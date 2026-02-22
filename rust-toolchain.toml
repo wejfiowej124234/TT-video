@@ -1,0 +1,8 @@
+[toolchain]
+# Deterministic/reproducible builds: pin exact toolchain.
+# NOTE: This repo currently builds with nightly; if/when stable-only is desired,
+# switch to a stable channel and update evidence/CI accordingly.
+channel = "nightly-2025-10-09"
+profile = "minimal"
+components = ["rustfmt", "clippy"]
+targets = ["wasm32-unknown-unknown"]

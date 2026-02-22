@@ -13,7 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@master
+      - name: Check invariants
+        run: bash ./scripts/check-invariants.sh
       - name: Build workspace
         run: cargo build --workspace
       - name: Run tests
