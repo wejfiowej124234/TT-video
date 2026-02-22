@@ -86,7 +86,7 @@
 - **协议终止与 graceful shutdown**（写死）：若**法律环境突变、稳定币永久冻结、仲裁体系不可恢复、多签失效**等导致协议无法持续运营，须有**协议终止与有序关闭**机制：① **graceful shutdown 流程**（停止新单→存量订单按 08-4 默认裁决或清算规则执行→资金处置披露）；② **存量订单最终路径**写死（自动清算脚本/流程或人工执行清单）；③ **自动清算脚本或等效执行清单**（可脚本化或 Runbook 步骤表）由法务/运维定稿写死本节；④ 与 08-4 第 3 章 fallback 一致。企业级须写死「协议如何终止」与终局机制，不得仅写应对而无终止路径。
 - **协议强制关闭（监管最后一问）**（写死）：**在什么情况下协议会被强制关闭？** 须写死：① **至少三种明确触发条件**（如监管勒令关停、多签/仲裁不可恢复且无自然终局、稳定币永久冻结且无法迁移等）— 由法务定稿列于本节或 08-4；② **关闭流程**（谁触发、谁执行、留痕要求）；③ **存量订单终局路径**（按默认裁决/清算/退款规则）；④ **用户资金最终处理逻辑**（链上 Escrow 内资金如何释放/退回）。无此四则无真正终局设计。见 08-4「协议终极边界声明与终局设计」。
 - **协议死亡场景**（写死）：若**公司破产、多签成员消失、团队集体退出、域名被封、GitHub 删除**：协议是否**还能自然运行**、用户是否**可完成存量订单**、是否存在**自然终局路径**须写死。若无（当前混合态下多为「否」），须明确「当前为平台型系统、无自然终局」及**依赖的终局路径**（如 30 天 fallback 默认裁决、或法务结论的存量处置）；否则企业级会认定无协议死亡设计。**团队消失推演（🔟）**（写死）：**若公司消失，协议如何自然终局？** 须写死：多签失联+仲裁员退出+公司破产+服务器下线时—**仲裁还能运行吗、Escrow 是否自动终局、存量订单是否自动清算、用户是否有自助路径**；若**必须依赖运营团队**=你不是协议、是 **SaaS**。**企业级须至少演练一次「团队消失」推演**（table-top 或 DR）；无实战推演=理论终局，须在本节或 08-4 注明是否已演练及结论。**团队消失后的自然终局证明（企业级深水区）**（写死）：**无运营团队情况下的自然终局能力**须写死—前端是否还能用、Escrow 是否还能释放、仲裁是否还能进行、参数是否还能执行；若存在**自动 fallback（如 30 天后默认裁决）、用户自助提现路径、时间触发终结逻辑**则具备自然终局能力；否则须明确「当前无、依赖运营」并落 08-4 四块深水区证明。可与团队消失推演合并为可出具的**自然终局证明**落点。
-- **年度 DR 演练强制**（写死）：**12 个月复检**须包含**至少一次资损/异常 DR 演练**（Runbook §1 场景）；无演练 = 无能力，复检时须产出演练记录与产物，否则视为门禁能力不足。**10× 争议/规模推演**（写死）：若存在 10× 争议或规模推演，**是否实际做过 table-top 演练**、**是否有演练编号**、**是否有复盘报告**须写死；否则属「纸面机制」。演练编号可沿用 DR-YYYYQX-0N 或单独编号，产物入 evidence。
+- **季度 DR 演练强制**（写死）：每季度必须至少一次 DR/table-top 演练（可选 Runbook §1 场景之一），并登记演练编号与复盘；无演练 = 无能力。年度复检（12 个月）必须能出示当年各季度演练记录与产物，否则视为门禁能力不足。**10× 争议/规模推演**（写死）：若存在 10× 争议或规模推演，**是否实际做过 table-top 演练**、**是否有演练编号**、**是否有复盘报告**须写死；否则属「纸面机制」。演练编号可沿用 DR-YYYYQX-0N 或单独编号，产物入 evidence。
 - **08-3 key 变更**：若与该 Gate 相关，须同步 08-4 并评估是否重新过该 Gate（见 08-2 W-PDP-SSOT-CONSISTENCY）。
 - **代币/合约升级**：若结算代币（如 USDC）升级合约或黑名单逻辑变更，是否**重新过门**由风控/法务在本节或 08-2 写死；建议触发 Gate-2/Gate-4 重评。
 
@@ -129,7 +129,37 @@
 - **多签实质控制声明**（写死）：多签成员须提供**实质控制声明**（股权/法人/控制关系，无共同实际控制人），**定期更新**（频率由法务定稿，如每 12 个月）；未声明或逾期未更新视为不合规，须暂停其多签权限直至补正。**多签成员不得由同一法人/同一控制方单独控制**（2/3 来自同一公司则门限无意义）；**公开透明度**（披露要求或可验证的「非同一控制」）由法务定稿写死本节或治理文档。**多签实质集中穿透**（写死）：监管会问**是否同一投资方持股、是否同一董事会、是否实际控制人为同一人、是否存在 side agreement**；若存在共同实控人则门限=形式。须写死：**禁止**上述情形控制多签多数，或**披露**并接受；由法务定稿落本节或治理文档。与 08-4 第 2 章一致。
 - **参数/配置变更流程**：08-3 表内「Runbook §10」指本节。常规变更：提案→双人审批→Timelock（若链上）→执行→08-3 变更记录；回滚按本节及 §1 触发条件执行。**全局变更指数执行**（写死）：变更前须核对「过去 30 日 08-3 变更记录表内记录条数」≤ paramChangeMaxPer30d（3）；每条记录计 1（同批次多 key 仍计 1）；超限则进入 paramFreezeDays 冻结期，不得执行非紧急参数变更。口径与 08-3「全局变更指数（可执行口径）」一致。
 - **KYC/证据/时间源等 Backend 参数**：变更流程同上；须同步 08-4 对应章节（若在映射表）。
-- **部署前 08-3 校验与 Backend 启动 SSOT 校验**（写死）：**部署前**：部署/升级脚本是否读取 08-3 版本或关键 key 与当前参数比对、不一致则阻断—**已实现 / 待实现**须在本节或架构文档注明，并写死脚本路径或「待实现」落点。**Backend 启动时**：是否校验或打印 SSOT 版本/hash、与 08-3 关键 key 比对—**已实现 / 待实现**须注明。定稿时勾选其一并留痕，否则审计会写 process-based。见 08-5 §4。**当前落点**：Backend 启动 SSOT 校验—**已实现**（落点：crates/api 启动时读取 env `SSOT_VERSION` 并打印；`STRICT_SSOT=1` 时未设置则拒绝启动，见 04 §四、08-5 §4）。部署前 08-3 校验—**待实现**（合约/部署脚本见 01/02、§7；当前仓库 contracts/ 为设计态，合约为设计态或独立 repo）。
+- **部署前 08-3 校验与 Backend 启动 SSOT 校验**（写死）：
+	- **部署前（已实现，enforce）**：部署/升级前必须执行 `./scripts/check-ssot-deploy.sh`。当 `STRICT_SSOT=1` 或 `CHECK_SSOT=1` 时：
+		1) 必须设置 `SSOT_VERSION`（非 `unset`）
+		2) 必须设置 `SSOT_SHA256`，并且与 `docs/08-3-参数与门禁表.md` 的 sha256 一致（不一致则阻断部署）
+		证据产物：部署日志中出现 `OK: SSOT_VERSION=...` 与 `OK: SSOT_SHA256=...`。
+	- **Backend 启动时（已实现）**：API 启动打印 `startup_snapshot`（包含 `SSOT_VERSION`、`CHARGEBACK_POLICY`、请求体上限与超时默认值）；`STRICT_SSOT=1` 时缺失 SSOT_VERSION 则拒绝启动。
+	- **运行时 drift 复检（频率与处置写死）**：
+		1) **频率**：每次发布/重启必检；运行中至少 **每 24 小时**复检一次（定时任务/cron）。
+		2) **触发入口（写死，可执行）**：执行 API 二进制的运行时校验命令：
+			- 命令：`traveltrust-api --ssot-runtime-check`
+			- 必要输入（由运维提供快照）：`RUNTIME_PARAM_SNAPSHOT_PATH=data/runtime_params.json`（JSON object，key=08-3 映射表 param_key；value=链上/配置读取结果）
+			- 模板生成（写死入口，避免漏 key）：`./scripts/gen-runtime-param-snapshot-template.sh --out data/runtime_params.json`
+			- 审计留痕：`SSOT_RUNTIME_AUDIT_LOG_PATH=data/ssot_runtime_audit.jsonl`（JSONL 追加，含 who/when/what），`SSOT_RUNTIME_LAST_SNAPSHOT_PATH=data/runtime_params_last.json`（用于对比“改了什么”）
+			- 审批链字段（写入审计日志）：`SSOT_AUDIT_ACTOR`（操作者）、`SSOT_AUDIT_APPROVER`（批准人）、`SSOT_AUDIT_WORKITEM_ID`、`SSOT_AUDIT_REASON`、`SSOT_AUDIT_SOURCE`（periodic/startup/deploy）
+		3) **检查项**：
+			- `GET /meta` 输出（defaults + ssot_version + ssot.expected_sha256/computed_sha256/match）与本次发布 evidence/GO_* 绑定的版本一致
+			- `--ssot-runtime-check` 比对：运行时快照（链上/配置读取）与 08-3 映射表 key 的 **value** 一致；缺 key 或不一致在严格模式下返回非 0（阻断/告警）
+		4) **触发阈值（写死）**：任一项满足即视为 drift：
+			- `ssot_version` 与预期不一致
+			- `SSOT_SHA256` 与仓库 `docs/08-3-参数与门禁表.md` 不一致（或 `/meta.ssot.match=false`）
+			- `--ssot-runtime-check` 输出 drift（缺 key/值不一致）
+		5) **自动动作（写死）**：立即告警（值班群/工单）；并执行“冻结关键写/只读降级”（后端已实现 degraded_mode 下冻结写；其余按 §11 定稿）。
+		6) **人工动作（写死）**：批准人确认后执行回滚/修正；补齐 evidence：
+			- `ssot_deploy_preflight_*.json`（部署前置证据）
+			- `data/ssot_runtime_audit.jsonl` 片段（含 who/when/what）
+			- `/meta` 输出与启动日志 `startup_snapshot`
+			并在 08-3 变更记录登记（若为合法变更）或在事故复盘中标注“运行时外改”。
+	- **Fork PR 边界条件（写死，防口头放行）**：若 PR 来自 fork 导致 CI 无法获取 `base.sha` 或 `git diff` 失败（见 08-5），维护者必须：
+		1) 本地/受信 runner 手工执行 `./scripts/check-08-consistency.sh main`（或等价 base_ref）
+		2) 将输出作为证据写入 `evidence/ci_exemptions/PR-<号>-W-DRIFT-CI.md`（或本次 GO evidence bundle）并在 PR 中引用
+		3) 未留痕不得合并（否则 CI 豁免机制变成绕过点）
 
 ---
 
@@ -137,6 +167,22 @@
 
 - **证据存储物理冗余**：证据须**多地域或跨云**备份（具体架构由运维定稿）；主存储故障 **> 7 天**时：**暂停新仲裁受理**，存量争议按**证据缺失默认裁决**（退款优先）；恢复后按既有规则。cold archive 策略（若有）由运维留档。**证据链攻击（8️⃣）**（写死）：**证据是否可被批量删除**（须按保留期与策略写死）、**Hash 是否可被 GDPR 删除要求覆盖**（须写死法律 override 流程）、**司法命令是否 override 区块证据**（须写死优先级）；**若存储集中在单一云（如仅 S3），S3 被封时仲裁能否进行**须写死—须**多地域/多云**或写死「单云不可用时暂停新仲裁、存量按证据缺失默认裁决」，否则企业级会问。见 08-4 第 3 章。
 - **reorg 超过 finalityN（超 finality 场景）**（如 > 12 block）：**自动暂停结算**；须**人工确认 finality** 后按 §1 恢复；**已基于旧链状态执行的裁决/DB 须回滚或按新链重放**（不得保留与最终链不一致的终态）；具体步骤由运维定稿写死本节。**reorg 后 disputeWindow 是否重算**须写死（如 reorg 后以新链 block 重算窗口、或已开窗口不重算）；否则时间攻击层不完整。
+- **checkpoint（事件消费断点）必须包含 logIndex（写死，12 缝 #9）**：checkpoint 的最小唯一性必须是 `(blockNumber, logIndex)`（建议同时记录 txHash 以便审计），否则遇到**同一 tx 多个 log**、reorg 重放、重复事件去重时会出现**重建失败/漏账/错账**。证据产物：indexer/runtime state 文件或 DB 表中保存的 checkpoint 必含 `log_index` 字段；演练/复盘时附带 `blockHash+logIndex`。
+- **事件唯一性与去重键（写死并可留痕）**：事件去重键必须包含 `txHash+logIndex+blockHash`（建议再加 `chainId`），否则跨节点重复拉取/同 tx 多事件/reorg 重放会导致重复入账或漏账。证据产物：append-only `data/indexer_events.jsonl` 中每条事件必须带 `dedupe_key`，并在 `data/indexer_audit.jsonl` 留痕 `event_applied/event_skipped_duplicate`。
+- **finalityN 被修改后的重放/校验流程（写死并实现，12 缝 #8）**：
+	1) **变更前置条件**：变更 `finalityN` 属于高风险参数，必须双人审批并登记 08-3 变更记录；变更提交必须附“重放计划”（见下）。
+	2) **变更后强制动作（不得跳过）**：在后端/执行器启动或发布前，必须执行一次回放/重放前置动作：
+		- 命令：`traveltrust-api --indexer-replay-finality-change`
+		- 结果：更新 `data/indexer_state.json`（或 `INDEXER_STATE_PATH` 指定文件）中的 `last_seen_finality_n`，并将 checkpoint **回退**到 `max(old_finalityN, new_finalityN)+2` blocks 之前，且 `log_index=0` 重新消费。
+		- 证据产物：部署/运维日志中出现 `indexer_replay_plan: {...}`，并把计划 JSON 作为 evidence/GO_* 的一部分（或贴 hash）。
+	3) **启动门禁（enforce）**：当检测到 `last_seen_finality_n != FINALITY_N` 且 `STRICT_INDEXER_REPLAY=1` 时，后端必须拒绝启动（防止改一次 finalityN 就导致投影错乱/漏账）。
+	4) **校验动作（写死）**：重放完成后，必须对关键聚合结果做一致性校验（至少：订单数/资金流入流出总额/未结算余额三项）并留痕；校验不通过则继续回放或触发只读/暂停。
+	5) **离线演练/回放输入（实现落点）**：后端支持通过 JSONL 输入进行确定性事件回放（用于演练/审计/重建验证；真实环境事件源应来自 RPC/indexer）。
+		- 命令（先校验）：`traveltrust-api --indexer-validate-jsonl <events.jsonl>`（输出 `dup_in_file` 等统计，便于验收输入是否自洽）
+		- 命令（再回放/入库证据）：`traveltrust-api --indexer-ingest-jsonl <events.jsonl>`
+		- 门禁（写死，防误操作）：**非重复事件**若 `block_number/log_index <= checkpoint` 将 **fail-closed**（避免 checkpoint 倒退或重复入账）；需要回退时必须先执行 `--indexer-replay-finality-change`（或重置 state/seen_keys）
+		- 去重：使用 `INDEXER_SEEN_KEYS_PATH`（默认 `data/indexer_seen_keys.json`）持久化去重键集合
+		- 证据产物：`data/indexer_events.jsonl`（原始事件 append-only）+ `data/indexer_audit.jsonl`（每次 applied/duplicate + `finality_n_used`）+ `data/indexer_state.json`（checkpoint）
 - **OFAC + 稳定币冻结 + Pause 三者同时触发**：**冲突矩阵与执行顺序**写死：① 监管（OFAC/政府请求）② 稳定币冻结披露/处置 ③ Pause（若仍需）④ 仲裁延后；与 08-4 第 6 章一致；具体步骤表由风控/法务定稿写死本节。
 - **服务开始时间防篡改**：backend 时间源须可验证（服务器时间签名、NTP 可信源或时间戳公证）；实现由运维/架构定稿并留 08-3 变更记录。**证据链时间戳与司法验证**（写死）：证据 hash 须配**防篡改时间戳**与**独立时间锚**（链上锚或可信时间公证），支持司法验证；仅 server timestamp 在跨境司法场景可能被质疑，见 08-4 第 3 章。
 - **SSOT 与链/DB 冲突优先级**（写死）：**链事件 > SSOT（08-3）> DB**。冲突时以链为准，DB 与链/SSOT 不一致须修正 DB；与 08-3 一致。**冲突时自动停机策略**（写死）：若检测到链参数与 08-3 文档冲突且无法自动修正，**须拒绝执行或自动暂停相关结算/裁决**，直至人工确认并修正；不得进入「人工判断区」现场裁量。具体触发条件与恢复流程由运维定稿写死本节。
@@ -153,6 +199,50 @@
 
 ---
 
+## 12. Outbox/执行器（文件型）运行与排障（实现落点）
+
+当前后端已提供**最小可运行**的文件型 Outbox（`pending/ in_progress/ done/ dead/` 四目录）与可选后台 worker（默认关闭）。语义为**at-least-once**：worker 可能重试同一条事件，处理器必须幂等。
+
+**运行开关（写死）**：
+- `OUTBOX_DIR`：默认 `data/outbox`
+- `OUTBOX_WORKER=1`：启用后台 worker（默认不启用）
+- `OUTBOX_LEASE_SECS`：默认 `60`（in_progress 领取租约）
+- `OUTBOX_POLL_MS`：默认 `500`（空闲轮询间隔）
+- `OUTBOX_MAX_ATTEMPTS`：默认 `10`（超过进入 `dead/`）
+
+**工作目录结构（取证点）**：
+- `data/outbox/pending/`：待处理事件（worker 通过原子 `rename` 领取）
+- `data/outbox/in_progress/`：处理中事件（崩溃/宕机后可回收）
+- `data/outbox/done/`：已完成事件（归档）
+- `data/outbox/dead/`：超过重试上限/损坏事件（需人工介入）
+
+**崩溃恢复（写死）**：
+- worker 启动与循环中会执行 `recover_stuck(lease_secs)`：将超过租约的 `in_progress` 事件回收到 `pending`。
+- 处理卡死/进程崩溃后，必须先确认 `in_progress` 是否被回收，再做人工重试或 dead-letter 处置。
+
+**排障步骤（最小可执行）**：
+1) 观察 `pending/in_progress/done/dead` 数量是否异常增长（`in_progress` 长期不动=可能 worker 死亡或 handler 卡死）。
+2) 若 `dead/` 有新增：取出对应 JSON，定位 `kind/attempts/last_error`；需要双人审批后决定重放或人工补偿。
+3) 证据产物：相关目录快照（文件名+hash）、API `startup_snapshot`、`GET /meta`、以及 dead 事件 JSON 的脱敏副本。
+
+**实现提示（边界声明）**：当前 `evidence_receipt.created` 的 handler 仅将事件追加到 `data/outbox_processed.log` 作为“副作用边界示例”；真实链上提交/存储 pin 需要替换为幂等的链调用与结果持久化（txHash/logIndex）。
+
+---
+
+## 13. CI/门禁脚本的边界条件（Fork PR / base sha 不可用）
+
+- **Fork PR 的 base.sha 不可用时的处理（写死）**：当 CI 运行环境无法获取 PR 的 base 提交（如 fork/权限限制/浅克隆），`./scripts/check-08-consistency.sh` 这类基于 `git diff <base>` 的门禁会失效。
+	1) **默认策略（fail-closed）**：无法确定 base 时，必须由维护者以有权限的方式重新触发校验（如在主仓库环境运行、或显式传入 base_ref 并确保已 fetch）。
+	2) **可执行操作**：维护者在仓库根手工执行 `./scripts/check-08-consistency.sh main`（或具体 base_ref），并将输出作为 evidence。
+	3) **门禁口径**：任何“因为 base.sha 不可用而跳过校验”的情况，必须在 PR 里留痕并由维护者审批；不得作为绕过点。
+
+- **08-3 evidence_pointer 禁止裸指针（写死）**：08-3 属于 SSOT，任何 key 若 evidence_pointer 仅写“见 Runbook/见文档”，等价于门禁不可执行。
+	1) **门禁脚本**：在仓库根执行 `./scripts/check-08-evidence-pointer.sh`，若发现 evidence_pointer 为空/"—"/“见 Runbook”等裸指针，直接失败。
+	2) **精确性要求**：若 evidence_pointer 提及 Runbook，必须精确到 Runbook §N 或“表”。
+	3) **证据产物**：脚本输出保留在 CI 日志或 evidence/GO_* 中；异常必须在 PR 中修复后再合并。
+
+---
+
 ## 定稿时须填写项（未填则 Runbook 不可作为 Gate 闭合证据）
 
 **P0 最小必填项**（上线/过门前**至少须填**以下 9 项，否则 Runbook 不可作为 Gate 闭合证据）：① 值班/批准人 ② 多签实质控制声明更新频率 ③ OFAC+稳定币冻结+Pause 冲突矩阵步骤表 ④ 法律突变 30 天内存量处理策略 ⑤ 收入归集路径或收益流图 ⑥ 协议终止与 graceful shutdown 步骤 ⑦ 多签权限矩阵或紧急多签可验证触发条件表 ⑧ 与 08-4 文末定稿日期+签字同步确认 ⑨ **协议强制关闭**（至少三种触发条件+关闭流程+存量订单终局+用户资金最终处理，§6）。**发版前须将以下 P0 九项全部填实（定稿时填），未填项不得视为门禁闭合。**详见 [08-2 定稿前检查](../docs/08-2-附录-闭合工单表.md)。
@@ -163,7 +253,6 @@
 
 | 项 | 所在节 | 定稿时须填写 | 主责 | P0 |
 |----|--------|--------------|------|-----|
-|----|--------|--------------|------|
 | 值班/批准人 | §2 值班与批准链 | 具体联系人或代号（脱敏可）→ __________ | 运维 | ✅ P0 |
 | 多签实质控制声明更新频率 | §10 | 如「每 12 个月」；未更新后果 → __________ | 法务 | ✅ P0 |
 | OFAC+稳定币冻结+Pause 冲突矩阵步骤表 | §11 | 三者同时触发时的具体执行步骤表 → __________ | 风控/法务 | ✅ P0 |

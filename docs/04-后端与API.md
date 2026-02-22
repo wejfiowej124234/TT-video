@@ -135,11 +135,54 @@
 
 ## 四、后端设计要点（crates/api）
 
-- **运行时参数与 08-3 SSOT**：业务参数（仲裁费、证据保留期、争议窗口、finalityN、stakeTierThresholds 等）以 [08-3-参数与门禁表](08-3-参数与门禁表.md) 为单源真相；Backend 启动须加载或校验 08-3 约定版本/关键 key，见 [08-5-CI与一致性落地说明](08-5-CI与一致性落地说明.md) §4、[Runbook §10](../ops/RUNBOOK.md)。实现落点：配置或 env 注入 SSOT 版本/参数，启动时校验或打印；无校验时须在 Runbook §10 注明「待实现」并留痕。**当前 Backend 启动 SSOT 校验已实现**，见 Runbook §10。**Backend 环境变量**（PORT、CORS_ORIGINS、SSOT_VERSION、STRICT_SSOT）见仓库根 [.env.example](../.env.example) 与 Runbook §10；**生产必须设置 CORS_ORIGINS** 限制允许的 origin，否则存在跨域风险。**请求体与超时**：请求体大小上限（建议 1MB，与证据 DoS 风控一致）、请求超时（实现时定稿，便于限流与资源保护）须在实现时配置并与运维约定。
+- **运行时参数与 08-3 SSOT**：业务参数（仲裁费、证据保留期、争议窗口、finalityN、stakeTierThresholds 等）以 [08-3-参数与门禁表](08-3-参数与门禁表.md) 为单源真相；Backend 启动须加载或校验 08-3 约定版本/关键 key，见 [08-5-CI与一致性落地说明](08-5-CI与一致性落地说明.md) §4、[Runbook §10](../ops/RUNBOOK.md)。实现落点：配置或 env 注入 SSOT 版本/参数，启动时校验或打印；无校验时须在 Runbook §10 注明「待实现」并留痕。**当前 Backend 启动 SSOT 校验已实现**（读取 `SSOT_VERSION`，`STRICT_SSOT=1` 时缺失拒绝启动），见 Runbook §10。**Backend 环境变量**（PORT、CORS_ORIGINS、SSOT_VERSION、STRICT_SSOT、SSOT_SHA256、CHARGEBACK_POLICY）见仓库根 [.env.example](../.env.example) 与 Runbook §10；**生产必须设置 CORS_ORIGINS** 限制允许的 origin，否则存在跨域风险。
+- **请求体与超时（写死默认值 + 一致性证据）**：默认值为：① 请求体大小上限 **1MB**；② 全局请求超时 **30s**。该默认值须在 **API 进程**与 **网关/反代（如 Nginx/Cloudflare/LB）**保持一致；任一层放大上限均视为风控退化，必须走 08-3/Runbook 变更流程并留痕。
+  - **证据产物（必须能取证）**：① 启动日志含 `startup_snapshot` 行（含 `REQUEST_BODY_LIMIT_BYTES` 与 `REQUEST_TIMEOUT_SECS`）② `GET /meta` 返回 defaults 快照（用于复核与前端版本绑定）③ 部署前脚本 `./scripts/check-ssot-deploy.sh` 在 strict 模式下校验 `docs/08-3-参数与门禁表.md` 的 sha256（`SSOT_SHA256`）。
 - **路由**：**认证与账号**（注册、登录、登出、邮箱验证、找回/重置密码）、**个人中心**（GET·PUT /api/v1/me、修改密码）、导游、订单（含接单、取消、确认完成）、争议、证据与支付/链上（见 §三）；支付回调由实现定稿，与 01 §3 链为准一致。
 - **用户与账号**：注册邮箱+密码；登录态 JWT 或 session；`/api/v1/me` 返回用户资料与按角色统计（见 §三 3.2）。总收入可对账链上放款或由订单表汇总。**身份 P0-1**：下单/接单/争议/证据提交时签名钱包与主身份校验与 01 §2 一致，实现时定稿。**代付（P0）**：后端不持私钥、不代签、不接受用户转后端；已支付仅来自链上 Paid/对账；代付若启用须法务门禁，见 [01-总库总览](01-总库总览.md) §7。
 - **风控**：与 01 §4、[03-业务流程与风控](03-业务流程与风控.md) §二 一致。**Sybil**：同设备/IP 多导游账号可限或人工复核。**评分权重**：`weight = f(订单金额, 导游历史信誉, 账户年龄)`，在 `core` 实现（03 §2.3）。**反刷/限流（P0）**：rate limit、黑名单与冻结阈值见 01 §4。**证据 DoS（P0）**：大小/类型白名单见 01 §6、02 §六。**证据上传与访问（P0）**：pre-signed URL、工单内可读、每次读审计与 01 §6 访问 P0 一致，接口在实现时与 01 §6、02 §六 定稿。**证据可用性（P0-3）**：重建工具、存储不可用/证据已删除时 SLA 与公平性口径见 01 §6，实现时定稿。**黑名单**：导游/用户 ID 表，下单/接单前校验。**allowlist**：token/合约 allowlist 校验与 01 §5 一致，后端不绕过 allowlist（见 01 禁止行为）。
 - **API 幂等**：重试/连点用 requestId 或 idempotency-key，与 01 §10 17 条 #14 一致。当前 API 已读取 Idempotency-Key/X-Idempotency-Key 并回写响应头；**实现时对写操作须校验 idempotency-key 并做 key 去重与结果复用**，落 17 条 #14 证据产物（如 idempotency 日志）。
+
+- **事务边界与链调用顺序（写死，P0）**：必须明确“先写 DB 还是先发链交易”，并避免“链成功 + DB 失败”的永久不一致。
+  - **强制策略（推荐且可审计）**：采用 **outbox pattern**：
+    1) API 写入业务表（orders/disputes/…）+ 写入 `outbox_events`（待发送链交易/待执行副作用）在 **同一 DB transaction** 内提交；
+    2) 执行器/队列消费者从 outbox 拉取事件并发链交易；
+    3) 链上确认后，再由 indexer/投影写回资金相关状态。
+  - **禁止策略**：API 在同一请求内“先发链交易、后写 DB”，且中间无 outbox/补偿机制。
+  - **失败处置（写死）**：DB commit 失败 → 必须视为“未发起”；链交易失败 → outbox 事件进入 retry/backoff；链成功但写回失败 → 由投影重放修复，且必须能从 checkpoint 重建。
+  - **证据产物**：outbox 表/事件日志（messageId/txHash/orderId/action）、重放能力（Runbook §11、/meta + checkpoint）。
+
+- **队列/执行器崩溃恢复语义（写死，P0）**：
+  - **投影/事件消费**：至少保证 **at-least-once**，并以 `(blockNumber, logIndex)` checkpoint 与业务去重键保证幂等。
+  - **执行器副作用**：同样按 at-least-once 设计，但必须做到“重复执行不改变结果”（幂等），并有最大重试/死信策略。
+  - **崩溃后从哪个 offset 继续**：checkpoint/outbox offset 必须持久化（文件或 DB），重启后从最后确认点继续；不得依赖内存。
+  - **重试上限（写死）**：必须有最大次数/最大时长；超过阈值进入人工工单队列并告警（避免无限重复执行）。
+
+- **数据库迁移策略（写死，P0）**：
+  - **迁移工具**：必须使用可回放的迁移机制（如 SQLx migrations 或等价工具），迁移脚本必须入库并可在 CI 校验。
+  - **向后兼容**：新增字段必须允许旧版本 API 在灰度期继续运行（默认值/nullable/双写/读兼容策略写死）。
+  - **回滚方案**：每次 schema 变更必须写明可回滚方式（down migration 或前滚修复），以及回滚对数据一致性的影响。
+
+- **日志与隐私冲突（写死，P0）**：
+  - **默认不记录 PII**：日志中不得输出邮箱、完整钱包地址、证据内容、Authorization/JWT 等敏感字段；必须做脱敏（如钱包仅保留前 6 后 4）。
+  - **保留期**：审计/运行日志保留周期必须写死（由法务/风控定稿）；超过期限必须删除或归档。
+  - **GDPR 删除与日志**：GDPR/删除请求必须覆盖“业务表 + 证据原件 + 可识别日志字段”；仅允许保留不可逆 hash/receipt（见 08-4 第 3 章与 Runbook §9/§11）。
+- **支付回调 / Webhook（安全模型写死）**：对外口径为「链为准、callback 不对外暴露」（01 §3）。
+  - **默认结论（写死）**：后端 **不提供对公网暴露的支付 callback** 来驱动订单资金终态；资金相关状态仅由 **链上事件（达到 finalityN）** 驱动。
+  - **若必须接入第三方支付网关 Webhook（例如法币/卡）**：其作用仅限于“**触发链下对账/创建工单/写审计日志/异步拉取网关账单**”，不得直接将订单置为 Paid/Escrowed/Completed 等资金终态。
+  - **Webhook 安全要求（实现时不得弱化）**：
+    1) **签名校验**：必须验证网关签名（HMAC/RSA，按 provider 规范），并对签名覆盖的原始 body 做一致性校验；失败返回 401/403。
+    2) **重放防护**：必须校验 `timestamp` + `nonce/event_id`，并做去重（TTL ≥ 7 天或按 provider 最大重试窗口）；过期或重复返回 200（幂等消耗）但不得重复产生副作用。
+    3) **幂等键**：必须以 provider 的 `event_id` 或等价字段作为 idempotency-key；写入审计日志与幂等存储。
+    4) **允许来源**：Webhook 入口必须为**私网/内网**或在网关层做 IP allowlist（如 provider 固定出口 IP）；不得暴露公网通用路径。
+    5) **失败重试策略**：对 provider 重试应遵循“幂等 + 快速 ACK”，业务处理异步化；不得因处理超时导致 provider 重放。
+    6) **审计字段（最小集合）**：`request_id`、`provider`、`event_id`、`timestamp`、`signature_verified`、`dedup_hit`、`order_id(optional)`、`raw_body_sha256`、处理结果（ack/queued/ignored/rejected）。
+- **权威源切换规则（callback 不暴露 vs 链为准，写死）**：
+  - **权威优先级（写死）**：链事件（达到 `finalityN`） > 08-3 SSOT > DB 投影/缓存。任何链下回调/索引器读模仅能作为“提示/触发”，不得覆盖链终态。
+  - **indexer 落后/拥堵降级**：当检测到 indexer 落后（Runbook §1 场景②）时：
+    1) 对资金相关写操作（确认完成/裁决执行等）应进入“排队/只读/返回处理中”模式；
+    2) 对外展示必须明确“链上确认中（pending）”，不得把链下成功当作链上成功。
+  - **reorg 处理**：检测到 reorg 深度 > `finalityN`（Runbook §1 场景③）时必须自动暂停结算/执行器副作用，待人工确认后重放/修正；不得保留与最终链不一致的终态（见 Runbook §11）。
 - **持久化**：trait 抽象（`UserRepository`、`OrderRepository`），支持 PostgreSQL 或分布式 DB（CockroachDB/TiDB/YugabyteDB 等），SQL 尽量标准。证据/隐私/保留与删除 P0 见 01 §6、02 §六。**对账**：对账任务/脚本与 01 §9、[02-架构设计](02-架构设计.md) §十二 一致；**事件表、checkpoint、投影**与 01 §5、02 §十二 一致（event 表 blockHash+blockNumber+logIndex，投影可重建）；主状态仅由链上事件驱动、correction 与投影分离见 01 §10 17 条 #12。**DB 全丢重建（P0-6）**：最小产物与脚本见 01 §9，与事件投影可重建一致。**可观测**：traceId 贯通 requestId→messageId→txHash→logIndex，与 01 §9 一致，便于审计导出与资损排查。API 响应头 x-request-id 即 requestId；对账/执行器消费消息时 **messageId 与 x-request-id 的关联方式**（透传或映射规则）由实现定稿并留痕，见 01 §9。#15 对账三段式、#16 状态机与副作用落点见 §二、§四、01 §9。**SLO（P0-7）**：六项指标+阈值与动作见 01 §9，后端/对账侧与 02 §十二 配合定稿。**RBAC 8 项**：选项与证据产物见 01 §7，鉴权与路由在 §三 实现时定稿。**系统级不变量**：与 01 §10 一致，后端设计不与之冲突。**12 缝后端相关**：#2 争议费用/#3 争议窗口/#10 证据时间戳/#11 钱包换绑/#12 取消矩阵与 01 §10 定稿一致，落点见 §二、§三、§四及 03；**具体数值与选项**以 [01-总库总览](01-总库总览.md) §10 12 缝表为准，实现时定稿。**资损 runbook（P0）**：至少 5 条（① RPC 大面积不可用；② Indexer 落后；③ reorg 触发撤销；④ 执行器卡单；⑤ token 冻结/黑名单导致结算失败），见 01 §9 发布与 E2E；后端/对账侧责任与 [07-开发流程与顺序](07-开发流程与顺序.md) 或运维 runbook 配合定稿。**17 条证据产物**：后端产出物（如 `correction_log`、`reconciliation_rules.json`、API `idempotency_key` 日志、执行器审计表等）与 01 §10 审计验收表一致，实现时定稿。**P1 占位**：沟通/安全/费用税务见 01 §4、法务。
 
 ---
