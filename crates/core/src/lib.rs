@@ -3,11 +3,13 @@
 //! 先链下实现，接口设计兼容后续上链。
 
 pub mod escrow;
+pub mod outbox;
 pub mod reputation;
 pub mod staking;
 pub mod types;
 
 pub use escrow::{EscrowState, OrderState};
+pub use outbox::*;
 pub use reputation::ReviewWeight;
 pub use staking::StakeTier;
 pub use types::*;

@@ -10,7 +10,7 @@ path = "src/main.rs"
 
 [dependencies]
 traveltrust-core = { path = "../core" }
-axum = { version = "0.7", features = ["json", "macros", "middleware"] }
+axum = { version = "0.7", features = ["json", "macros"] }
 tokio = { version = "1", features = ["full"] }
 tower = "0.4"
 # tower-http: 若 build 报错 unknown feature "limit"/"timeout"，去掉该 feature 并删 main.rs 中对应 layer
@@ -21,3 +21,5 @@ chrono = { version = "0.4", features = ["serde"] }
 uuid = { version = "1", features = ["v4", "serde"] }
 http-body-util = "0.1"
 bytes = "1"
+hmac = "0.12"
+sha2 = "0.10"
