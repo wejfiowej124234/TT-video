@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # 08-3 与 08-4 一致性校验（W-PDP-SSOT-CONSISTENCY）
-# 用法：在仓库根目录执行 scripts/check-08-consistency.sh [base_ref]
+# 用法：在仓库根目录执行 ./scripts/check-08-consistency.sh [base_ref]
 # 若未传 base_ref 则与 HEAD 比较（单次提交）；CI 中可传 main 或 $BASE_REF。
 # 规则：若 docs/08-3 的「关键 key 与 08-4 章节映射」表中任一 key 被改动，则 docs/08-4 中「文档版本（CI 校验用）」行必须在本 diff 中有变更，否则 exit 1。
 
@@ -10,13 +10,64 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
 # 无父提交时（如首次提交）跳过检查
-if [ "$BASE" = "HEAD^" ] && ! git rev-parse HEAD^ 2>/dev/null; then
+if [ "$BASE" = "HEAD^" ] && ! git rev-parse HEAD^ >/dev/null 2>&1; then
   echo "OK: 无父提交，跳过 08-3/08-4 一致性检查"
   exit 0
 fi
 
-# 08-3 映射表中的 param_key（与 08-3 文档「关键 key 与 08-4 章节映射」表一致；增删 key 须同步此处）
-KEYS="ofacHitPolicy|pauseCooldown|pauseAllowlist|evidenceRetentionDays|evidenceMaxSize|evidenceTypeAllowlist|arbFeeBase|arbFeeCap|fxDisplayPolicy|paramChangeMaxPer30d|paramFreezeDays|freezeDisputePolicy|serviceStartTimeSource|minArbitratorCount|chargebackPolicy"
+SSOT_DOC="docs/08-3-参数与门禁表.md"
+
+# 从 08-3「关键 key 与 08-4 章节映射」表自动提取 param_key，避免脚本 KEYS 与文档双维护漂移。
+extract_mapping_keys_regex() {
+  if [ ! -f "$SSOT_DOC" ]; then
+    echo ""
+    return 0
+  fi
+
+  # 取映射表段落内 markdown 表的第一列 param_key。
+  # - 支持单元格内用 '、' / ',' / '，' 连接多个 key（如 pauseCooldown、pauseAllowlist）
+  # - 忽略表头/分隔线/括号行
+  local keys
+  keys="$(
+    awk '
+      BEGIN { in_section=0 }
+      /##[[:space:]]+关键 key 与 08-4 章节映射/ { in_section=1; next }
+      in_section && /^##[[:space:]]/ { exit }
+      in_section && /^\|/ {
+        if ($0 ~ /\|[[:space:]]*param_key[[:space:]]*\|/) next
+        if ($0 ~ /^\|[-[:space:]]+\|/) next
+        line=$0
+        sub(/^\|/, "", line)
+        split(line, cells, "[|]")
+        k=cells[1]
+        gsub(/\*\*/, "", k)
+        gsub(/`/, "", k)
+        gsub(/^[[:space:]]+|[[:space:]]+$/, "", k)
+        if (k == "" || k ~ /^\(/) next
+        # Only keep identifier-like keys (avoid explanatory rows / non-ASCII content).
+        if (k !~ /^[A-Za-z][A-Za-z0-9_]*$/) next
+        print k
+      }
+    ' "$SSOT_DOC" \
+      | tr '、，,' '\n' \
+      | sed -e 's/[[:space:]]//g' \
+      | sed -e '/^$/d' \
+      | LC_ALL=C sort -u
+  )"
+
+  if [ -z "$keys" ]; then
+    echo ""
+    return 0
+  fi
+
+  # join with |
+  echo "$keys" | paste -sd'|' -
+}
+
+KEYS_REGEX="$(extract_mapping_keys_regex)"
+if [ -z "$KEYS_REGEX" ]; then
+  echo "WARN: 无法从 ${SSOT_DOC} 提取映射 key 列表，跳过 key 触及判断（将仅在 08-4 版本行自身变更时通过）。"
+fi
 
 # 08-4 版本行标识（兼容全角/半角括号与空格，避免格式微调导致误判）
 VERSION_MARKER="文档版本"
@@ -32,9 +83,14 @@ if [ -z "$diff_08_3" ]; then
 fi
 
 # 检查 08-3 的 diff 是否触及映射 key（在 26 key 表或映射表段落中出现的 key）
-if ! echo "$diff_08_3" | grep -qE "$KEYS"; then
+if [ -n "$KEYS_REGEX" ] && ! echo "$diff_08_3" | grep -qE "$KEYS_REGEX"; then
   echo "OK: docs/08-3 有变更但未触及映射表中的 param_key"
   exit 0
+fi
+
+if [ -z "$KEYS_REGEX" ]; then
+  echo "FAIL: docs/08-3 有变更，但无法提取映射 key 列表以做一致性判定；请确认 ${SSOT_DOC} 中映射表标题与表格格式未被破坏。"
+  exit 1
 fi
 
 # 触及映射 key：08-4 的「文档版本（CI 校验用）」行必须在本 PR 中有变更

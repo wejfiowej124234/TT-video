@@ -17,4 +17,4 @@ jobs:
         with:
           fetch-depth: 0
       - name: Check 08-3 and 08-4 consistency
-        run: ./scripts/check-08-consistency.sh ${{ github.event.pull_request.base.sha }}
+        run: ./scripts/check-08-consistency.sh "${{ github.event.pull_request.base.sha || 'main' }}"

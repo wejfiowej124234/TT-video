@@ -1,0 +1,16 @@
+# 08-3 evidence_pointer 精确性门禁（W-DRIFT-CI / SSOT 执行性）
+name: Check 08-3 evidence_pointer
+
+on:
+  pull_request:
+    paths:
+      - 'docs/08-3*.md'
+      - 'scripts/check-08-evidence-pointer.sh'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: evidence_pointer must be precise
+        run: ./scripts/check-08-evidence-pointer.sh
