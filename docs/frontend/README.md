@@ -4,8 +4,10 @@
 
 ## 主要文档
 
+- 协议级 UI 设计宪法（UI/UX 最高约束，优先）：[../13-协议级UI设计宪法.md](../13-协议级UI设计宪法.md)
 - 前端总览（权威正文）：[../05-前端总览.md](../05-前端总览.md)
 - DApp 架构总览（钱包/签名/链交互）：[../06-DApp架构总览.md](../06-DApp架构总览.md)
+- 合约与 ABI 对齐（实现时）：[../14-合约-API-ABI-前后端对齐.md](../14-合约-API-ABI-前后端对齐.md)
 
 ## 架构目录（本目录补充）
 
@@ -18,6 +20,8 @@
 
 ## 代码落点（仓库结构）
 
-- 前端（Yew/WASM）：`crates/web`
-- 页面：`crates/web/src/pages/`
-- API DTO：`crates/web/src/api/`
+- 前端（Next.js + React + TypeScript）：`frontend/`。技术栈以 [09 §2.6 标准分层表](../09-技术架构总览-v1.0.md)、§2.7 DApp+3D 定稿方案 为准。
+- 页面：`frontend/app/`（App Router）或 `frontend/pages/`
+- API / 状态：`frontend/lib/`；DApp：`frontend/dapp/`（wagmi + viem）
+
+文档索引与版本表见 [00-文档索引](../00-文档索引.md)。

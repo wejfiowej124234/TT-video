@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # 前端可验证发布（deterministic manifest）：在 frontend 构建产物目录生成 manifest.json 与 manifest.sha256（08-4 第 7 章、W-Q6-FE）
-# 用法：前端构建完成后在仓库根执行，默认扫描 dist/；可传目录： ./scripts/build-frontend-manifest.sh [dist_dir]
-# 示例：cd crates/web && trunk build --release && cd ../.. && ./scripts/build-frontend-manifest.sh dist
+# 用法：前端构建完成后在仓库根执行；可传目录： ./scripts/build-frontend-manifest.sh [dist_dir]
+# 示例：cd frontend && pnpm build && cd .. && ./scripts/build-frontend-manifest.sh frontend/.next
+# 或 Next.js 静态导出：next.config.js 设置 output: 'export' 后产物在 frontend/out，传 frontend/out。
 #
 # 重要：manifest 内容必须尽量“可重复”。不得包含 wall-clock 时间戳；否则同一 commit 不同机器会生成不同 manifest.sha256。
 
@@ -11,7 +12,7 @@ DIST_DIR="${1:-dist}"
 cd "$ROOT"
 
 if [ ! -d "$DIST_DIR" ]; then
-  echo "SKIP: 目录 $DIST_DIR 不存在；请先完成前端构建（如 trunk build 产出 dist/）再运行本脚本。"
+  echo "SKIP: 目录 $DIST_DIR 不存在；请先完成前端构建（如 cd frontend && pnpm build）再运行本脚本。"
   exit 0
 fi
 
@@ -25,14 +26,18 @@ if command -v git >/dev/null 2>&1 && git rev-parse --is-inside-work-tree >/dev/n
   git_ct="$(git show -s --format=%ct HEAD 2>/dev/null || true)"
 fi
 
-rustc_v="$(command -v rustc >/dev/null 2>&1 && rustc --version 2>/dev/null || echo "")"
-cargo_v="$(command -v cargo >/dev/null 2>&1 && cargo --version 2>/dev/null || echo "")"
-trunk_v="$(command -v trunk >/dev/null 2>&1 && trunk --version 2>/dev/null || echo "")"
-wasm_opt_v="$(command -v wasm-opt >/dev/null 2>&1 && wasm-opt --version 2>/dev/null || echo "")"
+node_v="$(command -v node >/dev/null 2>&1 && node --version 2>/dev/null || echo "")"
+pnpm_v="$(command -v pnpm >/dev/null 2>&1 && pnpm --version 2>/dev/null || echo "")"
+npm_v="$(command -v npm >/dev/null 2>&1 && npm --version 2>/dev/null || echo "")"
 
 lock_sha256=""
-if command -v sha256sum >/dev/null 2>&1 && [ -f "Cargo.lock" ]; then
-  lock_sha256="$(sha256sum Cargo.lock | cut -d' ' -f1)"
+if command -v sha256sum >/dev/null 2>&1; then
+  for lock in frontend/pnpm-lock.yaml frontend/package-lock.json frontend/yarn.lock; do
+    if [ -f "$ROOT/$lock" ]; then
+      lock_sha256="$(sha256sum "$ROOT/$lock" | cut -d' ' -f1)"
+      break
+    fi
+  done
 fi
 
 # 收集产物：path 与 sha256（需 jq 生成多文件列表；无 jq 时写空 artifacts）
@@ -57,7 +62,7 @@ if command -v jq >/dev/null 2>&1; then
   ARTIFACTS="$(echo "$ARTIFACTS" | jq 'sort_by(.path)')"
 fi
 
-echo "{\"gate\":\"Q6-frontend\",\"git\":{\"commit\":\"$git_sha\",\"commit_time_unix\":\"$git_ct\"},\"tooling\":{\"rustc\":\"$rustc_v\",\"cargo\":\"$cargo_v\",\"trunk\":\"$trunk_v\",\"wasm_opt\":\"$wasm_opt_v\"},\"locks\":{\"Cargo.lock_sha256\":\"$lock_sha256\"},\"artifacts\":$ARTIFACTS,\"sign_off\":[\"build\"]}" > "$MANIFEST_JSON"
+echo "{\"gate\":\"Q6-frontend\",\"git\":{\"commit\":\"$git_sha\",\"commit_time_unix\":\"$git_ct\"},\"tooling\":{\"node\":\"$node_v\",\"pnpm\":\"$pnpm_v\",\"npm\":\"$npm_v\"},\"locks\":{\"frontend_lock_sha256\":\"$lock_sha256\"},\"artifacts\":$ARTIFACTS,\"sign_off\":[\"build\"]}" > "$MANIFEST_JSON"
 
 if command -v sha256sum >/dev/null 2>&1; then
   sha256sum "$MANIFEST_JSON" | cut -d' ' -f1 > "$MANIFEST_SHA"

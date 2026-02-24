@@ -4,6 +4,12 @@
 dist
 Cargo.lock
 
+# 前端（Next.js）
+node_modules/
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+
 # 环境与密钥（勿提交）
 .env
 .env.*

@@ -4,7 +4,7 @@
 //! traceId：响应头 x-request-id 由请求头带入或自动生成，与 01 §9 贯通 requestId→txHash→logIndex 一致。
 //! 路由：/health、/api/v1/guides 为占位实现；其余为 501 占位，实现时按 04 §三 与 01 §10 17 条（幂等、traceId）补齐。
 //! 幂等：请求头 Idempotency-Key / X-Idempotency-Key 在中间件透传并回写；对 POST/PUT 做 key 去重与结果复用（01 §10 #14），缓存键=method+path+key，最多 1000 条。
-//! 环境变量：PORT（默认 3000）、CORS_ORIGINS（逗号分隔的允许 origin，未设则开发态允许任意；生产应设置）。
+//! 环境变量：PORT（默认 8080，与 frontend 默认 NEXT_PUBLIC_API_BASE_URL 一致）、CORS_ORIGINS（逗号分隔的允许 origin，未设则开发态允许任意；生产应设置）。
 
 use axum::{
     body::Body,
@@ -828,7 +828,7 @@ async fn run() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     let port: u16 = env::var("PORT")
         .ok()
         .and_then(|p| p.parse().ok())
-        .unwrap_or(3000);
+        .unwrap_or(8080);
     let addr = SocketAddr::from(([0, 0, 0, 0], port));
     println!("TravelTrust API listening on http://{}", addr);
     let listener = tokio::net::TcpListener::bind(addr).await?;

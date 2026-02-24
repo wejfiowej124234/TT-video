@@ -34,7 +34,7 @@ fi
 
 git_sha="$(git rev-parse HEAD 2>/dev/null || echo unknown)"
 
-api_base_url="${API_BASE_URL:-${VITE_API_BASE_URL:-}}"
+api_base_url="${API_BASE_URL:-${NEXT_PUBLIC_API_BASE_URL:-}}"
 meta_raw=""
 meta_fetch_error=""
 if [ -n "$api_base_url" ] && command -v curl >/dev/null 2>&1; then

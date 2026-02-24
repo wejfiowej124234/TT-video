@@ -12,20 +12,16 @@ cd "$root_dir"
 # --- Deterministic build / toolchain ---
 [[ -f rust-toolchain.toml ]] || fail "missing rust-toolchain.toml (toolchain must be pinned)"
 
-# --- Frontend baseline security + determinism hints ---
-web_index="crates/web/index.html"
-[[ -f "$web_index" ]] || fail "missing $web_index"
-
-grep -q "Content-Security-Policy" "$web_index" || fail "missing CSP meta in $web_index"
-grep -q "meta name=\"referrer\"" "$web_index" || fail "missing referrer policy meta in $web_index"
-grep -q "data-wasm-opt=\"z\"" "$web_index" || fail "missing data-wasm-opt=\"z\" in $web_index"
+# --- Frontend (Next.js) presence ---
+[[ -d "frontend" ]] || fail "missing frontend/ (Next.js app root)"
+[[ -f "frontend/package.json" ]] || fail "missing frontend/package.json"
 
 # --- Frontend manifest determinism (script must embed deterministic anchors) ---
 manifest_script="scripts/build-frontend-manifest.sh"
 [[ -f "$manifest_script" ]] || fail "missing $manifest_script"
 
 grep -q "git_sha" "$manifest_script" || fail "frontend manifest script missing git commit anchor (git_sha)"
-grep -q "Cargo.lock_sha256" "$manifest_script" || fail "frontend manifest script missing Cargo.lock sha256 anchor"
+grep -q "frontend_lock_sha256\|lock_sha256" "$manifest_script" || fail "frontend manifest script missing lock sha256 anchor"
 
 # --- Backend baseline security headers ---
 api_main="crates/api/src/main.rs"
@@ -34,8 +30,8 @@ api_main="crates/api/src/main.rs"
 grep -q "security_headers_layer" "$api_main" || fail "API missing security_headers_layer middleware"
 grep -q "x-content-type-options" "$api_main" || fail "API security headers missing x-content-type-options"
 
-# --- Node supply-chain policy (only enforced if Node is introduced) ---
-if [[ -f package.json ]]; then
+# --- Node supply-chain policy（前端为 Next.js，须过锁文件与版本规则）---
+if [[ -d frontend ]] && [[ -f frontend/package.json ]]; then
   bash scripts/check-node-lock-policy.sh
 fi
 

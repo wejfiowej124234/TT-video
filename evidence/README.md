@@ -42,7 +42,7 @@
 
 **校验**：定稿或过门时建议对 manifest 做一次校验（必填字段存在、date 格式、artifacts[].sha256 为 64 位 hex）。可执行 **scripts/validate-evidence-manifest.sh [path/to/manifest.json]**（依赖 jq）；无 jq 时人工按上表核对，落 08-2 定稿前检查。
 
-**Gate 通过检查**（满足后该 bundle 方可作为门禁证据）：□ manifest 含 `gate`、`date`、`artifacts`、`sign_off` □ 08-4 已定稿时，manifest 内引用版本号与 08-4 文末版本一致 □ 工单 Evidence 列已贴本目录路径或 manifest hash。
+**Gate 通过检查**（满足后该 bundle 方可作为门禁证据；过门时逐项勾选）：□ manifest 含 `gate`、`date`、`artifacts`、`sign_off` □ 08-4 已定稿时，manifest 内引用版本号与 08-4 文末版本一致 □ 工单 Evidence 列已贴本目录路径或 manifest hash。与 00 发版前快速核对、08-2 定稿前检查配套使用。
 
 *勿提交敏感内容（密钥、未脱敏 PII）；仅路径与 hash、脱敏清单可入仓。*
 

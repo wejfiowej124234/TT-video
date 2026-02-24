@@ -12,5 +12,9 @@ updates:
       interval: "weekly"
     open-pull-requests-limit: 5
 
-  # If Node.js tooling is introduced later (package.json), add an npm update block
-  # and enforce lockfile policy via scripts/check-node-lock-policy.sh.
+  - package-ecosystem: "npm"
+    directory: "/frontend"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    versioning-strategy: lockfile-only

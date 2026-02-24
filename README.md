@@ -9,13 +9,13 @@
 - **信誉**：仅链上/系统内「真实成交」可评价，权重与订单金额与历史挂钩，防刷单。
 - **履约**：导游质押准入，游客可选押金；争议走证据 + 仲裁，违约扣罚质押。
 
-## 技术栈（全 Rust）
+## 技术栈
 
 | 层级     | 技术选型              | 说明 |
 |----------|-----------------------|------|
-| 后端 API | Axum + Tower          | 异步 HTTP、中间件、与前端/链解耦 |
+| 后端 API | Axum + Tower (Rust)   | 异步 HTTP、中间件、与前端/链解耦 |
 | 数据     | SQLx + 关系型/分布式 DB | PostgreSQL 或 CockroachDB/TiDB 等，见 [总库总览](docs/01-总库总览.md) |
-| 前端     | Yew (Rust → WASM)     | 游客端 / 导游端 / 仲裁后台 |
+| 前端     | Next.js + React + TypeScript + wagmi + viem + WalletConnect + R3F + drei + Framer Motion | 游客端 / 导游端 / 仲裁后台；3D 展示（Hero、可视化）；见 [09-技术架构总览](docs/09-技术架构总览-v1.0.md) |
 | 共享逻辑 | `traveltrust-core`   | 领域类型、校验、与链交互抽象 |
 | 区块链   | EVM（以太坊 + L2）    | 智能合约 Solidity，链下 Rust；稳定币 USDC/USDT/DAI，L2 如 Arbitrum/Base 降低 gas，见 [总库总览](docs/01-总库总览.md) |
 
@@ -24,8 +24,8 @@
 - **协议定位**：**去中心化协议**；资金与关键状态链上可验证，治理多签+TimeLock，运营层可演进（详见 [总库总览](docs/01-总库总览.md)）。
 - **技术形态**：链上做托管(Escrow)、质押(Staking)、信誉存证；数据库做用户/导游/订单/争议等业务与检索。
 - **智能合约**：Escrow、Staking 必须上链；Reputation 存证建议上链；Dispute 执行可选上链。
-- **UI**：全 Rust（Yew/WASM）；同一前端支持 **Web 版** 与 **DApp 版**（连接钱包后签名支付与质押）。
-- **钱包**：不自研钱包，通过标准接口（如 WalletConnect、注入 provider）兼容常见钱包。
+- **UI**：Next.js + React + TypeScript；同一前端支持 **Web 版** 与 **DApp 版**。**旅游项目 DApp**：Next.js / React / TS（连接钱包后签名支付与质押；wagmi + viem + WalletConnect v2）。
+- **钱包**：不自研钱包，通过 wagmi + WalletConnect v2 兼容常见钱包。
 
 详见 [总库总览](docs/01-总库总览.md)。
 
@@ -37,9 +37,9 @@
 Wbe3-TravelTrust/
 ├── crates/
 │   ├── core/          # 领域模型、Escrow/Staking/Reputation 抽象
-│   ├── api/           # Axum 后端、REST、DB、链客户端封装
-│   ├── web/           # Yew 前端 (游客/导游/仲裁) + DApp 钱包连接
+│   ├── api/           # Axum 后端、REST、DB、链客户端封装（见 09 §2.8）
 │   └── chain-client/  # 可选：与链交互的共用封装（当前未入 workspace）
+├── frontend/          # 前端：Next.js + React + TS + wagmi + viem + R3F + drei + Framer Motion（09 §2.6～2.7）
 ├── contracts/         # 智能合约：Escrow、Staking、Registry（01/02 方案 B）；Reputation 存证可选；设计见 contracts/README.md
 ├── docs/              # 技术文档（00～08 按序号，含 08 合规门禁）
 ├── ops/               # Runbook、演练模板、值班/批准链
@@ -52,7 +52,7 @@ Wbe3-TravelTrust/
 ## 实现状态（与 docs/04、08-0 §十二 对齐）
 
 - **api**：04 §三 全量路由已挂（含可选 GET /api/v1/me/stats），x-request-id（traceId）、请求超时（30s）、请求体限制（1MB）、鉴权占位中间件、STRICT_SSOT 可选校验已就位；幂等键（Idempotency-Key/X-Idempotency-Key）透传与响应回写已就位，实现时在此做 key 去重与结果复用（01 §10 #14）。**生产环境必须设置 CORS_ORIGINS**（未设则开发态允许任意 origin）。
-- **web**：yew-router 路由（/、/auth、/me、/orders、/disputes）、api 模块（get_health、get_me）、首页 loading/error 示例已就位；Phase 4 按 05/06 落地业务与 dapp 钱包。
+- **frontend**：Next.js 路由（/、/auth、/me、/orders、/disputes、/pay、/staking、/escrow/:id）、API 调用、wagmi/viem DApp、R3F/drei 3D；技术栈见 [09 §2.6～2.7](docs/09-技术架构总览-v1.0.md)。Phase 4 按 05/06 落地业务与 dapp。
 - **contracts**：README 与设计锚点、实现时技术约束说明已建（01/02/08-4）；Solidity 实现待落。
 
 ## 核心模块（对应你之前讨论的清单）
@@ -75,7 +75,7 @@ Wbe3-TravelTrust/
 cd crates/api && cargo run
 
 # 前端
-cd crates/web && trunk serve
+cd frontend && pnpm install && pnpm dev
 ```
 
 ## 合规与风控（设计原则）
@@ -92,11 +92,11 @@ cd crates/web && trunk serve
 - **[02-架构设计](docs/02-架构设计.md)**：分层、子域、状态机、钱与链抽象、合约/模块对应
 - **[03-业务流程与风控](docs/03-业务流程与风控.md)**：流程规则、公平评分与防恶意、争议人工裁决
 - **[04-后端与API](docs/04-后端与API.md)**：数据表、API 路由 v1、风控、落地顺序
-- **[05-前端总览](docs/05-前端总览.md)**：Yew 结构、页面/组件、api 与 dapp、代币支付落点
+- **[05-前端总览](docs/05-前端总览.md)**：Next.js + React + TS 结构、页面/组件、lib 与 dapp、代币支付落点
 - **[06-DApp架构总览](docs/06-DApp架构总览.md)**：DApp 定位、架构简图、钱包/签名/合约交互
 - **[07-开发流程与顺序](docs/07-开发流程与顺序.md)**：先确认的架构、企业级开发阶段与顺序（Phase 0～5）
-- **08 合规与门禁**：[08-1 战略与合规风险检查清单](docs/08-1-战略与合规风险检查清单.md)、[08-2 闭合工单表](docs/08-2-附录-闭合工单表.md)、[08-3 参数与门禁表](docs/08-3-参数与门禁表.md)、[08-4 对外口径包](docs/08-4-对外口径包.md)；发版前须过 08-4 定稿勾选、[Runbook P0 最小必填项](ops/RUNBOOK.md)、08-2 [发版前审查一（语义一致性）](docs/08-2-附录-闭合工单表.md#发版前审查一关键语义一致性审查表) 与 [发版前审查二（Gate 冲突矩阵）](docs/08-2-附录-闭合工单表.md#发版前审查二gate-冲突矩阵与优先级规则)；P0 门禁、Gate-1～5、evidence 与 CI 见 [00-文档索引 §08 系列](docs/00-文档索引.md)、[08-5-CI与一致性落地说明](docs/08-5-CI与一致性落地说明.md)、[evidence/README](evidence/README.md)。**企业级审计结论**（文档缺口/技术缺口/风险与落点）见 [08-0 §十一～§十四](docs/08-0-系列审计-命名排序与合并瘦身.md)。**全方位文档与缺口检查**见 [多维度文档与技术检查报告](docs/多维度文档与技术检查报告.md)。
+- **08 合规与门禁**：[08-1 战略与合规风险检查清单](docs/08-1-战略与合规风险检查清单.md)、[08-2 闭合工单表](docs/08-2-附录-闭合工单表.md)、[08-3 参数与门禁表](docs/08-3-参数与门禁表.md)、[08-4 对外口径包](docs/08-4-对外口径包.md)；发版前须过 08-4 定稿勾选、[Runbook P0 最小必填项](ops/RUNBOOK.md)、08-2 [发版前审查一（语义一致性）](docs/08-2-附录-闭合工单表.md#发版前审查一关键语义一致性审查表) 与 [发版前审查二（Gate 冲突矩阵）](docs/08-2-附录-闭合工单表.md#发版前审查二gate-冲突矩阵与优先级规则)；P0 门禁、Gate-1～5、evidence 与 CI 见 [00-文档索引 §08 系列](docs/00-文档索引.md)、[08-5-CI与一致性落地说明](docs/08-5-CI与一致性落地说明.md)、[evidence/README](evidence/README.md)。**企业级审计结论**（文档缺口/技术缺口/风险与落点）见 [08-0 §十一～§十四](docs/08-0-系列审计-命名排序与合并瘦身.md)。**全方位文档与缺口检查**见 [15-多维度文档与技术检查报告](docs/15-多维度文档与技术检查报告.md)。
 
 ## License
 
-MIT
+MIT. See [LICENSE](LICENSE).
