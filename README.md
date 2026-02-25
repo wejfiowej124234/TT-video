@@ -49,7 +49,7 @@ Wbe3-TravelTrust/
 └── README.md
 ```
 
-## 实现状态（与 docs/04、08-0 对齐）
+## 实现状态（与 docs/spec/04、08-0 对齐）
 
 - **api**：04 §三 全量路由已挂（含可选 GET /api/v1/me/stats），x-request-id（traceId）、请求超时（30s）、请求体限制（1MB）、鉴权占位中间件、STRICT_SSOT 可选校验已就位；幂等键（Idempotency-Key/X-Idempotency-Key）透传与响应回写已就位，实现时在此做 key 去重与结果复用（01 §10 #14）。**生产环境必须设置 CORS_ORIGINS**（未设则开发态允许任意 origin）。
 - **frontend**：Next.js 路由（/、/auth、/me、/orders、/disputes、/pay、/staking、/escrow/:id）、API 调用、wagmi/viem DApp、R3F/drei 3D；技术栈见 [09 §2.6～2.7](docs/spec/09-技术架构总览-v1.0.md)。Phase 4 按 05/06 落地业务与 dapp。

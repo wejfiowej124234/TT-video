@@ -1,6 +1,6 @@
 /**
  * API 基地址与路由路径常量（与 04 §三、crates/api 一致）
- * 见 docs/合约-API-ABI-前后端对齐.md、docs/04-后端与API.md
+ * 见 docs/spec/14-合约-API-ABI-前后端对齐.md、docs/spec/04-后端与API.md
  */
 
 const BASE =

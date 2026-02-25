@@ -60,8 +60,8 @@ if [ "$STRICT" = "1" ]; then
 
   # 可选：与 08-4 中的「文档版本（CI 校验用）」行比对，不一致时告警（不阻断）
   # 注意：08-4 内可能包含其他 v* 字样（如示例/历史版本），因此这里只从该“CI 校验用”行提取。
-  if [ -f "docs/08-4-对外口径包.md" ]; then
-    DOC_VER="$(grep -E "文档版本（CI 校验用）" "docs/08-4-对外口径包.md" 2>/dev/null | head -1 | sed -n 's/.*\(v[0-9][0-9a-z.]*\).*/\1/p')"
+  if [ -f "docs/spec/08-4-对外口径包.md" ]; then
+    DOC_VER="$(grep -E "文档版本（CI 校验用）" "docs/spec/08-4-对外口径包.md" 2>/dev/null | head -1 | sed -n 's/.*\(v[0-9][0-9a-z.]*\).*/\1/p')"
     if [ -n "$DOC_VER" ] && [ "$SSOT_VERSION" != "$DOC_VER" ]; then
       echo "WARN: SSOT_VERSION 与 08-4 的 CI 校验版本（${DOC_VER}）不一致，请确认是否故意；一致时建议设为相同值。"
     fi

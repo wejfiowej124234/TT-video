@@ -293,7 +293,7 @@ fn write_bytes_atomic(path: &std::path::Path, bytes: &[u8]) -> Result<(), String
 }
 
 fn run_ssot_runtime_check(strict: bool, ssot_version: &str) -> i32 {
-    let ssot_doc_path = env::var("SSOT_DOC_PATH").unwrap_or_else(|_| "docs/08-3-参数与门禁表.md".to_string());
+    let ssot_doc_path = env::var("SSOT_DOC_PATH").unwrap_or_else(|_| "docs/spec/08-3-参数与门禁表.md".to_string());
     let runtime_snapshot_path = env::var("RUNTIME_PARAM_SNAPSHOT_PATH").unwrap_or_else(|_| "data/runtime_params.json".to_string());
     let last_snapshot_path = env::var("SSOT_RUNTIME_LAST_SNAPSHOT_PATH").unwrap_or_else(|_| "data/runtime_params_last.json".to_string());
     let audit_log_path = env::var("SSOT_RUNTIME_AUDIT_LOG_PATH").unwrap_or_else(|_| "data/ssot_runtime_audit.jsonl".to_string());
@@ -456,7 +456,7 @@ async fn run() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
 
     // Strict SSOT hash verification (08-5 §4、Runbook §10)
     let ssot_sha256_expected = env::var("SSOT_SHA256").ok();
-    let ssot_doc_path = std::path::PathBuf::from("docs/08-3-参数与门禁表.md");
+    let ssot_doc_path = std::path::PathBuf::from("docs/spec/08-3-参数与门禁表.md");
     let (ssot_sha256_computed, ssot_sha256_match) = match compute_file_sha256_hex(&ssot_doc_path) {
         Ok(h) => {
             let matched = ssot_sha256_expected
@@ -477,13 +477,13 @@ async fn run() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     if strict_ssot {
         let Some(expected) = ssot_sha256_expected.as_deref() else {
             eprintln!(
-                "STRICT_SSOT/CHECK_SSOT=1: 必须设置 SSOT_SHA256，并与 docs/08-3-参数与门禁表.md sha256 一致"
+                "STRICT_SSOT/CHECK_SSOT=1: 必须设置 SSOT_SHA256，并与 docs/spec/08-3-参数与门禁表.md sha256 一致"
             );
             std::process::exit(1);
         };
         let Some(computed) = ssot_sha256_computed.as_deref() else {
             eprintln!(
-                "STRICT_SSOT/CHECK_SSOT=1: 无法计算 docs/08-3-参数与门禁表.md sha256；请确保运行时包含该文件（或调整部署方式以提供可校验的 SSOT 副本）"
+                "STRICT_SSOT/CHECK_SSOT=1: 无法计算 docs/spec/08-3-参数与门禁表.md sha256；请确保运行时包含该文件（或调整部署方式以提供可校验的 SSOT 副本）"
             );
             std::process::exit(1);
         };
@@ -1107,7 +1107,7 @@ async fn meta(axum::extract::State(state): axum::extract::State<ApiMetaState>) -
             "expected_sha256": state.ssot_sha256_expected,
             "computed_sha256": state.ssot_sha256_computed,
             "match": state.ssot_sha256_match,
-            "file": "docs/08-3-参数与门禁表.md",
+            "file": "docs/spec/08-3-参数与门禁表.md",
             "rule": "STRICT_SSOT/CHECK_SSOT=1 时 expected_sha256 必须与 computed_sha256 一致，否则拒绝启动",
         },
         "chargeback_policy": state.chargeback_policy,

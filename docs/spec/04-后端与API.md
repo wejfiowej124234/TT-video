@@ -126,6 +126,8 @@
 | GET | /api/v1/orders/:id/reviews | 该订单评价 |
 | POST | /api/v1/orders/:id/reviews | 提交评价（仅资金终态：Completed/Refunded/PartiallyRefunded/Slashed，带权重） |
 | POST | /api/v1/orders/:id/dispute | 发起争议 |
+| GET | /api/v1/orders/:id/evidence | 证据列表/详情（工单内可读、每次读审计，见 01 §6） |
+| POST | /api/v1/orders/:id/evidence | 证据上传（pre-signed 或直传，大小/类型见 08-3） |
 | GET | /api/v1/disputes | 争议列表（仲裁员） |
 | GET | /api/v1/disputes/:id | 争议详情（含证据引用） |
 | POST | /api/v1/disputes/:id/resolve | 裁决 |
@@ -138,7 +140,7 @@
 
 ## 四、后端设计要点（crates/api）
 
-- **运行时参数与 08-3 SSOT**：业务参数（仲裁费、证据保留期、争议窗口、finalityN、stakeTierThresholds 等）以 [08-3-参数与门禁表](08-3-参数与门禁表.md) 为单源真相；Backend 启动须加载或校验 08-3 约定版本/关键 key，见 [08-5-CI与一致性落地说明](08-5-CI与一致性落地说明.md) §4、[Runbook §10](../ops/RUNBOOK.md)。实现落点：配置或 env 注入 SSOT 版本/参数，启动时校验或打印；无校验时须在 Runbook §10 注明「待实现」并留痕。**当前 Backend 启动 SSOT 校验已实现**（读取 `SSOT_VERSION`，`STRICT_SSOT=1` 时缺失拒绝启动），见 Runbook §10。**Backend 环境变量**（PORT、CORS_ORIGINS、SSOT_VERSION、STRICT_SSOT、SSOT_SHA256、CHARGEBACK_POLICY）见仓库根 [.env.example](../.env.example) 与 Runbook §10；**生产必须设置 CORS_ORIGINS** 限制允许的 origin，否则存在跨域风险。
+- **运行时参数与 08-3 SSOT**：业务参数（仲裁费、证据保留期、争议窗口、finalityN、stakeTierThresholds 等）以 [08-3-参数与门禁表](08-3-参数与门禁表.md) 为单源真相；Backend 启动须加载或校验 08-3 约定版本/关键 key，见 [08-5-CI与一致性落地说明](08-5-CI与一致性落地说明.md) §4、[Runbook §10](../../ops/RUNBOOK.md)。实现落点：配置或 env 注入 SSOT 版本/参数，启动时校验或打印；无校验时须在 Runbook §10 注明「待实现」并留痕。**当前 Backend 启动 SSOT 校验已实现**（读取 `SSOT_VERSION`，`STRICT_SSOT=1` 时缺失拒绝启动），见 Runbook §10。**Backend 环境变量**（PORT、CORS_ORIGINS、SSOT_VERSION、STRICT_SSOT、SSOT_SHA256、CHARGEBACK_POLICY）见仓库根 [.env.example](../../.env.example) 与 Runbook §10；**生产必须设置 CORS_ORIGINS** 限制允许的 origin，否则存在跨域风险。
 - **请求体与超时（写死默认值 + 一致性证据）**：默认值为：① 请求体大小上限 **1MB**；② 全局请求超时 **30s**。该默认值须在 **API 进程**与 **网关/反代（如 Nginx/Cloudflare/LB）**保持一致；任一层放大上限均视为风控退化，必须走 08-3/Runbook 变更流程并留痕。
   - **证据产物（必须能取证）**：① 启动日志含 `startup_snapshot` 行（含 `REQUEST_BODY_LIMIT_BYTES` 与 `REQUEST_TIMEOUT_SECS`）② `GET /meta` 返回 defaults 快照（用于复核与前端版本绑定）③ 部署前脚本 `./scripts/check-ssot-deploy.sh` 在 strict 模式下校验 `docs/spec/08-3-参数与门禁表.md` 的 sha256（`SSOT_SHA256`）。
 - **路由**：**认证与账号**（注册、登录、登出、邮箱验证、找回/重置密码）、**个人中心**（GET·PUT /api/v1/me、修改密码）、导游、订单（含接单、取消、确认完成）、争议、证据与支付/链上（见 §三）；支付回调由实现定稿，与 01 §3 链为准一致。

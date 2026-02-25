@@ -55,7 +55,7 @@ export default function Home() {
       </section>
       <p style={{ marginTop: "2rem", fontSize: "0.875rem", color: "#888" }}>
         技术栈：Next.js + React + TypeScript；DApp：wagmi + viem + WalletConnect
-        v2（见 docs/05、06、09）。
+        v2（见 docs/spec/05、06、09）。
       </p>
     </main>
   );

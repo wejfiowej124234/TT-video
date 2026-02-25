@@ -1,6 +1,6 @@
 # 合约、API、ABI 与前后端对齐说明
 
-本文为**合约接口、API 路由、ABI 放置与前后端调用**的单源对齐文档，便于实现时 04、crates/api、frontend、contracts 保持一致。**权威依据**：合约见 [01-总库总览](01-总库总览.md) §4/§5、[02-架构设计](02-架构设计.md) §十、[contracts/README](../contracts/README.md)；API 见 [04-后端与API](04-后端与API.md) §三；DApp 见 [06-DApp架构总览](06-DApp架构总览.md)、[09-技术架构总览](09-技术架构总览-v1.0.md) §2.7。
+本文为**合约接口、API 路由、ABI 放置与前后端调用**的单源对齐文档，便于实现时 04、crates/api、frontend、contracts 保持一致。**权威依据**：合约见 [01-总库总览](01-总库总览.md) §4/§5、[02-架构设计](02-架构设计.md) §十、[contracts/README](../../contracts/README.md)；API 见 [04-后端与API](04-后端与API.md) §三；DApp 见 [06-DApp架构总览](06-DApp架构总览.md)、[09-技术架构总览](09-技术架构总览-v1.0.md) §2.7。
 
 ---
 
@@ -127,7 +127,7 @@
 | 项 | 当前状态 | 说明 |
 |------|----------|------|
 | **是否使用本地虚拟链** | **否** | 仓库内未配置 Anvil/Hardhat/Ganache 等本地链；07 Phase 3 为「测试网部署」，11 M2 为「本地链全流程演示」规划。 |
-| **智能合约实现** | **待实现** | contracts/ 仅 README（设计承诺）；无 Solidity 源码、无 contracts/abi/ 产物；Escrow/Staking/Registry 为设计态（见 [contracts/README](../contracts/README.md)）。 |
+| **智能合约实现** | **待实现** | contracts/ 仅 README（设计承诺）；无 Solidity 源码、无 contracts/abi/ 产物；Escrow/Staking/Registry 为设计态（见 [contracts/README](../../contracts/README.md)）。 |
 | **本地链上部署合约** | **不可用** | 合约未实现，无法在本地链或测试网部署；实现后需在 contracts/ 或独立 repo 增加构建与部署脚本（含本地链/测试网）。 |
 | **本地全流程功能测试** | **部分可用** | **API 与前端**：可本地启动后端 + 前端，对 04 §三 路由做注册/登录/订单/争议等 API 与页面联调。**链上支付/质押/争议/执行器**：依赖合约与链，当前无法端到端测试；合约实现后可先接本地链（如 Anvil）再接测试网。 |
 

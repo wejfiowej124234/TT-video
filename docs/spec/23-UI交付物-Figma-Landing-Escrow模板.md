@@ -364,4 +364,4 @@ export default function EscrowPage({ params }: { params: { id: string } }) {
 
 ---
 
-*本文与 [21-UI-3D-旅游Web3融合规范](21-UI-3D-旅游Web3融合规范-v1.0.md)、[22-Design-Tokens-旅游Web3融合体系](22-Design-Tokens-旅游Web3融合体系-v1.0.md)、[13-1-UI产品级SSOT与页面规范](13-1-UI产品级SSOT与页面规范.md)、[25-顶级UI标准-Landing-Discover-Itinerary](25-顶级UI标准-Landing-Discover-Itinerary.md) 配套。文档版本与最后更新见 [00-文档索引](00-文档索引.md)。*(21-UI-3D-旅游Web3融合规范-v1.0.md)、[22-Design-Tokens-旅游Web3融合体系](22-Design-Tokens-旅游Web3融合体系-v1.0.md)、[13-1-UI产品级SSOT与页面规范](13-1-UI产品级SSOT与页面规范.md) 配套。文档版本与最后更新见 [00-文档索引](00-文档索引.md)。*
+*本文与 [21-UI-3D-旅游Web3融合规范](21-UI-3D-旅游Web3融合规范-v1.0.md)、[22-Design-Tokens-旅游Web3融合体系](22-Design-Tokens-旅游Web3融合体系-v1.0.md)、[13-1-UI产品级SSOT与页面规范](13-1-UI产品级SSOT与页面规范.md)、[25-顶级UI标准-Landing-Discover-Itinerary](25-顶级UI标准-Landing-Discover-Itinerary.md) 配套。文档版本与最后更新见 [00-文档索引](00-文档索引.md)。*
