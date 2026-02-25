@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # 运行时参数快照模板生成（P0：防运行时外改必须可执行）
 #
-# 从 docs/08-3-参数与门禁表.md 的「关键 key 与 08-4 章节映射」表自动提取 param_key，
+# 从 docs/spec/08-3-参数与门禁表.md 的「关键 key 与 08-4 章节映射」表自动提取 param_key，
 # 生成 JSON object 模板（key 全列、value 置为 null 占位）。
 #
 # 用法：
@@ -13,7 +13,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-SSOT_DOC="${SSOT_DOC_PATH:-docs/08-3-参数与门禁表.md}"
+SSOT_DOC="${SSOT_DOC_PATH:-docs/spec/08-3-参数与门禁表.md}"
 OUT="${OUT:-data/runtime_params.template.json}"
 
 if [ "${1:-}" = "--out" ]; then

@@ -24,7 +24,7 @@ export CHECK_SSOT=1
 
 ./scripts/check-ssot-deploy.sh
 
-ssot_doc="docs/08-3-参数与门禁表.md"
+ssot_doc="docs/spec/08-3-参数与门禁表.md"
 computed_sha=""
 if command -v sha256sum >/dev/null 2>&1; then
   computed_sha="$(sha256sum "$ssot_doc" | awk '{print $1}')"

@@ -1,6 +1,6 @@
 # ABI 放置目录（合约编译产物单源）
 
-本目录为**合约 ABI JSON 的单源存放位置**，与 [docs/14-合约-API-ABI-前后端对齐](../docs/14-合约-API-ABI-前后端对齐.md) 一致。
+本目录为**合约 ABI JSON 的单源存放位置**，与 [docs/14-合约-API-ABI-前后端对齐](../docs/spec/14-合约-API-ABI-前后端对齐.md) 一致。
 
 ## 约定
 
@@ -16,4 +16,4 @@
 ## 当前状态
 
 - 合约尚未实现（见 [contracts/README](../README.md)）；本目录暂无 ABI 文件。
-- 实现后请同步更新 [docs/14-合约-API-ABI-前后端对齐](../docs/14-合约-API-ABI-前后端对齐.md) §1.1 中具体方法/事件名。
+- 实现后请同步更新 [docs/14-合约-API-ABI-前后端对齐](../docs/spec/14-合约-API-ABI-前后端对齐.md) §1.1 中具体方法/事件名。

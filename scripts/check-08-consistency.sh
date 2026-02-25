@@ -2,7 +2,7 @@
 # 08-3 与 08-4 一致性校验（W-PDP-SSOT-CONSISTENCY）
 # 用法：在仓库根目录执行 ./scripts/check-08-consistency.sh [base_ref]
 # 若未传 base_ref 则与 HEAD 比较（单次提交）；CI 中可传 main 或 $BASE_REF。
-# 规则：若 docs/08-3 的「关键 key 与 08-4 章节映射」表中任一 key 被改动，则 docs/08-4 中「文档版本（CI 校验用）」行必须在本 diff 中有变更，否则 exit 1。
+# 规则：若 docs/spec/08-3 的「关键 key 与 08-4 章节映射」表中任一 key 被改动，则 docs/spec/08-4 中「文档版本（CI 校验用）」行必须在本 diff 中有变更，否则 exit 1。
 
 set -e
 BASE="${1:-HEAD^}"
@@ -15,7 +15,7 @@ if [ "$BASE" = "HEAD^" ] && ! git rev-parse HEAD^ >/dev/null 2>&1; then
   exit 0
 fi
 
-SSOT_DOC="docs/08-3-参数与门禁表.md"
+SSOT_DOC="docs/spec/08-3-参数与门禁表.md"
 
 # 从 08-3「关键 key 与 08-4 章节映射」表自动提取 param_key，避免脚本 KEYS 与文档双维护漂移。
 extract_mapping_keys_regex() {
@@ -73,34 +73,34 @@ fi
 VERSION_MARKER="文档版本"
 
 # 精确匹配 08-3/08-4 文件名，避免 pathspec 匹配不到实际文件
-diff_08_3="$(git diff "$BASE" -- "docs/08-3-参数与门禁表.md" 2>/dev/null || true)"
-diff_08_4="$(git diff "$BASE" -- "docs/08-4-对外口径包.md" 2>/dev/null || true)"
+diff_08_3="$(git diff "$BASE" -- "docs/spec/08-3-参数与门禁表.md" 2>/dev/null || true)"
+diff_08_4="$(git diff "$BASE" -- "docs/spec/08-4-对外口径包.md" 2>/dev/null || true)"
 
 # 若未改 08-3，直接通过
 if [ -z "$diff_08_3" ]; then
-  echo "OK: docs/08-3 无变更，跳过 08-4 版本号检查"
+  echo "OK: docs/spec/08-3 无变更，跳过 08-4 版本号检查"
   exit 0
 fi
 
 # 检查 08-3 的 diff 是否触及映射 key（在 26 key 表或映射表段落中出现的 key）
 if [ -n "$KEYS_REGEX" ] && ! echo "$diff_08_3" | grep -qE "$KEYS_REGEX"; then
-  echo "OK: docs/08-3 有变更但未触及映射表中的 param_key"
+  echo "OK: docs/spec/08-3 有变更但未触及映射表中的 param_key"
   exit 0
 fi
 
 if [ -z "$KEYS_REGEX" ]; then
-  echo "FAIL: docs/08-3 有变更，但无法提取映射 key 列表以做一致性判定；请确认 ${SSOT_DOC} 中映射表标题与表格格式未被破坏。"
+  echo "FAIL: docs/spec/08-3 有变更，但无法提取映射 key 列表以做一致性判定；请确认 ${SSOT_DOC} 中映射表标题与表格格式未被破坏。"
   exit 1
 fi
 
 # 触及映射 key：08-4 的「文档版本（CI 校验用）」行必须在本 PR 中有变更
 if [ -z "$diff_08_4" ]; then
-  echo "FAIL: 本次变更触及 08-3 映射表中的 key，但 docs/08-4 无变更。请在 08-4 文末更新「文档版本（CI 校验用）」行，或在本 PR 中同步修改 08-4 对应章节。"
+  echo "FAIL: 本次变更触及 08-3 映射表中的 key，但 docs/spec/08-4 无变更。请在 08-4 文末更新「文档版本（CI 校验用）」行，或在本 PR 中同步修改 08-4 对应章节。"
   exit 1
 fi
 # 08-4 变更中须包含版本行（含「文档版本」及 CI 校验用标识，兼容全角/半角括号）
 if ! echo "$diff_08_4" | grep -q "$VERSION_MARKER"; then
-  echo "FAIL: 本次变更触及 08-3 映射表中的 key，但 docs/08-4 的变更中未包含「文档版本（CI 校验用）」行。请更新 08-4 文末该行（如 vYYYYMMDD）。"
+  echo "FAIL: 本次变更触及 08-3 映射表中的 key，但 docs/spec/08-4 的变更中未包含「文档版本（CI 校验用）」行。请更新 08-4 文末该行（如 vYYYYMMDD）。"
   exit 1
 fi
 if ! echo "$diff_08_4" | grep -qE "CI.?校验用|v[0-9]"; then

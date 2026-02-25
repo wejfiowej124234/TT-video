@@ -1,6 +1,6 @@
 # TravelTrust 前端（Next.js + DApp + 3D）
 
-- **技术栈（旅游项目前端）**：Next.js + React + TypeScript + wagmi + viem + WalletConnect v2 + R3F + drei + Framer Motion。**旅游项目 DApp**：Next.js / React / TS（见 [06-DApp架构总览](../docs/06-DApp架构总览.md)、[09-技术架构总览](../docs/09-技术架构总览-v1.0.md)）。
+- **技术栈（旅游项目前端）**：Next.js + React + TypeScript + wagmi + viem + WalletConnect v2 + R3F + drei + Framer Motion。**旅游项目 DApp**：Next.js / React / TS（见 [06-DApp架构总览](../docs/spec/06-DApp架构总览.md)、[09-技术架构总览](../docs/spec/09-技术架构总览-v1.0.md)）。
 - **运行**：`pnpm install` 后 `pnpm dev`（或 `npm run dev`）。后端 API 基地址通过 `NEXT_PUBLIC_API_BASE_URL` 配置。
 - **WalletConnect v2**：在 [cloud.walletconnect.com](https://cloud.walletconnect.com) 创建项目，将 Project ID 写入 `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID`（见 `.env.example`）；不设置则仅使用注入型钱包（如 MetaMask）。
 

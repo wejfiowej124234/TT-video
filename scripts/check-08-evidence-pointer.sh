@@ -2,7 +2,7 @@
 # 08-3 evidence_pointer 精确性门禁（W-DRIFT-CI / SSOT 执行性）
 # 用法：在仓库根目录执行 scripts/check-08-evidence-pointer.sh
 # 规则：
-# - docs/08-3-参数与门禁表.md 的 26 key 表中 evidence_pointer 不得为空/"—"。
+# - docs/spec/08-3-参数与门禁表.md 的 26 key 表中 evidence_pointer 不得为空/"—"。
 # - evidence_pointer 不得出现裸写："见 Runbook" / "见文档"。
 # - 若 evidence_pointer 提及 "Runbook"，必须精确到 Runbook §N 或 "表"（例如："Runbook §1 表"）。
 
@@ -11,7 +11,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-FILE="docs/08-3-参数与门禁表.md"
+FILE="docs/spec/08-3-参数与门禁表.md"
 
 if [ ! -f "$FILE" ]; then
   echo "FAIL: missing $FILE"

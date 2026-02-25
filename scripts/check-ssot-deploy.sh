@@ -34,7 +34,7 @@ if [ "$STRICT" = "1" ]; then
   echo "OK: SSOT_VERSION=${SSOT_VERSION}（部署前校验通过）"
 
   # 强制：校验 08-3 文件 hash（enforce SSOT hash at deploy time）
-  SSOT_FILE="docs/08-3-参数与门禁表.md"
+  SSOT_FILE="docs/spec/08-3-参数与门禁表.md"
   if [ -f "$SSOT_FILE" ]; then
     SSOT_FILE_HASH="$(ssot_file_sha256 "$SSOT_FILE" || true)"
     if [ -z "$SSOT_FILE_HASH" ]; then

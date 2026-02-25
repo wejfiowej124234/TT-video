@@ -107,4 +107,34 @@
 - [ ] crates/api 路由与 04 §三 表一致（已挂载；实现时补齐业务逻辑）。
 - [ ] GET /meta 与前端版本绑定、fail-closed 逻辑已实现（05 §七点六）。
 
+---
+
+## 5. 端口与本地启动对齐
+
+| 项 | 约定 | 当前实现 | 对齐 |
+|------|------|----------|------|
+| **后端 API 端口** | PORT 环境变量，默认 **8080**（与前端默认基地址一致） | crates/api/src/main.rs 默认 8080；.env.example 已列 PORT | ✅ 一致 |
+| **前端 API 基地址** | NEXT_PUBLIC_API_BASE_URL；未设时开发默认 `http://localhost:8080` | frontend/lib/api.ts 默认 localhost:8080；frontend/.env.example 已列 | ✅ 一致 |
+| **本地启动后端** | `cargo run -p api` 或等价；监听 0.0.0.0:PORT | main.rs bind(0.0.0.0:PORT) | ✅ 可启动 |
+| **本地启动前端** | Next.js dev；需能请求后端 8080 | 依赖 NEXT_PUBLIC_API_BASE_URL；CORS 由后端 CORS_ORIGINS 控制 | ✅ 可启动（生产须设 CORS_ORIGINS） |
+
+**结论**：端口与本地启动**已对齐**；后端 8080、前端默认连 localhost:8080，可本地分别启动并联调 API。
+
+---
+
+## 6. 本地虚拟链、智能合约部署与可测试性
+
+| 项 | 当前状态 | 说明 |
+|------|----------|------|
+| **是否使用本地虚拟链** | **否** | 仓库内未配置 Anvil/Hardhat/Ganache 等本地链；07 Phase 3 为「测试网部署」，11 M2 为「本地链全流程演示」规划。 |
+| **智能合约实现** | **待实现** | contracts/ 仅 README（设计承诺）；无 Solidity 源码、无 contracts/abi/ 产物；Escrow/Staking/Registry 为设计态（见 [contracts/README](../contracts/README.md)）。 |
+| **本地链上部署合约** | **不可用** | 合约未实现，无法在本地链或测试网部署；实现后需在 contracts/ 或独立 repo 增加构建与部署脚本（含本地链/测试网）。 |
+| **本地全流程功能测试** | **部分可用** | **API 与前端**：可本地启动后端 + 前端，对 04 §三 路由做注册/登录/订单/争议等 API 与页面联调。**链上支付/质押/争议/执行器**：依赖合约与链，当前无法端到端测试；合约实现后可先接本地链（如 Anvil）再接测试网。 |
+
+**实现期建议**（与 01 §10、07 Phase 3、11 一致）：
+
+1. **合约实现**：在 contracts/ 或独立 repo 实现 Escrow/Staking/Registry，产出 ABI 至 contracts/abi/，同步 frontend/dapp/abis/。
+2. **本地链（可选）**：引入 Foundry Anvil 或 Hardhat 本地节点，供开发与 E2E 使用；chainId 与 08-3/配置一致。
+3. **部署与测试**：本地链部署脚本 + 测试网部署脚本；E2E 或手动「创建订单→支付→放款/争议」闭环。
+
 *本文与 01、02、04、05、06、09、contracts/README 配套；合约与 ABI 实现后请更新 §1.1、§1.2 具体方法/事件名。* 文档版本与最后更新见 [00-文档索引](00-文档索引.md)。

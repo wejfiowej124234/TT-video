@@ -1,3 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Brand Tokens (22-Design-Tokens) */
+  --travel-500: #2e6fff;
+  --travel-400: #4c82ff;
+  --travel-300: #7ea3ff;
+
+  --trust-500: #1f2937;
+  --trust-600: #111827;
+  --trust-700: #0b1220;
+
+  --success: #16a34a;
+  --warning: #f59e0b;
+  --danger: #dc2626;
+  --info: #2563eb;
+
+  --bg-main: #f9fafb;
+  --bg-soft: #f3f4f6;
+  --bg-console: #ffffff;
+  --bg-dark-console: #0f172a;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-strong: 0 16px 40px rgba(0, 0, 0, 0.12);
+
+  --font-sans: Inter, system-ui, sans-serif;
+}
+
+.dark {
+  --bg-main: #0b1220;
+  --bg-soft: #0f172a;
+  --bg-console: #0f172a;
+  --bg-dark-console: #0b1220;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -8,7 +51,7 @@ html,
 body {
   max-width: 100vw;
   min-height: 100vh;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
 }
 
 a {

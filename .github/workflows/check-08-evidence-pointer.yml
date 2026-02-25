@@ -4,7 +4,7 @@ name: Check 08-3 evidence_pointer
 on:
   pull_request:
     paths:
-      - 'docs/08-3*.md'
+      - 'docs/spec/08-3*.md'
       - 'scripts/check-08-evidence-pointer.sh'
 
 jobs:

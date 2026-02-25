@@ -1,6 +1,6 @@
 # TravelTrust 智能合约（待实现）
 
-本目录为 **Escrow、Staking、Registry（方案 B）** 及可选 **Reputation 存证** 的合约落点，与 [01-总库总览](../docs/01-总库总览.md) §4/§5、[02-架构设计](../docs/02-架构设计.md) §十、[08-4 对外口径包](../docs/08-4-对外口径包.md)、[Runbook §7](../ops/RUNBOOK.md) 一致。
+本目录为 **Escrow、Staking、Registry（方案 B）** 及可选 **Reputation 存证** 的合约落点，与 [01-总库总览](../docs/spec/01-总库总览.md) §4/§5、[02-架构设计](../docs/spec/02-架构设计.md) §十、[08-4 对外口径包](../docs/spec/08-4-对外口径包.md)、[Runbook §7](../ops/RUNBOOK.md) 一致。
 
 ## 设计承诺（定稿须与实现一致）
 
