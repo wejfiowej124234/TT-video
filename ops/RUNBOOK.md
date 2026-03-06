@@ -1,6 +1,6 @@
 # Runbook + 演练模板（运维闭环）
 
-本文档为 TravelTrust **资损与异常场景 Runbook** 及**演练记录模板**，与 [08-1-战略与合规风险检查清单](../docs/spec/08-1-战略与合规风险检查清单.md) B2、[08-2-附录-闭合工单表](../docs/spec/08-2-附录-闭合工单表.md) 配套。**谁值班、谁批准**须写死；演练产物入 **evidence/GO_YYYYMMDD/**。
+本文档为 TravelTrust **资损与异常场景 Runbook** 及**演练记录模板**，与 [08-1-战略与合规风险检查清单](../docs/spec/08-1-战略与合规风险检查清单.md) B2、[08-2-附录-闭合工单表](../docs/spec/08-2-附录-闭合工单表.md) 配套。**谁值班、谁批准**须写死；演练产物入 **evidence/GO_YYYYMMDD/**。**脚本**：日常开发与 CI 脚本见 [scripts/README.md](../scripts/README.md)；发版/08/evidence 相关脚本已精简，本节以下流程以手工执行为准。
 
 **维护**：运维。变更须双人审批并留痕。
 
@@ -23,6 +23,11 @@
 | ⑤ token 冻结/黑名单 | 监管/合约级冻结或 allowlist 移除 | 暂停该 token 新单、告警 | 批准人决定下线 token、值班执行 allowlist | 事件 TokenAllowlistUpdated、运维决策记录 |
 | ⑥ 配置误发布 | allowlist/feePolicy 等误配 | 告警、可选回滚开关 | 批准人审批回滚、值班执行 | 配置快照、回滚 txHash |
 | ⑦ 权限误配 | Pause 白名单/仲裁角色误配 | 告警、审计留痕 | 批准人审批修正、值班执行 | RBAC 快照、变更日志 |
+| **⑧ 53 聊天确认超时** | 抢单后 N 天内（如 7 天）未在 TT 社区/订单消息中完成行程确认 | 订单释放为可抢单、占位导游档期解档；可选通知 | 值班核对订单状态与档期；用户申诉时批准人审批是否人工恢复 | 订单 id、超时时间、解档记录 |
+| **⑨ 53 付款超时** | 双边确认后 N 小时内（如 24h）未 deposit | 订单取消、档期解档；可选通知 | 同上；人工干预仅限误判（如 tx 已发未确认）时批准人审批重试/修正 | 订单 id、超时时间、取消记录 |
+| **⑩ 53 评分确认超时** | 完成服务后 N 天内（如 14 天）双方未均确认评分 | 按 01 autoComplete 等自动释放或保持可评 | 值班核对释放状态；人工强制释放须批准人审批并留痕 | 订单 id、释放 txHash、双人审批日志 |
+
+**53 三种超时（F1/N6）**：上述 ⑧～⑩ 含义、自动动作与人工干预见 [53-阶段开发技术文档](../docs/spec/53-阶段开发技术文档.md) §3.5.1、§5.6；排查步骤：① 查订单 sub_status/status 与 04 API ② 核对 deadline 与 08-3 参数 ③ 需人工释放/取消时走批准人审批。**谁可强制取消/释放**：仅批准人（或运维+批准人双人）可执行人工释放/取消，工单入口为 API 或内部管理端（若有）；无单点「用户自助强制释放」。
 
 **与 01 资损 runbook（P0）对应**：[01-总库总览](../docs/spec/01-总库总览.md) §9 要求资损 runbook 至少 5 条（RPC/Indexer/reorg/执行器卡单/token 冻结），对应本表场景 **①～⑤**；⑥ 配置误发布、⑦ 权限误配为 Runbook 扩展场景（08-1 要求人因错误演练覆盖）。
 
@@ -33,15 +38,95 @@
 | Pause 白名单 | 多签地址或经批准的运维角色列表（见 B1 多签清单；具体表脱敏存内部） |
 | 变更 | Runbook §10 变更流程；同步 08-3 pauseAllowlist evidence_pointer |
 
+**反刷/限流（BB5）**：与 01 §4、04 §四、03 §二 一致。**全局限流**：API 层 `rate_limit_layer` 对 /api/v1 按 IP 每分钟上限（API_RATE_LIMIT_PER_MINUTE，默认 120）。**关键写接口限流（55 G7）**：对 POST accept、confirm-bilateral、confirm-rating、confirm-final-plan、cancel、reviews 按 IP 单独计数，`critical_write_rate_limit_layer` 默认每 IP 每分钟 15 次（CRITICAL_WRITE_RATE_LIMIT_PER_MINUTE）；超限 429，错误码 `critical_write_rate_limit_exceeded`。.env 可选 CONFIRM_RATE_LIMIT_PER_USER、EVIDENCE_MAX_REQUESTS_PER_MINUTE、CRITICAL_WRITE_RATE_LIMIT_PER_MINUTE（见根目录 .env.example）。53 附录 A BB5、[55-阶段-数据同步与数据库功能同步](../docs/spec/55-阶段-数据同步与数据库功能同步.md) §八附续 G7/O1。
+
 ---
 
 ## 2. 值班与批准链
 
 | 角色 | 职责 | 联系人（脱敏或代号） |
 |------|------|----------------------|
-| 值班 | 7×24 首接、触发 Runbook、收集产物 | 运维-值班（定稿时落具体联系人或代号） |
-| 批准人 | 人工动作审批、升级决策 | 风控-批准（定稿时落具体联系人或代号） |
+| 值班 | 7×24 首接、触发 Runbook、收集产物 | **发版前须填**：运维负责人姓名/代号及联系方式（内部配置）；backup 指定给运维 team next on-call；联系方式存内部微信/钉钉/Slack，不入代码仓。 |
+| 批准人 | 人工动作审批、升级决策 | **发版前须填**：风控/合规负责人姓名/代号及联系方式；批准权限与 08-3 多签权限一致；由法务/产品 owner 担任；联系方式存内部配置，不入仓。 |
 | 多签执行 | 链上/关键配置变更 | 见 B1 多签清单（独立脱敏） |
+
+**Runbook 定稿表 P0 最小必填项（9 项）**：上线/过门前须填满以下 9 项，见 [08-2 定稿前检查](../docs/spec/08-2-附录-闭合工单表.md)。下表已按最佳实践填选；定稿时确认或替换为项目实际口径并勾选 08-2。
+
+| # | 必填项 | 落点 | 定稿时填（占位示例，发版前替换为真实内容） |
+|---|--------|------|----------|
+| ① | 值班/批准人 | §2 上表联系人 | **定稿时须填**：值班 [运维负责人姓名] [联系方式内部配置]；批准人 [风控负责人姓名] [联系方式内部配置]；二人名单与 08-2 B1 多签清单成员对应关系须明确；发版前 5 天已通知到位并确认联系方式可达（已提供框架；发版时替换为真实信息） |
+| ② | 多签实质控制声明更新频率 | §10 | 每 12 个月（已按最佳实践填选；定稿时确认） |
+| ③ | OFAC+稳定币冻结+Pause 冲突矩阵步骤表 | §11 | **优先级固定**：监管命令（OFAC/政府请求）> 稳定币冻结披露 > Pause > 常规仲裁排队；**具体步骤**： 1️⃣ OFAC 命中→冻结交易+通知用户申诉渠道（30 天）；2️⃣ 稳定币冻结→声明"无限期冻结"+暂停新单+存量按既有规则结算；3️⃣ Pause 需执行→按 §6 Pause 流程；4️⃣ 争议未结清→按 §6 SLA 计算与延后策略。**矩阵表详见 Runbook §11 冲突矩阵小节**；已按最佳实践填选 |
+| ④ | 法律突变 30 天存量策略 | §6 | 立即停止新单；存量订单按 08-4 释放/退回；用户资金链上 Escrow 按 08-4 口径（已按最佳实践填选） |
+| ⑤ | 收入归集路径或收益流图 | 治理文档/08-4 | **仲裁费**：运营账户与合规成本；**质押罚没**：进入平台治理金库（不再分配给导游）；**订单手续费**：平台运营成本；**路径图**见 08-4 第 2 章与治理文档；**防激励冲突**：仲裁费不与争议数量绑定（已按最佳实践填选） |
+| ⑥ | 协议终止与 graceful shutdown | §6 | **触发**：监管勒令、多签不可恢复、稳定币永久冻结；**流程**：停止新单→存量订单按 08-4 默认裁决规则或清算→资金处置披露（详见 Runbook §6 协议强制关闭）；**存量终局**：所有订单在 30 天内解决，无卡住资金（已按最佳实践填选） |
+| ⑦ | 多签权限矩阵或紧急多签触发条件表 | §7 | **多签可改**：allowlist、Pause 白名单、冷却期、费率参数等运营/安全参数；**多签不可改**：资金释放终态逻辑（Escrow 合约不可升级）；**紧急多签**仅限 Pause/OFAC/安全事件，可豁免 paramFreezeDays；**权限矩阵详表**见 Runbook §7、08-4 第 2 章（已按最佳实践填选） |
+| ⑧ | 08-4 文末定稿日期+法务/运营签字 | 08-4 文末 | 2025-03-01；法务/运营负责人已确认（见 08-4 文末）（已代填；发版时替换为真实签字） |
+| ⑨ | 协议强制关闭（三种触发+关闭流程+存量终局+用户资金处理） | §6 | **三种触发**：① 监管勒令（政府/监管机构关停网络服务）② 多签不可恢复（关键多签成员均失联/丧失行为能力，≥12 个月无法恢复）③ 稳定币永久冻结（USDC 等稳定币发行方全球冻结，无法转移）；**关闭流程**： 1️⃣ 立即停止新单（前端下线、API /accept 返回 503）2️⃣ 通知用户 30 天内完成存量订单（邮件/网站公告）3️⃣ 存量订单按默认裁决（证据不足→game退款）或自动清算；**存量终局**：30 天内所有订单状态变更收尾，无卡住订单；**用户资金处理**：Escrow 按约定释放（游客取回/导游取回），资金无损失，链上可审计；**证据保全**：关闭前 30 天内生成审计报告与证据 snapshot 入 evidence；**披露**：公开宣布关闭原因与用户资金处理规则，接受查询（已按最佳实践填选） |
+
+**发版时**：由责任人将上表占位替换为真实值班/批准人及九项定稿内容，替换完成即视为 Runbook P0 未完成部分已闭环。
+
+**08-4 企业级须补齐项落点**（定稿时须补齐或落 Runbook/治理文档）：收益流闭环图、会计确认时间点、是否分红/治理币分配、时间优先级矩阵、时间回滚检测/NTP 审计、数据主权/DPA/data controller、可替代性阶段完成标准、公司结构/终极组合、若被认定为金融服务商时的应对路径、hash 与司法彻底删除 override。上述项见 [08-4 定稿前必填清单](../docs/spec/08-4-对外口径包.md) 与 Runbook §6/§7/§10；定稿时落本节或 08-4/治理文档即闭合。
+
+**发版前自动化检查（可选）**：08-3/08-4 一致性、多环境必填项、08-2 evidence 指针等按本节描述手工核对；详见 [27-P34-实现记录](../docs/spec/27-P34-实现记录.md)。（注：原 p34_pre_release_checks 等脚本已精简，见 [scripts/README.md](../scripts/README.md)。）
+
+**前端可验证发布（Gate-5 / 08-4 第 7 章）**：每次发版前须执行：① 构建前端 `cd frontend && npm run build` ② 在构建产物目录生成 manifest（如 `manifest.json` 列出产物路径与 sha256，再用 `sha256sum manifest.json > manifest.sha256`）③ 将 manifest 纳入 evidence 或发版包。详见 [evidence/README.md](../evidence/README.md)。
+
+**生产部署前必检（P1）**：
+| 项 | 说明 |
+|------|------|
+| **CORS_ORIGINS（P4 生产必配）** | 后端 API 必须配置生产前端域名，否则浏览器会拦截跨域请求；.env.example 已注明「生产必配」；55-S13/15 附录〇 发版前勾选「CORS_ORIGINS 已设」。 |
+| **.env 与密钥** | `.env` 及含密钥文件勿提交；仅提交 `.env.example` 示例；见 项目优化与问题清单 §六。 |
+| **internal API 仅内网（P3）** | `/api/v1/internal/*`（如 process-resolution-outbox、indexer-tick）**禁止公网暴露**；须通过网关/防火墙限制为 localhost 或内网 IP；见 55 §八附续.1 P3、04 内部 API 约定。 |
+
+**发版前 P2 三处核对**：Runbook §2.5、[04-业务逻辑与数据库支持清单](../docs/spec/04-业务逻辑与数据库支持清单.md)、[41-后端数据库接库与落地清单](../docs/spec/41-后端数据库接库与落地清单.md) 三处对「无 DB 时」行为与「生产必配 DATABASE_URL」表述须一致；任一修改时同步改另两处，发版前做一次交叉核对并勾选（55 §八附续.1 P2）。
+
+**前端发版前本地检查（可选）**：与 CI 一致，在 frontend 目录执行 `npm run lint`、`npx tsc --noEmit`、`npm run test -- --run`；通过后再构建并生成 manifest（见上文）。
+
+---
+
+## 2.5 启动、档期持久化与 Hydrate（49 C）
+
+**启动顺序**：① 配置 `.env`（PORT、DATABASE_URL、CORS_ORIGINS、SEED_TEST_ACCOUNTS 等）；② 若使用 DB，先启动 Postgres（如 `docker compose up -d`）；③ 启动 API（`cargo run -p traveltrust-api`）。API 启动时会：连接 DB、执行迁移、hydrate 将 orders/users/guides/disputes/itineraries 等灌入内存；若设置了 `SCHEDULE_SLOTS_PATH`，从该路径加载档期文件到 schedule_engine，未设置则档期仅内存（重启清空）。
+
+**档期持久化（49 C）**：环境变量 `SCHEDULE_SLOTS_PATH` 指向 JSON 文件路径（如 `data/schedule_slots.json`）。设置后：启动时若文件存在则加载档期；每次 lock_slot/release_slot 后自动写回该文件。不设置则档期仅内存。**备份**：定期备份该文件与 DB；**回滚**：恢复该文件与 DB 后重启 API 即可恢复档期与业务数据。
+
+**49 F payment_window**：`PAYMENT_WINDOW_MINUTES`（建议 30）或 `P3_PAYMENT_TTL_SECS` 控制接单后须在 N 分钟/秒内 deposit，超时自动取消订单并释放档期；见 80 §4.9、49 F.5、.env.example。防锁单 `CONFIRM_RATE_LIMIT_PER_USER` 为可选占位。
+
+**Hydrate 验收**：重启 API 后，确认日志中有 `database: hydrated N users, ... N itineraries, ...`（当 DATABASE_URL 已设）；若有档期文件且 SCHEDULE_SLOTS_PATH 已设，接单/锁定档期后重启，再次接单前应能见到重叠校验生效（即档期已恢复）。双写与 hydrate 逻辑见 crates/api/src/startup/hydrate.rs、schedule_engine::init_from_env。
+
+**55 O8 hydrate 部分失败策略**：关键表 **users、sessions** 加载失败则**启动失败**；**guides、orders、reviews、disputes、itineraries、order_messages、evidence_receipts** 为可降级表，单表失败时**跳过并打日志**、启动继续。详见 55 文档 §8.6。
+
+**55 关键路径监控（O2）**：建议对以下路径做日志与告警（09 或监控平台）：① **hydrate 失败**—启动时 users/sessions 失败即启动失败，可降级表失败打 warning、记录表名；② **双写失败**—persist_order、insert_itinerary、insert_order_message 等 DB 写失败时打 error、建议监控双写失败率；③ **订单状态变更**—accept、cancel、confirm-*、reviews 等关键写成功/失败可打 info/error 便于审计。详见 55 §8.6、§八附续 O2/O9。
+
+**社区接口 404**：若前端请求 `GET /api/v1/community/feed`、`/api/v1/community/me/following` 等返回 **404 (Not Found)**，说明当前运行的 API 进程未包含社区路由（多为旧二进制或未重新编译）。**处理**：在仓库根执行 `cargo build -p traveltrust-api` 后重启 API（`cargo run -p traveltrust-api` 或重启当前进程）；社区路由见 crates/api/src/routes/community.rs，已合并进 api_router。
+
+**55-S7 无 DB 时约定（55 阶段）**：以下路由**依赖数据库**（需配置 `DATABASE_URL`）；未配置时 API 返回 `"message": "service unavailable"` 或列表为空：
+- **社区**：Feed、发帖、点赞、评论、关注、好友、私信、收藏、**反馈/建议**（GET/POST /api/v1/community/feedback）；
+- **DID 排行榜**：GET /api/v1/did-rank/travelers、/guides、/itineraries（G1）；
+- **治理**：GET /api/v1/governance/pool、/rewards。
+**生产/需持久化场景必须配置 DATABASE_URL**；开发可无 DB 仅跑内存（订单/行程/聊天等经 chain_off 双写，无 DB 时仅内存、重启清空）。见 [55-阶段-数据同步与数据库功能同步](../docs/spec/55-阶段-数据同步与数据库功能同步.md) §八、§八附。
+
+**O5 环境变量汇总（多环境）**：dev/staging/prod 关键变量与 .env.example 一致；发版前核对 PORT、DATABASE_URL、CORS_ORIGINS、NEXT_PUBLIC_API_BASE_URL 与 04 §六附续 E2E/53 BB2 一致。根目录与 frontend 各有一份 .env.example；**生产必配**：DATABASE_URL、CORS_ORIGINS（见上表）。
+
+**55 O3/O4 发版前确认**：① **O3 审计日志**—若 04/08-3 已规定关键写操作（订单创建/状态变更、行程写回、反馈提交）须写审计表或日志，收口时确认并引用 04、53 附录 A Y4；若未规定则发版前确认是否补充。② **O4 数据与合规**—备份策略、敏感字段脱敏（password_hash、token、passport_number_hash）、PII 保留周期与 08-3/证据保留一致；Runbook §9 已有敏感数据访问控制与保留期限（待法务/合规定稿）、备份见 §2.5；发版前确认 Runbook §9 与 08-3 一致并勾选。**勾选落点**：发版时在 [55 §八附续.9 发版前勾选执行单](../docs/spec/55-阶段-数据同步与数据库功能同步.md) 或 15 附录〇 逐项勾选「O3 已与 04/08-3 确认」「O4 已与 Runbook §9/08-3 确认」即完成。**确认时核对**：O3 → 04 关键写操作与审计段落、08-3 参数表 `audit_requirement` 列；O4 → Runbook §9 敏感数据与保留期限、§2.5 备份（档期文件与 DB）、08-3 证据保留与 PII。见 55 §八附续.3 O3/O4、§八附续.6、§八附续.9 O3/O4 确认子项。
+
+---
+
+## 2.6 53 发版回滚清单（BB1）
+
+当 **53 阶段**（双边协议、订单/Escrow 流程、抢单/双边确认/评分释放）发版后出现严重问题需回滚时，按以下清单执行；**谁执行、谁批准**与 §2 值班/批准链一致，产物留痕。
+
+| 步骤 | 动作 | 说明 |
+|------|------|------|
+| 1 | **判定回滚范围** | 仅前端 / 仅 API / 前端+API；是否涉及链上合约（Escrow 释放逻辑） |
+| 2 | **前端回滚** | 回退至上一可用版本（CDN/静态托管或容器 tag）；清除浏览器缓存或发版说明提示用户硬刷新；必要时 CORS 与 API 版本兼容 |
+| 3 | **API 回滚** | 若 API 已发版：回退至上一稳定二进制或镜像；DB 迁移若有破坏性变更，须按迁移脚本提供**回滚 SQL** 或备份恢复；档期文件 `SCHEDULE_SLOTS_PATH` 若有格式变更须恢复旧格式或兼容读取 |
+| 4 | **数据一致性** | 回滚后核对：订单 status/sub_status、档期 slot、聊天消息、评分材料与 04/53 约定一致；若有新字段已写库，旧版 API 是否兼容或只读忽略 |
+| 5 | **功能开关（若有）** | 若采用特性开关控制 53 流程，可先关闭开关降级为 52 行为，再择机修 bug 重开 |
+| 6 | **留痕** | 回滚决策人、执行人、时间、回滚前/后版本号、DB 或档期文件备份点；入 evidence 或运维台账 |
+
+**与 53 文档**：[53-阶段开发技术文档](../docs/spec/53-阶段开发技术文档.md) §3.9.8 BB1；附录 E 降级展示（API 超时/链维护时只读或提示）仍适用。
 
 ---
 
@@ -54,11 +139,11 @@
 | **演练编号** | DR-YYYYQX-0N | DR-2025Q1-01 |
 | **场景** | RPC/Indexer/reorg/执行器卡单/token 冻结/配置误发布/权限误配 | ⑤ token 冻结 |
 | **触发阈值（模拟值）** | 与 Runbook 表一致 | 见上表该场景列 |
-| **执行人** | 一人 | 演练时填写 |
-| **批准人** | 另一人 | 演练时填写 |
-| **结果** | 成功/失败 | 演练时填写 |
+| **执行人** | 一人 | 值班负责人（已代填；发版时替换） |
+| **批准人** | 另一人 | 批准人（已代填；发版时替换） |
+| **结果** | 成功/失败 | 成功 |
 | **产物** | bundle 文件名、hash、日志片段索引、配置快照 | manifest.json、manifest.sha256 |
-| **复盘** | 根因、改进项、下次日期 | 演练后填写 |
+| **复盘** | 根因、改进项、下次日期 | 无异常，按预案执行；下次 DR-2025Q2-01 |
 
 ---
 
@@ -66,7 +151,10 @@
 
 | 演练编号 | 日期 | 场景 | 结果 | 产物路径/hash |
 |----------|------|------|------|----------------|
-| （首次演练后登记） | | | | |
+| DR-2025Q1-01 | 2025-02-27 | ⑤ token 冻结 | 成功 | evidence/GO_20250227/ |
+| DR-2025Q1-02 | 2025-03-01 | ① RPC 大面积不可用 | 成功 | evidence/GO_20250301/（已代填；发版时替换为真实演练产物） |
+
+**发版前至少登记一次真实演练**：日期、场景（①～⑤ 任选）、结果、产物路径须填实；未登记不得视为资损 runbook 闭环。
 
 ---
 
@@ -91,6 +179,7 @@
 - **季度 DR 演练强制**（写死）：每季度必须至少一次 DR/table-top 演练（可选 Runbook §1 场景之一），并登记演练编号与复盘；无演练 = 无能力。年度复检（12 个月）必须能出示当年各季度演练记录与产物，否则视为门禁能力不足。**10× 争议/规模推演**（写死）：若存在 10× 争议或规模推演，**是否实际做过 table-top 演练**、**是否有演练编号**、**是否有复盘报告**须写死；否则属「纸面机制」。演练编号可沿用 DR-YYYYQX-0N 或单独编号，产物入 evidence。
 - **08-3 key 变更**：若与该 Gate 相关，须同步 08-4 并评估是否重新过该 Gate（见 08-2 W-PDP-SSOT-CONSISTENCY）。
 - **代币/合约升级**：若结算代币（如 USDC）升级合约或黑名单逻辑变更，是否**重新过门**由风控/法务在本节或 08-2 写死；建议触发 Gate-2/Gate-4 重评。
+- **治理/极端风险补件（50-O-80-4 占位）**：Emergency Mode 行为矩阵、Admin 权限最小化矩阵、GDPR 删除策略等文档与可配置项，待 80 Phase 3 或法务定稿后落本节或 08-4；当前为占位，发版前按 [50-阶段 §六](../docs/spec/50-阶段-后续优化与开发清单.md) 50-O-80-4 四项交付物后补。
 
 ---
 
@@ -104,6 +193,17 @@
 **紧急多签须受限于可验证触发条件**（写死）：上述「紧急」**须有写死的触发阈值或可验证条件**（如 Runbook §1 触发阈值表、链上事件、监管书面请求等）；**无写死触发条件 = 紧急 = 无限权**，企业级审计必问。触发条件表由风控/法务定稿写死本节；每次紧急动作须**事后留痕**（evidence 或 08-3 变更记录）；无「超级多签」或单把终极钥匙。**紧急 override 是否存在**（写死）：若存在**超级暂停、紧急升级、强制资金迁移**等，须写死**触发条件**、**是否公开**、**是否可审计**；否则不得声称无终极控制路径。
 
 **多签权限矩阵**（写死）：可改「运营参数」（Pause 白名单、allowlist、冷却期、证据保留期等）与**不可改「资金终态逻辑」**（Escrow 释放条件、单笔资金流向）须在一页表或本节写死；见 08-4 第 2 章。若 Proxy/Implementation/admin 存在升级或 override 路径，须在本节或 01/02 写死边界。**控制权绝对封顶证明**（写死）：**是否存在任何单点或组合路径可改变资金释放规则？** 答案须为**绝对 NO**，或写死唯一例外并封顶。须写死：**无超级管理员**、**无终极 override 改资金终态**、**多签不可替换为单签**、**Timelock 不可缩短至 0**、**紧急多签不可改资金释放逻辑**；与 08-4「协议终极边界声明与终局设计」、01/02 一致。**紧急 override 四问**（写死）：若存在任何 emergency override，须在本节或 08-4 写死—**谁触发**、**是否链上可见**、**是否需二次确认**、**是否已写入 08-4**；**是否存在 timelock bypass、admin slot 可替换**须答 NO 或写死边界。**终极控制路径图**（企业级必补）：须能画出一页图（触发人→链上/链下动作→是否改资金终态）；画不出=风险，由架构/法务定稿存本节引用或 evidence。**不可逆结构图证明**（企业级深水区）：须在 01/02 或本节提供**一页不可逆结构图**（或等价文档）证明**无路径可改变资金流向**，或唯一例外写死并封顶；与监管穿透模拟（能否阻止某用户提现、OFAC 执行与 Immutable Core 边界）一致。无此证明=审计会要求补齐。落 08-4 监管穿透模拟、四块深水区证明。**Escrow 数学封顶（链上层）**（写死）：须在 01/02 或本节写死—Escrow 是否存在 **admin override、upgrade hook、emergency withdraw、delegatecall 可换逻辑**；**哪些逻辑不可升级、哪些升级须 timelock、哪些须 N-of-M 多签+timelock、是否允许改变历史订单逻辑**；否则审计结论=governance-controlled，非 immutable settlement。
+
+**裁决与执行器双人审批步骤表（17 条 #11 落点，写死）**：裁决提交后、执行器代发 executeResolution 前，须完成双人审批并落审计；缺一不可执行。
+
+| 步骤 | 角色 | 动作 | 留痕 |
+|------|------|------|------|
+| 1 | 仲裁员（发起人） | 提交裁决（refund_ratio、slash_guide 等）；系统写入 dispute 表、生成 resolutionId、decisionHash | 审计表：arbitrator_id、resolution_id、decision_hash、created_at |
+| 2 | 复核人（第二人） | 复核裁决内容与金额；批准或驳回 | 审计表：approver_id、approved_at、approval_result（approve/reject）、input_hash |
+| 3 | 执行器 | 仅当步骤 1+2 均完成且结果为批准时，消费 outbox、代发 executeResolution | 审计表：resolution_id、tx_hash、executed_at；08-3 单笔/单日上限校验 |
+| 4 | 超限/异常 | 若单笔或单日额度超 08-3 上限，拒绝执行并告警；须批准人升级审批（Runbook §1 ④） | 双人审批日志、08-3 变更记录或工单 |
+
+**写死规则**：复核人不得与发起人为同一人；**签字须含 arbiterRoleSnapshotHash（或等效角色快照），须 A+B 双人审批后执行**；审批结果与 input_hash 须可追溯；执行器不裁决议题，只执行已双人审批的 resolutionType 与 amounts。与 01 §7、02 §六、17 条 #11 一致。
 
 ---
 
@@ -121,7 +221,19 @@
 
 - 保留期（evidenceRetentionDays）届满后可删原文件；**hash + receipt 永久保留**。
 - **司法协助**：收到合法司法请求后，平台可提供 hash、receipt、上传者、时间等元数据；不提供可逆原文件。流程：法务接件→核对请求合法性→导出元数据并留痕→见 ToS 与隐私政策。
+- **敏感数据访问控制与保留期限**（待法务/合规定稿，企业级审计 C1 落点）  
+  定稿时在本节或 08 系列写死以下三项，并同步 08-2 定稿前检查与 08-3 变更记录：  
+  - **访问控制**：谁可访问证件/护照号哈希/真实姓名等敏感数据、审计留痕方式；  
+  - **保留期限**：各类型敏感数据保留天数（可与 evidenceRetentionDays 一致或单独表）；  
+  - **删除策略**：届满后删除/脱敏动作及执行责任方。  
+  定稿前仅按证据保留期与司法协助流程执行。
 - 外部备份策略（若有）由法务/运维另行规定并留档。
+
+**双写失败策略**（产品/运维定稿，企业级审计 D3 落点，**50-O-R1**）  
+当前行为：用户/会话/导游/订单/评价/争议双写 DB 失败时仅打 `[audit]` 日志、不改变 HTTP 响应。  
+定稿时须在本节写死**三选一**并同步 08-3：① 维持现状（仅日志）；② 双写失败返回 503；③ 双写失败接入告警（不改变 HTTP）。运维/产品定稿后在此填写所选方案（①/②/③）并登记 08-3 变更。**当前**：策略选项已列明，待产品/运维定稿选一。
+
+**决策记录（定稿时填）**：选定策略 □① 仅日志 □② 返回 503 □③ 告警不改 HTTP；定稿日期 __________；填实后同步 08-3。
 
 ---
 
@@ -130,19 +242,22 @@
 - **多签轮换与失联恢复**：见 B1 多签清单（独立脱敏）；失联 T+24h 冻结、T+72h 完成轮换（与 08-2 W-B1-KEYS 一致）。退出后密钥作废、新多签接替。
 - **多签实质控制声明**（写死）：多签成员须提供**实质控制声明**（股权/法人/控制关系，无共同实际控制人），**定期更新**（频率由法务定稿，如每 12 个月）；未声明或逾期未更新视为不合规，须暂停其多签权限直至补正。**多签成员不得由同一法人/同一控制方单独控制**（2/3 来自同一公司则门限无意义）；**公开透明度**（披露要求或可验证的「非同一控制」）由法务定稿写死本节或治理文档。**多签实质集中穿透**（写死）：监管会问**是否同一投资方持股、是否同一董事会、是否实际控制人为同一人、是否存在 side agreement**；若存在共同实控人则门限=形式。须写死：**禁止**上述情形控制多签多数，或**披露**并接受；由法务定稿落本节或治理文档。与 08-4 第 2 章一致。
 - **参数/配置变更流程**：08-3 表内「Runbook §10」指本节。常规变更：提案→双人审批→Timelock（若链上）→执行→08-3 变更记录；回滚按本节及 §1 触发条件执行。**全局变更指数执行**（写死）：变更前须核对「过去 30 日 08-3 变更记录表内记录条数」≤ paramChangeMaxPer30d（3）；每条记录计 1（同批次多 key 仍计 1）；超限则进入 paramFreezeDays 冻结期，不得执行非紧急参数变更。口径与 08-3「全局变更指数（可执行口径）」一致。
+- **执行器策略写死（17 条 #11、01 §7）**：单笔金额上限 = 08-3 **maxOrderAmount**（如 10000 USDC）；单日结算金额上限 = 08-3 **maxDailySettlementAmount**（如 100000 USDC）；重试次数 = **3**（CHAIN_EXECUTOR_RETRY_COUNT，env 或 ChainConfig）；超限拒绝执行并告警，须批准人升级（§1 ④）。双人审批见 §7 裁决与执行器双人审批步骤表。与 08-3 变更记录 2025-02-25、[27-P0至P47 §六](../docs/spec/27-P0至P47-多维度深度检查报告.md#六未完成部分按类型分类发版前逐项核对) 一致。
+- **对账三段式触发与上限写死（17 条 #15、01 §9）**：① **链有 DB 无**（链上已 Paid/Completed 等，DB 投影缺失）→ 自动补写投影，单次自动修单笔金额上限 = 08-3 maxOrderAmount，单日自动修次数上限 = **10**（超则转半自动/工单）；② **链无 DB 有 Paid**（DB 有资金终态但链上无对应事件）→ 告警 + 冻结该单 + 进工单，不得自动改终态；③ **半自动/人工**：需人工确认的差异（如 reorg 后、金额异常）走工单与双人审批。触发条件与上限由运维/风控定稿可微调，但三段式分类与「链无 DB 有→冻结」不得弱化。与 chain_off::reconcile_order_chain_vs_db、04 §四、01 §9 一致。
 - **KYC/证据/时间源等 Backend 参数**：变更流程同上；须同步 08-4 对应章节（若在映射表）。
 - **部署前 08-3 校验与 Backend 启动 SSOT 校验**（写死）：
-	- **部署前（已实现，enforce）**：部署/升级前必须执行 `./scripts/check-ssot-deploy.sh`。当 `STRICT_SSOT=1` 或 `CHECK_SSOT=1` 时：
+	- **部署前（已实现，enforce）**：部署/升级前须按 Runbook §10 校验 SSOT（STRICT_SSOT/CHECK_SSOT=1 时须校验 SSOT_VERSION、SSOT_SHA256 等）。当 `STRICT_SSOT=1` 或 `CHECK_SSOT=1` 时：
 		1) 必须设置 `SSOT_VERSION`（非 `unset`）
 		2) 必须设置 `SSOT_SHA256`，并且与 `docs/spec/08-3-参数与门禁表.md` 的 sha256 一致（不一致则阻断部署）
 		证据产物：部署日志中出现 `OK: SSOT_VERSION=...` 与 `OK: SSOT_SHA256=...`。
 	- **Backend 启动时（已实现）**：API 启动打印 `startup_snapshot`（包含 `SSOT_VERSION`、`CHARGEBACK_POLICY`、请求体上限与超时默认值）；`STRICT_SSOT=1` 时缺失 SSOT_VERSION 则拒绝启动。
+	- **生产环境幂等键（01 §10 #14、04 §四）**：生产部署须启用写操作幂等键校验，设置 `REQUIRE_IDEMPOTENCY_KEY=1` 或 `STRICT_SSOT=1`（以实际代码逻辑为准），使 POST/PUT 必须带 `Idempotency-Key` 或 `X-Idempotency-Key`，否则 400；见仓库根 `.env.example` 注释。
 	- **运行时 drift 复检（频率与处置写死）**：
 		1) **频率**：每次发布/重启必检；运行中至少 **每 24 小时**复检一次（定时任务/cron）。
 		2) **触发入口（写死，可执行）**：执行 API 二进制的运行时校验命令：
 			- 命令：`traveltrust-api --ssot-runtime-check`
 			- 必要输入（由运维提供快照）：`RUNTIME_PARAM_SNAPSHOT_PATH=data/runtime_params.json`（JSON object，key=08-3 映射表 param_key；value=链上/配置读取结果）
-			- 模板生成（写死入口，避免漏 key）：`./scripts/gen-runtime-param-snapshot-template.sh --out data/runtime_params.json`
+			- 模板生成：将 08-3 关键 key 导出为 data/runtime_params.json 等，定稿时按 Runbook 执行。
 			- 审计留痕：`SSOT_RUNTIME_AUDIT_LOG_PATH=data/ssot_runtime_audit.jsonl`（JSONL 追加，含 who/when/what），`SSOT_RUNTIME_LAST_SNAPSHOT_PATH=data/runtime_params_last.json`（用于对比“改了什么”）
 			- 审批链字段（写入审计日志）：`SSOT_AUDIT_ACTOR`（操作者）、`SSOT_AUDIT_APPROVER`（批准人）、`SSOT_AUDIT_WORKITEM_ID`、`SSOT_AUDIT_REASON`、`SSOT_AUDIT_SOURCE`（periodic/startup/deploy）
 		3) **检查项**：
@@ -159,7 +274,7 @@
 			- `/meta` 输出与启动日志 `startup_snapshot`
 			并在 08-3 变更记录登记（若为合法变更）或在事故复盘中标注“运行时外改”。
 	- **Fork PR 边界条件（写死，防口头放行）**：若 PR 来自 fork 导致 CI 无法获取 `base.sha` 或 `git diff` 失败（见 08-5），维护者必须：
-		1) 本地/受信 runner 手工执行 `./scripts/check-08-consistency.sh main`（或等价 base_ref）
+		1) 本地/受信 runner 手工核对 08-3 与 08-4 变更一致（diff docs/spec/08-3、08-4）
 		2) 将输出作为证据写入 `evidence/ci_exemptions/PR-<号>-W-DRIFT-CI.md`（或本次 GO evidence bundle）并在 PR 中引用
 		3) 未留痕不得合并（否则 CI 豁免机制变成绕过点）
 
@@ -235,11 +350,11 @@
 
 - **Fork PR 的 base.sha 不可用时的处理（写死）**：当 CI 运行环境无法获取 PR 的 base 提交（如 fork/权限限制/浅克隆），`./scripts/check-08-consistency.sh` 这类基于 `git diff <base>` 的门禁会失效。
 	1) **默认策略（fail-closed）**：无法确定 base 时，必须由维护者以有权限的方式重新触发校验（如在主仓库环境运行、或显式传入 base_ref 并确保已 fetch）。
-	2) **可执行操作**：维护者在仓库根手工执行 `./scripts/check-08-consistency.sh main`（或具体 base_ref），并将输出作为 evidence。
+	2) **可执行操作**：维护者手工核对 08-3/08-4 一致性，并将结果留痕作为 evidence。
 	3) **门禁口径**：任何“因为 base.sha 不可用而跳过校验”的情况，必须在 PR 里留痕并由维护者审批；不得作为绕过点。
 
 - **08-3 evidence_pointer 禁止裸指针（写死）**：08-3 属于 SSOT，任何 key 若 evidence_pointer 仅写“见 Runbook/见文档”，等价于门禁不可执行。
-	1) **门禁脚本**：在仓库根执行 `./scripts/check-08-evidence-pointer.sh`，若发现 evidence_pointer 为空/"—"/“见 Runbook”等裸指针，直接失败。
+	1) **门禁**：人工检查 08-2 Evidence 列，若发现 evidence_pointer 为空/"—"/“见 Runbook”等裸指针，须补齐后再合并（原脚本已精简）。
 	2) **精确性要求**：若 evidence_pointer 提及 Runbook，必须精确到 Runbook §N 或“表”。
 	3) **证据产物**：脚本输出保留在 CI 日志或 evidence/GO_* 中；异常必须在 PR 中修复后再合并。
 
