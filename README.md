@@ -3,7 +3,8 @@
 **TravelTrust** 为本团队在 **GitHub 私有仓库** 中维护的全栈项目：**Rust 后端 API**、**Next.js 前端**、**Solidity 智能合约**，以及 **`docs/`、`docs/spec/`** 下的**内部规格与工程文档**。  
 **本文档以中文为准**，面向团队开发与协作；**不属于对外开源发布材料**，请勿将私有仓库内容或完整 spec 擅自对外公开或再分发。
 
-**远程仓库（私有）**：`https://github.com/wejfiowej124234/Wbe3-TravelTrust`（与 `git@github.com:wejfiowej124234/Wbe3-TravelTrust.git` 为同一仓库，任选 HTTPS 或 SSH）。
+**小组远程（协作）**：`https://github.com/TT-Expedition/TT-Expedition`（SSH：`git@github.com:TT-Expedition/TT-Expedition.git`）。  
+若仍保留个人/旧远程，本地可配置为 `git remote` 中的别名（如 `legacy`），以小组仓库为 **`origin`** 即可。
 
 可选能力包括：**链上托管（Escrow）**、**质押（Staking）**、**治理与费路由相关合约**、以及链下订单/社区/治理等 **REST API**。具体以代码与 [04-后端与API](docs/spec/04-后端与API.md) 为准。
 
