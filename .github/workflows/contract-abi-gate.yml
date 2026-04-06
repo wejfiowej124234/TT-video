@@ -1,0 +1,77 @@
+name: Contract ABI Gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "contracts/**"
+      - "frontend/dapp/abis/**"
+      - "scripts/verify-abi-forge.py"
+      - "scripts/run-verify-abi-forge.sh"
+      - "scripts/sync-abi-from-forge.sh"
+      - "scripts/sync-abi-from-forge.ps1"
+      - "scripts/check-55-s13.sh"
+      - "scripts/check-55-s13.ps1"
+      - ".github/workflows/contract-abi-gate.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "contracts/**"
+      - "frontend/dapp/abis/**"
+      - "scripts/verify-abi-forge.py"
+      - "scripts/run-verify-abi-forge.sh"
+      - "scripts/sync-abi-from-forge.sh"
+      - "scripts/sync-abi-from-forge.ps1"
+      - "scripts/check-55-s13.sh"
+      - "scripts/check-55-s13.ps1"
+      - ".github/workflows/contract-abi-gate.yml"
+
+jobs:
+  contract-abi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: foundry-rs/foundry-toolchain@v1
+      - name: Install forge-std (if missing)
+        run: |
+          set -euo pipefail
+          git config --global --add safe.directory "${GITHUB_WORKSPACE}"
+          cd contracts
+          if [ ! -f lib/forge-std/src/Test.sol ]; then
+            forge install foundry-rs/forge-std
+          fi
+      - name: Set evidence dir
+        run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
+      - name: Run forge test
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR"
+          forge test --root contracts | tee "$EVIDENCE_DIR/forge_test.log"
+      - name: Verify contracts/abi matches forge inspect (canonical)
+        run: bash ./scripts/run-verify-abi-forge.sh
+      - name: Generate ABI alignment report
+        run: |
+          set -euo pipefail
+          {
+            echo "# ABI Alignment Report"
+            echo
+            echo "- Workflow: Contract ABI Gate"
+            echo "- Job: contract-abi"
+            echo "- Commit: ${{ github.sha }}"
+            echo "- ABI multiset: scripts/run-verify-abi-forge.sh → verify-abi-forge.py"
+            echo "- Check script: scripts/check-55-s13.sh"
+            echo
+            echo "## Check Output"
+            echo
+            echo '```text'
+            bash ./scripts/check-55-s13.sh
+            echo '```'
+          } > "$EVIDENCE_DIR/abi_alignment_report.md"
+      - name: Upload contract/abi evidence artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: contract-abi-evidence
+          path: |
+            ${{ env.EVIDENCE_DIR }}/forge_test.log
+            ${{ env.EVIDENCE_DIR }}/abi_alignment_report.md

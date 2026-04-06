@@ -1,0 +1,38 @@
+# Example GitHub Actions workflow: scheduled / manual DB projection reconcile probe.
+# NOT active until copied into .github/workflows/ (e.g. indexer-reconcile-probe.yml) and secrets are set.
+#
+# Required repository secrets (Settings → Secrets → Actions):
+#   INDEXER_PROBE_API_BASE_URL   e.g. https://api.internal.example.com  (no trailing slash)
+#   INDEXER_PROBE_INTERNAL_SECRET Same value as API env INTERNAL_API_SECRET
+#
+# The job runs scripts/indexer-reconcile-probe.sh from the default branch checkout.
+# SSOT: scripts/indexer-reconcile-probe.sh, ops/RUNBOOK.md §2.55, docs/spec/04 §3.4, 110.
+
+name: Indexer reconcile probe (example — copy to .github/workflows/)
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    # Every 6 hours at :17 UTC — tune per SRE
+    - cron: "17 */6 * * *"
+
+concurrency:
+  group: indexer-reconcile-probe-example-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install probe dependencies
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q curl jq
+
+      - name: Run indexer-reconcile-probe.sh
+        env:
+          API_BASE_URL: ${{ secrets.INDEXER_PROBE_API_BASE_URL }}
+          INTERNAL_API_SECRET: ${{ secrets.INDEXER_PROBE_INTERNAL_SECRET }}
+        run: bash scripts/indexer-reconcile-probe.sh

@@ -12,14 +12,30 @@ path = "src/main.rs"
 traveltrust-core = { path = "../core" }
 axum = { version = "0.7", features = ["json", "macros"] }
 tokio = { version = "1", features = ["full"] }
-tower = "0.4"
+tower = { version = "0.4", features = ["util"] }
 # tower-http: 若 build 报错 unknown feature "limit"/"timeout"，去掉该 feature 并删 main.rs 中对应 layer
 tower-http = { version = "0.5", features = ["cors", "limit", "timeout"] }
 serde = { version = "1", features = ["derive"] }
-serde_json = "1"
+serde_json = { version = "1", features = ["preserve_order"] }
 chrono = { version = "0.4", features = ["serde"] }
 uuid = { version = "1", features = ["v4", "serde"] }
 http-body-util = "0.1"
 bytes = "1"
 hmac = "0.12"
 sha2 = "0.10"
+ed25519-dalek = "2.2"
+# P5 链上读状态与执行器发 tx
+reqwest = { version = "0.12", features = ["json"] }
+hex = "0.4"
+num-bigint = "0.4"
+sha3 = "0.10"
+secp256k1 = { version = "0.28", features = ["recovery"] }
+digest = "0.10"
+rlp = "0.5"
+base64 = "0.21"
+# 用户/会话等业务数据落库（04 §四、04-附录-DDL草案 §9）
+sqlx = { version = "0.8", features = ["runtime-tokio-native-tls", "postgres", "chrono", "uuid", "json"] }
+# P0 密码安全：生产用 bcrypt 哈希（企业级检查报告）
+bcrypt = "0.16"
+# 启动时加载 .env（项目根或 crates/api 下），便于本地 SEED_TEST_ACCOUNTS、DATABASE_URL 等
+dotenvy = "0.15"

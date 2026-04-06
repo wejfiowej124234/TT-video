@@ -4,8 +4,14 @@
 
 ## 目录约定
 
+- **索引器 / DB 投影对账**（可选机器预检、发版留痕）：最小顺序见 **[Runbook §12.5](../ops/RUNBOOK.md)**（与 **§2.55**、`indexer-reconcile-probe`、`write-indexer-evidence` 配套；**步骤 6** 链级 **`dry-run`** 只读计数与 **`artifacts/`**）；**不替代** [01 §「发布与 E2E」](../docs/spec/01-总库总览.md) **三项**（**[27-P14 P14-3](../docs/spec/27-P14-实现记录.md)**）。**链级「规划归零」只读（DR / 演练，不执行 DELETE）**：**`POST …/internal/indexer-reconcile`** 可选 **`orders_chain_scope_rollback_dry_run:true`**（响应锚 **`110-ORDERS-CHAIN-SCOPE-DRY-RUN`**）及同类 **`event_log_*` / `correction_executor_*`** dry-run；值班 **`bash scripts/internal-indexer-ops.sh reconcile --chain-scope-dry-run`**（及 **`--event-log-scope-dry-run`** 等）见 **[Runbook §2.55](../ops/RUNBOOK.md)**、**[110 §3.1.4](../docs/spec/110-阶段开发链上索引器与事件同步器.md)**；可将 **dry-run** 响应 JSON（含各计数与 **`anchor`**）落入 **`evidence/GO_YYYYMMDD/artifacts/`** 与 manifest 同批。**execute** 路径须独立 **ENV + confirm**，**不**纳入 CI 自动跑，且仍须 **01/03** 与 Runbook 人工评审。
+- **可验证发布 manifest + E2E / 演练留痕**：**`gen-frontend-manifest`**（**`build` 后**执行）、**`pre-release-automation` 与 manifest 的关系**、**P14-3** 与 **Runbook §4** — **[Runbook §12.6](../ops/RUNBOOK.md)**。
+- **17 条 checklist #5（部署参数 / Slither）**：执行顺序 **[Runbook §12.8](../ops/RUNBOOK.md)**；将 **`export_deployment_params`** 输出与/或 Slither 报告路径纳入本目录 **`artifacts`**（或 **08-3 evidence_pointer**，须可复核）；与 [checklist-17](../scripts/checklist-17.md) #5 勾选配套。
+- **08-2 工单定稿顺序**：Owner → 审查一 → 审查二（横向 Gate 评审见 **§12.7**）→ Evidence 列 — **[Runbook §12.9](../ops/RUNBOOK.md)**（与 [08-2 定稿前检查](../docs/spec/08-2-附录-闭合工单表.md) 全文同读，**不替代**人工勾选）。
 - **evidence/GO_YYYYMMDD/** — 某次 Gate 通过（或发版前五门全过）的 evidence bundle。
+  - **根目录 `.gitignore` 已排除 `evidence/GO_[0-9]{8}/`**：该路径**不会**进入公开 git 历史；责任人本地创建后自行归档或写入私有制品库；复核方可对照 [15 附录〇 机器预检段](../docs/spec/15-多维度文档与技术检查报告.md#发版前勾选总表) 在本地重跑 `pre-release-automation` / `cargo test`。
   - 内含：`manifest.json`（产物清单）、`manifest.sha256`（校验）、截图/日志索引等。
+  - 可选：运维脚本 **`scripts/write-indexer-evidence.sh`** 或 Windows **`scripts/write-indexer-evidence.ps1`**（须 **Git Bash** 执行 **`indexer-public-snapshot.sh`**；manifest / **`.zip`** 由 PowerShell **`Compress-Archive`** 生成）；或 Windows **`.\scripts\internal-indexer-ops.ps1 evidence`** / **`evidence-bundle`**（委托 **`write-indexer-evidence.ps1`**；其它子命令委托 **bash** **`internal-indexer-ops.sh`**）可将 **`indexer_public_snapshot_*.json`**（**`/health`** + **`/meta`** + 可选 admin/internal 段；顶域 **`snapshot_provenance`** **`script`**/**`script_semver`**/**`host_git_commit`**/**`host_git_branch`**/**`host_repo_dirty`** 标识生成器与主机 Git 上下文）落入本目录，见 [RUNBOOK §2.55](../ops/RUNBOOK.md)（110 索引器留痕）。**`04` / `14` / `110`** 与 **`07 §六 6.4`** 互指见 **[14 §2.1 · 运维 JSON 快照](../docs/spec/14-合约-API-ABI-前后端对齐.md)**（**`04 §3.4` · `internal`** 为段落 **SSOT**）。**`INDEXER_EVIDENCE_WRITE_MANIFEST=1`** 或 **`INDEXER_EVIDENCE_BUNDLE_ZIP=1`**（或 **`internal-indexer-ops.sh evidence-bundle`** / **`.ps1 evidence-bundle`**）另生成 **`indexer_public_snapshot_manifest.json`**（`gate` / `date` / `artifacts` / `sign_off` + **`bundle_kind`**），可选 **`indexer_evidence_bundle_*.zip`**；正式过门前替换默认 **`gate`/`sign_off`**。
   - 工单表 **Evidence** 列可贴：`evidence/GO_20250220/` 或 manifest 的 hash。
 - **evidence/GO_YYYYMMDD_template/** — **可复制模板**：首次过门时复制为本目录并重命名为 GO_YYYYMMDD，再填写 manifest。勿在此目录内放真实证据。
 - **evidence/GO_placeholder/** — **仅占位说明**（非 bundle、非模板）：说明真实 bundle 用 GO_YYYYMMDD 目录。
@@ -57,7 +63,7 @@ npm run build
 
 **第二步：生成产物清单（manifest.json）**
 
-在 `evidence/GO_YYYYMMDD/` 目录（进度标记为 YYYY-MM-DD）中创建 `manifest.json`，包含以下必填字段：
+推荐：仓库根执行 **`./scripts/gen-frontend-manifest.sh`**（可选环境变量 **`EVIDENCE_GO_DIR=evidence/GO_YYYYMMDD`**）或 Windows **`.\scripts\gen-frontend-manifest.ps1`**，生成 `frontend/.next/build-manifest.json` 并可复制为 **`frontend-build-manifest.json`** + **`.sha256`**。亦可手工在 `evidence/GO_YYYYMMDD/` 中按下列模板编写 `manifest.json`：
 
 ```json
 {

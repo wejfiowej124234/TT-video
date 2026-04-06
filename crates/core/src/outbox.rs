@@ -136,7 +136,10 @@ impl FileOutbox {
                     item.updated_at = now;
                     write_json_atomic(&in_progress_path, &item)?;
                     let lease_expires_at = now + Duration::seconds(lease_secs);
-                    return Ok(Some(OutboxClaim { item, lease_expires_at }));
+                    return Ok(Some(OutboxClaim {
+                        item,
+                        lease_expires_at,
+                    }));
                 }
                 Err(_) => continue,
             }
@@ -193,7 +196,12 @@ impl FileOutbox {
         Ok(())
     }
 
-    pub fn reschedule(&self, mut item: OutboxItem, after_secs: i64, err: Option<String>) -> io::Result<()> {
+    pub fn reschedule(
+        &self,
+        mut item: OutboxItem,
+        after_secs: i64,
+        err: Option<String>,
+    ) -> io::Result<()> {
         self.ensure_dirs()?;
         let now = Utc::now();
         item.attempts = item.attempts.saturating_add(1);
@@ -255,7 +263,7 @@ fn write_json_atomic<T: Serialize>(path: &Path, value: &T) -> io::Result<()> {
         fs::create_dir_all(parent)?;
     }
     let tmp = path.with_extension("json.tmp");
-    let bytes = serde_json::to_vec_pretty(value).map_err(|e| io::Error::new(io::ErrorKind::Other, e))?;
+    let bytes = serde_json::to_vec_pretty(value).map_err(io::Error::other)?;
     fs::write(&tmp, bytes)?;
     fs::rename(tmp, path)?;
     Ok(())

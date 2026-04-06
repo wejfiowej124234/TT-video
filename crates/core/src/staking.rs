@@ -1,4 +1,4 @@
-//! 导游质押准入：按 08-3 stakeTierThresholds=500,2000,10000、stakeToOrderCapMap=1,3,10 分档
+//! 向导质押准入：按 08-3 stakeTierThresholds=500,2000,10000、stakeToOrderCapMap=1,3,10 分档
 
 use serde::{Deserialize, Serialize};
 

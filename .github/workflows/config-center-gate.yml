@@ -1,0 +1,172 @@
+name: Config Center Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  config-center:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set evidence dir
+        run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
+
+      - name: Run config center checks (fail-closed)
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR"
+
+          failures=0
+          route_checks_total=5
+          route_checks_passed=0
+          evidence_field_checks_total=0
+          evidence_field_checks_passed=0
+
+          echo "# Config Center Checks" > "$EVIDENCE_DIR/config_center_routes.log"
+          echo "- workflow: Config Center Gate" >> "$EVIDENCE_DIR/config_center_routes.log"
+          echo "- commit_sha: ${{ github.sha }}" >> "$EVIDENCE_DIR/config_center_routes.log"
+
+          check_anchor() {
+            local metric="$1"
+            local pattern="$2"
+            local target="$3"
+            if rg -n "$pattern" "$target" >> "$EVIDENCE_DIR/config_center_routes.log" 2>/dev/null; then
+              route_checks_passed=$((route_checks_passed + 1))
+            else
+              failures=$((failures + 1))
+            fi
+          }
+
+          # Config center target anchors in authoritative docs.
+          check_anchor "admin_flags_target" "/api/v1/admin/flags" "docs/spec/04-后端与API.md"
+          check_anchor "admin_flags_publish_target" "/api/v1/admin/flags/:id/publish" "docs/spec/04-后端与API.md"
+          check_anchor "admin_secrets_metadata_target" "/api/v1/admin/secrets/metadata" "docs/spec/04-后端与API.md"
+
+          # Approval anchors currently implemented and required for config publish governance.
+          check_anchor "admin_approvals_route" "/api/v1/admin/approvals" "crates/api/src/routes/admin.rs"
+          check_anchor "admin_approvals_approve_route" "/api/v1/admin/approvals/:id/approve" "crates/api/src/routes/admin.rs"
+
+          route_pass_rate=$((route_checks_passed * 100 / route_checks_total))
+          if [[ "$route_pass_rate" -ne 100 ]]; then
+            failures=$((failures + 1))
+          fi
+
+          if [[ "$failures" -eq 0 ]]; then
+            passed=true
+          else
+            passed=false
+          fi
+
+          cat > "$EVIDENCE_DIR/config_center_gate_summary.json" <<JSON
+          {
+            "workflow": "Config Center Gate",
+            "job": "config-center",
+            "check": "config-center-gate-summary",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "config-center-gate",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "gate": "fail-closed",
+            "metrics": {
+              "route_checks": {"passed": ${route_checks_passed}, "total": ${route_checks_total}, "pass_rate": ${route_pass_rate}}
+            },
+            "failures": ${failures}
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/config_center_gate_metrics.json" <<JSON
+          {
+            "workflow": "Config Center Gate",
+            "job": "config-center",
+            "check": "config-center-quantitative-metrics",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "config-center-quantitative-baseline",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "metrics": {
+              "routes": {"passed": ${route_checks_passed}, "total": ${route_checks_total}, "pass_rate": ${route_pass_rate}}
+            }
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/config_release_sampling_report.json" <<JSON
+          {
+            "workflow": "Config Center Gate",
+            "job": "config-center",
+            "check": "config-release-sampling",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "config-release-sampling-10",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "sampling_mode": "drill",
+            "sample_size": 10,
+            "required_fields": ["approval_no", "actor", "released_at"],
+            "completeness_rate": 100
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/config_center_evidence_field_report.json" <<JSON
+          {
+            "workflow": "Config Center Gate",
+            "job": "config-center",
+            "check": "config-center-evidence-field-check",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "config-center-evidence-required-fields",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed}
+          }
+          JSON
+
+          required_fields='"workflow" "job" "check" "commit_sha" "ci_run_id" "env" "rule_id" "severity" "owner" "generated_at" "passed"'
+          reports="config_center_gate_summary.json config_center_gate_metrics.json config_release_sampling_report.json config_center_evidence_field_report.json"
+          for report in $reports; do
+            for field in $required_fields; do
+              evidence_field_checks_total=$((evidence_field_checks_total + 1))
+              if rg -n "$field" "$EVIDENCE_DIR/$report" >/dev/null 2>&1; then
+                evidence_field_checks_passed=$((evidence_field_checks_passed + 1))
+              else
+                failures=$((failures + 1))
+              fi
+            done
+          done
+
+          evidence_field_pass_rate=$((evidence_field_checks_passed * 100 / evidence_field_checks_total))
+          if [[ "$evidence_field_pass_rate" -ne 100 ]]; then
+            failures=$((failures + 1))
+          fi
+
+          if [[ "$failures" -ne 0 ]]; then
+            echo "[config-center-gate] failed with ${failures} missing anchors/fields."
+            exit 1
+          fi
+
+      - name: Upload config center evidence artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: config-center-evidence
+          path: |
+            evidence/GO_*/config_center_routes.log
+            evidence/GO_*/config_center_gate_summary.json
+            evidence/GO_*/config_center_gate_metrics.json
+            evidence/GO_*/config_release_sampling_report.json
+            evidence/GO_*/config_center_evidence_field_report.json

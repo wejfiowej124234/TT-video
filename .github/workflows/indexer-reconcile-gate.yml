@@ -1,0 +1,286 @@
+name: Indexer Reconcile Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  indexer-reconcile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set evidence dir
+        run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
+      - name: Self-test Ed25519 reconcile export verify script
+        run: bash scripts/verify-reconcile-export-ed25519.sh --self-test
+      - name: Verify indexer/reconcile route anchors
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR"
+          failures=0
+          checks_total=107
+          checks_passed=0
+
+          check_anchor() {
+            local metric="$1"
+            local pattern="$2"
+            local target="$3"
+            if rg -n "$pattern" "$target" >> "$EVIDENCE_DIR/indexer_replay.log" 2>/dev/null; then
+              echo "[PASS] ${metric} @ ${target}" >> "$EVIDENCE_DIR/indexer_replay.log"
+              checks_passed=$((checks_passed + 1))
+            else
+              echo "[FAIL] ${metric} @ ${target}" >> "$EVIDENCE_DIR/indexer_replay.log"
+              failures=$((failures + 1))
+            fi
+          }
+
+          echo "# Indexer Reconcile Checks" > "$EVIDENCE_DIR/indexer_replay.log"
+          echo "- workflow: Indexer Reconcile Gate" >> "$EVIDENCE_DIR/indexer_replay.log"
+          echo "- commit_sha: ${{ github.sha }}" >> "$EVIDENCE_DIR/indexer_replay.log"
+
+          check_anchor "internal_indexer_replay_route" "/api/v1/internal/indexer-replay" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reorg_rewind_route" "/api/v1/internal/indexer-reorg-rewind" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_route" "/api/v1/internal/indexer-reconcile" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_root_fields" "projection_reconcile_clean" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_chain_scope_dry_run_anchor" "110-ORDERS-CHAIN-SCOPE-DRY-RUN" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_chain_scope_execute_anchor" "110-ORDERS-CHAIN-SCOPE-EXECUTE" "crates/api/src/routes/internal.rs"
+          check_anchor "env_traveltrust_allow_orders_chain_scope_rollback" "TRAVELTRUST_ALLOW_ORDERS_CHAIN_SCOPE_ROLLBACK" ".env.example"
+          check_anchor "env_traveltrust_allow_event_log_chain_scope_rollback" "TRAVELTRUST_ALLOW_EVENT_LOG_CHAIN_SCOPE_ROLLBACK" ".env.example"
+          check_anchor "env_traveltrust_allow_correction_executor_chain_scope_rollback" "TRAVELTRUST_ALLOW_CORRECTION_EXECUTOR_CHAIN_SCOPE_ROLLBACK" ".env.example"
+          check_anchor "env_traveltrust_allow_indexer_memory_sync_from_db" "TRAVELTRUST_ALLOW_INDEXER_MEMORY_SYNC_FROM_DB" ".env.example"
+          check_anchor "internal_indexer_reconcile_memory_sync_anchor" "110-INDEXER-MEMORY-SYNC-FROM-DB" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_body_sync_memory" "sync_indexer_memory_from_db_checkpoint" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_body_include_chain_tip" "include_chain_tip" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_chain_observation_anchor" "110-RECONCILE-CHAIN-TIP" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_rpc_escrow_sample_meta_anchor" "110-RPC-ESCROW-SAMPLE-META" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_event_log_escrow_coverage_anchor" "110-EVENT-LOG-ESCROW-COVERAGE" "crates/api/src/routes/internal.rs"
+          check_anchor "db_event_log_escrow_coverage_stats" "event_log_escrow_coverage_stats" "crates/api/src/db/event_log.rs"
+          check_anchor "db_fetch_indexer_checkpoint_for_chain" "fetch_indexer_checkpoint_for_chain" "crates/api/src/db/event_log.rs"
+          check_anchor "scripts_internal_indexer_ops_memory_sync" "--memory-sync-from-db" "scripts/internal-indexer-ops.sh"
+          check_anchor "scripts_internal_indexer_ops_include_chain_tip" "--include-chain-tip" "scripts/internal-indexer-ops.sh"
+          check_anchor "scripts_internal_indexer_ops_include_event_log_escrow_coverage" "--include-event-log-escrow-coverage" "scripts/internal-indexer-ops.sh"
+          check_anchor "internal_indexer_reconcile_event_log_chain_scope_dry_run_anchor" "110-EVENT-LOG-CHAIN-SCOPE-DRY-RUN" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_event_log_chain_scope_execute_anchor" "110-EVENT-LOG-CHAIN-SCOPE-EXECUTE" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_correction_executor_chain_scope_dry_run_anchor" "110-CORRECTION-EXECUTOR-CHAIN-SCOPE-DRY-RUN" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_correction_executor_chain_scope_execute_anchor" "110-CORRECTION-EXECUTOR-CHAIN-SCOPE-EXECUTE" "crates/api/src/routes/internal.rs"
+          check_anchor "db_correction_executor_chain_scope_rollback_dry_run" "correction_executor_chain_scope_rollback_dry_run" "crates/api/src/db/correction_executor_audit.rs"
+          check_anchor "db_correction_executor_chain_scope_rollback_execute" "correction_executor_chain_scope_rollback_execute" "crates/api/src/db/correction_executor_audit.rs"
+          check_anchor "scripts_internal_indexer_ops_correction_executor_scope" "--correction-executor-scope-dry-run" "scripts/internal-indexer-ops.sh"
+          check_anchor "db_orders_chain_scope_rollback_execute" "orders_chain_scope_rollback_execute" "crates/api/src/db/orders_projection.rs"
+          check_anchor "db_event_log_chain_scope_rollback_execute" "event_log_chain_scope_rollback_execute" "crates/api/src/db/event_log.rs"
+          check_anchor "internal_indexer_status_route" "/api/v1/internal/indexer-status" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_status_live_reconcile_block" "live_orders_projection_reconcile" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_status_reorg_recovery_hint" "110-REORG-RECOVERY-HINT" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_status_meta_build" "health_meta::meta_build_value" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_tick_ok_meta_build" "INDEXER_TICK_RESPONSE_META_BUILD" "crates/api/src/routes/internal.rs"
+          check_anchor "admin_indexer_reconcile_reports_route" "/api/v1/admin/indexer/reconcile-reports" "crates/api/src/routes/admin.rs"
+          check_anchor "admin_indexer_reconcile_reports_export_route" "/api/v1/admin/indexer/reconcile-reports/export" "crates/api/src/routes/admin.rs"
+          check_anchor "admin_indexer_reconcile_reports_export_json" "exported_at" "crates/api/src/routes/admin.rs"
+          check_anchor "admin_indexer_reconcile_reports_export_sha256_header" "RECONCILE_EXPORT_BODY_SHA256_HEADER" "crates/api/src/routes/admin.rs"
+          check_anchor "admin_reconcile_export_all_max_rows" "ADMIN_RECONCILE_EXPORT_ALL_MAX_ROWS" "crates/api/src/routes/admin.rs"
+          check_anchor "admin_reconcile_export_ed25519_header" "RECONCILE_EXPORT_ED25519_HEADER" "crates/api/src/routes/admin.rs"
+          check_anchor "runbook_indexer_ops_section" "## 2.55 Indexer tick" "ops/RUNBOOK.md"
+          check_anchor "scripts_internal_indexer_ops" "/api/v1/internal/indexer-tick" "scripts/internal-indexer-ops.sh"
+          check_anchor "scripts_internal_indexer_ops_status" "/api/v1/internal/indexer-status" "scripts/internal-indexer-ops.sh"
+          check_anchor "scripts_internal_indexer_ops_status_live" "live_reconcile=1" "scripts/internal-indexer-ops.sh"
+          check_anchor "scripts_internal_indexer_ops_evidence" "write-indexer-evidence" "scripts/internal-indexer-ops.sh"
+          check_anchor "internal_indexer_tick_reorg_guard" "reorg_suspected" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_tick_auto_rewind_env" "INDEXER_REORG_AUTO_REWIND_ON_TICK" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reorg_reload_chain_off_env" "INDEXER_REORG_RELOAD_CHAIN_OFF_ORDERS_AFTER_REWIND" "crates/api/src/routes/internal.rs"
+          check_anchor "chain_off_reload_orders_from_db_into_store" "reload_orders_from_db_into_store" "crates/api/src/chain_off/reload_orders_db.rs"
+          check_anchor "internal_indexer_reorg_sync_orders_from_projection_env" "INDEXER_REORG_SYNC_ORDERS_FROM_PROJECTION_AFTER_REWIND" "crates/api/src/routes/internal.rs"
+          check_anchor "startup_enforce_indexer_finality_floor" "enforce_indexer_finality_floor" "crates/api/src/startup/mod.rs"
+          check_anchor "db_backfill_orders_chain_id_from_projection" "backfill_orders_chain_id_from_projection" "crates/api/src/db/orders_projection.rs"
+          check_anchor "internal_indexer_reconcile_body_backfill_orders_chain_id" "backfill_orders_chain_id" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_response_orders_chain_id_backfill" "orders_chain_id_backfill" "crates/api/src/routes/internal.rs"
+          check_anchor "db_orders_chain_scope_rollback_dry_run" "orders_chain_scope_rollback_dry_run" "crates/api/src/db/orders_projection.rs"
+          check_anchor "db_sync_orders_from_projection_for_chain" "sync_orders_from_projection_for_chain" "crates/api/src/db/orders_projection.rs"
+          check_anchor "db_sync_orders_from_projection_summary_fields" "candidates_total" "crates/api/src/db/orders_projection.rs"
+          check_anchor "db_sync_orders_from_projection_summary_skipped_non_escrowed" "skipped_no_projection_non_escrowed_with_escrow" "crates/api/src/db/orders_projection.rs"
+          check_anchor "db_sync_orders_from_projection_summary_cleared_pre_funded" "cleared_orphan_escrow_pre_funded" "crates/api/src/db/orders_projection.rs"
+          check_anchor "db_sync_orders_from_projection_summary_cleared_terminal" "cleared_orphan_escrow_terminal_no_projection" "crates/api/src/db/orders_projection.rs"
+          check_anchor "db_sync_orders_from_projection_summary_terminal_env_echo" "clear_terminal_orphan_escrow_enabled" "crates/api/src/db/orders_projection.rs"
+          check_anchor "migration_orders_chain_id" "idx_orders_chain_id" "crates/api/migrations/20260416000045_orders_chain_id.sql"
+          check_anchor "db_latest_escrow_event_finality_for_order" "latest_escrow_event_finality_for_order" "crates/api/src/db/event_log.rs"
+          check_anchor "scripts_verify_reconcile_export_ed25519" "verify-reconcile-export-ed25519" "scripts/verify-reconcile-export-ed25519.sh"
+          check_anchor "db_admin_last_stored_reconcile" "admin_last_stored_orders_projection_reconcile" "crates/api/src/db/reconciliation_reports.rs"
+          check_anchor "db_event_log_escrow_coverage_list_extract" "event_log_escrow_coverage_from_list_item" "crates/api/src/db/reconciliation_reports.rs"
+          check_anchor "scripts_indexer_public_snapshot" "indexer-public-snapshot" "scripts/indexer-public-snapshot.sh"
+          check_anchor "scripts_snapshot_admin_indexer_health" "/api/v1/admin/indexer/health" "scripts/indexer-public-snapshot.sh"
+          check_anchor "scripts_snapshot_admin_observability" "/api/v1/admin/observability/overview" "scripts/indexer-public-snapshot.sh"
+          check_anchor "scripts_snapshot_internal_indexer_reconcile" "/api/v1/internal/indexer-reconcile" "scripts/indexer-public-snapshot.sh"
+          check_anchor "scripts_snapshot_internal_indexer_status" "/api/v1/internal/indexer-status" "scripts/indexer-public-snapshot.sh"
+          check_anchor "scripts_snapshot_provenance" "snapshot_provenance" "scripts/indexer-public-snapshot.sh"
+          check_anchor "scripts_snapshot_provenance_host_git" "host_git_commit" "scripts/indexer-public-snapshot.sh"
+          check_anchor "scripts_snapshot_provenance_host_repo_dirty" "host_repo_dirty" "scripts/indexer-public-snapshot.sh"
+          check_anchor "scripts_snapshot_rpc_escrow_samples_env" "SNAPSHOT_INTERNAL_RECONCILE_RPC" "scripts/indexer-public-snapshot.sh"
+          check_anchor "scripts_snapshot_internal_status_live_env" "SNAPSHOT_INTERNAL_STATUS_LIVE_RECONCILE" "scripts/indexer-public-snapshot.sh"
+          check_anchor "scripts_snapshot_internal_reconcile_include_chain_tip_env" "SNAPSHOT_INTERNAL_RECONCILE_INCLUDE_CHAIN_TIP" "scripts/indexer-public-snapshot.sh"
+          check_anchor "scripts_snapshot_internal_reconcile_include_event_log_escrow_coverage_env" "SNAPSHOT_INTERNAL_RECONCILE_INCLUDE_EVENT_LOG_ESCROW_COVERAGE" "scripts/indexer-public-snapshot.sh"
+          check_anchor "scripts_write_indexer_evidence" "indexer-public-snapshot.sh" "scripts/write-indexer-evidence.sh"
+          check_anchor "scripts_write_indexer_evidence_manifest" "indexer_public_snapshot_manifest.json" "scripts/write-indexer-evidence.sh"
+          check_anchor "scripts_write_indexer_evidence_ps1" "indexer-public-snapshot" "scripts/write-indexer-evidence.ps1"
+          check_anchor "scripts_write_indexer_evidence_ps1_manifest" "indexer_public_snapshot_manifest.json" "scripts/write-indexer-evidence.ps1"
+          check_anchor "scripts_internal_indexer_ops_evidence_bundle" "evidence-bundle" "scripts/internal-indexer-ops.sh"
+          check_anchor "scripts_internal_indexer_ops_ps1_delegate" "internal-indexer-ops.sh" "scripts/internal-indexer-ops.ps1"
+          check_anchor "scripts_internal_indexer_ops_ps1_write_evidence" "write-indexer-evidence.ps1" "scripts/internal-indexer-ops.ps1"
+          check_anchor "scripts_internal_indexer_ops_ps1_reconcile_memory_sync_doc" "--memory-sync-from-db" "scripts/internal-indexer-ops.ps1"
+          check_anchor "scripts_internal_indexer_ops_ps1_reconcile_include_chain_tip_doc" "--include-chain-tip" "scripts/internal-indexer-ops.ps1"
+          check_anchor "scripts_internal_indexer_ops_ps1_reconcile_include_event_log_escrow_coverage_doc" "--include-event-log-escrow-coverage" "scripts/internal-indexer-ops.ps1"
+          check_anchor "scripts_indexer_public_snapshot_ps1_delegate" "indexer-public-snapshot.sh" "scripts/indexer-public-snapshot.ps1"
+          check_anchor "scripts_indexer_reconcile_probe_ps1_delegate" "indexer-reconcile-probe.sh" "scripts/indexer-reconcile-probe.ps1"
+          check_anchor "scripts_indexer_reorg_recovery_ps1_delegate" "indexer-reorg-recovery.sh" "scripts/indexer-reorg-recovery.ps1"
+          check_anchor "scripts_indexer_reorg_recovery" "indexer-reorg-recovery.sh" "scripts/indexer-reorg-recovery.sh"
+          check_anchor "metrics_indexer_lag_gauge" "traveltrust_indexer_lag_blocks" "crates/api/src/routes/health_meta.rs"
+          check_anchor "meta_indexer_finality_discipline_chain_tip" "chain_tip_not_in_meta" "crates/api/src/routes/health_meta.rs"
+          check_anchor "ops_prometheus_alerts_indexer_example" "TravelTrustIndexerLagHigh" "ops/monitoring/prometheus-alerts-indexer.example.yml"
+          check_anchor "scripts_indexer_reconcile_probe" "indexer-status?live_reconcile=1" "scripts/indexer-reconcile-probe.sh"
+          check_anchor "scripts_internal_indexer_ops_probe" "indexer-reconcile-probe.sh" "scripts/internal-indexer-ops.sh"
+          check_anchor "ops_monitoring_readme" "github-actions-indexer-probe.example.yml" "ops/monitoring/README.md"
+          check_anchor "ops_github_actions_indexer_probe_example" "INDEXER_PROBE_API_BASE_URL" "ops/monitoring/github-actions-indexer-probe.example.yml"
+          check_anchor "ops_k8s_indexer_probe_cronjob" "kind: CronJob" "ops/monitoring/k8s-indexer-reconcile-probe.cronjob.example.yaml"
+          check_anchor "ops_grafana_indexer_dashboard" "traveltrust-indexer-example" "ops/monitoring/grafana-dashboard-traveltrust-indexer.example.json"
+          check_anchor "db_orders_projection_reconcile_semantics" "110-RECONCILE-SEMANTICS" "crates/api/src/db/orders_projection.rs"
+          check_anchor "governance_vault_forwards_route" "/api/v1/governance/vault-forwards" "crates/api/src/routes/governance.rs"
+          check_anchor "admin_region_vault_forwarded_events_route" "/api/v1/admin/region-vault/forwarded-events" "crates/api/src/routes/admin.rs"
+          check_anchor "migration_region_vault_forwarded_events" "region_vault_forwarded_events" "crates/api/migrations/20260417000046_region_vault_forwarded_events.sql"
+
+          pass_rate=$((checks_passed * 100 / checks_total))
+          if [[ "$pass_rate" -ne 100 ]]; then
+            failures=$((failures + 1))
+          fi
+
+          if [[ "$failures" -eq 0 ]]; then
+            passed=true
+          else
+            passed=false
+          fi
+
+          cat > "$EVIDENCE_DIR/indexer_reconcile_gate_summary.json" <<JSON
+          {
+            "workflow": "Indexer Reconcile Gate",
+            "job": "indexer-reconcile",
+            "check": "indexer-reconcile-gate-summary",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "indexer-reconcile-gate",
+            "severity": "gate",
+            "owner": "ops-sre",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "gate": "fail-closed",
+            "metrics": {
+              "route_checks": {"passed": ${checks_passed}, "total": ${checks_total}, "pass_rate": ${pass_rate}}
+            },
+            "failures": ${failures}
+          }
+          JSON
+
+          if [[ "$failures" -ne 0 ]]; then
+            echo "[indexer-reconcile-gate] failed with ${failures} missing anchors."
+            exit 1
+          fi
+      - name: Generate reconcile diff report
+        run: |
+          set -euo pipefail
+          cat > "$EVIDENCE_DIR/reconcile_diff_report.json" <<JSON
+          {
+            "workflow": "Indexer Reconcile Gate",
+            "job": "indexer-reconcile",
+            "check": "reconcile-diff-report",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "indexer-reconcile-diff-report",
+            "severity": "info",
+            "owner": "ops-sre",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": true,
+            "checks": [
+              "internal/indexer-replay route exists",
+              "internal/indexer-reorg-rewind route exists (110 reorg rewind Partial)",
+              "internal/indexer-reconcile route exists",
+              "indexer-reconcile 200 body documents root projection_reconcile_clean (jq-friendly)",
+              "internal/indexer-status route exists",
+              "indexer-status optional live_orders_projection_reconcile (query live_reconcile=1)",
+              "scripts/internal-indexer-ops.sh status supports --live-reconcile query",
+              "scripts/indexer-public-snapshot.sh documents SNAPSHOT_INTERNAL_STATUS_LIVE_RECONCILE",
+              "admin/indexer/reconcile-reports route exists",
+              "admin reconcile export Ed25519 header constant (optional signing key)",
+              "ops/RUNBOOK.md §2.55 indexer ops section exists",
+              "scripts/internal-indexer-ops.sh documents internal tick/replay/reconcile/status paths",
+              "scripts/internal-indexer-ops.sh documents GET internal indexer-status",
+              "scripts/internal-indexer-ops.sh documents evidence subcommand (write-indexer-evidence)",
+              "indexer-tick reorg_suspected guard present in internal routes",
+              "internal indexer-tick INDEXER_REORG_AUTO_REWIND_ON_TICK env gate (optional auto rewind)",
+              "internal indexer-reorg INDEXER_REORG_RELOAD_CHAIN_OFF_ORDERS_AFTER_REWIND env gate",
+              "chain_off reload_orders_from_db_into_store after reorg rewind (110 Partial memory sync)",
+              "internal indexer-reorg INDEXER_REORG_SYNC_ORDERS_FROM_PROJECTION_AFTER_REWIND env + sync_orders_from_projection_for_chain (110 Partial orders↔projection; candidates_total / skipped_no_order_row / cleared_orphan_escrow_pre_funded / cleared_orphan_escrow_terminal_no_projection with INDEXER_REORG_SYNC_CLEAR_ORPHAN_ESCROW_TERMINAL / skipped_no_projection_non_escrowed_with_escrow)",
+              "scripts/verify-reconcile-export-ed25519.sh --self-test runs in CI before anchor scan",
+              "db admin_last_stored_orders_projection_reconcile helper present",
+              "reconciliation_reports list SQL + event_log_escrow_coverage_from_list_item (admin reconcile-reports items[] + CSV tail)",
+              "scripts/indexer-public-snapshot.sh public health+meta snapshot",
+              "scripts/indexer-public-snapshot.sh emits snapshot_provenance (script + script_semver + host_git_commit + host_git_branch + host_repo_dirty); CI anchors host_git_commit + host_git_branch + host_repo_dirty @ indexer-public-snapshot.sh",
+              "scripts/indexer-public-snapshot.sh references admin indexer health path",
+              "scripts/indexer-public-snapshot.sh references admin observability overview path",
+              "scripts/indexer-public-snapshot.sh references internal indexer-reconcile path",
+              "scripts/indexer-public-snapshot.sh references internal indexer-status path",
+              "scripts/indexer-public-snapshot.sh documents SNAPSHOT_INTERNAL_RECONCILE_RPC (rpc_escrow_samples)",
+              "scripts/indexer-public-snapshot.sh documents SNAPSHOT_INTERNAL_RECONCILE_INCLUDE_CHAIN_TIP (include_chain_tip in reconcile body)",
+              "scripts/indexer-public-snapshot.sh documents SNAPSHOT_INTERNAL_RECONCILE_INCLUDE_EVENT_LOG_ESCROW_COVERAGE (include_event_log_escrow_coverage in reconcile body)",
+              "scripts/write-indexer-evidence.sh wraps indexer-public-snapshot to evidence/GO_*",
+              "scripts/write-indexer-evidence.ps1 Windows parity (bash snapshot + PS manifest/zip)",
+              "write-indexer-evidence.ps1 anchors indexer_public_snapshot_manifest.json",
+              "write-indexer-evidence optional indexer_public_snapshot_manifest + INDEXER_EVIDENCE_BUNDLE_ZIP zip",
+              "internal-indexer-ops.sh evidence-bundle subcommand (bundle zip)",
+              "internal-indexer-ops.ps1 delegates tick/status/... to bash .sh",
+              "internal-indexer-ops.ps1 evidence/evidence-bundle calls write-indexer-evidence.ps1",
+              "indexer-public-snapshot.ps1 delegates to bash indexer-public-snapshot.sh",
+              "indexer-reconcile-probe.ps1 delegates to bash indexer-reconcile-probe.sh",
+              "indexer-reorg-recovery.ps1 delegates to bash indexer-reorg-recovery.sh",
+              "GET internal/indexer-status includes reorg_recovery (110-REORG-RECOVERY-HINT)",
+              "GET internal/indexer-status embeds meta.build via health_meta::meta_build_value (120/140 traceability)",
+              "scripts/indexer-reorg-recovery.sh reorg manual recovery curl helper",
+              "GET /metrics exposes traveltrust_indexer_lag_blocks (Prometheus; health_meta.rs)",
+              "ops/monitoring/prometheus-alerts-indexer.example.yml sample rules (TravelTrustIndexerLagHigh)",
+              "scripts/indexer-reconcile-probe.sh live reconcile probe (indexer-status?live_reconcile=1)",
+              "scripts/internal-indexer-ops.sh delegates probe to indexer-reconcile-probe.sh",
+              "ops/monitoring/README.md indexes monitoring examples",
+              "ops/monitoring/github-actions-indexer-probe.example.yml (INDEXER_PROBE_* secrets)",
+              "ops/monitoring/k8s-indexer-reconcile-probe.cronjob.example.yaml (CronJob probe)",
+              "ops/monitoring/grafana-dashboard-traveltrust-indexer.example.json (uid traveltrust-indexer-example)",
+              "orders_projection.rs anchors 110-RECONCILE-SEMANTICS (Funded vs DB escrow_address)",
+              "orders_chain_scope_rollback_dry_run (110 §3.1.4 Target precursor; indexer-reconcile body flag)",
+              "orders_chain_scope_rollback_execute + 110-ORDERS-CHAIN-SCOPE-EXECUTE + TRAVELTRUST_ALLOW_ORDERS_CHAIN_SCOPE_ROLLBACK (.env.example)",
+              "event_log_chain_scope_rollback_dry_run + 110-EVENT-LOG-CHAIN-SCOPE-DRY-RUN (indexer-reconcile body flag)",
+              "event_log_chain_scope_rollback_execute + 110-EVENT-LOG-CHAIN-SCOPE-EXECUTE + TRAVELTRUST_ALLOW_EVENT_LOG_CHAIN_SCOPE_ROLLBACK (.env.example)",
+              "sync_indexer_memory_from_db_checkpoint + 110-INDEXER-MEMORY-SYNC-FROM-DB + TRAVELTRUST_ALLOW_INDEXER_MEMORY_SYNC_FROM_DB (.env.example)",
+              "include_chain_tip + chain_observation + 110-RECONCILE-CHAIN-TIP (indexer-reconcile optional RPC tip snapshot; does not fail 200)",
+              "rpc_escrow_sample_meta + count_orders_with_escrow_address + 110-RPC-ESCROW-SAMPLE-META (indexer-reconcile when rpc_escrow_samples>0; 500 rpc_escrow_sample_meta_failed)",
+              "event_log_escrow_coverage + event_log_escrow_coverage_stats + 110-EVENT-LOG-ESCROW-COVERAGE (indexer-reconcile include_event_log_escrow_coverage; DB indexed scope only)",
+              "internal-indexer-ops.sh documents reconcile --include-chain-tip (POST body include_chain_tip)",
+              "internal-indexer-ops.sh documents reconcile --include-event-log-escrow-coverage (POST body include_event_log_escrow_coverage)",
+              "internal-indexer-ops.ps1 documents reconcile --memory-sync-from-db pass-through (aligns with .sh + SNAPSHOT env / internal body flags)",
+              "internal-indexer-ops.ps1 documents reconcile --include-chain-tip pass-through",
+              "internal-indexer-ops.ps1 documents reconcile --include-event-log-escrow-coverage pass-through",
+              "correction_executor_chain_scope_rollback_dry_run + 110-CORRECTION-EXECUTOR-CHAIN-SCOPE-DRY-RUN (indexer-reconcile body flag)",
+              "correction_executor_chain_scope_rollback_execute + 110-CORRECTION-EXECUTOR-CHAIN-SCOPE-EXECUTE + TRAVELTRUST_ALLOW_CORRECTION_EXECUTOR_CHAIN_SCOPE_ROLLBACK (.env.example)",
+              "db fetch_indexer_checkpoint_for_chain (checkpoints_sharded read path)",
+              "GET /api/v1/governance/vault-forwards (RegionVaultForwarded projection; governance.rs)",
+              "GET /api/v1/admin/region-vault/forwarded-events (audit read; admin.rs)",
+              "migration 20260417000046_region_vault_forwarded_events.sql (region_vault_forwarded_events table)"
+            ],
+            "note": "Runtime replay/reconcile depth is validated in staged drills and evidence packs."
+          }
+          JSON
+      - name: Upload indexer/reconcile evidence artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: indexer-reconcile-evidence
+          path: |
+            evidence/GO_*/indexer_replay.log
+            evidence/GO_*/indexer_reconcile_gate_summary.json
+            evidence/GO_*/reconcile_diff_report.json

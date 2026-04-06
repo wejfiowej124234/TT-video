@@ -1,4 +1,4 @@
-//! 通用领域类型：用户、导游、订单、争议
+//! 通用领域类型：用户、向导、订单、争议
 
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
@@ -59,7 +59,7 @@ pub enum ServiceType {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "snake_case")]
 pub enum GuideStatus {
-    Pending,   // 未达质押或审核中
+    Pending, // 未达质押或审核中
     Active,
     Suspended,
 }
@@ -101,6 +101,6 @@ pub enum DisputeStatus {
 pub struct DisputeResolution {
     /// 0.0 ~ 1.0，退给游客的比例
     pub refund_ratio: f64,
-    /// 是否扣罚导游质押
+    /// 是否扣罚向导质押
     pub slash_guide: bool,
 }

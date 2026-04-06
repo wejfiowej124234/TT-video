@@ -1,0 +1,96 @@
+{
+  "workflow": "Build",
+  "job": "frontend",
+  "check": "test:i18n:ci",
+  "commit_sha": "local",
+  "env": "local",
+  "locale": [
+    "zh",
+    "en"
+  ],
+  "rule_id": "i18n-key-parity-critical-prefix-and-key-routes",
+  "severity": "none",
+  "owner": "frontend-team",
+  "generated_at": "2026-04-06T03:08:59.268Z",
+  "totals": {
+    "zh_keys": 3988,
+    "en_keys": 3988
+  },
+  "missing_in_en": [],
+  "missing_in_zh": [],
+  "critical_prefix_coverage": [
+    {
+      "prefix": "common_",
+      "zh_count": 26,
+      "en_count": 26,
+      "passed": true
+    },
+    {
+      "prefix": "orders_",
+      "zh_count": 57,
+      "en_count": 57,
+      "passed": true
+    },
+    {
+      "prefix": "disputes_",
+      "zh_count": 20,
+      "en_count": 20,
+      "passed": true
+    },
+    {
+      "prefix": "order_",
+      "zh_count": 144,
+      "en_count": 144,
+      "passed": true
+    },
+    {
+      "prefix": "escrow_",
+      "zh_count": 291,
+      "en_count": 291,
+      "passed": true
+    }
+  ],
+  "key_route_coverage": {
+    "total": 5,
+    "passed": 5,
+    "percent": 100
+  },
+  "key_route_results": [
+    {
+      "id": "login",
+      "file": "app/auth/login/page.tsx",
+      "rule": "must contain useTranslation or t(...)",
+      "status": "passed",
+      "hardcoded_samples": []
+    },
+    {
+      "id": "place_order",
+      "file": "app/itinerary/new/page.tsx",
+      "rule": "must contain useTranslation or t(...)",
+      "status": "passed",
+      "hardcoded_samples": []
+    },
+    {
+      "id": "orders",
+      "file": "app/orders/page.tsx",
+      "rule": "must contain useTranslation and t(...)",
+      "status": "passed",
+      "hardcoded_samples": []
+    },
+    {
+      "id": "disputes",
+      "file": "app/disputes/page.tsx",
+      "rule": "must contain useTranslation and t(...)",
+      "status": "passed",
+      "hardcoded_samples": []
+    },
+    {
+      "id": "order_detail",
+      "file": "components/escrow/EscrowDetail/index.tsx",
+      "rule": "must contain useTranslation and t(...)",
+      "status": "passed",
+      "hardcoded_samples": []
+    }
+  ],
+  "passed": true
+}

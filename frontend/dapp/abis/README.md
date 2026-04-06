@@ -10,5 +10,6 @@
 
 ## 当前状态
 
-- 合约尚未实现，本目录暂无 ABI 文件。
-- 实现时见 [docs/spec/14-合约-API-ABI-前后端对齐](../../../docs/spec/14-合约-API-ABI-前后端对齐.md) §1.2。
+- **Escrow.json**：已从 contracts/abi 对齐并增加 openDispute，供 P9 DApp 调用 deposit/release/openDispute。
+- **EscrowFactory.json**：已从 contracts/abi 同步（48 前后端 ABI 对齐），供创建 Escrow 实例时使用（escrowOf、createEscrow、EscrowCreated）。
+- 与 [contracts/abi](../../../contracts/abi/) 同步；发版前核对部署合约版本。见 [14-合约-API-ABI-前后端对齐](../../../docs/spec/14-合约-API-ABI-前后端对齐.md) §1.2。

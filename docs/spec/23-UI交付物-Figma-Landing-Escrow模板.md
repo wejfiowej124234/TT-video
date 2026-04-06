@@ -1,7 +1,19 @@
 # UI 交付物：Figma 结构 + Landing 线框 + Escrow 银行级模板
 
-**Version:** 1.0  
+**Version:** 1.0.1  
+**Landing/Discover 视觉框架定稿**：以 **[28-Cinematic-Glassmorphism-Web3融合规范](28-Cinematic-Glassmorphism-Web3融合规范.md)** 为准（Hero 可信承诺行+三徽章、卡片 Escrow 角标与 Escrow pricing、可信基建墙、WalletStatusMini）；本文线框与 **Escrow 银行级模板** 仍适用，与 28 配套。  
 **用途**：设计/开发可直接按本文建 Figma、实现 Landing 与 EscrowDetail 页面。与 [21-UI-3D-旅游Web3融合规范](21-UI-3D-旅游Web3融合规范-v1.0.md)、[22-Design-Tokens-旅游Web3融合体系](22-Design-Tokens-旅游Web3融合体系-v1.0.md) 一致。**Landing/Discover/Itinerary 顶级标准**（沉浸叙事、动效哲学、杂志级 Itinerary、缺失模块验收）见 [25-顶级UI标准-Landing-Discover-Itinerary](25-顶级UI标准-Landing-Discover-Itinerary.md)。文档版本与最后更新见 [00-文档索引](00-文档索引.md)。
+
+### 读前摘要
+
+| 你要找什么 | 单源 |
+|------------|------|
+| **Tailwind / globals 工程路径** | **§一** |
+| **Figma 文件结构、组件命名** | **§二** |
+| **Landing 线框** | **§三** |
+| **Escrow 银行级模板（结构+层级）** | **§四、§七** |
+| **Awwwards 级排版、Before/After** | **§五、§六** |
+| **叙事与动效哲学（导演级）** | **[25](25-顶级UI标准-Landing-Discover-Itinerary.md)**；Experience 组件 **[28](28-Cinematic-Glassmorphism-Web3融合规范.md)** |
 
 ---
 

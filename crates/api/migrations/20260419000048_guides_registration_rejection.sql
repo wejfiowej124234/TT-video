@@ -1,0 +1,4 @@
+-- B-080 / TT-GUIDE-DASHBOARD-REGISTRATION-BANNER-001：向导资质审核拒绝原因（GET /me.trust、Admin PATCH）
+
+ALTER TABLE guides ADD COLUMN IF NOT EXISTS rejection_codes JSONB NOT NULL DEFAULT '[]'::jsonb;
+ALTER TABLE guides ADD COLUMN IF NOT EXISTS rejection_message TEXT;

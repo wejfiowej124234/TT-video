@@ -1,0 +1,90 @@
+# TravelTrust API — example Prometheus alert rules for GET /metrics indexer gauges.
+# SSOT narrative: ops/RUNBOOK.md §2.55、docs/spec/04 §7.10、docs/spec/110 §3.1.2
+#
+# Usage: merge into your Prometheus rule_files (or Grafana Mimir / Thanos Ruler) after
+# scraping the API job that exposes /metrics. Tune `for:` and severities per environment.
+#
+# Limitation: /metrics does NOT include DB projection reconcile cleanliness
+# (projection_reconcile_clean). For that, use internal GET …/indexer-status?live_reconcile=1
+# or POST …/internal/indexer-reconcile (internal network + secret); see RUNBOOK §2.55.
+# Optional scripted probe (exit 0 iff clean): scripts/indexer-reconcile-probe.sh
+# Schedule examples: ops/monitoring/github-actions-indexer-probe.example.yml,
+#   k8s-indexer-reconcile-probe.cronjob.example.yaml (see ops/monitoring/README.md).
+# Grafana: ops/monitoring/grafana-dashboard-traveltrust-indexer.example.json
+#
+# RegionVaultForwarded: rows live in PostgreSQL `region_vault_forwarded_events`; the indexer shares the same
+# tick/reorg path as Escrow/FeeRouter. There is no separate /metrics gauge for vault row counts — use
+# GET /api/v1/governance/vault-forwards, GET /api/v1/admin/region-vault/forwarded-events (admin RBAC), or SQL.
+
+groups:
+  - name: traveltrust_indexer
+    interval: 30s
+    rules:
+      - alert: TravelTrustIndexerLagHigh
+        expr: traveltrust_indexer_lag_blocks > traveltrust_indexer_lag_max_blocks
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: Indexer lag blocks exceed INDEXER_LAG_MAX_BLOCKS threshold
+          description: >-
+            traveltrust_indexer_lag_blocks is above traveltrust_indexer_lag_max_blocks
+            on this scrape target. See GET /meta.indexer and Runbook §2.55.
+
+      - alert: TravelTrustIndexerReorgSuspected
+        expr: traveltrust_indexer_reorg_detected == 1
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: Indexer reorg_suspected flag is set
+          description: >-
+            Pause indexer-tick, verify chain head vs last indexed block hash, then Runbook §2.55
+            (replay / reconcile / manual correction per 110).
+
+      - alert: TravelTrustAuthorityDegraded
+        expr: traveltrust_authority_degraded_mode == 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: API authority.degraded_mode is active (lag or reorg path)
+          description: >-
+            Aligns with GET /meta.authority.degraded_mode. Review indexer lag and reorg flags.
+
+      - alert: TravelTrustIndexerReplayRequired
+        expr: traveltrust_indexer_replay_required == 1
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: indexer_replay_required flag has been set for a sustained interval
+          description: >-
+            Run POST /api/v1/internal/indexer-replay per Runbook §2.55 after confirming chain + DB.
+
+  # Optional: enable only in environments where the API **must** have PostgreSQL + chain client.
+  # Pure chain_off / demo targets legitimately scrape 0 — do not merge blindly into prod.
+  - name: traveltrust_api_attachments
+    interval: 30s
+    rules:
+      - alert: TravelTrustDatabaseNotConnected
+        expr: traveltrust_database_connected == 0
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: API process reports no PostgreSQL pool on chain_off (meta.database_connected aligned)
+          description: >-
+            traveltrust_database_connected is 0. Expected only for memory-only demos. If this target
+            should use DATABASE_URL, verify deployment and GET /meta.database_connected. See 04 §7.10 / 120.
+
+      - alert: TravelTrustChainConfigNotLoaded
+        expr: traveltrust_chain_config_loaded == 0
+        for: 30m
+        labels:
+          severity: info
+        annotations:
+          summary: API has no ChainConfig snapshot (CHAIN_RPC_URL path not mounted)
+          description: >-
+            traveltrust_chain_config_loaded is 0. OK for chain_off-only stacks; for indexer/on-chain
+            paths set CHAIN_RPC_URL and related env. See GET /meta.chain / 110.

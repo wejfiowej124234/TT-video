@@ -1,0 +1,23 @@
+"use client";
+
+/** 52 §7.5 P0：消息列表加载骨架，先出壳再出数 */
+const ROWS = 5;
+
+export function CommunityMessagesListSkeleton() {
+  return (
+    <ul className="divide-y divide-slate-600/50" aria-hidden>
+      {Array.from({ length: ROWS }).map((_, i) => (
+        <li key={i} className="flex min-h-[44px] items-center justify-start gap-3 px-4 py-3">
+          <div className="h-11 w-11 min-h-[44px] min-w-[44px] shrink-0 rounded-full bg-slate-700/80 animate-pulse" />
+          <div className="min-w-0 flex-1 space-y-2">
+            <div className="h-4 w-24 rounded-[var(--radius-sm)] bg-slate-600/70 animate-pulse" />
+            <div className="h-3 w-32 rounded-[var(--radius-sm)] bg-slate-700/60 animate-pulse" />
+          </div>
+          <div className="flex h-11 min-h-[44px] shrink-0 items-center justify-end">
+            <div className="h-3 w-12 rounded-[var(--radius-sm)] bg-slate-600/60 animate-pulse" />
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}

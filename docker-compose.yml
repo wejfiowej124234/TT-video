@@ -1,0 +1,26 @@
+# 本地开发用 PostgreSQL（阶段 41 接库）
+# 使用：在项目根执行 docker compose up -d，再在 .env 中设置 DATABASE_URL 后启动 API。
+# 详见 docs/测试账号与本地联调.md §五
+# 交付追溯（140 / GET /meta.build）：预发与生产 API 建议在运行时注入 TRAVELTRUST_GIT_SHA、TRAVELTRUST_DEPLOYED_AT（见根目录 .env.example）；CI 见 .github/workflows/build.yml 对 TRAVELTRUST_BUILD_GIT_SHA 的编译期注入。
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: traveltrust-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: traveltrust
+      POSTGRES_PASSWORD: traveltrust
+      POSTGRES_DB: traveltrust
+    volumes:
+      - traveltrust_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U traveltrust -d traveltrust"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  traveltrust_pgdata:

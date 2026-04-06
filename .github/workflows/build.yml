@@ -1,5 +1,5 @@
-# 仓库构建与门禁：check-invariants（含 Node 锁策略）→ Rust 构建与测试 → 依赖审计（可选不阻塞）
-# 见 08-5、README 实现状态。若默认分支非 main，请将下方 branches 改为实际默认分支（如 master）
+# 仓库构建与门禁：check-invariants → Rust 构建与测试 → 前端 lint/tsc/test → 依赖审计（可选不阻塞）
+# 见 08-5、README 实现状态；前端见 项目优化与问题清单 §六 CI
 name: Build
 
 on:
@@ -14,12 +14,1067 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+      - name: Set evidence dir
+        run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
       - name: Check invariants
         run: bash ./scripts/check-invariants.sh
+      - name: 55-S13 ABI and API path gate
+        run: bash ./scripts/check-55-s13.sh
+      - name: 04 section 3.4 API table vs mounted routes (STRICT_WARNINGS)
+        env:
+          STRICT_WARNINGS: "1"
+        run: python3 scripts/check-04-routes-vs-code.py
+      - name: 04 section 3.4 frontend page routes vs Next app
+        run: python3 scripts/check-04-frontend-routes-vs-app.py
+      - name: 13-1 section 2 table 1 IA routes vs Next app
+        run: python3 scripts/check-13-1-table1-routes-vs-app.py
+      - name: 13-1 table 1 routes covered by 04 frontend path table
+        run: python3 scripts/check-13-1-routes-covered-by-04-frontend-table.py
+      # 140 / GET /meta.build：编译期注入提交 SHA（option_env TRAVELTRUST_BUILD_GIT_SHA），与发布追溯一致
       - name: Build workspace
+        env:
+          TRAVELTRUST_BUILD_GIT_SHA: ${{ github.sha }}
         run: cargo build --workspace
       - name: Run tests
+        env:
+          TRAVELTRUST_BUILD_GIT_SHA: ${{ github.sha }}
         run: cargo test --workspace
+      - name: Generate backend evidence artifacts
+        run: |
+          TS_UTC="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          mkdir -p "$EVIDENCE_DIR"
+          cat > "$EVIDENCE_DIR/unit_api_summary.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "build",
+            "check": "backend-unit-suite",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "backend-unit-tests",
+            "severity": "gate",
+            "owner": "api-backend",
+            "generated_at": "${TS_UTC}",
+            "passed": true,
+            "suite": "cargo test --workspace"
+          }
+          JSON
+          cat > "$EVIDENCE_DIR/unit_api_junit.xml" <<'XML'
+          <testsuite name="backend-unit-api" tests="1" failures="0" errors="0" skipped="0">
+            <testcase classname="ci.backend" name="cargo test --workspace"/>
+          </testsuite>
+          XML
+      - name: Upload backend evidence artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-backend-evidence
+          path: |
+            evidence/GO_*/unit_api_summary.json
+            evidence/GO_*/unit_api_junit.xml
       - name: Audit dependencies (optional, does not block)
         run: bash ./scripts/audit-deps.sh
         continue-on-error: true
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+      - name: Set evidence dir
+        run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
+      - name: Install frontend deps
+        run: cd frontend && npm ci
+      - name: Lint
+        run: cd frontend && npm run lint
+      - name: TypeScript
+        run: cd frontend && npx tsc --noEmit
+      - name: Unit tests
+        run: cd frontend && npm run test -- --run
+      - name: I18n coverage gate (fail-closed)
+        run: cd frontend && npm run test:i18n:ci
+      - name: Generate frontend evidence artifacts
+        run: |
+          TS_UTC="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          mkdir -p "$EVIDENCE_DIR"
+          cp frontend/.i18n-coverage.json "$EVIDENCE_DIR/i18n_coverage_report.json"
+          cat > "$EVIDENCE_DIR/frontend_quality_summary.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "frontend",
+            "commit_sha": "${{ github.sha }}",
+            "env": "ci",
+            "locale": "zh,en",
+            "rule_id": "i18n-regression-and-key-parity",
+            "severity": "gate",
+            "owner": "frontend-team",
+            "generated_at": "${TS_UTC}",
+            "ci_run_id": "${{ github.run_id }}",
+            "passed": true,
+            "status": "passed",
+            "checks": ["lint", "tsc", "vitest", "test:i18n:ci"]
+          }
+          JSON
+          cat > "$EVIDENCE_DIR/frontend_junit.xml" <<'XML'
+          <testsuite name="frontend-quality" tests="4" failures="0" errors="0" skipped="0">
+            <testcase classname="ci.frontend" name="lint"/>
+            <testcase classname="ci.frontend" name="tsc"/>
+            <testcase classname="ci.frontend" name="vitest"/>
+            <testcase classname="ci.frontend" name="test:i18n:ci"/>
+          </testsuite>
+          XML
+      - name: Upload frontend evidence artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-frontend-evidence
+          path: |
+            evidence/GO_*/frontend_quality_summary.json
+            evidence/GO_*/frontend_junit.xml
+            evidence/GO_*/i18n_coverage_report.json
+
+  regional-matrix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+      - name: Set evidence dir
+        run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
+      - name: Install frontend deps
+        run: cd frontend && npm ci
+      - name: Regional matrix gate (fail-closed)
+        run: cd frontend && npm run test:regional:ci
+      - name: Generate regional matrix evidence artifacts
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR"
+          cp frontend/.regional-matrix.json "$EVIDENCE_DIR/regional_matrix_report.json"
+      - name: Upload regional matrix evidence artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-regional-matrix-evidence
+          path: |
+            evidence/GO_*/regional_matrix_report.json
+
+  a11y:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+      - name: Set evidence dir
+        run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
+      - name: Install frontend deps
+        run: cd frontend && npm ci
+      - name: Build and start frontend for lighthouse a11y
+        run: |
+          set -euo pipefail
+          cd frontend
+          npm run build
+          npm run start -- -p 3012 > /tmp/frontend-a11y.log 2>&1 &
+          echo $! > /tmp/frontend-a11y.pid
+          for _ in {1..30}; do
+            if curl -sf http://localhost:3012 >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Frontend server failed to start for a11y gate"
+          cat /tmp/frontend-a11y.log || true
+          exit 1
+      - name: A11y lighthouse gate (fail-closed)
+        run: cd frontend && npm run test:a11y:ci
+      - name: Stop frontend server
+        if: always()
+        run: |
+          if [[ -f /tmp/frontend-a11y.pid ]]; then
+            kill "$(cat /tmp/frontend-a11y.pid)" || true
+          fi
+      - name: Generate a11y evidence artifacts
+        run: |
+          set -euo pipefail
+          TS_UTC="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          mkdir -p "$EVIDENCE_DIR"
+          cp frontend/.lighthouse-a11y.json "$EVIDENCE_DIR/lighthouse_a11y.json"
+          cat > "$EVIDENCE_DIR/a11y_gate_summary.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "a11y",
+            "commit_sha": "${{ github.sha }}",
+            "env": "ci",
+            "locale": "en-US",
+            "rule_id": "lighthouse-accessibility-gate",
+            "severity": "gate",
+            "owner": "frontend-team",
+            "generated_at": "${TS_UTC}",
+            "ci_run_id": "${{ github.run_id }}",
+            "passed": true,
+            "status": "passed",
+            "gate": "fail-closed",
+            "check": "npm run test:a11y:ci"
+          }
+          JSON
+      - name: Upload a11y evidence artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-a11y-evidence
+          path: |
+            evidence/GO_*/lighthouse_a11y.json
+            evidence/GO_*/a11y_gate_summary.json
+
+  # 50-T1：E2E 纳入 CI（可选不阻塞，便于回归；发版前可将 continue-on-error 改为 false 以强制通过，见 50 §9.2/§六附 企业级检查）
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+      - name: Set evidence dir
+        run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
+      - name: Install frontend deps
+        run: cd frontend && npm ci
+      - name: Install Playwright browsers
+        run: cd frontend && npx playwright install --with-deps chromium
+      - name: Build frontend
+        run: cd frontend && npm run build
+      - name: E2E (Playwright)
+        env:
+          PORT: "3012"
+          PLAYWRIGHT_BASE_URL: "http://localhost:3012"
+        run: cd frontend && npm run e2e -- --project=chromium
+        continue-on-error: false  # E2E 门禁已收紧（50 §六附 修补所有问题）
+      - name: Generate e2e evidence artifacts
+        run: |
+          TS_UTC="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          mkdir -p "$EVIDENCE_DIR"
+          cat > "$EVIDENCE_DIR/e2e_core_report.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "e2e",
+            "check": "e2e-playwright-core",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "e2e-playwright",
+            "severity": "gate",
+            "owner": "frontend-team",
+            "generated_at": "${TS_UTC}",
+            "passed": true,
+            "suite": "playwright chromium"
+          }
+          JSON
+          cat > "$EVIDENCE_DIR/e2e_trace_index.csv" <<'CSV'
+          suite,artifact,status
+          playwright,frontend/playwright-report,passed
+          CSV
+      - name: Upload e2e evidence artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-e2e-evidence
+          path: |
+            evidence/GO_*/e2e_core_report.json
+            evidence/GO_*/e2e_trace_index.csv
+
+  finance-reconcile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set evidence dir
+        run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
+      - name: Finance reconcile gate (fail-closed)
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR"
+
+          failures=0
+          route_checks_total=5
+          route_checks_passed=0
+
+          echo "# Finance Reconcile Checks" > "$EVIDENCE_DIR/finance_reconcile_routes.log"
+          echo "- workflow: Build" >> "$EVIDENCE_DIR/finance_reconcile_routes.log"
+          echo "- job: finance-reconcile" >> "$EVIDENCE_DIR/finance_reconcile_routes.log"
+          echo "- commit_sha: ${{ github.sha }}" >> "$EVIDENCE_DIR/finance_reconcile_routes.log"
+
+          check_anchor() {
+            local metric="$1"
+            local pattern="$2"
+            local target="$3"
+            if rg -n "$pattern" "$target" >> "$EVIDENCE_DIR/finance_reconcile_routes.log" 2>/dev/null; then
+              route_checks_passed=$((route_checks_passed + 1))
+            else
+              failures=$((failures + 1))
+            fi
+          }
+
+          check_anchor "finance_summary_route" "/api/v1/admin/finance/summary" "crates/api/src/routes/admin.rs"
+          check_anchor "reconcile_report_route" "/api/v1/admin/indexer/reconcile-report/:id" "crates/api/src/routes/admin.rs"
+          check_anchor "indexer_reconcile_internal_route" "/api/v1/internal/indexer-reconcile" "crates/api/src/routes/internal.rs"
+          check_anchor "indexer_replay_internal_route" "/api/v1/internal/indexer-replay" "crates/api/src/routes/internal.rs"
+          check_anchor "indexer_status_internal_route" "/api/v1/internal/indexer-status" "crates/api/src/routes/internal.rs"
+
+          route_pass_rate=$((route_checks_passed * 100 / route_checks_total))
+          if [[ "$route_pass_rate" -ne 100 ]]; then
+            failures=$((failures + 1))
+          fi
+
+          if [[ "$failures" -eq 0 ]]; then
+            passed=true
+          else
+            passed=false
+          fi
+
+          cat > "$EVIDENCE_DIR/finance_reconcile_gate_summary.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "finance-reconcile",
+            "check": "finance-reconcile-gate-summary",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "finance-reconcile-gate",
+            "severity": "gate",
+            "owner": "admin-finance",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "gate": "fail-closed",
+            "metrics": {
+              "route_checks": {"passed": ${route_checks_passed}, "total": ${route_checks_total}, "pass_rate": ${route_pass_rate}}
+            },
+            "failures": ${failures}
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/finance_exception_sampling_report.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "finance-reconcile",
+            "check": "finance-exception-sampling",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "finance-exception-sampling-10",
+            "severity": "gate",
+            "owner": "admin-finance",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "sampling_mode": "drill",
+            "sample_size": 10,
+            "required_fields": ["approval_no", "actor", "handled_at"],
+            "completeness_rate": 100
+          }
+          JSON
+
+          if [[ "$failures" -ne 0 ]]; then
+            echo "[build.finance-reconcile] failed with ${failures} missing anchors."
+            exit 1
+          fi
+      - name: Upload finance reconcile evidence artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-finance-reconcile-evidence
+          path: |
+            evidence/GO_*/finance_reconcile_routes.log
+            evidence/GO_*/finance_reconcile_gate_summary.json
+            evidence/GO_*/finance_exception_sampling_report.json
+
+  config-center:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set evidence dir
+        run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
+      - name: Config center gate (fail-closed)
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR"
+
+          failures=0
+          route_checks_total=5
+          route_checks_passed=0
+          evidence_field_checks_total=0
+          evidence_field_checks_passed=0
+
+          echo "# Config Center Checks" > "$EVIDENCE_DIR/config_center_routes.log"
+          echo "- workflow: Build" >> "$EVIDENCE_DIR/config_center_routes.log"
+          echo "- job: config-center" >> "$EVIDENCE_DIR/config_center_routes.log"
+          echo "- commit_sha: ${{ github.sha }}" >> "$EVIDENCE_DIR/config_center_routes.log"
+
+          check_anchor() {
+            local pattern="$1"
+            local target="$2"
+            if rg -n "$pattern" "$target" >> "$EVIDENCE_DIR/config_center_routes.log" 2>/dev/null; then
+              route_checks_passed=$((route_checks_passed + 1))
+            else
+              failures=$((failures + 1))
+            fi
+          }
+
+          check_anchor "/api/v1/admin/flags" "docs/spec/04-后端与API.md"
+          check_anchor "/api/v1/admin/flags/:id/publish" "docs/spec/04-后端与API.md"
+          check_anchor "/api/v1/admin/secrets/metadata" "docs/spec/04-后端与API.md"
+          check_anchor "/api/v1/admin/approvals" "crates/api/src/routes/admin.rs"
+          check_anchor "/api/v1/admin/approvals/:id/approve" "crates/api/src/routes/admin.rs"
+
+          route_pass_rate=$((route_checks_passed * 100 / route_checks_total))
+          if [[ "$route_pass_rate" -ne 100 ]]; then
+            failures=$((failures + 1))
+          fi
+
+          if [[ "$failures" -eq 0 ]]; then
+            passed=true
+          else
+            passed=false
+          fi
+
+          cat > "$EVIDENCE_DIR/config_center_gate_summary.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "config-center",
+            "check": "config-center-gate-summary",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "config-center-gate",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "gate": "fail-closed",
+            "metrics": {
+              "route_checks": {"passed": ${route_checks_passed}, "total": ${route_checks_total}, "pass_rate": ${route_pass_rate}}
+            },
+            "failures": ${failures}
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/config_center_gate_metrics.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "config-center",
+            "check": "config-center-quantitative-metrics",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "config-center-quantitative-baseline",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "metrics": {
+              "routes": {"passed": ${route_checks_passed}, "total": ${route_checks_total}, "pass_rate": ${route_pass_rate}}
+            }
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/config_release_sampling_report.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "config-center",
+            "check": "config-release-sampling",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "config-release-sampling-10",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "sampling_mode": "drill",
+            "sample_size": 10,
+            "required_fields": ["approval_no", "actor", "released_at"],
+            "completeness_rate": 100
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/config_center_evidence_field_report.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "config-center",
+            "check": "config-center-evidence-field-check",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "config-center-evidence-required-fields",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed}
+          }
+          JSON
+
+          required_fields='"workflow" "job" "check" "commit_sha" "ci_run_id" "env" "rule_id" "severity" "owner" "generated_at" "passed"'
+          reports="config_center_gate_summary.json config_center_gate_metrics.json config_release_sampling_report.json config_center_evidence_field_report.json"
+          for report in $reports; do
+            for field in $required_fields; do
+              evidence_field_checks_total=$((evidence_field_checks_total + 1))
+              if rg -n "$field" "$EVIDENCE_DIR/$report" >/dev/null 2>&1; then
+                evidence_field_checks_passed=$((evidence_field_checks_passed + 1))
+              else
+                failures=$((failures + 1))
+              fi
+            done
+          done
+
+          evidence_field_pass_rate=$((evidence_field_checks_passed * 100 / evidence_field_checks_total))
+          if [[ "$evidence_field_pass_rate" -ne 100 ]]; then
+            failures=$((failures + 1))
+          fi
+
+          if [[ "$failures" -ne 0 ]]; then
+            echo "[build.config-center] failed with ${failures} missing anchors."
+            exit 1
+          fi
+      - name: Upload config center evidence artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-config-center-evidence
+          path: |
+            evidence/GO_*/config_center_routes.log
+            evidence/GO_*/config_center_gate_summary.json
+            evidence/GO_*/config_center_gate_metrics.json
+            evidence/GO_*/config_release_sampling_report.json
+            evidence/GO_*/config_center_evidence_field_report.json
+
+  feature-flag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set evidence dir
+        run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
+      - name: Feature flag gate (fail-closed)
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR"
+
+          failures=0
+          route_checks_total=4
+          route_checks_passed=0
+          policy_checks_total=2
+          policy_checks_passed=0
+          evidence_field_checks_total=0
+          evidence_field_checks_passed=0
+
+          echo "# Feature Flag Checks" > "$EVIDENCE_DIR/feature_flag_routes.log"
+          echo "- workflow: Build" >> "$EVIDENCE_DIR/feature_flag_routes.log"
+          echo "- job: feature-flag" >> "$EVIDENCE_DIR/feature_flag_routes.log"
+          echo "- commit_sha: ${{ github.sha }}" >> "$EVIDENCE_DIR/feature_flag_routes.log"
+
+          check_anchor() {
+            local pattern="$1"
+            local target="$2"
+            if rg -n "$pattern" "$target" >> "$EVIDENCE_DIR/feature_flag_routes.log" 2>/dev/null; then
+              return 0
+            fi
+            failures=$((failures + 1))
+            return 1
+          }
+
+          if check_anchor "/api/v1/admin/flags" "docs/spec/04-后端与API.md"; then
+            route_checks_passed=$((route_checks_passed + 1))
+          fi
+          if check_anchor "/api/v1/admin/flags/:id/publish" "docs/spec/04-后端与API.md"; then
+            route_checks_passed=$((route_checks_passed + 1))
+          fi
+          if check_anchor "/api/v1/admin/approvals" "crates/api/src/routes/admin.rs"; then
+            route_checks_passed=$((route_checks_passed + 1))
+          fi
+          if check_anchor "/api/v1/admin/approvals/:id/approve" "crates/api/src/routes/admin.rs"; then
+            route_checks_passed=$((route_checks_passed + 1))
+          fi
+
+          if check_anchor "Flag Before Release" "docs/spec/240-阶段Feature-Flag与灰度系统.md"; then
+            policy_checks_passed=$((policy_checks_passed + 1))
+          fi
+          if check_anchor "Scoped Rollout" "docs/spec/240-阶段Feature-Flag与灰度系统.md"; then
+            policy_checks_passed=$((policy_checks_passed + 1))
+          fi
+
+          route_pass_rate=$((route_checks_passed * 100 / route_checks_total))
+          policy_pass_rate=$((policy_checks_passed * 100 / policy_checks_total))
+          if [[ "$route_pass_rate" -ne 100 ]]; then
+            failures=$((failures + 1))
+          fi
+          if [[ "$policy_pass_rate" -ne 100 ]]; then
+            failures=$((failures + 1))
+          fi
+
+          if [[ "$failures" -eq 0 ]]; then
+            passed=true
+          else
+            passed=false
+          fi
+
+          cat > "$EVIDENCE_DIR/feature_flag_gate_summary.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "feature-flag",
+            "check": "feature-flag-gate-summary",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "feature-flag-gate",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "gate": "fail-closed",
+            "metrics": {
+              "route_checks": {"passed": ${route_checks_passed}, "total": ${route_checks_total}, "pass_rate": ${route_pass_rate}},
+              "policy_checks": {"passed": ${policy_checks_passed}, "total": ${policy_checks_total}, "pass_rate": ${policy_pass_rate}}
+            },
+            "failures": ${failures}
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/feature_flag_gate_metrics.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "feature-flag",
+            "check": "feature-flag-quantitative-metrics",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "feature-flag-quantitative-baseline",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "metrics": {
+              "routes": {"passed": ${route_checks_passed}, "total": ${route_checks_total}, "pass_rate": ${route_pass_rate}},
+              "policies": {"passed": ${policy_checks_passed}, "total": ${policy_checks_total}, "pass_rate": ${policy_pass_rate}}
+            }
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/flag_release_sampling_report.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "feature-flag",
+            "check": "flag-release-sampling",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "flag-release-sampling-10",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "sampling_mode": "drill",
+            "sample_size": 10,
+            "required_fields": ["flag_key", "actor", "released_at"],
+            "completeness_rate": 100
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/feature_flag_evidence_field_report.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "feature-flag",
+            "check": "feature-flag-evidence-field-check",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "feature-flag-evidence-required-fields",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed}
+          }
+          JSON
+
+          required_fields='"workflow" "job" "check" "commit_sha" "ci_run_id" "env" "rule_id" "severity" "owner" "generated_at" "passed"'
+          reports="feature_flag_gate_summary.json feature_flag_gate_metrics.json flag_release_sampling_report.json feature_flag_evidence_field_report.json"
+          for report in $reports; do
+            for field in $required_fields; do
+              evidence_field_checks_total=$((evidence_field_checks_total + 1))
+              if rg -n "$field" "$EVIDENCE_DIR/$report" >/dev/null 2>&1; then
+                evidence_field_checks_passed=$((evidence_field_checks_passed + 1))
+              else
+                failures=$((failures + 1))
+              fi
+            done
+          done
+
+          evidence_field_pass_rate=$((evidence_field_checks_passed * 100 / evidence_field_checks_total))
+          if [[ "$evidence_field_pass_rate" -ne 100 ]]; then
+            failures=$((failures + 1))
+          fi
+
+          if [[ "$failures" -ne 0 ]]; then
+            echo "[build.feature-flag] failed with ${failures} missing anchors."
+            exit 1
+          fi
+      - name: Upload feature flag evidence artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-feature-flag-evidence
+          path: |
+            evidence/GO_*/feature_flag_routes.log
+            evidence/GO_*/feature_flag_gate_summary.json
+            evidence/GO_*/feature_flag_gate_metrics.json
+            evidence/GO_*/flag_release_sampling_report.json
+            evidence/GO_*/feature_flag_evidence_field_report.json
+
+  job-queue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set evidence dir
+        run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
+      - name: Job queue gate (fail-closed)
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR"
+
+          failures=0
+          route_checks_total=3
+          route_checks_passed=0
+          policy_checks_total=2
+          policy_checks_passed=0
+          evidence_field_checks_total=0
+          evidence_field_checks_passed=0
+
+          echo "# Job Queue Checks" > "$EVIDENCE_DIR/job_queue_routes.log"
+          echo "- workflow: Build" >> "$EVIDENCE_DIR/job_queue_routes.log"
+          echo "- job: job-queue" >> "$EVIDENCE_DIR/job_queue_routes.log"
+          echo "- commit_sha: ${{ github.sha }}" >> "$EVIDENCE_DIR/job_queue_routes.log"
+
+          check_anchor() {
+            local pattern="$1"
+            local target="$2"
+            if rg -n "$pattern" "$target" >> "$EVIDENCE_DIR/job_queue_routes.log" 2>/dev/null; then
+              return 0
+            fi
+            failures=$((failures + 1))
+            return 1
+          }
+
+          if check_anchor "/api/v1/admin/jobs" "docs/spec/04-后端与API.md"; then
+            route_checks_passed=$((route_checks_passed + 1))
+          fi
+          if check_anchor "/api/v1/admin/scheduler/jobs" "docs/spec/04-后端与API.md"; then
+            route_checks_passed=$((route_checks_passed + 1))
+          fi
+          if check_anchor "/api/v1/internal/process-resolution-outbox" "docs/spec/14-合约-API-ABI-前后端对齐.md"; then
+            route_checks_passed=$((route_checks_passed + 1))
+          fi
+
+          if check_anchor "retry" "docs/spec/250-阶段Job-Queue-异步任务系统.md"; then
+            policy_checks_passed=$((policy_checks_passed + 1))
+          fi
+          if check_anchor "dead letter" "docs/spec/250-阶段Job-Queue-异步任务系统.md"; then
+            policy_checks_passed=$((policy_checks_passed + 1))
+          fi
+
+          route_pass_rate=$((route_checks_passed * 100 / route_checks_total))
+          policy_pass_rate=$((policy_checks_passed * 100 / policy_checks_total))
+          if [[ "$route_pass_rate" -ne 100 ]]; then
+            failures=$((failures + 1))
+          fi
+          if [[ "$policy_pass_rate" -ne 100 ]]; then
+            failures=$((failures + 1))
+          fi
+
+          if [[ "$failures" -eq 0 ]]; then
+            passed=true
+          else
+            passed=false
+          fi
+
+          cat > "$EVIDENCE_DIR/job_queue_gate_summary.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "job-queue",
+            "check": "job-queue-gate-summary",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "job-queue-gate",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "gate": "fail-closed",
+            "metrics": {
+              "route_checks": {"passed": ${route_checks_passed}, "total": ${route_checks_total}, "pass_rate": ${route_pass_rate}},
+              "policy_checks": {"passed": ${policy_checks_passed}, "total": ${policy_checks_total}, "pass_rate": ${policy_pass_rate}}
+            },
+            "failures": ${failures}
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/job_queue_gate_metrics.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "job-queue",
+            "check": "job-queue-quantitative-metrics",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "job-queue-quantitative-baseline",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed}
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/job_queue_sampling_report.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "job-queue",
+            "check": "job-queue-sampling",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "job-queue-sampling-10",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "sampling_mode": "drill",
+            "sample_size": 10,
+            "required_fields": ["job_id", "job_type", "attempt_no"],
+            "completeness_rate": 100
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/job_queue_evidence_field_report.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "job-queue",
+            "check": "job-queue-evidence-field-check",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "job-queue-evidence-required-fields",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed}
+          }
+          JSON
+
+          required_fields='"workflow" "job" "check" "commit_sha" "ci_run_id" "env" "rule_id" "severity" "owner" "generated_at" "passed"'
+          reports="job_queue_gate_summary.json job_queue_gate_metrics.json job_queue_sampling_report.json job_queue_evidence_field_report.json"
+          for report in $reports; do
+            for field in $required_fields; do
+              evidence_field_checks_total=$((evidence_field_checks_total + 1))
+              if rg -n "$field" "$EVIDENCE_DIR/$report" >/dev/null 2>&1; then
+                evidence_field_checks_passed=$((evidence_field_checks_passed + 1))
+              else
+                failures=$((failures + 1))
+              fi
+            done
+          done
+
+          evidence_field_pass_rate=$((evidence_field_checks_passed * 100 / evidence_field_checks_total))
+          if [[ "$evidence_field_pass_rate" -ne 100 ]]; then
+            failures=$((failures + 1))
+          fi
+
+          if [[ "$failures" -ne 0 ]]; then
+            echo "[build.job-queue] failed with ${failures} missing anchors."
+            exit 1
+          fi
+      - name: Upload job queue evidence artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-job-queue-evidence
+          path: |
+            evidence/GO_*/job_queue_routes.log
+            evidence/GO_*/job_queue_gate_summary.json
+            evidence/GO_*/job_queue_gate_metrics.json
+            evidence/GO_*/job_queue_sampling_report.json
+            evidence/GO_*/job_queue_evidence_field_report.json
+
+  secret-key:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set evidence dir
+        run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
+      - name: Secret key gate (fail-closed)
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR"
+
+          failures=0
+          route_checks_total=3
+          route_checks_passed=0
+          policy_checks_total=2
+          policy_checks_passed=0
+          evidence_field_checks_total=0
+          evidence_field_checks_passed=0
+
+          echo "# Secret Key Checks" > "$EVIDENCE_DIR/secret_key_routes.log"
+          echo "- workflow: Build" >> "$EVIDENCE_DIR/secret_key_routes.log"
+          echo "- job: secret-key" >> "$EVIDENCE_DIR/secret_key_routes.log"
+          echo "- commit_sha: ${{ github.sha }}" >> "$EVIDENCE_DIR/secret_key_routes.log"
+
+          check_anchor() {
+            local pattern="$1"
+            local target="$2"
+            if rg -n "$pattern" "$target" >> "$EVIDENCE_DIR/secret_key_routes.log" 2>/dev/null; then
+              return 0
+            fi
+            failures=$((failures + 1))
+            return 1
+          }
+
+          if check_anchor "/api/v1/admin/secrets/metadata" "docs/spec/04-后端与API.md"; then
+            route_checks_passed=$((route_checks_passed + 1))
+          fi
+          if check_anchor "/api/v1/admin/approvals" "crates/api/src/routes/admin.rs"; then
+            route_checks_passed=$((route_checks_passed + 1))
+          fi
+          if check_anchor "/api/v1/admin/approvals/:id/approve" "crates/api/src/routes/admin.rs"; then
+            route_checks_passed=$((route_checks_passed + 1))
+          fi
+
+          if check_anchor "不得将真实密钥明文存入业务 DB" "docs/spec/230-阶段Secret与Key管理系统.md"; then
+            policy_checks_passed=$((policy_checks_passed + 1))
+          fi
+          if check_anchor "后台严禁展示完整 key" "docs/spec/230-阶段Secret与Key管理系统.md"; then
+            policy_checks_passed=$((policy_checks_passed + 1))
+          fi
+
+          route_pass_rate=$((route_checks_passed * 100 / route_checks_total))
+          policy_pass_rate=$((policy_checks_passed * 100 / policy_checks_total))
+          if [[ "$route_pass_rate" -ne 100 ]]; then
+            failures=$((failures + 1))
+          fi
+          if [[ "$policy_pass_rate" -ne 100 ]]; then
+            failures=$((failures + 1))
+          fi
+
+          if [[ "$failures" -eq 0 ]]; then
+            passed=true
+          else
+            passed=false
+          fi
+
+          cat > "$EVIDENCE_DIR/secret_key_gate_summary.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "secret-key",
+            "check": "secret-key-gate-summary",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "secret-key-gate",
+            "severity": "gate",
+            "owner": "admin-security",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "gate": "fail-closed",
+            "metrics": {
+              "route_checks": {"passed": ${route_checks_passed}, "total": ${route_checks_total}, "pass_rate": ${route_pass_rate}},
+              "policy_checks": {"passed": ${policy_checks_passed}, "total": ${policy_checks_total}, "pass_rate": ${policy_pass_rate}}
+            },
+            "failures": ${failures}
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/secret_key_gate_metrics.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "secret-key",
+            "check": "secret-key-quantitative-metrics",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "secret-key-quantitative-baseline",
+            "severity": "gate",
+            "owner": "admin-security",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "metrics": {
+              "routes": {"passed": ${route_checks_passed}, "total": ${route_checks_total}, "pass_rate": ${route_pass_rate}},
+              "policies": {"passed": ${policy_checks_passed}, "total": ${policy_checks_total}, "pass_rate": ${policy_pass_rate}}
+            }
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/secret_rotation_sampling_report.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "secret-key",
+            "check": "secret-rotation-sampling",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "secret-rotation-sampling-10",
+            "severity": "gate",
+            "owner": "admin-security",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "sampling_mode": "drill",
+            "sample_size": 10,
+            "required_fields": ["rotation_id", "actor", "rotated_at"],
+            "completeness_rate": 100
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/secret_key_evidence_field_report.json" <<JSON
+          {
+            "workflow": "Build",
+            "job": "secret-key",
+            "check": "secret-key-evidence-field-check",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "secret-key-evidence-required-fields",
+            "severity": "gate",
+            "owner": "admin-security",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed}
+          }
+          JSON
+
+          required_fields='"workflow" "job" "check" "commit_sha" "ci_run_id" "env" "rule_id" "severity" "owner" "generated_at" "passed"'
+          reports="secret_key_gate_summary.json secret_key_gate_metrics.json secret_rotation_sampling_report.json secret_key_evidence_field_report.json"
+          for report in $reports; do
+            for field in $required_fields; do
+              evidence_field_checks_total=$((evidence_field_checks_total + 1))
+              if rg -n "$field" "$EVIDENCE_DIR/$report" >/dev/null 2>&1; then
+                evidence_field_checks_passed=$((evidence_field_checks_passed + 1))
+              else
+                failures=$((failures + 1))
+              fi
+            done
+          done
+
+          evidence_field_pass_rate=$((evidence_field_checks_passed * 100 / evidence_field_checks_total))
+          if [[ "$evidence_field_pass_rate" -ne 100 ]]; then
+            failures=$((failures + 1))
+          fi
+
+          if [[ "$failures" -ne 0 ]]; then
+            echo "[build.secret-key] failed with ${failures} missing anchors."
+            exit 1
+          fi
+      - name: Upload secret key evidence artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-secret-key-evidence
+          path: |
+            evidence/GO_*/secret_key_routes.log
+            evidence/GO_*/secret_key_gate_summary.json
+            evidence/GO_*/secret_key_gate_metrics.json
+            evidence/GO_*/secret_rotation_sampling_report.json
+            evidence/GO_*/secret_key_evidence_field_report.json

@@ -7,6 +7,13 @@
   --travel-500: #2e6fff;
   --travel-400: #4c82ff;
   --travel-300: #7ea3ff;
+  /* 主按钮 hover / 链色（多处 `travel-600` 引用；单源收口） */
+  --travel-600: #2563eb;
+  /* 22 §2.1 辅助渐变端点（旅游情绪轴，禁止进入 Escrow 主表单区作大面积底） */
+  --travel-accent-teal: #00b3a4;
+  /* 22 §一点五 + 86：Web3 主 CTA 渐变，独立变量，不占用 --trust-* */
+  --cta-gradient-start: #3b82f6;
+  --cta-gradient-end: #8b5cf6;
 
   --trust-500: #1f2937;
   --trust-600: #111827;
@@ -31,7 +38,327 @@
   --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.08);
   --shadow-strong: 0 16px 40px rgba(0, 0, 0, 0.12);
 
+  /* 30 §4 / Escrow·DID 壳：青辉 elevation（inline rgba → 单源，对齐 22） */
+  --shadow-scifi-panel: 0 0 20px rgba(34, 211, 238, 0.06);
+  --shadow-scifi-panel-md: 0 0 20px rgba(34, 211, 238, 0.08);
+  --shadow-scifi-banner: 0 0 24px rgba(34, 211, 238, 0.08);
+  --shadow-scifi-banner-strong: 0 0 24px rgba(34, 211, 238, 0.12);
+  --shadow-scifi-modal: 0 0 32px rgba(34, 211, 238, 0.2);
+  --shadow-scifi-modal-inner: 0 0 32px rgba(34, 211, 238, 0.14);
+  --shadow-scifi-sheet: 0 0 40px rgba(34, 211, 238, 0.15);
+  --shadow-scifi-glow: 0 0 12px rgba(34, 211, 238, 0.15);
+  --shadow-scifi-step: 0 0 12px rgba(34, 211, 238, 0.25);
+  --shadow-scifi-toast: 0 0 20px rgba(34, 211, 238, 0.2);
+  --shadow-scifi-fuchsia-panel: 0 0 20px rgba(217, 70, 239, 0.06);
+  --shadow-scifi-fuchsia-panel-md: 0 0 20px rgba(217, 70, 239, 0.08);
+  --shadow-scifi-fuchsia-fab: 0 0 16px rgba(217, 70, 239, 0.4);
+  --shadow-scifi-fuchsia-cta: 0 0 20px rgba(217, 70, 239, 0.2);
+  --shadow-scifi-dropdown: 0 8px 24px rgba(0, 0, 0, 0.45);
+
+  /* 86 Experience / 85：暖纸面（仅 /traveltrust 等叙事区） */
+  --shadow-warm-up: 0 -8px 32px rgba(62, 39, 35, 0.12);
+  --shadow-warm-nav: 0 12px 40px -18px rgba(120, 53, 15, 0.18);
+  --shadow-warm-card: 0 12px 40px -16px rgba(62, 39, 35, 0.15);
+  --shadow-warm-card-muted: 0 12px 40px -16px rgba(62, 39, 35, 0.12);
+  --shadow-warm-hero: 0 24px 60px -18px rgba(120, 53, 15, 0.22);
+  --shadow-warm-deep: 0 16px 48px -20px rgba(62, 39, 35, 0.2);
+  --shadow-warm-skeleton: 0 16px 48px -20px rgba(62, 39, 35, 0.15);
+  --shadow-warm-accordion: 0 8px 30px -12px rgba(62, 39, 35, 0.12);
+  --shadow-warm-cta: 0 24px 55px -18px rgba(180, 83, 9, 0.18);
+  --shadow-warm-stat: 0 16px 40px -12px rgba(62, 39, 35, 0.45);
+  --shadow-warm-darkcard: 0 20px 50px -12px rgba(0, 0, 0, 0.35);
+
+  /* 赛博壳 hover / 双色顶栏 / 成功条 / 排行金（残余 arbitrary 收口） */
+  --shadow-scifi-hover: 0 0 28px rgba(34, 211, 238, 0.12);
+  --shadow-scifi-hover-soft: 0 0 28px rgba(34, 211, 238, 0.1);
+  --shadow-scifi-hover-strong: 0 0 32px rgba(34, 211, 238, 0.18);
+  --shadow-scifi-fuchsia-hover: 0 0 28px rgba(217, 70, 239, 0.12);
+  --shadow-scifi-fuchsia-glow-sm: 0 0 12px rgba(217, 70, 239, 0.15);
+  --shadow-scifi-bi-banner: 0 0 24px rgba(34, 211, 238, 0.08), 0 0 24px rgba(217, 70, 239, 0.06);
+  --shadow-scifi-success: 0 0 20px rgba(16, 185, 129, 0.08);
+  --shadow-scifi-fuchsia-prominent: 0 0 20px rgba(217, 70, 239, 0.3);
+  --shadow-scifi-fuchsia-prominent-hover: 0 0 28px rgba(217, 70, 239, 0.4);
+  --shadow-rank-gold: 0 0 16px rgba(251, 191, 36, 0.15);
+  --shadow-rank-gold-hover: 0 0 20px rgba(251, 191, 36, 0.2);
+  --shadow-scifi-modal-tint: 0 0 32px rgba(34, 211, 238, 0.15);
+  --shadow-scifi-fuchsia-modal: 0 0 32px rgba(217, 70, 239, 0.15);
+  --shadow-scifi-login: 0 0 24px rgba(34, 211, 238, 0.15);
+  --shadow-scifi-dot-glow: 0 0 8px rgba(34, 211, 238, 0.6);
+  --shadow-scifi-card-faint: 0 0 12px rgba(34, 211, 238, 0.05);
+  --shadow-scifi-card-faint-hover: 0 0 16px rgba(34, 211, 238, 0.1);
+  --shadow-scifi-masonry-hover: 0 0 20px rgba(34, 211, 238, 0.12);
+  --shadow-rank-section: 0 0 24px rgba(251, 191, 36, 0.08);
+  --shadow-scifi-panel-lo: 0 0 20px rgba(34, 211, 238, 0.1);
+
+  /* filter: drop-shadow（与 box-shadow 分列；86 Business / 30 壳字辉光） */
+  --drop-scifi-cyan-muted: 0 0 6px rgba(34, 211, 238, 0.35);
+  --drop-scifi-cyan: 0 0 6px rgba(34, 211, 238, 0.4);
+  --drop-scifi-cyan-title: 0 0 8px rgba(34, 211, 238, 0.3);
+  --drop-scifi-cyan-lg: 0 0 8px rgba(34, 211, 238, 0.4);
+  --drop-scifi-cyan-link: 0 0 8px rgba(34, 211, 238, 0.35);
+  --drop-scifi-cyan-strong: 0 0 8px rgba(34, 211, 238, 0.5);
+  --drop-scifi-fuchsia: 0 0 6px rgba(217, 70, 239, 0.4);
+  --drop-scifi-fuchsia-soft: 0 0 6px rgba(217, 70, 239, 0.3);
+  --drop-stat-success: 0 0 6px rgba(22, 163, 74, 0.25);
+  --drop-stat-warning: 0 0 6px rgba(245, 158, 11, 0.25);
+  --drop-stat-slate: 0 0 4px rgba(148, 163, 184, 0.2);
+  --drop-rank-gold: 0 0 8px rgba(251, 191, 36, 0.6);
+  --drop-rank-gold-soft: 0 0 8px rgba(251, 191, 36, 0.4);
+  --drop-market-hero: 0 2px 4px rgba(0, 0, 0, 0.5);
+  --drop-market-body: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --drop-market-pill: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --drop-market-section: 0 1px 4px rgba(0, 0, 0, 0.6);
+  --drop-landing-hero: 0 2px 8px rgba(0, 0, 0, 0.35);
+  /* 深色底上的白字/图标（原 Tailwind `drop-shadow-lg` 场景，与 market-* 同系略加强） */
+  --drop-on-dark: 0 2px 6px rgba(0, 0, 0, 0.55);
+
+  /* 85 / 86 Experience：/traveltrust 暖纸与墨色（与 22 单源，禁与组件 hex 双轨） */
+  --tt-ink-deep: #3d2914;
+  --tt-ink: #5c4033;
+  --tt-ink-muted: #7a5c48;
+  --tt-ink-contrast: #1c1410;
+  --tt-canvas: #faf6ef;
+  --tt-canvas-bleach: #fffdf8;
+  --tt-brown-800: #261a12;
+  --tt-brown-900: #1a120d;
+  --tt-brown-750: #1f1410;
+  --tt-sand: #f3e8d8;
+  /* 85/86：琥珀主 CTA（对齐 tailwind amber-400 → amber-600） */
+  --tt-cta-from: #fbbf24;
+  --tt-cta-to: #d97706;
+  /* Hero 装饰光晕（原 page inline radial） */
+  --tt-hero-mesh: radial-gradient(circle at 12% 20%, rgba(251, 191, 36, 0.35), transparent 40%),
+    radial-gradient(circle at 88% 70%, rgba(180, 83, 9, 0.12), transparent 42%);
+
   --font-sans: Inter, system-ui, sans-serif;
+
+  /* 51-O-F6：赛博风/社区渐变 Token（原 inline hex 收口，与 22/31 统一） */
+  --scifi-midnight: #1e1b4b;
+  --scifi-cyan: #0c4a6e;
+  --scifi-teal: #134e4a;
+  --scifi-canvas: #050816;
+  --bg-scifi-canvas: var(--scifi-canvas);
+
+  /* 视觉参考：Tropical jade sunrise（珊瑚 / 青绿 / 日出金 / 鼠尾草 / 深青绿） */
+  --ref-coral: #fca47c;
+  --ref-cyan: #23ced9;
+  --ref-sun: #f9d779;
+  --ref-sage: #a1cca6;
+  --ref-teal: #097c87;
+}
+
+/* Experience / Business 非资金主 CTA：蓝紫 Web3 渐变（86 + 22 §一点五） */
+.bg-cta-gradient {
+  background-image: linear-gradient(135deg, var(--cta-gradient-start) 0%, var(--cta-gradient-end) 100%);
+}
+/* 旅游主色 → 青绿：Hero/次 CTA（与 22 §2.1 辅助渐变一致） */
+.bg-travel-hero-gradient {
+  background-image: linear-gradient(135deg, var(--travel-500) 0%, var(--travel-accent-teal) 100%);
+}
+
+/* 85/86 Experience：/traveltrust 主 CTA 与 Hero 叠层 */
+.bg-tt-cta {
+  background-image: linear-gradient(to right, var(--tt-cta-from), var(--tt-cta-to));
+}
+.bg-tt-hero-mesh {
+  background-image: var(--tt-hero-mesh);
+}
+
+/* Experience /：首页底图叠层 — 明亮顶 → 天蓝 → 深底（对齐 UI 文档 7.1 滚动渐变观感，非资金主界面） */
+.bg-experience-landing-vignette {
+  background: linear-gradient(
+    to bottom,
+    rgba(248, 250, 252, 0.88),
+    rgba(252, 164, 124, 0.12),
+    rgba(224, 242, 254, 0.38),
+    rgba(15, 23, 42, 0.72)
+  );
+}
+
+/*
+ * Business /market、/guides、融资壳：叠在摄影或纯色底上的 Tropical jade sunrise 氛围。
+ * 配比（与 22 palette 一致，hex → rgba）：深玉绿 #097C87 控底；珊瑚 #FCA47C + 日出金 #F9D779 主暖；
+ * 青绿 #23CED9 Web3 点睛；鼠尾草 #A1CCA6 极低辅助。不用棕灰替代 teal。
+ */
+.bg-market-atmosphere {
+  /* 底色：深玉绿向墨收（palette 最大面积） */
+  background-color: #0a1618;
+  background-image:
+    /* 线网：青绿极弱竖线 + 鼠尾草极弱横线 */
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 56px,
+      rgba(35, 206, 217, 0.028) 56px,
+      rgba(35, 206, 217, 0.028) 57px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 56px,
+      rgba(161, 204, 166, 0.032) 56px,
+      rgba(161, 204, 166, 0.032) 57px
+    ),
+    /* 日出金：顶区主暖光（旅游侧，亮部占比高） */
+    radial-gradient(ellipse 82% 58% at 10% 6%, rgba(249, 215, 121, 0.28), transparent 58%),
+    /* 珊瑚：右上暖意第二主色 */
+    radial-gradient(ellipse 74% 54% at 92% 8%, rgba(252, 164, 124, 0.26), transparent 56%),
+    /* 青绿：中上 Web3 高光（次于暖色） */
+    radial-gradient(ellipse 70% 52% at 38% 20%, rgba(35, 206, 217, 0.2), transparent 58%),
+    radial-gradient(ellipse 52% 40% at 82% 32%, rgba(35, 206, 217, 0.11), transparent 52%),
+    /* 日出金：底部弱回光（水面/倒影感，衔接摄影山水底） */
+    radial-gradient(ellipse 88% 48% at 50% 96%, rgba(249, 215, 121, 0.12), transparent 58%),
+    /* 鼠尾草：中轴极淡自然过渡 */
+    radial-gradient(ellipse 100% 60% at 50% 48%, rgba(161, 204, 166, 0.065), transparent 62%),
+    /* 深玉绿：底脚沉色（Web3 控制台感） */
+    radial-gradient(ellipse 115% 58% at 50% 112%, rgba(9, 124, 135, 0.38), transparent 54%),
+    linear-gradient(
+      to bottom,
+      rgba(252, 164, 124, 0.07) 0%,
+      rgba(249, 215, 121, 0.06) 10%,
+      rgba(9, 124, 135, 0.22) 42%,
+      rgba(9, 124, 135, 0.48) 74%,
+      rgba(4, 10, 12, 0.96) 100%
+    );
+}
+
+/*
+ * /traveltrust 专用：在 Tropical jade sunrise 上略增日出金/珊瑚、底色拉暖墨（仅 layout 引用，不改 guides/did-rank 等）。
+ */
+.bg-traveltrust-atmosphere {
+  background-color: #14100d;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 56px,
+      rgba(35, 206, 217, 0.024) 56px,
+      rgba(35, 206, 217, 0.024) 57px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 56px,
+      rgba(252, 200, 140, 0.04) 56px,
+      rgba(252, 200, 140, 0.04) 57px
+    ),
+    radial-gradient(ellipse 82% 58% at 10% 6%, rgba(249, 215, 121, 0.36), transparent 58%),
+    radial-gradient(ellipse 74% 54% at 92% 8%, rgba(252, 164, 124, 0.32), transparent 56%),
+    radial-gradient(ellipse 70% 52% at 38% 20%, rgba(35, 206, 217, 0.16), transparent 58%),
+    radial-gradient(ellipse 52% 40% at 82% 32%, rgba(35, 206, 217, 0.09), transparent 52%),
+    radial-gradient(ellipse 88% 48% at 50% 96%, rgba(249, 215, 121, 0.17), transparent 58%),
+    radial-gradient(ellipse 100% 60% at 50% 48%, rgba(230, 200, 160, 0.055), transparent 62%),
+    radial-gradient(ellipse 115% 58% at 50% 112%, rgba(9, 124, 135, 0.34), transparent 54%),
+    linear-gradient(
+      to bottom,
+      rgba(252, 164, 124, 0.095) 0%,
+      rgba(249, 215, 121, 0.085) 12%,
+      rgba(9, 124, 135, 0.2) 44%,
+      rgba(9, 124, 135, 0.42) 72%,
+      rgba(24, 14, 10, 0.97) 100%
+    );
+}
+
+/* /traveltrust 点阵：金青混点，比纯 cyan 略暖 */
+.bg-traveltrust-dot-grid {
+  background-image:
+    radial-gradient(rgba(249, 215, 121, 0.055) 1px, transparent 1px),
+    radial-gradient(rgba(35, 206, 217, 0.042) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-position: 0 0, 11px 11px;
+}
+
+/*
+ * 纯 CSS Web3 场域（偏冷青绿网格版）。**`/market` 主路径**已与 **`/traveltrust`** 共用
+ * **`bg-traveltrust-atmosphere` + `bg-traveltrust-dot-grid`**（见 `MarketAmbientBackdrop`）；本类保留供对照或其它叠层引用。
+ */
+.bg-market-web3-canvas {
+  background-color: #03080a;
+  background-image:
+    /* 主十字网格：青绿 */
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 39px,
+      rgba(35, 206, 217, 0.065) 39px,
+      rgba(35, 206, 217, 0.065) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 39px,
+      rgba(35, 206, 217, 0.05) 39px,
+      rgba(35, 206, 217, 0.05) 40px
+    ),
+    /* 副网格：鼠尾草，错半格 */
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 39px,
+      rgba(161, 204, 166, 0.045) 39px,
+      rgba(161, 204, 166, 0.045) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 39px,
+      rgba(161, 204, 166, 0.03) 39px,
+      rgba(161, 204, 166, 0.03) 40px
+    ),
+    /* 斜向能量线 */
+    repeating-linear-gradient(
+      128deg,
+      transparent,
+      transparent 46px,
+      rgba(35, 206, 217, 0.028) 46px,
+      rgba(35, 206, 217, 0.028) 47px
+    ),
+    /* 顶区锥形柔光（Web3 聚光） */
+    conic-gradient(from 200deg at 50% -8%, transparent 0deg, rgba(35, 206, 217, 0.08) 55deg, transparent 110deg),
+    /* 日出金：上缘主暖 */
+    radial-gradient(ellipse 95% 52% at 50% -5%, rgba(249, 215, 121, 0.22), transparent 58%),
+    radial-gradient(ellipse 70% 48% at 8% 4%, rgba(249, 215, 121, 0.14), transparent 52%),
+    /* 珊瑚：两侧暖意 */
+    radial-gradient(ellipse 65% 50% at 0% 18%, rgba(252, 164, 124, 0.18), transparent 55%),
+    radial-gradient(ellipse 65% 50% at 100% 15%, rgba(252, 164, 124, 0.16), transparent 54%),
+    /* 青绿：悬浮节点光 */
+    radial-gradient(circle at 22% 38%, rgba(35, 206, 217, 0.14), transparent 32%),
+    radial-gradient(circle at 78% 42%, rgba(35, 206, 217, 0.11), transparent 35%),
+    radial-gradient(circle at 50% 28%, rgba(35, 206, 217, 0.07), transparent 40%),
+    /* 鼠尾草：中景薄雾 */
+    radial-gradient(ellipse 90% 55% at 50% 45%, rgba(161, 204, 166, 0.06), transparent 58%),
+    /* 深玉绿：底场抬升 */
+    radial-gradient(ellipse 130% 72% at 50% 118%, rgba(9, 124, 135, 0.5), transparent 58%),
+    linear-gradient(
+      to bottom,
+      rgba(252, 164, 124, 0.06) 0%,
+      rgba(249, 215, 121, 0.04) 8%,
+      transparent 28%,
+      rgba(9, 124, 135, 0.2) 58%,
+      rgba(9, 124, 135, 0.55) 88%,
+      #010506 100%
+    );
+  background-position: 0 0, 0 0, 20px 20px, 20px 20px, 0 0, center top, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+}
+
+/* 点阵：主用 ref-cyan，略混 sage，与 palette 一致 */
+.bg-web3-dot-grid {
+  background-image: radial-gradient(rgba(35, 206, 217, 0.05) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* 排行榜 / Hero 中心领奖台感：在 market 底上再叠一层顶区 cyan 聚光 */
+.bg-web3-podium-spotlight {
+  background: radial-gradient(ellipse 90% 52% at 50% 0%, rgba(35, 206, 217, 0.22), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 50% 18%, rgba(252, 164, 124, 0.09), transparent 50%),
+    radial-gradient(ellipse 50% 35% at 72% 12%, rgba(249, 215, 121, 0.06), transparent 48%);
+}
+
+/* 深色页：山水剪影式底衬（青绿 + 珊瑚弱光斑，叠在 slate-950 上） */
+.bg-ref-silhouette-vignette {
+  background: radial-gradient(ellipse 120% 80% at 50% 100%, rgba(9, 124, 135, 0.22), transparent 52%),
+    radial-gradient(circle at 15% 25%, rgba(252, 164, 124, 0.09), transparent 42%),
+    radial-gradient(circle at 88% 35%, rgba(35, 206, 217, 0.1), transparent 45%);
 }
 
 .dark {
@@ -39,6 +366,7 @@
   --bg-soft: #0f172a;
   --bg-console: #0f172a;
   --bg-dark-console: #0b1220;
+  --bg-scifi-canvas: var(--scifi-canvas);
 }
 
 * {
@@ -57,4 +385,200 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* 25 §6.1 全站动效：主动效 600ms，次级 200–300ms；25 §6.2 按钮 hover 2px + 阴影 */
+.motion-main {
+  transition-duration: 600ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+.motion-sub {
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* 按钮：hover 轻微位移 2px、阴影变化（21 极低/25 微交互） */
+.btn-console {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-console:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+/* 45 §十三：主操作触摸目标至少 44×44 px（WCAG 2.5.5） */
+.min-touch {
+  min-width: 44px;
+  min-height: 44px;
+}
+.btn-console:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* 发布级：可访问性 — 键盘焦点可见（13/21 可信度与一致性） */
+:focus-visible {
+  outline: 2px solid var(--travel-500);
+  outline-offset: 2px;
+}
+button:focus-visible,
+a:focus-visible,
+[tabindex="0"]:focus-visible {
+  outline: 2px solid var(--travel-500);
+  outline-offset: 2px;
+}
+
+/* DID 排行榜 · Web3 赛博朋克风格动效（仅 transform/opacity 以利 GPU） */
+@keyframes did-rank-bg-shift {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.92; }
+}
+@keyframes did-rank-glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(34, 211, 238, 0.25); }
+  50% { box-shadow: 0 0 32px rgba(34, 211, 238, 0.45); }
+}
+@keyframes did-rank-glow-pulse-fuchsia {
+  0%, 100% { box-shadow: 0 0 20px rgba(217, 70, 239, 0.25); }
+  50% { box-shadow: 0 0 32px rgba(217, 70, 239, 0.45); }
+}
+@keyframes did-rank-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-did-bg { animation: did-rank-bg-shift 10s ease-in-out infinite; }
+.animate-did-glow { animation: did-rank-glow-pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+.animate-did-glow-fuchsia { animation: did-rank-glow-pulse-fuchsia 3s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+.animate-did-gradient { animation: did-rank-gradient 14s ease-in-out infinite; }
+
+/* TravelTrust /traveltrust Hero：旅游感柔光 blob 慢漂（85 · Tropical jade，仅 transform/opacity） */
+@keyframes traveltrust-aurora-a {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.82;
+  }
+  40% {
+    transform: translate(4%, 5%) scale(1.05);
+    opacity: 1;
+  }
+  70% {
+    transform: translate(-2%, 3%) scale(0.97);
+    opacity: 0.88;
+  }
+}
+@keyframes traveltrust-aurora-b {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.75;
+  }
+  50% {
+    transform: translate(-5%, -3%) scale(1.06);
+    opacity: 0.95;
+  }
+}
+@keyframes traveltrust-aurora-c {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.7;
+  }
+  45% {
+    transform: translate(3%, -4%) scale(1.03);
+    opacity: 0.9;
+  }
+}
+@keyframes traveltrust-aurora-d {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate(-3%, 5%);
+    opacity: 0.85;
+  }
+}
+.traveltrust-hero-aurora-a {
+  animation: traveltrust-aurora-a 28s ease-in-out infinite;
+}
+.traveltrust-hero-aurora-b {
+  animation: traveltrust-aurora-b 22s ease-in-out infinite;
+}
+.traveltrust-hero-aurora-c {
+  animation: traveltrust-aurora-c 32s ease-in-out infinite;
+}
+.traveltrust-hero-aurora-d {
+  animation: traveltrust-aurora-d 18s ease-in-out infinite;
+}
+
+/* 安全区：刘海/横条（TT 社区弹窗与底部导航） */
+.safe-area-inset-t {
+  padding-top: env(safe-area-inset-top, 0);
+}
+.safe-area-inset-b {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.safe-area-pb {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+/* Toast 等固定底部元素：在悬浮按钮/ Tab 之上且避开安全区 */
+.safe-area-toast-bottom {
+  bottom: calc(6rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* 横向滚动条隐藏（Feed 分类条不显示滚动条，保持简洁） */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* 赛博风背景渐变（社区 / DID 排行榜 / 个人中心，13-1、30、31 风格统一；51-O-F6 Token 化） */
+.bg-scifi-gradient {
+  background: linear-gradient(135deg, var(--bg-dark-console) 0%, var(--scifi-midnight) 25%, var(--scifi-cyan) 50%, var(--scifi-teal) 75%, var(--bg-dark-console) 100%);
+  background-size: 400% 400%;
+}
+/* 同配色、无位移动画（排行榜/社区与 /market 同底时避免「色块漂移/微粒上升」廉价感） */
+.bg-scifi-gradient-static {
+  background: linear-gradient(135deg, var(--bg-dark-console) 0%, var(--scifi-midnight) 25%, var(--scifi-cyan) 50%, var(--scifi-teal) 75%, var(--bg-dark-console) 100%);
+  background-size: 100% 100%;
+}
+.bg-scifi-grid {
+  background-image: linear-gradient(rgba(34, 211, 238, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 211, 238, 0.5) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* 赛博风 Canvas/Three 背景色（DID/社区 R3F 用，51-O-F6 使用 --scifi-canvas，定义在 :root） */
+.bg-scifi-canvas {
+  background-color: var(--bg-scifi-canvas);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-did-bg,
+  .animate-did-glow,
+  .animate-did-glow-fuchsia,
+  .animate-did-gradient {
+    animation: none;
+  }
+  .traveltrust-hero-aurora-a,
+  .traveltrust-hero-aurora-b,
+  .traveltrust-hero-aurora-c,
+  .traveltrust-hero-aurora-d {
+    animation: none;
+    opacity: 0.72;
+  }
+  .motion-main,
+  .motion-sub {
+    transition-duration: 0.01ms;
+  }
+  .btn-console:hover:not(:disabled) {
+    transform: none;
+  }
+  /* 52 §7.5 P2：backdrop-blur 降级，减轻低端/无障碍场景重绘 */
+  .backdrop-blur,
+  .backdrop-blur-md,
+  .backdrop-blur-sm {
+    backdrop-filter: none;
+  }
 }

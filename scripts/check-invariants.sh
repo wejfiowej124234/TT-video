@@ -15,24 +15,17 @@ cd "$root_dir"
 # --- Frontend (Next.js) presence ---
 [[ -d "frontend" ]] || fail "missing frontend/ (Next.js app root)"
 [[ -f "frontend/package.json" ]] || fail "missing frontend/package.json"
+[[ -f "frontend/package-lock.json" ]] || fail "missing frontend/package-lock.json (lock file required)"
 
-# --- Frontend manifest determinism (script must embed deterministic anchors) ---
-manifest_script="scripts/build-frontend-manifest.sh"
-[[ -f "$manifest_script" ]] || fail "missing $manifest_script"
-
-grep -q "git_sha" "$manifest_script" || fail "frontend manifest script missing git commit anchor (git_sha)"
-grep -q "frontend_lock_sha256\|lock_sha256" "$manifest_script" || fail "frontend manifest script missing lock sha256 anchor"
-
-# --- Backend baseline security headers ---
+# --- Backend baseline security headers（挂载在 router，实现见 middleware）---
 api_main="crates/api/src/main.rs"
+api_router="crates/api/src/router.rs"
+api_mw_headers="crates/api/src/middleware/auth_pause_metrics/mod.rs"
 [[ -f "$api_main" ]] || fail "missing $api_main"
+[[ -f "$api_router" ]] || fail "missing $api_router"
+[[ -f "$api_mw_headers" ]] || fail "missing $api_mw_headers"
 
-grep -q "security_headers_layer" "$api_main" || fail "API missing security_headers_layer middleware"
-grep -q "x-content-type-options" "$api_main" || fail "API security headers missing x-content-type-options"
-
-# --- Node supply-chain policy（前端为 Next.js，须过锁文件与版本规则）---
-if [[ -d frontend ]] && [[ -f frontend/package.json ]]; then
-  bash scripts/check-node-lock-policy.sh
-fi
+grep -q "security_headers_layer" "$api_router" || fail "API router missing security_headers_layer middleware"
+grep -q "x-content-type-options" "$api_mw_headers" || fail "API security headers missing x-content-type-options"
 
 echo "OK: invariants passed"

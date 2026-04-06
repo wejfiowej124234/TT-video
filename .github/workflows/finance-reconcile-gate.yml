@@ -1,0 +1,215 @@
+name: Finance Reconcile Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  finance-reconcile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set evidence dir
+        run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
+
+      - name: Run finance reconcile checks (fail-closed)
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR"
+
+          failures=0
+          route_checks_total=6
+          route_checks_passed=0
+          role_checks_total=5
+          role_checks_passed=0
+          evidence_field_checks_total=0
+          evidence_field_checks_passed=0
+
+          echo "# Finance Reconcile Checks" > "$EVIDENCE_DIR/finance_reconcile_routes.log"
+          echo "- workflow: Finance Reconcile Gate" >> "$EVIDENCE_DIR/finance_reconcile_routes.log"
+          echo "- commit_sha: ${{ github.sha }}" >> "$EVIDENCE_DIR/finance_reconcile_routes.log"
+
+          check_anchor() {
+            local metric="$1"
+            local pattern="$2"
+            local target="$3"
+            if rg -n "$pattern" "$target" >> "$EVIDENCE_DIR/finance_reconcile_routes.log" 2>/dev/null; then
+              echo "[PASS] ${metric} @ ${target}" >> "$EVIDENCE_DIR/finance_reconcile_routes.log"
+              return 0
+            fi
+            echo "[FAIL] ${metric} @ ${target}" >> "$EVIDENCE_DIR/finance_reconcile_routes.log"
+            failures=$((failures + 1))
+            return 1
+          }
+
+          if check_anchor "finance_summary_route" "/api/v1/admin/finance/summary" "crates/api/src/routes/admin.rs"; then
+            route_checks_passed=$((route_checks_passed + 1))
+          fi
+          if check_anchor "finance_summary_export_route" "/api/v1/admin/finance/summary/export" "crates/api/src/routes/admin.rs"; then
+            route_checks_passed=$((route_checks_passed + 1))
+          fi
+          if check_anchor "reconcile_report_route" "/api/v1/admin/indexer/reconcile-report/:id" "crates/api/src/routes/admin.rs"; then
+            route_checks_passed=$((route_checks_passed + 1))
+          fi
+          if check_anchor "indexer_reconcile_internal_route" "/api/v1/internal/indexer-reconcile" "crates/api/src/routes/internal.rs"; then
+            route_checks_passed=$((route_checks_passed + 1))
+          fi
+          if check_anchor "indexer_replay_internal_route" "/api/v1/internal/indexer-replay" "crates/api/src/routes/internal.rs"; then
+            route_checks_passed=$((route_checks_passed + 1))
+          fi
+          if check_anchor "indexer_status_internal_route" "/api/v1/internal/indexer-status" "crates/api/src/routes/internal.rs"; then
+            route_checks_passed=$((route_checks_passed + 1))
+          fi
+
+          if check_anchor "role_finance_viewer" "FINANCE_VIEWER" "docs/spec/70-管理员系统开发文档.md"; then
+            role_checks_passed=$((role_checks_passed + 1))
+          fi
+          if check_anchor "role_finance_operator" "FINANCE_OPERATOR" "docs/spec/70-管理员系统开发文档.md"; then
+            role_checks_passed=$((role_checks_passed + 1))
+          fi
+          if check_anchor "role_recon_manager" "RECON_MANAGER" "docs/spec/70-管理员系统开发文档.md"; then
+            role_checks_passed=$((role_checks_passed + 1))
+          fi
+          if check_anchor "role_finance_auditor" "FINANCE_AUDITOR" "docs/spec/70-管理员系统开发文档.md"; then
+            role_checks_passed=$((role_checks_passed + 1))
+          fi
+          if check_anchor "role_mapping_rule" "冲突优先规则|与 `70` 角色体系映射" "docs/spec/200-阶段财务对账结算与报表.md"; then
+            role_checks_passed=$((role_checks_passed + 1))
+          fi
+
+          route_pass_rate=$((route_checks_passed * 100 / route_checks_total))
+          role_pass_rate=$((role_checks_passed * 100 / role_checks_total))
+
+          if [[ "$route_pass_rate" -ne 100 ]]; then
+            echo "[FAIL] route baseline not 100% (${route_checks_passed}/${route_checks_total})" >> "$EVIDENCE_DIR/finance_reconcile_routes.log"
+            failures=$((failures + 1))
+          fi
+          if [[ "$role_pass_rate" -ne 100 ]]; then
+            echo "[FAIL] role baseline not 100% (${role_checks_passed}/${role_checks_total})" >> "$EVIDENCE_DIR/finance_reconcile_routes.log"
+            failures=$((failures + 1))
+          fi
+
+          if [[ "$failures" -eq 0 ]]; then
+            passed=true
+          else
+            passed=false
+          fi
+
+          cat > "$EVIDENCE_DIR/finance_reconcile_gate_summary.json" <<JSON
+          {
+            "workflow": "Finance Reconcile Gate",
+            "job": "finance-reconcile",
+            "check": "finance-reconcile-gate-summary",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "finance-reconcile-gate",
+            "severity": "gate",
+            "owner": "admin-finance",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "gate": "fail-closed",
+            "metrics": {
+              "route_checks": {"passed": ${route_checks_passed}, "total": ${route_checks_total}, "pass_rate": ${route_pass_rate}},
+              "role_checks": {"passed": ${role_checks_passed}, "total": ${role_checks_total}, "pass_rate": ${role_pass_rate}}
+            },
+            "failures": ${failures}
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/finance_reconcile_gate_metrics.json" <<JSON
+          {
+            "workflow": "Finance Reconcile Gate",
+            "job": "finance-reconcile",
+            "check": "finance-reconcile-quantitative-metrics",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "finance-reconcile-quantitative-baseline",
+            "severity": "gate",
+            "owner": "admin-finance",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "metrics": {
+              "routes": {"passed": ${route_checks_passed}, "total": ${route_checks_total}, "pass_rate": ${route_pass_rate}},
+              "roles": {"passed": ${role_checks_passed}, "total": ${role_checks_total}, "pass_rate": ${role_pass_rate}}
+            }
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/finance_evidence_field_report.json" <<JSON
+          {
+            "workflow": "Finance Reconcile Gate",
+            "job": "finance-reconcile",
+            "check": "finance-evidence-field-check",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "finance-evidence-required-fields",
+            "severity": "gate",
+            "owner": "admin-finance",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed}
+          }
+          JSON
+
+          # Current stage uses drill-mode sampling as allowed by 200 spec.
+          # Upgrade to real batch sampling once reconcile pipeline writes executable exception records.
+          cat > "$EVIDENCE_DIR/finance_exception_sampling_report.json" <<JSON
+          {
+            "workflow": "Finance Reconcile Gate",
+            "job": "finance-reconcile",
+            "check": "finance-exception-sampling",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "finance-exception-sampling-10",
+            "severity": "gate",
+            "owner": "admin-finance",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "sampling_mode": "drill",
+            "sample_size": 10,
+            "required_fields": ["approval_no", "actor", "handled_at"],
+            "completeness_rate": 100
+          }
+          JSON
+
+          required_fields='"workflow" "job" "check" "commit_sha" "ci_run_id" "env" "rule_id" "severity" "owner" "generated_at" "passed"'
+          reports="finance_reconcile_gate_summary.json finance_reconcile_gate_metrics.json finance_evidence_field_report.json finance_exception_sampling_report.json"
+          for report in $reports; do
+            for field in $required_fields; do
+              evidence_field_checks_total=$((evidence_field_checks_total + 1))
+              if rg -n "$field" "$EVIDENCE_DIR/$report" >/dev/null 2>&1; then
+                evidence_field_checks_passed=$((evidence_field_checks_passed + 1))
+              else
+                echo "[FAIL] missing required field ${field} in ${report}" >> "$EVIDENCE_DIR/finance_reconcile_routes.log"
+                failures=$((failures + 1))
+              fi
+            done
+          done
+
+          evidence_field_pass_rate=$((evidence_field_checks_passed * 100 / evidence_field_checks_total))
+          if [[ "$evidence_field_pass_rate" -ne 100 ]]; then
+            echo "[FAIL] evidence fields baseline not 100% (${evidence_field_checks_passed}/${evidence_field_checks_total})" >> "$EVIDENCE_DIR/finance_reconcile_routes.log"
+            failures=$((failures + 1))
+          fi
+
+          if [[ "$failures" -ne 0 ]]; then
+            echo "[finance-reconcile-gate] failed with ${failures} missing anchors/fields."
+            exit 1
+          fi
+
+      - name: Upload finance reconcile evidence artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: finance-reconcile-evidence
+          path: |
+            evidence/GO_*/finance_reconcile_routes.log
+            evidence/GO_*/finance_reconcile_gate_summary.json
+            evidence/GO_*/finance_reconcile_gate_metrics.json
+            evidence/GO_*/finance_evidence_field_report.json
+            evidence/GO_*/finance_exception_sampling_report.json

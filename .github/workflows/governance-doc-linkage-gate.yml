@@ -1,0 +1,17 @@
+# 82 / governance-token 与索引、总表、串联、07 §二 2.4 的静态联动校验（fail-closed）
+name: Governance doc linkage gate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run governance doc linkage script
+        run: bash scripts/check-governance-doc-linkage.sh
+      - name: Run 07 version triple check (header / 00 index / §6.5 top)
+        run: bash scripts/check-07-version-triple.sh

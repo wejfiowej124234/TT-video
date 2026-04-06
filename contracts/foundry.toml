@@ -1,0 +1,14 @@
+# TravelTrust contracts — Foundry (与 01 §4、19、contracts/README 一致)
+# 目标：Polygon PoS (chainId 137)；MVP 单链
+# 首次：forge install foundry-rs/forge-std
+
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc_version = "0.8.19"
+evm_version = "paris"
+remappings = ["forge-std/=lib/forge-std/src"]
+
+[profile.default.fmt]
+line_length = 120

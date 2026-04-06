@@ -1,0 +1,185 @@
+name: Internal Drill Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  internal-drill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set evidence dir
+        run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
+      - name: Verify internal boundary and drill routes
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR"
+          {
+            echo "# Internal Boundary Check"
+            echo
+            echo "- Workflow: Internal Drill Gate"
+            echo "- Job: internal-drill"
+            echo "- Commit: ${{ github.sha }}"
+            echo
+            echo "## Route Anchors"
+            grep -n "/api/v1/internal/alerts/test-fire" crates/api/src/routes/internal.rs
+            grep -n "last_stored_orders_projection_reconcile" crates/api/src/routes/internal.rs
+            grep -n "/api/v1/internal/incident/open" crates/api/src/routes/internal.rs
+            grep -n "/api/v1/internal/indexer-reconcile" crates/api/src/routes/internal.rs
+            grep -n "/api/v1/internal/indexer-reorg-rewind" crates/api/src/routes/internal.rs
+            grep -n "projection_reconcile_clean" crates/api/src/routes/internal.rs
+            grep -n "live_orders_projection_reconcile" crates/api/src/routes/internal.rs
+            grep -n "traveltrust_indexer_lag_blocks" crates/api/src/routes/health_meta.rs
+            grep -n "chain_tip_not_in_meta" crates/api/src/routes/health_meta.rs
+            grep -n "TravelTrustIndexerLagHigh" ops/monitoring/prometheus-alerts-indexer.example.yml
+            grep -n "indexer-reconcile-probe.sh" scripts/internal-indexer-ops.sh
+            grep -n "indexer-status?live_reconcile=1" scripts/indexer-reconcile-probe.sh
+            grep -n "INDEXER_PROBE_API_BASE_URL" ops/monitoring/github-actions-indexer-probe.example.yml
+            grep -n "kind: CronJob" ops/monitoring/k8s-indexer-reconcile-probe.cronjob.example.yaml
+            grep -n "traveltrust-indexer-example" ops/monitoring/grafana-dashboard-traveltrust-indexer.example.json
+            grep -n "110-RECONCILE-SEMANTICS" crates/api/src/db/orders_projection.rs
+            grep -n "/api/v1/internal/indexer-tick" crates/api/src/routes/internal.rs
+            echo
+            echo "## Policy Anchors"
+            grep -n "禁止公网暴露" docs/spec/04-后端与API.md
+            grep -n "内外网隔离策略" docs/spec/140-阶段开发云部署与交付架构.md
+            grep -n "## 2.55 Indexer tick" ops/RUNBOOK.md
+            grep -n "/api/v1/internal/indexer-tick" scripts/internal-indexer-ops.sh
+            grep -n "/api/v1/internal/indexer-status" scripts/internal-indexer-ops.sh
+            grep -n "backfill_orders_chain_id" scripts/internal-indexer-ops.sh
+            grep -n "memory-sync-from-db" scripts/internal-indexer-ops.sh
+            grep -n "include-chain-tip" scripts/internal-indexer-ops.sh
+            grep -n "include-event-log-escrow-coverage" scripts/internal-indexer-ops.sh
+            grep -n "backfill-chain-id" scripts/internal-indexer-ops.ps1
+            grep -n "write-indexer-evidence" scripts/internal-indexer-ops.sh
+            grep -n "internal-indexer-ops.sh" scripts/internal-indexer-ops.ps1
+            grep -n "write-indexer-evidence.ps1" scripts/internal-indexer-ops.ps1
+            grep -n "indexer-public-snapshot.sh" scripts/indexer-public-snapshot.ps1
+            grep -n "indexer-reconcile-probe.sh" scripts/indexer-reconcile-probe.ps1
+            grep -n "indexer-reorg-recovery.sh" scripts/indexer-reorg-recovery.ps1
+            grep -n "/api/v1/internal/indexer-reconcile" scripts/indexer-public-snapshot.sh
+            grep -n "/api/v1/internal/indexer-status" scripts/indexer-public-snapshot.sh
+            grep -n "SNAPSHOT_INTERNAL_RECONCILE_RPC" scripts/indexer-public-snapshot.sh
+            grep -n "SNAPSHOT_INTERNAL_RECONCILE_INCLUDE_EVENT_LOG_ESCROW_COVERAGE" scripts/indexer-public-snapshot.sh
+            grep -n "indexer-public-snapshot" scripts/write-indexer-evidence.sh
+            grep -n "indexer_public_snapshot_manifest.json" scripts/write-indexer-evidence.sh
+            grep -n "indexer-public-snapshot" scripts/write-indexer-evidence.ps1
+            grep -n "indexer_public_snapshot_manifest.json" scripts/write-indexer-evidence.ps1
+            grep -n "evidence-bundle" scripts/internal-indexer-ops.sh
+            grep -n "110-REORG-RECOVERY-HINT" crates/api/src/routes/internal.rs
+            grep -n "indexer-reorg-recovery.sh" scripts/internal-indexer-ops.sh
+            grep -n "reorg_suspected" crates/api/src/routes/internal.rs
+            grep -n "INDEXER_REORG_AUTO_REWIND_ON_TICK" crates/api/src/routes/internal.rs
+            grep -n "INDEXER_REORG_RELOAD_CHAIN_OFF_ORDERS_AFTER_REWIND" crates/api/src/routes/internal.rs
+            grep -n "reload_orders_from_db_into_store" crates/api/src/chain_off/reload_orders_db.rs
+            grep -n "INDEXER_REORG_SYNC_ORDERS_FROM_PROJECTION_AFTER_REWIND" crates/api/src/routes/internal.rs
+            grep -n "sync_orders_from_projection_for_chain" crates/api/src/db/orders_projection.rs
+            grep -n "latest_escrow_event_finality_for_order" crates/api/src/db/event_log.rs
+            grep -n "skipped_no_order_row" crates/api/src/db/orders_projection.rs
+            grep -n "skipped_no_projection_non_escrowed_with_escrow" crates/api/src/db/orders_projection.rs
+            grep -n "cleared_orphan_escrow_pre_funded" crates/api/src/db/orders_projection.rs
+            grep -n "cleared_orphan_escrow_terminal_no_projection" crates/api/src/db/orders_projection.rs
+            grep -n "INDEXER_REORG_SYNC_CLEAR_ORPHAN_ESCROW_TERMINAL" crates/api/src/routes/internal.rs
+            grep -n "clear_terminal_orphan_escrow_enabled" crates/api/src/db/orders_projection.rs
+            grep -n "orders_chain_scope_rollback_execute" crates/api/src/routes/internal.rs
+            grep -n "orders_chain_scope_rollback_execute" crates/api/src/db/orders_projection.rs
+            grep -n "event_log_chain_scope_rollback_execute" crates/api/src/routes/internal.rs
+            grep -n "event_log_chain_scope_rollback_execute" crates/api/src/db/event_log.rs
+            grep -n "region_vault_forwarded_events_rows" crates/api/src/routes/internal.rs
+            grep -n "/api/v1/governance/vault-forwards" crates/api/src/routes/governance.rs
+            grep -n "/api/v1/admin/region-vault/forwarded-events" crates/api/src/routes/admin.rs
+            grep -n "correction_executor_chain_scope_rollback_execute" crates/api/src/routes/internal.rs
+            grep -n "correction_executor_chain_scope_rollback_execute" crates/api/src/db/correction_executor_audit.rs
+            grep -n "fetch_indexer_checkpoint_for_chain" crates/api/src/db/event_log.rs
+            grep -n "sync_indexer_memory_from_db_checkpoint" crates/api/src/routes/internal.rs
+            grep -n "110-INDEXER-MEMORY-SYNC-FROM-DB" crates/api/src/routes/internal.rs
+            grep -n "business_chain_id" crates/api/src/chain_off/mod.rs
+            grep -n "enforce_indexer_finality_floor" crates/api/src/startup/mod.rs
+            grep -n "pub chain_id: Option<i64>" crates/api/src/db/orders.rs
+            grep -n "verify-reconcile-export-ed25519" scripts/verify-reconcile-export-ed25519.sh
+          } > "$EVIDENCE_DIR/internal_boundary_check.md"
+      - name: Generate internal audit sample
+        run: |
+          set -euo pipefail
+          cat > "$EVIDENCE_DIR/internal_audit_sample.json" <<'JSON'
+          {
+            "workflow": "Internal Drill Gate",
+            "job": "internal-drill",
+            "commit": "${{ github.sha }}",
+            "status": "passed",
+            "controls": [
+              "internal alert drill route declared",
+              "internal alerts/incident handlers reference last_stored_orders_projection_reconcile",
+              "internal incident open route declared",
+              "internal indexer-reconcile, indexer-reorg-rewind, and indexer-tick routes declared",
+              "indexer-reconcile handler includes projection_reconcile_clean in response body",
+              "indexer-status handler documents live_orders_projection_reconcile (optional query)",
+              "GET /metrics documents traveltrust_indexer_lag_blocks gauge (health_meta.rs)",
+              "GET /meta documents indexer.finality_discipline chain_tip_not_in_meta (health_meta.rs)",
+              "ops/monitoring/prometheus-alerts-indexer.example.yml lists TravelTrustIndexerLagHigh",
+              "scripts/indexer-reconcile-probe.sh documents GET indexer-status?live_reconcile=1",
+              "scripts/internal-indexer-ops.sh references indexer-reconcile-probe.sh (probe subcommand)",
+              "ops/monitoring/github-actions-indexer-probe.example.yml documents INDEXER_PROBE_API_BASE_URL",
+              "ops/monitoring k8s CronJob example present",
+              "ops/monitoring Grafana indexer dashboard example JSON present",
+              "orders_projection.rs lists 110-RECONCILE-SEMANTICS comment",
+              "internal API no-public-exposure policy documented",
+              "Runbook §2.55 indexer ops section present",
+              "scripts/internal-indexer-ops.sh present for local/internal indexer curl (incl. GET indexer-status + evidence)",
+              "internal-indexer-ops.sh reconcile maps --backfill-chain-id to backfill_orders_chain_id JSON field",
+              "internal-indexer-ops.sh reconcile CLI documents --memory-sync-from-db (internal indexer-reconcile body)",
+              "internal-indexer-ops.sh reconcile CLI documents --include-chain-tip and --include-event-log-escrow-coverage",
+              "internal-indexer-ops.ps1 documents --backfill-chain-id pass-through to bash reconcile",
+              "indexer-tick reorg_suspected string present in internal.rs",
+              "indexer-tick INDEXER_REORG_AUTO_REWIND_ON_TICK env gate present in internal.rs",
+              "indexer-reorg INDEXER_REORG_RELOAD_CHAIN_OFF_ORDERS_AFTER_REWIND env gate present in internal.rs",
+              "chain_off reload_orders_from_db_into_store present in reload_orders_db.rs",
+              "indexer-reorg INDEXER_REORG_SYNC_ORDERS_FROM_PROJECTION_AFTER_REWIND env gate present in internal.rs",
+              "sync_orders_from_projection_for_chain present in orders_projection.rs",
+              "latest_escrow_event_finality_for_order present in event_log.rs (chain-sync-status enrichment)",
+              "SyncOrdersFromProjectionSummary skipped_no_order_row field present in orders_projection.rs",
+              "SyncOrdersFromProjectionSummary skipped_no_projection_non_escrowed_with_escrow field present in orders_projection.rs",
+              "SyncOrdersFromProjectionSummary cleared_orphan_escrow_pre_funded field present in orders_projection.rs",
+              "SyncOrdersFromProjectionSummary cleared_orphan_escrow_terminal_no_projection field present in orders_projection.rs",
+              "internal.rs documents INDEXER_REORG_SYNC_CLEAR_ORPHAN_ESCROW_TERMINAL env gate",
+              "internal.rs documents orders_chain_scope_rollback_execute on indexer-reconcile (110 §3.1.4 Partial)",
+              "orders_projection.rs documents orders_chain_scope_rollback_execute db path",
+              "internal.rs documents event_log_chain_scope_rollback_execute on indexer-reconcile (110 §3.1.4 Partial)",
+              "event_log.rs documents event_log_chain_scope_rollback_execute db path",
+              "internal.rs documents region_vault_forwarded_events_rows in indexer tick / chain-scope responses",
+              "governance.rs documents GET /api/v1/governance/vault-forwards",
+              "admin.rs documents GET /api/v1/admin/region-vault/forwarded-events",
+              "internal.rs documents correction_executor_chain_scope_rollback_execute on indexer-reconcile (110 §3.1.4 Partial)",
+              "correction_executor_audit.rs documents correction_executor_chain_scope_rollback_execute db path",
+              "event_log.rs documents fetch_indexer_checkpoint_for_chain (checkpoints_sharded read)",
+              "internal.rs documents sync_indexer_memory_from_db_checkpoint + 110-INDEXER-MEMORY-SYNC-FROM-DB",
+              "verify-reconcile-export-ed25519.sh self-references script name",
+              "indexer-public-snapshot.sh references internal indexer-reconcile path",
+              "indexer-public-snapshot.sh references internal indexer-status path",
+              "indexer-public-snapshot.sh documents SNAPSHOT_INTERNAL_RECONCILE_RPC for rpc_escrow_samples",
+              "indexer-public-snapshot.sh documents SNAPSHOT_INTERNAL_RECONCILE_INCLUDE_EVENT_LOG_ESCROW_COVERAGE for include_event_log_escrow_coverage",
+              "write-indexer-evidence.sh invokes indexer-public-snapshot",
+              "write-indexer-evidence.ps1 documents indexer-public-snapshot (Windows parity)",
+              "write-indexer-evidence.sh documents indexer_public_snapshot_manifest.json bundle",
+              "write-indexer-evidence.ps1 documents indexer_public_snapshot_manifest.json bundle",
+              "internal-indexer-ops.sh evidence-bundle subcommand present",
+              "internal-indexer-ops.ps1 delegates to bash internal-indexer-ops.sh",
+              "internal-indexer-ops.ps1 evidence uses write-indexer-evidence.ps1",
+              "indexer-public-snapshot.ps1 delegates to bash indexer-public-snapshot.sh",
+              "indexer-reconcile-probe.ps1 delegates to bash indexer-reconcile-probe.sh",
+              "indexer-reorg-recovery.ps1 delegates to bash indexer-reorg-recovery.sh",
+              "indexer-status embeds 110-REORG-RECOVERY-HINT reorg_recovery block",
+              "indexer-reorg-recovery.sh present; internal-indexer-ops recover delegates"
+            ]
+          }
+          JSON
+      - name: Upload internal drill evidence artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: internal-drill-evidence
+          path: |
+            ${{ env.EVIDENCE_DIR }}/internal_boundary_check.md
+            ${{ env.EVIDENCE_DIR }}/internal_audit_sample.json

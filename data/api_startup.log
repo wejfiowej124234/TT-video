@@ -1,0 +1,192 @@
+   Compiling traveltrust-api v0.1.0 (C:\Users\plant\Desktop\Wbe3-TravelTrust\crates\api)
+warning: field `filename` is never read
+    --> crates\api\src\main.rs:1796:9
+     |
+1792 | struct UploadGuideDocBody {
+     |        ------------------ field in this struct
+...
+1796 |     pub filename: Option<String>,
+     |         ^^^^^^^^
+     |
+     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: struct `SignedIntent` is never constructed
+    --> crates\api\src\main.rs:3327:8
+     |
+3327 | struct SignedIntent {
+     |        ^^^^^^^^^^^^
+
+warning: function `env_chain_id` is never used
+    --> crates\api\src\main.rs:3337:4
+     |
+3337 | fn env_chain_id() -> Option<u64> {
+     |    ^^^^^^^^^^^^
+
+warning: function `normalize_addr` is never used
+    --> crates\api\src\main.rs:3341:4
+     |
+3341 | fn normalize_addr(s: &str) -> String {
+     |    ^^^^^^^^^^^^^^
+
+warning: function `parse_addr_set` is never used
+    --> crates\api\src\main.rs:3345:4
+     |
+3345 | fn parse_addr_set(raw: &str) -> std::collections::HashSet<String> {
+     |    ^^^^^^^^^^^^^^
+
+warning: function `validate_intent_policy` is never used
+    --> crates\api\src\main.rs:3358:4
+     |
+3358 | fn validate_intent_policy(intent: &SignedIntent, strict_ssot: bool) -> Result<(), String> {
+     |    ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `validate_intent_shape` is never used
+    --> crates\api\src\main.rs:3389:4
+     |
+3389 | fn validate_intent_shape(intent: &SignedIntent) -> Result<(), String> {
+     |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `post_order_confirm_completion_intent` is never used
+    --> crates\api\src\main.rs:3413:10
+     |
+3413 | async fn post_order_confirm_completion_intent(
+     |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `post_order_open_dispute_intent` is never used
+    --> crates\api\src\main.rs:3487:10
+     |
+3487 | async fn post_order_open_dispute_intent(
+     |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `post_dispute_execute_resolution_intent` is never used
+    --> crates\api\src\main.rs:3561:10
+     |
+3561 | async fn post_dispute_execute_resolution_intent(
+     |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `not_impl_guides_id` is never used
+    --> crates\api\src\main.rs:3676:10
+     |
+3676 | async fn not_impl_guides_id(Path(id): Path<String>) -> impl IntoResponse {
+     |          ^^^^^^^^^^^^^^^^^^
+
+warning: function `not_impl_auth` is never used
+    --> crates\api\src\main.rs:3682:10
+     |
+3682 | async fn not_impl_auth() -> impl IntoResponse {
+     |          ^^^^^^^^^^^^^
+
+warning: function `not_impl_v1` is never used
+    --> crates\api\src\main.rs:3685:10
+     |
+3685 | async fn not_impl_v1() -> impl IntoResponse {
+     |          ^^^^^^^^^^^
+
+warning: enum `EscrowChainStatus` is never used
+  --> crates\api\src\chain\mod.rs:64:10
+   |
+64 | pub enum EscrowChainStatus {
+   |          ^^^^^^^^^^^^^^^^^
+
+warning: constant `SELECTOR_ESCROW_OF` is never used
+  --> crates\api\src\chain\mod.rs:75:7
+   |
+75 | const SELECTOR_ESCROW_OF: &[u8] = &[0x87, 0x90, 0x6b, 0x1e];
+   |       ^^^^^^^^^^^^^^^^^^
+
+warning: constant `SELECTOR_STATUS` is never used
+  --> crates\api\src\chain\mod.rs:76:7
+   |
+76 | const SELECTOR_STATUS: &[u8] = &[0x66, 0x01, 0xcb, 0x31];
+   |       ^^^^^^^^^^^^^^^
+
+warning: function `get_escrow_status` is never used
+  --> crates\api\src\chain\mod.rs:79:14
+   |
+79 | pub async fn get_escrow_status(
+   |              ^^^^^^^^^^^^^^^^^
+
+warning: function `reorg_detected` is never used
+   --> crates\api\src\chain\indexer.rs:209:8
+    |
+209 | pub fn reorg_detected(last_block_hash: &str, current_block_hash: &str) -> bool {
+    |        ^^^^^^^^^^^^^^
+
+warning: field `reason` is never read
+   --> crates\api\src\chain_off.rs:322:9
+    |
+320 | pub struct OpenDisputeBody {
+    |            --------------- field in this struct
+321 |     #[serde(default)]
+322 |     pub reason: Option<String>,
+    |         ^^^^^^
+
+warning: fields `travel_date` and `notes` are never read
+   --> crates\api\src\chain_off.rs:335:9
+    |
+332 | pub struct CreateItineraryBody {
+    |            ------------------- fields in this struct
+...
+335 |     pub travel_date: String,
+    |         ^^^^^^^^^^^
+...
+350 |     pub notes: Option<String>,
+    |         ^^^^^
+    |
+    = note: `CreateItineraryBody` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: field `order_id` is never read
+   --> crates\api\src\chain_off.rs:377:9
+    |
+376 | pub struct ItineraryBundle {
+    |            --------------- field in this struct
+377 |     pub order_id: Uuid,
+    |         ^^^^^^^^
+    |
+    = note: `ItineraryBundle` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: fields `old_password` and `new_password` are never read
+   --> crates\api\src\chain_off.rs:822:9
+    |
+821 | pub struct PutMePasswordBody {
+    |            ----------------- fields in this struct
+822 |     pub old_password: Option<String>,
+    |         ^^^^^^^^^^^^
+823 |     pub new_password: Option<String>,
+    |         ^^^^^^^^^^^^
+
+warning: function `is_valid_eip55` is never used
+    --> crates\api\src\chain_off.rs:1055:4
+     |
+1055 | fn is_valid_eip55(addr: &str) -> bool {
+     |    ^^^^^^^^^^^^^^
+
+warning: function `reconcile_order_chain_vs_db` is never used
+    --> crates\api\src\chain_off.rs:2500:8
+     |
+2500 | pub fn reconcile_order_chain_vs_db(
+     |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: fields `id`, `draft_id`, `created_at`, and `updated_at` are never read
+   --> crates\api\src\db.rs:572:9
+    |
+571 | pub struct ItineraryRow {
+    |            ------------ fields in this struct
+572 |     pub id: Uuid,
+    |         ^^
+573 |     pub order_id: Uuid,
+574 |     pub draft_id: Option<String>,
+    |         ^^^^^^^^
+...
+581 |     pub created_at: DateTime<Utc>,
+    |         ^^^^^^^^^^
+582 |     pub updated_at: DateTime<Utc>,
+    |         ^^^^^^^^^^
+    |
+    = note: `ItineraryRow` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: `traveltrust-api` (bin "traveltrust-api") generated 25 warnings
+error: failed to remove file `C:\Users\plant\Desktop\Wbe3-TravelTrust\target\debug\traveltrust-api.exe`
+
+Caused by:
+  拒绝访问。 (os error 5)

@@ -1,0 +1,6 @@
+Photos via Unsplash (https://unsplash.com/license) — replace with brand-owned assets for production if required.
+
+traveler.jpg — scenic travel / nature (sparse or no people)
+guide.jpg — international landmark / tour context
+provider.jpg — restaurant interior
+steward.jpg — professional portrait (regional lead)

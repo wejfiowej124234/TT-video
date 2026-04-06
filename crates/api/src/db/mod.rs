@@ -1,0 +1,70 @@
+//! 业务库读写：users / sessions / guides / orders / reviews / disputes / itineraries / order_messages（04 §四、48 §六）
+//! 当 DATABASE_URL 设置时：启动时从 DB hydrate 到 chain_off 内存；注册/登录/向导/订单/评价/争议/行程/聊天双写 DB。
+
+#![allow(dead_code)]
+
+pub use admin::*;
+pub use admin_policies_tenants::*;
+pub use api_versions::*;
+pub use community::*;
+pub use community_governance_audit::*;
+pub use community_moderation_cases::*;
+pub use community_penalties::*;
+pub use community_reports::*;
+pub use compliance_internal_tools::*;
+pub use config_center::*;
+pub use correction_executor_audit::*;
+pub use disputes::*;
+pub use economic_aggregate::*;
+pub use event_log::*;
+pub use evidence::*;
+pub use fee_router_events::*;
+pub use governance::*;
+pub use guides::*;
+pub use idempotency::*;
+pub use investor_share::*;
+pub use investor_distribution::*;
+pub use itineraries::*;
+pub use jobs_scheduler_config::*;
+pub use lifecycle_state_machines::*;
+pub use media_signed_url::*;
+pub use messages::*;
+pub use orders::*;
+pub use orders_projection::*;
+pub use reconciliation_reports::*;
+pub use region_vault_events::*;
+pub use reviews::*;
+pub use users_sessions::*;
+
+mod admin;
+mod admin_policies_tenants;
+mod api_versions;
+mod community;
+mod community_governance_audit;
+mod community_moderation_cases;
+mod community_penalties;
+mod community_reports;
+mod compliance_internal_tools;
+mod config_center;
+mod correction_executor_audit;
+mod disputes;
+mod economic_aggregate;
+mod event_log;
+mod evidence;
+mod fee_router_events;
+mod governance;
+mod guides;
+mod idempotency;
+mod investor_share;
+mod investor_distribution;
+mod itineraries;
+mod jobs_scheduler_config;
+mod lifecycle_state_machines;
+mod media_signed_url;
+mod messages;
+mod orders;
+mod orders_projection;
+mod reconciliation_reports;
+mod region_vault_events;
+mod reviews;
+mod users_sessions;

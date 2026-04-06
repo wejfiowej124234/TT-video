@@ -9,6 +9,7 @@ node_modules/
 frontend/node_modules/
 frontend/.next/
 frontend/out/
+frontend/.lighthouse*
 
 # 环境与密钥（勿提交）
 .env
@@ -18,10 +19,18 @@ frontend/out/
 *.key
 *credentials*
 
+# Windows 设备保留名：若出现在仓库根，会导致 `git add` 索引失败（须删除并勿再创建）
+/nul
+
 # 备份与本地
 **/*.rs.bk
 *.bak
 *.tmp
+.dev_backend.pid
+.dev_frontend.pid
+
+# 脚本运行产生的日志（留痕由 CI/人工执行后生成）
+scripts/*.log
 
 # 真实 evidence bundle（过门时产出，可能含内部信息；模板与 README 可提交）
 evidence/GO_[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/

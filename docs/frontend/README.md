@@ -19,8 +19,8 @@
 
 ## 可验证发布
 
-- 前端构建产物 manifest：脚本位于 `scripts/build-frontend-manifest.sh`
-- deterministic 验证（本地自检）：脚本位于 `scripts/verify-frontend-deterministic-build.sh`
+- 前端构建产物 manifest：按 [evidence/README](../../evidence/README.md) 可验证发布段落手工生成 manifest.json、manifest.sha256（原 build-frontend-manifest.sh 已移除）
+- deterministic 验证（本地自检）：按 evidence/README 与发版前核对执行（原 verify-frontend-deterministic-build.sh 已移除）
 
 ## 代码落点（仓库结构）
 

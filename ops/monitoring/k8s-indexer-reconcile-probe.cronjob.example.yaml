@@ -1,0 +1,68 @@
+# Example Kubernetes CronJob: in-cluster (or VPN-sidecar) probe for DB projection reconcile.
+# Apply after creating Secret `traveltrust-indexer-probe` (see below). Logic aligned with
+# scripts/indexer-reconcile-probe.sh — keep jq checks in sync on changes.
+#
+#   kubectl -n YOUR_NS create secret generic traveltrust-indexer-probe \
+#     --from-literal=api_base_url='http://traveltrust-api:8080' \
+#     --from-literal=internal_api_secret='YOUR_INTERNAL_SECRET'
+#
+# SSOT narrative: ops/RUNBOOK.md §2.55, docs/spec/04 §3.4, 110.
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: indexer-reconcile-probe
+spec:
+  schedule: "17 */6 * * *"
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: probe
+              image: alpine:3.20
+              env:
+                - name: API_BASE_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: traveltrust-indexer-probe
+                      key: api_base_url
+                - name: INTERNAL_API_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: traveltrust-indexer-probe
+                      key: internal_api_secret
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  set -eu
+                  apk add --no-cache --quiet curl jq
+                  BASE="${API_BASE_URL%/}"
+                  tmp="$(mktemp)"
+                  trap 'rm -f "$tmp"' EXIT
+                  code="$(curl -sS -o "$tmp" -w "%{http_code}" \
+                    -H "X-Internal-Api-Secret: ${INTERNAL_API_SECRET}" \
+                    "${BASE}/api/v1/internal/indexer-status?live_reconcile=1")"
+                  if [ "$code" != "200" ]; then
+                    echo "probe: HTTP ${code}" >&2
+                    head -c 400 "$tmp" >&2 || true
+                    exit 2
+                  fi
+                  if ! jq -e '.live_orders_projection_reconcile != null' "$tmp" >/dev/null 2>&1; then
+                    echo "probe: missing live_orders_projection_reconcile" >&2
+                    exit 3
+                  fi
+                  if ! jq -e '.live_orders_projection_reconcile.ok == true' "$tmp" >/dev/null 2>&1; then
+                    jq -r '.live_orders_projection_reconcile | "\(.error) \(.message)"' "$tmp" >&2
+                    exit 4
+                  fi
+                  if ! jq -e '.live_orders_projection_reconcile.projection_reconcile_clean == true' "$tmp" >/dev/null 2>&1; then
+                    jq '.live_orders_projection_reconcile' "$tmp" >&2
+                    exit 5
+                  fi
+                  echo "probe: ok projection_reconcile_clean"
+                  jq '.live_orders_projection_reconcile | {chain_id, issues_total, projection_reconcile_clean}' "$tmp"

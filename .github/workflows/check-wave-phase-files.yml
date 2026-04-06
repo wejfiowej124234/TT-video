@@ -1,0 +1,19 @@
+# 90～550 阶段规格 Markdown 存在性校验（防误删 docs/spec/NNN-*.md）
+name: Check wave phase spec files
+
+on:
+  pull_request:
+    paths:
+      - 'docs/spec/**'
+      - 'scripts/check-wave-phase-files.sh'
+      - '.github/workflows/check-wave-phase-files.yml'
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify phase spec files (90～550, empty slots 280–310 allowed)
+        run: bash scripts/check-wave-phase-files.sh

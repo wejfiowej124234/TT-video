@@ -1,0 +1,82 @@
+{
+  "policy_version": "baseline-v1",
+  "entries": [
+    {
+      "country": "中国",
+      "city": "北京",
+      "locale": "zh-CN",
+      "timezone": "Asia/Shanghai",
+      "currency": "CNY"
+    },
+    {
+      "country": "美国",
+      "city": "纽约",
+      "locale": "en-US",
+      "timezone": "America/New_York",
+      "currency": "USD"
+    },
+    {
+      "country": "英国",
+      "city": "伦敦",
+      "locale": "en-GB",
+      "timezone": "Europe/London",
+      "currency": "GBP"
+    },
+    {
+      "country": "日本",
+      "city": "东京",
+      "locale": "en-US",
+      "timezone": "Asia/Tokyo",
+      "currency": "JPY"
+    },
+    {
+      "country": "韩国",
+      "city": "首尔",
+      "locale": "en-US",
+      "timezone": "Asia/Seoul",
+      "currency": "KRW"
+    },
+    {
+      "country": "泰国",
+      "city": "曼谷",
+      "locale": "en-US",
+      "timezone": "Asia/Bangkok",
+      "currency": "THB"
+    },
+    {
+      "country": "新加坡",
+      "city": "新加坡",
+      "locale": "en-US",
+      "timezone": "Asia/Singapore",
+      "currency": "SGD"
+    },
+    {
+      "country": "法国",
+      "city": "巴黎",
+      "locale": "en-US",
+      "timezone": "Europe/Paris",
+      "currency": "EUR"
+    },
+    {
+      "country": "意大利",
+      "city": "罗马",
+      "locale": "en-US",
+      "timezone": "Europe/Rome",
+      "currency": "EUR"
+    },
+    {
+      "country": "西班牙",
+      "city": "马德里",
+      "locale": "en-US",
+      "timezone": "Europe/Madrid",
+      "currency": "EUR"
+    },
+    {
+      "country": "澳大利亚",
+      "city": "悉尼",
+      "locale": "en-US",
+      "timezone": "Australia/Sydney",
+      "currency": "AUD"
+    }
+  ]
+}

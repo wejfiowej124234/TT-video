@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # 依赖安全审计（发版前建议执行）：前端 npm audit、后端 cargo audit
 # 用法：在仓库根执行 ./scripts/audit-deps.sh
+# Windows：.\scripts\audit-deps.ps1（委托本脚本；须 **Git Bash**）
 # 可选：npm audit 可用 --audit-level=high 仅在高危时失败；cargo audit 需安装 cargo-audit
 
 set -euo pipefail

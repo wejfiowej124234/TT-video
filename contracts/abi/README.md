@@ -15,5 +15,8 @@
 
 ## 当前状态
 
-- 合约尚未实现（见 [contracts/README](../README.md)）；本目录暂无 ABI 文件。
+- 合约已实现（Escrow、EscrowFactory、IERC20、MockERC20、Staking、Registry、**FeeRouter**、**RegionVault**）。本目录已含 **Escrow.json**、**EscrowFactory.json**、**Staking.json**、**Registry.json**、**FeeRouter.json**、**RegionVault.json**（与 `contracts/src` 对齐；供后端/前端引用）。**FeeRouter** / **RegionVault** 为经济路由 **Partial**，与 **14 §1.1.1** 一致。
+- **与前端同步**：将 `Staking.json`、`Registry.json`、`EscrowFactory.json`、`FeeRouter.json`、`RegionVault.json` 复制到 `frontend/dapp/abis/` 后执行 `./scripts/check-55-s13.sh`，确保两目录字节一致。
+- **CI / 本地**：`.github/workflows/contract-abi-gate.yml` 在 `forge test` 后运行 **`bash scripts/run-verify-abi-forge.sh`**（内部调用 **verify-abi-forge.py**，比较 `forge inspect … abi` 与已提交 JSON 的 **ABI 条目 multiset**）。Workflow 对无关变更（仅文档等）**不自动触发**；可在 GitHub **Actions → 手动 Run workflow** 补跑。本地有 Foundry：`bash scripts/run-verify-abi-forge.sh`。不一致时跑 `./scripts/sync-abi-from-forge.sh`（或 `.ps1`）后提交。
+- 完整 ABI 推荐用项目根 **`./scripts/sync-abi-from-forge.sh`** 一次性写入本目录（需本机已安装 `forge` 且 `contracts` 能 `forge build`）；脚本会提示将 **`Staking` / `Registry` / `FeeRouter` / `RegionVault`** 等 JSON 复制到 `frontend/dapp/abis/` 并执行 `check-55-s13.sh`。亦可手工：`forge inspect RegionVault abi | jq . > abi/RegionVault.json` 等。
 - 实现后请同步更新 [docs/spec/14-合约-API-ABI-前后端对齐](../../docs/spec/14-合约-API-ABI-前后端对齐.md) §1.1 中具体方法/事件名。

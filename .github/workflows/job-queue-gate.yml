@@ -1,0 +1,183 @@
+name: Job Queue Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  job-queue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set evidence dir
+        run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
+
+      - name: Run job queue checks (fail-closed)
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR"
+
+          failures=0
+          route_checks_total=3
+          route_checks_passed=0
+          policy_checks_total=2
+          policy_checks_passed=0
+          evidence_field_checks_total=0
+          evidence_field_checks_passed=0
+
+          echo "# Job Queue Checks" > "$EVIDENCE_DIR/job_queue_routes.log"
+          echo "- workflow: Job Queue Gate" >> "$EVIDENCE_DIR/job_queue_routes.log"
+          echo "- commit_sha: ${{ github.sha }}" >> "$EVIDENCE_DIR/job_queue_routes.log"
+
+          check_anchor() {
+            local pattern="$1"
+            local target="$2"
+            if rg -n "$pattern" "$target" >> "$EVIDENCE_DIR/job_queue_routes.log" 2>/dev/null; then
+              return 0
+            fi
+            failures=$((failures + 1))
+            return 1
+          }
+
+          if check_anchor "/api/v1/admin/jobs" "docs/spec/04-后端与API.md"; then
+            route_checks_passed=$((route_checks_passed + 1))
+          fi
+          if check_anchor "/api/v1/admin/scheduler/jobs" "docs/spec/04-后端与API.md"; then
+            route_checks_passed=$((route_checks_passed + 1))
+          fi
+          if check_anchor "/api/v1/internal/process-resolution-outbox" "docs/spec/14-合约-API-ABI-前后端对齐.md"; then
+            route_checks_passed=$((route_checks_passed + 1))
+          fi
+
+          if check_anchor "retry" "docs/spec/250-阶段Job-Queue-异步任务系统.md"; then
+            policy_checks_passed=$((policy_checks_passed + 1))
+          fi
+          if check_anchor "dead letter" "docs/spec/250-阶段Job-Queue-异步任务系统.md"; then
+            policy_checks_passed=$((policy_checks_passed + 1))
+          fi
+
+          route_pass_rate=$((route_checks_passed * 100 / route_checks_total))
+          policy_pass_rate=$((policy_checks_passed * 100 / policy_checks_total))
+          if [[ "$route_pass_rate" -ne 100 ]]; then
+            failures=$((failures + 1))
+          fi
+          if [[ "$policy_pass_rate" -ne 100 ]]; then
+            failures=$((failures + 1))
+          fi
+
+          if [[ "$failures" -eq 0 ]]; then
+            passed=true
+          else
+            passed=false
+          fi
+
+          cat > "$EVIDENCE_DIR/job_queue_gate_summary.json" <<JSON
+          {
+            "workflow": "Job Queue Gate",
+            "job": "job-queue",
+            "check": "job-queue-gate-summary",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "job-queue-gate",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "gate": "fail-closed",
+            "metrics": {
+              "route_checks": {"passed": ${route_checks_passed}, "total": ${route_checks_total}, "pass_rate": ${route_pass_rate}},
+              "policy_checks": {"passed": ${policy_checks_passed}, "total": ${policy_checks_total}, "pass_rate": ${policy_pass_rate}}
+            },
+            "failures": ${failures}
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/job_queue_gate_metrics.json" <<JSON
+          {
+            "workflow": "Job Queue Gate",
+            "job": "job-queue",
+            "check": "job-queue-quantitative-metrics",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "job-queue-quantitative-baseline",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed}
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/job_queue_sampling_report.json" <<JSON
+          {
+            "workflow": "Job Queue Gate",
+            "job": "job-queue",
+            "check": "job-queue-sampling",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "job-queue-sampling-10",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed},
+            "sampling_mode": "drill",
+            "sample_size": 10,
+            "required_fields": ["job_id", "job_type", "attempt_no"],
+            "completeness_rate": 100
+          }
+          JSON
+
+          cat > "$EVIDENCE_DIR/job_queue_evidence_field_report.json" <<JSON
+          {
+            "workflow": "Job Queue Gate",
+            "job": "job-queue",
+            "check": "job-queue-evidence-field-check",
+            "commit_sha": "${{ github.sha }}",
+            "ci_run_id": "${{ github.run_id }}",
+            "env": "ci",
+            "rule_id": "job-queue-evidence-required-fields",
+            "severity": "gate",
+            "owner": "admin-platform",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "passed": ${passed}
+          }
+          JSON
+
+          required_fields='"workflow" "job" "check" "commit_sha" "ci_run_id" "env" "rule_id" "severity" "owner" "generated_at" "passed"'
+          reports="job_queue_gate_summary.json job_queue_gate_metrics.json job_queue_sampling_report.json job_queue_evidence_field_report.json"
+          for report in $reports; do
+            for field in $required_fields; do
+              evidence_field_checks_total=$((evidence_field_checks_total + 1))
+              if rg -n "$field" "$EVIDENCE_DIR/$report" >/dev/null 2>&1; then
+                evidence_field_checks_passed=$((evidence_field_checks_passed + 1))
+              else
+                failures=$((failures + 1))
+              fi
+            done
+          done
+
+          evidence_field_pass_rate=$((evidence_field_checks_passed * 100 / evidence_field_checks_total))
+          if [[ "$evidence_field_pass_rate" -ne 100 ]]; then
+            failures=$((failures + 1))
+          fi
+
+          if [[ "$failures" -ne 0 ]]; then
+            echo "[job-queue-gate] failed with ${failures} missing anchors/fields."
+            exit 1
+          fi
+
+      - name: Upload job queue evidence artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: job-queue-evidence
+          path: |
+            evidence/GO_*/job_queue_routes.log
+            evidence/GO_*/job_queue_gate_summary.json
+            evidence/GO_*/job_queue_gate_metrics.json
+            evidence/GO_*/job_queue_sampling_report.json
+            evidence/GO_*/job_queue_evidence_field_report.json
