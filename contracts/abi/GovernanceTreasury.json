@@ -16,6 +16,10 @@
     "stateMutability": "nonpayable"
   },
   {
+    "type": "receive",
+    "stateMutability": "payable"
+  },
+  {
     "type": "function",
     "name": "owner",
     "inputs": [],
@@ -50,6 +54,24 @@
         "type": "address",
         "internalType": "address"
       },
+      {
+        "name": "to",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "amount",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "spendETH",
+    "inputs": [
       {
         "name": "to",
         "type": "address",
@@ -152,6 +174,30 @@
       }
     ],
     "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "TreasuryEthSpent",
+    "inputs": [
+      {
+        "name": "to",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "amount",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "error",
+    "name": "EthTransferFailed",
+    "inputs": []
   },
   {
     "type": "error",

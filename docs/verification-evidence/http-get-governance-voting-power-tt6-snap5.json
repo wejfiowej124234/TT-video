@@ -1,0 +1,42 @@
+{
+    "status": "ok",
+    "authenticated": true,
+    "vote_kind": "signal_off_chain",
+    "triggers_on_chain_execution": false,
+    "weight_ssot": "delegation_units_v1",
+    "anchor": "B-092-GOV-VOTE-WEIGHT-DELEGATION-MVP",
+    "can_cast_vote": true,
+    "delegate_to": null,
+    "delegator_count": 0,
+    "total_weight_units": 1,
+    "stake_snapshot": {
+        "block": 5,
+        "stake_u256_hex": "0x0000000000000000000000000000000000000000000000000000000077359400",
+        "read_status": "ok",
+        "error": null,
+        "meets_contract_min_stake": true,
+        "reconcile": {
+            "delegation_units_mvp": 1,
+            "note": "delegation_units_mvp is GET /voting-power + POST /vote SSOT; stake_u256_hex is Staking.stakeOf at block 5 (TT-COMP-B092-VOTE-WEIGHT-STAKE-SNAPSHOT-001). Unified single-weight formula remains Target."
+        },
+        "anchor": "TT-COMP-B092-VOTE-WEIGHT-STAKE-SNAPSHOT-001"
+    },
+    "country_pool_share_snapshot": {
+        "block": 5,
+        "read_status": "ok",
+        "tokens": [
+            {
+                "token_address": "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
+                "balance_u256_hex": "0x000000000000000000000000000000000000000000000000000000002e501440",
+                "read_status": "ok",
+                "error": null
+            }
+        ],
+        "error": null,
+        "reconcile": {
+            "delegation_units_mvp": 1,
+            "note": "Per-token balanceOf(wallet) at block 5 for chain_config.investor_share_token_addresses (B-085 / Country Pool ERC20s). delegation_units_mvp not used for tally (TT-COMP-B092-COUNTRY-POOL-SNAPSHOT-001)."
+        },
+        "anchor": "TT-COMP-B092-COUNTRY-POOL-SNAPSHOT-001"
+    }
+}

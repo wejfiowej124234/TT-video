@@ -1,0 +1,11 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.23s
+     Running unittests src\main.rs (target\debug\deps\traveltrust_api-d6d848f99f582d3a.exe)
+
+running 4 tests
+test routes::governance_voting_power::tests::comp_b092_stake_snapshot_matches_mock_eth_call ... ok
+test routes::governance_voting_power::tests::comp_b092_http_voting_power_includes_stake_snapshot_ok ... ok
+test routes::governance_voting_power::tests::comp_b092_http_voting_power_includes_country_pool_snapshot_ok ... ok
+test routes::governance_voting_power::tests::comp_b092_country_pool_snapshot_two_tokens_ok ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 526 filtered out; finished in 0.01s
+

@@ -3496,6 +3496,33 @@ export default {
     "You have delegated your vote. Revoke delegation on the delegation page to cast votes yourself, or ask your delegatee to vote on your behalf (B-092 signal vote).",
   governance_proposal_detail_vote_counts_weighted_hint:
     "Tallies are weighted units (1 + direct delegators to you at vote time). This is an off-chain signal vote only; it does not move funds on-chain.",
+  governance_proposal_on_chain_tally_hint:
+    "Tallies come from indexed on-chain VoteCast events (governance_proposals_projection), aligned with the Governor state machine.",
+  governance_proposal_chain_state_live: "On-chain state (eth_call)",
+  governance_proposal_chain_read_error: "RPC read failed",
+  governance_proposal_on_chain_vote_explain:
+    "Governor mode: send a wallet transaction to the Governor contract with castVote(uint256,uint8). Calldata for each choice is below (do not use the off-chain POST vote buttons).",
+  governance_proposal_calldata_yes: "Yes calldata",
+  governance_proposal_calldata_no: "No calldata",
+  governance_proposal_calldata_abstain: "Abstain calldata",
+  governance_b090_onchain_notice_aria: "On-chain governance and treasury proposal path",
+  governance_b090_onchain_list_title: "Indexed on-chain proposals (Governor)",
+  governance_b090_onchain_detail_title: "On-chain proposal and treasury execution path",
+  governance_b090_onchain_intro:
+    "This list is backed by the API indexer (governance_proposals_projection). Vote on-chain via the Governor contract; the app does not forge tallies or substitute fake proposal data.",
+  governance_b090_onchain_treasury_body:
+    "Treasury spend proposals (B-090): when a passed proposal’s execution payload calls GovernanceTreasury.spend or spendETH, amounts, token, and recipient are fixed by the calldata executed through Timelock—this UI does not rewrite them. After voting succeeds, the Governor queues the operation on the Timelock; execution happens after the configured delay.",
+  governance_b090_onchain_chain_id_label: "chain_id (from list or meta)",
+  governance_b090_onchain_governor_label: "governor_address (GET /meta.chain.contracts when available)",
+  governance_b090_onchain_governor_unavailable: "Governor address not present in GET /meta (configure FEE_ROUTER / chain or open meta in another tab).",
+  governance_b090_onchain_proposer_label: "Proposer",
+  governance_b090_onchain_snapshot_block_label: "Votes snapshot block",
+  governance_b090_onchain_vote_window_label: "Voting window (blocks)",
+  governance_b090_onchain_operation_id_heading: "Timelock operation id (after queue)",
+  governance_b090_onchain_operation_id_none:
+    "Not queued yet (no ProposalQueued operation id in the projection). Queue via Governor once the proposal has succeeded.",
+  governance_b090_onchain_timelock_hint:
+    "Use your wallet on Timelock.execute / the Governor queue flow per deployment; calldata must match the scheduled operation—do not trust any off-chain editor that claims to “fix” recipient or amount.",
   governance_proposal_detail_my_vote_weight: "Weight recorded for this vote",
   governance_voting_power_current: "Your current voting weight (if you cast now)",
   governance_voting_power_delegated_away: "You have delegated; revoke at delegation to vote yourself.",

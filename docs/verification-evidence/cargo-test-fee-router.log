@@ -1,0 +1,21 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.23s
+     Running unittests src\main.rs (target\debug\deps\traveltrust_api-d6d848f99f582d3a.exe)
+
+running 14 tests
+test db::fee_router_events::tests::limit_defaults_and_clamps ... ok
+test db::fee_router_events::tests::admin_limit_clamps_at_200 ... ok
+test chain::fee_router_verify::tests::norm_u256_hex_pads ... ok
+test db::fee_router_events::tests::parse_cursor_roundtrip ... ok
+test chain::fee_router_verify::tests::platform_fee_routed_topic0_stable ... ok
+test db::fee_router_events::tests::parse_cursor_rejects_bad ... ok
+test routes::internal::tests::indexer_reconcile_body_deserializes_verify_fee_router_events_rpc ... ok
+test routes::governance_doc_reference::tests::protocol_reference_fee_router_layer1_splits ... ok
+test routes::governance_doc_reference::tests::protocol_reference_pending_mirror_matches_fee_router ... ok
+test routes::admin::tests::admin_fee_router_routed_events_bad_cursor_returns_400_before_db ... ok
+test routes::admin::tests::admin_fee_router_routed_events_limit_zero_returns_400_before_db ... ok
+test routes::admin::tests::admin_fee_router_routed_events_requires_db ... ok
+test routes::admin::tests::admin_fee_router_routed_events_forbidden_for_non_admin ... ok
+test routes::admin::tests::admin_fee_router_routed_events_not_impl_without_chain_off ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 516 filtered out; finished in 0.00s
+

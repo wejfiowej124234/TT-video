@@ -553,6 +553,19 @@ pub async fn get_user_id_by_token(pool: &PgPool, token: &str) -> Result<Option<U
     Ok(row.map(|r| r.0))
 }
 
+/// **`default_wallet_address`**（**B-092** **`Staking.stakeOf`** 快照读链）。
+pub async fn get_user_default_wallet_by_id(
+    pool: &PgPool,
+    user_id: Uuid,
+) -> Result<Option<String>, sqlx::Error> {
+    let row: Option<Option<String>> =
+        sqlx::query_scalar("SELECT default_wallet_address FROM users WHERE id = $1")
+            .bind(user_id)
+            .fetch_optional(pool)
+            .await?;
+    Ok(row.flatten())
+}
+
 /// 更新用户密码（50-B2 put_me_password 真实实现）
 pub async fn update_user_password(
     pool: &PgPool,

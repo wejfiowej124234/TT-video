@@ -121,19 +121,24 @@
 | 92 | TT-INVESTOR-DISTRIBUTION-CLAIM-001 | 收益 / 链上领取 | 已封口 | **B-087**：**`InvestorDistributionClaim`** — **`withdrawDividend` / `claim`**；**`registerAccrual`**（owner）；**双花** → **`NothingToClaim` revert**；ABI **`contracts/abi/InvestorDistributionClaim.json`**；**`Deploy.s.sol`** |
 | 93 | TT-INVESTOR-DISTRIBUTION-SNAPSHOT-TRANSFER-RULE-001 | 收益 / 应计快照规则 | 已封口 | **B-088**：**`snapshot_block_number`** **含块**冻结 + **`list_investor_share_transfers_up_to_block`**；**`snapshot_binding`**（**GET/POST**）；单测重放 + **`pro_rata`** 名单一致 |
 | 94 | TT-GOVERNANCE-PARAM-TIMELOCK-EXECUTE-001 | 治理 / 链上延迟执行 | 已封口 | **B-089 Partial**：**`GovernanceTimelock`** **`schedule`/`execute`**；**`GovernanceTimelock.t.sol`**（**`FeeRouter.transferOwnership`**）；**`Deploy.s.sol`** + **`GOVERNANCE_TIMELOCK_DELAY_SECONDS`**；**四方/BPS 热改** 见 **TT-COMP-B089** |
-| 95 | TT-GOVERNANCE-TREASURY-SPEND-EXECUTE-001 | 治理 / 金库链上支出 | 已封口 | **B-090 Partial**：**`GovernanceTreasury.spend`**；**`spender`=Timelock**；**`GovernanceTreasury.t.sol`** E2E；**`Deploy.s.sol`** |
+| 95 | TT-GOVERNANCE-TREASURY-SPEND-EXECUTE-001 | 治理 / 金库链上支出 | 已封口 | **B-090 Partial**：**`GovernanceTreasury.spend`**；**`spender`=Timelock**；**`GovernanceTreasury.t.sol`** E2E；**`Deploy.s.sol`**；**链上提案 UI** **Completion** 见 **111** |
 | 96 | TT-GOVERNANCE-PROTOCOL-EMERGENCY-PAUSE-001 | 治理 / 紧急开关 | 已封口 | **B-091 Partial**：**`EscrowFactory.factoryPaused`** + **`FeeRouter.distributePaused`**；**`Escrow.t.sol`** / **`FeeRouter.t.sol`**；**55-S13** ABI |
-| 97 | TT-GOVERNANCE-VOTE-WEIGHT-DELEGATION-SIGNAL-001 | 治理 / 链下投票权重 | 已封口（**Partial**） | **B-092**：**`delegation_units_v1`** + **`GET …/voting-power`** + 提案 **`governance_vote`**；**信号票**；**质押/份额链上快照** **Target** |
-| 98 | TT-ESCROW-RELEASE-NORMAL-SPLIT-B093-001 | Escrow / 正常放款分账 | 已封口（**Partial**） | **B-093**：**`release()`** 与 **01 §10** 对齐；**`Escrow.t.sol`** 表驱动 + fuzz；**PartiallyRefunded/Slashed** 自动分账 **Target** |
+| 97 | TT-GOVERNANCE-VOTE-WEIGHT-DELEGATION-SIGNAL-001 | 治理 / 链下投票权重 | 已封口（**Partial**） | **B-092**：**`delegation_units_v1`** + **`GET …/voting-power`** + 提案 **`governance_vote`**；**信号票**；**质押/份额链上快照** **Completion** **105·110**（**统一单一权重公式** **Target**） |
+| 98 | TT-ESCROW-RELEASE-NORMAL-SPLIT-B093-001 | Escrow / 正常放款分账 | 已封口（**Partial**） | **B-093**：**`release()`** 与 **01 §10** 对齐；**`Escrow.t.sol`** 表驱动 + fuzz；**附录 02** 其它收平台费终态见 **Completion** **106**/**108** |
 | 99 | TT-ESCROW-EXECUTE-RESOLUTION-B094-001 | Escrow / 争议执行三腿 | 已封口（**Partial**） | **B-094**：**`executeResolution`** 三模板 + **`terminal_order_state_from_resolution_amounts`**；**`evidence/B-094-*`**；投影细分 **Target** |
 | 100 | TT-ORDERS-SPLIT-ADDRESSES-SSOT-B095-001 | 订单 / 分账地址 SSOT | 已封口 | **B-095**：**`GET /orders/:id`** **`split_addresses_ssot`** + **`ChainConfig::escrow_platform_fee_recipient`** 与 **`/meta`** 同源；单测 **`b095_*`** |
-| 101 | TT-COMP-B088-STAKE-LOCK-PROJECTION-001 | 投资人 / 快照补齐 | 未封口 · Completion | **B-088 Target**：锁仓或质押 **单一事件源** → 可重放投影，**pro_rata** 与名单对拍 |
+| 101 | TT-COMP-B088-STAKE-LOCK-PROJECTION-001 | 投资人 / 快照补齐 | 已封口（**Completion**） | **B-088**：**`Staking`** **`Staked`****/****`Withdrawn`****/****`Slashed`** → **`investor_stake_state_events`**；**`indexer-tick`** 写入；应计与 **`Transfer`** **merge** + **`supply`** 对拍 |
 | 102 | TT-COMP-B089-FEEROUTER-MUTABLE-ROUTING-001 | 治理 / FeeRouter 热改 | 已封口（**Completion**） | **B-089 Target**：**`setRoutingConfig`** + **`GovernanceTimelock` `execute`** 验收；**`BPS_*()`** ABI 不变 |
-| 103 | TT-COMP-B090-TREASURY-NATIVE-SPEND-001 | 治理 / 金库原生币 | 未封口 · Completion | **B-090 Target**：**`GovernanceTreasury`** **`receive` + `spendETH`**（或等价），**仅 spender** |
-| 104 | TT-COMP-B091-META-PAUSE-CHAIN-READ-001 | API / meta 读链 | 未封口 · Completion | **B-091 Target**：**`GET /meta`** **pause** 与 **factoryPaused / distributePaused** **链上读数**对齐 |
-| 105 | TT-COMP-B092-VOTE-WEIGHT-STAKE-SNAPSHOT-001 | 治理 / 质押快照权重 | 未封口 · Completion | **B-092 Target**：快照块 **质押** 读链与 **`voting-power`/计票** **二选一**对账 |
-| 106 | TT-COMP-B093-ESCROW-APPENDIX-AUTO-SPLIT-001 | Escrow / 附录分账 | 未封口 · Completion | **B-093 Target**：**80 附录 02** 一终态 **单链上出口** + Foundry 1～2 用例 |
-| 107 | TT-COMP-B094-INDEXER-RESOLUTION-TERMINAL-STATE-001 | API / 投影 | 未封口 · Completion | **B-094 Target**：**三腿** 可得时 **`orders_projection`** 映 **Refunded/Partial/Slashed** |
+| 103 | TT-COMP-B090-TREASURY-NATIVE-SPEND-001 | 治理 / 金库原生币 | 已封口（**Completion**） | **B-090 Target**：**`GovernanceTreasury`** **`receive` + `spendETH`**；**`GovernanceTreasury.t.sol`** **`test_COMP_B090_timelock_execute_spendETH_matches_payload`**；**链上提案 UI** 见 **111** |
+| 104 | TT-COMP-B091-META-PAUSE-CHAIN-READ-001 | API / meta 读链 | 已封口（**Completion**） | **B-091 Target**：**`GET /meta` `pause.factory_paused` / `pause.distribute_paused`** + **`chain_pause_read`**；mock **`comp_b091_*`** |
+| 105 | TT-COMP-B092-VOTE-WEIGHT-STAKE-SNAPSHOT-001 | 治理 / 质押快照权重 | 已封口（**Completion**） | **B-092**：**`GET …/voting-power?snapshot_block=`** **`stake_snapshot`** **`stakeOf`**；**计票** 路径未改；**份额 `balanceOf`** 见 **110** |
+| 106 | TT-COMP-B093-ESCROW-APPENDIX-AUTO-SPLIT-001 | Escrow / 附录分账 | 已封口（**Completion**） | **B-093**：**`releasePartialRefund`** + **`PartialRefundExecuted`** / **`test_COMP_B093_*`**；索引器 **`PartialRefundExecuted`** → **`partially_refunded`** |
+| 107 | TT-COMP-B094-INDEXER-RESOLUTION-TERMINAL-STATE-001 | API / 投影 | 已封口（**Completion**） | **B-094 Target**：**`ResolutionExecuted`** 同源 **`eth_getTransactionByHash`** 解析 **`executeResolution`** → **`orders_projection`** **Refunded/Partial/Slashed**；缺 input/RPC 时 **Completed** |
+| 108 | TT-COMP-B093-ESCROW-SLASHED-NON-DISPUTE-001 | Escrow / Slashed 附录 | 已封口（**Completion**） | **B-093**：**`releaseSlashed`** + **`SlashedExecuted`**；**`status()==8`**；**`indexer-tick`** → **`slashed`**（与 **106** 正交） |
+| 109 | TT-COMP-B089-GOVERNOR-CHAIN-VOTING-001 | 治理 / Governor 链上投票 | 已封口（**Completion**） | **B-089**：**`TravelTrustGovernor`** + **`GovernanceVotesToken`** + **`GovernanceTimelock.scheduleByGovernor`**；**`indexer-tick`** → **`governance_proposals_projection`**；**`GET …/proposals`** 对齐链上 + **`eth_call`** **`state`****/****`getPastVotes`**；**`POST …/vote`** → **`vote_on_chain_required`** |
+| 110 | TT-COMP-B092-COUNTRY-POOL-SNAPSHOT-001 | 治理 / Country Pool 份额快照 | 已封口（**Completion**） | **B-092**：**`GET …/voting-power?snapshot_block=`** **`country_pool_share_snapshot`**；**`INVESTOR_SHARE_TOKEN_ADDRESSES`** 各 **`balanceOf`** **`eth_call`**；与 **105** 并列；**计票** 未改 |
+| 111 | TT-COMP-B090-ONCHAIN-PROPOSAL-UI-001 | 治理 / 链上提案 UI（B-090） | 已封口（**Completion**） | **B-090**：**`/governance/proposals`** **`data_source=governance_proposals_projection`** 时说明面板 + **`GET /meta`** **`governor_address`**；详情 **Governor** 模式展示 **proposer / 块窗 / operation_id** + **Treasury·Timelock** 路径；**禁止**伪造链上数据 |
+| 112 | TT-COMP-B088-LOCK-VAULT-PROJECTION-001 | 投资人 / 快照补齐（B-088 锁仓） | 已封口（**Completion**） | **`InvestorShareLockLedger`** **`Locked`****/****`Unlocked`** → **`investor_lock_state_events`**；**`indexer-tick`** + **`INVESTOR_LOCK_CONTRACT_ADDRESSES`**；应计在 **质押 overlay** 之后再叠 **锁仓 overlay** + **`supply`****Σ** 对拍；**reorg** 删表尾 |
 
 ---
 
@@ -1490,10 +1495,10 @@
 - **本轮仅改**：`crates/api/src/db/investor_distribution.rs`（常量 **`B088_*`** / **`SNAPSHOT_*`**）、`crates/api/src/db/investor_share.rs`（**`b088_*`** 单测）、`crates/api/src/routes/investor_distribution.rs`（**`snapshot_binding`** JSON）、`docs/spec/04-后端与API.md`、`docs/任务母表.md`、本索引  
 - **禁止再分析**：—  
 - **任务（钉死规则）**：  
-  1. **单一冻结时点**：应计 **`POST …/internal/investor-distribution-accrual`** 的 **`snapshot_block_number`** 为 **含块**上界；**仅** **`investor_share_transfer_events`** 中 **`block_number <= snapshot_block_number`** 的 **`Transfer`** 参与余额重放。  
-  2. **交易顺序**：同块内按 **`log_index ASC`**（与 SQL **`ORDER BY block_number ASC, log_index ASC`** 一致）。  
-  3. **机读契约**：**`GET …/governance/investor-distribution-accruals`**（列表项与 **`distribution_id`** 单条）及 **POST 首次成功 200** 含 **`snapshot_binding`**：**`anchor`****=`B-088-INVESTOR-DISTRIBUTION-SNAPSHOT-TRANSFER`**、**`snapshot_block_binding`****=`inclusive_upto_snapshot_block`**、**`transfer_replay_order`****=`block_number_asc_log_index_asc`**、**`eligibility_projection`****=`investor_share_transfer_events`**。  
-  4. **锁仓/质押**：无独立链上投影时，以是否反映在 **`Transfer`** 为准；否则标 **Target**（不在本卡扩展新表）。  
+  1. **单一冻结时点**：应计 **`POST …/internal/investor-distribution-accrual`** 的 **`snapshot_block_number`** 为 **含块**上界；**`Transfer`** 重放**钉死** **`investor_share_transfer_events`** 中 **`block_number <= snapshot_block_number`**（与 SQL **`ORDER BY block_number ASC, log_index ASC`** 一致）。  
+  2. **交易顺序**：同块内按 **`log_index ASC`**（与上式一致）。  
+  3. **机读契约**：**`GET …/governance/investor-distribution-accruals`**（列表项与 **`distribution_id`** 单条）及 **POST 首次成功 200** 含 **`snapshot_binding`**：**`anchor`****=`B-088-INVESTOR-DISTRIBUTION-SNAPSHOT-TRANSFER`**、**`snapshot_block_binding`****=`inclusive_upto_snapshot_block`**、**`transfer_replay_order`****=`block_number_asc_log_index_asc`**、**`eligibility_projection`****=`investor_share_transfer_events`**，并**并列** **`stake_overlay_*`****/`b088_completion_anchor`**（**`STAKING_ADDRESS`** 未设时质押叠加不生效）、**`lock_overlay_*`****/`b088_lock_completion_anchor`**（**`INVESTOR_LOCK_CONTRACT_ADDRESSES`** 未设时锁仓叠加不生效）。  
+  4. **锁仓/质押**：**质押** 可重放投影见 **`TT-COMP-B088-STAKE-LOCK-PROJECTION-001`**（**101**）；**锁仓** 独立投影见 **`TT-COMP-B088-LOCK-VAULT-PROJECTION-001`**（**112**）。  
 - **验收（手动）**：同一投影数据下，提高 **`snapshot_block_number`** 前后 **`lines[]`** 与本地按上规则重算 **逐地址一致**。  
 - **测试**：`cargo test -p traveltrust-api` **`investor_share::tests::b088_later_block_transfer_excluded_from_snapshot_cutoff`**；`python3 scripts/check-04-routes-vs-code.py`（若仓库启用）。  
 - **备注**：与 **B-086** 公式同源；**B-087** 链上 **`registerAccrual`** 须与链下 **`distribution_id`/行表** 运营对齐。  
@@ -1618,14 +1623,27 @@
 
 ### TT-COMP-B088-STAKE-LOCK-PROJECTION-001
 
-- **阶段**：投资人分红快照补齐（**B-088** 母表 **Target**：锁仓/质押无独立投影）  
-- **状态**：未封口 · **Completion**（只补缺；不重做 **`snapshot_block_number` / `snapshot_binding` / `b088_*`**）  
-- **本轮仅改**：实现时钉死 **`crates/api`** 内 **indexer/DB 单一路径**（**≤1** 组件：新投影表 **或** 扩展现有 **`investor_share_*`** 消费）  
+- **阶段**：投资人分红快照补齐（**B-088** **Completion**：**质押** 可重放投影）  
+- **状态**：已封口（**Completion**）  
+- **本轮仅改**：`crates/api/migrations/20260422000051_investor_stake_state_events.sql`、`crates/api/src/db/investor_stake.rs`、`crates/api/src/chain/indexer.rs`（**`fetch_staking_state_logs`**）、`crates/api/src/routes/internal.rs`（**tick**/**reorg**）、`crates/api/src/routes/investor_distribution.rs`、`crates/api/src/db/investor_distribution.rs`、`docs/spec/04-后端与API.md`、`docs/任务母表.md`、本索引  
 - **禁止再分析**：—  
-- **任务（钉死）**：为 **锁仓或质押**（**二选一写死为母表口径的一种链上事件源**）增加 **可重放投影**，使 **快照块高截止** 下 **领取名单** 可与链下复算表 **逐地址**对拍。  
-- **验收**：给定 **交易顺序 fixture**，名单与投影重放一致（**`cargo test -p traveltrust-api`** 或脚本文档化）。  
+- **任务（钉死）**：**写死 SSOT**=**`contracts/src/Staking.sol`** 事件 **`Staked` / `Withdrawn` / `Slashed`** → 表 **`investor_stake_state_events`**；**`POST …/internal/indexer-tick`** 在 **`STAKING_ADDRESS`** + **`DATABASE_URL`** 时写入；**`POST …/internal/investor-distribution-accrual`** 在 **`chain_config.staking_address`** 非空时将 **`stakeOf`** 重放叠加到 **`Transfer`** 重放余额并 **剔除** 质押合约地址，**`Σ` 持有人** 须等于 **`Transfer`****supply**（否则 **`b088_stake_overlay_supply_mismatch`**）；**`indexer-reorg-rewind`** 同步删尾该表。  
+- **验收**：**`cargo test -p traveltrust-api`**：**`comp_b088_overlay_restores_holder_weight_after_stake_to_contract`** 等。  
 - **测试**：**`cargo test -p traveltrust-api`**。  
-- **备注**：与 **`TT-INVESTOR-DISTRIBUTION-SNAPSHOT-TRANSFER-RULE-001`** 正交；**Country Pool 份额** 若另卡则勿在本卡混做。  
+- **备注**：与 **`TT-INVESTOR-DISTRIBUTION-SNAPSHOT-TRANSFER-RULE-001`** 正交；**锁仓** 见 **112** **`TT-COMP-B088-LOCK-VAULT-PROJECTION-001`**；**Country Pool 份额** 勿混本卡。  
+
+---
+
+### TT-COMP-B088-LOCK-VAULT-PROJECTION-001
+
+- **阶段**：投资人分红快照补齐（**B-088** **Completion**：**锁仓** 可重放投影）  
+- **状态**：已封口（**Completion**）  
+- **本轮仅改**：`crates/api/migrations/20260423000052_investor_lock_state_events.sql`、`crates/api/src/db/investor_lock.rs`、`crates/api/src/chain/mod.rs`（**`INVESTOR_LOCK_CONTRACT_ADDRESSES`**）、`crates/api/src/chain/indexer.rs`（**`fetch_investor_lock_state_logs`** / topic0 单测）、`crates/api/src/routes/internal.rs`（**tick**/**reorg**）、`crates/api/src/routes/investor_distribution.rs`、`crates/api/src/db/investor_distribution.rs`、`contracts/src/InvestorShareLockLedger.sol`、`contracts/test/InvestorShareLockLedger.t.sol`、`.env.example`、`docs/spec/04-后端与API.md`、`docs/任务母表.md`、本索引  
+- **禁止再分析**：—  
+- **任务（钉死）**：**写死 SSOT**=**`contracts/src/InvestorShareLockLedger.sol`** 事件 **`Locked` / `Unlocked`**（**`Locked(address,uint256)`** / **`Unlocked(address,uint256)`** topic 与 **`indexer::LOCKED_TOPIC0` / `UNLOCKED_TOPIC0`** 一致）→ 表 **`investor_lock_state_events`**；**`POST …/internal/indexer-tick`** 在 **`INVESTOR_LOCK_CONTRACT_ADDRESSES`** + **`DATABASE_URL`** 时对各地址 **`eth_getLogs`** 写入；**`POST …/internal/investor-distribution-accrual`** 在 **`chain_config.investor_lock_contract_addresses`** 非空时于 **质押 overlay**（若启用）**之后** 按地址顺序叠 **`merge_transfer_balances_with_lock_overlay`**，每步后 **持有人 `Σ` = `Transfer`****supply**，否则 **`b088_lock_overlay_supply_mismatch`**；**`indexer-reorg-rewind`** / tick 自动回滚 同源 **`delete_investor_lock_state_events_from_block`**；**`snapshot_binding`** 并列 **`lock_overlay_*`****/`b088_lock_completion_anchor`**。  
+- **验收**：**`cargo test -p traveltrust-api`**：**`investor_lock::tests::comp_b088_lock_overlay_attributes_locked_to_user`**、**`indexer::tests::lock_ledger_event_topic0s_keccak`**；**`cd contracts && forge test --match-contract InvestorShareLockLedgerTest`**。  
+- **测试**：**`cargo test -p traveltrust-api`**；**`forge test`**（上式）。  
+- **备注**：与 **101** 质押 overlay **顺序固定**（先 stake 后 lock）；多锁仓地址 **顺序敏感**（与配置列表一致）。  
 
 ---
 
@@ -1645,65 +1663,117 @@
 ### TT-COMP-B090-TREASURY-NATIVE-SPEND-001
 
 - **阶段**：治理金库补齐（**B-090** **Target**：**ETH 原生**支出）  
-- **状态**：未封口 · **Completion**（不重做 **`GovernanceTreasury.spend` ERC20** + Timelock E2E）  
-- **本轮仅改**：**`contracts/src/GovernanceTreasury.sol`**（**≤1** 合约点）+ 对应 **`GovernanceTreasury.t.sol`**  
+- **状态**：已封口（**Completion**）  
+- **本轮仅改**：**`contracts/src/GovernanceTreasury.sol`**、**`contracts/test/GovernanceTreasury.t.sol`**、**`contracts/abi/GovernanceTreasury.json`**、**`contracts/README.md`**、本索引一览与正文  
 - **禁止再分析**：—  
 - **任务（钉死）**：**`receive` + `spendETH(to,amount)`**（或等价 **单笔原生转出**），调用方 **仍仅 `spender`**（Timelock）。  
-- **验收**：Foundry：Timelock **`execute` → `spendETH`** 后收款 **EOA 余额增量** = payload（wei）。  
-- **测试**：**`forge test --match-contract GovernanceTreasury`**（或新增用例名）。  
-- **备注**：链上提案 UI 另卡；本卡 **仅合约**。  
+- **验收**：Foundry：Timelock **`execute` → `spendETH`** 后收款 **EOA 余额增量** = payload（wei）（**`test_COMP_B090_timelock_execute_spendETH_matches_payload`**）。  
+- **测试**：**`forge test --match-contract GovernanceTreasuryTest`**。  
+- **备注**：链上提案 UI 见 **111** **`TT-COMP-B090-ONCHAIN-PROPOSAL-UI-001`**；**`spend` ERC20** + Timelock E2E 不重做（沿用 **`test_b090_timelock_execute_spend_matches_payload`**）。  
+
+---
+
+### TT-COMP-B090-ONCHAIN-PROPOSAL-UI-001
+
+- **阶段**：治理 / **链上提案 UI**（**B-090** 母表 **Target** 收口：**国库支出**叙事与 **Governor·Timelock** 路径可读性）  
+- **状态**：已封口（**Completion**）  
+- **本轮仅改**：**`frontend/app/governance/proposals/page.tsx`**、**`frontend/app/governance/proposals/[id]/page.tsx`**、**`frontend/components/governance/GovernanceB090OnChainProposalNotice.tsx`**、**`frontend/lib/governanceChainMeta.ts`**、**`frontend/lib/apiClient/governance.ts`**（提案详情扩展字段）；**`frontend/locales/zh.ts`** / **`en.ts`**；本索引一览 **111** 与正文；**`docs/任务母表.md`**（B-090 / Completion 表 / 映射 / 101～112）；**`docs/spec/04-后端与API.md`**（治理提案页契约句）  
+- **禁止再分析**：—  
+- **任务（钉死）**：在 **Governor 索引模式**（**`GET …/governance/proposals`** **`data_source`****=`governance_proposals_projection`**）下，列表页展示 **链上索引 + 表决/国库路径** 说明，并 **可选** 拉 **`GET /meta`** 展示 **`chain.contracts.governor_address`**（无则提示未配置，**禁止**填假地址）。详情页在 **`governance_vote.kind`****=`on_chain_governor`** 时展示 API 已返回的 **`proposal.proposer`****、****`snapshot_block`****、****`vote_start_block`****、****`vote_end_block`****、****`operation_id`**（与投影一致）及 **Treasury `spend`****/****`spendETH`****+****Timelock** 说明；**不**新增链下「代投」或伪造计票。  
+- **验收**：**`npm run lint`**（`frontend/`）通过；**`npm run test:i18n:ci`** 通过（新增文案键）。  
+- **测试**：**`cd frontend && npm run lint`**；**`npm run test:i18n:ci`**。  
+- **备注**：与 **109** Governor 详情 **`castVote` calldata** 块并存；**不**在本卡生成 **Timelock.execute** 假 calldata。  
 
 ---
 
 ### TT-COMP-B091-META-PAUSE-CHAIN-READ-001
 
 - **阶段**：紧急开关可观测性补齐（**B-091** **Target**：**`meta.pause` 自动读链**）  
-- **状态**：未封口 · **Completion**（不重做 **`factoryPaused`/`distributePaused`** Foundry 行为）  
-- **本轮仅改**：**`crates/api/src/routes/health_meta.rs`**（**≤1** 组件）及 **契约单测**  
+- **状态**：已封口（**Completion**）  
+- **本轮仅改**：**`crates/api/src/routes/health_meta.rs`**（**`PAUSE_META_TOP_KEYS`** 扩 **`factory_paused` / `distribute_paused` / `chain_pause_read`**）+ **`comp_b091_meta_pause_chain_eth_call_matches_mock_fixture`** 等单测；本索引一览与正文；**`docs/任务母表.md`**（B-091 / Completion 行）  
 - **禁止再分析**：—  
-- **任务（钉死）**：在 **`CHAIN_RPC_URL`** 与合约地址可用时，**`GET /meta`** 中与暂停相关的字段（**`pause` / `protocol-reference`** 已存在键位内）反映 **`EscrowFactory.factoryPaused`**、**`FeeRouter.distributePaused`** 的 **`eth_call`** 结果；**无链** 时保持显式降级，**禁止**伪造链上真值。  
-- **验收**：**`cargo test -p traveltrust-api`**：**mock RPC fixture** 开关前后与读链一致。  
+- **任务（钉死）**：在 **`CHAIN_RPC_URL`** 与合约地址可用时，**`GET /meta`** **`pause`** 反映 **`EscrowFactory.factoryPaused`**、**`FeeRouter.distributePaused`** 的 **`eth_call`**；**无链 / 地址未设** 时 **`null`** + **`chain_pause_read.status`**（**`chain_unavailable` / `chain_pause_targets_unset` / `eth_call` / `eth_call_error`**），**禁止**伪造链上真值；**`protocol-reference`** 仍为文档镜像，与 **`pause.chain_pause_read.rule`** 互文区分。  
+- **验收**：**`cargo test -p traveltrust-api`**：`health_meta` + **`comp_b091_*`**。  
 - **测试**：**`cargo test -p traveltrust-api`**。  
-- **备注**：前端 **`readProtocolPauseFromMeta`** 若消费同字段可另开微 TT。  
+- **备注**：前端 **`readProtocolPauseFromMeta`** 可消费 **`pause.factory_paused` / `pause.distribute_paused`**；另开微 TT 若需 UI 文案。Foundry **`factoryPaused`/`distributePaused`** 不重做。  
 
 ---
 
 ### TT-COMP-B092-VOTE-WEIGHT-STAKE-SNAPSHOT-001
 
 - **阶段**：治理投票权重补齐（**B-092** **Target**：**质押** / 份额链上快照；本卡先钉 **质押** **≤1** 点）  
-- **状态**：未封口 · **Completion**（不重做 **`delegation_units_v1`、信号票、冻结权重**）  
-- **本轮仅改**：**`crates/api`** 内 **单一路径**（**`governance_voting_power`** **或** **`governance_proposals` 计票`**，**二选一写死**）  
+- **状态**：已封口（**Completion**）  
+- **本轮仅改**：**`crates/api/src/routes/governance_voting_power.rs`**、**`crates/api/src/db/users_sessions.rs`**（**`get_user_default_wallet_by_id`**）；本索引一览与正文；**`docs/任务母表.md`**；**`docs/spec/04-后端与API.md`**（**`GET …/voting-power`** 契约句）  
 - **禁止再分析**：—  
-- **任务（钉死）**：在 **指定快照块** 从 **`Staking`**（或仓库已钉死的 **单一链上读接口**）读取 **可投票权重**，与 **`GET …/voting-power` 或计票** **其一**对账；另一路径须 **显式未实现** 或保持不变。  
-- **验收**：fixture：**下一快照** 权重与链上读数一致（单测）。  
+- **任务（钉死）**：**写死** **`governance_voting_power`**：**`?snapshot_block=`** 且 **CHAIN_RPC_URL + STAKING_ADDRESS + `users.default_wallet_address`（或 chain_off 内存用户钱包）** 可用时 **`eth_call`** **`Staking.stakeOf(address)`**；响应 **`stake_snapshot`**（含 **`reconcile.delegation_units_mvp`** 与链上 **`stake_u256_hex`** 并列）；**`governance_proposals` 计票** 仍 **仅** **`delegation_units_v1`**（**不改**）。  
+- **验收**：**`cargo test -p traveltrust-api`** **`comp_b092_*`**。  
 - **测试**：**`cargo test -p traveltrust-api`**。  
-- **备注**：**Country Pool 份额** 快照另卡（**TT-COMP-B092-*** 系列可续号）。  
+- **备注**：**Country Pool 份额** 快照见 **110** **`TT-COMP-B092-COUNTRY-POOL-SNAPSHOT-001`**；**统一单一权重公式** 仍为 **Target**。  
+
+---
+
+### TT-COMP-B092-COUNTRY-POOL-SNAPSHOT-001
+
+- **阶段**：治理投票权重补齐（**B-092** **Target**：**Country Pool / 份额 ERC20** 与链上 **`balanceOf`** 快照对账；与 **105** 正交）  
+- **状态**：已封口（**Completion**）  
+- **本轮仅改**：**`crates/api/src/routes/governance_voting_power.rs`**（**`country_pool_share_snapshot`** + **`eth_call`** 复用）；本索引一览 **110** 与正文；**`docs/任务母表.md`**（B-092 / Completion 表）；**`docs/spec/04-后端与API.md`**（**`GET …/voting-power`** 契约句）  
+- **禁止再分析**：—  
+- **任务（钉死）**：在 **`GET /api/v1/governance/voting-power`** 响应中增加 **`country_pool_share_snapshot`**：**`?snapshot_block=<u64>`** 且 **CHAIN_RPC_URL** 可用、**`ChainConfig.investor_share_token_addresses`**（**`INVESTOR_SHARE_TOKEN_ADDRESSES`**，与 **B-085** **`indexer-tick`** 同源）非空、用户 **`default_wallet_address`** 可用时，对 **列表内每一 ERC20** **`eth_call`** **`balanceOf(address)`**（历史块 **= `snapshot_block`**）；**`tokens[]`** 逐项 **`token_address` / `balance_u256_hex` / `read_status` / `error`**；根 **`read_status`****=`ok`****/**`partial`****/**`eth_call_error_all`****/**`skipped_*`**；**`reconcile.delegation_units_mvp`** 与 **`stake_snapshot`** **并列**；**`POST …/governance/proposals/:id/vote` 计票** 仍 **仅** **`delegation_units_v1`**（**不改**）。  
+- **验收**：**`cargo test -p traveltrust-api`**：**`comp_b092_country_pool_*`**、**`b092_selector_balance_of_address`**；既有 **`comp_b092_http_voting_power_includes_stake_snapshot_ok`** 增补 **`country_pool_share_snapshot`** **skip** 断言。  
+- **测试**：**`cargo test -p traveltrust-api`**。  
+- **备注**：**禁止**用占位余额替代 **`eth_call`** 真值；多代币时 **顺序** 与配置列表一致。  
 
 ---
 
 ### TT-COMP-B093-ESCROW-APPENDIX-AUTO-SPLIT-001
 
 - **阶段**：Escrow 正常放款补齐（**B-093** **Target**：**80 附录 02** 非 **Completed**、仍 **收平台费** 终态的 **自动链上分账**）  
-- **状态**：未封口 · **Completion**（不重做 **`release()`** **01 §10** 表驱动 + fuzz）  
-- **本轮仅改**：**`contracts/src/Escrow.sol`**（**≤1** 合约点）+ **`Escrow.t.sol`**  
+- **状态**：已封口 · **Completion**（不重做 **`release()`** **01 §10** 表驱动 + fuzz）  
+- **本轮落地**：**`Escrow.releasePartialRefund`** + **`PartialRefundExecuted`** + **`Status.PartiallyRefunded`**；**`Escrow.t.sol`** **`test_COMP_B093_*`**；**`contracts/abi` + `frontend/dapp/abis` `Escrow.json`**；**`traveltrust-api`** topic0 / 投影 / **`get_escrow_status` 7** / **`event_log` 回放列表**；**04 §3.4** / **14 §1.1** 契约句  
 - **禁止再分析**：—  
 - **任务（钉死）**：为 **附录 02 已钉死的一种终态** 增加 **单一链上出口**（新函数或受控 **`release` 变体**），**`platformFeeBps`** **仍仅** **`EscrowCreated` 封存**；**三腿守恒 + dust** 与 **01/80** 一致。  
 - **验收**：Foundry：**1～2** 表驱动用例。  
-- **测试**：**`forge test --match-contract EscrowTest`**（或 **`--match-test`** 新用例前缀）。  
-- **备注**：**争议路径** 仍以 **`executeResolution`** 为主，勿与本卡混为同一函数。  
+- **测试**：**`forge test --match-contract EscrowTest`**（或 **`--match-test`** **`COMP_B093`**）；**`cargo test -p traveltrust-api`**。  
+- **备注**：**争议路径** 仍以 **`executeResolution`** 为主；**Slashed** 非争议 **单出口** 见 **108** **`TT-COMP-B093-ESCROW-SLASHED-NON-DISPUTE-001`**。  
+
+---
+
+### TT-COMP-B093-ESCROW-SLASHED-NON-DISPUTE-001
+
+- **阶段**：Escrow / **80 附录 02 · Slashed** 非争议自动分账（**B-093** **Completion**，与 **106** 正交）  
+- **状态**：已封口（**Completion**）  
+- **本轮落地**：**`Escrow.releaseSlashed`** + **`Status.Slashed`**（**取值 `8`**）+ **`SlashedExecuted`**（与 **`PartialRefundExecuted`** 同形五字段，**`guideAmount` = `0`**）；**`Escrow.t.sol`** **`test_COMP_B093_releaseSlashed_*`**；**`contracts/abi` + `frontend/dapp/abis` `Escrow.json`**；**`traveltrust-api`** **`event_name_from_topic0`** / **`apply_escrow_event_kind_to_order_state`** / **`orders_projection`** / **`get_escrow_status` 8** / **`event_log` 列表**；**04 §7.4** / **14 §1.1** 契约句  
+- **禁止再分析**：—  
+- **任务（钉死）**：自 **`Funded`** **单一出口**：**`travelerRefund < totalAmount`** 时 **`platformFeeAmount = totalAmount - travelerRefund`** 转 **`platformFeeRecipient`**，**`guideAmount` 钉死 `0`**；**`travelerRefund == totalAmount`** 须走 **`refund()`**（附录 **Refunded** 不收平台费）；**守恒** **`travelerRefund + platformFeeAmount == totalAmount`**。  
+- **验收**：Foundry：**表驱动** **`test_COMP_B093_releaseSlashed_non_dispute_table_twoTemplates`** + **`revert`** 用例；**`cargo test -p traveltrust-api`**：**`maps_slashed_executed_topic`** 等。  
+- **测试**：**`forge test --match-test COMP_B093_releaseSlashed`**（或全量 **`EscrowTest`**）；**`cargo test -p traveltrust-api`**。  
+- **备注**：与 **`executeResolution`** 扣罚模板（**B-094**）**并存**；链上 **两种** **Slashed** 来源（争议 / 非争议）投影均为订单域 **`slashed`**。  
+
+---
+
+### TT-COMP-B089-GOVERNOR-CHAIN-VOTING-001
+
+- **阶段**：治理 / **Governor 链上投票**（**B-089** **Completion**，与 **102** **FeeRouter 热改** 正交）  
+- **状态**：已封口（**Completion**）  
+- **本轮落地**：**`GovernanceVotesToken.sol`**（**`getPastVotes` / `getPastTotalSupply`**）；**`TravelTrustGovernor.sol`**（**`propose` / `castVote` / `state` / `quorumReached` / `queue` / `execute`**；**Pending→Active→Succeeded/Defeated→Queued→Executed**）；**`GovernanceTimelock`** **`setGovernor` + `scheduleByGovernor`**；**`TravelTrustGovernor.t.sol`** **`test_COMP_B089_governor_*`**；**`contracts/abi/GovernanceTimelock.json`** 增补；**`governance_proposals_projection`** 表 + **`apply_governance_projection_from_parsed_event`**；**`indexer-tick`** 拉 **`GOVERNOR_ADDRESS`** 日志；**`replay_governance_proposals_from_event_log`** + **reorg rewind** 删表重放；**`crates/api/src/chain/governor.rs`** **`eth_call`**；**`governance_proposals.rs`** **Governor 模式**；**`GET /meta` `chain.contracts`** **759** 扩 **12 键**（**`governor_address`****/****`governance_votes_token_address`**）；**前端** **`/governance/proposals/[id]`** 链上 **calldata** 展示；**04 / 14** 契约句  
+- **禁止再分析**：—  
+- **任务（钉死）**：**`GOVERNOR_ADDRESS` + `DATABASE_URL`** 时 **禁止** 对 **`POST …/governance/proposals/:id/vote`** 写服务器假票；**计票** 以 **`VoteCast`** 索引为准；**详情** 须 **`eth_call` `state(uint256)`** 与 **`GovernanceVotesToken.getPastVotes(user,snapshot)`**（设 **`GOVERNANCE_VOTES_TOKEN_ADDRESS`** 且用户有 **`default_wallet_address`**）对拍展示。  
+- **验收**：**`forge test --match-contract TravelTrustGovernorTest`**（环境有 Foundry 时）；**`cargo test -p traveltrust-api`**。  
+- **测试**：同上。  
+- **备注**：与 **B-092** 链下 **信号票** **并存**：未配 **`GOVERNOR_ADDRESS`** 时仍走 **MVP** **`chain_off_mvp`**。  
 
 ---
 
 ### TT-COMP-B094-INDEXER-RESOLUTION-TERMINAL-STATE-001
 
 - **阶段**：争议执行投影补齐（**B-094** **Target**：仅凭日志时 **Completed**；**有三腿** 时细分终态）  
-- **状态**：未封口 · **Completion**（不重做 Foundry **`test_B094_*`**、**`terminal_order_state_from_resolution_amounts`**）  
-- **本轮仅改**：**`crates/api`** **chain_off 投影 / indexer-reconcile**（**≤1** 组件：解码 **tx input** **或** **outbox 侧车**，**二选一写死 SSOT**）  
+- **状态**：已封口 · **Completion**（不重做 Foundry **`test_B094_*`**、**`terminal_order_state_from_resolution_amounts`**）  
+- **本轮落地**：**SSOT** = 事件同源交易 **`eth_getTransactionByHash`** → 解码 **`executeResolution(bytes32,bytes32,uint256,uint256,uint256)`** **`input`**；**`crates/api/src/chain/resolution_tx.rs`** + **`indexer-tick`** / **`replay_orders_projection_from_event_log`**（**`event_log.tx_hash`**）  
 - **禁止再分析**：—  
 - **任务（钉死）**：当能解析 **`executeResolution` 三腿** 时，调用 **`terminal_order_state_from_resolution_amounts`** 写 **`orders_projection`（或等价行）**；**无三腿来源** 时保持 **`ResolutionExecuted` → Completed** 行为。  
 - **验收**：**`cargo test -p traveltrust-api`**：**三模板** 投影终态为 **Refunded / PartiallyRefunded / Slashed**；缺三腿时与现网一致。  
 - **测试**：**`cargo test -p traveltrust-api`**。  
-- **备注**：与 **04** 争议节、执行器 outbox 回填策略一致。  
+- **备注**：与 **04** 争议节一致；执行器 outbox 仍为裁决排队真源，投影以链上 **`input`** 为金额 SSOT。  
 
 ---
 

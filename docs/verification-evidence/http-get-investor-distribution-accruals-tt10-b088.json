@@ -1,0 +1,33 @@
+{
+    "status": "ok",
+    "anchor": "B-086-INVESTOR-DISTRIBUTION-ACCRUAL",
+    "data_source": "database",
+    "items": [
+        {
+            "id": "1d70f92d-cbf4-430c-8003-692cda75cc5d",
+            "idempotency_key": "tt10-b088-evidence-001",
+            "chain_id": 31337,
+            "token_address": "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
+            "snapshot_block_number": 100,
+            "cash_basis": "fee_router_allocatable_platform_fee_sum",
+            "formula": "pro_rata_share_balance_at_snapshot",
+            "total_cash_u256_hex": "0x0000000000000000000000000000000000000000000000000000000000002710",
+            "total_supply_u256_hex": "0x0000000000000000000000000000000000000000000000000000000000000064",
+            "distributed_sum_u256_hex": "0x0000000000000000000000000000000000000000000000000000000000002710",
+            "remainder_u256_hex": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "created_at": "2026-04-07T06:09:34.861006+00:00",
+            "snapshot_binding": {
+                "anchor": "B-088-INVESTOR-DISTRIBUTION-SNAPSHOT-TRANSFER",
+                "snapshot_block_binding": "inclusive_upto_snapshot_block",
+                "transfer_replay_order": "block_number_asc_log_index_asc",
+                "eligibility_projection": "investor_share_transfer_events",
+                "stake_overlay_projection": "investor_stake_state_events",
+                "stake_overlay_event_source": "Staking.Staked|Withdrawn|Slashed",
+                "b088_completion_anchor": "TT-COMP-B088-STAKE-LOCK-PROJECTION-001",
+                "lock_overlay_projection": "investor_lock_state_events",
+                "lock_overlay_event_source": "InvestorShareLockLedger.Locked|Unlocked",
+                "b088_lock_completion_anchor": "TT-COMP-B088-LOCK-VAULT-PROJECTION-001"
+            }
+        }
+    ]
+}

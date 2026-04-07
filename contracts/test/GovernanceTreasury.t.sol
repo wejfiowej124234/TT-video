@@ -62,4 +62,39 @@ contract GovernanceTreasuryTest is Test {
         assertEq(token.balanceOf(recipient), pay);
         assertEq(token.balanceOf(address(treasury)), fund - pay);
     }
+
+    /// **TT-COMP-B090**：Timelock **`execute` → `spendETH`**，收款 **ETH** 增量 = calldata **wei**。
+    function test_COMP_B090_timelock_execute_spendETH_matches_payload() public {
+        GovernanceTimelock tl = new GovernanceTimelock(deployer, 10);
+        GovernanceTreasury treasury = new GovernanceTreasury(deployer, address(tl));
+
+        uint256 fund = 5 ether;
+        vm.deal(address(treasury), fund);
+
+        uint256 pay = 1.234 ether;
+        uint256 balBefore = recipient.balance;
+
+        bytes memory data = abi.encodeWithSelector(
+            GovernanceTreasury.spendETH.selector,
+            recipient,
+            pay
+        );
+        bytes32 salt = bytes32(uint256(42));
+        bytes32 id = tl.schedule(address(treasury), 0, data, salt);
+
+        vm.warp(block.timestamp + 10);
+        tl.execute(id);
+
+        assertEq(recipient.balance, balBefore + pay);
+        assertEq(address(treasury).balance, fund - pay);
+    }
+
+    function test_COMP_B090_non_spender_cannot_spendETH() public {
+        GovernanceTreasury treasury = new GovernanceTreasury(deployer, deployer);
+        vm.deal(address(treasury), 1 ether);
+
+        vm.prank(address(0xB0B));
+        vm.expectRevert(GovernanceTreasury.OnlySpender.selector);
+        treasury.spendETH(recipient, 1 wei);
+    }
 }

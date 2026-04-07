@@ -364,6 +364,20 @@ pub async fn get_block_hash_at(rpc_url: &str, block_number: u64) -> Result<Strin
 pub const ERC20_TRANSFER_TOPIC0: &str =
     "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
 
+/// Staking 合约事件 topic0（与 `contracts/src/Staking.sol` 一致；`indexer::tests::staking_event_topic0s_keccak` 校验）
+pub const STAKED_TOPIC0: &str =
+    "0x9e71bc8eea02a63969f509818f2dafb9254532904319f9dbda79b67bd34a5f3d";
+pub const WITHDRAWN_TOPIC0: &str =
+    "0x7084f5476618d8e60b11ef0d7d3f06914655adb8793e28ff7f018d4c76d505d5";
+pub const SLASHED_TOPIC0: &str =
+    "0x4ed05e9673c26d2ed44f7ef6a7f2942df0ee3b5e1e17db4b99f9dcd261a339cd";
+
+/// **`InvestorShareLockLedger`**（**TT-COMP-B088-LOCK-VAULT-PROJECTION-001**）；`indexer::tests::lock_ledger_event_topic0s_keccak` 校验
+pub const LOCKED_TOPIC0: &str =
+    "0x9f1ec8c880f76798e7b793325d625e9b60e4082a553c98f42b6cda368dd60008";
+pub const UNLOCKED_TOPIC0: &str =
+    "0x0f0bc5b519ddefdd8e5f9e6423433aa2b869738de2ae34d58ebc796fc749fa0d";
+
 /// 单条 ERC20 `Transfer`（来自 `eth_getLogs`）
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct FetchedErc20Transfer {
@@ -490,6 +504,287 @@ pub async fn fetch_erc20_transfer_logs_for_tokens(
     Ok(out)
 }
 
+/// 单条 Staking 状态事件（`Staked` / `Withdrawn` / `Slashed`）
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct FetchedStakingStateEvent {
+    pub block_number: u64,
+    pub log_index: u32,
+    pub block_hash: String,
+    pub tx_hash: String,
+    pub staking_contract_address: String,
+    pub event_kind: String,
+    pub user_address: String,
+    pub amount_u256_hex: String,
+}
+
+fn staking_topic0_to_kind(topic0: &str) -> Option<&'static str> {
+    let t = topic0.trim_start_matches("0x").to_ascii_lowercase();
+    if t == STAKED_TOPIC0.trim_start_matches("0x").to_ascii_lowercase() {
+        return Some("Staked");
+    }
+    if t == WITHDRAWN_TOPIC0.trim_start_matches("0x").to_ascii_lowercase() {
+        return Some("Withdrawn");
+    }
+    if t == SLASHED_TOPIC0.trim_start_matches("0x").to_ascii_lowercase() {
+        return Some("Slashed");
+    }
+    None
+}
+
+/// 对 **`STAKING_ADDRESS`** 合约拉取 **`Staked` / `Withdrawn` / `Slashed`**（B-088 Completion）
+pub async fn fetch_staking_state_logs(
+    rpc_url: &str,
+    staking_address: &str,
+    from_block: u64,
+    to_block: u64,
+) -> Result<Vec<FetchedStakingStateEvent>, String> {
+    let raw = staking_address.trim().trim_start_matches("0x");
+    if raw.len() != 40 || !raw.chars().all(|c| c.is_ascii_hexdigit()) {
+        return Err("invalid_staking_address".to_string());
+    }
+    let addr = format!("0x{}", raw.to_ascii_lowercase());
+    let client = reqwest::Client::new();
+    let body = serde_json::json!({
+        "jsonrpc": "2.0",
+        "method": "eth_getLogs",
+        "params": [{
+            "address": addr,
+            "topics": [[STAKED_TOPIC0, WITHDRAWN_TOPIC0, SLASHED_TOPIC0]],
+            "fromBlock": format!("0x{:x}", from_block),
+            "toBlock": format!("0x{:x}", to_block)
+        }],
+        "id": 1
+    });
+    let res: serde_json::Value = client
+        .post(rpc_url)
+        .json(&body)
+        .send()
+        .await
+        .map_err(|e| e.to_string())?
+        .json()
+        .await
+        .map_err(|e| e.to_string())?;
+    let logs = res
+        .get("result")
+        .and_then(|r| r.as_array())
+        .ok_or_else(|| {
+            res.get("error")
+                .and_then(|e| e.get("message").and_then(|m| m.as_str()))
+                .unwrap_or("eth_getLogs failed")
+                .to_string()
+        })?;
+    let mut out = Vec::new();
+    for log in logs {
+        let block_number = log
+            .get("blockNumber")
+            .and_then(|b| b.as_str())
+            .and_then(|s| u64::from_str_radix(s.trim_start_matches("0x"), 16).ok())
+            .unwrap_or(0);
+        let log_index = log
+            .get("logIndex")
+            .and_then(|l| l.as_str())
+            .and_then(|s| u32::from_str_radix(s.trim_start_matches("0x"), 16).ok())
+            .unwrap_or(0);
+        let block_hash = log
+            .get("blockHash")
+            .and_then(|b| b.as_str())
+            .unwrap_or("")
+            .to_string();
+        let tx_hash = log
+            .get("transactionHash")
+            .and_then(|t| t.as_str())
+            .unwrap_or("")
+            .to_string();
+        let log_addr_raw = log
+            .get("address")
+            .and_then(|a| a.as_str())
+            .unwrap_or("")
+            .trim_start_matches("0x");
+        if log_addr_raw.len() != 40 {
+            continue;
+        }
+        let staking_contract_address = format!("0x{}", log_addr_raw.to_ascii_lowercase());
+        let topics_arr = log
+            .get("topics")
+            .and_then(|t| t.as_array())
+            .map(|a| {
+                a.iter()
+                    .filter_map(|t| t.as_str().map(String::from))
+                    .collect::<Vec<_>>()
+            })
+            .unwrap_or_default();
+        let Some(t0) = topics_arr.first() else {
+            continue;
+        };
+        let Some(kind) = staking_topic0_to_kind(t0) else {
+            continue;
+        };
+        let Some(user_address) = topics_arr
+            .get(1)
+            .and_then(|t| topic_word_to_address(t))
+        else {
+            continue;
+        };
+        let data = log.get("data").and_then(|d| d.as_str()).unwrap_or("");
+        let raw_d = hex::decode(data.trim_start_matches("0x")).unwrap_or_default();
+        if raw_d.len() < 32 {
+            continue;
+        }
+        let amount_u256_hex = format!("0x{}", hex::encode(&raw_d[0..32]));
+        out.push(FetchedStakingStateEvent {
+            block_number,
+            log_index,
+            block_hash,
+            tx_hash,
+            staking_contract_address,
+            event_kind: kind.to_string(),
+            user_address,
+            amount_u256_hex,
+        });
+    }
+    out.sort_by_key(|t| (t.block_number, t.log_index));
+    Ok(out)
+}
+
+/// 单条锁仓状态事件（**`Locked` / `Unlocked`**）
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct FetchedInvestorLockStateEvent {
+    pub block_number: u64,
+    pub log_index: u32,
+    pub block_hash: String,
+    pub tx_hash: String,
+    pub lock_contract_address: String,
+    pub event_kind: String,
+    pub user_address: String,
+    pub amount_u256_hex: String,
+}
+
+fn lock_topic0_to_kind(topic0: &str) -> Option<&'static str> {
+    let t = topic0.trim_start_matches("0x").to_ascii_lowercase();
+    if t == LOCKED_TOPIC0.trim_start_matches("0x").to_ascii_lowercase() {
+        return Some("Locked");
+    }
+    if t == UNLOCKED_TOPIC0.trim_start_matches("0x").to_ascii_lowercase() {
+        return Some("Unlocked");
+    }
+    None
+}
+
+/// 对 **`INVESTOR_LOCK_CONTRACT_ADDRESSES`** 中各合约拉取 **`Locked` / `Unlocked`**
+pub async fn fetch_investor_lock_state_logs(
+    rpc_url: &str,
+    lock_address: &str,
+    from_block: u64,
+    to_block: u64,
+) -> Result<Vec<FetchedInvestorLockStateEvent>, String> {
+    let raw = lock_address.trim().trim_start_matches("0x");
+    if raw.len() != 40 || !raw.chars().all(|c| c.is_ascii_hexdigit()) {
+        return Err("invalid_lock_contract_address".to_string());
+    }
+    let addr = format!("0x{}", raw.to_ascii_lowercase());
+    let client = reqwest::Client::new();
+    let body = serde_json::json!({
+        "jsonrpc": "2.0",
+        "method": "eth_getLogs",
+        "params": [{
+            "address": addr,
+            "topics": [[LOCKED_TOPIC0, UNLOCKED_TOPIC0]],
+            "fromBlock": format!("0x{:x}", from_block),
+            "toBlock": format!("0x{:x}", to_block)
+        }],
+        "id": 1
+    });
+    let res: serde_json::Value = client
+        .post(rpc_url)
+        .json(&body)
+        .send()
+        .await
+        .map_err(|e| e.to_string())?
+        .json()
+        .await
+        .map_err(|e| e.to_string())?;
+    let logs = res
+        .get("result")
+        .and_then(|r| r.as_array())
+        .ok_or_else(|| {
+            res.get("error")
+                .and_then(|e| e.get("message").and_then(|m| m.as_str()))
+                .unwrap_or("eth_getLogs failed")
+                .to_string()
+        })?;
+    let mut out = Vec::new();
+    for log in logs {
+        let block_number = log
+            .get("blockNumber")
+            .and_then(|b| b.as_str())
+            .and_then(|s| u64::from_str_radix(s.trim_start_matches("0x"), 16).ok())
+            .unwrap_or(0);
+        let log_index = log
+            .get("logIndex")
+            .and_then(|l| l.as_str())
+            .and_then(|s| u32::from_str_radix(s.trim_start_matches("0x"), 16).ok())
+            .unwrap_or(0);
+        let block_hash = log
+            .get("blockHash")
+            .and_then(|b| b.as_str())
+            .unwrap_or("")
+            .to_string();
+        let tx_hash = log
+            .get("transactionHash")
+            .and_then(|t| t.as_str())
+            .unwrap_or("")
+            .to_string();
+        let log_addr_raw = log
+            .get("address")
+            .and_then(|a| a.as_str())
+            .unwrap_or("")
+            .trim_start_matches("0x");
+        if log_addr_raw.len() != 40 {
+            continue;
+        }
+        let lock_contract_address = format!("0x{}", log_addr_raw.to_ascii_lowercase());
+        let topics_arr = log
+            .get("topics")
+            .and_then(|t| t.as_array())
+            .map(|a| {
+                a.iter()
+                    .filter_map(|t| t.as_str().map(String::from))
+                    .collect::<Vec<_>>()
+            })
+            .unwrap_or_default();
+        let Some(t0) = topics_arr.first() else {
+            continue;
+        };
+        let Some(kind) = lock_topic0_to_kind(t0) else {
+            continue;
+        };
+        let Some(user_address) = topics_arr
+            .get(1)
+            .and_then(|t| topic_word_to_address(t))
+        else {
+            continue;
+        };
+        let data = log.get("data").and_then(|d| d.as_str()).unwrap_or("");
+        let raw_d = hex::decode(data.trim_start_matches("0x")).unwrap_or_default();
+        if raw_d.len() < 32 {
+            continue;
+        }
+        let amount_u256_hex = format!("0x{}", hex::encode(&raw_d[0..32]));
+        out.push(FetchedInvestorLockStateEvent {
+            block_number,
+            log_index,
+            block_hash,
+            tx_hash,
+            lock_contract_address,
+            event_kind: kind.to_string(),
+            user_address,
+            amount_u256_hex,
+        });
+    }
+    out.sort_by_key(|t| (t.block_number, t.log_index));
+    Ok(out)
+}
+
 fn topic_word_to_address(topic: &str) -> Option<String> {
     let hex_s = topic.trim_start_matches("0x");
     if hex_s.len() < 40 {
@@ -520,7 +815,8 @@ fn parse_erc20_transfer_topics_data(
 mod tests {
     use super::{
         append_event_and_advance_checkpoint, indexer_finalized_upper_bound, new_indexer_state,
-        reorg_detected,
+        reorg_detected, LOCKED_TOPIC0, SLASHED_TOPIC0, STAKED_TOPIC0, UNLOCKED_TOPIC0,
+        WITHDRAWN_TOPIC0,
     };
     use serde_json::json;
 
@@ -570,5 +866,40 @@ mod tests {
     #[test]
     fn finalized_upper_bound_saturates_at_zero() {
         assert_eq!(indexer_finalized_upper_bound(5, 12), 0);
+    }
+
+    #[test]
+    fn staking_event_topic0s_keccak() {
+        use sha3::{Digest, Keccak256};
+        let want = [
+            STAKED_TOPIC0,
+            WITHDRAWN_TOPIC0,
+            SLASHED_TOPIC0,
+        ];
+        let sigs = [
+            "Staked(address,uint256)",
+            "Withdrawn(address,uint256)",
+            "Slashed(address,uint256)",
+        ];
+        for (sig, w) in sigs.iter().zip(want.iter()) {
+            let h = Keccak256::digest(sig.as_bytes());
+            let got = format!("0x{}", hex::encode(h));
+            assert_eq!(&got, *w, "sig={sig}");
+        }
+    }
+
+    #[test]
+    fn lock_ledger_event_topic0s_keccak() {
+        use sha3::{Digest, Keccak256};
+        let want = [LOCKED_TOPIC0, UNLOCKED_TOPIC0];
+        let sigs = [
+            "Locked(address,uint256)",
+            "Unlocked(address,uint256)",
+        ];
+        for (sig, w) in sigs.iter().zip(want.iter()) {
+            let h = Keccak256::digest(sig.as_bytes());
+            let got = format!("0x{}", hex::encode(h));
+            assert_eq!(&got, *w, "sig={sig}");
+        }
     }
 }

@@ -1,0 +1,48 @@
+{
+    "status": "ok",
+    "data_source": "projection",
+    "ssot": "fee_router_routed_events+region_vault_forwarded_events",
+    "chain_id_filter": 31337,
+    "fee_router": {
+        "by_token": [
+            {
+                "token_address": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+                "event_row_count": 2,
+                "pools": {
+                    "allocatable_platform_fee_total_u256_hex": "0x0000000000000000000000000000000000000000000000000000000000007530",
+                    "country_bucket_u256_hex": "0x00000000000000000000000000000000000000000000000000000000000034bc",
+                    "global_stakers_u256_hex": "0x00000000000000000000000000000000000000000000000000000000000029e5",
+                    "global_reserve_u256_hex": "0x0000000000000000000000000000000000000000000000000000000000000ce4",
+                    "global_ops_u256_hex": "0x00000000000000000000000000000000000000000000000000000000000009ab"
+                },
+                "pool_id_legend": "84: country_bucket = PlatformFeeRouted data word[1]; global_stakers/reserve/ops = words[2..5] (ttg_stakers / reserve / operations)"
+            }
+        ],
+        "note": "Per-token \u03a3 over indexed PlatformFeeRouted projection rows; uint256 big-endian 0x-hex"
+    },
+    "region_vault": {
+        "by_token": [
+            {
+                "token_address": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+                "event_row_count": 1,
+                "total_forwarded_u256_hex": "0x0000000000000000000000000000000000000000000000000000000000000bb8",
+                "by_recipient": [
+                    {
+                        "to_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+                        "amount_u256_hex": "0x0000000000000000000000000000000000000000000000000000000000000bb8"
+                    }
+                ]
+            }
+        ],
+        "note": "Per-token \u03a3 RegionVaultForwarded amount; by_recipient sub-aggregates for downstream pool routing checks"
+    },
+    "cross_check": {
+        "protocol_reference_doc_version": "1.0.16",
+        "phase1_open_fee_points_sum": 22,
+        "phase1_countries_count": 10,
+        "fee_router_layer1_country_bucket_percent": 45,
+        "note": "Cross-check GET /api/v1/governance/protocol-reference (84 open_fee_points checksums); aggregates are \u03a3 projection rows only (B-084)"
+    },
+    "rule_version": "fee_pool_aggregates_projection_v1",
+    "anchor": "B-084-FEE-POOL-AGGREGATES-PROJECTION"
+}

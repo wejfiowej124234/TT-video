@@ -1,0 +1,32 @@
+{
+  "tt_id": "TT-VERIFY-B088-STAKE-LOCK-OVERLAY-DISTRIBUTION-API-001",
+  "order": 10,
+  "mother_refs": ["B-088"],
+  "executed_at_utc": "2026-04-07T06:12:00Z",
+  "repo_git_sha": "60c44919ba6581400dc700ee6ca2ee0e716ca166",
+  "execution_record": {
+    "steps": [
+      "Postgres：`seed-tt9-tt10-b094-b088.sql` — `fee_router_routed_events`（token=`StubShareToken`）、`investor_share_transfer_events`（mint + 转入质押合约）、`investor_stake_state_events`（`Staked` 叠加重建持有人权重）。",
+      "API env：`STAKING_ADDRESS` = Anvil `StubStaking`，`INVESTOR_SHARE_TOKEN_ADDRESSES` = `StubShareToken`（与 TT-4～6 部署表一致）。",
+      "POST `/api/v1/internal/investor-distribution-accrual` body `chain_id=31337`、`snapshot_block_number=100`、`idempotency_key=tt10-b088-evidence-001`（`http-post-investor-distribution-accrual-tt10-b088.json`）— 响应 `snapshot_binding` 含 **B-088 / lock** 锚点字段。",
+      "GET `/api/v1/governance/investor-distribution-accruals` + `X-User-Id`（`http-get-investor-distribution-accruals-tt10-b088.json`）。",
+      "SQL 行级：`sql-tt10-distribution-lines-b088.txt`。",
+      "单元测试 `comp_b088` / `cargo-test-b088.log` 仍保留为回归。"
+    ],
+    "outcome": "GREEN — 真实 DB + internal POST + governance GET；质押叠加与 `comp_b088` 叙事一致"
+  },
+  "screenshot": { "path": null, "note": null },
+  "json_artifact": {
+    "paths": [
+      "docs/verification-evidence/http-post-investor-distribution-accrual-tt10-b088.json",
+      "docs/verification-evidence/http-get-investor-distribution-accruals-tt10-b088.json"
+    ]
+  },
+  "linked_logs": ["docs/verification-evidence/cargo-test-b088.log"],
+  "sql_artifact": {
+    "paths": [
+      "docs/verification-evidence/seed-tt9-tt10-b094-b088.sql",
+      "docs/verification-evidence/sql-tt10-distribution-lines-b088.txt"
+    ]
+  }
+}

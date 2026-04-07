@@ -1,0 +1,28 @@
+{
+    "status": "ok",
+    "events_applied": 0,
+    "events_new": 0,
+    "investor_share_transfer_events_new": 0,
+    "investor_stake_state_events_new": 0,
+    "investor_lock_state_events_new": 0,
+    "from_block": 1,
+    "to_block": 0,
+    "chain_tip": 5,
+    "finality_n": 12,
+    "message": "awaiting_finality",
+    "meta": {
+        "build": {
+            "git_sha": "unknown",
+            "deployed_at": null,
+            "rule": "120/140\uff1a\u9884\u53d1/\u751f\u4ea7\u5efa\u8bae\u5728\u5bb9\u5668\u6216\u8fdb\u7a0b\u6ce8\u5165 TRAVELTRUST_GIT_SHA\uff08\u6216 GIT_COMMIT_SHA\u3001SOURCE_VERSION\uff09\u4e0e TRAVELTRUST_DEPLOYED_AT\uff08UTC ISO8601\uff09\uff1b\u955c\u50cf\u6784\u5efa\u53ef\u5728 cargo \u524d export TRAVELTRUST_BUILD_GIT_SHA \u5199\u5165\u7f16\u8bd1\u671f\u515c\u5e95\uff1b730 GET /meta build \u5bf9\u8c61 build_top_keys / build_top_keys_contract_730 \u4e0e META_BUILD_TOP_KEYS \u4e94\u952e\u987a\u5e8f\u540c\u6e90",
+            "build_top_keys": [
+                "git_sha",
+                "deployed_at",
+                "rule",
+                "build_top_keys",
+                "build_top_keys_contract_730"
+            ],
+            "build_top_keys_contract_730": "**730**\uff1a**`build_top_keys`** **\u4e0e **`META_BUILD_TOP_KEYS`** **\u540c\u6e90\uff08\u987a\u5e8f `git_sha`****\u2192**`deployed_at`****\u2192**`rule`****\u2192**`build_top_keys`****\u2192**`build_top_keys_contract_730`\uff09"
+        }
+    }
+}

@@ -1,0 +1,27 @@
+{
+  "tt_id": "TT-VERIFY-B093-ESCROW-RELEASE-PARTIALREFUND-SLASHED-FOUNDRY-STATUS-001",
+  "order": 8,
+  "mother_refs": ["B-093"],
+  "executed_at_utc": "2026-04-07T16:45:00Z",
+  "repo_git_sha": "60c44919ba6581400dc700ee6ca2ee0e716ca166",
+  "execution_record": {
+    "steps": [
+      "Foundry via Docker: `ghcr.io/foundry-rs/foundry@sha256:9e591221051112fe0bb530abcaba67f43f01ebbd12a94a8632d570d5e065a8bf`；挂载 `-v <repo>/contracts:/contracts`、`-w /contracts`；**整条** `forge test --match-path test/Escrow.t.sol -vv` 作为镜像 **entrypoint `sh -c` 的单一参数**（Windows/Git Bash 建议 `MSYS_NO_PATHCONV=1`）。",
+      "Suite `EscrowTest`：13 passed, 0 failed（含 B-093 table/fuzz/COMP 与 B-094 resolution 模板）。",
+      "Supplementary: `cargo test -p traveltrust-api partial_refund_executed` + `slashed_executed` — orders_projection reconcile。",
+      "Full-suite cross-check: `cargo test -p traveltrust-api -- --test-threads=1` → `cargo-test-traveltrust-api-full-green.log`（见 pack §7.2）。"
+    ],
+    "outcome": "FORGE_OK + API_FULL_GREEN — 13 passed Escrow.t.sol；530 passed traveltrust-api（单线程全量）"
+  },
+  "screenshot": {
+    "path": null,
+    "note": "Primary evidence is forge-test-escrow-b093.log"
+  },
+  "json_artifact": { "path": null },
+  "linked_logs": [
+    "docs/verification-evidence/forge-test-escrow-b093.log",
+    "docs/verification-evidence/cargo-test-b093-partial.log",
+    "docs/verification-evidence/cargo-test-b093-slash.log",
+    "docs/verification-evidence/cargo-test-traveltrust-api-full-green.log"
+  ]
+}

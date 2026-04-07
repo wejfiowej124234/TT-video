@@ -1,0 +1,7 @@
+# Full `cargo test -p traveltrust-api` note (2026-04-07)
+
+- First run in verification session: **530 passed, 0 failed** (see agent session log excerpt; not re-saved in full due to size).
+- Subsequent runs observed **ordering/env sensitivity**:
+  - `--test-threads=1`: **529 passed**; `comp_b092_stake_snapshot_matches_mock_eth_call` failed once with `eth_call_error` vs `ok`.
+  - Isolated: `cargo test -p traveltrust-api comp_b092_stake_snapshot_matches_mock_eth_call` → **ok**.
+- **Recommendation**: use per-TT filtered logs in this folder as primary evidence; track full-suite flake separately (test harness isolation).

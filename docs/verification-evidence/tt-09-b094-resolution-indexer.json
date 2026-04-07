@@ -1,0 +1,34 @@
+{
+  "tt_id": "TT-VERIFY-B094-RESOLUTION-TX-INDEXER-ORDERS-PROJECTION-001",
+  "order": 9,
+  "mother_refs": ["B-094"],
+  "executed_at_utc": "2026-04-07T06:12:00Z",
+  "repo_git_sha": "60c44919ba6581400dc700ee6ca2ee0e716ca166",
+  "execution_record": {
+    "steps": [
+      "Anvil：`eth_sendTransaction` 提交 `executeResolution(bytes32,bytes32,uint256,uint256,uint256)` 三腿 **300 / 650 / 50**（`cast calldata` 生成 input；见 `rpc-tt9-eth-getTransactionByHash-resolution-input.json`）。",
+      "Postgres：`seed-tt9-tt10-b094-b088.sql` 创建订单 `33333333-3333-4333-8333-333333333301`（`escrowed`）；`sql-tt9-insert-event-log-resolution-b094.sql` 写入 `event_log` `ResolutionExecuted`（topic0/topic1 与合约事件签名一致）。",
+      "API：`POST /api/v1/internal/indexer-replay` `chain_id=31337`（须 `CHAIN_RPC_URL` + `ESCROW_FACTORY_ADDRESS` + indexer 状态）；响应 `stats.upserts_ok>=1`（`http-post-indexer-replay-tt9-b094-chain31337.json`）。",
+      "DB：`orders_projection.status=partially_refunded` 且 `resolution_type=ResolutionExecuted`（`sql-tt9-orders-projection-b094.txt`）。",
+      "GET `/api/v1/orders/:id` 仍读业务表 hydrate 的 `orders.state`（本样例为 `escrowed`）。**规范 SSOT 句**见 `docs/verification-evidence-pack.md` **§1.2**（英文）：终态裁决以 `orders_projection` 为准；分歧时同上。",
+      "单元测试 `cargo test -p traveltrust-api b094` 仍保留为回归（`cargo-test-b094.log`）。"
+    ],
+    "outcome": "GREEN — 真实 RPC input + event_log + replay + SQL 投影；fixture 叙事仍见 `evidence/B-094-execute-resolution-fixtures.md`"
+  },
+  "screenshot": { "path": null, "note": null },
+  "json_artifact": {
+    "paths": [
+      "docs/verification-evidence/http-post-indexer-replay-tt9-b094-chain31337.json",
+      "docs/verification-evidence/rpc-tt9-eth-getTransactionByHash-resolution-input.json",
+      "docs/verification-evidence/http-get-order-tt9-b094-after-projection.json"
+    ]
+  },
+  "linked_logs": ["docs/verification-evidence/cargo-test-b094.log"],
+  "sql_artifact": {
+    "paths": [
+      "docs/verification-evidence/seed-tt9-tt10-b094-b088.sql",
+      "docs/verification-evidence/sql-tt9-insert-event-log-resolution-b094.sql",
+      "docs/verification-evidence/sql-tt9-orders-projection-b094.txt"
+    ]
+  }
+}

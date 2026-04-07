@@ -44,7 +44,7 @@ impl OrderState {
             Draft => &[Created, Cancelled],
             Created => &[Accepted, Cancelled],
             Accepted => &[Escrowed, Cancelled],
-            Escrowed => &[Completed, Disputed],
+            Escrowed => &[Completed, Disputed, PartiallyRefunded, Slashed],
             Disputed => &[Completed, Refunded, PartiallyRefunded, Slashed],
             Completed | Refunded | PartiallyRefunded | Slashed | Cancelled => &[],
         }
@@ -137,6 +137,8 @@ mod tests {
     fn escrowed_may_transition_to_completed_or_disputed() {
         assert!(OrderState::Escrowed.can_transition_to(OrderState::Completed));
         assert!(OrderState::Escrowed.can_transition_to(OrderState::Disputed));
+        assert!(OrderState::Escrowed.can_transition_to(OrderState::PartiallyRefunded));
+        assert!(OrderState::Escrowed.can_transition_to(OrderState::Slashed));
         assert!(!OrderState::Escrowed.can_transition_to(OrderState::Refunded));
     }
 

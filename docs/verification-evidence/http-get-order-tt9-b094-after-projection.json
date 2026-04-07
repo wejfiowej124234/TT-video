@@ -1,0 +1,65 @@
+{
+    "status": "ok",
+    "order": {
+        "id": "33333333-3333-4333-8333-333333333301",
+        "tourist_id": "e9a0feb8-0b83-4f9c-ab4d-a145be92ae71",
+        "traveler_id": "e9a0feb8-0b83-4f9c-ab4d-a145be92ae71",
+        "guide_id": "1600d3ec-dc44-426e-8098-b8be77765a58",
+        "amount": "500.00",
+        "currency": "USD",
+        "escrow_address": "0x000000000000000000000000000000000000dEaD",
+        "state": "escrowed",
+        "status": "escrowed",
+        "created_at": "2026-04-07T06:07:42.915001+00:00",
+        "accepted_at": null,
+        "escrowed_at": null,
+        "completed_at": null,
+        "dispute_deadline_at": null,
+        "auto_complete_at": null,
+        "finality_block": null,
+        "escrow_block_number": null,
+        "sub_status": null,
+        "tourist_confirmed": null,
+        "guide_confirmed": null,
+        "rating_tourist_confirmed": null,
+        "rating_guide_confirmed": null,
+        "payment_deadline": null,
+        "chat_confirm_deadline": null,
+        "rating_deadline": null,
+        "chain_id": 31337,
+        "destination": "\u4e2d\u56fd",
+        "city": "\u4e0a\u6d77",
+        "days": 0,
+        "travel_date": "",
+        "fee_route_country": {
+            "ssot_field": "itinerary.destination",
+            "name_zh": "\u4e2d\u56fd",
+            "iso3166_alpha2": "CN",
+            "bucket_route_key": "country_pool_cn",
+            "on_chain_mvp": "fee_router_single_country_bucket",
+            "note": "Distinct bucket_route_key per ISO for 84 alignment; FeeRouter.sol uses one immutable countryBucket until multi-bucket on-chain routing"
+        },
+        "split_addresses_ssot": {
+            "ssot": "chain_config_plus_guide_row",
+            "guide_receive_address": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+            "platform_fee_recipient": "0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc",
+            "region_vault_address": "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+            "registry_address": "0x14dC79964da2C8b236f843306c718Cc664c5C1bd",
+            "rule": "EscrowFactory.createEscrow: guide = guide_receive_address; platformFeeRecipient = platform_fee_recipient\uff08\u987b\u4e0e GET /meta chain.contracts.escrow_platform_fee_recipient \u4e00\u81f4\uff09\uff1bRegionVault \u5165\u8d26/\u8f6c\u53d1\u4e0e region_vault_address\u300183/84 \u4e00\u81f4\uff1b\u94fe\u4e0a Registry \u8d44\u683c\u8bfb registry_address"
+        }
+    },
+    "itinerary": {
+        "version": 1,
+        "snapshot_hash": null,
+        "daily_itinerary": [],
+        "amount_breakdown": {
+            "hotel": 0.0,
+            "catering": 0.0,
+            "tickets": 0.0,
+            "guide_fee": 0.0,
+            "vehicle": 0.0,
+            "platform_fee": 0.0,
+            "total_budget": 0.0
+        }
+    }
+}

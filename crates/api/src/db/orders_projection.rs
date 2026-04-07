@@ -51,8 +51,10 @@ pub async fn upsert_orders_projection_chain_snapshot(
     } else {
         None
     };
-    let completed_at_block = if matches!(event_kind, "Released" | "Refunded" | "ResolutionExecuted")
-    {
+    let completed_at_block = if matches!(
+        event_kind,
+        "Released" | "Refunded" | "ResolutionExecuted" | "PartialRefundExecuted" | "SlashedExecuted"
+    ) {
         Some(block_number)
     } else {
         None

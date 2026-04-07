@@ -1,0 +1,15 @@
+Warning: This is a nightly build of Foundry. It is recommended to use the latest stable version. To mute this warning set `FOUNDRY_DISABLE_NIGHTLY_WARNING` in your environment. 
+
+No files changed, compilation skipped
+
+Ran 7 tests for test/InvestorDistributionClaim.t.sol:InvestorDistributionClaimTest
+[PASS] test_Claim_Alias_SameAsWithdraw() (gas: 127974)
+[PASS] test_DoubleSpendSecondClaimReverts() (gas: 129275)
+[PASS] test_FullClaim_TransferMatchesExpected() (gas: 132925)
+[PASS] test_PartialThenRemainder() (gas: 143812)
+[PASS] test_RevertTokenMismatchOnSecondRegister() (gas: 590205)
+[PASS] test_RevertUnknownDistribution() (gas: 14188)
+[PASS] test_TwoHolders_BothClaimExpected() (gas: 212413)
+Suite result: ok. 7 passed; 0 failed; 0 skipped; finished in 10.29ms (38.80ms CPU time)
+
+Ran 1 test suite in 12.86ms (10.29ms CPU time): 7 tests passed, 0 failed, 0 skipped (7 total tests)

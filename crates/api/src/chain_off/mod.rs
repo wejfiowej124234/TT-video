@@ -377,6 +377,8 @@ mod reconcile;
 pub use reconcile::*;
 mod replay_orders_projection;
 pub(crate) use replay_orders_projection::replay_orders_projection_from_event_log;
+mod replay_governance_proposals;
+pub(crate) use replay_governance_proposals::replay_governance_proposals_from_event_log;
 mod reload_orders_db;
 pub use reload_orders_db::reload_orders_from_db_into_store;
 

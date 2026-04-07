@@ -1,0 +1,25 @@
+{
+  "tt_id": "TT-VERIFY-B087-INVESTOR-DISTRIBUTION-CLAIM-FORGE-001",
+  "order": 13,
+  "mother_refs": ["B-087"],
+  "executed_at_utc": "2026-04-07T16:45:00Z",
+  "repo_git_sha": "60c44919ba6581400dc700ee6ca2ee0e716ca166",
+  "execution_record": {
+    "steps": [
+      "Foundry via Docker: 同 TT-8 镜像与 **entrypoint 调用约定**；`forge test --match-path test/InvestorDistributionClaim.t.sol -vv`（合约 `InvestorDistributionClaimTest`）。",
+      "Covers double-claim revert, partial claim, token mismatch on second register, two holders.",
+      "Full-suite cross-check: `cargo-test-traveltrust-api-full-green.log`（与 TT-8 同一次全量跑）。"
+    ],
+    "outcome": "FORGE_OK + API_FULL_GREEN — 7 passed InvestorDistributionClaim.t.sol；530 passed traveltrust-api（单线程全量）"
+  },
+  "screenshot": {
+    "path": null,
+    "note": "Primary evidence is forge-test-b087-claim.log"
+  },
+  "json_artifact": { "path": null },
+  "linked_logs": [
+    "docs/verification-evidence/forge-test-b087-claim.log",
+    "docs/verification-evidence/cargo-test-b087-accrual-proxy.log",
+    "docs/verification-evidence/cargo-test-traveltrust-api-full-green.log"
+  ]
+}

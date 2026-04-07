@@ -1,0 +1,34 @@
+{
+  "tt_id": "TT-VERIFY-B089-GOVERNOR-PROPOSAL-CHAIN-API-DB-001",
+  "order": 5,
+  "mother_refs": ["B-089"],
+  "executed_at_utc": "2026-04-07T06:05:00Z",
+  "repo_git_sha": "60c44919ba6581400dc700ee6ca2ee0e716ca166",
+  "execution_record": {
+    "steps": [
+      "Postgres: `governance_proposals_projection` row `chain_id=31337`, `proposal_id=1`, `chain_state=pending` via `seed-tt456-anvil-31337.sql`; verify `sql-tt456-db-verify.txt`.",
+      "Anvil: deploy `StubGovernor` at `0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512`, `StubVotes` at `0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9` (Foundry `forge create` from `stub-contracts-tt456`).",
+      "API env `GOVERNOR_ADDRESS` / `GOVERNANCE_VOTES_TOKEN_ADDRESS` + `DATABASE_URL` + `CHAIN_RPC_URL`; GET `/api/v1/governance/proposals` returns `x-implementation-status: chain_governor_indexed` + projection row (`http-get-governance-proposals-tt5-chain31337.json`).",
+      "GET `/api/v1/governance/proposals/1` with `X-User-Id` — `chain.state_live` = `pending` vs StubGovernor `state(1)`; `voting_power_at_snapshot.votes` = `100` vs StubVotes `getPastVotes` (`http-get-governance-proposal-1-tt5-chain31337.json`).",
+      "POST `/api/v1/internal/indexer-tick` — `indexer-tick-tt5-tt6-chain31337.json`（本环境 `FINALITY_N=12`、tip=5 时 `awaiting_finality`，仍为真实 RPC 索引器响应）.",
+      "Raw JSON-RPC 对照：`rpc-tt5-eth-call-governor-and-votes.json`."
+    ],
+    "outcome": "GREEN — DB 投影 + Governor 模式 GET + eth_call 对齐 + indexer-tick 响应落盘"
+  },
+  "screenshot": { "path": null, "note": null },
+  "json_artifact": {
+    "paths": [
+      "docs/verification-evidence/http-get-governance-proposals-tt5-chain31337.json",
+      "docs/verification-evidence/http-get-governance-proposal-1-tt5-chain31337.json",
+      "docs/verification-evidence/indexer-tick-tt5-tt6-chain31337.json",
+      "docs/verification-evidence/rpc-tt5-eth-call-governor-and-votes.json"
+    ]
+  },
+  "linked_logs": [],
+  "sql_artifact": {
+    "paths": [
+      "docs/verification-evidence/seed-tt456-anvil-31337.sql",
+      "docs/verification-evidence/sql-tt456-db-verify.txt"
+    ]
+  }
+}

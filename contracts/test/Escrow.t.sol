@@ -69,6 +69,17 @@ contract EscrowTest is Test {
         fee = total - guideAmount;
     }
 
+    /// 80 附录 02 · PartiallyRefunded：`remainder = total - travelerRefund`，再对 `remainder` 套 `release` 同式。
+    function _expectedPartialRefundSplit(uint256 total, uint16 bps, uint256 travelerRefund)
+        internal
+        pure
+        returns (uint256 guideAmount, uint256 platformFee)
+    {
+        uint256 remainder = total - travelerRefund;
+        guideAmount = (remainder * (uint256(10000) - uint256(bps))) / 10000;
+        platformFee = remainder - guideAmount;
+    }
+
     function test_B093_release_table_threeFeeRates() public {
         uint16[3] memory bpsVals = [uint16(0), uint16(500), uint16(333)];
         uint256[3] memory totals = [uint256(1), uint256(1000e6), uint256(999_999_999_999)];
@@ -115,6 +126,171 @@ contract EscrowTest is Test {
             assertEq(token.balanceOf(escrowAddr), 0);
             assertEq(uint256(escrow.status()), uint256(Escrow.Status.Completed));
         }
+    }
+
+    /// Completion B-093：附录 02 PartiallyRefunded 非争议单出口；`platformFeeBps` 仍 init 封存。
+    function test_COMP_B093_releasePartialRefund_table_twoTemplates() public {
+        uint256[2] memory refunds = [uint256(400e6), uint256(250e6)];
+        uint16[2] memory bpsVals = [uint16(500), uint16(0)];
+
+        for (uint256 i = 0; i < 2; i++) {
+            uint256 tRefund = refunds[i];
+            uint16 bps = bpsVals[i];
+            bytes32 orderId = keccak256(abi.encodePacked("comp093partial", i, tRefund, bps));
+            token.mint(traveler, TOTAL);
+
+            Escrow.EscrowParams memory params = Escrow.EscrowParams({
+                chainId: 137,
+                orderId: orderId,
+                snapshotHash: keccak256("snap"),
+                schemaVersion: 1,
+                traveler: traveler,
+                guide: guide,
+                platformFeeRecipient: platformFeeRecipient,
+                token: address(token),
+                totalAmount: TOTAL,
+                platformFeeBps: bps,
+                serviceStart: uint64(block.timestamp),
+                serviceEnd: uint64(block.timestamp + 1 days),
+                disputeWindowSeconds: 7 days,
+                arbitrator: makeAddr("arb")
+            });
+            address escrowAddr = factory.createEscrow(params);
+            Escrow escrow = Escrow(escrowAddr);
+
+            (uint256 expGuide, uint256 expFee) = _expectedPartialRefundSplit(TOTAL, bps, tRefund);
+            assertEq(tRefund + expGuide + expFee, TOTAL, "paper conservation partial");
+
+            vm.prank(traveler);
+            token.approve(escrowAddr, TOTAL);
+            vm.prank(traveler);
+            escrow.deposit(TOTAL);
+
+            uint256 t0Traveler = token.balanceOf(traveler);
+            uint256 t0Guide = token.balanceOf(guide);
+            uint256 t0Plat = token.balanceOf(platformFeeRecipient);
+
+            escrow.releasePartialRefund(tRefund);
+
+            assertEq(uint256(escrow.status()), uint256(Escrow.Status.PartiallyRefunded));
+            assertEq(token.balanceOf(traveler) - t0Traveler, tRefund);
+            assertEq(token.balanceOf(guide) - t0Guide, expGuide);
+            assertEq(token.balanceOf(platformFeeRecipient) - t0Plat, expFee);
+            assertEq(token.balanceOf(escrowAddr), 0);
+        }
+    }
+
+    function test_COMP_B093_releasePartialRefund_reverts_bad_refund_amount() public {
+        bytes32 orderId = keccak256("comp093-revert");
+        Escrow.EscrowParams memory params = Escrow.EscrowParams({
+            chainId: 137,
+            orderId: orderId,
+            snapshotHash: keccak256("snap"),
+            schemaVersion: 1,
+            traveler: traveler,
+            guide: guide,
+            platformFeeRecipient: platformFeeRecipient,
+            token: address(token),
+            totalAmount: TOTAL,
+            platformFeeBps: FEE_BPS,
+            serviceStart: uint64(block.timestamp),
+            serviceEnd: uint64(block.timestamp + 1 days),
+            disputeWindowSeconds: 7 days,
+            arbitrator: makeAddr("arb")
+        });
+        address escrowAddr = factory.createEscrow(params);
+        Escrow escrow = Escrow(escrowAddr);
+        vm.prank(traveler);
+        token.approve(escrowAddr, TOTAL);
+        vm.prank(traveler);
+        escrow.deposit(TOTAL);
+
+        vm.expectRevert(Escrow.InvalidState.selector);
+        escrow.releasePartialRefund(0);
+        vm.expectRevert(Escrow.InvalidState.selector);
+        escrow.releasePartialRefund(TOTAL);
+        vm.expectRevert(Escrow.InvalidState.selector);
+        escrow.releasePartialRefund(TOTAL + 1);
+    }
+
+    /// Completion B-093：附录 02 Slashed 非争议单出口；向导 0，余款归平台，`travelerRefund` 可为 0。
+    function test_COMP_B093_releaseSlashed_non_dispute_table_twoTemplates() public {
+        uint256[2] memory tRefunds = [uint256(400e6), uint256(0)];
+        for (uint256 i = 0; i < 2; i++) {
+            uint256 tRefund = tRefunds[i];
+            bytes32 orderId = keccak256(abi.encodePacked("comp093slashed", i, tRefund));
+            token.mint(traveler, TOTAL);
+
+            Escrow.EscrowParams memory params = Escrow.EscrowParams({
+                chainId: 137,
+                orderId: orderId,
+                snapshotHash: keccak256("snap"),
+                schemaVersion: 1,
+                traveler: traveler,
+                guide: guide,
+                platformFeeRecipient: platformFeeRecipient,
+                token: address(token),
+                totalAmount: TOTAL,
+                platformFeeBps: FEE_BPS,
+                serviceStart: uint64(block.timestamp),
+                serviceEnd: uint64(block.timestamp + 1 days),
+                disputeWindowSeconds: 7 days,
+                arbitrator: makeAddr("arb")
+            });
+            address escrowAddr = factory.createEscrow(params);
+            Escrow escrow = Escrow(escrowAddr);
+
+            uint256 expPlatform = TOTAL - tRefund;
+            assertEq(tRefund + expPlatform, TOTAL, "paper conservation slashed");
+
+            vm.prank(traveler);
+            token.approve(escrowAddr, TOTAL);
+            vm.prank(traveler);
+            escrow.deposit(TOTAL);
+
+            uint256 t0Traveler = token.balanceOf(traveler);
+            uint256 t0Guide = token.balanceOf(guide);
+            uint256 t0Plat = token.balanceOf(platformFeeRecipient);
+
+            escrow.releaseSlashed(tRefund);
+
+            assertEq(uint256(escrow.status()), uint256(Escrow.Status.Slashed));
+            assertEq(token.balanceOf(traveler) - t0Traveler, tRefund);
+            assertEq(token.balanceOf(guide) - t0Guide, 0);
+            assertEq(token.balanceOf(platformFeeRecipient) - t0Plat, expPlatform);
+            assertEq(token.balanceOf(escrowAddr), 0);
+        }
+    }
+
+    function test_COMP_B093_releaseSlashed_reverts_bad_refund_amount() public {
+        bytes32 orderId = keccak256("comp093-slashed-revert");
+        Escrow.EscrowParams memory params = Escrow.EscrowParams({
+            chainId: 137,
+            orderId: orderId,
+            snapshotHash: keccak256("snap"),
+            schemaVersion: 1,
+            traveler: traveler,
+            guide: guide,
+            platformFeeRecipient: platformFeeRecipient,
+            token: address(token),
+            totalAmount: TOTAL,
+            platformFeeBps: FEE_BPS,
+            serviceStart: uint64(block.timestamp),
+            serviceEnd: uint64(block.timestamp + 1 days),
+            disputeWindowSeconds: 7 days,
+            arbitrator: makeAddr("arb")
+        });
+        address escrowAddr = factory.createEscrow(params);
+        Escrow escrow = Escrow(escrowAddr);
+        vm.prank(traveler);
+        token.approve(escrowAddr, TOTAL);
+        vm.prank(traveler);
+        escrow.deposit(TOTAL);
+
+        vm.expectRevert(Escrow.InvalidState.selector);
+        escrow.releaseSlashed(TOTAL);
+        vm.expectRevert(Escrow.InvalidState.selector);
+        escrow.releaseSlashed(TOTAL + 1);
     }
 
     /// B-093 fuzz：任意 (total, bps) 守恒 + 与封存 bps 可复算。

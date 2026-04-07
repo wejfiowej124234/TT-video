@@ -48,12 +48,40 @@ pub fn event_name_from_topic0(topic0: &str) -> Option<&'static str> {
             "ResolutionExecuted",
         ),
         (
+            b"PartialRefundExecuted(bytes32,address,uint256,uint256,uint256)".as_slice(),
+            "PartialRefundExecuted",
+        ),
+        (
+            b"SlashedExecuted(bytes32,address,uint256,uint256,uint256)".as_slice(),
+            "SlashedExecuted",
+        ),
+        (
             b"PlatformFeeRouted(address,uint256,uint256,uint256,uint256,uint256)".as_slice(),
             "PlatformFeeRouted",
         ),
         (
             b"RegionVaultForwarded(address,address,uint256)".as_slice(),
             "RegionVaultForwarded",
+        ),
+        (
+            b"ProposalCreated(uint256,address,uint256,uint256,uint256,string)".as_slice(),
+            "ProposalCreated",
+        ),
+        (
+            b"VoteCast(address,uint256,uint8,uint256)".as_slice(),
+            "VoteCast",
+        ),
+        (
+            b"ProposalQueued(uint256,bytes32)".as_slice(),
+            "ProposalQueued",
+        ),
+        (
+            b"ProposalExecuted(uint256)".as_slice(),
+            "ProposalExecuted",
+        ),
+        (
+            b"ProposalCanceled(uint256)".as_slice(),
+            "ProposalCanceled",
         ),
     ];
     for (sig, name) in sigs {
@@ -200,6 +228,28 @@ pub fn apply_escrow_event_kind_to_order_state(state: OrderState, kind: &str) -> 
                 state
             }
         }
+        "PartialRefundExecuted" => {
+            if state == OrderState::PartiallyRefunded {
+                state
+            } else if state == OrderState::Escrowed {
+                OrderState::PartiallyRefunded
+            } else if state.can_transition_to(OrderState::PartiallyRefunded) {
+                OrderState::PartiallyRefunded
+            } else {
+                state
+            }
+        }
+        "SlashedExecuted" => {
+            if state == OrderState::Slashed {
+                state
+            } else if state == OrderState::Escrowed {
+                OrderState::Slashed
+            } else if state.can_transition_to(OrderState::Slashed) {
+                OrderState::Slashed
+            } else {
+                state
+            }
+        }
         _ => state,
     }
 }
@@ -227,7 +277,8 @@ pub fn project_chain_event_onto_order(
     }
     if matches!(
         kind,
-        "Paid" | "DisputeOpened" | "Released" | "Refunded" | "ResolutionExecuted"
+        "Paid" | "DisputeOpened" | "Released" | "Refunded" | "ResolutionExecuted" | "PartialRefundExecuted"
+            | "SlashedExecuted"
     ) {
         order.state = apply_escrow_event_kind_to_order_state(order.state, kind);
     }
@@ -235,6 +286,15 @@ pub fn project_chain_event_onto_order(
         order.completed_at = Some(now);
     }
     if kind == "Refunded" && order.state == OrderState::Refunded && order.completed_at.is_none() {
+        order.completed_at = Some(now);
+    }
+    if kind == "PartialRefundExecuted"
+        && order.state == OrderState::PartiallyRefunded
+        && order.completed_at.is_none()
+    {
+        order.completed_at = Some(now);
+    }
+    if kind == "SlashedExecuted" && order.state == OrderState::Slashed && order.completed_at.is_none() {
         order.completed_at = Some(now);
     }
     if kind == "ResolutionExecuted"
@@ -367,6 +427,102 @@ mod tests {
     }
 
     #[test]
+    fn partial_refund_executed_from_escrowed_sets_partially_refunded() {
+        let mut store = ChainOffStore::default();
+        let id = Uuid::new_v4();
+        let tid = Uuid::new_v4();
+        let gid = Uuid::new_v4();
+        let t0 = Utc::now();
+        store.orders.insert(
+            id,
+            OrderRow {
+                id,
+                tourist_id: tid,
+                guide_id: gid,
+                amount: "100".to_string(),
+                currency: "USD".to_string(),
+                escrow_address: Some("0xab".to_string()),
+                state: OrderState::Escrowed,
+                created_at: t0,
+                accepted_at: None,
+                escrowed_at: None,
+                completed_at: None,
+                dispute_deadline_at: None,
+                auto_complete_at: None,
+                updated_at: t0,
+                start_date: None,
+                end_date: None,
+                sub_status: None,
+                tourist_confirmed: None,
+                guide_confirmed: None,
+                rating_tourist_confirmed: None,
+                rating_guide_confirmed: None,
+                chain_id: None,
+            },
+        );
+        assert!(project_chain_event_onto_order(
+            &mut store,
+            id,
+            1,
+            10,
+            0,
+            "PartialRefundExecuted",
+            None
+        ));
+        let o = store.orders.get(&id).unwrap();
+        assert_eq!(o.state, OrderState::PartiallyRefunded);
+        assert!(o.completed_at.is_some());
+    }
+
+    #[test]
+    fn slashed_executed_from_escrowed_sets_slashed() {
+        let mut store = ChainOffStore::default();
+        let id = Uuid::new_v4();
+        let tid = Uuid::new_v4();
+        let gid = Uuid::new_v4();
+        let t0 = Utc::now();
+        store.orders.insert(
+            id,
+            OrderRow {
+                id,
+                tourist_id: tid,
+                guide_id: gid,
+                amount: "100".to_string(),
+                currency: "USD".to_string(),
+                escrow_address: Some("0xab".to_string()),
+                state: OrderState::Escrowed,
+                created_at: t0,
+                accepted_at: None,
+                escrowed_at: None,
+                completed_at: None,
+                dispute_deadline_at: None,
+                auto_complete_at: None,
+                updated_at: t0,
+                start_date: None,
+                end_date: None,
+                sub_status: None,
+                tourist_confirmed: None,
+                guide_confirmed: None,
+                rating_tourist_confirmed: None,
+                rating_guide_confirmed: None,
+                chain_id: None,
+            },
+        );
+        assert!(project_chain_event_onto_order(
+            &mut store,
+            id,
+            1,
+            10,
+            0,
+            "SlashedExecuted",
+            None
+        ));
+        let o = store.orders.get(&id).unwrap();
+        assert_eq!(o.state, OrderState::Slashed);
+        assert!(o.completed_at.is_some());
+    }
+
+    #[test]
     fn maps_deposited_topic_to_paid() {
         let topic = format!(
             "0x{}",
@@ -387,6 +543,28 @@ mod tests {
         );
         assert_eq!(event_name_from_topic0(&topic), Some("DisputeOpened"));
     }
+
+    #[test]
+    fn maps_partial_refund_executed_topic() {
+        let topic = format!(
+            "0x{}",
+            hex::encode(Keccak256::digest(
+                b"PartialRefundExecuted(bytes32,address,uint256,uint256,uint256)"
+            ))
+        );
+        assert_eq!(event_name_from_topic0(&topic), Some("PartialRefundExecuted"));
+    }
+
+    #[test]
+    fn maps_slashed_executed_topic() {
+        let topic = format!(
+            "0x{}",
+            hex::encode(Keccak256::digest(
+                b"SlashedExecuted(bytes32,address,uint256,uint256,uint256)"
+            ))
+        );
+        assert_eq!(event_name_from_topic0(&topic), Some("SlashedExecuted"));
+    }
 }
 
 /// P5-5 对账骨架：返回链上状态与 DB 状态是否一致
@@ -397,7 +575,11 @@ pub fn reconcile_order_chain_vs_db(
 ) -> Result<bool, String> {
     let chain_done = matches!(
         chain_status,
-        Some("Completed") | Some("Refunded") | Some("Resolved")
+        Some("Completed")
+            | Some("Refunded")
+            | Some("Resolved")
+            | Some("PartiallyRefunded")
+            | Some("Slashed")
     );
     let db_done = matches!(
         db_state,

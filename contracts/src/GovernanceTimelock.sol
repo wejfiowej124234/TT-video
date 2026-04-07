@@ -22,11 +22,15 @@ contract GovernanceTimelock {
     mapping(bytes32 => Operation) public operations;
 
     error OnlyAdmin();
+    error OnlyGovernor();
     error OperationExists();
     error UnknownOperation();
     error TooEarly();
     error AlreadyExecuted();
     error CallFailed();
+
+    /// @notice **B-089 Completion**：Governor 合约地址；**`scheduleByGovernor`** 仅此地址可调用（与 **`onlyAdmin`** 的 **`schedule`** 并存）。
+    address public governor;
 
     event OperationScheduled(
         bytes32 indexed id,
@@ -39,6 +43,11 @@ contract GovernanceTimelock {
 
     modifier onlyAdmin() {
         if (msg.sender != admin) revert OnlyAdmin();
+        _;
+    }
+
+    modifier onlyGovernor() {
+        if (msg.sender != governor) revert OnlyGovernor();
         _;
     }
 
@@ -56,6 +65,30 @@ contract GovernanceTimelock {
         bytes32 salt
     ) public pure returns (bytes32) {
         return keccak256(abi.encode(target, value, keccak256(data), salt));
+    }
+
+    function setGovernor(address g) external onlyAdmin {
+        governor = g;
+    }
+
+    /// @notice Governor **queue** 路径：**与 `schedule` 同源** 写入 **`operations`**，仅调用方约束不同。
+    function scheduleByGovernor(
+        address target,
+        uint256 value,
+        bytes calldata data,
+        bytes32 salt
+    ) external onlyGovernor returns (bytes32 id) {
+        id = hashOperation(target, value, data, salt);
+        if (operations[id].readyAt != 0) revert OperationExists();
+        uint256 eta = block.timestamp + delay;
+        operations[id] = Operation({
+            readyAt: eta,
+            done: false,
+            target: target,
+            value: value,
+            data: data
+        });
+        emit OperationScheduled(id, target, value, data, eta);
     }
 
     function schedule(

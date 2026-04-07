@@ -1,0 +1,32 @@
+{
+  "tt_id": "TT-VERIFY-B092-VOTING-POWER-SNAPSHOT-CROSS-001",
+  "order": 6,
+  "mother_refs": ["B-092"],
+  "executed_at_utc": "2026-04-07T06:05:00Z",
+  "repo_git_sha": "60c44919ba6581400dc700ee6ca2ee0e716ca166",
+  "execution_record": {
+    "steps": [
+      "Postgres: `users.default_wallet_address` = Anvil 账户 `0xf39F…`（`seed-tt456-anvil-31337.sql`）；见 `sql-tt456-db-verify.txt`.",
+      "Anvil: `StubStaking` `0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0`、`StubShareToken` `0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9`；API `STAKING_ADDRESS` + `INVESTOR_SHARE_TOKEN_ADDRESSES`.",
+      "GET `/api/v1/governance/voting-power?snapshot_block=5` + `X-User-Id` — `stake_snapshot.read_status=ok`、`country_pool_share_snapshot.read_status=ok`（`http-get-governance-voting-power-tt6-snap5.json`）。",
+      "同块 `eth_call` 对照：`rpc-tt6-eth-call-stake-balance-block5.json`（`stakeOf` / `balanceOf` at `0x5`）。",
+      "indexer-tick 响应与 TT-5 共用：`indexer-tick-tt5-tt6-chain31337.json`."
+    ],
+    "outcome": "GREEN — 真实 RPC `snapshot_block` + DB 默认钱包 + HTTP 与独立 eth_call 一致"
+  },
+  "screenshot": { "path": null, "note": null },
+  "json_artifact": {
+    "paths": [
+      "docs/verification-evidence/http-get-governance-voting-power-tt6-snap5.json",
+      "docs/verification-evidence/rpc-tt6-eth-call-stake-balance-block5.json",
+      "docs/verification-evidence/indexer-tick-tt5-tt6-chain31337.json"
+    ]
+  },
+  "linked_logs": ["docs/verification-evidence/cargo-test-b092.log"],
+  "sql_artifact": {
+    "paths": [
+      "docs/verification-evidence/seed-tt456-anvil-31337.sql",
+      "docs/verification-evidence/sql-tt456-db-verify.txt"
+    ]
+  }
+}

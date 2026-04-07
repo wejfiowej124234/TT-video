@@ -9,6 +9,9 @@ import { mapApiReadError } from "@/lib/mapApiReadError";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import LoadingText from "@/components/LoadingText";
 import GovernanceTargetNotice from "@/components/governance/GovernanceTargetNotice";
+import GovernanceB090OnChainProposalNotice from "@/components/governance/GovernanceB090OnChainProposalNotice";
+import { getMeta } from "@/lib/apiClient";
+import { governorAddressFromMeta } from "@/lib/governanceChainMeta";
 import { GovernanceOpsAdminLinks } from "@/components/governance/GovernanceOpsAdminLinks";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import {
@@ -23,6 +26,8 @@ type ProposalsRes = {
   status?: string;
   items?: unknown;
   note?: string;
+  data_source?: string;
+  chain_id?: number;
 };
 
 /** 13-1 / B-064：首屏 GET 列表；失败 ApiErrorAlert + 重试；空列表与错误态文案分离 */
@@ -35,6 +40,9 @@ export default function GovernanceProposalsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [retryTick, setRetryTick] = useState(0);
+  const [dataSource, setDataSource] = useState<string | null>(null);
+  const [chainId, setChainId] = useState<number | null>(null);
+  const [metaGovernor, setMetaGovernor] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -50,12 +58,19 @@ export default function GovernanceProposalsPage() {
         const o = j as ProposalsRes;
         if (o.status !== "ok") throw new Error(String(o.status ?? "bad_status"));
         if (!Array.isArray(o.items)) throw new Error("invalid_items");
-        return { items: o.items as ProposalItem[], note: typeof o.note === "string" ? o.note : null };
+        return {
+          items: o.items as ProposalItem[],
+          note: typeof o.note === "string" ? o.note : null,
+          data_source: typeof o.data_source === "string" ? o.data_source : null,
+          chain_id: typeof o.chain_id === "number" && Number.isFinite(o.chain_id) ? o.chain_id : null,
+        };
       })
-      .then(({ items: next, note: n }) => {
+      .then(({ items: next, note: n, data_source: ds, chain_id: cid }) => {
         if (cancelled) return;
         setItems(next);
         setNote(n);
+        setDataSource(ds);
+        setChainId(cid);
         setError(null);
       })
       .catch((err) => {
@@ -65,6 +80,8 @@ export default function GovernanceProposalsPage() {
         }
         setItems(null);
         setNote(null);
+        setDataSource(null);
+        setChainId(null);
         setError(mapApiReadError(err, t, "governance_proposals_loadFailed"));
       })
       .finally(() => {
@@ -75,7 +92,27 @@ export default function GovernanceProposalsPage() {
     };
   }, [t, retryTick]);
 
+  useEffect(() => {
+    if (dataSource !== "governance_proposals_projection") {
+      setMetaGovernor(null);
+      return undefined;
+    }
+    let cancelled = false;
+    getMeta()
+      .then((m) => {
+        if (cancelled) return;
+        setMetaGovernor(governorAddressFromMeta(m));
+      })
+      .catch(() => {
+        if (!cancelled) setMetaGovernor(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [dataSource, retryTick]);
+
   const emptySuccess = !loading && !error && items !== null && items.length === 0;
+  const showOnChainPanel = !loading && !error && dataSource === "governance_proposals_projection";
 
   return (
     <main className="mx-auto max-w-3xl p-8" aria-labelledby={pageTitleId}>
@@ -84,6 +121,16 @@ export default function GovernanceProposalsPage() {
       </h1>
       <p className="mt-2 text-body text-ink-600">{t("governance_proposals_intro")}</p>
       <GovernanceTargetNotice className="mt-4" />
+
+      {showOnChainPanel ? (
+        <div className="mt-6">
+          <GovernanceB090OnChainProposalNotice
+            variant="list"
+            chainId={chainId}
+            governorAddress={metaGovernor}
+          />
+        </div>
+      ) : null}
 
       {loading ? (
         <div className="mt-6">

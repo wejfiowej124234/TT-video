@@ -1,0 +1,25 @@
+{
+  "tt_id": "TT-VERIFY-B081-FEE-ROUTER-LOG-DB-RPC-001",
+  "order": 1,
+  "mother_refs": ["B-081"],
+  "executed_at_utc": "2026-04-07T05:40:00Z",
+  "repo_git_sha": "60c44919ba6581400dc700ee6ca2ee0e716ca166",
+  "execution_record": {
+    "steps": [
+      "Local Postgres (`docker compose`)+ disposable Anvil (`:18545`) + deployed `FeeRouter`/`MockERC20`; projection seeded via `seed-tt1-tt2-tt3-anvil-31337.sql` (chain_id=31337).",
+      "API: `CHAIN_RPC_URL=http://127.0.0.1:18545`, `CHAIN_ID=31337`, `FEE_ROUTER_ADDRESS` = deployed router, `DATABASE_URL` → `traveltrust-postgres`.",
+      "`POST /api/v1/internal/indexer-reconcile` body `{\"verify_fee_router_events_rpc\":5,\"verify_region_vault_events_rpc\":5,\"persist\":false}` — response field `fee_router_log_verify`."
+    ],
+    "outcome": "API_DB_RPC_OK — `fee_router_log_verify.log_verify_clean` true; 2/2 samples `ok` true; `fee_router_recipients_on_chain` eth_call 四方地址与部署一致"
+  },
+  "screenshot": { "path": null },
+  "json_artifact": {
+    "path": "docs/verification-evidence/http-post-indexer-reconcile-tt1-tt2-chain31337.json",
+    "note": "同文件内含 TT-2 `region_vault_log_verify`"
+  },
+  "linked_logs": [
+    "docs/verification-evidence/http-post-indexer-reconcile-tt1-tt2-chain31337.json",
+    "docs/verification-evidence/seed-tt1-tt2-tt3-anvil-31337.sql",
+    "docs/verification-evidence/cargo-test-fee-router.log"
+  ]
+}

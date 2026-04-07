@@ -257,6 +257,9 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
                                                 "fee_router_routed_events_rows": out.deleted_fee_router,
                                                 "region_vault_forwarded_events_rows": out.deleted_region_vault,
                                                 "investor_share_transfer_events_rows": out.deleted_investor_share,
+                                                "investor_stake_state_events_rows": out.deleted_investor_stake,
+                                                "investor_lock_state_events_rows": out.deleted_investor_lock,
+                                                "governance_proposals_projection_rows": out.deleted_governance_proposals_projection,
                                                 "orders_projection_rows": out.deleted_orders_projection,
                                             },
                                             "indexer_after": {
@@ -336,6 +339,8 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
             "events_applied": 0,
             "events_new": 0,
             "investor_share_transfer_events_new": 0,
+            "investor_stake_state_events_new": 0,
+            "investor_lock_state_events_new": 0,
             "from_block": from_block,
             "to_block": to_block,
             "chain_tip": latest,
@@ -351,6 +356,8 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
             "events_applied": 0,
             "events_new": 0,
             "investor_share_transfer_events_new": 0,
+            "investor_stake_state_events_new": 0,
+            "investor_lock_state_events_new": 0,
             "from_block": from_block,
             "to_block": to_block,
             "chain_tip": latest,
@@ -487,6 +494,42 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
             }
         }
     }
+    // Governor：**ProposalCreated / VoteCast / …** → **`event_log`** + **`governance_proposals_projection`**（B-089 Completion）
+    if let Some(ref gov_a) = config.governor_address {
+        let gov_a = gov_a.trim();
+        if !gov_a.is_empty() {
+            match chain::indexer::fetch_logs_from_addresses(
+                &config.rpc_url,
+                &[gov_a.to_string()],
+                from_block,
+                to_block,
+            )
+            .await
+            {
+                Ok(gv_logs) => {
+                    logs.extend(gv_logs);
+                    logs.sort_by_key(|t| (t.0, t.1));
+                }
+                Err(e) => {
+                    if strict_supplemental_logs {
+                        return (
+                            StatusCode::INTERNAL_SERVER_ERROR,
+                            Json(crate::api_json::err_key_detail(
+                                "fetch_supplemental_logs_failed",
+                                format!("governor: {}", e),
+                            )),
+                        )
+                            .into_response();
+                    }
+                    logs_fetch_skipped.push(json!({
+                        "scope": "governor",
+                        "address": gov_a,
+                        "error": e
+                    }));
+                }
+            }
+        }
+    }
     let mut applied = 0u32;
     let mut events_new = 0u32;
     for (block_number, log_index, block_hash, tx_hash, kind, data, topics) in logs {
@@ -543,6 +586,39 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
                             )),
                         )
                             .into_response();
+                    }
+                    if let Some(n) = ev_name {
+                        if matches!(
+                            n,
+                            "ProposalCreated"
+                                | "VoteCast"
+                                | "ProposalQueued"
+                                | "ProposalExecuted"
+                                | "ProposalCanceled"
+                        ) {
+                            let data_hex = data_for_fee_parse
+                                .as_str()
+                                .unwrap_or("0x")
+                                .to_string();
+                            if let Err(e) = db::apply_governance_projection_from_parsed_event(
+                                pool,
+                                chain_id_i64,
+                                n,
+                                &topics,
+                                &data_hex,
+                            )
+                            .await
+                            {
+                                return (
+                                    StatusCode::INTERNAL_SERVER_ERROR,
+                                    Json(crate::api_json::err_key_detail(
+                                        "apply_governance_projection_failed",
+                                        e.to_string(),
+                                    )),
+                                )
+                                    .into_response();
+                            }
+                        }
                     }
                 }
             }
@@ -666,6 +742,19 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
                                                 .escrow_address
                                                 .as_deref()
                                                 .and_then(db::decode_evm_address_bytes);
+                                            let fallback_status =
+                                                chain_off::order_state_to_str(order.state);
+                                            let projection_status =
+                                                if event_name == "ResolutionExecuted" {
+                                                    chain::resolution_tx::orders_projection_status_for_resolution_executed_event(
+                                                        Some(config.rpc_url.as_str()),
+                                                        &tx_hash,
+                                                        fallback_status,
+                                                    )
+                                                    .await
+                                                } else {
+                                                    fallback_status
+                                                };
                                             if let Err(e) =
                                                 db::upsert_orders_projection_chain_snapshot(
                                                     pool,
@@ -678,7 +767,7 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
                                                         .then_some(order.tourist_id),
                                                     (!order.guide_id.is_nil())
                                                         .then_some(order.guide_id),
-                                                    chain_off::order_state_to_str(order.state),
+                                                    projection_status,
                                                     esc.as_deref(),
                                                 )
                                                 .await
@@ -703,6 +792,8 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
         }
     }
     let mut investor_share_transfer_events_new = 0u32;
+    let mut investor_stake_state_events_new = 0u32;
+    let mut investor_lock_state_events_new = 0u32;
     let share_tokens: Vec<String> = config
         .investor_share_token_addresses
         .iter()
@@ -774,6 +865,148 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
             }
         }
     }
+    let staking_trimmed = config
+        .staking_address
+        .as_ref()
+        .map(|s| s.trim().to_string())
+        .filter(|s| !s.is_empty());
+    if let Some(staking_raw) = staking_trimmed.as_ref() {
+        if let Some(pool) = state.chain_off.as_ref().and_then(|co| co.db_pool.as_ref()) {
+            let staking_n = normalize_hex_addr(staking_raw);
+            match chain::indexer::fetch_staking_state_logs(
+                &config.rpc_url,
+                &staking_n,
+                from_block,
+                to_block,
+            )
+            .await
+            {
+                Ok(fetched) => {
+                    let chain_id_i64 = (config.chain_id.min(i64::MAX as u64)) as i64;
+                    for ev in fetched {
+                        let user_n = normalize_hex_addr(&ev.user_address);
+                        let sc_n = normalize_hex_addr(&ev.staking_contract_address);
+                        match db::insert_investor_stake_state_event(
+                            pool,
+                            chain_id_i64,
+                            ev.block_number as i64,
+                            ev.log_index as i32,
+                            &ev.block_hash,
+                            &ev.tx_hash,
+                            &sc_n,
+                            &user_n,
+                            &ev.event_kind,
+                            &ev.amount_u256_hex,
+                        )
+                        .await
+                        {
+                            Ok(n) if n > 0 => investor_stake_state_events_new += 1,
+                            Ok(_) => {}
+                            Err(e) => {
+                                return (
+                                    StatusCode::INTERNAL_SERVER_ERROR,
+                                    Json(crate::api_json::err_key_detail(
+                                        "insert_investor_stake_state_event_failed",
+                                        e.to_string(),
+                                    )),
+                                )
+                                    .into_response();
+                            }
+                        }
+                    }
+                }
+                Err(e) => {
+                    if strict_supplemental_logs {
+                        return (
+                            StatusCode::INTERNAL_SERVER_ERROR,
+                            Json(crate::api_json::err_key_detail(
+                                "fetch_supplemental_logs_failed",
+                                format!("staking_contract: {}", e),
+                            )),
+                        )
+                            .into_response();
+                    }
+                    logs_fetch_skipped.push(json!({
+                        "scope": "staking_contract",
+                        "error": e
+                    }));
+                }
+            }
+        }
+    }
+    let lock_addrs: Vec<String> = config
+        .investor_lock_contract_addresses
+        .iter()
+        .map(|s| s.trim().to_string())
+        .filter(|s| !s.is_empty())
+        .collect();
+    if !lock_addrs.is_empty() {
+        if let Some(pool) = state.chain_off.as_ref().and_then(|co| co.db_pool.as_ref()) {
+            let chain_id_i64 = (config.chain_id.min(i64::MAX as u64)) as i64;
+            for lock_raw in &lock_addrs {
+                let lock_n = normalize_hex_addr(lock_raw);
+                match chain::indexer::fetch_investor_lock_state_logs(
+                    &config.rpc_url,
+                    &lock_n,
+                    from_block,
+                    to_block,
+                )
+                .await
+                {
+                    Ok(fetched) => {
+                        for ev in fetched {
+                            let user_n = normalize_hex_addr(&ev.user_address);
+                            let lc_n = normalize_hex_addr(&ev.lock_contract_address);
+                            match db::insert_investor_lock_state_event(
+                                pool,
+                                chain_id_i64,
+                                ev.block_number as i64,
+                                ev.log_index as i32,
+                                &ev.block_hash,
+                                &ev.tx_hash,
+                                &lc_n,
+                                &user_n,
+                                &ev.event_kind,
+                                &ev.amount_u256_hex,
+                            )
+                            .await
+                            {
+                                Ok(n) if n > 0 => investor_lock_state_events_new += 1,
+                                Ok(_) => {}
+                                Err(e) => {
+                                    return (
+                                        StatusCode::INTERNAL_SERVER_ERROR,
+                                        Json(crate::api_json::err_key_detail(
+                                            "insert_investor_lock_state_event_failed",
+                                            e.to_string(),
+                                        )),
+                                    )
+                                        .into_response();
+                                }
+                            }
+                        }
+                    }
+                    Err(e) => {
+                        if strict_supplemental_logs {
+                            return (
+                                StatusCode::INTERNAL_SERVER_ERROR,
+                                Json(crate::api_json::err_key_detail(
+                                    "fetch_supplemental_logs_failed",
+                                    format!("investor_lock_contract: {}", e),
+                                )),
+                            )
+                                .into_response();
+                        }
+                        logs_fetch_skipped.push(json!({
+                            "scope": "investor_lock_contract",
+                            "address": lock_n,
+                            "error": e
+                        }));
+                    }
+                }
+            }
+        }
+    }
     if let Some(pool) = state.chain_off.as_ref().and_then(|co| co.db_pool.as_ref()) {
         let g = indexer_handle.read().await;
         let chain_id_i64 = (config.chain_id.min(i64::MAX as u64)) as i64;
@@ -815,6 +1048,8 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
         "events_applied": applied,
         "events_new": events_new,
         "investor_share_transfer_events_new": investor_share_transfer_events_new,
+        "investor_stake_state_events_new": investor_stake_state_events_new,
+        "investor_lock_state_events_new": investor_lock_state_events_new,
         "from_block": from_block,
         "to_block": to_block,
         "chain_tip": latest,
@@ -899,6 +1134,9 @@ struct ReorgRewindExecuteOutcome {
     deleted_fee_router: u64,
     deleted_region_vault: u64,
     deleted_investor_share: u64,
+    deleted_investor_stake: u64,
+    deleted_investor_lock: u64,
+    deleted_governance_proposals_projection: u64,
     deleted_orders_projection: u64,
     last_block: u64,
     last_log_index: u32,
@@ -979,6 +1217,47 @@ async fn perform_indexer_reorg_rewind_execute(
                 ));
             }
         };
+    let stake_deleted =
+        match db::delete_investor_stake_state_events_from_block(pool, chain_id_i64, rewind_i64).await
+        {
+            Ok(n) => n,
+            Err(e) => {
+                return Err((
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    crate::api_json::err_key_detail(
+                        "delete_investor_stake_state_events_failed",
+                        e.to_string(),
+                    ),
+                ));
+            }
+        };
+    let lock_deleted =
+        match db::delete_investor_lock_state_events_from_block(pool, chain_id_i64, rewind_i64).await
+        {
+            Ok(n) => n,
+            Err(e) => {
+                return Err((
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    crate::api_json::err_key_detail(
+                        "delete_investor_lock_state_events_failed",
+                        e.to_string(),
+                    ),
+                ));
+            }
+        };
+    let gov_deleted =
+        match db::delete_governance_proposals_projection_for_chain(pool, chain_id_i64).await {
+            Ok(n) => n,
+            Err(e) => {
+                return Err((
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    crate::api_json::err_key_detail(
+                        "delete_governance_proposals_projection_failed",
+                        e.to_string(),
+                    ),
+                ));
+            }
+        };
     let proj_deleted = match db::delete_orders_projection_for_chain(pool, chain_id_i64).await {
         Ok(n) => n,
         Err(e) => {
@@ -1040,7 +1319,14 @@ async fn perform_indexer_reorg_rewind_execute(
         }
     }
 
-    let replay = match chain_off::replay_orders_projection_from_event_log(pool, chain_id_i64).await
+    let rpc_for_replay = config.rpc_url.trim();
+    let rpc_replay_opt = (!rpc_for_replay.is_empty()).then_some(rpc_for_replay);
+    let replay = match chain_off::replay_orders_projection_from_event_log(
+        pool,
+        chain_id_i64,
+        rpc_replay_opt,
+    )
+    .await
     {
         Ok(s) => s,
         Err(e) => {
@@ -1050,7 +1336,26 @@ async fn perform_indexer_reorg_rewind_execute(
             ));
         }
     };
-    let replay_stats = serde_json::to_value(&replay).unwrap_or_else(|_| json!({}));
+    let replay_stats_orders = serde_json::to_value(&replay).unwrap_or_else(|_| json!({}));
+
+    let gov_replay = match chain_off::replay_governance_proposals_from_event_log(pool, chain_id_i64)
+        .await
+    {
+        Ok(s) => s,
+        Err(e) => {
+            return Err((
+                StatusCode::INTERNAL_SERVER_ERROR,
+                crate::api_json::err_key_detail(
+                    "replay_governance_proposals_failed",
+                    e.to_string(),
+                ),
+            ));
+        }
+    };
+    let replay_stats = json!({
+        "orders_projection": replay_stats_orders,
+        "governance_proposals": serde_json::to_value(&gov_replay).unwrap_or_else(|_| json!({})),
+    });
 
     let mut orders_table_projection_sync = Value::Null;
     if indexer_reorg_sync_orders_from_projection_after_rewind_enabled() {
@@ -1104,6 +1409,9 @@ async fn perform_indexer_reorg_rewind_execute(
         deleted_fee_router: fr_deleted,
         deleted_region_vault: rv_deleted,
         deleted_investor_share: inv_deleted,
+        deleted_investor_stake: stake_deleted,
+        deleted_investor_lock: lock_deleted,
+        deleted_governance_proposals_projection: gov_deleted,
         deleted_orders_projection: proj_deleted,
         last_block: nb,
         last_log_index: nli,
@@ -1174,6 +1482,8 @@ fn terminal_escrow_label_for_reconcile(s: &chain::EscrowChainStatus) -> Option<&
         chain::EscrowChainStatus::Completed => Some("Completed"),
         chain::EscrowChainStatus::Refunded => Some("Refunded"),
         chain::EscrowChainStatus::Resolved => Some("Resolved"),
+        chain::EscrowChainStatus::PartiallyRefunded => Some("PartiallyRefunded"),
+        chain::EscrowChainStatus::Slashed => Some("Slashed"),
         _ => None,
     }
 }
@@ -1187,6 +1497,8 @@ fn escrow_chain_status_label(s: &chain::EscrowChainStatus) -> &'static str {
         chain::EscrowChainStatus::Refunded => "Refunded",
         chain::EscrowChainStatus::Disputed => "Disputed",
         chain::EscrowChainStatus::Resolved => "Resolved",
+        chain::EscrowChainStatus::PartiallyRefunded => "PartiallyRefunded",
+        chain::EscrowChainStatus::Slashed => "Slashed",
     }
 }
 
@@ -1394,7 +1706,11 @@ pub async fn indexer_replay(
     };
     let chain_id = body.and_then(|j| j.0.chain_id).unwrap_or(config.chain_id);
     let chain_id_i64 = (chain_id.min(i64::MAX as u64)) as i64;
-    match chain_off::replay_orders_projection_from_event_log(pool, chain_id_i64).await {
+    let rpc_for_replay = config.rpc_url.trim();
+    let rpc_replay_opt = (!rpc_for_replay.is_empty()).then_some(rpc_for_replay);
+    match chain_off::replay_orders_projection_from_event_log(pool, chain_id_i64, rpc_replay_opt)
+        .await
+    {
         Ok(stats) => (
             StatusCode::OK,
             Json(json!({
@@ -1571,6 +1887,9 @@ pub async fn indexer_reorg_rewind(
                 "fee_router_routed_events_rows": outcome.deleted_fee_router,
                 "region_vault_forwarded_events_rows": outcome.deleted_region_vault,
                 "investor_share_transfer_events_rows": outcome.deleted_investor_share,
+                "investor_stake_state_events_rows": outcome.deleted_investor_stake,
+                "investor_lock_state_events_rows": outcome.deleted_investor_lock,
+                "governance_proposals_projection_rows": outcome.deleted_governance_proposals_projection,
                 "orders_projection_rows": outcome.deleted_orders_projection,
             },
             "indexer_after": {
@@ -2907,6 +3226,9 @@ mod tests {
             region_vault_address: None,
             investor_share_token_addresses: vec![],
             staking_address: None,
+            investor_lock_contract_addresses: vec![],
+            governor_address: None,
+            governance_votes_token_address: None,
             registry_address: None,
             executor_max_amount_per_tx: None,
             executor_max_amount_per_day: None,
@@ -2927,6 +3249,9 @@ mod tests {
             region_vault_address: None,
             investor_share_token_addresses: vec![],
             staking_address: None,
+            investor_lock_contract_addresses: vec![],
+            governor_address: None,
+            governance_votes_token_address: None,
             registry_address: None,
             executor_max_amount_per_tx: None,
             executor_max_amount_per_day: None,

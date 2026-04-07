@@ -1,6 +1,7 @@
 //! B-072：`GET /governance/proposals/:id` + `POST …/vote` 链下 MVP（内存票仓；与 04 §三 登记一致）。
 //! **B-092**：计票为 **权重 Σ**（`delegation_units_v1`：投票当刻 `1+直接委托者数`，冻结存票）；已委托他人者 **不可** 直投。
 //! 重复提交：同 **`vote`** → **200** **`idempotent: true`**；不同 **`vote`** → **409** **`already_voted`**。
+//! **B-089 Completion**：**`GOVERNOR_ADDRESS` + `DATABASE_URL`** 时列表/详情走 **`governance_proposals_projection`** + **`eth_call`** **`state` / `getPastVotes`**；**`POST …/vote`** 返回 **`vote_on_chain_required`**（**禁止**链下假票）。
 
 use axum::extract::{Path, State};
 use axum::http::header::{HeaderName, HeaderValue};
@@ -16,11 +17,14 @@ use std::sync::{Arc, OnceLock};
 use tokio::sync::RwLock;
 use uuid::Uuid;
 
+use crate::chain;
+use crate::db::{self, get_user_default_wallet_by_id};
 use crate::routes::governance_delegation_store::{delegate_store, is_delegating_away, voter_weight_units_now};
 use crate::state::{extract_user_with_session_check, ApiMetaState};
 
 const IMPL_HEADER: &str = "x-implementation-status";
 const IMPL_VALUE: &str = "chain_off_mvp";
+const IMPL_GOVERNOR: &str = "chain_governor_indexed";
 
 fn mvp_headered(mut res: axum::response::Response) -> axum::response::Response {
     res.headers_mut().insert(
@@ -28,6 +32,30 @@ fn mvp_headered(mut res: axum::response::Response) -> axum::response::Response {
         HeaderValue::from_static(IMPL_VALUE),
     );
     res
+}
+
+fn governor_headered(mut res: axum::response::Response) -> axum::response::Response {
+    res.headers_mut().insert(
+        HeaderName::from_static(IMPL_HEADER),
+        HeaderValue::from_static(IMPL_GOVERNOR),
+    );
+    res
+}
+
+/// **`GOVERNOR_ADDRESS` 非空 + DB pool** 时启用链上提案索引模式。
+fn governor_indexed_mode(state: &ApiMetaState) -> Option<(&chain::ChainConfig, &sqlx::postgres::PgPool)> {
+    let cfg = state.chain_config.as_ref()?;
+    let g = cfg.governor_address.as_ref()?.trim();
+    if g.is_empty() {
+        return None;
+    }
+    let pool = state.chain_off.as_ref()?.db_pool.as_ref()?;
+    Some((cfg, pool))
+}
+
+fn is_decimal_proposal_id(s: &str) -> bool {
+    let t = s.trim();
+    !t.is_empty() && t.chars().all(|c| c.is_ascii_digit())
 }
 
 #[derive(Clone)]
@@ -108,7 +136,44 @@ fn store() -> Arc<RwLock<ProposalsMvpStore>> {
 }
 
 /// GET /api/v1/governance/proposals
-pub async fn get_governance_proposals_list() -> impl IntoResponse {
+pub async fn get_governance_proposals_list(State(state): State<ApiMetaState>) -> impl IntoResponse {
+    if let Some((cfg, pool)) = governor_indexed_mode(&state) {
+        let chain_id_i64 = (cfg.chain_id.min(i64::MAX as u64)) as i64;
+        let rows = match db::list_governance_proposals_for_chain(pool, chain_id_i64, 200).await {
+            Ok(r) => r,
+            Err(e) => {
+                return (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    Json(json!({"error": "governance_list_failed", "message": e.to_string()})),
+                )
+                    .into_response();
+            }
+        };
+        let items: Vec<_> = rows
+            .into_iter()
+            .map(|r| {
+                let st = r
+                    .chain_state
+                    .unwrap_or_else(|| "pending".to_string());
+                json!({
+                    "id": r.proposal_id,
+                    "title": r.title.unwrap_or_default(),
+                    "status": st,
+                })
+            })
+            .collect();
+        return governor_headered(
+            Json(json!({
+                "status": "ok",
+                "items": items,
+                "data_source": "governance_proposals_projection",
+                "chain_id": cfg.chain_id,
+                "note": "B-089 Governor events via indexer-tick → DB; status from projection (see GET detail for eth_call state)"
+            }))
+            .into_response(),
+        );
+    }
+
     let arc = store();
     let g = arc.read().await;
     let mut items: Vec<_> = g
@@ -144,6 +209,131 @@ pub async fn get_governance_proposal(
     Path(proposal_id): Path<String>,
     headers: HeaderMap,
 ) -> impl IntoResponse {
+    let proposal_id = proposal_id.trim().to_string();
+
+    if let Some((cfg, pool)) = governor_indexed_mode(&state) {
+        if !is_decimal_proposal_id(&proposal_id) {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(json!({"error": "invalid_proposal_id", "message": "governor_mode expects decimal proposal id"})),
+            )
+                .into_response();
+        }
+        let chain_id_i64 = (cfg.chain_id.min(i64::MAX as u64)) as i64;
+        let row = match db::get_governance_proposal_projection(pool, chain_id_i64, &proposal_id).await
+        {
+            Ok(r) => r,
+            Err(e) => {
+                return (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    Json(json!({"error": "governance_detail_failed", "message": e.to_string()})),
+                )
+                    .into_response();
+            }
+        };
+        let Some(row) = row else {
+            return (
+                StatusCode::NOT_FOUND,
+                Json(json!({"error": "proposal_not_found", "message": "proposal_not_found"})),
+            )
+                .into_response();
+        };
+
+        let gov = cfg.governor_address.as_deref().unwrap_or("").trim();
+        let mut chain_state_live: Option<String> = None;
+        let mut chain_state_rpc_error: Option<String> = None;
+        if !cfg.rpc_url.is_empty() && !gov.is_empty() {
+            match chain::governor::eth_call_governor_state(&cfg.rpc_url, gov, &proposal_id).await {
+                Ok(u) => chain_state_live = Some(chain::governor::governor_state_label(u).to_string()),
+                Err(e) => chain_state_rpc_error = Some(e),
+            }
+        }
+
+        let viewer = extract_user_with_session_check(&state, &headers).await;
+        let mut voting_power_at_snapshot: Option<serde_json::Value> = None;
+        if let Some(uid) = viewer {
+            if let (Some(tok), Ok(Some(wallet))) = (
+                cfg.governance_votes_token_address.as_deref(),
+                get_user_default_wallet_by_id(pool, uid).await,
+            ) {
+                let w = wallet.trim();
+                if !w.is_empty() && !cfg.rpc_url.is_empty() {
+                    let snap = row.snapshot_block.to_string();
+                    match chain::governor::eth_call_get_past_votes(
+                        &cfg.rpc_url,
+                        tok.trim(),
+                        w,
+                        &snap,
+                    )
+                    .await
+                    {
+                        Ok(v) => {
+                            voting_power_at_snapshot = Some(json!({
+                                "wallet": w,
+                                "snapshot_block": snap,
+                                "votes": v,
+                                "ssot": "GovernanceVotesToken.getPastVotes"
+                            }));
+                        }
+                        Err(e) => {
+                            voting_power_at_snapshot = Some(json!({
+                                "wallet": w,
+                                "snapshot_block": snap,
+                                "read_error": e,
+                            }));
+                        }
+                    }
+                }
+            }
+        }
+
+        let status_display = chain_state_live.clone().or(row.chain_state.clone()).unwrap_or_else(|| "pending".to_string());
+        let cast_yes = chain::governor::encode_cast_vote_calldata(&proposal_id, 1).ok();
+        let cast_no = chain::governor::encode_cast_vote_calldata(&proposal_id, 0).ok();
+        let cast_abstain = chain::governor::encode_cast_vote_calldata(&proposal_id, 2).ok();
+
+        return governor_headered(
+            Json(json!({
+                "status": "ok",
+                "proposal": {
+                    "id": row.proposal_id,
+                    "title": row.title.clone().unwrap_or_default(),
+                    "body": row.title.clone().unwrap_or_default(),
+                    "status": status_display,
+                    "proposer": row.proposer_hex,
+                    "snapshot_block": row.snapshot_block,
+                    "vote_start_block": row.vote_start_block,
+                    "vote_end_block": row.vote_end_block,
+                    "operation_id": row.operation_id_hex,
+                },
+                "governance_vote": {
+                    "kind": "on_chain_governor",
+                    "triggers_on_chain_execution": true,
+                    "weight_ssot": "GovernanceVotesToken.getPastVotes@snapshot",
+                    "anchor": "TT-COMP-B089-GOVERNOR-CHAIN-VOTING-001"
+                },
+                "vote_counts": { "yes": row.for_votes, "no": row.against_votes, "abstain": row.abstain_votes },
+                "chain": {
+                    "governor_address": gov,
+                    "votes_token_address": cfg.governance_votes_token_address,
+                    "state_live": chain_state_live,
+                    "state_rpc_error": chain_state_rpc_error,
+                    "projection_state": row.chain_state,
+                },
+                "voting_power_at_snapshot": voting_power_at_snapshot,
+                "cast_vote_calldata": {
+                    "yes": cast_yes,
+                    "no": cast_no,
+                    "abstain": cast_abstain,
+                    "selector_note": "TravelTrustGovernor.castVote(uint256,uint8)"
+                },
+                "my_vote": serde_json::Value::Null,
+                "my_vote_weight": serde_json::Value::Null,
+            }))
+            .into_response(),
+        );
+    }
+
     let Ok(pid) = Uuid::parse_str(proposal_id.trim()) else {
         return (
             StatusCode::BAD_REQUEST,
@@ -202,6 +392,39 @@ pub async fn post_governance_proposal_vote(
     headers: HeaderMap,
     Json(body): Json<ProposalVoteBody>,
 ) -> impl IntoResponse {
+    if governor_indexed_mode(&state).is_some() {
+        let proposal_id = proposal_id.trim();
+        let choice = body.vote.trim().to_ascii_lowercase();
+        if !matches!(choice.as_str(), "yes" | "no" | "abstain") {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(json!({
+                    "error": "invalid_vote",
+                    "message": "invalid_vote",
+                    "hint": "vote must be yes, no, or abstain"
+                })),
+            )
+                .into_response();
+        }
+        let cast = if choice == "yes" {
+            chain::governor::encode_cast_vote_calldata(proposal_id, 1).ok()
+        } else if choice == "no" {
+            chain::governor::encode_cast_vote_calldata(proposal_id, 0).ok()
+        } else {
+            chain::governor::encode_cast_vote_calldata(proposal_id, 2).ok()
+        };
+        return (
+            StatusCode::BAD_REQUEST,
+            Json(json!({
+                "error": "vote_on_chain_required",
+                "message": "vote_on_chain_required",
+                "hint": "Governor mode: submit castVote(uint256,uint8) on-chain; API does not record signal votes (B-089 Completion)",
+                "cast_vote_calldata": cast,
+            })),
+        )
+            .into_response();
+    }
+
     let Some(uid) = extract_user_with_session_check(&state, &headers).await else {
         return (
             StatusCode::UNAUTHORIZED,
@@ -325,7 +548,9 @@ mod tests {
 
     #[tokio::test]
     async fn proposals_list_returns_seeded_items_and_mvp_header() {
-        let res = get_governance_proposals_list().await.into_response();
+        let res = get_governance_proposals_list(State(api_meta_state(None)))
+            .await
+            .into_response();
         assert_eq!(res.status(), StatusCode::OK);
         assert_eq!(
             res.headers()

@@ -1,0 +1,23 @@
+{
+  "tt_id": "TT-VERIFY-B082-REGION-VAULT-FORWARD-DB-RPC-001",
+  "order": 2,
+  "mother_refs": ["B-082"],
+  "executed_at_utc": "2026-04-07T05:40:00Z",
+  "repo_git_sha": "60c44919ba6581400dc700ee6ca2ee0e716ca166",
+  "execution_record": {
+    "steps": [
+      "与 TT-1 同源环境：Anvil 部署 `RegionVault`，`forward` 产生 `RegionVaultForwarded`；DB 行见 `seed-tt1-tt2-tt3-anvil-31337.sql`。",
+      "`REGION_VAULT_ADDRESS` 指向部署 vault；`POST …/internal/indexer-reconcile` 同上。"
+    ],
+    "outcome": "API_DB_RPC_OK — `region_vault_log_verify.log_verify_clean` true; 样本 `balance_closure.balance_delta_check` = `ok`（单交易块）"
+  },
+  "screenshot": { "path": null },
+  "json_artifact": {
+    "path": "docs/verification-evidence/http-post-indexer-reconcile-tt1-tt2-chain31337.json"
+  },
+  "linked_logs": [
+    "docs/verification-evidence/http-post-indexer-reconcile-tt1-tt2-chain31337.json",
+    "docs/verification-evidence/seed-tt1-tt2-tt3-anvil-31337.sql",
+    "docs/verification-evidence/cargo-test-region-vault.log"
+  ]
+}

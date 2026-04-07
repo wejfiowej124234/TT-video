@@ -16,7 +16,11 @@ contract Escrow {
         Completed,
         Refunded,
         Disputed,
-        Resolved
+        Resolved,
+        /// 80 附录 02 · PartiallyRefunded：非争议路径，部分退游客 + 余款按 01 §10 分向导/平台（与 `release` 同式，基数为 remainder）。
+        PartiallyRefunded,
+        /// 80 附录 02 · Slashed：非争议路径，向导 **钉死为 0**，游客 **`travelerRefund`**，**余款** 归 **`platformFeeRecipient`**（附录「Slashed 收平台费」）。
+        Slashed
     }
 
     struct EscrowParams {
@@ -62,6 +66,22 @@ contract Escrow {
     event Refunded(bytes32 indexed orderId, address indexed escrow, uint256 travelerAmount);
     event DisputeOpened(bytes32 indexed orderId, address indexed escrow, address opener, bytes32 reasonHash);
     event ResolutionExecuted(bytes32 indexed orderId, address indexed escrow, bytes32 resolutionId, bytes32 decisionHash);
+    /// 80 附录 02 · PartiallyRefunded（收平台费）；与 `Released` 对称，多 `travelerRefund` 腿。
+    event PartialRefundExecuted(
+        bytes32 indexed orderId,
+        address indexed escrow,
+        uint256 travelerRefund,
+        uint256 guideAmount,
+        uint256 platformFeeAmount
+    );
+    /// 80 附录 02 · Slashed（非争议）；与 `PartialRefundExecuted` 同形便于索引/解码，`guideAmount` **恒为 0**。
+    event SlashedExecuted(
+        bytes32 indexed orderId,
+        address indexed escrow,
+        uint256 travelerRefund,
+        uint256 guideAmount,
+        uint256 platformFeeAmount
+    );
 
     error AlreadyInitialized();
     error InvalidState();
@@ -123,6 +143,33 @@ contract Escrow {
         if (fee > 0 && !IERC20(token).transfer(platformFeeRecipient, fee)) revert TransferFailed();
         status = Status.Completed;
         emit Released(orderId, address(this), guideAmount, fee);
+    }
+
+    /// @notice 80 附录 02 · PartiallyRefunded：先退 `travelerRefund` 给游客；余款 `remainder = totalAmount - travelerRefund` 按 01 §10 同 `release`（向导 `floor(remainder*(10000-bps)/10000)`，平台费 `remainder - guide`）。
+    /// @dev 与争议路径 `executeResolution` 正交；`platformFeeBps` 仍仅 `EscrowCreated` 封存。
+    function releasePartialRefund(uint256 travelerRefund) external {
+        if (status != Status.Funded) revert InvalidState();
+        if (travelerRefund == 0 || travelerRefund >= totalAmount) revert InvalidState();
+        uint256 remainder = totalAmount - travelerRefund;
+        uint256 guideAmount = (remainder * (uint256(10000) - uint256(platformFeeBps))) / 10000;
+        uint256 platformFee = remainder - guideAmount;
+        if (!IERC20(token).transfer(traveler, travelerRefund)) revert TransferFailed();
+        if (!IERC20(token).transfer(guide, guideAmount)) revert TransferFailed();
+        if (platformFee > 0 && !IERC20(token).transfer(platformFeeRecipient, platformFee)) revert TransferFailed();
+        status = Status.PartiallyRefunded;
+        emit PartialRefundExecuted(orderId, address(this), travelerRefund, guideAmount, platformFee);
+    }
+
+    /// @notice 80 附录 02 · Slashed（非争议）：**`guideAmount = 0`**，`platformFee = totalAmount - travelerRefund`，**`travelerRefund < totalAmount`**（全额退游客请用 `refund()`）。
+    /// @dev 与争议路径 `executeResolution` 正交；`platformFeeBps` **不参与**本路径分配（扣罚语义下余款归平台收款方）。
+    function releaseSlashed(uint256 travelerRefund) external {
+        if (status != Status.Funded) revert InvalidState();
+        if (travelerRefund >= totalAmount) revert InvalidState();
+        uint256 platformFee = totalAmount - travelerRefund;
+        if (travelerRefund > 0 && !IERC20(token).transfer(traveler, travelerRefund)) revert TransferFailed();
+        if (platformFee > 0 && !IERC20(token).transfer(platformFeeRecipient, platformFee)) revert TransferFailed();
+        status = Status.Slashed;
+        emit SlashedExecuted(orderId, address(this), travelerRefund, 0, platformFee);
     }
 
     function refund() external {

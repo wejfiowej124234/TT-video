@@ -13,14 +13,20 @@ use uuid::Uuid;
 
 use crate::db;
 use crate::state::ApiMetaState;
-use crate::u256_hex::fmt_word_hex;
+use crate::u256_hex::{add_assign_be, fmt_word_hex, zero_word};
 
 fn snapshot_binding_json() -> serde_json::Value {
     json!({
         "anchor": db::B088_ANCHOR,
         "snapshot_block_binding": db::SNAPSHOT_BLOCK_BINDING,
         "transfer_replay_order": db::SNAPSHOT_TRANSFER_REPLAY_ORDER,
-        "eligibility_projection": db::SNAPSHOT_ELIGIBILITY_PROJECTION
+        "eligibility_projection": db::SNAPSHOT_ELIGIBILITY_PROJECTION,
+        "stake_overlay_projection": db::B088_STAKE_PROJECTION_TABLE,
+        "stake_overlay_event_source": db::B088_STAKE_EVENT_SOURCE,
+        "b088_completion_anchor": db::B088_COMP_ANCHOR,
+        "lock_overlay_projection": db::B088_LOCK_PROJECTION_TABLE,
+        "lock_overlay_event_source": db::B088_LOCK_EVENT_SOURCE,
+        "b088_lock_completion_anchor": db::B088_LOCK_COMP_ANCHOR
     })
 }
 
@@ -160,7 +166,7 @@ pub async fn post_investor_distribution_accrual(
         }
     };
 
-    let (balances, supply_word) = match db::replay_balances_from_transfers(&transfers) {
+    let (mut balances, supply_word) = match db::replay_balances_from_transfers(&transfers) {
         Ok(x) => x,
         Err(msg) => {
             return (
@@ -170,6 +176,170 @@ pub async fn post_investor_distribution_accrual(
                 .into_response();
         }
     };
+
+    let staking_opt = state
+        .chain_config
+        .as_ref()
+        .and_then(|c| c.staking_address.as_ref())
+        .map(|s| s.trim().to_string())
+        .filter(|s| !s.is_empty());
+    if let Some(ref staking) = staking_opt {
+        let stake_rows = match db::list_investor_stake_state_events_up_to_block(
+            pool,
+            body.chain_id,
+            staking,
+            body.snapshot_block_number,
+        )
+        .await
+        {
+            Ok(r) => r,
+            Err(e) => {
+                return (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    Json(crate::api_json::err_key_detail(
+                        "investor_stake_event_list_failed",
+                        e.to_string(),
+                    )),
+                )
+                    .into_response();
+            }
+        };
+        balances = match db::merge_transfer_balances_with_stake_overlay(
+            balances,
+            &stake_rows,
+            staking,
+        ) {
+            Ok(b) => b,
+            Err(msg) => {
+                return (
+                    StatusCode::BAD_REQUEST,
+                    Json(crate::api_json::err_key_detail(
+                        "b088_stake_overlay_replay_failed",
+                        msg,
+                    )),
+                )
+                    .into_response();
+            }
+        };
+        let mut merged_sum = zero_word();
+        for w in balances.values() {
+            if add_assign_be(&mut merged_sum, w).is_err() {
+                return (
+                    StatusCode::BAD_REQUEST,
+                    Json(crate::api_json::err_key_detail(
+                        "b088_stake_overlay_supply_sum_overflow",
+                        "holder_sum_u256_overflow",
+                    )),
+                )
+                    .into_response();
+            }
+        }
+        if merged_sum != supply_word {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(crate::api_json::err_key_detail(
+                    "b088_stake_overlay_supply_mismatch",
+                    format!(
+                        "transfer_replay_supply={} overlay_holder_sum={}",
+                        fmt_word_hex(&supply_word),
+                        fmt_word_hex(&merged_sum)
+                    ),
+                )),
+            )
+                .into_response();
+        }
+    }
+
+    let lock_addrs: Vec<String> = state
+        .chain_config
+        .as_ref()
+        .map(|c| {
+            c.investor_lock_contract_addresses
+                .iter()
+                .map(|s| s.trim().to_string())
+                .filter(|s| !s.is_empty())
+                .collect::<Vec<_>>()
+        })
+        .unwrap_or_default();
+    for lock_raw in &lock_addrs {
+        let lock_n = match normalize_token_addr(lock_raw) {
+            Ok(t) => t,
+            Err(_) => {
+                return (
+                    StatusCode::BAD_REQUEST,
+                    Json(crate::api_json::err_key(
+                        "invalid_lock_contract_address_in_config",
+                    )),
+                )
+                    .into_response();
+            }
+        };
+        let lock_rows = match db::list_investor_lock_state_events_up_to_block(
+            pool,
+            body.chain_id,
+            &lock_n,
+            body.snapshot_block_number,
+        )
+        .await
+        {
+            Ok(r) => r,
+            Err(e) => {
+                return (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    Json(crate::api_json::err_key_detail(
+                        "investor_lock_event_list_failed",
+                        e.to_string(),
+                    )),
+                )
+                    .into_response();
+            }
+        };
+        balances = match db::merge_transfer_balances_with_lock_overlay(
+            balances,
+            &lock_rows,
+            &lock_n,
+        ) {
+            Ok(b) => b,
+            Err(msg) => {
+                return (
+                    StatusCode::BAD_REQUEST,
+                    Json(crate::api_json::err_key_detail(
+                        "b088_lock_overlay_replay_failed",
+                        msg,
+                    )),
+                )
+                    .into_response();
+            }
+        };
+        let mut merged_sum = zero_word();
+        for w in balances.values() {
+            if add_assign_be(&mut merged_sum, w).is_err() {
+                return (
+                    StatusCode::BAD_REQUEST,
+                    Json(crate::api_json::err_key_detail(
+                        "b088_lock_overlay_supply_sum_overflow",
+                        "holder_sum_u256_overflow",
+                    )),
+                )
+                    .into_response();
+            }
+        }
+        if merged_sum != supply_word {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(crate::api_json::err_key_detail(
+                    "b088_lock_overlay_supply_mismatch",
+                    format!(
+                        "transfer_replay_supply={} overlay_holder_sum={} lock_contract={}",
+                        fmt_word_hex(&supply_word),
+                        fmt_word_hex(&merged_sum),
+                        lock_n
+                    ),
+                )),
+            )
+                .into_response();
+        }
+    }
 
     if balances.is_empty() {
         return (

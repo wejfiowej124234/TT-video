@@ -136,6 +136,8 @@ pub struct EventLogEscrowProjectionRow {
     pub log_index: i32,
     pub event_type: String,
     pub payload: Json<serde_json::Value>,
+    /// 与 **`insert_event_log`** 同源；**`ResolutionExecuted`** 回放时用于拉 **`eth_getTransactionByHash`**。
+    pub tx_hash: Option<Vec<u8>>,
 }
 
 /// 与 **`topics[1]`** 末 **32** 个十六进制字符（订单 **UUID** **16** 字节）匹配的、该订单**最近一条** Escrow 类 `event_log` 行（**110 §3.3** 读模型；**702** 增补 **`tx_hash`****/**`block_hash`**）。
@@ -206,7 +208,9 @@ pub async fn latest_escrow_event_finality_for_order(
             'DisputeOpened',
             'Released',
             'Refunded',
-            'ResolutionExecuted'
+            'ResolutionExecuted',
+            'PartialRefundExecuted',
+            'SlashedExecuted'
           )
           AND LENGTH(REGEXP_REPLACE(COALESCE(payload->'topics'->>1, ''), '^0x', '', 'i')) >= 32
           AND LOWER(RIGHT(REGEXP_REPLACE(COALESCE(payload->'topics'->>1, ''), '^0x', '', 'i'), 32)) = $2
@@ -356,7 +360,9 @@ pub async fn event_log_escrow_coverage_stats(
             'DisputeOpened',
             'Released',
             'Refunded',
-            'ResolutionExecuted'
+            'ResolutionExecuted',
+            'PartialRefundExecuted',
+            'SlashedExecuted'
           )
         "#,
     )
@@ -423,7 +429,7 @@ pub async fn list_event_log_escrow_projection_rows(
 ) -> Result<Vec<EventLogEscrowProjectionRow>, sqlx::Error> {
     sqlx::query_as::<_, EventLogEscrowProjectionRow>(
         r#"
-        SELECT chain_id, block_number, log_index, event_type, payload
+        SELECT chain_id, block_number, log_index, event_type, payload, tx_hash
         FROM event_log
         WHERE chain_id = $1
           AND event_type IN (
@@ -432,7 +438,34 @@ pub async fn list_event_log_escrow_projection_rows(
             'DisputeOpened',
             'Released',
             'Refunded',
-            'ResolutionExecuted'
+            'ResolutionExecuted',
+            'PartialRefundExecuted',
+            'SlashedExecuted'
+          )
+        ORDER BY block_number ASC, log_index ASC
+        "#,
+    )
+    .bind(chain_id)
+    .fetch_all(pool)
+    .await
+}
+
+/// Governor 类事件（**B-089 Completion**），供 **`replay_governance_proposals_from_event_log`** 使用。
+pub async fn list_event_log_governance_projection_rows(
+    pool: &PgPool,
+    chain_id: i64,
+) -> Result<Vec<EventLogEscrowProjectionRow>, sqlx::Error> {
+    sqlx::query_as::<_, EventLogEscrowProjectionRow>(
+        r#"
+        SELECT chain_id, block_number, log_index, event_type, payload, tx_hash
+        FROM event_log
+        WHERE chain_id = $1
+          AND event_type IN (
+            'ProposalCreated',
+            'VoteCast',
+            'ProposalQueued',
+            'ProposalExecuted',
+            'ProposalCanceled'
           )
         ORDER BY block_number ASC, log_index ASC
         "#,

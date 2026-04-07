@@ -1,0 +1,36 @@
+{
+  "tt_id": "TT-VERIFY-B083-B095-ORDER-ROUTING-AND-SPLIT-ADDRESSES-001",
+  "order": 4,
+  "mother_refs": ["B-083", "B-095"],
+  "executed_at_utc": "2026-04-07T06:05:00Z",
+  "repo_git_sha": "60c44919ba6581400dc700ee6ca2ee0e716ca166",
+  "execution_record": {
+    "steps": [
+      "Postgres: `seed-tt456-anvil-31337.sql` — guide `wallet_address`, two draft `orders` + `itineraries` (destination 中国 vs 日本), tourist participant `e9a0feb8-0b83-4f9c-ab4d-a145be92ae71`.",
+      "Anvil :18545 + `docs/verification-evidence/stub-contracts-tt456` deploy StubEmpty (factory placeholder); API env `CHAIN_ID=31337`, `FEE_ROUTER_ADDRESS` / `REGION_VAULT_ADDRESS` / `REGISTRY_ADDRESS` set to distinct Anvil EOAs; `CHAIN_RPC_URL=http://127.0.0.1:18545`.",
+      "GET `/api/v1/orders/:id` ×2 with `X-User-Id` — `fee_route_country` CN vs JP + `split_addresses_ssot` aligned to env (see `http-get-order-tt4-china-31337.json`, `http-get-order-tt4-japan-31337.json`).",
+      "POST `/api/v1/internal/indexer-reconcile` `chain_id=31337` — `indexer-reconcile-tt4-orders-chain31337.json`.",
+      "RPC: `rpc-tt4-eth-getCode-split-addresses.json` — `eth_getCode` on split / factory addresses."
+    ],
+    "outcome": "GREEN — live API + DB + RPC; Anvil stop 后 receipt 不可复验，按 §4.2 重放"
+  },
+  "screenshot": {
+    "path": null,
+    "note": "Optional: Network 面板保存 GET order 原始 JSON（已与 http-get-order-tt4-*.json 同形）。"
+  },
+  "json_artifact": {
+    "paths": [
+      "docs/verification-evidence/http-get-order-tt4-china-31337.json",
+      "docs/verification-evidence/http-get-order-tt4-japan-31337.json",
+      "docs/verification-evidence/indexer-reconcile-tt4-orders-chain31337.json",
+      "docs/verification-evidence/rpc-tt4-eth-getCode-split-addresses.json"
+    ]
+  },
+  "linked_logs": [],
+  "sql_artifact": {
+    "paths": [
+      "docs/verification-evidence/seed-tt456-anvil-31337.sql",
+      "docs/verification-evidence/sql-tt456-db-verify.txt"
+    ]
+  }
+}

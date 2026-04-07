@@ -6,9 +6,11 @@
 #![allow(dead_code)]
 
 pub mod fee_router_verify;
+pub mod governor;
 pub mod indexer;
 pub mod region_vault_verify;
 pub mod outbox;
+pub mod resolution_tx;
 
 use digest::Digest;
 use serde::{Deserialize, Serialize};
@@ -26,7 +28,15 @@ pub struct ChainConfig {
     /// 份额代币（TTG / Country Pool 等）ERC20 地址列表；`indexer-tick` 写入 `investor_share_transfer_events`（B-085）
     #[serde(default)]
     pub investor_share_token_addresses: Vec<String>,
+    /// Staking 合约；设后 **`indexer-tick`** 写入 **`investor_stake_state_events`**（**B-088 Completion**）；**`investor-distribution-accrual`** 与 **`Transfer`** 重放合并
     pub staking_address: Option<String>,
+    /// **`InvestorShareLockLedger`** 等锁仓合约地址列表；**`indexer-tick`** 写入 **`investor_lock_state_events`**（**B-088 · 112**）
+    #[serde(default)]
+    pub investor_lock_contract_addresses: Vec<String>,
+    /// **`TravelTrustGovernor`**；设后 **`indexer-tick`** 拉取 **`ProposalCreated` / `VoteCast` / …** 写入 **`governance_proposals_projection`**（**B-089 Completion**）
+    pub governor_address: Option<String>,
+    /// 与 Governor 绑定的 **`GovernanceVotesToken`**；**`GET …/governance/proposals/:id`** 可选 **`getPastVotes`** 对拍
+    pub governance_votes_token_address: Option<String>,
     pub registry_address: Option<String>,
     /// 执行器单笔最大金额（guide_amount + traveler_refund + platform_fee），0 或不设表示不限制
     pub executor_max_amount_per_tx: Option<u128>,
@@ -65,6 +75,15 @@ impl ChainConfig {
                     .collect::<Vec<_>>()
             })
             .unwrap_or_default();
+        let investor_lock_contract_addresses = std::env::var("INVESTOR_LOCK_CONTRACT_ADDRESSES")
+            .ok()
+            .map(|s| {
+                s.split(',')
+                    .map(|x| x.trim().to_string())
+                    .filter(|x| !x.is_empty())
+                    .collect::<Vec<_>>()
+            })
+            .unwrap_or_default();
         Some(Self {
             rpc_url,
             chain_id,
@@ -73,6 +92,9 @@ impl ChainConfig {
             region_vault_address: std::env::var("REGION_VAULT_ADDRESS").ok(),
             investor_share_token_addresses,
             staking_address: std::env::var("STAKING_ADDRESS").ok(),
+            investor_lock_contract_addresses,
+            governor_address: std::env::var("GOVERNOR_ADDRESS").ok(),
+            governance_votes_token_address: std::env::var("GOVERNANCE_VOTES_TOKEN_ADDRESS").ok(),
             registry_address: std::env::var("REGISTRY_ADDRESS").ok(),
             executor_max_amount_per_tx,
             executor_max_amount_per_day,
@@ -106,6 +128,8 @@ pub enum EscrowChainStatus {
     Refunded,
     Disputed,
     Resolved,
+    PartiallyRefunded,
+    Slashed,
 }
 
 /// escrowOf(bytes32) selector; status() selector（Solidity 4 字节）
@@ -195,6 +219,8 @@ pub async fn get_escrow_status(
         4 => EscrowChainStatus::Refunded,
         5 => EscrowChainStatus::Disputed,
         6 => EscrowChainStatus::Resolved,
+        7 => EscrowChainStatus::PartiallyRefunded,
+        8 => EscrowChainStatus::Slashed,
         _ => EscrowChainStatus::None,
     };
     Ok(Some(status))

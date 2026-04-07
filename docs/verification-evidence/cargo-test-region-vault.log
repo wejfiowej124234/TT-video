@@ -1,0 +1,17 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.23s
+     Running unittests src\main.rs (target\debug\deps\traveltrust_api-d6d848f99f582d3a.exe)
+
+running 10 tests
+test chain::region_vault_verify::tests::u256_sub_simple ... ok
+test chain::region_vault_verify::tests::region_vault_forwarded_topic0_stable ... ok
+test chain_off::tests_events_itinerary::parse_region_vault_forwarded_decodes_token_to_amount ... ok
+test routes::internal::tests::indexer_reconcile_body_deserializes_verify_region_vault_events_rpc ... ok
+test chain_off::tests_events_itinerary::event_name_from_topic0_region_vault_forwarded ... ok
+test routes::admin::tests::admin_region_vault_forwarded_events_not_impl_without_chain_off ... ok
+test routes::admin::tests::admin_region_vault_forwarded_events_limit_zero_returns_400_before_db ... ok
+test routes::admin::tests::admin_region_vault_forwarded_events_requires_db ... ok
+test routes::admin::tests::admin_region_vault_forwarded_events_bad_cursor_returns_400_before_db ... ok
+test routes::admin::tests::admin_region_vault_forwarded_events_forbidden_for_non_admin ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 520 filtered out; finished in 0.00s
+

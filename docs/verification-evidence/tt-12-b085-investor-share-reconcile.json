@@ -1,0 +1,17 @@
+{
+  "tt_id": "TT-VERIFY-B085-INVESTOR-SHARE-RECONCILE-RPC-001",
+  "order": 12,
+  "mother_refs": ["B-085"],
+  "executed_at_utc": "2026-04-07T12:00:00Z",
+  "repo_git_sha": "60c44919ba6581400dc700ee6ca2ee0e716ca166",
+  "execution_record": {
+    "steps": [
+      "GET /governance/investor-share-reconcile with DB + RPC skipped.",
+      "Substitute: `cargo test -p traveltrust-api investor_share_reconcile` — placeholder without DB pool; `replay_mint_transfer_burn` + transfer projection tests in full `cargo test -p traveltrust-api investor_share` (optional extended run)."
+    ],
+    "outcome": "SUBSTITUTE_PARTIAL — placeholder route test OK; invariant Σ=totalSupply requires DB+RPC"
+  },
+  "screenshot": { "path": null, "note": "Live: GET investor-share-reconcile JSON with invariant_holds true." },
+  "json_artifact": { "path": null },
+  "linked_logs": ["docs/verification-evidence/cargo-test-b085.log"]
+}

@@ -3430,6 +3430,33 @@ export default {
     "您已设置投票委托，不能直接投票。请在「投票委托」页撤销委托后再投，或由被委托人代为投票（B-092 链下信号票）。",
   governance_proposal_detail_vote_counts_weighted_hint:
     "计票为权重单位（投票当刻：1 + 直接委托给您的人数）。本路径为链下信号票，不单独触发链上资金划转。",
+  governance_proposal_on_chain_tally_hint:
+    "计票来自链上 VoteCast 事件索引（governance_proposals_projection）；与 Governor 合约状态机一致。",
+  governance_proposal_chain_state_live: "链上 state(eth_call)",
+  governance_proposal_chain_read_error: "读链失败",
+  governance_proposal_on_chain_vote_explain:
+    "当前为链上 Governor 模式：请在钱包中对 Governor 合约发送交易执行 castVote(uint256,uint8)。下方为各选项的 calldata（勿用本页的链下 POST 投票）。",
+  governance_proposal_calldata_yes: "赞成 calldata",
+  governance_proposal_calldata_no: "反对 calldata",
+  governance_proposal_calldata_abstain: "弃权 calldata",
+  governance_b090_onchain_notice_aria: "链上治理与国库提案路径说明",
+  governance_b090_onchain_list_title: "链上提案列表（Governor 索引）",
+  governance_b090_onchain_detail_title: "链上提案与国库执行路径",
+  governance_b090_onchain_intro:
+    "本列表由后端索引写入的 governance_proposals_projection 驱动。表决须在 Governor 合约上链完成；前端不伪造计票或替代链上提案数据。",
+  governance_b090_onchain_treasury_body:
+    "国库支出类提案（B-090）：若执行 payload 调用 GovernanceTreasury.spend 或 spendETH，金额、代币与收款地址以经 Timelock 执行的 calldata 为 SSOT，本页不可改写。投票通过后由 Governor 将操作写入 Timelock 队列，延迟期满后再 execute。",
+  governance_b090_onchain_chain_id_label: "chain_id（列表或 meta）",
+  governance_b090_onchain_governor_label: "governor_address（GET /meta.chain.contracts，有则展示）",
+  governance_b090_onchain_governor_unavailable: "当前 GET /meta 未返回 Governor 地址（请检查链配置或另开标签查看 meta）。",
+  governance_b090_onchain_proposer_label: "提案人",
+  governance_b090_onchain_snapshot_block_label: "投票权快照块高",
+  governance_b090_onchain_vote_window_label: "投票窗口（区块）",
+  governance_b090_onchain_operation_id_heading: "Timelock operation id（排队后）",
+  governance_b090_onchain_operation_id_none:
+    "尚未排队（投影中无 ProposalQueued 的 operation id）。提案进入 Succeeded 后请通过 Governor/Timelock 流程 queue。",
+  governance_b090_onchain_timelock_hint:
+    "请在部署环境用钱包执行 Timelock.execute / Governor 队列流程；calldata 须与已 schedule 的操作一致，勿信任何声称可「代改」收款或金额的链下表单。",
   governance_proposal_detail_my_vote_weight: "本票冻结权重",
   governance_voting_power_current: "当前可投票权重（若现在投票）",
   governance_voting_power_delegated_away: "您已委托表决权；需在「投票委托」撤销后方可本人投票。",

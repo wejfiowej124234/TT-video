@@ -1,0 +1,25 @@
+{
+  "tt_id": "TT-VERIFY-B084-FEE-POOL-AGGREGATES-VS-DB-SUM-001",
+  "order": 3,
+  "mother_refs": ["B-084"],
+  "executed_at_utc": "2026-04-07T05:40:00Z",
+  "repo_git_sha": "60c44919ba6581400dc700ee6ca2ee0e716ca166",
+  "execution_record": {
+    "steps": [
+      "同链 `chain_id=31337` 投影：`fee_router_routed_events` 2 行（同 token）、`region_vault_forwarded_events` 1 行。",
+      "`GET /api/v1/governance/fee-pool-aggregates?chain_id=31337` + 请求头 `X-User-Id`（本地种子用户，见 API 启动日志 hydrate）。",
+      "DB 行导出：`sql-tt3-fee-router-projection-rows.txt`；人工 uint256 列求和与响应 `fee_router.by_token[0].pools.*` 一致（例：`allocatable_platform_fee_total_u256_hex` = 0x7530 = 10000+20000）。"
+    ],
+    "outcome": "API_DB_OK — GET `anchor` B-084; `data_source` projection; 与 SQL 导出逐列心算/脚本可对齐"
+  },
+  "screenshot": { "path": null },
+  "json_artifact": {
+    "path": "docs/verification-evidence/http-get-fee-pool-aggregates-chain31337.json"
+  },
+  "linked_logs": [
+    "docs/verification-evidence/http-get-fee-pool-aggregates-chain31337.json",
+    "docs/verification-evidence/sql-tt3-fee-router-projection-rows.txt",
+    "docs/verification-evidence/seed-tt1-tt2-tt3-anvil-31337.sql",
+    "docs/verification-evidence/cargo-test-fee-pool.log"
+  ]
+}

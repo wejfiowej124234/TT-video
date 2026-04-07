@@ -1,0 +1,8 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.24s
+     Running unittests src\main.rs (target\debug\deps\traveltrust_api-d6d848f99f582d3a.exe)
+
+running 1 test
+test db::investor_distribution::tests::pro_rata_two_holders_matches_manual ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 529 filtered out; finished in 0.00s
+

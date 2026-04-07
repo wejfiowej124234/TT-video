@@ -1,10 +1,13 @@
 //! /health, /meta, /meta/build, /metrics（48 §2.2 routes/health_meta）
 
 use axum::{extract::State, response::IntoResponse, routing::get, Json, Router};
+use digest::Digest;
 use serde_json::json;
+use sha3::Keccak256;
 use std::env;
 use std::fmt::Write as _;
 
+use crate::chain;
 use crate::middleware;
 use crate::state::{any_traveltrust_strict_db_write, dual_write_failure_policy, ApiMetaState};
 use traveltrust_core::FEE_ROUTE_COUNTRY_SSOT_FIELD;
@@ -333,7 +336,7 @@ pub(crate) fn format_chain_meta_top_keys_contract_729() -> String {
     s
 }
 
-/// **759**：`GET /meta` **`chain.contracts`** 对象顶层键顺序（仅 **`ChainConfig`** 挂载、**`contracts`** **非 **null** 时存在；机读锁 **`chain_contracts_top_keys`** / **`chain_contracts_top_keys_contract_759`**；与同名列 JSON 数组同源）。
+/// **759**：`GET /meta` **`chain.contracts`** 对象顶层键顺序（仅 **`ChainConfig`** 挂载、**`contracts`** **非 **null** 时存在；机读锁 **`chain_contracts_top_keys`** / **`chain_contracts_top_keys_contract_759`**；与同名列 JSON 数组同源；**共 12 键**）。
 pub(crate) const CHAIN_CONTRACTS_META_TOP_KEYS: &[&str] = &[
     "escrow_factory_address",
     "fee_router_address",
@@ -341,6 +344,8 @@ pub(crate) const CHAIN_CONTRACTS_META_TOP_KEYS: &[&str] = &[
     "escrow_platform_fee_recipient",
     "staking_address",
     "registry_address",
+    "governor_address",
+    "governance_votes_token_address",
     "chain_id_configured",
     "rule",
     "chain_contracts_top_keys",
@@ -561,10 +566,16 @@ pub(crate) fn format_authority_meta_top_keys_contract_736() -> String {
 pub(crate) const PAUSE_META_TOP_KEYS: &[&str] = &[
     "enabled",
     "api_allowlist",
+    "factory_paused",
+    "distribute_paused",
+    "chain_pause_read",
     "rule",
     "pause_top_keys",
     "pause_top_keys_contract_737",
 ];
+
+/// **`pause.chain_pause_read`** 子对象键序（**B-091** / **TT-COMP-B091**）。
+pub(crate) const CHAIN_PAUSE_READ_META_TOP_KEYS: &[&str] = &["status", "error", "rule"];
 
 pub(crate) fn format_pause_meta_top_keys_contract_737() -> String {
     let mut s =
@@ -1111,6 +1122,136 @@ pub(crate) fn meta_build_for_startup_log() -> (String, String) {
     (sha, dep_label)
 }
 
+/// B-091：`factoryPaused()` / `distributePaused()` 的 **4** 字节 selector（Solidity **`bool public`** getter）。
+fn b091_evm_selector(canonical_sig: &str) -> [u8; 4] {
+    let h = Keccak256::digest(canonical_sig.as_bytes());
+    [h[0], h[1], h[2], h[3]]
+}
+
+async fn eth_call_bool_latest(
+    client: &reqwest::Client,
+    rpc_url: &str,
+    to: &str,
+    selector: [u8; 4],
+) -> Result<bool, String> {
+    let data = format!("0x{}", hex::encode(selector));
+    let body = serde_json::json!({
+        "jsonrpc": "2.0",
+        "method": "eth_call",
+        "params": [{"to": to, "data": data}, "latest"],
+        "id": 1
+    });
+    let res: serde_json::Value = client
+        .post(rpc_url)
+        .json(&body)
+        .send()
+        .await
+        .map_err(|e| e.to_string())?
+        .json()
+        .await
+        .map_err(|e| e.to_string())?;
+    let hex_result = res.get("result").and_then(|r| r.as_str()).ok_or_else(|| {
+        res.get("error")
+            .and_then(|e| e.get("message").and_then(|m| m.as_str()))
+            .unwrap_or("eth_call failed")
+            .to_string()
+    })?;
+    let raw = hex::decode(hex_result.trim_start_matches("0x")).map_err(|e| e.to_string())?;
+    if raw.len() < 32 {
+        return Err("eth_call result too short".to_string());
+    }
+    Ok(raw[31] != 0)
+}
+
+struct MetaPauseChainSnapshot {
+    factory_paused: Option<bool>,
+    distribute_paused: Option<bool>,
+    read_status: &'static str,
+    read_error: Option<String>,
+}
+
+/// **TT-COMP-B091**：在 **`CHAIN_RPC_URL`** 与对应合约地址可用时 **`eth_call`** 读 **`factoryPaused` / `distributePaused`**；否则 **`null`** + 显式 **`chain_pause_read.status`**（**禁止**伪造链上真值）。
+async fn meta_pause_chain_snapshot(cfg: Option<&chain::ChainConfig>) -> MetaPauseChainSnapshot {
+    let Some(cfg) = cfg else {
+        return MetaPauseChainSnapshot {
+            factory_paused: None,
+            distribute_paused: None,
+            read_status: "chain_unavailable",
+            read_error: None,
+        };
+    };
+    if !cfg.is_configured() {
+        return MetaPauseChainSnapshot {
+            factory_paused: None,
+            distribute_paused: None,
+            read_status: "chain_unavailable",
+            read_error: None,
+        };
+    }
+    let sel_factory = b091_evm_selector("factoryPaused()");
+    let sel_dist = b091_evm_selector("distributePaused()");
+    let mut factory_paused = None;
+    let mut distribute_paused = None;
+    let mut errors: Vec<String> = Vec::new();
+    let mut attempted = false;
+
+    if let Some(to_raw) = cfg
+        .escrow_factory_address
+        .as_ref()
+        .map(|s| s.trim())
+        .filter(|s| !s.is_empty())
+    {
+        attempted = true;
+        let to = if to_raw.starts_with("0x") || to_raw.starts_with("0X") {
+            to_raw.to_string()
+        } else {
+            format!("0x{}", to_raw)
+        };
+        // 每路独立 **Client**：避免连接复用下单次 **accept** mock / 部分代理对 **pipeline** 行为不一致（B-091 单测与运维读链）。
+        match eth_call_bool_latest(&reqwest::Client::new(), &cfg.rpc_url, &to, sel_factory).await {
+            Ok(b) => factory_paused = Some(b),
+            Err(e) => errors.push(format!("factoryPaused: {e}")),
+        }
+    }
+
+    if let Some(to_raw) = cfg
+        .fee_router_address
+        .as_ref()
+        .map(|s| s.trim())
+        .filter(|s| !s.is_empty())
+    {
+        attempted = true;
+        let to = if to_raw.starts_with("0x") || to_raw.starts_with("0X") {
+            to_raw.to_string()
+        } else {
+            format!("0x{}", to_raw)
+        };
+        match eth_call_bool_latest(&reqwest::Client::new(), &cfg.rpc_url, &to, sel_dist).await {
+            Ok(b) => distribute_paused = Some(b),
+            Err(e) => errors.push(format!("distributePaused: {e}")),
+        }
+    }
+
+    let read_status = if !attempted {
+        "chain_pause_targets_unset"
+    } else if errors.is_empty() {
+        "eth_call"
+    } else {
+        "eth_call_error"
+    };
+    let read_error = if errors.is_empty() {
+        None
+    } else {
+        Some(errors.join("; "))
+    };
+    MetaPauseChainSnapshot {
+        factory_paused,
+        distribute_paused,
+        read_status,
+        read_error,
+    }
+}
+
 /// GET /meta/build：`build` 对象 JSON（`git_sha` / `deployed_at` / `rule` + **730** **`build_top_keys`** / **`build_top_keys_contract_730`**），与 **GET /meta** 根级 **`build`**、Admin **`meta.build`**、**`internal/indexer-tick`** 嵌入 **`build`** 同源（**`meta_build_value`**，120/140）。文档写法 **`GET /meta.build`** 与本路径同义。
 async fn meta_build_only() -> Json<serde_json::Value> {
     Json(meta_build_value())
@@ -1148,8 +1289,10 @@ async fn meta(State(state): State<ApiMetaState>) -> impl IntoResponse {
             "escrow_platform_fee_recipient": escrow_platform_fee_recipient,
             "staking_address": &c.staking_address,
             "registry_address": &c.registry_address,
+            "governor_address": &c.governor_address,
+            "governance_votes_token_address": &c.governance_votes_token_address,
             "chain_id_configured": c.chain_id,
-            "rule": "仅当 CHAIN_RPC_URL 等已加载 ChainConfig 时有值；地址与前端 NEXT_PUBLIC_* 部署须一致；FEE_ROUTER_ADDRESS 设后 indexer-tick 拉取 PlatformFeeRouted；REGION_VAULT_ADDRESS 设后拉取 RegionVaultForwarded 写入 region_vault_forwarded_events；EscrowFactory.createEscrow.platformFeeRecipient 应与 fee_router_address / escrow_platform_fee_recipient 一致（Runbook §7.1）"
+            "rule": "仅当 CHAIN_RPC_URL 等已加载 ChainConfig 时有值；地址与前端 NEXT_PUBLIC_* 部署须一致；FEE_ROUTER_ADDRESS 设后 indexer-tick 拉取 PlatformFeeRouted；REGION_VAULT_ADDRESS 设后拉取 RegionVaultForwarded 写入 region_vault_forwarded_events；GOVERNOR_ADDRESS 设后 indexer-tick 拉取 Governor 事件写入 governance_proposals_projection（B-089）；GOVERNANCE_VOTES_TOKEN_ADDRESS 供 GET …/governance/proposals/:id 与 getPastVotes 对拍；EscrowFactory.createEscrow.platformFeeRecipient 应与 fee_router_address / escrow_platform_fee_recipient 一致（Runbook §7.1）"
         })
     });
 
@@ -1431,7 +1574,7 @@ async fn meta(State(state): State<ApiMetaState>) -> impl IntoResponse {
     let mut chain_section = json!({
             "chain_id": chain_id,
             "contracts": chain_contracts,
-            "rule": "与 intents EIP-712 domain、前端 NEXT_PUBLIC_CHAIN_ID 应对齐；contracts 见 ChainConfig；759：ChainConfig 挂载且 contracts 非 null 时 chain_contracts_top_keys / chain_contracts_top_keys_contract_759 与 CHAIN_CONTRACTS_META_TOP_KEYS 十键顺序同源；760：GET /meta database 对象 database_top_keys / database_top_keys_contract_760 与 DATABASE_META_TOP_KEYS 四键顺序同源，database.connected 与根级 database_connected 布尔同源；762：GET /meta rate_limits.guide_upload 对象 guide_upload_top_keys / guide_upload_top_keys_contract_761 与 GUIDE_UPLOAD_META_TOP_KEYS 五键顺序同源（761 子树机读互链）；763：GET /meta 根级 service（traveltrust-api）与 api_version（CARGO_PKG_VERSION）为实例版本可观测锚点，与 META_ROOT_TOP_KEYS 首二键 service→api_version 及 728 meta_top_keys 机读同源；765：GET /meta 根级 build 对象 build_top_keys / build_top_keys_contract_730 与 META_BUILD_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第三键 build 及 728 meta_top_keys 机读同源；766：GET /meta 根级 chain 对象 chain_top_keys / chain_top_keys_contract_729 与 CHAIN_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第四键 chain 及 728 meta_top_keys 机读同源；767：GET /meta 根级 rate_limits 对象 rate_limits_top_keys / rate_limits_top_keys_contract_756 与 RATE_LIMITS_META_TOP_KEYS 十五键顺序同源，与 META_ROOT_TOP_KEYS 第五键 rate_limits 及 728 meta_top_keys 机读同源；768：GET /meta 根级 database_connected 与 database.connected 及 DATABASE_META_TOP_KEYS 首键 connected 布尔同源，与 META_ROOT_TOP_KEYS 第六键 database_connected 及 728 meta_top_keys 机读同源；769：GET /meta 根级 database 对象 database_top_keys / database_top_keys_contract_760 与 DATABASE_META_TOP_KEYS 四键顺序同源，与 META_ROOT_TOP_KEYS 第七键 database 及 728 meta_top_keys 机读同源；770：GET /meta 根级 dual_write 对象 dual_write_top_keys / dual_write_top_keys_contract_732 与 DUAL_WRITE_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第八键 dual_write 及 728 meta_top_keys 机读同源；771：GET /meta 根级 strict_mode 对象 strict_mode_top_keys / strict_mode_top_keys_contract_731 与 STRICT_MODE_META_TOP_KEYS 七键顺序同源，与 META_ROOT_TOP_KEYS 第九键 strict_mode 及 728 meta_top_keys 机读同源；772：GET /meta 根级 ssot_version 与 strict_mode.rule 中「strict_ssot 与 GET /meta.ssot_version 及启动 STRICT_SSOT 同源」一致，与 META_ROOT_TOP_KEYS 第十键 ssot_version 及 728 meta_top_keys 机读同源；733 GET /meta ssot 对象 ssot_top_keys / ssot_top_keys_contract_733 与 SSOT_META_TOP_KEYS 七键顺序同源；773：GET /meta 根级 admin_exports 对象 admin_exports_top_keys / admin_exports_top_keys_contract_734 与 ADMIN_EXPORTS_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第十二键 admin_exports 及 728 meta_top_keys 机读同源；774：GET /meta 根级 chargeback_policy 对象 chargeback_policy_top_keys / chargeback_policy_top_keys_contract_735 与 CHARGEBACK_POLICY_META_TOP_KEYS 四键顺序同源，与 META_ROOT_TOP_KEYS 第十三键 chargeback_policy 及 728 meta_top_keys 机读同源；775：GET /meta 根级 finality_n 与 FINALITY_N 及 GET /meta.indexer.finality_n 同源，与 META_ROOT_TOP_KEYS 第十四键 finality_n 及 728 meta_top_keys 机读同源；776：GET /meta 根级 indexer 对象 indexer_top_keys / indexer_top_keys_contract_727 与 INDEXER_META_TOP_KEYS 十三键顺序同源，与 META_ROOT_TOP_KEYS 第十五键 indexer 及 728 meta_top_keys 机读同源；777：GET /meta 根级 authority 对象 authority_top_keys / authority_top_keys_contract_736 与 AUTHORITY_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第十六键 authority 及 728 meta_top_keys 机读同源；778：GET /meta 根级 pause 对象 pause_top_keys / pause_top_keys_contract_737 与 PAUSE_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第十七键 pause 及 728 meta_top_keys 机读同源；779：GET /meta 根级 evidence 对象 evidence_top_keys / evidence_top_keys_contract_738 与 EVIDENCE_META_TOP_KEYS 九键顺序同源，与 META_ROOT_TOP_KEYS 第十八键 evidence 及 728 meta_top_keys 机读同源；780：GET /meta 根级 order_messages 对象 order_messages_top_keys / order_messages_top_keys_contract_739 与 ORDER_MESSAGES_META_TOP_KEYS 七键顺序同源，与 META_ROOT_TOP_KEYS 第十九键 order_messages 及 728 meta_top_keys 机读同源；781：GET /meta 根级 reviews 对象 reviews_top_keys / reviews_top_keys_contract_740 与 REVIEWS_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第二十键 reviews 及 728 meta_top_keys 机读同源；782：GET /meta 根级 dispute_open 对象 dispute_open_top_keys / dispute_open_top_keys_contract_741 与 DISPUTE_OPEN_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第二十一键 dispute_open 及 728 meta_top_keys 机读同源；783：GET /meta 根级 dispute_resolve 对象 dispute_resolve_top_keys / dispute_resolve_top_keys_contract_742 与 DISPUTE_RESOLVE_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第二十二键 dispute_resolve 及 728 meta_top_keys 机读同源；784：GET /meta 根级 itineraries 对象 itineraries_top_keys / itineraries_top_keys_contract_743 与 ITINERARIES_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第二十三键 itineraries 及 728 meta_top_keys 机读同源；785：GET /meta 根级 orders 对象 orders_top_keys / orders_top_keys_contract_744 与 ORDERS_META_TOP_KEYS 七键顺序同源，与 META_ROOT_TOP_KEYS 第二十四键 orders 及 728 meta_top_keys 机读同源；786：GET /meta 根级 discover 对象 discover_top_keys / discover_top_keys_contract_745 与 DISCOVER_META_TOP_KEYS 六键顺序同源，与 META_ROOT_TOP_KEYS 第二十五键 discover 及 728 meta_top_keys 机读同源；787：GET /meta 根级 product_countries 对象 product_countries_top_keys / product_countries_top_keys_contract_746 与 PRODUCT_COUNTRIES_META_TOP_KEYS 七键顺序同源，与 META_ROOT_TOP_KEYS 第二十六键 product_countries 及 728 meta_top_keys 机读同源；788：GET /meta 根级 did_rank 对象 did_rank_top_keys / did_rank_top_keys_contract_747 与 DID_RANK_META_TOP_KEYS 八键顺序同源，与 META_ROOT_TOP_KEYS 第二十七键 did_rank 及 728 meta_top_keys 机读同源；789：GET /meta 根级 product_roles 对象 product_roles_top_keys / product_roles_top_keys_contract_748 与 PRODUCT_ROLES_META_TOP_KEYS 十键顺序同源，与 META_ROOT_TOP_KEYS 第二十八键 product_roles 及 728 meta_top_keys 机读同源；790：GET /meta 根级 auth 对象 auth_top_keys / auth_top_keys_contract_750 与 AUTH_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第二十九键 auth 及 728 meta_top_keys 机读同源；791：GET /meta 根级 seed_test_accounts 对象 seed_test_accounts_top_keys / seed_test_accounts_top_keys_contract_751 与 SEED_TEST_ACCOUNTS_META_TOP_KEYS 四键顺序同源，与 META_ROOT_TOP_KEYS 第三十键 seed_test_accounts 及 728 meta_top_keys 机读同源；792：GET /meta 根级 guides 对象 guides_top_keys / guides_top_keys_contract_752 与 GUIDES_META_TOP_KEYS 四键顺序同源，与 META_ROOT_TOP_KEYS 第三十一键 guides 及 728 meta_top_keys 机读同源；793：GET /meta 根级 idempotency_cache 对象 idempotency_cache_top_keys / idempotency_cache_top_keys_contract_753 与 IDEMPOTENCY_CACHE_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第三十二键 idempotency_cache 及 728 meta_top_keys 机读同源；794：GET /meta 根级 defaults 对象 defaults_top_keys / defaults_top_keys_contract_754 与 DEFAULTS_META_TOP_KEYS 六键顺序同源，与 META_ROOT_TOP_KEYS 第三十三键 defaults 及 728 meta_top_keys 机读同源；795：GET /meta 根级 outbox 对象 outbox_top_keys / outbox_top_keys_contract_755 与 OUTBOX_META_TOP_KEYS 八键顺序同源，与 META_ROOT_TOP_KEYS 第三十四键 outbox 及 728 meta_top_keys 机读同源；796：GET /meta 根级 meta_top_keys JSON 数组与 META_ROOT_TOP_KEYS 三十六键顺序同源，根级 meta_top_keys_contract_728 机读与 728 contract 同源，与 META_ROOT_TOP_KEYS 第三十五键 meta_top_keys 机读互链；797：GET /meta 根级 meta_top_keys_contract_728 与 META_ROOT_TOP_KEYS 第三十六键 meta_top_keys_contract_728 机读同源，与 728 contract、META_ROOT_TOP_KEYS 第三十五键 meta_top_keys 机读互链；798：GET /meta 根级 meta_top_keys JSON 数组三十六项与 META_ROOT_TOP_KEYS 三十六键顺序逐项同源，meta_top_keys_contract_728 嵌入三十六键字面顺序同源，796 与 797 与文末 728 句链式互证；799：798 句与文末 728 句机读相邻互锁，双锚根级 meta_top_keys JSON 数组三十六项与 META_ROOT_TOP_KEYS 三十六键及 meta_top_keys_contract_728 字面顺序同源闭环；800：799 双锚闭环与 GET /meta chain 对象 729 chain_top_keys / chain_top_keys_contract_729 及 CHAIN_META_TOP_KEYS 五键机读同源，与 META_ROOT_TOP_KEYS 第四键 chain 及 766 机读句串联互证；801：800 串联与 GET /meta chain.contracts 非 null 时 759 chain_contracts_top_keys / chain_contracts_top_keys_contract_759 及 CHAIN_CONTRACTS_META_TOP_KEYS 十键机读同源，与 799 双锚闭环及 766/729 chain 子树三向互证；802：801 串联与 GET /meta chain.contracts 非 null 时 contracts.rule 嵌入之 759 句与根级 chain.rule 759 及 801 十键机读核心同源，与 chain_contracts_top_keys / chain_contracts_top_keys_contract_759 / CHAIN_CONTRACTS_META_TOP_KEYS 及 801 四向互证；803：802 串联与 800 及 766 GET /meta chain 对象 chain_top_keys / chain_top_keys_contract_729 / CHAIN_META_TOP_KEYS 五键机读同源，与 799 双锚经 729、801、759、802 contracts.rule 根级 chain.rule 759 嵌入形成五向链读闭环，与 META_ROOT_TOP_KEYS 第四键 chain 及 728 meta_top_keys 机读六向互证；804：803 六向互证与 GET /meta chain.chain_id 及根级 chain.rule 文首与 intents EIP-712 domain、前端 NEXT_PUBLIC_CHAIN_ID 应对齐及 contracts 见 ChainConfig 机读同源，七向收束 803 链读至 CHAIN_META_TOP_KEYS 首键 chain_id 部署观测锚，与 chain_top_keys / chain_top_keys_contract_729 及 803 七向互证；805：804 七向互证与 GET /meta chain.contracts 及 CHAIN_META_TOP_KEYS 第二键 contracts 机读同源，八向收束 804 链读至 contracts 部署观测锚与 chain_contracts_top_keys / chain_contracts_top_keys_contract_759 / CHAIN_CONTRACTS_META_TOP_KEYS 十键及 801 三向 802 四向 803 六向串联，与 chain_top_keys / chain_top_keys_contract_729 及 804 八向互证；806：805 八向互证与 GET /meta chain.rule 及 CHAIN_META_TOP_KEYS 第三键 rule 机读同源，九向收束 805 链读至根级 chain.rule 文首与 intents EIP-712 domain、NEXT_PUBLIC_CHAIN_ID、ChainConfig、759 句及 contracts.rule 759 嵌入与 801 三向 802 四向 803 六向 804 七向 805 八向串联，与 chain_top_keys / chain_top_keys_contract_729 及 805 九向互证；728 GET /meta 根级 meta_top_keys / meta_top_keys_contract_728 与 META_ROOT_TOP_KEYS 三十六键顺序同源；729 GET /meta chain 对象 chain_top_keys / chain_top_keys_contract_729 与 CHAIN_META_TOP_KEYS 五键顺序同源"
+            "rule": "与 intents EIP-712 domain、前端 NEXT_PUBLIC_CHAIN_ID 应对齐；contracts 见 ChainConfig；759：ChainConfig 挂载且 contracts 非 null 时 chain_contracts_top_keys / chain_contracts_top_keys_contract_759 与 CHAIN_CONTRACTS_META_TOP_KEYS 十二键顺序同源；760：GET /meta database 对象 database_top_keys / database_top_keys_contract_760 与 DATABASE_META_TOP_KEYS 四键顺序同源，database.connected 与根级 database_connected 布尔同源；762：GET /meta rate_limits.guide_upload 对象 guide_upload_top_keys / guide_upload_top_keys_contract_761 与 GUIDE_UPLOAD_META_TOP_KEYS 五键顺序同源（761 子树机读互链）；763：GET /meta 根级 service（traveltrust-api）与 api_version（CARGO_PKG_VERSION）为实例版本可观测锚点，与 META_ROOT_TOP_KEYS 首二键 service→api_version 及 728 meta_top_keys 机读同源；765：GET /meta 根级 build 对象 build_top_keys / build_top_keys_contract_730 与 META_BUILD_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第三键 build 及 728 meta_top_keys 机读同源；766：GET /meta 根级 chain 对象 chain_top_keys / chain_top_keys_contract_729 与 CHAIN_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第四键 chain 及 728 meta_top_keys 机读同源；767：GET /meta 根级 rate_limits 对象 rate_limits_top_keys / rate_limits_top_keys_contract_756 与 RATE_LIMITS_META_TOP_KEYS 十五键顺序同源，与 META_ROOT_TOP_KEYS 第五键 rate_limits 及 728 meta_top_keys 机读同源；768：GET /meta 根级 database_connected 与 database.connected 及 DATABASE_META_TOP_KEYS 首键 connected 布尔同源，与 META_ROOT_TOP_KEYS 第六键 database_connected 及 728 meta_top_keys 机读同源；769：GET /meta 根级 database 对象 database_top_keys / database_top_keys_contract_760 与 DATABASE_META_TOP_KEYS 四键顺序同源，与 META_ROOT_TOP_KEYS 第七键 database 及 728 meta_top_keys 机读同源；770：GET /meta 根级 dual_write 对象 dual_write_top_keys / dual_write_top_keys_contract_732 与 DUAL_WRITE_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第八键 dual_write 及 728 meta_top_keys 机读同源；771：GET /meta 根级 strict_mode 对象 strict_mode_top_keys / strict_mode_top_keys_contract_731 与 STRICT_MODE_META_TOP_KEYS 七键顺序同源，与 META_ROOT_TOP_KEYS 第九键 strict_mode 及 728 meta_top_keys 机读同源；772：GET /meta 根级 ssot_version 与 strict_mode.rule 中「strict_ssot 与 GET /meta.ssot_version 及启动 STRICT_SSOT 同源」一致，与 META_ROOT_TOP_KEYS 第十键 ssot_version 及 728 meta_top_keys 机读同源；733 GET /meta ssot 对象 ssot_top_keys / ssot_top_keys_contract_733 与 SSOT_META_TOP_KEYS 七键顺序同源；773：GET /meta 根级 admin_exports 对象 admin_exports_top_keys / admin_exports_top_keys_contract_734 与 ADMIN_EXPORTS_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第十二键 admin_exports 及 728 meta_top_keys 机读同源；774：GET /meta 根级 chargeback_policy 对象 chargeback_policy_top_keys / chargeback_policy_top_keys_contract_735 与 CHARGEBACK_POLICY_META_TOP_KEYS 四键顺序同源，与 META_ROOT_TOP_KEYS 第十三键 chargeback_policy 及 728 meta_top_keys 机读同源；775：GET /meta 根级 finality_n 与 FINALITY_N 及 GET /meta.indexer.finality_n 同源，与 META_ROOT_TOP_KEYS 第十四键 finality_n 及 728 meta_top_keys 机读同源；776：GET /meta 根级 indexer 对象 indexer_top_keys / indexer_top_keys_contract_727 与 INDEXER_META_TOP_KEYS 十三键顺序同源，与 META_ROOT_TOP_KEYS 第十五键 indexer 及 728 meta_top_keys 机读同源；777：GET /meta 根级 authority 对象 authority_top_keys / authority_top_keys_contract_736 与 AUTHORITY_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第十六键 authority 及 728 meta_top_keys 机读同源；778：GET /meta 根级 pause 对象 pause_top_keys / pause_top_keys_contract_737 与 PAUSE_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第十七键 pause 及 728 meta_top_keys 机读同源；779：GET /meta 根级 evidence 对象 evidence_top_keys / evidence_top_keys_contract_738 与 EVIDENCE_META_TOP_KEYS 九键顺序同源，与 META_ROOT_TOP_KEYS 第十八键 evidence 及 728 meta_top_keys 机读同源；780：GET /meta 根级 order_messages 对象 order_messages_top_keys / order_messages_top_keys_contract_739 与 ORDER_MESSAGES_META_TOP_KEYS 七键顺序同源，与 META_ROOT_TOP_KEYS 第十九键 order_messages 及 728 meta_top_keys 机读同源；781：GET /meta 根级 reviews 对象 reviews_top_keys / reviews_top_keys_contract_740 与 REVIEWS_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第二十键 reviews 及 728 meta_top_keys 机读同源；782：GET /meta 根级 dispute_open 对象 dispute_open_top_keys / dispute_open_top_keys_contract_741 与 DISPUTE_OPEN_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第二十一键 dispute_open 及 728 meta_top_keys 机读同源；783：GET /meta 根级 dispute_resolve 对象 dispute_resolve_top_keys / dispute_resolve_top_keys_contract_742 与 DISPUTE_RESOLVE_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第二十二键 dispute_resolve 及 728 meta_top_keys 机读同源；784：GET /meta 根级 itineraries 对象 itineraries_top_keys / itineraries_top_keys_contract_743 与 ITINERARIES_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第二十三键 itineraries 及 728 meta_top_keys 机读同源；785：GET /meta 根级 orders 对象 orders_top_keys / orders_top_keys_contract_744 与 ORDERS_META_TOP_KEYS 七键顺序同源，与 META_ROOT_TOP_KEYS 第二十四键 orders 及 728 meta_top_keys 机读同源；786：GET /meta 根级 discover 对象 discover_top_keys / discover_top_keys_contract_745 与 DISCOVER_META_TOP_KEYS 六键顺序同源，与 META_ROOT_TOP_KEYS 第二十五键 discover 及 728 meta_top_keys 机读同源；787：GET /meta 根级 product_countries 对象 product_countries_top_keys / product_countries_top_keys_contract_746 与 PRODUCT_COUNTRIES_META_TOP_KEYS 七键顺序同源，与 META_ROOT_TOP_KEYS 第二十六键 product_countries 及 728 meta_top_keys 机读同源；788：GET /meta 根级 did_rank 对象 did_rank_top_keys / did_rank_top_keys_contract_747 与 DID_RANK_META_TOP_KEYS 八键顺序同源，与 META_ROOT_TOP_KEYS 第二十七键 did_rank 及 728 meta_top_keys 机读同源；789：GET /meta 根级 product_roles 对象 product_roles_top_keys / product_roles_top_keys_contract_748 与 PRODUCT_ROLES_META_TOP_KEYS 十键顺序同源，与 META_ROOT_TOP_KEYS 第二十八键 product_roles 及 728 meta_top_keys 机读同源；790：GET /meta 根级 auth 对象 auth_top_keys / auth_top_keys_contract_750 与 AUTH_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第二十九键 auth 及 728 meta_top_keys 机读同源；791：GET /meta 根级 seed_test_accounts 对象 seed_test_accounts_top_keys / seed_test_accounts_top_keys_contract_751 与 SEED_TEST_ACCOUNTS_META_TOP_KEYS 四键顺序同源，与 META_ROOT_TOP_KEYS 第三十键 seed_test_accounts 及 728 meta_top_keys 机读同源；792：GET /meta 根级 guides 对象 guides_top_keys / guides_top_keys_contract_752 与 GUIDES_META_TOP_KEYS 四键顺序同源，与 META_ROOT_TOP_KEYS 第三十一键 guides 及 728 meta_top_keys 机读同源；793：GET /meta 根级 idempotency_cache 对象 idempotency_cache_top_keys / idempotency_cache_top_keys_contract_753 与 IDEMPOTENCY_CACHE_META_TOP_KEYS 五键顺序同源，与 META_ROOT_TOP_KEYS 第三十二键 idempotency_cache 及 728 meta_top_keys 机读同源；794：GET /meta 根级 defaults 对象 defaults_top_keys / defaults_top_keys_contract_754 与 DEFAULTS_META_TOP_KEYS 六键顺序同源，与 META_ROOT_TOP_KEYS 第三十三键 defaults 及 728 meta_top_keys 机读同源；795：GET /meta 根级 outbox 对象 outbox_top_keys / outbox_top_keys_contract_755 与 OUTBOX_META_TOP_KEYS 八键顺序同源，与 META_ROOT_TOP_KEYS 第三十四键 outbox 及 728 meta_top_keys 机读同源；796：GET /meta 根级 meta_top_keys JSON 数组与 META_ROOT_TOP_KEYS 三十六键顺序同源，根级 meta_top_keys_contract_728 机读与 728 contract 同源，与 META_ROOT_TOP_KEYS 第三十五键 meta_top_keys 机读互链；797：GET /meta 根级 meta_top_keys_contract_728 与 META_ROOT_TOP_KEYS 第三十六键 meta_top_keys_contract_728 机读同源，与 728 contract、META_ROOT_TOP_KEYS 第三十五键 meta_top_keys 机读互链；798：GET /meta 根级 meta_top_keys JSON 数组三十六项与 META_ROOT_TOP_KEYS 三十六键顺序逐项同源，meta_top_keys_contract_728 嵌入三十六键字面顺序同源，796 与 797 与文末 728 句链式互证；799：798 句与文末 728 句机读相邻互锁，双锚根级 meta_top_keys JSON 数组三十六项与 META_ROOT_TOP_KEYS 三十六键及 meta_top_keys_contract_728 字面顺序同源闭环；800：799 双锚闭环与 GET /meta chain 对象 729 chain_top_keys / chain_top_keys_contract_729 及 CHAIN_META_TOP_KEYS 五键机读同源，与 META_ROOT_TOP_KEYS 第四键 chain 及 766 机读句串联互证；801：800 串联与 GET /meta chain.contracts 非 null 时 759 chain_contracts_top_keys / chain_contracts_top_keys_contract_759 及 CHAIN_CONTRACTS_META_TOP_KEYS 十二键机读同源，与 799 双锚闭环及 766/729 chain 子树三向互证；802：801 串联与 GET /meta chain.contracts 非 null 时 contracts.rule 嵌入之 759 句与根级 chain.rule 759 及 801 十键机读核心同源，与 chain_contracts_top_keys / chain_contracts_top_keys_contract_759 / CHAIN_CONTRACTS_META_TOP_KEYS 及 801 四向互证；803：802 串联与 800 及 766 GET /meta chain 对象 chain_top_keys / chain_top_keys_contract_729 / CHAIN_META_TOP_KEYS 五键机读同源，与 799 双锚经 729、801、759、802 contracts.rule 根级 chain.rule 759 嵌入形成五向链读闭环，与 META_ROOT_TOP_KEYS 第四键 chain 及 728 meta_top_keys 机读六向互证；804：803 六向互证与 GET /meta chain.chain_id 及根级 chain.rule 文首与 intents EIP-712 domain、前端 NEXT_PUBLIC_CHAIN_ID 应对齐及 contracts 见 ChainConfig 机读同源，七向收束 803 链读至 CHAIN_META_TOP_KEYS 首键 chain_id 部署观测锚，与 chain_top_keys / chain_top_keys_contract_729 及 803 七向互证；805：804 七向互证与 GET /meta chain.contracts 及 CHAIN_META_TOP_KEYS 第二键 contracts 机读同源，八向收束 804 链读至 contracts 部署观测锚与 chain_contracts_top_keys / chain_contracts_top_keys_contract_759 / CHAIN_CONTRACTS_META_TOP_KEYS 十二键及 801 三向 802 四向 803 六向串联，与 chain_top_keys / chain_top_keys_contract_729 及 804 八向互证；806：805 八向互证与 GET /meta chain.rule 及 CHAIN_META_TOP_KEYS 第三键 rule 机读同源，九向收束 805 链读至根级 chain.rule 文首与 intents EIP-712 domain、NEXT_PUBLIC_CHAIN_ID、ChainConfig、759 句及 contracts.rule 759 嵌入与 801 三向 802 四向 803 六向 804 七向 805 八向串联，与 chain_top_keys / chain_top_keys_contract_729 及 805 九向互证；728 GET /meta 根级 meta_top_keys / meta_top_keys_contract_728 与 META_ROOT_TOP_KEYS 三十六键顺序同源；729 GET /meta chain 对象 chain_top_keys / chain_top_keys_contract_729 与 CHAIN_META_TOP_KEYS 五键顺序同源"
     });
     if let Some(ch) = chain_section.as_object_mut() {
         let keys729: serde_json::Value = serde_json::to_value(CHAIN_META_TOP_KEYS)
@@ -1447,7 +1590,7 @@ async fn meta(State(state): State<ApiMetaState>) -> impl IntoResponse {
                     if let Some(rs) = rule_v.as_str() {
                         let mut extended = rs.to_string();
                         extended.push_str(
-                            "；759 GET /meta chain.contracts 对象 chain_contracts_top_keys / chain_contracts_top_keys_contract_759 与 CHAIN_CONTRACTS_META_TOP_KEYS 十键顺序同源",
+                            "；759 GET /meta chain.contracts 对象 chain_contracts_top_keys / chain_contracts_top_keys_contract_759 与 CHAIN_CONTRACTS_META_TOP_KEYS 十二键顺序同源",
                         );
                         *rule_v = serde_json::Value::String(extended);
                     }
@@ -1565,10 +1708,18 @@ async fn meta(State(state): State<ApiMetaState>) -> impl IntoResponse {
         );
     }
 
+    let pause_chain = meta_pause_chain_snapshot(state.chain_config.as_ref()).await;
     let mut pause_section = json!({
             "enabled": state.pause_mode,
             "api_allowlist": state.pause_api_allowlist,
-            "rule": "PAUSE_MODE=1 时，除 allowlist 外的写操作一律阻断（防 Pause 变万能开关/滥用）。737 GET /meta pause 对象 pause_top_keys / pause_top_keys_contract_737 与 PAUSE_META_TOP_KEYS 五键顺序同源",
+            "factory_paused": pause_chain.factory_paused,
+            "distribute_paused": pause_chain.distribute_paused,
+            "chain_pause_read": {
+                "status": pause_chain.read_status,
+                "error": pause_chain.read_error,
+                "rule": "B-091 TT-COMP-B091: EscrowFactory.factoryPaused + FeeRouter.distributePaused via eth_call when CHAIN_RPC_URL and each contract address are set; null booleans when no on-chain read — do not fabricate true/false (contrast GET …/governance/protocol-reference doc mirror)."
+            },
+            "rule": "PAUSE_MODE=1 时，除 allowlist 外的写操作一律阻断（防 Pause 变万能开关/滥用）。737 GET /meta pause 对象 pause_top_keys / pause_top_keys_contract_737 与 PAUSE_META_TOP_KEYS 八键顺序同源；链上工厂/费路由暂停见 factory_paused、distribute_paused（B-091）",
     });
     if let Some(pu) = pause_section.as_object_mut() {
         let keys737: serde_json::Value = serde_json::to_value(PAUSE_META_TOP_KEYS)
@@ -2031,7 +2182,9 @@ mod tests {
     use axum::body::Body;
     use axum::http::{Request, StatusCode};
     use http_body_util::BodyExt;
-    use std::sync::Arc;
+    use std::collections::VecDeque;
+    use std::sync::{Arc, Mutex};
+    use tokio::io::{AsyncReadExt, AsyncWriteExt};
     use tokio::sync::RwLock;
     use tower::util::ServiceExt;
 
@@ -2124,10 +2277,10 @@ mod tests {
 
     #[test]
     fn chain_contracts_meta_top_keys_order_and_literals_759() {
-        assert_eq!(CHAIN_CONTRACTS_META_TOP_KEYS[7], "rule");
-        assert_eq!(CHAIN_CONTRACTS_META_TOP_KEYS[8], "chain_contracts_top_keys");
+        assert_eq!(CHAIN_CONTRACTS_META_TOP_KEYS[9], "rule");
+        assert_eq!(CHAIN_CONTRACTS_META_TOP_KEYS[10], "chain_contracts_top_keys");
         assert_eq!(
-            CHAIN_CONTRACTS_META_TOP_KEYS[9],
+            CHAIN_CONTRACTS_META_TOP_KEYS[11],
             "chain_contracts_top_keys_contract_759"
         );
         let c = format_chain_contracts_meta_top_keys_contract_759();
@@ -2234,13 +2387,19 @@ mod tests {
 
     #[test]
     fn pause_meta_top_keys_order_and_literals_737() {
-        assert_eq!(PAUSE_META_TOP_KEYS[3], "pause_top_keys");
-        assert_eq!(PAUSE_META_TOP_KEYS[4], "pause_top_keys_contract_737");
+        assert_eq!(PAUSE_META_TOP_KEYS[6], "pause_top_keys");
+        assert_eq!(PAUSE_META_TOP_KEYS[7], "pause_top_keys_contract_737");
         let c = format_pause_meta_top_keys_contract_737();
         assert!(c.contains("737"), "contract: {c}");
         for k in PAUSE_META_TOP_KEYS {
             assert!(c.contains(k), "contract should embed {k}: {c}");
         }
+    }
+
+    #[test]
+    fn b091_selectors_factory_and_distribute_paused() {
+        assert_eq!(hex::encode(b091_evm_selector("factoryPaused()")), "98159752");
+        assert_eq!(hex::encode(b091_evm_selector("distributePaused()")), "627f66d3");
     }
 
     #[test]
@@ -3866,6 +4025,30 @@ mod tests {
         let pu = &v["pause"];
         assert_eq!(pu["enabled"], serde_json::json!(false));
         assert_eq!(pu["api_allowlist"].as_str().unwrap_or(""), "");
+        assert!(
+            pu["factory_paused"].is_null(),
+            "factory_paused null without chain config"
+        );
+        assert!(
+            pu["distribute_paused"].is_null(),
+            "distribute_paused null without chain config"
+        );
+        assert_eq!(pu["chain_pause_read"]["status"], "chain_unavailable");
+        assert!(
+            pu["chain_pause_read"]["rule"]
+                .as_str()
+                .unwrap_or("")
+                .contains("TT-COMP-B091"),
+            "chain_pause_read.rule should cite TT-COMP-B091"
+        );
+        let cpr = pu["chain_pause_read"].as_object().expect("chain_pause_read object");
+        for (i, k) in CHAIN_PAUSE_READ_META_TOP_KEYS.iter().enumerate() {
+            assert_eq!(
+                cpr.keys().nth(i).map(|s| s.as_str()),
+                Some(*k),
+                "chain_pause_read key order[{i}]"
+            );
+        }
         let pu737tk = pu["pause_top_keys"]
             .as_array()
             .expect("pause_top_keys array");
@@ -5244,6 +5427,12 @@ mod tests {
             v["chain"]["contracts"]["chain_id_configured"],
             serde_json::json!(31337)
         );
+        assert_eq!(
+            v["pause"]["chain_pause_read"]["status"],
+            "chain_pause_targets_unset"
+        );
+        assert!(v["pause"]["factory_paused"].is_null());
+        assert!(v["pause"]["distribute_paused"].is_null());
     }
 
     #[tokio::test]
@@ -5274,5 +5463,70 @@ mod tests {
         assert!(text.contains("traveltrust_indexer_memory_last_block 12345\n"));
         assert!(text.contains("traveltrust_indexer_checkpoint_block 12345\n"));
         assert!(text.contains("traveltrust_indexer_checkpoint_log_index 0\n"));
+    }
+
+    async fn spawn_mock_jsonrpc_eth_call_two(results: [&'static str; 2]) -> String {
+        let queue = Arc::new(Mutex::new(VecDeque::from([
+            results[0].to_string(),
+            results[1].to_string(),
+        ])));
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0")
+            .await
+            .expect("bind mock rpc");
+        let addr = listener.local_addr().expect("mock rpc addr");
+        let (ready_tx, ready_rx) = tokio::sync::oneshot::channel::<()>();
+        let q = Arc::clone(&queue);
+        tokio::spawn(async move {
+            let _ = ready_tx.send(());
+            for _ in 0..2 {
+                let Ok((mut socket, _)) = listener.accept().await else {
+                    break;
+                };
+                let mut buf = [0u8; 16384];
+                let Ok(n) = socket.read(&mut buf).await else {
+                    continue;
+                };
+                if n == 0 {
+                    continue;
+                }
+                let _ = &buf[..n];
+                let result_hex = {
+                    let mut g = q.lock().expect("mock queue");
+                    g.pop_front().unwrap_or_else(|| "0x".to_string())
+                };
+                let payload =
+                    format!(r#"{{"jsonrpc":"2.0","id":1,"result":"{}"}}"#, result_hex);
+                let http = format!(
+                    "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
+                    payload.len(),
+                    payload
+                );
+                let _ = socket.write_all(http.as_bytes()).await;
+            }
+        });
+        let _ = ready_rx.await;
+        format!("http://{}", addr)
+    }
+
+    /// **TT-COMP-B091**：mock JSON-RPC **`eth_call`** 返回 ABI 编码 **`bool`**，**`meta_pause_chain_snapshot`** 与 fixture 一致。
+    #[tokio::test]
+    async fn comp_b091_meta_pause_chain_eth_call_matches_mock_fixture() {
+        let url = spawn_mock_jsonrpc_eth_call_two([
+            "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+        ])
+        .await;
+        let cfg = chain::ChainConfig {
+            rpc_url: url,
+            chain_id: 31337,
+            escrow_factory_address: Some("0x0000000000000000000000000000000000000AbC".into()),
+            fee_router_address: Some("0x0000000000000000000000000000000000000dEf".into()),
+            ..Default::default()
+        };
+        let snap = meta_pause_chain_snapshot(Some(&cfg)).await;
+        assert_eq!(snap.factory_paused, Some(true));
+        assert_eq!(snap.distribute_paused, Some(false));
+        assert_eq!(snap.read_status, "eth_call");
+        assert!(snap.read_error.is_none());
     }
 }

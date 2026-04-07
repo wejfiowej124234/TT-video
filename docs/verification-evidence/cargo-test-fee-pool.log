@@ -1,0 +1,9 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.23s
+     Running unittests src\main.rs (target\debug\deps\traveltrust_api-d6d848f99f582d3a.exe)
+
+running 2 tests
+test routes::governance::tests::fee_pool_aggregate_body_sums_two_fr_rows_same_token ... ok
+test routes::governance::tests::governance_fee_pool_aggregates_no_chain_off_sets_placeholder_header ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 528 filtered out; finished in 0.00s
+

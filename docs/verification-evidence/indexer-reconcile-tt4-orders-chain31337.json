@@ -1,0 +1,40 @@
+{
+    "status": "ok",
+    "task": "indexer_reconcile_orders_projection",
+    "chain_id": 31337,
+    "checkpoint": {
+        "block_number": 0,
+        "log_index": 0
+    },
+    "reorg_detected": false,
+    "issues_total": 0,
+    "projection_reconcile_clean": true,
+    "stats": {
+        "chain_id": 31337,
+        "orders_with_escrow": 0,
+        "projection_rows_chain": 0,
+        "malformed_projection_order_id_bytes": 0,
+        "matched": 0,
+        "missing_projection": 0,
+        "status_mismatch": 0,
+        "escrow_mismatch": 0,
+        "orphan_projections": 0,
+        "issues_total": 0,
+        "projection_reconcile_clean": true
+    },
+    "report_id": null,
+    "economic_projection_row_counts": {
+        "fee_router_routed_events": {
+            "rows_total": 2,
+            "max_block_number": 9,
+            "min_block_number": 4,
+            "latest_inserted_at": "2026-04-07T05:38:58.409132+00:00"
+        },
+        "region_vault_forwarded_events": {
+            "rows_total": 1,
+            "max_block_number": 7,
+            "min_block_number": 7,
+            "latest_inserted_at": "2026-04-07T05:38:58.412664+00:00"
+        }
+    }
+}

@@ -9,21 +9,33 @@ import {
   AUTH_USER_ID_KEY,
   getGovernanceProposal,
   getGovernanceVotingPower,
+  getMeta,
   postGovernanceProposalVote,
   type GovernanceProposalDetailResponse,
   type GovernanceVotingPowerResponse,
 } from "@/lib/apiClient";
+import { chainIdFromMeta, governorAddressFromMeta } from "@/lib/governanceChainMeta";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { mapOrderWriteError } from "@/lib/mapOrderWriteError";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import LoadingText from "@/components/LoadingText";
 import GovernanceTargetNotice from "@/components/governance/GovernanceTargetNotice";
+import GovernanceB090OnChainProposalNotice from "@/components/governance/GovernanceB090OnChainProposalNotice";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import {
   touchTargetLink44Classes,
   travelFocusRingCoreOffset2Classes,
   travelFocusRingOffset2Classes,
 } from "@/lib/travelLinkFocus";
+
+function voteCountFromApi(v: unknown): number {
+  if (typeof v === "number" && Number.isFinite(v)) return v;
+  if (typeof v === "string" && v.trim()) {
+    const n = Number(v);
+    return Number.isFinite(n) ? n : 0;
+  }
+  return 0;
+}
 
 function hasClientSession(): boolean {
   if (typeof window === "undefined") return false;
@@ -55,6 +67,8 @@ export default function GovernanceProposalDetailPage() {
   const [voteInfo, setVoteInfo] = useState<string | null>(null);
   const [hasSession, setHasSession] = useState(false);
   const [votingPower, setVotingPower] = useState<GovernanceVotingPowerResponse | null>(null);
+  const [metaGovernor, setMetaGovernor] = useState<string | null>(null);
+  const [metaChainId, setMetaChainId] = useState<number | null>(null);
 
   const loginHref = useMemo(() => {
     const back = pathname && pathname.startsWith("/") ? pathname : `/governance/proposals/${proposalId}`;
@@ -121,6 +135,32 @@ export default function GovernanceProposalDetailPage() {
     };
   }, [proposalId, retryTick, t]);
 
+  const onChainGovernorKind = data?.governance_vote?.kind === "on_chain_governor";
+
+  useEffect(() => {
+    if (!onChainGovernorKind) {
+      setMetaGovernor(null);
+      setMetaChainId(null);
+      return undefined;
+    }
+    let cancelled = false;
+    getMeta()
+      .then((m) => {
+        if (cancelled) return;
+        setMetaGovernor(governorAddressFromMeta(m));
+        setMetaChainId(chainIdFromMeta(m));
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setMetaGovernor(null);
+          setMetaChainId(null);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [onChainGovernorKind, proposalId, retryTick]);
+
   const proposal = data?.proposal;
   const title =
     typeof proposal?.title === "string" && proposal.title.trim()
@@ -129,9 +169,10 @@ export default function GovernanceProposalDetailPage() {
   const body = typeof proposal?.body === "string" ? proposal.body : "";
   const status = typeof proposal?.status === "string" ? proposal.status : "—";
   const counts = data?.vote_counts ?? {};
-  const yes = typeof counts.yes === "number" ? counts.yes : 0;
-  const no = typeof counts.no === "number" ? counts.no : 0;
-  const abstain = typeof counts.abstain === "number" ? counts.abstain : 0;
+  const yes = voteCountFromApi(counts.yes);
+  const no = voteCountFromApi(counts.no);
+  const abstain = voteCountFromApi(counts.abstain);
+  const onChainGovernor = onChainGovernorKind;
   const myVote =
     data?.my_vote === null || data?.my_vote === undefined
       ? null
@@ -144,7 +185,7 @@ export default function GovernanceProposalDetailPage() {
       : null;
 
   async function submitVote(choice: "yes" | "no" | "abstain") {
-    if (!proposalId || voteBusy) return;
+    if (!proposalId || voteBusy || onChainGovernor) return;
     setVoteBusy(true);
     setVoteError(null);
     setVoteFailCode(null);
@@ -225,6 +266,20 @@ export default function GovernanceProposalDetailPage() {
               {t("governance_proposal_detail_status")}: {status}
             </p>
           </header>
+          {onChainGovernor && proposal ? (
+            <GovernanceB090OnChainProposalNotice
+              variant="detail"
+              chainId={metaChainId}
+              governorAddress={metaGovernor}
+              proposal={{
+                proposer: proposal.proposer,
+                snapshot_block: proposal.snapshot_block,
+                vote_start_block: proposal.vote_start_block,
+                vote_end_block: proposal.vote_end_block,
+                operation_id: proposal.operation_id,
+              }}
+            />
+          ) : null}
           <section aria-labelledby="gov-prop-body">
             <h3 id="gov-prop-body" className="text-small font-semibold text-ink-800">
               {t("governance_proposal_detail_body")}
@@ -247,8 +302,23 @@ export default function GovernanceProposalDetailPage() {
               </li>
             </ul>
             <p className="mt-2 text-meta text-ink-600 dark:text-ink-300">
-              {t("governance_proposal_detail_vote_counts_weighted_hint")}
+              {onChainGovernor
+                ? t("governance_proposal_on_chain_tally_hint")
+                : t("governance_proposal_detail_vote_counts_weighted_hint")}
             </p>
+            {onChainGovernor && data?.chain?.state_live ? (
+              <p className="mt-2 text-body text-ink-800 dark:text-ink-100" role="status">
+                {t("governance_proposal_chain_state_live")}: {String(data.chain.state_live)}
+                {data.chain.state_rpc_error
+                  ? ` (${t("governance_proposal_chain_read_error")}: ${String(data.chain.state_rpc_error)})`
+                  : ""}
+              </p>
+            ) : null}
+            {onChainGovernor && data?.voting_power_at_snapshot != null ? (
+              <pre className="mt-2 max-w-full overflow-x-auto rounded border border-ink-200/80 bg-white p-2 text-meta text-ink-800 dark:border-ink-600/40 dark:bg-ink-950/40 dark:text-ink-100">
+                {JSON.stringify(data.voting_power_at_snapshot, null, 2)}
+              </pre>
+            ) : null}
             {hasSession &&
             votingPower?.authenticated &&
             ((votingPower.can_cast_vote === false &&
@@ -312,6 +382,33 @@ export default function GovernanceProposalDetailPage() {
                 {voteInfo}
               </p>
             ) : null}
+            {onChainGovernor ? (
+              <div className="mt-3 space-y-2 text-body text-ink-800 dark:text-ink-100">
+                <p>{t("governance_proposal_on_chain_vote_explain")}</p>
+                {data?.cast_vote_calldata ? (
+                  <div className="space-y-1 text-meta">
+                    <div>
+                      <span className="font-medium">{t("governance_proposal_calldata_yes")}</span>
+                      <pre className="mt-1 max-w-full overflow-x-auto whitespace-pre-wrap break-all rounded border border-ink-200/80 bg-white p-2 dark:border-ink-600/40 dark:bg-ink-950/40">
+                        {data.cast_vote_calldata.yes ?? "—"}
+                      </pre>
+                    </div>
+                    <div>
+                      <span className="font-medium">{t("governance_proposal_calldata_no")}</span>
+                      <pre className="mt-1 max-w-full overflow-x-auto whitespace-pre-wrap break-all rounded border border-ink-200/80 bg-white p-2 dark:border-ink-600/40 dark:bg-ink-950/40">
+                        {data.cast_vote_calldata.no ?? "—"}
+                      </pre>
+                    </div>
+                    <div>
+                      <span className="font-medium">{t("governance_proposal_calldata_abstain")}</span>
+                      <pre className="mt-1 max-w-full overflow-x-auto whitespace-pre-wrap break-all rounded border border-ink-200/80 bg-white p-2 dark:border-ink-600/40 dark:bg-ink-950/40">
+                        {data.cast_vote_calldata.abstain ?? "—"}
+                      </pre>
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
             {voteBusy ? (
               <p className="mt-3 text-meta text-ink-600" role="status" aria-live="polite">
                 {t("governance_proposal_detail_vote_submitting")}
@@ -321,7 +418,7 @@ export default function GovernanceProposalDetailPage() {
               <button
                 type="button"
                 className={voteBtnClass}
-                disabled={voteBusy || !hasSession}
+                disabled={voteBusy || !hasSession || onChainGovernor}
                 aria-busy={voteBusy ? true : undefined}
                 onClick={() => void submitVote("yes")}
               >
@@ -330,7 +427,7 @@ export default function GovernanceProposalDetailPage() {
               <button
                 type="button"
                 className={voteBtnClass}
-                disabled={voteBusy || !hasSession}
+                disabled={voteBusy || !hasSession || onChainGovernor}
                 aria-busy={voteBusy ? true : undefined}
                 onClick={() => void submitVote("no")}
               >
@@ -339,7 +436,7 @@ export default function GovernanceProposalDetailPage() {
               <button
                 type="button"
                 className={voteBtnClass}
-                disabled={voteBusy || !hasSession}
+                disabled={voteBusy || !hasSession || onChainGovernor}
                 aria-busy={voteBusy ? true : undefined}
                 onClick={() => void submitVote("abstain")}
               >

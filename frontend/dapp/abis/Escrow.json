@@ -29,6 +29,20 @@
   },
   {
     "type": "function",
+    "name": "releasePartialRefund",
+    "inputs": [{ "name": "travelerRefund", "type": "uint256", "internalType": "uint256" }],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "releaseSlashed",
+    "inputs": [{ "name": "travelerRefund", "type": "uint256", "internalType": "uint256" }],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
     "name": "refund",
     "inputs": [],
     "outputs": [],
@@ -116,6 +130,28 @@
       { "name": "escrow", "type": "address", "indexed": true },
       { "name": "resolutionId", "type": "bytes32", "indexed": false },
       { "name": "decisionHash", "type": "bytes32", "indexed": false }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "PartialRefundExecuted",
+    "inputs": [
+      { "name": "orderId", "type": "bytes32", "indexed": true },
+      { "name": "escrow", "type": "address", "indexed": true },
+      { "name": "travelerRefund", "type": "uint256", "indexed": false },
+      { "name": "guideAmount", "type": "uint256", "indexed": false },
+      { "name": "platformFeeAmount", "type": "uint256", "indexed": false }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "SlashedExecuted",
+    "inputs": [
+      { "name": "orderId", "type": "bytes32", "indexed": true },
+      { "name": "escrow", "type": "address", "indexed": true },
+      { "name": "travelerRefund", "type": "uint256", "indexed": false },
+      { "name": "guideAmount", "type": "uint256", "indexed": false },
+      { "name": "platformFeeAmount", "type": "uint256", "indexed": false }
     ]
   }
 ]

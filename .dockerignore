@@ -1,0 +1,14 @@
+.git
+.github
+frontend
+target
+**/node_modules
+**/.next
+contracts
+docs
+evidence
+data
+*.md
+!README.md
+.mcps
+.cursor

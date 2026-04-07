@@ -1,0 +1,107 @@
+{
+    "status": "ok",
+    "task": "indexer_reconcile_orders_projection",
+    "chain_id": 31337,
+    "checkpoint": {
+        "block_number": 0,
+        "log_index": 0
+    },
+    "reorg_detected": false,
+    "issues_total": 0,
+    "projection_reconcile_clean": true,
+    "stats": {
+        "chain_id": 31337,
+        "orders_with_escrow": 0,
+        "projection_rows_chain": 0,
+        "malformed_projection_order_id_bytes": 0,
+        "matched": 0,
+        "missing_projection": 0,
+        "status_mismatch": 0,
+        "escrow_mismatch": 0,
+        "orphan_projections": 0,
+        "issues_total": 0,
+        "projection_reconcile_clean": true
+    },
+    "report_id": null,
+    "economic_projection_row_counts": {
+        "fee_router_routed_events": {
+            "rows_total": 2,
+            "max_block_number": 9,
+            "min_block_number": 4,
+            "latest_inserted_at": "2026-04-07T05:38:58.409132+00:00"
+        },
+        "region_vault_forwarded_events": {
+            "rows_total": 1,
+            "max_block_number": 7,
+            "min_block_number": 7,
+            "latest_inserted_at": "2026-04-07T05:38:58.412664+00:00"
+        }
+    },
+    "fee_router_log_verify": {
+        "anchor": "B-081-FEE-ROUTER-LOG-VERIFY",
+        "sample_limit_requested": 5,
+        "sample_limit_applied": 5,
+        "samples_returned": 2,
+        "fee_router_projection_rows_fetched": 2,
+        "samples": [
+            {
+                "ok": true,
+                "chain_id": 31337,
+                "block_number": 9,
+                "log_index": 0,
+                "tx_hash": "0x4dc6cb3d750e80799aaaa04f7c32c5aede079695f5c11229e6e8da05782ca9e9",
+                "router_address": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+                "token_address": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+                "amount_u256_hex": "0x0000000000000000000000000000000000000000000000000000000000004e20"
+            },
+            {
+                "ok": true,
+                "chain_id": 31337,
+                "block_number": 4,
+                "log_index": 0,
+                "tx_hash": "0x85aa04c80cb19c8c490de25103d99fd78ef940eda00f6d66ac11ea59b67c6db6",
+                "router_address": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+                "token_address": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+                "amount_u256_hex": "0x0000000000000000000000000000000000000000000000000000000000002710"
+            }
+        ],
+        "log_verify_clean": true,
+        "fee_router_recipients_on_chain": {
+            "country_bucket": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+            "global_stakers": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+            "global_reserve": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+            "global_ops": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65"
+        }
+    },
+    "region_vault_log_verify": {
+        "anchor": "B-082-REGION-VAULT-LOG-VERIFY",
+        "sample_limit_requested": 5,
+        "sample_limit_applied": 5,
+        "samples_returned": 1,
+        "region_vault_projection_rows_fetched": 1,
+        "samples": [
+            {
+                "ok": true,
+                "chain_id": 31337,
+                "block_number": 7,
+                "log_index": 0,
+                "tx_hash": "0xd605ac178fb966be00e74ff2cd514751d4c4df42222b4c85d9c95b282bfe92dd",
+                "vault_address": "0xdc64a140aa3e981100a9beca4e685f962f0cf6c9",
+                "token_address": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+                "to_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+                "amount_u256_hex": "0x0000000000000000000000000000000000000000000000000000000000000bb8",
+                "balance_closure": {
+                    "balance_delta_check": "ok",
+                    "note": null,
+                    "block_tx_count": 1,
+                    "single_tx_block": true,
+                    "balance_after_block_hex": "0x0000000000000000000000000000000000000000000000000000000000001d4c",
+                    "balance_before_block_hex": "0x0000000000000000000000000000000000000000000000000000000000001194",
+                    "balance_delta_hex": "0x0000000000000000000000000000000000000000000000000000000000000bb8",
+                    "event_amount_hex": "0x0000000000000000000000000000000000000000000000000000000000000bb8"
+                }
+            }
+        ],
+        "log_verify_clean": true
+    }
+}

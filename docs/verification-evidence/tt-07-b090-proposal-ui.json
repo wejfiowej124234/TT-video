@@ -1,0 +1,34 @@
+{
+  "tt_id": "TT-VERIFY-B090-ONCHAIN-PROPOSAL-UI-API-PARITY-001",
+  "order": 7,
+  "mother_refs": ["B-090"],
+  "executed_at_utc": "2026-04-07T06:12:00Z",
+  "repo_git_sha": "60c44919ba6581400dc700ee6ca2ee0e716ca166",
+  "execution_record": {
+    "steps": [
+      "API：`GOVERNOR_ADDRESS` + `governance_proposals_projection`（与 TT-5 同源 env，`PORT=8091`）。",
+      "Next dev：`NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8091`，`npm run dev` → `http://127.0.0.1:3012`。",
+      "Playwright：`node frontend/scripts/b090-evidence-screenshots.mjs` → 列表 / 详情全页 PNG。",
+      "经 Next `rewrites` 拉取与 UI 同路径 JSON：`/api/v1/governance/proposals`、`/api/v1/governance/proposals/1`（头 `X-User-Id` 仅详情投票权字段）。"
+    ],
+    "outcome": "GREEN — UI 截图 + 代理路径 JSON 与后端 Governor 索引模式一致"
+  },
+  "screenshot": {
+    "paths": [
+      "docs/verification-evidence/screenshot-b090-proposals-list.png",
+      "docs/verification-evidence/screenshot-b090-proposal-detail.png"
+    ],
+    "note": "Headless Chromium；若字体与本地略有差异可忽略，以 Network 同形 JSON 为准。"
+  },
+  "json_artifact": {
+    "paths": [
+      "docs/verification-evidence/http-b090-ui-proxy-governance-proposals-3012.json",
+      "docs/verification-evidence/http-b090-ui-proxy-governance-proposal-1-3012.json"
+    ]
+  },
+  "linked_logs": [],
+  "helper_script": {
+    "path": "frontend/scripts/b090-evidence-screenshots.mjs",
+    "note": "证据采集专用；非生产 bundle 依赖。"
+  }
+}

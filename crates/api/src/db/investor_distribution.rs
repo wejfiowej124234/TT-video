@@ -17,7 +17,7 @@ pub const FORMULA: &str = "pro_rata_share_balance_at_snapshot";
 pub const SNAPSHOT_BLOCK_BINDING: &str = "inclusive_upto_snapshot_block";
 /// 与 SQL **`ORDER BY block_number ASC, log_index ASC`** 一致
 pub const SNAPSHOT_TRANSFER_REPLAY_ORDER: &str = "block_number_asc_log_index_asc";
-/// 持有人集合来源；**锁仓/质押**无独立投影时 = 是否已反映在 **`Transfer`** 上（否则为 **Target**）
+/// 持有人集合主投影：**ERC20 `Transfer`**；**`STAKING_ADDRESS`** 非空时叠加 **`investor_stake_state_events`** 质押归因（**101**）；**`INVESTOR_LOCK_CONTRACT_ADDRESSES`** 非空时于质押之后再叠 **`investor_lock_state_events`**（**112**）
 pub const SNAPSHOT_ELIGIBILITY_PROJECTION: &str = "investor_share_transfer_events";
 pub const B088_ANCHOR: &str = "B-088-INVESTOR-DISTRIBUTION-SNAPSHOT-TRANSFER";
 

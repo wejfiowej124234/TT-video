@@ -1,0 +1,9 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.24s
+     Running unittests src\main.rs (target\debug\deps\traveltrust_api-d6d848f99f582d3a.exe)
+
+running 2 tests
+test chain_off::reconcile::tests::slashed_executed_from_escrowed_sets_slashed ... ok
+test chain_off::reconcile::tests::maps_slashed_executed_topic ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 528 filtered out; finished in 0.00s
+

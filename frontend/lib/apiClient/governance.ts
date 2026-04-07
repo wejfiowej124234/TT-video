@@ -17,6 +17,13 @@ export type GovernanceProposalDetail = {
   title?: string;
   body?: string;
   status?: string;
+  /** Governor 索引模式：提案人地址 */
+  proposer?: string | null;
+  snapshot_block?: number;
+  vote_start_block?: number;
+  vote_end_block?: number;
+  /** ProposalQueued 同源 operationId（bytes32 十六进制）；未排队时为 null */
+  operation_id?: string | null;
 };
 
 export type GovernanceVoteSemantics = {
@@ -26,14 +33,33 @@ export type GovernanceVoteSemantics = {
   anchor?: string;
 };
 
+export type GovernanceProposalChainSnapshot = {
+  governor_address?: string;
+  votes_token_address?: string | null;
+  state_live?: string | null;
+  state_rpc_error?: string | null;
+  projection_state?: string | null;
+};
+
+export type GovernanceCastVoteCalldata = {
+  yes?: string | null;
+  no?: string | null;
+  abstain?: string | null;
+  selector_note?: string;
+};
+
 export type GovernanceProposalDetailResponse = {
   status?: string;
   proposal?: GovernanceProposalDetail;
-  vote_counts?: { yes?: number; no?: number; abstain?: number };
+  /** 链上模式为大整数字符串；MVP 为 number */
+  vote_counts?: { yes?: number | string; no?: number | string; abstain?: number | string };
   governance_vote?: GovernanceVoteSemantics;
   my_vote?: string | null;
   /** B-092：已投时为本票冻结权重单位；未投为 null */
   my_vote_weight?: number | null;
+  chain?: GovernanceProposalChainSnapshot;
+  voting_power_at_snapshot?: unknown;
+  cast_vote_calldata?: GovernanceCastVoteCalldata;
 };
 
 export async function getGovernanceProposal(proposalId: string): Promise<GovernanceProposalDetailResponse> {
@@ -56,6 +82,23 @@ export type GovernanceProposalVoteResult = {
   duplicate?: boolean;
 };
 
+/** B-092 Completion **110**：`GET …/voting-power?snapshot_block=` 时各份额代币 `balanceOf` 链上读数 */
+export type GovernanceCountryPoolShareSnapshotToken = {
+  token_address?: string;
+  balance_u256_hex?: string | null;
+  read_status?: string;
+  error?: string | null;
+};
+
+export type GovernanceCountryPoolShareSnapshot = {
+  block?: number | null;
+  read_status?: string;
+  tokens?: GovernanceCountryPoolShareSnapshotToken[];
+  error?: string | null;
+  reconcile?: { delegation_units_mvp?: number | null; note?: string };
+  anchor?: string;
+};
+
 export type GovernanceVotingPowerResponse = {
   status?: string;
   authenticated?: boolean;
@@ -69,6 +112,8 @@ export type GovernanceVotingPowerResponse = {
   delegator_count?: number | null;
   total_weight_units?: number | null;
   note?: string;
+  stake_snapshot?: unknown;
+  country_pool_share_snapshot?: GovernanceCountryPoolShareSnapshot;
 };
 
 export async function getGovernanceVotingPower(): Promise<GovernanceVotingPowerResponse> {

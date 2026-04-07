@@ -1,0 +1,21 @@
+Warning: This is a nightly build of Foundry. It is recommended to use the latest stable version. To mute this warning set `FOUNDRY_DISABLE_NIGHTLY_WARNING` in your environment. 
+
+No files changed, compilation skipped
+
+Ran 13 tests for test/Escrow.t.sol:EscrowTest
+[PASS] testFuzz_B093_release_conservation(uint256,uint16) (runs: 256, μ: 2206468, ~: 2208294)
+[PASS] test_B091_factoryPause_blocksNewCreate_existingEscrowStillReleases() (gas: 4311466)
+[PASS] test_B093_release_table_threeFeeRates() (gas: 6505532)
+[PASS] test_B094_executeResolution_partially_refunded_split() (gas: 2224184)
+[PASS] test_B094_executeResolution_refunded_full_traveler() (gas: 2176296)
+[PASS] test_B094_executeResolution_slashed_guide_zero_platform_fee() (gas: 2200405)
+[PASS] test_COMP_B093_releasePartialRefund_reverts_bad_refund_amount() (gas: 2166974)
+[PASS] test_COMP_B093_releasePartialRefund_table_twoTemplates() (gas: 4377663)
+[PASS] test_COMP_B093_releaseSlashed_non_dispute_table_twoTemplates() (gas: 4346872)
+[PASS] test_COMP_B093_releaseSlashed_reverts_bad_refund_amount() (gas: 2165030)
+[PASS] test_CreateDepositRelease() (gas: 2208291)
+[PASS] test_Refund() (gas: 2155484)
+[PASS] test_init_reverts_when_platformFeeBps_gt_10000() (gas: 1960315)
+Suite result: ok. 13 passed; 0 failed; 0 skipped; finished in 19.12ms (21.36ms CPU time)
+
+Ran 1 test suite in 23.18ms (19.12ms CPU time): 13 tests passed, 0 failed, 0 skipped (13 total tests)

@@ -11,6 +11,7 @@ use super::{
     apply_escrow_event_kind_to_order_state, order_state_to_str,
     parse_order_id_and_escrow_from_topics, parse_order_id_bytes32_from_topics, str_to_order_state,
 };
+use crate::chain::resolution_tx;
 use crate::db::{self, decode_evm_address_bytes};
 
 #[derive(Debug, Clone, Default, Serialize)]
@@ -35,9 +36,11 @@ fn topics_from_payload(payload: &serde_json::Value) -> Option<Vec<String>> {
 
 /// 按 `(block_number, log_index)` 顺序重放 Escrow 类 `event_log` 行，幂等 upsert **`orders_projection`**。
 /// 订单状态沿事件递进模拟（与 [`super::project_chain_event_onto_order`] 一致）；`tourist_id`/`guide_id`/初始状态以 **`orders`** 行为准。
+/// **`rpc_url`** 非空时，**`ResolutionExecuted`** 行另调 **`eth_getTransactionByHash`** 解析 **`executeResolution`** 以细分投影终态（B-094）。
 pub async fn replay_orders_projection_from_event_log(
     pool: &PgPool,
     chain_id: i64,
+    rpc_url: Option<&str>,
 ) -> Result<OrdersProjectionReplayStats, sqlx::Error> {
     let rows = db::list_event_log_escrow_projection_rows(pool, chain_id).await?;
     let mut stats = OrdersProjectionReplayStats {
@@ -92,6 +95,25 @@ pub async fn replay_orders_projection_from_event_log(
         let tourist_opt = (!db_order.tourist_id.is_nil()).then_some(db_order.tourist_id);
         let guide_opt = db_order.guide_id.filter(|g| !g.is_nil());
 
+        let base_status = order_state_to_str(*st);
+        let projection_status = if row.event_type == "ResolutionExecuted" {
+            let rpc_effective = rpc_url.map(str::trim).filter(|u| !u.is_empty());
+            let th_hex = row.tx_hash.as_ref().map(|th| format!("0x{}", hex::encode(th)));
+            match (rpc_effective, th_hex) {
+                (Some(rpc), Some(ref hex)) => {
+                    resolution_tx::orders_projection_status_for_resolution_executed_event(
+                        Some(rpc),
+                        hex,
+                        base_status,
+                    )
+                    .await
+                }
+                _ => base_status,
+            }
+        } else {
+            base_status
+        };
+
         match db::upsert_orders_projection_chain_snapshot(
             pool,
             &raw32,
@@ -101,7 +123,7 @@ pub async fn replay_orders_projection_from_event_log(
             row.event_type.as_str(),
             tourist_opt,
             guide_opt,
-            order_state_to_str(*st),
+            projection_status,
             esc_bytes.as_deref(),
         )
         .await

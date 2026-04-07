@@ -1,0 +1,36 @@
+{
+  "anchor": "TT-4-B095",
+  "rpc_url": "http://127.0.0.1:18545",
+  "calls": [
+    {
+      "role": "guide_receive_address",
+      "address": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "eth_getCode_result": "0x",
+      "rpc_error": null
+    },
+    {
+      "role": "platform_fee_recipient_fee_router_env",
+      "address": "0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc",
+      "eth_getCode_result": "0x",
+      "rpc_error": null
+    },
+    {
+      "role": "region_vault_address",
+      "address": "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+      "eth_getCode_result": "0x",
+      "rpc_error": null
+    },
+    {
+      "role": "registry_address",
+      "address": "0x14dC79964da2C8b236f843306c718Cc664c5C1bd",
+      "eth_getCode_result": "0x",
+      "rpc_error": null
+    },
+    {
+      "role": "escrow_factory_stub_empty",
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "eth_getCode_result": "0x6080604052600080fdfea26469706673582212200bd26494c48a139fe1faf1c6392bdc165b7c35567f2700d9fc2a5f0be4140f0764736f6c63430008130033",
+      "rpc_error": null
+    }
+  ]
+}

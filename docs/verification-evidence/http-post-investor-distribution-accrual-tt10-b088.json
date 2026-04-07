@@ -1,0 +1,25 @@
+{
+    "status": "ok",
+    "anchor": "B-086-INVESTOR-DISTRIBUTION-ACCRUAL",
+    "idempotent": false,
+    "distribution_id": "1d70f92d-cbf4-430c-8003-692cda75cc5d",
+    "cash_basis": "fee_router_allocatable_platform_fee_sum",
+    "formula": "pro_rata_share_balance_at_snapshot",
+    "total_cash_u256_hex": "0x0000000000000000000000000000000000000000000000000000000000002710",
+    "total_supply_u256_hex": "0x0000000000000000000000000000000000000000000000000000000000000064",
+    "distributed_sum_u256_hex": "0x0000000000000000000000000000000000000000000000000000000000002710",
+    "remainder_u256_hex": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "lines_written": 1,
+    "snapshot_binding": {
+        "anchor": "B-088-INVESTOR-DISTRIBUTION-SNAPSHOT-TRANSFER",
+        "snapshot_block_binding": "inclusive_upto_snapshot_block",
+        "transfer_replay_order": "block_number_asc_log_index_asc",
+        "eligibility_projection": "investor_share_transfer_events",
+        "stake_overlay_projection": "investor_stake_state_events",
+        "stake_overlay_event_source": "Staking.Staked|Withdrawn|Slashed",
+        "b088_completion_anchor": "TT-COMP-B088-STAKE-LOCK-PROJECTION-001",
+        "lock_overlay_projection": "investor_lock_state_events",
+        "lock_overlay_event_source": "InvestorShareLockLedger.Locked|Unlocked",
+        "b088_lock_completion_anchor": "TT-COMP-B088-LOCK-VAULT-PROJECTION-001"
+    }
+}
