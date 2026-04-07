@@ -1,11 +1,20 @@
 @echo off
 chcp 65001 >nul
 REM 仅启动前端（供 start-api-with-seed.bat 调用或单独运行）。
-REM npm run dev = run-dev.mjs：Windows 默认 Webpack -p 3012；需 Turbopack 见 frontend README（dev:turbopack）
-REM 若 /market 与 /_next/static 全 404：先执行 scripts\frontend-clean-dev.bat 或 cd frontend ^&^& npm run clean ^&^& npm run dev
+REM npm run dev = run-dev.mjs；默认 Webpack 端口 3012；Turbopack 见 frontend README（dev:turbopack）
+REM 若 market 或 _next static 全 404：先执行 scripts\frontend-clean-dev.bat 或 cd frontend ^&^& npm run clean ^&^& npm run dev
 REM 或在启动一键脚本前设 TRAVELTRUST_CLEAN_FRONTEND_NEXT=1，本脚本会在 npm run dev 前执行 npm run clean（删 frontend\.next）
 set "ROOT=%~dp0\.."
 cd /d "%ROOT%\frontend"
+if exist "E:\Dev\nodejs\npm.cmd" set "PATH=E:\Dev\nodejs;%PATH%"
+if exist "%ProgramFiles%\nodejs\npm.cmd" set "PATH=%ProgramFiles%\nodejs;%PATH%"
+where npm >nul 2>&1
+if errorlevel 1 (
+    echo [错误] 未找到 npm。请安装 Node.js 18+ LTS，建议安装到 E:\Dev\nodejs 并勾选 Add to PATH。
+    echo 下载: https://nodejs.org/
+    pause
+    exit /b 1
+)
 if not exist "package.json" (
     echo [错误] 未找到 package.json，当前目录：%CD%
     pause

@@ -1,6 +1,6 @@
 @echo off
 chcp 65001 >nul
-REM 48 §12.6 拆分后必跑：健康检查 + /meta + 登录 + /api/v1/me
+REM 48 §12.6 拆分后必跑：健康检查 + meta + 登录 + api v1 me
 REM 从项目根运行: scripts\e2e-post-split.bat
 set "ROOT=%~dp0\.."
 cd /d "%ROOT%"
@@ -16,15 +16,15 @@ if %errorlevel% neq 0 (
 )
 
 echo.
-echo [5/5] GET /meta ...
+echo Step 5 - GET meta
 curl -sf -o "%TEMP%\e2e_meta.json" -w "%%{http_code}" --connect-timeout 3 http://localhost:8080/meta 2>nul
 if %errorlevel% neq 0 (
-    echo   失败 /meta 无响应
+    echo   失败 meta 无响应
     exit /b 1
 )
-echo   OK  /meta 可访问
+echo   OK  meta 可访问
 
-echo [6/6] POST /auth/login + GET /api/v1/me ...
+echo Step 6 - login and me
 curl -sf -o "%TEMP%\e2e_login.json" -X POST -H "Content-Type: application/json" -d "{\"email\":\"tourist@test.com\",\"password\":\"Test123!\"}" --connect-timeout 3 http://localhost:8080/auth/login 2>nul
 if %errorlevel% neq 0 (
     echo   失败 登录请求失败
@@ -38,11 +38,11 @@ if not defined UID (
 )
 curl -sf -o "%TEMP%\e2e_me.json" -H "X-User-Id: %UID%" --connect-timeout 3 http://localhost:8080/api/v1/me 2>nul
 if %errorlevel% neq 0 (
-    echo   失败 /api/v1/me 无响应
+    echo   失败 api v1 me 无响应
     del "%TEMP%\e2e_login.json" 2>nul
     exit /b 1
 )
-echo   OK  登录 + /api/v1/me 通过
+echo   OK  登录 + api v1 me 通过
 
 del "%TEMP%\e2e_meta.json" "%TEMP%\e2e_login.json" "%TEMP%\e2e_me.json" 2>nul
 echo.

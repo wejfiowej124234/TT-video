@@ -1,6 +1,6 @@
 # Scripts 脚本说明
 
-**快速使用**（工程总纲读前入口：**[07-开发流程与顺序](../docs/spec/07-开发流程与顺序.md)** 文首**读前摘要**「**本地开发起停（Win · Unix · Next 15）**」行、**§二 2.3**）：Windows 一键启动（终止旧进程 + Docker + **编译** + 后端 8080 + 前端 3012）→ 项目根执行 `scripts\start-api-with-seed.bat`（**第 1 步**会校验 `crates/api/migrations/*.sql` 的版本前缀是否唯一，避免 SQLx `_sqlx_migrations` 主键冲突）。仅终止前后端（不关 Docker）→ `scripts\stop-all.bat`。仅需前端 → `scripts\check-3000-and-start.bat`（检查 **3012**）。验证 → `scripts\e2e-verify.bat`。Linux/Mac → `./scripts/start_dev.sh`（会先校验迁移前缀并编译后端），停止 → `./scripts/stop_dev.sh`。**数据库**：使用 DB 时请在项目根 `.env` 设置 `DATABASE_URL`（如 `postgres://traveltrust:traveltrust@localhost:5432/traveltrust`）；API 启动时会**自动执行迁移**，无需单独运行 `sqlx migrate run`。若 API 报错 `duplicate key value violates unique constraint "_sqlx_migrations_pkey"`：通常是两个迁移文件共用了同一数字前缀；修复后若本地库曾在错误版本下跑过一半，可 **`docker compose down -v`** 再 `up -d`（与一键脚本一致）清空库后重迁。单独自检：`powershell -File scripts\check-sqlx-migration-prefixes.ps1` 或 `bash scripts/check-sqlx-migration-prefixes.sh`。
+**快速使用**（工程总纲读前入口：**[07-开发流程与顺序](../docs/spec/07-开发流程与顺序.md)** 文首**读前摘要**「**本地开发起停（Win · Unix · Next 15）**」行、**§二 2.3**）：Windows 一键启动（终止旧进程 + Docker + **编译** + 后端 8080 + 前端 3012）→ 项目根执行 `scripts\start-api-with-seed.bat`（**第 1 步**会校验 `crates/api/migrations/*.sql` 的版本前缀是否唯一，避免 SQLx `_sqlx_migrations` 主键冲突）。仅终止前后端（不关 Docker）→ `scripts\stop-all.bat`。仅需前端 → `scripts\check-3000-and-start.bat`（检查 **3012**）。验证 → `scripts\e2e-verify.bat`。Linux/Mac → `./scripts/start_dev.sh`（会先校验迁移前缀并编译后端），停止 → `./scripts/stop_dev.sh`。**数据库**：使用 DB 时请在项目根 `.env` 设置 `DATABASE_URL`（如 `postgres://traveltrust:traveltrust@localhost:5432/traveltrust`）；API 启动时会**自动执行迁移**，无需单独运行 `sqlx migrate run`。若 API 报错 `duplicate key value violates unique constraint "_sqlx_migrations_pkey"`：通常是两个迁移文件共用了同一数字前缀；修复后若本地库曾在错误版本下跑过一半，可 **`docker compose down -v`** 再 `up -d` 清空库后重迁。一键脚本 **默认保留数据库数据**（仅 `docker compose up -d`）；若需每次清空卷，启动前执行 **`set RESET_DOCKER_DB=1`** 再运行 `start-api-with-seed.bat`。单独自检：`powershell -File scripts\check-sqlx-migration-prefixes.ps1` 或 `bash scripts/check-sqlx-migration-prefixes.sh`。
 
 **Next.js 与 07 §二 Phase 4（前端）**：当前 **Next 15**；`npm run dev` 经 **`frontend/scripts/run-dev.mjs`**：**Windows 默认 Webpack** `dev -p 3012`（减轻 Turbopack 下 `app-build-manifest.json` / `_buildManifest.js.tmp.*` ENOENT）；**macOS/Linux 默认 Turbopack**（先 `ensure-turbo-dev.mjs`）。**勿**在 CMD 里单独输入 `dev`。**仍要 Turbopack（Windows）**：`npm run dev:turbopack` 或 `TRAVELTRUST_DEV_TURBO=1 npm run dev`。显式 Webpack（任意系统）：`npm run dev:webpack`。`npm run start` 会先执行 `ensure-next-start.mjs`，端口 **3012**。`next.config.js` 中 **turbopack.resolveAlias** 与 **webpack resolve.fallback** 对齐。若 **`/market` 404** 且 **`/_next/static/chunks/*.js` 大量 404**：`frontend` 下 **`npm run clean && npm run dev`**，或 `scripts\frontend-clean-dev.bat` / **`.\scripts\frontend-clean-dev.ps1`** / `./scripts/frontend-clean-dev.sh`。
 
@@ -16,7 +16,7 @@
 
 | 脚本 | 平台 | 说明 |
 |------|------|------|
-| **start-api-with-seed.bat** | Windows | 一键：结束旧进程 → Docker 数据库 → **编译后端** → 启动后端(8080) → 启动前端(3012)，并打测试账号。项目根运行 `scripts\start-api-with-seed.bat`。设 **SKIP_API_BUILD=1** 可跳过编译。 |
+| **start-api-with-seed.bat** | Windows | 一键：结束旧进程 → **Docker `up -d`（默认保留 Postgres 数据）** → **编译后端** → 启动后端(8080) → 启动前端(3012)，并打测试账号。项目根运行 `scripts\start-api-with-seed.bat`。设 **SKIP_API_BUILD=1** 可跳过编译。设 **RESET_DOCKER_DB=1** 时先 `down -v` 再 `up`（清空库）。 |
 | **stop-all.bat** | Windows | 仅终止后端与前端进程（traveltrust-api.exe 及占用 8080/3012 的进程），不关 Docker。 |
 | **run-frontend.bat** | Windows | 仅启动前端（`npm run dev` = Turbopack + 门禁，端口 3012），被其他 bat 调用；也可直接双击运行。 |
 | **run-frontend-webpack.bat** | Windows | Webpack dev（`npm run dev:webpack`，含 `ensure-dev-next`）。Turbopack 异常时改用。 |
@@ -27,6 +27,7 @@
 | **check-3000-and-start.bat** | Windows | 检查 3012 是否监听；未监听则新窗口启动前端。适合「只起前端」时用。（文件名保留兼容，端口为 3012。） |
 | **build-api.bat** | Windows | 仅编译后端（先跑 `check-sqlx-migration-prefixes.ps1`，再 `cargo build -p traveltrust-api`）。编译后需重启 API 或再运行 start-api-with-seed.bat。 |
 | **check-sqlx-migration-prefixes.ps1** / **check-sqlx-migration-prefixes.sh** | Windows / Unix | 校验 `crates/api/migrations/*.sql` 文件名数字前缀唯一；`start-api-with-seed.bat`、`build-api.bat`、`start_dev.sh` 会调用。 |
+| **dev-preflight.ps1** | Windows | 检查 Docker、npm、cargo、`.env`；项目根 `powershell -ExecutionPolicy Bypass -File scripts\dev-preflight.ps1`。 |
 | **e2e-verify.bat** | Windows | 验证：数据库容器、8080、3012、测试账号登录。启动约 1 分钟后运行。 |
 | **start_dev.sh** | Linux/Mac | 一键：**编译后端** → 启动后端(8080)+前端。前端：`ensure-turbo-dev` + `next dev --turbopack -p $FRONTEND_PORT`（默认 **3012**，Next 15）。`./scripts/start_dev.sh`。设 **SKIP_API_BUILD=1** 可跳过编译。 |
 | **start_dev.ps1** | Windows | 委托 **`bash scripts/start_dev.sh`**（须 **Git Bash**）；含 Docker/DB 一键见 **start-api-with-seed.bat**。 |
