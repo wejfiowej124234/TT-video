@@ -8,6 +8,12 @@
 
 **[GO_20260407_SSOT_GUARDS.md](GO_20260407_SSOT_GUARDS.md)**（**TT-SSOT-GUARD-GO-SUMMARY-018**）：汇总已落地的 **B-097 Escrow** 与 **B-110 Pool** 两条 **Python** 门禁的覆盖范围、**`check-invariants.sh` / Build workflow** 入口、典型阻断回归与「**新链上 SSOT → 单开 TT + 新 guard/allowlist**」规则。机读脚本表见 **[scripts/README.md](../scripts/README.md)** **二、CI 门禁**；任务溯源见 **[docs/任务母表.md](../docs/任务母表.md)** **SSOT Guard 门禁索引**。
 
+<a id="build-ci-closure-20260408"></a>
+
+### Build（`build.yml`）全绿收口 · 2026-04-08
+
+- **[GO_20260408_BUILD_CI_CLOSURE.md](GO_20260408_BUILD_CI_CLOSURE.md)**：GitHub Actions Run **`24139191178`**（tip **`2364f55`**）及本轮 **gate / regional-matrix / e2e·8080 / smoke / governance·params / traveltrust·nav / Vitest·locale / trust-gate·alert** 等修复链条台账；**后续新卡从新问题起算，不回扫本条已收口链**。
+
 <a id="07-p0-e2e-three"></a>
 
 ## 07 §二 2.1 发布前 E2E 三项（P0 · artifacts 索引）
