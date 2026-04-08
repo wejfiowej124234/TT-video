@@ -1105,3 +1105,25 @@ jobs:
             evidence/GO_*/secret_key_gate_metrics.json
             evidence/GO_*/secret_rotation_sampling_report.json
             evidence/GO_*/secret_key_evidence_field_report.json
+
+  # Runs after all parallel jobs finish; prints baseline + triage template when any needed job failed.
+  # `always()` is required so this job is not skipped when a sibling `needs` job fails (default skip rule).
+  ci-triage-hint:
+    name: CI triage hint (baseline)
+    runs-on: ubuntu-latest
+    if: ${{ always() && failure() }}
+    needs:
+      - build
+      - frontend
+      - regional-matrix
+      - a11y
+      - e2e
+      - finance-reconcile
+      - config-center
+      - feature-flag
+      - job-queue
+      - secret-key
+    steps:
+      - uses: actions/checkout@v6
+      - name: CI triage hint
+        run: bash scripts/ci-triage.sh
