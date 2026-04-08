@@ -2051,6 +2051,10 @@ export default {
   order_status_slashed: "已扣减",
   order_status_closed: "已关闭",
   order_status_unknown: "未知状态",
+  orders_projection_ssot_notice_divergent:
+    "链上投影与订单行业务态不一致；徽章以链上投影（结算 SSOT）为准。",
+  orders_projection_ssot_notice_divergent_short: "徽章以链上投影为准；订单行可能滞后。",
+  orders_projection_ssot_degraded: "暂无法读取链上投影，仅显示订单行业务状态。",
   escrow_errorTitle: "托管页加载异常",
   escrow_errorMessage: "页面加载异常，请重试或返回首页。",
   escrow_confirmFailed: "确认失败",

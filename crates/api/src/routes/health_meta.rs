@@ -1281,6 +1281,7 @@ async fn meta(State(state): State<ApiMetaState>) -> impl IntoResponse {
     let chain_id = env::var("CHAIN_ID").unwrap_or_else(|_| "137".to_string());
     let build = meta_build_value();
     let chain_contracts = state.chain_config.as_ref().map(|c| {
+        // B-095 / TT-B095：与 `GET /api/v1/orders/:id` → `order.split_addresses_ssot.platform_fee_recipient` 同源（`ChainConfig::escrow_platform_fee_recipient` → `chain_off::orders::order_split_addresses_ssot`）。
         let escrow_platform_fee_recipient = c.escrow_platform_fee_recipient();
         json!({
             "escrow_factory_address": &c.escrow_factory_address,
@@ -1832,6 +1833,7 @@ async fn meta(State(state): State<ApiMetaState>) -> impl IntoResponse {
         "dual_write_order": "when DATABASE_URL set: handlers mutate in-memory order row first then try_persist_order_to_db (strict TRAVELTRUST_STRICT_ORDER_DB_WRITE) or persist_order_if_db best-effort via db::upsert_order; strict upsert failure → revert memory order → 503 order_db_persist_failed; non-strict logs [audit] db upsert_order failed and may leave DB lagging memory",
         "rule": "upsert_order after state transitions (create, escrow addr, accept, cancel, mock pay, confirm completion, bilateral/rating confirm, open-dispute order row): on failure revert memory → 503 order_db_persist_failed; chain_off/mod.rs try_persist_order_to_db/persist_order_if_db 与 chain_off/orders.rs、orders_flow/* 双写与 TRAVELTRUST_STRICT_ORDER_DB_WRITE 同源；744 GET /meta orders 对象 orders_top_keys / orders_top_keys_contract_744 与 ORDERS_META_TOP_KEYS 七键顺序同源（含 fee_route_country_ssot，B-083）",
         "list_pagination": "GET /api/v1/orders: omit limit = full list (legacy); limit=1..100 with optional cursor (last item id from prior page) returns items + page.next_cursor/has_more; sort updated_at desc, id desc when paginated",
+        // B-083 / TT-B083-FEE-ROUTE-COUNTRY-ORDER-META-SSOT-001：与 **`order_detail_envelope`** **`order.fee_route_country`** 对读（**`crates/api/src/chain_off/orders.rs`**）。
         "fee_route_country_ssot": format!(
             "GET /api/v1/orders/:id: when itinerary bundle present, order.fee_route_country from SSOT field `{}` (zh product country name → iso3166_alpha2 + bucket_route_key country_pool_<iso_lower> aligned to 84; unmapped/empty → reject with code, no silent default pool; on-chain MVP FeeRouter still single countryBucket) (B-083)",
             FEE_ROUTE_COUNTRY_SSOT_FIELD
@@ -2184,7 +2186,7 @@ mod tests {
     use http_body_util::BodyExt;
     use std::collections::VecDeque;
     use std::sync::{Arc, Mutex};
-    use tokio::io::{AsyncReadExt, AsyncWriteExt};
+    use tokio::io::AsyncWriteExt;
     use tokio::sync::RwLock;
     use tower::util::ServiceExt;
 
@@ -2396,6 +2398,7 @@ mod tests {
         }
     }
 
+    /// **TT-B091-EVM-SELECTORS-001**：与 **`EscrowFactory.factoryPaused` / `FeeRouter.distributePaused`**（**`bool public`** getter）ABI 首 4 字节一致。
     #[test]
     fn b091_selectors_factory_and_distribute_paused() {
         assert_eq!(hex::encode(b091_evm_selector("factoryPaused()")), "98159752");
@@ -5465,11 +5468,11 @@ mod tests {
         assert!(text.contains("traveltrust_indexer_checkpoint_log_index 0\n"));
     }
 
-    async fn spawn_mock_jsonrpc_eth_call_two(results: [&'static str; 2]) -> String {
-        let queue = Arc::new(Mutex::new(VecDeque::from([
-            results[0].to_string(),
-            results[1].to_string(),
-        ])));
+    async fn spawn_mock_jsonrpc_eth_call_sequence(results: &[&'static str]) -> String {
+        let queue = Arc::new(Mutex::new(VecDeque::from_iter(
+            results.iter().map(|s| (*s).to_string()),
+        )));
+        let n = results.len();
         let listener = tokio::net::TcpListener::bind("127.0.0.1:0")
             .await
             .expect("bind mock rpc");
@@ -5478,18 +5481,16 @@ mod tests {
         let q = Arc::clone(&queue);
         tokio::spawn(async move {
             let _ = ready_tx.send(());
-            for _ in 0..2 {
+            for _ in 0..n {
                 let Ok((mut socket, _)) = listener.accept().await else {
                     break;
                 };
-                let mut buf = [0u8; 16384];
-                let Ok(n) = socket.read(&mut buf).await else {
+                let Ok(_req) =
+                    crate::jsonrpc_mock_server::read_http_request_headers_and_body(&mut socket)
+                        .await
+                else {
                     continue;
                 };
-                if n == 0 {
-                    continue;
-                }
-                let _ = &buf[..n];
                 let result_hex = {
                     let mut g = q.lock().expect("mock queue");
                     g.pop_front().unwrap_or_else(|| "0x".to_string())
@@ -5508,7 +5509,11 @@ mod tests {
         format!("http://{}", addr)
     }
 
-    /// **TT-COMP-B091**：mock JSON-RPC **`eth_call`** 返回 ABI 编码 **`bool`**，**`meta_pause_chain_snapshot`** 与 fixture 一致。
+    async fn spawn_mock_jsonrpc_eth_call_two(results: [&'static str; 2]) -> String {
+        spawn_mock_jsonrpc_eth_call_sequence(&[results[0], results[1]]).await
+    }
+
+    /// **TT-B091-META-PAUSE-SNAPSHOT-MOCK-001**：mock **`eth_call`** 返回 ABI 编码 **`bool`**，**`meta_pause_chain_snapshot`** 与 fixture 一致。
     #[tokio::test]
     async fn comp_b091_meta_pause_chain_eth_call_matches_mock_fixture() {
         let url = spawn_mock_jsonrpc_eth_call_two([
@@ -5528,5 +5533,41 @@ mod tests {
         assert_eq!(snap.distribute_paused, Some(false));
         assert_eq!(snap.read_status, "eth_call");
         assert!(snap.read_error.is_none());
+    }
+
+    /// **TT-B091-GET-META-PAUSE-CHAIN-SYNC-001**：**`GET /meta`** **`pause.factory_paused` / `pause.distribute_paused`** 与 handler 内 **`meta_pause_chain_snapshot`**（**2×`eth_call`**）同源；**勿**在 **`oneshot` 前**再调 **`meta_pause_chain_snapshot`**，否则 mock 连接序耗尽。
+    #[tokio::test]
+    async fn b091_get_meta_pause_matches_mock_chain_eth_call() {
+        const F: &str = "0x0000000000000000000000000000000000000000000000000000000000000000";
+        const D: &str = "0x0000000000000000000000000000000000000000000000000000000000000001";
+        let url = spawn_mock_jsonrpc_eth_call_sequence(&[F, D]).await;
+        let cfg = chain::ChainConfig {
+            rpc_url: url,
+            chain_id: 31337,
+            escrow_factory_address: Some("0x0000000000000000000000000000000000000AbC".into()),
+            fee_router_address: Some("0x0000000000000000000000000000000000000dEf".into()),
+            ..Default::default()
+        };
+        let mut state = api_meta_state(None);
+        state.chain_config = Some(cfg);
+
+        let app = router().with_state(state);
+        let res = app
+            .oneshot(
+                Request::builder()
+                    .uri("/meta")
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(res.status(), StatusCode::OK);
+        let body = res.into_body().collect().await.unwrap().to_bytes();
+        let v: serde_json::Value = serde_json::from_slice(&body).unwrap();
+        let pause = &v["pause"];
+        assert_eq!(pause["factory_paused"], json!(false));
+        assert_eq!(pause["distribute_paused"], json!(true));
+        assert_eq!(pause["chain_pause_read"]["status"], json!("eth_call"));
+        assert!(pause["chain_pause_read"]["error"].is_null());
     }
 }

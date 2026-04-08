@@ -2,6 +2,7 @@
 //! **B-092**：计票为 **权重 Σ**（`delegation_units_v1`：投票当刻 `1+直接委托者数`，冻结存票）；已委托他人者 **不可** 直投。
 //! 重复提交：同 **`vote`** → **200** **`idempotent: true`**；不同 **`vote`** → **409** **`already_voted`**。
 //! **B-089 Completion**：**`GOVERNOR_ADDRESS` + `DATABASE_URL`** 时列表/详情走 **`governance_proposals_projection`** + **`eth_call`** **`state` / `getPastVotes`**；**`POST …/vote`** 返回 **`vote_on_chain_required`**（**禁止**链下假票）。
+//! **B-098 / TT-B098-PROPOSAL-VOTING-POWER-SNAPSHOT-001**：详情 **`voting_power_at_snapshot.votes`** 与 **`GET …/governance/voting-power?snapshot_block=`** **`on_chain_vote_weight.votes_u256_dec`** 同源（**`chain::governor::eth_call_get_past_votes`**；**`snapshot_block`** **=** 投影行 **`snapshot_block`**）；与 **`governance_vote.weight_ssot`**（链上 Governor）及链下 MVP 信号票 **字段分离**。
 
 use axum::extract::{Path, State};
 use axum::http::header::{HeaderName, HeaderValue};
@@ -542,12 +543,41 @@ pub fn router() -> Router<ApiMetaState> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::routes::governance_delegation_store::delegate_store;
     use crate::state::test_support::api_meta_state;
     use axum::extract::State;
     use http_body_util::BodyExt;
+    use std::sync::OnceLock;
+    use tokio::sync::{Mutex, MutexGuard};
+
+    static PROPOSALS_TESTS_MUTEX: OnceLock<Mutex<()>> = OnceLock::new();
+
+    fn proposals_tests_mutex() -> &'static Mutex<()> {
+        PROPOSALS_TESTS_MUTEX.get_or_init(|| Mutex::new(()))
+    }
+
+    /// 并行单测共享 `MVP_STORE` / `DELEGATE_STORE`（`OnceLock`）；持锁 + 重置，避免多测交错清空或污染。
+    async fn proposals_tests_lock() -> MutexGuard<'static, ()> {
+        proposals_tests_mutex().lock().await
+    }
+
+    async fn reset_mvp_and_delegation() {
+        {
+            let arc = store();
+            let mut g = arc.write().await;
+            *g = ProposalsMvpStore::seeded();
+        }
+        {
+            let arc = delegate_store();
+            let mut d = arc.write().await;
+            d.clear();
+        }
+    }
 
     #[tokio::test]
     async fn proposals_list_returns_seeded_items_and_mvp_header() {
+        let _g = proposals_tests_lock().await;
+        reset_mvp_and_delegation().await;
         let res = get_governance_proposals_list(State(api_meta_state(None)))
             .await
             .into_response();
@@ -566,6 +596,8 @@ mod tests {
 
     #[tokio::test]
     async fn proposal_detail_not_found() {
+        let _g = proposals_tests_lock().await;
+        reset_mvp_and_delegation().await;
         let res = get_governance_proposal(
             State(api_meta_state(None)),
             Path("ffffffff-ffff-4fff-bfff-ffffffffffff".to_string()),
@@ -578,6 +610,8 @@ mod tests {
 
     #[tokio::test]
     async fn vote_requires_login() {
+        let _g = proposals_tests_lock().await;
+        reset_mvp_and_delegation().await;
         let res = post_governance_proposal_vote(
             State(api_meta_state(None)),
             Path("00000000-0000-4000-8000-000000000001".to_string()),
@@ -602,6 +636,8 @@ mod tests {
 
     #[tokio::test]
     async fn vote_same_choice_idempotent_different_choice_409() {
+        let _g = proposals_tests_lock().await;
+        reset_mvp_and_delegation().await;
         let uid = Uuid::parse_str("aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee").expect("uid");
         let pid = "00000000-0000-4000-8000-000000000001".to_string();
         let h = headers_with_user(&uid);
@@ -651,6 +687,8 @@ mod tests {
 
     #[tokio::test]
     async fn vote_forbidden_when_user_has_active_delegation() {
+        let _g = proposals_tests_lock().await;
+        reset_mvp_and_delegation().await;
         let delegator = Uuid::new_v4();
         let delegatee = Uuid::new_v4();
         assert_ne!(delegator, delegatee);
@@ -679,6 +717,8 @@ mod tests {
 
     #[tokio::test]
     async fn delegatee_vote_counts_frozen_weight_in_tally() {
+        let _g = proposals_tests_lock().await;
+        reset_mvp_and_delegation().await;
         let delegator = Uuid::new_v4();
         let delegatee = Uuid::new_v4();
         assert_ne!(delegator, delegatee);

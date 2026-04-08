@@ -9,7 +9,9 @@
 
 use std::collections::{HashMap, HashSet};
 
+use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
+use serde_json::json;
 use sqlx::postgres::PgPool;
 use uuid::Uuid;
 
@@ -160,6 +162,88 @@ pub fn uuid_from_projection_order_id(buf: &[u8]) -> Option<Uuid> {
     }
     let tail: [u8; 16] = buf[16..32].try_into().ok()?;
     Some(Uuid::from_bytes(tail))
+}
+
+/// B-097：只读 **`orders_projection`** 终端列，供 **`GET /orders`** / **`GET /orders/:id`** 嵌套 **`projection_terminal`**。
+#[derive(Debug, Clone)]
+pub struct OrdersProjectionTerminalRow {
+    pub status: String,
+    pub resolution_type: Option<String>,
+    pub updated_at: DateTime<Utc>,
+}
+
+#[derive(sqlx::FromRow)]
+struct OrdersProjectionTerminalSqlRow {
+    status: String,
+    resolution_type: Option<String>,
+    updated_at: DateTime<Utc>,
+}
+
+fn normalize_order_status_key(s: &str) -> String {
+    s.trim().to_lowercase().replace('-', "_")
+}
+
+/// 无投影行时为 **`null`**；有行时含 **`diverges_from_order_state`**（与 **`order.state`** 字符串比）。
+#[must_use]
+pub fn projection_terminal_json_for_api(
+    business_order_status: &str,
+    row: Option<&OrdersProjectionTerminalRow>,
+) -> serde_json::Value {
+    match row {
+        None => serde_json::Value::Null,
+        Some(p) => {
+            let diverges =
+                normalize_order_status_key(business_order_status) != normalize_order_status_key(&p.status);
+            json!({
+                "status": p.status,
+                "resolution_type": p.resolution_type,
+                "updated_at": p.updated_at.to_rfc3339(),
+                "diverges_from_order_state": diverges,
+            })
+        }
+    }
+}
+
+/// **`DATABASE_URL` 可读但查询失败** 时写入 **`order.projection_terminal`**，**`display_status`** 仍回落 **`orders`** 业务态。
+#[must_use]
+pub fn projection_terminal_json_degraded(err: &str) -> serde_json::Value {
+    json!({
+        "read_status": "degraded",
+        "error": err,
+    })
+}
+
+/// 按 **`order_uuid_to_projection_order_id`** 主键读一行（**`orders_projection`** PK = **`order_id`** BYTEA）。
+pub async fn fetch_orders_projection_terminal_by_order_uuid(
+    pool: &PgPool,
+    order_id: Uuid,
+) -> Result<Option<OrdersProjectionTerminalRow>, sqlx::Error> {
+    let key = order_uuid_to_projection_order_id(order_id);
+    let r = sqlx::query_as::<_, OrdersProjectionTerminalSqlRow>(
+        r#"SELECT status, resolution_type, updated_at FROM orders_projection WHERE order_id = $1"#,
+    )
+    .bind(key.as_slice())
+    .fetch_optional(pool)
+    .await?;
+    Ok(r.map(|x| OrdersProjectionTerminalRow {
+        status: x.status,
+        resolution_type: x.resolution_type,
+        updated_at: x.updated_at,
+    }))
+}
+
+/// 列表批量：逐键查询（订单列表页规模可控；避免手写 BYTEA 数组绑定差异）。
+pub async fn fetch_orders_projection_terminals_by_order_uuids(
+    pool: &PgPool,
+    order_ids: &[Uuid],
+) -> Result<HashMap<Uuid, OrdersProjectionTerminalRow>, sqlx::Error> {
+    let mut m = HashMap::with_capacity(order_ids.len());
+    for id in order_ids {
+        if let Some(row) = fetch_orders_projection_terminal_by_order_uuid(pool, *id).await? {
+            m.insert(*id, row);
+        }
+    }
+    Ok(m)
 }
 
 fn vec_to_bytes32(v: &[u8]) -> Option<[u8; 32]> {
@@ -716,11 +800,66 @@ pub async fn backfill_orders_chain_id_from_projection(
     Ok(updated)
 }
 
+/// **B-102**：**`backfill_orders_chain_id_from_projection`** 的 **dry-run** 摘要（**只读**，不写 **`orders`**）。
+#[derive(Debug, Serialize)]
+pub struct OrdersChainIdBackfillDryRunSummary {
+    pub anchor: &'static str,
+    pub chain_id: i64,
+    pub projection_rows_on_chain: usize,
+    pub orders_null_chain_id_total: i64,
+    pub would_update_rows: u32,
+    /// 与 **`GET /api/v1/orders?orders_chain_id=<chain_id>`** **`orders_chain_scope`** 同源（**`db::orders::orders_list_chain_scope_json`** + **`ChainOffConfig.business_chain_id`**）。
+    pub orders_list_chain_scope: serde_json::Value,
+}
+
+pub async fn orders_chain_id_backfill_dry_run_summary(
+    pool: &PgPool,
+    chain_id: i64,
+    list_scope_business_chain_id: Option<i64>,
+) -> Result<OrdersChainIdBackfillDryRunSummary, sqlx::Error> {
+    let orders_null_chain_id_total = super::orders::count_orders_chain_id_null(pool).await?;
+    let proj_rows = list_orders_projection_for_chain(pool, chain_id).await?;
+    let projection_rows_on_chain = proj_rows.len();
+    let mut would_update_rows = 0u32;
+    for r in &proj_rows {
+        let Some(k) = vec_to_bytes32(&r.order_id) else {
+            continue;
+        };
+        let Some(uid) = uuid_from_projection_order_id(k.as_slice()) else {
+            continue;
+        };
+        let n: i64 = sqlx::query_scalar(
+            r#"SELECT COUNT(*)::bigint FROM orders WHERE id = $1 AND chain_id IS NULL"#,
+        )
+        .bind(uid)
+        .fetch_one(pool)
+        .await?;
+        if n > 0 {
+            would_update_rows += 1;
+        }
+    }
+    let orders_list_chain_scope =
+        crate::db::orders_list_chain_scope_json(list_scope_business_chain_id, Some(chain_id));
+    Ok(OrdersChainIdBackfillDryRunSummary {
+        anchor: "B102-ORDERS-CHAIN-ID-BACKFILL-DRY-RUN",
+        chain_id,
+        projection_rows_on_chain,
+        orders_null_chain_id_total,
+        would_update_rows,
+        orders_list_chain_scope,
+    })
+}
+
 #[cfg(test)]
 mod tests {
     use super::decode_evm_address_bytes;
     use super::order_uuid_to_projection_order_id;
     use super::uuid_from_projection_order_id;
+    use crate::chain::resolution_tx::{
+        orders_projection_status_from_resolution_input, parse_execute_resolution_amounts,
+    };
+    use crate::chain_off::order_state_to_str;
+    use traveltrust_core::terminal_order_state_from_resolution_amounts;
     use uuid::Uuid;
 
     #[test]
@@ -785,6 +924,57 @@ mod tests {
         assert_eq!(
             super::orders_chain_scope_rollback_expected_confirm(137),
             "CONFIRM_DELETE_ORDERS_CHAIN_137"
+        );
+    }
+
+    /// **TT-B122-BACKFILL-DRY-RUN-STRICT-SCOPE-JSON-001**：**`chain_id != business_chain_id`** 时摘要内嵌 **`orders_list_chain_scope`** 与 **`GET /orders?orders_chain_id=<chain_id>`** 所用 **`orders_list_chain_scope_json`** **同序列化**（**`strict_chain_id`**）。
+    #[test]
+    fn tt_b122_backfill_dry_run_summary_strict_scope_matches_list_chain_scope_json() {
+        let biz = Some(137_i64);
+        let reconcile_cid = 1_i64;
+        let scope = crate::db::orders_list_chain_scope_json(biz, Some(reconcile_cid));
+        let s = super::OrdersChainIdBackfillDryRunSummary {
+            anchor: "B102-ORDERS-CHAIN-ID-BACKFILL-DRY-RUN",
+            chain_id: reconcile_cid,
+            projection_rows_on_chain: 0,
+            orders_null_chain_id_total: 0,
+            would_update_rows: 0,
+            orders_list_chain_scope: scope.clone(),
+        };
+        let v = serde_json::to_value(&s).expect("json");
+        assert_eq!(v["orders_list_chain_scope"], scope);
+        assert_eq!(v["orders_list_chain_scope"]["filter"], "strict_chain_id");
+        assert_eq!(
+            v["orders_list_chain_scope"],
+            serde_json::to_value(crate::db::orders_list_chain_scope_json(biz, Some(reconcile_cid)))
+                .unwrap()
+        );
+    }
+
+    /// **TT-B102-BACKFILL-DRY-RUN-SUMMARY-LIST-SCOPE-001**：**`OrdersChainIdBackfillDryRunSummary.orders_list_chain_scope`** 与 **`db::orders::orders_list_chain_scope_json(business, Some(chain_id))`** 同源。
+    #[test]
+    fn b102_orders_chain_id_backfill_dry_run_summary_embeds_list_chain_scope() {
+        let s = super::OrdersChainIdBackfillDryRunSummary {
+            anchor: "B102-ORDERS-CHAIN-ID-BACKFILL-DRY-RUN",
+            chain_id: 137,
+            projection_rows_on_chain: 0,
+            orders_null_chain_id_total: 0,
+            would_update_rows: 0,
+            orders_list_chain_scope: crate::db::orders_list_chain_scope_json(Some(137), Some(137)),
+        };
+        let v = serde_json::to_value(&s).expect("json");
+        assert_eq!(v["chain_id"], 137);
+        assert_eq!(
+            v["orders_list_chain_scope"]["filter"],
+            "default_business_chain"
+        );
+        assert_eq!(
+            v["orders_list_chain_scope"],
+            serde_json::to_value(crate::db::orders_list_chain_scope_json(
+                Some(137),
+                Some(137)
+            ))
+            .unwrap()
         );
     }
 
@@ -866,5 +1056,68 @@ mod tests {
         let v = serde_json::to_value(&s).expect("json");
         assert_eq!(v["projection_reconcile_clean"], false);
         assert!(v.get("samples").and_then(|x| x.as_object()).is_some());
+    }
+
+    #[test]
+    fn b097_projection_terminal_json_null_when_no_row() {
+        let v = super::projection_terminal_json_for_api("escrowed", None);
+        assert!(v.is_null());
+    }
+
+    #[test]
+    fn b097_projection_terminal_json_sets_diverges_when_mismatch() {
+        let row = super::OrdersProjectionTerminalRow {
+            status: "partially_refunded".to_string(),
+            resolution_type: Some("ResolutionExecuted".to_string()),
+            updated_at: "2026-04-07T12:00:00Z".parse::<chrono::DateTime<chrono::Utc>>().unwrap(),
+        };
+        let v = super::projection_terminal_json_for_api("escrowed", Some(&row));
+        assert_eq!(v["status"], "partially_refunded");
+        assert_eq!(v["resolution_type"], "ResolutionExecuted");
+        assert_eq!(v["diverges_from_order_state"], true);
+    }
+
+    fn b094_execute_resolution_calldata(g: u128, t: u128, p: u128) -> Vec<u8> {
+        use sha3::{Digest, Keccak256};
+        let h = Keccak256::digest(b"executeResolution(bytes32,bytes32,uint256,uint256,uint256)");
+        let sel = [h[0], h[1], h[2], h[3]];
+        let word = |v: u128| {
+            let mut x = [0u8; 32];
+            x[16..32].copy_from_slice(&v.to_be_bytes());
+            x
+        };
+        let mut out = Vec::with_capacity(4 + 32 * 5);
+        out.extend_from_slice(&sel);
+        out.extend_from_slice(&[0u8; 64]);
+        out.extend_from_slice(&word(g));
+        out.extend_from_slice(&word(t));
+        out.extend_from_slice(&word(p));
+        out
+    }
+
+    /// **TT-B094-ORDERS-PROJECTION-RESOLUTION-STATUS-SSOT-001**：**`orders_projection.status`**（经 **`resolution_tx::orders_projection_status_from_resolution_input`** 写入，与 **`replay_orders_projection`** / RPC 路径同源）与 **`traveltrust_core::terminal_order_state_from_resolution_amounts`**、**`executeResolution`** calldata 三腿一致；比例与 **`contracts/test/Escrow.t.sol`** **`test_B094_executeResolution_*`** 模板相同（标度可用 **`TOTAL`** 任意正倍数）。
+    #[test]
+    fn b094_orders_projection_status_ssot_matches_resolution_parse_and_core_terminal() {
+        let cases: [(u128, u128, u128, &str); 3] = [
+            (0, 1000, 0, "refunded"),
+            (300, 650, 50, "partially_refunded"),
+            (0, 800, 200, "slashed"),
+        ];
+        for (g, t, p, want) in cases {
+            let total = g + t + p;
+            let st = terminal_order_state_from_resolution_amounts(g, t, p, total).expect("conserving");
+            let input = b094_execute_resolution_calldata(g, t, p);
+            assert_eq!(
+                parse_execute_resolution_amounts(&input),
+                Some((g, t, p)),
+                "parse three legs ({g},{t},{p})"
+            );
+            assert_eq!(
+                orders_projection_status_from_resolution_input(&input),
+                Some(want),
+                "projection status string"
+            );
+            assert_eq!(order_state_to_str(st), want, "order_state_to_str vs upsert status");
+        }
     }
 }

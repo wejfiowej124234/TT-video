@@ -33,4 +33,10 @@ if ($mwContent -notmatch "x-content-type-options") {
     fail "API security headers missing x-content-type-options"
 }
 
+$ssotV2 = Join-Path $PSScriptRoot "ssot-guard-ci-v2.py"
+& python $ssotV2
+if ($LASTEXITCODE -ne 0) {
+    fail "ssot-guard-ci-v2.py failed (see target/ssot-guard-ci-v2-report.json)"
+}
+
 Write-Host "OK: invariants passed"

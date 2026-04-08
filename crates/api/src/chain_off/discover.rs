@@ -99,10 +99,14 @@ pub async fn discover_orders_list_impl(
         .filter(|s| !s.is_empty());
     let city_trim = city.as_deref().map(|s| s.trim()).filter(|s| !s.is_empty());
 
+    let business = state.config.business_chain_id;
     let pairs: Vec<(OrderRow, ItineraryBundle)> = store
         .orders
         .values()
-        .filter(|o| o.state == OrderState::Draft)
+        .filter(|o| {
+            o.state == OrderState::Draft
+                && super::orders::order_matches_orders_list_chain_scope(o, business, None)
+        })
         .filter_map(|o| {
             let bundle = store.itineraries.get(&o.id)?;
             if country_trim.map_or(true, |c| bundle.destination.eq_ignore_ascii_case(c))

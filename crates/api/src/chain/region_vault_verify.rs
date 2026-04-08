@@ -529,6 +529,12 @@ pub async fn verify_region_vault_row_vs_chain(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::chain::ChainConfig;
+    use crate::db::RegionVaultForwardedEventRow;
+    use chrono::Utc;
+    use serde_json::json;
+    use tokio::io::{AsyncReadExt, AsyncWriteExt};
+    use uuid::Uuid;
 
     #[test]
     fn region_vault_forwarded_topic0_stable() {
@@ -543,5 +549,164 @@ mod tests {
         let b = u256_from_hex_32("0x02").unwrap();
         let d = u256_sub_nonneg(a, b).unwrap();
         assert_eq!(norm_u256_hex(&format!("0x{}", hex::encode(d))), norm_u256_hex("0x3"));
+    }
+
+    /// B-082 / **TT-B082-REGION-VAULT-FORWARDED-BALANCE-DELTA-UNIT-001**：复用生产 **`verify_region_vault_row_vs_chain`**（**`parse_region_vault_forwarded`** + 单交易块 **`balanceOf(block)` − `balanceOf(block−1)`**）。
+    #[tokio::test]
+    async fn b082_event_amount_eq_recipient_erc20_balance_delta_single_tx_block() {
+        let topic0 = region_vault_forwarded_topic0_hex();
+        let vault = "0x1111111111111111111111111111111111111111";
+        let token = "0x2222222222222222222222222222222222222222";
+        let to_addr = "3333333333333333333333333333333333333333";
+        let token_topic = format!("0x000000000000000000000000{}", token.trim_start_matches("0x"));
+        let to_topic = format!("0x000000000000000000000000{to_addr}");
+
+        let amount_val: u8 = 7;
+        let mut amount_word = [0u8; 32];
+        amount_word[31] = amount_val;
+        let data_hex = format!("0x{}", hex::encode(amount_word));
+        let amount_row = norm_u256_hex(&format!("0x{:x}", amount_val));
+
+        let tx_hash =
+            "0x0101010101010101010101010101010101010101010101010101010101010101";
+        let block_n: u64 = 100;
+        let block_hex = format!("0x{:x}", block_n);
+
+        let receipt = json!({
+            "transactionHash": tx_hash,
+            "blockNumber": block_hex,
+            "logs": [{
+                "address": vault,
+                "logIndex": "0x0",
+                "topics": [topic0, token_topic, to_topic],
+                "data": data_hex
+            }]
+        });
+        let rpc_receipt =
+            json!({"jsonrpc":"2.0", "id": 1, "result": receipt}).to_string();
+        let rpc_block = json!({
+            "jsonrpc": "2.0",
+            "id": 1,
+            "result": { "transactions": [tx_hash] }
+        })
+        .to_string();
+
+        let mut bal_before_b = [0u8; 32];
+        bal_before_b[31] = 1u8;
+        let mut bal_after = bal_before_b;
+        let delta = amount_val as u64;
+        let sum = bal_before_b[31] as u64 + delta;
+        bal_after[31] = sum as u8;
+
+        let rpc_bal_before =
+            json!({"jsonrpc":"2.0", "id": 1, "result": format!("0x{}", hex::encode(bal_before_b))})
+                .to_string();
+        let rpc_bal_after =
+            json!({"jsonrpc":"2.0", "id": 1, "result": format!("0x{}", hex::encode(bal_after))})
+                .to_string();
+
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let addr = listener.local_addr().unwrap();
+
+        let parent_block_hex = format!("0x{:x}", block_n - 1);
+        tokio::spawn(async move {
+            for expect in [
+                "eth_getTransactionReceipt",
+                "eth_getBlockByNumber",
+                "eth_call",
+                "eth_call",
+            ] {
+                let (mut sock, _) = listener.accept().await.unwrap();
+                let mut buf: Vec<u8> = Vec::new();
+                let mut tmp = [0u8; 2048];
+                let mut headers_end: Option<usize> = None;
+                let mut content_len: usize = 0;
+                loop {
+                    let n = sock.read(&mut tmp).await.unwrap();
+                    if n == 0 {
+                        break;
+                    }
+                    buf.extend_from_slice(&tmp[..n]);
+                    if headers_end.is_none() {
+                        if let Some(pos) = buf.windows(4).position(|w| w == b"\r\n\r\n") {
+                            let he = pos + 4;
+                            let head = String::from_utf8_lossy(&buf[..he]);
+                            for line in head.lines() {
+                                let lower = line.to_ascii_lowercase();
+                                if let Some(rest) = lower.strip_prefix("content-length:") {
+                                    content_len = rest.trim().parse().unwrap_or(0);
+                                }
+                            }
+                            headers_end = Some(he);
+                        }
+                    }
+                    if let Some(he) = headers_end {
+                        if buf.len() >= he + content_len {
+                            break;
+                        }
+                    }
+                }
+                let he = headers_end.expect("headers");
+                let body = std::str::from_utf8(&buf[he..he + content_len]).expect("utf8 body");
+                let v: serde_json::Value = serde_json::from_str(body.trim()).expect("json body");
+                assert_eq!(v.get("method").and_then(|m| m.as_str()), Some(expect));
+
+                let payload = match expect {
+                    "eth_getTransactionReceipt" => rpc_receipt.clone(),
+                    "eth_getBlockByNumber" => rpc_block.clone(),
+                    "eth_call" => {
+                        let tag = v["params"]
+                            .get(1)
+                            .and_then(|x| x.as_str())
+                            .unwrap_or("");
+                        if tag == block_hex {
+                            rpc_bal_after.clone()
+                        } else if tag == parent_block_hex {
+                            rpc_bal_before.clone()
+                        } else {
+                            panic!("unexpected eth_call block tag {tag}");
+                        }
+                    }
+                    _ => unreachable!(),
+                };
+                let response = format!(
+                    "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
+                    payload.len(),
+                    payload
+                );
+                let _ = sock.write_all(response.as_bytes()).await;
+            }
+        });
+
+        let row = RegionVaultForwardedEventRow {
+            id: Uuid::nil(),
+            chain_id: 31337,
+            block_number: block_n as i64,
+            log_index: 0,
+            block_hash: "0x0202020202020202020202020202020202020202020202020202020202020202"
+                .to_string(),
+            tx_hash: tx_hash.to_string(),
+            vault_address: vault.to_string(),
+            token_address: token.to_string(),
+            to_address: format!("0x{to_addr}"),
+            amount_u256_hex: amount_row.clone(),
+            inserted_at: Utc::now(),
+        };
+
+        let mut cfg = ChainConfig::default();
+        cfg.rpc_url = format!("http://{}", addr);
+        cfg.chain_id = 31337;
+        cfg.region_vault_address = Some(vault.to_string());
+
+        let out = verify_region_vault_row_vs_chain(&cfg, &row, vault, &topic0).await;
+        assert_eq!(out.get("ok"), Some(&json!(true)), "expected ok:true, got {out:?}");
+        let bc = out.get("balance_closure").expect("balance_closure");
+        assert_eq!(bc.get("balance_delta_check"), Some(&json!("ok")));
+        assert_eq!(bc.get("single_tx_block"), Some(&json!(true)));
+        assert_eq!(bc.get("event_amount_hex"), Some(&json!(amount_row)));
+        assert_eq!(
+            bc.get("balance_delta_hex").and_then(|x| x.as_str()),
+            Some(amount_row.as_str())
+        );
     }
 }

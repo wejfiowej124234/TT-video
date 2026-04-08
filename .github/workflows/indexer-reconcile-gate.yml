@@ -20,7 +20,7 @@ jobs:
           set -euo pipefail
           mkdir -p "$EVIDENCE_DIR"
           failures=0
-          checks_total=107
+          checks_total=106
           checks_passed=0
 
           check_anchor() {

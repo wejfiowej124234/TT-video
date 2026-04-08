@@ -2080,6 +2080,10 @@ export default {
   order_status_slashed: "Slashed",
   order_status_closed: "Closed",
   order_status_unknown: "Unknown status",
+  orders_projection_ssot_notice_divergent:
+    "On-chain projection differs from the order row; the badge follows the projection (settlement SSOT).",
+  orders_projection_ssot_notice_divergent_short: "Badge follows on-chain projection; order row may lag.",
+  orders_projection_ssot_degraded: "Could not load on-chain projection; showing business order status only.",
   escrow_errorTitle: "Escrow page failed to load",
   escrow_errorMessage: "The page failed to load. Please retry or go back home.",
   escrow_confirmFailed: "Confirmation failed",

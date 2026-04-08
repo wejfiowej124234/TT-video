@@ -12,14 +12,37 @@ import {
   throwUnlessApiOk,
 } from "./core";
 
+type DisputesListEnvelope = {
+  status?: string;
+  items?: unknown[];
+  page?: { has_more?: boolean; next_cursor?: string | null };
+  error?: string;
+};
+
+/** 拉全量争议（PostgreSQL 路径下自动跟 `page.next_cursor` 分页直至 `has_more` 为 false）。 */
 export async function getDisputes(): Promise<unknown[]> {
-  const res = await fetch(apiUrl(routes.disputes), {
-    headers: { "x-request-id": requestId(), ...getAuthHeaders() },
-  });
-  const data = (await parseResponse(res)) as { status?: string; items?: unknown[] };
-  logApiJsonStatusNotOk("getDisputes", data);
-  throwUnlessApiOk(data);
-  return Array.isArray(data.items) ? data.items : [];
+  const acc: unknown[] = [];
+  let cursor: string | undefined;
+  const limit = 500;
+  for (let guard = 0; guard < 50; guard++) {
+    const qs = new URLSearchParams();
+    qs.set("limit", String(limit));
+    if (cursor) qs.set("cursor", cursor);
+    const url = `${apiUrl(routes.disputes)}?${qs.toString()}`;
+    const res = await fetch(url, {
+      headers: { "x-request-id": requestId(), ...getAuthHeaders() },
+    });
+    const data = (await parseResponse(res)) as DisputesListEnvelope;
+    logApiJsonStatusNotOk("getDisputes", data);
+    throwUnlessApiOk(data);
+    const chunk = Array.isArray(data.items) ? data.items : [];
+    acc.push(...chunk);
+    const more = data.page?.has_more === true && data.page?.next_cursor;
+    if (!more) break;
+    cursor = data.page!.next_cursor!;
+    if (chunk.length === 0) break;
+  }
+  return acc;
 }
 
 export async function getDispute(id: string): Promise<unknown> {

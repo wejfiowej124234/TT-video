@@ -5,6 +5,7 @@ import "forge-std/Test.sol";
 import "../src/InvestorDistributionClaim.sol";
 import "../src/MockERC20.sol";
 
+/// @notice **B-087 / TT-B087-INVESTOR-DISTRIBUTION-CLAIM-FOUNDRY-001**：`registerAccrual` → `claim`/`withdrawDividend`；首提金额与 **`entitled - claimed`** 一致；领尽后 **`NothingToClaim`**（与 **`contracts/abi/InvestorDistributionClaim.json`**、`script/Deploy.s.sol` 同源）。
 contract InvestorDistributionClaimTest is Test {
     InvestorDistributionClaim public claimer;
     MockERC20 public token;
@@ -20,6 +21,42 @@ contract InvestorDistributionClaimTest is Test {
         vm.prank(admin);
         claimer = new InvestorDistributionClaim(admin);
         token = new MockERC20();
+    }
+
+    /// **TT-B087-ABI-SELECTORS-001**：与 **`contracts/abi/InvestorDistributionClaim.json`** 函数入口 **selector** 对齐（防签名漂移）。
+    function test_B087_abi_selectors_match_canonical_signatures() public pure {
+        assertEq(
+            bytes4(keccak256("claim(bytes32,uint256)")),
+            InvestorDistributionClaim.claim.selector
+        );
+        assertEq(
+            bytes4(keccak256("withdrawDividend(bytes32,uint256)")),
+            InvestorDistributionClaim.withdrawDividend.selector
+        );
+        assertEq(
+            bytes4(keccak256("registerAccrual(bytes32,address,address,uint256)")),
+            InvestorDistributionClaim.registerAccrual.selector
+        );
+    }
+
+    /// **TT-B087-FIRST-CLAIM-THEN-NOTHING-001**：首提 **`claim`** 转出额 = 登记额；再提 **`NothingToClaim`**。
+    function test_B087_first_claim_transfers_exact_then_second_reverts() public {
+        uint256 entitledAmt = 777_777;
+        token.mint(address(claimer), entitledAmt);
+        vm.prank(admin);
+        claimer.registerAccrual(DIST_A, address(token), alice, entitledAmt);
+
+        vm.expectEmit(true, true, true, true);
+        emit DividendWithdrawn(DIST_A, alice, entitledAmt);
+        vm.prank(alice);
+        claimer.claim(DIST_A, type(uint256).max);
+
+        assertEq(token.balanceOf(alice), entitledAmt);
+        assertEq(claimer.claimable(DIST_A, alice), 0);
+
+        vm.prank(alice);
+        vm.expectRevert(InvestorDistributionClaim.NothingToClaim.selector);
+        claimer.claim(DIST_A, 1);
     }
 
     function test_FullClaim_TransferMatchesExpected() public {

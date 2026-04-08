@@ -1,4 +1,6 @@
 //! B-092：只读 **`GET /api/v1/governance/voting-power`**（当前委托图下的可投票权重；与计票 **冻结权重** 同源公式）。
+//! **TT-B098-UNIFIED-ON-CHAIN-VOTE-WEIGHT-001**：**`f(wallet,B):=getPastVotes(wallet,B)`**；**`unified_on_chain_vote_weight_u256_dec`** 仅在 **`on_chain_vote_weight.read_status==ok`** 时等于 **`votes_u256_dec`**（与 **`crate::chain::governor::eth_call_get_past_votes`**、**`GET …/proposals/:id`** **`voting_power_at_snapshot.votes`** 同源）。根级 **`weight_ssot`** 仍为 **`delegation_units_v1`**（链下信号票），**不得**与 **`GovernanceVotesToken.getPastVotes`** 混读。
+//! **TT-B092-VOTING-POWER-SNAPSHOT-ALIGN-001**：**`snapshot_block`** **查询** 与 **`stake_snapshot` / `country_pool_share_snapshot` / `on_chain_vote_weight`** 内 **block** 同源；**`total_weight_units`**（**`delegation_units_v1`**）与各 **`reconcile.delegation_units_mvp`** 对齐（**`POST …/vote` 信号票** 仍仅用 **MVP** 权重，与链上 **getPastVotes** 观测并列不冲突）。
 //! **TT-COMP-B092**：可选 **`snapshot_block`** + **`Staking.stakeOf`** **`eth_call`** 与 **`delegation_units_v1`** **并列对账**；**`POST …/vote` 计票** 仍 **仅** **`delegation_units_v1`**（本卡 **不改** **`governance_proposals`**）。
 //! **TT-COMP-B092-COUNTRY-POOL-SNAPSHOT-001**：同 **`snapshot_block`** 下对 **`INVESTOR_SHARE_TOKEN_ADDRESSES`**（与 **B-085** **`indexer-tick`** 同源）各 ERC20 **`balanceOf(default_wallet)`** **`eth_call`**，响应 **`country_pool_share_snapshot`**。
 
@@ -10,9 +12,11 @@ use axum::routing::get;
 use axum::Json;
 use axum::Router;
 use digest::Digest;
+use num_bigint::BigUint;
 use serde::Deserialize;
 use serde_json::json;
 use sha3::Keccak256;
+use std::str::FromStr;
 use uuid::Uuid;
 
 use crate::routes::governance_delegation_store::{
@@ -35,6 +39,8 @@ const WEIGHT_SSOT: &str = "delegation_units_v1";
 const ANCHOR: &str = "B-092-GOV-VOTE-WEIGHT-DELEGATION-MVP";
 const COMP_ANCHOR: &str = "TT-COMP-B092-VOTE-WEIGHT-STAKE-SNAPSHOT-001";
 const COMP_ANCHOR_COUNTRY: &str = "TT-COMP-B092-COUNTRY-POOL-SNAPSHOT-001";
+/// **B-098**：单一链上治理权重 **f(wallet, B)** = **`GovernanceVotesToken.getPastVotes(wallet, B)`**（与 **`GET …/proposals/:id`** **`voting_power_at_snapshot`** 同源 **`eth_call`**）。
+const B098_ANCHOR: &str = "TT-GOVERNANCE-VOTE-WEIGHT-UNIFIED-FORMULA-001";
 
 /// 与 **`Staking.sol`** **`MIN_STAKE`**（**1000e6**）一致，用于 **`meets_contract_min_stake`** 观测。
 const STAKING_MIN_STAKE_UNITS: u128 = 1000 * 1_000_000;
@@ -322,7 +328,7 @@ async fn stake_snapshot_value(
                 "meets_contract_min_stake": meets,
                 "reconcile": {
                     "delegation_units_mvp": delegation_mvp_units,
-                    "note": format!("delegation_units_mvp is GET /voting-power + POST /vote SSOT; stake_u256_hex is Staking.stakeOf at block {block} ({COMP_ANCHOR}). Unified single-weight formula remains Target.")
+                    "note": format!("delegation_units_mvp is GET /voting-power + POST /vote SSOT; stake_u256_hex is Staking.stakeOf at block {block} ({COMP_ANCHOR}). On-chain Governor weight f(·) see `on_chain_vote_weight` ({B098_ANCHOR}).")
                 },
                 "anchor": COMP_ANCHOR
             })
@@ -513,6 +519,197 @@ async fn country_pool_share_snapshot_value(
     })
 }
 
+fn reconcile_delegation_mvp_with_chain_votes_json(
+    delegation_mvp_units: Option<u64>,
+    votes_u256_dec: Option<&str>,
+    chain_read_ok: bool,
+) -> serde_json::Value {
+    let Some(mvp) = delegation_mvp_units else {
+        return json!({
+            "delegation_total_weight_units_mvp": serde_json::Value::Null,
+            "mvp_numeric_equal_to_chain_votes": serde_json::Value::Null,
+            "note": "delegation_units_v1 total unavailable (anonymous, delegating away, or not computed)."
+        });
+    };
+    if !chain_read_ok {
+        return json!({
+            "delegation_total_weight_units_mvp": mvp,
+            "mvp_numeric_equal_to_chain_votes": serde_json::Value::Null,
+            "note": "GovernanceVotesToken.getPastVotes not available; cannot numeric-reconcile with delegation_units_v1."
+        });
+    }
+    let Some(vs) = votes_u256_dec.map(str::trim).filter(|s| !s.is_empty()) else {
+        return json!({
+            "delegation_total_weight_units_mvp": mvp,
+            "mvp_numeric_equal_to_chain_votes": serde_json::Value::Null,
+            "note": "Missing chain votes decimal despite ok read (unexpected)."
+        });
+    };
+    let Ok(chain_bi) = BigUint::from_str(vs) else {
+        return json!({
+            "delegation_total_weight_units_mvp": mvp,
+            "mvp_numeric_equal_to_chain_votes": serde_json::Value::Null,
+            "note": "Could not parse votes_u256_dec as unsigned integer for reconcile."
+        });
+    };
+    let mvp_bi = BigUint::from(mvp);
+    let eq = chain_bi == mvp_bi;
+    json!({
+        "delegation_total_weight_units_mvp": mvp,
+        "mvp_numeric_equal_to_chain_votes": eq,
+        "note": if eq {
+            "getPastVotes(wallet,B) equals delegation_total_weight_units_mvp as integers (deployment-specific; often false when TTGV uses wei-scale balances)."
+        } else {
+            "getPastVotes(wallet,B) differs from delegation_total_weight_units_mvp; B-092 signal tally remains delegation_units_v1-only; Governor uses chain weight only."
+        }
+    })
+}
+
+/// **B-098**：**f(wallet, B) := GovernanceVotesToken.getPastVotes(wallet, B)**（**`B`****=****`snapshot_block`**），与 **`crate::chain::governor::eth_call_get_past_votes`** / 提案详情 **`voting_power_at_snapshot`** 对拍同源。
+async fn on_chain_vote_weight_at_snapshot(
+    state: &ApiMetaState,
+    viewer: Option<Uuid>,
+    q: &GovernanceVotingPowerQuery,
+    delegation_mvp_units: Option<u64>,
+) -> serde_json::Value {
+    let block = match q.snapshot_block {
+        Some(b) => b,
+        None => {
+            return json!({
+                "anchor": B098_ANCHOR,
+                "weight_formula_id": "B-098-f-getPastVotes",
+                "formula": "f(wallet,B) := uint256 from GovernanceVotesToken.getPastVotes(wallet,B)",
+                "snapshot_block": serde_json::Value::Null,
+                "votes_u256_dec": serde_json::Value::Null,
+                "read_status": "skipped_no_snapshot_block_param",
+                "error": serde_json::Value::Null,
+                "ssot": "GovernanceVotesToken.getPastVotes",
+                "reconcile": reconcile_delegation_mvp_with_chain_votes_json(delegation_mvp_units, None, false),
+            });
+        }
+    };
+
+    let Some(uid) = viewer else {
+        return json!({
+            "anchor": B098_ANCHOR,
+            "weight_formula_id": "B-098-f-getPastVotes",
+            "formula": "f(wallet,B) := uint256 from GovernanceVotesToken.getPastVotes(wallet,B)",
+            "snapshot_block": block,
+            "votes_u256_dec": serde_json::Value::Null,
+            "read_status": "skipped_unauthenticated",
+            "error": serde_json::Value::Null,
+            "ssot": "GovernanceVotesToken.getPastVotes",
+            "reconcile": reconcile_delegation_mvp_with_chain_votes_json(delegation_mvp_units, None, false),
+        });
+    };
+
+    let Some(ref cfg) = state.chain_config else {
+        return json!({
+            "anchor": B098_ANCHOR,
+            "weight_formula_id": "B-098-f-getPastVotes",
+            "formula": "f(wallet,B) := uint256 from GovernanceVotesToken.getPastVotes(wallet,B)",
+            "snapshot_block": block,
+            "votes_u256_dec": serde_json::Value::Null,
+            "read_status": "skipped_no_chain_config",
+            "error": serde_json::Value::Null,
+            "ssot": "GovernanceVotesToken.getPastVotes",
+            "reconcile": reconcile_delegation_mvp_with_chain_votes_json(delegation_mvp_units, None, false),
+        });
+    };
+    if !cfg.is_configured() {
+        return json!({
+            "anchor": B098_ANCHOR,
+            "weight_formula_id": "B-098-f-getPastVotes",
+            "formula": "f(wallet,B) := uint256 from GovernanceVotesToken.getPastVotes(wallet,B)",
+            "snapshot_block": block,
+            "votes_u256_dec": serde_json::Value::Null,
+            "read_status": "skipped_chain_rpc_unconfigured",
+            "error": serde_json::Value::Null,
+            "ssot": "GovernanceVotesToken.getPastVotes",
+            "reconcile": reconcile_delegation_mvp_with_chain_votes_json(delegation_mvp_units, None, false),
+        });
+    }
+
+    let token = match cfg
+        .governance_votes_token_address
+        .as_deref()
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+    {
+        Some(s) => s.to_string(),
+        None => {
+            return json!({
+                "anchor": B098_ANCHOR,
+                "weight_formula_id": "B-098-f-getPastVotes",
+                "formula": "f(wallet,B) := uint256 from GovernanceVotesToken.getPastVotes(wallet,B)",
+                "snapshot_block": block,
+                "votes_u256_dec": serde_json::Value::Null,
+                "read_status": "skipped_no_governance_votes_token_address",
+                "error": serde_json::Value::Null,
+                "ssot": "GovernanceVotesToken.getPastVotes",
+                "reconcile": reconcile_delegation_mvp_with_chain_votes_json(delegation_mvp_units, None, false),
+            });
+        }
+    };
+
+    let wallet = match resolve_user_default_wallet(state, uid).await {
+        Some(w) => w,
+        None => {
+            return json!({
+                "anchor": B098_ANCHOR,
+                "weight_formula_id": "B-098-f-getPastVotes",
+                "formula": "f(wallet,B) := uint256 from GovernanceVotesToken.getPastVotes(wallet,B)",
+                "snapshot_block": block,
+                "votes_u256_dec": serde_json::Value::Null,
+                "read_status": "skipped_no_wallet",
+                "error": serde_json::Value::Null,
+                "ssot": "GovernanceVotesToken.getPastVotes",
+                "reconcile": reconcile_delegation_mvp_with_chain_votes_json(delegation_mvp_units, None, false),
+            });
+        }
+    };
+
+    let snap = block.to_string();
+    match crate::chain::governor::eth_call_get_past_votes(&cfg.rpc_url, &token, &wallet, &snap).await {
+        Ok(votes) => json!({
+            "anchor": B098_ANCHOR,
+            "weight_formula_id": "B-098-f-getPastVotes",
+            "formula": "f(wallet,B) := uint256 from GovernanceVotesToken.getPastVotes(wallet,B)",
+            "snapshot_block": block,
+            "wallet": wallet,
+            "votes_token_address": token,
+            "votes_u256_dec": votes.clone(),
+            "read_status": "ok",
+            "error": serde_json::Value::Null,
+            "ssot": "GovernanceVotesToken.getPastVotes",
+            "eth_call_note": "Same selector+args as GET /governance/proposals/:id voting_power_at_snapshot; eth_call context block is `latest` (snapshot B must be < chain head).",
+            "reconcile": reconcile_delegation_mvp_with_chain_votes_json(delegation_mvp_units, Some(&votes), true),
+        }),
+        Err(e) => json!({
+            "anchor": B098_ANCHOR,
+            "weight_formula_id": "B-098-f-getPastVotes",
+            "formula": "f(wallet,B) := uint256 from GovernanceVotesToken.getPastVotes(wallet,B)",
+            "snapshot_block": block,
+            "votes_u256_dec": serde_json::Value::Null,
+            "read_status": "eth_call_error",
+            "error": e,
+            "ssot": "GovernanceVotesToken.getPastVotes",
+            "reconcile": reconcile_delegation_mvp_with_chain_votes_json(delegation_mvp_units, None, false),
+        }),
+    }
+}
+
+fn unified_on_chain_vote_weight_field(on_chain: &serde_json::Value) -> serde_json::Value {
+    if on_chain.get("read_status").and_then(|s| s.as_str()) == Some("ok") {
+        on_chain
+            .get("votes_u256_dec")
+            .cloned()
+            .unwrap_or(serde_json::Value::Null)
+    } else {
+        serde_json::Value::Null
+    }
+}
+
 /// GET /api/v1/governance/voting-power
 pub async fn get_governance_voting_power(
     State(state): State<ApiMetaState>,
@@ -528,6 +725,8 @@ pub async fn get_governance_voting_power(
             let del = m.get(&uid).map(|d| d.to_string());
             let snap = stake_snapshot_value(&state, Some(uid), &q, None).await;
             let country = country_pool_share_snapshot_value(&state, Some(uid), &q, None).await;
+            let on_chain = on_chain_vote_weight_at_snapshot(&state, Some(uid), &q, None).await;
+            let unified_dec = unified_on_chain_vote_weight_field(&on_chain);
             json!({
                 "status": "ok",
                 "authenticated": true,
@@ -535,12 +734,15 @@ pub async fn get_governance_voting_power(
                 "triggers_on_chain_execution": false,
                 "weight_ssot": WEIGHT_SSOT,
                 "anchor": ANCHOR,
+                "unified_on_chain_vote_weight_u256_dec": unified_dec,
+                "weight_formula_anchor": B098_ANCHOR,
                 "can_cast_vote": false,
                 "reason": "delegation_active_cannot_vote",
                 "delegate_to": del,
                 "delegator_count": serde_json::Value::Null,
                 "total_weight_units": serde_json::Value::Null,
                 "note": "Revoke delegation at DELETE /api/v1/governance/delegate to cast votes yourself (B-092)",
+                "on_chain_vote_weight": on_chain,
                 "stake_snapshot": snap,
                 "country_pool_share_snapshot": country,
             })
@@ -549,6 +751,8 @@ pub async fn get_governance_voting_power(
             let tw = voter_weight_units_now(&m, uid);
             let snap = stake_snapshot_value(&state, Some(uid), &q, Some(tw)).await;
             let country = country_pool_share_snapshot_value(&state, Some(uid), &q, Some(tw)).await;
+            let on_chain = on_chain_vote_weight_at_snapshot(&state, Some(uid), &q, Some(tw)).await;
+            let unified_dec = unified_on_chain_vote_weight_field(&on_chain);
             json!({
                 "status": "ok",
                 "authenticated": true,
@@ -556,10 +760,13 @@ pub async fn get_governance_voting_power(
                 "triggers_on_chain_execution": false,
                 "weight_ssot": WEIGHT_SSOT,
                 "anchor": ANCHOR,
+                "unified_on_chain_vote_weight_u256_dec": unified_dec,
+                "weight_formula_anchor": B098_ANCHOR,
                 "can_cast_vote": true,
                 "delegate_to": serde_json::Value::Null,
                 "delegator_count": dc,
                 "total_weight_units": tw,
+                "on_chain_vote_weight": on_chain,
                 "stake_snapshot": snap,
                 "country_pool_share_snapshot": country,
             })
@@ -567,6 +774,8 @@ pub async fn get_governance_voting_power(
     } else {
         let snap = stake_snapshot_value(&state, None, &q, None).await;
         let country = country_pool_share_snapshot_value(&state, None, &q, None).await;
+        let on_chain = on_chain_vote_weight_at_snapshot(&state, None, &q, None).await;
+        let unified_dec = unified_on_chain_vote_weight_field(&on_chain);
         json!({
             "status": "ok",
             "authenticated": false,
@@ -574,11 +783,14 @@ pub async fn get_governance_voting_power(
             "triggers_on_chain_execution": false,
             "weight_ssot": WEIGHT_SSOT,
             "anchor": ANCHOR,
+            "unified_on_chain_vote_weight_u256_dec": unified_dec,
+            "weight_formula_anchor": B098_ANCHOR,
             "can_cast_vote": serde_json::Value::Null,
             "delegate_to": serde_json::Value::Null,
             "delegator_count": serde_json::Value::Null,
             "total_weight_units": serde_json::Value::Null,
             "note": "Sign in to compute voting-power units (B-092)",
+            "on_chain_vote_weight": on_chain,
             "stake_snapshot": snap,
             "country_pool_share_snapshot": country,
         })
@@ -603,7 +815,7 @@ mod tests {
     use http_body_util::BodyExt;
     use std::collections::HashMap;
     use std::sync::Arc;
-    use tokio::io::{AsyncReadExt, AsyncWriteExt};
+    use tokio::io::AsyncWriteExt;
     use tokio::sync::RwLock;
     use tower::util::ServiceExt;
 
@@ -633,13 +845,12 @@ mod tests {
                 let Ok((mut socket, _)) = listener.accept().await else {
                     break;
                 };
-                let mut buf = [0u8; 16384];
-                let Ok(n) = socket.read(&mut buf).await else {
+                let Ok(_req) =
+                    crate::jsonrpc_mock_server::read_http_request_headers_and_body(&mut socket)
+                        .await
+                else {
                     continue;
                 };
-                if n == 0 {
-                    continue;
-                }
                 let payload = format!(r#"{{"jsonrpc":"2.0","id":1,"result":"{}"}}"#, result);
                 let http = format!(
                     "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
@@ -665,13 +876,11 @@ mod tests {
             let Ok((mut socket, _)) = listener.accept().await else {
                 return;
             };
-            let mut buf = [0u8; 16384];
-            let Ok(n) = socket.read(&mut buf).await else {
+            let Ok(_req) =
+                crate::jsonrpc_mock_server::read_http_request_headers_and_body(&mut socket).await
+            else {
                 return;
             };
-            if n == 0 {
-                return;
-            }
             let payload = format!(
                 r#"{{"jsonrpc":"2.0","id":1,"result":"{}"}}"#,
                 result
@@ -915,6 +1124,195 @@ mod tests {
         assert_eq!(
             j["country_pool_share_snapshot"]["tokens"][0]["balance_u256_hex"],
             json!(bal)
+        );
+    }
+
+    #[test]
+    fn b098_reconcile_equal_when_integers_match() {
+        let j = reconcile_delegation_mvp_with_chain_votes_json(Some(1u64), Some("1"), true);
+        assert_eq!(j["mvp_numeric_equal_to_chain_votes"], json!(true));
+    }
+
+    #[test]
+    fn b098_reconcile_unequal_when_chain_differs_from_mvp() {
+        let j = reconcile_delegation_mvp_with_chain_votes_json(Some(1u64), Some("1337"), true);
+        assert_eq!(j["mvp_numeric_equal_to_chain_votes"], json!(false));
+    }
+
+    /// **TT-B098-GET-VOTING-POWER-UNIFIED-WEIGHT-GETPASTVOTES-001**：**`?snapshot_block=`** 下 **`unified_on_chain_vote_weight_u256_dec`** **=** **`on_chain_vote_weight.votes_u256_dec`** **=** mock **`getPastVotes`**；根级 **`weight_ssot`/`total_weight_units`**（MVP）与 **`on_chain_vote_weight`/`weight_formula_anchor`**（B-098）字段语义分离。
+    #[tokio::test]
+    async fn b098_http_voting_power_unified_weight_matches_get_past_votes_mock() {
+        let stake_w = word_hex_min_stake_exact();
+        let votes_w = "0x0000000000000000000000000000000000000000000000000000000000000539";
+        let rpc = spawn_mock_rpc_sequence(vec![stake_w, votes_w]).await;
+
+        let uid = Uuid::parse_str("77777777-7777-4777-8777-777777777777").unwrap();
+        let wallet = "0x8888888888888888888888888888888888888888";
+        let user = UserRow {
+            id: uid,
+            email: "g@g".into(),
+            password_hash: None,
+            role: "tourist".into(),
+            kyc_status: "none".into(),
+            nickname: None,
+            avatar_url: None,
+            default_wallet_address: Some(wallet.into()),
+            created_at: Utc::now(),
+            updated_at: Utc::now(),
+        };
+        let mut users = HashMap::new();
+        users.insert(uid, user);
+        let co = ChainOffState {
+            store: Arc::new(RwLock::new(ChainOffStore {
+                users,
+                ..Default::default()
+            })),
+            config: ChainOffConfig::default(),
+            db_pool: None,
+        };
+        let mut st = api_meta_state(Some(co));
+        st.chain_config = Some(ChainConfig {
+            rpc_url: rpc,
+            chain_id: 31337,
+            staking_address: Some("0x9999999999999999999999999999999999999999".into()),
+            governance_votes_token_address: Some("0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".into()),
+            ..Default::default()
+        });
+
+        let app = router().with_state(st);
+        let uri = "/api/v1/governance/voting-power?snapshot_block=100";
+        let res = app
+            .oneshot(
+                Request::builder()
+                    .uri(uri)
+                    .header("x-user-id", uid.to_string())
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(res.status(), StatusCode::OK);
+        let bytes = res.into_body().collect().await.unwrap().to_bytes();
+        let j: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
+        assert_eq!(j["vote_kind"], json!("signal_off_chain"));
+        assert_eq!(j["weight_ssot"], json!("delegation_units_v1"));
+        assert_eq!(j["triggers_on_chain_execution"], json!(false));
+        assert_eq!(j["stake_snapshot"]["read_status"], "ok");
+        assert_eq!(j["on_chain_vote_weight"]["read_status"], "ok");
+        assert_eq!(j["on_chain_vote_weight"]["snapshot_block"], json!(100));
+        assert_eq!(j["on_chain_vote_weight"]["ssot"], json!("GovernanceVotesToken.getPastVotes"));
+        assert_eq!(j["on_chain_vote_weight"]["weight_formula_id"], json!("B-098-f-getPastVotes"));
+        assert_eq!(j["on_chain_vote_weight"]["votes_u256_dec"], "1337");
+        assert_eq!(j["unified_on_chain_vote_weight_u256_dec"], json!("1337"));
+        assert_eq!(
+            j["unified_on_chain_vote_weight_u256_dec"],
+            j["on_chain_vote_weight"]["votes_u256_dec"]
+        );
+        assert_eq!(j["weight_formula_anchor"], json!(B098_ANCHOR));
+        assert_eq!(
+            j["on_chain_vote_weight"]["reconcile"]["mvp_numeric_equal_to_chain_votes"],
+            json!(false)
+        );
+        assert_eq!(j["total_weight_units"], json!(1));
+        assert_ne!(j["total_weight_units"], j["unified_on_chain_vote_weight_u256_dec"]);
+    }
+
+    /// **TT-B098-UNIFIED-FIELD-EXTRACTOR-001**：**`unified_on_chain_vote_weight_u256_dec`** 仅 **`read_status==ok`** 时透传 **`votes_u256_dec`**，否则 **`null`**（防将失败读当统一权重）。
+    #[test]
+    fn b098_unified_on_chain_vote_weight_field_ok_and_non_ok() {
+        let ok = json!({"read_status":"ok","votes_u256_dec":"999"});
+        assert_eq!(unified_on_chain_vote_weight_field(&ok), json!("999"));
+        let bad = json!({"read_status":"eth_call_error","votes_u256_dec":"999"});
+        assert!(unified_on_chain_vote_weight_field(&bad).is_null());
+    }
+
+    /// **TT-B092-VOTING-POWER-SNAPSHOT-ALIGN-DELEGATION-FIELDS-001**：单次 **`GET …/voting-power?snapshot_block=`** 下 **stake / country share / getPastVotes** 子块 **block** 一致；**mock `eth_call`** 返回值回显于各读数字段；**`delegation_units_mvp`** 与 **`total_weight_units`** 在三处 **reconcile** 一致。
+    #[tokio::test]
+    async fn b092_http_voting_power_snapshot_aligns_delegation_reconcile_and_chain_reads() {
+        let stake_w = word_hex_min_stake_exact();
+        let bal = "0x0000000000000000000000000000000000000000000000000000000000000005";
+        let votes_w = "0x0000000000000000000000000000000000000000000000000000000000000005";
+        let rpc = spawn_mock_rpc_sequence(vec![stake_w, bal, votes_w]).await;
+
+        let uid = Uuid::parse_str("09209209-2092-4092-8092-092092092092").unwrap();
+        let wallet = "0x1919191919191919191919191919191919191919";
+        let user = UserRow {
+            id: uid,
+            email: "b092@b092".into(),
+            password_hash: None,
+            role: "tourist".into(),
+            kyc_status: "none".into(),
+            nickname: None,
+            avatar_url: None,
+            default_wallet_address: Some(wallet.into()),
+            created_at: Utc::now(),
+            updated_at: Utc::now(),
+        };
+        let mut users = HashMap::new();
+        users.insert(uid, user);
+        let co = ChainOffState {
+            store: Arc::new(RwLock::new(ChainOffStore {
+                users,
+                ..Default::default()
+            })),
+            config: ChainOffConfig::default(),
+            db_pool: None,
+        };
+        let mut st = api_meta_state(Some(co));
+        st.chain_config = Some(ChainConfig {
+            rpc_url: rpc,
+            chain_id: 31337,
+            staking_address: Some("0x1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a".into()),
+            investor_share_token_addresses: vec!["0x2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b".into()],
+            governance_votes_token_address: Some("0x3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c".into()),
+            ..Default::default()
+        });
+
+        let snap_block: u64 = 4242;
+        let app = router().with_state(st);
+        let uri = format!("/api/v1/governance/voting-power?snapshot_block={snap_block}");
+        let res = app
+            .oneshot(
+                Request::builder()
+                    .uri(&uri)
+                    .header("x-user-id", uid.to_string())
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(res.status(), StatusCode::OK);
+        let bytes = res.into_body().collect().await.unwrap().to_bytes();
+        let j: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
+
+        assert_eq!(j["weight_ssot"], json!("delegation_units_v1"));
+        assert_eq!(j["stake_snapshot"]["block"], json!(snap_block));
+        assert_eq!(j["country_pool_share_snapshot"]["block"], json!(snap_block));
+        assert_eq!(j["on_chain_vote_weight"]["snapshot_block"], json!(snap_block));
+
+        let tw = j["total_weight_units"].as_u64().expect("total_weight_units");
+        assert_eq!(j["stake_snapshot"]["reconcile"]["delegation_units_mvp"], json!(tw));
+        assert_eq!(
+            j["country_pool_share_snapshot"]["reconcile"]["delegation_units_mvp"],
+            json!(tw)
+        );
+        assert_eq!(
+            j["on_chain_vote_weight"]["reconcile"]["delegation_total_weight_units_mvp"],
+            json!(tw)
+        );
+
+        assert_eq!(j["stake_snapshot"]["stake_u256_hex"].as_str().unwrap(), stake_w);
+        assert_eq!(
+            j["country_pool_share_snapshot"]["tokens"][0]["balance_u256_hex"]
+                .as_str()
+                .unwrap(),
+            bal
+        );
+        assert_eq!(j["on_chain_vote_weight"]["votes_u256_dec"], "5");
+        assert_eq!(j["unified_on_chain_vote_weight_u256_dec"], json!("5"));
+        assert_eq!(
+            j["on_chain_vote_weight"]["reconcile"]["mvp_numeric_equal_to_chain_votes"],
+            json!(false)
         );
     }
 }

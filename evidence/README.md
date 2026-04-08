@@ -1,6 +1,26 @@
 # Evidence 目录（Gate 通过证据 bundle）
 
-本目录存放 **Gate 通过** 与 **演练** 的取证级证据 bundle，与 [08-1-战略与合规风险检查清单](../docs/spec/08-1-战略与合规风险检查清单.md)、[08-2-附录-闭合工单表](../docs/spec/08-2-附录-闭合工单表.md) 配套。08 定稿与闭合标准见 [08-4](../docs/spec/08-4-对外口径包.md)、[08-3](../docs/spec/08-3-参数与门禁表.md) 开篇「审计闭合标准」及 [08-2 定稿前检查](../docs/spec/08-2-附录-闭合工单表.md)。
+本目录存放 **Gate 通过** 与 **演练** 的取证级 evidence bundle，与 [08-1-战略与合规风险检查清单](../docs/spec/08-1-战略与合规风险检查清单.md)、[08-2-附录-闭合工单表](../docs/spec/08-2-附录-闭合工单表.md) 配套。08 定稿与闭合标准见 [08-4](../docs/spec/08-4-对外口径包.md)、[08-3](../docs/spec/08-3-参数与门禁表.md) 开篇「审计闭合标准」及 [08-2 定稿前检查](../docs/spec/08-2-附录-闭合工单表.md)。
+
+<a id="ssot-guards-ci-summary"></a>
+
+## PR/CI 静态 SSOT Guard 总览（一条读）
+
+**[GO_20260407_SSOT_GUARDS.md](GO_20260407_SSOT_GUARDS.md)**（**TT-SSOT-GUARD-GO-SUMMARY-018**）：汇总已落地的 **B-097 Escrow** 与 **B-110 Pool** 两条 **Python** 门禁的覆盖范围、**`check-invariants.sh` / Build workflow** 入口、典型阻断回归与「**新链上 SSOT → 单开 TT + 新 guard/allowlist**」规则。机读脚本表见 **[scripts/README.md](../scripts/README.md)** **二、CI 门禁**；任务溯源见 **[docs/任务母表.md](../docs/任务母表.md)** **SSOT Guard 门禁索引**。
+
+<a id="07-p0-e2e-three"></a>
+
+## 07 §二 2.1 发布前 E2E 三项（P0 · artifacts 索引）
+
+与 [01-总库总览 §「发布与 E2E（P2）」](../docs/spec/01-总库总览.md) 及 [07 §二 2.1](../docs/spec/07-开发流程与顺序.md#21-顺序约束简要) **字面一致**；**不得视为可发布** 前须各至少 **一份**可复核留痕（并入当次 **`evidence/GO_YYYYMMDD/`** 或私有制品库同形 manifest 指针）。
+
+| 项（07 / 01） | 建议 `artifacts/` 文件名（示例） | 最少内容 |
+|---------------|-----------------------------------|----------|
+| **正常放款** | `e2e-normal-release.md`（或 `.json` 索引） | 环境、日期、命令/入口、结论、执行人；链上 tx / 订单 id 可检索 |
+| **争议三终态** | `e2e-dispute-three-terminals.md` | Refunded / PartiallyRefunded / Slashed 各至少一条可复现路径或引用 SSOT 路径 |
+| **三条超时路径** | `e2e-three-timeouts.md` | 与 01/53 超时语义对齐的三类路径各一条留痕（或引用已登记的演练编号 **DR-***） |
+
+与 [27-P14 · P14-3](../docs/spec/27-P14-实现记录.md) 同批执行时可互链上述文件名。**签字**：`manifest.json` 之 **`sign_off`** 须非空（见下文 manifest 格式）。
 
 ## 目录约定
 
@@ -16,6 +36,26 @@
 - **evidence/GO_YYYYMMDD_template/** — **可复制模板**：首次过门时复制为本目录并重命名为 GO_YYYYMMDD，再填写 manifest。勿在此目录内放真实证据。
 - **evidence/GO_placeholder/** — **仅占位说明**（非 bundle、非模板）：说明真实 bundle 用 GO_YYYYMMDD 目录。
 - **evidence/DR-YYYYQX-0N/** — 单次演练（Runbook 演练）产物，可选按演练编号建子目录。
+
+<a id="governance-pool-country-pool-ssot-drill"></a>
+
+### 治理池根级链上 SSOT 演练留痕（B-110）
+
+- **`country_pool` 根级链上主读闸**（**`GOVERNANCE_COUNTRY_POOL_BALANCE_CHAIN_SSOT`**）：**可复制** 开关、验证点、回滚、与 **Σ / 观测腿** 边界 — **[Runbook §7.1.1](../ops/RUNBOOK.md)**（**TT-RUNBOOK-COUNTRY-POOL-DRILL-001**）。与 **`GOVERNANCE_POOL_BALANCE_CHAIN_SSOT`**（**`pool_balance`**）**独立**；留痕时建议**分别**保存两次闸的前后 JSON 片段（脱敏 **`API_BASE`**）。
+- **建议 artifacts 文件名**：`governance-pool-country-pool-ssot-on.json`、`governance-pool-country-pool-ssot-off.json`、可选 `governance-fee-pool-aggregates-projection-only.json`（核对 **`data_source":"projection"`** 且无根级 **`country_pool*`**）。
+
+<a id="governance-pool-treasury-erc20-ssot-drill"></a>
+
+- **`treasury_erc20_pool` 根级链上主读闸**（**`GOVERNANCE_TREASURY_ERC20_POOL_BALANCE_CHAIN_SSOT`**）：**可复制** 开关、验证、回滚；**硬性验证**为 **`GET …/governance/pool` 根级 `treasury_erc20_pool*` 随闸出现/消失**，且 **`GET …/governance/fee-pool-aggregates` 响应根级永不出现 `treasury_erc20_pool*`**（与 **Σ** 无关、不并入聚合）— **[Runbook §7.1.2](../ops/RUNBOOK.md)**（**TT-RUNBOOK-TREASURY-ERC20-POOL-DRILL-007**）。
+- **建议 artifacts 文件名**：`governance-pool-treasury-erc20-ssot-on.json`、`governance-pool-treasury-erc20-ssot-off.json`、可选 `governance-fee-pool-aggregates-no-treasury-erc20-keys.json`（`jq` 输出或脱敏 JSON，证明根级 **`treasury_erc20_pool` / `treasury_erc20_pool_data_source` / `treasury_erc20_pool_is_chain_ssot`** 均为缺失或 **`false`**）。
+
+<a id="orders-detail-escrow-chain-state-ssot-drill"></a>
+
+### 订单详情 `escrow_chain_state*` / `escrow_release_state*` / `escrow_dispute_state*` / `escrow_locked_amount*` 链上 SSOT 演练留痕（**TT-ESCROW-SSOT-RUNBOOK-003** · **TT-ESCROW-SSOT-RUNBOOK-RELEASE-006** · **TT-ESCROW-SSOT-RUNBOOK-DISPUTE-009** · **TT-ESCROW-SSOT-RUNBOOK-AMOUNT-012**）
+
+- **验证步骤**：**[Runbook §7.1.3](../ops/RUNBOOK.md)** — **A** 证明 **`GET …/api/v1/orders/:id`** 在 **`get_escrow_status` 成功**时根级出现 **`escrow_chain_state*`**；且 **仅当**链上 **`Escrow.status()`** 为 **Completed / Refunded / Resolved / PartiallyRefunded / Slashed** 时出现根级 **`escrow_release_state*`**（**`chain_read`** + **`true`**）；**非**上述终态时 **`escrow_release_state*`** **不得**出现；且 **仅当**链上为 **`Disputed` / `Resolved`** 时出现根级 **`escrow_dispute_state*`**（**TT-ESCROW-SSOT-DISPUTE-STATE-008**），**无争议**时 **不得**出现；且 **仅当**链上 **Escrow 有效**、**`token()` 非零**、**`balanceOf(escrow) > 0`** 时出现根级 **`escrow_locked_amount*`**（**TT-ESCROW-SSOT-AMOUNT-011**），**否则不得**出现。**B** 证明 **列表**与 **占位**响应根级**永不**带 **`escrow_chain_state*`** / **`escrow_release_state*`** / **`escrow_dispute_state*`** / **`escrow_locked_amount*`**（与 **TT-ESCROW-SSOT-ORDER-STATE-AGGREGATE-EXCLUDE-002** 一致）。
+- **建议 artifacts 文件名**：`orders-detail-escrow-chain-state-ssot-ok.json`（**A**、脱敏 **`API_BASE`**/**`Bearer`**，可含 **`escrow_release_state*`** / **`escrow_dispute_state*`** / **`escrow_locked_amount*`**）；可选 **`orders-detail-escrow-release-state-ssot-terminal-only.json`**（五放款终态之一）、**`orders-detail-escrow-dispute-state-ssot-disputed-or-resolved.json`**（**`Disputed`** 或 **`Resolved`**）、**`orders-detail-escrow-locked-amount-ssot-positive-balance.json`**（**`balanceOf(escrow) > 0`**）；**`orders-list-no-escrow-order-ssot-root-keys.json`**（**B**，证明根级无上述四套键；旧名 **`orders-list-no-escrow-chain-state-root-keys.json`** 仍可作别名归档）。
+- **发版过门收口（GO 静态文档 · TT-RELEASE-GATE-ESCROW-GO-DOC-015）**：四套键**覆盖范围**、**不变量**、**§7.1.3** 验证步骤、**B1～B3 十二项 `has_*` 全 `false` 门禁**、**artifacts 命名** — **[GO_20260407_ESCROW.md](GO_20260407_ESCROW.md)**（过门日 **2026-04-07**；若另择过门日可复制改名并修订文内日期表）。
 
 **首次过门时**：① 复制 **evidence/GO_YYYYMMDD_template/** 为 `evidence/GO_YYYYMMDD/`（如 GO_20250220）② 在新区目录内编辑 `manifest.json`（填 gate、date、artifacts、sign_off）③ 生成 `manifest.sha256`（见模板内 README.txt，可用 `sha256sum manifest.json > manifest.sha256` 或等价命令）④ 在 08-2 对应工单 Evidence 列填写该路径或 manifest hash。无 bundle 时 Gate 不视为闭合。（注：原 scripts/p13_evidence_bundle.sh 已移除，按上述手工步骤即可。）
 

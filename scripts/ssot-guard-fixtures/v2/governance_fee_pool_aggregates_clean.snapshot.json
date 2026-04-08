@@ -1,0 +1,10 @@
+{
+  "status": "ok",
+  "data_source": "projection",
+  "ssot": "fee_router_routed_events+region_vault_forwarded_events",
+  "chain_id_filter": null,
+  "fee_router": { "by_token": [], "note": "fixture" },
+  "region_vault": { "by_token": [], "note": "fixture" },
+  "rule_version": "fee_pool_aggregates_projection_v1",
+  "anchor": "B-084-FEE-POOL-AGGREGATES-PROJECTION"
+}

@@ -7,7 +7,7 @@ import "../src/GovernanceTimelock.sol";
 import "../src/TravelTrustGovernor.sol";
 import "../src/FeeRouter.sol";
 
-/// **TT-COMP-B089-GOVERNOR-CHAIN-VOTING-001**：Governor 全生命周期 + **`getPastVotes` 快照** + Timelock **queue/execute**。
+/// **TT-COMP-B089-GOVERNOR-CHAIN-VOTING-001**：Governor 全生命周期 + **`getPastVotes` 快照** + Timelock **`scheduleByGovernor` / execute**（**`FeeRouter`** **`owner` = Timelock** 与生产一致）。
 contract TravelTrustGovernorTest is Test {
     address internal deployer = address(this);
     address internal voter = address(0xA11CE);
@@ -37,6 +37,7 @@ contract TravelTrustGovernorTest is Test {
         address r0 = makeAddr("r0");
         address o0 = makeAddr("o0");
         router = new FeeRouter(deployer, c0, s0, r0, o0);
+        router.transferOwnership(address(tl));
     }
 
     function test_COMP_B089_governor_full_cycle_propose_vote_queue_execute() public {
@@ -76,6 +77,51 @@ contract TravelTrustGovernorTest is Test {
         gov.execute(pid);
         assertEq(uint256(gov.state(pid)), uint256(ProposalState.Executed));
         assertEq(router.owner(), newOwner);
+    }
+
+    /// **TT-B089-GOVERNOR-SET-ROUTING-CONFIG-PAYLOAD-001**：**Succeeded → `queue`（`scheduleByGovernor`）→ delay → `execute`** 后 **`FeeRouter`** 读数与提案 **calldata** 一致（补 Governor 链上 **热改路由** 一层；Timelock 直连见 **`GovernanceTimelock.t.sol`**）。
+    function test_TT_B089_governor_execute_set_routing_config_matches_payload() public {
+        address c1 = makeAddr("bucket1");
+        address s1 = makeAddr("stakers1");
+        address r1 = makeAddr("reserve1");
+        address o1 = makeAddr("ops1");
+        uint256 b0 = 4000;
+        uint256 b1 = 3000;
+        uint256 b2 = 2000;
+        uint256 b3 = 1000;
+
+        bytes memory data = abi.encodeWithSelector(
+            FeeRouter.setRoutingConfig.selector, c1, s1, r1, o1, b0, b1, b2, b3
+        );
+
+        address[] memory targets = new address[](1);
+        targets[0] = address(router);
+        uint256[] memory values = new uint256[](1);
+        values[0] = 0;
+        bytes[] memory calldatas = new bytes[](1);
+        calldatas[0] = data;
+
+        vm.prank(voter);
+        uint256 pid = gov.propose(targets, values, calldatas, "TT-B089 setRoutingConfig");
+
+        vm.roll(block.number + 1);
+        vm.prank(voter);
+        gov.castVote(pid, 1);
+        vm.roll(block.number + 6);
+        assertEq(uint256(gov.state(pid)), uint256(ProposalState.Succeeded));
+
+        gov.queue(pid);
+        vm.warp(block.timestamp + 100);
+        gov.execute(pid);
+
+        assertEq(router.countryBucket(), c1);
+        assertEq(router.globalStakers(), s1);
+        assertEq(router.globalReserve(), r1);
+        assertEq(router.globalOps(), o1);
+        assertEq(router.BPS_COUNTRY(), b0);
+        assertEq(router.BPS_GLOBAL_STAKERS(), b1);
+        assertEq(router.BPS_GLOBAL_RESERVE(), b2);
+        assertEq(router.BPS_GLOBAL_OPS(), b3);
     }
 
     function test_COMP_B089_getPastVotes_matches_cast_weight() public {

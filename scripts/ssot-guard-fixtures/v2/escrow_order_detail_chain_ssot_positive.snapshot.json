@@ -1,0 +1,15 @@
+{
+  "order": { "id": "00000000-0000-4000-8000-000000000001", "state": "escrowed" },
+  "escrow_chain_state": 3,
+  "escrow_chain_state_data_source": "chain_read",
+  "escrow_chain_state_is_chain_ssot": true,
+  "escrow_release_state": 5,
+  "escrow_release_state_data_source": "chain_read",
+  "escrow_release_state_is_chain_ssot": true,
+  "escrow_dispute_state": 0,
+  "escrow_dispute_state_data_source": "chain_read",
+  "escrow_dispute_state_is_chain_ssot": true,
+  "escrow_locked_amount": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+  "escrow_locked_amount_data_source": "chain_read",
+  "escrow_locked_amount_is_chain_ssot": true
+}

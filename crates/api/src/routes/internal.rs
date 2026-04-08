@@ -50,6 +50,329 @@ async fn economic_projection_row_counts_for_chain(pool: &PgPool, chain_id: i64) 
 
 const DEFAULT_COMMUNITY_RANKING_SNAPSHOT_LIMIT: i64 = 30;
 
+/// **`POST …/internal/indexer-reconcile`**：机读 **`pass`/`breakdown`** + **`human_summary`**（探针/`jq` 门禁）；**仅**写入 **`persist` `summary`**（**B-117**：**`200`** 根级 **`orders_projection_reconcile_gate`** 须自该 **`summary`** 子树取出，**禁止**平行再组）。
+fn orders_projection_reconcile_gate(stats: &db::OrdersProjectionReconcileStats) -> Value {
+    let pass = stats.projection_reconcile_clean;
+    let human = format!(
+        "issues_total={} projection_reconcile_clean={}; missing_projection={} status_mismatch={} escrow_mismatch={} orphan_projections={} malformed_projection_order_id_bytes={}; matched={} orders_with_escrow={} projection_rows_chain={}",
+        stats.issues_total,
+        pass,
+        stats.missing_projection,
+        stats.status_mismatch,
+        stats.escrow_mismatch,
+        stats.orphan_projections,
+        stats.malformed_projection_order_id_bytes,
+        stats.matched,
+        stats.orders_with_escrow,
+        stats.projection_rows_chain,
+    );
+    json!({
+        "anchor": "110-ORDERS-PROJECTION-RECONCILE-GATE",
+        "pass": pass,
+        "issues_total": stats.issues_total,
+        "projection_reconcile_clean": pass,
+        "breakdown": {
+            "missing_projection": stats.missing_projection,
+            "status_mismatch": stats.status_mismatch,
+            "escrow_mismatch": stats.escrow_mismatch,
+            "orphan_projections": stats.orphan_projections,
+            "malformed_projection_order_id_bytes": stats.malformed_projection_order_id_bytes,
+            "matched": stats.matched,
+            "orders_with_escrow": stats.orders_with_escrow,
+            "projection_rows_chain": stats.projection_rows_chain,
+        },
+        "human_summary": human,
+    })
+}
+
+/// **B-117 / TT-B117**：**`persist:true`** 落库的 **`reconciliation_reports.summary`** 与 **`200`** 根级 **`orders_projection_reconcile_gate`** **同一份** JSON；成功体该键**仅**允许自本函数从已组装完毕的 **`summary`** 读取（**无**第二套 **`orders_projection_reconcile_gate(...)`** 调用）。
+fn indexer_reconcile_orders_projection_gate_from_persist_summary(summary: &Value) -> Value {
+    summary
+        .get("orders_projection_reconcile_gate")
+        .expect("indexer-reconcile persist summary must include orders_projection_reconcile_gate")
+        .clone()
+}
+
+/// **B-110 · SSOT-04**：对 **`ssot_parallel_chain_snapshot`** 体（与 **`GET …/governance/pool`** **`chain_alignment_hint`** 内 **同形**）做 **可读性**观测。
+/// **`pass`** = 三腿均 **`read_status":"ok"`**；**不**写入 **`reconcile_compound_pass`**，**不**表示订单/池业务真值。
+/// **`region_vault_erc20_balance_read_ok`** 仅表示 **B110-SSOT-03 并行观测腿**可读，**非** **`GET …/governance/pool`** 根级 **`country_pool`** 主读（后者由 **`GOVERNANCE_COUNTRY_POOL_BALANCE_CHAIN_SSOT`** + 根字段 **`country_pool_*`** 表达；**TT-SSOT-SWITCH-APPLY-001**）。
+/// **`governance_treasury_native_balance_read_ok`** 仅表示 **B110-SSOT-03 并行观测腿**可读，**非** 根级 **`treasury_pool*`** 主读（后者由 **`GOVERNANCE_TREASURY_POOL_BALANCE_CHAIN_SSOT`** + 根字段 **`treasury_pool_*`** 表达；**TT-SSOT-SWITCH-APPLY-002**）。
+fn ssot_parallel_chain_snapshot_gate(snapshot: &Value) -> Value {
+    let leg_ok = |key: &str| -> bool {
+        snapshot
+            .get(key)
+            .and_then(|v| v.as_object())
+            .and_then(|o| o.get("read_status"))
+            .and_then(|x| x.as_str())
+            == Some("ok")
+    };
+    let fr = leg_ok("fee_router_erc20_balance_read");
+    // 并行快照 GovernanceTreasury 原生 Wei 腿；与根级 `treasury_pool*` SSOT（governance/pool 体）门禁无关。
+    let tr = leg_ok("governance_treasury_native_balance_read");
+    // 并行快照 RegionVault 腿；与根级 `country_pool` SSOT（governance/pool 体）门禁无关。
+    let rv = leg_ok("region_vault_erc20_balance_read");
+    let readable = [fr, tr, rv].iter().filter(|x| **x).count();
+    let pattern = match readable {
+        3 => "all_readable",
+        0 => "none_readable",
+        _ => "partial_readable",
+    };
+    let pass = readable == 3;
+    let human = format!(
+        "ssot_parallel_chain_snapshot_gate legs_ok={}/3 pattern={} fee_router_erc20={} treasury_native={} region_vault_erc20={}; B110-SSOT-04 observability only; not compound_gate",
+        readable, pattern, fr, tr, rv
+    );
+    json!({
+        "anchor": "B110-SSOT-04-PARALLEL-CHAIN-SNAPSHOT-GATE",
+        "pass": pass,
+        "pattern": pattern,
+        "readable_legs": readable,
+        "legs": {
+            "fee_router_erc20_balance_read_ok": fr,
+            "governance_treasury_native_balance_read_ok": tr,
+            "region_vault_erc20_balance_read_ok": rv
+        },
+        "human_summary": human,
+        "note": "Does not affect indexer_reconcile_compound_pass; not governance pool main SSOT"
+    })
+}
+
+/// **B-101 / TT-B101-INDEXER-RECONCILE-COMPOUND-PASS-FROM-BREAKDOWN-001**：根级 **`indexer_reconcile_compound_gate.pass`** 与 **`reconcile_compound_pass`** 的**唯一**语义 — **`breakdown`** 内凡 **`participates: true`** 的子对象，其 **`pass`** 须**全部为 true**（AND）；**`participates: false`** 或缺省为不参战（对 AND 为中性真）。
+///
+/// 与 **`docs/spec/110-阶段开发链上索引器与事件同步器.md`** **§3.1.3.1** 一致；**禁止**在 handler 内另写平行布尔式。
+fn indexer_reconcile_compound_pass_from_breakdown(breakdown: &serde_json::Map<String, Value>) -> bool {
+    breakdown.values().all(|branch| {
+        let participates = branch
+            .get("participates")
+            .and_then(|v| v.as_bool())
+            .unwrap_or(false);
+        if !participates {
+            return true;
+        }
+        branch.get("pass").and_then(|v| v.as_bool()).unwrap_or(false)
+    })
+}
+
+/// **B-101 / TT-121**：在 **`orders_projection_reconcile_gate`** 之上，将本次请求**实际产生**的可判定对账信号 **AND** 为单一根级门禁（**`pass`**）。
+///
+/// 返回 **`(reconcile_compound_pass, gate_json)`**：**`reconcile_compound_pass`** 与 **`gate_json["pass"]`** 恒等于 **`indexer_reconcile_compound_pass_from_breakdown(&breakdown)`**（单点算出，**无** `parts` 平行向量）。
+///
+/// 语义钉死见 **`docs/spec/110-阶段开发链上索引器与事件同步器.md`** **§3.1.3.1** 与 **04 §3.4** **`indexer-reconcile`** 行。
+fn indexer_reconcile_compound_gate(
+    orders_gate: &Value,
+    rpc_requested: bool,
+    rpc_skip_reason: Option<&str>,
+    rpc_samples: Option<&[Value]>,
+    event_log_coverage_requested: bool,
+    event_log_coverage: Option<&Value>,
+    fee_router_verify: Option<&Value>,
+    region_vault_verify: Option<&Value>,
+    chain_observation: Option<&Value>,
+) -> (bool, Value) {
+    let orders_pass = orders_gate
+        .get("pass")
+        .and_then(|v| v.as_bool())
+        .unwrap_or(false);
+
+    let mut breakdown = serde_json::Map::new();
+
+    breakdown.insert(
+        "orders_projection".to_string(),
+        json!({
+            "participates": true,
+            "pass": orders_pass,
+            "anchor_child": "110-ORDERS-PROJECTION-RECONCILE-GATE",
+        }),
+    );
+
+    // rpc_escrow_samples：仅在实际拉样（未 skipped）时参与 AND
+    let rpc_branch = if !rpc_requested {
+        json!({
+            "participates": false,
+            "pass": true,
+            "state": "not_requested",
+        })
+    } else if rpc_skip_reason.is_some() {
+        json!({
+            "participates": false,
+            "pass": true,
+            "state": "skipped_not_configured",
+            "reason": rpc_skip_reason,
+        })
+    } else if let Some(samples) = rpc_samples {
+        let all_aligned = samples.iter().all(|s| {
+            s.get("coarse_terminal_aligned")
+                .and_then(|v| v.as_bool())
+                .unwrap_or(false)
+        });
+        json!({
+            "participates": true,
+            "pass": all_aligned,
+            "state": "rpc_samples_evaluated",
+            "samples_count": samples.len(),
+        })
+    } else {
+        json!({
+            "participates": false,
+            "pass": true,
+            "state": "no_samples_branch",
+        })
+    };
+    breakdown.insert("rpc_escrow_samples".to_string(), rpc_branch);
+
+    // event_log_escrow_coverage：请求且成功返回体时参与，当前仅为观测计数（不引入阈值），**pass 恒 true**
+    let ev_branch = if !event_log_coverage_requested {
+        json!({
+            "participates": false,
+            "pass": true,
+            "state": "not_requested",
+        })
+    } else if event_log_coverage.is_some() {
+        json!({
+            "participates": true,
+            "pass": true,
+            "state": "observational_counts",
+            "rule": "B101_EVENT_LOG_COVERAGE_NO_THRESHOLD",
+            "anchor_child": "110-EVENT-LOG-ESCROW-COVERAGE",
+        })
+    } else {
+        json!({
+            "participates": false,
+            "pass": true,
+            "state": "absent",
+        })
+    };
+    breakdown.insert("event_log_escrow_coverage".to_string(), ev_branch);
+
+    fn log_verify_compound_branch(anchor_child: &str, v: &Value) -> Value {
+        if v.get("skipped").is_some() {
+            return json!({
+                "participates": false,
+                "pass": true,
+                "state": "skipped_not_configured",
+                "anchor_child": anchor_child,
+            });
+        }
+        if v.get("no_fee_router_rows").and_then(|x| x.as_bool()) == Some(true)
+            || v.get("no_region_vault_rows").and_then(|x| x.as_bool()) == Some(true)
+        {
+            return json!({
+                "participates": false,
+                "pass": true,
+                "state": "no_projection_rows",
+                "anchor_child": anchor_child,
+            });
+        }
+        let clean = v.get("log_verify_clean").and_then(|x| x.as_bool());
+        match clean {
+            Some(true) => json!({
+                "participates": true,
+                "pass": true,
+                "state": "log_verify_clean",
+                "anchor_child": anchor_child,
+            }),
+            Some(false) => json!({
+                "participates": true,
+                "pass": false,
+                "state": "log_verify_failed",
+                "anchor_child": anchor_child,
+            }),
+            None => json!({
+                "participates": false,
+                "pass": true,
+                "state": "clean_unset",
+                "anchor_child": anchor_child,
+            }),
+        }
+    }
+
+    let fr_branch = match fee_router_verify {
+        None => json!({
+            "participates": false,
+            "pass": true,
+            "state": "not_requested",
+        }),
+        Some(v) => log_verify_compound_branch("B-081-FEE-ROUTER-LOG-VERIFY", v),
+    };
+    breakdown.insert("fee_router_log_verify".to_string(), fr_branch);
+
+    let rv_branch = match region_vault_verify {
+        None => json!({
+            "participates": false,
+            "pass": true,
+            "state": "not_requested",
+        }),
+        Some(v) => log_verify_compound_branch("B-082-REGION-VAULT-LOG-VERIFY", v),
+    };
+    breakdown.insert("region_vault_log_verify".to_string(), rv_branch);
+
+    let chain_branch = match chain_observation {
+        None => json!({
+            "participates": false,
+            "pass": true,
+            "state": "not_requested",
+        }),
+        Some(v) => {
+            let ok = v.get("ok").and_then(|x| x.as_bool()).unwrap_or(false);
+            json!({
+                "participates": true,
+                "pass": ok,
+                "state": if ok { "rpc_tip_ok" } else { "rpc_tip_failed" },
+                "anchor_child": "110-RECONCILE-CHAIN-TIP",
+            })
+        }
+    };
+    breakdown.insert("chain_observation".to_string(), chain_branch);
+
+    let compound_pass = indexer_reconcile_compound_pass_from_breakdown(&breakdown);
+    let contributing = breakdown
+        .values()
+        .filter(|v| {
+            v.get("participates")
+                .and_then(|x| x.as_bool())
+                .unwrap_or(false)
+        })
+        .count();
+    let human = format!(
+        "compound_pass={} orders_projection={} contributing_parts={}",
+        compound_pass, orders_pass, contributing
+    );
+
+    (
+        compound_pass,
+        json!({
+            "anchor": "B101-INDEXER-RECONCILE-COMPOUND-GATE",
+            "pass": compound_pass,
+            "orders_projection_reconcile_gate_pass": orders_pass,
+            "breakdown": Value::Object(breakdown),
+            "human_summary": human,
+        }),
+    )
+}
+
+/// **B-121 / TT-B121-INDEXER-RECONCILE-SUMMARY-COMPOUND-SSOT-001**：**`persist` `summary`** 与 **`200`** 体共用 **`reconcile_compound_pass` + `indexer_reconcile_compound_gate`** 时，根级布尔须与 **`gate["pass"]`**、**`breakdown` AND** 三元一致（与 **`indexer_reconcile_compound_gate`** 返回值**同源**，**禁止**手写第二套 compound 布尔）。
+#[cfg(test)]
+fn indexer_reconcile_assert_summary_compound_ssot_b121(summary: &Value) {
+    let root = summary
+        .get("reconcile_compound_pass")
+        .and_then(|v| v.as_bool())
+        .expect("summary must contain reconcile_compound_pass bool");
+    let gate = summary
+        .get("indexer_reconcile_compound_gate")
+        .expect("summary must contain indexer_reconcile_compound_gate");
+    let gate_pass = gate
+        .get("pass")
+        .and_then(|v| v.as_bool())
+        .expect("compound gate pass");
+    let bd = gate
+        .get("breakdown")
+        .and_then(|v| v.as_object())
+        .expect("compound gate breakdown");
+    let from_bd = indexer_reconcile_compound_pass_from_breakdown(bd);
+    assert_eq!(root, gate_pass, "B121 root reconcile_compound_pass vs gate.pass");
+    assert_eq!(root, from_bd, "B121 root vs breakdown AND");
+}
+
 /// 单模式快照：`mode` ∈ latest|hot|recommend（与公开 Feed 同源查询）
 async fn execute_community_ranking_snapshot_core(
     pool: &sqlx::PgPool,
@@ -1435,6 +1758,9 @@ pub struct IndexerReconcileBody {
     /// **`true`** 时在对账 **`200`** 成功后执行 **`db::backfill_orders_chain_id_from_projection`**（仅 **`orders.chain_id IS NULL`**；**110 §3.1.4**）
     #[serde(default)]
     pub backfill_orders_chain_id: bool,
+    /// **`true`** 时在对账 **`200`** 成功后附加 **`orders_chain_id_backfill_dry_run`**（**只读**；**B-102** / **TT-122**；锚 **`B102-ORDERS-CHAIN-ID-BACKFILL-DRY-RUN`**）
+    #[serde(default)]
+    pub orders_chain_id_backfill_dry_run: bool,
     /// **`true`** 时在对账 **`200`** 成功后附加 **`orders_chain_scope_rollback_dry_run`**（**`db::orders_chain_scope_rollback_dry_run`**；只读计数，锚 **`110-ORDERS-CHAIN-SCOPE-DRY-RUN`**；**110 §3.1.4** 向 **Target** 前置）
     #[serde(default)]
     pub orders_chain_scope_rollback_dry_run: bool,
@@ -1958,6 +2284,7 @@ pub async fn indexer_reconcile(
     let chain_id_i64 = (chain_id.min(i64::MAX as u64)) as i64;
     match db::reconcile_orders_projection_vs_orders(pool, chain_id_i64).await {
         Ok(stats) => {
+            let reconcile_gate_value = orders_projection_reconcile_gate(&stats);
             let want_rpc = body
                 .as_ref()
                 .and_then(|j| j.0.rpc_escrow_samples)
@@ -2120,9 +2447,34 @@ pub async fn indexer_reconcile(
                 None
             };
 
+            let rpc_samples_slice: Option<&[serde_json::Value]> = rpc_samples.as_deref();
+            let (reconcile_compound_pass, compound_gate) = indexer_reconcile_compound_gate(
+                &reconcile_gate_value,
+                want_rpc.is_some(),
+                rpc_skip,
+                rpc_samples_slice,
+                body
+                    .as_ref()
+                    .is_some_and(|j| j.0.include_event_log_escrow_coverage),
+                event_log_escrow_coverage.as_ref(),
+                fee_router_log_verify.as_ref(),
+                region_vault_log_verify.as_ref(),
+                chain_observation.as_ref(),
+            );
+
+            let ssot_parallel_chain_snapshot =
+                crate::routes::governance::pool_ssot_parallel_chain_snapshot(&state).await;
+            let ssot_parallel_chain_snapshot_gate =
+                ssot_parallel_chain_snapshot_gate(&ssot_parallel_chain_snapshot);
+
             let mut summary = json!({
                 "task": "indexer_reconcile_orders_projection",
                 "stats": &stats,
+                "orders_projection_reconcile_gate": reconcile_gate_value.clone(),
+                "indexer_reconcile_compound_gate": compound_gate.clone(),
+                "reconcile_compound_pass": reconcile_compound_pass,
+                "ssot_parallel_chain_snapshot": ssot_parallel_chain_snapshot.clone(),
+                "ssot_parallel_chain_snapshot_gate": ssot_parallel_chain_snapshot_gate.clone(),
                 "checkpoint": {
                     "block_number": state.indexer_checkpoint.block_number,
                     "log_index": state.indexer_checkpoint.log_index
@@ -2155,6 +2507,9 @@ pub async fn indexer_reconcile(
             if let Some(ref rv) = region_vault_log_verify {
                 summary["region_vault_log_verify"] = rv.clone();
             }
+
+            let orders_projection_gate_for_http =
+                indexer_reconcile_orders_projection_gate_from_persist_summary(&summary);
 
             let report_id = if persist {
                 match db::insert_reconciliation_report(
@@ -2192,6 +2547,11 @@ pub async fn indexer_reconcile(
                 "reorg_detected": state.reorg_detected,
                 "issues_total": stats.issues_total,
                 "projection_reconcile_clean": stats.projection_reconcile_clean,
+                "reconcile_compound_pass": reconcile_compound_pass,
+                "orders_projection_reconcile_gate": orders_projection_gate_for_http,
+                "indexer_reconcile_compound_gate": compound_gate,
+                "ssot_parallel_chain_snapshot": ssot_parallel_chain_snapshot,
+                "ssot_parallel_chain_snapshot_gate": ssot_parallel_chain_snapshot_gate,
                 "stats": stats,
                 "report_id": report_id.map(|id| id.to_string()),
             });
@@ -2218,6 +2578,37 @@ pub async fn indexer_reconcile(
             }
             if let Some(rv) = region_vault_log_verify {
                 resp_body["region_vault_log_verify"] = rv;
+            }
+            if body
+                .as_ref()
+                .is_some_and(|j| j.0.orders_chain_id_backfill_dry_run)
+            {
+                let list_scope_business = state
+                    .chain_off
+                    .as_ref()
+                    .and_then(|co| co.config.business_chain_id);
+                match db::orders_chain_id_backfill_dry_run_summary(
+                    pool,
+                    chain_id_i64,
+                    list_scope_business,
+                )
+                .await
+                {
+                    Ok(s) => {
+                        resp_body["orders_chain_id_backfill_dry_run"] =
+                            serde_json::to_value(&s).unwrap_or_else(|_| json!({}));
+                    }
+                    Err(e) => {
+                        return (
+                            StatusCode::INTERNAL_SERVER_ERROR,
+                            Json(crate::api_json::err_key_detail(
+                                "orders_chain_id_backfill_dry_run_failed",
+                                e.to_string(),
+                            )),
+                        )
+                            .into_response();
+                    }
+                }
             }
             if body.as_ref().is_some_and(|j| j.0.backfill_orders_chain_id) {
                 match db::backfill_orders_chain_id_from_projection(pool, chain_id_i64).await {
@@ -3386,6 +3777,66 @@ mod tests {
         assert!(build.get("rule").is_some());
     }
 
+    #[test]
+    fn ssot_parallel_chain_snapshot_gate_patterns() {
+        let all = json!({
+            "fee_router_erc20_balance_read": {"read_status": "ok"},
+            "governance_treasury_native_balance_read": {"read_status": "ok"},
+            "region_vault_erc20_balance_read": {"read_status": "ok"},
+        });
+        let g = ssot_parallel_chain_snapshot_gate(&all);
+        assert_eq!(g["pass"], true);
+        assert_eq!(g["pattern"].as_str(), Some("all_readable"));
+
+        let partial = json!({
+            "fee_router_erc20_balance_read": {"read_status": "ok"},
+            "governance_treasury_native_balance_read": serde_json::Value::Null,
+            "region_vault_erc20_balance_read": serde_json::Value::Null,
+        });
+        let g2 = ssot_parallel_chain_snapshot_gate(&partial);
+        assert_eq!(g2["pass"], false);
+        assert_eq!(g2["pattern"].as_str(), Some("partial_readable"));
+
+        let none = json!({
+            "fee_router_erc20_balance_read": serde_json::Value::Null,
+            "governance_treasury_native_balance_read": serde_json::Value::Null,
+            "region_vault_erc20_balance_read": serde_json::Value::Null,
+        });
+        let g3 = ssot_parallel_chain_snapshot_gate(&none);
+        assert_eq!(g3["pass"], false);
+        assert_eq!(g3["pattern"].as_str(), Some("none_readable"));
+    }
+
+    /// **RegionVault 腿**单独可读仍为 **`partial_readable` / `pass:false`**：本 gate 只统计三腿并行观测，**不**等价于根级 **`country_pool`** 链上主读已启用或已对齐。
+    #[test]
+    fn ssot_parallel_chain_snapshot_gate_region_vault_leg_ok_alone_is_partial_not_root_country_pool_ssot() {
+        let rv_only = json!({
+            "fee_router_erc20_balance_read": serde_json::Value::Null,
+            "governance_treasury_native_balance_read": serde_json::Value::Null,
+            "region_vault_erc20_balance_read": {"read_status": "ok"},
+        });
+        let g = ssot_parallel_chain_snapshot_gate(&rv_only);
+        assert_eq!(g["pass"], false);
+        assert_eq!(g["pattern"].as_str(), Some("partial_readable"));
+        assert_eq!(g["readable_legs"], 1);
+        assert_eq!(g["legs"]["region_vault_erc20_balance_read_ok"], true);
+    }
+
+    /// **GovernanceTreasury 原生 Wei 腿**单独可读仍为 **`partial_readable` / `pass:false`**：本 gate 只统计三腿并行观测，**不**等价于根级 **`treasury_pool*`** 链上主读已启用或已对齐（**TT-SSOT-SWITCH-APPLY-002**）。
+    #[test]
+    fn ssot_parallel_chain_snapshot_gate_treasury_native_leg_ok_alone_is_partial_not_root_treasury_pool_ssot() {
+        let tr_only = json!({
+            "fee_router_erc20_balance_read": serde_json::Value::Null,
+            "governance_treasury_native_balance_read": {"read_status": "ok"},
+            "region_vault_erc20_balance_read": serde_json::Value::Null,
+        });
+        let g = ssot_parallel_chain_snapshot_gate(&tr_only);
+        assert_eq!(g["pass"], false);
+        assert_eq!(g["pattern"].as_str(), Some("partial_readable"));
+        assert_eq!(g["readable_legs"], 1);
+        assert_eq!(g["legs"]["governance_treasury_native_balance_read_ok"], true);
+    }
+
     #[tokio::test]
     async fn indexer_status_ok_omits_last_stored_without_db() {
         let resp = indexer_status(State(build_state()), Query(IndexerStatusQuery::default()))
@@ -3969,6 +4420,767 @@ mod tests {
         assert_eq!(b.chain_id, Some(42161));
     }
 
+    /// **TT-B121-INDEXER-RECONCILE-HANDLER-SUMMARY-COMPOUND-SSOT-001**：模拟 **`POST …/indexer-reconcile`** 写入 **`summary`** 的 **`reconcile_compound_pass` / `indexer_reconcile_compound_gate`** 与 **`indexer_reconcile_compound_gate`** 元组**同源**；根级、**`gate.pass`**、**`breakdown` AND** 三元一致。
+    #[test]
+    fn tt_b121_handler_summary_compound_matches_compound_gate_tuple() {
+        let orders_gate = json!({"pass": true});
+        let samples = [
+            json!({"coarse_terminal_aligned": true}),
+            json!({"coarse_terminal_aligned": true}),
+        ];
+        let ev_cov = json!({"anchor": "110-EVENT-LOG-ESCROW-COVERAGE", "chain_id": 137});
+        let (reconcile_compound_pass, compound_gate) = indexer_reconcile_compound_gate(
+            &orders_gate,
+            true,
+            None,
+            Some(&samples),
+            true,
+            Some(&ev_cov),
+            None,
+            None,
+            None,
+        );
+        let summary = json!({
+            "task": "indexer_reconcile_orders_projection",
+            "reconcile_compound_pass": reconcile_compound_pass,
+            "indexer_reconcile_compound_gate": compound_gate.clone(),
+        });
+        super::indexer_reconcile_assert_summary_compound_ssot_b121(&summary);
+        b101_assert_compound_pass_matches_breakdown(reconcile_compound_pass, &compound_gate);
+    }
+
+    /// **TT-B121-RPC-EVENT-LOG-BREAKDOWN-PARTICIPATES-001**：**`rpc_escrow_samples`** 与 **`event_log_escrow_coverage`** 的 **`participates`/`pass`** 与 **`indexer_reconcile_compound_gate`** breakdown **同源**（RPC 未对齐则 compound **false**，event_log 观测枝 **pass true** 仍参与 AND）。
+    #[test]
+    fn tt_b121_rpc_misaligned_event_log_requested_breakdown_matches_gate() {
+        let orders_gate = json!({"pass": true});
+        let samples = [
+            json!({"coarse_terminal_aligned": true}),
+            json!({"coarse_terminal_aligned": false}),
+        ];
+        let ev_cov = json!({"anchor": "110-EVENT-LOG-ESCROW-COVERAGE"});
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &orders_gate,
+            true,
+            None,
+            Some(&samples),
+            true,
+            Some(&ev_cov),
+            None,
+            None,
+            None,
+        );
+        assert!(!compound_pass);
+        let summary = json!({
+            "reconcile_compound_pass": compound_pass,
+            "indexer_reconcile_compound_gate": c.clone(),
+        });
+        super::indexer_reconcile_assert_summary_compound_ssot_b121(&summary);
+        let bd = c["breakdown"].as_object().unwrap();
+        let rpc = bd.get("rpc_escrow_samples").unwrap();
+        assert_eq!(rpc["participates"], true);
+        assert_eq!(rpc["pass"], false);
+        let ev = bd.get("event_log_escrow_coverage").unwrap();
+        assert_eq!(ev["participates"], true);
+        assert_eq!(ev["pass"], true);
+    }
+
+    /// **TT-B117-INDEXER-RECONCILE-ORDERS-PROJECTION-GATE-PERSIST-SUMMARY-SSOT-001**：**`200`** 根级 **`orders_projection_reconcile_gate`** 与 **`persist` `summary`** 内同键**同源**（handler 自 **`summary`** 取子树；**`insert_reconciliation_report`** 与响应共享 **`summary`** 中该对象）。
+    #[test]
+    fn tt_b117_gate_from_persist_summary_matches_assembled_summary() {
+        let stats = db::OrdersProjectionReconcileStats {
+            chain_id: 137,
+            orders_with_escrow: 2,
+            projection_rows_chain: 2,
+            malformed_projection_order_id_bytes: 0,
+            matched: 2,
+            missing_projection: 0,
+            status_mismatch: 0,
+            escrow_mismatch: 0,
+            orphan_projections: 0,
+            issues_total: 0,
+            projection_reconcile_clean: true,
+            samples: None,
+        };
+        let gate = orders_projection_reconcile_gate(&stats);
+        let summary = json!({
+            "task": "indexer_reconcile_orders_projection",
+            "stats": &stats,
+            "orders_projection_reconcile_gate": gate.clone(),
+        });
+        let extracted = indexer_reconcile_orders_projection_gate_from_persist_summary(&summary);
+        assert_eq!(extracted, gate);
+        let persisted_subtree = summary
+            .get("orders_projection_reconcile_gate")
+            .expect("summary gate");
+        assert_eq!(persisted_subtree, &gate);
+        let simulated_http = json!({ "orders_projection_reconcile_gate": extracted });
+        assert_eq!(
+            simulated_http.get("orders_projection_reconcile_gate"),
+            Some(persisted_subtree)
+        );
+    }
+
+    /// **TT-B101-INDEXER-RECONCILE-COMPOUND-PASS-TUPLE-001**：根级布尔与 **`gate["pass"]`**、**`breakdown` AND** 三元一致（**`POST …/indexer-reconcile`** 成功体 **`reconcile_compound_pass`** 同源）。
+    fn b101_assert_compound_pass_matches_breakdown(compound_pass: bool, gate: &serde_json::Value) {
+        assert_eq!(
+            gate.get("pass").and_then(|v| v.as_bool()),
+            Some(compound_pass)
+        );
+        let bd = gate
+            .get("breakdown")
+            .and_then(|b| b.as_object())
+            .expect("breakdown object");
+        assert_eq!(
+            compound_pass,
+            super::indexer_reconcile_compound_pass_from_breakdown(bd)
+        );
+    }
+
+    #[test]
+    fn b101_compound_gate_orders_only_matches_projection_gate() {
+        let gate = json!({"pass": true});
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &gate,
+            false,
+            None,
+            None,
+            false,
+            None,
+            None,
+            None,
+            None,
+        );
+        assert!(compound_pass);
+        b101_assert_compound_pass_matches_breakdown(compound_pass, &c);
+        assert_eq!(
+            c.get("anchor").and_then(|x| x.as_str()),
+            Some("B101-INDEXER-RECONCILE-COMPOUND-GATE")
+        );
+    }
+
+    #[test]
+    fn b101_compound_gate_orders_false_dominates_even_if_rpc_clean() {
+        let gate = json!({"pass": false});
+        let samples = [json!({"coarse_terminal_aligned": true})];
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &gate,
+            true,
+            None,
+            Some(&samples),
+            false,
+            None,
+            None,
+            None,
+            None,
+        );
+        assert!(!compound_pass);
+        b101_assert_compound_pass_matches_breakdown(compound_pass, &c);
+    }
+
+    #[test]
+    fn b101_compound_gate_rpc_misaligned_fails_when_requested() {
+        let gate = json!({"pass": true});
+        let samples = [json!({"coarse_terminal_aligned": false})];
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &gate,
+            true,
+            None,
+            Some(&samples),
+            false,
+            None,
+            None,
+            None,
+            None,
+        );
+        assert!(!compound_pass);
+        b101_assert_compound_pass_matches_breakdown(compound_pass, &c);
+    }
+
+    #[test]
+    fn b101_compound_gate_rpc_skipped_does_not_fail_compound() {
+        let gate = json!({"pass": true});
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &gate,
+            true,
+            Some("escrow_factory_or_rpc_not_configured"),
+            None,
+            false,
+            None,
+            None,
+            None,
+            None,
+        );
+        assert!(compound_pass);
+        b101_assert_compound_pass_matches_breakdown(compound_pass, &c);
+    }
+
+    #[test]
+    fn b101_compound_gate_chain_observation_ok_false_fails() {
+        let gate = json!({"pass": true});
+        let obs = json!({"ok": false, "error": "rpc_down"});
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &gate,
+            false,
+            None,
+            None,
+            false,
+            None,
+            None,
+            None,
+            Some(&obs),
+        );
+        assert!(!compound_pass);
+        b101_assert_compound_pass_matches_breakdown(compound_pass, &c);
+    }
+
+    /// **TT-B101-RPC-EVENTLOG-CHAIN-COVERAGE-BREAKDOWN-001**：**`rpc_escrow_samples`**（**`coarse_terminal_aligned`**）+ **`event_log_escrow_coverage`** + **`chain_observation`** 同时 **`participates`** 时，根级 **`pass`** 与 **`breakdown`** 子 **`pass`** 同源 AND。
+    #[test]
+    fn b101_compound_gate_rpc_event_log_chain_observation_align_with_breakdown() {
+        let gate = json!({"pass": true});
+        let samples = [
+            json!({"coarse_terminal_aligned": true}),
+            json!({"coarse_terminal_aligned": true}),
+        ];
+        let ev = json!({
+            "anchor": "110-EVENT-LOG-ESCROW-COVERAGE",
+            "escrow_class_event_rows": 3_i64,
+            "escrow_created_rows": 1_i64,
+        });
+        let obs = json!({"ok": true, "anchor": "110-RECONCILE-CHAIN-TIP"});
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &gate,
+            true,
+            None,
+            Some(&samples),
+            true,
+            Some(&ev),
+            None,
+            None,
+            Some(&obs),
+        );
+        assert!(compound_pass);
+        b101_assert_compound_pass_matches_breakdown(compound_pass, &c);
+        let bd = c.get("breakdown").unwrap();
+        let rpc = bd.get("rpc_escrow_samples").unwrap();
+        assert_eq!(rpc.get("samples_count").and_then(|x| x.as_u64()), Some(2));
+        assert_eq!(
+            rpc.get("participates").and_then(|x| x.as_bool()),
+            Some(true)
+        );
+        assert_eq!(rpc.get("pass").and_then(|x| x.as_bool()), Some(true));
+        let el = bd.get("event_log_escrow_coverage").unwrap();
+        assert_eq!(
+            el.get("participates").and_then(|x| x.as_bool()),
+            Some(true)
+        );
+        assert_eq!(
+            el.get("anchor_child").and_then(|x| x.as_str()),
+            Some("110-EVENT-LOG-ESCROW-COVERAGE")
+        );
+        let ch = bd.get("chain_observation").unwrap();
+        assert_eq!(
+            ch.get("participates").and_then(|x| x.as_bool()),
+            Some(true)
+        );
+        assert_eq!(ch.get("pass").and_then(|x| x.as_bool()), Some(true));
+    }
+
+    #[test]
+    fn b101_compound_gate_fee_router_log_verify_clean_participates() {
+        let gate = json!({"pass": true});
+        let fr = json!({"log_verify_clean": true, "samples": [1]});
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &gate,
+            false,
+            None,
+            None,
+            false,
+            None,
+            Some(&fr),
+            None,
+            None,
+        );
+        assert!(compound_pass);
+        b101_assert_compound_pass_matches_breakdown(compound_pass, &c);
+    }
+
+    #[test]
+    fn b101_compound_gate_fee_router_log_verify_unclean_fails() {
+        let gate = json!({"pass": true});
+        let fr = json!({"log_verify_clean": false, "samples": [1]});
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &gate,
+            false,
+            None,
+            None,
+            false,
+            None,
+            Some(&fr),
+            None,
+            None,
+        );
+        assert!(!compound_pass);
+        b101_assert_compound_pass_matches_breakdown(compound_pass, &c);
+    }
+
+    #[test]
+    fn b101_compound_gate_region_vault_log_verify_clean_participates() {
+        let gate = json!({"pass": true});
+        let rv = json!({"log_verify_clean": true, "samples": [1]});
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &gate,
+            false,
+            None,
+            None,
+            false,
+            None,
+            None,
+            Some(&rv),
+            None,
+        );
+        assert!(compound_pass);
+        b101_assert_compound_pass_matches_breakdown(compound_pass, &c);
+    }
+
+    #[test]
+    fn b101_compound_gate_region_vault_log_verify_unclean_fails() {
+        let gate = json!({"pass": true});
+        let rv = json!({"log_verify_clean": false, "samples": [1]});
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &gate,
+            false,
+            None,
+            None,
+            false,
+            None,
+            None,
+            Some(&rv),
+            None,
+        );
+        assert!(!compound_pass);
+        b101_assert_compound_pass_matches_breakdown(compound_pass, &c);
+    }
+
+    #[test]
+    fn b101_compound_gate_fee_router_log_verify_skipped_does_not_fail_compound() {
+        let gate = json!({"pass": true});
+        let fr = json!({
+            "anchor": "B-081-FEE-ROUTER-LOG-VERIFY",
+            "skipped": "fee_router_address_not_configured",
+            "sample_limit_requested": 5u8,
+            "sample_limit_applied": 5usize,
+            "samples_returned": 0usize,
+            "samples": [],
+        });
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &gate,
+            false,
+            None,
+            None,
+            false,
+            None,
+            Some(&fr),
+            None,
+            None,
+        );
+        assert!(compound_pass);
+        b101_assert_compound_pass_matches_breakdown(compound_pass, &c);
+        assert_eq!(
+            c.get("orders_projection_reconcile_gate_pass"),
+            Some(&json!(true))
+        );
+        let bd = c.get("breakdown").unwrap();
+        assert_eq!(
+            bd.get("orders_projection")
+                .and_then(|x| x.get("pass"))
+                .and_then(|x| x.as_bool()),
+            Some(true)
+        );
+        assert_eq!(
+            bd.get("fee_router_log_verify")
+                .and_then(|x| x.get("participates"))
+                .and_then(|x| x.as_bool()),
+            Some(false)
+        );
+    }
+
+    #[test]
+    fn b101_compound_gate_region_vault_log_verify_skipped_does_not_fail_compound() {
+        let gate = json!({"pass": true});
+        let rv = json!({
+            "anchor": "B-082-REGION-VAULT-LOG-VERIFY",
+            "skipped": "region_vault_address_not_configured",
+            "sample_limit_requested": 5u8,
+            "sample_limit_applied": 5usize,
+            "samples_returned": 0usize,
+            "samples": [],
+        });
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &gate,
+            false,
+            None,
+            None,
+            false,
+            None,
+            None,
+            Some(&rv),
+            None,
+        );
+        assert!(compound_pass);
+        b101_assert_compound_pass_matches_breakdown(compound_pass, &c);
+        assert_eq!(
+            c.get("orders_projection_reconcile_gate_pass"),
+            Some(&json!(true))
+        );
+        let bd = c.get("breakdown").unwrap();
+        assert_eq!(
+            bd.get("orders_projection")
+                .and_then(|x| x.get("pass"))
+                .and_then(|x| x.as_bool()),
+            Some(true)
+        );
+        assert_eq!(
+            bd.get("region_vault_log_verify")
+                .and_then(|x| x.get("participates"))
+                .and_then(|x| x.as_bool()),
+            Some(false)
+        );
+    }
+
+    #[test]
+    fn b101_compound_gate_fee_router_log_verify_no_rows_does_not_fail_compound() {
+        let gate = json!({"pass": true});
+        let fr = json!({
+            "anchor": "B-081-FEE-ROUTER-LOG-VERIFY",
+            "sample_limit_requested": 5u8,
+            "sample_limit_applied": 5usize,
+            "samples_returned": 0usize,
+            "fee_router_projection_rows_fetched": 0usize,
+            "samples": [],
+            "log_verify_clean": serde_json::Value::Null,
+            "no_fee_router_rows": true,
+            "fee_router_recipients_on_chain": serde_json::Value::Null,
+        });
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &gate,
+            false,
+            None,
+            None,
+            false,
+            None,
+            Some(&fr),
+            None,
+            None,
+        );
+        assert!(compound_pass);
+        b101_assert_compound_pass_matches_breakdown(compound_pass, &c);
+        assert_eq!(
+            c.get("orders_projection_reconcile_gate_pass"),
+            Some(&json!(true))
+        );
+        let bd = c.get("breakdown").unwrap();
+        assert_eq!(
+            bd.get("orders_projection")
+                .and_then(|x| x.get("pass"))
+                .and_then(|x| x.as_bool()),
+            Some(true)
+        );
+        assert_eq!(
+            bd.get("fee_router_log_verify")
+                .and_then(|x| x.get("participates"))
+                .and_then(|x| x.as_bool()),
+            Some(false)
+        );
+    }
+
+    #[test]
+    fn b101_compound_gate_region_vault_log_verify_no_rows_does_not_fail_compound() {
+        let gate = json!({"pass": true});
+        let rv = json!({
+            "anchor": "B-082-REGION-VAULT-LOG-VERIFY",
+            "sample_limit_requested": 5u8,
+            "sample_limit_applied": 5usize,
+            "samples_returned": 0usize,
+            "region_vault_projection_rows_fetched": 0usize,
+            "samples": [],
+            "log_verify_clean": serde_json::Value::Null,
+            "no_region_vault_rows": true,
+        });
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &gate,
+            false,
+            None,
+            None,
+            false,
+            None,
+            None,
+            Some(&rv),
+            None,
+        );
+        assert!(compound_pass);
+        b101_assert_compound_pass_matches_breakdown(compound_pass, &c);
+        assert_eq!(
+            c.get("orders_projection_reconcile_gate_pass"),
+            Some(&json!(true))
+        );
+        let bd = c.get("breakdown").unwrap();
+        assert_eq!(
+            bd.get("orders_projection")
+                .and_then(|x| x.get("pass"))
+                .and_then(|x| x.as_bool()),
+            Some(true)
+        );
+        assert_eq!(
+            bd.get("region_vault_log_verify")
+                .and_then(|x| x.get("participates"))
+                .and_then(|x| x.as_bool()),
+            Some(false)
+        );
+    }
+
+    #[test]
+    fn b101_compound_gate_fee_router_log_verify_missing_clean_key_does_not_fail_compound() {
+        let gate = json!({"pass": true});
+        let fr = json!({
+            "anchor": "B-081-FEE-ROUTER-LOG-VERIFY",
+            "sample_limit_requested": 5u8,
+            "sample_limit_applied": 5usize,
+            "samples_returned": 1usize,
+            "fee_router_projection_rows_fetched": 1usize,
+            "samples": [{"ok": true}],
+            "fee_router_recipients_on_chain": serde_json::Value::Null,
+        });
+        assert!(
+            fr.get("log_verify_clean").is_none(),
+            "fixture must omit log_verify_clean key"
+        );
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &gate,
+            false,
+            None,
+            None,
+            false,
+            None,
+            Some(&fr),
+            None,
+            None,
+        );
+        assert!(compound_pass);
+        b101_assert_compound_pass_matches_breakdown(compound_pass, &c);
+        assert_eq!(
+            c.get("orders_projection_reconcile_gate_pass"),
+            Some(&json!(true))
+        );
+        let bd = c.get("breakdown").unwrap();
+        assert_eq!(
+            bd.get("orders_projection")
+                .and_then(|x| x.get("pass"))
+                .and_then(|x| x.as_bool()),
+            Some(true)
+        );
+        assert_eq!(
+            bd.get("fee_router_log_verify")
+                .and_then(|x| x.get("participates"))
+                .and_then(|x| x.as_bool()),
+            Some(false)
+        );
+    }
+
+    #[test]
+    fn b101_compound_gate_region_vault_log_verify_missing_clean_key_does_not_fail_compound() {
+        let gate = json!({"pass": true});
+        let rv = json!({
+            "anchor": "B-082-REGION-VAULT-LOG-VERIFY",
+            "sample_limit_requested": 5u8,
+            "sample_limit_applied": 5usize,
+            "samples_returned": 1usize,
+            "region_vault_projection_rows_fetched": 1usize,
+            "samples": [{"ok": true}],
+        });
+        assert!(
+            rv.get("log_verify_clean").is_none(),
+            "fixture must omit log_verify_clean key"
+        );
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &gate,
+            false,
+            None,
+            None,
+            false,
+            None,
+            None,
+            Some(&rv),
+            None,
+        );
+        assert!(compound_pass);
+        b101_assert_compound_pass_matches_breakdown(compound_pass, &c);
+        assert_eq!(
+            c.get("orders_projection_reconcile_gate_pass"),
+            Some(&json!(true))
+        );
+        let bd = c.get("breakdown").unwrap();
+        assert_eq!(
+            bd.get("orders_projection")
+                .and_then(|x| x.get("pass"))
+                .and_then(|x| x.as_bool()),
+            Some(true)
+        );
+        assert_eq!(
+            bd.get("region_vault_log_verify")
+                .and_then(|x| x.get("participates"))
+                .and_then(|x| x.as_bool()),
+            Some(false)
+        );
+    }
+
+    #[test]
+    fn b101_compound_gate_fee_router_log_verify_clean_null_does_not_fail_compound() {
+        let gate = json!({"pass": true});
+        let fr = json!({
+            "anchor": "B-081-FEE-ROUTER-LOG-VERIFY",
+            "sample_limit_requested": 5u8,
+            "sample_limit_applied": 5usize,
+            "samples_returned": 1usize,
+            "fee_router_projection_rows_fetched": 1usize,
+            "samples": [{"ok": true}],
+            "log_verify_clean": serde_json::Value::Null,
+            "fee_router_recipients_on_chain": serde_json::Value::Null,
+        });
+        assert_eq!(fr.get("log_verify_clean"), Some(&serde_json::Value::Null));
+        assert!(fr.get("skipped").is_none());
+        assert!(fr.get("no_fee_router_rows").is_none());
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &gate,
+            false,
+            None,
+            None,
+            false,
+            None,
+            Some(&fr),
+            None,
+            None,
+        );
+        assert!(compound_pass);
+        b101_assert_compound_pass_matches_breakdown(compound_pass, &c);
+        assert_eq!(
+            c.get("orders_projection_reconcile_gate_pass"),
+            Some(&json!(true))
+        );
+        let bd = c.get("breakdown").unwrap();
+        assert_eq!(
+            bd.get("orders_projection")
+                .and_then(|x| x.get("pass"))
+                .and_then(|x| x.as_bool()),
+            Some(true)
+        );
+        assert_eq!(
+            bd.get("fee_router_log_verify")
+                .and_then(|x| x.get("participates"))
+                .and_then(|x| x.as_bool()),
+            Some(false)
+        );
+    }
+
+    #[test]
+    fn b101_compound_gate_region_vault_log_verify_clean_null_does_not_fail_compound() {
+        let gate = json!({"pass": true});
+        let rv = json!({
+            "anchor": "B-082-REGION-VAULT-LOG-VERIFY",
+            "sample_limit_requested": 5u8,
+            "sample_limit_applied": 5usize,
+            "samples_returned": 1usize,
+            "region_vault_projection_rows_fetched": 1usize,
+            "samples": [{"ok": true}],
+            "log_verify_clean": serde_json::Value::Null,
+        });
+        assert_eq!(rv.get("log_verify_clean"), Some(&serde_json::Value::Null));
+        assert!(rv.get("skipped").is_none());
+        assert!(rv.get("no_region_vault_rows").is_none());
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &gate,
+            false,
+            None,
+            None,
+            false,
+            None,
+            None,
+            Some(&rv),
+            None,
+        );
+        assert!(compound_pass);
+        b101_assert_compound_pass_matches_breakdown(compound_pass, &c);
+        assert_eq!(
+            c.get("orders_projection_reconcile_gate_pass"),
+            Some(&json!(true))
+        );
+        let bd = c.get("breakdown").unwrap();
+        assert_eq!(
+            bd.get("orders_projection")
+                .and_then(|x| x.get("pass"))
+                .and_then(|x| x.as_bool()),
+            Some(true)
+        );
+        assert_eq!(
+            bd.get("region_vault_log_verify")
+                .and_then(|x| x.get("participates"))
+                .and_then(|x| x.as_bool()),
+            Some(false)
+        );
+    }
+
+    #[test]
+    fn b101_compound_gate_log_verify_noise_keys_do_not_change_compound_result() {
+        let gate = json!({"pass": true});
+        let fr = json!({
+            "log_verify_clean": true,
+            "samples": [1],
+            "extra_note": "noise",
+            "unexpected_counter": 42i64,
+        });
+        let rv = json!({
+            "log_verify_clean": true,
+            "samples": [1],
+            "extra_note": "noise",
+            "unexpected_counter": 7i64,
+        });
+        let (compound_pass, c) = indexer_reconcile_compound_gate(
+            &gate,
+            false,
+            None,
+            None,
+            false,
+            None,
+            Some(&fr),
+            Some(&rv),
+            None,
+        );
+        assert!(compound_pass);
+        b101_assert_compound_pass_matches_breakdown(compound_pass, &c);
+        assert_eq!(
+            c.get("orders_projection_reconcile_gate_pass"),
+            Some(&json!(true))
+        );
+        let bd = c.get("breakdown").unwrap();
+        assert_eq!(
+            bd.get("orders_projection")
+                .and_then(|x| x.get("pass"))
+                .and_then(|x| x.as_bool()),
+            Some(true)
+        );
+        let fr_b = bd.get("fee_router_log_verify").unwrap();
+        assert_eq!(
+            fr_b.get("participates").and_then(|x| x.as_bool()),
+            Some(true)
+        );
+        assert_eq!(fr_b.get("pass").and_then(|x| x.as_bool()), Some(true));
+        let rv_b = bd.get("region_vault_log_verify").unwrap();
+        assert_eq!(
+            rv_b.get("participates").and_then(|x| x.as_bool()),
+            Some(true)
+        );
+        assert_eq!(rv_b.get("pass").and_then(|x| x.as_bool()), Some(true));
+    }
+
     #[test]
     fn indexer_replay_body_deserializes_optional_chain_id() {
         let v = json!({"chain_id": 80001});
@@ -3976,6 +5188,13 @@ mod tests {
         assert_eq!(b.chain_id, Some(80001));
         let empty: IndexerReplayBody = serde_json::from_value(json!({})).unwrap();
         assert!(empty.chain_id.is_none());
+    }
+
+    #[test]
+    fn indexer_reconcile_body_deserializes_orders_chain_id_backfill_dry_run() {
+        let v = json!({"orders_chain_id_backfill_dry_run": true});
+        let b: IndexerReconcileBody = serde_json::from_value(v).unwrap();
+        assert!(b.orders_chain_id_backfill_dry_run);
     }
 
     #[test]
@@ -4015,6 +5234,59 @@ mod tests {
             v.get("hint").and_then(|x| x.as_str()),
             Some("CHAIN_RPC_URL and ESCROW_FACTORY_ADDRESS required")
         );
+    }
+
+    /// **TT-B096-RESOLUTION-OUTBOX-PROCESS-PROJECTION-HANDLER-001**：队列非空时 **`process_resolution_outbox`** 走 **`chain::outbox::process_one`** → **`submit_execute_resolution`**；无密钥/RPC 时 **`execute_failed`** 且 **不**出队（等价于「已消费尝试、可追溯失败 detail」）；若环境已配执行器+可用 RPC 则 **`200`** + **`tx_hash`** 且出队。
+    #[tokio::test]
+    async fn b096_process_resolution_outbox_process_one_nonempty_queue() {
+        let outbox = chain::outbox::new_resolution_outbox();
+        chain::outbox::push_resolution(
+            &outbox,
+            chain::outbox::ResolutionOutboxEntry {
+                order_id: "00000000-0000-0000-0000-0000000000b6".to_string(),
+                escrow_address: "0x1111111111111111111111111111111111111111".to_string(),
+                resolution_id: [0xB6u8; 32],
+                decision_hash: [0x96u8; 32],
+                guide_amount: 1,
+                traveler_refund: 1,
+                platform_fee: 1,
+            },
+        )
+        .await;
+        let mut s = build_state_chain_only_no_indexer_no_db_pool();
+        s.resolution_outbox = Some(outbox.clone());
+        let resp = process_resolution_outbox(State(s)).await.into_response();
+        let status = resp.status();
+        let body = resp.into_body().collect().await.unwrap().to_bytes();
+        let v: serde_json::Value = serde_json::from_slice(&body).expect("json");
+        match status {
+            StatusCode::OK => {
+                assert_eq!(v.get("processed").and_then(|x| x.as_u64()), Some(1));
+                let tx = v.get("tx_hash").and_then(|x| x.as_str()).unwrap_or("");
+                assert!(
+                    tx.starts_with("0x") && tx.len() > 2,
+                    "expected tx_hash, got {v}"
+                );
+                assert!(outbox.read().await.is_empty());
+            }
+            StatusCode::INTERNAL_SERVER_ERROR => {
+                assert_eq!(
+                    v.get("error").and_then(|x| x.as_str()),
+                    Some("execute_failed")
+                );
+                let detail = v.get("detail").and_then(|x| x.as_str()).unwrap_or("");
+                assert!(
+                    detail.contains("CHAIN_EXECUTOR_PRIVATE_KEY")
+                        || detail.contains("connection")
+                        || detail.contains("error sending request")
+                        || detail.contains("get nonce")
+                        || detail.contains("get gasPrice"),
+                    "unexpected detail={detail}"
+                );
+                assert_eq!(outbox.read().await.len(), 1);
+            }
+            other => panic!("unexpected status {other} body={v}"),
+        }
     }
 
     #[tokio::test]

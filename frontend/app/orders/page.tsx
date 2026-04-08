@@ -12,7 +12,12 @@ import ApiErrorAlert from "@/components/ApiErrorAlert";
 import TrustInfraWall from "@/components/trust/TrustInfraWall";
 import LoadingText from "@/components/LoadingText";
 import { orderLikeMayOnchainDeposit } from "@/components/escrow/EscrowDetail/escrowOnChainEligibility";
-import { orderStateToBadgeVariant, orderStateToStatusLabelKey } from "@/lib/orderStatusI18n";
+import {
+  orderBadgeVariantFromApiOrder,
+  orderProjectionDivergesFromOrderState,
+  orderProjectionTerminalDegraded,
+  orderStatusLabelKeyFromApiOrder,
+} from "@/lib/orderProjectionDisplayStatus";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { dedupeListById, mergeListsUniqueById } from "@/lib/dedupeListById";
 import { ordersNewHrefForGuide } from "@/lib/ordersGuideDeepLink";
@@ -52,6 +57,8 @@ function orderListItemToDetailDrawer(item: OrderListItem): OrderDetailItem {
     state: item.state,
     status: item.status,
     sub_status: item.sub_status,
+    display_status: item.display_status,
+    projection_terminal: item.projection_terminal,
     destination: item.destination,
     country: item.country,
     city: item.city,
@@ -645,17 +652,11 @@ function OrdersPageInner() {
             {list.map((item, i) => {
               const id = item?.id ?? String(i);
               const state = (item?.state ?? item?.status ?? "").toLowerCase();
-              const statusKey = orderStateToStatusLabelKey({
-                state: item?.state,
-                status: item?.status,
-                sub_status: item?.sub_status,
-              });
+              const statusKey = orderStatusLabelKeyFromApiOrder(item);
               const statusLabel = t(statusKey) || state || t("ui_em_dash");
-              const variant = orderStateToBadgeVariant({
-                state: item?.state,
-                status: item?.status,
-                sub_status: item?.sub_status,
-              });
+              const variant = orderBadgeVariantFromApiOrder(item);
+              const projectionDiverges = orderProjectionDivergesFromOrderState(item);
+              const projectionDegraded = orderProjectionTerminalDegraded(item);
               const isDraftOrder = isDraftOrderListState(state);
               const canDelete =
                 state === "created" ||
@@ -699,6 +700,13 @@ function OrdersPageInner() {
                       </span>
                     )}
                   </div>
+                  {(projectionDiverges || projectionDegraded) ? (
+                    <p className="text-meta text-amber-800 mt-1.5 leading-snug" role="note">
+                      {projectionDegraded
+                        ? t("orders_projection_ssot_degraded")
+                        : t("orders_projection_ssot_notice_divergent_short")}
+                    </p>
+                  ) : null}
                   {item.escrow_address ? (
                     <p
                       className="text-meta text-ink-500 mt-1.5 font-mono truncate max-w-full"

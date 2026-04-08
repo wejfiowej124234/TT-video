@@ -1,4 +1,4 @@
-//! 份额代币 ERC20 `Transfer` 投影与重放对账（B-085、`investor_share_transfer_events`）
+//! 份额代币 ERC20 `Transfer` 投影与重放对账（B-085 / **TT-B085-INVESTOR-SHARE-REPLAY-001**、`investor_share_transfer_events`）：**Σ holder balance** 与 **mint/burn 净额（`totalSupply` 语义）** 由同一重放路径钉死。
 
 use std::collections::BTreeMap;
 
@@ -122,7 +122,31 @@ fn norm_addr(a: &str) -> String {
     format!("0x{}", a.trim_start_matches("0x").to_lowercase())
 }
 
+/// 仅按 **Mint**（`from == 0`）与 **Burn**（`to == 0`）累计链上 **`totalSupply()`** 语义；**Transfer** 不改变供给。
+fn total_supply_u256_from_mint_burn_rows(
+    rows: &[InvestorShareTransferRow],
+) -> Result<[u8; 32], &'static str> {
+    let mut supply = zero_word();
+    let zero = norm_addr(ZERO_ADDR);
+    for r in rows {
+        let from = norm_addr(&r.from_address);
+        let to = norm_addr(&r.to_address);
+        let v = parse_u256_word_hex(&r.value_u256_hex).ok_or("invalid_value_u256_hex")?;
+        if from == zero && to == zero {
+            return Err("transfer_from_and_to_zero");
+        }
+        if from == zero {
+            add_assign_be(&mut supply, &v).map_err(|_| "supply_mint_overflow")?;
+        } else if to == zero {
+            sub_assign_be(&mut supply, &v).map_err(|_| "supply_burn_underflow")?;
+        }
+    }
+    Ok(supply)
+}
+
 /// 自 `Transfer` 行重放余额；返回 (**holder → u256 hex**)、**Σ balances**（不含零地址键）。
+///
+/// **B-085**：成功返回当且仅当 **Σ balances == mint/burn 净供给**（与 **`GET …/investor-share-reconcile`** **`rpc_total_supply.matches_sum_balances`** 同源前提）。
 pub fn replay_balances_from_transfers(
     rows: &[InvestorShareTransferRow],
 ) -> Result<(BTreeMap<String, [u8; 32]>, [u8; 32]), &'static str> {
@@ -160,6 +184,10 @@ pub fn replay_balances_from_transfers(
     let mut sum = zero_word();
     for w in balances.values() {
         add_assign_be(&mut sum, w).map_err(|_| "sum_balances_overflow")?;
+    }
+    let supply = total_supply_u256_from_mint_burn_rows(rows)?;
+    if sum != supply {
+        return Err("b085_replay_sum_ne_total_supply");
     }
     Ok((balances, sum))
 }
@@ -201,6 +229,8 @@ pub async fn investor_share_compliance_wallet_count(pool: &PgPool) -> Result<i64
 #[cfg(test)]
 mod tests {
     use super::*;
+    use sqlx::postgres::PgPoolOptions;
+    use std::time::Duration;
 
     fn row(from: &str, to: &str, value: &str) -> InvestorShareTransferRow {
         InvestorShareTransferRow {
@@ -209,6 +239,47 @@ mod tests {
             to_address: to.to_string(),
             value_u256_hex: value.to_string(),
         }
+    }
+
+    /// **TT-B085-REPLAY-SUM-EQ-TOTAL-SUPPLY-001**：**`replay_balances_from_transfers`** 内 **Σ balance == mint−burn**；与 **`governance_investor_share`** **`sum_balances_u256_hex`** / **`totalSupply`** 对拍前提一致。
+    #[test]
+    fn b085_replay_sum_equals_total_supply_from_mint_burn() {
+        let z = ZERO_ADDR;
+        let a = "0x00000000000000000000000000000000000000aa";
+        let rows = vec![
+            row(
+                z,
+                a,
+                "0x00000000000000000000000000000000000000000000000000000000000003e8",
+            ),
+            row(
+                a,
+                z,
+                "0x00000000000000000000000000000000000000000000000000000000000003e8",
+            ),
+        ];
+        let supply = super::total_supply_u256_from_mint_burn_rows(&rows).expect("supply");
+        let (bal, sum) = replay_balances_from_transfers(&rows).expect("replay");
+        assert!(bal.is_empty(), "full mint then full burn → no holders");
+        assert_eq!(sum, supply);
+        assert_eq!(
+            fmt_word_hex(&sum),
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
+        );
+    }
+
+    /// **TT-B085-COMPLIANCE-HOLDERS-EMPTY-SHORTCIRCUIT-001**：**`compliance_holders_not_allowlisted`** 空持有人时**不**访问 DB（与 **`investor_share_compliance_wallet_count` > 0** 分支下的生产路径可组合）。
+    #[tokio::test]
+    async fn b085_compliance_holders_not_allowlisted_empty_skips_queries() {
+        let pool = PgPoolOptions::new()
+            .max_connections(1)
+            .acquire_timeout(Duration::from_millis(200))
+            .connect_lazy("postgres://nouser:nopass@127.0.0.1:1/traveltrust_b085_gate")
+            .expect("lazy dead pool");
+        let out = compliance_holders_not_allowlisted(&pool, &[])
+            .await
+            .expect("empty holders short-circuit");
+        assert!(out.is_empty());
     }
 
     #[test]
@@ -238,7 +309,7 @@ mod tests {
         assert_eq!(sum, expect_sum);
     }
 
-    /// 母表 **B-088**：**`snapshot_block = 10`** 时 **不含** 块 **11** 的转让；领取名单与 **`pro_rata`** 表一致。
+    /// **TT-B088-SNAPSHOT-BLOCK-CUTOFF-PRO-RATA-001**：**`snapshot_block_number = 10`**（**含** 块 **10**）时，等价 SQL **`block_number <= 10`** 的行集 **不含** 块 **11** 转让；**`replay_balances_from_transfers`** 名单 + **`allocate_pro_rata_accruals`** 与宽截止一致（与 **`list_investor_share_transfers_up_to_block`** + POST 应计同源）。
     #[test]
     fn b088_later_block_transfer_excluded_from_snapshot_cutoff() {
         let z = ZERO_ADDR;
@@ -304,6 +375,38 @@ mod tests {
         assert_eq!(
             lines11[1].2,
             "0x0000000000000000000000000000000000000000000000000000000000000190"
+        );
+    }
+
+    /// **TT-B088-TRANSFER-REPLAY-ORDER-001**：与 **`SNAPSHOT_TRANSFER_REPLAY_ORDER`**（**`block_number_asc_log_index_asc`**）一致 — 向量序即 log 序；**先转后铸** 破坏重放前提 → **`replay_balances_from_transfers`** 失败，**铸再转** 成功。
+    #[test]
+    fn b088_replay_order_requires_mint_before_transfer() {
+        let z = ZERO_ADDR;
+        let a = "0x000000000000000000000000000000000000000a";
+        let b = "0x000000000000000000000000000000000000000b";
+        let mint = row(
+            z,
+            a,
+            "0x0000000000000000000000000000000000000000000000000000000000000064",
+        );
+        let xfer = row(
+            a,
+            b,
+            "0x000000000000000000000000000000000000000000000000000000000000000a",
+        );
+        assert!(
+            replay_balances_from_transfers(&[xfer.clone(), mint.clone()]).is_err(),
+            "transfer before mint should fail replay"
+        );
+        let (bal, _) = replay_balances_from_transfers(&[mint, xfer]).expect("mint then transfer");
+        assert_eq!(bal.len(), 2);
+        assert_eq!(
+            fmt_word_hex(bal.get(&norm_addr(a)).unwrap()),
+            "0x000000000000000000000000000000000000000000000000000000000000005a"
+        );
+        assert_eq!(
+            fmt_word_hex(bal.get(&norm_addr(b)).unwrap()),
+            "0x000000000000000000000000000000000000000000000000000000000000000a"
         );
     }
 }

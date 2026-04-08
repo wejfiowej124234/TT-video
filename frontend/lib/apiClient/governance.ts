@@ -82,6 +82,26 @@ export type GovernanceProposalVoteResult = {
   duplicate?: boolean;
 };
 
+/** B-098：`f(wallet,B)=GovernanceVotesToken.getPastVotes`；与提案详情 `voting_power_at_snapshot` 同源 `eth_call` */
+export type GovernanceOnChainVoteWeight = {
+  anchor?: string;
+  weight_formula_id?: string;
+  formula?: string;
+  snapshot_block?: number | null;
+  votes_u256_dec?: string | null;
+  read_status?: string;
+  error?: string | null;
+  ssot?: string;
+  eth_call_note?: string;
+  wallet?: string;
+  votes_token_address?: string;
+  reconcile?: {
+    delegation_total_weight_units_mvp?: number | null;
+    mvp_numeric_equal_to_chain_votes?: boolean | null;
+    note?: string;
+  };
+};
+
 /** B-092 Completion **110**：`GET …/voting-power?snapshot_block=` 时各份额代币 `balanceOf` 链上读数 */
 export type GovernanceCountryPoolShareSnapshotToken = {
   token_address?: string;
@@ -106,6 +126,11 @@ export type GovernanceVotingPowerResponse = {
   triggers_on_chain_execution?: boolean;
   weight_ssot?: string;
   anchor?: string;
+  /** B-098 */
+  weight_formula_anchor?: string;
+  /** B-098：与 `on_chain_vote_weight.votes_u256_dec` 同值（`read_status===ok` 时） */
+  unified_on_chain_vote_weight_u256_dec?: string | null;
+  on_chain_vote_weight?: GovernanceOnChainVoteWeight;
   can_cast_vote?: boolean | null;
   reason?: string;
   delegate_to?: string | null;

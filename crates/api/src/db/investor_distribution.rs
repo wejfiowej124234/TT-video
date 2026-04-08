@@ -1,4 +1,4 @@
-//! 应计分红分录（B-086）：幂等 **`idempotency_key`** + 快照块 **`pro_rata`** 分配；**B-088** 快照钉死常量（**`SNAPSHOT_*`** / **`B088_ANCHOR`**）供 API **`snapshot_binding`** 引用
+//! 应计分红分录（B-086 / **TT-B086-INVESTOR-DISTRIBUTION-ACCRUAL-001**）：幂等 **`idempotency_key`** + 快照块 **`pro_rata`** 分配（**`allocate_pro_rata_accruals`** = **`pro_rata_share_balance_at_snapshot`**）；**B-088** 快照钉死常量（**`SNAPSHOT_*`** / **`B088_ANCHOR`**）供 API **`snapshot_binding`** 引用
 
 use chrono::{DateTime, Utc};
 use num_bigint::BigUint;
@@ -262,6 +262,67 @@ pub async fn insert_distribution_with_lines(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use num_bigint::BigUint;
+
+    /// **TT-B086-PRO-RATA-FLOOR-SNAPSHOT-001**：每行 **`accrual_i = floor(cash * balance_i / supply)`**；与 **`POST …/internal/investor-distribution-accrual`** 写入行同源。
+    #[test]
+    fn b086_allocate_each_line_is_floor_cash_times_balance_over_supply() {
+        let cash = u256_hex_to_biguint(
+            "0x0000000000000000000000000000000000000000000000000000000000002710",
+        )
+        .unwrap();
+        let supply = u256_hex_to_biguint(
+            "0x00000000000000000000000000000000000000000000000000000000000003e8",
+        )
+        .unwrap();
+        let holders = vec![
+            (
+                "0x0000000000000000000000000000000000000001".into(),
+                "0x00000000000000000000000000000000000000000000000000000000000001f4".into(),
+            ),
+            (
+                "0x0000000000000000000000000000000000000002".into(),
+                "0x00000000000000000000000000000000000000000000000000000000000001f4".into(),
+            ),
+        ];
+        let cash_hex = "0x0000000000000000000000000000000000000000000000000000000000002710";
+        let supply_hex = "0x00000000000000000000000000000000000000000000000000000000000003e8";
+        let (lines, dist, rem) =
+            allocate_pro_rata_accruals(cash_hex, &holders, supply_hex).unwrap();
+        for (addr, bal_hex, acc_hex) in &lines {
+            let bal = u256_hex_to_biguint(bal_hex).unwrap();
+            let acc = u256_hex_to_biguint(acc_hex).unwrap();
+            let expect = (&cash * &bal) / &supply;
+            assert_eq!(acc, expect, "holder {addr}");
+        }
+        let sum_acc: BigUint = lines.iter().fold(BigUint::from(0u8), |acc, (_, _, a)| {
+            acc + u256_hex_to_biguint(a).unwrap()
+        });
+        assert_eq!(super::biguint_to_u256_hex(&sum_acc), dist);
+        assert_eq!(sum_acc + u256_hex_to_biguint(&rem).unwrap(), cash);
+    }
+
+    /// **TT-B086-PRO-RATA-IDEMPOTENT-MATH-001**：同一 **cash / holders / supply** 重算，分录 **逐字一致**（对应 DB 层「同 **`idempotency_key`** 不重插」的数学前提）。
+    #[test]
+    fn b086_allocate_pro_rata_repeat_is_deterministic() {
+        let cash = "0x00000000000000000000000000000000000000000000000000000000000003e8";
+        let supply = "0x0000000000000000000000000000000000000000000000000000000000000064";
+        let h = vec![
+            (
+                "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".into(),
+                "0x000000000000000000000000000000000000000000000000000000000000003c".into(),
+            ),
+            (
+                "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb".into(),
+                "0x0000000000000000000000000000000000000000000000000000000000000028".into(),
+            ),
+        ];
+        let a = allocate_pro_rata_accruals(cash, &h, supply).unwrap();
+        let b = allocate_pro_rata_accruals(cash, &h, supply).unwrap();
+        assert_eq!(a.0, b.0);
+        assert_eq!(a.1, b.1);
+        assert_eq!(a.2, b.2);
+    }
 
     #[test]
     fn pro_rata_two_holders_matches_manual() {

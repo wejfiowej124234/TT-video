@@ -17,6 +17,7 @@ use super::{
     try_persist_order_to_db, ChainOffState, ChainOffStore, OrderListPage, OrderRow,
 };
 use crate::chain::ChainConfig;
+use crate::db;
 use traveltrust_core::{
     fee_route_country::{resolve_fee_route_country_from_zh_destination, FeeRouteCountryResolve},
     OrderState,
@@ -200,6 +201,48 @@ fn build_canonical_payload(order: &OrderRow, bundle: &ItineraryBundle) -> String
     serde_json::to_string(&m).unwrap_or_default()
 }
 
+/// B-097：向 **`order`** JSON 写入 **`projection_terminal`** + **`display_status`**（有投影行时徽章以投影 **`status`** 为 SSOT）。
+fn apply_orders_projection_fields_to_order_json(
+    body: &mut serde_json::Value,
+    order_state_str: &str,
+    term: Option<&db::OrdersProjectionTerminalRow>,
+    db_err: Option<&str>,
+) {
+    let Some(order_j) = body.get_mut("order").and_then(|v| v.as_object_mut()) else {
+        return;
+    };
+    match db_err {
+        Some(err) => {
+            order_j.insert(
+                "projection_terminal".to_string(),
+                db::projection_terminal_json_degraded(err),
+            );
+            order_j.insert("display_status".to_string(), json!(order_state_str));
+        }
+        None => {
+            let pt = db::projection_terminal_json_for_api(order_state_str, term);
+            let disp = term.map(|t| t.status.as_str()).unwrap_or(order_state_str);
+            order_j.insert("projection_terminal".to_string(), pt);
+            order_j.insert("display_status".to_string(), json!(disp));
+        }
+    }
+}
+
+/// 列表项：在 **`order_list_item_json`** 结果上附加 **`projection_terminal`** / **`display_status`**。
+fn apply_orders_projection_fields_to_list_item_json(
+    item: &mut serde_json::Value,
+    order_state_str: &str,
+    term: Option<&db::OrdersProjectionTerminalRow>,
+) {
+    let Some(obj) = item.as_object_mut() else {
+        return;
+    };
+    let pt = db::projection_terminal_json_for_api(order_state_str, term);
+    let disp = term.map(|t| t.status.as_str()).unwrap_or(order_state_str);
+    obj.insert("projection_terminal".to_string(), pt);
+    obj.insert("display_status".to_string(), json!(disp));
+}
+
 fn order_list_item_json(store: &super::ChainOffStore, o: &OrderRow) -> serde_json::Value {
     let bundle = store.itineraries.get(&o.id);
     let (destination, city, days, travel_date, image) = bundle
@@ -252,15 +295,44 @@ fn order_list_item_json(store: &super::ChainOffStore, o: &OrderRow) -> serde_jso
     item
 }
 
+/// **B-102 / TT-122 / B-122**：列表链范围（谓词 **SSOT**：**`db::orders::orders_row_matches_list_chain_scope`**；**`orders_chain_scope`**：**`db::orders::orders_list_chain_scope_json`**；单测 **`tt_b122_*`**）。
+/// - **`business_chain_id`**：**`None`**（实例未解析 **`CHAIN_ID`**）→ **不过滤**。
+/// - **`query_chain_id`**：**`None`** → **默认范围**：**`order.chain_id IS NULL`**（历史/未赋值）**或** **`== business_chain_id`**。
+/// - **`query_chain_id == Some(q)`** 且 **`q == business`**：**同上**（含 NULL legacy）。
+/// - **`query_chain_id == Some(q)`** 且 **`q != business`**：**严格** **`order.chain_id == Some(q)`**（**不含** NULL）。
+pub fn order_matches_orders_list_chain_scope(
+    o: &OrderRow,
+    business_chain_id: Option<i64>,
+    query_chain_id: Option<i64>,
+) -> bool {
+    crate::db::orders_row_matches_list_chain_scope(
+        o.chain_id,
+        business_chain_id,
+        query_chain_id,
+    )
+}
+
+/// **GET /api/v1/orders/:id**：若订单已写 **`chain_id`** 且与 **`ChainConfig.chain_id`** 不一致 → **404**（与 **`order_not_found`** 同形，防泄漏）。
+pub fn order_chain_mismatch_for_public_read(o: &OrderRow, chain: &ChainConfig) -> bool {
+    let want = (chain.chain_id.min(i64::MAX as u64)) as i64;
+    match o.chain_id {
+        None => false,
+        Some(cid) => cid != want,
+    }
+}
+
 /// 55-S12：订单列表含 destination、city、travel_date、days，且按 order_id 唯一（store.orders 即按 id 唯一）。
 /// 不传 `limit` 时保持全量返回（兼容旧客户端）；传 `limit` 时按 `updated_at DESC, id DESC` 分页，`cursor` 为上一页最后一条的 `id`。
 /// **`state_filter`**：`GET /api/v1/orders?state=` 与 `order.state` 精确匹配（B-071）；`None` 表示不过滤。
+/// **`orders_list_chain_id`**：`GET /api/v1/orders?orders_chain_id=`（**B-102**）；**`None`** = 默认业务链范围。
 pub async fn orders_list_impl(
     state: ChainOffState,
     user_id: Uuid,
     page: OrderListPage,
     state_filter: Option<OrderState>,
+    orders_list_chain_id: Option<i64>,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    let business = state.config.business_chain_id;
     let store = state.store.read().await;
     let mut rows: Vec<&OrderRow> = store
         .orders
@@ -268,6 +340,7 @@ pub async fn orders_list_impl(
         .filter(|o| {
             crate::chain_off::order_is_participant(&store, o, user_id)
                 && state_filter.map_or(true, |s| o.state == s)
+                && order_matches_orders_list_chain_scope(o, business, orders_list_chain_id)
         })
         .collect();
 
@@ -297,10 +370,32 @@ pub async fn orders_list_impl(
         } else {
             None
         };
-        let items: Vec<_> = page_rows
+        let staged: Vec<(Uuid, String, serde_json::Value)> = page_rows
             .iter()
-            .map(|o| order_list_item_json(&store, o))
+            .map(|o| {
+                (
+                    o.id,
+                    order_state_to_str(o.state).to_string(),
+                    order_list_item_json(&store, o),
+                )
+            })
             .collect();
+        drop(store);
+        let ids: Vec<Uuid> = staged.iter().map(|(id, _, _)| *id).collect();
+        let proj = match state.db_pool.as_ref() {
+            Some(pool) => db::fetch_orders_projection_terminals_by_order_uuids(pool, &ids)
+                .await
+                .unwrap_or_default(),
+            None => std::collections::HashMap::new(),
+        };
+        let items: Vec<_> = staged
+            .into_iter()
+            .map(|(id, os, mut item)| {
+                apply_orders_projection_fields_to_list_item_json(&mut item, &os, proj.get(&id));
+                item
+            })
+            .collect();
+        let scope = crate::db::orders_list_chain_scope_json(business, orders_list_chain_id);
         return Ok(Json(json!({
             "status": "ok",
             "items": items,
@@ -308,15 +403,38 @@ pub async fn orders_list_impl(
                 "limit": lim,
                 "next_cursor": next_cursor,
                 "has_more": has_more
-            }
+            },
+            "orders_chain_scope": scope
         })));
     }
 
-    let items: Vec<_> = rows
+    let staged: Vec<(Uuid, String, serde_json::Value)> = rows
         .into_iter()
-        .map(|o| order_list_item_json(&store, o))
+        .map(|o| {
+            (
+                o.id,
+                order_state_to_str(o.state).to_string(),
+                order_list_item_json(&store, o),
+            )
+        })
         .collect();
-    Ok(Json(json!({ "status": "ok", "items": items })))
+    drop(store);
+    let ids: Vec<Uuid> = staged.iter().map(|(id, _, _)| *id).collect();
+    let proj = match state.db_pool.as_ref() {
+        Some(pool) => db::fetch_orders_projection_terminals_by_order_uuids(pool, &ids)
+            .await
+            .unwrap_or_default(),
+        None => std::collections::HashMap::new(),
+    };
+    let items: Vec<_> = staged
+        .into_iter()
+        .map(|(id, os, mut item)| {
+            apply_orders_projection_fields_to_list_item_json(&mut item, &os, proj.get(&id));
+            item
+        })
+        .collect();
+    let scope = crate::db::orders_list_chain_scope_json(business, orders_list_chain_id);
+    Ok(Json(json!({ "status": "ok", "items": items, "orders_chain_scope": scope })))
 }
 
 /// B-095：**向导收款 / 平台费入路由 / 国池（RegionVault）** 与 **`ChainConfig` + `guides.wallet_address`** 同源；**禁止**由客户端请求体覆写本对象。
@@ -461,7 +579,7 @@ pub fn order_detail_envelope(
             }
         });
 
-        // B-083：destination → ISO + 国别子路径键；未知国家显式 reject（不静默默认池）
+        // B-083 / TT-B083-FEE-ROUTE-COUNTRY-ORDER-META-SSOT-001：`itinerary.destination`（**`FEE_ROUTE_COUNTRY_SSOT_FIELD`**）→ **`resolve_fee_route_country_from_zh_destination`** → **`iso3166_alpha2` / `bucket_route_key`** 或显式 **reject**（与 **GET /meta** **`orders.fee_route_country_ssot`** 同源语义）。
         match resolve_fee_route_country_from_zh_destination(&bundle.destination) {
             FeeRouteCountryResolve::Routed {
                 iso3166_alpha2,
@@ -502,18 +620,54 @@ pub async fn order_get_impl(
     order_id: Uuid,
     user_id: Uuid,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
-    let store = state.store.read().await;
-    let o = store.orders.get(&order_id).ok_or((
-        StatusCode::NOT_FOUND,
-        Json(json!({"error": "order_not_found", "message": "order_not_found"})),
-    ))?;
-    if !crate::chain_off::order_is_participant(&store, o, user_id) {
-        return Err((
-            StatusCode::FORBIDDEN,
-            Json(json!({"error": "forbidden", "message": "forbidden"})),
-        ));
+    let (mut body, order_state_str) = {
+        let store = state.store.read().await;
+        let o = store.orders.get(&order_id).ok_or((
+            StatusCode::NOT_FOUND,
+            Json(json!({"error": "order_not_found", "message": "order_not_found"})),
+        ))?;
+        if !crate::chain_off::order_is_participant(&store, o, user_id) {
+            return Err((
+                StatusCode::FORBIDDEN,
+                Json(json!({"error": "forbidden", "message": "forbidden"})),
+            ));
+        }
+        if let Some(cfg) = chain_config {
+            if order_chain_mismatch_for_public_read(o, cfg) {
+                return Err((
+                    StatusCode::NOT_FOUND,
+                    Json(json!({"error": "order_not_found", "message": "order_not_found", "hint": "order_chain_mismatch"})),
+                ));
+            }
+        }
+        let order_state_str = order_state_to_str(o.state);
+        let body = order_detail_envelope(&store, o, state.config.review_window_days, chain_config);
+        (body, order_state_str)
+    };
+
+    match state.db_pool.as_ref() {
+        None => {
+            apply_orders_projection_fields_to_order_json(&mut body, &order_state_str, None, None);
+        }
+        Some(pool) => match db::fetch_orders_projection_terminal_by_order_uuid(pool, order_id).await {
+            Ok(term) => {
+                apply_orders_projection_fields_to_order_json(&mut body, &order_state_str, term.as_ref(), None);
+            }
+            Err(e) => {
+                eprintln!(
+                    "[audit] GET /orders/:id projection_terminal fetch failed order_id={} error={}",
+                    order_id, e
+                );
+                apply_orders_projection_fields_to_order_json(
+                    &mut body,
+                    &order_state_str,
+                    None,
+                    Some(&e.to_string()),
+                );
+            }
+        },
     }
-    let body = order_detail_envelope(&store, o, state.config.review_window_days, chain_config);
+
     Ok(Json(body))
 }
 
@@ -979,6 +1133,7 @@ mod traveler_id_alias_tests {
         );
     }
 
+    /// **TT-B095-SPLIT-ADDRESSES-META-SSOT-ENVELOPE-001**：**`order_split_addresses_ssot`** 与 **`ChainConfig::escrow_platform_fee_recipient`**（**GET /meta** **`chain.contracts.escrow_platform_fee_recipient`** 同源）及 **`order_detail_envelope`** 内嵌一致。
     #[test]
     fn b095_split_addresses_match_chain_config_and_meta_escrow_platform_fee_recipient() {
         let tid = Uuid::new_v4();
@@ -1050,5 +1205,141 @@ mod traveler_id_alias_tests {
 
         let env = order_detail_envelope(&store, &o, 14, Some(&chain));
         assert_eq!(env["order"]["split_addresses_ssot"], split);
+    }
+
+    #[test]
+    fn b102_orders_list_chain_scope_default_includes_null_and_business_chain() {
+        let mut o_null = sample_order(Uuid::new_v4());
+        o_null.chain_id = None;
+        let mut o_match = sample_order(Uuid::new_v4());
+        o_match.chain_id = Some(137);
+        let mut o_other = sample_order(Uuid::new_v4());
+        o_other.chain_id = Some(1);
+        assert!(order_matches_orders_list_chain_scope(&o_null, Some(137), None));
+        assert!(order_matches_orders_list_chain_scope(&o_match, Some(137), None));
+        assert!(!order_matches_orders_list_chain_scope(&o_other, Some(137), None));
+    }
+
+    #[test]
+    fn b102_orders_list_chain_scope_explicit_same_as_business_includes_null() {
+        let mut o = sample_order(Uuid::new_v4());
+        o.chain_id = None;
+        assert!(order_matches_orders_list_chain_scope(&o, Some(137), Some(137)));
+    }
+
+    #[test]
+    fn b102_orders_list_chain_scope_explicit_other_chain_strict() {
+        let mut o = sample_order(Uuid::new_v4());
+        o.chain_id = None;
+        assert!(!order_matches_orders_list_chain_scope(&o, Some(137), Some(1)));
+        o.chain_id = Some(137);
+        assert!(!order_matches_orders_list_chain_scope(&o, Some(137), Some(1)));
+        o.chain_id = Some(1);
+        assert!(order_matches_orders_list_chain_scope(&o, Some(137), Some(1)));
+    }
+
+    #[test]
+    fn b102_order_chain_mismatch_for_public_read() {
+        let chain = crate::chain::ChainConfig {
+            rpc_url: "http://x".to_string(),
+            chain_id: 137,
+            escrow_factory_address: None,
+            fee_router_address: None,
+            region_vault_address: None,
+            investor_share_token_addresses: vec![],
+            staking_address: None,
+            investor_lock_contract_addresses: vec![],
+            governor_address: None,
+            governance_votes_token_address: None,
+            registry_address: None,
+            executor_max_amount_per_tx: None,
+            executor_max_amount_per_day: None,
+            executor_retry_count: 3,
+        };
+        let mut o = sample_order(Uuid::new_v4());
+        o.chain_id = None;
+        assert!(!order_chain_mismatch_for_public_read(&o, &chain));
+        o.chain_id = Some(137);
+        assert!(!order_chain_mismatch_for_public_read(&o, &chain));
+        o.chain_id = Some(1);
+        assert!(order_chain_mismatch_for_public_read(&o, &chain));
+    }
+}
+
+/// **TT-B097-GET-ORDER-PROJECTION-TERMINAL-SSOT-001**：与 **`order_get_impl`** 在 **`fetch_orders_projection_terminal_by_order_uuid` → `Ok(Some(row))`** 分支同源：**`order_detail_envelope`** + **`apply_orders_projection_fields_to_order_json`**；**`order.projection_terminal.status`** 与 **`orders_projection.status`**（行上 **`OrdersProjectionTerminalRow.status`**）一致。
+#[cfg(test)]
+mod b097_projection_terminal_order_get_tests {
+    use super::*;
+    use crate::db;
+    use chrono::Utc;
+    use std::sync::Arc;
+    use tokio::sync::RwLock;
+    use traveltrust_core::OrderState;
+    use uuid::Uuid;
+
+    #[tokio::test]
+    async fn b097_terminal_order_envelope_projection_terminal_status_matches_projection_row() {
+        let tid = Uuid::new_v4();
+        let gid = Uuid::new_v4();
+        let oid = Uuid::new_v4();
+        let now = Utc::now();
+        let mut store = ChainOffStore::default();
+        store.orders.insert(
+            oid,
+            OrderRow {
+                id: oid,
+                tourist_id: tid,
+                guide_id: gid,
+                amount: "1".to_string(),
+                currency: "USD".to_string(),
+                escrow_address: None,
+                state: OrderState::Completed,
+                created_at: now,
+                accepted_at: None,
+                escrowed_at: None,
+                completed_at: Some(now),
+                dispute_deadline_at: None,
+                auto_complete_at: None,
+                updated_at: now,
+                start_date: None,
+                end_date: None,
+                sub_status: None,
+                tourist_confirmed: None,
+                guide_confirmed: None,
+                rating_tourist_confirmed: None,
+                rating_guide_confirmed: None,
+                chain_id: None,
+            },
+        );
+        let store = Arc::new(RwLock::new(store));
+        let (mut body, order_state_str) = {
+            let g = store.read().await;
+            let o = g.orders.get(&oid).expect("order");
+            let order_state_str = order_state_to_str(o.state);
+            let body = order_detail_envelope(&g, o, 14, None);
+            (body, order_state_str)
+        };
+
+        let projection_status = "completed";
+        let row = db::OrdersProjectionTerminalRow {
+            status: projection_status.to_string(),
+            resolution_type: Some("Released".to_string()),
+            updated_at: now,
+        };
+        apply_orders_projection_fields_to_order_json(&mut body, &order_state_str, Some(&row), None);
+
+        let pt = body["order"]["projection_terminal"].as_object().expect("object");
+        assert_eq!(
+            pt["status"].as_str(),
+            Some(projection_status),
+            "projection_terminal.status mirrors orders_projection.status"
+        );
+        assert_eq!(
+            pt["status"].as_str(),
+            Some(row.status.as_str()),
+            "field equals row SSOT"
+        );
+        assert_eq!(body["order"]["display_status"].as_str(), Some(projection_status));
+        assert_eq!(pt["diverges_from_order_state"], false);
     }
 }

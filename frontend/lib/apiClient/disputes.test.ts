@@ -32,7 +32,7 @@ describe("getDisputes", () => {
     const out = await getDisputes();
     expect(out).toEqual([{ id: "d1" }]);
     expect(globalThis.fetch).toHaveBeenCalledWith(
-      apiUrl(routes.disputes),
+      `${apiUrl(routes.disputes)}?limit=500`,
       expect.objectContaining({
         headers: expect.objectContaining({ "x-request-id": expect.any(String) }),
       })
@@ -44,6 +44,33 @@ describe("getDisputes", () => {
       mockTextResponse(true, { status: "error", error: "login_required" })
     );
     await expect(getDisputes()).rejects.toThrow();
+  });
+
+  it("follows page.next_cursor until has_more is false", async () => {
+    (globalThis.fetch as ReturnType<typeof vi.fn>)
+      .mockResolvedValueOnce(
+        mockTextResponse(true, {
+          status: "ok",
+          items: [{ id: "a" }],
+          page: { has_more: true, next_cursor: "c1" },
+        })
+      )
+      .mockResolvedValueOnce(
+        mockTextResponse(true, {
+          status: "ok",
+          items: [{ id: "b" }],
+          page: { has_more: false, next_cursor: null },
+        })
+      );
+    const out = await getDisputes();
+    expect(out).toEqual([{ id: "a" }, { id: "b" }]);
+    expect(globalThis.fetch).toHaveBeenCalledTimes(2);
+    expect((globalThis.fetch as ReturnType<typeof vi.fn>).mock.calls[0][0]).toBe(
+      `${apiUrl(routes.disputes)}?limit=500`
+    );
+    expect((globalThis.fetch as ReturnType<typeof vi.fn>).mock.calls[1][0]).toBe(
+      `${apiUrl(routes.disputes)}?limit=500&cursor=c1`
+    );
   });
 });
 

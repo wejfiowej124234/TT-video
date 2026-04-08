@@ -5,6 +5,7 @@
 
 #![allow(dead_code)]
 
+pub mod balance_read;
 pub mod fee_router_verify;
 pub mod governor;
 pub mod indexer;

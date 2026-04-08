@@ -13,7 +13,12 @@ import { getOrder } from "@/lib/apiClient";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import { orderLikeMayOnchainDeposit } from "@/components/escrow/EscrowDetail/escrowOnChainEligibility";
 import { mapApiReadError } from "@/lib/mapApiReadError";
-import { orderStateToStatusLabelKey } from "@/lib/orderStatusI18n";
+import {
+  orderDisplayStatusRaw,
+  orderProjectionDivergesFromOrderState,
+  orderProjectionTerminalDegraded,
+  orderStatusLabelKeyFromApiOrder,
+} from "@/lib/orderProjectionDisplayStatus";
 import type { MarketOrderItinerary } from "@/lib/marketTypes";
 import { stashEscrowOrderPrefetchFromDetailDrawer } from "@/lib/orderEscrowPrefetch";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
@@ -86,6 +91,9 @@ export interface OrderDetailItem {
   guideLevel?: string | null;
   /** 53：详情 GET 可带子状态 */
   sub_status?: string;
+  /** B-097 */
+  display_status?: string | null;
+  projection_terminal?: Record<string, unknown> | null;
 }
 
 /** 53-S5：向导在右侧弹窗内「确认接该项目」后的回调；成功后可关闭抽屉并刷新列表 */
@@ -396,12 +404,12 @@ export default function OrderDetailDrawer({
   const dash = t("ui_em_dash");
   const orderCurrency = displayOrder.currency ?? t("order_defaultSettlementToken");
 
-  const statusKey = orderStateToStatusLabelKey({
-    state: displayOrder.state,
-    status: displayOrder.status,
-    sub_status: displayOrder.sub_status,
-  });
-  const statusText = displayOrder.state || displayOrder.status ? t(statusKey) : null;
+  const statusKey = orderStatusLabelKeyFromApiOrder(displayOrder);
+  const hasMainStatus =
+    Boolean(orderDisplayStatusRaw(displayOrder)) ||
+    Boolean(displayOrder.state) ||
+    Boolean(displayOrder.status);
+  const statusText = hasMainStatus ? t(statusKey) : null;
   const dest = [displayOrder.country, displayOrder.city, displayOrder.destination].filter(Boolean).join(" · ") || dash;
   const imageAlt = dest !== dash ? t("order_imageAlt").replace("{{dest}}", dest) : t("order_imageAltFallback");
   const itineraryDayCount = displayOrder.itinerary?.daily_itinerary?.length ?? 0;
@@ -472,6 +480,13 @@ export default function OrderDetailDrawer({
               {displayOrder.headcount != null && displayOrder.headcount > 0 ? ` · ${displayOrder.headcount}${t("order_personUnit")}` : ""}
               {" · "}{t("order_versionLabel").replace("{{n}}", String(displayOrder.version ?? 1))}
             </p>
+            {(orderProjectionDivergesFromOrderState(displayOrder) || orderProjectionTerminalDegraded(displayOrder)) ? (
+              <p className="text-meta text-amber-800 mt-1 leading-snug" role="note">
+                {orderProjectionTerminalDegraded(displayOrder)
+                  ? t("orders_projection_ssot_degraded")
+                  : t("orders_projection_ssot_notice_divergent")}
+              </p>
+            ) : null}
             </section>
             <section>
             <p className="text-body-l font-semibold text-ink-900">

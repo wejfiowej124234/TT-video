@@ -38,7 +38,7 @@ All chain-derived evidence is reproducible via deterministic local deployment (*
 - **命令输出（文本）**：`docs/verification-evidence/cargo-test-*.log`、`forge-test-*.log`、**全量单线程**：`cargo-test-traveltrust-api-full-green.log`
 - **TT-1～3 HTTP / SQL**：`http-post-indexer-reconcile-tt1-tt2-chain31337.json`、`http-get-fee-pool-aggregates-chain31337.json`、`seed-tt1-tt2-tt3-anvil-31337.sql`、`sql-tt3-fee-router-projection-rows.txt`
 - **TT-4～6 HTTP / indexer / SQL / RPC JSON**：`http-get-order-tt4-*-31337.json`、`indexer-reconcile-tt4-orders-chain31337.json`、`indexer-tick-tt5-tt6-chain31337.json`、`http-get-governance-*-tt5-chain31337.json`、`http-get-governance-voting-power-tt6-snap5.json`、`seed-tt456-anvil-31337.sql`、`sql-tt456-db-verify.txt`、`rpc-tt4-eth-getCode-split-addresses.json`、`rpc-tt5-eth-call-governor-and-votes.json`、`rpc-tt6-eth-call-stake-balance-block5.json`
-- **B-094 叙事 fixture（Markdown）**：`evidence/B-094-execute-resolution-fixtures.md`
+- **B-094 三终态 fixture SSOT（Markdown）**：`docs/verification-evidence/B-094-resolution-fixtures-SSOT.md`（**主**）；**从文档** `evidence/B-094-execute-resolution-fixtures.md`（入口指针，叙事以 SSOT 为准）
 - **TT-7（B-090 UI）**：`screenshot-b090-proposals-list.png`、`screenshot-b090-proposal-detail.png`、`http-b090-ui-proxy-governance-proposals-3012.json`、`http-b090-ui-proxy-governance-proposal-1-3012.json`；脚本见 **§1.1**
 - **TT-9（B-094 投影 + RPC）**：`http-post-indexer-replay-tt9-b094-chain31337.json`、`rpc-tt9-eth-getTransactionByHash-resolution-input.json`、`http-get-order-tt9-b094-after-projection.json`、`seed-tt9-tt10-b094-b088.sql`、`sql-tt9-insert-event-log-resolution-b094.sql`、`sql-tt9-orders-projection-b094.txt`
 - **TT-10（B-088 分红叠加）**：`http-post-investor-distribution-accrual-tt10-b088.json`、`http-get-investor-distribution-accruals-tt10-b088.json`、`sql-tt10-distribution-lines-b088.txt`（与上项共用 `seed-tt9-tt10-b094-b088.sql`）
@@ -47,7 +47,7 @@ All chain-derived evidence is reproducible via deterministic local deployment (*
 **清单文件自校验 SHA256**（对 `docs/verification-evidence-sha256.txt` 本体）：
 
 ```text
-416bff932680bdcf728fb067cd4ac678376547bff7818aea3e8029a47db8bf2c
+4caf07a2e19cbe47056e5329fc290a50aecbf860e5faf6bd110ceba47c2392a7
 ```
 
 复验（仓库根）：
@@ -71,7 +71,7 @@ sha256sum -c docs/verification-evidence-sha256.txt
 | 6 | `TT-VERIFY-B092-VOTING-POWER-…` | **绿**：`GET …/voting-power?snapshot_block=5` 与 `rpc-tt6-eth-call-stake-balance-block5.json` 一致 | `7aba7018cd3597d481a1b3045397c8b081aa19ed15ce398f97ed7f303479bd32` | `http-get-governance-voting-power-tt6-snap5.json`、`rpc-tt6-eth-call-stake-balance-block5.json` | `cargo-test-b092.log`（单元测试仍保留） |
 | 7 | `TT-VERIFY-B090-ONCHAIN-PROPOSAL-UI-…` | **绿**：Playwright 列表/详情 PNG + Next 代理 governance JSON | （见 `docs/verification-evidence-sha256.txt`） | `screenshot-b090-*.png`、`http-b090-ui-proxy-*.json` | `frontend/scripts/b090-evidence-screenshots.mjs`（§1.1） |
 | 8 | `TT-VERIFY-B093-ESCROW-…` | **绿**：Foundry `Escrow.t.sol`（`forge-test-escrow-b093.log`）+ cargo reconcile + 全量 `cargo-test-traveltrust-api-full-green.log` | `760e218b04197f53c8650259cc6587cc64d70c2d573201b35f0c40fb9cd5b442` | `forge-test-escrow-b093.log` | `cargo-test-b093-*.log`、`cargo-test-traveltrust-api-full-green.log` |
-| 9 | `TT-VERIFY-B094-RESOLUTION-…` | **绿**：`executeResolution` 真 tx + `event_log` + `indexer-replay` → `orders_projection.partially_refunded`；RPC `eth_getTransactionByHash`；**§1.2** 英文 SSOT 句 | `b76420f6ad49cbfa875f57c0eadfccd8c660a6354d51d9475184f37e0c844df4` | `http-post-indexer-replay-tt9-b094-chain31337.json`、`rpc-tt9-eth-getTransactionByHash-resolution-input.json` | `cargo-test-b094.log` + `sql-tt9-*.sql` / `sql-tt9-orders-projection-b094.txt` |
+| 9 | `TT-VERIFY-B094-RESOLUTION-…` | **绿**：`executeResolution` 真 tx + `event_log` + `indexer-replay` → `orders_projection.partially_refunded`；RPC `eth_getTransactionByHash`；**§1.2** 英文 SSOT 句；**B-094 fixture SSOT**：`B-094-resolution-fixtures-SSOT.md` | `78a29f74a2e7f94f6e9e559589fdd68d26884a731fa76c60bb810e85fdc7f7be` | `http-post-indexer-replay-tt9-b094-chain31337.json`、`rpc-tt9-eth-getTransactionByHash-resolution-input.json` | `cargo-test-b094.log` + `sql-tt9-*.sql` / `sql-tt9-orders-projection-b094.txt` |
 | 10 | `TT-VERIFY-B088-STAKE-LOCK-…` | **绿**：`investor-distribution-accrual` + GET accruals；DB 质押叠加 + `snapshot_binding` | （见清单） | `http-post-investor-distribution-accrual-tt10-b088.json`、`http-get-investor-distribution-accruals-tt10-b088.json` | `cargo-test-b088.log` + `sql-tt10-distribution-lines-b088.txt` |
 | 11 | `TT-VERIFY-B091-META-PAUSE-…` | 替代：`comp_b091_meta_pause…` 1 passed | `73918a0f3839a1d497280d3ef6affb083d212cf866f43fad4be67bfc0150ba47` | 无 | `cargo-test-b091.log` |
 | 12 | `TT-VERIFY-B085-INVESTOR-SHARE-…` | 替代：无 DB 池 placeholder 1 passed | `d07cd11f55bdd992e58f0b70cc5cb9df1b89aa2af6488be90c0b9fc994c33c28` | 无 | `cargo-test-b085.log` |
@@ -288,6 +288,7 @@ sha256sum \
   docs/verification-evidence/indexer-reconcile-*.json \
   docs/verification-evidence/ui-*.json \
   docs/verification-evidence/screenshot-b090-*.png \
+  docs/verification-evidence/B-094-resolution-fixtures-SSOT.md \
   evidence/B-094-execute-resolution-fixtures.md \
   | sort -u > docs/verification-evidence-sha256.txt
 
@@ -297,3 +298,39 @@ sha256sum docs/verification-evidence-sha256.txt
 将新的 **清单文件自身** SHA256 写回 **§2** 代码块；并更新 **§3** 表中各 `tt-*.json` 的 SHA256（与清单一致）。
 
 **Windows PowerShell** 若无 `sha256sum`，可用：`Get-FileHash -Algorithm SHA256` 逐文件生成同等清单，或 Git Bash 执行上文命令。
+
+## System Freeze Declaration (Reconciliation Scope)
+
+This project is considered **Release-Ready** under the reconciliation scope based on the following criteria:
+
+### 1. SSOT Alignment
+All reconciliation semantics are defined in `docs/spec/110 §3.1.3.1` and referenced by `docs/spec/04` and implementation.
+
+### 2. Implementation Consistency
+The `indexer_reconcile_compound_gate` and all participating signals are aligned with the SSOT, including:
+- `orders_projection_reconcile_gate`
+- `rpc_escrow_samples`
+- `event_log_escrow_coverage` (no threshold, always pass when participating)
+
+### 3. Evidence Traceability
+All B-094 resolution fixtures are consolidated into a single SSOT:
+- `docs/verification-evidence/B-094-resolution-fixtures-SSOT.md`
+
+Supporting artifacts:
+- `verification-evidence-pack.md`
+- SHA256 manifest (`docs/verification-evidence-sha256.txt`)
+
+### 4. Accepted Gaps (Non-blocking)
+The following are explicitly documented and accepted:
+
+- Capabilities marked as `Target` in `spec/110` (e.g., full-chain scan, automated reorg handling)
+- Partial product areas (B-089 ~ B-094)
+- Resolution evidence asymmetry:
+  - `PartiallyRefunded` has pinned tx
+  - `Refunded / Slashed` may require post-hoc tx anchoring
+
+### 5. Operational Constraint
+`GET /api/v1/internal/indexer-status?live_reconcile=1` is **not equivalent** to `POST /api/v1/internal/indexer-reconcile` and must not be used as a gate signal.
+
+### Conclusion
+Under the reconciliation scope, with the above constraints explicitly accepted, the system is considered **Release-Ready and audit-consistent**.

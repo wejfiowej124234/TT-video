@@ -12,6 +12,7 @@ function statusVariant(status: string): "success" | "warning" | "danger" | "neut
     s === "resolved" ||
     s === "refunded" ||
     s === "partiallyrefunded" ||
+    s === "partially_refunded" ||
     s === "slashed"
   )
     return "success";

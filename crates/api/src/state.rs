@@ -219,6 +219,110 @@ pub fn any_traveltrust_strict_db_write() -> bool {
     KEYS.iter().any(|k| env::var(k).as_deref() == Ok("1"))
 }
 
+/// **B110-SSOT-05**：是否执行 **`ssot_parallel_chain_snapshot`** 并行 RPC（**`GET …/governance/pool`** **`chain_alignment_hint`** 与 **`POST …/internal/indexer-reconcile`** 同源快照）。
+/// 未设置环境变量 → **启用**（与既有行为一致）。**`0` / `false` / `off` / `no`**（大小写不敏感）→ **关闭**：**不**发 RPC，体为 **`is_chain_ssot:false`** + 三腿 **`null`** + **`observation_enabled:false`**，**绝不**用占位数值冒充链上读数。
+/// 变量名：**`SSOT_PARALLEL_CHAIN_SNAPSHOT_OBSERVATION`**。**不**参与 **`reconcile_compound_pass`**。
+pub(crate) fn ssot_parallel_chain_snapshot_observation_raw(
+    raw: Option<&str>,
+) -> bool {
+    match raw {
+        None => true,
+        Some(s) => {
+            let t = s.trim().to_ascii_lowercase();
+            !matches!(t.as_str(), "0" | "false" | "off" | "no")
+        }
+    }
+}
+
+/// 自进程环境读取 **`SSOT_PARALLEL_CHAIN_SNAPSHOT_OBSERVATION`**（见 [`ssot_parallel_chain_snapshot_observation_raw`]）。
+pub fn ssot_parallel_chain_snapshot_observation_enabled() -> bool {
+    ssot_parallel_chain_snapshot_observation_raw(env::var("SSOT_PARALLEL_CHAIN_SNAPSHOT_OBSERVATION").ok().as_deref())
+}
+
+/// **B110-SSOT-06**：**`GET …/governance/pool`** 根级 **`pool_balance`** 是否以 **FeeRouter** + **`GOVERNANCE_POOL_SSOT_TOKEN_ADDRESS`** 的 **`balanceOf`** 为 **SSOT**（与 **04/14** 设计一致）。
+/// **未设置或非启用令牌** → **关闭**（走 **`database` / `database_empty` / `placeholder`**）。**`1` / `true` / `on` / `yes`**（大小写不敏感）→ **开启**。
+/// 变量名：**`GOVERNANCE_POOL_BALANCE_CHAIN_SSOT`**。运维 **单动作回滚**：取消或置非启用值后重启/重读环境。
+pub(crate) fn governance_pool_balance_chain_ssot_raw(raw: Option<&str>) -> bool {
+    match raw {
+        None => false,
+        Some(s) => matches!(
+            s.trim().to_ascii_lowercase().as_str(),
+            "1" | "true" | "on" | "yes"
+        ),
+    }
+}
+
+/// 自进程环境读取 **`GOVERNANCE_POOL_BALANCE_CHAIN_SSOT`**（见 [`governance_pool_balance_chain_ssot_raw`]）。
+pub fn governance_pool_balance_chain_ssot_enabled() -> bool {
+    governance_pool_balance_chain_ssot_raw(env::var("GOVERNANCE_POOL_BALANCE_CHAIN_SSOT").ok().as_deref())
+}
+
+/// **B110-SSOT-06**：**`GET …/governance/pool`** 根级 **`country_pool`** 是否以 **RegionVault** + **`GOVERNANCE_POOL_SSOT_TOKEN_ADDRESS`** 的 **`balanceOf`** 为 **SSOT**（与 **04/14** 设计一致；与根级 **`pool_balance`** 闸 **独立**）。
+/// **未设置或非启用令牌** → **关闭**。**`1` / `true` / `on` / `yes`**（大小写不敏感）→ **开启**。
+/// 变量名：**`GOVERNANCE_COUNTRY_POOL_BALANCE_CHAIN_SSOT`**。运维 **单动作回滚**：取消或置非启用值后重启/重读环境。
+pub(crate) fn governance_country_pool_balance_chain_ssot_raw(raw: Option<&str>) -> bool {
+    match raw {
+        None => false,
+        Some(s) => matches!(
+            s.trim().to_ascii_lowercase().as_str(),
+            "1" | "true" | "on" | "yes"
+        ),
+    }
+}
+
+/// 自进程环境读取 **`GOVERNANCE_COUNTRY_POOL_BALANCE_CHAIN_SSOT`**（见 [`governance_country_pool_balance_chain_ssot_raw`]）。
+pub fn governance_country_pool_balance_chain_ssot_enabled() -> bool {
+    governance_country_pool_balance_chain_ssot_raw(
+        env::var("GOVERNANCE_COUNTRY_POOL_BALANCE_CHAIN_SSOT")
+            .ok()
+            .as_deref(),
+    )
+}
+
+/// **B110-SSOT-06**：**`GET …/governance/pool`** 根级 **`treasury_pool`** 是否以 **`GovernanceTreasury`** 的 **`eth_getBalance`**（**Wei**）为 **SSOT**（与 **04/14** 设计一致；与 **`pool_balance`** / **`country_pool`** 闸 **独立**）。
+/// **未设置或非启用令牌** → **关闭**。**`1` / `true` / `on` / `yes`**（大小写不敏感）→ **开启**。
+/// 变量名：**`GOVERNANCE_TREASURY_POOL_BALANCE_CHAIN_SSOT`**。运维 **单动作回滚**：取消或置非启用值后重启/重读环境。
+pub(crate) fn governance_treasury_pool_balance_chain_ssot_raw(raw: Option<&str>) -> bool {
+    match raw {
+        None => false,
+        Some(s) => matches!(
+            s.trim().to_ascii_lowercase().as_str(),
+            "1" | "true" | "on" | "yes"
+        ),
+    }
+}
+
+/// 自进程环境读取 **`GOVERNANCE_TREASURY_POOL_BALANCE_CHAIN_SSOT`**（见 [`governance_treasury_pool_balance_chain_ssot_raw`]）。
+pub fn governance_treasury_pool_balance_chain_ssot_enabled() -> bool {
+    governance_treasury_pool_balance_chain_ssot_raw(
+        env::var("GOVERNANCE_TREASURY_POOL_BALANCE_CHAIN_SSOT")
+            .ok()
+            .as_deref(),
+    )
+}
+
+/// **B110-SSOT-06**：**`GET …/governance/pool`** 根级 **`treasury_erc20_pool`** 是否以 **`GovernanceTreasury`** + **`GOVERNANCE_TREASURY_SSOT_TOKEN_ADDRESS`** 的 **`ERC20.balanceOf`** 为 **SSOT**（与 **04/14** 设计一致；与 **`pool_balance`** / **`country_pool`** / **`treasury_pool`（Wei）** 闸 **独立**）。
+/// **未设置或非启用令牌** → **关闭**。**`1` / `true` / `on` / `yes`**（大小写不敏感）→ **开启**。
+/// 变量名：**`GOVERNANCE_TREASURY_ERC20_POOL_BALANCE_CHAIN_SSOT`**。运维 **单动作回滚**：取消或置非启用值后重启/重读环境。
+pub(crate) fn governance_treasury_erc20_pool_balance_chain_ssot_raw(raw: Option<&str>) -> bool {
+    match raw {
+        None => false,
+        Some(s) => matches!(
+            s.trim().to_ascii_lowercase().as_str(),
+            "1" | "true" | "on" | "yes"
+        ),
+    }
+}
+
+/// 自进程环境读取 **`GOVERNANCE_TREASURY_ERC20_POOL_BALANCE_CHAIN_SSOT`**（见 [`governance_treasury_erc20_pool_balance_chain_ssot_raw`]）。
+pub fn governance_treasury_erc20_pool_balance_chain_ssot_enabled() -> bool {
+    governance_treasury_erc20_pool_balance_chain_ssot_raw(
+        env::var("GOVERNANCE_TREASURY_ERC20_POOL_BALANCE_CHAIN_SSOT")
+            .ok()
+            .as_deref(),
+    )
+}
+
 /// 供 `routes/*` 单测构造 **`ApiMetaState`**（Axum `oneshot`），避免各文件重复填 20+ 字段。
 #[cfg(test)]
 pub(crate) mod test_support {
@@ -284,5 +388,89 @@ mod dual_write_policy_tests {
         assert_eq!(normalize_dual_write_policy_str("2"), "strict_503");
         assert_eq!(normalize_dual_write_policy_str("fail_closed"), "strict_503");
         assert_eq!(normalize_dual_write_policy_str("3"), "alert_only");
+    }
+}
+
+#[cfg(test)]
+mod ssot_parallel_chain_snapshot_observation_tests {
+    use super::ssot_parallel_chain_snapshot_observation_raw;
+
+    #[test]
+    fn observation_raw_default_and_disable_tokens() {
+        assert!(ssot_parallel_chain_snapshot_observation_raw(None));
+        assert!(ssot_parallel_chain_snapshot_observation_raw(Some("1")));
+        assert!(ssot_parallel_chain_snapshot_observation_raw(Some("TRUE")));
+        assert!(!ssot_parallel_chain_snapshot_observation_raw(Some("0")));
+        assert!(!ssot_parallel_chain_snapshot_observation_raw(Some("false")));
+        assert!(!ssot_parallel_chain_snapshot_observation_raw(Some("OFF")));
+        assert!(!ssot_parallel_chain_snapshot_observation_raw(Some("no")));
+    }
+}
+
+#[cfg(test)]
+mod governance_pool_balance_chain_ssot_tests {
+    use super::governance_pool_balance_chain_ssot_raw;
+
+    #[test]
+    fn chain_ssot_raw_default_off_and_enable_tokens() {
+        assert!(!governance_pool_balance_chain_ssot_raw(None));
+        assert!(!governance_pool_balance_chain_ssot_raw(Some("")));
+        assert!(!governance_pool_balance_chain_ssot_raw(Some("0")));
+        assert!(!governance_pool_balance_chain_ssot_raw(Some("off")));
+        assert!(governance_pool_balance_chain_ssot_raw(Some("1")));
+        assert!(governance_pool_balance_chain_ssot_raw(Some("TRUE")));
+        assert!(governance_pool_balance_chain_ssot_raw(Some("on")));
+        assert!(governance_pool_balance_chain_ssot_raw(Some("YES")));
+    }
+}
+
+#[cfg(test)]
+mod governance_country_pool_balance_chain_ssot_tests {
+    use super::governance_country_pool_balance_chain_ssot_raw;
+
+    #[test]
+    fn chain_ssot_raw_default_off_and_enable_tokens() {
+        assert!(!governance_country_pool_balance_chain_ssot_raw(None));
+        assert!(!governance_country_pool_balance_chain_ssot_raw(Some("")));
+        assert!(!governance_country_pool_balance_chain_ssot_raw(Some("0")));
+        assert!(!governance_country_pool_balance_chain_ssot_raw(Some("off")));
+        assert!(governance_country_pool_balance_chain_ssot_raw(Some("1")));
+        assert!(governance_country_pool_balance_chain_ssot_raw(Some("TRUE")));
+        assert!(governance_country_pool_balance_chain_ssot_raw(Some("on")));
+        assert!(governance_country_pool_balance_chain_ssot_raw(Some("YES")));
+    }
+}
+
+#[cfg(test)]
+mod governance_treasury_pool_balance_chain_ssot_tests {
+    use super::governance_treasury_pool_balance_chain_ssot_raw;
+
+    #[test]
+    fn chain_ssot_raw_default_off_and_enable_tokens() {
+        assert!(!governance_treasury_pool_balance_chain_ssot_raw(None));
+        assert!(!governance_treasury_pool_balance_chain_ssot_raw(Some("")));
+        assert!(!governance_treasury_pool_balance_chain_ssot_raw(Some("0")));
+        assert!(!governance_treasury_pool_balance_chain_ssot_raw(Some("off")));
+        assert!(governance_treasury_pool_balance_chain_ssot_raw(Some("1")));
+        assert!(governance_treasury_pool_balance_chain_ssot_raw(Some("TRUE")));
+        assert!(governance_treasury_pool_balance_chain_ssot_raw(Some("on")));
+        assert!(governance_treasury_pool_balance_chain_ssot_raw(Some("YES")));
+    }
+}
+
+#[cfg(test)]
+mod governance_treasury_erc20_pool_balance_chain_ssot_tests {
+    use super::governance_treasury_erc20_pool_balance_chain_ssot_raw;
+
+    #[test]
+    fn chain_ssot_raw_default_off_and_enable_tokens() {
+        assert!(!governance_treasury_erc20_pool_balance_chain_ssot_raw(None));
+        assert!(!governance_treasury_erc20_pool_balance_chain_ssot_raw(Some("")));
+        assert!(!governance_treasury_erc20_pool_balance_chain_ssot_raw(Some("0")));
+        assert!(!governance_treasury_erc20_pool_balance_chain_ssot_raw(Some("off")));
+        assert!(governance_treasury_erc20_pool_balance_chain_ssot_raw(Some("1")));
+        assert!(governance_treasury_erc20_pool_balance_chain_ssot_raw(Some("TRUE")));
+        assert!(governance_treasury_erc20_pool_balance_chain_ssot_raw(Some("on")));
+        assert!(governance_treasury_erc20_pool_balance_chain_ssot_raw(Some("YES")));
     }
 }

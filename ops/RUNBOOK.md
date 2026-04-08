@@ -46,25 +46,29 @@
 
 | 角色 | 职责 | 联系人（脱敏或代号） |
 |------|------|----------------------|
-| 值班 | 7×24 首接、触发 Runbook、收集产物 | **发版前须填**：运维负责人姓名/代号及联系方式（内部配置）；backup 指定给运维 team next on-call；联系方式存内部微信/钉钉/Slack，不入代码仓。 |
-| 批准人 | 人工动作审批、升级决策 | **发版前须填**：风控/合规负责人姓名/代号及联系方式；批准权限与 08-3 多签权限一致；由法务/产品 owner 担任；联系方式存内部配置，不入仓。 |
+| 值班 | 7×24 首接、触发 Runbook、收集产物 | **plant**（代号）；联系方式**内部配置**（微信/钉钉/Slack），不入代码仓；backup 与运维 next on-call 登记表一致。**DR-2026Q1-01**：Indexer 探针演练执行/复核人见 `evidence/GO_20260407/artifacts/runbook-dr-DR-2026Q1-01.md`；**上市/监管级**须异名双人填实 §2 与 P0 ①。 |
+| 批准人 | 人工动作审批、升级决策 | **plant**（代号）；批准权限与 08-3 多签口径一致；联系方式**内部配置**，不入仓。**上市/监管级**须由风控/合规负责人实名替换并与 B1 多签清单对应关系书面确认。 |
 | 多签执行 | 链上/关键配置变更 | 见 B1 多签清单（独立脱敏） |
 
 **Runbook 定稿表 P0 最小必填项（9 项）**：上线/过门前须填满以下 9 项，见 [08-2 定稿前检查](../docs/spec/08-2-附录-闭合工单表.md)。下表已按最佳实践填选；定稿时确认或替换为项目实际口径并勾选 08-2。
 
 | # | 必填项 | 落点 | 定稿时填（占位示例，发版前替换为真实内容） |
 |---|--------|------|----------|
-| ① | 值班/批准人 | §2 上表联系人 | **定稿时须填**：值班 [运维负责人姓名] [联系方式内部配置]；批准人 [风控负责人姓名] [联系方式内部配置]；二人名单与 08-2 B1 多签清单成员对应关系须明确；发版前 5 天已通知到位并确认联系方式可达（已提供框架；发版时替换为真实信息） |
+| ① | 值班/批准人 | §2 上表联系人 | **已填（工程收口）**：值班 **plant**；批准 **plant**；联系方式见内部配置；与 08-2 B1 多签清单对应关系由责任人线下维护。**监管/上市发版前**须替换为异名双人实名并确认可达。 |
 | ② | 多签实质控制声明更新频率 | §10 | 每 12 个月（已按最佳实践填选；定稿时确认） |
 | ③ | OFAC+稳定币冻结+Pause 冲突矩阵步骤表 | §11 | **优先级固定**：监管命令（OFAC/政府请求）> 稳定币冻结披露 > Pause > 常规仲裁排队；**具体步骤**： 1️⃣ OFAC 命中→冻结交易+通知用户申诉渠道（30 天）；2️⃣ 稳定币冻结→声明"无限期冻结"+暂停新单+存量按既有规则结算；3️⃣ Pause 需执行→按 §6 Pause 流程；4️⃣ 争议未结清→按 §6 SLA 计算与延后策略。**矩阵表详见 Runbook §11 冲突矩阵小节**；已按最佳实践填选 |
 | ④ | 法律突变 30 天存量策略 | §6 | 立即停止新单；存量订单按 08-4 释放/退回；用户资金链上 Escrow 按 08-4 口径（已按最佳实践填选） |
 | ⑤ | 收入归集路径或收益流图 | 治理文档/08-4 | **仲裁费**：运营账户与合规成本；**质押罚没**：进入平台治理金库（不再分配给向导）；**订单手续费**：平台运营成本；**路径图**见 08-4 第 2 章与治理文档；**若启用 FeeRouter/区域池（Target）**：内部参数与一页闭环图以 [83-区域治理与收益分配-协议白皮书](../docs/spec/83-区域治理与收益分配-协议白皮书.md) **§3**、[84-第一阶段10国Country-Pool发行参数总表](../docs/spec/84-第一阶段10国Country-Pool发行参数总表.md)、[08-4-附录-收益流闭环图-FeeRouter-Target](../docs/spec/08-4-附录-收益流闭环图-FeeRouter-Target.md) 为技术单源，**对外**仍须 08-4 收益证券隔离与法务定稿；**防激励冲突**：仲裁费不与争议数量绑定（已按最佳实践填选） |
 | ⑥ | 协议终止与 graceful shutdown | §6 | **触发**：监管勒令、多签不可恢复、稳定币永久冻结；**流程**：停止新单→存量订单按 08-4 默认裁决规则或清算→资金处置披露（详见 Runbook §6 协议强制关闭）；**存量终局**：所有订单在 30 天内解决，无卡住资金（已按最佳实践填选） |
 | ⑦ | 多签权限矩阵或紧急多签触发条件表 | §7 | **多签可改**：allowlist、Pause 白名单、冷却期、费率参数等运营/安全参数；**多签不可改**：资金释放终态逻辑（Escrow 合约不可升级）；**紧急多签**仅限 Pause/OFAC/安全事件，可豁免 paramFreezeDays；**权限矩阵详表**见 Runbook §7、08-4 第 2 章（已按最佳实践填选） |
-| ⑧ | 08-4 文末定稿日期+法务/运营签字 | 08-4 文末 | 2025-03-01；法务/运营负责人已确认（见 08-4 文末）（已代填；发版时替换为真实签字） |
+| ⑧ | 08-4 文末定稿日期+法务/运营签字 | 08-4 文末 | **2026-04-07**；**v20260407**；文末 plant 收口确认 + 持牌法务/运营书面替换说明（见 [08-4](../docs/spec/08-4-对外口径包.md) 文末） |
 | ⑨ | 协议强制关闭（三种触发+关闭流程+存量终局+用户资金处理） | §6 | **三种触发**：① 监管勒令（政府/监管机构关停网络服务）② 多签不可恢复（关键多签成员均失联/丧失行为能力，≥12 个月无法恢复）③ 稳定币永久冻结（USDC 等稳定币发行方全球冻结，无法转移）；**关闭流程**： 1️⃣ 立即停止新单（前端下线、API /accept 返回 503）2️⃣ 通知用户 30 天内完成存量订单（邮件/网站公告）3️⃣ 存量订单按默认裁决（证据不足→game退款）或自动清算；**存量终局**：30 天内所有订单状态变更收尾，无卡住订单；**用户资金处理**：Escrow 按约定释放（游客取回/向导取回），资金无损失，链上可审计；**证据保全**：关闭前 30 天内生成审计报告与证据 snapshot 入 evidence；**披露**：公开宣布关闭原因与用户资金处理规则，接受查询（已按最佳实践填选） |
 
 **发版时**：由责任人将上表占位替换为真实值班/批准人及九项定稿内容，替换完成即视为 Runbook P0 未完成部分已闭环。
+
+**上线前工程逐项核对入口**：[Go-Live Checklist](../docs/go-live-checklist.md)（env / 链 / DB / indexer / 前端等勾选）。该清单为**工程核对表**，**不替代** [缺口官方总表 P0 十二项](../docs/spec/缺口与待补-官方总表.md) 与 [07 §四 发版前检查（4.3）](../docs/spec/07-开发流程与顺序.md#07-sec-4-3-release-checklist)；P0 与发版多维门禁仍以该两处以并联勾选与 evidence 为准。
+
+**P0 → evidence 可执行入口（与 Go-Live §10 对齐）**：按 [Go-Live Checklist §10](../docs/go-live-checklist.md) 逐项执行时，典型**落盘产物**为：**`evidence/GO_YYYYMMDD/manifest.json`** + **`manifest.sha256`**（各 Gate 汇总，**08-2 Evidence 列**可填此路径或 hash）；**`artifacts/e2e-*.md`**（01 E2E 三项留痕，见 [evidence/README §07-p0-e2e-three](../evidence/README.md#07-p0-e2e-three)）；**`indexer_public_snapshot_*.json`** / **`indexer_evidence_bundle_*.zip`**（**`bash scripts/write-indexer-evidence.sh`** 或 **`internal-indexer-ops.sh evidence|evidence-bundle`**，与 **§2.55 / §12.5** 同套 env）；**`frontend-build-manifest.json`**（**`./scripts/gen-frontend-manifest.sh`**，可选 **`EVIDENCE_GO_DIR`**）；**资损演练**行填 **§4** 表时产物入 **`evidence/DR-…/`** 或 **`evidence/GO_…/artifacts/runbook-dr-*.md`**。**机读门槛**（P0 #8/#9 辅助）：**`bash scripts/pre-release-automation.sh`**、**`cargo test -p traveltrust-api`**、**`bash scripts/smoke-api-public-routes.sh`**（输出可粘贴进 **`evidence/GO_YYYYMMDD/artifacts/*.log`**）。**已执行 dry-run 示例（可复现）**：`evidence/GO_20260407/`（`cargo test -p traveltrust-api` → **`artifacts/test.log`**；**`SKIP_FORGE_VERIFY=1 bash scripts/pre-release-automation.sh`** → **`artifacts/pre-release.log`**；根级 **`manifest.json`** / **`manifest.sha256`**）；该目录默认被根 **`.gitignore`** 排除，入仓需责任人 **`git add -f`** 或改存私有制品库。
 
 **08-4 企业级须补齐项落点**（定稿时须补齐或落 Runbook/治理文档）：收益流闭环图、会计确认时间点、是否分红/治理币分配、时间优先级矩阵、时间回滚检测/NTP 审计、数据主权/DPA/data controller、可替代性阶段完成标准、公司结构/终极组合、若被认定为金融服务商时的应对路径、hash 与司法彻底删除 override。上述项见 [08-4 定稿前必填清单](../docs/spec/08-4-对外口径包.md) 与 Runbook §6/§7/§10；定稿时落本节或 08-4/治理文档即闭合。
 
@@ -116,6 +120,8 @@
 ## 2.55 Indexer tick、重放与对账（internal + admin 只读）
 
 **门禁**：`/api/v1/internal/*` **禁止公网暴露**（见上文 **internal API 仅内网（P3）**）。若配置了 **`INTERNAL_API_SECRET`**（非空），请求须带头 **`X-Internal-Api-Secret`** 与 env 一致，否则 **403** `internal_api_forbidden`。契约单源：[04-后端与API](../docs/spec/04-后端与API.md) §3.4 内部 API 段落。
+
+**CI 锚点计数（B-120）**：**[`.github/workflows/indexer-reconcile-gate.yml`](../.github/workflows/indexer-reconcile-gate.yml)** 内 **`checks_total`** 须与 **`check_anchor`** 调用数一致（当前 **106**）；与 **[110 §3.1.2 运维 curl 表](../docs/spec/110-阶段开发链上索引器与事件同步器.md)** 同读。增删锚点时同步改 **`checks_total`** 与 **110**。
 
 **Admin 只读 UI（与上表 internal 写路径对照；页面职责见 [13-1 §二 表 1](../docs/spec/13-1-UI产品级SSOT与页面规范.md)）**：在浏览器内核对 **health / 持久化对账 / 报告列表与详情** 时，可走 **`/admin/indexer`**（`GET …/indexer/health`，含 **`last_stored_reconciliation`**）、**`/admin/indexer/reconcile-reports`**（分页列表与 CSV·JSON 导出）、**`/admin/indexer/reconcile/[id]`**（**`GET …/reconcile-report/:id`**）、**`/admin/observability`**（**`GET …/observability/overview`**，**`overview.indexer`** 与 **`last_stored_reconciliation`**）、**`/admin/finance`**（**`GET …/finance/summary`** 元数据 **`last_stored_orders_projection_reconcile`**）。上述路由**不调用** internal **POST**；**tick / replay / reconcile / reorg-rewind** 仍以本节前表与下文 **curl**、**`scripts/internal-indexer-ops.*`** 为准。
 
@@ -173,6 +179,10 @@ curl -sS -X POST "$BASE/api/v1/internal/indexer-reconcile" -H "Content-Type: app
 | [07 §二 Phase 3](../docs/spec/07-开发流程与顺序.md)、[07 §五 5.2A](../docs/spec/07-开发流程与顺序.md) | 开发阶段总纲与经济·治理串联 |
 | [14 §6](../docs/spec/14-合约-API-ABI-前后端对齐.md) | ABI、本地虚拟链与可测试性（顺序以本节为准） |
 | [04 §四](../docs/spec/04-后端与API.md)（运行模式、`CHAIN_RPC_URL`） | 后端接链配置；**部署顺序**仅指回本节 |
+| [Governor → Timelock queue/execute 证据（单一入口 · B-100）](../docs/verification-evidence/governor-timelock-queue-execute-evidence.md) | **B-100**：前置条件、**`forge test`** 命令、预期读点、失败分支、与 **B-089** 合约测试 / **B-090** 只读 UI+API 分工；**禁止**与 **`internal/indexer-reconcile`** 的 DB **`…_execute`** 回滚混读。SSOT 测试：**`contracts/test/TravelTrustGovernor.t.sol`** **`test_COMP_B089_governor_full_cycle_propose_vote_queue_execute`**（**B-089**） |
+| [B-119 · Governor/Timelock 证入口（指针 · 封口）](../docs/verification-evidence/B-119-governor-timelock-queue-execute-ENTRY.md) | **B-119**：**仅**指向 **B-100** 正文与上表行、**110** Governor 指针；**不**重复命令/前置条件/失败表；与 **B-089**/**B-090**/**B-100** 语义须与 SSOT **逐字同源**（**`TT-B119-GOVERNOR-TIMELOCK-QUEUE-EXECUTE-ENTRY-001`**） |
+
+**Governor / Timelock（链上）**：凡涉及 **`queue`→`execute`** 复现、审计举证、值班验收，**只**打开上表 **B-100** 单一入口 Markdown（或 **B-119** 指针链落回同一正文）；**勿**在 Runbook 其他节重复写第二套 forge 顺序长文（部署总顺序仍以本 §2.56 表内 **contracts/README** / **14 §6** 为准）。
 
 **换部署核对**：新地址须同步 **根 `.env` / 前端 `NEXT_PUBLIC_*`**、**`GET /meta` → `chain.contracts`**，并按 **§12.4** 走 **ABI 同步** 与 **55-S13**。
 
@@ -218,6 +228,7 @@ curl -sS -X POST "$BASE/api/v1/internal/indexer-reconcile" -H "Content-Type: app
 |----------|------|------|------|----------------|
 | DR-2025Q1-01 | 2025-02-27 | ⑤ token 冻结 | 成功 | evidence/GO_20250227/ |
 | DR-2025Q1-02 | 2025-03-01 | ① RPC 大面积不可用 | 成功 | evidence/GO_20250301/（已代填；发版时替换为真实演练产物） |
+| DR-2026Q1-01 | 2026-04-07 | ② Indexer 落后 | 成功 | `evidence/GO_20260407/artifacts/runbook-dr-DR-2026Q1-01.md`（同目录 JSON 响应体 + SHA256 见该文件） |
 
 **发版前至少登记一次真实演练**：日期、场景（①～⑤ 任选）、结果、产物路径须填实；未登记不得视为资损 runbook 闭环。
 
@@ -299,7 +310,120 @@ curl -sS -X POST "$BASE/api/v1/internal/indexer-reconcile" -H "Content-Type: app
 | **观测** | **`region_vault_forwarded_events`** **无**独立 Prometheus 计数 gauge；索引进度与 lag 仍看 **`/metrics`** 既有 indexer gauge + **`GET /meta.indexer`**；行级审计用 **admin** **`GET /api/v1/admin/region-vault/forwarded-events`** 或 DB 查询。 |
 | **reorg** | **`event_log` 链域回滚**路径已含 **`region_vault_forwarded_events`** 删尾（与 **fee_router_routed_events** 同族）；见 **internal** 响应键 **`region_vault_forwarded_events_rows`**。 |
 
+#### 7.1.1 演练（可复制）：`GOVERNANCE_COUNTRY_POOL_BALANCE_CHAIN_SSOT`（根级 **country_pool** 链上主读 · **TT-RUNBOOK-COUNTRY-POOL-DRILL-001**）
+
+**契约 SSOT**（字段语义）：[04 §3.4 `GET …/governance/pool`](../docs/spec/04-后端与API.md) 大表行、**B110-SSOT-06/07**；与 **`GOVERNANCE_POOL_BALANCE_CHAIN_SSOT`**（**`pool_balance`**）**独立门闸**。本节强调：**不得**将 **`chain_alignment_hint.ssot_parallel_chain_snapshot.region_vault_erc20_balance_read`**（并行观测腿）或 **`GET …/governance/fee-pool-aggregates`**（**Σ 投影**）当作根级 **`country_pool`** 瞬时 **`balanceOf`** SSOT。
+
+**前置**（开闸后仍须全部满足，否则 API **不**写根级 **`country_pool*`** 链上主读）：进程已挂载 **`ChainConfig` + 可用 RPC**；**`REGION_VAULT_ADDRESS`**（与 **`GET /meta` → `chain.contracts.region_vault_address`** 同源）；**`GOVERNANCE_POOL_SSOT_TOKEN_ADDRESS`**（与 **FeeRouter `pool_balance`** SSOT 代币同源）。
+
+**A · 开启（预发 / 生产须书面批准后再做）**
+
+1. 在编排 env / systemd `Environment=` 增加：  
+   `GOVERNANCE_COUNTRY_POOL_BALANCE_CHAIN_SSOT=1`  
+   （同义：`true` / `on` / `yes`，大小写不敏感。）
+2. **重启 API**（或等价使进程重读环境变量）。
+3. **验证点（可复制）**：
+   ```bash
+   curl -sS "${API_BASE:-http://127.0.0.1:8080}/api/v1/governance/pool" \
+     | jq '{country_pool,country_pool_data_source,country_pool_is_chain_ssot,data_source,is_chain_ssot}'
+   ```
+   - **成功（闸开且 RPC + 锚点读成功）**：`country_pool_data_source == "chain_read"` 且 `country_pool_is_chain_ssot == true`，且 **`country_pool`** 为规范 **全宽 `0x` u256 hex**（**禁止**用 **`0`** 或无 RPC 支撑值冒充；失败时根级**不出现**上述主读三键或按 **04** 降级，**不**用 **Σ** 顶替）。
+   - **边界**：同响应 **`chain_alignment_hint.ssot_parallel_chain_snapshot`** 仍为 **B110-SSOT-03 观测**（嵌套体 **`is_chain_ssot`** 为 **false**），**不得**与根级 **`country_pool*`** 混读。
+4. **Σ 路径（反证 fee-pool-aggregates 非主读）**：
+   ```bash
+   curl -sS "${API_BASE:-http://127.0.0.1:8080}/api/v1/governance/fee-pool-aggregates" \
+     | jq '{data_source,anchor,has_country_pool_ssot: (.country_pool != null), has_country_pool_flag: (.country_pool_is_chain_ssot != null)}'
+   ```
+   **期望**：`data_source == "projection"`，**`anchor`** 含 **B-084** 语义；**`has_country_pool_ssot` / `has_country_pool_flag` 均为 `false`**（响应体**无**根级 **`country_pool*`** 主读键）。
+
+**B · 回滚（单动作）**
+
+1. 取消或置非启用：  
+   `GOVERNANCE_COUNTRY_POOL_BALANCE_CHAIN_SSOT=0`  
+   （或 `unset` / `false` / `off` / `no`。）
+2. **重启 API**。
+3. **验证点**：再次执行 **A.3** 的 `jq`；**`country_pool_is_chain_ssot` 不得为 `true`**，**`country_pool_data_source` 不得为 `chain_read`**（键缺失视为关闸成功）。
+
+**证据留痕（可选）**：开关前后各保存一份 **脱敏** 的 **`governance/pool`** JSON 片段（及可选 **fee-pool-aggregates** `data_source` 行）入 **`evidence/GO_YYYYMMDD/artifacts/`**，与工单 / manifest 互指；详见 **[evidence/README · 治理池根级链上 SSOT 演练留痕](../evidence/README.md#governance-pool-country-pool-ssot-drill)**。
+
 **变更**：改任一行归宿或「是否计入基数」→ 同步 **84 §1.1.1**、**08-4**、**82 §六** 纪要，并按 [07 §二 2.4](../docs/spec/07-开发流程与顺序.md) 跑治理联动脚本（若涉 83/84 百分数）。
+
+#### 7.1.2 演练（可复制）：`GOVERNANCE_TREASURY_ERC20_POOL_BALANCE_CHAIN_SSOT`（根级 **treasury_erc20_pool** 链上主读 · **TT-RUNBOOK-TREASURY-ERC20-POOL-DRILL-007**）
+
+**契约 SSOT**（字段语义）：[04 §3.4 `GET …/governance/pool`](../docs/spec/04-后端与API.md) 根级 **`treasury_erc20_pool*`**；与 **`GOVERNANCE_POOL_BALANCE_CHAIN_SSOT`**（**`pool_balance`**）、**`GOVERNANCE_COUNTRY_POOL_BALANCE_CHAIN_SSOT`**（**`country_pool*`**）、**`GOVERNANCE_TREASURY_POOL_BALANCE_CHAIN_SSOT`**（**`treasury_pool`·原生 Wei**）**四门独立**。链上锚：**`ERC20.balanceOf(GovernanceTreasury)`**，**`token_address`** = **`GOVERNANCE_TREASURY_SSOT_TOKEN_ADDRESS`**（**不必**与 **`GOVERNANCE_POOL_SSOT_TOKEN_ADDRESS`** 同址）。本节强调：**不得**将 **`chain_alignment_hint.ssot_parallel_chain_snapshot`** 内并行观测腿当作根级 **`treasury_erc20_pool*`** 主读；**`GET …/governance/fee-pool-aggregates`**（**Σ 投影**）**永不**含根级 **`treasury_erc20_pool*`**，**不得**与主读混名或并入 Σ。
+
+**前置**（开闸后仍须全部满足，否则 API **不**写根级 **`treasury_erc20_pool*`** 链上主读）：进程已挂载 **`ChainConfig` + 可用 RPC**；**`GOVERNANCE_TREASURY_ADDRESS`**（与 **`GET /meta` → 链上金库地址配置** 同源，见根目录 **`.env.example`**）；**`GOVERNANCE_TREASURY_SSOT_TOKEN_ADDRESS`**（非空、规范合约地址）。
+
+**A · 开启（预发 / 生产须书面批准后再做）**
+
+1. 在编排 env / systemd `Environment=` 增加：  
+   `GOVERNANCE_TREASURY_ERC20_POOL_BALANCE_CHAIN_SSOT=1`  
+   （同义：`true` / `on` / `yes`，大小写不敏感。）
+2. **重启 API**（或等价使进程重读环境变量）。
+3. **验证点（可复制）——根级三键出现**：
+   ```bash
+   curl -sS "${API_BASE:-http://127.0.0.1:8080}/api/v1/governance/pool" \
+     | jq '{treasury_erc20_pool,treasury_erc20_pool_data_source,treasury_erc20_pool_is_chain_ssot}'
+   ```
+   - **成功（闸开且 RPC + 锚点读成功）**：`treasury_erc20_pool_data_source == "chain_read"` 且 `treasury_erc20_pool_is_chain_ssot == true`，且 **`treasury_erc20_pool`** 为规范 **全宽 `0x` u256 hex**（**禁止**用 **`0`** 或无 RPC 支撑值冒充；失败时根级**不出现**上述主读三键或按 **04** 降级，**不**用 **Σ** 顶替）。
+   - **边界**：**`chain_alignment_hint`** 内并行快照仍为 **B110-SSOT-03 观测**，**不得**与根级 **`treasury_erc20_pool*`** 混读。
+4. **验证点（可复制）——Σ 永不出现该三键（与闸开/关无关）**：
+   ```bash
+   curl -sS "${API_BASE:-http://127.0.0.1:8080}/api/v1/governance/fee-pool-aggregates" \
+     | jq '{data_source,anchor,has_treasury_erc20_pool: (.treasury_erc20_pool != null), has_treasury_erc20_ds: (.treasury_erc20_pool_data_source != null), has_treasury_erc20_flag: (.treasury_erc20_pool_is_chain_ssot != null)}'
+   ```
+   **期望**：**`has_treasury_erc20_pool` / `has_treasury_erc20_ds` / `has_treasury_erc20_flag` 均为 `false`**（响应体根级**无** **`treasury_erc20_pool`**、**`treasury_erc20_pool_data_source`**、**`treasury_erc20_pool_is_chain_ssot`**）；**`data_source`** 为 **`projection`** 或（无 DB 时）**`placeholder`**，均**不得**因本闸在 Σ 体上**新增**上述键。可与 **A.3** 同一轮执行，用于证明 **「pool 根级可出现 `treasury_erc20_pool*`，Σ 仍永不出现」**。
+
+**B · 回滚（单动作）**
+
+1. 取消或置非启用：  
+   `GOVERNANCE_TREASURY_ERC20_POOL_BALANCE_CHAIN_SSOT=0`  
+   （或 `unset` / `false` / `off` / `no`。）
+2. **重启 API**。
+3. **验证点**：再次执行 **A.3** 的 `jq`；**`treasury_erc20_pool_is_chain_ssot` 不得为 `true`**，**`treasury_erc20_pool_data_source` 不得为 `chain_read`**（键缺失视为关闸成功、即根级主读**消失**）。
+4. 再次执行 **A.4** 的 `jq`；**仍须**满足 **A.4** 的三项 **`false`**（回滚后 Σ **仍**不得出现根级 **`treasury_erc20_pool*`**）。
+
+**证据留痕（可选）**：开关前后各保存一份 **脱敏** 的 **`governance/pool`** 片段（及可选 **fee-pool-aggregates** 整段或 `jq` 输出）入 **`evidence/GO_YYYYMMDD/artifacts/`**，与工单 / manifest 互指；详见 **[evidence/README · treasury_erc20_pool SSOT 演练留痕](../evidence/README.md#governance-pool-treasury-erc20-ssot-drill)**。
+
+#### 7.1.3 验证（可复制）：订单详情 **`escrow_chain_state*`** / **`escrow_release_state*`** / **`escrow_dispute_state*`** / **`escrow_locked_amount*`** 链上主读（**TT-ESCROW-SSOT-RUNBOOK-003** · **TT-ESCROW-SSOT-RUNBOOK-RELEASE-006** · **TT-ESCROW-SSOT-RUNBOOK-DISPUTE-009** · **TT-ESCROW-SSOT-RUNBOOK-AMOUNT-012**）
+
+**契约 SSOT**：[04 §3.4 **`GET …/api/v1/orders/:id`**](../docs/spec/04-后端与API.md) 响应根级可选 **`escrow_chain_state`**、**`escrow_chain_state_data_source`**（**`chain_read`**）、**`escrow_chain_state_is_chain_ssot`**（**`true`**）；与 **`order.state` / `order.status`**（**投影/DB**）**不得混读或互相替代**。另可选根级 **`escrow_release_state`**、**`escrow_release_state_data_source`**（**`chain_read`**）、**`escrow_release_state_is_chain_ssot`**（**`true`**）：**仅当**链上 **`Escrow.status()`** 为 **放款类终态** **Completed / Refunded / Resolved / PartiallyRefunded / Slashed**（与 **`internal::terminal_escrow_label_for_reconcile`** 同源终态集）时出现；**`Created` / `Funded` / `Disputed` / `None`** 等**非**上述终态时**不得**出现 **`escrow_release_state*`**（**不**写 **`false`**、**`pending`**）；**不得**由订单/支付投影字段推导。另可选根级 **`escrow_dispute_state`**、**`escrow_dispute_state_data_source`**（**`chain_read`**）、**`escrow_dispute_state_is_chain_ssot`**（**`true`**）：**仅当**链上 **`Escrow.status()`** 处于 **争议生命周期** **`Disputed` / `Resolved`** 时出现（**TT-ESCROW-SSOT-DISPUTE-STATE-008**）；**无争议**（**`Created` / `Funded` / `Completed` / `Refunded` / `PartiallyRefunded` / `Slashed` / `None`** 等）时**不得**出现 **`escrow_dispute_state*`**；**不得**由订单状态或人工裁决记录推导。另可选根级 **`escrow_locked_amount`**、**`escrow_locked_amount_data_source`**（**`chain_read`**）、**`escrow_locked_amount_is_chain_ssot`**（**`true`**）：**仅当**链上 **`factory.escrowOf(orderId)`** 指向**有效** Escrow 合约、**`Escrow.token()`** 为**非零**地址且 **`ERC20.balanceOf(escrow)`** **> 0** 时出现（**TT-ESCROW-SSOT-AMOUNT-011**）；**无 Escrow / token 为零 / 余额 0 / RPC 失败** 时**不得**出现（**不**写 **0**）；**不得**由订单金额或 DB 推导。链上读路径（状态）：**`RPC_URL` + `ESCROW_FACTORY_ADDRESS`** → **`escrowOf(orderId)`** → **`Escrow.status()`**（**`chain::get_escrow_status`**）。**`GET …/api/v1/orders` 列表**及 **未挂载 `chain_off` 时的占位列表/占位详情** 响应根级**不得**出现 **`escrow_chain_state*`**、**`escrow_release_state*`**、**`escrow_dispute_state*`**、**`escrow_locked_amount*`**（与 **TT-ESCROW-SSOT-ORDER-STATE-AGGREGATE-EXCLUDE-002** 单测语义一致）。
+
+**前置（详情出现 `escrow_chain_state*`）**：进程已配置 **`ChainConfig`**（**`RPC_URL`**、**`ESCROW_FACTORY_ADDRESS`** 等）；API **已挂载 `chain_off`** 且订单存在于内存/DB；调用方 **`Authorization: Bearer bearer_<uuid>`** 之 **`<uuid>`** 须为该单 **tourist_id** 或 **guide_id**（与 **SEED_TEST_ACCOUNTS** / 会话一致）；链上 **`get_escrow_status` 返回 `Some`**（若返回 **`None`** 或 RPC 失败，详情**不出现** **`escrow_chain_state*`** 等状态三键，属契约行为，**不**用 **`order.state`** 回填）。**`escrow_locked_amount*`** 由 **`escrowOf` + `token()` + `balanceOf(escrow)`** 独立拉取，**可与** **`escrow_chain_state*`** 缺省**并存**（例如仅验证锁仓余额分支时可选用 **`Funded`** 且链上仍有余额之单）。
+
+**A · 详情链读成功（根级 `escrow_chain_state*`；`escrow_release_state*` 视放款终态；`escrow_dispute_state*` 视争议生命周期；`escrow_locked_amount*` 视链上锁仓余额）**
+
+```bash
+ORDER_ID="<订单 UUID>"
+PARTICIPANT_UUID="<该单 tourist_id 或 guide_id>"
+curl -sS -H "Authorization: Bearer bearer_${PARTICIPANT_UUID}" \
+  "${API_BASE:-http://127.0.0.1:8080}/api/v1/orders/${ORDER_ID}" \
+  | jq '{escrow_chain_state,escrow_chain_state_data_source,escrow_chain_state_is_chain_ssot,escrow_release_state,escrow_release_state_data_source,escrow_release_state_is_chain_ssot,escrow_dispute_state,escrow_dispute_state_data_source,escrow_dispute_state_is_chain_ssot,escrow_locked_amount,escrow_locked_amount_data_source,escrow_locked_amount_is_chain_ssot,order_state: .order.state}'
+```
+
+**期望**：**`escrow_chain_state_data_source` == `"chain_read"`** 且 **`escrow_chain_state_is_chain_ssot` == `true`**，**`escrow_chain_state`** 为与链上一致的枚举字符串（**非**空串占位）。**当且仅当** **`escrow_chain_state`** 为 **`Completed` / `Refunded` / `Resolved` / `PartiallyRefunded` / `Slashed`** 之一时，须同时满足：**`escrow_release_state_data_source` == `"chain_read"`**、**`escrow_release_state_is_chain_ssot` == `true`**，**`escrow_release_state`** 与该终态字符串**一致**。**当** **`escrow_chain_state`** 为 **`Funded` / `Disputed` / `Created` / `None`** 等**未**进入放款终态时：**`escrow_release_state` / `escrow_release_state_data_source` / `escrow_release_state_is_chain_ssot`** 须均为 **`null`**。**当且仅当** **`escrow_chain_state`** 为 **`Disputed` / `Resolved`** 时，须同时满足：**`escrow_dispute_state_data_source` == `"chain_read"`**、**`escrow_dispute_state_is_chain_ssot` == `true`**，**`escrow_dispute_state`** 与 **`escrow_chain_state`** **一致**（**`Disputed`** 或 **`Resolved`**）。**无争议**（**其它**链上态）时：**`escrow_dispute_state` / `escrow_dispute_state_data_source` / `escrow_dispute_state_is_chain_ssot`** 须均为 **`null`**。**当且仅当**链上 **Escrow 有效**、**`token()` 非零**、**`balanceOf(escrow) > 0`** 时：**`escrow_locked_amount_data_source` == `"chain_read"`**、**`escrow_locked_amount_is_chain_ssot` == `true`**，**`escrow_locked_amount`** 为 **规范 `0x` + 64 位 uint256 hex** 且 **非全零**（手检可与 **`cast call`** 同源 **`balanceOf`** 比对）；**否则**（含余额 **0**）**`escrow_locked_amount` / `escrow_locked_amount_data_source` / `escrow_locked_amount_is_chain_ssot`** 须均为 **`null`**。
+
+**B · 列表与占位路径（根级不得出现 `escrow_chain_state*`、`escrow_release_state*`、`escrow_dispute_state*`、`escrow_locked_amount*`）**
+
+```bash
+PARTICIPANT_UUID="<已登录用户 UUID>"
+# B1：**chain_off 已挂载**时的订单列表
+curl -sS -H "Authorization: Bearer bearer_${PARTICIPANT_UUID}" \
+  "${API_BASE:-http://127.0.0.1:8080}/api/v1/orders?limit=5" \
+  | jq '{has_escrow_state: (.escrow_chain_state != null), has_escrow_ds: (.escrow_chain_state_data_source != null), has_escrow_flag: (.escrow_chain_state_is_chain_ssot != null), has_rel_state: (.escrow_release_state != null), has_rel_ds: (.escrow_release_state_data_source != null), has_rel_flag: (.escrow_release_state_is_chain_ssot != null), has_disp_state: (.escrow_dispute_state != null), has_disp_ds: (.escrow_dispute_state_data_source != null), has_disp_flag: (.escrow_dispute_state_is_chain_ssot != null), has_lock_amt: (.escrow_locked_amount != null), has_lock_ds: (.escrow_locked_amount_data_source != null), has_lock_flag: (.escrow_locked_amount_is_chain_ssot != null)}'
+
+# B2：**未挂载 chain_off** 时的占位列表（无需 Bearer）
+curl -sS "${API_BASE:-http://127.0.0.1:8080}/api/v1/orders" \
+  | jq '{has_escrow_state: (.escrow_chain_state != null), has_escrow_ds: (.escrow_chain_state_data_source != null), has_escrow_flag: (.escrow_chain_state_is_chain_ssot != null), has_rel_state: (.escrow_release_state != null), has_rel_ds: (.escrow_release_state_data_source != null), has_rel_flag: (.escrow_release_state_is_chain_ssot != null), has_disp_state: (.escrow_dispute_state != null), has_disp_ds: (.escrow_dispute_state_data_source != null), has_disp_flag: (.escrow_dispute_state_is_chain_ssot != null), has_lock_amt: (.escrow_locked_amount != null), has_lock_ds: (.escrow_locked_amount_data_source != null), has_lock_flag: (.escrow_locked_amount_is_chain_ssot != null)}'
+
+# B3：**未挂载 chain_off** 时的占位详情（示例 UUID，可替换）
+curl -sS "${API_BASE:-http://127.0.0.1:8080}/api/v1/orders/00000000-0000-4000-8000-000000000001" \
+  | jq '{has_escrow_state: (.escrow_chain_state != null), has_escrow_ds: (.escrow_chain_state_data_source != null), has_escrow_flag: (.escrow_chain_state_is_chain_ssot != null), has_rel_state: (.escrow_release_state != null), has_rel_ds: (.escrow_release_state_data_source != null), has_rel_flag: (.escrow_release_state_is_chain_ssot != null), has_disp_state: (.escrow_dispute_state != null), has_disp_ds: (.escrow_dispute_state_data_source != null), has_disp_flag: (.escrow_dispute_state_is_chain_ssot != null), has_lock_amt: (.escrow_locked_amount != null), has_lock_ds: (.escrow_locked_amount_data_source != null), has_lock_flag: (.escrow_locked_amount_is_chain_ssot != null)}'
+```
+
+**期望**：**B1～B3** 中 **`has_escrow_*`、`has_rel_*`、`has_disp_*`、`has_lock_*` 共十二项均为 `false`**。
+
+**证据留痕（可选）**：**A** 成功体（脱敏 **`API_BASE`**、**`Bearer`**）→ **`orders-detail-escrow-chain-state-ssot-ok.json`**（可含 **`escrow_release_state*`** / **`escrow_dispute_state*`** / **`escrow_locked_amount*`** 样例）；另可选 **`orders-detail-escrow-release-state-ssot-terminal-only.json`**（五放款终态之一）、**`orders-detail-escrow-dispute-state-ssot-disputed-or-resolved.json`**（**`Disputed`** 或 **`Resolved`**）、**`orders-detail-escrow-locked-amount-ssot-positive-balance.json`**（**`balanceOf(escrow) > 0`**）；**B** 的 **`jq` 输出** → **`orders-list-no-escrow-order-ssot-root-keys.json`**（列表 + 占位，证明根级**无** **`escrow_chain_state*`** / **`escrow_release_state*`** / **`escrow_dispute_state*`** / **`escrow_locked_amount*`**）；与 **manifest** 互指 — 详见 **[evidence/README · 订单详情 escrow 链上 SSOT](../evidence/README.md#orders-detail-escrow-chain-state-ssot-drill)**。
 
 ---
 

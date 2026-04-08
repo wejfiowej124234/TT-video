@@ -809,7 +809,7 @@ async fn s55_custom_create_then_orders_and_discover_contain_draft() {
     assert_eq!(json["order_status"], "draft");
     let order_id = Uuid::parse_str(json["order_id"].as_str().unwrap()).unwrap();
 
-    let Json(orders) = orders_list_impl(state.clone(), user_id, OrderListPage::default(), None)
+    let Json(orders) = orders_list_impl(state.clone(), user_id, OrderListPage::default(), None, None)
         .await
         .expect("orders_list_impl");
     let items = orders["items"].as_array().expect("items");
@@ -961,7 +961,7 @@ async fn discover_card_itinerary_matches_order_get() {
     assert!((nf(&br["misc"]) - nf(&disc_ab["platform_fee"])).abs() < 1e-6);
 
     // GET /api/v1/orders 列表项与 discover 卡片同形 breakdown + itinerary（07 §5.1）
-    let Json(orders_list) = orders_list_impl(state.clone(), user_id, OrderListPage::default(), None)
+    let Json(orders_list) = orders_list_impl(state.clone(), user_id, OrderListPage::default(), None, None)
         .await
         .expect("orders_list_impl");
     let list_item = orders_list["items"]
@@ -1274,6 +1274,7 @@ async fn orders_list_pagination_limit_and_cursor() {
             cursor: None,
         },
         None,
+        None,
     )
     .await
     else {
@@ -1294,6 +1295,7 @@ async fn orders_list_pagination_limit_and_cursor() {
             limit: Some(2),
             cursor: Some(cid),
         },
+        None,
         None,
     )
     .await

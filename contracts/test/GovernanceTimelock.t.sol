@@ -6,7 +6,7 @@ import "../src/GovernanceTimelock.sol";
 import "../src/FeeRouter.sol";
 import "../src/RegionVault.sol";
 
-/// B-089：create（schedule）→ 锁定期 → execute；**链上读数**与 **calldata** 一致。
+/// **TT-B089-TIMELOCK-FeeRouter-001**：**`schedule` → delay → `execute`**；**`FeeRouter.owner` 须为 Timelock** 方可用 **`onlyOwner`** payload（与生产 **`call`** 语义一致）。
 contract GovernanceTimelockTest is Test {
     address internal deployer = address(this);
     address internal multisig = address(0xBEEF);
@@ -15,6 +15,7 @@ contract GovernanceTimelockTest is Test {
         RegionVault v = new RegionVault(deployer);
         FeeRouter router = new FeeRouter(deployer, address(v), deployer, deployer, deployer);
         GovernanceTimelock tl = new GovernanceTimelock(deployer, 100);
+        router.transferOwnership(address(tl));
 
         bytes memory data = abi.encodeWithSelector(FeeRouter.transferOwnership.selector, multisig);
         bytes32 salt = bytes32(uint256(1));
@@ -33,7 +34,7 @@ contract GovernanceTimelockTest is Test {
         assertEq(router.owner(), multisig);
     }
 
-    /// TT-COMP-B089：**Timelock `execute`** 后 **`setRoutingConfig`** 链上读数与 **calldata** 一致。
+    /// **TT-B089-TIMELOCK-SET-ROUTING-CONFIG-PAYLOAD-001**：**`execute`** 后 **`get*`**（四方地址 + BPS）与 **payload** 一致。
     function test_COMP_B089_timelock_execute_set_routing_config() public {
         address c0 = makeAddr("bucket0");
         address s0 = makeAddr("stakers0");
@@ -41,6 +42,7 @@ contract GovernanceTimelockTest is Test {
         address o0 = makeAddr("ops0");
         FeeRouter router = new FeeRouter(deployer, c0, s0, r0, o0);
         GovernanceTimelock tl = new GovernanceTimelock(deployer, 50);
+        router.transferOwnership(address(tl));
 
         address c1 = makeAddr("bucket1");
         address s1 = makeAddr("stakers1");
@@ -94,6 +96,7 @@ contract GovernanceTimelockTest is Test {
         RegionVault v = new RegionVault(deployer);
         FeeRouter router = new FeeRouter(deployer, address(v), deployer, deployer, deployer);
         GovernanceTimelock tl = new GovernanceTimelock(deployer, 1);
+        router.transferOwnership(address(tl));
         bytes memory data = abi.encodeWithSelector(FeeRouter.transferOwnership.selector, multisig);
         bytes32 id = tl.schedule(address(router), 0, data, bytes32(uint256(2)));
 

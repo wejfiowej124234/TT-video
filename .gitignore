@@ -34,6 +34,10 @@ frontend/.lighthouse*
 .dev_backend.pid
 .dev_frontend.pid
 
+# Python 字节码（勿提交）
+**/__pycache__/
+*.py[cod]
+
 # 脚本运行产生的日志（留痕由 CI/人工执行后生成）
 scripts/*.log
 

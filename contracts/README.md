@@ -42,7 +42,8 @@
 
 - **Solidity 版本**：0.8.19（foundry.toml solc_version）；EVM paris
 - **目标网络**：Polygon PoS chainId 137（01 §5）；**本地测试必须先用 Anvil**，通过后再部署到链上。
-- **构建**：Foundry（`forge build`）；合约位于 `contracts/src/`，产物 `out/`
+- **构建**：Foundry（`forge build`）；合约位于 `contracts/src/`，产物 `out/`  
+  - **本地未装 `forge` / PATH**：见 **`contracts/LOCAL-FOUNDRY.md`**；**B-093** / **B-087** / **B-089** / **B-090** 验收：**`run-b093-forge.sh`**、**`run-b087-forge.sh`**（§6）、**`run-b089-forge.sh`**（§7）、**`run-b090-forge.sh`**（**`GovernanceTreasury.t.sol` + `[Bb]090`**，§8）
 - **ABI 导出**：仓库根执行 `./scripts/sync-abi-from-forge.sh`（须已安装 `forge`），将 canonical ABI 写入 `contracts/abi/`，再按脚本提示同步 `frontend/dapp/abis` 并跑 `check-55-s13.sh`；详见 [contracts/abi/README](abi/README.md)、[scripts/README](../scripts/README.md)
 - **依赖**：`forge install foundry-rs/forge-std`；本地测试与部署见上文「部署」段（Anvil + forge script）
 

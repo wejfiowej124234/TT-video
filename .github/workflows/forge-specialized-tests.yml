@@ -1,0 +1,68 @@
+# 四条 Forge 专验（B-093 / B-087 / B-089 / B-090）：与母表 `evidence/GO_20260408/forge_B*.log` 路径对齐；artifact 下载后落盘提交即可审计闭环。
+name: Forge Specialized Tests (B093/B087/B089/B090)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "contracts/**"
+      - ".github/workflows/forge-specialized-tests.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "contracts/**"
+      - ".github/workflows/forge-specialized-tests.yml"
+
+jobs:
+  forge-specialized-tests:
+    name: Forge Specialized Tests (B093/B087/B089/B090)
+    runs-on: ubuntu-latest
+
+    steps:
+      # 与 `.gitmodules` 中 `contracts/lib/forge-std` 对齐；不拉子模块时目录空/占位，`forge install` 易失败 → CI 红叉
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Install forge-std (if missing)
+        run: |
+          set -euo pipefail
+          git config --global --add safe.directory "${GITHUB_WORKSPACE}"
+          cd contracts
+          if [ ! -f lib/forge-std/src/Test.sol ]; then
+            forge install foundry-rs/forge-std
+          fi
+
+      - name: Prepare evidence dir
+        run: mkdir -p evidence/GO_20260408
+
+      - name: Run B-093
+        run: |
+          set -euo pipefail
+          forge test --root contracts --match-path test/Escrow.t.sol --match-test "B093" -vv 2>&1 | tee evidence/GO_20260408/forge_B093.log
+
+      - name: Run B-087
+        run: |
+          set -euo pipefail
+          forge test --root contracts --match-path test/InvestorDistributionClaim.t.sol --match-test "B087" -vv 2>&1 | tee evidence/GO_20260408/forge_B087.log
+
+      - name: Run B-089
+        run: |
+          set -euo pipefail
+          forge test --root contracts --match-test "[Bb]089" -vv 2>&1 | tee evidence/GO_20260408/forge_B089.log
+
+      - name: Run B-090
+        run: |
+          set -euo pipefail
+          forge test --root contracts --match-path test/GovernanceTreasury.t.sol --match-test "[Bb]090" -vv 2>&1 | tee evidence/GO_20260408/forge_B090.log
+
+      - name: Upload Forge logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: forge-specialized-logs
+          path: evidence/GO_20260408/

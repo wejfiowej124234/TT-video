@@ -53,6 +53,23 @@
 
 ## 二、CI 门禁
 
+### SSOT Guard 统一索引（TT-SSOT-GUARD-INDEX-017）
+
+**触发入口（统一）**：仓库根执行 **`bash scripts/check-invariants.sh`**（Windows 可用 **`scripts/check-invariants.ps1`**，与 **`.sh`** 同源）；CI 上由 **[`.github/workflows/build.yml`](../.github/workflows/build.yml)** 的 **Build** job **首步**调用；**`pre-release-automation`** 亦串联同一 **`check-invariants`** 链路。
+
+**横向扩展（必须）**：若在**其它 HTTP 端点**引入与下表同类的**根级链读 SSOT**（新 `m.insert` 键族或新 JSON 根键），须**单独开立 TT**，并**新增独立 guard 脚本**或**扩展 allowlist / 并列校验**；**禁止**不经 TT 与脚本评审把新键并入既有 Escrow / B-110 默认范围。
+
+| Guard | 脚本 | 覆盖范围（摘要） |
+|------|------|------------------|
+| **B-097** 订单详情 **Escrow** 四套根级链读 | **`ssot-guard-escrow-orders-detail.py`**（**`.ps1`** 包装） | **`escrow_*` SSOT `m.insert` 仅** `crates/api/src/routes/orders/mod.rs`；**`merge_escrow_*`** 内**禁止**回填 **`order.*`**；**`data_source` / `is_chain_ssot`** 字面 **`chain_read` / `true`**；**002** 类聚合体排除 **12** 键（与 **`TT-ESCROW-SSOT-ORDER-STATE-AGGREGATE-EXCLUDE-002`** 同口径） |
+| **B-110** 治理池 **四根级**链上 SSOT | **`ssot-guard-b110-pool-ssot.py`**（**`.ps1`** 包装） | **`GET …/governance/pool`**：**`pool_balance`** 与顶层 **`data_source` / `is_chain_ssot`**；**`country_pool*` / `treasury_pool*` / `treasury_erc20_pool*`** 的 **`m.insert` 落点、`chain_read` / `true`、不写 0**；**`build_fee_pool_aggregate_body`（fee-pool-aggregates Σ）** **不得**含上述三池**根级**键（与 **`TT-SSOT-GUARD-B110-POOL-016`** 同链） |
+
+**母表交叉索引**（任务溯源）：**[docs/任务母表.md](../docs/任务母表.md)** 内 **「SSOT Guard 门禁索引」** 段（检索 **TT-SSOT-GUARD-INDEX-017**）。
+
+**Evidence 总览**（覆盖 / CI / 典型回归 / 扩展规则一条读）：**[evidence/GO_20260407_SSOT_GUARDS.md](../evidence/GO_20260407_SSOT_GUARDS.md)**（**TT-SSOT-GUARD-GO-SUMMARY-018**）；**evidence 目录锚点**：[evidence/README.md · SSOT Guard 总览](../evidence/README.md#ssot-guards-ci-summary)。
+
+**CI Gate v2（编排）**：**`check-invariants.sh` / `check-invariants.ps1`** 调用 **`ssot-guard-ci-v2.py`** — 顺序执行 **B-097 静态**、**B-110 静态**、**`ssot-guard-response-contract.py`**（**`scripts/ssot-guard-fixtures/v2/*.snapshot.json`** 运行时契约快照）；成功/失败均写 **`target/ssot-guard-ci-v2-report.json`**。失败字段说明：**[templates/SSOT_GUARD_FAILURE_REPORT.md](templates/SSOT_GUARD_FAILURE_REPORT.md)**。新端点接入流程：**[SSOT_GUARD_NEW_ENDPOINT.md](SSOT_GUARD_NEW_ENDPOINT.md)**（**TT + allowlist**）。共享常量：**`ssot_guard_v2_constants.py`**。
+
 | 脚本 / Workflow | 说明 |
 |------|------|
 | **Contract ABI Gate**（`.github/workflows/contract-abi-gate.yml`） | `forge test` + **`bash scripts/run-verify-abi-forge.sh`**；**仅当**变更命中 `contracts/**`、`frontend/dapp/abis/**`、相关 `scripts/*` 或本 workflow 时自动跑（省 CI）；**Actions → Contract ABI Gate → Run workflow** 可手动全量跑。 |
@@ -60,7 +77,13 @@
 | **run-verify-abi-forge.sh** | 优先 `python3`、否则 `python` 调用 **verify-abi-forge.py**；项目根 `bash scripts/run-verify-abi-forge.sh`。 |
 | **run-verify-abi-forge.ps1** | Windows PowerShell 与上等价；项目根 `.\scripts\run-verify-abi-forge.ps1`。 |
 | **verify-abi-forge.py** | ABI multiset 校验实现；通常经上一行或 CI 调用（须 `forge`、建议已 `forge build`）。 |
-| **check-invariants.sh** | 校验 rust-toolchain、frontend、package-lock.json、API 安全头。**文首读前摘要**入口 **[07](../docs/spec/07-开发流程与顺序.md)**「**工台基线 · 依赖审计（invariants · audit-deps）**」行；**[00-文档治理总册 §8.3](../docs/spec/00-文档治理总册.md#doc-audit-gates-ssot)**；**pre-release-automation** 首段同源。 |
+| **check-invariants.sh** | 校验 rust-toolchain、frontend、package-lock.json、API 安全头；并联 **`ssot-guard-ci-v2.py`**（**CI Gate v2**）：内含 **`ssot-guard-escrow-orders-detail.py`**（**B-097**）、**`ssot-guard-b110-pool-ssot.py`**（**B-110**）、**`ssot-guard-response-contract.py`**（**快照契约**）；报告 **`target/ssot-guard-ci-v2-report.json`**，模板 **[templates/SSOT_GUARD_FAILURE_REPORT.md](templates/SSOT_GUARD_FAILURE_REPORT.md)**。**文首读前摘要**入口 **[07](../docs/spec/07-开发流程与顺序.md)**「**工台基线 · 依赖审计（invariants · audit-deps）**」行；**[00-文档治理总册 §8.3](../docs/spec/00-文档治理总册.md#doc-audit-gates-ssot)**；**pre-release-automation** 首段同源。 |
+| **ssot-guard-escrow-orders-detail.py** | **CI / PR**（经 **check-invariants.sh** → **Build** workflow）：静态校验 **`escrow_*` SSOT `m.insert` 仅见于 `routes/orders/mod.rs`**；两路 **`merge_escrow_*`** 内**禁止 `order.*`**；**`chain_read` / `true`** 与 **002** 聚合排除 **12** 键。订单**列表**若将来需链读展示：**单开 TT**，**扩脚本或并列 guard**，**不**并入 **B-097** 默认范围。项目根 `python3 scripts/ssot-guard-escrow-orders-detail.py`。 |
+| **ssot-guard-escrow-orders-detail.ps1** | Windows：委托 **`python`** 运行 **`ssot-guard-escrow-orders-detail.py`**（与上表 **.py** 同链）。 |
+| **ssot-guard-b110-pool-ssot.py** | **CI / PR**（经 **check-invariants.sh**）：**B-110** `GET …/governance/pool` 四池根级链上 SSOT 静态门禁（见上表 **check-invariants** 行）。项目根 `python3 scripts/ssot-guard-b110-pool-ssot.py`。 |
+| **ssot-guard-b110-pool-ssot.ps1** | Windows：委托 **`python`** 运行 **`ssot-guard-b110-pool-ssot.py`**。 |
+| **ssot-guard-ci-v2.py** | **CI Gate v2 编排器**（由 **check-invariants** 调用）：串联 **B-097** / **B-110** 静态脚本 + **`ssot-guard-response-contract.py`**；写 **`target/ssot-guard-ci-v2-report.json`**。 |
+| **ssot-guard-response-contract.py** | **快照契约**：校验 **`scripts/ssot-guard-fixtures/v2/*.snapshot.json`**（与 **B-097 / B-110** 根级不变量对齐）。 |
 | **audit-deps.sh** | 前端 npm audit、后端 cargo audit（CI 中 continue-on-error）。**文首读前摘要**入口 **[07](../docs/spec/07-开发流程与顺序.md)**「**工台基线 · 依赖审计（invariants · audit-deps）**」行；**[00-文档治理总册 §8.3](../docs/spec/00-文档治理总册.md#doc-audit-gates-ssot)**。 |
 | **audit-deps.ps1** | Windows：委托 **`bash scripts/audit-deps.sh`**（须 **Git Bash**；与上表 **audit-deps.sh** 行同文档链）。 |
 | **check-08-consistency.sh** | 08-3/08-4 **W-PDP-SSOT-CONSISTENCY**；`./scripts/check-08-consistency.sh [BASE_REF]`（默认 **main**）。Workflow：[check-08-consistency.yml](../.github/workflows/check-08-consistency.yml)。**文首读前摘要**入口 **[07](../docs/spec/07-开发流程与顺序.md)**「**08-3/08-4 机读预检（一致性 · evidence 指针）**」行。**W-GATE-CROSS-CHECK** 机读辅助之一，**不替代** **08-2 审查二** — **[Runbook §12.7](../ops/RUNBOOK.md)**；**[00-文档治理总册 §8.3](../docs/spec/00-文档治理总册.md#doc-audit-gates-ssot)**。 |

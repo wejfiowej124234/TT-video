@@ -18,7 +18,10 @@
 558e460d7e988c9fcf423b489e22b47c1af92024a440f2f1864dadd8573edcd0 *docs/verification-evidence/cargo-test-fee-pool.log
 57094e032248443d46e41a2850bfba40407356d7e2523684c47b312086e5a289 *docs/verification-evidence/cargo-test-b085.log
 58375de225cd9ea9a9b57b3a1ac696db87db5ce9f903084ce07b7e562951c297 *docs/verification-evidence/sql-tt10-distribution-lines-b088.txt
-5edbe3e4e3154a94e2d586fe21e91a6163c0ec398c124c4627a2e3be907c6c17 *evidence/B-094-execute-resolution-fixtures.md
+9a76e27d4633c255420381eef54129fcb1895825210ce564cd842763331dcc94 *docs/verification-evidence/B-103-resolution-fixtures-SSOT.md
+d0c5239e2c1a7876eb781b88a712b5f82a086156f7d2354d05783a64709485b0 *docs/verification-evidence/B-094-resolution-fixtures-SSOT.md
+16ad282ccb269a93aee094afd8d8aeded7e6897e0d230a2fd54cf9f66c7f2ba6 *docs/verification-evidence/B-123-resolution-fixtures-ENTRY.md
+7188cdc7d7cd98aafb69414694a57af7694fc9c62f1c754ffff9e990cbf7d027 *evidence/B-094-execute-resolution-fixtures.md
 61cb8b6482f66094bb88cd432f0e72eafe1d8200a1a57dbc4db646bc2a1ab991 *docs/verification-evidence/http-b090-ui-proxy-governance-proposals-3012.json
 61cb8b6482f66094bb88cd432f0e72eafe1d8200a1a57dbc4db646bc2a1ab991 *docs/verification-evidence/http-get-governance-proposals-tt5-chain31337.json
 632930ec6955661652f848119f2283e96c35e91b2c5030697d6a5e6a8fa96e0b *docs/verification-evidence/cargo-test-b093-slash.log
@@ -37,7 +40,7 @@
 9cdb55ef6cd7018abbdc841682ecdebac6f9e1b7640d72318f50c7bb2295f333 *docs/verification-evidence/tt-05-b089-governor-projection.json
 adb616425587b364c4fcb4bf75151e2c259454e9283d19b3438f8f23ce57b643 *docs/verification-evidence/indexer-reconcile-tt4-orders-chain31337.json
 b728532794f226f6bc96f3d4c9baf18ae45485db382ada7e3c982ee447c38d6e *docs/verification-evidence/http-post-indexer-reconcile-tt1-tt2-chain31337.json
-b76420f6ad49cbfa875f57c0eadfccd8c660a6354d51d9475184f37e0c844df4 *docs/verification-evidence/tt-09-b094-resolution-indexer.json
+78a29f74a2e7f94f6e9e559589fdd68d26884a731fa76c60bb810e85fdc7f7be *docs/verification-evidence/tt-09-b094-resolution-indexer.json
 b7bca4151f5f923fbfd59e67832d8f0fdf8efb0a269e63d76a1b049cd039bb0d *docs/verification-evidence/cargo-test-traveltrust-api-full-green.log
 bee1d5850366bb848c5b43d9e80faa087bdcca50f40307d790c7c0b77f4b2a19 *docs/verification-evidence/http-post-indexer-replay-tt9-b094-chain31337.json
 c37c58b21c3dc976e863dbb3ea5f21a744674b1c9d42485ea5caeda320f70781 *docs/verification-evidence/cargo-test-traveltrust-api-full.log
@@ -56,3 +59,5 @@ f3144169ea08a29d32307f78caed81f07412d2e346fe426c02599fc85ee962de *docs/verificat
 f7646a0775a51f7a0aaeac3e9622d2c2821144de7d984700ac4df86682cd1629 *docs/verification-evidence/sql-tt9-orders-projection-b094.txt
 f79d10c81f08373acff7c1468af2381832d8c6e01907d75ebf6dd60203ff4675 *docs/verification-evidence/forge-test-escrow-b093.log
 ff94276016662a22873336cc5265e735ef52da0f0e630018e7936344854ed25f *docs/verification-evidence/http-get-fee-pool-aggregates-chain31337.json
+09b6bcf8333a5cc87f520b38802f03b07365ddb6c423b83a539e45c56faa312f *docs/verification-evidence/governor-timelock-queue-execute-evidence.md
+b907ea17e367c294ecef603803183d8206b1a014e4f596f9b1cf50e02b1687b9 *docs/verification-evidence/B-119-governor-timelock-queue-execute-ENTRY.md

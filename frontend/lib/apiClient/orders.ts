@@ -43,6 +43,10 @@ export type OrderListItem = {
   created_at?: string;
   breakdown?: OrderBreakdown | null;
   itinerary?: MarketOrderItinerary | null;
+  /** B-097：有 **`orders_projection`** 时由 API 给出；徽章以之为 SSOT */
+  display_status?: string | null;
+  /** B-097：链上投影终端；**`null`** 表示无投影行；**`read_status: degraded`** 表示读库失败 */
+  projection_terminal?: Record<string, unknown> | null;
 };
 
 export async function getOrders(params?: {

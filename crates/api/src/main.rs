@@ -4,7 +4,7 @@
 //! traceId：响应头 x-request-id 由请求头带入或自动生成，与 01 §9 贯通 requestId→txHash→logIndex 一致。
 //! 路由：核心业务路由已在 routes/* + chain_off/* 落地；少量降级分支在业务层不可用时返回 not_implemented，需按 04 §三 与 01 §10 持续校准。
 //! 幂等：请求头 Idempotency-Key / X-Idempotency-Key 在中间件透传并回写；对 POST/PUT 做 key 去重与结果复用（01 §10 #14），缓存键=method+path+key，最多 1000 条。
-//! 环境变量：PORT（默认 8080，与 frontend 默认 NEXT_PUBLIC_API_BASE_URL 一致）、CORS_ORIGINS（逗号分隔的允许 origin，未设则开发态允许任意；生产应设置）。
+//! 环境变量：PORT（默认 8080，与 frontend 默认 NEXT_PUBLIC_API_BASE_URL 一致）、CORS_ORIGINS（逗号分隔的允许 origin，未设则开发态允许任意；生产应设置）、**`SSOT_PARALLEL_CHAIN_SNAPSHOT_OBSERVATION`**（默认启用 **`ssot_parallel_chain_snapshot`** 并行 RPC；**`0`/`false`/`off`/`no`** 关闭，体三腿 **`null`**、**不**写池根级主字段；**`crate::state`** / **04** B110-SSOT-05）。
 
 #![allow(dead_code)]
 
@@ -22,6 +22,9 @@ mod ssot;
 mod startup;
 mod state;
 mod u256_hex;
+
+#[cfg(test)]
+mod jsonrpc_mock_server;
 
 fn main() {
     // 加载 .env：先当前目录，再项目根（crates/api 的上级两级 = 仓库根），使 SEED_TEST_ACCOUNTS、DATABASE_URL 等生效

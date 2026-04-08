@@ -13,7 +13,7 @@
       "GET `/api/v1/orders/:id` 仍读业务表 hydrate 的 `orders.state`（本样例为 `escrowed`）。**规范 SSOT 句**见 `docs/verification-evidence-pack.md` **§1.2**（英文）：终态裁决以 `orders_projection` 为准；分歧时同上。",
       "单元测试 `cargo test -p traveltrust-api b094` 仍保留为回归（`cargo-test-b094.log`）。"
     ],
-    "outcome": "GREEN — 真实 RPC input + event_log + replay + SQL 投影；fixture 叙事仍见 `evidence/B-094-execute-resolution-fixtures.md`"
+    "outcome": "GREEN — 真实 RPC input + event_log + replay + SQL 投影；三态 fixture SSOT：`docs/verification-evidence/B-094-resolution-fixtures-SSOT.md`（从文档：`evidence/B-094-execute-resolution-fixtures.md`）"
   },
   "screenshot": { "path": null, "note": null },
   "json_artifact": {

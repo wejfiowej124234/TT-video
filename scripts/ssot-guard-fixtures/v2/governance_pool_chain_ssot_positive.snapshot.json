@@ -1,0 +1,18 @@
+{
+  "status": "ok",
+  "pool_balance": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+  "currency": "0x0000000000000000000000000000000000000001",
+  "updated_at": null,
+  "data_source": "chain_read",
+  "is_chain_ssot": true,
+  "rule_version": "governance_pool_v1",
+  "country_pool": "0x0000000000000000000000000000000000000000000000000000000000000001",
+  "country_pool_data_source": "chain_read",
+  "country_pool_is_chain_ssot": true,
+  "treasury_pool": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640001",
+  "treasury_pool_data_source": "chain_read",
+  "treasury_pool_is_chain_ssot": true,
+  "treasury_erc20_pool": "0x0000000000000000000000000000000000000000000000000000000000000002",
+  "treasury_erc20_pool_data_source": "chain_read",
+  "treasury_erc20_pool_is_chain_ssot": true
+}

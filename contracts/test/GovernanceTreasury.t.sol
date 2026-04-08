@@ -6,11 +6,12 @@ import "../src/GovernanceTreasury.sol";
 import "../src/GovernanceTimelock.sol";
 import "../src/MockERC20.sol";
 
-/// B-090：支出后收款人余额增量 = payload **amount**（同币）；**非 spender** 不可 **spend**。
+/// **TT-B090-GOVERNANCE-TREASURY-FOUNDRY-001**：**`spend` / `spendETH`** 收款余额增量 = payload；**Timelock `execute`** 与生产 **`call`** 同源；**非 spender** revert。
 contract GovernanceTreasuryTest is Test {
     address internal deployer = address(this);
     address internal recipient = address(0xC0FFEE);
 
+    /// **TT-B090-SPEND-ERC20-DIRECT-001**
     function test_b090_spend_increases_recipient_balance_by_payload() public {
         MockERC20 token = new MockERC20();
         GovernanceTreasury treasury = new GovernanceTreasury(deployer, deployer);
@@ -27,6 +28,7 @@ contract GovernanceTreasuryTest is Test {
         assertEq(token.balanceOf(address(treasury)), fund - pay);
     }
 
+    /// **TT-B090-SPEND-ERC20-ONLY-SPENDER-001**
     function test_b090_non_spender_cannot_spend() public {
         MockERC20 token = new MockERC20();
         GovernanceTreasury treasury = new GovernanceTreasury(deployer, deployer);
@@ -37,7 +39,7 @@ contract GovernanceTreasuryTest is Test {
         treasury.spend(address(token), recipient, 1e6);
     }
 
-    /// E2E：**Timelock `execute`** 触发 **`spend`**，收款增量 = calldata 中的 **amount**。
+    /// **TT-B090-TIMELOCK-SPEND-ERC20-PAYLOAD-001**：**`schedule` → delay → `execute`** → 收款 **ERC20** 增量 = calldata **amount**。
     function test_b090_timelock_execute_spend_matches_payload() public {
         MockERC20 token = new MockERC20();
         GovernanceTimelock tl = new GovernanceTimelock(deployer, 10);
@@ -63,7 +65,7 @@ contract GovernanceTreasuryTest is Test {
         assertEq(token.balanceOf(address(treasury)), fund - pay);
     }
 
-    /// **TT-COMP-B090**：Timelock **`execute` → `spendETH`**，收款 **ETH** 增量 = calldata **wei**。
+    /// **TT-B090-TIMELOCK-SPENDETH-PAYLOAD-001**：Timelock **`execute` → `spendETH`**，收款 **ETH** 增量 = calldata **wei**。
     function test_COMP_B090_timelock_execute_spendETH_matches_payload() public {
         GovernanceTimelock tl = new GovernanceTimelock(deployer, 10);
         GovernanceTreasury treasury = new GovernanceTreasury(deployer, address(tl));
@@ -84,6 +86,22 @@ contract GovernanceTreasuryTest is Test {
 
         vm.warp(block.timestamp + 10);
         tl.execute(id);
+
+        assertEq(recipient.balance, balBefore + pay);
+        assertEq(address(treasury).balance, fund - pay);
+    }
+
+    /// **TT-B090-SPENDETH-DIRECT-PAYLOAD-001**：**`spender`** 直连 **`spendETH`**（无 Timelock）时，收款 **ETH** 增量 = payload **wei**（与 **`spend` 直连** 对称）。
+    function test_TT_B090_spendETH_direct_increases_recipient_balance_by_payload() public {
+        GovernanceTreasury treasury = new GovernanceTreasury(deployer, deployer);
+
+        uint256 fund = 3 ether;
+        vm.deal(address(treasury), fund);
+
+        uint256 pay = 0.789 ether;
+        uint256 balBefore = recipient.balance;
+
+        treasury.spendETH(recipient, pay);
 
         assertEq(recipient.balance, balBefore + pay);
         assertEq(address(treasury).balance, fund - pay);

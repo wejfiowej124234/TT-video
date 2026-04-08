@@ -1,4 +1,4 @@
-//! 经济投影 **只读聚合**（B-084）：`fee_router_routed_events` + `region_vault_forwarded_events`。
+//! 经济投影 **只读聚合**（B-084 / **TT-B084-FEE-POOL-AGGREGATES-DB-SOURCES-001**）：**`fetch_fee_router_for_aggregate`** / **`fetch_region_vault_for_aggregate`** 分别读 **`fee_router_routed_events`**、**`region_vault_forwarded_events`**，供 **`GET /api/v1/governance/fee-pool-aggregates`** **`build_fee_pool_aggregate_body`** Σ。
 
 use sqlx::postgres::PgPool;
 

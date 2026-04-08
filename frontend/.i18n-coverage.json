@@ -11,10 +11,10 @@
   "rule_id": "i18n-key-parity-critical-prefix-and-key-routes",
   "severity": "none",
   "owner": "frontend-team",
-  "generated_at": "2026-04-07T04:56:15.391Z",
+  "generated_at": "2026-04-07T07:22:13.571Z",
   "totals": {
-    "zh_keys": 4137,
-    "en_keys": 4137
+    "zh_keys": 4140,
+    "en_keys": 4140
   },
   "missing_in_en": [],
   "missing_in_zh": [],
@@ -27,8 +27,8 @@
     },
     {
       "prefix": "orders_",
-      "zh_count": 62,
-      "en_count": 62,
+      "zh_count": 65,
+      "en_count": 65,
       "passed": true
     },
     {

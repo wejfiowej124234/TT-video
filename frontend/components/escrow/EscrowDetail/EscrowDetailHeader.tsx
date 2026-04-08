@@ -9,6 +9,10 @@ import {
   travelFocusRingOffset2Classes,
 } from "@/lib/travelLinkFocus";
 import StatusBadge from "../StatusBadge";
+import {
+  orderProjectionDivergesFromOrderState,
+  orderProjectionTerminalDegraded,
+} from "@/lib/orderProjectionDisplayStatus";
 import { resolveStatusForEscrowBadge } from "./orderChainDisplayStatus";
 import type { OrderChainSyncState, OrderRow } from "./types";
 
@@ -102,10 +106,19 @@ export default function EscrowDetailHeader({
             {shareLinkCopied ? t("escrow_shareLinkCopied") : t("escrow_shareLink")}
           </button>
         </form>
-        <StatusBadge
-          status={resolveStatusForEscrowBadge(order, chainSync ?? null) || String(state ?? "")}
-          sub_status={order.sub_status}
-        />
+        <div className="flex flex-col items-end gap-1 max-w-[min(100%,18rem)]">
+          {(orderProjectionDivergesFromOrderState(order) || orderProjectionTerminalDegraded(order)) ? (
+            <p className="text-meta text-amber-800 text-right leading-snug" role="note">
+              {orderProjectionTerminalDegraded(order)
+                ? t("orders_projection_ssot_degraded")
+                : t("orders_projection_ssot_notice_divergent")}
+            </p>
+          ) : null}
+          <StatusBadge
+            status={resolveStatusForEscrowBadge(order, chainSync ?? null) || String(state ?? "")}
+            sub_status={order.sub_status}
+          />
+        </div>
       </div>
     </div>
   );

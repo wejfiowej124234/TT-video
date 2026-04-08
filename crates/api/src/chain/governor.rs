@@ -167,6 +167,16 @@ mod tests {
     use super::*;
 
     #[test]
+    fn b098_get_past_votes_selector_stable_for_eth_call() {
+        // Same `Keccak256` prefix rule as `state` / `castVote` in this module; must match
+        // `GovernanceVotesToken.getPastVotes(address,uint256)` on deployed bytecode.
+        assert_eq!(
+            hex::encode(selector4("getPastVotes(address,uint256)")),
+            "3a46b1a8"
+        );
+    }
+
+    #[test]
     fn cast_vote_selector_roundtrip() {
         let h = encode_cast_vote_calldata("1", 1).unwrap();
         assert!(h.starts_with("0x"));

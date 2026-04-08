@@ -84,7 +84,7 @@ contract FeeRouterTest is Test {
         router.distribute(token, 100);
     }
 
-    /// B-091：**暂停** 后 **`distribute`** **revert**；**恢复** 后成功。
+    /// **TT-B091-FEE-ROUTER-DISTRIBUTE-PAUSED-001**：**`distributePaused`** 门闸 — 暂停后 **`distribute`** **revert**，恢复后成功（与 **`GET /meta`** **`distribute_paused`** 同源读数字段）。
     function test_B091_distributePaused_revertsThenResumes() public {
         token.mint(address(router), 10_000);
         vm.prank(admin);

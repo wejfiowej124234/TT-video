@@ -80,6 +80,7 @@ contract EscrowTest is Test {
         platformFee = remainder - guideAmount;
     }
 
+    /// TT-B093-RELEASE-NORMAL-SPLIT-THREE-LEG-CLOSURE-001：Completed **`release()`** 三腿 — 游客仅在 **`deposit`** 转出 **`total`**，**`release`** 不再动游客钱包；**`guide` + `platform`** == **`total`**，与合约 `Escrow.release` 一致。
     function test_B093_release_table_threeFeeRates() public {
         uint16[3] memory bpsVals = [uint16(0), uint16(500), uint16(333)];
         uint256[3] memory totals = [uint256(1), uint256(1000e6), uint256(999_999_999_999)];
@@ -114,17 +115,81 @@ contract EscrowTest is Test {
 
             vm.prank(traveler);
             token.approve(escrowAddr, total);
+            uint256 travelerPreDeposit = token.balanceOf(traveler);
             vm.prank(traveler);
             escrow.deposit(total);
+            uint256 travelerPostDeposit = token.balanceOf(traveler);
+            assertEq(travelerPreDeposit - travelerPostDeposit, total, "traveler leg: paid total at deposit");
 
             uint256 guideBefore = token.balanceOf(guide);
             uint256 platformBefore = token.balanceOf(platformFeeRecipient);
             escrow.release();
 
-            assertEq(token.balanceOf(guide), guideBefore + expGuide);
-            assertEq(token.balanceOf(platformFeeRecipient), platformBefore + expFee);
+            assertEq(token.balanceOf(traveler), travelerPostDeposit, "traveler leg: no wallet change on release");
+            assertEq(token.balanceOf(guide), guideBefore + expGuide, "guide leg");
+            assertEq(token.balanceOf(platformFeeRecipient), platformBefore + expFee, "platform fee leg");
+            assertEq(
+                (token.balanceOf(guide) - guideBefore) + (token.balanceOf(platformFeeRecipient) - platformBefore),
+                total,
+                "guide + platform == total out of escrow"
+            );
             assertEq(token.balanceOf(escrowAddr), 0);
             assertEq(uint256(escrow.status()), uint256(Escrow.Status.Completed));
+        }
+    }
+
+    /// TT-B093-RELEASE-NORMAL-SPLIT-THREE-LEG-CLOSURE-002：同 **`totalAmount`** 下 **3 档 `platformFeeBps`**，重复用生产 **`release()`** 断三腿余额闭环。
+    function test_B093_release_sameTotal_threeBps_threeLeg() public {
+        uint16[3] memory bpsVals = [uint16(250), uint16(1000), uint16(7500)];
+        uint256 total = TOTAL;
+
+        for (uint256 i = 0; i < bpsVals.length; i++) {
+            uint16 bps = bpsVals[i];
+            bytes32 orderId = keccak256(abi.encodePacked("b093-3bps", i, bps, total));
+            token.mint(traveler, total);
+
+            Escrow.EscrowParams memory params = Escrow.EscrowParams({
+                chainId: 137,
+                orderId: orderId,
+                snapshotHash: keccak256("snap"),
+                schemaVersion: 1,
+                traveler: traveler,
+                guide: guide,
+                platformFeeRecipient: platformFeeRecipient,
+                token: address(token),
+                totalAmount: total,
+                platformFeeBps: bps,
+                serviceStart: uint64(block.timestamp),
+                serviceEnd: uint64(block.timestamp + 1 days),
+                disputeWindowSeconds: 7 days,
+                arbitrator: makeAddr("arb")
+            });
+            address escrowAddr = factory.createEscrow(params);
+            Escrow escrow = Escrow(escrowAddr);
+
+            (uint256 expGuide, uint256 expFee) = _expectedReleaseSplit(total, bps);
+            assertEq(expGuide + expFee, total);
+
+            vm.prank(traveler);
+            token.approve(escrowAddr, total);
+            uint256 travelerPreDeposit = token.balanceOf(traveler);
+            vm.prank(traveler);
+            escrow.deposit(total);
+            uint256 travelerPostDeposit = token.balanceOf(traveler);
+            assertEq(travelerPreDeposit - travelerPostDeposit, total);
+
+            uint256 guideBefore = token.balanceOf(guide);
+            uint256 platformBefore = token.balanceOf(platformFeeRecipient);
+            escrow.release();
+
+            assertEq(token.balanceOf(traveler), travelerPostDeposit);
+            assertEq(token.balanceOf(guide) - guideBefore, expGuide);
+            assertEq(token.balanceOf(platformFeeRecipient) - platformBefore, expFee);
+            assertEq(
+                (token.balanceOf(guide) - guideBefore) + (token.balanceOf(platformFeeRecipient) - platformBefore),
+                total
+            );
+            assertEq(token.balanceOf(escrowAddr), 0);
         }
     }
 
@@ -334,7 +399,7 @@ contract EscrowTest is Test {
         assertEq(token.balanceOf(escrowAddr), 0);
     }
 
-    /// B-091：**工厂暂停** 阻断 **新** `createEscrow`；**已存在** Escrow 仍 **`release`**。
+    /// **TT-B091-ESCROW-FACTORY-PAUSED-001**：**`factoryPaused`** 阻断新 **`createEscrow`**；已部署实例不受影响（与 **`GET /meta`** **`factory_paused`** 同源读数字段）。
     function test_B091_factoryPause_blocksNewCreate_existingEscrowStillReleases() public {
         bytes32 orderId1 = keccak256("order-pause-1");
         Escrow.EscrowParams memory params = Escrow.EscrowParams({
@@ -453,7 +518,7 @@ contract EscrowTest is Test {
         escrow.openDispute(keccak256("reason"));
     }
 
-    /// B-094：全额退游客（订单域 Refunded）；链上 `Resolved` + 余额守恒。
+    /// B-094 / **TT-B094-ORDERS-PROJECTION-RESOLUTION-STATUS-SSOT-001**：全额退游客（订单域 Refunded）；链上 `Resolved` + 三腿余额与 `traveltrust_core::terminal_order_state_from_resolution_amounts` / API **`orders_projection.status`** 同源。
     function test_B094_executeResolution_refunded_full_traveler() public {
         (Escrow escrow, address escrowAddr) = _createFundedDisputed(keccak256("b094-refund"));
         uint256 t0Traveler = token.balanceOf(traveler);

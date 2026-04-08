@@ -1,5 +1,14 @@
 import type { OrderChainSyncState, OrderRow } from "./types";
 
+/** B-097：详情 **`order.projection_terminal`**（**`GET /orders/:id`**）优先于链上快照与业务行。 */
+function projectionTerminalStatusForBadge(order: OrderRow): string | null {
+  const pt = order.projection_terminal as Record<string, unknown> | null | undefined;
+  if (!pt || typeof pt !== "object") return null;
+  if (String(pt.read_status ?? "") === "degraded") return null;
+  const st = String(pt.status ?? "").trim();
+  return st.length > 0 ? st : null;
+}
+
 function normalizeChainEventTypeKey(raw: unknown): string | null {
   if (raw == null) return null;
   if (typeof raw === "string") {
@@ -56,11 +65,15 @@ function orderStateRank(s: string): number {
   return 0;
 }
 
-/** 链上最终事件快照优先于滞后的订单行状态，用于详情顶栏 StatusBadge。始终返回字符串（可为 `""`，由调用方再兜底）。 */
+/** 链上投影终端（B-097）优先于事件快照与业务行，用于详情顶栏 StatusBadge。始终返回字符串（可为 `""`，由调用方再兜底）。 */
 export function resolveStatusForEscrowBadge(
   order: OrderRow,
   chainSync: OrderChainSyncState | null | undefined,
 ): string {
+  const fromProjection = projectionTerminalStatusForBadge(order);
+  if (fromProjection != null) {
+    return fromProjection;
+  }
   const fromOrder = String(order?.state ?? order?.status ?? "").trim();
   const fromChain = escrowEventTypeToOrderStateForBadge(chainSync?.eventLogSnapshot?.event_type);
   if (fromChain != null && orderStateRank(fromChain) > orderStateRank(fromOrder)) {

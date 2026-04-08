@@ -1,7 +1,11 @@
 //! orders 表：DbOrderRow、upsert_order、list_orders（48 §6.4）
 //! start_date/end_date 见 48 §7.3、E3，80 §4.15
+//!
+//! **B-102 / TT-B102-ORDERS-LIST-CHAIN-SCOPE-SSOT-001**：**`GET /api/v1/orders`** **`orders_chain_id`** 过滤谓词与 **`orders_chain_scope`** 信封、**`orders_chain_id_backfill_dry_run`** 内嵌 **`orders_list_chain_scope`** **同源**（**`orders_row_matches_list_chain_scope`** / **`orders_list_chain_scope_json`**），**禁止**平行过滤逻辑。
+//! **B-122 / TT-B122**：在 **`business_chain_id: Some(_)`**（与回填 dry-run / **GET** 主路径一致）下，**`orders_list_chain_scope_json`** 之 **`filter`/`orders_chain_id`/`default_business_chain_id`** 与 **`orders_row_matches_list_chain_scope`** **互证**（单测 **`tt_b122_*`**）。
 
 use chrono::{DateTime, NaiveDate, Utc};
+use serde_json::{json, Value};
 use sqlx::postgres::{PgPool, Postgres};
 use sqlx::Transaction;
 use uuid::Uuid;
@@ -248,6 +252,77 @@ pub async fn count_orders_with_escrow_address(pool: &PgPool) -> Result<i64, sqlx
     .await
 }
 
+/// **`orders.chain_id IS NULL`** 行总数（**B-102** dry-run / 回填决策）。
+pub async fn count_orders_chain_id_null(pool: &PgPool) -> Result<i64, sqlx::Error> {
+    sqlx::query_scalar::<_, i64>(
+        r#"SELECT COUNT(*)::bigint FROM orders WHERE chain_id IS NULL"#,
+    )
+    .fetch_one(pool)
+    .await
+}
+
+/// **`GET /api/v1/orders`** 列表链过滤谓词（**`chain_off::OrderRow.chain_id`** 与 query 同源）。
+///
+/// **TT-B102-ORDERS-LIST-CHAIN-SCOPE-ROW-001**：与 **`orders_list_chain_scope_json`** 的 **`rule`/`filter`** 语义一致。
+pub fn orders_row_matches_list_chain_scope(
+    order_chain_id: Option<i64>,
+    business_chain_id: Option<i64>,
+    query_chain_id: Option<i64>,
+) -> bool {
+    match (business_chain_id, query_chain_id) {
+        (None, None) => true,
+        (None, Some(_)) => true,
+        (Some(b), None) => order_chain_id.is_none() || order_chain_id == Some(b),
+        (Some(b), Some(q)) => {
+            if q == b {
+                order_chain_id.is_none() || order_chain_id == Some(q)
+            } else {
+                order_chain_id == Some(q)
+            }
+        }
+    }
+}
+
+/// **`GET /api/v1/orders`** 响应根级 **`orders_chain_scope`**；**`POST …/indexer-reconcile`** **`orders_chain_id_backfill_dry_run.orders_list_chain_scope`** **同函数**。
+///
+/// **TT-B102-ORDERS-LIST-CHAIN-SCOPE-ENVELOPE-001**
+pub fn orders_list_chain_scope_json(
+    business_chain_id: Option<i64>,
+    query_chain_id: Option<i64>,
+) -> Value {
+    match (business_chain_id, query_chain_id) {
+        (None, None) => json!({
+            "filter": "none",
+            "rule": "实例未配置 CHAIN_ID：不按 orders.chain_id 过滤列表"
+        }),
+        (None, Some(q)) => json!({
+            "filter": "explicit_chain_id",
+            "orders_chain_id": q,
+            "rule": "未配置默认业务链：仅返回 orders.chain_id 匹配该值的行（不含 NULL）"
+        }),
+        (Some(b), None) => json!({
+            "filter": "default_business_chain",
+            "default_business_chain_id": b,
+            "includes_null_chain_id": true,
+            "rule": "orders.chain_id IS NULL 或 = default_business_chain_id"
+        }),
+        (Some(b), Some(q)) if q == b => json!({
+            "filter": "default_business_chain",
+            "default_business_chain_id": b,
+            "orders_chain_id": q,
+            "includes_null_chain_id": true,
+            "rule": "显式 orders_chain_id 与默认链相同：同默认范围（含 NULL legacy）"
+        }),
+        (Some(b), Some(q)) => json!({
+            "filter": "strict_chain_id",
+            "default_business_chain_id": b,
+            "orders_chain_id": q,
+            "includes_null_chain_id": false,
+            "rule": "仅 orders.chain_id 精确匹配 orders_chain_id（不含 NULL）"
+        }),
+    }
+}
+
 /// **110 Partial**：reorg replay 后按 **`orders_projection`** 回写 **`orders.status` / `escrow_address`**（须显式 env，见 **`INDEXER_REORG_SYNC_ORDERS_FROM_PROJECTION_AFTER_REWIND`**）。
 pub(crate) async fn update_order_status_escrow_for_reorg_sync(
     pool: &PgPool,
@@ -289,4 +364,72 @@ pub(crate) async fn update_order_status_escrow_for_reorg_sync(
         .await?;
     }
     Ok(())
+}
+
+#[cfg(test)]
+mod b102_orders_chain_scope_tests {
+    use super::{orders_list_chain_scope_json, orders_row_matches_list_chain_scope};
+
+    /// **TT-B102-ROW-PREDICATE-VS-ENVELOPE-001**：典型 **`(business, query, order.chain_id)`** 与信封 **`filter`** 可互证。
+    #[test]
+    fn b102_row_matches_list_chain_scope_matches_envelope_semantics() {
+        let b = Some(137_i64);
+        let q = Some(137_i64);
+        let env = orders_list_chain_scope_json(b, q);
+        assert_eq!(env["filter"], "default_business_chain");
+        assert!(orders_row_matches_list_chain_scope(None, b, q));
+        assert!(orders_row_matches_list_chain_scope(Some(137), b, q));
+        assert!(!orders_row_matches_list_chain_scope(Some(1), b, q));
+
+        let env_strict = orders_list_chain_scope_json(b, Some(1_i64));
+        assert_eq!(env_strict["filter"], "strict_chain_id");
+        assert!(!orders_row_matches_list_chain_scope(None, b, Some(1)));
+        assert!(orders_row_matches_list_chain_scope(Some(1), b, Some(1)));
+    }
+
+    /// **TT-B102-BACKFILL-DRY-RUN-SCOPE-EMBED-001**：回填 dry-run 内嵌 **`orders_list_chain_scope`** 与 **`GET ?orders_chain_id=reconcile_chain_id`** 同源（本测不跑 PG）。
+    #[test]
+    fn b102_backfill_dry_run_embeds_same_scope_as_list_query() {
+        let scope = orders_list_chain_scope_json(Some(137), Some(137));
+        assert_eq!(scope, orders_list_chain_scope_json(Some(137), Some(137)));
+        let scope_none_biz = orders_list_chain_scope_json(None, Some(42));
+        assert_eq!(scope_none_biz["filter"], "explicit_chain_id");
+        assert_eq!(scope_none_biz["orders_chain_id"], 42);
+    }
+
+    /// 仅从 **`orders_list_chain_scope_json`** 产出之 **`filter`/`orders_chain_id`/`default_business_chain_id`** 推导行是否可见（**不**手写第二套 match）；与 **`orders_row_matches_list_chain_scope`** 对照。
+    fn b122_visible_from_scope_envelope(scope: &serde_json::Value, order_chain_id: Option<i64>) -> bool {
+        match scope.get("filter").and_then(|x| x.as_str()) {
+            Some("none") => true,
+            Some("default_business_chain") => {
+                let b = scope["default_business_chain_id"]
+                    .as_i64()
+                    .expect("default_business_chain_id");
+                order_chain_id.is_none() || order_chain_id == Some(b)
+            }
+            Some("strict_chain_id") | Some("explicit_chain_id") => {
+                let q = scope["orders_chain_id"].as_i64().expect("orders_chain_id");
+                order_chain_id == Some(q)
+            }
+            other => panic!("unexpected orders_chain_scope.filter: {:?}", other),
+        }
+    }
+
+    /// **TT-B122-ORDERS-LIST-SCOPE-ROW-ENVELOPE-TRIPLE-001**：**`business_chain_id: Some(137)`** 时 **`orders_list_chain_scope_json`** 与 **`orders_row_matches_list_chain_scope`** 对 **`query_chain_id`** ∈ **`None` / `137` / `1`** 一致（与 **`orders_chain_id_backfill_dry_run_summary`** 内嵌 **`orders_list_chain_scope`**、**`GET /orders`** 同源）。
+    #[test]
+    fn tt_b122_row_matches_list_chain_scope_matches_scope_envelope_for_configured_business() {
+        let b = Some(137_i64);
+        for q in [None, Some(137_i64), Some(1_i64)] {
+            let scope = orders_list_chain_scope_json(b, q);
+            for oc in [None, Some(137_i64), Some(1_i64), Some(999_i64)] {
+                let row = orders_row_matches_list_chain_scope(oc, b, q);
+                let from_env = b122_visible_from_scope_envelope(&scope, oc);
+                assert_eq!(
+                    row, from_env,
+                    "business={:?} query={:?} order.chain_id={:?}",
+                    b, q, oc
+                );
+            }
+        }
+    }
 }

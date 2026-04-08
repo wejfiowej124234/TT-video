@@ -113,5 +113,25 @@ describe("TT-ESCROW-007 · orderChainDisplayStatus", () => {
       const cs = chainSyncWithEventType("Released");
       expect(resolveStatusForEscrowBadge(order, cs)).toBe("refunded");
     });
+
+    it("B-097: projection_terminal.status wins over chain snapshot and order row", () => {
+      const order = orderRow({
+        id: "o1",
+        state: "escrowed",
+        projection_terminal: { status: "partially_refunded", diverges_from_order_state: true },
+      });
+      const cs = chainSyncWithEventType("Released");
+      expect(resolveStatusForEscrowBadge(order, cs)).toBe("partially_refunded");
+    });
+
+    it("B-097: degraded projection_terminal is ignored for badge resolution", () => {
+      const order = orderRow({
+        id: "o1",
+        state: "escrowed",
+        projection_terminal: { read_status: "degraded", error: "db" },
+      });
+      const cs = chainSyncWithEventType("Released");
+      expect(resolveStatusForEscrowBadge(order, cs)).toBe("completed");
+    });
   });
 });

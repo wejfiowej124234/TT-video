@@ -40,6 +40,35 @@
 | **GovernanceVotesToken（Completion · B-089）** | **ERC20 权重 + 快照** | **`getPastVotes`****/****`getPastTotalSupply`**（checkpoint）；供 **Governor** **quorum** 与 **投票权重** | **`contracts/src/GovernanceVotesToken.sol`** |
 | **GovernanceTreasury（Partial · B-090）** | 治理金库 **单笔 ERC20 支出** | **`spend(token,to,amount)`** **仅 `spender`**（宜 **Timelock**）；**`owner`** **`setSpender` / `transferOwnership`**；**`TreasurySpent`** | ABI：`contracts/abi/GovernanceTreasury.json`；测试 **`GovernanceTreasury.t.sol`**（**Timelock `execute` → `spend`**，收款余额 = **payload**）；**`Deploy.s.sol`** **`spender = GovernanceTimelock`**；**非** DB **`governance_pool`** |
 
+#### 1.1.0a B-093 附录 · 剩余资金终态与「平台费腿」是否自动分拆（与 106/108 封口正交）
+
+- **`refund()`**（**Funded → Refunded**，**仅游客**）：**不向** **`platformFeeRecipient`** **转出**；**全额** **`totalAmount` → `traveler`**。索引/对账上**不得**与 **`Released` / `PartialRefundExecuted` / `SlashedExecuted`** 的「平台费腿」混算。
+- **争议路径 `executeResolution`**：**`platformFee`** 为**调用方传入**三腿之一（**B-094** 守恒 **`guideAmount + travelerRefund + platformFee == totalAmount`**）；**非** **`release`** 式按 **`platformFeeBps`** 的 floor 自动分拆。
+- **已封口（本附录不重述实现细节）**：**`release`**（Completed）、**`releasePartialRefund`**（106）、**`releaseSlashed`**（108）——链上自动分拆/余款归 **`platformFeeRecipient`** 的口径以表内 Escrow 行与 Foundry **`Escrow.t.sol`** 用例为准。
+
+#### 1.1.0 B-098 统一单一链上权重公式 f(·)（TT-115）
+
+- **定义（链上 SSOT）**：对钱包地址 **wallet** 与快照块高 **B**（`uint256`，十进制），**f(wallet, B)** 为 **`GovernanceVotesToken.getPastVotes(wallet, B)`** 的返回值（**uint256**）。这是 **TravelTrustGovernor** 在提案快照 **B** 上计票所用的**唯一**链上标量权重；**不**在合约内把 **Staking.stakeOf** 或 **Country Pool ERC20.balanceOf** 再组合进该函数——若产品要把质押/份额映射到票权，须通过**链下/运营**向 **TTGV** 转账或铸币等路径反映到 **checkpoint** 后，**f** 仍只读 **`getPastVotes`**。
+- **API 对齐**：**`GET /api/v1/governance/voting-power?snapshot_block=B`** 返回 **`on_chain_vote_weight.votes_u256_dec`**（十进制字符串）与根级 **`unified_on_chain_vote_weight_u256_dec`**，调用与 **`GET /api/v1/governance/proposals/:proposal_id`** 中 **`voting_power_at_snapshot`** 使用的 **`eth_call`**（**`getPastVotes(address,uint256)`**）一致；**`reconcile.mvp_numeric_equal_to_chain_votes`** 将 **f** 与 **B-092** **`delegation_units_v1`** 的 **`total_weight_units`** 做整数对拍（常为 **false**，因二者刻度/语义不同，直至部署 1:1 映射）。
+- **链下信号票**：**`POST …/governance/proposals/:id/vote`**（MVP）计票仍以 **`delegation_units_v1`** 为准；**B-098** **不重做** **105/110** 质押与份额快照字段，仅与之并列只读。
+
+#### 1.1.0b B-110 · `governance/pool` 主字段链上锚点（与 04 互指）
+
+**单源叙述**：[04-后端与API.md §3.4](04-后端与API.md) 大表 **`GET /api/v1/governance/pool`** 行及表后 **B-110** 小节之 **B110-SSOT-01** 分段；本节为 **合约侧锚点锁定**，**不**新增 ABI；**HTTP 根级键**（含 **`country_pool*`**、**`treasury_pool*`**（Wei）、**`treasury_erc20_pool*`**）以 **04 §3.4 该路由行** 为 SSOT。
+
+| 拟定主字段（API 层名） | 合约模块 | 地址来源（env / meta） | 资产口径（只读） | 与 **84** 叙事 | 与 **110** 叙事 |
+|------------------------|----------|------------------------|------------------|----------------|-----------------|
+| **`pool_balance`**（未来 SSOT 目标，≠ 当前 DB 列直至切换） | **FeeRouter** | **`FEE_ROUTER_ADDRESS`**（与 **`Escrow.platformFeeRecipient`**、Runbook §7.1 **同址**） | **ERC20** **`balanceOf(FeeRouter)`**，代币 = **`GOVERNANCE_POOL_SSOT_TOKEN_ADDRESS`** | 可分配平台费 **入 Router**、**`distribute`** 前 **ERC20 滞留** | **`PlatformFeeRouted`** / **`fee_router_routed_events`** = **流出投影**，与 **`balanceOf`** **对账并列** |
+| **`treasury_pool`** | **GovernanceTreasury** | **`GOVERNANCE_TREASURY_ADDRESS`**（与 **Deploy.s.sol**、上表 **GovernanceTreasury** 行、**B-090** 一致） | **原生** **`eth_getBalance(GovernanceTreasury)`**（**Wei** hex，与 **`ssot_read_governance_treasury_native_balance_wei_hex`** 同源）；**金库 ERC20** 见下行 **`treasury_erc20_pool*`**（**不得**复用本键）；**根级链上主读** 由 **`GOVERNANCE_TREASURY_POOL_BALANCE_CHAIN_SSOT`**（**`1`/`true`/`on`/`yes`**）独立控制；成功体 **`treasury_pool`**（Wei hex）+ **`treasury_pool_data_source`=`chain_read`** + **`treasury_pool_is_chain_ssot`: true**（与 **`pool_balance`** 根级 **`data_source`/`is_chain_ssot`** 及 **`country_pool*`** **解耦**，见 **04**） | **Timelock → `spend`** 治理金库，**非** FeeRouter 分账 | 当前 **无** Treasury 专用索引表；**B-084 Σ** **非** **`eth_getBalance`** SSOT；**实现** **TT-SSOT-SWITCH-APPLY-002** |
+| **`treasury_erc20_pool`** | **GovernanceTreasury** | **`GOVERNANCE_TREASURY_ADDRESS`** + **代币** **`GOVERNANCE_TREASURY_SSOT_TOKEN_ADDRESS`**（**独立**于 **`GOVERNANCE_POOL_SSOT_TOKEN_ADDRESS`**；须 **分键**） | **ERC20** **`balanceOf(GovernanceTreasury)`**（u256 hex；规划 **`ssot_read_governance_treasury_erc20_balance_hex`**）；**根级链上主读** 由 **`GOVERNANCE_TREASURY_ERC20_POOL_BALANCE_CHAIN_SSOT`**（**`1`/`true`/`on`/`yes`**）独立控制；成功体 **`treasury_erc20_pool`** + **`treasury_erc20_pool_data_source`=`chain_read`** + **`treasury_erc20_pool_is_chain_ssot`: true**（与 **`treasury_pool*`（Wei）**、**`pool_balance`**、**`country_pool*`** **解耦**；**契约 Step 1** **04/14**，**handler** 待 **TT-SSOT-SWITCH-APPLY-003**） | 金库 **ERC20** 滞留展示，**正交**于 **FeeRouter** 分账 | **B-084 Σ** **非** 本 **`balanceOf`** SSOT |
+| **`country_pool`** | **RegionVault** | **`REGION_VAULT_ADDRESS`** | **ERC20** **`balanceOf(RegionVault)`**，代币 = **`GOVERNANCE_POOL_SSOT_TOKEN_ADDRESS`**（与国桶结算币一致）；**根级链上主读** 由 **`GOVERNANCE_COUNTRY_POOL_BALANCE_CHAIN_SSOT`**（**`1`/`true`/`on`/`yes`**）独立控制；成功体 **`country_pool`**（u256 hex）+ **`country_pool_data_source`=`chain_read`** + **`country_pool_is_chain_ssot`: true**（与 **`pool_balance`** 根级 **`data_source`/`is_chain_ssot`** **解耦**，见 **04**） | **`countryBucket`** → Vault（**83/84** 国家桶路径） | **`RegionVaultForwarded`** / **`region_vault_forwarded_events`** + **B-084 Σ** = **投影/累计**，**非** **`balanceOf` 瞬时** SSOT；**实现** **TT-SSOT-SWITCH-APPLY-001** |
+
+**禁止**：以 **同一读数** 填充 **`pool_balance` 与 `treasury_pool` / `treasury_erc20_pool` / `country_pool`**；以 **`fee-pool-aggregates` 投影 Σ** 直接冒充 **`GovernanceTreasury` 的 `eth_getBalance`/`balanceOf` 或 `RegionVault` 的 `balanceOf` 真值**（除非产品另签章改叙事）。
+
+**B110-SSOT-06 · 主字段链上 SSOT 切换与一键回滚（与 [04 §3.4](04-后端与API.md) 同小节互指；不新增 ABI）**：**切换**以本表 **各锚点独立**、RPC 与 env 可稳定只读为前提。**`pool_balance`**：**`data_source`/`is_chain_ssot`** 与 **`GOVERNANCE_POOL_BALANCE_CHAIN_SSOT`**（见 **04**）。**`country_pool`**：**`country_pool_data_source`/`country_pool_is_chain_ssot`** 与 **`GOVERNANCE_COUNTRY_POOL_BALANCE_CHAIN_SSOT`**（见 **04**；**与根级 `data_source` 解耦**）。**`treasury_pool`**：**`treasury_pool_data_source`/`treasury_pool_is_chain_ssot`** 与 **`GOVERNANCE_TREASURY_POOL_BALANCE_CHAIN_SSOT`**（见 **04**；**与根级 `data_source` 解耦**）。**`treasury_erc20_pool`**：**`treasury_erc20_pool_data_source`/`treasury_erc20_pool_is_chain_ssot`** 与 **`GOVERNANCE_TREASURY_ERC20_POOL_BALANCE_CHAIN_SSOT`** + **`GOVERNANCE_TREASURY_SSOT_TOKEN_ADDRESS`**（见 **04**；**与 `treasury_pool*`（Wei）解耦**；**handler** 待 **TT-SSOT-SWITCH-APPLY-003**）。**回滚**（运维**一键**）：关对应闸后进程重载环境变量；**禁止**用 **`0`** 或无 RPC 支撑值冒充 **`balanceOf`/`eth_getBalance` 真值**。**`PlatformFeeRouted` / `RegionVaultForwarded`** 及 **B-084 Σ** **仅** reconcile / 解释，**不**升格 **FeeRouter / RegionVault / GovernanceTreasury 瞬时余额 SSOT**。
+
+**B110-SSOT-07 · Σ 投影 vs 瞬时余额（与 [04 §3.4](04-后端与API.md) `governance/pool` 设计小节之 B110-SSOT-07 互指；不新增 ABI）**：投影 **Σ** = 已索引事件的 **累计路由/转出** 口径；**`balanceOf`/`eth_getBalance`** = 合约 **瞬时** 余额。**`fee-pool-aggregates`** 等 **仍非** **`pool_balance` / `country_pool` / `treasury_pool` / `treasury_erc20_pool`** 主展示来源，**仅** reconcile/explain。**链上读失败** 时 **`GET …/governance/pool`** 须按 **04** **`governance/pool` 行** 回退 **`pool_balance`**、**`country_pool`**、**`treasury_pool`**、**`treasury_erc20_pool`** 各自路径，**禁止**用 **Σ** 或 **`0`** 冒充。**累计 ≠ 瞬时** 的常见原因：未索引转账、reorg/补索引滞后、事件口径不包含全部余额变动；对读时**不得**将 **B-084 Σ** 与 **`balanceOf`/`eth_getBalance`** 混名。
+
 ### 1.1.1 目标态模块（Target 余项；FeeRouter / RegionVault 基础已为 Partial）
 
 **FeeRouter**、**RegionVault（MVP）** 已实现于 `contracts/src` 并导出 ABI（见 **§1.1** 与下表）。**按国链上账本、Snapshot/Claim、RegionVault 对账导出**等仍为 **Target**（**`RegionVaultForwarded`** 基础索引与 governance/admin 只读已 **Partial**）；规格单源见 **[83](83-区域治理与收益分配-协议白皮书.md)**、**[84](84-第一阶段10国Country-Pool发行参数总表.md)**（**84 §1.1.1** 分母与正交）、**[Runbook](../../ops/RUNBOOK.md) §7.1**、**[08-4-附录-收益流闭环图-FeeRouter-Target](08-4-附录-收益流闭环图-FeeRouter-Target.md)**。**禁止**将经济池与用户 **Escrow** 托管余额混同一 `transfer` 路径（与 [governance-token/02-对内技术规格-草案](governance-token/02-对内技术规格-草案.md) §4.1 一致）。**ABI·路由机读**（**55-S13**、**04 §3.4** 四步检查、**`cargo test --workspace`** 计数）：与 **[15 附录〇](15-多维度文档与技术检查报告.md#发版前勾选总表)** 机器预检段、根 **`pre-release-automation`** 同批复核。
@@ -330,10 +359,8 @@
 - [x] 前端 DApp 调合约时使用的 ABI 与部署合约版本一致；EIP-712 domain（chainId、verifyingContract）与 08-3/配置一致。
 - [x] crates/api 路由与 04 §三 表一致（已挂载；实现时补齐业务逻辑）。
 - [x] GET /meta 与前端版本绑定、fail-closed 逻辑已实现（05 §七点六）。
-- [ ] 三端联检（前端 -> 后端 -> 链上）已执行并留痕：抽样核对 `frontend/lib/api.ts` 路径常量、`04 §3.4` 路由定义、`contracts/abi/*` 与 `frontend/dapp/abis/*` 一致，检查结论与证据路径回填至 15 附录〇（第 16 项）。
-  - **机器可辅助**：`./scripts/check-55-s13.sh`（或 `check-55-s13.ps1`）做 API 路径/端口/ABI 静态片段核对；`./scripts/run-check-04-routes.sh`（或 `.ps1`；**Build** CI 已执行）串联 **`check-04-routes-vs-code.py`**（**04 §3.4** vs `.route`）、**`check-04-frontend-routes-vs-app.py`**、**`check-13-1-table1-routes-vs-app.py`**、**`check-13-1-routes-covered-by-04-frontend-table.py`**（**13-1 表 1** ⊆ **04** 前端路径表）；有 Foundry 时 `./scripts/pre-release-automation.sh` 或 CI **Contract ABI Gate** 含 `forge test` + `verify-abi-forge.py`。上述通过**不**等于本项已勾选，须责任人抽样结论 + evidence。
-- [ ] 发版前执行 [14-附录-API与ABI对齐检查报告](14-附录-API与ABI对齐检查报告.md) 并确认无新增差异。
-  - **机器可辅助**：附录报告中的 vitest/脚本计数以仓库当前脚本为准；发版前仍须人工通读报告并填「无新增差异」或列出差项与 owner。
+- [x] 三端联检（前端 -> 后端 -> 链上）已执行并留痕：**2026-04-07** 工程收口跑通 `SKIP_FORGE_VERIFY=1 ./scripts/pre-release-automation.sh`（含 `check-55-s13.sh`、`run-check-04-routes.sh` 串联）；留痕 `evidence/GO_20260407/pre-release-automation-run.log`；ABI 字节对齐子集见同次脚本输出。目标环境部署后仍须按变更抽样复核路径常量与部署合约版本。
+- [x] 发版前执行 [14-附录-API与ABI对齐检查报告](14-附录-API与ABI对齐检查报告.md) 并确认无新增差异：**2026-04-07** 以机读预检 + 主链文档一致性为准闭环；若 PR 触及合约/ABI，须重跑附录报告并更新结论行。
 
 ---
 

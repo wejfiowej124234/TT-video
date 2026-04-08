@@ -1,4 +1,4 @@
-//! GET `/api/v1/governance/investor-share-reconcile`（B-085）：`Transfer` 投影重放 Σ balance 与 `totalSupply()` 对拍
+//! GET `/api/v1/governance/investor-share-reconcile`（B-085 / **TT-B085-GOVERNANCE-INVESTOR-SHARE-RECONCILE-001**）：**`Transfer` 投影** **`replay_balances_from_transfers`** **Σ balance** 与链上 **`totalSupply()`** 对拍；合规表非空时 **`compliance_holders_not_allowlisted`** 同源。
 
 use axum::extract::{Query, State};
 use axum::http::header::{HeaderName, HeaderValue};
@@ -255,6 +255,39 @@ mod tests {
         )
         .await
         .into_response();
+        assert_eq!(res.status(), StatusCode::OK);
+        assert_eq!(
+            res.headers()
+                .get("x-implementation-status")
+                .and_then(|h| h.to_str().ok()),
+            Some("placeholder")
+        );
+        let body = res.into_body().collect().await.unwrap().to_bytes();
+        let v: serde_json::Value = serde_json::from_slice(&body).unwrap();
+        assert_eq!(v["data_source"], "placeholder");
+        assert_eq!(
+            v["anchor"].as_str(),
+            Some("B-085-INVESTOR-SHARE-SUPPLY-REBUILD")
+        );
+    }
+
+    /// **TT-B085-GET-INVESTOR-SHARE-RECONCILE-PATH-001**
+    #[tokio::test]
+    async fn b085_get_investor_share_reconcile_http_route_placeholder() {
+        use axum::body::Body;
+        use axum::http::{Request, StatusCode};
+        use tower::util::ServiceExt;
+
+        let app = router().with_state(api_meta_state(None));
+        let res = app
+            .oneshot(
+                Request::builder()
+                    .uri("/api/v1/governance/investor-share-reconcile")
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
         assert_eq!(res.status(), StatusCode::OK);
         assert_eq!(
             res.headers()
