@@ -8,14 +8,14 @@
   "rule_id": "regional-matrix-country-city-locale-timezone",
   "severity": "none",
   "owner": "frontend-team",
-  "generated_at": "2026-03-24T09:26:35.757Z",
+  "generated_at": "2026-04-08T10:52:26.724Z",
   "policy_version": "baseline-v1",
   "config_source": "scripts/regional-matrix.config.json",
   "supported_locales": [
     "zh",
     "en"
   ],
-  "matrix_total": 11,
+  "matrix_total": 10,
   "matrix_failed": 0,
   "results": [
     {
@@ -27,30 +27,6 @@
       "policy_version": "baseline-v1",
       "currency_preview": "¥12,345.67",
       "datetime_preview": "2026/03/08 20:00",
-      "status": "passed",
-      "validation_errors": []
-    },
-    {
-      "country": "美国",
-      "city": "纽约",
-      "locale": "en-US",
-      "timezone": "America/New_York",
-      "currency": "USD",
-      "policy_version": "baseline-v1",
-      "currency_preview": "$12,345.67",
-      "datetime_preview": "03/08/2026, 08:00",
-      "status": "passed",
-      "validation_errors": []
-    },
-    {
-      "country": "英国",
-      "city": "伦敦",
-      "locale": "en-GB",
-      "timezone": "Europe/London",
-      "currency": "GBP",
-      "policy_version": "baseline-v1",
-      "currency_preview": "£12,345.67",
-      "datetime_preview": "08/03/2026, 12:00",
       "status": "passed",
       "validation_errors": []
     },
@@ -79,6 +55,18 @@
       "validation_errors": []
     },
     {
+      "country": "新加坡",
+      "city": "新加坡",
+      "locale": "en-US",
+      "timezone": "Asia/Singapore",
+      "currency": "SGD",
+      "policy_version": "baseline-v1",
+      "currency_preview": "SGD 12,345.67",
+      "datetime_preview": "03/08/2026, 20:00",
+      "status": "passed",
+      "validation_errors": []
+    },
+    {
       "country": "泰国",
       "city": "曼谷",
       "locale": "en-US",
@@ -91,14 +79,38 @@
       "validation_errors": []
     },
     {
-      "country": "新加坡",
-      "city": "新加坡",
+      "country": "阿联酋",
+      "city": "迪拜",
       "locale": "en-US",
-      "timezone": "Asia/Singapore",
-      "currency": "SGD",
+      "timezone": "Asia/Dubai",
+      "currency": "AED",
       "policy_version": "baseline-v1",
-      "currency_preview": "SGD 12,345.67",
-      "datetime_preview": "03/08/2026, 20:00",
+      "currency_preview": "AED 12,345.67",
+      "datetime_preview": "03/08/2026, 16:00",
+      "status": "passed",
+      "validation_errors": []
+    },
+    {
+      "country": "美国",
+      "city": "纽约",
+      "locale": "en-US",
+      "timezone": "America/New_York",
+      "currency": "USD",
+      "policy_version": "baseline-v1",
+      "currency_preview": "$12,345.67",
+      "datetime_preview": "03/08/2026, 08:00",
+      "status": "passed",
+      "validation_errors": []
+    },
+    {
+      "country": "澳大利亚",
+      "city": "悉尼",
+      "locale": "en-US",
+      "timezone": "Australia/Sydney",
+      "currency": "AUD",
+      "policy_version": "baseline-v1",
+      "currency_preview": "A$12,345.67",
+      "datetime_preview": "03/08/2026, 23:00",
       "status": "passed",
       "validation_errors": []
     },
@@ -115,18 +127,6 @@
       "validation_errors": []
     },
     {
-      "country": "意大利",
-      "city": "罗马",
-      "locale": "en-US",
-      "timezone": "Europe/Rome",
-      "currency": "EUR",
-      "policy_version": "baseline-v1",
-      "currency_preview": "€12,345.67",
-      "datetime_preview": "03/08/2026, 13:00",
-      "status": "passed",
-      "validation_errors": []
-    },
-    {
       "country": "西班牙",
       "city": "马德里",
       "locale": "en-US",
@@ -135,18 +135,6 @@
       "policy_version": "baseline-v1",
       "currency_preview": "€12,345.67",
       "datetime_preview": "03/08/2026, 13:00",
-      "status": "passed",
-      "validation_errors": []
-    },
-    {
-      "country": "澳大利亚",
-      "city": "悉尼",
-      "locale": "en-US",
-      "timezone": "Australia/Sydney",
-      "currency": "AUD",
-      "policy_version": "baseline-v1",
-      "currency_preview": "A$12,345.67",
-      "datetime_preview": "03/08/2026, 23:00",
       "status": "passed",
       "validation_errors": []
     }

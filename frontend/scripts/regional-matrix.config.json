@@ -9,20 +9,6 @@
       "currency": "CNY"
     },
     {
-      "country": "美国",
-      "city": "纽约",
-      "locale": "en-US",
-      "timezone": "America/New_York",
-      "currency": "USD"
-    },
-    {
-      "country": "英国",
-      "city": "伦敦",
-      "locale": "en-GB",
-      "timezone": "Europe/London",
-      "currency": "GBP"
-    },
-    {
       "country": "日本",
       "city": "东京",
       "locale": "en-US",
@@ -37,6 +23,13 @@
       "currency": "KRW"
     },
     {
+      "country": "新加坡",
+      "city": "新加坡",
+      "locale": "en-US",
+      "timezone": "Asia/Singapore",
+      "currency": "SGD"
+    },
+    {
       "country": "泰国",
       "city": "曼谷",
       "locale": "en-US",
@@ -44,11 +37,25 @@
       "currency": "THB"
     },
     {
-      "country": "新加坡",
-      "city": "新加坡",
+      "country": "阿联酋",
+      "city": "迪拜",
       "locale": "en-US",
-      "timezone": "Asia/Singapore",
-      "currency": "SGD"
+      "timezone": "Asia/Dubai",
+      "currency": "AED"
+    },
+    {
+      "country": "美国",
+      "city": "纽约",
+      "locale": "en-US",
+      "timezone": "America/New_York",
+      "currency": "USD"
+    },
+    {
+      "country": "澳大利亚",
+      "city": "悉尼",
+      "locale": "en-US",
+      "timezone": "Australia/Sydney",
+      "currency": "AUD"
     },
     {
       "country": "法国",
@@ -58,25 +65,11 @@
       "currency": "EUR"
     },
     {
-      "country": "意大利",
-      "city": "罗马",
-      "locale": "en-US",
-      "timezone": "Europe/Rome",
-      "currency": "EUR"
-    },
-    {
       "country": "西班牙",
       "city": "马德里",
       "locale": "en-US",
       "timezone": "Europe/Madrid",
       "currency": "EUR"
-    },
-    {
-      "country": "澳大利亚",
-      "city": "悉尼",
-      "locale": "en-US",
-      "timezone": "Australia/Sydney",
-      "currency": "AUD"
     }
   ]
 }

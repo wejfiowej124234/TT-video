@@ -23,8 +23,9 @@ function parseSupportedLocales(content) {
   return [...m[1].matchAll(/"([a-z]{2})"/g)].map((x) => x[1]);
 }
 
+/** 与 `CITIES_BY_COUNTRY` 键一致（国家中文名）；`COUNTRY_OPTIONS` 由 `PRODUCT_COUNTRIES` 派生，源码中未必出现 `value: "中国"` 字面量。 */
 function countryExists(country) {
-  const re = new RegExp(`value:\\s*"${escapeRegex(country)}"`);
+  const re = new RegExp(`^\\s*${escapeRegex(country)}:\\s*\\[`, "m");
   return re.test(geoContent);
 }
 
