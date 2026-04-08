@@ -1,4 +1,4 @@
-//! /api/v1/governance（49 G 治理与激励；04 §3.4、49 G.4、50-G1；**protocol-reference** 见 84 文档镜像）
+//! /api/v1/governance（49 G 治理与激励；04 §3.4、49 G.4、50-G1；**protocol-reference** 见 84 文档镜像；**`GET …/governance/params`** 占位聚合见 **B-124**）
 //! 有 DB 时从 governance_pool / governance_reward_records / fee_router_routed_events / region_vault_forwarded_events 读取；无 DB 时返回占位。
 //! **fee-pool-aggregates**（B-084）：对两投影表按 token / pool_id 做 **uint256 Σ**（只读对账）。
 //! 发放逻辑（谁在何时获得多少）待产品定稿后补，见 50 §六附、04 §3.4。
@@ -1099,6 +1099,20 @@ pub async fn get_protocol_reference_pending() -> impl IntoResponse {
     res
 }
 
+/// GET /api/v1/governance/params — 治理参数聚合占位（`/governance/params` 页主数据仍为 protocol-reference + pending）
+pub async fn get_governance_params() -> impl IntoResponse {
+    let mut res = Json(json!({
+        "status": "ok",
+        "params": {},
+        "items": [],
+        "data_source": "placeholder",
+        "note": "49 G 占位：五项费用等对拍见 GET …/protocol-reference 与 …/pending；本端点为契约占位"
+    }))
+    .into_response();
+    add_placeholder_header(&mut res);
+    res
+}
+
 pub fn router() -> Router<ApiMetaState> {
     Router::new()
         .route("/api/v1/governance/pool", get(get_governance_pool))
@@ -1128,6 +1142,7 @@ pub fn router() -> Router<ApiMetaState> {
             "/api/v1/governance/protocol-reference/pending",
             get(get_protocol_reference_pending),
         )
+        .route("/api/v1/governance/params", get(get_governance_params))
 }
 
 #[cfg(test)]
@@ -1135,6 +1150,7 @@ mod tests {
     use super::*;
     use crate::chain::ChainConfig;
     use crate::db;
+    use crate::routes::governance_proposals::get_governance_proposals_list;
     use crate::state::test_support::api_meta_state;
     use axum::extract::Query;
 
@@ -1369,6 +1385,141 @@ mod tests {
             Some("governance_rewards_v1")
         );
         assert!(v.get("items").and_then(|x| x.as_array()).is_some());
+    }
+
+    async fn governance_params_response_parts(
+    ) -> (axum::http::StatusCode, axum::http::HeaderMap, serde_json::Value) {
+        let res = get_governance_params().await.into_response();
+        let status = res.status();
+        let headers = res.headers().clone();
+        let body = res.into_body().collect().await.unwrap().to_bytes();
+        let v: serde_json::Value = serde_json::from_slice(&body).expect("governance params json");
+        (status, headers, v)
+    }
+
+    #[tokio::test]
+    async fn governance_params_response_placeholder_branch() {
+        let (status, headers, v) = governance_params_response_parts().await;
+        assert_eq!(status, StatusCode::OK);
+        assert_eq!(
+            headers
+                .get("x-implementation-status")
+                .and_then(|h| h.to_str().ok()),
+            Some("placeholder")
+        );
+        assert_eq!(v.get("status").and_then(|x| x.as_str()), Some("ok"));
+        assert_eq!(
+            v.get("data_source").and_then(|x| x.as_str()),
+            Some("placeholder")
+        );
+        assert!(
+            v.get("params").is_some_and(|p| p.is_object()),
+            "params must be a JSON object"
+        );
+        assert!(
+            v.get("items").and_then(|x| x.as_array()).is_some(),
+            "items must be an array"
+        );
+    }
+
+    async fn governance_proposals_response_parts(
+        state: ApiMetaState,
+    ) -> (axum::http::StatusCode, axum::http::HeaderMap, serde_json::Value) {
+        let res = get_governance_proposals_list(State(state)).await.into_response();
+        let status = res.status();
+        let headers = res.headers().clone();
+        let body = res.into_body().collect().await.unwrap().to_bytes();
+        let v: serde_json::Value = serde_json::from_slice(&body).expect("governance proposals json");
+        (status, headers, v)
+    }
+
+    /// 非 Governor 索引路径：**JSON** **`data_source`** 为 **`chain_off_mvp`**（**`X-Implementation-Status: chain_off_mvp`**），与 **`governance.rs`** 根级 **`placeholder`** 头不同源。
+    #[tokio::test]
+    async fn governance_proposals_response_placeholder_branch() {
+        let (status, headers, v) =
+            governance_proposals_response_parts(api_meta_state(None)).await;
+        assert_eq!(status, StatusCode::OK);
+        assert_eq!(
+            headers
+                .get("x-implementation-status")
+                .and_then(|h| h.to_str().ok()),
+            Some("chain_off_mvp")
+        );
+        assert_eq!(v.get("status").and_then(|x| x.as_str()), Some("ok"));
+        assert_eq!(
+            v.get("data_source").and_then(|x| x.as_str()),
+            Some("chain_off_mvp")
+        );
+        assert!(v.get("items").and_then(|x| x.as_array()).is_some());
+    }
+
+    /// 需 **`DATABASE_URL`** 且已迁移含 **`governance_proposals_projection`**；**CI 无库/无表时提前返回**。
+    #[tokio::test]
+    async fn governance_proposals_response_projection_branch_when_database_url_set() {
+        let url = match std::env::var("DATABASE_URL") {
+            Ok(u) if !u.trim().is_empty() => u,
+            _ => {
+                eprintln!(
+                    "governance_proposals projection branch: skip (DATABASE_URL unset)"
+                );
+                return;
+            }
+        };
+        let pool = match PgPoolOptions::new()
+            .max_connections(2)
+            .acquire_timeout(Duration::from_secs(5))
+            .connect(&url)
+            .await
+        {
+            Ok(p) => p,
+            Err(e) => {
+                eprintln!("governance_proposals projection branch: skip (connect failed): {e}");
+                return;
+            }
+        };
+        if sqlx::query("SELECT 1 FROM governance_proposals_projection LIMIT 1")
+            .fetch_optional(&pool)
+            .await
+            .is_err()
+        {
+            eprintln!(
+                "governance_proposals projection branch: skip (governance_proposals_projection missing)"
+            );
+            return;
+        }
+
+        let co = ChainOffState {
+            store: Arc::new(RwLock::new(ChainOffStore::default())),
+            config: ChainOffConfig::default(),
+            db_pool: Some(pool),
+        };
+        let mut state = api_meta_state(Some(co));
+        state.chain_config = Some(ChainConfig {
+            governor_address: Some("0x0000000000000000000000000000000000000001".to_string()),
+            chain_id: 999_001,
+            ..Default::default()
+        });
+
+        let (status, headers, v) = governance_proposals_response_parts(state).await;
+        assert_eq!(status, StatusCode::OK);
+        assert_eq!(
+            headers
+                .get("x-implementation-status")
+                .and_then(|h| h.to_str().ok()),
+            Some("chain_governor_indexed")
+        );
+        assert_eq!(v.get("status").and_then(|x| x.as_str()), Some("ok"));
+        assert_eq!(
+            v.get("data_source").and_then(|x| x.as_str()),
+            Some("governance_proposals_projection")
+        );
+        assert!(v.get("items").and_then(|x| x.as_array()).is_some());
+        if let Some(ga) = v.get("governor_address").and_then(|x| x.as_str()) {
+            assert!(
+                !ga.trim().is_empty(),
+                "governor_address must be non-empty when present"
+            );
+        }
     }
 
     #[test]
