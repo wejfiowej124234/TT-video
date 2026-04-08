@@ -256,6 +256,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
             {t("escrow_itineraryLockHint")}
           </p>
         </div>
+        <EscrowRiskNotice />
         <EscrowCancelPolicySection headingId={cancelPolicyHeadingId} />
         <ProductCrossNav ariaLabelKey="escrow_detail_relatedNav_aria" showGuides />
       </main>

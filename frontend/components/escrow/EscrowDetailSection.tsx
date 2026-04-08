@@ -7,6 +7,7 @@ import { useTranslation } from "@/components/LocaleProvider";
 import LoadingText from "@/components/LoadingText";
 import EscrowCancelPolicySection from "@/components/escrow/EscrowDetail/EscrowCancelPolicySection";
 import EscrowOrderPrintButton from "@/components/escrow/EscrowDetail/EscrowOrderPrintButton";
+import EscrowRiskNotice from "@/components/escrow/EscrowDetail/EscrowRiskNotice";
 
 /** 动态包未就绪或 Suspense 回退：与 EscrowDetail 内 main 同 escrow_detailAria，便于烟雾命中地标 */
 function EscrowDetailRouteLoading() {
@@ -26,6 +27,7 @@ function EscrowDetailRouteLoading() {
             <EscrowOrderPrintButton variant="protocolDid" />
           </p>
         </div>
+        <EscrowRiskNotice />
         <EscrowCancelPolicySection headingId={cancelPolicyHeadingId} />
       </div>
     </main>
