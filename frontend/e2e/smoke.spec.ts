@@ -410,7 +410,8 @@ test("社区私信会话页可访问（占位会话 id）", async ({ page }) => 
   await page.goto(`/community/messages/${convId}`);
   await expect(page.locator("body")).toBeVisible();
   await expect(page.getByRole("main", { name: /Direct message thread|私信会话/i })).toBeVisible({ timeout: 20_000 });
-  await expect(page.getByRole("button", { name: /Back|返回/i })).toBeVisible();
+  // Header back control is a Link (navigate to /community/messages), not a <button>.
+  await expect(page.getByRole("link", { name: /Back|返回/i })).toBeVisible();
 });
 
 /** 53-S7：会话详情 URL 保留 ?orderId=（合法 UUID）时在消息区上方展示只读订单摘要卡片 */
