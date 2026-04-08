@@ -36,9 +36,16 @@ jobs:
             local metric="$1"
             local pattern="$2"
             local target="$3"
-            if rg -n "$pattern" "$target" >> "$EVIDENCE_DIR/finance_reconcile_routes.log" 2>/dev/null; then
-              echo "[PASS] ${metric} @ ${target}" >> "$EVIDENCE_DIR/finance_reconcile_routes.log"
-              return 0
+            if [[ "$pattern" == *"|"* ]]; then
+              if grep -nE "$pattern" "$target" >> "$EVIDENCE_DIR/finance_reconcile_routes.log" 2>/dev/null; then
+                echo "[PASS] ${metric} @ ${target}" >> "$EVIDENCE_DIR/finance_reconcile_routes.log"
+                return 0
+              fi
+            else
+              if grep -nF "$pattern" "$target" >> "$EVIDENCE_DIR/finance_reconcile_routes.log" 2>/dev/null; then
+                echo "[PASS] ${metric} @ ${target}" >> "$EVIDENCE_DIR/finance_reconcile_routes.log"
+                return 0
+              fi
             fi
             echo "[FAIL] ${metric} @ ${target}" >> "$EVIDENCE_DIR/finance_reconcile_routes.log"
             failures=$((failures + 1))
@@ -76,7 +83,7 @@ jobs:
           if check_anchor "role_finance_auditor" "FINANCE_AUDITOR" "docs/spec/70-管理员系统开发文档.md"; then
             role_checks_passed=$((role_checks_passed + 1))
           fi
-          if check_anchor "role_mapping_rule" "冲突优先规则|与 `70` 角色体系映射" "docs/spec/200-阶段财务对账结算与报表.md"; then
+          if check_anchor "role_mapping_rule" '冲突优先规则|与 `70` 角色体系映射' "docs/spec/200-阶段财务对账结算与报表.md"; then
             role_checks_passed=$((role_checks_passed + 1))
           fi
 
@@ -183,7 +190,7 @@ jobs:
           for report in $reports; do
             for field in $required_fields; do
               evidence_field_checks_total=$((evidence_field_checks_total + 1))
-              if rg -n "$field" "$EVIDENCE_DIR/$report" >/dev/null 2>&1; then
+              if grep -nF "$field" "$EVIDENCE_DIR/$report" >/dev/null 2>&1; then
                 evidence_field_checks_passed=$((evidence_field_checks_passed + 1))
               else
                 echo "[FAIL] missing required field ${field} in ${report}" >> "$EVIDENCE_DIR/finance_reconcile_routes.log"

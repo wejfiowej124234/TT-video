@@ -313,7 +313,7 @@ jobs:
             local metric="$1"
             local pattern="$2"
             local target="$3"
-            if rg -n "$pattern" "$target" >> "$EVIDENCE_DIR/finance_reconcile_routes.log" 2>/dev/null; then
+            if grep -nF "$pattern" "$target" >> "$EVIDENCE_DIR/finance_reconcile_routes.log" 2>/dev/null; then
               route_checks_passed=$((route_checks_passed + 1))
             else
               failures=$((failures + 1))
@@ -416,7 +416,7 @@ jobs:
           check_anchor() {
             local pattern="$1"
             local target="$2"
-            if rg -n "$pattern" "$target" >> "$EVIDENCE_DIR/config_center_routes.log" 2>/dev/null; then
+            if grep -nF "$pattern" "$target" >> "$EVIDENCE_DIR/config_center_routes.log" 2>/dev/null; then
               route_checks_passed=$((route_checks_passed + 1))
             else
               failures=$((failures + 1))
@@ -521,7 +521,7 @@ jobs:
           for report in $reports; do
             for field in $required_fields; do
               evidence_field_checks_total=$((evidence_field_checks_total + 1))
-              if rg -n "$field" "$EVIDENCE_DIR/$report" >/dev/null 2>&1; then
+              if grep -nF "$field" "$EVIDENCE_DIR/$report" >/dev/null 2>&1; then
                 evidence_field_checks_passed=$((evidence_field_checks_passed + 1))
               else
                 failures=$((failures + 1))
@@ -576,7 +576,7 @@ jobs:
           check_anchor() {
             local pattern="$1"
             local target="$2"
-            if rg -n "$pattern" "$target" >> "$EVIDENCE_DIR/feature_flag_routes.log" 2>/dev/null; then
+            if grep -nF "$pattern" "$target" >> "$EVIDENCE_DIR/feature_flag_routes.log" 2>/dev/null; then
               return 0
             fi
             failures=$((failures + 1))
@@ -701,7 +701,7 @@ jobs:
           for report in $reports; do
             for field in $required_fields; do
               evidence_field_checks_total=$((evidence_field_checks_total + 1))
-              if rg -n "$field" "$EVIDENCE_DIR/$report" >/dev/null 2>&1; then
+              if grep -nF "$field" "$EVIDENCE_DIR/$report" >/dev/null 2>&1; then
                 evidence_field_checks_passed=$((evidence_field_checks_passed + 1))
               else
                 failures=$((failures + 1))
@@ -756,7 +756,7 @@ jobs:
           check_anchor() {
             local pattern="$1"
             local target="$2"
-            if rg -n "$pattern" "$target" >> "$EVIDENCE_DIR/job_queue_routes.log" 2>/dev/null; then
+            if grep -nF "$pattern" "$target" >> "$EVIDENCE_DIR/job_queue_routes.log" 2>/dev/null; then
               return 0
             fi
             failures=$((failures + 1))
@@ -874,7 +874,7 @@ jobs:
           for report in $reports; do
             for field in $required_fields; do
               evidence_field_checks_total=$((evidence_field_checks_total + 1))
-              if rg -n "$field" "$EVIDENCE_DIR/$report" >/dev/null 2>&1; then
+              if grep -nF "$field" "$EVIDENCE_DIR/$report" >/dev/null 2>&1; then
                 evidence_field_checks_passed=$((evidence_field_checks_passed + 1))
               else
                 failures=$((failures + 1))
@@ -929,7 +929,7 @@ jobs:
           check_anchor() {
             local pattern="$1"
             local target="$2"
-            if rg -n "$pattern" "$target" >> "$EVIDENCE_DIR/secret_key_routes.log" 2>/dev/null; then
+            if grep -nF "$pattern" "$target" >> "$EVIDENCE_DIR/secret_key_routes.log" 2>/dev/null; then
               return 0
             fi
             failures=$((failures + 1))
@@ -1051,7 +1051,7 @@ jobs:
           for report in $reports; do
             for field in $required_fields; do
               evidence_field_checks_total=$((evidence_field_checks_total + 1))
-              if rg -n "$field" "$EVIDENCE_DIR/$report" >/dev/null 2>&1; then
+              if grep -nF "$field" "$EVIDENCE_DIR/$report" >/dev/null 2>&1; then
                 evidence_field_checks_passed=$((evidence_field_checks_passed + 1))
               else
                 failures=$((failures + 1))
