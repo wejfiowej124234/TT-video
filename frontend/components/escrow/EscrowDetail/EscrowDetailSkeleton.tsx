@@ -4,6 +4,7 @@ import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import EscrowCancelPolicySection from "./EscrowCancelPolicySection";
+import EscrowCopySummaryButton from "./EscrowCopySummaryButton";
 import EscrowOrderPrintButton from "./EscrowOrderPrintButton";
 import EscrowRiskNotice from "./EscrowRiskNotice";
 
@@ -43,6 +44,7 @@ export default function EscrowDetailSkeleton() {
           </p>
           <p className="text-small text-slate-300 flex flex-wrap items-center gap-4 pt-1">
             <EscrowOrderPrintButton variant="protocolDid" />
+            <EscrowCopySummaryButton variant="protocolDid" onCopy={() => {}} disabled />
           </p>
         </div>
 

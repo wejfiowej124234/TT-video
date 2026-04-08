@@ -27,6 +27,7 @@ import EscrowOnChainActions from "./EscrowOnChainActions";
 import ReorgBanner from "./ReorgBanner";
 import EscrowRiskNotice from "./EscrowRiskNotice";
 import EscrowCancelPolicySection from "./EscrowCancelPolicySection";
+import EscrowCopySummaryButton from "./EscrowCopySummaryButton";
 import EscrowOrderPrintButton from "./EscrowOrderPrintButton";
 import BilateralConfirmBlock from "./BilateralConfirmBlock";
 import OrderMessageLink from "./OrderMessageLink";
@@ -249,6 +250,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
             {t("escrow_backToOrders")}
           </Link>
           <EscrowOrderPrintButton variant="console" />
+          <EscrowCopySummaryButton variant="console" onCopy={() => {}} disabled />
         </div>
         <div className="rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 p-4 space-y-2">
           <h3 className="text-body-l font-semibold text-cyan-200">{t("escrow_itineraryBudget")}</h3>
@@ -825,23 +827,12 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
 
       <p className="text-small text-slate-300 flex flex-wrap items-center gap-4">
         <EscrowOrderPrintButton variant="protocolDid" />
-        <form
-          className="inline"
-          onSubmit={(e) => {
-            e.preventDefault();
-            void handleCopySummary();
-          }}
-        >
-          <button
-            type="submit"
-            disabled={copySummaryBusy}
-            aria-busy={copySummaryBusy ? true : undefined}
-            className={`text-cyan-300 hover:text-cyan-100 hover:drop-shadow-scifi-cyan-lg transition-colors disabled:opacity-60 disabled:cursor-wait rounded-[var(--radius-sm)] ${deepShellPillControlFocusClasses}`}
-            aria-label={t("order_copySummary")}
-          >
-            {copySummaryDone ? t("order_copySummaryDone") : t("order_copySummary")}
-          </button>
-        </form>
+        <EscrowCopySummaryButton
+          variant="protocolDid"
+          onCopy={handleCopySummary}
+          busy={copySummaryBusy}
+          done={copySummaryDone}
+        />
         <Link href="/orders" className={`text-cyan-300 hover:text-cyan-100 hover:drop-shadow-scifi-cyan-lg transition-colors rounded-[var(--radius-sm)] ${deepShellPillControlFocusClasses}`}>{t("escrow_backToOrders")}</Link>
         <Link
           href={`/pay?orderId=${encodeURIComponent(String(order.id))}`}

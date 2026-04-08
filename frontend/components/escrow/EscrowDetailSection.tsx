@@ -6,6 +6,7 @@ import { Suspense, useId } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import LoadingText from "@/components/LoadingText";
 import EscrowCancelPolicySection from "@/components/escrow/EscrowDetail/EscrowCancelPolicySection";
+import EscrowCopySummaryButton from "@/components/escrow/EscrowDetail/EscrowCopySummaryButton";
 import EscrowOrderPrintButton from "@/components/escrow/EscrowDetail/EscrowOrderPrintButton";
 import EscrowRiskNotice from "@/components/escrow/EscrowDetail/EscrowRiskNotice";
 
@@ -25,6 +26,7 @@ function EscrowDetailRouteLoading() {
           </p>
           <p className="text-small text-slate-300 flex flex-wrap items-center gap-4 pt-1">
             <EscrowOrderPrintButton variant="protocolDid" />
+            <EscrowCopySummaryButton variant="protocolDid" onCopy={() => {}} disabled />
           </p>
         </div>
         <EscrowRiskNotice />
