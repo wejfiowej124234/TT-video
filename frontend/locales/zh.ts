@@ -3077,6 +3077,8 @@ export default {
   traveltrust_nav_liveStats: "数据演示",
   traveltrust_nav_quickExplain: "三步",
   traveltrust_nav_video: "视频",
+  traveltrust_nav_problem: "痛点",
+  traveltrust_nav_solution: "方案",
   traveltrust_nav_flow: "主流程",
   traveltrust_nav_demo: "演示",
   traveltrust_nav_tokenSystem: "代币分层",

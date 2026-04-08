@@ -3142,6 +3142,8 @@ export default {
   traveltrust_nav_liveStats: "Live stats",
   traveltrust_nav_quickExplain: "3 steps",
   traveltrust_nav_video: "Video",
+  traveltrust_nav_problem: "Problem",
+  traveltrust_nav_solution: "Solution",
   traveltrust_nav_flow: "Flow",
   traveltrust_nav_demo: "Demo",
   traveltrust_nav_tokenSystem: "Token layers",

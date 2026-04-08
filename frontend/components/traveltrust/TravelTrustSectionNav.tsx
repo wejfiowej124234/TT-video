@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
 
-/** 与 85 §三 IA 顺序对齐：Hero → Live → Stats → Quick → Video → Problem → Solution → Flow → Demo → … */
+/** 与 85 §三 IA 顺序对齐：Hero → … → Video → Problem → Solution → Flow → Demo → …（#problem / #solution 在 overview 内） */
 const SECTIONS: readonly { id: string; labelKey: string }[] = [
   { id: "hero", labelKey: "traveltrust_nav_hero" },
   { id: "overview", labelKey: "traveltrust_nav_overview" },
@@ -11,6 +11,8 @@ const SECTIONS: readonly { id: string; labelKey: string }[] = [
   { id: "live-stats", labelKey: "traveltrust_nav_liveStats" },
   { id: "quick-explain", labelKey: "traveltrust_nav_quickExplain" },
   { id: "video", labelKey: "traveltrust_nav_video" },
+  { id: "problem", labelKey: "traveltrust_nav_problem" },
+  { id: "solution", labelKey: "traveltrust_nav_solution" },
   { id: "flow", labelKey: "traveltrust_nav_flow" },
   { id: "demo", labelKey: "traveltrust_nav_demo" },
   { id: "token-system", labelKey: "traveltrust_nav_tokenSystem" },
