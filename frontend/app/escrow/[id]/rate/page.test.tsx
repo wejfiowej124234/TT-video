@@ -5,6 +5,7 @@ import React from "react";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, within, fireEvent, waitFor } from "@testing-library/react";
 import { LocaleProvider } from "@/components/LocaleProvider";
+import { LOCALE_STORAGE_KEY } from "@/lib/i18n";
 import EscrowRatePage from "./page";
 
 const { getOrderMock } = vi.hoisted(() => ({
@@ -33,6 +34,9 @@ function renderRate() {
 
 describe("EscrowRatePage", () => {
   beforeEach(() => {
+    // Other suites may persist `traveltrust_locale`; LocaleProvider reads it in useEffect and
+    // would swap labels (e.g. upload submit → "Submit for review"), breaking zh-only queries.
+    localStorage.removeItem(LOCALE_STORAGE_KEY);
     getOrderMock.mockResolvedValue({ state: "Escrowed", sub_status: "" });
   });
 
@@ -53,7 +57,7 @@ describe("EscrowRatePage", () => {
   it("submit upload is disabled without files; describedby hints when disabled", async () => {
     renderRate();
     await screen.findByRole("heading", { level: 1, name: "行程评分" });
-    const submit = screen.getByRole("button", { name: "提交审核" });
+    const submit = await screen.findByRole("button", { name: "提交审核" });
     expect(submit.hasAttribute("disabled")).toBe(true);
     const hintId = submit.getAttribute("aria-describedby");
     expect(hintId).toBeTruthy();
@@ -70,7 +74,7 @@ describe("EscrowRatePage", () => {
     const fileInput = screen.getByLabelText("选择要上传的行程评分照片或视频");
     const file = new File(["x"], "trip.jpg", { type: "image/jpeg" });
     fireEvent.change(fileInput, { target: { files: [file] } });
-    const submit = screen.getByRole("button", { name: "提交审核" });
+    const submit = await screen.findByRole("button", { name: "提交审核" });
     expect(submit.hasAttribute("disabled")).toBe(false);
     fireEvent.click(submit);
     await waitFor(() => {
