@@ -4,6 +4,7 @@ import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import EscrowCancelPolicySection from "./EscrowCancelPolicySection";
+import EscrowOrderPrintButton from "./EscrowOrderPrintButton";
 
 /** 53 §4.6.8：订单/Escrow 详情骨架与首屏布局同构，减少 CLS；协议区用深色底与 30-DID 协调 */
 export default function EscrowDetailSkeleton() {
@@ -38,6 +39,9 @@ export default function EscrowDetailSkeleton() {
           <h3 className="text-body-l font-semibold text-cyan-200">{t("escrow_itineraryBudget")}</h3>
           <p className="text-meta text-slate-300 leading-relaxed" role="status">
             {t("escrow_itineraryLockHint")}
+          </p>
+          <p className="text-small text-slate-300 flex flex-wrap items-center gap-4 pt-1">
+            <EscrowOrderPrintButton variant="protocolDid" />
           </p>
         </div>
 

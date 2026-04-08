@@ -27,6 +27,7 @@ import EscrowOnChainActions from "./EscrowOnChainActions";
 import ReorgBanner from "./ReorgBanner";
 import EscrowRiskNotice from "./EscrowRiskNotice";
 import EscrowCancelPolicySection from "./EscrowCancelPolicySection";
+import EscrowOrderPrintButton from "./EscrowOrderPrintButton";
 import BilateralConfirmBlock from "./BilateralConfirmBlock";
 import OrderMessageLink from "./OrderMessageLink";
 import EscrowDetailSkeleton from "./EscrowDetailSkeleton";
@@ -247,6 +248,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
           >
             {t("escrow_backToOrders")}
           </Link>
+          <EscrowOrderPrintButton variant="console" />
         </div>
         <div className="rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 p-4 space-y-2">
           <h3 className="text-body-l font-semibold text-cyan-200">{t("escrow_itineraryBudget")}</h3>
@@ -821,17 +823,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
       <EscrowCancelPolicySection headingId={cancelPolicyHeadingId} />
 
       <p className="text-small text-slate-300 flex flex-wrap items-center gap-4">
-        <form
-          className="inline"
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (typeof window !== "undefined") window.print();
-          }}
-        >
-          <button type="submit" className={`text-cyan-300 hover:text-cyan-100 hover:drop-shadow-scifi-cyan-lg transition-colors rounded-[var(--radius-sm)] ${deepShellPillControlFocusClasses}`} aria-label={t("order_printPage")}>
-            {t("order_printPage")}
-          </button>
-        </form>
+        <EscrowOrderPrintButton variant="protocolDid" />
         <form
           className="inline"
           onSubmit={(e) => {

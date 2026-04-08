@@ -6,6 +6,7 @@ import { Suspense, useId } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import LoadingText from "@/components/LoadingText";
 import EscrowCancelPolicySection from "@/components/escrow/EscrowDetail/EscrowCancelPolicySection";
+import EscrowOrderPrintButton from "@/components/escrow/EscrowDetail/EscrowOrderPrintButton";
 
 /** 动态包未就绪或 Suspense 回退：与 EscrowDetail 内 main 同 escrow_detailAria，便于烟雾命中地标 */
 function EscrowDetailRouteLoading() {
@@ -20,6 +21,9 @@ function EscrowDetailRouteLoading() {
           <h3 className="text-body-l font-semibold text-cyan-200">{t("escrow_itineraryBudget")}</h3>
           <p className="text-meta text-slate-300 leading-relaxed" role="status">
             {t("escrow_itineraryLockHint")}
+          </p>
+          <p className="text-small text-slate-300 flex flex-wrap items-center gap-4 pt-1">
+            <EscrowOrderPrintButton variant="protocolDid" />
           </p>
         </div>
         <EscrowCancelPolicySection headingId={cancelPolicyHeadingId} />
