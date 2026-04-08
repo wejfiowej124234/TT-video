@@ -3,7 +3,7 @@
  */
 import React from "react";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, within, fireEvent, act } from "@testing-library/react";
+import { render, screen, within, fireEvent, waitFor } from "@testing-library/react";
 import { LocaleProvider } from "@/components/LocaleProvider";
 import EscrowRatePage from "./page";
 
@@ -61,8 +61,10 @@ describe("EscrowRatePage", () => {
     expect(hint?.textContent).toContain("请先选择至少一个文件");
   });
 
-  it("after selecting a file: submit enabled; fake timer completes upload phase", async () => {
-    vi.useFakeTimers({ shouldAdvanceTime: true });
+  it("after selecting a file: submit enabled; refresh shows confirm rating CTA", async () => {
+    getOrderMock
+      .mockResolvedValueOnce({ state: "Escrowed", sub_status: "" })
+      .mockResolvedValue({ state: "completed", sub_status: "rating_pending" });
     renderRate();
     await screen.findByRole("heading", { level: 1, name: "行程评分" });
     const fileInput = screen.getByLabelText("选择要上传的行程评分照片或视频");
@@ -71,10 +73,9 @@ describe("EscrowRatePage", () => {
     const submit = screen.getByRole("button", { name: "提交审核" });
     expect(submit.hasAttribute("disabled")).toBe(false);
     fireEvent.click(submit);
-    await act(async () => {
-      vi.advanceTimersByTime(600);
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: "确认评分与材料" })).toBeTruthy();
     });
-    expect(screen.getByRole("button", { name: "确认评分与材料" })).toBeTruthy();
   });
 
   it("53-S10: completed + rating_confirmed shows escrow release CTA (API snake_case state)", async () => {
