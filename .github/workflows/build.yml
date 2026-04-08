@@ -251,6 +251,33 @@ jobs:
         run: cd frontend && npx playwright install --with-deps chromium
       - name: Build frontend
         run: cd frontend && npm run build
+      # Next rewrites（next.config.js）默认把 /api/v1、/meta、/health 代理到 localhost:8080；仅起 Next 会导致 E2E 侧 ECONNREFUSED。
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+      - name: Build traveltrust-api (E2E rewrite target)
+        env:
+          TRAVELTRUST_BUILD_GIT_SHA: ${{ github.sha }}
+        run: cargo build -p traveltrust-api
+      - name: Start API on 8080 for E2E
+        env:
+          PORT: "8080"
+          SEED_TEST_ACCOUNTS: "1"
+          TRAVELTRUST_BUILD_GIT_SHA: ${{ github.sha }}
+          DATABASE_URL: ""
+        run: |
+          set -euo pipefail
+          cargo run -p traveltrust-api > /tmp/traveltrust-api-e2e.log 2>&1 &
+          for i in $(seq 1 120); do
+            if curl -sf "http://127.0.0.1:8080/health" >/dev/null; then
+              echo "API ready on :8080"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "API did not become ready on :8080"
+          cat /tmp/traveltrust-api-e2e.log || true
+          exit 1
       - name: E2E (Playwright)
         env:
           PORT: "3012"
