@@ -151,10 +151,22 @@
 | 122 | TT-ORDERS-CHAIN-ID-BACKFILL-AND-QUERY-GATE-001 | orders / DB | 已封口 · **NEW** | **B-102**：**`orders.chain_id`** 回填 **dry-run** + **`GET /orders`** 等读路径 **链过滤/标注**；**110 §3.1.4** |
 | 123 | TT-EVIDENCE-B094-RESOLUTION-FIXTURES-SSOT-001 | escrow / 证据 | 已封口 · **EXTEND** | **B-103** / **B-094**：三终态 **fixture** **单文件 SSOT**（**tx hash** + 余额 + **`orders_projection`**） |
 | 124 | TT-B120-INDEXER-RECONCILE-GATE-CHECKS-TOTAL-ALIGN-001 | CI / 110 / Runbook | 已封口 | **B-120**：**`indexer-reconcile-gate.yml`** **`checks_total`** = **`check_anchor`** 数 **106**；**110**/**07** 表、**RUNBOOK §2.55** 同锚 |
+| 125 | TT-GOVERNANCE-POOL-CHAIN-ALIGNMENT-HINT-TRIPLE-001 | API / 治理 pool | 已封口 | **B-110**：**`GET …/governance/pool`** **`database` / `database_empty` / `placeholder`** 三枝 **`chain_alignment_hint`** 一致 **`is_chain_ssot=false`·`data_source=projection`·`chain_alignment_status=not_aligned`**；**`cargo test -p traveltrust-api`** **`governance_pool_*chain_alignment_hint*`**（**无 `DATABASE_URL` 时 DB 两枝跳过**） |
+
+### TT-GOVERNANCE-POOL-CHAIN-ALIGNMENT-HINT-TRIPLE-001
+
+- **阶段**：API / 治理 **`GET /api/v1/governance/pool`**
+- **状态**：已封口
+- **本轮仅改**：`crates/api/src/routes/governance.rs`（**`#[cfg(test)]`**）
+- **任务**：三 **`data_source`** 枝下 **`chain_alignment_hint`** 三键一致性（**`is_chain_ssot` / `data_source` / `chain_alignment_status`**）。
+- **验收**：**`cargo test -p traveltrust-api`**：**`governance_pool_placeholder_branch_chain_alignment_hint_consistency`** 恒跑；**`governance_pool_database_branches_chain_alignment_hint_consistency_when_database_url_set`** 在 **`DATABASE_URL`** 可用且已迁移时覆盖 **`database`** 与 **`database_empty`**。
+- **禁止**：改 handler / 生产装配逻辑（本卡仅补测）。
+
+---
 
 ### 未封口一览项 · 去重（仅扫状态非「已封口」）
 
-**范围**：上表 **序号 1～124** 中，**状态**列 **不含** **`已封口`** 的条目 **仅** **3**、**6**、**12**（**只读** · 审计/文档扫档，**非** Target 能力登记）。
+**范围**：上表 **序号 1～125** 中，**状态**列 **不含** **`已封口`** 的条目 **仅** **3**、**6**、**12**（**只读** · 审计/文档扫档，**非** Target 能力登记）。
 
 **结论（本轮 · 跳过已封口 113～123）**：**DUPLICATE = 0**（**121** 复合门闸 **≠** **117** 单门闸；**122** **chain_id** **≠** disputes PG / **114** 投影 UX 等；**123** **B-094 证据 SSOT** **≠** **107** 写入 **≠** **113** outbox）；**NEW / EXTEND 登记缺口** = **0**（无未登记母表 **Target** 行缺 TT 映射）。
 

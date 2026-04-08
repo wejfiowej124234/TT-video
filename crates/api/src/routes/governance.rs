@@ -1186,7 +1186,112 @@ mod tests {
         );
     }
     use axum::extract::State;
+    use axum::http::StatusCode;
+    use crate::chain_off::{ChainOffConfig, ChainOffState, ChainOffStore};
     use http_body_util::BodyExt;
+    use serde_json::json;
+    use sqlx::postgres::PgPoolOptions;
+    use std::sync::Arc;
+    use std::time::Duration;
+    use tokio::sync::RwLock;
+
+    /// **`GET …/governance/pool`** **`chain_alignment_hint`**：三键在 **非链上 SSOT** 路径下与 **04** 叙事一致（**`database` / `database_empty` / `placeholder`**）。
+    fn assert_governance_pool_chain_alignment_hint_projection_not_aligned(h: &serde_json::Value) {
+        assert_eq!(h.get("is_chain_ssot"), Some(&json!(false)));
+        assert_eq!(
+            h.get("data_source").and_then(|x| x.as_str()),
+            Some("projection")
+        );
+        assert_eq!(
+            h.get("chain_alignment_status").and_then(|x| x.as_str()),
+            Some("not_aligned")
+        );
+    }
+
+    async fn governance_pool_response_json(state: ApiMetaState) -> serde_json::Value {
+        let res = get_governance_pool(State(state)).await.into_response();
+        assert_eq!(res.status(), StatusCode::OK);
+        let body = res.into_body().collect().await.unwrap().to_bytes();
+        serde_json::from_slice(&body).expect("pool json")
+    }
+
+    #[tokio::test]
+    async fn governance_pool_placeholder_branch_chain_alignment_hint_consistency() {
+        let v = governance_pool_response_json(api_meta_state(None)).await;
+        assert_eq!(
+            v.get("data_source").and_then(|x| x.as_str()),
+            Some("placeholder")
+        );
+        assert_governance_pool_chain_alignment_hint_projection_not_aligned(&v["chain_alignment_hint"]);
+    }
+
+    /// 需 **`DATABASE_URL`** 指向已迁移库（含 **`governance_pool`** 表）。**CI 无 DB 时提前返回**（仍验 **placeholder** 枝于上测）。
+    #[tokio::test]
+    async fn governance_pool_database_branches_chain_alignment_hint_consistency_when_database_url_set(
+    ) {
+        let url = match std::env::var("DATABASE_URL") {
+            Ok(u) if !u.trim().is_empty() => u,
+            _ => {
+                eprintln!(
+                    "governance_pool database/database_empty branches: skip (DATABASE_URL unset)"
+                );
+                return;
+            }
+        };
+        let pool = match PgPoolOptions::new()
+            .max_connections(2)
+            .acquire_timeout(Duration::from_secs(5))
+            .connect(&url)
+            .await
+        {
+            Ok(p) => p,
+            Err(e) => {
+                eprintln!("governance_pool DB branches: skip (connect failed): {e}");
+                return;
+            }
+        };
+
+        let state_with_pool = || {
+            let co = ChainOffState {
+                store: Arc::new(RwLock::new(ChainOffStore::default())),
+                config: ChainOffConfig::default(),
+                db_pool: Some(pool.clone()),
+            };
+            api_meta_state(Some(co))
+        };
+
+        sqlx::query("DELETE FROM governance_pool")
+            .execute(&pool)
+            .await
+            .expect("delete governance_pool for empty-branch test");
+
+        let v_empty = governance_pool_response_json(state_with_pool()).await;
+        assert_eq!(
+            v_empty.get("data_source").and_then(|x| x.as_str()),
+            Some("database_empty")
+        );
+        assert_governance_pool_chain_alignment_hint_projection_not_aligned(
+            &v_empty["chain_alignment_hint"],
+        );
+
+        sqlx::query(
+            "INSERT INTO governance_pool (balance, currency, updated_at) VALUES ($1, $2, NOW())",
+        )
+        .bind("42")
+        .bind("TT")
+        .execute(&pool)
+        .await
+        .expect("insert governance_pool for database-branch test");
+
+        let v_db = governance_pool_response_json(state_with_pool()).await;
+        assert_eq!(
+            v_db.get("data_source").and_then(|x| x.as_str()),
+            Some("database")
+        );
+        assert_governance_pool_chain_alignment_hint_projection_not_aligned(
+            &v_db["chain_alignment_hint"],
+        );
+    }
 
     #[test]
     fn balance_consistency_hint_presence_only_patterns() {
