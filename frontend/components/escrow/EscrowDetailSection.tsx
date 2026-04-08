@@ -15,7 +15,13 @@ function EscrowDetailRouteLoading() {
     <main className="flex min-h-screen flex-col items-center justify-center gap-6 p-8" aria-label={t("escrow_detailAria")}>
       <h1 className="sr-only">{t("escrow_detailAria")}</h1>
       <LoadingText />
-      <div className="w-full max-w-2xl">
+      <div className="w-full max-w-2xl space-y-4">
+        <div className="rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md p-4 space-y-2 shadow-scifi-panel">
+          <h3 className="text-body-l font-semibold text-cyan-200">{t("escrow_itineraryBudget")}</h3>
+          <p className="text-meta text-slate-300 leading-relaxed" role="status">
+            {t("escrow_itineraryLockHint")}
+          </p>
+        </div>
         <EscrowCancelPolicySection headingId={cancelPolicyHeadingId} />
       </div>
     </main>

@@ -248,6 +248,12 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
             {t("escrow_backToOrders")}
           </Link>
         </div>
+        <div className="rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 p-4 space-y-2">
+          <h3 className="text-body-l font-semibold text-cyan-200">{t("escrow_itineraryBudget")}</h3>
+          <p className="text-meta text-slate-300 leading-relaxed" role="status">
+            {t("escrow_itineraryLockHint")}
+          </p>
+        </div>
         <EscrowCancelPolicySection headingId={cancelPolicyHeadingId} />
         <ProductCrossNav ariaLabelKey="escrow_detail_relatedNav_aria" showGuides />
       </main>
@@ -355,7 +361,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
           />
         </div>
 
-      {data.isDraft && itinerary && (
+      {data.isDraft && itinerary ? (
         <div className={`${panelClass} p-6 space-y-4`}>
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div>
@@ -563,6 +569,13 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
               />
             </div>
           </div>
+        </div>
+      ) : (
+        <div className={`${panelClass} p-4 space-y-2`}>
+          <h3 className="text-body-l font-semibold text-cyan-200">{t("escrow_itineraryBudget")}</h3>
+          <p className="text-meta text-slate-300 leading-relaxed" role="status">
+            {t("escrow_itineraryLockHint")}
+          </p>
         </div>
       )}
 

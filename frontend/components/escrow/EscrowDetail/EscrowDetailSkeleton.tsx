@@ -34,6 +34,13 @@ export default function EscrowDetailSkeleton() {
           ))}
         </div>
 
+        <div className={`${panelClass} p-4 space-y-2`}>
+          <h3 className="text-body-l font-semibold text-cyan-200">{t("escrow_itineraryBudget")}</h3>
+          <p className="text-meta text-slate-300 leading-relaxed" role="status">
+            {t("escrow_itineraryLockHint")}
+          </p>
+        </div>
+
         {/* Panel: itinerary / amount / participants area */}
         <div className={`${panelClass} p-6 md:p-8 space-y-6`}>
           <div>
