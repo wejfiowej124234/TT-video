@@ -150,7 +150,7 @@
 | 121 | TT-INDEXER-RECONCILE-COMPOUND-PASS-GATE-001 | internal / 索引 | 已封口 · **EXTEND** | **B-101**：**`indexer-reconcile`** **复合门闸**（**`orders_projection_reconcile_gate`** + **RPC 抽样** + 可选 **event_log 覆盖** → 根级 **`compound_pass`**）；**04**/**110** |
 | 122 | TT-ORDERS-CHAIN-ID-BACKFILL-AND-QUERY-GATE-001 | orders / DB | 已封口 · **NEW** | **B-102**：**`orders.chain_id`** 回填 **dry-run** + **`GET /orders`** 等读路径 **链过滤/标注**；**110 §3.1.4** |
 | 123 | TT-EVIDENCE-B094-RESOLUTION-FIXTURES-SSOT-001 | escrow / 证据 | 已封口 · **EXTEND** | **B-103** / **B-094**：三终态 **fixture** **单文件 SSOT**（**tx hash** + 余额 + **`orders_projection`**） |
-| 124 | TT-GOVERNANCE-PROPOSALS-LIST-RESPONSE-CONTRACT-TEST-001 | API / 治理 | 已封口 | **`GET …/governance/proposals`**：**`governance_proposals_response_*`** 契约单测（**projection** / 链下 MVP **`chain_off_mvp`**）；**不改** handler |
+| 124 | TT-GOVERNANCE-PROPOSALS-LIST-RESPONSE-CONTRACT-TEST-001 | API / 治理 | 已封口 · **EXTEND** | **`GET …/governance/proposals`**：**`governance_proposals_response_*`**（**projection** 枝 **非** **`X-Implementation-Status: placeholder`**；MVP 枝 **`chain_off_mvp`**）；**不改** handler |
 | 125 | TT-B120-INDEXER-RECONCILE-GATE-CHECKS-TOTAL-ALIGN-001 | CI / 110 / Runbook | 已封口 | **B-120**：**`indexer-reconcile-gate.yml`** **`checks_total`** = **`check_anchor`** 数 **106**；**110**/**07** 表、**RUNBOOK §2.55** 同锚 |
 | 126 | TT-GOVERNANCE-POOL-CHAIN-ALIGNMENT-HINT-TRIPLE-001 | API / 治理 pool | 已封口 | **B-110**：**`GET …/governance/pool`** **`database` / `database_empty` / `placeholder`** 三枝 **`chain_alignment_hint`** 一致 **`is_chain_ssot=false`·`data_source=projection`·`chain_alignment_status=not_aligned`**；**`cargo test -p traveltrust-api`** **`governance_pool_*chain_alignment_hint*`**（**无 `DATABASE_URL` 时 DB 两枝跳过**） |
 | 127 | TT-GOVERNANCE-REWARDS-RESPONSE-CONTRACT-TEST-001 | API / 治理 rewards | 已封口 | **`GET …/governance/rewards`**：**`placeholder`**（**`items:[]`** + **`x-implementation-status`**) / **`database`**（**`rule_version=governance_rewards_v1`**）；**`cargo test -p traveltrust-api`** **`governance_rewards_response_`**；实现 **`governance.rs`** **`#[cfg(test)]`** |
@@ -1971,14 +1971,14 @@
 
 ### TT-GOVERNANCE-PROPOSALS-LIST-RESPONSE-CONTRACT-TEST-001
 
-- **去重类型**：**NEW**（**DUPLICATE**：**0** — **不**重复 **governance_proposals.rs** 内既有列表功能测；本卡仅 **响应契约** 于 **`governance.rs`** **`#[cfg(test)]`**）
+- **去重类型**：**EXTEND**（**DUPLICATE**：**0**；承 **projection/MVP** 体契约；**EXTEND**：**`X-Implementation-Status`** **不得**为 **`placeholder`**（与 **pool/params** 占位头区分），**projection** 成功枝仍为 **`chain_governor_indexed`**）
 - **阶段**：API / 治理 · **`GET /api/v1/governance/proposals`**
-- **状态**：已封口
+- **状态**：已封口 · **EXTEND**
 - **母表**：—（窄补测试）
-- **任务**：在 **`crates/api/src/routes/governance.rs`** **`mod tests`** 增加 **`governance_proposals_response_*`**：**`status`**、**`data_source`**（**projection** ⇒ **`governance_proposals_projection`**；非 projection ⇒ 实现恒为 **`chain_off_mvp`** + 头 **`chain_off_mvp`**）、**`items`** 为数组；projection 时若根级含 **`governor_address`** 则校验非空。**禁止**改 handler / DB / 其它模块。
+- **任务**：在 **`crates/api/src/routes/governance.rs`** **`mod tests`** 增加 **`governance_proposals_response_*`**：**`status`**、**`data_source`**（**projection** ⇒ **`governance_proposals_projection`**；非 projection ⇒ 实现恒为 **`chain_off_mvp`** + 头 **`chain_off_mvp`**）、**`items`** 为数组；projection 时若根级含 **`governor_address`** 则校验非空；**Governor 索引**成功枝显式 **`assert_ne!(…, Some("placeholder"))`**。**禁止**改 handler / DB / 其它模块。
 - **本轮仅改**：**`crates/api/src/routes/governance.rs`**（**`#[cfg(test)]`**）、本索引一览与正文
 - **禁止再分析**：**04** 全文重扫；**handler** 改写
-- **验收**：**`cargo test -p traveltrust-api governance_proposals_response_*`** 通过（无 **`DATABASE_URL`** 或缺表时 projection 测跳过仍绿）
+- **验收**：**通过**（**EXTEND**：**projection** 成功枝 **`X-Implementation-Status`** **≠** **`placeholder`** 且 **=** **`chain_governor_indexed`**；MVP 枝 **`chain_off_mvp`**；**`cargo test -p traveltrust-api governance_proposals_response_*`** 绿；无 **`DATABASE_URL`** 或缺表时 projection 枝跳过仍绿）
 - **测试**：**`cargo test -p traveltrust-api governance_proposals_response_*`**
 
 ---

@@ -1502,6 +1502,13 @@ mod tests {
 
         let (status, headers, v) = governance_proposals_response_parts(state).await;
         assert_eq!(status, StatusCode::OK);
+        assert_ne!(
+            headers
+                .get("x-implementation-status")
+                .and_then(|h| h.to_str().ok()),
+            Some("placeholder"),
+            "projection list must not use pool/params-style X-Implementation-Status: placeholder"
+        );
         assert_eq!(
             headers
                 .get("x-implementation-status")
