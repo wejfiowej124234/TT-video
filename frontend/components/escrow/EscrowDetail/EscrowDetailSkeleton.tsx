@@ -1,10 +1,14 @@
 "use client";
 
+import { useId } from "react";
+
 import { useTranslation } from "@/components/LocaleProvider";
+import EscrowCancelPolicySection from "./EscrowCancelPolicySection";
 
 /** 53 §4.6.8：订单/Escrow 详情骨架与首屏布局同构，减少 CLS；协议区用深色底与 30-DID 协调 */
 export default function EscrowDetailSkeleton() {
   const { t } = useTranslation();
+  const cancelPolicyHeadingId = useId();
   const protocolZoneClass = "order-protocol-zone rounded-[var(--radius-xl)] bg-slate-950 text-slate-200 space-y-6 p-4 md:p-6";
   const panelClass = "rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md shadow-scifi-panel";
 
@@ -58,6 +62,7 @@ export default function EscrowDetailSkeleton() {
         </div>
       </div>
       <p className="text-meta text-ink-500 text-center" role="status">{t("common_loading")}</p>
+      <EscrowCancelPolicySection headingId={cancelPolicyHeadingId} />
     </main>
   );
 }

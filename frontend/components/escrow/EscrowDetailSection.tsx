@@ -1,18 +1,23 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
+import { Suspense, useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import LoadingText from "@/components/LoadingText";
+import EscrowCancelPolicySection from "@/components/escrow/EscrowDetail/EscrowCancelPolicySection";
 
 /** 动态包未就绪或 Suspense 回退：与 EscrowDetail 内 main 同 escrow_detailAria，便于烟雾命中地标 */
 function EscrowDetailRouteLoading() {
   const { t } = useTranslation();
+  const cancelPolicyHeadingId = useId();
   return (
-    <main className="flex min-h-screen items-center justify-center p-8" aria-label={t("escrow_detailAria")}>
+    <main className="flex min-h-screen flex-col items-center justify-center gap-6 p-8" aria-label={t("escrow_detailAria")}>
       <h1 className="sr-only">{t("escrow_detailAria")}</h1>
       <LoadingText />
+      <div className="w-full max-w-2xl">
+        <EscrowCancelPolicySection headingId={cancelPolicyHeadingId} />
+      </div>
     </main>
   );
 }

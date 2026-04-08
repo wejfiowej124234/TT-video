@@ -248,6 +248,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
             {t("escrow_backToOrders")}
           </Link>
         </div>
+        <EscrowCancelPolicySection headingId={cancelPolicyHeadingId} />
         <ProductCrossNav ariaLabelKey="escrow_detail_relatedNav_aria" showGuides />
       </main>
     );
