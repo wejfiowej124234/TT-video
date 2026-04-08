@@ -202,6 +202,22 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
     stashEscrowOrderPrefetchFromOrderAndItinerary(String(o.id), o, data.itinerary ?? null);
   }, [data.order, data.itinerary]);
 
+  /** B-070：终版确认成功后直达 `/escrow/:id` 并刷新；须在 early return 之前声明，满足 hooks 顺序 */
+  const onConfirmFinalPlanSuccess = useCallback(() => {
+    data.refreshOrder();
+    const path = `/escrow/${encodeURIComponent(escrowId)}`;
+    router.replace(path);
+    router.refresh();
+    if (typeof window !== "undefined") {
+      window.setTimeout(() => {
+        document.getElementById("escrow-after-final-plan")?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 200);
+    }
+  }, [data.refreshOrder, escrowId, router]);
+
   if (data.error) {
     if (typeof window !== "undefined") {
       console.error("EscrowDetail load error:", data.error);
@@ -243,21 +259,6 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
   const order = data.order as OrderRow;
   const itinerary = data.itinerary;
   const onConfirmedRefresh = () => data.refreshOrder();
-  /** B-070：终版确认成功后直达 `/escrow/:id` 并刷新，避免用户再找托管入口 */
-  const onConfirmFinalPlanSuccess = useCallback(() => {
-    data.refreshOrder();
-    const path = `/escrow/${encodeURIComponent(escrowId)}`;
-    router.replace(path);
-    router.refresh();
-    if (typeof window !== "undefined") {
-      window.setTimeout(() => {
-        document.getElementById("escrow-after-final-plan")?.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }, 200);
-    }
-  }, [data.refreshOrder, escrowId, router]);
   const cityOptions = CITIES_BY_COUNTRY[destinationZh] ?? [];
   const draftRowsAligned = showDraftDayEditor && draftDailyItinerary.length === rowsFromApi.length;
   const itineraryListDays: UnifiedDayRow[] = draftRowsAligned ? draftDailyItinerary : rowsFromApi;
