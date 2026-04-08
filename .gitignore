@@ -38,8 +38,6 @@ frontend/.lighthouse*
 **/__pycache__/
 *.py[cod]
 
-# 脚本运行产生的日志（留痕由 CI/人工执行后生成）
-scripts/*.log
-
-# 真实 evidence bundle（过门时产出，可能含内部信息；模板与 README 可提交）
-evidence/GO_[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/
+# 日志默认不入仓；evidence 下 Forge 专验日志白名单入仓（封口/里程碑，见 docs/solo-dev-rhythm.md）
+*.log
+!evidence/**/forge_*.log
