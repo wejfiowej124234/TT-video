@@ -28,6 +28,7 @@
 | **文档** | **`docs/`、`docs/spec/`** 为团队内部设计与实现的**权威说明（SSOT）**；变更大规格时按 [07-开发流程与顺序](docs/spec/07-开发流程与顺序.md) 与 [CONTRIBUTING.md](CONTRIBUTING.md) 约定同步。 |
 | **密钥** | **勿提交** `.env`、私钥、真实凭证；使用根目录与 `frontend/` 的 `.env.example` 自建本地环境。 |
 | **日常同步** | 开始工作前 `git pull`，完成后 `git push`；大功能用分支 + PR，由团队习惯决定。 |
+| **单人开发节奏** | [docs/solo-dev-rhythm.md](docs/solo-dev-rhythm.md)（封口、推送、CI、Evidence 约定） |
 
 ### 用本地最新树覆盖远程旧内容（须全员知情）
 
