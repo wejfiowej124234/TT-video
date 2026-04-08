@@ -22,7 +22,7 @@ jobs:
     steps:
       # 与 `.gitmodules` 中 `contracts/lib/forge-std` 对齐；不拉子模块时目录空/占位，`forge install` 易失败 → CI 红叉
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: recursive
 
