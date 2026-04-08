@@ -11,6 +11,15 @@
 
 ---
 
+## Baseline（回归参照）
+
+**Baseline:** Build **24139191178** is the stable baseline.  
+**Rule:** Any regression must be compared against this run.
+
+**作用**：`build.yml` 再次失败时，以本 Run 为 **回退参照点**，优先判断是 **新问题** 还是 **相对 baseline 的回归**；必要时与 **`2364f55`**（或当时 tip）对照做 bisect。
+
+---
+
 ## 1. 本轮关键修复点（按链条顺序 · 摘要）
 
 | # | 主题 | 要点 |
