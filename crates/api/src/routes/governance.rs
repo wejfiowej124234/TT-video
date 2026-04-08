@@ -1293,6 +1293,84 @@ mod tests {
         );
     }
 
+    async fn governance_rewards_response_parts(
+        state: ApiMetaState,
+    ) -> (axum::http::StatusCode, axum::http::HeaderMap, serde_json::Value) {
+        let res = get_governance_rewards(State(state)).await.into_response();
+        let status = res.status();
+        let headers = res.headers().clone();
+        let body = res.into_body().collect().await.unwrap().to_bytes();
+        let v: serde_json::Value = serde_json::from_slice(&body).expect("rewards json");
+        (status, headers, v)
+    }
+
+    #[tokio::test]
+    async fn governance_rewards_response_placeholder_branch() {
+        let (status, headers, v) = governance_rewards_response_parts(api_meta_state(None)).await;
+        assert_eq!(status, StatusCode::OK);
+        assert_eq!(
+            headers
+                .get("x-implementation-status")
+                .and_then(|h| h.to_str().ok()),
+            Some("placeholder")
+        );
+        assert_eq!(v.get("status").and_then(|x| x.as_str()), Some("ok"));
+        assert_eq!(
+            v.get("items").and_then(|x| x.as_array()).map(|a| a.len()),
+            Some(0)
+        );
+        assert_eq!(
+            v.get("data_source").and_then(|x| x.as_str()),
+            Some("placeholder")
+        );
+    }
+
+    /// 需 **`DATABASE_URL`**；**CI 无 DB 时提前返回**。
+    #[tokio::test]
+    async fn governance_rewards_response_database_branch_when_database_url_set() {
+        let url = match std::env::var("DATABASE_URL") {
+            Ok(u) if !u.trim().is_empty() => u,
+            _ => {
+                eprintln!("governance_rewards database branch: skip (DATABASE_URL unset)");
+                return;
+            }
+        };
+        let pool = match PgPoolOptions::new()
+            .max_connections(2)
+            .acquire_timeout(Duration::from_secs(5))
+            .connect(&url)
+            .await
+        {
+            Ok(p) => p,
+            Err(e) => {
+                eprintln!("governance_rewards database branch: skip (connect failed): {e}");
+                return;
+            }
+        };
+        let co = ChainOffState {
+            store: Arc::new(RwLock::new(ChainOffStore::default())),
+            config: ChainOffConfig::default(),
+            db_pool: Some(pool),
+        };
+        let (status, headers, v) =
+            governance_rewards_response_parts(api_meta_state(Some(co))).await;
+        assert_eq!(status, StatusCode::OK);
+        assert!(
+            headers.get("x-implementation-status").is_none(),
+            "database branch must not set placeholder header"
+        );
+        assert_eq!(v.get("status").and_then(|x| x.as_str()), Some("ok"));
+        assert_eq!(
+            v.get("data_source").and_then(|x| x.as_str()),
+            Some("database")
+        );
+        assert_eq!(
+            v.get("rule_version").and_then(|x| x.as_str()),
+            Some("governance_rewards_v1")
+        );
+        assert!(v.get("items").and_then(|x| x.as_array()).is_some());
+    }
+
     #[test]
     fn balance_consistency_hint_presence_only_patterns() {
         let native_ok = json!({"read_status": "ok", "method": "eth_getBalance(FeeRouter)"});

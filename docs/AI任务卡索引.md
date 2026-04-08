@@ -152,6 +152,7 @@
 | 123 | TT-EVIDENCE-B094-RESOLUTION-FIXTURES-SSOT-001 | escrow / 证据 | 已封口 · **EXTEND** | **B-103** / **B-094**：三终态 **fixture** **单文件 SSOT**（**tx hash** + 余额 + **`orders_projection`**） |
 | 124 | TT-B120-INDEXER-RECONCILE-GATE-CHECKS-TOTAL-ALIGN-001 | CI / 110 / Runbook | 已封口 | **B-120**：**`indexer-reconcile-gate.yml`** **`checks_total`** = **`check_anchor`** 数 **106**；**110**/**07** 表、**RUNBOOK §2.55** 同锚 |
 | 125 | TT-GOVERNANCE-POOL-CHAIN-ALIGNMENT-HINT-TRIPLE-001 | API / 治理 pool | 已封口 | **B-110**：**`GET …/governance/pool`** **`database` / `database_empty` / `placeholder`** 三枝 **`chain_alignment_hint`** 一致 **`is_chain_ssot=false`·`data_source=projection`·`chain_alignment_status=not_aligned`**；**`cargo test -p traveltrust-api`** **`governance_pool_*chain_alignment_hint*`**（**无 `DATABASE_URL` 时 DB 两枝跳过**） |
+| 126 | TT-GOVERNANCE-REWARDS-RESPONSE-CONTRACT-TEST-001 | API / 治理 rewards | 已封口 | **`GET …/governance/rewards`**：**`placeholder`**（**`items:[]`** + **`x-implementation-status`**) / **`database`**（**`rule_version=governance_rewards_v1`**）；**`cargo test -p traveltrust-api`** **`governance_rewards_response_`**；实现 **`governance.rs`** **`#[cfg(test)]`** |
 
 ### TT-GOVERNANCE-POOL-CHAIN-ALIGNMENT-HINT-TRIPLE-001
 
