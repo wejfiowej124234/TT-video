@@ -110,7 +110,13 @@ describe("EscrowRatePage", () => {
     });
     renderRate();
     await screen.findByRole("heading", { level: 1, name: "行程评分" });
-    expect(screen.getByText(/须于.*前完成评分确认/)).toBeTruthy();
+    await waitFor(() => {
+      const deadlineHint = screen
+        .getAllByRole("note")
+        .map((el) => el.textContent ?? "")
+        .find((text) => /须于[\s\S]*前完成评分确认/.test(text));
+      expect(deadlineHint).toBeTruthy();
+    });
   });
 
   it("shows text review block when order is completed (same ReviewBlock as escrow detail)", async () => {
