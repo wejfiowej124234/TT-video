@@ -15,8 +15,6 @@ jobs:
         run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
       - name: Self-test Ed25519 reconcile export verify script
         run: bash scripts/verify-reconcile-export-ed25519.sh --self-test
-      - name: Install ripgrep for anchor scans
-        run: sudo apt-get update && sudo apt-get install -y ripgrep
       - name: Verify indexer/reconcile route anchors
         run: |
           set -euo pipefail
@@ -29,7 +27,7 @@ jobs:
             local metric="$1"
             local pattern="$2"
             local target="$3"
-            if rg -n -F "$pattern" "$target" >> "$EVIDENCE_DIR/indexer_replay.log" 2>/dev/null; then
+            if grep -nF -- "$pattern" "$target" >> "$EVIDENCE_DIR/indexer_replay.log" 2>/dev/null; then
               echo "[PASS] ${metric} @ ${target}" >> "$EVIDENCE_DIR/indexer_replay.log"
               checks_passed=$((checks_passed + 1))
             else
