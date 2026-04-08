@@ -129,7 +129,9 @@ test.describe("争议执行裁决意向 mapIntentError（mock API + 注入钱包
     await expect(submit).toBeEnabled({ timeout: 30_000 });
     await submit.click();
 
-    await expect(page.getByRole("alert")).toContainText(
+    // Scope to page main: Next.js adds `#__next-route-announcer__` with role="alert" on `body`,
+    // which makes document-wide `getByRole('alert')` a strict-mode violation.
+    await expect(page.getByRole("main").getByRole("alert")).toContainText(
       /意向暂存失败|Could not persist intent|retry/i
     );
   });
@@ -149,7 +151,7 @@ test.describe("争议执行裁决意向 mapIntentError（mock API + 注入钱包
     await expect(submit).toBeEnabled({ timeout: 30_000 });
     await submit.click();
 
-    await expect(page.getByRole("alert")).toContainText(
+    await expect(page.getByRole("main").getByRole("alert")).toContainText(
       /身份核验仍在处理中|identity verification is still in progress/i
     );
   });
@@ -167,7 +169,7 @@ test.describe("争议执行裁决意向 mapIntentError（mock API + 注入钱包
     await expect(submit).toBeEnabled({ timeout: 30_000 });
     await submit.click();
 
-    await expect(page.getByRole("alert")).toContainText(
+    await expect(page.getByRole("main").getByRole("alert")).toContainText(
       /请求过于频繁|Too many requests|try again/i
     );
   });
