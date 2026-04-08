@@ -11,8 +11,9 @@ export default function GovernanceParamsLoading() {
       <div className="mt-2 h-4 w-full max-w-2xl bg-ink-100 rounded-[var(--radius-sm)] animate-pulse" aria-hidden />
       <div className="mt-2 h-3 w-48 bg-ink-100 rounded-[var(--radius-sm)] animate-pulse" aria-hidden />
 
-      <section className="mt-8 space-y-3" aria-hidden>
-        <div className="min-h-[44px] h-11 w-48 bg-ink-200 rounded-[var(--radius-sm)] animate-pulse" />
+      <section className="mt-8 space-y-3">
+        <h2 className="text-h4 font-medium text-ink-800">{t("governance_params_diff_section")}</h2>
+        <div className="min-h-[44px] h-11 w-48 max-w-full bg-ink-200 rounded-[var(--radius-sm)] animate-pulse" aria-hidden />
         <div className="space-y-2 pl-2">
           <div className="h-4 w-3/4 max-w-md bg-ink-100 rounded-[var(--radius-sm)] animate-pulse" />
           <div className="h-4 w-2/3 max-w-sm bg-ink-100 rounded-[var(--radius-sm)] animate-pulse" />

@@ -225,17 +225,32 @@ export default function GovernanceParamsPage() {
       )}
       {data?.note && <p className="mt-2 text-small text-warning dark:text-warning/90">{data.note}</p>}
 
-      {loading ? <div className="mt-6"><LoadingText /></div> : null}
+      {loading ? (
+        <section className="mt-8 space-y-3" aria-labelledby={diffSectionId}>
+          <h2 id={diffSectionId} className="text-h4 font-medium text-ink-800">
+            {t("governance_params_diff_section")}
+          </h2>
+          <LoadingText />
+        </section>
+      ) : null}
       {error ? (
-        <div className="mt-6">
+        <section className="mt-6 space-y-3" aria-labelledby={diffSectionId}>
+          <h2 id={diffSectionId} className="text-h4 font-medium text-ink-800">
+            {t("governance_params_diff_section")}
+          </h2>
           <ApiErrorAlert message={error} />
-        </div>
+        </section>
       ) : null}
 
       {!loading && !error && data && !protocolReferenceHasSubstance(data) && (
-        <p className="mt-6 text-body text-warning dark:text-warning/95" role="alert">
-          {t("governance_params_body_incomplete")}
-        </p>
+        <section className="mt-8 space-y-2" aria-labelledby={diffSectionId}>
+          <h2 id={diffSectionId} className="text-h4 font-medium text-ink-800">
+            {t("governance_params_diff_section")}
+          </h2>
+          <p className="text-body text-warning dark:text-warning/95" role="alert">
+            {t("governance_params_body_incomplete")}
+          </p>
+        </section>
       )}
 
       {!loading && !error && data && protocolReferenceHasSubstance(data) && (
