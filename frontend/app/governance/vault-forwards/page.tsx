@@ -413,6 +413,12 @@ export default function GovernanceVaultForwardsPage() {
           {t("governance_fee_routes_title")}
         </Link>
         <Link
+          href="/governance/distribution-accruals"
+          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+        >
+          {t("governance_distribution_accruals_title")}
+        </Link>
+        <Link
           href="/governance/proposals"
           className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
         >

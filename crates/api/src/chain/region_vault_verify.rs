@@ -4,13 +4,12 @@ use sha3::{Digest, Keccak256};
 use serde_json::{json, Value};
 
 use crate::chain::ChainConfig;
-use crate::chain_off::parse_region_vault_forwarded;
+use crate::chain_off::{parse_region_vault_forwarded, region_vault_forwarded_topic0_hex as topic0_region_vault_forwarded};
 use crate::db::RegionVaultForwardedEventRow;
 
-/// `keccak256("RegionVaultForwarded(address,address,uint256)")` topic0
+/// `keccak256(RegionVaultForwarded(address,address,uint256))` topic0（与 `chain_off::reconcile` SSOT 一致）。
 pub fn region_vault_forwarded_topic0_hex() -> String {
-    let h = Keccak256::digest(b"RegionVaultForwarded(address,address,uint256)");
-    format!("0x{}", hex::encode(h))
+    topic0_region_vault_forwarded()
 }
 
 fn norm_hex_addr(a: &str) -> String {
@@ -26,6 +25,33 @@ fn norm_u256_hex(h: &str) -> String {
         return h.to_string();
     }
     format!("0x{:0>64}", s)
+}
+
+/// 将 [`parse_region_vault_forwarded`] 解码结果与 DB 投影行逐字段比对（**无 RPC**；与 `verify_region_vault_row_vs_chain` 规则一致）。
+pub fn region_vault_parsed_matches_row(
+    token: &str,
+    to: &str,
+    amount_hex: &str,
+    row: &RegionVaultForwardedEventRow,
+) -> Result<(), (&'static str, String, String)> {
+    if norm_hex_addr(token) != norm_hex_addr(&row.token_address) {
+        return Err((
+            "token_address",
+            token.to_string(),
+            row.token_address.clone(),
+        ));
+    }
+    if norm_hex_addr(to) != norm_hex_addr(&row.to_address) {
+        return Err(("to_address", to.to_string(), row.to_address.clone()));
+    }
+    if norm_u256_hex(amount_hex) != norm_u256_hex(&row.amount_u256_hex) {
+        return Err((
+            "amount_u256_hex",
+            amount_hex.to_string(),
+            row.amount_u256_hex.clone(),
+        ));
+    }
+    Ok(())
 }
 
 fn norm_tx_hash(h: &str) -> String {
@@ -347,7 +373,9 @@ pub async fn verify_region_vault_row_vs_chain(
         });
     };
 
-    if norm_hex_addr(&token) != norm_hex_addr(&row.token_address) {
+    if let Err((field, chain_v, db_v)) =
+        region_vault_parsed_matches_row(&token, &to, &amount_hex, row)
+    {
         return serde_json::json!({
             "ok": false,
             "chain_id": row.chain_id,
@@ -355,35 +383,9 @@ pub async fn verify_region_vault_row_vs_chain(
             "log_index": row.log_index,
             "tx_hash": row.tx_hash,
             "error": "field_mismatch",
-            "field": "token_address",
-            "chain": token,
-            "db": row.token_address,
-        });
-    }
-    if norm_hex_addr(&to) != norm_hex_addr(&row.to_address) {
-        return serde_json::json!({
-            "ok": false,
-            "chain_id": row.chain_id,
-            "block_number": row.block_number,
-            "log_index": row.log_index,
-            "tx_hash": row.tx_hash,
-            "error": "field_mismatch",
-            "field": "to_address",
-            "chain": to,
-            "db": row.to_address,
-        });
-    }
-    if norm_u256_hex(&amount_hex) != norm_u256_hex(&row.amount_u256_hex) {
-        return serde_json::json!({
-            "ok": false,
-            "chain_id": row.chain_id,
-            "block_number": row.block_number,
-            "log_index": row.log_index,
-            "tx_hash": row.tx_hash,
-            "error": "field_mismatch",
-            "field": "amount_u256_hex",
-            "chain": amount_hex,
-            "db": row.amount_u256_hex,
+            "field": field,
+            "chain": chain_v,
+            "db": db_v,
         });
     }
 
@@ -549,6 +551,38 @@ mod tests {
         let b = u256_from_hex_32("0x02").unwrap();
         let d = u256_sub_nonneg(a, b).unwrap();
         assert_eq!(norm_u256_hex(&format!("0x{}", hex::encode(d))), norm_u256_hex("0x3"));
+    }
+
+    /// B-116-2-2：纯比对辅助（无 RPC）。
+    #[test]
+    fn region_vault_parsed_matches_row_ok_and_amount_mismatch() {
+        let row = RegionVaultForwardedEventRow {
+            id: Uuid::nil(),
+            chain_id: 1,
+            block_number: 1,
+            log_index: 0,
+            block_hash: "0x00".to_string(),
+            tx_hash: "0x01".to_string(),
+            vault_address: "0x11".to_string(),
+            token_address: "0x2222222222222222222222222222222222222222".to_string(),
+            to_address: "0x3333333333333333333333333333333333333333".to_string(),
+            amount_u256_hex: norm_u256_hex("0x7"),
+            inserted_at: Utc::now(),
+        };
+        assert!(region_vault_parsed_matches_row(
+            "0x2222222222222222222222222222222222222222",
+            "0x3333333333333333333333333333333333333333",
+            &norm_u256_hex("0x7"),
+            &row
+        )
+        .is_ok());
+        assert!(region_vault_parsed_matches_row(
+            "0x2222222222222222222222222222222222222222",
+            "0x3333333333333333333333333333333333333333",
+            &norm_u256_hex("0x8"),
+            &row
+        )
+        .is_err());
     }
 
     /// B-082 / **TT-B082-REGION-VAULT-FORWARDED-BALANCE-DELTA-UNIT-001**：复用生产 **`verify_region_vault_row_vs_chain`**（**`parse_region_vault_forwarded`** + 单交易块 **`balanceOf(block)` − `balanceOf(block−1)`**）。

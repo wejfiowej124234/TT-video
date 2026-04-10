@@ -1,0 +1,22 @@
+# B-145 · 单人开发「元数据门禁」之可选重复提醒（仅 pull_request → main；元数据缺省仍 ::warning:: + exit 0）
+# B-147 · 同脚本覆盖须登记的 contracts/**（豁免见 scripts/gates/check-pr-crates-needs-metadata.sh）
+# B-148 · 本 job 注入 CRATES_METADATA_GATE_REQUIRE_REFS=1：BASE/HEAD 不可解析时脚本 exit 2 → job 失败（本地默认不设）
+# 主路径：本地 push 前 bash scripts/check-pr-crates-needs-metadata.sh main HEAD（勿称 PR gate）
+# TT-B145 · TT-B147 · TT-B148-SSOT-METADATA-GATE-CI-REQUIRE-REFS-001
+name: SSOT crates metadata hint
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  crates-metadata-hint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: crates/** · contracts/** vs 母表/索引（REQUIRE_REFS；warning 或 ref-fail）
+        env:
+          CRATES_METADATA_GATE_REQUIRE_REFS: "1"
+        run: bash ./scripts/check-pr-crates-needs-metadata.sh "${{ github.event.pull_request.base.sha }}" "${{ github.event.pull_request.head.sha }}"

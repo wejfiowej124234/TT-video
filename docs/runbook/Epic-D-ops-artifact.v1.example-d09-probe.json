@@ -1,0 +1,44 @@
+{
+  "artifact_schema_id": "traveltrust.ops_artifact.v1",
+  "artifact_schema_version": "1.0.0",
+  "artifact_version": "v1",
+  "artifact_type": "probe",
+  "probe_exit_code": 0,
+  "issues_total": 0,
+  "clean": true,
+  "gate_workflow_checks_total_expected": 106,
+  "gate_workflow_rule_id": "indexer-reconcile-gate",
+  "gate_workflow_job": "indexer-reconcile",
+  "captured_at": "2026-04-09T12:34:56Z",
+  "epic_task_id": "Epic-D-D09",
+  "provenance": {
+    "script": "indexer-reconcile-probe.sh",
+    "script_semver": "1.1.0",
+    "host_git_commit": "abcdef0123456789",
+    "host_git_branch": "main",
+    "host_repo_dirty": false
+  },
+  "api_context": {
+    "api_base_url_redacted": "http://127.0.0.1:8080",
+    "chain_id": 1,
+    "internal_invoked": true,
+    "live_reconcile_query": true
+  },
+  "payload": {
+    "probe_exit_code": 0,
+    "issues_total": 0,
+    "projection_reconcile_clean": true,
+    "gate_workflow_checks_total_expected": 106,
+    "gate_workflow_rule_id": "indexer-reconcile-gate",
+    "gate_workflow_job": "indexer-reconcile",
+    "indexer_status": {
+      "status": "ok",
+      "live_orders_projection_reconcile": {
+        "ok": true,
+        "issues_total": 0,
+        "projection_reconcile_clean": true,
+        "chain_id": 1
+      }
+    }
+  }
+}

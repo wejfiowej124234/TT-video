@@ -80,6 +80,15 @@ export default {
   governance_vault_forwards_meta_title: "Governance · Region Vault forwards | TravelTrust",
   governance_vault_forwards_meta_description:
     "Regional vault forward and reconciliation entry; on-chain and API state wins.",
+  governance_distribution_accruals_meta_title: "Governance · Investor distribution accruals | TravelTrust",
+  governance_distribution_accruals_meta_description:
+    "Read-only accrual lines from GET …/governance/investor-distribution-accruals; not on-chain Claim SSOT and not fee-pool-aggregates Σ.",
+  governance_distribution_accruals_detail_meta_title: "Governance · Accrual detail | TravelTrust",
+  governance_distribution_accruals_detail_meta_description:
+    "Single distribution holder lines and snapshot_binding (read-only).",
+  governance_claim_meta_title: "Governance · Distribution claim (on-chain) | TravelTrust",
+  governance_claim_meta_description:
+    "InvestorDistributionClaim wallet flow: read-only precheck and claim/withdraw; no in-browser accrual registration or internal APIs.",
   governance_params_meta_title: "Governance · Params snapshot | TravelTrust",
   governance_params_meta_description: "Read-only on/off-chain governance params; 08-3/08-4 for sign-off.",
   governance_proposals_meta_title: "Governance · Proposals | TravelTrust",
@@ -276,6 +285,108 @@ export default {
   wallet_txErrorGeneric: "The on-chain request could not complete. Retry later or check network and balance.",
   staking_stake_rawUnits: "base units",
   admin_observability_title: "Observability",
+  /** Epic C-09：finance / indexer / observability 等页脚互链提示。 */
+  admin_audit_compare_links_heading:
+    "Optional read-only tools: governance cross-check and drift summary (no fixes or writes on those pages).",
+  /** Epic C-06：对拍 / 差异页共用边界（与顶栏、副标题口径一致）。 */
+  admin_audit_tools_read_only_scope:
+    "Read-only boundary: these pages only show multi-source comparison JSON and drift outputs. No root-cause analysis, repair actions, or writes—use governance and protocol change processes.",
+  admin_cross_check_title: "Cross-check",
+  admin_cross_check_subtitle:
+    "GET /api/v1/admin/cross-check — read-only multi-slot envelope (projection / chain_ssot / reference). Raw JSON only; no remediation or writes from this page.",
+  admin_cross_check_loading: "Loading…",
+  admin_cross_check_source_kind: "source_kind",
+  admin_cross_check_raw_body: "body (JSON)",
+  admin_cross_check_slot_fee_pool_projection: "fee_pool_projection",
+  admin_cross_check_slot_governance_pool_chain: "governance_pool_chain",
+  admin_cross_check_slot_protocol_reference: "protocol_reference",
+  admin_cross_check_slots_region_heading: "Three slots (read-only)",
+  admin_cross_check_slots_region_hint:
+    "Three independent slots (source_kind + body JSON). Display-only; not a remediation or write surface.",
+  admin_cross_check_slots_jump_nav_aria: "Jump to a slot",
+  admin_cross_check_slot_index: "Slot {n}",
+  admin_cross_check_status_label: "status",
+  admin_shell_nav_cross_check: "Cross-check · read-only",
+  admin_shell_nav_finance_reconciliation: "Finance · hub",
+  admin_shell_nav_drift_summary: "Drift · read-only",
+  admin_finance_reconciliation_title: "Finance · read-only hub",
+  admin_finance_reconciliation_disclaimer:
+    "Read-only navigation only. Do not use this page or linked summaries as the sole basis for reconciliation or settlement decisions; follow approved ops runbooks and authoritative sources.",
+  admin_finance_reconciliation_intro:
+    "Deep links to existing Admin pages. This route does not fetch APIs or aggregate data.",
+  admin_finance_reconciliation_nav_aria: "Finance read-only deep links",
+  admin_finance_reconciliation_link_finance: "Finance summary and CSV export — /admin/finance",
+  admin_finance_reconciliation_link_cross_check: "Cross-check — /admin/cross-check",
+  admin_finance_reconciliation_link_drift: "Drift summary — /admin/drift-summary",
+  admin_finance_reconciliation_link_indexer: "Indexer — /admin/indexer",
+  admin_finance_reconciliation_link_reconcile_reports: "Reconciliation reports — /admin/indexer/reconcile-reports",
+  admin_finance_reconciliation_home_desc:
+    "Read-only hub: links to finance summary, cross-check, drift, and indexer reconcile pages (Epic E).",
+  admin_finance_reconciliation_data_unavailable: "data_unavailable",
+  admin_finance_reconciliation_finance_summary_api_heading: "GET /api/v1/admin/finance/summary",
+  admin_finance_reconciliation_finance_summary_api_hint:
+    "Each row maps to a single JSON path. Missing or null values display data_unavailable. This page does not compute totals or combine fields.",
+  admin_finance_reconciliation_summary_loading: "Loading finance summary…",
+  admin_finance_reconciliation_meta_heading: "meta (scalar fields)",
+  admin_finance_reconciliation_summary_heading: "summary (scalar fields)",
+  admin_finance_reconciliation_projection_heading:
+    "Latest stored orders projection reconcile (meta.last_stored_orders_projection_reconcile)",
+  admin_finance_reconciliation_open_reconcile_reports: "Open reconciliation reports list",
+  admin_finance_reconciliation_open_reconcile_detail: "Open this report detail",
+  admin_finance_reconciliation_drift_section_title: "Projection drift (read-only)",
+  admin_finance_reconciliation_drift_section_hint:
+    "GET /api/v1/admin/cross-check and GET /api/v1/admin/drift-summary — display only; no writes or persist.",
+  admin_finance_reconciliation_drift_semantic_note_title: "Semantic labels (Epic E)",
+  admin_finance_reconciliation_drift_semantic_note_body:
+    "Projection-layer comparison is not chain truth. chain_alignment_status is derived from drift-summary.drift_detected when the API provides no homonymous field.",
+  admin_finance_reconciliation_drift_data_source_projection: "projection",
+  admin_finance_reconciliation_chain_alignment_aligned: "aligned",
+  admin_finance_reconciliation_chain_alignment_not_aligned: "not_aligned",
+  admin_finance_reconciliation_chain_alignment_unknown: "unknown",
+  admin_finance_reconciliation_chain_alignment_derived_hint: "Derived for hub display only.",
+  admin_finance_reconciliation_drift_loading: "Loading cross-check / drift-summary…",
+  admin_finance_reconciliation_drift_from_summary_heading: "Drift summary endpoint",
+  admin_finance_reconciliation_drift_from_cross_check_heading: "Cross-check envelope (drift_summary slice)",
+  admin_finance_reconciliation_open_drift_full: "Open full drift summary page",
+  admin_finance_reconciliation_open_cross_check_full: "Open full cross-check page",
+  admin_finance_reconciliation_epic_d_title: "Epic D evidence cross-check (manual)",
+  admin_finance_reconciliation_epic_d_intro:
+    "Compare `bundle_closure.included_tasks` in `epic_d_go_bundle_closure.json` with the read-only Admin APIs surfaced on this hub: GET /api/v1/admin/finance/summary, GET /api/v1/admin/cross-check, GET /api/v1/admin/drift-summary. This is a human checklist only.",
+  admin_finance_reconciliation_epic_d_evidence_path:
+    "evidence/GO_YYYYMMDD/epic_d_go_bundle_closure.json → JSON path bundle_closure.included_tasks",
+  admin_finance_reconciliation_epic_d_no_parse_hint:
+    "This page does not read evidence files or parse bundle_closure; use jq or an editor locally. No included_tasks inference runs in the browser.",
+  admin_finance_reconciliation_epic_d_link_ladder: "Epic D runbook (repo): Epic-D-indexer-ops-readonly-ladder.md",
+  admin_finance_reconciliation_epic_d_link_example: "Epic D example bundle: Epic-D-ops-artifact.v1.example-d10-go-bundle/",
+  admin_finance_reconciliation_epic_d_table_caption:
+    "Static mapping hints (not computed). See Epic D ladder for authoritative artifact rules.",
+  admin_finance_reconciliation_epic_d_col_hub: "Hub read-only surface (manual cross-check)",
+  admin_finance_reconciliation_epic_d_row_d02:
+    "Relate to snapshot_public artifacts and this hub’s GET /api/v1/admin/finance/summary (meta / projection reconcile digest).",
+  admin_finance_reconciliation_epic_d_row_d03:
+    "Relate to indexer_status-style envelopes and GET /api/v1/admin/cross-check (e.g. fee_pool_projection slot); use Indexer / reconcile deep links from this hub.",
+  admin_finance_reconciliation_epic_d_row_d04:
+    "Same family as D-03 (indexer_status); cross-check + drift-summary on this hub are projection-layer reads only.",
+  admin_finance_reconciliation_epic_d_row_d05:
+    "Relate to reconcile artifacts vs GET /api/v1/admin/finance/summary meta and the reconcile report links on this hub.",
+  admin_finance_reconciliation_epic_d_row_d06:
+    "Dry-run chain envelopes are not loaded here; compare local Epic D artifacts under evidence/ with Runbook D-06.",
+  admin_finance_reconciliation_epic_d_row_d07:
+    "Dry-run event_log envelopes are not loaded here; compare local Epic D artifacts with Runbook D-07.",
+  admin_finance_reconciliation_epic_d_row_d08:
+    "Dry-run correction_executor envelopes are not loaded here; compare local Epic D artifacts with Runbook D-08.",
+  admin_finance_reconciliation_epic_d_row_d09:
+    "Probe envelopes are not loaded here; compare local Epic D artifacts with Runbook D-09.",
+  admin_finance_reconciliation_epic_d_row_d10:
+    "The bundle closure file itself; this hub only lists APIs and deep links—no bundle integrity gate runs in the UI.",
+  admin_drift_summary_title: "Drift summary",
+  admin_drift_summary_subtitle:
+    "GET /api/v1/admin/drift-summary — read-only drift_detected / delta from the same comparison pipeline. No remediation or writes from this page.",
+  admin_drift_summary_loading: "Loading…",
+  admin_drift_summary_drift_detected_label: "drift_detected",
+  admin_drift_summary_drift_detected_not_provided: "(not provided)",
+  admin_drift_summary_delta_label: "delta (JSON)",
+  admin_drift_summary_status_label: "status",
   admin_observability_subtitle:
     "GET /api/v1/admin/observability/overview — chain, indexer, rate limits. Quick links: audit logs, operations catalog, reconcile reports, incidents.",
   admin_observability_loading: "Loading overview…",
@@ -521,6 +632,10 @@ export default {
     "RegionVault `RegionVaultForwarded` projection via `/api/v1/admin/region-vault/forwarded-events` (PostgreSQL).",
   admin_home_desc_observability:
     "Chain ID, indexer lag, rate limits via `/api/v1/admin/observability/overview`.",
+  admin_home_desc_cross_check:
+    "Read-only multi-source comparison (`GET /api/v1/admin/cross-check`). JSON display only; no remediation or writes from this tool.",
+  admin_home_desc_drift_summary:
+    "Read-only drift summary (`GET /api/v1/admin/drift-summary`). drift_detected / delta only; no remediation or writes.",
   admin_home_desc_audit_ops:
     "120: `GET …/admin/audit/operations` (static action catalog until export pipeline).",
   admin_home_desc_alert_incidents:
@@ -3477,6 +3592,21 @@ export default {
     "The request succeeded, but there are no proposal rows yet. This is not the same as a network or server error.",
   governance_proposals_list_heading: "Proposals",
   governance_proposals_item_untitled: "(Untitled proposal)",
+  governance_proposals_status_loading: "Loading execution status…",
+  governance_proposals_status_error: "Status unavailable",
+  governance_proposals_status_projection_note: "projection",
+  governance_proposals_status_chain_ssot_aria: "Status from on-chain eth_call state(uint256)",
+  governance_proposals_status_projection_aria: "Status from indexer projection (not a fresh on-chain read)",
+  governance_proposals_exec_ssot_badge: "On-chain SSOT",
+  governance_exec_shared_readonly_caption: "Read-only execution status (not a wallet write).",
+  governance_proposal_exec_status_pending: "Pending",
+  governance_proposal_exec_status_active: "Active",
+  governance_proposal_exec_status_canceled: "Canceled",
+  governance_proposal_exec_status_defeated: "Defeated",
+  governance_proposal_exec_status_succeeded: "Succeeded",
+  governance_proposal_exec_status_queued: "Queued",
+  governance_proposal_exec_status_executed: "Executed",
+  governance_proposal_exec_status_unknown: "Unknown state",
   governance_proposal_detail_title: "Proposal detail",
   governance_proposal_detail_loadFailed: "Could not load proposal detail",
   governance_proposal_detail_back: "Back to proposals",
@@ -3511,6 +3641,59 @@ export default {
   governance_proposal_calldata_yes: "Yes calldata",
   governance_proposal_calldata_no: "No calldata",
   governance_proposal_calldata_abstain: "Abstain calldata",
+  governance_pre_exec_hint_aria: "Read-only notice before governance execution (Timelock and on-chain read semantics)",
+  governance_pre_exec_section_heading: "Pre-execution notice (read-only)",
+  governance_pre_exec_timelock_lead: "This action executes after Timelock",
+  governance_pre_exec_timelock_detail:
+    "After the proposal passes on-chain voting, the Governor queues the operation in Timelock; a privileged party executes after the delay. This page explains the path only—it does not sign or pre-fill executable transactions.",
+  governance_pre_exec_phases_heading: "Typical on-chain execution stages (Governor + Timelock)",
+  governance_pre_exec_phases_detail:
+    "Proposals usually move: pending / created → active voting → succeeded or defeated. After **succeeded**, someone must **queue** the timelock operation on-chain; projections may then show an **operation_id**. The Timelock **delay** must elapse before **execute** can run. States like **queued** or **canceled** follow Governor/Timelock rules on your network. This UI lists stages for orientation only—it does not estimate block times, queue, or execute for you.",
+  governance_pre_exec_data_source_heading: "How on-chain primary reads are labeled (04)",
+  governance_pre_exec_data_source_explain:
+    "When the gate is on and RPC succeeds, governance pool HTTP responses mark root-level on-chain primary reads with **data_source: chain_read** (alongside **is_chain_ssot**, see 04 §3.4). This is orthogonal to **castVote** calldata and proposal **eth_call** info shown here—do not mix with projection totals such as **fee-pool-aggregates** as the same truth.",
+  governance_pre_exec_simulation_explain:
+    "If your wallet offers simulate / eth_call preview, that is read-only rehearsal and does not broadcast a transaction.",
+  governance_pre_exec_no_autotx: "This app does not generate, substitute, or auto-submit executable on-chain transactions here.",
+  governance_exec_readiness_section_heading: "Execution conditions (read-only)",
+  governance_exec_readiness_detail_off_chain:
+    "This proposal uses the off-chain signal vote path only. Timelock-style execution is not driven from this page; use wallet and contract flows when an on-chain path applies.",
+  governance_exec_shared_queued_explanation:
+    "Reported state is **Queued**: the operation is in the Timelock queue, but that **does not** prove the delay has ended or that **execute** would succeed if sent now. This page’s governance detail payload does **not** include Timelock ETA, executable block height, or other timing SSOT. After the delay elapses on-chain, a privileged address may **execute** from a wallet—this app does not queue or execute here.",
+  governance_exec_shared_list_queued_hint:
+    "**Queued** here matches the detail page read-out: not proof the Timelock delay ended or that **execute** would succeed; this list has no ETA or block-height SSOT.",
+  governance_exec_shared_limits_skeleton:
+    "This page does **not** provide Timelock ETA, the block height at which **execute** becomes valid, or a simulation of whether **execute** would succeed now. The buttons below are **skeleton entry points** for orientation; they do not build calldata, connect a wallet, or broadcast.",
+  governance_exec_list_entry_bridge:
+    "Each row’s execution pill and **SSOT / projection** chip come from **`GET …/proposal-status`** (read-only). Opening a proposal continues the **same** story: detail **`GET …/proposals/:id`** uses matching **source semantics** and **read-only limits** (no wallet writes, **no** on-page Timelock ETA)—list and detail are written as one journey.",
+  governance_exec_detail_continuation_bridge:
+    "If you came from the proposals list, execution sections here follow the **same** disclosure: **chain SSOT** vs **projection** wording, **Queued** limits, and skeleton actions only. List vs detail responses may refresh at different times, but the **rules and copy family** stay aligned.",
+  governance_exec_proposal_link_continue_title:
+    "Open proposal detail — same read-only execution disclosure as the list",
+  governance_exec_readiness_detail_before_timelock:
+    "Not yet at Timelock execute readiness as reported: state is **Pending**, **Active**, or **Succeeded** (still need on-chain **queue** plus **delay** before **execute**). This page shows status only.",
+  governance_exec_readiness_detail_executed:
+    "Reported state is **Executed**: the payload has already been run through Timelock. No further execution is implied by this readout.",
+  governance_exec_readiness_detail_not_executable:
+    "Reported state is terminal (**Defeated**, **Canceled**, **Expired**, etc.): Timelock execution does not apply.",
+  governance_exec_readiness_detail_unknown:
+    "Execution readiness is **unknown** from **state_live** / **projection_state** (missing or unrecognized). This page does not infer whether an action can be executed.",
+  governance_exec_readiness_vote_buttons_readonly_lead: "Vote controls (read-only, Governor mode):",
+  governance_exec_actions_section_heading: "Timelock actions (UI placeholder)",
+  governance_exec_actions_section_lead:
+    "Queue and execute happen from your wallet on-chain. This area maps controls to reported Governor state only—no transaction is sent from this app.",
+  governance_exec_actions_limits_aria: "Timelock execution limits and risks on this page",
+  governance_exec_actions_limits_heading: "Limits & risk (read-only)",
+  governance_exec_action_queue_label: "Queue on Timelock",
+  governance_exec_action_execute_label: "Execute after delay",
+  governance_exec_action_queue_disabled_hint: "Enabled when on-chain state is Succeeded (you still queue from your wallet).",
+  governance_exec_action_queue_enabled_hint: "Placeholder: use your wallet on-chain; this click does not broadcast.",
+  governance_exec_action_execute_disabled_hint:
+    "Shown when state is **Queued** in the readout; delay may still apply on-chain. This page shows no ETA or block height.",
+  governance_exec_action_execute_enabled_hint:
+    "Placeholder: **Queued** is a status label only—not proof **execute** will succeed or that timing is satisfied. No ETA on this page; use your wallet; this click does not broadcast.",
+  governance_exec_action_placeholder_ack:
+    "Noted: placeholder only—no Timelock timing SSOT here; this app does not submit Timelock transactions.",
   governance_b090_onchain_notice_aria: "On-chain governance and treasury proposal path",
   governance_b090_onchain_list_title: "Indexed on-chain proposals (Governor)",
   governance_b090_onchain_detail_title: "On-chain proposal and treasury execution path",
@@ -3587,6 +3770,18 @@ export default {
   governance_params_diff_pending_loading: "Loading pending package…",
   governance_params_diff_source_hint:
     "API pending_package_source: {{source}}. Set PROTOCOL_REFERENCE_PENDING_OVERLAY (JSON merge) to simulate a pending package.",
+  governance_params_data_scope_title: "Data sources (read-only · doc 84 mirror)",
+  governance_params_data_scope_bullet_api:
+    "Tables and percentages here come only from GET /api/v1/governance/protocol-reference and GET /api/v1/governance/protocol-reference/pending (headers X-Implementation-Status: doc-reference / doc-reference-pending). They mirror spec 84 — not on-chain contract reads.",
+  governance_params_data_scope_bullet_not_sigma:
+    "This is not GET /api/v1/governance/fee-pool-aggregates projection Σ. Do not treat indexed aggregates as the same truth or SSOT.",
+  governance_params_data_scope_bullet_not_pool:
+    "This is not GET /api/v1/governance/pool chain SSOT or balances. Do not mix with pool root chain reads as one truth.",
+  governance_params_checksums_section: "Open fee-point checksums (doc mirror only)",
+  governance_params_checksum_key_phase1_open_fee_points_sum: "Phase-1 open fee points sum",
+  governance_params_checksum_key_national_pool_cap_fee_points_sum: "National pool cap (fee points) sum",
+  governance_params_checksum_key_country_bucket_percent: "Country bucket share (layer 1)",
+  governance_params_checksum_key_phase1_open_over_country_bucket: "Phase-1 open vs country-bucket (narrative check)",
 
   governance_fee_routes_title: "Fee routes (on-chain index)",
   governance_fee_routes_desc:
@@ -3629,6 +3824,75 @@ export default {
   governance_vault_forwards_wiring_lead:
     "Per 14 §1.1.1 / 110: the indexer fetches and projects these logs only when REGION_VAULT_ADDRESS is set; GET /meta exposes region_vault_address for operator checks.",
   governance_vault_forwards_wiring_api: "GET /meta · chain.contracts.region_vault_address",
+
+  governance_distribution_accruals_title: "Accruals / distribution narrative (read-only)",
+  governance_distribution_accruals_desc:
+    "Data is only from GET /api/v1/governance/investor-distribution-accruals (04 §3.4). This page does not call any /internal/ write routes. Rows are off-chain projections with B-088 snapshot-binding metadata; not on-chain InvestorDistributionClaim SSOT and not the fee-pool-aggregates Σ narrative.",
+  governance_distribution_accruals_source_database: "Data source: database projection",
+  governance_distribution_accruals_source_placeholder: "Data source: placeholder (no DATABASE_URL or API degraded)",
+  governance_distribution_accruals_placeholder_note: "Root `note` and `X-Implementation-Status` may explain placeholder mode.",
+  governance_distribution_accruals_empty: "No accrual distributions yet. After rows exist in `investor_distribution_accruals`, recent batches appear here.",
+  governance_distribution_accruals_col_id: "distribution_id",
+  governance_distribution_accruals_col_chain: "chain_id",
+  governance_distribution_accruals_col_token: "token",
+  governance_distribution_accruals_col_snapshot: "snapshot_block",
+  governance_distribution_accruals_col_created: "created_at",
+  governance_distribution_accruals_col_total_cash: "total_cash (u256 hex)",
+  governance_distribution_accruals_view_detail: "Detail",
+  governance_distribution_accruals_detail_title: "Accrual distribution detail",
+  governance_distribution_accruals_back_list: "Back to list",
+  governance_distribution_accruals_invalid_id: "Invalid distribution_id (must be a UUID).",
+  governance_distribution_accruals_not_found: "Distribution not found or API error.",
+  governance_distribution_accruals_lines_title: "Holder lines",
+  governance_distribution_accruals_col_holder: "holder",
+  governance_distribution_accruals_col_balance_snap: "balance_snapshot",
+  governance_distribution_accruals_col_accrual: "accrual",
+  governance_distribution_accruals_snapshot_binding: "snapshot_binding (B-088, read-only JSON)",
+
+  governance_claim_title: "Accrual claim (on-chain)",
+  governance_claim_desc:
+    "Connect a wallet and read/write the deployed InvestorDistributionClaim only. This page does not call registerAccrual in the browser or any backend internal write routes; it is decoupled from governance accrual APIs—on-chain SSOT is the contract.",
+  governance_claim_env_hint: "Contract address from NEXT_PUBLIC_INVESTOR_DISTRIBUTION_CLAIM_ADDRESS (must match your deployment).",
+  governance_claim_contract_unconfigured:
+    "Claim contract address is not configured. Set NEXT_PUBLIC_INVESTOR_DISTRIBUTION_CLAIM_ADDRESS in the build environment.",
+  governance_claim_wallet_section: "Wallet and network",
+  governance_claim_wrong_chain: "Wallet network does not match NEXT_PUBLIC_CHAIN_ID; please switch chain.",
+  governance_claim_dist_label: "distributionId (UUID or 0x + 64 hex chars)",
+  governance_claim_dist_placeholder: "e.g. 550e8400-e29b-41d4-a716-446655440000",
+  governance_claim_dist_invalid: "Not a valid UUID or 32-byte hex string.",
+  governance_claim_resolved_bytes32: "Resolved bytes32",
+  governance_claim_token: "distributionToken (on-chain)",
+  governance_claim_token_unknown: "0x0 — distribution not registered on-chain (tx would revert UnknownDistribution)",
+  governance_claim_claimable: "Claimable for connected address (raw units)",
+  governance_claim_claimed_label: "Claimed",
+  governance_claim_entitled_label: "Entitled",
+  governance_claim_max_label: "maxAmount for this claim (uint256 string; leave empty to use full claimable)",
+  governance_claim_max_placeholder: "Empty = use full claimable",
+  governance_claim_max_hint: "Must be a positive integer in token smallest units; contract pays min(remaining, maxAmount).",
+  governance_claim_btn_claim: "Submit claim",
+  governance_claim_btn_withdraw: "Submit withdrawDividend",
+  governance_claim_precheck_section: "Read-only precheck (simulate claim)",
+  governance_claim_precheck_ok: "Precheck OK: simulate succeeded for current args (wallet result still authoritative).",
+  governance_claim_precheck_need_amount:
+    "When connected and token is resolved, set or leave maxAmount empty (empty uses claimable) to run automatic simulate.",
+  governance_claim_expected_fail_section: "Expected failure paths (explained)",
+  governance_claim_expected_fail_unknown:
+    "If the distribution is not registered on-chain: distributionToken is zero and the tx reverts UnknownDistribution.",
+  governance_claim_expected_fail_unknown_active: "Current read: distribution is not registered (zero token address).",
+  governance_claim_expected_fail_nothing:
+    "If nothing remains to claim: the tx reverts NothingToClaim (fully claimed or nothing accrued for your address).",
+  governance_claim_expected_fail_nothing_active: "Current read: claimable is 0; submitting the same would revert NothingToClaim.",
+  governance_claim_connect_for_reads: "Connect a wallet to load claimable / entitled / claimed.",
+  governance_claim_token_units_hint: "human-readable hint via token decimals",
+  governance_claim_tx_pending: "Submitting transaction…",
+  governance_claim_tx_success: "Transaction confirmed.",
+  governance_claim_tx_hash: "tx hash",
+  governance_claim_err_nothing: "On-chain revert: NothingToClaim.",
+  governance_claim_err_unknown: "On-chain revert: UnknownDistribution.",
+  governance_claim_err_transfer: "On-chain revert: TransferFailed (ERC20 transfer).",
+  governance_claim_err_token_mismatch: "On-chain revert: TokenMismatch.",
+  governance_claim_err_only_owner: "On-chain revert: OnlyOwner (not expected on user claim).",
+  governance_claim_err_generic: "Transaction failed. Check network, balances, and contract state. Never paste private keys.",
 
   itin_title: "Generate itinerary",
   itin_desc: "Pick a product-phase country and city, then dates, days, preferences and budget to generate a travel plan and Draft order.",

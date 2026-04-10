@@ -12,118 +12,19 @@ import GovernanceTargetNotice from "@/components/governance/GovernanceTargetNoti
 import { GovernanceOpsAdminLinks } from "@/components/governance/GovernanceOpsAdminLinks";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
+import {
+  buildFeeMetricDiffRows,
+  protocolReferenceHasSubstance,
+  PROTOCOL_REF_CHECKSUM_DISPLAY_KEYS,
+  type ProtocolRef84Mirror,
+} from "@/lib/governanceParams84Readonly";
 
-type FeeLayer = { country_bucket: number; global_pool: number };
-type GlobalSplit = { ttg_stakers: number; reserve: number; operations: number };
-type CountryRow = {
-  name_zh: string;
-  tier: string;
-  national_pool_cap_fee_points: number;
-  phase1_open_fee_points: number;
-  fundraise_target_cny_wan: number;
-  fundraise_cap_cny_wan: number;
-  notes?: string;
+const CHECKSUM_I18N_KEY: Record<(typeof PROTOCOL_REF_CHECKSUM_DISPLAY_KEYS)[number], string> = {
+  phase1_open_fee_points_sum: "governance_params_checksum_key_phase1_open_fee_points_sum",
+  national_pool_cap_fee_points_sum: "governance_params_checksum_key_national_pool_cap_fee_points_sum",
+  country_bucket_percent: "governance_params_checksum_key_country_bucket_percent",
+  phase1_open_over_country_bucket: "governance_params_checksum_key_phase1_open_over_country_bucket",
 };
-type ProtocolRef = {
-  status: string;
-  doc_ref?: string;
-  doc_version?: string;
-  note?: string;
-  /** GET …/protocol-reference/pending 根级：mirror | env_overlay | overlay_parse_error */
-  pending_package_source?: string;
-  fee_router?: {
-    layer1_percent_of_allocatable_platform_fee?: FeeLayer;
-    global_pool_split_percent?: GlobalSplit;
-    orthogonality_ref?: string;
-  };
-  phase1_countries?: CountryRow[];
-  checksums?: Record<string, string | number>;
-};
-
-type FeeMetricRow = { id: string; labelKey: string; cur: number; pen: number };
-
-function buildFeeMetricDiffRows(current: ProtocolRef, pending: ProtocolRef): FeeMetricRow[] | null {
-  const cL1 = current.fee_router?.layer1_percent_of_allocatable_platform_fee;
-  const pL1 = pending.fee_router?.layer1_percent_of_allocatable_platform_fee;
-  const cG = current.fee_router?.global_pool_split_percent;
-  const pG = pending.fee_router?.global_pool_split_percent;
-  if (
-    !cL1 ||
-    !pL1 ||
-    !cG ||
-    !pG ||
-    typeof cL1.country_bucket !== "number" ||
-    typeof pL1.country_bucket !== "number" ||
-    typeof cL1.global_pool !== "number" ||
-    typeof pL1.global_pool !== "number" ||
-    typeof cG.ttg_stakers !== "number" ||
-    typeof pG.ttg_stakers !== "number" ||
-    typeof cG.reserve !== "number" ||
-    typeof pG.reserve !== "number" ||
-    typeof cG.operations !== "number" ||
-    typeof pG.operations !== "number"
-  ) {
-    return null;
-  }
-  return [
-    {
-      id: "l1_country",
-      labelKey: "governance_params_layer1_country",
-      cur: cL1.country_bucket,
-      pen: pL1.country_bucket,
-    },
-    {
-      id: "l1_global",
-      labelKey: "governance_params_layer1_global",
-      cur: cL1.global_pool,
-      pen: pL1.global_pool,
-    },
-    {
-      id: "gp_stakers",
-      labelKey: "governance_params_stakers",
-      cur: cG.ttg_stakers,
-      pen: pG.ttg_stakers,
-    },
-    {
-      id: "gp_reserve",
-      labelKey: "governance_params_reserve",
-      cur: cG.reserve,
-      pen: pG.reserve,
-    },
-    {
-      id: "gp_ops",
-      labelKey: "governance_params_operations",
-      cur: cG.operations,
-      pen: pG.operations,
-    },
-  ];
-}
-
-/**
- * 与 `governance_doc_reference::protocol_reference_json()` 成功体对齐：须同时具备
- * layer1 拆分、Global Pool 拆分、非空 phase1_countries；避免 HTTP 200 但瘦响应被当成「已完整加载」。
- */
-function protocolReferenceHasSubstance(d: ProtocolRef): boolean {
-  const l1 = d.fee_router?.layer1_percent_of_allocatable_platform_fee;
-  const gp = d.fee_router?.global_pool_split_percent;
-  const hasLayer1 =
-    l1 != null &&
-    typeof l1.country_bucket === "number" &&
-    Number.isFinite(l1.country_bucket) &&
-    typeof l1.global_pool === "number" &&
-    Number.isFinite(l1.global_pool);
-  const hasGlobalSplit =
-    gp != null &&
-    typeof gp.ttg_stakers === "number" &&
-    Number.isFinite(gp.ttg_stakers) &&
-    typeof gp.reserve === "number" &&
-    Number.isFinite(gp.reserve) &&
-    typeof gp.operations === "number" &&
-    Number.isFinite(gp.operations);
-  const rows = d.phase1_countries;
-  const hasCountries = Array.isArray(rows) && rows.length > 0;
-  return hasLayer1 && hasGlobalSplit && hasCountries;
-}
 
 /** 13-1 表 1：/governance/params；数据源自 84 文档镜像 API（非链上真值）。 */
 export default function GovernanceParamsPage() {
@@ -133,9 +34,9 @@ export default function GovernanceParamsPage() {
   const feeSplitSectionId = useId();
   const countriesSectionId = useId();
   const dash = t("ui_em_dash");
-  const [data, setData] = useState<ProtocolRef | null>(null);
+  const [data, setData] = useState<ProtocolRef84Mirror | null>(null);
   /** `undefined` = 加载中；`null` = 失败；否则为成功体 */
-  const [pending, setPending] = useState<ProtocolRef | null | undefined>(undefined);
+  const [pending, setPending] = useState<ProtocolRef84Mirror | null | undefined>(undefined);
   const [pendingErr, setPendingErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -151,7 +52,7 @@ export default function GovernanceParamsPage() {
 
     void (async () => {
       try {
-        const cur = await fetchJsonWithApiStatusLog<ProtocolRef>(
+        const cur = await fetchJsonWithApiStatusLog<ProtocolRef84Mirror>(
           "governanceProtocolReference",
           apiUrl(routes.governanceProtocolReference),
           { headers },
@@ -174,7 +75,7 @@ export default function GovernanceParamsPage() {
 
     void (async () => {
       try {
-        const pen = await fetchJsonWithApiStatusLog<ProtocolRef>(
+        const pen = await fetchJsonWithApiStatusLog<ProtocolRef84Mirror>(
           "governanceProtocolReferencePending",
           apiUrl(routes.governanceProtocolReferencePending),
           { headers },
@@ -217,6 +118,19 @@ export default function GovernanceParamsPage() {
         {t("governance_params_title")}
       </h1>
       <p className="mt-2 text-body text-ink-600">{t("governance_params_doc_notice")}</p>
+      <div
+        role="note"
+        data-testid="governance-params-p553-data-scope"
+        aria-label={t("governance_params_data_scope_title")}
+        className="mt-4 rounded-[var(--radius-md)] border border-ink-200 bg-ink-50/80 p-4 text-small text-ink-800 dark:border-ink-700 dark:bg-ink-900/40 dark:text-ink-100"
+      >
+        <p className="font-medium text-ink-900 dark:text-ink-50">{t("governance_params_data_scope_title")}</p>
+        <ul className="mt-2 list-disc space-y-1.5 pl-5">
+          <li>{t("governance_params_data_scope_bullet_api")}</li>
+          <li>{t("governance_params_data_scope_bullet_not_sigma")}</li>
+          <li>{t("governance_params_data_scope_bullet_not_pool")}</li>
+        </ul>
+      </div>
       <GovernanceTargetNotice className="mt-3" />
       {data?.doc_ref && (
         <p className="mt-1 font-mono text-meta text-ink-500">
@@ -259,6 +173,7 @@ export default function GovernanceParamsPage() {
             <h2 id={diffSectionId} className="text-h4 font-medium text-ink-800">
               {t("governance_params_diff_section")}
             </h2>
+            <p className="mt-1 text-meta text-ink-500">{t("governance_params_data_scope_title")}</p>
             {pendingErr ? (
               <div className="mt-3">
                 <ApiErrorAlert message={pendingErr} />
@@ -319,6 +234,7 @@ export default function GovernanceParamsPage() {
             <h2 id={feeSplitSectionId} className="text-h4 font-medium text-ink-800">
               {t("governance_params_fee_split")}
             </h2>
+            <p className="mt-1 text-meta text-ink-500">{t("governance_params_data_scope_title")}</p>
             {l1 && (
               <ul className="mt-2 list-disc pl-5 text-body text-ink-700">
                 <li>
@@ -345,6 +261,7 @@ export default function GovernanceParamsPage() {
             <h2 id={countriesSectionId} className="text-h4 font-medium text-ink-800">
               {t("governance_params_phase1_countries")}
             </h2>
+            <p className="mt-1 text-meta text-ink-500">{t("governance_params_data_scope_title")}</p>
             <table className="mt-3 w-full min-w-[640px] border-collapse text-left text-small">
               <thead>
                 <tr className="border-b border-ink-200 text-ink-600">
@@ -372,9 +289,26 @@ export default function GovernanceParamsPage() {
               </tbody>
             </table>
             {data.checksums && (
-              <p className="mt-3 text-meta text-ink-500">
-                {JSON.stringify(data.checksums)}
-              </p>
+              <div className="mt-4 border-t border-ink-100 pt-3 dark:border-ink-800">
+                <h3 className="text-small font-medium text-ink-800 dark:text-ink-100">
+                  {t("governance_params_checksums_section")}
+                </h3>
+                <dl className="mt-2 space-y-2 text-small">
+                  {PROTOCOL_REF_CHECKSUM_DISPLAY_KEYS.map((key) => {
+                    const raw = data.checksums![key];
+                    if (raw === undefined) return null;
+                    return (
+                      <div
+                        key={key}
+                        className="grid gap-1 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-baseline"
+                      >
+                        <dt className="text-ink-600 dark:text-ink-400">{t(CHECKSUM_I18N_KEY[key])}</dt>
+                        <dd className="font-mono text-ink-900 dark:text-ink-100">{String(raw)}</dd>
+                      </div>
+                    );
+                  })}
+                </dl>
+              </div>
             )}
           </section>
         </>
@@ -404,6 +338,12 @@ export default function GovernanceParamsPage() {
           className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
         >
           {t("governance_vault_forwards_title")}
+        </Link>
+        <Link
+          href="/governance/distribution-accruals"
+          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+        >
+          {t("governance_distribution_accruals_title")}
         </Link>
         <Link
           href="/traveltrust#fee-router"

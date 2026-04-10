@@ -1,0 +1,65 @@
+{
+  "artifact_schema_id": "traveltrust.ops_artifact.v1",
+  "artifact_schema_version": "1.0.0",
+  "artifact_version": "v1",
+  "artifact_type": "indexer_status",
+  "captured_at": "2026-04-09T00:00:00Z",
+  "epic_task_id": "Epic-D-D03",
+  "status": "ok",
+  "checkpoint": {
+    "block_number": 0,
+    "log_index": 0
+  },
+  "lag": {
+    "lag_blocks": null,
+    "lag_max_blocks": 12
+  },
+  "provenance": {
+    "script": "internal-indexer-ops.sh",
+    "script_semver": "1.2.0",
+    "host_git_commit": null,
+    "host_git_branch": null,
+    "host_repo_dirty": null
+  },
+  "api_context": {
+    "api_base_url_redacted": "http://127.0.0.1:8080",
+    "chain_id": null,
+    "internal_invoked": true,
+    "live_reconcile_query": false
+  },
+  "indexer_surface": {
+    "checkpoint_block_number": 0,
+    "checkpoint_log_index": 0,
+    "lag_blocks": null,
+    "lag_max_blocks": 12,
+    "last_block": 0,
+    "last_block_hash": null
+  },
+  "live_reconcile_surface": null,
+  "payload": {
+    "status": "ok",
+    "meta": {
+      "build": {}
+    },
+    "indexer": {
+      "last_block": 0,
+      "last_log_index": 0,
+      "last_block_hash": null,
+      "events_cached": 0
+    },
+    "state": {
+      "finality_n": 1,
+      "checkpoint": {
+        "block_number": 0,
+        "log_index": 0
+      },
+      "last_seen_finality_n": null,
+      "replay_required": false,
+      "lag_blocks": null,
+      "lag_max_blocks": 12,
+      "reorg_detected": false,
+      "rule": "illustrative; see live API"
+    },
+    "reorg_recovery": {}
+  }
+}

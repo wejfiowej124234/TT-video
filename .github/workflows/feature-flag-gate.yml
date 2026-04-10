@@ -48,10 +48,10 @@ jobs:
           if check_anchor "/api/v1/admin/flags/:id/publish" "docs/spec/04-后端与API.md"; then
             route_checks_passed=$((route_checks_passed + 1))
           fi
-          if check_anchor "/api/v1/admin/approvals" "crates/api/src/routes/admin.rs"; then
+          if check_anchor "/api/v1/admin/approvals" "crates/api/src/routes/admin/mod.rs"; then
             route_checks_passed=$((route_checks_passed + 1))
           fi
-          if check_anchor "/api/v1/admin/approvals/:id/approve" "crates/api/src/routes/admin.rs"; then
+          if check_anchor "/api/v1/admin/approvals/:id/approve" "crates/api/src/routes/admin/mod.rs"; then
             route_checks_passed=$((route_checks_passed + 1))
           fi
 

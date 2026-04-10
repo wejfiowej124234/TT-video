@@ -3,6 +3,7 @@
  * 运行：npx playwright install 后 npm run e2e（能连上 baseURL 则复用已有 dev/start，否则自动启动）
  *
  * 可选：`PLAYWRIGHT_SKIP_ESCROW_API_TESTS=1` 跳过 `e2e/53-main-path.spec.ts`（仅本地；CI 勿设）。
+ * Epic F-08：`e2e/epic-f-normal-release-real.spec.ts`（`@e2e-three-pack-real`）用 **`PLAYWRIGHT_API_BASE_URL`**（默认 `http://127.0.0.1:8080`）；CI 默认跳过，设 **`RUN_EPIC_F_E2E_REAL_PATH=1`** 才执行；见 `docs/runbook/Epic-F-e2e-three-pack-ladder.md` **F-08**。
  */
 import { defineConfig, devices } from "@playwright/test";
 

@@ -52,13 +52,13 @@ jobs:
             return 1
           }
 
-          if check_anchor "finance_summary_route" "/api/v1/admin/finance/summary" "crates/api/src/routes/admin.rs"; then
+          if check_anchor "finance_summary_route" "/api/v1/admin/finance/summary" "crates/api/src/routes/admin/mod.rs"; then
             route_checks_passed=$((route_checks_passed + 1))
           fi
-          if check_anchor "finance_summary_export_route" "/api/v1/admin/finance/summary/export" "crates/api/src/routes/admin.rs"; then
+          if check_anchor "finance_summary_export_route" "/api/v1/admin/finance/summary/export" "crates/api/src/routes/admin/mod.rs"; then
             route_checks_passed=$((route_checks_passed + 1))
           fi
-          if check_anchor "reconcile_report_route" "/api/v1/admin/indexer/reconcile-report/:id" "crates/api/src/routes/admin.rs"; then
+          if check_anchor "reconcile_report_route" "/api/v1/admin/indexer/reconcile-report/:id" "crates/api/src/routes/admin/mod.rs"; then
             route_checks_passed=$((route_checks_passed + 1))
           fi
           if check_anchor "indexer_reconcile_internal_route" "/api/v1/internal/indexer-reconcile" "crates/api/src/routes/internal.rs"; then

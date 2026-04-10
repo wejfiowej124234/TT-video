@@ -2,17 +2,63 @@
 
 本目录存放 **Gate 通过** 与 **演练** 的取证级 evidence bundle，与 [08-1-战略与合规风险检查清单](../docs/spec/08-1-战略与合规风险检查清单.md)、[08-2-附录-闭合工单表](../docs/spec/08-2-附录-闭合工单表.md) 配套。08 定稿与闭合标准见 [08-4](../docs/spec/08-4-对外口径包.md)、[08-3](../docs/spec/08-3-参数与门禁表.md) 开篇「审计闭合标准」及 [08-2 定稿前检查](../docs/spec/08-2-附录-闭合工单表.md)。
 
+**总收口索引（B-114 / B-126 / B-127 / B-115 / B-116 / P5 / Epic A～F · GO + Runbook + 本 README 锚点）**：[docs/runbook/sealed-programs-and-epics-master-index.md](../docs/runbook/sealed-programs-and-epics-master-index.md)（**`TT-DOC-SEALED-PROGRAMS-EPICS-MASTER-INDEX-001`**，导航-only，不替代各 GO 正文）。
+
 <a id="ssot-guards-ci-summary"></a>
 
 ## PR/CI 静态 SSOT Guard 总览（一条读）
 
 **[GO_20260407_SSOT_GUARDS.md](GO_20260407_SSOT_GUARDS.md)**（**TT-SSOT-GUARD-GO-SUMMARY-018**）：汇总已落地的 **B-097 Escrow** 与 **B-110 Pool** 两条 **Python** 门禁的覆盖范围、**`check-invariants.sh` / Build workflow** 入口、典型阻断回归与「**新链上 SSOT → 单开 TT + 新 guard/allowlist**」规则。机读脚本表见 **[scripts/README.md](../scripts/README.md)** **二、CI 门禁**；任务溯源见 **[docs/任务母表.md](../docs/任务母表.md)** **SSOT Guard 门禁索引**。
 
+<a id="epic-a-governance-exec-ux-close"></a>
+
+### Epic A · 治理执行态只读 UX 收口（A-01～A-10）
+
+- **[GO_EPIC_A_GOVERNANCE_EXEC_UX_CLOSE.md](GO_EPIC_A_GOVERNANCE_EXEC_UX_CLOSE.md)**（**`TT-DOC-EPIC-A-GOVERNANCE-EXEC-UX-CLOSE-001`**）：完成项、**B-115 / B-116 / P5** 边界与排除项、前端验收命令；Runbook **[docs/runbook/Epic-A-governance-execution-ux-ladder.md](../docs/runbook/Epic-A-governance-execution-ux-ladder.md)**；母表 **[docs/任务母表.md](../docs/任务母表.md)** **Epic-A** 行。
+
+<a id="epic-c-admin-cross-check-drift-ui-close"></a>
+
+### Epic C · Admin 对拍 / Drift 只读 UI（C-01～C-10）
+
+- **[GO_EPIC_C_ADMIN_CROSS_CHECK_DRIFT_UI_CLOSE.md](GO_EPIC_C_ADMIN_CROSS_CHECK_DRIFT_UI_CLOSE.md)**（**`TT-DOC-EPIC-C-ADMIN-CROSS-CHECK-DRIFT-UI-CLOSE-001`**）：完成项、与 **B-115 / B-116 / P5** 及 **Epic A / A2** 边界、前端验收命令；Runbook **[docs/runbook/Epic-C-admin-cross-check-drift-ui-ladder.md](../docs/runbook/Epic-C-admin-cross-check-drift-ui-ladder.md)**；Read Contract **[docs/runbook/read-contract-admin-read-apis.md](../docs/runbook/read-contract-admin-read-apis.md)**；母表 **[docs/任务母表.md](../docs/任务母表.md)** **Epic-C** 行。
+
+<a id="epic-e-finance-readonly-close"></a>
+
+### Epic E · Admin 只读财务 / 对账视角（E-01～E-10）
+
+- **[GO_EPIC_E_FINANCE_READONLY_CLOSE.md](GO_EPIC_E_FINANCE_READONLY_CLOSE.md)**（**`TT-DOC-EPIC-E-FINANCE-READONLY-CLOSE-001`**）：完成项、边界、**`finance-readonly-smoke.sh`** / **`FINANCE_READONLY_SMOKE_SKIP`** 验收；Runbook **[docs/runbook/Epic-E-finance-readonly-ladder.md](../docs/runbook/Epic-E-finance-readonly-ladder.md)**。
+
+<a id="epic-f-e2e-three-pack-close"></a>
+
+### Epic F · 发布前 E2E 三项包（F-01～F-08 文档与单路径自动化收口）
+
+- **[GO_EPIC_F_E2E_THREE_PACK_CLOSE.md](GO_EPIC_F_E2E_THREE_PACK_CLOSE.md)**（**`TT-DOC-EPIC-F-E2E-THREE-PACK-CLOSE-001`**）：F-01～F-08 完成项、硬边界、**F-06** 静态校验命令、**F-08** Playwright 命令；真实路径 **仅 normal-release**；**dispute / timeout** 仍为 **模板 + 手工**；与 **B-115 / B-116 / P5 / Epic A / C / D / E** 边界。Runbook **[docs/runbook/Epic-F-e2e-three-pack-ladder.md](../docs/runbook/Epic-F-e2e-three-pack-ladder.md)**；ADR **[docs/runbook/Epic-F-real-path-adr.md](../docs/runbook/Epic-F-real-path-adr.md)**。
+
+<a id="b110-seq2-orders-deadline-bundle-close"></a>
+
+### B110-SEQ2 · 订单 `rating_deadline` 子主线 bundle 收口
+
+- **[GO_B110_SEQ2_ORDERS_DEADLINE_BUNDLE_CLOSE.md](GO_B110_SEQ2_ORDERS_DEADLINE_BUNDLE_CLOSE.md)**（**`TT-B110-SEQ2-ORDERS-DEADLINE-BUNDLE-CLOSE-001`** / **母表 B-132**）：**完成范围**（真值 → 可观测 → 对拍 → admin 提示 → **ops_check** → 可选 **staging CI**）、**边界**（**SEQ3** 后 **indexer-reconcile** 已并列 **deadline** 巡检 → **母表 B-133**；未扩 **`payment_deadline`/`chat_confirm_deadline`**）、**后续方向**（其它治理参数同类 SSOT 须 **另开 TT**）。**04** 锚点句与 **Runbook §2.55**、**scripts/README**、**[sealed-programs 总索引](../docs/runbook/sealed-programs-and-epics-master-index.md)** 互指。
+
+<a id="frontend-tsc-gate-close-20260409"></a>
+
+### 前端 TypeScript 门禁收口 · 2026-04-09（`tsc --noEmit` 全绿）
+
+- **[GO_20260409_FRONTEND_TSC_GATE_CLOSE.md](GO_20260409_FRONTEND_TSC_GATE_CLOSE.md)**（**`TT-DOC-FRONTEND-TSC-GATE-CLOSE-001`** / **母表 B-125**）：**TS-0**（`target` ES2020 + 清理 **`tsconfig.tsbuildinfo`**）、**TS-4**（`distribution-claim` **`bigint` 窄化**）、**TS-5/TS-6**（`distribution-accruals` **`mapApiReadError` 三参**）、**TS-7/TS-8**（Vitest **`vi` 导入**）；验收 **`cd frontend && npx tsc --noEmit`**。**未改** **B-115 / B-116 / P5 / Epic A / Epic C** 已封口语义、路由与文案。
+
 <a id="build-ci-closure-20260408"></a>
 
 ### Build（`build.yml`）全绿收口 · 2026-04-08
 
 - **[GO_20260408_BUILD_CI_CLOSURE.md](GO_20260408_BUILD_CI_CLOSURE.md)**：GitHub Actions Run **`24139191178`**（tip **`2364f55`**）及本轮 **gate / regional-matrix / e2e·8080 / smoke / governance·params / traveltrust·nav / Vitest·locale / trust-gate·alert** 等修复链条台账；**后续新卡从新问题起算，不回扫本条已收口链**。
+
+<a id="build-ci-hint-chain-usage"></a>
+
+- **如何使用（CI 提示链）**：红链时 **固定顺序**：**regression hint** → **`go_no_go_status`** → **首个失败 job** → **再决定是否开卡** — **[新红链首诊流程](GO_20260408_BUILD_CI_CLOSURE.md#new-red-chain-triage-flow)**；**GO / NO_GO / REVIEW_REQUIRED** 与表意见 **[判读说明](GO_20260408_BUILD_CI_CLOSURE.md#ci-hint-chain-usage-rules)**。
+
+<a id="baseline-regression-hint-readme"></a>
+
+- **Baseline regression hint（非阻断）**：[GO 文档 · Baseline regression hint 已接入 CI](GO_20260408_BUILD_CI_CLOSURE.md#baseline-regression-hint-ci) — Build **`e2e` job** 在 Playwright 后打印 **`baseline_run_id` / `diff_conclusion`** 等与 stable baseline 的对照，**不**影响 CI 绿红。
 
 <a id="07-p0-e2e-three"></a>
 
@@ -26,6 +72,20 @@
 | **争议三终态** | `e2e-dispute-three-terminals.md` | Refunded / PartiallyRefunded / Slashed 各至少一条可复现路径或引用 SSOT 路径 |
 | **三条超时路径** | `e2e-three-timeouts.md` | 与 01/53 超时语义对齐的三类路径各一条留痕（或引用已登记的演练编号 **DR-***） |
 
+**Epic F-02 钉死全路径（与 [Epic-F-e2e-three-pack-ladder · F-02](../docs/runbook/Epic-F-e2e-three-pack-ladder.md#epic-f-f02-e2e-artifacts) 一致）**：
+
+- **`evidence/GO_YYYYMMDD/artifacts/e2e-normal-release.md`**
+- **`evidence/GO_YYYYMMDD/artifacts/e2e-dispute-three-terminals.md`**
+- **`evidence/GO_YYYYMMDD/artifacts/e2e-three-timeouts.md`**
+
+**与 `manifest.json` / `manifest.sha256`**：上述三文件各应在当次 **`evidence/GO_YYYYMMDD/manifest.json`** 的 **`artifacts[]`** 中登记 **`path`**（相对 GO 根，如 **`artifacts/e2e-normal-release.md`**）与 **`sha256`**（文件内容哈希）；**`manifest.sha256`** 仅校验 **`manifest.json`** 本体（**`sha256sum -c manifest.sha256`**）。**示例目录**：**`evidence/GO_20260407/artifacts/`** 已含同名三 **`.md`**；该日检入的 **`manifest.json`** 为轻量 dry-run 样例，**完整过门**时须将三项并入 **`artifacts[]`** 并更新 **`manifest.sha256`**。
+
+**P1-C 行工程互证（TT-07-63B-P1C-E2E-SINGLE-001）**：**`evidence/GO_20260409/artifacts/p1c-e2e-close.md`** — 将 **① 正常放款 / ② 争议三终态 / ③ 三条超时路径** 与 **本节表**、**[27-P14 · P14-3](../docs/spec/27-P14-实现记录.md)**、**[Runbook §12.6 §B](../ops/RUNBOOK.md)**、**[缺口官方总表 · P1-C](../docs/spec/缺口与待补-官方总表.md)** 互链；**不**替代目标环境执行与 **P14-3** 日期填实。
+
+**P1-C 行工程互证（TT-07-63B-P1C-EVIDENCE-INTEGRATION-001）**：**`evidence/GO_20260409/artifacts/p1c-wgate-evidence-integration-close.md`** — **W-GATE** 与 **`bash scripts/check-governance-doc-linkage.sh`**、**`bash scripts/check-08-consistency.sh`**、**[Runbook §12.7](../ops/RUNBOOK.md)**、**[缺口官方总表 · P1-C](../docs/spec/缺口与待补-官方总表.md)**、**GO `manifest.json`** 互链；**不**替代 **08-2 审查二** 填实。
+
+**P1-C 行工程互证（TT-07-63B-P1C-RECONCILE-SINGLE-001）**：**`evidence/GO_20260409/artifacts/p1c-reconcile-close.md`** — **索引器 / DB 对账（reconcile）** 与 **[Runbook §12.5](../ops/RUNBOOK.md)**、**§2.55**、下文 **索引器 / DB 投影对账** 段、**[缺口官方总表 · P1-C](../docs/spec/缺口与待补-官方总表.md)**、**GO `manifest.json`** 互链；**不**替代目标环境 **`INTERNAL_API_SECRET`** 下真实执行与 **P0 #7**。
+
 与 [27-P14 · P14-3](../docs/spec/27-P14-实现记录.md) 同批执行时可互链上述文件名。**签字**：`manifest.json` 之 **`sign_off`** 须非空（见下文 manifest 格式）。
 
 ## 目录约定
@@ -37,11 +97,102 @@
 - **evidence/GO_YYYYMMDD/** — 某次 Gate 通过（或发版前五门全过）的 evidence bundle。
   - **根目录 `.gitignore` 已排除 `evidence/GO_[0-9]{8}/`**：该路径**不会**进入公开 git 历史；责任人本地创建后自行归档或写入私有制品库；复核方可对照 [15 附录〇 机器预检段](../docs/spec/15-多维度文档与技术检查报告.md#发版前勾选总表) 在本地重跑 `pre-release-automation` / `cargo test`。
   - 内含：`manifest.json`（产物清单）、`manifest.sha256`（校验）、截图/日志索引等。
-  - 可选：运维脚本 **`scripts/write-indexer-evidence.sh`** 或 Windows **`scripts/write-indexer-evidence.ps1`**（须 **Git Bash** 执行 **`indexer-public-snapshot.sh`**；manifest / **`.zip`** 由 PowerShell **`Compress-Archive`** 生成）；或 Windows **`.\scripts\internal-indexer-ops.ps1 evidence`** / **`evidence-bundle`**（委托 **`write-indexer-evidence.ps1`**；其它子命令委托 **bash** **`internal-indexer-ops.sh`**）可将 **`indexer_public_snapshot_*.json`**（**`/health`** + **`/meta`** + 可选 admin/internal 段；顶域 **`snapshot_provenance`** **`script`**/**`script_semver`**/**`host_git_commit`**/**`host_git_branch`**/**`host_repo_dirty`** 标识生成器与主机 Git 上下文）落入本目录，见 [RUNBOOK §2.55](../ops/RUNBOOK.md)（110 索引器留痕）。**`04` / `14` / `110`** 与 **`07 §六 6.4`** 互指见 **[14 §2.1 · 运维 JSON 快照](../docs/spec/14-合约-API-ABI-前后端对齐.md)**（**`04 §3.4` · `internal`** 为段落 **SSOT**）。**`INDEXER_EVIDENCE_WRITE_MANIFEST=1`** 或 **`INDEXER_EVIDENCE_BUNDLE_ZIP=1`**（或 **`internal-indexer-ops.sh evidence-bundle`** / **`.ps1 evidence-bundle`**）另生成 **`indexer_public_snapshot_manifest.json`**（`gate` / `date` / `artifacts` / `sign_off` + **`bundle_kind`**），可选 **`indexer_evidence_bundle_*.zip`**；正式过门前替换默认 **`gate`/`sign_off`**。
+  - 可选：运维脚本 **`scripts/write-indexer-evidence.sh`** 或 Windows **`scripts/write-indexer-evidence.ps1`**（须 **Git Bash** 执行 **`indexer-public-snapshot.sh`**；**Epic D-10** 收口另须 **jq** 跑 **`--epic-d10-post`** 生成 **`manifest.sha256`** + **`epic_d_go_bundle_closure.json`**）；或 Windows **`.\scripts\internal-indexer-ops.ps1 evidence`** / **`evidence-bundle`**（委托 **`write-indexer-evidence.ps1`**；其它子命令委托 **bash** **`internal-indexer-ops.sh`**）可将 **`indexer_public_snapshot_*.json`**（**`/health`** + **`/meta`** + 可选 admin/internal 段；顶域 **`snapshot_provenance`** **`script`**/**`script_semver`**/**`host_git_commit`**/**`host_git_branch`**/**`host_repo_dirty`** 标识生成器与主机 Git 上下文）落入本目录，见 [RUNBOOK §2.55](../ops/RUNBOOK.md)（110 索引器留痕）。**`04` / `14` / `110`** 与 **`07 §六 6.4`** 互指见 **[14 §2.1 · 运维 JSON 快照](../docs/spec/14-合约-API-ABI-前后端对齐.md)**（**`04 §3.4` · `internal`** 为段落 **SSOT**）。**`INDEXER_EVIDENCE_WRITE_MANIFEST=1`** 或 **`INDEXER_EVIDENCE_BUNDLE_ZIP=1`** 时另生成 **`indexer_public_snapshot_manifest.json`** 与 **`manifest.json`**（同内容）、**`manifest.sha256`**、**`epic_d_go_bundle_closure.json`**（**`traveltrust.ops_artifact.v1`** **`bundle`** / **Epic D-10**），可选 **`artifacts/epic_d_d0*.json`**（**`INTERNAL_API_SECRET`** + 默认 **`INDEXER_EVIDENCE_EPIC_D_ENVELOPES=1`**），可选 **`indexer_evidence_bundle_*.zip`**；正式过门前替换默认 **`gate`/`sign_off`**。目录形状示例见 **[Epic-D-ops-artifact.v1.example-d10-go-bundle/README.md](../docs/runbook/Epic-D-ops-artifact.v1.example-d10-go-bundle/README.md)**。
   - 工单表 **Evidence** 列可贴：`evidence/GO_20250220/` 或 manifest 的 hash。
 - **evidence/GO_YYYYMMDD_template/** — **可复制模板**：首次过门时复制为本目录并重命名为 GO_YYYYMMDD，再填写 manifest。勿在此目录内放真实证据。
 - **evidence/GO_placeholder/** — **仅占位说明**（非 bundle、非模板）：说明真实 bundle 用 GO_YYYYMMDD 目录。
 - **evidence/DR-YYYYQX-0N/** — 单次演练（Runbook 演练）产物，可选按演练编号建子目录。
+
+<a id="b114-indexer-target-slice-close"></a>
+
+### B-114 索引器 Target 切片收口（B-114-1～5 · 母表）
+
+**任务母表 [B-114](../docs/任务母表.md)** **已做（slice 完成 · B-114-1～5）**；reorg / **`eth_getLogs`** 区间 / orders 链域 / 多块 rewind·重放 / tick **`scan_from_block`** 下界 — **[GO_B114_INDEXER_TARGET_SLICE_CLOSE.md](GO_B114_INDEXER_TARGET_SLICE_CLOSE.md)**（**§B-114-1**～**§B-114-5**）。**不**替代 **spec/110** 全文其余 Target；**不**改写 **B-115 / B-116 / P5 / Epic A～F** 已封口语义。
+
+<a id="b126-110-target-alignment"></a>
+
+### B-126 · spec/110 Target 句机读登记（母表 · 文档轮）
+
+**任务母表 [B-126](../docs/任务母表.md)** **已做（文档轮）**：**[spec/110](../docs/spec/110-阶段开发链上索引器与事件同步器.md)** 中各 **Target / Partial** 句与 **B-114-1～5（[GO_B114](GO_B114_INDEXER_TARGET_SLICE_CLOSE.md)）** 覆盖关系之 **HTML 对照表**（**行内**）；**不重开 B-114-6**、**不**要求本步新增实现/测试。**总索引**：[sealed-programs-and-epics-master-index.md](../docs/runbook/sealed-programs-and-epics-master-index.md)；**运维阶梯互指**：[Epic-D-indexer-ops-readonly-ladder.md](../docs/runbook/Epic-D-indexer-ops-readonly-ladder.md)（**110 覆盖边界**）。
+
+<a id="b127-finality-gate"></a>
+
+### B-127 · Finality 确认层（母表 · ☑ 已封口 · Finality Gate 闭环）
+
+**任务母表 [B-127](../docs/任务母表.md)** **☑ 已封口（Finality Gate 闭环）**：**[spec/110 §3.3](../docs/spec/110-阶段开发链上索引器与事件同步器.md)**、**§3.1.1**（finality / tick 上界）与 **[04 §3.4 · internal](../docs/spec/04-后端与API.md)** — **资金终态 `orders_projection` 双写硬闸** + **internal 观测字段**；**不**改写 **B-115 / B-116 / P5 / Epic A～F** 已封口语义。**主 GO（封口入口）**：[**GO_B127_FINALITY_GATE_CLOSE.md**](GO_B127_FINALITY_GATE_CLOSE.md)（**`TT-DOC-B127-1-FINALITY-GATE-CLOSE-001`**）。**当前阶段已闭环，无需继续 B-127-2。** **验收**：**`cargo test -p traveltrust-api b127_finality_gate`**（**2 passed**）。**总索引**：[sealed-programs-and-epics-master-index.md](../docs/runbook/sealed-programs-and-epics-master-index.md)；**finality 闭环互指**：[Epic-D-indexer-ops-readonly-ladder.md](../docs/runbook/Epic-D-indexer-ops-readonly-ladder.md)。**still_target 来源索引**（**不**复制对照表）：[B-126](../docs/任务母表.md)。
+
+<a id="p5-program-master-close"></a>
+
+## P5 程序族总封口（P5-1～P5-5 · 项目级台账）
+
+**程序层总卷**（各 Epic 完成情况、与 **B-115/B-116** 关系与边界一口读）：[**GO_P5_CLOSE.md**](GO_P5_CLOSE.md)（**`TT-DOC-P5-PROGRAM-CLOSE-001`**）。**任务母表** 程序行与各子 Epic 行：[**docs/任务母表.md · P5**](../docs/任务母表.md)（检索 **P5**、**P5-1**…**P5-5**）。**子 Epic evidence 入口**：[**§P5-1**](#p5-1-country-ledger-ssot-v0-close) · [**§P5-2 Epic**](#p5-2-epic-vault-export-close) · [**§P5-3 Epic**](#p5-3-epic-regionshare-snapshot-onchain-anchor) · [**§P5-4 Epic**](#p5-4-epic-governance-distribution-claim-ui) · [**§P5-5**](#p5-5-doc-mirror-84-readonly-close)。
+
+<a id="b115-snapshot-claim-close"></a>
+
+### B-115 Snapshot / Claim / 分配对账分域（母表 · 已封口）
+
+**任务母表 [B-115](../docs/任务母表.md)** **☑ 已封口**；子卡 **B-115-1～5**、验收命令与代码路径索引 — **[GO_B115_CLOSE.md](GO_B115_CLOSE.md)**（**TT-DOC-B115-PM-CLOSE-001**）。与 **B-116** **`fee-pool-aggregates`** / **`governance/pool`** **正交**断言同仓库 **`cargo test`** 覆盖。**P5-5（84 文档镜像只读）** 与分配域 **正交** — [**GO_P5_5_CLOSE.md**](GO_P5_5_CLOSE.md)。**`RegionShareSnapshotLine` 链上锚点 Epic（P5-3）** **另卷总收口** — [**GO_P5_3_CLOSE.md**](GO_P5_3_CLOSE.md) · 入口 [**§P5-3 Epic**](#p5-3-epic-regionshare-snapshot-onchain-anchor)（**不**改写 **B-115** Claim/accrual **封口语义**；**同表** **`region_share_snapshot_lines`** **并列**链上/内网物化）。**投资者分配治理前端 Epic（P5-4）** — [**GO_P5_4_CLOSE.md**](GO_P5_4_CLOSE.md) · 入口 [**§P5-4 Epic**](#p5-4-epic-governance-distribution-claim-ui)（**`InvestorDistributionClaim`** **钱包交互** + **应计只读** **`GET …/investor-distribution-accruals`**；**不**扩 **B-115** accrual/Claim **封口语义**；**不**经 **`/internal/`** 写；**Σ** 正交见 **GO**）。
+
+<a id="b116-feerouter-regionvault-evidence"></a>
+
+### FeeRouter / RegionVault 经济投影 Partial MVP（B-116 · 14 §1.1.1）
+
+**B-116-P4（规格 / 索引器门禁 / Runbook / 台账同锚 · 单一入口）**：[**GO_B116_P4.md**](GO_B116_P4.md)（**`TT-DOC-B116-P4-ANCHOR-001`**）。**母表封口（核心闭环 · 不含 P5-1 本卷）**：[**GO_B116_CLOSE.md**](GO_B116_CLOSE.md)（**`TT-DOC-B116-PM-CLOSE-001`**）。**P5-1（试点 `country_ledger_ssot_v0`）另卷**：[**GO_P5_1_CLOSE.md**](GO_P5_1_CLOSE.md) · 入口 [**§P5-1**](#p5-1-country-ledger-ssot-v0-close)。
+
+与 **[14 §1.1.1](../docs/spec/14-合约-API-ABI-前后端对齐.md)**、**[110 §3.1.1](../docs/spec/110-阶段开发链上索引器与事件同步器.md)** 状态一致：**MVP 路径** 为 **Partial（已落地）**；**Vault 专项对账导出 Epic（P5-2 · A/B/C）** 已 **总卷封口**（[**GO_P5_2_CLOSE.md**](GO_P5_2_CLOSE.md) · **`TT-DOC-P5-2-PM-CLOSE-001`** · 入口 [**§P5-2 Epic**](#p5-2-epic-vault-export-close)）；**HTTP/实现子卷** 互指 [**GO_P5_2_B_CLOSE.md**](GO_P5_2_B_CLOSE.md)；**RegionShareSnapshot 链上锚点 Epic（P5-3）** 已 **总卷封口**（[**GO_P5_3_CLOSE.md**](GO_P5_3_CLOSE.md) · [**§P5-3 Epic**](#p5-3-epic-regionshare-snapshot-onchain-anchor)）；**投资者分配治理前端 Epic（P5-4）** 已 **总卷封口**（[**GO_P5_4_CLOSE.md**](GO_P5_4_CLOSE.md) · [**§P5-4 Epic**](#p5-4-epic-governance-distribution-claim-ui)）；**83/84** 其余更广叙事仍按各文 **Target** 登记；**试点逐国运营账本（P5-1）** 已 **另卷封口**（上段 **GO_P5_1_CLOSE**）；**84 文档镜像只读面（P5-5）** 已 **另卷封口**（[**GO_P5_5_CLOSE.md**](GO_P5_5_CLOSE.md) · [**§P5-5**](#p5-5-doc-mirror-84-readonly-close)）；**B-115（本锚上条）** **已封口**，**不**与 **B-116** MVP 范围混读。
+
+- **合约与 Foundry**：`contracts/src/FeeRouter.sol`、`contracts/src/RegionVault.sol`；`contracts/test/FeeRouter.t.sol`、`contracts/test/RegionVault.t.sol`（仓库根 **`forge test`** 或限定 **`--match-contract`**）。
+- **API / DB（Rust）**：`crates/api/src/db/fee_router_events.rs`、`region_vault_events.rs`、`economic_aggregate.rs`；`crates/api/src/routes/governance.rs`（**`fee-routes` / `vault-forwards` / `fee-pool-aggregates`**）；`crates/api/src/routes/internal.rs`（**indexer-tick** 写入与 **reorg / `event_log` 链域回滚** 删尾）；`crates/api/src/chain/indexer.rs`；`crates/api/src/chain_off/tests_events_itinerary.rs`（事件解码单测）。
+- **`cargo test -p traveltrust-api`**（默认门禁）：**`fee_router_events::tests`**、**`region_vault_events::tests`**、**`governance`** 模块内 **B-116-3-1 / 3-2 / 3-3** 等用例（见 **`routes/governance.rs`** `#[cfg(test)]`）。
+- **留痕**：发版 / Gate **bundle** 仍按上文 **[目录约定](#目录约定)** **`evidence/GO_YYYYMMDD/`**；运维索引器快照 **`scripts/write-indexer-evidence.sh`** / **`.ps1`**、**`internal-indexer-ops … evidence-bundle`** 与 **[110 §3.1.2](../docs/spec/110-阶段开发链上索引器与事件同步器.md)**、**[Runbook §2.55](../ops/RUNBOOK.md)** 同批。
+
+<a id="p5-1-country-ledger-ssot-v0-close"></a>
+
+### P5-1 试点逐国链上账本（`country_ledger_ssot_v0` · A/B/C 台账封口）
+
+**母表 / 项目管理封口（与 B-115/B-116 边界分卷）**：[**GO_P5_1_CLOSE.md**](GO_P5_1_CLOSE.md)（**`TT-DOC-P5-1-PM-CLOSE-001`**）。**规格**：[P5-1-逐国链上账本SSOT-一国辖区端到端](../docs/spec/P5-1-逐国链上账本SSOT-一国辖区端到端.md)；**HTTP / 合约登记**见 **[04 §3.4](../docs/spec/04-后端与API.md)**、**[14 §1.1](../docs/spec/14-合约-API-ABI-前后端对齐.md)**。**不**替代 **B-115**（Snapshot/Claim/分配）或 **B-116**（FeeRouter/RegionVault 投影 MVP）封口文档；**正交**与 **禁止派生** 句以 **GO_P5_1_CLOSE** 内 §边界 为准。**P5-2 Epic（Vault 专项对账导出 · A/B/C）总卷**：[**GO_P5_2_CLOSE.md**](GO_P5_2_CLOSE.md)（**`TT-DOC-P5-2-PM-CLOSE-001`** · [**§P5-2 Epic**](#p5-2-epic-vault-export-close)）；**API 子卷** [**GO_P5_2_B_CLOSE.md**](GO_P5_2_B_CLOSE.md)。**P5-3 Epic（RegionShareSnapshot 链上锚点）**：[**GO_P5_3_CLOSE.md**](GO_P5_3_CLOSE.md) · [**§P5-3 Epic**](#p5-3-epic-regionshare-snapshot-onchain-anchor)。**P5-4 Epic（投资者分配治理前端）**：[**GO_P5_4_CLOSE.md**](GO_P5_4_CLOSE.md) · [**§P5-4 Epic**](#p5-4-epic-governance-distribution-claim-ui)。**P5-5（84 文档镜像只读面）另卷**：[**GO_P5_5_CLOSE.md**](GO_P5_5_CLOSE.md) · 入口 [**§P5-5**](#p5-5-doc-mirror-84-readonly-close)。
+
+<a id="p5-2-epic-vault-export-close"></a>
+
+### P5-2 Epic · Vault 专项对账导出（A/B/C · 台账总卷）
+
+**母表 / Epic 项目管理封口**：[**GO_P5_2_CLOSE.md**](GO_P5_2_CLOSE.md)（**`TT-DOC-P5-2-PM-CLOSE-001`**）。**规格锚**：[04 · P5-2-A](../docs/spec/04-后端与API.md#p5-2-a--vault-专项对账导出规格冻结--epic-p5-2) · [04 · P5-2-C2](../docs/spec/04-后端与API.md#p5-2-c2--vault-专项离线包目录与-manifest-机读规范规格冻结) · [04 §3.5 · export](../docs/spec/04-后端与API.md)。**与 B-115 / B-116 / P5-1 / P5-5 边界** 以 **GO_P5_2_CLOSE** §边界 为准。**子卷**：**B** [**GO_P5_2_B_CLOSE**](GO_P5_2_B_CLOSE.md)；**C1/C2/C3** [**§P5-2-C**](#p5-2-c-vault-离线包-c1c2c3-互指)；**任务母表** [**P5-2** / **P5-2-B** / **P5-2-C3**](../docs/任务母表.md)。
+
+<a id="p5-3-epic-regionshare-snapshot-onchain-anchor"></a>
+
+### P5-3 Epic · RegionShareSnapshot 链上锚点（P5-3-1 / P5-3-2 / P5-3-3 · 台账总卷）
+
+**母表 / Epic 项目管理封口**：[**GO_P5_3_CLOSE.md**](GO_P5_3_CLOSE.md)（**`TT-DOC-P5-3-PM-CLOSE-001`**）。**规格锚**：[04 · P5-3](../docs/spec/04-后端与API.md#p5-3--regionsharesnapshot-链上锚点规格冻结--epic-p5-3) · [110 §3.1.1](../docs/spec/110-阶段开发链上索引器与事件同步器.md) · [14 §1.1.1](../docs/spec/14-合约-API-ABI-前后端对齐.md)。**分配域母表（B-115）** 仍归 [**GO_B115_CLOSE.md**](GO_B115_CLOSE.md) — 本 Epic **补齐** **`RegionShareSnapshotLine`** **链上 emit + indexer 物化**，**不**替代 **Claim/accrual**。**与 B-116 / P5-1 / P5-2 / P5-5 边界** 以 **GO_P5_3_CLOSE** §边界 为准。**子卡**：**P5-3-1** 合约 + Foundry + **`Deploy.s.sol` topic0 复核**；**P5-3-2** **`indexer_tick`** + **`reconcile` topic0 注册** + 重复 tick 幂等测；**P5-3-3** 本文档 + **04** + **母表**。**任务母表** [**P5-3** / **P5-3-1** / **P5-3-2** / **P5-3-3**](../docs/任务母表.md)。**验收命令** 见 **GO_P5_3_CLOSE** 内代码块。
+
+<a id="p5-4-epic-governance-distribution-claim-ui"></a>
+
+### P5-4 Epic · 投资者分配治理前端（Claim UI + 应计只读 · P5-4-1/2/3 · 台账总卷）
+
+**母表 / Epic 项目管理封口**：[**GO_P5_4_CLOSE.md**](GO_P5_4_CLOSE.md)（**`TT-DOC-P5-4-PM-CLOSE-001`**）。**规格锚**：[04 · P5-4](../docs/spec/04-后端与API.md#p5-4-epic-governance-distribution) · [04 §3.4](../docs/spec/04-后端与API.md) · [13-1 表 2-续](../docs/spec/13-1-UI产品级SSOT与页面规范.md)。**分配域（B-115）** 仍归 [**GO_B115_CLOSE.md**](GO_B115_CLOSE.md) — 本 Epic **仅**前端叙事与路由门禁，**不**扩 **accrual / `InvestorDistributionClaim`** 封口语义。**与 B-116 / P5-1 / P5-2 / P5-3 / P5-5 边界** 以 **GO_P5_4_CLOSE** §边界 为准。**子卡**：**P5-4-1** Claim 页 + 钱包写；**P5-4-2** 应计只读 **`GET …/investor-distribution-accruals`**；**P5-4-3** 文档 + **`run-check-04-routes`** + **`p5-4GovernanceRoutes.smoke.test.ts`**。**任务母表** [**P5-4** / **P5-4-1** / **P5-4-2** / **P5-4-3**](../docs/任务母表.md)。**验收命令** 见 **GO_P5_4_CLOSE** 内代码块。
+
+<a id="p5-2-b-vault-forwarded-export-close"></a>
+
+### P5-2-B · Vault 专项对账只读导出（Admin · 台账封口）
+
+**母表 / 项目管理封口（与 B-116 投影 / Σ、B-115、P5-1、P5-5 正交）**：[**GO_P5_2_B_CLOSE.md**](GO_P5_2_B_CLOSE.md)（**`TT-DOC-P5-2-B-PM-CLOSE-001`** · **P5-2 之 HTTP/实现子卷**）；**Epic 总卷** [**GO_P5_2_CLOSE.md**](GO_P5_2_CLOSE.md)（[**§P5-2 Epic**](#p5-2-epic-vault-export-close)）。**规格锚**：[04 · P5-2-A](../docs/spec/04-后端与API.md#p5-2-a--vault-专项对账导出规格冻结--epic-p5-2)、[04 §3.5 · export 表行](../docs/spec/04-后端与API.md)。**外部阻塞已清除**（**P5-1-C** 单测 / FIFO mock，**与 P5-2-B 无关**）见 **GO_P5_2_B_CLOSE** §外部阻塞。
+
+<a id="p5-2-c-vault-离线包-c1c2c3-互指"></a>
+
+### P5-2-C · Vault 离线包（C1 / C2 / C3 互指）
+
+| 子卡 | 交付 | 入口 |
+|------|------|------|
+| **C1** | 只读运维脚本拉取 **P5-2-B** **HTTP** 响应并落盘侧车 | **[`scripts/vault-forwarded-export-fetch.sh`](../scripts/vault-forwarded-export-fetch.sh)**、[`scripts/README.md`](../scripts/README.md)、[Runbook §2.55](../ops/RUNBOOK.md#255-indexer-tick重放与对账internal--admin-只读) |
+| **C2** | 离线包目录 + **`vault-forwarded-offline.manifest.json`** 机读规范 + 示例 | [04 · P5-2-C2](../docs/spec/04-后端与API.md#p5-2-c2--vault-专项离线包目录与-manifest-机读规范规格冻结)、[`vault-forwarded-offline-manifest.example.json`](vault-forwarded-offline-manifest.example.json) |
+| **C3** | **Admin/SOP/台账**：谁执行、哪条 API、如何组包与校验、证据放哪 | [**70 · 一点五 `#p5-2-c3-vault-offline-sop`**](../docs/spec/70-管理员系统开发文档.md#p5-2-c3-vault-offline-sop)、[**任务母表 · P5-2-C3**](../docs/任务母表.md)（检索表行）、[**GO_P5_2_CLOSE**（Epic 总卷）](GO_P5_2_CLOSE.md)、本段 **GO_P5_2_B**（**API 子卷**） |
+
+**证据目录建议**：**`evidence/GO_YYYYMMDD/artifacts/vault-forwarded-offline-<UTC>/`**（与 **70 §一点五**、**[目录约定](#目录约定)** 一致）。
+
+<a id="p5-5-doc-mirror-84-readonly-close"></a>
+
+### P5-5 · 84 参数与开放费点只读配置面（文档镜像 · A/B/C 台账封口）
+
+**母表 / 项目管理封口（与 B-115 / B-116 / P5-1 边界分卷）**：[**GO_P5_5_CLOSE.md**](GO_P5_5_CLOSE.md)（**`TT-DOC-P5-5-PM-CLOSE-001`**）。**规格锚**：**[84](../docs/spec/84-第一阶段10国Country-Pool发行参数总表.md)**、**[04 §3.4 · protocol-reference](../docs/spec/04-后端与API.md)**；**cross_check** 旁证与 **B-084** **`fee-pool-aggregates`** 同仓库单测锁死。**不**替代 **B-116** **Σ**、**B-115** 分配域、**P5-1** 运营账本；**禁止**镜像与投影/链读混为单一真值（**GO_P5_5_CLOSE** §边界 / 前端数据源注）。
 
 <a id="governance-pool-country-pool-ssot-drill"></a>
 
@@ -95,6 +246,8 @@
 **校验**：定稿或过门时建议对 manifest 做一次校验（必填字段存在、date 格式、artifacts[].sha256 为 64 位 hex）。有 jq 时可手工写校验命令；无 jq 时人工按上表核对，落 08-2 定稿前检查。（注：原 scripts/validate-evidence-manifest.sh 已移除。）
 
 **可验证发布（08-4 第 7 章、W-Q6-FE、51-D3）**：前端构建完成后，按以下手工步骤生成 manifest.json 与 manifest.sha256，纳入 evidence：
+
+**P1-C 行工程互证（TT-07-63B-P1C-MANIFEST-SINGLE-001）**：**`evidence/GO_20260409/artifacts/p1c-frontend-manifest-close.md`** 与当批 **GO 根级 `manifest.json`** / **`manifest.sha256`** 互指（见该文件「两层 manifest」表）。**`gen-frontend-manifest`** 写入的 **`frontend/.next/build-manifest.json`**（可选复制为 **`frontend-build-manifest.json`** + **`.sha256`**，**`EVIDENCE_GO_DIR`**）字段：**`gate`**（脚本默认 **Gate-5**）、**`date`**（**YYYY-MM-DD**）、**`artifacts`**（相对 **`frontend/.next/`** 的路径项，如 **`.next/BUILD_ID`**、**`.next/static`** 聚合 hash）、**`sign_off`**（脚本默认占位 **`发版人`**，发版前须替换）。**GO 聚合 `manifest.json`** 的 **`artifacts[]`** 须登记各证据文件的 **`path`**（相对 GO 目录）与 **`sha256`**；**`manifest.sha256`** **仅**校验 **GO 根级 `manifest.json`** 本体。有序步骤 **[Runbook §12.6 §A](../ops/RUNBOOK.md)**。
 
 ### 可验证发布：手工生成 Manifest 步骤
 

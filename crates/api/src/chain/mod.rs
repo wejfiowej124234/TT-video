@@ -6,8 +6,10 @@
 #![allow(dead_code)]
 
 pub mod balance_read;
+pub mod country_ledger;
 pub mod fee_router_verify;
 pub mod governor;
+pub mod timelock;
 pub mod indexer;
 pub mod region_vault_verify;
 pub mod outbox;
@@ -26,6 +28,8 @@ pub struct ChainConfig {
     pub fee_router_address: Option<String>,
     /// RegionVault 合约地址；设后 `indexer-tick` 额外拉取 `RegionVaultForwarded`（14 §1.1.1、110）
     pub region_vault_address: Option<String>,
+    /// **CountryPoolLedgerV0**；设后 **`indexer-tick`** 拉取 **`CountryLedgerCredited`** → **`p5_country_ledger_lines`**（**P5-1-B**）
+    pub country_pool_ledger_address: Option<String>,
     /// 份额代币（TTG / Country Pool 等）ERC20 地址列表；`indexer-tick` 写入 `investor_share_transfer_events`（B-085）
     #[serde(default)]
     pub investor_share_token_addresses: Vec<String>,
@@ -36,6 +40,8 @@ pub struct ChainConfig {
     pub investor_lock_contract_addresses: Vec<String>,
     /// **`TravelTrustGovernor`**；设后 **`indexer-tick`** 拉取 **`ProposalCreated` / `VoteCast` / …** 写入 **`governance_proposals_projection`**（**B-089 Completion**）
     pub governor_address: Option<String>,
+    /// **`GovernanceTimelock`**；**`GOVERNANCE_TIMELOCK_ADDRESS`**；**TT-B110-SEQ6** **`delay()`** 只读 SSOT
+    pub governance_timelock_address: Option<String>,
     /// 与 Governor 绑定的 **`GovernanceVotesToken`**；**`GET …/governance/proposals/:id`** 可选 **`getPastVotes`** 对拍
     pub governance_votes_token_address: Option<String>,
     pub registry_address: Option<String>,
@@ -91,10 +97,12 @@ impl ChainConfig {
             escrow_factory_address: std::env::var("ESCROW_FACTORY_ADDRESS").ok(),
             fee_router_address: std::env::var("FEE_ROUTER_ADDRESS").ok(),
             region_vault_address: std::env::var("REGION_VAULT_ADDRESS").ok(),
+            country_pool_ledger_address: std::env::var("COUNTRY_POOL_LEDGER_ADDRESS").ok(),
             investor_share_token_addresses,
             staking_address: std::env::var("STAKING_ADDRESS").ok(),
             investor_lock_contract_addresses,
             governor_address: std::env::var("GOVERNOR_ADDRESS").ok(),
+            governance_timelock_address: std::env::var("GOVERNANCE_TIMELOCK_ADDRESS").ok(),
             governance_votes_token_address: std::env::var("GOVERNANCE_VOTES_TOKEN_ADDRESS").ok(),
             registry_address: std::env::var("REGISTRY_ADDRESS").ok(),
             executor_max_amount_per_tx,

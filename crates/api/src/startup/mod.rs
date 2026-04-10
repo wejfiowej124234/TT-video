@@ -393,6 +393,9 @@ pub async fn run() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         std::process::exit(1);
     }
 
+    let jurisdiction_country_ledger_registry =
+        crate::jurisdiction_country_ledger_template::JurisdictionCountryLedgerRegistry::arc_from_env();
+
     let meta_state = ApiMetaState {
         strict_ssot,
         ssot_version,
@@ -417,11 +420,13 @@ pub async fn run() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         evidence_time_state_path: time_state_path_display,
         evidence_receipt_hmac_key: receipt_hmac_key.map(Arc::new),
         reconcile_export_ed25519_key,
+        order_deadline_clock: Arc::new(crate::order_deadline_clock::SystemOrderDeadlineClock),
         chain_off: Some(chain_off::ChainOffState {
             store: chain_off_store,
             config: chain_off::ChainOffConfig::from_env(),
             db_pool: db_pool.clone(),
         }),
+        jurisdiction_country_ledger_registry,
         chain_config: chain_config_opt.clone(),
         resolution_outbox: chain_config_opt
             .as_ref()
@@ -433,6 +438,7 @@ pub async fn run() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
                 .map(|s| Arc::new(RwLock::new(s)))
                 .unwrap_or_else(chain::indexer::new_indexer_state)
         }),
+        indexer_tick_fail_skip_bucket_obs_last: Arc::new(RwLock::new(None)),
         guide_upload_rate: Arc::new(RwLock::new(HashMap::new())),
     };
 

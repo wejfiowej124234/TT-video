@@ -28,6 +28,22 @@ pub struct ChainOffConfig {
     pub dispute_window_days: i64,
     /// 评价窗口：完成订单后 N 天内可评（03 §2.2）
     pub review_window_days: i64,
+    /// **`GOVERNANCE_ORDER_DEADLINE_CHAIN_SSOT`**：为真时 **`rating_deadline`** 优先 **`eth_call` `TravelTrustGovernor.orderRatingReviewWindowDays()`**（**`GOVERNOR_ADDRESS`** + **`CHAIN_RPC_URL`**）；读失败 / 无 Governor / 链上值越界 → **fail-closed** 回退 **`P3_REVIEW_WINDOW_DAYS`**（**`review_window_days`**）；见 **`chain/governor.rs`**、**`chain_off/orders.rs`**
+    pub governance_order_deadline_chain_ssot: bool,
+    /// **`GOVERNANCE_GOVERNOR_VIEW_PARAMS_CHAIN_SSOT`**：**`GET /meta` `governance`** / admin / reconcile 对 **`votingDelayBlocks`/`votingPeriodBlocks`/`quorumNumeratorBps`** 做链读与对拍（**TT-B110-SEQ5**）；**不**改 **`GET /api/v1/orders*`**。
+    pub governance_governor_view_params_chain_ssot: bool,
+    /// **`GOVERNANCE_TIMELOCK_DELAY_CHAIN_SSOT`**：**`GovernanceTimelock.delay()`**（**`getDelay()`** 口径）链读与对拍（**TT-B110-SEQ6**）；**不**改 **`GET /api/v1/orders*`**。
+    pub governance_timelock_delay_chain_ssot: bool,
+    /// **`GOVERNANCE_GOVERNOR_PROPOSAL_THRESHOLD_CHAIN_SSOT`**：**`TravelTrustGovernor.proposalThresholdVotes()`** 链读与对拍（**TT-B110-SEQ8**）；**不**改 **`GET /api/v1/orders*`**。
+    pub governance_governor_proposal_threshold_chain_ssot: bool,
+    /// **`GOVERNANCE_TIMELOCK_GOVERNOR_ADMIN_CHAIN_SSOT`**：**`GovernanceTimelock.governor()` / `admin()`** 链读与对拍（**TT-B110-SEQ9**）；**不**改 **`GET /api/v1/orders*`**。
+    pub governance_timelock_governor_admin_chain_ssot: bool,
+    /// **`GOVERNANCE_GOVERNOR_PROPOSAL_COUNT_CHAIN_SSOT`**：**`proposalCount()`** vs 投影行数（**TT-B110-SEQ10**）；**不**改 **`GET /api/v1/orders*`**。
+    pub governance_governor_proposal_count_chain_ssot: bool,
+    /// **`GOVERNANCE_GOVERNOR_TOKEN_TIMELOCK_CHAIN_SSOT`**：**`token()`** / **`timelock()`** **`immutable`** 引用地址链读与对拍（**TT-B110-SEQ11**）；**不**改 **`GET /api/v1/orders*`**。
+    pub governance_governor_token_timelock_chain_ssot: bool,
+    /// **`GOVERNANCE_PROPOSAL_COUNT_MAX_INDEXER_LAG`**：**`chain − projection`** 允许上限（默认 **32**）。
+    pub governance_proposal_count_max_indexer_lag: u64,
     /// 仲裁费基数（03 §3.2 重复争议费用递增）；0 表示不校验
     pub arb_base_fee: f64,
 }
@@ -41,6 +57,14 @@ impl Default for ChainOffConfig {
             auto_complete_days: 7,
             dispute_window_days: 7,
             review_window_days: 14,
+            governance_order_deadline_chain_ssot: false,
+            governance_governor_view_params_chain_ssot: false,
+            governance_timelock_delay_chain_ssot: false,
+            governance_governor_proposal_threshold_chain_ssot: false,
+            governance_timelock_governor_admin_chain_ssot: false,
+            governance_governor_proposal_count_chain_ssot: false,
+            governance_governor_token_timelock_chain_ssot: false,
+            governance_proposal_count_max_indexer_lag: 32,
             arb_base_fee: 0.0,
         }
     }
@@ -97,6 +121,87 @@ impl ChainOffConfig {
                 .ok()
                 .and_then(|v| v.parse().ok())
                 .unwrap_or(14),
+            governance_order_deadline_chain_ssot: std::env::var("GOVERNANCE_ORDER_DEADLINE_CHAIN_SSOT")
+                .ok()
+                .map(|s| {
+                    matches!(
+                        s.trim().to_ascii_lowercase().as_str(),
+                        "1" | "true" | "on" | "yes"
+                    )
+                })
+                .unwrap_or(false),
+            governance_governor_view_params_chain_ssot: std::env::var(
+                "GOVERNANCE_GOVERNOR_VIEW_PARAMS_CHAIN_SSOT",
+            )
+            .ok()
+            .map(|s| {
+                matches!(
+                    s.trim().to_ascii_lowercase().as_str(),
+                    "1" | "true" | "on" | "yes"
+                )
+            })
+            .unwrap_or(false),
+            governance_timelock_delay_chain_ssot: std::env::var(
+                "GOVERNANCE_TIMELOCK_DELAY_CHAIN_SSOT",
+            )
+            .ok()
+            .map(|s| {
+                matches!(
+                    s.trim().to_ascii_lowercase().as_str(),
+                    "1" | "true" | "on" | "yes"
+                )
+            })
+            .unwrap_or(false),
+            governance_governor_proposal_threshold_chain_ssot: std::env::var(
+                "GOVERNANCE_GOVERNOR_PROPOSAL_THRESHOLD_CHAIN_SSOT",
+            )
+            .ok()
+            .map(|s| {
+                matches!(
+                    s.trim().to_ascii_lowercase().as_str(),
+                    "1" | "true" | "on" | "yes"
+                )
+            })
+            .unwrap_or(false),
+            governance_timelock_governor_admin_chain_ssot: std::env::var(
+                "GOVERNANCE_TIMELOCK_GOVERNOR_ADMIN_CHAIN_SSOT",
+            )
+            .ok()
+            .map(|s| {
+                matches!(
+                    s.trim().to_ascii_lowercase().as_str(),
+                    "1" | "true" | "on" | "yes"
+                )
+            })
+            .unwrap_or(false),
+            governance_governor_proposal_count_chain_ssot: std::env::var(
+                "GOVERNANCE_GOVERNOR_PROPOSAL_COUNT_CHAIN_SSOT",
+            )
+            .ok()
+            .map(|s| {
+                matches!(
+                    s.trim().to_ascii_lowercase().as_str(),
+                    "1" | "true" | "on" | "yes"
+                )
+            })
+            .unwrap_or(false),
+            governance_governor_token_timelock_chain_ssot: std::env::var(
+                "GOVERNANCE_GOVERNOR_TOKEN_TIMELOCK_CHAIN_SSOT",
+            )
+            .ok()
+            .map(|s| {
+                matches!(
+                    s.trim().to_ascii_lowercase().as_str(),
+                    "1" | "true" | "on" | "yes"
+                )
+            })
+            .unwrap_or(false),
+            governance_proposal_count_max_indexer_lag: std::env::var(
+                "GOVERNANCE_PROPOSAL_COUNT_MAX_INDEXER_LAG",
+            )
+            .ok()
+            .and_then(|v| v.parse::<u64>().ok())
+            .unwrap_or(32),
             arb_base_fee: std::env::var("P3_ARB_BASE_FEE")
                 .ok()
                 .and_then(|v| v.parse().ok())
@@ -375,6 +480,24 @@ mod orders_flow;
 pub use orders_flow::*;
 mod reconcile;
 pub use reconcile::*;
+pub(crate) mod governance_view_params_ssot;
+pub(crate) mod governance_timelock_delay_ssot;
+pub(crate) mod governance_proposal_threshold_ssot;
+pub(crate) mod governance_timelock_governor_admin_ssot;
+pub(crate) mod governance_proposal_count_ssot;
+pub(crate) mod governance_proposal_tail_drift_b172;
+pub(crate) mod governance_proposal_state_chain_vs_projection_b149;
+pub(crate) mod governance_timelock_delay_meta_mirror_b173;
+pub(crate) mod governance_governor_token_timelock_ssot;
+pub(crate) use governance_view_params_ssot::governor_view_params_ssot_admin_overview_bundle;
+pub(crate) use governance_timelock_delay_ssot::timelock_delay_ssot_admin_overview_bundle;
+pub(crate) use governance_proposal_threshold_ssot::proposal_threshold_ssot_admin_overview_bundle;
+pub(crate) use governance_timelock_governor_admin_ssot::timelock_governor_admin_ssot_admin_overview_bundle;
+pub(crate) use governance_proposal_count_ssot::proposal_count_ssot_admin_overview_bundle;
+pub(crate) use governance_proposal_tail_drift_b172::governor_proposal_tail_drift_observability_b172;
+pub(crate) use governance_proposal_state_chain_vs_projection_b149::governor_proposal_state_chain_vs_projection_observability_b149;
+pub(crate) use governance_timelock_delay_meta_mirror_b173::timelock_delay_meta_mirror_observability_b173;
+pub(crate) use governance_governor_token_timelock_ssot::governor_token_timelock_ssot_admin_overview_bundle;
 mod replay_orders_projection;
 pub(crate) use replay_orders_projection::replay_orders_projection_from_event_log;
 mod replay_governance_proposals;

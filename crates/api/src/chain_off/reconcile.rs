@@ -7,6 +7,25 @@ use uuid::Uuid;
 use super::ChainOffStore;
 use traveltrust_core::OrderState;
 
+/// Solidity **`PlatformFeeRouted`** 事件签名字符串（与 `contracts/src/FeeRouter.sol` ABI 一致）。
+pub const PLATFORM_FEE_ROUTED_EVENT_SIGNATURE: &[u8] =
+    b"PlatformFeeRouted(address,uint256,uint256,uint256,uint256,uint256)";
+/// Solidity **`RegionVaultForwarded`** 事件签名字符串（与 `contracts/src/RegionVault.sol` ABI 一致）。
+pub const REGION_VAULT_FORWARDED_EVENT_SIGNATURE: &[u8] =
+    b"RegionVaultForwarded(address,address,uint256)";
+
+/// `keccak256(PLATFORM_FEE_ROUTED_EVENT_SIGNATURE)` — 与 `chain/fee_router_verify::platform_fee_routed_topic0_hex` 同源。
+pub fn platform_fee_routed_topic0_hex() -> String {
+    let h = Keccak256::digest(PLATFORM_FEE_ROUTED_EVENT_SIGNATURE);
+    format!("0x{}", hex::encode(h))
+}
+
+/// `keccak256(REGION_VAULT_FORWARDED_EVENT_SIGNATURE)` — 与 `chain/region_vault_verify::region_vault_forwarded_topic0_hex` 同源。
+pub fn region_vault_forwarded_topic0_hex() -> String {
+    let h = Keccak256::digest(REGION_VAULT_FORWARDED_EVENT_SIGNATURE);
+    format!("0x{}", hex::encode(h))
+}
+
 /// P5-5 索引器：从 store 中收集所有已有关联的 escrow 合约地址，供拉取链上日志
 pub fn list_escrow_addresses_for_indexer(store: &ChainOffStore) -> Vec<String> {
     store
@@ -55,13 +74,15 @@ pub fn event_name_from_topic0(topic0: &str) -> Option<&'static str> {
             b"SlashedExecuted(bytes32,address,uint256,uint256,uint256)".as_slice(),
             "SlashedExecuted",
         ),
+        (PLATFORM_FEE_ROUTED_EVENT_SIGNATURE, "PlatformFeeRouted"),
+        (REGION_VAULT_FORWARDED_EVENT_SIGNATURE, "RegionVaultForwarded"),
         (
-            b"PlatformFeeRouted(address,uint256,uint256,uint256,uint256,uint256)".as_slice(),
-            "PlatformFeeRouted",
+            crate::chain::indexer::REGION_SHARE_SNAPSHOT_LINE_EVENT_SIGNATURE,
+            "RegionShareSnapshotLine",
         ),
         (
-            b"RegionVaultForwarded(address,address,uint256)".as_slice(),
-            "RegionVaultForwarded",
+            crate::chain::country_ledger::COUNTRY_LEDGER_CREDITED_EVENT_SIGNATURE,
+            "CountryLedgerCredited",
         ),
         (
             b"ProposalCreated(uint256,address,uint256,uint256,uint256,string)".as_slice(),
@@ -97,6 +118,9 @@ pub fn parse_platform_fee_routed(
     topics: &[String],
     data: &serde_json::Value,
 ) -> Option<(String, [String; 5])> {
+    if topics.len() < 2 {
+        return None;
+    }
     let token = topic1_to_address(topics.get(1)?)?;
     let data_str = data.as_str()?;
     let raw = hex::decode(data_str.trim_start_matches("0x")).ok()?;
@@ -122,6 +146,9 @@ pub fn parse_region_vault_forwarded(
     topics: &[String],
     data: &serde_json::Value,
 ) -> Option<(String, String, String)> {
+    if topics.len() < 3 {
+        return None;
+    }
     let token = topic1_to_address(topics.get(1)?)?;
     let to = topic1_to_address(topics.get(2)?)?;
     let data_str = data.as_str()?;

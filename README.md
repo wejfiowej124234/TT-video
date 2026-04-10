@@ -87,6 +87,18 @@ Wbe3-TravelTrust/
 
 - **[CONTRIBUTING.md](CONTRIBUTING.md)**：PR 流程、本地命令、文档同步约定。
 - **[07-开发流程与顺序](docs/spec/07-开发流程与顺序.md)**：工程入口（阶段、审计、约定）。
+- **新增只读 API（治理/管理 GET）**：[runbook · 标准模板](docs/runbook/ai-template-read-only-api.md)；**强制顺序与后果**见 [CONTRIBUTING.md — Read API 开发强制流程](CONTRIBUTING.md#read-api-mandatory-flow)。
+- **Epic A（治理执行 UX）**：10 步连续 Task 见 [runbook/Epic-A-governance-execution-ux-ladder.md](docs/runbook/Epic-A-governance-execution-ux-ladder.md)（每步 ≤5 文件、不触 B-115/B-116/P5 封口）。
+- **Epic E（Admin 只读财务 / 对账视角）**：运维阶梯与 **curl / jq** 只读操作见 [docs/runbook/Epic-E-finance-readonly-ladder.md](docs/runbook/Epic-E-finance-readonly-ladder.md)（API 主入口；脚本非 SSOT）。
+- **Epic F（发布前 E2E 三项包 · F-01～F-08）**：Runbook [docs/runbook/Epic-F-e2e-three-pack-ladder.md](docs/runbook/Epic-F-e2e-three-pack-ladder.md)；收口 [evidence/GO_EPIC_F_E2E_THREE_PACK_CLOSE.md](evidence/GO_EPIC_F_E2E_THREE_PACK_CLOSE.md)；evidence 索引见 [evidence/README.md · Epic F](evidence/README.md#epic-f-e2e-three-pack-close)（真实路径仅 **normal-release**；争议/超时仍为模板 + 手工）。
+
+### P5-4 Epic 台账（投资者分配治理前端 · 可点击）
+
+| Epic | 总卷 GO | 规格锚 |
+|------|---------|--------|
+| **P5-4**（**P5-4-1** Claim UI · **P5-4-2** 应计只读 · **P5-4-3** 门禁/母表） | [evidence/GO_P5_4_CLOSE.md](evidence/GO_P5_4_CLOSE.md) | [docs/spec/04 · P5-4](docs/spec/04-后端与API.md#p5-4-epic-governance-distribution) |
+
+子卡与验收命令见 **GO_P5_4_CLOSE**；母表 [docs/任务母表.md](docs/任务母表.md)（检索 **P5-4**）。
 
 ## CI 与本地开发
 
@@ -146,6 +158,7 @@ cd frontend && npm install && npm run dev
 
 ## 文档索引
 
+- [封口项目与 Epic 总索引（B-115 / B-116 / P5 / Epic A～F）](docs/runbook/sealed-programs-and-epics-master-index.md) — GO、Runbook、evidence/README 锚点、边界与后续方向（导航-only）
 - [00-文档索引](docs/spec/00-文档索引.md) — 阅读顺序
 - [01-总库总览](docs/spec/01-总库总览.md) — 总览
 - [02-架构设计](docs/spec/02-架构设计.md) — 分层与域
@@ -177,6 +190,10 @@ Git 托管页默认只突出**根目录 `README.md`**。各子目录另有**模�
 | [data/README.md](data/README.md) | 数据目录说明 |
 | [migrations/README.md](migrations/README.md) | 根目录迁移草稿说明 |
 | [ops/monitoring/README.md](ops/monitoring/README.md) | 监控相关 |
+
+**Epic A（治理 proposals 执行态只读 UX · A-10）**：[docs/runbook/Epic-A-governance-execution-ux-ladder.md](docs/runbook/Epic-A-governance-execution-ux-ladder.md) · [evidence/GO_EPIC_A_GOVERNANCE_EXEC_UX_CLOSE.md](evidence/GO_EPIC_A_GOVERNANCE_EXEC_UX_CLOSE.md) · [docs/任务母表.md](docs/任务母表.md)（**Epic-A** 行）。
+
+**Epic F（发布前 E2E 三项包 · F-01～F-08）**：[docs/runbook/Epic-F-e2e-three-pack-ladder.md](docs/runbook/Epic-F-e2e-three-pack-ladder.md) · [evidence/GO_EPIC_F_E2E_THREE_PACK_CLOSE.md](evidence/GO_EPIC_F_E2E_THREE_PACK_CLOSE.md) · [evidence/README.md · Epic F](evidence/README.md#epic-f-e2e-three-pack-close) · [docs/任务母表.md](docs/任务母表.md)（检索 **Epic F**）。
 
 另：`docs/spec/` 下各子目录、`frontend/components/*` 部分组件、**`contracts/lib/forge-std`**（第三方）等也有各自 `README`，属于**局部说明**；完整枚举可在仓库内搜索文件名 `README`。
 

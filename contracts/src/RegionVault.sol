@@ -15,9 +15,20 @@ contract RegionVault {
     error OnlyOwner();
     error TransferFailed();
     error InvalidAmount();
+    error InvalidAddress();
+    error EmptyRegionId();
 
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
     event RegionVaultForwarded(address indexed token, address indexed to, uint256 amount);
+
+    /// @notice 与 API `parse_region_share_snapshot_line` / B-115-4 约定一致：`RegionShareSnapshotLine(uint256,address,string,uint256,uint256)`（topic0 = keccak256 该签名字符串）。
+    event RegionShareSnapshotLine(
+        uint256 indexed snapshotEpoch,
+        address indexed recipient,
+        string regionId,
+        uint256 snapshotBlockNumber,
+        uint256 shareBalance
+    );
 
     modifier onlyOwner() {
         if (msg.sender != owner) revert OnlyOwner();
@@ -40,10 +51,27 @@ contract RegionVault {
      * @param amount 转出数量（须 ≤ 本合约余额）
      */
     function forward(IERC20 token, address to, uint256 amount) external onlyOwner {
+        if (address(token) == address(0)) revert InvalidAddress();
         if (amount == 0) revert InvalidAmount();
         if (to == address(0)) revert InvalidAmount();
         if (token.balanceOf(address(this)) < amount) revert InvalidAmount();
         if (!token.transfer(to, amount)) revert TransferFailed();
         emit RegionVaultForwarded(address(token), to, amount);
+    }
+
+    /**
+     * @notice P5-3-1：链上锚点发出（仅 `owner`）；**不**改变 `forward` 资金路径语义。
+     * @dev 事件 ABI 须与 `crates/api/src/chain/indexer.rs` 中 `REGION_SHARE_SNAPSHOT_LINE_EVENT_SIGNATURE` 逐字段一致。
+     */
+    function emitRegionShareSnapshotLine(
+        uint256 snapshotEpoch,
+        address recipient,
+        string calldata regionId,
+        uint256 snapshotBlockNumber,
+        uint256 shareBalance
+    ) external onlyOwner {
+        if (bytes(regionId).length == 0) revert EmptyRegionId();
+        if (recipient == address(0)) revert InvalidAddress();
+        emit RegionShareSnapshotLine(snapshotEpoch, recipient, regionId, snapshotBlockNumber, shareBalance);
     }
 }

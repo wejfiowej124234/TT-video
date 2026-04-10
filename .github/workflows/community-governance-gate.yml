@@ -30,7 +30,7 @@ jobs:
           check_anchor() {
             local pattern="$1"
             local target="$2"
-            if rg -n "$pattern" "$target" >> "$EVIDENCE_DIR/community_governance_routes.log" 2>/dev/null; then
+            if grep -nF "$pattern" "$target" >> "$EVIDENCE_DIR/community_governance_routes.log" 2>/dev/null; then
               echo "[PASS] $pattern @ $target" >> "$EVIDENCE_DIR/community_governance_routes.log"
             else
               echo "[FAIL] $pattern @ $target" >> "$EVIDENCE_DIR/community_governance_routes.log"
@@ -42,13 +42,13 @@ jobs:
           check_anchor "/api/v1/community/feedback" "crates/api/src/routes/community.rs"
           check_anchor "/api/v1/internal/community/feedback/:id" "crates/api/src/routes/internal.rs"
           check_anchor "/api/v1/community/posts/:id/comments" "crates/api/src/routes/community.rs"
-          check_anchor "/api/v1/admin/community/comments/:id" "crates/api/src/routes/admin.rs"
-          check_anchor "/api/v1/admin/community/risk-signals" "crates/api/src/routes/admin.rs"
-          check_anchor "/api/v1/admin/community/policy-change-logs" "crates/api/src/routes/admin.rs"
-          check_anchor "/api/v1/admin/community/abuse-policy" "crates/api/src/routes/admin.rs"
+          check_anchor "/api/v1/admin/community/comments/:id" "crates/api/src/routes/admin/mod.rs"
+          check_anchor "/api/v1/admin/community/risk-signals" "crates/api/src/routes/admin/mod.rs"
+          check_anchor "/api/v1/admin/community/policy-change-logs" "crates/api/src/routes/admin/mod.rs"
+          check_anchor "/api/v1/admin/community/abuse-policy" "crates/api/src/routes/admin/mod.rs"
 
           # If 160治理专用路由已实现则按实现门禁校验，否则按Target占位校验。
-          target_route_count=$(rg -n "/api/v1/community/reports|/api/v1/admin/community/reports|/api/v1/admin/community/moderation/:id|/api/v1/admin/community/appeals/:id/review|/api/v1/admin/community/ranking/snapshots" crates/api/src/routes -S | wc -l | tr -d ' ')
+          target_route_count=$(grep -rE "/api/v1/community/reports|/api/v1/admin/community/reports|/api/v1/admin/community/moderation/:id|/api/v1/admin/community/appeals/:id/review|/api/v1/admin/community/ranking/snapshots" crates/api/src/routes --include='*.rs' 2>/dev/null | wc -l | tr -d ' ')
           if [[ "$target_route_count" -lt 5 ]]; then
             implemented_mode=false
             check_anchor "/api/v1/community/reports" "docs/spec/04-后端与API.md"
@@ -61,10 +61,10 @@ jobs:
             check_anchor "Target/Implemented 生效边界" "docs/spec/160-阶段开发内容与社区系统.md"
           else
             check_anchor "/api/v1/community/reports" "crates/api/src/routes/community.rs"
-            check_anchor "/api/v1/admin/community/reports" "crates/api/src/routes/admin.rs"
-            check_anchor "/api/v1/admin/community/moderation/:id" "crates/api/src/routes/admin.rs"
-            check_anchor "/api/v1/admin/community/appeals/:id/review" "crates/api/src/routes/admin.rs"
-            check_anchor "/api/v1/admin/community/ranking/snapshots" "crates/api/src/routes/admin.rs"
+            check_anchor "/api/v1/admin/community/reports" "crates/api/src/routes/admin/mod.rs"
+            check_anchor "/api/v1/admin/community/moderation/:id" "crates/api/src/routes/admin/mod.rs"
+            check_anchor "/api/v1/admin/community/appeals/:id/review" "crates/api/src/routes/admin/mod.rs"
+            check_anchor "/api/v1/admin/community/ranking/snapshots" "crates/api/src/routes/admin/mod.rs"
           fi
 
           if [[ "$failures" -eq 0 ]]; then

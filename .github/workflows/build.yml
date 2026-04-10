@@ -236,6 +236,8 @@ jobs:
   # 50-T1：E2E 纳入 CI（可选不阻塞，便于回归；发版前可将 continue-on-error 改为 false 以强制通过，见 50 §9.2/§六附 企业级检查）
   e2e:
     runs-on: ubuntu-latest
+    outputs:
+      playwright_outcome: ${{ steps.export_playwright_outcome.outputs.playwright_outcome }}
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v4
@@ -263,6 +265,7 @@ jobs:
         env:
           PORT: "8080"
           SEED_TEST_ACCOUNTS: "1"
+          P3_CHAIN_OFF: "1"
           TRAVELTRUST_BUILD_GIT_SHA: ${{ github.sha }}
           DATABASE_URL: ""
         run: |
@@ -279,11 +282,31 @@ jobs:
           cat /tmp/traveltrust-api-e2e.log || true
           exit 1
       - name: E2E (Playwright)
+        id: e2e_playwright
         env:
           PORT: "3012"
           PLAYWRIGHT_BASE_URL: "http://localhost:3012"
         run: cd frontend && npm run e2e -- --project=chromium
         continue-on-error: false  # E2E 门禁已收紧（50 §六附 修补所有问题）
+      - name: Baseline regression hint (informational, non-blocking)
+        if: always()
+        env:
+          E2E_OUTCOME: ${{ steps.e2e_playwright.outcome }}
+        run: bash scripts/check-baseline-regression.sh
+      - name: Export Playwright outcome for GO/NO-GO hint
+        id: export_playwright_outcome
+        if: always()
+        run: |
+          pw="${{ steps.e2e_playwright.outcome }}"
+          echo "playwright_outcome=${pw}" >> "${GITHUB_OUTPUT}"
+          printf '%s' "${pw}" > e2e-playwright-outcome.txt
+      - name: Upload e2e playwright outcome (GO/NO-GO)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-playwright-outcome
+          path: e2e-playwright-outcome.txt
+          retention-days: 2
       - name: Generate e2e evidence artifacts
         run: |
           TS_UTC="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
@@ -347,8 +370,8 @@ jobs:
             fi
           }
 
-          check_anchor "finance_summary_route" "/api/v1/admin/finance/summary" "crates/api/src/routes/admin.rs"
-          check_anchor "reconcile_report_route" "/api/v1/admin/indexer/reconcile-report/:id" "crates/api/src/routes/admin.rs"
+          check_anchor "finance_summary_route" "/api/v1/admin/finance/summary" "crates/api/src/routes/admin/mod.rs"
+          check_anchor "reconcile_report_route" "/api/v1/admin/indexer/reconcile-report/:id" "crates/api/src/routes/admin/mod.rs"
           check_anchor "indexer_reconcile_internal_route" "/api/v1/internal/indexer-reconcile" "crates/api/src/routes/internal.rs"
           check_anchor "indexer_replay_internal_route" "/api/v1/internal/indexer-replay" "crates/api/src/routes/internal.rs"
           check_anchor "indexer_status_internal_route" "/api/v1/internal/indexer-status" "crates/api/src/routes/internal.rs"
@@ -453,8 +476,8 @@ jobs:
           check_anchor "/api/v1/admin/flags" "docs/spec/04-后端与API.md"
           check_anchor "/api/v1/admin/flags/:id/publish" "docs/spec/04-后端与API.md"
           check_anchor "/api/v1/admin/secrets/metadata" "docs/spec/04-后端与API.md"
-          check_anchor "/api/v1/admin/approvals" "crates/api/src/routes/admin.rs"
-          check_anchor "/api/v1/admin/approvals/:id/approve" "crates/api/src/routes/admin.rs"
+          check_anchor "/api/v1/admin/approvals" "crates/api/src/routes/admin/mod.rs"
+          check_anchor "/api/v1/admin/approvals/:id/approve" "crates/api/src/routes/admin/mod.rs"
 
           route_pass_rate=$((route_checks_passed * 100 / route_checks_total))
           if [[ "$route_pass_rate" -ne 100 ]]; then
@@ -616,10 +639,10 @@ jobs:
           if check_anchor "/api/v1/admin/flags/:id/publish" "docs/spec/04-后端与API.md"; then
             route_checks_passed=$((route_checks_passed + 1))
           fi
-          if check_anchor "/api/v1/admin/approvals" "crates/api/src/routes/admin.rs"; then
+          if check_anchor "/api/v1/admin/approvals" "crates/api/src/routes/admin/mod.rs"; then
             route_checks_passed=$((route_checks_passed + 1))
           fi
-          if check_anchor "/api/v1/admin/approvals/:id/approve" "crates/api/src/routes/admin.rs"; then
+          if check_anchor "/api/v1/admin/approvals/:id/approve" "crates/api/src/routes/admin/mod.rs"; then
             route_checks_passed=$((route_checks_passed + 1))
           fi
 
@@ -966,10 +989,10 @@ jobs:
           if check_anchor "/api/v1/admin/secrets/metadata" "docs/spec/04-后端与API.md"; then
             route_checks_passed=$((route_checks_passed + 1))
           fi
-          if check_anchor "/api/v1/admin/approvals" "crates/api/src/routes/admin.rs"; then
+          if check_anchor "/api/v1/admin/approvals" "crates/api/src/routes/admin/mod.rs"; then
             route_checks_passed=$((route_checks_passed + 1))
           fi
-          if check_anchor "/api/v1/admin/approvals/:id/approve" "crates/api/src/routes/admin.rs"; then
+          if check_anchor "/api/v1/admin/approvals/:id/approve" "crates/api/src/routes/admin/mod.rs"; then
             route_checks_passed=$((route_checks_passed + 1))
           fi
 
@@ -1127,3 +1150,44 @@ jobs:
       - uses: actions/checkout@v6
       - name: CI triage hint
         run: bash scripts/ci-triage.sh
+
+  # Informational release hint: does not affect workflow success/failure.
+  go-no-go-hint:
+    name: GO/NO-GO hint (informational)
+    runs-on: ubuntu-latest
+    if: always()
+    needs:
+      - build
+      - frontend
+      - regional-matrix
+      - a11y
+      - e2e
+      - finance-reconcile
+      - config-center
+      - feature-flag
+      - job-queue
+      - secret-key
+    steps:
+      - uses: actions/checkout@v6
+      - name: Download e2e playwright outcome (if any)
+        if: always()
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: e2e-playwright-outcome
+          path: e2e-out
+      - name: GO/NO-GO hint
+        env:
+          E2E_PLAYWRIGHT_OUTCOME: ${{ needs.e2e.outputs.playwright_outcome }}
+          E2E_OUTCOME_FILE: e2e-out/e2e-playwright-outcome.txt
+          JOB_BUILD: ${{ needs.build.result }}
+          JOB_FRONTEND: ${{ needs.frontend.result }}
+          JOB_REGIONAL_MATRIX: ${{ needs.regional-matrix.result }}
+          JOB_A11Y: ${{ needs.a11y.result }}
+          JOB_E2E: ${{ needs.e2e.result }}
+          JOB_FINANCE_RECONCILE: ${{ needs.finance-reconcile.result }}
+          JOB_CONFIG_CENTER: ${{ needs.config-center.result }}
+          JOB_FEATURE_FLAG: ${{ needs.feature-flag.result }}
+          JOB_JOB_QUEUE: ${{ needs.job-queue.result }}
+          JOB_SECRET_KEY: ${{ needs.secret-key.result }}
+        run: bash scripts/check-go-no-go.sh

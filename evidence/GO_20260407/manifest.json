@@ -1,0 +1,19 @@
+{
+  "gate": "P0-DRY-RUN",
+  "date": "2026-04-07",
+  "bundle_note": "TT-GO-LIVE-P0-DRY-RUN-EVIDENCE-001 — lightweight P0 dry-run; not a full Gate-1..5 sign-off",
+  "artifacts": [
+    {
+      "path": "artifacts/test.log",
+      "sha256": "67f2157409ec5e82c2ec60d9d287e15bb46faad490de3e8c7bbc88b99c77fa39"
+    },
+    {
+      "path": "artifacts/pre-release.log",
+      "sha256": "1b69d484745ecc8168ee111470150cfb73e6ddf7d23a0f30ddbc680e4954c85c"
+    }
+  ],
+  "sign_off": [
+    "dry-run-automation",
+    "traveltrust-api-tests"
+  ]
+}

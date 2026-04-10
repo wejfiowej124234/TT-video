@@ -9,6 +9,7 @@ import "../src/MockERC20.sol";
 import "../src/FeeRouter.sol";
 import "../src/RegionVault.sol";
 import "../src/InvestorDistributionClaim.sol";
+import "../src/RegionDistributionClaim.sol";
 import "../src/GovernanceTimelock.sol";
 import "../src/GovernanceTreasury.sol";
 
@@ -42,6 +43,11 @@ contract DeployScript is Script {
         // RegionVault：承接 FeeRouter 国家桶（45% 第一层）；四方其余三方可改为多签/国库（83/84）
         RegionVault regionVault = new RegionVault(deployer);
         console.log("RegionVault", address(regionVault));
+        // P5-3-1 复核：`RegionShareSnapshotLine` topic0 = keccak256("RegionShareSnapshotLine(uint256,address,string,uint256,uint256)")；链上锚点由 `owner` 调用 `emitRegionShareSnapshotLine`（与 `crates/api/src/chain/indexer.rs` / B-115-4 解析一致）。
+        console.log("P5_3_1_RegionShareSnapshotLine_topic0");
+        console.logBytes32(
+            keccak256(bytes("RegionShareSnapshotLine(uint256,address,string,uint256,uint256)"))
+        );
 
         FeeRouter feeRouter = new FeeRouter(
             deployer,
@@ -57,6 +63,9 @@ contract DeployScript is Script {
 
         InvestorDistributionClaim distClaim = new InvestorDistributionClaim(deployer);
         console.log("InvestorDistributionClaim", address(distClaim));
+
+        RegionDistributionClaim regionDistClaim = new RegionDistributionClaim(deployer);
+        console.log("RegionDistributionClaim", address(regionDistClaim));
 
         // B-089：治理延迟执行；延迟秒数可环境覆盖（测试网建议 ≥ 86400）
         uint256 timelockDelay = vm.envOr("GOVERNANCE_TIMELOCK_DELAY_SECONDS", uint256(86400));

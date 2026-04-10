@@ -1,0 +1,46 @@
+{
+  "artifact_schema_id": "traveltrust.ops_artifact.v1",
+  "artifact_schema_version": "1.0.0",
+  "artifact_version": "v1",
+  "artifact_type": "snapshot_public",
+  "captured_at": "2026-04-09T00:00:00Z",
+  "epic_task_id": "Epic-D-D02",
+  "provenance": {
+    "script": "indexer-public-snapshot.sh",
+    "script_semver": "1.4.0",
+    "host_git_commit": null,
+    "host_git_branch": null,
+    "host_repo_dirty": null
+  },
+  "api_context": {
+    "api_base_url_redacted": "http://127.0.0.1:8080",
+    "chain_id": null,
+    "internal_invoked": false
+  },
+  "payload": {
+    "api_base_url": "http://127.0.0.1:8080",
+    "fetched_at": "2026-04-09T00:00:00Z",
+    "snapshot_provenance": {
+      "script": "indexer-public-snapshot.sh",
+      "script_semver": "1.4.0",
+      "host_git_commit": null,
+      "host_git_branch": null,
+      "host_repo_dirty": null
+    },
+    "snapshot_options": {
+      "snapshot_internal_reconcile_rpc": null,
+      "snapshot_internal_status_live_reconcile": null,
+      "snapshot_internal_reconcile_include_chain_tip": null,
+      "snapshot_internal_reconcile_include_event_log_escrow_coverage": null,
+      "snapshot_internal_indexer_tick": null,
+      "snapshot_internal_skip_reconcile": null
+    },
+    "health": { "status": "ok" },
+    "meta": { "note": "illustrative minimal keys only; run scripts/indexer-public-snapshot.sh against a live API for real /health + /meta" },
+    "admin_indexer_health": null,
+    "admin_observability_overview": null,
+    "internal_indexer_status": null,
+    "internal_indexer_reconcile": null,
+    "internal_indexer_tick": null
+  }
+}

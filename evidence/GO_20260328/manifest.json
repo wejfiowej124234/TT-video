@@ -1,0 +1,26 @@
+{
+  "gate": "machine-preverify",
+  "date": "2026-03-28",
+  "bundle_kind": "automation_logs",
+  "artifacts": [
+    {
+      "path": "pre-release-automation.log",
+      "sha256": "e65ff3c720fc6bebd7bd2ffcfa63ca270ee216b475c8890b204a0df946068205"
+    },
+    {
+      "path": "cargo-test.log",
+      "sha256": "bd1bbb404ab29dd51c8ed73e0add560f25bc8c461d2ce183204278024fbc3b04"
+    },
+    {
+      "path": "pre-release-automation-run.log",
+      "sha256": "601f03642820260a86583d83d8426f809289d2f8c6d32723015c684f8e13277b"
+    },
+    {
+      "path": "cargo-test-run.log",
+      "sha256": "dbde86850b4236aa0accc272c8e08008545e27ce1531a756642a2f88baa56568"
+    }
+  ],
+  "sign_off": [
+    "automation: pre-release-automation.sh + cargo test — not legal/ops release sign-off"
+  ]
+}

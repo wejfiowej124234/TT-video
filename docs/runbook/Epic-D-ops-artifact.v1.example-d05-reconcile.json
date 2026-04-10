@@ -1,0 +1,51 @@
+{
+  "artifact_schema_id": "traveltrust.ops_artifact.v1",
+  "artifact_schema_version": "1.0.0",
+  "artifact_version": "v1",
+  "artifact_type": "reconcile",
+  "dry_run": false,
+  "captured_at": "2026-04-09T12:34:56Z",
+  "epic_task_id": "Epic-D-D05",
+  "provenance": {
+    "script": "internal-indexer-ops.sh",
+    "script_semver": "1.4.0",
+    "host_git_commit": "abcdef0123456789",
+    "host_git_branch": "main",
+    "host_repo_dirty": false
+  },
+  "api_context": {
+    "api_base_url_redacted": "http://127.0.0.1:8080",
+    "chain_id": 1,
+    "internal_invoked": true,
+    "persist_requested": false
+  },
+  "ops_summary": {
+    "dry_run": false,
+    "domain": "orders",
+    "issues_total": 0,
+    "clean": true
+  },
+  "reconcile_surface": {
+    "issues_total": 0,
+    "projection_reconcile_clean": true,
+    "reconcile_compound_pass": true,
+    "orders_projection_reconcile_gate_pass": true,
+    "indexer_reconcile_compound_gate_pass": true
+  },
+  "payload": {
+    "issues_total": 0,
+    "projection_reconcile_clean": true,
+    "orders_projection_reconcile_gate": {
+      "pass": true,
+      "breakdown": {},
+      "human_summary": "example"
+    },
+    "reconcile_compound_pass": true,
+    "indexer_reconcile_compound_gate": {
+      "pass": true,
+      "breakdown": {},
+      "human_summary": "example",
+      "anchor": "B101-INDEXER-RECONCILE-COMPOUND-GATE"
+    }
+  }
+}

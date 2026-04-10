@@ -1,0 +1,24 @@
+
+=== meta ===
+exported_utc: 2026-04-10T02:31:44Z
+repo_root: /c/Users/plant/Desktop/Wbe3-TravelTrust
+git_commit: 355ff6547146ff534390477ff99bd7603e780243
+
+=== contracts / forge ===
+forge_version: forge Version: 1.5.1-stable
+forge_version: Commit SHA: b0a9dd9ceda36f63e2326ce530c10e6916f4b8a2
+forge_version: Build Timestamp: 2025-12-22T11:40:33.870895500Z (1766403633)
+forge_version: Build Profile: maxperf
+Compiling 1 files with Solc 0.8.19
+Solc 0.8.19 finished in 518.98ms
+Compiler run successful!
+bytecode_chars_Escrow: 19285
+bytecode_chars_EscrowFactory: 46121
+bytecode_chars_Staking: 6685
+bytecode_chars_Registry: 4071
+bytecode_chars_FeeRouter: 12529
+bytecode_chars_MockERC20: 4741
+
+=== optional slither ===
+Run: cd contracts && slither . --json slither-report.json
+Attach slither-report.json or this file to evidence/GO_YYYYMMDD/ per checklist-17 #5.

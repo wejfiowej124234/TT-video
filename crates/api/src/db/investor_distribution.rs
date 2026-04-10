@@ -1,4 +1,6 @@
 //! 应计分红分录（B-086 / **TT-B086-INVESTOR-DISTRIBUTION-ACCRUAL-001**）：幂等 **`idempotency_key`** + 快照块 **`pro_rata`** 分配（**`allocate_pro_rata_accruals`** = **`pro_rata_share_balance_at_snapshot`**）；**B-088** 快照钉死常量（**`SNAPSHOT_*`** / **`B088_ANCHOR`**）供 API **`snapshot_binding`** 引用
+//!
+//! **B-115-3**：**`registerAccrual`** 链下登记视图（与 **`InvestorDistributionClaim`** 头注释 **`distributionId`↔UUID** 对齐）；**不**调用链上。
 
 use chrono::{DateTime, Utc};
 use num_bigint::BigUint;
@@ -128,6 +130,33 @@ pub async fn sum_fee_router_amount_upto_block_hex(
         })?;
     }
     Ok(fmt_word_hex(&acc))
+}
+
+/// 与 **`InvestorDistributionClaim`** 头注释一致：将 **`Uuid` 的 128 位**置于 **`bytes32` 低 128 位**（高 128 位 **0**），供链上 **`distributionId`** / **`registerAccrual`** 对读。
+pub fn distribution_uuid_to_bytes32_hex_for_claim(id: Uuid) -> String {
+    let u = id.as_u128();
+    let mut word = [0u8; 32];
+    word[16..32].copy_from_slice(&u.to_be_bytes());
+    fmt_word_hex(&word)
+}
+
+pub async fn get_investor_distribution_accrual_line(
+    pool: &PgPool,
+    distribution_id: Uuid,
+    holder_address: &str,
+) -> Result<Option<InvestorDistributionAccrualLineRow>, sqlx::Error> {
+    let h = holder_address.trim().to_lowercase();
+    sqlx::query_as::<_, InvestorDistributionAccrualLineRow>(
+        r#"
+        SELECT distribution_id, holder_address, balance_snapshot_u256_hex, accrual_u256_hex
+        FROM investor_distribution_accrual_lines
+        WHERE distribution_id = $1 AND LOWER(holder_address) = $2
+        "#,
+    )
+    .bind(distribution_id)
+    .bind(h)
+    .fetch_optional(pool)
+    .await
 }
 
 pub async fn get_distribution_by_idempotency_key(
@@ -322,6 +351,34 @@ mod tests {
         assert_eq!(a.0, b.0);
         assert_eq!(a.1, b.1);
         assert_eq!(a.2, b.2);
+    }
+
+    /// **B-115-5**：应计 **现金口径 / 公式** 字面量 **不得** 与 **`fee-pool-aggregates`** 的 **Σ SSOT 串** 混名（与 **B-084** 投影聚合正交）。
+    #[test]
+    fn b1155_distribution_constants_not_fee_pool_aggregate_ssot_alias() {
+        assert_ne!(
+            crate::db::economic_aggregate::FEE_POOL_AGGREGATES_SSOT_LITERAL,
+            CASH_BASIS
+        );
+        assert_ne!(
+            crate::db::economic_aggregate::FEE_POOL_AGGREGATES_SSOT_LITERAL,
+            FORMULA
+        );
+        assert_ne!(
+            crate::db::economic_aggregate::FEE_POOL_AGGREGATES_RULE_VERSION,
+            SNAPSHOT_BLOCK_BINDING
+        );
+    }
+
+    /// **B-115-3**：**`Uuid::as_u128()`** 落 **`bytes32` 低 128 位**（big-endian 词）。
+    #[test]
+    fn b1153_distribution_uuid_to_bytes32_lower_u128() {
+        let id = Uuid::from_u128(0x00ab);
+        let h = distribution_uuid_to_bytes32_hex_for_claim(id);
+        assert_eq!(
+            h,
+            "0x00000000000000000000000000000000000000000000000000000000000000ab"
+        );
     }
 
     #[test]

@@ -1,0 +1,154 @@
+{
+  "artifact_schema_id": "traveltrust.ops_artifact.v1",
+  "artifact_schema_version": "1.0.0",
+  "artifact_type": "bundle",
+  "captured_at": "2026-04-09T00:00:00Z",
+  "epic_task_id": "Epic-D-D01",
+  "provenance": {
+    "host_git_commit": null,
+    "host_git_branch": null,
+    "host_repo_dirty": null,
+    "note": "D-01 登记物：tasks_min_keys；非运行时探针产物。"
+  },
+  "api_context": {
+    "internal_invoked": false,
+    "api_base_url_redacted": false
+  },
+  "payload": {},
+  "tasks_min_keys": {
+    "Epic-D-D02": {
+      "artifact_type": "snapshot_public",
+      "ops_summary_required": false,
+      "payload_keys": ["health", "meta", "snapshot_provenance"]
+    },
+    "Epic-D-D03": {
+      "artifact_type": "indexer_status",
+      "ops_summary_required": false,
+      "artifact_version_label": "v1",
+      "payload_keys": ["indexer", "state"],
+      "envelope_keys": ["status", "checkpoint", "lag", "indexer_surface", "live_reconcile_surface"]
+    },
+    "Epic-D-D04": {
+      "artifact_type": "indexer_status",
+      "ops_summary_required": false,
+      "artifact_version_label": "v1",
+      "payload_keys": ["live_orders_projection_reconcile"],
+      "envelope_keys": ["live_reconcile_surface", "status", "checkpoint", "lag"]
+    },
+    "Epic-D-D05": {
+      "artifact_type": "reconcile",
+      "ops_summary_required": true,
+      "ops_summary_template": {
+        "dry_run": false,
+        "domain": "orders",
+        "issues_total": "from payload.issues_total",
+        "clean": "from payload.projection_reconcile_clean"
+      },
+      "envelope_keys": [
+        "reconcile_surface",
+        "ops_summary",
+        "api_context"
+      ],
+      "payload_keys": [
+        "issues_total",
+        "projection_reconcile_clean",
+        "orders_projection_reconcile_gate",
+        "reconcile_compound_pass",
+        "indexer_reconcile_compound_gate"
+      ]
+    },
+    "Epic-D-D06": {
+      "artifact_type": "dry_run_chain",
+      "ops_summary_required": true,
+      "ops_summary_template": {
+        "dry_run": true,
+        "domain": "chain",
+        "issues_total": "from payload.orders_chain_scope_rollback_dry_run.orders_chain_id_null_with_escrow_address (script envelope) or D-01",
+        "clean": "true iff issues_total === 0 per D-01"
+      },
+      "envelope_keys": [
+        "dry_run",
+        "dry_run_chain_surface",
+        "ops_summary",
+        "api_context"
+      ],
+      "payload_keys": ["orders_chain_scope_rollback_dry_run"]
+    },
+    "Epic-D-D07": {
+      "artifact_type": "dry_run_event_log",
+      "ops_summary_required": true,
+      "ops_summary_template": {
+        "dry_run": true,
+        "domain": "event_log",
+        "issues_total": "sum of four row counts in payload.event_log_chain_scope_rollback_dry_run; 0 if block absent",
+        "clean": "true iff issues_total === 0"
+      },
+      "envelope_keys": [
+        "dry_run",
+        "reason_code",
+        "dry_run_event_log_surface",
+        "ops_summary",
+        "api_context"
+      ],
+      "payload_keys": ["event_log_chain_scope_rollback_dry_run"]
+    },
+    "Epic-D-D08": {
+      "artifact_type": "dry_run_correction_executor",
+      "ops_summary_required": true,
+      "ops_summary_template": {
+        "dry_run": true,
+        "domain": "correction_executor",
+        "issues_total": "correction_log_rows + executor_executions_rows in payload.correction_executor_chain_scope_rollback_dry_run; 0 if block absent",
+        "clean": "true iff issues_total === 0"
+      },
+      "envelope_keys": [
+        "dry_run",
+        "reason_code",
+        "dry_run_correction_executor_surface",
+        "ops_summary",
+        "api_context"
+      ],
+      "payload_keys": ["correction_executor_chain_scope_rollback_dry_run"]
+    },
+    "Epic-D-D09": {
+      "artifact_type": "probe",
+      "ops_summary_required": false,
+      "artifact_version_label": "v1",
+      "envelope_keys": [
+        "probe_exit_code",
+        "issues_total",
+        "clean",
+        "gate_workflow_checks_total_expected",
+        "gate_workflow_rule_id",
+        "gate_workflow_job",
+        "api_context"
+      ],
+      "payload_keys": [
+        "indexer_status",
+        "probe_exit_code",
+        "issues_total",
+        "projection_reconcile_clean",
+        "gate_workflow_checks_total_expected",
+        "gate_workflow_rule_id",
+        "gate_workflow_job"
+      ]
+    },
+    "Epic-D-D10": {
+      "artifact_type": "bundle",
+      "ops_summary_required": false,
+      "artifact_version_label": "v1",
+      "envelope_keys": [
+        "bundle_closure",
+        "payload",
+        "api_context",
+        "provenance"
+      ],
+      "payload_keys": [
+        "manifest",
+        "manifest_sha256_file",
+        "artifact_types_detected",
+        "artifacts_min_epic_d_hint"
+      ]
+    }
+  }
+}

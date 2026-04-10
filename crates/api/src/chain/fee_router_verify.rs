@@ -3,15 +3,12 @@
 use sha3::{Digest, Keccak256};
 
 use crate::chain::ChainConfig;
-use crate::chain_off::parse_platform_fee_routed;
+use crate::chain_off::{parse_platform_fee_routed, platform_fee_routed_topic0_hex as topic0_platform_fee_routed};
 use crate::db::FeeRouterRoutedEventRow;
 
-/// `keccak256("PlatformFeeRouted(address,uint256,uint256,uint256,uint256,uint256)")` topic0
+/// `keccak256(PlatformFeeRouted(address,uint256,uint256,uint256,uint256,uint256))` topic0（与 `chain_off::reconcile` SSOT 一致）。
 pub fn platform_fee_routed_topic0_hex() -> String {
-    let h = Keccak256::digest(
-        b"PlatformFeeRouted(address,uint256,uint256,uint256,uint256,uint256)",
-    );
-    format!("0x{}", hex::encode(h))
+    topic0_platform_fee_routed()
 }
 
 fn norm_hex_addr(a: &str) -> String {
@@ -27,6 +24,34 @@ fn norm_u256_hex(h: &str) -> String {
         return h.to_string();
     }
     format!("0x{:0>64}", s)
+}
+
+/// 将 [`parse_platform_fee_routed`] 解码结果与 DB 投影行逐字段比对（**无 RPC**；与 `verify_fee_router_row_vs_chain` 规则一致）。
+pub fn platform_fee_routed_parsed_matches_row(
+    token: &str,
+    words: &[String; 5],
+    row: &FeeRouterRoutedEventRow,
+) -> Result<(), (&'static str, String, String)> {
+    if norm_hex_addr(token) != norm_hex_addr(&row.token_address) {
+        return Err((
+            "token_address",
+            token.to_string(),
+            row.token_address.clone(),
+        ));
+    }
+    let u256_pairs = [
+        ("amount_u256_hex", words[0].as_str(), row.amount_u256_hex.as_str()),
+        ("to_country_u256_hex", words[1].as_str(), row.to_country_u256_hex.as_str()),
+        ("to_stakers_u256_hex", words[2].as_str(), row.to_stakers_u256_hex.as_str()),
+        ("to_reserve_u256_hex", words[3].as_str(), row.to_reserve_u256_hex.as_str()),
+        ("to_ops_u256_hex", words[4].as_str(), row.to_ops_u256_hex.as_str()),
+    ];
+    for (name, chain_v, db_v) in u256_pairs {
+        if norm_u256_hex(chain_v) != norm_u256_hex(db_v) {
+            return Err((name, chain_v.to_string(), db_v.to_string()));
+        }
+    }
+    Ok(())
 }
 
 fn evm_fn_selector(sig: &str) -> [u8; 4] {
@@ -395,7 +420,9 @@ pub async fn verify_fee_router_row_vs_chain(
                     "error": "parse_platform_fee_routed_failed",
                 });
             };
-            if norm_hex_addr(&token) != norm_hex_addr(&row.token_address) {
+            if let Err((field, chain_v, db_v)) =
+                platform_fee_routed_parsed_matches_row(&token, &words, row)
+            {
                 return serde_json::json!({
                     "ok": false,
                     "chain_id": row.chain_id,
@@ -403,32 +430,10 @@ pub async fn verify_fee_router_row_vs_chain(
                     "log_index": row.log_index,
                     "tx_hash": row.tx_hash,
                     "error": "field_mismatch",
-                    "field": "token_address",
-                    "chain": token,
-                    "db": row.token_address,
+                    "field": field,
+                    "chain": chain_v,
+                    "db": db_v,
                 });
-            }
-            let u256_pairs = [
-                ("amount_u256_hex", words[0].as_str(), row.amount_u256_hex.as_str()),
-                ("to_country_u256_hex", words[1].as_str(), row.to_country_u256_hex.as_str()),
-                ("to_stakers_u256_hex", words[2].as_str(), row.to_stakers_u256_hex.as_str()),
-                ("to_reserve_u256_hex", words[3].as_str(), row.to_reserve_u256_hex.as_str()),
-                ("to_ops_u256_hex", words[4].as_str(), row.to_ops_u256_hex.as_str()),
-            ];
-            for (name, chain_v, db_v) in u256_pairs {
-                if norm_u256_hex(chain_v) != norm_u256_hex(db_v) {
-                    return serde_json::json!({
-                        "ok": false,
-                        "chain_id": row.chain_id,
-                        "block_number": row.block_number,
-                        "log_index": row.log_index,
-                        "tx_hash": row.tx_hash,
-                        "error": "field_mismatch",
-                        "field": name,
-                        "chain": chain_v,
-                        "db": db_v,
-                    });
-                }
             }
             serde_json::json!({
                 "ok": true,
@@ -463,6 +468,42 @@ mod tests {
     #[test]
     fn norm_u256_hex_pads() {
         assert_eq!(norm_u256_hex("0x1"), "0x0000000000000000000000000000000000000000000000000000000000000001");
+    }
+
+    /// B-116-2-2：纯比对辅助（无 RPC）。
+    #[test]
+    fn platform_fee_routed_parsed_matches_row_ok_and_token_mismatch() {
+        let token_addr = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        let row = FeeRouterRoutedEventRow {
+            id: Uuid::nil(),
+            chain_id: 1,
+            block_number: 1,
+            log_index: 0,
+            block_hash: "0x00".to_string(),
+            tx_hash: "0x01".to_string(),
+            router_address: "0x11".to_string(),
+            token_address: format!("0x{token_addr}"),
+            amount_u256_hex: norm_u256_hex("0x1"),
+            to_country_u256_hex: norm_u256_hex("0x2"),
+            to_stakers_u256_hex: norm_u256_hex("0x3"),
+            to_reserve_u256_hex: norm_u256_hex("0x4"),
+            to_ops_u256_hex: norm_u256_hex("0x5"),
+            inserted_at: Utc::now(),
+        };
+        let words = [
+            norm_u256_hex("0x1"),
+            norm_u256_hex("0x2"),
+            norm_u256_hex("0x3"),
+            norm_u256_hex("0x4"),
+            norm_u256_hex("0x5"),
+        ];
+        assert!(platform_fee_routed_parsed_matches_row(
+            &format!("0x{token_addr}"),
+            &words,
+            &row
+        )
+        .is_ok());
+        assert!(platform_fee_routed_parsed_matches_row("0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", &words, &row).is_err());
     }
 
     /// B-081：单笔 **DB 投影行** 与 **`eth_getTransactionReceipt.logs[]`**（与 **`eth_getLogs`** 同字段解码路径）逐字段一致。

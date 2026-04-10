@@ -19,6 +19,7 @@
 | **本页视觉层级与代码文件索引** | **§二 2.6**（深色 Tropical 全页壳 + **环境粒子** + Hero 旅游柔光；**非** ICO 认购交互）；动效与 Token 映射仍对齐 **[86](86-UI-双系统未来风-风格与动效技术规格.md)**、**[22 §一点五](22-Design-Tokens-旅游Web3融合体系-v1.0.md)**；读序 **[07 §五 5.3](07-开发流程与顺序.md)**、**[07 §五 5.3A](07-开发流程与顺序.md)** |
 | **融资数字、Allocation** | **[84](84-第一阶段10国Country-Pool发行参数总表.md)**、**[governance-token/02 §2.5](governance-token/02-对内技术规格-草案.md)** |
 | **订单主链 / Escrow** | **[53](53-阶段开发技术文档.md)**、**[01](01-总库总览.md)** — 本文**不**替代 |
+| **法务与 A-B（B-106）** | **文内指针/勾选落点**：对外叙事 **fail-closed** 互证 **[08-4](08-4-对外口径包.md)**、**[governance-token/LEGAL-SIGNOFF-CHECKLIST](governance-token/LEGAL-SIGNOFF-CHECKLIST.md)**（**不**替代 **08-4** 签字定稿） |
 
 ---
 

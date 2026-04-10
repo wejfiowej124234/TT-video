@@ -32,10 +32,14 @@ pub use jobs_scheduler_config::*;
 pub use lifecycle_state_machines::*;
 pub use media_signed_url::*;
 pub use messages::*;
+pub use multi_table_chain_observability::multi_table_chain_id_footprint_matrix_rows;
 pub use orders::*;
 pub use orders_projection::*;
+pub use p5_country_ledger::*;
 pub use reconciliation_reports::*;
 pub use region_vault_events::*;
+#[allow(unused_imports)] // B-115-1：HTTP/indexer 未接线前仅单测直引模块；保留与 `crate::db::*` 同形 re-export
+pub use region_snapshot::*;
 pub use reviews::*;
 pub use users_sessions::*;
 
@@ -68,9 +72,12 @@ mod jobs_scheduler_config;
 mod lifecycle_state_machines;
 mod media_signed_url;
 mod messages;
+mod multi_table_chain_observability;
 mod orders;
 mod orders_projection;
+mod p5_country_ledger;
 mod reconciliation_reports;
 mod region_vault_events;
+mod region_snapshot;
 mod reviews;
 mod users_sessions;

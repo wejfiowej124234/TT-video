@@ -1,0 +1,41 @@
+# Epic F-07：E2E 三项包 **静态证据** 门禁（**不**跑浏览器、**不**起链、**不**要 secrets）
+# 仅调用 scripts/check-e2e-three-pack-evidence.sh；失败 = **证据目录结构/命名**不满足，**非**业务用例失败。
+name: Epic F · E2E three-pack evidence (static)
+
+on:
+  pull_request:
+    paths:
+      - 'evidence/**'
+      - 'docs/runbook/Epic-F*.md'
+      - 'docs/runbook/e2e-*.example.md'
+      - 'docs/runbook/Epic-F-e2e-three-pack.manifest-artifacts.example.json'
+      - 'scripts/check-e2e-three-pack-evidence.sh'
+      - '.github/workflows/e2e-three-pack-evidence.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'evidence/**'
+      - 'docs/runbook/Epic-F*.md'
+      - 'docs/runbook/e2e-*.example.md'
+      - 'docs/runbook/Epic-F-e2e-three-pack.manifest-artifacts.example.json'
+      - 'scripts/check-e2e-three-pack-evidence.sh'
+      - '.github/workflows/e2e-three-pack-evidence.yml'
+  workflow_dispatch:
+    inputs:
+      skip_check:
+        description: 'Set true to skip (E2E_THREE_PACK_CHECK_SKIP=1); emergency / greenkeeping only'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  epic-f-e2e-three-pack-static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Static structure — GO_20260407 / artifacts/e2e-*.md
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.event.inputs.skip_check }}" = "true" ]; then
+            export E2E_THREE_PACK_CHECK_SKIP=1
+          fi
+          bash scripts/check-e2e-three-pack-evidence.sh evidence/GO_20260407

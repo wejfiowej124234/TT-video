@@ -13,6 +13,8 @@
 | **金融区 / Zone Control / 交易交互** | **§二 表 3、表 4** |
 | **异常态清单** | **§二** 下文「异常态清单」；Escrow 扩展见 **[53](53-阶段开发技术文档.md)** |
 | **风格宪法（情绪层 vs 资金层）** | **[13](13-协议级UI设计宪法.md)**（**§一 1️⃣** 补充款）；**Experience 视觉 [86](86-UI-双系统未来风-风格与动效技术规格.md)**；**叙事结构 [28](28-Cinematic-Glassmorphism-Web3融合规范.md)** |
+| **浅色页 AA / 触控与对比度（B-107）** | **基线**：与 **[13](13-协议级UI设计宪法.md)**、**[22 §一点五](22-Design-Tokens-旅游Web3融合体系-v1.0.md)** 一致；五主路由页身抽检互证 **[88](88-五主路由页身实现快照与UX缺口审计-20260330.md)**、**[05 §九](05-前端总览.md)** |
+| **新路由契约门禁（B-108）** | 新增 **`frontend/app/**/page.tsx`** 须同批 **[04 §3.4](04-后端与API.md)** + **本文表 1** + **`scripts/run-check-04-routes.sh`**（**`check-04-routes-vs-code.py`** 等）；**验收**以脚本绿与表内登记一致为准 |
 
 ---
 
@@ -84,6 +86,8 @@
 | 对象 | 边界 |
 |------|------|
 | **本表「治理者」+ 路由 `/governance`** | 产品内治理入口；当前典型能力为 **只读展示**（如 `GET /api/v1/governance/pool`、`…/rewards`，见 [04 §3.4](04-后端与API.md)）；未来若做提案/投票 **UI**，须与链上合约能力**一致**，不得伪造链上已执行 |
+| **`/governance/distribution-accruals`（及 `[id]`）** | **P5-4-2**：应计分录叙事 **只读**；消费 **`GET …/governance/investor-distribution-accruals`**；**不**冒充链上 **Claim** SSOT、**不**承担 **`fee-pool-aggregates`** Σ 主叙事；**不**从前台调用 **`/internal/`** 写接口（与 [04 §3.4 前端路由表](04-后端与API.md) 同批登记） |
+| **`/governance/distribution-claim`** | **P5-4-1**：**`InvestorDistributionClaim`** **用户钱包** **`claim` / `withdrawDividend`**；**不**在 UI 封装 **`registerAccrual`**（**owner** 链上登记仍归 **B-115** 内网/运维路径）；**不**将 **`fee-pool-aggregates`** Σ **文案化成** Claim 主叙事；合约地址 **`NEXT_PUBLIC_INVESTOR_DISTRIBUTION_CLAIM_ADDRESS`**（与 [04 §3.4](04-后端与API.md)、[evidence/GO_P5_4_CLOSE.md](../../evidence/GO_P5_4_CLOSE.md) 同批） |
 | **[83](83-区域治理与收益分配-协议白皮书.md) GlobalDAO / RegionDAO** | **FeeRouter 比例、Snapshot、Seat、Claim** 等以**链上合约 + 治理流程**为权威；后端 **禁止**直接改池内余额或分配比例；职责矩阵见 **83 附录 I**（含 **I.0** 与本表对照） |
 | **82 / 84 / 08-4** | 经济数字与对外口径的 SSOT；募资与 **Country Pool** 叙事见 [84](84-第一阶段10国Country-Pool发行参数总表.md)；**FeeRouter 未上链前**不得对外宣称治理页数字=链上路由真值 |
 | **Admin（表 2-补充）** | 运营/审批/审计；**不得**与「治理者」链上参数改动混为同一入口或同一套权限语义 |

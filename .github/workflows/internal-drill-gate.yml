@@ -29,13 +29,23 @@ jobs:
             grep -n "last_stored_orders_projection_reconcile" crates/api/src/routes/internal.rs
             grep -n "/api/v1/internal/incident/open" crates/api/src/routes/internal.rs
             grep -n "/api/v1/internal/indexer-reconcile" crates/api/src/routes/internal.rs
+            grep -n "TT-B110-SEQ3-ORDERS-DEADLINE-INDEXER-RECONCILE-CHECK-001" crates/api/src/routes/internal.rs
+            grep -n "TT-B110-SEQ5-GOVERNANCE-GOVERNOR-VIEW-PARAMS-CHAIN-SSOT-001" crates/api/src/routes/internal.rs
+            grep -n "TT-B110-SEQ6-GOVERNANCE-TIMELOCK-DELAY-CHAIN-SSOT-001" crates/api/src/routes/internal.rs
+            grep -n "TT-B110-SEQ8-GOVERNANCE-GOVERNOR-PROPOSAL-THRESHOLD-CHAIN-SSOT-001" crates/api/src/routes/internal.rs
+            grep -n "TT-B110-SEQ9-GOVERNANCE-TIMELOCK-GOVERNOR-ADMIN-CHAIN-SSOT-001" crates/api/src/routes/internal.rs
+            grep -n "TT-B110-SEQ10-GOVERNANCE-GOVERNOR-PROPOSAL-COUNT-CHAIN-SSOT-001" crates/api/src/routes/internal.rs
+            grep -n "TT-B110-SEQ11-GOVERNANCE-GOVERNOR-TOKEN-TIMELOCK-CHAIN-SSOT-001" crates/api/src/routes/internal.rs
             grep -n "/api/v1/internal/indexer-reorg-rewind" crates/api/src/routes/internal.rs
             grep -n "projection_reconcile_clean" crates/api/src/routes/internal.rs
             grep -n "live_orders_projection_reconcile" crates/api/src/routes/internal.rs
-            grep -n "traveltrust_indexer_lag_blocks" crates/api/src/routes/health_meta.rs
-            grep -n "chain_tip_not_in_meta" crates/api/src/routes/health_meta.rs
+            grep -n "traveltrust_indexer_lag_blocks" crates/api/src/routes/health_meta/mod.rs
+            grep -n "chain_tip_not_in_meta" crates/api/src/routes/health_meta/mod.rs
             grep -n "TravelTrustIndexerLagHigh" ops/monitoring/prometheus-alerts-indexer.example.yml
             grep -n "indexer-reconcile-probe.sh" scripts/internal-indexer-ops.sh
+            grep -n "orders-deadline-ssot-ops-check.sh" scripts/orders-deadline-ssot-ops-check.sh
+            grep -n "STAGING_ORDERS_DEADLINE_OPS_ADMIN_BEARER_TOKEN" .github/workflows/orders-deadline-ssot-ops-staging.yml
+            grep -n "STAGING_ORDERS_DEADLINE_OPS_API_BASE_URL" .github/workflows/orders-deadline-ssot-ops-staging.yml
             grep -n "indexer-status?live_reconcile=1" scripts/indexer-reconcile-probe.sh
             grep -n "INDEXER_PROBE_API_BASE_URL" ops/monitoring/github-actions-indexer-probe.example.yml
             grep -n "kind: CronJob" ops/monitoring/k8s-indexer-reconcile-probe.cronjob.example.yaml
@@ -89,8 +99,8 @@ jobs:
             grep -n "event_log_chain_scope_rollback_execute" crates/api/src/routes/internal.rs
             grep -n "event_log_chain_scope_rollback_execute" crates/api/src/db/event_log.rs
             grep -n "region_vault_forwarded_events_rows" crates/api/src/routes/internal.rs
-            grep -n "/api/v1/governance/vault-forwards" crates/api/src/routes/governance.rs
-            grep -n "/api/v1/admin/region-vault/forwarded-events" crates/api/src/routes/admin.rs
+            grep -n "/api/v1/governance/vault-forwards" crates/api/src/routes/governance/router.rs
+            grep -n "/api/v1/admin/region-vault/forwarded-events" crates/api/src/routes/admin/mod.rs
             grep -n "correction_executor_chain_scope_rollback_execute" crates/api/src/routes/internal.rs
             grep -n "correction_executor_chain_scope_rollback_execute" crates/api/src/db/correction_executor_audit.rs
             grep -n "fetch_indexer_checkpoint_for_chain" crates/api/src/db/event_log.rs
@@ -121,6 +131,14 @@ jobs:
               "GET /meta documents indexer.finality_discipline chain_tip_not_in_meta (health_meta.rs)",
               "ops/monitoring/prometheus-alerts-indexer.example.yml lists TravelTrustIndexerLagHigh",
               "scripts/indexer-reconcile-probe.sh documents GET indexer-status?live_reconcile=1",
+              "scripts/orders-deadline-ssot-ops-check.sh documents staging workflow secret names",
+              "orders-deadline-ssot-ops-staging.yml documents STAGING_ORDERS_DEADLINE_OPS_* secrets",
+              "internal.rs documents TT-B110-SEQ5 governor_view_params_ssot_ops_check in indexer-reconcile success path",
+              "internal.rs documents TT-B110-SEQ6 timelock_delay_ssot_ops_check in indexer-reconcile success path",
+              "internal.rs documents TT-B110-SEQ8 governor_proposal_threshold_ssot_ops_check in indexer-reconcile success path",
+              "internal.rs documents TT-B110-SEQ9 timelock_governor_admin_ssot_ops_check in indexer-reconcile success path",
+              "internal.rs documents TT-B110-SEQ10 governor_proposal_count_ssot_ops_check in indexer-reconcile success path",
+              "internal.rs documents TT-B110-SEQ11 governor_token_timelock_ssot_ops_check in indexer-reconcile success path",
               "scripts/internal-indexer-ops.sh references indexer-reconcile-probe.sh (probe subcommand)",
               "ops/monitoring/github-actions-indexer-probe.example.yml documents INDEXER_PROBE_API_BASE_URL",
               "ops/monitoring k8s CronJob example present",
@@ -150,7 +168,7 @@ jobs:
               "internal.rs documents event_log_chain_scope_rollback_execute on indexer-reconcile (110 §3.1.4 Partial)",
               "event_log.rs documents event_log_chain_scope_rollback_execute db path",
               "internal.rs documents region_vault_forwarded_events_rows in indexer tick / chain-scope responses",
-              "governance.rs documents GET /api/v1/governance/vault-forwards",
+              "governance/router.rs documents GET /api/v1/governance/vault-forwards",
               "admin.rs documents GET /api/v1/admin/region-vault/forwarded-events",
               "internal.rs documents correction_executor_chain_scope_rollback_execute on indexer-reconcile (110 §3.1.4 Partial)",
               "correction_executor_audit.rs documents correction_executor_chain_scope_rollback_execute db path",

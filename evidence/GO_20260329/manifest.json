@@ -1,0 +1,18 @@
+{
+  "gate": "machine-preverify",
+  "date": "2026-03-29",
+  "bundle_kind": "automation_logs",
+  "artifacts": [
+    {
+      "path": "pre-release-automation-run.log",
+      "sha256": "601f03642820260a86583d83d8426f809289d2f8c6d32723015c684f8e13277b"
+    },
+    {
+      "path": "cargo-test-run.log",
+      "sha256": "3df1efd0f08c1de4821203dcf79885cc0dd530be91bda42ec613d7fbac635f2d"
+    }
+  ],
+  "sign_off": [
+    "automation: pre-release-automation.sh + cargo test — not legal/ops release sign-off"
+  ]
+}

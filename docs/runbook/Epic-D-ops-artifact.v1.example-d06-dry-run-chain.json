@@ -1,0 +1,51 @@
+{
+  "artifact_schema_id": "traveltrust.ops_artifact.v1",
+  "artifact_schema_version": "1.0.0",
+  "artifact_version": "v1",
+  "artifact_type": "dry_run_chain",
+  "dry_run": true,
+  "captured_at": "2026-04-09T12:34:56Z",
+  "epic_task_id": "Epic-D-D06",
+  "provenance": {
+    "script": "internal-indexer-ops.sh",
+    "script_semver": "1.4.0",
+    "host_git_commit": "abcdef0123456789",
+    "host_git_branch": "main",
+    "host_repo_dirty": false
+  },
+  "api_context": {
+    "api_base_url_redacted": "http://127.0.0.1:8080",
+    "chain_id": 1,
+    "internal_invoked": true,
+    "persist_requested": false,
+    "orders_chain_scope_rollback_execute_requested": false
+  },
+  "ops_summary": {
+    "dry_run": true,
+    "domain": "chain",
+    "issues_total": 0,
+    "clean": true
+  },
+  "dry_run_chain_surface": {
+    "issues_total": 0,
+    "orders_chain_scope_rollback_dry_run_present": true,
+    "anchor": "110-ORDERS-CHAIN-SCOPE-DRY-RUN",
+    "orders_chain_id_null_with_escrow_address": 0
+  },
+  "payload": {
+    "status": "ok",
+    "chain_id": 1,
+    "issues_total": 0,
+    "projection_reconcile_clean": true,
+    "orders_chain_scope_rollback_dry_run": {
+      "chain_id": 1,
+      "orders_chain_id_eq": 2,
+      "orders_chain_id_null": 1,
+      "orders_chain_id_null_with_escrow_address": 0,
+      "orders_chain_id_other": 0,
+      "orders_projection_rows": 3,
+      "anchor": "110-ORDERS-CHAIN-SCOPE-DRY-RUN",
+      "target_note": "chain-scoped DELETE/rewrite of all business orders remains Target; requires dual-gated persist API + 01/03 review after chain_id normalization"
+    }
+  }
+}

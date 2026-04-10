@@ -25,7 +25,8 @@ contract TravelTrustGovernorTest is Test {
             1, // votingDelayBlocks
             5, // votingPeriodBlocks
             1e18, // proposalThresholdVotes
-            1000 // quorum 10%
+            1000, // quorum 10%
+            14 // orderRatingReviewWindowDays (TT-B110)
         );
         tl.setGovernor(address(gov));
 
@@ -152,5 +153,10 @@ contract TravelTrustGovernorTest is Test {
     function _votes(uint256 pid) internal view returns (uint256, uint256, uint256) {
         (,,,,,,, uint256 fv, uint256 av, uint256 ab) = gov.proposals(pid);
         return (fv, av, ab);
+    }
+
+    /// **TT-B110-SEQ2-ORDERS-DEADLINE-GOVERNANCE-CHAIN-READ-001**：Governor **`orderRatingReviewWindowDays`** 链上只读与后端 **`eth_call`** 同源。
+    function test_TT_B110_order_rating_review_window_days_initial() public {
+        assertEq(gov.orderRatingReviewWindowDays(), 14);
     }
 }

@@ -102,6 +102,44 @@ bash scripts/check-07-version-triple.sh && bash scripts/run-check-04-routes.sh &
 
 ---
 
+## 7.1 Build 新红链（先看 CI 日志提示）
+
+```
+【Build 红链】在 Actions 先读 e2e job 的 baseline regression hint（diff_conclusion），再读末尾 go-no-go-hint 的 go_no_go_status；默认按相对 stable baseline（24139191178 / 2364f55）的新问题/回归分流，不先怀疑 baseline 抖动。判读细则：evidence/GO_20260408_BUILD_CI_CLOSURE.md#ci-hint-chain-usage-rules
+```
+
+---
+
+## 7.2 Build 新红链 · 首诊模板（复制填空）
+
+```
+【Build 新红链 · 首诊】Run URL：
+1) regression hint → diff_conclusion=（e2e job 内 BASELINE REGRESSION CHECK）
+2) go_no_go_status=（go-no-go-hint job）
+3) 首个失败 job= / 首个红 step=
+4) 是否开新卡：是/否；若开卡标题草稿：
+固定顺序与表意：evidence/GO_20260408_BUILD_CI_CLOSURE.md#new-red-chain-triage-flow
+```
+
+---
+
+## 7.3 CI 新红链 · 强制规则（入口统一）
+
+```
+【强制规则 · Build/CI 新红链】凡遇 GitHub Actions「Build」（build.yml）新红链，必须先按 §7.2 完成首诊模板（四项填实，或粘贴同次 Run 的日志锚点/截图等价信息）。未完成该流程前：禁止新开任务卡/TT；禁止分析业务代码、禁止提交修复补丁或重构建议。台账唯一入口：evidence/GO_20260408_BUILD_CI_CLOSURE.md#new-red-chain-triage-flow · evidence/GO_20260408_BUILD_CI_CLOSURE.md#ci-red-chain-single-entry
+```
+
+**违规示例与提示（软门禁）**
+
+- **违规示例**：收到「Build 红了」后**未按 §7.2 填首诊四项**（或等价日志锚点），就直接 **grep/读业务源码、猜根因、给 patch**。
+- **拉回提示（可复制给 AI/协作者）**：
+
+```
+【流程纠正】当前话题属于 Build 新红链，须先完成 §7.2 首诊模板后再分析代码。请先停下代码级推理，按顺序补：Run URL、diff_conclusion、go_no_go_status、首个失败 job/step；完成后再继续。模板见上文 §7.2。
+```
+
+---
+
 ## 8. 纯文档 PR 与完成度快照
 
 ```

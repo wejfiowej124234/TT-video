@@ -507,6 +507,7 @@ pub async fn reconcile_orders_projection_vs_orders(
 /// - **无**投影行且业务列有 escrow、**非** **`escrowed`**、且状态为资金终态（**`completed` / `disputed` / `refunded` / `partially_refunded` / `slashed` / `cancelled`**）：**默认**仅计数 **`skipped_no_projection_non_escrowed_with_escrow`**（须人工复核）；若调用方传入 **`clear_terminal_orphan_escrow=true`**（**`INDEXER_REORG_SYNC_CLEAR_ORPHAN_ESCROW_TERMINAL=1`**）→ 与同列 pre_funded 路径一样清 **`escrow_address`**/**`escrowed_at`**、**保持** **`status`**；摘要 **`cleared_orphan_escrow_terminal_no_projection`**。
 /// - **无**投影行且业务列有 escrow、**非** **`escrowed`**、且状态**非**上两类（未知/中间态字符串）→ **不**自动改写；摘要 **`skipped_no_projection_non_escrowed_with_escrow`**。
 /// - 投影指向的 **`order_id` 在 `orders` 中不存在** → 计数 **`skipped_no_order_row`**，**不**写库（与对账 **`orphan_projection`** 口径一致）。
+/// - **`orders.chain_id` 已钉死为其它链**（`Some` 且 **≠** 本次 **`chain_id`**）→ **不**改写；计数 **`skipped_orders_chain_domain_mismatch`**（**B-114-3**）。
 ///
 /// 须在 **`perform_indexer_reorg_rewind_execute`** 内由 **`INDEXER_REORG_SYNC_ORDERS_FROM_PROJECTION_AFTER_REWIND=1`** 显式开启。
 #[derive(Debug, Clone, Default, Serialize)]
@@ -527,6 +528,8 @@ pub struct SyncOrdersFromProjectionSummary {
     pub skipped_no_projection_non_escrowed_with_escrow: u32,
     /// 投影 **`order_id`** 可解析但 **`orders`** 无主键行
     pub skipped_no_order_row: u32,
+    /// **`orders.chain_id`** 与本次投影 **`chain_id`** 不一致，跳过改写（**B-114-3**）
+    pub skipped_orders_chain_domain_mismatch: u32,
 }
 
 pub async fn sync_orders_from_projection_for_chain(
@@ -563,6 +566,10 @@ pub async fn sync_orders_from_projection_for_chain(
             summary.skipped_no_order_row += 1;
             continue;
         };
+        if !super::orders::orders_row_allowed_projection_sync_chain_domain(o.chain_id, chain_id) {
+            summary.skipped_orders_chain_domain_mismatch += 1;
+            continue;
+        }
         let key = order_uuid_to_projection_order_id(id);
         let os = normalize_status(&o.status);
         let o_esc = o

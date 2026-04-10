@@ -22,7 +22,7 @@ contract GovernanceTimelockTest is Test {
         bytes32 id = tl.schedule(address(router), 0, data, salt);
 
         assertEq(tl.hashOperation(address(router), 0, data, salt), id);
-        assertEq(router.owner(), deployer);
+        assertEq(router.owner(), address(tl));
 
         vm.expectRevert(GovernanceTimelock.TooEarly.selector);
         tl.execute(id);

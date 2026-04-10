@@ -3,6 +3,11 @@
 //!
 //! **B-102 / TT-B102-ORDERS-LIST-CHAIN-SCOPE-SSOT-001**：**`GET /api/v1/orders`** **`orders_chain_id`** 过滤谓词与 **`orders_chain_scope`** 信封、**`orders_chain_id_backfill_dry_run`** 内嵌 **`orders_list_chain_scope`** **同源**（**`orders_row_matches_list_chain_scope`** / **`orders_list_chain_scope_json`**），**禁止**平行过滤逻辑。
 //! **B-122 / TT-B122**：在 **`business_chain_id: Some(_)`**（与回填 dry-run / **GET** 主路径一致）下，**`orders_list_chain_scope_json`** 之 **`filter`/`orders_chain_id`/`default_business_chain_id`** 与 **`orders_row_matches_list_chain_scope`** **互证**（单测 **`tt_b122_*`**）。
+//! **B-114-3 / TT-B114-3**：**`orders_row_allowed_projection_sync_chain_domain`** 与 **`sync_orders_from_projection_for_chain`** 同源，防 **`orders_projection`** 回放跨链污染 **`orders`**。
+//! **B-151 / TT-B151**：**`orders.chain_id IS NULL`** **只读观测**（**`orders_chain_id_null_observability`**：**`by_status`** 分桶 + **`orders_null_chain_id_total`** 与 **B-102** 同源）；**不** backfill、**不** `DELETE`、**不**入 **`compound_gate`**。
+//! **B-152 / orders 链一致性观测**：**`orders_chain_consistency_observability`** — **`orders.chain_id`** 已填但与 **进程/对账期望 `chain_id`** **不一致** 之行（**`by_status`** + **`orders_chain_id_mismatch_total`**）；**NULL** **`chain_id`** 见 **B-151**；**不** RPC、**不**入 **`compound_gate`**。
+//! **B-153 / orders 链健康汇总**：**`orders_chain_health_observability`** — 聚合 **B-151+B-152**（**`orders_total`**、**`orders_null_chain_id_total`**、**`orders_chain_id_mismatch_total`**、**`null_ratio`/`mismatch_ratio`**、分桶）；**admin overview** 与 **reconcile** **仅此一键**，**不**再并列顶层 **151/152** 键。
+//! **B-155**：**`reconciliation_reports.summary.orders_chain_health_trend_snapshot`**（**`db::reconciliation_reports::merge_orders_chain_health_trend_snapshot`**）在 **`persist:true`** 时滚动 **153** 标量之 **`by_batch`/`by_day`** 序列。
 
 use chrono::{DateTime, NaiveDate, Utc};
 use serde_json::{json, Value};
@@ -261,6 +266,176 @@ pub async fn count_orders_chain_id_null(pool: &PgPool) -> Result<i64, sqlx::Erro
     .await
 }
 
+/// **`orders.chain_id IS NULL`** 只读观测：**`by_status`** 分桶 + **`orders_null_chain_id_total`**（与 **`count_orders_chain_id_null`** / **B-102** **`orders_null_chain_id_total`** 同源）。
+///
+/// **TT-B151-ORDERS-CHAIN-ID-NULL-READ-ONLY-OBS-001**：**不**与投影/链上对拍；**不**构成业务双源 SSOT。
+pub async fn orders_chain_id_null_observability(pool: &PgPool) -> Result<Value, sqlx::Error> {
+    let rows = sqlx::query_as::<_, (String, i64)>(
+        r#"
+        SELECT status, COUNT(*)::bigint AS c
+        FROM orders
+        WHERE chain_id IS NULL
+        GROUP BY status
+        ORDER BY status ASC
+        "#,
+    )
+    .fetch_all(pool)
+    .await?;
+
+    let total: i64 = rows.iter().map(|(_, n)| n).sum();
+    let by_status: Vec<Value> = rows
+        .into_iter()
+        .map(|(status, cnt)| json!({ "status": status, "rows": cnt }))
+        .collect();
+
+    Ok(json!({
+        "anchor": "151-ORDERS-CHAIN-ID-NULL-OBS-V1",
+        "schema_version": 1,
+        "orders_null_chain_id_total": total,
+        "by_status": by_status,
+        "getter_note": "Single-table orders WHERE chain_id IS NULL; by_status is GROUP BY orders.status",
+        "boundary_vs_b102": "B-102 orders_chain_id_backfill_dry_run.orders_null_chain_id_total is the same total leg; B-151 adds by_status buckets.",
+    }))
+}
+
+/// 行是否计入 **`orders_chain_id_mismatch`**：`chain_id` **已填**且 **≠** **`expected_chain_id`**（与下列 SQL 谓词一致）。
+#[must_use]
+pub fn order_chain_id_mismatches_expected_for_obs(
+    order_chain_id: Option<i64>,
+    expected_chain_id: i64,
+) -> bool {
+    matches!(order_chain_id, Some(cid) if cid != expected_chain_id)
+}
+
+/// **`orders.chain_id` ≠ 期望链** 只读观测：**`by_status`** 分桶 + **`orders_chain_id_mismatch_total`**。
+///
+/// **谓词**：**`chain_id IS NOT NULL AND chain_id <> expected_chain_id`**（**`expected_chain_id`** = **`ChainConfig.chain_id`** / **`CHAIN_ID`** / **`indexer-reconcile`** 对账链，由调用方传入）。
+pub async fn orders_chain_consistency_observability(
+    pool: &PgPool,
+    expected_chain_id: i64,
+) -> Result<Value, sqlx::Error> {
+    let rows = sqlx::query_as::<_, (String, i64)>(
+        r#"
+        SELECT status, COUNT(*)::bigint AS c
+        FROM orders
+        WHERE chain_id IS NOT NULL AND chain_id <> $1
+        GROUP BY status
+        ORDER BY status ASC
+        "#,
+    )
+    .bind(expected_chain_id)
+    .fetch_all(pool)
+    .await?;
+
+    let total: i64 = rows.iter().map(|(_, n)| n).sum();
+    let by_status: Vec<Value> = rows
+        .into_iter()
+        .map(|(status, cnt)| json!({ "status": status, "rows": cnt }))
+        .collect();
+
+    Ok(json!({
+        "anchor": "152-ORDERS-CHAIN-CONSISTENCY-OBS-V1",
+        "schema_version": 1,
+        "expected_chain_id": expected_chain_id,
+        "orders_chain_id_mismatch_total": total,
+        "by_status": by_status,
+        "getter_note": "Single-table orders WHERE chain_id IS NOT NULL AND chain_id <> expected_chain_id; NULL chain_id excluded (B-151).",
+        "boundary_vs_b151": "B-151 counts NULL chain_id; B-152 counts non-NULL rows that differ from expected runtime/reconcile chain_id.",
+    }))
+}
+
+/// **`orders_total`>0** 时返回 **`null_ratio`/`mismatch_ratio`**（**`f64`**）；否则 **`null`**（**分母为 0**）。
+#[must_use]
+pub fn orders_chain_health_ratio_fields(
+    orders_total: i64,
+    null_total: i64,
+    mismatch_total: i64,
+) -> (Value, Value) {
+    if orders_total <= 0 {
+        return (Value::Null, Value::Null);
+    }
+    let t = orders_total as f64;
+    (
+        json!(null_total as f64 / t),
+        json!(mismatch_total as f64 / t),
+    )
+}
+
+/// **B-151+B-152** 汇总：**`orders_total`**、**`null`**、**`mismatch`**、**`ratio`** + **`null_by_status`/`mismatch_by_status`**。
+///
+/// **`expected_chain_id`**：与 **`orders_chain_consistency_observability`** 同源（**`ChainConfig`/`CHAIN_ID`/reconcile `chain_id`**）。
+pub async fn orders_chain_health_observability(
+    pool: &PgPool,
+    expected_chain_id: i64,
+) -> Result<Value, sqlx::Error> {
+    let (orders_total, null_total, mismatch_total) = sqlx::query_as::<_, (i64, i64, i64)>(
+        r#"
+        SELECT
+            COUNT(*)::bigint AS orders_total,
+            COUNT(*) FILTER (WHERE chain_id IS NULL)::bigint AS null_total,
+            COUNT(*) FILTER (WHERE chain_id IS NOT NULL AND chain_id <> $1)::bigint AS mismatch_total
+        FROM orders
+        "#,
+    )
+    .bind(expected_chain_id)
+    .fetch_one(pool)
+    .await?;
+
+    let null_rows = sqlx::query_as::<_, (String, i64)>(
+        r#"
+        SELECT status, COUNT(*)::bigint AS c
+        FROM orders
+        WHERE chain_id IS NULL
+        GROUP BY status
+        ORDER BY status ASC
+        "#,
+    )
+    .fetch_all(pool)
+    .await?;
+
+    let mismatch_rows = sqlx::query_as::<_, (String, i64)>(
+        r#"
+        SELECT status, COUNT(*)::bigint AS c
+        FROM orders
+        WHERE chain_id IS NOT NULL AND chain_id <> $1
+        GROUP BY status
+        ORDER BY status ASC
+        "#,
+    )
+    .bind(expected_chain_id)
+    .fetch_all(pool)
+    .await?;
+
+    let null_by_status: Vec<Value> = null_rows
+        .into_iter()
+        .map(|(status, cnt)| json!({ "status": status, "rows": cnt }))
+        .collect();
+    let mismatch_by_status: Vec<Value> = mismatch_rows
+        .into_iter()
+        .map(|(status, cnt)| json!({ "status": status, "rows": cnt }))
+        .collect();
+
+    let aligned = orders_total - null_total - mismatch_total;
+    let (null_ratio, mismatch_ratio) =
+        orders_chain_health_ratio_fields(orders_total, null_total, mismatch_total);
+
+    Ok(json!({
+        "anchor": "153-ORDERS-CHAIN-HEALTH-OBS-V1",
+        "schema_version": 1,
+        "expected_chain_id": expected_chain_id,
+        "orders_total": orders_total,
+        "orders_null_chain_id_total": null_total,
+        "orders_chain_id_mismatch_total": mismatch_total,
+        "orders_aligned_expected_total": aligned,
+        "null_ratio": null_ratio,
+        "mismatch_ratio": mismatch_ratio,
+        "null_by_status": null_by_status,
+        "mismatch_by_status": mismatch_by_status,
+        "getter_note": "Aggregates B-151 (NULL chain_id buckets) and B-152 (non-NULL chain_id <> expected_chain_id buckets); orders_total is COUNT(*) from orders.",
+        "boundary_vs_b151_b152": "Single overview/reconcile key; B-151/B-152 scalar legs match orders_null_chain_id_total and orders_chain_id_mismatch_total; ratios use orders_total as denominator.",
+    }))
+}
+
 /// **`GET /api/v1/orders`** 列表链过滤谓词（**`chain_off::OrderRow.chain_id`** 与 query 同源）。
 ///
 /// **TT-B102-ORDERS-LIST-CHAIN-SCOPE-ROW-001**：与 **`orders_list_chain_scope_json`** 的 **`rule`/`filter`** 语义一致。
@@ -323,6 +498,20 @@ pub fn orders_list_chain_scope_json(
     }
 }
 
+/// **`orders_projection` → `orders` 同步**链域门闸（**B-114-3**）：
+/// - **`order_chain_id == None`**：允许（历史行，归属待回填，仍仅消费**本次** `projection_chain_id` 的投影表）。
+/// - **`order_chain_id == Some(cid)`**：仅当 **`cid == projection_chain_id`** 时允许改写，避免一条业务订单被**另一条链**的投影回放误更新。
+#[must_use]
+pub fn orders_row_allowed_projection_sync_chain_domain(
+    order_chain_id: Option<i64>,
+    projection_chain_id: i64,
+) -> bool {
+    match order_chain_id {
+        None => true,
+        Some(cid) => cid == projection_chain_id,
+    }
+}
+
 /// **110 Partial**：reorg replay 后按 **`orders_projection`** 回写 **`orders.status` / `escrow_address`**（须显式 env，见 **`INDEXER_REORG_SYNC_ORDERS_FROM_PROJECTION_AFTER_REWIND`**）。
 pub(crate) async fn update_order_status_escrow_for_reorg_sync(
     pool: &PgPool,
@@ -364,6 +553,25 @@ pub(crate) async fn update_order_status_escrow_for_reorg_sync(
         .await?;
     }
     Ok(())
+}
+
+#[cfg(test)]
+mod b114_3_orders_chain_domain_tests {
+    use super::orders_row_allowed_projection_sync_chain_domain;
+
+    #[test]
+    fn b114_3_orders_chain_domain_legacy_null_allows_sync_under_any_projection_chain() {
+        assert!(orders_row_allowed_projection_sync_chain_domain(None, 137));
+        assert!(orders_row_allowed_projection_sync_chain_domain(None, 1));
+    }
+
+    #[test]
+    fn b114_3_orders_chain_domain_stamped_row_requires_matching_projection_chain() {
+        assert!(orders_row_allowed_projection_sync_chain_domain(Some(137), 137));
+        assert!(!orders_row_allowed_projection_sync_chain_domain(Some(1), 137));
+        assert!(!orders_row_allowed_projection_sync_chain_domain(Some(137), 1));
+        assert!(!orders_row_allowed_projection_sync_chain_domain(Some(999), 137));
+    }
 }
 
 #[cfg(test)]
@@ -431,5 +639,94 @@ mod b102_orders_chain_scope_tests {
                 );
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod b151_orders_chain_id_null_obs_tests {
+    use serde_json::json;
+
+    /// **TT-B151**：机读壳 **`anchor`/`by_status`** 形状稳定（**不**跑 PG）。
+    #[test]
+    fn b151_orders_chain_id_null_obs_anchor_and_by_status_shape() {
+        let v = json!({
+            "anchor": "151-ORDERS-CHAIN-ID-NULL-OBS-V1",
+            "schema_version": 1,
+            "orders_null_chain_id_total": 0_i64,
+            "by_status": [],
+            "getter_note": "Single-table orders WHERE chain_id IS NULL; by_status is GROUP BY orders.status",
+            "boundary_vs_b102": "B-102 orders_chain_id_backfill_dry_run.orders_null_chain_id_total is the same total leg; B-151 adds by_status buckets.",
+        });
+        assert_eq!(v["anchor"], "151-ORDERS-CHAIN-ID-NULL-OBS-V1");
+        assert!(v["by_status"].is_array());
+    }
+}
+
+#[cfg(test)]
+mod b152_orders_chain_consistency_obs_tests {
+    use super::order_chain_id_mismatches_expected_for_obs;
+    use serde_json::json;
+
+    #[test]
+    fn b152_mismatch_predicate_matches_sql_semantics() {
+        assert!(!order_chain_id_mismatches_expected_for_obs(None, 137));
+        assert!(!order_chain_id_mismatches_expected_for_obs(Some(137), 137));
+        assert!(order_chain_id_mismatches_expected_for_obs(Some(1), 137));
+        assert!(order_chain_id_mismatches_expected_for_obs(Some(31337), 137));
+    }
+
+    /// 机读壳 **`anchor`/`orders_chain_id_mismatch_total`/`by_status`** 形状稳定（**不**跑 PG）。
+    #[test]
+    fn b152_orders_chain_consistency_obs_anchor_and_by_status_shape() {
+        let v = json!({
+            "anchor": "152-ORDERS-CHAIN-CONSISTENCY-OBS-V1",
+            "schema_version": 1,
+            "expected_chain_id": 137_i64,
+            "orders_chain_id_mismatch_total": 0_i64,
+            "by_status": [],
+            "getter_note": "Single-table orders WHERE chain_id IS NOT NULL AND chain_id <> expected_chain_id; NULL chain_id excluded (B-151).",
+            "boundary_vs_b151": "B-151 counts NULL chain_id; B-152 counts non-NULL rows that differ from expected runtime/reconcile chain_id.",
+        });
+        assert_eq!(v["anchor"], "152-ORDERS-CHAIN-CONSISTENCY-OBS-V1");
+        assert!(v["by_status"].is_array());
+    }
+}
+
+#[cfg(test)]
+mod b153_orders_chain_health_obs_tests {
+    use super::orders_chain_health_ratio_fields;
+    use serde_json::json;
+
+    #[test]
+    fn b153_ratio_null_when_orders_total_zero() {
+        let (nr, mr) = orders_chain_health_ratio_fields(0, 0, 0);
+        assert!(nr.is_null() && mr.is_null());
+    }
+
+    #[test]
+    fn b153_ratio_halves_when_half_null() {
+        let (nr, mr) = orders_chain_health_ratio_fields(100, 50, 10);
+        assert_eq!(nr.as_f64(), Some(0.5));
+        assert_eq!(mr.as_f64(), Some(0.1));
+    }
+
+    #[test]
+    fn b153_health_obs_anchor_shape() {
+        let v = json!({
+            "anchor": "153-ORDERS-CHAIN-HEALTH-OBS-V1",
+            "schema_version": 1,
+            "expected_chain_id": 137_i64,
+            "orders_total": 0_i64,
+            "orders_null_chain_id_total": 0_i64,
+            "orders_chain_id_mismatch_total": 0_i64,
+            "orders_aligned_expected_total": 0_i64,
+            "null_ratio": serde_json::Value::Null,
+            "mismatch_ratio": serde_json::Value::Null,
+            "null_by_status": [],
+            "mismatch_by_status": [],
+        });
+        assert_eq!(v["anchor"], "153-ORDERS-CHAIN-HEALTH-OBS-V1");
+        assert!(v["null_by_status"].is_array());
+        assert!(v["mismatch_by_status"].is_array());
     }
 }

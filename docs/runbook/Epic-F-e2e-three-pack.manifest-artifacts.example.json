@@ -1,0 +1,17 @@
+[
+  {
+    "path": "artifacts/e2e-normal-release.md",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "kind": "e2e_three_pack_normal_release"
+  },
+  {
+    "path": "artifacts/e2e-dispute-three-terminals.md",
+    "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "kind": "e2e_three_pack_dispute_three_terminals"
+  },
+  {
+    "path": "artifacts/e2e-three-timeouts.md",
+    "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+    "kind": "e2e_three_pack_three_timeouts"
+  }
+]

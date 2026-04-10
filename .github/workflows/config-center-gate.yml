@@ -47,8 +47,8 @@ jobs:
           check_anchor "admin_secrets_metadata_target" "/api/v1/admin/secrets/metadata" "docs/spec/04-后端与API.md"
 
           # Approval anchors currently implemented and required for config publish governance.
-          check_anchor "admin_approvals_route" "/api/v1/admin/approvals" "crates/api/src/routes/admin.rs"
-          check_anchor "admin_approvals_approve_route" "/api/v1/admin/approvals/:id/approve" "crates/api/src/routes/admin.rs"
+          check_anchor "admin_approvals_route" "/api/v1/admin/approvals" "crates/api/src/routes/admin/mod.rs"
+          check_anchor "admin_approvals_approve_route" "/api/v1/admin/approvals/:id/approve" "crates/api/src/routes/admin/mod.rs"
 
           route_pass_rate=$((route_checks_passed * 100 / route_checks_total))
           if [[ "$route_pass_rate" -ne 100 ]]; then

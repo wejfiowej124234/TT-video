@@ -20,7 +20,7 @@ jobs:
           set -euo pipefail
           mkdir -p "$EVIDENCE_DIR"
           failures=0
-          checks_total=106
+          checks_total=113
           checks_passed=0
 
           check_anchor() {
@@ -43,6 +43,13 @@ jobs:
           check_anchor "internal_indexer_replay_route" "/api/v1/internal/indexer-replay" "crates/api/src/routes/internal.rs"
           check_anchor "internal_indexer_reorg_rewind_route" "/api/v1/internal/indexer-reorg-rewind" "crates/api/src/routes/internal.rs"
           check_anchor "internal_indexer_reconcile_route" "/api/v1/internal/indexer-reconcile" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_tt_b110_seq3_deadline" "TT-B110-SEQ3-ORDERS-DEADLINE-INDEXER-RECONCILE-CHECK-001" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_tt_b110_seq5_governor_view_params" "TT-B110-SEQ5-GOVERNANCE-GOVERNOR-VIEW-PARAMS-CHAIN-SSOT-001" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_tt_b110_seq6_timelock_delay" "TT-B110-SEQ6-GOVERNANCE-TIMELOCK-DELAY-CHAIN-SSOT-001" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_tt_b110_seq8_governor_proposal_threshold" "TT-B110-SEQ8-GOVERNANCE-GOVERNOR-PROPOSAL-THRESHOLD-CHAIN-SSOT-001" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_tt_b110_seq9_timelock_governor_admin" "TT-B110-SEQ9-GOVERNANCE-TIMELOCK-GOVERNOR-ADMIN-CHAIN-SSOT-001" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_tt_b110_seq10_governor_proposal_count" "TT-B110-SEQ10-GOVERNANCE-GOVERNOR-PROPOSAL-COUNT-CHAIN-SSOT-001" "crates/api/src/routes/internal.rs"
+          check_anchor "internal_indexer_reconcile_tt_b110_seq11_governor_token_timelock" "TT-B110-SEQ11-GOVERNANCE-GOVERNOR-TOKEN-TIMELOCK-CHAIN-SSOT-001" "crates/api/src/routes/internal.rs"
           check_anchor "internal_indexer_reconcile_root_fields" "projection_reconcile_clean" "crates/api/src/routes/internal.rs"
           check_anchor "internal_indexer_reconcile_chain_scope_dry_run_anchor" "110-ORDERS-CHAIN-SCOPE-DRY-RUN" "crates/api/src/routes/internal.rs"
           check_anchor "internal_indexer_reconcile_chain_scope_execute_anchor" "110-ORDERS-CHAIN-SCOPE-EXECUTE" "crates/api/src/routes/internal.rs"
@@ -75,12 +82,12 @@ jobs:
           check_anchor "internal_indexer_status_reorg_recovery_hint" "110-REORG-RECOVERY-HINT" "crates/api/src/routes/internal.rs"
           check_anchor "internal_indexer_status_meta_build" "health_meta::meta_build_value" "crates/api/src/routes/internal.rs"
           check_anchor "internal_indexer_tick_ok_meta_build" "INDEXER_TICK_RESPONSE_META_BUILD" "crates/api/src/routes/internal.rs"
-          check_anchor "admin_indexer_reconcile_reports_route" "/api/v1/admin/indexer/reconcile-reports" "crates/api/src/routes/admin.rs"
-          check_anchor "admin_indexer_reconcile_reports_export_route" "/api/v1/admin/indexer/reconcile-reports/export" "crates/api/src/routes/admin.rs"
-          check_anchor "admin_indexer_reconcile_reports_export_json" "exported_at" "crates/api/src/routes/admin.rs"
-          check_anchor "admin_indexer_reconcile_reports_export_sha256_header" "RECONCILE_EXPORT_BODY_SHA256_HEADER" "crates/api/src/routes/admin.rs"
-          check_anchor "admin_reconcile_export_all_max_rows" "ADMIN_RECONCILE_EXPORT_ALL_MAX_ROWS" "crates/api/src/routes/admin.rs"
-          check_anchor "admin_reconcile_export_ed25519_header" "RECONCILE_EXPORT_ED25519_HEADER" "crates/api/src/routes/admin.rs"
+          check_anchor "admin_indexer_reconcile_reports_route" "/api/v1/admin/indexer/reconcile-reports" "crates/api/src/routes/admin/mod.rs"
+          check_anchor "admin_indexer_reconcile_reports_export_route" "/api/v1/admin/indexer/reconcile-reports/export" "crates/api/src/routes/admin/mod.rs"
+          check_anchor "admin_indexer_reconcile_reports_export_json" "exported_at" "crates/api/src/routes/admin/mod.rs"
+          check_anchor "admin_indexer_reconcile_reports_export_sha256_header" "RECONCILE_EXPORT_BODY_SHA256_HEADER" "crates/api/src/routes/admin/mod.rs"
+          check_anchor "admin_reconcile_export_all_max_rows" "ADMIN_RECONCILE_EXPORT_ALL_MAX_ROWS" "crates/api/src/routes/admin/mod.rs"
+          check_anchor "admin_reconcile_export_ed25519_header" "RECONCILE_EXPORT_ED25519_HEADER" "crates/api/src/routes/admin/mod.rs"
           check_anchor "runbook_indexer_ops_section" "## 2.55 Indexer tick" "ops/RUNBOOK.md"
           check_anchor "scripts_internal_indexer_ops" "/api/v1/internal/indexer-tick" "scripts/internal-indexer-ops.sh"
           check_anchor "scripts_internal_indexer_ops_status" "/api/v1/internal/indexer-status" "scripts/internal-indexer-ops.sh"
@@ -133,8 +140,8 @@ jobs:
           check_anchor "scripts_indexer_reconcile_probe_ps1_delegate" "indexer-reconcile-probe.sh" "scripts/indexer-reconcile-probe.ps1"
           check_anchor "scripts_indexer_reorg_recovery_ps1_delegate" "indexer-reorg-recovery.sh" "scripts/indexer-reorg-recovery.ps1"
           check_anchor "scripts_indexer_reorg_recovery" "indexer-reorg-recovery.sh" "scripts/indexer-reorg-recovery.sh"
-          check_anchor "metrics_indexer_lag_gauge" "traveltrust_indexer_lag_blocks" "crates/api/src/routes/health_meta.rs"
-          check_anchor "meta_indexer_finality_discipline_chain_tip" "chain_tip_not_in_meta" "crates/api/src/routes/health_meta.rs"
+          check_anchor "metrics_indexer_lag_gauge" "traveltrust_indexer_lag_blocks" "crates/api/src/routes/health_meta/mod.rs"
+          check_anchor "meta_indexer_finality_discipline_chain_tip" "chain_tip_not_in_meta" "crates/api/src/routes/health_meta/mod.rs"
           check_anchor "ops_prometheus_alerts_indexer_example" "TravelTrustIndexerLagHigh" "ops/monitoring/prometheus-alerts-indexer.example.yml"
           check_anchor "scripts_indexer_reconcile_probe" "indexer-status?live_reconcile=1" "scripts/indexer-reconcile-probe.sh"
           check_anchor "scripts_internal_indexer_ops_probe" "indexer-reconcile-probe.sh" "scripts/internal-indexer-ops.sh"
@@ -143,8 +150,8 @@ jobs:
           check_anchor "ops_k8s_indexer_probe_cronjob" "kind: CronJob" "ops/monitoring/k8s-indexer-reconcile-probe.cronjob.example.yaml"
           check_anchor "ops_grafana_indexer_dashboard" "traveltrust-indexer-example" "ops/monitoring/grafana-dashboard-traveltrust-indexer.example.json"
           check_anchor "db_orders_projection_reconcile_semantics" "110-RECONCILE-SEMANTICS" "crates/api/src/db/orders_projection.rs"
-          check_anchor "governance_vault_forwards_route" "/api/v1/governance/vault-forwards" "crates/api/src/routes/governance.rs"
-          check_anchor "admin_region_vault_forwarded_events_route" "/api/v1/admin/region-vault/forwarded-events" "crates/api/src/routes/admin.rs"
+          check_anchor "governance_vault_forwards_route" "/api/v1/governance/vault-forwards" "crates/api/src/routes/governance/router.rs"
+          check_anchor "admin_region_vault_forwarded_events_route" "/api/v1/admin/region-vault/forwarded-events" "crates/api/src/routes/admin/mod.rs"
           check_anchor "migration_region_vault_forwarded_events" "region_vault_forwarded_events" "crates/api/migrations/20260417000046_region_vault_forwarded_events.sql"
 
           pass_rate=$((checks_passed * 100 / checks_total))
@@ -269,7 +276,7 @@ jobs:
               "correction_executor_chain_scope_rollback_dry_run + 110-CORRECTION-EXECUTOR-CHAIN-SCOPE-DRY-RUN (indexer-reconcile body flag)",
               "correction_executor_chain_scope_rollback_execute + 110-CORRECTION-EXECUTOR-CHAIN-SCOPE-EXECUTE + TRAVELTRUST_ALLOW_CORRECTION_EXECUTOR_CHAIN_SCOPE_ROLLBACK (.env.example)",
               "db fetch_indexer_checkpoint_for_chain (checkpoints_sharded read path)",
-              "GET /api/v1/governance/vault-forwards (RegionVaultForwarded projection; governance.rs)",
+              "GET /api/v1/governance/vault-forwards (RegionVaultForwarded projection; governance/router.rs)",
               "GET /api/v1/admin/region-vault/forwarded-events (audit read; admin.rs)",
               "migration 20260417000046_region_vault_forwarded_events.sql (region_vault_forwarded_events table)"
             ],

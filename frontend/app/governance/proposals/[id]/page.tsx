@@ -21,12 +21,23 @@ import ApiErrorAlert from "@/components/ApiErrorAlert";
 import LoadingText from "@/components/LoadingText";
 import GovernanceTargetNotice from "@/components/governance/GovernanceTargetNotice";
 import GovernanceB090OnChainProposalNotice from "@/components/governance/GovernanceB090OnChainProposalNotice";
+import GovernancePreExecutionHint from "@/components/governance/GovernancePreExecutionHint";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import {
   touchTargetLink44Classes,
   travelFocusRingCoreOffset2Classes,
   travelFocusRingOffset2Classes,
 } from "@/lib/travelLinkFocus";
+import GovernanceProposalExecutionActionsSkeleton from "@/components/governance/GovernanceProposalExecutionActionsSkeleton";
+import GovernanceProposalExecutionReadinessPanel, {
+  GovernanceProposalExecutionVoteFooter,
+} from "@/components/governance/GovernanceProposalExecutionReadinessPanel";
+import {
+  deriveGovernanceExecutionReadiness,
+  GOV_EXEC_READINESS_DESC_ID,
+  GOV_EXEC_READINESS_VOTE_FOOTER_ID,
+} from "@/lib/governanceExecutionReadiness";
+import { GovExecReadOnlyI18n } from "@/lib/governanceExecReadOnlyNarrative";
 
 function voteCountFromApi(v: unknown): number {
   if (typeof v === "number" && Number.isFinite(v)) return v;
@@ -184,6 +195,11 @@ export default function GovernanceProposalDetailPage() {
       ? data.my_vote_weight
       : null;
 
+  const executionReadiness = useMemo(
+    () => deriveGovernanceExecutionReadiness(onChainGovernor, data?.chain ?? null),
+    [onChainGovernor, data?.chain],
+  );
+
   async function submitVote(choice: "yes" | "no" | "abstain") {
     if (!proposalId || voteBusy || onChainGovernor) return;
     setVoteBusy(true);
@@ -280,6 +296,23 @@ export default function GovernanceProposalDetailPage() {
               }}
             />
           ) : null}
+          {onChainGovernor ? (
+            <p
+              id="gov-exec-detail-bridge"
+              className="rounded-[var(--radius-sm)] border border-ink-200/90 bg-ink-50/80 p-3 text-meta leading-snug text-ink-700 dark:border-ink-600/45 dark:bg-ink-900/30 dark:text-ink-200"
+              role="note"
+            >
+              {t(GovExecReadOnlyI18n.detailContinuationBridge)}
+            </p>
+          ) : null}
+          {onChainGovernor ? (
+            <section aria-labelledby="gov-pre-exec" className="space-y-2">
+              <h2 id="gov-pre-exec" className="text-small font-semibold text-ink-800 dark:text-ink-100">
+                {t("governance_pre_exec_section_heading")}
+              </h2>
+              <GovernancePreExecutionHint />
+            </section>
+          ) : null}
           <section aria-labelledby="gov-prop-body">
             <h3 id="gov-prop-body" className="text-small font-semibold text-ink-800">
               {t("governance_proposal_detail_body")}
@@ -349,10 +382,19 @@ export default function GovernanceProposalDetailPage() {
             ) : null}
           </section>
 
+          {onChainGovernor ? (
+            <GovernanceProposalExecutionActionsSkeleton className="mt-2" readiness={executionReadiness} />
+          ) : null}
+
           <section aria-labelledby="gov-prop-vote" className="rounded-[var(--radius-md)] border border-ink-200/80 bg-ink-50/40 p-4 dark:border-ink-600/40 dark:bg-ink-900/20">
             <h3 id="gov-prop-vote" className="text-small font-semibold text-ink-800 dark:text-ink-100">
               {t("governance_proposal_detail_vote_section")}
             </h3>
+            <GovernanceProposalExecutionReadinessPanel
+              className="mt-3"
+              onChainGovernor={onChainGovernor}
+              chain={data?.chain}
+            />
             {!hasSession ? (
               <p className="mt-2 text-body text-ink-700 dark:text-ink-200">{t("governance_proposal_detail_login_to_vote")}</p>
             ) : null}
@@ -414,7 +456,17 @@ export default function GovernanceProposalDetailPage() {
                 {t("governance_proposal_detail_vote_submitting")}
               </p>
             ) : null}
-            <div className="mt-4 flex flex-wrap gap-2">
+            <GovernanceProposalExecutionVoteFooter
+              className="mt-4"
+              readiness={executionReadiness}
+              onChainGovernor={onChainGovernor}
+            />
+            <div
+              className="mt-2 flex flex-wrap gap-2"
+              aria-describedby={
+                onChainGovernor ? `${GOV_EXEC_READINESS_DESC_ID} ${GOV_EXEC_READINESS_VOTE_FOOTER_ID}` : undefined
+              }
+            >
               <button
                 type="button"
                 className={voteBtnClass}

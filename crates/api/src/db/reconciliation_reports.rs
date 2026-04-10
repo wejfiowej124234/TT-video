@@ -1,10 +1,18 @@
 //! 对账报告只追加表 `reconciliation_reports`（04 附录、110）
+//!
+//! **B-155**：**`orders_chain_health_trend_snapshot`**（锚 **`155-ORDERS-CHAIN-HEALTH-TREND-SNAPSHOT-V1`**）在 **`persist:true`** 时写入 **`summary`**，由 **`merge_orders_chain_health_trend_snapshot`** 自上一份报告滚动 **`by_batch`/`by_day`**。
 
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, Datelike, Utc};
 use serde_json::{json, Value};
 use sqlx::postgres::PgPool;
 use sqlx::types::Json;
 use uuid::Uuid;
+
+/// **B-155** 时间序列壳（与 **`153-ORDERS-CHAIN-HEALTH-OBS-V1`** 标量同源，**仅** persist 滚动）。
+pub const ORDERS_CHAIN_HEALTH_TREND_SNAPSHOT_ANCHOR: &str =
+    "155-ORDERS-CHAIN-HEALTH-TREND-SNAPSHOT-V1";
+const ORDERS_CHAIN_HEALTH_TREND_MAX_BATCH: usize = 90;
+const ORDERS_CHAIN_HEALTH_TREND_MAX_DAY: usize = 90;
 
 /// internal **indexer-reconcile** 持久化摘要所用 `report_type`
 pub const REPORT_TYPE_ORDERS_PROJECTION_VS_ORDERS: &str = "orders_projection_vs_orders";
@@ -27,6 +35,172 @@ pub async fn insert_reconciliation_report(
     .bind(Json(summary))
     .fetch_one(pool)
     .await
+}
+
+/// 与 [`insert_reconciliation_report`] 相同，但 **主键 `id` 预分配**（供 **B-155** 批次点写入 **`report_id`** 与 **`summary`** 同条 INSERT）。
+pub async fn insert_reconciliation_report_with_id(
+    pool: &PgPool,
+    id: Uuid,
+    report_type: &str,
+    chain_id: Option<i64>,
+    summary: &Value,
+) -> Result<Uuid, sqlx::Error> {
+    let row_id: Uuid = sqlx::query_scalar(
+        r#"
+        INSERT INTO reconciliation_reports (id, report_type, chain_id, summary)
+        VALUES ($1, $2, $3, $4)
+        RETURNING id
+        "#,
+    )
+    .bind(id)
+    .bind(report_type)
+    .bind(chain_id)
+    .bind(Json(summary))
+    .fetch_one(pool)
+    .await?;
+    debug_assert_eq!(row_id, id);
+    Ok(row_id)
+}
+
+fn orders_chain_health_observability_usable_for_trend(health: &Value) -> bool {
+    health.get("observation_note").is_none()
+        && health
+            .get("orders_total")
+            .and_then(|v| v.as_i64())
+            .is_some()
+}
+
+fn trend_point_from_health(health: &Value, report_id: Uuid, captured_at: DateTime<Utc>) -> Value {
+    json!({
+        "report_id": report_id.to_string(),
+        "captured_at": captured_at.to_rfc3339(),
+        "expected_chain_id": health.get("expected_chain_id"),
+        "orders_total": health.get("orders_total"),
+        "orders_null_chain_id_total": health.get("orders_null_chain_id_total"),
+        "orders_chain_id_mismatch_total": health.get("orders_chain_id_mismatch_total"),
+        "orders_aligned_expected_total": health.get("orders_aligned_expected_total"),
+        "null_ratio": health.get("null_ratio"),
+        "mismatch_ratio": health.get("mismatch_ratio"),
+    })
+}
+
+/// **B-155**：自上一份 **`summary.orders_chain_health_trend_snapshot`** 与当前 **`orders_chain_health_observability`** 合并（**`by_batch`** 每 persist 一点；**`by_day`** 按 **UTC 日历日**保留当日最后一点）。
+///
+/// **`health`** 非成功体（含 **`observation_note`** 或缺 **`orders_total`**）时：**不**追加点，返回 **上一份** 趋势克隆（若无则空壳）。
+pub fn merge_orders_chain_health_trend_snapshot(
+    prev: Option<&Value>,
+    health: &Value,
+    report_id: Uuid,
+    captured_at: DateTime<Utc>,
+) -> Value {
+    if !orders_chain_health_observability_usable_for_trend(health) {
+        if let Some(p) = prev {
+            if p.get("anchor").and_then(|a| a.as_str())
+                == Some(ORDERS_CHAIN_HEALTH_TREND_SNAPSHOT_ANCHOR)
+            {
+                return p.clone();
+            }
+        }
+        return json!({
+            "anchor": ORDERS_CHAIN_HEALTH_TREND_SNAPSHOT_ANCHOR,
+            "schema_version": 1_i64,
+            "max_batch_points_kept": ORDERS_CHAIN_HEALTH_TREND_MAX_BATCH as i64,
+            "max_day_points_kept": ORDERS_CHAIN_HEALTH_TREND_MAX_DAY as i64,
+            "merge_note": "health_snapshot_not_advanced",
+            "by_batch": [],
+            "by_day": [],
+            "getter_note": "Appends on POST …/internal/indexer-reconcile persist:true when orders_chain_health_observability is query-ok; else carries forward prior series if anchor matches.",
+        });
+    }
+
+    let new_expected = health.get("expected_chain_id").and_then(|v| v.as_i64());
+
+    let (mut by_batch, mut by_day) = if let Some(p) = prev {
+        if p.get("anchor").and_then(|a| a.as_str()) == Some(ORDERS_CHAIN_HEALTH_TREND_SNAPSHOT_ANCHOR)
+        {
+            let batch = p
+                .get("by_batch")
+                .and_then(|v| v.as_array())
+                .cloned()
+                .unwrap_or_default();
+            let day = p
+                .get("by_day")
+                .and_then(|v| v.as_array())
+                .cloned()
+                .unwrap_or_default();
+            let reset = batch.last().and_then(|last| {
+                let last_ec = last.get("expected_chain_id").and_then(|v| v.as_i64());
+                match (last_ec, new_expected) {
+                    (Some(a), Some(b)) if a != b => Some(()),
+                    _ => None,
+                }
+            });
+            if reset.is_some() {
+                (Vec::new(), Vec::new())
+            } else {
+                (batch, day)
+            }
+        } else {
+            (Vec::new(), Vec::new())
+        }
+    } else {
+        (Vec::new(), Vec::new())
+    };
+
+    let point = trend_point_from_health(health, report_id, captured_at);
+    by_batch.push(point.clone());
+    while by_batch.len() > ORDERS_CHAIN_HEALTH_TREND_MAX_BATCH {
+        by_batch.remove(0);
+    }
+
+    let day_utc = format!(
+        "{:04}-{:02}-{:02}",
+        captured_at.year(),
+        captured_at.month(),
+        captured_at.day()
+    );
+    let day_entry = json!({
+        "day_utc": day_utc,
+        "last_captured_at": captured_at.to_rfc3339(),
+        "last_report_id": report_id.to_string(),
+        "expected_chain_id": health.get("expected_chain_id"),
+        "orders_total": health.get("orders_total"),
+        "orders_null_chain_id_total": health.get("orders_null_chain_id_total"),
+        "orders_chain_id_mismatch_total": health.get("orders_chain_id_mismatch_total"),
+        "orders_aligned_expected_total": health.get("orders_aligned_expected_total"),
+        "null_ratio": health.get("null_ratio"),
+        "mismatch_ratio": health.get("mismatch_ratio"),
+    });
+    let mut day_hit = false;
+    for d in by_day.iter_mut() {
+        if d.get("day_utc").and_then(|v| v.as_str()) == Some(day_utc.as_str()) {
+            *d = day_entry.clone();
+            day_hit = true;
+            break;
+        }
+    }
+    if !day_hit {
+        by_day.push(day_entry);
+    }
+    by_day.sort_by(|a, b| {
+        let da = a.get("day_utc").and_then(|v| v.as_str()).unwrap_or("");
+        let db = b.get("day_utc").and_then(|v| v.as_str()).unwrap_or("");
+        da.cmp(db)
+    });
+    while by_day.len() > ORDERS_CHAIN_HEALTH_TREND_MAX_DAY {
+        by_day.remove(0);
+    }
+
+    json!({
+        "anchor": ORDERS_CHAIN_HEALTH_TREND_SNAPSHOT_ANCHOR,
+        "schema_version": 1_i64,
+        "max_batch_points_kept": ORDERS_CHAIN_HEALTH_TREND_MAX_BATCH as i64,
+        "max_day_points_kept": ORDERS_CHAIN_HEALTH_TREND_MAX_DAY as i64,
+        "expected_chain_id": health.get("expected_chain_id"),
+        "by_batch": Value::Array(by_batch),
+        "by_day": Value::Array(by_day),
+        "getter_note": "by_batch: one point per persist:true indexer-reconcile (capped); by_day: last snapshot per UTC calendar day (capped). Scalar fields mirror orders_chain_health_observability (153).",
+    })
 }
 
 #[derive(Debug, sqlx::FromRow)]
@@ -100,6 +274,40 @@ pub async fn admin_last_stored_orders_projection_reconcile(
         "projection_reconcile_clean": projection_reconcile_clean,
         "issues_total": issues_total,
     })))
+}
+
+/// **B-154**：自最新 **`orders_projection_vs_orders`** 报告 **`summary`** 读取 **`indexer_reconcile_duration_batch_stats_observability`**（与 **`POST …/internal/indexer-reconcile`** **`persist:true`** 同键）。
+pub async fn admin_last_indexer_reconcile_duration_batch_stats_observability(
+    pool: &PgPool,
+) -> Result<Option<Value>, sqlx::Error> {
+    let Some(row) =
+        get_latest_reconciliation_report_by_type(pool, REPORT_TYPE_ORDERS_PROJECTION_VS_ORDERS)
+            .await?
+    else {
+        return Ok(None);
+    };
+    Ok(row
+        .summary
+        .0
+        .get("indexer_reconcile_duration_batch_stats_observability")
+        .cloned())
+}
+
+/// **B-155**：自最新 **`orders_projection_vs_orders`** 报告 **`summary`** 读取 **`orders_chain_health_trend_snapshot`**。
+pub async fn admin_last_orders_chain_health_trend_snapshot(
+    pool: &PgPool,
+) -> Result<Option<Value>, sqlx::Error> {
+    let Some(row) =
+        get_latest_reconciliation_report_by_type(pool, REPORT_TYPE_ORDERS_PROJECTION_VS_ORDERS)
+            .await?
+    else {
+        return Ok(None);
+    };
+    Ok(row
+        .summary
+        .0
+        .get("orders_chain_health_trend_snapshot")
+        .cloned())
 }
 
 /// Admin 列表用（不含整份 **`summary`**；从 **`summary.stats`** 抽取门禁字段与分项计数，**不含** **`samples`**）
@@ -346,5 +554,68 @@ mod tests {
         let v = event_log_escrow_coverage_from_list_item(&r).expect("some");
         assert_eq!(v["escrow_created_rows"], 42);
         assert!(v["escrow_class_event_rows"].is_null());
+    }
+
+    fn health_sample(ecid: i64, total: i64, null_t: i64, mismatch_t: i64) -> Value {
+        json!({
+            "anchor": "153-ORDERS-CHAIN-HEALTH-OBS-V1",
+            "expected_chain_id": ecid,
+            "orders_total": total,
+            "orders_null_chain_id_total": null_t,
+            "orders_chain_id_mismatch_total": mismatch_t,
+            "orders_aligned_expected_total": total - null_t - mismatch_t,
+            "null_ratio": 0.1,
+            "mismatch_ratio": 0.05,
+        })
+    }
+
+    #[test]
+    fn merge_orders_chain_health_trend_first_point() {
+        let id = Uuid::new_v4();
+        let t = Utc::now();
+        let h = health_sample(7, 100, 2, 1);
+        let v = merge_orders_chain_health_trend_snapshot(None, &h, id, t);
+        assert_eq!(
+            v["anchor"].as_str().unwrap(),
+            ORDERS_CHAIN_HEALTH_TREND_SNAPSHOT_ANCHOR
+        );
+        let batch = v["by_batch"].as_array().unwrap();
+        assert_eq!(batch.len(), 1);
+        assert_eq!(batch[0]["report_id"].as_str().unwrap(), id.to_string());
+        assert_eq!(batch[0]["orders_total"], 100);
+        let day = v["by_day"].as_array().unwrap();
+        assert_eq!(day.len(), 1);
+        assert_eq!(day[0]["last_report_id"].as_str().unwrap(), id.to_string());
+    }
+
+    #[test]
+    fn merge_orders_chain_health_trend_appends_batch_updates_same_day() {
+        let id1 = Uuid::new_v4();
+        let id2 = Uuid::new_v4();
+        let t1 = Utc::now();
+        let t2 = t1 + chrono::Duration::seconds(5);
+        let h1 = health_sample(7, 100, 2, 1);
+        let h2 = health_sample(7, 101, 3, 1);
+        let first = merge_orders_chain_health_trend_snapshot(None, &h1, id1, t1);
+        let second = merge_orders_chain_health_trend_snapshot(Some(&first), &h2, id2, t2);
+        let batch = second["by_batch"].as_array().unwrap();
+        assert_eq!(batch.len(), 2);
+        assert_eq!(batch[1]["orders_total"], 101);
+        let day = second["by_day"].as_array().unwrap();
+        assert_eq!(day.len(), 1);
+        assert_eq!(day[0]["orders_total"], 101);
+    }
+
+    #[test]
+    fn merge_orders_chain_health_trend_skips_unhealthy_health() {
+        let id = Uuid::new_v4();
+        let bad = json!({
+            "anchor": "153-ORDERS-CHAIN-HEALTH-OBS-V1",
+            "observation_note": "query_failed",
+        });
+        let prev = merge_orders_chain_health_trend_snapshot(None, &health_sample(7, 1, 0, 0), id, Utc::now());
+        let id2 = Uuid::new_v4();
+        let out = merge_orders_chain_health_trend_snapshot(Some(&prev), &bad, id2, Utc::now());
+        assert_eq!(out["by_batch"].as_array().unwrap().len(), 1);
     }
 }

@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://traveltrust.local/schemas/traveltrust.ops_artifact.v1.json",
+  "title": "traveltrust.ops_artifact.v1",
+  "description": "Epic D 运维落盘 artifact 总壳。不描述 API 业务语义；B-115/B-116/P5/Epic A/Epic C 行为不在此变更。artifact_type 用于机读分类、evidence 索引与 bundle 完整性校验。",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "artifact_schema_id",
+    "artifact_schema_version",
+    "artifact_type",
+    "captured_at",
+    "epic_task_id",
+    "provenance",
+    "api_context",
+    "payload"
+  ],
+  "properties": {
+    "artifact_schema_id": {
+      "type": "string",
+      "const": "traveltrust.ops_artifact.v1"
+    },
+    "artifact_schema_version": {
+      "type": "string",
+      "description": "SemVer；仅当本 schema 语义变更时 bump。",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "artifact_type": {
+      "type": "string",
+      "description": "决定性分类字段；同一 Task 落盘不得省略或拼写变体。D-02 使用 snapshot_public；D-08 使用 dry_run_correction_executor。",
+      "enum": [
+        "snapshot_public",
+        "indexer_status",
+        "reconcile",
+        "dry_run_chain",
+        "dry_run_event_log",
+        "dry_run_correction_executor",
+        "probe",
+        "bundle"
+      ]
+    },
+    "captured_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC3339 UTC"
+    },
+    "epic_task_id": {
+      "type": "string",
+      "pattern": "^Epic-D-D(0[1-9]|10)$"
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["host_git_commit", "host_git_branch", "host_repo_dirty"],
+      "additionalProperties": true,
+      "properties": {
+        "host_git_commit": { "type": ["string", "null"] },
+        "host_git_branch": { "type": ["string", "null"] },
+        "host_repo_dirty": { "type": ["boolean", "null"] },
+        "script": { "type": "string" },
+        "script_semver": { "type": "string" }
+      }
+    },
+    "api_context": {
+      "type": "object",
+      "required": ["internal_invoked"],
+      "additionalProperties": true,
+      "properties": {
+        "api_base_url_redacted": { "type": ["string", "boolean"] },
+        "chain_id": { "type": ["integer", "null"] },
+        "internal_invoked": { "type": "boolean" }
+      }
+    },
+    "ops_summary": {
+      "type": "object",
+      "description": "reconcile 与全部 dry-run artifact（D-05～D-08）强制；结构一致供通用 probe/gate。由落盘工具从 payload 映射填充，见 Epic-D-indexer-ops-readonly-ladder.md D-01。",
+      "required": ["dry_run", "domain", "issues_total", "clean"],
+      "additionalProperties": false,
+      "properties": {
+        "dry_run": { "type": "boolean" },
+        "domain": {
+          "type": "string",
+          "enum": ["orders", "chain", "event_log", "correction_executor"]
+        },
+        "issues_total": { "type": "integer", "minimum": 0 },
+        "clean": { "type": "boolean" }
+      }
+    },
+    "payload": {
+      "type": "object",
+      "description": "API 响应全文或快照合并根；不得仅以 human_summary 替代结构化键。"
+    },
+    "tasks_min_keys": {
+      "type": "object",
+      "description": "仅用于 D-01 登记文件 epic-d-d01-tasks-min-keys.json；常规落盘 artifact 可省略。",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["artifact_type", "payload_keys"],
+        "properties": {
+          "artifact_type": { "type": "string" },
+          "payload_keys": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "ops_summary_required": { "type": "boolean" }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "artifact_type": {
+            "enum": [
+              "reconcile",
+              "dry_run_chain",
+              "dry_run_event_log",
+              "dry_run_correction_executor"
+            ]
+          }
+        },
+        "required": ["artifact_type"]
+      },
+      "then": { "required": ["ops_summary"] }
+    }
+  ]
+}

@@ -1,13 +1,16 @@
 //! 按领域聚合路由（48 §三、§11.6）；各子模块提供 router()，此处 merge 后由 router::app 统一 .with_state。
 
 mod admin;
+mod admin_cross_check;
 mod auth;
 mod community;
+mod country_ledger_jurisdiction;
 mod did_rank;
 mod discover;
 mod disputes;
 mod evidence;
 mod governance;
+mod governance_country_ledger;
 mod governance_delegation_store;
 mod governance_investor_share;
 mod governance_delegate;
@@ -24,6 +27,15 @@ mod me;
 mod media;
 mod messages;
 mod orders;
+
+#[cfg(test)]
+mod governance_read_contract_contract_tests;
+
+#[cfg(test)]
+mod admin_read_contract_contract_tests;
+
+#[cfg(test)]
+mod read_contract_route_guard;
 
 use axum::http::StatusCode;
 use axum::response::IntoResponse;
@@ -74,6 +86,7 @@ pub fn api_router() -> Router<ApiMetaState> {
         .merge(media::router())
         .merge(intents::router())
         .merge(community::router())
+        .merge(country_ledger_jurisdiction::router())
         .merge(did_rank::router())
         .merge(governance::router())
         .merge(internal::router())

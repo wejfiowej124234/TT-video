@@ -17,6 +17,8 @@ use ed25519_dalek::SigningKey;
 use crate::chain;
 use crate::chain_off;
 use crate::db;
+use crate::order_deadline_clock::OrderDeadlineClock;
+use crate::jurisdiction_country_ledger_template::JurisdictionCountryLedgerRegistry;
 
 /// 索引器 checkpoint（block_number + log_index），与 main 内 CLI 索引器状态一致。
 #[derive(Clone, Debug, Serialize, Deserialize)]
@@ -121,10 +123,17 @@ pub struct ApiMetaState {
     /// **`RECONCILE_EXPORT_ED25519_SEED_HEX`**（32 字节 hex）；对 **`GET …/reconcile-reports/export`** 响应体做 **Ed25519** 签名（**200** 头 **`x-traveltrust-reconcile-export-ed25519`**）；公钥见 **`GET /meta.admin_exports`**（200 §2.1 Partial）。
     pub reconcile_export_ed25519_key: Option<Arc<SigningKey>>,
 
+    /// **TT-B110-SEQ2-ORDERS-DEADLINE-CLOCK-INJECT-001**：**`GET /api/v1/orders`** / **`GET …/orders/:id`** / **`GET …/admin/orders/:id`** 在构造 **53-S12** deadline 前取 **`as_of = now_utc()`**（列表整次请求一次快照）。
+    pub order_deadline_clock: Arc<dyn OrderDeadlineClock + Send + Sync>,
+
     pub chain_off: Option<chain_off::ChainOffState>,
+    /// **Task B-1**：辖区 → 国池账本合约 **模板**（**不**回落 **`COUNTRY_POOL_LEDGER_ADDRESS`**）。
+    pub jurisdiction_country_ledger_registry: std::sync::Arc<JurisdictionCountryLedgerRegistry>,
     pub chain_config: Option<chain::ChainConfig>,
     pub resolution_outbox: Option<chain::outbox::ResolutionOutbox>,
     pub indexer_state: Option<chain::indexer::IndexerStateHandle>,
+    /// **B-174**：最近一次 **`indexer_tick` 成功路径**（含 **`no_new_blocks` / `awaiting_finality`**）落盘的 **failed/skip 分桶** 快照；**HTTP 5xx** 中断的 tick **不**更新。
+    pub indexer_tick_fail_skip_bucket_obs_last: Arc<RwLock<Option<serde_json::Value>>>,
     pub guide_upload_rate: Arc<RwLock<std::collections::HashMap<Uuid, Vec<Instant>>>>,
 }
 
@@ -328,6 +337,7 @@ pub fn governance_treasury_erc20_pool_balance_chain_ssot_enabled() -> bool {
 pub(crate) mod test_support {
     use super::{ApiMetaState, EvidenceTimeState, ProjectorCheckpoint};
     use crate::chain_off::ChainOffState;
+    use crate::order_deadline_clock::SystemOrderDeadlineClock;
     use chrono::Utc;
     use std::collections::HashMap;
     use std::sync::Arc;
@@ -365,10 +375,16 @@ pub(crate) mod test_support {
             evidence_time_state_path: "test".to_string(),
             evidence_receipt_hmac_key: None,
             reconcile_export_ed25519_key: None,
+            order_deadline_clock: Arc::new(SystemOrderDeadlineClock),
             chain_off,
+            jurisdiction_country_ledger_registry: std::sync::Arc::new(
+                crate::jurisdiction_country_ledger_template::JurisdictionCountryLedgerRegistry::empty(
+                ),
+            ),
             chain_config: None,
             resolution_outbox: None,
             indexer_state: None,
+            indexer_tick_fail_skip_bucket_obs_last: Arc::new(RwLock::new(None)),
             guide_upload_rate: Arc::new(RwLock::new(HashMap::<Uuid, Vec<Instant>>::new())),
         }
     }

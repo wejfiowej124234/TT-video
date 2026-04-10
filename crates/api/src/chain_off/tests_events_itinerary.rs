@@ -6,12 +6,14 @@ use super::{
     message_post_impl, messages_list_impl, order_get_impl, orders_list_impl,
     parse_order_id_and_escrow_from_topics, parse_order_id_bytes32_from_topics,
     parse_platform_fee_routed, parse_region_vault_forwarded, patch_order_itinerary_impl,
+    platform_fee_routed_topic0_hex, region_vault_forwarded_topic0_hex,
     set_order_escrow_address_impl, AmountBreakdown, ChainOffConfig, ChainOffState, ChainOffStore,
     ConfirmFinalPlanBody, CreateItineraryBody, CustomItineraryBody, GuideRow, ItineraryBundle,
     ItineraryDayRow, OrderListPage, OrderRow, PatchItineraryBody, PostMessageBody,
     SetEscrowAddressBody, UserRow,
 };
 use axum::Json;
+use crate::order_deadline_clock::SystemOrderDeadlineClock;
 use chrono::Utc;
 use serde_json::json;
 use sha3::{Digest, Keccak256};
@@ -19,6 +21,10 @@ use std::sync::Arc;
 use tokio::sync::RwLock;
 use traveltrust_core::OrderState;
 use uuid::Uuid;
+
+fn test_order_deadline_clock() -> SystemOrderDeadlineClock {
+    SystemOrderDeadlineClock
+}
 
 #[test]
 fn event_name_from_topic0_escrow_created() {
@@ -101,6 +107,74 @@ fn parse_region_vault_forwarded_decodes_token_to_amount() {
         amount,
         "0x000000000000000000000000000000000000000000000000000000000000002a"
     );
+}
+
+/// B-116-2-2：`reconcile` topic0 与 `chain/*_verify` 委托一致，且 `event_name_from_topic0` 可反查事件名。
+#[test]
+fn economic_events_topic0_ssot_matches_chain_verify_modules() {
+    use crate::chain::fee_router_verify::platform_fee_routed_topic0_hex as fr_topic0;
+    use crate::chain::region_vault_verify::region_vault_forwarded_topic0_hex as rv_topic0;
+    assert_eq!(
+        platform_fee_routed_topic0_hex().to_ascii_lowercase(),
+        fr_topic0().to_ascii_lowercase()
+    );
+    assert_eq!(
+        region_vault_forwarded_topic0_hex().to_ascii_lowercase(),
+        rv_topic0().to_ascii_lowercase()
+    );
+    assert_eq!(
+        event_name_from_topic0(&platform_fee_routed_topic0_hex()),
+        Some("PlatformFeeRouted")
+    );
+    assert_eq!(
+        event_name_from_topic0(&region_vault_forwarded_topic0_hex()),
+        Some("RegionVaultForwarded")
+    );
+}
+
+#[test]
+fn parse_platform_fee_routed_rejects_insufficient_topics() {
+    let topics = vec![platform_fee_routed_topic0_hex()];
+    let data = json!("0x0000000000000000000000000000000000000000000000000000000000000001");
+    assert!(parse_platform_fee_routed(&topics, &data).is_none());
+}
+
+#[test]
+fn parse_platform_fee_routed_rejects_short_data() {
+    let token_topic =
+        "0x000000000000000000000000aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".to_string();
+    let topics = vec![platform_fee_routed_topic0_hex(), token_topic];
+    let data = json!("0x00");
+    assert!(parse_platform_fee_routed(&topics, &data).is_none());
+}
+
+#[test]
+fn parse_platform_fee_routed_rejects_non_string_data() {
+    let token_topic =
+        "0x000000000000000000000000aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".to_string();
+    let topics = vec![platform_fee_routed_topic0_hex(), token_topic];
+    assert!(parse_platform_fee_routed(&topics, &json!({})).is_none());
+}
+
+#[test]
+fn parse_region_vault_forwarded_rejects_insufficient_topics() {
+    let topics = vec![
+        region_vault_forwarded_topic0_hex(),
+        "0x000000000000000000000000bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb".to_string(),
+    ];
+    let data = json!("0x0000000000000000000000000000000000000000000000000000000000000001");
+    assert!(parse_region_vault_forwarded(&topics, &data).is_none());
+}
+
+#[test]
+fn parse_region_vault_forwarded_rejects_short_data() {
+    let topics = vec![
+        region_vault_forwarded_topic0_hex(),
+        "0x000000000000000000000000bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb".to_string(),
+        "0x000000000000000000000000cccccccccccccccccccccccccccccccccccccccc".to_string(),
+    ];
+    let data = json!("0x00");
+    assert!(parse_region_vault_forwarded(&topics, &data).is_none());
 }
 
 #[test]
@@ -809,7 +883,15 @@ async fn s55_custom_create_then_orders_and_discover_contain_draft() {
     assert_eq!(json["order_status"], "draft");
     let order_id = Uuid::parse_str(json["order_id"].as_str().unwrap()).unwrap();
 
-    let Json(orders) = orders_list_impl(state.clone(), user_id, OrderListPage::default(), None, None)
+    let Json(orders) = orders_list_impl(
+        state.clone(),
+        &test_order_deadline_clock(),
+        None,
+        user_id,
+        OrderListPage::default(),
+        None,
+        None,
+    )
         .await
         .expect("orders_list_impl");
     let items = orders["items"].as_array().expect("items");
@@ -893,7 +975,13 @@ async fn discover_card_itinerary_matches_order_get() {
     };
     let order_id = Uuid::parse_str(create_json["order_id"].as_str().unwrap()).unwrap();
 
-    let Json(get_body) = order_get_impl(state.clone(), None, order_id, user_id)
+    let Json(get_body) = order_get_impl(
+        state.clone(),
+        &test_order_deadline_clock(),
+        None,
+        order_id,
+        user_id,
+    )
         .await
         .expect("order_get_impl");
     let Json(discover) =
@@ -961,7 +1049,15 @@ async fn discover_card_itinerary_matches_order_get() {
     assert!((nf(&br["misc"]) - nf(&disc_ab["platform_fee"])).abs() < 1e-6);
 
     // GET /api/v1/orders 列表项与 discover 卡片同形 breakdown + itinerary（07 §5.1）
-    let Json(orders_list) = orders_list_impl(state.clone(), user_id, OrderListPage::default(), None, None)
+    let Json(orders_list) = orders_list_impl(
+        state.clone(),
+        &test_order_deadline_clock(),
+        None,
+        user_id,
+        OrderListPage::default(),
+        None,
+        None,
+    )
         .await
         .expect("orders_list_impl");
     let list_item = orders_list["items"]
@@ -1268,6 +1364,8 @@ async fn orders_list_pagination_limit_and_cursor() {
 
     let Ok(Json(p1)) = orders_list_impl(
         state.clone(),
+        &test_order_deadline_clock(),
+        None,
         user_id,
         OrderListPage {
             limit: Some(2),
@@ -1290,6 +1388,8 @@ async fn orders_list_pagination_limit_and_cursor() {
 
     let Ok(Json(p2)) = orders_list_impl(
         state.clone(),
+        &test_order_deadline_clock(),
+        None,
         user_id,
         OrderListPage {
             limit: Some(2),
@@ -1549,7 +1649,9 @@ async fn order_get_includes_itinerary_when_not_draft() {
         order.guide_id = guide_placeholder;
         order.accepted_at = Some(Utc::now());
     }
-    let Ok(Json(get_json)) = order_get_impl(state, None, order_id, user_id).await else {
+    let Ok(Json(get_json)) =
+        order_get_impl(state, &test_order_deadline_clock(), None, order_id, user_id).await
+    else {
         panic!("order_get_impl");
     };
     let it = get_json["itinerary"].as_object().expect("itinerary object");
@@ -1604,7 +1706,9 @@ async fn set_order_escrow_address_impl_writes_address() {
     };
     assert_eq!(set_json["status"], "ok");
     assert_eq!(set_json["escrow_address"], addr);
-    let Ok(Json(get_json)) = order_get_impl(state.clone(), None, order_id, user_id).await else {
+    let Ok(Json(get_json)) =
+        order_get_impl(state.clone(), &test_order_deadline_clock(), None, order_id, user_id).await
+    else {
         panic!("order_get_impl");
     };
     assert_eq!(get_json["order"]["escrow_address"], addr);

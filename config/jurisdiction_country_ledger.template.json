@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "jurisdiction": "CN",
+      "COUNTRY_POOL_LEDGER_ADDRESS": "0x1111111111111111111111111111111111111111"
+    }
+  ]
+}

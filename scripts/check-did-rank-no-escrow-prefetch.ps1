@@ -1,23 +1,5 @@
-# 委托 **bash scripts/check-did-rank-no-escrow-prefetch.sh**（须 **Git Bash**）。
-param(
-    [Parameter(ValueFromRemainingArguments = $true)]
-    [string[]]$RemainingArgs = @()
-)
-
-$ErrorActionPreference = "Stop"
-$rootDir = Split-Path -Parent $PSScriptRoot
-if (-not $rootDir) { $rootDir = (Get-Location).Path }
-
-if (-not (Get-Command bash -ErrorAction SilentlyContinue)) {
-    Write-Error "check-did-rank-no-escrow-prefetch.ps1 requires Git Bash (bash on PATH)."
-    exit 1
-}
-
-Push-Location $rootDir
-try {
-    $bashArgs = @("scripts/check-did-rank-no-escrow-prefetch.sh") + $RemainingArgs
-    & bash @bashArgs
-    exit $LASTEXITCODE
-} finally {
-    Pop-Location
-}
+# B-184 compat: forwards to scripts/gates/check-did-rank-no-escrow-prefetch.ps1
+$ErrorActionPreference = 'Stop'
+$p = Join-Path $PSScriptRoot 'gates/check-did-rank-no-escrow-prefetch.ps1'
+& $p @args
+exit $LASTEXITCODE

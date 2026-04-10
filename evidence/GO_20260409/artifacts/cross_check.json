@@ -1,0 +1,46 @@
+{
+  "_note": "Task C-1 illustrative cross-check envelope. Production: GET /api/v1/admin/cross-check (admin JWT) returns full bodies + meta.build.",
+  "status": "ok",
+  "fee_pool_projection": {
+    "source_kind": "projection",
+    "body": {
+      "status": "ok",
+      "data_source": "placeholder",
+      "ssot": "fee_router_routed_events+region_vault_forwarded_events",
+      "chain_id_filter": null,
+      "fee_router": { "by_token": [] },
+      "region_vault": { "by_token": [] },
+      "cross_check": {},
+      "rule_version": "fee_pool_aggregates_projection_v1",
+      "anchor": "B-084-FEE-POOL-AGGREGATES-PROJECTION"
+    }
+  },
+  "governance_pool_chain": {
+    "source_kind": "chain_ssot",
+    "body": {
+      "status": "ok",
+      "pool_balance": null,
+      "currency": null,
+      "data_source": "placeholder",
+      "note": "49 G 占位：非链上 FeeRouter 真值；治理币池待产品定稿后实现"
+    }
+  },
+  "protocol_reference": {
+    "source_kind": "reference",
+    "body": {
+      "status": "ok",
+      "doc_ref": "docs/spec/84-第一阶段10国Country-Pool发行参数总表.md",
+      "doc_version": "1.0.16",
+      "fee_router": {
+        "layer1_percent_of_allocatable_platform_fee": {
+          "country_bucket": 45,
+          "global_pool": 55
+        }
+      }
+    }
+  },
+  "drift_summary": {
+    "drift_detected": false,
+    "delta": []
+  }
+}

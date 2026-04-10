@@ -492,6 +492,18 @@ export default function GovernancePage() {
           {t("governance_vault_forwards_title")}
         </Link>
         <Link
+          href="/governance/distribution-accruals"
+          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+        >
+          {t("governance_distribution_accruals_title")}
+        </Link>
+        <Link
+          href="/governance/distribution-claim"
+          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+        >
+          {t("governance_claim_title")}
+        </Link>
+        <Link
           href="/traveltrust#fee-router"
           className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
         >

@@ -1,4 +1,5 @@
 //! B-072：`GET /governance/proposals/:id` + `POST …/vote` 链下 MVP（内存票仓；与 04 §三 登记一致）。
+//! **Task A-1**：**`GET …/governance/proposal-status/:id`** — Governor **`state(uint256)`** 只读（**`is_chain_ssot`**）；投影回退时显式 **`data_source`**。
 //! **B-092**：计票为 **权重 Σ**（`delegation_units_v1`：投票当刻 `1+直接委托者数`，冻结存票）；已委托他人者 **不可** 直投。
 //! 重复提交：同 **`vote`** → **200** **`idempotent: true`**；不同 **`vote`** → **409** **`already_voted`**。
 //! **B-089 Completion**：**`GOVERNOR_ADDRESS` + `DATABASE_URL`** 时列表/详情走 **`governance_proposals_projection`** + **`eth_call`** **`state` / `getPastVotes`**；**`POST …/vote`** 返回 **`vote_on_chain_required`**（**禁止**链下假票）。
@@ -202,6 +203,124 @@ pub async fn get_governance_proposals_list(State(state): State<ApiMetaState>) ->
         }))
         .into_response(),
     )
+}
+
+/// GET /api/v1/governance/proposal-status/:proposal_id — **Task A-1**：Governor **`state(uint256)`** 只读；
+/// 失败时回退 **投影** `chain_state` 并 **`is_chain_ssot: false`**（**不**编造状态）。
+pub async fn get_governance_proposal_status(
+    State(state): State<ApiMetaState>,
+    Path(proposal_id): Path<String>,
+) -> impl IntoResponse {
+    let proposal_id = proposal_id.trim().to_string();
+
+    let Some((cfg, pool)) = governor_indexed_mode(&state) else {
+        return (
+            StatusCode::NOT_IMPLEMENTED,
+            Json(json!({
+                "error": "proposal_status_governor_only",
+                "message": "GET …/proposal-status requires GOVERNOR_ADDRESS, DATABASE_URL, and indexer projection (governance_proposals_projection)"
+            })),
+        )
+            .into_response();
+    };
+
+    if !is_decimal_proposal_id(&proposal_id) {
+        return (
+            StatusCode::BAD_REQUEST,
+            Json(json!({"error": "invalid_proposal_id", "message": "governor_mode expects decimal proposal id"})),
+        )
+            .into_response();
+    }
+
+    let chain_id_i64 = (cfg.chain_id.min(i64::MAX as u64)) as i64;
+    let row = match db::get_governance_proposal_projection(pool, chain_id_i64, &proposal_id).await {
+        Ok(r) => r,
+        Err(e) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(json!({"error": "governance_proposal_status_failed", "message": e.to_string()})),
+            )
+                .into_response();
+        }
+    };
+    let Some(row) = row else {
+        return (
+            StatusCode::NOT_FOUND,
+            Json(json!({"error": "proposal_not_found", "message": "proposal_not_found"})),
+        )
+            .into_response();
+    };
+
+    let gov = cfg.governor_address.as_deref().unwrap_or("").trim();
+    if !cfg.rpc_url.is_empty() && !gov.is_empty() {
+        match chain::governor::eth_call_governor_state(&cfg.rpc_url, gov, &proposal_id).await {
+            Ok(u) => {
+                let label = chain::governor::governor_state_label(u);
+                if label == "unknown" {
+                    return (
+                        StatusCode::BAD_GATEWAY,
+                        Json(json!({
+                            "error": "governor_state_decode",
+                            "message": "unexpected ProposalState enum value from chain",
+                            "is_chain_ssot": false
+                        })),
+                    )
+                        .into_response();
+                }
+                return governor_headered(
+                    Json(json!({
+                        "status": label,
+                        "is_chain_ssot": true
+                    }))
+                    .into_response(),
+                );
+            }
+            Err(e) => {
+                if let Some(ref st) = row.chain_state {
+                    return governor_headered(
+                        Json(json!({
+                            "status": st,
+                            "is_chain_ssot": false,
+                            "data_source": "governance_proposals_projection",
+                            "read_error": e
+                        }))
+                        .into_response(),
+                    );
+                }
+                return (
+                    StatusCode::BAD_GATEWAY,
+                    Json(json!({
+                        "error": "governor_state_unavailable",
+                        "message": e,
+                        "is_chain_ssot": false
+                    })),
+                )
+                    .into_response();
+            }
+        }
+    }
+
+    // No RPC / governor address configured: projection only (explicitly not chain SSOT).
+    match row.chain_state {
+        Some(st) => governor_headered(
+            Json(json!({
+                "status": st,
+                "is_chain_ssot": false,
+                "data_source": "governance_proposals_projection",
+                "note": "CHAIN_RPC_URL or governor_address missing; status from projection only"
+            }))
+            .into_response(),
+        ),
+        None => (
+            StatusCode::SERVICE_UNAVAILABLE,
+            Json(json!({
+                "error": "governor_state_unconfigured",
+                "message": "no RPC/governor for eth_call and projection has no chain_state",
+                "is_chain_ssot": false
+            })),
+        )
+            .into_response(),
+    }
 }
 
 /// GET /api/v1/governance/proposals/:proposal_id
@@ -527,6 +646,10 @@ pub async fn post_governance_proposal_vote(
 pub fn router() -> Router<ApiMetaState> {
     Router::new()
         .route(
+            "/api/v1/governance/proposal-status/:proposal_id",
+            get(get_governance_proposal_status),
+        )
+        .route(
             "/api/v1/governance/proposals/:proposal_id/vote",
             post(post_governance_proposal_vote),
         )
@@ -592,6 +715,20 @@ mod tests {
         let v: serde_json::Value = serde_json::from_slice(&body).expect("json");
         assert_eq!(v["status"], "ok");
         assert_eq!(v["items"].as_array().map(|a| a.len()), Some(2));
+    }
+
+    #[tokio::test]
+    async fn proposal_status_requires_governor_indexed_mode() {
+        let res = get_governance_proposal_status(State(api_meta_state(None)), Path("1".to_string()))
+            .await
+            .into_response();
+        assert_eq!(res.status(), StatusCode::NOT_IMPLEMENTED);
+        let body = res.into_body().collect().await.unwrap().to_bytes();
+        let v: serde_json::Value = serde_json::from_slice(&body).expect("json");
+        assert_eq!(
+            v.get("error").and_then(|x| x.as_str()),
+            Some("proposal_status_governor_only")
+        );
     }
 
     #[tokio::test]

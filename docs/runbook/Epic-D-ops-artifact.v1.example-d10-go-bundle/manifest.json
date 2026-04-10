@@ -1,0 +1,25 @@
+{
+  "bundle_kind": "indexer_public_snapshot",
+  "gate": "Indexer-110-public-snapshot",
+  "date": "2026-04-09",
+  "artifacts": [
+    {
+      "path": "indexer_public_snapshot_20260409T120000Z.json",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "path": "artifacts/epic_d_d03_indexer_status.json",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    {
+      "path": "artifacts/epic_d_d04_indexer_status_live.json",
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    {
+      "path": "artifacts/epic_d_d05_reconcile.json",
+      "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    }
+  ],
+  "sign_off": ["automation"],
+  "notes": "Example only; paths relative to GO_* day dir. Epic D-10 closure: manifest.sha256 + epic_d_go_bundle_closure.json."
+}

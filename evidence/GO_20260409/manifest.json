@@ -1,0 +1,86 @@
+{
+  "gate": "P1-B-RUNBOOK-P0-NINE",
+  "date": "2026-04-09",
+  "bundle_note": "TT-07-63B-SEQ1-P0-SINGLE-ITEM-001 — 缺口官方总表 P1-B（Runbook 定稿表 P0 九项）最小 evidence 互证；不替代监管级实名替换。TT-07-63B-P1B-08-4-CH2-SINGLE-001 — P1-B「08-4 第 2 章」索引互证（p1b-08-4-ch2-close.md）；不替代持牌法务签字。TT-07-63B-P1B-08-4-CH3-SINGLE-001 — P1-B「08-4 第 3 章」索引互证（p1b-08-4-ch3-close.md）；不替代目标环境 NTP/时间源实名定稿。TT-07-63B-P1C-MANIFEST-SINGLE-001 — P1-C「可验证发布 manifest」流程/字段互证（p1c-frontend-manifest-close.md）；不替代发版机 build 后真实 frontend-build-manifest.json。TT-07-63B-P1C-E2E-SINGLE-001 — P1-C「E2E 三项脚本」定义/路径/样例互证（p1c-e2e-close.md）；不替代目标环境执行与 P14-3 日期填实。TT-07-63B-P1C-RECONCILE-SINGLE-001 — P1-C「对账流程」与 §12.5 / reconcile 命令互证（p1c-reconcile-close.md）；不替代 INTERNAL_API_SECRET 下真实对账。TT-07-63B-P1C-EVIDENCE-INTEGRATION-001 — P1-C「W-GATE-CROSS-CHECK」与 §12.7 / 两脚本互证（p1c-wgate-evidence-integration-close.md）；不替代 08-2 审查二人工矩阵。TT-07-63B-P1C-BUNDLE-ROLLUP-001 — P1-C 四行工程互证一段式索引（p1c-bundle-rollup.md）；不替代各单行 artifact。TT-07-63B-P1D-HELP-CENTER-001 — P1-D「帮助中心」/help 与 08-4 第 1～6 章用户侧口径索引互证（p1d-help-center-close.md）；不替代法务全文定稿与运营逐条 diff。TT-07-63B-P1D-17-5-ARTIFACT-001 — P1-D「17 条 #5」与 export_deployment_params 产出 + SHA256 sidecar + checklist-17 #5 互证（p1d-17-5-artifact-close.md、deployment_params_export.txt/.sha256）；不替代链上部署地址台账与 Slither 全量报告。TT-07-63B-P1D-08-2-WORKORDER-001 — P1-D「08-2 工单定稿」：Runbook §12.9 × 08-2 表头/审查一·二互证索引（p1d-08-2-workorder-close.md）；不修改 08-2 正文状态、不填实 Owner/审查结论。TT-07-63B-P1D-BUNDLE-ROLLUP-REFRESH-001 — P1-D 四行工程互证一段式索引（p1d-bundle-rollup.md）：已纳入帮助中心、17#5 Artifact、08-2 工单定稿、30-UX i18n；不替代各单行 artifact。TT-07-63B-P1D-BUNDLE-ROLLUP-001 — 初版三行 rollup（已由 REFRESH 扩展为四行）。TT-07-63B-P1D-30-UX-I18N-INDEX-001 — P1-D「30-UX i18n」：30 §5/§8 与 `frontend/locales/zh.ts`/`en.ts` 键空间索引互证（p1d-30-ux-i18n-index-close.md）；不替代 `test:i18n:ci` 与法务全文。",
+  "artifacts": [
+    {
+      "path": "artifacts/p0-runbook-nine-items-close.md",
+      "sha256": "34f7844a6e1419cf763a8a7b8d11d11e95eaf9cf7a809cb86ce47f256dccb92f"
+    },
+    {
+      "path": "artifacts/cross_check.json",
+      "sha256": "5abccf9eb54f8ce30f9d28dd48baf4d23ed5443137df618767583759ac68757e"
+    },
+    {
+      "path": "artifacts/p1b-08-4-ch2-close.md",
+      "sha256": "c54e7d2cf86567a840b8600476854c9eee3b0f708500d89d70dc9bf076a4a844"
+    },
+    {
+      "path": "artifacts/p1b-08-4-ch3-close.md",
+      "sha256": "f635d4cc906df493b375d9156ffd71896f7dca9fde83ebbbe61f7037a54a3162"
+    },
+    {
+      "path": "artifacts/p1c-frontend-manifest-close.md",
+      "sha256": "c18c699a4ee755315cbe920e10526ac0fff74532d08fe13bc3a15e08d39ec85d"
+    },
+    {
+      "path": "artifacts/p1c-e2e-close.md",
+      "sha256": "3042af2dfb9fed6380b326f2acf82962bff65d637516a615bbdd9708171fe67d"
+    },
+    {
+      "path": "artifacts/p1c-wgate-evidence-integration-close.md",
+      "sha256": "158b5c12252b0bee78b0573176f6be2e603112e351ade9ee7cd04d3a4e7c1a16"
+    },
+    {
+      "path": "artifacts/p1c-reconcile-close.md",
+      "sha256": "d9b44edd737cd43a8fd757ec543508cfb530611104759175334a64fd42ff5680"
+    },
+    {
+      "path": "artifacts/p1c-bundle-rollup.md",
+      "sha256": "24816796d8d352ac43408c51584e2110ca588f197c47a75da2e6ceadf19fec61"
+    },
+    {
+      "path": "artifacts/p1d-help-center-close.md",
+      "sha256": "9dda4a2ceb142273940ecf0b8e538f77b798e4b8621e129346001ea3d9231645"
+    },
+    {
+      "path": "artifacts/p1d-17-5-artifact-close.md",
+      "sha256": "1e0adc89e3df77d2eefd5d7bc716fba2a4d543d0e803372723e863fa586600d1"
+    },
+    {
+      "path": "artifacts/deployment_params_export.txt",
+      "sha256": "5c591be8977a542f964155c3b2df86845da5c65add5f054d55f9376bfd28273f"
+    },
+    {
+      "path": "artifacts/deployment_params_export.sha256",
+      "sha256": "854b77a59de1db6902c2457cd8c79635caf168575564da95b1ad672632da1f4a"
+    },
+    {
+      "path": "artifacts/p1d-08-2-workorder-close.md",
+      "sha256": "ced651886a34fb967f6a081e2fec62f6d408868b236292e838651187a6b85bac"
+    },
+    {
+      "path": "artifacts/p1d-bundle-rollup.md",
+      "sha256": "81e4b9b2287974c73c8f511616b8c67953e5ec74da990d8f2e946a25d6fdd7a4"
+    },
+    {
+      "path": "artifacts/p1d-30-ux-i18n-index-close.md",
+      "sha256": "ae736f402ac024615809c342313d077580ce354cb00fa74b677aef7f93f6b6e9"
+    }
+  ],
+  "sign_off": [
+    "p0-runbook-nine-items-doc-close",
+    "p1b-08-4-ch2-doc-close",
+    "p1b-08-4-ch3-doc-close",
+    "p1c-frontend-manifest-doc-close",
+    "p1c-e2e-doc-close",
+    "p1c-reconcile-doc-close",
+    "p1c-wgate-evidence-integration-doc-close",
+    "p1c-bundle-rollup-doc-close",
+    "p1d-help-center-doc-close",
+    "p1d-17-5-artifact-doc-close",
+    "p1d-08-2-workorder-doc-close",
+    "p1d-bundle-rollup-doc-close",
+    "p1d-30-ux-i18n-index-doc-close"
+  ]
+}

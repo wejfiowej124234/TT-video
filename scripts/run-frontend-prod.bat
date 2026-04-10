@@ -1,33 +1,3 @@
 @echo off
-chcp 65001 >nul
-REM 生产模式：完整 build 后 next start（ensure-next-start + 端口 3012）
-REM 用于验收 Lighthouse；勿与 npm run dev 共用同一终端会话中的陈旧 .next
-set "ROOT=%~dp0\.."
-cd /d "%ROOT%\frontend"
-if exist "E:\Dev\nodejs\npm.cmd" set "PATH=E:\Dev\nodejs;%PATH%"
-if exist "%ProgramFiles%\nodejs\npm.cmd" set "PATH=%ProgramFiles%\nodejs;%PATH%"
-where npm >nul 2>&1
-if errorlevel 1 (
-    echo [错误] 未找到 npm。请安装 Node.js 18+ LTS，建议安装到 E:\Dev\nodejs。
-    pause
-    exit /b 1
-)
-if not exist "package.json" (
-    echo [错误] 未找到 package.json
-    pause
-    exit /b 1
-)
-if not exist "node_modules" (
-    call npm install
-    if errorlevel 1 exit /b 1
-)
-echo [前端] npm run build ...
-call npm run build
-if errorlevel 1 (
-    echo [错误] build 失败
-    pause
-    exit /b 1
-)
-echo [前端] npm run start（生产，端口 3012）...
-call npm run start
-pause
+set "HERE=%~dp0"
+call "%HERE%dev/run-frontend-prod.bat" %*

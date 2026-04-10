@@ -1,5 +1,6 @@
 //! B-086 / **TT-B086-INVESTOR-DISTRIBUTION-ACCRUAL-ROUTE-001**：应计分红分录 — **`POST …/internal/investor-distribution-accrual`** 生成（**`idempotency_key`** 幂等）、**`GET …/governance/investor-distribution-accruals`** 只读（**`distribution_id`** 单条与 **`fetch_distribution_envelope`** 同源）
 //! **B-088 / TT-B088-SNAPSHOT-BINDING-ROUTE-001**：**`snapshot_block_number`** 与 **`list_investor_share_transfers_up_to_block`**（含块冻结）+ **`replay_balances_from_transfers`** + **`allocate_pro_rata_accruals`** 同源；**`snapshot_binding_json`** 与 **`db::SNAPSHOT_*` / `B088_*`** SSOT。
+//! **B-115-3**：**`POST …/internal/investor-distribution-register-accrual`** — 链下 **`registerAccrual`** 语义（**`distribution_bytes32` + token + holder + amount**），幂等键 **`(distribution_id, holder)`** 经 **`idempotency_keys`**；**不**发链、**不**改 Claim。
 
 use axum::extract::{Query, State};
 use axum::http::header::{HeaderName, HeaderValue};
@@ -52,6 +53,184 @@ pub struct InvestorDistributionAccrualBody {
     pub token_address: String,
     pub snapshot_block_number: i64,
     pub idempotency_key: String,
+}
+
+/// Internal path 片段（须与 **`db::key_hash(..., path, ...)`** 完全一致）
+pub const REGISTER_ACCRUAL_INTERNAL_PATH: &str =
+    "/api/v1/internal/investor-distribution-register-accrual";
+/// **`idempotency_keys.key_scope`**：与 **FeeRouter / RegionVault** 投影无关的独立 scope
+pub const REGISTER_ACCRUAL_IDEM_SCOPE: &str = "b115_register_accrual";
+
+#[derive(Debug, Deserialize, serde::Serialize)]
+pub struct RegisterAccrualBody {
+    pub distribution_id: Uuid,
+    pub holder_address: String,
+}
+
+/// POST /api/v1/internal/investor-distribution-register-accrual — B-115-3 链下登记（幂等）
+pub async fn post_internal_investor_distribution_register_accrual(
+    State(state): State<ApiMetaState>,
+    Json(body): Json<RegisterAccrualBody>,
+) -> impl IntoResponse {
+    let Some(pool) = state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref()) else {
+        return (
+            StatusCode::SERVICE_UNAVAILABLE,
+            Json(crate::api_json::err_key(
+                "database_required_for_investor_distribution_register_accrual",
+            )),
+        )
+            .into_response();
+    };
+
+    let holder_n = match normalize_token_addr(&body.holder_address) {
+        Ok(h) => h,
+        Err(_) => {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(crate::api_json::err_key("invalid_holder_address")),
+            )
+                .into_response();
+        }
+    };
+
+    let canonical_idem = format!("{}:{}", body.distribution_id, holder_n);
+    let key_hash = db::key_hash(
+        "POST",
+        REGISTER_ACCRUAL_INTERNAL_PATH,
+        &canonical_idem,
+    );
+
+    match db::get_cached_response(pool, &key_hash).await {
+        Ok(Some((cached_status, cached_body))) => {
+            return match serde_json::from_slice::<serde_json::Value>(&cached_body) {
+                Ok(v) => (cached_status, Json(v)).into_response(),
+                Err(_) => (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    Json(crate::api_json::err_key(
+                        "investor_distribution_register_accrual_cache_corrupt",
+                    )),
+                )
+                    .into_response(),
+            };
+        }
+        Ok(None) => {}
+        Err(e) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(crate::api_json::err_key_detail(
+                    "register_accrual_idempotency_lookup_failed",
+                    e.to_string(),
+                )),
+            )
+                .into_response();
+        }
+    }
+
+    let header = match db::get_distribution_header(pool, body.distribution_id).await {
+        Ok(h) => h,
+        Err(e) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(crate::api_json::err_key_detail(
+                    "register_accrual_distribution_header_failed",
+                    e.to_string(),
+                )),
+            )
+                .into_response();
+        }
+    };
+    let Some(header) = header else {
+        return (
+            StatusCode::NOT_FOUND,
+            Json(crate::api_json::err_key("distribution_not_found")),
+        )
+            .into_response();
+    };
+
+    let line = match db::get_investor_distribution_accrual_line(
+        pool,
+        body.distribution_id,
+        &holder_n,
+    )
+    .await
+    {
+        Ok(l) => l,
+        Err(e) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(crate::api_json::err_key_detail(
+                    "register_accrual_line_lookup_failed",
+                    e.to_string(),
+                )),
+            )
+                .into_response();
+        }
+    };
+    let Some(line) = line else {
+        return (
+            StatusCode::NOT_FOUND,
+            Json(crate::api_json::err_key("accrual_line_not_found_for_holder")),
+        )
+            .into_response();
+    };
+
+    let distribution_bytes32_hex =
+        db::distribution_uuid_to_bytes32_hex_for_claim(body.distribution_id);
+    let reg = json!({
+        "distribution_id": body.distribution_id.to_string(),
+        "distribution_bytes32_hex": distribution_bytes32_hex,
+        "token_address": header.token_address,
+        "holder_address": line.holder_address,
+        "amount_u256_hex": line.accrual_u256_hex,
+        "balance_snapshot_u256_hex": line.balance_snapshot_u256_hex,
+    });
+
+    let for_cache = json!({
+        "status": "ok",
+        "anchor": "B-115-3-INVESTOR-DISTRIBUTION-REGISTER-ACCRUAL",
+        "idempotent": true,
+        "registration": reg.clone()
+    });
+    let cache_bytes = match serde_json::to_vec(&for_cache) {
+        Ok(b) => b,
+        Err(e) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(crate::api_json::err_key_detail(
+                    "register_accrual_cache_serialize_failed",
+                    e.to_string(),
+                )),
+            )
+                .into_response();
+        }
+    };
+
+    if let Err(e) = db::save_cached_response(
+        pool,
+        &key_hash,
+        REGISTER_ACCRUAL_IDEM_SCOPE,
+        StatusCode::OK,
+        &cache_bytes,
+    )
+    .await
+    {
+        return (
+            StatusCode::INTERNAL_SERVER_ERROR,
+            Json(crate::api_json::err_key_detail(
+                "register_accrual_idempotency_save_failed",
+                e.to_string(),
+            )),
+        )
+            .into_response();
+    }
+
+    let resp_first = json!({
+        "status": "ok",
+        "anchor": "B-115-3-INVESTOR-DISTRIBUTION-REGISTER-ACCRUAL",
+        "idempotent": false,
+        "registration": reg
+    });
+    (StatusCode::OK, Json(resp_first)).into_response()
 }
 
 /// POST /api/v1/internal/investor-distribution-accrual
@@ -585,10 +764,15 @@ pub async fn get_governance_investor_distribution_accruals(
 }
 
 pub fn internal_router() -> Router<ApiMetaState> {
-    Router::new().route(
-        "/api/v1/internal/investor-distribution-accrual",
-        post(post_investor_distribution_accrual),
-    )
+    Router::new()
+        .route(
+            "/api/v1/internal/investor-distribution-accrual",
+            post(post_investor_distribution_accrual),
+        )
+        .route(
+            REGISTER_ACCRUAL_INTERNAL_PATH,
+            post(post_internal_investor_distribution_register_accrual),
+        )
 }
 
 pub fn governance_router() -> Router<ApiMetaState> {
@@ -798,5 +982,273 @@ mod tests {
         let body = res.into_body().collect().await.unwrap().to_bytes();
         let v: serde_json::Value = serde_json::from_slice(&body).unwrap();
         assert_eq!(v["data_source"], "placeholder");
+    }
+
+    /// B-115-3：无 **`db_pool`** → **`503`**。
+    #[tokio::test]
+    async fn b1153_register_accrual_requires_database() {
+        let res = post_internal_investor_distribution_register_accrual(
+            State(api_meta_state(None)),
+            Json(RegisterAccrualBody {
+                distribution_id: Uuid::nil(),
+                holder_address: "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".to_string(),
+            }),
+        )
+        .await
+        .into_response();
+        assert_eq!(res.status(), StatusCode::SERVICE_UNAVAILABLE);
+    }
+
+    /// B-115-3：登记成功 + **`(distribution_id, holder)`** 幂等（**`idempotency_keys`**）；读回 **`registration`** 与 DB 行一致。
+    #[tokio::test]
+    async fn b1153_register_accrual_success_and_idempotent_with_pg() {
+        let url = match std::env::var("DATABASE_URL") {
+            Ok(u) if !u.trim().is_empty() => u,
+            _ => {
+                eprintln!(
+                    "b1153_register_accrual_success_and_idempotent_with_pg: skip (DATABASE_URL unset)"
+                );
+                return;
+            }
+        };
+        use axum::body::Body;
+        use axum::http::{Request, StatusCode};
+        use crate::chain_off::{ChainOffConfig, ChainOffState, ChainOffStore};
+        use std::sync::Arc;
+        use tokio::sync::RwLock;
+        use tower::util::ServiceExt;
+
+        const CHAIN: i64 = 999_991_553;
+        const IDEM: &str = "b1153-test-register-accrual-dist-key";
+        let pool = sqlx::postgres::PgPoolOptions::new()
+            .max_connections(2)
+            .connect(&url)
+            .await
+            .expect("connect DATABASE_URL");
+
+        let _ = sqlx::query("DELETE FROM idempotency_keys WHERE key_scope = $1")
+            .bind(REGISTER_ACCRUAL_IDEM_SCOPE)
+            .execute(&pool)
+            .await;
+        let _ = sqlx::query("DELETE FROM investor_distribution_accruals WHERE idempotency_key = $1")
+            .bind(IDEM)
+            .execute(&pool)
+            .await;
+
+        let holder = "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".to_string();
+        let amt = "0x0000000000000000000000000000000000000000000000000000000000000001";
+        let lines = vec![(holder.clone(), amt.to_string(), amt.to_string())];
+
+        let dist_id = db::insert_distribution_with_lines(
+            &pool,
+            IDEM,
+            CHAIN,
+            "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            42,
+            "0x00000000000000000000000000000000000000000000000000000000000003e8",
+            "0x0000000000000000000000000000000000000000000000000000000000000002",
+            amt,
+            "0x0000000000000000000000000000000000000000000000000000000000000001",
+            &lines,
+        )
+        .await
+        .expect("insert_distribution_with_lines");
+
+        let co = ChainOffState {
+            store: Arc::new(RwLock::new(ChainOffStore::default())),
+            config: ChainOffConfig::default(),
+            db_pool: Some(pool.clone()),
+        };
+        let app = internal_router().with_state(api_meta_state(Some(co)));
+
+        let req_body = RegisterAccrualBody {
+            distribution_id: dist_id,
+            holder_address: "0xAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA".to_string(),
+        };
+        let payload = serde_json::to_vec(&req_body).unwrap();
+
+        let res1 = app
+            .clone()
+            .oneshot(
+                Request::builder()
+                    .method("POST")
+                    .uri(REGISTER_ACCRUAL_INTERNAL_PATH)
+                    .header("content-type", "application/json")
+                    .body(Body::from(payload.clone()))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(res1.status(), StatusCode::OK);
+        let b1 = res1.into_body().collect().await.unwrap().to_bytes();
+        let v1: serde_json::Value = serde_json::from_slice(&b1).unwrap();
+        assert_eq!(v1["idempotent"], false);
+        let exp_b32 = db::distribution_uuid_to_bytes32_hex_for_claim(dist_id);
+        assert_eq!(v1["registration"]["distribution_bytes32_hex"], json!(exp_b32));
+        assert_eq!(
+            v1["registration"]["holder_address"].as_str(),
+            Some(holder.as_str())
+        );
+        assert_eq!(v1["registration"]["amount_u256_hex"], amt);
+        assert_eq!(
+            v1["registration"]["token_address"].as_str(),
+            Some("0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+        );
+
+        let res2 = app
+            .oneshot(
+                Request::builder()
+                    .method("POST")
+                    .uri(REGISTER_ACCRUAL_INTERNAL_PATH)
+                    .header("content-type", "application/json")
+                    .body(Body::from(payload))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(res2.status(), StatusCode::OK);
+        let b2 = res2.into_body().collect().await.unwrap().to_bytes();
+        let v2: serde_json::Value = serde_json::from_slice(&b2).unwrap();
+        assert_eq!(v2["idempotent"], true);
+        assert_eq!(v2["registration"], v1["registration"]);
+
+        sqlx::query("DELETE FROM idempotency_keys WHERE key_scope = $1")
+            .bind(REGISTER_ACCRUAL_IDEM_SCOPE)
+            .execute(&pool)
+            .await
+            .unwrap();
+        sqlx::query("DELETE FROM investor_distribution_accruals WHERE id = $1")
+            .bind(dist_id)
+            .execute(&pool)
+            .await
+            .unwrap();
+    }
+
+    /// **B-115-5**：**`register-accrual`** 幂等 **scope / path** 与 **FeeRouter·RegionVault** 投影及 **`fee-pool-aggregates`** **URI** 正交（防混名）。
+    #[test]
+    fn b1155_register_accrual_route_orthogonal_to_fee_pool_aggregates() {
+        assert!(
+            !REGISTER_ACCRUAL_IDEM_SCOPE.contains("fee_router"),
+            "idem scope must not alias fee_router"
+        );
+        assert!(
+            !REGISTER_ACCRUAL_IDEM_SCOPE.contains("region_vault"),
+            "idem scope must not alias region_vault"
+        );
+        assert_ne!(
+            REGISTER_ACCRUAL_INTERNAL_PATH,
+            "/api/v1/governance/fee-pool-aggregates"
+        );
+    }
+
+    /// **B-115-5**：**重复登记**第二次 **HTTP 200** + **`idempotent: true`**（缓存命中，非链上 Claim；链上 **重复 Claim** 见 **`RegionDistributionClaim`** Foundry 测）。
+    #[tokio::test]
+    async fn b1155_register_accrual_repeat_is_idempotent_success_not_error() {
+        let url = match std::env::var("DATABASE_URL") {
+            Ok(u) if !u.trim().is_empty() => u,
+            _ => {
+                eprintln!(
+                    "b1155_register_accrual_repeat_is_idempotent_success_not_error: skip (DATABASE_URL unset)"
+                );
+                return;
+            }
+        };
+        use axum::body::Body;
+        use axum::http::{Request, StatusCode};
+        use crate::chain_off::{ChainOffConfig, ChainOffState, ChainOffStore};
+        use std::sync::Arc;
+        use tokio::sync::RwLock;
+        use tower::util::ServiceExt;
+
+        const CHAIN: i64 = 999_991_629;
+        const IDEM: &str = "b1155-test-register-repeat";
+        let pool = sqlx::postgres::PgPoolOptions::new()
+            .max_connections(2)
+            .connect(&url)
+            .await
+            .expect("connect DATABASE_URL");
+
+        let _ = sqlx::query("DELETE FROM idempotency_keys WHERE key_scope = $1")
+            .bind(REGISTER_ACCRUAL_IDEM_SCOPE)
+            .execute(&pool)
+            .await;
+        let _ = sqlx::query("DELETE FROM investor_distribution_accruals WHERE idempotency_key = $1")
+            .bind(IDEM)
+            .execute(&pool)
+            .await;
+
+        let holder = "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb".to_string();
+        let amt = "0x0000000000000000000000000000000000000000000000000000000000000002";
+        let lines = vec![(holder.clone(), amt.to_string(), amt.to_string())];
+        let dist_id = db::insert_distribution_with_lines(
+            &pool,
+            IDEM,
+            CHAIN,
+            "0xcccccccccccccccccccccccccccccccccccccccc",
+            99,
+            "0x00000000000000000000000000000000000000000000000000000000000003e8",
+            "0x0000000000000000000000000000000000000000000000000000000000000002",
+            amt,
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+            &lines,
+        )
+        .await
+        .expect("insert_distribution_with_lines");
+
+        let co = ChainOffState {
+            store: Arc::new(RwLock::new(ChainOffStore::default())),
+            config: ChainOffConfig::default(),
+            db_pool: Some(pool.clone()),
+        };
+        let app = internal_router().with_state(api_meta_state(Some(co)));
+        let req_body = RegisterAccrualBody {
+            distribution_id: dist_id,
+            holder_address: holder.clone(),
+        };
+        let payload = serde_json::to_vec(&req_body).unwrap();
+
+        let res1 = app
+            .clone()
+            .oneshot(
+                Request::builder()
+                    .method("POST")
+                    .uri(REGISTER_ACCRUAL_INTERNAL_PATH)
+                    .header("content-type", "application/json")
+                    .body(Body::from(payload.clone()))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(res1.status(), StatusCode::OK);
+        let res2 = app
+            .oneshot(
+                Request::builder()
+                    .method("POST")
+                    .uri(REGISTER_ACCRUAL_INTERNAL_PATH)
+                    .header("content-type", "application/json")
+                    .body(Body::from(payload))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(
+            res2.status(),
+            StatusCode::OK,
+            "B-115-5: duplicate register must not 4xx/5xx when cache hit"
+        );
+        let b2 = res2.into_body().collect().await.unwrap().to_bytes();
+        let v2: serde_json::Value = serde_json::from_slice(&b2).unwrap();
+        assert_eq!(v2["idempotent"], true);
+
+        sqlx::query("DELETE FROM idempotency_keys WHERE key_scope = $1")
+            .bind(REGISTER_ACCRUAL_IDEM_SCOPE)
+            .execute(&pool)
+            .await
+            .unwrap();
+        sqlx::query("DELETE FROM investor_distribution_accruals WHERE id = $1")
+            .bind(dist_id)
+            .execute(&pool)
+            .await
+            .unwrap();
     }
 }

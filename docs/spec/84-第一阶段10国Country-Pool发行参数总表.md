@@ -2,7 +2,7 @@
 
 **文档编号**：84  
 **版本**：1.0.16  
-**最后更新**：2026-04-05  
+**最后更新**：2026-04-08  
 **状态**：`Target`（融资与产品叙事参数表；FeeRouter **第一层**与 [83](83-区域治理与收益分配-协议白皮书.md) **§3** 已对齐；链上未实现前以合约为准）  
 **受众**：白皮书、融资材料、官网、APP「认领国家」产品说明、DAO 治理文档（须在 [08-4-对外口径包](08-4-对外口径包.md) 框架内使用；**对外募资印刷前须法务签核** [governance-token/LEGAL-SIGNOFF-CHECKLIST](governance-token/LEGAL-SIGNOFF-CHECKLIST.md)）  
 **维护**：经济模型 / 增长负责人；**对外数字与措辞变更**须与 [08-4](08-4-对外口径包.md)、[82-治理币-文档总览](82-治理币-文档总览.md)、[83](83-区域治理与收益分配-协议白皮书.md) 交叉审阅。  
@@ -10,7 +10,7 @@
 
 **企业级数字门禁**：**§四** 等对外募资/展示**数值列**须在 **§三 3.6** **A/B/C 纪要**填实并与 **[82](82-治理币-文档总览.md) T7**、[governance-token/LEGAL-SIGNOFF-CHECKLIST](governance-token/LEGAL-SIGNOFF-CHECKLIST.md) 同批勾选后视为可印刷；未定稿前**占位不视为链上或产品已按该数执行**（fail-closed）。
 
-**机器校验（合并前）**：凡同批改动触及 **83/84/82/08-4 附录/governance-token/03** 等已纳入 linkage 的指针，根目录须 **`bash scripts/check-governance-doc-linkage.sh` 通过**（与 **§九**、**07 §二 2.4**、[CONTRIBUTING](../../CONTRIBUTING.md) 一致）。
+**机器校验（合并前）**：凡同批改动触及 **83/84/82/08-4 附录/governance-token/03** 等已纳入 linkage 的指针，项目根须 **`bash scripts/check-governance-doc-linkage.sh` 通过**（Windows：**`.\scripts\check-governance-doc-linkage.ps1`**，须 **Git Bash** 在 PATH，委托 `.sh`）。**CI** 首步即该脚本：[`.github/workflows/governance-doc-linkage-gate.yml`](../../.github/workflows/governance-doc-linkage-gate.yml)（同 workflow 另跑 **`check-07-version-triple.sh`**）。**脚本索引**：[scripts/README.md §二「CI 门禁」](../../scripts/README.md) **`check-governance-doc-linkage`** 行。与 **§九**、**07 §二 2.4**、[CONTRIBUTING](../../CONTRIBUTING.md) 一致。
 
 **易混澄清（企业级）**：**linkage 通过** 只保证上述文档间**交叉指针与关键词静态一致**，**不**等于 **§四 对外数字已定稿**。**定稿**仍以 **§三 3.6 纪要 + [82](82-治理币-文档总览.md) T7 + [LEGAL-SIGNOFF-CHECKLIST](governance-token/LEGAL-SIGNOFF-CHECKLIST.md)** 同批勾选为准（fail-closed）。
 
@@ -24,6 +24,7 @@
 | **对外披露上限** | **[08-4](08-4-对外口径包.md)** + 法务 |
 | **治理专题入口 / linkage** | **[82](82-治理币-文档总览.md)**、`check-governance-doc-linkage.sh` |
 | **国家桶链上转出审计（索引投影 · MVP）** | **[04 §3.4](04-后端与API.md)** **`GET /api/v1/governance/vault-forwards`**、前端 **`/governance/vault-forwards`**、**[110 §3.1.1](110-阶段开发链上索引器与事件同步器.md)**、**[14 §1.1.1](14-合约-API-ABI-前后端对齐.md)**、**[Runbook §7.1](../../ops/RUNBOOK.md)**；**逐国链上再分 / 专用对账导出** 仍 **Target** |
+| **对账分域（B-115 · 台账指针）** | **[83](83-区域治理与收益分配-协议白皮书.md)** Snapshot/Claim 叙事与 **[04 §3.4](04-后端与API.md)**/**[14](14-合约-API-ABI-前后端对齐.md)** 链上+投影 **同一验收包** 须母表 **B-115** 与 **`evidence/`** 同批闭合 |
 
 ---
 
@@ -82,6 +83,8 @@
 | TTG 质押者 | **65%** |
 | 储备（Reserve） | **20%** |
 | 运营（Operations） | **15%** |
+
+**图示与机读（锁定）**：[08-4-附录-收益流闭环图-FeeRouter-Target](08-4-附录-收益流闭环图-FeeRouter-Target.md) **§2** Mermaid 五节点与 **`governance_doc_reference::protocol_reference_json`** 之 **`fee_router`**（HTTP **`GET …/governance/protocol-reference`**）须与本节 **§1.1、§1.2** 表内数字一致；变更须同 PR 通过 **`check-governance-doc-linkage.sh`** 与 **`cargo test -p traveltrust-api`**（`governance_doc_reference`）。
 
 ### 1.3 两套「百分比」分母（必读，避免误读）
 

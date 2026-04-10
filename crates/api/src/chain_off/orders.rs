@@ -1,7 +1,7 @@
 //! chain_off 订单：CreateOrderBody、OpenDisputeBody、SetEscrowAddressBody、ConfirmFinalPlanBody、orders_list、order_get、order_create、confirm_final_plan、set_order_escrow_address（48 §5.5；50-80-2 乐观锁、50-80-3 Canonical）
 
 use axum::{http::StatusCode, Json};
-use chrono::{Duration, NaiveDate, Utc};
+use chrono::{DateTime, Duration, NaiveDate, Utc};
 use serde::Deserialize;
 use serde_json::{json, Value as JsonValue};
 use sha3::{Digest, Keccak256};
@@ -18,10 +18,34 @@ use super::{
 };
 use crate::chain::ChainConfig;
 use crate::db;
+use crate::order_deadline_clock::OrderDeadlineClock;
 use traveltrust_core::{
     fee_route_country::{resolve_fee_route_country_from_zh_destination, FeeRouteCountryResolve},
     OrderState,
 };
+
+#[cfg(test)]
+use std::sync::Mutex;
+
+/// 单测并行安全：模拟链上读数；**`None`**=未覆盖，**`Some(None)`**=强制链读失败（**fail-closed** → **`governance_ssot_fallback_p3`**），**`Some(Some(d))`**=强制 Governor 返回 d 天（**`governance_ssot_chain_governor`**）。
+#[cfg(test)]
+static ORDER_DEADLINE_SSOT_REVIEW_DAYS_TEST_HOOK: Mutex<Option<Option<i64>>> = Mutex::new(None);
+
+/// 并行 `cargo test` 下 **`ORDER_DEADLINE_SSOT_REVIEW_DAYS_TEST_HOOK`** 须串行。
+#[cfg(test)]
+static ORDER_DEADLINE_SSOT_HOOK_TEST_MUTEX: Mutex<()> = Mutex::new(());
+
+/// 供 **`routes/admin.rs`** 等跨模块单测与其它 **`orders`** 用例并行时串行化 hook。
+#[cfg(test)]
+pub(crate) fn order_deadline_ssot_parallel_test_guard(
+) -> std::sync::MutexGuard<'static, ()> {
+    ORDER_DEADLINE_SSOT_HOOK_TEST_MUTEX.lock().expect("ssot hook test mutex")
+}
+
+#[cfg(test)]
+pub(crate) fn order_deadline_ssot_test_hook_reset() {
+    *ORDER_DEADLINE_SSOT_REVIEW_DAYS_TEST_HOOK.lock().unwrap() = None;
+}
 
 /// 解析可选的 start/end 日期（YYYY-MM-DD）；两者都有且合法时返回 Some，否则 (None, None)
 fn parse_optional_date_range(
@@ -246,10 +270,16 @@ fn apply_orders_projection_fields_to_list_item_json(
 fn order_list_item_json(
     store: &super::ChainOffStore,
     o: &OrderRow,
-    review_window_days: i64,
+    rating_resolution: &RatingReviewWindowResolution,
+    deadline_as_of_utc: DateTime<Utc>,
 ) -> serde_json::Value {
-    let (payment_deadline, chat_confirm_deadline, rating_deadline) =
-        order_deadline_fields(o, review_window_days);
+    let ((payment_deadline, chat_confirm_deadline, rating_deadline), deadline_obs) =
+        compute_order_deadlines_with_rating_observability(
+            o,
+            rating_resolution,
+            true,
+            deadline_as_of_utc,
+        );
     let bundle = store.itineraries.get(&o.id);
     let (destination, city, days, travel_date, image) = bundle
         .map(|b| {
@@ -285,7 +315,8 @@ fn order_list_item_json(
         "completed_at": o.completed_at.map(|t| t.to_rfc3339()),
         "payment_deadline": payment_deadline,
         "chat_confirm_deadline": chat_confirm_deadline,
-        "rating_deadline": rating_deadline
+        "rating_deadline": rating_deadline,
+        "deadline_rating_observability": deadline_obs
     });
     if let Some(cid) = o.chain_id {
         item["chain_id"] = json!(cid);
@@ -336,11 +367,16 @@ pub fn order_chain_mismatch_for_public_read(o: &OrderRow, chain: &ChainConfig) -
 /// **`orders_list_chain_id`**：`GET /api/v1/orders?orders_chain_id=`（**B-102**）；**`None`** = 默认业务链范围。
 pub async fn orders_list_impl(
     state: ChainOffState,
+    order_deadline_clock: &dyn OrderDeadlineClock,
+    chain_config: Option<&ChainConfig>,
     user_id: Uuid,
     page: OrderListPage,
     state_filter: Option<OrderState>,
     orders_list_chain_id: Option<i64>,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    let deadline_as_of_utc = order_deadline_clock.now_utc();
+    let rating_resolution =
+        rating_review_window_resolution_for_orders_api(&state.config, chain_config).await;
     let business = state.config.business_chain_id;
     let store = state.store.read().await;
     let mut rows: Vec<&OrderRow> = store
@@ -379,14 +415,13 @@ pub async fn orders_list_impl(
         } else {
             None
         };
-        let rw = state.config.review_window_days;
         let staged: Vec<(Uuid, String, serde_json::Value)> = page_rows
             .iter()
             .map(|o| {
                 (
                     o.id,
                     order_state_to_str(o.state).to_string(),
-                    order_list_item_json(&store, o, rw),
+                    order_list_item_json(&store, o, &rating_resolution, deadline_as_of_utc),
                 )
             })
             .collect();
@@ -418,14 +453,13 @@ pub async fn orders_list_impl(
         })));
     }
 
-    let rw = state.config.review_window_days;
     let staged: Vec<(Uuid, String, serde_json::Value)> = rows
         .into_iter()
         .map(|o| {
             (
                 o.id,
                 order_state_to_str(o.state).to_string(),
-                order_list_item_json(&store, o, rw),
+                order_list_item_json(&store, o, &rating_resolution, deadline_as_of_utc),
             )
         })
         .collect();
@@ -489,10 +523,368 @@ pub fn order_split_addresses_ssot(
     })
 }
 
-/// 53-S12：**`GET /api/v1/orders/:id`** 与 **`GET /api/v1/orders`** 列表项同源的可选 deadline（ISO8601）。
-fn order_deadline_fields(
+/// **`rating_deadline`** 用的评价窗口天数解析结果（**TT-B110-SEQ2-ORDERS-DEADLINE-SSOT-OBSERVE-001** / **TT-B110-SEQ2-ORDERS-DEADLINE-GOVERNANCE-CHAIN-READ-001**）。
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) struct RatingReviewWindowResolution {
+    pub effective_days: i64,
+    /// 机读源：**`p3_review_window_days`** | **`governance_ssot_chain_governor`**（**`TravelTrustGovernor.orderRatingReviewWindowDays()`**）| **`governance_ssot_fallback_p3`**（链读失败 / 无 Governor / 越界 **fail-closed**）
+    pub source: &'static str,
+    pub governance_order_deadline_chain_ssot: bool,
+    pub p3_review_window_days_config: i64,
+}
+
+pub(crate) fn resolve_rating_review_window_for_deadlines(
+    review_window_days_fallback: i64,
+    governance_order_deadline_chain_ssot: bool,
+    chain_review_window_days: Option<i64>,
+) -> RatingReviewWindowResolution {
+    if !governance_order_deadline_chain_ssot {
+        return RatingReviewWindowResolution {
+            effective_days: review_window_days_fallback,
+            source: "p3_review_window_days",
+            governance_order_deadline_chain_ssot: false,
+            p3_review_window_days_config: review_window_days_fallback,
+        };
+    }
+
+    #[cfg(test)]
+    {
+        if let Ok(g) = ORDER_DEADLINE_SSOT_REVIEW_DAYS_TEST_HOOK.lock() {
+            if let Some(inner) = *g {
+                return match inner {
+                    Some(d) => RatingReviewWindowResolution {
+                        effective_days: d,
+                        source: "governance_ssot_chain_governor",
+                        governance_order_deadline_chain_ssot: true,
+                        p3_review_window_days_config: review_window_days_fallback,
+                    },
+                    None => RatingReviewWindowResolution {
+                        effective_days: review_window_days_fallback,
+                        source: "governance_ssot_fallback_p3",
+                        governance_order_deadline_chain_ssot: true,
+                        p3_review_window_days_config: review_window_days_fallback,
+                    },
+                };
+            }
+        }
+    }
+    if let Some(d) = chain_review_window_days {
+        if (1..=3660).contains(&d) {
+            return RatingReviewWindowResolution {
+                effective_days: d,
+                source: "governance_ssot_chain_governor",
+                governance_order_deadline_chain_ssot: true,
+                p3_review_window_days_config: review_window_days_fallback,
+            };
+        }
+    }
+    RatingReviewWindowResolution {
+        effective_days: review_window_days_fallback,
+        source: "governance_ssot_fallback_p3",
+        governance_order_deadline_chain_ssot: true,
+        p3_review_window_days_config: review_window_days_fallback,
+    }
+}
+
+/// **`GOVERNANCE_ORDER_DEADLINE_CHAIN_SSOT`**：对 **`GOVERNOR_ADDRESS`** **`eth_call` `orderRatingReviewWindowDays()`**（与 **`rating_review_window_resolution_for_orders_api`** 同源）。
+pub(crate) async fn rating_review_window_resolution_for_orders_api(
+    chain_off_cfg: &super::ChainOffConfig,
+    chain_config: Option<&crate::chain::ChainConfig>,
+) -> RatingReviewWindowResolution {
+    let chain_days = if chain_off_cfg.governance_order_deadline_chain_ssot {
+        crate::chain::governor::fetch_governor_order_rating_review_window_days(chain_config).await
+    } else {
+        None
+    };
+    resolve_rating_review_window_for_deadlines(
+        chain_off_cfg.review_window_days,
+        chain_off_cfg.governance_order_deadline_chain_ssot,
+        chain_days,
+    )
+}
+
+/// 只读可观测块：**`payment_deadline` / `chat_confirm_deadline`** 不读此对象；仅说明 **`rating_deadline`** 窗口天数的 SSOT 路径。
+pub(crate) fn deadline_rating_observability_value(
+    res: &RatingReviewWindowResolution,
+    chain_off_mounted: bool,
+) -> JsonValue {
+    json!({
+        "anchor": "TT-B110-SEQ2-ORDERS-DEADLINE-SSOT-OBSERVE-001",
+        "chain_off_mounted": chain_off_mounted,
+        "review_window_days_effective": res.effective_days,
+        "review_window_days_source": res.source,
+        "governance_order_deadline_chain_ssot": res.governance_order_deadline_chain_ssot,
+        "p3_review_window_days_config": res.p3_review_window_days_config,
+        "rule": "Observability only; rating_deadline = completed_at + review_window_days_effective when state=completed; payment_deadline/chat_confirm_deadline ignore this block; governance_ssot_chain_governor = TravelTrustGovernor.orderRatingReviewWindowDays() eth_call when GOVERNANCE_ORDER_DEADLINE_CHAIN_SSOT",
+    })
+}
+
+/// **`GET /meta`** 嵌套 **`reconcile_probe`**：比对 [`rating_review_window_resolution_for_orders_api`] 与独立 [`crate::chain::governor::probe_governor_order_rating_review_window_chain`]（**TT-B110-SEQ2-ORDERS-DEADLINE-RECONCILE-PROBE-001**）。
+pub(crate) fn deadline_ssot_reconcile_pass(
+    cfg: &super::ChainOffConfig,
+    resolution: &RatingReviewWindowResolution,
+    probe: &crate::chain::governor::GovernorRatingWindowProbe,
+) -> bool {
+    if !cfg.governance_order_deadline_chain_ssot {
+        return resolution.source == "p3_review_window_days"
+            && resolution.effective_days == cfg.review_window_days;
+    }
+    match probe.probe_leg {
+        "eth_call_ok" => {
+            let Some(d) = probe.chain_read_days else {
+                return false;
+            };
+            resolution.source == "governance_ssot_chain_governor"
+                && resolution.effective_days == d
+        }
+        "value_out_of_range"
+        | "eth_call_failed"
+        | "skipped_no_governor"
+        | "skipped_rpc_unconfigured"
+        | "skipped_no_chain_config" => {
+            resolution.source == "governance_ssot_fallback_p3"
+                && resolution.effective_days == cfg.review_window_days
+        }
+        _ => false,
+    }
+}
+
+pub(crate) fn merge_deadline_reconcile_probe_into_observability(
+    mut obs: JsonValue,
+    cfg: &super::ChainOffConfig,
+    resolution: &RatingReviewWindowResolution,
+    probe: crate::chain::governor::GovernorRatingWindowProbe,
+) -> JsonValue {
+    let pass = deadline_ssot_reconcile_pass(cfg, resolution, &probe);
+    let gov_probe = serde_json::to_value(&probe).unwrap_or_else(|_| json!({}));
+    let reconcile = json!({
+        "anchor": "TT-B110-SEQ2-ORDERS-DEADLINE-RECONCILE-PROBE-001",
+        "pass": pass,
+        "governor_probe": gov_probe,
+        "resolution_review_window_days_source": resolution.source,
+        "resolution_review_window_days_effective": resolution.effective_days,
+        "rule": "Independent eth_call orderRatingReviewWindowDays() vs rating_review_window_resolution_for_orders_api; pass when source/effective matches probe_leg (governance_ssot_chain_governor + chain days, or governance_ssot_fallback_p3 / p3_review_window_days per GOVERNANCE_ORDER_DEADLINE_CHAIN_SSOT)."
+    });
+    if let Some(o) = obs.as_object_mut() {
+        o.insert("reconcile_probe".to_string(), reconcile);
+    }
+    obs
+}
+
+/// **`GET /api/v1/admin/observability/overview`** · **`overview.orders_deadline_ssot_ops_check`**（**TT-B110-SEQ2-ORDERS-DEADLINE-OPS-CHECK-001**）：由 **`rating_review_window_resolution_for_orders_api`** / **`probe_governor_order_rating_review_window_chain`** / **`deadline_ssot_reconcile_pass`** 派生；**`exit_code_hint`** **0** = 健康，**1** = 须介入（与 **`overview.orders_deadline_ssot`** 提示字段同源，**不**改其键语义）。
+pub(crate) fn orders_deadline_ssot_ops_check_value(
+    chain_off_mounted: bool,
+    cfg: &super::ChainOffConfig,
+    resolution: &RatingReviewWindowResolution,
+    probe: &crate::chain::governor::GovernorRatingWindowProbe,
+) -> JsonValue {
+    if !chain_off_mounted {
+        return json!({
+            "anchor": "TT-B110-SEQ2-ORDERS-DEADLINE-OPS-CHECK-001",
+            "overall": "fail",
+            "exit_code_hint": 1,
+            "degraded": false,
+            "checks": {
+                "chain_off_mounted": {
+                    "status": "fail",
+                    "detail": "chain_off not mounted; orders deadline SSOT unavailable (GET /api/v1/orders* may 501)"
+                },
+                "governance_chain_read": { "status": "skipped", "detail": "chain_off_unmounted" },
+                "fallback_path": { "status": "skipped", "detail": "chain_off_unmounted" },
+                "reconcile_probe": { "status": "skipped", "detail": "chain_off_unmounted" }
+            },
+            "rule": "Ops gate: fail closed when chain_off unmounted; scripts may use exit_code_hint for non-zero exit."
+        });
+    }
+
+    let reconcile_pass = deadline_ssot_reconcile_pass(cfg, resolution, probe);
+
+    let known_probe_leg = matches!(
+        probe.probe_leg,
+        "eth_call_ok"
+            | "value_out_of_range"
+            | "eth_call_failed"
+            | "skipped_no_governor"
+            | "skipped_rpc_unconfigured"
+            | "skipped_no_chain_config"
+    );
+
+    let governance_chain_read = if !cfg.governance_order_deadline_chain_ssot {
+        json!({
+            "status": "skipped",
+            "detail": "governance_order_deadline_chain_ssot false; p3_review_window_days path only"
+        })
+    } else if !known_probe_leg {
+        json!({
+            "status": "fail",
+            "detail": format!("unknown probe_leg={}", probe.probe_leg)
+        })
+    } else if probe.probe_leg == "eth_call_ok" {
+        if reconcile_pass {
+            json!({
+                "status": "ok",
+                "detail": "orderRatingReviewWindowDays eth_call_ok; resolution matches probe"
+            })
+        } else {
+            json!({
+                "status": "fail",
+                "detail": "eth_call_ok but resolution/probe mismatch (see reconcile_probe)"
+            })
+        }
+    } else if reconcile_pass {
+        json!({
+            "status": "degraded",
+            "detail": format!(
+                "probe_leg={}; using fail-closed p3 fallback while SSOT reconcile still passes",
+                probe.probe_leg
+            )
+        })
+    } else {
+        json!({
+            "status": "fail",
+            "detail": format!(
+                "probe_leg={}; resolution/probe mismatch (see reconcile_probe)",
+                probe.probe_leg
+            )
+        })
+    };
+
+    let fallback_path = if !cfg.governance_order_deadline_chain_ssot {
+        json!({
+            "status": "skipped",
+            "detail": "governance_order_deadline_chain_ssot false"
+        })
+    } else if probe.probe_leg == "eth_call_ok" {
+        let ok = resolution.source == "governance_ssot_chain_governor"
+            && probe
+                .chain_read_days
+                .is_some_and(|d| d == resolution.effective_days);
+        if ok {
+            json!({
+                "status": "ok",
+                "detail": "chain read ok; governance_ssot_chain_governor active"
+            })
+        } else {
+            json!({
+                "status": "fail",
+                "detail": "eth_call_ok but resolution is not governance_ssot_chain_governor or days differ"
+            })
+        }
+    } else if resolution.source == "governance_ssot_fallback_p3"
+        && resolution.effective_days == cfg.review_window_days
+    {
+        json!({
+            "status": "ok",
+            "detail": "governance_ssot_fallback_p3 matches p3_review_window_days_config"
+        })
+    } else {
+        json!({
+            "status": "fail",
+            "detail": "expected governance_ssot_fallback_p3 with p3_review_window_days_config when chain read did not yield ok"
+        })
+    };
+
+    let reconcile_probe = if reconcile_pass {
+        json!({ "status": "ok", "detail": "deadline_ssot_reconcile_pass true" })
+    } else {
+        json!({ "status": "fail", "detail": "deadline_ssot_reconcile_pass false" })
+    };
+
+    let chain_ok = chain_off_mounted;
+    let degraded = cfg.governance_order_deadline_chain_ssot
+        && probe.probe_leg != "eth_call_ok"
+        && known_probe_leg
+        && reconcile_pass;
+
+    let checks_obj = json!({
+        "chain_off_mounted": {
+            "status": if chain_ok { "ok" } else { "fail" },
+            "detail": "chain_off mounted for orders deadline SSOT"
+        },
+        "governance_chain_read": governance_chain_read,
+        "fallback_path": fallback_path,
+        "reconcile_probe": reconcile_probe
+    });
+
+    let any_fail = !chain_ok
+        || !reconcile_pass
+        || governance_chain_read["status"] == json!("fail")
+        || fallback_path["status"] == json!("fail");
+
+    let overall = if any_fail { "fail" } else { "ok" };
+    let exit_code_hint = if overall == "ok" { 0 } else { 1 };
+
+    json!({
+        "anchor": "TT-B110-SEQ2-ORDERS-DEADLINE-OPS-CHECK-001",
+        "overall": overall,
+        "exit_code_hint": exit_code_hint,
+        "degraded": degraded,
+        "checks": checks_obj,
+        "rule": "Unified ops gate: chain_off + governance_chain_read + fallback_path + reconcile_probe; exit_code_hint 1 => investigate (cron / jq scripts)."
+    })
+}
+
+/// Admin 可观测：**`overview.orders_deadline_ssot`** + **`overview.orders_deadline_ssot_ops_check`** 单次 RPC（**TT-B110-SEQ2-ORDERS-DEADLINE-OPS-CHECK-001**）。
+pub(crate) async fn orders_deadline_ssot_admin_overview_bundle(
+    chain_off: Option<&ChainOffState>,
+    chain_config: Option<&ChainConfig>,
+) -> (JsonValue, JsonValue) {
+    let Some(co) = chain_off else {
+        let hint = json!({
+            "anchor": "TT-B110-SEQ2-ORDERS-DEADLINE-ADMIN-DEBUG-HINT-001",
+            "chain_off_mounted": false,
+            "rule": "chain_off not mounted; orders deadline SSOT admin hint unavailable (GET /api/v1/orders* may 501)"
+        });
+        let dummy_cfg = super::ChainOffConfig::default();
+        let dummy_res = RatingReviewWindowResolution {
+            effective_days: dummy_cfg.review_window_days,
+            source: "p3_review_window_days",
+            governance_order_deadline_chain_ssot: false,
+            p3_review_window_days_config: dummy_cfg.review_window_days,
+        };
+        let dummy_probe = crate::chain::governor::GovernorRatingWindowProbe {
+            probe_leg: "skipped_no_chain_config",
+            chain_read_days: None,
+            eth_call_error: None,
+        };
+        let ops = orders_deadline_ssot_ops_check_value(false, &dummy_cfg, &dummy_res, &dummy_probe);
+        return (hint, ops);
+    };
+    let res =
+        rating_review_window_resolution_for_orders_api(&co.config, chain_config).await;
+    let probe =
+        crate::chain::governor::probe_governor_order_rating_review_window_chain(chain_config).await;
+    let reconcile_probe_pass = deadline_ssot_reconcile_pass(&co.config, &res, &probe);
+    let hint = json!({
+        "anchor": "TT-B110-SEQ2-ORDERS-DEADLINE-ADMIN-DEBUG-HINT-001",
+        "chain_off_mounted": true,
+        "review_window_days_source": res.source,
+        "review_window_days_effective": res.effective_days,
+        "governance_order_deadline_chain_ssot": res.governance_order_deadline_chain_ssot,
+        "p3_review_window_days_config": res.p3_review_window_days_config,
+        "reconcile_probe_pass": reconcile_probe_pass,
+        "reconcile_probe_leg": probe.probe_leg,
+        "rule": "Admin read-only; same SSOT paths as GET /meta orders.deadline_rating_observability + reconcile pass vs probe_leg (TT-B110-SEQ2-ORDERS-DEADLINE-RECONCILE-PROBE-001)."
+    });
+    let ops = orders_deadline_ssot_ops_check_value(true, &co.config, &res, &probe);
+    (hint, ops)
+}
+
+/// **`GET /api/v1/admin/observability/overview`** · **`overview.orders_deadline_ssot`**（**TT-B110-SEQ2-ORDERS-DEADLINE-ADMIN-DEBUG-HINT-001**）：与 **`rating_review_window_resolution_for_orders_api`** / **`reconcile_probe`** 同源，**不**改 **`GET /meta`** 与公开订单 JSON。
+pub(crate) async fn orders_deadline_ssot_admin_overview_hint(
+    chain_off: Option<&ChainOffState>,
+    chain_config: Option<&ChainConfig>,
+) -> JsonValue {
+    orders_deadline_ssot_admin_overview_bundle(chain_off, chain_config)
+        .await
+        .0
+}
+
+/// **`deadline_as_of_utc`**：**TT-B110-SEQ2-ORDERS-DEADLINE-CLOCK-INJECT-001** 注入的「请求级」时钟快照；当前 **53-S12** 三键仍仅由行内 **`accepted_at` / `updated_at` / `completed_at`** 推导，**不**读 **`as_of`**，以便未来相对「现在」的 deadline 与单测固定时钟对齐。
+fn order_deadline_triple_for_rating_window(
     o: &OrderRow,
     review_window_days: i64,
+    _deadline_as_of_utc: DateTime<Utc>,
 ) -> (Option<String>, Option<String>, Option<String>) {
     let chat_confirm_deadline = match (o.state, o.accepted_at.as_ref(), o.sub_status.as_deref()) {
         (OrderState::Accepted, Some(accepted_at), sub)
@@ -518,16 +910,41 @@ fn order_deadline_fields(
     (payment_deadline, chat_confirm_deadline, rating_deadline)
 }
 
+/// 53-S12：**`GET /api/v1/orders/:id`** 与 **`GET /api/v1/orders`** 列表项同源的可选 deadline（ISO8601）+ **TT-B110-SEQ2-ORDERS-DEADLINE-SSOT-OBSERVE-001** 可观测块。
+fn compute_order_deadlines_with_rating_observability(
+    o: &OrderRow,
+    rating_resolution: &RatingReviewWindowResolution,
+    chain_off_mounted: bool,
+    deadline_as_of_utc: DateTime<Utc>,
+) -> (
+    (Option<String>, Option<String>, Option<String>),
+    JsonValue,
+) {
+    let triple = order_deadline_triple_for_rating_window(
+        o,
+        rating_resolution.effective_days,
+        deadline_as_of_utc,
+    );
+    let obs = deadline_rating_observability_value(rating_resolution, chain_off_mounted);
+    (triple, obs)
+}
+
 /// 与 `GET /api/v1/orders/:id` 成功响应同形（含可选 `itinerary`）；**不做** tourist/guide 参与方校验（70：`GET /api/v1/admin/orders/:id`）。
 pub fn order_detail_envelope(
     store: &ChainOffStore,
     o: &OrderRow,
-    review_window_days: i64,
+    rating_resolution: &RatingReviewWindowResolution,
     chain_config: Option<&ChainConfig>,
+    deadline_as_of_utc: DateTime<Utc>,
 ) -> JsonValue {
     let order_id = o.id;
-    let (payment_deadline, chat_confirm_deadline, rating_deadline) =
-        order_deadline_fields(o, review_window_days);
+    let ((payment_deadline, chat_confirm_deadline, rating_deadline), deadline_obs) =
+        compute_order_deadlines_with_rating_observability(
+            o,
+            rating_resolution,
+            true,
+            deadline_as_of_utc,
+        );
 
     let mut order_json = json!({
         "id": o.id.to_string(),
@@ -554,7 +971,8 @@ pub fn order_detail_envelope(
         "rating_guide_confirmed": o.rating_guide_confirmed,
         "payment_deadline": payment_deadline,
         "chat_confirm_deadline": chat_confirm_deadline,
-        "rating_deadline": rating_deadline
+        "rating_deadline": rating_deadline,
+        "deadline_rating_observability": deadline_obs
     });
     if let Some(cid) = o.chain_id {
         order_json["chain_id"] = json!(cid);
@@ -636,10 +1054,14 @@ pub fn order_detail_envelope(
 
 pub async fn order_get_impl(
     state: ChainOffState,
+    order_deadline_clock: &dyn OrderDeadlineClock,
     chain_config: Option<&ChainConfig>,
     order_id: Uuid,
     user_id: Uuid,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    let deadline_as_of_utc = order_deadline_clock.now_utc();
+    let rating_resolution =
+        rating_review_window_resolution_for_orders_api(&state.config, chain_config).await;
     let (mut body, order_state_str) = {
         let store = state.store.read().await;
         let o = store.orders.get(&order_id).ok_or((
@@ -661,7 +1083,13 @@ pub async fn order_get_impl(
             }
         }
         let order_state_str = order_state_to_str(o.state);
-        let body = order_detail_envelope(&store, o, state.config.review_window_days, chain_config);
+        let body = order_detail_envelope(
+            &store,
+            o,
+            &rating_resolution,
+            chain_config,
+            deadline_as_of_utc,
+        );
         (body, order_state_str)
     };
 
@@ -1095,7 +1523,8 @@ pub async fn patch_order_itinerary_impl(
 mod traveler_id_alias_tests {
     use super::*;
     use crate::chain_off::{ChainOffStore, GuideRow};
-    use chrono::Utc;
+    use chrono::{Duration, TimeZone, Utc};
+    use serde_json::json;
     use traveltrust_core::OrderState;
     use uuid::Uuid;
 
@@ -1132,7 +1561,9 @@ mod traveler_id_alias_tests {
         let tid = Uuid::new_v4();
         let o = sample_order(tid);
         let store = ChainOffStore::default();
-        let j = order_list_item_json(&store, &o, 14);
+        let as_of = Utc::now();
+        let r = super::resolve_rating_review_window_for_deadlines(14, false, None);
+        let j = order_list_item_json(&store, &o, &r, as_of);
         assert_eq!(j["tourist_id"].as_str().unwrap(), tid.to_string());
         assert_eq!(j["traveler_id"].as_str().unwrap(), tid.to_string());
     }
@@ -1149,11 +1580,443 @@ mod traveler_id_alias_tests {
         o.updated_at = Utc::now();
 
         let store = ChainOffStore::default();
-        let item = order_list_item_json(&store, &o, rw);
-        let env = order_detail_envelope(&store, &o, rw, None);
+        let as_of = Utc::now();
+        let r = super::resolve_rating_review_window_for_deadlines(rw, false, None);
+        let item = order_list_item_json(&store, &o, &r, as_of);
+        let env = order_detail_envelope(&store, &o, &r, None, as_of);
         for key in ["payment_deadline", "chat_confirm_deadline", "rating_deadline"] {
             assert_eq!(item[key], env["order"][key], "deadline mismatch: {key}");
         }
+        assert_eq!(
+            item["deadline_rating_observability"],
+            env["order"]["deadline_rating_observability"]
+        );
+    }
+
+    #[test]
+    fn tt_b110_resolve_chain_read_success_without_test_hook() {
+        let _serial = super::ORDER_DEADLINE_SSOT_HOOK_TEST_MUTEX.lock().unwrap();
+        super::order_deadline_ssot_test_hook_reset();
+        let r = super::resolve_rating_review_window_for_deadlines(10, true, Some(55));
+        assert_eq!(r.effective_days, 55);
+        assert_eq!(r.source, "governance_ssot_chain_governor");
+    }
+
+    #[test]
+    fn tt_b110_resolve_chain_invalid_days_fail_closed_to_p3() {
+        let _serial = super::ORDER_DEADLINE_SSOT_HOOK_TEST_MUTEX.lock().unwrap();
+        super::order_deadline_ssot_test_hook_reset();
+        let r = super::resolve_rating_review_window_for_deadlines(10, true, Some(10_000));
+        assert_eq!(r.effective_days, 10);
+        assert_eq!(r.source, "governance_ssot_fallback_p3");
+    }
+
+    #[test]
+    fn tt_b110_resolve_chain_none_fail_closed_to_p3() {
+        let _serial = super::ORDER_DEADLINE_SSOT_HOOK_TEST_MUTEX.lock().unwrap();
+        super::order_deadline_ssot_test_hook_reset();
+        let r = super::resolve_rating_review_window_for_deadlines(21, true, None);
+        assert_eq!(r.effective_days, 21);
+        assert_eq!(r.source, "governance_ssot_fallback_p3");
+    }
+
+    #[tokio::test]
+    async fn orders_deadline_ssot_admin_hint_when_chain_off_unmounted() {
+        let (hint, ops) = super::orders_deadline_ssot_admin_overview_bundle(None, None).await;
+        assert_eq!(
+            hint["anchor"].as_str(),
+            Some("TT-B110-SEQ2-ORDERS-DEADLINE-ADMIN-DEBUG-HINT-001")
+        );
+        assert_eq!(hint["chain_off_mounted"], json!(false));
+        assert_eq!(
+            ops["anchor"].as_str(),
+            Some("TT-B110-SEQ2-ORDERS-DEADLINE-OPS-CHECK-001")
+        );
+        assert_eq!(ops["overall"], "fail");
+        assert_eq!(ops["exit_code_hint"], json!(1));
+    }
+
+    #[test]
+    fn tt_b110_reconcile_pass_ssot_off_ignores_probe_leg() {
+        let mut cfg = crate::chain_off::ChainOffConfig::default();
+        cfg.review_window_days = 14;
+        cfg.governance_order_deadline_chain_ssot = false;
+        let res = super::RatingReviewWindowResolution {
+            effective_days: 14,
+            source: "p3_review_window_days",
+            governance_order_deadline_chain_ssot: false,
+            p3_review_window_days_config: 14,
+        };
+        let probe_ok = crate::chain::governor::GovernorRatingWindowProbe {
+            probe_leg: "eth_call_ok",
+            chain_read_days: Some(99),
+            eth_call_error: None,
+        };
+        assert!(super::deadline_ssot_reconcile_pass(&cfg, &res, &probe_ok));
+        let bad = super::RatingReviewWindowResolution {
+            effective_days: 14,
+            source: "governance_ssot_chain_governor",
+            governance_order_deadline_chain_ssot: false,
+            p3_review_window_days_config: 14,
+        };
+        assert!(!super::deadline_ssot_reconcile_pass(&cfg, &bad, &probe_ok));
+    }
+
+    #[test]
+    fn tt_b110_reconcile_pass_ssot_on_eth_ok_mismatch_fails() {
+        let mut cfg = crate::chain_off::ChainOffConfig::default();
+        cfg.review_window_days = 7;
+        cfg.governance_order_deadline_chain_ssot = true;
+        let res = super::RatingReviewWindowResolution {
+            effective_days: 7,
+            source: "governance_ssot_fallback_p3",
+            governance_order_deadline_chain_ssot: true,
+            p3_review_window_days_config: 7,
+        };
+        let probe = crate::chain::governor::GovernorRatingWindowProbe {
+            probe_leg: "eth_call_ok",
+            chain_read_days: Some(42),
+            eth_call_error: None,
+        };
+        assert!(!super::deadline_ssot_reconcile_pass(&cfg, &res, &probe));
+    }
+
+    #[test]
+    fn tt_b110_orders_deadline_ssot_ops_check_chain_read_success() {
+        let mut cfg = crate::chain_off::ChainOffConfig::default();
+        cfg.review_window_days = 7;
+        cfg.governance_order_deadline_chain_ssot = true;
+        let res = super::RatingReviewWindowResolution {
+            effective_days: 42,
+            source: "governance_ssot_chain_governor",
+            governance_order_deadline_chain_ssot: true,
+            p3_review_window_days_config: 7,
+        };
+        let probe = crate::chain::governor::GovernorRatingWindowProbe {
+            probe_leg: "eth_call_ok",
+            chain_read_days: Some(42),
+            eth_call_error: None,
+        };
+        let v = super::orders_deadline_ssot_ops_check_value(true, &cfg, &res, &probe);
+        assert_eq!(v["overall"], "ok");
+        assert_eq!(v["exit_code_hint"], json!(0));
+        assert_eq!(v["degraded"], json!(false));
+        assert_eq!(v["checks"]["governance_chain_read"]["status"], "ok");
+        assert_eq!(v["checks"]["fallback_path"]["status"], "ok");
+        assert_eq!(v["checks"]["reconcile_probe"]["status"], "ok");
+    }
+
+    #[test]
+    fn tt_b110_orders_deadline_ssot_ops_check_eth_call_failed_fallback_ok() {
+        let mut cfg = crate::chain_off::ChainOffConfig::default();
+        cfg.review_window_days = 11;
+        cfg.governance_order_deadline_chain_ssot = true;
+        let res = super::RatingReviewWindowResolution {
+            effective_days: 11,
+            source: "governance_ssot_fallback_p3",
+            governance_order_deadline_chain_ssot: true,
+            p3_review_window_days_config: 11,
+        };
+        let probe = crate::chain::governor::GovernorRatingWindowProbe {
+            probe_leg: "eth_call_failed",
+            chain_read_days: None,
+            eth_call_error: Some("rpc".to_string()),
+        };
+        let v = super::orders_deadline_ssot_ops_check_value(true, &cfg, &res, &probe);
+        assert_eq!(v["overall"], "ok");
+        assert_eq!(v["exit_code_hint"], json!(0));
+        assert_eq!(v["degraded"], json!(true));
+        assert_eq!(v["checks"]["governance_chain_read"]["status"], "degraded");
+        assert_eq!(v["checks"]["fallback_path"]["status"], "ok");
+        assert_eq!(v["checks"]["reconcile_probe"]["status"], "ok");
+    }
+
+    #[test]
+    fn tt_b110_orders_deadline_ssot_ops_check_reconcile_mismatch_exit_nonzero() {
+        let mut cfg = crate::chain_off::ChainOffConfig::default();
+        cfg.review_window_days = 7;
+        cfg.governance_order_deadline_chain_ssot = true;
+        let res = super::RatingReviewWindowResolution {
+            effective_days: 7,
+            source: "governance_ssot_fallback_p3",
+            governance_order_deadline_chain_ssot: true,
+            p3_review_window_days_config: 7,
+        };
+        let probe = crate::chain::governor::GovernorRatingWindowProbe {
+            probe_leg: "eth_call_ok",
+            chain_read_days: Some(42),
+            eth_call_error: None,
+        };
+        let v = super::orders_deadline_ssot_ops_check_value(true, &cfg, &res, &probe);
+        assert_eq!(v["overall"], "fail");
+        assert_eq!(v["exit_code_hint"], json!(1));
+        assert_eq!(v["checks"]["reconcile_probe"]["status"], "fail");
+    }
+
+    #[tokio::test]
+    async fn tt_b110_reconcile_probe_end_to_end_chain_read_matches_resolution() {
+        use tokio::io::AsyncWriteExt;
+        use tokio::net::TcpListener;
+
+        let _serial = super::ORDER_DEADLINE_SSOT_HOOK_TEST_MUTEX.lock().unwrap();
+        let _hook = push_ssot_review_days_hook(None);
+
+        let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let port = listener.local_addr().unwrap().port();
+        tokio::spawn(async move {
+            for _ in 0..2 {
+                let (mut socket, _) = listener.accept().await.unwrap();
+                let _ = crate::jsonrpc_mock_server::read_http_request_headers_and_body(&mut socket)
+                    .await;
+                let result =
+                    "0x000000000000000000000000000000000000000000000000000000000000002a";
+                let payload = serde_json::json!({"jsonrpc":"2.0","id":1,"result":result});
+                let payload = serde_json::to_vec(&payload).unwrap();
+                let hdr = format!(
+                    "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\nContent-Type: application/json\r\n\r\n",
+                    payload.len()
+                );
+                let _ = socket.write_all(hdr.as_bytes()).await;
+                let _ = socket.write_all(&payload).await;
+            }
+        });
+        tokio::task::yield_now().await;
+
+        let mut co_cfg = crate::chain_off::ChainOffConfig::default();
+        co_cfg.governance_order_deadline_chain_ssot = true;
+        co_cfg.review_window_days = 7;
+
+        let chain = crate::chain::ChainConfig {
+            rpc_url: format!("http://127.0.0.1:{port}"),
+            chain_id: 1,
+            escrow_factory_address: None,
+            fee_router_address: None,
+            region_vault_address: None,
+            country_pool_ledger_address: None,
+            investor_share_token_addresses: vec![],
+            staking_address: None,
+            investor_lock_contract_addresses: vec![],
+            governor_address: Some("0x0000000000000000000000000000000000000001".to_string()),
+            governance_timelock_address: None,
+            governance_votes_token_address: None,
+            registry_address: None,
+            executor_max_amount_per_tx: None,
+            executor_max_amount_per_day: None,
+            executor_retry_count: 3,
+        };
+
+        let res =
+            super::rating_review_window_resolution_for_orders_api(&co_cfg, Some(&chain)).await;
+        let probe =
+            crate::chain::governor::probe_governor_order_rating_review_window_chain(Some(&chain))
+                .await;
+        assert_eq!(res.source, "governance_ssot_chain_governor");
+        assert_eq!(res.effective_days, 42);
+        assert!(super::deadline_ssot_reconcile_pass(&co_cfg, &res, &probe));
+    }
+
+    #[tokio::test]
+    async fn tt_b110_reconcile_probe_end_to_end_rpc_error_fallback_matches_resolution() {
+        use tokio::io::AsyncWriteExt;
+        use tokio::net::TcpListener;
+
+        let _serial = super::ORDER_DEADLINE_SSOT_HOOK_TEST_MUTEX.lock().unwrap();
+        let _hook = push_ssot_review_days_hook(None);
+
+        let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let port = listener.local_addr().unwrap().port();
+        tokio::spawn(async move {
+            for _ in 0..2 {
+                let (mut socket, _) = listener.accept().await.unwrap();
+                let _ = crate::jsonrpc_mock_server::read_http_request_headers_and_body(&mut socket)
+                    .await;
+                let payload = serde_json::json!({"jsonrpc":"2.0","id":1,"error":{"code":3,"message":"execution reverted"}});
+                let payload = serde_json::to_vec(&payload).unwrap();
+                let hdr = format!(
+                    "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\nContent-Type: application/json\r\n\r\n",
+                    payload.len()
+                );
+                let _ = socket.write_all(hdr.as_bytes()).await;
+                let _ = socket.write_all(&payload).await;
+            }
+        });
+        tokio::task::yield_now().await;
+
+        let mut co_cfg = crate::chain_off::ChainOffConfig::default();
+        co_cfg.governance_order_deadline_chain_ssot = true;
+        co_cfg.review_window_days = 11;
+
+        let chain = crate::chain::ChainConfig {
+            rpc_url: format!("http://127.0.0.1:{port}"),
+            chain_id: 1,
+            escrow_factory_address: None,
+            fee_router_address: None,
+            region_vault_address: None,
+            country_pool_ledger_address: None,
+            investor_share_token_addresses: vec![],
+            staking_address: None,
+            investor_lock_contract_addresses: vec![],
+            governor_address: Some("0x0000000000000000000000000000000000000001".to_string()),
+            governance_timelock_address: None,
+            governance_votes_token_address: None,
+            registry_address: None,
+            executor_max_amount_per_tx: None,
+            executor_max_amount_per_day: None,
+            executor_retry_count: 3,
+        };
+
+        let res =
+            super::rating_review_window_resolution_for_orders_api(&co_cfg, Some(&chain)).await;
+        let probe =
+            crate::chain::governor::probe_governor_order_rating_review_window_chain(Some(&chain))
+                .await;
+        assert_eq!(res.source, "governance_ssot_fallback_p3");
+        assert_eq!(res.effective_days, 11);
+        assert_eq!(probe.probe_leg, "eth_call_failed");
+        assert!(super::deadline_ssot_reconcile_pass(&co_cfg, &res, &probe));
+    }
+
+    struct SsotReviewDaysHookRestore(Option<Option<i64>>);
+
+    impl Drop for SsotReviewDaysHookRestore {
+        fn drop(&mut self) {
+            *super::ORDER_DEADLINE_SSOT_REVIEW_DAYS_TEST_HOOK.lock().unwrap() = self.0;
+        }
+    }
+
+    fn push_ssot_review_days_hook(v: Option<Option<i64>>) -> SsotReviewDaysHookRestore {
+        let mut g = super::ORDER_DEADLINE_SSOT_REVIEW_DAYS_TEST_HOOK.lock().unwrap();
+        let prev = *g;
+        *g = v;
+        SsotReviewDaysHookRestore(prev)
+    }
+
+    #[test]
+    fn order_deadline_chain_ssot_off_ignores_placeholder_days() {
+        let _serial = super::ORDER_DEADLINE_SSOT_HOOK_TEST_MUTEX.lock().unwrap();
+        let _g = push_ssot_review_days_hook(Some(Some(99)));
+        let tid = Uuid::new_v4();
+        let mut o = sample_order(tid);
+        let completed = Utc::now() - Duration::hours(1);
+        o.state = OrderState::Completed;
+        o.completed_at = Some(completed);
+        let fallback = 10i64;
+        let as_of = Utc::now();
+        let res = super::resolve_rating_review_window_for_deadlines(fallback, false, None);
+        let ((_, _, r), obs) =
+            super::compute_order_deadlines_with_rating_observability(&o, &res, true, as_of);
+        let expected = (completed + Duration::days(fallback)).to_rfc3339();
+        assert_eq!(r.as_deref(), Some(expected.as_str()));
+        assert_eq!(obs["review_window_days_source"].as_str(), Some("p3_review_window_days"));
+    }
+
+    #[test]
+    fn order_deadline_chain_ssot_on_uses_placeholder_when_set() {
+        let _serial = super::ORDER_DEADLINE_SSOT_HOOK_TEST_MUTEX.lock().unwrap();
+        let _g = push_ssot_review_days_hook(Some(Some(99)));
+        let tid = Uuid::new_v4();
+        let mut o = sample_order(tid);
+        let completed = Utc::now() - Duration::hours(1);
+        o.state = OrderState::Completed;
+        o.completed_at = Some(completed);
+        let fallback = 10i64;
+        let as_of = Utc::now();
+        let res = super::resolve_rating_review_window_for_deadlines(fallback, true, None);
+        let ((_, _, r), obs) =
+            super::compute_order_deadlines_with_rating_observability(&o, &res, true, as_of);
+        let expected = (completed + Duration::days(99)).to_rfc3339();
+        assert_eq!(r.as_deref(), Some(expected.as_str()));
+        assert_eq!(
+            obs["review_window_days_source"].as_str(),
+            Some("governance_ssot_chain_governor")
+        );
+    }
+
+    #[test]
+    fn order_deadline_chain_ssot_on_falls_back_when_placeholder_absent() {
+        let _serial = super::ORDER_DEADLINE_SSOT_HOOK_TEST_MUTEX.lock().unwrap();
+        let _g = push_ssot_review_days_hook(Some(None));
+        let tid = Uuid::new_v4();
+        let mut o = sample_order(tid);
+        let completed = Utc::now() - Duration::hours(1);
+        o.state = OrderState::Completed;
+        o.completed_at = Some(completed);
+        let fallback = 21i64;
+        let as_of = Utc::now();
+        let res = super::resolve_rating_review_window_for_deadlines(fallback, true, None);
+        let ((_, _, r), obs) =
+            super::compute_order_deadlines_with_rating_observability(&o, &res, true, as_of);
+        let expected = (completed + Duration::days(fallback)).to_rfc3339();
+        assert_eq!(r.as_deref(), Some(expected.as_str()));
+        assert_eq!(
+            obs["review_window_days_source"].as_str(),
+            Some("governance_ssot_fallback_p3")
+        );
+    }
+
+    #[test]
+    fn orders_list_item_deadlines_match_detail_under_chain_ssot() {
+        let _serial = super::ORDER_DEADLINE_SSOT_HOOK_TEST_MUTEX.lock().unwrap();
+        let _g = push_ssot_review_days_hook(Some(Some(40)));
+        let tid = Uuid::new_v4();
+        let mut o = sample_order(tid);
+        let rw = 11i64;
+        o.state = OrderState::Completed;
+        o.completed_at = Some(Utc::now() - Duration::hours(2));
+        o.tourist_confirmed = Some(true);
+        o.guide_confirmed = Some(true);
+        o.updated_at = Utc::now();
+        let store = ChainOffStore::default();
+        let as_of = Utc::now();
+        let r = super::resolve_rating_review_window_for_deadlines(rw, true, None);
+        let item = order_list_item_json(&store, &o, &r, as_of);
+        let env = order_detail_envelope(&store, &o, &r, None, as_of);
+        for key in ["payment_deadline", "chat_confirm_deadline", "rating_deadline"] {
+            assert_eq!(item[key], env["order"][key], "deadline mismatch: {key}");
+        }
+        assert_eq!(
+            item["deadline_rating_observability"],
+            env["order"]["deadline_rating_observability"]
+        );
+        assert_eq!(
+            env["order"]["deadline_rating_observability"]["review_window_days_source"]
+                .as_str(),
+            Some("governance_ssot_chain_governor")
+        );
+        assert_eq!(
+            env["order"]["deadline_rating_observability"]["review_window_days_effective"],
+            json!(40)
+        );
+    }
+
+    /// **TT-B110-SEQ2-ORDERS-DEADLINE-CLOCK-INJECT-001**：**`deadline_as_of_utc`** 漂移不改变 **53-S12** 三键（行内时间戳 SSOT）；列表项与详情同源。
+    #[test]
+    fn tt_b110_deadline_fields_stable_when_deadline_as_of_shifts() {
+        let as_of_a = Utc.with_ymd_and_hms(2020, 1, 1, 0, 0, 0).unwrap();
+        let as_of_b = Utc.with_ymd_and_hms(2030, 6, 15, 12, 0, 0).unwrap();
+        let tid = Uuid::new_v4();
+        let mut o = sample_order(tid);
+        let completed = Utc.with_ymd_and_hms(2025, 2, 1, 8, 0, 0).unwrap();
+        o.state = OrderState::Completed;
+        o.completed_at = Some(completed);
+        o.tourist_confirmed = Some(true);
+        o.guide_confirmed = Some(true);
+        o.updated_at = Utc.with_ymd_and_hms(2025, 2, 1, 9, 0, 0).unwrap();
+        let store = ChainOffStore::default();
+        let rw = 14i64;
+        let r = super::resolve_rating_review_window_for_deadlines(rw, false, None);
+        let env_a = order_detail_envelope(&store, &o, &r, None, as_of_a);
+        let env_b = order_detail_envelope(&store, &o, &r, None, as_of_b);
+        let item_a = order_list_item_json(&store, &o, &r, as_of_a);
+        let item_b = order_list_item_json(&store, &o, &r, as_of_b);
+        for key in ["payment_deadline", "chat_confirm_deadline", "rating_deadline"] {
+            assert_eq!(env_a["order"][key], env_b["order"][key], "detail {key}");
+            assert_eq!(item_a[key], item_b[key], "list {key}");
+        }
+        assert_eq!(
+            env_a["order"]["deadline_rating_observability"],
+            env_b["order"]["deadline_rating_observability"]
+        );
     }
 
     #[test]
@@ -1161,7 +2024,9 @@ mod traveler_id_alias_tests {
         let tid = Uuid::new_v4();
         let o = sample_order(tid);
         let store = ChainOffStore::default();
-        let env = order_detail_envelope(&store, &o, 14, None);
+        let as_of = Utc::now();
+        let r = super::resolve_rating_review_window_for_deadlines(14, false, None);
+        let env = order_detail_envelope(&store, &o, &r, None, as_of);
         assert_eq!(
             env["order"]["tourist_id"].as_str().unwrap(),
             tid.to_string()
@@ -1217,6 +2082,7 @@ mod traveler_id_alias_tests {
             staking_address: None,
             investor_lock_contract_addresses: vec![],
             governor_address: None,
+            governance_timelock_address: None,
             governance_votes_token_address: None,
             registry_address: Some("0x4444444444444444444444444444444444444444".to_string()),
             executor_max_amount_per_tx: None,
@@ -1243,7 +2109,8 @@ mod traveler_id_alias_tests {
             Some("0x4444444444444444444444444444444444444444")
         );
 
-        let env = order_detail_envelope(&store, &o, 14, Some(&chain));
+        let r = super::resolve_rating_review_window_for_deadlines(14, false, None);
+        let env = order_detail_envelope(&store, &o, &r, Some(&chain), now);
         assert_eq!(env["order"]["split_addresses_ssot"], split);
     }
 
@@ -1291,6 +2158,7 @@ mod traveler_id_alias_tests {
             staking_address: None,
             investor_lock_contract_addresses: vec![],
             governor_address: None,
+            governance_timelock_address: None,
             governance_votes_token_address: None,
             registry_address: None,
             executor_max_amount_per_tx: None,
@@ -1357,7 +2225,8 @@ mod b097_projection_terminal_order_get_tests {
             let g = store.read().await;
             let o = g.orders.get(&oid).expect("order");
             let order_state_str = order_state_to_str(o.state);
-            let body = order_detail_envelope(&g, o, 14, None);
+            let r = super::resolve_rating_review_window_for_deadlines(14, false, None);
+            let body = order_detail_envelope(&g, o, &r, None, now);
             (body, order_state_str)
         };
 

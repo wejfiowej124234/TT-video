@@ -135,6 +135,9 @@ export const routes = {
   /** 治理提案列表（B-072 MVP：链下内存种子条目） */
   governanceProposals: "/api/v1/governance/proposals",
   governanceProposal: (id: string) => `/api/v1/governance/proposals/${encodeURIComponent(id)}`,
+  /** Governor state(uint256) 只读；列表页链上状态标签（Task A-1） */
+  governanceProposalStatus: (id: string) =>
+    `/api/v1/governance/proposal-status/${encodeURIComponent(id)}`,
   governanceProposalVote: (id: string) =>
     `/api/v1/governance/proposals/${encodeURIComponent(id)}/vote`,
   /** B-073：委托投票权（链下 MVP） */
@@ -206,6 +209,10 @@ export const routes = {
     financeSummaryExport: "/api/v1/admin/finance/summary/export?format=csv",
     /** FeeRouter PlatformFeeRouted 投影：summary + items + page；须 DB + admin */
     feeRouterRoutedEvents: "/api/v1/admin/fee-router/routed-events",
+    /** Epic C-01：治理/协议多源对拍只读（三槽 + drift_summary）；须 admin */
+    crossCheck: "/api/v1/admin/cross-check",
+    /** Epic C-01：fee-pool vs protocol-reference 漂移摘要只读；须 admin */
+    driftSummary: "/api/v1/admin/drift-summary",
     /** RegionVault RegionVaultForwarded 投影：summary + items + page；须 DB + admin */
     regionVaultForwardedEvents: "/api/v1/admin/region-vault/forwarded-events",
     /** 70：争议运营列表；query **`limit`**（1～500，缺省 100）、**`status`**（与行内 **`status`** 精确匹配） */

@@ -1,0 +1,36 @@
+{
+  "manifest_version": "vault_forwarded_offline_v1",
+  "package_kind": "region_vault_forwarded_events_export",
+  "data_plane": "region_vault_forwarded_events",
+  "api": {
+    "method": "GET",
+    "path": "/api/v1/admin/region-vault/forwarded-events/export",
+    "query": {
+      "format": "csv",
+      "chain_id": null,
+      "limit": 2000
+    }
+  },
+  "response": {
+    "http_status": 200,
+    "content_type": "text/csv; charset=utf-8",
+    "content_disposition_filename": "region-vault-forwarded-events-20260409T120000Z.csv",
+    "headers_echo": {
+      "x-traveltrust-reconcile-export-sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "x-traveltrust-reconcile-export-truncated": null,
+      "x-traveltrust-reconcile-export-ed25519": null
+    },
+    "body_bytes_sha256_hex": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "body_filename": "region-vault-forwarded-events.csv",
+    "truncated": false
+  },
+  "artifacts": {
+    "body": "region-vault-forwarded-events.csv",
+    "headers_dump": "region-vault-forwarded-events.export.headers.txt",
+    "sha256_sidecar": "region-vault-forwarded-events.export.sha256",
+    "ed25519_sidecar": null,
+    "truncated_sidecar": null
+  },
+  "fetched_at_rfc3339": "2026-04-09T12:00:00Z",
+  "script_hint": "scripts/vault-forwarded-export-fetch.sh"
+}

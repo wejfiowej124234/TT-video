@@ -1,15 +1,19 @@
 "use client";
 
-import { type FormEvent, useEffect, useId, useState } from "react";
+import { type FormEvent, useEffect, useId, useMemo, useState } from "react";
 import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
 import { apiUrl, routes } from "@/lib/api";
-import { fetchJsonWithApiStatusLog } from "@/lib/apiClient";
+import { fetchJsonWithApiStatusLog, getGovernanceProposalStatus } from "@/lib/apiClient";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import LoadingText from "@/components/LoadingText";
 import GovernanceTargetNotice from "@/components/governance/GovernanceTargetNotice";
 import GovernanceB090OnChainProposalNotice from "@/components/governance/GovernanceB090OnChainProposalNotice";
+import GovernanceProposalExecStatusBadge, {
+  type GovernanceProposalExecStatusEntry,
+} from "@/components/governance/GovernanceProposalExecStatusBadge";
+import { GOV_EXEC_LIST_BRIDGE_DOM_ID, GovExecReadOnlyI18n } from "@/lib/governanceExecReadOnlyNarrative";
 import { getMeta } from "@/lib/apiClient";
 import { governorAddressFromMeta } from "@/lib/governanceChainMeta";
 import { GovernanceOpsAdminLinks } from "@/components/governance/GovernanceOpsAdminLinks";
@@ -43,6 +47,17 @@ export default function GovernanceProposalsPage() {
   const [dataSource, setDataSource] = useState<string | null>(null);
   const [chainId, setChainId] = useState<number | null>(null);
   const [metaGovernor, setMetaGovernor] = useState<string | null>(null);
+  const [chainExecById, setChainExecById] = useState<
+    Record<string, GovernanceProposalExecStatusEntry> | undefined
+  >(undefined);
+  const [chainExecLoading, setChainExecLoading] = useState(false);
+
+  const projectionItemsKey = useMemo(() => {
+    if (!items || items.length === 0) return "";
+    return items
+      .map((p) => (typeof p.id === "string" && p.id.trim() ? p.id.trim() : ""))
+      .join("|");
+  }, [items]);
 
   useEffect(() => {
     let cancelled = false;
@@ -110,6 +125,52 @@ export default function GovernanceProposalsPage() {
       cancelled = true;
     };
   }, [dataSource, retryTick]);
+
+  useEffect(() => {
+    if (dataSource !== "governance_proposals_projection" || items === null || items.length === 0) {
+      setChainExecById(undefined);
+      setChainExecLoading(false);
+      return undefined;
+    }
+    const ids = items
+      .map((p) => p.id)
+      .filter((id): id is string => typeof id === "string" && id.trim().length > 0);
+    if (ids.length === 0) {
+      setChainExecById(undefined);
+      setChainExecLoading(false);
+      return undefined;
+    }
+    let cancelled = false;
+    setChainExecLoading(true);
+    void (async () => {
+      const entries = await Promise.all(
+        ids.map(async (id) => {
+          const row = await getGovernanceProposalStatus(id);
+          if (row) {
+            return [
+              id,
+              {
+                state: "ok" as const,
+                status: row.status,
+                is_chain_ssot: row.is_chain_ssot,
+                ...(row.data_source ? { data_source: row.data_source } : {}),
+                ...(row.note ? { note: row.note } : {}),
+              },
+            ] as const;
+          }
+          return [id, { state: "error" } as const] as const;
+        }),
+      );
+      if (cancelled) return;
+      const next: Record<string, GovernanceProposalExecStatusEntry> = {};
+      for (const [id, e] of entries) next[id] = e;
+      setChainExecById(next);
+      setChainExecLoading(false);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [dataSource, projectionItemsKey, retryTick]);
 
   const emptySuccess = !loading && !error && items !== null && items.length === 0;
   const showOnChainPanel = !loading && !error && dataSource === "governance_proposals_projection";
@@ -182,6 +243,20 @@ export default function GovernanceProposalsPage() {
             {t("governance_proposals_list_heading")}
           </h2>
           {note ? <p className="mb-3 text-meta text-ink-600">{note}</p> : null}
+          {showOnChainPanel ? (
+            <p
+              id={GOV_EXEC_LIST_BRIDGE_DOM_ID}
+              className="mb-3 rounded-[var(--radius-sm)] border border-ink-200/90 bg-ink-50/80 p-3 text-meta leading-snug text-ink-700 dark:border-ink-600/45 dark:bg-ink-900/30 dark:text-ink-200"
+              role="note"
+            >
+              {t(GovExecReadOnlyI18n.listEntryBridge)}
+            </p>
+          ) : null}
+          {showOnChainPanel && chainExecLoading ? (
+            <p className="mb-2 text-meta text-ink-600" aria-live="polite">
+              {t("governance_proposals_status_loading")}
+            </p>
+          ) : null}
           <ul className="divide-y divide-ink-200 rounded-[var(--radius-md)] border border-ink-200">
             {items.map((p, i) => {
               const key = typeof p.id === "string" && p.id.trim() ? p.id : `proposal-${i}`;
@@ -190,18 +265,38 @@ export default function GovernanceProposalsPage() {
                   ? p.title
                   : t("governance_proposals_item_untitled");
               const href = `/governance/proposals/${encodeURIComponent(String(p.id))}`;
+              const pid = typeof p.id === "string" && p.id.trim() ? p.id.trim() : "";
+              const exec =
+                showOnChainPanel && pid && chainExecById ? chainExecById[pid] : undefined;
               return (
                 <li key={key} className="px-4 py-3 text-body text-ink-800">
-                  {typeof p.id === "string" && p.id.trim() ? (
-                    <Link
-                      href={href}
-                      className={`font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
-                    >
-                      {title}
-                    </Link>
-                  ) : (
-                    title
-                  )}
+                  <div className="flex flex-wrap items-baseline justify-between gap-2">
+                    <div className="min-w-0">
+                      {typeof p.id === "string" && p.id.trim() ? (
+                        <Link
+                          href={href}
+                          className={`font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+                          {...(showOnChainPanel
+                            ? {
+                                "aria-describedby": GOV_EXEC_LIST_BRIDGE_DOM_ID,
+                                title: t(GovExecReadOnlyI18n.proposalLinkContinueTitle),
+                              }
+                            : {})}
+                        >
+                          {title}
+                        </Link>
+                      ) : (
+                        title
+                      )}
+                    </div>
+                    {showOnChainPanel && pid ? (
+                      <GovernanceProposalExecStatusBadge
+                        loading={chainExecLoading}
+                        fetchSettled={chainExecById !== undefined}
+                        entry={exec}
+                      />
+                    ) : null}
+                  </div>
                 </li>
               );
             })}
@@ -233,6 +328,12 @@ export default function GovernanceProposalsPage() {
           className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
         >
           {t("governance_vault_forwards_title")}
+        </Link>
+        <Link
+          href="/governance/distribution-accruals"
+          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+        >
+          {t("governance_distribution_accruals_title")}
         </Link>
         <Link
           href="/governance/params"

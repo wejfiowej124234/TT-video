@@ -44,6 +44,9 @@ contract TravelTrustGovernor {
     /// @notice **quorum**：**`(for+abstain) >= supply@snapshot * quorumNumeratorBps / 10000`**
     uint256 public immutable quorumNumeratorBps;
 
+    /// @notice **TT-B110**：订单 **`rating_deadline`** 评价窗口天数链上 SSOT（**`eth_call` `orderRatingReviewWindowDays()`**）；与后端 **`GOVERNANCE_ORDER_DEADLINE_CHAIN_SSOT`** 联用；治理可通过 Timelock 执行对 Governor 的 **`setOrderRatingReviewWindowDays`** 更新。
+    uint256 public orderRatingReviewWindowDays;
+
     uint256 public proposalCount;
 
     struct ProposalCore {
@@ -84,6 +87,8 @@ contract TravelTrustGovernor {
     error GovThreshold();
     error GovBadState();
     error GovSingleOpOnly();
+    error GovInvalidReviewWindowDays();
+    error GovOnlyTimelock();
 
     constructor(
         IGovernanceVotes token_,
@@ -91,7 +96,8 @@ contract TravelTrustGovernor {
         uint256 votingDelayBlocks_,
         uint256 votingPeriodBlocks_,
         uint256 proposalThresholdVotes_,
-        uint256 quorumNumeratorBps_
+        uint256 quorumNumeratorBps_,
+        uint256 orderRatingReviewWindowDays_
     ) {
         token = token_;
         timelock = timelock_;
@@ -99,6 +105,15 @@ contract TravelTrustGovernor {
         votingPeriodBlocks = votingPeriodBlocks_;
         proposalThresholdVotes = proposalThresholdVotes_;
         quorumNumeratorBps = quorumNumeratorBps_;
+        if (orderRatingReviewWindowDays_ == 0 || orderRatingReviewWindowDays_ > 3660) revert GovInvalidReviewWindowDays();
+        orderRatingReviewWindowDays = orderRatingReviewWindowDays_;
+    }
+
+    /// @dev **仅 Timelock** 可更新（治理 **`queue`→`execute`** 路径）。
+    function setOrderRatingReviewWindowDays(uint256 days_) external {
+        if (msg.sender != address(timelock)) revert GovOnlyTimelock();
+        if (days_ == 0 || days_ > 3660) revert GovInvalidReviewWindowDays();
+        orderRatingReviewWindowDays = days_;
     }
 
     function propose(
@@ -174,7 +189,7 @@ contract TravelTrustGovernor {
         if (p.proposer == address(0)) revert GovUnknownProposal();
         if (p.canceled) return ProposalState.Canceled;
         if (p.executed) return ProposalState.Executed;
-        if (block.number <= p.voteStart) return ProposalState.Pending;
+        if (block.number < p.voteStart) return ProposalState.Pending;
         if (block.number <= p.voteEnd) return ProposalState.Active;
         if (p.forVotes <= p.againstVotes || !quorumReached(proposalId)) return ProposalState.Defeated;
         if (p.queuedOpId == bytes32(0)) return ProposalState.Succeeded;

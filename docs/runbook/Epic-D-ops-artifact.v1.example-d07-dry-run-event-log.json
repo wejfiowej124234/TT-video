@@ -1,0 +1,54 @@
+{
+  "artifact_schema_id": "traveltrust.ops_artifact.v1",
+  "artifact_schema_version": "1.0.0",
+  "artifact_version": "v1",
+  "artifact_type": "dry_run_event_log",
+  "dry_run": true,
+  "reason_code": null,
+  "captured_at": "2026-04-09T12:34:56Z",
+  "epic_task_id": "Epic-D-D07",
+  "provenance": {
+    "script": "internal-indexer-ops.sh",
+    "script_semver": "1.5.0",
+    "host_git_commit": "abcdef0123456789",
+    "host_git_branch": "main",
+    "host_repo_dirty": false
+  },
+  "api_context": {
+    "api_base_url_redacted": "http://127.0.0.1:8080",
+    "chain_id": 1,
+    "internal_invoked": true,
+    "persist_requested": false,
+    "event_log_chain_scope_rollback_execute_requested": false
+  },
+  "ops_summary": {
+    "dry_run": true,
+    "domain": "event_log",
+    "issues_total": 0,
+    "clean": true
+  },
+  "dry_run_event_log_surface": {
+    "issues_total": 0,
+    "event_log_chain_scope_rollback_dry_run_present": true,
+    "anchor": "110-EVENT-LOG-CHAIN-SCOPE-DRY-RUN",
+    "event_log_rows": 0,
+    "checkpoints_sharded_rows": 0,
+    "fee_router_routed_events_rows": 0,
+    "region_vault_forwarded_events_rows": 0
+  },
+  "payload": {
+    "status": "ok",
+    "chain_id": 1,
+    "issues_total": 0,
+    "projection_reconcile_clean": true,
+    "event_log_chain_scope_rollback_dry_run": {
+      "chain_id": 1,
+      "event_log_rows": 0,
+      "checkpoints_sharded_rows": 0,
+      "fee_router_routed_events_rows": 0,
+      "region_vault_forwarded_events_rows": 0,
+      "anchor": "110-EVENT-LOG-CHAIN-SCOPE-DRY-RUN",
+      "target_note": "does not reset in-process indexer memory by itself; after wipe use sync_indexer_memory_from_db_checkpoint + TRAVELTRUST_ALLOW_INDEXER_MEMORY_SYNC_FROM_DB=1 (110-INDEXER-MEMORY-SYNC-FROM-DB) or restart API / tick·replay; pair with orders_chain_scope rollback if full chain data reset"
+    }
+  }
+}

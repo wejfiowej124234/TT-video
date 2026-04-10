@@ -75,10 +75,16 @@ export {
   postForgotPassword,
   postResetPassword,
 } from "./auth";
-export { getGovernanceProposal, getGovernanceVotingPower, postGovernanceProposalVote } from "./governance";
+export {
+  getGovernanceProposal,
+  getGovernanceProposalStatus,
+  getGovernanceVotingPower,
+  postGovernanceProposalVote,
+} from "./governance";
 export type {
   GovernanceProposalDetail,
   GovernanceProposalDetailResponse,
+  GovernanceProposalStatusRead,
   GovernanceProposalVoteResult,
   GovernanceVoteSemantics,
   GovernanceVotingPowerResponse,
@@ -92,6 +98,24 @@ export type {
   GovernanceDelegateGetResponse,
   GovernanceDelegateWriteResponse,
 } from "./governanceDelegate";
+export {
+  getAdminCrossCheck,
+  getAdminDriftSummary,
+  readAdminJsonStatus,
+  normalizeCrossCheckSlot,
+  normalizeAdminCrossCheckRead,
+  normalizeAdminDriftSummaryRead,
+} from "./adminCrossCheck";
+export type {
+  AdminCrossCheckResponse,
+  AdminCrossCheckSourceKind,
+  AdminDriftSummaryResponse,
+  CrossCheckSlot,
+  NormalizedAdminCrossCheck,
+  NormalizedAdminDriftSummary,
+  NormalizedCrossCheckDriftSummary,
+  NormalizedCrossCheckSlot,
+} from "./adminCrossCheck";
 export {
   getDidRankTravelers,
   getDidRankGuides,

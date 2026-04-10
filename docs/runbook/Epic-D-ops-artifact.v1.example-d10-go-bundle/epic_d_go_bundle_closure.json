@@ -1,0 +1,45 @@
+{
+  "artifact_schema_id": "traveltrust.ops_artifact.v1",
+  "artifact_schema_version": "1.0.0",
+  "artifact_version": "v1",
+  "artifact_type": "bundle",
+  "captured_at": "2026-04-09T12:00:00Z",
+  "epic_task_id": "Epic-D-D10",
+  "bundle_closure": {
+    "epic": "D",
+    "closure_status": "GO",
+    "artifact_version": "v1",
+    "included_tasks": ["D-02", "D-03", "D-04", "D-05", "D-10"]
+  },
+  "provenance": {
+    "script": "write-indexer-evidence.sh",
+    "script_semver": "1.1.0",
+    "host_git_commit": null,
+    "host_git_branch": null,
+    "host_repo_dirty": null
+  },
+  "api_context": {
+    "internal_invoked": false,
+    "api_base_url_redacted": false,
+    "evidence_bundle_read_only": true
+  },
+  "payload": {
+    "manifest_sha256_file": "manifest.sha256",
+    "artifact_types_detected": ["snapshot_public", "indexer_status", "reconcile"],
+    "artifacts_min_epic_d_hint": {
+      "Epic-D-D02": "indexer_public_snapshot_*.json → artifact_type snapshot_public",
+      "Epic-D-D03": "artifacts/epic_d_d03_indexer_status.json → indexer_status",
+      "Epic-D-D04": "artifacts/epic_d_d04_indexer_status_live.json → indexer_status",
+      "Epic-D-D05": "artifacts/epic_d_d05_reconcile.json → reconcile"
+    },
+    "notes": "Example; real runs embed full manifest under payload.manifest.",
+    "manifest": {
+      "bundle_kind": "indexer_public_snapshot",
+      "gate": "Indexer-110-public-snapshot",
+      "date": "2026-04-09",
+      "artifacts": [],
+      "sign_off": ["automation"],
+      "notes": "See sibling manifest.json in this example dir."
+    }
+  }
+}

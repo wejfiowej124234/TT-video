@@ -328,6 +328,34 @@ pub async fn get_governance_proposal_projection(
     ))
 }
 
+/// **`COUNT(*)`** 按 **`chain_id`**（**TT-B110-SEQ10**：与 **`proposalCount()`** 对读）。
+pub async fn count_governance_proposals_projection_for_chain(
+    pool: &PgPool,
+    chain_id: i64,
+) -> Result<i64, sqlx::Error> {
+    let row: (i64,) = sqlx::query_as(
+        "SELECT COUNT(*)::bigint AS c FROM governance_proposals_projection WHERE chain_id = $1",
+    )
+    .bind(chain_id)
+    .fetch_one(pool)
+    .await?;
+    Ok(row.0)
+}
+
+/// **`MAX(proposal_id)`** 十进制字符串（**B-172** 投影「尾部」；无行时 **`None`**）。
+pub async fn max_proposal_id_decimal_string_governance_proposals_projection_for_chain(
+    pool: &PgPool,
+    chain_id: i64,
+) -> Result<Option<String>, sqlx::Error> {
+    let row: (Option<String>,) = sqlx::query_as(
+        "SELECT MAX(proposal_id)::text FROM governance_proposals_projection WHERE chain_id = $1",
+    )
+    .bind(chain_id)
+    .fetch_one(pool)
+    .await?;
+    Ok(row.0)
+}
+
 pub async fn delete_governance_proposals_projection_for_chain(
     pool: &PgPool,
     chain_id: i64,

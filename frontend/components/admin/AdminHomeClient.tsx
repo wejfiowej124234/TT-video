@@ -21,10 +21,18 @@ const ADMIN_HOME_CARDS: { href: string; titleKey: string; descKey: string; secti
   { href: "/admin/reviews", titleKey: "admin_reviews_title", descKey: "admin_home_desc_reviews", section: "core" },
   { href: "/admin/audit", titleKey: "admin_audit_list_title", descKey: "admin_home_desc_audit_logs", section: "audit_finance" },
   { href: "/admin/approvals", titleKey: "admin_approvals_title", descKey: "admin_home_desc_approvals", section: "audit_finance" },
+  {
+    href: "/admin/finance-reconciliation",
+    titleKey: "admin_finance_reconciliation_title",
+    descKey: "admin_finance_reconciliation_home_desc",
+    section: "audit_finance",
+  },
   { href: "/admin/finance", titleKey: "admin_finance_title", descKey: "admin_home_desc_finance", section: "audit_finance" },
   { href: "/admin/fee-router", titleKey: "admin_fee_router_title", descKey: "admin_home_desc_fee_router", section: "audit_finance" },
   { href: "/admin/region-vault", titleKey: "admin_region_vault_title", descKey: "admin_home_desc_region_vault", section: "audit_finance" },
   { href: "/admin/observability", titleKey: "admin_observability_title", descKey: "admin_home_desc_observability", section: "audit_finance" },
+  { href: "/admin/cross-check", titleKey: "admin_cross_check_title", descKey: "admin_home_desc_cross_check", section: "audit_finance" },
+  { href: "/admin/drift-summary", titleKey: "admin_drift_summary_title", descKey: "admin_home_desc_drift_summary", section: "audit_finance" },
   { href: "/admin/audit/operations", titleKey: "admin_audit_ops_title", descKey: "admin_home_desc_audit_ops", section: "audit_finance" },
   { href: "/admin/alerts/incidents", titleKey: "admin_alert_incident_hub_title", descKey: "admin_home_desc_alert_incidents", section: "audit_finance" },
   { href: "/admin/indexer", titleKey: "admin_indexer_title", descKey: "admin_home_desc_indexer", section: "audit_finance" },
@@ -91,12 +99,34 @@ export default function AdminHomeClient() {
             </h1>
             <p className="mt-2 text-body text-ink-600">{t("admin_workspace_subtitle")}</p>
           </div>
-          <Link
-            href="/admin/observability"
-            className={`${touchTargetLink44Classes} shrink-0 text-small font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
+          <div className="flex max-w-md flex-col items-end gap-2 sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-end">
+            <Link
+              href="/admin/observability"
+              className={`${touchTargetLink44Classes} shrink-0 text-small font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            >
+              {t("admin_observability_title")}
+            </Link>
+            <span className="hidden text-ink-300 sm:inline" aria-hidden>
+              ·
+            </span>
+            <Link
+              href="/admin/cross-check"
+              title={t("admin_audit_tools_read_only_scope")}
+              className={`${touchTargetLink44Classes} shrink-0 text-small font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            >
+              {t("admin_shell_nav_cross_check")}
+            </Link>
+            <span className="hidden text-ink-300 sm:inline" aria-hidden>
+              ·
+            </span>
+            <Link
+              href="/admin/drift-summary"
+              title={t("admin_audit_tools_read_only_scope")}
+              className={`${touchTargetLink44Classes} shrink-0 text-small font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            >
+              {t("admin_shell_nav_drift_summary")}
+            </Link>
+          </div>
         </div>
       </header>
 

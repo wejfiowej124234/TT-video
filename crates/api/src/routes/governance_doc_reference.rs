@@ -1,5 +1,7 @@
 //! [84-第一阶段10国Country-Pool发行参数总表](../../../../docs/spec/84-第一阶段10国Country-Pool发行参数总表.md) 的只读 JSON 镜像（07 §五 5.2A）。
 //! 更新 84 文首版本号时须同步 `DOC_VERSION` 与本模块数值。
+//!
+//! **FeeRouter 五数字**（`fee_router`）与 **84 §1.1～§1.2**、**[08-4-附录 §2 Mermaid](../../../../docs/spec/08-4-附录-收益流闭环图-FeeRouter-Target.md)**、**83 §3 / 附录 B** 须同号：`layer1` **45** / **55**；`global_pool_split_percent` **65** / **20** / **15**（后者相对 Global 自身 100%）。`check-governance-doc-linkage.sh` 对 Mermaid 节点与本模块字面量做交叉锚点。
 
 use serde_json::{json, Value};
 
@@ -152,6 +154,35 @@ mod tests {
         assert_eq!(g["ttg_stakers"], 65);
         assert_eq!(g["reserve"], 20);
         assert_eq!(g["operations"], 15);
+    }
+
+    /// P5-5-1：`checksums` 与 `fee_router` 同源；分层闭合 100%；§1.4 产品表述与 linkage 脚本锚点一致。
+    #[test]
+    fn protocol_reference_checksums_align_with_fee_router_and_84_section_1_4() {
+        let v = protocol_reference_json();
+        let l1 = &v["fee_router"]["layer1_percent_of_allocatable_platform_fee"];
+        let cb = l1["country_bucket"]
+            .as_u64()
+            .expect("layer1 country_bucket as u64");
+        let gl = l1["global_pool"]
+            .as_u64()
+            .expect("layer1 global_pool as u64");
+        assert_eq!(cb + gl, 100, "84 §1.1 layer1 must sum to 100%");
+        let g = &v["fee_router"]["global_pool_split_percent"];
+        let gps = g["ttg_stakers"].as_u64().expect("ttg_stakers")
+            + g["reserve"].as_u64().expect("reserve")
+            + g["operations"].as_u64().expect("operations");
+        assert_eq!(gps, 100, "84 §1.2 Global 内拆须合计 100%");
+        assert_eq!(
+            v["checksums"]["country_bucket_percent"].as_u64(),
+            Some(cb),
+            "checksums.country_bucket_percent must match fee_router.layer1.country_bucket"
+        );
+        assert_eq!(
+            v["checksums"]["phase1_open_over_country_bucket"].as_str(),
+            Some("22/45≈48.9%"),
+            "84 §1.4 叙事锁定；变更须同步 84 正文与 check-governance-doc-linkage 相关锚点"
+        );
     }
 
     #[test]

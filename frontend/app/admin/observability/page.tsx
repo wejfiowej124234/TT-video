@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState, useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import AdminAuditCompareLinks from "@/components/admin/AdminAuditCompareLinks";
 import { AdminMetaBuildSection, isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
 import {
   type AdminFetchErrorKind,
@@ -132,6 +133,8 @@ export default function AdminObservabilityPage() {
           </Link>
         </div>
       </header>
+
+      <AdminAuditCompareLinks />
 
       <AdminMetaBuildSection meta={meta} loading={loading} error={error} />
 

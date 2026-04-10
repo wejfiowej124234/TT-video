@@ -1,5 +1,5 @@
-# SSOT guard (B-110 governance/pool four-pool root chain SSOT) — Windows wrapper; same as .py
-$ErrorActionPreference = "Stop"
-$root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
-& python "$root/scripts/ssot-guard-b110-pool-ssot.py"
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+# B-184 compat: forwards to scripts/gates/ssot-guard-b110-pool-ssot.ps1
+$ErrorActionPreference = 'Stop'
+$p = Join-Path $PSScriptRoot 'gates/ssot-guard-b110-pool-ssot.ps1'
+& $p @args
+exit $LASTEXITCODE

@@ -72,6 +72,14 @@ export default {
   governance_fee_routes_meta_description: "FeeRouter 相关只读路由与审计入口摘要。",
   governance_vault_forwards_meta_title: "治理 · Region Vault 转发 | TravelTrust",
   governance_vault_forwards_meta_description: "区域金库转发与对账入口摘要；权威状态以链上与 API 为准。",
+  governance_distribution_accruals_meta_title: "治理 · 应计分红分录 | TravelTrust",
+  governance_distribution_accruals_meta_description:
+    "只读展示 GET …/governance/investor-distribution-accruals 的链下应计分录摘要；非链上 Claim SSOT，亦非 fee-pool-aggregates Σ。",
+  governance_distribution_accruals_detail_meta_title: "治理 · 应计分红详情 | TravelTrust",
+  governance_distribution_accruals_detail_meta_description: "单条 distribution 的 holder 分录与 snapshot_binding（只读）。",
+  governance_claim_meta_title: "治理 · 应计领取（链上 Claim）| TravelTrust",
+  governance_claim_meta_description:
+    "InvestorDistributionClaim 钱包交互：只读预检与 claim/withdraw；不在浏览器内登记应计或调用 internal。",
   governance_params_meta_title: "治理 · 参数快照 | TravelTrust",
   governance_params_meta_description: "链上与链下治理参数只读快照；定稿以 08-3/08-4 为准。",
   governance_proposals_meta_title: "治理 · 提案 | TravelTrust",
@@ -259,6 +267,108 @@ export default {
   wallet_txErrorGeneric: "链上请求未能完成，请稍后重试或检查网络与余额。",
   staking_stake_rawUnits: "最小单位",
   admin_observability_title: "可观测性",
+  /** Epic C-09：finance / indexer / observability 等页轻量互链提示。 */
+  admin_audit_compare_links_heading:
+    "可选只读工具：治理多源对拍与差异摘要（对应页面不提供修复或写操作）。",
+  /** Epic C-06：对拍 / 差异页共用边界（与顶栏、副标题口径一致）。 */
+  admin_audit_tools_read_only_scope:
+    "只读边界：本类页面仅展示多源对拍 JSON 与漂移输出；不分析根因、不提供修复或任何写操作；变更请走治理与协议既定流程。",
+  admin_cross_check_title: "多源对拍",
+  admin_cross_check_subtitle:
+    "GET /api/v1/admin/cross-check — 只读多槽（projection / chain_ssot / reference）封装；仅原始 JSON，本页不提供修复或写操作。",
+  admin_cross_check_loading: "加载中…",
+  admin_cross_check_source_kind: "source_kind",
+  admin_cross_check_raw_body: "body（JSON）",
+  admin_cross_check_slot_fee_pool_projection: "fee_pool_projection",
+  admin_cross_check_slot_governance_pool_chain: "governance_pool_chain",
+  admin_cross_check_slot_protocol_reference: "protocol_reference",
+  admin_cross_check_slots_region_heading: "三槽分区（只读）",
+  admin_cross_check_slots_region_hint:
+    "下列三槽相互独立（source_kind + body JSON）。仅展示，非修复或写入入口。",
+  admin_cross_check_slots_jump_nav_aria: "跳转到各槽位",
+  admin_cross_check_slot_index: "槽 {n}",
+  admin_cross_check_status_label: "status",
+  admin_shell_nav_cross_check: "对拍 · 只读",
+  admin_shell_nav_finance_reconciliation: "财务 · 枢纽",
+  admin_shell_nav_drift_summary: "差异 · 只读",
+  admin_finance_reconciliation_title: "财务 · 只读枢纽",
+  admin_finance_reconciliation_disclaimer:
+    "本页与所链子页仅供只读展示与运维导航，不得作为对账或结算决策依据；请以审批后的运维 Runbook 与权威数据源为准。",
+  admin_finance_reconciliation_intro:
+    "以下为既有 Admin 子页深链；本路由不请求接口、不做数据聚合。",
+  admin_finance_reconciliation_nav_aria: "财务只读深链导航",
+  admin_finance_reconciliation_link_finance: "财务摘要与 CSV — /admin/finance",
+  admin_finance_reconciliation_link_cross_check: "多源对拍 — /admin/cross-check",
+  admin_finance_reconciliation_link_drift: "差异摘要 — /admin/drift-summary",
+  admin_finance_reconciliation_link_indexer: "索引器 — /admin/indexer",
+  admin_finance_reconciliation_link_reconcile_reports: "对账报告列表 — /admin/indexer/reconcile-reports",
+  admin_finance_reconciliation_home_desc:
+    "只读枢纽：链向财务摘要、对拍、差异摘要与索引器对账等页（Epic E）。",
+  admin_finance_reconciliation_data_unavailable: "data_unavailable",
+  admin_finance_reconciliation_finance_summary_api_heading: "GET /api/v1/admin/finance/summary",
+  admin_finance_reconciliation_finance_summary_api_hint:
+    "每行对应单一 JSON 路径；缺失或为 null 时显示 data_unavailable。本页不做合计或字段拼接。",
+  admin_finance_reconciliation_summary_loading: "正在加载财务摘要…",
+  admin_finance_reconciliation_meta_heading: "meta（标量字段）",
+  admin_finance_reconciliation_summary_heading: "summary（标量字段）",
+  admin_finance_reconciliation_projection_heading:
+    "最近落库的订单投影对账摘要（meta.last_stored_orders_projection_reconcile）",
+  admin_finance_reconciliation_open_reconcile_reports: "打开对账报告列表",
+  admin_finance_reconciliation_open_reconcile_detail: "打开该报告详情",
+  admin_finance_reconciliation_drift_section_title: "投影层差异（只读）",
+  admin_finance_reconciliation_drift_section_hint:
+    "GET /api/v1/admin/cross-check 与 GET /api/v1/admin/drift-summary — 仅展示；无写入与 persist。",
+  admin_finance_reconciliation_drift_semantic_note_title: "语义标签（Epic E）",
+  admin_finance_reconciliation_drift_semantic_note_body:
+    "投影层对拍不等于链上真相；若 API 无同义字段，chain_alignment_status 由 drift-summary.drift_detected 推导。",
+  admin_finance_reconciliation_drift_data_source_projection: "projection",
+  admin_finance_reconciliation_chain_alignment_aligned: "aligned",
+  admin_finance_reconciliation_chain_alignment_not_aligned: "not_aligned",
+  admin_finance_reconciliation_chain_alignment_unknown: "unknown",
+  admin_finance_reconciliation_chain_alignment_derived_hint: "仅枢纽展示推导，非链上裁决。",
+  admin_finance_reconciliation_drift_loading: "正在加载 cross-check / drift-summary…",
+  admin_finance_reconciliation_drift_from_summary_heading: "drift-summary 接口",
+  admin_finance_reconciliation_drift_from_cross_check_heading: "cross-check 信封（drift_summary 切片）",
+  admin_finance_reconciliation_open_drift_full: "打开完整差异摘要页",
+  admin_finance_reconciliation_open_cross_check_full: "打开完整对拍页",
+  admin_finance_reconciliation_epic_d_title: "Epic D 证据对照（人工）",
+  admin_finance_reconciliation_epic_d_intro:
+    "将 evidence 目录下 epic_d_go_bundle_closure.json 的 bundle_closure.included_tasks，与本枢纽已展示的只读 Admin API 人工对照：GET /api/v1/admin/finance/summary、GET /api/v1/admin/cross-check、GET /api/v1/admin/drift-summary。下表为静态说明，不做机算。",
+  admin_finance_reconciliation_epic_d_evidence_path:
+    "evidence/GO_YYYYMMDD/epic_d_go_bundle_closure.json → JSON 路径 bundle_closure.included_tasks",
+  admin_finance_reconciliation_epic_d_no_parse_hint:
+    "本页不读取证据文件、不解析 bundle_closure；请在本地用 jq 或编辑器打开。浏览器内不执行 included_tasks 推断。",
+  admin_finance_reconciliation_epic_d_link_ladder: "Epic D 阶梯（仓库）：Epic-D-indexer-ops-readonly-ladder.md",
+  admin_finance_reconciliation_epic_d_link_example: "Epic D 示例包：Epic-D-ops-artifact.v1.example-d10-go-bundle/",
+  admin_finance_reconciliation_epic_d_table_caption:
+    "静态对照提示（非计算生成）；artifact 规则以 Epic D 阶梯为准。",
+  admin_finance_reconciliation_epic_d_col_hub: "枢纽只读面（人工对照）",
+  admin_finance_reconciliation_epic_d_row_d02:
+    "与 snapshot_public 类留痕及本页 GET /api/v1/admin/finance/summary（meta / 投影对账摘要）人工关联。",
+  admin_finance_reconciliation_epic_d_row_d03:
+    "与 indexer_status 类信封及 GET /api/v1/admin/cross-check（如 fee_pool_projection 槽）人工关联；可结合本页 Indexer / 对账深链。",
+  admin_finance_reconciliation_epic_d_row_d04:
+    "与 D-03 同类（indexer_status）；本页 cross-check / drift-summary 均为投影层只读。",
+  admin_finance_reconciliation_epic_d_row_d05:
+    "与 reconcile 类落盘及 GET /api/v1/admin/finance/summary 的 meta、本页对账报告深链人工关联。",
+  admin_finance_reconciliation_epic_d_row_d06:
+    "dry_run_chain 附档不在此页加载；请在本地 evidence/ 对照 Runbook D-06。",
+  admin_finance_reconciliation_epic_d_row_d07:
+    "dry_run_event_log 附档不在此页加载；请在本地对照 Runbook D-07。",
+  admin_finance_reconciliation_epic_d_row_d08:
+    "dry_run_correction_executor 附档不在此页加载；请在本地对照 Runbook D-08。",
+  admin_finance_reconciliation_epic_d_row_d09:
+    "probe 附档不在此页加载；请在本地对照 Runbook D-09。",
+  admin_finance_reconciliation_epic_d_row_d10:
+    "收口 bundle 本体；本页仅罗列 API 与深链，不在 UI 内做 bundle 完整性门闸。",
+  admin_drift_summary_title: "差异摘要",
+  admin_drift_summary_subtitle:
+    "GET /api/v1/admin/drift-summary — 只读 drift_detected / delta（与对拍同源管线）；本页不提供修复或写操作。",
+  admin_drift_summary_loading: "加载中…",
+  admin_drift_summary_drift_detected_label: "drift_detected",
+  admin_drift_summary_drift_detected_not_provided: "（未提供）",
+  admin_drift_summary_delta_label: "delta（JSON）",
+  admin_drift_summary_status_label: "status",
   admin_observability_subtitle:
     "GET /api/v1/admin/observability/overview — 链 ID、索引器、限流参数。顶栏快链：审计日志、运维动作目录、对账报告、告警 incident。",
   admin_observability_loading: "加载中…",
@@ -501,6 +611,10 @@ export default {
     "RegionVault `RegionVaultForwarded` 投影：`GET /api/v1/admin/region-vault/forwarded-events`（PostgreSQL）。",
   admin_home_desc_observability:
     "通过 `GET /api/v1/admin/observability/overview` 查看链 ID、索引延迟、限流等。",
+  admin_home_desc_cross_check:
+    "只读多源对拍（`GET /api/v1/admin/cross-check`）；仅展示 JSON，本工具不提供修复或写操作。",
+  admin_home_desc_drift_summary:
+    "只读差异摘要（`GET /api/v1/admin/drift-summary`）；仅 drift_detected / delta，不提供修复或写操作。",
   admin_home_desc_audit_ops:
     "120：`GET …/admin/audit/operations`（导出管线前的静态动作目录）。",
   admin_home_desc_alert_incidents:
@@ -3411,6 +3525,21 @@ export default {
   governance_proposals_empty_body: "接口已成功返回，但尚未有可用提案条目。这与网络或服务错误不同。",
   governance_proposals_list_heading: "提案列表",
   governance_proposals_item_untitled: "（未命名提案）",
+  governance_proposals_status_loading: "读取执行状态…",
+  governance_proposals_status_error: "状态不可用",
+  governance_proposals_status_projection_note: "投影",
+  governance_proposals_status_chain_ssot_aria: "状态来自链上 eth_call state(uint256)",
+  governance_proposals_status_projection_aria: "状态来自索引投影（非本次链上直读）",
+  governance_proposals_exec_ssot_badge: "链上 SSOT",
+  governance_exec_shared_readonly_caption: "只读执行状态（非钱包写入）。",
+  governance_proposal_exec_status_pending: "待开始",
+  governance_proposal_exec_status_active: "表决中",
+  governance_proposal_exec_status_canceled: "已取消",
+  governance_proposal_exec_status_defeated: "未通过",
+  governance_proposal_exec_status_succeeded: "已通过",
+  governance_proposal_exec_status_queued: "已排队",
+  governance_proposal_exec_status_executed: "已执行",
+  governance_proposal_exec_status_unknown: "未知状态",
   governance_proposal_detail_title: "提案详情",
   governance_proposal_detail_loadFailed: "提案详情加载失败",
   governance_proposal_detail_back: "返回提案列表",
@@ -3445,6 +3574,56 @@ export default {
   governance_proposal_calldata_yes: "赞成 calldata",
   governance_proposal_calldata_no: "反对 calldata",
   governance_proposal_calldata_abstain: "弃权 calldata",
+  governance_pre_exec_hint_aria: "治理执行前只读提示（Timelock 与链上读口径）",
+  governance_pre_exec_section_heading: "执行前说明（只读）",
+  governance_pre_exec_timelock_lead: "该操作将在 Timelock 后执行",
+  governance_pre_exec_timelock_detail:
+    "提案在链上表决通过后，由 Governor 将操作写入 Timelock 队列；延迟期满后再由有权主体 execute。本页仅说明路径，不代签、不预填可执行交易。",
+  governance_pre_exec_phases_heading: "链上执行阶段概览（Governor + Timelock）",
+  governance_pre_exec_phases_detail:
+    "常见顺序：待创建/待开始 → 投票进行中（active）→ 通过（succeeded）或否决（defeated）。**succeeded** 后需有人在链上 **queue** 写入 Timelock；投影里可能出现 **operation_id**。须等待 Timelock **延迟** 期满后才可 **execute**。**queued**、**canceled** 等态以您所在网络的 Governor/Timelock 规则为准。本区仅作阶段说明，不估算出块时间、不代排队、不代执行。",
+  governance_pre_exec_data_source_heading: "链上主读字段如何标注（04）",
+  governance_pre_exec_data_source_explain:
+    "治理池等 HTTP 响应在开闸且 RPC 成功时，根级主读以 **data_source: chain_read** 标注（与 **is_chain_ssot** 等键并列，见 04 §3.4）；与本页展示的 **castVote** calldata、提案状态 **eth_call** 只读信息正交，勿与 **fee-pool-aggregates** 等投影累计混为同一真值。",
+  governance_pre_exec_simulation_explain:
+    "若您在钱包中使用「模拟 / eth_call」预览调用，仅为只读推演，不会广播链上交易。",
+  governance_pre_exec_no_autotx: "本应用不会在此为您生成、替换或自动提交可执行链上交易。",
+  governance_exec_readiness_section_heading: "执行条件说明（只读）",
+  governance_exec_readiness_detail_off_chain:
+    "当前为链下信号票路径；Timelock 类执行不由本页驱动，链上相关请在钱包/合约侧完成。",
+  governance_exec_shared_queued_explanation:
+    "链上回报为 **Queued**：表示已进入 Timelock 队列，但**不表示**延迟已届满、也**不保证**此刻发送 **execute** 一定成功。本页治理详情响应**不包含** Timelock ETA、可执行块高等时序 SSOT。延迟在链上届满后，有权地址方可在钱包 **execute**；本应用不在此排队或代执行。",
+  governance_exec_shared_list_queued_hint:
+    "列表中 **Queued** 与详情页只读口径一致：不代表 Timelock 延迟已届满或 **execute** 一定成功；列表不提供 ETA / 块高 SSOT。",
+  governance_exec_shared_limits_skeleton:
+    "本页**不提供** Timelock ETA、**execute** 合法时刻的块高、也不模拟此刻 **execute** 是否成功。下方按钮为**骨架入口**便于对照阶段，不组装 calldata、不连接钱包、不广播。",
+  governance_exec_list_entry_bridge:
+    "每行执行态药丸与 **SSOT / 投影** 标识来自 **`GET …/proposal-status`**（只读）。进入详情后延续**同一套口径**：**`GET …/proposals/:id`** 下的执行说明与占位区沿用**相同的来源语义与只读限制**（非钱包写入、**无**页内 Timelock ETA）—列表与详情按一条路径阅读。",
+  governance_exec_detail_continuation_bridge:
+    "若从提案列表进入：本页执行相关区块与列表保持**同一披露口径**（**链上 SSOT** / **投影** 文案、**Queued** 限制、骨架操作区）。列表与详情的接口刷新时刻可能不同，但**规则与文案家族**一致。",
+  governance_exec_proposal_link_continue_title: "打开提案详情—与列表相同的只读执行态披露",
+  governance_exec_readiness_detail_before_timelock:
+    "尚未到达 Timelock 可执行窗口（回报为 **Pending** / **Active** / **Succeeded**）：通过后仍需链上 **queue** 并等待 **delay**。本页仅展示状态。",
+  governance_exec_readiness_detail_executed: "链上回报为 **Executed**：payload 已走 Timelock 执行完毕。",
+  governance_exec_readiness_detail_not_executable:
+    "链上回报为终态（如 **Defeated** / **Canceled** / **Expired** 等），不适用 Timelock 执行路径。",
+  governance_exec_readiness_detail_unknown:
+    "无法从 **state_live** / **projection_state** 判定执行条件（缺失或未识别）；本页不推断是否可执行。",
+  governance_exec_readiness_vote_buttons_readonly_lead: "投票按钮区（Governor 模式·只读）：",
+  governance_exec_actions_section_heading: "执行操作区（界面占位）",
+  governance_exec_actions_section_lead:
+    "Queue / Execute 须在钱包与链上完成；此处仅按回报状态映射按钮可用性，本应用不发交易。",
+  governance_exec_actions_limits_aria: "本页 Timelock 执行限制与风险说明",
+  governance_exec_actions_limits_heading: "限制与风险（只读）",
+  governance_exec_action_queue_label: "Queue（Timelock）",
+  governance_exec_action_execute_label: "Execute（延迟后）",
+  governance_exec_action_queue_disabled_hint: "仅当链上回报为 Succeeded 时可点（仍在钱包侧 queue）。",
+  governance_exec_action_queue_enabled_hint: "占位：请在链上钱包操作；点击不会广播交易。",
+  governance_exec_action_execute_disabled_hint:
+    "读数为 **Queued** 时显示；链上延迟仍可能未届满。本页不展示 ETA 或块高。",
+  governance_exec_action_execute_enabled_hint:
+    "占位：**Queued** 仅为状态字，不保证 **execute** 成功或时序已满足；本页无 ETA，请在钱包操作；点击不广播。",
+  governance_exec_action_placeholder_ack: "已确认：占位而已；本页无时序 SSOT；本应用不提交 Timelock 交易。",
   governance_b090_onchain_notice_aria: "链上治理与国库提案路径说明",
   governance_b090_onchain_list_title: "链上提案列表（Governor 索引）",
   governance_b090_onchain_detail_title: "链上提案与国库执行路径",
@@ -3521,6 +3700,18 @@ export default {
   governance_params_diff_pending_loading: "正在加载待生效包…",
   governance_params_diff_source_hint:
     "接口字段 pending_package_source：{{source}}。可通过环境变量 PROTOCOL_REFERENCE_PENDING_OVERLAY（JSON 深度合并）模拟待生效包。",
+  governance_params_data_scope_title: "数据源（只读 · 84 文档镜像）",
+  governance_params_data_scope_bullet_api:
+    "本页表格与百分数仅来自 GET /api/v1/governance/protocol-reference 与 GET /api/v1/governance/protocol-reference/pending（响应头 X-Implementation-Status: doc-reference / doc-reference-pending）；对齐 spec 84，不是链上合约读数。",
+  governance_params_data_scope_bullet_not_sigma:
+    "不是 GET /api/v1/governance/fee-pool-aggregates 的投影 Σ；不得与索引累计混为同一真值或 SSOT。",
+  governance_params_data_scope_bullet_not_pool:
+    "不是 GET /api/v1/governance/pool 等链上主读或账户余额；不得与 pool 根级链读混为同一真值。",
+  governance_params_checksums_section: "开放费点与分层校验和（仅文档镜像）",
+  governance_params_checksum_key_phase1_open_fee_points_sum: "首轮开放费点合计",
+  governance_params_checksum_key_national_pool_cap_fee_points_sum: "国家池额度（费用百分点）合计",
+  governance_params_checksum_key_country_bucket_percent: "国家可分配费用桶占比（layer1）",
+  governance_params_checksum_key_phase1_open_over_country_bucket: "首轮开放占国家桶（叙事校验）",
 
   governance_fee_routes_title: "费用路由（链上索引）",
   governance_fee_routes_desc:
@@ -3562,6 +3753,73 @@ export default {
   governance_vault_forwards_wiring_lead:
     "与 14 §1.1.1、110 一致：indexer 仅当后端配置 REGION_VAULT_ADDRESS 时抓取并投影；GET /meta 暴露 region_vault_address 供运维核对。",
   governance_vault_forwards_wiring_api: "GET /meta · chain.contracts.region_vault_address",
+
+  governance_distribution_accruals_title: "应计 / 分红分录（只读）",
+  governance_distribution_accruals_desc:
+    "数据仅来自 GET /api/v1/governance/investor-distribution-accruals（04 §3.4）。本页不调用任何 /internal/ 写接口；为链下投影与 B-088 快照绑定说明，非链上 InvestorDistributionClaim 领取 SSOT，亦非 fee-pool-aggregates 的 Σ 主叙事。",
+  governance_distribution_accruals_source_database: "数据源：数据库投影",
+  governance_distribution_accruals_source_placeholder: "数据源：占位（无 DATABASE_URL 或 API 降级）",
+  governance_distribution_accruals_placeholder_note: "根级 `note` 与响应头 `X-Implementation-Status` 可能标明占位原因。",
+  governance_distribution_accruals_empty: "暂无应计分录。有库且已写入 `investor_distribution_accruals` 后此处列出最近批次。",
+  governance_distribution_accruals_col_id: "distribution_id",
+  governance_distribution_accruals_col_chain: "chain_id",
+  governance_distribution_accruals_col_token: "token",
+  governance_distribution_accruals_col_snapshot: "snapshot_block",
+  governance_distribution_accruals_col_created: "created_at",
+  governance_distribution_accruals_col_total_cash: "total_cash (u256 hex)",
+  governance_distribution_accruals_view_detail: "详情",
+  governance_distribution_accruals_detail_title: "应计分录详情",
+  governance_distribution_accruals_back_list: "返回列表",
+  governance_distribution_accruals_invalid_id: "无效的 distribution_id（须为 UUID）。",
+  governance_distribution_accruals_not_found: "未找到该 distribution，或 API 返回错误。",
+  governance_distribution_accruals_lines_title: "Holder 分录（lines）",
+  governance_distribution_accruals_col_holder: "holder",
+  governance_distribution_accruals_col_balance_snap: "balance_snapshot",
+  governance_distribution_accruals_col_accrual: "accrual",
+  governance_distribution_accruals_snapshot_binding: "snapshot_binding（B-088，只读 JSON）",
+
+  governance_claim_title: "应计领取（链上 Claim）",
+  governance_claim_desc:
+    "本页仅连接钱包并对已部署的 InvestorDistributionClaim 做只读读数与链上 claim / withdrawDividend。不在浏览器内调用 registerAccrual、不调用任何后端 internal 写接口；与 governance 应计分录 API 解耦，链上 SSOT 以合约为准。",
+  governance_claim_env_hint: "合约地址来自 NEXT_PUBLIC_INVESTOR_DISTRIBUTION_CLAIM_ADDRESS（与部署环境一致）。",
+  governance_claim_contract_unconfigured: "未配置 Claim 合约地址，无法发起链上交互。请在构建环境设置 NEXT_PUBLIC_INVESTOR_DISTRIBUTION_CLAIM_ADDRESS。",
+  governance_claim_wallet_section: "钱包与网络",
+  governance_claim_wrong_chain: "当前钱包网络与 NEXT_PUBLIC_CHAIN_ID 不一致，请先切换网络。",
+  governance_claim_dist_label: "distributionId（UUID 或 0x + 64 位 hex）",
+  governance_claim_dist_placeholder: "如 550e8400-e29b-41d4-a716-446655440000",
+  governance_claim_dist_invalid: "无法解析为 UUID 或 32 字节 hex。",
+  governance_claim_resolved_bytes32: "解析得到的 bytes32",
+  governance_claim_token: "distributionToken（链上）",
+  governance_claim_token_unknown: "0x0 — 该 distribution 未在链上登记（预期交易会 UnknownDistribution）",
+  governance_claim_claimable: "当前地址可领（claimable，最小单位）",
+  governance_claim_claimed_label: "已领 claimed",
+  governance_claim_entitled_label: "应计 entitled",
+  governance_claim_max_label: "本次领取上限 maxAmount（uint256 字符串，留空=按可领全额）",
+  governance_claim_max_placeholder: "留空则使用 claimable 全额",
+  governance_claim_max_hint: "须为正整数 wei/最小单位；超过剩余可领时合约按剩余额支付。",
+  governance_claim_btn_claim: "发起 claim",
+  governance_claim_btn_withdraw: "发起 withdrawDividend",
+  governance_claim_precheck_section: "只读预检（simulate claim）",
+  governance_claim_precheck_ok: "预检通过：当前参数下 claim 模拟成功（仍以钱包实际结果为准）。",
+  governance_claim_precheck_need_amount: "已连接且 token 已解析时，填写或留空 maxAmount（留空用可领额）后将自动预检。",
+  governance_claim_expected_fail_section: "预期失败路径（说明）",
+  governance_claim_expected_fail_unknown:
+    "若 distribution 未在链上登记：distributionToken 为 0，交易将回退 UnknownDistribution。",
+  governance_claim_expected_fail_unknown_active: "当前读数：该 distribution 在链上未登记（0 地址 token）。",
+  governance_claim_expected_fail_nothing:
+    "若剩余可领为 0：交易将回退 NothingToClaim（与已领完或未登记到你的地址一致）。",
+  governance_claim_expected_fail_nothing_active: "当前读数：claimable 为 0，若仍发起同额交易将 NothingToClaim。",
+  governance_claim_connect_for_reads: "连接钱包后可读取 claimable / entitled / claimed。",
+  governance_claim_token_units_hint: "按代币 decimals 换算的参考值",
+  governance_claim_tx_pending: "交易提交中…",
+  governance_claim_tx_success: "交易已确认。",
+  governance_claim_tx_hash: "tx hash",
+  governance_claim_err_nothing: "链上回退：无可领余额（NothingToClaim）。",
+  governance_claim_err_unknown: "链上回退：该 distribution 未登记（UnknownDistribution）。",
+  governance_claim_err_transfer: "链上回退：ERC20 转出失败（TransferFailed）。",
+  governance_claim_err_token_mismatch: "链上回退：代币不一致（TokenMismatch）。",
+  governance_claim_err_only_owner: "链上回退：仅 owner 可调（不应出现在领取路径）。",
+  governance_claim_err_generic: "交易失败。请检查网络、余额与合约状态；勿向页面粘贴私钥。",
 
   itin_title: "行程生成",
   itin_desc: "选择产品期国家与城市，填写日期、天数、偏好与预算，生成旅行方案与 Draft 订单。",

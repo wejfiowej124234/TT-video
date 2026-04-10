@@ -222,6 +222,8 @@ mod tests {
         assert_eq!(parse_fee_routes_limit(None).unwrap(), 50);
         assert_eq!(parse_fee_routes_limit(Some(1)).unwrap(), 1);
         assert_eq!(parse_fee_routes_limit(Some(200)).unwrap(), 100);
+        assert_eq!(parse_fee_routes_limit(Some(100)).unwrap(), 100);
+        assert_eq!(parse_fee_routes_limit(Some(101)).unwrap(), 100);
         assert!(parse_fee_routes_limit(Some(0)).is_err());
     }
 
@@ -229,5 +231,70 @@ mod tests {
     fn admin_limit_clamps_at_200() {
         assert_eq!(parse_admin_fee_router_limit(Some(500)).unwrap(), 200);
         assert_eq!(parse_admin_fee_router_limit(None).unwrap(), 50);
+    }
+
+    /// B-116-2-3：`delete_fee_router_routed_events_from_block` 与 reorg rewind 同源 SQL；需已迁移 PG。
+    #[tokio::test]
+    async fn delete_fee_router_routed_events_from_block_removes_tail_for_chain() {
+        let url = match std::env::var("DATABASE_URL") {
+            Ok(u) if !u.trim().is_empty() => u,
+            _ => {
+                eprintln!(
+                    "delete_fee_router_routed_events_from_block_removes_tail_for_chain: skip (DATABASE_URL unset)"
+                );
+                return;
+            }
+        };
+        const CHAIN: i64 = 999_991_623;
+        let pool = sqlx::postgres::PgPoolOptions::new()
+            .max_connections(2)
+            .connect(&url)
+            .await
+            .expect("connect DATABASE_URL");
+        sqlx::query("DELETE FROM fee_router_routed_events WHERE chain_id = $1")
+            .bind(CHAIN)
+            .execute(&pool)
+            .await
+            .expect("cleanup fee_router_routed_events");
+        let router = "0x1111111111111111111111111111111111111111";
+        let token = "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        let w0 = "0x0000000000000000000000000000000000000000000000000000000000000001";
+        let w1 = "0x0000000000000000000000000000000000000000000000000000000000000002";
+        let w2 = "0x0000000000000000000000000000000000000000000000000000000000000003";
+        let w3 = "0x0000000000000000000000000000000000000000000000000000000000000004";
+        let w4 = "0x0000000000000000000000000000000000000000000000000000000000000005";
+        for (bn, li) in [(10i64, 0i32), (11, 0), (12, 0)] {
+            insert_fee_router_routed_event(
+                &pool,
+                CHAIN,
+                bn,
+                li,
+                "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                router,
+                token,
+                w0,
+                w1,
+                w2,
+                w3,
+                w4,
+            )
+            .await
+            .expect("insert");
+        }
+        let n = delete_fee_router_routed_events_from_block(&pool, CHAIN, 11)
+            .await
+            .expect("delete");
+        assert_eq!(n, 2, "blocks 11 and 12 should be removed");
+        let st = fee_router_routed_stats(&pool, Some(CHAIN))
+            .await
+            .expect("stats");
+        assert_eq!(st.total, 1);
+        assert_eq!(st.min_block_number, Some(10));
+        sqlx::query("DELETE FROM fee_router_routed_events WHERE chain_id = $1")
+            .bind(CHAIN)
+            .execute(&pool)
+            .await
+            .expect("cleanup tail");
     }
 }

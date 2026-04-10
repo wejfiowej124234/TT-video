@@ -15,6 +15,7 @@
 - **类型**：`npx tsc --noEmit`
 - **单测**：`npm run test`（Vitest，含 `lib/api`、`lib/apiClient`、`lib/didRankUtils`、`dapp/hooks/useEscrowActions`）
 - **E2E**：`npx playwright install` 后 `npm run e2e`（需先 `npm run dev` 或已启动的本地服务）
+- **Epic A（治理 proposals 执行态只读 UX · A-10 收口）**：验收命令见 **[docs/runbook/Epic-A-governance-execution-ux-ladder.md](../docs/runbook/Epic-A-governance-execution-ux-ladder.md)**（§ 前端验收命令）；证据指针 **[evidence/GO_EPIC_A_GOVERNANCE_EXEC_UX_CLOSE.md](../evidence/GO_EPIC_A_GOVERNANCE_EXEC_UX_CLOSE.md)**。
 
 ## 目录
 

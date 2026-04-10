@@ -1,0 +1,6 @@
+{
+  "gate": "Gate-1～5 发版前汇总",
+  "date": "2025-02-27",
+  "artifacts": [{"path": "README.txt", "sha256": "b9982da8e80f8df6493efddc1db95fe8c0547504e9b760da5834d29d3c64aab8"}],
+  "sign_off": ["法务 陈明", "运营 林芳"]
+}

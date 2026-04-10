@@ -1,0 +1,49 @@
+{
+  "artifact_schema_id": "traveltrust.ops_artifact.v1",
+  "artifact_schema_version": "1.0.0",
+  "artifact_version": "v1",
+  "artifact_type": "dry_run_correction_executor",
+  "dry_run": true,
+  "reason_code": null,
+  "captured_at": "2026-04-09T12:34:56Z",
+  "epic_task_id": "Epic-D-D08",
+  "provenance": {
+    "script": "internal-indexer-ops.sh",
+    "script_semver": "1.6.0",
+    "host_git_commit": "abcdef0123456789",
+    "host_git_branch": "main",
+    "host_repo_dirty": false
+  },
+  "api_context": {
+    "api_base_url_redacted": "http://127.0.0.1:8080",
+    "chain_id": 1,
+    "internal_invoked": true,
+    "persist_requested": false,
+    "correction_executor_chain_scope_rollback_execute_requested": false
+  },
+  "ops_summary": {
+    "dry_run": true,
+    "domain": "correction_executor",
+    "issues_total": 0,
+    "clean": true
+  },
+  "dry_run_correction_executor_surface": {
+    "issues_total": 0,
+    "correction_executor_chain_scope_rollback_dry_run_present": true,
+    "anchor": "110-CORRECTION-EXECUTOR-CHAIN-SCOPE-DRY-RUN",
+    "correction_log_rows": 0,
+    "executor_executions_rows": 0
+  },
+  "payload": {
+    "status": "ok",
+    "chain_id": 1,
+    "issues_total": 0,
+    "projection_reconcile_clean": true,
+    "correction_executor_chain_scope_rollback_dry_run": {
+      "chain_id": 1,
+      "correction_log_rows": 0,
+      "executor_executions_rows": 0,
+      "anchor": "110-CORRECTION-EXECUTOR-CHAIN-SCOPE-DRY-RUN"
+    }
+  }
+}

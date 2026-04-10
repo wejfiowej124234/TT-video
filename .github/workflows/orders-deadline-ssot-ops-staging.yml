@@ -1,0 +1,68 @@
+# TT-B110-SEQ2-ORDERS-DEADLINE-OPS-CI-STAGING-001
+#
+# Staging-only：对预发 / 受控环境的 **GET /api/v1/admin/observability/overview** 做
+# **orders_deadline_ssot_ops_check** 门禁（**scripts/orders-deadline-ssot-ops-check.sh**）。
+#
+# — **不**挂载在默认 **Build** / PR 门禁上；**不**要求 fork 或本地构建配置任何密钥。
+# — 未配置下方 **repository secrets** 时：本 workflow **成功跳过**（exit 0 + notice），不污染通用 CI。
+# — 配置了 token 时：**必须**同时配置 **API_BASE_URL**（避免误打 localhost）。
+#
+# Repository secrets（Settings → Secrets and variables → Actions）：
+#   STAGING_ORDERS_DEADLINE_OPS_ADMIN_BEARER_TOKEN  — Admin 会话 Bearer（与浏览器同源口径；**勿**提交入库）
+#   STAGING_ORDERS_DEADLINE_OPS_API_BASE_URL        — 预发 API 根，如 https://api.staging.example（**无**尾斜杠）
+#
+# 触发与频率：
+#   workflow_dispatch — 手工（发布前后 / 值班）
+#   schedule          — 每周一 07:00 UTC（可按组织策略改 cron；非密钥依赖项）
+#
+# 失败条件（与脚本一致）：HTTP≠200、缺 ops_check 字段、overall≠ok、exit_code_hint≠0。
+# 成功摘要：脚本 stdout 末行 **orders-deadline-ssot-ops-check.sh: ok (...)**；失败时 stderr 含 gate 说明 + jq 打印的 checks 体。
+
+name: Orders deadline SSOT ops (staging)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 7 * * 1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: orders-deadline-ssot-ops-staging-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  staging-orders-deadline-ops-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Ensure jq
+        run: |
+          set -euo pipefail
+          if ! command -v jq >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq jq
+          fi
+          jq --version
+
+      - name: Run staging orders-deadline SSOT ops check (optional secrets)
+        env:
+          ADMIN_BEARER_TOKEN: ${{ secrets.STAGING_ORDERS_DEADLINE_OPS_ADMIN_BEARER_TOKEN }}
+          API_BASE_URL: ${{ secrets.STAGING_ORDERS_DEADLINE_OPS_API_BASE_URL }}
+        run: |
+          set -euo pipefail
+          if [ -z "${ADMIN_BEARER_TOKEN}" ]; then
+            echo "::notice title=TT-B110 staging ops::skipped — secret STAGING_ORDERS_DEADLINE_OPS_ADMIN_BEARER_TOKEN unset (forks / repos without staging token expect this; Build workflow unchanged)."
+            exit 0
+          fi
+          if [ -z "${API_BASE_URL}" ]; then
+            echo "::error title=TT-B110 staging ops::STAGING_ORDERS_DEADLINE_OPS_API_BASE_URL must be set when STAGING_ORDERS_DEADLINE_OPS_ADMIN_BEARER_TOKEN is set."
+            exit 1
+          fi
+          echo "::group::orders_deadline_ssot_ops_check summary"
+          echo "API_BASE_URL=${API_BASE_URL}"
+          echo "Using scripts/orders-deadline-ssot-ops-check.sh (ADMIN_BEARER_TOKEN redacted)"
+          echo "::endgroup::"
+          bash scripts/orders-deadline-ssot-ops-check.sh
