@@ -243,7 +243,13 @@ fn apply_orders_projection_fields_to_list_item_json(
     obj.insert("display_status".to_string(), json!(disp));
 }
 
-fn order_list_item_json(store: &super::ChainOffStore, o: &OrderRow) -> serde_json::Value {
+fn order_list_item_json(
+    store: &super::ChainOffStore,
+    o: &OrderRow,
+    review_window_days: i64,
+) -> serde_json::Value {
+    let (payment_deadline, chat_confirm_deadline, rating_deadline) =
+        order_deadline_fields(o, review_window_days);
     let bundle = store.itineraries.get(&o.id);
     let (destination, city, days, travel_date, image) = bundle
         .map(|b| {
@@ -276,7 +282,10 @@ fn order_list_item_json(store: &super::ChainOffStore, o: &OrderRow) -> serde_jso
         "created_at": o.created_at.to_rfc3339(),
         "accepted_at": o.accepted_at.map(|t| t.to_rfc3339()),
         "escrowed_at": o.escrowed_at.map(|t| t.to_rfc3339()),
-        "completed_at": o.completed_at.map(|t| t.to_rfc3339())
+        "completed_at": o.completed_at.map(|t| t.to_rfc3339()),
+        "payment_deadline": payment_deadline,
+        "chat_confirm_deadline": chat_confirm_deadline,
+        "rating_deadline": rating_deadline
     });
     if let Some(cid) = o.chain_id {
         item["chain_id"] = json!(cid);
@@ -370,13 +379,14 @@ pub async fn orders_list_impl(
         } else {
             None
         };
+        let rw = state.config.review_window_days;
         let staged: Vec<(Uuid, String, serde_json::Value)> = page_rows
             .iter()
             .map(|o| {
                 (
                     o.id,
                     order_state_to_str(o.state).to_string(),
-                    order_list_item_json(&store, o),
+                    order_list_item_json(&store, o, rw),
                 )
             })
             .collect();
@@ -408,13 +418,14 @@ pub async fn orders_list_impl(
         })));
     }
 
+    let rw = state.config.review_window_days;
     let staged: Vec<(Uuid, String, serde_json::Value)> = rows
         .into_iter()
         .map(|o| {
             (
                 o.id,
                 order_state_to_str(o.state).to_string(),
-                order_list_item_json(&store, o),
+                order_list_item_json(&store, o, rw),
             )
         })
         .collect();
@@ -478,15 +489,11 @@ pub fn order_split_addresses_ssot(
     })
 }
 
-/// 与 `GET /api/v1/orders/:id` 成功响应同形（含可选 `itinerary`）；**不做** tourist/guide 参与方校验（70：`GET /api/v1/admin/orders/:id`）。
-pub fn order_detail_envelope(
-    store: &ChainOffStore,
+/// 53-S12：**`GET /api/v1/orders/:id`** 与 **`GET /api/v1/orders`** 列表项同源的可选 deadline（ISO8601）。
+fn order_deadline_fields(
     o: &OrderRow,
     review_window_days: i64,
-    chain_config: Option<&ChainConfig>,
-) -> JsonValue {
-    let order_id = o.id;
-    // 53-S12：GET order 可选返回 payment_deadline、chat_confirm_deadline、rating_deadline（04/53 附录 A/F）
+) -> (Option<String>, Option<String>, Option<String>) {
     let chat_confirm_deadline = match (o.state, o.accepted_at.as_ref(), o.sub_status.as_deref()) {
         (OrderState::Accepted, Some(accepted_at), sub)
             if sub
@@ -508,6 +515,19 @@ pub fn order_detail_envelope(
         }
         _ => None,
     };
+    (payment_deadline, chat_confirm_deadline, rating_deadline)
+}
+
+/// 与 `GET /api/v1/orders/:id` 成功响应同形（含可选 `itinerary`）；**不做** tourist/guide 参与方校验（70：`GET /api/v1/admin/orders/:id`）。
+pub fn order_detail_envelope(
+    store: &ChainOffStore,
+    o: &OrderRow,
+    review_window_days: i64,
+    chain_config: Option<&ChainConfig>,
+) -> JsonValue {
+    let order_id = o.id;
+    let (payment_deadline, chat_confirm_deadline, rating_deadline) =
+        order_deadline_fields(o, review_window_days);
 
     let mut order_json = json!({
         "id": o.id.to_string(),
@@ -541,7 +561,7 @@ pub fn order_detail_envelope(
     }
     let mut resp = json!({ "status": "ok", "order": order_json });
     if let Some(bundle) = store.itineraries.get(&order_id) {
-        // 与 order_list_item_json / 55-S12 一致：详情 order 上补齐目的地、城市、天数、出行日，便于前端会话侧只读摘要（53-S7）与列表字段对齐
+        // 与 order_list_item_json / 55-S12 / 53-S12 一致：详情 order 上补齐目的地、城市、天数、出行日，便于前端会话侧只读摘要（53-S7）与列表字段对齐
         let travel_date = o.start_date.map(|d| d.to_string()).unwrap_or_default();
         resp["order"]["destination"] = json!(bundle.destination.clone());
         resp["order"]["city"] = json!(bundle.city.clone());
@@ -1112,9 +1132,28 @@ mod traveler_id_alias_tests {
         let tid = Uuid::new_v4();
         let o = sample_order(tid);
         let store = ChainOffStore::default();
-        let j = order_list_item_json(&store, &o);
+        let j = order_list_item_json(&store, &o, 14);
         assert_eq!(j["tourist_id"].as_str().unwrap(), tid.to_string());
         assert_eq!(j["traveler_id"].as_str().unwrap(), tid.to_string());
+    }
+
+    #[test]
+    fn orders_list_item_deadlines_match_order_detail_envelope() {
+        let tid = Uuid::new_v4();
+        let mut o = sample_order(tid);
+        let rw = 21i64;
+        o.state = OrderState::Completed;
+        o.completed_at = Some(Utc::now() - Duration::hours(5));
+        o.tourist_confirmed = Some(true);
+        o.guide_confirmed = Some(true);
+        o.updated_at = Utc::now();
+
+        let store = ChainOffStore::default();
+        let item = order_list_item_json(&store, &o, rw);
+        let env = order_detail_envelope(&store, &o, rw, None);
+        for key in ["payment_deadline", "chat_confirm_deadline", "rating_deadline"] {
+            assert_eq!(item[key], env["order"][key], "deadline mismatch: {key}");
+        }
     }
 
     #[test]
@@ -1173,6 +1212,7 @@ mod traveler_id_alias_tests {
             escrow_factory_address: None,
             fee_router_address: Some(" 0x1111111111111111111111111111111111111111 ".to_string()),
             region_vault_address: Some("0x2222222222222222222222222222222222222222".to_string()),
+            country_pool_ledger_address: None,
             investor_share_token_addresses: vec![],
             staking_address: None,
             investor_lock_contract_addresses: vec![],
@@ -1246,6 +1286,7 @@ mod traveler_id_alias_tests {
             escrow_factory_address: None,
             fee_router_address: None,
             region_vault_address: None,
+            country_pool_ledger_address: None,
             investor_share_token_addresses: vec![],
             staking_address: None,
             investor_lock_contract_addresses: vec![],
