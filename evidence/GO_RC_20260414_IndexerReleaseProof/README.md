@@ -2,6 +2,8 @@
 
 本目录为 **Indexer Release Proof + GO Gate + Live replay** 的**正式检入证据包**，等级 **Full GO**（见根下 **`release_proof_rc_closure.json`** 字段 **`release_proof_grade`** / **`archive_status`**；门禁结论 **`go_gate_release_proof_audit.json`** **`verdict":"GO"`**）。
 
+**`repo_anchor_git_commit`**（closure / preflight）：取证时工作区 **HEAD**（本地跑通 GO 时的提交）；**引入本目录的 git 提交**请用 **`git log -1 --pretty=oneline -- evidence/GO_RC_20260414_IndexerReleaseProof/`** 查看。
+
 ## 机读锚点
 
 | 文件 | 说明 |
