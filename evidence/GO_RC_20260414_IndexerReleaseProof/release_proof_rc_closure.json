@@ -1,0 +1,13 @@
+{
+  "release_proof_rc_closure_schema_id": "traveltrust.release_proof_rc_closure.v1",
+  "generated_at": "2026-04-14T00:28:41Z",
+  "archived_official_at": "2026-04-14T12:00:00Z",
+  "evidence_go_dir": "C:/Users/plant/Desktop/Wbe3-TravelTrust/evidence/GO_RC_20260414_IndexerReleaseProof",
+  "evidence_go_dir_repo_relative": "evidence/GO_RC_20260414_IndexerReleaseProof",
+  "release_proof_grade": "Full GO",
+  "archive_status": "official",
+  "repo_anchor_git_commit": "d576a33fbb25fb7fb70499e8ddca6ba5617bdfc5",
+  "go_gate_verdict": "GO",
+  "go_gate_replay_live": true,
+  "notes": "Formal Release Proof evidence archive (Full GO). Indexer Release Proof + go_gate_release_proof_audit; manifest + manifest.sha256 under evidence_go_dir. Bundle zip skipped when zip unavailable; gate verdict GO unaffected. Upload: attach full directory or tarball to private artifact store / release; verify sha256sum -c manifest.sha256 in OUT_DIR."
+}

@@ -1,0 +1,55 @@
+{
+  "bundle_kind": "indexer_public_snapshot",
+  "gate": "Indexer-110-public-snapshot",
+  "date": "2026-04-14",
+  "artifacts": [
+    {
+      "path": "indexer_public_snapshot_20260414T002532Z.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "indexer_public_snapshot_20260414T002645Z.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "indexer_public_snapshot_20260414T002749Z.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "indexer_public_snapshot_20260414T002833Z.json",
+      "sha256": "e844e7b22373534ea425a020c24d64eeae00f686c7b0d893b32c2d80385630b2"
+    },
+    {
+      "path": "artifacts/epic_d_d03_indexer_status.json",
+      "sha256": "83c5d54738793bf9ad5975c2a3eba9f8ba1b34d4269ee92e7071377cbe81ac74"
+    },
+    {
+      "path": "artifacts/epic_d_d04_indexer_status_live.json",
+      "sha256": "7a05ffa6debf094a33a4071778a8318088559160a11262fcf59f5fce8c4985fc"
+    },
+    {
+      "path": "artifacts/epic_d_d05_reconcile.json",
+      "sha256": "87bf5337810ffd481321f65a5226173e8c4f3f2c929da0f354cfc66aada7e574"
+    },
+    {
+      "path": "artifacts/indexer_release_proof_admin_overview_slice.json",
+      "sha256": "b971b403092bc8c09e914e4cdef07ede6aad3611034dacedc0ac4bc2b655fd98"
+    },
+    {
+      "path": "artifacts/indexer_release_proof_reconcile_slice.json",
+      "sha256": "7b87decf68b6d986ca15d45e9794f123d83a75917cfeed9ab6bfa695163b651f"
+    },
+    {
+      "path": "release_proof_manifest.json",
+      "sha256": "0581d0f72749f878a401f2718d404daadf45d9b661c0644b7d7f73692c6100ed"
+    },
+    {
+      "path": "go_gate_release_proof_audit.json",
+      "sha256": "b60ebc1540a9065bc55af7424d596fc4c7132f15c2cbb29437143b806c8eae76"
+    }
+  ],
+  "sign_off": [
+    "automation"
+  ],
+  "notes": "Paths relative to GO_* day dir. Epic D-10: also manifest.json + manifest.sha256 + epic_d_go_bundle_closure.json (traveltrust.ops_artifact.v1 bundle). Replace gate/sign_off for formal gate per evidence/README.md. RUNBOOK §2.55 / 110."
+}

@@ -1,0 +1,10 @@
+{
+  "preflight_schema_id": "traveltrust.release_proof_rc_preflight.v1",
+  "generated_at": "2026-04-14T00:28:41Z",
+  "status": "completed",
+  "release_proof_grade": "Full GO",
+  "prior_blocked_preflight_superseded": "2026-04-14T00:14:21Z",
+  "note": "Full GO run via scripts/dev-release-proof-go-one-shot.sh (Docker Postgres + anvil + API); GO_GATE_REPLAY_LIVE=1. See go_gate_release_proof_audit.json and release_proof_rc_closure.json.",
+  "orchestration_script": "scripts/dev-release-proof-go-one-shot.sh",
+  "host_git_commit": "d576a33fbb25fb7fb70499e8ddca6ba5617bdfc5"
+}

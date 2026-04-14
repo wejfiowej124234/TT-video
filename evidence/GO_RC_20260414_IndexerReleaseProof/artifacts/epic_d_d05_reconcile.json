@@ -1,0 +1,639 @@
+{
+  "artifact_schema_id": "traveltrust.ops_artifact.v1",
+  "artifact_schema_version": "1.0.0",
+  "artifact_version": "v1",
+  "artifact_type": "reconcile",
+  "dry_run": false,
+  "captured_at": "2026-04-14T00:28:38Z",
+  "epic_task_id": "Epic-D-D05",
+  "provenance": {
+    "script": "internal-indexer-ops.sh",
+    "script_semver": "1.6.0",
+    "host_git_commit": "d576a33fbb25fb7fb70499e8ddca6ba5617bdfc5",
+    "host_git_branch": "dev",
+    "host_repo_dirty": true
+  },
+  "api_context": {
+    "api_base_url_redacted": "http://127.0.0.1:3012",
+    "chain_id": 31337,
+    "internal_invoked": true,
+    "persist_requested": false
+  },
+  "ops_summary": {
+    "dry_run": false,
+    "domain": "orders",
+    "issues_total": 1,
+    "clean": false
+  },
+  "reconcile_surface": {
+    "issues_total": 1,
+    "projection_reconcile_clean": null,
+    "reconcile_compound_pass": null,
+    "orders_projection_reconcile_gate_pass": null,
+    "indexer_reconcile_compound_gate_pass": null
+  },
+  "payload": {
+    "status": "ok",
+    "task": "indexer_reconcile_orders_projection",
+    "chain_id": 31337,
+    "checkpoint": {
+      "block_number": 0,
+      "log_index": 0
+    },
+    "reorg_detected": false,
+    "issues_total": 1,
+    "projection_reconcile_clean": false,
+    "reconcile_compound_pass": false,
+    "orders_projection_reconcile_gate": {
+      "anchor": "110-ORDERS-PROJECTION-RECONCILE-GATE",
+      "pass": false,
+      "issues_total": 1,
+      "projection_reconcile_clean": false,
+      "breakdown": {
+        "missing_projection": 0,
+        "status_mismatch": 1,
+        "escrow_mismatch": 0,
+        "orphan_projections": 0,
+        "malformed_projection_order_id_bytes": 0,
+        "matched": 0,
+        "orders_with_escrow": 1,
+        "projection_rows_chain": 1
+      },
+      "human_summary": "issues_total=1 projection_reconcile_clean=false; missing_projection=0 status_mismatch=1 escrow_mismatch=0 orphan_projections=0 malformed_projection_order_id_bytes=0; matched=0 orders_with_escrow=1 projection_rows_chain=1"
+    },
+    "indexer_reconcile_compound_gate": {
+      "anchor": "B101-INDEXER-RECONCILE-COMPOUND-GATE",
+      "pass": false,
+      "orders_projection_reconcile_gate_pass": false,
+      "breakdown": {
+        "orders_projection": {
+          "participates": true,
+          "pass": false,
+          "anchor_child": "110-ORDERS-PROJECTION-RECONCILE-GATE"
+        },
+        "rpc_escrow_samples": {
+          "participates": false,
+          "pass": true,
+          "state": "not_requested"
+        },
+        "event_log_escrow_coverage": {
+          "participates": false,
+          "pass": true,
+          "state": "not_requested"
+        },
+        "fee_router_log_verify": {
+          "participates": false,
+          "pass": true,
+          "state": "not_requested"
+        },
+        "region_vault_log_verify": {
+          "participates": false,
+          "pass": true,
+          "state": "not_requested"
+        },
+        "chain_observation": {
+          "participates": false,
+          "pass": true,
+          "state": "not_requested"
+        },
+        "orders_deadline_ssot_reconcile": {
+          "participates": true,
+          "pass": true,
+          "state": "ops_check_exit_0",
+          "anchor_child": "B110-SEQ3-ORDERS-DEADLINE-SSOT-RECONCILE",
+          "exit_code_hint": 0,
+          "overall": "ok",
+          "rule": "TT-B110-SEQ3-ORDERS-DEADLINE-INDEXER-RECONCILE-CHECK-001: same evaluation as GET …/admin/observability/overview.orders_deadline_ssot_ops_check; AND into reconcile_compound_pass without changing public orders HTTP shapes."
+        },
+        "governor_view_params_ssot_reconcile": {
+          "participates": true,
+          "pass": true,
+          "state": "ops_check_exit_0",
+          "anchor_child": "B110-SEQ5-GOVERNOR-VIEW-PARAMS-SSOT-RECONCILE",
+          "exit_code_hint": 0,
+          "overall": "ok",
+          "rule": "TT-B110-SEQ5-GOVERNANCE-GOVERNOR-VIEW-PARAMS-CHAIN-SSOT-001: same evaluation as GET …/admin/observability/overview.governor_view_params_ssot_ops_check; AND into reconcile_compound_pass; does not change GET /api/v1/orders*."
+        },
+        "governor_token_timelock_ssot_reconcile": {
+          "participates": true,
+          "pass": true,
+          "state": "ops_check_exit_0",
+          "anchor_child": "B110-SEQ11-GOVERNOR-TOKEN-TIMELOCK-SSOT-RECONCILE",
+          "exit_code_hint": 0,
+          "overall": "ok",
+          "rule": "TT-B110-SEQ11-GOVERNANCE-GOVERNOR-TOKEN-TIMELOCK-CHAIN-SSOT-001: same evaluation as GET …/admin/observability/overview.governor_token_timelock_ssot_ops_check; AND into reconcile_compound_pass; does not change GET /api/v1/orders*."
+        },
+        "timelock_delay_ssot_reconcile": {
+          "participates": true,
+          "pass": true,
+          "state": "ops_check_exit_0",
+          "anchor_child": "B110-SEQ6-TIMELOCK-DELAY-SSOT-RECONCILE",
+          "exit_code_hint": 0,
+          "overall": "ok",
+          "rule": "TT-B110-SEQ6-GOVERNANCE-TIMELOCK-DELAY-CHAIN-SSOT-001: same evaluation as GET …/admin/observability/overview.timelock_delay_ssot_ops_check; AND into reconcile_compound_pass; does not change GET /api/v1/orders*."
+        },
+        "governor_proposal_threshold_ssot_reconcile": {
+          "participates": true,
+          "pass": true,
+          "state": "ops_check_exit_0",
+          "anchor_child": "B110-SEQ8-GOVERNOR-PROPOSAL-THRESHOLD-SSOT-RECONCILE",
+          "exit_code_hint": 0,
+          "overall": "ok",
+          "rule": "TT-B110-SEQ8-GOVERNANCE-GOVERNOR-PROPOSAL-THRESHOLD-CHAIN-SSOT-001: same evaluation as GET …/admin/observability/overview.governor_proposal_threshold_ssot_ops_check; AND into reconcile_compound_pass; does not change GET /api/v1/orders*."
+        },
+        "timelock_governor_admin_ssot_reconcile": {
+          "participates": true,
+          "pass": true,
+          "state": "ops_check_exit_0",
+          "anchor_child": "B110-SEQ9-TIMELOCK-GOVERNOR-ADMIN-SSOT-RECONCILE",
+          "exit_code_hint": 0,
+          "overall": "ok",
+          "rule": "TT-B110-SEQ9-GOVERNANCE-TIMELOCK-GOVERNOR-ADMIN-CHAIN-SSOT-001: same evaluation as GET …/admin/observability/overview.timelock_governor_admin_ssot_ops_check; AND into reconcile_compound_pass; does not change GET /api/v1/orders*."
+        },
+        "governor_proposal_count_ssot_reconcile": {
+          "participates": true,
+          "pass": true,
+          "state": "ops_check_exit_0",
+          "anchor_child": "B110-SEQ10-GOVERNOR-PROPOSAL-COUNT-SSOT-RECONCILE",
+          "exit_code_hint": 0,
+          "overall": "ok",
+          "rule": "TT-B110-SEQ10-GOVERNANCE-GOVERNOR-PROPOSAL-COUNT-CHAIN-SSOT-001: same evaluation as GET …/admin/observability/overview.governor_proposal_count_ssot_ops_check; AND into reconcile_compound_pass; does not change GET /api/v1/orders*."
+        }
+      },
+      "human_summary": "compound_pass=false orders_projection=false contributing_parts=8 orders_deadline_ssot_reconcile participates=true pass=true governor_view_params_ssot_reconcile participates=true pass=true governor_token_timelock_ssot_reconcile participates=true pass=true timelock_delay_ssot_reconcile participates=true pass=true governor_proposal_threshold_ssot_reconcile participates=true pass=true timelock_governor_admin_ssot_reconcile participates=true pass=true governor_proposal_count_ssot_reconcile participates=true pass=true"
+    },
+    "orders_deadline_ssot_ops_check": {
+      "anchor": "TT-B110-SEQ2-ORDERS-DEADLINE-OPS-CHECK-001",
+      "overall": "ok",
+      "exit_code_hint": 0,
+      "degraded": false,
+      "checks": {
+        "chain_off_mounted": {
+          "status": "ok",
+          "detail": "chain_off mounted for orders deadline SSOT"
+        },
+        "governance_chain_read": {
+          "status": "skipped",
+          "detail": "governance_order_deadline_chain_ssot false; p3_review_window_days path only"
+        },
+        "fallback_path": {
+          "status": "skipped",
+          "detail": "governance_order_deadline_chain_ssot false"
+        },
+        "reconcile_probe": {
+          "status": "ok",
+          "detail": "deadline_ssot_reconcile_pass true"
+        }
+      },
+      "rule": "Unified ops gate: chain_off + governance_chain_read + fallback_path + reconcile_probe; exit_code_hint 1 => investigate (cron / jq scripts)."
+    },
+    "governor_view_params_ssot_ops_check": {
+      "anchor": "TT-B110-SEQ5-GOVERNANCE-GOVERNOR-VIEW-PARAMS-CHAIN-SSOT-001",
+      "overall": "ok",
+      "exit_code_hint": 0,
+      "degraded": false,
+      "checks": {
+        "chain_off_mounted": {
+          "status": "ok",
+          "detail": "chain_off mounted for governor view params SSOT"
+        },
+        "governance_chain_read": {
+          "status": "skipped",
+          "detail": "GOVERNANCE_GOVERNOR_VIEW_PARAMS_CHAIN_SSOT false"
+        },
+        "fallback_path": {
+          "status": "skipped",
+          "detail": "GOVERNANCE_GOVERNOR_VIEW_PARAMS_CHAIN_SSOT false"
+        },
+        "reconcile_probe": {
+          "status": "ok",
+          "detail": "governor_view_params_reconcile_pass true"
+        }
+      },
+      "rule": "Unified ops gate: chain_off + governance_chain_read + fallback_path + reconcile_probe; exit_code_hint 1 => investigate."
+    },
+    "timelock_delay_ssot_ops_check": {
+      "anchor": "TT-B110-SEQ6-GOVERNANCE-TIMELOCK-DELAY-CHAIN-SSOT-001",
+      "overall": "ok",
+      "exit_code_hint": 0,
+      "degraded": false,
+      "checks": {
+        "chain_off_mounted": {
+          "status": "ok",
+          "detail": "chain_off mounted for timelock delay SSOT"
+        },
+        "governance_chain_read": {
+          "status": "skipped",
+          "detail": "GOVERNANCE_TIMELOCK_DELAY_CHAIN_SSOT false"
+        },
+        "fallback_path": {
+          "status": "skipped",
+          "detail": "GOVERNANCE_TIMELOCK_DELAY_CHAIN_SSOT false"
+        },
+        "reconcile_probe": {
+          "status": "ok",
+          "detail": "timelock_delay_reconcile_pass true"
+        }
+      },
+      "rule": "Unified ops gate: chain_off + governance_chain_read + fallback_path + reconcile_probe; exit_code_hint 1 => investigate."
+    },
+    "governor_proposal_threshold_ssot_ops_check": {
+      "anchor": "TT-B110-SEQ8-GOVERNANCE-GOVERNOR-PROPOSAL-THRESHOLD-CHAIN-SSOT-001",
+      "overall": "ok",
+      "exit_code_hint": 0,
+      "degraded": false,
+      "checks": {
+        "chain_off_mounted": {
+          "status": "ok",
+          "detail": "chain_off mounted for governor proposal threshold SSOT"
+        },
+        "governance_chain_read": {
+          "status": "skipped",
+          "detail": "GOVERNANCE_GOVERNOR_PROPOSAL_THRESHOLD_CHAIN_SSOT false"
+        },
+        "fallback_path": {
+          "status": "skipped",
+          "detail": "GOVERNANCE_GOVERNOR_PROPOSAL_THRESHOLD_CHAIN_SSOT false"
+        },
+        "reconcile_probe": {
+          "status": "ok",
+          "detail": "proposal_threshold_reconcile_pass true"
+        }
+      },
+      "rule": "Unified ops gate: chain_off + governance_chain_read + fallback_path + reconcile_probe; exit_code_hint 1 => investigate."
+    },
+    "timelock_governor_admin_ssot_ops_check": {
+      "anchor": "TT-B110-SEQ9-GOVERNANCE-TIMELOCK-GOVERNOR-ADMIN-CHAIN-SSOT-001",
+      "overall": "ok",
+      "exit_code_hint": 0,
+      "degraded": false,
+      "checks": {
+        "chain_off_mounted": {
+          "status": "ok",
+          "detail": "chain_off mounted for timelock governor/admin SSOT"
+        },
+        "governance_chain_read": {
+          "status": "skipped",
+          "detail": "GOVERNANCE_TIMELOCK_GOVERNOR_ADMIN_CHAIN_SSOT false"
+        },
+        "fallback_path": {
+          "status": "skipped",
+          "detail": "GOVERNANCE_TIMELOCK_GOVERNOR_ADMIN_CHAIN_SSOT false"
+        },
+        "reconcile_probe": {
+          "status": "ok",
+          "detail": "timelock_governor_admin_reconcile_pass true"
+        }
+      },
+      "rule": "Unified ops gate: chain_off + governance_chain_read + fallback_path + reconcile_probe; exit_code_hint 1 => investigate."
+    },
+    "governor_proposal_count_ssot_ops_check": {
+      "anchor": "TT-B110-SEQ10-GOVERNANCE-GOVERNOR-PROPOSAL-COUNT-CHAIN-SSOT-001",
+      "overall": "ok",
+      "exit_code_hint": 0,
+      "degraded": false,
+      "checks": {
+        "chain_off_mounted": {
+          "status": "ok",
+          "detail": "chain_off mounted for governor proposal count SSOT"
+        },
+        "governance_chain_read": {
+          "status": "skipped",
+          "detail": "GOVERNANCE_GOVERNOR_PROPOSAL_COUNT_CHAIN_SSOT false"
+        },
+        "projection_drift": {
+          "status": "skipped",
+          "detail": "GOVERNANCE_GOVERNOR_PROPOSAL_COUNT_CHAIN_SSOT false"
+        },
+        "fallback_path": {
+          "status": "skipped",
+          "detail": "GOVERNANCE_GOVERNOR_PROPOSAL_COUNT_CHAIN_SSOT false"
+        },
+        "reconcile_probe": {
+          "status": "ok",
+          "detail": "proposal_count_reconcile_pass true"
+        }
+      },
+      "rule": "Unified ops gate: chain_off + governance_chain_read + projection_drift + fallback_path + reconcile_probe; indexer_lag_ok is degraded only, not fail."
+    },
+    "ssot_parallel_chain_snapshot": {
+      "is_chain_ssot": false,
+      "note": "B110-SSOT-03 parallel reads (04/14 B110-SSOT-01 anchors); not main field SSOT; governance_treasury_native_balance_read observation-only, not root treasury_pool* (GOVERNANCE_TREASURY_POOL_BALANCE_CHAIN_SSOT); region_vault leg observation-only, not root country_pool (GOVERNANCE_COUNTRY_POOL_BALANCE_CHAIN_SSOT)",
+      "fee_router_erc20_balance_read": null,
+      "governance_treasury_native_balance_read": null,
+      "region_vault_erc20_balance_read": null
+    },
+    "ssot_parallel_chain_snapshot_gate": {
+      "anchor": "B110-SSOT-04-PARALLEL-CHAIN-SNAPSHOT-GATE",
+      "pass": false,
+      "pattern": "none_readable",
+      "readable_legs": 0,
+      "legs": {
+        "fee_router_erc20_balance_read_ok": false,
+        "governance_treasury_native_balance_read_ok": false,
+        "region_vault_erc20_balance_read_ok": false
+      },
+      "human_summary": "ssot_parallel_chain_snapshot_gate legs_ok=0/3 pattern=none_readable fee_router_erc20=false treasury_native=false region_vault_erc20=false; B110-SSOT-04 observability only; not compound_gate",
+      "note": "Does not affect indexer_reconcile_compound_pass; not governance pool main SSOT"
+    },
+    "stats": {
+      "chain_id": 31337,
+      "orders_with_escrow": 1,
+      "projection_rows_chain": 1,
+      "malformed_projection_order_id_bytes": 0,
+      "matched": 0,
+      "missing_projection": 0,
+      "status_mismatch": 1,
+      "escrow_mismatch": 0,
+      "orphan_projections": 0,
+      "issues_total": 1,
+      "projection_reconcile_clean": false,
+      "samples": {
+        "missing_projection": [],
+        "status_mismatch": [
+          {
+            "order_id": "33333333-3333-4333-8333-333333333301",
+            "orders_status": "escrowed",
+            "projection_status": "partially_refunded",
+            "kind": "status_mismatch"
+          }
+        ],
+        "escrow_mismatch": [],
+        "orphan_projection": [],
+        "malformed_projection_order_id": []
+      }
+    },
+    "report_id": null,
+    "chain_context": {
+      "anchor": "175-RPC-CHAIN-ID-VS-CONFIG-PROBE",
+      "config_chain_id": 31337,
+      "reconcile_chain_id": 31337,
+      "reconcile_chain_id_vs_config_chain_id_aligned": true,
+      "rpc_chain_id": 31337,
+      "rpc_chain_id_ok": true,
+      "config_vs_rpc_chain_id_aligned": true
+    },
+    "economic_projection_row_counts": {
+      "fee_router_routed_events": {
+        "rows_total": 3,
+        "max_block_number": 50,
+        "min_block_number": 4,
+        "latest_inserted_at": "2026-04-07T06:07:42.915001+00:00"
+      },
+      "region_vault_forwarded_events": {
+        "rows_total": 1,
+        "max_block_number": 7,
+        "min_block_number": 7,
+        "latest_inserted_at": "2026-04-07T05:38:58.412664+00:00"
+      }
+    },
+    "orders_chain_health_observability": {
+      "anchor": "153-ORDERS-CHAIN-HEALTH-OBS-V1",
+      "schema_version": 1,
+      "expected_chain_id": 31337,
+      "orders_total": 3,
+      "orders_null_chain_id_total": 0,
+      "orders_chain_id_mismatch_total": 0,
+      "orders_aligned_expected_total": 3,
+      "null_ratio": 0.0,
+      "mismatch_ratio": 0.0,
+      "null_by_status": [],
+      "mismatch_by_status": [],
+      "getter_note": "Aggregates B-151 (NULL chain_id buckets) and B-152 (non-NULL chain_id <> expected_chain_id buckets); orders_total is COUNT(*) from orders.",
+      "boundary_vs_b151_b152": "Single overview/reconcile key; B-151/B-152 scalar legs match orders_null_chain_id_total and orders_chain_id_mismatch_total; ratios use orders_total as denominator."
+    },
+    "governance_proposals_projection_null_fields_observability": {
+      "anchor": "152-GOVERNANCE-PROPOSALS-PROJECTION-NULL-FIELDS-OBS-V1",
+      "schema_version": 1,
+      "chain_id": 31337,
+      "rows_total": 1,
+      "rows_chain_state_null_or_blank": 0,
+      "rows_snapshot_block_le_0": 0,
+      "rows_operation_id_null": 1,
+      "getter_note": "TT-B152: mother-table state→chain_state null/blank; block_number→snapshot_block<=0 (NOT NULL DEFAULT 0); no tx_hash column — third bucket is operation_id IS NULL (expected before ProposalQueued; not Ethereum tx hash).",
+      "boundary_vs_b149_b172": "Read-only row counts on governance_proposals_projection only; does not compare chain Governor.state/proposalCount tail (B-149/B-172)."
+    },
+    "correction_executor_rows_observability": {
+      "anchor": "160-CORRECTION-EXECUTOR-ROWS-OBS-V1",
+      "schema_version": 1,
+      "chain_id": 31337,
+      "correction_log_rows": 0,
+      "executor_executions_rows": 0,
+      "correction_log_latest_created_at": null,
+      "executor_executions_latest_activity_at": null,
+      "getter_note": "TT-B160: COUNT(*) per table WHERE chain_id; correction_log MAX(created_at); executor_executions MAX(GREATEST(created_at, updated_at)). Read-only observability; distinct from 110-CORRECTION-EXECUTOR-CHAIN-SCOPE-DRY-RUN rollback dry-run body."
+    },
+    "stake_lock_projection_block_lag_observability": {
+      "anchor": "161-STAKE-LOCK-PROJECTION-BLOCK-LAG-OBS-V1",
+      "schema_version": 1,
+      "chain_id": 31337,
+      "indexer_checkpoint_block_number": 0,
+      "stake_events_max_block_number": 62,
+      "lock_events_max_block_number": null,
+      "stake_lag_vs_checkpoint_blocks": -62,
+      "lock_lag_vs_checkpoint_blocks": null,
+      "getter_note": "TT-B161: MAX(block_number) FROM investor_stake_state_events / investor_lock_state_events WHERE chain_id; lag_vs_checkpoint = indexer_checkpoint_block_number - max (signed; negative => projection tail above checkpoint). Checkpoint = process ApiMetaState.indexer_checkpoint.block_number. Read-only; NOT B-153 (event_log vs RPC chain head). NOT compound_gate."
+    },
+    "indexer_head_vs_db_latest_block_drift_observability": {
+      "anchor": "153-INDEXER-HEAD-VS-DB-LATEST-BLOCK-DRIFT-OBS-V1",
+      "schema_version": 1,
+      "observed_at": "2026-04-14T00:28:38.273456+00:00",
+      "chain_id": 31337,
+      "db_latest_block_source": "event_log_max_block_number",
+      "chain_head_block": 0,
+      "db_latest_block": 6,
+      "drift_blocks": -6,
+      "rpc": {
+        "rpc_ok": true,
+        "rpc_error": null
+      }
+    },
+    "indexer_reconcile_duration_batch_stats_observability": {
+      "anchor": "154-INDEXER-RECONCILE-DURATION-BATCH-STATS-OBS-V1",
+      "schema_version": 1,
+      "reconcile_core_duration_ms": 4,
+      "chain_id": 31337,
+      "batch_row_counts": {
+        "orders_with_escrow": 1,
+        "projection_rows_chain": 1,
+        "malformed_projection_order_id_bytes": 0,
+        "matched": 0,
+        "missing_projection": 0,
+        "status_mismatch": 1,
+        "escrow_mismatch": 0,
+        "orphan_projections": 0,
+        "issues_total": 1,
+        "projection_reconcile_clean": false
+      },
+      "getter_note": "reconcile_core_duration_ms is wall time for db::reconcile_orders_projection_vs_orders only; batch_row_counts mirror response stats without samples."
+    },
+    "orders_amount_chain_vs_escrow_drift_observability": {
+      "anchor": "155-ORDERS-AMOUNT-CHAIN-VS-ESCROW-DRIFT-OBS-V1",
+      "schema_version": 1,
+      "expected_chain_id": 31337,
+      "chain_id": 31337,
+      "sample_limit_applied": 10,
+      "boundary_vs_b155": "B-155 v1 compares DB orders.amount (scaled by TT currency→decimals table) to on-chain Escrow.totalAmount() at orders.escrow_address via eth_call; does not use orders_projection row amounts.",
+      "boundary_vs_b168": "B-168 v1 is escrow_status_chain_vs_orders_drift_observability (get_escrow_status vs orders.status coarse terminal); B-155 is amount-only and does not read escrow enum status for the marker.",
+      "sampled_items": [
+        {
+          "order_id": "33333333-3333-4333-8333-333333333301",
+          "drift_marker": "unavailable_leg",
+          "reason": "rpc_error",
+          "rpc_error": "eth_call totalAmount result too short",
+          "orders_amount_raw": "500.00",
+          "currency": "USD",
+          "currency_decimals_applied": 6,
+          "db_amount_base_units_hex": "0x000000000000000000000000000000000000000000000000000000001dcd6500",
+          "escrow_address": "0x000000000000000000000000000000000000dEaD"
+        }
+      ],
+      "sampled_total": 1,
+      "aligned_count": 0,
+      "drift_count": 0,
+      "unavailable_leg_count": 1
+    },
+    "b157_region_snapshot_and_tick_observability": {
+      "anchor": "157-B157-REGION-SNAPSHOT-AND-TICK-OBSERVABILITY-V1",
+      "schema_version": 1,
+      "expected_chain_id": 31337,
+      "region_share_snapshot_line_chain_vs_db": {
+        "anchor": "157-REGION-SHARE-SNAPSHOT-LINE-CHAIN-VS-DB-OBS-V1",
+        "schema_version": 1,
+        "expected_chain_id": 31337,
+        "mode": "db_stats_default_low_rpc",
+        "db_stats": {
+          "rows_total": 0,
+          "max_snapshot_block_number": null,
+          "min_snapshot_block_number": null,
+          "distinct_region_id_count": 0,
+          "distinct_snapshot_epoch_count": 0
+        },
+        "chain_sample_mode": "off_by_default",
+        "chain_sample": null,
+        "getter_note": "Default uses only SQL aggregates on region_share_snapshot_lines (no chain RPC). Optional chain_sample reserved for future env-gated low-volume RPC."
+      },
+      "indexer_tick_counters": {
+        "anchor": "157-INDEXER-TICK-COUNTERS-V1",
+        "schema_version": 1,
+        "observation_note": "no_successful_indexer_tick_snapshot_yet",
+        "new_events": null,
+        "parsed_events": null,
+        "failed_events": null,
+        "skipped_events": null,
+        "legacy_parallel": null,
+        "getter_note": "Populated after HTTP 200 from POST …/internal/indexer-tick (including no_new_blocks / awaiting_finality)."
+      }
+    },
+    "fee_router_fee_routes_vs_routed_events_drift_observability": {
+      "anchor": "164-FEE-ROUTES-VS-ROUTED-EVENTS-DRIFT-OBS-V1",
+      "schema_version": 1,
+      "expected_chain_id": 31337,
+      "chain_id": 31337,
+      "boundary_vs_governance_fee_routes": "fee_routes_desc_head matches first row of same SQL as GET /api/v1/governance/fee-routes with chain_id filter and limit=1 (block_number DESC, log_index DESC).",
+      "boundary_vs_on_chain": "Compared legs are DB-only (indexed PlatformFeeRouted projection); no eth_getLogs in this marker.",
+      "routed_events_aggregate": {
+        "total": 3,
+        "max_block_number": 50,
+        "min_block_number": 4,
+        "latest_inserted_at": "2026-04-07T06:07:42.915001+00:00"
+      },
+      "fee_routes_desc_head": {
+        "cursor": "50:0",
+        "block_number": 50,
+        "log_index": 0
+      },
+      "fee_routes_chronological_tail": {
+        "cursor": "4:0",
+        "block_number": 4,
+        "log_index": 0
+      },
+      "checks": {
+        "head_block_vs_max_block": "aligned",
+        "tail_block_vs_min_block": "aligned",
+        "projection_empty": false
+      },
+      "marker": "aligned"
+    },
+    "vault_forwards_vs_forwarded_events_drift_observability": {
+      "anchor": "165-VAULT-FORWARDS-VS-FORWARDED-EVENTS-DRIFT-OBS-V1",
+      "schema_version": 1,
+      "expected_chain_id": 31337,
+      "chain_id": 31337,
+      "boundary_vs_governance_vault_forwards": "vault_forwards_desc_head matches first row of same SQL as GET /api/v1/governance/vault-forwards with chain_id filter and limit=1 (block_number DESC, log_index DESC).",
+      "boundary_vs_on_chain": "Compared legs are DB-only (indexed RegionVaultForwarded projection); no eth_getLogs in this marker.",
+      "forwarded_events_aggregate": {
+        "total": 1,
+        "max_block_number": 7,
+        "min_block_number": 7,
+        "latest_inserted_at": "2026-04-07T05:38:58.412664+00:00"
+      },
+      "vault_forwards_desc_head": {
+        "cursor": "7:0",
+        "block_number": 7,
+        "log_index": 0
+      },
+      "vault_forwards_chronological_tail": {
+        "cursor": "7:0",
+        "block_number": 7,
+        "log_index": 0
+      },
+      "checks": {
+        "head_block_vs_max_block": "aligned",
+        "tail_block_vs_min_block": "aligned",
+        "projection_empty": false
+      },
+      "marker": "aligned"
+    },
+    "escrow_status_chain_vs_orders_drift_observability": {
+      "anchor": "168-ESCROW-STATUS-CHAIN-VS-ORDERS-DRIFT-OBS-V1",
+      "schema_version": 1,
+      "expected_chain_id": 31337,
+      "chain_id": 31337,
+      "sample_limit_applied": 10,
+      "coarse_reconcile_fn": "chain_off::reconcile_order_chain_vs_db(terminal_escrow_label, orders.status→OrderState) — terminal chain labels Completed|Refunded|Resolved|PartiallyRefunded|Slashed vs DB terminal Completed|Refunded|Slashed|PartiallyRefunded.",
+      "boundary_vs_b155": "B-155 compares orders.amount to Escrow.totalAmount() only; does not use escrow enum status for its marker.",
+      "boundary_vs_rpc_escrow_samples": "Uses the same DB row source as optional rpc_escrow_samples (list_orders_with_escrow_id_status_limit, updated_at DESC, limit 10); this marker is always computed on reconcile success without requiring body rpc_escrow_samples.",
+      "marker": "unavailable_leg",
+      "observation_note": "escrow_factory_not_configured",
+      "sampled_items": [],
+      "sampled_total": 0,
+      "aligned_count": 0,
+      "drift_count": 0,
+      "unavailable_leg_count": 0
+    },
+    "indexer_observability_v1": {
+      "shell_anchor": "185-INDEXER-OBSERVABILITY-V1",
+      "schema_version": 1,
+      "orders_chain_health_observability": {
+        "anchor": "153-ORDERS-CHAIN-HEALTH-OBS-V1",
+        "schema_version": 1,
+        "expected_chain_id": 31337,
+        "orders_total": 3,
+        "orders_null_chain_id_total": 0,
+        "orders_chain_id_mismatch_total": 0,
+        "orders_aligned_expected_total": 3,
+        "null_ratio": 0.0,
+        "mismatch_ratio": 0.0,
+        "null_by_status": [],
+        "mismatch_by_status": [],
+        "getter_note": "Aggregates B-151 (NULL chain_id buckets) and B-152 (non-NULL chain_id <> expected_chain_id buckets); orders_total is COUNT(*) from orders.",
+        "boundary_vs_b151_b152": "Single overview/reconcile key; B-151/B-152 scalar legs match orders_null_chain_id_total and orders_chain_id_mismatch_total; ratios use orders_total as denominator."
+      },
+      "indexer_head_vs_db_latest_block_drift_observability": {
+        "anchor": "153-INDEXER-HEAD-VS-DB-LATEST-BLOCK-DRIFT-OBS-V1",
+        "schema_version": 1,
+        "observed_at": "2026-04-14T00:28:38.273456+00:00",
+        "chain_id": 31337,
+        "db_latest_block_source": "event_log_max_block_number",
+        "chain_head_block": 0,
+        "db_latest_block": 6,
+        "drift_blocks": -6,
+        "rpc": {
+          "rpc_ok": true,
+          "rpc_error": null
+        }
+      }
+    }
+  }
+}

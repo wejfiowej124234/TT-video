@@ -1,0 +1,38 @@
+{
+  "release_proof_schema_id": "traveltrust.indexer_release_proof.v1",
+  "schema_version": "1.0.0",
+  "bundle_kind": "indexer_observability_b166_release_proof",
+  "captured_at": "2026-04-14T00:28:35Z",
+  "gate": "Release-Proof-Indexer-Obs-v1",
+  "notes": "B-185 indexer_observability_v1 shell + B-166 chain_observation (110-RECONCILE-CHAIN-TIP). Spec: 04 §3.4 TT-B185 / TT-B186; verify jq in evidence/README anchor indexer-release-proof.",
+  "closure_refs": {
+    "shell_anchor": "185-INDEXER-OBSERVABILITY-V1",
+    "chain_tip_probe_anchor": "110-RECONCILE-CHAIN-TIP",
+    "spec_04": "docs/spec/04-后端与API.md §3.4"
+  },
+  "provenance": {
+    "script": "indexer-observability-release-proof-pack.sh",
+    "script_semver": "1.0.0",
+    "host_git_commit": "d576a33fbb25fb7fb70499e8ddca6ba5617bdfc5",
+    "host_git_branch": "dev",
+    "host_repo_dirty": true
+  },
+  "api_context": {
+    "api_base_url_redacted": "http://127.0.0.1:3012"
+  },
+  "artifacts": [
+    {
+      "path": "artifacts/indexer_release_proof_admin_overview_slice.json",
+      "sha256": "b971b403092bc8c09e914e4cdef07ede6aad3611034dacedc0ac4bc2b655fd98"
+    },
+    {
+      "path": "artifacts/indexer_release_proof_reconcile_slice.json",
+      "sha256": "7b87decf68b6d986ca15d45e9794f123d83a75917cfeed9ab6bfa695163b651f"
+    }
+  ],
+  "warnings": [],
+  "verification_hints": {
+    "admin_shell_anchor_jq": ".payload.overview_indexer_observability_v1.shell_anchor == \"185-INDEXER-OBSERVABILITY-V1\"",
+    "reconcile_chain_observation_anchor_jq": "((.payload.chain_observation == null) or (.payload.chain_observation.anchor == \"110-RECONCILE-CHAIN-TIP\"))"
+  }
+}

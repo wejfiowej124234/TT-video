@@ -40,6 +40,12 @@
 
 - **[GO_B110_SEQ2_ORDERS_DEADLINE_BUNDLE_CLOSE.md](GO_B110_SEQ2_ORDERS_DEADLINE_BUNDLE_CLOSE.md)**（**`TT-B110-SEQ2-ORDERS-DEADLINE-BUNDLE-CLOSE-001`** / **母表 B-132**）：**完成范围**（真值 → 可观测 → 对拍 → admin 提示 → **ops_check** → 可选 **staging CI**）、**边界**（**SEQ3** 后 **indexer-reconcile** 已并列 **deadline** 巡检 → **母表 B-133**；未扩 **`payment_deadline`/`chat_confirm_deadline`**）、**后续方向**（其它治理参数同类 SSOT 须 **另开 TT**）。**04** 锚点句与 **Runbook §2.55**、**scripts/README**、**[sealed-programs 总索引](../docs/runbook/sealed-programs-and-epics-master-index.md)** 互指。
 
+<a id="b191-doc-boundary-audit-reading-note"></a>
+
+### B-191 `/traveltrust` · 母表「文档轮边界」审计阅读注（非 Gate · **不可变审计资产 · immutable audit asset · 永久冻结**）
+
+- **[NOTE_B191_DOC_BOUNDARY_AUDIT_READING.md](NOTE_B191_DOC_BOUNDARY_AUDIT_READING.md)**：**审计 / 复盘只读注** — 说明母表 **B-191 文档轮边界** 与 **TT-B191** 封口声明的阅读顺序；**不改正文**。**作为不可变审计资产永久冻结**：**除「链接或路径失效」**之**最小指向修复**外**禁止**任何修改；**任何**政策或措辞调整**必须**通过**新决策**显式**废止或替换**当前声明**后方可执行**（与 NOTE 首段一致）。
+
 <a id="frontend-tsc-gate-close-20260409"></a>
 
 ### 前端 TypeScript 门禁收口 · 2026-04-09（`tsc --noEmit` 全绿）
@@ -87,6 +93,32 @@
 **P1-C 行工程互证（TT-07-63B-P1C-RECONCILE-SINGLE-001）**：**`evidence/GO_20260409/artifacts/p1c-reconcile-close.md`** — **索引器 / DB 对账（reconcile）** 与 **[Runbook §12.5](../ops/RUNBOOK.md)**、**§2.55**、下文 **索引器 / DB 投影对账** 段、**[缺口官方总表 · P1-C](../docs/spec/缺口与待补-官方总表.md)**、**GO `manifest.json`** 互链；**不**替代目标环境 **`INTERNAL_API_SECRET`** 下真实执行与 **P0 #7**。
 
 与 [27-P14 · P14-3](../docs/spec/27-P14-实现记录.md) 同批执行时可互链上述文件名。**签字**：`manifest.json` 之 **`sign_off`** 须非空（见下文 manifest 格式）。
+
+<a id="indexer-release-proof-b166"></a>
+
+### Release Proof：`indexer_observability_v1` × B-166（标准化 JSON + SHA256）
+
+- **目的**：发版或内审复核时，用**一条命令**固化 **B-185** 嵌套壳与 **B-166** tip 探针的**可机读证据**（与 **04 §3.4 · TT-Release-Proof-Indexer-Obs-B166** 对读）。
+- **命令**：`bash scripts/indexer-observability-release-proof-pack.sh [OUT_DIR]`（或 `INDEXER_EVIDENCE_RELEASE_PROOF=1 bash scripts/write-indexer-evidence.sh`，须 **`ADMIN_BEARER_TOKEN`** + **`INTERNAL_API_SECRET`**）。
+- **文件**：**`artifacts/indexer_release_proof_admin_overview_slice.json`**、**`artifacts/indexer_release_proof_reconcile_slice.json`**、**`release_proof_manifest.json`**（**`artifacts[]`** 内 **`path` + `sha256`**）、**`release_proof_manifest.sha256`**。
+- **验证**：在 **`OUT_DIR`** 执行 **`sha256sum -c release_proof_manifest.sha256`**；用 **`jq`** 按 **`release_proof_manifest.json`** 内 **`verification_hints`** 对两枚 slice 做锚点断言。主 **`manifest.json`**（**`write-indexer-evidence`** **`INDEXER_EVIDENCE_WRITE_MANIFEST=1`**）在存在 **`release_proof_manifest.json`** 时将其 **SHA256** 一并列入 **`artifacts[]`**。
+
+#### GO Gate（最终判定 / replay audit）
+
+- **脚本**：**`bash scripts/go-gate-release-proof-audit.sh [DIR]`**（**`DIR`** 默认 **`$EVIDENCE_GO_DIR`** 或 **`$PWD`**）。
+- **静态 audit**：**`release_proof_manifest.sha256`**（缺省侧车 → **`REVIEW_REQUIRED`**，非 **`GO`**）；**`artifacts[]`** 逐文件 **SHA256**；**`jq`** 断言 **admin** 切片 **`185-INDEXER-OBSERVABILITY-V1`**、**reconcile** 切片 **`chain_observation`** 为 **`null`** 或锚 **`110-RECONCILE-CHAIN-TIP`**；**`manifest.warnings`** 非空且其余通过 → **`REVIEW_REQUIRED`**。
+- **Live replay**（可选）：**`GO_GATE_REPLAY_LIVE=1`** + **`API_BASE_URL`** + **`ADMIN_BEARER_TOKEN`** + **`INTERNAL_API_SECRET`** — 再拉 **admin overview** 与 **`POST …/indexer-reconcile`**（**`persist:false`**, **`include_chain_tip:true`**）对拍；失败 → **`NO_GO`**。
+- **产物**：**`go_gate_release_proof_audit.json`**（**`traveltrust.go_gate.release_proof_audit.v1`**，`verdict`∈**`GO`****|****`NO_GO`****|****`REVIEW_REQUIRED`**）、**`go_gate_release_proof_audit.sha256`**。退出码 **0 / 1 / 2** 与 **`verdict`** 一致。存在时 **`write-indexer-evidence`** 主 **`manifest.json`** / **`.zip`** 可一并收录。
+- **接入**：**`INDEXER_EVIDENCE_GO_GATE_AUDIT=1`** 时 **`write-indexer-evidence.sh`** / **`.ps1`** 在 **`OUT_DIR`** 上自动执行本 gate（须已有 **`release_proof_manifest.json`**，通常与同批 **`INDEXER_EVIDENCE_RELEASE_PROOF=1`** 联用）。
+- **CI 规则**：以**进程退出码**为准 — **仅 `0`（`GO`）通过**；**`1`（`NO_GO`）与 `2`（`REVIEW_REQUIRED`）一律失败**（与 GitHub Actions / 任意 `set -e` 流水线默认行为一致；**不**将 `2` 当作「黄灯放行」）。
+
+<a id="indexer-release-proof-full-go-go-rc-20260414"></a>
+
+#### 正式归档 · Full GO（`GO_RC_20260414_IndexerReleaseProof`）
+
+- **路径（检入 git）**：**[`evidence/GO_RC_20260414_IndexerReleaseProof`](GO_RC_20260414_IndexerReleaseProof/README.md)**。
+- **等级**：**Full GO** — **`release_proof_rc_closure.json`** 内 **`release_proof_grade`** / **`archive_status":"official"`**；**`go_gate_release_proof_audit.json`** **`verdict":"GO"`**；**`GO_GATE_REPLAY_LIVE`** 已启用（见 closure）。
+- **制品库**：打包该目录或按 **`manifest.sha256`** 所列文件上传私有制品库 / Release；目录内 **[README](GO_RC_20260414_IndexerReleaseProof/README.md)** 含上传与复跑说明。
 
 ## 目录约定
 

@@ -1,0 +1,75 @@
+{
+  "go_gate_schema_id": "traveltrust.go_gate.release_proof_audit.v1",
+  "schema_version": "1.0.0",
+  "verdict": "GO",
+  "verdict_reason": "all_static_checks_passed",
+  "captured_at": "2026-04-14T00:28:37Z",
+  "release_proof_manifest": "release_proof_manifest.json",
+  "manifest_warnings_at_pack_time": [],
+  "checks": [
+    {
+      "check": "release_proof_manifest_sha256",
+      "pass": true,
+      "note": "ok"
+    },
+    {
+      "check": "artifacts_non_empty",
+      "pass": true,
+      "count": 2
+    },
+    {
+      "check": "artifact_sha256",
+      "path": "artifacts/indexer_release_proof_admin_overview_slice.json",
+      "pass": true,
+      "expected_sha256": "b971b403092bc8c09e914e4cdef07ede6aad3611034dacedc0ac4bc2b655fd98",
+      "actual_sha256": "b971b403092bc8c09e914e4cdef07ede6aad3611034dacedc0ac4bc2b655fd98"
+    },
+    {
+      "check": "artifact_sha256",
+      "path": "artifacts/indexer_release_proof_reconcile_slice.json",
+      "pass": true,
+      "expected_sha256": "7b87decf68b6d986ca15d45e9794f123d83a75917cfeed9ab6bfa695163b651f",
+      "actual_sha256": "7b87decf68b6d986ca15d45e9794f123d83a75917cfeed9ab6bfa695163b651f"
+    },
+    {
+      "check": "jq_admin_shell_anchor",
+      "pass": true
+    },
+    {
+      "check": "jq_reconcile_chain_observation_anchor",
+      "pass": true
+    },
+    {
+      "check": "replay_live",
+      "pass": true,
+      "detail": {
+        "attempted": true,
+        "pass": true,
+        "api_base_url_redacted": "http://127.0.0.1:3012",
+        "admin_overview_shell_anchor_ok": true,
+        "reconcile_chain_observation_ok": true,
+        "notes": []
+      }
+    }
+  ],
+  "replay_live": {
+    "attempted": true,
+    "pass": true,
+    "api_base_url_redacted": "http://127.0.0.1:3012",
+    "admin_overview_shell_anchor_ok": true,
+    "reconcile_chain_observation_ok": true,
+    "notes": []
+  },
+  "provenance": {
+    "script": "go-gate-release-proof-audit.sh",
+    "script_semver": "1.0.0",
+    "host_git_commit": "d576a33fbb25fb7fb70499e8ddca6ba5617bdfc5",
+    "host_git_branch": "dev",
+    "host_repo_dirty": true
+  },
+  "exit_code_map": {
+    "GO": 0,
+    "NO_GO": 1,
+    "REVIEW_REQUIRED": 2
+  }
+}

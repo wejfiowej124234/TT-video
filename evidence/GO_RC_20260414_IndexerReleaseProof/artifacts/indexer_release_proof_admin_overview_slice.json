@@ -1,0 +1,84 @@
+{
+  "artifact_schema_id": "traveltrust.ops_artifact.v1",
+  "artifact_schema_version": "1.0.0",
+  "artifact_version": "v1",
+  "artifact_type": "indexer_release_proof_admin_slice",
+  "captured_at": "2026-04-14T00:28:35Z",
+  "epic_task_id": "Release-Proof-Indexer-Obs-B166-v1",
+  "provenance": {
+    "script": "indexer-observability-release-proof-pack.sh",
+    "script_semver": "1.0.0",
+    "host_git_commit": "d576a33fbb25fb7fb70499e8ddca6ba5617bdfc5",
+    "host_git_branch": "dev",
+    "host_repo_dirty": true
+  },
+  "api_context": {
+    "api_base_url_redacted": "http://127.0.0.1:3012"
+  },
+  "payload": {
+    "overview_indexer_observability_v1": {
+      "shell_anchor": "185-INDEXER-OBSERVABILITY-V1",
+      "schema_version": 1,
+      "chain_observation": {
+        "anchor": "110-RECONCILE-CHAIN-TIP",
+        "observation_note": "no_stored_snapshot",
+        "getter_note": "From latest reconciliation_reports.summary.chain_observation when present (include_chain_tip + persist); same object as POST …/internal/indexer-reconcile root."
+      },
+      "orders_chain_health_observability": {
+        "anchor": "153-ORDERS-CHAIN-HEALTH-OBS-V1",
+        "schema_version": 1,
+        "expected_chain_id": 31337,
+        "orders_total": 3,
+        "orders_null_chain_id_total": 0,
+        "orders_chain_id_mismatch_total": 0,
+        "orders_aligned_expected_total": 3,
+        "null_ratio": 0.0,
+        "mismatch_ratio": 0.0,
+        "null_by_status": [],
+        "mismatch_by_status": [],
+        "getter_note": "Aggregates B-151 (NULL chain_id buckets) and B-152 (non-NULL chain_id <> expected_chain_id buckets); orders_total is COUNT(*) from orders.",
+        "boundary_vs_b151_b152": "Single overview/reconcile key; B-151/B-152 scalar legs match orders_null_chain_id_total and orders_chain_id_mismatch_total; ratios use orders_total as denominator."
+      },
+      "indexer_finality_triple_observability": {
+        "anchor": "170-INDEXER-FINALITY-TRIPLE-OBS-V1",
+        "observation_note": "no_stored_snapshot",
+        "getter_note": "From latest reconciliation_reports.summary.indexer_finality_triple_observability when present; include_indexer_finality_triple_observability + persist."
+      },
+      "multi_table_chain_observability": {
+        "anchor": "171-MULTI-TABLE-CHAIN-OBSERVABILITY-V1",
+        "observation_note": "no_stored_snapshot",
+        "getter_note": "From latest reconciliation_reports.summary.multi_table_chain_observability when present; include_multi_table_chain_observability + persist."
+      },
+      "indexer_head_vs_db_latest_block_drift_observability": {
+        "anchor": "153-INDEXER-HEAD-VS-DB-LATEST-BLOCK-DRIFT-OBS-V1",
+        "schema_version": 1,
+        "observed_at": "2026-04-14T00:28:35.352113500+00:00",
+        "chain_id": 31337,
+        "db_latest_block_source": "event_log_max_block_number",
+        "chain_head_block": 0,
+        "db_latest_block": 6,
+        "drift_blocks": -6,
+        "rpc": {
+          "rpc_ok": true,
+          "rpc_error": null
+        }
+      }
+    },
+    "overview_orders_chain_health_observability": {
+      "anchor": "153-ORDERS-CHAIN-HEALTH-OBS-V1",
+      "schema_version": 1,
+      "expected_chain_id": 31337,
+      "orders_total": 3,
+      "orders_null_chain_id_total": 0,
+      "orders_chain_id_mismatch_total": 0,
+      "orders_aligned_expected_total": 3,
+      "null_ratio": 0.0,
+      "mismatch_ratio": 0.0,
+      "null_by_status": [],
+      "mismatch_by_status": [],
+      "getter_note": "Aggregates B-151 (NULL chain_id buckets) and B-152 (non-NULL chain_id <> expected_chain_id buckets); orders_total is COUNT(*) from orders.",
+      "boundary_vs_b151_b152": "Single overview/reconcile key; B-151/B-152 scalar legs match orders_null_chain_id_total and orders_chain_id_mismatch_total; ratios use orders_total as denominator."
+    },
+    "status": "ok"
+  }
+}

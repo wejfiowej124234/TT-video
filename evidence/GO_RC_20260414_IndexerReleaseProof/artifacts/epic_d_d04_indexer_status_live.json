@@ -1,0 +1,151 @@
+{
+  "artifact_schema_id": "traveltrust.ops_artifact.v1",
+  "artifact_schema_version": "1.0.0",
+  "artifact_version": "v1",
+  "artifact_type": "indexer_status",
+  "captured_at": "2026-04-14T00:28:38Z",
+  "epic_task_id": "Epic-D-D04",
+  "status": "ok",
+  "checkpoint": {
+    "block_number": 0,
+    "log_index": 0
+  },
+  "lag": {
+    "lag_blocks": 0,
+    "lag_max_blocks": 100
+  },
+  "provenance": {
+    "script": "internal-indexer-ops.sh",
+    "script_semver": "1.6.0",
+    "host_git_commit": "d576a33fbb25fb7fb70499e8ddca6ba5617bdfc5",
+    "host_git_branch": "dev",
+    "host_repo_dirty": true
+  },
+  "api_context": {
+    "api_base_url_redacted": "http://127.0.0.1:3012",
+    "chain_id": 31337,
+    "internal_invoked": true,
+    "live_reconcile_query": true
+  },
+  "indexer_surface": {
+    "checkpoint_block_number": 0,
+    "checkpoint_log_index": 0,
+    "lag_blocks": 0,
+    "lag_max_blocks": 100,
+    "last_block": 0,
+    "last_block_hash": ""
+  },
+  "live_reconcile_surface": {
+    "projection_reconcile_clean": null,
+    "issues_total": 1,
+    "ok": true,
+    "error": null
+  },
+  "payload": {
+    "status": "ok",
+    "meta": {
+      "build": {
+        "git_sha": "unknown",
+        "deployed_at": null,
+        "rule": "120/140：预发/生产建议在容器或进程注入 TRAVELTRUST_GIT_SHA（或 GIT_COMMIT_SHA、SOURCE_VERSION）与 TRAVELTRUST_DEPLOYED_AT（UTC ISO8601）；镜像构建可在 cargo 前 export TRAVELTRUST_BUILD_GIT_SHA 写入编译期兜底；730 GET /meta build 对象 build_top_keys / build_top_keys_contract_730 与 META_BUILD_TOP_KEYS 五键顺序同源",
+        "build_top_keys": [
+          "git_sha",
+          "deployed_at",
+          "rule",
+          "build_top_keys",
+          "build_top_keys_contract_730"
+        ],
+        "build_top_keys_contract_730": "**730**：**`build_top_keys`** **与 **`META_BUILD_TOP_KEYS`** **同源（顺序 `git_sha`****→**`deployed_at`****→**`rule`****→**`build_top_keys`****→**`build_top_keys_contract_730`）"
+      }
+    },
+    "indexer": {
+      "last_block": 0,
+      "last_log_index": 0,
+      "last_block_hash": "",
+      "events_cached": 0
+    },
+    "state": {
+      "finality_n": 12,
+      "finality_n_used": 12,
+      "chain_tip": 0,
+      "indexer_finalized_upper_bound": 0,
+      "checkpoint": {
+        "block_number": 0,
+        "log_index": 0
+      },
+      "last_seen_finality_n": 12,
+      "replay_required": false,
+      "lag_blocks": 0,
+      "lag_max_blocks": 100,
+      "reorg_detected": false,
+      "rule": "110 §3.3 Partial：indexer-tick 上界 chain_tip−max(1,FINALITY_N)；同 GET /meta.indexer.rule；供 reconcile 门禁与运维对齐"
+    },
+    "reorg_recovery": {
+      "anchor": "110-REORG-RECOVERY-HINT",
+      "runbook": "ops/RUNBOOK.md §2.55",
+      "spec": "110 §3.4 Partial: indexer-reorg-rewind + replay; full orders/memory rollback still Target",
+      "steps": [
+        "Optional: set INDEXER_REORG_AUTO_REWIND_ON_TICK=1 with DATABASE_URL so a single indexer-tick may auto-run the same rewind as indexer-reorg-rewind once per tick (see tick response reorg_auto_rewind; limitations unchanged)",
+        "Pause indexer-tick jobs until chain head and stored last_block_hash are verified against RPC",
+        "POST /api/v1/internal/indexer-reorg-rewind JSON {\"rewind_from_block\": <same as reorg_suspected.block_number>} — truncate event_log/fee_router tail, rewind memory checkpoint, clear+replay orders_projection (see response limitations)",
+        "POST /api/v1/internal/indexer-replay — idempotent rebuild if needed (rewind already replays)",
+        "POST /api/v1/internal/indexer-reconcile — check issues_total / projection_reconcile_clean; use persist:true only after approval",
+        "Resume indexer-tick when indexer.last_block_hash matches canonical eth_getBlockByNumber(last_block)"
+      ],
+      "paths": {
+        "indexer_status": "/api/v1/internal/indexer-status",
+        "indexer_reorg_rewind": "/api/v1/internal/indexer-reorg-rewind",
+        "indexer_replay": "/api/v1/internal/indexer-replay",
+        "indexer_reconcile": "/api/v1/internal/indexer-reconcile",
+        "indexer_tick": "/api/v1/internal/indexer-tick"
+      }
+    },
+    "live_orders_projection_reconcile": {
+      "ok": true,
+      "chain_id": 31337,
+      "issues_total": 1,
+      "projection_reconcile_clean": false,
+      "stats": {
+        "chain_id": 31337,
+        "orders_with_escrow": 1,
+        "projection_rows_chain": 1,
+        "malformed_projection_order_id_bytes": 0,
+        "matched": 0,
+        "missing_projection": 0,
+        "status_mismatch": 1,
+        "escrow_mismatch": 0,
+        "orphan_projections": 0,
+        "issues_total": 1,
+        "projection_reconcile_clean": false,
+        "samples": {
+          "missing_projection": [],
+          "status_mismatch": [
+            {
+              "order_id": "33333333-3333-4333-8333-333333333301",
+              "orders_status": "escrowed",
+              "projection_status": "partially_refunded",
+              "kind": "status_mismatch"
+            }
+          ],
+          "escrow_mismatch": [],
+          "orphan_projection": [],
+          "malformed_projection_order_id": []
+        }
+      },
+      "economic_projection_row_counts": {
+        "fee_router_routed_events": {
+          "rows_total": 3,
+          "max_block_number": 50,
+          "min_block_number": 4,
+          "latest_inserted_at": "2026-04-07T06:07:42.915001+00:00"
+        },
+        "region_vault_forwarded_events": {
+          "rows_total": 1,
+          "max_block_number": 7,
+          "min_block_number": 7,
+          "latest_inserted_at": "2026-04-07T05:38:58.412664+00:00"
+        }
+      }
+    }
+  }
+}
