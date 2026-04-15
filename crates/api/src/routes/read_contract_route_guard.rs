@@ -52,6 +52,7 @@ const READ_CONTRACT_GOVERNANCE_ADMIN_GET_PATHS: &[&str] = &[
     "/api/v1/admin/lifecycle/state-machines",
     "/api/v1/admin/media/access-logs",
     "/api/v1/admin/media/signed-url-tokens",
+    "/api/v1/admin/observability/alert-rules",
     "/api/v1/admin/observability/overview",
     "/api/v1/admin/orders",
     "/api/v1/admin/orders/:id",

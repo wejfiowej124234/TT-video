@@ -2218,6 +2218,39 @@ async fn admin_observability_overview_requires_admin_role() {
 }
 
 #[tokio::test]
+async fn admin_observability_alert_rules_requires_admin_role() {
+    let tourist = user_with_role("tourist");
+    let resp = get_admin_observability_alert_rules(
+        State(build_state(vec![tourist.clone()])),
+        auth_headers(tourist.id),
+    )
+    .await
+    .into_response();
+    assert_eq!(resp.status(), StatusCode::FORBIDDEN);
+}
+
+#[tokio::test]
+async fn admin_observability_alert_rules_returns_rules_view_for_admin() {
+    let admin = user_with_role("admin");
+    let resp = get_admin_observability_alert_rules(
+        State(build_state(vec![admin.clone()])),
+        auth_headers(admin.id),
+    )
+    .await
+    .into_response();
+    assert_eq!(resp.status(), StatusCode::OK);
+    let body = body_json(resp).await;
+    assert_eq!(body["status"], "ok");
+    let rv = &body["rules_view"];
+    assert_eq!(rv["schema_version"], 1);
+    assert_eq!(rv["config_source"], "env");
+    assert!(rv["config_fingerprint"].as_str().unwrap().len() >= 8);
+    assert!(rv["effective_thresholds"]["INDEXER_LAG_MAX_BLOCKS_effective"].is_number());
+    let meta_b = &body["meta"]["build"];
+    assert!(meta_b["git_sha"].is_string());
+}
+
+#[tokio::test]
 async fn admin_observability_overview_returns_min_snapshot_for_admin() {
     let admin = user_with_role("admin");
     let resp = get_admin_observability_overview(
@@ -2230,6 +2263,11 @@ async fn admin_observability_overview_returns_min_snapshot_for_admin() {
     let body = body_json(resp).await;
     assert_eq!(body["status"], "ok");
     assert_eq!(body["overview"]["alerts"]["active"], 0);
+    let oa1 = &body["overview"]["observability_alerting_v1"];
+    assert_eq!(oa1["anchor"], "OBSERVABILITY-THRESHOLD-ALERTS-V3");
+    assert_eq!(oa1["schema_version"], 3);
+    assert_eq!(oa1["rules_config"]["schema_version"], 1);
+    assert_eq!(body["overview"]["alerts"]["active"], oa1["alert_summary"]["active"]);
     assert!(body["overview"]["rate_limits"]
         .get("api_requests_per_minute_per_client")
         .is_some());
@@ -2246,6 +2284,95 @@ async fn admin_observability_overview_returns_min_snapshot_for_admin() {
     let meta_b = &body["meta"]["build"];
     assert!(meta_b["git_sha"].is_string());
     assert_eq!(meta_b["git_sha"], b["git_sha"]);
+    let b153 = &body["overview"]["indexer_head_vs_db_latest_block_drift_observability"];
+    assert_eq!(
+        b153["anchor"].as_str(),
+        Some("153-INDEXER-HEAD-VS-DB-LATEST-BLOCK-DRIFT-OBS-V1")
+    );
+    assert_eq!(b153["schema_version"], 1);
+    assert_eq!(
+        b153["observation_note"].as_str(),
+        Some("database_pool_unavailable")
+    );
+    let b164 = &body["overview"]["fee_router_fee_routes_vs_routed_events_drift_observability"];
+    assert_eq!(
+        b164["anchor"].as_str(),
+        Some(db::FEE_ROUTER_FEE_ROUTES_VS_ROUTED_EVENTS_DRIFT_ANCHOR)
+    );
+    assert_eq!(b164["schema_version"], 1);
+    assert_eq!(
+        b164["observation_note"].as_str(),
+        Some("database_pool_unavailable")
+    );
+    let b165 = &body["overview"]["vault_forwards_vs_forwarded_events_drift_observability"];
+    assert_eq!(
+        b165["anchor"].as_str(),
+        Some(db::VAULT_FORWARDS_VS_FORWARDED_EVENTS_DRIFT_ANCHOR)
+    );
+    assert_eq!(b165["schema_version"], 1);
+    assert_eq!(
+        b165["observation_note"].as_str(),
+        Some("database_pool_unavailable")
+    );
+    let b161 = &body["overview"]["stake_lock_projection_block_lag_observability"];
+    assert_eq!(
+        b161["anchor"].as_str(),
+        Some(db::STAKE_LOCK_PROJECTION_BLOCK_LAG_OBS_ANCHOR)
+    );
+    assert_eq!(b161["schema_version"], 1);
+    assert_eq!(
+        b161["observation_note"].as_str(),
+        Some("database_pool_unavailable")
+    );
+    let b152 = &body["overview"]["governance_proposals_projection_null_fields_observability"];
+    assert_eq!(
+        b152["anchor"].as_str(),
+        Some(db::GOVERNANCE_PROPOSALS_PROJECTION_NULL_FIELDS_OBS_ANCHOR)
+    );
+    assert_eq!(b152["schema_version"], 1);
+    assert_eq!(
+        b152["observation_note"].as_str(),
+        Some("database_pool_unavailable")
+    );
+    let b155_amt = &body["overview"]["orders_amount_chain_vs_escrow_drift_observability"];
+    assert_eq!(
+        b155_amt["anchor"].as_str(),
+        Some(db::ORDERS_AMOUNT_CHAIN_VS_ESCROW_DRIFT_ANCHOR)
+    );
+    assert_eq!(b155_amt["schema_version"], 1);
+    assert_eq!(
+        b155_amt["observation_note"].as_str(),
+        Some("database_pool_unavailable")
+    );
+    let b168_escrow = &body["overview"]["escrow_status_chain_vs_orders_drift_observability"];
+    assert_eq!(
+        b168_escrow["anchor"].as_str(),
+        Some(db::ESCROW_STATUS_CHAIN_VS_ORDERS_DRIFT_OBS_ANCHOR)
+    );
+    assert_eq!(b168_escrow["schema_version"], 1);
+    assert_eq!(
+        b168_escrow["observation_note"].as_str(),
+        Some("database_pool_unavailable")
+    );
+    let b162_rpc_meta = &body["overview"]["rpc_escrow_sample_meta"];
+    assert_eq!(
+        b162_rpc_meta["anchor"].as_str(),
+        Some(db::RPC_ESCROW_SAMPLE_META_ANCHOR)
+    );
+    assert_eq!(
+        b162_rpc_meta["observation_note"].as_str(),
+        Some("database_pool_unavailable")
+    );
+    let b160_ce = &body["overview"]["correction_executor_rows_observability"];
+    assert_eq!(
+        b160_ce["anchor"].as_str(),
+        Some(db::CORRECTION_EXECUTOR_ROWS_OBS_ANCHOR)
+    );
+    assert_eq!(b160_ce["schema_version"], 1);
+    assert_eq!(
+        b160_ce["observation_note"].as_str(),
+        Some("database_pool_unavailable")
+    );
     let od = &body["overview"]["orders_deadline_ssot"];
     assert_eq!(
         od["anchor"].as_str(),

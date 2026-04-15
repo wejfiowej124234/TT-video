@@ -15,6 +15,8 @@ use ed25519_dalek::Signer;
 use serde::Deserialize;
 use serde_json::{json, Value};
 use std::collections::HashMap;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::{Hash, Hasher};
 use uuid::Uuid;
 
 use crate::chain_off;
@@ -540,6 +542,10 @@ pub fn router() -> Router<ApiMetaState> {
         .route(
             "/api/v1/admin/observability/overview",
             get(get_admin_observability_overview),
+        )
+        .route(
+            "/api/v1/admin/observability/alert-rules",
+            get(get_admin_observability_alert_rules),
         )
         .route(
             "/api/v1/admin/alerts/incidents/:id",
@@ -4104,6 +4110,82 @@ pub async fn get_admin_indexer_reconcile_report(
     Json(body).into_response()
 }
 
+/// **04 §3.5 · Alerting v3**：与 **`GET …/observability/overview`** 内 **`observability_alerting_v1.rules_config`** 同源装配（**ENV** 基线 + 进程 **`ApiMetaState`** 快照；**DB** **`observability_threshold_alert_config`** 未迁时 **`database_overlay`** 为 **`null`** 或 **`observation_note`** 占位）。
+fn admin_observability_alert_rules_config(state: &ApiMetaState) -> Value {
+    let chain_id = std::env::var("CHAIN_ID").unwrap_or_else(|_| "137".to_string());
+    let lag_max_env = std::env::var("INDEXER_LAG_MAX_BLOCKS").unwrap_or_default();
+    let mut h = DefaultHasher::new();
+    chain_id.hash(&mut h);
+    state.indexer_lag_max_blocks.hash(&mut h);
+    state.indexer_lag_blocks.hash(&mut h);
+    lag_max_env.hash(&mut h);
+    let fingerprint = format!("{:016x}", h.finish());
+
+    let pool_present = state
+        .chain_off
+        .as_ref()
+        .and_then(|c| c.db_pool.as_ref())
+        .is_some();
+    let database_overlay = if pool_present {
+        json!({
+            "observation_note": "observability_threshold_alert_config_row_optional",
+            "config_version": Value::Null,
+            "updated_at": Value::Null,
+        })
+    } else {
+        Value::Null
+    };
+
+    json!({
+        "schema_version": 1,
+        "anchor": "OBSERVABILITY-THRESHOLD-ALERT-RULES-CONFIG-V1",
+        "config_source": "env",
+        "config_fingerprint": fingerprint,
+        "effective_thresholds": {
+            "INDEXER_LAG_MAX_BLOCKS_effective": state.indexer_lag_max_blocks,
+            "INDEXER_LAG_BLOCKS_snapshot": state.indexer_lag_blocks,
+            "degraded_mode": state.degraded_mode,
+            "reorg_detected": state.reorg_detected,
+            "indexer_replay_required": state.indexer_replay_required
+        },
+        "rules_catalog": [
+            {
+                "rule_id": "indexer_lag_vs_max_blocks",
+                "severity": "P1",
+                "description": "Indexer lag vs max blocks (process snapshot; see INDEXER_LAG_* env and GET /meta metrics helpers)."
+            }
+        ],
+        "threshold_env_keys": ["CHAIN_ID", "INDEXER_LAG_MAX_BLOCKS", "INDEXER_LAG_BLOCKS"],
+        "threshold_db_json_keys": [],
+        "database_overlay": database_overlay
+    })
+}
+
+fn admin_observability_alerting_v1_bundle(state: &ApiMetaState) -> Value {
+    let rules_config = admin_observability_alert_rules_config(state);
+    let alert_summary = json!({
+        "active": 0,
+        "sev1": 0,
+        "sev2": 0,
+    });
+    json!({
+        "anchor": "OBSERVABILITY-THRESHOLD-ALERTS-V3",
+        "schema_version": 3,
+        "rules_config": rules_config,
+        "alert_summary": alert_summary,
+        "last_fired": [],
+        "dedup_policy": {
+            "mode": "best_effort_memory",
+            "anchor": "OBSERVABILITY-THRESHOLD-ALERTS-V3"
+        },
+        "persist": {
+            "storage": "memory_only",
+            "note": "DB-backed alert state optional; see 04 §3.5 and migration 20260427000056 when enabled."
+        },
+        "recent_events": []
+    })
+}
+
 pub async fn get_admin_observability_overview(
     State(state): State<ApiMetaState>,
     headers: HeaderMap,
@@ -4113,6 +4195,12 @@ pub async fn get_admin_observability_overview(
         Err(resp) => return resp,
     };
     let request_id = request_id_from_headers(&headers);
+
+    let observability_alerting_v1 = admin_observability_alerting_v1_bundle(&state);
+    let alert_summary = observability_alerting_v1
+        .get("alert_summary")
+        .cloned()
+        .unwrap_or_else(|| json!({ "active": 0, "sev1": 0, "sev2": 0 }));
 
     write_admin_audit_log_best_effort(
         &state,
@@ -4199,6 +4287,33 @@ pub async fn get_admin_observability_overview(
             state.chain_config.as_ref(),
         )
         .await;
+    let governance_proposals_projection_null_fields_observability =
+        match state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref()) {
+            Some(pool) => {
+                match db::admin_last_governance_proposals_projection_null_fields_observability(pool)
+                    .await
+                {
+                    Ok(Some(v)) => v,
+                    Ok(None) => json!({
+                        "anchor": db::GOVERNANCE_PROPOSALS_PROJECTION_NULL_FIELDS_OBS_ANCHOR,
+                        "schema_version": 1,
+                        "observation_note": "no_stored_snapshot",
+                        "getter_note": "From latest reconciliation_reports.summary when present; run POST …/internal/indexer-reconcile with persist:true to populate.",
+                    }),
+                    Err(e) => json!({
+                        "anchor": db::GOVERNANCE_PROPOSALS_PROJECTION_NULL_FIELDS_OBS_ANCHOR,
+                        "schema_version": 1,
+                        "observation_note": "query_failed",
+                        "error": e.to_string(),
+                    }),
+                }
+            }
+            None => json!({
+                "anchor": db::GOVERNANCE_PROPOSALS_PROJECTION_NULL_FIELDS_OBS_ANCHOR,
+                "schema_version": 1,
+                "observation_note": "database_pool_unavailable",
+            }),
+        };
     let orders_chain_health_observability = match (
         state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref()),
         expected_chain_id_for_orders_consistency,
@@ -4220,6 +4335,12 @@ pub async fn get_admin_observability_overview(
             "observation_note": "database_pool_unavailable",
         }),
     };
+    let indexer_head_vs_db_latest_block_drift_observability = crate::routes::internal::indexer_head_vs_db_latest_block_drift_observability_v1(
+        state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref()),
+        state.chain_config.as_ref().map(|c| c.rpc_url.as_str()),
+        expected_chain_id_for_orders_consistency,
+    )
+    .await;
     let indexer_reconcile_duration_batch_stats_observability =
         match state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref()) {
             Some(pool) => {
@@ -4243,6 +4364,50 @@ pub async fn get_admin_observability_overview(
                 "observation_note": "database_pool_unavailable",
             }),
         };
+    let rpc_escrow_sample_meta = match state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref()) {
+        Some(pool) => match db::admin_last_rpc_escrow_sample_meta(pool).await {
+            Ok(Some(v)) => v,
+            Ok(None) => json!({
+                "anchor": db::RPC_ESCROW_SAMPLE_META_ANCHOR,
+                "observation_note": "no_stored_snapshot",
+                "getter_note": "From latest reconciliation_reports.summary when present; run POST …/internal/indexer-reconcile with rpc_escrow_samples>0 and persist:true to populate.",
+            }),
+            Err(e) => json!({
+                "anchor": db::RPC_ESCROW_SAMPLE_META_ANCHOR,
+                "observation_note": "query_failed",
+                "error": e.to_string(),
+            }),
+        },
+        None => json!({
+            "anchor": db::RPC_ESCROW_SAMPLE_META_ANCHOR,
+            "observation_note": "database_pool_unavailable",
+        }),
+    };
+    let correction_executor_rows_observability =
+        match state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref()) {
+            Some(pool) => {
+                match db::admin_last_correction_executor_rows_observability(pool).await {
+                    Ok(Some(v)) => v,
+                    Ok(None) => json!({
+                        "anchor": db::CORRECTION_EXECUTOR_ROWS_OBS_ANCHOR,
+                        "schema_version": 1,
+                        "observation_note": "no_stored_snapshot",
+                        "getter_note": "From latest reconciliation_reports.summary when present; run POST …/internal/indexer-reconcile with persist:true to populate.",
+                    }),
+                    Err(e) => json!({
+                        "anchor": db::CORRECTION_EXECUTOR_ROWS_OBS_ANCHOR,
+                        "schema_version": 1,
+                        "observation_note": "query_failed",
+                        "error": e.to_string(),
+                    }),
+                }
+            }
+            None => json!({
+                "anchor": db::CORRECTION_EXECUTOR_ROWS_OBS_ANCHOR,
+                "schema_version": 1,
+                "observation_note": "database_pool_unavailable",
+            }),
+        };
     let orders_chain_health_trend_snapshot = match state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref())
     {
         Some(pool) => match db::admin_last_orders_chain_health_trend_snapshot(pool).await {
@@ -4263,6 +4428,134 @@ pub async fn get_admin_observability_overview(
             "observation_note": "database_pool_unavailable",
         }),
     };
+    let orders_amount_chain_vs_escrow_drift_observability =
+        match state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref()) {
+            Some(pool) => {
+                match db::admin_last_orders_amount_chain_vs_escrow_drift_observability(pool).await {
+                    Ok(Some(v)) => v,
+                    Ok(None) => json!({
+                        "anchor": db::ORDERS_AMOUNT_CHAIN_VS_ESCROW_DRIFT_ANCHOR,
+                        "schema_version": 1,
+                        "observation_note": "no_stored_snapshot",
+                        "getter_note": "From latest reconciliation_reports.summary when present; run POST …/internal/indexer-reconcile with persist:true to populate.",
+                    }),
+                    Err(e) => json!({
+                        "anchor": db::ORDERS_AMOUNT_CHAIN_VS_ESCROW_DRIFT_ANCHOR,
+                        "schema_version": 1,
+                        "observation_note": "query_failed",
+                        "error": e.to_string(),
+                    }),
+                }
+            }
+            None => json!({
+                "anchor": db::ORDERS_AMOUNT_CHAIN_VS_ESCROW_DRIFT_ANCHOR,
+                "schema_version": 1,
+                "observation_note": "database_pool_unavailable",
+            }),
+        };
+    let escrow_status_chain_vs_orders_drift_observability =
+        match state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref()) {
+            Some(pool) => {
+                match db::admin_last_escrow_status_chain_vs_orders_drift_observability(pool).await {
+                    Ok(Some(v)) => v,
+                    Ok(None) => json!({
+                        "anchor": db::ESCROW_STATUS_CHAIN_VS_ORDERS_DRIFT_OBS_ANCHOR,
+                        "schema_version": 1,
+                        "observation_note": "no_stored_snapshot",
+                        "getter_note": "From latest reconciliation_reports.summary when present; run POST …/internal/indexer-reconcile with persist:true to populate.",
+                    }),
+                    Err(e) => json!({
+                        "anchor": db::ESCROW_STATUS_CHAIN_VS_ORDERS_DRIFT_OBS_ANCHOR,
+                        "schema_version": 1,
+                        "observation_note": "query_failed",
+                        "error": e.to_string(),
+                    }),
+                }
+            }
+            None => json!({
+                "anchor": db::ESCROW_STATUS_CHAIN_VS_ORDERS_DRIFT_OBS_ANCHOR,
+                "schema_version": 1,
+                "observation_note": "database_pool_unavailable",
+            }),
+        };
+    let fee_router_fee_routes_vs_routed_events_drift_observability =
+        match state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref()) {
+            Some(pool) => {
+                match db::admin_last_fee_router_fee_routes_vs_routed_events_drift_observability(pool)
+                    .await
+                {
+                    Ok(Some(v)) => v,
+                    Ok(None) => json!({
+                        "anchor": db::FEE_ROUTER_FEE_ROUTES_VS_ROUTED_EVENTS_DRIFT_ANCHOR,
+                        "schema_version": 1,
+                        "observation_note": "no_stored_snapshot",
+                        "getter_note": "From latest reconciliation_reports.summary when present; run POST …/internal/indexer-reconcile with persist:true to populate.",
+                    }),
+                    Err(e) => json!({
+                        "anchor": db::FEE_ROUTER_FEE_ROUTES_VS_ROUTED_EVENTS_DRIFT_ANCHOR,
+                        "schema_version": 1,
+                        "observation_note": "query_failed",
+                        "error": e.to_string(),
+                    }),
+                }
+            }
+            None => json!({
+                "anchor": db::FEE_ROUTER_FEE_ROUTES_VS_ROUTED_EVENTS_DRIFT_ANCHOR,
+                "schema_version": 1,
+                "observation_note": "database_pool_unavailable",
+            }),
+        };
+    let vault_forwards_vs_forwarded_events_drift_observability =
+        match state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref()) {
+            Some(pool) => {
+                match db::admin_last_vault_forwards_vs_forwarded_events_drift_observability(pool).await
+                {
+                    Ok(Some(v)) => v,
+                    Ok(None) => json!({
+                        "anchor": db::VAULT_FORWARDS_VS_FORWARDED_EVENTS_DRIFT_ANCHOR,
+                        "schema_version": 1,
+                        "observation_note": "no_stored_snapshot",
+                        "getter_note": "From latest reconciliation_reports.summary when present; run POST …/internal/indexer-reconcile with persist:true to populate.",
+                    }),
+                    Err(e) => json!({
+                        "anchor": db::VAULT_FORWARDS_VS_FORWARDED_EVENTS_DRIFT_ANCHOR,
+                        "schema_version": 1,
+                        "observation_note": "query_failed",
+                        "error": e.to_string(),
+                    }),
+                }
+            }
+            None => json!({
+                "anchor": db::VAULT_FORWARDS_VS_FORWARDED_EVENTS_DRIFT_ANCHOR,
+                "schema_version": 1,
+                "observation_note": "database_pool_unavailable",
+            }),
+        };
+    let stake_lock_projection_block_lag_observability =
+        match state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref()) {
+            Some(pool) => {
+                match db::admin_last_stake_lock_projection_block_lag_observability(pool).await {
+                    Ok(Some(v)) => v,
+                    Ok(None) => json!({
+                        "anchor": db::STAKE_LOCK_PROJECTION_BLOCK_LAG_OBS_ANCHOR,
+                        "schema_version": 1,
+                        "observation_note": "no_stored_snapshot",
+                        "getter_note": "From latest reconciliation_reports.summary when present; run POST …/internal/indexer-reconcile with persist:true to populate.",
+                    }),
+                    Err(e) => json!({
+                        "anchor": db::STAKE_LOCK_PROJECTION_BLOCK_LAG_OBS_ANCHOR,
+                        "schema_version": 1,
+                        "observation_note": "query_failed",
+                        "error": e.to_string(),
+                    }),
+                }
+            }
+            None => json!({
+                "anchor": db::STAKE_LOCK_PROJECTION_BLOCK_LAG_OBS_ANCHOR,
+                "schema_version": 1,
+                "observation_note": "database_pool_unavailable",
+            }),
+        };
     let mut body = json!({
         "status": "ok",
         "overview": {
@@ -4270,11 +4563,8 @@ pub async fn get_admin_observability_overview(
             "build": overview_build,
             "indexer": indexer_ov,
             "rate_limits": middleware::meta_rate_limits_snapshot(),
-            "alerts": {
-                "active": 0,
-                "sev1": 0,
-                "sev2": 0
-            },
+            "alerts": alert_summary,
+            "observability_alerting_v1": observability_alerting_v1,
             "audit": {
                 "mode": "best_effort_read_path"
             },
@@ -4293,14 +4583,53 @@ pub async fn get_admin_observability_overview(
             "governor_proposal_count_ssot": governor_proposal_count_ssot,
             "governor_proposal_count_ssot_ops_check": governor_proposal_count_ssot_ops_check,
             "governor_proposal_state_chain_vs_projection_observability": governor_proposal_state_chain_vs_projection_observability,
+            "governance_proposals_projection_null_fields_observability": governance_proposals_projection_null_fields_observability,
             "orders_chain_health_observability": orders_chain_health_observability,
+            "indexer_head_vs_db_latest_block_drift_observability": indexer_head_vs_db_latest_block_drift_observability,
             "indexer_reconcile_duration_batch_stats_observability": indexer_reconcile_duration_batch_stats_observability,
-            "orders_chain_health_trend_snapshot": orders_chain_health_trend_snapshot
+            "rpc_escrow_sample_meta": rpc_escrow_sample_meta,
+            "correction_executor_rows_observability": correction_executor_rows_observability,
+            "orders_chain_health_trend_snapshot": orders_chain_health_trend_snapshot,
+            "orders_amount_chain_vs_escrow_drift_observability": orders_amount_chain_vs_escrow_drift_observability,
+            "escrow_status_chain_vs_orders_drift_observability": escrow_status_chain_vs_orders_drift_observability,
+            "fee_router_fee_routes_vs_routed_events_drift_observability": fee_router_fee_routes_vs_routed_events_drift_observability,
+            "vault_forwards_vs_forwarded_events_drift_observability": vault_forwards_vs_forwarded_events_drift_observability,
+            "stake_lock_projection_block_lag_observability": stake_lock_projection_block_lag_observability
         },
         "actor": {
             "id": actor_id,
             "role": actor_role
         }
+    });
+    admin_attach_meta_build(&mut body);
+    Json(body).into_response()
+}
+
+pub async fn get_admin_observability_alert_rules(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    let (actor_id, _) = match require_admin_actor(&state, &headers).await {
+        Ok(v) => v,
+        Err(resp) => return resp,
+    };
+    let request_id = request_id_from_headers(&headers);
+
+    write_admin_audit_log_best_effort(
+        &state,
+        actor_id,
+        request_id.as_deref(),
+        "admin.observability.alert_rules.read",
+        Some("observability"),
+        None,
+        json!({"ok": true}),
+    )
+    .await;
+
+    let rules_view = admin_observability_alert_rules_config(&state);
+    let mut body = json!({
+        "status": "ok",
+        "rules_view": rules_view
     });
     admin_attach_meta_build(&mut body);
     Json(body).into_response()
@@ -4387,6 +4716,7 @@ const ADMIN_AUDIT_ACTION_CODES: &[&str] = &[
     "admin.lifecycle.state_machines.read",
     "admin.media.access_logs.read",
     "admin.media.signed_url_tokens.read",
+    "admin.observability.alert_rules.read",
     "admin.observability.overview.read",
     "admin.orders.detail.read",
     "admin.orders.read",
@@ -4445,7 +4775,7 @@ pub async fn get_admin_audit_operations(
         "operations": operations,
         "catalog_total": catalog_total,
         "returned": take,
-        "note": "static action catalog aligned with write_admin_audit_log_best_effort in routes/admin.rs; not a DB-backed event stream; export pipeline pending stage 120/200",
+        "note": "static action catalog aligned with write_admin_audit_log_best_effort in routes/admin/mod.rs; not a DB-backed event stream; export pipeline pending stage 120/200",
         "applied_filters": {
             "limit": limit,
             "source": "action_catalog_v1"
