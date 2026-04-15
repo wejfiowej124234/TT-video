@@ -1,6 +1,7 @@
 # TravelTrust · AI 任务卡索引（Low-Latency 执行）
 
 <!-- CI: required workflow job "AI task card index overview / check" (see CONTRIBUTING.md#main-branch-ai-index-gate) -->
+<!-- CI: push-probe second commit (index-only) -->
 
 > **本文件范围**：仅收录 **已实现并封口** 的任务卡（一览 + 正文）。**未封口**、**规划类**及 backlog 统一维护于 [`docs/AI任务卡索引.from-stash.md`](./AI任务卡索引.from-stash.md)。**维护路径 A（推荐 · 稳定期）**：**不再改**本文件整体结构，**只增量**维护；**新任务**先落在 **from-stash**，**完成并封口**后再进入本主索引。
 
