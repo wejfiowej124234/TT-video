@@ -4,6 +4,7 @@
 
 ## 单一入口（B-184）
 
+- **单人直推 vs PR（改索引 / CI / gate / 广播证据链）** → [CONTRIBUTING.md](../CONTRIBUTING.md#solo-push-vs-pr)。
 - **本文件** `scripts/README.md` 是 **`scripts/` 树的人类说明与索引**；**命令行仍优先使用历史路径** `scripts/<脚本名>`（见下「兼容策略」）。
 - **实现按用途分目录**（**不改变**各脚本的退出码与串联语义）：
 

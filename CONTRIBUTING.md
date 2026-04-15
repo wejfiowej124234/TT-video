@@ -2,10 +2,28 @@
 
 本仓库的**开发顺序、阶段与发版门禁**以 `docs/spec` 为准；本页只列**工程侧最低标准**与入口，避免与长篇 spec 重复。
 
+<a id="solo-push-vs-pr"></a>
+
+## 单人 push 与 PR 建议（路径策略）
+
+**默认可直推 `main`**：普通小改、无风险脚本、**非核心**文档（与 `docs/spec` 核心契约无强耦合的说明、注释、小修复）。
+
+**建议走 PR**（单人亦适用）：触及下列**任一**时，用分支 + PR 合并，便于留 diff、跑全 CI、降低误伤 **`main`** 的概率：
+
+| 类别 | 路径或范围（示例） |
+|------|-------------------|
+| **AI 任务卡索引** | `docs/AI任务卡索引.md` |
+| **CI workflow** | `.github/workflows/**` |
+| **Gate 脚本** | `scripts/gates/**` |
+| **广播 / 证据 / production-go 链** | 如 **`scripts/gates/broadcast-batch-*.sh`**、**`scripts/ops/*broadcast*`**、**`scripts/ops/*production*go*`**（例 **`region_vault_claim_production_go_gate.py`**）、**`write-indexer-evidence.*`**，及 **`.github/workflows/broadcast-batch-blockers.yml`** 等与其强绑定的 **evidence 落盘 / 链上留痕** 脚本；以「动了 GO 闸、batch 证据 JSON、广播归档」为准。 |
+
+**最省事单人用法**：**日常**改动 **直推 `main`**；改 **索引、CI、gate、广播证据链** 时 **走 PR**。
+
 ## 必读入口
 
 | 用途 | 文档 |
 |------|------|
+| **单人直推 vs PR** | 本节上文 **[单人 push 与 PR 建议](#solo-push-vs-pr)** |
 | 阶段顺序、开工/发版 bar | [07-开发流程与顺序](docs/spec/07-开发流程与顺序.md)（**唯一入口**：**§零**、**§二 2.5**、**§二 2.4**、**§四 4.3**、§五）；**文档审计与机器门禁一览**见 [00-文档治理总册 §8.3](docs/spec/00-文档治理总册.md#doc-audit-gates-ssot) |
 | 文档命名、索引、迁移 | [00-文档治理总册](docs/spec/00-文档治理总册.md) |
 | API 单源 | [04-后端与API](docs/spec/04-后端与API.md) §3.4 |
