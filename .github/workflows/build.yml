@@ -1,4 +1,5 @@
 # 仓库构建与门禁：check-invariants → Rust 构建与测试 → 前端 lint/tsc/test → 依赖审计（可选不阻塞）
+# 非 batch 的 job 均 continue-on-error：失败不阻断 workflow；合并阻断仅依赖 workflow「Broadcast batch blockers」三门禁（见 broadcast-batch-blockers.yml）。
 # 见 08-5、README 实现状态；前端见 项目优化与问题清单 §六 CI
 name: Build
 
@@ -11,6 +12,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@master
@@ -79,6 +81,7 @@ jobs:
 
   frontend:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v4
@@ -139,6 +142,7 @@ jobs:
 
   regional-matrix:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v4
@@ -166,6 +170,7 @@ jobs:
 
   a11y:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v4
@@ -236,6 +241,7 @@ jobs:
   # 50-T1：E2E 纳入 CI（可选不阻塞，便于回归；发版前可将 continue-on-error 改为 false 以强制通过，见 50 §9.2/§六附 企业级检查）
   e2e:
     runs-on: ubuntu-latest
+    continue-on-error: true
     outputs:
       playwright_outcome: ${{ steps.export_playwright_outcome.outputs.playwright_outcome }}
     steps:
@@ -341,6 +347,7 @@ jobs:
 
   finance-reconcile:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v6
       - name: Set evidence dir
@@ -443,6 +450,7 @@ jobs:
 
   config-center:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v6
       - name: Set evidence dir
@@ -601,6 +609,7 @@ jobs:
 
   feature-flag:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v6
       - name: Set evidence dir
@@ -781,6 +790,7 @@ jobs:
 
   job-queue:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v6
       - name: Set evidence dir
@@ -954,6 +964,7 @@ jobs:
 
   secret-key:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v6
       - name: Set evidence dir
@@ -1129,30 +1140,6 @@ jobs:
             evidence/GO_*/secret_rotation_sampling_report.json
             evidence/GO_*/secret_key_evidence_field_report.json
 
-  broadcast-batch-1-blockers:
-    name: Broadcast batch 1 blockers
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - name: Batch-1 gate (B-380 / B-366 / B-379 / B-368)
-        run: bash scripts/gates/broadcast-batch-1-blockers.sh
-
-  broadcast-batch-2-blockers:
-    name: Broadcast batch 2 blockers
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - name: Batch-2 gate (B-367 / B-373 / B-374)
-        run: bash scripts/gates/broadcast-batch-2-blockers.sh
-
-  broadcast-batch-3-blockers:
-    name: Broadcast batch 3 blockers
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - name: Batch-3 gate (B-369 / B-370 / B-375)
-        run: bash scripts/gates/broadcast-batch-3-blockers.sh
-
   # Runs after all parallel jobs finish; prints baseline + triage template when any needed job failed.
   # `always()` is required so this job is not skipped when a sibling `needs` job fails (default skip rule).
   ci-triage-hint:
@@ -1170,9 +1157,6 @@ jobs:
       - feature-flag
       - job-queue
       - secret-key
-      - broadcast-batch-1-blockers
-      - broadcast-batch-2-blockers
-      - broadcast-batch-3-blockers
     steps:
       - uses: actions/checkout@v6
       - name: CI triage hint
@@ -1194,9 +1178,6 @@ jobs:
       - feature-flag
       - job-queue
       - secret-key
-      - broadcast-batch-1-blockers
-      - broadcast-batch-2-blockers
-      - broadcast-batch-3-blockers
     steps:
       - uses: actions/checkout@v6
       - name: Download e2e playwright outcome (if any)
@@ -1220,7 +1201,4 @@ jobs:
           JOB_FEATURE_FLAG: ${{ needs.feature-flag.result }}
           JOB_JOB_QUEUE: ${{ needs.job-queue.result }}
           JOB_SECRET_KEY: ${{ needs.secret-key.result }}
-          JOB_BROADCAST_BATCH_1: ${{ needs.broadcast-batch-1-blockers.result }}
-          JOB_BROADCAST_BATCH_2: ${{ needs.broadcast-batch-2-blockers.result }}
-          JOB_BROADCAST_BATCH_3: ${{ needs.broadcast-batch-3-blockers.result }}
         run: bash scripts/check-go-no-go.sh

@@ -1,0 +1,34 @@
+# 唯一阻断门禁：三个 batch gate 全部通过则本 workflow 绿灯（可与 branch protection 绑定）。
+# Build 工作流中的非 batch job 已设为 continue-on-error，不阻断合并信号。
+name: Broadcast batch blockers
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  broadcast-batch-1-blockers:
+    name: Broadcast batch 1 blockers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Batch-1 gate (B-380 / B-366 / B-379 / B-368)
+        run: bash scripts/gates/broadcast-batch-1-blockers.sh
+
+  broadcast-batch-2-blockers:
+    name: Broadcast batch 2 blockers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Batch-2 gate (B-367 / B-373 / B-374)
+        run: bash scripts/gates/broadcast-batch-2-blockers.sh
+
+  broadcast-batch-3-blockers:
+    name: Broadcast batch 3 blockers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Batch-3 gate (B-369 / B-370 / B-375)
+        run: bash scripts/gates/broadcast-batch-3-blockers.sh
