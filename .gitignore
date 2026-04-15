@@ -34,6 +34,9 @@ frontend/.lighthouse*
 .dev_backend.pid
 .dev_frontend.pid
 
+# 本地工具目录（如 jq.exe 等缓存，不入库）
+.tools/
+
 # Python 字节码（勿提交）
 **/__pycache__/
 *.py[cod]
