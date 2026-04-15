@@ -3,9 +3,13 @@
 > **开卡总规则（必须遵守）**  
 > 从母表 **B-xxx** / [缺口官方总表](spec/缺口与待补-官方总表.md) / 各 **spec** 之 **Target / Partial** 句生成候选 → 先做**信息价值**与**双源风险**判断（**可否决**）→ **必须**先落 [任务母表.md](./任务母表.md) **新行或更新行** → 再生成 **TT** → **最后**才允许写代码。  
 > **禁止**仅依据 [07-开发流程与顺序.md](spec/07-开发流程与顺序.md) 直接生成或执行任务卡。  
-> **单人开发默认**：**母表 B-xxx → TT → 代码**；**push 前** **`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** + **`bash scripts/check-pr-crates-needs-metadata.sh main HEAD`**（**或** **`bash scripts/dev-preflight.sh`** 一键）；第三条若 **stderr 有提醒**，表示 **`crates/**`** 与母表/索引**未同批**，**补齐再 commit**（**单人开发元数据门禁 · B-145**，**非** PR gate）。详见 **[04 · 零、](spec/04-后端与API.md#ssot-gate-pre-tt)**；走 **GitHub PR** 时另有 **workflow** 可重复提醒。
+> **单人开发默认**：**母表 B-xxx → TT → 代码**；**push 前** **`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** + **`bash scripts/check-pr-crates-needs-metadata.sh main HEAD`**（**或** **`bash scripts/dev-preflight.sh`** 一键）；第三条若 **stderr 有提醒**，表示 **`crates/**`**、须登记 **`contracts/**`**、须登记 **`frontend/**`** 或 **B-158 lockfile** 与母表/索引**未同批**，**补齐再 commit**（**元数据门禁 · B-145 + B-147 + B-158**，**非** PR gate）。详见 **[04 · 零、](spec/04-后端与API.md#ssot-gate-pre-tt)**；走 **GitHub PR** 时另有 **workflow** 可重复提醒。
+>
+> **单人维护（本仓库常态）**：**不**要求 Pull Request；**同批 / 封口 / 刷新审计件**指 **同一批 commit**（或紧邻小提交）内与 **母表·TT·spec** 对齐。**验收**以 **本地脚本**为准。脚本名 **`check-pr-crates-needs-metadata.sh`** 含 `pr` 为历史命名，**语义仍是 commit / push 前元数据检查**（**B-145**）。
 
 **上一层（任务从哪来）**：全项目 Backlog 见 **[任务母表.md](./任务母表.md)**。流程：**spec/需求 → 母表 `B-xxx` → 本索引 `TT-xxx` → 执行**。本文件**不**替代母表，只承载 **可执行** 的 TT 定义。
+
+**1 人极简 · 演示优先（可选）**：阶段排序与周节奏见 **[路线图-1人开发极简版.md](./路线图-1人开发极简版.md)**。此模式下 **TT 状态 = 进度记录**，**不作为**「能否继续开发/合并」的硬门禁（**资金与 04 契约变更除外**）；聚合目标见 **[TT-SOLO-ROADMAP-MVP-001](#tt-solo-roadmap-mvp-001)**。
 
 **用途**：你说 **「按 `docs/AI任务卡索引.md` 执行 TT-XXX」** 或 **「执行任务卡 TT-XXX」** 时，助手以对应条目为唯一范围与验收依据；**不**自动重扫全站、**不**重复展开完整 Task Card 模板。
 
@@ -34,7 +38,7 @@
 |------|-----|------|------|------|
 | 1 | TT-ACTION-SUCCESS-STATE-PREMATURE-OR-MISLEADING-001 | 状态机 | 已封口 | 成功态勿过早/误导 |
 | 2 | TT-ACTION-ERROR-STATE-NOT-CLEARED-ON-RETRY-001 | 状态机 | 已封口 | 重试时清 error |
-| 3 | TT-ACTION-STATE-TRANSITION-CONSISTENCY-AUDIT-001 | 审计 | 只读 | 全站状态机审计 |
+| 3 | TT-ACTION-STATE-TRANSITION-CONSISTENCY-AUDIT-001 | 审计 | **已封口**（**2026-04-14**） | 全站状态机审计；**高优** **1～4** **已由** **B-269～B-272** **收口** **；** **5～8** **低优** **一致性** **/** **UX** **余量** **见** [**正文**](#tt-action-state-transition-consistency-audit-001) |
 | 4 | TT-GOVERNANCE-PARAMS-ERROR-STUCK-AFTER-SUCCESS-001 | 状态机 | 已封口 | params 成功清 error |
 | 5 | TT-ESCROW-RATE-SUBMIT-PARTIAL-READY-STATE-001 | 状态机 | 已封口 | 评分确认 await 刷新 |
 | 6 | TT-UI-CONSISTENCY-POLISH-AUDIT-001 | 审计 | 只读 | UI 一致性审计 |
@@ -43,7 +47,7 @@
 | 9 | TT-TAIL-ERROR-DISPLAY-UNIFICATION-001 | UI | 已封口 | params + schema 错误组件 |
 | 10 | TT-TAIL-LOADING-EMPTY-TOAST-CONSISTENCY-001 | UI | 已封口 | LoadingText / 工具 empty |
 | 11 | TT-TAIL-SILENT-INTERACTION-ELIMINATION-001 | 体验 | 已封口 | 深链提示 + FeeRouter loading |
-| 12 | TT-PRODUCTION-READINESS-SUMMARY-001 | 文档 | 只读 | 上线前总结（无代码） |
+| 12 | TT-PRODUCTION-READINESS-SUMMARY-001 | 文档 | **已封口**（**2026-04-14**） | 上线前总结（无代码）；**`docs/frontend/Release-Readiness-Frontend.md`** **§0** **+** **§4.1** **与** **B-248** **/** **B-250～B-266** **边界** **互证**（**B-262** **/** **B-263** **为** **RPC** **广播** **/** **receipt** **归档** **；** **B-264** **为** **只读** **对账** **JSON** **；** **B-265** **为** **B-264** **`GO`** **读模型** **+** **`forwarded`** **互证** **（** **ENV** **导入** **）** **；** **B-266** **为** **B-263～B-265** **证据** **+** **双** **attestation** **生产** **GO** **闸** **（** **锚** **`14-REGIONVAULT-CLAIM-PRODUCTION-GO-GATE-V1`** **）** **；** **不** **声称** **生产** **主网** **已** **送** **tx** **）**；互证 [**正文**](#tt-production-readiness-summary-001) |
 | 13 | TT-AUTH-VERIFY-EMAIL-EMPTY-TOKEN-001 | 微任务 | 已封口 | 空 token 提交错误提示 |
 | 14 | TT-AUTH-LOGIN-CLEAR-ERROR-ON-RETRY-001 | 微任务 | 已封口 | 登录重试清旧 error |
 | 15 | TT-AUTH-LOGIN-SUBMITTING-STATE-001 | 微任务 | 已封口 | 登录提交中 loading、按钮与表单禁用（B-001） |
@@ -156,7 +160,7 @@
 | 122 | TT-ORDERS-CHAIN-ID-BACKFILL-AND-QUERY-GATE-001 | orders / DB | 已封口 · **NEW** | **B-102**：**`orders.chain_id`** 回填 **dry-run** + **`GET /orders`** 等读路径 **链过滤/标注**；**110 §3.1.4** |
 | 123 | TT-EVIDENCE-B094-RESOLUTION-FIXTURES-SSOT-001 | escrow / 证据 | 已封口 · **EXTEND** | **B-103** / **B-094**：三终态 **fixture** **单文件 SSOT**（**tx hash** + 余额 + **`orders_projection`**） |
 | 124 | TT-GOVERNANCE-PROPOSALS-LIST-RESPONSE-CONTRACT-TEST-001 | API / 治理 | 已封口 · **EXTEND** | **`GET …/governance/proposals`**：**`governance_proposals_response_*`**（**projection** 枝 **非** **`X-Implementation-Status: placeholder`**；MVP 枝 **`chain_off_mvp`**）；**不改** handler |
-| 125 | TT-B120-INDEXER-RECONCILE-GATE-CHECKS-TOTAL-ALIGN-001 | CI / 110 / Runbook | 已封口 | **B-120**：**`indexer-reconcile-gate.yml`** **`checks_total`** = **`check_anchor`** 数 **106**；**110**/**07** 表、**RUNBOOK §2.55** 同锚 |
+| 125 | TT-B120-INDEXER-RECONCILE-GATE-CHECKS-TOTAL-ALIGN-001 | CI / 110 / Runbook | 已封口 | **B-120**：**`indexer-reconcile-gate.yml`** **`checks_total`** = **`check_anchor`**（**现行** **125**；**YAML** 真值；**110**/**07**/**RUNBOOK §2.55**/**`scripts/ops/indexer-reconcile-probe.sh`** 同锚；历史 **TT-B120** 文内曾记 **106**；**113** **叙事** **见** **B-159**/**07 §六 6.5** **1.0.836**；**B-219/B-220** **承后** **文档互证**） |
 | 126 | TT-GOVERNANCE-POOL-CHAIN-ALIGNMENT-HINT-TRIPLE-001 | API / 治理 pool | 已封口 | **B-110**：**`GET …/governance/pool`** **`database` / `database_empty` / `placeholder`** 三枝 **`chain_alignment_hint`** 一致 **`is_chain_ssot=false`·`data_source=projection`·`chain_alignment_status=not_aligned`**；**`cargo test -p traveltrust-api`** **`governance_pool_*chain_alignment_hint*`**（**无 `DATABASE_URL` 时 DB 两枝跳过**） |
 | 127 | TT-GOVERNANCE-REWARDS-RESPONSE-CONTRACT-TEST-001 | API / 治理 rewards | 已封口 | **`GET …/governance/rewards`**：**`placeholder`**（**`items:[]`** + **`x-implementation-status`**) / **`database`**（**`rule_version=governance_rewards_v1`**）；**`cargo test -p traveltrust-api`** **`governance_rewards_response_`**；实现 **`governance.rs`** **`#[cfg(test)]`** |
 | 128 | TT-GOVERNANCE-PARAMS-HTTP-PLACEHOLDER-001 | API / 治理 params | 已封口 | **B-124 新能力**：**`GET …/governance/params`** **占位聚合**（**`status`****`ok`**、**`data_source`****`placeholder`**、**`params`****{}**、**`items`****[]**、**`X-Implementation-Status: placeholder`**）；**04 §3.4** + **母表 B-124**；页内主数据仍 **protocol-reference**/**pending**；**`cargo test -p traveltrust-api`** **`governance_params_response_`** |
@@ -174,7 +178,7 @@
 | 140 | TT-B110-SEQ10-GOVERNANCE-GOVERNOR-PROPOSAL-COUNT-CHAIN-SSOT-001 | governance / SSOT | 已封口 | **B-140**：**`GOVERNANCE_GOVERNOR_PROPOSAL_COUNT_CHAIN_SSOT`** + **`proposalCount()`** vs **`governance_proposals_projection`** **`COUNT(*)`**；**`drift_leg`** / **`GOVERNANCE_PROPOSAL_COUNT_MAX_INDEXER_LAG`**（默认 **32**）见 [**母表 B-140**](./任务母表.md)；**`GET /meta` `governance.governor_proposal_count_observability`**；**admin** **`governor_proposal_count_ssot*`**；**indexer-reconcile** **`governor_proposal_count_ssot_ops_check`** + **`compound` `governor_proposal_count_ssot_reconcile`**；**`scripts/governance-governor-proposal-count-ssot-ops-check.sh`**；**gate/probe** **113**；**不**改 **`GET /api/v1/orders*`** / **公开** **`GET …/governance/proposals*`**；互证 [**母表 B-140**](./任务母表.md) |
 | 141 | TT-B141-GOVERNANCE-SSOT-NEXT-CANDIDATE-PLAN-001 | governance / 规划 | 已封口 | **B-141**：承 **SEQ5～SEQ10** 方法库；**L1～L4** 分层、下表候选、**P** 序、**FeeRouter/P5-5/84** 双源风险；**首张实现 TT 占位**；**零**业务代码；互证 [**母表 B-141**](./任务母表.md) · [**正文**](#tt-b141-governance-ssot-next-candidate-plan-001) |
 | 142 | TT-B110-SEQ11-GOVERNANCE-GOVERNOR-TOKEN-TIMELOCK-CHAIN-SSOT-001 | governance / SSOT | 已封口 | **B-142**：**`GOVERNANCE_GOVERNOR_TOKEN_TIMELOCK_CHAIN_SSOT`** + **`token()`**/**`timelock()`** **`immutable`**；**`GET /meta` `governance.governor_token_timelock_observability`**（**807** **十键**）；**admin** **`governor_token_timelock_ssot*`**；**indexer-reconcile** **`governor_token_timelock_ssot_ops_check`** + **`compound` `governor_token_timelock_ssot_reconcile`**；**`scripts/governance-governor-token-timelock-ssot-ops-check.sh/.ps1`**；**gate/probe** **113**；**不**改 **`GET /api/v1/orders*`**；互证 [**母表 B-142**](./任务母表.md) · [**正文**](#tt-b110-seq11-governance-governor-token-timelock-chain-ssot-001) |
-| 143 | TT-B110-SEQ12-GOVERNANCE-GOVERNOR-ORDER-RATING-REVIEW-WINDOW-BOUNDARY-001 | governance / 边界台账 | 未封口 | **B-143**：**`orderRatingReviewWindowDays()`** 与 **SEQ2/SEQ3** **并列观测（默认）** vs **未来接管** 之 **文档裁断**；**04**/**110**/**Runbook** 互指；**实现**另开 TT；互证 [**母表 B-143**](./任务母表.md) · [**正文**](#tt-b110-seq12-governance-governor-order-rating-review-window-boundary-001) |
+| 143 | TT-B110-SEQ12-GOVERNANCE-GOVERNOR-ORDER-RATING-REVIEW-WINDOW-BOUNDARY-001 | governance / 边界台账 | 已封口 | **B-143**：**`orderRatingReviewWindowDays()`** 与 **SEQ2/SEQ3** **并列观测（默认）** vs **未来接管** 之 **文档裁断**（**文档轮** **☑**）；**04**/**110**/**Runbook** 互指；**升格 orders 真值** 须 **另开实现 TT**；互证 [**母表 B-143**](./任务母表.md) · [**正文**](#tt-b110-seq12-governance-governor-order-rating-review-window-boundary-001) |
 | 144 | TT-B110-SEQ13-GOVERNANCE-ORDER-RATING-REVIEW-WINDOW-PARALLEL-META-OBS-001 | governance / orders · 评估 | 已封口 | **B-144**：**807 `governance.*`** 并列 **`orderRatingReviewWindowDays()`** 观测 **信息价值评估** → **否决 Rust**（与 **SEQ2/SEQ3** **`orders.deadline_*`** **重复**）；**不**扩 **807**/**compound**；互证 [**母表 B-144**](./任务母表.md) · [**正文**](#tt-b110-seq13-governance-order-rating-review-window-parallel-meta-obs-001) |
 | 145 | TT-B145-SSOT-GATE-PR-CHECK-CRATES-NEEDS-METADATA-001 | SSOT · 元数据门禁 | 已封口 | **B-145**：**单人开发元数据门禁**（**非** PR gate）；**`crates/**`** 须同批母表或索引；**push 前** **`check-pr-crates-needs-metadata.sh`**；可选 **`ssot-crates-metadata-hint.yml`**；互证 [**母表 B-145**](./任务母表.md) · [**正文**](#tt-b145-ssot-gate-pr-check-crates-needs-metadata-001) |
 | 146 | TT-B146-SSOT-GATE-BASE-RESOLUTION-STRICTNESS-PLAN-001 | SSOT · 元数据门禁后续 | 已封口 | **B-146**：**BASE/HEAD 解析语义** + **脚本边界**（**先于** **`contracts/**`**）；**`CRATES_METADATA_GATE_REQUIRE_REFS`**；**不**默认 **`CRATES_METADATA_GATE_FAIL`**；互证 [**母表 B-146**](./任务母表.md) · [**正文**](#tt-b146-ssot-gate-base-resolution-strictness-plan-001) |
@@ -183,22 +187,22 @@
 | 149 | TT-B149-B110-SEQ14-GOVERNOR-PROPOSAL-STATE-CHAIN-SSOT-001 | governance / SSOT | 已封口 | **B-149**：**v1** **`state(uint256)`** vs **`governance_proposals_projection.chain_state`**（**admin overview** + **`indexer-reconcile`** 可选 **`include_governor_proposal_state_chain_vs_projection_observability`**；**`pending` 粗桶**；**不**入 **compound**；**非** **B-172**）；互证 [**母表 B-149**](./任务母表.md) · [**正文**](#tt-b149-b110-seq14-governor-proposal-state-chain-ssot-001) |
 | 150 | TT-B150-110-ORDERS-CHAIN-SYNC-SNAPSHOT-CLOSE-001 | orders / 110 | 已封口 | **B-150**：**`GET …/orders/:id/chain-sync-status`** **110 §六 Implemented** + **04 §3.4** + **716～725**；**B-127** finality；**不** bump **compound**；互证 [**母表 B-150**](./任务母表.md) · [**正文**](#tt-b150-110-orders-chain-sync-snapshot-close-001) |
 | 151 | TT-B151-ORDERS-CHAIN-ID-NULL-READ-ONLY-OBS-001 | orders / ops · 只读观测 | 已封口 | **B-151**：**`orders_chain_id_null_observability`**（**`by_status`** + **`orders_null_chain_id_total`** 与 **B-102** 同源）；**`overview`** + **`indexer-reconcile`/`persist` `summary`**；**不**入 **compound**；互证 [**母表 B-151**](./任务母表.md) · [**正文**](#tt-b151-orders-chain-id-null-read-only-obs-001) |
-| 152 | TT-B152-GOVERNANCE-PROPOSALS-PROJECTION-NULL-FIELDS-OBS-001 | governance / ops · 观测 | 未封口 | **B-152**：**projection** **缺** **`state`/`block_number`/`tx_hash`** **计数**；**仅** admin / reconcile；**单表**；**对拍**归 **B-149**；互证 [**母表 B-152**](./任务母表.md) · [**正文**](#tt-b152-governance-proposals-projection-null-fields-obs-001) |
-| 153 | TT-B153-INDEXER-HEAD-VS-DB-LATEST-BLOCK-DRIFT-OBS-001 | indexer / ops · 观测 | 未封口 | **B-153**：**`chain_head_block`/`db_latest_block`/`drift_blocks`**；**非**业务 SSOT；互证 [**母表 B-153**](./任务母表.md) · [**正文**](#tt-b153-indexer-head-vs-db-latest-block-drift-obs-001) |
+| 152 | TT-B152-GOVERNANCE-PROPOSALS-PROJECTION-NULL-FIELDS-OBS-001 | governance / ops · 观测 | 已封口 | **B-152 v1**：键 **`governance_proposals_projection_null_fields_observability`**（锚 **`152-GOVERNANCE-PROPOSALS-PROJECTION-NULL-FIELDS-OBS-V1`**）；四桶 **`rows_total`** / **`rows_chain_state_null_or_blank`**（**`state`→`chain_state`**）/ **`rows_snapshot_block_le_0`**（**`block_number`→`snapshot_block<=0`**）/ **`rows_operation_id_null`**（**无 `tx_hash` 列**；**`tx_hash` 语义第三桶→`operation_id IS NULL`**，**`getter_note`** 钉映射）；**admin overview** + **`indexer-reconcile` `200`/`persist` `summary`**；**非** B-149/B-172；互证 [**母表 B-152**](./任务母表.md) · [**正文**](#tt-b152-governance-proposals-projection-null-fields-obs-001) |
+| 153 | TT-B153-INDEXER-HEAD-VS-DB-LATEST-BLOCK-DRIFT-OBS-001 | indexer / ops · 观测 | 已封口 | **B-153**：**`indexer_head_vs_db_latest_block_drift_observability`**（锚 **`153-INDEXER-HEAD-VS-DB-LATEST-BLOCK-DRIFT-OBS-V1`**）；**`db_latest_block_source`**=**`event_log_max_block_number`**；**admin overview** + **`indexer-reconcile` `200`/`persist` `summary`**；**非** **`153-ORDERS-CHAIN-HEALTH-OBS-V1`**；互证 [**母表 B-153**](./任务母表.md) · [**正文**](#tt-b153-indexer-head-vs-db-latest-block-drift-obs-001) |
 | 154 | TT-B154-INDEXER-RECONCILE-DURATION-BATCH-STATS-OBS-001 | indexer / ops · 观测 | 已封口 | **B-154**：**`indexer_reconcile_duration_batch_stats_observability`**（**`154-INDEXER-RECONCILE-DURATION-BATCH-STATS-OBS-V1`**）：**`reconcile_core_duration_ms`** + **`batch_row_counts`**；**`indexer-reconcile`/`persist` `summary`** + **admin `overview`**；**不**入 **compound**；互证 [**母表 B-154**](./任务母表.md) · [**正文**](#tt-b154-indexer-reconcile-duration-batch-stats-obs-001) |
-| 155 | TT-B155-ORDERS-AMOUNT-CHAIN-VS-DB-DRIFT-MARKER-001 | orders / 对拍标记 | 未封口 | **B-155**：**orders.amount** vs **escrow** **链上** **drift 标记**；**不**接管公开 orders；互证 [**母表 B-155**](./任务母表.md) · [**正文**](#tt-b155-orders-amount-chain-vs-db-drift-marker-001) |
-| 156 | TT-B156-ORDERS-CHAIN-HEALTH-TREND-SNAPSHOT-001 | orders / ops · 链健康趋势 | 已封口 | **B-156**：**`orders_chain_health_trend_snapshot`**（**`by_batch`/`by_day`**；**`persist:true`** **summary** + **admin `overview`**；**JSON 锚字面量** **`155-ORDERS-CHAIN-HEALTH-TREND-SNAPSHOT-V1`** **与实现一致**）；互证 [**母表 B-156**](./任务母表.md) · [**正文**](#tt-b156-orders-chain-health-trend-snapshot-001) |
-| 157 | TT-B156-B115-4-REGION-SHARE-SNAPSHOT-LINE-CHAIN-DB-RECONCILE-001 · TT-B157-INDEXER-TICK-RESPONSE-COUNTERS-STANDARDIZE-001 | revenue / 对拍观测；indexer / internal 收口 | 未封口 | **B-157 · 子项 A**：**RegionShareSnapshotLine** **链 vs `region_share_snapshot_lines`**（**B-115-4/P5-3** **不**改写入语义）；**子项 B**：**`indexer_tick`** **`new_events`/`parsed_events`/`failed_events`/`skipped_events`** 计数器收口；互证 [**母表 B-157**](./任务母表.md) · [**Region 正文**](#tt-b156-b115-4-region-share-snapshot-line-chain-db-reconcile-001) · [**tick 正文**](#tt-b157-indexer-tick-response-counters-standardize-001) |
-| 158 | TT-B158-SSOT-GATE-FRONTEND-LOCKFILE-METADATA-SCOPE-001 | SSOT · 门禁 · frontend/lockfile | 未封口 | **B-158**：**`frontend/**`**/**`package-lock.json`** 触面扩 **母表/索引**；**非** **B-147 contracts**；互证 [**母表 B-158**](./任务母表.md) · [**正文**](#tt-b158-ssot-gate-frontend-lockfile-metadata-scope-001) |
-| 159 | TT-B159-INDEXER-GATE-CHECKS-TOTAL-DOC-TRIPLE-ALIGN-001 | ops · gate 三线对齐 | 未封口 | **B-159**：**checks_total**/**110**/**scripts**/**07** 机读同号；互证 [**母表 B-159**](./任务母表.md) · [**正文**](#tt-b159-indexer-gate-checks-total-doc-triple-align-001) |
-| 160 | TT-B160-CORRECTION-EXECUTOR-ROWS-OBS-001 | ops · DB 观测 | 未封口 | **B-160**：**`correction_log`/`executor_executions`** 按链行数；**仅** admin/reconcile；互证 [**母表 B-160**](./任务母表.md) · [**正文**](#tt-b160-correction-executor-rows-obs-001) |
-| 161 | TT-B161-STAKE-LOCK-BLOCK-LAG-OBS-001 | indexer · 块滞后 | 未封口 | **B-161**：**stake/lock** 事件尾 vs checkpoint；**非** **B-153**；互证 [**母表 B-161**](./任务母表.md) · [**正文**](#tt-b161-stake-lock-block-lag-obs-001) |
-| 162 | TT-B162-RPC-ESCROW-SAMPLE-META-ADMIN-OBS-001 | ops · sample meta | 未封口 | **B-162**：**`rpc_escrow_sample_meta`** → **admin overview**；互证 [**母表 B-162**](./任务母表.md) · [**正文**](#tt-b162-rpc-escrow-sample-meta-admin-obs-001) |
-| 164 | TT-B164-FEE-ROUTES-VS-ROUTED-EVENTS-DRIFT-MARKER-001 | governance · 对拍 | 未封口 | **B-164**：**fee-routes** vs **`fee_router_routed_events`** drift；**非** **B-155**/**B-157** **子项 A**；互证 [**母表 B-164**](./任务母表.md) · [**正文**](#tt-b164-fee-routes-vs-routed-events-drift-marker-001) |
-| 165 | TT-B165-VAULT-FORWARDS-VS-FORWARDED-EVENTS-DRIFT-MARKER-001 | governance · 对拍 | 未封口 | **B-165**：**vault-forwards** vs **`region_vault_forwarded_events`**；**非** **B-157** **子项 A**；互证 [**母表 B-165**](./任务母表.md) · [**正文**](#tt-b165-vault-forwards-vs-forwarded-events-drift-marker-001) |
-| 166 | TT-B166-CHAIN-TIP-RECONCILE-META-NARRATIVE-ALIGN-001 | indexer · 叙事对齐 | 未封口 | **B-166**：**`include_chain_tip`** vs **`chain_tip_not_in_meta`** 互指；**非** **B-153** 数值卡；互证 [**母表 B-166**](./任务母表.md) · [**正文**](#tt-b166-chain-tip-reconcile-meta-narrative-align-001) |
-| 167 | TT-B167-META-INDEXER-110-04-ALIGN-001 | API · 807 收口 | 未封口 | **B-167**：**`GET /meta` `indexer.*`** 对齐 **110/04**；**非** **B-150/157**；互证 [**母表 B-167**](./任务母表.md) · [**正文**](#tt-b167-meta-indexer-110-04-align-001) |
-| 168 | TT-B168-ESCROW-STATUS-CHAIN-VS-DB-DRIFT-MARKER-001 | orders · 对拍 | 未封口 | **B-168**：**escrow 粗状态** vs **DB**；**非** **B-155** 金额；互证 [**母表 B-168**](./任务母表.md) · [**正文**](#tt-b168-escrow-status-chain-vs-db-drift-marker-001) |
+| 155 | TT-B155-ORDERS-AMOUNT-CHAIN-VS-DB-DRIFT-MARKER-001 | orders / 对拍标记 | 已封口 | **B-155**：**`orders_amount_chain_vs_escrow_drift_observability`**（锚 **`155-ORDERS-AMOUNT-CHAIN-VS-ESCROW-DRIFT-OBS-V1`**）；**v1** **仅** **`currency`→decimals 白名单**（见母表 **B-155** **v1 封口**句），**未知货币**→**`unavailable_leg`**（**`unknown_currency_decimals`**）；**不**接管公开 orders；**不**与 **`rpc_escrow_samples`** 混用；互证 [**母表 B-155**](./任务母表.md) · [**正文**](#tt-b155-orders-amount-chain-vs-db-drift-marker-001) |
+| 156 | TT-B156-ORDERS-CHAIN-HEALTH-TREND-SNAPSHOT-001 | orders / ops · 链健康趋势 | 已封口 | **B-156**：**`orders_chain_health_trend_snapshot`**（**`by_batch`/`by_day`**；**`persist:true`** **summary** + **admin `overview`**；**JSON 锚字面量** **`156-ORDERS-CHAIN-HEALTH-TREND-SNAPSHOT-V1`** **与实现一致**）；互证 [**母表 B-156**](./任务母表.md) · [**正文**](#tt-b156-orders-chain-health-trend-snapshot-001) |
+| 157 | TT-B157-REGION-SNAPSHOT-AND-INDEXER-TICK-COUNTERS-CLOSE-001（叙事兼 **TT-B156-B115-4-…** / **TT-B157-INDEXER-TICK-…** 双子项） | revenue / 对拍观测；indexer / internal 收口 | 已封口 | **B-157 v1 封口**：**一壳两子项**（**RegionShareSnapshotLine**/**`region_share_snapshot_lines`** **DB 统计对拍** + **`indexer_tick` 四计数器收口**）；顶 **`b157_region_snapshot_and_tick_observability`**；**`indexer_tick_counters.legacy_parallel`** **镜像** **`events_applied`/`events_new`** **不静默更名**；**不**入 **compound**；互证 [**母表 B-157**](./任务母表.md) · [**正式封口正文**](#tt-b157-region-snapshot-and-indexer-tick-counters-close-001) · [**Region 子项正文**](#tt-b156-b115-4-region-share-snapshot-line-chain-db-reconcile-001) · [**tick 子项正文**](#tt-b157-indexer-tick-response-counters-standardize-001) |
+| 158 | TT-B158-SSOT-GATE-FRONTEND-LOCKFILE-METADATA-SCOPE-001 | SSOT · 门禁 · frontend/lockfile | 已封口 | **B-158 v1**：**`gates/check-pr-crates-needs-metadata.sh`** 扩 **须登记 `frontend/**`** + **`package-lock.json`**（**根**/**`frontend/`**）；**豁免** **locales/public/e2e/scripts、md、test/spec、snap、fixtures、stories、工具根配置**（**全文见脚本头**）；**`CRATES_METADATA_GATE_*`** 与 **B-145** 同轨；**未**改公开 API；**未**接 compound；**contracts/run-*.sh** **regex** 修正；互证 [**母表 B-158**](./任务母表.md) · [**正文**](#tt-b158-ssot-gate-frontend-lockfile-metadata-scope-001) |
+| 159 | TT-B159-INDEXER-GATE-CHECKS-TOTAL-DOC-TRIPLE-ALIGN-001 | ops · gate 三线对齐 | 已封口 | **B-159**：**checks_total=113**/**110**/**`scripts/ops/indexer-reconcile-probe.sh`**/**07**/**`internal-drill-gate` 互补叙述** 机读同锚；互证 [**母表 B-159**](./任务母表.md) · [**正文**](#tt-b159-indexer-gate-checks-total-doc-triple-align-001) |
+| 160 | TT-B160-CORRECTION-EXECUTOR-ROWS-OBS-001 | ops · DB 观测 | 已封口 | **B-160 v1**：键 **`correction_executor_rows_observability`**（锚 **`160-CORRECTION-EXECUTOR-ROWS-OBS-V1`**）；**`correction_log`/`executor_executions`** 按链 **COUNT** + **`correction_log_latest_created_at`**（**`MAX(created_at)`**）+ **`executor_executions_latest_activity_at`**（**`MAX(GREATEST(created_at,updated_at))`**）；**`GET …/admin/observability/overview`** 与 **`POST …/internal/indexer-reconcile`** **`200`/`persist` `summary`** **同源同键**；**未**入 **`compound_gate`**；**未**改公开 **`GET /api/v1/*`**；**非** **`correction_executor_chain_scope_rollback_*`** 体；互证 [**母表 B-160**](./任务母表.md) · [**正文**](#tt-b160-correction-executor-rows-obs-001) |
+| 161 | TT-B161-STAKE-LOCK-BLOCK-LAG-OBS-001 | indexer · 块滞后 | 已封口 | **B-161 v1**：**`investor_stake_state_events`/`investor_lock_state_events`** **按 `chain_id` `MAX(block_number)`** vs **`indexer_checkpoint_block_number`** → **`stake_lag_vs_checkpoint_blocks`/`lock_lag_vs_checkpoint_blocks`**（**checkpoint − max**，有行时；**负**=尾高于 checkpoint）；键 **`stake_lock_projection_block_lag_observability`**（**`161-STAKE-LOCK-PROJECTION-BLOCK-LAG-OBS-V1`**）；**admin `overview`** 与 **`indexer-reconcile` `200`/`persist` `summary`** **同源同键**；**非** **B-153**；**不**入 **`compound_gate`**；互证 [**母表 B-161**](./任务母表.md) · [**正文**](#tt-b161-stake-lock-block-lag-obs-001) |
+| 162 | TT-B162-RPC-ESCROW-SAMPLE-META-ADMIN-OBS-001 | ops · sample meta | 已封口 | **B-162 v1**：**`overview.rpc_escrow_sample_meta`** = 最新 **`orders_projection_vs_orders`** **`reconciliation_reports.summary.rpc_escrow_sample_meta`**（**`admin_last_rpc_escrow_sample_meta`**）；**有值**须曾 **`persist:true`+`rpc_escrow_samples>0`**；**无库/无报告/缺键** **占位**（**`110-RPC-ESCROW-SAMPLE-META`**）；**未**入 **`compound_gate`**；**未**改公开 **`GET /api/v1/*`**；互证 [**母表 B-162**](./任务母表.md) · [**正文**](#tt-b162-rpc-escrow-sample-meta-admin-obs-001) |
+| 164 | TT-B164-FEE-ROUTES-VS-ROUTED-EVENTS-DRIFT-MARKER-001 | governance · 对拍 | 已封口 | **B-164 v1**：键 **`fee_router_fee_routes_vs_routed_events_drift_observability`**（**`164-FEE-ROUTES-VS-ROUTED-EVENTS-DRIFT-OBS-V1`**）；**`fee_routes_desc_head`** / **`routed_events_aggregate`** / **`fee_routes_chronological_tail`** + **`checks.head_block_vs_max_block`/`tail_block_vs_min_block`**；**admin `overview`** 与 **`indexer-reconcile` `200`/`persist` `summary`** **同源同键**；**未**入 **`compound_gate`**；**未**改 **`GET …/governance/fee-routes`**；**非** **B-155**/**B-157** **子项 A**；互证 [**母表 B-164**](./任务母表.md) · [**正文**](#tt-b164-fee-routes-vs-routed-events-drift-marker-001) |
+| 165 | TT-B165-VAULT-FORWARDS-VS-FORWARDED-EVENTS-DRIFT-MARKER-001 | governance · 对拍 | 已封口 | **B-165 v1**：键 **`vault_forwards_vs_forwarded_events_drift_observability`**（**`165-VAULT-FORWARDS-VS-FORWARDED-EVENTS-DRIFT-OBS-V1`**）；**`vault_forwards_desc_head`** / **`forwarded_events_aggregate`** / **`vault_forwards_chronological_tail`** + **`checks.head_block_vs_max_block`/`tail_block_vs_min_block`**；**admin `overview`** 与 **`indexer-reconcile` `200`/`persist` `summary`** **同源同键**；**未**入 **`compound_gate`**；**未**改 **`GET …/governance/vault-forwards`**；**非** **B-157** **子项 A**；互证 [**母表 B-165**](./任务母表.md) · [**正文**](#tt-b165-vault-forwards-vs-forwarded-events-drift-marker-001) |
+| 166 | TT-B166-CHAIN-TIP-RECONCILE-META-NARRATIVE-ALIGN-001 | indexer · 叙事对齐 | 已封口 | **B-166 v1**：**`/meta` `chain_tip_not_in_meta`/`chain_tip_hint`** 与 **`reconcile` `include_chain_tip`→`chain_observation`** **并列运维观测**；**非** SSOT；**未**改 JSON 结构；**未**入 **`compound_gate`**；**非** **B-153**；互证 [**母表 B-166**](./任务母表.md) · [**正文**](#tt-b166-chain-tip-reconcile-meta-narrative-align-001) |
+| 167 | TT-B167-META-INDEXER-110-04-ALIGN-001 | API · 807 收口 | 已封口 | **B-167 v1**：**`GET /meta` `indexer.*`** 键序与 **`INDEXER_*_META_TOP_KEYS`**、**04 §3.4**、**110 §3.1.1** **同源对齐**；**未**改 JSON 结构、**未**改 compound gate、**文案与测试收口**；**非** **B-150/157**；互证 [**母表 B-167**](./任务母表.md) · [**正文**](#tt-b167-meta-indexer-110-04-align-001) |
+| 168 | TT-B168-ESCROW-STATUS-CHAIN-VS-DB-DRIFT-MARKER-001 | orders · 对拍 | 已封口 | **B-168 v1**：**`get_escrow_status`** vs **`orders.status`** **粗终端**；**`escrow_status_chain_vs_orders_drift_observability`**（锚 **`168-ESCROW-STATUS-CHAIN-VS-ORDERS-DRIFT-OBS-V1`**）；抽样 **`updated_at DESC`**、**≤10**、**须 `escrow_address`**；根 **`marker`** **drift > unavailable_leg > aligned**；**admin overview**/**reconcile `persist` summary** 同源；与 **B-155** **仅 `boundary_*` 互指、不混用**；互证 [**母表 B-168**](./任务母表.md) · [**正文**](#tt-b168-escrow-status-chain-vs-db-drift-marker-001) |
 | 169 | TT-B169-INDEXER-REORG-SENTINEL-OBS-001 | indexer · reorg 哨兵 | 已封口 | **B-169**：**reorg_suspected**/**hash** 对读 **只读汇总**；**非** **B-157**；互证 [**母表 B-169**](./任务母表.md) · [**正文**](#tt-b169-indexer-reorg-sentinel-obs-001) |
 | 170 | TT-B170-INDEXER-FINALITY-WINDOW-TRIPLE-OBS-001 | indexer · finality 三水线 | 已封口 | **B-170**：**tip / to_block / last_indexed** 并列；**非** **B-153**；互证 [**母表 B-170**](./任务母表.md) · [**正文**](#tt-b170-indexer-finality-window-triple-obs-001) |
 | 171 | TT-B171-MULTI-CHAIN-DB-CHAIN-ID-FOOTPRINT-MATRIX-OBS-001 | cross-chain · DB 足迹 | 已封口 | **B-171**：**DISTINCT chain_id** 矩阵 vs **runtime**；**非** **B-151**；互证 [**母表 B-171**](./任务母表.md) · [**正文**](#tt-b171-multi-chain-db-chain-id-footprint-matrix-obs-001) |
@@ -208,7 +212,7 @@
 | 175 | TT-B175-RPC-CHAIN-ID-VS-CONFIG-PROBE-RECONCILE-001 | cross-chain · 链身份探针 | 已封口 | **B-175**：**eth_chainId** vs **配置**；**非** **B-171**；互证 [**母表 B-175**](./任务母表.md) · [**正文**](#tt-b175-rpc-chain-id-vs-config-probe-reconcile-001) |
 | 176 | TT-B176-PER-TABLE-INDEXED-TAIL-BY-CHAIN-MATRIX-OBS-001 | indexer · 多表尾块矩阵 | 已封口 | **B-176**：**MAX(block)** **按表按链**；**非** **B-161**；互证 [**母表 B-176**](./任务母表.md) · [**正文**](#tt-b176-per-table-indexed-tail-by-chain-matrix-obs-001) |
 | 177 | TT-B177-META-GOVERNANCE-CHAIN-ALIGNMENT-04-110-ALIGN-001 | API · 807 治理对齐 | 已封口 | **B-177**：**meta governance*** + **pool** **04/110** 对齐；**非** **B-167**；互证 [**母表 B-177**](./任务母表.md) · [**正文**](#tt-b177-meta-governance-chain-alignment-04-110-align-001) |
-| 178 | TT-B178-PHASE-CLOSE-DOCS-CODE-REORG-PLAN-001 | process · Phase Close 规划 | 未封口 | **B-178**：**三批尽后** **规划** + **附录 A/B**（**观测壳** / **B-179～ 候选**）；互证 [**母表 B-178**](./任务母表.md) · [**正文**](#tt-b178-phase-close-docs-code-reorg-plan-001) |
+| 178 | TT-B178-PHASE-CLOSE-DOCS-CODE-REORG-PLAN-001 | process · Phase Close 规划 | 已封口 | **B-178 主 TT**：**五节规划** + **附录 A/B** → [**Phase-Close-Docs-Code-Reorg-Plan-B178.md**](./Phase-Close-Docs-Code-Reorg-Plan-B178.md)；**切片已封口** → [**195**](#tt-b178-phase-close-indexer-reconcile-observability-001) / [**Phase-Close-Indexer-Reconcile-Observability-Alignment.md**](./Phase-Close-Indexer-Reconcile-Observability-Alignment.md)；互证 [**母表 B-178**](./任务母表.md) · [**正文**](#tt-b178-phase-close-docs-code-reorg-plan-001) |
 | 179 | TT-DOC-MOD-BATCH1-INTERNAL-TESTS-SPLIT-001 | api / 程序级模块化 | 已封口 | **B-163** / **TT-MOD-B1-02**：**`internal/tests/`** 集成测拆分；互证 [**母表 B-163**](./任务母表.md) · [**正文**](#tt-doc-mod-batch1-internal-tests-split-001) |
 | 180 | TT-DOC-MOD-BATCH1-HEALTH-META-TESTS-SPLIT-001 | api / 程序级模块化 | 已封口 | **B-163** / **TT-MOD-B1-03**：**`health_meta/tests.rs`**；互证 [**母表 B-163**](./任务母表.md) · [**正文**](#tt-doc-mod-batch1-health-meta-tests-split-001) |
 | 181 | TT-DOC-MOD-BATCH1-ADMIN-TESTS-SPLIT-001 | api / 程序级模块化 | 已封口 | **B-163** / **TT-MOD-B1-05**：**`admin/tests.rs`**；互证 [**母表 B-163**](./任务母表.md) · [**正文**](#tt-doc-mod-batch1-admin-tests-split-001) |
@@ -233,86 +237,212 @@
 | 200 | TT-B189-DID-RANK-WEIGHTED-RANK-BASIS-V1-001 | did-rank / API · §3.1 加权主序 | 已封口 | **B-189**：**`sort=weighted`** **`rank_basis`** **`guide_s31_weighted_primary_*`** + **04-附录 1.23** + **04 §3.4** + **30** + **08-3** + **check-55**/**smoke**/**didRank.test**；**非** **B-098**；互证 [**母表 B-189**](./任务母表.md) · [**正文**](#tt-b189-did-rank-weighted-rank-basis-v1-001) |
 | 201 | TT-B190-DOC-DUAL-WRITE-PROD-08-3-SIGNOFF-001 | ops / 文档 · 双写生产定稿 | 已封口 | **B-190**：**Runbook §9** **②** + **并行观测（③ 类）** + **08-3 附录 A/变更记录**（**2026-04-13**）；**evidence** [**TT-B190-dual-write-prod-signoff.md**](../evidence/GO_20260413/artifacts/TT-B190-dual-write-prod-signoff.md)；**不**改 **`GET /meta`** **键名** **与** HTTP 契约；互证 [**母表 B-190**](./任务母表.md) · [**正文**](#tt-b190-doc-dual-write-prod-08-3-signoff-001) |
 | 202 | TT-B191-TRAVELTRUST-PAGE-04-13-1-CLOSE-001 | frontend / 路由契约 · `/traveltrust` | 已封口（**实现轮完成**） | **B-191**：**`GET /api/v1/traveltrust/page-brief`**（**`crates/api/src/routes/traveltrust_page.rs`** + **`routes/mod.rs`**）；**04 §3.3/§3.4** **`/traveltrust` Implemented** + **page-brief** 行；**13-1 表 1 · Network** **Implemented**；**`frontend/app/traveltrust/page.tsx`** **`TravelTrustPageBriefHydrate`**、**`frontend/lib/api.ts`**、**`frontend/lib/analytics.ts`** **`source`/`target`**；**85** **封口清单** **1/3/7** **与** **CTA·埋点·`page-brief`** **对齐**（**台账同批** **登记**）；互证 [**母表 B-191**](./任务母表.md) · [**正文**](#tt-b191-traveltrust-page-04-13-1-close-001) |
-| 203 | TT-B194-85-APPENDIX-HI-COMPONENT-SPEC-001 | traveltrust / 85 附录 H·I | 已封口（**2026-04-13** · **实现完成**） | **B-194**：**85 附录 v1.0.0.4** **§H/§I** **可生成代码级**；**组件拆分** + **i18n 单源** + **Vitest**；**`tsc` / `cargo test -p traveltrust-api` / `run-check-04-routes`** **绿**；**未改** **04/07**；互证 [**母表 B-194**](./任务母表.md) · [**正文**](#tt-b194-85-appendix-hi-component-spec-001) |
-| 204 | TT-B195-85-MOTION-PRESETS-LIB-001 | traveltrust / Motion B.3 | **已封口**（**2026-04-14**） | **B-195**：**`traveltrustMotionPresets.ts`** + **page 三处** + **Vitest** + **S23-06 Full**；**B.3 对读** → [**evidence/GO_B195_MOTION_B3_READOFF.md**](../evidence/GO_B195_MOTION_B3_READOFF.md)；互证 [**母表 B-195**](./任务母表.md) · [**正文**](#tt-b195-85-motion-presets-lib-001) |
-| 205 | TT-B196-85-VIDEO-ASSET-08-4-GATE-001 | traveltrust / 视频 §九 | **已封口**（**2026-04-14** · **示意资产**） | **B-196**：**`public/traveltrust/video/`** + **`CAPTIONS_*`** + **Vitest**；**证据** [**GO_B196**](../evidence/GO_B196_VIDEO_ASSET_08_4_CLOSE.md)；**S23-05** **仍** **Partial**；互证 [**母表 B-196**](./任务母表.md) · [**正文**](#tt-b196-85-video-asset-08-4-gate-001) |
-| 206 | TT-B197-85-ALLOCATION-84-SSOT-001 | traveltrust / Allocation·84 | **已封口**（**2026-04-14** · **SSOT 工程**） | **B-197**：**`traveltrustAllocation84Ssot`** + **Vitest** **锁** **84** **版本** + **Placeholder**；**证据** [**GO_B197**](../evidence/GO_B197_ALLOCATION_84_SSOT_CLOSE.md)；**S23-10** **仍** **Partial**；互证 [**母表 B-197**](./任务母表.md) · [**正文**](#tt-b197-85-allocation-84-ssot-001) |
-| 207 | TT-B198-85-ANALYTICS-PRODUCTION-PIPE-001 | traveltrust / 埋点 | **已封口**（**2026-04-14**） | **B-198**：**`trackTravelTrustEvent`** **`gtag`/`ingest`**；**`NEXT_PUBLIC_TRAVELTRUST_ANALYTICS_REQUIRE_CONSENT`** **门闸** + **`TravelTrustAnalyticsConsentBar`** + **`/privacy` §3**；**`lib/analytics.test.ts`** + **ConsentBar Vitest**；互证 [**母表 B-198**](./任务母表.md) · [**正文**](#tt-b198-85-analytics-production-pipe-001) · [**GO_B198**](../evidence/GO_B198_ANALYTICS_CLOSE.md) |
-| 208 | TT-B199-85-SEC23-ACCEPTANCE-EVIDENCE-001 | traveltrust / §廿三 | 已封口（**2026-04-13** · **验收完成**） | **完成** **85 §廿三** **S23-01～S23-12** **验收证据填充**；**CLI** / **测试** / **源码对齐** **证据已归档于** **GO_85_TRAVELTRUST** **与** **`artifacts/`**；**B-199** **历史轮** **未改** **07** **契约**；**后续** **04 §3.4** **diff** **见** **B-200** **封口** **同批**。互证 [**母表 B-199**](./任务母表.md) · [**正文**](#tt-b199-85-sec23-acceptance-evidence-001) |
-| 209 | TT-B200-85-PHASE2-ALLOCATION-ROUTE-001 | traveltrust / Phase 2 | **已封口**（**2026-04-14**） | **B-200**：**`/allocation`** **+** **04/13-1** **+** **`page-brief.p1_target`**；**证据** [**GO_B200**](../evidence/GO_B200_ALLOCATION_PHASE2_CLOSE.md)；互证 [**母表 B-200**](./任务母表.md) · [**正文**](#tt-b200-85-phase2-allocation-route-001) |
-| 210 | TT-B182-ADMIN-OBS-OVERVIEW-SUBDOMAIN-SPLIT-001 | admin / Phase Close · B-182 | 已封口 | **B-182**：**`routes/admin`** **薄装配** + **域文件** **收口**（**04** **零漂移**）；互证 [**母表 B-182**](./任务母表.md) · [**正文**](#tt-b182-admin-obs-overview-subdomain-split-001) |
-| 211 | TT-B183-CHAIN-OFF-SUBDIR-GROUPING-REORG-001 | api / Phase Close · B-183 | 已封口（**2026-04-14**） | **B-183**：**`chain_off/governance/`** + **`reconcile/replay_orders_projection`**；互证 [**母表 B-183**](./任务母表.md) · [**正文**](#tt-b183-chain-off-subdir-grouping-reorg-001) |
-| 212 | TT-B184-SCRIPTS-README-GATES-OPS-NARRATIVE-001 | scripts / Phase Close · B-184 | 已封口（**2026-04-14** · **Phase Close 完成**） | **B-184**：**`scripts/README`** gates/ops/dev 叙事；互证 [**母表 B-184**](./任务母表.md) · [**正文**](#tt-b184-scripts-readme-gates-ops-narrative-001) |
-| 213 | TT-B185-UNIFIED-OBSERVABILITY-JSON-SHELL-IMPL-001 | ops / Phase Close · B-185 | **已封口**（**2026-04-14**） | **B-185**：**`indexer_observability_v1`** **全腿** **+** **`observed_at`**（**admin/reconcile** **同源**）；互证 [**母表 B-185**](./任务母表.md) · [**正文**](#tt-b185-unified-observability-json-shell-impl-001) |
-| 214 | TT-B186-B166-NARRATIVE-PROBE-DOCS-TESTS-001 | docs / Phase Close · B-186 | **已封口**（**2026-04-14**） | **B-186**：**B-166** 叙事/探针文档与测；互证 [**母表 B-186**](./任务母表.md) · [**正文**](#tt-b186-b166-narrative-probe-docs-tests-001) |
-| 215 | TT-B201-ENTERPRISE-API-RS-FOOTPRINT-AUDIT-001 | api / 企业审计 | 已封口 | **B-201**：**`crates/api`** **`.rs`** 治理型快照（**[Enterprise-Code-Footprint-Audit-API-Rust.md](./Enterprise-Code-Footprint-Audit-API-Rust.md)**）；**对读** **check-48**；互证 [**母表 B-201**](./任务母表.md) · [**正文**](#tt-b201-enterprise-api-rs-footprint-audit-001) |
-| 216 | TT-B202-ENTERPRISE-FRONTEND-TS-FOOTPRINT-AUDIT-001 | frontend / 企业审计 | 已封口 | **B-202**：前端 **≥550** 行治理快照（**[Enterprise-Code-Footprint-Audit-Frontend.md](./Enterprise-Code-Footprint-Audit-Frontend.md)**）；互证 [**母表 B-202**](./任务母表.md) · [**正文**](#tt-b202-enterprise-frontend-ts-footprint-audit-001) |
-| 217 | TT-B203-85-HERO-MOTION-B3-ALIGN-001 | traveltrust / Hero · §C.3 | **已封口**（**2026-04-14**） | **B-203**：**Hero** **`fadeInUp`/`fadeIn` + `traveltrustHeroEntrance`**；**§C.3** **≤0.45s**；**证据** [**GO_B203_HERO_MOTION_CLOSE**](../evidence/GO_B203_HERO_MOTION_CLOSE.md)；互证 [**母表 B-203**](./任务母表.md) · [**正文**](#tt-b203-85-hero-motion-b3-align-001) |
-| 218 | TT-B204-110-FULL-CHAIN-SCAN-IMPLEMENTATION-001 | indexer / 110 · 全链扫最小切片 | **已封口**（**2026-04-14**） | **B-204**：**`INDEXER_FULL_SCAN_LOWER_BOUND_BLOCK`** **+** **`full_scan_lower_bound_observability`**（**110/04/08-3** **同批**）；**互证** [**母表 B-204**](./任务母表.md) · [**正文**](#tt-b204-110-full-chain-scan-implementation-001) |
-| 219 | TT-B205-GOVERNANCE-POOL-TREASURY-ERC20-SSOT-HANDLER-001 | governance / B110-SSOT-06 | **已封口**（**2026-04-14**） | **B-205**：**`treasury_erc20_pool*`** **handler**（**04/14** **所称** **`TT-SSOT-SWITCH-APPLY-003`** **之索引正式 ID**）；互证 [**母表 B-205**](./任务母表.md) · [**正文**](#tt-b205-governance-pool-treasury-erc20-ssot-handler-001) |
-| 220 | TT-B206-14-POST-FEEROUTER-FIRST-SUBDOMAIN-IMPL-001 | contracts / 14 §1.1.1.1 | 已封口（**2026-04-14**） | **B-206**：**FeeRouter** **country 档** **双桶**（**`setCountryBucketSplit`**）；互证 [**母表 B-206**](./任务母表.md) · [**正文**](#tt-b206-14-post-feerouter-first-subdomain-impl-001) |
-| 221 | TT-B207-04-MEDIA-SIGNED-URLS-BLOB-001 | api / 04 §3.4 · media blob | **已封口**（**2026-04-14**） | **B-207**：**`TRAVELTRUST_MEDIA_EVIDENCE_FETCH_URL_TEMPLATE`** **→** **`GET …/media/access/:token_id`** **字节体**（**批 270**）；互证 [**母表 B-207**](./任务母表.md) · [**正文**](#tt-b207-04-media-signed-urls-blob-001) |
-| 222 | TT-B208-14-REGIONVAULT-TABLE-ROW2-SUBDOMAIN-001 | api / 14 §1.1.1.1a · RegionVault 导出切片 | **已封口**（**2026-04-14**） | **B-208**：**admin/internal** **`…/region-vault/forwarded-events/export`** + **`include_snapshot_explain`**；互证 [**母表 B-208**](./任务母表.md) · [**14 §1.1.1.1a**](./spec/14-合约-API-ABI-前后端对齐.md) · [**正文**](#tt-b208-14-regionvault-table-row2-subdomain-001) |
-| 223 | TT-B209-110-FULL-CHAIN-SCAN-MAX-BLOCK-SPAN-V1-001 | indexer / 110 · 全链扫批宽切片 | **已封口**（**2026-04-14**） | **B-209**：**`INDEXER_TICK_MAX_BLOCK_SPAN`** **+** **`indexer_tick_max_block_span_observability`**（**承 B-192/B-204**）；互证 [**母表 B-209**](./任务母表.md) · [**110 §3.1.2.1**](./spec/110-阶段开发链上索引器与事件同步器.md) · [**正文**](#tt-b209-110-full-chain-scan-max-block-span-v1-001) |
-| 224 | TT-B210-110-INDEXER-EVIDENCE-MANIFEST-FULL-SCAN-REGISTRY-001 | indexer / 110 · evidence manifest 全链扫登记 | **已封口**（**2026-04-14**） | **B-210**：**`manifest.json`** **`indexer_full_scan_catchup_registry`**（**`110-INDEXER-EVIDENCE-FULL-SCAN-REGISTRY-V1`**）**十字登记** **B-204/B-209** **tick ENV**；互证 [**母表 B-210**](./任务母表.md) · [**110 §3.1.2.1**](./spec/110-阶段开发链上索引器与事件同步器.md) · [**正文**](#tt-b210-110-indexer-evidence-manifest-full-scan-registry-001) |
-| 225 | TT-B211-110-INDEXER-TICK-LOOP-ORCHESTRATION-001 | indexer / 110 · internal 多 tick 批编排 | **已封口**（**2026-04-14**） | **B-211**：**`internal-indexer-ops` `tick-loop`**（**`110-INDEXER-TICK-LOOP-ORCHESTRATION-V1`**）**反复** **`POST …/internal/indexer-tick` `{}`**；互证 [**母表 B-211**](./任务母表.md) · [**110 §3.1.2.1**](./spec/110-阶段开发链上索引器与事件同步器.md) · [**正文**](#tt-b211-110-indexer-tick-loop-orchestration-001) |
-| 226 | TT-B212-110-INDEXER-TICK-LOOP-RUN-OBSERVABILITY-001 | indexer / 110 · tick-loop 运行级观测聚合 | **已封口**（**2026-04-14**） | **B-212**：**`tick-loop` stdout** **`indexer_tick_loop_run_observability`**（**`110-INDEXER-TICK-LOOP-RUN-OBSERVABILITY-V1`**；**`rounds[]`****+****`run_summary`**）；**不**改 **单次 tick** **体**/**evidence manifest** **schema**；互证 [**母表 B-212**](./任务母表.md) · [**110 §3.1.2.1**](./spec/110-阶段开发链上索引器与事件同步器.md) · [**正文**](#tt-b212-110-indexer-tick-loop-run-observability-001) |
-| 227 | TT-B213-110-INDEXER-TICK-LOOP-EVIDENCE-JSON-WRITE-001 | indexer / 110 · tick-loop 可选 JSON 落盘 | **已封口**（**2026-04-14**） | **B-213**：**`--write-evidence-json`****/** **`INDEXER_TICK_LOOP_EVIDENCE_JSON`** **→** **落盘** **`indexer_tick_loop_evidence_write`**（**`110-INDEXER-TICK-LOOP-EVIDENCE-JSON-WRITE-V1`**）；**stdout** **无** **evidence_write**；**不**改 **B-210** **manifest** **根** **schema**；互证 [**母表 B-213**](./任务母表.md) · [**110 §3.1.2.1**](./spec/110-阶段开发链上索引器与事件同步器.md) · [**正文**](#tt-b213-110-indexer-tick-loop-evidence-json-write-001) |
-| 228 | TT-B214-FEEROUTER-B081-RECEIPT-MOCK-STABLE-001 | api / FeeRouter · b081 测去抖 | **已封口**（**2026-04-14**） | **B-214**：**`b081_db_row_matches_transaction_receipt_platform_fee_routed_decode`** **mock** **`std::thread`****+** **重试**；**承** **B-081** **receipt** **路径**；互证 [**母表 B-214**](./任务母表.md) · [**正文**](#tt-b214-feerouter-b081-receipt-mock-stable-001) |
-| 229 | TT-B216-110-FULL-CHAIN-HISTORICAL-COMPLETENESS-PROOF-V0-JSON-GATE-001 | indexer / 110 · 全集证明最小 JSON + gate | **已封口**（**2026-04-14**） | **B-216**：**`write-indexer-historical-completeness-proof.sh`** **+** **`internal-indexer-ops` `historical-completeness-proof`**；**锚** **`110-FULL-CHAIN-HISTORICAL-COMPLETENESS-PROOF-V0`**；**gate** **`checks_total`****`122`**；**承** **B-215**；**零** **`indexer-tick`** **语义** **diff**；互证 [**母表 B-216**](./任务母表.md) · [**110 §3.1.2.1**](./spec/110-阶段开发链上索引器与事件同步器.md) · [**正文**](#tt-b216-110-full-chain-historical-completeness-proof-v0-json-gate-001) |
-| 230 | TT-B217-110-INDEXER-TICK-RPC-PACING-V1-001 | indexer / 110 · indexer-tick JSON-RPC pacing | **已封口**（**2026-04-14**） | **B-217**：**`INDEXER_TICK_MIN_RPC_INTERVAL_MS`** **+** **`indexer_tick_rpc_pacing_observability`**；**锚** **`110-INDEXER-TICK-RPC-PACING-V1`** **`→`****`rpc_pacing.rs`**；**gate** **`checks_total`****`123`**；**排除** **`apply_escrow_loop`** **`eth_getTransactionByHash`**（**B-094**）；互证 [**母表 B-217**](./任务母表.md) · [**04 §3.4**](./spec/04-后端与API.md) · [**正文**](#tt-b217-110-indexer-tick-rpc-pacing-v1-001) |
-| 231 | TT-B218-14-FEEROUTER-ROUTED-EVENTS-EXPORT-001 | api / 14 §1.1.1.1 · FeeRouter 柱 C 导出 | **已封口**（**2026-04-14**） | **B-218**：**admin/internal** **`…/fee-router/routed-events/export`**（**对称 B-208**；**无** **`include_snapshot_explain`**）；互证 [**母表 B-218**](./任务母表.md) · [**04 §3.4/§3.5**](./spec/04-后端与API.md) · [**正文**](#tt-b218-14-feerouter-routed-events-export-001) |
-| 232 | TT-B219-110-EVIDENCE-BUNDLE-CANONICAL-COMBINE-001 | indexer / 110 · evidence 三件套标准化汇编 | **已封口**（**2026-04-14**） | **B-219**：**`write-indexer-evidence-bundle-canonical.sh`** + **`evidence-bundle-canonical`**；**锚** **`110-INDEXER-EVIDENCE-BUNDLE-CANONICAL-V1`**；**gate** **`checks_total`****`125`**；互证 [**母表 B-219**](./任务母表.md) · [**110 §3.1.2.1**](./spec/110-阶段开发链上索引器与事件同步器.md) · [**正文**](#tt-b219-110-evidence-bundle-canonical-combine-001) |
-| 233 | TT-B222-110-EVIDENCE-BUNDLE-CI-AUTO-RUN-001 | CI / indexer-reconcile-gate · evidence-bundle artifact | **已封口**（**2026-04-14**） | **B-222**：**`indexer-reconcile-gate.yml`** **离线** **fixture** **汇编** **`indexer_evidence_bundle_canonical_ci`** **+** **`sha256sum -c`**/**`jq`** **+** **`upload-artifact`**；**`checks_total`****`125`** **不变**；互证 [**母表 B-222**](./任务母表.md) · [**B-221**](./任务母表.md) · [**正文**](#tt-b222-110-evidence-bundle-ci-auto-run-001) |
-| 234 | TT-B223-14-REGIONVAULT-COUNTRY-LEDGER-READ-MODEL-V1-001 | api / 14 · RegionVault 辖区 Σ 读模型 | **已封口**（**2026-04-14**） | **B-223**：**`region_vault_forwarded_events`** **只读** **admin/internal** **`country-ledger-read-model`**；**可选** **`REGION_VAULT_COUNTRY_LEDGER_MAP_PATH`**；互证 [**母表 B-223**](./任务母表.md) · [**正文**](#tt-b223-14-regionvault-country-ledger-read-model-v1-001) |
-| 235 | TT-B224-14-REGIONVAULT-LEDGER-SNAPSHOT-EXPLAIN-EXPORT-001 | api / 14 · RegionVault 辖区 Σ 导出 + snapshot explain | **已封口**（**2026-04-14**） | **B-224**：**B-223** **附件** **`country-ledger-read-model/export`** **JSON/CSV** **对齐** **B-208**；互证 [**母表 B-224**](./任务母表.md) · [**正文**](#tt-b224-14-regionvault-ledger-snapshot-explain-export-001) |
-| 236 | TT-B225-14-REGIONVAULT-SNAPSHOT-CLAIM-READINESS-GATE-001 | api / 14 · RegionVault snapshot claim 就绪门禁 | **已封口**（**2026-04-14**） | **B-225**：**`region_share_snapshot_lines`** **+** **Vault** **投影** **只读** **`readiness`**；**`GET …/admin|internal/region-vault/snapshot-claim-readiness`**；互证 [**母表 B-225**](./任务母表.md) · [**正文**](#tt-b225-14-regionvault-snapshot-claim-readiness-gate-001) |
-| 237 | TT-B226-14-REGIONVAULT-CLAIM-DRYRUN-PAYLOAD-001 | api / 14 · RegionVault claim dry-run 载荷 | **已封口**（**2026-04-14**） | **B-226**：**承** **B-225** **`ready`**；**`GET …/admin|internal/region-vault/snapshot-claim-dryrun-payload(/export)`**；互证 [**母表 B-226**](./任务母表.md) · [**正文**](#tt-b226-14-regionvault-claim-dryrun-payload-001) |
-| 238 | TT-B227-14-REGIONVAULT-CLAIM-BATCH-PLAN-EXPORT-001 | api / 14 · RegionVault 批次计划导出 | **已封口**（**2026-04-14**） | **B-227**：**承** **B-226**；**按** **`jurisdiction`****+****`snapshot_epoch`** **聚** **`batches[]`**；**`GET …/admin|internal/region-vault/snapshot-claim-batch-plan(/export)`**；互证 [**母表 B-227**](./任务母表.md) · [**正文**](#tt-b227-14-regionvault-claim-batch-plan-export-001) |
-| 239 | TT-B228-14-REGIONVAULT-CLAIM-EXECUTION-EVIDENCE-STUB-001 | api / 14 · RegionVault claim 执行证据壳（stub） | **已封口**（**2026-04-14**） | **B-228**：**承** **B-227**；**`claim_execution_evidence_plan_id`****+****`execution_evidence_stub`****（** **`tx_hash`****/**`status`** **预留**）**；**`GET …/admin|internal/region-vault/snapshot-claim-execution-evidence-stub(/export)`**；互证 [**母表 B-228**](./任务母表.md) · [**正文**](#tt-b228-14-regionvault-claim-execution-evidence-stub-001) |
-| 240 | TT-B229-14-REGIONVAULT-CLAIM-EXECUTION-STATUS-IMPORT-READMODEL-001 | api / 14 · RegionVault claim 执行状态导入只读模型 | **已封口**（**2026-04-14**） | **B-229**：**承** **B-228**；**可选** **导入** **`tx_hash`****/**`status`****/**`block_number`****/**`log_index`** **合并** **`execution_status_read_model`**；**`GET …/admin|internal/region-vault/snapshot-claim-execution-status-read-model(/export)`**；互证 [**母表 B-229**](./任务母表.md) · [**正文**](#tt-b229-14-regionvault-claim-execution-status-import-readmodel-001) |
-| 241 | TT-B230-14-REGIONVAULT-CLAIM-EXECUTION-RECONCILE-REPORT-001 | api / 14 · RegionVault claim 执行合成 reconcile 报告 | **已封口**（**2026-04-14**） | **B-230**：**B-226～B-229** **合成** **`expected`****/**`executed`****/**`delta`**；**`GET …/admin|internal/region-vault/snapshot-claim-execution-reconcile-report(/export)`**；互证 [**母表 B-230**](./任务母表.md) · [**正文**](#tt-b230-14-regionvault-claim-execution-reconcile-report-001) |
-| 242 | TT-B231-14-REGIONVAULT-CLAIM-GO-NO-GO-GATE-READONLY-001 | api / 14 · RegionVault claim GO/NO-GO 只读门禁 | **已封口**（**2026-04-14**） | **B-231**：**B-230** **+** **B-225** **`gates[]`**** **`verdict`**** **`GO`****/**`NO_GO`****/**`NO_OP`**；**`GET …/admin|internal/region-vault/snapshot-claim-go-no-go-gate(/export)`**；互证 [**母表 B-231**](./任务母表.md) · [**正文**](#tt-b231-14-regionvault-claim-go-no-go-gate-readonly-001) |
-| 243 | TT-B232-14-REGIONVAULT-CLAIM-GO-NO-GO-EVIDENCE-BUNDLE-001 | api / 14 · RegionVault claim 只读证据包（admin） | **已封口**（**2026-04-14**） | **B-232**：**B-225～B-231** **`legs`****+****SHA256`****+** **CSV** **索引**；**`GET …/admin/region-vault/snapshot-claim-go-no-go-evidence-bundle(/export)`**；互证 [**母表 B-232**](./任务母表.md) · [**正文**](#tt-b232-14-regionvault-claim-go-no-go-evidence-bundle-001) |
-| 244 | TT-B233-14-REGIONVAULT-CLAIM-EVIDENCE-BUNDLE-RUNBOOK-CI-001 | CI / 14 · RegionVault claim 证据包离线验收 | **已封口**（**2026-04-14**） | **B-233**：**承** **B-232**；**`TRAVELTRUST_CLAIM_GO_NO_GO_BUNDLE_CI_OUT`** **`cargo test … claim_go_no_go_evidence_bundle_ci_artifact`** **+** **`verify-claim-go-no-go-evidence-bundle.py ci`**；**Build** **artifact**；互证 [**母表 B-233**](./任务母表.md) · [**正文**](#tt-b233-14-regionvault-claim-evidence-bundle-runbook-ci-001) |
-| 245 | TT-B234-14-REGIONVAULT-CLAIM-LIVE-ADMIN-VALIDATION-RUNBOOK-001 | ops / 14 · RegionVault claim 证据包联机 admin 验收 | **已封口**（**2026-04-14**） | **B-234**：**承** **B-232**/**B-233**；**`region-vault-claim-go-no-go-evidence-bundle-live-admin-validate.sh`** **200+SHA256+CSV8+summary**；互证 [**母表 B-234**](./任务母表.md) · [**正文**](#tt-b234-14-regionvault-claim-live-admin-validation-runbook-001) |
-| 246 | TT-B235-14-REGIONVAULT-CLAIM-GO-NO-GO-LIVE-EVIDENCE-ARCHIVE-001 | ops / 14 · RegionVault claim GO/NO-GO 联机证据标准归档 | **已封口**（**2026-04-14**） | **B-235**：**承** **B-234**；**`archive-region-vault-claim-go-no-go-live-evidence.sh`** **`artifacts/`****+****`archive_manifest`****+****`ARCHIVE_README`****+****`README.md`****（** **B-236** **）****+****`artifacts.sha256`**（**锚** **`14-REGIONVAULT-CLAIM-GO-NO-GO-LIVE-EVIDENCE-ARCHIVE-V1`**）；互证 [**母表 B-235**](./任务母表.md) · [**正文**](#tt-b235-14-regionvault-claim-go-no-go-live-evidence-archive-001) |
-| 247 | TT-B236-14-REGIONVAULT-CLAIM-LIVE-EVIDENCE-INDEX-README-001 | ops / 14 · RegionVault claim 联机证据归档索引 README | **已封口**（**2026-04-14**） | **B-236**：**承** **B-235**；**根** **`README.md`** **总览** **+** **`archive_manifest.json`** **`index`****/**`navigation`** **+** **复跑** **命令**（**锚** **`14-REGIONVAULT-CLAIM-LIVE-EVIDENCE-INDEX-README-V1`**）；互证 [**母表 B-236**](./任务母表.md) · [**正文**](#tt-b236-14-regionvault-claim-live-evidence-index-readme-001) |
-| 248 | TT-B237-14-REGIONVAULT-CLAIM-LIVE-EVIDENCE-CI-ARCHIVE-SMOKE-001 | CI / 14 · RegionVault claim 联机证据归档 CI 冒烟 | **已封口**（**2026-04-14**） | **B-237**：**B-233** **fixture** **→** **B-234** **staging** **→** **`finalize-only`** **归档**；**`region-vault-claim-live-archive-ci-smoke.sh`** **+** **Build** **job** **步**；互证 [**母表 B-237**](./任务母表.md) · [**正文**](#tt-b237-14-regionvault-claim-live-evidence-ci-archive-smoke-001) |
-| 249 | TT-B238-14-REGIONVAULT-CLAIM-GO-NO-GO-RELEASE-GATE-READONLY-001 | api / 14 · RegionVault claim GO/NO-GO 发布门禁只读摘要 | **已封口**（**2026-04-14**） | **B-238**：**B-231～B-237** **上** **`release_verdict`****+****`blocking_reasons`****+****`required_evidence_checklist`****+****`archive_integrity_checks`**；**`GET …/admin/region-vault/snapshot-claim-go-no-go-release-gate(/export)`**；互证 [**母表 B-238**](./任务母表.md) · [**正文**](#tt-b238-14-regionvault-claim-go-no-go-release-gate-readonly-001) |
-| 250 | TT-B239-14-REGIONVAULT-CLAIM-GO-NO-GO-RELEASE-GATE-LIVE-ARCHIVE-001 | ops / 14 · RegionVault claim 发布门禁联机归档 | **已封口**（**2026-04-14**） | **B-239**：**承** **B-238** **`validate`****+****`archive-…-release-gate-live-evidence`** **同构** **B-235**；**`verify-claim-go-no-go-release-gate.py`**；互证 [**母表 B-239**](./任务母表.md) · [**正文**](#tt-b239-14-regionvault-claim-go-no-go-release-gate-live-archive-001) |
-| 251 | TT-B240-14-REGIONVAULT-CLAIM-RELEASE-GATE-CI-ARCHIVE-SMOKE-001 | CI / 14 · RegionVault claim 发布门禁归档 CI 冒烟 | **已封口**（**2026-04-14**） | **B-240**：**fixture** **→** **B-239** **`finalize-only`** **+** **`live-full`** **+** **`sha256sum -c`**；**Build** **步** **接** **B-237**；互证 [**母表 B-240**](./任务母表.md) · [**正文**](#tt-b240-14-regionvault-claim-release-gate-ci-archive-smoke-001) |
-| 252 | TT-B241-14-REGIONVAULT-CLAIM-RELEASE-GATE-LIVE-EVIDENCE-INDEX-README-001 | ops / 14 · RegionVault claim 发布门禁归档索引 README | **已封口**（**2026-04-14**） | **B-241**：**承** **B-239**/**B-240**；**`README.md`** **+** **`index.*`****+****`index.parity`** **（** **对** **齐** **B-236** **）**；互证 [**母表 B-241**](./任务母表.md) · [**正文**](#tt-b241-14-regionvault-claim-release-gate-live-evidence-index-readme-001) |
-| 253 | TT-B242-14-REGIONVAULT-CLAIM-RELEASE-GATE-FINAL-GO-REPORT-READONLY-001 | api / 14 · RegionVault claim 发布门禁最终只读 GO 签署报告 | **已封口**（**2026-04-14**） | **B-242**：**承** **B-238** **+** **B-239/B-241**；**`GET …/admin/region-vault/snapshot-claim-go-no-go-release-gate-final-go-report(/export)`** **JSON+CSV**；**归档** **SHA** **query** **自** **证**；互证 [**母表 B-242**](./任务母表.md) · [**正文**](#tt-b242-14-regionvault-claim-release-gate-final-go-report-readonly-001) |
-| 254 | TT-B248-14-REGIONVAULT-CLAIM-READONLY-PHASE-CLOSE-SUMMARY-001 | docs / 14 · RegionVault claim 只读链阶段正式封口 | **已封口**（**2026-04-14**） | **B-248**：**B-223～B-247** **六段闭环** **+** **边界** **+** **执行链** **须** **另开** **非只读** **母卡**；互证 [**母表 B-248**](./任务母表.md) · [**正文**](#tt-b248-14-regionvault-claim-readonly-phase-close-summary-001) · [**附录**](./spec/14-附录-RegionVault-Claim-只读链阶段封口-B248.md) |
-| 255 | TT-B250-14-REGIONVAULT-CLAIM-EXECUTION-DRYRUN-CLI-V1-001 | ops / 14 · RegionVault claim dryrun→交易清单 CLI（只读） | **已封口**（**2026-04-14**） | **B-250**：**B-226** **JSON** **→** **manifest** **（** **B-227** **批次** **）**；**不** **签名** **不** **广播**；互证 [**母表 B-250**](./任务母表.md) · [**正文**](#tt-b250-14-regionvault-claim-execution-dryrun-cli-v1-001) · **`scripts/ops/region_vault_claim_execution_dryrun_cli.py`** |
-| 256 | TT-B251-14-REGIONVAULT-CLAIM-EXECUTION-SIGNING-PLAN-STUB-001 | ops / 14 · RegionVault claim manifest 签名计划壳（只读） | **已封口**（**2026-04-14**） | **B-251**：**承** **B-250**；**`signing_plan_stub`** **默认** **开**；**`--omit-signing-plan-stub`**；互证 [**母表 B-251**](./任务母表.md) · [**正文**](#tt-b251-14-regionvault-claim-execution-signing-plan-stub-001) |
-| 257 | TT-B252-14-REGIONVAULT-CLAIM-EXECUTION-SIGNING-ARTIFACT-STUB-001 | ops / 14 · RegionVault claim 每批签名产物壳（只读） | **已封口**（**2026-04-14**） | **B-252**：**承** **B-251**；**`signing_artifact_stub`** **+** **`signing_artifact_tx_stub`**；**`--omit-signing-artifact-stub`**；互证 [**母表 B-252**](./任务母表.md) · [**正文**](#tt-b252-14-regionvault-claim-execution-signing-artifact-stub-001) |
-| 258 | TT-B253-14-REGIONVAULT-CLAIM-EXECUTION-SIGNING-OFFLINE-PACKAGE-001 | ops / 14 · RegionVault claim 离线签名包布局（只读） | **已封口**（**2026-04-14**） | **B-253**：**承** **B-252**；**`write <manifest.json> <out_dir>`** **→** **per-batch** **+** **`artifacts.sha256`** **+** **交接** **manifest**；互证 [**母表 B-253**](./任务母表.md) · [**正文**](#tt-b253-14-regionvault-claim-execution-signing-offline-package-001) |
-| 259 | TT-B254-14-REGIONVAULT-CLAIM-SIGNED-BACKFILL-STUB-IMPORT-001 | ops / 14 · RegionVault claim 签回回填只读导入壳 | **已封口**（**2026-04-14**） | **B-254**：**承** **B-253**；**`import-stub`** **manifest+package+returned→** **`14-REGIONVAULT-CLAIM-SIGNED-BACKFILL-STUB-IMPORT-V1`**；互证 [**母表 B-254**](./任务母表.md) · [**正文**](#tt-b254-14-regionvault-claim-signed-backfill-stub-import-001) |
-| 260 | TT-B255-14-REGIONVAULT-CLAIM-SIGNED-BACKFILL-RECONCILE-STUB-001 | ops / 14 · RegionVault claim 签回对账只读 reconcile 壳 | **已封口**（**2026-04-14**） | **B-255**：**承** **B-254**；**`reconcile-stub`** **→** **`14-REGIONVAULT-CLAIM-SIGNED-BACKFILL-RECONCILE-STUB-V1`** **+** **`reconcile_verdict_preview`**；互证 [**母表 B-255**](./任务母表.md) · [**正文**](#tt-b255-14-regionvault-claim-signed-backfill-reconcile-stub-001) |
-| 261 | TT-B256-14-REGIONVAULT-CLAIM-BROADCAST-REQUEST-STUB-001 | ops / 14 · RegionVault claim 可广播请求只读壳 | **已封口**（**2026-04-14**） | **B-256**：**承** **B-255** **`GO`**；**`broadcast-request-stub`** **→** **`14-REGIONVAULT-CLAIM-BROADCAST-REQUEST-STUB-V1`**；互证 [**母表 B-256**](./任务母表.md) · [**正文**](#tt-b256-14-regionvault-claim-broadcast-request-stub-001) |
-| 262 | TT-B257-14-REGIONVAULT-CLAIM-BROADCAST-DRYRUN-REHEARSAL-001 | ops / 14 · RegionVault claim 广播前排练只读校验 | **已封口**（**2026-04-14**） | **B-257**：**承** **B-256**；**`rehearsal-dryrun`** **校验** **序** **/** **前置** **/** **`operator_confirmation`** **/** **`tx_hash`**** **槽**；互证 [**母表 B-257**](./任务母表.md) · [**正文**](#tt-b257-14-regionvault-claim-broadcast-dryrun-rehearsal-001) |
-| 263 | TT-B258-14-REGIONVAULT-CLAIM-BROADCAST-LIVE-ADMIN-GATE-STUB-001 | ops / 14 · RegionVault claim 临广播前人工闸口只读壳 | **已封口**（**2026-04-14**） | **B-258**：**承** **B-257** **报告** **+** **B-256**；**`gate-stub`** **→** **`14-REGIONVAULT-CLAIM-BROADCAST-LIVE-ADMIN-GATE-STUB-V1`**；互证 [**母表 B-258**](./任务母表.md) · [**正文**](#tt-b258-14-regionvault-claim-broadcast-live-admin-gate-stub-001) |
-| 264 | TT-B259-14-REGIONVAULT-CLAIM-BROADCAST-EVIDENCE-STUB-001 | ops / 14 · RegionVault claim 待广播证据壳只读归档 | **已封口**（**2026-04-14**） | **B-259**：**合** **B-256～B-258**；**`evidence-stub`** **→** **`14-REGIONVAULT-CLAIM-BROADCAST-EVIDENCE-STUB-V1`**；互证 [**母表 B-259**](./任务母表.md) · [**正文**](#tt-b259-14-regionvault-claim-broadcast-evidence-stub-001) |
-| 265 | TT-B260-14-REGIONVAULT-CLAIM-BROADCAST-RESULT-IMPORT-STUB-001 | ops / 14 · RegionVault claim 广播结果链下导入只读壳 | **已封口**（**2026-04-14**） | **B-260**：**承** **B-259**；**`import-result-stub`** **→** **`14-REGIONVAULT-CLAIM-BROADCAST-RESULT-IMPORT-STUB-V1`**；互证 [**母表 B-260**](./任务母表.md) · [**正文**](#tt-b260-14-regionvault-claim-broadcast-result-import-stub-001) |
-| 266 | TT-B261-14-REGIONVAULT-CLAIM-BROADCAST-RESULT-RECONCILE-STUB-001 | ops / 14 · RegionVault claim 广播结果链下对账只读壳 | **已封口**（**2026-04-14**） | **B-261**：**承** **B-260**；**`reconcile-result-stub`** **→** **`14-REGIONVAULT-CLAIM-BROADCAST-RESULT-RECONCILE-STUB-V1`**；互证 [**母表 B-261**](./任务母表.md) · [**正文**](#tt-b261-14-regionvault-claim-broadcast-result-reconcile-stub-001) |
-| 267 | TT-B262-14-REGIONVAULT-CLAIM-BROADCAST-EXECUTION-001 | ops / 14 · RegionVault claim 广播 JSON-RPC 执行与报告落盘 | **已封口**（**2026-04-14**） | **B-262**：**承** **B-256**；**`execute`** **`eth_sendRawTransaction`** **→** **`14-REGIONVAULT-CLAIM-BROADCAST-EXECUTION-REPORT-V1`**；互证 [**母表 B-262**](./任务母表.md) · [**正文**](#tt-b262-14-regionvault-claim-broadcast-execution-001) |
-| 268 | TT-B263-14-REGIONVAULT-CLAIM-BROADCAST-RECEIPT-ARCHIVE-001 | ops / 14 · RegionVault claim 广播 receipt 链上归档 | **已封口**（**2026-04-14**） | **B-263**：**承** **B-262**；**`archive-receipts`** **`eth_getTransactionReceipt`** **→** **`14-REGIONVAULT-CLAIM-BROADCAST-RECEIPT-ARCHIVE-V1`**；互证 [**母表 B-263**](./任务母表.md) · [**正文**](#tt-b263-14-regionvault-claim-broadcast-receipt-archive-001) |
-| 269 | TT-B264-14-REGIONVAULT-CLAIM-BROADCAST-RESULT-RECONCILE-ONCHAIN-001 | ops / 14 · RegionVault claim 广播 B-262+B-263 链上对账 | **已封口**（**2026-04-14**） | **B-264**：**承** **B-262+B-263**；**`reconcile-onchain`** **→** **`14-REGIONVAULT-CLAIM-BROADCAST-ONCHAIN-RECONCILE-V1`**；互证 [**母表 B-264**](./任务母表.md) · [**正文**](#tt-b264-14-regionvault-claim-broadcast-result-reconcile-onchain-001) |
-| 270 | TT-B265-14-REGIONVAULT-CLAIM-INDEXER-UPLIFT-ONCHAIN-001 | api / 14 · RegionVault claim B-264 JSON 读模型与 forwarded 互证 | **已封口**（**2026-04-14**） | **B-265**：**承** **B-264**；**`REGION_VAULT_CLAIM_ONCHAIN_RECONCILE_IMPORT_PATH`** **`GO`** **升格** **`execution_status_read_model`****+****`b265_indexer_uplift`**；**B-230～B-242** **同源**；互证 [**母表 B-265**](./任务母表.md) · [**正文**](#tt-b265-14-regionvault-claim-indexer-uplift-onchain-001) |
-| 271 | TT-B266-14-REGIONVAULT-CLAIM-PRODUCTION-GO-GATE-001 | ops / 14 · RegionVault claim B-263+B-264 生产 GO 闸（文件 + 双 attestation） | **已封口**（**2026-04-14**） | **B-266**：**承** **B-263～B-265**；**`production-go-gate`** **`onchain_reconcile.json`****+** **`receipt_archive.json`** **、** **`--attest-b265-indexer-uplift`****+** **`--attest-b230-b242-evidence-chain`** **；** **`production_verdict`****≠****`GO`** **默认** **exit** **1** **（** **`--allow-non-go-production`** **）** **；** **锚** **`14-REGIONVAULT-CLAIM-PRODUCTION-GO-GATE-V1`** **；** 互证 [**母表 B-266**](./任务母表.md) · [**正文**](#tt-b266-14-regionvault-claim-production-go-gate-001) · **`scripts/ops/region_vault_claim_production_go_gate.py`* |
-| 272 | TT-METAPROVIDER-LOADING-ERROR-RESYNC-001 | frontend · `MetaProvider` / `useMeta` 上下文 | **已封口**（**2026-04-14**） | **B-269**：**修复** **`frontend/components/MetaProvider.tsx`** **在** **`t` 变化等二次 `getMeta()`** **前** **未** **`setLoading(true)`**/**`setError(null)`** **之** **loading/error** **状态机** **缺口** **；** **保留** **`finally` → `setLoading(false)`** **；** **不** **扩展** **业务** **语义** **。** **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0** **。** 互证 [**母表 B-269**](./任务母表.md) · [**正文**](#tt-metaprovider-loading-error-resync-001) |
-| 273 | TT-FRIENDS-PARTIAL-ERROR-VISIBILITY-001 | community · `/community/friends` · 多腿 `allSettled` | **已封口**（**2026-04-14**） | **B-270**：**`frontend/app/community/friends/page.tsx`** **`Promise.allSettled`** **部分** **失败** **新增** **`partialLoadHint`** **弱** **提示** **；** **不** **打断** **主** **成功** **态** **渲染** **。** **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0** **。** 互证 [**母表 B-270**](./任务母表.md) · [**正文**](#tt-friends-partial-error-visibility-001) |
-| 274 | TT-FINANCE-RECONCILIATION-PARTIAL-ERROR-VISIBILITY-001 | admin · `/admin/finance-reconciliation` · 财务枢纽 | **已封口**（**2026-04-14**） | **B-271**：**`frontend/app/admin/finance-reconciliation/page.tsx`** **主** **`GET …/finance/summary`** **成功** **`crossErr`****/** **`driftSummaryErr`** **时** **顶部** **弱** **提示** **`admin_finance_reconciliation_partial_load_hint`****+****`driftLegsRetryKey`** **局部** **重试** **；** **不** **打断** **主** **成功** **态** **。** **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0** **。** 互证 [**母表 B-271**](./任务母表.md) · [**正文**](#tt-finance-reconciliation-partial-error-visibility-001) |
-| 275 | TT-ADMIN-ERROR-RESET-CONVENTION-UNIFICATION-001 | admin · `/admin/finance` · 首屏拉取错误清理惯例 | **已封口**（**2026-04-14**） | **B-272**：**`frontend/app/admin/finance/page.tsx`** **首屏** **`adminFetchJson`** **前** **`setLoading(true)`****+****`setError(null)`** **；** **统一** **admin** **首屏** **错误** **清理** **惯例** **。** **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0** **。** 互证 [**母表 B-272**](./任务母表.md) · [**正文**](#tt-admin-error-reset-convention-unification-001) |
-| 276 | TT-GOVERNANCE-EM-DASH-CONSISTENCY-001 | frontend · governance · 空值占位 `ui_em_dash` | **已封口**（**2026-04-14**） | **B-273**：**治理** **相关** **页** **硬编码** **`"—"`** **空值** **→** **`t("ui_em_dash")`** **；** **不** **改** **句内** **`base`****—****`detail`****/** **`note`****—** **说明** **等** **拼接** **语义** **。** **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0** **。** 互证 [**母表 B-273**](./任务母表.md) · [**正文**](#tt-governance-em-dash-consistency-001) |
-| 277 | TT-ADMIN-ERROR-DISPLAY-UNIFICATION-001 | admin · 首屏/摘要 · `ApiErrorAlert` 统一 | **已封口**（**2026-04-14**） | **B-274**：**8** **个** **admin** **页** **`adminErrorUserText`** **红框** **`role="alert"`** **→** **`ApiErrorAlert`** **；** **保留** **加载** **/** **重试** **/** **分支** **；** **不** **动** **warning** **黄框** **与** **非** **首屏** **页** **。** **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0** **。** 互证 [**母表 B-274**](./任务母表.md) · [**正文**](#tt-admin-error-display-unification-001) |
-| 278 | TT-TESTNET-REAL-RUN-VALIDATION-001 | ops · testnet · B-262→B-266 真实链编排 + operator 证据 | **已封口**（**2026-04-14**） | **B-275**：**已** **落地** **`run_testnet_b262_b266_real.sh`****/** **`write_tt_testnet_real_run_evidence_summary.py`****/** **`evidence/testnet_real_run_validation/README.md`** **；** **具备** **真实** **`broadcast_request_stub`****+** **`CHAIN_RPC_URL`** **时** **可** **testnet** **全链路** **真实** **运行** **并** **聚合** **operator** **证据** **；** **登记** **轮** **CI** **/** **沙箱** **无** **真实** **tx** **；** **多** **笔** **连续** **nonce** **真实** **链** **证据** **见** **一览** **376** **`TT-B322-…`** **（** **2026-04-15** **封口** **）** **。** **验收**：**脚本** **+** **README** **路径** **。** 互证 [**母表 B-275**](./任务母表.md) · [**正文**](#tt-testnet-real-run-validation-001) · **[`ops/RUNBOOK.md`](../ops/RUNBOOK.md)** **§2.55** |
-| 279 | TT-B306-07-PR-PREFLIGHT-SCRIPT-MATRIX-INDEX-001 | doc · 07 §二 2.3 · PR 前预检脚本矩阵索引 | **已封口**（**2026-04-14**） | **B-306**：**已** **新增** **[`docs/scripts-ops-preflight-matrix.md`](./scripts-ops-preflight-matrix.md)** **（** **`scripts/ops`**** **矩阵** **+** **07** **/** **CONTRIBUTING** **/** **`scripts/README`**** **互** **指** **）** **；** **`scripts/ops`**** **无** **行为** **diff** **。** **互证** [**母表 B-306**](./任务母表.md) · [**registry**](#tt-b306-b335-07-aligned-backlog-registry-001) |
-| 280 | TT-B307-GOVERNANCE-DOC-LINKAGE-FAILURE-RUNBOOK-001 | doc · 07 §二 2.4 · 治理联动门禁失败 Runbook | **已封口**（**2026-04-14**） | **B-307**：**Runbook** **[§12.7.1](../ops/RUNBOOK.md#1271-governance-doc-linkage-failure-triage)** **分流** **表** **+** **07** **§二 2.4** **CI** **基线** **互** **指** **+** **`scripts/README`** **/** **门禁** **头** **注释** **。** **互证** [**母表 B-307**](./任务母表.md) · [**registry**](#tt-b306-b335-07-aligned-backlog-registry-001) |
-| 281 | TT-B351-ADR-TEMPLATE-AND-CODEOWNERS-MAP-001 | doc · ADR 模板与 CODEOWNERS 映射 | **已封口**（**2026-04-14**） | **B-351**：**[`docs/adr/`](./adr/README.md)** **模板** **+** **[`CODEOWNERS-map.md`](./CODEOWNERS-map.md)** **；** **`.github/CODEOWNERS`** **注释** **占位** **；** **07** **§6.3C** **/** **CONTRIBUTING** **互** **指** **。** **互证** [**母表 B-351**](./任务母表.md) · [**registry**](#tt-b336-b365-platform-reliability-registry-001) |
-| 282 | TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001 | ops · testnet · B-275 多笔连续 nonce 真实链证据归档 | **已封口**（**2026-04-15**） | **B-275** **协记** **（** **非** **母表** **B-322** **/** **一览** **332** **`TT-B322-CI-TSC-VITEST-BUDGET-DOC-001`** **）** **：** **Anvil** **上** **2** **/** **3** **笔** **`broadcast_request_stub`** **经** **`run_testnet_b262_b266_real.sh`** **全链路** **`GO`** **；** **归档** **`evidence/testnet_real_run_validation/run_tt_b322_anvil_multi_tx2_20260415/`** **、** **`run_tt_b322_anvil_multi_tx3_20260415/`** **；** **契** **[`TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001.md`](../evidence/testnet_real_run_validation/TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001.md)** **。** **互证** [**母表 B-275**](./任务母表.md) · [**正文**](#tt-b322-testnet-multi-tx-nonce-sequence-real-run-001) · **一览** **285** · **[`ops/RUNBOOK.md`](../ops/RUNBOOK.md)** **§2.55** |
+| 203 | TT-B192-110-FULL-CHAIN-SCAN-SCOPE-001 | indexer / 规划 · 110 全链扫 | 已封口（**2026-04-13** · **文档轮**） | **B-192**：**110 §3.1.2.1** **全量扫链 Target** 与 **B-114** **切片** **分界** **钉界**；**三角互指** **110**/**母表 B-192**/**07 §六 6.3A**；**实现轮** **另 TT**；互证 [**母表 B-192**](./任务母表.md) · [**正文**](#tt-b192-110-full-chain-scan-scope-001) |
+| 204 | TT-B193-EVM-POST-FEEROUTER-PARTIAL-SCOPE-001 | contracts / 规划 · 14 §1.1.1 余量 | 已封口（**2026-04-13** · **文档轮**） | **B-193**：**14 §1.1.1.1** **FeeRouter 之后** **Partial/Target** **余量子域表**；**三角互指** **14**/**B-116**/**B-193**/**07 §六 6.3A**；**子域实现** **另开 TT**；互证 [**母表 B-193**](./任务母表.md) · [**正文**](#tt-b193-evm-post-feerouter-partial-scope-001) |
+| 205 | TT-B194-85-APPENDIX-HI-COMPONENT-SPEC-001 | traveltrust / 85 附录 H·I | 已封口（**2026-04-13** · **实现完成**） | **B-194**：**85 附录 v1.0.0.4** **§H/§I** **可生成代码级**；**组件拆分** + **i18n 单源** + **Vitest**；**`tsc` / `cargo test -p traveltrust-api` / `run-check-04-routes`** **绿**；**未改** **04/07**；互证 [**母表 B-194**](./任务母表.md) · [**正文**](#tt-b194-85-appendix-hi-component-spec-001) |
+| 206 | TT-B195-85-MOTION-PRESETS-LIB-001 | traveltrust / Motion B.3 | **已封口**（**2026-04-14**） | **B-195**：**`traveltrustMotionPresets.ts`** + **page 三处** + **Vitest** + **S23-06 Full**；**B.3 对读** → [**evidence/GO_B195_MOTION_B3_READOFF.md**](../evidence/GO_B195_MOTION_B3_READOFF.md)；互证 [**母表 B-195**](./任务母表.md) · [**正文**](#tt-b195-85-motion-presets-lib-001) |
+| 207 | TT-B196-85-VIDEO-ASSET-08-4-GATE-001 | traveltrust / 视频 §九 | **已封口**（**2026-04-14** · **示意资产**） | **B-196**：**`public/traveltrust/video/`** + **`CAPTIONS_*`** + **Vitest**；**证据** [**GO_B196**](../evidence/GO_B196_VIDEO_ASSET_08_4_CLOSE.md)；**S23-05** **仍** **Partial**；互证 [**母表 B-196**](./任务母表.md) · [**正文**](#tt-b196-85-video-asset-08-4-gate-001) |
+| 208 | TT-B197-85-ALLOCATION-84-SSOT-001 | traveltrust / Allocation·84 | **已封口**（**2026-04-14** · **SSOT 工程**） | **B-197**：**`traveltrustAllocation84Ssot`** + **Vitest** **锁** **84** **版本** + **Placeholder**；**证据** [**GO_B197**](../evidence/GO_B197_ALLOCATION_84_SSOT_CLOSE.md)；**S23-10** **仍** **Partial**；互证 [**母表 B-197**](./任务母表.md) · [**正文**](#tt-b197-85-allocation-84-ssot-001) |
+| 209 | TT-B198-85-ANALYTICS-PRODUCTION-PIPE-001 | traveltrust / 埋点 | **已封口**（**2026-04-14**） | **B-198**：**`trackTravelTrustEvent`** **`gtag`/`ingest`**；**`NEXT_PUBLIC_TRAVELTRUST_ANALYTICS_REQUIRE_CONSENT`** **门闸** + **`TravelTrustAnalyticsConsentBar`** + **`/privacy` §3**；**`lib/analytics.test.ts`** + **ConsentBar Vitest**；互证 [**母表 B-198**](./任务母表.md) · [**正文**](#tt-b198-85-analytics-production-pipe-001) · [**GO_B198**](../evidence/GO_B198_ANALYTICS_CLOSE.md) |
+| 210 | TT-B199-85-SEC23-ACCEPTANCE-EVIDENCE-001 | traveltrust / §廿三 | 已封口（**2026-04-13** · **验收完成**） | **完成** **85 §廿三** **S23-01～S23-12** **验收证据填充**；**CLI** / **测试** / **源码对齐** **证据已归档于** **GO_85_TRAVELTRUST** **与** **`artifacts/`**；**B-199** **历史轮** **未改** **07** **契约**；**后续** **04 §3.4** **diff** **见** **B-200** **封口** **同批**。互证 [**母表 B-199**](./任务母表.md) · [**正文**](#tt-b199-85-sec23-acceptance-evidence-001) |
+| 211 | TT-B200-85-PHASE2-ALLOCATION-ROUTE-001 | traveltrust / Phase 2 | **已封口**（**2026-04-14**） | **B-200**：**`/allocation`** **+** **04/13-1** **+** **`page-brief.p1_target`**；**证据** [**GO_B200**](../evidence/GO_B200_ALLOCATION_PHASE2_CLOSE.md)；互证 [**母表 B-200**](./任务母表.md) · [**正文**](#tt-b200-85-phase2-allocation-route-001) |
+| 212 | TT-B182-ADMIN-OBS-OVERVIEW-SUBDOMAIN-SPLIT-001 | admin / Phase Close · B-182 | 已封口 | **B-182**：**`routes/admin`** **薄装配** + **域文件** **收口**（**04** **零漂移**）；互证 [**母表 B-182**](./任务母表.md) · [**正文**](#tt-b182-admin-obs-overview-subdomain-split-001) |
+| 213 | TT-B183-CHAIN-OFF-SUBDIR-GROUPING-REORG-001 | api / Phase Close · B-183 | 已封口（**2026-04-14**） | **B-183**：**`chain_off/governance/`** + **`reconcile/replay_orders_projection`**；互证 [**母表 B-183**](./任务母表.md) · [**正文**](#tt-b183-chain-off-subdir-grouping-reorg-001) |
+| 214 | TT-B184-SCRIPTS-README-GATES-OPS-NARRATIVE-001 | scripts / Phase Close · B-184 | 已封口（**2026-04-14** · **Phase Close 完成**） | **B-184**：**`scripts/README`** gates/ops/dev 叙事；互证 [**母表 B-184**](./任务母表.md) · [**正文**](#tt-b184-scripts-readme-gates-ops-narrative-001) |
+| 215 | TT-B185-UNIFIED-OBSERVABILITY-JSON-SHELL-IMPL-001 | ops / Phase Close · B-185 | **已封口**（**2026-04-14**） | **B-185**：**`indexer_observability_v1`** **全腿** **+** **`observed_at`**（**admin/reconcile** **同源**）；互证 [**母表 B-185**](./任务母表.md) · [**正文**](#tt-b185-unified-observability-json-shell-impl-001) |
+| 216 | TT-B186-B166-NARRATIVE-PROBE-DOCS-TESTS-001 | docs / Phase Close · B-186 | **已封口**（**2026-04-14**） | **B-186**：**B-166** 叙事/探针文档与测；互证 [**母表 B-186**](./任务母表.md) · [**正文**](#tt-b186-b166-narrative-probe-docs-tests-001) |
+| 217 | TT-B201-ENTERPRISE-API-RS-FOOTPRINT-AUDIT-001 | api / 企业审计 | 已封口 | **B-201**：**`crates/api`** **`.rs`** 治理型快照（**[Enterprise-Code-Footprint-Audit-API-Rust.md](./Enterprise-Code-Footprint-Audit-API-Rust.md)**）；**对读** **check-48**；互证 [**母表 B-201**](./任务母表.md) · [**正文**](#tt-b201-enterprise-api-rs-footprint-audit-001) |
+| 218 | TT-B202-ENTERPRISE-FRONTEND-TS-FOOTPRINT-AUDIT-001 | frontend / 企业审计 | 已封口 | **B-202**：前端 **≥550** 行治理快照（**[Enterprise-Code-Footprint-Audit-Frontend.md](./Enterprise-Code-Footprint-Audit-Frontend.md)**）；互证 [**母表 B-202**](./任务母表.md) · [**正文**](#tt-b202-enterprise-frontend-ts-footprint-audit-001) |
+| 219 | TT-SOLO-ROADMAP-MVP-001 | process · 1 人极简路线图 | **进度锚点（非阻塞）** | **聚合任务目标**：**P0～P4** **演示闭包**；**[路线图-1人开发极简版.md](./路线图-1人开发极简版.md)** **SSOT**；**不替代** **单张业务 TT**；互证 [**母表 · 1 人极简总序**](./任务母表.md#1-人开发极简路线图总序) · [**正文**](#tt-solo-roadmap-mvp-001) |
+| 220 | TT-B203-85-HERO-MOTION-B3-ALIGN-001 | traveltrust / Hero · §C.3 | **已封口**（**2026-04-14**） | **B-203**：**Hero** **`fadeInUp`/`fadeIn` + `traveltrustHeroEntrance`**；**§C.3** **≤0.45s**；**证据** [**GO_B203_HERO_MOTION_CLOSE**](../evidence/GO_B203_HERO_MOTION_CLOSE.md)；互证 [**母表 B-203**](./任务母表.md) · [**正文**](#tt-b203-85-hero-motion-b3-align-001) |
+| 221 | TT-B204-110-FULL-CHAIN-SCAN-IMPLEMENTATION-001 | indexer / 110 · 全链扫最小切片 | **已封口**（**2026-04-14**） | **B-204**：**`INDEXER_FULL_SCAN_LOWER_BOUND_BLOCK`** **+** **`full_scan_lower_bound_observability`**（**110/04/08-3** **同批**）；**互证** [**母表 B-204**](./任务母表.md) · [**正文**](#tt-b204-110-full-chain-scan-implementation-001) |
+| 222 | TT-B205-GOVERNANCE-POOL-TREASURY-ERC20-SSOT-HANDLER-001 | governance / B110-SSOT-06 | **已封口**（**2026-04-14**） | **B-205**：**`treasury_erc20_pool*`** **handler**（**04/14** **所称** **`TT-SSOT-SWITCH-APPLY-003`** **之索引正式 ID**）；互证 [**母表 B-205**](./任务母表.md) · [**正文**](#tt-b205-governance-pool-treasury-erc20-ssot-handler-001) |
+| 223 | TT-B206-14-POST-FEEROUTER-FIRST-SUBDOMAIN-IMPL-001 | contracts / 14 §1.1.1.1 | 已封口（**2026-04-14**） | **B-206**：**FeeRouter** **country 档** **双桶**（**`setCountryBucketSplit`**）；互证 [**母表 B-206**](./任务母表.md) · [**正文**](#tt-b206-14-post-feerouter-first-subdomain-impl-001) |
+| 224 | TT-B207-04-MEDIA-SIGNED-URLS-BLOB-001 | api / 04 §3.4 · media blob | **已封口**（**2026-04-14**） | **B-207**：**`TRAVELTRUST_MEDIA_EVIDENCE_FETCH_URL_TEMPLATE`** **→** **`GET …/media/access/:token_id`** **字节体**（**批 270**）；互证 [**母表 B-207**](./任务母表.md) · [**正文**](#tt-b207-04-media-signed-urls-blob-001) |
+| 225 | TT-B208-14-REGIONVAULT-TABLE-ROW2-SUBDOMAIN-001 | api / 14 §1.1.1.1a · RegionVault 导出切片 | **已封口**（**2026-04-14**） | **B-208**：**admin/internal** **`…/region-vault/forwarded-events/export`** + **`include_snapshot_explain`**；互证 [**母表 B-208**](./任务母表.md) · [**14 §1.1.1.1a**](./spec/14-合约-API-ABI-前后端对齐.md) · [**正文**](#tt-b208-14-regionvault-table-row2-subdomain-001) |
+| 226 | TT-B209-110-FULL-CHAIN-SCAN-MAX-BLOCK-SPAN-V1-001 | indexer / 110 · 全链扫批宽切片 | **已封口**（**2026-04-14**） | **B-209**：**`INDEXER_TICK_MAX_BLOCK_SPAN`** **+** **`indexer_tick_max_block_span_observability`**（**承 B-192/B-204**）；互证 [**母表 B-209**](./任务母表.md) · [**110 §3.1.2.1**](./spec/110-阶段开发链上索引器与事件同步器.md) · [**正文**](#tt-b209-110-full-chain-scan-max-block-span-v1-001) |
+| 227 | TT-B210-110-INDEXER-EVIDENCE-MANIFEST-FULL-SCAN-REGISTRY-001 | indexer / 110 · evidence manifest 全链扫登记 | **已封口**（**2026-04-14**） | **B-210**：**`manifest.json`** **`indexer_full_scan_catchup_registry`**（**`110-INDEXER-EVIDENCE-FULL-SCAN-REGISTRY-V1`**）**十字登记** **B-204/B-209** **tick ENV**；互证 [**母表 B-210**](./任务母表.md) · [**110 §3.1.2.1**](./spec/110-阶段开发链上索引器与事件同步器.md) · [**正文**](#tt-b210-110-indexer-evidence-manifest-full-scan-registry-001) |
+| 228 | TT-B211-110-INDEXER-TICK-LOOP-ORCHESTRATION-001 | indexer / 110 · internal 多 tick 批编排 | **已封口**（**2026-04-14**） | **B-211**：**`internal-indexer-ops` `tick-loop`**（**`110-INDEXER-TICK-LOOP-ORCHESTRATION-V1`**）**反复** **`POST …/internal/indexer-tick` `{}`**；互证 [**母表 B-211**](./任务母表.md) · [**110 §3.1.2.1**](./spec/110-阶段开发链上索引器与事件同步器.md) · [**正文**](#tt-b211-110-indexer-tick-loop-orchestration-001) |
+| 229 | TT-B212-110-INDEXER-TICK-LOOP-RUN-OBSERVABILITY-001 | indexer / 110 · tick-loop 运行级观测聚合 | **已封口**（**2026-04-14**） | **B-212**：**`tick-loop` stdout** **`indexer_tick_loop_run_observability`**（**`110-INDEXER-TICK-LOOP-RUN-OBSERVABILITY-V1`**；**`rounds[]`****+****`run_summary`**）；**不**改 **单次 tick** **体**/**evidence manifest** **schema**；互证 [**母表 B-212**](./任务母表.md) · [**110 §3.1.2.1**](./spec/110-阶段开发链上索引器与事件同步器.md) · [**正文**](#tt-b212-110-indexer-tick-loop-run-observability-001) |
+| 230 | TT-B213-110-INDEXER-TICK-LOOP-EVIDENCE-JSON-WRITE-001 | indexer / 110 · tick-loop 可选 JSON 落盘 | **已封口**（**2026-04-14**） | **B-213**：**`--write-evidence-json`****/** **`INDEXER_TICK_LOOP_EVIDENCE_JSON`** **→** **落盘** **`indexer_tick_loop_evidence_write`**（**`110-INDEXER-TICK-LOOP-EVIDENCE-JSON-WRITE-V1`**）；**stdout** **无** **evidence_write**；**不**改 **B-210** **manifest** **根** **schema**；互证 [**母表 B-213**](./任务母表.md) · [**110 §3.1.2.1**](./spec/110-阶段开发链上索引器与事件同步器.md) · [**正文**](#tt-b213-110-indexer-tick-loop-evidence-json-write-001) |
+| 231 | TT-B214-FEEROUTER-B081-RECEIPT-MOCK-STABLE-001 | api / FeeRouter · b081 测去抖 | **已封口**（**2026-04-14**） | **B-214**：**`b081_db_row_matches_transaction_receipt_platform_fee_routed_decode`** **mock** **`std::thread`****+** **重试**；**承** **B-081** **receipt** **路径**；互证 [**母表 B-214**](./任务母表.md) · [**正文**](#tt-b214-feerouter-b081-receipt-mock-stable-001) |
+| 232 | TT-B215-110-FULL-CHAIN-HISTORICAL-COMPLETENESS-PROOF-SCOPE-001 | indexer / 110 · 全集链上证明钉界 | **已封口**（**2026-04-14** · **文档轮**） | **B-215**：**「全集链上证明」** **验收要素** **+** **显式排除** **+** **与 B-204～B-213/B-210** **关系**；**实现体** **见** **一览** **233**/**TT-B216**；互证 [**母表 B-215**](./任务母表.md) · [**110 §3.1.2.1**](./spec/110-阶段开发链上索引器与事件同步器.md) · [**正文**](#tt-b215-110-full-chain-historical-completeness-proof-scope-001) |
+| 233 | TT-B216-110-FULL-CHAIN-HISTORICAL-COMPLETENESS-PROOF-V0-JSON-GATE-001 | indexer / 110 · 全集证明最小 JSON + gate | **已封口**（**2026-04-14**） | **B-216**：**`write-indexer-historical-completeness-proof.sh`** **+** **`internal-indexer-ops` `historical-completeness-proof`**；**锚** **`110-FULL-CHAIN-HISTORICAL-COMPLETENESS-PROOF-V0`**；**gate** **`checks_total`****`122`**；**承** **B-215**；**零** **`indexer-tick`** **语义** **diff**；互证 [**母表 B-216**](./任务母表.md) · [**110 §3.1.2.1**](./spec/110-阶段开发链上索引器与事件同步器.md) · [**正文**](#tt-b216-110-full-chain-historical-completeness-proof-v0-json-gate-001) |
+| 234 | TT-B217-110-INDEXER-TICK-RPC-PACING-V1-001 | indexer / 110 · indexer-tick JSON-RPC pacing | **已封口**（**2026-04-14**） | **B-217**：**`INDEXER_TICK_MIN_RPC_INTERVAL_MS`** **+** **`indexer_tick_rpc_pacing_observability`**；**锚** **`110-INDEXER-TICK-RPC-PACING-V1`** **`→`****`rpc_pacing.rs`**；**gate** **`checks_total`****`123`**；**排除** **`apply_escrow_loop`** **`eth_getTransactionByHash`**（**B-094**）；互证 [**母表 B-217**](./任务母表.md) · [**04 §3.4**](./spec/04-后端与API.md) · [**正文**](#tt-b217-110-indexer-tick-rpc-pacing-v1-001) |
+| 235 | TT-B218-14-FEEROUTER-ROUTED-EVENTS-EXPORT-001 | api / 14 §1.1.1.1 · FeeRouter 柱 C 导出 | **已封口**（**2026-04-14**） | **B-218**：**admin/internal** **`…/fee-router/routed-events/export`**（**对称 B-208**；**无** **`include_snapshot_explain`**）；互证 [**母表 B-218**](./任务母表.md) · [**04 §3.4/§3.5**](./spec/04-后端与API.md) · [**正文**](#tt-b218-14-feerouter-routed-events-export-001) |
+| 236 | TT-B219-110-EVIDENCE-BUNDLE-CANONICAL-COMBINE-001 | indexer / 110 · evidence 三件套标准化汇编 | **已封口**（**2026-04-14**） | **B-219**：**`write-indexer-evidence-bundle-canonical.sh`** + **`evidence-bundle-canonical`**；**锚** **`110-INDEXER-EVIDENCE-BUNDLE-CANONICAL-V1`**；**gate** **`checks_total`****`125`**；互证 [**母表 B-219**](./任务母表.md) · [**110 §3.1.2.1**](./spec/110-阶段开发链上索引器与事件同步器.md) · [**正文**](#tt-b219-110-evidence-bundle-canonical-combine-001) |
+| 237 | TT-B220-110-GATE-CHECKS-TOTAL-CONSISTENCY-SWEEP-001 | docs / indexer gate · `checks_total` 现行句横扫 | **已封口**（**2026-04-14** · **文档轮**） | **B-220**：**`indexer-reconcile-gate`/`probe`/110 §3.1.2/**`RUNBOOK`/`scripts/README`/`07`/`04`/`08-3`** **现行** **`checks_total=125`** **同锚**（**承** **B-219** **YAML**）；**零** **workflow**/**sh** **常量** **diff**；互证 [**母表 B-220**](./任务母表.md) · [**正文**](#tt-b220-110-gate-checks-total-consistency-sweep-001) |
+| 238 | TT-B221-110-RUNBOOK-EVIDENCE-BUNDLE-USAGE-CANONICAL-001 | docs / Runbook · B-219 evidence-bundle 标准用法 | **已封口**（**2026-04-14** · **文档轮**） | **B-221**：**`RUNBOOK` §2.55**/**`scripts/README`** **一键**/**目录树**/**校验**（**`sha256sum`/`shasum -c`**、**`jq`****`bundle_anchor`**、**`bash -n`**）**固化** **B-219** **`evidence-bundle-canonical`**；**零** **脚本语义** **diff**；互证 [**母表 B-221**](./任务母表.md) · [**母表 B-219**](./任务母表.md) · [**正文**](#tt-b221-110-runbook-evidence-bundle-usage-canonical-001) |
+| 239 | TT-B222-110-EVIDENCE-BUNDLE-CI-AUTO-RUN-001 | CI / indexer-reconcile-gate · evidence-bundle artifact | **已封口**（**2026-04-14**） | **B-222**：**`indexer-reconcile-gate.yml`** **离线** **fixture** **汇编** **`indexer_evidence_bundle_canonical_ci`** **+** **`sha256sum -c`**/**`jq`** **+** **`upload-artifact`**；**`checks_total`****`125`** **不变**；互证 [**母表 B-222**](./任务母表.md) · [**B-221**](./任务母表.md) · [**正文**](#tt-b222-110-evidence-bundle-ci-auto-run-001) |
+| 240 | TT-B223-14-REGIONVAULT-COUNTRY-LEDGER-READ-MODEL-V1-001 | api / 14 · RegionVault 辖区 Σ 读模型 | **已封口**（**2026-04-14**） | **B-223**：**`region_vault_forwarded_events`** **只读** **admin/internal** **`country-ledger-read-model`**；**可选** **`REGION_VAULT_COUNTRY_LEDGER_MAP_PATH`**；互证 [**母表 B-223**](./任务母表.md) · [**正文**](#tt-b223-14-regionvault-country-ledger-read-model-v1-001) |
+| 241 | TT-B224-14-REGIONVAULT-LEDGER-SNAPSHOT-EXPLAIN-EXPORT-001 | api / 14 · RegionVault 辖区 Σ 导出 + snapshot explain | **已封口**（**2026-04-14**） | **B-224**：**B-223** **附件** **`country-ledger-read-model/export`** **JSON/CSV** **对齐** **B-208**；互证 [**母表 B-224**](./任务母表.md) · [**正文**](#tt-b224-14-regionvault-ledger-snapshot-explain-export-001) |
+| 242 | TT-B225-14-REGIONVAULT-SNAPSHOT-CLAIM-READINESS-GATE-001 | api / 14 · RegionVault snapshot claim 就绪门禁 | **已封口**（**2026-04-14**） | **B-225**：**`region_share_snapshot_lines`** **+** **Vault** **投影** **只读** **`readiness`**；**`GET …/admin|internal/region-vault/snapshot-claim-readiness`**；互证 [**母表 B-225**](./任务母表.md) · [**正文**](#tt-b225-14-regionvault-snapshot-claim-readiness-gate-001) |
+| 243 | TT-B226-14-REGIONVAULT-CLAIM-DRYRUN-PAYLOAD-001 | api / 14 · RegionVault claim dry-run 载荷 | **已封口**（**2026-04-14**） | **B-226**：**承** **B-225** **`ready`**；**`GET …/admin|internal/region-vault/snapshot-claim-dryrun-payload(/export)`**；互证 [**母表 B-226**](./任务母表.md) · [**正文**](#tt-b226-14-regionvault-claim-dryrun-payload-001) |
+| 244 | TT-B227-14-REGIONVAULT-CLAIM-BATCH-PLAN-EXPORT-001 | api / 14 · RegionVault 批次计划导出 | **已封口**（**2026-04-14**） | **B-227**：**承** **B-226**；**按** **`jurisdiction`****+****`snapshot_epoch`** **聚** **`batches[]`**；**`GET …/admin|internal/region-vault/snapshot-claim-batch-plan(/export)`**；互证 [**母表 B-227**](./任务母表.md) · [**正文**](#tt-b227-14-regionvault-claim-batch-plan-export-001) |
+| 245 | TT-B228-14-REGIONVAULT-CLAIM-EXECUTION-EVIDENCE-STUB-001 | api / 14 · RegionVault claim 执行证据壳（stub） | **已封口**（**2026-04-14**） | **B-228**：**承** **B-227**；**`claim_execution_evidence_plan_id`****+****`execution_evidence_stub`****（** **`tx_hash`****/**`status`** **预留**）**；**`GET …/admin|internal/region-vault/snapshot-claim-execution-evidence-stub(/export)`**；互证 [**母表 B-228**](./任务母表.md) · [**正文**](#tt-b228-14-regionvault-claim-execution-evidence-stub-001) |
+| 246 | TT-B229-14-REGIONVAULT-CLAIM-EXECUTION-STATUS-IMPORT-READMODEL-001 | api / 14 · RegionVault claim 执行状态导入只读模型 | **已封口**（**2026-04-14**） | **B-229**：**承** **B-228**；**可选** **导入** **`tx_hash`****/**`status`****/**`block_number`****/**`log_index`** **合并** **`execution_status_read_model`**；**`GET …/admin|internal/region-vault/snapshot-claim-execution-status-read-model(/export)`**；互证 [**母表 B-229**](./任务母表.md) · [**正文**](#tt-b229-14-regionvault-claim-execution-status-import-readmodel-001) |
+| 247 | TT-B230-14-REGIONVAULT-CLAIM-EXECUTION-RECONCILE-REPORT-001 | api / 14 · RegionVault claim 执行合成 reconcile 报告 | **已封口**（**2026-04-14**） | **B-230**：**B-226～B-229** **合成** **`expected`****/**`executed`****/**`delta`**；**`GET …/admin|internal/region-vault/snapshot-claim-execution-reconcile-report(/export)`**；互证 [**母表 B-230**](./任务母表.md) · [**正文**](#tt-b230-14-regionvault-claim-execution-reconcile-report-001) |
+| 248 | TT-B231-14-REGIONVAULT-CLAIM-GO-NO-GO-GATE-READONLY-001 | api / 14 · RegionVault claim GO/NO-GO 只读门禁 | **已封口**（**2026-04-14**） | **B-231**：**B-230** **+** **B-225** **`gates[]`**** **`verdict`**** **`GO`****/**`NO_GO`****/**`NO_OP`**；**`GET …/admin|internal/region-vault/snapshot-claim-go-no-go-gate(/export)`**；互证 [**母表 B-231**](./任务母表.md) · [**正文**](#tt-b231-14-regionvault-claim-go-no-go-gate-readonly-001) |
+| 249 | TT-B232-14-REGIONVAULT-CLAIM-GO-NO-GO-EVIDENCE-BUNDLE-001 | api / 14 · RegionVault claim 只读证据包（admin） | **已封口**（**2026-04-14**） | **B-232**：**B-225～B-231** **`legs`****+****SHA256`****+** **CSV** **索引**；**`GET …/admin/region-vault/snapshot-claim-go-no-go-evidence-bundle(/export)`**；互证 [**母表 B-232**](./任务母表.md) · [**正文**](#tt-b232-14-regionvault-claim-go-no-go-evidence-bundle-001) |
+| 250 | TT-B233-14-REGIONVAULT-CLAIM-EVIDENCE-BUNDLE-RUNBOOK-CI-001 | CI / 14 · RegionVault claim 证据包离线验收 | **已封口**（**2026-04-14**） | **B-233**：**承** **B-232**；**`TRAVELTRUST_CLAIM_GO_NO_GO_BUNDLE_CI_OUT`** **`cargo test … claim_go_no_go_evidence_bundle_ci_artifact`** **+** **`verify-claim-go-no-go-evidence-bundle.py ci`**；**Build** **artifact**；互证 [**母表 B-233**](./任务母表.md) · [**正文**](#tt-b233-14-regionvault-claim-evidence-bundle-runbook-ci-001) |
+| 251 | TT-B234-14-REGIONVAULT-CLAIM-LIVE-ADMIN-VALIDATION-RUNBOOK-001 | ops / 14 · RegionVault claim 证据包联机 admin 验收 | **已封口**（**2026-04-14**） | **B-234**：**承** **B-232**/**B-233**；**`region-vault-claim-go-no-go-evidence-bundle-live-admin-validate.sh`** **200+SHA256+CSV8+summary**；互证 [**母表 B-234**](./任务母表.md) · [**正文**](#tt-b234-14-regionvault-claim-live-admin-validation-runbook-001) |
+| 252 | TT-B235-14-REGIONVAULT-CLAIM-GO-NO-GO-LIVE-EVIDENCE-ARCHIVE-001 | ops / 14 · RegionVault claim GO/NO-GO 联机证据标准归档 | **已封口**（**2026-04-14**） | **B-235**：**承** **B-234**；**`archive-region-vault-claim-go-no-go-live-evidence.sh`** **`artifacts/`****+****`archive_manifest`****+****`ARCHIVE_README`****+****`README.md`****（** **B-236** **）****+****`artifacts.sha256`**（**锚** **`14-REGIONVAULT-CLAIM-GO-NO-GO-LIVE-EVIDENCE-ARCHIVE-V1`**）；互证 [**母表 B-235**](./任务母表.md) · [**正文**](#tt-b235-14-regionvault-claim-go-no-go-live-evidence-archive-001) |
+| 253 | TT-B236-14-REGIONVAULT-CLAIM-LIVE-EVIDENCE-INDEX-README-001 | ops / 14 · RegionVault claim 联机证据归档索引 README | **已封口**（**2026-04-14**） | **B-236**：**承** **B-235**；**根** **`README.md`** **总览** **+** **`archive_manifest.json`** **`index`****/**`navigation`** **+** **复跑** **命令**（**锚** **`14-REGIONVAULT-CLAIM-LIVE-EVIDENCE-INDEX-README-V1`**）；互证 [**母表 B-236**](./任务母表.md) · [**正文**](#tt-b236-14-regionvault-claim-live-evidence-index-readme-001) |
+| 254 | TT-B237-14-REGIONVAULT-CLAIM-LIVE-EVIDENCE-CI-ARCHIVE-SMOKE-001 | CI / 14 · RegionVault claim 联机证据归档 CI 冒烟 | **已封口**（**2026-04-14**） | **B-237**：**B-233** **fixture** **→** **B-234** **staging** **→** **`finalize-only`** **归档**；**`region-vault-claim-live-archive-ci-smoke.sh`** **+** **Build** **job** **步**；互证 [**母表 B-237**](./任务母表.md) · [**正文**](#tt-b237-14-regionvault-claim-live-evidence-ci-archive-smoke-001) |
+| 255 | TT-B238-14-REGIONVAULT-CLAIM-GO-NO-GO-RELEASE-GATE-READONLY-001 | api / 14 · RegionVault claim GO/NO-GO 发布门禁只读摘要 | **已封口**（**2026-04-14**） | **B-238**：**B-231～B-237** **上** **`release_verdict`****+****`blocking_reasons`****+****`required_evidence_checklist`****+****`archive_integrity_checks`**；**`GET …/admin/region-vault/snapshot-claim-go-no-go-release-gate(/export)`**；互证 [**母表 B-238**](./任务母表.md) · [**正文**](#tt-b238-14-regionvault-claim-go-no-go-release-gate-readonly-001) |
+| 256 | TT-B239-14-REGIONVAULT-CLAIM-GO-NO-GO-RELEASE-GATE-LIVE-ARCHIVE-001 | ops / 14 · RegionVault claim 发布门禁联机归档 | **已封口**（**2026-04-14**） | **B-239**：**承** **B-238** **`validate`****+****`archive-…-release-gate-live-evidence`** **同构** **B-235**；**`verify-claim-go-no-go-release-gate.py`**；互证 [**母表 B-239**](./任务母表.md) · [**正文**](#tt-b239-14-regionvault-claim-go-no-go-release-gate-live-archive-001) |
+| 257 | TT-B240-14-REGIONVAULT-CLAIM-RELEASE-GATE-CI-ARCHIVE-SMOKE-001 | CI / 14 · RegionVault claim 发布门禁归档 CI 冒烟 | **已封口**（**2026-04-14**） | **B-240**：**fixture** **→** **B-239** **`finalize-only`** **+** **`live-full`** **+** **`sha256sum -c`**；**Build** **步** **接** **B-237**；互证 [**母表 B-240**](./任务母表.md) · [**正文**](#tt-b240-14-regionvault-claim-release-gate-ci-archive-smoke-001) |
+| 258 | TT-B241-14-REGIONVAULT-CLAIM-RELEASE-GATE-LIVE-EVIDENCE-INDEX-README-001 | ops / 14 · RegionVault claim 发布门禁归档索引 README | **已封口**（**2026-04-14**） | **B-241**：**承** **B-239**/**B-240**；**`README.md`** **+** **`index.*`****+****`index.parity`** **（** **对** **齐** **B-236** **）**；互证 [**母表 B-241**](./任务母表.md) · [**正文**](#tt-b241-14-regionvault-claim-release-gate-live-evidence-index-readme-001) |
+| 259 | TT-B242-14-REGIONVAULT-CLAIM-RELEASE-GATE-FINAL-GO-REPORT-READONLY-001 | api / 14 · RegionVault claim 发布门禁最终只读 GO 签署报告 | **已封口**（**2026-04-14**） | **B-242**：**承** **B-238** **+** **B-239/B-241**；**`GET …/admin/region-vault/snapshot-claim-go-no-go-release-gate-final-go-report(/export)`** **JSON+CSV**；**归档** **SHA** **query** **自** **证**；互证 [**母表 B-242**](./任务母表.md) · [**正文**](#tt-b242-14-regionvault-claim-release-gate-final-go-report-readonly-001) |
+| 260 | TT-B248-14-REGIONVAULT-CLAIM-READONLY-PHASE-CLOSE-SUMMARY-001 | docs / 14 · RegionVault claim 只读链阶段正式封口 | **已封口**（**2026-04-14**） | **B-248**：**B-223～B-247** **六段闭环** **+** **边界** **+** **执行链** **须** **另开** **非只读** **母卡**；互证 [**母表 B-248**](./任务母表.md) · [**正文**](#tt-b248-14-regionvault-claim-readonly-phase-close-summary-001) · [**附录**](./spec/14-附录-RegionVault-Claim-只读链阶段封口-B248.md) |
+| 261 | TT-B249-14-REGIONVAULT-CLAIM-EXECUTION-CHAIN-ENTRY-NONREADONLY-001 | docs / 14 · RegionVault claim 执行链入口（非只读母卡） | **未封口**（**入口** **母卡** **·** **2026-04-14**） | **B-249**：**承** **B-248**；**B-250～B-261** **只读** **彩排** **已** **封口** **（** **非** **执行** **子域** **封口** **）** **；** **B-262** **已** **登记** **首条** **JSON-RPC** **广播** **执行** **；** **B-263** **已** **登记** **`14-REGIONVAULT-CLAIM-BROADCAST-RECEIPT-ARCHIVE-V1`** **receipt** **单一** **证据** **源** **；** **B-264** **已** **登记** **`14-REGIONVAULT-CLAIM-BROADCAST-ONCHAIN-RECONCILE-V1`** **；** **B-265** **已** **登记** **B-264** **`GO`** **JSON** **进程内** **read-model** **+** **`forwarded`** **互证** **；** **B-266** **已** **登记** **`14-REGIONVAULT-CLAIM-PRODUCTION-GO-GATE-V1`** **（** **`production-go-gate`** **双** **attestation** **+** **`production_verdict`****≠****`GO`** **默认** **exit** **1** **）** **；** **余** **量** **（** **合约** **`claim*`** **/** **新** **topic** **/** **新** **写** **HTTP** **等** **）** **须** **B-267+** **子** **TT** **；** **边界** **/** **权限** **/** **形态** **/** **风险** **见** **附录**；互证 [**母表 B-249**](./任务母表.md) · [**正文**](#tt-b249-14-regionvault-claim-execution-chain-entry-nonreadonly-001) · [**附录**](./spec/14-附录-RegionVault-Claim-执行链入口-B249.md) |
+| 262 | TT-B250-14-REGIONVAULT-CLAIM-EXECUTION-DRYRUN-CLI-V1-001 | ops / 14 · RegionVault claim dryrun→交易清单 CLI（只读） | **已封口**（**2026-04-14**） | **B-250**：**B-226** **JSON** **→** **manifest** **（** **B-227** **批次** **）**；**不** **签名** **不** **广播**；互证 [**母表 B-250**](./任务母表.md) · [**正文**](#tt-b250-14-regionvault-claim-execution-dryrun-cli-v1-001) · **`scripts/ops/region_vault_claim_execution_dryrun_cli.py`** |
+| 263 | TT-B251-14-REGIONVAULT-CLAIM-EXECUTION-SIGNING-PLAN-STUB-001 | ops / 14 · RegionVault claim manifest 签名计划壳（只读） | **已封口**（**2026-04-14**） | **B-251**：**承** **B-250**；**`signing_plan_stub`** **默认** **开**；**`--omit-signing-plan-stub`**；互证 [**母表 B-251**](./任务母表.md) · [**正文**](#tt-b251-14-regionvault-claim-execution-signing-plan-stub-001) |
+| 264 | TT-B252-14-REGIONVAULT-CLAIM-EXECUTION-SIGNING-ARTIFACT-STUB-001 | ops / 14 · RegionVault claim 每批签名产物壳（只读） | **已封口**（**2026-04-14**） | **B-252**：**承** **B-251**；**`signing_artifact_stub`** **+** **`signing_artifact_tx_stub`**；**`--omit-signing-artifact-stub`**；互证 [**母表 B-252**](./任务母表.md) · [**正文**](#tt-b252-14-regionvault-claim-execution-signing-artifact-stub-001) |
+| 265 | TT-B253-14-REGIONVAULT-CLAIM-EXECUTION-SIGNING-OFFLINE-PACKAGE-001 | ops / 14 · RegionVault claim 离线签名包布局（只读） | **已封口**（**2026-04-14**） | **B-253**：**承** **B-252**；**`write <manifest.json> <out_dir>`** **→** **per-batch** **+** **`artifacts.sha256`** **+** **交接** **manifest**；互证 [**母表 B-253**](./任务母表.md) · [**正文**](#tt-b253-14-regionvault-claim-execution-signing-offline-package-001) |
+| 266 | TT-B254-14-REGIONVAULT-CLAIM-SIGNED-BACKFILL-STUB-IMPORT-001 | ops / 14 · RegionVault claim 签回回填只读导入壳 | **已封口**（**2026-04-14**） | **B-254**：**承** **B-253**；**`import-stub`** **manifest+package+returned→** **`14-REGIONVAULT-CLAIM-SIGNED-BACKFILL-STUB-IMPORT-V1`**；互证 [**母表 B-254**](./任务母表.md) · [**正文**](#tt-b254-14-regionvault-claim-signed-backfill-stub-import-001) |
+| 267 | TT-B255-14-REGIONVAULT-CLAIM-SIGNED-BACKFILL-RECONCILE-STUB-001 | ops / 14 · RegionVault claim 签回对账只读 reconcile 壳 | **已封口**（**2026-04-14**） | **B-255**：**承** **B-254**；**`reconcile-stub`** **→** **`14-REGIONVAULT-CLAIM-SIGNED-BACKFILL-RECONCILE-STUB-V1`** **+** **`reconcile_verdict_preview`**；互证 [**母表 B-255**](./任务母表.md) · [**正文**](#tt-b255-14-regionvault-claim-signed-backfill-reconcile-stub-001) |
+| 268 | TT-B256-14-REGIONVAULT-CLAIM-BROADCAST-REQUEST-STUB-001 | ops / 14 · RegionVault claim 可广播请求只读壳 | **已封口**（**2026-04-14**） | **B-256**：**承** **B-255** **`GO`**；**`broadcast-request-stub`** **→** **`14-REGIONVAULT-CLAIM-BROADCAST-REQUEST-STUB-V1`**；互证 [**母表 B-256**](./任务母表.md) · [**正文**](#tt-b256-14-regionvault-claim-broadcast-request-stub-001) |
+| 269 | TT-B257-14-REGIONVAULT-CLAIM-BROADCAST-DRYRUN-REHEARSAL-001 | ops / 14 · RegionVault claim 广播前排练只读校验 | **已封口**（**2026-04-14**） | **B-257**：**承** **B-256**；**`rehearsal-dryrun`** **校验** **序** **/** **前置** **/** **`operator_confirmation`** **/** **`tx_hash`**** **槽**；互证 [**母表 B-257**](./任务母表.md) · [**正文**](#tt-b257-14-regionvault-claim-broadcast-dryrun-rehearsal-001) |
+| 270 | TT-B258-14-REGIONVAULT-CLAIM-BROADCAST-LIVE-ADMIN-GATE-STUB-001 | ops / 14 · RegionVault claim 临广播前人工闸口只读壳 | **已封口**（**2026-04-14**） | **B-258**：**承** **B-257** **报告** **+** **B-256**；**`gate-stub`** **→** **`14-REGIONVAULT-CLAIM-BROADCAST-LIVE-ADMIN-GATE-STUB-V1`**；互证 [**母表 B-258**](./任务母表.md) · [**正文**](#tt-b258-14-regionvault-claim-broadcast-live-admin-gate-stub-001) |
+| 271 | TT-B259-14-REGIONVAULT-CLAIM-BROADCAST-EVIDENCE-STUB-001 | ops / 14 · RegionVault claim 待广播证据壳只读归档 | **已封口**（**2026-04-14**） | **B-259**：**合** **B-256～B-258**；**`evidence-stub`** **→** **`14-REGIONVAULT-CLAIM-BROADCAST-EVIDENCE-STUB-V1`**；互证 [**母表 B-259**](./任务母表.md) · [**正文**](#tt-b259-14-regionvault-claim-broadcast-evidence-stub-001) |
+| 272 | TT-B260-14-REGIONVAULT-CLAIM-BROADCAST-RESULT-IMPORT-STUB-001 | ops / 14 · RegionVault claim 广播结果链下导入只读壳 | **已封口**（**2026-04-14**） | **B-260**：**承** **B-259**；**`import-result-stub`** **→** **`14-REGIONVAULT-CLAIM-BROADCAST-RESULT-IMPORT-STUB-V1`**；互证 [**母表 B-260**](./任务母表.md) · [**正文**](#tt-b260-14-regionvault-claim-broadcast-result-import-stub-001) |
+| 273 | TT-B261-14-REGIONVAULT-CLAIM-BROADCAST-RESULT-RECONCILE-STUB-001 | ops / 14 · RegionVault claim 广播结果链下对账只读壳 | **已封口**（**2026-04-14**） | **B-261**：**承** **B-260**；**`reconcile-result-stub`** **→** **`14-REGIONVAULT-CLAIM-BROADCAST-RESULT-RECONCILE-STUB-V1`**；互证 [**母表 B-261**](./任务母表.md) · [**正文**](#tt-b261-14-regionvault-claim-broadcast-result-reconcile-stub-001) |
+| 274 | TT-B262-14-REGIONVAULT-CLAIM-BROADCAST-EXECUTION-001 | ops / 14 · RegionVault claim 广播 JSON-RPC 执行与报告落盘 | **已封口**（**2026-04-14**） | **B-262**：**承** **B-256**；**`execute`** **`eth_sendRawTransaction`** **→** **`14-REGIONVAULT-CLAIM-BROADCAST-EXECUTION-REPORT-V1`**；互证 [**母表 B-262**](./任务母表.md) · [**正文**](#tt-b262-14-regionvault-claim-broadcast-execution-001) |
+| 275 | TT-B263-14-REGIONVAULT-CLAIM-BROADCAST-RECEIPT-ARCHIVE-001 | ops / 14 · RegionVault claim 广播 receipt 链上归档 | **已封口**（**2026-04-14**） | **B-263**：**承** **B-262**；**`archive-receipts`** **`eth_getTransactionReceipt`** **→** **`14-REGIONVAULT-CLAIM-BROADCAST-RECEIPT-ARCHIVE-V1`**；互证 [**母表 B-263**](./任务母表.md) · [**正文**](#tt-b263-14-regionvault-claim-broadcast-receipt-archive-001) |
+| 276 | TT-B264-14-REGIONVAULT-CLAIM-BROADCAST-RESULT-RECONCILE-ONCHAIN-001 | ops / 14 · RegionVault claim 广播 B-262+B-263 链上对账 | **已封口**（**2026-04-14**） | **B-264**：**承** **B-262+B-263**；**`reconcile-onchain`** **→** **`14-REGIONVAULT-CLAIM-BROADCAST-ONCHAIN-RECONCILE-V1`**；互证 [**母表 B-264**](./任务母表.md) · [**正文**](#tt-b264-14-regionvault-claim-broadcast-result-reconcile-onchain-001) |
+| 277 | TT-B265-14-REGIONVAULT-CLAIM-INDEXER-UPLIFT-ONCHAIN-001 | api / 14 · RegionVault claim B-264 JSON 读模型与 forwarded 互证 | **已封口**（**2026-04-14**） | **B-265**：**承** **B-264**；**`REGION_VAULT_CLAIM_ONCHAIN_RECONCILE_IMPORT_PATH`** **`GO`** **升格** **`execution_status_read_model`****+****`b265_indexer_uplift`**；**B-230～B-242** **同源**；互证 [**母表 B-265**](./任务母表.md) · [**正文**](#tt-b265-14-regionvault-claim-indexer-uplift-onchain-001) |
+| 278 | TT-B266-14-REGIONVAULT-CLAIM-PRODUCTION-GO-GATE-001 | ops / 14 · RegionVault claim B-263+B-264 生产 GO 闸（文件 + 双 attestation） | **已封口**（**2026-04-14**） | **B-266**：**承** **B-263～B-265**；**`production-go-gate`** **`onchain_reconcile.json`****+** **`receipt_archive.json`** **、** **`--attest-b265-indexer-uplift`****+** **`--attest-b230-b242-evidence-chain`** **；** **`production_verdict`****≠****`GO`** **默认** **exit** **1** **（** **`--allow-non-go-production`** **）** **；** **锚** **`14-REGIONVAULT-CLAIM-PRODUCTION-GO-GATE-V1`** **；** 互证 [**母表 B-266**](./任务母表.md) · [**正文**](#tt-b266-14-regionvault-claim-production-go-gate-001) · **`scripts/ops/region_vault_claim_production_go_gate.py`**
+| 279 | TT-METAPROVIDER-LOADING-ERROR-RESYNC-001 | frontend · `MetaProvider` / `useMeta` 上下文 | **已封口**（**2026-04-14**） | **B-269**：**修复** **`frontend/components/MetaProvider.tsx`** **在** **`t` 变化等二次 `getMeta()`** **前** **未** **`setLoading(true)`**/**`setError(null)`** **之** **loading/error** **状态机** **缺口** **；** **保留** **`finally` → `setLoading(false)`** **；** **不** **扩展** **业务** **语义** **。** **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0** **。** 互证 [**母表 B-269**](./任务母表.md) · [**正文**](#tt-metaprovider-loading-error-resync-001) |
+| 280 | TT-FRIENDS-PARTIAL-ERROR-VISIBILITY-001 | community · `/community/friends` · 多腿 `allSettled` | **已封口**（**2026-04-14**） | **B-270**：**`frontend/app/community/friends/page.tsx`** **`Promise.allSettled`** **部分** **失败** **新增** **`partialLoadHint`** **弱** **提示** **；** **不** **打断** **主** **成功** **态** **渲染** **。** **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0** **。** 互证 [**母表 B-270**](./任务母表.md) · [**正文**](#tt-friends-partial-error-visibility-001) |
+| 281 | TT-FINANCE-RECONCILIATION-PARTIAL-ERROR-VISIBILITY-001 | admin · `/admin/finance-reconciliation` · 财务枢纽 | **已封口**（**2026-04-14**） | **B-271**：**`frontend/app/admin/finance-reconciliation/page.tsx`** **主** **`GET …/finance/summary`** **成功** **`crossErr`****/** **`driftSummaryErr`** **时** **顶部** **弱** **提示** **`admin_finance_reconciliation_partial_load_hint`****+****`driftLegsRetryKey`** **局部** **重试** **；** **不** **打断** **主** **成功** **态** **。** **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0** **。** 互证 [**母表 B-271**](./任务母表.md) · [**正文**](#tt-finance-reconciliation-partial-error-visibility-001) |
+| 282 | TT-ADMIN-ERROR-RESET-CONVENTION-UNIFICATION-001 | admin · `/admin/finance` · 首屏拉取错误清理惯例 | **已封口**（**2026-04-14**） | **B-272**：**`frontend/app/admin/finance/page.tsx`** **首屏** **`adminFetchJson`** **前** **`setLoading(true)`****+****`setError(null)`** **；** **统一** **admin** **首屏** **错误** **清理** **惯例** **。** **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0** **。** 互证 [**母表 B-272**](./任务母表.md) · [**正文**](#tt-admin-error-reset-convention-unification-001) |
+| 283 | TT-GOVERNANCE-EM-DASH-CONSISTENCY-001 | frontend · governance · 空值占位 `ui_em_dash` | **已封口**（**2026-04-14**） | **B-273**：**治理** **相关** **页** **硬编码** **`"—"`** **空值** **→** **`t("ui_em_dash")`** **；** **不** **改** **句内** **`base`****—****`detail`****/** **`note`****—** **说明** **等** **拼接** **语义** **。** **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0** **。** 互证 [**母表 B-273**](./任务母表.md) · [**正文**](#tt-governance-em-dash-consistency-001) |
+| 284 | TT-ADMIN-ERROR-DISPLAY-UNIFICATION-001 | admin · 首屏/摘要 · `ApiErrorAlert` 统一 | **已封口**（**2026-04-14**） | **B-274**：**8** **个** **admin** **页** **`adminErrorUserText`** **红框** **`role="alert"`** **→** **`ApiErrorAlert`** **；** **保留** **加载** **/** **重试** **/** **分支** **；** **不** **动** **warning** **黄框** **与** **非** **首屏** **页** **。** **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0** **。** 互证 [**母表 B-274**](./任务母表.md) · [**正文**](#tt-admin-error-display-unification-001) |
+| 285 | TT-TESTNET-REAL-RUN-VALIDATION-001 | ops · testnet · B-262→B-266 真实链编排 + operator 证据 | **已封口**（**2026-04-14**） | **B-275**：**已** **落地** **`run_testnet_b262_b266_real.sh`****/** **`write_tt_testnet_real_run_evidence_summary.py`****/** **`evidence/testnet_real_run_validation/README.md`** **；** **具备** **真实** **`broadcast_request_stub`****+** **`CHAIN_RPC_URL`** **时** **可** **testnet** **全链路** **真实** **运行** **并** **聚合** **operator** **证据** **；** **登记** **轮** **CI** **/** **沙箱** **无** **真实** **tx** **；** **多** **笔** **连续** **nonce** **真实** **链** **证据** **见** **一览** **376** **`TT-B322-…`** **（** **2026-04-15** **封口** **）** **。** **验收**：**脚本** **+** **README** **路径** **。** 互证 [**母表 B-275**](./任务母表.md) · [**正文**](#tt-testnet-real-run-validation-001) · **[`ops/RUNBOOK.md`](../ops/RUNBOOK.md)** **§2.55** |
+| 286 | TT-B276-BROADCAST-NONCE-PREFLIGHT-RPC-001 | ops · 广播 · B-262 前 nonce 与 RPC 单调预检 | **未封口**（**登记**） | **B-276**：**`preflight`**** **`-o`** **`14-REGIONVAULT-CLAIM-BROADCAST-NONCE-PREFLIGHT-REPORT-V1`** **；** **B-262** **`--require-preflight-ok`** **软** **强制** **（** **默认** **不** **传** **则** **不** **校验** **）** **。** **互证** [**母表 B-276**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) · **[`ops/RUNBOOK.md`](../ops/RUNBOOK.md)** |
+| 287 | TT-B277-MULTISTEP-SIGNING-ORDER-CROSS-BATCH-001 | ops · 广播 · 多 batch 全局发送顺序表 | **未封口**（**登记**） | **B-277**：**静态** **顺序** **表** **与** **B-257** **一致** **。** **互证** [**母表 B-277**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 288 | TT-B278-PENDING-NONCE-GAP-DETECTOR-001 | ops · 广播 · pending nonce 空洞检测 | **未封口**（**登记**） | **B-278**：**只读** **mempool** **深度** **/** **空洞** **超阈** **可选** **阻断** **。** **互证** [**母表 B-278**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 289 | TT-B279-REPLACEMENT-AND-CANCELLED-TX-NONCE-001 | ops · 广播 · 替换/取消 tx 与证据对齐 | **未封口**（**登记**） | **B-279**：**Runbook+规则** **：** **同** **nonce** **替换** **后** **`tx_hash`** **与** **报告** **对齐** **。** **互证** [**母表 B-279**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 290 | TT-B280-MEMPOOL-ORDERING-DISCLOSURE-001 | ops · 广播 · mempool 顺序披露 | **未封口**（**登记**） | **B-280**：**B-266** **附属** **披露** **字段** **（** **默认** **不** **改** **`GO`** **判定** **）** **。** **互证** [**母表 B-280**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 291 | TT-B281-HOT-WALLET-NONCE-EXTERNAL-DRIFT-001 | ops · 广播 · 热钱包外部 nonce 漂移 | **未封口**（**登记**） | **B-281**：**多** **工具** **共用** **地址** **floor** **漂移** **检测** **。** **互证** [**母表 B-281**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 292 | TT-B282-IDEMPOTENT-RESUME-SKIP-MINED-STEPS-001 | ops · 广播 · 幂等续跑跳过已 mined | **未封口**（**登记**） | **B-282**：**`region_vault_claim_broadcast_pipeline_resume.py`** **`plan`****/**`write-resumed-stub`****/**`resume-execute`** **（** **根** **`region-vault-claim-broadcast-pipeline-resume.sh`** **）** **合并** **`execution_report`**** **、** **可选** **B-263～B-266** **；** **别名** **TT-B277-BROADCAST-PIPELINE-IDEMPOTENT-RESUME-AUTOMATION-001** **（** **非** **B-277** **母** **表** **TT** **）** **。** **互证** [**母表 B-282**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) · **[`ops/RUNBOOK.md`](../ops/RUNBOOK.md)** |
+| 293 | TT-B283-B263-RECEIPT-FETCH-BACKOFF-001 | ops · B-263 · receipt 拉取退避 | **未封口**（**登记**） | **B-283**：**429/5xx/timeout** **分类** **退避** **，** **默认** **保守** **。** **互证** [**母表 B-283**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 294 | TT-B284-PARTIAL-RUN-OPERATOR-RUNBOOK-001 | ops · Runbook · 部分失败恢复 | **未封口**（**登记**） | **B-284**：**stub** **重签** **/** **nonce** **重算** **/** **`OUT_DIR`** **标准** **作业** **。** **互证** [**母表 B-284**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 295 | TT-B285-QUARANTINE-FAILED-STUB-SNAPSHOT-001 | ops · 证据 · 失败隔离包 | **未封口**（**登记**） | **B-285**：**quarantine** **包** **写入** **`operator_run_evidence`** **。** **互证** [**母表 B-285**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 296 | TT-B286-REPLAY-GUARD-STUB-CONTENT-HASH-001 | ops · 广播 · stub 内容哈希重放防护 | **未封口**（**登记**） | **B-286**：**可选** **sha256** **+** **env** **二次** **确认** **。** **互证** [**母表 B-286**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 297 | TT-B287-MANUAL-OVERRIDE-WITH-JUSTIFICATION-001 | ops · 广播 · override 审计理由 | **未封口**（**登记**） | **B-287**：**`--allow-non-go-*`** **须** **`OVERRIDE_REASON`** **落** **JSON** **。** **互证** [**母表 B-287**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 298 | TT-B288-MIN-CONFIRMATIONS-OPTIONAL-GATE-001 | ops · B-266 · 最小确认数闸 | **未封口**（**登记**） | **B-288**：**可选** **env** **块** **深** **不足** **不** **默认** **`GO`** **。** **互证** [**母表 B-288**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 299 | TT-B289-REORG-RECEIPT-INVALIDATION-NOTE-001 | ops · 广播 · reorg 披露与头校验 | **未封口**（**登记**） | **B-289**：**证据** **说明** **+** **可选** **`safe|finalized`** **脚本** **。** **互证** [**母表 B-289**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 300 | TT-B290-RPC-CHAIN-TIP-LAG-WATCH-001 | ops · 广播 · 链尖滞后 watch | **未封口**（**登记**） | **B-290**：**双** **RPC** **尖** **滞后** **可选** **阻断** **。** **互证** [**母表 B-290**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 301 | TT-B291-GAS-PREFLIGHT-AND-FEE-CAP-001 | ops · 广播 · gas 预检与费用帽 | **未封口**（**登记**） | **B-291**：**feeHistory** **估算** **+** **cap** **超阈** **exit** **。** **互证** [**母表 B-291**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 302 | TT-B292-TX-TYPE-MATRIX-ANVIL-VS-PUBLIC-001 | ops · 广播 · tx 类型矩阵 | **未封口**（**登记**） | **B-292**：**legacy** **/** **1559** **×** **chainId** **文档** **+** **小** **测** **。** **互证** [**母表 B-292**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 303 | TT-B293-FINALITY-MODE-ENV-001 | ops · 广播 · finality 模式 env | **未封口**（**登记**） | **B-293**：**`TRAVELTRUST_FINALITY_MODE`** **统一** **口径** **。** **互证** [**母表 B-293**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 304 | TT-B294-SCHEDULED-BROADCAST-SMOKE-CRON-001 | ops · CI/cron · 缩短烟测 | **未封口**（**登记**） | **B-294**：**定时** **B-262→B-266** **缩短** **链** **失败** **告警** **。** **互证** [**母表 B-294**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 305 | TT-B295-EVIDENCE-BUNDLE-TAR-AND-MANIFEST-001 | ops · 证据 · tar+manifest | **未封口**（**登记**） | **B-295**：**`OUT_DIR`** **打包** **与** **sha256** **清单** **。** **互证** [**母表 B-295**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 306 | TT-B296-OPERATOR-RUN-STRUCTURED-JSONL-001 | ops · 证据 · operator 结构化元数据 | **未封口**（**登记**） | **B-296**：**who/when/git_sha** **等** **扩展** **`operator_run_evidence`** **。** **互证** [**母表 B-296**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 307 | TT-B297-RPC-URL-REDACTION-REGRESSION-TEST-001 | ops · 安全 · RPC URL 脱敏回归 | **未封口**（**登记**） | **B-297**：**自动化** **断言** **日志** **无** **完整** **凭据** **。** **互证** [**母表 B-297**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 308 | TT-B298-EVIDENCE-RETENTION-AND-INDEX-001 | ops · 证据 · 保留期与 INDEX | **未封口**（**登记**） | **B-298**：**`evidence/…/INDEX.md`** **模板** **。** **互证** [**母表 B-298**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 309 | TT-B299-RUNBOOK-VERSION-PIN-001 | ops · Runbook · 版本钉 | **未封口**（**登记**） | **B-299**：**命令** **旁** **commit/tag** **。** **互证** [**母表 B-299**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 310 | TT-B300-MAINNET-SECOND-OPERATOR-ACK-001 | ops · 广播 · 主网第二 ack | **未封口**（**登记**） | **B-300**：**双** **人** **/** **工单** **号** **元数据** **。** **互证** [**母表 B-300**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 311 | TT-B301-STUB-INTEGRITY-SIGNING-OPTIONAL-001 | ops · 广播 · stub 可选验签 | **未封口**（**登记**） | **B-301**：**GPG/minisign** **可选** **门禁** **。** **互证** [**母表 B-301**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 312 | TT-B302-ETH-SEND-RAW-RATE-LIMIT-001 | ops · 广播 · sendRaw 限流 | **未封口**（**登记**） | **B-302**：**QPS**/**并发** **上限** **。** **互证** [**母表 B-302**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 313 | TT-B303-BREAK-GLASS-AND-ROLLBACK-ROLES-001 | ops · 合规 · break-glass 角色 | **未封口**（**登记**） | **B-303**：**override** **批准** **与** **24h** **补证** **。** **互证** [**母表 B-303**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 314 | TT-B304-RPC-KEY-ROTATION-RUNBOOK-001 | ops · RPC · key 轮换 Runbook | **未封口**（**登记**） | **B-304**：**零** **改** **业务** **配置** **切换** **步骤** **。** **互证** [**母表 B-304**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 315 | TT-B305-ALLOWLIST-RPC-HOST-PREFIX-001 | ops · 广播 · RPC host 白名单 | **未封口**（**登记**） | **B-305**：**`TRAVELTRUST_CHAIN_RPC_URL_ALLOWLIST`** **前缀** **匹配** **。** **互证** [**母表 B-305**](./任务母表.md) · [**正文**](#tt-b276-b305-live-ops-enhancement-pack-registry-001) |
+| 316 | TT-B306-07-PR-PREFLIGHT-SCRIPT-MATRIX-INDEX-001 | doc · 07 §二 2.3 · PR 前预检脚本矩阵索引 | **已封口**（**2026-04-14**） | **B-306**：**已** **新增** **[`docs/scripts-ops-preflight-matrix.md`](./scripts-ops-preflight-matrix.md)** **（** **`scripts/ops`**** **矩阵** **+** **07** **/** **CONTRIBUTING** **/** **`scripts/README`**** **互** **指** **）** **；** **`scripts/ops`**** **无** **行为** **diff** **。** **互证** [**母表 B-306**](./任务母表.md) · [**registry**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 317 | TT-B307-GOVERNANCE-DOC-LINKAGE-FAILURE-RUNBOOK-001 | doc · 07 §二 2.4 · 治理联动门禁失败 Runbook | **已封口**（**2026-04-14**） | **B-307**：**Runbook** **[§12.7.1](../ops/RUNBOOK.md#1271-governance-doc-linkage-failure-triage)** **分流** **表** **+** **07** **§二 2.4** **CI** **基线** **互** **指** **+** **`scripts/README`** **/** **门禁** **头** **注释** **。** **互证** [**母表 B-307**](./任务母表.md) · [**registry**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 318 | TT-B308-WAVE-EVIDENCE-GO-DIR-TEMPLATE-ALIGN-001 | doc · 07 §零 0.4.1 · GO 证据目录与 15 附录〇对齐 | **未封口**（**登记**） | **B-308**：**`evidence/GO_*`** **模板** **互** **指** **15** **。** **互证** [**母表 B-308**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 319 | TT-B309-P15-APPENDIX-O-P0-ROW-MAP-001 | doc · 15 附录〇 · 与缺口官方总表 P0 映射 | **未封口**（**登记**） | **B-309**：**附录〇** **↔** **P0** **行** **映射** **表** **。** **互证** [**母表 B-309**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 320 | TT-B310-110-CHECKS-TOTAL-TRIPLE-DOC-SYNC-CHECKLIST-001 | doc · 110 + 07 · checks_total 三文档同批核对 | **未封口**（**登记**） | **B-310**：**indexer-reconcile-gate** **锚** **变更** **清单** **。** **互证** [**母表 B-310**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 321 | TT-B311-87-USERS-ROLE-PREFLIGHT-INVENTORY-001 | db · 87 §11 · users.role 迁移前只读盘点 | **未封口**（**登记**） | **B-311**：**SQL** **+** **模板** **，** **不** **改** **默认** **枚举** **。** **互证** [**母表 B-311**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 322 | TT-B312-88-FIVE-ROUTES-SHELL-UX-MATRIX-AUDIT-001 | frontend · 88 · 五主路由壳层 UX 与 86 矩阵差分 | **未封口**（**登记**） | **B-312**：**Loading** **/** **Empty** **审计** **表** **。** **互证** [**母表 B-312**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 323 | TT-B313-70-ADMIN-RBAC-04-ROUTE-DELTA-TABLE-001 | admin · 70 · RBAC 与 04 admin 路由差分 | **未封口**（**登记**） | **B-313**：**路由** **矩阵** **vs** **70** **叙事** **。** **互证** [**母表 B-313**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 324 | TT-B314-04-INTERNAL-REQUIRE-REFS-GATE-DOC-001 | api · 04 · internal 路由 REQUIRE_REFS 纪律 | **未封口**（**登记**） | **B-314**：**登记** **门禁** **说明** **。** **互证** [**母表 B-314**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 325 | TT-B315-53-ORDER-TERMINAL-VS-ESCROW-SSOT-001 | product · 53 · 订单终端态 vs Escrow SSOT | **未封口**（**登记**） | **B-315**：**对照** **表** **，** **不** **改** **Happy** **路径** **。** **互证** [**母表 B-315**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 326 | TT-B316-14-ABI-FORGE-SYNC-ANTI-DRIFT-HINT-001 | contracts · 14 · ABI forge 同步防 drift | **未封口**（**登记**） | **B-316**：**流程** **提示** **/** **可选** **hook** **文案** **。** **互证** [**母表 B-316**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 327 | TT-B317-83-84-COUNTRY-LEDGER-PROJECTION-GLOSSARY-001 | doc · 83/84 · country-ledger 与 110 投影 glossary | **未封口**（**登记**） | **B-317**：**只读** **字段** **映射** **。** **互证** [**母表 B-317**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 328 | TT-B318-FEE-ROUTER-INTERNAL-EXPORT-FIELD-GLOSSARY-001 | doc · FeeRouter · internal 导出 JSON glossary | **未封口**（**登记**） | **B-318**：**字段** **/** **admin** **边界** **。** **互证** [**母表 B-318**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 329 | TT-B319-FRONTEND-429-RETRY-04-ALIGNMENT-001 | frontend · 429 重试与 04 约定对齐 | **未封口**（**登记**） | **B-319**：**退避** **/** **错误** **包** **说明** **。** **互证** [**母表 B-319**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 330 | TT-B320-NEXT-PUBLIC-ENV-DIFF-SPEC-001 | doc · NEXT_PUBLIC 与 .env.example 机读 diff 规格 | **未封口**（**登记**） | **B-320**：**键** **全集** **对齐** **规格** **。** **互证** [**母表 B-320**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 331 | TT-B321-I18N-KEY-PARITY-LINT-SPEC-001 | frontend · i18n en/zh 对称 lint 规格 | **未封口**（**登记**） | **B-321**：**可选** **npm** **脚本** **。** **互证** [**母表 B-321**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 332 | TT-B322-CI-TSC-VITEST-BUDGET-DOC-001 | ci · tsc/vitest/cargo 分轨耗时预算文档 | **未封口**（**登记**） | **B-322**：**默认** **不** **改** **workflow** **语义** **。** **互证** [**母表 B-322**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 333 | TT-B323-API-CARGO-FEATURES-SURFACE-MAP-001 | api · Cargo features 暴露面地图 | **未封口**（**登记**） | **B-323**：**feature** **→** **路由** **/** **依赖** **。** **互证** [**母表 B-323**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 334 | TT-B324-DB-MIGRATION-ROLLFORWARD-RUNBOOK-POINTER-001 | db · 迁移正向回滚策略 + RUNBOOK 指针 | **未封口**（**登记**） | **B-324**：**Wave 2** **叙事** **对齐** **。** **互证** [**母表 B-324**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 335 | TT-B325-EVIDENCE-MANIFEST-P15-SIGNOFF-MAP-001 | doc · evidence manifest 与 15 签字项映射 | **未封口**（**登记**） | **B-325**：**人工** **签字** **逐条** **模板** **。** **互证** [**母表 B-325**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 336 | TT-B326-INTERNAL-DRILL-GATE-WORKFLOW-PARAMS-TABLE-001 | ci · internal-drill-gate 参数与 artifact 表 | **未封口**（**登记**） | **B-326**：**workflow** **一页** **说明** **。** **互证** [**母表 B-326**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 337 | TT-B327-DEV-START-STOP-PORT-MATRIX-AUDIT-001 | doc · 起停脚本与文档端口矩阵审计 | **未封口**（**登记**） | **B-327**：**8080** **/** **3012** **等** **一致性** **。** **互证** [**母表 B-327**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 338 | TT-B328-90-AUTH-04-SESSION-BOUNDARY-SSOT-001 | doc · 90 身份与 04 auth 会话边界 SSOT | **未封口**（**登记**） | **B-328**：**一句** **分界** **。** **互证** [**母表 B-328**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 339 | TT-B329-100-RISK-53-DISPUTE-API-MATRIX-001 | doc · 100 风控 vs 53 争议 API 责任矩阵 | **未封口**（**登记**） | **B-329**：**防** **双** **SSOT** **。** **互证** [**母表 B-329**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 340 | TT-B330-55-VS-INDEXER-SCOPE-SSOT-001 | doc · 55 数据同步 vs 110 indexer 职责分界 | **未封口**（**登记**） | **B-330**：**一句** **SSOT** **。** **互证** [**母表 B-330**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 341 | TT-B331-AUDIT-DEPS-SEVERITY-CI-POLICY-DOC-001 | doc · npm/cargo audit 分级与 CI 策略登记 | **未封口**（**登记**） | **B-331**：**不** **改** **默认** **除非** **单** **卡** **封口** **。** **互证** [**母表 B-331**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 342 | TT-B332-CHECK-08-CONSISTENCY-REMEDIATION-RUNBOOK-001 | doc · check-08-consistency 失败修复 Runbook | **未封口**（**登记**） | **B-332**：**08-3** **/** **08-4** **指针** **。** **互证** [**母表 B-332**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 343 | TT-B333-27-ARCHIVED-LINK-FIX-BATCH-DISCIPLINE-001 | doc · 27-archived 链接修复同批纪律 | **未封口**（**登记**） | **B-333**：**`fix_27_archived_links`** **触发** **条件** **。** **互证** [**母表 B-333**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 344 | TT-B334-MULTI-TABLE-OBS-SHELL-DEDUP-SCAN-SHEET-001 | doc · 观测壳键扩展前重复维度扫描表 | **未封口**（**登记**） | **B-334**：**承** **B-171** **/** **B-176** **防** **重复** **规则** **。** **互证** [**母表 B-334**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 345 | TT-B335-SOLO-MVP-VS-MOTHER-TABLE-OPEN-QUEUE-INDEX-001 | doc · Solo MVP 与母表未封口队列对照索引 | **未封口**（**登记**） | **B-335**：**选** **卡** **背板** **；** **须** **覆盖** **一览** **286～375** **（** **B-276～B-365** **三** **registry** **）** **。** **互证** [**母表 B-335**](./任务母表.md) · [**正文**](#tt-b306-b335-07-aligned-backlog-registry-001) |
+| 346 | TT-B336-API-IDEMPOTENCY-KEY-HEADER-SPEC-001 | api · 04 · 写操作 Idempotency-Key 规格 | **未封口**（**登记**） | **B-336**：**幂等** **头** **与** **04** **登记** **。** **互证** [**母表 B-336**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 347 | TT-B337-WEBHOOK-OUTBOX-DELIVERY-SPEC-001 | api · webhook outbox 投递叙事规格 | **未封口**（**登记**） | **B-337**：**无** **默认** **生产** **实现** **。** **互证** [**母表 B-337**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 348 | TT-B338-CORS-ALLOWLIST-MATRIX-ADMIN-PUBLIC-001 | security · CORS admin/public 矩阵 | **未封口**（**登记**） | **B-338**：**允许** **源** **/** **方法** **文档** **。** **互证** [**母表 B-338**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 349 | TT-B339-CSP-POLICY-GAP-AUDIT-DOC-001 | security · CSP/安全头缺口审计 | **未封口**（**登记**） | **B-339**：**分** **阶段** **目标** **。** **互证** [**母表 B-339**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 350 | TT-B340-STRUCTURED-LOG-FIELD-REGISTRY-001 | observability · 结构化日志键注册表 | **未封口**（**登记**） | **B-340**：**request_id** **等** **。** **互证** [**母表 B-340**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 351 | TT-B341-INTERNAL-METRICS-NAMING-CONVENTION-001 | observability · internal 指标命名与基数 | **未封口**（**登记**） | **B-341**：**与** **B-171/B-176** **不** **重复** **。** **互证** [**母表 B-341**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 352 | TT-B342-LOG-PII-REDACTION-TIERING-GUIDE-001 | security · 日志 PII 脱敏分级 | **未封口**（**登记**） | **B-342**：**L1/L2** **指南** **。** **互证** [**母表 B-342**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 353 | TT-B343-DB-BACKUP-RESTORE-DRILL-RUNBOOK-001 | ops · DB 备份恢复演练 Runbook | **未封口**（**登记**） | **B-343**：**桌面** **演练** **字段** **。** **互证** [**母表 B-343**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 354 | TT-B344-FLAKY-TEST-QUARANTINE-CI-POLICY-001 | ci · flaky quarantine 策略 | **未封口**（**登记**） | **B-344**：**默认** **不** **改** **workflow** **。** **互证** [**母表 B-344**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 355 | TT-B345-BRANCH-PROTECTION-REQUIRED-CHECKS-DOC-001 | repo · 分支保护与 required checks | **未封口**（**登记**） | **B-345**：**清单** **文档** **。** **互证** [**母表 B-345**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 356 | TT-B346-ESCROW-PATH-ERROR-BOUNDARY-COVERAGE-MAP-001 | frontend · Escrow 错误边界覆盖图 | **未封口**（**登记**） | **B-346**：**兜底** **地图** **。** **互证** [**母表 B-346**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 357 | TT-B347-FIVE-ROUTES-RESPONSIVE-TOUCH-TARGET-AUDIT-001 | frontend · 五主路由断点与 touch target | **未封口**（**登记**） | **B-347**：**86/88** **审计** **。** **互证** [**母表 B-347**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 358 | TT-B348-KEY-PAGES-LCP-BUDGET-DOC-001 | frontend · 关键页 LCP 预算 | **未封口**（**登记**） | **B-348**：**perf** **文档** **。** **互证** [**母表 B-348**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 359 | TT-B349-I18N-DATE-NUMBER-FORMAT-SSOT-001 | frontend · Intl 日期数字格式 SSOT | **未封口**（**登记**） | **B-349**：**13-1** **对齐** **。** **互证** [**母表 B-349**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 360 | TT-B350-FE-API-TYPE-ALIGNMENT-CHECKLIST-001 | contract · FE/API 类型对齐清单 | **未封口**（**登记**） | **B-350**：**OpenAPI** **/** **手写** **。** **互证** [**母表 B-350**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 361 | TT-B351-ADR-TEMPLATE-AND-CODEOWNERS-MAP-001 | doc · ADR 模板与 CODEOWNERS 映射 | **已封口**（**2026-04-14**） | **B-351**：**[`docs/adr/`](./adr/README.md)** **模板** **+** **[`CODEOWNERS-map.md`](./CODEOWNERS-map.md)** **；** **`.github/CODEOWNERS`** **注释** **占位** **；** **07** **§6.3C** **/** **CONTRIBUTING** **互** **指** **。** **互证** [**母表 B-351**](./任务母表.md) · [**registry**](#tt-b336-b365-platform-reliability-registry-001) |
+| 362 | TT-B352-INCIDENT-SEVERITY-ESCALATION-RUNBOOK-001 | ops · 事故等级与升级 Runbook | **未封口**（**登记**） | **B-352**：**响应** **时限** **。** **互证** [**母表 B-352**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 363 | TT-B353-DATA-RETENTION-TABLE-MATRIX-001 | compliance · 表级保留期矩阵 | **未封口**（**登记**） | **B-353**：**匿名化** **触发** **。** **互证** [**母表 B-353**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 364 | TT-B354-RATE-LIMIT-BUCKET-ADMIN-PUBLIC-DOC-001 | api · 429 分桶 admin/public | **未封口**（**登记**） | **B-354**：**承** **B-319** **叙事** **。** **互证** [**母表 B-354**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 365 | TT-B355-SECRETS-SCAN-PRECOMMIT-SPEC-001 | security · secret 扫描接入规格 | **未封口**（**登记**） | **B-355**：**pre-commit** **/** **CI** **。** **互证** [**母表 B-355**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 366 | TT-B356-DEPENDENCY-AUTOMATION-MERGE-POLICY-DOC-001 | deps · 依赖自动 PR 合并策略 | **未封口**（**登记**） | **B-356**：**机器人** **门槛** **。** **互证** [**母表 B-356**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 367 | TT-B357-OPENAPI-OR-SSOT-EXPORT-SMOKE-COMMAND-001 | api · OpenAPI/SSOT 导出烟测登记 | **未封口**（**登记**） | **B-357**：**脚本** **索引** **。** **互证** [**母表 B-357**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 368 | TT-B358-HEALTH-READY-SLO-AND-PROBE-CONTRACT-001 | api · health/ready SLO 与探针 | **未封口**（**登记**） | **B-358**：**契约** **一页** **。** **互证** [**母表 B-358**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 369 | TT-B359-GRACEFUL-SHUTDOWN-DRAIN-DEPLOY-DOC-001 | deploy · 优雅停机与排空 | **未封口**（**登记**） | **B-359**：**preStop** **对齐** **。** **互证** [**母表 B-359**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 370 | TT-B360-FEATURE-FLAG-LIFECYCLE-CLEANUP-LIST-001 | platform · feature flag 生命周期 | **未封口**（**登记**） | **B-360**：**退役** **清理** **。** **互证** [**母表 B-360**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 371 | TT-B361-SUBPROCESSOR-LIST-SHELL-001 | compliance · 子处理器清单壳 | **未封口**（**登记**） | **B-361**：**08-4** **/** **15** **。** **互证** [**母表 B-361**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 372 | TT-B362-RPO-RTO-TARGETS-AND-EVIDENCE-POINTER-001 | ops · RPO/RTO 目标与证据指针 | **未封口**（**登记**） | **B-362**：**DR** **文档** **。** **互证** [**母表 B-362**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 373 | TT-B363-INDEXER-RPC-DEGRADATION-TABLETOP-SPEC-001 | ops · indexer RPC 降级桌面演练 | **未封口**（**登记**） | **B-363**：**不** **默认** **打** **生产** **。** **互证** [**母表 B-363**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 374 | TT-B364-CONVENTIONAL-COMMITS-CHANGELOG-DOC-001 | repo · Conventional Commits 与 changelog | **未封口**（**登记**） | **B-364**：**发版** **注释** **。** **互证** [**母表 B-364**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 375 | TT-B365-DEPRECATED-HTTP-ROUTES-TOMBSTONE-TABLE-001 | api · 已下线路由墓碑表 | **未封口**（**登记**） | **B-365**：**410** **/** **404** **口径** **。** **互证** [**母表 B-365**](./任务母表.md) · [**正文**](#tt-b336-b365-platform-reliability-registry-001) |
+| 376 | TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001 | ops · testnet · B-275 多笔连续 nonce 真实链证据归档 | **已封口**（**2026-04-15**） | **B-275** **协记** **（** **非** **母表** **B-322** **/** **一览** **332** **`TT-B322-CI-TSC-VITEST-BUDGET-DOC-001`** **）** **：** **Anvil** **上** **2** **/** **3** **笔** **`broadcast_request_stub`** **经** **`run_testnet_b262_b266_real.sh`** **全链路** **`GO`** **；** **归档** **`evidence/testnet_real_run_validation/run_tt_b322_anvil_multi_tx2_20260415/`** **、** **`run_tt_b322_anvil_multi_tx3_20260415/`** **；** **契** **[`TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001.md`](../evidence/testnet_real_run_validation/TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001.md)** **。** **互证** [**母表 B-275**](./任务母表.md) · [**正文**](#tt-b322-testnet-multi-tx-nonce-sequence-real-run-001) · **一览** **285** · **[`ops/RUNBOOK.md`](../ops/RUNBOOK.md)** **§2.55** |
+
+### TT-B276-B305-LIVE-OPS-ENHANCEMENT-PACK-REGISTRY-001
+
+- **阶段**：上线运行 / 运维与安全增强（承 **B-262～B-275**，与已封口 UI·状态机正交）。
+- **状态**：**未封口**（**2026-04-14** 母表 + 一览 **登记批**；实现与验收在各单卡 TT 收口时补齐）。
+- **真值**：**母表** [**B-276～B-305**](./任务母表.md) **一行一卡**；**一览** **286～315** **与** **B** **一一对应**。
+- **硬边界**：**不** **改写** **B-262～B-266** **/** **B-275** **已落地** **默认** **执行** **语义**；**增量** **以** **可选** **门禁**、**独立** **CLI**、**Runbook**、**附属** **JSON** **披露** **等** **方式** **落地**。
+- **五类（各 6 张）**：**①** 多 tx / nonce / 顺序（**B-276～B-281**）**②** 失败恢复 / 幂等 / 重试（**B-282～B-287**）**③** 真链 / 最终性 / gas（**B-288～B-293**）**④** 运维自动化 / 证据（**B-294～B-299**）**⑤** 安全 / 风险（**B-300～B-305**）。
+- **防糊 · nonce 邻域**：**B-278**（**mempool pending** **深度** **/** **空洞** **/** **超阈** **阻断**）**与** **B-281**（**多** **工具** **共用** **热** **钱包** **nonce floor** **漂移**）**题** **面** **不同** **；** **若** **合并** **实现** **须** **先** **改** **母表** **互指** **划界** **。**
+- **防糊 · evidence 分工**：**本** **批** **B-295**（**`OUT_DIR`** **tar+sha256** **manifest**）**与** **B-298**（**`evidence/…/INDEX`** **保留** **期** **/** **清理**）**；** **07** **对齐** **批** **B-308**（**`GO_YYYYMMDD`** **命名** **↔** **15** **附录〇** **证据** **目录**）**——** **三** **卡** **分** **面** **（** **产物** **打包** **/** **仓内** **索引** **生命周期** **/** **发版** **证据** **目录** **口径** **）** **，** **勿** **混** **为** **单** **张** **通用** **「** **证据** **包** **」** **TT** **。**
+
+### TT-B306-B335-07-ALIGNED-BACKLOG-REGISTRY-001
+
+- **阶段**：**07**（`spec/07-开发流程与顺序.md`）**读前摘要** **+** **§二** **预检** **/** **联动** **+** **§四** **发版** **+** **§六 6.3A～C** **与** **Wave** **证据** **口径** **对齐** **的** **工程** **文档** **/** **门禁** **说明** **/** **SSOT** **一句** **表** **（** **非** **RegionVault** **广播** **执行** **链** **增强** **）** **。**
+- **状态**：**未封口**（**2026-04-14** **登记批**；**与** **[§TT-B276-B305](#tt-b276-b305-live-ops-enhancement-pack-registry-001)** **正交** **、** **编号** **不** **重叠** **；** **单** **卡** **一览** **316** **/** **B-306** **、** **317** **/** **B-307** **已于** **2026-04-14** **文档** **封口** **见** **一览** **表** **状态** **列** **）** **。**
+- **真值**：**母表** [**B-306～B-335**](./任务母表.md)；**一览** **316～345** **（** **316·B-306** **、** **317·B-307** **已** **封口** **见** **一览** **行** **）** **。**
+- **登记批内单卡封口**：**B-306** **/** **一览** **316** **→** **[`scripts-ops-preflight-matrix.md`](./scripts-ops-preflight-matrix.md)** **（** **`TT-B306-07-PR-PREFLIGHT-SCRIPT-MATRIX-INDEX-001`** **·** **2026-04-14** **）** **；** **B-307** **/** **一览** **317** **→** **[Runbook §12.7.1](../ops/RUNBOOK.md#1271-governance-doc-linkage-failure-triage)** **（** **`TT-B307-GOVERNANCE-DOC-LINKAGE-FAILURE-RUNBOOK-001`** **·** **2026-04-14** **）** **。**
+- **硬边界**：**默认** **以** **文档** **/** **清单** **/** **Runbook** **为主** **；** **若** **触** **04** **/** **合约** **/** **迁移** **须** **另** **开** **实现** **轮** **并** **遵守** **母表** **→** **TT** **→** **代码** **顺序** **。**
+- **互指**：**B-308** **（** **证据** **目录** **↔** **15** **附录〇** **）** **与** **广播** **批** **B-295/B-298** **分工** **见** **上** **[§TT-B276-B305](#tt-b276-b305-live-ops-enhancement-pack-registry-001)** **「** **防糊** **·** **evidence** **分工** **」** **。**
+- **主题簇（示意）**：**07** **/** **CI** **脚本** **索引**（**B-306～B-310**）**；** **87** **/** **88** **/** **70** **/** **53** **产品** **SSOT**（**B-311～B-315**）**；** **14** **/** **83** **/** **84** **/** **FeeRouter** **叙事**（**B-316～B-318**）**；** **前端** **/** **env** **/** **i18n** **/** **CI** **预算**（**B-319～B-322**）**；** **API features** **/** **DB** **/** **evidence** **/** **workflow**（**B-323～B-326**）**；** **本地** **端口** **/** **90** **/** **100** **/** **55** **分界**（**B-327～B-330**）**；** **audit** **/** **08** **/** **27** **/** **观测** **壳** **/** **排程** **背板**（**B-331～B-335**）**。**
+
+### TT-B336-B365-PLATFORM-RELIABILITY-REGISTRY-001
+
+- **阶段**：**平台** **可靠性** **/** **安全** **/** **可观测** **/** **合规** **/** **发版** **工程** **治理** **（** **API** **/** **前端** **/** **CI** **/** **Runbook** **）** **，** **与** **[§TT-B276-B305](#tt-b276-b305-live-ops-enhancement-pack-registry-001)** **（** **链上** **广播** **运维** **）** **、** **[§TT-B306-B335](#tt-b306-b335-07-aligned-backlog-registry-001)** **（** **07** **文档** **对齐** **）** **正交** **。**
+- **状态**：**未封口**（**2026-04-14** **登记批** **三** **；** **单** **卡** **一览** **361** **/** **B-351** **已于** **2026-04-14** **文档** **封口** **见** **一览** **表** **状态** **列** **）** **。**
+- **真值**：**母表** [**B-336～B-365**](./任务母表.md)；**一览** **346～375** **（** **361·B-351** **已** **封口** **见** **一览** **行** **）** **。** **附录**：**一览** **376** **`TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001`** **为** **B-275** **协记** **，** **不** **计入** **本** **B-336～B-365** **编号** **块** **（** **勿** **与** **一览** **332** **/** **母表** **B-322** **CI** **预算** **TT** **混** **）** **。**
+- **登记批内单卡封口**：**B-351** **/** **一览** **361** **→** **[`docs/adr/README.md`](./adr/README.md)** **+** **[`docs/CODEOWNERS-map.md`](./CODEOWNERS-map.md)** **+** **[`.github/CODEOWNERS`](../.github/CODEOWNERS)** **（** **`TT-B351-ADR-TEMPLATE-AND-CODEOWNERS-MAP-001`** **·** **2026-04-14** **）** **。**
+- **硬边界**：**默认** **文档** **/** **清单** **/** **Runbook** **；** **触** **生产** **行为** **变更** **须** **单** **卡** **封口** **并** **按** **母表** **→** **TT** **→** **代码** **。**
+- **互指**：**B-347**（**五** **主** **路由** **断点** **/** **touch** **target**）**与** **07** **对齐** **批** **B-312**（**壳** **层** **Loading/Empty**）**分** **切面** **审计** **；** **勿** **合并** **为** **单** **张** **「** **路由** **体验** **」** **TT** **除非** **母表** **先** **划界** **。**
+- **主题簇（示意）**：**API** **契约** **/** **幂等** **/** **429** **（** **B-336** **～** **B-337** **、** **B-354** **、** **B-357** **～** **B-358** **、** **B-365** **）** **；** **安全** **头** **/** **CORS** **/** **secret** **（** **B-338** **～** **B-339** **、** **B-342** **、** **B-355** **）** **；** **可观测** **（** **B-340** **～** **B-341** **）** **；** **SRE** **/** **DR** **（** **B-343** **、** **B-352** **、** **B-362** **～** **B-363** **）** **；** **CI** **/** **仓库** **（** **B-344** **～** **B-345** **、** **B-356** **、** **B-364** **）** **；** **前端** **体验** **（** **B-346** **～** **B-349** **）** **；** **类型** **/** **ADR** **（** **B-350** **～** **B-351** **）** **；** **数据** **/** **合规** **（** **B-353** **、** **B-361** **）** **；** **部署** **（** **B-359** **）** **；** **flags** **（** **B-360** **）** **。**
+
+**85 `/traveltrust` · 一览 206～211、220（B-195～B-200、B-203 Hero）**（**205·B-194** **至** **211·B-200**、**220·B-203** **均已封口** · **2026-04-14**）：**主线** **收尾** **以** **母表** **Backlog** **与** **GO_85** **§3** **为准**。**A/B/C**、**真值↔口述**、**推荐序（历史）**、**「TT 通用封口标准」DoD**、**「85 封口验证清单」按序实跑（1～8）**、**B-191 Partial→Implemented 充要**、**04 何时才改**、**Close-out → Release Ready**、**关键卡提醒** → **[任务母表.md · 85「/traveltrust」Backlog](./任务母表.md)**（**`### 85「/traveltrust」Backlog`** 起）。
 
 ### TT-GOVERNANCE-POOL-CHAIN-ALIGNMENT-HINT-TRIPLE-001
 
@@ -327,9 +457,23 @@
 
 ### 未封口一览项 · 去重（仅扫状态非「已封口」）
 
-**范围**：上表 **序号 1～191** 中，**状态**列 **不含** **`已封口`** 的条目 **含** **3**、**6**、**12**、**143**、**152**～**155**、**157**、**158**～**162**、**164**～**168**、**178**（**143** — **SEQ12 边界台账**；**147～177** — **三批 Execution backlog**（其中 **B-147**/**B-148**/**B-149**/**B-150**/**B-151** **TT** **已封口**；**母表观测 Batch-3** **B-169**～**B-177** **均已封口**；**152**～**168** 之余项 **仍以本表状态列为准**）；**178** — **Phase Close 规划门禁**，**待** **B-147～B-177** **三批 backlog 尽数封口** 后执行）；**179～184** — **母表 B-163** **程序级模块化治理 / Batch-1** **文档登记（含 B1-01/B1-04 补登）**（**已封口**）；**185～186** — **母表 B-163** **程序级模块化治理 / Batch-2**（**TT-MOD-B2-01/B2-02** · **internal indexer/reconcile 目录对称**）（**已封口** · **文档登记**）；**187～191** — **母表 B-163** **程序级模块化治理 / Batch-3**（**TT-MOD-B3-01～B3-05** · **`community/`** + **`health_meta/` 生产分段** + **`mod.rs` 装配对齐** + **`governance/` 第一层 + 第二层分域**）（**已封口** · **文档登记**；**非** 母表 **B-169～B-177** **观测 Batch-3**）；**807 并列观测** 经 **144/B-144** **否决**；**B-145～B-146** **已封口**；**3**/**6**/**12** 为**只读** · 审计/文档扫档，**非** Target 能力登记）。
+#### 当前阶段 · 执行面 vs 延后（清点 · 2026-04-14）
 
-**一览 192～282（本文件已并入）**：对应 **91** 张 TT 选自 **`docs/AI任务卡索引.from-stash.md`** 中 **已封口** 且 **非文档轮** 之子集；**一览 283～376** 及 **未封口登记批** **仍仅** 见于 **`docs/AI任务卡索引.from-stash.md`** 与 **git stash**（**不丢**）。
+> **状态列** 仍为 **真值**；本节 **仅** 为 **背板排程**，**不** 改写各 TT **已封口/未封口** 语义。
+
+| 归类 | 一览序号 | 备注 |
+|------|----------|------|
+| **建议挂在当期产品背板** | **199**（**已封口** · **2026-04-14**） | **B-187** **登记母卡** **已归档**；**85 `/traveltrust`** **B-195～B-200** **均已封口**（**一览 206～211**）；**若** **再起** **多源缺口登记母卡** **须** **新开** **TT** **勿** **复用** **本卡号** |
+| **台账母卡 · 历史** | **199** | **TT-B187** **已于** **2026-04-14** **Pass-0** **完整扫档后** **封口**；**当期** **缺口包** **按** **04 零、** **单卡** **B-+TT** **登记** |
+| **整包延后 · Phase Close 附录 B（余量）** | — | **B-182～B-186** **均已封口**（**一览 212～216**；**216·B-186** **2026-04-14**） |
+| **只读 · 不计入交付承诺** | **6** | **TT-UI-CONSISTENCY-POLISH-AUDIT-001** **（** **序号 6** **）** **；** **序号 3** **已于 2026-04-14** **封口** **（** **B-021** **·** **高优** **B-269～B-272** **）** **不** **再** **计入** **本条** |
+| **非阻塞进度锚** | **219** | **SOLO** **路线图** **不** 替代单卡 |
+| **上线运维增强（登记批）** | **286～315** | **B-276～B-305** **未封口**；**硬** **边界** **与** **五类** **划分** **见** **[§TT-B276-B305-LIVE-OPS-ENHANCEMENT-PACK-REGISTRY-001](#tt-b276-b305-live-ops-enhancement-pack-registry-001)** |
+| **07 对齐工程欠账（登记批 · 二）** | **316～345** | **一览** **316** **/** **B-306** **已于** **2026-04-14** **文档** **封口** **（** **矩阵** **[`scripts-ops-preflight-matrix.md`](./scripts-ops-preflight-matrix.md)** **）** **；** **一览** **317** **/** **B-307** **已于** **2026-04-14** **文档** **封口** **（** **[Runbook §12.7.1](../ops/RUNBOOK.md#1271-governance-doc-linkage-failure-triage)** **）** **；** **318～345** **/** **B-308～B-335** **未** **封口** **。** **与** **B-276～B-305** **广播** **包** **正交** **，** **互证** **[§TT-B306-B335-07-ALIGNED-BACKLOG-REGISTRY-001](#tt-b306-b335-07-aligned-backlog-registry-001)** |
+| **平台可靠性 / 安全 / 可观测（登记批 · 三）** | **346～375** | **一览** **361** **/** **B-351** **已于** **2026-04-14** **文档** **封口**（**[`docs/adr/`](./adr/README.md)** **+** **[`CODEOWNERS-map.md`](./CODEOWNERS-map.md)** **+** **[`.github/CODEOWNERS`](../.github/CODEOWNERS)** **注释** **占位** **）** **；** **346～360** **/** **B-336～B-350** **与** **362～375** **/** **B-352～B-365** **未** **封口** **。** **互证** **[§TT-B336-B365-PLATFORM-RELIABILITY-REGISTRY-001](#tt-b336-b365-platform-reliability-registry-001)** |
+| **testnet 多笔链上证据（B-275 协记 · 附录行）** | **376** | **一览** **376** **`TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001`** **已于** **2026-04-15** **封口**（**Anvil** **2** **/** **3** **笔** **连续** **nonce** **`broadcast_request_stub`****+** **`run_testnet_b262_b266_real.sh`** **归档** **；** **与** **一览** **332** **/** **母表** **B-322** **CI** **预算** **TT** **勿** **混** **）** **。** **互证** **[§TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001](#tt-b322-testnet-multi-tx-nonce-sequence-real-run-001)** · **[`TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001.md`](../evidence/testnet_real_run_validation/TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001.md)** · **一览** **285** |
+
+**范围**：上表 **序号 1～376** 中，**状态**列 **不含** **`已封口`** 的条目 **含** **6**、**261**（**B-249** **执行链** **入口** **母卡** **·** **未封口**）、**286～315**（**B-276～B-305** **上线** **运维** **增强** **·** **未封口** **，** **互证** **[§TT-B276-B305](#tt-b276-b305-live-ops-enhancement-pack-registry-001)**）、**318～345**（**B-308～B-335** **07** **对齐** **登记** **批** **·** **未封口** **，** **互证** **[§TT-B306-B335](#tt-b306-b335-07-aligned-backlog-registry-001)**）、**346～360**（**B-336～B-350** **·** **平台** **可靠性** **登记** **批** **·** **未封口** **，** **互证** **[§TT-B336-B365](#tt-b336-b365-platform-reliability-registry-001)**）**、** **362～375**（**B-352～B-365** **·** **未封口** **，** **互证** **[§TT-B336-B365](#tt-b336-b365-platform-reliability-registry-001)**）。** **另：一览 199**/**TT-B187** **母卡** **已于 2026-04-14** **封口**（**Pass-0** **完整**）— **不** **再** **计入** **本条** 「未封口」 **枚举**。** **另：一览 376**/**`TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001`** **已于 2026-04-15** **封口**（**B-275** **协记** **·** **多** **笔** **Anvil** **证据** **）** — **不** **再** **计入** **本条** 「未封口」 **枚举**。** **另：一览 316**/**B-306** **已于 2026-04-14** **封口**（**[`docs/scripts-ops-preflight-matrix.md`](./scripts-ops-preflight-matrix.md)** **+** **07** **/** **CONTRIBUTING** **/** **`scripts/README`**** **互** **指** **；** **`scripts/ops`**** **无** **逻辑** **diff** **）** — **不** **再** **计入** **本条** 「未封口」 **枚举**。** **另：一览 317**/**B-307** **已于 2026-04-14** **封口**（**[Runbook §12.7.1](../ops/RUNBOOK.md#1271-governance-doc-linkage-failure-triage)** **+** **07** **§二 2.4** **CI** **基线** **互** **指** **）** — **不** **再** **计入** **本条** 「未封口」 **枚举**。** **另：一览 361**/**B-351** **已于 2026-04-14** **封口**（**[`docs/adr/`](./adr/README.md)** **+** **[`CODEOWNERS-map.md`](./CODEOWNERS-map.md)** **+** **`.github/CODEOWNERS`**** **占位** **）** — **不** **再** **计入** **本条** 「未封口」 **枚举**。**已封口** **不列入** **含**：**一览 376** **·** **`TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001`** **已于 2026-04-15** **封口** **不列入**（**B-275** **协记** **·** **多** **笔** **Anvil** **证据** **归档** **）** **；** **一览 316** **·** **B-306** **已于 2026-04-14** **封口** **不列入**（**[`scripts-ops-preflight-matrix.md`](./scripts-ops-preflight-matrix.md)** **文档** **互** **指** **轮** **）** **；** **一览 317** **·** **B-307** **已于 2026-04-14** **封口** **不列入**（**[Runbook §12.7.1](../ops/RUNBOOK.md#1271-governance-doc-linkage-failure-triage)** **治理** **联动** **排障** **Runbook** **）** **；** **一览 361** **·** **B-351** **已于 2026-04-14** **封口** **不列入**（**ADR** **+** **CODEOWNERS** **映射** **文档** **轮** **）** **；** **一览 200～201** **·** **B-189/B-190** **已封口** **不列入**；**一览 202·B-191**、**203·B-192**、**204·B-193** **文档轮** **已封口** **不列入**；**子 B-189～B-193** **见母表**；**一览 205** **·** **B-194** **已封口** **不列入**；**一览 206** **·** **B-195** **已于 2026-04-14** **封口** **不列入**；**一览 207** **·** **B-196** **已于 2026-04-14** **封口** **不列入**；**一览 208** **·** **B-197** **已于 2026-04-14** **封口** **不列入**；**一览 209** **·** **B-198** **已于 2026-04-14** **封口** **不列入**；**一览 210** **·** **B-199** **已封口** **不列入**；**一览 211** **·** **B-200** **已于 2026-04-14** **封口** **不列入**；**一览 220** **·** **B-203** **已于 2026-04-14** **封口** **不列入**；**一览 221** **·** **B-204** **已封口** **不列入**；**一览 222** **·** **B-205** **已于 2026-04-14** **封口** **不列入**；**一览 223** **·** **B-206** **已于 2026-04-14** **封口** **不列入**；**一览 224** **·** **B-207** **已于 2026-04-14** **封口** **不列入**；**一览 225** **·** **B-208** **已于 2026-04-14** **封口** **不列入**；**一览 226** **·** **B-209** **已于 2026-04-14** **封口** **不列入**；**一览 227** **·** **B-210** **已于 2026-04-14** **封口** **不列入**；**一览 228** **·** **B-211** **已于 2026-04-14** **封口** **不列入**；**一览 229** **·** **B-212** **已于 2026-04-14** **封口** **不列入**；**一览 230** **·** **B-213** **已于 2026-04-14** **封口** **不列入**；**一览 231** **·** **B-214** **已于 2026-04-14** **封口** **不列入**；**一览 232** **·** **B-215** **已于 2026-04-14** **封口** **不列入**（**110** **全集证明** **文档轮**）；**一览 233** **·** **B-216** **已于 2026-04-14** **封口** **不列入**（**110** **全集证明** **JSON+gate**）；**一览 234** **·** **B-217** **已于 2026-04-14** **封口** **不列入**（**110** **`indexer-tick`** **JSON-RPC pacing**）；**一览 235** **·** **B-218** **已于 2026-04-14** **封口** **不列入**（**FeeRouter** **`fee_router_routed_events`** **admin/internal** **export**）；**一览 236** **·** **B-219** **已于 2026-04-14** **封口** **不列入**（**110** **evidence-bundle-canonical** **B-210+B-216+B-213**）；**一览 237** **·** **B-220** **已于 2026-04-14** **封口** **不列入**（**`checks_total=125`** **文档同锚** **承** **B-219**）；**一览 238** **·** **B-221** **已于 2026-04-14** **封口** **不列入**（**RUNBOOK/README** **B-219** **evidence-bundle** **标准用法**）；**一览 239** **·** **B-222** **已于 2026-04-14** **封口** **不列入**（**`indexer-reconcile-gate`** **CI** **evidence-bundle** **artifact**）；**一览 240** **·** **B-223** **已于 2026-04-14** **封口** **不列入**（**RegionVault** **`country-ledger-read-model`** **admin/internal**）；**一览 241** **·** **B-224** **已于 2026-04-14** **封口** **不列入**（**`country-ledger-read-model/export`** **JSON/CSV** **+** **可选** **snapshot explain**）；**一览 242** **·** **B-225** **已于 2026-04-14** **封口** **不列入**（**`snapshot-claim-readiness`**）；**一览 243** **·** **B-226** **已于 2026-04-14** **封口** **不列入**（**`snapshot-claim-dryrun-payload(/export)`**）；**一览 244** **·** **B-227** **已于 2026-04-14** **封口** **不列入**（**`snapshot-claim-batch-plan(/export)`**）；**一览 245** **·** **B-228** **已于 2026-04-14** **封口** **不列入**（**`snapshot-claim-execution-evidence-stub(/export)`**）；**一览 246** **·** **B-229** **已于 2026-04-14** **封口** **不列入**（**`snapshot-claim-execution-status-read-model(/export)`**）；**一览 247** **·** **B-230** **已于 2026-04-14** **封口** **不列入**（**`snapshot-claim-execution-reconcile-report(/export)`**）；**一览 248** **·** **B-231** **已于 2026-04-14** **封口** **不列入**（**`snapshot-claim-go-no-go-gate(/export)`**）；**一览 249** **·** **B-232** **已于 2026-04-14** **封口** **不列入**（**`snapshot-claim-go-no-go-evidence-bundle(/export)`** **admin** **only**）；**一览 250** **·** **B-233** **已于 2026-04-14** **封口** **不列入**（**claim** **GO/NO-GO** **evidence-bundle** **CI** **+** **verify** **脚本**）；**一览 251** **·** **B-234** **已于 2026-04-14** **封口** **不列入**（**claim** **evidence-bundle** **live** **admin** **validate**）；**一览 252** **·** **B-235** **已于 2026-04-14** **封口** **不列入**（**claim** **GO/NO-GO** **live** **evidence** **archive**）；**一览 253** **·** **B-236** **已于 2026-04-14** **封口** **不列入**（**claim** **live** **evidence** **index** **README**）；**一览 254** **·** **B-237** **已于 2026-04-14** **封口** **不列入**（**claim** **live** **evidence** **CI** **archive** **smoke**）；**一览 255** **·** **B-238** **已于 2026-04-14** **封口** **不列入**（**`snapshot-claim-go-no-go-release-gate(/export)`** **发布** **摘要** **admin** **only**）；**一览 256** **·** **B-239** **已于 2026-04-14** **封口** **不列入**（**release-gate** **live** **archive** **validate+finalize** **同构** **B-235**）；**一览 257** **·** **B-240** **已于 2026-04-14** **封口** **不列入**（**release-gate** **archive** **CI** **`finalize-only`** **smoke**）；**一览 258** **·** **B-241** **已于 2026-04-14** **封口** **不列入**（**release-gate** **archive** **README** **索引** **+** **manifest** **`index`** **对** **齐** **B-236**）；**一览 259** **·** **B-242** **已于 2026-04-14** **封口** **不列入**（**`snapshot-claim-go-no-go-release-gate-final-go-report(/export)`** **最终** **只读** **GO** **签署** **报告**）；**一览 260** **·** **B-248** **已于 2026-04-14** **封口** **不列入**（**14** **RegionVault claim** **只读链** **阶段** **附录** **封口** **+** **§1.1.1.1b** **锚**）；**一览 12** **·** **TT-PRODUCTION-READINESS-SUMMARY-001** **已于 2026-04-14** **封口** **不列入**（**`docs/frontend/Release-Readiness-Frontend.md`** **§0** **+** **§4.1** **与** **B-248** **只读阶** **及** **B-250～B-261** **彩排** **stub** **链** **/** **B-262** **执行** **/** **B-263** **receipt** **归档** **/** **B-264** **对账** **/** **B-265** **读模型** **+** **`forwarded`** **互证** **/** **B-266** **`14-REGIONVAULT-CLAIM-PRODUCTION-GO-GATE-V1`** **生产** **GO** **闸** **（** **双** **attestation** **、** **`production_verdict`****≠****`GO`** **默认** **exit** **1** **）** **；** **无** **新增** **实现** **）**；**一览 262** **·** **B-250** **已于 2026-04-14** **封口** **不列入**（**dryrun→manifest** **CLI** **·** **§1.1.1.1d** **/** **RUNBOOK** **§2.55**）；**一览 263** **·** **B-251** **已于 2026-04-14** **封口** **不列入**（**signing_plan_stub** **壳** **·** **§1.1.1.1e** **/** **同** **CLI**）；**一览 264** **·** **B-252** **已于 2026-04-14** **封口** **不列入**（**signing_artifact_stub** **·** **§1.1.1.1f**）；**一览 265** **·** **B-253** **已于 2026-04-14** **封口** **不列入**（**offline** **signing** **package** **·** **§1.1.1.1g** **/** **`region_vault_claim_signing_offline_package.py`** **）；** **一览 266** **·** **B-254** **已于 2026-04-14** **封口** **不列入**（**signed** **backfill** **import** **stub** **·** **§1.1.1.1h** **/** **`region_vault_claim_signed_backfill_stub_import.py`** **）；** **一览 267** **·** **B-255** **已于 2026-04-14** **封口** **不列入**（**signed** **backfill** **reconcile** **stub** **·** **§1.1.1.1i** **/** **`region_vault_claim_signed_backfill_reconcile_stub.py`** **）；** **一览 268** **·** **B-256** **已于 2026-04-14** **封口** **不列入**（**broadcast** **request** **stub** **·** **§1.1.1.1j** **/** **`region_vault_claim_broadcast_request_stub.py`** **）；** **一览 269** **·** **B-257** **已于 2026-04-14** **封口** **不列入**（**broadcast** **dryrun** **rehearsal** **·** **§1.1.1.1k** **/** **`region_vault_claim_broadcast_dryrun_rehearsal.py`** **）；** **一览 270** **·** **B-258** **已于 2026-04-14** **封口** **不列入**（**live** **admin** **gate** **stub** **·** **§1.1.1.1l** **/** **`region_vault_claim_broadcast_live_admin_gate_stub.py`** **）；** **一览 271** **·** **B-259** **已于 2026-04-14** **封口** **不列入**（**broadcast** **evidence** **stub** **·** **§1.1.1.1m** **/** **`region_vault_claim_broadcast_evidence_stub.py`** **）；** **一览 272** **·** **B-260** **已于 2026-04-14** **封口** **不列入**（**broadcast** **result** **import** **stub** **·** **§1.1.1.1n** **/** **`region_vault_claim_broadcast_result_import_stub.py`** **）；** **一览 273** **·** **B-261** **已于 2026-04-14** **封口** **不列入**（**broadcast** **result** **reconcile** **stub** **·** **§1.1.1.1o** **/** **`region_vault_claim_broadcast_result_reconcile_stub.py`** **）；** **一览 274** **·** **B-262** **已于 2026-04-14** **封口** **不列入**（**broadcast** **execute** **·** **§1.1.1.1p** **/** **`region_vault_claim_broadcast_execute.py`** **）；** **一览 275** **·** **B-263** **已于 2026-04-14** **封口** **不列入**（**broadcast** **receipt** **archive** **·** **§1.1.1.1q** **/** **`region_vault_claim_broadcast_receipt_archive.py`** **）；** **一览 276** **·** **B-264** **已于 2026-04-14** **封口** **不列入**（**broadcast** **onchain** **reconcile** **·** **§1.1.1.1r** **/** **`region_vault_claim_broadcast_onchain_reconcile.py`** **）；****一览 277** **·** **B-265** **已于 2026-04-14** **封口** **不列入**（**B-264** **`GO`** **读模型** **+** **`forwarded`** **互证** **·** **§1.1.1.1s** **`REGION_VAULT_CLAIM_ONCHAIN_RECONCILE_IMPORT_PATH`** **）；****一览 278** **·** **B-266** **已于 2026-04-14** **封口** **不列入**（**`14-REGIONVAULT-CLAIM-PRODUCTION-GO-GATE-V1`** **`production-go-gate`** **·** **§1.1.1.1t** **/** **`region_vault_claim_production_go_gate.py`** **、** **双** **attestation** **、** **`production_verdict`****≠****`GO`** **默认** **exit** **1** **）；****一览 279** **·** **B-269**/**TT-METAPROVIDER-LOADING-ERROR-RESYNC-001** **已于 2026-04-14** **封口** **不列入**（**`frontend/components/MetaProvider.tsx`** **二次** **`getMeta()`** **前** **`setLoading(true)`**+**`setError(null)`** **状态机** **）；****一览 280** **·** **B-270**/**TT-FRIENDS-PARTIAL-ERROR-VISIBILITY-001** **已于 2026-04-14** **封口** **不列入**（**`frontend/app/community/friends/page.tsx`** **`Promise.allSettled`** **部分** **失败** **`partialLoadHint`** **弱** **提示** **、** **不** **打断** **主** **成功** **态** **渲染** **）；****一览 281** **·** **B-271**/**TT-FINANCE-RECONCILIATION-PARTIAL-ERROR-VISIBILITY-001** **已于 2026-04-14** **封口** **不列入**（**`frontend/app/admin/finance-reconciliation/page.tsx`** **主** **摘要** **成功** **`crossErr`****/** **`driftSummaryErr`** **顶部** **弱** **提示** **`driftLegsRetryKey`** **局部** **重试** **）；****一览 282** **·** **B-272**/**TT-ADMIN-ERROR-RESET-CONVENTION-UNIFICATION-001** **已于 2026-04-14** **封口** **不列入**（**`frontend/app/admin/finance/page.tsx`** **首屏** **`adminFetchJson`** **前** **`setLoading(true)`****+****`setError(null)`** **admin** **惯例** **）；****一览 283** **·** **B-273**/**TT-GOVERNANCE-EM-DASH-CONSISTENCY-001** **已于 2026-04-14** **封口** **不列入**（**governance** **空值** **硬编码** **`"—"`** **→** **`t("ui_em_dash")`** **；** **句内** **`—`** **连接** **拼接** **语义** **不变** **；** **`cd frontend && npx tsc --noEmit`** **）** **；****一览 284** **·** **B-274**/**TT-ADMIN-ERROR-DISPLAY-UNIFICATION-001** **已于 2026-04-14** **封口** **不列入**（**8** **个** **admin** **首屏** **/** **摘要** **`adminErrorUserText`** **红框** **`role="alert"`** **→** **`ApiErrorAlert`** **；** **保留** **加载** **/** **重试** **/** **分支** **；** **不** **动** **warning** **黄框** **与** **非** **首屏** **页** **；** **`cd frontend && npx tsc --noEmit`** **）** **；****一览 285** **·** **B-275**/**TT-TESTNET-REAL-RUN-VALIDATION-001** **已于 2026-04-14** **封口** **不列入**（**testnet** **`broadcast_request_stub`****+** **`CHAIN_RPC_URL`** **B-262→B-266** **编排** **+** **`operator_run_evidence`****；** **登记** **轮** **CI** **/** **沙箱** **无** **真实** **tx** **；** **多** **笔** **协证** **见** **一览** **376** **）** **；****序号 3** **·** **B-021**/**TT-ACTION-STATE-TRANSITION-CONSISTENCY-AUDIT-001** **已于 2026-04-14** **封口** **不列入**（**审计** **高优** **1～4** **→** **B-269～B-272** **；** **5～8** **低优** **余量** **见** **该** **TT** **正文** **）；** **一览 213** **·** **B-183** **已于 2026-04-14** **封口** **不列入**；**一览 214** **·** **B-184** **已封口** **不列入**；**一览 215** **·** **B-185** **已于 2026-04-14** **封口** **不列入**；**一览 216** **·** **B-186** **已于 2026-04-14** **封口** **不列入**；**217～218**（**B-201**/**B-202** **企业审计基线**）**已封口**；**一览 143** **SEQ12** **已封口** · **文档轮**，**不列入** 本枚举；**147～168**（**B-147～B-168** **Execution Batch-1+2 母表域**）**均已封口**（**含** **B-159**～**B-162**/**B-164**/**B-165**/**B-167**）；**母表观测 Batch-3** **B-169**～**B-177** **均已封口**；**仍以本表状态列** 为 **真值**。**一览 179～184** — **母表 B-163** **程序级模块化治理 / Batch-1** **文档登记**（**TT-DOC-MOD-BATCH1-*** · **已封口**；**勿与母表 B-179 混淆**）；**185～186** — **母表 B-163** **程序级模块化治理 / Batch-2**（**TT-MOD-B2-01/B2-02** · **internal indexer/reconcile 目录对称**）（**已封口** · **文档登记**）；**187～191** — **母表 B-163** **程序级模块化治理 / Batch-3**（**TT-MOD-B3-01～B3-05** · **`community/`** + **`health_meta/` 生产分段** + **`mod.rs` 装配对齐** + **`governance/` 第一层 + 第二层分域**）（**已封口** · **文档登记**；**非** 母表 **B-169～B-177** **观测 Batch-3**）；**807 并列观测** 经 **144/B-144** **否决**；**B-145～B-146** **已封口**；**序号 6** **为** **只读** **审计** **扫档** **（** **TT-UI-CONSISTENCY-POLISH-AUDIT-001** **）** **，** **非** Target 能力登记 **；** **序号 3** **（** **B-021** **）** **已** **封口** **见** **上** **长句** **；** **一览 12** **上线** **前** **总结** **已** **封口** **见** **上** **长句**）。**序号 178**（**TT-B178-PHASE-CLOSE-DOCS-CODE-REORG-PLAN-001** · **B-178 主规划**）、**195**（**B-178 切片**）、**196**（**B-179** **`TT-B179-DOCS-CANONICAL-ENTRY-DEDUP-001`**）、**197**（**B-180** **`TT-B180-BATCH-ARCHIVE-ANCHOR-TOC-001`**）、**198**（**B-181** **`TT-B181-INTERNAL-ROUTES-OBSERVABILITY-DIR-SPLIT-001`**）**均已封口** · **不列入** 上句 「未封口」 枚举。
 
 **结构化三批（Batch-1 + Batch-2 + Batch-3）**：合计 **30** 张 **B-147～B-157**（**11**）+ **B-158～B-162/B-164～B-168**（**10**，**无 B-163**）+ **B-169～B-177**（**9**）— 供 **约 6～8 周** 单人 + AI **最优负载** 量级的 backlog（**非**承诺工期，以 **TT 封口** 为准）。**阶段收口（额外 1 张）**：**B-178** — **非** 第 4 批功能卡，**见下** **Phase Close**。
 
@@ -354,11 +498,11 @@
 
 **模块化门槛（建议写入 B-178 规划正文）**：**文档** — 同主题 **>3** 入口 → **总索引**。**代码** — **单文件 400～600 行** → 评估拆；**同目录同类源文件 >5** → 评估子目录；**同一能力跨 ≥4 层**（例：**routes / chain_off / db / scripts**）→ **骨架说明**。**脚本** — **同类 >4** → **子目录** + **`scripts/README`**。**优先关注面（规划标靶）**：**`chain_off/*` 聚合**、**`routes/internal.rs`**、**`routes/admin.rs`**、**`scripts/`** — **具体路径以 B-178 产出清单为准**。
 
-**Phase Close 两步法**：**① 规划卡** **B-178 / TT-B178** — **只产出** 归类表、**须拆文件/目录**、**只需加索引不需改代码** 的项；**② 分拆** **B-179～** **3～5 张小卡** 逐张落地（**文档归档** / **internal** / **admin** / **chain_off** / **scripts**）— **禁止** 单 PR 无清单大重构。
+**Phase Close 两步法**：**① 规划卡** **B-178 / TT-B178** — **只产出** 归类表、**须拆文件/目录**、**只需加索引不需改代码** 的项；**② 分拆** **B-179～** **3～5 张小卡** 逐张落地（**文档归档** / **internal** / **admin** / **chain_off** / **scripts**）— **禁止** **无清单** **之** **巨型** **单次提交**（**单人** **默认** **无** **PR**；**历史** **表述** **「单 PR」** **同义** **于此**）。
 
-**可复制 · 发给 AI 的执行话术**：进入 Execution Phase，不再新增 Batch-4。严格按 `docs/AI任务卡索引.md` 未封口段的 Batch-1 → Batch-2 → Batch-3 顺序执行；**每次只执行一张 TT**，完成后输出：修改文件列表、自测结果、母表更新、下一张单卡。对 **B-171/B-176** 必须共用 **单一 matrix 机读壳**；**母表 Execution 观测 Batch-3（B-169～B-177）** **已尽封口**；**B-147**/**B-148** **元数据门禁（contracts 扩面 + PR REQUIRE_REFS）** **已封口**；其后余卡（**152**～**168** 等）仍须 **显式** 写清与 **B-149/B-167/B-173** 等 **邻卡** **叙事分工**；禁止无登记扩 scope。每批末尾做**小收敛**；**B-147～B-177 全部封口后** 再执行 **B-178** 规划，**然后** 才开 **B-179～** 分拆卡。
+**可复制 · 发给 AI 的执行话术**：**B-147～B-177** **Execution 三批** **已全部封口** — **下文 Batch-1～3 推荐序** **仅** **作** **历史归档**，**勿** **误认为** **仍有** **观测批** **待跑**。**当期** **未封口选卡** **须** **先** **读** **上节 `#### 当前阶段 · 执行面 vs 延后（清点 · 2026-04-14）`**，**再** **对照** **[任务母表 · 85 Backlog](./任务母表.md)**。**纪律**：**勿再开 Batch-4**（与 **B-147～B-177** **同构之「第五批大卡」功能 backlog**）。**每次只执行一张 TT**，完成后输出：修改文件列表、自测结果、母表更新、下一张单卡。对 **B-171/B-176** 必须共用 **单一 matrix 机读壳**（**若** **未来** **再开** **同类观测** **扩展**）；**B-147**/**B-148**/**B-158** **元数据门禁（contracts + frontend/lockfile 扩面 + PR REQUIRE_REFS）** **已封口**；**B-147～B-177** **TT** **均已封口**（**含** **B-167** **`indexer.*`** **04/110 对齐**）；**B-178** **主规划** **与** **B-179～B-181** **分拆** **已封口** — **Phase Close 附录 B** **B-182～B-186** **均已封口**（**一览 212～216**；**216·B-186** **2026-04-14**）；**新开卡** 仍须 **显式** 写清与 **B-149/B-173** 等 **邻卡** **叙事分工**；**禁止** **无登记** **扩** **scope**。**历史** **小收敛** **纪律** **仍适用** **于** **同主题多文件改动** **批次**。
 
-**Batch-1 推荐执行顺序（1→10）**：**① B-147** → **② B-148** → **③ B-151** → **④ B-153** → **⑤ B-154** → **⑥ B-149** → **⑦ B-155** → **⑧ B-156**（**`orders_chain_health_trend_snapshot`** · **已封口**）→ **⑨ B-157**（**Region 对拍 + `indexer_tick` 收口** · **母表同行双子项**）→ **⑩ B-150**。
+**Batch-1 推荐执行顺序（1→10）**：**① B-147** → **② B-148** → **③ B-151** → **④ B-153**（**`indexer_head_vs_db_latest_block_drift_observability`** · **已封口**）→ **⑤ B-154** → **⑥ B-149** → **⑦ B-155**（**金额 drift · `orders_amount_chain_vs_escrow_drift_observability`** · **已封口**）→ **⑧ B-156**（**`orders_chain_health_trend_snapshot`** · **已封口**）→ **⑨ B-157**（**一壳两子项 · RegionShareSnapshotLine 对拍 + `indexer_tick` counters** · **`TT-B157-REGION-SNAPSHOT-AND-INDEXER-TICK-COUNTERS-CLOSE-001` 已封口**）→ **⑩ B-150**。
 
 **Batch-2 推荐执行顺序（1→10）**：**① B-158** → **② B-159** → **③ B-160** → **④ B-161** → **⑤ B-162** → **⑥ B-166** → **⑦ B-164** → **⑧ B-165** → **⑨ B-168** → **⑩ B-167**。
 
@@ -368,7 +512,7 @@
 
 **Batch-3 · 观测类防重复规则（实现硬约束）**：**matrix / drift / block lag** 同类 **观测** 落地时：**①** **优先** 合并为 **统一输出结构**（建议 **单一顶层壳**，如 **`multi_table_chain_observability`** — **最终键名 TT 钉死**；**B-171** 的 **DISTINCT/行数** 与 **B-176** 的 **MAX(block)** **默认同一壳内不同行/列**，**禁止** 两套平行顶层对象）。**②** **禁止** 为 **相同维度**（**同链、同表、同块高语义**）再开 **重复字段**。**③** 若与 **B-153** / **B-170** / **B-176** 已有语义重叠，**优先扩展既有键** **而非** 新建第三套 **drift** 块。
 
-**结论（本轮 · 跳过已封口 113～123、144、145、146、147、148、169～177）**：**DUPLICATE = 0**（**121** 复合门闸 **≠** **117** 单门闸；**122** **chain_id** **≠** disputes PG / **114** 投影 UX 等；**123** **B-094 证据 SSOT** **≠** **107** 写入 **≠** **113** outbox）；**NEW / EXTEND 登记缺口** = **0**（**143** 仍为 **未封口 · 边界台账**；**147**、**148**、**169**～**177** **已封口**；**149**～**168** 之余项 + **178（Phase Close · 规划）**（**一览缺 163 行**）**未封口 · 待执行** 以 **索引状态列** 为准；**B-178** **须** **B-147～B-177** **三批 backlog 尽封口** 后启动）。
+**结论（本轮 · 跳过已封口 113～123、143、144、145、146、147、148、152、153、157、159、166、167、168、169～177、178、192～198/B-188）**：**DUPLICATE = 0**（**121** 复合门闸 **≠** **117** 单门闸；**122** **chain_id** **≠** disputes PG / **114** 投影 UX 等；**123** **B-094 证据 SSOT** **≠** **107** 写入 **≠** **113** outbox）；**NEW / EXTEND 登记缺口**（**历史 Execution / Phase Close 轨**）= **0**（**143**（**SEQ12**）**已封口**（**文档轮**；**升格 orders 真值** 仍须 **另开实现 TT**）；**147**、**148**、**152**、**153**、**157**、**159**、**160**、**161**、**162**、**166**、**167**、**168**、**169**～**177**、**178**、**192～198**/**B-188**（**Observability Alerting v1+v2+v3** + **B-178 切片** + **B-179/B-180** **docs** + **B-181** **internal reorg**）**已封口**；**未封口** 主项 **不含** **B-178**/**B-179**/**B-180**/**B-181**（**主 178** + **切片 195** + **196** + **197** + **198** **均已封口**）；**一览缺 163 行** 等待补登记（**以本表状态列为准**）；**B-178 前提** **B-147～B-177** **均已封口** **已满足**）。**另**：**199**/**B-187**/**TT-B187**（**缺口登记母卡**）**已于 2026-04-14** **Pass-0** **完整扫档** **后** **母卡封口**；**Pass-0** **当时** **未** **因** **「母表空白 + 无 TT」** **同质包** **而** **须** **新开** **`B-215`**。**嗣后** **`B-215`**/**`TT-B215`**（**一览** **232** · **110 §3.1.2.1** **第七文档切片** · **「全集链上证明」钉界**）**已** **单列登记** **并** **文档轮封口**（**2026-04-14**）**与** **Pass-0** **结论** **正交**。**嗣后** **多源登记母卡** **须** **另开** **新 TT**。**B-187 Pass-1**（**归档**）：**一览 200～201** **·** **B-189/B-190** **已封口**；**母表 B-189～B-193** **已登记**（**202·B-191**、**203·B-192**、**204·B-193** **文档轮** **已封口**；**去重** 相对 **B-105/B-110/B-111/B-114/B-115/B-116/B-117/B-118** 等 **既有域**；**205·B-194** **已封口**；**206·B-195** **已封口**（**2026-04-14**）；**207·B-196**、**208·B-197**、**220·B-203** **已封口**（**2026-04-14**）；**210·B-199** **已封口**；**85 `/traveltrust` 余量** **B-200** **见** **一览 211**（**B-198** **已封口** · **一览 209** · **2026-04-14**））。
 
 ---
 
@@ -405,11 +549,106 @@
 ### TT-ACTION-STATE-TRANSITION-CONSISTENCY-AUDIT-001
 
 - **阶段**：审计  
-- **状态**：只读 · 无代码  
-- **本轮仅改**：无  
+- **状态**：已封口（**2026-04-14**）  
+- **本轮仅改**：无（**执行轮** **为** **只读** **审计** **交付** **列表** **；** **高优** **闭环** **由** **下游** **TT** **落码** **）  
 - **禁止再分析**：—  
 - **任务**：扫描 `frontend/app/*`、`frontend/components/*` 中 loading/error/success/empty 问题并输出列表。  
 - **验收**：交付问题列表（含类型与最小修复方向），不改代码。  
+- **收口登记（高优先级 1～4）**：**1** **`MetaProvider` / `getMeta`** **→** [**B-269**](./任务母表.md) **`TT-METAPROVIDER-LOADING-ERROR-RESYNC-001`** **；** **2** **`/community/friends`** **`Promise.allSettled`** **→** [**B-270**](./任务母表.md) **`TT-FRIENDS-PARTIAL-ERROR-VISIBILITY-001`** **；** **3** **`/admin/finance-reconciliation`** **（** **漂移** **两腿** **）** **→** [**B-271**](./任务母表.md) **`TT-FINANCE-RECONCILIATION-PARTIAL-ERROR-VISIBILITY-001`** **；** **4** **`/admin/finance`** **首屏** **`adminFetchJson`** **→** [**B-272**](./任务母表.md) **`TT-ADMIN-ERROR-RESET-CONVENTION-UNIFICATION-001`** **。**  
+- **余量（低优先级 5～8）**：**保留** **为** **一致性** **与** **UX** **改进** **余量** **，** **无** **与本** **TT** **绑定的** **单卡** **交付** **承诺** **；** **后续** **若** **收口** **须** **另开** **B-+TT** **。**  
+
+---
+
+### TT-METAPROVIDER-LOADING-ERROR-RESYNC-001
+
+- **阶段**：状态机  
+- **状态**：已封口（**2026-04-14**）  
+- **本轮仅改**：`frontend/components/MetaProvider.tsx`  
+- **禁止再分析**：—  
+- **任务**：**`useEffect` 依赖 `t`**（如语言切换）**再次** 调用 **`getMeta()`** 时，**在发起请求前** **`setLoading(true)`** 与 **`setError(null)`**，**保留** **`finally` → `setLoading(false)`**；消除 **首败后二次拉取仍挂旧 `error` 且 `loading` 为 false** 的缺口；**不** 扩展 GET `/meta` 业务语义。  
+- **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0**  
+
+---
+
+### TT-FRIENDS-PARTIAL-ERROR-VISIBILITY-001
+
+- **阶段**：UX / 状态语义  
+- **状态**：已封口（**2026-04-14**）  
+- **本轮仅改**：`frontend/app/community/friends/page.tsx`（**`frontend/locales/en.ts`****/** **`zh.ts`** **`community_friends_partialLoadHint`**）  
+- **禁止再分析**：—  
+- **任务**：**`Promise.allSettled`** **多腿** **请求** **在** **存在** **rejected** **且** **仍有** **fulfilled** **时**，**`partialLoadHint`** **弱** **提示**（**含** **`common_retry`**），**不** **改** **主** **成功** **态** **列表** **渲染** **；** **全** **reject** **仍** **走** **`loadError`**。  
+- **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0**  
+
+---
+
+### TT-FINANCE-RECONCILIATION-PARTIAL-ERROR-VISIBILITY-001
+
+- **阶段**：UX / 状态语义  
+- **状态**：已封口（**2026-04-14**）  
+- **本轮仅改**：`frontend/app/admin/finance-reconciliation/page.tsx`（**`frontend/locales/en.ts`****/** **`zh.ts`** **`admin_finance_reconciliation_partial_load_hint`**）  
+- **禁止再分析**：—  
+- **任务**：**`Promise.allSettled`****（****`getAdminCrossCheck`****、****`getAdminDriftSummary`****）** **结束后** **，** **若** **主** **财务** **摘要** **已** **成功** **展示** **且** **`crossErr`****/** **`driftSummaryErr`** **其一** **存在** **，** **header** **下** **弱** **提示** **（** **`role="status"`****、****`admin_finance_reconciliation_partial_load_hint`** **）** **+** **`common_retry`** **仅** **重拉** **漂移** **两腿** **（** **`driftLegsRetryKey`** **）** **；** **主** **`error`** **整页** **失败** **仍** **走** **既有** **错误** **态** **。**  
+- **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0**  
+
+---
+
+### TT-ADMIN-ERROR-RESET-CONVENTION-UNIFICATION-001
+
+- **阶段**：惯例 / 状态机  
+- **状态**：已封口（**2026-04-14**）  
+- **本轮仅改**：`frontend/app/admin/finance/page.tsx`  
+- **禁止再分析**：—  
+- **任务**：首屏 **`useEffect`** 内 **`adminFetchJson`** **发起前** **显式** **`setLoading(true)`** **与** **`setError(null)`** **，** **与** **其余** **admin** **首屏** **拉取** **页** **对齐** **，** **避免** **后续** **刷新** **/** **重试** **依赖** **变更** **时** **残留** **旧** **`error`** **。**  
+- **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0**  
+
+---
+
+### TT-GOVERNANCE-EM-DASH-CONSISTENCY-001
+
+- **阶段**：frontend · governance · i18n / 占位符  
+- **状态**：已封口（**2026-04-14**）  
+- **本轮仅改**：`frontend/app/governance/page.tsx`、`frontend/app/governance/distribution-accruals/page.tsx`、`frontend/app/governance/distribution-accruals/[id]/page.tsx`、`frontend/app/governance/proposals/[id]/page.tsx`  
+- **禁止再分析**：—  
+- **任务**：**治理** **相关** **页面** **中** **空值** **占位** **由** **硬编码** **`"—"`** **统一** **收敛** **为** **`t("ui_em_dash")`** **（** **或** **同源** **i18n** **键** **）** **；** **不** **改** **业务** **判空** **/** **分支** **语义** **。** **句内** **连接号** **拼接** **（** **如** **`${base} — ${detail}`****、****`note`****—** **说明** **文** **）** **保持** **不变** **。**  
+- **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0**  
+- **互证**：[**母表 B-273**](./任务母表.md) · **一览** **283**  
+
+---
+
+### TT-ADMIN-ERROR-DISPLAY-UNIFICATION-001
+
+- **阶段**：admin · UI · 错误展示  
+- **状态**：已封口（**2026-04-14**）  
+- **本轮仅改**：**`frontend/app/admin/finance/page.tsx`**（**主** **`error`** **；** **`exportError`** **warning** **黄框** **除外** **）** **、** **`fee-router/page.tsx`** **、** **`region-vault/page.tsx`** **、** **`orders/page.tsx`** **、** **`guides/page.tsx`** **、** **`cross-check/page.tsx`** **、** **`drift-summary/page.tsx`** **、** **`finance-reconciliation/page.tsx`**（**主** **`error`** **+** **`driftSummaryErr`** **+** **`crossErr`** **）  
+- **禁止再分析**：—  
+- **任务**：**8** **个** **admin** **首屏** **/** **摘要** **页** **将** **基于** **`adminErrorUserText`** **的** **红色** **自建** **`role="alert"`** **错误** **展示** **统一** **收敛** **为** **`ApiErrorAlert`** **；** **保留** **现有** **加载** **/** **重试** **/** **分支** **逻辑** **；** **不** **处理** **warning** **黄框** **与** **非** **首屏** **页** **。**  
+- **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0**  
+- **互证**：[**母表 B-274**](./任务母表.md) · **一览** **284**  
+
+---
+
+### TT-TESTNET-REAL-RUN-VALIDATION-001
+
+- **阶段**：ops · testnet · RegionVault claim 广播链（B-262→B-266）  
+- **状态**：已封口（**2026-04-14**）  
+- **本轮仅改**：**`scripts/ops/run_testnet_b262_b266_real.sh`**、**`scripts/ops/write_tt_testnet_real_run_evidence_summary.py`**、**`scripts/run-testnet-b262-b266-real.sh`**、**`evidence/testnet_real_run_validation/README.md`**（**登记** **轮** **；** **未** **在** **沙箱** **内** **送** **真实** **tx** **）  
+- **禁止再分析**：—  
+- **任务**：**具备** **真实** **`broadcast_request_stub.json`**（**B-256** **锚** **）** **与** **可用** **`CHAIN_RPC_URL`** **时** **，** **于** **testnet** **执行** **一轮** **小规模** **B-262→B-266** **全链路** **真实** **运行** **（** **非** **mock** **）** **；** **落盘** **`execution_report.json`****、****`receipt_archive.json`****、****`onchain_reconcile.json`****、****`production_go_report.json`****+** **B-265** **import** **提示** **JSON** **；** **聚合** **`operator_run_evidence.json`****/** **`OPERATOR_RUN_EVIDENCE.md`** **（** **链上** **`tx_hash`** **、** **`production_verdict`** **等** **）** **作为** **上线** **前** **运维** **证据** **。**  
+- **验收**：**`run_testnet_b262_b266_real.sh`** **/** **`write_tt_testnet_real_run_evidence_summary.py`** **与** **README** **运维** **路径** **已** **入库** **可** **复核** **；** **真实** **tx** **留痕** **以** **运维** **在** **目标** **环境** **执行** **产出** **`OUT_DIR`** **为准** **。**  
+- **互证**：[**母表 B-275**](./任务母表.md) · **一览** **285** · **[`ops/RUNBOOK.md`](../ops/RUNBOOK.md)** **§2.55**  
+- **多笔真实链证据（协记）**：**一览** **376** **`TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001`** **（** **2026-04-15** **封口** **）** **；** **正文** [**§TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001**](#tt-b322-testnet-multi-tx-nonce-sequence-real-run-001) **。**
+
+---
+
+### TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001
+
+- **阶段**：ops · testnet · B-275 多笔连续 nonce 真实链归档（**非** 母表 B-322 / 一览 332 CI 预算 TT）  
+- **状态**：**已封口**（**2026-04-15**）  
+- **封口依据**：**已** **落盘** **`evidence/testnet_real_run_validation/run_tt_b322_anvil_multi_tx2_20260415/`**、**`run_tt_b322_anvil_multi_tx3_20260415/`** **及** **契约** **[`TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001.md`](../evidence/testnet_real_run_validation/TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001.md)** **；** **本** **轮** **台账** **仅** **补** **AI** **索引** **/** **母表** **互指** **。**  
+- **禁止再分析**：—  
+- **任务**：**在** **本地** **Anvil** **上** **以** **2** **笔** **与** **3** **笔** **连续** **nonce** **真实** **`broadcast_request_stub`** **各** **跑通** **`run_testnet_b262_b266_real.sh`** **编排** **的** **B-262→B-266** **全链路** **，** **三** **verdict** **`GO`** **，** **`operator_run_evidence`** **与** **归档** **JSON** **可** **审计** **复核** **。**  
+- **验收**：**上** **述** **两** **目录** **各** **含** **完整** **`OUT_DIR`** **产物** **；** **与** **一览** **285** **登记** **语义** **兼容** **（** **登记** **轮** **CI** **/** **沙箱** **仍** **无** **tx** **）** **。**  
+- **互证**：[**母表 B-275**](./任务母表.md) · **一览** **285** · **一览** **376** · **[`ops/RUNBOOK.md`](../ops/RUNBOOK.md)** **§2.55** · **[`evidence/testnet_real_run_validation/README.md`](../evidence/testnet_real_run_validation/README.md)**  
 
 ---
 
@@ -510,9 +749,10 @@
 ### TT-PRODUCTION-READINESS-SUMMARY-001
 
 - **阶段**：文档  
-- **状态**：只读  
+- **状态**：**已封口**（**2026-04-14**）  
 - **本轮仅改**：`docs/frontend/Release-Readiness-Frontend.md`（已存在则仅按需修订）  
-- **任务**：前端 Release Readiness 技术说明与正式决议段落。  
+- **任务**：前端 Release Readiness 技术说明与正式决议段落；**§4.1** **与** **B-248** **只读阶** **及** **B-250～B-261** **彩排** **stub** **/** **B-262** **RPC** **执行** **/** **B-263** **receipt** **归档** **/** **B-264** **只读** **对账** **JSON** **边界** **互证**（**不** **声称** **B-249** **真** **执行** **或** **链上** **已** **完成**）。  
+- **封口批已落**：**`docs/frontend/Release-Readiness-Frontend.md`** **§0** **（** **Decision** **/** **Scope** **/** **Verification** **/** **Invariants** **/** **Risk** **）** **+** **§4.1** **（** **阶段** **总括** **表** **）**；**互证** **母表** **B-248**、**B-250～B-265** **行** **与** **14** **§1.1.1.1b** **/** **§1.1.1.1d～1s** **/** **RUNBOOK** **§2.55**  
 - **验收**：文档含决策、验证方式、不变量、风险接受；不改业务代码。  
 
 ---
@@ -1601,7 +1841,7 @@
 
 - **阶段**：收益 / 链上索引对账（Phase 3 · B-081）  
 - **状态**：已封口  
-- **本轮仅改**：`crates/api/src/chain/fee_router_verify.rs`、`crates/api/src/chain/mod.rs`、`crates/api/src/routes/internal.rs`（**`IndexerReconcileBody`**、**`indexer_reconcile`**、**`collect_fee_router_log_verify`**）、`docs/spec/04-后端与API.md`（**`indexer-reconcile`** 行）、`docs/任务母表.md`、本索引  
+- **本轮仅改**：`crates/api/src/chain/fee_router_verify/`（目录装配）、`crates/api/src/chain/mod.rs`、`crates/api/src/routes/internal.rs`（**`IndexerReconcileBody`**、**`indexer_reconcile`**、**`collect_fee_router_log_verify`**）、`docs/spec/04-后端与API.md`（**`indexer-reconcile`** 行）、`docs/任务母表.md`、本索引  
 - **禁止再分析**：—  
 - **任务（钉死规则）**：  
   1. **`POST /api/v1/internal/indexer-reconcile`** body 可选 **`verify_fee_router_events_rpc`**：**1～20**，对 **`fee_router_routed_events`**（当前 **`chain_id`**）降序最多取 **N** 行。  
@@ -1670,7 +1910,7 @@
 
 - **阶段**：收益 / 份额索引与只读对账（B-085）  
 - **状态**：已封口  
-- **本轮仅改**：`crates/api/migrations/20260420000049_investor_share_transfer_events.sql`、`crates/api/src/db/investor_share.rs`、`crates/api/src/db/mod.rs`、`crates/api/src/chain/mod.rs`、`crates/api/src/chain/indexer.rs`、`crates/api/src/routes/internal.rs`、`crates/api/src/routes/governance_investor_share.rs`、`crates/api/src/routes/governance.rs`、`crates/api/src/routes/mod.rs`、`crates/api/src/u256_hex.rs`、`.env.example`、`docs/spec/04-后端与API.md`、`docs/任务母表.md`、`frontend/lib/api.ts`、本索引  
+- **本轮仅改**：`crates/api/migrations/20260420000049_investor_share_transfer_events.sql`、`crates/api/src/db/investor_share.rs`、`crates/api/src/db/mod.rs`、`crates/api/src/chain/mod.rs`、`crates/api/src/chain/indexer/`、`crates/api/src/routes/internal.rs`、`crates/api/src/routes/governance_investor_share.rs`、`crates/api/src/routes/governance.rs`、`crates/api/src/routes/mod.rs`、`crates/api/src/u256_hex.rs`、`.env.example`、`docs/spec/04-后端与API.md`、`docs/任务母表.md`、`frontend/lib/api.ts`、本索引  
 - **禁止再分析**：—  
 - **任务（钉死规则）**：  
   1. **投影表** **`investor_share_transfer_events`**：幂等键 **`(chain_id, block_number, log_index)`**；来源为标准 ERC20 **`Transfer(address,address,uint256)`**（Mint/Burn 为 **`from`** 或 **`to`** 为零地址）。  
@@ -1822,7 +2062,7 @@
 
 - **阶段**：Escrow / 争议裁决链上执行与订单终态对齐（B-094 **Partial**）  
 - **状态**：已封口（**Partial**：**Foundry** 三模板 + **core** 映射 + 证据；**仅凭 `ResolutionExecuted` 日志细分 `orders_projection`** 为 **Target**）  
-- **本轮仅改**：`contracts/test/Escrow.t.sol`、`crates/core/src/escrow.rs`、`crates/core/src/lib.rs`、`crates/api/src/chain_off/reconcile.rs`（B-094 单测）、`evidence/B-094-execute-resolution-fixtures.md`、`contracts/README.md`、`docs/spec/04-后端与API.md`、`docs/spec/14-合约-API-ABI-前后端对齐.md`、`docs/任务母表.md`、本索引  
+- **本轮仅改**：`contracts/test/Escrow.t.sol`、`crates/core/src/escrow.rs`、`crates/core/src/lib.rs`、`crates/api/src/chain_off/reconcile/`（**`projection_tests.rs`** · B-094 相关单测）、`evidence/B-094-execute-resolution-fixtures.md`、`contracts/README.md`、`docs/spec/04-后端与API.md`、`docs/spec/14-合约-API-ABI-前后端对齐.md`、`docs/任务母表.md`、本索引  
 - **禁止再分析**：—  
 - **任务（钉死）**：  
   1. **`executeResolution`**：**`guideAmount + travelerRefund + platformFee == totalAmount`**（合约 **`InvalidState`** 否则 revert）。  
@@ -1855,7 +2095,7 @@
 
 - **阶段**：投资人分红快照补齐（**B-088** **Completion**：**质押** 可重放投影）  
 - **状态**：已封口（**Completion**）  
-- **本轮仅改**：`crates/api/migrations/20260422000051_investor_stake_state_events.sql`、`crates/api/src/db/investor_stake.rs`、`crates/api/src/chain/indexer.rs`（**`fetch_staking_state_logs`**）、`crates/api/src/routes/internal.rs`（**tick**/**reorg**）、`crates/api/src/routes/investor_distribution.rs`、`crates/api/src/db/investor_distribution.rs`、`docs/spec/04-后端与API.md`、`docs/任务母表.md`、本索引  
+- **本轮仅改**：`crates/api/migrations/20260422000051_investor_stake_state_events.sql`、`crates/api/src/db/investor_stake.rs`、`crates/api/src/chain/indexer/`（**`fetch_staking_state_logs`**）、`crates/api/src/routes/internal.rs`（**tick**/**reorg**）、`crates/api/src/routes/investor_distribution.rs`、`crates/api/src/db/investor_distribution.rs`、`docs/spec/04-后端与API.md`、`docs/任务母表.md`、本索引  
 - **禁止再分析**：—  
 - **任务（钉死）**：**写死 SSOT**=**`contracts/src/Staking.sol`** 事件 **`Staked` / `Withdrawn` / `Slashed`** → 表 **`investor_stake_state_events`**；**`POST …/internal/indexer-tick`** 在 **`STAKING_ADDRESS`** + **`DATABASE_URL`** 时写入；**`POST …/internal/investor-distribution-accrual`** 在 **`chain_config.staking_address`** 非空时将 **`stakeOf`** 重放叠加到 **`Transfer`** 重放余额并 **剔除** 质押合约地址，**`Σ` 持有人** 须等于 **`Transfer`****supply**（否则 **`b088_stake_overlay_supply_mismatch`**）；**`indexer-reorg-rewind`** 同步删尾该表。  
 - **验收**：**`cargo test -p traveltrust-api`**：**`comp_b088_overlay_restores_holder_weight_after_stake_to_contract`** 等。  
@@ -1868,7 +2108,7 @@
 
 - **阶段**：投资人分红快照补齐（**B-088** **Completion**：**锁仓** 可重放投影）  
 - **状态**：已封口（**Completion**）  
-- **本轮仅改**：`crates/api/migrations/20260423000052_investor_lock_state_events.sql`、`crates/api/src/db/investor_lock.rs`、`crates/api/src/chain/mod.rs`（**`INVESTOR_LOCK_CONTRACT_ADDRESSES`**）、`crates/api/src/chain/indexer.rs`（**`fetch_investor_lock_state_logs`** / topic0 单测）、`crates/api/src/routes/internal.rs`（**tick**/**reorg**）、`crates/api/src/routes/investor_distribution.rs`、`crates/api/src/db/investor_distribution.rs`、`contracts/src/InvestorShareLockLedger.sol`、`contracts/test/InvestorShareLockLedger.t.sol`、`.env.example`、`docs/spec/04-后端与API.md`、`docs/任务母表.md`、本索引  
+- **本轮仅改**：`crates/api/migrations/20260423000052_investor_lock_state_events.sql`、`crates/api/src/db/investor_lock.rs`、`crates/api/src/chain/mod.rs`（**`INVESTOR_LOCK_CONTRACT_ADDRESSES`**）、`crates/api/src/chain/indexer/`（**`fetch_investor_lock_state_logs`** / topic0 单测）、`crates/api/src/routes/internal.rs`（**tick**/**reorg**）、`crates/api/src/routes/investor_distribution.rs`、`crates/api/src/db/investor_distribution.rs`、`contracts/src/InvestorShareLockLedger.sol`、`contracts/test/InvestorShareLockLedger.t.sol`、`.env.example`、`docs/spec/04-后端与API.md`、`docs/任务母表.md`、本索引  
 - **禁止再分析**：—  
 - **任务（钉死）**：**写死 SSOT**=**`contracts/src/InvestorShareLockLedger.sol`** 事件 **`Locked` / `Unlocked`**（**`Locked(address,uint256)`** / **`Unlocked(address,uint256)`** topic 与 **`indexer::LOCKED_TOPIC0` / `UNLOCKED_TOPIC0`** 一致）→ 表 **`investor_lock_state_events`**；**`POST …/internal/indexer-tick`** 在 **`INVESTOR_LOCK_CONTRACT_ADDRESSES`** + **`DATABASE_URL`** 时对各地址 **`eth_getLogs`** 写入；**`POST …/internal/investor-distribution-accrual`** 在 **`chain_config.investor_lock_contract_addresses`** 非空时于 **质押 overlay**（若启用）**之后** 按地址顺序叠 **`merge_transfer_balances_with_lock_overlay`**，每步后 **持有人 `Σ` = `Transfer`****supply**，否则 **`b088_lock_overlay_supply_mismatch`**；**`indexer-reorg-rewind`** / tick 自动回滚 同源 **`delete_investor_lock_state_events_from_block`**；**`snapshot_binding`** 并列 **`lock_overlay_*`****/`b088_lock_completion_anchor`**。  
 - **验收**：**`cargo test -p traveltrust-api`**：**`investor_lock::tests::comp_b088_lock_overlay_attributes_locked_to_user`**、**`indexer::tests::lock_ledger_event_topic0s_keccak`**；**`cd contracts && forge test --match-contract InvestorShareLockLedgerTest`**。  
@@ -1933,7 +2173,7 @@
 
 - **阶段**：治理投票权重补齐（**B-092** **Target**：**质押** / 份额链上快照；本卡先钉 **质押** **≤1** 点）  
 - **状态**：已封口（**Completion**）  
-- **本轮仅改**：**`crates/api/src/routes/governance_voting_power.rs`**、**`crates/api/src/db/users_sessions.rs`**（**`get_user_default_wallet_by_id`**）；本索引一览与正文；**`docs/任务母表.md`**；**`docs/spec/04-后端与API.md`**（**`GET …/voting-power`** 契约句）  
+- **本轮仅改**：**`crates/api/src/routes/governance_voting_power.rs`**、**`crates/api/src/db/users_sessions/`**（**`get_user_default_wallet_by_id`**，见 **`core.rs`**）；本索引一览与正文；**`docs/任务母表.md`**；**`docs/spec/04-后端与API.md`**（**`GET …/voting-power`** 契约句）  
 - **禁止再分析**：—  
 - **任务（钉死）**：**写死** **`governance_voting_power`**：**`?snapshot_block=`** 且 **CHAIN_RPC_URL + STAKING_ADDRESS + `users.default_wallet_address`（或 chain_off 内存用户钱包）** 可用时 **`eth_call`** **`Staking.stakeOf(address)`**；响应 **`stake_snapshot`**（含 **`reconcile.delegation_units_mvp`** 与链上 **`stake_u256_hex`** 并列）；**`governance_proposals` 计票** 仍 **仅** **`delegation_units_v1`**（**不改**）。  
 - **验收**：**`cargo test -p traveltrust-api`** **`comp_b092_*`**。  
@@ -2014,7 +2254,7 @@
 - **状态**：已封口  
 - **母表**：**B-096**  
 - **任务**：在 **链与执行器配置可用** 的前提下，补齐 **可重复验收** 的 **端到端**：**争议 resolve → `resolution_outbox` 入队 → `POST /api/v1/internal/process-resolution-outbox` 消费一条 → 链上 `executeResolution` 成功 → `indexer-tick` 或 `indexer-replay` 后 `orders_projection` 细终态与三腿一致**；响应体须可追踪 **`tx_hash`** 或 **`request_id`**。  
-- **本轮仅改**（执行时钉死，示例）：**`crates/api/src/routes/internal.rs`**（**`process_resolution_outbox`**）、**`crates/api/src/chain_off/disputes.rs`**、**`crates/api/src/chain/outbox.rs`**、**与 outbox 消费路径直接相关的单测/fixture**；**不** 改 **已封口** **TT-COMP-B094-INDEXER-RESOLUTION-TERMINAL-STATE-001（107）** 的解析逻辑，除非 **107** 显式缺陷修复单开复核。  
+- **本轮仅改**（执行时钉死，示例）：**`crates/api/src/routes/internal.rs`**（**`process_resolution_outbox`**）、**`crates/api/src/chain_off/disputes/`**（**`resolve.rs`****/**`resolution.rs`** 等）、**`crates/api/src/chain/outbox.rs`**、**与 outbox 消费路径直接相关的单测/fixture**；**不** 改 **已封口** **TT-COMP-B094-INDEXER-RESOLUTION-TERMINAL-STATE-001（107）** 的解析逻辑，除非 **107** 显式缺陷修复单开复核。  
 - **禁止再分析**：全站争议 UI 重扫；**Docker / CI / 镜像发布**；与 **107** 无关的 indexer 大重构。  
 - **验收**：**至少一条** 自动化或半自动化用例（**Anvil/分叉网 + DB**）：**outbox 非空 → POST internal → receipt 成功 → 投影行 `status` 与解析三腿一致**；文档或 **`evidence/`** 片段记录 **tx_hash + order_id**。  
 - **测试**：**`cargo test -p traveltrust-api`** 新增/扩展用例（命名建议 **`resolution_outbox_e2e_*`** 或执行时钉死）；Foundry **不** 重跑 **B-094** 三模板替代本卡。  
@@ -2381,7 +2621,7 @@
 - **阶段**：indexer / **reorg** 安全（**母表 B-114 子线 B-114-1**）
 - **状态**：已封口
 - **母表**：**B-114**（**进行中**；本子线收口 **B-114-1**）
-- **本轮仅改**：**`crates/api/src/chain/indexer.rs`**（**`rewind_indexer_memory_state_after_reorg`** + **`#[cfg(test)]`**）；**`crates/api/src/routes/internal.rs`**（调用同源回滚，**不**改删尾 / replay 语义）
+- **本轮仅改**：**`crates/api/src/chain/indexer/`**（**`rewind_indexer_memory_state_after_reorg`** + **`#[cfg(test)]`**）；**`crates/api/src/routes/internal.rs`**（调用同源回滚，**不**改删尾 / replay 语义）
 - **禁止再分析**：**B-115 / B-116 / P5 / Epic A/C/D/E/F** 产品语义；**新 HTTP API**
 - **任务**：链回滚（reorg）时 **IndexerState** 丢弃 **`block_number >= rewind_from`** 的事件，checkpoint 回到安全前缀尾；与 **`delete_*_from_block`** **同界**，便于重扫 **canonical** log **不重复** `(chain_id, block_number, log_index)`、**不残留** 旧 **`block_hash`**。
 - **验收**：**`cargo test -p traveltrust-api reorg`** **全绿**（含 **`reorg_safety_*`** 模拟 reorg；**不得**以「跳过 tick」冒充修复）。
@@ -2394,7 +2634,7 @@
 - **阶段**：indexer / **reorg** 多区块回放（**母表 B-114-4**）
 - **状态**：已封口
 - **母表**：**B-114-4**（**已做**；与 [**docs/任务母表.md**](../docs/任务母表.md) **B-114-4** 行一致；互证 [**evidence/GO_B114_INDEXER_TARGET_SLICE_CLOSE.md**](../evidence/GO_B114_INDEXER_TARGET_SLICE_CLOSE.md) **§B-114-4**）
-- **本轮仅改**：**`crates/api/src/chain/indexer.rs`**（**`rewind_indexer_memory_state_after_reorg`** 文档 + **`#[cfg(test)]`** **`b114_4_reorg_multi_block_*`**）
+- **本轮仅改**：**`crates/api/src/chain/indexer/`**（**`rewind_indexer_memory_state_after_reorg`** 文档 + **`#[cfg(test)]`** **`b114_4_reorg_multi_block_*`**）
 - **禁止再分析**：**B-115 / B-116 / P5 / Epic D/E/F** 语义；**新 HTTP API**；**跳过 tick / reorg 路径**
 - **任务**：验证 **连续多区块**（例 **10/11/12**）被 **一次** **`rewind(from_block)`** 剥除后，重放 **10'/11'/12'** 仅保留新 fork 载荷、**`(chain_id, block_number, log_index)`** 无重复、**`last_block` / `last_block_hash`** 止于新链尾；重放后再 **`append`** 同键须判重复。
 - **验收**：**`cargo test -p traveltrust-api b114_4_reorg_multi_block`** **全绿**
@@ -2407,7 +2647,7 @@
 - **阶段**：indexer / **reorg** 后 **`indexer_tick`** 起扫下界（**母表 B-114-5**）
 - **状态**：已封口
 - **母表**：**B-114-5**（**已做**；与 [**docs/任务母表.md**](../docs/任务母表.md) **B-114-5** 行一致；互证 [**evidence/GO_B114_INDEXER_TARGET_SLICE_CLOSE.md**](../evidence/GO_B114_INDEXER_TARGET_SLICE_CLOSE.md) **§B-114-5**）
-- **本轮仅改**：**仅** **`crates/api/src/chain/indexer.rs`**（**`indexer_tick_scan_from_block_lower_bound`** + **`#[cfg(test)]`** **`b114_5_reorg_tick_scan_from_block_*`**）；**`crates/api/src/routes/internal.rs`**（**`indexer_tick`** 读锁内调用该函数）
+- **本轮仅改**：**仅** **`crates/api/src/chain/indexer/`**（**`indexer_tick_scan_from_block_lower_bound`** + **`#[cfg(test)]`** **`b114_5_reorg_tick_scan_from_block_*`**）；**`crates/api/src/routes/internal.rs`**（**`indexer_tick`** 读锁内调用该函数）
 - **禁止再分析**：**B-115 / B-116 / P5 / Epic A/C/D/E/F** 语义；**新 HTTP API**；**跳过 tick / reorg 路径**
 - **任务**：reorg 后 **`indexer_tick`** 用于 **`eth_getLogs`** 的 **`scan_from_block`** 与 **`rewind_indexer_memory_state_after_reorg` / `perform_indexer_reorg_rewind_execute`** 之后的内存 **`IndexerState`** 同源（**`last_block + 1`**）；**`reorg_detected` → rewind → `continue`** 后首轮回合重算不断档。
 - **验收**：**`cargo test -p traveltrust-api b114_5_reorg_tick_scan_from_block`** **全绿**（**2 passed**）
@@ -2539,8 +2779,8 @@
 
 ### TT-B110-SEQ12-GOVERNANCE-GOVERNOR-ORDER-RATING-REVIEW-WINDOW-BOUNDARY-001
 
-- **阶段**：governance / orders · **`orderRatingReviewWindowDays()`** 与 **SEQ2 `rating_deadline`** 真值链 · **边界语义（实现前）**（**母表 B-143**）
-- **状态**：未封口（**文档轮可收口**；**Rust 实现** 须 **另开实现类 TT**）
+- **阶段**：governance / orders · **`orderRatingReviewWindowDays()`** 与 **SEQ2 `rating_deadline`** 真值链 · **边界语义（文档轮已封口）**（**母表 B-143**；**升格** 须 **另开实现 TT**）
+- **状态**：已封口（**文档轮** **☑**；**升格 orders 真值链** 须 **另开实现类 TT**）
 - **母表**：[任务母表.md](./任务母表.md) **B-143**；互证 **B-132**（SEQ2）、**B-133**（SEQ3）、**B-141**（L1′ 候选）
 - **本轮仅改（文档轮）**：**`docs/任务母表.md`**（**B-143** 行、**B-110** 互指、**续表 B-144**）、**`docs/spec/04-后端与API.md`**（**SEQ12** 契约句）、**`docs/spec/110-…`**（**§3.1.3.1** SEQ12 边界段）、**`ops/RUNBOOK.md`**（**§2.55**）、本索引 **一览 143** + 本节
 - **禁止再分析**：在 **未**另开 **实现 TT** 前改动 **`crates/**`** 业务代码；擅自新增 **`compound_gate`** 子项或扩展 **公开** **`GET /api/v1/orders*`** **`rating_deadline`/`deadline_rating_observability`** 键集
@@ -2580,7 +2820,7 @@
 - **任务**：
   - **`git diff BASE..HEAD --name-only`**：若含 **`crates/**`**，则须含 **`docs/任务母表.md`** 或 **`docs/AI任务卡索引.md`** 之一。
   - **默认**：打印 **`::warning::`**（**`GITHUB_ACTIONS`** 内）、**exit 0**。
-  - **升格 fail**：环境变量 **`CRATES_METADATA_GATE_FAIL=1`** → **exit 1**（供后续收紧）。
+  - **升格 fail**：环境变量 **`CRATES_METADATA_GATE_FAIL=1`** → **exit 1**（**触发路径** 随 **B-147/B-158** 扩面；**详见 **`gates/check-pr-crates-needs-metadata.sh`** 头**）。
 - **验收**：**`bash scripts/check-pr-crates-needs-metadata.sh`** 本地可跑；**`pull_request`** workflow 存在（**可选**）；**`bash scripts/run-check-04-routes.sh`** 绿
 - **测试**：—（shell 自解释；CI 上 **PR** 场景可验 **`::warning::`**）
 - **备注（rollout）**：**阶段 1** — 默认 **exit 0** + **终端提醒**（**单人主路径**）；**PR** 时可加 **`::warning::`**。观察误报/漏报、是否把 **`docs/spec/04-后端与API.md`** 纳入「可接受元数据」、是否另规则 **`contracts/**`**。**阶段 2（B-146）** — **BASE/HEAD 解析语义**与**脚本边界**（**`TT-B146-SSOT-GATE-BASE-RESOLUTION-STRICTNESS-PLAN-001`**），**先于**路径扩面；**可选** **`CRATES_METADATA_GATE_REQUIRE_REFS=1`** → **解析失败 exit 2**。**阶段 3（B-147）** — **`contracts/**`** 规则与豁免（**产品化**）。**`crates/**` 违规默认 exit 1** — **另卡**，**非** B-146。**回归**：母表/索引同批提交后 **`bash scripts/check-pr-crates-needs-metadata.sh main HEAD`** → **OK**。
@@ -2590,7 +2830,7 @@
     - **多 commit 叠分支**：规则看 **`BASE..HEAD` 并集**；若流程上要求「每个 touch crates 的 commit 都带母表」脚本**不**校验，仅看整体 diff → 与「逐 commit 洁癖」预期不一致时像**误报**（整体已带母表但中间 commit 没有）。
   - **漏报（应管却 OK）**
     - **`git rev-parse` 失败**（无 **`main`**、浅克隆未 fetch、**`BASE`/`HEAD`** 错）：默认 **WARN + exit 0** → **静默跳过**；缓解见 **B-146** / **`CRATES_METADATA_GATE_REQUIRE_REFS=1`**（**exit 2**）；**workflow** 已 **`fetch-depth: 0`**，本地/旁路 CI 仍可能踩坑。
-    - **仅 **`frontend/**`**、根 **`Cargo.lock`** 等**：当前**不**在 **`^crates/`** **或 B-147 **`contracts/**`** 门禁路径内 → **已知缺口**（**B-158** / 另卡议）；**`contracts/**`** **须登记路径** → **B-147** **已收口**（**同脚本**）。**根 lock** 常伴随 crates 改动但若**单独**改 lock 且无 **`crates/**`** → 仍不触发。
+    - **~~仅 **`frontend/**`**、**`package-lock.json`**…~~** **已收口（B-158）**：与 **`crates/**`**/**`contracts/**`** **同脚本**；**`Cargo.lock`**（**Rust**）**仍不在** 本门禁路径内（**另卡议**）。**`contracts/**`** **须登记路径** → **B-147** **已收口**。
     - **同批「形式上」改了母表/索引**：脚本只认**路径出现**，**不**解析是否新增 **B-xxx / TT** 或语义是否敷衍 → **内容漏报**须 **review** 或 **另门禁**。
     - **业务代码迁出 `crates/`**（未来 monorepo 路径变更）：前缀规则失效 → 须改脚本或 **PATH 列表**。
   - **与 B-146 / B-147 分工**：**B-146** — **解析失败 ≠ 通过**（**`REQUIRE_REFS`** / 文档分层 / CI 后续收紧）；**B-147** — **`contracts/**`** 与豁免；**可接受元数据是否含 04**、**PR 标签豁免** — **另卡**议。
@@ -2609,7 +2849,7 @@
   - **默认（兼容 B-145）**：**unset** **`CRATES_METADATA_GATE_REQUIRE_REFS`** → 与 **B-145** 一致：**WARN + exit 0**。
   - **可选收紧**：**`CRATES_METADATA_GATE_REQUIRE_REFS=1`** → **不可解析时 exit 2**（**非** **`CRATES_METADATA_GATE_FAIL`** 轨；**非** workflow 默认）。
   - **本地 vs CI**：本地允许宽容；**CI**（**PR + SHA + depth 0**）应能解析 — 若不能，**不应**长期将 **exit 0** 当绿（**workflow 或默认策略**收紧留 **B-146 收口二期**或另卡）。
-  - **升格 fail**：**`CRATES_METADATA_GATE_FAIL=1`** 仍**只**针对 **「diff 含 `crates/**` 无母表/索引」** → **exit 1**。
+  - **升格 fail**：**`CRATES_METADATA_GATE_FAIL=1`** 针对 **「diff 触发门禁路径」（**`crates/**`**、须登记 **`contracts/**`**、**B-158** **`frontend/**`/lockfile** — **详见 gates 脚本**）**无母表/索引」** → **exit 1**。
 - **验收**：**`bash scripts/run-check-04-routes.sh`** 绿；**`bash scripts/check-pr-crates-needs-metadata.sh main HEAD`** 默认 **exit 0**；**`CRATES_METADATA_GATE_REQUIRE_REFS=1 bash scripts/check-pr-crates-needs-metadata.sh no-such-ref-xyz HEAD`** → **exit 2**
 - **测试**：—（shell；上列命令人工或 CI 可复验）
 - **下一张单卡**：**B-147** — **`contracts/**`** 是否纳入单人开发元数据门禁、**哪些改动须母表/TT**、**测试/脚本/注释豁免**、**是否与 Rust 同轨**（**在 B-146 底座稳定后**）
@@ -2676,7 +2916,7 @@
 - **数据来源**：**PostgreSQL** **`orders`** 表 — **`WHERE chain_id IS NULL`** 的 **COUNT**（**可选** **`GROUP BY`** **状态列**）；**非** **`orders_projection`** **对读**、**非** 链上第二源 — **不**构成双源 SSOT
 - **与已实现重叠（开做前 diff）**：**B-102** **`orders_chain_id_backfill_dry_run`** 已含 **`orders_null_chain_id_total`**（同源 **`count_orders_chain_id_null`**）；**indexer-reconcile** 默认 **`stats`**（**`OrdersProjectionReconcileStats`**）**不含** 该项 — **本 TT** 增量须对照母表 **B-151**（**分状态桶** / **admin 专节** / **reconcile 默认嵌套**），**勿**再单独立项「仅总数」
 - **与 110**：**前置观测** — 为 **110** 已登记或后续的 **`chain_id` 清理 / backfill / `DELETE`** 类 Target 提供基线；**本 TT** **不**执行 **DELETE/backfill**、**不**在 **110** 增写新 **Target** 句
-- **本轮仅改（封口）**：**`crates/api/src/db/orders.rs`** **`orders_chain_id_null_observability`**；**`crates/api/src/routes/admin/mod.rs`** **`overview.orders_chain_id_null_observability`**；**`crates/api/src/routes/internal/reconcile/indexer_reconcile.rs`** 成功 **`200`** + **`persist` `summary`** 同键；**`docs/spec/04-后端与API.md`** §3.5 表行 + §3.4 错误码表行；**`docs/任务母表.md`**/**`docs/AI任务卡索引.md`** 封口态
+- **本轮仅改（封口）**：**`crates/api/src/db/orders.rs`** **`orders_chain_id_null_observability`**；**`crates/api/src/routes/admin/mod.rs`** **`overview.orders_chain_id_null_observability`**；**`crates/api/src/routes/internal/reconcile/indexer_reconcile/`** 成功 **`200`** + **`persist` `summary`** 同键；**`docs/spec/04-后端与API.md`** §3.5 表行 + §3.4 错误码表行；**`docs/任务母表.md`**/**`docs/AI任务卡索引.md`** 封口态
 - **禁止再分析**：改动 **`GET /api/v1/orders*`**；将计数挂 **`GET /meta`**；与投影/链上做**漂移对拍**并升格为 SSOT；**默认**新增 **`compound_gate` breakdown**
 - **任务（封口）**：**`by_status`** 分桶 + **`orders_null_chain_id_total`**（与 **B-102** 同源）；**只读**、**无修复动作**
 - **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿
@@ -2687,34 +2927,35 @@
 ### TT-B152-GOVERNANCE-PROPOSALS-PROJECTION-NULL-FIELDS-OBS-001
 
 - **阶段**：governance / ops · **projection 缺字段计数**（**母表 B-152**）
-- **状态**：未封口
+- **状态**：已封口
 - **类别**：**观测 / admin / ops**（**低风险**）
-- **母表**：[任务母表.md](./任务母表.md) **B-152**；**对拍** **Governor↔projection** 归 **B-149**
-- **数据来源**：**PostgreSQL** **`governance_proposals_projection`** **单表** — **`state`/`block_number`/`tx_hash`** 缺失桶计数（**NULL/哨兵** 口径实现轮钉死）
-- **是否触碰公开 API**：**否**（**仅** admin / internal reconcile）
+- **母表**：[任务母表.md](./任务母表.md) **B-152**；**对拍** **Governor↔projection** 归 **B-149**；**尾部 proposalCount** 归 **B-172**
+- **数据来源**：**PostgreSQL** **`governance_proposals_projection`** **单表** **`WHERE chain_id = <expected_chain_id>`** — **四桶**：**`rows_total`**（**`COUNT(*)`**）；**`rows_chain_state_null_or_blank`**（**`chain_state IS NULL OR BTRIM(chain_state) = ''`**；母表 **`state`** → **`chain_state`**）；**`rows_snapshot_block_le_0`**（**`snapshot_block <= 0`**；**NOT NULL DEFAULT 0**；母表 **`block_number`** → **`snapshot_block`**）；**`rows_operation_id_null`**（**`operation_id IS NULL`**；**v1 表无 `tx_hash`**，第三桶以 **`operation_id`** 为空计数；**`getter_note`** 写明 **非** 以太坊 **tx hash**、**Queued 前可为常态**）
+- **JSON 壳**：键 **`governance_proposals_projection_null_fields_observability`**；锚 **`152-GOVERNANCE-PROPOSALS-PROJECTION-NULL-FIELDS-OBS-V1`**；**`schema_version`**=**1**；**`getter_note`**/**`boundary_vs_b149_b172`** 与实现对齐
+- **是否触碰公开 API**：**否**（**仅** **`overview.*`** + **`indexer-reconcile` `200`/`persist` `summary`**）
 - **gate / probe / compound**：**否**
-- **本轮仅改**：（实现轮填写）
-- **禁止再分析**：**Governor** **对拍**（**属 B-149**）；**公开** **`GET …/governance/proposals*`** 新字段；**DELETE**/backfill；弱化 **SEQ2**
-- **任务（占位）**：admin / reconcile **嵌套只读** 缺字段统计
-- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿
-- **测试**：实现轮单测名待填
+- **本轮仅改（台账同批）**：**`docs/任务母表.md`**、**`docs/AI任务卡索引.md`**（**零** **`crates/**`**）
+- **禁止再分析**：**Governor** **对拍**（**属 B-149**）；**proposalCount 尾漂移**（**属 B-172**）；**公开** **`GET …/governance/proposals*`** 新字段；**DELETE**/backfill；弱化 **SEQ2**；与 **`orders_chain_health_observability`**（**153** 锚下 **订单域 B-151/B-152 叙事**）**混名**
+- **任务（v1 封口）**：**`db::governance_proposals_projection_null_fields_observability_for_chain`**；**`GET …/admin/observability/overview`** **`overview.governance_proposals_projection_null_fields_observability`**；**`POST …/internal/indexer-reconcile`** 成功体与 **`persist:true` `summary`** 同键；**`docs/spec/04-后端与API.md`** §3.4 表行（**实现已落地**）
+- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿（**本卡仅文档**时 **不**重跑为硬性门槛；回归由前序实现轮承担）
+- **测试**：**`admin_observability_overview_returns_min_snapshot_for_admin`**（无池 **`observation_note`** 分支）
 
 ---
 
 ### TT-B153-INDEXER-HEAD-VS-DB-LATEST-BLOCK-DRIFT-OBS-001
 
 - **阶段**：indexer / ops · **链头 vs DB 尾漂移**（**母表 B-153**）
-- **状态**：未封口
+- **状态**：已封口
 - **类别**：**观测 / admin / ops**（**低风险**）
 - **母表**：[任务母表.md](./任务母表.md) **B-153**
-- **数据来源**：**链** — **`eth_blockNumber`**（或 **TT** 钉死同源）；**DB** — **单一聚合口径**（**`indexer_state` / `MAX(block)`** **二选一** 钉死）；**输出** **`drift_blocks`** — **并列运维指标**，**非**业务双源 SSOT
+- **数据来源**：**链** — **`eth_blockNumber`**（与 **B-170** **`get_latest_block`** 同源）；**DB** — **`event_log` `MAX(block_number)`**（按 **`chain_id`**；**`db_latest_block_source`**=**`event_log_max_block_number`**）；**`drift_blocks`** = **`chain_head_block`−`db_latest_block`**（**`i64`**，可为负；**双缺** 为 **`null`**）— **并列运维指标**，**非**业务双源 SSOT；**非** **`153-ORDERS-CHAIN-HEALTH-OBS-V1`**
 - **是否触碰公开 API**：**否**
 - **gate / probe / compound**：**默认否**
-- **本轮仅改**：（实现轮填写）
-- **禁止再分析**：将链头或 DB 尾 **升格**为订单/经济真值；**rewind/backfill** 在本 TT
-- **任务（占位）**：**`chain_head_block`** / **`db_latest_block`** / **`drift_blocks`**
+- **本轮仅改（实现已落地）**：**`db/event_log/`**（**`persist.rs`** **`event_log_max_block_number_for_chain`**）；**`routes/internal/common.rs`**；**`routes/internal/mod.rs`**（**admin 装配 wrapper**）；**`routes/admin/mod.rs`**；**`routes/internal/reconcile/indexer_reconcile/`**；**04**；**台账** **母表/索引**
+- **禁止再分析**：将链头或 DB 尾 **升格**为订单/经济真值；**rewind/backfill** 在本 TT；**勿**将 **`orders_chain_health_observability`**（**B-151/B-152**）**误标** 为 **母表 B-153**
+- **任务（v1）**：根键 **`indexer_head_vs_db_latest_block_drift_observability`**（锚 **`153-INDEXER-HEAD-VS-DB-LATEST-BLOCK-DRIFT-OBS-V1`**；**`schema_version`**=**1**）；**`GET …/admin/observability/overview`** **`overview.*`**；**`POST …/internal/indexer-reconcile`** **`200`**/**`persist` `summary`** 同键
 - **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿
-- **测试**：实现轮单测名待填
+- **测试**：**`b153_indexer_head_vs_db_latest_block_drift_observability_mock_rpc_and_db_max`**（**`DATABASE_URL`** 可选）；**`admin_observability_overview_returns_min_snapshot_for_admin`**（**`observation_note`**=**`database_pool_unavailable`**）
 
 ---
 
@@ -2727,28 +2968,28 @@
 - **数据来源**：**请求内** 耗时与 **`OrdersProjectionReconcileStats`** 行计数（**非**持久化第二业务真源）；**admin overview** 读 **最新** **`reconciliation_reports`** **`orders_projection_vs_orders`** **summary** 快照
 - **是否触碰公开 API**：**否**
 - **gate / probe / compound**：**否**
-- **本轮仅改**（实现已落地）：**`crates/api/src/routes/internal/reconcile/indexer_reconcile.rs`**、**`crates/api/src/routes/admin/mod.rs`**、**`crates/api/src/db/reconciliation_reports.rs`**、**`docs/spec/04-后端与API.md`**（契约句）；**台账同批** **母表/索引** 本条
+- **本轮仅改**（实现已落地）：**`crates/api/src/routes/internal/reconcile/indexer_reconcile/`**、**`crates/api/src/routes/admin/mod.rs`**、**`crates/api/src/db/reconciliation_reports.rs`**、**`docs/spec/04-后端与API.md`**（契约句）；**台账同批** **母表/索引** 本条
 - **禁止再分析**：**fail-closed** 门闸化；替代索引器主状态机叙事；**入** **`compound_gate`**
 - **任务（v1）**：根级 **`indexer_reconcile_duration_batch_stats_observability`**（锚 **`154-INDEXER-RECONCILE-DURATION-BATCH-STATS-OBS-V1`**）：**`reconcile_core_duration_ms`**（**仅** **`reconcile_orders_projection_vs_orders`**）+ **`batch_row_counts`**（**无** `samples`）；**`persist` `summary`** 同键；**overview** 同源快照或 **`no_stored_snapshot`**
 - **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿
-- **测试**：**`b154_indexer_reconcile_duration_batch_stats_tests`**（**`indexer_reconcile.rs`** **`#[cfg(test)]`**）
+- **测试**：**`b154_indexer_reconcile_duration_batch_stats_tests`**（**`indexer_reconcile/b154_stats.rs`** **`#[cfg(test)]`**）
 
 ---
 
 ### TT-B155-ORDERS-AMOUNT-CHAIN-VS-DB-DRIFT-MARKER-001
 
 - **阶段**：orders / **对拍标记**（**母表 B-155**）
-- **状态**：未封口
+- **状态**：已封口
 - **类别**：**对拍 / reconcile**（**中风险**）
 - **母表**：[任务母表.md](./任务母表.md) **B-155**；互证 **B-102**
-- **数据来源**：**DB** **`orders`** + **链上 escrow** **`eth_call`**（**TT** 钉死字段）— **仅 drift 标记**，**非**接管 SSOT
+- **数据来源**：**DB** **`orders`**（**`amount`/`currency`/`escrow_address`**）+ 链 **`Escrow.totalAmount()`**（**`eth_call`**）— **仅 drift 标记**，**非**接管 SSOT；**`persist:true` `reconciliation_reports.summary`** 与 **`POST …/internal/indexer-reconcile` `200`** 同键；**admin** **`overview.orders_amount_chain_vs_escrow_drift_observability`** 读最新 **`summary`**（无则 **`no_stored_snapshot`**）
 - **是否触碰公开 API**：**否**
 - **gate / probe / compound**：**默认否**
-- **本轮仅改**：（实现轮填写）
-- **禁止再分析**：弱化 **B-132 SEQ2**；写 DB / 自动修复；**DELETE**/backfill
-- **任务（占位）**：**`aligned`/`drift`/`unavailable_leg`** 类标记，**仅** admin / reconcile
+- **v1 封口说明**：**仅**支持当前 **`orders.currency`→decimals 白名单**（**USDC**/**USDT**/**USD**/**USDC.E**/**USDT.E**→**6**；**ETH**/**WETH**/**DAI**→**18**）；**未列入白名单**之 **`currency`** **不**产生 **`aligned`/`drift`**，对应抽样项一律 **`drift_marker`=`unavailable_leg`**，**`reason`=`unknown_currency_decimals`**；扩币种须**新卡/新版本**明确
+- **禁止再分析**：弱化 **B-132 SEQ2**；写业务 DB / 自动修复；**DELETE**/backfill；与 **`rpc_escrow_samples`** 状态粗对拍合并叙事
+- **任务（v1）**：键 **`orders_amount_chain_vs_escrow_drift_observability`**（锚 **`155-ORDERS-AMOUNT-CHAIN-VS-ESCROW-DRIFT-OBS-V1`**）；**`sampled_items[].drift_marker`**：**`aligned`****/**`drift`****/**`unavailable_leg`**；**`boundary_vs_b168`****/**`boundary_vs_b155`** 见 JSON 体
 - **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿
-- **测试**：实现轮单测名待填
+- **测试**：**`b155_orders_amount_drift_tests`**（**`orders_amount_drift.rs`** **`#[cfg(test)]`**）
 
 ---
 
@@ -2757,11 +2998,11 @@
 - **阶段**：orders / ops · **链健康趋势快照**（**母表 B-156**）
 - **状态**：已封口
 - **类别**：**观测 / admin / ops**（**低风险**）
-- **母表**：[任务母表.md](./任务母表.md) **B-156**；上游 **B-153** **`orders_chain_health_observability`** **标量**同源
+- **母表**：[任务母表.md](./任务母表.md) **B-156**；上游 **B-151/B-152** **`orders_chain_health_observability`** **标量**同源（锚 **`153-ORDERS-CHAIN-HEALTH-OBS-V1`**；**非** 母表 **B-153** 索引器漂移）
 - **数据来源**：**`persist:true`** **`reconciliation_reports.summary`** **merge** + **admin `overview`** 读最新快照；**`persist:false`** **不落点**
 - **是否触碰公开 API**：**否**
 - **gate / probe / compound**：**否**
-- **JSON 摘要锚字面量**：**`155-ORDERS-CHAIN-HEALTH-TREND-SNAPSHOT-V1`**（**与仓库实现一致**；**台账编号** **B-156** **与字面量 `155-…` 不同步为刻意保留**，**改字面量须代码轮**）
+- **JSON 摘要锚字面量**：**`156-ORDERS-CHAIN-HEALTH-TREND-SNAPSHOT-V1`**（**与仓库实现一致**；**字面量前缀与台账 B-156 对齐**）
 - **本轮仅改**（台账更正）：**`docs/任务母表.md`**、**`docs/AI任务卡索引.md`**、**`docs/spec/04-后端与API.md`** **编号句**
 - **禁止再分析**：入 **`compound_gate`**；改 **B-153** 聚合语义；扩 **公开** **`GET /api/v1/orders*`**
 - **任务（v1）**：**`orders_chain_health_trend_snapshot`**（**`by_batch`/`by_day`**）；**`indexer-reconcile` `200`/`persist` `summary`** + **`overview.orders_chain_health_trend_snapshot`**
@@ -2770,207 +3011,235 @@
 
 ---
 
+### TT-B157-REGION-SNAPSHOT-AND-INDEXER-TICK-COUNTERS-CLOSE-001
+
+- **阶段**：revenue / **对拍观测** + indexer / **internal 收口**（**母表 B-157** **整卡** **v1 封口**）
+- **状态**：已封口
+- **类别**：**观测壳 v1**（**一壳两子项**：**RegionShareSnapshotLine**/**`region_share_snapshot_lines`** **DB 统计对拍** + **`indexer_tick` 四计数器收口**）
+- **母表**：[任务母表.md](./任务母表.md) **B-157**；互证 **04** **`b157_region_snapshot_and_tick_observability`** 契约句；**子项叙事** 见下两节 **Region** / **tick**
+- **封口摘要**：顶键 **`b157_region_snapshot_and_tick_observability`**（锚 **`157-B157-REGION-SNAPSHOT-AND-TICK-OBSERVABILITY-V1`**）；**`indexer_tick_counters`** 内 **`new_events`/`parsed_events`/`failed_events`/`skipped_events`** + **`legacy_parallel`**（**显式镜像** **`events_applied`/`events_new`**，**不静默更名**）；**`POST …/internal/indexer-reconcile`/`persist` `summary`** + **`GET …/admin/observability/overview`** + **`POST …/internal/indexer-tick`**；**不**入 **`compound_gate`**
+- **本轮仅改**（台账同批）：**`docs/任务母表.md`**、**`docs/AI任务卡索引.md`**
+- **验收**（实现已在前序轮完成）：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿
+
+---
+
 ### TT-B156-B115-4-REGION-SHARE-SNAPSHOT-LINE-CHAIN-DB-RECONCILE-001
 
 - **阶段**：revenue / **对拍观测**（**母表 B-157 · 子项 A**）
-- **状态**：未封口
+- **状态**：已封口（**并入** **`TT-B157-REGION-SNAPSHOT-AND-INDEXER-TICK-COUNTERS-CLOSE-001`** **壳内** **`region_share_snapshot_line_chain_vs_db`**）
 - **类别**：**对拍 / reconcile**（**中风险**）
 - **母表**：[任务母表.md](./任务母表.md) **B-157**（**子项 A**）；互证 **B-115-4**、**P5-3**（**已封口写入** **不**改）；**索引表** 与 **子项 B** **同序号 157**
 - **数据来源**：**链** **`RegionShareSnapshotLine`** + **DB** **`region_share_snapshot_lines`** — **对拍观测**，**非** **Σ/FeeRouter** 新 SSOT
 - **是否触碰公开 API**：**否**
 - **gate / probe / compound**：**默认否**（**若**进 **compound** **须母表补丁 + B-120 同批**）
-- **本轮仅改**：（实现轮填写）
+- **本轮仅改**（台账同批）：**`docs/任务母表.md`**、**`docs/AI任务卡索引.md`**
 - **禁止再分析**：改 **B-115**/**P5-3** **索引写入**语义；**DELETE**/篡数据
-- **任务（占位）**：reconcile **侧** **drift/缺行/多行** 只读闭环
+- **任务（v1 落地）**：**v1** 以 **`region_share_snapshot_lines`** **按链 SQL 聚合**（**`chain_sample`****=`null`** **默认低 RPC**）纳入 **`b157_region_snapshot_and_tick_observability`**；**可选链抽样** 留 **`chain_sample_mode`** **off_by_default**
 - **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿
-- **测试**：实现轮单测名待填
+- **测试**：以仓库 **`traveltrust-api`** 实现为准
 
 ---
 
 ### TT-B157-INDEXER-TICK-RESPONSE-COUNTERS-STANDARDIZE-001
 
 - **阶段**：indexer / **internal 响应收口**（**母表 B-157 · 子项 B**）
-- **状态**：未封口
+- **状态**：已封口（**并入** **`TT-B157-REGION-SNAPSHOT-AND-INDEXER-TICK-COUNTERS-CLOSE-001`** **壳内** **`indexer_tick_counters`** + **`indexer-tick`** 根级四键 **并行** **`events_applied`/`events_new`**）
 - **类别**：**收口 / internal API**（**中风险**）
 - **母表**：[任务母表.md](./任务母表.md) **B-157**（**子项 B**）；互证 **B-114-5**；**索引表** 与 **子项 A** **同序号 157**
 - **数据来源**：**单次 `indexer_tick` 内计数** — **非**双源业务 SSOT
 - **是否触碰公开 API**：**否**（**仅 internal**）
 - **gate / probe / compound**：**默认否**
-- **本轮仅改**：（实现轮填写）
+- **本轮仅改**（台账同批）：**`docs/任务母表.md`**、**`docs/AI任务卡索引.md`**
 - **禁止再分析**：改 **B-114-5** **tick/reorg** 核心语义；新增 **公开** **`/api/v1/*`**
-- **任务（占位）**：**`new_events`**、**`parsed_events`**、**`failed_events`**、**`skipped_events`** 与 **04/110** 互指
+- **任务（v1 落地）**：**`new_events`/`parsed_events`/`failed_events`/`skipped_events`**；**`legacy_parallel`** **保留** **`events_applied`/`events_new`** **同源数值**；**04** 契约互指
 - **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿
-- **测试**：实现轮单测名待填
+- **测试**：以仓库 **`traveltrust-api`** 实现为准
 
 ---
 
 ### TT-B158-SSOT-GATE-FRONTEND-LOCKFILE-METADATA-SCOPE-001
 
 - **阶段**：SSOT · **元数据门禁 · frontend / lockfile 扩面**（**母表 B-158**）
-- **状态**：未封口
+- **状态**：**已封口**
 - **类别**：**门禁 / CI**
-- **母表**：[任务母表.md](./任务母表.md) **B-158**；互证 **B-145**/**B-146**
-- **数据来源**：**git diff 路径**（**`frontend/**`**、**`package-lock.json`** 等 — **TT** 白名单钉死）
+- **母表**：[任务母表.md](./任务母表.md) **B-158**；互证 **B-145**/**B-146**/**B-147**
+- **数据来源**：**git diff 路径** — **须登记 `frontend/**`**（**`frontend_path_is_exempt`** 豁免矩阵见 **`scripts/gates/check-pr-crates-needs-metadata.sh`** 头 **「frontend 豁免」**）；**lockfile**：**`package-lock.json`**（**仓库根** 或 **`frontend/package-lock.json`**）
 - **是否触碰公开 API**：**否**
-- **gate / probe / compound**：**否**
-- **本轮仅改**：（实现轮填写）
-- **禁止再分析**：与 **B-147 `contracts/**`** 混为一谈；默认 **`CRATES_METADATA_GATE_FAIL`**
-- **任务（占位）**：扩 **`check-pr-crates-needs-metadata.sh`**（或并行脚本）+ **04/母表/README** 互指
-- **验收**：**`bash scripts/run-check-04-routes.sh`** 绿
-- **测试**：实现轮待填
+- **gate / probe / compound**：**否**（**非** **`indexer_reconcile_compound_gate`**）
+- **v1 封口（本实现）**：**同一脚本**与 **`crates/**`**/**`contracts/**`** **同轨**（**`CRATES_METADATA_GATE_FAIL` / `REQUIRE_REFS`**）；**workflow** **step 名**/**注释** 互指 **frontend/lockfile**；**04 零、**/**`scripts/README.md`** 同步；**附**：**`contracts/run-*.sh`** 由 **`[[ == contracts/run-*.sh ]]`**（**永不真**）改为 **`^contracts/run-.*\.sh$`**
+- **禁止再分析**：默认打开 **`CRATES_METADATA_GATE_FAIL`**；与 **B-147** 豁免表 **混写** 导致双叙事；**无登记**再扩 **pnpm/yarn lock**（**另 TT**）
+- **任务（已实现）**：**误阻断** 由 **豁免矩阵** 吸收（**i18n / 静态资源 / e2e / 单测 / fixture / story / 根工具配置**）
+- **验收**：**`bash scripts/run-check-04-routes.sh`** 绿；**`bash scripts/check-pr-crates-needs-metadata.sh main HEAD`** 可跑
+- **测试**：—（**shell**；可选 **`CRATES_METADATA_GATE_FAIL=1`** 对 **含触发路径之 commit range** **验 exit 1**）
 
 ---
 
 ### TT-B159-INDEXER-GATE-CHECKS-TOTAL-DOC-TRIPLE-ALIGN-001
 
 - **阶段**：ops · **gate 三线对齐**（**母表 B-159**）
-- **状态**：未封口
-- **类别**：**门禁 / CI**
-- **母表**：[任务母表.md](./任务母表.md) **B-159**；互证 **110**、**07**、**workflows**
+- **状态**：已封口
+- **类别**：**门禁 / CI**（**仅文档 + workflow 注释 + 常量叙述**）
+- **母表**：[任务母表.md](./任务母表.md) **B-159**；互证 **110**、**07**、**`indexer-reconcile-gate.yml`**、**`internal-drill-gate.yml`**、**`scripts/ops/indexer-reconcile-probe.sh`**
 - **数据来源**：**YAML + Markdown + shell**（**机读 grep/锚**）
 - **是否触碰公开 API**：**否**
-- **gate / probe / compound**：**核验**；**bump** **`checks_total`** **须** **B-120** 同批叙事
-- **本轮仅改**：（实现轮填写）
-- **禁止再分析**：无登记改 **gate** **语义**；擅自 **+1 compound** 子项
-- **任务（占位）**：**`indexer-reconcile-gate`**/**`internal-drill-gate`** 与 **110/scripts/07** 同号
-- **验收**：**`bash scripts/run-check-04-routes.sh`** 绿
-- **测试**：实现轮待填
+- **gate / probe / compound**：**核验**；**未改** **`check_anchor`** **语义**；**未** bump **`checks_total`**（**现行** **113** 与 **YAML** 已一致）
+- **本轮已改**：**110 §3.1.2**/**文尾版本**；**07** **§二 2.3**/**§六 6.3B·序3**/**Version+6.5**；**`docs/spec/00-文档索引.md`** **07/110** 行；**`internal-drill-gate.yml`** 顶注释；**`scripts/README.md`**；**04** 封口标准 **`checks_total`** 句；**母表/索引** 封口态
+- **禁止再分析**：无登记改 **gate** **判定**；擅自 **+1 compound** 子项
+- **任务**：**`indexer-reconcile-gate`** **`checks_total`**/**`check_anchor`**/**`INDEXER_RECONCILE_GATE_CHECKS_TOTAL`** 与 **110**/**07**/**README** 同号；**`internal-drill-gate`** 标明 **无 `checks_total`**、与 **indexer-reconcile-gate** 互补
+- **验收**：**`bash scripts/run-check-04-routes.sh`** 绿；**`bash scripts/check-07-version-triple.sh`** 绿
+- **测试**：无新增 **`cargo test`**（本卡 **非** 业务实现）
 
 ---
 
 ### TT-B160-CORRECTION-EXECUTOR-ROWS-OBS-001
 
 - **阶段**：ops · **DB 观测**（**母表 B-160**）
-- **状态**：未封口
+- **状态**：**已封口**
 - **类别**：**观测 / admin / ops**
 - **母表**：[任务母表.md](./任务母表.md) **B-160**
-- **数据来源**：**PostgreSQL** — **`correction_log`**、**`executor_executions`**（**按 `chain_id`**）
-- **是否触碰公开 API**：**否**
-- **gate / probe / compound**：**否**
-- **本轮仅改**：（实现轮填写）
-- **禁止再分析**：**DELETE**/backfill；**fail-closed** 门闸化
-- **任务（占位）**：**admin overview** + **internal reconcile** 嵌套只读计数
-- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿
-- **测试**：实现轮单测名待填
+- **数据来源**：**PostgreSQL** — **`correction_log`**、**`executor_executions`**（**`WHERE chain_id = <配置链>`** **COUNT**；**`correction_log`** **`MAX(created_at)`**；**`executor_executions`** **`MAX(GREATEST(created_at, updated_at))`**）
+- **是否触碰公开 API**：**否**（**仅** admin **`observability/overview`** + internal **`indexer-reconcile`**）
+- **gate / probe / compound**：**否**（**未**并入 **`indexer_reconcile_compound_gate`/`reconcile_compound_pass`**）
+- **v1 封口（登记口径）**：**`overview.correction_executor_rows_observability`** 与 **`POST …/internal/indexer-reconcile`** 成功体及 **`persist:true` `summary`** 之 **`correction_executor_rows_observability`** **同源同键**；锚 **`160-CORRECTION-EXECUTOR-ROWS-OBS-V1`**；**只读**；**非** **`correction_executor_chain_scope_rollback_dry_run`/`_execute`** **JSON**
+- **本批台账同批**：**仅** **`docs/任务母表.md`**、**`docs/AI任务卡索引.md`** **封口态同步**（**禁止**本批再动业务代码）
+- **禁止再分析**：**DELETE**/backfill；**fail-closed** 门闸化；**擅自**将本键 **并入** **`compound_gate`**
+- **任务（已实现）**：上列 **COUNT + 最近时间** 观测 **admin + reconcile/summary** 对齐
+- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿（**实现轮**）
+- **测试**：**`correction_executor_rows_observability_b160_json_shape`**；**`admin_observability_overview_returns_min_snapshot_for_admin`**（**`overview.correction_executor_rows_observability`** **无池** **`database_pool_unavailable`**）
 
 ---
 
 ### TT-B161-STAKE-LOCK-BLOCK-LAG-OBS-001
 
 - **阶段**：indexer · **块滞后观测**（**母表 B-161**）
-- **状态**：未封口
+- **状态**：**已封口**（**v1**）
 - **类别**：**观测 / admin / ops**
-- **母表**：[任务母表.md](./任务母表.md) **B-161**；**非** **B-153** 全链头尾
-- **数据来源**：**DB**（**stake/lock 事件表 `MAX(block)`**）+ **indexer checkpoint 句柄**
-- **是否触碰公开 API**：**否**
-- **gate / probe / compound**：**否**
-- **本轮仅改**：（实现轮填写）
-- **禁止再分析**：全链扫；升格 **finality** 硬闸
-- **任务（占位）**：**滞后块数** 只读 — **admin** + **reconcile**
-- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿
-- **测试**：实现轮单测名待填
+- **母表**：[任务母表.md](./任务母表.md) **B-161**；**非** **B-153**（**非** **`event_log`** vs **RPC** **链头**）；**不**与 **B-153** 混用语义
+- **口径（封口钉死）**：对 **`investor_stake_state_events`**、**`investor_lock_state_events`** **各**按 **`chain_id`** 取 **`MAX(block_number)`**；与 **`ApiMetaState.indexer_checkpoint.block_number`**（JSON **`indexer_checkpoint_block_number`**）对比；**`stake_lag_vs_checkpoint_blocks`** / **`lock_lag_vs_checkpoint_blocks`** = **`indexer_checkpoint_block_number − max`**（**表有行**时；**负**表示投影尾块高于 checkpoint）
+- **暴露面（同源）**：**`GET …/admin/observability/overview`** **`overview.stake_lock_projection_block_lag_observability`** 与 **`POST …/internal/indexer-reconcile`** 成功 **`200`** 根级及 **`persist:true` `summary`** **同键同构建路径**
+- **机读壳**：键 **`stake_lock_projection_block_lag_observability`**；锚 **`161-STAKE-LOCK-PROJECTION-BLOCK-LAG-OBS-V1`**；**`schema_version`**=**1**；**`getter_note`** 复述 **not B-153 / not compound_gate**
+- **数据来源**：**PostgreSQL**（两表 **MAX**）+ **进程 indexer checkpoint**（**非**第二业务 SSOT）
+- **是否触碰公开 API**：**否**（**仅** admin 观测与 internal reconcile）
+- **gate / probe / compound**：**否**；**禁止**并入 **`compound_gate`**
+- **本批台账同批**：**仅** **`docs/任务母表.md`**、**`docs/AI任务卡索引.md`** **封口态同步**（**禁止**本批再动业务代码）
+- **禁止再分析**：全链扫；升格 **finality** 硬闸；与 **B-153** 合并叙事
+- **任务（已实现）**：**block_lag** 只读观测 — **admin overview** + **indexer-reconcile** **`200`/`persist` `summary`**
+- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿（**实现轮**）
+- **测试**：**`b161_stake_lock_block_lag_json_shape`**；**`b161_tail_above_checkpoint_negative_lag`**；**`admin_observability_overview_returns_min_snapshot_for_admin`**（**`overview.stake_lock_projection_block_lag_observability`** **无池** **`database_pool_unavailable`**）
 
 ---
 
 ### TT-B162-RPC-ESCROW-SAMPLE-META-ADMIN-OBS-001
 
 - **阶段**：ops · **样本元数据**（**母表 B-162**）
-- **状态**：未封口
+- **状态**：**已封口**（**v1**）
 - **类别**：**观测 / admin / ops**
-- **母表**：[任务母表.md](./任务母表.md) **B-162**；互证 **B-117**/**110**
-- **数据来源**：**reconcile** 路径已有 **`rpc_escrow_sample_meta`**（**非**新 SQL SSOT 轴）
-- **是否触碰公开 API**：**否**
-- **gate / probe / compound**：**否**
-- **本轮仅改**：（实现轮填写）
-- **禁止再分析**：扩 **`rpc_escrow_samples`** 业务语义
-- **任务（占位）**：**admin overview** 固化摘要
-- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿
-- **测试**：实现轮单测名待填
+- **母表**：[任务母表.md](./任务母表.md) **B-162**；互证 **B-117**/**110**（**`rpc_escrow_sample_meta`** / **`110-RPC-ESCROW-SAMPLE-META`**）
+- **口径（封口钉死）**：**`GET …/admin/observability/overview`** **`overview.rpc_escrow_sample_meta`** 与 **最新** **`orders_projection_vs_orders`** **`reconciliation_reports.summary.rpc_escrow_sample_meta`** **同键同源**（只读 SELECT 最新报告 **`summary`** 字段）
+- **可读条件**：**真实对象** **仅当** 曾 **`POST …/internal/indexer-reconcile`** **`persist:true`** 且 **`rpc_escrow_samples>0`** 写入 **`summary`**（与 **`200`** 根级 **`rpc_escrow_sample_meta`** 同形）；**无**该持久化键则 **无样本可读**，走占位
+- **占位**：**无 DB 池** **`database_pool_unavailable`**；**无报告或 `summary` 缺键** **`no_stored_snapshot`**（**`getter_note`** 说明 **`persist`+samples**）；**查询失败** **`query_failed`**；占位均带锚 **`110-RPC-ESCROW-SAMPLE-META`**
+- **是否触碰公开 API**：**否**（**仅** admin overview + internal reconcile 既有键）
+- **gate / probe / compound**：**否**；**未**入 **`compound_gate`**
+- **本批台账同批**：**仅** **`docs/任务母表.md`**、**`docs/AI任务卡索引.md`** **封口态同步**（**禁止**本批再动业务代码）
+- **禁止再分析**：扩 **`rpc_escrow_samples`** 业务语义；另造与 **`summary`** 不一致的 **第二 SQL 真源**
+- **任务（已实现）**：admin **只读** 暴露 **`rpc_escrow_sample_meta`** 快照
+- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿（**实现轮**）
+- **测试**：**`admin_observability_overview_returns_min_snapshot_for_admin`**（**`overview.rpc_escrow_sample_meta`** **无池** **`database_pool_unavailable`**）
 
 ---
 
 ### TT-B164-FEE-ROUTES-VS-ROUTED-EVENTS-DRIFT-MARKER-001
 
 - **阶段**：governance · **对拍标记**（**母表 B-164**）
-- **状态**：未封口
+- **状态**：**已封口**（**v1**）
 - **类别**：**对拍 / reconcile**
 - **母表**：[任务母表.md](./任务母表.md) **B-164**；**非** **B-155**/**B-157** **子项 A**（**RegionShareSnapshotLine**）
-- **数据来源**：**DB**（**fee-routes 游标/尾** vs **`fee_router_routed_events`**）
-- **是否触碰公开 API**：**是（只读 `GET …/fee-routes`）** — **drift** **默认** **admin/reconcile** 嵌套；根级变更 **须 TT+04 裁断**
-- **gate / probe / compound**：**默认否**
-- **本轮仅改**：（实现轮填写）
+- **数据来源**：**DB** **仅**（**`fee_router_routed_events`** + 与 **`GET …/governance/fee-routes`** **同源 DESC 列表**；**无** **`eth_getLogs`** **于本标记**）
+- **v1 封口口径（机读键）**：根键 **`fee_router_fee_routes_vs_routed_events_drift_observability`**（锚 **`164-FEE-ROUTES-VS-ROUTED-EVENTS-DRIFT-OBS-V1`**，**`schema_version`**=**1**）。**`fee_routes_desc_head`**：**`cursor`/`block_number`/`log_index`**，与 **`GET …/governance/fee-routes`** **同 SQL**（**reconcile 请求 `chain_id`**、**`ORDER BY block_number DESC, log_index DESC`**、**`LIMIT 1`**）。**`routed_events_aggregate`**：**`total`/`max_block_number`/`min_block_number`/`latest_inserted_at`**（**`fee_router_routed_stats`**）。**`fee_routes_chronological_tail`**：同链 **ASC** **首行**（**`fee_router_routed_oldest_row_for_chain`**）。**`checks.head_block_vs_max_block`** / **`checks.tail_block_vs_min_block`**：**`aligned`/`drift`/`n/a`**；**根级 `marker`**∈**`aligned`/`drift`/`unavailable_leg`**（**空表** **`aligned`**+**`no_rows_for_chain`**）。
+- **暴露面**：**`GET …/admin/observability/overview`** **`overview.fee_router_fee_routes_vs_routed_events_drift_observability`** 与 **`POST …/internal/indexer-reconcile`** 成功 **`200`** 及 **`persist:true` `summary`** **同源同键**（**overview** 自最新 **`reconciliation_reports.summary`** **`admin_last_fee_router_fee_routes_vs_routed_events_drift_observability`**）。
+- **是否触碰公开 API（v1 实现）**：**否** — **未**改 **`GET …/governance/fee-routes`** **HTTP/JSON**。
+- **gate / probe / compound**：**否** — **未**入 **`compound_gate`**。
+- **本轮仅改**（**台账同批**）：**`docs/任务母表.md`**、**`docs/AI任务卡索引.md`**
 - **禁止再分析**：**FeeRouter** **新 SSOT**；**DELETE**/backfill
-- **任务（占位）**：**drift**/**aligned** 类标记
+- **任务（已实现）**：**v1** **只读 drift marker**（上列键与 **04 §3.4** **admin/overview** + **indexer-reconcile** 行互证）
 - **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿
-- **测试**：实现轮单测名待填
+- **测试**：**`b164_anchor_constant`**
 
 ---
 
 ### TT-B165-VAULT-FORWARDS-VS-FORWARDED-EVENTS-DRIFT-MARKER-001
 
 - **阶段**：governance · **对拍标记**（**母表 B-165**）
-- **状态**：未封口
+- **状态**：**已封口**（**v1**）
 - **类别**：**对拍 / reconcile**
 - **母表**：[任务母表.md](./任务母表.md) **B-165**；**非** **B-157** **子项 A** SnapshotLine
-- **数据来源**：**DB**（**vault-forwards** 列表 vs **`region_vault_forwarded_events`**）
-- **是否触碰公开 API**：**是（只读治理 GET）** — 暴露面裁断同 **B-164**
-- **gate / probe / compound**：**默认否**
-- **本轮仅改**：（实现轮填写）
+- **数据来源**：**DB** **仅**（**`region_vault_forwarded_events`** + 与 **`GET …/governance/vault-forwards`** **同源 DESC 列表**；**无** **`eth_getLogs`** **于本标记**）
+- **v1 封口口径（机读键）**：根键 **`vault_forwards_vs_forwarded_events_drift_observability`**（锚 **`165-VAULT-FORWARDS-VS-FORWARDED-EVENTS-DRIFT-OBS-V1`**，**`schema_version`**=**1**）。**`vault_forwards_desc_head`**：**`cursor`/`block_number`/`log_index`**，与 **`GET …/governance/vault-forwards`** **同 SQL**（**reconcile 请求 `chain_id`**、**`ORDER BY block_number DESC, log_index DESC`**、**`LIMIT 1`**）。**`forwarded_events_aggregate`**：**`total`/`max_block_number`/`min_block_number`/`latest_inserted_at`**（**`region_vault_forwarded_stats`**）。**`vault_forwards_chronological_tail`**：同链 **ASC** **首行**（**`region_vault_forwarded_oldest_row_for_chain`**）。**`checks.head_block_vs_max_block`** / **`checks.tail_block_vs_min_block`**：**`aligned`/`drift`/`n/a`**；**根级 `marker`**∈**`aligned`/`drift`/`unavailable_leg`**（**空表** **`aligned`**+**`no_rows_for_chain`**）。
+- **暴露面**：**`GET …/admin/observability/overview`** **`overview.vault_forwards_vs_forwarded_events_drift_observability`** 与 **`POST …/internal/indexer-reconcile`** 成功 **`200`** 及 **`persist:true` `summary`** **同源同键**（**overview** 自最新 **`reconciliation_reports.summary`** **`admin_last_vault_forwards_vs_forwarded_events_drift_observability`**）。
+- **是否触碰公开 API（v1 实现）**：**否** — **未**改 **`GET …/governance/vault-forwards`** **HTTP/JSON**。
+- **gate / probe / compound**：**否** — **未**入 **`compound_gate`**。
+- **本轮仅改**（**台账同批**）：**`docs/任务母表.md`**、**`docs/AI任务卡索引.md`**
 - **禁止再分析**：**Σ** 主叙事改写；**DELETE**
-- **任务（占位）**：尾部 **drift** 统计
+- **任务（已实现）**：**v1** **只读 drift marker**（上列键与 **04 §3.4** **admin/overview** + **indexer-reconcile** 行互证）
 - **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿
-- **测试**：实现轮单测名待填
+- **测试**：**`b165_anchor_constant`**
 
 ---
 
 ### TT-B166-CHAIN-TIP-RECONCILE-META-NARRATIVE-ALIGN-001
 
 - **阶段**：indexer · **叙事 / 探针对齐**（**母表 B-166**）
-- **状态**：未封口
+- **状态**：**已封口**（**v1**）
 - **类别**：**对拍 / reconcile（文档+测）**
 - **母表**：[任务母表.md](./任务母表.md) **B-166**；**非** **B-153** **`drift_blocks`** 数值卡
-- **数据来源**：**现有 JSON 字段** + **04/110** 文档
-- **是否触碰公开 API**：**否**（**默认**）；扩 **807** **须** 另母表句
-- **gate / probe / compound**：**否**
-- **本轮仅改**：（实现轮填写）
-- **禁止再分析**：第二链尖 **业务 SSOT**；**per-request** **807** RPC 纪律
-- **任务（占位）**：**`include_chain_tip`** 与 **`chain_tip_not_in_meta`** 互指 + 单测
-- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿
-- **测试**：实现轮单测名待填
+- **口径（封口钉死）**：**`GET /meta` → `indexer.finality_discipline.chain_tip_not_in_meta`**（**`true`**）与 **`chain_tip_hint`**（**tick / 外置 RPC** 指引）和 **`POST …/internal/indexer-reconcile`** **`include_chain_tip:true` → `chain_observation`**（**`110-RECONCILE-CHAIN-TIP`**；**`eth_chain_tip_block_number`** 同源 **单次 `eth_blockNumber`**）为 **并列运维观测叙事**；**显式非**链尖 **业务 SSOT**、**非**807 **第二套 meta tip 真源**
+- **结构约束**：**不**改变 **`GET /meta`/`indexer-reconcile` 既有 JSON 结构**（封口批为 **04+110+实现注释+单测**）
+- **数据来源**：**既有 JSON** + **04/110 互指句**
+- **是否触碰公开 API**：**否**（**未**增删 **807** 契约键）
+- **gate / probe / compound**：**否**；**未**入 **`compound_gate`**
+- **本批台账同批**：**仅** **`docs/任务母表.md`**、**`docs/AI任务卡索引.md`** **封口态同步**（**禁止**本批再动业务代码）
+- **禁止再分析**：将 **`chain_observation`** 升格为 **meta** 内 **per-request** tip；弱化 **807** RPC 纪律
+- **任务（已实现）**：**`include_chain_tip` ↔ `chain_tip_not_in_meta`/`chain_tip_hint`** 文档与机读互证
+- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿（**实现轮**）
+- **测试**：**`b166_chain_tip_meta_finality_discipline_aligns_reconcile_narrative`**；**`b166_indexer_reconcile_include_chain_tip_chain_observation_contract_keys`**
 
 ---
 
 ### TT-B167-META-INDEXER-110-04-ALIGN-001
 
 - **阶段**：API · **807 收口**（**母表 B-167**）
-- **状态**：未封口
+- **状态**：已封口
 - **类别**：**收口 / API**
 - **母表**：[任务母表.md](./任务母表.md) **B-167**；**非** **B-150**/**B-157**
-- **数据来源**：**`GET /meta` 实现** + **110 §3.1.1** + **04 §3.1**
-- **是否触碰公开 API**：**是（`GET /meta`）**
-- **gate / probe / compound**：**否**
-- **本轮仅改**：（实现轮填写）
-- **禁止再分析**：弱化 **B-127**；新增 **orders** 807 键
-- **任务（占位）**：**`indexer.*`** 字段级对齐 + **`#[cfg(test)]`**
-- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿
-- **测试**：实现轮单测名待填
+- **数据来源**：**`GET /meta` 实现**（**`health_meta/handlers.rs`** + **`meta_contract_keys.rs`**）+ **110 §3.1.1** + **04 §3.4（TT-B167 键序小节）** + **04 §3.1** 长表互指句
+- **是否触碰公开 API**：**是（`GET /meta`）** — **仅** **`indexer.rule`** **字符串** **与** **文档** **对读**（**JSON 键树不变**）
+- **gate / probe / compound**：**否**（**未**接 **compound gate**）
+- **本轮仅改（台账同批）**：**`docs/任务母表.md`**、**`docs/AI任务卡索引.md`**（**零** **`crates/**`**）
+- **禁止再分析**：弱化 **B-127**；新增 **orders** 807 键；**改** **`GET /meta` `indexer.*`** **JSON 形状**
+- **任务（v1 封口）**：**`indexer.*`** 子树键序与 **`INDEXER_META_TOP_KEYS`**（**727**）、**`FINALITY_DISCIPLINE_META_TOP_KEYS`**（**726**）、**`INDEXER_MEMORY_META_TOP_KEYS`**（**757**）、**`INDEXER_CHECKPOINT_META_TOP_KEYS`**（**758**）**同源**；**04 §3.4**、**110 §3.1.1** **TT-B167** 行及 **`indexer.rule`** **TT-B167** **互指**；**未**改 **JSON 结构**；**未**改 **compound**；**实现轮** **文案 + 单测断言收口**
+- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿（**实现轮**）；**台账同批** **不强制** 重跑
+- **测试**：**`health_meta/tests.rs`** **`GET /meta` · `indexer`** 拓扑与 **`indexer.rule`** **含 `TT-B167`**（**以仓库为准**）
 
 ---
 
 ### TT-B168-ESCROW-STATUS-CHAIN-VS-DB-DRIFT-MARKER-001
 
 - **阶段**：orders · **对拍标记**（**母表 B-168**）
-- **状态**：未封口
+- **状态**：已封口
 - **类别**：**对拍 / reconcile**
-- **母表**：[任务母表.md](./任务母表.md) **B-168**；互证 **B-097**；**非** **B-155**（金额）/**B-150**（HTTP 路由）
-- **数据来源**：**chain** **`get_escrow_status`**（或等价）+ **DB** **`orders`/`orders_projection`**
+- **母表**：[任务母表.md](./任务母表.md) **B-168**；互证 **B-097**；**非** **B-150**（HTTP 路由）
+- **数据来源**：**chain** **`chain::get_escrow_status`**（**`factory.escrowOf` + `escrow.status()`**）之 **粗终端标签** ↔ **`orders.status`**（**`chain_off::reconcile_order_chain_vs_db`** / **`terminal_escrow_label_for_reconcile`**）；**DB 抽样** **仅** **`orders`**（**已填 `escrow_address`**）
+- **抽样规则**：**`list_orders_with_escrow_id_status_limit`** — **`escrow_address IS NOT NULL AND BTRIM(escrow_address) <> ''`**；**`ORDER BY updated_at DESC NULLS LAST`**；**`sample_limit_applied`**=**10**；**reconcile 成功路径恒算**，**不**依赖 **`rpc_escrow_samples`** body
+- **根级 `marker` 优先级**：**`drift` > `unavailable_leg` > `aligned`**（与 **`drift_count`/`unavailable_leg_count`** 聚合一致）；**`sampled_items[].drift_marker`**∈**`aligned`/`drift`/`unavailable_leg`**
+- **暴露面**：**`escrow_status_chain_vs_orders_drift_observability`**（锚 **`168-ESCROW-STATUS-CHAIN-VS-ORDERS-DRIFT-OBS-V1`**；**`schema_version`**=**1**）；**`POST …/internal/indexer-reconcile`** **`200`**/**`persist:true` `summary`**；**`GET …/admin/observability/overview`** **`overview.*`** 自 **`reconciliation_reports.summary`**（**`admin_last_escrow_status_chain_vs_orders_drift_observability`**）**同键只读**
+- **与 B-155**：**仅** **`boundary_vs_b155`**（本键体）/**`boundary_vs_b168`**（**B-155** 体）**互指** — **不**混用 **`sampled_items`**、**不**合并金额与 escrow 枚举态叙事
 - **是否触碰公开 API**：**否**
-- **gate / probe / compound**：**默认否**
-- **本轮仅改**：（实现轮填写）
-- **禁止再分析**：接管 **53** 状态机；**DELETE**/backfill；与 **B-155** 金额对拍合并
-- **任务（占位）**：**粗终端态** **drift** 标记 — **admin** + **internal reconcile**
-- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿
-- **测试**：实现轮单测名待填
+- **gate / probe / compound**：**否**
+- **本轮仅改（台账同批）**：**`docs/任务母表.md`**、**`docs/AI任务卡索引.md`**（**零** **`crates/**`**）
+- **禁止再分析**：接管 **53** 状态机；**DELETE**/backfill；与 **B-155** **`orders_amount_chain_vs_escrow_drift_observability`** **混读为同一对拍**；依赖 **`rpc_escrow_samples`** 才产出本键
+- **任务（v1 封口）**：见 **母表 B-168** **v1 封口**段与 **`escrow_status_chain_vs_orders_drift.rs`**
+- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿（**本卡仅文档**时 **不**强制重跑）
+- **测试**：**`b168_escrow_status_chain_vs_orders_drift_tests`**；**`admin_observability_overview_*`** 对 **`overview.escrow_status_chain_vs_orders_drift_observability`** 分支（以仓库为准）
 
 ---
 
@@ -3119,7 +3388,7 @@
 - **数据来源**：**`GET /meta`** + **`GET …/governance/pool`** + **`pool_chain_alignment_hint`** + **`ApiMetaState.chain_config`** + **04/110**
 - **是否触碰公开 API**：**否**（**未改** **`GET /meta`** **JSON 形状**；**807** **根键序** **由测** **锁**）
 - **gate / probe / compound**：**否**
-- **本轮仅改**（**实现已落地**）：**`health_meta/meta_contract_keys.rs`** **`governance_object_keys_match_contract_807`**；**`governance/governance_pool_meta_alignment_b177.rs`**；**`internal/reconcile/body.rs`** + **`indexer_reconcile.rs`** **可选** **`include_governance_pool_meta_chain_alignment_observability`** → **`governance_pool_meta_chain_alignment_observability`**；**`health_meta/tests.rs`**、**`internal/tests/suite_late.rs`**、**`governance/mod.rs`**
+- **本轮仅改**（**实现已落地**）：**`health_meta/meta_contract_keys.rs`** **`governance_object_keys_match_contract_807`**；**`governance/governance_pool_meta_alignment_b177.rs`**；**`internal/reconcile/body.rs`** + **`indexer_reconcile/`** **可选** **`include_governance_pool_meta_chain_alignment_observability`** → **`governance_pool_meta_chain_alignment_observability`**；**`health_meta/tests.rs`**、**`internal/tests/suite_late.rs`**、**`governance/mod.rs`**
 - **禁止再分析**：弱化 **B-132 SEQ2**；**per-request** **807** **RPC 风暴**；与 **B-173** **混写** **Timelock delay** **无互指**
 - **任务**：**807** **`governance`** 对象 **根键序** 与 **`GOVERNANCE_META_TOP_KEYS`** **一致**（**测** **`governance_object_keys_match_contract_807`**）；**reconcile** **可选** **锚** **`177-GOVERNANCE-POOL-META-CHAIN-ALIGNMENT-OBS-V1`** **对读** **`chain_id` / `fee_router_address`**（**meta 配置腿** vs **pool hint 腿**）；**不**进 **compound_gate**
 - **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿
@@ -3127,20 +3396,89 @@
 
 ---
 
+### TT-B188-OBSERVABILITY-THRESHOLD-ALERTS-V1-CLOSE-001
+
+- **阶段**：ops / admin · **Observability 阈值告警 v1**（**母表 B-188**）
+- **状态**：已封口
+- **类别**：**观测 / admin / internal · 只读**
+- **母表**：[任务母表.md](./任务母表.md) **B-188**；上游 **B-153**/**B-155**/**B-157** **快照 JSON**；**非** **B-178** Phase Close；**编号** **B-188** **避开** **附录 B** **建议** **B-179～B-186** **与** **`docs/00-文档索引.md`** **文首「B-179」** **导航俗称**
+- **封口摘要**：**`GET …/admin/observability/overview`** — **`overview.alerts.active`/`sev1`/`sev2`** **与** **`overview.observability_alerting_v1.alert_summary`** **同源计数**；**`observability_alerting_v1`** **含** **`alert_summary`** + **`last_fired`**（**v1 基线**：**`last_fired`** **以进程内内存为主**）。**`POST …/internal/indexer-reconcile`** — **仅** **`include_observability_alerting_v1:true`** 时 **200** 与 **`persist:true` `summary`** **带** **`observability_alerting_v1`**；**默认** **不带**。**前端** **`/admin/observability`** — **仅** **JSON** **展示**，**无** **业务动作**。**v2** — **见** **索引 · 193** / **`### TT-B188-OBSERVABILITY-THRESHOLD-ALERTS-V2-CLOSE-001`**。**v3**（**`schema_version`**=**3**、**`rules_config`**、**`GET …/admin/observability/alert-rules`**、**ENV+DB 阈值覆盖**、**迁移 `20260427000056`**）**已封口** — **见** **索引 · 194** / **`### TT-B188-OBSERVABILITY-THRESHOLD-ALERTS-V3-CLOSE-001`**。
+- **是否触碰公开 API**：**否**（**admin/internal** **只读**）
+- **gate / probe / compound**：**否**
+- **本轮仅改**（**实现已落地**）：**`observability_alerting_v1.rs`**；**`admin/mod.rs` overview**；**`reconcile/body`/`indexer_reconcile`**；**`state` `observability_alert_rule_last_fired`**；**admin/internal 测**；**`frontend/.../observability/page.tsx`** + **locales**；**04** **契约句**
+- **禁止再分析**：自动修复；扩 **公开** **`GET /api/v1/*`** **业务** 契约；**`observability_alerting_v1`** **入** **`compound_gate`**
+- **验收**：**`cargo test -p traveltrust-api`** 绿
+- **测试**：**`admin_observability_overview_returns_min_snapshot_for_admin`**（**alerts** **与** **`alert_summary`** **对齐**）；**`indexer_reconcile_body_deserializes_include_observability_alerting_v1`**；**`observability_alerting_v1`** 模块 **`#[cfg(test)]`**
+
+---
+
+### TT-B188-OBSERVABILITY-THRESHOLD-ALERTS-V2-CLOSE-001
+
+- **阶段**：ops / admin · **Observability 阈值告警 v2（持久化 + 去抖）**（**母表 B-188**）
+- **状态**：已封口
+- **类别**：**观测 / admin / internal · 只读**（**非**业务 API；**非**自动修复；**不**入 **compound_gate**）
+- **母表**：[任务母表.md](./任务母表.md) **B-188**；上游 **B-153**/**B-155**/**B-157** **快照 JSON** 与 **v1** 同源；**v1 基线封口** 见 **索引 · 192** / **`### TT-B188-OBSERVABILITY-THRESHOLD-ALERTS-V1-CLOSE-001`**
+- **封口摘要**：**`observability_alerting_v1`** 响应键名不变；**v2 代际** 下 **JSON** 曾钉 **锚** **`OBSERVABILITY-THRESHOLD-ALERTS-V2`** / **`schema_version`**=**2**；**现行实现** 已叠 **v3**（**锚** **`OBSERVABILITY-THRESHOLD-ALERTS-V3`** / **`schema_version`**=**3**）— **见** **索引 · 194**。**cooldown 去抖**：按 **`TRAVELTRUST_ALERT_V2_COOLDOWN_SECS`**（默认 **300s**）相对 **`last_dedup_emit_at`** 决定是否追加 **`observability_threshold_alert_events`** 行；**`recent_events`** 受 **`TRAVELTRUST_ALERT_V2_HISTORY_LIMIT`** 约束。**双模式**：**有 PgPool** 时 **`persist.storage`**=**`postgresql`**（**`last_fired_at`**/**`last_dedup_emit_at`** 落 **`observability_threshold_alert_rule_state`**）；**无 PgPool** 时 **`memory_only`**。**上线前须执行迁移 `crates/api/migrations/20260426000055_observability_threshold_alert_v2.sql`**（**`20260426000055`**）；未迁移且有池时 **`persist.write_errors`** 可见、持久化 best-effort 失败不影响 **200** 只读路径。**`GET …/admin/observability/overview`** 与 **`POST …/internal/indexer-reconcile`**（**`include_observability_alerting_v1:true`**）与 **v1** 门禁一致（**仅扩 JSON 字段**）。
+- **是否触碰公开 API**：**否**
+- **gate / probe / compound**：**否**
+- **本轮仅改（实现已落地 · 互证）**：**`observability_alerting_v1.rs`**；**`db/observability_threshold_alerts.rs`**；**迁移 `20260426000055_*`**；**`admin/mod.rs`/`indexer_reconcile/`**；**04**；**前端 observability 注释**；**测** **`observability_alerting`**/**`admin_observability_overview`**
+- **禁止再分析**：同 **192**（自动修复、公开业务契约、**compound**）
+- **验收**：**`cargo test -p traveltrust-api`** 绿（或 **`observability_alerting`** + **`admin_observability_overview`** 子集）；**04** **admin/reconcile** 契约句 **互指**
+- **测试**：**`alerting_schema_v3_memory_only_without_pool`**（**v3** 代际）；**`admin_observability_overview_returns_min_snapshot_for_admin`**（**`schema_version`**/**`persist.storage`**）；**`indexer_reconcile_body_deserializes_include_observability_alerting_v1`**
+
+---
+
+### TT-B188-OBSERVABILITY-THRESHOLD-ALERTS-V3-CLOSE-001
+
+- **阶段**：ops / admin · **Observability 阈值告警 v3（规则配置化 + 阈值外置）**（**母表 B-188**）
+- **状态**：已封口
+- **类别**：**观测 / admin / internal · 只读**（**非**业务 API；**非**自动修复；**不**入 **compound_gate**）
+- **母表**：[任务母表.md](./任务母表.md) **B-188**；**v1**/**v2** 互证 **索引 · 192**/**193**
+- **封口摘要**：**`observability_alerting_v1`** **JSON** **锚** **`OBSERVABILITY-THRESHOLD-ALERTS-V3`**；**`schema_version`**=**3**；嵌 **键** **`rules_config`**（**锚** **`OBSERVABILITY-THRESHOLD-ALERT-RULES-CONFIG-V1`**；**`schema_version`**=**1**）：**`config_source`** **`env`** / **`env_and_database`**（**`observability_threshold_alert_config`** **`id=1`** **`thresholds` JSON** 覆盖 **ENV** 可调项）；**`config_fingerprint`**；**`effective_thresholds`**；**`rules_catalog`**；**`database_overlay`**（**`config_version`**/**`updated_at`**）；**`threshold_env_keys`**/**`threshold_db_json_keys`**。**新增** **`GET /api/v1/admin/observability/alert-rules`**：**`200`** 体 **`rules_view`** 与 **`overview.observability_alerting_v1.rules_config`** **同源装配**；审计 **`admin.observability.alert_rules.read`**。**上线前须执行迁移 `crates/api/migrations/20260427000056_observability_threshold_alert_config.sql`**（**`20260427000056`**）；**无行** 时等价 **纯 ENV**。**`POST …/internal/indexer-reconcile`** **`include_observability_alerting_v1:true`** 时 **persist `summary`** 与 **admin overview** **同形** 含 **`rules_config`**。
+- **是否触碰公开 API**：**否**
+- **gate / probe / compound**：**否**
+- **本轮仅改（实现已落地 · 互证）**：**`observability_alert_threshold_config.rs`**；**`observability_alerting_v1.rs`**；**`db/observability_threshold_alerts.rs`**；**迁移 `20260427000056_*`**；**`admin/mod.rs`**（**`GET …/observability/alert-rules`**）；**`indexer_reconcile/handler.rs`**（注释）；**04**；**`frontend/.../observability/page.tsx`**/**`api.ts`**/**locales**；**测** **`observability`**/**`admin_observability_alert_rules_*`**
+- **禁止再分析**：同 **192**（自动修复、公开业务契约、**compound**）
+- **验收**：**`cargo test -p traveltrust-api`** 绿（或 **`observability`** + **`admin_observability_*`** 子集）；**04** **admin/reconcile** **互指**
+- **测试**：**`merge_db_thresholds_overrides_env_defaults`**；**`admin_observability_alert_rules_returns_rules_view_for_admin`**；**`alerting_schema_v3_memory_only_without_pool`**
+
+---
+
+### TT-B178-PHASE-CLOSE-INDEXER-RECONCILE-OBSERVABILITY-001
+
+- **阶段**：process · **Phase Close · indexer/reconcile/observability 切片**（**母表 B-178**）
+- **状态**：已封口
+- **类别**：**全链路一致性证明 / docs-only**
+- **母表**：[任务母表.md](./任务母表.md) **B-178**；**前置条件**：**B-147～B-177** **均已封口**
+- **产出**：[Phase-Close-Indexer-Reconcile-Observability-Alignment.md](./Phase-Close-Indexer-Reconcile-Observability-Alignment.md)
+- **与主 TT 关系**：**不** 替代 **主规划** **五节表**（**已封口** → [**Phase-Close-Docs-Code-Reorg-Plan-B178.md**](./Phase-Close-Docs-Code-Reorg-Plan-B178.md)）；**切片** **仅** **轴线对齐证明**
+- **是否触碰公开 API**：**否**
+- **gate / probe / compound**：**否**（**不** 扩 compound 叙事）
+- **本轮仅改**：**`docs/Phase-Close-Indexer-Reconcile-Observability-Alignment.md`**、**`docs/任务母表.md`**、**`docs/AI任务卡索引.md`**、**`docs/Execution-Batch-Archive-B147-B177.md`**（**零** **`crates/**`**）
+- **禁止再分析**：**新增** 观测键 / **改** **JSON**；**以切片代主规划** **回避** **五节表**（**主 TT** **已另封**）
+- **任务（v1 封口）**：**汇总** **三轴** **最终对齐状态**；**互证** **04/110/Runbook/归档**；**纳入** **B-188** **observability** **邻域**
+- **验收**：**`bash scripts/run-check-04-routes.sh`** 绿
+- **测试**：—
+
+---
+
 ### TT-B178-PHASE-CLOSE-DOCS-CODE-REORG-PLAN-001
 
 - **阶段**：process · **阶段收口（Phase Close · 规划门禁）**（**母表 B-178**）
-- **状态**：未封口
+- **状态**：已封口
 - **类别**：**规划 / 门禁（非 Batch-4）**
-- **母表**：[任务母表.md](./任务母表.md) **B-178**；**前置条件**：**B-147～B-177** **对应 TT 均已封口**
+- **母表**：[任务母表.md](./任务母表.md) **B-178**；**前置条件**：**B-147～B-177** **对应 TT 均已封口**；**indexer/reconcile/observability 切片证明** → [**195**](#tt-b178-phase-close-indexer-reconcile-observability-001)（**已封口**）
+- **产出（钉死路径）**：[Phase-Close-Docs-Code-Reorg-Plan-B178.md](./Phase-Close-Docs-Code-Reorg-Plan-B178.md)（**五节结构化表 + 附录 A/B**）
 - **数据来源**：**全仓文档 + 目录树**（**只读盘点**）；**无** 新业务真源
 - **是否触碰公开 API**：**否**（**规划轮默认**）
 - **gate / probe / compound**：**否**
-- **本轮仅改**：（规划轮）**`docs/**`** 新增/更新 **规划与归档稿**（**路径** 实现轮钉死）；**可选** **母表/索引** **状态句**
-- **禁止再分析**：**任何** **`crates/**`** **业务逻辑 diff**；**改** **04** **公开契约句**（**除非** 用户另令 **合 04 门禁**）；**写** **Rust/TS** **实现**；**无清单** **大单** 拆 **`internal.rs`/`admin.rs`/`chain_off`**；**与 B-147～B-177** **混在一张 PR** **无边界**；**跳过** **按批小收敛** **直接** **全仓重写**；**以「整理」为名** 在 **本卡** **内** **顺手改代码结构**；**仅输出长文** **无五节表**
-- **任务**：将下列 **五节** 写入 **同一份** **规划 Markdown**（**路径** 实现轮钉死，**建议** `docs/` 下 **专文件**），**每节至少一张表** — **不得** **仅输出散文**；**B-179～** **须能按表行** **一行一开卡**。
+- **本轮仅改（封口轮）**：**新增** **`docs/Phase-Close-Docs-Code-Reorg-Plan-B178.md`**；**更新** **`docs/任务母表.md`**、**`docs/AI任务卡索引.md`**、**`docs/Phase-Close-Indexer-Reconcile-Observability-Alignment.md`**、**`docs/Execution-Batch-Archive-B147-B177.md`**（**互指与状态**）；**零** **`crates/**`**
+- **禁止再分析**：**任何** **`crates/**`** **业务逻辑 diff**；**改** **04** **公开契约句**（**除非** 用户另令 **合 04 门禁**）；**写** **Rust/TS** **实现**；**无清单** **大单** 拆 **`internal`/`admin`/`chain_off`**；**与 B-147～B-177** **混在一张 PR** **无边界**；**跳过** **按批小收敛** **直接** **全仓重写**；**以「整理」为名** 在 **本卡** **内** **顺手改代码结构**
+- **任务（已交付）**：**五节 + 附录 A/B** **已写入** **产出**；**B-179～B-186** **母表已登记** **且** **附录 B 执行向** **212～216** **均已封口**（**含** [**216 / B-186**](#tt-b186-b166-narrative-probe-docs-tests-001) **2026-04-14**）；**P 轨** → [**196 / B-179**](#tt-b179-docs-canonical-entry-dedup-001) · [**197 / B-180**](#tt-b180-batch-archive-anchor-toc-001) · [**198 / B-181**](#tt-b181-internal-routes-observability-dir-split-001) · [**212～216**](#任务卡一览按阶段排序) **Phase Close 附录 B** **齐**。
 
-**强制产出结构（蓝图 · 执行 B-178 时原样建表填写）**
+**已定稿正文**：完整填表 **见** **[Phase-Close-Docs-Code-Reorg-Plan-B178.md](./Phase-Close-Docs-Code-Reorg-Plan-B178.md)**。**以下为** **蓝图模板**（**索引长期保留 · 与他卡对照用**）。
+
+**强制产出结构（蓝图 · 原样建表模板）**
 
 **1）文档归类结果**
 
@@ -3217,9 +3555,9 @@
 
 ---
 
-**附录 B · B-179～ 建议清单（候选 · 仅规划 · 非母表正式行）**
+**附录 B · B-179～B-186 清单（与母表对齐 · 真值见母表续表）**
 
-**说明**：下表 **不** 等于 **已登记母表**；**B-178 封口** 时 **可改号/合并/删减**。**续表** 下一可用 **B-179** **仍以母表为准**。
+**说明**：**B-179～B-186** **已在** **[任务母表.md](./任务母表.md)** **占行**；**B-179** → [**196**](#任务卡一览按阶段排序) / [**正文**](#tt-b179-docs-canonical-entry-dedup-001)；**B-180** → [**197**](#任务卡一览按阶段排序) / [**正文**](#tt-b180-batch-archive-anchor-toc-001)；**B-181** → [**198**](#任务卡一览按阶段排序) / [**正文**](#tt-b181-internal-routes-observability-dir-split-001)；下表 **保留** **依赖 / 必须执行** **规划语义**。
 
 | **建议 B 号** | **标题** | **来源（B-178 五节之一）** | **目标范围** | **必须执行** | **预估改动类型** | **依赖关系** |
 |---------------|----------|----------------------------|--------------|--------------|------------------|--------------|
@@ -3238,138 +3576,6 @@
 
 ---
 
-### TT-B141-GOVERNANCE-SSOT-NEXT-CANDIDATE-PLAN-001
-
-- **阶段**：governance / **SEQ5～SEQ10 之后 · 下一批只读 SSOT 分层规划**（**母表 B-141**）
-- **状态**：已封口
-- **母表**：[任务母表.md](./任务母表.md) **B-141**（承 **B-134**/**B-137**/**B-135**～**B-140**）
-- **本轮仅改**（执行本卡时）：**`docs/任务母表.md`**（**B-110** 互指句、**B-141** 新行、**续表 B-142**）、**`docs/AI任务卡索引.md`**（**一览 141**、**未封口**段、本节）
-- **禁止再分析**：**`crates/**` 业务实现**；**spec/04**/**110**/**Runbook**/**gate `checks_total`**（除非另开 **实现类 TT**）；擅自开 **SEQ11+** 实现
-- **任务**：在 **SEQ5/SEQ6/SEQ8/SEQ9/SEQ10** 已闭合前提下，用 **L1～L4** 给下一批候选 **统一分层**，并填下表（**首张实现 TT** 仅 **占位名**，**不**在本轮登记 **B-142** 实现行）
-- **验收**：母表 **B-141** 描述列与索引 **一览 141** / 本节 **候选表** 互指无断链；**零**业务代码 diff
-- **测试**：—
-
-**分层速查**
-
-| 标签 | 含义 | 已闭合参照 |
-|------|------|------------|
-| **L1** | 静态数值（构造期固定 / **`immutable`** / 无治理 setter 的 **`public`** getter） | **SEQ5**、**SEQ6**、**SEQ8** |
-| **L2** | 动态计数或提案级状态 vs 投影/DB 第二源 | **SEQ10**（全局计数 **`+` lag 窗）；提案级须**另写**漂移语义 |
-| **L3** | 可变 **`address`** 或运行时可变绑定 | **SEQ9**（双 **`eth_call`** 对拍） |
-| **L4** | 经济参数 / **FeeRouter** / **protocol-reference** / **P5-5**/**84** 镜像 | **默认隔离**；**高**双源风险，**禁止**无登记挂靠 **807 `governance.*`** |
-
-**下一批候选表（规划真值 · 实现须另开 TT + 母表行）**
-
-| 候选 | 分层 | 建议 P | 链读要点 | 第二源（若有） | fallback / 漂移草案 | FeeRouter · P5-5 · 84 | 首张实现 TT（占位） |
-|------|------|--------|----------|----------------|----------------------|------------------------|---------------------|
-| **`TravelTrustGovernor.token()`** | L1（**`immutable`** 引用） | P1 | 单 **`eth_call`** | 可选与部署配置对读 | 同 **SEQ5/SEQ8** 型 **`GOVERNANCE_*` 闸** + **`governance_ssot_chain_unavailable`** | 否 | **已封口**：**[`TT-B110-SEQ11-GOVERNANCE-GOVERNOR-TOKEN-TIMELOCK-CHAIN-SSOT-001`](#tt-b110-seq11-governance-governor-token-timelock-chain-ssot-001)**（**bundle** 含 **`timelock()`**） |
-| **`TravelTrustGovernor.timelock()`** | L1（**`immutable`** 引用） | P1 | 单 **`eth_call`** | 可选与 **`GOVERNANCE_TIMELOCK_ADDRESS`** 对读（**语义**：部署绑定，**非** **SEQ9** 运行时 **`timelock.governor()`**） | 须文案区分 **「Governor 所绑 Timelock 地址」** vs **「Timelock 自称 governor/admin」** | 否 | 同上 **SEQ11 bundle** |
-| **`TravelTrustGovernor.orderRatingReviewWindowDays()`** | **L1′** 治理可调标量（**Timelock** 可写） | P2 | 单 **`eth_call`** | **SEQ2** 已覆盖 **订单**域 bundle | **非** immutable；与 **SEQ8** 型「永不改」**不同** | 否 | **边界** [**SEQ12 / B-143**](#tt-b110-seq12-governance-governor-order-rating-review-window-boundary-001)；**807 并列观测** 经 [**SEQ13 / B-144**](#tt-b110-seq13-governance-order-rating-review-window-parallel-meta-obs-001) **否决**；**升格接管** 仍须 **B-143** 门槛 + **公开 orders** 同批 |
-| **`TravelTrustGovernor.state(proposalId)`** | L2（提案级） | P2 | 每提案 **`eth_call`** | **`governance_proposals_projection.status`**（或等价列） | **须**定义 **允许**关系（例如索引滞后时 **链上先于投影**）**或** **仅**运维抽样，**不**进 compound **AND** | 否 | **`TT-B110-SEQ?-GOVERNANCE-PROPOSAL-STATE-PROJECTION-SSOT-001`**（占位） |
-| **`TravelTrustGovernor.proposals(proposalId)`** 核心字段（**snapshot / voteStart / voteEnd** 等） | L2 | P3 | **`eth_call`** | 投影行 / 事件回放 | 与 **`state`** 类似，**优先序**应 **后于** **`state`** 或合并设计 | 否 | 占位 |
-| **`TravelTrustGovernor.quorumReached(proposalId)`** | L2 | P3 | **`eth_call`** | 链下重算 | 依赖 **`getPastTotalSupply`/`getPastVotes`** 路径，**复杂度高**，建议 **后移** | 否 | 占位 |
-| **FeeRouter `BPS_*` / 路由热参数** | **L4** | **延后** | 多 **`eth_call`** 或专项 Router | **protocol-reference**、**84**、**Σ** 投影 | **须**产品单一真源 + **独立母表**；**不**默认 **+1 `checks_total`** | **是 · 高** | **禁止**默认进 **807**；另开 **B-116/B-115** 域 **TT** |
-| **GovernanceTimelock** 除 **`delay`/`governor`/`admin`** 外 | — | — | 已闭合 **SEQ6/SEQ9** | — | 新 getter 再分类 | 否 | — |
-
-**P 序结论（本规划卡）**：优先 **L1 引用类**（**`token`/`timelock`**）或 **合并 bundle**；其次裁断 **`orderRatingReviewWindowDays`** 是否与 **SEQ2** 重复；再考虑 **L2 提案级**（**`state`**）**须**独立漂移叙事；**L4** 与经济 Σ **永**与 **807 治理观测骨架** 解耦，除非 **母表 + 产品** 另批。
-
----
-
-## 新增任务卡时（维护约定）
-
-1. 在本文件表格 **一览** 中增加一行，**序号** 续编。  
-2. 在 **正文** 增加一节，字段齐全：**阶段 / 状态 / 本轮仅改 / 禁止再分析 / 任务 / 验收 / 测试（可选）/ 备注**。  
-3. **ID** 建议：`TT-<域>-<主题>-<序号>`，与历史风格一致。  
-4. 封口后把 **状态** 改为 `已封口`，避免重复执行。
-
----
-
-## 与仓库其它文档的关系
-
-- **任务母表（Backlog）**：`docs/任务母表.md` — 条目级来源与状态；**先母表后 TT**。  
-- **协作与低负载规则**：`docs/AI协作话术-减负与边界.md`  
-- **前端上线说明（含英文决议）**：`docs/frontend/Release-Readiness-Frontend.md`  
-- **产品/流程 SSOT**：仍以 `docs/spec/*` 为准；母表与索引均为 **派生层**，不替代 spec。
-
-## 任务卡正文 · 已并入子集（来自 stash 导出 · 序号 192～282）
-
-> 完整未筛选一览与剩余条目见 **`docs/AI任务卡索引.from-stash.md`**（与 main 同批入库）。
-> 下列 **91** 张为 stash 一览中 **已封口** 且 **非文档轮** 之 TT；**未并入** 的 backlog 仍只在 `from-stash` 与 **git stash** 中保留。
-
-### TT-B188-OBSERVABILITY-THRESHOLD-ALERTS-V1-CLOSE-001
-
-- **阶段**：ops / admin · **Observability 阈值告警 v1**（**母表 B-188**）
-- **状态**：已封口
-- **类别**：**观测 / admin / internal · 只读**
-- **母表**：[任务母表.md](./任务母表.md) **B-188**；上游 **B-153**/**B-155**/**B-157** **快照 JSON**；**非** **B-178** Phase Close；**编号** **B-188** **避开** **附录 B** **建议** **B-179～B-186** **与** **`docs/00-文档索引.md`** **文首「B-179」** **导航俗称**
-- **封口摘要**：**`GET …/admin/observability/overview`** — **`overview.alerts.active`/`sev1`/`sev2`** **与** **`overview.observability_alerting_v1.alert_summary`** **同源计数**；**`observability_alerting_v1`** **含** **`alert_summary`** + **`last_fired`**（**v1 基线**：**`last_fired`** **以进程内内存为主**）。**`POST …/internal/indexer-reconcile`** — **仅** **`include_observability_alerting_v1:true`** 时 **200** 与 **`persist:true` `summary`** **带** **`observability_alerting_v1`**；**默认** **不带**。**前端** **`/admin/observability`** — **仅** **JSON** **展示**，**无** **业务动作**。**v2** — **见** **索引 · 193** / **`### TT-B188-OBSERVABILITY-THRESHOLD-ALERTS-V2-CLOSE-001`**。**v3**（**`schema_version`**=**3**、**`rules_config`**、**`GET …/admin/observability/alert-rules`**、**ENV+DB 阈值覆盖**、**迁移 `20260427000056`**）**已封口** — **见** **索引 · 194** / **`### TT-B188-OBSERVABILITY-THRESHOLD-ALERTS-V3-CLOSE-001`**。
-- **是否触碰公开 API**：**否**（**admin/internal** **只读**）
-- **gate / probe / compound**：**否**
-- **本轮仅改**（**实现已落地**）：**`observability_alerting_v1.rs`**；**`admin/mod.rs` overview**；**`reconcile/body`/`indexer_reconcile`**；**`state` `observability_alert_rule_last_fired`**；**admin/internal 测**；**`frontend/.../observability/page.tsx`** + **locales**；**04** **契约句**
-- **禁止再分析**：自动修复；扩 **公开** **`GET /api/v1/*`** **业务** 契约；**`observability_alerting_v1`** **入** **`compound_gate`**
-- **验收**：**`cargo test -p traveltrust-api`** 绿
-- **测试**：**`admin_observability_overview_returns_min_snapshot_for_admin`**（**alerts** **与** **`alert_summary`** **对齐**）；**`indexer_reconcile_body_deserializes_include_observability_alerting_v1`**；**`observability_alerting_v1`** 模块 **`#[cfg(test)]`**
-
----
-
----
-
-### TT-B188-OBSERVABILITY-THRESHOLD-ALERTS-V2-CLOSE-001
-
-- **阶段**：ops / admin · **Observability 阈值告警 v2（持久化 + 去抖）**（**母表 B-188**）
-- **状态**：已封口
-- **类别**：**观测 / admin / internal · 只读**（**非**业务 API；**非**自动修复；**不**入 **compound_gate**）
-- **母表**：[任务母表.md](./任务母表.md) **B-188**；上游 **B-153**/**B-155**/**B-157** **快照 JSON** 与 **v1** 同源；**v1 基线封口** 见 **索引 · 192** / **`### TT-B188-OBSERVABILITY-THRESHOLD-ALERTS-V1-CLOSE-001`**
-- **封口摘要**：**`observability_alerting_v1`** 响应键名不变；**v2 代际** 下 **JSON** 曾钉 **锚** **`OBSERVABILITY-THRESHOLD-ALERTS-V2`** / **`schema_version`**=**2**；**现行实现** 已叠 **v3**（**锚** **`OBSERVABILITY-THRESHOLD-ALERTS-V3`** / **`schema_version`**=**3**）— **见** **索引 · 194**。**cooldown 去抖**：按 **`TRAVELTRUST_ALERT_V2_COOLDOWN_SECS`**（默认 **300s**）相对 **`last_dedup_emit_at`** 决定是否追加 **`observability_threshold_alert_events`** 行；**`recent_events`** 受 **`TRAVELTRUST_ALERT_V2_HISTORY_LIMIT`** 约束。**双模式**：**有 PgPool** 时 **`persist.storage`**=**`postgresql`**（**`last_fired_at`**/**`last_dedup_emit_at`** 落 **`observability_threshold_alert_rule_state`**）；**无 PgPool** 时 **`memory_only`**。**上线前须执行迁移 `crates/api/migrations/20260426000055_observability_threshold_alert_v2.sql`**（**`20260426000055`**）；未迁移且有池时 **`persist.write_errors`** 可见、持久化 best-effort 失败不影响 **200** 只读路径。**`GET …/admin/observability/overview`** 与 **`POST …/internal/indexer-reconcile`**（**`include_observability_alerting_v1:true`**）与 **v1** 门禁一致（**仅扩 JSON 字段**）。
-- **是否触碰公开 API**：**否**
-- **gate / probe / compound**：**否**
-- **本轮仅改（实现已落地 · 互证）**：**`observability_alerting_v1.rs`**；**`db/observability_threshold_alerts.rs`**；**迁移 `20260426000055_*`**；**`admin/mod.rs`/`indexer_reconcile/`**；**04**；**前端 observability 注释**；**测** **`observability_alerting`**/**`admin_observability_overview`**
-- **禁止再分析**：同 **192**（自动修复、公开业务契约、**compound**）
-- **验收**：**`cargo test -p traveltrust-api`** 绿（或 **`observability_alerting`** + **`admin_observability_overview`** 子集）；**04** **admin/reconcile** 契约句 **互指**
-- **测试**：**`alerting_schema_v3_memory_only_without_pool`**（**v3** 代际）；**`admin_observability_overview_returns_min_snapshot_for_admin`**（**`schema_version`**/**`persist.storage`**）；**`indexer_reconcile_body_deserializes_include_observability_alerting_v1`**
-
----
-
----
-
-### TT-B188-OBSERVABILITY-THRESHOLD-ALERTS-V3-CLOSE-001
-
-- **阶段**：ops / admin · **Observability 阈值告警 v3（规则配置化 + 阈值外置）**（**母表 B-188**）
-- **状态**：已封口
-- **类别**：**观测 / admin / internal · 只读**（**非**业务 API；**非**自动修复；**不**入 **compound_gate**）
-- **母表**：[任务母表.md](./任务母表.md) **B-188**；**v1**/**v2** 互证 **索引 · 192**/**193**
-- **封口摘要**：**`observability_alerting_v1`** **JSON** **锚** **`OBSERVABILITY-THRESHOLD-ALERTS-V3`**；**`schema_version`**=**3**；嵌 **键** **`rules_config`**（**锚** **`OBSERVABILITY-THRESHOLD-ALERT-RULES-CONFIG-V1`**；**`schema_version`**=**1**）：**`config_source`** **`env`** / **`env_and_database`**（**`observability_threshold_alert_config`** **`id=1`** **`thresholds` JSON** 覆盖 **ENV** 可调项）；**`config_fingerprint`**；**`effective_thresholds`**；**`rules_catalog`**；**`database_overlay`**（**`config_version`**/**`updated_at`**）；**`threshold_env_keys`**/**`threshold_db_json_keys`**。**新增** **`GET /api/v1/admin/observability/alert-rules`**：**`200`** 体 **`rules_view`** 与 **`overview.observability_alerting_v1.rules_config`** **同源装配**；审计 **`admin.observability.alert_rules.read`**。**上线前须执行迁移 `crates/api/migrations/20260427000056_observability_threshold_alert_config.sql`**（**`20260427000056`**）；**无行** 时等价 **纯 ENV**。**`POST …/internal/indexer-reconcile`** **`include_observability_alerting_v1:true`** 时 **persist `summary`** 与 **admin overview** **同形** 含 **`rules_config`**。
-- **是否触碰公开 API**：**否**
-- **gate / probe / compound**：**否**
-- **本轮仅改（实现已落地 · 互证）**：**`observability_alert_threshold_config.rs`**；**`observability_alerting_v1.rs`**；**`db/observability_threshold_alerts.rs`**；**迁移 `20260427000056_*`**；**`admin/mod.rs`**（**`GET …/observability/alert-rules`**）；**`indexer_reconcile/handler.rs`**（注释）；**04**；**`frontend/.../observability/page.tsx`**/**`api.ts`**/**locales**；**测** **`observability`**/**`admin_observability_alert_rules_*`**
-- **禁止再分析**：同 **192**（自动修复、公开业务契约、**compound**）
-- **验收**：**`cargo test -p traveltrust-api`** 绿（或 **`observability`** + **`admin_observability_*`** 子集）；**04** **admin/reconcile** **互指**
-- **测试**：**`merge_db_thresholds_overrides_env_defaults`**；**`admin_observability_alert_rules_returns_rules_view_for_admin`**；**`alerting_schema_v3_memory_only_without_pool`**
-
----
-
----
-
-### TT-B178-PHASE-CLOSE-INDEXER-RECONCILE-OBSERVABILITY-001
-
-- **阶段**：process · **Phase Close · indexer/reconcile/observability 切片**（**母表 B-178**）
-- **状态**：已封口
-- **类别**：**全链路一致性证明 / docs-only**
-- **母表**：[任务母表.md](./任务母表.md) **B-178**；**前置条件**：**B-147～B-177** **均已封口**
-- **产出**：[Phase-Close-Indexer-Reconcile-Observability-Alignment.md](./Phase-Close-Indexer-Reconcile-Observability-Alignment.md)
-- **与主 TT 关系**：**不** 替代 **主规划** **五节表**（**已封口** → [**Phase-Close-Docs-Code-Reorg-Plan-B178.md**](./Phase-Close-Docs-Code-Reorg-Plan-B178.md)）；**切片** **仅** **轴线对齐证明**
-- **是否触碰公开 API**：**否**
-- **gate / probe / compound**：**否**（**不** 扩 compound 叙事）
-- **本轮仅改**：**`docs/Phase-Close-Indexer-Reconcile-Observability-Alignment.md`**、**`docs/任务母表.md`**、**`docs/AI任务卡索引.md`**、**`docs/Execution-Batch-Archive-B147-B177.md`**（**零** **`crates/**`**）
-- **禁止再分析**：**新增** 观测键 / **改** **JSON**；**以切片代主规划** **回避** **五节表**（**主 TT** **已另封**）
-- **任务（v1 封口）**：**汇总** **三轴** **最终对齐状态**；**互证** **04/110/Runbook/归档**；**纳入** **B-188** **observability** **邻域**
-- **验收**：**`bash scripts/run-check-04-routes.sh`** 绿
-- **测试**：—
-
----
-
----
-
 ### TT-B179-DOCS-CANONICAL-ENTRY-DEDUP-001
 
 - **阶段**：process · **docs 总入口与重复入口消解**（**母表 B-179**；**Phase Close 附录 B 第一项**）
@@ -3381,8 +3587,6 @@
 - **任务（已交付）**：**§1 表后** **互指** **00**；**00** **§3** **删除** **重复的 Phase Close 主规划行**（**改由 §1 表承载**）；**§4** **B-179** **备忘** **挂** **本 TT**
 - **验收**：**`bash scripts/run-check-04-routes.sh`** 绿；**母表 B-179** / **一览 196** / **本节** **互指无断链**
 - **测试**：—
-
----
 
 ---
 
@@ -3400,8 +3604,6 @@
 
 ---
 
----
-
 ### TT-B181-INTERNAL-ROUTES-OBSERVABILITY-DIR-SPLIT-001
 
 - **阶段**：api · **`routes/internal` 职责拆分**（**母表 B-181**；**Phase Close 附录 B 第三项**）
@@ -3413,8 +3615,6 @@
 - **任务（已交付）**：**观测路由 + 装配壳** **子目录化**；**`internal::router()`** **与** **导出** **行为** **不变**
 - **验收**：**`cargo test -p traveltrust-api`** 绿；**`bash scripts/run-check-04-routes.sh`** 绿
 - **测试**：**`indexer_status_wants_live_reconcile_*`**（**internal tests**）
-
----
 
 ---
 
@@ -3513,8 +3713,6 @@
 
 ---
 
----
-
 ### TT-B189-DID-RANK-WEIGHTED-RANK-BASIS-V1-001
 
 - **阶段**：did-rank / API（**代码 + 文档同批**）
@@ -3529,8 +3727,6 @@
 - **验收**：**`bash scripts/run-check-04-routes.sh`** 绿；**`cargo test -p traveltrust-api`** 绿。
 - **测试**：**`cargo test -p traveltrust-api`** **`did_rank`**
 - **模块化约束（≤300 行）**：**本批** **仅** **触** **`guide_sort.rs`** **小改**；**未** **新增** **超行** **单文件**。
-
----
 
 ---
 
@@ -3552,8 +3748,6 @@
 
 ---
 
----
-
 ### TT-B191-TRAVELTRUST-PAGE-04-13-1-CLOSE-001
 
 - **阶段**：frontend / **路由契约** + **公开只读 API**（**B-191** **实现轮**）
@@ -3570,200 +3764,43 @@
 
 ---
 
----
+### TT-B192-110-FULL-CHAIN-SCAN-SCOPE-001
 
-### TT-B194-85-APPENDIX-HI-COMPONENT-SPEC-001
-
-- **阶段**：traveltrust / **85 附录 §H/§I** + **前端装配**（**实现轮**）
-- **状态**：**已封口**（**2026-04-13** · **实现完成**）
-- **母表**：[任务母表.md](./任务母表.md) **B-194**
-- **封口批已落**：**`docs/spec/85-附录-AI组件蓝图.md`** **v1.0.0.4**（**§H、§I** **可生成代码级**；**§K** **组件清单**）；**`frontend/lib/traveltrustTrustFaqI18n.ts`**、**`frontend/lib/traveltrustGlobalMapDemo.ts`**；**`frontend/components/traveltrust/TravelTrustTrustFactsSection.tsx`**、**`TravelTrustFaqAccordion.tsx`**、**`TravelTrustGlobalMapSection.tsx`**、**`TravelTrustGlobalMap.tsx`**；**`frontend/app/traveltrust/page.tsx`**（**`#trust-facts` / `#global-map` / `#faq`** **不变**）；**`frontend/lib/traveltrustTrustFaqI18n.test.ts`**
-- **边界**：**未改** **`docs/spec/04-*`** / **`docs/spec/07-*`**；**不**扩 **85 主文** **新契约句**；**不**替代 **B-191**
-- **验收**：**`npx tsc --noEmit`** **绿**；**`npm test -- lib/traveltrustTrustFaqI18n.test.ts --run`** **绿**；**`cargo test -p traveltrust-api`** **绿**；**`bash scripts/run-check-04-routes.sh`** **绿**
-- **测试**：**`npm test -- lib/traveltrustTrustFaqI18n.test.ts --run`**；**`cargo test -p traveltrust-api`**（**门禁同批**）
-
----
-
-### TT-B195-85-MOTION-PRESETS-LIB-001
-
-- **阶段**：traveltrust / **Motion**
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-195**
-- **封口交付**：**`frontend/lib/traveltrustMotionPresets.ts`**、**`frontend/lib/traveltrustMotionPresets.test.ts`**、**`frontend/app/traveltrust/page.tsx`** **三处** **`traveltrustInViewStaggerCard`** + **`useReducedMotion`**；**§B.3 对读纪要** → [**evidence/GO_B195_MOTION_B3_READOFF.md**](../evidence/GO_B195_MOTION_B3_READOFF.md)；**动效录屏** **S23-06 Full**（[**S23-06-motion-full.md**](../evidence/GO_85_TRAVELTRUST_SEC23_20260413/artifacts/S23-06-motion-full.md)）。
-- **Hero 余量**：**已由** **B-203** **封口**（**2026-04-14**）→ [**GO_B203_HERO_MOTION_CLOSE**](../evidence/GO_B203_HERO_MOTION_CLOSE.md)；**对读件** [**GO_B195**](../evidence/GO_B195_MOTION_B3_READOFF.md) **§1** **矩阵行** **已更新** **为** **已闭合**。
-- **验收**：**`npm test -- lib/traveltrustMotionPresets.test.ts --run`** **绿**；**全仓 `tsc`** **既有报错** **见** **对读件 §2**（**非** **本 TT** **范围**）。
-- **测试**：**`npm test -- lib/traveltrustMotionPresets.test.ts --run`**；**Playwright** **`e2e/traveltrust-sec23-motion.spec.ts`**（**与 S23-06 同源**）
+- **阶段**：indexer / **规划**（**文档轮** **已交付** **2026-04-13**）
+- **状态**：**已封口**（**文档轮**；**全量扫链** **实现** **仍** **Target** **须** **另开实现 TT**）
+- **母表**：[任务母表.md](./任务母表.md) **B-192**
+- **本轮仅改（文档轮 · 已执行）**：**`docs/spec/110-阶段开发链上索引器与事件同步器.md`** **§3.1.2.1**、**`docs/任务母表.md`**（**B-192**）、**`docs/AI任务卡索引.md`**（**一览 203** / **本节** / **未封口枚举**）；**未改** **`docs/spec/04-后端与API.md`**（**无** **internal** **契约句** **diff**）
+- **文档轮交付物**：**`110` §3.1.2.1** — **「全量链上扫链」** **Target** **余量定义**；**B-114-1～5** **切片覆盖/不覆盖**；**`indexer_tick` 窗口** **摘要**；**显式非目标**（coverage / RPC 样例）；**三角互指** **母表 B-192** / **07 §六 6.3A** / **本 TT**。**110** **版本** **1.0.100**。
+- **改动说明（原卡 · 已满足）**：
+  1. **写清** **「全量链上扫链」** **与** **`indexer_tick` 当前窗口**、**B-114** **reorg/scan** **切片** **边界**。（**见 §3.1.2.1**）
+  2. **若** **需** **新 env**：**仅** **110+08-3** **叙事** **登记**；**实现** **另节** **执行**。
+  3. **禁止** **无 § 锚** **改** **`eth_getLogs`** **全局语义**。
+  4. **触及** **`crates/api`** **时** **须** **B-120** **类门闸叙事** **同批** **若 bump gate**。（**实现轮**）
+  5. **文档轮** **零** **代码**。（**本批** **遵守**）
+- **边界（禁止行为）**：**不** **重复** **B-114-1～5** **已交付** **证明**；**不** **单 PR** **文档+大改 indexer**；**不** **改** **P5** **经济投影** **写入路径** **除非** **母表另开**。
+- **验收**：**`bash scripts/run-check-04-routes.sh`** 绿；**110 §3.1.2.1**/**B-192**/**本 TT**/**07 §六 6.3A** **互指**；**实现轮** **`cargo test -p traveltrust-api`** **绿**（**另 TT**）。
+- **测试**：**`cargo test -p traveltrust-api`**（**仅实现轮**）
+- **模块化约束（≤300 行）**：**实现轮** **单 Rust 文件** **≤300 行**；**超标** **拆** **`chain_off`** / **`indexer`** **子模块** **登记**。
 
 ---
 
-### TT-B196-85-VIDEO-ASSET-08-4-GATE-001
+### TT-B193-EVM-POST-FEEROUTER-PARTIAL-SCOPE-001
 
-- **阶段**：traveltrust / **合规视频（85 §九 · 08-4）**
-- **状态**：**已封口**（**2026-04-14** · **示意资产 + 播放器**）
-- **母表**：[任务母表.md](./任务母表.md) **B-196**
-- **封口证据**：[evidence/GO_B196_VIDEO_ASSET_08_4_CLOSE.md](../evidence/GO_B196_VIDEO_ASSET_08_4_CLOSE.md)
-- **交付**：**`public/traveltrust/video/`**（**MP4**、**poster**、**en/zh WebVTT**）；**`traveltrustVideoIllustration.ts`** + **`traveltrustVideoIllustration.test.ts`**；**`TravelTrustVideoBlock`** **`CAPTIONS_*`** **轨**；**`.env.example`** **模板**；**i18n** **引导** **复制** **env**
-- **边界**：**未配置** **`NEXT_PUBLIC_TRAVELTRUST_VIDEO_MP4`** **时** **行为** **不变**（**占位** **+** **P1/P2**）；**未改** **04/07**；**§廿三 S23-05** **仍** **Partial** **直至** **full** **前提**
-- **余量**：**对外募资成片** **URL** **+** **08-4** **签字** **另** **轨** **替换** **env**
-- **验收**：**`npm test -- lib/traveltrustVideoIllustration.test.ts`** **+** **`TravelTrustVideoBlock.test.tsx`** **绿**
-- **测试**：**`npm test -- lib/traveltrustVideoIllustration.test.ts --run`**；**`npm test -- components/traveltrust/TravelTrustVideoBlock.test.tsx --run`**
-
----
-
-### TT-B197-85-ALLOCATION-84-SSOT-001
-
-- **阶段**：traveltrust / **数据真源（Allocation ↔ 84）**
-- **状态**：**已封口**（**2026-04-14** · **工程 SSOT**）
-- **母表**：[任务母表.md](./任务母表.md) **B-197**
-- **封口证据**：[evidence/GO_B197_ALLOCATION_84_SSOT_CLOSE.md](../evidence/GO_B197_ALLOCATION_84_SSOT_CLOSE.md)
-- **交付**：**`traveltrustAllocation84Ssot.ts`**（**`ALLOCATION_84_SSOT`**、**路径常量**、**`TRAVELTRUST_ALLOCATION_PLACEHOLDER_SLOT_KEYS`**）；**`traveltrustAllocation84Ssot.test.ts`**（**机读** **84** **文首版本**）；**`TravelTrustAllocationPlaceholder.tsx`** **仅消费 SSOT**
-- **边界**：**未改** **04/07**、**`page-brief` handler**、**P0** **主路径**；**§廿三 S23-10** **仍** **Partial** **直至** **full-prereq** **+** **`S23-10-funding-full.md`**
-- **余量（非本 TT）**：**84** **表内真数** **上屏** **须** **84 + LEGAL-SIGNOFF** **同批** **另轮**
-- **验收**：**`npm test -- lib/traveltrustAllocation84Ssot.test.ts --run`** **绿**
-- **测试**：**`npm test -- lib/traveltrustAllocation84Ssot.test.ts --run`**
-
----
-
-### TT-B198-85-ANALYTICS-PRODUCTION-PIPE-001
-
-- **阶段**：traveltrust / **增长**
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-198**
-- **封口证据**：[evidence/GO_B198_ANALYTICS_CLOSE.md](../evidence/GO_B198_ANALYTICS_CLOSE.md)
-- **交付**：**`trackTravelTrustEvent`**（**gtag** / **ingest** · **`source`/`target`** **不变**）；**`NEXT_PUBLIC_TRAVELTRUST_ANALYTICS_REQUIRE_CONSENT=1`** **时** **须** **`localStorage` `traveltrust:analytics-consent=granted`** **后才发送**；**未设** **REQUIRE_CONSENT** **保持** **「有传输即发」**；**`TravelTrustAnalyticsConsentBar`**（**`/traveltrust`**）+ **`/privacy` §3** **产品向说明**；**`TravelTrustCtaSource`** **仍** **含** **`video_placeholder`**。
-- **边界（历史卡面）**：**本 TT** **执行轮** **不**改 **04/07**；**`/allocation`** **路由** **由** **TT-B200** **另卡** **封口**（**见** [**GO_B200**](../evidence/GO_B200_ALLOCATION_PHASE2_CLOSE.md)）；**法务终稿** **仍以** **08-4** **为准**。
-- **验收**：**`npm test -- lib/analytics.test.ts components/traveltrust/TravelTrustAnalyticsConsentBar.test.tsx --run`** **绿**；staging **按需** **验** **网络**（**见** **GO_B198 §3**）。
-- **测试**：**`npm test -- lib/analytics.test.ts components/traveltrust/TravelTrustAnalyticsConsentBar.test.tsx --run`**
-- **增量执行（防大工程 · 已封口后仍适用）**：**每次只领一片** **≈1～2h** — **[GO_B198_ANALYTICS_CLOSE.md §5](../evidence/GO_B198_ANALYTICS_CLOSE.md)** **表** **198-A～F**（**母表 B-198** **描述列** **亦** **指** **该节**）；**新事件名 / 新契约 / 新 env 语义** → **另开 TT** **勿** **硬塞进** **单切片**。
-
----
-
-### TT-B199-85-SEC23-ACCEPTANCE-EVIDENCE-001
-
-- **阶段**：traveltrust / **验收 · 文档 + evidence**
-- **状态**：**已封口**
-- **封口批**：**2026-04-13**（**验收完成**）
-- **母表**：[任务母表.md](./任务母表.md) **B-199**
-- **交付摘要**：以 **[evidence/GO_85_TRAVELTRUST.md](../evidence/GO_85_TRAVELTRUST.md)** **为作业面** **SSOT**，**完成** **S23-01～S23-12** **全量证据填充**；**每项** **包含** **可复现步骤**、**执行输出** **与** **源码/返回值对齐**；**`artifacts/`** **目录提供逐项证据文件**；**B-191**、**B-194** **能力已完成互证**；**S23** **Partial/Full** **仍** **按** **GO_85** **维护**；**04 §3.4** **后续** **diff** **见** **B-200** **封口** **同批**。**指针**：[evidence/POINTER_B199_85_SEC23_ACCEPTANCE.md](../evidence/POINTER_B199_85_SEC23_ACCEPTANCE.md)
-- **边界**：**未修改** **`docs/spec/04-*`**、**`docs/spec/07-*`**；**不扩展** **HTTP/JSON** **契约**；**仅完成验收与证据归档**
-- **验收命令**：**`npx tsc --noEmit`**；**`npm test`**；**`cargo test -p traveltrust-api`**；**`bash scripts/run-check-04-routes.sh`**
-- **测试**：**Vitest**（**`npm test`** **全量**）；**Rust**（**`cargo test -p traveltrust-api`**）
-
----
-
-### TT-B200-85-PHASE2-ALLOCATION-ROUTE-001
-
-- **阶段**：traveltrust / **Phase 2 路由**
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-200**
-- **封口证据**：[evidence/GO_B200_ALLOCATION_PHASE2_CLOSE.md](../evidence/GO_B200_ALLOCATION_PHASE2_CLOSE.md)
-- **交付摘要**：**`frontend/app/allocation/*`**（**专页** + **`TravelTrustPageBriefHydrate`** + **`TravelTrustAllocationPlaceholder`**）；**`TRAVELTRUST_P1_PRIMARY_HREF`=`/allocation`**（**Hero / Sticky / 页尾 / 视频占位** **与** **埋点** **`target`** **同源**）；**`crates/api/src/routes/traveltrust_page.rs`** **`p1_target`=`/allocation`** **+** **单测**；**`04 §3.4`** **新** **`/allocation`** **行** **+** **`page-brief`** **契约**；**`13-1` 表 1** **Network + `/allocation`**；**`e2e/smoke.spec.ts`** **`/allocation`** **用例**。
-- **外链**：若 **P1** **须** **改为** **绝对 URL**，**须** **另开 TT** **同批** **改** **常量 + 04 + 13-1 + `traveltrust_page.rs`**。
-- **验收（已跑）**：**`bash scripts/run-check-04-routes.sh`**；**`cargo test -p traveltrust-api`**；**`npm test`**；**`npx tsc --noEmit`**
-
----
-
-### TT-B182-ADMIN-OBS-OVERVIEW-SUBDOMAIN-SPLIT-001
-
-- **阶段**：admin / **Phase Close · 附录 B-182**
-- **状态**：已封口（**2026-04-13** · **装配层 + 域文件**）
-- **母表**：[任务母表.md](./任务母表.md) **B-182**
-- **交付摘要**：**`routes/admin/mod.rs`** **≈320 行** — **仅** **`router()`** + **`mod` / `pub use` / `pub(crate) use`** **装配**；**handler** **在** **`catalog.rs`**、**`community.rs`**、**`observability_read.rs`** 等 **域模块**；**跨 handler 最小共享** **`common.rs`**（**元数据附着**、**request id**、**管理员 actor**、**导出/对账辅助** 等）；**对外** **`crate::routes::admin::*`** **与** **04 §3.5** **表** **一致**（**`run-check-04-routes`** **绿** = **零漂移**）。**`admin/tests.rs`** **仍大** — **不** **纳入** **本 TT DoD**（**48** / **另开切片**）。
-- **历史波次**：**第0波** — **`observability_overview`** **→** **`observability_overview.rs`**；**`common.rs`** **迁入** **共享**；**后续波次** — **大段 handler** **迁出** **`mod.rs`** **至** **`catalog`/`community`/…** **直至** **`mod.rs`** **<500**。
-- **DoD（封口）**：**①** **`cargo test -p traveltrust-api`** **绿**；**②** **`bash scripts/run-check-04-routes.sh`** **绿**；**③** **`check-48`** **stderr** **无** **`routes/admin/mod.rs`** **`OVER 500`**；**④** **审计件** **Top** **与** **`admin/mod.rs`** **现状** **对读** — **见** **[Enterprise-Code-Footprint-Audit-API-Rust.md](./Enterprise-Code-Footprint-Audit-API-Rust.md) §5**。
-- **边界（继承）**：**不** **改** **04 §3.5** **HTTP 契约** **除非** **同批 04**；**本封口轮** **禁止** **扩** **新 admin 能力**。
-- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿。
-- **测试**：**`cargo test -p traveltrust-api`**
-
----
-
-### TT-B183-CHAIN-OFF-SUBDIR-GROUPING-REORG-001
-
-- **阶段**：api / **Phase Close · 附录 B-183**
-- **状态**：已封口（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-183**
-- **本轮仅改（已交付）**：**`crates/api/src/chain_off/governance/**`**、**`crates/api/src/chain_off/reconcile/replay_orders_projection.rs`**、**`chain_off/mod.rs`**、**`reconcile/mod.rs`**、**`routes/internal/tests/suite_early/inc_part_01.rs`**（**indexer-status** **单测** **`rpc_url`** **死端口** **稳定化**）、**`docs/Enterprise-Code-Footprint-Audit-API-Rust.md`**
-- **任务（摘要）**：**`governance_*_ssot`** / **`replay_governance_proposals`** → **`chain_off/governance/`**；**`replay_orders_projection`** → **`reconcile/`**；**`crate::chain_off::governance_*`** **路径** **由** **根** **`pub use governance::{…}`** **保持**。**move-only**；**无** **HTTP/JSON** **契约** **diff**。
-- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿。
-- **测试**：**`cargo test -p traveltrust-api`**
-
----
-
-### TT-B184-SCRIPTS-README-GATES-OPS-NARRATIVE-001
-
-- **阶段**：scripts / **Phase Close · 附录 B-184**
-- **状态**：已封口（**2026-04-14** · **Phase Close 完成**）
-- **母表**：[任务母表.md](./任务母表.md) **B-184**
-- **本轮仅改**：**`scripts/README.md`**、**`scripts/INDEX.md`**（**可选** **根目录转发说明**）
-- **任务**：补强 **gates / ops / dev** **读者路径** 与 **B-163 B1-06** **互指**；**不**新建第二套 INDEX。
-- **验收**：**`bash scripts/run-check-04-routes.sh`** 绿（**文档轮** **默认** **零** **`crates/**`**）。
-- **测试**：—
-
----
-
-### TT-B185-UNIFIED-OBSERVABILITY-JSON-SHELL-IMPL-001
-
-- **阶段**：ops / **Phase Close · 附录 B-185**
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-185**
-- **本轮已改**：**`crates/api/src/routes/internal/observability/shell.rs`**（**`IndexerObservabilityV1Parts` 全腿**、**`observed_at`**）；**`crates/api/src/routes/internal/reconcile/indexer_reconcile/summary_resp.rs`**；**`crates/api/src/routes/admin/observability_overview.rs`**；**`crates/api/src/db/reconciliation_reports/row_get.rs`** + **`mod.rs`**（**`admin_last_orders_projection_vs_orders_summary_key`**）；**`crates/api/src/routes/admin/tests/inc_part_06.rs`**；**`docs/spec/04-后端与API.md`** **§3.4** **TT-B185**
-- **任务**：将 **附录 A** **`indexer_observability_v1` 草案** **落地** 为 **可机读嵌套壳**（**admin / reconcile** **同源**）；**不** **弱化** **B-147～B-177** **已有单键语义**。
-- **执行约束（JSON）**：**任何** **新增**/**重命名**/**改类型** **之** **JSON 字段** **或** **路由响应结构** — **须** **同一批 commit** **更新** **04** **对应段落**；**若** **纯属** **内部重构**、**对外** **字节级** **兼容**，**须在** **提交说明** **写明** **「无契约变化」** **并** **点名** **对读** **之** **04** **§** **锚**。
-- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿。
-- **测试**：**`cargo test -p traveltrust-api`** **绿**（**本封口轮** **2026-04-14**）
-
----
-
-### TT-B186-B166-NARRATIVE-PROBE-DOCS-TESTS-001
-
-- **阶段**：docs / **Phase Close · 附录 B-186**
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-186**
-- **本轮已改**：**`docs/spec/04-后端与API.md`** **§3.4** **TT-B186**（**`narrative_alignment` 规划名→实现对读** 短文；**Test** 行增 **`indexer_observability_v1_includes_b166_chain_observation_when_set`**）；**`docs/spec/110-阶段开发链上索引器与事件同步器.md`** **§3.1.4** **TT-B186** 互指；**`docs/任务母表.md`**、**`docs/AI任务卡索引.md`**、**`docs/Phase-Close-Docs-Code-Reorg-Plan-B178.md`**、**`docs/spec/07-开发流程与顺序.md`**、**`docs/spec/00-文档索引.md`**（**07** **版本三线** **1.0.841**）
-- **任务**：**B-166** **叙事** 与 **Phase Close 附录 A** **`narrative_alignment`** **规划名** **字段级对读**（**不**增独立 JSON 子树）；**测** **以** **既有** **`b166_*`** / **`meta_absent_frags`** / **`indexer_observability_v1_includes_b166_chain_observation_when_set`** **为闭环**。
-- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿；**`bash scripts/check-07-version-triple.sh`** 绿（**本批** **动** **07** **Version**）。
-- **测试**：**`cargo test -p traveltrust-api`**（**`b166_`** **前缀** + **`indexer_observability_v1_includes_b166_chain_observation_when_set`** **或** **全包**）
-
----
-
-### TT-B201-ENTERPRISE-API-RS-FOOTPRINT-AUDIT-001
-
-- **阶段**：api / **企业级审计（07 · 48 · check-48）**
-- **状态**：已封口（**2026-04-13** · **审计基线**）
-- **母表**：[任务母表.md](./任务母表.md) **B-201**
-- **本轮仅改**：**`docs/Enterprise-Code-Footprint-Audit-API-Rust.md`**、**`docs/任务母表.md`** **B-201 指针**、**本索引节**
-- **任务**：对 **`crates/api/src/**/*.rs`** **`wc -l` 排序**；**产出** **Top（>500，与脚本违规集一致）**；**每行** **至少含**：路径、行数、类型、**是否超脚本门禁**、风险、**P0/P1/P2**、**拆分轴**、**母卡/TT 指针**、**AI 稳定性**、**复测命令**；**另附** **按文件类型的拆分策略** + **与 `scripts/gates/check-48-line-count.sh` 的对读**（**默认 500** / **`STRICT=1` 400** / **违规计数**）。**重申**：**脚本** **为** **唯一裁决器**；**审计表** **快照** **非** SSOT。**禁止** **本 TT** **内** **顺手巨型拆分**。
-- **交付物**：**[Enterprise-Code-Footprint-Audit-API-Rust.md](./Enterprise-Code-Footprint-Audit-API-Rust.md)**
-- **验收**：**审计件** **与** **`bash scripts/check-48-line-count.sh`** **可逐条对读**；**`bash scripts/run-check-04-routes.sh`** 绿。
-- **备注**：**单人维护** **无** **PR**；**刷新审计件** **=** **commit 前** **对读** **+** **文档同批**。**后续** **模块化拆分**（**B-182** 等）**须在** **提交说明**（**或** **独立 `evidence/` 片段**）**附**：**审计表** **Before/After** **行数** + **`bash scripts/gates/check-48-line-count.sh`** **完整输出**（**或** **stderr 摘录**）— **见** **审计件 §5**。
-- **测试**：—
-
----
-
-### TT-B202-ENTERPRISE-FRONTEND-TS-FOOTPRINT-AUDIT-001
-
-- **阶段**：frontend / **企业级审计（07 · 6.3A）**
-- **状态**：已封口（**2026-04-13** · **审计基线**）
-- **母表**：[任务母表.md](./任务母表.md) **B-202**
-- **本轮仅改**：**`docs/Enterprise-Code-Footprint-Audit-Frontend.md`**、**`docs/任务母表.md`** **B-202 指针**、**本索引节**
-- **任务**：**`frontend/**/*.ts`/`*.tsx`** **`wc -l`**，**排除** **`locales/**`**、**`e2e/**`**、**`**/*.test.*`**；**≥550 行** **入表**；**列** **同 B-201 治理口径**（**前端无 check-48 单文件 gate** — **须在审计件中写明对读结论**）；**与** **B-195** **Motion 预设** **正交**。
-- **交付物**：**[Enterprise-Code-Footprint-Audit-Frontend.md](./Enterprise-Code-Footprint-Audit-Frontend.md)**
-- **验收**：**审计件** **与** **本地** **复跑** **§1** **命令** **输出** **一致**（**单人流程** **无** **PR** **要求**）；**`bash scripts/run-check-04-routes.sh`** 绿（**纯文档** **默认**）；**`npx tsc --noEmit -p frontend`** **建议** **本地** **自证**。
-- **备注**：同 **TT-B201** — **单人** **直推**；**同批** **指** **commit** **级**；**拆分后** **提交说明** **须** **附** **审计表** **Before/After**（**§5**）。
-- **测试**：—
-
----
-
-### TT-B203-85-HERO-MOTION-B3-ALIGN-001
-
-- **阶段**：traveltrust / **Motion · Hero（小微）**
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-203**
-- **封口证据**：[evidence/GO_B203_HERO_MOTION_CLOSE.md](../evidence/GO_B203_HERO_MOTION_CLOSE.md)
-- **交付**：**`frontend/lib/traveltrustMotionPresets.ts`** **`fadeInUp` / `fadeIn` / `traveltrustHeroEntrance`**；**`frontend/app/traveltrust/page.tsx`** **`#hero`** **`motion.p` / `motion.h1` / `motion.div` / `motion.aside`**；**`traveltrustMotionPresets.test.ts`** **增补** **断言**
-- **视觉 / a11y**：**见** **证据件** **§2～§3**（**手动** **+** **`prefers-reduced-motion`**）
-- **验收**：**`npm test -- lib/traveltrustMotionPresets.test.ts --run`** **绿**（**2026-04-14**）；**未改** **04/07**；**全仓 `tsc`** **既有报错** **非** **本 TT** **范围**
-- **测试**：**`npm test -- lib/traveltrustMotionPresets.test.ts --run`**；**Playwright** **`e2e/traveltrust-sec23-motion.spec.ts`** **仍** **兼容** **（无** **必改** **断言** **）**
+- **阶段**：contracts / **规划**（**文档轮** **已交付** **2026-04-13**）
+- **状态**：**已封口**（**文档轮**；**§1.1.1.1** 表内 **各子域实现** **仍** **须** **子 TT**）
+- **母表**：[任务母表.md](./任务母表.md) **B-193**
+- **本轮仅改（文档轮 · 已执行）**：**`docs/spec/14-合约-API-ABI-前后端对齐.md`** **§1.1.1.1**、读前摘要 **§1.1.1** 指针、**`docs/任务母表.md`**（**B-193**）、**`docs/AI任务卡索引.md`**（**一览 204** / **本节** / **未封口枚举** / **B-187 矩阵**）；**未改** **`docs/spec/04-后端与API.md`**（**无** **契约句** **diff**）
+- **文档轮交付物**：**`14` §1.1.1.1** — **FeeRouter 之后** **8** 行 **余量子域表**（**合约 / 索引 / 04·前端 / 指针**）；**三角互指** **B-116**/**`GO_B116`/`GO_B116_P4`**/**B-193**/**07 §六 6.3A**。
+- **改动说明（原卡 · 已满足）**：
+  1. **B-116 MVP** 前提下 **Partial** **子清单**。（**见表**）
+  2. **每项** **GO** **或** **未来 TT** **占位**。（**见「追踪指针」列**）
+  3. **零** **Solidity** **diff**。
+  4. **07·6.3A** **读者** **余量入口** **=** **14 §1.1.1.1**。
+  5. **实现** **另开** **单 TT**（**母表** **续号**）。
+- **边界（禁止行为）**：**不** **改** **ABI JSON** **形状** **unless** **14+合约+双份 ABI** **同批**；**不** **forge** **大改** **于** **文档轮**；**不** **吞** **B-115/B-116** **已封口** **范围**。（**本批** **遵守**）
+- **验收**：**`bash scripts/run-check-04-routes.sh`** 绿；**14 §1.1.1.1**/**B-116**/**B-193**/**TT-B193**/**07 §六 6.3A** **互指**；**实现子 TT** **`forge test`** / **`cargo test`** **按子 TT**。
+- **测试**：—（**文档轮**）；**子 TT** **另列**
+- **模块化约束（≤300 行）**：**未来实现轮** **单合约/单 Rust 文件** **≤300 行** **或** **按仓库既有分文件惯例**。
 
 ---
 
@@ -3778,8 +3815,6 @@
 - **验收**：**`cargo test -p traveltrust-api`** **绿**；**`bash scripts/run-check-04-routes.sh`** **绿**；**110**/**04**/**08-3**/**母表 B-204**/**本节** **互指**。
 - **测试**：**`cargo test -p traveltrust-api`** **`b204`**
 
----
-
 ### TT-B205-GOVERNANCE-POOL-TREASURY-ERC20-SSOT-HANDLER-001
 
 - **阶段**：governance / API · **B110-SSOT-06** **`treasury_erc20_pool*`**（**母表 B-205**）
@@ -3789,8 +3824,6 @@
 - **任务（已交付）**：**`GET …/governance/pool`** **根级** **`treasury_erc20_pool*`** **链上 SSOT**（**闸** **`GOVERNANCE_TREASURY_ERC20_POOL_BALANCE_CHAIN_SSOT`**、**`GOVERNANCE_TREASURY_ADDRESS`**、**`GOVERNANCE_TREASURY_SSOT_TOKEN_ADDRESS`**、**`ssot_read_governance_treasury_erc20_balance_hex`**）；**与** **`pool_balance`/`country_pool`/`treasury_pool`（Wei）** **解耦** **并行** **`tokio::join`** **腿**。**规范别名** **`TT-SSOT-SWITCH-APPLY-003`** **=** **本 TT**。
 - **验收**：**`cargo test -p traveltrust-api`** **绿**；**`bash scripts/run-check-04-routes.sh`** **绿**；**`python scripts/ssot-guard-b110-pool-ssot.py`** **绿**
 - **测试**：**`cargo test -p traveltrust-api`** **`b205_governance_pool_treasury_erc20_ssot_merges_on_placeholder_branch`**
-
----
 
 ### TT-B206-14-POST-FEEROUTER-FIRST-SUBDOMAIN-IMPL-001
 
@@ -3804,8 +3837,6 @@
 
 ---
 
----
-
 ### TT-B207-04-MEDIA-SIGNED-URLS-BLOB-001
 
 - **阶段**：api / **04 §3.4** · **媒体证据链**（**母表 B-207**）
@@ -3815,8 +3846,6 @@
 - **任务（摘要）**：**批 270** **`media/access`** **从** **纯占位** **到** **可配置上游 URL 模板** **的** **真字节响应**（**POST 签发** **路径** **本卡** **未改** **业务语义**）。**Runbook/08-3** **全附录** **未** **同批**（**非** **本卡** **硬门禁**）。
 - **验收**：**`cargo test -p traveltrust-api`** **绿**；**`bash scripts/run-check-04-routes.sh`** **绿**
 - **测试**：**`cargo test -p traveltrust-api`**（**含** **`media_blob_upstream`** **单测**）
-
----
 
 ### TT-B208-14-REGIONVAULT-TABLE-ROW2-SUBDOMAIN-001
 
@@ -3828,7 +3857,489 @@
 - **验收**：**`cargo test -p traveltrust-api`** **绿**；**`bash scripts/run-check-04-routes.sh`** **绿**
 - **测试**：**`cargo test -p traveltrust-api`**（**含** **`admin_region_vault_forwarded_events_export_*`**）
 
----
+### TT-B218-14-FEEROUTER-ROUTED-EVENTS-EXPORT-001
+
+- **阶段**：api / **admin + internal** · **14 §1.1.1.1** **柱 C**（**母表 B-218**；对称 **B-208**/**TT-B208**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-218**（承 **B-208**/**B-193**/**B-116**）
+- **封口批已落**：**`crates/api/src/db/fee_router_events.rs`**（**`ADMIN_FEE_ROUTER_EXPORT_MAX_ROWS`**、**`list_fee_router_routed_events_export`**）；**`crates/api/src/routes/admin/fee_router.rs`**（**`fee_router_routed_export_response`**、**`validate_fee_router_routed_export_query`**）；**`crates/api/src/routes/internal/fee_router_export.rs`** + **`internal/mod.rs`**；**`admin/mod.rs`**；**`read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`** **§3.4** **内部 API** + **§3.5** **`…/fee-router/routed-events/export`**；**`routes/admin/tests/inc_part_01.rs`**/**`inc_part_08.rs`**
+- **任务（摘要）**：**`GET …/admin/fee-router/routed-events/export`**（**审计** + **JSON** **`meta.build`**）**；** **`GET …/internal/fee-router/routed-events/export`**（**无审计**；**JSON** **无** **`meta.build`**）；**`format=csv|json`**、**`chain_id?`**、**`limit?`**（**缺省 2000**）。**无** **`include_snapshot_explain`**（**与** **RegionVault** **export** **差分**）。
+- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`bash scripts/run-check-04-routes.sh`** **绿**
+- **测试**：**`cargo test -p traveltrust-api`**（**含** **`admin_fee_router_routed_events_export_*`**、**`fee_router_routed_export_csv_*`**）
+
+### TT-B219-110-EVIDENCE-BUNDLE-CANONICAL-COMBINE-001
+
+- **阶段**：indexer / **110 §3.1.2.1 · evidence 三件套标准化汇编**（**母表 B-219**；承 **B-210**/**TT-B210**、**B-213**/**TT-B213**、**B-216**/**TT-B216**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-219**
+- **封口批已落**：**`scripts/ops/write-indexer-evidence-bundle-canonical.sh`**（**根** **`scripts/write-indexer-evidence-bundle-canonical.sh`** **转发**）；**`scripts/ops/internal-indexer-ops.sh`**/**`.ps1`** **`evidence-bundle-canonical`**；**`scripts/ops/fixtures/indexer_evidence_bundle_canonical_index.example.json`**；**`.github/workflows/indexer-reconcile-gate.yml`** **`checks_total`****`125`**（**+2** **`check_anchor`**：**`110-INDEXER-EVIDENCE-BUNDLE-CANONICAL-V1`**、**`scripts_internal_indexer_ops_evidence_bundle_canonical`**）；**`scripts/ops/indexer-reconcile-probe.sh`** **`INDEXER_RECONCILE_GATE_CHECKS_TOTAL`****`125`**；**`INTERNAL_INDEXER_OPS_SCRIPT_SEMVER`****`1.11.0`**；**`ops/RUNBOOK.md`** **§2.55**（**B-219** **实现** **+** **B-221** **标准用法** **长段**）；**`scripts/README.md`**（**B-221** **摘要**）；**本索引一览 236 / 本节**
+- **任务（摘要）**：**固定目录** **`OUT_DIR/artifacts/`** — **`b210_manifest.json`**、**`b216_historical_completeness_proof_v0.json`**、**`b213_indexer_tick_loop_evidence.json`**；**`artifacts.sha256`**；**`bundle_canonical_index.json`** + **`bundle_canonical_index.sha256`**。**ENV**：**`CANONICAL_BUNDLE_STAGE_GO_DIR`**（**其下** **`manifest.json`**）**或** **`CANONICAL_BUNDLE_B210_MANIFEST_PATH`**；**可选** **`CANONICAL_BUNDLE_B216_PROOF_PATH`**/**`CANONICAL_BUNDLE_B213_EVIDENCE_PATH`**（**离线** **复制**）**否则** **分别** **委托** **`write-indexer-historical-completeness-proof.sh`** **与** **`tick-loop --write-evidence-json`**（**须** **可达** **API**）。
+- **边界（未吞并）**：**不**改 **`POST …/internal/indexer-tick`** **Rust**；**不** **扩** **B-210** **`manifest.json`** **根** **登记块** **形**；**不** **新增** **04 §3.4** **契约句**（**本卡** **纯** **ops/gate**）。
+- **验收**：**`.github/workflows/indexer-reconcile-gate.yml`** **`grep -c 'check_anchor \"'`** **=** **`checks_total`**（**125**）；**`scripts/ops/indexer-reconcile-probe.sh`** **`INDEXER_RECONCILE_GATE_CHECKS_TOTAL`** **同值**；**`bash -n scripts/ops/write-indexer-evidence-bundle-canonical.sh`** **绿**
+- **测试**：—（**本卡** **无** **新增** **Rust** **用例**）
+
+### TT-B220-110-GATE-CHECKS-TOTAL-CONSISTENCY-SWEEP-001
+
+- **阶段**：docs / **indexer-reconcile-gate** **现行叙事** **与** **YAML**/**`probe`** **三线对齐**（**母表 B-220**；**承** **B-219**）
+- **状态**：**已封口**（**2026-04-14** · **文档轮**）
+- **母表**：[任务母表.md](./任务母表.md) **B-220**
+- **封口批已落**：**`docs/spec/110-阶段开发链上索引器与事件同步器.md`** **§3.1.2**/**§3.1.2.1** **台账** **+** **1.0.110**；**`docs/spec/07-开发流程与顺序.md`** **§二 2.3**/**§六 6.3A/6.3B/6.4**/**Version 1.0.848**/**§六 6.5**（**嗣后** **`RUNBOOK`/`scripts/README`** **B-221** **扩写** → **`07`****`1.0.849`** **见** **一览** **238**）；**`docs/spec/00-文档索引.md`** **07/110**（**及** **04/08-3** **版本表行**）；**`ops/RUNBOOK.md`** **§2.55**；**`scripts/README.md`**；**`docs/spec/04-后端与API.md`** **§6** **封口标准**；**`docs/spec/08-3-参数与门禁表.md`** **变更记录**；**本索引一览 237 / 本节**
+- **任务（摘要）**：**扫除** **仍写** **现行** **`checks_total`****`123`**/**`115`** **而** **`.github/workflows/indexer-reconcile-gate.yml`**/**`INDEXER_RECONCILE_GATE_CHECKS_TOTAL`** **已为** **`125`** **之** **文档句**；**保留** **B-216/B-217** **各批** **封口才** **`122`/`123`** **历史脚注**。
+- **边界**：**不**改 **`.github/workflows/indexer-reconcile-gate.yml`** **与** **`scripts/ops/indexer-reconcile-probe.sh`** **头常量**（**本批** **零** **diff**）。
+- **验收**：**`bash scripts/check-07-version-triple.sh`** **绿**；**`grep -c 'check_anchor \"'`** **`.github/workflows/indexer-reconcile-gate.yml`****`=`****`125`**
+- **测试**：—
+
+### TT-B221-110-RUNBOOK-EVIDENCE-BUNDLE-USAGE-CANONICAL-001
+
+- **阶段**：docs / **Runbook + scripts 索引** · **B-219 evidence-bundle canonical** **标准运维流程**（**母表 B-221**；**承** **B-219**/**TT-B219**）
+- **状态**：**已封口**（**2026-04-14** · **文档轮**）
+- **母表**：[任务母表.md](./任务母表.md) **B-221**
+- **封口批已落**：**`ops/RUNBOOK.md`** **§2.55**（**前置**、**一键命令**、**目录树**、**`sha256sum`/`shasum -c`**、**`jq`****`bundle_anchor`**、**`bash -n`**）；**`scripts/README.md`**（**篇首摘要段** + **「一、日常开发」表行** **`write-indexer-evidence-bundle-canonical.sh`** + **`internal-indexer-ops.ps1`** **`evidence-bundle-canonical`** **提示**）；**`docs/spec/07-开发流程与顺序.md`** **§六 6.4**/**6.5**/**Version 1.0.849**；**`docs/spec/00-文档索引.md`** **07** **行**；**本索引一览 238 / 本节**
+- **任务（摘要）**：**不**改 **`write-indexer-evidence-bundle-canonical.sh`** **行为**；**仅** **固化** **值班可读** **的** **同序** **操作说明** **与** **归档校验** **步骤**。
+- **边界**：**不** **bump** **`indexer-reconcile-gate` `checks_total`**；**不** **改** **04 §3.4** **契约句**。
+- **验收**：**`bash scripts/check-07-version-triple.sh`** **绿**；**`bash -n scripts/ops/write-indexer-evidence-bundle-canonical.sh`** **绿**；**离线三 PATH** **汇编** **后** **`OUT_DIR`** **内** **`sha256sum -c artifacts.sha256`**（**或** **`shasum -a 256 -c`**）**与** **`bundle_canonical_index.sha256`** **绿**；**`jq -e '.bundle_anchor == "110-INDEXER-EVIDENCE-BUNDLE-CANONICAL-V1"' bundle_canonical_index.json`** **绿**
+- **测试**：—（**文档** **+** **shell** **校验**）
+
+### TT-B222-110-EVIDENCE-BUNDLE-CI-AUTO-RUN-001
+
+- **阶段**：CI / **`indexer-reconcile-gate`** · **B-219 evidence-bundle canonical** **离线复现链**（**母表 B-222**；**承** **B-219**/**B-221**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-222**
+- **封口批已落**：**`.github/workflows/indexer-reconcile-gate.yml`**（**`Build and verify indexer evidence-bundle canonical`** **步** **+** **`upload-artifact`** **`indexer_evidence_bundle_canonical_ci/**`**）；**`scripts/ops/fixtures/ci_evidence_bundle_b210_manifest.json`**、**`scripts/ops/fixtures/ci_evidence_bundle_b213_tick_loop_evidence.json`**（**`B-216`** **用** **`indexer_historical_completeness_proof_v0.example.json`**）；**`ops/RUNBOOK.md`**/**`scripts/README.md`** **CI** **互指**；**`docs/spec/110-阶段开发链上索引器与事件同步器.md`**；**`docs/spec/07-开发流程与顺序.md`** **Version 1.0.850**/**§六 6.4/6.5**；**`docs/spec/00-文档索引.md`** **07/110**；**本索引一览 239 / 本节**
+- **任务（摘要）**：**每** **PR/push** **`main`** **在** **anchor** **门禁** **通过后** **同** **job** **内** **离线** **汇编** **并** **校验** **bundle**；**产物** **入** **`indexer-reconcile-evidence`** **artifact**。
+- **边界**：**不** **增加** **`check_anchor`**（**`checks_total`****`125`** **不变**）；**不** **改** **`write-indexer-evidence-bundle-canonical.sh`** **汇编语义**（**仅** **fixture** **+** **workflow**）。
+- **验收**：**本地** **复现** **workflow** **shell** **块** **绿**（**见** **YAML**）；**`bash scripts/check-07-version-triple.sh`** **绿**
+- **测试**：—（**CI** **与** **fixture** **字节** **为** **主** **回归**）
+
+### TT-B223-14-REGIONVAULT-COUNTRY-LEDGER-READ-MODEL-V1-001
+
+- **阶段**：api / **14 §1.1.1 · RegionVault** · **投影只读 Σ**（**母表 B-223**；**与** **P5-1** **`country_ledger_ssot_v0`** **正交**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-223**
+- **封口批已落**：**`crates/api/src/region_vault_country_ledger_map.rs`**、**`crates/api/src/db/region_vault_country_ledger_read.rs`**、**`crates/api/src/routes/admin/region_vault_country_ledger_read.rs`**、**`crates/api/src/routes/internal/region_vault_country_ledger_read.rs`**、**`config/region_vault_country_ledger_map.template.json`**、**`.env.example`**、**`docs/spec/04-后端与API.md`**（**§3.5** **表行** + **内部 API** **长段** + **`meta.build`** **枚举** + **§四** **迁移消费**）；**`read_contract_route_guard`** **注册表**；**本索引一览 240 / 本节**
+- **任务（摘要）**：**不改合约**；**`fetch_region_vault_for_aggregate`** **同源行** **按** **`to_address`** **映射** **辖区** **后** **uint256 Σ**；**无映射** **时** **`unassigned.by_recipient`** **承载** **全部**。
+- **边界**：**不** **写** **`fee_router_routed_events`**；**不** **冒充** **`governance/pool`** **链上 SSOT**（**根级** **禁** **B110** **键** **断言** **沿用** **`economic_aggregate`**）。
+- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
+- **测试**：**`cargo test -p traveltrust-api`**
+
+### TT-B224-14-REGIONVAULT-LEDGER-SNAPSHOT-EXPLAIN-EXPORT-001
+
+- **阶段**：api / **14 §1.1.1 · RegionVault** · **B-223 Σ 附件 + snapshot explain**（**母表 B-224**；**对齐** **B-208** **export** **形态**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-224**
+- **封口批已落**：**`crates/api/src/db/region_vault_country_ledger_read.rs`**（**`region_vault_country_ledger_read_model_export_csv`**、**`RV_COUNTRY_LEDGER_EXPORT_*`**）；**`crates/api/src/routes/admin/region_vault_country_ledger_read_export.rs`**、**`crates/api/src/routes/internal/region_vault_country_ledger_read_export.rs`**、**`crates/api/src/routes/admin/mod.rs`**、**`crates/api/src/routes/internal/mod.rs`**、**`crates/api/src/routes/admin/region_vault.rs`**（**`region_share_snapshot_line_row_to_json`** **`pub(crate)`**）；**`crates/api/src/routes/admin/audit_read.rs`**（**`ADMIN_AUDIT_ACTION_CODES`**）；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`crates/api/src/routes/admin/tests/inc_part_08.rs`**；**`docs/spec/04-后端与API.md`**（**§3.4** **`fee-pool-aggregates`** **互指**、**§3.5** **admin** **表**、**内部 API** **长段**、**`meta.build`**、**§四** **消费**）；**本索引一览 241 / 本节**
+- **任务（摘要）**：**`GET …/admin|internal/region-vault/country-ledger-read-model/export`**；**`format=csv|json`**、**`include_snapshot_explain`** **语义** **同** **B-208**；**`json`** **根级** **`country_ledger_read_model`** **嵌** **B-223** **体**。
+- **边界**：**不** **改合约**；**不** **将** **`region_share_snapshot_lines_explain`** **升格** **为** **governance/pool** **SSOT**（**B110-SSOT-07**）。
+- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
+- **测试**：**`cargo test -p traveltrust-api`**
+
+### TT-B225-14-REGIONVAULT-SNAPSHOT-CLAIM-READINESS-GATE-001
+
+- **阶段**：api / **14 §1.1.1 · RegionVault** · **snapshot × ledger claim 就绪门禁**（**母表 B-225**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-225**
+- **封口批已落**：**`crates/api/src/db/region_vault_snapshot_claim_readiness.rs`**；**`crates/api/src/routes/admin/region_vault_snapshot_claim_readiness.rs`**、**`crates/api/src/routes/internal/region_vault_snapshot_claim_readiness.rs`**；**`crates/api/src/routes/admin/mod.rs`**、**`crates/api/src/routes/internal/mod.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`**（**§3.5**、**内部 API** **长段**、**`meta.build`**、**附录** **RegionVault** **行**）；**本索引一览 242 / 本节**
+- **任务（摘要）**：**`GET …/admin|internal/region-vault/snapshot-claim-readiness`**；**`items[]`**** **`readiness=ready|blocked`** **+** **`reasons[]`**；**query** **`chain_id?`****/**`jurisdiction?`****/**`snapshot_epoch?`**。
+- **边界**：**只读**；**非** **链上** **claim** **可执行** **SSOT**。
+- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
+- **测试**：**`cargo test -p traveltrust-api`**
+
+### TT-B226-14-REGIONVAULT-CLAIM-DRYRUN-PAYLOAD-001
+
+- **阶段**：api / **14 §1.1.1 · RegionVault** · **B-225 ready 轮次 claim dry-run**（**母表 B-226**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-226**
+- **封口批已落**：**`crates/api/src/db/region_vault_snapshot_claim_dryrun.rs`**；**`crates/api/src/routes/admin/region_vault_snapshot_claim_dryrun.rs`**、**`crates/api/src/routes/internal/region_vault_snapshot_claim_dryrun.rs`**；**`crates/api/src/routes/admin/mod.rs`**、**`crates/api/src/routes/internal/mod.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`**；**本索引一览 243 / 本节**
+- **任务（摘要）**：**`GET …/admin|internal/region-vault/snapshot-claim-dryrun-payload(/export)`**；**`rounds[]`**** **`tokens[]`****+****`lines[]`** **pro_rata** **同形** **B-086**。
+- **边界**：**只读**；**不** **广播** **上链**。
+- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
+- **测试**：**`cargo test -p traveltrust-api`**
+
+### TT-B227-14-REGIONVAULT-CLAIM-BATCH-PLAN-EXPORT-001
+
+- **阶段**：api / **14 §1.1.1 · RegionVault** · **B-226 dryrun → 批次计划**（**母表 B-227**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-227**
+- **封口批已落**：**`crates/api/src/db/region_vault_claim_batch_plan.rs`**；**`crates/api/src/routes/admin/region_vault_claim_batch_plan.rs`**、**`crates/api/src/routes/internal/region_vault_claim_batch_plan.rs`**；**`crates/api/src/db/mod.rs`**；**`crates/api/src/routes/admin/mod.rs`**、**`crates/api/src/routes/internal/mod.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`**；**本索引一览 244 / 本节**
+- **任务（摘要）**：**`GET …/admin|internal/region-vault/snapshot-claim-batch-plan(/export)`**；**`batches[]`**** **键** **`(jurisdiction, snapshot_epoch)`**；**`chain_executions[]`**** **升序** **`chain_id`**。
+- **边界**：**只读**；**不** **上链**；**不** **改** **SSOT**。
+- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
+- **测试**：**`cargo test -p traveltrust-api`**
+
+### TT-B228-14-REGIONVAULT-CLAIM-EXECUTION-EVIDENCE-STUB-001
+
+- **阶段**：api / **14 §1.1.1 · RegionVault** · **B-227 batch plan → 执行证据壳（占位字段）**（**母表 B-228**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-228**
+- **封口批已落**：**`crates/api/src/db/region_vault_claim_execution_evidence_stub.rs`**；**`crates/api/src/routes/admin/region_vault_claim_execution_evidence_stub.rs`**、**`crates/api/src/routes/internal/region_vault_claim_execution_evidence_stub.rs`**；**`crates/api/src/db/mod.rs`**；**`crates/api/src/routes/admin/mod.rs`**、**`crates/api/src/routes/internal/mod.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`**；**本索引一览 245 / 本节**
+- **任务（摘要）**：**`GET …/admin|internal/region-vault/snapshot-claim-execution-evidence-stub(/export)`**；**`claim_execution_evidence_plan_id`**（**稳定** **SHA256**）；**`batch_summary`****+****`execution_evidence_stub`****（** **`tx_hash`****/**`status`****/**`block_number`****/**`log_index`** **预留**）**。
+- **边界**：**只读**；**不** **发交易**；**不** **写** **链上** **证据**（**stub** **仅** **定型** **字段**）。
+- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
+- **测试**：**`cargo test -p traveltrust-api`**
+
+### TT-B229-14-REGIONVAULT-CLAIM-EXECUTION-STATUS-IMPORT-READMODEL-001
+
+- **阶段**：api / **14 §1.1.1 · RegionVault** · **B-228 stub + 外部导入执行状态只读合并**（**母表 B-229**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-229**
+- **封口批已落**：**`crates/api/src/region_vault_claim_execution_status_import.rs`**；**`crates/api/src/db/region_vault_claim_execution_status_read_model.rs`**；**`crates/api/src/db/mod.rs`**；**`crates/api/src/main.rs`**；**`crates/api/src/state/mod.rs`**、**`crates/api/src/startup/run.rs`**；**`crates/api/src/routes/admin/region_vault_claim_execution_status_read_model.rs`**、**`crates/api/src/routes/internal/region_vault_claim_execution_status_read_model.rs`**；**`crates/api/src/routes/admin/mod.rs`**、**`crates/api/src/routes/internal/mod.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`**；**`.env.example`**；**本索引一览 246 / 本节**
+- **任务（摘要）**：**`GET …/admin|internal/region-vault/snapshot-claim-execution-status-read-model(/export)`**；**可选** **`REGION_VAULT_CLAIM_EXECUTION_STATUS_IMPORT_PATH`**；**`execution_status_read_model`**** **+** **`data_sources.execution_status_import`**。
+- **边界**：**只读**；**不** **上链**；**不** **RPC** **验导入** **真伪**。
+- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
+- **测试**：**`cargo test -p traveltrust-api`**
+
+### TT-B230-14-REGIONVAULT-CLAIM-EXECUTION-RECONCILE-REPORT-001
+
+- **阶段**：api / **14 §1.1.1 · RegionVault** · **B-226～B-229 合成 reconcile（expected/executed/delta）**（**母表 B-230**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-230**
+- **封口批已落**：**`crates/api/src/db/region_vault_claim_execution_reconcile_report.rs`**；**`crates/api/src/db/mod.rs`**；**`crates/api/src/routes/admin/region_vault_claim_execution_reconcile_report.rs`**、**`crates/api/src/routes/internal/region_vault_claim_execution_reconcile_report.rs`**；**`crates/api/src/routes/admin/mod.rs`**、**`crates/api/src/routes/internal/mod.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`**；**本索引一览 247 / 本节**
+- **任务（摘要）**：**`GET …/admin|internal/region-vault/snapshot-claim-execution-reconcile-report(/export)`**；**`reconcile_summary`**** **+** **`batches[]`**** **`expected`****/**`executed`****/**`delta`**。
+- **边界**：**只读**；**不** **上链**；**不** **RPC** **验** **导入** **或** **金额**。
+- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
+- **测试**：**`cargo test -p traveltrust-api`**
+
+### TT-B231-14-REGIONVAULT-CLAIM-GO-NO-GO-GATE-READONLY-001
+
+- **阶段**：api / **14 §1.1.1 · RegionVault** · **B-230 + B-225 只读 GO/NO-GO 门禁摘要**（**母表 B-231**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-231**
+- **封口批已落**：**`crates/api/src/db/region_vault_claim_go_no_go_gate_readonly.rs`**；**`crates/api/src/db/mod.rs`**；**`crates/api/src/routes/admin/region_vault_claim_go_no_go_gate_readonly.rs`**、**`crates/api/src/routes/internal/region_vault_claim_go_no_go_gate_readonly.rs`**；**`crates/api/src/routes/admin/mod.rs`**、**`crates/api/src/routes/internal/mod.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`**；**本索引一览 248 / 本节**
+- **任务（摘要）**：**`GET …/admin|internal/region-vault/snapshot-claim-go-no-go-gate(/export)`**；**`gate_summary`****+****`gates[]`**** **`readiness_aggregate`****/**`reconcile_code`****/**`delta_notes`****/**`verdict`****。
+- **边界**：**只读**；**不** **上链**；**不** **执行** **claim**。
+- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
+- **测试**：**`cargo test -p traveltrust-api`**
+
+### TT-B232-14-REGIONVAULT-CLAIM-GO-NO-GO-EVIDENCE-BUNDLE-001
+
+- **阶段**：api / **14 §1.1.1 · RegionVault** · **B-225～B-231 只读 claim 证据包（admin）**（**母表 B-232**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-232**
+- **封口批已落**：**`crates/api/src/db/region_vault_claim_go_no_go_evidence_bundle.rs`**；**`crates/api/src/db/mod.rs`**；**`crates/api/src/routes/admin/region_vault_claim_go_no_go_evidence_bundle.rs`**；**`crates/api/src/routes/admin/mod.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`**；**`ops/RUNBOOK.md`** **§2.55**；**本索引一览 249 / 本节**
+- **任务（摘要）**：**`GET …/admin/region-vault/snapshot-claim-go-no-go-evidence-bundle(/export)`**；**`legs`****+****`leg_content_sha256`****+****`bundle_legs_sha256`**；**`format=csv`** **索引** **表**。
+- **边界**：**只读**；**不** **上链**；**不** **执行** **claim**；**无** **internal** **镜像**。
+- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
+- **测试**：**`cargo test -p traveltrust-api`**
+
+### TT-B233-14-REGIONVAULT-CLAIM-EVIDENCE-BUNDLE-RUNBOOK-CI-001
+
+- **阶段**：CI / **14 · RegionVault** · **B-232 证据包离线验收与 artifact**（**母表 B-233**；承 **B-232**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-233**
+- **封口批已落**：**`.github/workflows/build.yml`**（**`Claim GO/NO-GO evidence bundle CI artifact (B-233)`** **步** **+** **`build-backend-evidence`** **路径** **`claim_go_no_go_evidence_bundle_ci/**`**）；**`scripts/verify-claim-go-no-go-evidence-bundle.sh`**；**`scripts/ops/verify-claim-go-no-go-evidence-bundle.py`**（**子命令** **`ci`****/**`live-read`****/**`live-full`**）；**`crates/api/src/db/region_vault_claim_go_no_go_evidence_bundle.rs`** **`claim_go_no_go_evidence_bundle_ci_artifact`**；**`ops/RUNBOOK.md`** **§2.55**；**`docs/spec/04-后端与API.md`** **§3.5** **B-232** **`/export`** **行** **CI** **脚注**；**本索引一览 250 / 本节**
+- **任务（摘要）**：**`TRAVELTRUST_CLAIM_GO_NO_GO_BUNDLE_CI_OUT`** **驱动** **落盘** **`bundle_read.json`****/**`bundle_export.json`****/**`index.csv`****/**`claim_go_no_go_evidence_bundle_ci_summary.json`**；**Python** **`ci`** **复验** **`leg_content_sha256`****/**`bundle_legs_sha256`****/**文件** **SHA256** **与** **summary** **一致**。
+- **边界**：**不** **上链**；**不** **执行** **claim**；**fixture** **为** **最小** **七腿** **形状** **（** **非** **联机** **DB** **快照** **黄金** **文件** **）**。
+- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python3 scripts/ops/verify-claim-go-no-go-evidence-bundle.py ci`** **对** **CI** **产出目录** **绿**
+- **测试**：**`cargo test -p traveltrust-api`** **`claim_go_no_go_evidence_bundle_ci_artifact`**
+
+### TT-B234-14-REGIONVAULT-CLAIM-LIVE-ADMIN-VALIDATION-RUNBOOK-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-232/B-233 联机 admin 验收 Runbook+脚本**（**母表 B-234**；承 **B-232**/**B-233**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-234**
+- **封口批已落**：**`scripts/region-vault-claim-go-no-go-evidence-bundle-live-admin-validate.sh`**；**`scripts/ops/region-vault-claim-go-no-go-evidence-bundle-live-admin-validate.sh`**；**`scripts/ops/verify-claim-go-no-go-evidence-bundle.py`** **`live-read`****/**`live-full`**；**`ops/RUNBOOK.md`** **§2.55**；**`docs/spec/04-后端与API.md`** **§3.5** **B-232** **read** **行** **脚注**；**`scripts/README.md`**；**本索引一览 251 / 本节**
+- **任务（摘要）**：**`ADMIN_BEARER_TOKEN`** **+** **`curl`** **read** **/** **export json** **/** **export csv**；**200**、**export** **`x-traveltrust-reconcile-export-sha256`****=****`sha256(体)`**、**CSV** **8** **行**、**`live_admin_summary.json`**（**锚** **`14-REGIONVAULT-CLAIM-GO-NO-GO-EVIDENCE-BUNDLE-LIVE-ADMIN-V1`**）；**与** **B-233** **同** **哈希** **算法** **对** **`legs`****/**`leg_content_sha256`****/**`bundle_legs_sha256`**。
+- **边界**：**不** **上链**；**不** **执行** **claim**；**不** **绑** **默认** **CI**（**须** **自备** **admin** **环境**）。
+- **验收**：**联机** **`bash scripts/region-vault-claim-go-no-go-evidence-bundle-live-admin-validate.sh`** **exit 0**（**预发** **/** **值班** **环境**）
+- **测试**：—（**本卡** **无** **新增** **Rust** **门禁**；**可选** **本地** **用** **`live-full`** **对** **B-233** **fixture** **目录** **冒烟**）
+
+### TT-B235-14-REGIONVAULT-CLAIM-GO-NO-GO-LIVE-EVIDENCE-ARCHIVE-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-234 联机产物标准归档**（**母表 B-235**；承 **B-232**/**B-233**/**B-234**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-235**
+- **封口批已落**：**`scripts/archive-region-vault-claim-go-no-go-live-evidence.sh`**；**`scripts/ops/archive-region-vault-claim-go-no-go-live-evidence.sh`**；**`archive_manifest.json`**（**含** **`index`****/**`navigation`** **B-236**）**/** **`README.md`** **/** **`ARCHIVE_README.md`** **/** **`artifacts.sha256`**（**根** **三** **文件** **+** **`artifacts/*`**）**/** **`artifacts/*`** **命名** **（** **机读锚** **`14-REGIONVAULT-CLAIM-GO-NO-GO-LIVE-EVIDENCE-ARCHIVE-V1`** **）**；**`scripts/ops/verify-claim-go-no-go-evidence-bundle.py`** **`live-full`** **归档** **后** **复验**；**`ops/RUNBOOK.md`** **§2.55**；**`docs/spec/04-后端与API.md`** **§3.5** **B-232** **行** **脚注**；**`scripts/README.md`**；**本索引一览 252 / 本节**
+- **任务（摘要）**：**一键** **委托** **B-234** **至** **`.staging_b234`** **再** **规范化** **复制** **为** **`artifacts/bundle_read.json`** **等**；**`--finalize-only <b234_dir> <archive_root>`** **不** **curl**；**根** **`artifacts.sha256`** **路径** **前缀** **`artifacts/`** **以便** **归档** **根** **`sha256sum -c`**。
+- **边界**：**不** **上链**；**不** **执行** **claim**；**不** **改** **API** **契约**。
+- **验收**：**`bash scripts/archive-region-vault-claim-go-no-go-live-evidence.sh --finalize-only …`** **或** **联机** **一键** **exit 0**；**归档** **根** **`sha256sum -c artifacts.sha256`** **绿**
+- **测试**：—（**无** **新增** **Rust**；**可选** **`bash -n`** **脚本** **+** **`--finalize-only`** **冒烟**）
+
+### TT-B236-14-REGIONVAULT-CLAIM-LIVE-EVIDENCE-INDEX-README-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-235 归档包统一索引与复核入口**（**母表 B-236**；承 **B-235**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-236**
+- **封口批已落**：**`scripts/ops/archive-region-vault-claim-go-no-go-live-evidence.sh`** **生成** **根** **`README.md`**（**总览**、**manifest** **键** **导航**、**复跑** **命令**）；**`archive_manifest.json`** **`index`****（** **`check_anchor`****=****`14-REGIONVAULT-CLAIM-LIVE-EVIDENCE-INDEX-README-V1`** **）** **与** **`navigation`**；**`artifacts.sha256`** **纳入** **`README.md`****/**`ARCHIVE_README.md`****/**`archive_manifest.json`**；**`ops/RUNBOOK.md`** **§2.55**；**`docs/spec/04-后端与API.md`** **§3.5**；**`scripts/README.md`**；**本索引一览 253 / 本节**
+- **任务（摘要）**：**每次** **联机** **归档** **同构** **审计**：**先** **打开** **`README.md`** → **按** **清单** **跑** **`sha256sum -c`****/**`jq`** **三** **锚** **快检** **→** **`live-full`**。
+- **边界**：**不** **上链**；**不** **执行** **claim**；**不** **单独** **改** **API** **契约**（**指针** **仅** **04** **脚注**）。
+- **验收**：**新** **归档** **含** **`README.md`**；**`sha256sum -c artifacts.sha256`** **绿**；**`README.md`** **内** **`jq`** **三** **`test`** **绿**
+- **测试**：—（**无** **Rust**）
+
+### TT-B237-14-REGIONVAULT-CLAIM-LIVE-EVIDENCE-CI-ARCHIVE-SMOKE-001
+
+- **阶段**：CI / **14 · RegionVault** · **B-235/B-236 归档脚本冒烟**（**母表 B-237**；承 **B-233**/**B-235**/**B-236**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-237**
+- **封口批已落**：**`scripts/ops/claim-go-no-go-bundle-ci-out-to-b234-staging.sh`**；**`scripts/ops/claim_go_no_go_bundle_b234_live_summary_from_env.py`**；**`scripts/ops/region-vault-claim-live-archive-ci-smoke.sh`**；**`scripts/region-vault-claim-live-archive-ci-smoke.sh`**；**`scripts/ops/archive_claim_go_no_go_live_write_manifest.py`**（**B-235** **归档** **写** **manifest**）；**`.github/workflows/build.yml`** **`Claim live evidence archive CI smoke (B-237)`**；**`ops/RUNBOOK.md`** **§2.55**；**`scripts/README.md`**；**本索引一览 254 / 本节**
+- **任务（摘要）**：**`cargo test … claim_go_no_go_evidence_bundle_ci_artifact`****+****`verify … ci`** **之后** **将** **B-233** **目录** **合成** **B-234** **snapshot** **文件名** **并** **`finalize-only`**；**断言** **`README.md`****/**`archive_manifest.json`****/**`artifacts.sha256`** **与** **`index.check_anchor`** **+** **`sha256sum -c`**。
+- **边界**：**不** **curl** **真实** **admin**；**不** **上链**；**不** **执行** **claim**。
+- **验收**：**Build** **job** **该** **步** **绿**；**本地** **同** **命令** **链** **绿**
+- **测试**：—（**无** **新增** **Rust** **用例**；**冒烟** **即** **门禁**）
+
+### TT-B238-14-REGIONVAULT-CLAIM-GO-NO-GO-RELEASE-GATE-READONLY-001
+
+- **阶段**：API / **14 · RegionVault** · **claim GO/NO-GO 发布门禁只读摘要**（**母表 B-238**；承 **B-231～B-237**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-238**
+- **封口批已落**：**`crates/api/src/db/region_vault_claim_go_no_go_release_gate_readonly.rs`**；**`crates/api/src/db/mod.rs`**；**`crates/api/src/routes/admin/region_vault_claim_go_no_go_release_gate_readonly.rs`**；**`crates/api/src/routes/admin/mod.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`** **§3.5**；**`ops/RUNBOOK.md`** **§2.55**；**本索引一览 255 / 本节**
+- **任务（摘要）**：**`build_region_vault_claim_go_no_go_release_gate_readonly_body`** **内** **先** **B-232** **证据包** **再** **派生** **`release_verdict`****（** **`GO`****/**`NO_GO`****/**`NO_OP`** **）** **与** **`blocking_reasons[]`**；**静态** **`required_evidence_checklist`****+****`archive_integrity_checks`** **指向** **B-233～B-237**/**B-240**/**B-241** **运维**/**CI** **（** **API** **不读** **归档** **盘** **）**；**`GET …/admin/region-vault/snapshot-claim-go-no-go-release-gate(/export)`** **JSON+CSV** **附件** **与** **reconcile** **export** **头** **同形**。
+- **边界**：**无** **internal** **镜像**；**不** **上链**；**不** **执行** **claim**；**不** **替代** **B-233～B-237** **脚本** **真值** **（** **清单** **为** **指针** **+** **模板** **）**。
+- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**；**联机** **按** **RUNBOOK** **§2.55** **B-238** **最小** **验收** **（** **200** **+** **export** **SHA256** **头** **+** **verdict** **与** **gate_summary** **一致** **）**
+- **测试**：**`cargo test -p traveltrust-api`** **（** **含** **`region_vault_claim_go_no_go_release_gate_readonly`** **单测** **）**
+
+### TT-B239-14-REGIONVAULT-CLAIM-GO-NO-GO-RELEASE-GATE-LIVE-ARCHIVE-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-238 联机结果 → B-235 同构归档**（**母表 B-239**；承 **B-238**、模板 **B-235～B-237**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-239**
+- **封口批已落**：**`scripts/ops/verify-claim-go-no-go-release-gate.py`**；**`scripts/ops/region-vault-claim-go-no-go-release-gate-live-admin-validate.sh`**；**`scripts/region-vault-claim-go-no-go-release-gate-live-admin-validate.sh`**；**`scripts/ops/archive-region-vault-claim-go-no-go-release-gate-live-evidence.sh`**；**`scripts/archive-region-vault-claim-go-no-go-release-gate-live-evidence.sh`**；**`scripts/ops/archive_claim_go_no_go_release_gate_live_write_manifest.py`**；**`scripts/verify-claim-go-no-go-release-gate.sh`**；**`ops/RUNBOOK.md`** **§2.55**；**`docs/spec/04-后端与API.md`** **§3.5** **B-238** **脚注**；**`scripts/README.md`**；**本索引一览 256 / 本节**
+- **任务（摘要）**：**联机** **拉** **B-238** **read/export** → **`live-read`****/**`live-full`** **（** **CSV** **2** **行** **）** → **`live_admin_summary`** **（** **锚** **`14-REGIONVAULT-CLAIM-GO-NO-GO-RELEASE-GATE-LIVE-ADMIN-V1`** **）**；**`archive-…-release-gate-live-evidence.sh`** **写** **`ARCHIVE_README`****/**`archive_manifest`****（** **`mother_table`****=****`B-239`** **+** **`index.*`**** **B-241** **）****/**`artifacts.sha256`****/**`artifacts/release_gate_read.json`**** **等**；**根** **`README.md`** **索引** **页** **见** **B-241**；**`--finalize-only`** **不** **curl**。
+- **边界**：**不** **上链**；**不** **执行** **claim**；**不** **改** **B-238** **HTTP** **契约**（**本卡** **仅** **脚本** **+** **归档** **模板**）。
+- **验收**：**`bash -n`** **新** **`.sh`** **绿**；**联机** **validate + archive** **exit 0**；**归档** **根** **`sha256sum -c artifacts.sha256`** **绿**
+- **测试**：—（**无** **新增** **Rust**；**Python** **`verify-claim-go-no-go-release-gate.py`** **为** **门禁**）
+
+### TT-B240-14-REGIONVAULT-CLAIM-RELEASE-GATE-CI-ARCHIVE-SMOKE-001
+
+- **阶段**：CI / **14 · RegionVault** · **B-239 归档模板 finalize-only 冒烟**（**母表 B-240**；承 **B-239**、范式 **B-237**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-240**
+- **封口批已落**：**`scripts/ops/claim_go_no_go_release_gate_b240_ci_staging_write.py`**；**`scripts/ops/region-vault-claim-release-gate-archive-ci-smoke.sh`**；**`scripts/region-vault-claim-release-gate-archive-ci-smoke.sh`**；**`.github/workflows/build.yml`** **`Claim release gate archive CI smoke (B-240)`**；**`crates/api/src/db/region_vault_claim_go_no_go_release_gate_readonly.rs`**（**`archive_integrity_checks`**** **`b240_release_gate_archive_smoke_green`** **等**）；**`ops/RUNBOOK.md`** **§2.55**；**`docs/spec/04-后端与API.md`** **§3.5** **B-238**；**`scripts/README.md`**；**本索引一览 257 / 本节**
+- **任务（摘要）**：**确定性** **fixture** **写** **B-239** **validate** **同名** **产物** **→** **`archive-region-vault-claim-go-no-go-release-gate-live-evidence.sh --finalize-only`** **→** **断言** **`README`****/**`archive_manifest.json`****（** **`mother_table`****+****`index.mother_table`****+****`index.tt_id`** **）****/**`artifacts.sha256`** **、****`sha256sum -c`****、****`verify-claim-go-no-go-release-gate.py live-full`** **（** **归档** **`artifacts/`** **三** **文件** **）**。
+- **边界**：**不** **curl**；**不** **上链**；**不** **执行** **claim**；**fixture** **非** **API** **真值** **（** **仅** **模板** **回归** **）**。
+- **验收**：**Build** **job** **该** **步** **绿**；**本地** **`bash scripts/ops/region-vault-claim-release-gate-archive-ci-smoke.sh <empty_archive_dir>`** **exit 0**
+- **测试**：**`cargo test -p traveltrust-api`** **绿**（**B-238** **`archive_integrity_checks`** **diff** **触** **既有** **单测** **路径** **时**）
+
+### TT-B241-14-REGIONVAULT-CLAIM-RELEASE-GATE-LIVE-EVIDENCE-INDEX-README-001
+
+- **阶段**：ops / **14 · RegionVault** · **发布门禁归档 README 索引**（**母表 B-241**；承 **B-239**、**B-240**；范式 **B-236**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-241**
+- **封口批已落**：**`scripts/ops/archive-region-vault-claim-go-no-go-release-gate-live-evidence.sh`**（**`README.md`****+****`ARCHIVE_README.md`** **文案**）；**`scripts/ops/archive_claim_go_no_go_release_gate_live_write_manifest.py`**（**`index.mother_table`****/**`index.tt_id`****/**`index.parity`**）；**`crates/api/src/db/region_vault_claim_go_no_go_release_gate_readonly.rs`**（**`release_gate_archive_index_readme_b241`**）；**`ops/RUNBOOK.md`** **§2.55**；**`docs/spec/04-后端与API.md`** **§3.5** **B-238**；**`docs/任务母表.md`**；**`scripts/README.md`**；**本索引一览 258 / 本节**
+- **任务（摘要）**：**联机** **与** **CI** **两套** **证据** **经** **同一** **`finalize-only`** **路径** **落盘**；**根** **`README.md`** **为** **审计** **首页**（**导航**、**manifest** **键** **说明**、**复跑** **命令** **清单**、**B-239/B-240** **对照**）；**`archive_manifest.json`** **`index.check_anchor`****=****`14-REGIONVAULT-CLAIM-RELEASE-GATE-LIVE-EVIDENCE-INDEX-README-V1`**。
+- **边界**：**不** **改** **B-238** **HTTP** **契约**；**不** **上链**；**不** **执行** **claim**。
+- **验收**：**新** **归档** **`jq`** **快检** **`mother_table`****+****`index.*`** **绿**；**`region-vault-claim-release-gate-archive-ci-smoke.sh`** **绿**；**`cargo test -p traveltrust-api`** **绿**
+- **测试**：**`cargo test -p traveltrust-api`**
+
+### TT-B242-14-REGIONVAULT-CLAIM-RELEASE-GATE-FINAL-GO-REPORT-READONLY-001
+
+- **阶段**：api / **14 · RegionVault** · **发布门禁最终只读 GO 签署视图**（**母表 B-242**；承 **B-238**、**B-239**/**B-241** 归档叙事）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-242**
+- **封口批已落**：**`crates/api/src/db/region_vault_claim_release_gate_final_go_report_readonly.rs`**；**`crates/api/src/routes/admin/region_vault_claim_release_gate_final_go_report_readonly.rs`**；**`crates/api/src/routes/admin/mod.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`docs/spec/04-后端与API.md`** **§3.5**；**`ops/RUNBOOK.md`** **§2.55**；**`docs/任务母表.md`**；**本索引一览 259 / 本节**
+- **任务（摘要）**：**`GET …/snapshot-claim-go-no-go-release-gate-final-go-report`** **嵌** **B-238** **`claim_go_no_go_release_gate`** **+** **`archive_attestation`**（**query** **自** **证** **路径**/**SHA256**）**+** **`derived.review_conclusion_*`****+****`final_publish_view_one_liner`**；**`export`** **JSON/CSV** **（** **CSV** **单行** **签署** **行** **）**。
+- **边界**：**不** **上链**；**不** **执行** **claim**；**无** **internal** **镜像**；**API** **不** **验证** **归档** **文件系统**。
+- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`bash scripts/run-check-04-routes.sh`** **绿**
+- **测试**：**`cargo test -p traveltrust-api`** **`b242_`**
+
+### TT-B248-14-REGIONVAULT-CLAIM-READONLY-PHASE-CLOSE-SUMMARY-001
+
+- **阶段**：docs / **14 · RegionVault** · **Snapshot·Claim 只读链阶段正式封口**（**母表 B-248**；承 **B-223～B-247** 叙事汇总，**非** 吞并实现卡）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-248**
+- **封口批已落**：**[spec/14-附录-RegionVault-Claim-只读链阶段封口-B248.md](./spec/14-附录-RegionVault-Claim-只读链阶段封口-B248.md)**（**机读锚** **`14-REGIONVAULT-CLAIM-READONLY-PHASE-CLOSE-SUMMARY-V1`**）；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1b**；**`docs/任务母表.md`**；**本索引一览 260 / 本节**
+- **任务（摘要）**：**六段闭环表**（**数据→判定→证据→归档→索引→checklist**）**+** **显式不包含**（**写链**、**stub→真** **交易** **SSOT** **等**）**+** **执行链** **须** **另开** **非只读** **母卡** **声明**
+- **边界**：**零** **04** **契约** **/** **合约** **/** **Rust** **本卡** **diff**；**不** **替代** **B-243～B-247** **单卡** **运维** **脚本** **真值**
+- **验收**：**14 §1.1.1.1b** ↔ **附录** **标题** **/** **锚** **/** **B-223～B-247** **表** **互指** **一致**
+- **测试**：—（**纯文档**）
+
+### TT-B249-14-REGIONVAULT-CLAIM-EXECUTION-CHAIN-ENTRY-NONREADONLY-001
+
+- **阶段**：docs / **14 · RegionVault** · **on-chain claim 执行链入口（非只读母卡）**（**母表 B-249**；承 **B-248**、**B-223～B-247** 只读前置；**对读** **B-250～B-261** 彩排 stub **+** **B-262** **JSON-RPC** **广播** **执行** **+** **B-263** **receipt** **链上** **归档** **+** **B-264** **链上** **对账** **JSON** **+** **B-265** **read-model** **与** **`forwarded`** **互证** **+** **B-266** **`14-REGIONVAULT-CLAIM-PRODUCTION-GO-GATE-V1`** **生产** **GO** **闸**）
+- **状态**：**未封口**（**2026-04-14** · **入口叙事已登记**；**B-250～B-261** **只读** **彩排** **已** **封口** **≠** **本** **母卡** **执行** **子域** **封口**；**B-262** **已** **登记** **首条** **`eth_sendRawTransaction`** **运维** **路径** **；** **B-263** **已** **登记** **`14-REGIONVAULT-CLAIM-BROADCAST-RECEIPT-ARCHIVE-V1`** **；** **B-264** **已** **登记** **`14-REGIONVAULT-CLAIM-BROADCAST-ONCHAIN-RECONCILE-V1`** **；** **B-265** **已** **登记** **B-264** **`GO`** **read-model** **+** **`forwarded`** **互证** **；** **B-266** **已** **登记** **`production-go-gate`** **（** **双** **attestation** **+** **`production_verdict`****≠****`GO`** **默认** **exit** **1** **）** **；** **合约** **`claim*`** **定稿** **/** **新** **topic** **/** **新** **写** **HTTP** **等** **仍** **须** **B-267+** **子** **TT**）
+- **母表**：[任务母表.md](./任务母表.md) **B-249**
+- **封口批已落（本开卡批）**：**[spec/14-附录-RegionVault-Claim-执行链入口-B249.md](./spec/14-附录-RegionVault-Claim-执行链入口-B249.md)**（**机读锚** **`14-REGIONVAULT-CLAIM-EXECUTION-CHAIN-ENTRY-NONREADONLY-V1`**）；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1c**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5** **B-249** **段**；**`docs/任务母表.md`**；**本索引一览 261 / 本节**
+- **本轮续（2026-04-14 · TT-B249 执行）**：**附录** **§1** **表** **增** **「** **彩排** **（** **只读** **）** **」** **行** **、** **「** **新开** **」** **改为** **「** **新开** **（** **真** **执行** **）** **」** **并** **钉** **B-262/B-263/B-264/B-265/B-266** **及** **余** **量** **B-267+** **；** **§7** **首段** **补** **下一** **真** **门槛** **清单** **；** **14** **§1.1.1.1c** **/** **04** **B-249** **段** **/** **母表** **B-249** **行** **与** **上** **述** **一致** **；** **仍** **无** **07** **/** **00** **百分比** **改动**
+- **任务（摘要）**：**从** **B-248** **切入** **执行链** **的** **边界**（**合约** **Target** **/** **只读** **API** **/** **B-238/B-242** **/** **indexer** **）**、**权限**（**链上** **签名** **主体** **/** **链下** **代播** **与** **70 RBAC** **/** **运维** **CLI** **）**、**交易形态** **原则**（**A** **合约** **claim** **/** **B** **编排** **转账** **/** **C** **治理** **包裹** **——** **具体** **selector** **子** **TT** **钉** **）**、**风险**（**资金**、**幂等**、**reorg**、**密钥**、**观测**）
+- **边界**：**本** **TT** **不** **实现** **写链** **/** **不** **新增** **04** **HTTP** **行**（**除非** **另** **开** **子** **TT** **同批**）；**不** **修改** **B-223～B-248** **只读** **语义**
+- **验收**：**附录** ↔ **14 §1.1.1.1c** ↔ **04 §3.5** **B-249** **段** ↔ **母表** **B-249** **一致**（**含** **B-250～B-266** **与** **B-267+** **指针** **2026-04-14** **同批**）
+- **测试**：—（**纯文档**）
+
+### TT-B250-14-REGIONVAULT-CLAIM-EXECUTION-DRYRUN-CLI-V1-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-226 dryrun JSON → 拟执行交易 manifest（只读）**（**母表 B-250**；承 **B-226/B-227**；对读 **B-249**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-250**
+- **封口批已落**：**`scripts/ops/region_vault_claim_execution_dryrun_cli.py`**；**`scripts/region-vault-claim-execution-dryrun-cli.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1d**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5** **B-250**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 262 / 本节**
+- **任务（摘要）**：**`build <dryrun.json>`** **输出** **`rule_version`****=****`region_vault_claim_execution_dryrun_cli_manifest_v1`**、**`anchor`****=****`14-REGIONVAULT-CLAIM-EXECUTION-DRYRUN-CLI-MANIFEST-V1`**；**`batches[]`**** **`batch_plan_id`** **同** **B-227**；**`proposed_transactions[]`** **每** **行** **对应** **一** **笔** **`erc20_transfer_placeholder`**（**`--vault-from`** **可选** **`from_address`**）**；** **默认** **叠** **B-251** **`signing_plan_stub`** **+** **B-252** **`signing_artifact_stub`**（**`--omit-signing-plan-stub`****/** **`--omit-signing-artifact-stub`** **）**
+- **边界**：**不** **签名**、**不** **广播**、**不** **新增** **HTTP** **路由**
+- **验收**：**`python scripts/ops/region_vault_claim_execution_dryrun_cli.py self-test`** **exit 0**
+- **测试**：**`python scripts/ops/region_vault_claim_execution_dryrun_cli.py self-test`**
+
+### TT-B251-14-REGIONVAULT-CLAIM-EXECUTION-SIGNING-PLAN-STUB-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-250 manifest 上叠加只读签名计划壳**（**母表 B-251**；承 **B-250**、对读 **B-249**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-251**
+- **封口批已落**：**`scripts/ops/region_vault_claim_execution_dryrun_cli.py`**（**`signing_plan_stub`****/** **`signing_plan_batch_stub`****/** **逐** **tx** **`signing_plan_stub`**）；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1e**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-251**；**本索引一览 263 / 本节**
+- **任务（摘要）**：**根** **`14-REGIONVAULT-CLAIM-EXECUTION-SIGNING-PLAN-STUB-V1`** **+** **`root_plan_id`****+****`batch_plan_ids_fingerprint_sha256_hex`**；**批** **`plan_id`****/** **`signer_role`****/** **`nonce_strategy`****/** **`gas_policy`****/** **`signing_order_policy`**；**笔** **`plan_id`****/** **`signing_order`**** **等**；**默认** **叠** **B-252** **`signing_artifact_stub`**（**`--omit-signing-artifact-stub`** **/** **`--omit-signing-plan-stub`** **）**
+- **边界**：**不** **签名**、**不** **广播**、**不** **新** **HTTP**
+- **验收**：**`python scripts/ops/region_vault_claim_execution_dryrun_cli.py self-test`**
+- **测试**：**`python scripts/ops/region_vault_claim_execution_dryrun_cli.py self-test`**
+
+### TT-B252-14-REGIONVAULT-CLAIM-EXECUTION-SIGNING-ARTIFACT-STUB-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-251 上每批签名产物壳 + 逐 tx 回填绑键**（**母表 B-252**；承 **B-251**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-252**
+- **封口批已落**：**`scripts/ops/region_vault_claim_execution_dryrun_cli.py`**（**`signing_artifact_stub`****/** **`signing_artifact_tx_stub`**）；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1f**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-252**；**本索引一览 264 / 本节**
+- **任务（摘要）**：**`digest_sha256_hex`****、****`fields_pending_signature`****、****`signature_slots`****、****`backfill_slots`****、****`artifact_id`** **（** **每** **批** **）**；**逐** **tx** **`signing_artifact_tx_stub`**
+- **边界**：**不** **写** **真实** **sig**、**不** **广播**
+- **验收**：**`python scripts/ops/region_vault_claim_execution_dryrun_cli.py self-test`**
+- **测试**：**`python scripts/ops/region_vault_claim_execution_dryrun_cli.py self-test`**
+
+### TT-B253-14-REGIONVAULT-CLAIM-EXECUTION-SIGNING-OFFLINE-PACKAGE-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-252 manifest → 离线签名包目录树（只读）**（**母表 B-253**；承 **B-252**、对读 **B-249**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-253**
+- **封口批已落**：**`scripts/ops/region_vault_claim_signing_offline_package.py`**（**`write`****/** **`self-test`**）；**`scripts/region-vault-claim-signing-offline-package.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1g**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-253**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 265 / 本节**
+- **任务（摘要）**：**输入** **须** **含** **根** **与** **每** **批** **`signing_artifact_stub`** **（** **勿** **`--omit-signing-artifact-stub`** **）** **的** **manifest**；**输出** **`batches/<safe_batch_id>/`****（** **`batch_digest.sha256`****、****`fields_pending_signature.json`****、****`signature_slots.json`****、****`backfill_template.json`****、****`batch_index.json`** **）****+** **`offline_signing_package_manifest.json`****+** **`artifacts.sha256`****+** **`README.md`**** **（** **`handoff.to_signer`****/**`from_signer`** **）**
+- **边界**：**不** **签名**、**不** **广播**、**不** **新** **HTTP**
+- **验收**：**`python scripts/ops/region_vault_claim_signing_offline_package.py self-test`**
+- **测试**：**`python scripts/ops/region_vault_claim_signing_offline_package.py self-test`**
+
+### TT-B254-14-REGIONVAULT-CLAIM-SIGNED-BACKFILL-STUB-IMPORT-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-253 签回 → 只读导入壳（对齐 B-252 artifact）**（**母表 B-254**；承 **B-252/B-253**、对读 **B-249**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-254**
+- **封口批已落**：**`scripts/ops/region_vault_claim_signed_backfill_stub_import.py`**（**`import-stub`****/** **`self-test`**）；**`scripts/region-vault-claim-signed-backfill-stub-import.sh`**；**B-253** **`artifacts.sha256`**** **终稿** **重算** **（** **与** **`offline_signing_package_manifest.json`**** **终** **写** **一致** **）**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1h**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-254**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 266 / 本节**
+- **任务（摘要）**：**`import-stub <source_manifest.json> <package_dir> <returned_dir> -o out.json`** **+** **可选** **`--verify-b253-artifacts-sha256`**** **`--require-nonempty-backfill`**** **→** **`14-REGIONVAULT-CLAIM-SIGNED-BACKFILL-STUB-IMPORT-V1`**
+- **边界**：**不** **广播**、**不** **上链**、**不** **新** **HTTP**
+- **验收**：**`python scripts/ops/region_vault_claim_signed_backfill_stub_import.py self-test`**
+- **测试**：**`python scripts/ops/region_vault_claim_signed_backfill_stub_import.py self-test`**
+
+### TT-B255-14-REGIONVAULT-CLAIM-SIGNED-BACKFILL-RECONCILE-STUB-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-254 import_stub 与 manifest+B-253 包逐批对账（只读）**（**母表 B-255**；承 **B-252～B-254**、对读 **B-249**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-255**
+- **封口批已落**：**`scripts/ops/region_vault_claim_signed_backfill_reconcile_stub.py`**（**`reconcile-stub`****/** **`self-test`**）；**`scripts/region-vault-claim-signed-backfill-reconcile-stub.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1i**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-255**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 267 / 本节**
+- **任务（摘要）**：**`reconcile-stub <import_stub.json> <source_manifest.json> <package_dir> [--returned-dir …] -o out.json [--verify-b253-artifacts-sha256]`** **→** **`gaps[]`****、****`blocking_reasons`****、****`reconcile_verdict_preview`****（** **`GO`****/**`NO_GO`**** **）** **；** **仍** **不** **广播**
+- **边界**：**不** **上链**、**不** **新** **HTTP**
+- **验收**：**`python scripts/ops/region_vault_claim_signed_backfill_reconcile_stub.py self-test`**
+- **测试**：**`python scripts/ops/region_vault_claim_signed_backfill_reconcile_stub.py self-test`**
+
+### TT-B256-14-REGIONVAULT-CLAIM-BROADCAST-REQUEST-STUB-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-255 GO → 可广播请求只读壳（最后一层入口）**（**母表 B-256**；承 **B-252～B-255**、对读 **B-249**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-256**
+- **封口批已落**：**`scripts/ops/region_vault_claim_broadcast_request_stub.py`**（**`broadcast-request-stub`****/** **`self-test`**）；**`scripts/region-vault-claim-broadcast-request-stub.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1j**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-256**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 268 / 本节**
+- **任务（摘要）**：**`broadcast-request-stub <reconcile_stub.json> <import_stub.json> <source_manifest.json> -o out.json [--allow-non-go]`** **→** **`broadcast_sequence`****+** **`operator_confirmation`****+** **`tx_hash`**** **回填** **位**
+- **边界**：**不** **广播**、**不** **上链**、**不** **新** **HTTP**
+- **验收**：**`python scripts/ops/region_vault_claim_broadcast_request_stub.py self-test`**
+- **测试**：**`python scripts/ops/region_vault_claim_broadcast_request_stub.py self-test`**
+
+### TT-B257-14-REGIONVAULT-CLAIM-BROADCAST-DRYRUN-REHEARSAL-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-256 stub → 广播前排练只读校验**（**母表 B-257**；承 **B-256**、对读 **B-249**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-257**
+- **封口批已落**：**`scripts/ops/region_vault_claim_broadcast_dryrun_rehearsal.py`**（**`rehearsal-dryrun`****/** **`self-test`**）；**`scripts/region-vault-claim-broadcast-dryrun-rehearsal.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1k**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-257**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 269 / 本节**
+- **任务（摘要）**：**`rehearsal-dryrun <broadcast_request_stub.json> [--source-manifest …] [-o report.json] [--skip-operator-confirmation]`** **—** **序** **/** **前置** **/** **`operator_confirmation`** **/** **`tx_hash`**** **槽** **映射** **；** **仍** **不** **RPC** **不** **上链**
+- **边界**：**不** **广播**、**不** **新** **HTTP**
+- **验收**：**`python scripts/ops/region_vault_claim_broadcast_dryrun_rehearsal.py self-test`**
+- **测试**：**`python scripts/ops/region_vault_claim_broadcast_dryrun_rehearsal.py self-test`**
+
+### TT-B258-14-REGIONVAULT-CLAIM-BROADCAST-LIVE-ADMIN-GATE-STUB-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-257 报告 + B-256 stub → 临广播前人工闸口只读壳**（**母表 B-258**；承 **B-257**、对读 **B-249**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-258**
+- **封口批已落**：**`scripts/ops/region_vault_claim_broadcast_live_admin_gate_stub.py`**（**`gate-stub`****/** **`self-test`**）；**`scripts/region-vault-claim-broadcast-live-admin-gate-stub.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1l**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-258**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 270 / 本节**
+- **任务（摘要）**：**`gate-stub <broadcast_request_stub.json> <rehearsal_report.json> [--source-manifest …] [-o gate_stub.json]`** **→** **`operator_sign_off`****+** **`gate_verdict_preview`****+** **`no_go_blocking_reasons`** **；** **`NO_GO`** **→** **exit** **1**
+- **边界**：**不** **广播**、**不** **新** **HTTP**
+- **验收**：**`python scripts/ops/region_vault_claim_broadcast_live_admin_gate_stub.py self-test`**
+- **测试**：**`python scripts/ops/region_vault_claim_broadcast_live_admin_gate_stub.py self-test`**
+
+### TT-B259-14-REGIONVAULT-CLAIM-BROADCAST-EVIDENCE-STUB-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-256～B-258 → 待广播证据壳只读归档**（**母表 B-259**；承 **B-256～B-258**、对读 **B-249**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-259**
+- **封口批已落**：**`scripts/ops/region_vault_claim_broadcast_evidence_stub.py`**（**`evidence-stub`****/** **`self-test`**）；**`scripts/region-vault-claim-broadcast-evidence-stub.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1m**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-259**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 271 / 本节**
+- **任务（摘要）**：**`evidence-stub <stub> <rehearsal> <gate> [-o out] [--allow-non-go-evidence]`** **→** **`request_summary`****+** **`rehearsal_conclusion`****+** **`live_admin_gate`****+** **`broadcast_evidence_slot_rows`**** **；** **`evidence_archive_verdict_preview`**** **非** **`GO`** **默认** **exit** **1**
+- **边界**：**不** **广播**、**不** **新** **HTTP**
+- **验收**：**`python scripts/ops/region_vault_claim_broadcast_evidence_stub.py self-test`**
+- **测试**：**`python scripts/ops/region_vault_claim_broadcast_evidence_stub.py self-test`**
+
+### TT-B260-14-REGIONVAULT-CLAIM-BROADCAST-RESULT-IMPORT-STUB-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-259 evidence + 链下 returned JSON → 结果导入只读壳**（**母表 B-260**；承 **B-259**、对读 **B-249**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-260**
+- **封口批已落**：**`scripts/ops/region_vault_claim_broadcast_result_import_stub.py`**（**`import-result-stub`****/** **`self-test`**）；**`scripts/region-vault-claim-broadcast-result-import-stub.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1n**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-260**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 272 / 本节**
+- **任务（摘要）**：**`import-result-stub <evidence_stub.json> [--returned-results-dir …] -o out.json [--allow-partial-import]`** **→** **`import_preview_verdict`****+** **`slot_alignment_rows`****+** **回填** **SHA**
+- **边界**：**不** **RPC**、**不** **新** **HTTP**
+- **验收**：**`python scripts/ops/region_vault_claim_broadcast_result_import_stub.py self-test`**
+- **测试**：**`python scripts/ops/region_vault_claim_broadcast_result_import_stub.py self-test`**
+
+### TT-B261-14-REGIONVAULT-CLAIM-BROADCAST-RESULT-RECONCILE-STUB-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-260 result_import → 广播结果对账只读壳**（**母表 B-261**；承 **B-260**、对读 **B-249**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-261**
+- **封口批已落**：**`scripts/ops/region_vault_claim_broadcast_result_reconcile_stub.py`**（**`reconcile-result-stub`****/** **`self-test`**）；**`scripts/region-vault-claim-broadcast-result-reconcile-stub.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1o**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-261**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 273 / 本节**
+- **任务（摘要）**：**`reconcile-result-stub <result_import_stub.json> -o out.json [--allow-non-go-reconcile] [--strict-tx-hash-len] [--no-require-import-go]`** **→** **`reconcile_verdict_preview`****+** **`blocking_reasons`****+** **`reconcile_slot_rows`**
+- **边界**：**不** **RPC**、**不** **广播**、**不** **上链**
+- **验收**：**`python scripts/ops/region_vault_claim_broadcast_result_reconcile_stub.py self-test`**
+- **测试**：**`python scripts/ops/region_vault_claim_broadcast_result_reconcile_stub.py self-test`**
+
+### TT-B262-14-REGIONVAULT-CLAIM-BROADCAST-EXECUTION-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-256 broadcast_request_stub → JSON-RPC 顺序广播与执行报告**（**母表 B-262**；承 **B-256**、**B-257**；对读 **B-249**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-262**
+- **封口批已落**：**`scripts/ops/region_vault_claim_broadcast_execute.py`**（**`execute`****/** **`self-test`**）；**`scripts/region-vault-claim-broadcast-execute.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1p**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-262**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 274 / 本节**
+- **任务（摘要）**：**`execute <stub.json> -o report.json`** **内** **嵌** **`run_rehearsal`** **→** **`eth_sendRawTransaction`**** **×** **`global_broadcast_sequence`**** **→** **可选** **`eth_getTransactionReceipt`**** **；** **`CHAIN_RPC_URL`**** **/** **`--rpc-url`** **；** **`--dry-run`** **；** **主网** **ack** **`TRAVELTRUST_BROADCAST_EXECUTE_ACK_MAINNET=1`**
+- **边界**：**不** **新增** **04** **HTTP** **路由** **；** **不** **替代** **B-259～B-261** **链下** **结果** **对账** **壳**
+- **验收**：**`PYTHONPATH=scripts/ops python scripts/ops/region_vault_claim_broadcast_execute.py self-test`** **exit** **0**
+- **测试**：**同上** **self-test**
+
+### TT-B263-14-REGIONVAULT-CLAIM-BROADCAST-RECEIPT-ARCHIVE-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-262 execution_report → receipt 链上归档**（**母表 B-263**；承 **B-262**；对读 **B-249**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-263**
+- **封口批已落**：**`scripts/ops/region_vault_claim_broadcast_receipt_archive.py`**（**`archive-receipts`****/** **`self-test`**）；**`scripts/region-vault-claim-broadcast-receipt-archive.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1q**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-263**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 275 / 本节**
+- **任务（摘要）**：**`archive-receipts <execution_report.json> -o receipt_archive.json`** **按** **步** **`tx_hash`** **`eth_getTransactionReceipt`** **→** **`14-REGIONVAULT-CLAIM-BROADCAST-RECEIPT-ARCHIVE-V1`** **（** **`archive_rows`****、****`receipt_archive_canonical_sha256_hex`** **）** **；** **`--strict-chain-id`** **；** **主网** **ack** **同** **B-262**
+- **边界**：**不** **新增** **04** **HTTP** **路由** **；** **单一** **链上** **receipt** **证据** **源** **供** **后续** **reconcile** **/** **索引** **升格**
+- **验收**：**`PYTHONPATH=scripts/ops python scripts/ops/region_vault_claim_broadcast_receipt_archive.py self-test`** **exit** **0**
+- **测试**：**同上** **self-test**
+
+### TT-B264-14-REGIONVAULT-CLAIM-BROADCAST-RESULT-RECONCILE-ONCHAIN-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-262 execution_report + B-263 receipt_archive → 只读链上对账 JSON**（**母表 B-264**；承 **B-262**、**B-263**；对读 **B-249**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-264**
+- **封口批已落**：**`scripts/ops/region_vault_claim_broadcast_onchain_reconcile.py`**（**`reconcile-onchain`****/** **`self-test`**）；**`scripts/region-vault-claim-broadcast-onchain-reconcile.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1r**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-264**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 276 / 本节**
+- **任务（摘要）**：**`reconcile-onchain <execution_report.json> <receipt_archive.json> -o onchain_reconcile.json`** **校验** **SHA** **链接** **与** **逐步** **`tx_hash`****/** **`status`****/** **`block_number`****/** **序** **；** **`reconcile_verdict`****+****`blocking_reasons`****+****`--allow-non-go-reconcile`**
+- **边界**：**不** **RPC**、**不** **新增** **HTTP**、**不** **改** **合约**
+- **验收**：**`PYTHONPATH=scripts/ops python scripts/ops/region_vault_claim_broadcast_onchain_reconcile.py self-test`** **exit** **0**
+- **测试**：**同上** **self-test**
+
+### TT-B265-14-REGIONVAULT-CLAIM-INDEXER-UPLIFT-ONCHAIN-001
+
+- **阶段**：api / **14 · RegionVault** · **B-264 `GO` onchain_reconcile.json → execution_status_read_model + region_vault_forwarded_events 只读互证**（**母表 B-265**；承 **B-264**、**B-229**；对读 **B-249**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-265**
+- **封口批已落**：**`crates/api/src/region_vault_claim_onchain_reconcile_import.rs`**；**`crates/api/src/db/region_vault_claim_execution_status_read_model.rs`**；**`crates/api/src/db/region_vault_events.rs`**（**`region_vault_forwarded_first_row_for_chain_tx`**）；**`crates/api/src/main.rs`** **/** **`state/mod.rs`** **/** **`startup/run.rs`** **/** **admin-internal** **claim** **快照** **装配**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1s**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-265**；**`.env.example`** **`REGION_VAULT_CLAIM_ONCHAIN_RECONCILE_IMPORT_PATH`**；**本索引一览 277 / 本节**
+- **任务（摘要）**：**`REGION_VAULT_CLAIM_ONCHAIN_RECONCILE_IMPORT_PATH`** **可选** **加载** **`14-REGIONVAULT-CLAIM-BROADCAST-ONCHAIN-RECONCILE-V1`** **且** **`reconcile_verdict`****=****`GO`** **时** **按** **`batch_plan_id`** **合并** **`reconcile_rows[]`** **；** **`chain_id`****+** **DB** **时** **`region_vault_forwarded_events`** **首** **行** **→** **`b265_indexer_uplift`****；** **B-230～B-242** **同源** **builder** **参数** **继承**
+- **边界**：**不** **新增** **公开** **前端** **路由** **；** **不** **新增** **04** **HTTP** **路径** **；** **不** **改** **合约**
+- **验收**：**`cargo test -p traveltrust-api`** **绿**
+- **测试**：**`cargo test -p traveltrust-api`**
+
+### TT-B266-14-REGIONVAULT-CLAIM-PRODUCTION-GO-GATE-001
+
+- **阶段**：ops / **14 · RegionVault** · **B-263 receipt + B-264 onchain + B-265 证据面 → `14-REGIONVAULT-CLAIM-PRODUCTION-GO-GATE-V1` 生产 GO 闸**（**母表 B-266**；承 **B-263**/**B-264**/**B-265**；对读 **B-249**）
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-266**
+- **封口批已落**：**`scripts/ops/region_vault_claim_production_go_gate.py`**（**`production-go-gate`****/** **`self-test`**）；**`scripts/region-vault-claim-production-go-gate.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1t**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-266**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 278 / 本节**
+- **任务（摘要）**：**读** **`onchain_reconcile.json`****+** **`receipt_archive.json`** **校验** **anchor** **/** **rule_version** **/** **`reconcile_verdict`** **等** **；** **须** **`--attest-b265-indexer-uplift`** **与** **`--attest-b230-b242-evidence-chain`** **方得** **`production_verdict`****=****`GO`** **；** **`production_verdict`****≠****`GO`** **默认** **exit** **1** **（** **`--allow-non-go-production`** **覆盖** **）**
+- **边界**：**不** **RPC** **、** **不** **新增** **HTTP**
+- **验收**：**`python scripts/ops/region_vault_claim_production_go_gate.py self-test`** **exit** **0**
+- **测试**：**同上** **self-test**
 
 ### TT-B209-110-FULL-CHAIN-SCAN-MAX-BLOCK-SPAN-V1-001
 
@@ -3841,8 +4352,6 @@
 - **验收**：**`cargo test -p traveltrust-api`** **绿**（**`b209_*`**）；**`bash scripts/run-check-04-routes.sh`** **绿**
 - **测试**：**`cargo test -p traveltrust-api`** **`b209_`**
 
----
-
 ### TT-B210-110-INDEXER-EVIDENCE-MANIFEST-FULL-SCAN-REGISTRY-001
 
 - **阶段**：indexer / **110 §3.1.2.1 · evidence manifest 全链扫 ENV 十字登记**（**母表 B-210**；承 **B-204**/**TT-B204**、**B-209**/**TT-B209**）
@@ -3853,8 +4362,6 @@
 - **边界（未吞并）**：**批编排** **脚本层** **见** **TT-B211** **`tick-loop`**；**`tick-loop` stdout 运行级观测** **见** **TT-B212**；**`tick-loop` 可选 JSON 落盘** **见** **TT-B213**（**不**扩 **本卡** **`manifest.json`** **根** **登记块** **形**）；**全集链上证明** **仍** **110 Target**。
 - **验收**：**`bash scripts/run-check-04-routes.sh`** **绿**；**`bash scripts/check-07-version-triple.sh`** **绿**；**`cargo test -p traveltrust-api`** **绿**（**回归**）
 - **测试**：—（**本卡** **无** **新增** **Rust** **用例**）
-
----
 
 ### TT-B211-110-INDEXER-TICK-LOOP-ORCHESTRATION-001
 
@@ -3867,8 +4374,6 @@
 - **验收**：**`bash scripts/check-07-version-triple.sh`** **绿**；**`bash scripts/run-check-04-routes.sh`** **绿**；**`cargo test -p traveltrust-api`** **绿**（**回归**）
 - **测试**：—（**本卡** **无** **新增** **Rust** **用例**）
 
----
-
 ### TT-B212-110-INDEXER-TICK-LOOP-RUN-OBSERVABILITY-001
 
 - **阶段**：indexer / **110 §3.1.2.1 · `tick-loop` 运行级观测聚合（脚本 stdout）**（**母表 B-212**；承 **B-211**/**TT-B211**）
@@ -3879,8 +4384,6 @@
 - **边界（未吞并）**：**不**改 **B-211** **循环/早停/exit 码**；**不**改 **`write-indexer-evidence`/`manifest.json`** **evidence** **schema**；**不** **新增** **04 §3.4** **契约句**。
 - **验收**：**`bash scripts/check-07-version-triple.sh`** **绿**；**`bash scripts/run-check-04-routes.sh`** **绿**；**`cargo test -p traveltrust-api`** **绿**（**回归**）
 - **测试**：—（**本卡** **无** **新增** **Rust** **用例**）
-
----
 
 ### TT-B213-110-INDEXER-TICK-LOOP-EVIDENCE-JSON-WRITE-001
 
@@ -3893,8 +4396,6 @@
 - **验收**：**`bash scripts/check-07-version-triple.sh`** **绿**；**`bash scripts/run-check-04-routes.sh`** **绿**；**`cargo test -p traveltrust-api`** **绿**（**回归**）
 - **测试**：—（**本卡** **无** **新增** **Rust** **用例**）
 
----
-
 ### TT-B214-FEEROUTER-B081-RECEIPT-MOCK-STABLE-001
 
 - **阶段**：api / **chain · `fee_router_verify` 单元测**（**母表 B-214**；**承** **B-081** **receipt 解码** **路径**）
@@ -3905,7 +4406,16 @@
 - **验收**：**`cargo test -p traveltrust-api`** **绿**（**建议** **多轮** **全量** **并行**）
 - **测试**：**`cargo test -p traveltrust-api` `b081_db_row_matches_transaction_receipt_platform_fee_routed_decode`**
 
----
+### TT-B215-110-FULL-CHAIN-HISTORICAL-COMPLETENESS-PROOF-SCOPE-001
+
+- **阶段**：indexer / **规划**（**文档轮** · **2026-04-14**）
+- **状态**：**已封口**（**文档轮**；**最小 JSON+gate** **见** **一览** **233**/**TT-B216**）
+- **母表**：[任务母表.md](./任务母表.md) **B-215**
+- **本轮仅改（文档轮）**：**`docs/spec/110-阶段开发链上索引器与事件同步器.md`** **§3.1.2.1**（**第七切片** **+** **台账互指**）、**`docs/任务母表.md`**（**B-215**）、**`docs/AI任务卡索引.md`**（**一览 232** / **本节**）；**未改** **`docs/spec/04-后端与API.md`**（**无** **公开契约句** **diff**）；**未** **bump** **`indexer-reconcile-gate` `checks_total`**（**嗣后** **B-216** **+2** **→** **`122`**）
+- **文档轮交付物**：**110** — **「全集链上证明」** **最小验收要素**（**须含/须排除**）、**与** **B-204～B-213** **及** **B-210 `explicit_non_goals`** **关系**、**建议机读锚** **`110-FULL-CHAIN-HISTORICAL-COMPLETENESS-PROOF-V0`**（**实现体** **见** **TT-B216**）；**三角互指** **母表 B-215** / **B-192** / **本 TT**。
+- **边界（禁止行为）**：**不** **在本轮** **改** **`POST …/internal/indexer-tick`** **响应形**；**不** **吞** **B-114**/**B-204～B-213** **已封口** **语义**；**不** **以** **文档句** **替代** **运维批准/E2E 留痕**。
+- **验收**：**`bash scripts/run-check-04-routes.sh`** **绿**；**110 §3.1.2.1**/**B-215**/**本 TT**/**B-192** **互指无断链**。
+- **测试**：—（**文档轮**）
 
 ### TT-B216-110-FULL-CHAIN-HISTORICAL-COMPLETENESS-PROOF-V0-JSON-GATE-001
 
@@ -3917,8 +4427,6 @@
 - **验收**：**`bash scripts/check-07-version-triple.sh`** **绿**；**`bash scripts/run-check-04-routes.sh`** **绿**；**`cargo test -p traveltrust-api`** **绿**
 - **测试**：**`cargo test -p traveltrust-api`**（**回归**）
 - **能力周期 · 实现封口基线**：**2026-04-14** **`cargo test -p traveltrust-api`** **全量** **854 passed / 0 failed** **已复核** — **110·全集链上证明（JSON+gate）子域** **自** **B-216**/**本 TT**/**一览 233** **起** **视为** **实现封口基线**。**下一 TT** **须** **自** **母表** **与** **本索引「未封口一览项」** **状态列真值** **或** **`docs/spec/110-阶段开发链上索引器与事件同步器.md`** **篇内 Target/Partial** **单列选卡**（**勿** **默认** **续开** **本切片**）。
-
----
 
 ### TT-B217-110-INDEXER-TICK-RPC-PACING-V1-001
 
@@ -3932,661 +4440,239 @@
 
 ---
 
----
+### TT-B141-GOVERNANCE-SSOT-NEXT-CANDIDATE-PLAN-001
 
-### TT-B218-14-FEEROUTER-ROUTED-EVENTS-EXPORT-001
+- **阶段**：governance / **SEQ5～SEQ10 之后 · 下一批只读 SSOT 分层规划**（**母表 B-141**）
+- **状态**：已封口
+- **母表**：[任务母表.md](./任务母表.md) **B-141**（承 **B-134**/**B-137**/**B-135**～**B-140**）
+- **本轮仅改**（执行本卡时）：**`docs/任务母表.md`**（**B-110** 互指句、**B-141** 新行、**续表 B-142**）、**`docs/AI任务卡索引.md`**（**一览 141**、**未封口**段、本节）
+- **禁止再分析**：**`crates/**` 业务实现**；**spec/04**/**110**/**Runbook**/**gate `checks_total`**（除非另开 **实现类 TT**）；擅自开 **SEQ11+** 实现
+- **任务**：在 **SEQ5/SEQ6/SEQ8/SEQ9/SEQ10** 已闭合前提下，用 **L1～L4** 给下一批候选 **统一分层**，并填下表（**首张实现 TT** 仅 **占位名**，**不**在本轮登记 **B-142** 实现行）
+- **验收**：母表 **B-141** 描述列与索引 **一览 141** / 本节 **候选表** 互指无断链；**零**业务代码 diff
+- **测试**：—
 
-- **阶段**：api / **admin + internal** · **14 §1.1.1.1** **柱 C**（**母表 B-218**；对称 **B-208**/**TT-B208**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-218**（承 **B-208**/**B-193**/**B-116**）
-- **封口批已落**：**`crates/api/src/db/fee_router_events.rs`**（**`ADMIN_FEE_ROUTER_EXPORT_MAX_ROWS`**、**`list_fee_router_routed_events_export`**）；**`crates/api/src/routes/admin/fee_router.rs`**（**`fee_router_routed_export_response`**、**`validate_fee_router_routed_export_query`**）；**`crates/api/src/routes/internal/fee_router_export.rs`** + **`internal/mod.rs`**；**`admin/mod.rs`**；**`read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`** **§3.4** **内部 API** + **§3.5** **`…/fee-router/routed-events/export`**；**`routes/admin/tests/inc_part_01.rs`**/**`inc_part_08.rs`**
-- **任务（摘要）**：**`GET …/admin/fee-router/routed-events/export`**（**审计** + **JSON** **`meta.build`**）**；** **`GET …/internal/fee-router/routed-events/export`**（**无审计**；**JSON** **无** **`meta.build`**）；**`format=csv|json`**、**`chain_id?`**、**`limit?`**（**缺省 2000**）。**无** **`include_snapshot_explain`**（**与** **RegionVault** **export** **差分**）。
-- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`bash scripts/run-check-04-routes.sh`** **绿**
-- **测试**：**`cargo test -p traveltrust-api`**（**含** **`admin_fee_router_routed_events_export_*`**、**`fee_router_routed_export_csv_*`**）
+**分层速查**
 
----
+| 标签 | 含义 | 已闭合参照 |
+|------|------|------------|
+| **L1** | 静态数值（构造期固定 / **`immutable`** / 无治理 setter 的 **`public`** getter） | **SEQ5**、**SEQ6**、**SEQ8** |
+| **L2** | 动态计数或提案级状态 vs 投影/DB 第二源 | **SEQ10**（全局计数 **`+` lag 窗）；提案级须**另写**漂移语义 |
+| **L3** | 可变 **`address`** 或运行时可变绑定 | **SEQ9**（双 **`eth_call`** 对拍） |
+| **L4** | 经济参数 / **FeeRouter** / **protocol-reference** / **P5-5**/**84** 镜像 | **默认隔离**；**高**双源风险，**禁止**无登记挂靠 **807 `governance.*`** |
 
-### TT-B219-110-EVIDENCE-BUNDLE-CANONICAL-COMBINE-001
+**下一批候选表（规划真值 · 实现须另开 TT + 母表行）**
 
-- **阶段**：indexer / **110 §3.1.2.1 · evidence 三件套标准化汇编**（**母表 B-219**；承 **B-210**/**TT-B210**、**B-213**/**TT-B213**、**B-216**/**TT-B216**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-219**
-- **封口批已落**：**`scripts/ops/write-indexer-evidence-bundle-canonical.sh`**（**根** **`scripts/write-indexer-evidence-bundle-canonical.sh`** **转发**）；**`scripts/ops/internal-indexer-ops.sh`**/**`.ps1`** **`evidence-bundle-canonical`**；**`scripts/ops/fixtures/indexer_evidence_bundle_canonical_index.example.json`**；**`.github/workflows/indexer-reconcile-gate.yml`** **`checks_total`****`125`**（**+2** **`check_anchor`**：**`110-INDEXER-EVIDENCE-BUNDLE-CANONICAL-V1`**、**`scripts_internal_indexer_ops_evidence_bundle_canonical`**）；**`scripts/ops/indexer-reconcile-probe.sh`** **`INDEXER_RECONCILE_GATE_CHECKS_TOTAL`****`125`**；**`INTERNAL_INDEXER_OPS_SCRIPT_SEMVER`****`1.11.0`**；**`ops/RUNBOOK.md`** **§2.55**（**B-219** **实现** **+** **B-221** **标准用法** **长段**）；**`scripts/README.md`**（**B-221** **摘要**）；**本索引一览 236 / 本节**
-- **任务（摘要）**：**固定目录** **`OUT_DIR/artifacts/`** — **`b210_manifest.json`**、**`b216_historical_completeness_proof_v0.json`**、**`b213_indexer_tick_loop_evidence.json`**；**`artifacts.sha256`**；**`bundle_canonical_index.json`** + **`bundle_canonical_index.sha256`**。**ENV**：**`CANONICAL_BUNDLE_STAGE_GO_DIR`**（**其下** **`manifest.json`**）**或** **`CANONICAL_BUNDLE_B210_MANIFEST_PATH`**；**可选** **`CANONICAL_BUNDLE_B216_PROOF_PATH`**/**`CANONICAL_BUNDLE_B213_EVIDENCE_PATH`**（**离线** **复制**）**否则** **分别** **委托** **`write-indexer-historical-completeness-proof.sh`** **与** **`tick-loop --write-evidence-json`**（**须** **可达** **API**）。
-- **边界（未吞并）**：**不**改 **`POST …/internal/indexer-tick`** **Rust**；**不** **扩** **B-210** **`manifest.json`** **根** **登记块** **形**；**不** **新增** **04 §3.4** **契约句**（**本卡** **纯** **ops/gate**）。
-- **验收**：**`.github/workflows/indexer-reconcile-gate.yml`** **`grep -c 'check_anchor \"'`** **=** **`checks_total`**（**125**）；**`scripts/ops/indexer-reconcile-probe.sh`** **`INDEXER_RECONCILE_GATE_CHECKS_TOTAL`** **同值**；**`bash -n scripts/ops/write-indexer-evidence-bundle-canonical.sh`** **绿**
-- **测试**：—（**本卡** **无** **新增** **Rust** **用例**）
+| 候选 | 分层 | 建议 P | 链读要点 | 第二源（若有） | fallback / 漂移草案 | FeeRouter · P5-5 · 84 | 首张实现 TT（占位） |
+|------|------|--------|----------|----------------|----------------------|------------------------|---------------------|
+| **`TravelTrustGovernor.token()`** | L1（**`immutable`** 引用） | P1 | 单 **`eth_call`** | 可选与部署配置对读 | 同 **SEQ5/SEQ8** 型 **`GOVERNANCE_*` 闸** + **`governance_ssot_chain_unavailable`** | 否 | **已封口**：**[`TT-B110-SEQ11-GOVERNANCE-GOVERNOR-TOKEN-TIMELOCK-CHAIN-SSOT-001`](#tt-b110-seq11-governance-governor-token-timelock-chain-ssot-001)**（**bundle** 含 **`timelock()`**） |
+| **`TravelTrustGovernor.timelock()`** | L1（**`immutable`** 引用） | P1 | 单 **`eth_call`** | 可选与 **`GOVERNANCE_TIMELOCK_ADDRESS`** 对读（**语义**：部署绑定，**非** **SEQ9** 运行时 **`timelock.governor()`**） | 须文案区分 **「Governor 所绑 Timelock 地址」** vs **「Timelock 自称 governor/admin」** | 否 | 同上 **SEQ11 bundle** |
+| **`TravelTrustGovernor.orderRatingReviewWindowDays()`** | **L1′** 治理可调标量（**Timelock** 可写） | P2 | 单 **`eth_call`** | **SEQ2** 已覆盖 **订单**域 bundle | **非** immutable；与 **SEQ8** 型「永不改」**不同** | 否 | **边界** [**SEQ12 / B-143**](#tt-b110-seq12-governance-governor-order-rating-review-window-boundary-001)；**807 并列观测** 经 [**SEQ13 / B-144**](#tt-b110-seq13-governance-order-rating-review-window-parallel-meta-obs-001) **否决**；**升格接管** 仍须 **B-143** 门槛 + **公开 orders** 同批 |
+| **`TravelTrustGovernor.state(proposalId)`** | L2（提案级） | P2 | 每提案 **`eth_call`** | **`governance_proposals_projection.status`**（或等价列） | **须**定义 **允许**关系（例如索引滞后时 **链上先于投影**）**或** **仅**运维抽样，**不**进 compound **AND** | 否 | **`TT-B110-SEQ?-GOVERNANCE-PROPOSAL-STATE-PROJECTION-SSOT-001`**（占位） |
+| **`TravelTrustGovernor.proposals(proposalId)`** 核心字段（**snapshot / voteStart / voteEnd** 等） | L2 | P3 | **`eth_call`** | 投影行 / 事件回放 | 与 **`state`** 类似，**优先序**应 **后于** **`state`** 或合并设计 | 否 | 占位 |
+| **`TravelTrustGovernor.quorumReached(proposalId)`** | L2 | P3 | **`eth_call`** | 链下重算 | 依赖 **`getPastTotalSupply`/`getPastVotes`** 路径，**复杂度高**，建议 **后移** | 否 | 占位 |
+| **FeeRouter `BPS_*` / 路由热参数** | **L4** | **延后** | 多 **`eth_call`** 或专项 Router | **protocol-reference**、**84**、**Σ** 投影 | **须**产品单一真源 + **独立母表**；**不**默认 **+1 `checks_total`** | **是 · 高** | **禁止**默认进 **807**；另开 **B-116/B-115** 域 **TT** |
+| **GovernanceTimelock** 除 **`delay`/`governor`/`admin`** 外 | — | — | 已闭合 **SEQ6/SEQ9** | — | 新 getter 再分类 | 否 | — |
 
----
-
-### TT-B222-110-EVIDENCE-BUNDLE-CI-AUTO-RUN-001
-
-- **阶段**：CI / **`indexer-reconcile-gate`** · **B-219 evidence-bundle canonical** **离线复现链**（**母表 B-222**；**承** **B-219**/**B-221**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-222**
-- **封口批已落**：**`.github/workflows/indexer-reconcile-gate.yml`**（**`Build and verify indexer evidence-bundle canonical`** **步** **+** **`upload-artifact`** **`indexer_evidence_bundle_canonical_ci/**`**）；**`scripts/ops/fixtures/ci_evidence_bundle_b210_manifest.json`**、**`scripts/ops/fixtures/ci_evidence_bundle_b213_tick_loop_evidence.json`**（**`B-216`** **用** **`indexer_historical_completeness_proof_v0.example.json`**）；**`ops/RUNBOOK.md`**/**`scripts/README.md`** **CI** **互指**；**`docs/spec/110-阶段开发链上索引器与事件同步器.md`**；**`docs/spec/07-开发流程与顺序.md`** **Version 1.0.850**/**§六 6.4/6.5**；**`docs/spec/00-文档索引.md`** **07/110**；**本索引一览 239 / 本节**
-- **任务（摘要）**：**每** **PR/push** **`main`** **在** **anchor** **门禁** **通过后** **同** **job** **内** **离线** **汇编** **并** **校验** **bundle**；**产物** **入** **`indexer-reconcile-evidence`** **artifact**。
-- **边界**：**不** **增加** **`check_anchor`**（**`checks_total`****`125`** **不变**）；**不** **改** **`write-indexer-evidence-bundle-canonical.sh`** **汇编语义**（**仅** **fixture** **+** **workflow**）。
-- **验收**：**本地** **复现** **workflow** **shell** **块** **绿**（**见** **YAML**）；**`bash scripts/check-07-version-triple.sh`** **绿**
-- **测试**：—（**CI** **与** **fixture** **字节** **为** **主** **回归**）
+**P 序结论（本规划卡）**：优先 **L1 引用类**（**`token`/`timelock`**）或 **合并 bundle**；其次裁断 **`orderRatingReviewWindowDays`** 是否与 **SEQ2** 重复；再考虑 **L2 提案级**（**`state`**）**须**独立漂移叙事；**L4** 与经济 Σ **永**与 **807 治理观测骨架** 解耦，除非 **母表 + 产品** 另批。
 
 ---
 
-### TT-B223-14-REGIONVAULT-COUNTRY-LEDGER-READ-MODEL-V1-001
+### TT-B194-85-APPENDIX-HI-COMPONENT-SPEC-001
 
-- **阶段**：api / **14 §1.1.1 · RegionVault** · **投影只读 Σ**（**母表 B-223**；**与** **P5-1** **`country_ledger_ssot_v0`** **正交**）
+- **阶段**：traveltrust / **85 附录 §H/§I** + **前端装配**（**实现轮**）
+- **状态**：**已封口**（**2026-04-13** · **实现完成**）
+- **母表**：[任务母表.md](./任务母表.md) **B-194**
+- **封口批已落**：**`docs/spec/85-附录-AI组件蓝图.md`** **v1.0.0.4**（**§H、§I** **可生成代码级**；**§K** **组件清单**）；**`frontend/lib/traveltrustTrustFaqI18n.ts`**、**`frontend/lib/traveltrustGlobalMapDemo.ts`**；**`frontend/components/traveltrust/TravelTrustTrustFactsSection.tsx`**、**`TravelTrustFaqAccordion.tsx`**、**`TravelTrustGlobalMapSection.tsx`**、**`TravelTrustGlobalMap.tsx`**；**`frontend/app/traveltrust/page.tsx`**（**`#trust-facts` / `#global-map` / `#faq`** **不变**）；**`frontend/lib/traveltrustTrustFaqI18n.test.ts`**
+- **边界**：**未改** **`docs/spec/04-*`** / **`docs/spec/07-*`**；**不**扩 **85 主文** **新契约句**；**不**替代 **B-191**
+- **验收**：**`npx tsc --noEmit`** **绿**；**`npm test -- lib/traveltrustTrustFaqI18n.test.ts --run`** **绿**；**`cargo test -p traveltrust-api`** **绿**；**`bash scripts/run-check-04-routes.sh`** **绿**
+- **测试**：**`npm test -- lib/traveltrustTrustFaqI18n.test.ts --run`**；**`cargo test -p traveltrust-api`**（**门禁同批**）
+
+### TT-B195-85-MOTION-PRESETS-LIB-001
+
+- **阶段**：traveltrust / **Motion**
 - **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-223**
-- **封口批已落**：**`crates/api/src/region_vault_country_ledger_map.rs`**、**`crates/api/src/db/region_vault_country_ledger_read.rs`**、**`crates/api/src/routes/admin/region_vault_country_ledger_read.rs`**、**`crates/api/src/routes/internal/region_vault_country_ledger_read.rs`**、**`config/region_vault_country_ledger_map.template.json`**、**`.env.example`**、**`docs/spec/04-后端与API.md`**（**§3.5** **表行** + **内部 API** **长段** + **`meta.build`** **枚举** + **§四** **迁移消费**）；**`read_contract_route_guard`** **注册表**；**本索引一览 240 / 本节**
-- **任务（摘要）**：**不改合约**；**`fetch_region_vault_for_aggregate`** **同源行** **按** **`to_address`** **映射** **辖区** **后** **uint256 Σ**；**无映射** **时** **`unassigned.by_recipient`** **承载** **全部**。
-- **边界**：**不** **写** **`fee_router_routed_events`**；**不** **冒充** **`governance/pool`** **链上 SSOT**（**根级** **禁** **B110** **键** **断言** **沿用** **`economic_aggregate`**）。
-- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
+- **母表**：[任务母表.md](./任务母表.md) **B-195**
+- **封口交付**：**`frontend/lib/traveltrustMotionPresets.ts`**、**`frontend/lib/traveltrustMotionPresets.test.ts`**、**`frontend/app/traveltrust/page.tsx`** **三处** **`traveltrustInViewStaggerCard`** + **`useReducedMotion`**；**§B.3 对读纪要** → [**evidence/GO_B195_MOTION_B3_READOFF.md**](../evidence/GO_B195_MOTION_B3_READOFF.md)；**动效录屏** **S23-06 Full**（[**S23-06-motion-full.md**](../evidence/GO_85_TRAVELTRUST_SEC23_20260413/artifacts/S23-06-motion-full.md)）。
+- **Hero 余量**：**已由** **B-203** **封口**（**2026-04-14**）→ [**GO_B203_HERO_MOTION_CLOSE**](../evidence/GO_B203_HERO_MOTION_CLOSE.md)；**对读件** [**GO_B195**](../evidence/GO_B195_MOTION_B3_READOFF.md) **§1** **矩阵行** **已更新** **为** **已闭合**。
+- **验收**：**`npm test -- lib/traveltrustMotionPresets.test.ts --run`** **绿**；**全仓 `tsc`** **既有报错** **见** **对读件 §2**（**非** **本 TT** **范围**）。
+- **测试**：**`npm test -- lib/traveltrustMotionPresets.test.ts --run`**；**Playwright** **`e2e/traveltrust-sec23-motion.spec.ts`**（**与 S23-06 同源**）
+
+### TT-B203-85-HERO-MOTION-B3-ALIGN-001
+
+- **阶段**：traveltrust / **Motion · Hero（小微）**
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-203**
+- **封口证据**：[evidence/GO_B203_HERO_MOTION_CLOSE.md](../evidence/GO_B203_HERO_MOTION_CLOSE.md)
+- **交付**：**`frontend/lib/traveltrustMotionPresets.ts`** **`fadeInUp` / `fadeIn` / `traveltrustHeroEntrance`**；**`frontend/app/traveltrust/page.tsx`** **`#hero`** **`motion.p` / `motion.h1` / `motion.div` / `motion.aside`**；**`traveltrustMotionPresets.test.ts`** **增补** **断言**
+- **视觉 / a11y**：**见** **证据件** **§2～§3**（**手动** **+** **`prefers-reduced-motion`**）
+- **验收**：**`npm test -- lib/traveltrustMotionPresets.test.ts --run`** **绿**（**2026-04-14**）；**未改** **04/07**；**全仓 `tsc`** **既有报错** **非** **本 TT** **范围**
+- **测试**：**`npm test -- lib/traveltrustMotionPresets.test.ts --run`**；**Playwright** **`e2e/traveltrust-sec23-motion.spec.ts`** **仍** **兼容** **（无** **必改** **断言** **）**
+
+### TT-B196-85-VIDEO-ASSET-08-4-GATE-001
+
+- **阶段**：traveltrust / **合规视频（85 §九 · 08-4）**
+- **状态**：**已封口**（**2026-04-14** · **示意资产 + 播放器**）
+- **母表**：[任务母表.md](./任务母表.md) **B-196**
+- **封口证据**：[evidence/GO_B196_VIDEO_ASSET_08_4_CLOSE.md](../evidence/GO_B196_VIDEO_ASSET_08_4_CLOSE.md)
+- **交付**：**`public/traveltrust/video/`**（**MP4**、**poster**、**en/zh WebVTT**）；**`traveltrustVideoIllustration.ts`** + **`traveltrustVideoIllustration.test.ts`**；**`TravelTrustVideoBlock`** **`CAPTIONS_*`** **轨**；**`.env.example`** **模板**；**i18n** **引导** **复制** **env**
+- **边界**：**未配置** **`NEXT_PUBLIC_TRAVELTRUST_VIDEO_MP4`** **时** **行为** **不变**（**占位** **+** **P1/P2**）；**未改** **04/07**；**§廿三 S23-05** **仍** **Partial** **直至** **full** **前提**
+- **余量**：**对外募资成片** **URL** **+** **08-4** **签字** **另** **轨** **替换** **env**
+- **验收**：**`npm test -- lib/traveltrustVideoIllustration.test.ts`** **+** **`TravelTrustVideoBlock.test.tsx`** **绿**
+- **测试**：**`npm test -- lib/traveltrustVideoIllustration.test.ts --run`**；**`npm test -- components/traveltrust/TravelTrustVideoBlock.test.tsx --run`**
+
+### TT-B197-85-ALLOCATION-84-SSOT-001
+
+- **阶段**：traveltrust / **数据真源（Allocation ↔ 84）**
+- **状态**：**已封口**（**2026-04-14** · **工程 SSOT**）
+- **母表**：[任务母表.md](./任务母表.md) **B-197**
+- **封口证据**：[evidence/GO_B197_ALLOCATION_84_SSOT_CLOSE.md](../evidence/GO_B197_ALLOCATION_84_SSOT_CLOSE.md)
+- **交付**：**`traveltrustAllocation84Ssot.ts`**（**`ALLOCATION_84_SSOT`**、**路径常量**、**`TRAVELTRUST_ALLOCATION_PLACEHOLDER_SLOT_KEYS`**）；**`traveltrustAllocation84Ssot.test.ts`**（**机读** **84** **文首版本**）；**`TravelTrustAllocationPlaceholder.tsx`** **仅消费 SSOT**
+- **边界**：**未改** **04/07**、**`page-brief` handler**、**P0** **主路径**；**§廿三 S23-10** **仍** **Partial** **直至** **full-prereq** **+** **`S23-10-funding-full.md`**
+- **余量（非本 TT）**：**84** **表内真数** **上屏** **须** **84 + LEGAL-SIGNOFF** **同批** **另轮**
+- **验收**：**`npm test -- lib/traveltrustAllocation84Ssot.test.ts --run`** **绿**
+- **测试**：**`npm test -- lib/traveltrustAllocation84Ssot.test.ts --run`**
+
+### TT-B198-85-ANALYTICS-PRODUCTION-PIPE-001
+
+- **阶段**：traveltrust / **增长**
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-198**
+- **封口证据**：[evidence/GO_B198_ANALYTICS_CLOSE.md](../evidence/GO_B198_ANALYTICS_CLOSE.md)
+- **交付**：**`trackTravelTrustEvent`**（**gtag** / **ingest** · **`source`/`target`** **不变**）；**`NEXT_PUBLIC_TRAVELTRUST_ANALYTICS_REQUIRE_CONSENT=1`** **时** **须** **`localStorage` `traveltrust:analytics-consent=granted`** **后才发送**；**未设** **REQUIRE_CONSENT** **保持** **「有传输即发」**；**`TravelTrustAnalyticsConsentBar`**（**`/traveltrust`**）+ **`/privacy` §3** **产品向说明**；**`TravelTrustCtaSource`** **仍** **含** **`video_placeholder`**。
+- **边界（历史卡面）**：**本 TT** **执行轮** **不**改 **04/07**；**`/allocation`** **路由** **由** **TT-B200** **另卡** **封口**（**见** [**GO_B200**](../evidence/GO_B200_ALLOCATION_PHASE2_CLOSE.md)）；**法务终稿** **仍以** **08-4** **为准**。
+- **验收**：**`npm test -- lib/analytics.test.ts components/traveltrust/TravelTrustAnalyticsConsentBar.test.tsx --run`** **绿**；staging **按需** **验** **网络**（**见** **GO_B198 §3**）。
+- **测试**：**`npm test -- lib/analytics.test.ts components/traveltrust/TravelTrustAnalyticsConsentBar.test.tsx --run`**
+- **增量执行（防大工程 · 已封口后仍适用）**：**每次只领一片** **≈1～2h** — **[GO_B198_ANALYTICS_CLOSE.md §5](../evidence/GO_B198_ANALYTICS_CLOSE.md)** **表** **198-A～F**（**母表 B-198** **描述列** **亦** **指** **该节**）；**新事件名 / 新契约 / 新 env 语义** → **另开 TT** **勿** **硬塞进** **单切片**。
+
+### TT-B199-85-SEC23-ACCEPTANCE-EVIDENCE-001
+
+- **阶段**：traveltrust / **验收 · 文档 + evidence**
+- **状态**：**已封口**
+- **封口批**：**2026-04-13**（**验收完成**）
+- **母表**：[任务母表.md](./任务母表.md) **B-199**
+- **交付摘要**：以 **[evidence/GO_85_TRAVELTRUST.md](../evidence/GO_85_TRAVELTRUST.md)** **为作业面** **SSOT**，**完成** **S23-01～S23-12** **全量证据填充**；**每项** **包含** **可复现步骤**、**执行输出** **与** **源码/返回值对齐**；**`artifacts/`** **目录提供逐项证据文件**；**B-191**、**B-194** **能力已完成互证**；**S23** **Partial/Full** **仍** **按** **GO_85** **维护**；**04 §3.4** **后续** **diff** **见** **B-200** **封口** **同批**。**指针**：[evidence/POINTER_B199_85_SEC23_ACCEPTANCE.md](../evidence/POINTER_B199_85_SEC23_ACCEPTANCE.md)
+- **边界**：**未修改** **`docs/spec/04-*`**、**`docs/spec/07-*`**；**不扩展** **HTTP/JSON** **契约**；**仅完成验收与证据归档**
+- **验收命令**：**`npx tsc --noEmit`**；**`npm test`**；**`cargo test -p traveltrust-api`**；**`bash scripts/run-check-04-routes.sh`**
+- **测试**：**Vitest**（**`npm test`** **全量**）；**Rust**（**`cargo test -p traveltrust-api`**）
+
+### TT-B200-85-PHASE2-ALLOCATION-ROUTE-001
+
+- **阶段**：traveltrust / **Phase 2 路由**
+- **状态**：**已封口**（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-200**
+- **封口证据**：[evidence/GO_B200_ALLOCATION_PHASE2_CLOSE.md](../evidence/GO_B200_ALLOCATION_PHASE2_CLOSE.md)
+- **交付摘要**：**`frontend/app/allocation/*`**（**专页** + **`TravelTrustPageBriefHydrate`** + **`TravelTrustAllocationPlaceholder`**）；**`TRAVELTRUST_P1_PRIMARY_HREF`=`/allocation`**（**Hero / Sticky / 页尾 / 视频占位** **与** **埋点** **`target`** **同源**）；**`crates/api/src/routes/traveltrust_page.rs`** **`p1_target`=`/allocation`** **+** **单测**；**`04 §3.4`** **新** **`/allocation`** **行** **+** **`page-brief`** **契约**；**`13-1` 表 1** **Network + `/allocation`**；**`e2e/smoke.spec.ts`** **`/allocation`** **用例**。
+- **外链**：若 **P1** **须** **改为** **绝对 URL**，**须** **另开 TT** **同批** **改** **常量 + 04 + 13-1 + `traveltrust_page.rs`**。
+- **验收（已跑）**：**`bash scripts/run-check-04-routes.sh`**；**`cargo test -p traveltrust-api`**；**`npm test`**；**`npx tsc --noEmit`**
+
+### TT-B182-ADMIN-OBS-OVERVIEW-SUBDOMAIN-SPLIT-001
+
+- **阶段**：admin / **Phase Close · 附录 B-182**
+- **状态**：已封口（**2026-04-13** · **装配层 + 域文件**）
+- **母表**：[任务母表.md](./任务母表.md) **B-182**
+- **交付摘要**：**`routes/admin/mod.rs`** **≈320 行** — **仅** **`router()`** + **`mod` / `pub use` / `pub(crate) use`** **装配**；**handler** **在** **`catalog.rs`**、**`community.rs`**、**`observability_read.rs`** 等 **域模块**；**跨 handler 最小共享** **`common.rs`**（**元数据附着**、**request id**、**管理员 actor**、**导出/对账辅助** 等）；**对外** **`crate::routes::admin::*`** **与** **04 §3.5** **表** **一致**（**`run-check-04-routes`** **绿** = **零漂移**）。**`admin/tests.rs`** **仍大** — **不** **纳入** **本 TT DoD**（**48** / **另开切片**）。
+- **历史波次**：**第0波** — **`observability_overview`** **→** **`observability_overview.rs`**；**`common.rs`** **迁入** **共享**；**后续波次** — **大段 handler** **迁出** **`mod.rs`** **至** **`catalog`/`community`/…** **直至** **`mod.rs`** **<500**。
+- **DoD（封口）**：**①** **`cargo test -p traveltrust-api`** **绿**；**②** **`bash scripts/run-check-04-routes.sh`** **绿**；**③** **`check-48`** **stderr** **无** **`routes/admin/mod.rs`** **`OVER 500`**；**④** **审计件** **Top** **与** **`admin/mod.rs`** **现状** **对读** — **见** **[Enterprise-Code-Footprint-Audit-API-Rust.md](./Enterprise-Code-Footprint-Audit-API-Rust.md) §5**。
+- **边界（继承）**：**不** **改** **04 §3.5** **HTTP 契约** **除非** **同批 04**；**本封口轮** **禁止** **扩** **新 admin 能力**。
+- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿。
 - **测试**：**`cargo test -p traveltrust-api`**
 
----
+### TT-B183-CHAIN-OFF-SUBDIR-GROUPING-REORG-001
 
-### TT-B224-14-REGIONVAULT-LEDGER-SNAPSHOT-EXPLAIN-EXPORT-001
-
-- **阶段**：api / **14 §1.1.1 · RegionVault** · **B-223 Σ 附件 + snapshot explain**（**母表 B-224**；**对齐** **B-208** **export** **形态**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-224**
-- **封口批已落**：**`crates/api/src/db/region_vault_country_ledger_read.rs`**（**`region_vault_country_ledger_read_model_export_csv`**、**`RV_COUNTRY_LEDGER_EXPORT_*`**）；**`crates/api/src/routes/admin/region_vault_country_ledger_read_export.rs`**、**`crates/api/src/routes/internal/region_vault_country_ledger_read_export.rs`**、**`crates/api/src/routes/admin/mod.rs`**、**`crates/api/src/routes/internal/mod.rs`**、**`crates/api/src/routes/admin/region_vault.rs`**（**`region_share_snapshot_line_row_to_json`** **`pub(crate)`**）；**`crates/api/src/routes/admin/audit_read.rs`**（**`ADMIN_AUDIT_ACTION_CODES`**）；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`crates/api/src/routes/admin/tests/inc_part_08.rs`**；**`docs/spec/04-后端与API.md`**（**§3.4** **`fee-pool-aggregates`** **互指**、**§3.5** **admin** **表**、**内部 API** **长段**、**`meta.build`**、**§四** **消费**）；**本索引一览 241 / 本节**
-- **任务（摘要）**：**`GET …/admin|internal/region-vault/country-ledger-read-model/export`**；**`format=csv|json`**、**`include_snapshot_explain`** **语义** **同** **B-208**；**`json`** **根级** **`country_ledger_read_model`** **嵌** **B-223** **体**。
-- **边界**：**不** **改合约**；**不** **将** **`region_share_snapshot_lines_explain`** **升格** **为** **governance/pool** **SSOT**（**B110-SSOT-07**）。
-- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
+- **阶段**：api / **Phase Close · 附录 B-183**
+- **状态**：已封口（**2026-04-14**）
+- **母表**：[任务母表.md](./任务母表.md) **B-183**
+- **本轮仅改（已交付）**：**`crates/api/src/chain_off/governance/**`**、**`crates/api/src/chain_off/reconcile/replay_orders_projection.rs`**、**`chain_off/mod.rs`**、**`reconcile/mod.rs`**、**`routes/internal/tests/suite_early/inc_part_01.rs`**（**indexer-status** **单测** **`rpc_url`** **死端口** **稳定化**）、**`docs/Enterprise-Code-Footprint-Audit-API-Rust.md`**
+- **任务（摘要）**：**`governance_*_ssot`** / **`replay_governance_proposals`** → **`chain_off/governance/`**；**`replay_orders_projection`** → **`reconcile/`**；**`crate::chain_off::governance_*`** **路径** **由** **根** **`pub use governance::{…}`** **保持**。**move-only**；**无** **HTTP/JSON** **契约** **diff**。
+- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿。
 - **测试**：**`cargo test -p traveltrust-api`**
 
----
+### TT-B184-SCRIPTS-README-GATES-OPS-NARRATIVE-001
 
-### TT-B225-14-REGIONVAULT-SNAPSHOT-CLAIM-READINESS-GATE-001
+- **阶段**：scripts / **Phase Close · 附录 B-184**
+- **状态**：已封口（**2026-04-14** · **Phase Close 完成**）
+- **母表**：[任务母表.md](./任务母表.md) **B-184**
+- **本轮仅改**：**`scripts/README.md`**、**`scripts/INDEX.md`**（**可选** **根目录转发说明**）
+- **任务**：补强 **gates / ops / dev** **读者路径** 与 **B-163 B1-06** **互指**；**不**新建第二套 INDEX。
+- **验收**：**`bash scripts/run-check-04-routes.sh`** 绿（**文档轮** **默认** **零** **`crates/**`**）。
+- **测试**：—
 
-- **阶段**：api / **14 §1.1.1 · RegionVault** · **snapshot × ledger claim 就绪门禁**（**母表 B-225**）
+### TT-B185-UNIFIED-OBSERVABILITY-JSON-SHELL-IMPL-001
+
+- **阶段**：ops / **Phase Close · 附录 B-185**
 - **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-225**
-- **封口批已落**：**`crates/api/src/db/region_vault_snapshot_claim_readiness.rs`**；**`crates/api/src/routes/admin/region_vault_snapshot_claim_readiness.rs`**、**`crates/api/src/routes/internal/region_vault_snapshot_claim_readiness.rs`**；**`crates/api/src/routes/admin/mod.rs`**、**`crates/api/src/routes/internal/mod.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`**（**§3.5**、**内部 API** **长段**、**`meta.build`**、**附录** **RegionVault** **行**）；**本索引一览 242 / 本节**
-- **任务（摘要）**：**`GET …/admin|internal/region-vault/snapshot-claim-readiness`**；**`items[]`**** **`readiness=ready|blocked`** **+** **`reasons[]`**；**query** **`chain_id?`****/**`jurisdiction?`****/**`snapshot_epoch?`**。
-- **边界**：**只读**；**非** **链上** **claim** **可执行** **SSOT**。
-- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
-- **测试**：**`cargo test -p traveltrust-api`**
+- **母表**：[任务母表.md](./任务母表.md) **B-185**
+- **本轮已改**：**`crates/api/src/routes/internal/observability/shell.rs`**（**`IndexerObservabilityV1Parts` 全腿**、**`observed_at`**）；**`crates/api/src/routes/internal/reconcile/indexer_reconcile/summary_resp.rs`**；**`crates/api/src/routes/admin/observability_overview.rs`**；**`crates/api/src/db/reconciliation_reports/row_get.rs`** + **`mod.rs`**（**`admin_last_orders_projection_vs_orders_summary_key`**）；**`crates/api/src/routes/admin/tests/inc_part_06.rs`**；**`docs/spec/04-后端与API.md`** **§3.4** **TT-B185**
+- **任务**：将 **附录 A** **`indexer_observability_v1` 草案** **落地** 为 **可机读嵌套壳**（**admin / reconcile** **同源**）；**不** **弱化** **B-147～B-177** **已有单键语义**。
+- **执行约束（JSON）**：**任何** **新增**/**重命名**/**改类型** **之** **JSON 字段** **或** **路由响应结构** — **须** **同一批 commit** **更新** **04** **对应段落**；**若** **纯属** **内部重构**、**对外** **字节级** **兼容**，**须在** **提交说明** **写明** **「无契约变化」** **并** **点名** **对读** **之** **04** **§** **锚**。
+- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿。
+- **测试**：**`cargo test -p traveltrust-api`** **绿**（**本封口轮** **2026-04-14**）
 
----
+### TT-B186-B166-NARRATIVE-PROBE-DOCS-TESTS-001
 
-### TT-B226-14-REGIONVAULT-CLAIM-DRYRUN-PAYLOAD-001
-
-- **阶段**：api / **14 §1.1.1 · RegionVault** · **B-225 ready 轮次 claim dry-run**（**母表 B-226**）
+- **阶段**：docs / **Phase Close · 附录 B-186**
 - **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-226**
-- **封口批已落**：**`crates/api/src/db/region_vault_snapshot_claim_dryrun.rs`**；**`crates/api/src/routes/admin/region_vault_snapshot_claim_dryrun.rs`**、**`crates/api/src/routes/internal/region_vault_snapshot_claim_dryrun.rs`**；**`crates/api/src/routes/admin/mod.rs`**、**`crates/api/src/routes/internal/mod.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`**；**本索引一览 243 / 本节**
-- **任务（摘要）**：**`GET …/admin|internal/region-vault/snapshot-claim-dryrun-payload(/export)`**；**`rounds[]`**** **`tokens[]`****+****`lines[]`** **pro_rata** **同形** **B-086**。
-- **边界**：**只读**；**不** **广播** **上链**。
-- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
-- **测试**：**`cargo test -p traveltrust-api`**
+- **母表**：[任务母表.md](./任务母表.md) **B-186**
+- **本轮已改**：**`docs/spec/04-后端与API.md`** **§3.4** **TT-B186**（**`narrative_alignment` 规划名→实现对读** 短文；**Test** 行增 **`indexer_observability_v1_includes_b166_chain_observation_when_set`**）；**`docs/spec/110-阶段开发链上索引器与事件同步器.md`** **§3.1.4** **TT-B186** 互指；**`docs/任务母表.md`**、**`docs/AI任务卡索引.md`**、**`docs/Phase-Close-Docs-Code-Reorg-Plan-B178.md`**、**`docs/spec/07-开发流程与顺序.md`**、**`docs/spec/00-文档索引.md`**（**07** **版本三线** **1.0.841**）
+- **任务**：**B-166** **叙事** 与 **Phase Close 附录 A** **`narrative_alignment`** **规划名** **字段级对读**（**不**增独立 JSON 子树）；**测** **以** **既有** **`b166_*`** / **`meta_absent_frags`** / **`indexer_observability_v1_includes_b166_chain_observation_when_set`** **为闭环**。
+- **验收**：**`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** 绿；**`bash scripts/check-07-version-triple.sh`** 绿（**本批** **动** **07** **Version**）。
+- **测试**：**`cargo test -p traveltrust-api`**（**`b166_`** **前缀** + **`indexer_observability_v1_includes_b166_chain_observation_when_set`** **或** **全包**）
+
+### TT-B201-ENTERPRISE-API-RS-FOOTPRINT-AUDIT-001
+
+- **阶段**：api / **企业级审计（07 · 48 · check-48）**
+- **状态**：已封口（**2026-04-13** · **审计基线**）
+- **母表**：[任务母表.md](./任务母表.md) **B-201**
+- **本轮仅改**：**`docs/Enterprise-Code-Footprint-Audit-API-Rust.md`**、**`docs/任务母表.md`** **B-201 指针**、**本索引节**
+- **任务**：对 **`crates/api/src/**/*.rs`** **`wc -l` 排序**；**产出** **Top（>500，与脚本违规集一致）**；**每行** **至少含**：路径、行数、类型、**是否超脚本门禁**、风险、**P0/P1/P2**、**拆分轴**、**母卡/TT 指针**、**AI 稳定性**、**复测命令**；**另附** **按文件类型的拆分策略** + **与 `scripts/gates/check-48-line-count.sh` 的对读**（**默认 500** / **`STRICT=1` 400** / **违规计数**）。**重申**：**脚本** **为** **唯一裁决器**；**审计表** **快照** **非** SSOT。**禁止** **本 TT** **内** **顺手巨型拆分**。
+- **交付物**：**[Enterprise-Code-Footprint-Audit-API-Rust.md](./Enterprise-Code-Footprint-Audit-API-Rust.md)**
+- **验收**：**审计件** **与** **`bash scripts/check-48-line-count.sh`** **可逐条对读**；**`bash scripts/run-check-04-routes.sh`** 绿。
+- **备注**：**单人维护** **无** **PR**；**刷新审计件** **=** **commit 前** **对读** **+** **文档同批**。**后续** **模块化拆分**（**B-182** 等）**须在** **提交说明**（**或** **独立 `evidence/` 片段**）**附**：**审计表** **Before/After** **行数** + **`bash scripts/gates/check-48-line-count.sh`** **完整输出**（**或** **stderr 摘录**）— **见** **审计件 §5**。
+- **测试**：—
+
+### TT-B202-ENTERPRISE-FRONTEND-TS-FOOTPRINT-AUDIT-001
+
+- **阶段**：frontend / **企业级审计（07 · 6.3A）**
+- **状态**：已封口（**2026-04-13** · **审计基线**）
+- **母表**：[任务母表.md](./任务母表.md) **B-202**
+- **本轮仅改**：**`docs/Enterprise-Code-Footprint-Audit-Frontend.md`**、**`docs/任务母表.md`** **B-202 指针**、**本索引节**
+- **任务**：**`frontend/**/*.ts`/`*.tsx`** **`wc -l`**，**排除** **`locales/**`**、**`e2e/**`**、**`**/*.test.*`**；**≥550 行** **入表**；**列** **同 B-201 治理口径**（**前端无 check-48 单文件 gate** — **须在审计件中写明对读结论**）；**与** **B-195** **Motion 预设** **正交**。
+- **交付物**：**[Enterprise-Code-Footprint-Audit-Frontend.md](./Enterprise-Code-Footprint-Audit-Frontend.md)**
+- **验收**：**审计件** **与** **本地** **复跑** **§1** **命令** **输出** **一致**（**单人流程** **无** **PR** **要求**）；**`bash scripts/run-check-04-routes.sh`** 绿（**纯文档** **默认**）；**`npx tsc --noEmit -p frontend`** **建议** **本地** **自证**。
+- **备注**：同 **TT-B201** — **单人** **直推**；**同批** **指** **commit** **级**；**拆分后** **提交说明** **须** **附** **审计表** **Before/After**（**§5**）。
+- **测试**：—
+
+### TT-SOLO-ROADMAP-MVP-001
+
+- **阶段**：process / **1 人开发 · 可演示产品优先**
+- **状态**：**进度锚点（非阻塞）** — **不**要求「封口」才算完成路线图；每达成一阶段可在 **备注** 或 **路线图 §6** 自建勾选。
+- **母表**：[任务母表.md](./任务母表.md) **「1 人开发·极简路线图（总序）」**（非独立 B 行，**避免**与 **B-201/B-202** 审计号混号）。
+- **本轮仅改**：**无固定路径** — 推进 **P0～P4** 时按当下竖切开 **具体业务 TT**；本卡 **仅** 维护 **[路线图-1人开发极简版.md](./路线图-1人开发极简版.md)** 与 **本段任务目标** 对齐。
+- **任务目标（聚合 · 极简）**：
+  1. **P0**：游客从 **落地/首页** 经 **`/market`** 完成 **下单/意向** 并进入 **`/escrow/[id]`** 主路径，**弱网/错误** 下仍可理解下一步。
+  2. **P1**：**`/guide`** 与 **市场/订单/托管** 形成可讲的 **向导侧** 故事线。
+  3. **P2**：**钱包连接、链 ID、关键链上步骤** 在 UI 上 **可感知**；**P18/mock** 演示不断档。
+  4. **P3**：**骨架屏、空态、移动端关键路径、smoke/core e2e** 达到「对外演示不尴尬」。
+  5. **P4**：**治理/admin/索引器** 等 **按需**；**不**与 **P0** 抢窗口。
+- **验收**：以 **[路线图-1人开发极简版.md](./路线图-1人开发极简版.md)** **§2 阶段表** 为口头验收清单；**技术验证** 仍按各竖切 **TT** 内命令（**`cargo test -p traveltrust-api`**、**`run-check-04-routes`**、**`tsc`/`npm test`** 等）。
+- **测试**：—（**由子任务 TT 承载**）
+- **备注**：选此模式时 **不必** 等 **85 封口清单** 或 **某张 TT 已封口** 再合 **下一张**；**04/资金/合约语义** 变更仍须 **spec 同批** 与 **既有 CI**。
 
 ---
 
-### TT-B227-14-REGIONVAULT-CLAIM-BATCH-PLAN-EXPORT-001
+## 新增任务卡时（维护约定）
 
-- **阶段**：api / **14 §1.1.1 · RegionVault** · **B-226 dryrun → 批次计划**（**母表 B-227**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-227**
-- **封口批已落**：**`crates/api/src/db/region_vault_claim_batch_plan.rs`**；**`crates/api/src/routes/admin/region_vault_claim_batch_plan.rs`**、**`crates/api/src/routes/internal/region_vault_claim_batch_plan.rs`**；**`crates/api/src/db/mod.rs`**；**`crates/api/src/routes/admin/mod.rs`**、**`crates/api/src/routes/internal/mod.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`**；**本索引一览 244 / 本节**
-- **任务（摘要）**：**`GET …/admin|internal/region-vault/snapshot-claim-batch-plan(/export)`**；**`batches[]`**** **键** **`(jurisdiction, snapshot_epoch)`**；**`chain_executions[]`**** **升序** **`chain_id`**。
-- **边界**：**只读**；**不** **上链**；**不** **改** **SSOT**。
-- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
-- **测试**：**`cargo test -p traveltrust-api`**
+1. 在本文件表格 **一览** 中增加一行，**序号** 续编。  
+2. 在 **正文** 增加一节，字段齐全：**阶段 / 状态 / 本轮仅改 / 禁止再分析 / 任务 / 验收 / 测试（可选）/ 备注**。  
+3. **ID** 建议：`TT-<域>-<主题>-<序号>`，与历史风格一致。  
+4. 封口后把 **状态** 改为 `已封口`，避免重复执行。
 
 ---
 
-### TT-B228-14-REGIONVAULT-CLAIM-EXECUTION-EVIDENCE-STUB-001
-
-- **阶段**：api / **14 §1.1.1 · RegionVault** · **B-227 batch plan → 执行证据壳（占位字段）**（**母表 B-228**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-228**
-- **封口批已落**：**`crates/api/src/db/region_vault_claim_execution_evidence_stub.rs`**；**`crates/api/src/routes/admin/region_vault_claim_execution_evidence_stub.rs`**、**`crates/api/src/routes/internal/region_vault_claim_execution_evidence_stub.rs`**；**`crates/api/src/db/mod.rs`**；**`crates/api/src/routes/admin/mod.rs`**、**`crates/api/src/routes/internal/mod.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`**；**本索引一览 245 / 本节**
-- **任务（摘要）**：**`GET …/admin|internal/region-vault/snapshot-claim-execution-evidence-stub(/export)`**；**`claim_execution_evidence_plan_id`**（**稳定** **SHA256**）；**`batch_summary`****+****`execution_evidence_stub`****（** **`tx_hash`****/**`status`****/**`block_number`****/**`log_index`** **预留**）**。
-- **边界**：**只读**；**不** **发交易**；**不** **写** **链上** **证据**（**stub** **仅** **定型** **字段**）。
-- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
-- **测试**：**`cargo test -p traveltrust-api`**
-
----
-
-### TT-B229-14-REGIONVAULT-CLAIM-EXECUTION-STATUS-IMPORT-READMODEL-001
-
-- **阶段**：api / **14 §1.1.1 · RegionVault** · **B-228 stub + 外部导入执行状态只读合并**（**母表 B-229**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-229**
-- **封口批已落**：**`crates/api/src/region_vault_claim_execution_status_import.rs`**；**`crates/api/src/db/region_vault_claim_execution_status_read_model.rs`**；**`crates/api/src/db/mod.rs`**；**`crates/api/src/main.rs`**；**`crates/api/src/state/mod.rs`**、**`crates/api/src/startup/run.rs`**；**`crates/api/src/routes/admin/region_vault_claim_execution_status_read_model.rs`**、**`crates/api/src/routes/internal/region_vault_claim_execution_status_read_model.rs`**；**`crates/api/src/routes/admin/mod.rs`**、**`crates/api/src/routes/internal/mod.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`**；**`.env.example`**；**本索引一览 246 / 本节**
-- **任务（摘要）**：**`GET …/admin|internal/region-vault/snapshot-claim-execution-status-read-model(/export)`**；**可选** **`REGION_VAULT_CLAIM_EXECUTION_STATUS_IMPORT_PATH`**；**`execution_status_read_model`**** **+** **`data_sources.execution_status_import`**。
-- **边界**：**只读**；**不** **上链**；**不** **RPC** **验导入** **真伪**。
-- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
-- **测试**：**`cargo test -p traveltrust-api`**
-
----
-
-### TT-B230-14-REGIONVAULT-CLAIM-EXECUTION-RECONCILE-REPORT-001
-
-- **阶段**：api / **14 §1.1.1 · RegionVault** · **B-226～B-229 合成 reconcile（expected/executed/delta）**（**母表 B-230**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-230**
-- **封口批已落**：**`crates/api/src/db/region_vault_claim_execution_reconcile_report.rs`**；**`crates/api/src/db/mod.rs`**；**`crates/api/src/routes/admin/region_vault_claim_execution_reconcile_report.rs`**、**`crates/api/src/routes/internal/region_vault_claim_execution_reconcile_report.rs`**；**`crates/api/src/routes/admin/mod.rs`**、**`crates/api/src/routes/internal/mod.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`**；**本索引一览 247 / 本节**
-- **任务（摘要）**：**`GET …/admin|internal/region-vault/snapshot-claim-execution-reconcile-report(/export)`**；**`reconcile_summary`**** **+** **`batches[]`**** **`expected`****/**`executed`****/**`delta`**。
-- **边界**：**只读**；**不** **上链**；**不** **RPC** **验** **导入** **或** **金额**。
-- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
-- **测试**：**`cargo test -p traveltrust-api`**
-
----
-
-### TT-B231-14-REGIONVAULT-CLAIM-GO-NO-GO-GATE-READONLY-001
-
-- **阶段**：api / **14 §1.1.1 · RegionVault** · **B-230 + B-225 只读 GO/NO-GO 门禁摘要**（**母表 B-231**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-231**
-- **封口批已落**：**`crates/api/src/db/region_vault_claim_go_no_go_gate_readonly.rs`**；**`crates/api/src/db/mod.rs`**；**`crates/api/src/routes/admin/region_vault_claim_go_no_go_gate_readonly.rs`**、**`crates/api/src/routes/internal/region_vault_claim_go_no_go_gate_readonly.rs`**；**`crates/api/src/routes/admin/mod.rs`**、**`crates/api/src/routes/internal/mod.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`**；**本索引一览 248 / 本节**
-- **任务（摘要）**：**`GET …/admin|internal/region-vault/snapshot-claim-go-no-go-gate(/export)`**；**`gate_summary`****+****`gates[]`**** **`readiness_aggregate`****/**`reconcile_code`****/**`delta_notes`****/**`verdict`****。
-- **边界**：**只读**；**不** **上链**；**不** **执行** **claim**。
-- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
-- **测试**：**`cargo test -p traveltrust-api`**
-
----
-
-### TT-B232-14-REGIONVAULT-CLAIM-GO-NO-GO-EVIDENCE-BUNDLE-001
-
-- **阶段**：api / **14 §1.1.1 · RegionVault** · **B-225～B-231 只读 claim 证据包（admin）**（**母表 B-232**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-232**
-- **封口批已落**：**`crates/api/src/db/region_vault_claim_go_no_go_evidence_bundle.rs`**；**`crates/api/src/db/mod.rs`**；**`crates/api/src/routes/admin/region_vault_claim_go_no_go_evidence_bundle.rs`**；**`crates/api/src/routes/admin/mod.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`**；**`ops/RUNBOOK.md`** **§2.55**；**本索引一览 249 / 本节**
-- **任务（摘要）**：**`GET …/admin/region-vault/snapshot-claim-go-no-go-evidence-bundle(/export)`**；**`legs`****+****`leg_content_sha256`****+****`bundle_legs_sha256`**；**`format=csv`** **索引** **表**。
-- **边界**：**只读**；**不** **上链**；**不** **执行** **claim**；**无** **internal** **镜像**。
-- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**
-- **测试**：**`cargo test -p traveltrust-api`**
-
----
-
-### TT-B233-14-REGIONVAULT-CLAIM-EVIDENCE-BUNDLE-RUNBOOK-CI-001
-
-- **阶段**：CI / **14 · RegionVault** · **B-232 证据包离线验收与 artifact**（**母表 B-233**；承 **B-232**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-233**
-- **封口批已落**：**`.github/workflows/build.yml`**（**`Claim GO/NO-GO evidence bundle CI artifact (B-233)`** **步** **+** **`build-backend-evidence`** **路径** **`claim_go_no_go_evidence_bundle_ci/**`**）；**`scripts/verify-claim-go-no-go-evidence-bundle.sh`**；**`scripts/ops/verify-claim-go-no-go-evidence-bundle.py`**（**子命令** **`ci`****/**`live-read`****/**`live-full`**）；**`crates/api/src/db/region_vault_claim_go_no_go_evidence_bundle.rs`** **`claim_go_no_go_evidence_bundle_ci_artifact`**；**`ops/RUNBOOK.md`** **§2.55**；**`docs/spec/04-后端与API.md`** **§3.5** **B-232** **`/export`** **行** **CI** **脚注**；**本索引一览 250 / 本节**
-- **任务（摘要）**：**`TRAVELTRUST_CLAIM_GO_NO_GO_BUNDLE_CI_OUT`** **驱动** **落盘** **`bundle_read.json`****/**`bundle_export.json`****/**`index.csv`****/**`claim_go_no_go_evidence_bundle_ci_summary.json`**；**Python** **`ci`** **复验** **`leg_content_sha256`****/**`bundle_legs_sha256`****/**文件** **SHA256** **与** **summary** **一致**。
-- **边界**：**不** **上链**；**不** **执行** **claim**；**fixture** **为** **最小** **七腿** **形状** **（** **非** **联机** **DB** **快照** **黄金** **文件** **）**。
-- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python3 scripts/ops/verify-claim-go-no-go-evidence-bundle.py ci`** **对** **CI** **产出目录** **绿**
-- **测试**：**`cargo test -p traveltrust-api`** **`claim_go_no_go_evidence_bundle_ci_artifact`**
-
----
-
-### TT-B234-14-REGIONVAULT-CLAIM-LIVE-ADMIN-VALIDATION-RUNBOOK-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-232/B-233 联机 admin 验收 Runbook+脚本**（**母表 B-234**；承 **B-232**/**B-233**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-234**
-- **封口批已落**：**`scripts/region-vault-claim-go-no-go-evidence-bundle-live-admin-validate.sh`**；**`scripts/ops/region-vault-claim-go-no-go-evidence-bundle-live-admin-validate.sh`**；**`scripts/ops/verify-claim-go-no-go-evidence-bundle.py`** **`live-read`****/**`live-full`**；**`ops/RUNBOOK.md`** **§2.55**；**`docs/spec/04-后端与API.md`** **§3.5** **B-232** **read** **行** **脚注**；**`scripts/README.md`**；**本索引一览 251 / 本节**
-- **任务（摘要）**：**`ADMIN_BEARER_TOKEN`** **+** **`curl`** **read** **/** **export json** **/** **export csv**；**200**、**export** **`x-traveltrust-reconcile-export-sha256`****=****`sha256(体)`**、**CSV** **8** **行**、**`live_admin_summary.json`**（**锚** **`14-REGIONVAULT-CLAIM-GO-NO-GO-EVIDENCE-BUNDLE-LIVE-ADMIN-V1`**）；**与** **B-233** **同** **哈希** **算法** **对** **`legs`****/**`leg_content_sha256`****/**`bundle_legs_sha256`**。
-- **边界**：**不** **上链**；**不** **执行** **claim**；**不** **绑** **默认** **CI**（**须** **自备** **admin** **环境**）。
-- **验收**：**联机** **`bash scripts/region-vault-claim-go-no-go-evidence-bundle-live-admin-validate.sh`** **exit 0**（**预发** **/** **值班** **环境**）
-- **测试**：—（**本卡** **无** **新增** **Rust** **门禁**；**可选** **本地** **用** **`live-full`** **对** **B-233** **fixture** **目录** **冒烟**）
-
----
-
-### TT-B235-14-REGIONVAULT-CLAIM-GO-NO-GO-LIVE-EVIDENCE-ARCHIVE-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-234 联机产物标准归档**（**母表 B-235**；承 **B-232**/**B-233**/**B-234**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-235**
-- **封口批已落**：**`scripts/archive-region-vault-claim-go-no-go-live-evidence.sh`**；**`scripts/ops/archive-region-vault-claim-go-no-go-live-evidence.sh`**；**`archive_manifest.json`**（**含** **`index`****/**`navigation`** **B-236**）**/** **`README.md`** **/** **`ARCHIVE_README.md`** **/** **`artifacts.sha256`**（**根** **三** **文件** **+** **`artifacts/*`**）**/** **`artifacts/*`** **命名** **（** **机读锚** **`14-REGIONVAULT-CLAIM-GO-NO-GO-LIVE-EVIDENCE-ARCHIVE-V1`** **）**；**`scripts/ops/verify-claim-go-no-go-evidence-bundle.py`** **`live-full`** **归档** **后** **复验**；**`ops/RUNBOOK.md`** **§2.55**；**`docs/spec/04-后端与API.md`** **§3.5** **B-232** **行** **脚注**；**`scripts/README.md`**；**本索引一览 252 / 本节**
-- **任务（摘要）**：**一键** **委托** **B-234** **至** **`.staging_b234`** **再** **规范化** **复制** **为** **`artifacts/bundle_read.json`** **等**；**`--finalize-only <b234_dir> <archive_root>`** **不** **curl**；**根** **`artifacts.sha256`** **路径** **前缀** **`artifacts/`** **以便** **归档** **根** **`sha256sum -c`**。
-- **边界**：**不** **上链**；**不** **执行** **claim**；**不** **改** **API** **契约**。
-- **验收**：**`bash scripts/archive-region-vault-claim-go-no-go-live-evidence.sh --finalize-only …`** **或** **联机** **一键** **exit 0**；**归档** **根** **`sha256sum -c artifacts.sha256`** **绿**
-- **测试**：—（**无** **新增** **Rust**；**可选** **`bash -n`** **脚本** **+** **`--finalize-only`** **冒烟**）
-
----
-
-### TT-B236-14-REGIONVAULT-CLAIM-LIVE-EVIDENCE-INDEX-README-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-235 归档包统一索引与复核入口**（**母表 B-236**；承 **B-235**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-236**
-- **封口批已落**：**`scripts/ops/archive-region-vault-claim-go-no-go-live-evidence.sh`** **生成** **根** **`README.md`**（**总览**、**manifest** **键** **导航**、**复跑** **命令**）；**`archive_manifest.json`** **`index`****（** **`check_anchor`****=****`14-REGIONVAULT-CLAIM-LIVE-EVIDENCE-INDEX-README-V1`** **）** **与** **`navigation`**；**`artifacts.sha256`** **纳入** **`README.md`****/**`ARCHIVE_README.md`****/**`archive_manifest.json`**；**`ops/RUNBOOK.md`** **§2.55**；**`docs/spec/04-后端与API.md`** **§3.5**；**`scripts/README.md`**；**本索引一览 253 / 本节**
-- **任务（摘要）**：**每次** **联机** **归档** **同构** **审计**：**先** **打开** **`README.md`** → **按** **清单** **跑** **`sha256sum -c`****/**`jq`** **三** **锚** **快检** **→** **`live-full`**。
-- **边界**：**不** **上链**；**不** **执行** **claim**；**不** **单独** **改** **API** **契约**（**指针** **仅** **04** **脚注**）。
-- **验收**：**新** **归档** **含** **`README.md`**；**`sha256sum -c artifacts.sha256`** **绿**；**`README.md`** **内** **`jq`** **三** **`test`** **绿**
-- **测试**：—（**无** **Rust**）
-
----
-
-### TT-B237-14-REGIONVAULT-CLAIM-LIVE-EVIDENCE-CI-ARCHIVE-SMOKE-001
-
-- **阶段**：CI / **14 · RegionVault** · **B-235/B-236 归档脚本冒烟**（**母表 B-237**；承 **B-233**/**B-235**/**B-236**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-237**
-- **封口批已落**：**`scripts/ops/claim-go-no-go-bundle-ci-out-to-b234-staging.sh`**；**`scripts/ops/claim_go_no_go_bundle_b234_live_summary_from_env.py`**；**`scripts/ops/region-vault-claim-live-archive-ci-smoke.sh`**；**`scripts/region-vault-claim-live-archive-ci-smoke.sh`**；**`scripts/ops/archive_claim_go_no_go_live_write_manifest.py`**（**B-235** **归档** **写** **manifest**）；**`.github/workflows/build.yml`** **`Claim live evidence archive CI smoke (B-237)`**；**`ops/RUNBOOK.md`** **§2.55**；**`scripts/README.md`**；**本索引一览 254 / 本节**
-- **任务（摘要）**：**`cargo test … claim_go_no_go_evidence_bundle_ci_artifact`****+****`verify … ci`** **之后** **将** **B-233** **目录** **合成** **B-234** **snapshot** **文件名** **并** **`finalize-only`**；**断言** **`README.md`****/**`archive_manifest.json`****/**`artifacts.sha256`** **与** **`index.check_anchor`** **+** **`sha256sum -c`**。
-- **边界**：**不** **curl** **真实** **admin**；**不** **上链**；**不** **执行** **claim**。
-- **验收**：**Build** **job** **该** **步** **绿**；**本地** **同** **命令** **链** **绿**
-- **测试**：—（**无** **新增** **Rust** **用例**；**冒烟** **即** **门禁**）
-
----
-
-### TT-B238-14-REGIONVAULT-CLAIM-GO-NO-GO-RELEASE-GATE-READONLY-001
-
-- **阶段**：API / **14 · RegionVault** · **claim GO/NO-GO 发布门禁只读摘要**（**母表 B-238**；承 **B-231～B-237**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-238**
-- **封口批已落**：**`crates/api/src/db/region_vault_claim_go_no_go_release_gate_readonly.rs`**；**`crates/api/src/db/mod.rs`**；**`crates/api/src/routes/admin/region_vault_claim_go_no_go_release_gate_readonly.rs`**；**`crates/api/src/routes/admin/mod.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`docs/spec/04-后端与API.md`** **§3.5**；**`ops/RUNBOOK.md`** **§2.55**；**本索引一览 255 / 本节**
-- **任务（摘要）**：**`build_region_vault_claim_go_no_go_release_gate_readonly_body`** **内** **先** **B-232** **证据包** **再** **派生** **`release_verdict`****（** **`GO`****/**`NO_GO`****/**`NO_OP`** **）** **与** **`blocking_reasons[]`**；**静态** **`required_evidence_checklist`****+****`archive_integrity_checks`** **指向** **B-233～B-237**/**B-240**/**B-241** **运维**/**CI** **（** **API** **不读** **归档** **盘** **）**；**`GET …/admin/region-vault/snapshot-claim-go-no-go-release-gate(/export)`** **JSON+CSV** **附件** **与** **reconcile** **export** **头** **同形**。
-- **边界**：**无** **internal** **镜像**；**不** **上链**；**不** **执行** **claim**；**不** **替代** **B-233～B-237** **脚本** **真值** **（** **清单** **为** **指针** **+** **模板** **）**。
-- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`python scripts/check-04-routes-vs-code.py`** **绿**；**联机** **按** **RUNBOOK** **§2.55** **B-238** **最小** **验收** **（** **200** **+** **export** **SHA256** **头** **+** **verdict** **与** **gate_summary** **一致** **）**
-- **测试**：**`cargo test -p traveltrust-api`** **（** **含** **`region_vault_claim_go_no_go_release_gate_readonly`** **单测** **）**
-
----
-
-### TT-B239-14-REGIONVAULT-CLAIM-GO-NO-GO-RELEASE-GATE-LIVE-ARCHIVE-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-238 联机结果 → B-235 同构归档**（**母表 B-239**；承 **B-238**、模板 **B-235～B-237**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-239**
-- **封口批已落**：**`scripts/ops/verify-claim-go-no-go-release-gate.py`**；**`scripts/ops/region-vault-claim-go-no-go-release-gate-live-admin-validate.sh`**；**`scripts/region-vault-claim-go-no-go-release-gate-live-admin-validate.sh`**；**`scripts/ops/archive-region-vault-claim-go-no-go-release-gate-live-evidence.sh`**；**`scripts/archive-region-vault-claim-go-no-go-release-gate-live-evidence.sh`**；**`scripts/ops/archive_claim_go_no_go_release_gate_live_write_manifest.py`**；**`scripts/verify-claim-go-no-go-release-gate.sh`**；**`ops/RUNBOOK.md`** **§2.55**；**`docs/spec/04-后端与API.md`** **§3.5** **B-238** **脚注**；**`scripts/README.md`**；**本索引一览 256 / 本节**
-- **任务（摘要）**：**联机** **拉** **B-238** **read/export** → **`live-read`****/**`live-full`** **（** **CSV** **2** **行** **）** → **`live_admin_summary`** **（** **锚** **`14-REGIONVAULT-CLAIM-GO-NO-GO-RELEASE-GATE-LIVE-ADMIN-V1`** **）**；**`archive-…-release-gate-live-evidence.sh`** **写** **`ARCHIVE_README`****/**`archive_manifest`****（** **`mother_table`****=****`B-239`** **+** **`index.*`**** **B-241** **）****/**`artifacts.sha256`****/**`artifacts/release_gate_read.json`**** **等**；**根** **`README.md`** **索引** **页** **见** **B-241**；**`--finalize-only`** **不** **curl**。
-- **边界**：**不** **上链**；**不** **执行** **claim**；**不** **改** **B-238** **HTTP** **契约**（**本卡** **仅** **脚本** **+** **归档** **模板**）。
-- **验收**：**`bash -n`** **新** **`.sh`** **绿**；**联机** **validate + archive** **exit 0**；**归档** **根** **`sha256sum -c artifacts.sha256`** **绿**
-- **测试**：—（**无** **新增** **Rust**；**Python** **`verify-claim-go-no-go-release-gate.py`** **为** **门禁**）
-
----
-
-### TT-B240-14-REGIONVAULT-CLAIM-RELEASE-GATE-CI-ARCHIVE-SMOKE-001
-
-- **阶段**：CI / **14 · RegionVault** · **B-239 归档模板 finalize-only 冒烟**（**母表 B-240**；承 **B-239**、范式 **B-237**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-240**
-- **封口批已落**：**`scripts/ops/claim_go_no_go_release_gate_b240_ci_staging_write.py`**；**`scripts/ops/region-vault-claim-release-gate-archive-ci-smoke.sh`**；**`scripts/region-vault-claim-release-gate-archive-ci-smoke.sh`**；**`.github/workflows/build.yml`** **`Claim release gate archive CI smoke (B-240)`**；**`crates/api/src/db/region_vault_claim_go_no_go_release_gate_readonly.rs`**（**`archive_integrity_checks`**** **`b240_release_gate_archive_smoke_green`** **等**）；**`ops/RUNBOOK.md`** **§2.55**；**`docs/spec/04-后端与API.md`** **§3.5** **B-238**；**`scripts/README.md`**；**本索引一览 257 / 本节**
-- **任务（摘要）**：**确定性** **fixture** **写** **B-239** **validate** **同名** **产物** **→** **`archive-region-vault-claim-go-no-go-release-gate-live-evidence.sh --finalize-only`** **→** **断言** **`README`****/**`archive_manifest.json`****（** **`mother_table`****+****`index.mother_table`****+****`index.tt_id`** **）****/**`artifacts.sha256`** **、****`sha256sum -c`****、****`verify-claim-go-no-go-release-gate.py live-full`** **（** **归档** **`artifacts/`** **三** **文件** **）**。
-- **边界**：**不** **curl**；**不** **上链**；**不** **执行** **claim**；**fixture** **非** **API** **真值** **（** **仅** **模板** **回归** **）**。
-- **验收**：**Build** **job** **该** **步** **绿**；**本地** **`bash scripts/ops/region-vault-claim-release-gate-archive-ci-smoke.sh <empty_archive_dir>`** **exit 0**
-- **测试**：**`cargo test -p traveltrust-api`** **绿**（**B-238** **`archive_integrity_checks`** **diff** **触** **既有** **单测** **路径** **时**）
-
----
-
-### TT-B241-14-REGIONVAULT-CLAIM-RELEASE-GATE-LIVE-EVIDENCE-INDEX-README-001
-
-- **阶段**：ops / **14 · RegionVault** · **发布门禁归档 README 索引**（**母表 B-241**；承 **B-239**、**B-240**；范式 **B-236**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-241**
-- **封口批已落**：**`scripts/ops/archive-region-vault-claim-go-no-go-release-gate-live-evidence.sh`**（**`README.md`****+****`ARCHIVE_README.md`** **文案**）；**`scripts/ops/archive_claim_go_no_go_release_gate_live_write_manifest.py`**（**`index.mother_table`****/**`index.tt_id`****/**`index.parity`**）；**`crates/api/src/db/region_vault_claim_go_no_go_release_gate_readonly.rs`**（**`release_gate_archive_index_readme_b241`**）；**`ops/RUNBOOK.md`** **§2.55**；**`docs/spec/04-后端与API.md`** **§3.5** **B-238**；**`docs/任务母表.md`**；**`scripts/README.md`**；**本索引一览 258 / 本节**
-- **任务（摘要）**：**联机** **与** **CI** **两套** **证据** **经** **同一** **`finalize-only`** **路径** **落盘**；**根** **`README.md`** **为** **审计** **首页**（**导航**、**manifest** **键** **说明**、**复跑** **命令** **清单**、**B-239/B-240** **对照**）；**`archive_manifest.json`** **`index.check_anchor`****=****`14-REGIONVAULT-CLAIM-RELEASE-GATE-LIVE-EVIDENCE-INDEX-README-V1`**。
-- **边界**：**不** **改** **B-238** **HTTP** **契约**；**不** **上链**；**不** **执行** **claim**。
-- **验收**：**新** **归档** **`jq`** **快检** **`mother_table`****+****`index.*`** **绿**；**`region-vault-claim-release-gate-archive-ci-smoke.sh`** **绿**；**`cargo test -p traveltrust-api`** **绿**
-- **测试**：**`cargo test -p traveltrust-api`**
-
----
-
-### TT-B242-14-REGIONVAULT-CLAIM-RELEASE-GATE-FINAL-GO-REPORT-READONLY-001
-
-- **阶段**：api / **14 · RegionVault** · **发布门禁最终只读 GO 签署视图**（**母表 B-242**；承 **B-238**、**B-239**/**B-241** 归档叙事）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-242**
-- **封口批已落**：**`crates/api/src/db/region_vault_claim_release_gate_final_go_report_readonly.rs`**；**`crates/api/src/routes/admin/region_vault_claim_release_gate_final_go_report_readonly.rs`**；**`crates/api/src/routes/admin/mod.rs`**；**`crates/api/src/routes/read_contract_route_guard.rs`**；**`crates/api/src/routes/admin/audit_read.rs`**；**`docs/spec/04-后端与API.md`** **§3.5**；**`ops/RUNBOOK.md`** **§2.55**；**`docs/任务母表.md`**；**本索引一览 259 / 本节**
-- **任务（摘要）**：**`GET …/snapshot-claim-go-no-go-release-gate-final-go-report`** **嵌** **B-238** **`claim_go_no_go_release_gate`** **+** **`archive_attestation`**（**query** **自** **证** **路径**/**SHA256**）**+** **`derived.review_conclusion_*`****+****`final_publish_view_one_liner`**；**`export`** **JSON/CSV** **（** **CSV** **单行** **签署** **行** **）**。
-- **边界**：**不** **上链**；**不** **执行** **claim**；**无** **internal** **镜像**；**API** **不** **验证** **归档** **文件系统**。
-- **验收**：**`cargo test -p traveltrust-api`** **绿**；**`bash scripts/run-check-04-routes.sh`** **绿**
-- **测试**：**`cargo test -p traveltrust-api`** **`b242_`**
-
----
-
-### TT-B248-14-REGIONVAULT-CLAIM-READONLY-PHASE-CLOSE-SUMMARY-001
-
-- **阶段**：docs / **14 · RegionVault** · **Snapshot·Claim 只读链阶段正式封口**（**母表 B-248**；承 **B-223～B-247** 叙事汇总，**非** 吞并实现卡）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-248**
-- **封口批已落**：**[spec/14-附录-RegionVault-Claim-只读链阶段封口-B248.md](./spec/14-附录-RegionVault-Claim-只读链阶段封口-B248.md)**（**机读锚** **`14-REGIONVAULT-CLAIM-READONLY-PHASE-CLOSE-SUMMARY-V1`**）；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1b**；**`docs/任务母表.md`**；**本索引一览 260 / 本节**
-- **任务（摘要）**：**六段闭环表**（**数据→判定→证据→归档→索引→checklist**）**+** **显式不包含**（**写链**、**stub→真** **交易** **SSOT** **等**）**+** **执行链** **须** **另开** **非只读** **母卡** **声明**
-- **边界**：**零** **04** **契约** **/** **合约** **/** **Rust** **本卡** **diff**；**不** **替代** **B-243～B-247** **单卡** **运维** **脚本** **真值**
-- **验收**：**14 §1.1.1.1b** ↔ **附录** **标题** **/** **锚** **/** **B-223～B-247** **表** **互指** **一致**
-- **测试**：—（**纯文档**）
-
----
-
-### TT-B250-14-REGIONVAULT-CLAIM-EXECUTION-DRYRUN-CLI-V1-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-226 dryrun JSON → 拟执行交易 manifest（只读）**（**母表 B-250**；承 **B-226/B-227**；对读 **B-249**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-250**
-- **封口批已落**：**`scripts/ops/region_vault_claim_execution_dryrun_cli.py`**；**`scripts/region-vault-claim-execution-dryrun-cli.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1d**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5** **B-250**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 262 / 本节**
-- **任务（摘要）**：**`build <dryrun.json>`** **输出** **`rule_version`****=****`region_vault_claim_execution_dryrun_cli_manifest_v1`**、**`anchor`****=****`14-REGIONVAULT-CLAIM-EXECUTION-DRYRUN-CLI-MANIFEST-V1`**；**`batches[]`**** **`batch_plan_id`** **同** **B-227**；**`proposed_transactions[]`** **每** **行** **对应** **一** **笔** **`erc20_transfer_placeholder`**（**`--vault-from`** **可选** **`from_address`**）**；** **默认** **叠** **B-251** **`signing_plan_stub`** **+** **B-252** **`signing_artifact_stub`**（**`--omit-signing-plan-stub`****/** **`--omit-signing-artifact-stub`** **）**
-- **边界**：**不** **签名**、**不** **广播**、**不** **新增** **HTTP** **路由**
-- **验收**：**`python scripts/ops/region_vault_claim_execution_dryrun_cli.py self-test`** **exit 0**
-- **测试**：**`python scripts/ops/region_vault_claim_execution_dryrun_cli.py self-test`**
-
----
-
-### TT-B251-14-REGIONVAULT-CLAIM-EXECUTION-SIGNING-PLAN-STUB-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-250 manifest 上叠加只读签名计划壳**（**母表 B-251**；承 **B-250**、对读 **B-249**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-251**
-- **封口批已落**：**`scripts/ops/region_vault_claim_execution_dryrun_cli.py`**（**`signing_plan_stub`****/** **`signing_plan_batch_stub`****/** **逐** **tx** **`signing_plan_stub`**）；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1e**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-251**；**本索引一览 263 / 本节**
-- **任务（摘要）**：**根** **`14-REGIONVAULT-CLAIM-EXECUTION-SIGNING-PLAN-STUB-V1`** **+** **`root_plan_id`****+****`batch_plan_ids_fingerprint_sha256_hex`**；**批** **`plan_id`****/** **`signer_role`****/** **`nonce_strategy`****/** **`gas_policy`****/** **`signing_order_policy`**；**笔** **`plan_id`****/** **`signing_order`**** **等**；**默认** **叠** **B-252** **`signing_artifact_stub`**（**`--omit-signing-artifact-stub`** **/** **`--omit-signing-plan-stub`** **）**
-- **边界**：**不** **签名**、**不** **广播**、**不** **新** **HTTP**
-- **验收**：**`python scripts/ops/region_vault_claim_execution_dryrun_cli.py self-test`**
-- **测试**：**`python scripts/ops/region_vault_claim_execution_dryrun_cli.py self-test`**
-
----
-
-### TT-B252-14-REGIONVAULT-CLAIM-EXECUTION-SIGNING-ARTIFACT-STUB-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-251 上每批签名产物壳 + 逐 tx 回填绑键**（**母表 B-252**；承 **B-251**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-252**
-- **封口批已落**：**`scripts/ops/region_vault_claim_execution_dryrun_cli.py`**（**`signing_artifact_stub`****/** **`signing_artifact_tx_stub`**）；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1f**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-252**；**本索引一览 264 / 本节**
-- **任务（摘要）**：**`digest_sha256_hex`****、****`fields_pending_signature`****、****`signature_slots`****、****`backfill_slots`****、****`artifact_id`** **（** **每** **批** **）**；**逐** **tx** **`signing_artifact_tx_stub`**
-- **边界**：**不** **写** **真实** **sig**、**不** **广播**
-- **验收**：**`python scripts/ops/region_vault_claim_execution_dryrun_cli.py self-test`**
-- **测试**：**`python scripts/ops/region_vault_claim_execution_dryrun_cli.py self-test`**
-
----
-
-### TT-B253-14-REGIONVAULT-CLAIM-EXECUTION-SIGNING-OFFLINE-PACKAGE-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-252 manifest → 离线签名包目录树（只读）**（**母表 B-253**；承 **B-252**、对读 **B-249**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-253**
-- **封口批已落**：**`scripts/ops/region_vault_claim_signing_offline_package.py`**（**`write`****/** **`self-test`**）；**`scripts/region-vault-claim-signing-offline-package.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1g**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-253**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 265 / 本节**
-- **任务（摘要）**：**输入** **须** **含** **根** **与** **每** **批** **`signing_artifact_stub`** **（** **勿** **`--omit-signing-artifact-stub`** **）** **的** **manifest**；**输出** **`batches/<safe_batch_id>/`****（** **`batch_digest.sha256`****、****`fields_pending_signature.json`****、****`signature_slots.json`****、****`backfill_template.json`****、****`batch_index.json`** **）****+** **`offline_signing_package_manifest.json`****+** **`artifacts.sha256`****+** **`README.md`**** **（** **`handoff.to_signer`****/**`from_signer`** **）**
-- **边界**：**不** **签名**、**不** **广播**、**不** **新** **HTTP**
-- **验收**：**`python scripts/ops/region_vault_claim_signing_offline_package.py self-test`**
-- **测试**：**`python scripts/ops/region_vault_claim_signing_offline_package.py self-test`**
-
----
-
-### TT-B254-14-REGIONVAULT-CLAIM-SIGNED-BACKFILL-STUB-IMPORT-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-253 签回 → 只读导入壳（对齐 B-252 artifact）**（**母表 B-254**；承 **B-252/B-253**、对读 **B-249**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-254**
-- **封口批已落**：**`scripts/ops/region_vault_claim_signed_backfill_stub_import.py`**（**`import-stub`****/** **`self-test`**）；**`scripts/region-vault-claim-signed-backfill-stub-import.sh`**；**B-253** **`artifacts.sha256`**** **终稿** **重算** **（** **与** **`offline_signing_package_manifest.json`**** **终** **写** **一致** **）**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1h**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-254**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 266 / 本节**
-- **任务（摘要）**：**`import-stub <source_manifest.json> <package_dir> <returned_dir> -o out.json`** **+** **可选** **`--verify-b253-artifacts-sha256`**** **`--require-nonempty-backfill`**** **→** **`14-REGIONVAULT-CLAIM-SIGNED-BACKFILL-STUB-IMPORT-V1`**
-- **边界**：**不** **广播**、**不** **上链**、**不** **新** **HTTP**
-- **验收**：**`python scripts/ops/region_vault_claim_signed_backfill_stub_import.py self-test`**
-- **测试**：**`python scripts/ops/region_vault_claim_signed_backfill_stub_import.py self-test`**
-
----
-
-### TT-B255-14-REGIONVAULT-CLAIM-SIGNED-BACKFILL-RECONCILE-STUB-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-254 import_stub 与 manifest+B-253 包逐批对账（只读）**（**母表 B-255**；承 **B-252～B-254**、对读 **B-249**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-255**
-- **封口批已落**：**`scripts/ops/region_vault_claim_signed_backfill_reconcile_stub.py`**（**`reconcile-stub`****/** **`self-test`**）；**`scripts/region-vault-claim-signed-backfill-reconcile-stub.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1i**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-255**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 267 / 本节**
-- **任务（摘要）**：**`reconcile-stub <import_stub.json> <source_manifest.json> <package_dir> [--returned-dir …] -o out.json [--verify-b253-artifacts-sha256]`** **→** **`gaps[]`****、****`blocking_reasons`****、****`reconcile_verdict_preview`****（** **`GO`****/**`NO_GO`**** **）** **；** **仍** **不** **广播**
-- **边界**：**不** **上链**、**不** **新** **HTTP**
-- **验收**：**`python scripts/ops/region_vault_claim_signed_backfill_reconcile_stub.py self-test`**
-- **测试**：**`python scripts/ops/region_vault_claim_signed_backfill_reconcile_stub.py self-test`**
-
----
-
-### TT-B256-14-REGIONVAULT-CLAIM-BROADCAST-REQUEST-STUB-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-255 GO → 可广播请求只读壳（最后一层入口）**（**母表 B-256**；承 **B-252～B-255**、对读 **B-249**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-256**
-- **封口批已落**：**`scripts/ops/region_vault_claim_broadcast_request_stub.py`**（**`broadcast-request-stub`****/** **`self-test`**）；**`scripts/region-vault-claim-broadcast-request-stub.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1j**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-256**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 268 / 本节**
-- **任务（摘要）**：**`broadcast-request-stub <reconcile_stub.json> <import_stub.json> <source_manifest.json> -o out.json [--allow-non-go]`** **→** **`broadcast_sequence`****+** **`operator_confirmation`****+** **`tx_hash`**** **回填** **位**
-- **边界**：**不** **广播**、**不** **上链**、**不** **新** **HTTP**
-- **验收**：**`python scripts/ops/region_vault_claim_broadcast_request_stub.py self-test`**
-- **测试**：**`python scripts/ops/region_vault_claim_broadcast_request_stub.py self-test`**
-
----
-
-### TT-B257-14-REGIONVAULT-CLAIM-BROADCAST-DRYRUN-REHEARSAL-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-256 stub → 广播前排练只读校验**（**母表 B-257**；承 **B-256**、对读 **B-249**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-257**
-- **封口批已落**：**`scripts/ops/region_vault_claim_broadcast_dryrun_rehearsal.py`**（**`rehearsal-dryrun`****/** **`self-test`**）；**`scripts/region-vault-claim-broadcast-dryrun-rehearsal.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1k**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-257**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 269 / 本节**
-- **任务（摘要）**：**`rehearsal-dryrun <broadcast_request_stub.json> [--source-manifest …] [-o report.json] [--skip-operator-confirmation]`** **—** **序** **/** **前置** **/** **`operator_confirmation`** **/** **`tx_hash`**** **槽** **映射** **；** **仍** **不** **RPC** **不** **上链**
-- **边界**：**不** **广播**、**不** **新** **HTTP**
-- **验收**：**`python scripts/ops/region_vault_claim_broadcast_dryrun_rehearsal.py self-test`**
-- **测试**：**`python scripts/ops/region_vault_claim_broadcast_dryrun_rehearsal.py self-test`**
-
----
-
-### TT-B258-14-REGIONVAULT-CLAIM-BROADCAST-LIVE-ADMIN-GATE-STUB-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-257 报告 + B-256 stub → 临广播前人工闸口只读壳**（**母表 B-258**；承 **B-257**、对读 **B-249**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-258**
-- **封口批已落**：**`scripts/ops/region_vault_claim_broadcast_live_admin_gate_stub.py`**（**`gate-stub`****/** **`self-test`**）；**`scripts/region-vault-claim-broadcast-live-admin-gate-stub.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1l**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-258**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 270 / 本节**
-- **任务（摘要）**：**`gate-stub <broadcast_request_stub.json> <rehearsal_report.json> [--source-manifest …] [-o gate_stub.json]`** **→** **`operator_sign_off`****+** **`gate_verdict_preview`****+** **`no_go_blocking_reasons`** **；** **`NO_GO`** **→** **exit** **1**
-- **边界**：**不** **广播**、**不** **新** **HTTP**
-- **验收**：**`python scripts/ops/region_vault_claim_broadcast_live_admin_gate_stub.py self-test`**
-- **测试**：**`python scripts/ops/region_vault_claim_broadcast_live_admin_gate_stub.py self-test`**
-
----
-
-### TT-B259-14-REGIONVAULT-CLAIM-BROADCAST-EVIDENCE-STUB-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-256～B-258 → 待广播证据壳只读归档**（**母表 B-259**；承 **B-256～B-258**、对读 **B-249**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-259**
-- **封口批已落**：**`scripts/ops/region_vault_claim_broadcast_evidence_stub.py`**（**`evidence-stub`****/** **`self-test`**）；**`scripts/region-vault-claim-broadcast-evidence-stub.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1m**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-259**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 271 / 本节**
-- **任务（摘要）**：**`evidence-stub <stub> <rehearsal> <gate> [-o out] [--allow-non-go-evidence]`** **→** **`request_summary`****+** **`rehearsal_conclusion`****+** **`live_admin_gate`****+** **`broadcast_evidence_slot_rows`**** **；** **`evidence_archive_verdict_preview`**** **非** **`GO`** **默认** **exit** **1**
-- **边界**：**不** **广播**、**不** **新** **HTTP**
-- **验收**：**`python scripts/ops/region_vault_claim_broadcast_evidence_stub.py self-test`**
-- **测试**：**`python scripts/ops/region_vault_claim_broadcast_evidence_stub.py self-test`**
-
----
-
-### TT-B260-14-REGIONVAULT-CLAIM-BROADCAST-RESULT-IMPORT-STUB-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-259 evidence + 链下 returned JSON → 结果导入只读壳**（**母表 B-260**；承 **B-259**、对读 **B-249**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-260**
-- **封口批已落**：**`scripts/ops/region_vault_claim_broadcast_result_import_stub.py`**（**`import-result-stub`****/** **`self-test`**）；**`scripts/region-vault-claim-broadcast-result-import-stub.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1n**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-260**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 272 / 本节**
-- **任务（摘要）**：**`import-result-stub <evidence_stub.json> [--returned-results-dir …] -o out.json [--allow-partial-import]`** **→** **`import_preview_verdict`****+** **`slot_alignment_rows`****+** **回填** **SHA**
-- **边界**：**不** **RPC**、**不** **新** **HTTP**
-- **验收**：**`python scripts/ops/region_vault_claim_broadcast_result_import_stub.py self-test`**
-- **测试**：**`python scripts/ops/region_vault_claim_broadcast_result_import_stub.py self-test`**
-
----
-
-### TT-B261-14-REGIONVAULT-CLAIM-BROADCAST-RESULT-RECONCILE-STUB-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-260 result_import → 广播结果对账只读壳**（**母表 B-261**；承 **B-260**、对读 **B-249**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-261**
-- **封口批已落**：**`scripts/ops/region_vault_claim_broadcast_result_reconcile_stub.py`**（**`reconcile-result-stub`****/** **`self-test`**）；**`scripts/region-vault-claim-broadcast-result-reconcile-stub.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1o**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-261**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 273 / 本节**
-- **任务（摘要）**：**`reconcile-result-stub <result_import_stub.json> -o out.json [--allow-non-go-reconcile] [--strict-tx-hash-len] [--no-require-import-go]`** **→** **`reconcile_verdict_preview`****+** **`blocking_reasons`****+** **`reconcile_slot_rows`**
-- **边界**：**不** **RPC**、**不** **广播**、**不** **上链**
-- **验收**：**`python scripts/ops/region_vault_claim_broadcast_result_reconcile_stub.py self-test`**
-- **测试**：**`python scripts/ops/region_vault_claim_broadcast_result_reconcile_stub.py self-test`**
-
----
-
-### TT-B262-14-REGIONVAULT-CLAIM-BROADCAST-EXECUTION-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-256 broadcast_request_stub → JSON-RPC 顺序广播与执行报告**（**母表 B-262**；承 **B-256**、**B-257**；对读 **B-249**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-262**
-- **封口批已落**：**`scripts/ops/region_vault_claim_broadcast_execute.py`**（**`execute`****/** **`self-test`**）；**`scripts/region-vault-claim-broadcast-execute.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1p**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-262**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 274 / 本节**
-- **任务（摘要）**：**`execute <stub.json> -o report.json`** **内** **嵌** **`run_rehearsal`** **→** **`eth_sendRawTransaction`**** **×** **`global_broadcast_sequence`**** **→** **可选** **`eth_getTransactionReceipt`**** **；** **`CHAIN_RPC_URL`**** **/** **`--rpc-url`** **；** **`--dry-run`** **；** **主网** **ack** **`TRAVELTRUST_BROADCAST_EXECUTE_ACK_MAINNET=1`**
-- **边界**：**不** **新增** **04** **HTTP** **路由** **；** **不** **替代** **B-259～B-261** **链下** **结果** **对账** **壳**
-- **验收**：**`PYTHONPATH=scripts/ops python scripts/ops/region_vault_claim_broadcast_execute.py self-test`** **exit** **0**
-- **测试**：**同上** **self-test**
-
----
-
-### TT-B263-14-REGIONVAULT-CLAIM-BROADCAST-RECEIPT-ARCHIVE-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-262 execution_report → receipt 链上归档**（**母表 B-263**；承 **B-262**；对读 **B-249**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-263**
-- **封口批已落**：**`scripts/ops/region_vault_claim_broadcast_receipt_archive.py`**（**`archive-receipts`****/** **`self-test`**）；**`scripts/region-vault-claim-broadcast-receipt-archive.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1q**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-263**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 275 / 本节**
-- **任务（摘要）**：**`archive-receipts <execution_report.json> -o receipt_archive.json`** **按** **步** **`tx_hash`** **`eth_getTransactionReceipt`** **→** **`14-REGIONVAULT-CLAIM-BROADCAST-RECEIPT-ARCHIVE-V1`** **（** **`archive_rows`****、****`receipt_archive_canonical_sha256_hex`** **）** **；** **`--strict-chain-id`** **；** **主网** **ack** **同** **B-262**
-- **边界**：**不** **新增** **04** **HTTP** **路由** **；** **单一** **链上** **receipt** **证据** **源** **供** **后续** **reconcile** **/** **索引** **升格**
-- **验收**：**`PYTHONPATH=scripts/ops python scripts/ops/region_vault_claim_broadcast_receipt_archive.py self-test`** **exit** **0**
-- **测试**：**同上** **self-test**
-
----
-
-### TT-B264-14-REGIONVAULT-CLAIM-BROADCAST-RESULT-RECONCILE-ONCHAIN-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-262 execution_report + B-263 receipt_archive → 只读链上对账 JSON**（**母表 B-264**；承 **B-262**、**B-263**；对读 **B-249**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-264**
-- **封口批已落**：**`scripts/ops/region_vault_claim_broadcast_onchain_reconcile.py`**（**`reconcile-onchain`****/** **`self-test`**）；**`scripts/region-vault-claim-broadcast-onchain-reconcile.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1r**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-264**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 276 / 本节**
-- **任务（摘要）**：**`reconcile-onchain <execution_report.json> <receipt_archive.json> -o onchain_reconcile.json`** **校验** **SHA** **链接** **与** **逐步** **`tx_hash`****/** **`status`****/** **`block_number`****/** **序** **；** **`reconcile_verdict`****+****`blocking_reasons`****+****`--allow-non-go-reconcile`**
-- **边界**：**不** **RPC**、**不** **新增** **HTTP**、**不** **改** **合约**
-- **验收**：**`PYTHONPATH=scripts/ops python scripts/ops/region_vault_claim_broadcast_onchain_reconcile.py self-test`** **exit** **0**
-- **测试**：**同上** **self-test**
-
----
-
-### TT-B265-14-REGIONVAULT-CLAIM-INDEXER-UPLIFT-ONCHAIN-001
-
-- **阶段**：api / **14 · RegionVault** · **B-264 `GO` onchain_reconcile.json → execution_status_read_model + region_vault_forwarded_events 只读互证**（**母表 B-265**；承 **B-264**、**B-229**；对读 **B-249**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-265**
-- **封口批已落**：**`crates/api/src/region_vault_claim_onchain_reconcile_import.rs`**；**`crates/api/src/db/region_vault_claim_execution_status_read_model.rs`**；**`crates/api/src/db/region_vault_events.rs`**（**`region_vault_forwarded_first_row_for_chain_tx`**）；**`crates/api/src/main.rs`** **/** **`state/mod.rs`** **/** **`startup/run.rs`** **/** **admin-internal** **claim** **快照** **装配**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1s**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-265**；**`.env.example`** **`REGION_VAULT_CLAIM_ONCHAIN_RECONCILE_IMPORT_PATH`**；**本索引一览 277 / 本节**
-- **任务（摘要）**：**`REGION_VAULT_CLAIM_ONCHAIN_RECONCILE_IMPORT_PATH`** **可选** **加载** **`14-REGIONVAULT-CLAIM-BROADCAST-ONCHAIN-RECONCILE-V1`** **且** **`reconcile_verdict`****=****`GO`** **时** **按** **`batch_plan_id`** **合并** **`reconcile_rows[]`** **；** **`chain_id`****+** **DB** **时** **`region_vault_forwarded_events`** **首** **行** **→** **`b265_indexer_uplift`****；** **B-230～B-242** **同源** **builder** **参数** **继承**
-- **边界**：**不** **新增** **公开** **前端** **路由** **；** **不** **新增** **04** **HTTP** **路径** **；** **不** **改** **合约**
-- **验收**：**`cargo test -p traveltrust-api`** **绿**
-- **测试**：**`cargo test -p traveltrust-api`**
-
----
-
-### TT-B266-14-REGIONVAULT-CLAIM-PRODUCTION-GO-GATE-001
-
-- **阶段**：ops / **14 · RegionVault** · **B-263 receipt + B-264 onchain + B-265 证据面 → `14-REGIONVAULT-CLAIM-PRODUCTION-GO-GATE-V1` 生产 GO 闸**（**母表 B-266**；承 **B-263**/**B-264**/**B-265**；对读 **B-249**）
-- **状态**：**已封口**（**2026-04-14**）
-- **母表**：[任务母表.md](./任务母表.md) **B-266**
-- **封口批已落**：**`scripts/ops/region_vault_claim_production_go_gate.py`**（**`production-go-gate`****/** **`self-test`**）；**`scripts/region-vault-claim-production-go-gate.sh`**；**[spec/14-合约-API-ABI-前后端对齐.md](./spec/14-合约-API-ABI-前后端对齐.md)** **§1.1.1.1t**；**[spec/04-后端与API.md](./spec/04-后端与API.md)** **§3.5**；**[ops/RUNBOOK.md](../ops/RUNBOOK.md)** **§2.55** **B-266**；**[scripts/README.md](../scripts/README.md)**；**本索引一览 278 / 本节**
-- **任务（摘要）**：**读** **`onchain_reconcile.json`****+** **`receipt_archive.json`** **校验** **anchor** **/** **rule_version** **/** **`reconcile_verdict`** **等** **；** **须** **`--attest-b265-indexer-uplift`** **与** **`--attest-b230-b242-evidence-chain`** **方得** **`production_verdict`****=****`GO`** **；** **`production_verdict`****≠****`GO`** **默认** **exit** **1** **（** **`--allow-non-go-production`** **覆盖** **）**
-- **边界**：**不** **RPC** **、** **不** **新增** **HTTP**
-- **验收**：**`python scripts/ops/region_vault_claim_production_go_gate.py self-test`** **exit** **0**
-- **测试**：**同上** **self-test**
-
----
-
-### TT-METAPROVIDER-LOADING-ERROR-RESYNC-001
-
-- **阶段**：状态机  
-- **状态**：已封口（**2026-04-14**）  
-- **本轮仅改**：`frontend/components/MetaProvider.tsx`  
-- **禁止再分析**：—  
-- **任务**：**`useEffect` 依赖 `t`**（如语言切换）**再次** 调用 **`getMeta()`** 时，**在发起请求前** **`setLoading(true)`** 与 **`setError(null)`**，**保留** **`finally` → `setLoading(false)`**；消除 **首败后二次拉取仍挂旧 `error` 且 `loading` 为 false** 的缺口；**不** 扩展 GET `/meta` 业务语义。  
-- **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0**  
-
----
-
----
-
-### TT-FRIENDS-PARTIAL-ERROR-VISIBILITY-001
-
-- **阶段**：UX / 状态语义  
-- **状态**：已封口（**2026-04-14**）  
-- **本轮仅改**：`frontend/app/community/friends/page.tsx`（**`frontend/locales/en.ts`****/** **`zh.ts`** **`community_friends_partialLoadHint`**）  
-- **禁止再分析**：—  
-- **任务**：**`Promise.allSettled`** **多腿** **请求** **在** **存在** **rejected** **且** **仍有** **fulfilled** **时**，**`partialLoadHint`** **弱** **提示**（**含** **`common_retry`**），**不** **改** **主** **成功** **态** **列表** **渲染** **；** **全** **reject** **仍** **走** **`loadError`**。  
-- **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0**  
-
----
-
----
-
-### TT-FINANCE-RECONCILIATION-PARTIAL-ERROR-VISIBILITY-001
-
-- **阶段**：UX / 状态语义  
-- **状态**：已封口（**2026-04-14**）  
-- **本轮仅改**：`frontend/app/admin/finance-reconciliation/page.tsx`（**`frontend/locales/en.ts`****/** **`zh.ts`** **`admin_finance_reconciliation_partial_load_hint`**）  
-- **禁止再分析**：—  
-- **任务**：**`Promise.allSettled`****（****`getAdminCrossCheck`****、****`getAdminDriftSummary`****）** **结束后** **，** **若** **主** **财务** **摘要** **已** **成功** **展示** **且** **`crossErr`****/** **`driftSummaryErr`** **其一** **存在** **，** **header** **下** **弱** **提示** **（** **`role="status"`****、****`admin_finance_reconciliation_partial_load_hint`** **）** **+** **`common_retry`** **仅** **重拉** **漂移** **两腿** **（** **`driftLegsRetryKey`** **）** **；** **主** **`error`** **整页** **失败** **仍** **走** **既有** **错误** **态** **。**  
-- **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0**  
-
----
-
----
-
-### TT-ADMIN-ERROR-RESET-CONVENTION-UNIFICATION-001
-
-- **阶段**：惯例 / 状态机  
-- **状态**：已封口（**2026-04-14**）  
-- **本轮仅改**：`frontend/app/admin/finance/page.tsx`  
-- **禁止再分析**：—  
-- **任务**：首屏 **`useEffect`** 内 **`adminFetchJson`** **发起前** **显式** **`setLoading(true)`** **与** **`setError(null)`** **，** **与** **其余** **admin** **首屏** **拉取** **页** **对齐** **，** **避免** **后续** **刷新** **/** **重试** **依赖** **变更** **时** **残留** **旧** **`error`** **。**  
-- **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0**  
-
----
-
----
-
-### TT-GOVERNANCE-EM-DASH-CONSISTENCY-001
-
-- **阶段**：frontend · governance · i18n / 占位符  
-- **状态**：已封口（**2026-04-14**）  
-- **本轮仅改**：`frontend/app/governance/page.tsx`、`frontend/app/governance/distribution-accruals/page.tsx`、`frontend/app/governance/distribution-accruals/[id]/page.tsx`、`frontend/app/governance/proposals/[id]/page.tsx`  
-- **禁止再分析**：—  
-- **任务**：**治理** **相关** **页面** **中** **空值** **占位** **由** **硬编码** **`"—"`** **统一** **收敛** **为** **`t("ui_em_dash")`** **（** **或** **同源** **i18n** **键** **）** **；** **不** **改** **业务** **判空** **/** **分支** **语义** **。** **句内** **连接号** **拼接** **（** **如** **`${base} — ${detail}`****、****`note`****—** **说明** **文** **）** **保持** **不变** **。**  
-- **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0**  
-- **互证**：[**母表 B-273**](./任务母表.md) · **一览** **283**  
-
----
-
----
-
-### TT-ADMIN-ERROR-DISPLAY-UNIFICATION-001
-
-- **阶段**：admin · UI · 错误展示  
-- **状态**：已封口（**2026-04-14**）  
-- **本轮仅改**：**`frontend/app/admin/finance/page.tsx`**（**主** **`error`** **；** **`exportError`** **warning** **黄框** **除外** **）** **、** **`fee-router/page.tsx`** **、** **`region-vault/page.tsx`** **、** **`orders/page.tsx`** **、** **`guides/page.tsx`** **、** **`cross-check/page.tsx`** **、** **`drift-summary/page.tsx`** **、** **`finance-reconciliation/page.tsx`**（**主** **`error`** **+** **`driftSummaryErr`** **+** **`crossErr`** **）  
-- **禁止再分析**：—  
-- **任务**：**8** **个** **admin** **首屏** **/** **摘要** **页** **将** **基于** **`adminErrorUserText`** **的** **红色** **自建** **`role="alert"`** **错误** **展示** **统一** **收敛** **为** **`ApiErrorAlert`** **；** **保留** **现有** **加载** **/** **重试** **/** **分支** **逻辑** **；** **不** **处理** **warning** **黄框** **与** **非** **首屏** **页** **。**  
-- **验收**：**`cd frontend && npx tsc --noEmit`** **exit** **0**  
-- **互证**：[**母表 B-274**](./任务母表.md) · **一览** **284**  
-
----
-
----
-
-### TT-TESTNET-REAL-RUN-VALIDATION-001
-
-- **阶段**：ops · testnet · RegionVault claim 广播链（B-262→B-266）  
-- **状态**：已封口（**2026-04-14**）  
-- **本轮仅改**：**`scripts/ops/run_testnet_b262_b266_real.sh`**、**`scripts/ops/write_tt_testnet_real_run_evidence_summary.py`**、**`scripts/run-testnet-b262-b266-real.sh`**、**`evidence/testnet_real_run_validation/README.md`**（**登记** **轮** **；** **未** **在** **沙箱** **内** **送** **真实** **tx** **）  
-- **禁止再分析**：—  
-- **任务**：**具备** **真实** **`broadcast_request_stub.json`**（**B-256** **锚** **）** **与** **可用** **`CHAIN_RPC_URL`** **时** **，** **于** **testnet** **执行** **一轮** **小规模** **B-262→B-266** **全链路** **真实** **运行** **（** **非** **mock** **）** **；** **落盘** **`execution_report.json`****、****`receipt_archive.json`****、****`onchain_reconcile.json`****、****`production_go_report.json`****+** **B-265** **import** **提示** **JSON** **；** **聚合** **`operator_run_evidence.json`****/** **`OPERATOR_RUN_EVIDENCE.md`** **（** **链上** **`tx_hash`** **、** **`production_verdict`** **等** **）** **作为** **上线** **前** **运维** **证据** **。**  
-- **验收**：**`run_testnet_b262_b266_real.sh`** **/** **`write_tt_testnet_real_run_evidence_summary.py`** **与** **README** **运维** **路径** **已** **入库** **可** **复核** **；** **真实** **tx** **留痕** **以** **运维** **在** **目标** **环境** **执行** **产出** **`OUT_DIR`** **为准** **。**  
-- **互证**：[**母表 B-275**](./任务母表.md) · **一览** **285** · **[`ops/RUNBOOK.md`](../ops/RUNBOOK.md)** **§2.55**  
-- **多笔真实链证据（协记）**：**一览** **376** **`TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001`** **（** **2026-04-15** **封口** **）** **；** **正文** [**§TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001**](#tt-b322-testnet-multi-tx-nonce-sequence-real-run-001) **。**
-
----
-
----
-
-### TT-B306-07-PR-PREFLIGHT-SCRIPT-MATRIX-INDEX-001
-
-- **说明**：在 `docs/AI任务卡索引.from-stash.md` 中该 TT **无**独立 `###` 正文节；验收与互证以 **一览表对应行摘要** 及 **任务母表** 对应 **B-** 行为准。
-
----
-
-### TT-B307-GOVERNANCE-DOC-LINKAGE-FAILURE-RUNBOOK-001
-
-- **说明**：在 `docs/AI任务卡索引.from-stash.md` 中该 TT **无**独立 `###` 正文节；验收与互证以 **一览表对应行摘要** 及 **任务母表** 对应 **B-** 行为准。
-
----
-
-### TT-B351-ADR-TEMPLATE-AND-CODEOWNERS-MAP-001
-
-- **说明**：在 `docs/AI任务卡索引.from-stash.md` 中该 TT **无**独立 `###` 正文节；验收与互证以 **一览表对应行摘要** 及 **任务母表** 对应 **B-** 行为准。
-
----
-
-### TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001
-
-- **阶段**：ops · testnet · B-275 多笔连续 nonce 真实链归档（**非** 母表 B-322 / 一览 332 CI 预算 TT）  
-- **状态**：**已封口**（**2026-04-15**）  
-- **封口依据**：**已** **落盘** **`evidence/testnet_real_run_validation/run_tt_b322_anvil_multi_tx2_20260415/`**、**`run_tt_b322_anvil_multi_tx3_20260415/`** **及** **契约** **[`TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001.md`](../evidence/testnet_real_run_validation/TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001.md)** **；** **本** **轮** **台账** **仅** **补** **AI** **索引** **/** **母表** **互指** **。**  
-- **禁止再分析**：—  
-- **任务**：**在** **本地** **Anvil** **上** **以** **2** **笔** **与** **3** **笔** **连续** **nonce** **真实** **`broadcast_request_stub`** **各** **跑通** **`run_testnet_b262_b266_real.sh`** **编排** **的** **B-262→B-266** **全链路** **，** **三** **verdict** **`GO`** **，** **`operator_run_evidence`** **与** **归档** **JSON** **可** **审计** **复核** **。**  
-- **验收**：**上** **述** **两** **目录** **各** **含** **完整** **`OUT_DIR`** **产物** **；** **与** **一览** **285** **登记** **语义** **兼容** **（** **登记** **轮** **CI** **/** **沙箱** **仍** **无** **tx** **）** **。**  
-- **互证**：[**母表 B-275**](./任务母表.md) · **一览** **285** · **一览** **376** · **[`ops/RUNBOOK.md`](../ops/RUNBOOK.md)** **§2.55** · **[`evidence/testnet_real_run_validation/README.md`](../evidence/testnet_real_run_validation/README.md)**  
-
----
+## 与仓库其它文档的关系
+
+- **任务母表（Backlog）**：`docs/任务母表.md` — 条目级来源与状态；**先母表后 TT**。  
+- **1 人极简路线图**：`docs/路线图-1人开发极简版.md` — **P0～P4** 与 **聚合任务目标**；**TT-SOLO-ROADMAP-MVP-001** 为进度锚点。  
+- **协作与低负载规则**：`docs/AI协作话术-减负与边界.md`  
+- **前端上线说明（含英文决议）**：`docs/frontend/Release-Readiness-Frontend.md`  
+- **产品/流程 SSOT**：仍以 `docs/spec/*` 为准；母表与索引均为 **派生层**，不替代 spec。
