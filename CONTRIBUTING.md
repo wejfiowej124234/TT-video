@@ -97,7 +97,37 @@ Windows：`.\scripts\gen-frontend-manifest.ps1`（可选 `$env:EVIDENCE_GO_DIR`�
 - **`crates/api/src` 大改**（易触达 **50-O-B2** 行数上限）：合并前建议 `bash scripts/check-48-line-count.sh`（严格模式 **`STRICT=1 bash scripts/check-48-line-count.sh`**）；见 [48 §1.1](docs/spec/48-后端模块化拆分与落地清单.md)、[scripts/README.md](scripts/README.md) **§二「CI 门禁」**；入口总览 [07-开发流程与顺序](docs/spec/07-开发流程与顺序.md) 文首**读前摘要**「**API 单文件行数 · 27-archived 链（50-O-B2 · 工具）**」行、**§二 2.3**。
 - **批量改动 `docs/spec/27-archived/` 下 Markdown 相对链接**：可 `bash scripts/fix_27_archived_links.sh`（须 **perl**、**Git Bash**）；说明见 [27-archived/README](docs/spec/27-archived/README.md)、上文 **07** 读前摘要同表行、**scripts/README** **§二「CI 门禁」**。
 - **阶段规格文件（`docs/spec/90～550` 主表登记）**：合并前建议执行 `bash scripts/check-wave-phase-files.sh`（Windows：**`.\scripts\check-wave-phase-files.ps1`**，须 Git Bash），防止误删 `NNN-*.md`（见 [scripts/README.md](scripts/README.md) **§二「CI 门禁」** **`check-wave-phase-files`** 行；入口总览见 [07-开发流程与顺序](docs/spec/07-开发流程与顺序.md) 文首**读前摘要**「**阶段规格文件存在性**」行、**§零 0.4**；CI：[check-wave-phase-files.yml](.github/workflows/check-wave-phase-files.yml)）。
+- **AI 任务卡索引一览表（`docs/AI任务卡索引.md`）**：见下文 **[main · AI 任务卡索引一览门禁](#main-branch-ai-index-gate)**（**须** 本地严格通过后再提交；**main** 上须将 CI 检查 **`AI task card index overview / check`** 设为必过）。
 - **密钥与生产配置**：勿提交 `.env`、私钥；仅更新 `.env.example` 与 [ops/RUNBOOK.md](ops/RUNBOOK.md) 中已约定的说明。
+
+<a id="main-branch-ai-index-gate"></a>
+
+## main · AI 任务卡索引一览门禁
+
+### 提交者（凡 `git diff` 含 `docs/AI任务卡索引.md`）
+
+**须**在 **`git commit`** 或 **`git push`** 之前于仓库根执行，且 **exit 0**（**严格模式**，**不传** **`--allow-seq-gaps`**）：
+
+```bash
+python3 scripts/check-ai-task-card-index-overview.py docs/AI任务卡索引.md
+```
+
+**`--allow-seq-gaps`** 仅允许用于**排障或临时分支**，**不得**作为合并 **`main`** 前的默认门槛。失败时脚本在 **stderr** 输出机读行：**`RULE=`**、**`seq=`**、**`id=`**、**`msg=`**（含义见 [scripts/README.md](scripts/README.md) 篇首与 **§二** **`check-ai-task-card-index-overview.py`**）。
+
+### 维护者（将 CI `check` job 设为 `main` 必过）
+
+Workflow 文件：[`.github/workflows/check-ai-task-card-index-overview.yml`](.github/workflows/check-ai-task-card-index-overview.yml)。在 GitHub **Actions** 中对应的 **必过检查显示名**为：
+
+**`AI task card index overview / check`**
+
+（由 workflow 的 **`name: AI task card index overview`** 与 job id **`check`** 组成；若将来改名，以 **Actions** 里该 workflow **最近一次成功 run** 的 job 名为准。）
+
+**操作路径（二选一）**
+
+1. **Repository rulesets**：**Settings** → **Rules** → **Rulesets** → 编辑针对 **`main`**（或 **Default**）的规则 → **Require status checks to pass** → **Add checks** → 搜索 **`AI task card index overview`** 或 **`check`** → 勾选 **`AI task card index overview / check`** → 保存。
+2. **Classic branch protection**：**Settings** → **Branches** → **Branch protection rules** → 编辑 **`main`** → **Require status checks to pass before merging** → 同上勾选。
+
+**首次启用前**：须让该 workflow 在仓库上至少 **成功完成一次**（合并本配置后的 push，或 **Actions** → 选中 **`AI task card index overview`** → **Run workflow**），否则规则集下拉里可能 **尚不出现** 该检查名。
 
 ## 行为与安全
 

@@ -1,0 +1,18 @@
+# docs/AI任务卡索引.md 一览表：序号 A、ID E、状态 B、已封口正文 C、登记未封 from-stash D（严格；无 --allow-seq-gaps）
+# 失败时 stderr 为机读行：RULE=… seq=… id=… msg=…（msg 为最后一项，可含空格）
+# 分支保护「必过检查」显示名：<本 workflow name> / <job id> → 「AI task card index overview / check」
+name: AI task card index overview
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Overview table (strict, default path)
+        run: python3 scripts/check-ai-task-card-index-overview.py docs/AI任务卡索引.md

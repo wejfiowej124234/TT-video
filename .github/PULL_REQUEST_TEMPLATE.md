@@ -16,4 +16,12 @@
 
 ---
 
-*CI 规则：若 PR 改动 08-3 映射表中的 key 且 08-4 版本号未在本 PR 中变更，将**阻断合并**。豁免须按 [08-2](docs/spec/08-2-附录-闭合工单表.md)「CI 豁免机制」留痕。*
+### AI 任务卡索引（若本 PR 修改 `docs/AI任务卡索引.md` 则必填）
+
+| 必填项 | 填写 |
+|--------|------|
+| **已本地通过严格一览校验** | 是 / 否（须在 push 前执行 **`python3 scripts/check-ai-task-card-index-overview.py docs/AI任务卡索引.md`** **exit 0**；勿依赖 **`--allow-seq-gaps`** 作为合并门槛；见 [CONTRIBUTING.md](CONTRIBUTING.md#main-branch-ai-index-gate)） |
+
+---
+
+*CI 规则：若 PR 改动 08-3 映射表中的 key 且 08-4 版本号未在本 PR 中变更，将**阻断合并**。豁免须按 [08-2](docs/spec/08-2-附录-闭合工单表.md)「CI 豁免机制」留痕。若 PR 修改 **`docs/AI任务卡索引.md`**，合并 **`main`** 前还须通过必过检查 **`AI task card index overview / check`**（仓库设置见 [CONTRIBUTING.md](CONTRIBUTING.md#main-branch-ai-index-gate)）。*

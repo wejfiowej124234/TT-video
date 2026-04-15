@@ -1,5 +1,7 @@
 # TravelTrust · AI 任务卡索引（Low-Latency 执行）
 
+<!-- CI: required workflow job "AI task card index overview / check" (see CONTRIBUTING.md#main-branch-ai-index-gate) -->
+
 > **本文件范围**：仅收录 **已实现并封口** 的任务卡（一览 + 正文）。**未封口**、**规划类**及 backlog 统一维护于 [`docs/AI任务卡索引.from-stash.md`](./AI任务卡索引.from-stash.md)。**维护路径 A（推荐 · 稳定期）**：**不再改**本文件整体结构，**只增量**维护；**新任务**先落在 **from-stash**，**完成并封口**后再进入本主索引。
 
 > **开卡总规则（必须遵守）**  
@@ -36,16 +38,16 @@
 |------|-----|------|------|------|
 | 1 | TT-ACTION-SUCCESS-STATE-PREMATURE-OR-MISLEADING-001 | 状态机 | 已封口 | 成功态勿过早/误导 |
 | 2 | TT-ACTION-ERROR-STATE-NOT-CLEARED-ON-RETRY-001 | 状态机 | 已封口 | 重试时清 error |
-| 3 | TT-ACTION-STATE-TRANSITION-CONSISTENCY-AUDIT-001 | 审计 | 只读 | 全站状态机审计 |
+| 3 | TT-ACTION-STATE-TRANSITION-CONSISTENCY-AUDIT-001 | 审计 | 已封口（只读） | **一览只读已封**，默认不跑实现 · 全站状态机审计 |
 | 4 | TT-GOVERNANCE-PARAMS-ERROR-STUCK-AFTER-SUCCESS-001 | 状态机 | 已封口 | params 成功清 error |
 | 5 | TT-ESCROW-RATE-SUBMIT-PARTIAL-READY-STATE-001 | 状态机 | 已封口 | 评分确认 await 刷新 |
-| 6 | TT-UI-CONSISTENCY-POLISH-AUDIT-001 | 审计 | 只读 | UI 一致性审计 |
+| 6 | TT-UI-CONSISTENCY-POLISH-AUDIT-001 | 审计 | 已封口（只读） | **一览只读已封**，默认不跑实现 · UI 一致性审计 |
 | 7 | TT-ERROR-DISPLAY-COMPONENT-INCONSISTENCY-001 | UI | 已封口 | ApiErrorAlert 示例页 |
 | 8 | TT-EMPTY-PLACEHOLDER-DASH-CONSISTENCY-001 | UI | 已封口 | admin 占位 `ui_em_dash` |
 | 9 | TT-TAIL-ERROR-DISPLAY-UNIFICATION-001 | UI | 已封口 | params + schema 错误组件 |
 | 10 | TT-TAIL-LOADING-EMPTY-TOAST-CONSISTENCY-001 | UI | 已封口 | LoadingText / 工具 empty |
 | 11 | TT-TAIL-SILENT-INTERACTION-ELIMINATION-001 | 体验 | 已封口 | 深链提示 + FeeRouter loading |
-| 12 | TT-PRODUCTION-READINESS-SUMMARY-001 | 文档 | 只读 | 上线前总结（无代码） |
+| 12 | TT-PRODUCTION-READINESS-SUMMARY-001 | 文档 | 已封口（只读） | **一览只读已封**，默认不跑实现 · 上线前总结（无代码） |
 | 13 | TT-AUTH-VERIFY-EMAIL-EMPTY-TOKEN-001 | 微任务 | 已封口 | 空 token 提交错误提示 |
 | 14 | TT-AUTH-LOGIN-CLEAR-ERROR-ON-RETRY-001 | 微任务 | 已封口 | 登录重试清旧 error |
 | 15 | TT-AUTH-LOGIN-SUBMITTING-STATE-001 | 微任务 | 已封口 | 登录提交中 loading、按钮与表单禁用（B-001） |
@@ -176,7 +178,7 @@
 | 140 | TT-B110-SEQ10-GOVERNANCE-GOVERNOR-PROPOSAL-COUNT-CHAIN-SSOT-001 | governance / SSOT | 已封口 | **B-140**：**`GOVERNANCE_GOVERNOR_PROPOSAL_COUNT_CHAIN_SSOT`** + **`proposalCount()`** vs **`governance_proposals_projection`** **`COUNT(*)`**；**`drift_leg`** / **`GOVERNANCE_PROPOSAL_COUNT_MAX_INDEXER_LAG`**（默认 **32**）见 [**母表 B-140**](./任务母表.md)；**`GET /meta` `governance.governor_proposal_count_observability`**；**admin** **`governor_proposal_count_ssot*`**；**indexer-reconcile** **`governor_proposal_count_ssot_ops_check`** + **`compound` `governor_proposal_count_ssot_reconcile`**；**`scripts/governance-governor-proposal-count-ssot-ops-check.sh`**；**gate/probe** **113**；**不**改 **`GET /api/v1/orders*`** / **公开** **`GET …/governance/proposals*`**；互证 [**母表 B-140**](./任务母表.md) |
 | 141 | TT-B141-GOVERNANCE-SSOT-NEXT-CANDIDATE-PLAN-001 | governance / 规划 | 已封口 | **B-141**：承 **SEQ5～SEQ10** 方法库；**L1～L4** 分层、下表候选、**P** 序、**FeeRouter/P5-5/84** 双源风险；**首张实现 TT 占位**；**零**业务代码；互证 [**母表 B-141**](./任务母表.md) · [**正文**](#tt-b141-governance-ssot-next-candidate-plan-001) |
 | 142 | TT-B110-SEQ11-GOVERNANCE-GOVERNOR-TOKEN-TIMELOCK-CHAIN-SSOT-001 | governance / SSOT | 已封口 | **B-142**：**`GOVERNANCE_GOVERNOR_TOKEN_TIMELOCK_CHAIN_SSOT`** + **`token()`**/**`timelock()`** **`immutable`**；**`GET /meta` `governance.governor_token_timelock_observability`**（**807** **十键**）；**admin** **`governor_token_timelock_ssot*`**；**indexer-reconcile** **`governor_token_timelock_ssot_ops_check`** + **`compound` `governor_token_timelock_ssot_reconcile`**；**`scripts/governance-governor-token-timelock-ssot-ops-check.sh/.ps1`**；**gate/probe** **113**；**不**改 **`GET /api/v1/orders*`**；互证 [**母表 B-142**](./任务母表.md) · [**正文**](#tt-b110-seq11-governance-governor-token-timelock-chain-ssot-001) |
-| 143 | TT-B110-SEQ12-GOVERNANCE-GOVERNOR-ORDER-RATING-REVIEW-WINDOW-BOUNDARY-001 | governance / 边界台账 | 未封口 | **B-143**：**`orderRatingReviewWindowDays()`** 与 **SEQ2/SEQ3** **并列观测（默认）** vs **未来接管** 之 **文档裁断**；**04**/**110**/**Runbook** 互指；**实现**另开 TT；互证 [**母表 B-143**](./任务母表.md) · [**正文**](#tt-b110-seq12-governance-governor-order-rating-review-window-boundary-001) |
+| 143 | TT-B110-SEQ12-GOVERNANCE-GOVERNOR-ORDER-RATING-REVIEW-WINDOW-BOUNDARY-001 | governance / 边界台账 | 登记（未封） | **一览登记（未封）**：详 [`from-stash`](./AI任务卡索引.from-stash.md) 与正文 · **B-143**：**`orderRatingReviewWindowDays()`** 与 **SEQ2/SEQ3** **并列观测（默认）** vs **未来接管** 之 **文档裁断**；**04**/**110**/**Runbook** 互指；**实现**另开 TT；互证 [**母表 B-143**](./任务母表.md) · [**正文**](#tt-b110-seq12-governance-governor-order-rating-review-window-boundary-001) |
 | 144 | TT-B110-SEQ13-GOVERNANCE-ORDER-RATING-REVIEW-WINDOW-PARALLEL-META-OBS-001 | governance / orders · 评估 | 已封口 | **B-144**：**807 `governance.*`** 并列 **`orderRatingReviewWindowDays()`** 观测 **信息价值评估** → **否决 Rust**（与 **SEQ2/SEQ3** **`orders.deadline_*`** **重复**）；**不**扩 **807**/**compound**；互证 [**母表 B-144**](./任务母表.md) · [**正文**](#tt-b110-seq13-governance-order-rating-review-window-parallel-meta-obs-001) |
 | 145 | TT-B145-SSOT-GATE-PR-CHECK-CRATES-NEEDS-METADATA-001 | SSOT · 元数据门禁 | 已封口 | **B-145**：**单人开发元数据门禁**（**非** PR gate）；**`crates/**`** 须同批母表或索引；**push 前** **`check-pr-crates-needs-metadata.sh`**；可选 **`ssot-crates-metadata-hint.yml`**；互证 [**母表 B-145**](./任务母表.md) · [**正文**](#tt-b145-ssot-gate-pr-check-crates-needs-metadata-001) |
 | 146 | TT-B146-SSOT-GATE-BASE-RESOLUTION-STRICTNESS-PLAN-001 | SSOT · 元数据门禁后续 | 已封口 | **B-146**：**BASE/HEAD 解析语义** + **脚本边界**（**先于** **`contracts/**`**）；**`CRATES_METADATA_GATE_REQUIRE_REFS`**；**不**默认 **`CRATES_METADATA_GATE_FAIL`**；互证 [**母表 B-146**](./任务母表.md) · [**正文**](#tt-b146-ssot-gate-base-resolution-strictness-plan-001) |
@@ -185,22 +187,23 @@
 | 149 | TT-B149-B110-SEQ14-GOVERNOR-PROPOSAL-STATE-CHAIN-SSOT-001 | governance / SSOT | 已封口 | **B-149**：**v1** **`state(uint256)`** vs **`governance_proposals_projection.chain_state`**（**admin overview** + **`indexer-reconcile`** 可选 **`include_governor_proposal_state_chain_vs_projection_observability`**；**`pending` 粗桶**；**不**入 **compound**；**非** **B-172**）；互证 [**母表 B-149**](./任务母表.md) · [**正文**](#tt-b149-b110-seq14-governor-proposal-state-chain-ssot-001) |
 | 150 | TT-B150-110-ORDERS-CHAIN-SYNC-SNAPSHOT-CLOSE-001 | orders / 110 | 已封口 | **B-150**：**`GET …/orders/:id/chain-sync-status`** **110 §六 Implemented** + **04 §3.4** + **716～725**；**B-127** finality；**不** bump **compound**；互证 [**母表 B-150**](./任务母表.md) · [**正文**](#tt-b150-110-orders-chain-sync-snapshot-close-001) |
 | 151 | TT-B151-ORDERS-CHAIN-ID-NULL-READ-ONLY-OBS-001 | orders / ops · 只读观测 | 已封口 | **B-151**：**`orders_chain_id_null_observability`**（**`by_status`** + **`orders_null_chain_id_total`** 与 **B-102** 同源）；**`overview`** + **`indexer-reconcile`/`persist` `summary`**；**不**入 **compound**；互证 [**母表 B-151**](./任务母表.md) · [**正文**](#tt-b151-orders-chain-id-null-read-only-obs-001) |
-| 152 | TT-B152-GOVERNANCE-PROPOSALS-PROJECTION-NULL-FIELDS-OBS-001 | governance / ops · 观测 | 未封口 | **B-152**：**projection** **缺** **`state`/`block_number`/`tx_hash`** **计数**；**仅** admin / reconcile；**单表**；**对拍**归 **B-149**；互证 [**母表 B-152**](./任务母表.md) · [**正文**](#tt-b152-governance-proposals-projection-null-fields-obs-001) |
-| 153 | TT-B153-INDEXER-HEAD-VS-DB-LATEST-BLOCK-DRIFT-OBS-001 | indexer / ops · 观测 | 未封口 | **B-153**：**`chain_head_block`/`db_latest_block`/`drift_blocks`**；**非**业务 SSOT；互证 [**母表 B-153**](./任务母表.md) · [**正文**](#tt-b153-indexer-head-vs-db-latest-block-drift-obs-001) |
+| 152 | TT-B152-GOVERNANCE-PROPOSALS-PROJECTION-NULL-FIELDS-OBS-001 | governance / ops · 观测 | 登记（未封） | **一览登记（未封）**：详 [`from-stash`](./AI任务卡索引.from-stash.md) 与正文 · **B-152**：**projection** **缺** **`state`/`block_number`/`tx_hash`** **计数**；**仅** admin / reconcile；**单表**；**对拍**归 **B-149**；互证 [**母表 B-152**](./任务母表.md) · [**正文**](#tt-b152-governance-proposals-projection-null-fields-obs-001) |
+| 153 | TT-B153-INDEXER-HEAD-VS-DB-LATEST-BLOCK-DRIFT-OBS-001 | indexer / ops · 观测 | 登记（未封） | **一览登记（未封）**：详 [`from-stash`](./AI任务卡索引.from-stash.md) 与正文 · **B-153**：**`chain_head_block`/`db_latest_block`/`drift_blocks`**；**非**业务 SSOT；互证 [**母表 B-153**](./任务母表.md) · [**正文**](#tt-b153-indexer-head-vs-db-latest-block-drift-obs-001) |
 | 154 | TT-B154-INDEXER-RECONCILE-DURATION-BATCH-STATS-OBS-001 | indexer / ops · 观测 | 已封口 | **B-154**：**`indexer_reconcile_duration_batch_stats_observability`**（**`154-INDEXER-RECONCILE-DURATION-BATCH-STATS-OBS-V1`**）：**`reconcile_core_duration_ms`** + **`batch_row_counts`**；**`indexer-reconcile`/`persist` `summary`** + **admin `overview`**；**不**入 **compound**；互证 [**母表 B-154**](./任务母表.md) · [**正文**](#tt-b154-indexer-reconcile-duration-batch-stats-obs-001) |
-| 155 | TT-B155-ORDERS-AMOUNT-CHAIN-VS-DB-DRIFT-MARKER-001 | orders / 对拍标记 | 未封口 | **B-155**：**orders.amount** vs **escrow** **链上** **drift 标记**；**不**接管公开 orders；互证 [**母表 B-155**](./任务母表.md) · [**正文**](#tt-b155-orders-amount-chain-vs-db-drift-marker-001) |
+| 155 | TT-B155-ORDERS-AMOUNT-CHAIN-VS-DB-DRIFT-MARKER-001 | orders / 对拍标记 | 登记（未封） | **一览登记（未封）**：详 [`from-stash`](./AI任务卡索引.from-stash.md) 与正文 · **B-155**：**orders.amount** vs **escrow** **链上** **drift 标记**；**不**接管公开 orders；互证 [**母表 B-155**](./任务母表.md) · [**正文**](#tt-b155-orders-amount-chain-vs-db-drift-marker-001) |
 | 156 | TT-B156-ORDERS-CHAIN-HEALTH-TREND-SNAPSHOT-001 | orders / ops · 链健康趋势 | 已封口 | **B-156**：**`orders_chain_health_trend_snapshot`**（**`by_batch`/`by_day`**；**`persist:true`** **summary** + **admin `overview`**；**JSON 锚字面量** **`155-ORDERS-CHAIN-HEALTH-TREND-SNAPSHOT-V1`** **与实现一致**）；互证 [**母表 B-156**](./任务母表.md) · [**正文**](#tt-b156-orders-chain-health-trend-snapshot-001) |
-| 157 | TT-B156-B115-4-REGION-SHARE-SNAPSHOT-LINE-CHAIN-DB-RECONCILE-001 · TT-B157-INDEXER-TICK-RESPONSE-COUNTERS-STANDARDIZE-001 | revenue / 对拍观测；indexer / internal 收口 | 未封口 | **B-157 · 子项 A**：**RegionShareSnapshotLine** **链 vs `region_share_snapshot_lines`**（**B-115-4/P5-3** **不**改写入语义）；**子项 B**：**`indexer_tick`** **`new_events`/`parsed_events`/`failed_events`/`skipped_events`** 计数器收口；互证 [**母表 B-157**](./任务母表.md) · [**Region 正文**](#tt-b156-b115-4-region-share-snapshot-line-chain-db-reconcile-001) · [**tick 正文**](#tt-b157-indexer-tick-response-counters-standardize-001) |
-| 158 | TT-B158-SSOT-GATE-FRONTEND-LOCKFILE-METADATA-SCOPE-001 | SSOT · 门禁 · frontend/lockfile | 未封口 | **B-158**：**`frontend/**`**/**`package-lock.json`** 触面扩 **母表/索引**；**非** **B-147 contracts**；互证 [**母表 B-158**](./任务母表.md) · [**正文**](#tt-b158-ssot-gate-frontend-lockfile-metadata-scope-001) |
-| 159 | TT-B159-INDEXER-GATE-CHECKS-TOTAL-DOC-TRIPLE-ALIGN-001 | ops · gate 三线对齐 | 未封口 | **B-159**：**checks_total**/**110**/**scripts**/**07** 机读同号；互证 [**母表 B-159**](./任务母表.md) · [**正文**](#tt-b159-indexer-gate-checks-total-doc-triple-align-001) |
-| 160 | TT-B160-CORRECTION-EXECUTOR-ROWS-OBS-001 | ops · DB 观测 | 未封口 | **B-160**：**`correction_log`/`executor_executions`** 按链行数；**仅** admin/reconcile；互证 [**母表 B-160**](./任务母表.md) · [**正文**](#tt-b160-correction-executor-rows-obs-001) |
-| 161 | TT-B161-STAKE-LOCK-BLOCK-LAG-OBS-001 | indexer · 块滞后 | 未封口 | **B-161**：**stake/lock** 事件尾 vs checkpoint；**非** **B-153**；互证 [**母表 B-161**](./任务母表.md) · [**正文**](#tt-b161-stake-lock-block-lag-obs-001) |
-| 162 | TT-B162-RPC-ESCROW-SAMPLE-META-ADMIN-OBS-001 | ops · sample meta | 未封口 | **B-162**：**`rpc_escrow_sample_meta`** → **admin overview**；互证 [**母表 B-162**](./任务母表.md) · [**正文**](#tt-b162-rpc-escrow-sample-meta-admin-obs-001) |
-| 164 | TT-B164-FEE-ROUTES-VS-ROUTED-EVENTS-DRIFT-MARKER-001 | governance · 对拍 | 未封口 | **B-164**：**fee-routes** vs **`fee_router_routed_events`** drift；**非** **B-155**/**B-157** **子项 A**；互证 [**母表 B-164**](./任务母表.md) · [**正文**](#tt-b164-fee-routes-vs-routed-events-drift-marker-001) |
-| 165 | TT-B165-VAULT-FORWARDS-VS-FORWARDED-EVENTS-DRIFT-MARKER-001 | governance · 对拍 | 未封口 | **B-165**：**vault-forwards** vs **`region_vault_forwarded_events`**；**非** **B-157** **子项 A**；互证 [**母表 B-165**](./任务母表.md) · [**正文**](#tt-b165-vault-forwards-vs-forwarded-events-drift-marker-001) |
-| 166 | TT-B166-CHAIN-TIP-RECONCILE-META-NARRATIVE-ALIGN-001 | indexer · 叙事对齐 | 未封口 | **B-166**：**`include_chain_tip`** vs **`chain_tip_not_in_meta`** 互指；**非** **B-153** 数值卡；互证 [**母表 B-166**](./任务母表.md) · [**正文**](#tt-b166-chain-tip-reconcile-meta-narrative-align-001) |
-| 167 | TT-B167-META-INDEXER-110-04-ALIGN-001 | API · 807 收口 | 未封口 | **B-167**：**`GET /meta` `indexer.*`** 对齐 **110/04**；**非** **B-150/157**；互证 [**母表 B-167**](./任务母表.md) · [**正文**](#tt-b167-meta-indexer-110-04-align-001) |
-| 168 | TT-B168-ESCROW-STATUS-CHAIN-VS-DB-DRIFT-MARKER-001 | orders · 对拍 | 未封口 | **B-168**：**escrow 粗状态** vs **DB**；**非** **B-155** 金额；互证 [**母表 B-168**](./任务母表.md) · [**正文**](#tt-b168-escrow-status-chain-vs-db-drift-marker-001) |
+| 157 | TT-B156-B115-4-REGION-SHARE-SNAPSHOT-LINE-CHAIN-DB-RECONCILE-001 · TT-B157-INDEXER-TICK-RESPONSE-COUNTERS-STANDARDIZE-001 | revenue / 对拍观测；indexer / internal 收口 | 登记（未封） | **一览登记（未封）**：详 [`from-stash`](./AI任务卡索引.from-stash.md) 与正文 · **B-157 · 子项 A**：**RegionShareSnapshotLine** **链 vs `region_share_snapshot_lines`**（**B-115-4/P5-3** **不**改写入语义）；**子项 B**：**`indexer_tick`** **`new_events`/`parsed_events`/`failed_events`/`skipped_events`** 计数器收口；互证 [**母表 B-157**](./任务母表.md) · [**Region 正文**](#tt-b156-b115-4-region-share-snapshot-line-chain-db-reconcile-001) · [**tick 正文**](#tt-b157-indexer-tick-response-counters-standardize-001) |
+| 158 | TT-B158-SSOT-GATE-FRONTEND-LOCKFILE-METADATA-SCOPE-001 | SSOT · 门禁 · frontend/lockfile | 登记（未封） | **一览登记（未封）**：详 [`from-stash`](./AI任务卡索引.from-stash.md) 与正文 · **B-158**：**`frontend/**`**/**`package-lock.json`** 触面扩 **母表/索引**；**非** **B-147 contracts**；互证 [**母表 B-158**](./任务母表.md) · [**正文**](#tt-b158-ssot-gate-frontend-lockfile-metadata-scope-001) |
+| 159 | TT-B159-INDEXER-GATE-CHECKS-TOTAL-DOC-TRIPLE-ALIGN-001 | ops · gate 三线对齐 | 登记（未封） | **一览登记（未封）**：详 [`from-stash`](./AI任务卡索引.from-stash.md) 与正文 · **B-159**：**checks_total**/**110**/**scripts**/**07** 机读同号；互证 [**母表 B-159**](./任务母表.md) · [**正文**](#tt-b159-indexer-gate-checks-total-doc-triple-align-001) |
+| 160 | TT-B160-CORRECTION-EXECUTOR-ROWS-OBS-001 | ops · DB 观测 | 登记（未封） | **一览登记（未封）**：详 [`from-stash`](./AI任务卡索引.from-stash.md) 与正文 · **B-160**：**`correction_log`/`executor_executions`** 按链行数；**仅** admin/reconcile；互证 [**母表 B-160**](./任务母表.md) · [**正文**](#tt-b160-correction-executor-rows-obs-001) |
+| 161 | TT-B161-STAKE-LOCK-BLOCK-LAG-OBS-001 | indexer · 块滞后 | 登记（未封） | **一览登记（未封）**：详 [`from-stash`](./AI任务卡索引.from-stash.md) 与正文 · **B-161**：**stake/lock** 事件尾 vs checkpoint；**非** **B-153**；互证 [**母表 B-161**](./任务母表.md) · [**正文**](#tt-b161-stake-lock-block-lag-obs-001) |
+| 162 | TT-B162-RPC-ESCROW-SAMPLE-META-ADMIN-OBS-001 | ops · sample meta | 登记（未封） | **一览登记（未封）**：详 [`from-stash`](./AI任务卡索引.from-stash.md) 与正文 · **B-162**：**`rpc_escrow_sample_meta`** → **admin overview**；互证 [**母表 B-162**](./任务母表.md) · [**正文**](#tt-b162-rpc-escrow-sample-meta-admin-obs-001) |
+| 163 | TT-OBS-BATCH-INDEX-SEQ163-SLOT-001 | docs / 一览锚点 | 已封口 | **B-158～B-168** **观测批** **在母表无** **B-163** **号位**（**与** **母表 B-163** **程序级模块化** **区分**）；**本行** **仅** **补** **一览** **连续序号**；**零** **代码**；互证 [**正文**](#tt-obs-batch-index-seq163-slot-001) |
+| 164 | TT-B164-FEE-ROUTES-VS-ROUTED-EVENTS-DRIFT-MARKER-001 | governance · 对拍 | 登记（未封） | **一览登记（未封）**：详 [`from-stash`](./AI任务卡索引.from-stash.md) 与正文 · **B-164**：**fee-routes** vs **`fee_router_routed_events`** drift；**非** **B-155**/**B-157** **子项 A**；互证 [**母表 B-164**](./任务母表.md) · [**正文**](#tt-b164-fee-routes-vs-routed-events-drift-marker-001) |
+| 165 | TT-B165-VAULT-FORWARDS-VS-FORWARDED-EVENTS-DRIFT-MARKER-001 | governance · 对拍 | 登记（未封） | **一览登记（未封）**：详 [`from-stash`](./AI任务卡索引.from-stash.md) 与正文 · **B-165**：**vault-forwards** vs **`region_vault_forwarded_events`**；**非** **B-157** **子项 A**；互证 [**母表 B-165**](./任务母表.md) · [**正文**](#tt-b165-vault-forwards-vs-forwarded-events-drift-marker-001) |
+| 166 | TT-B166-CHAIN-TIP-RECONCILE-META-NARRATIVE-ALIGN-001 | indexer · 叙事对齐 | 登记（未封） | **一览登记（未封）**：详 [`from-stash`](./AI任务卡索引.from-stash.md) 与正文 · **B-166**：**`include_chain_tip`** vs **`chain_tip_not_in_meta`** 互指；**非** **B-153** 数值卡；互证 [**母表 B-166**](./任务母表.md) · [**正文**](#tt-b166-chain-tip-reconcile-meta-narrative-align-001) |
+| 167 | TT-B167-META-INDEXER-110-04-ALIGN-001 | API · 807 收口 | 登记（未封） | **一览登记（未封）**：详 [`from-stash`](./AI任务卡索引.from-stash.md) 与正文 · **B-167**：**`GET /meta` `indexer.*`** 对齐 **110/04**；**非** **B-150/157**；互证 [**母表 B-167**](./任务母表.md) · [**正文**](#tt-b167-meta-indexer-110-04-align-001) |
+| 168 | TT-B168-ESCROW-STATUS-CHAIN-VS-DB-DRIFT-MARKER-001 | orders · 对拍 | 登记（未封） | **一览登记（未封）**：详 [`from-stash`](./AI任务卡索引.from-stash.md) 与正文 · **B-168**：**escrow 粗状态** vs **DB**；**非** **B-155** 金额；互证 [**母表 B-168**](./任务母表.md) · [**正文**](#tt-b168-escrow-status-chain-vs-db-drift-marker-001) |
 | 169 | TT-B169-INDEXER-REORG-SENTINEL-OBS-001 | indexer · reorg 哨兵 | 已封口 | **B-169**：**reorg_suspected**/**hash** 对读 **只读汇总**；**非** **B-157**；互证 [**母表 B-169**](./任务母表.md) · [**正文**](#tt-b169-indexer-reorg-sentinel-obs-001) |
 | 170 | TT-B170-INDEXER-FINALITY-WINDOW-TRIPLE-OBS-001 | indexer · finality 三水线 | 已封口 | **B-170**：**tip / to_block / last_indexed** 并列；**非** **B-153**；互证 [**母表 B-170**](./任务母表.md) · [**正文**](#tt-b170-indexer-finality-window-triple-obs-001) |
 | 171 | TT-B171-MULTI-CHAIN-DB-CHAIN-ID-FOOTPRINT-MATRIX-OBS-001 | cross-chain · DB 足迹 | 已封口 | **B-171**：**DISTINCT chain_id** 矩阵 vs **runtime**；**非** **B-151**；互证 [**母表 B-171**](./任务母表.md) · [**正文**](#tt-b171-multi-chain-db-chain-id-footprint-matrix-obs-001) |
@@ -210,7 +213,7 @@
 | 175 | TT-B175-RPC-CHAIN-ID-VS-CONFIG-PROBE-RECONCILE-001 | cross-chain · 链身份探针 | 已封口 | **B-175**：**eth_chainId** vs **配置**；**非** **B-171**；互证 [**母表 B-175**](./任务母表.md) · [**正文**](#tt-b175-rpc-chain-id-vs-config-probe-reconcile-001) |
 | 176 | TT-B176-PER-TABLE-INDEXED-TAIL-BY-CHAIN-MATRIX-OBS-001 | indexer · 多表尾块矩阵 | 已封口 | **B-176**：**MAX(block)** **按表按链**；**非** **B-161**；互证 [**母表 B-176**](./任务母表.md) · [**正文**](#tt-b176-per-table-indexed-tail-by-chain-matrix-obs-001) |
 | 177 | TT-B177-META-GOVERNANCE-CHAIN-ALIGNMENT-04-110-ALIGN-001 | API · 807 治理对齐 | 已封口 | **B-177**：**meta governance*** + **pool** **04/110** 对齐；**非** **B-167**；互证 [**母表 B-177**](./任务母表.md) · [**正文**](#tt-b177-meta-governance-chain-alignment-04-110-align-001) |
-| 178 | TT-B178-PHASE-CLOSE-DOCS-CODE-REORG-PLAN-001 | process · Phase Close 规划 | 未封口 | **B-178**：**三批尽后** **规划** + **附录 A/B**（**观测壳** / **B-179～ 候选**）；互证 [**母表 B-178**](./任务母表.md) · [**正文**](#tt-b178-phase-close-docs-code-reorg-plan-001) |
+| 178 | TT-B178-PHASE-CLOSE-DOCS-CODE-REORG-PLAN-001 | process · Phase Close 规划 | 登记（未封） | **一览登记（未封）**：详 [`from-stash`](./AI任务卡索引.from-stash.md) 与正文 · **B-178**：**三批尽后** **规划** + **附录 A/B**（**观测壳** / **B-179～ 候选**）；互证 [**母表 B-178**](./任务母表.md) · [**正文**](#tt-b178-phase-close-docs-code-reorg-plan-001) |
 | 179 | TT-DOC-MOD-BATCH1-INTERNAL-TESTS-SPLIT-001 | api / 程序级模块化 | 已封口 | **B-163** / **TT-MOD-B1-02**：**`internal/tests/`** 集成测拆分；互证 [**母表 B-163**](./任务母表.md) · [**正文**](#tt-doc-mod-batch1-internal-tests-split-001) |
 | 180 | TT-DOC-MOD-BATCH1-HEALTH-META-TESTS-SPLIT-001 | api / 程序级模块化 | 已封口 | **B-163** / **TT-MOD-B1-03**：**`health_meta/tests.rs`**；互证 [**母表 B-163**](./任务母表.md) · [**正文**](#tt-doc-mod-batch1-health-meta-tests-split-001) |
 | 181 | TT-DOC-MOD-BATCH1-ADMIN-TESTS-SPLIT-001 | api / 程序级模块化 | 已封口 | **B-163** / **TT-MOD-B1-05**：**`admin/tests.rs`**；互证 [**母表 B-163**](./任务母表.md) · [**正文**](#tt-doc-mod-batch1-admin-tests-split-001) |
@@ -370,13 +373,23 @@
 
 **Batch-3 · 观测类防重复规则（实现硬约束）**：**matrix / drift / block lag** 同类 **观测** 落地时：**①** **优先** 合并为 **统一输出结构**（建议 **单一顶层壳**，如 **`multi_table_chain_observability`** — **最终键名 TT 钉死**；**B-171** 的 **DISTINCT/行数** 与 **B-176** 的 **MAX(block)** **默认同一壳内不同行/列**，**禁止** 两套平行顶层对象）。**②** **禁止** 为 **相同维度**（**同链、同表、同块高语义**）再开 **重复字段**。**③** 若与 **B-153** / **B-170** / **B-176** 已有语义重叠，**优先扩展既有键** **而非** 新建第三套 **drift** 块。
 
-**结论（本轮 · 跳过已封口 113～123、144、145、146、147、148、169～177）**：**DUPLICATE = 0**（**121** 复合门闸 **≠** **117** 单门闸；**122** **chain_id** **≠** disputes PG / **114** 投影 UX 等；**123** **B-094 证据 SSOT** **≠** **107** 写入 **≠** **113** outbox）；**NEW / EXTEND 登记缺口** = **0**（**143** 仍为 **未封口 · 边界台账**；**147**、**148**、**169**～**177** **已封口**；**149**～**168** 之余项 + **178（Phase Close · 规划）**（**一览缺 163 行**）**未封口 · 待执行** 以 **索引状态列** 为准；**B-178** **须** **B-147～B-177** **三批 backlog 尽封口** 后启动）。
+**结论（本轮 · 跳过已封口 113～123、144、145、146、147、148、169～177）**：**DUPLICATE = 0**（**121** 复合门闸 **≠** **117** 单门闸；**122** **chain_id** **≠** disputes PG / **114** 投影 UX 等；**123** **B-094 证据 SSOT** **≠** **107** 写入 **≠** **113** outbox）；**NEW / EXTEND 登记缺口** = **0**（**143** 仍为 **未封口 · 边界台账**；**147**、**148**、**169**～**177** **已封口**；**149**～**168** 之余项 + **178（Phase Close · 规划）**（**一览序号 163** **已补** **`TT-OBS-BATCH-INDEX-SEQ163-SLOT-001`**）**未封口 · 待执行** 以 **索引状态列** 为准；**B-178** **须** **B-147～B-177** **三批 backlog 尽封口** 后启动）。
 
 ---
 
 ## 任务卡正文（标准字段）
 
 以下为 **可执行** 定义；路径以仓库 **已落地实现** 为准，复盘时若需重开请改「本轮仅改」并显式说明。
+
+---
+
+### TT-OBS-BATCH-INDEX-SEQ163-SLOT-001
+
+- **阶段**：docs / 一览  
+- **状态**：已封口  
+- **本轮仅改**：无  
+- **任务**：对齐 **一览** **序号** **163** 与 **Batch-2** **「B-158～B-162 / B-164～B-168」** **无母表 B-163 观测号** **之叙述**（**母表 B-163** **为程序级模块化**，**见** **一览** **179～191**）；**不** **扩张** **scope**。  
+- **验收**：**`python3 scripts/check-ai-task-card-index-overview.py`** **对** **`docs/AI任务卡索引.md`** **exit 0**。
 
 ---
 
@@ -424,6 +437,27 @@
 - **任务**：请求开始 `setLoading(true)` + `setError(null)`；成功写入数据时 `setError(null)`，避免先失败后成功仍挡正文。  
 - **验收**：先失败后再次成功，error 消失且可看到数据或 incomplete 提示。  
 - **测试**：`cd frontend && npx tsc --noEmit`
+
+---
+
+### TT-GOVERNANCE-REWARDS-RESPONSE-CONTRACT-TEST-001
+
+- **阶段**：API / 治理 · **`GET /api/v1/governance/rewards`**  
+- **状态**：已封口  
+- **本轮仅改**：**`crates/api/src/routes/governance.rs`**（**`#[cfg(test)]`**）  
+- **任务**：**`governance_rewards_response_*`** **契约测**；与 **一览** **127** **互指**；实现口径同表内摘要。  
+- **验收**：**`cargo test -p traveltrust-api` `governance_rewards_response_*`** **绿**。
+
+---
+
+### TT-GOVERNANCE-PARAMS-HTTP-PLACEHOLDER-001
+
+- **阶段**：API / 治理 · **`GET /api/v1/governance/params`**  
+- **状态**：已封口  
+- **母表**：[任务母表.md](./任务母表.md) **B-124**  
+- **本轮仅改**：**`crates/api/src/routes/governance.rs`**（**`#[cfg(test)]`**）  
+- **任务**：**`governance_params_response_*`** **占位聚合**；与 **一览** **128** **互指**；实现口径同表内摘要。  
+- **验收**：**`cargo test -p traveltrust-api` `governance_params_response_*`** **绿**。
 
 ---
 

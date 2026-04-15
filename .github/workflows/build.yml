@@ -34,6 +34,8 @@ jobs:
         run: python3 scripts/check-13-1-table1-routes-vs-app.py
       - name: 13-1 table 1 routes covered by 04 frontend path table
         run: python3 scripts/check-13-1-routes-covered-by-04-frontend-table.py
+      - name: AI task card index overview (strict)
+        run: python3 scripts/check-ai-task-card-index-overview.py docs/AI任务卡索引.md
       # 140 / GET /meta.build：编译期注入提交 SHA（option_env TRAVELTRUST_BUILD_GIT_SHA），与发布追溯一致
       - name: Build workspace
         env:
