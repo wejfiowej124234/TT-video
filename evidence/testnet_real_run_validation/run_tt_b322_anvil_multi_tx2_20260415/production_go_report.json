@@ -1,0 +1,84 @@
+{
+  "anchor": "14-REGIONVAULT-CLAIM-PRODUCTION-GO-GATE-V1",
+  "rule_version": "region_vault_claim_production_go_gate_v1",
+  "mother_table": "B-266",
+  "implementation_tt": "TT-B266-14-REGIONVAULT-CLAIM-PRODUCTION-GO-GATE-001",
+  "generated_at_utc": "2026-04-15T00:46:14Z",
+  "notes": "B-266: file-local cross-check of B-264+B-263 plus required operator attestations for B-265 indexer/read-model uplift and B-230～B-242 evidence alignment. No RPC; no new HTTP.",
+  "inputs": {
+    "onchain_reconcile_canonical_sha256_hex": "21066cbc573b73c9130a753b0850c124490a8863b83d98c63f40dfe25a57a3e3",
+    "onchain_reconcile_path": "C:\\Users\\plant\\Desktop\\Wbe3-TravelTrust\\evidence\\testnet_real_run_validation\\run_tt_b322_anvil_multi_tx2_20260415\\onchain_reconcile.json",
+    "receipt_archive_path": "C:\\Users\\plant\\Desktop\\Wbe3-TravelTrust\\evidence\\testnet_real_run_validation\\run_tt_b322_anvil_multi_tx2_20260415\\receipt_archive.json",
+    "onchain_reconcile_file_sha256_hex": "63ed335c455dfb5ce4ba2872bd5cb018617e4082085e1a1291e8da79d3ffe36b",
+    "receipt_archive_file_sha256_hex": "6645cf5e227f3ad3780da2fa1a97eedf0ecc1428d28ac14e391fa03fca0c51de"
+  },
+  "operator": {
+    "attest_b265_indexer_uplift": true,
+    "attest_b230_b242_evidence_chain": true,
+    "operator_note": "TT-B322 Anvil clean run multi_tx_2 (port 18545)"
+  },
+  "source_surface": {
+    "b264_reconcile_verdict": "GO",
+    "b263_archive_verdict": "GO",
+    "source_execution_report_sha256_hex_linked": "324efa6a0d5adfddcd2e8b3f49d41744b38a4c2718c18ef36fc2ed65d6fe3d9f",
+    "receipt_archive_canonical_sha256_recomputed_from_file": "d98d169f293082a9c9a699e164a032341533edce238c339444be8c53f55c98d9",
+    "b264_source_receipt_archive_canonical_sha256_hex_recomputed": "d98d169f293082a9c9a699e164a032341533edce238c339444be8c53f55c98d9"
+  },
+  "execution_and_evidence_surface_checks": [
+    {
+      "check_id": "b264_onchain_reconcile_verdict_go",
+      "passed": true,
+      "detail": "reconcile_verdict='GO'"
+    },
+    {
+      "check_id": "b263_receipt_archive_verdict_go",
+      "passed": true,
+      "detail": "archive_verdict='GO'"
+    },
+    {
+      "check_id": "execution_report_sha256_cross_link",
+      "passed": true,
+      "detail": "onchain.source_execution_report_sha256_of_file_bytes_hex vs receipt.source_execution_report_canonical_sha256_hex"
+    },
+    {
+      "check_id": "b263_receipt_archive_canonical_sha256_internal",
+      "passed": true,
+      "detail": "recomputed canonical JSON vs receipt_archive_canonical_sha256_hex"
+    },
+    {
+      "check_id": "b264_onchain_snapshot_matches_provided_receipt_archive",
+      "passed": true,
+      "detail": "onchain source_receipt_archive_canonical_sha256_hex_recomputed vs recomputed receipt file"
+    },
+    {
+      "check_id": "b264_all_reconcile_rows_row_ok",
+      "passed": true,
+      "detail": "every reconcile_rows[].row_ok true"
+    },
+    {
+      "check_id": "b278_receipt_finality_evidence_optional",
+      "passed": true,
+      "detail": "receipt_archive.finality_evidence (TT-B278) when --require-receipt-finality-pass"
+    },
+    {
+      "check_id": "operator_attests_b265_indexer_read_model_uplift",
+      "passed": true,
+      "detail": "requires --attest-b265-indexer-uplift (API/DB uplift + forwarded alignment verified out-of-band)"
+    },
+    {
+      "check_id": "operator_attests_b230_b242_evidence_chain_alignment",
+      "passed": true,
+      "detail": "requires --attest-b230-b242-evidence-chain (snapshots vs on-chain results)"
+    }
+  ],
+  "risk_acceptance_items": [
+    {
+      "item_id": "production_admission_default",
+      "description": "Operator accepts residual operational risk for long-running production admission after automated file checks and attestations above.",
+      "accepted": true
+    }
+  ],
+  "blocking_reasons": [],
+  "production_verdict": "GO",
+  "production_go_gate_canonical_sha256_hex": "8fa89165005824ac628b4edb041a8675f9e62558d1ee4a179d8c18b805d7bef4"
+}

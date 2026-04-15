@@ -1129,6 +1129,30 @@ jobs:
             evidence/GO_*/secret_rotation_sampling_report.json
             evidence/GO_*/secret_key_evidence_field_report.json
 
+  broadcast-batch-1-blockers:
+    name: Broadcast batch 1 blockers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Batch-1 gate (B-380 / B-366 / B-379 / B-368)
+        run: bash scripts/gates/broadcast-batch-1-blockers.sh
+
+  broadcast-batch-2-blockers:
+    name: Broadcast batch 2 blockers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Batch-2 gate (B-367 / B-373 / B-374)
+        run: bash scripts/gates/broadcast-batch-2-blockers.sh
+
+  broadcast-batch-3-blockers:
+    name: Broadcast batch 3 blockers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Batch-3 gate (B-369 / B-370 / B-375)
+        run: bash scripts/gates/broadcast-batch-3-blockers.sh
+
   # Runs after all parallel jobs finish; prints baseline + triage template when any needed job failed.
   # `always()` is required so this job is not skipped when a sibling `needs` job fails (default skip rule).
   ci-triage-hint:
@@ -1146,6 +1170,9 @@ jobs:
       - feature-flag
       - job-queue
       - secret-key
+      - broadcast-batch-1-blockers
+      - broadcast-batch-2-blockers
+      - broadcast-batch-3-blockers
     steps:
       - uses: actions/checkout@v6
       - name: CI triage hint
@@ -1167,6 +1194,9 @@ jobs:
       - feature-flag
       - job-queue
       - secret-key
+      - broadcast-batch-1-blockers
+      - broadcast-batch-2-blockers
+      - broadcast-batch-3-blockers
     steps:
       - uses: actions/checkout@v6
       - name: Download e2e playwright outcome (if any)
@@ -1190,4 +1220,7 @@ jobs:
           JOB_FEATURE_FLAG: ${{ needs.feature-flag.result }}
           JOB_JOB_QUEUE: ${{ needs.job-queue.result }}
           JOB_SECRET_KEY: ${{ needs.secret-key.result }}
+          JOB_BROADCAST_BATCH_1: ${{ needs.broadcast-batch-1-blockers.result }}
+          JOB_BROADCAST_BATCH_2: ${{ needs.broadcast-batch-2-blockers.result }}
+          JOB_BROADCAST_BATCH_3: ${{ needs.broadcast-batch-3-blockers.result }}
         run: bash scripts/check-go-no-go.sh

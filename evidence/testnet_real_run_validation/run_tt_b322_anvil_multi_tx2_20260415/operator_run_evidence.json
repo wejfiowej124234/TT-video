@@ -1,0 +1,52 @@
+{
+  "tt_id": "TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001",
+  "generated_at_utc": "2026-04-15T00:46:14Z",
+  "anchors": {
+    "execution_report": "14-REGIONVAULT-CLAIM-BROADCAST-EXECUTION-REPORT-V1",
+    "production_go_gate": "14-REGIONVAULT-CLAIM-PRODUCTION-GO-GATE-V1"
+  },
+  "chain_id_hex_from_execution_report": "0x7a69",
+  "execution_verdict": "GO",
+  "dry_run": false,
+  "production_verdict": "GO",
+  "transaction_hashes_in_order": [
+    "0x1ae1c351c3d9c481787cefa92e9316739a916441568396b0a0a353e51efd6902",
+    "0xa22e950333516da77e6fd0b99e28d896b2168e52f79531e3e04271a30f1111af"
+  ],
+  "execution_steps_summary": [
+    {
+      "global_index": 0,
+      "batch_plan_id": "JUR:US|EPOCH:7",
+      "tx_hash": "0x1ae1c351c3d9c481787cefa92e9316739a916441568396b0a0a353e51efd6902",
+      "eth_sendRawTransaction": "submitted",
+      "receipt_status_hex": "0x1"
+    },
+    {
+      "global_index": 1,
+      "batch_plan_id": "JUR:US|EPOCH:7",
+      "tx_hash": "0xa22e950333516da77e6fd0b99e28d896b2168e52f79531e3e04271a30f1111af",
+      "eth_sendRawTransaction": "submitted",
+      "receipt_status_hex": "0x1"
+    }
+  ],
+  "artifact_files": {
+    "execution_report_json": "execution_report.json",
+    "receipt_archive_json": "receipt_archive.json",
+    "onchain_reconcile_json": "onchain_reconcile.json",
+    "production_go_report_json": "production_go_report.json",
+    "b265_import_hint_json": "b265_region_vault_claim_import_hint.json"
+  },
+  "artifact_sha256_hex": {
+    "execution_report": "324efa6a0d5adfddcd2e8b3f49d41744b38a4c2718c18ef36fc2ed65d6fe3d9f",
+    "receipt_archive": "6645cf5e227f3ad3780da2fa1a97eedf0ecc1428d28ac14e391fa03fca0c51de",
+    "onchain_reconcile": "63ed335c455dfb5ce4ba2872bd5cb018617e4082085e1a1291e8da79d3ffe36b",
+    "production_go_report": "a17e17f44f2146941debd475c850ab136fd0c205dd66835aebde154b3add4449"
+  },
+  "broadcast_request_stub_sha256_hex": "8ed8a950a4ae93c996939a56a6185735648250db6e261ed465276626ada2952f",
+  "operator": {
+    "attest_b265_indexer_uplift": true,
+    "attest_b230_b242_evidence_chain": true,
+    "operator_note": "TT-B322 Anvil clean run multi_tx_2 (port 18545)"
+  },
+  "blocking_reasons_production": []
+}

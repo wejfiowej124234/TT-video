@@ -1,0 +1,48 @@
+{
+  "anchor": "14-REGIONVAULT-CLAIM-BROADCAST-ONCHAIN-RECONCILE-V1",
+  "rule_version": "region_vault_claim_broadcast_onchain_reconcile_v1",
+  "mother_table": "B-264",
+  "implementation_tt": "TT-B264-14-REGIONVAULT-CLAIM-BROADCAST-RESULT-RECONCILE-ONCHAIN-001",
+  "generated_at_utc": "2026-04-15T00:46:14Z",
+  "source_execution_report_canonical_sha256_hex": "96fc76c00dcd8e91ec15241a498dd76b26cd3b7ea955bb8c806cd029225bdc5d",
+  "source_execution_report_sha256_of_file_bytes_hex": "324efa6a0d5adfddcd2e8b3f49d41744b38a4c2718c18ef36fc2ed65d6fe3d9f",
+  "source_receipt_archive_canonical_sha256_hex_declared": "d98d169f293082a9c9a699e164a032341533edce238c339444be8c53f55c98d9",
+  "source_receipt_archive_canonical_sha256_hex_recomputed": "d98d169f293082a9c9a699e164a032341533edce238c339444be8c53f55c98d9",
+  "receipt_archive_canonical_sha256_match": true,
+  "source_receipt_archive_archive_verdict": "GO",
+  "source_execution_report_execution_verdict": "GO",
+  "reconcile_rows": [
+    {
+      "global_index": 0,
+      "batch_plan_id": "JUR:US|EPOCH:7",
+      "ordinal": 0,
+      "tx_hash_execution": "0x1ae1c351c3d9c481787cefa92e9316739a916441568396b0a0a353e51efd6902",
+      "tx_hash_archive": "0x1ae1c351c3d9c481787cefa92e9316739a916441568396b0a0a353e51efd6902",
+      "tx_hash_match": true,
+      "execution_receipt_status_hex": "0x1",
+      "archive_status_hex": "0x1",
+      "status_match": true,
+      "archive_row_result": "ok",
+      "archive_block_number_hex": "0x3",
+      "row_ok": true
+    },
+    {
+      "global_index": 1,
+      "batch_plan_id": "JUR:US|EPOCH:7",
+      "ordinal": 1,
+      "tx_hash_execution": "0xa22e950333516da77e6fd0b99e28d896b2168e52f79531e3e04271a30f1111af",
+      "tx_hash_archive": "0xa22e950333516da77e6fd0b99e28d896b2168e52f79531e3e04271a30f1111af",
+      "tx_hash_match": true,
+      "execution_receipt_status_hex": "0x1",
+      "archive_status_hex": "0x1",
+      "status_match": true,
+      "archive_row_result": "ok",
+      "archive_block_number_hex": "0x4",
+      "row_ok": true
+    }
+  ],
+  "blocking_reasons": [],
+  "reconcile_verdict": "GO",
+  "notes": "B-264: read-only cross-check B-262 vs B-263; no RPC; no new HTTP; no contract changes.",
+  "onchain_reconcile_canonical_sha256_hex": "21066cbc573b73c9130a753b0850c124490a8863b83d98c63f40dfe25a57a3e3"
+}

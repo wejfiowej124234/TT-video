@@ -1,0 +1,43 @@
+{
+  "anchor": "14-REGIONVAULT-CLAIM-BROADCAST-EXECUTION-REPORT-V1",
+  "rule_version": "region_vault_claim_broadcast_execute_v1",
+  "mother_table": "B-262",
+  "implementation_tt": "TT-B262-14-REGIONVAULT-CLAIM-BROADCAST-EXECUTION-001",
+  "generated_at_utc": "2026-04-15T00:46:14Z",
+  "source_broadcast_request_stub_sha256_hex": "8ed8a950a4ae93c996939a56a6185735648250db6e261ed465276626ada2952f",
+  "source_broadcast_request_anchor": "14-REGIONVAULT-CLAIM-BROADCAST-REQUEST-STUB-V1",
+  "source_broadcast_request_rule_version": "region_vault_claim_broadcast_request_stub_v1",
+  "rpc_url_redacted": "http://127.0.0.1:18545/…",
+  "chain_id_hex": "0x7a69",
+  "dry_run": false,
+  "skip_wait_receipt": false,
+  "require_operator_confirmation": true,
+  "rehearsal_anchor": "14-REGIONVAULT-CLAIM-BROADCAST-DRYRUN-REHEARSAL-REPORT-V1",
+  "rehearsal_rule_version": "region_vault_claim_broadcast_dryrun_rehearsal_v1",
+  "execution_steps": [
+    {
+      "global_index": 0,
+      "batch_plan_id": "JUR:US|EPOCH:7",
+      "ordinal": 0,
+      "signing_order": 0,
+      "signed_transaction_hex_byte_len": 210,
+      "tx_hash": "0x1ae1c351c3d9c481787cefa92e9316739a916441568396b0a0a353e51efd6902",
+      "eth_sendRawTransaction": "submitted",
+      "receipt_status_hex": "0x1"
+    },
+    {
+      "global_index": 1,
+      "batch_plan_id": "JUR:US|EPOCH:7",
+      "ordinal": 1,
+      "signing_order": 1,
+      "signed_transaction_hex_byte_len": 210,
+      "tx_hash": "0xa22e950333516da77e6fd0b99e28d896b2168e52f79531e3e04271a30f1111af",
+      "eth_sendRawTransaction": "submitted",
+      "receipt_status_hex": "0x1"
+    }
+  ],
+  "execution_verdict": "GO",
+  "execution_stop_reason": null,
+  "notes": "B-262: real RPC submit; prefer B-257 rehearsal + B-258 gate before live. Indexer/DB claim path remains separate TT.",
+  "execution_report_canonical_sha256_hex": "96fc76c00dcd8e91ec15241a498dd76b26cd3b7ea955bb8c806cd029225bdc5d"
+}

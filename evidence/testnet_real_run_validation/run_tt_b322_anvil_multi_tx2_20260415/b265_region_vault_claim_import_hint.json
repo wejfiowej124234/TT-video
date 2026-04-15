@@ -1,0 +1,8 @@
+{
+  "tt_id": "TT-B322-TESTNET-MULTI-TX-NONCE-SEQUENCE-REAL-RUN-001",
+  "anchor_note": "B-265: set REGION_VAULT_CLAIM_ONCHAIN_RECONCILE_IMPORT_PATH to onchain_reconcile.json (absolute path recommended), restart traveltrust-api; forwarded-events join per RUNBOOK B-265.",
+  "suggested_env": {
+    "REGION_VAULT_CLAIM_ONCHAIN_RECONCILE_IMPORT_PATH": "C:\\Users\\plant\\Desktop\\Wbe3-TravelTrust\\evidence\\testnet_real_run_validation\\run_tt_b322_anvil_multi_tx2_20260415\\onchain_reconcile.json"
+  },
+  "onchain_reconcile_relative_to_repo": "evidence/testnet_real_run_validation/run_tt_b322_anvil_multi_tx2_20260415/onchain_reconcile.json"
+}
