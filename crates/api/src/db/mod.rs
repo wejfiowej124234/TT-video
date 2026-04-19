@@ -38,6 +38,7 @@ pub use orders_projection::*;
 pub use p5_country_ledger::*;
 pub use reconciliation_reports::*;
 pub use region_vault_events::*;
+pub use stake_lock_projection_block_lag_obs::STAKE_LOCK_PROJECTION_BLOCK_LAG_OBS_ANCHOR;
 #[allow(unused_imports)] // B-115-1：HTTP/indexer 未接线前仅单测直引模块；保留与 `crate::db::*` 同形 re-export
 pub use region_snapshot::*;
 pub use reviews::*;
@@ -78,6 +79,7 @@ mod orders_projection;
 mod p5_country_ledger;
 mod reconciliation_reports;
 mod region_vault_events;
+mod stake_lock_projection_block_lag_obs;
 mod region_snapshot;
 mod reviews;
 mod users_sessions;

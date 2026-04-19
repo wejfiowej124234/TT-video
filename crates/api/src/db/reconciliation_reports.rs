@@ -310,6 +310,116 @@ pub async fn admin_last_orders_chain_health_trend_snapshot(
         .cloned())
 }
 
+// --- Admin observability：自最新 `orders_projection_vs_orders` 报告 `summary` 读取（与 indexer-reconcile persist 同键）---
+
+pub const GOVERNANCE_PROPOSALS_PROJECTION_NULL_FIELDS_OBS_ANCHOR: &str =
+    "152-GOVERNANCE-PROPOSALS-PROJECTION-NULL-FIELDS-OBS-V1";
+pub const RPC_ESCROW_SAMPLE_META_ANCHOR: &str = "110-RPC-ESCROW-SAMPLE-META";
+pub const CORRECTION_EXECUTOR_ROWS_OBS_ANCHOR: &str = "160-CORRECTION-EXECUTOR-ROWS-OBS-V1";
+pub const ORDERS_AMOUNT_CHAIN_VS_ESCROW_DRIFT_ANCHOR: &str =
+    "155-ORDERS-AMOUNT-CHAIN-VS-ESCROW-DRIFT-OBS-V1";
+pub const ESCROW_STATUS_CHAIN_VS_ORDERS_DRIFT_OBS_ANCHOR: &str =
+    "168-ESCROW-STATUS-CHAIN-VS-ORDERS-DRIFT-OBS-V1";
+pub const FEE_ROUTER_FEE_ROUTES_VS_ROUTED_EVENTS_DRIFT_ANCHOR: &str =
+    "164-FEE-ROUTER-FEE-ROUTES-VS-ROUTED-EVENTS-DRIFT-OBS-V1";
+pub const VAULT_FORWARDS_VS_FORWARDED_EVENTS_DRIFT_ANCHOR: &str =
+    "165-VAULT-FORWARDS-VS-FORWARDED-EVENTS-DRIFT-OBS-V1";
+
+async fn admin_last_orders_projection_summary_field(
+    pool: &PgPool,
+    key: &str,
+) -> Result<Option<Value>, sqlx::Error> {
+    let Some(row) =
+        get_latest_reconciliation_report_by_type(pool, REPORT_TYPE_ORDERS_PROJECTION_VS_ORDERS)
+            .await?
+    else {
+        return Ok(None);
+    };
+    Ok(row.summary.0.get(key).cloned())
+}
+
+pub async fn admin_last_governance_proposals_projection_null_fields_observability(
+    pool: &PgPool,
+) -> Result<Option<Value>, sqlx::Error> {
+    admin_last_orders_projection_summary_field(
+        pool,
+        "governance_proposals_projection_null_fields_observability",
+    )
+    .await
+}
+
+pub async fn admin_last_rpc_escrow_sample_meta(
+    pool: &PgPool,
+) -> Result<Option<Value>, sqlx::Error> {
+    admin_last_orders_projection_summary_field(pool, "rpc_escrow_sample_meta").await
+}
+
+pub async fn admin_last_correction_executor_rows_observability(
+    pool: &PgPool,
+) -> Result<Option<Value>, sqlx::Error> {
+    admin_last_orders_projection_summary_field(pool, "correction_executor_rows_observability").await
+}
+
+pub async fn admin_last_orders_amount_chain_vs_escrow_drift_observability(
+    pool: &PgPool,
+) -> Result<Option<Value>, sqlx::Error> {
+    admin_last_orders_projection_summary_field(
+        pool,
+        "orders_amount_chain_vs_escrow_drift_observability",
+    )
+    .await
+}
+
+pub async fn admin_last_escrow_status_chain_vs_orders_drift_observability(
+    pool: &PgPool,
+) -> Result<Option<Value>, sqlx::Error> {
+    admin_last_orders_projection_summary_field(
+        pool,
+        "escrow_status_chain_vs_orders_drift_observability",
+    )
+    .await
+}
+
+pub async fn admin_last_fee_router_fee_routes_vs_routed_events_drift_observability(
+    pool: &PgPool,
+) -> Result<Option<Value>, sqlx::Error> {
+    admin_last_orders_projection_summary_field(
+        pool,
+        "fee_router_fee_routes_vs_routed_events_drift_observability",
+    )
+    .await
+}
+
+pub async fn admin_last_vault_forwards_vs_forwarded_events_drift_observability(
+    pool: &PgPool,
+) -> Result<Option<Value>, sqlx::Error> {
+    admin_last_orders_projection_summary_field(
+        pool,
+        "vault_forwards_vs_forwarded_events_drift_observability",
+    )
+    .await
+}
+
+pub async fn admin_last_stake_lock_projection_block_lag_observability(
+    pool: &PgPool,
+) -> Result<Option<Value>, sqlx::Error> {
+    admin_last_orders_projection_summary_field(
+        pool,
+        "stake_lock_projection_block_lag_observability",
+    )
+    .await
+}
+
+pub async fn admin_last_indexer_head_vs_db_latest_block_drift_observability(
+    pool: &PgPool,
+) -> Result<Option<Value>, sqlx::Error> {
+    admin_last_orders_projection_summary_field(
+        pool,
+        "indexer_head_vs_db_latest_block_drift_observability",
+    )
+    .await
+}
+
 /// Admin 列表用（不含整份 **`summary`**；从 **`summary.stats`** 抽取门禁字段与分项计数，**不含** **`samples`**）
 #[derive(Debug, sqlx::FromRow)]
 pub struct ReconciliationReportListItem {

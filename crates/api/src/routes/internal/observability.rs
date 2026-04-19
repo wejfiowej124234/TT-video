@@ -190,3 +190,34 @@ pub async fn indexer_status(
     }
     Json(body).into_response()
 }
+
+/// **`GET …/admin/observability/overview`** 与 **`indexer-reconcile`** **`persist`** 摘要同源：最新报告 **`summary.indexer_head_vs_db_latest_block_drift_observability`**（锚 **`153-INDEXER-HEAD-VS-DB-LATEST-BLOCK-DRIFT-OBS-V1`**）。
+pub async fn indexer_head_vs_db_latest_block_drift_observability_v1(
+    pool: Option<&sqlx::PgPool>,
+    _rpc_url: Option<&str>,
+    _expected_chain_id: Option<i64>,
+) -> Value {
+    const ANCHOR: &str = "153-INDEXER-HEAD-VS-DB-LATEST-BLOCK-DRIFT-OBS-V1";
+    let Some(pool) = pool else {
+        return json!({
+            "anchor": ANCHOR,
+            "schema_version": 1,
+            "observation_note": "database_pool_unavailable",
+        });
+    };
+    match db::admin_last_indexer_head_vs_db_latest_block_drift_observability(pool).await {
+        Ok(Some(v)) => v,
+        Ok(None) => json!({
+            "anchor": ANCHOR,
+            "schema_version": 1,
+            "observation_note": "no_stored_snapshot",
+            "getter_note": "From latest reconciliation_reports.summary when present; run POST …/internal/indexer-reconcile with persist:true to populate.",
+        }),
+        Err(e) => json!({
+            "anchor": ANCHOR,
+            "schema_version": 1,
+            "observation_note": "query_failed",
+            "error": e.to_string(),
+        }),
+    }
+}

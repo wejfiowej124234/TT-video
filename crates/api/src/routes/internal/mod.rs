@@ -27,7 +27,10 @@ pub use indexer::{
 #[allow(unused_imports)]
 pub use messages::{post_internal_region_share_snapshot_line, process_resolution_outbox, RegionShareSnapshotLineBody};
 #[allow(unused_imports)]
-pub use observability::{indexer_status, internal_alerts_test_fire, internal_incident_open, IndexerStatusQuery};
+pub use observability::{
+    indexer_head_vs_db_latest_block_drift_observability_v1, indexer_status, internal_alerts_test_fire,
+    internal_incident_open, IndexerStatusQuery,
+};
 #[allow(unused_imports)]
 pub use reconcile::{indexer_reconcile, IndexerReconcileBody};
 
