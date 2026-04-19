@@ -2,15 +2,17 @@
 
 **与 [13-协议级UI设计宪法](13-协议级UI设计宪法.md) 关系**：13 已锁死**风格与边界**（资金区像银行、3D 只在情绪层等）。本文档补**信息架构 + 页面职责 + 交互边界**，作为**产品级 SSOT**，避免 AI 把每个页面做成「万能页」或混入错误情绪/布局。05 §九 以 13 为准；**页面层次、角色权限、交易交互与异常态**以本文为准。**协议级四类角色命名与不变量**与 **[87-TravelTrust-角色体系技术文档-融合架构版](87-TravelTrust-角色体系技术文档-融合架构版.md)** 同读；下文 **表 2** 为**路由×页权**矩阵，与 **87** 分层见 **表 2 融合注**。  
 **UI 风格定稿**：**Experience（`/`、`/traveltrust`）页身外观**（色、动效、粒子/Hero、桥接渐变等）以 **[86-UI-双系统未来风-风格与动效技术规格](86-UI-双系统未来风-风格与动效技术规格.md)** 为 **视觉 SSOT**；**全局顶栏（`Header.tsx`）** 自 2026-03 起 **全路由统一白底深字**（与 **86 §6.0** 一致），**不**再随 Experience 路径切换玻璃浅字顶栏。**Cinematic 叙事结构、三层融合、组件清单** 以 **[28-Cinematic-Glassmorphism-Web3融合规范](28-Cinematic-Glassmorphism-Web3融合规范.md)** 为准（见 28 篇首分工）。**`/market`**：**86 Business 降级** + **28/29** 信息与撮合；全页底与 **`/traveltrust`** 同系暖色场域：**`WarmRouteFieldBackdrop`**（`#14100d` + **`bg-traveltrust-atmosphere`** + **`bg-traveltrust-dot-grid`**，经 **`MarketAmbientBackdrop`**）；**`/did-rank`** 与 **`/community/*`** 共用同一暖场底，并叠 **静态** 赛博渐变（**`bg-scifi-gradient-static`**）与 **领奖台柔光**（**无**全屏 Three 粒子、**无** `bg-scifi-grid` 与 **`animate-did-gradient`** 位移动画），与 **`/market`** 切换时色差可控；**实现真值与缺口审计**见 **[88](88-五主路由页身实现快照与UX缺口审计-20260330.md)**。**`/discover`** 仅为 **重定向壳**，列表与角标验收以 **`/market`** 为准；表 1 关键组件与 **28 §5** 清单一致。**风格迭代**（含配色）须走 **[22 §一点五](22-Design-Tokens-旅游Web3融合体系-v1.0.md)**，**不改** 页面职责与路由（**86 篇首「定稿口径」**）。  
-**全系统页面在技术栈中的位置**（用户层/市场/Escrow 等，与 **53** 主链对齐）：[18-TravelTrust-全系统架构图](18-TravelTrust-全系统架构图.md)、[18-补充-TravelTrust-全系统架构层级图-最终版](18-补充-TravelTrust-全系统架构层级图-最终版.md) §1；**订单步骤条与协议区**扩展以 **[53-阶段开发技术文档](53-阶段开发技术文档.md)**、**[29-自由市场-撮合控制台规范](29-自由市场-撮合控制台规范.md)** 为准。**治理页 `/governance` 与链上 DAO** 的产品 vs 合约边界见 **§二 表 2-续**、[83-区域治理与收益分配-协议白皮书](83-区域治理与收益分配-协议白皮书.md) **附录 I.0**。文档版本与最后更新见 [00-文档索引](00-文档索引.md)。
+**全系统页面在技术栈中的位置**（用户层/市场/Escrow 等，与 **53** 主链对齐）：[18-TravelTrust-全系统架构图](18-TravelTrust-全系统架构图.md)、[18-补充-TravelTrust-全系统架构层级图-最终版](18-补充-TravelTrust-全系统架构层级图-最终版.md) §1；**订单步骤条与协议区**扩展以 **[53-阶段开发技术文档](53-阶段开发技术文档.md)**、**[29-自由市场-撮合控制台规范](29-自由市场-撮合控制台规范.md)** 为准。**治理页 `/governance` 与链上 DAO** 的产品 vs 合约边界见 **§二 表 2-续**、[83-区域治理与收益分配-协议白皮书](83-区域治理与收益分配-协议白皮书.md) **附录 I.0**；**治理控制台 IA**（含 **发起提案**、**角色视角**、**影响面板**、**移动端**）、分页面、时间轴与文案见 **[89-治理UI-全球旅游市场治理控制台设计规格](89-治理UI-全球旅游市场治理控制台设计规格.md)** **2.0.8**（**§5.0** 注册·多身份·地区代理商）。文档版本与最后更新见 [00-文档索引](00-文档索引.md)。
 
 ### 读前摘要
 
 | 你要找什么 | 单源 |
 |------------|------|
+| **规范分层宪法 / 86 与 P0 冲突裁决** | **[00-Spec-Constitution-规范宪法.md](00-Spec-Constitution-规范宪法.md)**、**[Spec-CONFLICT-RESOLUTION-冲突处理.md](Spec-CONFLICT-RESOLUTION-冲突处理.md)** |
 | **页面地图、每页「不做什么」** | **§二 表 1**（含 **`/traveltrust`**、**`/did-rank`**；**`/discover`→`/market`** 与 **[04 §3.4](04-后端与API.md)** 一致） |
-| **角色 / RBAC / 导航** | **§二 表 2**、**表 2-续**（`/governance` vs **83 附录 I.0**）；**87** 协议四类 vs 本表「游客/向导/…」见 **表 2 融合注** |
-| **金融区 / Zone Control / 交易交互** | **§二 表 3、表 4** |
+| **角色 / RBAC / 导航** | **§二 表 2**、**表 2-续**（`/governance` vs **83 附录 I.0**）；**87 §1.3** 用语 + 协议四类 vs 本表「旅行者/向导/…」见 **表 2 融合注** |
+| **治理域 IA、提案创建/详情/影响面板、执行时间轴、角色视角、金库/区域、移动端** | **[89](89-治理UI-全球旅游市场治理控制台设计规格.md)** **2.0.8**（**表 1** 仍锁页面职责；**89** 为治理子域 **Target** 规格） |
+| **金融区 / Zone Control / 交易交互** | **§二 表 3、表 4**；**全站 F/X/G 分区与粒子/Hero 裁决** **[92](92-P0-全站UI分区控制表-金融体验灰区与动效裁决.md)** |
 | **异常态清单** | **§二** 下文「异常态清单」；Escrow 扩展见 **[53](53-阶段开发技术文档.md)** |
 | **风格宪法（情绪层 vs 资金层）** | **[13](13-协议级UI设计宪法.md)**（**§一 1️⃣** 补充款）；**Experience 视觉 [86](86-UI-双系统未来风-风格与动效技术规格.md)**；**叙事结构 [28](28-Cinematic-Glassmorphism-Web3融合规范.md)** |
 | **浅色页 AA / 触控与对比度（B-107）** | **基线**：与 **[13](13-协议级UI设计宪法.md)**、**[22 §一点五](22-Design-Tokens-旅游Web3融合体系-v1.0.md)** 一致；五主路由页身抽检互证 **[88](88-五主路由页身实现快照与UX缺口审计-20260330.md)**、**[05 §九](05-前端总览.md)** |
@@ -43,13 +45,13 @@
 | **Network（融资向）** | **TravelTrust 网络（/traveltrust 或 /network）** | 品牌/协议级 **网络叙事** + 合规融资转化入口（见 [85](85-TravelTrust网络落地页-融资级设计与开发规格.md)）；**`/network`** 重定向至 **`/traveltrust`**（与 [04 §3.4](04-后端与API.md) 前端路由表一致） | **不做**单笔订单 Escrow 主流程、**不做**完整 DApp 控制台堆叠 | **Partial**：`frontend/app/traveltrust` 最小壳；**T2** 结算披露（allowlist 稳定币 vs TTG/Target）须在页面 **Trust 邻近**可见；完整 IA/三币框/动效以 **85** 验收 |
 | | **Discover（`/discover`）** | **路由壳**：**`/discover` 客户端重定向至 `/market`**（**[04 §3.4](04-后端与API.md)**、**`app/discover/page.tsx`**）。**「发现」列表与卡片**不在此路径单独实现，与下行 **自由市场** 同一套 UI。 | 不在 **`app/discover`** 维护第二套订单/向导卡片列表 | 过渡/loading（**`app/discover/*`**）；角标与列表验收见 **自由市场** 行 |
 | **Protocol Console（协议控制台）** | **自由市场（/market）** | **撮合行程与向导**：发现订单（**GET `/api/v1/discover/orders`**）+发现向导、邀请/接单、协商、去 Escrow；**承接原 Discover 列表心智与 UI** | **不出现支付/链上操作堆叠**、不做论坛/3D | 双栏（订单流+向导库）、ViewSwitcher、StickyFilterBar、OrderCard/GuideCard、Drawer、EmptyStates、EscrowEnabledBadge/SupportedTokensPill、Escrow pricing、TrustInfraWall（[29](29-自由市场-撮合控制台规范.md) **撮合**；**28** **组件/IA**；**Business 外观 [86](86-UI-双系统未来风-风格与动效技术规格.md) 降级** + **[22 §一点五](22-Design-Tokens-旅游Web3融合体系-v1.0.md)**） |
-| **Protocol Console（协议控制台）** | **TT社区（/community）** | **UGC 信息流**：**L1** 主 Tab（动态\|发现\|消息\|好友\|我）；**L2** **「帮助与支持」下拉**（**`CommunitySupportMenu`**）：建议与反馈（`/community/feedback`）、帮助中心（`/help`）、社区规范（`/terms/community-guidelines`）三项同型归并，**不与** L1 Tab 并列（见 [31 §5.1.0](31-TT社区页面设计.md)）；游客与向导发帖（照片/旅游/美食/视频）、点赞/收藏/评论/关注、按推荐/关注/最新/最热与目的地/类型筛选。**费路由/治理**不在该下拉，见 **`/help`**、**`/traveltrust`**、页脚、**`ProductCrossNav`** | **不支付、不撮合、不在此页做 Escrow 操作**；不做 28 玻璃态 Hero | **暖场 + 静态赛博叠层**（**`WarmRouteFieldBackdrop`**、`layout.tsx`）；卡片/Feed 仍 **cyan/fuchsia** 霓虹语义（**31**）；壳层**无** `Web3SciFiBackground`、**无**背景网格位移动画（**88**）；子路由、空态、骨架、loading/error |
+| **Protocol Console（协议控制台）** | **TT社区（/community）** | **UGC 信息流**：**L1** 主 Tab（动态\|发现\|消息\|好友\|我）；**L2** **「帮助与支持」下拉**（**`CommunitySupportMenu`**）：建议与反馈（`/community/feedback`）、帮助中心（`/help`）、社区规范（`/terms/community-guidelines`）三项同型归并，**不与** L1 Tab 并列（见 [31 §5.1.0](31-TT社区页面设计.md)）；旅行者与向导发帖（照片/旅游/美食/视频）、点赞/收藏/评论/关注、按推荐/关注/最新/最热与目的地/类型筛选。**费路由/治理**不在该下拉，见 **`/help`**、**`/traveltrust`**、页脚、**`ProductCrossNav`** | **不支付、不撮合、不在此页做 Escrow 操作**；不做 28 玻璃态 Hero | **暖场 + 静态赛博叠层**（**`WarmRouteFieldBackdrop`**、`layout.tsx`）；卡片/Feed 仍 **cyan/fuchsia** 霓虹语义（**31**）；壳层**无** `Web3SciFiBackground`、**无**背景网格位移动画（**88**）；子路由、空态、骨架、loading/error |
 | **Protocol Console（协议控制台）** | **DID 排行榜（/did-rank）** | **竖脊切换三签**：旅行者 / 向导 / 商家（商家占位）；**内页翻页**动效（**30 §1、§4.3**）；**`?board=`** + 时间范围与 **`rank_basis`** 元数据（见 [30](30-DID排行榜-页面规范.md)、[04-附录 did-rank](04-附录-did-rank对接说明.md) §2）；**`GET …/itineraries` 行程榜** API 仍存，**当前页不展示**；**Me** 高亮与 **`?me=`** 对齐 | **不做** Escrow 签名与单笔支付；**不做**社区 Feed；评价/信誉加权排行见 [04-附录 §3.1](04-附录-did-rank对接说明.md)（**Target**） | **暖场 + 静态赛博叠层**（**30 §4.1**）；**`framer-motion`** 脊签切换（**30 §6**）；榜单 **cyan/fuchsia**（**30 §4.2**）；**无**全屏 Three、**无** `bg-scifi-grid` / **`animate-did-gradient`** 背景漂移；`getDidRankTravelers`/`Guides`、`normalize*Row` |
 | **Protocol Console（协议控制台）** | OrderFlow | 步骤引导：草稿→确认→付款→完成；**53 阶段扩展**为草稿→**向导确认→双边确认**→确认→付款→完成→**评分→资金释放**（详见 [53-阶段开发技术文档](53-阶段开发技术文档.md) §3.2）；状态机可视化 | 不放大图/强情绪、不用 3D | 步骤条、状态、金额、签名入口 |
 | | EscrowDetail | 托管单笔状态、金额、参与方、finality、允许动作（链下确认行程完成/**release**/争议）；**53 约定**：订单/Escrow 详情页内**协议控制台区**（行程与预算、报价摘要、步骤条、聊天、操作区）采用 [30-DID 赛博朋克](30-DID排行榜-页面规范.md) §4，以 53 为准。**企业级 UI/UX**（信息层级、留白、异常态、动效、a11y）以 [53 §4.4](53-阶段开发技术文档.md) 验收清单为准。 | 默认禁止霓虹/强动效、禁止 3D；**协议控制台区**以 53+30-DID 为准 | 状态、金额与币种、时间与 finality、操作区、风险提示 |
 | | **Escrow 评分子页（`/escrow/:id/rate`）** | **53-S8**：行程评分材料上传与 **`orderConfirmRating`**；**订单处于可评价资金终态**时内嵌与 Escrow 详情相同的链下文字评价（**REST** **`GET`/`POST`** **`api/v1/orders/:id/reviews`**；列表 **权重**、**`meta.review_weight_*`**、提交 **`weight_breakdown`**，与 **04 / 90** 一致） | **不做**链上 **release** 的**唯一**入口（释放仍回 **`/escrow/:id`**） | 与详情共用 **`ReviewBlock`**（**`variantDid`**）、**`EscrowRateRouteSuspense`** |
 | | Dispute | 证据时间线、可裁决项、裁决执行记录、可追溯 hash | 禁止 3D、禁止装饰性动效 | 时间线、证据列表、裁决表单、tx 记录 |
-| **Governance（治理）** | Governance / Proposals / Params | 参数与提案、投票 | 不放旅游内容 | 参数表、提案列表、投票 UI |
+| **Governance（治理）** | **`/governance`** **及子路径**（总览、提案列表/详情、**提案创建器·89 Target**、金库、区域、我的治理、代表/席位等；**创建器** 独立 `page.tsx` 落地前勿写可机读裸路径以免 CI 误抽） | **链上治理控制台**：**发起**（达链上阈值）、提案与投票、**影响面板**、**执行时间轴**、区域/金库/DID 业务叙事；**非**旅游 Feed | **不放**撮合下单、**不放**社区 Feed 主内容 | 参数表、提案列表、投票 UI、**IA 与分页面规格** **[89](89-治理UI-全球旅游市场治理控制台设计规格.md)** **2.0.8** |
 | **Ops（内部）** | Admin / Runbook / Evidence Viewer | 内部运维与证据查看 | 不对外暴露为默认入口 | 按角色 RBAC |
 | **个人中心（/me 或 /account）** | **账号维度统一入口（类淘宝「我的」）**：用户点击**顶栏头像/账号**进入；含 **我的订单**、**我的行程**（生成的行程/草稿）、向导侧**我的接单**、个人资料与设置；与 [31 TT社区「我」](31-TT社区页面设计.md) **互通**（见下表「个人中心与 TT 社区·我 互通」）。**不在此页做**：支付/链上签名（在 Escrow 详情）；发帖/Feed（在 TT 社区）。 | 订单列表（卡片或列表、状态筛选）、行程列表（草稿/已发布）、接单列表（向导）、资料/设置、**入口到 TT 社区·我** |
 
@@ -58,7 +60,7 @@
 | 入口 | 去向 | 说明 |
 |------|------|------|
 | **顶栏头像/账号** | **个人中心**（/me 或 /account） | 全站统一：点击头像或账号名进入「我的」空间，与淘宝「我的淘宝」一致。 |
-| **个人中心** | **我的订单**（/me/orders 或 /orders）、**我的行程**、**我的接单**（向导）、资料/设置、**TT 社区·我** | 订单列表展示当前用户作为游客/向导的订单，支持状态筛选；点击订单进入订单详情或 Escrow 详情。**生成的行程**在「我的行程」或「我的订单」中可查（订单关联行程，订单卡可展示行程摘要）。 |
+| **个人中心** | **我的订单**（/me/orders 或 /orders）、**我的行程**、**我的接单**（向导）、资料/设置、**TT 社区·我** | 订单列表展示当前用户作为旅行者/向导的订单，支持状态筛选；点击订单进入订单详情或 Escrow 详情。**生成的行程**在「我的行程」或「我的订单」中可查（订单关联行程，订单卡可展示行程摘要）。 |
 | **个人中心 → TT 社区·我** | /community/me | 显式入口「去 TT 社区·我」或「我的动态/帖子」；同一账号，不重复登录。 |
 | **TT 社区「我」**（/community/me） | **我的订单 / 我的行程** 入口 | 显式入口「我的订单」「我的行程」跳转至个人中心或 /orders，避免用户只在社区时找不到订单。 |
 
@@ -70,11 +72,11 @@
 
 ### 表 2：角色 × 页面权限矩阵（RBAC）
 
-**表 2 与 [87](87-TravelTrust-角色体系技术文档-融合架构版.md) 融合注**：**87** 锁死协议侧 **Traveler / Guide / Shop（UI）·`provider` / Region Steward** 及 **UI·API·合约**分层；本表是**工作空间与页权**（含**仲裁员**、**治理者**、**观察者**、**Admin**）。**游客 ≈ Traveler**、**向导 ≈ Guide**（UI 文案「游客」可保留；API 收敛 **`traveler`** 见 **87 §1.2**、**04 §二 2.1**）。**治理者 + `/governance`** 为产品治理入口；**Region Steward** 绑定 **FeeRouter/83**，**不**参与订单内 Escrow 操作叙事（**87 §5**）。**商铺（`provider`）**：订单参与方见 **87 §4**、**14**；独立商铺工作台路由与 RBAC **落地前**可按订单关联 **Partial**。**仲裁员** = 争议**裁决执行**，见 **87 §6** 注、**100**。
+**表 2 与 [87](87-TravelTrust-角色体系技术文档-融合架构版.md) 融合注**：**87** 锁死协议侧 **Traveler / Guide / Shop（UI）·`provider` / Region Steward** 及 **UI·API·合约**分层；本表是**工作空间与页权**（含**仲裁员**、**治理者**、**观察者**、**Admin**）。**旅行者 = Traveler（协议 SSOT 中文）**；**旅行者** 为产品常用同义词，与 **旅行者** 同一角色（UI 文案「旅行者」可保留；API 收敛 **`traveler`** 见 **87 §1.2～§1.3**、**04 §二 2.1**）。**治理者 + `/governance`** 为产品治理入口；链上投票权以 **治理代币（TTG）** 与 **[governance-token/02 §4.5](governance-token/02-对内技术规格-草案.md)** 为准，**不**由表 2 产品身份单独决定。**Region Steward** 绑定 **FeeRouter/83**，**不**参与订单内 Escrow 操作叙事（**87 §5**）。**商铺（`provider`）**：订单参与方见 **87 §4**、**14**；独立商铺工作台路由与 RBAC **落地前**可按订单关联 **Partial**。**仲裁员** = 争议**裁决执行**，见 **87 §6** 注、**100**。
 
 | 角色 | 可访问页面 | 可执行动作 | 必须隐藏/限制 |
 |------|------------|------------|----------------|
-| **游客** | Landing、**自由市场（`/market`；`/discover`→`/market`）**、OrderFlow（自己订单）、EscrowDetail（参与方）、Profile、**TT社区** | 下单、付款（签名）、**确认行程完成（链下 API）**、评分路径后 **release（钱包）**、发起争议、**社区发帖/点赞/收藏/评论/关注** | 仲裁/治理/Admin |
+| **旅行者** | Landing、**自由市场（`/market`；`/discover`→`/market`）**、OrderFlow（自己订单）、EscrowDetail（参与方）、Profile、**TT社区** | 下单、付款（签名）、**确认行程完成（链下 API）**、评分路径后 **release（钱包）**、发起争议、**社区发帖/点赞/收藏/评论/关注** | 仲裁/治理/Admin |
 | **向导** | Landing、**自由市场（`/market`；`/discover`→`/market`）**、OrderFlow、EscrowDetail、Profile、我的接单、**TT社区** | 接单、**确认行程完成（链下 API）**、**release**、争议响应、**社区发帖/点赞/收藏/评论/关注** | 仲裁裁决、治理投票、Admin |
 | **仲裁员** | Dispute（分配案件）、证据与时间线、裁决提交 | 裁决、执行器触发（若权限） | 非分配案件、治理敏感操作 |
 | **治理者** | Governance、Proposals、Params | 提案、投票、参数查看 | 资金操作、仲裁裁决 |
@@ -85,7 +87,7 @@
 
 | 对象 | 边界 |
 |------|------|
-| **本表「治理者」+ 路由 `/governance`** | 产品内治理入口；当前典型能力为 **只读展示**（如 `GET /api/v1/governance/pool`、`…/rewards`，见 [04 §3.4](04-后端与API.md)）；未来若做提案/投票 **UI**，须与链上合约能力**一致**，不得伪造链上已执行 |
+| **本表「治理者」+ 路由 `/governance`** | 产品内治理入口；**IA Target** 见 **[89](89-治理UI-全球旅游市场治理控制台设计规格.md)**。已登记前端路由与契约见 **[04 §3.4](04-后端与API.md)**：含 **提案列表/详情**、**委托**、参数与路由事件等；Governor 模式下投票计票须与合约**一致**，不得伪造链上状态。**`pool` / `rewards`** 及若干经济投影页仍以 **只读或占位叙事**为主（与 **04** `GET` 行、**82** 一致）。**89** 所列 **完整影响面板**、treasury/regions 等 **Target** 与实现对拍；**提案创建器** 等子路径须待 **`page.tsx`** 落地后再于 **04** 单行登记。**禁止** 将 **`fee-pool-aggregates` Σ** 等投影累计冒充 **`pool`** 链上主读或链上已执行（与本表下行、**83** 一致）。**工程**：**母表 B-432** **`check-b432-governance-ui-ssot-surface`**（**`run-check-04-routes`** 串联末步）钉死 **B-428** 演示路径之 **`frontend/app/governance/*`**、**`/staking`** 与 **`governance_b428_closeloop_doc_pointer`** i18n（**不**替代 **04** 全量表） |
 | **`/governance/distribution-accruals`（及 `[id]`）** | **P5-4-2**：应计分录叙事 **只读**；消费 **`GET …/governance/investor-distribution-accruals`**；**不**冒充链上 **Claim** SSOT、**不**承担 **`fee-pool-aggregates`** Σ 主叙事；**不**从前台调用 **`/internal/`** 写接口（与 [04 §3.4 前端路由表](04-后端与API.md) 同批登记） |
 | **`/governance/distribution-claim`** | **P5-4-1**：**`InvestorDistributionClaim`** **用户钱包** **`claim` / `withdrawDividend`**；**不**在 UI 封装 **`registerAccrual`**（**owner** 链上登记仍归 **B-115** 内网/运维路径）；**不**将 **`fee-pool-aggregates`** Σ **文案化成** Claim 主叙事；合约地址 **`NEXT_PUBLIC_INVESTOR_DISTRIBUTION_CLAIM_ADDRESS`**（与 [04 §3.4](04-后端与API.md)、[evidence/GO_P5_4_CLOSE.md](../../evidence/GO_P5_4_CLOSE.md) 同批） |
 | **[83](83-区域治理与收益分配-协议白皮书.md) GlobalDAO / RegionDAO** | **FeeRouter 比例、Snapshot、Seat、Claim** 等以**链上合约 + 治理流程**为权威；后端 **禁止**直接改池内余额或分配比例；职责矩阵见 **83 附录 I**（含 **I.0** 与本表对照） |
@@ -93,20 +95,20 @@
 | **Admin（表 2-补充）** | 运营/审批/审计；**不得**与「治理者」链上参数改动混为同一入口或同一套权限语义 |
 | **公开治理区 → Admin 经济台账（交叉链）** | **Partial**：各 **`/governance*`** 主 **`nav`** 在 **`/traveltrust#fee-router`** 与 **`/help`** 之间挂 **`GovernanceOpsAdminLinks`**（**`/admin/finance`**、**`/admin/fee-router#admin-fee-router-events`**、**`/admin/region-vault#admin-region-vault-events`**）；**`governance/error.tsx`** 在 **治理·争议·支付** 脚注下 **`border-t` `nav`** 同挂 **`GovernanceOpsAdminLinks`**，**`aria-label`** **`governance_error_adminOpsNav_aria`**；**目标须 Admin RBAC**（未授权 **401/403**）；与 **表 2-补充** **Admin** 分层一致，**非**将治理者权限等同于运营后台；i18n **`governance_ops_admin_*`** / **`governance_error_adminOpsNav_aria`** |
 
-**角色与顶栏（当前实现）**：顶栏**无角色切换**，仅「登录」「注册」及导航；左侧**深色字标「TravelTrust」**→ **`/traveltrust`**（[85](85-TravelTrust网络落地页-融资级设计与开发规格.md)、[04 §3.4](04-后端与API.md)），**不设**独立顶栏「网络」项；**字标** **非** **`<nav>`** 内第五链（与 **88** 文首、**07 §二 2.3 #9**、**86** 读前摘要一致）。**`<nav>`** 仅 **Web3旅行**（`/`）、**自由市场**（`/market`）、**DID排行榜**（`/did-rank`）、**TT社区**（`/community`）；主导航文案键 **`header_web3Travel` / `header_market` / `header_didRank` / `header_community`**（`frontend/locales/zh.ts`、`en.ts`）。**不含** **`/discover`**（该路由重定向至 **`/market`**）、**不含** **`/pay`**。**支付与托管**（`/pay`）及 **我的订单、个人中心、质押、用户反馈**等仅在**已登录用户顶栏下拉菜单**露出（**主入口**）；帮助页、各路由 **error** 恢复区、`ProductCrossNav` 等**非 `<nav>`** 场景可保留 **`/pay`** 深链，与 **04 §3.4** 表前总述一致。角色由**注册入口**（游客注册 vs 申请向导）与**路由/权限**自然区分（如 /disputes、**`/guide`（向导工作台）**、/guide/register、/governance 按权限可见）。若后续恢复「角色工作空间」入口，须与 13「角色必须空间隔离」一致并写死入口位置（如独立路由前缀 `/tourist` / `/guide` / `/arbitrator`）。
+**角色与顶栏（当前实现）**：顶栏**无角色切换**，仅「登录」「注册」及导航；左侧**深色字标「TravelTrust」**→ **`/traveltrust`**（[85](85-TravelTrust网络落地页-融资级设计与开发规格.md)、[04 §3.4](04-后端与API.md)），**不设**独立顶栏「网络」项；**字标** **非** **`<nav>`** 内第五链（与 **88** 文首、**07 §二 2.3 #9**、**86** 读前摘要一致）。**`<nav>`** 仅 **Web3旅行**（`/`）、**自由市场**（`/market`）、**DID排行榜**（`/did-rank`）、**TT社区**（`/community`）；主导航文案键 **`header_web3Travel` / `header_market` / `header_didRank` / `header_community`**（`frontend/locales/zh.ts`、`en.ts`）。**不含** **`/discover`**（该路由重定向至 **`/market`**）、**不含** **`/pay`**。**支付与托管**（`/pay`）及 **我的订单、个人中心、质押、用户反馈**等仅在**已登录用户顶栏下拉菜单**露出（**主入口**）；帮助页、各路由 **error** 恢复区、`ProductCrossNav` 等**非 `<nav>`** 场景可保留 **`/pay`** 深链，与 **04 §3.4** 表前总述一致。角色由**注册入口**（**目标态**：**旅行者** 首登主路径；**追加身份** 见 **[89 §5.0](89-治理UI-全球旅游市场治理控制台设计规格.md)** — 头像菜单申请向导/服务商/地区代理商等；**当前实现** 仍为 **四角色同页注册** 见 **04 §3.4**）与**路由/权限**自然区分（如 /disputes、**`/guide`（向导工作台）**、/guide/register、/governance 按权限可见）。若后续恢复「角色工作空间」入口，须与 13「角色必须空间隔离」一致并写死入口位置（如独立路由前缀 `/tourist` / `/guide` / `/arbitrator`）。
 
 **登录态全站统一（与个人中心 / TT 社区数据同步）**：
 
 - **单源**：全站登录态以 `localStorage.traveltrust_user_id` + 后端 `GET /api/v1/me`（请求头 `X-User-Id`）为唯一依据；个人中心、TT 社区、自由市场、订单等**共用同一套**，不做各自一份「是否登录」状态。
 - **同步**：登录成功后前端写入 `traveltrust_user_id` 并清除 getMe 缓存、派发 `traveltrust:auth-change` 事件，顶栏等监听该事件以即时更新「登录/未登录」展示，避免社区已登录而个人中心仍显示未登录。
-- **测试账号与权限**：测试账号（如种子接口）与功能权限（游客/向导/仲裁员/治理）由**后端统一**；前端仅根据 getMe() 或统一 Auth 展示，权限归类以**表 2 角色×页面权限矩阵**为准，不在各 UI 重复维护权限逻辑。
+- **测试账号与权限**：测试账号（如种子接口）与功能权限（旅行者/向导/仲裁员/治理）由**后端统一**；前端仅根据 getMe() 或统一 Auth 展示，权限归类以**表 2 角色×页面权限矩阵**为准，不在各 UI 重复维护权限逻辑。
 
 ### 表 2-补充：Admin 工作台状态锚点（对齐 70）
 
 | 项 | 口径 |
 |----|------|
 | **实现状态标签** | **Partial**（信息架构与 RBAC 已定义；前台默认导航不暴露 Admin 入口） |
-| **当前基线** | 表 1 已定义 Ops 内部域（Admin / Runbook / Evidence Viewer）；表 2 已限制游客/向导不可见 Admin；前端路由现状含 **`/admin/users`**（**GET** + **`/admin/users/[id]`**（**GET** `…/admin/users/:id`，`routes.admin.userById`）+ **Modal POST** `role-change-request`）、**`/admin/guides`**（**GET** 向导入驻台账）、**`/admin/guides/[id]`**（**GET** `…/admin/guides/:id`，`routes.admin.guideById`）、**`/admin/orders`**、**`/admin/orders/[id]`**（**GET** `…/admin/orders/:id`，`routes.admin.orderById`）、**`/admin/disputes`**、**`/admin/disputes/[id]`**（**GET** `…/admin/disputes/:id`，`routes.admin.disputeById`）、**`/admin/reviews`**、**`/admin/reviews/[id]`**（**GET** `…/admin/reviews/:id`，`routes.admin.reviewById`）、**`/admin/audit`**、**`/admin/audit/logs/[id]`**（**GET** `…/admin/audit-logs/:id`，`routes.admin.auditLogById`）、**`/admin/approvals`**、**`/admin/approvals/[id]`**（**GET** `…/admin/approvals/:id`，`routes.admin.approvalById`）、**POST …/approve**（`writeRequestHeaders`）、**`/admin/finance`**、**`/admin/fee-router`**、**`/admin/region-vault`**；**orders/disputes/reviews/audit/approvals/finance/fee-router/region-vault/observability** 等页 UI **zh/en** 已入 **`frontend/locales`**（含 **`admin_em_dash`** 表格空值占位——**orders/disputes/audit** 全列与 **incident** 副标题等，替代 **`admin_approvals_dash`**；**`audit/operations` / `alerts/incidents*`** 顶栏 **`admin_schema_back`**；**非 Admin 前台**缺省占位键 **`ui_em_dash`**（与市场、社区、订单、托管详情、DID 榜、`StatusBadge` 等 **`t()`** 对齐，字形与 **`admin_em_dash`** 一致）**）、**`/admin/observability`**、**`/admin/audit/operations`**、**`/admin/alerts/incidents`**（含 **`[id]`**）、**`/admin/community/*`**（含 **`/reports`** 上 **moderation PATCH**、**`/penalties`** 上 **POST**、**`/comments/visibility`**（**PATCH** + **select** 枚举 **zh/en**）、**`/abuse-policy`**、**`/appeals`** **GET**、**`/appeals/review`** **POST**（**decision** **zh/en**））、**`/admin/compliance/requests/[requestId]/update`**（**status** **select** **zh/en**）、**`/admin/jobs`**、**`/admin/config/releases`**、**`/admin/secrets/metadata`**、**`/admin/scheduler/jobs`**（含 **rerun** 写）、**`/admin/tenants/scopes`**（含发布写）、**`/admin/compliance/requests`**（**`…/events`**、**`…/update`**）与 **`/admin/lifecycle`**、**`/admin/api-versions`**、**`/admin/policies`**（含 **publish** 写）、**`/admin/internal-tools/audits`**、**`/admin/flags`**（含 **publish** 写）等页 |
+| **当前基线** | 表 1 已定义 Ops 内部域（Admin / Runbook / Evidence Viewer）；表 2 已限制旅行者/向导不可见 Admin；前端路由现状含 **`/admin/users`**（**GET** + **`/admin/users/[id]`**（**GET** `…/admin/users/:id`，`routes.admin.userById`）+ **Modal POST** `role-change-request`）、**`/admin/guides`**（**GET** 向导入驻台账）、**`/admin/guides/[id]`**（**GET** `…/admin/guides/:id`，`routes.admin.guideById`）、**`/admin/orders`**、**`/admin/orders/[id]`**（**GET** `…/admin/orders/:id`，`routes.admin.orderById`）、**`/admin/disputes`**、**`/admin/disputes/[id]`**（**GET** `…/admin/disputes/:id`，`routes.admin.disputeById`）、**`/admin/reviews`**、**`/admin/reviews/[id]`**（**GET** `…/admin/reviews/:id`，`routes.admin.reviewById`）、**`/admin/audit`**、**`/admin/audit/logs/[id]`**（**GET** `…/admin/audit-logs/:id`，`routes.admin.auditLogById`）、**`/admin/approvals`**、**`/admin/approvals/[id]`**（**GET** `…/admin/approvals/:id`，`routes.admin.approvalById`）、**POST …/approve**（`writeRequestHeaders`）、**`/admin/finance`**、**`/admin/fee-router`**、**`/admin/region-vault`**；**orders/disputes/reviews/audit/approvals/finance/fee-router/region-vault/observability** 等页 UI **zh/en** 已入 **`frontend/locales`**（含 **`admin_em_dash`** 表格空值占位——**orders/disputes/audit** 全列与 **incident** 副标题等，替代 **`admin_approvals_dash`**；**`audit/operations` / `alerts/incidents*`** 顶栏 **`admin_schema_back`**；**非 Admin 前台**缺省占位键 **`ui_em_dash`**（与市场、社区、订单、托管详情、DID 榜、`StatusBadge` 等 **`t()`** 对齐，字形与 **`admin_em_dash`** 一致）**）、**`/admin/observability`**、**`/admin/audit/operations`**、**`/admin/alerts/incidents`**（含 **`[id]`**）、**`/admin/community/*`**（含 **`/reports`** 上 **moderation PATCH**、**`/penalties`** 上 **POST**、**`/comments/visibility`**（**PATCH** + **select** 枚举 **zh/en**）、**`/abuse-policy`**、**`/appeals`** **GET**、**`/appeals/review`** **POST**（**decision** **zh/en**））、**`/admin/compliance/requests/[requestId]/update`**（**status** **select** **zh/en**）、**`/admin/jobs`**、**`/admin/config/releases`**、**`/admin/secrets/metadata`**、**`/admin/scheduler/jobs`**（含 **rerun** 写）、**`/admin/tenants/scopes`**（含发布写）、**`/admin/compliance/requests`**（**`…/events`**、**`…/update`**）与 **`/admin/lifecycle`**、**`/admin/api-versions`**、**`/admin/policies`**（含 **publish** 写）、**`/admin/internal-tools/audits`**、**`/admin/flags`**（含 **publish** 写）等页 |
 | **目标锚点** | 与 [70-管理员系统开发文档](70-管理员系统开发文档.md) §3.1、§6.4、§9.1/§9.2/§9.4、§12.6/§12.7/§12.8 及 [04-后端与API](04-后端与API.md) §3.5 保持同一状态口径 |
 
 **UI Target（待实现，路由命名可在实现中微调）**：
@@ -169,7 +171,7 @@
 
 **强制约束**：
 
-- Admin 路由不得出现在游客/向导默认导航和公开 sitemap。
+- Admin 路由不得出现在旅行者/向导默认导航和公开 sitemap。
 - 未授权访问 Admin 路由时必须 fail-closed（401/403）并记录审计事件。
 - Admin 高危写与导出动作在 UI 必须显式显示“审计失败即拒绝执行”结果，不得静默降级为成功。
 - 审批工作台必须显式展示并校验：`No Self-Approval`、步骤完整性、审批超时重校验。
@@ -215,7 +217,7 @@
 |-----------|------------|----------|
 | 草稿 | 订单摘要、参与方、金额；来源 API | 提交确认 |
 | **向导确认**（53） | 订单摘要、行程概要、报价；来源 API | 确认接该项目（向导） |
-| **双边确认**（53） | 行程与金额；双方确认态；来源 API | 游客/向导各自确认行程与金额 |
+| **双边确认**（53） | 行程与金额；双方确认态；来源 API | 旅行者/向导各自确认行程与金额 |
 | 确认 | 锁定金额、币种、超时时间；链下+链上 | 前往付款（唤起钱包） |
 | 付款 | chainId、contract、amount、token、gas、finalityN；链上 | 签名并支付 |
 | 完成 | 状态、finality 块数、完成/争议入口；链上+API | **确认行程完成（链下）** / 发起争议；**release** 在评分路径后见操作区 |
@@ -230,7 +232,7 @@
 | **步骤条（53 八步）** | 53 阶段：草稿→向导确认→双边确认→确认→付款→完成→评分→资金释放；当前步高亮、已完成打勾、未完成灰显 | 见 [53 §3.2](53-阶段开发技术文档.md)、表 4 OrderFlow；不可缺步或顺序错 |
 | 状态 | 当前状态（Draft/Confirmed/Funded/Completed/Disputed/Resolved） | 不可忽略、不可折叠 |
 | 金额与币种 | 金额、USDC（或白名单 token） | 不可误读、统一小数位 |
-| 参与方 | 游客、向导、仲裁（若已分配） | 来自 API |
+| 参与方 | 旅行者、向导、仲裁（若已分配） | 来自 API |
 | 时间与 finality | 创建时间、finality 块高、可验证链接 | 可验证 |
 | 事件列表 | 链上事件摘要（EscrowCreated/Funded/…） | 可选折叠，默认可见最近 |
 | 允许动作 | **确认行程完成（链下）**、发起争议、**release（链上，评分路径后）**、裁决（按角色） | 按状态与 RBAC 显示；语义与 [04](04-后端与API.md) §3.4、[53](53-阶段开发技术文档.md)、[14](14-合约-API-ABI-前后端对齐.md) 一致 |
@@ -282,7 +284,7 @@ AI 默认只画 happy path；以下异常态**必须**有明确页面或组件�
 请先输出 UI 信息架构 SSOT，不要写代码：
 
 1. 页面地图（按 Experience / Protocol Console / Governance / Ops 分组），每页一句话职责 + 明确不做什么
-2. 角色 × 页面权限矩阵（游客/向导/仲裁员/治理者/观察者）
+2. 角色 × 页面权限矩阵（旅行者/向导/仲裁员/治理者/观察者）
 3. Zone Control 表（展示区 vs 金融区，动效等级、3D 允许/禁止）
 4. EscrowDetail / Dispute / OrderFlow 三页的字段级信息结构（信息层级顺序必须：状态→金额→finality→动作→风险提示）
 
