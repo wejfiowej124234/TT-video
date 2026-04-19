@@ -9,10 +9,10 @@ on:
   pull_request:
     branches: [main]
 
-# 与 `push` 分桶：否则 main 上新 push 会 cancel 掉正在跑的 workflow_dispatch，日志仅剩 system.txt、无 e2e。
+# 分桶 + 不 cancel：同组内**排队**至上一轮结束，避免 in-flight 被掐断（此前仅余 system.txt、无完整 step 日志）。
 concurrency:
   group: l4-parallel-ci-${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   l4-sepolia-workers-2:
@@ -119,6 +119,7 @@ jobs:
         run: cargo build -p traveltrust-api
 
       - name: Run L4 Sepolia (e2e:sepolia, workers=2)
+        id: l4_e2e
         if: steps.l4_gate.outputs.run == 'true'
         env:
           SKIP_API_BUILD: "1"
@@ -128,10 +129,12 @@ jobs:
           export PLAYWRIGHT_WORKERS=2
           cd frontend && npm run e2e:sepolia
 
-      - name: Upload Playwright report (on failure)
-        if: failure() && steps.l4_gate.outputs.run == 'true'
+      # 观测用：成功也上传 HTML report（失败时同样有 trace/data）；无目录则跳过不红。
+      - name: Upload Playwright report (L4 observability)
+        if: always() && steps.l4_gate.outputs.run == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: l4-parallel-ci-playwright-report
           path: frontend/playwright-report/
+          if-no-files-found: ignore
           retention-days: 7
