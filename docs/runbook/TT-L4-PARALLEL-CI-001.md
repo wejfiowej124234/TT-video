@@ -1,6 +1,6 @@
 # TT-L4-PARALLEL-CI-001 · CI 并行验证（Sepolia · `start` · workers=2）
 
-**Version:** 1.0.11  
+**Version:** 1.0.12  
 **Status:** 观测（**不**替代 **[TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001](./TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001.md)** 默认 **`npm run e2e:sepolia` 单 worker** 门禁）
 
 ## 1. 唯一目标
@@ -66,6 +66,8 @@ base64 -w0 < .env | gh secret set L4_CI_DOTENV_B64
 此时 **无** Checkout 之后常规 step 日志、**无** `npm run e2e:sepolia`、**无** artifact **上传**阶段 — **不得**将此类红叉 **归因** 于 **`actions/upload-artifact` 版本 bump**（PR 类依赖升级）**除非** 另见 **artifact upload 步骤** 自身报错。
 
 **处理**：组织 Owner / Billing 权限 → **Settings → Billing and plans** → 修正支付方式并放行 **GitHub Actions** 支出（组织路径：`https://github.com/organizations/<ORG>/settings/billing`）。修复后对本 workflow **Re-run jobs** 或推新 commit。
+
+**Billing** **异常** **、** **须** **先** **保** **交付** **时** **：** **[** **`TT-LOCAL-CI-DELIVERY-GATE-001`** **（** **本地** **/** **VPS** **真** **门禁** **）** **](./TT-LOCAL-CI-DELIVERY-GATE-001.md)** **。**
 
 **机读复验（Maintainer · `repo` 权限即可）**：当 **job** **`steps: []`** **且** **墙钟** **极短** **时** **，** **可** **拉** **GitHub** **在** **check-run** **上** **写入** **的** **注解** **（** **与** **UI** **Annotations** **同源** **）** **：**
 

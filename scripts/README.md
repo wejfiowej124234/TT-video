@@ -67,7 +67,7 @@ bash scripts/run-check-04-routes.sh
 bash scripts/check-pr-crates-needs-metadata.sh main HEAD
 ```
 
-**一键（可选）**：**`bash scripts/dev-preflight.sh`**（与上三行同序；**1～2** 任一失败 **exit 1**；第 **3** 条仍为 **元数据门禁** 默认 **exit 0**）。
+**一键（可选）**：**`bash scripts/dev-preflight.sh`**（与上三行同序；**1～2** 任一失败 **exit 1**；第 **3** 条仍为 **元数据门禁** 默认 **exit 0**）。**GitHub-hosted** **不可** **用时** **的** **最小** **交付** **三连** **（** **同** **上** **三** **行** **、** **薄** **封装** **）** **：** **`bash scripts/ci-local-delivery-minimum.sh`** — 编排见 **[TT-LOCAL-CI-DELIVERY-GATE-001](../docs/runbook/TT-LOCAL-CI-DELIVERY-GATE-001.md)**。
 
 **`check-pr-crates-needs-metadata.sh` 环境变量**（**B-145** / **B-146** / **B-147**，详见 **`scripts/gates/check-pr-crates-needs-metadata.sh`** 头与 **[母表 B-146](../docs/任务母表.md)**）：**`CRATES_METADATA_GATE_FAIL=1`** — diff 含 **`crates/**`** 或 **须登记的 **`contracts/**`** 但未同批母表/索引时 **exit 1**；**`CRATES_METADATA_GATE_REQUIRE_REFS=1`** — **`git rev-parse` 失败**时 **exit 2**（**默认 unset** 仍为 **WARN + exit 0**）。
 
