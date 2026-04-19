@@ -471,7 +471,7 @@ pub async fn get_block_hash_at(rpc_url: &str, block_number: u64) -> Result<Strin
 pub const ERC20_TRANSFER_TOPIC0: &str =
     "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
 
-/// Staking 合约事件 topic0（与 `contracts/src/Staking.sol` 一致；`indexer::tests::staking_event_topic0s_keccak` 校验）
+/// 身份质押池事件 topic0（**`IdentityStakingPool`**；旧 **`contracts/src/Staking.sol` 已移除**；与历史 **`Staking`** **事件签名/topic0 兼容**；`indexer::tests::staking_event_topic0s_keccak` 校验）
 pub const STAKED_TOPIC0: &str =
     "0x9e71bc8eea02a63969f509818f2dafb9254532904319f9dbda79b67bd34a5f3d";
 pub const WITHDRAWN_TOPIC0: &str =
@@ -716,7 +716,7 @@ pub fn parse_region_share_snapshot_line(
     ))
 }
 
-/// 单条 Staking 状态事件（`Staked` / `Withdrawn` / `Slashed`）
+/// 单条身份质押池状态事件（`Staked` / `Withdrawn` / `Slashed`；与旧 `Staking` ABI 兼容）
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct FetchedStakingStateEvent {
     pub block_number: u64,
