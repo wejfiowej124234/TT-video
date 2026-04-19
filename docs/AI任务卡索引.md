@@ -139,7 +139,7 @@
 | 98 | TT-ESCROW-RELEASE-NORMAL-SPLIT-B093-001 | Escrow / 正常放款分账 | 已封口（**Partial**） | **B-093**：**`release()`** 与 **01 §10** 对齐；**`Escrow.t.sol`** 表驱动 + fuzz；**附录 02** 其它收平台费终态见 **Completion** **106**/**108**。**Foundry 专验**：`contracts/LOCAL-FOUNDRY.md` §4； **`forge test --root contracts --match-path test/Escrow.t.sol --match-test "B093" -vv`** 于 **2026-04-08** 通过；**日志**：`evidence/GO_20260408/forge_B093.log`。 |
 | 99 | TT-ESCROW-EXECUTE-RESOLUTION-B094-001 | Escrow / 争议执行三腿 | 已封口（**Partial**） | **B-094**：**`executeResolution`** 三模板 + **`terminal_order_state_from_resolution_amounts`** + **`evidence/B-094-*`**；**`orders_projection`** 细分终态由 **107** **`TT-COMP-B094-INDEXER-RESOLUTION-TERMINAL-STATE-001`** **已封口**（非本卡交付范围） |
 | 100 | TT-ORDERS-SPLIT-ADDRESSES-SSOT-B095-001 | 订单 / 分账地址 SSOT | 已封口 | **B-095**：**`GET /orders/:id`** **`split_addresses_ssot`** + **`ChainConfig::escrow_platform_fee_recipient`** 与 **`/meta`** 同源；单测 **`b095_*`** |
-| 101 | TT-COMP-B088-STAKE-LOCK-PROJECTION-001 | 投资人 / 快照补齐 | 已封口（**Completion**） | **B-088**：**`Staking`** **`Staked`****/****`Withdrawn`****/****`Slashed`** → **`investor_stake_state_events`**；**`indexer-tick`** 写入；应计与 **`Transfer`** **merge** + **`supply`** 对拍 |
+| 101 | TT-COMP-B088-STAKE-LOCK-PROJECTION-001 | 投资人 / 快照补齐 | 已封口（**Completion**） | **B-088**：**`IdentityStakingPool` 系**（**`Staked`****/****`Withdrawn`****/****`Slashed`**；**事件 topic0 与旧 `Staking` 兼容**）→ **`investor_stake_state_events`**；**`indexer-tick`** 写入；应计与 **`Transfer`** **merge** + **`supply`** 对拍 |
 | 102 | TT-COMP-B089-FEEROUTER-MUTABLE-ROUTING-001 | 治理 / FeeRouter 热改 | 已封口（**Completion**） | **B-089 Target**：**`setRoutingConfig`** + **`GovernanceTimelock` `execute`** 验收；**`BPS_*()`** ABI 不变。**Foundry 专验**：`contracts/LOCAL-FOUNDRY.md` §7； **`forge test --root contracts --match-test "[Bb]089" -vv`** 于 **2026-04-08** 通过；**日志**：`evidence/GO_20260408/forge_B089.log`。 |
 | 103 | TT-COMP-B090-TREASURY-NATIVE-SPEND-001 | 治理 / 金库原生币 | 已封口（**Completion**） | **B-090 Target**：**`GovernanceTreasury`** **`receive` + `spendETH`**；**`GovernanceTreasury.t.sol`** **`test_COMP_B090_timelock_execute_spendETH_matches_payload`**；**链上提案 UI** 见 **111**。**Foundry 专验**：`contracts/LOCAL-FOUNDRY.md` §8； **`forge test --root contracts --match-path test/GovernanceTreasury.t.sol --match-test "[Bb]090" -vv`** 于 **2026-04-08** 通过；**日志**：`evidence/GO_20260408/forge_B090.log`。 |
 | 104 | TT-COMP-B091-META-PAUSE-CHAIN-READ-001 | API / meta 读链 | 已封口（**Completion**） | **B-091 Target**：**`GET /meta` `pause.factory_paused` / `pause.distribute_paused`** + **`chain_pause_read`**；mock **`comp_b091_*`** |
@@ -169,7 +169,7 @@
 | 128 | TT-GOVERNANCE-PARAMS-HTTP-PLACEHOLDER-001 | API / 治理 params | 已封口 | **B-124 新能力**：**`GET …/governance/params`** **占位聚合**（**`status`****`ok`**、**`data_source`****`placeholder`**、**`params`****{}**、**`items`****[]**、**`X-Implementation-Status: placeholder`**）；**04 §3.4** + **母表 B-124**；页内主数据仍 **protocol-reference**/**pending**；**`cargo test -p traveltrust-api`** **`governance_params_response_`** |
 | 129 | TT-B114-1-REORG-SAFETY-001 | indexer / reorg | 已封口 | **B-114-1**：reorg 后内存状态与 **`perform_indexer_reorg_rewind_execute`** DB 删尾对齐；**`cargo test -p traveltrust-api reorg`**（含模拟 reorg） |
 | 130 | TT-B114-4-REORG-MULTI-BLOCK-REPLAY-001 | indexer / reorg | 已封口 | **B-114-4**：连续 **N** 块 reorg 后重放；**`cargo test -p traveltrust-api b114_4_reorg_multi_block`** |
-| 131 | TT-B114-5 | indexer / reorg | 已封口 | **B-114-5**：reorg 后 **`indexer_tick`** 的 **`scan_from_block`** 与 rewind 后内存 **`IndexerState`** 一致（**`last_block + 1`**）；**`cargo test -p traveltrust-api b114_5_reorg_tick_scan_from_block`**（**2 passed**）；互证 [**docs/任务母表.md**](../docs/任务母表.md) **B-114-5**、[**evidence/GO_B114_INDEXER_TARGET_SLICE_CLOSE.md**](../evidence/GO_B114_INDEXER_TARGET_SLICE_CLOSE.md) **§B-114-5** |
+| 131 | TT-B114-5 | indexer / reorg | 已封口 | **B-114-5**：reorg 后 **`indexer_tick`** 的 **`scan_from_block`** 与 rewind 后内存 **`IndexerState`** 一致（**`last_block + 1`**）；**`cargo test -p traveltrust-api b114_5_reorg_tick_scan_from_block`**（**2 passed**）；互证 [**docs/任务母表.md**](./任务母表.md) **B-114-5**、[**evidence/GO_B114_INDEXER_TARGET_SLICE_CLOSE.md**](../evidence/GO_B114_INDEXER_TARGET_SLICE_CLOSE.md) **§B-114-5** |
 | 132 | TT-B110-SEQ2-ORDERS-DEADLINE-BUNDLE-CLOSE-001 | orders / SSOT / 文档收口 | 已封口 | **B-132**：**B110-SEQ2** **`rating_deadline`** 子主线 **bundle**（完成范围/边界/后续）；**GO** [**GO_B110_SEQ2_ORDERS_DEADLINE_BUNDLE_CLOSE.md**](../evidence/GO_B110_SEQ2_ORDERS_DEADLINE_BUNDLE_CLOSE.md)；**04**/**Runbook §2.55**/**sealed-programs**/**evidence/README** 互指；验收 **`cargo test -p traveltrust-api`** + **`bash scripts/run-check-04-routes.sh`** |
 | 133 | TT-B110-SEQ3-ORDERS-DEADLINE-INDEXER-RECONCILE-CHECK-001 | indexer / orders SSOT | 已封口 | **B-133**：**`POST …/internal/indexer-reconcile`** **`orders_deadline_ssot_ops_check`** + **`compound_gate.breakdown.orders_deadline_ssot_reconcile`** **AND**；**indexer-reconcile-gate** **`checks_total`** **113** / **probe** 同锚（累计 **SEQ3+SEQ5+SEQ6+SEQ8+SEQ9+SEQ10+SEQ11** 机读锚；**B-120**）；验收 **`cargo test -p traveltrust-api`** + **`run-check-04-routes`**；互证 [**母表 B-133**](./任务母表.md) |
 | 134 | TT-B110-SEQ4-GOVERNANCE-PARAM-NEXT-CANDIDATE-001 | governance / 规划 | 已封口 | **B-134**：**SEQ2/SEQ3** 后下一治理参数 **P1～P4** 候选、链读可行性、**fallback**、**observability/reconcile/ops/CI** 复用点；首张实现 [**SEQ5**](#tt-b110-seq5-governance-governor-view-params-chain-ssot-001)；**零**业务代码；互证 [**母表 B-134**](./任务母表.md) |
@@ -1849,7 +1849,7 @@
 - **本轮仅改**：`contracts/src/Escrow.sol`、`contracts/test/Escrow.t.sol`、`contracts/README.md`、`docs/spec/14-合约-API-ABI-前后端对齐.md`（**§1.1 Escrow**）、`docs/spec/04-后端与API.md`（**53** ④ **评分与释放**）、`docs/任务母表.md`、本索引  
 - **禁止再分析**：—  
 - **任务（钉死）**：  
-  1. **`release()`**：**`guideAmount = totalAmount * (10000 - platformFeeBps) / 10000`**；**`platformFeeAmount = totalAmount - guideAmount`**（与 **[01 §10](01-总库总览.md)**「**dust 归平台**」一致；**`platformFeeBps`** 于 **`init`** 封存，对应产品 **Paid** 后费率不变，链上锚 **EscrowCreated**）。  
+  1. **`release()`**：**`guideAmount = totalAmount * (10000 - platformFeeBps) / 10000`**；**`platformFeeAmount = totalAmount - guideAmount`**（与 **[01 §10](spec/01-总库总览.md)**「**dust 归平台**」一致；**`platformFeeBps`** 于 **`init`** 封存，对应产品 **Paid** 后费率不变，链上锚 **EscrowCreated**）。  
   2. **`init`**：**`platformFeeBps > 10000`** → **`InvalidState`**（防 **`release`** 算术下溢）。  
   3. **验收**：**`Escrow.t.sol`** **`test_B093_release_table_threeFeeRates`**（≥3 组 **bps×total**）+ **`testFuzz_B093_release_conservation`**。  
 - **测试**：`cd contracts && forge test --match-contract EscrowTest`（或 CI **Contract ABI Gate** 同源）。  
@@ -1896,10 +1896,10 @@
 - **状态**：已封口（**Completion**）  
 - **本轮仅改**：`crates/api/migrations/20260422000051_investor_stake_state_events.sql`、`crates/api/src/db/investor_stake.rs`、`crates/api/src/chain/indexer.rs`（**`fetch_staking_state_logs`**）、`crates/api/src/routes/internal.rs`（**tick**/**reorg**）、`crates/api/src/routes/investor_distribution.rs`、`crates/api/src/db/investor_distribution.rs`、`docs/spec/04-后端与API.md`、`docs/任务母表.md`、本索引  
 - **禁止再分析**：—  
-- **任务（钉死）**：**写死 SSOT**=**`contracts/src/Staking.sol`** 事件 **`Staked` / `Withdrawn` / `Slashed`** → 表 **`investor_stake_state_events`**；**`POST …/internal/indexer-tick`** 在 **`STAKING_ADDRESS`** + **`DATABASE_URL`** 时写入；**`POST …/internal/investor-distribution-accrual`** 在 **`chain_config.staking_address`** 非空时将 **`stakeOf`** 重放叠加到 **`Transfer`** 重放余额并 **剔除** 质押合约地址，**`Σ` 持有人** 须等于 **`Transfer`****supply**（否则 **`b088_stake_overlay_supply_mismatch`**）；**`indexer-reorg-rewind`** 同步删尾该表。  
+- **任务（钉死）**：**写死 SSOT**=**`IdentityStakingPool` 系列**（**`contracts/src/IdentityStakingPool.sol`** + **`GuideIdentityStakingPool.sol` / `ProviderIdentityStakingPool.sol`**；**旧 `contracts/src/Staking.sol` 已移除**；**`Staked` / `Withdrawn` / `Slashed` 事件签名与 topic0 与旧版向后兼容**）→ 表 **`investor_stake_state_events`**；**`POST …/internal/indexer-tick`** 在 **`STAKING_ADDRESS`** + **`DATABASE_URL`** 时写入；**`POST …/internal/investor-distribution-accrual`** 在 **`chain_config.staking_address`** 非空时将 **`stakeOf`** 重放叠加到 **`Transfer`** 重放余额并 **剔除** 质押合约地址，**`Σ` 持有人** 须等于 **`Transfer`****supply**（否则 **`b088_stake_overlay_supply_mismatch`**）；**`indexer-reorg-rewind`** 同步删尾该表。  
 - **验收**：**`cargo test -p traveltrust-api`**：**`comp_b088_overlay_restores_holder_weight_after_stake_to_contract`** 等。  
 - **测试**：**`cargo test -p traveltrust-api`**。  
-- **备注**：与 **`TT-INVESTOR-DISTRIBUTION-SNAPSHOT-TRANSFER-RULE-001`** 正交；**锁仓** 见 **112** **`TT-COMP-B088-LOCK-VAULT-PROJECTION-001`**；**Country Pool 份额** 勿混本卡。  
+- **备注**：与 **`TT-INVESTOR-DISTRIBUTION-SNAPSHOT-TRANSFER-RULE-001`** 正交；**锁仓** 见 **112** **`TT-COMP-B088-LOCK-VAULT-PROJECTION-001`**；**Country Pool 份额** 勿混本卡。**工程 SSOT** 仅以 **`IdentityStakingPool` 系** 源码与 ABI 为准；**不得**将 **`contracts/src/Staking.sol`** 当作现存实现路径引用（该文件已移除，仅作历史兼容叙述时点名）。  
 
 ---
 
@@ -2432,7 +2432,7 @@
 
 - **阶段**：indexer / **reorg** 多区块回放（**母表 B-114-4**）
 - **状态**：已封口
-- **母表**：**B-114-4**（**已做**；与 [**docs/任务母表.md**](../docs/任务母表.md) **B-114-4** 行一致；互证 [**evidence/GO_B114_INDEXER_TARGET_SLICE_CLOSE.md**](../evidence/GO_B114_INDEXER_TARGET_SLICE_CLOSE.md) **§B-114-4**）
+- **母表**：**B-114-4**（**已做**；与 [**docs/任务母表.md**](./任务母表.md) **B-114-4** 行一致；互证 [**evidence/GO_B114_INDEXER_TARGET_SLICE_CLOSE.md**](../evidence/GO_B114_INDEXER_TARGET_SLICE_CLOSE.md) **§B-114-4**）
 - **本轮仅改**：**`crates/api/src/chain/indexer.rs`**（**`rewind_indexer_memory_state_after_reorg`** 文档 + **`#[cfg(test)]`** **`b114_4_reorg_multi_block_*`**）
 - **禁止再分析**：**B-115 / B-116 / P5 / Epic D/E/F** 语义；**新 HTTP API**；**跳过 tick / reorg 路径**
 - **任务**：验证 **连续多区块**（例 **10/11/12**）被 **一次** **`rewind(from_block)`** 剥除后，重放 **10'/11'/12'** 仅保留新 fork 载荷、**`(chain_id, block_number, log_index)`** 无重复、**`last_block` / `last_block_hash`** 止于新链尾；重放后再 **`append`** 同键须判重复。
@@ -2445,7 +2445,7 @@
 
 - **阶段**：indexer / **reorg** 后 **`indexer_tick`** 起扫下界（**母表 B-114-5**）
 - **状态**：已封口
-- **母表**：**B-114-5**（**已做**；与 [**docs/任务母表.md**](../docs/任务母表.md) **B-114-5** 行一致；互证 [**evidence/GO_B114_INDEXER_TARGET_SLICE_CLOSE.md**](../evidence/GO_B114_INDEXER_TARGET_SLICE_CLOSE.md) **§B-114-5**）
+- **母表**：**B-114-5**（**已做**；与 [**docs/任务母表.md**](./任务母表.md) **B-114-5** 行一致；互证 [**evidence/GO_B114_INDEXER_TARGET_SLICE_CLOSE.md**](../evidence/GO_B114_INDEXER_TARGET_SLICE_CLOSE.md) **§B-114-5**）
 - **本轮仅改**：**仅** **`crates/api/src/chain/indexer.rs`**（**`indexer_tick_scan_from_block_lower_bound`** + **`#[cfg(test)]`** **`b114_5_reorg_tick_scan_from_block_*`**）；**`crates/api/src/routes/internal.rs`**（**`indexer_tick`** 读锁内调用该函数）
 - **禁止再分析**：**B-115 / B-116 / P5 / Epic A/C/D/E/F** 语义；**新 HTTP API**；**跳过 tick / reorg 路径**
 - **任务**：reorg 后 **`indexer_tick`** 用于 **`eth_getLogs`** 的 **`scan_from_block`** 与 **`rewind_indexer_memory_state_after_reorg` / `perform_indexer_reorg_rewind_execute`** 之后的内存 **`IndexerState`** 同源（**`last_block + 1`**）；**`reorg_detected` → rewind → `continue`** 后首轮回合重算不断档。
@@ -2458,7 +2458,7 @@
 
 - **阶段**：orders / **`rating_deadline`** SSOT · **文档与索引收口**（**母表 B-132**）
 - **状态**：已封口
-- **母表**：[docs/任务母表.md](../docs/任务母表.md) **B-132**
+- **母表**：[docs/任务母表.md](./任务母表.md) **B-132**
 - **本轮仅改**（执行本卡时）：**`docs/任务母表.md`**、**`docs/spec/04-后端与API.md`**（**bundle** 契约句）、**`evidence/GO_B110_SEQ2_ORDERS_DEADLINE_BUNDLE_CLOSE.md`**、**`evidence/README.md`**（锚点）、**`docs/runbook/sealed-programs-and-epics-master-index.md`**、**`ops/RUNBOOK.md`**（**§2.55** 互指）、**`docs/AI任务卡索引.md`**（本条目）
 - **禁止再分析**：在这条子线上 **横向加** deadline 相关 **产品能力**；**改** **`GET /api/v1/orders*`** 公开字段语义
 - **任务**：将 **B110-SEQ2** 已落地项登记为可引用 **bundle**（真值 → **`meta`/observability → reconcile_probe → clock → governor 链读与 P3 → admin → ops_check → 可选 staging CI**）；写明 **与 indexer reconcile 正交**、**未覆盖** **`payment_deadline`/`chat_confirm_deadline`** 等边界；**规划级** 后续方向见 **GO §4**
@@ -2471,7 +2471,7 @@
 
 - **阶段**：indexer / internal **`indexer-reconcile`** · **orders `rating_deadline`** SSOT **并列巡检**（**母表 B-133**）
 - **状态**：已封口
-- **母表**：[docs/任务母表.md](../docs/任务母表.md) **B-133**
+- **母表**：[docs/任务母表.md](./任务母表.md) **B-133**
 - **本轮仅改**（执行本卡时）：**`crates/api/src/routes/internal.rs`**（**`indexer_reconcile`** + **`indexer_reconcile_compound_gate`** + **`#[cfg(test)]`** **`b110_seq3_*`**）；**`docs/spec/04-后端与API.md`**（**`internal/indexer-reconcile`** 表行）；**`docs/spec/110-…`** **§3.1.3.1**；**`ops/RUNBOOK.md`** **§2.55**；**`.github/workflows/indexer-reconcile-gate.yml`**（**`checks_total`** **107** + **`check_anchor`**）；**`scripts/indexer-reconcile-probe.sh`**（**`INDEXER_RECONCILE_GATE_CHECKS_TOTAL`**）；**`.github/workflows/internal-drill-gate.yml`**；**`docs/任务母表.md`**（**B-110 / B-120 / B-132 / B-133**）；**`docs/runbook/sealed-programs-and-epics-master-index.md`**；**`evidence/GO_B110_SEQ2_…`** **§2** 边界句；**`evidence/README.md`**；本索引 **一览 133** + 本节
 - **禁止再分析**：改 **`GET /api/v1/orders*`** / **`GET /meta`** 公开字段语义；**无** **母表+TT** 再扩 **其它治理参数** 同类门闸
 - **任务**：在 **B110-SEQ2** 不变前提下，将 **admin** **`overview.orders_deadline_ssot_ops_check`** **同源判定** 并入 **`indexer-reconcile`** **`200`**/**`persist` `summary`**，并 **AND** 入 **`reconcile_compound_pass`**
