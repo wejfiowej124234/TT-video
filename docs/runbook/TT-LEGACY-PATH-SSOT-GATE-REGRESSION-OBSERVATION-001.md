@@ -58,13 +58,13 @@ Repro: load the gate module from `scripts/check_no_legacy_staking_path_as_ssot.p
 
 **Residual FN risk (theory only — not observed)**:
 
-- **Case / spelling**: `hit_regexes` use **case-sensitive** `Staking.sol` / `contracts/src/Staking`; an all-lower `staking.sol` path string would not hit (may be desirable).
+- **Case / spelling**: `hit_regexes` are **case-sensitive** for the legacy monolithic token **`Staking`** + **`.sol`** and for **`contracts/src/`** + **`Staking`**; an all-lower **`staking`** + **`.sol`** spelling would not hit the first hit pattern (may be desirable).
 - **Line split**: Deprecation in **previous** line, bare path on next line → would **fail** (by design: same-line policy).
-- **Alias path**: Different string than `contracts/src/Staking` (e.g. `src/Staking.sol` only) → would not hit second pattern; first pattern still catches `Staking.sol` with word-boundary.
+- **Alias path**: Different string than **`contracts/src/`** + **`Staking`** (e.g. **`src/`** + **`Staking`** + **`.sol`** only) → would not hit the second hit pattern; the first pattern still catches **`Staking`** + **`.sol`** with the configured word-boundary.
 
 **Residual FP risk (theory only — not observed)**:
 
-- Very long prose that accidentally contains `contracts/src/Staking` as a **substring** of another token (unlikely); current patterns are literal-oriented.
+- Very long prose that accidentally contains **`contracts/src/`** + **`Staking`** as a **substring** of another token (unlikely); current patterns are literal-oriented.
 
 ---
 
@@ -84,3 +84,14 @@ python3 scripts/check_no_legacy_staking_path_as_ssot.py
 ```
 
 CI already invokes this script from **Governance doc linkage gate**, **Broadcast batch blockers**, and **Build** (see `.github/workflows/*.yml`).
+
+---
+
+## 6. Required check（合并阻断）与长期监控（2026-04-19 起）
+
+| 机制 | 说明 |
+|------|------|
+| **必过（`main`）** | 在 GitHub **branch protection** 中，将 workflow **「Broadcast batch blockers」** 下的 **legacy staking 路径 SSOT job**（YAML `no-legacy-staking-path-ssot`；显示名以 Actions UI 为准）与三门 batch job **一并**勾选为 required。登记见 **[`.github/CI-REQUIRED-BROADCAST-BATCHES.md`](../../.github/CI-REQUIRED-BROADCAST-BATCHES.md)**。 |
+| **本地 pre-push** | **`scripts/gates/broadcast-batch-all-required.sh`** 已包含同一 `python3 scripts/check_no_legacy_staking_path_as_ssot.py`（顺序与 CI 对齐）。 |
+| **定时监控（非必过）** | **[`.github/workflows/legacy-path-ssot-gate-monitor.yml`](../../.github/workflows/legacy-path-ssot-gate-monitor.yml)**：`schedule` 每周复跑同一脚本，仅用于 **Actions 时间线观测**；**合并仍以 branch protection 必过项为准**。 |
+| **规则变更策略** | **`config/ci/legacy_path_ssot_rules.v1.json`** 仅在**真实误报/漏报**或**新增退役路径**时修改；否则冻结。 |

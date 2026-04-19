@@ -1,5 +1,5 @@
-# 唯一阻断门禁：三个 batch gate 全部通过则本 workflow 绿灯（可与 branch protection 绑定）。
-# Build 工作流中的非 batch job 已设为 continue-on-error，不阻断合并信号。
+# 合并阻断：legacy path SSOT gate + 三个 batch gate 全通过则本 workflow 绿灯（可与 branch protection 绑定）。
+# Build 工作流中的非 batch job 已设为 continue-on-error，不阻断合并信号；本文件所列 job 见 .github/CI-REQUIRED-BROADCAST-BATCHES.md。
 name: Broadcast batch blockers
 
 on:

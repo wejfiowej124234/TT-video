@@ -1,0 +1,21 @@
+# 长期监控：与 PR 门禁同源脚本，定时在 main 上复跑（规则变更仍走 config/ci/legacy_path_ssot_rules.v1.json 与 code review）。
+# 不替代 broadcast-batch-blockers 中的必过 job；用于 Actions 时间线 / 失败告警（若仓库配置了通知）。
+name: Legacy path SSOT gate (monitor)
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 每周一 06:00 UTC（与多数地区工作日早晨错开高峰）
+    - cron: "0 6 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  legacy-path-ssot-gate:
+    name: Legacy path SSOT gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Run legacy path SSOT gate (same as merge-blocking check)
+        run: python3 scripts/check_no_legacy_staking_path_as_ssot.py

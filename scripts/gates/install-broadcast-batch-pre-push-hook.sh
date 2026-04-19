@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 安装 git pre-push：推送前强制跑三门禁（需 bash + python3 可用；Windows 可改用 py -3 改 gate 内解释器）。
+# 安装 git pre-push：推送前强制跑 legacy path SSOT gate + 三门禁（需 bash + python3 可用；Windows 可改用 py -3）。
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 HOOK_DIR="${ROOT}/.git/hooks"
