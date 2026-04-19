@@ -28,6 +28,9 @@ on:
         default: false
         type: boolean
 
+permissions:
+  contents: read
+
 jobs:
   epic-f-e2e-three-pack-static:
     runs-on: ubuntu-latest

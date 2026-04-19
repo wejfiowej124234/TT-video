@@ -14,6 +14,10 @@ on:
       - "contracts/**"
       - ".github/workflows/forge-specialized-tests.yml"
 
+permissions:
+  contents: read
+  actions: write
+
 jobs:
   forge-specialized-tests:
     name: Forge Specialized Tests (B093/B087/B089/B090)

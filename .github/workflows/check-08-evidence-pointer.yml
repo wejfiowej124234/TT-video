@@ -7,6 +7,9 @@ on:
       - 'docs/spec/08-3*.md'
       - 'scripts/check-08-evidence-pointer.sh'
 
+permissions:
+  contents: read
+
 jobs:
   check:
     runs-on: ubuntu-latest

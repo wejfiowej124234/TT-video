@@ -10,6 +10,9 @@ on:
       - 'docs/spec/08-3*.md'
       - 'docs/spec/08-4*.md'
 
+permissions:
+  contents: read
+
 jobs:
   check:
     runs-on: ubuntu-latest

@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+  actions: write
+
 jobs:
   community-governance:
     runs-on: ubuntu-latest

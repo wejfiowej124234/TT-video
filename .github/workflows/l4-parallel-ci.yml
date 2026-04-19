@@ -9,6 +9,10 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+  actions: write
+
 # 分桶 + 不 cancel：同组内**排队**至上一轮结束，避免 in-flight 被掐断（此前仅余 system.txt、无完整 step 日志）。
 concurrency:
   group: l4-parallel-ci-${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}

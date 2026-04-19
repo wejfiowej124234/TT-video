@@ -27,6 +27,10 @@ on:
       - "scripts/check-55-s13.ps1"
       - ".github/workflows/contract-abi-gate.yml"
 
+permissions:
+  contents: read
+  actions: write
+
 jobs:
   contract-abi:
     runs-on: ubuntu-latest
