@@ -1,6 +1,6 @@
 # TT-L4-PARALLEL-CI-001 · CI 并行验证（Sepolia · `start` · workers=2）
 
-**Version:** 1.0.6  
+**Version:** 1.0.8  
 **Status:** 观测（**不**替代 **[TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001](./TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001.md)** 默认 **`npm run e2e:sepolia` 单 worker** 门禁）
 
 ## 1. 唯一目标
@@ -49,6 +49,14 @@ base64 -w0 < .env | gh secret set L4_CI_DOTENV_B64
 
 ## 5. 组织级前置与排障（非仓库代码可修）
 
+### 5.0 执行纪律 · 组织 gate（TT-Expedition）
+
+**唯一目标（先于一切仓库内动作）：** 恢复 **TT-Expedition** 组织侧 **GitHub-hosted runner**（如 **`ubuntu-latest`**）的 **可调度、可执行** 能力（**Billing**、**Actions 权限**、**支出限额** 等，见 **§5.1** 及组织 **Settings → Actions**；**与** **[** **母表** **`B-499`** **](../任务母表.md)** **P0** **前置** **一致** **）** **。**
+
+**可操作判据（未满足则组织 gate 未解除）：** **任意** **`Build`** **或** **`L4 parallel CI`** **中** **至少** **一个** **job** **出现** **非空** **Steps**，且 **UI** **或** **`gh run view --job=…`** **中** **可见** **`actions/checkout`** **（** **或** **等价检出** **）** **的** **step** **日志** **（** **非** **墙钟** **仅** **数秒** **、** **`steps: []`** **、** **`gh run view --log` 报 log not found** **类** **空** **执行** **）** **。**
+
+**在组织 gate 解除之前，禁止：** **仓库** **内** **CI** **YAML** **/** **脚本** **的** **归因式** **大改** **；** **依赖** **bump** **；** **将** **失败** **记为** **`upload-artifact`** **版本** **回归** **；** **将** **失败** **记为** **业务** **/** **单测** **/** **E2E** **逻辑** **缺陷** **（** **除非** **已** **先** **在同一** **run** **内** **看到** **checkout** **之后** **的** **真实** **step** **失败** **日志** **）** **。** **解除** **后** **再** **按** **§5.2** **与** **§7** **做** **仓库** **内** **诊断** **与** **登记** **。**
+
 ### 5.1 GitHub Actions 计费 / 支出限额
 
 若组织 **付款失败**、**未绑卡** 或 **Actions spending limit** 为 **0 / 低于实际需求**，GitHub 可能 **拒绝调度** `ubuntu-latest` job，注解近似：
@@ -59,7 +67,7 @@ base64 -w0 < .env | gh secret set L4_CI_DOTENV_B64
 
 **处理**：组织 Owner / Billing 权限 → **Settings → Billing and plans** → 修正支付方式并放行 **GitHub Actions** 支出（组织路径：`https://github.com/organizations/<ORG>/settings/billing`）。修复后对本 workflow **Re-run jobs** 或推新 commit。
 
-**复验登记（远程 · 持续）**：`main` 上 [run 24619014632](https://github.com/TT-Expedition/TT-Expedition/actions/runs/24619014632)（`a24851b`）、[run 24619181210](https://github.com/TT-Expedition/TT-Expedition/actions/runs/24619181210)（`1843d3f`）等 **仍** 为 **job was not started**（**payments / spending limit** 注解），**不能**据此认为「Billing 已恢复」。**Billing 恢复的可操作判据**：同一 workflow 下 **L4 Sepolia** job **墙钟 ≫ 数秒**，且 **Steps** 中出现 **`Run L4 Sepolia (e2e:sepolia, workers=2)`**（workflow 内 **ASCII 逗号**）并产生 **Playwright** 日志。
+**复验登记（远程 · 持续 · 2026-04-19 UTC）**：`main` 上自 **`a24851b`** 起多轮 push（含 **`1843d3f`**、**`f07240c`**、**`c132988`**）触发的 **L4 parallel CI** 仍多次出现 **job was not started**（**payments / spending limit** 注解）；**最新抽查**：[run 24619308854](https://github.com/TT-Expedition/TT-Expedition/actions/runs/24619308854)（`c132988`）· **1s** · **同注解**。**不能**据此认为「Billing 已恢复」。本地复查：**`bash scripts/gh-l4-run-inspect.sh`**（或 **`GH_BRANCH=main …`**）核对 **per-job** 输出。**Billing 恢复的可操作判据**：**L4 Sepolia** job **墙钟 ≫ 数秒**，且 **Steps** 含 **`Run L4 Sepolia (e2e:sepolia, workers=2)`**（**ASCII 逗号**）并出现 **Playwright** 日志。
 
 ### 5.2 归因纪律（与 Dependabot / `upload-artifact` bump 并行）
 
@@ -79,7 +87,7 @@ base64 -w0 < .env | gh secret set L4_CI_DOTENV_B64
 | 2026-04-19（UTC） | f4e1a70 | **2** | **e2e 未执行**（未达 193/0） | job **failure**；workflow **success**（`continue-on-error`） | 首轮真实 CI：[run 24617409810](https://github.com/TT-Expedition/TT-Expedition/actions/runs/24617409810) · `workflow_dispatch` · job wall **356s**（~5m56s）· **Build traveltrust-api** 失败（编译错误，未进入 Playwright）· artifact **`l4-parallel-ci-playwright-report`** ~**195 KiB**（build 失败后上传） |
 | 2026-04-19（UTC） | 49dcafe | **2** | **e2e 未执行**（job **未调度**） | job **failure**；workflow **success**（`continue-on-error`） | PR [#3](https://github.com/TT-Expedition/TT-Expedition/pull/3) 已合并 **`main`**（含 **`42e88bd`** `e2e:sepolia` 恢复 + **`34b39a2`** 契约断言）；[run 24618396945](https://github.com/TT-Expedition/TT-Expedition/actions/runs/24618396945) · **GitHub 组织计费 / spending limit** → **job was not started**（**无** npm / Playwright / artifact **上传** 日志；归类见 **§5**） |
 | 2026-04-19（UTC） | a24851b | **2** | **e2e 未执行**（job **未调度**） | job **failure**；workflow **success**（`continue-on-error`） | **`main`** 复验：[run 24619014632](https://github.com/TT-Expedition/TT-Expedition/actions/runs/24619014632) · **同注解**（**payments / spending limit**）· **非** PR #3 独有；与 **§5.1 复验登记** 一致 |
-| （待跑） | | **2** | | | **首要**：组织 **Actions 可调度**（§5.1）→ job **墙钟与 Steps** 符合 **§5.1 判据**；**其次** **`traveltrust-api`** 在 CI 可 **`cargo build`**（对照 §7 首行历史失败）；再登记 **193/0** 与 Slow file |
+| （待跑） | | **2** | | | **首要**：组织 **Actions 可调度**（§5.1）→ 用 **`gh-l4-run-inspect`** 确认 **非** 1s **未调度**；**其次** **`traveltrust-api`** 在 CI 可 **`cargo build`**（对照 §7 首行历史失败）；再登记 **193/0** 与 Slow file |
 
 ## 8. 缺口与多维对齐（自检清单 · 登记用）
 
@@ -87,7 +95,8 @@ base64 -w0 < .env | gh secret set L4_CI_DOTENV_B64
 
 | 维度 | 当前常见缺口 | 对齐动作 |
 |------|----------------|----------|
-| **组织 / 计费** | Actions **不启 job**（§5.1） | Billing 修复后 **Re-run**；`gh run view <id>` 可见完整 steps |
+| **组织 / 计费** | Actions **不启 job**（§5.1） | Billing 修复后 **Re-run**；**`bash scripts/gh-l4-run-inspect.sh`** 或 **`gh run view <id>`** 核对 **job** 级 steps（**勿**只看 workflow ✓） |
+| **`gh` 工具链** | **`HTTP 401` / `not logged in`** | **`gh auth login`**；脚本见 **§9** |
 | **读错 CI 信号** | **Run 总结论 ✓** 但 **L4 job 未调度** / **无 Playwright** | 以 **job 级** Steps 为准（§2 表末行）；**`gh run view --job=<job_id>`** 看 **Annotations** |
 | **Summary · gate** | 见 **「L4 parallel CI · gate」** 即认为 **193/0 已验证** | 该段 **仅** 报告 **`L4_CI_DOTENV_B64`** 是否配置；**Playwright** 须看 **`Run L4 Sepolia (e2e:sepolia, workers=2)`** step 日志 |
 | **Secret** | **`L4_CI_DOTENV_B64` 未设** | 整 job 跳过（绿）；需真跑时 `base64 -w0 < .env \| gh secret set L4_CI_DOTENV_B64`（§3）；与 **计费阻塞** 区分：后者 **Annotations** 为 **payments / spending limit** |
