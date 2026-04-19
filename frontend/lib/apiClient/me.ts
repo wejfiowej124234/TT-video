@@ -15,7 +15,8 @@ import {
 type GetMeCacheEntry = { promise: Promise<unknown | null>; result?: unknown | null; at: number };
 let getMeCache: GetMeCacheEntry | null = null;
 const GET_ME_CACHE_MS = 60_000;
-const GET_ME_TIMEOUT_MS = 4_000; // 避免 404/慢响应拖慢切换页面（切换页面卡顿）
+/** 全栈并行 E2E / CI 下偶发 >4s；过短会误判未登录并跳转登录页 */
+const GET_ME_TIMEOUT_MS = 12_000;
 const SKIP_ME_FETCH = typeof process !== "undefined" && process.env.NEXT_PUBLIC_SKIP_ME_FETCH === "1";
 
 function fetchWithTimeout(url: string, opts: RequestInit, ms: number): Promise<Response> {

@@ -4,6 +4,12 @@
  * 本地需先 npm run dev，或 CI 中由 playwright.config 启动 webServer
  */
 import { test, expect } from "@playwright/test";
+import {
+  apiLoginReturnCredentials,
+  defaultApiBase,
+  gotoWithBearerSession,
+  seedTestAccountsAndReleaseGuideSlot,
+} from "./helpers/apiSession";
 
 test("首页可访问", async ({ page }) => {
   await page.goto("/");
@@ -374,13 +380,28 @@ test("向导注册页可访问", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1, name: /Become a Guide|成为向导/i })).toBeVisible();
 });
 
-test("向导工作台页可访问（07 §5.0）", async ({ page }) => {
-  await page.goto("/guide");
+test("向导工作台页可访问（07 §5.0）", async ({ page, request }) => {
+  test.setTimeout(120_000);
+  const apiBase = defaultApiBase();
+  const health = await request.get(`${apiBase}/health`).catch(() => null);
+  if (!health?.ok()) {
+    test.skip(true, `API 不可达，跳过向导台烟雾：${apiBase}/health`);
+    return;
+  }
+  await seedTestAccountsAndReleaseGuideSlot(request, apiBase);
+  const creds = await apiLoginReturnCredentials(request, apiBase, "guide@test.com", "Test123!");
+  if (!creds?.token) {
+    test.skip(true, "guide@test 登录无 token（需 SEED_TEST_ACCOUNTS 与 API）");
+    return;
+  }
+  await gotoWithBearerSession(page, "/guide", creds);
+  await page.waitForURL("**/guide", { timeout: 60_000 });
   await expect(page.locator("body")).toBeVisible();
-  await expect(page.getByRole("main", { name: /Guide workspace|向导工作台/i })).toBeVisible({ timeout: 20_000 });
+  const guideMain = page.getByRole("main", { name: /Guide workspace|向导工作台/i });
+  await expect(guideMain).toBeVisible({ timeout: 60_000 });
   await expect(
-    page.getByRole("heading", { level: 1, name: /Guide workspace|向导工作台/i }),
-  ).toBeVisible({ timeout: 20_000 });
+    guideMain.locator("header").first().getByRole("heading", { level: 1, name: /Guide workspace|向导工作台/i }),
+  ).toBeVisible({ timeout: 60_000 });
 });
 
 test("修改密码页可访问", async ({ page }) => {
