@@ -9,7 +9,8 @@ Static checks:
     merge_escrow_locked_amount_ssot_into_order_detail_if_ok: no order.* reads
     (no DB / order row backfill).
   • *_data_source → json!("chain_read"); *_is_chain_ssot → json!(true) for all four families.
-  • assert_orders_envelope_has_no_escrow_chain_state_ssot_root_keys covers 12 root keys (002).
+  • assert_orders_envelope_has_no_escrow_chain_state_ssot_root_keys covers 12 root keys (002);
+    implementation is read from routes/orders/tests/suite.rs (fallback: mod.rs).
 
 Horizontal extension: list or other endpoints need chain-read → **new TT** + sibling guard or
 explicit allowlist here — **do not** widen B-097 without spec sign-off.
@@ -26,6 +27,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 API_SRC = ROOT / "crates" / "api" / "src"
 ORDERS_MOD = API_SRC / "routes" / "orders" / "mod.rs"
+ORDERS_ASSERT_SUITE = API_SRC / "routes" / "orders" / "tests" / "suite.rs"
 
 INSERT_KEY_RE = re.compile(
     r'"((escrow_(?:chain_state|release_state|dispute_state|locked_amount)'
@@ -51,6 +53,29 @@ TWELVE_ROOT_KEYS = (
 def fail(msg: str) -> None:
     print(f"ERROR [ssot-guard-escrow-orders-detail]: {msg}", file=sys.stderr)
     sys.exit(1)
+
+
+def slice_sync_fn(text: str, fn_name: str) -> str:
+    """Slice one top-level sync fn by brace matching."""
+    key = f"fn {fn_name}"
+    start = text.find(key)
+    if start < 0:
+        return ""
+    brace_open = text.find("{", start)
+    if brace_open < 0:
+        return ""
+    depth = 0
+    i = brace_open
+    while i < len(text):
+        c = text[i]
+        if c == "{":
+            depth += 1
+        elif c == "}":
+            depth -= 1
+            if depth == 0:
+                return text[start : i + 1]
+        i += 1
+    return ""
 
 
 def slice_async_fn(text: str, fn_name: str) -> str:
@@ -129,16 +154,26 @@ def main() -> None:
         locked_fn, "escrow_locked_amount_data_source", "escrow_locked_amount_is_chain_ssot"
     )
 
-    a0 = orders_text.find("fn assert_orders_envelope_has_no_escrow_chain_state_ssot_root_keys")
-    if a0 < 0:
+    assert_fn_block = ""
+    assert_src = ""
+    fn_assert = "assert_orders_envelope_has_no_escrow_chain_state_ssot_root_keys"
+    for path in (ORDERS_ASSERT_SUITE, ORDERS_MOD):
+        if not path.is_file():
+            continue
+        t = path.read_text(encoding="utf-8")
+        blk = slice_sync_fn(t, fn_assert)
+        if blk:
+            assert_fn_block = blk
+            assert_src = str(path.relative_to(ROOT))
+            break
+    if not assert_fn_block:
         fail("missing assert_orders_envelope_has_no_escrow_chain_state_ssot_root_keys")
-    a1 = orders_text.find("\n    #[tokio::test]", a0)
-    if a1 < 0:
-        fail("could not bound assert_orders_envelope function body")
-    assert_body = orders_text[a0:a1]
     for k in TWELVE_ROOT_KEYS:
-        if f'v.get("{k}")' not in assert_body:
-            fail(f"aggregate exclude must include v.get({k!r}) (12-key gate / Runbook B)")
+        if f'v.get("{k}")' not in assert_fn_block:
+            fail(
+                f"aggregate exclude must include v.get({k!r}) (12-key gate / Runbook B) "
+                f"in assert_orders_envelope… ({assert_src})"
+            )
 
     print("OK: ssot-guard-escrow-orders-detail passed")
 
