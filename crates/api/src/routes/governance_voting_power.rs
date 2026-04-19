@@ -1,7 +1,7 @@
 //! B-092：只读 **`GET /api/v1/governance/voting-power`**（当前委托图下的可投票权重；与计票 **冻结权重** 同源公式）。
 //! **TT-B098-UNIFIED-ON-CHAIN-VOTE-WEIGHT-001**：**`f(wallet,B):=getPastVotes(wallet,B)`**；**`unified_on_chain_vote_weight_u256_dec`** 仅在 **`on_chain_vote_weight.read_status==ok`** 时等于 **`votes_u256_dec`**（与 **`crate::chain::governor::eth_call_get_past_votes`**、**`GET …/proposals/:id`** **`voting_power_at_snapshot.votes`** 同源）。根级 **`weight_ssot`** 仍为 **`delegation_units_v1`**（链下信号票），**不得**与 **`GovernanceVotesToken.getPastVotes`** 混读。
 //! **TT-B092-VOTING-POWER-SNAPSHOT-ALIGN-001**：**`snapshot_block`** **查询** 与 **`stake_snapshot` / `country_pool_share_snapshot` / `on_chain_vote_weight`** 内 **block** 同源；**`total_weight_units`**（**`delegation_units_v1`**）与各 **`reconcile.delegation_units_mvp`** 对齐（**`POST …/vote` 信号票** 仍仅用 **MVP** 权重，与链上 **getPastVotes** 观测并列不冲突）。
-//! **TT-COMP-B092**：可选 **`snapshot_block`** + **`Staking.stakeOf`** **`eth_call`** 与 **`delegation_units_v1`** **并列对账**；**`POST …/vote` 计票** 仍 **仅** **`delegation_units_v1`**（本卡 **不改** **`governance_proposals`**）。
+//! **TT-COMP-B092**：可选 **`snapshot_block`** + **`stakeOf(address)`**（**`IdentityStakingPool` 部署**；**读接口与旧 `Staking` ABI 兼容**）**`eth_call`** 与 **`delegation_units_v1`** **并列对账**；**`POST …/vote` 计票** 仍 **仅** **`delegation_units_v1`**（本卡 **不改** **`governance_proposals`**）。
 //! **TT-COMP-B092-COUNTRY-POOL-SNAPSHOT-001**：同 **`snapshot_block`** 下对 **`INVESTOR_SHARE_TOKEN_ADDRESSES`**（与 **B-085** **`indexer-tick`** 同源）各 ERC20 **`balanceOf(default_wallet)`** **`eth_call`**，响应 **`country_pool_share_snapshot`**。
 
 use axum::extract::{Query, State};
@@ -42,13 +42,13 @@ const COMP_ANCHOR_COUNTRY: &str = "TT-COMP-B092-COUNTRY-POOL-SNAPSHOT-001";
 /// **B-098**：单一链上治理权重 **f(wallet, B)** = **`GovernanceVotesToken.getPastVotes(wallet, B)`**（与 **`GET …/proposals/:id`** **`voting_power_at_snapshot`** 同源 **`eth_call`**）。
 const B098_ANCHOR: &str = "TT-GOVERNANCE-VOTE-WEIGHT-UNIFIED-FORMULA-001";
 
-/// 与 **`Staking.sol`** **`MIN_STAKE`**（**1000e6**）一致，用于 **`meets_contract_min_stake`** 观测。
+/// 与 **`IdentityStakingPool::MIN_STAKE()`**（**1000e6**；与旧 **`Staking::MIN_STAKE`** 口径一致）一致，用于 **`meets_contract_min_stake`** 观测。
 const STAKING_MIN_STAKE_UNITS: u128 = 1000 * 1_000_000;
 
 #[derive(Debug, Deserialize, Default)]
 #[serde(default)]
 pub(crate) struct GovernanceVotingPowerQuery {
-    /// 指定时：对 **`Staking.stakeOf(default_wallet)`** 做 **`eth_call`**（块高 **本参数**）。
+    /// 指定时：对 **`stakeOf(default_wallet)`**（**`IdentityStakingPool` 部署**；**与旧 `Staking.stakeOf` ABI 兼容**）做 **`eth_call`**（块高 **本参数**）。
     pub(crate) snapshot_block: Option<u64>,
 }
 
@@ -213,7 +213,7 @@ async fn stake_snapshot_value(
                 "meets_contract_min_stake": serde_json::Value::Null,
                 "reconcile": {
                     "delegation_units_mvp": delegation_mvp_units,
-                    "note": format!("Pass snapshot_block query to eth_call Staking.stakeOf at block ({COMP_ANCHOR}). POST …/vote tally unchanged (delegation_units_v1 only).")
+                    "note": format!("Pass snapshot_block query to eth_call stakeOf (IdentityStakingPool; ABI-compatible with legacy Staking) at block ({COMP_ANCHOR}). POST …/vote tally unchanged (delegation_units_v1 only).")
                 },
                 "anchor": COMP_ANCHOR
             });
@@ -328,7 +328,7 @@ async fn stake_snapshot_value(
                 "meets_contract_min_stake": meets,
                 "reconcile": {
                     "delegation_units_mvp": delegation_mvp_units,
-                    "note": format!("delegation_units_mvp is GET /voting-power + POST /vote SSOT; stake_u256_hex is Staking.stakeOf at block {block} ({COMP_ANCHOR}). On-chain Governor weight f(·) see `on_chain_vote_weight` ({B098_ANCHOR}).")
+                    "note": format!("delegation_units_mvp is GET /voting-power + POST /vote SSOT; stake_u256_hex is stakeOf (IdentityStakingPool; ABI-compatible with legacy Staking) at block {block} ({COMP_ANCHOR}). On-chain Governor weight f(·) see `on_chain_vote_weight` ({B098_ANCHOR}).")
                 },
                 "anchor": COMP_ANCHOR
             })
@@ -341,7 +341,7 @@ async fn stake_snapshot_value(
             "meets_contract_min_stake": serde_json::Value::Null,
             "reconcile": {
                 "delegation_units_mvp": delegation_mvp_units,
-                "note": "eth_call Staking.stakeOf failed"
+                "note": "eth_call stakeOf (IdentityStakingPool) failed"
             },
             "anchor": COMP_ANCHOR
         }),
@@ -896,7 +896,7 @@ mod tests {
         format!("http://{}", addr)
     }
 
-    /// **1000e6** = **1e12** wei of 6-dec staking token，与 **`Staking.MIN_STAKE`** 对齐。
+    /// **1000e6** = **1e12** wei of 6-dec staking token，与 **`IdentityStakingPool::MIN_STAKE()`**（旧 **`Staking::MIN_STAKE`**）对齐。
     fn word_hex_min_stake_exact() -> &'static str {
         "0x000000000000000000000000000000000000000000000000000000e8d4a51000"
     }
