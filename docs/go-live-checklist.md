@@ -152,7 +152,7 @@
 - [ ] **10.3** **值班路径**：on-call 能访问内网 internal 与 DB 只读账号；**Runbook** 链接已贴在工单/聊天置顶。**（P0 #6）**
 - [ ] **10.4** **审计证据**：如需对外出具，**`sha256sum -c docs/verification-evidence-sha256.txt`** 在发布分支通过（与 pack 第 2 节自校验哈希一致）。**（P0 #7）**
 
-**并联（非 P0 子项 · GitHub Actions 组织健康）**：若组织 **付款失败** 或 **Actions spending limit** 过低，GitHub 可 **拒绝启动** `ubuntu-latest` job（注解常含 *payments have failed* / *spending limit*）；此时 **无** 常规 CI step 日志，**与** 单条 Dependabot（如 **`upload-artifact`**）**版本 bump** **无**可验证因果链。**处理**：**Billing & plans**（组织：`https://github.com/organizations/<ORG>/settings/billing`）+ 放行 **Actions** 支出；复跑后按 **[TT-L4-PARALLEL-CI-001](runbook/TT-L4-PARALLEL-CI-001.md) §5～§8** 对拍 **L4 parallel CI** 是否已进入 **`npm run e2e:sepolia`**。
+**并联（非 P0 子项 · GitHub Actions 组织健康）**：若组织 **付款失败** 或 **Actions spending limit** 过低，GitHub 可 **拒绝启动** `ubuntu-latest` job（注解常含 *payments have failed* / *spending limit*）；此时 **无** 常规 CI step 日志，**与** 单条 Dependabot（如 **`upload-artifact`**）**版本 bump** **无**可验证因果链。**处理**：**Billing & plans**（组织：`https://github.com/organizations/<ORG>/settings/billing`）+ 放行 **Actions** 支出；复跑后按 **[TT-L4-PARALLEL-CI-001](runbook/TT-L4-PARALLEL-CI-001.md) §5～§8** 对拍 **L4 parallel CI** 是否已进入 **`npm run e2e:sepolia`**。**读结果**：**不得**仅凭 workflow **总结论 ✓** 认定 **L4 Sepolia** 已真实执行（`continue-on-error` + **未调度** 时仍可出现 ✓）；须打开 **Job** 核对 **Annotations / Steps**（见该 Runbook **§2**）。
 
 ---
 

@@ -1,6 +1,6 @@
 # TT-L4-PARALLEL-CI-001 · CI 并行验证（Sepolia · `start` · workers=2）
 
-**Version:** 1.0.2  
+**Version:** 1.0.3  
 **Status:** 观测（**不**替代 **[TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001](./TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001.md)** 默认 **`npm run e2e:sepolia` 单 worker** 门禁）
 
 ## 1. 唯一目标
@@ -14,6 +14,7 @@
 | **触发** | 本机 / 既有流程以 **`npm run e2e:sepolia`** 默认 **workers:1** 为准 | **`.github/workflows/l4-parallel-ci.yml`** 独立 job |
 | **Next** | 本机多为 **`next dev`** | **CI 下 `npm run start`**（生产构建产物） |
 | **是否阻塞合并** | 以仓库既定 **required checks** 为准（本卡 **不**默认加入） | Job 设 **`continue-on-error: true`**，直至连续 **193/0** 证据后再议升格 |
+| **读 CI 结果** | 以 **Playwright 汇总行** 与 **exit 0** 为准 | **Workflow run 页顶部的「绿勾 ✓」≠ 本 job 已执行**：计费未放行或 **Gate** 跳过等情况下，**总结论仍可 ✓**，须点开 **Job「L4 Sepolia (start · workers=2)」** 看 **Annotations / Steps**（或 `gh run view --job=<job_id>`）；**未调度** 时 **墙钟常为数秒**、**无** `npm run e2e:sepolia` **step** |
 
 ## 3. CI 启用条件（Secrets）
 
@@ -55,6 +56,8 @@ base64 -w0 < .env | gh secret set L4_CI_DOTENV_B64
 
 **处理**：组织 Owner / Billing 权限 → **Settings → Billing and plans** → 修正支付方式并放行 **GitHub Actions** 支出（组织路径：`https://github.com/organizations/<ORG>/settings/billing`）。修复后对本 workflow **Re-run jobs** 或推新 commit。
 
+**复验登记（远程 · 2026-04-19 UTC 后）**：`main` 上 [run 24619014632](https://github.com/TT-Expedition/TT-Expedition/actions/runs/24619014632)（`a24851b`）等 **仍** 为 **job was not started**（**payments / spending limit** 注解），**不能**据此认为「Billing 已恢复」。**Billing 恢复的可操作判据**：同一 workflow 下 **L4 Sepolia** job **墙钟 ≫ 数秒**，且 **Steps** 中出现 **`Run L4 Sepolia (e2e:sepolia · workers=2)`**（或等价）并产生 **Playwright** 日志。
+
 ### 5.2 归因纪律（与 Dependabot / `upload-artifact` bump 并行）
 
 - **非 bump 直接**：job **未启动**、**Gate** `run=false`、**契约断言**失败、**编译**/**`npm ci`**/**Playwright** 失败，或仅见 **download-artifact** 相关日志 — **均不**自动记为 **`upload-artifact` bump** 回归。  
@@ -72,7 +75,8 @@ base64 -w0 < .env | gh secret set L4_CI_DOTENV_B64
 |------|------------|---------|-----------------|------|------|
 | 2026-04-19（UTC） | f4e1a70 | **2** | **e2e 未执行**（未达 193/0） | job **failure**；workflow **success**（`continue-on-error`） | 首轮真实 CI：[run 24617409810](https://github.com/TT-Expedition/TT-Expedition/actions/runs/24617409810) · `workflow_dispatch` · job wall **356s**（~5m56s）· **Build traveltrust-api** 失败（编译错误，未进入 Playwright）· artifact **`l4-parallel-ci-playwright-report`** ~**195 KiB**（build 失败后上传） |
 | 2026-04-19（UTC） | 49dcafe | **2** | **e2e 未执行**（job **未调度**） | job **failure**；workflow **success**（`continue-on-error`） | PR [#3](https://github.com/TT-Expedition/TT-Expedition/pull/3) 已合并 **`main`**（含 **`42e88bd`** `e2e:sepolia` 恢复 + **`34b39a2`** 契约断言）；[run 24618396945](https://github.com/TT-Expedition/TT-Expedition/actions/runs/24618396945) · **GitHub 组织计费 / spending limit** → **job was not started**（**无** npm / Playwright / artifact **上传** 日志；归类见 **§5**） |
-| （待跑） | | **2** | | | 待 **组织 Actions 可调度** 且 **`traveltrust-api`** 在 CI 可编译后重跑，登记 **193/0** 与 Slow file |
+| 2026-04-19（UTC） | a24851b | **2** | **e2e 未执行**（job **未调度**） | job **failure**；workflow **success**（`continue-on-error`） | **`main`** 复验：[run 24619014632](https://github.com/TT-Expedition/TT-Expedition/actions/runs/24619014632) · **同注解**（**payments / spending limit**）· **非** PR #3 独有；与 **§5.1 复验登记** 一致 |
+| （待跑） | | **2** | | | **首要**：组织 **Actions 可调度**（§5.1）→ job **墙钟与 Steps** 符合 **§5.1 判据**；**其次** **`traveltrust-api`** 在 CI 可 **`cargo build`**（对照 §7 首行历史失败）；再登记 **193/0** 与 Slow file |
 
 ## 8. 缺口与多维对齐（自检清单 · 登记用）
 
@@ -81,7 +85,8 @@ base64 -w0 < .env | gh secret set L4_CI_DOTENV_B64
 | 维度 | 当前常见缺口 | 对齐动作 |
 |------|----------------|----------|
 | **组织 / 计费** | Actions **不启 job**（§5.1） | Billing 修复后 **Re-run**；`gh run view <id>` 可见完整 steps |
-| **Secret** | **`L4_CI_DOTENV_B64` 未设** | 整 job 跳过（绿）；需真跑时 `base64 -w0 < .env \| gh secret set L4_CI_DOTENV_B64`（§3） |
+| **读错 CI 信号** | **Run 总结论 ✓** 但 **L4 job 未调度** / **无 Playwright** | 以 **job 级** Steps 为准（§2 表末行）；**`gh run view --job=<job_id>`** 看 **Annotations** |
+| **Secret** | **`L4_CI_DOTENV_B64` 未设** | 整 job 跳过（绿）；需真跑时 `base64 -w0 < .env \| gh secret set L4_CI_DOTENV_B64`（§3）；与 **计费阻塞** 区分：后者 **Annotations** 为 **payments / spending limit** |
 | **分支 ↔ `main`** | 长寿命 PR **未合并**含 **`e2e:sepolia`** 的 **`main`** | **`Missing script: "e2e:sepolia"`**；合并 **`main`** 或 cherry-pick **`42e88bd`** 起相关提交；契约步 **§4** 会早失败 |
 | **workflow ↔ package.json** | 脚本名 / runner 路径漂移 | 以 **`npm run e2e:sepolia`** 为 SSOT；workflow 已加 **契约断言**（与 **`34b39a2`** 一致） |
 | **API 编译** | **`cargo build -p traveltrust-api`** 在观测 SHA 上失败 | 见 §7 首行 run；**未进 Playwright** 时 **不得** 登记 193/0 |
