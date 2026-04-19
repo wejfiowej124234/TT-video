@@ -27,6 +27,7 @@ mod me;
 mod media;
 mod messages;
 mod orders;
+mod traveltrust_page;
 
 #[cfg(test)]
 mod governance_read_contract_contract_tests;
@@ -78,6 +79,7 @@ pub fn api_router() -> Router<ApiMetaState> {
         .merge(me::router())
         .merge(guides::router())
         .merge(orders::router())
+        .merge(traveltrust_page::router())
         .merge(itineraries::router())
         .merge(discover::router())
         .merge(messages::router())
