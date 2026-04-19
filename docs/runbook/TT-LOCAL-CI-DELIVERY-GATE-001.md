@@ -1,7 +1,15 @@
 # TT-LOCAL-CI-DELIVERY-GATE-001 · 本地 / VPS 交付门禁（绕开 GitHub-hosted 计费）
 
-**Version:** 1.0.0  
+**Version:** 1.0.1  
 **Status:** `Target`（与 **[TT-L4-PARALLEL-CI-001](./TT-L4-PARALLEL-CI-001.md) §5.0** 对读：**组织 gate 未解除** 时 **以本节为交付真门禁**；**不**宣称替代 **07** 或 **分支保护** 的长期策略）
+
+## 0. 固定打法（日常节奏）
+
+| 节奏 | 做什么 | 备注 |
+|------|--------|------|
+| **日常** | **本地 / VPS** 跑 **§2** 交付门禁（入口：**`bash scripts/gates/ci-local-delivery-minimum.sh`** 等，见 **[scripts/README.md](../../scripts/README.md)**） | **交付与验收以本节为真判据**；母表 **[B-499](../任务母表.md)** 已写明：**GitHub-hosted 未恢复不阻塞交付**，统一转按 **本篇** 执行。 |
+| **定期** | 在 **GitHub Actions** 对 **`Build`** 最新 run **Re-run**，**只验证** hosted 是否恢复（**非空 Steps** + **`actions/checkout`** 级日志） | **判读** 仍按 **[TT-L4-PARALLEL-CI-001 §5.0](./TT-L4-PARALLEL-CI-001.md)**：未见 checkout 前，**不把 hosted 红叉当仓库内回归**。可选机读：`bash scripts/dev/gh-actions-check-run-annotations.sh build.yml`。 |
+| **需要 PR Checks 时** | 上 **self-hosted runner**，**先试点只迁一个 job** 的 **`runs-on:`**（见 **§3**、[Adding self-hosted runners](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/adding-self-hosted-runners)），确认 **checkout** 与后续 step 后再扩大 | **不占 hosted 分钟**；与 **§5.0** 对读。 |
 
 ## 1. 背景与边界
 
