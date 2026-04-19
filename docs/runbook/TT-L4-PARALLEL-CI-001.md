@@ -1,6 +1,6 @@
 # TT-L4-PARALLEL-CI-001 · CI 并行验证（Sepolia · `start` · workers=2）
 
-**Version:** 1.0.3  
+**Version:** 1.0.5  
 **Status:** 观测（**不**替代 **[TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001](./TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001.md)** 默认 **`npm run e2e:sepolia` 单 worker** 门禁）
 
 ## 1. 唯一目标
@@ -14,7 +14,7 @@
 | **触发** | 本机 / 既有流程以 **`npm run e2e:sepolia`** 默认 **workers:1** 为准 | **`.github/workflows/l4-parallel-ci.yml`** 独立 job |
 | **Next** | 本机多为 **`next dev`** | **CI 下 `npm run start`**（生产构建产物） |
 | **是否阻塞合并** | 以仓库既定 **required checks** 为准（本卡 **不**默认加入） | Job 设 **`continue-on-error: true`**，直至连续 **193/0** 证据后再议升格 |
-| **读 CI 结果** | 以 **Playwright 汇总行** 与 **exit 0** 为准 | **Workflow run 页顶部的「绿勾 ✓」≠ 本 job 已执行**：计费未放行或 **Gate** 跳过等情况下，**总结论仍可 ✓**，须点开 **Job「L4 Sepolia (start · workers=2)」** 看 **Annotations / Steps**（或 `gh run view --job=<job_id>`）；**未调度** 时 **墙钟常为数秒**、**无** `npm run e2e:sepolia` **step** |
+| **读 CI 结果** | 以 **Playwright 汇总行** 与 **exit 0** 为准 | **Workflow run 页顶部的「绿勾 ✓」≠ 本 job 已执行**：计费未放行或 **Gate** 跳过等情况下，**总结论仍可 ✓**，须点开 **Job「L4 Sepolia (start, workers=2)」**（workflow 内 **ASCII 逗号** 命名）看 **Annotations / Steps**（或 `gh run view --job=<job_id>`）；**未调度** 时 **墙钟常为数秒**、**无** `npm run e2e:sepolia` **step**。**Run 页 · Summary** 含 **「L4 parallel CI · gate」**（若 job 已跑过 **Checkout**）：仅说明 **`L4_CI_DOTENV_B64`** 是否配置，**不**表示 Playwright 已执行 |
 
 ## 3. CI 启用条件（Secrets）
 
@@ -42,7 +42,10 @@ base64 -w0 < .env | gh secret set L4_CI_DOTENV_B64
 | **npm 脚本契约（gate 为 true 时）** | **`Assert L4 e2e:sepolia script contract`**：`frontend/package.json` 的 **`scripts["e2e:sepolia"]`** 须引用 **`run-e2e-sepolia.mjs`**，且 **`frontend/scripts/run-e2e-sepolia.mjs`** 存在；在 **`npm ci`** 之前失败，避免长链路后才报 **`Missing script: "e2e:sepolia"`**（长寿命分支未合并 **`main`** 时常见）。 |
 | **并行度** | **`PLAYWRIGHT_WORKERS=2`**；**不**设 `PLAYWRIGHT_L4_FILE_PARALLEL`（避免脚本把 workers 改成 4） |
 | **套件** | `cd frontend && npm run e2e:sepolia`（`run-e2e-sepolia.mjs` 已默认 **`PLAYWRIGHT_FULL_STACK=1`**、**`PLAYWRIGHT_EXPECT_CHAIN_ID=11155111`**） |
-| **失败留证** | **`continue-on-error: true`**；失败时上传 **`frontend/playwright-report/`** artifact（当前 workflow 使用 **`actions/upload-artifact@v4`**；与 **Dependabot** 对其它 workflow 的 **`upload-artifact@v7` bump** **无**同一 job 内强绑定，**归因** 须以 **本 job 日志是否出现 upload 步骤失败** 为准，见 **§5.2**）。 |
+| **并发** | **`cancel-in-progress: false`**（`concurrency` **group** 含 **`github.event_name`**）：同 ref 上 **排队** 至上一轮结束，避免 in-flight 被掐断导致 **仅余 system.txt、无完整 step 日志**。 |
+| **Run Summary** | **Gate** 经步骤 **`Summary — L4 gate (TT-L4-PARALLEL-CI-001)`**（`if: always()`）写入 **`GITHUB_STEP_SUMMARY`** → run **Summary** tab：**`run=true` / `run=false`**（**仅** 表示 **`L4_CI_DOTENV_B64` 是否配置**，**不**表示 Playwright 已跑）。**计费导致 job 未调度** 时 **无** 该段。 |
+| **Playwright 报告 artifact** | **`continue-on-error: true`**；**`Upload Playwright report (L4 observability)`** + **`actions/upload-artifact@v4`**，**`if: always() && gate`**，路径 **`frontend/playwright-report/`**，**`if-no-files-found: ignore`** — **成功 / 失败** 均可留 HTML（观测）。与 **其它 workflow** 的 **`upload-artifact@v7` bump** **无**同 job 强绑定；**归因** §5.2。 |
+| **本地排障** | **`gh` CLI**：项目根 **`bash scripts/gh-l4-run-inspect.sh`**（薄转发 → **`scripts/dev/gh-l4-run-inspect.sh`**），可选 **`run_id`**；见 **§9**、**[scripts/README.md](../../scripts/README.md) §一** 表。 |
 
 ## 5. 组织级前置与排障（非仓库代码可修）
 
@@ -56,7 +59,7 @@ base64 -w0 < .env | gh secret set L4_CI_DOTENV_B64
 
 **处理**：组织 Owner / Billing 权限 → **Settings → Billing and plans** → 修正支付方式并放行 **GitHub Actions** 支出（组织路径：`https://github.com/organizations/<ORG>/settings/billing`）。修复后对本 workflow **Re-run jobs** 或推新 commit。
 
-**复验登记（远程 · 2026-04-19 UTC 后）**：`main` 上 [run 24619014632](https://github.com/TT-Expedition/TT-Expedition/actions/runs/24619014632)（`a24851b`）等 **仍** 为 **job was not started**（**payments / spending limit** 注解），**不能**据此认为「Billing 已恢复」。**Billing 恢复的可操作判据**：同一 workflow 下 **L4 Sepolia** job **墙钟 ≫ 数秒**，且 **Steps** 中出现 **`Run L4 Sepolia (e2e:sepolia · workers=2)`**（或等价）并产生 **Playwright** 日志。
+**复验登记（远程 · 持续）**：`main` 上 [run 24619014632](https://github.com/TT-Expedition/TT-Expedition/actions/runs/24619014632)（`a24851b`）、[run 24619181210](https://github.com/TT-Expedition/TT-Expedition/actions/runs/24619181210)（`1843d3f`）等 **仍** 为 **job was not started**（**payments / spending limit** 注解），**不能**据此认为「Billing 已恢复」。**Billing 恢复的可操作判据**：同一 workflow 下 **L4 Sepolia** job **墙钟 ≫ 数秒**，且 **Steps** 中出现 **`Run L4 Sepolia (e2e:sepolia, workers=2)`**（workflow 内 **ASCII 逗号**）并产生 **Playwright** 日志。
 
 ### 5.2 归因纪律（与 Dependabot / `upload-artifact` bump 并行）
 
@@ -86,6 +89,7 @@ base64 -w0 < .env | gh secret set L4_CI_DOTENV_B64
 |------|----------------|----------|
 | **组织 / 计费** | Actions **不启 job**（§5.1） | Billing 修复后 **Re-run**；`gh run view <id>` 可见完整 steps |
 | **读错 CI 信号** | **Run 总结论 ✓** 但 **L4 job 未调度** / **无 Playwright** | 以 **job 级** Steps 为准（§2 表末行）；**`gh run view --job=<job_id>`** 看 **Annotations** |
+| **Summary · gate** | 见 **「L4 parallel CI · gate」** 即认为 **193/0 已验证** | 该段 **仅** 报告 **`L4_CI_DOTENV_B64`** 是否配置；**Playwright** 须看 **`Run L4 Sepolia (e2e:sepolia, workers=2)`** step 日志 |
 | **Secret** | **`L4_CI_DOTENV_B64` 未设** | 整 job 跳过（绿）；需真跑时 `base64 -w0 < .env \| gh secret set L4_CI_DOTENV_B64`（§3）；与 **计费阻塞** 区分：后者 **Annotations** 为 **payments / spending limit** |
 | **分支 ↔ `main`** | 长寿命 PR **未合并**含 **`e2e:sepolia`** 的 **`main`** | **`Missing script: "e2e:sepolia"`**；合并 **`main`** 或 cherry-pick **`42e88bd`** 起相关提交；契约步 **§4** 会早失败 |
 | **workflow ↔ package.json** | 脚本名 / runner 路径漂移 | 以 **`npm run e2e:sepolia`** 为 SSOT；workflow 已加 **契约断言**（与 **`34b39a2`** 一致） |
@@ -96,3 +100,4 @@ base64 -w0 < .env | gh secret set L4_CI_DOTENV_B64
 
 - **perf 分单（本机 dev 并行结论）**：[TT-L4-SMOKE-SLOWFILE-PERF-001](./TT-L4-SMOKE-SLOWFILE-PERF-001.md) **§3.4**  
 - **Sepolia 基线口径**：[TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001](./TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001.md)
+- **本地 `gh` 巡检（最近或指定 run id）**：[scripts/gh-l4-run-inspect.sh](../../scripts/gh-l4-run-inspect.sh) → [scripts/dev/gh-l4-run-inspect.sh](../../scripts/dev/gh-l4-run-inspect.sh)；[scripts/README.md](../../scripts/README.md) **§一** 表内 **`gh-l4-run-inspect.sh`** 行

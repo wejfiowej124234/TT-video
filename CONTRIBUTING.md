@@ -66,7 +66,13 @@ cargo test -p traveltrust-api
 cd frontend && npm run lint && npx tsc --noEmit && npm test
 ```
 
+**GitHub · L4 parallel CI（观测 workflow）**：与 **`build.yml`** 的链关烟测 **正交**；须配置组织 **Actions 计费** 与（若要真跑）secret **`L4_CI_DOTENV_B64`**。**不得**仅凭 workflow **总结论 ✓** 认定已在 CI 跑完 **`npm run e2e:sepolia`**。长寿命 PR（含 Dependabot）请 **定期合并 `main`**，避免 **`frontend/package.json`** 与 **`e2e:sepolia`** 契约漂移。排障与归因：**[docs/runbook/TT-L4-PARALLEL-CI-001.md](docs/runbook/TT-L4-PARALLEL-CI-001.md)**；本地 **`bash scripts/gh-l4-run-inspect.sh`**（须已 **`gh auth login`**）。
+
 可选（工台基线与依赖审计，与 **`pre-release-automation`** 首段同源）：`bash scripts/check-invariants.sh`、`bash scripts/audit-deps.sh`。Windows：`.\scripts\check-invariants.ps1`；**audit-deps** 须 **Git Bash** 执行 `bash scripts/audit-deps.sh`。总览见 [07-开发流程与顺序](docs/spec/07-开发流程与顺序.md) 文首**读前摘要**「**工台基线 · 依赖审计（invariants · audit-deps）**」行、[scripts/README.md](scripts/README.md) **§二「CI 门禁」**。
+
+### PR 须声明 F/X/G 分区（spec/92 · 涉及 UI 动效或路由时）
+
+**下列** **任一** **情形** **，** **PR** **描述** **须** **写明** **：** **（** **1** **）** **影响** **路由** **或** **页面** **范围** **；** **（** **2** **）** **对应** **[spec/92](docs/spec/92-P0-全站UI分区控制表-金融体验灰区与动效裁决.md)** **表** **A** **之** **F** **/** **X** **/** **G** **分区** **。** **范围** **包括** **：** **修改** **路由** **；** **新增** **/** **调整** **动效** **、** **粒子** **、** **全页** **背景** **；** **修改** **资金** **相关** **UI** **。** **未** **注明** **者** **，** **review** **可** **要求** **补全** **或** **拒绝** **合入** **（** **防** **Spec** **Collision** **）** **。** **执行** **入口** **见** **[07 §五 5.3](docs/spec/07-开发流程与顺序.md)** **文首** **「** **入口** **强制** **」** **段** **。**
 
 ### 路由与 `04` / `13-1` / `frontend/app` 契约（建议）
 
@@ -103,6 +109,29 @@ Windows：`.\scripts\check-55-quick-verify.ps1`；**严格 200 冒烟**（与 Ba
 ```
 
 Windows：`.\scripts\gen-frontend-manifest.ps1`（可选 `$env:EVIDENCE_GO_DIR`）。产出见 [evidence/README.md](evidence/README.md)。
+
+过门目录填妥 **`manifest.json`** / **`manifest.sha256`** 后，可机读校验（**不**替代 **08-2/08-4** 人工项）：
+
+```bash
+bash scripts/validate-evidence-manifest.sh validate evidence/GO_YYYYMMDD
+# 可选：同时核对 artifacts 文件与登记 sha256 一致
+bash scripts/validate-evidence-manifest.sh validate evidence/GO_YYYYMMDD --verify-artifact-files
+bash scripts/validate-evidence-manifest.sh self-test
+```
+
+实现：`scripts/dev/validate_evidence_manifest.py`（**Python 3** 标准库）。详见 [evidence/README.md](evidence/README.md) **manifest 格式与必填字段**。
+
+**IMP-EV-001**：**`evidence/GO_20260409`** 为仓库内**唯一**机读基线（frozen baseline，**禁止**在常规 PR 中改其内容）。**凡含 `manifest.json` 的新增或变更 evidence bundle**（新 **`GO_YYYYMMDD`**、**`GO_RC_*`** 等），在**合并入 `main` 之前**须已通过 **`python3 scripts/dev/validate_evidence_manifest.py validate <DIR> --emit-summary --verify-artifact-files`**（**`scripts/validate-evidence-manifest.sh`** **参数透传**）；否则 **一律禁止合并**。**`main`** 须将 **`Evidence manifest validate / IMP-EV-001 validate + JSON summary`** 设为 **required status check**。细则与 CI 编排见 **[docs/runbook/evidence-gate.md](docs/runbook/evidence-gate.md)**。
+
+<a id="sqlx-migration-pr-checklist"></a>
+
+## PR 检表：新增 SQLx 迁移（IMP-DB-002）
+
+向 **`crates/api/migrations/`** 增加或实质修改 **`.sql`** 时，PR **描述或评审**中须能回答（与 [04 §四](docs/spec/04-后端与API.md) **数据库迁移策略（P0）**、[41](docs/spec/41-后端数据库接库与落地清单.md)、[55 §1.2](docs/spec/55-阶段-数据同步与数据库功能同步.md) **O10** 对读）：
+
+- [ ] **回滚或前滚修复路径**：本次 schema 变更的 **down migration**、**备份恢复** 或 **前滚热修脚本** 方案之一已写明（**不要求** 历史迁移一次性补全 **down**）。
+- [ ] **数据一致性影响**：是否锁表 / 是否需双写或回填；若有破坏性变更，与 **RUNBOOK §2.6** 发版回滚叙事可衔接。
+- [ ] **文档联动**：若本 PR 新增迁移文件，**须** 计划同批或跟进更新 **55 §1.2** 迁移一览、**04**/**41** 接库范围（**O10** 纪律）。
 
 ## 变更类型与文档义务
 
