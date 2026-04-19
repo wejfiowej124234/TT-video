@@ -84,6 +84,7 @@
 | 5.2 | **`scripts/README.md` / `scripts/INDEX.md`** 与 **根薄转发** 策略一致（B-184） | [`scripts/README.md`](../../scripts/README.md)、[`scripts/INDEX.md`](../../scripts/INDEX.md) |
 | 5.3 | **L4 parallel CI** 叙事与 **组织 Billing / `L4_CI_DOTENV_B64`** 现状对拍 | [`TT-L4-PARALLEL-CI-001.md`](TT-L4-PARALLEL-CI-001.md)、**`bash scripts/gh-l4-run-inspect.sh`** |
 | 5.4 | **主分支 AI 索引门禁**（若启用）仍可达 | **CONTRIBUTING** · **main-branch-ai-index-gate** |
+| 5.5 | **GitHub Actions** **workflow SSOT**：**`.github/workflows/*.yml`** **全集** **已** **跟踪** **、** **顶栏** **`permissions`** **（** **`contents: read`** **；** **含** **`upload-artifact`** **者** **须** **`actions: write`** **）** **与** **组织** **默认** **token** **对拍** | **母表** **[** **`B-499`** **行**](../任务母表.md) **、** **[** **`.github/workflows/`**](../../.github/workflows/) **、** **[** **`TT-L4-PARALLEL-CI-001`**](TT-L4-PARALLEL-CI-001.md) **（** **组织** **hosted** **runner** **/** **Billing** **为** **P0** **前置** **）** |
 
 ---
 

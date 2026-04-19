@@ -17,6 +17,8 @@
 | **Gate 脚本** | `scripts/gates/**` |
 | **广播 / 证据 / production-go 链** | 如 **`scripts/gates/broadcast-batch-*.sh`**、**`scripts/ops/*broadcast*`**、**`scripts/ops/*production*go*`**（例 **`region_vault_claim_production_go_gate.py`**）、**`write-indexer-evidence.*`**，及 **`.github/workflows/broadcast-batch-blockers.yml`** 等与其强绑定的 **evidence 落盘 / 链上留痕** 脚本；以「动了 GO 闸、batch 证据 JSON、广播归档」为准。 |
 
+**CI workflow SSOT**（**`.github/workflows/*.yml`** **全集** **须** **跟踪** **、** **顶栏** **`permissions`** **；** **含** **`upload-artifact`** **须** **叠加** **`actions: write`** **）** **见** [母表 **B-499**](docs/任务母表.md) **与** [企业审计清单 **Phase 5 · 项 5.5**](docs/runbook/TT-DOC-ENTERPRISE-AUDIT-CHECKLIST-001.md) **。**
+
 **最省事单人用法**：**日常**改动 **直推 `main`**；改 **索引、CI、gate、广播证据链** 时 **走 PR**。
 
 ## 必读入口
