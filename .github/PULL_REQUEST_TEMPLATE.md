@@ -24,4 +24,26 @@
 
 ---
 
+### 定型发版 / Check-G（若本 PR 更新 `evidence/GO_FINAL_*`、`dual_score_signoff.v1.json` 或对应 `manifest.json`）
+
+| 勾选 | 项 |
+|------|-----|
+| ☐ | 已按 [Runbook §2.7.4](ops/RUNBOOK.md#check-g-dual-score-gate) 执行 **封口命令（建议顺序）**；**`GO_FINAL_*`** 已对 **`validate_evidence_manifest.py`** 使用 **`--verify-artifact-files`**。 |
+| ☐ | PR 描述或正文已含 **本发布 tip `git` commit SHA**（与 **go-live-checklist §0.1** / 镜像 digest 可追溯对齐）。 |
+| ☐ | **封口留痕（非自动化）**：三连命令的**成功终端输出**已**粘贴**于本 PR，或给出**可访问链接**（如工单、内网 CI 日志、`evidence/.../artifacts/check-g-seal.log` 随 PR 路径），便于审计核对「曾执行」而非仅勾选。 |
+
+详见 [docs/go-live-checklist.md](docs/go-live-checklist.md) **§11.13～11.18**。
+
+---
+
+### 长寿命 / Dependabot PR（前端 `package.json` · L4）
+
+若本 PR **分支较旧**（如 **Dependabot** 单依赖升级），建议 **合并最新 `main`**，避免 **`frontend/package.json`** 与 **`npm run e2e:sepolia`** 契约漂移（L4 workflow 见 **[TT-L4-PARALLEL-CI-001](docs/runbook/TT-L4-PARALLEL-CI-001.md)**）。合并后可用 **`bash scripts/gh-l4-run-inspect.sh`**（或设 **`GH_BRANCH=<本分支名>`** 看该分支最近一次 L4 run）核对 **job 级** 是否已进入 Playwright，**勿**仅凭 workflow **总结论 ✓** 推断。
+
+| 勾选 | 项 |
+|------|-----|
+| ☐ | （若适用）已 **merge / rebase `main`**，且知悉 **L4 parallel CI** 与 **`upload-artifact` 版本 bump** 无自动因果链（归因见 Runbook **§5.2**）。 |
+
+---
+
 *CI 规则：若 PR 改动 08-3 映射表中的 key 且 08-4 版本号未在本 PR 中变更，将**阻断合并**。豁免须按 [08-2](docs/spec/08-2-附录-闭合工单表.md)「CI 豁免机制」留痕。若 PR 修改 **`docs/AI任务卡索引.md`**，合并 **`main`** 前还须通过必过检查 **`AI task card index overview / check`**（仓库设置见 [CONTRIBUTING.md](CONTRIBUTING.md#main-branch-ai-index-gate)）。*

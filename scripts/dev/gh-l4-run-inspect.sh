@@ -5,16 +5,22 @@
 #   bash scripts/dev/gh-l4-run-inspect.sh
 #   bash scripts/dev/gh-l4-run-inspect.sh 24619014632
 # Env:
-#   GH_REPO   default TT-Expedition/TT-Expedition
+#   GH_REPO    default TT-Expedition/TT-Expedition
+#   GH_BRANCH  optional: `gh run list --branch …` (e.g. dependabot/github_actions/actions/upload-artifact-7)
 set -euo pipefail
 
 REPO="${GH_REPO:-TT-Expedition/TT-Expedition}"
 WF="l4-parallel-ci.yml"
 
+branch_args=()
+if [[ -n "${GH_BRANCH:-}" ]]; then
+  branch_args=(--branch "$GH_BRANCH")
+fi
+
 if [[ "${1:-}" =~ ^[0-9]+$ ]]; then
   RID="$1"
 else
-  RID="$(gh run list --repo "$REPO" --workflow "$WF" --limit 1 --json databaseId --jq '.[0].databaseId')"
+  RID="$(gh run list --repo "$REPO" --workflow "$WF" "${branch_args[@]}" --limit 1 --json databaseId --jq '.[0].databaseId')"
 fi
 
 if [[ -z "$RID" || "$RID" == "null" ]]; then
@@ -30,5 +36,13 @@ echo "== Jobs (JSON: name, conclusion, databaseId) =="
 gh api "repos/${REPO}/actions/runs/${RID}/jobs" --jq '.jobs[] | {name, conclusion, databaseId, status}'
 
 echo ""
-echo "Tip: open job URL from run page, or: gh run view --repo $REPO --job=<job_databaseId>"
+echo "== Per-job detail (incl. billing / annotations) =="
+gh api "repos/${REPO}/actions/runs/${RID}/jobs" --jq -r '.jobs[].databaseId | tostring' | while IFS= read -r _jid; do
+  [[ -z "${_jid}" ]] && continue
+  echo "--- gh run view --job=${_jid} ---"
+  gh run view "$RID" --repo "$REPO" --job="${_jid}" || true
+  echo ""
+done
+
+echo "Tip: GH_BRANCH=<branch> bash scripts/dev/gh-l4-run-inspect.sh  # latest run on that branch"
 echo "Runbook: docs/runbook/TT-L4-PARALLEL-CI-001.md"

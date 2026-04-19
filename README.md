@@ -103,6 +103,7 @@ Wbe3-TravelTrust/
 ## CI 与本地开发
 
 阶段清单与 CI 预期见 [49-阶段建议](docs/spec/49-阶段建议-下一阶段方向与优先级.md) 等。**`.github/workflows/`** 中通常包含：`traveltrust-api` 的 **Rust 测试**、**前端** lint/测试、以及（若启用）**合约/ABI** 门禁。  
+**Sepolia L4 并行观测（独立 workflow）**：**`.github/workflows/l4-parallel-ci.yml`** — 与 **`build.yml`** 烟测正交；须组织 **GitHub Actions** 计费与（真跑时）secret **`L4_CI_DOTENV_B64`**。**勿**仅凭 workflow 顶栏 **✓** 认定已跑 **`npm run e2e:sepolia`**。排障：**[docs/runbook/TT-L4-PARALLEL-CI-001.md](docs/runbook/TT-L4-PARALLEL-CI-001.md)**；本地 **`bash scripts/gh-l4-run-inspect.sh`** 或 **`powershell -File scripts/gh-l4-run-inspect.ps1`**。  
 **合约测试**：安装 [Foundry](https://book.getfoundry.sh/) 后执行 `cd contracts && forge test`。
 
 ### 快速开始
@@ -120,7 +121,7 @@ cd frontend && npm install && npm run dev
 
 **前端缓存异常**（如 `.next` 损坏）：在 `frontend/` 下执行 `npm run clean` 后再 `npm run dev`。Windows 下请在 **`frontend` 目录**执行完整命令 **`npm run dev`**，不要只输入 `dev`。
 
-**Windows 一键脚本**：`scripts\start-api-with-seed.bat`，说明见 [docs/测试账号与本地联调.md](docs/测试账号与本地联调.md)。
+**Windows 手测推荐**：先 **`scripts\prepare-local-manual-test.bat`**（停 8080/3012、清 `frontend/.next` 与 Playwright 报告、预检），再 **`scripts\start-api-with-seed.bat`**（Docker + 编译 API + 起 API + 同步 `frontend/.env.local` + 起 Next）。默认**不清空**数据库；清库见脚本注释或联调文档 **「零、真实手测前准备」**。说明见 [docs/测试账号与本地联调.md](docs/测试账号与本地联调.md)。
 
 ### 测试账号（仅本地）
 

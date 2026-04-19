@@ -66,7 +66,7 @@ cargo test -p traveltrust-api
 cd frontend && npm run lint && npx tsc --noEmit && npm test
 ```
 
-**GitHub · L4 parallel CI（观测 workflow）**：与 **`build.yml`** 的链关烟测 **正交**；须配置组织 **Actions 计费** 与（若要真跑）secret **`L4_CI_DOTENV_B64`**。**不得**仅凭 workflow **总结论 ✓** 认定已在 CI 跑完 **`npm run e2e:sepolia`**。长寿命 PR（含 Dependabot）请 **定期合并 `main`**，避免 **`frontend/package.json`** 与 **`e2e:sepolia`** 契约漂移。排障与归因：**[docs/runbook/TT-L4-PARALLEL-CI-001.md](docs/runbook/TT-L4-PARALLEL-CI-001.md)**；本地 **`bash scripts/gh-l4-run-inspect.sh`**（须已 **`gh auth login`**）。
+**GitHub · L4 parallel CI（观测 workflow）**：与 **`build.yml`** 的链关烟测 **正交**；须配置组织 **Actions 计费** 与（若要真跑）secret **`L4_CI_DOTENV_B64`**。**不得**仅凭 workflow **总结论 ✓** 认定已在 CI 跑完 **`npm run e2e:sepolia`**。长寿命 PR（含 Dependabot）请 **定期合并 `main`**，避免 **`frontend/package.json`** 与 **`e2e:sepolia`** 契约漂移。排障与归因：**[docs/runbook/TT-L4-PARALLEL-CI-001.md](docs/runbook/TT-L4-PARALLEL-CI-001.md)**；本地 **`bash scripts/gh-l4-run-inspect.sh`** 或 **`powershell -File scripts/gh-l4-run-inspect.ps1`**（须已 **`gh auth login`**；可选 **`GH_BRANCH=<ref>`** 筛分支）。
 
 可选（工台基线与依赖审计，与 **`pre-release-automation`** 首段同源）：`bash scripts/check-invariants.sh`、`bash scripts/audit-deps.sh`。Windows：`.\scripts\check-invariants.ps1`；**audit-deps** 须 **Git Bash** 执行 `bash scripts/audit-deps.sh`。总览见 [07-开发流程与顺序](docs/spec/07-开发流程与顺序.md) 文首**读前摘要**「**工台基线 · 依赖审计（invariants · audit-deps）**」行、[scripts/README.md](scripts/README.md) **§二「CI 门禁」**。
 

@@ -1,6 +1,6 @@
 # TT-L4-PARALLEL-CI-001 · CI 并行验证（Sepolia · `start` · workers=2）
 
-**Version:** 1.0.5  
+**Version:** 1.0.6  
 **Status:** 观测（**不**替代 **[TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001](./TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001.md)** 默认 **`npm run e2e:sepolia` 单 worker** 门禁）
 
 ## 1. 唯一目标
@@ -45,7 +45,7 @@ base64 -w0 < .env | gh secret set L4_CI_DOTENV_B64
 | **并发** | **`cancel-in-progress: false`**（`concurrency` **group** 含 **`github.event_name`**）：同 ref 上 **排队** 至上一轮结束，避免 in-flight 被掐断导致 **仅余 system.txt、无完整 step 日志**。 |
 | **Run Summary** | **Gate** 经步骤 **`Summary — L4 gate (TT-L4-PARALLEL-CI-001)`**（`if: always()`）写入 **`GITHUB_STEP_SUMMARY`** → run **Summary** tab：**`run=true` / `run=false`**（**仅** 表示 **`L4_CI_DOTENV_B64` 是否配置**，**不**表示 Playwright 已跑）。**计费导致 job 未调度** 时 **无** 该段。 |
 | **Playwright 报告 artifact** | **`continue-on-error: true`**；**`Upload Playwright report (L4 observability)`** + **`actions/upload-artifact@v4`**，**`if: always() && gate`**，路径 **`frontend/playwright-report/`**，**`if-no-files-found: ignore`** — **成功 / 失败** 均可留 HTML（观测）。与 **其它 workflow** 的 **`upload-artifact@v7` bump** **无**同 job 强绑定；**归因** §5.2。 |
-| **本地排障** | **`gh` CLI**：项目根 **`bash scripts/gh-l4-run-inspect.sh`**（薄转发 → **`scripts/dev/gh-l4-run-inspect.sh`**），可选 **`run_id`**；见 **§9**、**[scripts/README.md](../../scripts/README.md) §一** 表。 |
+| **本地排障** | **`gh` CLI**：**`bash scripts/gh-l4-run-inspect.sh`**（薄转发 → **`scripts/dev/gh-l4-run-inspect.sh`**），可选 **`run_id`**；环境变量 **`GH_BRANCH`** 限定「该分支最近一次 run」。Windows：**`powershell -File scripts/gh-l4-run-inspect.ps1`**。见 **§9**、**[scripts/README.md](../../scripts/README.md) §一** 表。 |
 
 ## 5. 组织级前置与排障（非仓库代码可修）
 
@@ -100,4 +100,4 @@ base64 -w0 < .env | gh secret set L4_CI_DOTENV_B64
 
 - **perf 分单（本机 dev 并行结论）**：[TT-L4-SMOKE-SLOWFILE-PERF-001](./TT-L4-SMOKE-SLOWFILE-PERF-001.md) **§3.4**  
 - **Sepolia 基线口径**：[TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001](./TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001.md)
-- **本地 `gh` 巡检（最近或指定 run id）**：[scripts/gh-l4-run-inspect.sh](../../scripts/gh-l4-run-inspect.sh) → [scripts/dev/gh-l4-run-inspect.sh](../../scripts/dev/gh-l4-run-inspect.sh)；[scripts/README.md](../../scripts/README.md) **§一** 表内 **`gh-l4-run-inspect.sh`** 行
+- **本地 `gh` 巡检（最近或指定 run id）**：[scripts/gh-l4-run-inspect.sh](../../scripts/gh-l4-run-inspect.sh) → [scripts/dev/gh-l4-run-inspect.sh](../../scripts/dev/gh-l4-run-inspect.sh)；Windows：[scripts/gh-l4-run-inspect.ps1](../../scripts/gh-l4-run-inspect.ps1)。可选 **`GH_BRANCH=<ref>`** 筛分支；输出含 **per-job** `gh run view --job=…`（**Annotations** / 计费未启动）。索引见 [scripts/README.md](../../scripts/README.md) **§一**。
