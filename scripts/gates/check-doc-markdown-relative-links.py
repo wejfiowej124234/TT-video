@@ -3,6 +3,8 @@
 Scan Markdown under docs/ for relative [](path) links and verify targets exist.
 
 - Skips: http(s)://, mailto:, bare #fragments, empty paths after stripping #fragment
+- Inline destinations may contain spaces (e.g. `docs/product-manager/25-… .md`); optional
+  title suffix ` "…"` / ` '…'` is stripped; wrap path in `<…>` when needed for parsers
 - Resolves paths relative to the containing .md file; rejects targets outside repo root
 - Default excludes (override with --no-default-excludes): spec/27-archived, AI stash index
 - Default: WARN + exit 0 if any broken (repo may still carry historical gaps).
@@ -23,6 +25,25 @@ from pathlib import Path
 from urllib.parse import unquote
 
 LINK_RE = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
+
+
+def _path_from_inline_link_target(raw: str) -> str:
+    """
+    Inline link destination (inside parentheses), before optional title.
+
+    - `<path with spaces.md>` → inner path
+    - `path with spaces.md` → full string (do not split on spaces; titles use ` "..."` / ` '...'`)
+    - `url "title"` / `url 'title'` → strip title suffix only when a space precedes the quote
+    """
+    raw = raw.strip()
+    if raw.startswith("<"):
+        end = raw.find(">", 1)
+        if end != -1:
+            return unquote(raw[1:end].split("#", 1)[0])
+        return unquote(raw[1:].split("#", 1)[0])
+    if re.search(r"\s+[\"']", raw):
+        raw = re.split(r"\s+[\"']", raw, maxsplit=1)[0].strip()
+    return unquote(raw.split("#", 1)[0])
 
 
 def _norm_rel(rel: str) -> str:
@@ -111,10 +132,10 @@ def main() -> int:
                 raw = m.group(1).strip()
                 if not raw or raw.startswith(("#", "http://", "https://", "mailto:")):
                     continue
-                target = raw.split()[0].strip("\"'")
-                path_part = unquote(target.split("#", 1)[0])
+                path_part = _path_from_inline_link_target(raw)
                 if not path_part:
                     continue
+                target = path_part  # for error messages
 
                 candidate = (base / path_part).resolve()
                 try:
