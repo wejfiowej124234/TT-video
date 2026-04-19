@@ -1,6 +1,6 @@
 # TT-LOCAL-CI-DELIVERY-GATE-001 · 本地 / VPS 交付门禁（绕开 GitHub-hosted 计费）
 
-**Version:** 1.0.1  
+**Version:** 1.0.2  
 **Status:** `Target`（与 **[TT-L4-PARALLEL-CI-001](./TT-L4-PARALLEL-CI-001.md) §5.0** 对读：**组织 gate 未解除** 时 **以本节为交付真门禁**；**不**宣称替代 **07** 或 **分支保护** 的长期策略）
 
 ## 0. 固定打法（日常节奏）
@@ -16,6 +16,7 @@
 - **GitHub-hosted Actions** 因 **组织 Billing / spending limit** 等 **无法调度** 时，**PR 上的绿勾 / 红叉** 可能 **不可信**（见 **TT-L4-PARALLEL-CI-001 §5.0**）。  
 - **本节**给出 **不依赖 GitHub-hosted 分钟**、**当天可执行** 的 **交付门禁顺序**：先 **本地 / VPS 脚本**；**Billing 恢复后** 再接 **GitHub 展示层**（hosted 或 self-hosted）。  
 - **真源**：具体命令与脚本索引仍以 **[scripts/README.md](../../scripts/README.md)** 为准；本节只做 **编排与决策**。
+- **文档真源**：**`snapshots/`**、**`archive/`**、**`docs/spec/27-archived/`** **等** **归档** **或** **快照** **路径** **非** **SSOT** **；** **工程** **口径** **以** **[** **00-文档索引** **](../spec/00-文档索引.md)** **版本** **表** **及** **主线** **spec** **（** **如** **04** **/** **07** **/** **14** **）** **为准** **。**
 
 ## 2. 阶段一：先保交付（本地 / VPS 真门禁）— **最推荐**
 
