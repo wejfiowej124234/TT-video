@@ -1,0 +1,95 @@
+# B-456/B-457 · B-455 裁决 → B-456 GITHUB_OUTPUT → B-457 适配层 execution_receipt（默认 dry-run；密钥仅 env）。
+name: Review JSON contract release controller
+
+on:
+  workflow_dispatch:
+    inputs:
+      replay_summary_path:
+        description: "Path to B-454 replay_summary.json (repo-relative)"
+        required: false
+        default: evidence/b455_review_json_contract_rollout/fixtures/replay_summary.green.json
+        type: string
+  pull_request:
+    branches: [main]
+    paths:
+      - "scripts/ops/release-controller-b456-review-json-contract.py"
+      - "config/b456_review_json_contract_release_controller.json"
+      - "config/b455_review_json_contract_rollout_thresholds.json"
+      - "scripts/gates/eval-b455-review-json-contract-rollout-decision.py"
+      - "scripts/gates/check-b456-review-json-contract-release-controller-gate.py"
+      - "docs/runbook/TT-B456-REVIEW-JSON-CONTRACT-RELEASE-CONTROLLER-001.md"
+      - "docs/runbook/TT-B457-REVIEW-JSON-CONTRACT-RELEASE-ADAPTER-EXECUTION-001.md"
+      - "config/b457_review_json_contract_release_adapters.json"
+      - "scripts/ops/release-adapter-layer-b457-review-json-contract.py"
+      - "scripts/gates/check-b457-review-json-contract-release-adapter-gate.py"
+      - "evidence/b457_release_controller_executions/README.md"
+      - ".github/workflows/review-json-contract-release-controller.yml"
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  controller:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set replay summary path (dispatch vs PR)
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "SUMMARY_PATH=${{ inputs.replay_summary_path }}" >> "$GITHUB_ENV"
+          else
+            echo "SUMMARY_PATH=evidence/b455_review_json_contract_rollout/fixtures/replay_summary.green.json" >> "$GITHUB_ENV"
+          fi
+
+      - name: Run B-456 release controller (CI mode)
+        id: rc
+        run: |
+          set -euo pipefail
+          test -f "$SUMMARY_PATH"
+          python scripts/ops/release-controller-b456-review-json-contract.py "$SUMMARY_PATH" --ci
+
+      - name: B-457 adapter layer + execution_receipt.json (default dry-run)
+        env:
+          VERDICT: ${{ steps.rc.outputs.verdict }}
+        run: |
+          set -euo pipefail
+          out="evidence/b457_release_controller_executions/run_${GITHUB_RUN_ID}_${GITHUB_RUN_ATTEMPT}"
+          python scripts/ops/release-adapter-layer-b457-review-json-contract.py \
+            --verdict "$VERDICT" \
+            --evidence-dir "$out"
+          test -f "$out/execution_receipt.json"
+
+      - name: Upload B-457 execution receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: b457-execution-receipt-${{ github.run_id }}-${{ github.run_attempt }}
+          path: evidence/b457_release_controller_executions/
+
+      - name: Optional — B-457 execute (set repo env + secrets in GitHub Environment)
+        if: vars.B457_EXECUTE == 'true'
+        env:
+          VERDICT: ${{ steps.rc.outputs.verdict }}
+          TRAVELTRUST_ADMIN_API_BASE_URL: ${{ secrets.TRAVELTRUST_ADMIN_API_BASE_URL }}
+          TRAVELTRUST_ADMIN_API_BEARER: ${{ secrets.TRAVELTRUST_ADMIN_API_BEARER }}
+          TRAVELTRUST_DEPLOY_DISPATCH_URL: ${{ secrets.TRAVELTRUST_DEPLOY_DISPATCH_URL }}
+          TRAVELTRUST_CHATOPS_SLACK_WEBHOOK_URL: ${{ secrets.TRAVELTRUST_CHATOPS_SLACK_WEBHOOK_URL }}
+        run: |
+          set -euo pipefail
+          out="evidence/b457_release_controller_executions/run_${GITHUB_RUN_ID}_${GITHUB_RUN_ATTEMPT}_execute"
+          python scripts/ops/release-adapter-layer-b457-review-json-contract.py \
+            --verdict "$VERDICT" \
+            --evidence-dir "$out" \
+            --execute
+          test -f "$out/execution_receipt.json"
+
+      - name: Upload B-457 execution receipt (execute mode)
+        if: vars.B457_EXECUTE == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: b457-execution-receipt-execute-${{ github.run_id }}-${{ github.run_attempt }}
+          path: evidence/b457_release_controller_executions/run_${{ github.run_id }}_${{ github.run_attempt }}_execute/

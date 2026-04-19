@@ -1,0 +1,62 @@
+# IMP-EV-001：唯一基线 evidence/GO_20260409；diff 触及的含 manifest 的 evidence bundle 须全量强校验（见 docs/runbook/evidence-gate.md）。
+# 不设 continue-on-error。main 须将本 job 设为 required status check。
+name: Evidence manifest validate
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  imp-ev-001:
+    name: IMP-EV-001 validate + JSON summary
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Frozen baseline — PR must not modify evidence/GO_20260409
+        if: github.event_name == 'pull_request'
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin "$BASE" "$HEAD" 2>/dev/null || true
+          if ! git diff --exit-code "$BASE" "$HEAD" -- evidence/GO_20260409; then
+            echo "::error::IMP-EV-001 唯一基线 evidence/GO_20260409 不得在 PR 中修改（冻结）。新证据请新建 evidence/GO_YYYYMMDD。见 docs/runbook/evidence-gate.md。"
+            exit 1
+          fi
+      - name: Frozen baseline — push to main must not modify evidence/GO_20260409
+        if: github.event_name == 'push'
+        run: |
+          set -euo pipefail
+          if ! git rev-parse HEAD^ >/dev/null 2>&1; then
+            echo "Skip frozen-baseline check (no parent commit)."
+            exit 0
+          fi
+          if ! git diff --exit-code HEAD^ HEAD -- evidence/GO_20260409; then
+            echo "::error::IMP-EV-001 唯一基线 evidence/GO_20260409 不得在 push 至 main 时变更（冻结）。见 docs/runbook/evidence-gate.md。"
+            exit 1
+          fi
+      - name: Validator self-test
+        run: python3 scripts/dev/validate_evidence_manifest.py self-test
+      - name: Evidence run insurance gate (fixture; manifest verify + optional meta chain_id)
+        run: bash ./scripts/gates/check-evidence-run-insurance-gate.sh evidence/ci_insurance_gate_fixture/run_min
+      - name: Validate baseline + any touched evidence bundles (emit-summary + verify + jq)
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            FROM="${{ github.event.pull_request.base.sha }}"
+            TO="${{ github.event.pull_request.head.sha }}"
+            git fetch --no-tags origin "$FROM" "$TO" 2>/dev/null || true
+            bash scripts/gates/imp-ev-001-evidence-bundles.sh "$FROM" "$TO"
+          elif git rev-parse HEAD^ >/dev/null 2>&1; then
+            bash scripts/gates/imp-ev-001-evidence-bundles.sh HEAD^ HEAD
+          else
+            bash scripts/gates/imp-ev-001-evidence-bundles.sh HEAD HEAD
+          fi

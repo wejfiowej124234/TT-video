@@ -1,0 +1,86 @@
+# 团队可复现：在干净 CI Runner 上执行 docs/dev-local-smoke-baseline.md 等价流程
+# — Postgres service（空库）→ cargo run traveltrust-api → bash scripts/smoke-ab-core-chain.sh
+# Runner 与任何开发者本机无关；满足「非原作者环境」exit=0 + DB 抽检（§4 / §5）。
+name: Dev local smoke baseline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dev-local-smoke-baseline-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  smoke-ab-core:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: traveltrust
+          POSTGRES_PASSWORD: traveltrust
+          POSTGRES_DB: traveltrust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U traveltrust -d traveltrust"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+
+    env:
+      DATABASE_URL: postgres://traveltrust:traveltrust@127.0.0.1:5432/traveltrust
+      API_BASE_URL: http://127.0.0.1:8080
+      PORT: "8080"
+      SEED_TEST_ACCOUNTS: "1"
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+
+      # 与 docs/dev-local-smoke-baseline.md §5 一致：有 psql 时走 DATABASE_URL 抽检（CI 无 Docker 版 traveltrust-postgres 容器名）
+      - name: Install postgresql-client (psql for smoke step 10)
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Build traveltrust-api
+        env:
+          TRAVELTRUST_BUILD_GIT_SHA: ${{ github.sha }}
+        run: cargo build -p traveltrust-api
+
+      - name: Start API (background)
+        env:
+          TRAVELTRUST_BUILD_GIT_SHA: ${{ github.sha }}
+        run: |
+          nohup cargo run -p traveltrust-api > /tmp/traveltrust-api.log 2>&1 &
+          echo "Started API (pid $!)"
+
+      - name: Wait for GET /health
+        run: |
+          for i in $(seq 1 120); do
+            if curl -sf -o /dev/null "http://127.0.0.1:8080/health"; then
+              echo "health=200 after ${i}s"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "--- API log ---"
+          cat /tmp/traveltrust-api.log || true
+          exit 1
+
+      - name: Run smoke-ab-core-chain.sh
+        run: bash scripts/smoke-ab-core-chain.sh
+
+      - name: API log (on failure)
+        if: failure()
+        run: cat /tmp/traveltrust-api.log || true

@@ -1,0 +1,47 @@
+# R-003 / R-002: optional hard validation of evidence/.../report.json
+# Does not run on every PR by default — use workflow_dispatch for first staging run / audits.
+
+name: regression-report-validate
+
+on:
+  workflow_dispatch:
+    inputs:
+      report_path:
+        description: "Path to report.json (repo root relative)"
+        required: true
+        default: "evidence/GO_20260418/report.json"
+      require_go:
+        description: "If true, fail unless release_gate is exactly GO"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate report.json
+        run: |
+          set -euo pipefail
+          REPORT="${{ github.event.inputs.report_path }}"
+          if [[ ! -f "$REPORT" ]]; then
+            echo "ERROR: file not found: $REPORT"
+            exit 2
+          fi
+          ARGS=(python scripts/validate-regression-report.py "$REPORT" --fail-on-no-go)
+          if [[ "${{ github.event.inputs.require_go }}" == "true" ]]; then
+            ARGS+=(--require-go)
+          fi
+          "${ARGS[@]}"

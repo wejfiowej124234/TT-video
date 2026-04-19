@@ -1,0 +1,114 @@
+# TT-B486 / 93-R003-STAGING：CI 上可复现跑完整证据链（回归 → validate --fail-on-no-go），
+# 无本机依赖；产出目录上传为 Artifact，便于 PR 合入或留档。
+#
+# 触发：仅 workflow_dispatch（不占用 PR/push 分钟数，避免误连 staging）。
+#
+# Secrets（Repository → Settings → Secrets and variables → Actions）：
+#   R003_STAGING_API_BASE    必填，如 https://api.staging.example（无尾斜杠）
+#   R003_STAGING_A_PASSWORD  必填，与 r003_a_email 对应账号在 staging 上的口令
+#   R003_STAGING_EXECUTOR    必填，会签身份（邮箱或工号）
+#
+# Runner：
+#   github-hosted → ubuntu-latest（staging API 须对公网 HTTPS 可达）。
+#   self-hosted   → [self-hosted, linux]（须由团队在自托管机上注册带 linux 标签的 runner，
+#                   且该机能路由到内网 staging）。
+#
+# 铁律①：不代写 ENV-DB-PROOF/notes.md；validate 通过后仍须具备 staging PG 读权限的人在 PR 中补写后读。
+
+name: R-003 staging evidence chain (dispatch)
+
+on:
+  workflow_dispatch:
+    inputs:
+      runner_type:
+        description: "github-hosted = 公网 staging；self-hosted = 内网 staging（须已注册 [self-hosted, linux] runner）"
+        required: false
+        default: "github-hosted"
+        type: choice
+        options:
+          - "github-hosted"
+          - "self-hosted"
+      r003_out:
+        description: "Evidence output directory (repo-relative)"
+        required: false
+        default: "evidence/GO_20260418"
+      r003_a_email:
+        description: "A-domain account email on staging"
+        required: false
+        default: "tourist@test.com"
+      warn_localhost:
+        description: "If staging API is loopback/tunnel only, set true (passes --warn-localhost to regression)"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+
+concurrency:
+  group: r003-staging-evidence-${{ github.repository }}-${{ github.event.inputs.r003_out }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  r003-staging-chain:
+    name: R-003 staging evidence chain
+    runs-on: ${{ fromJSON(github.event.inputs.runner_type == 'self-hosted' && '["self-hosted", "linux"]' || '["ubuntu-latest"]') }}
+    timeout-minutes: 45
+    env:
+      R003_ENVIRONMENT_NAME: staging
+      R003_OUT: ${{ github.event.inputs.r003_out }}
+      R003_API_BASE: ${{ secrets.R003_STAGING_API_BASE }}
+      R003_A_PASSWORD: ${{ secrets.R003_STAGING_A_PASSWORD }}
+      R003_EXECUTOR: ${{ secrets.R003_STAGING_EXECUTOR }}
+      R003_A_EMAIL: ${{ github.event.inputs.r003_a_email }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Reproducibility metadata
+        run: |
+          set -euo pipefail
+          echo "checkout_sha=${GITHUB_SHA}"
+          echo "runner_type=${{ github.event.inputs.runner_type }}"
+          echo "r003_out=${{ github.event.inputs.r003_out }}"
+          python --version
+
+      - name: Require staging secrets
+        run: |
+          set -euo pipefail
+          if [ -z "${R003_API_BASE:-}" ] || [ -z "${R003_A_PASSWORD:-}" ] || [ -z "${R003_EXECUTOR:-}" ]; then
+            echo "::error::Missing one or more secrets. Add under Repo Settings → Secrets:"
+            echo "  R003_STAGING_API_BASE, R003_STAGING_A_PASSWORD, R003_STAGING_EXECUTOR"
+            exit 2
+          fi
+
+      - name: Run evidence chain (regression + validate --fail-on-no-go)
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event.inputs.warn_localhost }}" = "true" ]; then
+            export R003_WARN_LOCALHOST=1
+          fi
+          python scripts/dev/run_r003_staging_evidence_chain.py --from-env
+
+      - name: TT-B486 seal snippet (paste into docs PR after PG + R-002 review)
+        if: success()
+        run: |
+          set -euo pipefail
+          REPORT="${{ github.event.inputs.r003_out }}/report.json"
+          python scripts/dev/print_tt_b486_seal_snippet.py --report "$REPORT"
+
+      - name: Upload evidence bundle
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: r003-staging-evidence-${{ github.run_id }}
+          path: ${{ github.event.inputs.r003_out }}
+          if-no-files-found: error

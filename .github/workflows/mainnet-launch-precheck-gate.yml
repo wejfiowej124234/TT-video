@@ -1,0 +1,79 @@
+# TT-MAINNET · G0～G6 门禁（[`docs/runbook/TT-MAINNET-LAUNCH-PRECHECK-AFTER-B435-001`](../docs/runbook/TT-MAINNET-LAUNCH-PRECHECK-AFTER-B435-001.md) §0）
+#
+# push：仅 **脚本语法** + **SKIP**（MAINNET_LAUNCH_PRECHECK 未启用）— **不访问** **主网** **RPC**
+# workflow_dispatch：**全量** **须** **配置** **Repository secrets**（见 job 内 env）
+
+name: Mainnet launch precheck gate (TT-MAINNET)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/gates/check-mainnet-launch-precheck-gate.sh"
+      - "scripts/check-mainnet-launch-precheck-gate.sh"
+      - ".github/workflows/mainnet-launch-precheck-gate.yml"
+      - "ops/mainnet-trigger-matrix.v1.md"
+  pull_request:
+    branches: [main]
+    paths:
+      - "scripts/gates/check-mainnet-launch-precheck-gate.sh"
+      - "scripts/check-mainnet-launch-precheck-gate.sh"
+      - ".github/workflows/mainnet-launch-precheck-gate.yml"
+  workflow_dispatch:
+    inputs:
+      run_full_mainnet_gate:
+        description: "Run full G0–G6 against Ethereum mainnet (requires secrets + evidence paths)"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  mainnet-gate-syntax:
+    name: TT-MAINNET gate script (syntax + skip path)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: bash -n + dry skip
+        run: |
+          set -euo pipefail
+          bash -n scripts/gates/check-mainnet-launch-precheck-gate.sh
+          MAINNET_LAUNCH_PRECHECK=0 bash scripts/gates/check-mainnet-launch-precheck-gate.sh
+          echo "OK: gate script parses; default SKIP exits 0"
+
+  mainnet-gate-full:
+    name: TT-MAINNET full gate (CHAIN_ID=1)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && inputs.run_full_mainnet_gate == true
+    env:
+      CHAIN_ID: "1"
+      TT_MAINNET_GATE_ENFORCE: "1"
+      MAINNET_GATE_NO_AUTOLOAD_ENV: "1"
+      RUNTIME_SSOT_NO_AUTOLOAD_ENV: "1"
+      CHAIN_RPC_URL: ${{ secrets.MAINNET_CHAIN_RPC_URL }}
+      GOVERNOR_ADDRESS: ${{ secrets.MAINNET_GOVERNOR_ADDRESS }}
+      TIMELOCK_ADDRESS: ${{ secrets.MAINNET_TIMELOCK_ADDRESS }}
+      GOVERNANCE_TOKEN_ADDRESS: ${{ secrets.MAINNET_GOVERNANCE_TOKEN_ADDRESS }}
+      FEE_ROUTER_ADDRESS: ${{ secrets.MAINNET_FEE_ROUTER_ADDRESS }}
+      ESCROW_FACTORY_ADDRESS: ${{ secrets.MAINNET_ESCROW_FACTORY_ADDRESS }}
+      MAINNET_EVIDENCE_RUN_DIR: ${{ secrets.MAINNET_EVIDENCE_RUN_DIR }}
+      MAINNET_G2_EVIDENCE_JSON: ${{ secrets.MAINNET_G2_EVIDENCE_JSON }}
+      MAINNET_G6_FILE: ${{ secrets.MAINNET_G6_FILE }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+      - name: Verify secrets present
+        run: |
+          test -n "${CHAIN_RPC_URL:-}" || { echo "Missing secret MAINNET_CHAIN_RPC_URL"; exit 1; }
+          test -n "${GOVERNANCE_TOKEN_ADDRESS:-}" || { echo "Missing secret MAINNET_GOVERNANCE_TOKEN_ADDRESS"; exit 1; }
+          test -n "${MAINNET_EVIDENCE_RUN_DIR:-}" || { echo "Missing secret MAINNET_EVIDENCE_RUN_DIR (repo-relative path to evidence run_<UTC>/ after checkout)"; exit 1; }
+          test -n "${MAINNET_G2_EVIDENCE_JSON:-}" || { echo "Missing secret MAINNET_G2_EVIDENCE_JSON (repo-relative path to JSON with .g2_gate == GO)"; exit 1; }
+      - name: Run check-mainnet-launch-precheck-gate.sh
+        run: bash scripts/gates/check-mainnet-launch-precheck-gate.sh

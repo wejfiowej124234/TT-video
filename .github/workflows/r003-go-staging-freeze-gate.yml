@@ -1,0 +1,61 @@
+# R-003 Runbook §3.1：GO 证据包冻结后，PR/push 至 main 不得修改 evidence/GO_20260418，
+# 且 report.json 须机读为 release_gate=GO（validate-regression-report.py --require-go）。
+#
+# 启用条件：main 上出现 evidence/GO_20260418/.r003-go-frozen（会签后由团队提交）。
+# 未提交该标记前，本 workflow 始终通过（占位 NO_GO 不会误伤合并）。
+#
+# 合并闸：将 job「R-003 GO staging freeze gate」设为 main 的 required status check。
+
+name: R-003 GO staging freeze gate
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  r003-go-freeze:
+    name: R-003 GO staging freeze gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Checkout (pull_request)
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: PR — enforce frozen bundle + GO
+        if: github.event_name == 'pull_request'
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin "$BASE" "$HEAD" 2>/dev/null || true
+          bash scripts/ci/r003-go-staging-freeze-gate.sh "$BASE" "$HEAD"
+
+      - name: Checkout (push)
+        if: github.event_name == 'push'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Push to main — enforce frozen bundle + GO
+        if: github.event_name == 'push'
+        run: |
+          set -euo pipefail
+          if ! git rev-parse HEAD^ >/dev/null 2>&1; then
+            echo "r003-go-freeze: skip (no parent commit)."
+            exit 0
+          fi
+          BASE="$(git rev-parse HEAD^)"
+          HEAD="$(git rev-parse HEAD)"
+          bash scripts/ci/r003-go-staging-freeze-gate.sh "$BASE" "$HEAD"
