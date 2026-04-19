@@ -9,7 +9,7 @@
 | **SSOT** | **[../82-治理币-文档总览](../../82-治理币-文档总览.md)** |
 
 **Status**: DRAFT — implementation SSOT remains **code**, **04 §3.4**, **14**  
-**Version**: 0.1.2-draft-en  
+**Version**: 0.1.3-draft-en  
 **Last updated**: 2026-04-19  
 **Audience**: Engineering, security, internal audit  
 
@@ -19,7 +19,7 @@
 
 ## 1. Baseline (as-is)
 
-- Guide / provider **identity staking** uses an injected ERC-20 (e.g. USDC), not a dedicated governance token — SSOT **`contracts/src/IdentityStakingPool.sol`**（**`GuideIdentityStakingPool` / `ProviderIdentityStakingPool`**；legacy **`Staking.sol`** removed from tree; **event signatures and topic0 remain compatible** for indexer / API consumers).
+- Guide / provider **identity staking** uses an injected ERC-20 (e.g. USDC), not a dedicated governance token — SSOT **`contracts/src/IdentityStakingPool.sol`**（**`GuideIdentityStakingPool` / `ProviderIdentityStakingPool`**；legacy monolithic staking **implementation** removed from the repo; **event signatures and topic0 remain compatible** for indexer / API consumers).
 - API placeholders: `GET /api/v1/governance/pool`, `GET /api/v1/governance/rewards` — `crates/api/src/routes/governance.rs`.
 - DB: `governance_pool`, `governance_reward_records` — see migrations and `crates/api/src/db/governance.rs`.
 
