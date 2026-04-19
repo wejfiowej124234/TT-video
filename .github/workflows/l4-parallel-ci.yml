@@ -17,7 +17,6 @@ jobs:
   l4-sepolia-workers-2:
     name: L4 Sepolia (start · workers=2)
     runs-on: ubuntu-latest
-    if: ${{ secrets.L4_CI_DOTENV_B64 != '' }}
     continue-on-error: true
     timeout-minutes: 90
     services:
@@ -51,35 +50,53 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      # secrets 不可用于 job-level if（workflow_dispatch 解析失败）；未配置时此处短路为绿跳过。
+      - name: Gate (skip when L4_CI_DOTENV_B64 unset)
+        id: l4_gate
+        run: |
+          if [ -z "${{ secrets.L4_CI_DOTENV_B64 }}" ]; then
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: actions/setup-node@v4
+        if: steps.l4_gate.outputs.run == 'true'
         with:
           node-version: "20"
           cache: "npm"
           cache-dependency-path: frontend/package-lock.json
 
       - uses: dtolnay/rust-toolchain@master
+        if: steps.l4_gate.outputs.run == 'true'
         with:
           toolchain: stable
 
       - name: Decode L4 CI .env (Sepolia + contracts)
+        if: steps.l4_gate.outputs.run == 'true'
         run: |
           set -euo pipefail
           echo "${{ secrets.L4_CI_DOTENV_B64 }}" | base64 -d > "${GITHUB_WORKSPACE}/.env"
           printf '\n# CI service postgres (TT-L4-PARALLEL-CI-001)\nDATABASE_URL=postgres://traveltrust:traveltrust@127.0.0.1:5432/traveltrust\n' >> "${GITHUB_WORKSPACE}/.env"
 
       - name: Install frontend deps
+        if: steps.l4_gate.outputs.run == 'true'
         run: cd frontend && npm ci
 
       - name: Install Playwright Chromium
+        if: steps.l4_gate.outputs.run == 'true'
         run: cd frontend && npx playwright install --with-deps chromium
 
       - name: Build frontend (production)
+        if: steps.l4_gate.outputs.run == 'true'
         run: cd frontend && npm run build
 
       - name: Build traveltrust-api
+        if: steps.l4_gate.outputs.run == 'true'
         run: cargo build -p traveltrust-api
 
       - name: Run L4 Sepolia (e2e:sepolia · workers=2)
+        if: steps.l4_gate.outputs.run == 'true'
         env:
           SKIP_API_BUILD: "1"
         run: |
@@ -89,7 +106,7 @@ jobs:
           cd frontend && npm run e2e:sepolia
 
       - name: Upload Playwright report (on failure)
-        if: failure()
+        if: failure() && steps.l4_gate.outputs.run == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: l4-parallel-ci-playwright-report
