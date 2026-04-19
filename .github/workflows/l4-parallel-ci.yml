@@ -67,6 +67,27 @@ jobs:
           cache: "npm"
           cache-dependency-path: frontend/package-lock.json
 
+      # SSOT: runbook TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001 / TT-L4-PARALLEL-CI-001 — `cd frontend && npm run e2e:sepolia`.
+      - name: Assert L4 e2e:sepolia script contract
+        if: steps.l4_gate.outputs.run == 'true'
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require("fs");
+          const pkg = JSON.parse(fs.readFileSync("frontend/package.json", "utf8"));
+          const cmd = (pkg.scripts && pkg.scripts["e2e:sepolia"]) || "";
+          if (!cmd.includes("run-e2e-sepolia.mjs")) {
+            console.error(
+              'L4 contract: frontend/package.json must define scripts["e2e:sepolia"] pointing at ./scripts/run-e2e-sepolia.mjs (see docs/runbook/TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001.md).'
+            );
+            process.exit(1);
+          }
+          if (!fs.existsSync("frontend/scripts/run-e2e-sepolia.mjs")) {
+            console.error("L4 contract: missing frontend/scripts/run-e2e-sepolia.mjs");
+            process.exit(1);
+          }
+          NODE
+
       - uses: dtolnay/rust-toolchain@master
         if: steps.l4_gate.outputs.run == 'true'
         with:
