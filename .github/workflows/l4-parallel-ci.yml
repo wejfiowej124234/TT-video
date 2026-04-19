@@ -1,0 +1,97 @@
+# TT-L4-PARALLEL-CI-001：Sepolia L4 在 CI + Next `start` 下以 workers=2 做并行观测。
+# 不替代默认单 worker 门禁；未配置 L4_CI_DOTENV_B64 时整 job 跳过。
+name: L4 parallel CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: l4-parallel-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  l4-sepolia-workers-2:
+    name: L4 Sepolia (start · workers=2)
+    runs-on: ubuntu-latest
+    if: ${{ secrets.L4_CI_DOTENV_B64 != '' }}
+    continue-on-error: true
+    timeout-minutes: 90
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: traveltrust
+          POSTGRES_PASSWORD: traveltrust
+          POSTGRES_DB: traveltrust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U traveltrust -d traveltrust"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+
+    env:
+      CI: "true"
+      PLAYWRIGHT_FULL_STACK: "1"
+      PLAYWRIGHT_BASE_URL: "http://127.0.0.1:3012"
+      PLAYWRIGHT_API_PORT: "8080"
+      PLAYWRIGHT_EXPECT_CHAIN_ID: "11155111"
+      PLAYWRIGHT_WORKERS: "2"
+      PORT: "3012"
+      FRONTEND_PORT: "3012"
+      TRAVELTRUST_FRONTEND_PORT: "3012"
+      NEXT_PUBLIC_API_BASE_URL: "http://127.0.0.1:8080"
+      TRAVELTRUST_BUILD_GIT_SHA: ${{ github.sha }}
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+
+      - name: Decode L4 CI .env (Sepolia + contracts)
+        run: |
+          set -euo pipefail
+          echo "${{ secrets.L4_CI_DOTENV_B64 }}" | base64 -d > "${GITHUB_WORKSPACE}/.env"
+          printf '\n# CI service postgres (TT-L4-PARALLEL-CI-001)\nDATABASE_URL=postgres://traveltrust:traveltrust@127.0.0.1:5432/traveltrust\n' >> "${GITHUB_WORKSPACE}/.env"
+
+      - name: Install frontend deps
+        run: cd frontend && npm ci
+
+      - name: Install Playwright Chromium
+        run: cd frontend && npx playwright install --with-deps chromium
+
+      - name: Build frontend (production)
+        run: cd frontend && npm run build
+
+      - name: Build traveltrust-api
+        run: cargo build -p traveltrust-api
+
+      - name: Run L4 Sepolia (e2e:sepolia · workers=2)
+        env:
+          SKIP_API_BUILD: "1"
+        run: |
+          set -euo pipefail
+          unset PLAYWRIGHT_L4_FILE_PARALLEL PLAYWRIGHT_L4_FULL_PARALLEL PLAYWRIGHT_PARALLEL || true
+          export PLAYWRIGHT_WORKERS=2
+          cd frontend && npm run e2e:sepolia
+
+      - name: Upload Playwright report (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: l4-parallel-ci-playwright-report
+          path: frontend/playwright-report/
+          retention-days: 7
