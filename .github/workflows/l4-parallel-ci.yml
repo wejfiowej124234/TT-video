@@ -15,7 +15,8 @@ concurrency:
 
 jobs:
   l4-sepolia-workers-2:
-    name: L4 Sepolia (start · workers=2)
+    # ASCII job name：避免中间点 `·` 在部分 runner 上导致日志/步骤元数据异常（仅 system.txt、无 step 日志）。
+    name: L4 Sepolia (start, workers=2)
     runs-on: ubuntu-latest
     continue-on-error: true
     timeout-minutes: 90
@@ -116,7 +117,7 @@ jobs:
         if: steps.l4_gate.outputs.run == 'true'
         run: cargo build -p traveltrust-api
 
-      - name: Run L4 Sepolia (e2e:sepolia · workers=2)
+      - name: Run L4 Sepolia (e2e:sepolia, workers=2)
         if: steps.l4_gate.outputs.run == 'true'
         env:
           SKIP_API_BUILD: "1"
