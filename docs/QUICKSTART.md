@@ -13,7 +13,7 @@
 | **Web3/DApp** | [spec/06-DApp架构](spec/06-DApp架构总览.md)、[spec/35-钱包流程](spec/35-DApp与钱包流程实现与验收清单.md) | [spec/56-接口对齐](spec/53-API-ABI-接口端口核对清单.md) |
 | **产品经理** | [spec/01-总库总览](spec/01-总库总览.md)、[spec/03-业务流程](spec/03-业务流程与风控.md) | [spec/50-发版自检](spec/50-发版前自检单.md) |
 | **QA/测试** | [spec/07-开发流程](spec/07-开发流程与顺序.md)、[spec/36-测试门禁](spec/36-前端测试与质量门禁.md) | [spec/27-P0～P50勾选](spec/27-P0至P50开发流程勾选清单.md) |
-| **运维/DevOps** | [spec/09-技术栈](spec/09-技术架构总览-v1.0.md)、[ops/RUNBOOK](ops/RUNBOOK.md) | Runbook §10 CORS_ORIGINS/SSOT_VERSION |
+| **运维/DevOps** | [spec/09-技术栈](spec/09-技术架构总览-v1.0.md)、[ops/RUNBOOK](../ops/RUNBOOK.md) | Runbook §10 CORS_ORIGINS/SSOT_VERSION |
 | **审计/合规** | [spec/08-1-合规检查](spec/08-1-战略与合规风险检查清单.md)、[spec/08-4-对外口径](spec/08-4-对外口径包.md) | evidence/ 产出证据 |
 | **架构师/负责人** | [spec/02-架构设计](spec/02-架构设计.md)、[spec/10-系统不变量](spec/10-系统级不变量白皮书-v1.0.md) | [spec/50-阶段清单](spec/50-阶段-后续优化与开发清单.md) |
 
