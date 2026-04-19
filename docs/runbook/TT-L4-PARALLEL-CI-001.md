@@ -1,6 +1,6 @@
 # TT-L4-PARALLEL-CI-001 · CI 并行验证（Sepolia · `start` · workers=2）
 
-**Version:** 1.0.8  
+**Version:** 1.0.9  
 **Status:** 观测（**不**替代 **[TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001](./TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001.md)** 默认 **`npm run e2e:sepolia` 单 worker** 门禁）
 
 ## 1. 唯一目标
@@ -14,7 +14,7 @@
 | **触发** | 本机 / 既有流程以 **`npm run e2e:sepolia`** 默认 **workers:1** 为准 | **`.github/workflows/l4-parallel-ci.yml`** 独立 job |
 | **Next** | 本机多为 **`next dev`** | **CI 下 `npm run start`**（生产构建产物） |
 | **是否阻塞合并** | 以仓库既定 **required checks** 为准（本卡 **不**默认加入） | Job 设 **`continue-on-error: true`**，直至连续 **193/0** 证据后再议升格 |
-| **读 CI 结果** | 以 **Playwright 汇总行** 与 **exit 0** 为准 | **Workflow run 页顶部的「绿勾 ✓」≠ 本 job 已执行**：计费未放行或 **Gate** 跳过等情况下，**总结论仍可 ✓**，须点开 **Job「L4 Sepolia (start, workers=2)」**（workflow 内 **ASCII 逗号** 命名）看 **Annotations / Steps**（或 `gh run view --job=<job_id>`）；**未调度** 时 **墙钟常为数秒**、**无** `npm run e2e:sepolia` **step**。**Run 页 · Summary** 含 **「L4 parallel CI · gate」**（若 job 已跑过 **Checkout**）：仅说明 **`L4_CI_DOTENV_B64`** 是否配置，**不**表示 Playwright 已执行 |
+| **读 CI 结果** | 以 **Playwright 汇总行** 与 **exit 0** 为准 | **Workflow run 页顶部的「绿勾 ✓」≠ 本 job 已执行**：计费未放行或 **Gate** 跳过等情况下，**总结论仍可 ✓**，须点开 **Job「L4 Sepolia (start, workers=2)」**（workflow 内 **ASCII 逗号** 命名）看 **Annotations / Steps**（或 `gh run view --job=<job_id>`）；**未调度** 时 **墙钟常为数秒**、**无** `npm run e2e:sepolia` **step**。**Run 页 · Summary** 含 **「L4 parallel CI · gate」**（若 job 已跑过 **Checkout**）：仅说明 **`L4_CI_DOTENV_B64`** 是否配置，**不**表示 Playwright 已执行。**`Build`** **与** **本** **workflow** **对** **组织** **gate** **的** **解读** **自** **`main`** **`d71b283`** **起** **统一** **见** **§5.0** **（** **非空** **steps** **+** **checkout** **级** **日志** **前** **一律** **未** **解除** **）** **。** |
 
 ## 3. CI 启用条件（Secrets）
 
@@ -55,6 +55,8 @@ base64 -w0 < .env | gh secret set L4_CI_DOTENV_B64
 
 **可操作判据（未满足则组织 gate 未解除）：** **任意** **`Build`** **或** **`L4 parallel CI`** **中** **至少** **一个** **job** **出现** **非空** **Steps**，且 **UI** **或** **`gh run view --job=…`** **中** **可见** **`actions/checkout`** **（** **或** **等价检出** **）** **的** **step** **日志** **（** **非** **墙钟** **仅** **数秒** **、** **`steps: []`** **、** **`gh run view --log` 报 log not found** **类** **空** **执行** **）** **。**
 
+**统一解读基准（`main` · 自 `d71b283` 起）：** **`d71b283`** **为** **本篇** **§5.0** **首次** **合入** **之** **commit** **。** **对** **`Build`** **与** **`L4 parallel CI`** **的** **任意** **run** **，** **在** **未** **同时** **满足** **上款** **判据** **前** **，** **一律** **按** **组织** **gate** **未** **解除** **处理** **：** **不** **做** **仓库** **内** **CI** **（** **YAML** **/** **脚本** **）** **归因** **式** **诊断** **或** **大改** **；** **不** **做** **依赖** **bump** **归因** **；** **不** **做** **业务** **/** **E2E** **逻辑** **归因** **（** **含** **误** **将** **workflow** **顶栏** **绿** **勾** **、** **短** **墙钟** **、** **或** **仅** **Summary** **文案** **当作** **已** **执行** **编译** **/** **Playwright** **）** **。** **满足** **上款** **后** **，** **方** **可** **按** **§5.2** **与** **§7** **对** **checkout** **之后** **的** **step** **失败** **做** **仓库** **内** **分类** **。**
+
 **在组织 gate 解除之前，禁止：** **仓库** **内** **CI** **YAML** **/** **脚本** **的** **归因式** **大改** **；** **依赖** **bump** **；** **将** **失败** **记为** **`upload-artifact`** **版本** **回归** **；** **将** **失败** **记为** **业务** **/** **单测** **/** **E2E** **逻辑** **缺陷** **（** **除非** **已** **先** **在同一** **run** **内** **看到** **checkout** **之后** **的** **真实** **step** **失败** **日志** **）** **。** **解除** **后** **再** **按** **§5.2** **与** **§7** **做** **仓库** **内** **诊断** **与** **登记** **。**
 
 ### 5.1 GitHub Actions 计费 / 支出限额
@@ -71,6 +73,7 @@ base64 -w0 < .env | gh secret set L4_CI_DOTENV_B64
 
 ### 5.2 归因纪律（与 Dependabot / `upload-artifact` bump 并行）
 
+- **§5.0（** **`d71b283`** **起** **）** **未** **解除** **时** **：** **不** **启动** **下** **列** **「** **bump** **/** **业务** **」** **归因** **；** **Build** **多** **job** **矩阵** **与** **L4** **同** **判** **。**  
 - **非 bump 直接**：job **未启动**、**Gate** `run=false`、**契约断言**失败、**编译**/**`npm ci`**/**Playwright** 失败，或仅见 **download-artifact** 相关日志 — **均不**自动记为 **`upload-artifact` bump** 回归。  
 - **才考虑 bump 相关**：**本 workflow run** 的 **Upload … artifact**（或等价上传步骤）**明确失败**，且变更集 **包含** 对应 `uses:` 版本改动并可时间关联。
 
