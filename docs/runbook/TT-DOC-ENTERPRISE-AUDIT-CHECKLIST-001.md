@@ -1,6 +1,6 @@
 # TT-DOC-ENTERPRISE-AUDIT-CHECKLIST-001 · 全仓文档企业级审计清单（按序执行）
 
-**Version:** 1.0.0  
+**Version:** 1.0.1  
 **Status:** 清单（**不**替代各篇 SSOT 正文；**不**自动 bump **07**/**spec/00** 版本 —— 若本轮要合 **07/00/缺口总表** 台账，须单独标明 **「台账同批」** 或 **「合 07 门禁」**）  
 **范围**：`docs/`（含 `spec/`、`product-manager/`、`runbook/`）、根 `README.md` / `CONTRIBUTING.md` / `ops/RUNBOOK.md`、与文档强绑定的 **`scripts/`**/**`.github/workflows/`** 互指。
 
@@ -16,6 +16,12 @@
 | **留痕** | 每完成一 Phase：记录 **日期、执行人、仓库 SHA、结论（PASS/ GAP / N/A）、跟进单号或 PR#**。 |
 | **自动化** | 表内 **「机读」** 行优先于纯人工通读；失败项再下钻到具体 `.md`。 |
 | **退出标准** | 单 Phase：**全部勾选完成** 或 **已登记豁免/缺口owner**；**全仓一轮**：Phase 0～12 至少各 **1** 次 PASS 或 **已文档化例外**。 |
+
+---
+
+## 机读一键聚合（TT-DOC machine）
+
+项目根执行 **`bash scripts/doc-enterprise-audit-machine-phases.sh`**（薄转发 → **`scripts/gates/doc-enterprise-audit-machine-phases.sh`**）。**默认快路径**：**07 版本三线** → **AI 任务卡索引一览** → **`docs/` 相对 Markdown 链接**（**默认排除** **`docs/spec/27-archived/**`** 与 **`docs/AI任务卡索引.from-stash.md`**；链接步 **默认 warn-only、exit 0**，设 **`DOC_AUDIT_LINKS_ENFORCE=1`** 则任一条断链 **exit 1**）。**全量（慢）**：**`DOC_AUDIT_FULL=1`** 再跑 **`check-55-s13`** + **`run-check-04-routes`**。跳过子步：**`DOC_AUDIT_SKIP_07`** / **`DOC_AUDIT_SKIP_AI`** / **`DOC_AUDIT_SKIP_LINKS`** **=1**。单独跑链接脚本：**`python3 scripts/gates/check-doc-markdown-relative-links.py`**（**`--enforce`**、**`--no-default-excludes`**、**`--exclude-glob`** 见 **`--help`**）。
 
 ---
 
@@ -126,7 +132,7 @@
 
 | # | 检查项 | 证据 / 动作 |
 |---|--------|-------------|
-| 10.1 | 全站 **相对链接**（尤其 `docs/spec` ↔ `docs/runbook`）抽样点击或脚本 | 可用 **仓库内搜索**（如 `rg '\]\([^)]+\)' docs`）或 **Markdown 链接校验工具** 辅助；大规模变更后建议 **工具化** |
+| 10.1 | 全站 **相对链接**（尤其 `docs/spec` ↔ `docs/runbook`）抽样点击或脚本 | **机读**：**`python3 scripts/gates/check-doc-markdown-relative-links.py`**（与上文 **「机读一键聚合」** 同源；历史缺口多时默认 **warn-only**，收口阶段可 **`DOC_AUDIT_LINKS_ENFORCE=1`**） |
 | 10.2 | **同一主题** 仅 **一** 主入口（00 §2 **重复入口** 表） | 新增长文须 **先** 定主入口再写作 |
 | 10.3 | **`docs/spec/27-archived`** 与现行 **07** 无叙事冲突 | 抽样；**tail** 长表仅按团队规则更新 |
 
@@ -157,6 +163,7 @@
 | 日期 | 版本 | 摘要 |
 |------|------|------|
 | 2026-04-19 | 1.0.0 | 首版：全仓 Phase 0～12 + PM 专档对拍说明 |
+| 2026-04-19 | 1.0.1 | 登记 **TT-DOC machine** 聚合脚本 + **Phase 10.1** 机读入口；链接检查默认排除 **27-archived** / **from-stash** |
 
 ---
 
