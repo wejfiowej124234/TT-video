@@ -22,6 +22,7 @@
     "test:regional:ci": "node scripts/check-regional-matrix.mjs",
     "test:watch": "vitest",
     "e2e": "playwright test",
+    "e2e:sepolia": "node ./scripts/run-e2e-sepolia.mjs",
     "check:tokens": "node scripts/check-forbidden-classes.mjs",
     "lighthouse": "npx --yes lighthouse http://localhost:3012 --only-categories=performance --view --output=html --output-path=./.lighthouse-report.html",
     "lighthouse:ci": "npx --yes lighthouse http://localhost:3012 --only-categories=performance --output=json --output-path=./.lighthouse-root.json --chrome-flags=\"--headless --no-sandbox --disable-gpu\"",
