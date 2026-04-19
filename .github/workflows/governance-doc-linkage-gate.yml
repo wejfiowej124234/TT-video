@@ -17,5 +17,7 @@ jobs:
       - uses: actions/checkout@v6
       - name: Run governance doc linkage script
         run: bash scripts/check-governance-doc-linkage.sh
+      - name: No legacy Staking.sol as unqualified SSOT path (docs + crates + contracts sources)
+        run: python3 scripts/check_no_legacy_staking_path_as_ssot.py
       - name: Run 07 version triple check (header / 00 index / §6.5 top)
         run: bash scripts/check-07-version-triple.sh

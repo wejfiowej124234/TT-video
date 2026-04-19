@@ -12,6 +12,14 @@ permissions:
   contents: read
 
 jobs:
+  no-legacy-staking-path-ssot:
+    name: No legacy Staking.sol as unqualified SSOT path
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Check docs/spec, docs, crates, contracts sources
+        run: python3 scripts/check_no_legacy_staking_path_as_ssot.py
+
   broadcast-batch-1-blockers:
     name: Broadcast batch 1 blockers
     runs-on: ubuntu-latest

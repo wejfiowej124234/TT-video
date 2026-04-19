@@ -26,6 +26,8 @@ jobs:
         run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
       - name: Check invariants
         run: bash ./scripts/check-invariants.sh
+      - name: No legacy Staking.sol as unqualified SSOT path (docs + crates + contracts sources)
+        run: python3 scripts/check_no_legacy_staking_path_as_ssot.py
       - name: 55-S13 ABI and API path gate
         run: bash ./scripts/check-55-s13.sh
       - name: 04 section 3.4 API table vs mounted routes (STRICT_WARNINGS)
