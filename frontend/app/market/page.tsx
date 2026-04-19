@@ -8,6 +8,7 @@ import { useTranslation } from "@/components/LocaleProvider";
 import { MarketRouteSuspense } from "@/components/market";
 import { useMarketPage } from "@/components/market/useMarketPage";
 import MarketAmbientBackdrop from "@/components/market/MarketAmbientBackdrop";
+import MarketHubSubNav from "@/components/market/MarketHubSubNav";
 import StickyFilterBar from "@/components/market/StickyFilterBar";
 import MarketPageHero from "@/components/market/MarketPageHero";
 import MarketContent from "@/components/market/MarketContent";
@@ -18,26 +19,32 @@ import GuideDetailDrawer from "@/components/market/GuideDetailDrawer";
 import BookGuideModal from "@/components/market/BookGuideModal";
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 import { buildLoginReturnPathWithQuery } from "@/lib/marketLoginReturnPath";
+import { formatGuideDisplayName } from "@/lib/guideDisplayName";
 
 const CustomItineraryModal = dynamic(
   () => import("@/components/market/CustomItineraryModal").then((m) => m.default),
   { ssr: false, loading: () => null }
 );
 
-/** P29 自由市场：撮合控制台。背景 `MarketAmbientBackdrop`（暖场三叠层 + **弱** podium/赛博渐变/vignette，**88 §1.1**）；28 Cinematic + 玻璃态。 */
+const MARKET_BASE = "/market";
+
+/** P29 自由市场主入口（旅行预约）；`/market/provider`、`/market/acquisition` 为独立子页。 */
 function MarketPageInner() {
   const { t } = useTranslation();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const orderDrawerLoginReturnPath = useMemo(
-    () => buildLoginReturnPathWithQuery(pathname, searchParams.toString(), "/market"),
+    () => buildLoginReturnPathWithQuery(pathname, searchParams.toString(), MARKET_BASE),
     [pathname, searchParams],
   );
   const data = useMarketPage();
 
   return (
-    <main className="relative min-h-screen" aria-label={t("market_hero_title")}>
-      {/* 全屏 Unsplash 用原生 img，避免 next/image + Turbopack custom loader 抛错 */}
+    <main
+      className="relative min-h-screen"
+      aria-label={t("market_hero_title")}
+      data-testid="market-page"
+    >
       <MarketAmbientBackdrop />
 
       <div className="relative z-10 isolate min-h-screen">
@@ -45,6 +52,11 @@ function MarketPageInner() {
           onCustomItineraryClick={() => data.setCustomItineraryOpen(true)}
           customItineraryLabel={t("market_customItinerary")}
         />
+        <div className="flex justify-center px-4 mt-3">
+          <div className="w-full max-w-4xl">
+            <MarketHubSubNav />
+          </div>
+        </div>
         {data.communityGuideDeepLinkNotFound ? (
           <div className="relative z-10 px-4 mt-3 flex justify-center" role="status" aria-live="polite">
             <div className="w-full max-w-4xl flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-md)] border border-warning/45 bg-warning/15 px-4 py-3 text-small text-ink-900">
@@ -122,7 +134,7 @@ function MarketPageInner() {
         onClose={() => data.setDetailGuide(null)}
         onInvite={data.detailGuide ? () => {
           data.setBookGuideId(data.detailGuide!.id);
-          data.setBookGuideName(data.detailGuide!.city ? `${data.detailGuide!.city} ${t("guide_suffix")}` : t("guide_suffix"));
+          data.setBookGuideName(formatGuideDisplayName(t, data.detailGuide!));
           data.setDetailGuide(null);
         } : undefined}
       />

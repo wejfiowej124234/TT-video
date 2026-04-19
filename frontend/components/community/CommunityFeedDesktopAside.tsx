@@ -216,18 +216,12 @@ export default function CommunityFeedDesktopAside({
               )}
             </section>
 
-            <div className="mt-3 space-y-2 border-t border-slate-600/40 pt-3 px-0.5">
+            <div className="mt-3 border-t border-slate-600/40 pt-3 px-0.5">
               <Link
                 href="/community/friends"
                 className={`flex min-h-[44px] items-center justify-start rounded-[var(--radius-md)] px-2 py-2 text-meta text-fuchsia-200 hover:text-fuchsia-100 hover:bg-fuchsia-500/10 motion-sub ${communityCardLinkFocus}`}
               >
                 {t("community_following_follow_more")}
-              </Link>
-              <Link
-                href="/terms/community-guidelines"
-                className={`flex min-h-[44px] items-center justify-start rounded-[var(--radius-md)] px-2 py-2 text-meta text-slate-400 hover:text-cyan-100 motion-sub ${communityCardLinkFocus}`}
-              >
-                {t("community_guidelines")}
               </Link>
             </div>
           </div>

@@ -9,7 +9,7 @@ export default function CommunityMeLoading() {
     <main
       className="max-w-4xl mx-auto px-3 py-4 sm:px-4 sm:py-6 pb-24 safe-area-pb"
       role="status"
-      aria-label={t("community_tab_me")}
+      aria-label={t("me_title")}
       aria-busy="true"
     >
       <header className="rounded-[var(--radius-md)] border border-cyan-400/40 bg-slate-900/60 backdrop-blur-md px-4 py-6 mb-4 shadow-scifi-banner" aria-hidden>

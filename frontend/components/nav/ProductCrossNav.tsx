@@ -68,6 +68,10 @@ export function ProductCrossNavCore({
         {t("help_title")}
       </Link>
       <Sep className={separatorClassName} />
+      <Link href="/trust" className={linkClassName}>
+        {t("trust_nav_short")}
+      </Link>
+      <Sep className={separatorClassName} />
       <Link href="/governance/fee-routes" className={linkClassName}>
         {t("footer_link_governance_fee_routes")}
       </Link>

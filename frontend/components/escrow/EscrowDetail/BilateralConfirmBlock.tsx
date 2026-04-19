@@ -10,14 +10,14 @@ import {
 } from "@/lib/travelLinkFocus";
 
 /**
- * 53-S6：双边确认区 — 游客/向导各自「确认行程与金额」，双勾后进入「确认·待付款」
+ * 53-S6：双边确认区 — 旅行者/向导各自「确认行程与金额」，双勾后进入「确认·待付款」
  * 与 §4.6.9 G4、§5.2 一致；布局双列或上下两行，已确认打勾+弱化主色
  */
 export interface BilateralConfirmBlockProps {
   orderId: string;
   /** 当前用户是否为向导（来自 me.guide） */
   isGuide: boolean;
-  /** 游客是否已确认（来自 order 或 API） */
+  /** 旅行者是否已确认（来自 order 或 API） */
   touristConfirmed?: boolean;
   /** 向导是否已确认 */
   guideConfirmed?: boolean;

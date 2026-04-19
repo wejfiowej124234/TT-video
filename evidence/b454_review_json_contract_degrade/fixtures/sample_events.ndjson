@@ -1,0 +1,2 @@
+{"degrade":"missing_meta","api_path":"get_reviews","schema_version_reported":null,"schema_version_effective":1,"client_max_supported":1,"captured_at":"2026-04-17T12:00:00Z","environment":"staging"}
+{"event":"review_json_contract_degrade","payload":{"degrade":"unknown_future_schema","api_path":"post_review","schema_version_reported":2,"schema_version_effective":1,"client_max_supported":1}}

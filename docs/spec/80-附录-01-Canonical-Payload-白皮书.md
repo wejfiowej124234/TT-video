@@ -41,7 +41,7 @@
 
 | 字段名 | 类型 | 说明 |
 |--------|------|------|
-| traveler_id | string | 游客身份标识（如 wallet 或 user_id，与 01 主身份一致） |
+| traveler_id | string | 旅行者身份标识（如 wallet 或 user_id，与 01 主身份一致） |
 | guide_id | string | 向导身份标识 |
 | chain_id | string 或 integer | 链 ID（如 137） |
 | settlement_token | string | 结算代币地址（token_address） |

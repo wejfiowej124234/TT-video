@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.evidence_sha256_manifest.v1",
+  "generated_at_utc": "2026-04-17T05:26:25Z",
+  "root_relative": "evidence/ci_insurance_gate_fixture/run_min",
+  "file_count": 2,
+  "files": [
+    {
+      "path": "README.txt",
+      "sha256": "e9a3bff711550a30ee546de89367f4a650801a4f5ebfcf633d67d05df552e7d6",
+      "size": 85
+    },
+    {
+      "path": "meta.json",
+      "sha256": "24e683f735ef78e6f18921a2666b89b6df4dea87340e7300c643b4e5bb4cc1bb",
+      "size": 29
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "name": "P-GROW3 Auto-Optimization Loop",
+  "flow": [
+    "Client: trackTrustGrowthEvent → POST /api/v1/trust-growth/ingest (public allowlist; server requires chain_off + DATABASE_URL / PgPool)",
+    "Server: trust_growth_ingest_and_recompute → upsert trust_growth_variant_metrics; refresh trust_growth_runtime_state + trust_growth_generation_history (crates/api/src/db/trust_growth.rs)",
+    "Server: autopilot recompute (moments_json, variant caps, autopilot_generation) per trust_growth_autopilot + trust_growth_control",
+    "Client: useTrustGrowthExperiment → GET /api/v1/trust-growth/config → pickVariantIdWithWeights(moments from body, autopilot_generation)"
+  ],
+  "metrics_in_db": [
+    "view",
+    "trust_hub_click",
+    "dismiss",
+    "details_toggle_open"
+  ],
+  "notes": [
+    "Implementation SSOT: docs/spec/04 §3.4 (trust-growth rows); frontend/lib/trustGrowthAnalytics.ts + frontend/lib/api.ts routes.",
+    "Narrative only: legacy .data/trust-growth/aggregates.json and runtime-weights.json paths are NOT used by traveltrust-api.",
+    "Optional NEXT_PUBLIC_TRUST_GROWTH_SERVICE_URL overrides origin; paths remain /api/v1/trust-growth/*.",
+    "Bump trustGrowthExperiments.ts version to reshuffle assignments; autopilot_generation tracks recompute count."
+  ]
+}

@@ -2,14 +2,16 @@ import { describe, expect, it } from "vitest";
 import { buildLoginReturnPathWithQuery } from "./marketLoginReturnPath";
 
 describe("buildLoginReturnPathWithQuery", () => {
-  it("preserves pathname and query for market", () => {
+  it("preserves pathname and query for market travel", () => {
     expect(
       buildLoginReturnPathWithQuery("/market", "view=orders&country=JP&city=Tokyo", "/market"),
     ).toBe("/market?view=orders&country=JP&city=Tokyo");
   });
 
   it("strips leading ? from search string", () => {
-    expect(buildLoginReturnPathWithQuery("/market", "?view=guides", "/market")).toBe("/market?view=guides");
+    expect(buildLoginReturnPathWithQuery("/market", "?view=guides", "/market")).toBe(
+      "/market?view=guides",
+    );
   });
 
   it("uses fallback when pathname empty or root", () => {

@@ -1,20 +1,28 @@
 #!/usr/bin/env python3
 # Production GO gate: B-264 onchain_reconcile + B-263 receipt_archive + operator attestations (B-265 / B-230～B-242).
+# B-288 (EXTEND): optional env TRAVELTRUST_B288_MIN_CONFIRMATIONS — receipt finality depth gate (no default GO shortcut).
 # No RPC / no HTTP — file-local checks + human attestation flags for evidence/indexer surfaces.
 from __future__ import annotations
 
 import argparse
 import hashlib
 import json
+import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from region_vault_claim_broadcast_break_glass_roles_b303 import require_b303_metadata_if_b287_active
+from region_vault_claim_broadcast_manual_override_b287 import b287_block_for_allow_non_go
+
 GATE_ANCHOR = "14-REGIONVAULT-CLAIM-PRODUCTION-GO-GATE-V1"
 GATE_RULE_VERSION = "region_vault_claim_production_go_gate_v1"
 IMPLEMENTATION_TT = "TT-B266-14-REGIONVAULT-CLAIM-PRODUCTION-GO-GATE-001"
 MOTHER_TABLE = "B-266"
+B288_IMPLEMENTATION_TT = "TT-B288-MIN-CONFIRMATIONS-OPTIONAL-GATE-001"
+B288_MOTHER_TABLE = "B-288"
+B288_MIN_CONFIRMATIONS_ENV = "TRAVELTRUST_B288_MIN_CONFIRMATIONS"
 
 ONCHAIN_ANCHOR = "14-REGIONVAULT-CLAIM-BROADCAST-ONCHAIN-RECONCILE-V1"
 ONCHAIN_RULE_VERSION = "region_vault_claim_broadcast_onchain_reconcile_v1"
@@ -44,6 +52,21 @@ def _load_json(path: Path) -> tuple[dict[str, Any], bytes]:
     return json.loads(raw.decode("utf-8")), raw
 
 
+def _b288_required_min_confirmations_from_env() -> int | None:
+    raw = os.environ.get(B288_MIN_CONFIRMATIONS_ENV, "").strip()
+    if not raw:
+        return None
+    try:
+        n = int(raw, 10)
+    except ValueError as e:
+        raise ValueError(
+            f"B-288: {B288_MIN_CONFIRMATIONS_ENV} must be a positive integer (got {raw!r})"
+        ) from e
+    if n < 1:
+        raise ValueError(f"B-288: {B288_MIN_CONFIRMATIONS_ENV} must be >= 1 (got {n})")
+    return n
+
+
 def run_production_go_gate(
     onchain: dict[str, Any],
     raw_onchain: bytes,
@@ -58,9 +81,12 @@ def run_production_go_gate(
     operator_note: str | None,
     require_receipt_finality_pass: bool = False,
     revalidation_report: dict[str, Any] | None = None,
+    b287_manual_override: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    b288_n = _b288_required_min_confirmations_from_env()
     blocking: list[str] = []
     checks: list[dict[str, Any]] = []
+    b288_report_block: dict[str, Any] | None = None
 
     if onchain.get("anchor") != ONCHAIN_ANCHOR:
         raise ValueError(f"onchain_reconcile.anchor must be {ONCHAIN_ANCHOR!r}")
@@ -189,6 +215,72 @@ def run_production_go_gate(
             "finality_evidence.enabled + all_rows_finality_ok true (re-run B-263 with --min-confirmations > 0)"
         )
 
+    if b288_n is not None:
+        b288_msgs: list[str] = []
+        b288_ok = True
+        fe288 = receipt.get("finality_evidence")
+        if not isinstance(fe288, dict) or fe288.get("enabled") is not True:
+            b288_ok = False
+            b288_msgs.append(
+                f"B-288: {B288_MIN_CONFIRMATIONS_ENV}={b288_n} requires receipt_archive.finality_evidence.enabled "
+                "(re-run B-263 archive-receipts with --min-confirmations >= threshold and finality head tag)"
+            )
+        else:
+            fe_min = fe288.get("min_confirmations")
+            if not isinstance(fe_min, int) or fe_min < b288_n:
+                b288_ok = False
+                b288_msgs.append(
+                    f"B-288: receipt finality_evidence.min_confirmations={fe_min!r} is not an int >= "
+                    f"{b288_n} from {B288_MIN_CONFIRMATIONS_ENV}"
+                )
+            if fe288.get("all_rows_finality_ok") is not True:
+                b288_ok = False
+                b288_msgs.append(
+                    "B-288: receipt finality_evidence.all_rows_finality_ok must be true when env min-confirmations gate is active"
+                )
+            for row in receipt.get("archive_rows") or []:
+                if not isinstance(row, dict) or row.get("row_result") != "ok":
+                    continue
+                obs = row.get("finality_confirmations_observed")
+                if obs is None:
+                    b288_ok = False
+                    b288_msgs.append(
+                        f"B-288: archive_rows global_index {row.get('global_index')!r} missing "
+                        "finality_confirmations_observed (B-263 finality fields required)"
+                    )
+                    continue
+                try:
+                    oi = int(obs)
+                except (TypeError, ValueError):
+                    b288_ok = False
+                    b288_msgs.append(
+                        f"B-288: archive_rows global_index {row.get('global_index')!r} has non-integer "
+                        f"finality_confirmations_observed={obs!r}"
+                    )
+                    continue
+                if oi < b288_n:
+                    b288_ok = False
+                    b288_msgs.append(
+                        f"B-288: row global_index {row.get('global_index')} finality_confirmations_observed={oi} "
+                        f"< required {b288_n}"
+                    )
+        b288_report_block = {
+            "mother_table": B288_MOTHER_TABLE,
+            "implementation_tt": B288_IMPLEMENTATION_TT,
+            "env_name": B288_MIN_CONFIRMATIONS_ENV,
+            "required_min_confirmations": b288_n,
+            "gate_passed": b288_ok,
+            "blocking_detail": b288_msgs,
+        }
+        checks.append(
+            {
+                "check_id": "b288_min_confirmations_env_gate",
+                "passed": b288_ok,
+                "detail": f"{B288_MIN_CONFIRMATIONS_ENV}={b288_n} vs receipt_archive finality evidence",
+            }
+        )
+        blocking.extend(b288_msgs)
+
     if revalidation_report is not None:
         ra_ok = (
             revalidation_report.get("anchor") == REVALIDATE_ANCHOR
@@ -263,6 +355,9 @@ def run_production_go_gate(
         )
 
     verdict = "GO" if not blocking else "NO_GO"
+    b303_meta = require_b303_metadata_if_b287_active(
+        b287_manual_override, tool_label="region_vault_claim_production_go_gate"
+    )
     generated = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     # B-379: audit surface from receipt_archive (no RPC in this gate; fields are producer-attested).
@@ -336,6 +431,12 @@ def run_production_go_gate(
             "entries": fps,
         },
     }
+    if b287_manual_override is not None:
+        report["b287_manual_override"] = b287_manual_override
+    if b303_meta is not None:
+        report["b303_break_glass_roles"] = b303_meta
+    if b288_report_block is not None:
+        report["b288_min_confirmations_gate"] = b288_report_block
     canon = {k: v for k, v in report.items() if k != "production_go_gate_canonical_sha256_hex"}
     report["production_go_gate_canonical_sha256_hex"] = _sha256_canonical_json(canon)
     return report
@@ -361,6 +462,14 @@ def _cmd_production_go_gate(args: argparse.Namespace) -> int:
         risk_items = data
 
     try:
+        b287_meta = b287_block_for_allow_non_go(
+            {
+                "allow_non_go_onchain": bool(args.allow_non_go_onchain),
+                "allow_non_go_archive": bool(args.allow_non_go_archive),
+                "allow_non_go_production": bool(args.allow_non_go_production),
+            },
+            tool_label="region_vault_claim_production_go_gate",
+        )
         rev: dict[str, Any] | None = None
         if args.receipt_revalidation_json:
             rev = json.loads(Path(args.receipt_revalidation_json).read_text(encoding="utf-8"))
@@ -380,6 +489,7 @@ def _cmd_production_go_gate(args: argparse.Namespace) -> int:
             operator_note=args.operator_note,
             require_receipt_finality_pass=args.require_receipt_finality_pass,
             revalidation_report=rev,
+            b287_manual_override=b287_meta,
         )
     except ValueError as e:
         print(f"production-go-gate: FAIL: {e}", file=sys.stderr)
@@ -560,6 +670,122 @@ def _cmd_self_test(_: argparse.Namespace) -> int:
     )
     assert bad_r["production_verdict"] == "NO_GO", bad_r
 
+    def _clear_b288_env() -> None:
+        os.environ.pop(B288_MIN_CONFIRMATIONS_ENV, None)
+
+    _clear_b288_env()
+    try:
+        os.environ[B288_MIN_CONFIRMATIONS_ENV] = "1"
+        no_fe = run_production_go_gate(
+            onchain,
+            raw_on,
+            arch,
+            raw_arch,
+            attest_b265_uplift=True,
+            attest_evidence_chain=True,
+            require_onchain_go=True,
+            require_archive_go=True,
+            risk_acceptance_items=[],
+            operator_note="b288-no-finality-on-archive",
+            revalidation_report=None,
+        )
+        assert no_fe["production_verdict"] == "NO_GO", no_fe
+        assert any("B-288" in str(x) for x in (no_fe.get("blocking_reasons") or [])), no_fe
+        assert no_fe.get("b288_min_confirmations_gate", {}).get("gate_passed") is False
+    finally:
+        _clear_b288_env()
+
+    arch_fe = json.loads(json.dumps(arch))
+    row0 = arch_fe["archive_rows"][0]
+    row0["finality_gate_ok"] = True
+    row0["finality_min_confirmations_required"] = 3
+    row0["finality_confirmations_observed"] = 10
+    row0["finality_head_block_tag"] = "latest"
+    arch_fe["finality_evidence"] = {
+        "implementation_tt": "TT-B278-BROADCAST-EVIDENCE-FINALITY-REORG-GATE-001",
+        "enabled": True,
+        "min_confirmations": 3,
+        "head_tag": "latest",
+        "head_block_tag": "latest",
+        "head_number": 100,
+        "head_block_number_hex": "0x64",
+        "head_hash": "0x" + "22" * 32,
+        "all_rows_finality_ok": True,
+    }
+    ab_fe = {k: v for k, v in arch_fe.items() if k != "receipt_archive_canonical_sha256_hex"}
+    arch_fe["receipt_archive_canonical_sha256_hex"] = _sha256_canonical_json(ab_fe)
+    raw_arch_fe = json.dumps(arch_fe, ensure_ascii=False).encode("utf-8")
+    onchain_fe = mod.run_onchain_reconcile(
+        er_body,
+        raw_er,
+        arch_fe,
+        raw_arch_fe,
+        require_execution_go=True,
+        require_archive_go=True,
+        strict_receipt_archive_sha256=True,
+    )
+    assert onchain_fe["reconcile_verdict"] == "GO", onchain_fe
+    raw_on_fe = json.dumps(onchain_fe, ensure_ascii=False).encode("utf-8")
+
+    _clear_b288_env()
+    try:
+        os.environ[B288_MIN_CONFIRMATIONS_ENV] = "3"
+        ok_b288 = run_production_go_gate(
+            onchain_fe,
+            raw_on_fe,
+            arch_fe,
+            raw_arch_fe,
+            attest_b265_uplift=True,
+            attest_evidence_chain=True,
+            require_onchain_go=True,
+            require_archive_go=True,
+            risk_acceptance_items=[],
+            operator_note="b288-ok",
+            revalidation_report=None,
+        )
+        assert ok_b288["production_verdict"] == "GO", ok_b288
+        assert ok_b288.get("b288_min_confirmations_gate", {}).get("gate_passed") is True
+
+        os.environ[B288_MIN_CONFIRMATIONS_ENV] = "99"
+        hi_b288 = run_production_go_gate(
+            onchain_fe,
+            raw_on_fe,
+            arch_fe,
+            raw_arch_fe,
+            attest_b265_uplift=True,
+            attest_evidence_chain=True,
+            require_onchain_go=True,
+            require_archive_go=True,
+            risk_acceptance_items=[],
+            operator_note="b288-too-high",
+            revalidation_report=None,
+        )
+        assert hi_b288["production_verdict"] == "NO_GO", hi_b288
+    finally:
+        _clear_b288_env()
+
+    try:
+        os.environ[B288_MIN_CONFIRMATIONS_ENV] = "not_int"
+        run_production_go_gate(
+            onchain,
+            raw_on,
+            arch,
+            raw_arch,
+            attest_b265_uplift=True,
+            attest_evidence_chain=True,
+            require_onchain_go=True,
+            require_archive_go=True,
+            risk_acceptance_items=[],
+            operator_note=None,
+            revalidation_report=None,
+        )
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("B-288: invalid env must raise ValueError")
+    finally:
+        _clear_b288_env()
+
     print("region_vault_claim_production_go_gate self-test OK", file=sys.stderr)
     return 0
 
@@ -570,7 +796,16 @@ def main() -> int:
     )
     sub = ap.add_subparsers(dest="cmd", required=True)
 
-    g = sub.add_parser("production-go-gate", help="Validate onchain_reconcile + receipt_archive + attestations")
+    g = sub.add_parser(
+        "production-go-gate",
+        help="Validate onchain_reconcile + receipt_archive + attestations",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            f"B-288 optional gate: set {B288_MIN_CONFIRMATIONS_ENV}=N (positive int) to require "
+            "receipt_archive.finality_evidence (B-263 with --min-confirmations) and per-row "
+            "finality_confirmations_observed >= N; does not replace --require-receipt-finality-pass."
+        ),
+    )
     g.add_argument("onchain_reconcile", help="Path to B-264 onchain_reconcile.json")
     g.add_argument("receipt_archive", help="Path to B-263 receipt_archive.json")
     g.add_argument("-o", "--output", required=True, help="Output production_go_report.json")
@@ -587,17 +822,17 @@ def main() -> int:
     g.add_argument(
         "--allow-non-go-onchain",
         action="store_true",
-        help="Do not require B-264 reconcile_verdict GO",
+        help="Do not require B-264 reconcile_verdict GO; B-287: requires OVERRIDE_REASON env when passed",
     )
     g.add_argument(
         "--allow-non-go-archive",
         action="store_true",
-        help="Do not require B-263 archive_verdict GO",
+        help="Do not require B-263 archive_verdict GO; B-287: requires OVERRIDE_REASON env when passed",
     )
     g.add_argument(
         "--allow-non-go-production",
         action="store_true",
-        help="Exit 0 even when production_verdict is NO_GO (still writes report)",
+        help="Exit 0 even when production_verdict is NO_GO (still writes report); B-287: requires OVERRIDE_REASON env when passed",
     )
     g.add_argument(
         "--risk-acceptance-json",

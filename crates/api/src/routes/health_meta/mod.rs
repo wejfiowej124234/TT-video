@@ -15,12 +15,16 @@ pub use router::router;
 // 对外：`build` / startup / internal 嵌入同源
 pub use meta_build::{meta_build_for_startup_log, meta_build_value};
 
-// crate 内：`tests` `use super::*`、机读键、B091 快照等再导出
+// crate 内：`handlers` 经 `super::*` 使用 `meta_pause_chain_snapshot`；其余仅 **`tests`** 需要。
+#[cfg(test)]
 pub use serde_json::json;
+#[cfg(test)]
 pub(crate) use meta_build::meta_build_snapshot;
 pub(crate) use meta_contract_keys::*;
 pub(crate) use meta_helpers::*;
-pub(crate) use pause_chain::{b091_evm_selector, meta_pause_chain_snapshot};
+pub(crate) use pause_chain::meta_pause_chain_snapshot;
+#[cfg(test)]
+pub(crate) use pause_chain::b091_evm_selector;
 
 #[cfg(test)]
 mod tests;

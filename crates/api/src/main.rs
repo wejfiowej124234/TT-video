@@ -24,6 +24,7 @@ mod source_kind;
 mod ssot;
 mod startup;
 mod state;
+mod trust_growth_autopilot;
 mod u256_hex;
 
 #[cfg(test)]

@@ -25,7 +25,8 @@ const BG_TRANSITION = "motion-safe:transition-opacity duration-500";
 
 /** 主容器：须与 `RegisterPageBackdrop` 同用；`relative isolate` + 底 `z-0`、正文 `z-10`（勿用负 z-index，易被 isolate 吃掉） */
 export function registerPageShellClass(layout: RegisterPageLayout = "centered"): string {
-  const base = `relative isolate min-h-screen flex flex-col ${BG_TRANSITION}`;
+  /** `overflow-x-hidden`：底图全宽 + 底栏换行偶发 `100vw` 横向条时，避免注册卡内标签/输入纵向叠压可读性 */
+  const base = `relative isolate min-h-screen w-full max-w-[100vw] overflow-x-hidden flex flex-col ${BG_TRANSITION}`;
   if (layout === "guideForm") {
     return `${base} items-center gap-6 py-8 px-4 pb-12`;
   }

@@ -30,6 +30,7 @@ function runNext(args) {
 
 const isWin = process.platform === "win32";
 const forceTurbo = process.env.TRAVELTRUST_DEV_TURBO === "1";
+const devPort = (process.env.TRAVELTRUST_FRONTEND_PORT || process.env.FRONTEND_PORT || "3012").trim();
 
 if (isWin && !forceTurbo) {
   console.warn(
@@ -37,8 +38,8 @@ if (isWin && !forceTurbo) {
       "Use `npm run dev:turbopack` or TRAVELTRUST_DEV_TURBO=1 for Turbopack."
   );
   runNodeScript("scripts/ensure-dev-next.mjs");
-  runNext(["dev", "-p", "3012"]);
+  runNext(["dev", "-p", devPort]);
 } else {
   runNodeScript("scripts/ensure-turbo-dev.mjs");
-  runNext(["dev", "--turbopack", "-p", "3012"]);
+  runNext(["dev", "--turbopack", "-p", devPort]);
 }

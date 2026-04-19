@@ -1,0 +1,8 @@
+{
+  "chain_id": 11155111,
+  "explorer_base": "https://sepolia.etherscan.io/tx/",
+  "deploy_governance_stack_token_create": "0xbef31e23bf7f47f80c50f08726abdf4ad3866247caa3bf01dbe820d89cfc6615",
+  "deploy_fund_stack_escrow_factory_create": "0x3e7ac09523fe52572f2826ee9204917e5d5bc7fe8773a70af26eb56631a39c10",
+  "first_payment": "0x3b7406937b9fbbd1ad2b22b2d93a52ec3bd2a0b0269f4bfbaa3a0cbf254ee0ad",
+  "notes": "TT-TESTNET 本轮 Sepolia：DeployGovernanceStack + DeployFundStackUnderTimelock；first_payment 由 stake tx 写入。"
+}

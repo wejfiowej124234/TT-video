@@ -70,6 +70,7 @@ export async function postLogin(body: { email: string; password: string }): Prom
   });
   const data = await parseResponse(res);
   logApiJsonStatusNotOk("postLogin", data);
+  throwUnlessApiOk(data);
   return data;
 }
 

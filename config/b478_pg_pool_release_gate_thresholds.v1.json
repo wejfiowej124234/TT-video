@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust_b478_pg_pool_release_gate_thresholds.v1",
+  "version": "1.0.0",
+  "updated_at": "2026-04-18T00:00:00Z",
+  "content_sha256": "da2bc53ad4b98792939ea398cc1b9b079ef69b3371a34fc1f4f77232f6541284",
+  "description": "B-478 单库 PostgreSQL 连接池发布前硬门禁阈值；与 TT-B477/B-477 报告 params 及 B477_* 环境变量同源。调整须同步 TT-B478 Runbook、refresh-b478-baseline-hash.py 与 scripts/ops/b477 默认加载逻辑。",
+  "thresholds": {
+    "max_acquire_timeout_delta": 0,
+    "max_slow_acquire_delta": 999999,
+    "peak_utilization_max": 0.98,
+    "warn_utilization_above": 0.95,
+    "recovery_target_util": 0.45,
+    "recovery_timeout_sec": 90.0,
+    "recovery_poll_ms": 500,
+    "max_http_error_ratio": 0.02
+  },
+  "recovery_gate": {
+    "require_recovery_within_timeout": true,
+    "note": "与 b477 recovery_wait 一致：thr = max(recovery_target_util, min(baseline_util + 0.08, 0.95))；FAIL 若 phases.recovery.recovery_time_ms 为 null（超时）。"
+  }
+}

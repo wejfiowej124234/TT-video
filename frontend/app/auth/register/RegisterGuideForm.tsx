@@ -11,6 +11,7 @@ import {
 import { ACCEPT_ID, ACCEPT_LANG } from "./constants";
 import RegisterPageBackdrop from "./RegisterPageBackdrop";
 import { registerPageShellClass, type RegisterVisualKind } from "./registerBackgrounds";
+import TrustGrowthMomentBanner from "@/components/trust/TrustGrowthMomentBanner";
 import { passwordStrength } from "./utils";
 
 export type RegisterGuideFormProps = {
@@ -105,11 +106,12 @@ export default function RegisterGuideForm({
   labelClass,
 }: RegisterGuideFormProps) {
   const formErrorId = useId();
+  const fieldWrapClass = "flex min-w-0 flex-col gap-1.5";
   return (
     <main className={mainClassName} aria-label={t("auth_register_guide")}>
       <RegisterPageBackdrop kind={backdropKind} />
-      <div className="relative z-10 flex w-full flex-col items-center gap-6">
-        <div className="w-full max-w-lg mx-auto rounded-[var(--radius-sm)] border border-ink-200 bg-bg-console shadow-soft p-6 space-y-6">
+      <div className="relative z-10 flex w-full min-w-0 flex-col items-center gap-6">
+        <div className="mx-auto flex w-full min-w-0 max-w-lg flex-col gap-6 rounded-[var(--radius-sm)] border border-ink-200 bg-bg-console p-6 shadow-soft">
         <div className="flex items-center gap-2">
           <form
             className="inline"
@@ -121,21 +123,22 @@ export default function RegisterGuideForm({
             <button type="submit" className="text-meta text-ink-500 hover:text-travel-500">{t("auth_register_back")}</button>
           </form>
         </div>
-        <h1 className="text-h4 font-semibold text-ink-900">{t("auth_register_guide")}</h1>
+        <h1 className="shrink-0 text-h4 font-semibold leading-snug text-ink-900">{t("auth_register_guide")}</h1>
         <p className="text-meta text-ink-600">{t("auth_register_guideDesc")}</p>
+        <TrustGrowthMomentBanner moment="register" surface="auth" />
 
-        <form noValidate onSubmit={onSubmit} className="space-y-5">
-          <section className="space-y-3">
+        <form noValidate onSubmit={onSubmit} className="flex min-w-0 flex-col gap-5">
+          <section className="flex min-w-0 flex-col gap-3">
             <h2 className="text-small font-semibold text-ink-800 border-b border-ink-200 pb-1">{t("auth_register_accountSection")}</h2>
-            <div>
+            <div className={fieldWrapClass}>
               <label className={labelClass}>{t("auth_register_email")} *</label>
               <input type="email" autoFocus={autoFocusAccountEmail} value={email} onChange={(e) => setEmail(e.target.value)} required className={inputClass} placeholder={t("auth_register_email")} aria-invalid={!!error} aria-describedby={error ? formErrorId : undefined} />
             </div>
-            <div>
+            <div className={fieldWrapClass}>
               <label className={labelClass}>{t("auth_register_nickname")}</label>
               <input type="text" value={nickname} onChange={(e) => setNickname(e.target.value)} className={inputClass} />
             </div>
-            <div>
+            <div className={fieldWrapClass}>
               <label className={labelClass}>{t("auth_register_password")} *</label>
               <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required className={inputClass} placeholder={t("auth_register_passwordPlaceholder")} />
               {(() => {
@@ -147,19 +150,19 @@ export default function RegisterGuideForm({
                 );
               })()}
             </div>
-            <div>
+            <div className={fieldWrapClass}>
               <label className={labelClass}>{t("auth_register_confirmPassword")} *</label>
               <input type="password" value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)} required className={inputClass} placeholder={t("auth_register_confirmPlaceholder")} />
             </div>
           </section>
 
-          <section className="space-y-3">
+          <section className="flex min-w-0 flex-col gap-3">
             <h2 className="text-small font-semibold text-ink-800 border-b border-ink-200 pb-1">{t("auth_register_didSection")}</h2>
-            <div>
+            <div className={fieldWrapClass}>
               <label className={labelClass}>{t("auth_register_idNumber")}</label>
               <input type="text" value={idNumber} onChange={(e) => setIdNumber(e.target.value)} required className={inputClass} placeholder={t("auth_register_idNumber")} />
             </div>
-            <div>
+            <div className={fieldWrapClass}>
               <label className={labelClass}>{t("auth_register_idPhoto")}</label>
               <input
                 type="file"
@@ -170,7 +173,7 @@ export default function RegisterGuideForm({
               <p className="text-meta text-ink-500 mt-0.5">{t("auth_register_idPhotoHint")}</p>
               {idPhotoFile && <p className="text-meta text-travel-600 mt-0.5">{idPhotoFile.name}</p>}
             </div>
-            <div>
+            <div className={fieldWrapClass}>
               <label className={labelClass}>{t("auth_register_languageCert")}</label>
               <input
                 type="file"
@@ -181,31 +184,31 @@ export default function RegisterGuideForm({
               <p className="text-meta text-ink-500 mt-0.5">{t("auth_register_languageCertOptional")}</p>
               {languageCertFile && <p className="text-meta text-travel-600 mt-0.5">{languageCertFile.name}</p>}
             </div>
-            <div>
+            <div className={fieldWrapClass}>
               <label className={labelClass}>{t("auth_register_realName")}</label>
               <input type="text" value={realName} onChange={(e) => setRealName(e.target.value)} required className={inputClass} />
             </div>
-            <div>
+            <div className={fieldWrapClass}>
               <label className={labelClass}>{t("auth_register_walletAddress")}</label>
               <input type="text" value={walletAddress} onChange={(e) => setWalletAddress(e.target.value)} required className={inputClass} placeholder={t("auth_register_placeholder_wallet")} />
             </div>
-            <div>
+            <div className={fieldWrapClass}>
               <label className={labelClass}>{t("auth_register_city")}</label>
               <input type="text" value={city} onChange={(e) => setCity(e.target.value)} required className={inputClass} />
             </div>
-            <div>
+            <div className={fieldWrapClass}>
               <label className={labelClass}>{t("auth_register_countryCode")}</label>
               <input type="text" value={countryCode} onChange={(e) => setCountryCode(e.target.value)} className={inputClass} placeholder={t("auth_register_placeholder_countryCode")} />
             </div>
-            <div>
+            <div className={fieldWrapClass}>
               <label className={labelClass}>{t("auth_register_languages")}</label>
               <input type="text" value={languages} onChange={(e) => setLanguages(e.target.value)} className={inputClass} placeholder={t("auth_register_placeholder_languages")} />
             </div>
-            <div>
+            <div className={fieldWrapClass}>
               <label className={labelClass}>{t("auth_register_serviceTypes")}</label>
               <input type="text" value={serviceTypes} onChange={(e) => setServiceTypes(e.target.value)} className={inputClass} />
             </div>
-            <div>
+            <div className={fieldWrapClass}>
               <label className={labelClass}>{t("auth_register_bio")}</label>
               <textarea value={bio} onChange={(e) => setBio(e.target.value)} rows={3} className={textareaClass} />
             </div>

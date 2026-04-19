@@ -35,7 +35,7 @@ $main = {
         try {
             & forge build
             if ($LASTEXITCODE -ne 0) { throw "forge build failed (exit $LASTEXITCODE)" }
-            foreach ($c in @("Escrow", "EscrowFactory", "Staking", "Registry", "FeeRouter", "MockERC20")) {
+            foreach ($c in @("Escrow", "EscrowFactory", "GuideIdentityStakingPool", "Registry", "FeeRouter", "MockERC20")) {
                 $inspect = & forge inspect $c bytecode 2>$null
                 $raw = if ($null -ne $inspect) { ($inspect | Out-String).Trim() } else { "" }
                 $blen = if ($raw) { $raw.Length } else { 0 }

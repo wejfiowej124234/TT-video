@@ -61,7 +61,7 @@
 | # | 检查项 | 证据 / 动作 |
 |---|--------|-------------|
 | 3.1 | **[`docs/spec/缺口与待补-官方总表.md`](../spec/缺口与待补-官方总表.md)** 与 **go-live §11 映射** 无互斥 | 对照 **[`docs/go-live-checklist.md`](../go-live-checklist.md)** **P0 覆盖映射表** |
-| 3.2 | **15 附录〇** / **B-309 映射**（若在用）与母表行号仍有效 | [`docs/spec/15-附录〇与缺口官方总表-P0行映射-B309.md`](../spec/15-附录〇与缺口官方总表-P0行映射-B309.md) |
+| 3.2 | **15 附录〇** / **B-309 映射**（若在用）与母表行号仍有效 | [`docs/spec/code-maps/15-附录〇与缺口官方总表-P0行映射-B309.md`](../spec/code-maps/15-附录〇与缺口官方总表-P0行映射-B309.md) |
 | 3.3 | **任务母表** `B-xxx` 与 **AI任务卡索引** 封口态一致 | [`docs/任务母表.md`](../任务母表.md)、[`docs/AI任务卡索引.md`](../AI任务卡索引.md) **机读**：`python3 scripts/check-ai-task-card-index-overview.py docs/AI任务卡索引.md` |
 
 ---

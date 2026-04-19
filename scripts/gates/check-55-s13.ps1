@@ -20,7 +20,7 @@ $routerContent = Get-Content $apiRouter -Raw
 if ($routerContent -notmatch "api_router|api/v1") { fail "api_router must mount /api/v1 routes" }
 ok "API router and routes dir present"
 
-# --- 2) ABI：目录 + Escrow 关键项 + Staking/Registry 字节一致
+# --- 2) ABI：目录 + Escrow 关键项 + Guide/Provider 池与 Registry 字节一致
 if (-not (Test-Path "contracts/abi" -PathType Container)) { fail "missing contracts/abi" }
 if (-not (Test-Path "frontend/dapp/abis" -PathType Container)) { fail "missing frontend/dapp/abis" }
 $ce = "contracts/abi/Escrow.json"
@@ -34,7 +34,7 @@ if ($ceRaw -notmatch "DisputeOpened") { fail "contracts/abi/Escrow.json missing 
 if ($feRaw -notmatch "openDispute") { fail "frontend/dapp/abis/Escrow.json missing openDispute" }
 ok "ABI dirs present; Escrow canonical + frontend minimal include openDispute"
 
-foreach ($f in @("Staking.json", "Registry.json", "EscrowFactory.json", "FeeRouter.json", "RegionVault.json")) {
+foreach ($f in @("GuideIdentityStakingPool.json", "ProviderIdentityStakingPool.json", "Registry.json", "EscrowFactory.json", "FeeRouter.json", "RegionVault.json")) {
     $p1 = "contracts/abi/$f"
     $p2 = "frontend/dapp/abis/$f"
     if (-not (Test-Path $p1)) { fail "missing $p1" }
@@ -43,19 +43,17 @@ foreach ($f in @("Staking.json", "Registry.json", "EscrowFactory.json", "FeeRout
     $h2 = (Get-FileHash $p2 -Algorithm SHA256).Hash
     if ($h1 -ne $h2) { fail "ABI drift: $f differs between contracts/abi and frontend/dapp/abis" }
 }
-ok "Staking/Registry/EscrowFactory/FeeRouter byte-identical (contracts/abi <-> frontend/dapp/abis)"
+ok "GuideIdentityStakingPool/ProviderIdentityStakingPool/Registry/EscrowFactory/FeeRouter byte-identical (contracts/abi <-> frontend/dapp/abis)"
 
 # --- 3) .env.example
 if (-not (Test-Path ".env.example")) { fail "missing .env.example" }
 ok "env.example present (manual: PORT and NEXT_PUBLIC_API_BASE_URL consistent across envs)"
 
 # --- 4) 55 关键路由存在（抽样）
-$found = $false
-Get-ChildItem -Path $routesMod -Filter "*.rs" -Recurse | ForEach-Object {
-    $c = Get-Content $_.FullName -Raw
-    if ($c -match "discover/orders|/orders|community/feedback|did-rank") { $found = $true }
+$hit = Get-ChildItem -Path $routesMod -Filter "*.rs" -Recurse | Where-Object {
+    (Get-Content $_.FullName -Raw) -match "discover/orders|/orders|community/feedback|did-rank"
 }
-if (-not $found) { fail "expected 55 routes not found in routes/" }
+if (-not $hit) { fail "expected 55 routes not found in routes/" }
 ok "55 key routes registered"
 
 Write-Host ""

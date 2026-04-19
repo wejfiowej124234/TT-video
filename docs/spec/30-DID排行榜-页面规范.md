@@ -1,7 +1,7 @@
 # 30 · DID 排行榜页面规范
 
 **Status:** 产品与 UI 定稿  
-**定位**：DID 排行榜为**书脊 + 单页内容区**：左侧竖向 **脊签**（旅行者 / 向导 / 商家）切换榜单；右侧**内页框**同一时间只展示一栏内容，切换时带**横向翻页感**动效（见 **§1、§4.3**）。突出链上/托管消费与接待战绩，类音乐排行榜信息层级。  
+**定位**：DID 排行榜为**书脊 + 单页内容区**：左侧竖向 **脊签**（旅行者 / 向导 / 商家 / **旅行收购**）切换榜单；右侧**内页框**同一时间只展示一栏内容，切换时带**横向翻页感**动效（见 **§1、§4.3**）。突出链上/托管消费与接待战绩，类音乐排行榜信息层级。**第四脊签「旅行收购」**：**脊签 + `?board=acquisition` + `AcquisitionRankBlock`** 已上线（合规说明、空态、**`/market`** CTA，**不接** mock 排行）；**榜单 HTTP、DB 聚合、前 10 + 11～100 同构列表**仍 **Target** — 见 **§3.2**、**§7.1**、**[87 §1.4](87-TravelTrust-角色体系技术文档-融合架构版.md)**。  
 **风格定稿**：**Web3 赛博朋克**（动感、科技、霓虹），见 §4；本页与 28/29 旅行玻璃态区分，仅 DID 排行榜采用此风格。  
 **配套**：[28-Cinematic-Glassmorphism-Web3融合规范](28-Cinematic-Glassmorphism-Web3融合规范.md)、[29-自由市场-撮合控制台规范](29-自由市场-撮合控制台规范.md)、[13-1-UI产品级SSOT与页面规范](13-1-UI产品级SSOT与页面规范.md)。本页风格以本文 §4 为准。
 
@@ -13,7 +13,7 @@
 |------------|------|
 | **排序主键、`rank_basis`、与 UI 主指标关系** | **§0.1**；契约 **[04-附录-did-rank](04-附录-did-rank对接说明.md) §2** |
 | **书壳 + 脊签 + 内页翻页布局与动效** | **§1、§4.3** |
-| **旅行者榜 / 向导榜 / 商家占位** | **§2、§3**（商家见 **§3.1**） |
+| **旅行者榜 / 向导榜 / 商家占位 / 旅行收购（UI ✅ · 榜数据 Target）** | **§2、§3**（商家 **§3.1**；旅行收购 **§3.2**；待办总表 **§7.1**） |
 | **赛博朋克视觉（与 28 区分）** | **§4** |
 | **路由、URL 参数与实现** | **§5、§6** |
 | **同风格社区页** | **[31](31-TT社区页面设计.md)**（复用 **30 §4**） |
@@ -28,6 +28,7 @@
 | **向导榜** | 按窗口内 **已完成订单金额合计**（`orders.amount` 之和）降序，同分按 **完成单数**，再按用户创建时间；API 含 `reception_gross_total` / `reception_count`；`rank_basis`=`guide_reception_gross_total_then_completed_count`。 |
 | **行程榜**（`GET …/did-rank/itineraries`） | 按关联订单 **完成时间**；无完成单时回退 **行程创建时间**（`rank_basis` 标明 fallback）。**当前 `/did-rank` 页不展示通栏行程榜**（后端与 `getDidRankItineraries` 仍保留，供其它入口或后续产品恢复）。 |
 | **商家榜**（脊签） | 前端 **占位** UI（`ProviderRankBlock`）；排序与数据接口以产品后续定稿为准。 |
+| **旅行收购榜**（脊签） | **跨境捎带诉求** 维度：委托方发布收购任务、受托方（多为入境该地区的旅行者）履约。**前端**：第四脊签 + **`AcquisitionRankBlock`** + **`?board=acquisition`**（**`parseDidRankBoardParam`**）已落地，**禁止** mock 冒充真实排行。**后端 / DB**：**尚无** `GET …/did-rank/…` 收购专用端点及排行聚合表（以业务订单或任务单定稿为准）；**排序主键、`rank_basis`、HTTP 路径** 以 **[04 附录 did-rank §1.2](04-附录-did-rank对接说明.md)** 与 **§7.1** 同批落地；草案口径可为窗口内 **成功履约单数**、**撮合成交额**、**委托/受托双方信誉** 等与产品共定。 |
 | **展示字段** | UI 仍可突出 **USDT 消费、接待金额、国家/城市数** 等，作为 **辅助指标**；**排序以 API 返回的 `rank` 与 §0.1 为准**，不必与单笔金额字段一致。 |
 
 ---
@@ -36,11 +37,11 @@
 
 | 区域 | 说明 |
 |------|------|
-| **奖金池** | 页面最上：**奖金池**区块，说明每月奖励排行榜前 10 名、以治理币发放；展示本月池子总量（占位可接链上/后端）；风格与 §4 一致（霓虹青/品红/琥珀高亮） |
+| **奖金池** | 页面最上：**奖金池**区块，说明每月奖励排行榜前 10 名、以治理代币（TTG）发放（Target）；展示本月池子总量（占位可接链上/后端）；风格与 §4 一致（霓虹青/品红/琥珀高亮） |
 | **顶部** | 标题「DID排行榜」+ 简短说明（链上消费/接待可验证）；可与 28 玻璃 Hero 一致 |
-| **主内容（书壳）** | **外层书壳**：圆角边框、浅 inset 高光、与页身赛博底对比。**左侧竖脊**（`role="tablist"`）：**旅行者**、**向导**、**商家** 三按钮纵向排列；大屏时脊部与内容区横排，小屏时脊在上、内容在下。**右侧内页框**：`min-h` 约 `min(520px, 72vh)`、`overflow` 裁剪，内部 **单时刻只展示当前脊签对应榜单**（`TravelerRankBlock` / `GuideRankBlock` / `ProviderRankBlock`）。 |
-| **翻页动效（脊签切换）** | 在内页框内使用 **`framer-motion`**：`AnimatePresence` + `motion.div`，`key={activeBoard}`；进场/退场为 **横向位移** + 轻 **`rotateY`** + **模糊**，父级 **`perspective`** 增强立体感；按脊签顺序 **旅行者 → 向导 → 商家** 推导前后方向（`slideDir`）。**首次进入本页**对默认榜 **不播入场翻页**（`initial={false}` 于首屏），避免闪动；仅 **切换脊签** 时播放。**`useReducedMotion()`** 为真时改为极短 **淡入淡出**（与 **§4.3** 一致）。 |
-| **每榜结构（内容区内）** | 上半：**前 10 名横板**（横向卡片，突出头像、排名、核心指标）；下半：**竖版 11～100 名**（列表式，不重复前 10；排名 + 头像 + 昵称 + 指标，类音乐排行榜） |
+| **主内容（书壳）** | **外层书壳**：圆角边框、浅 inset 高光、与页身赛博底对比。**左侧竖脊**（`role="tablist"`）：**旅行者**、**向导**、**商家**、**旅行收购** 四按钮纵向排列（**`?board=`** 见 **§5**）；大屏时脊部与内容区横排，小屏时脊在上、内容在下。**右侧内页框**：`min-h` 约 `min(520px, 72vh)`、`overflow` 裁剪，内部 **单时刻只展示当前脊签对应内容**（`TravelerRankBlock` / `GuideRankBlock` / `ProviderRankBlock` / **`AcquisitionRankBlock`**）。 |
+| **翻页动效（脊签切换）** | 在内页框内使用 **`framer-motion`**：`AnimatePresence` + `motion.div`，`key={activeBoard}`；进场/退场为 **横向位移** + 轻 **`rotateY`** + **模糊**，父级 **`perspective`** 增强立体感；按脊签顺序 **旅行者 → 向导 → 商家 → 旅行收购** 推导前后方向（`slideDir`）。**首次进入本页**对默认榜 **不播入场翻页**（`initial={false}` 于首屏），避免闪动；仅 **切换脊签** 时播放。**`useReducedMotion()`** 为真时改为极短 **淡入淡出**（与 **§4.3** 一致）。 |
+| **每榜结构（内容区内）** | 上半：**前 10 名横板**（横向卡片，突出头像、排名、核心指标）；下半：**竖版 11～100 名**（列表式，不重复前 10；排名 + 头像 + 昵称 + 指标，类音乐排行榜）。**旅行收购**在 API 未接入前为 **§3.2** 占位形态，**不**要求与上列完全同构；数据落地后须与 **§2、§3** 对齐。 |
 
 ---
 
@@ -82,6 +83,12 @@
 
 占位区块：文案与空态说明以 `ProviderRankBlock` + `locales` `didRank_*` 为准；不接排序数据前不冒充真实排行。
 
+### 3.2 旅行收购榜（脊签：旅行收购 · Target）
+
+**产品叙事**：用户发布 **收购任务**（目标国家/地区、品类、预算或单价、交割方式等），**入境该地区的旅行者** 浏览可顺带捎带的物品并接单赚取约定对价（与 **[87 §1.4](87-TravelTrust-角色体系技术文档-融合架构版.md)** 一致）。**药品、首饰/贵金属、禁限品** 须在任务与接单流程中 **强制披露与风险提示**；合规边界以 **03**、法务与属地监管为准，**本页榜单不**构成合规承诺。
+
+**UI（当前）**：第四脊签 + **`AcquisitionRankBlock`** — 合规与风险提示、空态说明、**`/market`** 动线；**禁止** mock 冒充真实排行。**UI（数据落地后 · Target）**：与 §2、§3 同构 — **前 10 横板** + **11～100 竖版**；主指标与辅助指标以 **`rank_basis`** 定稿为准（**§0.1**）。**多重身份**：委托发布与受托履约可作为 **附加能力申请**（**87 §1.4**），不新增独立 `users.role` 枚举值。
+
 ---
 
 ## 4. 风格定稿：Web3 赛博朋克（动感、科技、霓虹）
@@ -106,6 +113,8 @@
 | **脊签选中态** | 以 **cyan** 高光为主（边框/背景/微光），与书壳右侧分界（如 `border-r-cyan-500/25`、内阴影） |
 | **内页 · 旅行者榜** | 主色 **cyan**：边框 `border-cyan-500/30`、标题 `text-cyan-200`、金额 `text-cyan-400`、阴影 `rgba(34,211,238,...)`（与 `TravelerRankBlock` 一致） |
 | **内页 · 向导榜** | 主色 **fuchsia**：边框 `border-fuchsia-500/30`、标题 `text-fuchsia-200`、金额 `text-fuchsia-400`、阴影 `rgba(217,70,239,...)`（与 `GuideRankBlock` 一致） |
+| **内页 · 商家榜** | 与 **ProviderRankBlock** 占位一致：**amber** 系霓虹点缀（与奖金池琥珀高光一致），具体以组件为准 |
+| **内页 · 旅行收购榜（Target）** | 建议主色 **amber** 或 **emerald**，与旅行者/向导/商家区分（定稿时与 **§4.3** 前 3 名光晕键名一并固化）；未实现前可复用商家占位色系 |
 | **页面标题** | 渐变字 `from-cyan-300 via-cyan-400 to-fuchsia-400`、`bg-clip-text text-transparent` |
 | **徽章** | Polygon：`border-cyan-400/50`、`bg-cyan-400/10`、`text-cyan-300`；USDT/USDC：`border-fuchsia-400/50`、`bg-fuchsia-400/10`、`text-fuchsia-300` |
 | **面板** | `bg-slate-900/70`、`backdrop-blur-md`、霓虹边框 + `shadow-[0_0_20px_...]`；hover 时边框与阴影加强 |
@@ -114,7 +123,7 @@
 
 | 元素 | 约定 |
 |------|------|
-| **脊签切换 · 内页翻页** | **`framer-motion`**（项目依赖见 `frontend/package.json`）：`AnimatePresence` `mode="wait"`；`motion.div` 绑定 `activeBoard` 为 `key`；进退场 **`custom={slideDir}`** 与变体中 **`x` / `rotateY` / `opacity` / `filter: blur`** 组合；父容器 **`perspective`**（约 1200px 量级）。**`useReducedMotion()`**：缩短时长或仅用透明度切换。实现真值 **`frontend/app/did-rank/page.tsx`**（`didRankFlipTransition`、`didRankPageVariants`、`usePreviousDidRankBoard`）。 |
+| **脊签切换 · 内页翻页** | **`framer-motion`**（项目依赖见 `frontend/package.json`）：`AnimatePresence` `mode="wait"`；`motion.div` 绑定 `activeBoard` 为 `key`；进退场 **`custom={slideDir}`** 与变体中 **`x` / `rotateY` / `opacity` / `filter: blur`** 组合；父容器 **`perspective`**（约 1200px 量级）；脊签序 **旅行者 → 向导 → 商家 → 旅行收购**（四签；实现真值见 **`frontend/app/did-rank/page.tsx`**）。**`useReducedMotion()`**：缩短时长或仅用透明度切换。实现真值 **`didRankFlipTransition`**、**`didRankPageVariants`**、**`usePreviousDidRankBoard`**。 |
 | **路由 loading 骨架** | **`frontend/app/did-rank/loading.tsx`** 与书壳 + 竖脊 + 内页框 **同构**，减轻首屏与 `page` 切换时的布局跳变。 |
 | **前 3 名卡片** | `animate-did-glow`：光晕脉冲（约 2.5s），旅行者区 cyan、向导区 fuchsia |
 | **面板 hover** | `motion-sub` + `hover:border-*-400/50`、`hover:shadow-[0_0_28px_...]` |
@@ -142,7 +151,7 @@
 ## 5. 路由与入口
 
 - **路由**：`/did-rank`（与 05、Header 导航「DID排行榜」一致）
-- **查询参数**：**`?board=traveler|guide|provider`**（默认 **traveler**），与 **`parseDidRankBoardParam`**（`frontend/lib/didRankUtils.ts`）一致；**`?period=week|month|all`**、**`?me=traveler-<uuid>` / `guide-<uuid>`** 高亮与分页行为不变。
+- **查询参数**：**`?board=traveler|guide|provider|acquisition`**（默认 **traveler**），与 **`parseDidRankBoardParam`**（`frontend/lib/didRankUtils.ts`）一致；**`acquisition`** 已与脊签 **旅行收购** 对齐（非法或未知值仍回退 **traveler**）。**`?period=week|month|all`**、**`?me=traveler-<uuid>` / `guide-<uuid>`** 高亮与分页行为不变；收购榜若需 **`?me=`** 扩展须单独立契约（**Target**）。
 - **SEO**：layout 内 `title`、`description` 含 DID 排行榜、旅行者/向导排名
 
 ---
@@ -153,7 +162,7 @@
 
 | 项 | 落点 |
 |------|------|
-| **页面** | `frontend/app/did-rank/page.tsx`：**书壳 + 竖脊 + 内页框**；脊签切换 **`framer-motion`** 翻页（**§1、§4.3**）；子块 **`TravelerRankBlock`** / **`GuideRankBlock`** / **`ProviderRankBlock`**：前 10 横板、竖版 11～100（不重复前 10）；霓虹语义 **§4.2** |
+| **页面** | `frontend/app/did-rank/page.tsx`：**书壳 + 竖脊 + 内页框**；脊签切换 **`framer-motion`** 翻页（**§1、§4.3**）；子块 **`TravelerRankBlock`** / **`GuideRankBlock`** / **`ProviderRankBlock`** / **`AcquisitionRankBlock`**（旅行收购：**占位**；旅行者/向导：**前 10 横板 + 竖版 11～100**）；霓虹语义 **§4.2** |
 | **动效** | **`framer-motion`**：脊签切换（上表）；`globals.css`：榜单 **`animate-did-glow`** / **`animate-did-glow-fuchsia`** 等仍可用；**页身**不再使用 **`animate-did-gradient` / `animate-did-bg`** 驱动整屏背景（见 **§4.1**） |
 | **Loading** | `frontend/app/did-rank/loading.tsx`：与 **§1** 书壳布局对齐的骨架 |
 | **SEO** | `frontend/app/did-rank/layout.tsx`：title、description |
@@ -180,13 +189,23 @@
 | **交互** | 战绩展开（可选） | 旅行者前 10 卡片与列表行支持「战绩」展开/收起，展示国家、城市列表 | ✅ 已做 |
 | **多语言** | 文案 i18n | 页面文案走 `locales`：`didRank_*`（zh.ts / en.ts），标题、Tab、按钮、分页等均已接入 | ✅ 已做 |
 | **移动端** | 间距与横板列数 | 小屏 `px-3 py-6`、`gap-2`、横板 `grid-cols-2`、头像/文字略缩、分页与「回到我的排名」同栏折行 | ✅ 已做 |
-| **布局** | 书脊三签 + 单页翻页 | 竖脊 **旅行者/向导/商家**；内页 **`AnimatePresence`** 切换；URL **`?board=`**；**loading** 同构 | ✅ 已做（2026-04） |
+| **布局** | 书脊与翻页 | **已实现**：竖脊 **旅行者 / 向导 / 商家 / 旅行收购** 四签 + 内页 **`AnimatePresence`** + URL **`?board=`**（含 **`acquisition`**）+ **`loading.tsx`** 同构（2026-04）。**旅行收购内页**：**`AcquisitionRankBlock`**（合规、空态、**`/market`**）；**榜 HTTP + DB** 仍 **Target**（**04 附录 §1.2**、**§7.1**） | 四签 UI ✅；收购 **数据/API/库表** Target |
+
+### 7.1 旅行收购：前端 / 后端 / 数据库相关项（台账）
+
+以下与 **§3.2**、**[04 附录 §1.2](04-附录-did-rank对接说明.md)** 一致，便于排期与验收对齐。
+
+| 层级 | 已落地（仓库真值） | 仍属 Target（定稿后与产品同批） |
+|------|-------------------|----------------------------------|
+| **前端** | 第四脊签；**`?board=acquisition`**（**`parseDidRankBoardParam`**）；**`components/did-rank/AcquisitionRankBlock.tsx`**；**`locales`** **`didRank_acquisition*`**；**`lib/didRankUtils.test.ts`**；E2E **`frontend/e2e/93-matrix-path-did-rank-boards.spec.ts`** | **`frontend/lib/api.ts`** 路由常量、**`apiClient/didRank.ts`** **`getDidRankAcquisitions`**（路径名随 04 定稿）；**`didRankResponseNormalize`** 收购行类型；**`did-rank/page.tsx`** 接入请求、错误/重试、分页、**前 10 + 11～100** 与旅行者/向导同构；**`?me=`** 若需委托/受托维度须单列契约；**`didRank_prizePoolDesc`** 等文案是否纳入「收购榜前 10」由产品定稿后改 **i18n** |
+| **后端** | 无收购专用 **`GET /api/v1/did-rank/*`** | **`crates/api/src/routes/did_rank.rs`**（或拆分模块）新增收购榜路由；**`period` / `since` / `limit` / `rank_basis`** 与现有三榜同形元数据；**`crates/api/src/middleware/auth_pause_metrics/mod.rs`** 公开 GET 白名单；**`smoke-api-public-routes` / `check-55-quick-verify`** 与 **[04 §3](04-附录-did-rank对接说明.md)** 机读断言；**`04-后端与API.md` §3.4** 路由总表 + **`run-check-04-routes`** |
+| **数据库** | 无「旅行收购」**排行专用**聚合表/物化视图 | 依赖 **收购任务 / 履约订单** 等业务表与 **`completed_at`**、金额、**委托方/受托方 `user_id`** 等字段定稿；在 **`db/users_sessions.rs`** 或新 **`db/*.rs`** 实现 **`list_*_acquisition*_did_rank`** 类查询；Schema 迁移记入 **41 / 55** 与 **04** 相关节 |
 
 ---
 
 ## 8. 还可优化的方向（清单）
 
-在 §7 已全部完成的前提下，以下为**后续可逐步做的优化**，不改变 §4 风格；按优先级与资源选做。
+在 §7 表内「已定稿风格与主路径」已完成的前提下（**§7.1** 旅行收购 **数据/API** 仍为 **Target**），以下为**后续可逐步做的优化**，不改变 §4 风格；按优先级与资源选做。
 
 ### 8.1 DID 页内体验
 
@@ -270,6 +289,8 @@
 
 ---
 
-**文档版本**：1.8（2026-04-04：**§1 / §4.2～4.3 / §5～§6** 与 **书壳 + 竖脊 + `framer-motion` 内页翻页**、`?board=`、**`loading.tsx` 同构** 对齐；**行程通栏** 从前端页移除说明写入 **§0.1**；**商家** 占位见 **§3.1**）  
+**文档版本**：**2.0**（2026-04-19：**四签** 旅行收购 **UI** 落地（**`AcquisitionRankBlock`**、**`?board=acquisition`**）；**§7.1** 前端/后端/DB 待办表；**§0.1 / §1 / §3.2 / §4.3 / §5 / §6 / §7** 与实现对齐；互链 **87 §1.4**、**04 附录 §1.2** **1.23**）  
+此前 **1.9**（2026-04-17：**旅行收购** 脊签与榜单 **Target** 叙事；**`?board=acquisition`** 预留文案）  
+此前 **1.8**（2026-04-04：**§1 / §4.2～4.3 / §5～§6** 与 **书壳 + 竖脊 + `framer-motion` 内页翻页**、`?board=`、**`loading.tsx` 同构** 对齐；**行程通栏** 从前端页移除说明写入 **§0.1**；**商家** 占位见 **§3.1**）  
 此前 **1.7**（2026-03-30）：**§4.1 / §6** 与 **`WarmRouteFieldBackdrop` + 静态赛博叠层** 实现真值对齐，链 **[88](88-五主路由页身实现快照与UX缺口审计-20260330.md)**。  
 **§7** 已全部完成；**§8** 为还可优化方向清单，**§8.8** 为当前问题与优化汇总，按需排期实施。

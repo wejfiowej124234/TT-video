@@ -1,0 +1,32 @@
+{
+  "request_chain": [
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:8082/auth/logout",
+      "headers": {
+        "Authorization": "Bearer tts_[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "body": {}
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:8082/api/v1/me",
+      "headers": {
+        "Authorization": "Bearer tts_[REDACTED]"
+      }
+    }
+  ],
+  "response": {
+    "logout_http": 200,
+    "logout_body": {
+      "status": "ok",
+      "message": "logged_out"
+    },
+    "me_after_logout_http": 401,
+    "me_after_logout_body": {
+      "error": "login_required",
+      "message": "login_required"
+    }
+  }
+}

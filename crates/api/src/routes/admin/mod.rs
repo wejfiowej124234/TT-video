@@ -26,6 +26,8 @@ use crate::state::{extract_user_with_session_check, ApiMetaState};
 
 use super::not_impl_json;
 
+mod trust_growth_obs;
+
 fn parse_optional_penalty_expires_at(s: &Option<String>) -> Result<Option<DateTime<Utc>>, ()> {
     match s {
         None => Ok(None),
@@ -699,6 +701,7 @@ pub fn router() -> Router<ApiMetaState> {
             "/api/v1/admin/drift-summary",
             get(get_admin_drift_summary),
         )
+        .merge(trust_growth_obs::router())
 }
 
 #[derive(Debug, Deserialize)]

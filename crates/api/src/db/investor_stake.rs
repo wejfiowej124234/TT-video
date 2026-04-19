@@ -4,7 +4,7 @@ use std::collections::BTreeMap;
 
 use sqlx::postgres::PgPool;
 
-use crate::u256_hex::{add_assign_be, fmt_word_hex, parse_u256_word_hex, sub_assign_be, zero_word};
+use crate::u256_hex::{add_assign_be, parse_u256_word_hex, sub_assign_be, zero_word};
 
 /// 与 **`POST …/internal/investor-distribution-accrual`** **`snapshot_binding`** 同源
 pub const B088_STAKE_PROJECTION_TABLE: &str = "investor_stake_state_events";
@@ -136,6 +136,7 @@ pub async fn delete_investor_stake_state_events_from_block(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::u256_hex::fmt_word_hex;
 
     fn row(kind: &str, user: &str, hexv: &str) -> InvestorStakeStateRow {
         InvestorStakeStateRow {

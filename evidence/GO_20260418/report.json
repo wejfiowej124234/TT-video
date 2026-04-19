@@ -1,0 +1,25 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260418_R003_STAGING",
+  "title": "R-003 staging first full regression — replace by running r003_staging_full_regression.py",
+  "executor": "pending-staging-run",
+  "reviewer": "",
+  "started_at": "2026-04-18T00:00:00Z",
+  "finished_at": "2026-04-18T00:00:00Z",
+  "environment": {
+    "name": "staging",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer"
+  },
+  "release_gate": "NO_GO",
+  "release_gate_reason": "占位：尚未在真实 staging API 上执行 scripts/dev/r003_staging_full_regression.py。部署含 delete_session 的 /auth/logout 后，在目标环境重跑并覆盖本文件；预期 GO、PARTIAL_GO（如 B-MSG-002 BLOCKED）或 NO_GO，以实测为准。",
+  "cases": [],
+  "summary": {
+    "PASS": 0,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  }
+}

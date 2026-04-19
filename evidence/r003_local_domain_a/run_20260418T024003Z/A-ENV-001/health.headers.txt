@@ -1,0 +1,15 @@
+HTTP/1.1 200 OK
+content-type: text/plain; charset=utf-8
+vary: origin, access-control-request-method, access-control-request-headers
+access-control-allow-credentials: true
+x-authority-source: db_projection
+x-request-id: e07057a2-dea2-4d4b-9308-46ace22a16d1
+x-message-id: c48b92d6-65a3-469e-ab68-c1968e7237c0
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+cache-control: no-store
+permissions-policy: geolocation=(), microphone=(), camera=()
+content-length: 2
+date: Sat, 18 Apr 2026 02:42:37 GMT
+

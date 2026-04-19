@@ -511,7 +511,7 @@ if ($sb729 -notlike '*contracts*') { fail "/meta JSON chain_top_keys_contract_72
 if ($null -ne $jm.chain.contracts -and $jm.chain.contracts -is [System.Management.Automation.PSCustomObject]) {
     $cc759r = [string]$jm.chain.contracts.rule
     if ($cc759r -notlike '*759*') { fail "/meta JSON chain.contracts.rule must mention 759 (759)" }
-    $c759Exp = @("escrow_factory_address", "fee_router_address", "region_vault_address", "escrow_platform_fee_recipient", "staking_address", "registry_address", "chain_id_configured", "rule", "chain_contracts_top_keys", "chain_contracts_top_keys_contract_759")
+    $c759Exp = @("guide_staking_address", "staking_provider_address", "governor_address", "timelock_address", "governance_token_address", "fee_router_address", "treasury_address", "rule", "chain_contracts_top_keys", "chain_contracts_top_keys_contract_759")
     $c759 = $jm.chain.contracts.chain_contracts_top_keys
     if ($null -eq $c759 -or @($c759).Count -ne 10) { fail "/meta JSON chain.contracts.chain_contracts_top_keys must be length 10 (759)" }
     for ($i = 0; $i -lt 10; $i++) {
@@ -831,9 +831,9 @@ if ($code2 -eq 200) {
         fail "discover paginated JSON parse failed: $_"
     }
     if ($jp.status -ne "ok") { fail "discover paginated JSON .status expected ok, got $($jp.status)" }
-    if ($jp.page -eq $null) { fail "discover paginated JSON .page missing" }
+    if ($null -eq $jp.page) { fail "discover paginated JSON .page missing" }
     if ($jp.page.limit -ne 1) { fail "discover paginated JSON .page.limit expected 1, got $($jp.page.limit)" }
-    if ($jp.items -eq $null) { fail "discover paginated JSON .items missing" }
+    if ($null -eq $jp.items) { fail "discover paginated JSON .items missing" }
     if ($jp.items -isnot [System.Array]) { fail "discover paginated JSON .items must be array" }
     $hm = $jp.page.has_more
     if ($hm -isnot [bool]) { fail "discover paginated JSON .page.has_more must be boolean" }

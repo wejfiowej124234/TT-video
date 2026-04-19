@@ -2,7 +2,7 @@
 chcp 65001 >nul
 REM 生产模式：完整 build 后 next start（ensure-next-start + 端口 3012）
 REM 用于验收 Lighthouse；勿与 npm run dev 共用同一终端会话中的陈旧 .next
-set "ROOT=%~dp0\.."
+for %%I in ("%~dp0..\..") do set "ROOT=%%~fI"
 cd /d "%ROOT%\frontend"
 if exist "E:\Dev\nodejs\npm.cmd" set "PATH=E:\Dev\nodejs;%PATH%"
 if exist "%ProgramFiles%\nodejs\npm.cmd" set "PATH=%ProgramFiles%\nodejs;%PATH%"

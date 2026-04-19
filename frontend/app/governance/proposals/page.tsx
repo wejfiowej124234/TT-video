@@ -258,21 +258,27 @@ export default function GovernanceProposalsPage() {
             </p>
           ) : null}
           <ul className="divide-y divide-ink-200 rounded-[var(--radius-md)] border border-ink-200">
-            {items.map((p, i) => {
-              const key = typeof p.id === "string" && p.id.trim() ? p.id : `proposal-${i}`;
+            {items.map((proposal, i) => {
+              const key =
+                typeof proposal.id === "string" && proposal.id.trim() ? proposal.id : `proposal-${i}`;
               const title =
-                typeof p.title === "string" && p.title.trim()
-                  ? p.title
+                typeof proposal.title === "string" && proposal.title.trim()
+                  ? proposal.title
                   : t("governance_proposals_item_untitled");
-              const href = `/governance/proposals/${encodeURIComponent(String(p.id))}`;
-              const pid = typeof p.id === "string" && p.id.trim() ? p.id.trim() : "";
+              const statusText =
+                typeof proposal.status === "string" && proposal.status.trim()
+                  ? proposal.status.trim()
+                  : null;
+              const href = `/governance/proposals/${encodeURIComponent(String(proposal.id))}`;
+              const pid =
+                typeof proposal.id === "string" && proposal.id.trim() ? proposal.id.trim() : "";
               const exec =
                 showOnChainPanel && pid && chainExecById ? chainExecById[pid] : undefined;
               return (
                 <li key={key} className="px-4 py-3 text-body text-ink-800">
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
                     <div className="min-w-0">
-                      {typeof p.id === "string" && p.id.trim() ? (
+                      {typeof proposal.id === "string" && proposal.id.trim() ? (
                         <Link
                           href={href}
                           className={`font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
@@ -288,6 +294,11 @@ export default function GovernanceProposalsPage() {
                       ) : (
                         title
                       )}
+                      {statusText ? (
+                        <p className="mt-1 text-meta text-ink-600 dark:text-ink-400">
+                          {t("governance_proposal_detail_status")}: {statusText}
+                        </p>
+                      ) : null}
                     </div>
                     {showOnChainPanel && pid ? (
                       <GovernanceProposalExecStatusBadge

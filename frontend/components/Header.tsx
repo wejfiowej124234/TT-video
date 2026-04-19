@@ -3,11 +3,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useRef, useEffect, useState, useCallback, Suspense } from "react";
+import { useRef, useEffect, useLayoutEffect, useState, useCallback, Suspense } from "react";
 import WalletStatusMini from "@/components/trust/WalletStatusMini";
 import { useTranslation } from "@/components/LocaleProvider";
 import { LOCALE_LABELS, LOCALES, type Locale } from "@/lib/i18n";
-import { getMe, clearGetMeCache, postLogout, applyLocalLogoutAfterServerOk } from "@/lib/apiClient";
+import {
+  getMe,
+  clearGetMeCache,
+  postLogout,
+  applyLocalLogoutAfterServerOk,
+  AUTH_USER_ID_KEY,
+} from "@/lib/apiClient";
 import {
   travelFocusRingCoreClasses,
   travelFocusRingCoreInsetMenuClasses,
@@ -53,11 +59,17 @@ function NavLink({
 }
 
 function useHasUser(pathname: string | null) {
+  /** 首帧必须与 SSR 一致（false），否则客户端若已登录会立刻 true，与占位 Suspense 树冲突导致 hydration 失败 */
   const [hasUser, setHasUser] = useState(false);
   const refresh = useCallback(() => {
-    setHasUser(typeof window !== "undefined" && !!localStorage.getItem("traveltrust_user_id"));
+    try {
+      setHasUser(typeof window !== "undefined" && !!localStorage.getItem(AUTH_USER_ID_KEY));
+    } catch {
+      setHasUser(false);
+    }
   }, []);
-  useEffect(() => {
+  /** 路由切换时与首屏绘制前同步读 storage（在 hydration 后立刻对齐登录态） */
+  useLayoutEffect(() => {
     refresh();
   }, [pathname, refresh]);
   useEffect(() => {
@@ -233,7 +245,38 @@ function UserMenu({ hasUser }: { hasUser: boolean }) {
       </button>
       {open && (
         <div role="menu" className={`absolute right-0 top-full mt-1 min-w-[10rem] rounded-[var(--radius-sm)] border py-1 shadow-strong z-50 ${menuClass}`}>
-          <Link href="/me" onClick={() => setOpen(false)} className={`block px-3 py-2 text-small text-ink-800 hover:bg-ink-100 w-full text-left ${travelFocusRingCoreInsetMenuClasses}`} role="menuitem">{t("nav_me")}</Link>
+          <Link href="/community/me" onClick={() => setOpen(false)} className={`block px-3 py-2 text-small text-ink-800 hover:bg-ink-100 w-full text-left ${travelFocusRingCoreInsetMenuClasses}`} role="menuitem">{t("nav_me")}</Link>
+          <div
+            className="border-t border-ink-200 pt-1 mt-1"
+            role="group"
+            aria-label={t("header_multiIdentity")}
+          >
+            <p className="px-3 py-1.5 text-meta font-medium text-ink-600">{t("header_multiIdentity")}</p>
+            <Link
+              href="/guide/register"
+              onClick={() => setOpen(false)}
+              className={`block px-3 py-2 text-small text-ink-800 hover:bg-ink-100 w-full text-left ${travelFocusRingCoreInsetMenuClasses}`}
+              role="menuitem"
+            >
+              {t("header_identity_applyGuide")}
+            </Link>
+            <Link
+              href="/auth/register?role=provider"
+              onClick={() => setOpen(false)}
+              className={`block px-3 py-2 text-small text-ink-800 hover:bg-ink-100 w-full text-left ${travelFocusRingCoreInsetMenuClasses}`}
+              role="menuitem"
+            >
+              {t("header_identity_provider")}
+            </Link>
+            <Link
+              href="/auth/register?role=steward"
+              onClick={() => setOpen(false)}
+              className={`block px-3 py-2 text-small text-ink-800 hover:bg-ink-100 w-full text-left ${travelFocusRingCoreInsetMenuClasses}`}
+              role="menuitem"
+            >
+              {t("header_identity_steward")}
+            </Link>
+          </div>
           <Link href="/orders" onClick={() => setOpen(false)} className={`block px-3 py-2 text-small text-ink-800 hover:bg-ink-100 w-full text-left ${travelFocusRingCoreInsetMenuClasses}`} role="menuitem">{t("header_myOrders")}</Link>
           <Link href="/community/feedback" onClick={() => setOpen(false)} className={`block px-3 py-2 text-small text-ink-800 hover:bg-ink-100 w-full text-left ${travelFocusRingCoreInsetMenuClasses}`} role="menuitem">{t("me_link_feedback")}</Link>
           <Link href="/pay" onClick={() => setOpen(false)} className={`block px-3 py-2 text-small text-ink-800 hover:bg-ink-100 w-full text-left ${travelFocusRingCoreInsetMenuClasses}`} role="menuitem">{t("header_payHub")}</Link>
@@ -300,7 +343,7 @@ function HeaderLoginNavLink({
   );
 }
 
-/** L1 全局壳：顶栏、品牌、全局导航、钱包、登录/注册（无角色选择，角色在注册时选游客或申请向导）；28 截图风格 */
+/** L1 全局壳：顶栏、品牌、全局导航、钱包、登录/注册；注册页默认仅旅行者，向导/商家/区域主理人入口在登录后用户菜单「多重身份」 */
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();

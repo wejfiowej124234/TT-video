@@ -22,4 +22,6 @@ if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 & $pyExe (Join-Path $PSScriptRoot "check-13-1-table1-routes-vs-app.py")
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 & $pyExe (Join-Path $PSScriptRoot "check-13-1-routes-covered-by-04-frontend-table.py")
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+& $pyExe (Join-Path $PSScriptRoot "check-b432-governance-ui-ssot-surface.py")
 exit $LASTEXITCODE

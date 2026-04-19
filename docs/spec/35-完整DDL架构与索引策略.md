@@ -95,7 +95,7 @@ CREATE TABLE orders_projection (
     order_id            BYTEA PRIMARY KEY,                  -- bytes32 链上订单ID
     chain_id            BIGINT NOT NULL,                    -- EVM chain ID
     escrow_address      BYTEA,                              -- Escrow 合约实例地址
-    tourist_id          UUID REFERENCES users(id),          -- 游客用户ID（链下）
+    tourist_id          UUID REFERENCES users(id),          -- 旅行者用户ID（链下）
     guide_id            UUID REFERENCES users(id),          -- 向导用户ID（链下）
     status              TEXT NOT NULL,                      -- 订单链上状态。与 core::escrow::OrderState 对应
     amount              NUMERIC(36,18),                     -- 托管金额（精确到 wei 级）

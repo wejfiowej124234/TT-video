@@ -1,0 +1,44 @@
+{
+  "schema": "traveltrust_b480_prod_fault_slo_gate.v1",
+  "version": "1.0.0",
+  "updated_at": "2026-04-18T14:00:00Z",
+  "content_sha256": "67a59a3bf91983b660ec1ec8ed8ff777652ed05e740157979c3670d72a96f7da",
+  "description": "B-480 生产拓扑故障演练与双态（正常+故障）SLO 门禁；异常路径阈值与 TT-B480 一致；池相关观测可对照 B-478。",
+  "inherits_pool_thresholds_from": "config/b478_pg_pool_release_gate_thresholds.v1.json",
+  "slo_thresholds": {
+    "normal": {
+      "http_error_ratio": 0.02,
+      "ratio_429": 0.12,
+      "ratio_5xx": 0.01
+    },
+    "fault_db_latency": {
+      "http_error_ratio": 0.45,
+      "ratio_429": 0.2,
+      "ratio_5xx": 0.4,
+      "max_pool_acquire_timeout_delta": 20
+    },
+    "fault_connection_refused": {
+      "http_error_ratio": 0.85,
+      "ratio_429": 0.05,
+      "ratio_5xx": 0.8
+    },
+    "fault_network_jitter": {
+      "http_error_ratio": 0.55,
+      "ratio_429": 0.25,
+      "ratio_5xx": 0.45
+    },
+    "recovery": {
+      "http_error_ratio": 0.03,
+      "ratio_429": 0.15,
+      "ratio_5xx": 0.02
+    },
+    "recovery_after_fault": {
+      "max_recovery_time_sec": 300
+    }
+  },
+  "fault_injection_playbook": {
+    "db_latency": "pgbench / ALTER ROLE SET statement_timeout / 中间代理 tc netem delay / 云厂商延迟注入",
+    "connection_refused": "安全组或 iptables 临时 DROP PG 端口 / 错误 DATABASE_URL",
+    "network_jitter": "tc netem loss/delay/jitter 针对 API↔PG 或 LB↔API"
+  }
+}

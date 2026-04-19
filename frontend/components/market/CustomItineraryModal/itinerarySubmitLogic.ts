@@ -1,7 +1,7 @@
 /**
- * 行程弹窗提交逻辑：校验 + 构建 OrderCardItem（游客/向导）；49 A 构建 API 请求体。
+ * 行程弹窗提交逻辑：校验 + 构建 OrderCardItem（旅行者/向导）；49 A 构建 API 请求体。
  * 纯函数，供 useItineraryForm 的 handleSubmit 调用。
- * 游客侧提交时带上景区/美食/酒店配图，与行程单展示一致。
+ * 旅行者侧提交时带上景区/美食/酒店配图，与行程单展示一致。
  */
 
 import type { OrderCardItem } from "@/lib/marketTypes";
@@ -61,7 +61,7 @@ export function validateAndBuildGuide(
   return { item };
 }
 
-/** 游客创建：校验并构建订单项 */
+/** 旅行者创建：校验并构建订单项 */
 export function validateAndBuildTourist(
   form: CustomItineraryForm,
   t: TFunction,
@@ -150,7 +150,7 @@ export function validateAndBuildTourist(
   return { item };
 }
 
-/** 49 A.7：游客表单 → POST /itineraries/custom 请求体（调用前需已通过 validateAndBuildTourist） */
+/** 49 A.7：旅行者表单 → POST /itineraries/custom 请求体（调用前需已通过 validateAndBuildTourist） */
 export function buildTouristCustomBody(
   form: CustomItineraryForm,
   suggestedTransportFee: number

@@ -35,7 +35,7 @@ export type GovernanceVoteSemantics = {
 
 export type GovernanceProposalChainSnapshot = {
   governor_address?: string;
-  votes_token_address?: string | null;
+  governance_token_address?: string | null;
   state_live?: string | null;
   state_rpc_error?: string | null;
   projection_state?: string | null;
@@ -139,7 +139,7 @@ export type GovernanceOnChainVoteWeight = {
   ssot?: string;
   eth_call_note?: string;
   wallet?: string;
-  votes_token_address?: string;
+  governance_token_address?: string;
   reconcile?: {
     delegation_total_weight_units_mvp?: number | null;
     mvp_numeric_equal_to_chain_votes?: boolean | null;

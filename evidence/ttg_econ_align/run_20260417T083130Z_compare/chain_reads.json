@@ -1,0 +1,14 @@
+{
+  "chain_id": 11155111,
+  "token": "0x9f88a0072319c5d5c6ec1c61082288f6b86511a2",
+  "total_supply": "10000000000000000000000000",
+  "treasury_balance": "0",
+  "top_holders": [
+    {
+      "address": "0x843b6aa08bcbfa4ced8c1ea5f2cf857464512a3b",
+      "balance": "0"
+    }
+  ],
+  "block_number": 10676467,
+  "timestamp": 1776411238
+}

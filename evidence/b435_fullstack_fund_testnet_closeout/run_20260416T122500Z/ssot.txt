@@ -1,0 +1,11 @@
+=== runtime-chain-ssot-cast-verify (read-only) ===
+rpc: https://sepolia.drpc.org
+governor(env): 0x247ac1c986c458c385cc9499a7054f1747282151
+timelock(env): 0x55fd44d987b1285a6890a3df9a616abfeb77e085
+governance_token(env): 0x3d8eb8446abe78cdd6952453d83790aa0f0bc7a9
+cast chain-id → 11155111
+governor.token()     → 0x3d8eb8446abe78cdd6952453d83790aa0f0bc7a9
+governor.timelock()  → 0x55fd44d987b1285a6890a3df9a616abfeb77e085
+timelock.governor()  → 0x247ac1c986c458c385cc9499a7054f1747282151
+feeRouter.owner()    → 0x55fd44d987b1285a6890a3df9a616abfeb77e085  (fee_router env → 0x01c0fed839540be2cddc59067310086a719df89c)
+runtime-chain-ssot-cast-verify: OK (env matches on-chain wiring for this RPC)

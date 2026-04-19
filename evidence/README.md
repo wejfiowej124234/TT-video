@@ -1,6 +1,22 @@
 # Evidence 目录（Gate 通过证据 bundle）
 
+**Production Go-Live · 当前版本唯一总入口**：**[`evidence/GO_FINAL_20260416/README.md`](GO_FINAL_20260416/README.md)**（**机读** **[`release_proof.json`](GO_FINAL_20260416/release_proof.json)** **`repository_wide_canonical_entry`** **:** **`true`** **）** **；** **对外摘要** **[`RELEASE_NOTES_PUBLIC.md`](GO_FINAL_20260416/RELEASE_NOTES_PUBLIC.md)** **。** **其它** **证据** **目录** **（** **B-414** **/** **B-430** **/** **B-431** **等** **）** **均为** **本** **入口** **下** **三** **支柱** **所** **指向** **的** **真源** **，** **非** **并列** **第二** **总入口** **。**
+
+<a id="b418-go-release-evidence-manifest"></a>
+
+**B-418 / `TT-B418-GO-RELEASE-EVIDENCE-MANIFEST-001`**：机读 bundle 校验入口 — **`bash scripts/validate-evidence-manifest.sh validate <evidence/GO_*>`**（**`--verify-artifact-files`** 用于全量哈希）；定版 Runbook **[`docs/runbook/TT-B418-GO-RELEASE-EVIDENCE-MANIFEST-001.md`](../docs/runbook/TT-B418-GO-RELEASE-EVIDENCE-MANIFEST-001.md)**；CI 见 **[`.github/workflows/evidence-manifest-validate.yml`](../.github/workflows/evidence-manifest-validate.yml)**（**IMP-EV-001**）。
+
+<a id="check-g-dual-score-signoff"></a>
+
+**Check-G / `dual_score_signoff.v1`**（**Runbook §2.7.4**，与 **07（1）%** + **15 §〇** 双评分）：机读 **`artifacts/dual_score_signoff.v1.json`**（JSON Schema **[schemas/dual_score_signoff.v1.schema.json](schemas/dual_score_signoff.v1.schema.json)**；模板 **[GO_YYYYMMDD_template/artifacts/dual_score_signoff.v1.example.json](GO_YYYYMMDD_template/artifacts/dual_score_signoff.v1.example.json)**）；校验 **`bash scripts/check-dual-score-gate.sh`** **`…/dual_score_signoff.v1.json`**（**stderr** 打 **`sha256=`** 便于写入 **`manifest.json`** 或侧车 **`.sha256`**）。**G1 %** 阈值仍人工；**G2** 分阶段 **7/8/9** 每维 + **`risk_acceptances[]`** 见 **[Runbook §2.7.4](../ops/RUNBOOK.md#check-g-dual-score-gate)**。
+
 本目录存放 **Gate 通过** 与 **演练** 的取证级 evidence bundle，与 [08-1-战略与合规风险检查清单](../docs/spec/08-1-战略与合规风险检查清单.md)、[08-2-附录-闭合工单表](../docs/spec/08-2-附录-闭合工单表.md) 配套。08 定稿与闭合标准见 [08-4](../docs/spec/08-4-对外口径包.md)、[08-3](../docs/spec/08-3-参数与门禁表.md) 开篇「审计闭合标准」及 [08-2 定稿前检查](../docs/spec/08-2-附录-闭合工单表.md)。
+
+<a id="r002-regression-report-json"></a>
+
+**全站回归 `report.json`（93 / R-001 / R-002）**：每轮目录 **`evidence/GO_YYYYMMDD/report.json`**（结构 **[R-001](../docs/spec/R-001-全站回归报告模板与汇总JSON结构.md)**，执行闭环 **[R-002](../docs/spec/R-002-回归执行闭环与发布准入.md)**）；机读校验 **`python scripts/validate-regression-report.py evidence/GO_YYYYMMDD/report.json`**；发布并联 **[go-live-checklist §0.3](../docs/go-live-checklist.md)**。可与 **B-418** **`manifest.json`** 并列登记 artifact 哈希。
+
+**首次 Staging 完整 A+B 实战（R-003）**：步骤与验收 **D1～D5** 见 **[R-003](../docs/spec/R-003-Staging首次完整回归-A-B域-执行Runbook.md)**；**首轮真实 `report.json` 建议落盘** **[`evidence/r003_staging_first/README.md`](r003_staging_first/README.md)**；模板壳 **[`templates/regression-report.staging.min.json`](../templates/regression-report.staging.min.json)**；GitHub **Actions** 手动跑校验：**`regression-report-validate`** workflow（**`workflow_dispatch`**）。
 
 **总收口索引（B-114 / B-126 / B-127 / B-115 / B-116 / P5 / Epic A～F · GO + Runbook + 本 README 锚点）**：[docs/runbook/sealed-programs-and-epics-master-index.md](../docs/runbook/sealed-programs-and-epics-master-index.md)（**`TT-DOC-SEALED-PROGRAMS-EPICS-MASTER-INDEX-001`**，导航-only，不替代各 GO 正文）。
 
@@ -10,11 +26,78 @@
 
 **[GO_20260407_SSOT_GUARDS.md](GO_20260407_SSOT_GUARDS.md)**（**TT-SSOT-GUARD-GO-SUMMARY-018**）：汇总已落地的 **B-097 Escrow** 与 **B-110 Pool** 两条 **Python** 门禁的覆盖范围、**`check-invariants.sh` / Build workflow** 入口、典型阻断回归与「**新链上 SSOT → 单开 TT + 新 guard/allowlist**」规则。机读脚本表见 **[scripts/README.md](../scripts/README.md)** **二、CI 门禁**；任务溯源见 **[docs/任务母表.md](../docs/任务母表.md)** **SSOT Guard 门禁索引**。
 
+<a id="b413-order-state-chain-align"></a>
+
+### B-413 · 订单状态事实 vs `event_log` / `orders_projection`（TT-B413）
+
+- **Runbook**：[docs/runbook/TT-B413-ORDER-STATE-CHAIN-LOG-PROJECTION-ALIGN-001.md](../docs/runbook/TT-B413-ORDER-STATE-CHAIN-LOG-PROJECTION-ALIGN-001.md)（锚 **`413-ORDER-STATE-FACTS-CHAIN-ALIGN-OBS-V1`**）  
+- **实现入口**：[crates/api/src/db/order_state_transition_facts.rs](../crates/api/src/db/order_state_transition_facts.rs)  
+- **母表 / 索引**：[docs/任务母表.md](../docs/任务母表.md) **B-413** · **一览** **358**
+
+<a id="b410-user-flow-e2e-gate"></a>
+
+### B-410 · 用户订单主路径闸（TT-B410）
+
+- **Runbook**：[docs/runbook/TT-B410-USER-FLOW-E2E-ORDER-STATE-UNIFIED-001.md](../docs/runbook/TT-B410-USER-FLOW-E2E-ORDER-STATE-UNIFIED-001.md)  
+- **一键**：**`bash scripts/ops/b410-user-flow-e2e-gate.sh`**（内含 **`b409-*`** acceptance）  
+- **母表 / 索引**：[docs/任务母表.md](../docs/任务母表.md) **B-410** · **一览** **359**
+
+<a id="b414-revenue-e2e-go-live-closeout"></a>
+
+### B-414 · Revenue Go-Live 联调收口（TT-B414）
+
+- **Runbook**：[docs/runbook/TT-B414-REVENUE-E2E-GO-LIVE-CLOSEOUT-001.md](../docs/runbook/TT-B414-REVENUE-E2E-GO-LIVE-CLOSEOUT-001.md)（**B-402 + B-412 + B-413** **→** **`b414-closeout-record.json`**）  
+- **证据目录**：[evidence/b414_revenue_e2e_go_live_closeout/README.md](b414_revenue_e2e_go_live_closeout/README.md)  
+- **一键**：**`bash scripts/ops/b414-revenue-e2e-go-live-closeout.sh`**  
+- **母表 / 索引**：[docs/任务母表.md](../docs/任务母表.md) **B-414** · **一览** **360**
+
 <a id="epic-a-governance-exec-ux-close"></a>
 
 ### Epic A · 治理执行态只读 UX 收口（A-01～A-10）
 
 - **[GO_EPIC_A_GOVERNANCE_EXEC_UX_CLOSE.md](GO_EPIC_A_GOVERNANCE_EXEC_UX_CLOSE.md)**（**`TT-DOC-EPIC-A-GOVERNANCE-EXEC-UX-CLOSE-001`**）：完成项、**B-115 / B-116 / P5** 边界与排除项、前端验收命令；Runbook **[docs/runbook/Epic-A-governance-execution-ux-ladder.md](../docs/runbook/Epic-A-governance-execution-ux-ladder.md)**；母表 **[docs/任务母表.md](../docs/任务母表.md)** **Epic-A** 行。
+
+<a id="b428-gov-staking-treasury-ui-closeloop"></a>
+
+### B-428 · 质押→投票→执行→池/国库 UI 演示闭环（TT-B428）
+
+- **Runbook**：[docs/runbook/TT-B428-GOV-STAKING-TREASURY-UI-CLOSELOOP-001.md](../docs/runbook/TT-B428-GOV-STAKING-TREASURY-UI-CLOSELOOP-001.md)（步骤、截图清单、与 **B-417** / **B-110** 互证）  
+- **证据目录**：[evidence/b428_gov_staking_treasury_ui_closeloop/README.md](b428_gov_staking_treasury_ui_closeloop/README.md)  
+- **已封口 bundle**：[evidence/b428_gov_staking_treasury_ui_closeloop/run_20260416T0949Z_local-api-b417-sepolia/README.md](b428_gov_staking_treasury_ui_closeloop/run_20260416T0949Z_local-api-b417-sepolia/README.md)（**`b428-closeout-record.json`**）  
+- **母表**：[docs/任务母表.md](../docs/任务母表.md) **B-428**
+
+<a id="b430-gov-post-exec-reconcile-overview"></a>
+
+### B-430 · 治理 execute 后 reconcile ↔ overview 四键并列（TT-B430）
+
+- **Runbook**：[docs/runbook/TT-B430-GOV-POST-EXEC-RECONCILE-OVERVIEW-BUNDLE-001.md](../docs/runbook/TT-B430-GOV-POST-EXEC-RECONCILE-OVERVIEW-BUNDLE-001.md)  
+- **一键**：**`bash scripts/ops/b430-gov-post-exec-reconcile-overview-bundle.sh`**（**`B430_WRITE_CLOSEOUT_PACK=1`** **等** **见** **Runbook** **§3.1**）  
+- **证据目录**：**`evidence/b430_gov_post_exec_reconcile_overview/run_<UTC>/`**（**`b430-closeout-record.json`** **等**）  
+- **母表 / 索引**：[docs/任务母表.md](../docs/任务母表.md) **B-430** · **一览** **350**
+
+<a id="b431-gov-execute-chain-read-payload-align"></a>
+
+### B-431 · `execute` 后链上读数与 payload 对拍 · Foundry（TT-B431）
+
+- **Runbook**：[docs/runbook/TT-B431-GOV-EXECUTE-CHAIN-READ-PAYLOAD-ALIGN-001.md](../docs/runbook/TT-B431-GOV-EXECUTE-CHAIN-READ-PAYLOAD-ALIGN-001.md)  
+- **证据入口**：[docs/verification-evidence/B-431-gov-execute-chain-read-payload-align-ENTRY.md](../docs/verification-evidence/B-431-gov-execute-chain-read-payload-align-ENTRY.md)  
+- **一键留证**：**`bash scripts/ops/b431-gov-execute-foundry-closeout.sh`** → **`evidence/b431_gov_execute_chain_read/run_<UTC>/`**（**`b431-closeout-record.json`**）  
+- **母表 / 索引**：[docs/任务母表.md](../docs/任务母表.md) **B-431** · **一览** **351**
+
+<a id="go-master-evidence-entry-production-go-live"></a>
+
+### GO_MASTER_EVIDENCE_ENTRY · Production Go-Live（B-414 + B-430 + B-431）
+
+**本仓库当前版本唯一总入口（SSOT）** **：** **[`evidence/GO_FINAL_20260416/README.md`](GO_FINAL_20260416/README.md)** · **机读** **[`release_proof.json`](GO_FINAL_20260416/release_proof.json)**（**`verdict`** **:** **`GO`** **、** **`repository_wide_canonical_entry`** **:** **`true`** **）** **。** **对外发布说明** **[`RELEASE_NOTES_PUBLIC.md`](GO_FINAL_20260416/RELEASE_NOTES_PUBLIC.md)** **。** **子目录** **：** **`revenue/`** **/** **`governance/`** **/** **`chain/`** **。** **上线判定** **：** **当且仅当** **三条** **均为** **GO** **，** **见** **该** **README** **首段** **。**
+
+<a id="b433-go-release-proof-staking-gov-bundle"></a>
+
+### B-433 · GO release-proof bundle（Production GO + 405–408 + 414 + 428 + 430 + 431 + 432）
+
+- **Runbook**：[docs/runbook/TT-B433-GO-RELEASE-PROOF-STAKING-GOV-BUNDLE-001.md](../docs/runbook/TT-B433-GO-RELEASE-PROOF-STAKING-GOV-BUNDLE-001.md)（成员矩阵、统一门禁、**Production** **判定**、边界）  
+- **机读 manifest**：[evidence/GO_release_proof_staking_gov_bundle/release_proof_manifest.v1.json](GO_release_proof_staking_gov_bundle/release_proof_manifest.v1.json)（**`bundle_verdict`** **`GO`** **、** **`production_scope`** **、** **`members[]`** **、** **`caveats[]`** **说明性** **）**  
+- **证据壳 README**：[evidence/GO_release_proof_staking_gov_bundle/README.md](GO_release_proof_staking_gov_bundle/README.md)  
+- **母表**：[docs/任务母表.md](../docs/任务母表.md) **B-433**
 
 <a id="epic-c-admin-cross-check-drift-ui-close"></a>
 
@@ -134,6 +217,7 @@
 - **evidence/GO_YYYYMMDD_template/** — **可复制模板**：首次过门时复制为本目录并重命名为 GO_YYYYMMDD，再填写 manifest。勿在此目录内放真实证据。
 - **evidence/GO_placeholder/** — **仅占位说明**（非 bundle、非模板）：说明真实 bundle 用 GO_YYYYMMDD 目录。
 - **evidence/DR-YYYYQX-0N/** — 单次演练（Runbook 演练）产物，可选按演练编号建子目录。
+- **evidence/timelock_truth_arbitration/** — **母表** **B-434** **：** **`GovernanceTimelock`** **真源** **书面** **裁断** **（** **`decision_record.v1.json`** **）** **；** **先于** **全栈** **资金** **默认** **`Deploy.s.sol`** **广播** **。** **见** **[README.md](timelock_truth_arbitration/README.md)** **。**
 
 <a id="b114-indexer-target-slice-close"></a>
 
@@ -275,7 +359,9 @@
 
 生成后计算 `sha256 manifest.json`（或 `sha256sum manifest.json`）写入 `manifest.sha256`，便于验证未被篡改。
 
-**校验**：定稿或过门时建议对 manifest 做一次校验（必填字段存在、date 格式、artifacts[].sha256 为 64 位 hex）。有 jq 时可手工写校验命令；无 jq 时人工按上表核对，落 08-2 定稿前检查。（注：原 scripts/validate-evidence-manifest.sh 已移除。）
+**校验**：定稿或过门时建议对 manifest 做一次校验（必填字段存在、date 格式、artifacts[].sha256 为 64 位 hex）。**机读（IMP-EV-001）**：仓库根执行 **`bash scripts/validate-evidence-manifest.sh validate evidence/GO_YYYYMMDD`**（或 **`python3 scripts/dev/validate_evidence_manifest.py validate evidence/GO_YYYYMMDD`**）；可选 **`--verify-artifact-files`** 抽查磁盘上 **artifacts[].path** 与 **sha256**；可选 **`--emit-summary`**，校验通过时在 **stdout** 输出一行 JSON 机读摘要（**`traveltrust.evidence_manifest.validate_summary.v1_1`**，含契约字段 **`status` / `artifact_count` / `hash_verified` / `missing_files`** 及 **`files_count` / `total_bytes` / `all_hash_ok`** 等），人类可读 **`validate-evidence-manifest: OK …`** 在 **stderr**，便于 **`jq`** 或流水线采集。**自检**：**`bash scripts/validate-evidence-manifest.sh self-test`**（须 **Python 3**）。仍须落 **08-2** 定稿前检查（本脚本**不**替代 **08-4** 签字）。
+
+**CI / 入仓纪律**：**`evidence/GO_20260409`** 为 **IMP-EV-001** **唯一**基线（frozen）；**凡含 `manifest.json` 的新证据 bundle**（含新建目录或变更其下文件）在**合并入 `main` 之前**须通过 **`python3 scripts/dev/validate_evidence_manifest.py validate <DIR> --emit-summary --verify-artifact-files`**（**`validate-evidence-manifest.sh`** 同等参数），**否则一律禁止合并**。**`main`** 须在 **branch protection** 将 **`Evidence manifest validate / IMP-EV-001 validate + JSON summary`** 设为 **required status check**。编排、契约与禁止项见 **[docs/runbook/evidence-gate.md](../docs/runbook/evidence-gate.md)**（**Evidence Gate v1.1**）。
 
 **可验证发布（08-4 第 7 章、W-Q6-FE、51-D3）**：前端构建完成后，按以下手工步骤生成 manifest.json 与 manifest.sha256，纳入 evidence：
 

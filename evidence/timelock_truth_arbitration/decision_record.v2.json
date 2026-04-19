@@ -1,0 +1,34 @@
+{
+  "schema": "traveltrust.timelock_truth_arbitration.v1",
+  "mother_table_id": "B-434",
+  "task_card": "TT-B434-FUND-TIMELOCK-TRUTH-ARBITRATION-001",
+  "decided_at_utc": "2026-04-16T22:30:00Z",
+  "chain_id": 11155111,
+  "network": "sepolia",
+  "timelock_truth_decision": "B",
+  "decision_title_zh": "方案 A：以新 DeployGovernanceStack 批次 GovernanceTimelock 为唯一 Timelock 真源（对齐 B-407 setAllowedExecutionTarget）",
+  "canonical_timelock_address": "0x55fd44d987B1285a6890a3Df9A616ABFeB77E085",
+  "governor_address_same_stack": "0x247aC1C986c458C385cC9499A7054f1747282151",
+  "governance_token_address_same_stack": "0x3d8eb8446Abe78cDD6952453d83790aa0f0bc7a9",
+  "deployer_eoa_reference": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "deploy_batch_block_reference": 10671276,
+  "evidence_cross_refs": [
+    "contracts/broadcast/DeployGovernanceStack.s.sol/11155111/run-latest.json",
+    "contracts/broadcast/DeployFundStackUnderTimelock.s.sol/11155111/run-latest.json",
+    "evidence/timelock_truth_arbitration/decision_record.v1.json"
+  ],
+  "rationale_summary_zh": "链上旧 canonical Timelock（decision_record.v1）字节码不含 allowedExecutionTarget/setAllowedExecutionTarget（B-407），导致 TT-B435 DeployFundStackUnderTimelock 在 setAllowedExecutionTarget(FeeRouter) 处必然失败。按方案 A 重新广播 DeployGovernanceStack（首笔部署约区块 10671276），新 Timelock 与当前 GovernanceTimelock.sol 一致并已 setAllowedExecutionTarget(governor,true)；随后广播 DeployFundStackUnderTimelock（资金栈首笔 CREATE 约区块 10671286，FUND_STACK_TOKEN 与治理票同址）。本记录取代 v1 的 TIMELOCK/GOVERNOR/TOKEN 真值，旧地址仅作历史。",
+  "operational_constraints_zh": [
+    "禁止将 decision_record.v1 的 TIMELOCK_ADDRESS / GOVERNOR_ADDRESS / GOVERNANCE_TOKEN_ADDRESS 与 v2 混写入同一 .env 作为当前真值。",
+    "全栈资金合约须以 canonical_timelock_address（v2）为 owner/spender/白名单目标；TT-B435 使用 DeployFundStackUnderTimelock.s.sol。",
+    "GET /meta → chain.contracts 须与 v2 三键及后续七键同源后再宣称闭环。"
+  ],
+  "impact_notes_zh": {
+    "seven_keys_and_meta": "TIMELOCK_ADDRESS / GOVERNOR_ADDRESS / GOVERNANCE_TOKEN_ADDRESS 以 v2 为准；FEE_ROUTER 等由 TT-B435 资金栈广播后写入。",
+    "b417_b431": "新 Governor 上既有提案计数从零开始；B-417/B-431 测试网证据须锚定 v2 地址。",
+    "tt_b435": "在 v2 Timelock 上执行 DeployFundStackUnderTimelock 并完成 §3.2～§3.7。"
+  },
+  "supersedes": "decision_record.v1.json",
+  "superseded_by": "decision_record.v3.json",
+  "notes": "v1 所载 0x1E94… Timelock 仍存在于链上但不作为当前真源；若需 Explorer 对照见 Blockscout Sepolia。本记录所载 0x55fd… 三键已由 v3（0x726E… 栈）取代为当前运维 canonical；见 decision_record.v3.json。"
+}

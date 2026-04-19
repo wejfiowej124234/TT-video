@@ -167,12 +167,13 @@ export default function LandingHeroForm({
             >
               {t("header_market")}
             </Link>
-            <Link
-              href="/#form"
+            {/* 同页 #form：原生 <a href="#form"> 保证写入 hash（next/link `/#form` 在同路径不稳定） */}
+            <a
+              href="#form"
               className="rounded-full bg-white/10 backdrop-blur-sm border border-white/25 px-4 py-2 text-small font-medium text-white hover:bg-white/18 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
               {t("landing_cta_create")}
-            </Link>
+            </a>
             <Link
               href="/guides"
               className="rounded-full bg-white/10 backdrop-blur-sm border border-ref-sage/35 px-4 py-2 text-small font-medium text-white hover:bg-ref-sage/15 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sage/40 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"

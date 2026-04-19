@@ -10,6 +10,7 @@ import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/l
 import { getGuide } from "@/lib/apiClient";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
+import { formatGuideDisplayName } from "@/lib/guideDisplayName";
 
 /** 顶栏高度，抽屉内容与 sticky 标题栏留白，避免被顶栏遮挡（56-S8） */
 const DRAWER_TOP_SAFE = "3.5rem";
@@ -133,7 +134,7 @@ export default function GuideDetailDrawer({
     </div>
   );
 
-  const name = shellGuide.city ? t("guide_card_cityGuide").replace("{{city}}", shellGuide.city) : t("guide_card_guide");
+  const name = formatGuideDisplayName(t, shellGuide);
   const langs = Array.isArray(shellGuide.languages) ? shellGuide.languages.join("、") : dash;
   const tags = Array.isArray(shellGuide.service_types) ? shellGuide.service_types : [];
   const avatarAlt = t("guide_card_avatarAlt").replace("{{name}}", name);

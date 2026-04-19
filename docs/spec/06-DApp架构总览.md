@@ -46,7 +46,7 @@
 | 表现层、frontend/、dapp/ | DApp 为 05 frontend/ 下 dapp/ 模块的架构展开；页面、路由、lib/ 与 05 共用 | §一、§二、§五 |
 | 链与合约边界、执行器代发 | 用户签由前端发起；裁决上链由后端执行器调合约，前端仅展示 | §一、§三、§四 |
 | 12 缝 #11、17 条 #2/#14 | 钱包换绑与已支付订单、支付须经 deposit()、用户连点幂等 | §四 |
-| 向导准入 Registry+Staking（方案 B） | 合约交互读 Registry 资格、Staking 余额；可接单由 API/链上共同决定 | §三、§四 |
+| 向导准入 Registry+**Guide/Provider 身份池**（方案 B） | 合约交互读 Registry 资格、**`GuideIdentityStakingPool`/`ProviderIdentityStakingPool`** 质押余额；可接单由 API/链上共同决定 | §三、§四 |
 | Created/Accepted EIP-712 签名留痕 | 01 §3、§5 十一、03 两步确认 | §三 签名与交易（若前端参与下单/接单） |
 | 敏感操作展示（金额/代币/合约/取消） | 05 §九 9.0.5 | §五 安全 |
 
@@ -58,7 +58,7 @@
 |------|------|
 | **与前端关系** | DApp 与「普通 Web」共用同一套 **Next.js 前端**（frontend/，见 05 §四）；通过「是否连接钱包」区分模式，**不是独立应用**。 |
 | **DApp 负责的事** | **连接钱包**（wagmi + WalletConnect v2）、**用户签名**（viem + EIP-712：支付旅行费用、质押、**Escrow.release**、**发起争议 openDispute**，01 §7 deposit/**release**/openDispute 须钱包签）、**与链上合约交互**；**链下**「确认行程完成」以 API 为主，与 **release** 解耦（04 §3.4、53、14）。交易状态由 **txMachine** 管理，事件监听用 **viem watchContractEvent**，终态以 **Finality 12 blocks** 为准；平台不托管私钥（02 §十三 13.1）。**代付（P0）**：默认不托管、不代签；代付为法务门禁例外路径（01 §7），DApp 实现以用户自签为准。 |
-| **链与合约** | **已采用 EVM（以太坊 + L2）**，合约 Solidity（Escrow、Staking、Registry 方案 B，见 01 §4）；链下后端 Rust（alloy），前端 **viem + wagmi** 通过 RPC 与链通信。 |
+| **链与合约** | **已采用 EVM（以太坊 + L2）**，合约 Solidity（Escrow、**`IdentityStakingPool` 系**、Registry 方案 B，见 01 §4）；链下后端 Rust（alloy），前端 **viem + wagmi** 通过 RPC 与链通信。 |
 
 ---
 
@@ -66,7 +66,7 @@
 
 ```
                     ┌─────────────────────────────────────────────────────────┐
-                    │                    用户（游客 / 向导）                     │
+                    │                    用户（旅行者 / 向导）                     │
                     └───────────────────────────┬─────────────────────────────┘
                                                 │
                     ┌───────────────────────────▼─────────────────────────────┐
@@ -90,7 +90,7 @@
          ▼                                                        ▼
 ┌─────────────────┐                                    ┌─────────────────────┐
 │  数据库          │                                    │  EVM 链              │
-│  业务数据        │                                    │  Escrow / Staking    │
+│  业务数据        │                                    │  Escrow / Identity 池 │
 └─────────────────┘                                    │  等智能合约          │
                                                         └─────────────────────┘
 ```
@@ -109,18 +109,18 @@
 | 层级 | 职责 | 实现要点 |
 |------|------|----------|
 | **钱包连接** | 检测/连接用户钱包、获取地址与链 ID | **wagmi** + **WalletConnect v2**；兼容所有市场钱包，不自研钱包。登录/签名可选 **SIWE**（01 §7 P1），与 05 一致。 |
-| **签名与交易** | 构造交易参数、唤起钱包签名、提交交易 | **viem** 构造交易与 **EIP-712** TypedData 签名。**订单创建/接单**（Created/Accepted）若在前端参与，须 EIP-712 留痕（01 §3、§5 十一、03）。支付 **deposit(orderId, amount)**（直转不算，01 §10 17 条 #2）、质押（Staking）、**Escrow.release**（释放托管资金；与 `POST confirm-completion` 解耦，见 04 §3.4）、**openDispute**（01 §7 须钱包签）；交易状态由自研 **txMachine** 管理，终态以 **Finality 12 blocks** 为准。 |
-| **合约交互** | 读链上状态、监听事件、提交已签名交易 | **viem** 读合约状态；**viem watchContractEvent** 监听 Escrow/Staking 等事件；读：Escrow 状态、Staking 余额、**Registry 资格**（方案 B，01 §4）；写：仅通过用户签名后的合约调用。 |
+| **签名与交易** | 构造交易参数、唤起钱包签名、提交交易 | **viem** 构造交易与 **EIP-712** TypedData 签名。**订单创建/接单**（Created/Accepted）若在前端参与，须 EIP-712 留痕（01 §3、§5 十一、03）。支付 **deposit(orderId, amount)**（直转不算，01 §10 17 条 #2）、**身份质押（`GuideIdentityStakingPool` / `ProviderIdentityStakingPool`）**、**Escrow.release**（释放托管资金；与 `POST confirm-completion` 解耦，见 04 §3.4）、**openDispute**（01 §7 须钱包签）；交易状态由自研 **txMachine** 管理，终态以 **Finality 12 blocks** 为准。 |
+| **合约交互** | 读链上状态、监听事件、提交已签名交易 | **viem** 读合约状态；**viem watchContractEvent** 监听 Escrow / **`IdentityStakingPool` 系** 等事件；读：Escrow 状态、**身份池质押余额**、**Registry 资格**（方案 B，01 §4）；写：仅通过用户签名后的合约调用。 |
 | **后端配合** | 订单/争议等业务数据、裁决上链 | API 提供订单与合约地址/参数；**裁决执行由后端执行器调合约**（01 执行器 P0），前端仅展示状态与 tx 链接。 |
 
-**治理交易（Target）**（与 Escrow **订单主链**并列；**链上模块未部署前不得对外宣称已可执行**）：当产品启用 **FeeRouter / RegionVault、GlobalDAO / RegionDAO、TTG 质押激励、Snapshot / Claim** 等扩展时，DApp 侧可能增加的**用户钱包签名**类型包括：治理投票、经 Timelock 的参数变更流程、**Claim**、**TTG 质押 / 解押**等（与 [81-经济模型-向导质押与订单押金](81-经济模型-向导质押与订单押金.md) 中向导 **Staking** 的**质押品路径**不同，见 [14-合约-API-ABI-前后端对齐](14-合约-API-ABI-前后端对齐.md) **§1.1.1**）。**产品页与链上权限边界**须与 [13-1-UI产品级SSOT与页面规范](13-1-UI产品级SSOT与页面规范.md) **表 2-续**（`/governance` **产品入口** vs **链上 DAO**）及 [83-区域治理与收益分配-协议白皮书](83-区域治理与收益分配-协议白皮书.md) **附录 I.0** 一致：**`/governance` 典型能力为只读展示**（如 `GET /api/v1/governance/*`），**禁止** UI 伪装链上已执行；真实链上治理交互须 **viem + 用户签** 与 **04 §3.4 / 14 / `contracts/abi`** 对齐。**新合约或切换所连网络前**：**Anvil 本地验收**（订单主路径 + 已开发治理流）见 **[Runbook §2.56](../../ops/RUNBOOK.md)**、**[14 §6](14-合约-API-ABI-前后端对齐.md)**、**[governance-token/02 §1.3](governance-token/02-对内技术规格-草案.md)**。经济参数单源 **83 §3**、**84**；对外措辞与证券隔离见 [08-4-对外口径包](08-4-对外口径包.md)、[82-治理币-文档总览](82-治理币-文档总览.md)；定稿前 [governance-token/LEGAL-SIGNOFF-CHECKLIST](governance-token/LEGAL-SIGNOFF-CHECKLIST.md)。
+**治理交易（Target）**（与 Escrow **订单主链**并列）：**`contracts/`** 内 **FeeRouter / RegionVault** 等为 **Partial/MVP**（**`bash scripts/check-55-s13.sh`** / **`scripts/gates/check-55-s13.sh`** **2b**、**B-116**、**14 §1.1.1** 互证），**≠** 将 **`/governance` 只读页**或 **Target 叙事**误宣称为**主网终局已全量可执行**。当产品启用 **GlobalDAO / RegionDAO、TTG 质押激励、Snapshot / Claim** 等扩展时，DApp 侧可能增加的**用户钱包签名**类型包括：治理投票、经 Timelock 的参数变更流程、**Claim**、**TTG 质押 / 解押**等（与 [81-经济模型-向导质押与订单押金](81-经济模型-向导质押与订单押金.md) 中向导 **`IdentityStakingPool` 系身份质押**的**质押品路径**不同，见 [14-合约-API-ABI-前后端对齐](14-合约-API-ABI-前后端对齐.md) **§1.1.1**）。**产品页与链上权限边界**须与 [13-1-UI产品级SSOT与页面规范](13-1-UI产品级SSOT与页面规范.md) **表 2-续**（`/governance` **产品入口** vs **链上 DAO**）及 [83-区域治理与收益分配-协议白皮书](83-区域治理与收益分配-协议白皮书.md) **附录 I.0** 一致：**`/governance` 典型能力为只读展示**（如 `GET /api/v1/governance/*`），**禁止** UI 伪装链上已执行；真实链上治理交互须 **viem + 用户签** 与 **04 §3.4 / 14 / `contracts/abi`** 对齐。**新合约或切换所连网络前**：**Anvil 本地验收**（订单主路径 + 已开发治理流）见 **[Runbook §2.56](../../ops/RUNBOOK.md)**、**[14 §6](14-合约-API-ABI-前后端对齐.md)**、**[governance-token/02 §1.3](governance-token/02-对内技术规格-草案.md)**。经济参数单源 **83 §3**、**84**；对外措辞与证券隔离见 [08-4-对外口径包](08-4-对外口径包.md)、[82-治理币-文档总览](82-治理币-文档总览.md)；定稿前 [governance-token/LEGAL-SIGNOFF-CHECKLIST](governance-token/LEGAL-SIGNOFF-CHECKLIST.md)。
 
 ---
 
 ## 四、典型数据流（DApp）
 
-1. **游客支付**：API 取 Escrow 地址与金额 → 唤起钱包（wagmi）→ 用户签 **deposit(orderId, amount)**（viem + EIP-712，须经 deposit，直转不算，01 §10 17 条 #2）→ 上链 → **txMachine** 管理状态，**viem watchContractEvent** 或轮询更新；终态以 **Finality 12 blocks** 为准。**UI 事实（P0）**：已支付仅依据链上 Paid/对账；pending 可展示 confirmations。
-2. **向导质押**：API 取 Staking 地址与最低金额 → 用户签授权+质押 → 上链 → 后端读链更新可接单资格。
+1. **旅行者支付**：API 取 Escrow 地址与金额 → 唤起钱包（wagmi）→ 用户签 **deposit(orderId, amount)**（viem + EIP-712，须经 deposit，直转不算，01 §10 17 条 #2）→ 上链 → **txMachine** 管理状态，**viem watchContractEvent** 或轮询更新；终态以 **Finality 12 blocks** 为准。**UI 事实（P0）**：已支付仅依据链上 Paid/对账；pending 可展示 confirmations。
+2. **向导身份质押**：API 取 **`GuideIdentityStakingPool` / `ProviderIdentityStakingPool`** 地址与 **`MIN_STAKE`** 等参数 → 用户签授权+质押 → 上链 → 后端读链更新可接单资格。
 3. **行程完成（链下）与释放（链上）**：`POST confirm-completion` 等为链下进度；**合约释放至向导**由用户签 **Escrow.release()**、超时自动路径或执行器触发（01/03/53）；裁决后由**后端执行器**调合约退款/扣罚，前端仅展示状态与 tx 链接。
 4. **发起争议（openDispute）**：Escrowed 下先调 API 提交争议与证据，再 dapp/escrow 唤起钱包签 openDispute（付 arbFee）；01 §7、05 §七。
 
@@ -132,7 +132,7 @@
 
 | 项目 | 约定 |
 |------|------|
-| **链** | 已采用 **EVM（以太坊 + L2）**，合约 Solidity（Escrow、Staking、Registry 方案 B，见 01 §4）；前端 **wagmi + viem** 通过 RPC 与链交互；终态以 **Finality 12 blocks** 为准。 |
+| **链** | 已采用 **EVM（以太坊 + L2）**，合约 Solidity（Escrow、**`IdentityStakingPool` 系身份池**、Registry 方案 B，见 01 §4）；前端 **wagmi + viem** 通过 RPC 与链交互；终态以 **Finality 12 blocks** 为准。 |
 | **钱包** | 不托管私钥，仅连接用户已有钱包；**wagmi + WalletConnect v2**，兼容所有主流钱包。 |
 | **安全** | 签名前明确展示「支付对象与金额」、**合约/订单标识**，用户可取消/拒绝（与 05 §九 9.0.5 敏感操作一致）；**EIP-712** 结构化签名（Domain Separator 写死，01 §7 P0）；不引导无限授权。 |
 

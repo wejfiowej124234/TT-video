@@ -1,0 +1,8 @@
+{
+  "chain_id": 11155111,
+  "explorer_base": "https://sepolia.etherscan.io/tx/",
+  "deploy_governance_stack_token_create": "0x927f5ca0fc6b7e2ca6fef434d10d8011990503778cd5254f54eb513d3cf9f52e",
+  "deploy_fund_stack_escrow_factory_create": "0x5882e7859acf01c39f7a558bf50477e8d97e9bab50a5ba80d2eb389e3a4438ed",
+  "first_payment": "0x84c46ced80455e0c809152c704055a1cd4b2bcd0bbe24457fa898211bac4622e",
+  "notes": "first_payment: Timelock execute（DeployFundStack 批次）涉及 FeeRouter 接线；非两条 CREATE 部署 tx。Explorer 可复核。"
+}

@@ -31,11 +31,11 @@ describe("ConfirmFinalPlanBlock", () => {
     });
   });
 
-  it("renders nothing when not draft", () => {
+  it("renders nothing when confirm not allowed", () => {
     const { container } = render(
       <ConfirmFinalPlanBlock
         orderId="o1"
-        isDraft={false}
+        allowConfirmFinalPlan={false}
         hasSnapshot={false}
         onConfirmed={() => {}}
       />
@@ -47,7 +47,7 @@ describe("ConfirmFinalPlanBlock", () => {
     const { container } = render(
       <ConfirmFinalPlanBlock
         orderId="o1"
-        isDraft
+        allowConfirmFinalPlan
         hasSnapshot
         onConfirmed={() => {}}
       />
@@ -59,7 +59,7 @@ describe("ConfirmFinalPlanBlock", () => {
     render(
       <ConfirmFinalPlanBlock
         orderId="order-uuid"
-        isDraft
+        allowConfirmFinalPlan
         hasSnapshot={false}
         version={2}
         snapshotHash={null}

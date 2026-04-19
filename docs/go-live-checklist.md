@@ -13,8 +13,8 @@
 - **`pre-release-automation` 等机器预检**：仅作辅助，**不能**单独视为 P0 或 §四 已闭合。
 - **§0～§10** 各条已标注 **P0 #**（与官方总表行号一致）或 **07 §四**；**§11** 为十二项中**不以工程小节展开**的并联打卡；文末 **「P0 覆盖映射表」** 汇总。
 - **Ethereum Mainnet 首次生产部署 / cutover（P0 强制）**：**目标网络为 Ethereum Mainnet（`CHAIN_ID=1`）** 时，**必须先** 完成 **[TT-MAINNET §0](runbook/TT-MAINNET-LAUNCH-PRECHECK-AFTER-B435-001.md#0-门禁总表mainnet-deploy--cutover--全部为-go-才允许)** **门禁表（G0～G6** **与** **SL** **全 GO）** 并留痕；**其中** **SL** **（** **Mainnet Shadow Launch** **）** **独立证据包** **[`evidence/mainnet_shadow_launch/run_<UTC>/`](../evidence/mainnet_shadow_launch/README.md)** **`shadow_go_no_go.json`** **`shadow_launch_verdict":"GO"`** **为** **正式** **主网** **发布** **最终** **Go/No-Go** **输入**。**任一 NO-GO → 禁止 mainnet deploy**。**勾选见 §9**；**完整条款** **以该 Runbook 为准**。**Sepolia / 预发** **不能** **替代** **§9** **中** **仅适用于主网** **的项**。
-- **B-421 文档互指机读（锚 `B-421-RUNBOOK-GOLIVE-DOCLINK-GATE` · `TT-B421-GO-RUNBOOK-GOLIVE-DOCLINK-001`）**：[00-文档索引](spec/00-文档索引.md)、[缺口与待补-官方总表](spec/缺口与待补-官方总表.md)、[15 附录〇](spec/15-多维度文档与技术检查报告.md#发版前勾选总表)、[ops/RUNBOOK](../../ops/RUNBOOK.md)、[TT-B421 Runbook](runbook/TT-B421-GO-RUNBOOK-GOLIVE-DOCLINK-001.md)；**`bash scripts/check-runbook-golive-doclink-gate.sh`** **`--json`**。
-- **Check-G / W-GATE 边界**：[Runbook §2.7.4 · Check-G](../../ops/RUNBOOK.md#check-g-dual-score-gate)（**`dual_score_signoff`** **↔** **`manifest.dual_score`**、签字链、**`--verify-artifact-files`** 策略、**封口命令**）**不**被 **`bash scripts/check-w-gate-prerelease.sh`**（[TT-B420](runbook/TT-B420-GO-W-GATE-PRERELEASE-001.md)）默认编排替代；**定型发布**须在本清单 **§11.13～11.18** 与 Runbook 并联执行。
+- **B-421 文档互指机读（锚 `B-421-RUNBOOK-GOLIVE-DOCLINK-GATE` · `TT-B421-GO-RUNBOOK-GOLIVE-DOCLINK-001`）**：[00-文档索引](spec/00-文档索引.md)、[缺口与待补-官方总表](spec/缺口与待补-官方总表.md)、[15 附录〇](spec/15-多维度文档与技术检查报告.md#发版前勾选总表)、[ops/RUNBOOK](../ops/RUNBOOK.md)、[TT-B421 Runbook](runbook/TT-B421-GO-RUNBOOK-GOLIVE-DOCLINK-001.md)；**`bash scripts/check-runbook-golive-doclink-gate.sh`** **`--json`**。
+- **Check-G / W-GATE 边界**：[Runbook §2.7.4 · Check-G](../ops/RUNBOOK.md#check-g-dual-score-gate)（**`dual_score_signoff`** **↔** **`manifest.dual_score`**、签字链、**`--verify-artifact-files`** 策略、**封口命令**）**不**被 **`bash scripts/check-w-gate-prerelease.sh`**（[TT-B420](runbook/TT-B420-GO-W-GATE-PRERELEASE-001.md)）默认编排替代；**定型发布**须在本清单 **§11.13～11.18** 与 Runbook 并联执行。
 - **全站回归 `report.json`（93 / R-002）**：发布前须完成 **[spec/R-002-回归执行闭环与发布准入.md](spec/R-002-回归执行闭环与发布准入.md)** **§1**（汇总 → 机读校验 → Gate）；**`python scripts/validate-regression-report.py evidence/GO_YYYYMMDD/report.json`**；**`release_gate`** 与 **[93 §7.1](spec/93-全站功能验证矩阵-域别回归清单.md)** 一致。**staging/prod 口径**须 **`environment.name`** 匹配或 **PARTIAL_GO** 已说明 — 详见 **R-002 §2**。**首次在 staging 按矩阵完整跑通 A+B 域**的步骤与 **D1～D5** 验收见 **[spec/R-003-Staging首次完整回归-A-B域-执行Runbook.md](spec/R-003-Staging首次完整回归-A-B域-执行Runbook.md)**。
 
 ---
@@ -152,7 +152,7 @@
 - [ ] **10.3** **值班路径**：on-call 能访问内网 internal 与 DB 只读账号；**Runbook** 链接已贴在工单/聊天置顶。**（P0 #6）**
 - [ ] **10.4** **审计证据**：如需对外出具，**`sha256sum -c docs/verification-evidence-sha256.txt`** 在发布分支通过（与 pack 第 2 节自校验哈希一致）。**（P0 #7）**
 
-**并联（非 P0 子项 · GitHub Actions 组织健康）**：若组织 **付款失败** 或 **Actions spending limit** 过低，GitHub 可 **拒绝启动** `ubuntu-latest` job（注解常含 *payments have failed* / *spending limit*）；此时 **无** 常规 CI step 日志，**与** 单条 Dependabot（如 **`upload-artifact`**）**版本 bump** **无**可验证因果链。**处理**：**Billing & plans**（组织：`https://github.com/organizations/<ORG>/settings/billing`）+ 放行 **Actions** 支出；复跑后按 **[TT-L4-PARALLEL-CI-001](runbook/TT-L4-PARALLEL-CI-001.md) §5～§8** 对拍 **L4 parallel CI** 是否已进入 **`npm run e2e:sepolia`**。**读结果**：**不得**仅凭 workflow **总结论 ✓** 认定 **L4 Sepolia** 已真实执行（`continue-on-error` + **未调度** 时仍可出现 ✓）；须打开 **Job** 核对 **Annotations / Steps**（见该 Runbook **§2**）。
+**并联（非 P0 子项 · GitHub Actions 组织健康）**：若组织 **付款失败** 或 **Actions spending limit** 过低，GitHub 可 **拒绝启动** `ubuntu-latest` job（注解常含 *payments have failed* / *spending limit*）；此时 **无** 常规 CI step 日志，**与** 单条 Dependabot（如 **`upload-artifact`**）**版本 bump** **无**可验证因果链。**处理**：**Billing & plans**（组织：`https://github.com/organizations/<ORG>/settings/billing`）+ 放行 **Actions** 支出；复跑后按 **[TT-L4-PARALLEL-CI-001](runbook/TT-L4-PARALLEL-CI-001.md) §5～§8** 对拍 **L4 parallel CI** 是否已进入 **`npm run e2e:sepolia`**。**读结果**：**不得**仅凭 workflow **总结论 ✓** 认定 **L4 Sepolia** 已真实执行（`continue-on-error` + **未调度** 时仍可出现 ✓）；须打开 **Job** 核对 **Annotations / Steps**（见该 Runbook **§2**）。本地辅助：**`bash scripts/gh-l4-run-inspect.sh`**（**`GH_BRANCH=…`** 可选）— 见 Runbook **§9**。
 
 ---
 
@@ -160,22 +160,22 @@
 
 本节**不重复** 08-2 / 08-4 / 00 正文；仅确认已在 **[缺口与待补-官方总表](spec/缺口与待补-官方总表.md)** 对应行 **☑**，并与 **07 §四 4.3** 发版前并联说明一致。
 
-**Evidence path 约定**：日期目录一律写 **`evidence/GO_YYYYMMDD/`**（`YYYYMMDD` 为发版或过门日）；首次可复制模板 **`evidence/GO_YYYYMMDD_template/`**（见 [evidence/README](../../evidence/README.md)）。**Run command** 在仓库根执行，除非另注。
+**Evidence path 约定**：日期目录一律写 **`evidence/GO_YYYYMMDD/`**（`YYYYMMDD` 为发版或过门日）；首次可复制模板 **`evidence/GO_YYYYMMDD_template/`**（见 [evidence/README](../evidence/README.md)）。**Run command** 在仓库根执行，除非另注。
 
-**并联（非 P0 十二项子项）**：**Production 工程/治理/链上三条闭环** 的 **仓库内唯一总入口** 为 **[`evidence/GO_FINAL_20260416/README.md`](../../evidence/GO_FINAL_20260416/README.md)**（**对外摘要** **[`RELEASE_NOTES_PUBLIC.md`](../../evidence/GO_FINAL_20260416/RELEASE_NOTES_PUBLIC.md)** **）** **；** **与** **本节** **08** **证据包** **路径** **约定** **正交** **，** **勿** **混为** **第二套** **顶层** **入口** **。**
+**并联（非 P0 十二项子项）**：**Production 工程/治理/链上三条闭环** 的 **仓库内唯一总入口** 为 **[`evidence/GO_FINAL_20260416/README.md`](../evidence/GO_FINAL_20260416/README.md)**（**对外摘要** **[`RELEASE_NOTES_PUBLIC.md`](../evidence/GO_FINAL_20260416/RELEASE_NOTES_PUBLIC.md)** **）** **；** **与** **本节** **08** **证据包** **路径** **约定** **正交** **，** **勿** **混为** **第二套** **顶层** **入口** **。**
 
-**Check-G · 定型包 · 签字链（并联 [15 附录〇 · Check-G](spec/15-多维度文档与技术检查报告.md#发版前勾选总表) / [Runbook §2.7.4](../../ops/RUNBOOK.md#check-g-dual-score-gate)）** — **非** P0 十二项子项；**合并进 `main` 的 CI 绿灯** **不** **替代** **下列发布前动作**。
+**Check-G · 定型包 · 签字链（并联 [15 附录〇 · Check-G](spec/15-多维度文档与技术检查报告.md#发版前勾选总表) / [Runbook §2.7.4](../ops/RUNBOOK.md#check-g-dual-score-gate)）** — **非** P0 十二项子项；**合并进 `main` 的 CI 绿灯** **不** **替代** **下列发布前动作**。
 
 - [ ] **11.13** **`GO_FINAL_*`**：用作**定型发布包**目录名时，**同次封口**在仓内只认**一个** bundle 根路径（勿复制出多套同名前缀目录）；一般过门仍用 **`evidence/GO_YYYYMMDD/`**（与上文 **Evidence path 约定** 一致）。
-- [ ] **11.14** **Check-G 封口三连**已在**发布前/发布动作**执行（见 [Runbook §2.7.4](../../ops/RUNBOOK.md#check-g-dual-score-gate)「**封口命令（建议顺序）**」）：**`bash scripts/check-dual-score-gate.sh`** → **`python scripts/dev/validate_dual_score_signoff.py <评分件路径> --bundle-root <GO包根目录>`** → **`python scripts/dev/validate_evidence_manifest.py validate <GO包根目录>`**；**`GO_FINAL_*`** **须**对第三步加 **`--verify-artifact-files`**。
+- [ ] **11.14** **Check-G 封口三连**已在**发布前/发布动作**执行（见 [Runbook §2.7.4](../ops/RUNBOOK.md#check-g-dual-score-gate)「**封口命令（建议顺序）**」）：**`bash scripts/check-dual-score-gate.sh`** → **`python scripts/dev/validate_dual_score_signoff.py <评分件路径> --bundle-root <GO包根目录>`** → **`python scripts/dev/validate_evidence_manifest.py validate <GO包根目录>`**；**`GO_FINAL_*`** **须**对第三步加 **`--verify-artifact-files`**。
 - [ ] **11.15** **`dual_score_signoff.v1.json`**：**`stage`**、**`risk_acceptances[]`**、**`evidence_refs[]`** 已与当次**会议纪要 / PR / TT** **人工对读**一致（**谁 / 何时 / 依据**可追溯）。**`evidence_refs[]`** **须**含与本发布一致的 **commit 可解析行**（推荐 **`commit:`** + **40 位小写 hex**，与 **§11.16** / **`g1_snapshot`** 同源）；建议并列 **`tag:`**、**`PR:`**（例：`commit: abcdef…`、`tag: v1.0.x`、`PR: #482`），以绑定**评分对应的构建 / release 状态**（仍用字符串数组，**不**改 schema）。
 - [ ] **11.16** 发版 **PR** 或工单已写明**本发布 tip `git` commit SHA**（与 **§0.1** **`TRAVELTRUST_GIT_SHA` / tag / 镜像 digest** 可追溯对齐）。
 - [ ] **11.17** **供应链留痕**：本发布与根目录 **`Cargo.lock`**、**`frontend/package-lock.json`**（及 CI **run** 或制品号，若有）已能在工单/PR 中关联，便于事后对拍（**不**替代 **§0.1** 运行时 SHA）。
-- [ ] **11.18** **封口执行留痕**：**Check-G 三连**（[Runbook §2.7.4](../../ops/RUNBOOK.md#check-g-dual-score-gate)）成功运行的**终端输出**已粘贴至发版 **PR/工单**，或落入本 bundle **`artifacts/check-g-seal.log`**（或等价可链 URL）— **不**引入 CI 强制，仅满足审计「发生过、可核对」。
+- [ ] **11.18** **封口执行留痕**：**Check-G 三连**（[Runbook §2.7.4](../ops/RUNBOOK.md#check-g-dual-score-gate)）成功运行的**终端输出**已粘贴至发版 **PR/工单**，或落入本 bundle **`artifacts/check-g-seal.log`**（或等价可链 URL）— **不**引入 CI 强制，仅满足审计「发生过、可核对」。
 
 - [ ] **11.1 （P0 #1）** [08-4](spec/08-4-对外口径包.md) 文末 **定稿日期、法务/运营签字或邮件确认** 已在官方总表 **P0 #1** 勾选。
   - **Evidence path:** `docs/spec/08-4-对外口径包.md`（文末三要素 Git 可追溯）；可选扫描件/邮件落 **`evidence/GO_YYYYMMDD/artifacts/08-4-signoff/`**（或内网制品库路径写入 **`manifest.json` → `artifacts`**）。
-  - **Run command:** 人工完成 08-4 文末更新后 `git add docs/spec/08-4-对外口径包.md && git commit -m "…"`；bundle 内另附 **`manifest.json` + `manifest.sha256`**（格式见 [evidence/README](../../evidence/README.md)）。
+  - **Run command:** 人工完成 08-4 文末更新后 `git add docs/spec/08-4-对外口径包.md && git commit -m "…"`；bundle 内另附 **`manifest.json` + `manifest.sha256`**（格式见 [evidence/README](../evidence/README.md)）。
 
 - [ ] **11.2 （P0 #2）** [08-2](spec/08-2-附录-闭合工单表.md) 各工单 **Owner + backup** 已填实，官方总表 **P0 #2** 已勾选。
   - **Evidence path:** `docs/spec/08-2-附录-闭合工单表.md`（提交 SHA）；或 **`evidence/GO_YYYYMMDD/artifacts/08-2-owner-snapshot.md`**（粘贴关键表片段 + 日期）。
@@ -183,39 +183,39 @@
 
 - [ ] **11.3 （P0 #3）** [08-2 审查一](spec/08-2-附录-闭合工单表.md#发版前审查一关键语义一致性审查表) **11 行**已逐行勾选并填审查人/日期/结论，**P0 #3** 已勾选。
   - **Evidence path:** `docs/spec/08-2-附录-闭合工单表.md`（审查一表内勾选与签字可追溯）。
-  - **Run command:** 人工逐行勾选审查一；`git commit`；**Runbook** [§12.9](../../ops/RUNBOOK.md) 定稿顺序。
+  - **Run command:** 人工逐行勾选审查一；`git commit`；**Runbook** [§12.9](../ops/RUNBOOK.md) 定稿顺序。
 
 - [ ] **11.4 （P0 #4）** [08-2 审查二](spec/08-2-附录-闭合工单表.md#发版前审查二gate-冲突矩阵与优先级规则) **最后更新 / 评审日期 / Evidence 路径**已填实，**P0 #4** 已勾选。
-  - **Evidence path:** 08-2 审查二表本体；可选矩阵副本 **`evidence/GO_YYYYMMDD/artifacts/gate-cross-check.md`**（与 [Runbook §12.7](../../ops/RUNBOOK.md) 一致）。
+  - **Evidence path:** 08-2 审查二表本体；可选矩阵副本 **`evidence/GO_YYYYMMDD/artifacts/gate-cross-check.md`**（与 [Runbook §12.7](../ops/RUNBOOK.md) 一致）。
   - **Run command:** `bash scripts/check-08-consistency.sh`（机读辅助，**不替代**审查二）；`bash scripts/check-governance-doc-linkage.sh`（涉 82～84/08-4 时）；结果日志可落入 **`evidence/GO_YYYYMMDD/artifacts/`**。
 
 - [ ] **11.5 （P0 #5）** [08-4](spec/08-4-对外口径包.md) **定稿检查勾选**（企业级/穿透/自检七项等）已完成，**P0 #5** 已勾选。
   - **Evidence path:** `docs/spec/08-4-对外口径包.md` 文末与文内勾选区；并联 **08-3** 时可将 `bash scripts/check-08-evidence-pointer.sh` 输出存 **`evidence/GO_YYYYMMDD/artifacts/check-08-evidence-pointer.log`**。
   - **Run command:** 人工勾选 08-4 定稿检查；可选 `bash scripts/check-08-evidence-pointer.sh`。
 
-- [ ] **11.6 （P0 #6）** [Runbook §2](../../ops/RUNBOOK.md) **P0 最小九项、值班/批准人真实联系人**已与 08-2 定稿口径一致，**P0 #6** 已勾选。
+- [ ] **11.6 （P0 #6）** [Runbook §2](../ops/RUNBOOK.md) **P0 最小九项、值班/批准人真实联系人**已与 08-2 定稿口径一致，**P0 #6** 已勾选。
   - **Evidence path:** `ops/RUNBOOK.md`（§2 表 + P0 九项表 Git 可追溯）；或 **`evidence/GO_YYYYMMDD/artifacts/runbook-p0-table-snapshot.md`**。
   - **Run command:** 编辑 `ops/RUNBOOK.md` §2 → `git commit`。
 
-- [ ] **11.7 （P0 #7）** [evidence/README](../../evidence/README.md) 与 **08-2 Evidence 列**：各 Gate 产物路径或 manifest hash 已填实，**P0 #7** 已勾选。
-  - **Evidence path:** **`evidence/GO_YYYYMMDD/manifest.json`** + **`manifest.sha256`**（必填字段见 [evidence/README](../../evidence/README.md)）；索引器快照可选 **`indexer_public_snapshot_*.json`**、**`indexer_evidence_bundle_*.zip`**（同目录）。
-  - **Run command:** `cp -r evidence/GO_YYYYMMDD_template evidence/GO_YYYYMMDD` 后编辑 manifest；**`sha256sum manifest.json > manifest.sha256`**（或等价）；索引器留痕：**`bash scripts/write-indexer-evidence.sh`** 或 **`bash scripts/internal-indexer-ops.sh evidence`** / **`evidence-bundle`**（须 **`API_BASE_URL` + `INTERNAL_API_SECRET`**，见 [Runbook §2.55 / §12.5](../../ops/RUNBOOK.md)）；前端 Gate-5：**`./scripts/gen-frontend-manifest.sh`**（可选 **`EVIDENCE_GO_DIR=evidence/GO_YYYYMMDD`**）。
+- [ ] **11.7 （P0 #7）** [evidence/README](../evidence/README.md) 与 **08-2 Evidence 列**：各 Gate 产物路径或 manifest hash 已填实，**P0 #7** 已勾选。
+  - **Evidence path:** **`evidence/GO_YYYYMMDD/manifest.json`** + **`manifest.sha256`**（必填字段见 [evidence/README](../evidence/README.md)）；索引器快照可选 **`indexer_public_snapshot_*.json`**、**`indexer_evidence_bundle_*.zip`**（同目录）。
+  - **Run command:** `cp -r evidence/GO_YYYYMMDD_template evidence/GO_YYYYMMDD` 后编辑 manifest；**`sha256sum manifest.json > manifest.sha256`**（或等价）；索引器留痕：**`bash scripts/write-indexer-evidence.sh`** 或 **`bash scripts/internal-indexer-ops.sh evidence`** / **`evidence-bundle`**（须 **`API_BASE_URL` + `INTERNAL_API_SECRET`**，见 [Runbook §2.55 / §12.5](../ops/RUNBOOK.md)）；前端 Gate-5：**`./scripts/gen-frontend-manifest.sh`**（可选 **`EVIDENCE_GO_DIR=evidence/GO_YYYYMMDD`**）。
 
 - [ ] **11.8 （P0 #8）** [00 文档索引 · 发版前快速核对（7 项）](spec/00-文档索引.md#发版前快速核对7项) 已逐项执行（含 **07 §四 4.3**、版本表、签字等并联），**P0 #8** 已勾选。
   - **Evidence path:** `docs/spec/00-文档索引.md` 版本表 Git 记录；机读日志 **`evidence/GO_YYYYMMDD/artifacts/pre-release-automation.log`**。
-  - **Run command:** **`bash scripts/pre-release-automation.sh`**（或 **`.ps1`**，见 [scripts/README](../../scripts/README.md)、[缺口总表](spec/缺口与待补-官方总表.md) 核查流水步骤 4）；并联 **`bash scripts/run-check-04-routes.sh`**、**`bash scripts/check-55-s13.sh`**（与 7 项中 08-3/04 勾选对应）。
+  - **Run command:** **`bash scripts/pre-release-automation.sh`**（或 **`.ps1`**，见 [scripts/README](../scripts/README.md)、[缺口总表](spec/缺口与待补-官方总表.md) 核查流水步骤 4）；并联 **`bash scripts/run-check-04-routes.sh`**、**`bash scripts/check-55-s13.sh`**（与 7 项中 08-3/04 勾选对应）。
 
 - [ ] **11.9 （P0 #9）** [27-P26 实现记录](spec/27-archived/27-P26-实现记录.md) **可调通验收**（脚本/门禁表）已按该文执行并勾选，**P0 #9** 已勾选。
   - **Evidence path:** 27-P26 §二 **验收日期 / 结果** 表（Git 可追溯）；执行日志 **`evidence/GO_YYYYMMDD/artifacts/p26-smoke.log`**（粘贴 `cargo test` / smoke 输出）。
   - **Run command:** **`cargo test -p traveltrust-api`**；API 就绪时 **`bash scripts/smoke-api-public-routes.sh`**（见脚本头注释设 `BASE_URL`）；若仓库内存在 **`scripts/p4_chain_off_e2e.sh`**（27-P26 原文口径）则优先执行并将输出落入 **`artifacts/`**。争议路径可选文档所列 **`p10_e2e_dispute`** 类脚本（若存在）。
 
-- [ ] **11.10 （P0 #10）** **E2E 三项**在目标环境已留痕（`YYYY-MM-DD` 格式，见 [evidence/README](../../evidence/README.md)、[01 发布与 E2E](spec/01-总库总览.md)），**P0 #10** 已勾选。
-  - **Evidence path:** **`evidence/GO_YYYYMMDD/artifacts/e2e-normal-release.md`**、**`e2e-dispute-three-terminals.md`**、**`e2e-three-timeouts.md`**（文件名与 [evidence/README · 07-p0-e2e-three](../../evidence/README.md#07-p0-e2e-three) 一致）；并入 **`manifest.json` → `artifacts`**。
+- [ ] **11.10 （P0 #10）** **E2E 三项**在目标环境已留痕（`YYYY-MM-DD` 格式，见 [evidence/README](../evidence/README.md)、[01 发布与 E2E](spec/01-总库总览.md)），**P0 #10** 已勾选。
+  - **Evidence path:** **`evidence/GO_YYYYMMDD/artifacts/e2e-normal-release.md`**、**`e2e-dispute-three-terminals.md`**、**`e2e-three-timeouts.md`**（文件名与 [evidence/README · 07-p0-e2e-three](../evidence/README.md#07-p0-e2e-three) 一致）；并入 **`manifest.json` → `artifacts`**。
   - **Run command:** 目标环境按 01/53 执行三项并记录命令与结论；合约侧可选 **`cd contracts && forge test`**（与部署网络一致时）；将 tx hash / 订单 id 写入上述 **`artifacts/*.md`**。
 
-- [ ] **11.11 （P0 #11）** [Runbook §4](../../ops/RUNBOOK.md) **资损 runbook 演练**至少登记一次（与 01 §9 一致），**P0 #11** 已勾选。
+- [ ] **11.11 （P0 #11）** [Runbook §4](../ops/RUNBOOK.md) **资损 runbook 演练**至少登记一次（与 01 §9 一致），**P0 #11** 已勾选。
   - **Evidence path:** **`evidence/DR-YYYYQX-0N/`** 或 **`evidence/GO_YYYYMMDD/artifacts/runbook-dr-*.md`**（与 §4 演练历史表 **产物** 列互指）；示例见 Runbook §4 已登记行。
-  - **Run command:** 按 [Runbook §1](../../ops/RUNBOOK.md) 场景 **①～⑤** 之一执行桌面演练；将 **日期 / 场景 / 结果 / 产物路径** 填入 Runbook §4 表；产物 MD/JSON 落 **`evidence/…/artifacts/`**。
+  - **Run command:** 按 [Runbook §1](../ops/RUNBOOK.md) 场景 **①～⑤** 之一执行桌面演练；将 **日期 / 场景 / 结果 / 产物路径** 填入 Runbook §4 表；产物 MD/JSON 落 **`evidence/…/artifacts/`**。
 
 - [ ] **11.12 （P0 #12）** [27-P10-02 十三勾选表](spec/27-archived/27-P10-02-十三勾选表.md) **02 §十三 发版前** **13.1 / 13.2 / 13.3** 已勾选，**P0 #12** 已勾选。
   - **Evidence path:** `docs/spec/27-archived/27-P10-02-十三勾选表.md`（勾选与日期 Git 可追溯）；或 **`evidence/GO_YYYYMMDD/artifacts/02-sec13-snapshot.md`**。

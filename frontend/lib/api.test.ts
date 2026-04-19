@@ -47,6 +47,24 @@ describe("lib/api", () => {
     );
   });
 
+  it("routes include traveltrust page-brief (04 B-191)", () => {
+    expect(routes.traveltrustPageBrief).toBe("/api/v1/traveltrust/page-brief");
+    expect(apiUrl(routes.traveltrustPageBrief)).toBe(
+      `${apiBase}/api/v1/traveltrust/page-brief`,
+    );
+  });
+
+  it("routes include trust growth P-SCALE1", () => {
+    expect(routes.trustGrowthIngest).toBe("/api/v1/trust-growth/ingest");
+    expect(routes.trustGrowthConfig).toBe("/api/v1/trust-growth/config");
+  });
+
+  it("routes include trust growth admin P-OBS1", () => {
+    expect(routes.admin.trustGrowthObservability).toBe("/api/v1/admin/trust-growth/observability");
+    expect(routes.admin.trustGrowthControl).toBe("/api/v1/admin/trust-growth/control");
+    expect(routes.admin.trustGrowthRollbackControl).toBe("/api/v1/admin/trust-growth/rollback-control");
+  });
+
   it("routes include governance placeholders (49 G / 84)", () => {
     expect(routes.governancePool).toBe("/api/v1/governance/pool");
     expect(routes.governanceRewards).toBe("/api/v1/governance/rewards");

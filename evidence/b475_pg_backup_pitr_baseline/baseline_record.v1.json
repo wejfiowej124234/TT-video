@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust_pg_backup_pitr_baseline.v1",
+  "status": "PLANNED",
+  "milestone": "单库生产级基线收口 · L0",
+  "wal_archive_destination_desc": "",
+  "logical_backup_schedule_desc": "",
+  "last_restore_drill_utc": null,
+  "notes": "Owner：完成 WAL 归档、逻辑备份节奏与恢复演练后，将 status 升为 PASS 并补全三字段；不可用环境可书面 WAIVED 并写明原因（见 TT-B475 Runbook §1）。"
+}

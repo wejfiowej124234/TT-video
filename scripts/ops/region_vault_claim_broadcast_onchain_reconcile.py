@@ -5,10 +5,22 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+from region_vault_claim_broadcast_break_glass_roles_b303 import (
+    B303_ACK_ENV,
+    B303_APPROVER_ENV,
+    B303_TICKET_ENV,
+    require_b303_metadata_if_b287_active,
+)
+from region_vault_claim_broadcast_manual_override_b287 import (
+    OVERRIDE_REASON_ENV,
+    b287_block_for_allow_non_go,
+)
 
 RECONCILE_RULE_VERSION = "region_vault_claim_broadcast_onchain_reconcile_v1"
 RECONCILE_ANCHOR = "14-REGIONVAULT-CLAIM-BROADCAST-ONCHAIN-RECONCILE-V1"
@@ -79,6 +91,7 @@ def run_onchain_reconcile(
     require_execution_go: bool,
     require_archive_go: bool,
     strict_receipt_archive_sha256: bool,
+    b287_manual_override: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     if execution_report.get("anchor") != EXECUTION_ANCHOR:
         raise ValueError(f"execution_report.anchor must be {EXECUTION_ANCHOR!r}")
@@ -293,6 +306,9 @@ def run_onchain_reconcile(
             last_o = o_int
 
     verdict = "GO" if not blocking else "NO_GO"
+    b303_meta = require_b303_metadata_if_b287_active(
+        b287_manual_override, tool_label="region_vault_claim_broadcast_onchain_reconcile"
+    )
     generated = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     report: dict[str, Any] = {
@@ -313,6 +329,10 @@ def run_onchain_reconcile(
         "reconcile_verdict": verdict,
         "notes": "B-264: read-only cross-check B-262 vs B-263; no RPC; no new HTTP; no contract changes.",
     }
+    if b287_manual_override is not None:
+        report["b287_manual_override"] = b287_manual_override
+    if b303_meta is not None:
+        report["b303_break_glass_roles"] = b303_meta
     canon = {k: v for k, v in report.items() if k != "onchain_reconcile_canonical_sha256_hex"}
     report["onchain_reconcile_canonical_sha256_hex"] = _sha256_canonical_json(canon)
     return report
@@ -324,6 +344,14 @@ def _cmd_reconcile_onchain(args: argparse.Namespace) -> int:
     er = json.loads(raw_er.decode("utf-8"))
     arch = json.loads(raw_arch.decode("utf-8"))
     try:
+        b287_meta = b287_block_for_allow_non_go(
+            {
+                "allow_non_go_execution_report": bool(args.allow_non_go_execution_report),
+                "allow_non_go_archive": bool(args.allow_non_go_archive),
+                "allow_non_go_reconcile": bool(args.allow_non_go_reconcile),
+            },
+            tool_label="region_vault_claim_broadcast_onchain_reconcile",
+        )
         out = run_onchain_reconcile(
             er,
             raw_er,
@@ -332,6 +360,7 @@ def _cmd_reconcile_onchain(args: argparse.Namespace) -> int:
             require_execution_go=not args.allow_non_go_execution_report,
             require_archive_go=not args.allow_non_go_archive,
             strict_receipt_archive_sha256=args.strict_receipt_archive_sha256,
+            b287_manual_override=b287_meta,
         )
     except ValueError as e:
         print(f"reconcile-onchain: FAIL: {e}", file=sys.stderr)
@@ -434,6 +463,44 @@ def _cmd_self_test(_: argparse.Namespace) -> int:
     )
     assert out_bad["reconcile_verdict"] == "NO_GO", out_bad
 
+    saved_or = os.environ.get(OVERRIDE_REASON_ENV)
+    saved_b303: dict[str, str | None] = {
+        B303_ACK_ENV: os.environ.get(B303_ACK_ENV),
+        B303_APPROVER_ENV: os.environ.get(B303_APPROVER_ENV),
+        B303_TICKET_ENV: os.environ.get(B303_TICKET_ENV),
+    }
+    try:
+        os.environ[OVERRIDE_REASON_ENV] = "B-287 onchain self-test: audited override for non-GO inputs."
+        os.environ[B303_ACK_ENV] = "1"
+        os.environ[B303_APPROVER_ENV] = "onchain-selftest-approver"
+        os.environ[B303_TICKET_ENV] = "B-303-ONCHAIN-SELFTEST"
+        blk = b287_block_for_allow_non_go(
+            {"allow_non_go_execution_report": True, "allow_non_go_archive": True},
+            tool_label="onchain_reconcile self-test",
+        )
+        out_b287 = run_onchain_reconcile(
+            er,
+            raw_er,
+            arch_bad,
+            raw_bad,
+            require_execution_go=False,
+            require_archive_go=False,
+            strict_receipt_archive_sha256=True,
+            b287_manual_override=blk,
+        )
+        assert out_b287.get("b287_manual_override", {}).get("implementation_tt") == "TT-B287-MANUAL-OVERRIDE-WITH-JUSTIFICATION-001"
+        assert out_b287.get("b303_break_glass_roles", {}).get("implementation_tt") == "TT-B303-BREAK-GLASS-AND-ROLLBACK-ROLES-001"
+    finally:
+        if saved_or is None:
+            os.environ.pop(OVERRIDE_REASON_ENV, None)
+        else:
+            os.environ[OVERRIDE_REASON_ENV] = saved_or
+        for k, v in saved_b303.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+
     print("region_vault_claim_broadcast_onchain_reconcile self-test OK", file=sys.stderr)
     return 0
 
@@ -449,17 +516,17 @@ def main() -> int:
     r.add_argument(
         "--allow-non-go-reconcile",
         action="store_true",
-        help="Write output and exit 0 even when reconcile_verdict is NO_GO",
+        help="Write output and exit 0 even when reconcile_verdict is NO_GO; B-287: requires OVERRIDE_REASON env when passed",
     )
     r.add_argument(
         "--allow-non-go-execution-report",
         action="store_true",
-        help="Do not require execution_verdict GO",
+        help="Do not require execution_verdict GO; B-287: requires OVERRIDE_REASON env when passed",
     )
     r.add_argument(
         "--allow-non-go-archive",
         action="store_true",
-        help="Do not require archive_verdict GO",
+        help="Do not require archive_verdict GO; B-287: requires OVERRIDE_REASON env when passed",
     )
     r.add_argument(
         "--strict-receipt-archive-sha256",

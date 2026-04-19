@@ -19,20 +19,76 @@
         "type": "tuple",
         "internalType": "struct Escrow.EscrowParams",
         "components": [
-          { "name": "chainId", "type": "uint256", "internalType": "uint256" },
-          { "name": "orderId", "type": "bytes32", "internalType": "bytes32" },
-          { "name": "snapshotHash", "type": "bytes32", "internalType": "bytes32" },
-          { "name": "schemaVersion", "type": "uint16", "internalType": "uint16" },
-          { "name": "traveler", "type": "address", "internalType": "address" },
-          { "name": "guide", "type": "address", "internalType": "address" },
-          { "name": "platformFeeRecipient", "type": "address", "internalType": "address" },
-          { "name": "token", "type": "address", "internalType": "address" },
-          { "name": "totalAmount", "type": "uint256", "internalType": "uint256" },
-          { "name": "platformFeeBps", "type": "uint16", "internalType": "uint16" },
-          { "name": "serviceStart", "type": "uint64", "internalType": "uint64" },
-          { "name": "serviceEnd", "type": "uint64", "internalType": "uint64" },
-          { "name": "disputeWindowSeconds", "type": "uint32", "internalType": "uint32" },
-          { "name": "arbitrator", "type": "address", "internalType": "address" }
+          {
+            "name": "chainId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "orderId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "snapshotHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "schemaVersion",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "traveler",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "guide",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "platformFeeRecipient",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "totalAmount",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "platformFeeBps",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "serviceStart",
+            "type": "uint64",
+            "internalType": "uint64"
+          },
+          {
+            "name": "serviceEnd",
+            "type": "uint64",
+            "internalType": "uint64"
+          },
+          {
+            "name": "disputeWindowSeconds",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "arbitrator",
+            "type": "address",
+            "internalType": "address"
+          }
         ]
       }
     ],

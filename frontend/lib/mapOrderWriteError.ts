@@ -32,6 +32,8 @@ export function mapOrderWriteError(
   if (code === "email_already_registered") return t("auth_error_email_already_registered");
   if (code === "seed_test_accounts_disabled") return t("auth_error_seed_test_accounts_disabled");
   if (code === "auth_db_persist_failed") return t("auth_error_auth_db_persist_failed");
+  if (code === "api_html_not_json") return t("auth_error_api_html_not_json");
+  if (code === "api_invalid_json_body") return t("auth_error_api_invalid_json_body");
   if (code === "invalid_credentials") return t("auth_error_invalid_credentials");
   if (code === "refresh_token_required") return t("auth_error_refresh_token_required");
   if (code === "invalid_token") return t("auth_error_invalid_token");

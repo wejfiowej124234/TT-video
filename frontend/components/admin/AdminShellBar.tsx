@@ -14,6 +14,7 @@ export default function AdminShellBar() {
     pathname === "/admin/finance-reconciliation" ||
     pathname.startsWith("/admin/finance-reconciliation/");
   const onObservability = pathname === "/admin/observability";
+  const onTrustGrowth = pathname === "/admin/trust-growth" || pathname.startsWith("/admin/trust-growth/");
   const onCrossCheck = pathname === "/admin/cross-check";
   const onDriftSummary = pathname === "/admin/drift-summary";
 
@@ -48,6 +49,16 @@ export default function AdminShellBar() {
             aria-current={onObservability ? "page" : undefined}
           >
             {t("admin_observability_title")}
+          </Link>
+          <span className="text-ink-300 select-none" aria-hidden>
+            ·
+          </span>
+          <Link
+            href="/admin/trust-growth"
+            className={`${touchTargetLink44Classes} font-medium motion-sub rounded-[var(--radius-sm)] ${onTrustGrowth ? "text-ink-900" : "text-travel-600 hover:text-travel-700 hover:underline"} ${travelFocusRingOffset2Classes}`}
+            aria-current={onTrustGrowth ? "page" : undefined}
+          >
+            {t("admin_shell_nav_trust_growth")}
           </Link>
           <span className="text-ink-300 select-none" aria-hidden>
             ·

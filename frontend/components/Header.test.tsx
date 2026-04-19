@@ -46,6 +46,7 @@ vi.mock("@/lib/apiClient", () => ({
   clearGetMeCache: vi.fn(),
   postLogout: (...args: unknown[]) => postLogout(...args),
   applyLocalLogoutAfterServerOk: (...args: unknown[]) => applyLocalLogoutAfterServerOk(...args),
+  AUTH_USER_ID_KEY: "traveltrust_user_id",
 }));
 
 describe("Header (54-S18 UserMenu)", () => {
@@ -102,7 +103,25 @@ describe("Header (54-S18 UserMenu)", () => {
     await waitFor(() => screen.getByRole("button", { name: "用户菜单" }));
     fireEvent.click(screen.getByRole("button", { name: "用户菜单" }));
     const profile = screen.getByRole("link", { name: "个人中心" });
-    expect(profile.getAttribute("href")).toBe("/me");
+    expect(profile.getAttribute("href")).toBe("/community/me");
+  });
+
+  it("user menu includes 多重身份 links (guide / provider register / steward)", async () => {
+    render(
+      <LocaleProvider>
+        <Header />
+      </LocaleProvider>
+    );
+    await waitFor(() => screen.getByRole("button", { name: "用户菜单" }));
+    fireEvent.click(screen.getByRole("button", { name: "用户菜单" }));
+    expect(screen.getByRole("group", { name: "多重身份" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "申请向导" }).getAttribute("href")).toBe("/guide/register");
+    expect(screen.getByRole("link", { name: "商家 / 服务方入驻" }).getAttribute("href")).toBe(
+      "/auth/register?role=provider"
+    );
+    expect(screen.getByRole("link", { name: "区域主理人申请" }).getAttribute("href")).toBe(
+      "/auth/register?role=steward"
+    );
   });
 
   it("without traveltrust_user_id shows login link, not user menu", () => {

@@ -277,7 +277,7 @@ export default function GuideRegisterPage() {
             <p className="mt-4">
               <Link href="/guides" className={`${touchTargetLink44Classes} text-travel-500 text-small hover:underline ${travelFocusRingOffset2Classes}`}>{t("guideRegister_doneGuideList")}</Link>
               {" · "}
-              <Link href="/me" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("guideRegister_doneMe")}</Link>
+              <Link href="/community/me" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("guideRegister_doneMe")}</Link>
             </p>
           </div>
         </div>
@@ -296,7 +296,7 @@ export default function GuideRegisterPage() {
             <p className="mt-4">
               <Link href="/guides" className={`${touchTargetLink44Classes} text-travel-500 text-small hover:underline ${travelFocusRingOffset2Classes}`}>{t("guideRegister_guideList")}</Link>
               {" · "}
-              <Link href="/me" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("guideRegister_me")}</Link>
+              <Link href="/community/me" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("guideRegister_me")}</Link>
             </p>
           </div>
         </div>
@@ -454,7 +454,7 @@ export default function GuideRegisterPage() {
         <p className="mt-4 text-meta text-ink-500">
           <Link href="/guides" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("guideRegister_guideList")}</Link>
           {" · "}
-          <Link href="/me" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("guideRegister_me")}</Link>
+          <Link href="/community/me" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("guideRegister_me")}</Link>
         </p>
         <ProductCrossNav
           ariaLabelKey="guide_register_relatedNav_aria"

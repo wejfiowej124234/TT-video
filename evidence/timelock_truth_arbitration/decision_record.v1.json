@@ -1,0 +1,32 @@
+{
+  "schema": "traveltrust.timelock_truth_arbitration.v1",
+  "mother_table_id": "B-434",
+  "task_card": "TT-B434-FUND-TIMELOCK-TRUTH-ARBITRATION-001",
+  "decided_at_utc": "2026-04-16T14:00:00Z",
+  "chain_id": 11155111,
+  "network": "sepolia",
+  "timelock_truth_decision": "B",
+  "decision_title_zh": "以现有 DeployGovernanceStack 批次 GovernanceTimelock 为唯一 Timelock 真源",
+  "canonical_timelock_address": "0x1E94f265106521B009aD395525cF87Ed00dd84a6",
+  "governor_address_same_stack": "0xcAc92Fb6c9594CE4a72bE90D3B7FF0B9ca33FE5b",
+  "governance_token_address_same_stack": "0x50F0B26167EC73e327D97c54c81F1c1B9eFB22f7",
+  "deployer_eoa_reference": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "deploy_batch_block_reference": 10669413,
+  "evidence_cross_refs": [
+    "evidence/runtime_chain_ssot_verify/SEPOLIA_DEPLOYER_BLOCKSCOUT_NOTE.md",
+    "evidence/runtime_chain_ssot_verify/run_20260416T112402Z/README.md"
+  ],
+  "rationale_summary_zh": "治理栈已在 Sepolia 部署并与 runtime-chain-ssot 治理三角对拍；若未经裁断即整包广播 Deploy.s.sol，将额外产生第二套 GovernanceTimelock，与现有 GOVERNOR/TIMELOCK 真值冲突并污染 meta/对账。",
+  "operational_constraints_zh": [
+    "禁止将 vanilla Deploy.s.sol 同批 new GovernanceTimelock 的地址与当前 TIMELOCK_ADDRESS / GOVERNOR_ADDRESS 混写入同一环境 .env 作为一套真值。",
+    "全栈资金合约（FeeRouter/池/RegionVault/Treasury 等）须以 canonical_timelock_address 为 owner/spender/白名单目标接线；可拆脚本、分步部署或迁移脚本，而非默认整包 Deploy.s.sol 输出即真。",
+    "GET /meta → chain.contracts.timelock_address 须与 canonical_timelock_address 一致后再宣称环境闭环。"
+  ],
+  "impact_notes_zh": {
+    "seven_keys_and_meta": "TIMELOCK_ADDRESS 保持本裁断地址；后续仅增补 FEE_ROUTER_ADDRESS 等扩展键，须与接线一致。",
+    "b417_b431": "既有 Governor/Timelock/Token 证据链保持锚定本栈；新 FeeRouter 部署后补 runtime-chain-ssot 的 feeRouter.owner 腿与 B-431 测试网侧对拍按 Runbook。",
+    "tt_b435": "下一执行 TT-B435：在不解绑本 Timelock 的前提下完成资金侧部署与测试网发布闭环。"
+  },
+  "supersedes": null,
+  "notes": "若未来改选方案 A（以新 Deploy.s.sol Timelock 为真），须发布新的 decision_record 并显式作废本记录（supersedes 链）。"
+}

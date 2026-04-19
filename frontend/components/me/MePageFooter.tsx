@@ -7,20 +7,23 @@ import { FOCUS_RING } from "./constants";
 
 export interface MePageFooterProps {
   t: (k: string) => string;
+  /** 社区「我的」：缩短页尾，隐藏基建标签墙 */
+  variant?: "full" | "compact";
 }
 
-export default function MePageFooter({ t }: MePageFooterProps) {
+export default function MePageFooter({ t, variant = "full" }: MePageFooterProps) {
+  const compact = variant === "compact";
   return (
-    <footer className="mt-8 pt-6 border-t border-slate-700/50">
-      <TrustInfraWall />
+    <footer className={compact ? "mt-4 pt-3 border-t border-slate-700/45" : "mt-8 pt-6 border-t border-slate-700/50"}>
+      {compact ? null : <TrustInfraWall />}
       <ProductCrossNav
         ariaLabelKey="me_relatedNav_aria"
         showGuides
-        className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-300"
-        linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 font-medium motion-sub ${FOCUS_RING}`}
+        className={`flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-300 ${compact ? "mt-0" : "mt-4"}`}
+        linkClassName={`inline-flex items-center justify-center text-cyan-300 hover:text-cyan-100 font-medium motion-sub ${compact ? "min-h-[40px] px-1" : "min-h-[44px]"} ${FOCUS_RING}`}
         separatorClassName="text-slate-500"
       />
-      <p className="mt-4 text-center text-small">
+      <p className={`text-center ${compact ? "mt-2 text-[0.7rem] text-slate-400" : "mt-4 text-small"}`}>
         <Link href="/" className={`text-cyan-300 hover:text-cyan-100 font-medium motion-sub ${FOCUS_RING}`}>
           {t("me_back")}
         </Link>

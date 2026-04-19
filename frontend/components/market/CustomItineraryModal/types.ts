@@ -21,7 +21,7 @@ export interface DayPlan {
 }
 
 /**
- * 向导创作：每日与游客一致；景区/美食为向导上传，城市交通/酒店由平台预设。
+ * 向导创作：每日与旅行者一致；景区/美食为向导上传，城市交通/酒店由平台预设。
  * @deprecated 字段仅为兼容历史/持久化数据保留，新逻辑不再使用。
  */
 export interface GuideDayPlan {
@@ -44,7 +44,7 @@ export interface GuideDayPlan {
 }
 
 /**
- * 自定义行程表单状态（游客/向导创建行程弹窗）。
+ * 自定义行程表单状态（旅行者/向导创建行程弹窗）。
  * 与 useItineraryForm、useQuoteCalculation 配合；金额与费用为字符串便于输入与展示。
  */
 export interface CustomItineraryForm {
@@ -114,7 +114,7 @@ export function defaultForm(totalDays: number = 5): CustomItineraryForm {
   };
 }
 
-/** 游客表单区块：样式与引用，由 index 传入 */
+/** 旅行者表单区块：样式与引用，由 index 传入 */
 export interface FormSectionStyles {
   labelClass: string;
   inputClass: string;
@@ -127,7 +127,7 @@ export interface FormSectionStyles {
 export type GuideLevelOptionWithPricing = { value: GuideLevel; labelKey: string; suggestedPerDay: number };
 
 /**
- * 游客表单区块 props（由 index 组合 useItineraryForm + useQuoteCalculation 传入）。
+ * 旅行者表单区块 props（由 index 组合 useItineraryForm + useQuoteCalculation 传入）。
  * 含表单状态、预算拆解、交通明细、样式类名与 i18n 的 t。
  */
 export interface TouristFormProps extends FormSectionStyles {

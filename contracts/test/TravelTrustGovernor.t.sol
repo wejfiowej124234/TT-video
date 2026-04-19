@@ -39,6 +39,8 @@ contract TravelTrustGovernorTest is Test {
         address o0 = makeAddr("o0");
         router = new FeeRouter(deployer, c0, s0, r0, o0);
         router.transferOwnership(address(tl));
+        tl.setAllowedExecutionTarget(address(router), true);
+        tl.setAllowedExecutionTarget(address(gov), true);
     }
 
     function test_COMP_B089_governor_full_cycle_propose_vote_queue_execute() public {
@@ -123,6 +125,104 @@ contract TravelTrustGovernorTest is Test {
         assertEq(router.BPS_GLOBAL_STAKERS(), b1);
         assertEq(router.BPS_GLOBAL_RESERVE(), b2);
         assertEq(router.BPS_GLOBAL_OPS(), b3);
+    }
+
+    /// **TT-B431-GOV-EXECUTE-CHAIN-READ-PAYLOAD-ALIGN-001**：`queue`→`execute` 后 **`getProposalActions`**、**`GovernanceTimelock.operations(queuedOpId)`** 与提案 **calldata** 字段级一致，且 **FeeRouter** 读数与 **payload** 解码一致（Foundry SSOT；**不**新增 ABI；**不**替代 **B-417** 测试网封口）。
+    function test_B431_governor_execute_chain_reads_match_payload_and_timelock_operation() public {
+        (uint256 pid, bytes32 queuedOpId, B431SetRoutingExpect memory exp) = _b431_propose_vote_queue();
+        _b431_execute_and_assert_alignment(pid, queuedOpId, exp);
+    }
+
+    struct B431SetRoutingExpect {
+        address c1;
+        address s1;
+        address r1;
+        address o1;
+        uint256 b0;
+        uint256 b1;
+        uint256 b2;
+        uint256 b3;
+    }
+
+    function _b431_propose_vote_queue()
+        internal
+        returns (uint256 pid, bytes32 queuedOpId, B431SetRoutingExpect memory exp)
+    {
+        exp = B431SetRoutingExpect({
+            c1: makeAddr("b431_bucket"),
+            s1: makeAddr("b431_stakers"),
+            r1: makeAddr("b431_reserve"),
+            o1: makeAddr("b431_ops"),
+            b0: 4000,
+            b1: 3000,
+            b2: 2000,
+            b3: 1000
+        });
+
+        bytes memory data = abi.encodeWithSelector(
+            FeeRouter.setRoutingConfig.selector,
+            exp.c1,
+            exp.s1,
+            exp.r1,
+            exp.o1,
+            exp.b0,
+            exp.b1,
+            exp.b2,
+            exp.b3
+        );
+
+        address[] memory targets = new address[](1);
+        targets[0] = address(router);
+        uint256[] memory values = new uint256[](1);
+        bytes[] memory calldatas = new bytes[](1);
+        calldatas[0] = data;
+
+        vm.prank(voter);
+        pid = gov.propose(targets, values, calldatas, "TT-B431 payload align");
+
+        vm.roll(block.number + 1);
+        vm.prank(voter);
+        gov.castVote(pid, 1);
+        vm.roll(block.number + 6);
+        assertEq(uint256(gov.state(pid)), uint256(ProposalState.Succeeded));
+
+        gov.queue(pid);
+        assertEq(uint256(gov.state(pid)), uint256(ProposalState.Queued));
+
+        (,,,,,, queuedOpId,,,) = gov.proposals(pid);
+        assertTrue(queuedOpId != bytes32(0));
+    }
+
+    function _b431_execute_and_assert_alignment(uint256 pid, bytes32 queuedOpId, B431SetRoutingExpect memory exp)
+        internal
+    {
+        (, bool doneBefore,,,) = tl.operations(queuedOpId);
+        assertFalse(doneBefore);
+
+        vm.warp(block.timestamp + 100);
+        gov.execute(pid);
+        assertEq(uint256(gov.state(pid)), uint256(ProposalState.Executed));
+
+        (, bool doneAfter,,,) = tl.operations(queuedOpId);
+        assertTrue(doneAfter);
+
+        (address[] memory gaT, uint256[] memory gaV, bytes[] memory gaC) = gov.getProposalActions(pid);
+        assertEq(gaT.length, 1);
+        assertEq(gaT[0], address(router));
+        assertEq(gaV[0], 0);
+        (, , address opTarget, uint256 opValue, bytes memory opData) = tl.operations(queuedOpId);
+        assertEq(opTarget, gaT[0]);
+        assertEq(opValue, gaV[0]);
+        assertEq(keccak256(opData), keccak256(gaC[0]));
+
+        assertEq(router.countryBucket(), exp.c1);
+        assertEq(router.globalStakers(), exp.s1);
+        assertEq(router.globalReserve(), exp.r1);
+        assertEq(router.globalOps(), exp.o1);
+        assertEq(router.BPS_COUNTRY(), exp.b0);
+        assertEq(router.BPS_GLOBAL_STAKERS(), exp.b1);
+        assertEq(router.BPS_GLOBAL_RESERVE(), exp.b2);
+        assertEq(router.BPS_GLOBAL_OPS(), exp.b3);
     }
 
     function test_COMP_B089_getPastVotes_matches_cast_weight() public {

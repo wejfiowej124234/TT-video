@@ -418,7 +418,7 @@ if command -v jq >/dev/null 2>&1; then
   if [[ "$ct" == "object" ]]; then
     cc759r=$(echo "$mb" | jq -r '.chain.contracts.rule // empty')
     [[ "$cc759r" == *"759"* ]] || fail "/meta JSON chain.contracts.rule must mention 759 (759), got \"$cc759r\""
-    c759_exp='["escrow_factory_address","fee_router_address","region_vault_address","escrow_platform_fee_recipient","staking_address","registry_address","chain_id_configured","rule","chain_contracts_top_keys","chain_contracts_top_keys_contract_759"]'
+    c759_exp='["guide_staking_address","staking_provider_address","governor_address","timelock_address","governance_token_address","fee_router_address","treasury_address","rule","chain_contracts_top_keys","chain_contracts_top_keys_contract_759"]'
     c759_got=$(echo "$mb" | jq -c '.chain.contracts.chain_contracts_top_keys // empty')
     [[ "$c759_got" == "$c759_exp" ]] || fail "/meta JSON chain.contracts.chain_contracts_top_keys must equal CHAIN_CONTRACTS_META (759), got \"$c759_got\""
     sb759cc=$(echo "$mb" | jq -r '.chain.contracts.chain_contracts_top_keys_contract_759 // empty')

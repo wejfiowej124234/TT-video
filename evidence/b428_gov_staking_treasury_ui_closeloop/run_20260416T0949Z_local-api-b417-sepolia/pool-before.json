@@ -1,0 +1,29 @@
+{
+    "status": "ok",
+    "pool_balance": null,
+    "currency": null,
+    "updated_at": "2026-04-15T09:19:11.773842+00:00",
+    "data_source": "database",
+    "rule_version": "governance_pool_v1",
+    "chain_alignment_hint": {
+        "is_chain_ssot": false,
+        "data_source": "projection",
+        "chain_alignment_status": "not_aligned",
+        "chain_id": null,
+        "fee_router_address": null,
+        "chain_config_source": "unmounted",
+        "fee_router_chain_read": null,
+        "fee_router_routing_config_read": null,
+        "fee_router_balance_read": null,
+        "fee_router_erc20_balance_read": null,
+        "balance_consistency_hint": null,
+        "ssot_parallel_chain_snapshot": {
+            "is_chain_ssot": false,
+            "note": "B110-SSOT-03 parallel reads (04/14 B110-SSOT-01 anchors); not main field SSOT; governance_treasury_native_balance_read observation-only, not root treasury_pool* (GOVERNANCE_TREASURY_POOL_BALANCE_CHAIN_SSOT); region_vault leg observation-only, not root country_pool (GOVERNANCE_COUNTRY_POOL_BALANCE_CHAIN_SSOT)",
+            "fee_router_erc20_balance_read": null,
+            "governance_treasury_native_balance_read": null,
+            "region_vault_erc20_balance_read": null
+        },
+        "chain_alignment_derived": null
+    }
+}

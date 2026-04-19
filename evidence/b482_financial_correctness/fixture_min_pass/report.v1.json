@@ -1,0 +1,36 @@
+{
+  "schema": "traveltrust_b482_financial_correctness_acceptance.v1",
+  "verdict": "PASS",
+  "fail_reasons": [],
+  "gate_file": "config/b482_financial_correctness_gate.v1.json",
+  "scope": {
+    "b481_reference": "optional cross-region drill id",
+    "nodes_observed": ["api-a", "api-b"],
+    "note": "CI fixture：全硬约束为零；真实环境由 reconcile + 审计流水线填入。"
+  },
+  "checks": {
+    "ledger_reconciliation": {
+      "unreconciled_rows": 0,
+      "chain_vs_db_mismatch_count": 0,
+      "fund_discrepancy_wei": "0",
+      "cross_node_ledger_hash_match": true
+    },
+    "idempotency": {
+      "violations_count": 0,
+      "sample_size": 10000,
+      "duplicate_key_replay_same_response_rate": 1.0
+    },
+    "duplicate_or_lost_tx": {
+      "duplicate_execution_count": 0,
+      "lost_transaction_count": 0
+    },
+    "state_fork": {
+      "observed_fork_count": 0
+    },
+    "eventual_consistency_proof": {
+      "max_replication_lag_sec": 4.5,
+      "event_log_catchup_within_sec": 45,
+      "proof_bundle_ref": "evidence/b482_financial_correctness/run_ci/hash_bundle_placeholder.txt"
+    }
+  }
+}

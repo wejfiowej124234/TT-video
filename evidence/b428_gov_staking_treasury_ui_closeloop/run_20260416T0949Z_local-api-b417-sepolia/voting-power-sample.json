@@ -1,0 +1,52 @@
+{
+    "status": "ok",
+    "authenticated": true,
+    "vote_kind": "signal_off_chain",
+    "triggers_on_chain_execution": false,
+    "weight_ssot": "delegation_units_v1",
+    "anchor": "B-092-GOV-VOTE-WEIGHT-DELEGATION-MVP",
+    "unified_on_chain_vote_weight_u256_dec": null,
+    "weight_formula_anchor": "TT-GOVERNANCE-VOTE-WEIGHT-UNIFIED-FORMULA-001",
+    "can_cast_vote": true,
+    "delegate_to": null,
+    "delegator_count": 0,
+    "total_weight_units": 1,
+    "on_chain_vote_weight": {
+        "anchor": "TT-GOVERNANCE-VOTE-WEIGHT-UNIFIED-FORMULA-001",
+        "weight_formula_id": "B-098-f-getPastVotes",
+        "formula": "f(wallet,B) := uint256 from GovernanceVotesToken.getPastVotes(wallet,B)",
+        "snapshot_block": null,
+        "votes_u256_dec": null,
+        "read_status": "skipped_no_snapshot_block_param",
+        "error": null,
+        "ssot": "GovernanceVotesToken.getPastVotes",
+        "reconcile": {
+            "delegation_total_weight_units_mvp": 1,
+            "mvp_numeric_equal_to_chain_votes": null,
+            "note": "GovernanceVotesToken.getPastVotes not available; cannot numeric-reconcile with delegation_units_v1."
+        }
+    },
+    "stake_snapshot": {
+        "block": null,
+        "stake_u256_hex": null,
+        "read_status": "skipped_no_snapshot_block_param",
+        "error": null,
+        "meets_contract_min_stake": null,
+        "reconcile": {
+            "delegation_units_mvp": 1,
+            "note": "Pass snapshot_block query to eth_call Staking.stakeOf at block (TT-COMP-B092-VOTE-WEIGHT-STAKE-SNAPSHOT-001). POST \u9225\udca6/vote tally unchanged (delegation_units_v1 only)."
+        },
+        "anchor": "TT-COMP-B092-VOTE-WEIGHT-STAKE-SNAPSHOT-001"
+    },
+    "country_pool_share_snapshot": {
+        "block": null,
+        "read_status": "skipped_no_snapshot_block_param",
+        "tokens": [],
+        "error": null,
+        "reconcile": {
+            "delegation_units_mvp": 1,
+            "note": "Pass snapshot_block to eth_call ERC20 balanceOf for INVESTOR_SHARE_TOKEN_ADDRESSES (TT-COMP-B092-COUNTRY-POOL-SNAPSHOT-001). POST \u9225\udca6/vote tally unchanged (delegation_units_v1 only)."
+        },
+        "anchor": "TT-COMP-B092-COUNTRY-POOL-SNAPSHOT-001"
+    }
+}

@@ -32,13 +32,14 @@ export function parseGuideSortParam(param: string | null): GuideLeaderboardSort 
   return "weighted";
 }
 
-/** 书页式主榜：`?board=` 与页内脊签同步（`traveler` | `guide` | `provider`） */
-export type DidRankBoardTab = "traveler" | "guide" | "provider";
+/** 书页式主榜：`?board=` 与页内脊签同步（**30 §3.2** · **`acquisition`** = 旅行收购） */
+export type DidRankBoardTab = "traveler" | "guide" | "provider" | "acquisition";
 
 export function parseDidRankBoardParam(param: string | null): DidRankBoardTab {
   const p = param == null ? "" : String(param).trim().toLowerCase();
   if (p === "guide") return "guide";
   if (p === "provider" || p === "merchant") return "provider";
+  if (p === "acquisition") return "acquisition";
   return "traveler";
 }
 

@@ -54,7 +54,7 @@ export default function MePasswordPage() {
         <div className={`w-full max-w-md ${cardClass} space-y-4`}>
           <h1 className="text-h4 font-semibold text-ink-900">{t("mePassword_title")}</h1>
           <p className="text-success">{t("mePassword_successMessage")}</p>
-          <p className="text-meta text-ink-500"><Link href="/me" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("mePassword_backMe")}</Link></p>
+          <p className="text-meta text-ink-500"><Link href="/community/me" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("mePassword_backMe")}</Link></p>
           <ProductCrossNav
             ariaLabelKey="me_password_relatedNav_aria"
             showGuides
@@ -84,7 +84,7 @@ export default function MePasswordPage() {
           <div className="flex gap-2">
             <button type="submit" disabled={submitting} aria-busy={submitting ? true : undefined} className={`btn-console rounded-[var(--radius-sm)] bg-travel-500 px-4 py-2 text-white text-small disabled:opacity-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}>{submitting ? t("common_submitting") : t("mePassword_submit")}</button>
             <Link
-              href="/me"
+              href="/community/me"
               className={`rounded-[var(--radius-sm)] border border-ink-300 px-4 py-2 text-small inline-block text-ink-700 hover:bg-ink-50 ${travelFocusRingOffset2Classes}`}
             >
               {t("mePassword_cancel")}
@@ -92,7 +92,7 @@ export default function MePasswordPage() {
           </div>
         </form>
         <p className="mt-4 text-meta text-ink-500">
-          <Link href="/me" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("mePassword_me")}</Link>
+          <Link href="/community/me" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("mePassword_me")}</Link>
           {" · "}
           <Link href="/" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("auth_forgot_home")}</Link>
         </p>

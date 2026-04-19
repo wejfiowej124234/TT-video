@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "name": "P-GROW1 trust growth funnel",
+  "events": {
+    "moment_view": "trust_growth_moment_view",
+    "trust_hub_click": "trust_growth_trust_hub_click",
+    "moment_dismiss": "trust_growth_moment_dismiss"
+  },
+  "moment_ids": ["register", "first_yield", "first_order", "governance_entry"],
+  "recommended_segments": [
+    "Funnel: view → trust_hub_click (conversion to trust hub)",
+    "Optional: view → dismiss (escrow banner only)",
+    "Slice by moment + claimable_gt_zero on first_yield"
+  ]
+}

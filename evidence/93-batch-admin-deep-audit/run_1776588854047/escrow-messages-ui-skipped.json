@@ -1,0 +1,3 @@
+{
+  "reason": "Escrow 未渲染 ChatBlock（`showItineraryBudgetZone` 须无 escrow 且 draft|created|accepted 并有 itinerary）；全栈真实建单常不满足，API 对拍仍成立"
+}

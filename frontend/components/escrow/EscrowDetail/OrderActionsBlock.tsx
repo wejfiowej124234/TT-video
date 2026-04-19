@@ -43,9 +43,14 @@ export interface OrderActionsBlockProps {
   variantDid?: boolean;
   /** B-067：`GET /meta` `pause.enabled` */
   protocolPaused?: boolean;
+  /**
+   * P07 / P3：`GET /meta` `orders.order_mock_pay_enabled`（与 `P3_CHAIN_OFF` 同源）为真时，
+   * 对有托管地址的订单仍走 REST `confirm-completion`，便于测试网链下闭环；为假时保持「有 escrow 则 EIP-712 intent」。
+   */
+  chainOffRestConfirmCompletionEnabled?: boolean;
 }
 
-/** P23：订单操作；有 escrow_address 时确认完成/争议意向走 EIP-712 + intents API（202） */
+/** P23：订单操作；有 escrow_address 时确认完成默认走 EIP-712 + intents（202）；P3 链下闸开启时可走 REST confirm-completion（见 `chainOffRestConfirmCompletionEnabled`） */
 export default function OrderActionsBlock({
   orderId,
   state,
@@ -58,6 +63,7 @@ export default function OrderActionsBlock({
   disputeWindowExpired = false,
   variantDid,
   protocolPaused = false,
+  chainOffRestConfirmCompletionEnabled = false,
 }: OrderActionsBlockProps) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState<string | null>(null);
@@ -129,8 +135,11 @@ export default function OrderActionsBlock({
     !!connectedAddress &&
     !sameWallet(guideWalletAddress, connectedAddress);
 
-  const showOffchainConfirm = canConfirmCompletion && (!hasEscrow || !validEscrow);
-  const showIntentConfirm = canConfirmCompletion && validEscrow;
+  const showOffchainConfirm =
+    canConfirmCompletion &&
+    (!hasEscrow || !validEscrow || chainOffRestConfirmCompletionEnabled);
+  const showIntentConfirm =
+    canConfirmCompletion && validEscrow && !chainOffRestConfirmCompletionEnabled;
 
   if (
     !canAccept &&

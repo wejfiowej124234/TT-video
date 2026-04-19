@@ -32,6 +32,15 @@ export function orderDisplayStatusRaw(order: OrderWithProjectionDisplay): string
 /** 与 **`orderStateToStatusLabelKey`** 对齐；**`display_status`** 作单一 state 传入。 */
 export function orderStatusLabelKeyFromApiOrder(order: OrderWithProjectionDisplay): string {
   const raw = orderDisplayStatusRaw(order);
+  const sub = order.sub_status?.trim();
+  /** 有投影/业务 `display_status` 时仍须带上 `sub_status`（如 Accepted + confirmed → 已确认·待付款），否则字符串分支会丢掉子状态。 */
+  if (raw && sub) {
+    return orderStateToStatusLabelKey({
+      state: raw,
+      status: raw,
+      sub_status: sub,
+    });
+  }
   if (raw) return orderStateToStatusLabelKey(raw);
   return orderStateToStatusLabelKey({
     state: order.state ?? undefined,
@@ -42,6 +51,14 @@ export function orderStatusLabelKeyFromApiOrder(order: OrderWithProjectionDispla
 
 export function orderBadgeVariantFromApiOrder(order: OrderWithProjectionDisplay): OrderBadgeVariant {
   const raw = orderDisplayStatusRaw(order);
+  const sub = order.sub_status?.trim();
+  if (raw && sub) {
+    return orderStateToBadgeVariant({
+      state: raw,
+      status: raw,
+      sub_status: sub,
+    });
+  }
   if (raw) return orderStateToBadgeVariant(raw);
   return orderStateToBadgeVariant({
     state: order.state ?? undefined,

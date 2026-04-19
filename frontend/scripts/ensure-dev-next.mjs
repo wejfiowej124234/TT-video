@@ -8,6 +8,7 @@
  * **routes-manifest.json / app-paths-manifest.json ENOENT**：非生产 `.next` 若缺路由清单或 server 侧 app-paths 清单，Webpack dev 会对 `/`、`/community` 等直接 500；
  * 常见于 Windows 编译被打断、`next.config` 触发热重启与长编译竞态、杀毒扫 `.next`、两个 dev 抢同一目录。启动前整目录删除以自愈。
  */
+import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -58,4 +59,20 @@ if (devManifestTorn) {
       "Retry `npm run dev`. Tip: exclude `frontend/.next` from real-time AV if this repeats."
   );
   fs.rmSync(nextDir, { recursive: true, force: true });
+}
+
+/**
+ * Webpack dev on Windows can leave chunks only under `.next/server/chunks/` while
+ * `webpack-runtime.js` still does `require("./NNNN.js")` from `.next/server/` — same class
+ * of failure as production; `sync-server-chunks.mjs` (post-`next build`) copies them up.
+ * Re-run when a prior session left a tree so first GET after restart does not 500.
+ */
+const root = path.join(__dirname, "..");
+const chunksDir = path.join(serverDir, "chunks");
+if (process.platform === "win32" && fs.existsSync(nextDir) && fs.existsSync(chunksDir)) {
+  const syncScript = path.join(__dirname, "sync-server-chunks.mjs");
+  const r = spawnSync(process.execPath, [syncScript], { cwd: root, stdio: "inherit" });
+  if (r.status !== 0) {
+    console.warn("[traveltrust] sync-server-chunks (dev warmup) exited with", r.status, "(non-fatal)");
+  }
 }

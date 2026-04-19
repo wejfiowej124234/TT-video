@@ -23,6 +23,27 @@ pub struct SubmitReviewBody {
     pub comment: Option<String>,
 }
 
+/// B-451：`meta.review_json_contract.anchor`（与 **04** / **`frontend/lib/reviewJsonContract.ts`** **`REVIEW_JSON_CONTRACT_ANCHOR_V1`** 同源）。
+pub const REVIEW_JSON_CONTRACT_ANCHOR: &str = "REVIEW-SUBMIT-JSON-CONTRACT-V1";
+/// B-451：`meta.review_json_contract.schema_version`（破坏性变更须 **+1** 并同步 **`b451_*`** / **`check-b451-*`**）。
+pub const REVIEW_JSON_CONTRACT_SCHEMA_VERSION: u64 = 1;
+
+/// B-451 SSOT：`meta.review_json_contract` 对象（**`check-b451-*`** 机读 **`review_json_contract_meta`**）。
+pub fn review_json_contract_meta() -> JsonValue {
+    json!({
+        "schema_version": REVIEW_JSON_CONTRACT_SCHEMA_VERSION,
+        "anchor": REVIEW_JSON_CONTRACT_ANCHOR,
+    })
+}
+
+fn reviews_public_meta() -> JsonValue {
+    json!({
+        "review_weight_rule_version": "review_weight_v1",
+        "review_weight_rule": "weight = clamp(order_amount/1000,0.1,10) * clamp(reviewer_account_age_days/365,0.5,3); see traveltrust_core::ReviewWeight",
+        "review_json_contract": review_json_contract_meta(),
+    })
+}
+
 fn reviewer_account_age_days(created_at: chrono::DateTime<Utc>) -> u64 {
     Utc::now()
         .signed_duration_since(created_at)
@@ -167,10 +188,7 @@ pub async fn reviews_list_impl(
     Ok(Json(json!({
         "status": "ok",
         "items": items,
-        "meta": {
-            "review_weight_rule_version": "review_weight_v1",
-            "review_weight_rule": "weight = clamp(order_amount/1000,0.1,10) * clamp(reviewer_account_age_days/365,0.5,3); see traveltrust_core::ReviewWeight"
-        }
+        "meta": reviews_public_meta(),
     })))
 }
 
@@ -351,6 +369,7 @@ pub async fn review_submit_impl(
                 let (tourist_id, traveler_id) = dispute_party_mirror(order);
                 return Ok(Json(json!({
                     "status": "ok",
+                    "meta": reviews_public_meta(),
                     "review": {
                         "id": synced.id.to_string(),
                         "order_id": order_id.to_string(),
@@ -407,6 +426,7 @@ pub async fn review_submit_impl(
 
     Ok(Json(json!({
         "status": "ok",
+        "meta": reviews_public_meta(),
         "review": {
             "id": row.id.to_string(),
             "order_id": order_id.to_string(),

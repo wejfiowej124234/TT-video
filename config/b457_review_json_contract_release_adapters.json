@@ -1,0 +1,75 @@
+{
+  "adapters_schema": "b457_review_json_contract_release_adapters_v1",
+  "description": "B-457 · 在 B-456 之后执行：按 verdict 路由到 Feature Flag / 部署平台 / ChatOps 适配器；密钥仅经环境变量注入（此处只登记变量名）。",
+  "verdict_routes": {
+    "GREEN": ["feature_flag_publish", "deploy_promote", "chatops_notify_promote"],
+    "YELLOW": ["feature_flag_hold", "deploy_hold", "chatops_notify_freeze"],
+    "RED": ["feature_flag_rollback", "deploy_rollback", "chatops_notify_rollback"]
+  },
+  "adapters": {
+    "feature_flag_publish": {
+      "category": "feature_flag",
+      "kind": "admin_http_json",
+      "env_base_url": "TRAVELTRUST_ADMIN_API_BASE_URL",
+      "method": "POST",
+      "path": "/api/v1/admin/flags/traveltrust:review_json_contract_strict/publish",
+      "body": { "reason": "b457_GREEN", "source": "release_controller" }
+    },
+    "feature_flag_hold": {
+      "category": "feature_flag",
+      "kind": "admin_http_json",
+      "env_base_url": "TRAVELTRUST_ADMIN_API_BASE_URL",
+      "method": "POST",
+      "path": "/api/v1/admin/flags/traveltrust:review_json_contract_strict/hold",
+      "body": { "reason": "b457_YELLOW", "source": "release_controller" }
+    },
+    "feature_flag_rollback": {
+      "category": "feature_flag",
+      "kind": "admin_http_json",
+      "env_base_url": "TRAVELTRUST_ADMIN_API_BASE_URL",
+      "method": "POST",
+      "path": "/api/v1/admin/flags/traveltrust:review_json_contract_strict/rollback",
+      "body": { "reason": "b457_RED", "source": "release_controller" }
+    },
+    "deploy_promote": {
+      "category": "deploy_platform",
+      "kind": "dispatch_webhook",
+      "env_url": "TRAVELTRUST_DEPLOY_DISPATCH_URL",
+      "method": "POST",
+      "headers_env_json": "TRAVELTRUST_DEPLOY_DISPATCH_HEADERS_JSON",
+      "body": { "action": "promote_canary", "scope": "frontend", "trigger": "b457" }
+    },
+    "deploy_hold": {
+      "category": "deploy_platform",
+      "kind": "dispatch_webhook",
+      "env_url": "TRAVELTRUST_DEPLOY_DISPATCH_URL",
+      "method": "POST",
+      "body": { "action": "hold", "scope": "frontend", "trigger": "b457" }
+    },
+    "deploy_rollback": {
+      "category": "deploy_platform",
+      "kind": "dispatch_webhook",
+      "env_url": "TRAVELTRUST_DEPLOY_DISPATCH_URL",
+      "method": "POST",
+      "body": { "action": "rollback_canary", "scope": "frontend", "trigger": "b457" }
+    },
+    "chatops_notify_promote": {
+      "category": "chatops",
+      "kind": "slack_incoming_webhook",
+      "env_webhook_url": "TRAVELTRUST_CHATOPS_SLACK_WEBHOOK_URL",
+      "text_template": "[B-457] review_json_contract rollout PROMOTE (GREEN) verdict={{verdict}} run={{run_id}}"
+    },
+    "chatops_notify_freeze": {
+      "category": "chatops",
+      "kind": "slack_incoming_webhook",
+      "env_webhook_url": "TRAVELTRUST_CHATOPS_SLACK_WEBHOOK_URL",
+      "text_template": "[B-457] review_json_contract rollout FREEZE (YELLOW) verdict={{verdict}} run={{run_id}}"
+    },
+    "chatops_notify_rollback": {
+      "category": "chatops",
+      "kind": "slack_incoming_webhook",
+      "env_webhook_url": "TRAVELTRUST_CHATOPS_SLACK_WEBHOOK_URL",
+      "text_template": "[B-457] review_json_contract ROLLBACK instruction (RED) verdict={{verdict}} run={{run_id}} — execute runbook TT-B457 §3"
+    }
+  }
+}

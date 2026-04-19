@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useTranslation } from "@/components/LocaleProvider";
 import type { GuideCardItem } from "@/lib/marketTypes";
+import { formatGuideDisplayName } from "@/lib/guideDisplayName";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
 
 /** P29 向导卡片：向导照片 + 收藏 + 预约向导/查看向导；28 玻璃态 + DID/时薪 */
@@ -25,7 +26,7 @@ export default function GuideCard({
 }) {
   const { t } = useTranslation();
   const dash = t("ui_em_dash");
-  const name = guide.city ? t("guide_card_cityGuide").replace("{{city}}", guide.city) : t("guide_card_guide");
+  const name = formatGuideDisplayName(t, guide);
   const langs = Array.isArray(guide.languages) ? guide.languages.slice(0, 3).join(" / ") : dash;
   const tags = Array.isArray(guide.service_types) ? guide.service_types : [];
   const avatarUrl = guide.avatar_url || null;

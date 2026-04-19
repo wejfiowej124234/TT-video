@@ -28,7 +28,7 @@ export default function CommunityGuidelinesPage() {
             href="/community/me"
             className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] bg-travel-500 px-4 py-2 text-meta font-medium text-white hover:bg-travel-400 motion-sub focus-visible:ring-offset-bg-console ${travelFocusRingCoreOffset2Classes}`}
           >
-            {t("community_tab_me")}
+            {t("me_title")}
           </Link>
           <Link
             href="/community"

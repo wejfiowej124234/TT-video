@@ -1,0 +1,15 @@
+== A+B 主链烟测（API=http://127.0.0.1:8080） ==
+1) POST /auth/register
+2) POST /auth/login (same account)
+3) GET /api/v1/me
+4) GET /api/v1/discover/orders (市场)
+5) GET /api/v1/guides?city=杭州 (取 guide_id)
+6) POST /api/v1/orders
+7) GET /api/v1/orders/92b4ff82-1a50-411b-a4a4-6bb16184f07b (回读订单)
+8) POST /api/v1/orders/92b4ff82-1a50-411b-a4a4-6bb16184f07b/messages
+9) GET /api/v1/orders/92b4ff82-1a50-411b-a4a4-6bb16184f07b/messages (回读消息)
+   messages count: 1
+10) PostgreSQL 抽检（docker exec traveltrust-postgres psql，无本机 psql）
+   DB: orders + users + order_messages OK
+
+OK: A+B 主链 HTTP + 回读一致 通过。邮箱=ab.smoke.1776480228@example.com 订单=92b4ff82-1a50-411b-a4a4-6bb16184f07b

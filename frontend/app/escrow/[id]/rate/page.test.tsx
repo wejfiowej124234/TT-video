@@ -16,12 +16,35 @@ vi.mock("next/navigation", () => ({
   useParams: () => ({ id: "11111111-1111-1111-1111-111111111111" }),
 }));
 
+const reviewJsonContractClientMissing = {
+  schemaVersionReported: null,
+  schemaVersionEffective: 1,
+  anchorEffective: null,
+  degrade: "missing_meta" as const,
+};
+
 vi.mock("@/lib/apiClient", () => ({
   getOrder: (...args: unknown[]) => getOrderMock(...args),
   orderConfirmRating: vi.fn(() => Promise.resolve()),
   getIdempotencyKey: () => "test-idempotency-key",
-  getOrderReviews: vi.fn(() => Promise.resolve({ items: [] as unknown[] })),
-  postReview: vi.fn(() => Promise.resolve({ status: "ok" })),
+  getOrderReviews: vi.fn(() =>
+    Promise.resolve({ items: [] as unknown[], reviewJsonContractClient: reviewJsonContractClientMissing })
+  ),
+  postReview: vi.fn(() =>
+    Promise.resolve({
+      status: "ok" as const,
+      review: {
+        id: "rev-mock",
+        order_id: "11111111-1111-1111-1111-111111111111",
+        tourist_id: "t",
+        traveler_id: "tr",
+        score: 5,
+        weight: 1,
+        weight_breakdown: null,
+      },
+      reviewJsonContractClient: reviewJsonContractClientMissing,
+    })
+  ),
 }));
 
 function renderRate() {

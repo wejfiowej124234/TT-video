@@ -130,13 +130,13 @@ export const CHAIN_META_TOP_KEYS = [
 
 /** 759：`GET /meta` `chain.contracts` 对象顶层键顺序（仅 `ChainConfig` 挂载、`contracts` 非 null 时）；与 `CHAIN_CONTRACTS_META_TOP_KEYS`（`crates/api` `routes/health_meta.rs`）/ `chain_contracts_top_keys` / `chain_contracts_top_keys_contract_759` 对读 */
 export const CHAIN_CONTRACTS_META_TOP_KEYS = [
-  "escrow_factory_address",
+  "guide_staking_address",
+  "staking_provider_address",
+  "governor_address",
+  "timelock_address",
+  "governance_token_address",
   "fee_router_address",
-  "region_vault_address",
-  "escrow_platform_fee_recipient",
-  "staking_address",
-  "registry_address",
-  "chain_id_configured",
+  "treasury_address",
   "rule",
   "chain_contracts_top_keys",
   "chain_contracts_top_keys_contract_759",
@@ -277,13 +277,15 @@ export const ITINERARIES_META_TOP_KEYS = [
   "itineraries_top_keys_contract_743",
 ] as const;
 
-/** 744：`GET /meta` `orders` 对象顶层键顺序（含 `list_pagination`、`fee_route_country_ssot`（B-083））；与 `ORDERS_META_TOP_KEYS`（`crates/api` `routes/health_meta.rs`）/ `orders_top_keys` / `orders_top_keys_contract_744` 对读 */
+/** 744：`GET /meta` `orders` 对象顶层键顺序（含 `list_pagination`、`fee_route_country_ssot`（B-083）、`deadline_rating_observability`、`order_mock_pay_enabled`）；与 `ORDERS_META_TOP_KEYS`（`crates/api` `routes/health_meta.rs`）/ `orders_top_keys` / `orders_top_keys_contract_744` 对读 */
 export const ORDERS_META_TOP_KEYS = [
   "strict_db_write",
   "dual_write_order",
   "rule",
   "list_pagination",
   "fee_route_country_ssot",
+  "deadline_rating_observability",
+  "order_mock_pay_enabled",
   "orders_top_keys",
   "orders_top_keys_contract_744",
 ] as const;
@@ -524,7 +526,7 @@ export const META_CHAIN_RULE_784_ITINERARIES_META_ROOT_TWENTY_THIRD_KEY_CLAUSE =
 
 /** 与 `crates/api` `routes/health_meta.rs` `chain_section.rule` 中 **785** 句须字节级一致（CI / smoke 对读） */
 export const META_CHAIN_RULE_785_ORDERS_META_ROOT_TWENTY_FOURTH_KEY_CLAUSE =
-  "785：GET /meta 根级 orders 对象 orders_top_keys / orders_top_keys_contract_744 与 ORDERS_META_TOP_KEYS 七键顺序同源，与 META_ROOT_TOP_KEYS 第二十四键 orders 及 728 meta_top_keys 机读同源";
+  "785：GET /meta 根级 orders 对象 orders_top_keys / orders_top_keys_contract_744 与 ORDERS_META_TOP_KEYS 九键顺序同源，与 META_ROOT_TOP_KEYS 第二十四键 orders 及 728 meta_top_keys 机读同源";
 
 /** 与 `crates/api` `routes/health_meta.rs` `chain_section.rule` 中 **786** 句须字节级一致（CI / smoke 对读） */
 export const META_CHAIN_RULE_786_DISCOVER_META_ROOT_TWENTY_FIFTH_KEY_CLAUSE =

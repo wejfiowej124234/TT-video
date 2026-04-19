@@ -15,12 +15,14 @@ mod pool_chain;
 mod governance_pool_meta_alignment_b177;
 mod router;
 
-pub use doc_params::{
-    get_governance_params, get_protocol_reference, get_protocol_reference_pending,
-};
+/// `router` 与 `doc_params` 直连；**`get_protocol_reference`** 供 **`admin_cross_check`** 等同源组装；其余供契约测试。
+pub use doc_params::get_protocol_reference;
+#[cfg(test)]
+pub use doc_params::{get_governance_params, get_protocol_reference_pending};
 pub use fee_pool_aggregate::{get_governance_fee_pool_aggregates, FeePoolAggregatesQuery};
 pub(crate) use fee_pool_aggregate::fee_pool_cross_check_from_pref;
 pub use governance_pool::get_governance_pool;
+#[cfg(test)]
 pub use governance_reads::{
     get_governance_fee_routes, get_governance_rewards, get_governance_vault_forwards, FeeRoutesQuery,
 };

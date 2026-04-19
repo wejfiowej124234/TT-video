@@ -89,7 +89,7 @@
 
 | 项 | 约定（14 §1.2） | 现状 |
 |----|------------------|------|
-| **contracts/abi/** | 合约编译产物单源 | 已有 Escrow.json、EscrowFactory.json、**Staking.json**、**Registry.json**；合约变更后用 `./scripts/sync-abi-from-forge.sh`（或 `forge inspect`）回写。 |
+| **contracts/abi/** | 合约编译产物单源 | 已有 Escrow.json、EscrowFactory.json、**GuideIdentityStakingPool.json**、**ProviderIdentityStakingPool.json**、**Registry.json**；合约变更后用 `./scripts/sync-abi-from-forge.sh`（或 `forge inspect`）回写。 |
 | **frontend/dapp/abis/** | Staking/Registry 须与 contracts/abi **字节一致**；Escrow 可为精简子集 | **Staking/Registry** 由 `check-55-s13` 门禁；**Escrow** 须含 openDispute 等调用所需条目；**EscrowFactory** 与 canonical 一致。 |
 
 ### 3.2 合约方法名与文档表述

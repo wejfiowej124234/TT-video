@@ -1,0 +1,10 @@
+{
+  "anchor": "TT-MAINNET-MAINNET-SHADOW-LAUNCH",
+  "deployment_chain_id": 1,
+  "network": "Ethereum Mainnet",
+  "shadow_launch_verdict": "NO_GO",
+  "notes": "Scaffold run_20260417T005952Z — full internal API drill not executed in-repo. Set to GO only after indexer_tick/replay/reconcile/overview/trigger_matrix_drill are real and operator signs.",
+  "completed_at_utc": null,
+  "operator": null,
+  "git_sha": "f267483c8db3aaefb500618168333d0daafbf05d"
+}

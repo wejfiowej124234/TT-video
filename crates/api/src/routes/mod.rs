@@ -1,4 +1,5 @@
-//! 按领域聚合路由（48 §三、§11.6）；各子模块提供 router()，此处 merge 后由 router::app 统一 .with_state。
+//! 按领域聚合路由：各子模块提供 `router()`，于此处 `merge` 后由 `router::app` 统一 `.with_state`。
+//! **域清单与 `merge` 次数 SSOT**：`docs/spec/07` §零 0.6、`docs/spec/14` §2.1、`docs/spec/04` §3.4、`crates/api/src/routes/mod.rs`（与历史阶段文 **48** §三 / §11.6 对读，**不**以阶段文替代上述 SSOT）。
 
 mod admin;
 mod admin_cross_check;
@@ -28,6 +29,7 @@ mod media;
 mod messages;
 mod orders;
 mod traveltrust_page;
+mod trust_growth;
 
 #[cfg(test)]
 mod governance_read_contract_contract_tests;
@@ -46,7 +48,7 @@ use serde_json::json;
 
 use crate::state::ApiMetaState;
 
-/// 501 占位响应，供各 route 模块使用（48 §4.4）
+/// 501 占位响应，供各 route 模块使用（契约说明见 **`docs/spec/04`** §三；域清单见 **07** §零 0.6、**14** §2.1）。
 pub(crate) fn not_impl_json(path: &str) -> impl IntoResponse {
     (
         StatusCode::NOT_IMPLEMENTED,
@@ -91,5 +93,6 @@ pub fn api_router() -> Router<ApiMetaState> {
         .merge(country_ledger_jurisdiction::router())
         .merge(did_rank::router())
         .merge(governance::router())
+        .merge(trust_growth::router())
         .merge(internal::router())
 }

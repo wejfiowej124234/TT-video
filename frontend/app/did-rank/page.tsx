@@ -32,6 +32,7 @@ import DidRankHeaderSkeleton from "@/components/did-rank/DidRankHeaderSkeleton";
 import TravelerRankBlock from "@/components/did-rank/TravelerRankBlock";
 import GuideRankBlock from "@/components/did-rank/GuideRankBlock";
 import ProviderRankBlock from "@/components/did-rank/ProviderRankBlock";
+import AcquisitionRankBlock from "@/components/did-rank/AcquisitionRankBlock";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import { DidRankRouteSuspense } from "@/components/did-rank/DidRankRouteSuspense";
 import WarmRouteFieldBackdrop from "@/components/shell/WarmRouteFieldBackdrop";
@@ -55,7 +56,7 @@ function didRankCacheKey(period: Period): string {
 
 const PAGE_SIZE = 20;
 
-const DID_RANK_BOARD_ORDER: DidRankBoardTab[] = ["traveler", "guide", "provider"];
+const DID_RANK_BOARD_ORDER: DidRankBoardTab[] = ["traveler", "guide", "provider", "acquisition"];
 
 function usePreviousDidRankBoard(value: DidRankBoardTab): DidRankBoardTab | undefined {
   const ref = useRef<DidRankBoardTab | undefined>(undefined);
@@ -393,6 +394,7 @@ function DidRankPageInner() {
                 { id: "traveler" as const, labelKey: "didRank_travelerRankShort" },
                 { id: "guide" as const, labelKey: "didRank_guideRankShort" },
                 { id: "provider" as const, labelKey: "didRank_providerRankShort" },
+                { id: "acquisition" as const, labelKey: "didRank_acquisitionRankShort" },
               ] as const
             ).map((b) => {
               const selected = activeBoard === b.id;
@@ -487,6 +489,7 @@ function DidRankPageInner() {
                       />
                     )}
                     {activeBoard === "provider" && <ProviderRankBlock period={timeRange} t={t} />}
+                    {activeBoard === "acquisition" && <AcquisitionRankBlock period={timeRange} t={t} />}
                   </motion.div>
                 </AnimatePresence>
               )}

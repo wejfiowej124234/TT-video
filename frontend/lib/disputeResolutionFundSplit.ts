@@ -10,7 +10,7 @@ export function orderStateTriggersDisputeFundSplit(state: string | undefined): b
 }
 
 /**
- * `refund_ratio`：退给游客比例 [0,1]；`slash_guide`：向导侧罚没时向导应收为 0，剩余（除游客已退）记为平台/池示意。
+ * `refund_ratio`：退给旅行者比例 [0,1]；`slash_guide`：向导侧罚没时向导应收为 0，剩余（除旅行者已退）记为平台/池示意。
  */
 export function computeDisputeResolutionFundSplit(
   orderAmount: number,

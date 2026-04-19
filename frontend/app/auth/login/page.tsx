@@ -22,7 +22,7 @@ function LoginForm() {
   const { t } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const returnUrl = safeInternalReturnPath(searchParams.get("returnUrl"), "/me");
+  const returnUrl = safeInternalReturnPath(searchParams.get("returnUrl"), "/community/me");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -45,9 +45,12 @@ function LoginForm() {
     setLoading(true);
     try {
       const res = await postLogin({ email, password });
-      applyClientSessionAfterAuth(res);
-      router.push(returnUrl);
-      router.refresh();
+      const uid = applyClientSessionAfterAuth(res);
+      if (!uid) {
+        setError(t("auth_login_error_failed"));
+        return;
+      }
+      await router.replace(returnUrl);
     } catch (err) {
       const msg = err instanceof Error ? err.message : "";
       if (typeof window !== "undefined" && !isExpectedAuthLoginErrorMessage(msg)) {

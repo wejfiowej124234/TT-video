@@ -39,7 +39,7 @@ function Write-Abi($name) {
     return $true
 }
 
-foreach ($c in @("Escrow", "EscrowFactory", "Staking", "Registry", "FeeRouter", "RegionVault", "InvestorDistributionClaim", "GovernanceTimelock", "GovernanceTreasury")) {
+foreach ($c in @("Escrow", "EscrowFactory", "GuideIdentityStakingPool", "ProviderIdentityStakingPool", "Registry", "FeeRouter", "RegionVault", "ReserveVault", "SlashRouter", "InvestorDistributionClaim", "GovernanceTimelock", "GovernanceTreasury", "GovernanceVotesToken", "TravelTrustGovernor")) {
     if (-not (Write-Abi $c)) { Fail "forge inspect $c abi failed" }
 }
 foreach ($c in @("IERC20", "MockERC20")) {
@@ -57,5 +57,5 @@ if ($pyExe) {
 
 Write-Host ""
 Write-Host "Next:"
-Write-Host "  cp contracts/abi/Staking.json ... FeeRouter.json RegionVault.json frontend/dapp/abis/   # or copy on Windows"
+Write-Host "  cp contracts/abi/GuideIdentityStakingPool.json contracts/abi/ProviderIdentityStakingPool.json ... frontend/dapp/abis/   # or copy on Windows"
 Write-Host "  .\scripts\check-55-s13.ps1"

@@ -9,13 +9,16 @@ type Props = {
   onNavStart?: () => void;
   /** mobile 顶栏第二行略小 */
   size?: "sm" | "md";
+  /** 与桌面主 Tab 同一圆角条内：触发器样式与 Tab 对齐 */
+  variant?: "toolbar" | "tabBar";
 };
 
 /**
- * L2「帮助与支持」：建议与反馈、帮助中心、社区规范 归入同一下拉，避免与 L1 主 Tab 并列混淆。
+ * 「帮助与支持」：建议与反馈、帮助中心、社区规范、完整活动中心 同一下拉。
+ * `tabBar`：与动态/发现/…/个人中心同一顶栏行；`toolbar`：独立顶行或移动顶栏第二行。
  * 交互与 Header UserMenu 同型（点击外关闭、Escape）。
  */
-export function CommunitySupportMenu({ onNavStart, size = "md" }: Props) {
+export function CommunitySupportMenu({ onNavStart, size = "md", variant = "toolbar" }: Props) {
   const { t } = useTranslation();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -47,18 +50,30 @@ export function CommunitySupportMenu({ onNavStart, size = "md" }: Props) {
     return () => document.removeEventListener("keydown", onKey);
   }, [open, close]);
 
-  const triggerCls =
+  const triggerToolbarSm =
     size === "sm"
       ? "min-h-[44px] text-[0.65rem] px-2 py-1 rounded-[var(--radius-md)]"
       : "min-h-[44px] text-[0.6875rem] sm:text-meta px-2 py-1 rounded-[var(--radius-md)]";
+
+  const triggerTabBar =
+    "h-full min-h-[44px] w-full min-w-0 items-center justify-center gap-0.5 rounded-[var(--radius-md)] px-1 sm:px-2 py-2 text-[0.65rem] leading-tight sm:text-meta font-medium motion-sub border transition-colors";
+
+  const triggerCls = variant === "tabBar" ? triggerTabBar : triggerToolbarSm;
 
   const itemCls =
     "flex min-h-[44px] w-full items-center justify-start text-left px-3 py-2 text-small text-slate-200 hover:bg-slate-700/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-cyan-400/60 rounded-sm";
 
   return (
-    <div className="relative shrink-0" ref={rootRef}>
+    <div
+      className={
+        variant === "tabBar"
+          ? "relative flex w-[min(100%,10.5rem)] shrink-0 items-stretch sm:w-[min(100%,12rem)]"
+          : "relative shrink-0"
+      }
+      ref={rootRef}
+    >
       <form
-        className="contents"
+        className={variant === "tabBar" ? "flex h-full min-h-[44px] min-w-0 flex-1 flex-col" : "contents"}
         onSubmit={(e) => {
           e.preventDefault();
           setOpen((o) => !o);
@@ -69,9 +84,13 @@ export function CommunitySupportMenu({ onNavStart, size = "md" }: Props) {
           aria-expanded={open}
           aria-haspopup="menu"
           aria-controls={menuId}
-          className={`inline-flex items-center justify-center gap-1 font-medium text-slate-300 hover:text-cyan-100 motion-sub border transition-colors ${triggerCls} ${
+          className={`${
+            variant === "tabBar" ? "flex h-full min-h-[44px] w-full min-w-0 flex-1" : "inline-flex"
+          } items-center justify-center gap-0.5 font-medium text-slate-300 hover:text-cyan-100 motion-sub border transition-colors ${triggerCls} ${
             onFeedback ? "border-cyan-500/40 bg-cyan-500/15 text-cyan-200" : "border-transparent hover:border-cyan-500/25"
-          } focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/75 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
+          } focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/75 focus-visible:ring-offset-2 ${
+            variant === "tabBar" ? "focus-visible:ring-offset-slate-800" : "focus-visible:ring-offset-slate-900"
+          }`}
         >
           {t("community_support_menu_trigger")}
           <svg
@@ -114,6 +133,16 @@ export function CommunitySupportMenu({ onNavStart, size = "md" }: Props) {
             className={itemCls}
           >
             {t("community_guidelines")}
+          </Link>
+          <Link
+            href="/community/activity"
+            role="menuitem"
+            prefetch={true}
+            onPointerDown={onNavStart}
+            onClick={close}
+            className={itemCls}
+          >
+            {t("community_activity_open_full")}
           </Link>
         </div>
       )}

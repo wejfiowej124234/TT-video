@@ -1,0 +1,13 @@
+TIMELOCK_ADDRESS for this run: 0x1E94f265106521B009aD395525cF87Ed00dd84a6
+=== runtime-chain-ssot-cast-verify (read-only) ===
+rpc: https://sepolia.drpc.org
+governor(env): 0xcac92fb6c9594ce4a72be90d3b7ff0b9ca33fe5b
+timelock(env): 0x1e94f265106521b009ad395525cf87ed00dd84a6
+governance_token(env): 0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7
+cast chain-id → 11155111
+governor.token()     → 0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7
+governor.timelock()  → 0x1e94f265106521b009ad395525cf87ed00dd84a6
+timelock.governor()  → 0xcac92fb6c9594ce4a72be90d3b7ff0b9ca33fe5b
+runtime-chain-ssot-cast-verify: WARN FEE_ROUTER_ADDRESS unset — skipped feeRouter.owner check
+runtime-chain-ssot-cast-verify: OK (env matches on-chain wiring for this RPC)
+exit_code=0

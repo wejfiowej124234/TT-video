@@ -1,0 +1,43 @@
+{
+  "anchor": "TTG-ECON-ALIGN-COMPARE-V1",
+  "verdict": "SUSPECT",
+  "api_base_url": "http://127.0.0.1:3012",
+  "chain_reads": {
+    "chain_id": 11155111,
+    "token": "0x9f88a0072319c5d5c6ec1c61082288f6b86511a2",
+    "total_supply": "10000000000000000000000000",
+    "treasury_balance": "0",
+    "block_number": 10676467
+  },
+  "checks": [
+    {
+      "name": "chain_id_meta_vs_chain_reads",
+      "ok": true,
+      "meta": "11155111",
+      "chain_reads": "11155111"
+    },
+    {
+      "name": "governance_token_meta_vs_chain_reads",
+      "ok": true,
+      "meta": "0x9f88a0072319c5d5c6ec1c61082288f6b86511a2",
+      "chain_reads_token": "0x9f88a0072319c5d5c6ec1c61082288f6b86511a2"
+    },
+    {
+      "name": "treasury_address_meta_vs_env",
+      "ok": true,
+      "meta": "0x843b6aa08bcbfa4ced8c1ea5f2cf857464512a3b",
+      "env_treasury": "0x843b6aa08bcbfa4ced8c1ea5f2cf857464512a3b"
+    },
+    {
+      "name": "ttg_econ_anchor_present",
+      "ok": false,
+      "detail": "chain.ttg_econ_anchor missing"
+    }
+  ],
+  "artifacts": {
+    "chain_reads_json": "chain_reads.json",
+    "meta_snapshot_json": "meta_snapshot.json",
+    "governance_pool_snapshot_json": "governance_pool_snapshot.json",
+    "governance_pool_db_snippet_json": "governance_pool_db_snippet.json"
+  }
+}

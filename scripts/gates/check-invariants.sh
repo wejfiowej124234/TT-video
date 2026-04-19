@@ -17,6 +17,9 @@ cd "$root_dir"
 [[ -f "frontend/package.json" ]] || fail "missing frontend/package.json"
 [[ -f "frontend/package-lock.json" ]] || fail "missing frontend/package-lock.json (lock file required)"
 
+# B-158: package.json direct deps must appear under lockfile packages{} (npm v7+); no network.
+node "$root_dir/scripts/gates/verify-frontend-package-lock-sync.mjs" || fail "frontend package-lock drift (B-158); run npm install in frontend/ and commit"
+
 # --- Backend baseline security headers（挂载在 router，实现见 middleware）---
 api_main="crates/api/src/main.rs"
 api_router="crates/api/src/router.rs"

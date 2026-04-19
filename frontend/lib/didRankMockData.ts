@@ -41,7 +41,7 @@ export interface ItineraryRankItem {
   id: string;
   rank: number;
   title: string;
-  /** 登录且为关联订单的游客时由 API 置 true */
+  /** 登录且为关联订单的旅行者时由 API 置 true */
   is_me?: boolean;
   creatorName: string;
   creatorType: "traveler" | "guide";

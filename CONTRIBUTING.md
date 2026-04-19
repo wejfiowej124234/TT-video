@@ -19,6 +19,8 @@
 
 **CI workflow SSOT**（**`.github/workflows/*.yml`** **全集** **须** **跟踪** **、** **顶栏** **`permissions`** **；** **含** **`upload-artifact`** **须** **叠加** **`actions: write`** **）** **见** [母表 **B-499**](docs/任务母表.md) **与** [企业审计清单 **Phase 5 · 项 5.5**](docs/runbook/TT-DOC-ENTERPRISE-AUDIT-CHECKLIST-001.md) **。** **GitHub-hosted** **因** **组织** **Billing** **不可** **调度** **时** **，** **交付** **真** **门禁** **见** **[** **`TT-LOCAL-CI-DELIVERY-GATE-001`** **](** **docs/runbook/TT-LOCAL-CI-DELIVERY-GATE-001.md** **)** **（** **本地** **/** **VPS** **；** **与** **[** **`TT-L4-PARALLEL-CI-001`** **§5.0** **](** **docs/runbook/TT-L4-PARALLEL-CI-001.md** **)** **对** **读** **）** **。**
 
+**已封口 L4 / 本地交付证据 · 纯文档勘误**：若仅合入 **spec/母表/59/27** 等 **文字勘误** 与 **`internal` 测试** **未使用 `use` 清理**，**不**必据此 **重跑** 全量 **Sepolia E2E**；**一行引用** **[TT-L4-PARALLEL-CI-001 §10](docs/runbook/TT-L4-PARALLEL-CI-001.md)** **与** **[TT-LOCAL-CI-DELIVERY-GATE-001](docs/runbook/TT-LOCAL-CI-DELIVERY-GATE-001.md)** **篇首「文档对齐勘误」** **即可** **。** **触及** **`frontend/`** **路由** **/** **`crates/api` 契约** **/** **合约 ABI** **的** **diff** **仍** **须** **按** **上表** **与** **本节** **重跑** **相关** **门禁** **。**
+
 **最省事单人用法**：**日常**改动 **直推 `main`**；改 **索引、CI、gate、广播证据链** 时 **走 PR**。
 
 ## 必读入口
@@ -84,9 +86,17 @@ cd frontend && npm run lint && npx tsc --noEmit && npm test
 bash scripts/run-check-04-routes.sh
 ```
 
+**合并前默认建议**：改动触及 **`crates/api/src/routes/**`**、**`frontend/lib/api.ts`** 或 **`frontend/lib/apiClient/**`** 中与 **`/api/v1/*`** 相关的路径或常量时，**应在 PR 合并前**执行本脚本（与 **Build** CI、`scripts/dev-preflight.sh` 第二步同源）；PR 描述可附通过日志或截图。
+
 串联四步：**`check-04-routes-vs-code.py`**（§3.4 API 表 vs `crates/api` **`.route`**）→ **`check-04-frontend-routes-vs-app.py`** → **`check-13-1-table1-routes-vs-app.py`** → **`check-13-1-routes-covered-by-04-frontend-table.py`**（**13-1 表 1** ⊆ **04** 前端路径表）。默认 **`STRICT_WARNINGS=1`**（与 CI 一致；排障可 `STRICT_WARNINGS=0`）。
 
-Windows：`.\scripts\run-check-04-routes.ps1`。命令参数、**`STRICT_WARNINGS`** 与 **59**/**14 §2.1**/**07 §二 2.4·A1** 配套说明见 [scripts/README.md](scripts/README.md) **§三** 验收清单表内 **`run-check-04-routes`** / **`check-04-routes-vs-code.py`** 行；总览见 [07 §二 2.3](docs/spec/07-开发流程与顺序.md)。**`api_router()`** **17** 域与 **ABI** 静态核对叙事见 [14-合约-API-ABI-前后端对齐 §2.1](docs/spec/14-合约-API-ABI-前后端对齐.md)；全域检查清单篇首机读互链见 [59](docs/spec/59-企业级全域检查清单与文档补充计划.md)。
+**04 / 14 路由机读契约冻结（约定）**：以 **`bash scripts/run-check-04-routes.sh`** **exit 0** 作为 **[04 §3.4](docs/spec/04-后端与API.md)** 与 **[14](docs/spec/14-合约-API-ABI-前后端对齐.md)** 当前**表格结构**及 **`run-check-04-routes`** 后半串联门禁（**B450～B457** 等）所依赖的**字面锚点**的冻结验收点。**不要**在同一 PR 内混做「版式 / 可读性重排」与上述锚点/表结构变更；若只做 04/14 排版或拆表，请**另开独立 PR**，且合并前仍须本脚本绿。**默认**不再提交「仅为扩写机读锚点、无 HTTP/路由真值变更」的单独 04/14 文档 PR；若 API 或挂载路由真值变更，须与 **`crates/api` / `frontend`** **同批**更新 04 §3.4 / 14 并保持本脚本绿。
+
+**后续工作重心（约定）**：在 04/14 冻结前提下，优先把 **[spec/93](docs/spec/93-全站功能验证矩阵-域别回归清单.md)** 功能链路做成**真实环境执行**：对先前记 **BLOCKED** 的用例，在具备依赖的环境（staging、本地全栈、链/邮件等）上**逐条重跑**，落盘为 **PASS** 或 **FAIL**（**禁止**长期停留在无证据的 BLOCKED）；最小证据集与汇总 **`report.json`** 见 **93 §0.5**、**[R-001](docs/spec/R-001-全站回归报告模板与汇总JSON结构.md)**；批次排期与证据目录模板见 **[`docs/runbook/93-matrix-batch-tracker.md`](docs/runbook/93-matrix-batch-tracker.md)**，自动化回填见 **[R-002 §4](docs/spec/R-002-回归执行闭环与发布准入.md)**。
+
+Windows：`.\scripts\run-check-04-routes.ps1`。命令参数、**`STRICT_WARNINGS`** 与 **59**/**14 §2.1**/**07 §二 2.4·A1** 配套说明见 [scripts/README.md](scripts/README.md) **§三** 验收清单表内 **`run-check-04-routes`** / **`check-04-routes-vs-code.py`** 行；总览见 [07 §二 2.3](docs/spec/07-开发流程与顺序.md)。**`api_router()`** 在 `crates/api/src/routes/mod.rs` 中 **`merge` 共 20 次**（与 [07 §零 0.6](docs/spec/07-开发流程与顺序.md)、[14 §2.1](docs/spec/14-合约-API-ABI-前后端对齐.md) 同序：`health_meta`、`auth`、`admin`、`me`、`guides`、`orders`、`traveltrust_page`、`itineraries`、`discover`、`messages`、`disputes`、`evidence`、`media`、`intents`、`community`、`country_ledger_jurisdiction`、`did_rank`、`governance`、`trust_growth`、`internal`）；**ABI** 静态核对叙事见 **14 §2.1**、**§1.2**；全域检查清单篇首机读互链见 [59](docs/spec/59-企业级全域检查清单与文档补充计划.md)。
+
+**`docs/spec/snapshots/`** 与 **`docs/spec/27-archived/`**：**不**作为现行 HTTP/路由/合约契约 SSOT；变更路由或 API 契约须以 **[04 §3.4](docs/spec/04-后端与API.md)**、**[13-1 表 1](docs/spec/13-1-UI产品级SSOT与页面规范.md)**、**[14](docs/spec/14-合约-API-ABI-前后端对齐.md)** 与 **[00](docs/spec/00-文档索引.md)** 为准，**禁止**仅凭 snapshots 或归档 27 正文替代 **04/13-1/14** 的 PR 对读。
 
 改动 **合约** 或 **`contracts/abi` / `frontend/dapp/abis`** 时：在 `contracts/` 下 `forge build` / `forge test`，按 [scripts/README.md](scripts/README.md) **§三** **`sync-abi-from-forge`** / **`check-55-s13`** 行同步 ABI，并执行 `bash scripts/check-55-s13.sh`（Windows：`.\scripts\check-55-s13.ps1`）。契约与 **sync-abi → dapp/abis → 55-S13** 有序清单见 [14 §1.2](docs/spec/14-合约-API-ABI-前后端对齐.md)、[ops/RUNBOOK.md](ops/RUNBOOK.md) **§12.4**；总览见 [07 §二 2.3](docs/spec/07-开发流程与顺序.md) **55-S13** 子弹与文首**读前摘要**「**ABI·55-S13**」行。**上测试网/主网前**：须先 **Anvil** 本地闭环（订单主路径 + 治理相关 **Target** 若已开发），见 [contracts/README](contracts/README.md)、[Runbook §2.56](ops/RUNBOOK.md)、[governance-token/02 §1.3](docs/spec/governance-token/02-对内技术规格-草案.md)、[07 §二 Phase 3](docs/spec/07-开发流程与顺序.md)。
 

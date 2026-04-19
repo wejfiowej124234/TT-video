@@ -6,6 +6,19 @@ function isAdminPath(pathname: string): boolean {
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  /** 曾用 `/market/travel` 的旧书签 → 主入口 `/market` */
+  if (pathname === "/market/travel" || pathname === "/market/travel/") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/market";
+    return NextResponse.redirect(url);
+  }
+  /** 29 §10：/discover → 自由市场主界面 `/market`（保留 query/hash） */
+  if (pathname === "/discover" || pathname === "/discover/") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/market";
+    return NextResponse.redirect(url);
+  }
+
   if (!isAdminPath(pathname)) {
     return NextResponse.next();
   }
@@ -22,5 +35,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/discover", "/discover/", "/market/travel", "/market/travel/", "/admin/:path*"],
 };

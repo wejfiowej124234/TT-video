@@ -188,7 +188,7 @@ test("向导列表页可访问", async ({ page }) => {
 test("我的页可访问（未登录回登录或已登录留个人中心）", async ({ page }) => {
   await page.goto("/me");
   await page.waitForURL(
-    (url) => url.pathname === "/me" || url.pathname.startsWith("/auth/login"),
+    (url) => url.pathname === "/community/me" || url.pathname.startsWith("/auth/login"),
     { timeout: 15_000 },
   );
   const path = new URL(page.url()).pathname;

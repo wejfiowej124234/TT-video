@@ -11,6 +11,7 @@ import {
 } from "@/lib/travelLinkFocus";
 import RegisterPageBackdrop from "./RegisterPageBackdrop";
 import { registerPageShellClass, type RegisterVisualKind } from "./registerBackgrounds";
+import TrustGrowthMomentBanner from "@/components/trust/TrustGrowthMomentBanner";
 
 export type RegisterTouristFormProps = {
   /** 主容器布局类（须含 `relative isolate`，与 `registerPageShellClass` 一致） */
@@ -70,12 +71,13 @@ export default function RegisterTouristForm({
   labelClass,
 }: RegisterTouristFormProps) {
   const formErrorId = useId();
+  const fieldWrapClass = "flex min-w-0 flex-col gap-1.5";
   return (
     <main className={mainClassName} aria-label={t(headingKey)}>
       <RegisterPageBackdrop kind={backdropKind} />
-      <div className="relative z-10 flex w-full flex-col items-center gap-4">
-      <div className="w-full max-w-sm rounded-[var(--radius-sm)] border border-ink-200 bg-bg-console shadow-soft p-6 space-y-4">
-        <div className="flex items-center gap-2 mb-2">
+      <div className="relative z-10 flex w-full min-w-0 flex-col items-center gap-4">
+      <div className="flex w-full min-w-0 max-w-sm flex-col gap-4 rounded-[var(--radius-sm)] border border-ink-200 bg-bg-console p-6 shadow-soft">
+        <div className="flex items-center gap-2">
           <form
             className="inline"
             onSubmit={(e) => {
@@ -89,29 +91,30 @@ export default function RegisterTouristForm({
         {bannerKey ? (
           <p className="text-meta text-ink-600 rounded-[var(--radius-sm)] border border-ink-200 bg-bg-soft px-3 py-2">{t(bannerKey)}</p>
         ) : null}
-        <h1 className="text-h4 font-semibold text-ink-900">{t(headingKey)}</h1>
-        <form noValidate onSubmit={onSubmit} className="space-y-3">
-          <div>
+        <h1 className="shrink-0 text-h4 font-semibold leading-snug text-ink-900">{t(headingKey)}</h1>
+        <TrustGrowthMomentBanner moment="register" surface="auth" />
+        <form noValidate onSubmit={onSubmit} className="flex min-w-0 flex-col gap-3">
+          <div className={fieldWrapClass}>
             <label className={labelClass}>{t("auth_register_email")}</label>
             <input type="email" autoFocus={autoFocusEmail} placeholder={t("auth_register_email")} value={email} onChange={(e) => setEmail(e.target.value)} required className={inputClass} aria-label={t("auth_register_email")} aria-invalid={!!error} aria-describedby={error ? formErrorId : undefined} />
           </div>
-          <div>
+          <div className={fieldWrapClass}>
             <label className={labelClass}>{t("auth_register_nickname")}</label>
             <input type="text" placeholder={t("auth_register_nickname")} value={nickname} onChange={(e) => setNickname(e.target.value)} className={inputClass} />
           </div>
-          <div>
+          <div className={fieldWrapClass}>
             <label className={labelClass}>{t("auth_register_password")}</label>
             <input type="password" placeholder={t("auth_register_passwordPlaceholder")} value={password} onChange={(e) => setPassword(e.target.value)} required className={inputClass} aria-label={t("auth_register_password")} />
             {password && (() => { const s = passwordStrength(password); return s.labelKey ? <p className={`text-meta mt-0.5 ${s.ok ? "text-ink-500" : "text-warning"}`}>{t(s.labelKey)}</p> : null; })()}
           </div>
-          <div>
+          <div className={fieldWrapClass}>
             <label className={labelClass}>{t("auth_register_confirmPassword")}</label>
             <input type="password" placeholder={t("auth_register_confirmPlaceholder")} value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)} required className={inputClass} aria-label={t("auth_register_confirmPassword")} />
           </div>
-          <div>
+          <div className={fieldWrapClass}>
             <label className={labelClass}>{t("auth_register_defaultWallet")}</label>
             <input type="text" placeholder={t("auth_register_walletPlaceholder")} value={defaultWallet} onChange={(e) => setDefaultWallet(e.target.value)} className={inputClass} />
-            <p className="text-meta text-ink-500 mt-0.5">{t("auth_register_walletHint")}</p>
+            <p className="text-meta text-ink-500">{t("auth_register_walletHint")}</p>
           </div>
           {error && <p id={formErrorId} className="text-danger text-small" role="alert">{getErrorDisplay(error)}</p>}
           <button type="submit" disabled={loading} aria-busy={loading ? true : undefined} className={`btn-console w-full rounded-[var(--radius-sm)] bg-travel-500 text-white py-2 text-small font-medium disabled:opacity-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}>{loading ? t("auth_register_submitting") : t("auth_register_submit")}</button>

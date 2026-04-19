@@ -11,7 +11,8 @@
 **所有权威技术文档在子目录 [`spec/`](spec/)** 中，便于 AI 与人类快速定位。
 
 - **规范主序列入口**：[spec/00-文档索引.md](spec/00-文档索引.md) — 文档列表与阅读顺序、版本表、发版前必做清单。
-- **内容**：00～27、08-0～08-5、13-1、企业级审计报告等均位于 `docs/spec/`，实现与审计以该目录为准。
+- **代码映射与时点快照（方案 A）**：[spec/code-maps/README.md](spec/code-maps/README.md)、[spec/snapshots/README.md](spec/snapshots/README.md) — **62/57/补充实装、58/60/61/67、28 审计·对照四篇、24/26、00 整理清单** 等；主链 **01/04/07/14/53/110** 与 **28-Cinematic…** 仍在 **spec/** 根。
+- **内容**：00～27、08-0～08-5、13-1、企业级审计报告等均位于 `docs/spec/`（含上述子目录），实现与审计以该目录为准。
 
 ## 开发过程临时文档
 
@@ -23,7 +24,7 @@
 ## 导航子目录
 
 - [runbook/](runbook/) — 运维阶梯与 Epic 收口（含 **[封口项目与 Epic 总索引](runbook/sealed-programs-and-epics-master-index.md)**）
-- [spec/](spec/) — 权威技术文档（00～27、08 系列等）
+- [spec/](spec/) — 权威技术文档（00～27、08 系列等；**[code-maps/](spec/code-maps/README.md)** / **[snapshots/](spec/snapshots/README.md)** 见子目录说明）
 - [backend/](backend/) — 后端文档导航与架构目录
 - [frontend/](frontend/) — 前端文档导航与架构目录
 - [dapp/](dapp/) — DApp 文档导航与架构目录

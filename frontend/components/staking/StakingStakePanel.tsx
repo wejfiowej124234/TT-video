@@ -6,8 +6,9 @@ import { useAccount, useChainId, useReadContract, useWaitForTransactionReceipt, 
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { getExpectedChainId } from "@/lib/chainEnv";
-import { erc20TokenAbi, stakingAbi } from "@/lib/stakingAbi";
-import { getStakingAddress } from "@/lib/stakingEnv";
+import { erc20TokenAbi, identityStakingPoolAbi } from "@/lib/stakingAbi";
+import { getGuideStakingAddress, getProviderStakingAddress } from "@/lib/stakingEnv";
+import type { StakingPoolKind } from "./StakingContractPanel";
 import { mapWalletWriteError } from "@/lib/mapWalletWriteError";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 
@@ -23,12 +24,16 @@ const STAKE_WRITE_ERROR_OPTS = {
   genericKey: "staking_stake_errGeneric",
 } as const;
 
-/** Phase 3/4：ERC-20 approve + Staking.stake（与升级后的 Staking.sol 一致） */
-export function StakingStakePanel() {
+/** Phase 3/4：ERC-20 approve + 身份质押池 `stake`。 */
+export function StakingStakePanel({ pool }: { pool: StakingPoolKind }) {
   const { t } = useTranslation();
   const { address, isConnected } = useAccount();
   const chainId = useChainId();
-  const stakingAddress = useMemo(() => getStakingAddress(), []);
+  const stakingAddress = useMemo(
+    () => (pool === "guide" ? getGuideStakingAddress() : getProviderStakingAddress()),
+    [pool],
+  );
+  const stakeTitleKey = pool === "guide" ? "staking_pool_guide_stake_title" : "staking_pool_provider_stake_title";
   const expectedChainId = getExpectedChainId();
   const chainOk = chainId === expectedChainId;
   const baseEnabled = Boolean(stakingAddress && chainOk);
@@ -39,7 +44,7 @@ export function StakingStakePanel() {
 
   const tokenRead = useReadContract({
     address: stakingAddress ?? undefined,
-    abi: stakingAbi,
+    abi: identityStakingPoolAbi,
     functionName: "token",
     query: { enabled: baseEnabled },
   });
@@ -56,14 +61,14 @@ export function StakingStakePanel() {
 
   const minStakeRead = useReadContract({
     address: stakingAddress ?? undefined,
-    abi: stakingAbi,
+    abi: identityStakingPoolAbi,
     functionName: "MIN_STAKE",
     query: { enabled: baseEnabled },
   });
 
   const stakeOfRead = useReadContract({
     address: stakingAddress ?? undefined,
-    abi: stakingAbi,
+    abi: identityStakingPoolAbi,
     functionName: "stakeOf",
     args: address ? [address] : undefined,
     query: { enabled: userEnabled },
@@ -198,7 +203,7 @@ export function StakingStakePanel() {
       return;
     writeStake({
       address: stakingAddress,
-      abi: stakingAbi,
+      abi: identityStakingPoolAbi,
       functionName: "stake",
       args: [parsedAmount],
     });
@@ -220,7 +225,7 @@ export function StakingStakePanel() {
         aria-labelledby={titleId}
       >
         <h2 id={titleId} className="text-body-l font-semibold text-ink-900">
-          {t("staking_stake_title")}
+          {t(stakeTitleKey)}
         </h2>
         <p className="mt-2 text-body text-ink-600">{t("staking_stake_connect")}</p>
       </section>
@@ -236,7 +241,7 @@ export function StakingStakePanel() {
       aria-labelledby={titleId}
     >
       <h2 id={titleId} className="text-body-l font-semibold text-ink-900">
-        {t("staking_stake_title")}
+        {t(stakeTitleKey)}
       </h2>
       <p className="mt-1 text-body text-ink-600">{t("staking_stake_subtitle")}</p>
 

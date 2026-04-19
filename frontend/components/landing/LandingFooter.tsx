@@ -38,7 +38,7 @@ export default function LandingFooter() {
             <ul className="space-y-2 text-ink-600">
               <li><Link href="/auth/login" className={FOOTER_LINK_CLASS}>{t("footer_link_login")}</Link></li>
               <li><Link href="/auth/register" className={FOOTER_LINK_CLASS}>{t("footer_link_register")}</Link></li>
-              <li><Link href="/me" className={FOOTER_LINK_CLASS}>{t("footer_link_me")}</Link></li>
+              <li><Link href="/community/me" className={FOOTER_LINK_CLASS}>{t("footer_link_me")}</Link></li>
             </ul>
           </div>
           <div>

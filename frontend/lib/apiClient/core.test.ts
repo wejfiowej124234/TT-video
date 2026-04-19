@@ -360,6 +360,35 @@ describe("parseResponse (Phase 4/5 API 契约)", () => {
     });
     await expect(parseResponse(res)).rejects.toThrow("review_window_expired");
   });
+
+  it("rejects 2xx HTML body with api_html_not_json (proxy/API base misconfigured)", async () => {
+    const res = new Response("<!DOCTYPE html><html>", {
+      status: 200,
+      headers: { "Content-Type": "text/html" },
+    });
+    await expect(parseResponse(res)).rejects.toThrow("api_html_not_json");
+  });
+
+  it("rejects 2xx HTML with leading NBSP (trim alone would miss)", async () => {
+    const res = new Response("\u00A0\u00A0<!DOCTYPE html><html>", {
+      status: 200,
+      headers: { "Content-Type": "text/html" },
+    });
+    await expect(parseResponse(res)).rejects.toThrow("api_html_not_json");
+  });
+
+  it("rejects 2xx non-JSON with api_invalid_json_body", async () => {
+    const res = new Response("not-json", { status: 200 });
+    await expect(parseResponse(res)).rejects.toThrow("api_invalid_json_body");
+  });
+
+  it("rejects non-2xx HTML body with api_html_not_json (e.g. 500 error page)", async () => {
+    const res = new Response("<!DOCTYPE html><html><body>error</body></html>", {
+      status: 500,
+      headers: { "Content-Type": "text/html" },
+    });
+    await expect(parseResponse(res)).rejects.toThrow("api_html_not_json");
+  });
 });
 
 describe("isComplianceError", () => {

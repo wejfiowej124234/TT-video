@@ -99,7 +99,7 @@ pub enum DisputeStatus {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DisputeResolution {
-    /// 0.0 ~ 1.0，退给游客的比例
+    /// 0.0 ~ 1.0，退给旅行者的比例
     pub refund_ratio: f64,
     /// 是否扣罚向导质押
     pub slash_guide: bool,

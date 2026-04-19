@@ -46,9 +46,16 @@ export default function StakingPage() {
           </div>
         </section>
 
-        <StakingContractPanel />
-        <StakingStakePanel />
-        <StakingWithdrawPanel />
+        <div className="mt-10 space-y-6">
+          <StakingContractPanel pool="guide" />
+          <StakingStakePanel pool="guide" />
+          <StakingWithdrawPanel pool="guide" />
+        </div>
+        <div className="mt-10 space-y-6">
+          <StakingContractPanel pool="provider" />
+          <StakingStakePanel pool="provider" />
+          <StakingWithdrawPanel pool="provider" />
+        </div>
         <StakingRegistryPanel />
 
         <p className="mt-6 text-meta leading-relaxed text-ink-500" role="note">

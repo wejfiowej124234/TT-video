@@ -2,16 +2,25 @@
 # B-145 / TT-B145-SSOT-GATE-PR-CHECK-CRATES-NEEDS-METADATA-001
 # B-146 / TT-B146-SSOT-GATE-BASE-RESOLUTION-STRICTNESS-PLAN-001（BASE/HEAD 解析语义 · 母表 B-146）
 # B-147 / TT-B147-SSOT-GATE-CONTRACTS-SCOPE-001（contracts/** 纳入同一门禁 · 路径豁免见下「contracts 豁免」）
+# B-158 / TT-B158-SSOT-GATE-FRONTEND-LOCKFILE-METADATA-SCOPE-001（须登记 frontend/** + package-lock.json · 豁免见下「frontend 豁免」）
 #
-# 单人开发「元数据门禁」（勿称 PR gate）：BASE..HEAD 若含 crates/**，或含须登记的 contracts/**（见下豁免），须同批 docs/任务母表.md 或 docs/AI任务卡索引.md。
+# 单人开发「元数据门禁」（勿称 PR gate）：BASE..HEAD 若含 crates/**，或含须登记的 contracts/**（见下豁免），或含须登记的
+# frontend/**（见下豁免），或含 B-158 package-lock.json（仓库根或 frontend/），须同批 docs/任务母表.md 或 docs/AI任务卡索引.md。
 # 与 B-145 同轨：同一对文档、同一 CRATES_METADATA_GATE_FAIL / CRATES_METADATA_GATE_REQUIRE_REFS 语义（变量名保留兼容）。
 #
 # contracts 豁免（仅路径判定；纯注释行级豁免不做 — 归 CR / 人工）：
 #   - contracts/test/**、contracts/script/**、contracts/lib/**、contracts/cache/**、contracts/out/**
 #   - contracts/foundry.toml、contracts/foundry.lock、contracts/remappings.txt
 #   - contracts 下任意 **/*.md
-#   - contracts/run-*.sh（仓库内 Foundry 辅助壳脚本）
+#   - contracts/run-*.sh（仓库内 Foundry 辅助壳脚本；glob 不可用，脚本内用正则 ^contracts/run-.*\.sh$）
 #   - 路径以 .generated 结尾（如 abi 生成物）
+#
+# frontend 豁免（B-158；路径前缀均为 frontend/）：
+#   - frontend/locales/**、frontend/public/**、frontend/e2e/**、frontend/scripts/**
+#   - 任意 **/*.md
+#   - 路径含 __tests__/、/fixtures/、/.storybook/、/stories/
+#   - *.test.* / *.spec.*（js|jsx|ts|tsx|mjs|cjs）
+#   - *.stories.(js|jsx|ts|tsx)
 #
 # Exit 约定（分轨）：
 #   0 — 未触发检查 / 检查通过 / 违规但未启用 fail（默认）
@@ -39,6 +48,25 @@ cd "$ROOT"
 
 MOTHER="docs/任务母表.md"
 INDEX="docs/AI任务卡索引.md"
+
+# 0 = path triggers B-158 metadata gate; 1 = exempt or not under frontend/
+frontend_path_triggers_gate() {
+  local f="$1"
+  [[ "$f" == frontend/* ]] || return 1
+  case "$f" in
+    frontend/locales/* | frontend/public/* | frontend/e2e/* | frontend/scripts/*)
+      return 1
+      ;;
+  esac
+  [[ "$f" =~ \.md$ ]] && return 1
+  [[ "$f" =~ __tests__/ ]] && return 1
+  [[ "$f" =~ /fixtures/ ]] && return 1
+  [[ "$f" =~ (^|/)\.storybook/ ]] && return 1
+  [[ "$f" =~ /stories/ ]] && return 1
+  [[ "$f" =~ \.(test|spec)\.(js|jsx|ts|tsx|mjs|cjs)$ ]] && return 1
+  [[ "$f" =~ \.stories\.(js|jsx|ts|tsx)$ ]] && return 1
+  return 0
+}
 
 if ! git rev-parse "$BASE" >/dev/null 2>&1; then
   echo "WARN: git base '$BASE' not found (shallow clone or wrong ref?). Skip crates/metadata gate." >&2
@@ -79,7 +107,7 @@ while IFS= read -r f; do
   if [[ "$f" =~ ^contracts/.*\.md$ ]]; then
     continue
   fi
-  if [[ "$f" == contracts/run-*.sh ]]; then
+  if [[ "$f" =~ ^contracts/run-.*\.sh$ ]]; then
     continue
   fi
   if [[ "$f" =~ \.generated$ ]]; then
@@ -89,8 +117,26 @@ while IFS= read -r f; do
   break
 done <<< "$(printf '%s\n' "$changed")"
 
-if [[ "$crates_hit" -eq 0 && "$contracts_gate_hit" -eq 0 ]]; then
-  echo "OK: no crates/** or gated contracts/** changes vs $BASE..$HEAD."
+frontend_gate_hit=0
+while IFS= read -r f; do
+  [[ -z "$f" ]] && continue
+  if frontend_path_triggers_gate "$f"; then
+    frontend_gate_hit=1
+    break
+  fi
+done <<< "$(printf '%s\n' "$changed")"
+
+lockfile_gate_hit=0
+while IFS= read -r f; do
+  [[ -z "$f" ]] && continue
+  if [[ "$f" == package-lock.json || "$f" == frontend/package-lock.json ]]; then
+    lockfile_gate_hit=1
+    break
+  fi
+done <<< "$(printf '%s\n' "$changed")"
+
+if [[ "$crates_hit" -eq 0 && "$contracts_gate_hit" -eq 0 && "$frontend_gate_hit" -eq 0 && "$lockfile_gate_hit" -eq 0 ]]; then
+  echo "OK: no crates/**, gated contracts/**, gated frontend/**, or B-158 lockfile changes vs $BASE..$HEAD."
   exit 0
 fi
 
@@ -107,11 +153,13 @@ fi
 REASONS=()
 [[ "$crates_hit" -eq 1 ]] && REASONS+=("crates/**")
 [[ "$contracts_gate_hit" -eq 1 ]] && REASONS+=("contracts/**（B-147 非豁免路径）")
-MSG="Diff 含 ${REASONS[*]} 但未同批修改 $MOTHER 或 $INDEX。请先落母表 B-xxx / 更新 TT（见 04 零、SSOT Gate · B-145 / B-147）。"
+[[ "$frontend_gate_hit" -eq 1 ]] && REASONS+=("frontend/**（B-158 非豁免路径）")
+[[ "$lockfile_gate_hit" -eq 1 ]] && REASONS+=("package-lock.json（根或 frontend/ · B-158）")
+MSG="Diff 含 ${REASONS[*]} 但未同批修改 $MOTHER 或 $INDEX。请先落母表 B-xxx / 更新 TT（见 04 零、SSOT Gate · B-145 / B-147 / B-158）。"
 echo "$MSG" >&2
 
 if [[ -n "${GITHUB_ACTIONS:-}" ]]; then
-  echo "::warning title=SSOT crates+contracts/metadata::$MSG"
+  echo "::warning title=SSOT crates+contracts+frontend+lockfile/metadata::$MSG"
 fi
 
 if [[ "${CRATES_METADATA_GATE_FAIL:-}" == "1" ]]; then

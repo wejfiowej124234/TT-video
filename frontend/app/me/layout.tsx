@@ -8,18 +8,18 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: {
-    canonical: "/me",
+    canonical: "/community/me",
     languages: {
-      "zh-CN": "/me",
-      en: "/me",
-      "x-default": "/me",
+      "zh-CN": "/community/me",
+      en: "/community/me",
+      "x-default": "/community/me",
     },
   },
   openGraph: {
     title,
     description,
     type: "website",
-    url: "/me",
+    url: "/community/me",
   },
   twitter: {
     card: "summary_large_image",

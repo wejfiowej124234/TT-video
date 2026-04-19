@@ -537,17 +537,6 @@ mod tests {
         let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
         let addr = listener.local_addr().unwrap();
         let payload = rpc_body.clone();
-        tokio::spawn(async move {
-            let (mut sock, _) = listener.accept().await.unwrap();
-            let mut buf = vec![0u8; 16384];
-            let _ = sock.read(&mut buf).await;
-            let response = format!(
-                "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
-                payload.len(),
-                payload
-            );
-            let _ = sock.write_all(response.as_bytes()).await;
-        });
 
         let tx_hash = "0x0101010101010101010101010101010101010101010101010101010101010101";
         let row = FeeRouterRoutedEventRow {
@@ -573,7 +562,22 @@ mod tests {
         cfg.chain_id = 31337;
         cfg.fee_router_address = Some(router.to_string());
 
-        let out = verify_fee_router_row_vs_chain(&cfg, &row, router, &topic0).await;
+        // Poll mock server together with the client so `accept` is not starved under
+        // parallel `cargo test` (avoids intermittent "error decoding response body").
+        let (_, out) = tokio::join!(
+            async move {
+                let (mut sock, _) = listener.accept().await.unwrap();
+                let mut buf = vec![0u8; 16384];
+                let _ = sock.read(&mut buf).await;
+                let response = format!(
+                    "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
+                    payload.len(),
+                    payload
+                );
+                let _ = sock.write_all(response.as_bytes()).await;
+            },
+            verify_fee_router_row_vs_chain(&cfg, &row, router, &topic0)
+        );
         assert_eq!(out.get("ok"), Some(&json!(true)), "expected ok:true, got {out:?}");
         assert_eq!(out.get("tx_hash").and_then(|x| x.as_str()), Some(tx_hash));
     }

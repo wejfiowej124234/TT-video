@@ -62,7 +62,7 @@ export default function MeError({
           </Link>
         </div>
         <p className="mt-5 text-meta text-slate-400 flex flex-wrap justify-center gap-x-2 gap-y-1">
-          <Link href="/me" className={`text-cyan-300 hover:text-cyan-100 hover:underline ${deepShellInlineLinkFocusClasses}`}>
+          <Link href="/community/me" className={`text-cyan-300 hover:text-cyan-100 hover:underline ${deepShellInlineLinkFocusClasses}`}>
             {t("nav_me")}
           </Link>
           <span aria-hidden>·</span>

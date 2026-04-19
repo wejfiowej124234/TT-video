@@ -1,7 +1,7 @@
 @echo off
 chcp 65001 >nul
 REM 仅编译 API（修改 CORS 或代码后执行，再重启 API）。从项目根运行: scripts\build-api.bat
-set "ROOT=%~dp0\.."
+for %%I in ("%~dp0..\..") do set "ROOT=%%~fI"
 cd /d "%ROOT%"
 powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\check-sqlx-migration-prefixes.ps1"
 if errorlevel 1 (

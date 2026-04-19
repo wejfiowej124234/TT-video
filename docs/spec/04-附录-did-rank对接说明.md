@@ -6,7 +6,7 @@
 |------------|------|
 | **接口路径与 DB/chain_off 行为** | **§1** |
 | **`period` / `rank_basis` 排序口径** | **§2** |
-| **页面与产品 SSOT** | **[30-DID排行榜-页面规范](30-DID排行榜-页面规范.md)** |
+| **页面与产品 SSOT** | **[30-DID排行榜-页面规范](30-DID排行榜-页面规范.md)**；旅行收购脊签 **Target** 见 **30 §3.2**、**本附录 §1.2** |
 | **路由总表** | **[04 §3.4](04-后端与API.md)** |
 | **信誉加权 · §3.1（MVP `sort=weighted` + env / 08-3 附录 A + Target 余项）** | **§2、§3.1**；**[08-3 附录 A](08-3-参数与门禁表.md#附录-a运维与实现映射非-26-key-数值对齐代码与-runbook)** |
 
@@ -30,8 +30,16 @@
 
 | 字段（JSON） | 说明 |
 |-------------|------|
-| **`tourist_id`** / **`traveler_id`** | **可选**（实现上**恒同值**）。与关联订单游客 **`orders.tourist_id`** 同 UUID 字符串；**`traveler_id`** 为 **87** 与 **`GET /api/v1/orders`** 列表/详情 **`traveler_id`****=**`tourist_id` 双读口径一致。无关联游客或链下 store 中订单缺失时为 **`null`**（JSON）。 |
+| **`tourist_id`** / **`traveler_id`** | **可选**（实现上**恒同值**）。与关联订单旅行者 **`orders.tourist_id`** 同 UUID 字符串；**`traveler_id`** 为 **87** 与 **`GET /api/v1/orders`** 列表/详情 **`traveler_id`****=**`tourist_id` 双读口径一致。无关联旅行者或链下 store 中订单缺失时为 **`null`**（JSON）。 |
 | **`creator_community_user_id`** | **可选**。字符串，须为与 **`/community/user/[id]`** 一致的用户 UUID（与社区作者主页路由同形）。有值时前端 `normalizeItineraryRow` 同时接受 **`creatorCommunityUserId`**（camelCase）并映射为页面类型字段 **`creatorCommunityUserId`**；仅当通过 `isDidRankCommunityProfileId`（与 `community/user/[id]/page` 一致之 UUID 正则）校验时，**`ItineraryTopCard`** 将**创作者昵称**渲染为链至社区主页的 `Link`，与 **`GuideTopCard`** 社区档案链同口径（**无**整卡 `role="button"` 嵌套 `Link`）。未返回、空串或非法格式时仅展示纯文本昵称。后端与 chain_off/mock 可无此字段；抽检数据可填合法 UUID。 |
+
+### 1.2 旅行收购榜（脊签 · API/DB **Target** · 前端脊签与占位已上线）
+
+| 项 | 说明 |
+|----|------|
+| **状态** | **尚无** `GET /api/v1/did-rank/…` 旅行收购专用端点；**不**在本附录 §2 占用 `rank_basis` 枚举。落地后须与 **[30 §0.1 / §3.2 / §7.1](30-DID排行榜-页面规范.md)**、**[87 §1.4](87-TravelTrust-角色体系技术文档-融合架构版.md)** 同批补充 **HTTP 路径**、**响应字段**、**`rank_basis` 命名**，并更新 **[04 §3.4](04-后端与API.md)** 路由总表与 **`run-check-04-routes`**。 |
+| **产品口径（草案）** | 排行维度可为窗口内 **成功完成的旅行收购履约单数**、**撮合成交额（USDT/USDC）**、**委托/受托双方加权信誉** 等，与产品共定；任务与列表须携带 **药品/禁限品/海关** 等 **合规披露** 字段，**不**构成对外合规承诺（与 **03** 同路径）。 |
+| **URL 与前端** | **`?board=acquisition`**（**30 §5**）已由 **`parseDidRankBoardParam`** 解析（**`frontend/lib/didRankUtils.ts`**）；**`/did-rank`** 页渲染 **`AcquisitionRankBlock`**（合规说明、空态、**`/market`** CTA，**无**假排行）。**待接**：`getDidRankAcquisitions` 等 client 与响应归一化（路径名以定稿为准）。 |
 
 ---
 
@@ -53,7 +61,7 @@
 
 三条接口均在 JSON 根级返回：`status`、`period`（解析后的 canonical：`week` \| `month` \| `all`）、`since`（`null` 或字符串）、`limit`（固定 30）、**`rank_basis`**（排序主键说明，前端可忽略）、以及 `travelers` / `guides` / `itineraries` 之一。无数据源时列表为空，可带 `note` 说明。
 
-**当前排序口径（2026-03-28）**：有 DB 时 **travelers** 按窗口内 **`orders.completed_at`** 且 `status=completed` 的订单数（游客 `tourist_id`）降序，其次 `users.created_at`（`rank_basis`=`tourist_completed_orders_in_window`）；**guides** 按窗口内完成单的 **`SUM(orders.amount::numeric)`** 降序，其次完成单数，再 `users.created_at`（`rank_basis`=`guide_reception_gross_total_then_completed_count`）；响应项含 **`reception_gross_total`**（文本小数）、**`reception_count`**，并（**2026-04-03** 起）附 **`received_review_count`**（窗口内、已完成订单上且 `reviews.reviewee_id` 为向导用户 id 的评价条数）、**`avg_received_review_score`**（上列算术均分，无评价时为 `null`）— **在缺省** **`sort`** **下** **不改变** 上述主序与 `rank_basis`（可选 **`sort=reviews`** / **`sort=weighted`** 时见 §2 **`sort` 列表**）。**itineraries** 优先按关联订单 **`orders.completed_at`** 降序（`rank_basis`=`order_completed_at`）；若无完成单数据则回退为 **`itineraries.created_at`**（`rank_basis`=`itinerary_created_at_fallback`）。chain_off 回退：travelers 完成单计数；guides 以 `amount` 解析累加（f64，仅演示）+ 完成单数，并附与 DB 同语义的 **`received_review_count`** / **`avg_received_review_score`**；行程在无已完成订单窗口内数据时按订单 **`created_at`** 代理窗口（`rank_basis`=`itinerary_created_at_proxy`）。§3.1 **固定权重** **`sort=weighted`** 已落地；**`sort=reviews`/`weighted`** **≥3** **完成单** **入榜**（批 **682**）；**`w_*` 08-3 化** 等仍见 §3.1 **Target**。
+**当前排序口径（2026-03-28）**：有 DB 时 **travelers** 按窗口内 **`orders.completed_at`** 且 `status=completed` 的订单数（旅行者 `tourist_id`）降序，其次 `users.created_at`（`rank_basis`=`tourist_completed_orders_in_window`）；**guides** 按窗口内完成单的 **`SUM(orders.amount::numeric)`** 降序，其次完成单数，再 `users.created_at`（`rank_basis`=`guide_reception_gross_total_then_completed_count`）；响应项含 **`reception_gross_total`**（文本小数）、**`reception_count`**，并（**2026-04-03** 起）附 **`received_review_count`**（窗口内、已完成订单上且 `reviews.reviewee_id` 为向导用户 id 的评价条数）、**`avg_received_review_score`**（上列算术均分，无评价时为 `null`）— **在缺省** **`sort`** **下** **不改变** 上述主序与 `rank_basis`（可选 **`sort=reviews`** / **`sort=weighted`** 时见 §2 **`sort` 列表**）。**itineraries** 优先按关联订单 **`orders.completed_at`** 降序（`rank_basis`=`order_completed_at`）；若无完成单数据则回退为 **`itineraries.created_at`**（`rank_basis`=`itinerary_created_at_fallback`）。chain_off 回退：travelers 完成单计数；guides 以 `amount` 解析累加（f64，仅演示）+ 完成单数，并附与 DB 同语义的 **`received_review_count`** / **`avg_received_review_score`**；行程在无已完成订单窗口内数据时按订单 **`created_at`** 代理窗口（`rank_basis`=`itinerary_created_at_proxy`）。§3.1 **固定权重** **`sort=weighted`** 已落地；**`sort=reviews`/`weighted`** **≥3** **完成单** **入榜**（批 **682**）；**`w_*` 08-3 化** 等仍见 §3.1 **Target**。
 
 ---
 
@@ -110,4 +118,5 @@
 | 1.19 | 2026-04-03 | **§1**：**`GET /meta`** 增 **`did_rank`** 块（**`guides_community_penalty_exclusion`** **`db_backed`****/**`chain_off_memory_only`****/**`no_chain_off`****）与 **685** 路径同源；**04** **`GET /meta`** 双表登记；**07** 批 **686** 互证。 |
 | 1.20 | 2026-04-03 | **§3**：**`smoke-api-public-routes`****+**`check-55-quick-verify`****（**.sh/.ps1**）在 **`/meta`** JSON 分支校验 **`.did_rank`** 形状及 **`guides_community_penalty_exclusion`****↔**`chain_off_*`** 一致性；**07** 批 **687** 互证。 |
 | 1.21 | 2026-04-05 | **§1.1**：**`itineraries[]`** **`tourist_id`****/**`traveler_id`**（同值，**87** 与 **`GET /api/v1/orders`** 双读）；**04** §3.4 **`GET …/did-rank/itineraries`**；**`did_rank.rs`** 单测；**07** 批 **811** 互证。 |
-| 1.22 | 2026-04-05 | **87** **订单游客** **UUID** **双读** **延伸至** **争议**：**04** §3.4 **`GET /api/v1/disputes*`**、**`POST …/resolve`** 与 **§三** **争议** **条**；**`chain_off/disputes.rs`** **`dispute_party_mirror`** + **`tests_disputes`**；**07** 批 **812** 互证（**非** did-rank 接口变更，附录版本随 **04** **1.0.333** **同批**）。 |
+| 1.22 | 2026-04-05 | **87** **订单旅行者** **UUID** **双读** **延伸至** **争议**：**04** §3.4 **`GET /api/v1/disputes*`**、**`POST …/resolve`** 与 **§三** **争议** **条**；**`chain_off/disputes.rs`** **`dispute_party_mirror`** + **`tests_disputes`**；**07** 批 **812** 互证（**非** did-rank 接口变更，附录版本随 **04** **1.0.333** **同批**）。 |
+| 1.23 | 2026-04-19 | **§1.2**：旅行收购 **HTTP/DB** 仍为 **Target**；**前端** 四脊签 + **`?board=acquisition`** + **`AcquisitionRankBlock`** 与 **[30 §7.1](30-DID排行榜-页面规范.md)** 台账对齐；**`parseDidRankBoardParam`** 真值已支持 **`acquisition`**。 |

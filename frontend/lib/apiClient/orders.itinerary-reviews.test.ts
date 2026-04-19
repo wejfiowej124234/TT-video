@@ -3,7 +3,15 @@
  */
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { apiUrl, routes } from "../api";
+import { resetReviewJsonContractDegradeCounters } from "../reviewJsonContractObservability";
+import { trackReviewJsonContractDegrade } from "../analytics";
 import { patchOrderItinerary, getOrderReviews, postReview } from "./orders";
+
+vi.mock("../analytics", () => ({
+  trackMarketEvent: vi.fn(),
+  trackDidRankEvent: vi.fn(),
+  trackReviewJsonContractDegrade: vi.fn(),
+}));
 
 function mockTextResponse(ok: boolean, body: unknown, status?: number) {
   const st = status ?? (ok ? 200 : 500);
@@ -47,7 +55,10 @@ describe("patchOrderItinerary (53)", () => {
 });
 
 describe("getOrderReviews", () => {
-  beforeEach(() => vi.stubGlobal("fetch", vi.fn()));
+  beforeEach(() => {
+    vi.stubGlobal("fetch", vi.fn());
+    resetReviewJsonContractDegradeCounters();
+  });
   afterEach(() => vi.restoreAllMocks());
 
   it("GETs reviews route and returns items", async () => {
@@ -62,7 +73,16 @@ describe("getOrderReviews", () => {
     expect(await getOrderReviews("ord-r")).toEqual({
       items: [{ id: "r1", reviewer_id: "a", reviewee_id: "b", score: 5, weight: 0.25 }],
       meta: { review_weight_rule_version: "review_weight_v1", review_weight_rule: "x" },
+      reviewJsonContractClient: {
+        schemaVersionReported: null,
+        schemaVersionEffective: 1,
+        anchorEffective: null,
+        degrade: "missing_meta",
+      },
     });
+    expect(trackReviewJsonContractDegrade).toHaveBeenCalledWith(
+      expect.objectContaining({ degrade: "missing_meta", api_path: "get_reviews" })
+    );
     expect(globalThis.fetch).toHaveBeenCalledWith(
       apiUrl(routes.orderReviews("ord-r")),
       expect.objectContaining({
@@ -75,7 +95,15 @@ describe("getOrderReviews", () => {
     (globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce(
       mockTextResponse(true, { status: "ok" })
     );
-    expect(await getOrderReviews("x")).toEqual({ items: [] });
+    expect(await getOrderReviews("x")).toEqual({
+      items: [],
+      reviewJsonContractClient: {
+        schemaVersionReported: null,
+        schemaVersionEffective: 1,
+        anchorEffective: null,
+        degrade: "missing_meta",
+      },
+    });
   });
 
   it("rejects when envelope status is error", async () => {
@@ -87,7 +115,10 @@ describe("getOrderReviews", () => {
 });
 
 describe("postReview", () => {
-  beforeEach(() => vi.stubGlobal("fetch", vi.fn()));
+  beforeEach(() => {
+    vi.stubGlobal("fetch", vi.fn());
+    resetReviewJsonContractDegradeCounters();
+  });
   afterEach(() => vi.restoreAllMocks());
 
   it("POSTs score and optional comment with idempotency headers", async () => {
@@ -95,7 +126,11 @@ describe("postReview", () => {
       mockTextResponse(true, { status: "ok", id: "rev-1" })
     );
     const out = await postReview("ord-rv", { score: 4, comment: "  ok  " }, "idem-rev");
-    expect(out).toMatchObject({ status: "ok", id: "rev-1" });
+    expect(out).toMatchObject({
+      status: "ok",
+      id: "rev-1",
+      reviewJsonContractClient: { degrade: "missing_meta" },
+    });
     expect(globalThis.fetch).toHaveBeenCalledWith(
       apiUrl(routes.orderReviews("ord-rv")),
       expect.objectContaining({
@@ -106,6 +141,9 @@ describe("postReview", () => {
           "Idempotency-Key": "idem-rev",
         }),
       })
+    );
+    expect(trackReviewJsonContractDegrade).toHaveBeenCalledWith(
+      expect.objectContaining({ degrade: "missing_meta", api_path: "post_review" })
     );
   });
 

@@ -6,9 +6,12 @@ import { useCallback, useEffect, useId, useMemo, useState, type FormEvent } from
 import { useTranslation } from "@/components/LocaleProvider";
 import { PayRouteSuspense } from "@/components/pay/PayRouteSuspense";
 import OrderFlowSteps, { orderStateToStep, type OrderFlowStep } from "@/components/escrow/OrderFlowSteps";
-import { getOrder } from "@/lib/apiClient";
+import { getMe, getIdempotencyKey, getOrder, orderMockPay } from "@/lib/apiClient";
+import { useMeta } from "@/components/MetaProvider";
+import { readOrderMockPayEnabledFromMeta } from "@/lib/readOrderMockPayFromMeta";
+import { readProtocolPauseFromMeta } from "@/lib/readProtocolPauseFromMeta";
+import type { OrderResponse, OrderRow } from "@/components/escrow/EscrowDetail/types";
 import { mapApiReadError } from "@/lib/mapApiReadError";
-import type { OrderResponse } from "@/components/escrow/EscrowDetail/types";
 import { stashEscrowOrderPrefetchForPayHubEscrowNav } from "@/lib/orderEscrowPrefetch";
 import { computePayDeadlineLines, type PayDeadlineOrderSlice } from "@/lib/payOrderDeadlineHints";
 import { orderLikeMayOnchainDeposit } from "@/components/escrow/EscrowDetail/escrowOnChainEligibility";
@@ -40,6 +43,9 @@ const PAY_ORDER_FLOW_STEP_LABEL_KEYS = [
 /** 07 Phase 4 / 5.1：支付与托管入口；资金区克制（13），业务同源 04 API + 托管页。 */
 function PayPageInner() {
   const { t } = useTranslation();
+  const { meta } = useMeta();
+  const mockPayEnabledFromMeta = useMemo(() => readOrderMockPayEnabledFromMeta(meta), [meta]);
+  const protocolPaused = useMemo(() => readProtocolPauseFromMeta(meta), [meta]);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -79,6 +85,10 @@ function PayPageInner() {
   /** B-050：`GET order` 403 `forbidden`（非参与方）— 勿当 login_required，主区中性说明 + 回订单列表 */
   const [payOrderForbidden, setPayOrderForbidden] = useState(false);
   const [orderFetchTick, setOrderFetchTick] = useState(0);
+  const [viewerUserId, setViewerUserId] = useState<string | null>(null);
+  const [mockPayBusy, setMockPayBusy] = useState(false);
+  const [mockPayError, setMockPayError] = useState<string | null>(null);
+  const [mockPayOk, setMockPayOk] = useState(false);
   /** B-053：从 /escrow 后退等恢复 /pay 时，BFCache 会保留旧 React 态；`persisted` 时 bump tick 触发重新 getOrder */
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -98,6 +108,7 @@ function PayPageInner() {
   const payStepsHeadingId = useId();
   const payOrderInputId = useId();
   const payEscrowPhaseCalloutId = useId();
+  const payOrderSummaryHeadingId = useId();
 
   const effectiveOrderId = useMemo(
     () => effectivePayHubOrderId(fromQuery, orderIdInput.trim()),
@@ -111,6 +122,26 @@ function PayPageInner() {
 
   const escrowHref = useMemo(() => {
     return PAY_ORDER_ID_UUID_RE.test(effectiveOrderId) ? `/escrow/${effectiveOrderId}` : null;
+  }, [effectiveOrderId]);
+
+  useEffect(() => {
+    if (!PAY_ORDER_ID_UUID_RE.test(effectiveOrderId)) {
+      setViewerUserId(null);
+      return;
+    }
+    let cancelled = false;
+    getMe()
+      .then((raw) => {
+        if (cancelled) return;
+        const uid = (raw as { user?: { id?: string } } | null)?.user?.id;
+        setViewerUserId(typeof uid === "string" ? uid : null);
+      })
+      .catch(() => {
+        if (!cancelled) setViewerUserId(null);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [effectiveOrderId]);
 
   const payOrderFlowStep = useMemo((): OrderFlowStep => {
@@ -176,6 +207,8 @@ function PayPageInner() {
     }
     setOrderLoadError(null);
     setPayOrderForbidden(false);
+    setMockPayOk(false);
+    setMockPayError(null);
     /** B-051：每次拉单前清快照，避免与上一轮错误/旧订单 UI 叠显；与重试按钮内联清错一致 */
     setPayDeadlineHints(null);
     setOrderResponseForEscrowPrefetch(null);
@@ -246,6 +279,31 @@ function PayPageInner() {
   const awaitingOrderSlice =
     PAY_ORDER_ID_UUID_RE.test(effectiveOrderId) && orderLoadError == null && orderRow == null;
 
+  const showMockPayCta = useMemo(() => {
+    if (
+      !mockPayEnabledFromMeta ||
+      protocolPaused ||
+      !orderLoadedOk ||
+      !orderRow ||
+      payOrderForbidden
+    ) {
+      return false;
+    }
+    const st = String(orderRow.state ?? orderRow.status ?? "").toLowerCase();
+    if (st !== "accepted") return false;
+    if (!viewerUserId) return false;
+    const tid = orderRow.tourist_id ?? orderRow.traveler_id;
+    if (!tid || String(tid) !== String(viewerUserId)) return false;
+    return true;
+  }, [
+    mockPayEnabledFromMeta,
+    protocolPaused,
+    orderLoadedOk,
+    orderRow,
+    payOrderForbidden,
+    viewerUserId,
+  ]);
+
   const payPageSubtitle = useMemo(() => {
     if (!PAY_ORDER_ID_UUID_RE.test(effectiveOrderId)) return t("pay_pageSubtitle");
     if (payOrderForbidden) return t("pay_pageSubtitle_orderForbidden");
@@ -262,6 +320,25 @@ function PayPageInner() {
           <h1 className="text-h3 font-semibold tracking-tight text-ink-900">{t("pay_pageTitle")}</h1>
           <p className="mt-3 text-body text-ink-600 leading-relaxed">{payPageSubtitle}</p>
         </header>
+
+        {orderLoadedOk && orderRow && !payOrderForbidden ? (
+          <section
+            className="mb-8 rounded-[var(--radius-md)] border border-ink-200 bg-bg-console p-5 shadow-soft"
+            aria-labelledby={payOrderSummaryHeadingId}
+          >
+            <h2 id={payOrderSummaryHeadingId} className="sr-only">
+              {t("pay_orderSummary_title")}
+            </h2>
+            <div className="text-small font-semibold text-ink-900">{t("pay_orderSummary_title")}</div>
+            <p className="mt-3 text-meta text-ink-600">{t("pay_orderSummary_idLabel")}</p>
+            <p className="font-mono text-body text-ink-900 break-all">{orderRow.id}</p>
+            <p className="mt-3 text-meta text-ink-600">{t("pay_orderSummary_amountLabel")}</p>
+            <p className="text-body font-medium text-ink-900">
+              {orderRow.amount ?? t("ui_em_dash")}
+              {orderRow.currency ? ` ${orderRow.currency}` : ""}
+            </p>
+          </section>
+        ) : null}
 
         <div className="mb-8" aria-label={payFlowBandAria}>
           <OrderFlowSteps currentStep={payOrderFlowStep} />
@@ -491,6 +568,54 @@ function PayPageInner() {
           {escrowHref && mayOnchainDeposit ? (
             <div className="mt-6">
               <FeeRouterWiringNotice variant="light" />
+            </div>
+          ) : null}
+
+          {showMockPayCta && escrowHref ? (
+            <div className="mt-6 rounded-[var(--radius-md)] border border-dashed border-ink-300 bg-bg-soft/80 p-4 sm:p-5">
+              <p className="text-small text-ink-700 leading-relaxed">{t("pay_mockPay_hint")}</p>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  disabled={mockPayBusy || protocolPaused}
+                  title={protocolPaused ? t("escrow_protocolPause_title") : undefined}
+                  onClick={() => {
+                    if (!PAY_ORDER_ID_UUID_RE.test(effectiveOrderId)) return;
+                    setMockPayError(null);
+                    setMockPayBusy(true);
+                    orderMockPay(effectiveOrderId, getIdempotencyKey())
+                      .then(() => {
+                        setMockPayOk(true);
+                        setOrderFetchTick((n) => n + 1);
+                      })
+                      .catch((e) => {
+                        setMockPayOk(false);
+                        setMockPayError(mapApiReadError(e, t, "pay_mockPay_failed"));
+                      })
+                      .finally(() => setMockPayBusy(false));
+                  }}
+                  className={`${touchTargetLink44Classes} rounded-[var(--radius-sm)] border border-ink-400 bg-bg-main px-4 py-2.5 text-small font-semibold text-ink-900 disabled:opacity-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+                >
+                  {mockPayBusy ? t("common_loading") : t("pay_mockPay_cta")}
+                </button>
+                <Link
+                  href={escrowHref}
+                  onClick={stashEscrowNavPrefetch}
+                  className={`${touchTargetLink44Classes} inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] bg-trust-600 px-4 py-2.5 text-small font-semibold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-trust-600 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-console`}
+                >
+                  {t("pay_ctaEscrow")}
+                </Link>
+              </div>
+              {mockPayError ? (
+                <div className="mt-3">
+                  <ApiErrorAlert message={mockPayError} />
+                </div>
+              ) : null}
+              {mockPayOk ? (
+                <p className="mt-3 text-small text-success" role="status">
+                  {t("pay_mockPay_ok")}
+                </p>
+              ) : null}
             </div>
           ) : null}
         </section>

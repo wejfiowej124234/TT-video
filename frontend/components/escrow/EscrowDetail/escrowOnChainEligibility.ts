@@ -75,7 +75,7 @@ export function canReleaseAfterRating(order: OrderRow | null, hasEscrow: boolean
 }
 
 /**
- * 链上 refund（仅游客，合约校验）：已双方评分确认后应走 release，不再引导 refund
+ * 链上 refund（仅旅行者，合约校验）：已双方评分确认后应走 release，不再引导 refund
  */
 export function canRefundEscrow(order: OrderRow | null, hasEscrow: boolean): boolean {
   if (!hasEscrow || !order) return false;

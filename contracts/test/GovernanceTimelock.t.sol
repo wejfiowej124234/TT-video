@@ -16,6 +16,7 @@ contract GovernanceTimelockTest is Test {
         FeeRouter router = new FeeRouter(deployer, address(v), deployer, deployer, deployer);
         GovernanceTimelock tl = new GovernanceTimelock(deployer, 100);
         router.transferOwnership(address(tl));
+        tl.setAllowedExecutionTarget(address(router), true);
 
         bytes memory data = abi.encodeWithSelector(FeeRouter.transferOwnership.selector, multisig);
         bytes32 salt = bytes32(uint256(1));
@@ -43,6 +44,7 @@ contract GovernanceTimelockTest is Test {
         FeeRouter router = new FeeRouter(deployer, c0, s0, r0, o0);
         GovernanceTimelock tl = new GovernanceTimelock(deployer, 50);
         router.transferOwnership(address(tl));
+        tl.setAllowedExecutionTarget(address(router), true);
 
         address c1 = makeAddr("bucket1");
         address s1 = makeAddr("stakers1");
@@ -79,8 +81,15 @@ contract GovernanceTimelockTest is Test {
         tl.schedule(address(0x1), 0, hex"", bytes32(0));
     }
 
+    function test_B407_schedule_reverts_when_target_not_allowed() public {
+        GovernanceTimelock tl = new GovernanceTimelock(deployer, 1);
+        vm.expectRevert(GovernanceTimelock.TargetNotAllowed.selector);
+        tl.schedule(address(0x1), 0, hex"", bytes32(0));
+    }
+
     function test_double_schedule_same_id_reverts() public {
         GovernanceTimelock tl = new GovernanceTimelock(deployer, 1);
+        tl.setAllowedExecutionTarget(address(0x1), true);
         tl.schedule(address(0x1), 0, hex"", bytes32(0));
         vm.expectRevert(GovernanceTimelock.OperationExists.selector);
         tl.schedule(address(0x1), 0, hex"", bytes32(0));
@@ -97,6 +106,7 @@ contract GovernanceTimelockTest is Test {
         FeeRouter router = new FeeRouter(deployer, address(v), deployer, deployer, deployer);
         GovernanceTimelock tl = new GovernanceTimelock(deployer, 1);
         router.transferOwnership(address(tl));
+        tl.setAllowedExecutionTarget(address(router), true);
         bytes memory data = abi.encodeWithSelector(FeeRouter.transferOwnership.selector, multisig);
         bytes32 id = tl.schedule(address(router), 0, data, bytes32(uint256(2)));
 

@@ -257,12 +257,27 @@ export default function TravelerRankBlock({
         ) : (
           <>
             <p className="text-meta text-slate-300 mb-2 sm:mb-3 font-medium">🏆 {t("didRank_top10")}</p>
-            <div id={rankTopGridId} className="mb-4 sm:mb-6">
-              {topTravelers.length < 3 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-3">
-                  {topTravelers.map((traveler) => (
+            <div id={rankTopGridId} className="mb-4 sm:mb-6 space-y-2.5 sm:space-y-3">
+              <div className="grid grid-cols-5 gap-1.5 sm:gap-3">
+                {topTravelers.slice(0, 5).map((traveler) => (
+                  <TravelerTopCard
+                    key={traveler.id}
+                    className="min-w-0"
+                    item={traveler}
+                    onOpenRecord={onOpenRecord}
+                    avatarFailed={failedAvatarIds.has(traveler.id)}
+                    onAvatarError={addFailedAvatar}
+                    onAvatarErrorId={traveler.id}
+                    t={t}
+                  />
+                ))}
+              </div>
+              {topTravelers.length > 5 ? (
+                <div className="grid grid-cols-5 gap-1.5 sm:gap-3">
+                  {topTravelers.slice(5, 10).map((traveler) => (
                     <TravelerTopCard
                       key={traveler.id}
+                      className="min-w-0"
                       item={traveler}
                       onOpenRecord={onOpenRecord}
                       avatarFailed={failedAvatarIds.has(traveler.id)}
@@ -272,75 +287,7 @@ export default function TravelerRankBlock({
                     />
                   ))}
                 </div>
-              ) : (
-                <>
-                  <div className="hidden sm:block">
-                    <div className="relative px-1 pt-2 pb-8">
-                      <div
-                        className="pointer-events-none absolute bottom-5 left-[6%] right-[6%] h-5 rounded-[100%] bg-gradient-to-r from-ref-cyan/35 via-ref-coral/30 to-ref-sun/32 blur-lg opacity-90"
-                        aria-hidden
-                      />
-                      <div className="relative flex items-end justify-center gap-3 sm:gap-4 max-w-3xl mx-auto">
-                        <TravelerTopCard
-                          className="w-full max-w-[11rem] flex-1"
-                          item={topTravelers[1]}
-                          onOpenRecord={onOpenRecord}
-                          avatarFailed={failedAvatarIds.has(topTravelers[1].id)}
-                          onAvatarError={addFailedAvatar}
-                          onAvatarErrorId={topTravelers[1].id}
-                          t={t}
-                        />
-                        <TravelerTopCard
-                          className="w-full max-w-[13rem] flex-[1.12] z-10 sm:scale-[1.07] sm:-translate-y-2 shadow-[0_0_40px_-6px_rgba(35,206,217,0.5)]"
-                          item={topTravelers[0]}
-                          onOpenRecord={onOpenRecord}
-                          avatarFailed={failedAvatarIds.has(topTravelers[0].id)}
-                          onAvatarError={addFailedAvatar}
-                          onAvatarErrorId={topTravelers[0].id}
-                          t={t}
-                        />
-                        <TravelerTopCard
-                          className="w-full max-w-[11rem] flex-1"
-                          item={topTravelers[2]}
-                          onOpenRecord={onOpenRecord}
-                          avatarFailed={failedAvatarIds.has(topTravelers[2].id)}
-                          onAvatarError={addFailedAvatar}
-                          onAvatarErrorId={topTravelers[2].id}
-                          t={t}
-                        />
-                      </div>
-                    </div>
-                    {topTravelers.length > 3 && (
-                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-2">
-                        {topTravelers.slice(3).map((traveler) => (
-                          <TravelerTopCard
-                            key={traveler.id}
-                            item={traveler}
-                            onOpenRecord={onOpenRecord}
-                            avatarFailed={failedAvatarIds.has(traveler.id)}
-                            onAvatarError={addFailedAvatar}
-                            onAvatarErrorId={traveler.id}
-                            t={t}
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                  <div className="grid grid-cols-2 gap-2 sm:hidden">
-                    {topTravelers.map((traveler) => (
-                      <TravelerTopCard
-                        key={traveler.id}
-                        item={traveler}
-                        onOpenRecord={onOpenRecord}
-                        avatarFailed={failedAvatarIds.has(traveler.id)}
-                        onAvatarError={addFailedAvatar}
-                        onAvatarErrorId={traveler.id}
-                        t={t}
-                      />
-                    ))}
-                  </div>
-                </>
-              )}
+              ) : null}
             </div>
             <p className="text-meta text-slate-300 mb-2 font-medium">📋 {t("didRank_fullList11_100")}</p>
             {listTravelersFrom11.length === 0 ? (

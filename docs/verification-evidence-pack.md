@@ -144,7 +144,7 @@ MSYS_NO_PATHCONV=1 docker run --rm -v "<repo>/contracts:/contracts" -w /contract
 2. Anvil：`docker run -d --name tt-anvil -p 18545:8545 --entrypoint anvil ghcr.io/foundry-rs/foundry:latest --host 0.0.0.0 --port 8545`。  
 3. 在仓库根（Docker Desktop）：`docker run --rm -v "c:/Users/plant/Desktop/Wbe3-TravelTrust/docs/verification-evidence/stub-contracts-tt456:/work" -w /work ghcr.io/foundry-rs/foundry:latest "forge build"`，再对各 `Stub*` 执行 `forge create … --rpc-url http://host.docker.internal:18545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --broadcast`（见上文表或 `tt-05` 执行记录）。  
 4. `docker exec -i traveltrust-postgres psql -U traveltrust -d traveltrust < docs/verification-evidence/seed-tt456-anvil-31337.sql`。  
-5. 启动 API（示例端口 `8091`）：`CHAIN_RPC_URL=http://127.0.0.1:18545`、`CHAIN_ID=31337`、`ESCROW_FACTORY_ADDRESS`、`FEE_ROUTER_ADDRESS`、`REGION_VAULT_ADDRESS`、`REGISTRY_ADDRESS`、`GOVERNOR_ADDRESS`、`GOVERNANCE_VOTES_TOKEN_ADDRESS`、`STAKING_ADDRESS`、`INVESTOR_SHARE_TOKEN_ADDRESSES` 与上表一致。  
+5. 启动 API（示例端口 `8091`）：`CHAIN_RPC_URL=http://127.0.0.1:18545`、`CHAIN_ID=31337`、`ESCROW_FACTORY_ADDRESS`、`FEE_ROUTER_ADDRESS`、`REGION_VAULT_ADDRESS`、`REGISTRY_ADDRESS`、`GOVERNOR_ADDRESS`、`GOVERNANCE_TOKEN_ADDRESS`、`GUIDE_STAKING_ADDRESS`、`STAKING_PROVIDER_ADDRESS`、`INVESTOR_SHARE_TOKEN_ADDRESSES` 与上表一致。  
 6. `curl`：`GET /api/v1/orders/11111111-…101` / `…102`（头 `X-User-Id: e9a0feb8-0b83-4f9c-ab4d-a145be92ae71`）；`POST /api/v1/internal/indexer-reconcile` body `{"chain_id":31337,"persist":false}`；`POST /api/v1/internal/indexer-tick`；`GET /api/v1/governance/proposals`、`GET /api/v1/governance/proposals/1`；`GET /api/v1/governance/voting-power?snapshot_block=5`。  
 7. Windows 落盘 JSON 时建议 `PYTHONUTF8=1`，避免中文 `destination` 在管道中损坏。
 

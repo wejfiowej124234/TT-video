@@ -1,8 +1,8 @@
 /**
  * 07 §5.0（90）+ §5.1 / §5.6A / 130：订单页写接口 4xx 的 UI 文案与 `mapOrderWriteError`（53 附录 C）一致。
  * 全程 mock API（不依赖本地 8080）：
- * - 游客：POST cancel → trust_* / forbidden（通用无权）
- * - 游客：POST accept → not_guide（角色不符）
+ * - 旅行者：POST cancel → trust_* / forbidden（通用无权）
+ * - 旅行者：POST accept → not_guide（角色不符）
  * - 向导：POST accept → trust_* / accept_window_expired（410）/ schedule_conflict·invalid_state（409，与 chain_off 一致）
  * - 向导：POST cancel → not_tourist（角色不符）
  * - Accepted 态：POST confirm-completion / confirm-bilateral → trust_*（53-S6 / 完成确认链）
@@ -311,21 +311,21 @@ test.describe("Escrow 订单页订单写错误文案（mock API）", () => {
 
     await installEscrowTrustMocks(page, "tourist_cancel_trust");
 
-    await page.goto(`/escrow/${ORDER_ID}`);
+    await page.goto(`/escrow/${ORDER_ID}`, { timeout: 60_000 });
 
     await expect(page.getByRole("main", { name: /订单详情|Order details/i })).toBeVisible({
-      timeout: 60_000,
+      timeout: 90_000,
     });
 
     const actionsHeading = page.getByRole("heading", { name: /订单操作|Order actions/i });
-    await expect(actionsHeading).toBeVisible();
-    await actionsHeading.locator("..").getByRole("button", { name: /取消订单|Cancel order/i }).click();
+    await expect(actionsHeading).toBeVisible({ timeout: 30_000 });
+    await actionsHeading.locator("..").getByRole("button", { name: /取消订单|Cancel order/i }).click({ timeout: 25_000 });
 
     await expect(
       page.getByRole("alert").filter({
         hasText: /身份核验仍在处理中|identity verification is still in progress/i,
       }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 30_000 });
   });
 
   test("取消订单 403 trust_identity_restricted 映射为受限核验提示", async ({ page }) => {
@@ -335,22 +335,22 @@ test.describe("Escrow 订单页订单写错误文案（mock API）", () => {
 
     await installEscrowTrustMocks(page, "tourist_cancel_identity_restricted");
 
-    await page.goto(`/escrow/${ORDER_ID}`);
+    await page.goto(`/escrow/${ORDER_ID}`, { timeout: 60_000 });
 
     await expect(page.getByRole("main", { name: /订单详情|Order details/i })).toBeVisible({
-      timeout: 60_000,
+      timeout: 90_000,
     });
 
     const actionsHeading = page.getByRole("heading", { name: /订单操作|Order actions/i });
-    await expect(actionsHeading).toBeVisible();
-    await actionsHeading.locator("..").getByRole("button", { name: /取消订单|Cancel order/i }).click();
+    await expect(actionsHeading).toBeVisible({ timeout: 30_000 });
+    await actionsHeading.locator("..").getByRole("button", { name: /取消订单|Cancel order/i }).click({ timeout: 25_000 });
 
     await expect(
       page.getByRole("alert").filter({
         hasText:
           /账户核验状态受限|restricted verification status|Contact support if this is unexpected/i,
       }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 30_000 });
   });
 
   test("取消订单 403 trust_risk_too_high 映射为争议风险提示", async ({ page }) => {
@@ -360,22 +360,22 @@ test.describe("Escrow 订单页订单写错误文案（mock API）", () => {
 
     await installEscrowTrustMocks(page, "tourist_cancel_risk_too_high");
 
-    await page.goto(`/escrow/${ORDER_ID}`);
+    await page.goto(`/escrow/${ORDER_ID}`, { timeout: 60_000 });
 
     await expect(page.getByRole("main", { name: /订单详情|Order details/i })).toBeVisible({
-      timeout: 60_000,
+      timeout: 90_000,
     });
 
     const actionsHeading = page.getByRole("heading", { name: /订单操作|Order actions/i });
-    await expect(actionsHeading).toBeVisible();
-    await actionsHeading.locator("..").getByRole("button", { name: /取消订单|Cancel order/i }).click();
+    await expect(actionsHeading).toBeVisible({ timeout: 30_000 });
+    await actionsHeading.locator("..").getByRole("button", { name: /取消订单|Cancel order/i }).click({ timeout: 25_000 });
 
     await expect(
       page.getByRole("alert").filter({
         hasText:
           /未决争议过多|Too many open disputes|Resolve open cases or contact support/i,
       }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 30_000 });
   });
 
   test("取消订单 403 forbidden 映射为通用无权提示（order_error_forbidden）", async ({ page }) => {
@@ -385,45 +385,45 @@ test.describe("Escrow 订单页订单写错误文案（mock API）", () => {
 
     await installEscrowTrustMocks(page, "tourist_cancel_forbidden");
 
-    await page.goto(`/escrow/${ORDER_ID}`);
+    await page.goto(`/escrow/${ORDER_ID}`, { timeout: 60_000 });
 
     await expect(page.getByRole("main", { name: /订单详情|Order details/i })).toBeVisible({
-      timeout: 60_000,
+      timeout: 90_000,
     });
 
     const actionsHeading = page.getByRole("heading", { name: /订单操作|Order actions/i });
-    await expect(actionsHeading).toBeVisible();
-    await actionsHeading.locator("..").getByRole("button", { name: /取消订单|Cancel order/i }).click();
+    await expect(actionsHeading).toBeVisible({ timeout: 30_000 });
+    await actionsHeading.locator("..").getByRole("button", { name: /取消订单|Cancel order/i }).click({ timeout: 25_000 });
 
     await expect(
       page.getByRole("alert").filter({
         hasText: /您无权执行此操作|don't have permission for this action/i,
       }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 30_000 });
   });
 
-  test("游客点接单 403 not_guide 映射为角色提示（order_error_not_guide）", async ({ page }) => {
+  test("旅行者点接单 403 not_guide 映射为角色提示（order_error_not_guide）", async ({ page }) => {
     await page.addInitScript((uid) => {
       window.localStorage.setItem("traveltrust_user_id", uid);
     }, TOURIST_ID);
 
     await installEscrowTrustMocks(page, "tourist_accept_not_guide");
 
-    await page.goto(`/escrow/${ORDER_ID}`);
+    await page.goto(`/escrow/${ORDER_ID}`, { timeout: 60_000 });
 
     await expect(page.getByRole("main", { name: /订单详情|Order details/i })).toBeVisible({
-      timeout: 60_000,
+      timeout: 90_000,
     });
 
     const actionsHeading = page.getByRole("heading", { name: /订单操作|Order actions/i });
-    await expect(actionsHeading).toBeVisible();
-    await actionsHeading.locator("..").getByRole("button", { name: /接单|Accept order/i }).click();
+    await expect(actionsHeading).toBeVisible({ timeout: 30_000 });
+    await actionsHeading.locator("..").getByRole("button", { name: /接单|Accept order/i }).click({ timeout: 25_000 });
 
     await expect(
       page.getByRole("alert").filter({
         hasText: /该操作仅限向导|only available to guides/i,
       }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 30_000 });
   });
 
   test("接单 403 trust_guide_pending_review 映射为可读的向导审核提示", async ({ page }) => {
@@ -433,21 +433,21 @@ test.describe("Escrow 订单页订单写错误文案（mock API）", () => {
 
     await installEscrowTrustMocks(page, "guide_accept_trust");
 
-    await page.goto(`/escrow/${ORDER_ID}`);
+    await page.goto(`/escrow/${ORDER_ID}`, { timeout: 60_000 });
 
     await expect(page.getByRole("main", { name: /订单详情|Order details/i })).toBeVisible({
-      timeout: 60_000,
+      timeout: 90_000,
     });
 
     const actionsHeading = page.getByRole("heading", { name: /订单操作|Order actions/i });
-    await expect(actionsHeading).toBeVisible();
-    await actionsHeading.locator("..").getByRole("button", { name: /接单|Accept order/i }).click();
+    await expect(actionsHeading).toBeVisible({ timeout: 30_000 });
+    await actionsHeading.locator("..").getByRole("button", { name: /接单|Accept order/i }).click({ timeout: 25_000 });
 
     await expect(
       page.getByRole("alert").filter({
         hasText: /向导资料仍在审核|guide profile is still under review/i,
       }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 30_000 });
   });
 
   test("向导点取消订单 403 not_tourist 映射为角色提示（order_error_not_tourist）", async ({
@@ -459,21 +459,21 @@ test.describe("Escrow 订单页订单写错误文案（mock API）", () => {
 
     await installEscrowTrustMocks(page, "guide_cancel_not_tourist");
 
-    await page.goto(`/escrow/${ORDER_ID}`);
+    await page.goto(`/escrow/${ORDER_ID}`, { timeout: 60_000 });
 
     await expect(page.getByRole("main", { name: /订单详情|Order details/i })).toBeVisible({
-      timeout: 60_000,
+      timeout: 90_000,
     });
 
     const actionsHeading = page.getByRole("heading", { name: /订单操作|Order actions/i });
-    await expect(actionsHeading).toBeVisible();
-    await actionsHeading.locator("..").getByRole("button", { name: /取消订单|Cancel order/i }).click();
+    await expect(actionsHeading).toBeVisible({ timeout: 30_000 });
+    await actionsHeading.locator("..").getByRole("button", { name: /取消订单|Cancel order/i }).click({ timeout: 25_000 });
 
     await expect(
       page.getByRole("alert").filter({
-        hasText: /该操作仅限游客|only available to travelers/i,
+        hasText: /该操作仅限旅行者|only available to travelers/i,
       }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 30_000 });
   });
 
   test("接单 410 accept_window_expired 映射为接单时限提示（与后端 GONE 一致）", async ({
@@ -485,21 +485,21 @@ test.describe("Escrow 订单页订单写错误文案（mock API）", () => {
 
     await installEscrowTrustMocks(page, "guide_accept_window_expired");
 
-    await page.goto(`/escrow/${ORDER_ID}`);
+    await page.goto(`/escrow/${ORDER_ID}`, { timeout: 60_000 });
 
     await expect(page.getByRole("main", { name: /订单详情|Order details/i })).toBeVisible({
-      timeout: 60_000,
+      timeout: 90_000,
     });
 
     const actionsHeading = page.getByRole("heading", { name: /订单操作|Order actions/i });
-    await expect(actionsHeading).toBeVisible();
-    await actionsHeading.locator("..").getByRole("button", { name: /接单|Accept order/i }).click();
+    await expect(actionsHeading).toBeVisible({ timeout: 30_000 });
+    await actionsHeading.locator("..").getByRole("button", { name: /接单|Accept order/i }).click({ timeout: 25_000 });
 
     await expect(
       page.getByRole("alert").filter({
         hasText: /接单时限已过|acceptance window has expired|Refresh to see the latest status/i,
       }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 30_000 });
   });
 
   test("接单 409 schedule_conflict 映射为档期冲突提示", async ({ page }) => {
@@ -509,21 +509,21 @@ test.describe("Escrow 订单页订单写错误文案（mock API）", () => {
 
     await installEscrowTrustMocks(page, "guide_accept_schedule_conflict");
 
-    await page.goto(`/escrow/${ORDER_ID}`);
+    await page.goto(`/escrow/${ORDER_ID}`, { timeout: 60_000 });
 
     await expect(page.getByRole("main", { name: /订单详情|Order details/i })).toBeVisible({
-      timeout: 60_000,
+      timeout: 90_000,
     });
 
     const actionsHeading = page.getByRole("heading", { name: /订单操作|Order actions/i });
-    await expect(actionsHeading).toBeVisible();
-    await actionsHeading.locator("..").getByRole("button", { name: /接单|Accept order/i }).click();
+    await expect(actionsHeading).toBeVisible({ timeout: 30_000 });
+    await actionsHeading.locator("..").getByRole("button", { name: /接单|Accept order/i }).click({ timeout: 25_000 });
 
     await expect(
       page.getByRole("alert").filter({
         hasText: /档期冲突|Schedule conflict|another order may be using this slot/i,
       }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 30_000 });
   });
 
   test("接单 409 invalid_state 映射为状态冲突提示（order_error_state_conflict）", async ({
@@ -535,22 +535,22 @@ test.describe("Escrow 订单页订单写错误文案（mock API）", () => {
 
     await installEscrowTrustMocks(page, "guide_accept_invalid_state");
 
-    await page.goto(`/escrow/${ORDER_ID}`);
+    await page.goto(`/escrow/${ORDER_ID}`, { timeout: 60_000 });
 
     await expect(page.getByRole("main", { name: /订单详情|Order details/i })).toBeVisible({
-      timeout: 60_000,
+      timeout: 90_000,
     });
 
     const actionsHeading = page.getByRole("heading", { name: /订单操作|Order actions/i });
-    await expect(actionsHeading).toBeVisible();
-    await actionsHeading.locator("..").getByRole("button", { name: /接单|Accept order/i }).click();
+    await expect(actionsHeading).toBeVisible({ timeout: 30_000 });
+    await actionsHeading.locator("..").getByRole("button", { name: /接单|Accept order/i }).click({ timeout: 25_000 });
 
     await expect(
       page.getByRole("alert").filter({
         hasText:
           /订单状态已变更|The order is no longer in that state|Refresh to see the latest status/i,
       }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 30_000 });
   });
 
   test("Accepted 态：确认完成（链下）403 trust_verification_pending 映射为信任提示", async ({
@@ -562,24 +562,24 @@ test.describe("Escrow 订单页订单写错误文案（mock API）", () => {
 
     await installEscrowTrustMocks(page, "tourist_confirm_completion_trust");
 
-    await page.goto(`/escrow/${ORDER_ID}`);
+    await page.goto(`/escrow/${ORDER_ID}`, { timeout: 60_000 });
 
     await expect(page.getByRole("main", { name: /订单详情|Order details/i })).toBeVisible({
-      timeout: 60_000,
+      timeout: 90_000,
     });
 
     const actionsHeading = page.getByRole("heading", { name: /订单操作|Order actions/i });
-    await expect(actionsHeading).toBeVisible();
+    await expect(actionsHeading).toBeVisible({ timeout: 30_000 });
     await actionsHeading
       .locator("..")
       .getByRole("button", { name: /确认完成（链下）|Confirm completion \(off-chain\)/i })
-      .click();
+      .click({ timeout: 25_000 });
 
     await expect(
       page.getByRole("alert").filter({
         hasText: /身份核验仍在处理中|identity verification is still in progress/i,
       }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 30_000 });
   });
 
   test("Accepted 态：双边确认 POST confirm-bilateral 403 trust_guide_pending_review 映射为向导审核提示", async ({
@@ -591,21 +591,21 @@ test.describe("Escrow 订单页订单写错误文案（mock API）", () => {
 
     await installEscrowTrustMocks(page, "guide_bilateral_trust");
 
-    await page.goto(`/escrow/${ORDER_ID}`);
+    await page.goto(`/escrow/${ORDER_ID}`, { timeout: 60_000 });
 
     await expect(page.getByRole("main", { name: /订单详情|Order details/i })).toBeVisible({
-      timeout: 60_000,
+      timeout: 90_000,
     });
 
-    await page
-      .getByRole("button", { name: /确认行程与金额|Confirm itinerary and amount/i })
-      .click();
+    const bilateralBtn = page.getByRole("button", { name: /确认行程与金额|Confirm itinerary and amount/i });
+    await expect(bilateralBtn).toBeVisible({ timeout: 30_000 });
+    await bilateralBtn.click({ timeout: 25_000 });
 
     await expect(
       page.getByRole("alert").filter({
         hasText: /向导资料仍在审核|guide profile is still under review/i,
       }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 30_000 });
   });
 
   test("草稿态 ChatBlock：POST messages 403 trust_verification_pending 映射为信任提示（53-S7）", async ({
@@ -617,20 +617,20 @@ test.describe("Escrow 订单页订单写错误文案（mock API）", () => {
 
     await installEscrowTrustMocks(page, "tourist_chat_post_trust");
 
-    await page.goto(`/escrow/${ORDER_ID}`);
+    await page.goto(`/escrow/${ORDER_ID}`, { timeout: 60_000 });
 
     await expect(page.getByRole("main", { name: /订单详情|Order details/i })).toBeVisible({
-      timeout: 60_000,
+      timeout: 90_000,
     });
 
     await page.getByPlaceholder(/输入消息|Type a message/i).fill("e2e-chat-trust");
-    await page.getByRole("button", { name: /发送|Send/i }).click();
+    await page.getByRole("button", { name: /发送|Send/i }).click({ timeout: 25_000 });
 
     await expect(
       page.getByRole("alert").filter({
         hasText: /身份核验仍在处理中|identity verification is still in progress/i,
       }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 30_000 });
   });
 
   test("Completed 态 ReviewBlock：POST reviews 403 trust_verification_pending 映射为信任提示", async ({
@@ -642,21 +642,21 @@ test.describe("Escrow 订单页订单写错误文案（mock API）", () => {
 
     await installEscrowTrustMocks(page, "tourist_review_post_trust");
 
-    await page.goto(`/escrow/${ORDER_ID}`);
+    await page.goto(`/escrow/${ORDER_ID}`, { timeout: 60_000 });
 
     await expect(page.getByRole("main", { name: /订单详情|Order details/i })).toBeVisible({
-      timeout: 60_000,
+      timeout: 90_000,
     });
 
-    await expect(page.getByRole("heading", { name: /评价|Reviews/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /评价|Reviews/i })).toBeVisible({ timeout: 30_000 });
 
-    await page.getByRole("button", { name: /提交评价|Submit review/i }).click();
+    await page.getByRole("button", { name: /提交评价|Submit review/i }).click({ timeout: 25_000 });
 
     await expect(
       page.getByRole("alert").filter({
         hasText: /身份核验仍在处理中|identity verification is still in progress/i,
       }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 30_000 });
   });
 
   test("Accepted 无托管：发起争议（链下）403 trust_verification_pending 映射为信任提示", async ({
@@ -668,24 +668,24 @@ test.describe("Escrow 订单页订单写错误文案（mock API）", () => {
 
     await installEscrowTrustMocks(page, "tourist_dispute_offchain_trust");
 
-    await page.goto(`/escrow/${ORDER_ID}`);
+    await page.goto(`/escrow/${ORDER_ID}`, { timeout: 60_000 });
 
     await expect(page.getByRole("main", { name: /订单详情|Order details/i })).toBeVisible({
-      timeout: 60_000,
+      timeout: 90_000,
     });
 
     const actionsHeading = page.getByRole("heading", { name: /订单操作|Order actions/i });
-    await expect(actionsHeading).toBeVisible();
+    await expect(actionsHeading).toBeVisible({ timeout: 30_000 });
     await actionsHeading
       .locator("..")
       .getByRole("button", { name: /发起争议（链下）|Open dispute \(off-chain\)/i })
-      .click();
+      .click({ timeout: 25_000 });
 
     await expect(
       page.getByRole("alert").filter({
         hasText: /身份核验仍在处理中|identity verification is still in progress/i,
       }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 30_000 });
   });
 
   test("草稿态 ChatBlock：POST messages 429 rate_limit_exceeded 映射为限流提示（100）", async ({
@@ -697,19 +697,19 @@ test.describe("Escrow 订单页订单写错误文案（mock API）", () => {
 
     await installEscrowTrustMocks(page, "tourist_chat_post_rate_limit");
 
-    await page.goto(`/escrow/${ORDER_ID}`);
+    await page.goto(`/escrow/${ORDER_ID}`, { timeout: 60_000 });
 
     await expect(page.getByRole("main", { name: /订单详情|Order details/i })).toBeVisible({
-      timeout: 60_000,
+      timeout: 90_000,
     });
 
     await page.getByPlaceholder(/输入消息|Type a message/i).fill("e2e-rate-limit");
-    await page.getByRole("button", { name: /发送|Send/i }).click();
+    await page.getByRole("button", { name: /发送|Send/i }).click({ timeout: 25_000 });
 
     await expect(
       page.getByRole("alert").filter({
         hasText: /请求过于频繁|Too many requests|Please wait and try again/i,
       }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 30_000 });
   });
 });

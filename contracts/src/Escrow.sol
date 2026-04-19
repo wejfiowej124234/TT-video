@@ -17,9 +17,9 @@ contract Escrow {
         Refunded,
         Disputed,
         Resolved,
-        /// 80 附录 02 · PartiallyRefunded：非争议路径，部分退游客 + 余款按 01 §10 分向导/平台（与 `release` 同式，基数为 remainder）。
+        /// 80 附录 02 · PartiallyRefunded：非争议路径，部分退旅行者 + 余款按 01 §10 分向导/平台（与 `release` 同式，基数为 remainder）。
         PartiallyRefunded,
-        /// 80 附录 02 · Slashed：非争议路径，向导 **钉死为 0**，游客 **`travelerRefund`**，**余款** 归 **`platformFeeRecipient`**（附录「Slashed 收平台费」）。
+        /// 80 附录 02 · Slashed：非争议路径，向导 **钉死为 0**，旅行者 **`travelerRefund`**，**余款** 归 **`platformFeeRecipient`**（附录「Slashed 收平台费」）。
         Slashed
     }
 
@@ -145,7 +145,7 @@ contract Escrow {
         emit Released(orderId, address(this), guideAmount, fee);
     }
 
-    /// @notice 80 附录 02 · PartiallyRefunded：先退 `travelerRefund` 给游客；余款 `remainder = totalAmount - travelerRefund` 按 01 §10 同 `release`（向导 `floor(remainder*(10000-bps)/10000)`，平台费 `remainder - guide`）。
+    /// @notice 80 附录 02 · PartiallyRefunded：先退 `travelerRefund` 给旅行者；余款 `remainder = totalAmount - travelerRefund` 按 01 §10 同 `release`（向导 `floor(remainder*(10000-bps)/10000)`，平台费 `remainder - guide`）。
     /// @dev 与争议路径 `executeResolution` 正交；`platformFeeBps` 仍仅 `EscrowCreated` 封存。
     function releasePartialRefund(uint256 travelerRefund) external {
         if (status != Status.Funded) revert InvalidState();
@@ -160,7 +160,7 @@ contract Escrow {
         emit PartialRefundExecuted(orderId, address(this), travelerRefund, guideAmount, platformFee);
     }
 
-    /// @notice 80 附录 02 · Slashed（非争议）：**`guideAmount = 0`**，`platformFee = totalAmount - travelerRefund`，**`travelerRefund < totalAmount`**（全额退游客请用 `refund()`）。
+    /// @notice 80 附录 02 · Slashed（非争议）：**`guideAmount = 0`**，`platformFee = totalAmount - travelerRefund`，**`travelerRefund < totalAmount`**（全额退旅行者请用 `refund()`）。
     /// @dev 与争议路径 `executeResolution` 正交；`platformFeeBps` **不参与**本路径分配（扣罚语义下余款归平台收款方）。
     function releaseSlashed(uint256 travelerRefund) external {
         if (status != Status.Funded) revert InvalidState();

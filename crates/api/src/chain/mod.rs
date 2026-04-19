@@ -1,6 +1,6 @@
 //! 链客户端封装（与 01 §8 骨架、09 定稿一致）
 //!
-//! 职责：读链状态（Escrow/Staking/Registry）、提交交易（执行器代发 executeResolution 等）。
+//! 职责：读链状态（Escrow / **身份质押池**（`IdentityStakingPool` 部署）/ Registry）、提交交易（执行器代发 executeResolution 等）。
 //! 资金状态仅由链上事件驱动，本模块不直接改 DB 资金终态（04 §四）。
 
 #![allow(dead_code)]
@@ -33,7 +33,7 @@ pub struct ChainConfig {
     /// 份额代币（TTG / Country Pool 等）ERC20 地址列表；`indexer-tick` 写入 `investor_share_transfer_events`（B-085）
     #[serde(default)]
     pub investor_share_token_addresses: Vec<String>,
-    /// Staking 合约；设后 **`indexer-tick`** 写入 **`investor_stake_state_events`**（**B-088 Completion**）；**`investor-distribution-accrual`** 与 **`Transfer`** 重放合并
+    /// **身份质押池**部署地址（**`GuideIdentityStakingPool` / `ProviderIdentityStakingPool`**，`IdentityStakingPool`；与旧 **`Staking`** **读接口/事件 topic 兼容**）；设后 **`indexer-tick`** 写入 **`investor_stake_state_events`**（**B-088 Completion**）；**`investor-distribution-accrual`** 与 **`Transfer`** 重放合并
     pub staking_address: Option<String>,
     /// **`InvestorShareLockLedger`** 等锁仓合约地址列表；**`indexer-tick`** 写入 **`investor_lock_state_events`**（**B-088 · 112**）
     #[serde(default)]

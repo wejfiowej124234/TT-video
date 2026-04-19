@@ -2,7 +2,7 @@
 chcp 65001 >nul
 REM 07 Phase 4 联调恢复：清除混用的 .next 后启动 Turbopack dev（3012）
 REM 适用于 market 404、_next static chunks 大量 404 等 dev 与 build 产物混用场景
-set "ROOT=%~dp0\.."
+for %%I in ("%~dp0..\..") do set "ROOT=%%~fI"
 cd /d "%ROOT%\frontend"
 if exist "E:\Dev\nodejs\npm.cmd" set "PATH=E:\Dev\nodejs;%PATH%"
 if exist "%ProgramFiles%\nodejs\npm.cmd" set "PATH=%ProgramFiles%\nodejs;%PATH%"

@@ -48,3 +48,13 @@ describe("GovernanceProposalDetailPage list→detail bridge (A-09)", () => {
     expect(src).toContain("gov-exec-detail-bridge");
   });
 });
+
+describe("GovernanceProposalDetailPage B-408 impact panel", () => {
+  const src = readFileSync(join(__dir, "[id]", "page.tsx"), "utf8");
+
+  it("renders GovernanceProposalImpactPanel wired to meta contracts and chain snapshot", () => {
+    expect(src).toContain("GovernanceProposalImpactPanel");
+    expect(src).toContain("chainContractsFromMeta");
+    expect(src).toContain("metaContracts");
+  });
+});

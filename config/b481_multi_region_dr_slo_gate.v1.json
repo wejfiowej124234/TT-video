@@ -1,0 +1,64 @@
+{
+  "schema": "traveltrust_b481_multi_region_dr_slo_gate.v1",
+  "version": "1.0.0",
+  "updated_at": "2026-04-18T16:00:00Z",
+  "content_sha256": "223d3f5494bd4231282b83b2e4ff9bd76020202c75e79b2b4c177309c00dd0d9",
+  "description": "B-481 跨区域（Multi-Region / Multi-AZ）容灾与切换验证 SLO；区域级失效在仓库外注入；流量与复制滞后由探针+运维观测填入；继承 B-478 池真源与 B-480 单区故障模型参照。",
+  "inherits_pool_thresholds_from": "config/b478_pg_pool_release_gate_thresholds.v1.json",
+  "extends_single_region_fault_gate": "config/b480_prod_fault_slo_gate.v1.json",
+  "dr_playbook": {
+    "whole_node": "停实例 / 摘除节点 / k8s cordon+drain",
+    "whole_az": "云控制台禁用 AZ 子网路由 / NACL DENY / 区域 LB 健康检查摘除整 AZ",
+    "whole_region": "Geo-DNS 权重置零 / GSLB 切换 / 主区域入口防火墙 DROP",
+    "replication_lag": "PG 读副本 lag / 云 RDS 复制延迟指标 / 应用侧只读戳比对"
+  },
+  "slo_thresholds": {
+    "normal_single_region": {
+      "http_error_ratio": 0.02,
+      "ratio_429": 0.12,
+      "ratio_5xx": 0.01,
+      "replication_lag_sec_max": 5,
+      "p95_latency_ms_max": 800
+    },
+    "fault_whole_node": {
+      "http_error_ratio": 0.35,
+      "ratio_429": 0.25,
+      "ratio_5xx": 0.25,
+      "replication_lag_sec_max": 15,
+      "p95_latency_ms_max": 2500
+    },
+    "fault_whole_az": {
+      "http_error_ratio": 0.55,
+      "ratio_429": 0.2,
+      "ratio_5xx": 0.45,
+      "replication_lag_sec_max": 45,
+      "p95_latency_ms_max": 4000
+    },
+    "fault_whole_region": {
+      "http_error_ratio": 0.85,
+      "ratio_429": 0.1,
+      "ratio_5xx": 0.75,
+      "replication_lag_sec_max": 120,
+      "p95_latency_ms_max": 8000
+    },
+    "failover_traffic_switch": {
+      "http_error_ratio": 0.7,
+      "ratio_429": 0.15,
+      "ratio_5xx": 0.6,
+      "replication_lag_sec_max": 90,
+      "p95_latency_ms_max": 6000
+    },
+    "recovery_steady": {
+      "http_error_ratio": 0.03,
+      "ratio_429": 0.15,
+      "ratio_5xx": 0.02,
+      "replication_lag_sec_max": 10,
+      "p95_latency_ms_max": 1200
+    },
+    "aggregate_limits": {
+      "max_failover_time_sec": 1200,
+      "max_replication_lag_sec_observed": 180,
+      "max_rpo_sec_observed": 300
+    }
+  }
+}

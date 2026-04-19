@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 # B-367/B-373: RPC revalidation — canonical block header vs receipt inclusion hash (reorg / lag detection).
+# B-293 (EXTEND): TRAVELTRUST_FINALITY_MODE default --safe-head-tag when CLI omits it (legacy default finalized).
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import urllib.error
 import urllib.parse
@@ -13,6 +15,13 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 from threading import Thread
 from typing import Any
+
+from region_vault_claim_broadcast_finality_mode import (
+    FINALITY_MODE_ENV,
+    build_b293_resolution_dict,
+    normalized_rpc_head_tag_from_finality_mode,
+)
+from region_vault_claim_broadcast_rpc_host_allowlist_b305 import allowlist_evidence_or_none
 
 ANCHOR = "14-REGIONVAULT-CLAIM-BROADCAST-RECEIPT-REVALIDATE-V1"
 RULE_VERSION = "region_vault_claim_broadcast_receipt_revalidate_v1"
@@ -65,6 +74,10 @@ def run_revalidate(
     rows_in = receipt_archive.get("archive_rows")
     if not isinstance(rows_in, list):
         raise ValueError("archive_rows must be array")
+
+    b305_rev = allowlist_evidence_or_none(
+        [rpc_url], tool_label="region_vault_claim_broadcast_receipt_revalidate_rpc"
+    )
 
     rid = 1
     resp = _json_rpc(rpc_url, "eth_getBlockByNumber", [safe_head_tag, False], rid)
@@ -138,7 +151,7 @@ def run_revalidate(
         except Exception:
             return "<redacted>"
 
-    return {
+    out: dict[str, Any] = {
         "anchor": ANCHOR,
         "rule_version": RULE_VERSION,
         "mother_table": MOTHER_TABLE,
@@ -152,6 +165,9 @@ def run_revalidate(
         "blocking_reasons": blocking,
         "revalidation_verdict": verdict,
     }
+    if b305_rev is not None:
+        out["b305_rpc_host_allowlist"] = b305_rev
+    return out
 
 
 def _cmd_revalidate(args: argparse.Namespace) -> int:
@@ -161,11 +177,49 @@ def _cmd_revalidate(args: argparse.Namespace) -> int:
     if not rpc:
         print("revalidate: need --rpc-url", file=sys.stderr)
         return 1
+    env_mode_raw = os.environ.get(FINALITY_MODE_ENV)
+    norm_m, pe = normalized_rpc_head_tag_from_finality_mode(env_mode_raw)
+    raw_tag = getattr(args, "safe_head_tag", None)
+    if raw_tag is not None:
+        safe_tag = str(raw_tag)
+        b293_meta = build_b293_resolution_dict(
+            tool="revalidate",
+            env_raw=env_mode_raw,
+            normalized_tag=norm_m,
+            mode_parsed_ok=pe is None,
+            parse_error=pe,
+            cli_head_tag_supplied=True,
+            b289_env_override_active=False,
+            effective_head_tag=safe_tag,
+            applied_traveltrust_finality_mode_default=False,
+        )
+    else:
+        if pe:
+            print(f"revalidate: FAIL: {pe}", file=sys.stderr)
+            return 1
+        if norm_m is None:
+            safe_tag = "finalized"
+            applied_b293 = False
+        else:
+            safe_tag = norm_m
+            applied_b293 = True
+        b293_meta = build_b293_resolution_dict(
+            tool="revalidate",
+            env_raw=env_mode_raw,
+            normalized_tag=norm_m,
+            mode_parsed_ok=True,
+            parse_error=None,
+            cli_head_tag_supplied=False,
+            b289_env_override_active=False,
+            effective_head_tag=safe_tag,
+            applied_traveltrust_finality_mode_default=applied_b293,
+        )
     try:
-        out = run_revalidate(arch, rpc, safe_head_tag=str(args.safe_head_tag))
+        out = run_revalidate(arch, rpc, safe_head_tag=safe_tag)
     except ValueError as e:
         print(f"revalidate: FAIL: {e}", file=sys.stderr)
         return 1
+    out["b293_finality_mode_resolution"] = b293_meta
     Path(args.output).write_text(json.dumps(out, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"wrote {args.output}", file=sys.stderr)
     if out.get("revalidation_verdict") != "GO":
@@ -174,6 +228,9 @@ def _cmd_revalidate(args: argparse.Namespace) -> int:
 
 
 def _cmd_self_test(_: argparse.Namespace) -> int:
+    import subprocess
+    import tempfile
+
     tx = "0x" + "ab" * 32
     block_hash = "0x" + "11" * 32
     parent_hash = "0x" + "22" * 32
@@ -242,6 +299,57 @@ def _cmd_self_test(_: argparse.Namespace) -> int:
         arch_bad["archive_rows"][0]["receipt_normalized"]["blockHash"] = "0x" + "ee" * 32
         out_bad = run_revalidate(arch_bad, rpc, safe_head_tag="finalized")
         assert out_bad["revalidation_verdict"] == "NO_GO", out_bad
+
+        script_path = Path(__file__).resolve()
+        repo_root = script_path.parents[2]
+        with tempfile.TemporaryDirectory() as td:
+            arch_path = Path(td) / "arch.json"
+            out_path = Path(td) / "rev.json"
+            arch_path.write_text(json.dumps(arch, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+            env293 = {k: v for k, v in os.environ.items() if k != FINALITY_MODE_ENV}
+            env293["PYTHONPATH"] = str(script_path.parent)
+            env293[FINALITY_MODE_ENV] = "safe"
+            proc = subprocess.run(
+                [
+                    sys.executable,
+                    str(script_path),
+                    "revalidate",
+                    str(arch_path),
+                    "-o",
+                    str(out_path),
+                    "--rpc-url",
+                    rpc,
+                ],
+                cwd=str(repo_root),
+                env=env293,
+                capture_output=True,
+                text=True,
+            )
+            assert proc.returncode == 0, proc.stderr
+            doc = json.loads(out_path.read_text(encoding="utf-8"))
+            assert doc.get("safe_head_tag_observed") == "safe"
+            b293 = doc.get("b293_finality_mode_resolution") or {}
+            assert b293.get("applied_traveltrust_finality_mode_default") is True
+
+            env_bad = dict(env293)
+            env_bad[FINALITY_MODE_ENV] = "typo-mode"
+            proc_bad = subprocess.run(
+                [
+                    sys.executable,
+                    str(script_path),
+                    "revalidate",
+                    str(arch_path),
+                    "-o",
+                    str(Path(td) / "rev_bad.json"),
+                    "--rpc-url",
+                    rpc,
+                ],
+                cwd=str(repo_root),
+                env=env_bad,
+                capture_output=True,
+                text=True,
+            )
+            assert proc_bad.returncode != 0, proc_bad.stderr
     finally:
         srv.shutdown()
 
@@ -259,9 +367,12 @@ def main() -> int:
     rv.add_argument("--rpc-url", required=True, help="JSON-RPC HTTP endpoint")
     rv.add_argument(
         "--safe-head-tag",
-        default="finalized",
+        default=argparse.SUPPRESS,
         choices=("latest", "safe", "finalized"),
-        help="also record head snapshot at revalidation time",
+        help=(
+            "also record head snapshot at revalidation time; omit to use TRAVELTRUST_FINALITY_MODE (B-293) "
+            "or default finalized (B-367)"
+        ),
     )
     rv.set_defaults(func=_cmd_revalidate)
 

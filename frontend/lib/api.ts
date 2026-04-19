@@ -6,7 +6,7 @@
 const BASE =
   typeof process !== "undefined" && process.env.NEXT_PUBLIC_API_BASE_URL?.trim()
     ? process.env.NEXT_PUBLIC_API_BASE_URL.trim().replace(/\/$/, "")
-    : "http://localhost:8080";
+    : "http://127.0.0.1:8080";
 
 export const apiBase = BASE;
 
@@ -50,6 +50,8 @@ export const routes = {
   auth: {
     register: "/auth/register",
     seedTestAccounts: "/auth/seed-test-accounts",
+    /** C-GOV-004：Governor+PG 投影 sentinel 或重置链下 MVP 治理内存（须 `SEED_TEST_ACCOUNTS=1`） */
+    seedGovernanceE2e: "/auth/seed-governance-e2e",
     login: "/auth/login",
     logout: "/auth/logout",
     refresh: "/auth/refresh",
@@ -96,7 +98,7 @@ export const routes = {
   orderPatchItinerary: (id: string) => `/api/v1/orders/${id}/itinerary`,
   orderConfirmFinalPlan: (id: string) =>
     `/api/v1/orders/${id}/confirm-final-plan`,
-  /** 53 双边确认：游客/向导各自确认行程与金额 */
+  /** 53 双边确认：旅行者/向导各自确认行程与金额 */
   orderConfirmBilateral: (id: string) =>
     `/api/v1/orders/${id}/confirm-bilateral`,
   /** 53-S8：评分双方确认后触发释放（04 登记后对接） */
@@ -153,6 +155,12 @@ export const routes = {
   governanceInvestorShareReconcile: "/api/v1/governance/investor-share-reconcile",
   governanceInvestorDistributionAccruals: "/api/v1/governance/investor-distribution-accruals",
   internalInvestorDistributionAccrual: "/api/v1/internal/investor-distribution-accrual",
+  /** B-191：`/traveltrust` 只读机读锚（04 §3.3 / §3.4；与 governance protocol-reference `doc_version` 同源） */
+  traveltrustPageBrief: "/api/v1/traveltrust/page-brief",
+  /** P-SCALE1：信任增长外部化（traveltrust-api + Postgres；多实例一致） */
+  trustGrowthIngest: "/api/v1/trust-growth/ingest",
+  trustGrowthConfig: "/api/v1/trust-growth/config",
+
   /** 84 文档镜像（非链上 FeeRouter）；响应头 X-Implementation-Status: doc-reference */
   governanceProtocolReference: "/api/v1/governance/protocol-reference",
   /** 待生效参数包（默认与上同形；可选 PROTOCOL_REFERENCE_PENDING_OVERLAY 深度合并）；头 doc-reference-pending */
@@ -280,6 +288,12 @@ export const routes = {
     approvalApprove: (id: string) => `/api/v1/admin/approvals/${id}/approve`,
     /** Phase 5：运维快照（chain、indexer、rate_limits） */
     observabilityOverview: "/api/v1/admin/observability/overview",
+    /** P-OBS1：信任增长 CTR/分布/generation/告警；须 admin + DB */
+    trustGrowthObservability: "/api/v1/admin/trust-growth/observability",
+    /** P-OBS1：PATCH 冻结权重、强制对照、变体占比上限 */
+    trustGrowthControl: "/api/v1/admin/trust-growth/control",
+    /** P-OBS1：一键回滚为三等分对照权重并清空 caps */
+    trustGrowthRollbackControl: "/api/v1/admin/trust-growth/rollback-control",
     /** 120 / 70：运维审计动作最小列表（占位直至导出流水线） */
     /** 120 / 70：运维审计动作占位列表；query **`limit`**（1～200，缺省 50）；**`applied_filters`** 见响应 */
     auditOperations: (params?: { limit?: number }) => {
@@ -870,10 +884,16 @@ export const routes = {
   },
 } as const;
 
-/** 完整 URL（base + path）。浏览器 + loopback 基址时返回「当前页 origin + path」（须配合 `next.config.js` rewrites）。 */
+/** 完整 URL（base + path）。浏览器 + loopback 基址时通常返回「当前页 origin + path」（经 `next.config.js` rewrites 代理）。
+ * `/auth/*` 例外：App Router 在同路径有页面时 **afterFiles** rewrite 不覆盖，**POST** 会落到 Next 返回 HTML；开发态 API CORS 已放宽，须直连 `BASE`。
+ * `/api/*` 在 loopback 下亦直连 `BASE`：与 rewrites 等价，但避免 Playwright/部分环境下 Node 侧代理连 :8080 失败导致 `getGuides`/`postOrder` 等 **Failed to fetch**（仍受 API `CORS`/`localhost:3012` 允许）。
+ */
 export function apiUrl(path: string): string {
   const p = path.startsWith("/") ? path : `/${path}`;
   if (isLoopbackApiBase(BASE)) {
+    if (p.startsWith("/auth/") || p.startsWith("/api/")) {
+      return `${BASE}${p}`;
+    }
     const same = sameOriginApiPathInBrowser(p);
     if (same != null) return same;
   }

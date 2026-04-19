@@ -31,7 +31,7 @@ export default function ProviderRankBlock({ period, t }: { period: Period; t: TF
         >
           <p className="text-small">{t("didRank_emptyProvider")}</p>
           <Link
-            href="/market"
+            href="/market/provider"
             onClick={() => trackDidRankEvent("did_rank_empty_market_cta", { list: "provider", period })}
             className={`mt-4 inline-flex ${touchTargetLink44Classes} font-medium text-small text-cyan-300 hover:text-cyan-100 motion-sub ${deepShellInlineLinkFocusClasses}`}
           >

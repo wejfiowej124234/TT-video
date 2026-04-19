@@ -49,6 +49,8 @@ contract GovernanceTreasuryTest is Test {
         uint256 pay = 999_999e6;
         token.mint(address(treasury), fund);
 
+        tl.setAllowedExecutionTarget(address(treasury), true);
+
         bytes memory data = abi.encodeWithSelector(
             GovernanceTreasury.spend.selector,
             address(token),
@@ -75,6 +77,8 @@ contract GovernanceTreasuryTest is Test {
 
         uint256 pay = 1.234 ether;
         uint256 balBefore = recipient.balance;
+
+        tl.setAllowedExecutionTarget(address(treasury), true);
 
         bytes memory data = abi.encodeWithSelector(
             GovernanceTreasury.spendETH.selector,
@@ -114,5 +118,29 @@ contract GovernanceTreasuryTest is Test {
         vm.prank(address(0xB0B));
         vm.expectRevert(GovernanceTreasury.OnlySpender.selector);
         treasury.spendETH(recipient, 1 wei);
+    }
+
+    /// **P0**：**ERC20 spend allowlist** 开启后，未列入 token **revert**；列入后 **通过**。
+    function test_erc20_spend_allowlist_blocks_unlisted() public {
+        MockERC20 token = new MockERC20();
+        GovernanceTreasury treasury = new GovernanceTreasury(deployer, deployer);
+        token.mint(address(treasury), 100e6);
+
+        treasury.setErc20SpendAllowlistEnabled(true);
+
+        vm.expectRevert(GovernanceTreasury.Erc20SpendNotAllowed.selector);
+        treasury.spend(address(token), recipient, 1e6);
+    }
+
+    function test_erc20_spend_allowlist_allows_listed() public {
+        MockERC20 token = new MockERC20();
+        GovernanceTreasury treasury = new GovernanceTreasury(deployer, deployer);
+        token.mint(address(treasury), 100e6);
+
+        treasury.setErc20SpendAllowlistEnabled(true);
+        treasury.setErc20SpendAllowed(address(token), true);
+
+        treasury.spend(address(token), recipient, 1e6);
+        assertEq(token.balanceOf(recipient), 1e6);
     }
 }

@@ -187,6 +187,88 @@ pub(crate) fn order_participant_trust_gate(
     order_accept_trust_gate(store, user_id, guide)
 }
 
+/// 个人中心「五类身份」矩阵：旅行者 / 向导 / 旅行收购 / 商家 / 区域主理人；质押字段随角色逐步接入链上。
+fn identity_slots_json(user: &super::UserRow, guide: Option<&super::GuideRow>) -> serde_json::Value {
+    use super::users_role_is_traveler_side;
+    let role_lc = user.role.to_ascii_lowercase();
+    let traveler_active = users_role_is_traveler_side(&role_lc);
+
+    let guide_slot = match guide {
+        None => {
+            if role_lc == "guide" {
+                json!({
+                    "id": "guide",
+                    "state": "active",
+                    "stake_display": JsonValue::Null
+                })
+            } else {
+                json!({
+                    "id": "guide",
+                    "state": "inactive",
+                    "stake_display": JsonValue::Null
+                })
+            }
+        }
+        Some(g) => {
+            let st = g.status.to_ascii_lowercase();
+            let stake = g.stake_amount.trim();
+            let stake_json = if stake.is_empty() {
+                JsonValue::Null
+            } else {
+                json!(format!("{stake} USDT"))
+            };
+            let state = match st.as_str() {
+                "pending" => "pending",
+                "rejected" | "suspended" => "restricted",
+                "active" => "active",
+                _ => {
+                    if role_lc == "guide" {
+                        "active"
+                    } else {
+                        "inactive"
+                    }
+                }
+            };
+            json!({
+                "id": "guide",
+                "state": state,
+                "stake_display": stake_json
+            })
+        }
+    };
+
+    let traveler_slot = json!({
+        "id": "traveler",
+        "state": if traveler_active { "active" } else { "inactive" },
+        "stake_display": JsonValue::Null
+    });
+    let acquisition_slot = json!({
+        "id": "acquisition",
+        "state": "inactive",
+        "stake_display": JsonValue::Null
+    });
+    let merchant_active = role_lc == "provider";
+    let merchant_slot = json!({
+        "id": "merchant",
+        "state": if merchant_active { "active" } else { "inactive" },
+        "stake_display": JsonValue::Null
+    });
+    let steward_active = role_lc == "region_steward";
+    let steward_slot = json!({
+        "id": "region_steward",
+        "state": if steward_active { "active" } else { "inactive" },
+        "stake_display": JsonValue::Null
+    });
+
+    json!([
+        traveler_slot,
+        guide_slot,
+        acquisition_slot,
+        merchant_slot,
+        steward_slot
+    ])
+}
+
 /// 90 / 07 §5.0：身份与验证最小摘要（与 `user.kyc_status` 同源；便于前端只读 `trust` 块）
 fn me_trust_json(
     user: &super::UserRow,
@@ -408,9 +490,12 @@ pub async fn get_me_impl(
     let guide_json = guide_ref.map(|g| {
         json!({
             "id": g.id.to_string(),
-            "wallet_address": g.wallet_address
+            "wallet_address": g.wallet_address,
+            "stake_amount": g.stake_amount,
+            "status": g.status
         })
     });
+    let identity_slots = identity_slots_json(user, guide_ref);
     let open_d = open_disputes_as_party_count(&store, user_id);
     let reputation = me_reputation_json(
         user.role.as_str(),
@@ -437,7 +522,8 @@ pub async fn get_me_impl(
         },
         "guide": guide_json,
         "trust": trust,
-        "stats": stats
+        "stats": stats,
+        "identity_slots": identity_slots
     })))
 }
 

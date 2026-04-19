@@ -1,0 +1,7 @@
+{
+  "count_by_api_path": { "get_reviews": 25 },
+  "count_by_degrade": { "malformed_meta": 0, "missing_meta": 25, "unknown_future_schema": 0 },
+  "count_by_degrade_and_api_path": { "missing_meta|get_reviews": 25 },
+  "evidence_schema": "b454_review_json_contract_degrade_replay_v1",
+  "total_events": 25
+}

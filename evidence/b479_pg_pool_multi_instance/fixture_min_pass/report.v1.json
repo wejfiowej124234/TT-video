@@ -1,0 +1,42 @@
+{
+  "schema": "traveltrust_b479_pg_pool_multi_instance_stress.v1",
+  "verdict": "PASS",
+  "b478_baseline_path": "config/b478_pg_pool_release_gate_thresholds.v1.json",
+  "params": {
+    "instances": [
+      "http://ci-api-a.example:8080",
+      "http://ci-api-b.example:8080"
+    ],
+    "workers_per_instance": 16,
+    "duration_sec": 25.0,
+    "stress_mode": "mixed",
+    "auth_bearer_set": false
+  },
+  "aggregate": {
+    "max_peak_utilization_ratio": 0.72,
+    "max_acquire_timeout_delta": 0,
+    "recovery_time_sec": 3.2,
+    "recovery_time_ms": 3200.0,
+    "http_error_ratio": 0.0
+  },
+  "instances_detail": [
+    {
+      "api_base": "http://ci-api-a.example:8080",
+      "post_load_peak_utilization_ratio": 0.7,
+      "acquire_timeout_delta": 0,
+      "stress_requests_ok": 1200,
+      "stress_requests_err": 0
+    },
+    {
+      "api_base": "http://ci-api-b.example:8080",
+      "post_load_peak_utilization_ratio": 0.72,
+      "acquire_timeout_delta": 0,
+      "stress_requests_ok": 1180,
+      "stress_requests_err": 0
+    }
+  ],
+  "fail_reasons": [],
+  "notes": [
+    "CI fixture：数值满足 B-478 thresholds；真实跑法见 TT-B479。"
+  ]
+}

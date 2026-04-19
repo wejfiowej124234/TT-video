@@ -28,13 +28,13 @@ grep -q 'DisputeOpened' contracts/abi/Escrow.json || fail "contracts/abi/Escrow.
 grep -q 'openDispute' frontend/dapp/abis/Escrow.json || fail "frontend/dapp/abis/Escrow.json missing openDispute"
 ok "ABI dirs present; Escrow canonical + frontend minimal include openDispute (manual: full byte match optional; deploy version vs ABI)"
 
-# --- 2b) Staking / Registry / EscrowFactory / FeeRouter：双目录 JSON 须字节一致（防 contracts 与前端 dapp 漂移；04 §7.6 ABI 门禁）
-for f in Staking.json Registry.json EscrowFactory.json FeeRouter.json RegionVault.json; do
+# --- 2b) Guide/Provider 身份质押池 + Registry / EscrowFactory / FeeRouter：双目录 JSON 须字节一致（04 §7.6 ABI 门禁）
+for f in GuideIdentityStakingPool.json ProviderIdentityStakingPool.json Registry.json EscrowFactory.json FeeRouter.json RegionVault.json; do
   [[ -f "contracts/abi/$f" ]] || fail "missing contracts/abi/$f"
   [[ -f "frontend/dapp/abis/$f" ]] || fail "missing frontend/dapp/abis/$f"
   cmp -s "contracts/abi/$f" "frontend/dapp/abis/$f" || fail "ABI drift: $f differs between contracts/abi and frontend/dapp/abis (copy after editing canonical JSON)"
 done
-ok "Staking/Registry/EscrowFactory/FeeRouter/RegionVault JSON byte-identical (contracts/abi ↔ frontend/dapp/abis)"
+ok "GuideIdentityStakingPool/ProviderIdentityStakingPool/Registry/EscrowFactory/FeeRouter/RegionVault JSON byte-identical (contracts/abi ↔ frontend/dapp/abis)"
 
 # --- 3) 端口与前端 API base：.env.example 含 PORT 与 NEXT_PUBLIC_API_BASE_URL 说明
 [[ -f ".env.example" ]] || fail "missing .env.example"

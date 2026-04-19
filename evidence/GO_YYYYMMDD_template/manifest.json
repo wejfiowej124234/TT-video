@@ -1,8 +1,19 @@
 {
   "gate": "Gate-X",
-  "date": "YYYY-MM-DD",
+  "date": "2026-04-17",
   "artifacts": [
-    { "path": "artifact-example.pdf", "sha256": "填写该文件 sha256" }
+    {
+      "path": "artifact-example.pdf",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000001"
+    },
+    {
+      "path": "artifacts/dual_score_signoff.v1.example.json",
+      "sha256": "0cc8a00cc85ef6ec90ef61c78685c7c2b7f0700fcc612fccf9063421c642899f"
+    }
   ],
-  "sign_off": [ "角色1", "角色2" ]
+  "sign_off": [ "角色1", "角色2" ],
+  "dual_score": {
+    "path": "artifacts/dual_score_signoff.v1.example.json",
+    "sha256": "0cc8a00cc85ef6ec90ef61c78685c7c2b7f0700fcc612fccf9063421c642899f"
+  }
 }

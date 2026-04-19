@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust_b479_pg_pool_multi_instance_gate.v1",
+  "version": "1.0.0",
+  "updated_at": "2026-04-18T12:00:00Z",
+  "content_sha256": "f29446733bf6ae7b1adf4d141802f9961a7051b5fa42ceb5c74a0adbd8f3a81c",
+  "description": "B-479 多 API 实例并发压测门禁元数据；阈值真源继承 B-478；全链路见 TT-B479。",
+  "b478_baseline_path": "config/b478_pg_pool_release_gate_thresholds.v1.json",
+  "stress_defaults": {
+    "workers_per_instance": 16,
+    "duration_sec": 25.0,
+    "stress_mode": "mixed"
+  },
+  "aggregate_policy": {
+    "max_peak_utilization_must_not_exceed_b478_peak_max": true,
+    "max_acquire_timeout_delta_per_instance_must_not_exceed_b478": true,
+    "recovery_required_all_instances": true,
+    "pg_global_connections_note": "须核对：N * DATABASE_POOL_MAX_CONNECTIONS <= PostgreSQL max_connections（部署侧）。"
+  }
+}

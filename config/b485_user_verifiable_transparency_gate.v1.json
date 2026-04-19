@@ -1,0 +1,22 @@
+{
+  "schema": "traveltrust_b485_user_verifiable_transparency_gate.v1",
+  "version": "1.0.0",
+  "updated_at": "2026-04-19T00:00:00Z",
+  "content_sha256": "41714c79f66d32b13086a07802eda02ae86a0c3872ad44eeee95776015562210",
+  "description": "B-485 用户级可验证与外部信任证明：将 B-482～B-484 内向证据外化为用户可下载/可独立校验的证明包；形成系统内可信→用户可验证可信闭环。",
+  "inherits_pool_thresholds_from": "config/b478_pg_pool_release_gate_thresholds.v1.json",
+  "extends_governance_protocol_gate": "config/b484_governance_protocol_consistency_gate.v1.json",
+  "extends_auditability_gate": "config/b483_auditability_forensics_gate.v1.json",
+  "hard_requirements": {
+    "require_downloadable_audit_snapshot": true,
+    "require_merkle_or_hash_proof_for_balances": true,
+    "require_governance_execution_proof_pack": true,
+    "require_documented_verifier_flow": true,
+    "require_b482_b484_evidence_wired_to_user_surface": true
+  },
+  "limits": {
+    "max_unsupported_verification_gaps": 0,
+    "max_proof_bundle_format_failures": 0
+  },
+  "evidence_sources_note": "用户可下载快照、Merkle/哈希路径、治理执行证明 JSON、开源/文档化校验脚本链接；与 TT-B485 §3 一致。"
+}

@@ -2,7 +2,7 @@
 chcp 65001 >nul
 REM Webpack dev（会执行 ensure-dev-next，避免与 next build 的 .next 混用）
 REM 当 Turbopack 异常时可改用本脚本；端口 3012 与默认 dev 一致
-set "ROOT=%~dp0\.."
+for %%I in ("%~dp0..\..") do set "ROOT=%%~fI"
 cd /d "%ROOT%\frontend"
 if exist "E:\Dev\nodejs\npm.cmd" set "PATH=E:\Dev\nodejs;%PATH%"
 if exist "%ProgramFiles%\nodejs\npm.cmd" set "PATH=%ProgramFiles%\nodejs;%PATH%"

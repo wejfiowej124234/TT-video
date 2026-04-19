@@ -49,11 +49,11 @@
     },
     {
       "path": "artifacts/deployment_params_export.txt",
-      "sha256": "5c591be8977a542f964155c3b2df86845da5c65add5f054d55f9376bfd28273f"
+      "sha256": "954b203c60e5497d88a8722cbd7b51cd84775861a6d37b83071ab0e40608cb2f"
     },
     {
       "path": "artifacts/deployment_params_export.sha256",
-      "sha256": "854b77a59de1db6902c2457cd8c79635caf168575564da95b1ad672632da1f4a"
+      "sha256": "9a33ca7307e688db698ed7f487c95980c6db355bbe2e6c4276cf06c98b73964f"
     },
     {
       "path": "artifacts/p1d-08-2-workorder-close.md",
@@ -61,7 +61,7 @@
     },
     {
       "path": "artifacts/p1d-bundle-rollup.md",
-      "sha256": "81e4b9b2287974c73c8f511616b8c67953e5ec74da990d8f2e946a25d6fdd7a4"
+      "sha256": "6bf0d142d298d2be83f0df66b3ef54f7feefce7aca0d4df331e3c0e171235f7b"
     },
     {
       "path": "artifacts/p1d-30-ux-i18n-index-close.md",

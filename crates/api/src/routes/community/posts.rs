@@ -11,7 +11,7 @@ use crate::db;
 use crate::state::{extract_user_with_session_check, ApiMetaState};
 
 use super::common::{
-    comment_body_visible_to_viewer, display_nickname_for_user, enforce_community_comment_abuse,
+    comment_body_visible_to_viewer, enforce_community_comment_abuse,
     enforce_community_post_abuse, enforce_no_active_write_penalty, json_profiles_to_author_map,
     normalize_comment_sort, order_comments_thread, placeholder_ok,
     posts_json_with_engagement_counts, user_ids_to_json_profiles, AuthorEnrich, FEED_LIMIT,

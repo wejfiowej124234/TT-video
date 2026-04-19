@@ -3,9 +3,10 @@ pragma solidity 0.8.19;
 
 /// @title GovernanceVotesToken
 /// @notice 轻量投票权重代币：**`getPastVotes` / `getPastTotalSupply`** 与 **Governor 快照块** 对齐（B-089 Completion）。
+///      测试网/主网对外符号统一为 **TTG**（与 `.env` **`GOVERNANCE_TOKEN_ADDRESS`**、钱包导入一致）。
 contract GovernanceVotesToken {
-    string public constant name = "TravelTrust Gov Votes";
-    string public constant symbol = "TTGV";
+    string public constant name = "TravelTrust Governance";
+    string public constant symbol = "TTG";
     uint8 public constant decimals = 18;
 
     uint256 public totalSupply;

@@ -31,6 +31,7 @@ const ADMIN_HOME_CARDS: { href: string; titleKey: string; descKey: string; secti
   { href: "/admin/fee-router", titleKey: "admin_fee_router_title", descKey: "admin_home_desc_fee_router", section: "audit_finance" },
   { href: "/admin/region-vault", titleKey: "admin_region_vault_title", descKey: "admin_home_desc_region_vault", section: "audit_finance" },
   { href: "/admin/observability", titleKey: "admin_observability_title", descKey: "admin_home_desc_observability", section: "audit_finance" },
+  { href: "/admin/trust-growth", titleKey: "admin_trust_growth_title", descKey: "admin_home_desc_trust_growth", section: "audit_finance" },
   { href: "/admin/cross-check", titleKey: "admin_cross_check_title", descKey: "admin_home_desc_cross_check", section: "audit_finance" },
   { href: "/admin/drift-summary", titleKey: "admin_drift_summary_title", descKey: "admin_home_desc_drift_summary", section: "audit_finance" },
   { href: "/admin/audit/operations", titleKey: "admin_audit_ops_title", descKey: "admin_home_desc_audit_ops", section: "audit_finance" },
@@ -105,6 +106,15 @@ export default function AdminHomeClient() {
               className={`${touchTargetLink44Classes} shrink-0 text-small font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
             >
               {t("admin_observability_title")}
+            </Link>
+            <span className="hidden text-ink-300 sm:inline" aria-hidden>
+              ·
+            </span>
+            <Link
+              href="/admin/trust-growth"
+              className={`${touchTargetLink44Classes} shrink-0 text-small font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            >
+              {t("admin_shell_nav_trust_growth")}
             </Link>
             <span className="hidden text-ink-300 sm:inline" aria-hidden>
               ·

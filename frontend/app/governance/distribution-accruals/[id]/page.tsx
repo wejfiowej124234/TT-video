@@ -14,6 +14,7 @@ import { shortHexAddr } from "@/lib/feeRouterWiring";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import GovernanceTargetNotice from "@/components/governance/GovernanceTargetNotice";
+import InlineTransparencyVerification from "@/components/trust/InlineTransparencyVerification";
 import { GovernanceOpsAdminLinks } from "@/components/governance/GovernanceOpsAdminLinks";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
@@ -178,6 +179,10 @@ export default function GovernanceDistributionAccrualDetailPage() {
       <p className="mt-2 max-w-3xl text-body text-ink-700">{t("governance_distribution_accruals_desc")}</p>
       <p className="mt-2 font-mono text-meta text-ink-700 break-all">{rawId || "—"}</p>
       <p className="mt-1 text-meta text-ink-600">{sourceLabel}</p>
+
+      <div className="mt-4 max-w-3xl">
+        <InlineTransparencyVerification context="yield" surface="ink" verificationKey={rawId ?? ""} />
+      </div>
 
       {!validUuid ? (
         <p className="mt-6 text-body text-ink-700">{t("governance_distribution_accruals_invalid_id")}</p>

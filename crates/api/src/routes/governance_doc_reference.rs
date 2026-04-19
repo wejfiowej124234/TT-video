@@ -6,7 +6,7 @@
 use serde_json::{json, Value};
 
 pub const DOC_REF: &str = "docs/spec/84-第一阶段10国Country-Pool发行参数总表.md";
-pub const DOC_VERSION: &str = "1.0.16";
+pub const DOC_VERSION: &str = "1.0.21";
 
 /// 与 84 §四 主表行顺序一致。
 pub fn protocol_reference_json() -> Value {

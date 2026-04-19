@@ -4,7 +4,7 @@ import { useState, useEffect, useId, useCallback, useRef } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslation } from "@/components/LocaleProvider";
-import { getGuides, postOrder } from "@/lib/apiClient";
+import { getGuides, getIdempotencyKey, postOrder } from "@/lib/apiClient";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import OrderFlowSteps from "@/components/escrow/OrderFlowSteps";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
@@ -24,6 +24,9 @@ function NewOrderPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const guideIdFromQuery = searchParams?.get("guide_id") ?? "";
+  /** `getGuides` Promise 解析时须读最新 query（Suspense/hydration 后 `guide_id` 才就绪），避免闭包仍为 "" 导致不注入向导。 */
+  const guideIdFromQueryRef = useRef(guideIdFromQuery);
+  guideIdFromQueryRef.current = guideIdFromQuery;
   const [guideId, setGuideId] = useState(guideIdFromQuery);
   const [amount, setAmount] = useState("");
   const defaultFiat = t("orders_defaultFiatCurrency");
@@ -45,13 +48,24 @@ function NewOrderPageInner() {
     setGuideId((prev) => guideIdFromQuery || prev);
   }, [guideIdFromQuery]);
 
+  /** URL 带 `guide_id` 时立即注入下拉（不依赖 `getGuides` 时序）；与下方 merge / ref 同源。 */
+  useEffect(() => {
+    const q = guideIdFromQuery.trim();
+    if (!q) return;
+    setGuides((prev) => {
+      if (prev.some((g) => g.id === q)) return prev;
+      return [{ id: q, city: t("orders_fromLink") }, ...prev];
+    });
+  }, [guideIdFromQuery, t]);
+
   useEffect(() => {
     setGuidesLoadError(null);
     getGuides()
       .then((v) => (Array.isArray(v) ? v : []) as { id: string; city?: string }[])
       .then((list) => {
-        const hasQueryGuide = guideIdFromQuery && !list.some((g) => g.id === guideIdFromQuery);
-        if (hasQueryGuide) return [{ id: guideIdFromQuery, city: t("orders_fromLink") }, ...list];
+        const q = (guideIdFromQueryRef.current ?? "").trim();
+        const hasQueryGuide = !!q && !list.some((g) => g.id === q);
+        if (hasQueryGuide) return [{ id: q, city: t("orders_fromLink") }, ...list];
         return list;
       })
       .then(setGuides)
@@ -66,7 +80,12 @@ function NewOrderPageInner() {
             return;
           }
         }
-        setGuides([]);
+        const q = (guideIdFromQueryRef.current ?? "").trim();
+        if (q) {
+          setGuides([{ id: q, city: t("orders_fromLink") }]);
+        } else {
+          setGuides([]);
+        }
         setGuidesLoadError(mapApiReadError(err, t, "orders_guides_loadFailed"));
       });
   }, [guideIdFromQuery, t, guidesRetryKey, router]);
@@ -78,11 +97,14 @@ function NewOrderPageInner() {
     submitInFlightRef.current = true;
     setLoading(true);
     setError(null);
-    postOrder({
-      guide_id: guideId.trim(),
-      amount: amount.trim(),
-      currency: currency.trim() || t("orders_defaultFiatCurrency"),
-    })
+    postOrder(
+      {
+        guide_id: guideId.trim(),
+        amount: amount.trim(),
+        currency: currency.trim() || t("orders_defaultFiatCurrency"),
+      },
+      getIdempotencyKey(),
+    )
       .then((res) => {
         const data = res as { order?: { id?: string } };
         const id = data?.order?.id ?? (res as { id?: string })?.id;

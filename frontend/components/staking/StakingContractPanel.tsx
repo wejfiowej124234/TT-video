@@ -6,8 +6,8 @@ import { useAccount, useChainId, useReadContract } from "wagmi";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { getExpectedChainId } from "@/lib/chainEnv";
-import { erc20DecimalsAbi, stakingAbi } from "@/lib/stakingAbi";
-import { getStakingAddress } from "@/lib/stakingEnv";
+import { erc20DecimalsAbi, identityStakingPoolAbi } from "@/lib/stakingAbi";
+import { getGuideStakingAddress, getProviderStakingAddress } from "@/lib/stakingEnv";
 
 function formatAmount(raw: bigint, decimals: number | undefined, t: (k: string) => string): string {
   if (decimals === undefined) return `${raw.toString()} (${t("staking_contract_rawUnits")})`;
@@ -18,13 +18,21 @@ function formatAmount(raw: bigint, decimals: number | undefined, t: (k: string) 
   }
 }
 
-/** Phase 3/4：Staking 合约链上只读（token、slasher、MIN_STAKE、stakeOf、slashedOf）。 */
-export function StakingContractPanel() {
+export type StakingPoolKind = "guide" | "provider";
+
+/** Phase 3/4：身份质押池链上只读（token、slasher、MIN_STAKE、stakeOf、slashedOf）。 */
+export function StakingContractPanel({ pool }: { pool: StakingPoolKind }) {
   const { t } = useTranslation();
   const dash = t("ui_em_dash");
   const { address, isConnected } = useAccount();
   const chainId = useChainId();
-  const stakingAddress = useMemo(() => getStakingAddress(), []);
+  const stakingAddress = useMemo(
+    () => (pool === "guide" ? getGuideStakingAddress() : getProviderStakingAddress()),
+    [pool],
+  );
+  const titleKey = pool === "guide" ? "staking_pool_guide_panel_title" : "staking_pool_provider_panel_title";
+  const notConfiguredKey =
+    pool === "guide" ? "staking_pool_guide_notConfigured" : "staking_pool_provider_notConfigured";
   const expectedChainId = getExpectedChainId();
   const chainOk = chainId === expectedChainId;
   const baseEnabled = Boolean(stakingAddress && chainOk);
@@ -33,7 +41,7 @@ export function StakingContractPanel() {
 
   const tokenRead = useReadContract({
     address: stakingAddress ?? undefined,
-    abi: stakingAbi,
+    abi: identityStakingPoolAbi,
     functionName: "token",
     query: { enabled: baseEnabled },
   });
@@ -51,21 +59,21 @@ export function StakingContractPanel() {
 
   const slasherRead = useReadContract({
     address: stakingAddress ?? undefined,
-    abi: stakingAbi,
+    abi: identityStakingPoolAbi,
     functionName: "slasher",
     query: { enabled: baseEnabled },
   });
 
   const minStakeRead = useReadContract({
     address: stakingAddress ?? undefined,
-    abi: stakingAbi,
+    abi: identityStakingPoolAbi,
     functionName: "MIN_STAKE",
     query: { enabled: baseEnabled },
   });
 
   const stakeOfRead = useReadContract({
     address: stakingAddress ?? undefined,
-    abi: stakingAbi,
+    abi: identityStakingPoolAbi,
     functionName: "stakeOf",
     args: address ? [address] : undefined,
     query: { enabled: userEnabled },
@@ -73,7 +81,7 @@ export function StakingContractPanel() {
 
   const slashedRead = useReadContract({
     address: stakingAddress ?? undefined,
-    abi: stakingAbi,
+    abi: identityStakingPoolAbi,
     functionName: "slashedOf",
     args: address ? [address] : undefined,
     query: { enabled: userEnabled },
@@ -112,9 +120,9 @@ export function StakingContractPanel() {
         aria-labelledby={titleId}
       >
         <h2 id={titleId} className="text-body-l font-semibold text-ink-900">
-          {t("staking_contract_title")}
+          {t(titleKey)}
         </h2>
-        <p className="mt-2 text-body text-ink-600 leading-relaxed">{t("staking_contract_notConfigured")}</p>
+        <p className="mt-2 text-body text-ink-600 leading-relaxed">{t(notConfiguredKey)}</p>
       </section>
     );
   }
@@ -126,7 +134,7 @@ export function StakingContractPanel() {
         aria-labelledby={titleId}
       >
         <h2 id={titleId} className="text-body-l font-semibold text-ink-900">
-          {t("staking_contract_title")}
+          {t(titleKey)}
         </h2>
         <p className="mt-2 text-body text-ink-700 leading-relaxed">
           {t("escrow_wrongChainDesc")
@@ -143,7 +151,7 @@ export function StakingContractPanel() {
       aria-labelledby={titleId}
     >
       <h2 id={titleId} className="text-body-l font-semibold text-ink-900">
-        {t("staking_contract_title")}
+        {t(titleKey)}
       </h2>
       <p className="mt-1 text-meta text-ink-500 font-mono break-all">{stakingAddress}</p>
 

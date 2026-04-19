@@ -1,0 +1,5 @@
+{
+  "anchor": "TT-MAINNET-G2-INDEXER-PATH-SMOKE",
+  "g2_gate": "GO",
+  "notes": "Replace with real staging/mainnet smoke output; committed example only — do not use as production attestation."
+}

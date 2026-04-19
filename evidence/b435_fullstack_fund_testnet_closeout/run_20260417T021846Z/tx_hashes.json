@@ -1,0 +1,8 @@
+{
+  "chain_id": 11155111,
+  "explorer_base": "https://sepolia.etherscan.io/tx/",
+  "deploy_governance_stack_token_create": "",
+  "deploy_fund_stack_escrow_factory_create": "",
+  "first_payment": "",
+  "notes": "TT-TESTNET / TT-B435：将各部署与 first_payment 的 0x… 填入；first_payment 也可用 scripts/ops/b435-merge-first-payment-tx.example.sh 合并。然后运行 scripts/ops/tt-testnet-fullstack-seal.sh。"
+}

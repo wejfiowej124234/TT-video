@@ -25,8 +25,14 @@ export type {
   OrderReviewListItem,
   OrderReviewsListMeta,
   OrderReviewsListResult,
+  OrderReviewPostResult,
   OrderReviewWeightBreakdown,
+  OrderReviewJsonContractMeta,
+  OrderReviewSubmitReview,
+  OrderReviewSubmitOk,
 } from "./orders";
+export type { ReviewJsonContractClientView, ReviewJsonContractDegrade } from "../reviewJsonContract";
+export { parseReviewJsonContractMeta, CLIENT_REVIEW_JSON_CONTRACT_SCHEMA_MAX_SUPPORTED } from "../reviewJsonContract";
 export {
   getOrders,
   postOrder,

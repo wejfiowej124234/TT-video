@@ -1,0 +1,41 @@
+{
+  "schema": "traveltrust_b483_auditability_forensics_acceptance.v1",
+  "verdict": "PASS",
+  "fail_reasons": [],
+  "gate_file": "config/b483_auditability_forensics_gate.v1.json",
+  "scope": {
+    "replay_window": "2026-04-01T00:00:00Z/2026-04-18T23:59:59Z",
+    "note": "CI fixture：事件链完整、重放无分叉、审计证明校验全过。"
+  },
+  "checks": {
+    "append_only_event_log": {
+      "append_only_enforced": true,
+      "hash_chain_valid": true,
+      "tamper_detected_count": 0,
+      "total_entries_observed": 125000,
+      "head_event_hash_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "snapshot_signatures": {
+      "snapshots_signed_count": 48,
+      "signature_verification_failures": 0,
+      "latest_snapshot_id": "snap_ci_fixture_001"
+    },
+    "replay_verification": {
+      "replay_runs": 8,
+      "state_divergence_count": 0,
+      "reproducible_ledger_state": true,
+      "replay_engine_ref": "internal-replay-job/v1"
+    },
+    "audit_proof": {
+      "proof_bundles_generated": 4,
+      "proof_verification_failures": 0,
+      "proof_format": "merkle_batch_v1+ed25519"
+    },
+    "chain_integrity": {
+      "event_chain_complete": true,
+      "head_hash_matches_tip": true,
+      "hash_chain_coverage_ratio": 1.0,
+      "merkle_batch_root_match": true
+    }
+  }
+}

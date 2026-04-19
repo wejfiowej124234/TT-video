@@ -1,0 +1,891 @@
+{
+    "service": "traveltrust-api",
+    "api_version": "0.1.0",
+    "build": {
+        "git_sha": "unknown",
+        "deployed_at": null,
+        "rule": "120/140\u951b\u6c36\udca2\u52eb\u5f42/\u9422\u71b6\u9a87\u5be4\u9e3f\udcae\udcae\u9366\u3125\udcae\u7470\u6ad2\u93b4\u682c\u7e58\u7ecb\u5b2b\u655e\u934f\udca5 TRAVELTRUST_GIT_SHA\u951b\u581f\u57a8 GIT_COMMIT_SHA\u9286\u4e3cOURCE_VERSION\u951b\u5909\u7b0c TRAVELTRUST_DEPLOYED_AT\u951b\u5732TC ISO8601\u951b\u591b\u7d31\u95c0\u6ec3\u511a\u93cb\u52eb\u7f13\u9359\udcaf\u9366\udca8 cargo \u9353\udc8d export TRAVELTRUST_BUILD_GIT_SHA \u9350\u6b0f\u53c6\u7f02\u682c\u7627\u93c8\u71b7\u53b9\u6434\u66ea\u7d31730 GET /meta build \u7035\u7845\u8584 build_top_keys / build_top_keys_contract_730 \u6d93\udc8e META_BUILD_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "build_top_keys": [
+            "git_sha",
+            "deployed_at",
+            "rule",
+            "build_top_keys",
+            "build_top_keys_contract_730"
+        ],
+        "build_top_keys_contract_730": "**730**\u951b\udc9a**`build_top_keys`** **\u6d93\udc8e **`META_BUILD_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `git_sha`****\u922b\udc92**`deployed_at`****\u922b\udc92**`rule`****\u922b\udc92**`build_top_keys`****\u922b\udc92**`build_top_keys_contract_730`\u951b\udc89"
+    },
+    "chain": {
+        "chain_id": "137",
+        "contracts": null,
+        "rule": "\u6d93\udc8e intents EIP-712 domain\u9286\u4f78\u58a0\u7ed4\udcaf NEXT_PUBLIC_CHAIN_ID \u6434\u65bf\udcaf\u5f52\u7d88\u951b\u6c9contracts \u7459\udc81 ChainConfig\u951b\udc9b759\u951b\u6b33hainConfig \u93b8\u509d\u6d47\u6d93\udc94 contracts \u95c8\udc9e null \u93c3\udcb6 chain_contracts_top_keys / chain_contracts_top_keys_contract_759 \u6d93\udc8e CHAIN_CONTRACTS_META_TOP_KEYS \u9357\u4f77\u7c29\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\udc9b760\u951b\u6b38ET /meta database \u7035\u7845\u8584 database_top_keys / database_top_keys_contract_760 \u6d93\udc8e DATABASE_META_TOP_KEYS \u9365\u6da2\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5b92atabase.connected \u6d93\u5ea2\u7274\u7efe\udca7 database_connected \u752f\u51a8\u76b5\u935a\u5c7e\u7c2e\u951b\udc9b762\u951b\u6b38ET /meta rate_limits.guide_upload \u7035\u7845\u8584 guide_upload_top_keys / guide_upload_top_keys_contract_761 \u6d93\udc8e GUIDE_UPLOAD_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\udc88761 \u701b\u612d\u7232\u93c8\u9e3f\udcaf\u8bb3\u7c30\u95be\u6485\u7d1a\u951b\udc9b763\u951b\u6b38ET /meta \u93cd\u572d\u9a87 service\u951b\u5771raveltrust-api\u951b\u5909\u7b0c api_version\u951b\u5715ARGO_PKG_VERSION\u951b\u5909\u8d1f\u7039\u70b0\u7de5\u9417\u581f\u6e70\u9359\udcaf\u7459\u509b\u7974\u95bf\u6c31\u5063\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u68e3\u6826\u7c29\u95bf\udcae service\u922b\u628bpi_version \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31765\u951b\u6b38ET /meta \u93cd\u572d\u9a87 build \u7035\u7845\u8584 build_top_keys / build_top_keys_contract_730 \u6d93\udc8e META_BUILD_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d93\u5910\u656d build \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31766\u951b\u6b38ET /meta \u93cd\u572d\u9a87 chain \u7035\u7845\u8584 chain_top_keys / chain_top_keys_contract_729 \u6d93\udc8e CHAIN_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u9365\u6da2\u656d chain \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31767\u951b\u6b38ET /meta \u93cd\u572d\u9a87 rate_limits \u7035\u7845\u8584 rate_limits_top_keys / rate_limits_top_keys_contract_756 \u6d93\udc8e RATE_LIMITS_META_TOP_KEYS \u9357\u4f77\u7c32\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d5c\u65c8\u656d rate_limits \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31768\u951b\u6b38ET /meta \u93cd\u572d\u9a87 database_connected \u6d93\udc8e database.connected \u9359\udc8a DATABASE_META_TOP_KEYS \u68e3\u682d\u656d connected \u752f\u51a8\u76b5\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u934f\udcad\u95bf\udcae database_connected \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31769\u951b\u6b38ET /meta \u93cd\u572d\u9a87 database \u7035\u7845\u8584 database_top_keys / database_top_keys_contract_760 \u6d93\udc8e DATABASE_META_TOP_KEYS \u9365\u6da2\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d93\u51ae\u656d database \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31770\u951b\u6b38ET /meta \u93cd\u572d\u9a87 dual_write \u7035\u7845\u8584 dual_write_top_keys / dual_write_top_keys_contract_732 \u6d93\udc8e DUAL_WRITE_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u934f\udcab\u95bf\udcae dual_write \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31771\u951b\u6b38ET /meta \u93cd\u572d\u9a87 strict_mode \u7035\u7845\u8584 strict_mode_top_keys / strict_mode_top_keys_contract_731 \u6d93\udc8e STRICT_MODE_META_TOP_KEYS \u6d93\u51ae\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d94\u6fcb\u656d strict_mode \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31772\u951b\u6b38ET /meta \u93cd\u572d\u9a87 ssot_version \u6d93\udc8e strict_mode.rule \u6d93\udcad\u9286\u5bbbtrict_ssot \u6d93\udc8e GET /meta.ssot_version \u9359\u5a42\u60ce\u9354\udca8 STRICT_SSOT \u935a\u5c7e\u7c2e\u9286\u5d84\u7af4\u9477\u8fbe\u7d1d\u6d93\udc8e META_ROOT_TOP_KEYS \u7ed7\udcac\u9357\u4f80\u656d ssot_version \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31733 GET /meta ssot \u7035\u7845\u8584 ssot_top_keys / ssot_top_keys_contract_733 \u6d93\udc8e SSOT_META_TOP_KEYS \u6d93\u51ae\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\udc9b773\u951b\u6b38ET /meta \u93cd\u572d\u9a87 admin_exports \u7035\u7845\u8584 admin_exports_top_keys / admin_exports_top_keys_contract_734 \u6d93\udc8e ADMIN_EXPORTS_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u9357\u4f77\u7c29\u95bf\udcae admin_exports \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31774\u951b\u6b38ET /meta \u93cd\u572d\u9a87 chargeback_policy \u7035\u7845\u8584 chargeback_policy_top_keys / chargeback_policy_top_keys_contract_735 \u6d93\udc8e CHARGEBACK_POLICY_META_TOP_KEYS \u9365\u6da2\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u9357\u4f77\u7b01\u95bf\udcae chargeback_policy \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31775\u951b\u6b38ET /meta \u93cd\u572d\u9a87 finality_n \u6d93\udc8e FINALITY_N \u9359\udc8a GET /meta.indexer.finality_n \u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u9357\u4f78\u6d13\u95bf\udcae finality_n \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31776\u951b\u6b38ET /meta \u93cd\u572d\u9a87 indexer \u7035\u7845\u8584 indexer_top_keys / indexer_top_keys_contract_727 \u6d93\udc8e INDEXER_META_TOP_KEYS \u9357\u4f77\u7b01\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u9357\u4f77\u7c32\u95bf\udcae indexer \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31777\u951b\u6b38ET /meta \u93cd\u572d\u9a87 authority \u7035\u7845\u8584 authority_top_keys / authority_top_keys_contract_736 \u6d93\udc8e AUTHORITY_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u9357\u4f78\u53da\u95bf\udcae authority \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31778\u951b\u6b38ET /meta \u93cd\u572d\u9a87 pause \u7035\u7845\u8584 pause_top_keys / pause_top_keys_contract_737 \u6d93\udc8e PAUSE_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u9357\u4f77\u7af7\u95bf\udcae pause \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31779\u951b\u6b38ET /meta \u93cd\u572d\u9a87 evidence \u7035\u7845\u8584 evidence_top_keys / evidence_top_keys_contract_738 \u6d93\udc8e EVIDENCE_META_TOP_KEYS \u6d94\u6fcb\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u9357\u4f78\u53d3\u95bf\udcae evidence \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31780\u951b\u6b38ET /meta \u93cd\u572d\u9a87 order_messages \u7035\u7845\u8584 order_messages_top_keys / order_messages_top_keys_contract_739 \u6d93\udc8e ORDER_MESSAGES_META_TOP_KEYS \u6d93\u51ae\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u9357\u4f77\u7bc0\u95bf\udcae order_messages \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31781\u951b\u6b38ET /meta \u93cd\u572d\u9a87 reviews \u7035\u7845\u8584 reviews_top_keys / reviews_top_keys_contract_740 \u6d93\udc8e REVIEWS_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d5c\u5c7d\u5d04\u95bf\udcae reviews \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31782\u951b\u6b38ET /meta \u93cd\u572d\u9a87 dispute_open \u7035\u7845\u8584 dispute_open_top_keys / dispute_open_top_keys_contract_741 \u6d93\udc8e DISPUTE_OPEN_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d5c\u5c7d\u5d04\u6d93\udc80\u95bf\udcae dispute_open \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31783\u951b\u6b38ET /meta \u93cd\u572d\u9a87 dispute_resolve \u7035\u7845\u8584 dispute_resolve_top_keys / dispute_resolve_top_keys_contract_742 \u6d93\udc8e DISPUTE_RESOLVE_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d5c\u5c7d\u5d04\u6d5c\u5c84\u656d dispute_resolve \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31784\u951b\u6b38ET /meta \u93cd\u572d\u9a87 itineraries \u7035\u7845\u8584 itineraries_top_keys / itineraries_top_keys_contract_743 \u6d93\udc8e ITINERARIES_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d5c\u5c7d\u5d04\u6d93\u5910\u656d itineraries \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31785\u951b\u6b38ET /meta \u93cd\u572d\u9a87 orders \u7035\u7845\u8584 orders_top_keys / orders_top_keys_contract_744 \u6d93\udc8e ORDERS_META_TOP_KEYS \u6d93\u51ae\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d5c\u5c7d\u5d04\u9365\u6da2\u656d orders \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31786\u951b\u6b38ET /meta \u93cd\u572d\u9a87 discover \u7035\u7845\u8584 discover_top_keys / discover_top_keys_contract_745 \u6d93\udc8e DISCOVER_META_TOP_KEYS \u934f\udcad\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d5c\u5c7d\u5d04\u6d5c\u65c8\u656d discover \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31787\u951b\u6b38ET /meta \u93cd\u572d\u9a87 product_countries \u7035\u7845\u8584 product_countries_top_keys / product_countries_top_keys_contract_746 \u6d93\udc8e PRODUCT_COUNTRIES_META_TOP_KEYS \u6d93\u51ae\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d5c\u5c7d\u5d04\u934f\udcad\u95bf\udcae product_countries \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31788\u951b\u6b38ET /meta \u93cd\u572d\u9a87 did_rank \u7035\u7845\u8584 did_rank_top_keys / did_rank_top_keys_contract_747 \u6d93\udc8e DID_RANK_META_TOP_KEYS \u934f\udcab\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d5c\u5c7d\u5d04\u6d93\u51ae\u656d did_rank \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31789\u951b\u6b38ET /meta \u93cd\u572d\u9a87 product_roles \u7035\u7845\u8584 product_roles_top_keys / product_roles_top_keys_contract_748 \u6d93\udc8e PRODUCT_ROLES_META_TOP_KEYS \u9357\u4f80\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d5c\u5c7d\u5d04\u934f\udcab\u95bf\udcae product_roles \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31790\u951b\u6b38ET /meta \u93cd\u572d\u9a87 auth \u7035\u7845\u8584 auth_top_keys / auth_top_keys_contract_750 \u6d93\udc8e AUTH_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d5c\u5c7d\u5d04\u6d94\u6fcb\u656d auth \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31791\u951b\u6b38ET /meta \u93cd\u572d\u9a87 seed_test_accounts \u7035\u7845\u8584 seed_test_accounts_top_keys / seed_test_accounts_top_keys_contract_751 \u6d93\udc8e SEED_TEST_ACCOUNTS_META_TOP_KEYS \u9365\u6da2\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d93\u590a\u5d04\u95bf\udcae seed_test_accounts \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31792\u951b\u6b38ET /meta \u93cd\u572d\u9a87 guides \u7035\u7845\u8584 guides_top_keys / guides_top_keys_contract_752 \u6d93\udc8e GUIDES_META_TOP_KEYS \u9365\u6da2\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d93\u590a\u5d04\u6d93\udc80\u95bf\udcae guides \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31807\u951b\u6b38ET /meta \u93cd\u572d\u9a87 governance \u7035\u7845\u8584 governance_top_keys / governance_top_keys_contract_807 \u6d93\udc8e GOVERNANCE_META_TOP_KEYS \u934f\udcad\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d93\u590a\u5d04\u6d5c\u5c84\u656d governance \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d19TT-B110-SEQ5 TravelTrustGovernor votingDelay/Period/quorumNumeratorBps\u951b\u6c7cEQ6 GovernanceTimelock delay() \u9359\udcaa\u7487\udcbb SSOT\u951b\u591b\u7d31793\u951b\u6b38ET /meta \u93cd\u572d\u9a87 idempotency_cache \u7035\u7845\u8584 idempotency_cache_top_keys / idempotency_cache_top_keys_contract_753 \u6d93\udc8e IDEMPOTENCY_CACHE_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d93\u590a\u5d04\u6d93\u5910\u656d idempotency_cache \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31794\u951b\u6b38ET /meta \u93cd\u572d\u9a87 defaults \u7035\u7845\u8584 defaults_top_keys / defaults_top_keys_contract_754 \u6d93\udc8e DEFAULTS_META_TOP_KEYS \u934f\udcad\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d93\u590a\u5d04\u9365\u6da2\u656d defaults \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31795\u951b\u6b38ET /meta \u93cd\u572d\u9a87 outbox \u7035\u7845\u8584 outbox_top_keys / outbox_top_keys_contract_755 \u6d93\udc8e OUTBOX_META_TOP_KEYS \u934f\udcab\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d93\u590a\u5d04\u6d5c\u65c8\u656d outbox \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d31796\u951b\u6b38ET /meta \u93cd\u572d\u9a87 meta_top_keys JSON \u93c1\u626e\u7c8d\u6d93\udc8e META_ROOT_TOP_KEYS \u6d93\u590a\u5d04\u6d93\u51ae\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u5c7e\u7274\u7efe\udca7 meta_top_keys_contract_728 \u93c8\u9e3f\udcaf\u8bb3\u7b0c 728 contract \u935a\u5c7e\u7c2e\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u6d93\u590a\u5d04\u934f\udcad\u95bf\udcae meta_top_keys \u93c8\u9e3f\udcaf\u8bb3\u7c30\u95be\u6485\u7d31797\u951b\u6b38ET /meta \u93cd\u572d\u9a87 meta_top_keys_contract_728 \u6d93\udc8e META_ROOT_TOP_KEYS \u7ed7\udcac\u6d93\u590a\u5d04\u6d93\u51ae\u656d meta_top_keys_contract_728 \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d1d\u6d93\udc8e 728 contract\u9286\u4e2eETA_ROOT_TOP_KEYS \u7ed7\udcac\u6d93\u590a\u5d04\u934f\udcad\u95bf\udcae meta_top_keys \u93c8\u9e3f\udcaf\u8bb3\u7c30\u95be\u6485\u7d31798\u951b\u6b38ET /meta \u93cd\u572d\u9a87 meta_top_keys JSON \u93c1\u626e\u7c8d\u6d93\u590a\u5d04\u6d93\u51ae\u300d\u6d93\udc8e META_ROOT_TOP_KEYS \u6d93\u590a\u5d04\u6d93\u51ae\u656d\u6924\u54c4\u7c2d\u95ab\u6130\u300d\u935a\u5c7e\u7c2e\u951b\u5baeeta_top_keys_contract_728 \u5b93\u5c7d\u53c6\u6d93\u590a\u5d04\u6d93\u51ae\u656d\u701b\u6945\u6f70\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\udc8c796 \u6d93\udc8e 797 \u6d93\u5ea2\u6783\u93c8\udcab 728 \u9359\u30e9\u647c\u5bee\u5fce\u7c30\u7487\u4f8a\u7d31799\u951b\udc9a798 \u9359\u30e4\u7b0c\u93c2\u56e8\u6e6f 728 \u9359\u30e6\u6e80\u7487\u8364\u6d49\u95ad\u8bb3\u7c30\u95bf\u4f8a\u7d1d\u9359\u5c84\u654b\u93cd\u572d\u9a87 meta_top_keys JSON \u93c1\u626e\u7c8d\u6d93\u590a\u5d04\u6d93\u51ae\u300d\u6d93\udc8e META_ROOT_TOP_KEYS \u6d93\u590a\u5d04\u6d93\u51ae\u656d\u9359\udc8a meta_top_keys_contract_728 \u701b\u6945\u6f70\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u95c2\udcad\u941c\udcaf\u951b\udc9b800\u951b\udc9a799 \u9359\u5c84\u654b\u95c2\udcad\u941c\udcaf\u6d93\udc8e GET /meta chain \u7035\u7845\u8584 729 chain_top_keys / chain_top_keys_contract_729 \u9359\udc8a CHAIN_META_TOP_KEYS \u6d5c\u65c8\u656d\u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d1d\u6d93\udc8e META_ROOT_TOP_KEYS \u7ed7\udcac\u9365\u6da2\u656d chain \u9359\udc8a 766 \u93c8\u9e3f\udcaf\u8bf2\u5f5e\u6d93\u8336\u4ec8\u6d5c\u6395\u7609\u951b\udc9b801\u951b\udc9a800 \u6d93\u8336\u4ec8\u6d93\udc8e GET /meta chain.contracts \u95c8\udc9e null \u93c3\udcb6 759 chain_contracts_top_keys / chain_contracts_top_keys_contract_759 \u9359\udc8a CHAIN_CONTRACTS_META_TOP_KEYS \u9357\u4f77\u7c29\u95bf\udcae\u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d1d\u6d93\udc8e 799 \u9359\u5c84\u654b\u95c2\udcad\u941c\udcaf\u9359\udc8a 766/729 chain \u701b\u612d\u7232\u6d93\u590a\u609c\u6d5c\u6395\u7609\u951b\udc9b802\u951b\udc9a801 \u6d93\u8336\u4ec8\u6d93\udc8e GET /meta chain.contracts \u95c8\udc9e null \u93c3\udcb6 contracts.rule \u5b93\u5c7d\u53c6\u6d94\udc8b 759 \u9359\u30e4\u7b0c\u93cd\u572d\u9a87 chain.rule 759 \u9359\udc8a 801 \u9357\u4f80\u656d\u93c8\u9e3f\udcaf\u7ed8\u7273\u8e47\u51a8\u6093\u5a67\u6136\u7d1d\u6d93\udc8e chain_contracts_top_keys / chain_contracts_top_keys_contract_759 / CHAIN_CONTRACTS_META_TOP_KEYS \u9359\udc8a 801 \u9365\u6d98\u609c\u6d5c\u6395\u7609\u951b\udc9b803\u951b\udc9a802 \u6d93\u8336\u4ec8\u6d93\udc8e 800 \u9359\udc8a 766 GET /meta chain \u7035\u7845\u8584 chain_top_keys / chain_top_keys_contract_729 / CHAIN_META_TOP_KEYS \u6d5c\u65c8\u656d\u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d1d\u6d93\udc8e 799 \u9359\u5c84\u654b\u7f01\udc8f 729\u9286\udc81801\u9286\udc81759\u9286\udc81802 contracts.rule \u93cd\u572d\u9a87 chain.rule 759 \u5b93\u5c7d\u53c6\u8930\u3221\u579a\u6d5c\u65bf\u609c\u95be\u6350\udcaf\u5a5a\u68f4\u941c\udcaf\u951b\u5c7c\u7b0c META_ROOT_TOP_KEYS \u7ed7\udcac\u9365\u6da2\u656d chain \u9359\udc8a 728 meta_top_keys \u93c8\u9e3f\udcaf\u8bf2\u53da\u935a\u621c\u7c30\u7487\u4f8a\u7d31804\u951b\udc9a803 \u934f\udcad\u935a\u621c\u7c30\u7487\u4f77\u7b0c GET /meta chain.chain_id \u9359\u5a43\u7274\u7efe\udca7 chain.rule \u93c2\u56ec\udca6\u6826\u7b0c intents EIP-712 domain\u9286\u4f78\u58a0\u7ed4\udcaf NEXT_PUBLIC_CHAIN_ID \u6434\u65bf\udcaf\u5f52\u7d88\u9359\udc8a contracts \u7459\udc81 ChainConfig \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d1d\u6d93\u51a8\u609c\u93c0\u8235\u6f6b 803 \u95be\u6350\udcaf\u660f\u56a6 CHAIN_META_TOP_KEYS \u68e3\u682d\u656d chain_id \u95ae\u3127\u8bb2\u7459\u509b\u7974\u95bf\u6c3e\u7d1d\u6d93\udc8e chain_top_keys / chain_top_keys_contract_729 \u9359\udc8a 803 \u6d93\u51a8\u609c\u6d5c\u6395\u7609\u951b\udc9b805\u951b\udc9a804 \u6d93\u51a8\u609c\u6d5c\u6395\u7609\u6d93\udc8e GET /meta chain.contracts \u9359\udc8a CHAIN_META_TOP_KEYS \u7ed7\udcac\u6d5c\u5c84\u656d contracts \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d1d\u934f\udcab\u935a\u621e\u6579\u93c9\udc9f 804 \u95be\u6350\udcaf\u660f\u56a6 contracts \u95ae\u3127\u8bb2\u7459\u509b\u7974\u95bf\u6c2b\u7b0c chain_contracts_top_keys / chain_contracts_top_keys_contract_759 / CHAIN_CONTRACTS_META_TOP_KEYS \u9357\u4f77\u7c29\u95bf\udcae\u9359\udc8a 801 \u6d93\u590a\u609c 802 \u9365\u6d98\u609c 803 \u934f\udcad\u935a\u621c\u8986\u9471\u65d3\u7d1d\u6d93\udc8e chain_top_keys / chain_top_keys_contract_729 \u9359\udc8a 804 \u934f\udcab\u935a\u621c\u7c30\u7487\u4f8a\u7d31806\u951b\udc9a805 \u934f\udcab\u935a\u621c\u7c30\u7487\u4f77\u7b0c GET /meta chain.rule \u9359\udc8a CHAIN_META_TOP_KEYS \u7ed7\udcac\u6d93\u5910\u656d rule \u93c8\u9e3f\udcaf\u8bf2\u6093\u5a67\u6136\u7d1d\u6d94\u6fc6\u609c\u93c0\u8235\u6f6b 805 \u95be\u6350\udcaf\u660f\u56a6\u93cd\u572d\u9a87 chain.rule \u93c2\u56ec\udca6\u6826\u7b0c intents EIP-712 domain\u9286\u4e2fEXT_PUBLIC_CHAIN_ID\u9286\u4e06hainConfig\u9286\udc81759 \u9359\u30e5\u5f37 contracts.rule 759 \u5b93\u5c7d\u53c6\u6d93\udc8e 801 \u6d93\u590a\u609c 802 \u9365\u6d98\u609c 803 \u934f\udcad\u935a\udc91 804 \u6d93\u51a8\u609c 805 \u934f\udcab\u935a\u621c\u8986\u9471\u65d3\u7d1d\u6d93\udc8e chain_top_keys / chain_top_keys_contract_729 \u9359\udc8a 805 \u6d94\u6fc6\u609c\u6d5c\u6395\u7609\u951b\udc9b728 GET /meta \u93cd\u572d\u9a87 meta_top_keys / meta_top_keys_contract_728 \u6d93\udc8e META_ROOT_TOP_KEYS \u6d93\u590a\u5d04\u6d93\u51ae\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\udc9b729 GET /meta chain \u7035\u7845\u8584 chain_top_keys / chain_top_keys_contract_729 \u6d93\udc8e CHAIN_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "chain_top_keys": [
+            "chain_id",
+            "contracts",
+            "rule",
+            "chain_top_keys",
+            "chain_top_keys_contract_729"
+        ],
+        "chain_top_keys_contract_729": "**729**\u951b\udc9a**`chain_top_keys`** **\u6d93\udc8e **`CHAIN_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `chain_id`****\u922b\udc92**`contracts`****\u922b\udc92**`rule`****\u922b\udc92**`chain_top_keys`****\u922b\udc92**`chain_top_keys_contract_729`\u951b\udc89"
+    },
+    "rate_limits": {
+        "window_seconds": 60,
+        "api_requests_per_minute_per_client": 120,
+        "api_limit_disabled": false,
+        "critical_writes_per_minute_per_client": 15,
+        "critical_limit_disabled": false,
+        "evidence_posts_per_minute_per_order_user": 0,
+        "evidence_limit_disabled": true,
+        "review_submits_per_minute_per_order_reviewer": 0,
+        "review_limit_disabled": true,
+        "review_low_score_min_comment_chars": 20,
+        "review_low_score_rule_disabled": false,
+        "guide_upload": {
+            "max_per_window": 10,
+            "window_seconds": 60,
+            "rule": "761\u951b\u6b6eax_per_window/window_seconds \u6d93\udc8e GUIDE_UPLOAD_RATE_LIMIT / GUIDE_UPLOAD_RATE_WINDOW_SECS \u9359\u5a42\u609c\u7035\u8270\u796b\u93c2\u6b0e\u7b02\u6d7c\u72bb\u6aba\u5a34\u4f77\u8151\u95c2\u7fe0\u6b22\u935a\u5c7e\u7c2e\u951b\u6c6bET /meta rate_limits.guide_upload \u7035\u7845\u8584 guide_upload_top_keys / guide_upload_top_keys_contract_761 \u6d93\udc8e GUIDE_UPLOAD_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+            "guide_upload_top_keys": [
+                "max_per_window",
+                "window_seconds",
+                "rule",
+                "guide_upload_top_keys",
+                "guide_upload_top_keys_contract_761"
+            ],
+            "guide_upload_top_keys_contract_761": "**761**\u951b\udc9a**`guide_upload_top_keys`** **\u6d93\udc8e **`GUIDE_UPLOAD_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `max_per_window`****\u922b\udc92**`window_seconds`****\u922b\udc92**`rule`****\u922b\udc92**`guide_upload_top_keys`****\u922b\udc92**`guide_upload_top_keys_contract_761`\u951b\udc89"
+        },
+        "rule": "API/critical: 0=\u934f\u62bd\u68f4\u7487\u30e9\u6aba\u5a34\u4f8a\u7d31evidence/review \u9352\u55db\u6313\u5997\udcb6: 0=\u934f\u62bd\u68f4\u951b\u6d97\u7d86\u9352\u55da\u760e\u7481\udcba: min_chars=0 \u934f\u62bd\u68f4\u93cd\uffe0\u7359\u951b\udc9b756 GET /meta rate_limits \u7035\u7845\u8584 rate_limits_top_keys / rate_limits_top_keys_contract_756 \u6d93\udc8e RATE_LIMITS_META_TOP_KEYS \u9357\u4f77\u7c32\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\udc9b761 GET /meta rate_limits.guide_upload \u7035\u7845\u8584 guide_upload_top_keys / guide_upload_top_keys_contract_761 \u6d93\udc8e GUIDE_UPLOAD_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "rate_limits_top_keys": [
+            "window_seconds",
+            "api_requests_per_minute_per_client",
+            "api_limit_disabled",
+            "critical_writes_per_minute_per_client",
+            "critical_limit_disabled",
+            "evidence_posts_per_minute_per_order_user",
+            "evidence_limit_disabled",
+            "review_submits_per_minute_per_order_reviewer",
+            "review_limit_disabled",
+            "review_low_score_min_comment_chars",
+            "review_low_score_rule_disabled",
+            "guide_upload",
+            "rule",
+            "rate_limits_top_keys",
+            "rate_limits_top_keys_contract_756"
+        ],
+        "rate_limits_top_keys_contract_756": "**756**\u951b\udc9a**`rate_limits_top_keys`** **\u6d93\udc8e **`RATE_LIMITS_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `window_seconds`****\u922b\udc92**`api_requests_per_minute_per_client`****\u922b\udc92**`api_limit_disabled`****\u922b\udc92**`critical_writes_per_minute_per_client`****\u922b\udc92**`critical_limit_disabled`****\u922b\udc92**`evidence_posts_per_minute_per_order_user`****\u922b\udc92**`evidence_limit_disabled`****\u922b\udc92**`review_submits_per_minute_per_order_reviewer`****\u922b\udc92**`review_limit_disabled`****\u922b\udc92**`review_low_score_min_comment_chars`****\u922b\udc92**`review_low_score_rule_disabled`****\u922b\udc92**`guide_upload`****\u922b\udc92**`rule`****\u922b\udc92**`rate_limits_top_keys`****\u922b\udc92**`rate_limits_top_keys_contract_756`\u951b\udc89"
+    },
+    "database_connected": true,
+    "database": {
+        "connected": true,
+        "rule": "760\u951b\u6b5donnected \u6d93\u5ea2\u7274\u7efe\udca7 database_connected \u752f\u51a8\u76b5\u935a\u5c7e\u7c2e\u951b\u6c6bET /meta database \u7035\u7845\u8584 database_top_keys / database_top_keys_contract_760 \u6d93\udc8e DATABASE_META_TOP_KEYS \u9365\u6da2\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "database_top_keys": [
+            "connected",
+            "rule",
+            "database_top_keys",
+            "database_top_keys_contract_760"
+        ],
+        "database_top_keys_contract_760": "**760**\u951b\udc9a**`database_top_keys`** **\u6d93\udc8e **`DATABASE_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `connected`****\u922b\udc92**`rule`****\u922b\udc92**`database_top_keys`****\u922b\udc92**`database_top_keys_contract_760`\u951b\udc89"
+    },
+    "dual_write": {
+        "failure_policy": "log_only",
+        "strict_db_write_any": false,
+        "rule": "50-O-R1 / Runbook \u64029\u951b\u6b6dog_only=\u9236\udca0 \u699b\u6a3f\udcae\u308f\u7d19\u9359\u5c7d\u5553\u6fb6\u8fab\u89e6\u6d60\udc85 [audit] \u93c3\u30e5\u7e54\u951b\u591b\u7d31strict_503=\u9236\udca1 \u6924\u5a5a\u53a4\u935a\udc88 TRAVELTRUST_STRICT_*_DB_WRITE=1 \u9352\u55da\u77fe\u5bf0\udc84 503\u951b\u6c98lert_only=\u9236\udca2 \u6fb6\u6828\u5e34\u935b\u5a45\udcad\ufe3a\udc80\u4e20TTP \u6d93\u5d85\u5f49\u9286\u4fe5nv DUAL_WRITE_FAILURE_POLICY\u951b\u6d98\u757e\u7ecb\u57ae\u6093\u59dd\udca5 08-3 \u9359\u6a3b\u6d3f\u7481\u677f\u7d8d\u9286\udc82732 GET /meta dual_write \u7035\u7845\u8584 dual_write_top_keys / dual_write_top_keys_contract_732 \u6d93\udc8e DUAL_WRITE_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "dual_write_top_keys": [
+            "failure_policy",
+            "strict_db_write_any",
+            "rule",
+            "dual_write_top_keys",
+            "dual_write_top_keys_contract_732"
+        ],
+        "dual_write_top_keys_contract_732": "**732**\u951b\udc9a**`dual_write_top_keys`** **\u6d93\udc8e **`DUAL_WRITE_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `failure_policy`****\u922b\udc92**`strict_db_write_any`****\u922b\udc92**`rule`****\u922b\udc92**`dual_write_top_keys`****\u922b\udc92**`dual_write_top_keys_contract_732`\u951b\udc89"
+    },
+    "strict_mode": {
+        "strict_ssot": false,
+        "require_idempotency_key": false,
+        "strict_session_gate": false,
+        "internal_api_secret_configured": true,
+        "rule": "strict_ssot \u6d93\udc8e GET /meta.ssot_version \u9359\u5a42\u60ce\u9354\udca8 STRICT_SSOT \u935a\u5c7e\u7c2e\u951b\u6cc1equire_idempotency_key = strict_ssot \u93b4\udc96 REQUIRE_IDEMPOTENCY_KEY=1\u951b\u6cc2trict_session_gate = STRICT_SESSION_GATE=1\u951b\u5825\u6f6a\u934f\udcac\u5bee\udc80 /api/v1 \u6924\udcbb Bearer\u951b\udc8c04 \u64027.8\u951b\u591b\u7d31internal_api_secret_configured \u741b\u3127\u305a INTERNAL_API_SECRET \u95c8\u70b5\u2516 trim\u951b\udc9b731 GET /meta strict_mode \u7035\u7845\u8584 strict_mode_top_keys / strict_mode_top_keys_contract_731 \u6d93\udc8e STRICT_MODE_META_TOP_KEYS \u6d93\u51ae\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "strict_mode_top_keys": [
+            "strict_ssot",
+            "require_idempotency_key",
+            "strict_session_gate",
+            "internal_api_secret_configured",
+            "rule",
+            "strict_mode_top_keys",
+            "strict_mode_top_keys_contract_731"
+        ],
+        "strict_mode_top_keys_contract_731": "**731**\u951b\udc9a**`strict_mode_top_keys`** **\u6d93\udc8e **`STRICT_MODE_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `strict_ssot`****\u922b\udc92**`require_idempotency_key`****\u922b\udc92**`strict_session_gate`****\u922b\udc92**`internal_api_secret_configured`****\u922b\udc92**`rule`****\u922b\udc92**`strict_mode_top_keys`****\u922b\udc92**`strict_mode_top_keys_contract_731`\u951b\udc89"
+    },
+    "ssot_version": "unset",
+    "ssot": {
+        "expected_sha256": null,
+        "computed_sha256": "1df74ff95fd144cc579bf70d096d680fb5a43b7c1c4c461694e3106920efe420",
+        "match": false,
+        "file": "docs/spec/08-3-\u9359\u509b\u669f\u6d93\u5ea8\u68ec\u7ec2\u4f7d\u3003.md",
+        "rule": "STRICT_SSOT/CHECK_SSOT=1 \u93c3\udcb6 expected_sha256 \u8e47\u5474\u300f\u6d93\udc8e computed_sha256 \u6d93\udc80\u9477\u8fbe\u7d1d\u935a\ufe40\u57af\u93b7\u6394\u7cb7\u935a\udcaf\u9354\u3123\udc80\udc82733 GET /meta ssot \u7035\u7845\u8584 ssot_top_keys / ssot_top_keys_contract_733 \u6d93\udc8e SSOT_META_TOP_KEYS \u6d93\u51ae\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "ssot_top_keys": [
+            "expected_sha256",
+            "computed_sha256",
+            "match",
+            "file",
+            "rule",
+            "ssot_top_keys",
+            "ssot_top_keys_contract_733"
+        ],
+        "ssot_top_keys_contract_733": "**733**\u951b\udc9a**`ssot_top_keys`** **\u6d93\udc8e **`SSOT_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `expected_sha256`****\u922b\udc92**`computed_sha256`****\u922b\udc92**`match`****\u922b\udc92**`file`****\u922b\udc92**`rule`****\u922b\udc92**`ssot_top_keys`****\u922b\udc92**`ssot_top_keys_contract_733`\u951b\udc89"
+    },
+    "admin_exports": {
+        "reconcile_ed25519_public_key_hex": null,
+        "reconcile_ed25519_response_header": "x-traveltrust-reconcile-export-ed25519",
+        "rule": "200 \u64022.1 Partial\u951b\u6c33\udcae\u5267\u7586 RECONCILE_EXPORT_ED25519_SEED_HEX\u951b\udc8832 \u701b\u6944\u59ad hex\u951b\u590b\u6902\u951b\u5b4fET \u9225\udca6/admin/indexer/reconcile-reports/export \u7035\udcb9**\u935d\u5d85\u7c32\u6d63\u64b3\u74e7\u947a\udc82**\u934b\udc9a Ed25519 \u7edb\u60e7\u6095\u951b\u6d97\u7b0c x-traveltrust-reconcile-export-sha256 \u9a9e\u8dfa\u74e8\u951b\u6da2\u7359\u7edb\u5267\u6564\u93c8\udcac\u701b\u6941\udcae\u975b\u53d5\u95bd\u30e3\udc80\udc82734 GET /meta admin_exports \u7035\u7845\u8584 admin_exports_top_keys / admin_exports_top_keys_contract_734 \u6d93\udc8e ADMIN_EXPORTS_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "admin_exports_top_keys": [
+            "reconcile_ed25519_public_key_hex",
+            "reconcile_ed25519_response_header",
+            "rule",
+            "admin_exports_top_keys",
+            "admin_exports_top_keys_contract_734"
+        ],
+        "admin_exports_top_keys_contract_734": "**734**\u951b\udc9a**`admin_exports_top_keys`** **\u6d93\udc8e **`ADMIN_EXPORTS_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `reconcile_ed25519_public_key_hex`****\u922b\udc92**`reconcile_ed25519_response_header`****\u922b\udc92**`rule`****\u922b\udc92**`admin_exports_top_keys`****\u922b\udc92**`admin_exports_top_keys_contract_734`\u951b\udc89"
+    },
+    "chargeback_policy": {
+        "value": "unset",
+        "rule": "CHARGEBACK_POLICY \u941c\udcaf\u6fa7\u51a8\u5f49\u95b2\u5fce\u7b0c\u935a\udcaf\u9354\udca8 STRICT_SSOT \u93cd\uffe0\u7359\u935a\u5c7e\u7c2e\u951b\udc8808-3 chargebackPolicy \u934f\u62bd\u656d key\u951b\u6cc6nset \u93c3\u5815\u6f6a strict \u9359\udcaf\u6769\u612f\udca1\u5c7b\udc80\u4e7btrict \u93b7\u6394\u7cb7\u935a\udcaf\u9354\udca8\u951b\u5908\udc80\udc82735 GET /meta chargeback_policy \u7035\u7845\u8584 chargeback_policy_top_keys / chargeback_policy_top_keys_contract_735 \u6d93\udc8e CHARGEBACK_POLICY_META_TOP_KEYS \u9365\u6da2\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "chargeback_policy_top_keys": [
+            "value",
+            "rule",
+            "chargeback_policy_top_keys",
+            "chargeback_policy_top_keys_contract_735"
+        ],
+        "chargeback_policy_top_keys_contract_735": "**735**\u951b\udc9a**`chargeback_policy_top_keys`** **\u6d93\udc8e **`CHARGEBACK_POLICY_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `value`****\u922b\udc92**`rule`****\u922b\udc92**`chargeback_policy_top_keys`****\u922b\udc92**`chargeback_policy_top_keys_contract_735`\u951b\udc89"
+    },
+    "finality_n": 12,
+    "indexer": {
+        "state_path": "data/indexer_state.json",
+        "checkpoint": {
+            "block_number": 0,
+            "log_index": 0,
+            "source": "startup_snapshot",
+            "rule": "\u6d93\udc8e orders chain_sync.checkpoint\u9286\u4e75etrics traveltrust_indexer_checkpoint_* \u935a\u5c7e\u7c2e\u951b\u6cc2ource=runtime \u93c3\udcb6 block/log \u6d93\udc8e indexer.memory \u935a\u5c7e\u7c2e\u951b\udc9b758 GET /meta indexer.checkpoint \u7035\u7845\u8584 indexer_checkpoint_top_keys / indexer_checkpoint_top_keys_contract_758 \u6d93\udc8e INDEXER_CHECKPOINT_META_TOP_KEYS \u934f\udcad\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+            "indexer_checkpoint_top_keys": [
+                "block_number",
+                "log_index",
+                "source",
+                "rule",
+                "indexer_checkpoint_top_keys",
+                "indexer_checkpoint_top_keys_contract_758"
+            ],
+            "indexer_checkpoint_top_keys_contract_758": "**758**\u951b\udc9a**`indexer_checkpoint_top_keys`** **\u6d93\udc8e **`INDEXER_CHECKPOINT_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `block_number`****\u922b\udc92**`log_index`****\u922b\udc92**`source`****\u922b\udc92**`rule`****\u922b\udc92**`indexer_checkpoint_top_keys`****\u922b\udc92**`indexer_checkpoint_top_keys_contract_758`\u951b\udc89"
+        },
+        "last_seen_finality_n": 12,
+        "replay_required": false,
+        "lag_blocks": 0,
+        "lag_max_blocks": 100,
+        "reorg_detected": false,
+        "finality_n": 12,
+        "memory": {
+            "available": false,
+            "last_block": null,
+            "last_log_index": null,
+            "last_block_hash_prefix": null,
+            "events_cached": null,
+            "rule": "\u6769\u6d9a\u25bc\u9350\udc85 indexer \u9359\u30e6\u713a\u8e47\udcab\u9413\u044d\u7d19available/last_block/last_log_index/last_block_hash_prefix/events_cached\u951b\u591b\u7d31727 indexer.memory \u6d93\udc8e indexer.checkpoint \u9366\udca8 source=runtime \u93c3\u8dfa\u6093\u5a67\u6136\u7d31757 GET /meta indexer.memory \u7035\u7845\u8584 indexer_memory_top_keys / indexer_memory_top_keys_contract_757 \u6d93\udc8e INDEXER_MEMORY_META_TOP_KEYS \u934f\udcab\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\udc9b758 indexer.checkpoint \u93c8\u9e3f\udcaf\u5a5a\u656d\u6434\u5fda\udca7\udc81 indexer_checkpoint_top_keys",
+            "indexer_memory_top_keys": [
+                "available",
+                "last_block",
+                "last_log_index",
+                "last_block_hash_prefix",
+                "events_cached",
+                "rule",
+                "indexer_memory_top_keys",
+                "indexer_memory_top_keys_contract_757"
+            ],
+            "indexer_memory_top_keys_contract_757": "**757**\u951b\udc9a**`indexer_memory_top_keys`** **\u6d93\udc8e **`INDEXER_MEMORY_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `available`****\u922b\udc92**`last_block`****\u922b\udc92**`last_log_index`****\u922b\udc92**`last_block_hash_prefix`****\u922b\udc92**`events_cached`****\u922b\udc92**`rule`****\u922b\udc92**`indexer_memory_top_keys`****\u922b\udc92**`indexer_memory_top_keys_contract_757`\u951b\udc89"
+        },
+        "finality_discipline": {
+            "tick_logs_upper_bound": "chain_tip - max(1, finality_n)",
+            "postgres_event_log_has_finality_n_used": true,
+            "order_chain_sync_status": {
+                "method_path": "GET /api/v1/orders/:id/chain-sync-status",
+                "method_path_contract_717": "**717**\u951b\udc9a**`method_path`**=**`GET /api/v1/orders/:id/chain-sync-status`** **\u6d93\udc8e **`orders::CHAIN_SYNC_STATUS_METHOD_AND_PATH`** **\u9359\udc8a **`router`**** **`.route`**** **`/api/v1/orders/:id/chain-sync-status`** **\u935a\u5c7e\u7c2e**",
+                "status_values": [
+                    "pending",
+                    "confirmed",
+                    "unknown"
+                ],
+                "status_values_contract_719": "**719**\u951b\udc9a**`status_values`** **[**`pending`****, **`confirmed`****, **`unknown`**]** **\u6d93\udc8e **`orders::CHAIN_SYNC_STATUS_VALUES`** **\u9359\udc8a **`713`**** **`chain_sync_status_enum`** **\u935a\u5c7e\u7c2e**",
+                "absent_reason_values": [
+                    "no_database",
+                    "no_chain_context",
+                    "no_row",
+                    "read_failed",
+                    "projection_backend_unavailable"
+                ],
+                "absent_reason_values_contract_720": "**720**\u951b\udc9a**`absent_reason_values`** **[**`no_database`****, **`no_chain_context`****, **`no_row`****, **`read_failed`****, **`projection_backend_unavailable`**]** **\u6d93\udc8e **`orders::CHAIN_SYNC_EVENT_LOG_SNAPSHOT_ABSENT_REASONS`** **\u9359\udc8a **`703`**** **`optional_event_log_snapshot_absent_reason`** **\u935a\u5c7e\u7c2e**",
+                "code": "crates/api/src/routes/orders/mod.rs get_order_chain_sync_status",
+                "code_contract_718": "**718**\u951b\udc9a**`code`**=**`crates/api/src/routes/orders/mod.rs get_order_chain_sync_status`** **\u6d93\udc8e **`orders::CHAIN_SYNC_STATUS_HANDLER_CODE`** **\u9359\udc8a **`get_order_chain_sync_status`** **\u7039\u70b5\u5e47** **\u95bf\u6c31\u5063** **\u935a\u5c7e\u7c2e**",
+                "event_log_snapshot_top_keys": [
+                    "finality_n_used",
+                    "block_number",
+                    "log_index",
+                    "event_type",
+                    "tx_hash",
+                    "block_hash"
+                ],
+                "event_log_snapshot_keys_contract_722": "**722**\u951b\udc9a**`event_log_snapshot_top_keys`** **[**`finality_n_used`****, **`block_number`****, **`log_index`****, **`event_type`****, **`tx_hash`****, **`block_hash`**]** **\u6d93\udc8e **`db::EVENT_LOG_SNAPSHOT_JSON_TOP_KEYS`** **\u9359\udc8a **`escrow_event_finality_snapshot_to_json`** **\u9359\udc8a **`702`**** **`chain_sync.event_log_snapshot`** **\u935a\u5c7e\u7c2e**",
+                "optional_event_log_snapshot": "**702**\u951b\udc9a**DATABASE_URL** + **event_log** **\u935b\u6212\u8151** **\u93c3\udcb6 **`chain_sync.event_log_snapshot`**\u951b\udc88**`db::latest_escrow_event_finality_for_order`** \u922b\udc92 **`escrow_event_finality_snapshot_to_json`**\u951b\udc9b**722** **`event_log_snapshot_top_keys`** **\u935a\u5c7e\u7c2e**\u951b\u591b\u7d30**`finality_n_used`****/**`block_number`****/**`log_index`****/**`event_type`****/**`tx_hash`****/**`block_hash`**\u951b\udc9b**`tx_hash`****/**`block_hash`** **`event_log`**** **\u9352\udc97 **encode** **0x** **hex**\u951b\u5c7d\u57aa\u7ecc\u54c4\u57af **null**",
+                "optional_event_log_snapshot_absent_reason": "**703**\u951b\u6c2d\u68e4 **event_log_snapshot** \u93c3\udcb6 **chain_sync.event_log_snapshot_absent_reason** \u93c8\u54c4\u6ad2\u95bf\udcae\u951b\udc88**720** **`absent_reason_values`** **\u935a\u5c7e\u7c2e**\u951b\u591b\u7d30**`no_database`****/**`no_chain_context`****/**`no_row`****/**`read_failed`****\u951b\u5748hain_off\u951b\u591b\u7d31**`projection_backend_unavailable`**\u951b\u5825\u6f6a chain_off \u93c8\udc80\u704f\u5fce\u7d8b\u951b\udc89",
+                "last_event_top_keys": [
+                    "state",
+                    "updated_at",
+                    "escrow_address"
+                ],
+                "last_event_keys_contract_721": "**721**\u951b\udc9a**`last_event_top_keys`** **[**`state`****, **`updated_at`****, **`escrow_address`**]** **\u6d93\udc8e **`orders::CHAIN_SYNC_LAST_EVENT_TOP_KEYS`** **\u9359\udc8a **`706`**** **`chain_sync.last_event`** **\u935a\u5c7e\u7c2e**",
+                "checkpoint_top_keys": [
+                    "block_number",
+                    "log_index",
+                    "source"
+                ],
+                "checkpoint_keys_contract_723": "**723**\u951b\udc9a**order_chain_sync_status.checkpoint_top_keys** **\u6d93\udc8e **`orders::CHAIN_SYNC_CHECKPOINT_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f **`block_number`****\u922b\udc92**`log_index`****\u922b\udc92**`source`**\u951b\udc89",
+                "checkpoint_source_values": [
+                    "runtime",
+                    "startup_snapshot"
+                ],
+                "checkpoint_source_values_contract_724": "**724**\u951b\udc9a**`checkpoint_source_values`** **\u6d93\udc8e **`orders::CHAIN_SYNC_CHECKPOINT_SOURCE_VALUES`** **\u935a\u5c7e\u7c2e\u951b\udc88**`runtime`****\u922d\udca5**`startup_snapshot`**\u951b\udc89",
+                "optional_last_event": "**706**\u951b\udc9a**chain_off** \u93c3\udcb6 **chain_sync.last_event**\u951b\udc88**state**\u9286\udc81**updated_at**\u9286\udc81**escrow_address**\u951b\u591b\u7d31\u95c8\udc9e **chain_off** \u93c8\udc80\u704f\u5fce\u7d8b\u6d93\udcba **null**\u951b\udc88**721** **`last_event_top_keys`** **\u935a\u5c7e\u7c2e**\u951b\udc89",
+                "success_body_order_id": "**707**\u951b\udc9a**200 **`status=ok`** \u93cd\u572d\u9a87 **`order_id`**\u951b\u5823\u77fe\u5bf0\u52eb\u5f2c\u93c1\u677f\u6d16\u935d\u5d8f\u7d1dUUID \u701b\u6943\udcac\ufe3f\u8986\u951b\udc89",
+                "success_body_envelope_status": "**715**\u951b\udc9a**200** \u93b4\u612c\u59db\u6d63\u64b4\u7274\u7efe\udca7 **`status`** **\u701b\u6945\u6f70 **`ok`**\u951b\udc88**\u6d93\udc8e **`chain_sync.status`** **\u6d93\u590a\udc80\udcbc** **\u9356\u54c4\u578e**\u951b\u6d98\u58a0\u7ed4\udcaf **`parseOrderChainSyncResponse`**** **\u95c8\udc9e **`ok`** **\u9352\udc99 **`null`**\u951b\udc89",
+                "chain_sync_required_top_keys": "**716**\u951b\udc9a**200** **`chain_sync`** **\u8e47\u546e\u6e41 **`status`****\u9286\udc81**`finality_n`****\u9286\udc81**`checkpoint`****\u9286\udc81**`last_event`**\u951b\udc88**`checkpoint`**\u951b\udc9a**`block_number`****/**`log_index`****/**`source`**\u951b\udc9b**`last_event`**\u951b\udc9a**chain_off** **\u95c8\udc9e **null** **\u7035\u7845\u8584** **/** **\u95c8\udc9e chain_off** **JSON **`null`**\u951b\udc9b**703** **\u9359\udcaf\u95c4\u52eb\u59de **`event_log_snapshot`** **\u93b4\udc96 **`event_log_snapshot_absent_reason`**\u951b\udc89",
+                "minimal_body_requester": "**708**\u951b\u6c36\u6f6a **chain_off** \u93c8\udc80\u704f\u5fd4\u579a\u9354\u71b6\u7d8b\u93cd\u572d\u9a87 **`requester`**\u951b\u581d\u7d8b\u9353\u5d84\u7d30\u7487\u6fc8\u6564\u93b4\udcb7 UUID\u951b\u5c7c\u7b0c **`note`**/**`order_id`** \u935a\u5c7e\u58d2\u951b\udc89",
+                "minimal_body_chain_sync_status_unknown": "**709**\u951b\u6c36\u6f6a **chain_off** \u93c8\udc80\u704f\u5fd4\u579a\u9354\u71b6\u7d8b **`chain_sync.status`**=`**unknown**`\u951b\u581c\u7b0c **`event_log_snapshot_absent_reason`**=`projection_backend_unavailable` **\u935a\u5c7e\u58d2**\u951b\udc89",
+                "chain_sync_checkpoint": "**710**\u951b\u6c2d\u579a\u9354\u71b6\u7d8b **`chain_sync.checkpoint`**\u951b\udc88**`state.indexer_checkpoint`** \u9350\u6b0f\u53c6\u951b\u6d97\u7b0c **`GET /meta.indexer.checkpoint`** \u935a\u5c7e\u7c2e\u7035\u7845\udcaf\u4f19\u7d31\u95c8\udc9e **chain_off** \u93c8\udc80\u704f\u5fce\u7d8b\u935a\u5c7d\u8230\u951b\udc9b**723** **`checkpoint_top_keys`** **\u935a\u5c7e\u7c2e**\u951b\u591b\u7d30**`block_number`****\u922b\udc92**`log_index`****\u922b\udc92**`source`**",
+                "chain_sync_finality_n": "**711**\u951b\u6c2d\u579a\u9354\u71b6\u7d8b **`chain_sync.finality_n`** \u6d93\udc8e **`GET /meta.finality_n`**\u9286\udc81**`GET /meta.indexer.finality_n`** **\u935a\u5c7e\u7c2e**\u951b\udc88**FINALITY_N**\u951b\u6d97\u7b0c **`event_log_snapshot.finality_n_used`** \u7035\u7845\udcaf\u660f\udca7\udc81 **110 \u64023.3**\u951b\udc89",
+                "chain_sync_checkpoint_source": "**712**\u951b\u6c2d\u579a\u9354\u71b6\u7d8b **`chain_sync.checkpoint.source`** \u6d93\udc8e **`GET /meta.indexer.checkpoint.source`** **\u935a\u5c7e\u7c2e**\u951b\udc88**724** **`checkpoint_source_values`** **\u935a\u5c7e\u7c2e**\u951b\udc9a**`runtime`****\u922d\udca5**`startup_snapshot`**\u951b\u6d97\u7b0c **710** block/log \u7035\u7845\udcaf\u4f19\u7d1a",
+                "chain_sync_status_enum": "**713**\u951b\u6c2d\u579a\u9354\u71b6\u7d8b **`chain_sync.status`** **\u6d60\udc85** **`pending`****/**`confirmed`****/**`unknown`**\u951b\u581c\u7b0c\u6d93\u5a42\u57aa **`status_values`** **\u935a\u5c7e\u7c2e**\u951b\udc9b**chain_off** \u6d93\udcba **pending**/**confirmed**\u951b\u6da2\u6f6a **chain_off** \u93c8\udc80\u704f\u5fce\u7d8b **unknown**\u951b\udc89",
+                "minimal_body_note_stable": "**714**\u951b\u6c36\u6f6a **chain_off** \u93c8\udc80\u704f\u5fd4\u579a\u9354\u71b6\u7d8b\u93cd\u572d\u9a87 **`note`** **\u7ecb\u51b2\u757e\u9359\udca5**\u951b\udc88**705** **`chainSyncNote`** **\u935a\u5c7e\u7c2e**\u951b\u591b\u7d30**`minimal runtime snapshot when order projection backend is unavailable`**",
+                "order_chain_sync_status_top_keys": [
+                    "method_path",
+                    "method_path_contract_717",
+                    "status_values",
+                    "status_values_contract_719",
+                    "absent_reason_values",
+                    "absent_reason_values_contract_720",
+                    "code",
+                    "code_contract_718",
+                    "event_log_snapshot_top_keys",
+                    "event_log_snapshot_keys_contract_722",
+                    "optional_event_log_snapshot",
+                    "optional_event_log_snapshot_absent_reason",
+                    "last_event_top_keys",
+                    "last_event_keys_contract_721",
+                    "checkpoint_top_keys",
+                    "checkpoint_keys_contract_723",
+                    "checkpoint_source_values",
+                    "checkpoint_source_values_contract_724",
+                    "optional_last_event",
+                    "success_body_order_id",
+                    "success_body_envelope_status",
+                    "chain_sync_required_top_keys",
+                    "minimal_body_requester",
+                    "minimal_body_chain_sync_status_unknown",
+                    "chain_sync_checkpoint",
+                    "chain_sync_finality_n",
+                    "chain_sync_checkpoint_source",
+                    "chain_sync_status_enum",
+                    "minimal_body_note_stable",
+                    "order_chain_sync_status_top_keys",
+                    "order_chain_sync_status_top_keys_contract_725",
+                    "rule"
+                ],
+                "order_chain_sync_status_top_keys_contract_725": "**725**\u951b\udc9a**`order_chain_sync_status_top_keys`** **\u6d93\udc8e **`orders::ORDER_CHAIN_SYNC_STATUS_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `method_path`****\u922b\udc92**`method_path_contract_717`****\u922b\udc92**`status_values`****\u922b\udc92**`status_values_contract_719`****\u922b\udc92**`absent_reason_values`****\u922b\udc92**`absent_reason_values_contract_720`****\u922b\udc92**`code`****\u922b\udc92**`code_contract_718`****\u922b\udc92**`event_log_snapshot_top_keys`****\u922b\udc92**`event_log_snapshot_keys_contract_722`****\u922b\udc92**`optional_event_log_snapshot`****\u922b\udc92**`optional_event_log_snapshot_absent_reason`****\u922b\udc92**`last_event_top_keys`****\u922b\udc92**`last_event_keys_contract_721`****\u922b\udc92**`checkpoint_top_keys`****\u922b\udc92**`checkpoint_keys_contract_723`****\u922b\udc92**`checkpoint_source_values`****\u922b\udc92**`checkpoint_source_values_contract_724`****\u922b\udc92**`optional_last_event`****\u922b\udc92**`success_body_order_id`****\u922b\udc92**`success_body_envelope_status`****\u922b\udc92**`chain_sync_required_top_keys`****\u922b\udc92**`minimal_body_requester`****\u922b\udc92**`minimal_body_chain_sync_status_unknown`****\u922b\udc92**`chain_sync_checkpoint`****\u922b\udc92**`chain_sync_finality_n`****\u922b\udc92**`chain_sync_checkpoint_source`****\u922b\udc92**`chain_sync_status_enum`****\u922b\udc92**`minimal_body_note_stable`****\u922b\udc92**`order_chain_sync_status_top_keys`****\u922b\udc92**`order_chain_sync_status_top_keys_contract_725`****\u922b\udc92**`rule`\u951b\udc89",
+                "rule": "110 \u64023.3 Partial\u951b\u6c33\udcae\u3220\u5d1f\u7efe\udca7 pending/confirmed \u7487\u7ed8\u0101\u9368\u5b36\u7d31\u9359\udcaf\u95ab\udc89 **event_log_snapshot**\u951b\udc88**finality_n_used**\u9286\udc81**block_number**\u9286\udc81**log_index**\u9286\udc81**event_type**\u9286\udc81**702** **tx_hash**/**block_hash**\u951b\u591b\u7d31**722** **`event_log_snapshot_top_keys`**/**`event_log_snapshot_keys_contract_722`** **\u6d93\udc8e **`db::EVENT_LOG_SNAPSHOT_JSON_TOP_KEYS`** **`702`**** **`chain_sync.event_log_snapshot`** **\u934f\udcad\u95bf\udcae** **\u935a\u5c7e\u7c2e**\u951b\udc9b**703** **absent_reason** \u9359\udcaf\u7459\u509b\u7974\u93ac\u044d\u7d31**720** **`absent_reason_values`**/**`absent_reason_values_contract_720`** **\u6d93\udc8e **`orders::CHAIN_SYNC_EVENT_LOG_SNAPSHOT_ABSENT_REASONS`** **`703`**** **`event_log_snapshot_absent_reason`** **\u6d5c\u65c8\u656d** **\u935a\u5c7e\u7c2e**\u951b\udc9b**721** **`last_event_top_keys`**/**`last_event_keys_contract_721`** **\u6d93\udc8e **`orders::CHAIN_SYNC_LAST_EVENT_TOP_KEYS`** **`706`**** **`chain_sync.last_event`** **\u6d93\u5910\u656d** **\u935a\u5c7e\u7c2e**\u951b\udc9b**723** **`checkpoint_top_keys`**/**`checkpoint_keys_contract_723`** **\u6d93\udc8e **`orders::CHAIN_SYNC_CHECKPOINT_TOP_KEYS`** **`710`**** **`chain_sync.checkpoint`** **\u6d93\u5910\u656d** **\u935a\u5c7e\u7c2e**\u951b\udc9b**724** **`checkpoint_source_values`**/**`checkpoint_source_values_contract_724`** **\u6d93\udc8e **`orders::CHAIN_SYNC_CHECKPOINT_SOURCE_VALUES`** **`712`**** **`chain_sync.checkpoint.source`** **\u6d5c\u5c7d\udc80\udcbc** **\u935a\u5c7e\u7c2e**\u951b\udc9b**725** **`order_chain_sync_status_top_keys`**/**`order_chain_sync_status_top_keys_contract_725`** **\u6d93\udc8e **`orders::ORDER_CHAIN_SYNC_STATUS_META_TOP_KEYS`** **32** **\u6924\u8dfa\u7730\u95bf\udcae** **\u6924\u54c4\u7c2d** **\u935a\u5c7e\u7c2e**\u951b\udc9b**706** **last_event**\u951b\u5748hain_off\u951b\u591b\u7d31**707** \u93b4\u612c\u59db\u6d63\u64b4\u7274\u7efe\udca7 **order_id**\u951b\udc9b**715** \u93b4\u612c\u59db\u6d63\u64b4\u7274\u7efe\udca7 **`status`** **`ok`** **\u6dc7\u2033\u769d**\u951b\udc9b**716** **`chain_sync`** **\u9365\u6da2\u300a\u705e\u509e\u656d**\u951b\udc9b**717** **`method_path`** **\u6d93\udc8e **`router`**** **`.route`** **\u935a\u5c7e\u7c2e**\u951b\udc9b**718** **`code`**/**`code_contract_718`** **\u6d93\udc8e **`orders::CHAIN_SYNC_STATUS_HANDLER_CODE`** **`get_order_chain_sync_status`** **\u95bf\u6c31\u5063** **\u935a\u5c7e\u7c2e**\u951b\udc9b**719** **`status_values`**/**`status_values_contract_719`** **\u6d93\udc8e **`orders::CHAIN_SYNC_STATUS_VALUES`** **`713`**** **`chain_sync.status`** **\u6d93\u590a\udc80\udcbc** **\u935a\u5c7e\u7c2e**\u951b\udc9b**708** \u93c8\udc80\u704f\u5fce\u7d8b **requester**\u951b\udc9b**709** \u93c8\udc80\u704f\u5fce\u7d8b **`chain_sync.status`** **unknown**\u951b\udc9b**710** **`chain_sync.checkpoint`**\u951b\udc9b**711** **`chain_sync.finality_n`**\u951b\udc9b**712** **`chain_sync.checkpoint.source`**\u951b\udc9b**713** **`chain_sync.status`** **\u93cb\u6c2b\u5987**\u951b\udc9b**714** \u93c8\udc80\u704f\u5fce\u7d8b\u93cd\u572d\u9a87 **`note`** **\u7ecb\u51b2\u757e\u9359\udca5**\u951b\u6d98\u53cf\u95b2\udc8f pending vs finalized \u9359\u5c83\udca7\u55d7\u6d58 API \u6d60\u5d84\u8d1f Target"
+            },
+            "chain_tip_not_in_meta": true,
+            "chain_tip_hint": "Use POST /api/v1/internal/indexer-tick response chain_tip or external RPC; GET /meta avoids RPC per request",
+            "finality_discipline_top_keys": [
+                "tick_logs_upper_bound",
+                "postgres_event_log_has_finality_n_used",
+                "order_chain_sync_status",
+                "chain_tip_not_in_meta",
+                "chain_tip_hint",
+                "finality_discipline_top_keys",
+                "finality_discipline_top_keys_contract_726"
+            ],
+            "finality_discipline_top_keys_contract_726": "**726**\u951b\udc9a**`finality_discipline_top_keys`** **\u6d93\udc8e **`FINALITY_DISCIPLINE_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `tick_logs_upper_bound`****\u922b\udc92**`postgres_event_log_has_finality_n_used`****\u922b\udc92**`order_chain_sync_status`****\u922b\udc92**`chain_tip_not_in_meta`****\u922b\udc92**`chain_tip_hint`****\u922b\udc92**`finality_discipline_top_keys`****\u922b\udc92**`finality_discipline_top_keys_contract_726`\u951b\udc89"
+        },
+        "rule": "110 \u64023.3 Partial\u951b\u6b60inality_n \u6d93\u5ea2\u7274\u701b\u6941\udcae\u975b\u6093\u5a67\u6136\u7d19FINALITY_N\u951b\u591b\u7d31indexer-tick \u6d60\u546e\u5aba\u9359\u682c\u56a6 chain_tip\u922d\u62a6ax(1,FINALITY_N)\u951b\u6c9checkpoint \u9357\u66e1\u769f\u951b\u6cc1eorg \u934f\u3129\u567a\u9365\u70b4\u7cb4\u6d60\u5d84\u8d1f Target\u951b\u6cb4ag/reorg \u93c3\u60f0\udca7\udc81 authority.degraded_mode\u951b\u6cacndexer.checkpoint.source=runtime \u93c3\u6735\u7b0c indexer.memory \u935a\u5c7e\u7c2e\u951b\u6d99\u68e4\u9359\u30e6\u713a\u93c3\u6735\u8d1f startup_snapshot\u951b\u6cacndexer.finality_discipline \u6d93\udcba pending/confirmed \u9359\uff45\u7dde\u7487\u5b58\u69d1\u951b\u581f\u68e4\u95be\u53e5\u7b02 tip\u951b\u591b\u7d31726 finality_discipline_top_keys / finality_discipline_top_keys_contract_726 \u6d93\udc8e FINALITY_DISCIPLINE_META_TOP_KEYS \u6d93\u51ae\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\udc9b727 indexer_top_keys / indexer_top_keys_contract_727 \u6d93\udc8e INDEXER_META_TOP_KEYS \u9357\u4f77\u7b01\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\udc9b757 indexer.memory indexer_memory_top_keys / indexer_memory_top_keys_contract_757 \u6d93\udc8e INDEXER_MEMORY_META_TOP_KEYS \u934f\udcab\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\udc9b758 indexer.checkpoint indexer_checkpoint_top_keys / indexer_checkpoint_top_keys_contract_758 \u6d93\udc8e INDEXER_CHECKPOINT_META_TOP_KEYS \u934f\udcad\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u6c7fT-B167\u951b\u581f\u761d\u741b\udca8 B-167\u951b\u591b\u7d30GET /meta indexer.* \u95bf\udcae\u935a\udc8d/\u95bf\udcae\u6434\u5fce\u7b0c 04 \u64023.4\u9286\udc81110 \u64023.1.1 \u9359\udc8a crates/api/src/routes/health_meta/meta_contract_keys.rs \u6d93\udcad INDEXER_*_META_TOP_KEYS \u935a\u5c7e\u7c2e\u951b\u6d97\u7b09\u935a\udcab B-153 indexer_head_vs_db_latest_block_drift_observability\u951b\u5823\udcaf\u30e9\u656d\u6d60\udc85 admin observability overview \u6d93\udc8e POST \u9225\udca6/internal/indexer-reconcile\u951b\udc89",
+        "indexer_top_keys": [
+            "state_path",
+            "checkpoint",
+            "last_seen_finality_n",
+            "replay_required",
+            "lag_blocks",
+            "lag_max_blocks",
+            "reorg_detected",
+            "finality_n",
+            "memory",
+            "finality_discipline",
+            "rule",
+            "indexer_top_keys",
+            "indexer_top_keys_contract_727"
+        ],
+        "indexer_top_keys_contract_727": "**727**\u951b\udc9a**`indexer_top_keys`** **\u6d93\udc8e **`INDEXER_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `state_path`****\u922b\udc92**`checkpoint`****\u922b\udc92**`last_seen_finality_n`****\u922b\udc92**`replay_required`****\u922b\udc92**`lag_blocks`****\u922b\udc92**`lag_max_blocks`****\u922b\udc92**`reorg_detected`****\u922b\udc92**`finality_n`****\u922b\udc92**`memory`****\u922b\udc92**`finality_discipline`****\u922b\udc92**`rule`****\u922b\udc92**`indexer_top_keys`****\u922b\udc92**`indexer_top_keys_contract_727`\u951b\udc89"
+    },
+    "authority": {
+        "source": "db_projection",
+        "degraded_mode": false,
+        "rule": "normal=DB\u93b6\u66de\u5956\u951b\u6cacndexer\u9480\u85c9\u6097\u93b4\u675beorg=\u5bf0\u546e\u6e36\u7f01\u5822\u2018\u7481\udca4(pending_finality)+\u9350\u8364\u7ca8\u934f\u62bd\u656d\u9350\u6b10\u6437\u6d63\u6ebf\udc80\udc82736 GET /meta authority \u7035\u7845\u8584 authority_top_keys / authority_top_keys_contract_736 \u6d93\udc8e AUTHORITY_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "authority_top_keys": [
+            "source",
+            "degraded_mode",
+            "rule",
+            "authority_top_keys",
+            "authority_top_keys_contract_736"
+        ],
+        "authority_top_keys_contract_736": "**736**\u951b\udc9a**`authority_top_keys`** **\u6d93\udc8e **`AUTHORITY_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `source`****\u922b\udc92**`degraded_mode`****\u922b\udc92**`rule`****\u922b\udc92**`authority_top_keys`****\u922b\udc92**`authority_top_keys_contract_736`\u951b\udc89"
+    },
+    "pause": {
+        "enabled": false,
+        "api_allowlist": "GET /health;GET /meta",
+        "factory_paused": null,
+        "distribute_paused": null,
+        "chain_pause_read": {
+            "status": "chain_unavailable",
+            "error": null,
+            "rule": "B-091 TT-COMP-B091: EscrowFactory.factoryPaused + FeeRouter.distributePaused via eth_call when CHAIN_RPC_URL and each contract address are set; null booleans when no on-chain read \u9225\udc94 do not fabricate true/false (contrast GET \u9225\udca6/governance/protocol-reference doc mirror)."
+        },
+        "rule": "PAUSE_MODE=1 \u93c3\u8bb9\u7d1d\u95c4\udca4 allowlist \u6fb6\u682b\u6b91\u9350\u6b10\u6437\u6d63\u6ec0\u7af4\u5bf0\u5b2e\u6a06\u93c2\udcad\u951b\u5825\u69fb Pause \u9359\u6a39\u7afe\u9473\u85c9\u7d11\u934f\udcb3/\u5a4a\u30e7\u6564\u951b\u5908\udc80\udc82737 GET /meta pause \u7035\u7845\u8584 pause_top_keys / pause_top_keys_contract_737 \u6d93\udc8e PAUSE_META_TOP_KEYS \u934f\udcab\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u6da2\u647c\u6d93\u5a42\u4f10\u9358\udc82/\u7490\u7845\u77fe\u9422\u8fa8\u6b8f\u934b\u6ec6\udca7\udc81 factory_paused\u9286\u4e68istribute_paused\u951b\u5714-091\u951b\udc89",
+        "pause_top_keys": [
+            "enabled",
+            "api_allowlist",
+            "factory_paused",
+            "distribute_paused",
+            "chain_pause_read",
+            "rule",
+            "pause_top_keys",
+            "pause_top_keys_contract_737"
+        ],
+        "pause_top_keys_contract_737": "**737**\u951b\udc9a**`pause_top_keys`** **\u6d93\udc8e **`PAUSE_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `enabled`****\u922b\udc92**`api_allowlist`****\u922b\udc92**`factory_paused`****\u922b\udc92**`distribute_paused`****\u922b\udc92**`chain_pause_read`****\u922b\udc92**`rule`****\u922b\udc92**`pause_top_keys`****\u922b\udc92**`pause_top_keys_contract_737`\u951b\udc89"
+    },
+    "evidence": {
+        "timestamp_policy": "backend_signed",
+        "time_state_path": "data/evidence_time_state.json",
+        "receipt_signature": "unset",
+        "rollback_detection": "monotonic_last_timestamp (persisted)",
+        "strict_db_write": false,
+        "dual_write_order": "when DATABASE_URL set: insert evidence_receipts to DB first; on success append dispute hash if applicable; then update chain_off store; if strict_db_write and insert fails \u922b\udc92 503 without memory update",
+        "rule": "01 \u64026 / \u6d5c\u590e\udcae\udcae\u7487\u4f79\u5d41\u951b\u6b73eceipt HMAC\u9286\u4f79\u6902\u95c2\u5b58\u57d1\u7edb\u682b\u6690\u6d93\u5ea1\u5d1f\u748b\u51a8\u6d16\u5a4a\u6c2d\udca3\udc80\u5a34\u5b29\u7b0c\u7039\u70b5\u5e47\u935a\u5c7e\u7c2e\u951b\udc9b738 GET /meta evidence \u7035\u7845\u8584 evidence_top_keys / evidence_top_keys_contract_738 \u6d93\udc8e EVIDENCE_META_TOP_KEYS \u6d94\u6fcb\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "evidence_top_keys": [
+            "timestamp_policy",
+            "time_state_path",
+            "receipt_signature",
+            "rollback_detection",
+            "strict_db_write",
+            "dual_write_order",
+            "rule",
+            "evidence_top_keys",
+            "evidence_top_keys_contract_738"
+        ],
+        "evidence_top_keys_contract_738": "**738**\u951b\udc9a**`evidence_top_keys`** **\u6d93\udc8e **`EVIDENCE_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `timestamp_policy`****\u922b\udc92**`time_state_path`****\u922b\udc92**`receipt_signature`****\u922b\udc92**`rollback_detection`****\u922b\udc92**`strict_db_write`****\u922b\udc92**`dual_write_order`****\u922b\udc92**`rule`****\u922b\udc92**`evidence_top_keys`****\u922b\udc92**`evidence_top_keys_contract_738`\u951b\udc89"
+    },
+    "order_messages": {
+        "chain_off_mounted": true,
+        "strict_db_write": false,
+        "dual_write_order": "when DATABASE_URL set: insert_order_message to DB first; then append to chain_off store; strict \u922b\udc92 503 message_db_persist_failed without memory update",
+        "http_rule": "GET|POST /api/v1/orders/:id/messages require chain_off; if absent \u922b\udc92 501 not_implemented (not_impl_json); 04 \u64023.4 P16",
+        "rule": "04 \u64023.4 P16 / chain_off\u951b\u6b38ET|POST \u9225\udca6/messages \u6d93\udc8e http_rule \u935a\u5c7e\u7c2e\u951b\udc9b739 GET /meta order_messages \u7035\u7845\u8584 order_messages_top_keys / order_messages_top_keys_contract_739 \u6d93\udc8e ORDER_MESSAGES_META_TOP_KEYS \u6d93\u51ae\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "order_messages_top_keys": [
+            "chain_off_mounted",
+            "strict_db_write",
+            "dual_write_order",
+            "http_rule",
+            "rule",
+            "order_messages_top_keys",
+            "order_messages_top_keys_contract_739"
+        ],
+        "order_messages_top_keys_contract_739": "**739**\u951b\udc9a**`order_messages_top_keys`** **\u6d93\udc8e **`ORDER_MESSAGES_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `chain_off_mounted`****\u922b\udc92**`strict_db_write`****\u922b\udc92**`dual_write_order`****\u922b\udc92**`http_rule`****\u922b\udc92**`rule`****\u922b\udc92**`order_messages_top_keys`****\u922b\udc92**`order_messages_top_keys_contract_739`\u951b\udc89"
+    },
+    "reviews": {
+        "strict_db_write": false,
+        "dual_write_order": "when DATABASE_URL set: insert_review to DB first (UNIQUE order_id+reviewer_id); then chain_off store; ON CONFLICT loads row for memory sync; strict insert/fetch failure \u922b\udc92 503 review_db_persist_failed without memory update",
+        "rule": "53 / 04\u951b\u6c33\udcae\u3220\u5d1f\u7487\u52eb\u578e\u9359\u5c7d\u5553\u6d93\udc8e TRAVELTRUST_STRICT_REVIEW_DB_WRITE \u935a\u5c7e\u7c2e\u951b\udc9b740 GET /meta reviews \u7035\u7845\u8584 reviews_top_keys / reviews_top_keys_contract_740 \u6d93\udc8e REVIEWS_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "reviews_top_keys": [
+            "strict_db_write",
+            "dual_write_order",
+            "rule",
+            "reviews_top_keys",
+            "reviews_top_keys_contract_740"
+        ],
+        "reviews_top_keys_contract_740": "**740**\u951b\udc9a**`reviews_top_keys`** **\u6d93\udc8e **`REVIEWS_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `strict_db_write`****\u922b\udc92**`dual_write_order`****\u922b\udc92**`rule`****\u922b\udc92**`reviews_top_keys`****\u922b\udc92**`reviews_top_keys_contract_740`\u951b\udc89"
+    },
+    "dispute_open": {
+        "strict_db_write": false,
+        "dual_write_order": "when DATABASE_URL set: upsert_order (order\u922b\u6257isputed) first per TRAVELTRUST_STRICT_ORDER_DB_WRITE strict path or persist_order_if_db best-effort; then insert_dispute; on TRAVELTRUST_STRICT_DISPUTE_OPEN_DB_WRITE insert failure \u922b\udc92 remove dispute from memory, revert order state, re-persist prior order row \u922b\udc92 503 dispute_open_db_persist_failed",
+        "rule": "orders_flow/dispute_bilateral_rating.rs open dispute \u9359\u5c7d\u5553\u6d93\udc8e TRAVELTRUST_STRICT_DISPUTE_OPEN_DB_WRITE \u935a\u5c7e\u7c2e\u951b\udc9b741 GET /meta dispute_open \u7035\u7845\u8584 dispute_open_top_keys / dispute_open_top_keys_contract_741 \u6d93\udc8e DISPUTE_OPEN_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "dispute_open_top_keys": [
+            "strict_db_write",
+            "dual_write_order",
+            "rule",
+            "dispute_open_top_keys",
+            "dispute_open_top_keys_contract_741"
+        ],
+        "dispute_open_top_keys_contract_741": "**741**\u951b\udc9a**`dispute_open_top_keys`** **\u6d93\udc8e **`DISPUTE_OPEN_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `strict_db_write`****\u922b\udc92**`dual_write_order`****\u922b\udc92**`rule`****\u922b\udc92**`dispute_open_top_keys`****\u922b\udc92**`dispute_open_top_keys_contract_741`\u951b\udc89"
+    },
+    "dispute_resolve": {
+        "strict_db_write": false,
+        "dual_write_order": "when DATABASE_URL set: memory applies dispute+order first; strict TRAVELTRUST_STRICT_DISPUTE_RESOLVE_DB_WRITE \u922b\udc92 try_persist_order_to_db (resolved order) then update_dispute_resolved; either DB step failure \u922b\udc92 rollback_dispute_resolve_memory + best-effort upsert prior order row \u922b\udc92 503 dispute_resolve_db_persist_failed; non-strict \u922b\udc92 persist_order_if_db then best-effort update_dispute_resolved (disputes row may lag on failure)",
+        "rule": "chain_off/disputes.rs dispute_resolve_impl \u9359\u5c7d\u5553\u6d93\udc8e TRAVELTRUST_STRICT_DISPUTE_RESOLVE_DB_WRITE \u935a\u5c7e\u7c2e\u951b\udc9b742 GET /meta dispute_resolve \u7035\u7845\u8584 dispute_resolve_top_keys / dispute_resolve_top_keys_contract_742 \u6d93\udc8e DISPUTE_RESOLVE_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "dispute_resolve_top_keys": [
+            "strict_db_write",
+            "dual_write_order",
+            "rule",
+            "dispute_resolve_top_keys",
+            "dispute_resolve_top_keys_contract_742"
+        ],
+        "dispute_resolve_top_keys_contract_742": "**742**\u951b\udc9a**`dispute_resolve_top_keys`** **\u6d93\udc8e **`DISPUTE_RESOLVE_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `strict_db_write`****\u922b\udc92**`dual_write_order`****\u922b\udc92**`rule`****\u922b\udc92**`dispute_resolve_top_keys`****\u922b\udc92**`dispute_resolve_top_keys_contract_742`\u951b\udc89"
+    },
+    "itineraries": {
+        "strict_db_write": false,
+        "dual_write_order": "POST /itineraries & /itineraries/custom: insert Draft order+bundle in memory first; when DATABASE_URL set best-effort single-tx upsert_order_tx+insert_itinerary_tx (rollback on failure, memory retains draft, no 503); confirm-final-plan: set snapshot_hash in memory then update_itinerary_snapshot_hash \u9225\udc94 strict TRAVELTRUST_STRICT_ITINERARY_DB_WRITE failure clears snapshot_hash \u922b\udc92 503 itinerary_db_persist_failed; PATCH /orders/:id/itinerary: apply bundle changes in memory then update_itinerary_days_breakdown_version \u9225\udc94 strict failure restores prior bundle \u922b\udc92 503 itinerary_db_persist_failed; non-strict PATCH/create paths may leave DB lagging memory",
+        "rule": "confirm-final-plan: snapshot_hash UPDATE fails \u922b\udc92 clear snapshot in memory \u922b\udc92 503 itinerary_db_persist_failed; PATCH itinerary: UPDATE fails \u922b\udc92 restore prior bundle \u922b\udc92 503; chain_off/itineraries.rs itinerary_create_impl/itinerary_custom_create_impl \u6d93\udc8e chain_off/orders.rs confirm_final_plan_impl\u9286\u4e78atch_order_itinerary_impl \u9359\u5c7d\u5553\u6d93\udc8e TRAVELTRUST_STRICT_ITINERARY_DB_WRITE \u935a\u5c7e\u7c2e\u951b\udc9b743 GET /meta itineraries \u7035\u7845\u8584 itineraries_top_keys / itineraries_top_keys_contract_743 \u6d93\udc8e ITINERARIES_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "itineraries_top_keys": [
+            "strict_db_write",
+            "dual_write_order",
+            "rule",
+            "itineraries_top_keys",
+            "itineraries_top_keys_contract_743"
+        ],
+        "itineraries_top_keys_contract_743": "**743**\u951b\udc9a**`itineraries_top_keys`** **\u6d93\udc8e **`ITINERARIES_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `strict_db_write`****\u922b\udc92**`dual_write_order`****\u922b\udc92**`rule`****\u922b\udc92**`itineraries_top_keys`****\u922b\udc92**`itineraries_top_keys_contract_743`\u951b\udc89"
+    },
+    "orders": {
+        "strict_db_write": false,
+        "dual_write_order": "when DATABASE_URL set: handlers mutate in-memory order row first then try_persist_order_to_db (strict TRAVELTRUST_STRICT_ORDER_DB_WRITE) or persist_order_if_db best-effort via db::upsert_order; strict upsert failure \u922b\udc92 revert memory order \u922b\udc92 503 order_db_persist_failed; non-strict logs [audit] db upsert_order failed and may leave DB lagging memory",
+        "rule": "upsert_order after state transitions (create, escrow addr, accept, cancel, mock pay, confirm completion, bilateral/rating confirm, open-dispute order row): on failure revert memory \u922b\udc92 503 order_db_persist_failed; chain_off/mod.rs try_persist_order_to_db/persist_order_if_db \u6d93\udc8e chain_off/orders.rs\u9286\u4e77rders_flow/* \u9359\u5c7d\u5553\u6d93\udc8e TRAVELTRUST_STRICT_ORDER_DB_WRITE \u935a\u5c7e\u7c2e\u951b\udc9b744 GET /meta orders \u7035\u7845\u8584 orders_top_keys / orders_top_keys_contract_744 \u6d93\udc8e ORDERS_META_TOP_KEYS \u934f\udcab\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u581d\u60c8 fee_route_country_ssot\u9286\u4e68eadline_rating_observability\u951b\u6c62-083\u951b\u6c7fT-B110-SEQ2-ORDERS-DEADLINE-SSOT-OBSERVE-001\u951b\u6c9chain_off \u93b8\u509d\u6d47\u93c3\udcb6 meta.orders.deadline_rating_observability \u5b93\udc8c reconcile_probe\u951b\u6b4dT-B110-SEQ2-ORDERS-DEADLINE-RECONCILE-PROBE-001\u951b\udc89",
+        "list_pagination": "GET /api/v1/orders: omit limit = full list (legacy); limit=1..100 with optional cursor (last item id from prior page) returns items + page.next_cursor/has_more; sort updated_at desc, id desc when paginated",
+        "fee_route_country_ssot": "GET /api/v1/orders/:id: when itinerary bundle present, order.fee_route_country from SSOT field `itinerary.destination` (zh product country name \u922b\udc92 iso3166_alpha2 + bucket_route_key country_pool_<iso_lower> aligned to 84; unmapped/empty \u922b\udc92 reject with code, no silent default pool; on-chain MVP FeeRouter still single countryBucket) (B-083)",
+        "deadline_rating_observability": {
+            "anchor": "TT-B110-SEQ2-ORDERS-DEADLINE-SSOT-OBSERVE-001",
+            "chain_off_mounted": true,
+            "review_window_days_effective": 14,
+            "review_window_days_source": "p3_review_window_days",
+            "governance_order_deadline_chain_ssot": false,
+            "p3_review_window_days_config": 14,
+            "rule": "Observability only; rating_deadline = completed_at + review_window_days_effective when state=completed; payment_deadline/chat_confirm_deadline ignore this block; governance_ssot_chain_governor = TravelTrustGovernor.orderRatingReviewWindowDays() eth_call when GOVERNANCE_ORDER_DEADLINE_CHAIN_SSOT",
+            "reconcile_probe": {
+                "anchor": "TT-B110-SEQ2-ORDERS-DEADLINE-RECONCILE-PROBE-001",
+                "pass": true,
+                "governor_probe": {
+                    "probe_leg": "skipped_no_chain_config"
+                },
+                "resolution_review_window_days_source": "p3_review_window_days",
+                "resolution_review_window_days_effective": 14,
+                "rule": "Independent eth_call orderRatingReviewWindowDays() vs rating_review_window_resolution_for_orders_api; pass when source/effective matches probe_leg (governance_ssot_chain_governor + chain days, or governance_ssot_fallback_p3 / p3_review_window_days per GOVERNANCE_ORDER_DEADLINE_CHAIN_SSOT)."
+            }
+        },
+        "orders_top_keys": [
+            "strict_db_write",
+            "dual_write_order",
+            "rule",
+            "list_pagination",
+            "fee_route_country_ssot",
+            "deadline_rating_observability",
+            "orders_top_keys",
+            "orders_top_keys_contract_744"
+        ],
+        "orders_top_keys_contract_744": "**744**\u951b\udc9a**`orders_top_keys`** **\u6d93\udc8e **`ORDERS_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `strict_db_write`****\u922b\udc92**`dual_write_order`****\u922b\udc92**`rule`****\u922b\udc92**`list_pagination`****\u922b\udc92**`fee_route_country_ssot`****\u922b\udc92**`deadline_rating_observability`****\u922b\udc92**`orders_top_keys`****\u922b\udc92**`orders_top_keys_contract_744`\u951b\udc89"
+    },
+    "discover": {
+        "strict_db_write": false,
+        "dual_write_order": "GET /api/v1/discover/orders is read-only aggregation: routes/discover.rs \u922b\udc92 chain_off::discover_orders_list_impl; no order upsert in discover handler (writes use orders/itineraries mutations); cards may reflect DB-hydrated projections when store reads DB but discover path does not persist order transitions",
+        "rule": "GET /api/v1/discover/orders limit/cursor/sort semantics aligned with GET /api/v1/orders (contrast orders.list_pagination); chain_off/discover.rs discover_orders_list_impl \u935a\u5c7e\u7c2e\u951b\udc9b745 GET /meta discover \u7035\u7845\u8584 discover_top_keys / discover_top_keys_contract_745 \u6d93\udc8e DISCOVER_META_TOP_KEYS \u934f\udcad\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "orders_pagination": "GET /api/v1/discover/orders: same limit/cursor semantics as GET /api/v1/orders; paginated sort updated_at desc, id desc; full list sort created_at desc",
+        "discover_top_keys": [
+            "strict_db_write",
+            "dual_write_order",
+            "rule",
+            "orders_pagination",
+            "discover_top_keys",
+            "discover_top_keys_contract_745"
+        ],
+        "discover_top_keys_contract_745": "**745**\u951b\udc9a**`discover_top_keys`** **\u6d93\udc8e **`DISCOVER_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `strict_db_write`****\u922b\udc92**`dual_write_order`****\u922b\udc92**`rule`****\u922b\udc92**`orders_pagination`****\u922b\udc92**`discover_top_keys`****\u922b\udc92**`discover_top_keys_contract_745`\u951b\udc89"
+    },
+    "product_countries": {
+        "strict_db_write": false,
+        "dual_write_order": "GET /meta product_countries is a compile-time snapshot: traveltrust_core::PRODUCT_COUNTRY_CODES and PRODUCT_COUNTRY_NAMES_ZH (same-length parallel arrays); meta handler does not persist this block; POST /guides country_code and POST /itineraries* validators read the same core product_countries lists",
+        "rule": "\u6d5c\u0443\u6427\u93c8\u71b7\u5d04\u9365\u4ecb\u6523\u59dd\u4f19\u7d30POST /api/v1/guides `country_code` \u6924\u8bb3\u8d1f iso3166_alpha2\u951b\u6c78OST /api/v1/itineraries/custom \u9428\udc84 `country` \u6924\u8bb3\u8d1f name_zh\u951b\u581c\u8151\u93c2\u56e7\u6d57\u7039\u8dfa\u6095\u951b\u5908\udc80\u4fbeOST /api/v1/itineraries \u9428\udc84 `destination` \u6924\u8bb3\u8d1f\u934f\u4f7d\udcae\u54e5\u6b91\u6d93\udcad\u93c2\u56e7\u6d57\u7039\u8dfa\u6095\u951b\u5744is_allowed_zh_destination_country`\u951b\u5c7c\u7b0c `name_zh` \u6d93\udc80\u9477\u8fbe\u7d31\u95c8\u70b4\u7876 \u922b\udc92 `invalid_destination_country`\u951b\u591b\u7d31`city`/`cities[]` \u6924\u8bb3\u8d1f\u7487\u30e5\u6d57\u68f0\u52ee\udcae\u60e7\u7144\u752f\u50a6\u7d19`preset_cities`\u951b\u5908\udc80\u5099\u7b0c `traveltrust_core::product_countries`\u9286\u4e63frontend/lib/productCountries.ts`\u9286\udc8144/54 \u6d93\udc80\u9477\u8fbe\u7d31746 GET /meta product_countries \u7035\u7845\u8584 product_countries_top_keys / product_countries_top_keys_contract_746 \u6d93\udc8e PRODUCT_COUNTRIES_META_TOP_KEYS \u6d93\u51ae\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "iso3166_alpha2": [
+            "CN",
+            "JP",
+            "KR",
+            "SG",
+            "TH",
+            "AE",
+            "US",
+            "AU",
+            "FR",
+            "ES"
+        ],
+        "name_zh": [
+            "\u6d93\udcad\u9365\udcbd",
+            "\u93c3\u30e6\u6e70",
+            "\u95ca\u2541\u6d57",
+            "\u93c2\u677f\u59de\u9367\udca1",
+            "\u5a09\u677f\u6d57",
+            "\u95c3\u80ef\u4ec8\u95b0\udc8b",
+            "\u7f07\u5ea1\u6d57",
+            "\u5a62\u51b2\u3047\u9352\u2540\u7c39",
+            "\u5a09\u66de\u6d57",
+            "\u7457\u8de8\u5f6e\u9417\udc99"
+        ],
+        "product_countries_top_keys": [
+            "strict_db_write",
+            "dual_write_order",
+            "rule",
+            "iso3166_alpha2",
+            "name_zh",
+            "product_countries_top_keys",
+            "product_countries_top_keys_contract_746"
+        ],
+        "product_countries_top_keys_contract_746": "**746**\u951b\udc9a**`product_countries_top_keys`** **\u6d93\udc8e **`PRODUCT_COUNTRIES_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `strict_db_write`****\u922b\udc92**`dual_write_order`****\u922b\udc92**`rule`****\u922b\udc92**`iso3166_alpha2`****\u922b\udc92**`name_zh`****\u922b\udc92**`product_countries_top_keys`****\u922b\udc92**`product_countries_top_keys_contract_746`\u951b\udc89"
+    },
+    "did_rank": {
+        "strict_db_write": false,
+        "dual_write_order": "GET /meta did_rank is read-only observation of chain_off mount and db_pool; ranking JSON is served by GET /api/v1/did-rank/* (routes/did_rank.rs), not this block; guides_community_penalty_exclusion explains guides list filtering vs community_penalties (685)",
+        "rule": "\u93c8\udc89 chain_off.db_pool \u93c3\udcb6 guides \u7ec0\u60e7\u5c2f\u6fb6\u52ed\u7d92\u9353\u65c8\u6ace\u9422\u71b8\u6665\u951b\u6b45ostgreSQL list_guides_did_rank_* \u9350\u5470\u4ec8 NOT EXISTS\u951b\u5c7e\u57a8 list_guides_did_rank \u6fb6\u8fab\u89e6\u93c3\udcb6 list_subject_user_ids_excluded_from_did_rank_guides \u6769\u56e8\u62a4\u9350\u546d\u74e8\u59d2\u6ed0\u7d19\u93b5\udcb9 685\u951b\u591b\u7d31\u6d60\udc85 chain_off \u93c3\udca0 db_pool \u93c3\u6735\u7b09\u7487\udcbb community_penalties\u951b\u6d99\u68e4 chain_off \u93c3\udcb6 guides \u6d93\u8679\u2516+note\u951b\u576eoutes/did_rank.rs\u951b\u591b\u7d31747 GET /meta did_rank \u7035\u7845\u8584 did_rank_top_keys / did_rank_top_keys_contract_747 \u6d93\udc8e DID_RANK_META_TOP_KEYS \u934f\udcab\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "chain_off_mounted": true,
+        "chain_off_db_pool": true,
+        "guides_community_penalty_exclusion": "db_backed",
+        "did_rank_top_keys": [
+            "strict_db_write",
+            "dual_write_order",
+            "rule",
+            "chain_off_mounted",
+            "chain_off_db_pool",
+            "guides_community_penalty_exclusion",
+            "did_rank_top_keys",
+            "did_rank_top_keys_contract_747"
+        ],
+        "did_rank_top_keys_contract_747": "**747**\u951b\udc9a**`did_rank_top_keys`** **\u6d93\udc8e **`DID_RANK_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `strict_db_write`****\u922b\udc92**`dual_write_order`****\u922b\udc92**`rule`****\u922b\udc92**`chain_off_mounted`****\u922b\udc92**`chain_off_db_pool`****\u922b\udc92**`guides_community_penalty_exclusion`****\u922b\udc92**`did_rank_top_keys`****\u922b\udc92**`did_rank_top_keys_contract_747`\u951b\udc89"
+    },
+    "product_roles": {
+        "strict_db_write": false,
+        "dual_write_order": "GET /meta product_roles is read-only observation JSON; meta handler does not persist this block; GET /api/v1/me public role uses chain_off/me.rs role_traveltrust_public; admin role changes use admin.rs targets (692/697)",
+        "rule": "87 \u64021.2 \u9429\udcae\u93cd\u56e7\u6d13\u7eeb\udcbb vs 04 \u6402\u6d5c\udc8c 2.1 \u6d93\udc8e admin.rs is_supported_target_role\u951b\u6b5ausers.role` \u6434\u65c2\u6564\u705e\u509a\u5391\u7481\udcb8 admin/arbitrator/guide/provider/region_steward/super_admin/tourist/traveler\u951b\udc88697\u951b\u6b5atraveler` \u9359\udcaf\u9480\u85c9\u7c31\u951b\u6d98\u74e8\u95b2\udc8f `tourist` \u6d60\u5d85\u540b\u7039\u7678\u7d1a\u951b\u6c6bET /api/v1/me \u934f\udcac\u5bee\udc80 role \u7f01\udc8f chain_off/me.rs role_traveltrust_public \u704f\udc86 tourist \u93c4\u72b1\u8d1f traveler\u9286\u4e7craveler \u9429\u64ae\udc80\u6c3e\u7d31\u93b5\udcb9 692 \u704f\udc86 provider/region_steward \u7efe\u51b2\u53c6\u7459\u6395\u58ca\u9359\u6a3b\u6d3f\u9429\udcae\u93cd\u56e9\u6ae7\u935a\u5d85\u5d1f \u9225\udc94 \u7459\udc81 07 \u6402\u934f\udcad 6.4\u9286\udc8187 \u640211.1\u951b\udc9b748 GET /meta product_roles \u7035\u7845\u8584 product_roles_top_keys / product_roles_top_keys_contract_748 \u6d93\udc8e PRODUCT_ROLES_META_TOP_KEYS \u9357\u4f80\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "users_role_stored": [
+            "admin",
+            "arbitrator",
+            "guide",
+            "provider",
+            "region_steward",
+            "super_admin",
+            "tourist",
+            "traveler"
+        ],
+        "me_public_role_mapping": {
+            "tourist": "traveler"
+        },
+        "protocol_roles_target_87": [
+            "traveler",
+            "guide",
+            "provider",
+            "region_steward"
+        ],
+        "provider_in_users_role": true,
+        "region_steward_in_users_role": true,
+        "product_roles_top_keys": [
+            "strict_db_write",
+            "dual_write_order",
+            "rule",
+            "users_role_stored",
+            "me_public_role_mapping",
+            "protocol_roles_target_87",
+            "provider_in_users_role",
+            "region_steward_in_users_role",
+            "product_roles_top_keys",
+            "product_roles_top_keys_contract_748"
+        ],
+        "product_roles_top_keys_contract_748": "**748**\u951b\udc9a**`product_roles_top_keys`** **\u6d93\udc8e **`PRODUCT_ROLES_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `strict_db_write`****\u922b\udc92**`dual_write_order`****\u922b\udc92**`rule`****\u922b\udc92**`users_role_stored`****\u922b\udc92**`me_public_role_mapping`****\u922b\udc92**`protocol_roles_target_87`****\u922b\udc92**`provider_in_users_role`****\u922b\udc92**`region_steward_in_users_role`****\u922b\udc92**`product_roles_top_keys`****\u922b\udc92**`product_roles_top_keys_contract_748`\u951b\udc89"
+    },
+    "auth": {
+        "strict_db_write": false,
+        "registration": {
+            "strict_db_write": false,
+            "dual_write_order": "GET /meta auth.registration is read-only observation JSON; meta handler does not persist this block; POST /auth/register persists user+session via chain_off/auth.rs registration_role_stored (694/695/697)",
+            "rule": "694/695/697\u951b\u6b45OST /auth/register \u9359\udcaf\u95ab\udc89 role \u6d93\udcba tourist|traveler\u951b\udc8887 \u9357\u5fda\udcae\udcae\u935a\u5d8f\u7d1d697 \u74a7\udcb7 traveler \u9480\u85c9\u7c31 traveler\u951b\u588aprovider|region_steward\u951b\u5822\u5df1\u942a\udc81 tourist\u951b\u591b\u7d31request_role_aliases \u7ecc\u54c4\udcaf\u7845\u8584\u951b\u581f\u68e4\u9352\udcab\u935a\u5d8f\u7d1a\u951b\u6d98\u53fe\u7039\u51a8\u7c32\u9422\u3125\u7730 role \u922b\udc92 400 invalid_registration_role\u951b\u6da2\u5056\u7ee0\u535e\u61e1\u6d93\udcad P3_SEED_ARBITRATOR_EMAIL \u93c3\u8dfa\u5df1\u9352\udcb6 arbitrator\u951b\u6ca2uide \u6924\udcbb postRegister \u935a\u5ea4\u86cb /guide/register + POST /api/v1/guides \u9225\udc94 \u6d93\udc8e chain_off/auth.rs \u6d93\udc80\u9477\u8fbe\u7d31749 GET /meta auth.registration \u7035\u7845\u8584 auth_registration_top_keys / auth_registration_top_keys_contract_749 \u6d93\udc8e AUTH_REGISTRATION_META_TOP_KEYS \u9357\u4f77\u7af4\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+            "self_serve_roles_allowed": [
+                "provider",
+                "region_steward",
+                "tourist",
+                "traveler"
+            ],
+            "request_role_aliases": {},
+            "default_role": "tourist",
+            "invalid_role_error_key": "invalid_registration_role",
+            "arbitrator_seed_env": "P3_SEED_ARBITRATOR_EMAIL",
+            "guide_via_separate_flow_only": true,
+            "auth_registration_top_keys": [
+                "strict_db_write",
+                "dual_write_order",
+                "rule",
+                "self_serve_roles_allowed",
+                "request_role_aliases",
+                "default_role",
+                "invalid_role_error_key",
+                "arbitrator_seed_env",
+                "guide_via_separate_flow_only",
+                "auth_registration_top_keys",
+                "auth_registration_top_keys_contract_749"
+            ],
+            "auth_registration_top_keys_contract_749": "**749**\u951b\udc9a**`auth_registration_top_keys`** **\u6d93\udc8e **`AUTH_REGISTRATION_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `strict_db_write`****\u922b\udc92**`dual_write_order`****\u922b\udc92**`rule`****\u922b\udc92**`self_serve_roles_allowed`****\u922b\udc92**`request_role_aliases`****\u922b\udc92**`default_role`****\u922b\udc92**`invalid_role_error_key`****\u922b\udc92**`arbitrator_seed_env`****\u922b\udc92**`guide_via_separate_flow_only`****\u922b\udc92**`auth_registration_top_keys`****\u922b\udc92**`auth_registration_top_keys_contract_749`\u951b\udc89"
+        },
+        "rule": "register: insert_user + insert_session must succeed or roll back user+session in memory \u922b\udc92 503 auth_db_persist_failed; login: insert_session must succeed or remove session from memory \u922b\udc92 503\u951b\udc9b750 GET /meta auth \u7035\u7845\u8584 auth_top_keys / auth_top_keys_contract_750 \u6d93\udc8e AUTH_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "auth_top_keys": [
+            "strict_db_write",
+            "registration",
+            "rule",
+            "auth_top_keys",
+            "auth_top_keys_contract_750"
+        ],
+        "auth_top_keys_contract_750": "**750**\u951b\udc9a**`auth_top_keys`** **\u6d93\udc8e **`AUTH_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `strict_db_write`****\u922b\udc92**`registration`****\u922b\udc92**`rule`****\u922b\udc92**`auth_top_keys`****\u922b\udc92**`auth_top_keys_contract_750`\u951b\udc89"
+    },
+    "seed_test_accounts": {
+        "strict_db_write": false,
+        "rule": "SEED_TEST_ACCOUNTS=1: insert_user/insert_guide must succeed before memory; on failure skip that account (strict guide path may leave orphan user row in DB \u9225\udc94 reset dev DB if needed)\u951b\udc9b751 GET /meta seed_test_accounts \u7035\u7845\u8584 seed_test_accounts_top_keys / seed_test_accounts_top_keys_contract_751 \u6d93\udc8e SEED_TEST_ACCOUNTS_META_TOP_KEYS \u9365\u6da2\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "seed_test_accounts_top_keys": [
+            "strict_db_write",
+            "rule",
+            "seed_test_accounts_top_keys",
+            "seed_test_accounts_top_keys_contract_751"
+        ],
+        "seed_test_accounts_top_keys_contract_751": "**751**\u951b\udc9a**`seed_test_accounts_top_keys`** **\u6d93\udc8e **`SEED_TEST_ACCOUNTS_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `strict_db_write`****\u922b\udc92**`rule`****\u922b\udc92**`seed_test_accounts_top_keys`****\u922b\udc92**`seed_test_accounts_top_keys_contract_751`\u951b\udc89"
+    },
+    "guides": {
+        "strict_db_write": false,
+        "rule": "guide_create: insert_guide must succeed or remove guide from memory \u922b\udc92 503 guide_db_persist_failed\u951b\udc9b752 GET /meta guides \u7035\u7845\u8584 guides_top_keys / guides_top_keys_contract_752 \u6d93\udc8e GUIDES_META_TOP_KEYS \u9365\u6da2\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "guides_top_keys": [
+            "strict_db_write",
+            "rule",
+            "guides_top_keys",
+            "guides_top_keys_contract_752"
+        ],
+        "guides_top_keys_contract_752": "**752**\u951b\udc9a**`guides_top_keys`** **\u6d93\udc8e **`GUIDES_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `strict_db_write`****\u922b\udc92**`rule`****\u922b\udc92**`guides_top_keys`****\u922b\udc92**`guides_top_keys_contract_752`\u951b\udc89"
+    },
+    "governance": {
+        "strict_db_write": false,
+        "rule": "807\u951b\u6b38ET /meta governance \u7035\u7845\u8584 governance_top_keys / governance_top_keys_contract_807 \u6d93\udc8e GOVERNANCE_META_TOP_KEYS \u9357\u4f80\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e\u951b\u6ca2overnor_view_params_observability \u5b93\udc8c reconcile_probe\u951b\u5731T-B110-SEQ5\u951b\u6c7fravelTrustGovernor votingDelayBlocks/votingPeriodBlocks/quorumNumeratorBps\u951b\u591b\u7d31governor_token_timelock_observability \u5b93\udc8c reconcile_probe\u951b\u5731T-B110-SEQ11\u951b\u6c7fravelTrustGovernor token()/timelock() immutable \u5bee\u66e0\u6564\u9366\u677f\u6f43\u951b\u591b\u7d31timelock_delay_observability \u5b93\udc8c reconcile_probe\u951b\u5731T-B110-SEQ6\u951b\u6c6bovernanceTimelock delay()\u951b\u5c7c\u6362\u9354\udca1 getDelay \u9359\uff45\u7dde\u93c4\u72b2\u76a0\u951b\u591b\u7d31governor_proposal_threshold_observability \u5b93\udc8c reconcile_probe\u951b\u5731T-B110-SEQ8\u951b\u6c7fravelTrustGovernor proposalThresholdVotes()\u951b\u591b\u7d31timelock_governor_admin_observability \u5b93\udc8c reconcile_probe\u951b\u5731T-B110-SEQ9\u951b\u6c6bovernanceTimelock governor()/admin()\u951b\u5c7d\u6e74\u9367\udc80\u6769\u612f\udca1\u5c7e\u6902\u9359\udcaf\u9359\u6a48\u7d1d\u7035\u89c4\u5abf\u6d93\u8f70\u88b1\u5a06\udca1 eth_call \u6d93\udc80\u9477\u5b58\udc80\u044d\u7d1a\u951b\u6ca2overnor_proposal_count_observability \u5b93\udc8c reconcile_probe\u951b\u5731T-B110-SEQ10\u951b\u6c7fravelTrustGovernor proposalCount() vs governance_proposals_projection \u741b\u5c7e\u669f\u951b\u5c7e\u6a09\u5bee\udc8f drift_leg\u951b\udc89",
+        "governor_view_params_observability": {
+            "anchor": "TT-B110-SEQ5-GOVERNANCE-GOVERNOR-VIEW-PARAMS-CHAIN-SSOT-001",
+            "chain_off_mounted": true,
+            "governance_governor_view_params_chain_ssot": false,
+            "source": "governance_governor_view_params_ssot_disabled",
+            "voting_delay_blocks": null,
+            "voting_period_blocks": null,
+            "quorum_numerator_bps": null,
+            "rule": "Observability only; immutable TravelTrustGovernor getters when GOVERNANCE_GOVERNOR_VIEW_PARAMS_CHAIN_SSOT; does not change GET /api/v1/orders*",
+            "reconcile_probe": {
+                "anchor": "TT-B110-SEQ5-GOVERNANCE-GOVERNOR-VIEW-PARAMS-CHAIN-SSOT-001",
+                "pass": true,
+                "governor_probe": {
+                    "probe_leg": "skipped_no_chain_config"
+                },
+                "resolution_source": "governance_governor_view_params_ssot_disabled",
+                "rule": "Independent second eth_call triple vs first leg resolution; pass per GOVERNANCE_GOVERNOR_VIEW_PARAMS_CHAIN_SSOT and probe_leg."
+            }
+        },
+        "governor_token_timelock_observability": {
+            "anchor": "TT-B110-SEQ11-GOVERNANCE-GOVERNOR-TOKEN-TIMELOCK-CHAIN-SSOT-001",
+            "chain_off_mounted": true,
+            "governance_governor_token_timelock_chain_ssot": false,
+            "source": "governance_governor_token_timelock_ssot_disabled",
+            "token": null,
+            "timelock": null,
+            "getter_note": "Solidity immutable token/timelock \u922b\udc92 token() / timelock()",
+            "rule": "Observability only; eth_call token()+timelock() when GOVERNANCE_GOVERNOR_TOKEN_TIMELOCK_CHAIN_SSOT; does not change GET /api/v1/orders*",
+            "reconcile_probe": {
+                "anchor": "TT-B110-SEQ11-GOVERNANCE-GOVERNOR-TOKEN-TIMELOCK-CHAIN-SSOT-001",
+                "pass": true,
+                "governor_probe": {
+                    "probe_leg": "skipped_no_chain_config"
+                },
+                "resolution_source": "governance_governor_token_timelock_ssot_disabled",
+                "rule": "Independent second eth_call token()+timelock() vs first leg resolution; pass per GOVERNANCE_GOVERNOR_TOKEN_TIMELOCK_CHAIN_SSOT and probe_leg."
+            }
+        },
+        "timelock_delay_observability": {
+            "anchor": "TT-B110-SEQ6-GOVERNANCE-TIMELOCK-DELAY-CHAIN-SSOT-001",
+            "chain_off_mounted": true,
+            "governance_timelock_delay_chain_ssot": false,
+            "source": "governance_timelock_delay_ssot_disabled",
+            "delay_seconds": null,
+            "getter_note": "Solidity public immutable delay \u922b\udc92 delay(); task wording getDelay maps to this symbol",
+            "rule": "Observability only; eth_call delay() when GOVERNANCE_TIMELOCK_DELAY_CHAIN_SSOT; does not change GET /api/v1/orders*",
+            "reconcile_probe": {
+                "anchor": "TT-B110-SEQ6-GOVERNANCE-TIMELOCK-DELAY-CHAIN-SSOT-001",
+                "pass": true,
+                "timelock_probe": {
+                    "probe_leg": "skipped_no_chain_config"
+                },
+                "resolution_source": "governance_timelock_delay_ssot_disabled",
+                "rule": "Independent second eth_call delay() vs first leg resolution; pass per GOVERNANCE_TIMELOCK_DELAY_CHAIN_SSOT and probe_leg."
+            }
+        },
+        "governor_proposal_threshold_observability": {
+            "anchor": "TT-B110-SEQ8-GOVERNANCE-GOVERNOR-PROPOSAL-THRESHOLD-CHAIN-SSOT-001",
+            "chain_off_mounted": true,
+            "governance_governor_proposal_threshold_chain_ssot": false,
+            "source": "governance_governor_proposal_threshold_ssot_disabled",
+            "proposal_threshold_votes": null,
+            "getter_note": "Solidity public immutable proposalThresholdVotes \u922b\udc92 proposalThresholdVotes()",
+            "rule": "Observability only; eth_call proposalThresholdVotes() when GOVERNANCE_GOVERNOR_PROPOSAL_THRESHOLD_CHAIN_SSOT; does not change GET /api/v1/orders*",
+            "reconcile_probe": {
+                "anchor": "TT-B110-SEQ8-GOVERNANCE-GOVERNOR-PROPOSAL-THRESHOLD-CHAIN-SSOT-001",
+                "pass": true,
+                "governor_probe": {
+                    "probe_leg": "skipped_no_chain_config"
+                },
+                "resolution_source": "governance_governor_proposal_threshold_ssot_disabled",
+                "rule": "Independent second eth_call proposalThresholdVotes() vs first leg resolution; pass per GOVERNANCE_GOVERNOR_PROPOSAL_THRESHOLD_CHAIN_SSOT and probe_leg."
+            }
+        },
+        "timelock_governor_admin_observability": {
+            "anchor": "TT-B110-SEQ9-GOVERNANCE-TIMELOCK-GOVERNOR-ADMIN-CHAIN-SSOT-001",
+            "chain_off_mounted": true,
+            "governance_timelock_governor_admin_chain_ssot": false,
+            "source": "governance_timelock_governor_admin_ssot_disabled",
+            "timelock_governor_address": null,
+            "timelock_admin_address": null,
+            "getter_note": "Solidity public governor / admin state variables \u922b\udc92 governor() / admin(); addresses may change on-chain",
+            "rule": "Observability only; dual eth_call when GOVERNANCE_TIMELOCK_GOVERNOR_ADMIN_CHAIN_SSOT; reconcile_probe checks two-pass read consistency at latest; does not change GET /api/v1/orders*",
+            "reconcile_probe": {
+                "anchor": "TT-B110-SEQ9-GOVERNANCE-TIMELOCK-GOVERNOR-ADMIN-CHAIN-SSOT-001",
+                "pass": true,
+                "timelock_governor_admin_probe": {
+                    "probe_leg": "skipped_no_chain_config"
+                },
+                "resolution_source": "governance_timelock_governor_admin_ssot_disabled",
+                "rule": "Independent second eth_call governor()+admin() vs first leg resolution; on-chain roles are mutable \u9225\udc94 pass means read consistency between passes, not immutability vs off-chain config."
+            }
+        },
+        "governor_proposal_count_observability": {
+            "anchor": "TT-B110-SEQ10-GOVERNANCE-GOVERNOR-PROPOSAL-COUNT-CHAIN-SSOT-001",
+            "chain_off_mounted": true,
+            "governance_governor_proposal_count_chain_ssot": false,
+            "source": "governance_governor_proposal_count_ssot_disabled",
+            "chain_proposal_count": null,
+            "projection_row_count": null,
+            "drift_leg": "observation_disabled",
+            "max_indexer_lag_allowed": 32,
+            "chain_minus_projection": null,
+            "getter_note": "Solidity public uint256 proposalCount \u922b\udc92 proposalCount(); mutable on-chain counter",
+            "drift_rule": "chain_count >= projection_row_count expected under indexer lag; projection_ahead_of_chain or indexer_lag_exceeded fails ops when SSOT on; projection_unavailable omits compare",
+            "rule": "Observability only; meta/admin/internal; does not change GET /api/v1/orders* or public governance proposals APIs",
+            "reconcile_probe": {
+                "anchor": "TT-B110-SEQ10-GOVERNANCE-GOVERNOR-PROPOSAL-COUNT-CHAIN-SSOT-001",
+                "pass": true,
+                "governor_probe": {
+                    "probe_leg": "skipped_no_chain_config"
+                },
+                "resolution_source": "governance_governor_proposal_count_ssot_disabled",
+                "mutable_counter_note": null,
+                "rule": "Second eth_call proposalCount() must match first resolution; inequality => pass false (tip moved between passes)."
+            }
+        },
+        "governance_top_keys": [
+            "strict_db_write",
+            "rule",
+            "governor_view_params_observability",
+            "governor_token_timelock_observability",
+            "timelock_delay_observability",
+            "governor_proposal_threshold_observability",
+            "timelock_governor_admin_observability",
+            "governor_proposal_count_observability",
+            "governance_top_keys",
+            "governance_top_keys_contract_807"
+        ],
+        "governance_top_keys_contract_807": "**807**\u951b\udc9a**`governance_top_keys`** **\u6d93\udc8e **`GOVERNANCE_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `strict_db_write`****\u922b\udc92**`rule`****\u922b\udc92**`governor_view_params_observability`****\u922b\udc92**`governor_token_timelock_observability`****\u922b\udc92**`timelock_delay_observability`****\u922b\udc92**`governor_proposal_threshold_observability`****\u922b\udc92**`timelock_governor_admin_observability`****\u922b\udc92**`governor_proposal_count_observability`****\u922b\udc92**`governance_top_keys`****\u922b\udc92**`governance_top_keys_contract_807`\u951b\udc89"
+    },
+    "idempotency_cache": {
+        "memory_max_entries": 1000,
+        "db_projection": "when DATABASE_URL set: replay cache may read/write idempotency_keys; failures log [audit] idempotency_cache_db_read_failed / idempotency_cache_db_write_failed without changing HTTP status",
+        "rule": "GET /meta idempotency_cache mirrors middleware in-process idempotency cache max and DATABASE_URL projection behavior (routes/middleware idempotency); 753 GET /meta idempotency_cache \u7035\u7845\u8584 idempotency_cache_top_keys / idempotency_cache_top_keys_contract_753 \u6d93\udc8e IDEMPOTENCY_CACHE_META_TOP_KEYS \u6d5c\u65c8\u656d\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "idempotency_cache_top_keys": [
+            "memory_max_entries",
+            "db_projection",
+            "rule",
+            "idempotency_cache_top_keys",
+            "idempotency_cache_top_keys_contract_753"
+        ],
+        "idempotency_cache_top_keys_contract_753": "**753**\u951b\udc9a**`idempotency_cache_top_keys`** **\u6d93\udc8e **`IDEMPOTENCY_CACHE_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `memory_max_entries`****\u922b\udc92**`db_projection`****\u922b\udc92**`rule`****\u922b\udc92**`idempotency_cache_top_keys`****\u922b\udc92**`idempotency_cache_top_keys_contract_753`\u951b\udc89"
+    },
+    "defaults": {
+        "request_timeout_secs": 30,
+        "request_body_limit_bytes": 1048576,
+        "idempotency_cache_max": 1000,
+        "rule": "GET /meta.defaults.request_timeout_secs mirrors middleware request_timeout_secs_effective (REQUEST_TIMEOUT_SECS); POST \u9225\udca6/internal/indexer-reconcile uses longer internal_indexer_reconcile_timeout_secs_effective (INTERNAL_INDEXER_RECONCILE_TIMEOUT_SECS); defaults also mirror REQUEST_BODY_LIMIT_BYTES / idempotency cache max; 754 GET /meta defaults \u7035\u7845\u8584 defaults_top_keys / defaults_top_keys_contract_754 \u6d93\udc8e DEFAULTS_META_TOP_KEYS \u934f\udcad\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "defaults_top_keys": [
+            "request_timeout_secs",
+            "request_body_limit_bytes",
+            "idempotency_cache_max",
+            "rule",
+            "defaults_top_keys",
+            "defaults_top_keys_contract_754"
+        ],
+        "defaults_top_keys_contract_754": "**754**\u951b\udc9a**`defaults_top_keys`** **\u6d93\udc8e **`DEFAULTS_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `request_timeout_secs`****\u922b\udc92**`request_body_limit_bytes`****\u922b\udc92**`idempotency_cache_max`****\u922b\udc92**`rule`****\u922b\udc92**`defaults_top_keys`****\u922b\udc92**`defaults_top_keys_contract_754`\u951b\udc89"
+    },
+    "outbox": {
+        "dir": "data/outbox",
+        "worker_enabled": false,
+        "lease_secs": 60,
+        "poll_ms": 500,
+        "max_attempts": 10,
+        "rule": "GET /meta.outbox mirrors OUTBOX_DIR / OUTBOX_WORKER=1 / OUTBOX_LEASE_SECS / OUTBOX_POLL_MS / OUTBOX_MAX_ATTEMPTS (core outbox worker); 755 GET /meta outbox \u7035\u7845\u8584 outbox_top_keys / outbox_top_keys_contract_755 \u6d93\udc8e OUTBOX_META_TOP_KEYS \u934f\udcab\u95bf\udcae\u6924\u54c4\u7c2d\u935a\u5c7e\u7c2e",
+        "outbox_top_keys": [
+            "dir",
+            "worker_enabled",
+            "lease_secs",
+            "poll_ms",
+            "max_attempts",
+            "rule",
+            "outbox_top_keys",
+            "outbox_top_keys_contract_755"
+        ],
+        "outbox_top_keys_contract_755": "**755**\u951b\udc9a**`outbox_top_keys`** **\u6d93\udc8e **`OUTBOX_META_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `dir`****\u922b\udc92**`worker_enabled`****\u922b\udc92**`lease_secs`****\u922b\udc92**`poll_ms`****\u922b\udc92**`max_attempts`****\u922b\udc92**`rule`****\u922b\udc92**`outbox_top_keys`****\u922b\udc92**`outbox_top_keys_contract_755`\u951b\udc89"
+    },
+    "meta_top_keys": [
+        "service",
+        "api_version",
+        "build",
+        "chain",
+        "rate_limits",
+        "database_connected",
+        "database",
+        "dual_write",
+        "strict_mode",
+        "ssot_version",
+        "ssot",
+        "admin_exports",
+        "chargeback_policy",
+        "finality_n",
+        "indexer",
+        "authority",
+        "pause",
+        "evidence",
+        "order_messages",
+        "reviews",
+        "dispute_open",
+        "dispute_resolve",
+        "itineraries",
+        "orders",
+        "discover",
+        "product_countries",
+        "did_rank",
+        "product_roles",
+        "auth",
+        "seed_test_accounts",
+        "guides",
+        "governance",
+        "idempotency_cache",
+        "defaults",
+        "outbox",
+        "meta_top_keys",
+        "meta_top_keys_contract_728"
+    ],
+    "meta_top_keys_contract_728": "**728**\u951b\udc9a**`meta_top_keys`** **\u6d93\udc8e **`META_ROOT_TOP_KEYS`** **\u935a\u5c7e\u7c2e\u951b\u5825\u300e\u6434\udc8f `service`****\u922b\udc92**`api_version`****\u922b\udc92**`build`****\u922b\udc92**`chain`****\u922b\udc92**`rate_limits`****\u922b\udc92**`database_connected`****\u922b\udc92**`database`****\u922b\udc92**`dual_write`****\u922b\udc92**`strict_mode`****\u922b\udc92**`ssot_version`****\u922b\udc92**`ssot`****\u922b\udc92**`admin_exports`****\u922b\udc92**`chargeback_policy`****\u922b\udc92**`finality_n`****\u922b\udc92**`indexer`****\u922b\udc92**`authority`****\u922b\udc92**`pause`****\u922b\udc92**`evidence`****\u922b\udc92**`order_messages`****\u922b\udc92**`reviews`****\u922b\udc92**`dispute_open`****\u922b\udc92**`dispute_resolve`****\u922b\udc92**`itineraries`****\u922b\udc92**`orders`****\u922b\udc92**`discover`****\u922b\udc92**`product_countries`****\u922b\udc92**`did_rank`****\u922b\udc92**`product_roles`****\u922b\udc92**`auth`****\u922b\udc92**`seed_test_accounts`****\u922b\udc92**`guides`****\u922b\udc92**`governance`****\u922b\udc92**`idempotency_cache`****\u922b\udc92**`defaults`****\u922b\udc92**`outbox`****\u922b\udc92**`meta_top_keys`****\u922b\udc92**`meta_top_keys_contract_728`\u951b\udc89"
+}

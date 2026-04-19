@@ -22,13 +22,84 @@ export function writeRequestHeaders(idempotencyKey?: string): Record<string, str
   return h;
 }
 
+/** 网关/错误页常返回 HTML；与 2xx/4xx/5xx 均可能出现。 */
+function isLikelyHtmlResponseBody(text: string): boolean {
+  // `trim()` 不删 NBSP(U+00A0)，错误页前导 NBSP 会导致误判为非 HTML 并在 JSON.parse 处抛 SyntaxError
+  const raw = text.replace(/^[\uFEFF\u00A0\s]+/, "").trimStart();
+  if (!raw) return false;
+  const head = raw.slice(0, 512).toLowerCase();
+  return (
+    raw[0] === "<" &&
+    (head.startsWith("<!doctype") ||
+      head.startsWith("<html") ||
+      head.startsWith("<head") ||
+      head.startsWith("<body") ||
+      /^<\s*html[\s>]/.test(head))
+  );
+}
+
+/** `JSON.parse` 失败时二次判断：整页 HTML/XML 常被误判为「可解析 JSON」前的漏网之鱼 */
+function looksLikeMarkupNotJson(text: string): boolean {
+  const s = text.replace(/^[\uFEFF\u00A0\s]+/, "").trimStart();
+  if (!s) return false;
+  if (s[0] !== "<") return false;
+  const head = s.slice(0, 800).toLowerCase();
+  return (
+    /<!doctype\s+html/i.test(head) ||
+    /<\s*html[\s>]/.test(head) ||
+    head.startsWith("<head") ||
+    head.startsWith("<body") ||
+    head.startsWith("<script") ||
+    head.startsWith("<div")
+  );
+}
+
+/** 错误响应体解析为对象；非法 JSON 或非 object 时返回 `{}`，不抛错。 */
+function coerceJsonObjectFromResponseText(text: string): Record<string, unknown> {
+  const raw = text.trim();
+  if (!raw) return {};
+  try {
+    const v = JSON.parse(raw) as unknown;
+    if (v !== null && typeof v === "object" && !Array.isArray(v)) return v as Record<string, unknown>;
+  } catch {
+    // ignore
+  }
+  return {};
+}
+
+/**
+ * HTTP 2xx 体须为 JSON；若收到 HTML（常见于 NEXT_PUBLIC_API_BASE_URL 指到 Next 端口、rewrite 自指或网关返回整页），
+ * 避免 `JSON.parse` 抛 SyntaxError，改为可映射的业务码。
+ */
+function parseSuccessJsonBody(text: string): unknown {
+  const raw = text.trim();
+  if (!raw) return {};
+  if (isLikelyHtmlResponseBody(text)) {
+    throw new Error("api_html_not_json");
+  }
+  try {
+    return JSON.parse(raw);
+  } catch (e) {
+    if (looksLikeMarkupNotJson(text) || isLikelyHtmlResponseBody(text)) {
+      throw new Error("api_html_not_json");
+    }
+    if (e instanceof SyntaxError && /<!doctype|<\s*html/i.test(raw.slice(0, 1200))) {
+      throw new Error("api_html_not_json");
+    }
+    throw new Error("api_invalid_json_body");
+  }
+}
+
 /** 统一处理响应：403 时解析 body 识别 OFAC/风控并抛出友好文案（13-1 §四、27-P22 生产级） */
 export async function parseResponse(res: Response): Promise<unknown> {
   const text = await res.text();
   if (!res.ok) {
+    if (isLikelyHtmlResponseBody(text)) {
+      throw new Error("api_html_not_json");
+    }
     let msg = `请求失败 ${res.status}`;
+    const j = coerceJsonObjectFromResponseText(text);
     try {
-      const j = (text ? JSON.parse(text) : {}) as Record<string, unknown>;
       // 401：invalid_credentials（登录页错密/无用户）与 login_required/unauthorized（严格会话门）分流
       if (res.status === 401 && j.error === "invalid_credentials") throw new Error("invalid_credentials");
       // PUT /me/password 旧密码错误（chain_off put_me_password）
@@ -132,21 +203,16 @@ export async function parseResponse(res: Response): Promise<unknown> {
       }
     }
     if (res.status === 403) {
-      try {
-        const j = (text ? JSON.parse(text) : {}) as Record<string, unknown>;
-        const combined = [j.message, j.error, j.detail, String(j.code ?? "")].filter(Boolean).join(" ");
-        if (j.code === "ofac" || /ofac|compliance|风控|合规/i.test(combined))
-          msg = "风控/合规限制，当前操作不可用。如有疑问请联系客服。";
-        else if (typeof j.message === "string" && !/forbidden|^请求失败\s*403$/i.test(j.message)) msg = j.message;
-        else if (typeof j.error === "string" && !/forbidden/i.test(j.error)) msg = j.error;
-        else msg = "您暂无权限查看该内容，请返回订单列表或自由市场。";
-      } catch {
-        msg = "您暂无权限查看该内容，请返回订单列表或自由市场。";
-      }
+      const combined = [j.message, j.error, j.detail, String(j.code ?? "")].filter(Boolean).join(" ");
+      if (j.code === "ofac" || /ofac|compliance|风控|合规/i.test(combined))
+        msg = "风控/合规限制，当前操作不可用。如有疑问请联系客服。";
+      else if (typeof j.message === "string" && !/forbidden|^请求失败\s*403$/i.test(j.message)) msg = j.message;
+      else if (typeof j.error === "string" && !/forbidden/i.test(j.error)) msg = j.error;
+      else msg = "您暂无权限查看该内容，请返回订单列表或自由市场。";
     }
     throw new Error(msg);
   }
-  return text ? JSON.parse(text) : {};
+  return parseSuccessJsonBody(text);
 }
 
 /** 判断是否为 API 返回的风控/合规类错误（便于 UI 高亮展示） */

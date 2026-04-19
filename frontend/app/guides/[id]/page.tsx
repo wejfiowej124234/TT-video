@@ -13,6 +13,8 @@ import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import { marketCyanInlineLinkFocusClasses, touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 import { GuideDetailRouteSuspense } from "@/components/guides/GuideDetailRouteSuspense";
 import GuideOccupiedScheduleBlock from "@/components/guides/GuideOccupiedScheduleBlock";
+import BookGuideModal from "@/components/market/BookGuideModal";
+import { formatGuideDisplayName } from "@/lib/guideDisplayName";
 
 type GuideShape = {
   id?: string;
@@ -68,6 +70,7 @@ function GuideDetailPageInner() {
   const [copiedDid, setCopiedDid] = useState(false);
   const [copyDidBusy, setCopyDidBusy] = useState(false);
   const [guideLoadRetryKey, setGuideLoadRetryKey] = useState(0);
+  const [bookGuideOpen, setBookGuideOpen] = useState(false);
   const guideHeroNameId = useId();
   const guideCredentialsHeadingId = useId();
 
@@ -229,7 +232,7 @@ function GuideDetailPageInner() {
     );
   }
 
-  const displayName = guide.city ? `${guide.city}${t("guide_suffix")}` : t("guide_card_guide");
+  const displayName = formatGuideDisplayName(t, guide);
   const didShort = guide.wallet_address
     ? `${guide.wallet_address.slice(0, 10)}…${guide.wallet_address.slice(-8)}`
     : null;
@@ -445,12 +448,13 @@ function GuideDetailPageInner() {
           {/* CTA（56-S6 主次按钮、无障碍） */}
           <nav className="flex flex-col sm:flex-row gap-3" aria-label={t("guideDetail_ctaAria")}>
             {guide.id && (
-              <Link
-                href={`/orders/new?guide_id=${guide.id}`}
+              <button
+                type="button"
+                onClick={() => setBookGuideOpen(true)}
                 className="rounded-[var(--radius-md)] border border-cyan-400/50 bg-cyan-500/30 px-5 py-3 text-small font-medium text-cyan-200 hover:text-cyan-100 hover:bg-cyan-500/40 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
               >
                 {t("guideDetail_orderLink")}
-              </Link>
+              </button>
             )}
             <Link
               href="/market"
@@ -473,6 +477,14 @@ function GuideDetailPageInner() {
             linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}
             separatorClassName="text-slate-500"
           />
+
+          {guide.id && bookGuideOpen ? (
+            <BookGuideModal
+              guideId={guide.id}
+              guideName={displayName}
+              onClose={() => setBookGuideOpen(false)}
+            />
+          ) : null}
         </div>
       </div>
     </main>

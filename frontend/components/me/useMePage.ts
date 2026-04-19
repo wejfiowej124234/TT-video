@@ -3,15 +3,9 @@
 import { useEffect, useLayoutEffect, useState, useCallback, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAccount } from "wagmi";
-import {
-  getMe,
-  clearGetMeCache,
-  putMe,
-  postLogout,
-  applyLocalLogoutAfterServerOk,
-  getMeStats,
-} from "@/lib/apiClient";
+import { getMe, clearGetMeCache, putMe, getMeStats } from "@/lib/apiClient";
 import { mapApiReadError } from "@/lib/mapApiReadError";
+import { runMeLogoutFlow } from "@/lib/meLogoutFlow";
 import type { UserShape } from "./constants";
 
 export function useMePage(t: (k: string) => string) {
@@ -90,7 +84,7 @@ export function useMePage(t: (k: string) => string) {
       .then((res) => {
         if (gen !== meFetchGen.current) return;
         if (res == null) {
-          const returnUrl = pathname && pathname !== "/" ? pathname : "/me";
+          const returnUrl = pathname && pathname !== "/" ? pathname : "/community/me";
           router.replace(`/auth/login?returnUrl=${encodeURIComponent(returnUrl)}`);
           return;
         }
@@ -108,7 +102,7 @@ export function useMePage(t: (k: string) => string) {
       .catch((err) => {
         if (gen !== meFetchGen.current) return;
         if (err instanceof Error && err.message === "login_required") {
-          const returnUrl = pathname && pathname !== "/" ? pathname : "/me";
+          const returnUrl = pathname && pathname !== "/" ? pathname : "/community/me";
           router.replace(`/auth/login?returnUrl=${encodeURIComponent(returnUrl)}`);
           return;
         }
@@ -192,18 +186,7 @@ export function useMePage(t: (k: string) => string) {
   }, [connectedAddress, loadMe, t]);
 
   const handleLogout = useCallback(() => {
-    if (typeof window === "undefined") return;
-    if (!window.confirm(t("me_logout_confirm"))) return;
-    postLogout()
-      .then(() => {
-        applyLocalLogoutAfterServerOk();
-        window.location.href = "/auth/login";
-      })
-      .catch((err) => {
-        if (typeof window !== "undefined") {
-          console.error("useMePage postLogout:", err);
-        }
-      });
+    runMeLogoutFlow(t);
   }, [t]);
 
   return {

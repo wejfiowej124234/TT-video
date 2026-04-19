@@ -643,6 +643,56 @@ pub async fn post_governance_proposal_vote(
     )
 }
 
+/// **`POST /auth/seed-governance-e2e`**（仅 **`SEED_TEST_ACCOUNTS=1`**）：Governor+DB 时幂等 upsert 投影 sentinel；否则重置 B-072 MVP 内存票仓并清空委托票（**C-GOV-004** Playwright / 本地可重复）。
+pub async fn exec_seed_governance_e2e(
+    state: &ApiMetaState,
+) -> Result<serde_json::Value, (StatusCode, serde_json::Value)> {
+    if std::env::var("SEED_TEST_ACCOUNTS").as_deref() != Ok("1") {
+        return Err((
+            StatusCode::FORBIDDEN,
+            json!({
+                "error": "seed_test_accounts_disabled",
+                "message": "seed_test_accounts_disabled",
+                "hint": "set SEED_TEST_ACCOUNTS=1 to enable POST /auth/seed-governance-e2e"
+            }),
+        ));
+    }
+    if let Some((cfg, pool)) = governor_indexed_mode(state) {
+        let chain_id_i64 = (cfg.chain_id.min(i64::MAX as u64)) as i64;
+        if let Err(e) = db::upsert_e2e_governance_proposal_sentinel(pool, chain_id_i64).await {
+            return Err((
+                StatusCode::INTERNAL_SERVER_ERROR,
+                json!({
+                    "error": "seed_governance_e2e_failed",
+                    "message": e.to_string(),
+                    "hint": "DATABASE_URL and migration governance_proposals_projection required when GOVERNOR_ADDRESS is set"
+                }),
+            ));
+        }
+        return Ok(json!({
+            "status": "ok",
+            "mode": "governance_proposals_projection",
+            "proposal_id": db::E2E_GOVERNANCE_PROPOSAL_DECIMAL_ID,
+            "chain_id": cfg.chain_id,
+        }));
+    }
+    {
+        let arc = store();
+        let mut g = arc.write().await;
+        *g = ProposalsMvpStore::seeded();
+    }
+    {
+        let arc = delegate_store();
+        let mut d = arc.write().await;
+        d.clear();
+    }
+    Ok(json!({
+        "status": "ok",
+        "mode": "chain_off_mvp",
+        "proposal_id": "00000000-0000-4000-8000-000000000001",
+    }))
+}
+
 pub fn router() -> Router<ApiMetaState> {
     Router::new()
         .route(

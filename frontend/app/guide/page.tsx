@@ -14,6 +14,7 @@ import MePageSkeleton from "@/components/me/MePageSkeleton";
 import GuideRegistrationStatusBanner from "@/components/guide/GuideRegistrationStatusBanner";
 import MeTrustSection from "@/components/me/MeTrustSection";
 import { FOCUS_RING, type UserShape } from "@/components/me/constants";
+import { parseIdentitySlotsFromMe } from "@/lib/meIdentitySlots";
 import { parseMeTrustFromMeResponse } from "@/lib/meTrust";
 import { userIsGuide } from "@/lib/meRoleDisplay";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
@@ -104,7 +105,9 @@ export default function GuideDashboardPage() {
         <MePageBackground />
         <div className="relative z-10 max-w-2xl mx-auto px-4 py-12">
           <div className="rounded-[var(--radius-md)] border border-slate-600/60 bg-slate-800/50 px-4 py-4 space-y-4">
-            <h1 className="sr-only">{t("guide_dashboard_title")}</h1>
+            <h1 className="text-h2 font-bold bg-gradient-to-r from-cyan-300 via-cyan-400 to-fuchsia-400 bg-clip-text text-transparent">
+              {t("guide_dashboard_title")}
+            </h1>
             <ApiErrorAlert message={error} />
             <div className="flex flex-wrap gap-3">
               <form
@@ -122,7 +125,7 @@ export default function GuideDashboardPage() {
                 </button>
               </form>
               <Link
-                href="/me"
+                href="/community/me"
                 className={`inline-flex items-center justify-center rounded-full border border-slate-500/60 bg-slate-800/60 px-4 py-2.5 min-h-[44px] text-meta text-slate-300 hover:bg-slate-700/60 motion-sub ${FOCUS_RING}`}
               >
                 {t("guide_dashboard_link_me")}
@@ -174,6 +177,7 @@ export default function GuideDashboardPage() {
             trust={trustSummary}
             showGuideRegisterLink={!userIsGuide(user)}
             hideGuideRegistrationRow={isGuide}
+            identitySlots={mePayload ? parseIdentitySlotsFromMe(mePayload) : undefined}
           />
         ) : null}
 
@@ -192,7 +196,7 @@ export default function GuideDashboardPage() {
                 {t("guide_dashboard_cta_register")}
               </Link>
               <Link
-                href="/me"
+                href="/community/me"
                 className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-slate-500/60 bg-slate-800/60 px-4 py-2 text-meta text-slate-300 hover:bg-slate-700/60 motion-sub ${FOCUS_RING}`}
               >
                 {t("guide_dashboard_link_me")}
@@ -243,7 +247,7 @@ export default function GuideDashboardPage() {
                   {t("header_community")}
                 </Link>
                 <Link
-                  href="/me"
+                  href="/community/me"
                   className={`rounded-full border border-slate-500/60 bg-slate-800/60 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-slate-300 hover:bg-slate-700/60 motion-sub ${FOCUS_RING}`}
                 >
                   {t("me_title")}

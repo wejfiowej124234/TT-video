@@ -43,7 +43,10 @@ import { isAllowedProductZhCountryName } from "@/lib/productCountries";
 import { resolveDestinationZhForPresetCities } from "@/lib/resolveDestinationZhForPresetCities";
 import { stashEscrowOrderPrefetchFromOrderAndItinerary } from "@/lib/orderEscrowPrefetch";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
+import InlineTransparencyVerification from "@/components/trust/InlineTransparencyVerification";
+import TrustGrowthMomentBanner from "@/components/trust/TrustGrowthMomentBanner";
 import { useMeta } from "@/components/MetaProvider";
+import { readOrderMockPayEnabledFromMeta } from "@/lib/readOrderMockPayFromMeta";
 import { readProtocolPauseFromMeta } from "@/lib/readProtocolPauseFromMeta";
 import {
   deepShellPillControlFocusClasses,
@@ -63,6 +66,10 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
   const data = useEscrowDetail(escrowId, t);
   const { meta } = useMeta();
   const protocolPaused = useMemo(() => readProtocolPauseFromMeta(meta), [meta]);
+  const chainOffRestConfirmCompletionEnabled = useMemo(
+    () => readOrderMockPayEnabledFromMeta(meta),
+    [meta],
+  );
   const [savingItinerary, setSavingItinerary] = useState(false);
   const [patchItineraryError, setPatchItineraryError] = useState<string | null>(null);
   const [patchItinerarySuccess, setPatchItinerarySuccess] = useState(false);
@@ -76,7 +83,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
   const itineraryForPatch = data.itinerary;
   const orderForDest = data.order;
   const canPatchItinerary = Boolean(
-    data.isDraft && itineraryForPatch && !itineraryForPatch.snapshot_hash,
+    data.isPreEscrowProtocol && itineraryForPatch && !itineraryForPatch.snapshot_hash,
   );
 
   const rowsFromApi = useMemo(
@@ -168,7 +175,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
       if (b.platform_fee != null) pushBreakdown(t("order_copySummary_platformFee"), b.platform_fee);
     }
     const rowsCopy = (itinerary?.daily_itinerary ?? []) as UnifiedDayRow[];
-    const canPatchCopy = Boolean(data.isDraft && itinerary && !itinerary.snapshot_hash);
+    const canPatchCopy = Boolean(data.isPreEscrowProtocol && itinerary && !itinerary.snapshot_hash);
     const showDraftCopy = canPatchCopy && rowsCopy.length > 0;
     const draftAlignedCopy = showDraftCopy && draftDailyItinerary.length === rowsCopy.length;
     const dailyForCopy = draftAlignedCopy ? draftDailyItinerary : rowsCopy;
@@ -195,7 +202,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
     } finally {
       setCopySummaryBusy(false);
     }
-  }, [data.order, data.itinerary, data.isDraft, draftDailyItinerary, t]);
+  }, [data.order, data.itinerary, data.isPreEscrowProtocol, draftDailyItinerary, t]);
 
   /** `/escrow/:id/rate` 与页脚 Pay hub：同快照 `order`+`itinerary`（07 §六 6.4 预填台账） */
   const stashEscrowDetailPayOrRatePrefetch = useCallback(() => {
@@ -358,6 +365,10 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
           variantDid
         />
 
+        <TrustGrowthMomentBanner moment="first_order" surface="slate" dismissible />
+
+        <InlineTransparencyVerification context="order" surface="slate" verificationKey={escrowId} />
+
         <div id="escrow-after-final-plan" className="scroll-mt-24 outline-none" tabIndex={-1}>
           <OrderFlowSteps
             currentStep={orderStateToStep(order)}
@@ -366,7 +377,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
           />
         </div>
 
-      {data.isDraft && itinerary ? (
+      {data.showItineraryBudgetZone && itinerary ? (
         <div className={`${panelClass} p-6 space-y-4`}>
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div>
@@ -567,7 +578,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
                 version={itinerary.version}
                 snapshotHash={data.snapshotHash}
                 orderId={String(order.id)}
-                isDraft={data.isDraft}
+                allowConfirmFinalPlan={data.allowConfirmFinalPlan}
                 onConfirmed={onConfirmFinalPlanSuccess}
                 variantDid
                 protocolPaused={protocolPaused}
@@ -669,7 +680,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
         />
       )}
 
-      {!data.isDraft && [2, 3, 4].includes(orderStateToStep(order)) && (
+      {!data.showItineraryBudgetZone && [2, 3, 4].includes(orderStateToStep(order)) && (
         <OrderMessageLink orderId={String(order.id)} variantDid />
       )}
 
@@ -737,6 +748,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
           disputeWindowExpired={data.disputeWindowExpired}
           variantDid
           protocolPaused={protocolPaused}
+          chainOffRestConfirmCompletionEnabled={chainOffRestConfirmCompletionEnabled}
         />
       )}
 
@@ -756,7 +768,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
 
       {data.state === "completed" && (
         <>
-          {orderStateToStep(order) >= 7 && (
+          {orderStateToStep(order) >= 6 && orderStateToStep(order) < 8 && (
             <div className={`${panelClass} p-4`}>
               <h3 className="text-small font-semibold text-cyan-200 mb-1">{t("order_ratingEntry")}</h3>
               <p className="text-small text-slate-300 mb-3 leading-relaxed">{t("order_ratingEntryDesc")}</p>

@@ -4,8 +4,8 @@
 # Windows：.\scripts\stop_dev.ps1（委托本脚本）；亦可 **stop-all.bat**
 set -e
 REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-BACKEND_PORT="${API_PORT:-8080}"
-FRONTEND_PORT="${FRONTEND_PORT:-3012}"
+# shellcheck source=scripts/dev/_dev_stack_ports.sh
+source "$REPO_ROOT/scripts/dev/_dev_stack_ports.sh"
 
 echo ">>> 停止前后端..."
 

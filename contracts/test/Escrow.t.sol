@@ -80,7 +80,7 @@ contract EscrowTest is Test {
         platformFee = remainder - guideAmount;
     }
 
-    /// TT-B093-RELEASE-NORMAL-SPLIT-THREE-LEG-CLOSURE-001：Completed **`release()`** 三腿 — 游客仅在 **`deposit`** 转出 **`total`**，**`release`** 不再动游客钱包；**`guide` + `platform`** == **`total`**，与合约 `Escrow.release` 一致。
+    /// TT-B093-RELEASE-NORMAL-SPLIT-THREE-LEG-CLOSURE-001：Completed **`release()`** 三腿 — 旅行者仅在 **`deposit`** 转出 **`total`**，**`release`** 不再动旅行者钱包；**`guide` + `platform`** == **`total`**，与合约 `Escrow.release` 一致。
     function test_B093_release_table_threeFeeRates() public {
         uint16[3] memory bpsVals = [uint16(0), uint16(500), uint16(333)];
         uint256[3] memory totals = [uint256(1), uint256(1000e6), uint256(999_999_999_999)];
@@ -518,7 +518,7 @@ contract EscrowTest is Test {
         escrow.openDispute(keccak256("reason"));
     }
 
-    /// B-094 / **TT-B094-ORDERS-PROJECTION-RESOLUTION-STATUS-SSOT-001**：全额退游客（订单域 Refunded）；链上 `Resolved` + 三腿余额与 `traveltrust_core::terminal_order_state_from_resolution_amounts` / API **`orders_projection.status`** 同源。
+    /// B-094 / **TT-B094-ORDERS-PROJECTION-RESOLUTION-STATUS-SSOT-001**：全额退旅行者（订单域 Refunded）；链上 `Resolved` + 三腿余额与 `traveltrust_core::terminal_order_state_from_resolution_amounts` / API **`orders_projection.status`** 同源。
     function test_B094_executeResolution_refunded_full_traveler() public {
         (Escrow escrow, address escrowAddr) = _createFundedDisputed(keccak256("b094-refund"));
         uint256 t0Traveler = token.balanceOf(traveler);
@@ -536,7 +536,7 @@ contract EscrowTest is Test {
         assertEq(t0Escrow, TOTAL);
     }
 
-    /// B-094：向导 + 游客双收（订单域 PartiallyRefunded）。
+    /// B-094：向导 + 旅行者双收（订单域 PartiallyRefunded）。
     function test_B094_executeResolution_partially_refunded_split() public {
         (Escrow escrow, address escrowAddr) = _createFundedDisputed(keccak256("b094-partial"));
         uint256 gAmt = 300e6;

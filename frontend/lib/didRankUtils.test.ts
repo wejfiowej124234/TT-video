@@ -112,6 +112,9 @@ describe("didRankUtils", () => {
       expect(parseDidRankBoardParam("guide")).toBe("guide");
       expect(parseDidRankBoardParam("provider")).toBe("provider");
       expect(parseDidRankBoardParam("merchant")).toBe("provider");
+      expect(parseDidRankBoardParam("acquisition")).toBe("acquisition");
+      expect(parseDidRankBoardParam(" Acquisition ")).toBe("acquisition");
+      expect(parseDidRankBoardParam("unknown")).toBe("traveler");
     });
   });
 

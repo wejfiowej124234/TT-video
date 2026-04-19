@@ -1,7 +1,9 @@
 # TT-LOCAL-CI-DELIVERY-GATE-001 · 本地 / VPS 交付门禁（绕开 GitHub-hosted 计费）
 
-**Version:** 1.0.2  
+**Version:** 1.0.3  
 **Status:** `Target`（与 **[TT-L4-PARALLEL-CI-001](./TT-L4-PARALLEL-CI-001.md) §5.0** 对读：**组织 gate 未解除** 时 **以本节为交付真门禁**；**不**宣称替代 **07** 或 **分支保护** 的长期策略）
+
+**文档对齐勘误（2026-04-19）**：若你 **已按 §2 跑通** 本地 / VPS 交付门禁并留证，随后仓库仅合入 **spec/母表/27 索引/59 B1 行** 等 **纯文档勘误** 与 **`internal` 测试文件顶栏未使用 `use` 清理**，**不**构成 **§2 全量重跑** 的硬性理由；收口材料可 **一行** 指向 **[TT-L4-PARALLEL-CI-001](./TT-L4-PARALLEL-CI-001.md)** **§10**（**文档对齐勘误**）与 **[TT-ALIGN-DOCS-CODE-MOTHER-AUDIT-2026-04-19](./TT-ALIGN-DOCS-CODE-MOTHER-AUDIT-2026-04-19.md)** **§8**。**若 diff 触及 `frontend/` 路由、`crates/api` 契约路径或合约 ABI**，仍须按 **§2** 与 **CONTRIBUTING** 对本次变更范围重跑相关门禁。
 
 ## 0. 固定打法（日常节奏）
 

@@ -19,13 +19,15 @@ from pathlib import Path
 from threading import Thread
 from typing import Any
 
+from region_vault_claim_broadcast_mainnet_dual_control import ACK_MAINNET_ENV, enforce_mainnet_dual_control
+from region_vault_claim_broadcast_rpc_host_allowlist_b305 import allowlist_evidence_or_none
+
 BROADCAST_REQUEST_ANCHOR = "14-REGIONVAULT-CLAIM-BROADCAST-REQUEST-STUB-V1"
 NONCE_PREFLIGHT_REPORT_ANCHOR = "14-REGIONVAULT-CLAIM-BROADCAST-NONCE-PREFLIGHT-REPORT-V1"
 NONCE_PREFLIGHT_REPORT_RULE_VERSION = "region_vault_claim_broadcast_nonce_preflight_report_v1"
 IMPLEMENTATION_TT = "TT-B276-BROADCAST-NONCE-PREFLIGHT-RPC-001"
 MOTHER_TABLE = "B-276"
 MULTI_RPC_IMPLEMENTATION_TT = "TT-B380-MULTI-RPC-NONCE-CONSENSUS-PREFLIGHT-001"
-ACK_MAINNET_ENV = "TRAVELTRUST_BROADCAST_EXECUTE_ACK_MAINNET"
 FROM_ENV = "TRAVELTRUST_BROADCAST_SIGNER_ADDRESS"
 EXTRA_RPC_ENV = "TRAVELTRUST_BROADCAST_EXTRA_RPC_URLS"
 
@@ -46,6 +48,7 @@ def build_nonce_preflight_report(
     chain_id_hex_observed: str | None,
     from_address_redacted: str | None,
     nonce_rpc_quorum_evidence: dict[str, Any] | None = None,
+    b305_rpc_host_allowlist: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     verdict = "GO" if ok else "NO_GO"
     body: dict[str, Any] = {
@@ -66,6 +69,8 @@ def build_nonce_preflight_report(
     }
     if nonce_rpc_quorum_evidence is not None:
         body["nonce_rpc_quorum_evidence"] = nonce_rpc_quorum_evidence
+    if b305_rpc_host_allowlist is not None:
+        body["b305_rpc_host_allowlist"] = b305_rpc_host_allowlist
     canon = {k: v for k, v in body.items() if k != "preflight_report_canonical_sha256_hex"}
     body["preflight_report_canonical_sha256_hex"] = _sha256_canonical_json(canon)
     return body
@@ -100,14 +105,7 @@ def _parse_chain_id_hex(chain_id_hex: str) -> int:
 
 
 def _assert_mainnet_ack_if_needed(chain_id: int) -> None:
-    if chain_id != 1:
-        return
-    if os.environ.get(ACK_MAINNET_ENV, "").strip() == "1":
-        return
-    raise ValueError(
-        f"chain_id=1 (Ethereum mainnet): set {ACK_MAINNET_ENV}=1 after explicit operator ack, "
-        "or use a dev RPC (Anvil / localhost)."
-    )
+    enforce_mainnet_dual_control(chain_id, rpc_url_redacted=None)
 
 
 def _normalize_hex_address(addr: str) -> str:
@@ -460,6 +458,14 @@ def run_nonce_preflight(
     if not do_rpc or not urls:
         return True, [], meta
 
+    try:
+        b305_blk = allowlist_evidence_or_none(urls, tool_label="region_vault_claim_broadcast_nonce_preflight")
+        if b305_blk is not None:
+            meta["b305_rpc_host_allowlist"] = b305_blk
+    except ValueError as e:
+        errs.append(str(e))
+        return False, errs, meta
+
     if not from_addr:
         errs.append(
             f"RPC preflight requires signer address: pass --from or set {FROM_ENV} "
@@ -565,6 +571,7 @@ def _cmd_preflight(args: argparse.Namespace) -> int:
             chain_id_hex_observed=meta.get("chain_id_hex_observed"),
             from_address_redacted=meta.get("from_address_redacted"),
             nonce_rpc_quorum_evidence=meta.get("nonce_rpc_quorum_evidence"),
+            b305_rpc_host_allowlist=meta.get("b305_rpc_host_allowlist"),
         )
         Path(args.output).write_text(json.dumps(rep, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         print(f"wrote {args.output}", file=sys.stderr)
@@ -720,6 +727,37 @@ def _cmd_self_test(_: argparse.Namespace) -> int:
         assert ok5 and not e5, e5
         assert seen.get("count_calls", 0) >= 1
         assert m5.get("nonce_rpc_quorum_evidence") is None
+
+        from region_vault_claim_broadcast_rpc_host_allowlist_b305 import ALLOWLIST_ENV as _B305_ENV
+
+        saved_al = os.environ.get(_B305_ENV)
+        try:
+            os.environ[_B305_ENV] = "https://no-match.example/"
+            ox, ex, _ = run_nonce_preflight(
+                stub_ok,
+                raw_ok,
+                from_addr="0x" + "22" * 20,
+                rpc_urls=[rpc],
+                do_rpc=True,
+                strict_stub_chain_id=True,
+            )
+            assert not ox and ex and any("B-305" in str(x) for x in ex)
+            os.environ[_B305_ENV] = "http://127.0.0.1"
+            oy, ey, my = run_nonce_preflight(
+                stub_ok,
+                raw_ok,
+                from_addr="0x" + "22" * 20,
+                rpc_urls=[rpc],
+                do_rpc=True,
+                strict_stub_chain_id=True,
+            )
+            assert oy and not ey
+            assert my.get("b305_rpc_host_allowlist", {}).get("implementation_tt") == "TT-B305-ALLOWLIST-RPC-HOST-PREFIX-001"
+        finally:
+            if saved_al is None:
+                os.environ.pop(_B305_ENV, None)
+            else:
+                os.environ[_B305_ENV] = saved_al
 
         seen["return_nonce"] = 1
         ok6, e6, _ = run_nonce_preflight(

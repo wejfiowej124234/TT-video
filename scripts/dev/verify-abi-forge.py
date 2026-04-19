@@ -18,14 +18,21 @@ from pathlib import Path
 CONTRACTS = (
     "Escrow",
     "EscrowFactory",
-    "Staking",
-    "Registry",
     "FeeRouter",
-    "RegionVault",
-    "InvestorDistributionClaim",
     "GovernanceTimelock",
     "GovernanceTreasury",
+    "GovernanceVotesToken",
+    "GuideIdentityStakingPool",
+    "InvestorDistributionClaim",
+    "ProviderIdentityStakingPool",
+    "RegionVault",
+    "Registry",
+    "ReserveVault",
+    "SlashRouter",
+    "TravelTrustGovernor",
 )
+
+FORGE_INSPECT_NAME = {}
 
 
 def fragments(xs: list) -> list[str]:
@@ -46,12 +53,21 @@ def main() -> int:
         if not path.is_file():
             print(f"verify-abi-forge: missing {path}", file=sys.stderr)
             return 1
+        inspect_name = FORGE_INSPECT_NAME.get(name, name)
+        artifact = contracts_dir / "out" / f"{inspect_name}.sol" / f"{inspect_name}.json"
         try:
-            forge_out = subprocess.check_output(
-                ["forge", "inspect", name, "abi"],
-                cwd=contracts_dir,
-                text=True,
-            )
+            if artifact.is_file():
+                a = json.loads(artifact.read_text(encoding="utf-8")).get("abi")
+                if not isinstance(a, list):
+                    print(f"verify-abi-forge: {artifact} missing abi array", file=sys.stderr)
+                    return 1
+            else:
+                forge_out = subprocess.check_output(
+                    ["forge", "inspect", inspect_name, "abi"],
+                    cwd=contracts_dir,
+                    text=True,
+                )
+                a = json.loads(forge_out)
         except FileNotFoundError:
             print(
                 "verify-abi-forge: forge not found; install Foundry: https://book.getfoundry.sh",
@@ -59,11 +75,10 @@ def main() -> int:
             )
             return 1
         except subprocess.CalledProcessError as e:
-            print(f"verify-abi-forge: forge inspect {name} abi failed: {e}", file=sys.stderr)
+            print(f"verify-abi-forge: forge inspect {inspect_name} abi failed: {e}", file=sys.stderr)
             return 1
 
         try:
-            a = json.loads(forge_out)
             b = json.loads(path.read_text(encoding="utf-8"))
         except json.JSONDecodeError as e:
             print(f"verify-abi-forge: invalid JSON for {name}: {e}", file=sys.stderr)
@@ -75,7 +90,7 @@ def main() -> int:
 
         if fragments(a) != fragments(b):
             print(
-                f"verify-abi-forge: ABI drift: abi/{name}.json != forge inspect {name} abi",
+                f"verify-abi-forge: ABI drift: abi/{name}.json != forge inspect {inspect_name} abi",
                 file=sys.stderr,
             )
             print(

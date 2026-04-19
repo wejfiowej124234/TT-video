@@ -24,7 +24,8 @@ export interface QuoteSummaryCardProps {
   version?: number | null;
   snapshotHash?: string | null;
   orderId: string;
-  isDraft: boolean;
+  /** Draft 或 双边已确认后的 Accepted：显示终版确认入口 */
+  allowConfirmFinalPlan: boolean;
   onConfirmed: () => void;
   /** 订单协议区 30-DID 玻璃面板，与 EscrowDetail panelClass 一致 */
   variantDid?: boolean;
@@ -50,7 +51,7 @@ export default function QuoteSummaryCard({
   version,
   snapshotHash,
   orderId,
-  isDraft,
+  allowConfirmFinalPlan,
   onConfirmed,
   variantDid,
   protocolPaused = false,
@@ -129,7 +130,7 @@ export default function QuoteSummaryCard({
       )}
       <ConfirmFinalPlanBlock
         orderId={orderId}
-        isDraft={isDraft}
+        allowConfirmFinalPlan={allowConfirmFinalPlan}
         hasSnapshot={hasSnapshot}
         version={version}
         snapshotHash={snapshotHash}

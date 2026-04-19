@@ -11,6 +11,7 @@ import GovernanceTargetNotice from "@/components/governance/GovernanceTargetNoti
 import { GovernanceOpsAdminLinks } from "@/components/governance/GovernanceOpsAdminLinks";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
+import TrustGrowthMomentBanner from "@/components/trust/TrustGrowthMomentBanner";
 
 /** 13-1 表 2：治理页（治理者/仲裁员权限）；50-G1 前端已对接 pool/rewards API。51-H2：治理池/奖励为占位数据，待产品定稿后替换真实数据。 */
 type PoolRes = {
@@ -19,6 +20,13 @@ type PoolRes = {
   currency?: string | null;
   updated_at?: string | null;
   data_source?: string;
+  /** P0 / 04 §3.4：余额类展示须带分轨标签与最小来源枚举（additive；不替代旧根字段）。 */
+  balance_lines_v1?: Array<{
+    balance: string | number | null;
+    track_type: "A" | "B" | "Escrow" | "Staking";
+    source: "FeeRouter" | "RegionVault" | "Treasury" | "Escrow" | "StakingPool";
+    currency?: string | null;
+  }>;
   /** B-110：`GET …/governance/pool` 链上 SSOT 路径与 `data_source: chain_read` 同批 */
   is_chain_ssot?: boolean;
   /** 根级国家池链上读（与根级 `data_source` / `is_chain_ssot` 解耦；勿与 `chain_alignment_hint` 内观测腿混读） */
@@ -112,6 +120,11 @@ function looksLikeEvmAddress(s: string): boolean {
 
 function governancePoolIsChainReadRow(p: PoolRes | null): p is PoolRes & { data_source: "chain_read" } {
   return p != null && p.data_source === "chain_read";
+}
+
+function balanceLineShortLabel(line: NonNullable<PoolRes["balance_lines_v1"]>[number]): string {
+  // 企业级防误读：显式 track + source，不提供“总余额”语义。
+  return `${line.track_type} · ${line.source}`;
 }
 
 /** B110：`country_pool_data_source: chain_read` + `country_pool_is_chain_ssot` + 非空 `country_pool`（uint256 hex）。 */
@@ -291,7 +304,16 @@ export default function GovernancePage() {
         {t("governance_title")}
       </h1>
       <p className="mt-2 text-body text-ink-600">{t("governance_desc")}</p>
+      <div className="mt-4">
+        <TrustGrowthMomentBanner moment="governance_entry" surface="ink" />
+      </div>
       <GovernanceTargetNotice />
+      <p
+        className="mt-4 rounded-[var(--radius-sm)] border border-ink-200/80 bg-ink-50/60 px-3 py-2 text-meta text-ink-700 dark:border-ink-600/40 dark:bg-ink-900/25 dark:text-ink-200"
+        role="note"
+      >
+        {t("governance_b428_closeloop_doc_pointer")}
+      </p>
 
       {loading && (
         <p className="mt-4 text-body text-ink-500" role="status">
@@ -309,6 +331,39 @@ export default function GovernancePage() {
               </div>
             ) : (
               <div className="mt-2 space-y-4">
+                {Array.isArray(pool?.balance_lines_v1) && pool.balance_lines_v1.length > 0 ? (
+                  <div className="space-y-2 rounded-[var(--radius-sm)] border border-ink-200/80 bg-ink-50/60 p-3 dark:border-ink-700/60 dark:bg-ink-900/20">
+                    <p className="text-meta font-medium text-ink-700 dark:text-ink-200">
+                      Track-labeled balances (P0)
+                    </p>
+                    <p className="text-meta text-ink-500">
+                      No “total balance” is shown here; each line is explicit about its track and source.
+                    </p>
+                    <div className="grid gap-2">
+                      {pool.balance_lines_v1.map((line, i) => (
+                        <div
+                          key={`${line.track_type}-${line.source}-${i}`}
+                          className="rounded-[var(--radius-sm)] border border-ink-200/70 bg-white/60 px-3 py-2 dark:border-ink-700/60 dark:bg-ink-950/20"
+                        >
+                          <div className="flex items-center justify-between gap-3">
+                            <p className="text-small font-medium text-ink-800 dark:text-ink-100">
+                              {balanceLineShortLabel(line)}
+                            </p>
+                            {typeof line.currency === "string" && line.currency.trim() ? (
+                              <p className="text-meta text-ink-500 dark:text-ink-400">
+                                {line.currency.trim()}
+                              </p>
+                            ) : null}
+                          </div>
+                          <p className="mt-1 break-all font-mono text-small text-ink-800 dark:text-ink-100">
+                            {line.balance == null ? "—" : String(line.balance)}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+
                 {governancePoolIsChainReadRow(pool) ? (
                   <div className="space-y-3">
                     {showPoolChainSsotBadge ? (

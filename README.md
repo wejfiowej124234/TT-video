@@ -1,6 +1,6 @@
 # TravelTrust（团队内部）
 
-**TravelTrust** 为本团队在 **GitHub 私有仓库** 中维护的全栈项目：**Rust 后端 API**、**Next.js 前端**、**Solidity 智能合约**，以及 **`docs/`、`docs/spec/`** 下的**内部规格与工程文档**。  
+**TravelTrust** 为本团队在 **GitHub 私有仓库** 中维护的全栈项目：**Rust 后端 API**、**Next.js 前端**、**Solidity 智能合约**，以及 **`docs/`、`docs/spec/`**（含 **`docs/spec/code-maps/`**、**`docs/spec/snapshots/`** 等子目录）下的**内部规格与工程文档**。  
 **本文档以中文为准**，面向团队开发与协作；**不属于对外开源发布材料**，请勿将私有仓库内容或完整 spec 擅自对外公开或再分发。
 
 **小组远程（协作）**：`https://github.com/TT-Expedition/TT-Expedition`（SSH：`git@github.com:TT-Expedition/TT-Expedition.git`）。  

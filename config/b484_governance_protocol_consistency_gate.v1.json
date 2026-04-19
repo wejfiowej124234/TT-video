@@ -1,0 +1,23 @@
+{
+  "schema": "traveltrust_b484_governance_protocol_consistency_gate.v1",
+  "version": "1.0.0",
+  "updated_at": "2026-04-18T22:00:00Z",
+  "content_sha256": "75a65e4565ea4e6c4e18c7d7b6e35da92f568087e46178b674cfe98e79aa5d96",
+  "description": "B-484 协议与治理一致性：链上治理结果与链下 API/DB/分配流水线无漂移；决议可验证、参数版本可追溯；与 B-483 可审计性并列技术+治理双一致放行。",
+  "inherits_pool_thresholds_from": "config/b478_pg_pool_release_gate_thresholds.v1.json",
+  "extends_auditability_gate": "config/b483_auditability_forensics_gate.v1.json",
+  "hard_requirements": {
+    "require_no_execution_drift": true,
+    "require_governance_resolution_verifiable": true,
+    "require_parameter_version_traceable": true,
+    "require_governance_inputs_hash_match": true,
+    "require_api_db_projection_match": true
+  },
+  "limits": {
+    "max_drift_observations": 0,
+    "max_unverified_proposals": 0,
+    "max_parameter_version_mismatch": 0,
+    "max_distribution_violations": 0
+  },
+  "evidence_sources_note": "Governor/Timelock eth_call、治理提案投影 governance_proposals_projection、FeeRouter/分配流水线观测；见 TT-B484 §3。"
+}

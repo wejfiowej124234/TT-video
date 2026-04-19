@@ -1,0 +1,7 @@
+{
+  "schema": "traveltrust_transparency_bundle.v1",
+  "fetched_at": "2026-04-18T12:00:00.000Z",
+  "build": { "git_sha": "abc", "deployed_at": null },
+  "meta_slice": {},
+  "protocol_reference_summary": { "status": "ok", "doc_version": "t" }
+}

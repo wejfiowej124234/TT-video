@@ -53,6 +53,15 @@ pub async fn insert_session(pool: &PgPool, token: &str, user_id: Uuid) -> Result
     Ok(())
 }
 
+/// 登出：删除会话行（与内存 `sessions` 映射同步由调用方负责）。
+pub async fn delete_session(pool: &PgPool, token: &str) -> Result<u64, sqlx::Error> {
+    let r = sqlx::query("DELETE FROM sessions WHERE token = $1")
+        .bind(token)
+        .execute(pool)
+        .await?;
+    Ok(r.rows_affected())
+}
+
 /// 用户行（与 chain_off::UserRow 字段对齐，用于 hydrate）
 #[derive(Debug, Clone)]
 pub struct UserRow {
@@ -553,7 +562,7 @@ pub async fn get_user_id_by_token(pool: &PgPool, token: &str) -> Result<Option<U
     Ok(row.map(|r| r.0))
 }
 
-/// **`default_wallet_address`**（**B-092** **`Staking.stakeOf`** 快照读链）。
+/// **`default_wallet_address`**（**B-092**：**`IdentityStakingPool.stakeOf`** 快照读链，与 **`GuideIdentityStakingPool`** 部署及旧 **`Staking.sol`** **ABI** **兼容** **口径** **一致**）。
 pub async fn get_user_default_wallet_by_id(
     pool: &PgPool,
     user_id: Uuid,

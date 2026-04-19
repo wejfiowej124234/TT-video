@@ -128,6 +128,12 @@ export default function AdminObservabilityPage() {
           <Link href="/admin/alerts/incidents" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
             {t("admin_observability_linkIncidents")}
           </Link>
+          <Link
+            href="/admin/trust-growth"
+            className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+          >
+            {t("admin_shell_nav_trust_growth")}
+          </Link>
           <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
             {t("admin_schema_back")}
           </Link>

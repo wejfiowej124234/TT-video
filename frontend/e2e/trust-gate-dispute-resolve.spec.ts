@@ -1,7 +1,7 @@
 /**
  * 07 §5.1 + §5.6A / 130：争议详情页仲裁区：
  * - 仲裁员：POST resolve 错误文案与 `handleResolve` / `mapApiReadError` → `mapOrderWriteError` 一致。
- * - 非仲裁员（游客/向导）：仅展示 `dispute_resolveArbitratorOnly`，无「提交裁决」按钮（RBAC · 13-1）。
+ * - 非仲裁员（旅行者/向导）：仅展示 `dispute_resolveArbitratorOnly`，无「提交裁决」按钮（RBAC · 13-1）。
  * 全程 mock API。
  */
 import { test, expect } from "@playwright/test";
@@ -126,7 +126,10 @@ test.describe("争议详情页裁决提交错误文案（mock API · 仲裁员�
     await expect(page.getByRole("main")).toBeVisible({ timeout: 60_000 });
 
     const section = arbSection(page);
-    await section.getByRole("button", { name: /提交裁决|Submit resolution/i }).click();
+    await expect(section).toBeVisible({ timeout: 45_000 });
+    const resolveBtn = section.getByRole("button", { name: /提交裁决|Submit resolution/i });
+    await expect(resolveBtn).toBeVisible({ timeout: 60_000 });
+    await resolveBtn.click();
 
     await expect(section.locator("p.text-danger")).toContainText(
       /仅仲裁员账号可提交裁决|Only an arbitrator account can submit/i
@@ -140,7 +143,10 @@ test.describe("争议详情页裁决提交错误文案（mock API · 仲裁员�
     await expect(page.getByRole("main")).toBeVisible({ timeout: 60_000 });
 
     const section = arbSection(page);
-    await section.getByRole("button", { name: /提交裁决|Submit resolution/i }).click();
+    await expect(section).toBeVisible({ timeout: 45_000 });
+    const resolveBtn = section.getByRole("button", { name: /提交裁决|Submit resolution/i });
+    await expect(resolveBtn).toBeVisible({ timeout: 60_000 });
+    await resolveBtn.click();
 
     await expect(section.locator("p.text-danger")).toContainText(
       /裁决未能完整写入数据库|Resolution could not be fully persisted|Idempotency-Key/i
@@ -154,7 +160,10 @@ test.describe("争议详情页裁决提交错误文案（mock API · 仲裁员�
     await expect(page.getByRole("main")).toBeVisible({ timeout: 60_000 });
 
     const section = arbSection(page);
-    await section.getByRole("button", { name: /提交裁决|Submit resolution/i }).click();
+    await expect(section).toBeVisible({ timeout: 45_000 });
+    const resolveBtn = section.getByRole("button", { name: /提交裁决|Submit resolution/i });
+    await expect(resolveBtn).toBeVisible({ timeout: 60_000 });
+    await resolveBtn.click();
 
     await expect(section.locator("p.text-danger")).toContainText(
       /身份核验仍在处理中|identity verification is still in progress/i

@@ -1,0 +1,33 @@
+{
+  "schema": "traveltrust.timelock_truth_arbitration.v1",
+  "mother_table_id": "B-434",
+  "task_card": "TT-B434-FUND-TIMELOCK-TRUTH-ARBITRATION-001",
+  "decided_at_utc": "2026-04-17T12:00:00Z",
+  "chain_id": 11155111,
+  "network": "sepolia",
+  "timelock_truth_decision": "B",
+  "decision_title_zh": "方案 A（续）：Sepolia 运维栈以 0x726E… Timelock / 0x9FC8… Governor / 0x9f88… TTG 为当前 canonical（与根 .env、GET /meta、runtime SSOT、B-417 真链证据对齐）",
+  "canonical_timelock_address": "0x726EA62833EbC1DC4FA3A69cDcfA490b7C619874",
+  "governor_address_same_stack": "0x9FC8265EF33E6273C3786341E5f20D59C518F316",
+  "governance_token_address_same_stack": "0x9f88A0072319C5d5C6eC1C61082288F6B86511A2",
+  "deployer_eoa_reference": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "deploy_batch_block_reference": 10676215,
+  "evidence_cross_refs": [
+    "evidence/timelock_truth_arbitration/decision_record.v2.json",
+    "evidence/b417_governance_execution_runs/run_20260417T0640Z_b417/b417-governance-execution-report.json",
+    "scripts/ops/runtime-chain-ssot-cast-verify.sh"
+  ],
+  "rationale_summary_zh": "运维根 .env 与链上 cast（runtime-chain-ssot-cast-verify）及 GET /meta.chain.contracts 已对齐本三键；B-417 真链 queue/execute 证据（run_20260417T0640Z_b417）锚定同一 Governor。decision_record.v2 所载 0x55fd…/0x247a…/0x3d8e… 为上一批次部署真值，链上合约仍可存在，但不再作为当前环境与裁断唯一真源；由 v3 取代。",
+  "operational_constraints_zh": [
+    "禁止将 decision_record.v1/v2 的 TIMELOCK / GOVERNOR / TTG 与 v3 混写入同一 .env 作为当前真值。",
+    "全栈资金合约仍须以 canonical_timelock_address（v3）为 owner/spender/白名单目标；TT-B435 与 DeployFundStackUnderTimelock 不变。",
+    "GET /meta → chain.contracts 须与 v3 三键及七键同源后再宣称测试网闭环。"
+  ],
+  "impact_notes_zh": {
+    "seven_keys_and_meta": "TIMELOCK_ADDRESS / GOVERNOR_ADDRESS / GOVERNANCE_TOKEN_ADDRESS 以 v3 为准；与 FEE_ROUTER 等七键并列时须与根 .env 一致。",
+    "b417_b431": "B-417 测试网证据应锚定 v3 Governor；既有 GO 包见 evidence/b417_governance_execution_runs/run_20260417T0640Z_b417/。",
+    "tt_b435": "资金栈与 Timelock 接线仍以裁断 B + TT-B435 为准；v3 仅更新治理三键 canonical。"
+  },
+  "supersedes": "decision_record.v2.json",
+  "notes": "v2 所载 0x55fd… 栈仍可能存在于链上；Explorer 对照见 Blockscout Sepolia。历史 B-435 证据目录中旧 meta 快照仅作归档，不与当前 GET /meta 混为真值。"
+}

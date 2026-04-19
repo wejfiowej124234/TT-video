@@ -2,7 +2,7 @@
 chcp 65001 >nul
 REM 检查端口 3012 是否在监听；若没有则启动前端（Turbopack dev）。
 REM 从项目根运行: scripts\check-3000-and-start.bat（文件名保留兼容，端口为 3012）
-set "ROOT=%~dp0\.."
+for %%I in ("%~dp0..\..") do set "ROOT=%%~fI"
 cd /d "%ROOT%"
 
 echo 正在检查端口 3012...

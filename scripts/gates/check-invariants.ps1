@@ -18,6 +18,13 @@ if (-not (Test-Path "frontend/package-lock.json" -PathType Leaf)) {
     fail "missing frontend/package-lock.json (lock file required)"
 }
 
+# B-158: package.json direct deps vs lockfile packages{} (npm v7+); no network.
+$verifyLock = Join-Path $PSScriptRoot "verify-frontend-package-lock-sync.mjs"
+& node $verifyLock
+if ($LASTEXITCODE -ne 0) {
+    fail "frontend package-lock drift (B-158); run npm install in frontend/ and commit"
+}
+
 $apiMain = "crates/api/src/main.rs"
 $apiRouter = "crates/api/src/router.rs"
 $apiMwHeaders = "crates/api/src/middleware/auth_pause_metrics/mod.rs"

@@ -1,0 +1,16 @@
+{
+  "threshold_schema": "b455_review_json_contract_rollout_v1",
+  "description": "B-455 · 与 B-454 `replay_summary.json` 联动的灰度/自动回滚阈值（机读真源；调参须同步 TT-B455 Runbook 人读表与 `check-b455-*`）。",
+  "min_total_events_eval_rate": 50,
+  "insufficient_sample_verdict": "YELLOW",
+  "limits": {
+    "missing_meta": { "yellow_abs": 3, "red_abs": 20 },
+    "malformed_meta": { "yellow_abs": 2, "red_abs": 10 },
+    "unknown_future_schema": { "yellow_abs": 5, "red_abs": 100 }
+  },
+  "gray_release": {
+    "traffic_percent_steps": [5, 25, 50, 100],
+    "min_wall_clock_minutes_between_steps": 30,
+    "on_verdict": { "GREEN": "advance_or_hold_top", "YELLOW": "hold_and_triage", "RED": "auto_rollback_frontend_or_flag" }
+  }
+}

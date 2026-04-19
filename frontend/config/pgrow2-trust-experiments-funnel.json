@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "name": "P-GROW2 Trust A/B experimentation",
+  "assignment": {
+    "subject_storage_key": "tt_pgrow2_subject_v1",
+    "assignment_storage_key": "tt_pgrow2_assignment_v1",
+    "disable_env": "NEXT_PUBLIC_TRUST_EXPERIMENTS_DISABLED=1"
+  },
+  "events": {
+    "moment_view": "trust_growth_moment_view",
+    "trust_hub_click": "trust_growth_trust_hub_click",
+    "moment_dismiss": "trust_growth_moment_dismiss",
+    "details_toggle": "trust_growth_details_toggle"
+  },
+  "payload_dimensions": [
+    "experiment_version",
+    "variant_id",
+    "copy_module",
+    "evidence_count",
+    "delay_ms",
+    "default_expanded",
+    "subject_stable",
+    "experiment_ready"
+  ],
+  "analysis_notes": [
+    "CTR: trust_growth_trust_hub_click / trust_growth_moment_view by variant_id",
+    "Engagement: trust_growth_details_toggle (details_open) when default_expanded=false",
+    "Retention proxy: correlate subject_stable cohorts with return sessions (server-side join)",
+    "Bump trustGrowthExperiments.ts version to reshuffle all users for that moment",
+    "HTTP ingest/config: POST/GET /api/v1/trust-growth/* via trustGrowthAnalytics.ts + api.ts routes; contract SSOT docs/spec/04 §3.4."
+  ]
+}

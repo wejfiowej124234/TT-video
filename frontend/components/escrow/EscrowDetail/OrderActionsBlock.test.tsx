@@ -12,6 +12,7 @@ vi.mock("@/components/LocaleProvider", () => ({
 
 const orderAcceptMock = vi.fn();
 const orderCancelMock = vi.fn();
+const orderConfirmCompletionMock = vi.fn();
 
 vi.mock("@/lib/apiClient", async (importOriginal) => {
   const mod = await importOriginal<typeof import("@/lib/apiClient")>();
@@ -19,6 +20,8 @@ vi.mock("@/lib/apiClient", async (importOriginal) => {
     ...mod,
     orderAccept: (orderId: string, key: string) => orderAcceptMock(orderId, key),
     orderCancel: (orderId: string, key: string) => orderCancelMock(orderId, key),
+    orderConfirmCompletion: (orderId: string, key: string) =>
+      orderConfirmCompletionMock(orderId, key),
     getIdempotencyKey: () => "idem-key",
   };
 });
@@ -39,6 +42,7 @@ describe("OrderActionsBlock", () => {
   beforeEach(() => {
     orderAcceptMock.mockReset();
     orderCancelMock.mockReset();
+    orderConfirmCompletionMock.mockReset();
   });
 
   it("orderAccept failure shows ApiErrorAlert and common_retry re-calls accept (B-042)", async () => {
@@ -101,5 +105,32 @@ describe("OrderActionsBlock", () => {
     const acceptBtn = screen.getByRole("button", { name: "escrow_accept" });
     expect(acceptBtn.getAttribute("title")).toBe("escrow_acceptBlocked_otherActionPending");
     expect(acceptBtn.getAttribute("aria-describedby")).toBeTruthy();
+  });
+
+  it("P07: when chainOffRestConfirmCompletionEnabled and valid escrow, REST confirm-completion not intent-only", async () => {
+    const onSuccess = vi.fn();
+    orderConfirmCompletionMock.mockResolvedValue(undefined);
+
+    render(
+      <OrderActionsBlock
+        orderId="00000000-0000-4000-8000-000000000001"
+        state="escrowed"
+        hasEscrow
+        onSuccess={onSuccess}
+        guideWalletAddress={null}
+        connectedAddress={ADDR}
+        escrowAddress={ADDR}
+        expectedChainId={1}
+        chainOffRestConfirmCompletionEnabled
+      />,
+    );
+
+    expect(screen.queryByRole("button", { name: "escrow_confirmCompletionSign" })).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "escrow_confirmCompletion" }));
+
+    await waitFor(() => {
+      expect(orderConfirmCompletionMock).toHaveBeenCalled();
+      expect(onSuccess).toHaveBeenCalled();
+    });
   });
 });

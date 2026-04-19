@@ -1,0 +1,10 @@
+{
+  "chain_id": "11155111",
+  "guide_staking_address": "0x2f36B1100332757C12c32CDbDe1ce41Ab7bD6629",
+  "staking_provider_address": "0xA78CB25b898f3f17Dbd44b118D17510609ee940",
+  "governor_address": "0x247aC1C986c458C385cC9499A7054f1747282151",
+  "timelock_address": "0x55fd44d987B1285a6890a3Df9A616ABFeB77E085",
+  "governance_token_address": "0x3d8eb8446Abe78cDD6952453d83790aa0f0bc7a9",
+  "fee_router_address": "0x01C0FED839540BE2CDdC59067310086A719DF89c",
+  "treasury_address": "0x01dB92048d4a1916912fA76590ECa44D2f654D05"
+}

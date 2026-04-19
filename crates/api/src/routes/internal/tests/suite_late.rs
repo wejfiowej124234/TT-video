@@ -1,25 +1,16 @@
 use super::super::*;
 use super::support::*;
 use crate::chain;
-use crate::chain_off::{ChainOffConfig, ChainOffState, ChainOffStore};
 use crate::db;
 use crate::jsonrpc_mock_server::read_http_request_headers_and_body;
-use crate::state::{ApiMetaState, EvidenceTimeState, ProjectorCheckpoint};
-use axum::extract::{Path as AxumPath, Query, State};
+use axum::extract::{Path as AxumPath, State};
 use axum::http::StatusCode;
 use axum::response::IntoResponse;
 use axum::Json;
-use serde_json::{json, Value};
-use chrono::Utc;
+use serde_json::json;
 use http_body_util::BodyExt;
-use sqlx::postgres::PgPoolOptions;
-use std::collections::HashMap;
-use std::sync::Arc;
-use std::time::Duration;
 use tokio::io::AsyncWriteExt;
 use tokio::net::TcpListener;
-use tokio::sync::RwLock;
-use uuid::Uuid;
 
 #[tokio::test]
 async fn indexer_reconcile_requires_chain_config() {

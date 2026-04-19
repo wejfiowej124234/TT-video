@@ -63,10 +63,14 @@ forge test --match-test test_COMP_B089_governor_full_cycle_propose_vote_queue_ex
 
 以下与 **B-089** 同一套 Governor/Timelock/FeeRouter 拓扑，仅 payload 或入口不同；**验收仍为一事：Succeeded → queue → delay → execute**。
 
+**B-431（execute 后 `getProposalActions` ↔ Timelock `operations` ↔ 目标合约读数）**：证据入口 [`B-431-gov-execute-chain-read-payload-align-ENTRY.md`](./B-431-gov-execute-chain-read-payload-align-ENTRY.md)。
+
 ```bash
 cd contracts
 # Governor 路径：`setRoutingConfig` payload
 forge test --match-test test_TT_B089_governor_execute_set_routing_config_matches_payload -vv
+# B-431：字段级对拍（Governor / Timelock / FeeRouter getter）
+forge test --match-test test_B431_governor_execute_chain_reads_match_payload_and_timelock_operation -vv
 ```
 
 **Timelock 直连**（无 Governor 投票段，验证 **`schedule` → delay → `execute`** 与 **`TooEarly`**）：

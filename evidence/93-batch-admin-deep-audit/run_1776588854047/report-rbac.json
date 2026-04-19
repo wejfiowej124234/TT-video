@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "id": "admin-rbac-unauth",
+      "http": 401,
+      "expect": "401 login_required path"
+    },
+    {
+      "id": "admin-rbac-tourist-api",
+      "http": 403,
+      "expect": "403 admin_required"
+    },
+    {
+      "id": "admin-rbac-guide-api",
+      "http": 403,
+      "expect": "403 admin_required"
+    },
+    {
+      "id": "admin-rbac-tourist-ui-orders",
+      "expect": "alert admin_required copy"
+    }
+  ]
+}

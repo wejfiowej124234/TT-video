@@ -68,12 +68,11 @@ describe("postLogin", () => {
   beforeEach(() => vi.stubGlobal("fetch", vi.fn()));
   afterEach(() => vi.restoreAllMocks());
 
-  it("returns body without throwUnlessApiOk (caller handles envelope)", async () => {
+  it("throws when HTTP 200 but envelope status is not ok (aligned with postRegister)", async () => {
     (globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce(
       mockTextResponse(true, { status: "error", error: "invalid_credentials" })
     );
-    const out = await postLogin({ email: "a@b.c", password: "x" });
-    expect(out).toEqual({ status: "error", error: "invalid_credentials" });
+    await expect(postLogin({ email: "a@b.c", password: "x" })).rejects.toThrow("invalid_credentials");
     expect(globalThis.fetch).toHaveBeenCalledWith(
       apiUrl(routes.auth.login),
       expect.objectContaining({

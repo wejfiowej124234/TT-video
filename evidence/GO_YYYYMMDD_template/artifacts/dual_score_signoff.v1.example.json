@@ -1,0 +1,38 @@
+{
+  "schema_id": "traveltrust.dual_score_signoff.v1",
+  "date": "2026-04-17",
+  "stage": "test_internal",
+  "execution_snapshot": {
+    "combined_percent": 56,
+    "source_note": "与 g1_snapshot 同源时可与 g1_snapshot.overall_percent 对读"
+  },
+  "g1_snapshot": {
+    "spec_version": "1.0.837",
+    "overall_percent": 56,
+    "source": "docs/spec/07-开发流程与顺序.md §六 6.3"
+  },
+  "g1_pass": true,
+  "dimensions": [
+    { "id": 1, "key": "track_treasury_pool", "score": 8 },
+    { "id": 2, "key": "governance_ttg_b110", "score": 8 },
+    { "id": 3, "key": "permissions_security", "score": 7 },
+    { "id": 4, "key": "did_reputation", "score": 7 },
+    { "id": 5, "key": "contracts_abi", "score": 8 },
+    { "id": 6, "key": "indexer_reconcile_evidence", "score": 8 },
+    { "id": 7, "key": "mother_table_ci", "score": 8 }
+  ],
+  "risk_acceptances": [],
+  "sign_off": ["批准人代号"],
+  "evidence_refs": [
+    "commit: REPLACE_WITH_RELEASE_TIP_40_HEX",
+    "tag: v0.0.0-placeholder",
+    "PR: #482",
+    "artifacts/reconcile_report_YYYYMMDD.md",
+    "runbook_drill_2.7_A_YYYYMMDD",
+    "TT-B417"
+  ],
+  "meta": {
+    "manifest_ref": "manifest.json#dual_score"
+  },
+  "human_readable_md_path": "artifacts/dual-score-signoff.md"
+}

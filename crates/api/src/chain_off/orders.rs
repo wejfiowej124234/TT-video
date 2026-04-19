@@ -79,6 +79,36 @@ fn default_currency() -> String {
     "USD".to_string()
 }
 
+/// `POST /api/v1/orders` 创建的 Created 订单无行程包；为 confirm-final-plan / GET 详情
+/// 与 50-80-3 canonical 快照提供与订单金额一致的最小只读 bundle（目的地取产品期允许中文国名）。
+fn minimal_itinerary_bundle_for_simple_order(order: &OrderRow) -> ItineraryBundle {
+    let amount_f64: f64 = order.amount.trim().replace(',', "").parse().unwrap_or(0.0);
+    let ab = AmountBreakdown {
+        hotel: 0.0,
+        catering: 0.0,
+        tickets: 0.0,
+        guide_fee: amount_f64,
+        vehicle: 0.0,
+        platform_fee: 0.0,
+        total_budget: amount_f64,
+    };
+    let day = ItineraryDayRow {
+        day_index: 1,
+        content_text: "order_create placeholder itinerary".to_string(),
+        ..Default::default()
+    };
+    ItineraryBundle {
+        order_id: order.id,
+        version: 1,
+        destination: "中国".to_string(),
+        city: "上海".to_string(),
+        days: vec![day],
+        amount_breakdown: ab,
+        snapshot_hash: None,
+        cover_image: None,
+    }
+}
+
 #[derive(Deserialize)]
 pub struct OpenDisputeBody {
     #[serde(default)]
@@ -1181,6 +1211,7 @@ pub async fn order_create_impl(
         chain_id: state.config.business_chain_id,
     };
     store.orders.insert(id, order.clone());
+    store.itineraries.insert(id, minimal_itinerary_bundle_for_simple_order(&order));
     drop(store);
     if state.db_pool.is_some() {
         if strict_order_db_write_enabled() {
@@ -1191,6 +1222,7 @@ pub async fn order_create_impl(
                 );
                 let mut store = state.store.write().await;
                 store.orders.remove(&id);
+                store.itineraries.remove(&id);
                 return Err((
                     StatusCode::SERVICE_UNAVAILABLE,
                     Json(json!({
@@ -1246,11 +1278,15 @@ pub async fn confirm_final_plan_impl(
                 Json(crate::api_json::err_key(err_key)),
             ));
         }
-        if order.state != OrderState::Draft {
+        let accepted_bilateral_confirmed = order.state == OrderState::Accepted
+            && order.sub_status.as_deref() == Some("confirmed")
+            && order.tourist_confirmed == Some(true)
+            && order.guide_confirmed == Some(true);
+        if order.state != OrderState::Draft && !accepted_bilateral_confirmed {
             return Err((
                 StatusCode::BAD_REQUEST,
                 Json(
-                    json!({"error": "order_not_draft", "message": "order_not_draft", "hint": "仅 Draft 订单可确认最终版本"}),
+                    json!({"error": "order_not_draft", "message": "order_not_draft", "hint": "仅 Draft 订单可确认最终版本；或 Accepted 且双方已完成双边确认（sub_status=confirmed）"}),
                 ),
             ));
         }

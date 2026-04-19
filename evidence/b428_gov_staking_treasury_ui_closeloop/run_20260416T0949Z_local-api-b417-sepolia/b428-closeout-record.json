@@ -1,0 +1,14 @@
+{
+  "anchor": "B428-GOV-STAKING-TREASURY-UI-CLOSELOOP-RECORD-V1",
+  "rule_version": "b428_closeout_record_schema_v1",
+  "implementation_tt": "TT-B428-GOV-STAKING-TREASURY-UI-CLOSELOOP-001",
+  "mother_table": "B-428",
+  "generated_at_utc": "2026-04-16T09:49:00Z",
+  "run_dir": "evidence/b428_gov_staking_treasury_ui_closeloop/run_20260416T0949Z_local-api-b417-sepolia",
+  "env_tag": "local-api-b417-sepolia",
+  "api_base_url": "http://127.0.0.1:8080",
+  "frontend_base_url": "http://127.0.0.1:3012",
+  "b417_cross_ref_dir": "evidence/b417_governance_execution_runs/run_20260416T0602Z",
+  "closeout_verdict": "GO",
+  "notes": "Pool JSON captured with X-User-Id dev header; meta chain.contracts null on local API — see run README. Sepolia queue/execute evidence aligned with B-417 GO bundle."
+}

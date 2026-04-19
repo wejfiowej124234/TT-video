@@ -367,6 +367,47 @@ pub async fn delete_governance_proposals_projection_for_chain(
     Ok(r.rows_affected())
 }
 
+/// **十进制** sentinel，与链上 `proposalCount()` 真实 id 冲突概率可忽略；供 **`POST /auth/seed-governance-e2e`**（**C-GOV-004** Playwright）幂等 upsert。
+pub const E2E_GOVERNANCE_PROPOSAL_DECIMAL_ID: &str = "911919911919911919911919911919911919";
+
+/// 在 **`governance_proposals_projection`** 写入/刷新一行，使 **`GET /api/v1/governance/proposals`** 在 Governor 索引模式下非空（**B-089** 表结构一致）。
+pub async fn upsert_e2e_governance_proposal_sentinel(pool: &PgPool, chain_id: i64) -> Result<(), sqlx::Error> {
+    sqlx::query(
+        r#"
+        INSERT INTO governance_proposals_projection (
+            chain_id, proposal_id, proposer, snapshot_block, vote_start_block, vote_end_block,
+            title, for_votes, against_votes, abstain_votes, chain_state, operation_id, updated_at
+        ) VALUES (
+            $1,
+            $2::numeric,
+            NULL,
+            1,
+            1,
+            999999999,
+            'TravelTrust E2E governance seed (SEED_TEST_ACCOUNTS)',
+            0,
+            0,
+            0,
+            'active',
+            NULL,
+            now()
+        )
+        ON CONFLICT (chain_id, proposal_id) DO UPDATE SET
+            title = EXCLUDED.title,
+            snapshot_block = EXCLUDED.snapshot_block,
+            vote_start_block = EXCLUDED.vote_start_block,
+            vote_end_block = EXCLUDED.vote_end_block,
+            chain_state = EXCLUDED.chain_state,
+            updated_at = now()
+        "#,
+    )
+    .bind(chain_id)
+    .bind(E2E_GOVERNANCE_PROPOSAL_DECIMAL_ID)
+    .execute(pool)
+    .await?;
+    Ok(())
+}
+
 #[cfg(test)]
 mod decode_tests {
     use super::*;

@@ -4,7 +4,7 @@ use std::collections::BTreeMap;
 
 use sqlx::postgres::PgPool;
 
-use crate::u256_hex::{add_assign_be, fmt_word_hex, parse_u256_word_hex, sub_assign_be, zero_word};
+use crate::u256_hex::{add_assign_be, parse_u256_word_hex, sub_assign_be, zero_word};
 
 pub const B088_LOCK_PROJECTION_TABLE: &str = "investor_lock_state_events";
 pub const B088_LOCK_EVENT_SOURCE: &str = "InvestorShareLockLedger.Locked|Unlocked";
@@ -133,6 +133,7 @@ pub async fn delete_investor_lock_state_events_from_block(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::u256_hex::fmt_word_hex;
 
     fn row(kind: &str, user: &str, hexv: &str) -> InvestorLockStateRow {
         InvestorLockStateRow {

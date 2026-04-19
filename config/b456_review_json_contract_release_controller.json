@@ -1,0 +1,12 @@
+{
+  "controller_schema": "b456_review_json_contract_release_controller_v1",
+  "description": "B-456 · release-controller：消费 eval-b455 裁决并驱动 CI/CD 输出与可选 shell 钩子（仓库内 hooks.shell_command 默认为 null，由运维叠加）。",
+  "hooks": {
+    "GREEN": { "shell_command": null, "action": "advance_or_hold_top" },
+    "YELLOW": { "shell_command": null, "action": "freeze_and_triage" },
+    "RED": { "shell_command": null, "action": "auto_rollback_frontend_or_flag" }
+  },
+  "ci_outputs": {
+    "verdict_env_keys": ["verdict", "eval_exit_code", "should_promote", "should_freeze", "should_rollback"]
+  }
+}

@@ -11,7 +11,7 @@ import {
 
 export interface ConfirmFinalPlanBlockProps {
   orderId: string;
-  isDraft: boolean;
+  allowConfirmFinalPlan: boolean;
   hasSnapshot: boolean;
   version?: number | null;
   snapshotHash?: string | null;
@@ -24,7 +24,7 @@ export interface ConfirmFinalPlanBlockProps {
 
 export default function ConfirmFinalPlanBlock({
   orderId,
-  isDraft,
+  allowConfirmFinalPlan,
   hasSnapshot,
   version,
   snapshotHash,
@@ -40,7 +40,7 @@ export default function ConfirmFinalPlanBlock({
   const dialogTitleId = useId();
   const dialogDescId = useId();
   const dialogDetailsId = useId();
-  if (!isDraft || hasSnapshot) return null;
+  if (!allowConfirmFinalPlan || hasSnapshot) return null;
 
   const handleOpenModal = () => {
     if (protocolPaused) return;

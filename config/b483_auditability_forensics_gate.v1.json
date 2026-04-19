@@ -1,0 +1,24 @@
+{
+  "schema": "traveltrust_b483_auditability_forensics_gate.v1",
+  "version": "1.0.0",
+  "updated_at": "2026-04-18T20:00:00Z",
+  "content_sha256": "8d5fe0cb39dee11c478a3e35d1e19bcdde1162e9043d05355231329255f6eeb9",
+  "description": "B-483 可审计与可追溯：append-only event log、哈希链/快照签名、重放与审计证明；与 B-482 正确性、B-481 韧性并列三维放行。",
+  "inherits_pool_thresholds_from": "config/b478_pg_pool_release_gate_thresholds.v1.json",
+  "extends_financial_correctness_gate": "config/b482_financial_correctness_gate.v1.json",
+  "hard_requirements": {
+    "require_hash_chain_valid": true,
+    "require_append_only_enforced": true,
+    "require_reproducible_ledger_state": true,
+    "require_head_hash_matches_tip": true,
+    "require_event_chain_complete": true
+  },
+  "limits": {
+    "max_tamper_events": 0,
+    "max_signature_failures": 0,
+    "max_replay_divergence": 0,
+    "max_proof_verification_failures": 0,
+    "min_hash_chain_coverage_ratio": 1.0
+  },
+  "evidence_sources_note": "postgres event_log、indexer_audit.jsonl、快照导出与 Ed25519 签名、重放作业与 Merkle/批次根比对；见 TT-B483 §3。"
+}

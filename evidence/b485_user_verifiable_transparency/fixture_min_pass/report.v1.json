@@ -1,0 +1,34 @@
+{
+  "schema": "traveltrust_b485_user_verifiable_transparency_acceptance.v1",
+  "verdict": "PASS",
+  "fail_reasons": [],
+  "gate_file": "config/b485_user_verifiable_transparency_gate.v1.json",
+  "scope": {
+    "user_surface": "web + export API",
+    "note": "CI fixture：用户侧证明与文档齐全，与 B-482～B-484 证据闭环。"
+  },
+  "checks": {
+    "user_facing_artifacts": {
+      "audit_snapshot_downloadable": true,
+      "merkle_or_hash_proof_for_user_balances": true,
+      "governance_execution_proof_pack_available": true,
+      "snapshot_formats": ["json", "jsonl+manifest"]
+    },
+    "coverage": {
+      "unsupported_user_verification_gaps": 0,
+      "covered_asset_classes": ["escrowed_orders", "governance_rewards_stub"],
+      "covered_governance_actions": ["fee_router_routing", "treasury_spend_stub"]
+    },
+    "verification_tooling": {
+      "documented_independent_verifier_flow": true,
+      "open_verifier_script_ref": "docs/runbook/TT-B485-USER-VERIFIABLE-TRANSPARENCY-ACCEPTANCE-001.md",
+      "proof_bundle_format_failures": 0
+    },
+    "internal_to_user_closure": {
+      "b482_report_cross_linked": true,
+      "b483_report_cross_linked": true,
+      "b484_report_cross_linked": true,
+      "b482_b484_evidence_linked_in_user_surface": true
+    }
+  }
+}

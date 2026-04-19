@@ -16,8 +16,8 @@
 
 ## 1. 状态与事件（与 01 一致）
 
-- **Accepted**：向导已接单，待游客 deposit。
-- **Escrowed**：游客已 deposit（Paid 事件已确认），行程进行中。
+- **Accepted**：向导已接单，待旅行者 deposit。
+- **Escrowed**：旅行者已 deposit（Paid 事件已确认），行程进行中。
 - **Cancelled**：已取消或**超时取消**（未进 Escrow）。
 
 ---
@@ -37,7 +37,7 @@
 | 当前状态 | 事件/条件 | 下一状态 | 副作用 |
 |----------|-----------|----------|--------|
 | Accepted | 超时未在 payment_window 内 deposit | **Cancelled** | 解除向导档期软占；释放价格/报价占用；可选通知双方。 |
-| Accepted | 游客 deposit 成功（Paid 事件） | **Escrowed** | 占档（Schedule Engine）；锁定向导 start_date～end_date。 |
+| Accepted | 旅行者 deposit 成功（Paid 事件） | **Escrowed** | 占档（Schedule Engine）；锁定向导 start_date～end_date。 |
 | Accepted | 任一方取消 / 向导撤回 | **Cancelled** | 同左。 |
 | Escrowed | 双签完成 / 超时自动放款 / 争议裁决执行 | Completed / Refunded / PartiallyRefunded / Slashed | 解档；评价开放（仅资金终态）。 |
 

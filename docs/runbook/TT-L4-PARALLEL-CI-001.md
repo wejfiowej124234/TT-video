@@ -128,3 +128,19 @@ gh api "repos/$REPO/check-runs/$JOB_ID/annotations" --jq '.[] | .message'
 - **perf 分单（本机 dev 并行结论）**：[TT-L4-SMOKE-SLOWFILE-PERF-001](./TT-L4-SMOKE-SLOWFILE-PERF-001.md) **§3.4**  
 - **Sepolia 基线口径**：[TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001](./TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001.md)
 - **本地 `gh` 巡检（最近或指定 run id）**：[scripts/gh-l4-run-inspect.sh](../../scripts/gh-l4-run-inspect.sh) → [scripts/dev/gh-l4-run-inspect.sh](../../scripts/dev/gh-l4-run-inspect.sh)；Windows：[scripts/gh-l4-run-inspect.ps1](../../scripts/gh-l4-run-inspect.ps1)。可选 **`GH_BRANCH=<ref>`** 筛分支；输出含 **per-job** `gh run view --job=…`（**Annotations** / 计费未启动）。索引见 [scripts/README.md](../../scripts/README.md) **§一**。
+
+## 10. 文档对齐勘误（与已封口 L4 互证）
+
+**用途**：你已在 **`main`** 或指定 SHA 上 **封口 L4**（**Playwright 193/0、exit 0** 或 **§5.0** 下「组织 gate」判读留痕）后，若收口材料里仍写着 **旧版文档数字/旧母表状态**，可 **本条 + 下表一行** 作为 **勘误附录**，**不要求** 仅为下列 **纯文档/测试卫生** 变更 **重跑** 全量 **`npm run e2e:sepolia`**。
+
+| 变更项 | 旧叙述（易出现在证据摘抄里） | 现行真源（仓库） |
+|--------|-------------------------------|------------------|
+| **路由域计数** | **59 B1** 写「**17** 个路由域」 | **`api_router()`** **`20`** 次 **`.merge`**，与 **`crates/api/src/routes/mod.rs`**、**[14 §2.1](../spec/14-合约-API-ABI-前后端对齐.md)**、**[59 V1.9.3 B1](../spec/59-企业级全域检查清单与文档补充计划.md)** 一致 |
+| **质押快照 SSOT 用语** | 母表 **B-429** 写「**Staking** **`stakeOf`**」 | **`IdentityStakingPool.stakeOf`**（**`STAKING_ADDRESS` / `chain_config.staking_address`**）；与 **04 / 14 / 母表 B-092** 一致 |
+| **治理投票 UI 封口状态** | 母表 **B-437** 写「**未做**」 | **进行中（Partial）**；页身 **`/governance/proposals/[id]`**（**`GovernanceProposalDetailPage`** 等），链上 Governor 枝 **禁** **`POST …/vote` 信号票** 与 **`castVote` i18n** 已落地；**TT §3 余项手测** 仍待 |
+| **27 系列目录** | 「**不设子目录**」 | **`docs/spec/`** 根 **`27-*.md`** + **`docs/spec/27-archived/`** 归档；见 **[27-系列索引 §〇](../spec/27-系列索引.md)** |
+| **Rust** | — | 仅 **`crates/api/src/routes/internal/tests/suite_{early,late}.rs`** 删除 **未使用 `use`**；**不**改路由、**不**改 **L4 workflow** |
+
+**汇总登记**（变更清单与日期）：**[TT-ALIGN-DOCS-CODE-MOTHER-AUDIT-2026-04-19](./TT-ALIGN-DOCS-CODE-MOTHER-AUDIT-2026-04-19.md)** **§8**。
+
+**与 Sepolia 基线卡对读**：**[TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001](./TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001.md)** **§5**「维护」中与 **本节**「**不重跑** 全量 **`e2e:sepolia`**」**同口径** 的说明（**Version 1.0.1+**）。

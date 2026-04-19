@@ -292,7 +292,7 @@ export default function CommunityMeCollectsPage() {
               href="/community/me"
               className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-3 py-1.5 text-meta text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub inline-flex items-center justify-center min-h-[44px] ${communityCyanPillFocus}`}
             >
-              {t("community_tab_me")}
+              {t("me_title")}
             </Link>
           </div>
         </header>

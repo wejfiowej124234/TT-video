@@ -63,7 +63,7 @@ const nextConfig = {
    * 与 `frontend/lib/api.ts` 中 `isLoopbackApiBase` 对齐。
    */
   async rewrites() {
-    const dest = (process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080").replace(/\/$/, "");
+    const dest = (process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8080").replace(/\/$/, "");
     return [
       { source: "/favicon.ico", destination: "/favicon.svg" },
       { source: "/api/v1/:path*", destination: `${dest}/api/v1/:path*` },

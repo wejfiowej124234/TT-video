@@ -1,6 +1,6 @@
 # TT-L4-CHROMIUM-SEPOLIA-E2E-BASELINE-001 · Sepolia 主链 Playwright 回归基线（chromium-sepolia）
 
-**Version:** 1.0.0  
+**Version:** 1.0.1  
 **Status:** 登记（机读口径；与 **L4** 编排 **[TT-STACK-LAYERS-REGRESSION-ORCH-001](./TT-STACK-LAYERS-REGRESSION-ORCH-001.md)** 对齐）
 
 ## 1. 任务卡验收口径（首次全绿 · 固化基线）
@@ -59,6 +59,7 @@ npm run e2e:sepolia
 
 - **bump 基线 passed 数**：全量新增 `chromium-sepolia` 内用例且全绿后，更新 §1 表 `passed` 与登记日期。  
 - **Sepolia 以外链**：另开 runbook，**不**覆盖本卡「11155111」口径。
+- **已封口 §6.6（193/0）后的纯文档勘误**：若仓库后续仅合入 **spec / 母表 / 59 / 27 索引** 等 **文字修正** 与 **`crates/api` `internal` 测试** 顶栏 **未使用 `use` 清理**，**不**要求因此 **重跑** 全量 **`npm run e2e:sepolia`** 以推翻 **§6.6** 稳定性结论；收口材料可 **一行** 互证 **[TT-L4-PARALLEL-CI-001](./TT-L4-PARALLEL-CI-001.md)** **§10**、**[TT-LOCAL-CI-DELIVERY-GATE-001](./TT-LOCAL-CI-DELIVERY-GATE-001.md)** **篇首「文档对齐勘误」**、**[TT-ALIGN-DOCS-CODE-MOTHER-AUDIT-2026-04-19](./TT-ALIGN-DOCS-CODE-MOTHER-AUDIT-2026-04-19.md)** **§8**。**若 diff 触及 `frontend/e2e`、`playwright.config.ts`、Sepolia 相关 API/合约 ABI 或本卡 §1 同形约束**，仍须对 **变更范围** 重跑并按 **§1 / §6** 更新登记。
 
 ## 6. `gotoSmoke` 导航策略观测（**不得**将 `domcontentloaded` 升格为基线）
 

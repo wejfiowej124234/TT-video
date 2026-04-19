@@ -1,0 +1,17 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "http://127.0.0.1:8082/auth/login",
+    "body": {
+      "email": "tourist@test.com",
+      "password": "[REDACTED]"
+    }
+  },
+  "response": {
+    "http_status": 401,
+    "body": {
+      "error": "invalid_credentials",
+      "message": "invalid_credentials"
+    }
+  }
+}

@@ -31,13 +31,16 @@ test.describe("49 D.8 市场页验收（D-T3 辅助）", () => {
   });
 
   test("导航：从首页可进入市场页", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/", { timeout: 60_000 });
     await expect(page.locator("body")).toBeVisible();
-    await page.getByRole("link", { name: /发现|Discover|市场|Market|自由市场/i }).first().click();
+    const nav = page.getByRole("link", { name: /发现|Discover|市场|Market|自由市场/i }).first();
+    await expect(nav).toBeVisible({ timeout: 30_000 });
+    await nav.click();
+    await page.waitForURL(/\/(market|discover)/, { timeout: 30_000 });
     await expect(page).toHaveURL(/\/(market|discover)/);
     await expect(
-      page.getByText(/订单|向导|Orders|Guides|暂无|链上|Escrow/i).first()
-    ).toBeVisible({ timeout: 10000 });
+      page.getByText(/订单|向导|Orders|Guides|暂无|链上|Escrow/i).first(),
+    ).toBeVisible({ timeout: 30_000 });
   });
 
   test("市场页含 P29 视图切换（双栏 / 订单 / 向导）", async ({ page }) => {

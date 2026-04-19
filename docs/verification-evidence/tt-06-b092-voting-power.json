@@ -7,7 +7,7 @@
   "execution_record": {
     "steps": [
       "Postgres: `users.default_wallet_address` = Anvil 账户 `0xf39F…`（`seed-tt456-anvil-31337.sql`）；见 `sql-tt456-db-verify.txt`.",
-      "Anvil: `StubStaking` `0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0`、`StubShareToken` `0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9`；API `STAKING_ADDRESS` + `INVESTOR_SHARE_TOKEN_ADDRESSES`.",
+      "Anvil: `StubStaking` `0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0`、`StubShareToken` `0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9`；API `GUIDE_STAKING_ADDRESS` + `INVESTOR_SHARE_TOKEN_ADDRESSES`.",
       "GET `/api/v1/governance/voting-power?snapshot_block=5` + `X-User-Id` — `stake_snapshot.read_status=ok`、`country_pool_share_snapshot.read_status=ok`（`http-get-governance-voting-power-tt6-snap5.json`）。",
       "同块 `eth_call` 对照：`rpc-tt6-eth-call-stake-balance-block5.json`（`stakeOf` / `balanceOf` at `0x5`）。",
       "indexer-tick 响应与 TT-5 共用：`indexer-tick-tt5-tt6-chain31337.json`."

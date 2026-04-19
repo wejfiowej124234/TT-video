@@ -17,7 +17,7 @@ import {
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import WarmRouteFieldBackdrop from "@/components/shell/WarmRouteFieldBackdrop";
 
-/** L1 主 Tab；建议与反馈已并入 L2「帮助与支持」下拉 */
+/** L1 主 Tab；桌面端「帮助与支持」与主 Tab 同一行（TabLinks 内下拉）；移动顶栏第二行仍为独立入口 */
 const TABS = [
   {
     path: "/community",
@@ -38,7 +38,7 @@ const TABS = [
     unread: true,
   },
   { path: "/community/friends", pathMatch: (p: string) => p.startsWith("/community/friends"), key: "community_tab_friends", unread: false },
-  { path: "/community/me", pathMatch: (p: string) => p.startsWith("/community/me"), key: "community_tab_me", unread: false },
+  { path: "/community/me", pathMatch: (p: string) => p.startsWith("/community/me"), key: "me_title", unread: false },
 ] as const;
 
 /** L1/底栏激活：青→紫→珊瑚（31 旅行/发现 cyan + 创作者 fuchsia）+ 青/暖双色轻光晕，与暖场底衔接 */
@@ -62,7 +62,9 @@ const TabLinks = memo(function TabLinks({
   onNavStart?: () => void;
 }) {
   return (
-    <div className={`flex gap-1 rounded-[var(--radius-md)] p-1 bg-slate-800/60 ring-1 ring-ref-cyan/15 ${className}`}>
+    <div
+      className={`flex items-stretch gap-1 rounded-[var(--radius-md)] p-1 bg-slate-800/60 ring-1 ring-ref-cyan/15 ${className}`}
+    >
       {TABS.map((tab) => {
         const active = tab.pathMatch(pathname ?? "");
         const showBadge = tab.unread && totalUnread > 0;
@@ -89,6 +91,8 @@ const TabLinks = memo(function TabLinks({
           </Link>
         );
       })}
+      <div className="w-px shrink-0 self-stretch bg-slate-600/45 my-1" aria-hidden />
+      <CommunitySupportMenu onNavStart={onNavStart} variant="tabBar" />
     </div>
   );
 });
@@ -207,9 +211,9 @@ const MobileBottomNav = memo(function MobileBottomNav({
           (pathname ?? "").startsWith("/community/me") ? COMMUNITY_SHELL_TAB_ACTIVE : "text-slate-300 hover:text-slate-200 hover:bg-slate-700/60 border border-transparent"
         }`}
         aria-current={(pathname ?? "").startsWith("/community/me") ? "page" : undefined}
-        aria-label={t("community_tab_me")}
+        aria-label={t("me_title")}
       >
-        {t("community_tab_me")}
+        {t("me_title")}
       </Link>
     </div>
   );
@@ -367,15 +371,9 @@ function CommunityLayoutInner({ children }: { children: React.ReactNode }) {
         {showTabProgress && (
           <div className="absolute left-0 top-0 right-0 h-0.5 bg-cyan-400/90 z-[1]" role="progressbar" aria-valuenow={undefined} aria-label={t("common_loading") || "Loading"} />
         )}
-        <div className="max-w-4xl mx-auto px-3 py-2 sm:px-4">
+        <div className="max-w-6xl mx-auto px-3 py-2 sm:px-4">
           <nav aria-label={t("community_nav_tabs_aria")}>
             <TabLinks pathname={pathname} t={t} totalUnread={totalUnread} onNavStart={onTabNavStart} className="w-full" />
-          </nav>
-          <nav
-            aria-label={t("community_nav_support_aria")}
-            className="mt-2 pt-2 border-t border-cyan-500/20 flex flex-wrap items-center justify-end"
-          >
-            <CommunitySupportMenu onNavStart={onTabNavStart} size="md" />
           </nav>
         </div>
       </header>
@@ -402,7 +400,7 @@ function CommunityLayoutInner({ children }: { children: React.ReactNode }) {
   );
 }
 
-/** 31 §5.1：L1 主 Tab（动态/发现/消息/好友/我）；L2「帮助与支持」下拉（建议与反馈+帮助中心+社区规范）；费路由见 /help、/traveltrust、页脚。52 §7.5 / 13 宪法：Tab 切换可感知反馈。 */
+/** 31 §5.1：L1 主 Tab + 同条「帮助与支持」下拉（桌面）；移动顶栏 L2 仍为帮助入口。52 §7.5 / 13 宪法：Tab 切换可感知反馈。 */
 export default function CommunityRouteShell({ children }: { children: React.ReactNode }) {
   return (
     <CommunityPublishProvider>

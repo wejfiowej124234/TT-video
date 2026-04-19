@@ -1,0 +1,64 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "R-003: local full chain (LOCAL_CHAIN + validate)",
+      "type": "shell",
+      "command": "python",
+      "args": ["scripts/dev/run_r003_staging_evidence_chain.py", "--from-env"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": { "R003_LOCAL_CHAIN": "1" }
+      },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "focus": true }
+    },
+    {
+      "label": "R-003: staging evidence chain (env)",
+      "type": "shell",
+      "command": "python",
+      "args": ["scripts/dev/run_r003_staging_evidence_chain.py", "--from-env"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      }
+    },
+    {
+      "label": "R-003: check staging env (.env.r003.local)",
+      "type": "shell",
+      "command": "python",
+      "args": ["scripts/dev/check_r003_staging_env_ready.py"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      "label": "R-003: print TT-B486 seal snippet (after staging GO)",
+      "type": "shell",
+      "command": "python",
+      "args": ["scripts/dev/print_tt_b486_seal_snippet.py", "--report", "evidence/GO_20260418/report.json"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "R-003: print env template path",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "-c",
+        "from pathlib import Path; r=Path('${workspaceFolder}')/'scripts'/'dev'; print('Copy:', r/'r003-staging-chain.env.example'); print('  To:', r/'.env.r003.local'); print('Then: Run Task -> R-003: staging evidence chain (env)')"
+      ],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    }
+  ]
+}

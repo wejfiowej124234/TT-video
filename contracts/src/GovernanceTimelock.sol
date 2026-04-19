@@ -3,9 +3,9 @@ pragma solidity 0.8.19;
 
 /**
  * @title GovernanceTimelock
- * @notice 母表 **B-089 Partial**：**`admin`** **`schedule`** 任意 **`target.call{value}(data)`**，经过固定 **`delay`** 后 **任意调用方**可 **`execute`**。
+ * @notice 母表 **B-089 Partial**：**`admin`** **`schedule`** **`target.call{value}(data)`**，经过固定 **`delay`** 后 **任意调用方**可 **`execute`**。
  * @dev 验收路径：**schedule → 时间推进 → execute**，链上效果与 **payload** 一致（示例：**`FeeRouter.transferOwnership`**）。
- *      当前 **`FeeRouter`** 的 **四方 immutable 地址** 与 **BPS 常量** **不可**由单笔 `call` 改写；**费率 / 池路由 / 分层比例** 的 **无迁址热更新** 须 **可配置 Router** 或 **新部署 + 运维迁址**（**Target**，见 **14** / **83**）。
+ *      **B-407**：**`schedule` / `scheduleByGovernor`** 仅当 **`allowedExecutionTarget[target]`** 为 **true**（**`admin`** **`setAllowedExecutionTarget`**），与 **02 §4.6～§4.7** **FeeRouter 分轨** vs **`GovernanceTreasury` / 募资** 的工程隔离一致：**Timelock** **不**对任意合约开放 **`execute`** 面。
  */
 contract GovernanceTimelock {
     struct Operation {
@@ -28,9 +28,15 @@ contract GovernanceTimelock {
     error TooEarly();
     error AlreadyExecuted();
     error CallFailed();
+    error TargetNotAllowed();
 
     /// @notice **B-089 Completion**：Governor 合约地址；**`scheduleByGovernor`** 仅此地址可调用（与 **`onlyAdmin`** 的 **`schedule`** 并存）。
     address public governor;
+
+    /// @notice **B-407**：**`true`** 时 **`target`** 方可进入 **`operations`**（Governor→Timelock 与 **admin** **`schedule`** 同源）。
+    mapping(address => bool) public allowedExecutionTarget;
+
+    event AllowedExecutionTargetSet(address indexed target, bool allowed);
 
     event OperationScheduled(
         bytes32 indexed id,
@@ -71,6 +77,16 @@ contract GovernanceTimelock {
         governor = g;
     }
 
+    /// @notice **B-407**：上线前由 **`admin`** 为 **FeeRouter / GovernanceTreasury / ReserveVault / RegionVault / TravelTrustGovernor** 等登记 **`true`**。
+    function setAllowedExecutionTarget(address target, bool allowed) external onlyAdmin {
+        allowedExecutionTarget[target] = allowed;
+        emit AllowedExecutionTargetSet(target, allowed);
+    }
+
+    function _requireAllowedTarget(address target) internal view {
+        if (!allowedExecutionTarget[target]) revert TargetNotAllowed();
+    }
+
     /// @notice Governor **queue** 路径：**与 `schedule` 同源** 写入 **`operations`**，仅调用方约束不同。
     function scheduleByGovernor(
         address target,
@@ -78,6 +94,7 @@ contract GovernanceTimelock {
         bytes calldata data,
         bytes32 salt
     ) external onlyGovernor returns (bytes32 id) {
+        _requireAllowedTarget(target);
         id = hashOperation(target, value, data, salt);
         if (operations[id].readyAt != 0) revert OperationExists();
         uint256 eta = block.timestamp + delay;
@@ -97,6 +114,7 @@ contract GovernanceTimelock {
         bytes calldata data,
         bytes32 salt
     ) external onlyAdmin returns (bytes32 id) {
+        _requireAllowedTarget(target);
         id = hashOperation(target, value, data, salt);
         if (operations[id].readyAt != 0) revert OperationExists();
         uint256 eta = block.timestamp + delay;

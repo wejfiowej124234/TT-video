@@ -4,7 +4,7 @@ import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslation } from "@/components/LocaleProvider";
 
-/** 将 /discover 的查询串原样带到 /market，与 useMarketPage URL 同步逻辑一致 */
+/** 将 /discover 的查询串原样带到 `/market`（与 `middleware` 一致） */
 function DiscoverReplaceToMarket() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -15,7 +15,7 @@ function DiscoverReplaceToMarket() {
   return null;
 }
 
-/** 29 §10：/discover 与 /market 统一为同一页，重定向到自由市场（撮合控制台） */
+/** 29 §10：/discover → 自由市场 · 主市场（旅行预约） */
 export default function DiscoverRedirect() {
   const { t } = useTranslation();
   return (

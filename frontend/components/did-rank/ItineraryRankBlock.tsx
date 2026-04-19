@@ -176,7 +176,7 @@ export interface ItineraryRankBlockProps {
   t: TFunc;
 }
 
-/** 行程排行榜区块：最佳行程由游客/向导创建，按使用次数、评价等排名，前 10 奖励创作者治理币；无接口时仅展示空状态 */
+/** 行程排行榜区块：最佳行程由旅行者/向导创建，按使用次数、评价等排名，前 10 奖励创作者治理币；无接口时仅展示空状态 */
 export default function ItineraryRankBlock({ listItineraries, period, t }: ItineraryRankBlockProps) {
   const top10 = listItineraries.slice(0, 10);
   const titleId = useId();

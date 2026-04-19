@@ -1,0 +1,26 @@
+{
+  "anchor": "B417-GOVERNANCE-EXECUTION-REPORT-V1",
+  "rule_version": "b417_governance_execution_report_schema_v1",
+  "dry_run": false,
+  "generated_at_utc": "2026-04-17T08:13:05Z",
+  "implementation_tt": "TT-B417-GOVERNANCE-EXECUTION-AUTOMATION-L3-001",
+  "mother_table": "B-417",
+  "notes": "chain merge: TravelTrustGovernor.queue + execute on testnet/mainnet; sidecars from b417-governor-queue-testnet.sh / b417-governor-execute-testnet.sh",
+  "execution_steps": [
+    {
+      "step": "queue",
+      "status": "success",
+      "tx_hash": "0xad86bf07c1fad58989492b8ebe14f9512bbc8ad91019abb07127403e430a4d9b",
+      "block_number": 10676636,
+      "timestamp": 1776413436
+    },
+    {
+      "step": "execute",
+      "status": "success",
+      "tx_hash": "0xab38ea7849e11dab449460b613083f074656736f08b8436f1e7d9396cf8afa1d",
+      "block_number": 10676647,
+      "timestamp": 1776413580
+    }
+  ],
+  "execution_verdict": "GO"
+}

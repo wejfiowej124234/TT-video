@@ -1,0 +1,34 @@
+{
+  "batch": "93-ADMIN-DEEP",
+  "evidenceDir": "C:\\Users\\plant\\Desktop\\Wbe3-TravelTrust\\evidence\\93-batch-admin-deep-audit\\run_1776588854047",
+  "chain_off_mounted": true,
+  "finished_at": "2026-04-19T08:55:47.706Z",
+  "target_matrix": {
+    "B-MSG-002": {
+      "id": "B-MSG-002",
+      "status": "PASS",
+      "note": "API POST+GET OK；UI 因协议区未展开跳过（见 escrow-messages-ui-skipped.json）",
+      "evidence": [
+        "escrow-messages-post.json",
+        "escrow-messages-readback.json",
+        "escrow-messages-ui-no-chatblock.png",
+        "escrow-messages-ui-skipped.json",
+        "report-escrow-messages.json"
+      ],
+      "at": "2026-04-19T08:55:47.691Z"
+    },
+    "D-ADM-002-rbac-api-ui": {
+      "id": "D-ADM-002-rbac-api-ui",
+      "status": "PASS",
+      "note": "401/403 API + 游客 /admin/orders 权限面",
+      "evidence": [
+        "rbac-unauth-admin-users.json",
+        "rbac-tourist-admin-users.json",
+        "rbac-guide-admin-users.json",
+        "admin-orders-403-tourist.png",
+        "report-rbac.json"
+      ],
+      "at": "2026-04-19T08:55:16.281Z"
+    }
+  }
+}

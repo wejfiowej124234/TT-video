@@ -1,0 +1,77 @@
+{
+  "schema_version": "release_proof_manifest_v1",
+  "implementation_tt": "TT-B433-GO-RELEASE-PROOF-STAKING-GOV-BUNDLE-001",
+  "mother_table": "B-433",
+  "bundle_id": "B405-B408-B414-B428-B430-B431-B432",
+  "generated_at_utc": "2026-04-16T12:00:00Z",
+  "bundle_verdict": "GO",
+  "production_scope": "production-ready (engineering + governance + revenue)",
+  "bundle_verdict_note": "Production GO: engineering gates (B-432) + demo evidence (B-428) + three-pillar closeout pointers (B-414 revenue, B-430 governance API reconcile↔overview, B-431 Foundry chain-read↔payload) are sealed or script-anchored in-repo. Protocol extension lines B-405–B-407 are not separately claimed as standalone contract GO—see caveats_explanatory (non-blocking).",
+  "go_master_evidence_entry": "evidence/GO_FINAL_20260416/release_proof.json",
+  "go_master_evidence_entry_canonical": true,
+  "go_master_evidence_public_notes": "evidence/GO_FINAL_20260416/RELEASE_NOTES_PUBLIC.md",
+  "unified_gates_min": [
+    "cargo test -p traveltrust-api",
+    "bash scripts/run-check-04-routes.sh",
+    "cd frontend && npx tsc --noEmit",
+    "cd frontend && npm run test:b432"
+  ],
+  "production_go_live_requires_all": [
+    "B-414: b414-closeout-record.json verdict GO (revenue / business loop)",
+    "B-430: b430-gov-post-exec-reconcile-overview-bundle.sh exit 0; b430-closeout-record.json verdict GO when persisted (governance API loop)",
+    "B-431: b431-closeout-record.json chain_read_payload_align_verdict GO or forge test_B431_* green (on-chain truth SSOT; does not replace B-417 testnet L3)"
+  ],
+  "members": [
+    {
+      "mother_table": "B-405",
+      "closure_in_bundle": "registry_only",
+      "evidence_pointer": "docs/任务母表.md B-405"
+    },
+    {
+      "mother_table": "B-406",
+      "closure_in_bundle": "registry_only",
+      "evidence_pointer": "docs/任务母表.md B-406"
+    },
+    {
+      "mother_table": "B-407",
+      "closure_in_bundle": "registry_only",
+      "evidence_pointer": "docs/任务母表.md B-407"
+    },
+    {
+      "mother_table": "B-408",
+      "closure_in_bundle": "partial_ui_gates_via_B432",
+      "evidence_pointer": "docs/任务母表.md B-408; scripts/gates/check-b432-governance-ui-ssot-surface.py"
+    },
+    {
+      "mother_table": "B-414",
+      "closure_in_bundle": "sealed",
+      "evidence_pointer": "evidence/b414_revenue_e2e_go_live_closeout/; scripts/ops/b414-revenue-e2e-go-live-closeout.sh; evidence/GO_FINAL_20260416/revenue/"
+    },
+    {
+      "mother_table": "B-428",
+      "closure_in_bundle": "sealed",
+      "evidence_pointer": "evidence/b428_gov_staking_treasury_ui_closeloop/run_20260416T0949Z_local-api-b417-sepolia/b428-closeout-record.json"
+    },
+    {
+      "mother_table": "B-430",
+      "closure_in_bundle": "sealed",
+      "evidence_pointer": "scripts/ops/b430-gov-post-exec-reconcile-overview-bundle.sh; evidence/b430_gov_post_exec_reconcile_overview/; evidence/GO_FINAL_20260416/governance/"
+    },
+    {
+      "mother_table": "B-431",
+      "closure_in_bundle": "sealed",
+      "evidence_pointer": "contracts/test/TravelTrustGovernor.t.sol test_B431_*; scripts/ops/b431-gov-execute-foundry-closeout.sh; evidence/b431_gov_execute_chain_read/; evidence/GO_FINAL_20260416/chain/"
+    },
+    {
+      "mother_table": "B-432",
+      "closure_in_bundle": "sealed",
+      "evidence_pointer": "scripts/gates/check-b432-governance-ui-ssot-surface.py; frontend/package.json test:b432"
+    }
+  ],
+  "caveats": [
+    "B-405–B-407: contract/protocol extension capability is not separately claimed as standalone GO (informational only; not a Production GO blocker when B-414, B-430, and B-431 are GO per evidence/GO_FINAL_20260416/).",
+    "B-408: full UI↔payload parity remains TT-B408; B-432 covers governance UI surface regression shell only.",
+    "B-428 sample run may show meta.chain.contracts null on local API; full 759-anchor replay optional per target env.",
+    "B-431 Foundry SSOT does not replace B-417 testnet L3 execute closeout; chain-of-custody may require both."
+  ]
+}

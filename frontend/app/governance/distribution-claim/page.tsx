@@ -15,6 +15,8 @@ import GovernanceTargetNotice from "@/components/governance/GovernanceTargetNoti
 import { GovernanceOpsAdminLinks } from "@/components/governance/GovernanceOpsAdminLinks";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import WalletStatusMini from "@/components/trust/WalletStatusMini";
+import InlineTransparencyVerification from "@/components/trust/InlineTransparencyVerification";
+import TrustGrowthMomentBanner from "@/components/trust/TrustGrowthMomentBanner";
 import claimAbi from "@/dapp/abis/InvestorDistributionClaim.json";
 import { useInvestorDistributionClaimWrite } from "@/dapp/hooks/useInvestorDistributionClaimWrite";
 import { getExpectedChainId } from "@/lib/chainEnv";
@@ -196,6 +198,11 @@ export default function GovernanceDistributionClaimPage() {
       ? formatUnits(claimable, decimals)
       : null;
 
+  const yieldGrowPayload = useMemo(
+    () => ({ claimable_gt_zero: claimable !== undefined && claimable > 0n }),
+    [claimable]
+  );
+
   const distInvalid = distInput.trim() !== "" && !parsedBytes32;
 
   return (
@@ -206,6 +213,14 @@ export default function GovernanceDistributionClaimPage() {
       </h1>
       <p className="mt-2 text-body text-ink-700">{t("governance_claim_desc")}</p>
       <p className="mt-2 text-meta text-ink-500">{t("governance_claim_env_hint")}</p>
+
+      <div className="mt-4">
+        <TrustGrowthMomentBanner moment="first_yield" surface="ink" analyticsPayload={yieldGrowPayload} />
+      </div>
+
+      <div className="mt-4">
+        <InlineTransparencyVerification context="yield" surface="ink" />
+      </div>
 
       {!claimAddress ? (
         <p className="mt-4 rounded-[var(--radius-md)] border border-amber-200 bg-amber-50 px-3 py-2 text-body text-amber-900">

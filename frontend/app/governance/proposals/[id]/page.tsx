@@ -14,13 +14,19 @@ import {
   type GovernanceProposalDetailResponse,
   type GovernanceVotingPowerResponse,
 } from "@/lib/apiClient";
-import { chainIdFromMeta, governorAddressFromMeta } from "@/lib/governanceChainMeta";
+import {
+  chainContractsFromMeta,
+  chainIdFromMeta,
+  governorAddressFromMeta,
+  type ChainContractsSnapshot,
+} from "@/lib/governanceChainMeta";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { mapOrderWriteError } from "@/lib/mapOrderWriteError";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import LoadingText from "@/components/LoadingText";
 import GovernanceTargetNotice from "@/components/governance/GovernanceTargetNotice";
 import GovernanceB090OnChainProposalNotice from "@/components/governance/GovernanceB090OnChainProposalNotice";
+import GovernanceProposalImpactPanel from "@/components/governance/GovernanceProposalImpactPanel";
 import GovernancePreExecutionHint from "@/components/governance/GovernancePreExecutionHint";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import {
@@ -32,6 +38,7 @@ import GovernanceProposalExecutionActionsSkeleton from "@/components/governance/
 import GovernanceProposalExecutionReadinessPanel, {
   GovernanceProposalExecutionVoteFooter,
 } from "@/components/governance/GovernanceProposalExecutionReadinessPanel";
+import InlineTransparencyVerification from "@/components/trust/InlineTransparencyVerification";
 import {
   deriveGovernanceExecutionReadiness,
   GOV_EXEC_READINESS_DESC_ID,
@@ -80,6 +87,7 @@ export default function GovernanceProposalDetailPage() {
   const [votingPower, setVotingPower] = useState<GovernanceVotingPowerResponse | null>(null);
   const [metaGovernor, setMetaGovernor] = useState<string | null>(null);
   const [metaChainId, setMetaChainId] = useState<number | null>(null);
+  const [metaContracts, setMetaContracts] = useState<ChainContractsSnapshot | null>(null);
 
   const loginHref = useMemo(() => {
     const back = pathname && pathname.startsWith("/") ? pathname : `/governance/proposals/${proposalId}`;
@@ -152,6 +160,7 @@ export default function GovernanceProposalDetailPage() {
     if (!onChainGovernorKind) {
       setMetaGovernor(null);
       setMetaChainId(null);
+      setMetaContracts(null);
       return undefined;
     }
     let cancelled = false;
@@ -160,11 +169,13 @@ export default function GovernanceProposalDetailPage() {
         if (cancelled) return;
         setMetaGovernor(governorAddressFromMeta(m));
         setMetaChainId(chainIdFromMeta(m));
+        setMetaContracts(chainContractsFromMeta(m));
       })
       .catch(() => {
         if (!cancelled) {
           setMetaGovernor(null);
           setMetaChainId(null);
+          setMetaContracts(null);
         }
       });
     return () => {
@@ -235,6 +246,10 @@ export default function GovernanceProposalDetailPage() {
       <p className="mt-2 text-body text-ink-600">{t("governance_proposals_intro")}</p>
       <GovernanceTargetNotice className="mt-4" />
 
+      <div className="mt-4">
+        <InlineTransparencyVerification context="governance" surface="ink" verificationKey={proposalId} />
+      </div>
+
       <nav className="mt-4" aria-label={t("governance_nav_label")}>
         <Link
           href="/governance/proposals"
@@ -296,6 +311,23 @@ export default function GovernanceProposalDetailPage() {
               }}
             />
           ) : null}
+          {onChainGovernor && proposal ? (
+            <GovernanceProposalImpactPanel
+              onChainGovernor={onChainGovernor}
+              proposal={proposal}
+              chain={data?.chain}
+              contracts={metaContracts}
+              votingPowerAtSnapshot={data?.voting_power_at_snapshot}
+              hasCastVoteCalldata={
+                !!(
+                  data?.cast_vote_calldata &&
+                  (data.cast_vote_calldata.yes ||
+                    data.cast_vote_calldata.no ||
+                    data.cast_vote_calldata.abstain)
+                )
+              }
+            />
+          ) : null}
           {onChainGovernor ? (
             <p
               id="gov-exec-detail-bridge"
@@ -346,11 +378,6 @@ export default function GovernanceProposalDetailPage() {
                   ? ` (${t("governance_proposal_chain_read_error")}: ${String(data.chain.state_rpc_error)})`
                   : ""}
               </p>
-            ) : null}
-            {onChainGovernor && data?.voting_power_at_snapshot != null ? (
-              <pre className="mt-2 max-w-full overflow-x-auto rounded border border-ink-200/80 bg-white p-2 text-meta text-ink-800 dark:border-ink-600/40 dark:bg-ink-950/40 dark:text-ink-100">
-                {JSON.stringify(data.voting_power_at_snapshot, null, 2)}
-              </pre>
             ) : null}
             {hasSession &&
             votingPower?.authenticated &&

@@ -12,15 +12,23 @@ contract GovernanceTreasury {
     address public owner;
     address public spender;
 
+    /// @notice **P0（可选）**：为 **ERC20 `spend`** 启用 **allowlist** 时，仅允许列表内 token 被划出（**默认关闭**，保持既有部署行为不变）。**`spendETH` 不受此限制**（原生币路径由 Timelock/运维流程约束）。
+    bool public erc20SpendAllowlistEnabled;
+
+    mapping(address => bool) public erc20SpendAllowed;
+
     error OnlyOwner();
     error OnlySpender();
     error TransferFailed();
     error EthTransferFailed();
     error InvalidAmount();
     error InvalidRecipient();
+    error Erc20SpendNotAllowed();
 
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
     event SpenderUpdated(address indexed previousSpender, address indexed newSpender);
+    event Erc20SpendAllowlistEnabledUpdated(bool enabled);
+    event Erc20SpendAllowedUpdated(address indexed token, bool allowed);
     event TreasurySpent(
         address indexed token,
         address indexed to,
@@ -56,6 +64,18 @@ contract GovernanceTreasury {
         spender = newSpender;
     }
 
+    /// @notice 开启后，`spend(token,…)` **仅**允许 **`erc20SpendAllowed[token]==true`** 的 ERC20。
+    function setErc20SpendAllowlistEnabled(bool enabled) external onlyOwner {
+        erc20SpendAllowlistEnabled = enabled;
+        emit Erc20SpendAllowlistEnabledUpdated(enabled);
+    }
+
+    /// @notice 将某 ERC20 标记为允许/禁止经 `spend` 划出（**allowlist 开启时生效**）。
+    function setErc20SpendAllowed(address token, bool allowed) external onlyOwner {
+        erc20SpendAllowed[token] = allowed;
+        emit Erc20SpendAllowedUpdated(token, allowed);
+    }
+
     receive() external payable {}
 
     /**
@@ -75,6 +95,7 @@ contract GovernanceTreasury {
     function spend(address token, address to, uint256 amount) external onlySpender {
         if (amount == 0) revert InvalidAmount();
         if (to == address(0)) revert InvalidRecipient();
+        if (erc20SpendAllowlistEnabled && !erc20SpendAllowed[token]) revert Erc20SpendNotAllowed();
         if (!IERC20(token).transfer(to, amount)) revert TransferFailed();
         emit TreasurySpent(token, to, amount);
     }

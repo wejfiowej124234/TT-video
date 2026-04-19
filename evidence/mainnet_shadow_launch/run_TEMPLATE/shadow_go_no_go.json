@@ -1,0 +1,10 @@
+{
+  "anchor": "TT-MAINNET-MAINNET-SHADOW-LAUNCH",
+  "deployment_chain_id": 1,
+  "network": "Ethereum Mainnet",
+  "shadow_launch_verdict": "NO_GO",
+  "notes": "TEMPLATE ONLY — after real shadow drill, set shadow_launch_verdict to GO and add operator, completed_at_utc, git_sha.",
+  "completed_at_utc": null,
+  "operator": null,
+  "git_sha": null
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "traveltrust_b484_governance_protocol_consistency_acceptance.v1",
+  "verdict": "PASS",
+  "fail_reasons": [],
+  "gate_file": "config/b484_governance_protocol_consistency_gate.v1.json",
+  "scope": {
+    "governor_address": "0x0000000000000000000000000000000000000000",
+    "note": "CI fixture：链上/链下版本与哈希一致、无漂移。"
+  },
+  "checks": {
+    "on_chain_vs_off_chain": {
+      "drift_observations_count": 0,
+      "governance_inputs_hash_match": true,
+      "last_synced_block": 10000000,
+      "chain_tip_governance_root_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "governance_verifiability": {
+      "unverified_active_proposals": 0,
+      "resolution_proof_bundle_valid": true,
+      "executable_proposals_checked": 12
+    },
+    "parameter_version_traceability": {
+      "active_config_version_chain": "gov-params-v1.0.0",
+      "active_config_version_db": "gov-params-v1.0.0",
+      "version_mismatch_count": 0,
+      "routing_ruleset_id_chain": "fee-router-v3",
+      "routing_ruleset_id_db": "fee-router-v3"
+    },
+    "execution_consistency": {
+      "distribution_pipeline_violations": 0,
+      "api_db_governance_projection_match": true,
+      "fee_router_bps_chain_vs_db_match": true
+    }
+  }
+}

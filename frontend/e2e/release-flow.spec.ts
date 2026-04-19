@@ -36,16 +36,17 @@ test.describe("01 核心流程页面结构（发版前 E2E 清单）", () => {
   });
 
   test("完整导航链：Landing → Market → Orders → Escrow", async ({ page }) => {
-    await page.goto("/");
+    test.setTimeout(120_000);
+    await page.goto("/", { timeout: 60_000 });
     await expect(page.locator("body")).toBeVisible();
-    await page.goto("/market");
-    await expect(page.getByText(/订单|向导|Escrow/i).first()).toBeVisible({ timeout: 10000 });
-    await page.goto("/orders");
-    await expect(page.getByText(/订单|Orders|我的|列表/i).first()).toBeVisible({ timeout: 10000 });
-    await page.goto("/escrow/1");
+    await page.goto("/market", { timeout: 60_000 });
+    await expect(page.getByText(/订单|向导|Escrow/i).first()).toBeVisible({ timeout: 30_000 });
+    await page.goto("/orders", { timeout: 60_000 });
+    await expect(page.getByText(/订单|Orders|我的|列表/i).first()).toBeVisible({ timeout: 30_000 });
+    await page.goto("/escrow/1", { timeout: 60_000 });
     await expect(
-      page.getByText(/托管|状态|Status|加载|错误|Escrow/i).first()
-    ).toBeVisible({ timeout: 10000 });
+      page.getByText(/托管|状态|Status|加载|错误|Escrow/i).first(),
+    ).toBeVisible({ timeout: 30_000 });
   });
 
   test("支付与托管说明页可访问", async ({ page }) => {

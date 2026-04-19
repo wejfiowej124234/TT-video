@@ -1,5 +1,5 @@
 /**
- * E2E：关键路径见 e2e/smoke.spec.ts、e2e/smoke-governance.spec.ts、e2e/smoke-community.spec.ts、e2e/smoke-admin.spec.ts、e2e/core-path.spec.ts、e2e/release-flow.spec.ts
+ * E2E：关键路径见 e2e/smoke.spec.ts、e2e/smoke-governance.spec.ts、e2e/smoke-community.spec.ts、e2e/smoke-admin.spec.ts、e2e/core-path.spec.ts、e2e/release-flow.spec.ts、**e2e/93-matrix-path-p1-remediation.spec.ts**（93 §5 风险序补强）
  * 运行：npx playwright install 后 npm run e2e（能连上 baseURL 则复用已有 dev/start，否则自动启动）
  *
  * 全栈（API + Next）：`npm run e2e:auth-chain` 或 `PLAYWRIGHT_FULL_STACK=1 npx playwright test …`

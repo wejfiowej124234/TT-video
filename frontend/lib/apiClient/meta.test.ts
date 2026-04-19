@@ -440,13 +440,13 @@ describe("CHAIN_META_TOP_KEYS (729)", () => {
 describe("CHAIN_CONTRACTS_META_TOP_KEYS (759)", () => {
   it("matches health_meta CHAIN_CONTRACTS_META_TOP_KEYS / GET /meta chain.contracts order when object", () => {
     expect([...CHAIN_CONTRACTS_META_TOP_KEYS]).toEqual([
-      "escrow_factory_address",
+      "guide_staking_address",
+      "staking_provider_address",
+      "governor_address",
+      "timelock_address",
+      "governance_token_address",
       "fee_router_address",
-      "region_vault_address",
-      "escrow_platform_fee_recipient",
-      "staking_address",
-      "registry_address",
-      "chain_id_configured",
+      "treasury_address",
       "rule",
       "chain_contracts_top_keys",
       "chain_contracts_top_keys_contract_759",
@@ -639,6 +639,8 @@ describe("ORDERS_META_TOP_KEYS (744)", () => {
       "rule",
       "list_pagination",
       "fee_route_country_ssot",
+      "deadline_rating_observability",
+      "order_mock_pay_enabled",
       "orders_top_keys",
       "orders_top_keys_contract_744",
     ]);

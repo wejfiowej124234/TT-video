@@ -1,0 +1,33 @@
+b409-order-state-primary-acceptance: tt_b409_chain_off_http_order_created_accepted_escrowed
+   Compiling traveltrust-core v0.1.0 (C:\Users\plant\Desktop\Wbe3-TravelTrust\crates\core)
+   Compiling traveltrust-api v0.1.0 (C:\Users\plant\Desktop\Wbe3-TravelTrust\crates\api)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 13.63s
+     Running unittests src\main.rs (target\debug\deps\traveltrust_api-d6d848f99f582d3a.exe)
+
+running 1 test
+test routes::orders::tests::suite::tt_b409_chain_off_http_order_created_accepted_escrowed ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 995 filtered out; finished in 0.01s
+
+b409-order-state-primary-acceptance: p21_order_create_accept_mock_pay_confirm
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.27s
+     Running unittests src\main.rs (target\debug\deps\traveltrust_api-d6d848f99f582d3a.exe)
+
+running 1 test
+test chain_off::tests_guides_me_orders::p21_order_create_accept_mock_pay_confirm ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 995 filtered out; finished in 0.00s
+
+b409-order-state-primary-acceptance: ok
+b409-order-state-exception-acceptance: p21_order_cancel_created
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.24s
+     Running unittests src\main.rs (target\debug\deps\traveltrust_api-d6d848f99f582d3a.exe)
+
+running 1 test
+test chain_off::tests_guides_me_orders::p21_order_cancel_created ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 995 filtered out; finished in 0.00s
+
+b409-order-state-exception-acceptance: ok
+b410-user-flow-e2e-gate: skip Playwright (set B410_RUN_PLAYWRIGHT=1 and install frontend deps to run)
+b410-user-flow-e2e-gate: ok

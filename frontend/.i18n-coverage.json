@@ -11,10 +11,10 @@
   "rule_id": "i18n-key-parity-critical-prefix-and-key-routes",
   "severity": "none",
   "owner": "frontend-team",
-  "generated_at": "2026-04-09T12:17:18.077Z",
+  "generated_at": "2026-04-19T12:30:48.840Z",
   "totals": {
-    "zh_keys": 4344,
-    "en_keys": 4344
+    "zh_keys": 4625,
+    "en_keys": 4625
   },
   "missing_in_en": [],
   "missing_in_zh": [],

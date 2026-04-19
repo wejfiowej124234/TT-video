@@ -11,6 +11,7 @@ import EmptyState from "@/components/market/EmptyState";
 import { OrderCardSkeleton, GuideCardSkeleton } from "@/components/market/MarketSkeleton";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import { trackMarketEvent } from "@/lib/analytics";
+import { formatGuideDisplayName } from "@/lib/guideDisplayName";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
 
 export type MarketSortBy = "latest" | "priceDesc" | "priceAsc";
@@ -334,7 +335,7 @@ export default function MarketContent({
                         trackMarketEvent("market_guide_click", { guideId: id });
                         const guide = guides.find((x) => x.id === id);
                         setBookGuideId(id);
-                        setBookGuideName(guide ? (guide.city ? t("guide_card_cityGuide").replace("{{city}}", guide.city) : t("guide_card_guide")) : null);
+                        setBookGuideName(guide ? formatGuideDisplayName(t, guide) : null);
                       }}
                       isFavorited={favoritedGuideIds.has(g.id)}
                       onToggleFavorite={toggleGuideFavorite}

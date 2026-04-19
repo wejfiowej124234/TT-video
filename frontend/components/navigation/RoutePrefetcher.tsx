@@ -14,7 +14,7 @@ const PRIMARY = [
   "/market",
   "/did-rank",
   "/community",
-  "/me",
+  "/community/me",
   "/auth/login",
   "/auth/register",
 ] as const;

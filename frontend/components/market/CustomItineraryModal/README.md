@@ -1,6 +1,6 @@
 # CustomItineraryModal
 
-自由市场：自定义行程弹窗。先选总天数与国家，再按天选城市→景区→美食→酒店，确认后作为新订单出现在市场。支持「游客创建」与「向导创建」两种模式。
+自由市场：自定义行程弹窗。先选总天数与国家，再按天选城市→景区→美食→酒店，确认后作为新订单出现在市场。支持「旅行者创建」与「向导创建」两种模式。
 
 ## 入口与对外
 
@@ -19,7 +19,7 @@
 | `useQuoteCalculation.ts` | 报价/预算派生（budgetBreakdown、guideQuoteBreakdown 等） |
 | `useItineraryForm.ts` | 表单 state、setDayPlan/setGuideDayPlan、handleSubmit、useEffects |
 | `DetailOverlay.tsx` | 景区/美食/车辆/酒店点击后的大图+介绍浮层 |
-| `sections/TouristForm.tsx` | 游客分支：按天卡片、报价清单、标题/预算/人数/描述/封面 |
+| `sections/TouristForm.tsx` | 旅行者分支：按天卡片、报价清单、标题/预算/人数/描述/封面 |
 | `sections/GuideForm.tsx` | 向导分支：按天卡片（上传+文案）、服务费与交通、报价清单、元信息 |
 
 ## 依赖方向

@@ -1,5 +1,5 @@
-/** TravelTrust Staking.sol ABI；须与 `contracts/abi/Staking.json` 语义一致（改合约后同步 JSON + 本常量，并跑 `scripts/check-55-s13.sh`） */
-export const stakingAbi = [
+/** `GuideIdentityStakingPool` / `ProviderIdentityStakingPool` 同形读调 ABI；须与 `contracts/abi/GuideIdentityStakingPool.json` 一致（`scripts/check-55-s13.sh`）。 */
+export const identityStakingPoolAbi = [
   {
     type: "function",
     name: "slasher",

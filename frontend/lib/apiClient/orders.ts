@@ -12,6 +12,11 @@ import {
   throwUnlessApiOk,
 } from "./core";
 import type { MarketOrderItinerary, OrderBreakdown } from "../marketTypes";
+import {
+  parseReviewJsonContractMeta,
+  type ReviewJsonContractClientView,
+} from "../reviewJsonContract";
+import { observeReviewJsonContractClient } from "../reviewJsonContractObservability";
 
 /** `GET /api/v1/orders`；不传 limit 时后端全量返回（兼容）；传 limit/cursor 时分页（55 / 04） */
 export type OrdersListResult = {
@@ -146,7 +151,7 @@ export async function orderAccept(orderId: string, idempotencyKey?: string): Pro
   return data;
 }
 
-/** 53-S6：双边确认 — 游客/向导各自确认行程与金额（04 POST confirm-bilateral） */
+/** 53-S6：双边确认 — 旅行者/向导各自确认行程与金额（04 POST confirm-bilateral） */
 export async function orderConfirmBilateral(orderId: string, idempotencyKey?: string): Promise<unknown> {
   const res = await fetch(apiUrl(routes.orderConfirmBilateral(orderId)), {
     method: "POST",
@@ -257,15 +262,24 @@ export type OrderReviewListItem = {
   created_at?: string;
 };
 
-/** 与响应 `meta` 同源（`review_weight_rule_*`） */
+/** **`meta.review_json_contract`**（B-451；与 `GET`/`POST …/reviews` 同源） */
+export type OrderReviewJsonContractMeta = {
+  schema_version: number;
+  anchor: string;
+};
+
+/** 与响应 `meta` 同源（`review_weight_rule_*` + `review_json_contract`） */
 export type OrderReviewsListMeta = {
   review_weight_rule_version?: string;
   review_weight_rule?: string;
+  review_json_contract?: OrderReviewJsonContractMeta;
 };
 
 export type OrderReviewsListResult = {
   items: OrderReviewListItem[];
   meta?: OrderReviewsListMeta;
+  /** B-452：与 `meta` 同源解析，供 UI/日志做版本化降级 */
+  reviewJsonContractClient: ReviewJsonContractClientView;
 };
 
 /** `POST …/reviews` 成功体 `review.weight_breakdown`（与 `traveltrust_core::ReviewWeightBreakdown` 对齐） */
@@ -277,6 +291,32 @@ export type OrderReviewWeightBreakdown = {
   age_factor: number;
   weight: number;
   guide_historical_score_reserved: number;
+};
+
+/** `POST …/reviews` **200** **`review`** **（** **B-449/B-450** **：** **首次成功** **`weight_breakdown`** **object** **且** **无** **`weight_breakdown_note`** **；** **幂等** **`weight_breakdown`** **null** **且** **`weight_breakdown_note`** **=** **`persisted_review_inputs_not_replayed`** **）** */
+export type OrderReviewSubmitReview = {
+  id: string;
+  order_id: string;
+  tourist_id: string;
+  traveler_id: string;
+  score: number;
+  weight: number;
+  weight_breakdown: OrderReviewWeightBreakdown | null;
+  weight_breakdown_note?: "persisted_review_inputs_not_replayed";
+};
+
+export type OrderReviewSubmitOk = {
+  status: "ok";
+  /** B-451：与 `GET …/reviews` `meta.review_json_contract` 同源 */
+  meta?: {
+    review_json_contract?: OrderReviewJsonContractMeta;
+  };
+  review: OrderReviewSubmitReview;
+};
+
+/** B-452：`postReview` 成功体 + 客户端合约视图 */
+export type OrderReviewPostResult = OrderReviewSubmitOk & {
+  reviewJsonContractClient: ReviewJsonContractClientView;
 };
 
 export async function getOrderReviews(orderId: string): Promise<OrderReviewsListResult> {
@@ -294,7 +334,9 @@ export async function getOrderReviews(orderId: string): Promise<OrderReviewsList
   const items = raw.filter(isRecord).map(normalizeOrderReviewItem);
   const meta =
     data.meta != null && typeof data.meta === "object" ? (data.meta as OrderReviewsListMeta) : undefined;
-  return { items, meta };
+  const reviewJsonContractClient = parseReviewJsonContractMeta(data.meta);
+  observeReviewJsonContractClient(reviewJsonContractClient, "get_reviews");
+  return { items, meta, reviewJsonContractClient };
 }
 
 function isRecord(x: unknown): x is Record<string, unknown> {
@@ -317,16 +359,18 @@ export async function postReview(
   orderId: string,
   body: { score: number; comment?: string },
   idempotencyKey?: string
-): Promise<unknown> {
+): Promise<OrderReviewPostResult> {
   const res = await fetch(apiUrl(routes.orderReviews(orderId)), {
     method: "POST",
     headers: { "Content-Type": "application/json", ...writeRequestHeaders(idempotencyKey) },
     body: JSON.stringify(body),
   });
-  const data = await parseResponse(res);
+  const data = (await parseResponse(res)) as OrderReviewSubmitOk;
   logApiJsonStatusNotOk("postReview", data);
   throwUnlessApiOk(data);
-  return data;
+  const reviewJsonContractClient = parseReviewJsonContractMeta(data.meta);
+  observeReviewJsonContractClient(reviewJsonContractClient, "post_review");
+  return { ...data, reviewJsonContractClient };
 }
 
 export async function postOrderDispute(

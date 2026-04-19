@@ -4,7 +4,7 @@ import type { CountryPricingConfig } from "@/lib/countries";
 import type { CustomItineraryForm } from "./types";
 import type { TransportLine, InterCityLine, BudgetBreakdown } from "./quoteCalculationTypes";
 
-/** 游客侧报价：市内/城际交通、预算拆解与建议（从 useQuoteCalculation 拆出） */
+/** 旅行者侧报价：市内/城际交通、预算拆解与建议（从 useQuoteCalculation 拆出） */
 export function computeTouristQuote(form: CustomItineraryForm, pricing: CountryPricingConfig) {
   const suggestedCityTransportFee = form.dayPlans.reduce(
     (sum, d) => sum + (d.cityTransport ? pricing.cityTransportPrice[d.cityTransport] ?? 0 : 0),

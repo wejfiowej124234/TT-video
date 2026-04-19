@@ -1,0 +1,68 @@
+{
+  "schema_version": "1",
+  "run_id": "R003_LOCAL_A_20260418T024003Z",
+  "title": "R-003 A domain only (local clean) — account & identity",
+  "executor": "local-ci",
+  "reviewer": "",
+  "started_at": "2026-04-18T02:40:00Z",
+  "finished_at": "2026-04-18T02:41:30Z",
+  "environment": {
+    "name": "local",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "R-003 §1 计划内 A 域 7/7 PASS（本地）；B 域未执行 NOT_RUN。非 staging 首轮全量回归交付。",
+  "cases": [
+    {
+      "id": "A-ENV-001",
+      "status": "PASS",
+      "evidence_path": "evidence/r003_local_domain_a/run_20260418T024003Z/A-ENV-001",
+      "notes": "GET /health 200; GET /meta 200，契约键见 meta.pretty.json"
+    },
+    {
+      "id": "A-LOG-001",
+      "status": "PASS",
+      "evidence_path": "evidence/r003_local_domain_a/run_20260418T024003Z/A-LOG-001",
+      "notes": "POST /auth/login 200 + GET /api/v1/me 200（种子账号 tourist@test.com）"
+    },
+    {
+      "id": "A-LOG-002",
+      "status": "PASS",
+      "evidence_path": "evidence/r003_local_domain_a/run_20260418T024003Z/A-LOG-002",
+      "notes": "连续第二次 GET /api/v1/me 200（同 Bearer）"
+    },
+    {
+      "id": "A-LOG-003",
+      "status": "PASS",
+      "evidence_path": "evidence/r003_local_domain_a/run_20260418T024003Z/A-LOG-003",
+      "notes": "POST /auth/logout 200 后同一 token GET /api/v1/me → 401 login_required"
+    },
+    {
+      "id": "A-ME-001",
+      "status": "PASS",
+      "evidence_path": "evidence/r003_local_domain_a/run_20260418T024003Z/A-ME-001",
+      "notes": "GET /api/v1/me 200，email 与种子账号一致"
+    },
+    {
+      "id": "A-NEG-001",
+      "status": "PASS",
+      "evidence_path": "evidence/r003_local_domain_a/run_20260418T024003Z/A-NEG-001",
+      "notes": "错误密码 POST /auth/login → 401 invalid_credentials"
+    },
+    {
+      "id": "A-NEG-002",
+      "status": "PASS",
+      "evidence_path": "evidence/r003_local_domain_a/run_20260418T024003Z/A-NEG-002",
+      "notes": "无 Authorization GET /api/v1/me → 401"
+    }
+  ],
+  "summary": {
+    "PASS": 7,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  }
+}

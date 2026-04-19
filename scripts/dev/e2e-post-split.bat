@@ -2,7 +2,7 @@
 chcp 65001 >nul
 REM 48 §12.6 拆分后必跑：健康检查 + meta + 登录 + api v1 me
 REM 从项目根运行: scripts\e2e-post-split.bat
-set "ROOT=%~dp0\.."
+for %%I in ("%~dp0..\..") do set "ROOT=%%~fI"
 cd /d "%ROOT%"
 
 echo ========== 48 拆分后必跑验证 ==========

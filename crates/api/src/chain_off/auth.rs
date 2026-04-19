@@ -1,6 +1,9 @@
 //! chain_off 认证：注册/登录/种子账号/占位 stub/鉴权解析（48 §5.2）
 
-use axum::{http::StatusCode, Json};
+use axum::{
+    http::{HeaderMap, StatusCode},
+    Json,
+};
 use chrono::Utc;
 use serde::Deserialize;
 use serde_json::json;
@@ -599,11 +602,62 @@ pub async fn seed_test_accounts_if_empty(state: &ChainOffState) {
     }
 }
 
-pub async fn auth_logout_stub(
-    _state: ChainOffState,
-    Json(_body): Json<serde_json::Value>,
+fn bearer_token_from_headers(headers: &HeaderMap) -> Option<String> {
+    let auth = headers
+        .get(axum::http::header::AUTHORIZATION)?
+        .to_str()
+        .ok()?;
+    let s = auth.trim();
+    if s.len() < 8 || !s[..7].eq_ignore_ascii_case("bearer ") {
+        return None;
+    }
+    let token = s[7..].trim();
+    if token.is_empty() {
+        return None;
+    }
+    Some(token.to_string())
+}
+
+/// POST `/auth/logout`：须带 `Authorization: Bearer <session_token>`；删除内存与（若已接库）`sessions` 表中的会话。
+pub async fn auth_logout(
+    state: ChainOffState,
+    headers: HeaderMap,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
-    Ok(Json(json!({"status": "ok", "message": "chain_off_stub"})))
+    let Some(token) = bearer_token_from_headers(&headers) else {
+        return Err((
+            StatusCode::UNAUTHORIZED,
+            Json(crate::api_json::err_key_detail(
+                "session_token_required",
+                "Authorization: Bearer <token> required",
+            )),
+        ));
+    };
+
+    {
+        let mut store = state.store.write().await;
+        store.sessions.remove(&token);
+    }
+
+    if let Some(ref pool) = state.db_pool {
+        match crate::db::delete_session(pool, &token).await {
+            Ok(_) => {}
+            Err(e) => {
+                eprintln!("[audit] delete_session on logout failed token_len={} error={}", token.len(), e);
+                if super::strict_auth_db_write_enabled() {
+                    return Err((
+                        StatusCode::SERVICE_UNAVAILABLE,
+                        Json(json!({
+                            "error": "auth_db_logout_failed",
+                            "message": "auth_db_logout_failed",
+                            "rule": "TRAVELTRUST_STRICT_AUTH_DB_WRITE=1; session delete failed",
+                        })),
+                    ));
+                }
+            }
+        }
+    }
+
+    Ok(Json(json!({"status": "ok", "message": "logged_out"})))
 }
 
 /// 50-B2：刷新 token 真实实现。校验 session（DB 或 store），返回同一 token 与 user_id/role（续期有效）。

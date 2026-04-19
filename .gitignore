@@ -16,6 +16,9 @@ frontend/.next/
 frontend/out/
 frontend/.lighthouse*
 
+# P-GROW3/P-SCALE1：历史遗留本地目录（旧版 Next 文件存储）；运行时权重已迁 Postgres
+frontend/.data/
+
 # 环境与密钥（勿提交）
 .env
 .env.*
@@ -31,6 +34,7 @@ frontend/.lighthouse*
 **/*.rs.bk
 *.bak
 *.tmp
+.smoke_ab_body.json
 .dev_backend.pid
 .dev_frontend.pid
 
@@ -44,3 +48,13 @@ frontend/.lighthouse*
 # 日志默认不入仓；evidence 下 Forge 专验日志白名单入仓（封口/里程碑，见 docs/solo-dev-rhythm.md）
 *.log
 !evidence/**/forge_*.log
+
+# R-003：本机 LOCAL_CHAIN 烟测输出（非 staging 首轮 GO 证据）
+evidence/R003_local_evidence_chain/
+
+# 本地另存 `CARGO_TARGET_DIR` 的构建树（勿入仓；体积极大）
+target-r003-evidence/
+
+# Playwright 本地报告（勿入仓）
+frontend/playwright-report/
+frontend/test-results/

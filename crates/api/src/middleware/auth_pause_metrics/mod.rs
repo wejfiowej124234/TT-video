@@ -28,6 +28,8 @@ pub async fn auth_placeholder_layer(req: Request<Body>, next: axum::middleware::
         || path.starts_with("/auth/")
         || (method == Method::GET && path == "/api/v1/guides")
         || (method == Method::GET && path == "/api/v1/discover/orders")
+        || (method == Method::POST && path == "/api/v1/trust-growth/ingest")
+        || (method == Method::GET && path == "/api/v1/trust-growth/config")
         || (method == Method::GET && path == "/api/v1/did-rank/travelers")
         || (method == Method::GET && path == "/api/v1/did-rank/guides")
         || (method == Method::GET && path == "/api/v1/did-rank/itineraries")

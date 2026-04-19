@@ -26,6 +26,24 @@ import { isDisplayableSnapshotHash } from "@/lib/snapshotHashDisplay";
 
 const ESCROW_ABI = escrowAbiJson as readonly unknown[];
 
+/** GET :id 偶发未带 `itinerary` 时仍展示报价区与终版确认（P05；占位 version 与 ConfirmFinalPlan 乐观锁一致） */
+function itineraryOrPlaceholderForPreEscrow(
+  order: OrderRow | null | undefined,
+  fromApi: ItineraryBlock | null | undefined,
+): ItineraryBlock | null {
+  if (fromApi) return fromApi;
+  if (!order?.id) return null;
+  const st = String(order.state ?? order.status ?? "").toLowerCase();
+  if (order.escrow_address) return null;
+  if (st !== "draft" && st !== "created" && st !== "accepted") return null;
+  return {
+    version: 1,
+    snapshot_hash: null,
+    daily_itinerary: [],
+    amount_breakdown: undefined,
+  };
+}
+
 export interface UseEscrowDetailResult {
   order: OrderRow | null;
   itinerary: ItineraryBlock | null;
@@ -44,6 +62,12 @@ export interface UseEscrowDetailResult {
   currency: string;
   hasEscrow: boolean;
   isDraft: boolean;
+  /** 未上链托管前（draft / created / accepted），与 PATCH itinerary / 终版确认 同域 */
+  isPreEscrowProtocol: boolean;
+  /** 展示报价摘要 + Confirm Final Plan（含接单后 Accepted） */
+  showItineraryBudgetZone: boolean;
+  /** Confirm Final Plan 按钮：Draft 或 双边已确认后的 Accepted */
+  allowConfirmFinalPlan: boolean;
   expectedChainId: number;
   chainMismatch: boolean;
   disputeDeadlineAt: string | undefined;
@@ -426,7 +450,7 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
     const pref = consumeEscrowOrderPrefetch(escrowId);
     if (pref) {
       setOrder(pref.order);
-      setItinerary(pref.itinerary);
+      setItinerary(itineraryOrPlaceholderForPreEscrow(pref.order as OrderRow, pref.itinerary));
     }
     getOrder(escrowId)
       .then((data: unknown) => {
@@ -434,8 +458,9 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
         setError(null);
         const res = data as OrderResponse;
         const o = res?.order ?? (data as OrderRow);
-        setOrder(o?.id ? o : { ...o, id: escrowId });
-        setItinerary(res?.itinerary ?? null);
+        const normalized = o?.id ? o : { ...o, id: escrowId };
+        setOrder(normalized);
+        setItinerary(itineraryOrPlaceholderForPreEscrow(normalized as OrderRow, res?.itinerary ?? null));
       })
       .catch((err) => {
         if (cancelled) return;
@@ -477,7 +502,7 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
         const res = data as OrderResponse;
         const o = res?.order ?? (data as OrderRow);
         if (o?.id) setOrder(o);
-        if (res?.itinerary != null) setItinerary(res.itinerary);
+        setItinerary(itineraryOrPlaceholderForPreEscrow(o as OrderRow | undefined, res?.itinerary ?? null));
         fetchChainSync();
       })
       .catch((err) => {
@@ -518,7 +543,14 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
   const amount = order?.amount ?? t("ui_em_dash");
   const currency = order?.currency ?? "";
   const hasEscrow = !!order?.escrow_address;
-  const isDraft = state === "draft";
+  const stateLower = state.toLowerCase();
+  const isDraft = stateLower === "draft";
+  const subNorm = String((order as OrderRow & { sub_status?: string })?.sub_status ?? "")
+    .toLowerCase()
+    .replace(/-/g, "_");
+  const bilateralConfirmed = subNorm === "confirmed";
+  const isPreEscrowProtocol =
+    !hasEscrow && (isDraft || stateLower === "created" || stateLower === "accepted");
   const chainMismatch = hasEscrow && chainId !== expectedChainId;
   const disputeDeadlineAt = order ? (order as OrderRow & { dispute_deadline_at?: string }).dispute_deadline_at : undefined;
   const disputeWindowExpired = !!disputeDeadlineAt && new Date(disputeDeadlineAt) < new Date();
@@ -538,6 +570,11 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
     (order as OrderRow & { snapshot_hash?: string } | null)?.snapshot_hash ??
     null;
   const snapshotHash = isDisplayableSnapshotHash(snapshotHashRaw) ? snapshotHashRaw.trim() : null;
+
+  const showItineraryBudgetZone = Boolean(isPreEscrowProtocol && itinerary);
+  const allowConfirmFinalPlan = Boolean(
+    !snapshotHash && (isDraft || (stateLower === "accepted" && bilateralConfirmed)),
+  );
 
   const canDepositOnChain = canDepositToEscrow(order, hasEscrow, depositAmount);
   const canReleaseOnChain = canReleaseAfterRating(order, hasEscrow);
@@ -569,6 +606,9 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
     currency,
     hasEscrow,
     isDraft,
+    isPreEscrowProtocol,
+    showItineraryBudgetZone,
+    allowConfirmFinalPlan,
     expectedChainId,
     chainMismatch,
     disputeDeadlineAt,

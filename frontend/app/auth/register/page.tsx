@@ -1,35 +1,31 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
 import { postRegister, applyClientSessionAfterAuth } from "@/lib/apiClient";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { PENDING_GUIDE_KEY } from "@/lib/constants";
 import { PASSWORD_MIN_LEN, MAX_FILE_SIZE } from "./constants";
-import { registerPageShellClass, type RegisterVisualKind } from "./registerBackgrounds";
+import { registerPageShellClass } from "./registerBackgrounds";
 import RegisterPageBackdrop from "./RegisterPageBackdrop";
 import { isValidWalletAddress, fileToBase64, FILE_TOO_LARGE } from "./utils";
 import RegisterTouristForm from "./RegisterTouristForm";
 import RegisterGuideForm from "./RegisterGuideForm";
 import AuthShellCrossNav from "@/components/auth/AuthShellCrossNav";
 import { AuthFullBleedSearchParamsSuspense } from "@/components/auth/AuthSearchParamsSuspense";
-import {
-  touchTargetLink44Classes,
-  travelFocusRingCoreOffset2Classes,
-  travelFocusRingOffset2Classes,
-} from "@/lib/travelLinkFocus";
+import { travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
 import { safeInternalReturnPath } from "@/lib/safeInternalReturnPath";
 
-type RegisterType = "choose" | "traveler" | "guide" | "provider" | "steward";
+type RegisterType = "traveler" | "guide" | "provider" | "steward";
 
-const CHOICE_ROWS: { type: Exclude<RegisterType, "choose">; bg: RegisterVisualKind; labelKey: string }[] = [
-  { type: "traveler", bg: "traveler", labelKey: "auth_register_traveler" },
-  { type: "guide", bg: "guide", labelKey: "auth_register_guide" },
-  { type: "provider", bg: "provider", labelKey: "auth_register_provider" },
-  { type: "steward", bg: "steward", labelKey: "auth_register_steward" },
-];
+function registerTypeFromRoleParam(role: string | null): RegisterType {
+  const r = role?.trim().toLowerCase() ?? "";
+  if (r === "guide") return "guide";
+  if (r === "provider") return "provider";
+  if (r === "steward" || r === "region_steward") return "steward";
+  return "traveler";
+}
 
 const ERROR_KEYS: Record<string, string> = {
   email_required: "auth_register_error_emailRequired",
@@ -66,7 +62,10 @@ function registerApiCatch(
   else if (msg === "invalid_registration_role") setError("invalid_registration_role");
   else if (msg === FILE_TOO_LARGE) setError("file_too_large");
   else if (msg === "auth_db_persist_failed") setError("auth_db_persist_failed");
-  else {
+  else if (msg === "api_html_not_json" || msg === "api_invalid_json_body") {
+    // 已映射为可读的运维提示，勿作未预期异常打 console（仍由表单展示）
+    setError(mapApiReadError(err, t, "auth_register_error_registerFailed"));
+  } else {
     if (typeof window !== "undefined") {
       console.error(logContext, err);
     }
@@ -78,9 +77,9 @@ function RegisterPageInner() {
   const { t } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [registerType, setRegisterType] = useState<RegisterType>("choose");
-  const [hoverBg, setHoverBg] = useState<RegisterVisualKind>("default");
-  const chooseHeadingId = useId();
+  /** 须用稳定原始值作 effect 依赖：`searchParams` 对象引用可能每帧变，会导致重复 setState、极端时白屏 */
+  const roleParam = searchParams.get("role");
+  const [registerType, setRegisterType] = useState<RegisterType>("traveler");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -102,6 +101,10 @@ function RegisterPageInner() {
 
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setRegisterType(registerTypeFromRoleParam(roleParam));
+  }, [roleParam]);
 
   async function handleTravelerSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -152,9 +155,9 @@ function RegisterPageInner() {
         setError("register_failed");
         return;
       }
-      const next = safeInternalReturnPath(searchParams.get("returnUrl"), "/me");
-      router.push(next);
-      router.refresh();
+      const next = safeInternalReturnPath(searchParams.get("returnUrl"), "/community/me");
+      // 成功后会离开本页；勿 `router.refresh()`，否则会刷新当前 `/auth/register` 的 RSC，易重挂载并清空表单。
+      await router.replace(next);
     } catch (err) {
       registerApiCatch(err, t, setError, "RegisterForm submit:");
     } finally {
@@ -243,8 +246,7 @@ function RegisterPageInner() {
       setIdNumber("");
       setIdPhotoFile(null);
       setLanguageCertFile(null);
-      router.push("/guide/register");
-      router.refresh();
+      await router.replace("/guide/register");
     } catch (err) {
       registerApiCatch(err, t, setError, "RegisterForm guideSubmit:");
     } finally {
@@ -266,66 +268,9 @@ function RegisterPageInner() {
   const textareaClass = `w-full min-h-[80px] border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 text-ink-800 bg-bg-console text-small ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`;
   const labelClass = "block text-meta text-ink-600 mb-0.5";
 
-  const backToChoose = () => {
-    setRegisterType("choose");
-    setHoverBg("default");
+  const goBackFromStep = () => {
+    router.push("/");
   };
-
-  if (registerType === "choose") {
-    return (
-      <main className={registerPageShellClass()} aria-label={t("auth_register_title")}>
-        <RegisterPageBackdrop kind={hoverBg} />
-        <div className="relative z-10 flex w-full flex-col items-center gap-4">
-        <div className="w-full max-w-lg rounded-[var(--radius-sm)] border border-ink-200 bg-bg-console/95 shadow-soft backdrop-blur-sm p-6 space-y-6">
-          <h1 id={chooseHeadingId} className="text-h4 font-semibold text-ink-900">
-            {t("auth_register_title")}
-          </h1>
-          <p className="text-meta text-ink-600">{t("auth_register_chooseDesc")}</p>
-          <div
-            role="group"
-            aria-labelledby={chooseHeadingId}
-            className="grid grid-cols-1 gap-3 sm:grid-cols-2"
-            onMouseLeave={() => setHoverBg("default")}
-          >
-            {CHOICE_ROWS.map(({ type, bg, labelKey }) => {
-              const active = hoverBg === bg;
-              return (
-                <form
-                  key={type}
-                  className="contents"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    setHoverBg(bg);
-                    setRegisterType(type);
-                  }}
-                >
-                  <button
-                    type="submit"
-                    onMouseEnter={() => setHoverBg(bg)}
-                    onFocus={() => setHoverBg(bg)}
-                    className={`w-full rounded-[var(--radius-sm)] border-2 py-3 px-4 text-left text-small font-medium transition-colors sm:min-h-[52px] ${
-                      active
-                        ? "border-travel-500 bg-travel-500/10 text-travel-900"
-                        : "border-ink-300 bg-bg-soft text-ink-800 hover:border-travel-400 hover:bg-travel-500/5"
-                    }`}
-                  >
-                    {t(labelKey)}
-                  </button>
-                </form>
-              );
-            })}
-          </div>
-          <p className="text-meta text-ink-500">{t("auth_register_fourWayNote")}</p>
-          <p className="text-meta text-ink-500">
-            <Link href="/auth/login" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("auth_register_loginLink")}</Link> ·{" "}
-            <Link href="/" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("auth_register_web3Travel")}</Link>
-          </p>
-        </div>
-        <AuthShellCrossNav />
-        </div>
-      </main>
-    );
-  }
 
   if (registerType === "traveler") {
     return (
@@ -344,7 +289,7 @@ function RegisterPageInner() {
         setDefaultWallet={setDefaultWallet}
         error={error}
         loading={loading}
-        onBack={backToChoose}
+        onBack={goBackFromStep}
         onSubmit={handleTravelerSubmit}
         getErrorDisplay={getErrorDisplay}
         t={t}
@@ -373,7 +318,7 @@ function RegisterPageInner() {
         setDefaultWallet={setDefaultWallet}
         error={error}
         loading={loading}
-        onBack={backToChoose}
+        onBack={goBackFromStep}
         onSubmit={handleTravelerSubmit}
         getErrorDisplay={getErrorDisplay}
         t={t}
@@ -402,7 +347,7 @@ function RegisterPageInner() {
         setDefaultWallet={setDefaultWallet}
         error={error}
         loading={loading}
-        onBack={backToChoose}
+        onBack={goBackFromStep}
         onSubmit={handleTravelerSubmit}
         getErrorDisplay={getErrorDisplay}
         t={t}
@@ -448,7 +393,7 @@ function RegisterPageInner() {
       setAgreePrivacy={setAgreePrivacy}
       error={error}
       loading={loading}
-      onBack={backToChoose}
+      onBack={goBackFromStep}
       onSubmit={handleGuideSubmit}
       getErrorDisplay={getErrorDisplay}
       t={t}

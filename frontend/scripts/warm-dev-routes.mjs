@@ -9,6 +9,7 @@ const base = (process.argv[2] || "http://127.0.0.1:3012").replace(/\/$/, "");
 const paths = [
   "/",
   "/traveltrust",
+  "/trust",
   "/market",
   "/did-rank",
   "/community",

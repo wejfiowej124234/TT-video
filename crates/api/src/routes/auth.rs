@@ -8,6 +8,7 @@ use axum::Json;
 use axum::Router;
 
 use crate::chain_off;
+use crate::routes::governance_proposals::exec_seed_governance_e2e;
 use crate::state::ApiMetaState;
 
 use super::not_impl_json;
@@ -49,6 +50,14 @@ pub async fn auth_seed_test_accounts(State(state): State<ApiMetaState>) -> impl 
         .into_response()
 }
 
+/// POST /auth/seed-governance-e2e：与 **`seed-test-accounts`** 同源 **`SEED_TEST_ACCOUNTS=1`**；Governor+PG 时 upsert 投影 sentinel，否则重置链下 MVP 治理提案内存（**C-GOV-004** E2E）。
+pub async fn auth_seed_governance_e2e(State(state): State<ApiMetaState>) -> impl IntoResponse {
+    match exec_seed_governance_e2e(&state).await {
+        Ok(j) => (StatusCode::OK, Json(j)).into_response(),
+        Err((code, j)) => (code, Json(j)).into_response(),
+    }
+}
+
 pub async fn auth_login(
     State(state): State<ApiMetaState>,
     Json(body): Json<chain_off::AuthLoginBody>,
@@ -64,10 +73,11 @@ pub async fn auth_login(
 
 pub async fn auth_logout(
     State(state): State<ApiMetaState>,
-    Json(body): Json<serde_json::Value>,
+    headers: axum::http::HeaderMap,
+    Json(_body): Json<serde_json::Value>,
 ) -> impl IntoResponse {
     if let Some(ref co) = state.chain_off {
-        return match chain_off::auth_logout_stub(co.clone(), Json(body)).await {
+        return match chain_off::auth_logout(co.clone(), headers).await {
             Ok(j) => j.into_response(),
             Err((code, j)) => (code, j).into_response(),
         };
@@ -144,6 +154,7 @@ pub fn router() -> Router<ApiMetaState> {
     Router::new()
         .route("/auth/register", post(auth_register))
         .route("/auth/seed-test-accounts", post(auth_seed_test_accounts))
+        .route("/auth/seed-governance-e2e", post(auth_seed_governance_e2e))
         .route("/auth/login", post(auth_login))
         .route("/auth/logout", post(auth_logout))
         .route("/auth/refresh", post(auth_refresh))
