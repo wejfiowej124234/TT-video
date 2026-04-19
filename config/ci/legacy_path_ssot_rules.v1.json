@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "description": "CI gate: legacy repo paths must not read as current SSOT without same-line deprecation markers.",
+  "scan_roots": ["docs/spec", "docs", "crates", "contracts"],
+  "text_suffixes": [
+    ".md",
+    ".rs",
+    ".sol",
+    ".toml",
+    ".yml",
+    ".yaml",
+    ".sh",
+    ".ps1",
+    ".json"
+  ],
+  "skip_path_contains": [
+    "node_modules",
+    "/target/",
+    "\\target\\",
+    "/.git/",
+    "\\.git\\",
+    ".git/",
+    "/contracts/lib/",
+    "\\contracts\\lib\\",
+    "contracts/lib/",
+    "/contracts/out/",
+    "\\contracts\\out\\",
+    "contracts/out/",
+    "verification-evidence"
+  ],
+  "rules": [
+    {
+      "id": "monolithic_staking_removed",
+      "enabled": true,
+      "description": "Legacy single-file staking removed; SSOT is IdentityStakingPool + Guide/Provider pools.",
+      "hit_regexes": [
+        "(?<![A-Za-z0-9_])Staking\\.sol",
+        "contracts/src/Staking"
+      ],
+      "allow_structured_regexes": [
+        "Staking\\.sol.*(已移除|legacy|旧|removed|obsolete|deprecated)",
+        "(已移除|legacy|旧|removed|obsolete|deprecated).*Staking\\.sol",
+        "contracts/src/Staking.*(已移除|legacy|旧|removed|obsolete|deprecated)",
+        "(已移除|legacy|旧|removed|obsolete|deprecated).*contracts/src/Staking",
+        "Staking\\.sol\\s*（[^）]{0,64}已移除[^）]{0,64}）",
+        "（[^）]{0,64}已移除[^）]{0,64}）\\s*Staking\\.sol"
+      ],
+      "allow_line_fallback_regex": "已移除|已删除|已下线|已从仓库|已从树|removed\\s+from|no\\s+longer|legacy|obsolete|deprecated|historical|审计时点|不得|仅作历史|历史兼容|旧单文件|旧版|旧\\s*`|`\\s*旧|向后兼容|compatible|该文件已移除|叙述下线|与历史|静默.*旧|旧.*Staking\\.sol|Staking\\.sol.*已移除|contracts/src/Staking.*已移除|已移除.*contracts/src/Staking",
+      "suggestion": "SSOT: contracts/src/IdentityStakingPool.sol + GuideIdentityStakingPool.sol / ProviderIdentityStakingPool.sol (ABI: contracts/abi/GuideIdentityStakingPool.json, ProviderIdentityStakingPool.json). If you must mention the removed file, keep removed/legacy/已移除/旧 on the same line (see allow_structured_regexes in config/ci/legacy_path_ssot_rules.v1.json)."
+    },
+    {
+      "id": "_template_add_more_legacy_path_rules",
+      "enabled": false,
+      "description": "Duplicate this object, set enabled true, and fill hit_regexes / allow_structured_regexes / allow_line_fallback_regex / suggestion for other retired paths.",
+      "hit_regexes": ["(?!)"],
+      "allow_structured_regexes": [],
+      "allow_line_fallback_regex": null,
+      "suggestion": ""
+    }
+  ]
+}
