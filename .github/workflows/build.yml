@@ -9,6 +9,11 @@ on:
   pull_request:
     branches: [main]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # PR 与 feature 分支：新 push 取消旧运行以省分钟数；main 不取消，避免「标签/合并」竞态下误杀长跑证据。
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
 permissions:
   contents: read
   actions: write
@@ -17,11 +22,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     continue-on-error: true
+    timeout-minutes: 90
+    env:
+      CARGO_INCREMENTAL: "0"
     steps:
       - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: traveltrust-${{ runner.os }}
       - name: Set evidence dir
         run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
       - name: Check invariants
@@ -90,6 +101,7 @@ jobs:
   frontend:
     runs-on: ubuntu-latest
     continue-on-error: true
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v4
@@ -103,6 +115,8 @@ jobs:
         run: cd frontend && npm ci
       - name: Lint
         run: cd frontend && npm run lint
+      - name: Next 15 useSearchParams + Suspense guard (app + components + lib/hooks)
+        run: cd frontend && npm run check:search-params-suspense
       - name: TypeScript
         run: cd frontend && npx tsc --noEmit
       - name: Unit tests
@@ -128,12 +142,13 @@ jobs:
             "ci_run_id": "${{ github.run_id }}",
             "passed": true,
             "status": "passed",
-            "checks": ["lint", "tsc", "vitest", "test:i18n:ci"]
+            "checks": ["lint", "search-params-suspense", "tsc", "vitest", "test:i18n:ci"]
           }
           JSON
           cat > "$EVIDENCE_DIR/frontend_junit.xml" <<'XML'
-          <testsuite name="frontend-quality" tests="4" failures="0" errors="0" skipped="0">
+          <testsuite name="frontend-quality" tests="5" failures="0" errors="0" skipped="0">
             <testcase classname="ci.frontend" name="lint"/>
+            <testcase classname="ci.frontend" name="search-params-suspense"/>
             <testcase classname="ci.frontend" name="tsc"/>
             <testcase classname="ci.frontend" name="vitest"/>
             <testcase classname="ci.frontend" name="test:i18n:ci"/>
@@ -151,6 +166,7 @@ jobs:
   regional-matrix:
     runs-on: ubuntu-latest
     continue-on-error: true
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v4
@@ -179,6 +195,7 @@ jobs:
   a11y:
     runs-on: ubuntu-latest
     continue-on-error: true
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v4
@@ -250,6 +267,23 @@ jobs:
   e2e:
     runs-on: ubuntu-latest
     continue-on-error: true
+    timeout-minutes: 60
+    # 95 · ISS-007：与 dev-local-smoke-baseline / l4-parallel-ci 同源 Postgres，供注册/会话/Feed 等
+    # 需「二次可读」的 Playwright 与 93 A 域闭证（API 启动时 embedded Migrator 跑迁移）。
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: traveltrust
+          POSTGRES_PASSWORD: traveltrust
+          POSTGRES_DB: traveltrust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U traveltrust -d traveltrust"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
     outputs:
       playwright_outcome: ${{ steps.export_playwright_outcome.outputs.playwright_outcome }}
     steps:
@@ -271,20 +305,27 @@ jobs:
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: traveltrust-${{ runner.os }}
       - name: Build traveltrust-api (E2E rewrite target)
         env:
           TRAVELTRUST_BUILD_GIT_SHA: ${{ github.sha }}
+          CARGO_INCREMENTAL: "0"
         run: cargo build -p traveltrust-api
       - name: Start API on 8080 for E2E
         env:
           PORT: "8080"
           SEED_TEST_ACCOUNTS: "1"
           P3_CHAIN_OFF: "1"
+          # **95 · ISS-007 / F-025**：`f024-f025-f026-request` **B-DSP-003** E2E 须与 **`chain_off/auth`** 种子邮箱一致（`POST /auth/register` → `arbitrator`）。
+          P3_SEED_ARBITRATOR_EMAIL: "e2e-ci-arbitrator-seed@traveltrust.test"
           TRAVELTRUST_BUILD_GIT_SHA: ${{ github.sha }}
-          DATABASE_URL: ""
+          DATABASE_URL: postgres://traveltrust:traveltrust@127.0.0.1:5432/traveltrust
+          CHAIN_RPC_URL: ""
         run: |
           set -euo pipefail
-          cargo run -p traveltrust-api > /tmp/traveltrust-api-e2e.log 2>&1 &
+          ./target/debug/traveltrust-api > /tmp/traveltrust-api-e2e.log 2>&1 &
           for i in $(seq 1 120); do
             if curl -sf "http://127.0.0.1:8080/health" >/dev/null; then
               echo "API ready on :8080"
@@ -300,8 +341,28 @@ jobs:
         env:
           PORT: "3012"
           PLAYWRIGHT_BASE_URL: "http://localhost:3012"
+          PLAYWRIGHT_ARBITRATOR_SEED_EMAIL: "e2e-ci-arbitrator-seed@traveltrust.test"
+          # 链关烟测：`CHAIN_RPC_URL=""` 时 /meta 无 chain.contracts；setup-meta-chain 须 RELAX（见 frontend/playwright.config.ts、metaChainGuard.ts）
+          PLAYWRIGHT_RELAX_META_CHAIN_GUARD: "1"
         run: cd frontend && npm run e2e -- --project=chromium
         continue-on-error: false  # E2E 门禁已收紧（50 §六附 修补所有问题）
+      - name: R-002 · ISS-007 narrow slice (43× matrix_93 → report.json)
+        env:
+          DATABASE_URL: postgres://traveltrust:traveltrust@127.0.0.1:5432/traveltrust
+          P3_CHAIN_OFF: "1"
+          CARGO_INCREMENTAL: "0"
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_SHA: ${{ github.sha }}
+          PLAYWRIGHT_E2E_STEP_OUTCOME: ${{ steps.e2e_playwright.outcome }}
+        run: |
+          set -euo pipefail
+          export TRAVELTRUST_R002_REPORT_PARENT="${EVIDENCE_DIR}"
+          python3 scripts/gen-r002-iss007-prereport.py
+          RPT="${EVIDENCE_DIR}/r002_iss007_prereport/report.json"
+          test -f "${RPT}"
+          python3 scripts/validate-regression-report.py "${RPT}" \
+            --fail-on-no-go \
+            --fail-on-case-not-run
       - name: Baseline regression hint (informational, non-blocking)
         if: always()
         env:
@@ -322,29 +383,13 @@ jobs:
           path: e2e-playwright-outcome.txt
           retention-days: 2
       - name: Generate e2e evidence artifacts
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
         run: |
-          TS_UTC="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          set -euo pipefail
           mkdir -p "$EVIDENCE_DIR"
-          cat > "$EVIDENCE_DIR/e2e_core_report.json" <<JSON
-          {
-            "workflow": "Build",
-            "job": "e2e",
-            "check": "e2e-playwright-core",
-            "commit_sha": "${{ github.sha }}",
-            "ci_run_id": "${{ github.run_id }}",
-            "env": "ci",
-            "rule_id": "e2e-playwright",
-            "severity": "gate",
-            "owner": "frontend-team",
-            "generated_at": "${TS_UTC}",
-            "passed": true,
-            "suite": "playwright chromium"
-          }
-          JSON
-          cat > "$EVIDENCE_DIR/e2e_trace_index.csv" <<'CSV'
-          suite,artifact,status
-          playwright,frontend/playwright-report,passed
-          CSV
+          python3 scripts/write-e2e-core-report-with-r002.py
       - name: Upload e2e evidence artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -352,6 +397,8 @@ jobs:
           path: |
             evidence/GO_*/e2e_core_report.json
             evidence/GO_*/e2e_trace_index.csv
+            evidence/GO_*/r002_iss007_prereport/report.json
+            evidence/GO_*/r002_iss007_prereport/*/notes.md
 
   finance-reconcile:
     runs-on: ubuntu-latest
