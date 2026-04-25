@@ -1,0 +1,29 @@
+{
+  "batch": "GO_96_16_d5_d6_d7_admin_community_observability_config_guides_staking_traveltrust",
+  "docs_spec_touched": false,
+  "scope": "/admin/community/*, /admin/observability, /admin/config/*, /guides + /guides/[id], /staking + components StakingStakePanel/StakingWithdrawPanel, /traveltrust; locales en/zh (guideDetail_stakeAmountLabel)",
+  "d5_d6_d7_actions": [
+    "admin community: all page.tsx text links + motion-reduce/underline-offset; reports filter fields explicit htmlFor/id; appeals table mono link",
+    "admin observability: link polish + card transitions motion-reduce:transition-none",
+    "admin config hub + releases list/detail: link/underline/transition; releases apply/reset button transitions",
+    "guides list/detail: cyan links underline-offset + transition + motion-reduce; retry/loading motion; guide detail stake sr-only label + id + 44px field",
+    "staking: loading motion-sub transition-none; error links; Stake/Withdraw panels label htmlFor, 44px inputs, focus rings, aria-invalid/errormessage regions, max button motion-reduce",
+    "traveltrust error: link hover motion-reduce + underline-offset"
+  ],
+  "commands": {
+    "eslint": { "cmd": "npm run lint", "exit": 0 },
+    "i18n_ci": { "cmd": "npm run test:i18n:ci", "exit": 0 },
+    "vitest": {
+      "cmd": "npm test -- --run lib/stakingEnv.test.ts lib/apiClient/guides.test.ts",
+      "exit": 0,
+      "tests_passed": 17
+    },
+    "npm_run_build": { "cmd": "npm run build", "exit": 0 }
+  },
+  "playwright_e2e": {
+    "status": "NOT_RUN",
+    "trace": "93",
+    "detail": "E2E not run in this batch."
+  },
+  "claim_96_complete": false
+}

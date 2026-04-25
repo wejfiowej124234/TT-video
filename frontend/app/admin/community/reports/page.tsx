@@ -19,6 +19,7 @@ import {
 } from "@/lib/adminFetchDisplay";
 import { apiUrl, routes } from "@/lib/api";
 import { getAuthHeaders, writeRequestHeaders } from "@/lib/apiClient";
+import type { LocaleTranslateFn } from "@/lib/i18n";
 import { isUuidString } from "@/lib/isUuidString";
 import {
   touchTargetLink44Classes,
@@ -109,13 +110,13 @@ function buildReportsListPath(q: ReportsListParsed): string {
 function moderationErrText(
   code: string | undefined,
   body: ModerationRes | undefined,
-  t: (k: string) => string,
+  t: LocaleTranslateFn,
 ): string {
   switch (code) {
     case "community_report_version_conflict": {
       const cv = body?.current_version;
       return typeof cv === "number"
-        ? t("admin_reports_modErrVersionConflict").replace("{{v}}", String(cv))
+        ? t("admin_reports_modErrVersionConflict", { v: cv })
         : t("admin_reports_modErrVersionConflictGeneric");
     }
     case "admin_community_moderation_race":
@@ -144,10 +145,16 @@ function AdminCommunityReportsPageInner() {
   const modModalFilterHintId = useId();
   const adminAppliedFiltersDescId = useId();
   const adminListApplyResetHintId = useId();
+  const communityReportsFilterLimitId = useId();
+  const communityReportsFilterStatusId = useId();
+  const communityReportsFilterReporterId = useId();
+  const communityReportsFilterTargetTypeId = useId();
+  const communityReportsFilterReasonCodeId = useId();
+  const communityReportsFilterTargetId = useId();
   const router = useRouter();
   const searchParams = useSearchParams();
   const listQ = useMemo(
-    () => parseReportsListQuery(new URLSearchParams(searchParams.toString())),
+    () => parseReportsListQuery(new URLSearchParams(searchParams?.toString() ?? "")),
     [searchParams],
   );
 
@@ -391,40 +398,40 @@ function AdminCommunityReportsPageInner() {
           <p className="mt-1 text-body text-ink-600">{t("admin_community_reports_subtitle")}</p>
         </div>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-small">
-          <Link href="/admin/community/moderation/cases" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/community/moderation/cases" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_community_reports_linkModCases")}
           </Link>
-          <Link href="/admin/community/risk-signals" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/community/risk-signals" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_community_reports_linkRisk")}
           </Link>
-          <Link href="/admin/community/policy-change-logs" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/community/policy-change-logs" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_community_reports_linkPolicy")}
           </Link>
-          <Link href="/admin/community/abuse-policy" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/community/abuse-policy" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_community_reports_linkAbusePolicy")}
           </Link>
-          <Link href="/admin/community/comments/visibility" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/community/comments/visibility" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_community_reports_linkCommentVis")}
           </Link>
-          <Link href="/admin/community/ranking/snapshots" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/community/ranking/snapshots" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_community_reports_linkRanking")}
           </Link>
-          <Link href="/admin/community/penalties" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/community/penalties" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_community_reports_linkPenalties")}
           </Link>
-          <Link href="/admin/community/appeals" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/community/appeals" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_community_reports_linkAppeals")}
           </Link>
-          <Link href="/admin/community/appeals/review" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/community/appeals/review" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_community_reports_linkAppealReview")}
           </Link>
           <Link
             href="/admin/observability"
-            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("admin_observability_title")}
           </Link>
-          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_community_reports_back")}
           </Link>
         </div>
@@ -447,9 +454,10 @@ function AdminCommunityReportsPageInner() {
             {t("admin_list_filters_apply_reset_hint")}
           </p>
           <div className="flex flex-wrap items-end gap-3">
-            <label className="text-small text-ink-700">
+            <label htmlFor={communityReportsFilterLimitId} className="text-small text-ink-700">
               {t("admin_community_reports_limit")}
               <input
+                id={communityReportsFilterLimitId}
                 type="text"
                 inputMode="numeric"
                 value={draftLimit}
@@ -457,9 +465,10 @@ function AdminCommunityReportsPageInner() {
                 className={`ml-2 min-h-[44px] w-20 rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 ${travelFocusRingCoreOffset2WhiteClasses}`}
               />
             </label>
-            <label className="text-small text-ink-700">
+            <label htmlFor={communityReportsFilterStatusId} className="text-small text-ink-700">
               {t("admin_community_reports_status")}
               <select
+                id={communityReportsFilterStatusId}
                 value={draftStatus}
                 onChange={(e) => setDraftStatus(e.target.value)}
                 className={`ml-2 inline-flex min-h-[44px] items-center justify-start rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 ${travelFocusRingCoreOffset2WhiteClasses}`}
@@ -471,9 +480,10 @@ function AdminCommunityReportsPageInner() {
                 ))}
               </select>
             </label>
-            <label className="text-small text-ink-700 block min-w-[12rem]">
+            <label htmlFor={communityReportsFilterReporterId} className="text-small text-ink-700 block min-w-[12rem]">
               {t("admin_community_reports_reporter_id")}
               <input
+                id={communityReportsFilterReporterId}
                 type="text"
                 value={draftReporterId}
                 onChange={(e) => setDraftReporterId(e.target.value)}
@@ -482,9 +492,10 @@ function AdminCommunityReportsPageInner() {
                 autoComplete="off"
               />
             </label>
-            <label className="text-small text-ink-700 block min-w-[8rem]">
+            <label htmlFor={communityReportsFilterTargetTypeId} className="text-small text-ink-700 block min-w-[8rem]">
               {t("admin_community_reports_target_type")}
               <input
+                id={communityReportsFilterTargetTypeId}
                 type="text"
                 value={draftTargetType}
                 onChange={(e) => setDraftTargetType(e.target.value.slice(0, TT_MAX))}
@@ -493,9 +504,10 @@ function AdminCommunityReportsPageInner() {
                 autoComplete="off"
               />
             </label>
-            <label className="text-small text-ink-700 block min-w-[10rem]">
+            <label htmlFor={communityReportsFilterReasonCodeId} className="text-small text-ink-700 block min-w-[10rem]">
               {t("admin_community_reports_reason_code")}
               <input
+                id={communityReportsFilterReasonCodeId}
                 type="text"
                 value={draftReasonCode}
                 onChange={(e) => setDraftReasonCode(e.target.value.slice(0, RC_MAX))}
@@ -504,9 +516,10 @@ function AdminCommunityReportsPageInner() {
                 autoComplete="off"
               />
             </label>
-            <label className="text-small text-ink-700 block min-w-[12rem]">
+            <label htmlFor={communityReportsFilterTargetId} className="text-small text-ink-700 block min-w-[12rem]">
               {t("admin_community_reports_target_id")}
               <input
+                id={communityReportsFilterTargetId}
                 type="text"
                 value={draftTargetId}
                 onChange={(e) => setDraftTargetId(e.target.value)}
@@ -547,7 +560,9 @@ function AdminCommunityReportsPageInner() {
 
       {!loading && !error && appliedFilters ? (
         <AdminAppliedFiltersBanner id={adminAppliedFiltersDescId} variant="card" className="mt-6">
-          {t("admin_community_reports_applied")}: {JSON.stringify(appliedFilters)}
+          {t("admin_community_reports_applied")}
+          {t("market_fin_colon")}
+          {JSON.stringify(appliedFilters)}
         </AdminAppliedFiltersBanner>
       ) : null}
 

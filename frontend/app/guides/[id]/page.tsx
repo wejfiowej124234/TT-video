@@ -82,6 +82,7 @@ function GuideDetailPageInner() {
   const [bookGuideOpen, setBookGuideOpen] = useState(false);
   const guideHeroNameId = useId();
   const guideCredentialsHeadingId = useId();
+  const guideStakeAmountFieldId = useId();
 
   useEffect(() => {
     if (!id) {
@@ -183,7 +184,7 @@ function GuideDetailPageInner() {
             ariaLabelKey="guide_detail_relatedNav_aria"
             showGuides
             className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-300"
-            linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}
+            linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}
             separatorClassName="text-slate-500"
           />
         </div>
@@ -217,7 +218,7 @@ function GuideDetailPageInner() {
             <p>
               <Link
                 href="/guides"
-                className={`${touchTargetLink44Classes} text-cyan-300 hover:text-cyan-100 underline text-small ${marketCyanInlineLinkFocusClasses}`}
+                className={`${touchTargetLink44Classes} text-cyan-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none text-small ${marketCyanInlineLinkFocusClasses}`}
               >
                 {t("guideDetail_backList")}
               </Link>
@@ -226,7 +227,7 @@ function GuideDetailPageInner() {
               ariaLabelKey="guide_detail_relatedNav_aria"
               showGuides
               className="mt-6 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-300"
-              linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}
+              linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}
               separatorClassName="text-slate-500"
             />
           </div>
@@ -253,7 +254,7 @@ function GuideDetailPageInner() {
               ariaLabelKey="guide_detail_relatedNav_aria"
               showGuides
               className="mt-6 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-300"
-              linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}
+              linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}
               separatorClassName="text-slate-500"
             />
           </div>
@@ -276,15 +277,15 @@ function GuideDetailPageInner() {
         <div className="mx-auto max-w-2xl space-y-6">
           {/* 返回 */}
           <p className="text-small">
-            <Link href="/guides" className={`${touchTargetLink44Classes} text-slate-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}>
+            <Link href="/guides" className={`${touchTargetLink44Classes} text-slate-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}>
               {t("guides_title")}
             </Link>
             {" · "}
-            <Link href="/market" className={`${touchTargetLink44Classes} text-slate-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}>
+            <Link href="/market" className={`${touchTargetLink44Classes} text-slate-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}>
               {t("market_meta_title")}
             </Link>
             {" · "}
-            <Link href="/" className={`${touchTargetLink44Classes} text-slate-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}>
+            <Link href="/" className={`${touchTargetLink44Classes} text-slate-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}>
               {t("guides_navHome")}
             </Link>
           </p>
@@ -364,7 +365,7 @@ function GuideDetailPageInner() {
                     href={guide.id_photo_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`${touchTargetLink44Classes} text-small text-cyan-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}
+                    className={`${touchTargetLink44Classes} text-small text-cyan-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}
                   >
                     {t("guideDetail_viewCert")}
                   </a>
@@ -378,7 +379,7 @@ function GuideDetailPageInner() {
                     href={guide.language_cert_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`${touchTargetLink44Classes} text-small text-cyan-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}
+                    className={`${touchTargetLink44Classes} text-small text-cyan-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}
                   >
                     {t("guideDetail_viewCert")}
                   </a>
@@ -452,12 +453,17 @@ function GuideDetailPageInner() {
                 handleStake();
               }}
             >
+              <label htmlFor={guideStakeAmountFieldId} className="sr-only">
+                {t("guideDetail_stakeAmountLabel")}
+              </label>
               <input
+                id={guideStakeAmountFieldId}
                 type="text"
                 value={stakeAmount}
                 onChange={(e) => setStakeAmount(e.target.value)}
                 placeholder={t("guideDetail_amountPlaceholder")}
-                className="rounded-[var(--radius-md)] border border-slate-600 bg-ink-700/80 px-3 py-2 text-small text-slate-200 placeholder:text-slate-400 w-28 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-800"
+                className="min-h-[44px] rounded-[var(--radius-md)] border border-slate-600 bg-ink-700/80 px-3 py-2 text-small text-slate-200 placeholder:text-slate-400 w-28 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-800"
+                autoComplete="off"
                 aria-label={t("guideDetail_amountPlaceholder")}
               />
               <button
@@ -505,7 +511,7 @@ function GuideDetailPageInner() {
             ariaLabelKey="guide_detail_relatedNav_aria"
             showGuides
             className="mt-8 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-300 pt-6 border-t border-white/10"
-            linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}
+            linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}
             separatorClassName="text-slate-500"
           />
 

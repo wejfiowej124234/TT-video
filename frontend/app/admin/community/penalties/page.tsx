@@ -136,7 +136,7 @@ function AdminCommunityPenaltiesPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const listQ = useMemo(
-    () => parsePenaltiesListQuery(new URLSearchParams(searchParams.toString())),
+    () => parsePenaltiesListQuery(new URLSearchParams(searchParams?.toString() ?? "")),
     [searchParams],
   );
 
@@ -338,16 +338,16 @@ function AdminCommunityPenaltiesPageInner() {
               {t("admin_penalties_createOpen")}
             </button>
           </form>
-          <Link href="/admin/community/reports" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/community/reports" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_penalties_linkReports")}
           </Link>
           <Link
             href="/admin/observability"
-            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("admin_observability_title")}
           </Link>
-          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_penalties_back")}
           </Link>
         </div>
@@ -460,7 +460,9 @@ function AdminCommunityPenaltiesPageInner() {
 
       {!loading && !error && appliedFilters ? (
         <AdminAppliedFiltersBanner id={adminAppliedFiltersDescId} variant="card" className="mt-6">
-          {t("admin_penalties_applied")}: {JSON.stringify(appliedFilters)}
+          {t("admin_penalties_applied")}
+          {t("market_fin_colon")}
+          {JSON.stringify(appliedFilters)}
         </AdminAppliedFiltersBanner>
       ) : null}
 

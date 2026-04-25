@@ -113,28 +113,28 @@ export default function AdminObservabilityPage() {
           <p className="mt-1 text-body text-ink-600">{t("admin_observability_subtitle")}</p>
         </div>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-small">
-          <Link href="/admin/audit" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/audit" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_observability_linkAuditLogs")}
           </Link>
-          <Link href="/admin/audit/operations" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/audit/operations" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_observability_linkAuditOps")}
           </Link>
           <Link
             href="/admin/indexer/reconcile-reports"
-            className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("admin_observability_linkReconcileReports")}
           </Link>
-          <Link href="/admin/alerts/incidents" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/alerts/incidents" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_observability_linkIncidents")}
           </Link>
           <Link
             href="/admin/trust-growth"
-            className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("admin_shell_nav_trust_growth")}
           </Link>
-          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_schema_back")}
           </Link>
         </div>
@@ -155,7 +155,7 @@ export default function AdminObservabilityPage() {
           <div className="space-y-6">
             <Link
               href="/admin/indexer"
-              className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200/70 bg-bg-console/50 p-3 text-left text-ink-800 transition hover:border-travel-400 hover:text-travel-700 ${travelFocusRingOffset2Classes}`}
+              className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200/70 bg-bg-console/50 p-3 text-left text-ink-800 transition motion-reduce:transition-none hover:border-travel-400 hover:text-travel-700 ${travelFocusRingOffset2Classes}`}
               aria-labelledby={chainBlockId}
             >
               <h2 id={chainBlockId} className="text-small font-semibold uppercase tracking-wide text-ink-500">
@@ -171,13 +171,13 @@ export default function AdminObservabilityPage() {
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                   <Link
                     href="/admin/indexer"
-                    className={`${touchTargetLink44Classes} text-small font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+                    className={`${touchTargetLink44Classes} text-small font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
                   >
                     {t("admin_observability_linkIndexer")}
                   </Link>
                   <Link
                     href="/admin/indexer/reconcile-reports"
-                    className={`${touchTargetLink44Classes} text-small font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+                    className={`${touchTargetLink44Classes} text-small font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
                   >
                     {t("admin_observability_linkReconcileReports")}
                   </Link>
@@ -204,7 +204,7 @@ export default function AdminObservabilityPage() {
                 const rtLabel = lr?.report_type?.trim();
                 const chainLine =
                   typeof lr?.chain_id === "number"
-                    ? t("admin_indexer_last_reconcile_chain").replace("{id}", String(lr.chain_id))
+                    ? t("admin_indexer_last_reconcile_chain", { id: String(lr.chain_id) })
                     : t("admin_indexer_last_reconcile_chain_unknown");
 
                 const summaryHref = reportId
@@ -217,27 +217,26 @@ export default function AdminObservabilityPage() {
                 return (
                   <Link
                     href={summaryHref}
-                    className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start mb-4 space-y-2 rounded-[var(--radius-md)] border border-ink-200 bg-white/90 p-4 text-left text-ink-800 transition hover:border-travel-400 hover:text-travel-700 ${travelFocusRingCoreOffset2WhiteClasses}`}
+                    className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start mb-4 space-y-2 rounded-[var(--radius-md)] border border-ink-200 bg-white/90 p-4 text-left text-ink-800 transition motion-reduce:transition-none hover:border-travel-400 hover:text-travel-700 ${travelFocusRingCoreOffset2WhiteClasses}`}
                     aria-label={summaryAria}
                   >
                     <h3 className="text-small font-semibold text-ink-800">{t("admin_observability_indexer_summary_heading")}</h3>
                     {block !== null && log !== null ? (
                       <p className="text-body text-ink-700">
-                        {t("admin_observability_indexer_checkpoint")
-                          .replace("{block}", String(block))
-                          .replace("{log}", String(log))}
+                        {t("admin_observability_indexer_checkpoint", { block: String(block), log: String(log) })}
                       </p>
                     ) : null}
                     {lag !== null && lagMax !== null ? (
                       <p className="text-body text-ink-700">
-                        {t("admin_observability_indexer_lag").replace("{lag}", String(lag)).replace("{max}", String(lagMax))}
+                        {t("admin_observability_indexer_lag", { lag: String(lag), max: String(lagMax) })}
                       </p>
                     ) : null}
                     {finalityN !== null ? (
                       <p className="text-body text-ink-700">
-                        {t("admin_observability_indexer_finality")
-                          .replace("{n}", String(finalityN))
-                          .replace("{seen}", lastSeenFn !== null ? String(lastSeenFn) : t("admin_em_dash"))}
+                        {t("admin_observability_indexer_finality", {
+                          n: String(finalityN),
+                          seen: lastSeenFn !== null ? String(lastSeenFn) : t("admin_em_dash"),
+                        })}
                       </p>
                     ) : null}
                     <p className="text-body text-ink-700">
@@ -251,7 +250,7 @@ export default function AdminObservabilityPage() {
                         <h4 className="text-small font-semibold text-ink-800">{t("admin_indexer_last_reconcile_heading")}</h4>
                         {rtLabel ? (
                           <p className="mt-2 text-meta font-mono text-ink-700">
-                            {t("admin_indexer_last_reconcile_report_type").replace("{type}", rtLabel)}
+                            {t("admin_indexer_last_reconcile_report_type", { type: rtLabel })}
                           </p>
                         ) : null}
                         <p className="mt-2 text-body text-ink-700">
@@ -263,13 +262,16 @@ export default function AdminObservabilityPage() {
                         </p>
                         <p className="mt-1 text-body text-ink-600">
                           {typeof issues === "number"
-                            ? t("admin_indexer_last_reconcile_issues").replace("{count}", String(issues))
-                            : t("admin_indexer_last_reconcile_issues_unknown")}
+                            ? t("admin_indexer_last_reconcile_issues", {
+                                count: String(issues),
+                                colon: t("market_fin_colon"),
+                              })
+                            : t("admin_indexer_last_reconcile_issues_unknown", { colon: t("market_fin_colon") })}
                         </p>
                         <p className="mt-1 text-meta text-ink-600">{chainLine}</p>
                         {lr?.created_at && !Number.isNaN(Date.parse(lr.created_at)) ? (
                           <p className="mt-1 text-meta text-ink-500">
-                            {t("admin_indexer_last_reconcile_at").replace("{ts}", new Date(lr.created_at).toLocaleString())}
+                            {t("admin_indexer_last_reconcile_at", { ts: new Date(lr.created_at).toLocaleString() })}
                           </p>
                         ) : null}
                         <p className="mt-2 text-small font-medium text-travel-600">
@@ -282,7 +284,7 @@ export default function AdminObservabilityPage() {
               })()}
               <Link
                 href="/admin/indexer"
-                className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200/50 p-1 text-left transition hover:border-travel-400 ${travelFocusRingOffset2Classes}`}
+                className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200/50 p-1 text-left transition motion-reduce:transition-none hover:border-travel-400 ${travelFocusRingOffset2Classes}`}
                 aria-label={t("admin_observability_linkIndexer")}
               >
                 <JsonBlock value={ov.indexer ?? {}} />
@@ -290,7 +292,7 @@ export default function AdminObservabilityPage() {
             </div>
             <Link
               href="/admin/audit"
-              className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200/70 bg-bg-console/30 p-3 text-left text-ink-800 transition hover:border-travel-400 hover:text-travel-700 ${travelFocusRingOffset2Classes}`}
+              className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200/70 bg-bg-console/30 p-3 text-left text-ink-800 transition motion-reduce:transition-none hover:border-travel-400 hover:text-travel-700 ${travelFocusRingOffset2Classes}`}
               aria-labelledby={rateLimitsBlockId}
             >
               <h2 id={rateLimitsBlockId} className="text-small font-semibold uppercase tracking-wide text-ink-500">
@@ -300,7 +302,7 @@ export default function AdminObservabilityPage() {
             </Link>
             <Link
               href="/admin/alerts/incidents"
-              className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200/70 bg-bg-console/30 p-3 text-left text-ink-800 transition hover:border-travel-400 hover:text-travel-700 ${travelFocusRingOffset2Classes}`}
+              className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200/70 bg-bg-console/30 p-3 text-left text-ink-800 transition motion-reduce:transition-none hover:border-travel-400 hover:text-travel-700 ${travelFocusRingOffset2Classes}`}
               aria-labelledby={alertsBlockId}
             >
               <h2 id={alertsBlockId} className="text-small font-semibold uppercase tracking-wide text-ink-500">

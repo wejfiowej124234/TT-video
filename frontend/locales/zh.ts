@@ -4214,6 +4214,7 @@ export default {
   guideDetail_languages: "语言：",
   guideDetail_services: "服务：",
   guideDetail_stakeSection: "质押（向导本人可操作）",
+  guideDetail_stakeAmountLabel: "质押金额",
   guideDetail_amountPlaceholder: "金额",
   guideDetail_submitting: "提交中…",
   guideDetail_orderLink: "向该向导下单 →",

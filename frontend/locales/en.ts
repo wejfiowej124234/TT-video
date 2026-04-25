@@ -4288,6 +4288,7 @@ export default {
   guideDetail_languages: "Languages: ",
   guideDetail_services: "Services: ",
   guideDetail_stakeSection: "Stake (guide only)",
+  guideDetail_stakeAmountLabel: "Stake amount",
   guideDetail_amountPlaceholder: "Amount",
   guideDetail_submitting: "Submitting…",
   guideDetail_orderLink: "Order from this guide →",

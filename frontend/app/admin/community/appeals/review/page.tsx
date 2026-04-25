@@ -16,6 +16,7 @@ import {
 } from "@/lib/adminFetchDisplay";
 import { apiUrl, routes } from "@/lib/api";
 import { writeRequestHeaders } from "@/lib/apiClient";
+import type { LocaleTranslateFn } from "@/lib/i18n";
 import {
   touchTargetLink44Classes,
   travelFocusRingCoreOffset2WhiteClasses,
@@ -36,7 +37,7 @@ type Res = {
   item?: { id?: string; status?: string; version?: number };
 };
 
-function appealReviewErr(code: string | undefined, body: Res | undefined, t: (k: string) => string): string {
+function appealReviewErr(code: string | undefined, body: Res | undefined, t: LocaleTranslateFn): string {
   switch (code) {
     case "invalid_community_appeal_id":
       return t("admin_appeal_review_errBadId");
@@ -49,7 +50,7 @@ function appealReviewErr(code: string | undefined, body: Res | undefined, t: (k:
     case "community_appeal_version_conflict": {
       const cv = body?.current_version;
       return typeof cv === "number"
-        ? t("admin_appeal_review_errVersionConflict").replace("{{v}}", String(cv))
+        ? t("admin_appeal_review_errVersionConflict", { v: cv })
         : t("admin_appeal_review_errVersionConflictGeneric");
     }
     case "admin_community_appeal_review_race":
@@ -140,7 +141,7 @@ function AdminCommunityAppealReviewPageInner() {
         const idOut = b.item?.id ?? aid;
         const stNorm = st === "accepted" || st === "rejected" ? st : null;
         const stLabel = stNorm ? t(APPEAL_DECISION_I18N[stNorm]) : st;
-        setOk(t("admin_appeal_review_ok").replace("{{id}}", idOut).replace("{{status}}", stLabel));
+        setOk(t("admin_appeal_review_ok", { id: idOut, status: stLabel }));
       })
       .catch((e: unknown) => {
         logAdminFetch("AdminCommunityAppealReview", e);
@@ -160,19 +161,19 @@ function AdminCommunityAppealReviewPageInner() {
           <p className="mt-1 text-body text-ink-600">{t("admin_appeal_review_subtitle")}</p>
         </div>
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-small">
-          <Link href="/admin/community/appeals" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/community/appeals" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_appeals_linkLedger")}
           </Link>
-          <Link href="/admin/community/reports" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/community/reports" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_penalties_linkReports")}
           </Link>
           <Link
             href="/admin/observability"
-            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("admin_observability_title")}
           </Link>
-          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_community_reports_back")}
           </Link>
         </div>

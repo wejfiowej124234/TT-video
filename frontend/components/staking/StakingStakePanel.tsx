@@ -10,7 +10,7 @@ import { erc20TokenAbi, identityStakingPoolAbi } from "@/lib/stakingAbi";
 import { getGuideStakingAddress, getProviderStakingAddress } from "@/lib/stakingEnv";
 import type { StakingPoolKind } from "./StakingContractPanel";
 import { mapWalletWriteError } from "@/lib/mapWalletWriteError";
-import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
+import { touchTargetLink44Classes, travelFocusRingCoreOffset2WhiteClasses } from "@/lib/travelLinkFocus";
 
 import { StakingTxFacts } from "./StakingTxFacts";
 
@@ -39,6 +39,8 @@ export function StakingStakePanel({ pool }: { pool: StakingPoolKind }) {
   const baseEnabled = Boolean(stakingAddress && chainOk);
   const userEnabled = Boolean(baseEnabled && address && isConnected);
   const titleId = useId();
+  const stakeAmountFieldId = useId();
+  const stakeAmountErrorRegionId = useId();
 
   const [amountStr, setAmountStr] = useState("");
 
@@ -116,6 +118,9 @@ export function StakingStakePanel({ pool }: { pool: StakingPoolKind }) {
     parsedAmount !== undefined &&
     balanceRead.data !== undefined &&
     parsedAmount > balanceRead.data;
+
+  const amountParseInvalid = amountStr.trim() !== "" && parsedAmount === undefined;
+  const stakeAmountInvalid = exceedsBalance || belowMin || amountParseInvalid;
 
   const needsApproval =
     parsedAmount !== undefined &&
@@ -247,21 +252,27 @@ export function StakingStakePanel({ pool }: { pool: StakingPoolKind }) {
 
       {minStakeRead.data !== undefined && decimals !== undefined ? (
         <p className="mt-2 text-meta text-ink-600">
-          {t("staking_stake_minHint")}: {formatUnits(minStakeRead.data, decimals)} ({t("staking_stake_minTotalNote")})
+          {t("staking_stake_minHint")}
+          {t("market_fin_colon")}
+          {formatUnits(minStakeRead.data, decimals)} ({t("staking_stake_minTotalNote")})
         </p>
       ) : null}
 
       <div className="mt-4 flex flex-wrap items-end gap-3">
-        <label className="text-small text-ink-700">
+        <label htmlFor={stakeAmountFieldId} className="text-small text-ink-700">
           {t("staking_stake_amountLabel")}
           <input
+            id={stakeAmountFieldId}
             type="text"
             inputMode="decimal"
             value={amountStr}
             onChange={(e) => setAmountStr(e.target.value)}
             disabled={busy || decimals === undefined}
-            className="mt-1 block w-48 rounded-[var(--radius-sm)] border border-ink-200 bg-white px-3 py-2 text-body text-ink-900"
+            aria-invalid={stakeAmountInvalid}
+            aria-errormessage={stakeAmountInvalid ? stakeAmountErrorRegionId : undefined}
+            className={`mt-1 block min-h-[44px] w-48 rounded-[var(--radius-sm)] border border-ink-200 bg-white px-3 py-2 text-body text-ink-900 ${travelFocusRingCoreOffset2WhiteClasses}`}
             autoComplete="off"
+            spellCheck={false}
           />
         </label>
         <form
@@ -275,7 +286,7 @@ export function StakingStakePanel({ pool }: { pool: StakingPoolKind }) {
             type="submit"
             disabled={busy || balanceRead.data === undefined || decimals === undefined}
             aria-busy={busy ? true : undefined}
-            className={`${touchTargetLink44Classes} rounded-[var(--radius-sm)] border border-ink-300 bg-white px-3 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 disabled:opacity-50`}
+            className={`${touchTargetLink44Classes} rounded-[var(--radius-sm)] border border-ink-300 bg-white px-3 py-2 text-small font-medium text-ink-800 transition-colors motion-reduce:transition-none hover:bg-ink-50 disabled:opacity-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
           >
             {t("staking_stake_max")}
           </button>
@@ -284,29 +295,25 @@ export function StakingStakePanel({ pool }: { pool: StakingPoolKind }) {
 
       {balanceRead.data !== undefined && decimals !== undefined ? (
         <p className="mt-2 text-meta text-ink-600">
-          {t("staking_stake_walletBalance")}: {formatUnits(balanceRead.data, decimals)}
+          {t("staking_stake_walletBalance")}
+          {t("market_fin_colon")}
+          {formatUnits(balanceRead.data, decimals)}
         </p>
       ) : null}
       {allowanceRead.data !== undefined && decimals !== undefined ? (
         <p className="mt-1 text-meta text-ink-600">
-          {t("staking_stake_allowance")}: {formatUnits(allowanceRead.data, decimals)}
+          {t("staking_stake_allowance")}
+          {t("market_fin_colon")}
+          {formatUnits(allowanceRead.data, decimals)}
         </p>
       ) : null}
 
-      {exceedsBalance ? (
-        <p className="mt-3 text-body text-warning" role="alert">
-          {t("staking_stake_exceedsBalance")}
-        </p>
-      ) : null}
-      {belowMin ? (
-        <p className="mt-3 text-body text-warning" role="alert">
-          {t("staking_stake_belowMin")}
-        </p>
-      ) : null}
-      {parsedAmount === undefined && amountStr.trim() !== "" ? (
-        <p className="mt-3 text-body text-danger" role="alert">
-          {t("staking_stake_invalidAmount")}
-        </p>
+      {stakeAmountInvalid ? (
+        <div id={stakeAmountErrorRegionId} className="mt-3 space-y-2" role="alert">
+          {exceedsBalance ? <p className="text-body text-warning">{t("staking_stake_exceedsBalance")}</p> : null}
+          {belowMin ? <p className="text-body text-warning">{t("staking_stake_belowMin")}</p> : null}
+          {amountParseInvalid ? <p className="text-body text-danger">{t("staking_stake_invalidAmount")}</p> : null}
+        </div>
       ) : null}
 
       {token && stakingAddress ? (

@@ -98,7 +98,7 @@ function AdminCommunityModerationCasesPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const listQ = useMemo(
-    () => parseModCasesQuery(new URLSearchParams(searchParams.toString())),
+    () => parseModCasesQuery(new URLSearchParams(searchParams?.toString() ?? "")),
     [searchParams],
   );
 
@@ -209,16 +209,16 @@ function AdminCommunityModerationCasesPageInner() {
           <p className="mt-1 text-body text-ink-600">{t("admin_mod_cases_subtitle")}</p>
         </div>
         <div className="flex flex-wrap gap-3">
-          <Link href="/admin/community/reports" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/community/reports" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_mod_cases_backReports")}
           </Link>
           <Link
             href="/admin/observability"
-            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("admin_observability_title")}
           </Link>
-          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_mod_cases_back")}
           </Link>
         </div>
@@ -323,7 +323,9 @@ function AdminCommunityModerationCasesPageInner() {
         </div>
         {appliedFilters ? (
           <AdminAppliedFiltersBanner id={adminAppliedFiltersDescId} variant="inline">
-            {t("admin_mod_cases_applied")}: {JSON.stringify(appliedFilters)}
+            {t("admin_mod_cases_applied")}
+            {t("market_fin_colon")}
+            {JSON.stringify(appliedFilters)}
           </AdminAppliedFiltersBanner>
         ) : null}
       </div>

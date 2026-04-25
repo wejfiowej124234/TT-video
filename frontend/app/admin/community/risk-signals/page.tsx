@@ -102,7 +102,7 @@ function AdminCommunityRiskSignalsPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const listQ = useMemo(
-    () => parseRiskSignalsQuery(new URLSearchParams(searchParams.toString())),
+    () => parseRiskSignalsQuery(new URLSearchParams(searchParams?.toString() ?? "")),
     [searchParams],
   );
 
@@ -213,11 +213,11 @@ function AdminCommunityRiskSignalsPageInner() {
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-small">
           <Link
             href="/admin/observability"
-            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("admin_observability_title")}
           </Link>
-          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_risk_signals_back")}
           </Link>
         </div>
@@ -322,7 +322,9 @@ function AdminCommunityRiskSignalsPageInner() {
         </div>
         {appliedFilters ? (
           <AdminAppliedFiltersBanner id={adminAppliedFiltersDescId} variant="inline">
-            {t("admin_risk_signals_applied")}: {JSON.stringify(appliedFilters)}
+            {t("admin_risk_signals_applied")}
+            {t("market_fin_colon")}
+            {JSON.stringify(appliedFilters)}
           </AdminAppliedFiltersBanner>
         ) : null}
       </div>

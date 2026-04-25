@@ -99,7 +99,7 @@ export default function AdminCommunityCommentVisibilityPage() {
         const visNorm =
           visRaw === "visible" || visRaw === "hidden" || visRaw === "removed" ? visRaw : null;
         const visLabel = visNorm ? t(COMMENT_VIS_I18N[visNorm]) : visRaw;
-        setOk(t("admin_comment_vis_ok").replace("{{id}}", b.id ?? id).replace("{{vis}}", visLabel));
+        setOk(t("admin_comment_vis_ok", { id: b.id ?? id, vis: visLabel }));
       })
       .catch((e: unknown) => {
         logAdminFetch("AdminCommunityCommentVisibility", e);
@@ -119,16 +119,16 @@ export default function AdminCommunityCommentVisibilityPage() {
           <p className="mt-1 text-body text-ink-600">{t("admin_comment_vis_subtitle")}</p>
         </div>
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-small">
-          <Link href="/admin/community/reports" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/community/reports" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_penalties_linkReports")}
           </Link>
           <Link
             href="/admin/observability"
-            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("admin_observability_title")}
           </Link>
-          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_community_reports_back")}
           </Link>
         </div>

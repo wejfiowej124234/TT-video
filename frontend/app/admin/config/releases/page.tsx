@@ -85,7 +85,7 @@ function AdminConfigReleasesPageInner() {
   const searchParams = useSearchParams();
 
   const { limit, releaseKey, status } = useMemo(
-    () => parseListQuery(new URLSearchParams(searchParams.toString())),
+    () => parseListQuery(new URLSearchParams(searchParams?.toString() ?? "")),
     [searchParams],
   );
 
@@ -188,11 +188,11 @@ function AdminConfigReleasesPageInner() {
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-small">
           <Link
             href="/admin/observability"
-            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("admin_observability_title")}
           </Link>
-          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_config_releases_back")}
           </Link>
         </div>
@@ -267,7 +267,7 @@ function AdminConfigReleasesPageInner() {
           <button
             form="admin-config-releases-filter-form"
             type="submit"
-            className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] bg-travel-500 px-4 py-2 text-small font-medium text-white hover:bg-travel-600 ${travelFocusRingCoreOffset2WhiteClasses}`}
+            className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] bg-travel-500 px-4 py-2 text-small font-medium text-white transition-colors motion-reduce:transition-none hover:bg-travel-600 ${travelFocusRingCoreOffset2WhiteClasses}`}
           >
             {t("admin_config_releases_apply")}
           </button>
@@ -282,7 +282,7 @@ function AdminConfigReleasesPageInner() {
             >
               <button
                 type="submit"
-                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 px-4 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
+                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 px-4 py-2 text-small font-medium text-ink-800 transition-colors motion-reduce:transition-none hover:bg-ink-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
               >
                 {t("admin_config_releases_filter_clear")}
               </button>
@@ -297,17 +297,19 @@ function AdminConfigReleasesPageInner() {
 
       {releaseKey ? (
         <p id={configReleasesActiveKeyDescId} className="mt-2 text-meta text-ink-600">
-          {t("admin_config_releases_active_release_key").replace("{key}", releaseKey)}
+          {t("admin_config_releases_active_release_key", { key: releaseKey, colon: t("market_fin_colon") })}
         </p>
       ) : null}
       {status ? (
         <p id={configReleasesActiveStatusDescId} className="mt-1 text-meta text-ink-600">
-          {t("admin_config_releases_active_status").replace("{status}", status)}
+          {t("admin_config_releases_active_status", { status, colon: t("market_fin_colon") })}
         </p>
       ) : null}
       {appliedFilters ? (
         <AdminAppliedFiltersBanner id={adminAppliedFiltersDescId} variant="inline" className="mt-2">
-          {t("admin_config_releases_applied")}: {JSON.stringify(appliedFilters)}
+          {t("admin_config_releases_applied")}
+          {t("market_fin_colon")}
+          {JSON.stringify(appliedFilters)}
         </AdminAppliedFiltersBanner>
       ) : null}
 
@@ -370,7 +372,7 @@ function AdminConfigReleasesPageInner() {
                     {r.id ? (
                       <Link
                         href={`/admin/config/releases/${encodeURIComponent(r.id)}?relist=${encodeURIComponent(listQueryString)}`}
-                        className={`${touchTargetLink44Classes} text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+                        className={`${touchTargetLink44Classes} text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
                       >
                         {t("admin_config_releases_colOpen")}
                       </Link>

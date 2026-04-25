@@ -23,7 +23,11 @@ export default function GuidesError({
   }, [error]);
 
   return (
-    <main className="mx-auto flex min-h-[50vh] max-w-lg flex-col items-center justify-center px-6 py-12 bg-bg-main" role="alert">
+    <main
+      className="mx-auto flex min-h-[50vh] max-w-lg flex-col items-center justify-center px-6 py-12 bg-bg-main"
+      role="alert"
+      data-tt-error-boundary-root="guides"
+    >
       <div className="rounded-[var(--radius-md)] border border-ink-200 bg-bg-console p-6 shadow-soft">
         <p className="text-meta font-medium text-ink-500 mb-1">{t("nav_guides")}</p>
         <h1 className="text-h4 font-semibold text-ink-900">{t("common_errorTitle")}</h1>
@@ -61,6 +65,7 @@ export default function GuidesError({
         <ProductCrossNav
           ariaLabelKey="app_error_relatedNav_aria"
           showGuides
+          errorBoundaryCrossNavMarker
           className="mt-5 flex flex-wrap justify-center gap-x-2 gap-y-1 text-meta text-ink-600"
         />
       </div>

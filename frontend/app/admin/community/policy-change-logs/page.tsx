@@ -103,7 +103,7 @@ function AdminCommunityPolicyChangeLogsPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const listQ = useMemo(
-    () => parsePolicyLogsQuery(new URLSearchParams(searchParams.toString())),
+    () => parsePolicyLogsQuery(new URLSearchParams(searchParams?.toString() ?? "")),
     [searchParams],
   );
 
@@ -214,16 +214,16 @@ function AdminCommunityPolicyChangeLogsPageInner() {
           <p className="mt-1 text-body text-ink-600">{t("admin_policy_logs_subtitle")}</p>
         </div>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-small">
-          <Link href="/admin/community/abuse-policy" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/community/abuse-policy" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_policy_logs_linkAbuse")}
           </Link>
           <Link
             href="/admin/observability"
-            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("admin_observability_title")}
           </Link>
-          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_policy_logs_back")}
           </Link>
         </div>
@@ -327,7 +327,9 @@ function AdminCommunityPolicyChangeLogsPageInner() {
         </div>
         {appliedFilters ? (
           <AdminAppliedFiltersBanner id={adminAppliedFiltersDescId} variant="inline" className="mt-2">
-            {t("admin_policy_logs_applied")}: {JSON.stringify(appliedFilters)}
+            {t("admin_policy_logs_applied")}
+            {t("market_fin_colon")}
+            {JSON.stringify(appliedFilters)}
           </AdminAppliedFiltersBanner>
         ) : null}
       </div>

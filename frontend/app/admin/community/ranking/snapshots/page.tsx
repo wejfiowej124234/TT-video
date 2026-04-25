@@ -75,7 +75,7 @@ function AdminCommunityRankingSnapshotsPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { limit, feedMode } = useMemo(
-    () => parseRankSnapshotsQuery(new URLSearchParams(searchParams.toString())),
+    () => parseRankSnapshotsQuery(new URLSearchParams(searchParams?.toString() ?? "")),
     [searchParams],
   );
 
@@ -163,16 +163,16 @@ function AdminCommunityRankingSnapshotsPageInner() {
           <p className="mt-1 text-body text-ink-600">{t("admin_rank_snapshots_subtitle")}</p>
         </div>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-small">
-          <Link href="/admin/community/reports" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/community/reports" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_rank_snapshots_linkReports")}
           </Link>
           <Link
             href="/admin/observability"
-            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("admin_observability_title")}
           </Link>
-          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_rank_snapshots_back")}
           </Link>
         </div>
@@ -254,7 +254,9 @@ function AdminCommunityRankingSnapshotsPageInner() {
 
       {!loading && !error && appliedFilters ? (
         <AdminAppliedFiltersBanner id={adminAppliedFiltersDescId} variant="card" className="mt-6">
-          {t("admin_rank_snapshots_applied")}: {JSON.stringify(appliedFilters)}
+          {t("admin_rank_snapshots_applied")}
+          {t("market_fin_colon")}
+          {JSON.stringify(appliedFilters)}
         </AdminAppliedFiltersBanner>
       ) : null}
 

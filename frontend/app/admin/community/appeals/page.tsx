@@ -85,7 +85,7 @@ function AdminCommunityAppealsPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const listQ = useMemo(
-    () => parseAppealsListQuery(new URLSearchParams(searchParams.toString())),
+    () => parseAppealsListQuery(new URLSearchParams(searchParams?.toString() ?? "")),
     [searchParams],
   );
 
@@ -170,19 +170,19 @@ function AdminCommunityAppealsPageInner() {
           <p className="mt-1 text-body text-ink-600">{t("admin_appeals_subtitle")}</p>
         </div>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-small">
-          <Link href="/admin/community/appeals/review" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/community/appeals/review" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_appeals_linkReview")}
           </Link>
-          <Link href="/admin/community/reports" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/community/reports" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_penalties_linkReports")}
           </Link>
           <Link
             href="/admin/observability"
-            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("admin_observability_title")}
           </Link>
-          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_community_reports_back")}
           </Link>
         </div>
@@ -240,7 +240,9 @@ function AdminCommunityAppealsPageInner() {
           </div>
           {appliedFilters ? (
             <AdminAppliedFiltersBanner id={adminAppliedFiltersDescId} variant="inline">
-              {t("admin_appeals_applied")}: {JSON.stringify(appliedFilters)}
+              {t("admin_appeals_applied")}
+              {t("market_fin_colon")}
+              {JSON.stringify(appliedFilters)}
             </AdminAppliedFiltersBanner>
           ) : null}
         </form>
@@ -342,7 +344,7 @@ function AdminCommunityAppealsPageInner() {
                       {reviewHref && r.status === "pending" ? (
                         <Link
                           href={reviewHref}
-                          className={`${touchTargetLink44Classes} text-travel-600 hover:underline font-mono text-meta ${travelFocusRingOffset2Classes}`}
+                          className={`${touchTargetLink44Classes} text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none font-mono text-meta ${travelFocusRingOffset2Classes}`}
                         >
                           {t("admin_appeals_rowReview")}
                         </Link>

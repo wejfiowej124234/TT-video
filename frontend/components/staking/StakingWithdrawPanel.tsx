@@ -10,7 +10,7 @@ import { erc20TokenAbi, identityStakingPoolAbi } from "@/lib/stakingAbi";
 import { getGuideStakingAddress, getProviderStakingAddress } from "@/lib/stakingEnv";
 import type { StakingPoolKind } from "./StakingContractPanel";
 import { mapWalletWriteError } from "@/lib/mapWalletWriteError";
-import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
+import { touchTargetLink44Classes, travelFocusRingCoreOffset2WhiteClasses } from "@/lib/travelLinkFocus";
 
 import { StakingTxFacts } from "./StakingTxFacts";
 
@@ -40,6 +40,8 @@ export function StakingWithdrawPanel({ pool }: { pool: StakingPoolKind }) {
   const baseEnabled = Boolean(stakingAddress && chainOk);
   const userEnabled = Boolean(baseEnabled && address && isConnected);
   const titleId = useId();
+  const withdrawAmountFieldId = useId();
+  const withdrawAmountErrorRegionId = useId();
 
   const [amountStr, setAmountStr] = useState("");
 
@@ -91,6 +93,9 @@ export function StakingWithdrawPanel({ pool }: { pool: StakingPoolKind }) {
     parsedAmount !== undefined &&
     stakeOfRead.data !== undefined &&
     parsedAmount > stakeOfRead.data;
+
+  const amountParseInvalid = amountStr.trim() !== "" && parsedAmount === undefined;
+  const withdrawAmountInvalid = exceedsStake || amountParseInvalid;
 
   const amountDisplay =
     decimals !== undefined && parsedAmount !== undefined
@@ -174,7 +179,9 @@ export function StakingWithdrawPanel({ pool }: { pool: StakingPoolKind }) {
 
       {stakeOfRead.data !== undefined && decimals !== undefined ? (
         <p className="mt-2 text-meta text-ink-600">
-          {t("staking_withdraw_currentStake")}: {formatUnits(stakeOfRead.data, decimals)}
+          {t("staking_withdraw_currentStake")}
+          {t("market_fin_colon")}
+          {formatUnits(stakeOfRead.data, decimals)}
         </p>
       ) : null}
       {stakeOfRead.data !== undefined && stakeOfRead.data === BigInt(0) && !stakeOfRead.isLoading ? (
@@ -182,16 +189,20 @@ export function StakingWithdrawPanel({ pool }: { pool: StakingPoolKind }) {
       ) : null}
 
       <div className="mt-4 flex flex-wrap items-end gap-3">
-        <label className="text-small text-ink-700">
+        <label htmlFor={withdrawAmountFieldId} className="text-small text-ink-700">
           {t("staking_withdraw_amountLabel")}
           <input
+            id={withdrawAmountFieldId}
             type="text"
             inputMode="decimal"
             value={amountStr}
             onChange={(e) => setAmountStr(e.target.value)}
             disabled={busy || decimals === undefined}
-            className="mt-1 block w-48 rounded-[var(--radius-sm)] border border-ink-200 bg-white px-3 py-2 text-body text-ink-900"
+            aria-invalid={withdrawAmountInvalid}
+            aria-errormessage={withdrawAmountInvalid ? withdrawAmountErrorRegionId : undefined}
+            className={`mt-1 block min-h-[44px] w-48 rounded-[var(--radius-sm)] border border-ink-200 bg-white px-3 py-2 text-body text-ink-900 ${travelFocusRingCoreOffset2WhiteClasses}`}
             autoComplete="off"
+            spellCheck={false}
           />
         </label>
         <form
@@ -205,22 +216,18 @@ export function StakingWithdrawPanel({ pool }: { pool: StakingPoolKind }) {
             type="submit"
             disabled={busy || stakeOfRead.data === undefined || decimals === undefined || stakeOfRead.data === BigInt(0)}
             aria-busy={busy ? true : undefined}
-            className={`${touchTargetLink44Classes} rounded-[var(--radius-sm)] border border-ink-300 bg-white px-3 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 disabled:opacity-50`}
+            className={`${touchTargetLink44Classes} rounded-[var(--radius-sm)] border border-ink-300 bg-white px-3 py-2 text-small font-medium text-ink-800 transition-colors motion-reduce:transition-none hover:bg-ink-50 disabled:opacity-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
           >
             {t("staking_withdraw_max")}
           </button>
         </form>
       </div>
 
-      {exceedsStake ? (
-        <p className="mt-3 text-body text-warning" role="alert">
-          {t("staking_withdraw_exceedsStake")}
-        </p>
-      ) : null}
-      {parsedAmount === undefined && amountStr.trim() !== "" ? (
-        <p className="mt-3 text-body text-danger" role="alert">
-          {t("staking_stake_invalidAmount")}
-        </p>
+      {withdrawAmountInvalid ? (
+        <div id={withdrawAmountErrorRegionId} className="mt-3 space-y-2" role="alert">
+          {exceedsStake ? <p className="text-body text-warning">{t("staking_withdraw_exceedsStake")}</p> : null}
+          {amountParseInvalid ? <p className="text-body text-danger">{t("staking_stake_invalidAmount")}</p> : null}
+        </div>
       ) : null}
 
       {token && stakingAddress && parsedAmount !== undefined && parsedAmount > BigInt(0) && !exceedsStake ? (

@@ -83,7 +83,7 @@ export default function AdminCommunityAbusePolicyPage() {
       if (raw === "") continue;
       const n = Number.parseInt(raw, 10);
       if (!Number.isFinite(n)) {
-        setError(t("admin_abuse_errBadNumber").replace("{{field}}", fieldLabel(k)));
+        setError(t("admin_abuse_errBadNumber", { field: fieldLabel(k) }));
         return;
       }
       patch[k] = n;
@@ -164,16 +164,16 @@ export default function AdminCommunityAbusePolicyPage() {
           <p className="mt-1 text-body text-ink-600">{t("admin_abuse_subtitle")}</p>
         </div>
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-small">
-          <Link href="/admin/community/policy-change-logs" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin/community/policy-change-logs" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_abuse_linkLogs")}
           </Link>
           <Link
             href="/admin/observability"
-            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("admin_observability_title")}
           </Link>
-          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("admin_community_reports_back")}
           </Link>
         </div>

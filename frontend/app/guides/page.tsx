@@ -1,15 +1,15 @@
 "use client";
 
-import { useCallback, useEffect, useState, type FormEvent } from "react";
-import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState, type FormEvent } from "react";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { getGuides } from "@/lib/apiClient";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import TrustInfraWall from "@/components/trust/TrustInfraWall";
-import LoadingText from "@/components/LoadingText";
 import { useTranslation } from "@/components/LocaleProvider";
 import GuideCard from "@/components/market/GuideCard";
+import { GuideCardSkeleton } from "@/components/market/MarketSkeleton";
 import type { GuideCardItem } from "@/lib/marketTypes";
 import { dedupeListById } from "@/lib/dedupeListById";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
@@ -18,11 +18,20 @@ import {
   touchTargetLink44Classes,
   travelFocusRingOffset2Classes,
 } from "@/lib/travelLinkFocus";
+import { ordersNewHrefForGuide } from "@/lib/ordersGuideDeepLink";
+import { GuidesRouteSuspense } from "@/components/guides/GuidesRouteSuspense";
 
 /** 向导列表（56-S7：卡片网格与市场 29 信息层级一致，玻璃态风格） */
-export default function GuidesPage() {
+function GuidesPageInner() {
   const { t } = useTranslation();
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const guidesLoginReturnPath = useMemo(() => {
+    const base = pathname && pathname !== "/" ? pathname : "/guides";
+    const q = searchParams?.toString() ?? "";
+    return q ? `${base}?${q}` : base;
+  }, [pathname, searchParams]);
   const [list, setList] = useState<GuideCardItem[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -50,10 +59,14 @@ export default function GuidesPage() {
         if (typeof window !== "undefined") {
           console.error("GuidesPage:", err);
         }
+        if (err instanceof Error && err.message === "login_required") {
+          router.replace(`/auth/login?returnUrl=${encodeURIComponent(guidesLoginReturnPath)}`);
+          return;
+        }
         setError(mapApiReadError(err, t, "guides_requestFailed"));
       })
       .finally(() => setLoading(false));
-  }, [t]);
+  }, [guidesLoginReturnPath, router, t]);
 
   useEffect(() => {
     loadGuides();
@@ -61,18 +74,40 @@ export default function GuidesPage() {
 
   if (loading) {
     return (
-      <main className="relative min-h-screen flex items-center justify-center p-8" aria-label={t("guides_title")}>
+      <main
+        className="relative min-h-screen"
+        aria-label={t("guides_title")}
+        aria-busy="true"
+        data-tt-guides-surface="list_loading"
+      >
         <div className="fixed inset-0 z-0 bg-market-atmosphere pointer-events-none" aria-hidden />
         <div className="fixed inset-0 z-0 bg-web3-dot-grid opacity-[0.22] pointer-events-none" aria-hidden />
-        <div className="relative z-10 flex flex-col items-center gap-6">
-          <LoadingText />
-          <ProductCrossNav
-            ariaLabelKey="guides_relatedNav_aria"
-            showGuides
-            className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-300"
-            linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}
-            separatorClassName="text-slate-400"
-          />
+        <div className="relative z-10 min-h-screen px-4 py-8 md:py-12">
+          <div className="mx-auto max-w-6xl space-y-6">
+            <header>
+              <p className="text-small text-slate-300 mb-2">
+                <Link href="/market" className={`${touchTargetLink44Classes} text-slate-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}>
+                  {t("market_meta_title")}
+                </Link>
+                {" · "}
+                <Link href="/" className={`${touchTargetLink44Classes} text-slate-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}>
+                  {t("guides_navHome")}
+                </Link>
+              </p>
+              <h1 className="text-h3 font-semibold text-white tracking-tight">{t("guides_title")}</h1>
+              <p className="text-small text-slate-300 mt-1">{t("guides_desc")}</p>
+            </header>
+            <GuideCardSkeleton count={6} gridClass="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" />
+            <footer className="mt-12 pt-8 border-t border-white/20">
+              <ProductCrossNav
+                ariaLabelKey="guides_relatedNav_aria"
+                showGuides
+                className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-300"
+                linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}
+                separatorClassName="text-slate-400"
+              />
+            </footer>
+          </div>
         </div>
       </main>
     );
@@ -95,17 +130,17 @@ export default function GuidesPage() {
             <button
               type="submit"
               aria-label={t("common_retry")}
-              className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub min-h-[44px] inline-flex items-center justify-center ${travelFocusRingOffset2Classes}`}
+              className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${travelFocusRingOffset2Classes}`}
             >
               {t("common_retry")}
             </button>
           </form>
           <p>
-            <Link href="/market" className={`${touchTargetLink44Classes} text-cyan-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}>
+            <Link href="/market" className={`${touchTargetLink44Classes} text-cyan-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}>
               {t("market_meta_title")}
             </Link>
             {" · "}
-            <Link href="/" className={`${touchTargetLink44Classes} text-cyan-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}>
+            <Link href="/" className={`${touchTargetLink44Classes} text-cyan-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}>
               {t("guides_navHome")}
             </Link>
           </p>
@@ -113,7 +148,7 @@ export default function GuidesPage() {
             ariaLabelKey="guides_relatedNav_aria"
             showGuides
             className="mt-6 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-300"
-            linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}
+            linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}
             separatorClassName="text-slate-400"
           />
         </div>
@@ -130,11 +165,11 @@ export default function GuidesPage() {
         <div className="mx-auto max-w-6xl space-y-6">
           <header>
             <p className="text-small text-slate-300 mb-2">
-              <Link href="/market" className={`${touchTargetLink44Classes} text-slate-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}>
+              <Link href="/market" className={`${touchTargetLink44Classes} text-slate-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}>
                 {t("market_meta_title")}
               </Link>
               {" · "}
-              <Link href="/" className={`${touchTargetLink44Classes} text-slate-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}>
+              <Link href="/" className={`${touchTargetLink44Classes} text-slate-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}>
                 {t("guides_navHome")}
               </Link>
             </p>
@@ -146,24 +181,25 @@ export default function GuidesPage() {
             <section className="rounded-[var(--radius-xl)] border border-white/25 bg-white/5 backdrop-blur-md p-8 text-center text-slate-300" aria-live="polite">
               {t("guides_empty")}
               <p className="mt-4">
-                <Link href="/market" className={`${touchTargetLink44Classes} text-cyan-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}>
+                <Link href="/market" className={`${touchTargetLink44Classes} text-cyan-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}>
                   {t("market_meta_title")}
                 </Link>
                 {" · "}
-                <Link href="/guide/register" className={`${touchTargetLink44Classes} text-cyan-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}>
+                <Link href="/guide/register" className={`${touchTargetLink44Classes} text-cyan-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}>
                   {t("guides_becomeGuide")}
                 </Link>
               </p>
             </section>
           ) : (
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 list-none p-0 m-0" role="list" aria-label={t("guides_title")}>
-              {list.map((guide) => (
+              {list.map((guide, guideIdx) => (
                 <li key={guide.id}>
                   <GuideCard
                     guide={guide}
                     glass
+                    coverImagePriority={guideIdx === 0}
                     onView={(id) => router.push(`/guides/${id}`)}
-                    onBookGuide={(id) => router.push(`/orders/new?guide_id=${id}`)}
+                    onBookGuide={(gid) => router.push(ordersNewHrefForGuide(gid))}
                   />
                 </li>
               ))}
@@ -175,20 +211,20 @@ export default function GuidesPage() {
             <ProductCrossNav
               ariaLabelKey="guides_relatedNav_aria"
               className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-300"
-              linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}
+              linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}
               separatorClassName="text-slate-400"
             />
             <p className="mt-3 text-meta text-slate-300 text-center">
-              <Link href="/guide/register" className={`${touchTargetLink44Classes} text-cyan-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}>
+              <Link href="/guide/register" className={`${touchTargetLink44Classes} text-cyan-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}>
                 {t("guides_becomeGuide")}
               </Link>
               {" · "}
-              <Link href="/orders/new" className={`${touchTargetLink44Classes} text-cyan-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}>
+              <Link href="/orders/new" className={`${touchTargetLink44Classes} text-cyan-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}>
                 {t("guides_createOrder")}
               </Link>
               {" · "}
-              <Link href="/itinerary/new" className={`${touchTargetLink44Classes} text-cyan-300 hover:text-cyan-100 underline ${marketCyanInlineLinkFocusClasses}`}>
-                {t("market_customItineraryTitle")}
+              <Link href="/itinerary/new" className={`${touchTargetLink44Classes} text-cyan-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}>
+                {t("guides_newItineraryDraft")}
               </Link>
             </p>
           </footer>
@@ -219,4 +255,12 @@ function toGuideCardItem(g: unknown): GuideCardItem {
     completedCount: (row?.completedCount as number | null) ?? null,
     responseSLA: (row?.responseSLA as string | null) ?? null,
   };
+}
+
+export default function GuidesPage() {
+  return (
+    <GuidesRouteSuspense>
+      <GuidesPageInner />
+    </GuidesRouteSuspense>
+  );
 }
