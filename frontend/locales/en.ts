@@ -3182,6 +3182,7 @@ export default {
   community_report_status_resolved: "Resolved",
   community_report_status_dismissed: "Dismissed",
   community_report_appeal_heading: "Appeal after closure",
+  community_report_appeal_reason_label: "Appeal details",
   community_report_appeal_placeholder: "Explain why you believe the outcome should be reviewed.",
   community_report_appeal_submit: "Submit appeal",
   community_report_appeal_success: "Appeal submitted. We will review it.",

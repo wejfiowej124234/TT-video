@@ -83,6 +83,8 @@ function AdminSchedulerJobsPageInner() {
   const jobCodeInputId = useId();
   const rerunDialogTitleId = useId();
   const rerunDialogDescId = useId();
+  const rerunReasonInputId = useId();
+  const rerunErrorId = useId();
   const rerunModalFilterHintId = useId();
   const adminFilterHintId = useId();
   const schedulerActiveJobCodeDescId = useId();
@@ -92,7 +94,7 @@ function AdminSchedulerJobsPageInner() {
   const searchParams = useSearchParams();
 
   const { limit, jobCode } = useMemo(
-    () => parseSchedulerListQuery(new URLSearchParams(searchParams.toString())),
+    () => parseSchedulerListQuery(new URLSearchParams(searchParams?.toString() ?? "")),
     [searchParams],
   );
 
@@ -306,7 +308,7 @@ function AdminSchedulerJobsPageInner() {
           <button
             form="admin-scheduler-jobs-filter-form"
             type="submit"
-            className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] bg-travel-500 px-4 py-2 text-small font-medium text-white hover:bg-travel-600 ${travelFocusRingCoreOffset2WhiteClasses}`}
+            className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] bg-travel-500 px-4 py-2 text-small font-medium text-white transition-colors motion-reduce:transition-none hover:bg-travel-600 ${travelFocusRingCoreOffset2WhiteClasses}`}
           >
             {t("admin_scheduler_jobs_apply")}
           </button>
@@ -321,7 +323,7 @@ function AdminSchedulerJobsPageInner() {
             >
               <button
                 type="submit"
-                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 px-4 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
+                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 px-4 py-2 text-small font-medium text-ink-800 transition-colors motion-reduce:transition-none hover:bg-ink-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
               >
                 {t("admin_scheduler_jobs_filter_clear")}
               </button>
@@ -333,7 +335,7 @@ function AdminSchedulerJobsPageInner() {
         </p>
         {jobCode ? (
           <p id={schedulerActiveJobCodeDescId} className="text-meta text-ink-600">
-            {t("admin_scheduler_jobs_active_job_code").replace("{code}", jobCode)}
+            {t("admin_scheduler_jobs_active_job_code", { code: jobCode, colon: t("market_fin_colon") })}
           </p>
         ) : null}
         <p className="text-small text-ink-600">{t("admin_scheduler_rerunHint")}</p>
@@ -341,7 +343,9 @@ function AdminSchedulerJobsPageInner() {
 
       {!loading && !error && appliedFilters ? (
         <AdminAppliedFiltersBanner id={adminAppliedFiltersDescId} variant="card" className="mt-6">
-          {t("admin_scheduler_jobs_applied")}: {JSON.stringify(appliedFilters)}
+          {t("admin_scheduler_jobs_applied")}
+          {t("market_fin_colon")}
+          {JSON.stringify(appliedFilters)}
         </AdminAppliedFiltersBanner>
       ) : null}
 
@@ -412,7 +416,7 @@ function AdminSchedulerJobsPageInner() {
                         >
                           <button
                             type="submit"
-                            className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+                            className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
                           >
                             {t("admin_scheduler_rerun")}
                           </button>
@@ -460,20 +464,23 @@ function AdminSchedulerJobsPageInner() {
                 void submitRerun();
               }}
             >
-            <label className="mt-4 block text-small text-ink-800">
+            <label htmlFor={rerunReasonInputId} className="mt-4 block text-small text-ink-800">
               {t("admin_scheduler_rerunReason")}
               <input
+                id={rerunReasonInputId}
                 type="text"
                 name="reason"
                 value={rerunReason}
                 onChange={(e) => setRerunReason(e.target.value)}
-                className="mt-1 w-full rounded-[var(--radius-sm)] border border-ink-200 px-3 py-2 font-mono text-small"
+                aria-invalid={!!rerunError}
+                aria-errormessage={rerunError ? rerunErrorId : undefined}
+                className={`mt-1 min-h-[44px] w-full rounded-[var(--radius-sm)] border border-ink-200 px-3 py-2 font-mono text-small ${travelFocusRingCoreOffset2WhiteClasses}`}
                 placeholder={t("admin_scheduler_rerunReasonPh")}
               />
             </label>
 
             {rerunError ? (
-              <p className="mt-3 text-small text-danger" role="alert">
+              <p id={rerunErrorId} className="mt-3 text-small text-danger" role="alert">
                 {rerunError}
               </p>
             ) : null}
@@ -484,7 +491,7 @@ function AdminSchedulerJobsPageInner() {
                 name="admin_modal_intent"
                 value="cancel"
                 formNoValidate
-                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-200 px-4 py-2 text-small text-ink-800 hover:bg-bg-console ${travelFocusRingCoreOffset2WhiteClasses}`}
+                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-200 px-4 py-2 text-small text-ink-800 transition-colors motion-reduce:transition-none hover:bg-bg-console ${travelFocusRingCoreOffset2WhiteClasses}`}
               >
                 {t("admin_scheduler_rerunCancel")}
               </button>
@@ -492,7 +499,7 @@ function AdminSchedulerJobsPageInner() {
                 type="submit"
                 disabled={rerunSubmitting}
                 aria-busy={rerunSubmitting ? true : undefined}
-                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] bg-travel-500 px-4 py-2 text-small font-medium text-white hover:bg-travel-600 disabled:opacity-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
+                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] bg-travel-500 px-4 py-2 text-small font-medium text-white transition-colors motion-reduce:transition-none hover:bg-travel-600 disabled:opacity-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
               >
                 {rerunSubmitting ? t("admin_scheduler_rerunSubmitting") : t("admin_scheduler_rerunSubmit")}
               </button>

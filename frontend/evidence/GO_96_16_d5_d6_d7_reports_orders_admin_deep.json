@@ -1,0 +1,36 @@
+{
+  "batch": "GO_96_16_d5_d6_d7_reports_orders_admin_deep",
+  "docs_spec_touched": false,
+  "scope": "/community/me/reports/*, /community/post/* (redirect-only, no UI change), /orders/* deep page, /admin/compliance/requests/[requestId]/update, /admin/scheduler/jobs; locale keys en/zh",
+  "d5_d6_d7_actions": [
+    "community reports: motion-reduce on pill/header/card transitions; detail appeal adds label+id and aria-errormessage",
+    "orders deep page: retry button motion-reduce; footer links add underline-offset/transition/motion-reduce",
+    "admin compliance update: form fields wired htmlFor/id, 44px controls, focus ring, form-level error id and aria-errormessage",
+    "admin scheduler jobs: rerun reason input aria-invalid/errormessage + id wiring; buttons/links transition + motion-reduce"
+  ],
+  "commands": {
+    "eslint": {
+      "cmd": "npm run lint",
+      "exit": 0
+    },
+    "i18n_ci": {
+      "cmd": "npm run test:i18n:ci",
+      "exit": 0
+    },
+    "vitest": {
+      "cmd": "npm test -- --run lib/apiClient/community.stats-reports.test.ts lib/communityMeMyOrdersModel.test.ts lib/orderStatusI18n.test.ts",
+      "exit": 0,
+      "tests_passed": 15
+    },
+    "npm_run_build": {
+      "cmd": "npm run build",
+      "exit": 0
+    }
+  },
+  "playwright_e2e": {
+    "status": "NOT_RUN",
+    "trace": "93",
+    "detail": ":8080 API unavailable; E2E not run."
+  },
+  "claim_96_complete": false
+}

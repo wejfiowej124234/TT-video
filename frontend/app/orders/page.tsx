@@ -453,7 +453,7 @@ function OrdersPageInner() {
               type="submit"
               data-tt-orders-page-error-retry="1"
               aria-label={t("common_retry")}
-              className={`${touchTargetLink44Classes} rounded-full border border-travel-500/50 bg-travel-500/10 px-4 py-2 text-meta font-medium text-travel-700 hover:text-travel-800 hover:bg-travel-500/20 motion-sub min-h-[44px] inline-flex items-center justify-center ${travelFocusRingOffset2Classes}`}
+              className={`${touchTargetLink44Classes} rounded-full border border-travel-500/50 bg-travel-500/10 px-4 py-2 text-meta font-medium text-travel-700 hover:text-travel-800 hover:bg-travel-500/20 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${travelFocusRingOffset2Classes}`}
             >
               {t("common_retry")}
             </button>
@@ -934,10 +934,10 @@ function OrdersPageInner() {
             className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-ink-500"
           />
           <p className="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-meta text-ink-500">
-            <Link href="/community/me" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+            <Link href="/community/me" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
               {t("orders_me")}
             </Link>
-            <Link href="/guides" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+            <Link href="/guides" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
               {t("orders_guides")}
             </Link>
           </p>

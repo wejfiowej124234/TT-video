@@ -63,6 +63,12 @@ function AdminComplianceRequestUpdatePageInner() {
   const [submitting, setSubmitting] = useState(false);
   const [writeError, setWriteError] = useState<string | null>(null);
   const [writeOk, setWriteOk] = useState<string | null>(null);
+  const expectedVersionId = useId();
+  const eventTypeId = useId();
+  const statusId = useId();
+  const notesId = useId();
+  const eventDetailId = useId();
+  const writeErrorId = useId();
 
   useEffect(() => {
     const v = searchParams.get("v");
@@ -118,7 +124,7 @@ function AdminComplianceRequestUpdatePageInner() {
           const cv = b.current_version;
           setWriteError(
             typeof cv === "number"
-              ? t("admin_compliance_update_conflict").replace("{{current}}", String(cv))
+              ? t("admin_compliance_update_conflict", { current: cv })
               : t("admin_compliance_update_conflictGeneric")
           );
           return;
@@ -133,7 +139,7 @@ function AdminComplianceRequestUpdatePageInner() {
         const ver = b.item?.version;
         setWriteOk(
           typeof ver === "number"
-            ? t("admin_compliance_update_ok").replace("{{version}}", String(ver))
+            ? t("admin_compliance_update_ok", { version: ver })
             : t("admin_compliance_update_okGeneric")
         );
         if (typeof ver === "number") setExpectedVersion(String(ver));
@@ -156,7 +162,9 @@ function AdminComplianceRequestUpdatePageInner() {
           <p className="mt-1 text-body text-ink-600">{t("admin_compliance_update_subtitle")}</p>
           {requestId ? (
             <p className="mt-2 font-mono text-small text-ink-500 break-all">
-              {t("admin_compliance_events_requestId")}: {requestId}
+              {t("admin_compliance_events_requestId")}
+              {t("market_fin_colon")}
+              {requestId}
             </p>
           ) : null}
         </div>
@@ -198,39 +206,46 @@ function AdminComplianceRequestUpdatePageInner() {
 
           <form
             className="space-y-4"
-            aria-describedby={complianceUpdateFilterHintId}
+            aria-describedby={writeError ? `${complianceUpdateFilterHintId} ${writeErrorId}` : complianceUpdateFilterHintId}
             onSubmit={(e) => {
               e.preventDefault();
               void submit();
             }}
           >
-            <label className="block text-small text-ink-800">
+            <label htmlFor={expectedVersionId} className="block text-small text-ink-800">
               {t("admin_compliance_update_expectedVersion")}
               <input
+                id={expectedVersionId}
                 name="expected_version"
                 type="text"
                 inputMode="numeric"
                 value={expectedVersion}
                 onChange={(e) => setExpectedVersion(e.target.value)}
-                className="mt-1 w-full rounded-[var(--radius-sm)] border border-ink-200 px-3 py-2 font-mono text-small"
+                aria-invalid={!!writeError}
+                aria-errormessage={writeError ? writeErrorId : undefined}
+                className={`mt-1 min-h-[44px] w-full rounded-[var(--radius-sm)] border border-ink-200 px-3 py-2 font-mono text-small ${travelFocusRingCoreOffset2WhiteClasses}`}
               />
             </label>
 
-            <label className="block text-small text-ink-800">
+            <label htmlFor={eventTypeId} className="block text-small text-ink-800">
               {t("admin_compliance_update_eventType")}
               <input
+                id={eventTypeId}
                 name="event_type"
                 type="text"
                 value={eventType}
                 onChange={(e) => setEventType(e.target.value)}
-                className="mt-1 w-full rounded-[var(--radius-sm)] border border-ink-200 px-3 py-2 font-mono text-small"
+                aria-invalid={!!writeError}
+                aria-errormessage={writeError ? writeErrorId : undefined}
+                className={`mt-1 min-h-[44px] w-full rounded-[var(--radius-sm)] border border-ink-200 px-3 py-2 font-mono text-small ${travelFocusRingCoreOffset2WhiteClasses}`}
                 placeholder={t("admin_compliance_update_eventTypePh")}
               />
             </label>
 
-            <label className="block text-small text-ink-800">
+            <label htmlFor={statusId} className="block text-small text-ink-800">
               {t("admin_compliance_update_statusOptional")}
               <select
+                id={statusId}
                 name="status"
                 value={statusSel}
                 onChange={(e) => setStatusSel(e.target.value)}
@@ -244,30 +259,32 @@ function AdminComplianceRequestUpdatePageInner() {
               </select>
             </label>
 
-            <label className="block text-small text-ink-800">
+            <label htmlFor={notesId} className="block text-small text-ink-800">
               {t("admin_compliance_update_notesOptional")}
               <textarea
+                id={notesId}
                 name="notes"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 rows={2}
-                className="mt-1 w-full rounded-[var(--radius-sm)] border border-ink-200 px-3 py-2 font-mono text-small"
+                className={`mt-1 min-h-[44px] w-full rounded-[var(--radius-sm)] border border-ink-200 px-3 py-2 font-mono text-small ${travelFocusRingCoreOffset2WhiteClasses}`}
               />
             </label>
 
-            <label className="block text-small text-ink-800">
+            <label htmlFor={eventDetailId} className="block text-small text-ink-800">
               {t("admin_compliance_update_detailOptional")}
               <textarea
+                id={eventDetailId}
                 name="event_detail"
                 value={eventDetail}
                 onChange={(e) => setEventDetail(e.target.value)}
                 rows={2}
-                className="mt-1 w-full rounded-[var(--radius-sm)] border border-ink-200 px-3 py-2 font-mono text-small"
+                className={`mt-1 min-h-[44px] w-full rounded-[var(--radius-sm)] border border-ink-200 px-3 py-2 font-mono text-small ${travelFocusRingCoreOffset2WhiteClasses}`}
               />
             </label>
 
             {writeError && (
-              <p className="rounded-[var(--radius-md)] border border-danger/20 bg-danger/5 p-3 text-body text-danger" role="alert">
+              <p id={writeErrorId} className="rounded-[var(--radius-md)] border border-danger/20 bg-danger/5 p-3 text-body text-danger" role="alert">
                 {writeError}
               </p>
             )}
@@ -281,7 +298,7 @@ function AdminComplianceRequestUpdatePageInner() {
               type="submit"
               disabled={submitting}
               aria-busy={submitting ? true : undefined}
-              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] bg-travel-500 px-4 py-2 text-small font-medium text-white hover:bg-travel-600 disabled:opacity-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
+              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] bg-travel-500 px-4 py-2 text-small font-medium text-white transition-colors motion-reduce:transition-none hover:bg-travel-600 disabled:opacity-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
             >
               {submitting ? t("admin_compliance_update_submitting") : t("admin_compliance_update_submit")}
             </button>

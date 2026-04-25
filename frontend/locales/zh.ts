@@ -3126,6 +3126,7 @@ export default {
   community_report_status_resolved: "已处理",
   community_report_status_dismissed: "已驳回",
   community_report_appeal_heading: "结案后申诉",
+  community_report_appeal_reason_label: "申诉说明",
   community_report_appeal_placeholder: "请说明您认为处理不当的原因与依据。",
   community_report_appeal_submit: "提交申诉",
   community_report_appeal_success: "申诉已提交，请等待复核。",
