@@ -18,7 +18,7 @@ export default function TravelTrustAllocationPlaceholder() {
         <div
           key={labelKey}
           role="listitem"
-          className="rounded-[var(--radius-lg)] border border-white/12 bg-slate-900/50 backdrop-blur-md p-4 shadow-scifi-panel ring-1 ring-ref-cyan/15"
+          className="rounded-[var(--radius-lg)] border border-white/12 bg-ink-800/50 backdrop-blur-md p-4 shadow-scifi-panel ring-1 ring-ref-cyan/15"
         >
           <div className="flex flex-wrap items-center justify-between gap-2">
             <span className="text-small font-medium text-slate-100">{t(labelKey)}</span>
@@ -40,7 +40,7 @@ export default function TravelTrustAllocationPlaceholder() {
       <p className="text-meta leading-relaxed text-slate-300">{t("traveltrust_allocation_row_hint")}</p>
       <Link
         href="/market"
-        className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-ref-teal/40 bg-ref-teal/10 px-5 py-2 text-small font-semibold text-ref-teal motion-sub hover:bg-ref-cyan/15 hover:border-ref-cyan/50 ${communityCardLinkFocus}`}
+        className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-ref-teal/40 bg-ref-teal/10 px-5 py-2 text-small font-semibold text-ref-teal transition-colors motion-sub motion-reduce:transition-none hover:bg-ref-cyan/15 hover:border-ref-cyan/50 ${communityCardLinkFocus}`}
       >
         {t("traveltrust_allocation_cta_market")}
       </Link>

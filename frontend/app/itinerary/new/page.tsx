@@ -17,6 +17,7 @@ import { isUuidString } from "@/lib/isUuidString";
 import { COUNTRY_OPTIONS, CITIES_BY_COUNTRY, productCountryZhForCityName } from "@/lib/geoOptions";
 import { isAllowedProductZhCountryName } from "@/lib/productCountries";
 import type { OrderResponse } from "@/components/escrow/EscrowDetail/types";
+import { apiOrderSliceMatchesRoute } from "@/lib/orderGetEnvelopeGuard";
 import {
   stashEscrowOrderPrefetchForFromOrderDeepLink,
   stashEscrowOrderPrefetchFromItineraryCreateResult,
@@ -124,6 +125,7 @@ function ItineraryNewPageInner() {
   const [fromOrderFullResponse, setFromOrderFullResponse] = useState<OrderResponse | null>(null);
   const fromOrderFetchGen = useRef(0);
   const formBaseId = useId();
+  const formErrorId = useId();
   const fid = (name: string) => `${formBaseId}-${name}`;
   const itinDailyHeadingId = useId();
   const itinCostHeadingId = useId();
@@ -152,6 +154,11 @@ function ItineraryNewPageInner() {
           };
           itinerary?: { daily_itinerary?: UnifiedDayRow[] };
         };
+        if (!apiOrderSliceMatchesRoute(data?.order, fromOrderId)) {
+          setFromOrderFullResponse(null);
+          setFromOrderPrefetchError(t("orderGet_payloadOrderMismatch"));
+          return;
+        }
         setFromOrderFullResponse(data);
         const daily = data?.itinerary?.daily_itinerary;
         const o = data?.order;
@@ -190,8 +197,10 @@ function ItineraryNewPageInner() {
   };
 
   const formFieldFocus = `focus:outline-none ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`;
+  const inputMinH = "min-h-[44px]";
+  const inlineLinkClass = `${touchTargetLink44Classes} font-medium text-travel-500 underline-offset-2 transition-colors hover:underline motion-reduce:transition-none ${travelFocusRingOffset2Classes}`;
   const pillBase =
-    `rounded-full px-3 py-1.5 text-meta font-medium border border-ink-200 transition-colors ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`;
+    `inline-flex min-h-[44px] items-center justify-center rounded-full px-3 py-1.5 text-meta font-medium border border-ink-200 transition-colors motion-reduce:transition-none ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`;
   const pillSelected = "bg-travel-500/20 border-travel-500/50 text-ink-900";
   const pillUnselected = "bg-bg-soft border-ink-200 text-ink-600 hover:bg-bg-console";
 
@@ -282,7 +291,7 @@ function ItineraryNewPageInner() {
           <p className="mt-1 text-meta text-ink-600">{t("itin_guideContext_body")}</p>
           <Link
             href={ordersNewHrefForGuide(guideIdFromQuery)}
-            className={`mt-3 inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] border border-travel-500/50 bg-travel-500/15 px-4 py-2 text-small font-medium text-travel-800 hover:bg-travel-500/25 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+            className={`mt-3 inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] border border-travel-500/50 bg-travel-500/15 px-4 py-2 text-small font-medium text-travel-800 transition-colors hover:bg-travel-500/25 motion-reduce:transition-none ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
           >
             {t("itin_guideContext_cta")}
           </Link>
@@ -292,7 +301,7 @@ function ItineraryNewPageInner() {
       {fromOrderId && (
         <div className="mt-4 p-4 rounded-[var(--radius-sm)] border border-cyan-500/40 bg-cyan-500/5 text-small text-slate-800" role="status">
           <p>
-            {fromOrderLoading ? t("common_loading") : t("itin_fromOrderHint").replace("{{id}}", fromOrderId)}
+            {fromOrderLoading ? t("common_loading") : t("itin_fromOrderHint", { id: fromOrderId })}
           </p>
           {!fromOrderLoading && (
             <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
@@ -301,7 +310,7 @@ function ItineraryNewPageInner() {
                 onClick={() =>
                   stashEscrowOrderPrefetchForFromOrderDeepLink(fromOrderId, fromOrderFullResponse, "escrow")
                 }
-                className={`${touchTargetLink44Classes} text-travel-500 font-medium hover:underline ${travelFocusRingOffset2Classes}`}
+                className={inlineLinkClass}
               >
                 {t("itin_backToOrder")}
               </Link>
@@ -310,7 +319,7 @@ function ItineraryNewPageInner() {
                 onClick={() =>
                   stashEscrowOrderPrefetchForFromOrderDeepLink(fromOrderId, fromOrderFullResponse, "pay")
                 }
-                className={`${touchTargetLink44Classes} text-travel-500 font-medium hover:underline ${travelFocusRingOffset2Classes}`}
+                className={inlineLinkClass}
               >
                 {t("orders_payHub")}
               </Link>
@@ -323,7 +332,12 @@ function ItineraryNewPageInner() {
           )}
         </div>
       )}
-      <form onSubmit={handleSubmit} className="space-y-3">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-3"
+        noValidate
+        aria-describedby={error ? formErrorId : undefined}
+      >
         <div role="group" aria-labelledby={fid("destination-legend")}>
           <span id={fid("destination-legend")} className="block text-small font-medium mb-1">
             {t("itin_label_destination")}
@@ -374,7 +388,9 @@ function ItineraryNewPageInner() {
             name="travel_date"
             value={form.travel_date}
             onChange={handleChange}
-            className={`border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 w-full bg-bg-console ${formFieldFocus}`}
+            aria-invalid={!!error}
+            aria-errormessage={error ? formErrorId : undefined}
+            className={`border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 w-full ${inputMinH} bg-bg-console ${formFieldFocus}`}
           />
         </div>
         <div>
@@ -389,7 +405,9 @@ function ItineraryNewPageInner() {
             max={30}
             value={form.days}
             onChange={handleChange}
-            className={`border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 w-full bg-bg-console ${formFieldFocus}`}
+            aria-invalid={!!error}
+            aria-errormessage={error ? formErrorId : undefined}
+            className={`border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 w-full ${inputMinH} bg-bg-console ${formFieldFocus}`}
           />
         </div>
         <div>
@@ -402,7 +420,9 @@ function ItineraryNewPageInner() {
             name="hotel_type"
             value={form.hotel_type}
             onChange={handleChange}
-            className={`border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 w-full bg-bg-console ${formFieldFocus}`}
+            aria-invalid={!!error}
+            aria-errormessage={error ? formErrorId : undefined}
+            className={`border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 w-full ${inputMinH} bg-bg-console ${formFieldFocus}`}
             placeholder={t("itin_placeholder_hotel")}
             autoComplete="off"
           />
@@ -417,7 +437,9 @@ function ItineraryNewPageInner() {
             name="food_preference"
             value={form.food_preference}
             onChange={handleChange}
-            className={`border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 w-full bg-bg-console ${formFieldFocus}`}
+            aria-invalid={!!error}
+            aria-errormessage={error ? formErrorId : undefined}
+            className={`border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 w-full ${inputMinH} bg-bg-console ${formFieldFocus}`}
             placeholder={t("itin_placeholder_food")}
             autoComplete="off"
           />
@@ -432,7 +454,9 @@ function ItineraryNewPageInner() {
             name="transport"
             value={form.transport}
             onChange={handleChange}
-            className={`border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 w-full bg-bg-console ${formFieldFocus}`}
+            aria-invalid={!!error}
+            aria-errormessage={error ? formErrorId : undefined}
+            className={`border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 w-full ${inputMinH} bg-bg-console ${formFieldFocus}`}
             placeholder={t("itin_placeholder_transport")}
             autoComplete="off"
           />
@@ -450,7 +474,9 @@ function ItineraryNewPageInner() {
               step={100}
               value={form.budget_min}
               onChange={handleChange}
-              className={`border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 w-full bg-bg-console ${formFieldFocus}`}
+              aria-invalid={!!error}
+              aria-errormessage={error ? formErrorId : undefined}
+              className={`border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 w-full ${inputMinH} bg-bg-console ${formFieldFocus}`}
               placeholder={t("itin_placeholder_optional")}
             />
           </div>
@@ -466,7 +492,9 @@ function ItineraryNewPageInner() {
               step={100}
               value={form.budget_max}
               onChange={handleChange}
-              className={`border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 w-full bg-bg-console ${formFieldFocus}`}
+              aria-invalid={!!error}
+              aria-errormessage={error ? formErrorId : undefined}
+              className={`border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 w-full ${inputMinH} bg-bg-console ${formFieldFocus}`}
               placeholder={t("itin_placeholder_optional")}
             />
           </div>
@@ -480,7 +508,9 @@ function ItineraryNewPageInner() {
             name="notes"
             value={form.notes}
             onChange={handleChange}
-            className={`border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 w-full min-h-[80px] bg-bg-console ${formFieldFocus}`}
+            aria-invalid={!!error}
+            aria-errormessage={error ? formErrorId : undefined}
+            className={`min-h-[80px] border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 w-full bg-bg-console ${formFieldFocus}`}
             placeholder={t("itin_placeholder_optional")}
           />
         </div>
@@ -488,35 +518,38 @@ function ItineraryNewPageInner() {
           type="submit"
           disabled={submitting}
           aria-busy={submitting ? true : undefined}
-          className={`btn-console rounded-[var(--radius-sm)] bg-travel-500 px-6 py-2.5 text-white font-medium disabled:opacity-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+          className={`btn-console inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] bg-travel-500 px-6 py-2.5 text-small font-medium text-white transition-colors motion-reduce:transition-none disabled:opacity-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
         >
           {submitting ? t("itin_submitting") : t("itin_submit")}
         </button>
+        {error ? (
+          <div
+            id={formErrorId}
+            className="mt-4 rounded-[var(--radius-sm)] border border-danger/30 bg-danger/10 p-3 text-small text-danger"
+            role="alert"
+          >
+            {error === ERROR_LOGIN_REQUIRED ? t("itin_error_loginRequired") : error}
+            {error === ERROR_LOGIN_REQUIRED && (
+              <span className="ml-2">
+                <Link href={`/auth/login?returnUrl=${encodeURIComponent(itinNewLoginReturnPath)}`} className={inlineLinkClass}>
+                  {t("itin_goLogin")}
+                </Link>
+              </span>
+            )}
+          </div>
+        ) : null}
       </form>
-      {error && (
-        <div
-          className="mt-4 p-3 border border-danger/30 rounded-[var(--radius-sm)] bg-danger/10 text-danger text-small"
-          role="alert"
-        >
-          {error === ERROR_LOGIN_REQUIRED ? t("itin_error_loginRequired") : error}
-          {error === ERROR_LOGIN_REQUIRED && (
-            <span className="ml-2">
-              <Link
-                href={`/auth/login?returnUrl=${encodeURIComponent(itinNewLoginReturnPath)}`}
-                className={`${touchTargetLink44Classes} text-travel-500 underline underline-offset-2 ${travelFocusRingOffset2Classes}`}
-              >
-                {t("itin_goLogin")}
-              </Link>
-            </span>
-          )}
-        </div>
-      )}
       {result && (
         <div className="mt-12 animate-fadeUp space-y-10">
           <div className="rounded-[var(--radius-xl)] border border-ink-200 bg-success/5 p-6" role="status">
             <p className="font-semibold text-success">{t("itin_result_title")}</p>
             <p className="mt-1 text-small text-ink-600">{t("itin_result_orderId")}<code className="rounded-[var(--radius-sm)] bg-bg-console px-1.5 py-0.5 font-mono text-meta">{result.order_id}</code></p>
-            <p className="text-meta text-ink-500">{t("itin_result_version").replace("{{n}}", String(result.version)).replace("{{status}}", result.order_status ?? result.status ?? "")}</p>
+            <p className="text-meta text-ink-500">
+              {t("itin_result_version", {
+                n: result.version,
+                status: result.order_status ?? result.status ?? "",
+              })}
+            </p>
           </div>
 
           <div className="rounded-[var(--radius-xl)] border border-ink-200 bg-bg-soft p-5 shadow-soft">
@@ -526,26 +559,26 @@ function ItineraryNewPageInner() {
               <Link
                 href={`/escrow/${encodeURIComponent(result.order_id)}`}
                 onClick={stashPostCreateEscrowPayPrefetch}
-                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] bg-travel-500 px-4 py-2 text-small font-medium text-white hover:bg-travel-600 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] bg-travel-500 px-4 py-2 text-small font-medium text-white transition-colors motion-reduce:transition-none hover:bg-travel-600 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
               >
                 {t("itin_result_cta_escrow")}
               </Link>
               <Link
                 href={`/pay?orderId=${encodeURIComponent(result.order_id)}`}
                 onClick={stashPostCreateEscrowPayPrefetch}
-                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] border border-ink-300 bg-bg-console px-4 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] border border-ink-300 bg-bg-console px-4 py-2 text-small font-medium text-ink-800 transition-colors motion-reduce:transition-none hover:bg-ink-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
               >
                 {t("itin_result_cta_pay")}
               </Link>
               <Link
                 href="/market?view=guides"
-                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] border border-ink-300 bg-bg-console px-4 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] border border-ink-300 bg-bg-console px-4 py-2 text-small font-medium text-ink-800 transition-colors motion-reduce:transition-none hover:bg-ink-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
               >
                 {t("itin_result_cta_market")}
               </Link>
               <Link
                 href="/orders"
-                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] border border-ink-200 px-4 py-2 text-small text-ink-600 hover:bg-ink-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] border border-ink-200 px-4 py-2 text-small text-ink-600 transition-colors motion-reduce:transition-none hover:bg-ink-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
               >
                 {t("itin_result_cta_orders")}
               </Link>
@@ -587,7 +620,7 @@ function ItineraryNewPageInner() {
                     <tr><td className="py-1 pr-4">{t("itin_platformFee")}</td><td className="py-1 text-right font-medium">{result.amount_breakdown.platform_fee}{t("ui_currency_suffix_usdc")}</td></tr>
                   )}
                   {result.amount_breakdown.total_budget != null && (
-                    <tr className="border-t border-ink-200"><td className="pt-2 pr-4 font-semibold text-ink-900">{t("escrow_totalBudget").replace(": ", "")}</td><td className="pt-2 text-right font-semibold text-ink-900">{result.amount_breakdown.total_budget}{t("ui_currency_suffix_usdc")}</td></tr>
+                    <tr className="border-t border-ink-200"><td className="pt-2 pr-4 font-semibold text-ink-900">{t("escrow_totalBudget_short")}</td><td className="pt-2 text-right font-semibold text-ink-900">{result.amount_breakdown.total_budget}{t("ui_currency_suffix_usdc")}</td></tr>
                   )}
                 </tbody>
               </table>

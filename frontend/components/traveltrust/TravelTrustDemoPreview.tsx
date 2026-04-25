@@ -6,6 +6,9 @@ import { useTranslation } from "@/components/LocaleProvider";
 export default function TravelTrustDemoPreview() {
   const { t } = useTranslation();
   const titleId = useId();
+  const cityId = useId();
+  const guideId = useId();
+  const tierId = useId();
   const [city, setCity] = useState("tokyo");
   const [guide, setGuide] = useState("g1");
   const [tier, setTier] = useState("standard");
@@ -21,24 +24,39 @@ export default function TravelTrustDemoPreview() {
       </h2>
       <p className="mt-2 text-small leading-relaxed text-slate-300">{t("traveltrust_demo_intro")}</p>
       <div className="mt-4 grid gap-4 sm:grid-cols-3">
-        <label className="block text-meta font-medium text-slate-300">
+        <label className="block text-meta font-medium text-slate-300" htmlFor={cityId}>
           {t("traveltrust_demo_label_city")}
-          <select className={`${field} mt-1 inline-flex w-full min-h-[44px] items-center justify-start`} value={city} onChange={(e) => setCity(e.target.value)}>
+          <select
+            id={cityId}
+            className={`${field} mt-1 inline-flex w-full min-h-[44px] items-center justify-start`}
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+          >
             <option value="tokyo">{t("traveltrust_demo_city_tokyo")}</option>
             <option value="paris">{t("traveltrust_demo_city_paris")}</option>
             <option value="cairo">{t("traveltrust_demo_city_cairo")}</option>
           </select>
         </label>
-        <label className="block text-meta font-medium text-slate-300">
+        <label className="block text-meta font-medium text-slate-300" htmlFor={guideId}>
           {t("traveltrust_demo_label_guide")}
-          <select className={`${field} mt-1 inline-flex w-full min-h-[44px] items-center justify-start`} value={guide} onChange={(e) => setGuide(e.target.value)}>
+          <select
+            id={guideId}
+            className={`${field} mt-1 inline-flex w-full min-h-[44px] items-center justify-start`}
+            value={guide}
+            onChange={(e) => setGuide(e.target.value)}
+          >
             <option value="g1">{t("traveltrust_demo_guide_a")}</option>
             <option value="g2">{t("traveltrust_demo_guide_b")}</option>
           </select>
         </label>
-        <label className="block text-meta font-medium text-slate-300">
+        <label className="block text-meta font-medium text-slate-300" htmlFor={tierId}>
           {t("traveltrust_demo_label_tier")}
-          <select className={`${field} mt-1 inline-flex w-full min-h-[44px] items-center justify-start`} value={tier} onChange={(e) => setTier(e.target.value)}>
+          <select
+            id={tierId}
+            className={`${field} mt-1 inline-flex w-full min-h-[44px] items-center justify-start`}
+            value={tier}
+            onChange={(e) => setTier(e.target.value)}
+          >
             <option value="standard">{t("traveltrust_demo_tier_standard")}</option>
             <option value="premium">{t("traveltrust_demo_tier_premium")}</option>
           </select>

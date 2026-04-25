@@ -70,7 +70,7 @@ export default function TravelTrustVideoBlock() {
         )
       ) : !inView ? (
         <div
-          className="flex min-h-[200px] items-center justify-center rounded-[var(--radius-md)] border border-white/12 bg-ink-800/50 text-meta text-slate-400 motion-sub animate-pulse motion-reduce:animate-none backdrop-blur-sm"
+          className="flex min-h-[200px] items-center justify-center rounded-[var(--radius-md)] border border-white/12 bg-ink-800/50 text-meta text-slate-400 motion-sub motion-reduce:transition-none animate-pulse motion-reduce:animate-none backdrop-blur-sm"
           role="status"
           aria-busy="true"
         >

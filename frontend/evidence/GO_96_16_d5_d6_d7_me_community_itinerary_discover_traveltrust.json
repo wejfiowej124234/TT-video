@@ -1,0 +1,27 @@
+{
+  "batch": "GO_96_16_d5_d6_d7_me_community_itinerary_discover_traveltrust",
+  "docs_spec_touched": false,
+  "scope": "/discover, /community/me, /itinerary/new (+ AgreementSummaryAccordion), /traveltrust via TravelTrustDemoPreview/VideoBlock/AllocationPlaceholder; community segment SSOT in lib/communityMeContentNav; /me index unchanged (redirect-only)",
+  "d5_d6_d7_actions": [
+    "discover: motion-reduce on motion-sub status line",
+    "community/me: login CTA + env-dismiss control transition/44px; segment tabs motion-reduce (shared class)",
+    "itinerary/new: 44px inputs/pills/submit, form errormessage id + aria-describedby/aria-invalid on fields, inline link parity, result CTAs motion-reduce",
+    "traveltrust: demo selects label htmlFor+id; video loading slot + allocation CTA motion-reduce; poster branch already fetchPriority=high"
+  ],
+  "commands": {
+    "eslint": { "cmd": "npm run lint", "exit": 0 },
+    "i18n_ci": { "cmd": "npm run test:i18n:ci", "exit": 0 },
+    "vitest": {
+      "cmd": "npm test -- --run app/discover/page.test.tsx lib/communityMeContentNav.test.ts",
+      "exit": 0,
+      "tests_passed": 10
+    },
+    "npm_run_build": { "cmd": "npm run build", "exit": 0 }
+  },
+  "playwright_e2e": {
+    "status": "NOT_RUN",
+    "trace": "93",
+    "detail": ":8080 API unavailable; E2E not run."
+  },
+  "claim_96_complete": false
+}

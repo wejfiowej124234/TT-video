@@ -67,7 +67,7 @@ export default function AgreementSummaryAccordion({
       >
         <button
           type="submit"
-          className={`flex w-full items-center justify-between text-left text-body font-semibold text-ink-800 hover:text-travel-500 motion-sub ${travelFocusRingOffset2Classes}`}
+          className={`flex min-h-[44px] w-full items-center justify-between text-left text-body font-semibold text-ink-800 transition-colors hover:text-travel-500 motion-sub motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           aria-expanded={open}
         >
           <span>{t("agree_title")}</span>
@@ -78,9 +78,10 @@ export default function AgreementSummaryAccordion({
         <div className="mt-4 space-y-3 border-t border-ink-200 pt-4 text-small text-ink-700">
           <p>
             <span className="text-ink-500">{t("agree_label_token")}</span>
-            {t("agree_escrow_token_display")
-              .replace("{{token}}", t("order_defaultSettlementToken"))
-              .replace("{{chain}}", t("didRank_badge_polygon"))}
+            {t("agree_escrow_token_display", {
+              token: t("order_defaultSettlementToken"),
+              chain: t("didRank_badge_polygon"),
+            })}
           </p>
           <p>
             <span className="text-ink-500">{t("agree_label_total")}</span>

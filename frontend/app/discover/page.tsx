@@ -9,7 +9,7 @@ function DiscoverReplaceToMarket() {
   const router = useRouter();
   const searchParams = useSearchParams();
   useEffect(() => {
-    const qs = searchParams.toString();
+    const qs = searchParams?.toString() ?? "";
     router.replace(qs ? `/market?${qs}` : "/market");
   }, [router, searchParams]);
   return null;
@@ -25,7 +25,14 @@ export default function DiscoverRedirect() {
       </Suspense>
       <div className="fixed inset-0 z-0 bg-market-atmosphere pointer-events-none" aria-hidden />
       <div className="fixed inset-0 z-0 bg-web3-dot-grid opacity-[0.22] pointer-events-none" aria-hidden />
-      <p className="relative z-10 text-slate-300 motion-sub animate-pulse drop-shadow-on-dark">{t("discover_redirect")}</p>
+      <p
+        className="relative z-10 text-center text-body text-white/90 motion-sub motion-reduce:transition-none animate-pulse motion-reduce:animate-none drop-shadow-on-dark"
+        role="status"
+        aria-live="polite"
+        aria-busy="true"
+      >
+        {t("discover_redirect")}
+      </p>
     </main>
   );
 }
