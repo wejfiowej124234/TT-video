@@ -1,0 +1,27 @@
+{
+  "batch": "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch",
+  "docs_spec_touched": false,
+  "scope": "/auth/* (login, forgot-password, reset-password, verify-email, register forms), /me/password, /guides/[id], /staking, /terms, /privacy, /terms/community-guidelines; locales en/zh for auth_forgot_emailLabel, auth_verify_token_label",
+  "d5_d6_d7_actions": [
+    "Forms: visible labels with htmlFor/id on auth login/forgot/verify/reset (password rows), me/password, RegisterTouristForm + RegisterGuideForm; autocomplete hints; error region id + aria-invalid/aria-errormessage on me/password",
+    "Touch & motion: 44px submit/ghost targets; footer/info links use touchTargetLink44 + underline-offset + transition-colors + motion-reduce:transition-none (auth, me/password, terms, privacy, community-guidelines, register)",
+    "LCP/a11y: guides/[id] hero avatar Image priority + fetchPriority high + guide_card_avatarAlt with displayName; error retry motion-sub + motion-reduce:transition-none",
+    "Staking: primary CTA Link transition-colors + motion-reduce:transition-none"
+  ],
+  "commands": {
+    "eslint": { "cmd": "npm run lint", "exit": 0 },
+    "i18n_ci": { "cmd": "npm run test:i18n:ci", "exit": 0 },
+    "vitest": {
+      "cmd": "npm test -- --run lib/mapAuthLoginSubmitError.test.ts lib/mapApiReadError.test.ts lib/guideDetailRoutePayload.test.ts",
+      "exit": 0,
+      "tests_passed": 15
+    },
+    "npm_run_build": { "cmd": "npm run build", "exit": 0 }
+  },
+  "playwright_e2e": {
+    "status": "NOT_RUN",
+    "trace": "93",
+    "detail": ":8080 API unavailable; E2E not run."
+  },
+  "claim_96_complete": false
+}

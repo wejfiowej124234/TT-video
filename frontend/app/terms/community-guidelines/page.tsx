@@ -15,6 +15,7 @@ import {
  */
 export default function CommunityGuidelinesPage() {
   const { t } = useTranslation();
+  const footerLinkClass = `${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`;
 
   return (
     <main className="min-h-screen bg-bg-console py-12 px-4" aria-label={t("community_guidelines")}>
@@ -26,24 +27,24 @@ export default function CommunityGuidelinesPage() {
         <div className="not-prose mt-6 flex flex-wrap items-center gap-3">
           <Link
             href="/community/me"
-            className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] bg-travel-500 px-4 py-2 text-meta font-medium text-white hover:bg-travel-400 motion-sub focus-visible:ring-offset-bg-console ${travelFocusRingCoreOffset2Classes}`}
+            className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] bg-travel-500 px-4 py-2 text-meta font-medium text-white transition-colors hover:bg-travel-400 motion-sub motion-reduce:transition-none focus-visible:ring-offset-bg-console ${travelFocusRingCoreOffset2Classes}`}
           >
             {t("me_title")}
           </Link>
           <Link
             href="/community"
-            className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-200 bg-white px-4 py-2 text-meta font-medium text-ink-800 hover:bg-ink-50 motion-sub focus-visible:ring-offset-bg-console ${travelFocusRingCoreOffset2Classes}`}
+            className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-200 bg-white px-4 py-2 text-meta font-medium text-ink-800 transition-colors hover:bg-ink-50 motion-sub motion-reduce:transition-none focus-visible:ring-offset-bg-console ${travelFocusRingCoreOffset2Classes}`}
           >
             {t("community_tab_feed")}
           </Link>
         </div>
 
         <p className="not-prose mt-6">
-          <Link href="/terms" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/terms" className={footerLinkClass}>
             {t("common_terms")}
           </Link>
           {" · "}
-          <Link href="/" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/" className={footerLinkClass}>
             {t("terms_backHome")}
           </Link>
         </p>

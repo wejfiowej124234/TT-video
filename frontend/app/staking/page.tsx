@@ -39,7 +39,7 @@ export default function StakingPage() {
           <div className="mt-8">
             <Link
               href="/guide/register"
-              className={`${touchTargetLink44Classes} btn-console rounded-[var(--radius-sm)] bg-trust-600 px-5 py-2.5 text-center text-small font-semibold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-trust-600 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-console`}
+              className={`${touchTargetLink44Classes} btn-console rounded-[var(--radius-sm)] bg-trust-600 px-5 py-2.5 text-center text-small font-semibold text-white transition-colors motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-trust-600 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-console`}
             >
               {t("staking_ctaApply")}
             </Link>

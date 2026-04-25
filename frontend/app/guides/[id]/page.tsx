@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState, useId, type FormEvent } from "react";
+import { useEffect, useMemo, useState, useId, type FormEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getGuide, postGuideStake } from "@/lib/apiClient";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
@@ -15,6 +15,8 @@ import { GuideDetailRouteSuspense } from "@/components/guides/GuideDetailRouteSu
 import GuideOccupiedScheduleBlock from "@/components/guides/GuideOccupiedScheduleBlock";
 import BookGuideModal from "@/components/market/BookGuideModal";
 import { formatGuideDisplayName } from "@/lib/guideDisplayName";
+import { buildLoginReturnPathWithQuery } from "@/lib/marketLoginReturnPath";
+import { parseGuideDetailForRoute } from "@/lib/guideDetailRoutePayload";
 
 type GuideShape = {
   id?: string;
@@ -38,7 +40,7 @@ type GuideShape = {
   hourly_currency?: string | null;
 };
 
-const PANEL_CLASS = "rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md shadow-scifi-panel";
+const PANEL_CLASS = "rounded-[var(--radius-md)] border border-cyan-500/30 bg-ink-800/70 backdrop-blur-md shadow-scifi-panel";
 
 function CredentialCard({
   title,
@@ -50,7 +52,7 @@ function CredentialCard({
   className?: string;
 }) {
   return (
-    <div className={`rounded-[var(--radius-md)] border border-slate-600/50 bg-slate-800/50 p-4 ${className}`}>
+    <div className={`rounded-[var(--radius-md)] border border-slate-600/50 bg-ink-700/50 p-4 ${className}`}>
       <h4 className="text-meta font-semibold text-cyan-200 mb-2">{title}</h4>
       {children}
     </div>
@@ -59,8 +61,15 @@ function CredentialCard({
 
 function GuideDetailPageInner() {
   const { t } = useTranslation();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const params = useParams();
   const id = typeof params?.id === "string" ? params.id : "";
+  const guideDetailLoginReturnUrl = useMemo(
+    () => buildLoginReturnPathWithQuery(pathname, searchParams?.toString() ?? "", id ? `/guides/${id}` : "/guides"),
+    [pathname, searchParams, id],
+  );
   const [guide, setGuide] = useState<GuideShape | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -87,13 +96,23 @@ function GuideDetailPageInner() {
     getGuide(id)
       .then((g) => {
         if (cancelled) return;
+        const normalized = parseGuideDetailForRoute(g, id);
+        if (!normalized) {
+          setGuide(null);
+          setError(t("guideDetail_payloadIncomplete"));
+          return;
+        }
         setError(null);
-        setGuide(g as GuideShape);
+        setGuide(normalized as GuideShape);
       })
       .catch((err) => {
         if (cancelled) return;
         if (typeof window !== "undefined") {
           console.error("GuideDetailPage load:", err);
+        }
+        if (err instanceof Error && err.message === "login_required") {
+          router.replace(`/auth/login?returnUrl=${encodeURIComponent(guideDetailLoginReturnUrl)}`);
+          return;
         }
         setGuide(null);
         setError(mapApiReadError(err, t, "guideDetail_loadFailed"));
@@ -104,7 +123,7 @@ function GuideDetailPageInner() {
     return () => {
       cancelled = true;
     };
-  }, [id, t, guideLoadRetryKey]);
+  }, [id, router, t, guideLoadRetryKey, guideDetailLoginReturnUrl]);
 
   const handleStake = () => {
     if (!id || !stakeAmount.trim()) return;
@@ -115,10 +134,21 @@ function GuideDetailPageInner() {
         setStakeAmount("");
         return getGuide(id);
       })
-      .then((g) => setGuide(g as GuideShape))
+      .then((g) => {
+        const normalized = parseGuideDetailForRoute(g, id);
+        if (!normalized) {
+          setStakeError(t("guideDetail_payloadIncomplete"));
+          return;
+        }
+        setGuide(normalized as GuideShape);
+      })
       .catch((e) => {
         if (typeof window !== "undefined") {
           console.error("GuideDetailPage stake:", e);
+        }
+        if (e instanceof Error && e.message === "login_required") {
+          router.replace(`/auth/login?returnUrl=${encodeURIComponent(guideDetailLoginReturnUrl)}`);
+          return;
         }
         setStakeError(mapApiReadError(e, t, "guideDetail_stakeFailed"));
       })
@@ -179,7 +209,7 @@ function GuideDetailPageInner() {
               <button
                 type="submit"
                 aria-label={t("common_retry")}
-                className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub min-h-[44px] inline-flex items-center justify-center ${travelFocusRingOffset2Classes}`}
+                className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${travelFocusRingOffset2Classes}`}
               >
                 {t("common_retry")}
               </button>
@@ -262,12 +292,14 @@ function GuideDetailPageInner() {
           {/* Hero：头像 + 名称 + 地区 + DID（56-S6 与 P56-002 附一致） */}
           <section className={`${PANEL_CLASS} p-6`} aria-labelledby={guideHeroNameId}>
             <div className="flex flex-col sm:flex-row gap-4 items-start">
-              <div className="relative w-24 h-24 shrink-0 rounded-full overflow-hidden ring-2 ring-cyan-400/50 bg-slate-700">
+              <div className="relative w-24 h-24 shrink-0 rounded-full overflow-hidden ring-2 ring-cyan-400/50 bg-ink-700">
                 {guide.avatar_url ? (
                   <Image
                     src={guide.avatar_url}
-                    alt={t("guideDetail_avatar")}
+                    alt={t("guide_card_avatarAlt", { name: displayName })}
                     fill
+                    priority
+                    fetchPriority="high"
                     className="object-cover"
                     sizes="96px"
                     unoptimized
@@ -300,7 +332,7 @@ function GuideDetailPageInner() {
                         type="submit"
                         disabled={copyDidBusy}
                         aria-busy={copyDidBusy ? true : undefined}
-                        className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-[var(--radius-md)] border border-cyan-500/40 bg-cyan-500/10 px-3 py-1.5 text-meta font-mono text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 disabled:opacity-60 disabled:cursor-wait"
+                        className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-[var(--radius-md)] border border-cyan-500/40 bg-cyan-500/10 px-3 py-1.5 text-meta font-mono text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-800 disabled:opacity-60 disabled:cursor-wait"
                         title={guide.wallet_address ?? undefined}
                         aria-label={copiedDid ? t("guideRegister_copied") : t("guideDetail_didCopy")}
                       >
@@ -399,14 +431,13 @@ function GuideDetailPageInner() {
             ) : null}
             {(guide.hourly_rate != null && guide.hourly_rate !== "") && (
               <p className="text-small text-cyan-300 mt-2 font-medium">
-                {t("guide_detail_perHour")
-                  .replace("{{amount}}", String(guide.hourly_rate))
-                  .replace(
-                    "{{currency}}",
+                {t("guide_detail_perHour", {
+                  amount: String(guide.hourly_rate),
+                  currency:
                     typeof guide.hourly_currency === "string" && guide.hourly_currency.trim()
                       ? guide.hourly_currency.trim()
-                      : t("market_guide_hourly_currency_unspecified")
-                  )}
+                      : t("market_guide_hourly_currency_unspecified"),
+                })}
               </p>
             )}
           </section>
@@ -426,14 +457,14 @@ function GuideDetailPageInner() {
                 value={stakeAmount}
                 onChange={(e) => setStakeAmount(e.target.value)}
                 placeholder={t("guideDetail_amountPlaceholder")}
-                className="rounded-[var(--radius-md)] border border-slate-600 bg-slate-800/80 px-3 py-2 text-small text-slate-200 placeholder:text-slate-400 w-28 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+                className="rounded-[var(--radius-md)] border border-slate-600 bg-ink-700/80 px-3 py-2 text-small text-slate-200 placeholder:text-slate-400 w-28 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-800"
                 aria-label={t("guideDetail_amountPlaceholder")}
               />
               <button
                 type="submit"
                 disabled={stakeLoading || !stakeAmount.trim()}
                 aria-busy={stakeLoading ? true : undefined}
-                className="rounded-[var(--radius-md)] border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-small font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+                className="rounded-[var(--radius-md)] border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-small font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-800"
               >
                 {stakeLoading ? t("guideDetail_submitting") : t("guideDetail_stake")}
               </button>
@@ -451,20 +482,20 @@ function GuideDetailPageInner() {
               <button
                 type="button"
                 onClick={() => setBookGuideOpen(true)}
-                className="rounded-[var(--radius-md)] border border-cyan-400/50 bg-cyan-500/30 px-5 py-3 text-small font-medium text-cyan-200 hover:text-cyan-100 hover:bg-cyan-500/40 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+                className="rounded-[var(--radius-md)] border border-cyan-400/50 bg-cyan-500/30 px-5 py-3 text-small font-medium text-cyan-200 hover:text-cyan-100 hover:bg-cyan-500/40 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-800"
               >
                 {t("guideDetail_orderLink")}
               </button>
             )}
             <Link
               href="/market"
-              className="rounded-[var(--radius-md)] border border-cyan-400/40 bg-slate-800/60 px-5 py-3 text-small text-slate-300 hover:bg-slate-700/60 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+              className="rounded-[var(--radius-md)] border border-cyan-400/40 bg-ink-700/60 px-5 py-3 text-small text-slate-300 hover:bg-ink-600/60 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-800"
             >
               {t("market_meta_title")}
             </Link>
             <Link
               href="/guides"
-              className="rounded-[var(--radius-md)] border border-slate-500/60 bg-slate-800/60 px-5 py-3 text-small text-slate-300 hover:bg-slate-700/60 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+              className="rounded-[var(--radius-md)] border border-slate-500/60 bg-ink-700/60 px-5 py-3 text-small text-slate-300 hover:bg-ink-600/60 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-800"
             >
               {t("guideDetail_backList")}
             </Link>

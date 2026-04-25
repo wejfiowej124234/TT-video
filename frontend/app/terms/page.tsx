@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
-import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
+import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
 /**
  * 服务条款页：核心表述与《对外口径包》08-4 第 1～2 章一致；
@@ -39,14 +39,14 @@ export default function TermsPage() {
         <p className="mt-4">
           <Link
             href="/"
-            className={`text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} text-travel-500 underline-offset-2 transition-colors hover:underline motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("terms_backHome")}
           </Link>
           {" · "}
           <Link
             href="/privacy"
-            className={`text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} text-travel-500 underline-offset-2 transition-colors hover:underline motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("help_privacy")}
           </Link>
