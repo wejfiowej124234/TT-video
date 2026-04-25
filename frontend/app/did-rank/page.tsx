@@ -7,7 +7,7 @@ import { useRef, useState, useCallback, useEffect, useLayoutEffect, useId } from
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useTranslation } from "@/components/LocaleProvider";
 import { trackDidRankEvent } from "@/lib/analytics";
-import type { TravelerRankItem, GuideRankItem } from "@/lib/didRankMockData";
+import type { TravelerRankItem, GuideRankItem } from "@/lib/didRankTypes";
 import {
   extractDidRankList,
   normalizeDidRankTravelerRow,
@@ -156,7 +156,7 @@ function DidRankPageInner() {
     setTimeRangeState(parsePeriodParam(periodParam || null, "all"));
   }, [periodParam]);
 
-  // 数据：优先 API；失败时用 mock；按 period 缓存，切换回来先展示缓存再后台刷新
+  // 数据：仅 DID 排行 API；失败时保留本 period 内存缓存或空列表（无本地 mock 注入）；切换 period 时先展示缓存再后台刷新
   const fetchRankData = useCallback(
     (period: Period, skipFullLoading = false) => {
       rankFetchGen.current += 1;
@@ -381,7 +381,7 @@ function DidRankPageInner() {
           id={rankTabPanelId}
           role="presentation"
           aria-labelledby={`${rankTabIdPrefix}-${timeRange}`}
-          className="rounded-[var(--radius-xl)] border border-white/18 bg-slate-950/55 backdrop-blur-md p-2 sm:p-3 shadow-[0_28px_80px_-32px_rgba(0,0,0,0.78),inset_0_1px_0_rgba(255,255,255,0.07)] flex flex-col lg:flex-row gap-3 lg:gap-0 lg:items-stretch"
+          className="rounded-[var(--radius-xl)] border border-white/18 bg-ink-900/55 backdrop-blur-md p-2 sm:p-3 shadow-[0_28px_80px_-32px_rgba(0,0,0,0.78),inset_0_1px_0_rgba(255,255,255,0.07)] flex flex-col lg:flex-row gap-3 lg:gap-0 lg:items-stretch"
           aria-busy={isLoading || isRefreshing ? true : undefined}
         >
           <nav
@@ -407,10 +407,10 @@ function DidRankPageInner() {
                   aria-controls={`did-rank-board-panel-${b.id}`}
                   id={`did-rank-board-tab-${b.id}`}
                   onClick={() => setBoard(b.id)}
-                  className={`min-h-[48px] w-full rounded-md border px-3 py-3 text-left text-small font-medium transition-[transform,background-color,border-color,box-shadow] duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/55 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
+                  className={`min-h-[48px] w-full rounded-[var(--radius-md)] border px-3 py-3 text-left text-small font-medium transition-[transform,background-color,border-color,box-shadow] duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/55 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900 ${
                     selected
                       ? "border-cyan-400/55 bg-cyan-500/18 text-cyan-50 shadow-[inset_0_0_0_1px_rgba(34,211,238,0.22),0_0_20px_-8px_rgba(34,211,238,0.35)] lg:translate-x-1"
-                      : "border-transparent bg-slate-900/35 text-slate-400 hover:border-white/12 hover:text-slate-200 hover:bg-slate-800/50"
+                      : "border-transparent bg-ink-800/35 text-slate-400 hover:border-white/12 hover:text-slate-200 hover:bg-ink-700/50"
                   }`}
                 >
                   {t(b.labelKey)}
@@ -423,7 +423,7 @@ function DidRankPageInner() {
             className="flex-1 min-w-0 lg:pl-2 flex flex-col"
             style={reduceMotion ? undefined : { perspective: 1240 }}
           >
-            <div className="relative flex-1 min-h-[min(520px,72vh)] overflow-hidden rounded-[var(--radius-lg)] border border-white/10 bg-slate-900/35 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)]">
+            <div className="relative flex-1 min-h-[min(520px,72vh)] overflow-hidden rounded-[var(--radius-lg)] border border-white/10 bg-ink-800/35 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)]">
               {isLoading && !isRefreshing ? (
                 <div className="p-1 sm:p-2 h-full overflow-auto">
                   <DidRankSkeleton t={t} />
@@ -552,13 +552,13 @@ function DidRankPageInner() {
             ariaLabelKey="did_rank_relatedNav_aria"
             showGuides
             className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-300"
-            linkClassName="inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 underline motion-sub hover:drop-shadow-scifi-cyan-link focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded-[var(--radius-sm)] px-0.5"
+            linkClassName="inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 underline motion-sub motion-reduce:transition-none hover:drop-shadow-scifi-cyan-link focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900 rounded-[var(--radius-sm)] px-0.5"
             separatorClassName="text-slate-500"
           />
           <div>
             <Link
               href="/"
-              className={`${touchTargetLink44Classes} font-medium text-small text-cyan-300 hover:text-cyan-100 motion-sub hover:drop-shadow-scifi-cyan-strong ${deepShellInlineLinkFocusClasses}`}
+              className={`${touchTargetLink44Classes} font-medium text-small text-cyan-300 hover:text-cyan-100 motion-sub motion-reduce:transition-none hover:drop-shadow-scifi-cyan-strong ${deepShellInlineLinkFocusClasses}`}
             >
               {t("didRank_back")}
             </Link>

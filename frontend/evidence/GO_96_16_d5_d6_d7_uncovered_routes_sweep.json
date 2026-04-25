@@ -1,0 +1,31 @@
+{
+  "batch": "GO_96_16_d5_d6_d7_uncovered_routes_sweep",
+  "docs_spec_touched": false,
+  "uncovered_routes_list_before_sweep": [
+    "/ (resolved in script: landing evidence + Home token adds hint /; see list-d5d6d7-uncovered-routes.mjs)",
+    "See also frozen list without / in evidence/GO_96_16_d5_d6_d7_uncovered_routes_snapshot.json (8 routes, pre-sweep code)"
+  ],
+  "scope": "/(home) already LCP in landing batch; this sweep: /did-rank, /disputes, /disputes/[id] + DisputeDetailPageClient, /guide, /guide/register, /help, /network (redirect-only, no UI), /trust + TrustTransparencyHub; scripts/list-d5d6d7-uncovered-routes.mjs (exclude snapshot from evidence scan, Home hint)",
+  "d5_d6_d7_actions": [
+    "list-d5d6d7-uncovered-routes: Home/Landing → hint /; exclude *_uncovered_routes_snapshot.json from evidence scan",
+    "did-rank: ProductCrossNav + back link motion-sub + motion-reduce:transition-none",
+    "disputes list: retry pill + all text links underline-offset/transition/motion-reduce",
+    "disputes [id] client: links; evidence hash sr-only label+id; refund ratio label htmlFor+id; retry motion-reduce",
+    "guide hub: all motion-sub controls + motion-reduce:transition-none",
+    "guide/register + help: hover:underline links → underline-offset + transition + motion-reduce",
+    "trust: TrustTransparencyHub primary/secondary/product cross-nav motion-reduce on motion-sub",
+    "/network: permanentRedirect only — no UI change"
+  ],
+  "commands": {
+    "eslint": { "cmd": "npm run lint", "exit": 0 },
+    "i18n_ci": { "cmd": "npm run test:i18n:ci", "exit": 0 },
+    "vitest": {
+      "cmd": "npm test -- --run lib/mapIntentError.test.ts",
+      "exit": 0,
+      "tests_passed": 15
+    },
+    "npm_run_build": { "cmd": "npm run build", "exit": 0 }
+  },
+  "playwright_e2e": { "status": "NOT_RUN", "trace": "93", "detail": "E2E not run in this batch." },
+  "claim_96_complete": false
+}

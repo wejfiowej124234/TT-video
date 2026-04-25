@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useChainId } from "wagmi";
 import {
   getDispute,
-  getMe,
+  getMeFull,
   getOrder,
   postDisputeResolve,
   getOrderEvidence,
@@ -18,6 +18,8 @@ import { getExpectedChainId } from "@/lib/chainEnv";
 import { meRoleFromGetMe } from "@/lib/meRole";
 import { mapIntentError } from "@/lib/mapIntentError";
 import { mapApiReadError } from "@/lib/mapApiReadError";
+import { apiOrderSliceMatchesRoute } from "@/lib/orderGetEnvelopeGuard";
+import { apiDisputeSliceMatchesRoute } from "@/lib/disputeGetEnvelopeGuard";
 import IntentSignFacts from "@/components/escrow/EscrowDetail/IntentSignFacts";
 import LoadingText from "@/components/LoadingText";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
@@ -89,6 +91,8 @@ function DisputeDetailPageInner() {
   const [copyTxBusy, setCopyTxBusy] = useState(false);
   /** undefined=未拉取；null=无有效托管地址；0x…=可签 execute-resolution-intent */
   const [orderEscrowAddr, setOrderEscrowAddr] = useState<`0x${string}` | null | undefined>(undefined);
+  /** GET order 体与 `dispute.order_id` 不一致（区别于「无 escrow」） */
+  const [orderEscrowEnvelopeMismatch, setOrderEscrowEnvelopeMismatch] = useState(false);
   const [execIntentError, setExecIntentError] = useState<string | null>(null);
   const [execIntentOk, setExecIntentOk] = useState(false);
   const [execIntentSubmitting, setExecIntentSubmitting] = useState(false);
@@ -106,6 +110,8 @@ function DisputeDetailPageInner() {
     submitExecuteResolutionIntent,
   } = useDisputeExecuteResolutionIntentSigner(expectedChainId);
   const disputeTraceableHeadingId = useId();
+  const disputeEvidenceHashInputId = useId();
+  const disputeRefundRatioInputId = useId();
 
   const copyTxHash = useCallback(async (hash: string) => {
     if (typeof navigator === "undefined" || !navigator.clipboard?.writeText) return;
@@ -136,6 +142,11 @@ function DisputeDetailPageInner() {
     getDispute(id)
       .then((d) => {
         if (gen !== disputeFetchGen.current) return;
+        if (!apiDisputeSliceMatchesRoute(d, id)) {
+          setDispute(null);
+          setError(t("disputeGet_payloadMismatch"));
+          return;
+        }
         setError(null);
         setDispute(d as DisputeDetail);
       })
@@ -154,11 +165,11 @@ function DisputeDetailPageInner() {
 
   useEffect(() => {
     setMeRoleFetch({ phase: "loading" });
-    getMe()
+    getMeFull()
       .then((me) => setMeRoleFetch({ phase: "ready", role: meRoleFromGetMe(me) }))
       .catch((err) => {
         if (typeof window !== "undefined") {
-          console.error("DisputeDetailPage getMe:", err);
+          console.error("DisputeDetailPage getMeFull:", err);
         }
         setMeRoleFetch({ phase: "failed" });
       });
@@ -198,14 +209,24 @@ function DisputeDetailPageInner() {
   useEffect(() => {
     if (!dispute?.order_id || dispute.status !== "resolved") {
       setOrderEscrowAddr(undefined);
+      setOrderEscrowEnvelopeMismatch(false);
       return;
     }
+    const orderId = dispute.order_id;
     let cancelled = false;
-    getOrder(dispute.order_id)
+    setOrderEscrowAddr(undefined);
+    setOrderEscrowEnvelopeMismatch(false);
+    getOrder(orderId)
       .then((raw: unknown) => {
         if (cancelled) return;
         const res = raw as { order?: { escrow_address?: string | null } };
         const o = res?.order ?? raw;
+        if (!apiOrderSliceMatchesRoute(o, orderId)) {
+          setOrderEscrowEnvelopeMismatch(true);
+          setOrderEscrowAddr(null);
+          return;
+        }
+        setOrderEscrowEnvelopeMismatch(false);
         const addr =
           typeof o === "object" && o !== null && "escrow_address" in o
             ? (o as { escrow_address?: string | null }).escrow_address
@@ -221,6 +242,7 @@ function DisputeDetailPageInner() {
           if (typeof window !== "undefined") {
             console.error("DisputeDetailPage getOrder escrow_address:", err);
           }
+          setOrderEscrowEnvelopeMismatch(false);
           setOrderEscrowAddr(null);
         }
       });
@@ -244,7 +266,12 @@ function DisputeDetailPageInner() {
         setOrderEvidenceListFetch("ready");
         setOrderEvidenceListError(null);
       })
-      .then(() => getDispute(id).then((d) => setDispute(d as DisputeDetail)))
+      .then(() =>
+        getDispute(id).then((d) => {
+          if (!apiDisputeSliceMatchesRoute(d, id)) return;
+          setDispute(d as DisputeDetail);
+        })
+      )
       .catch((e) => {
         if (typeof window !== "undefined") {
           console.error("DisputeDetailPage handleEvidenceSubmit:", e);
@@ -266,7 +293,12 @@ function DisputeDetailPageInner() {
     setResolveSubmitting(true);
     setResolveError(null);
     postDisputeResolve(id, { refund_ratio: ratio, slash_guide: slashGuide }, getIdempotencyKey())
-      .then(() => getDispute(id).then((d) => setDispute(d as DisputeDetail)))
+      .then(() =>
+        getDispute(id).then((d) => {
+          if (!apiDisputeSliceMatchesRoute(d, id)) return;
+          setDispute(d as DisputeDetail);
+        })
+      )
       .catch((e) => {
         if (typeof window !== "undefined") {
           console.error("DisputeDetailPage handleResolve:", e);
@@ -288,7 +320,10 @@ function DisputeDetailPageInner() {
         setExecIntentOk(true);
         return getDispute(id);
       })
-      .then((d) => setDispute(d as DisputeDetail))
+      .then((d) => {
+        if (!apiDisputeSliceMatchesRoute(d, id)) return;
+        setDispute(d as DisputeDetail);
+      })
       .catch((e) => {
         if (typeof window !== "undefined") {
           console.error("DisputeDetailPage handleExecuteResolutionIntent:", e);
@@ -328,13 +363,13 @@ function DisputeDetailPageInner() {
           <button
             type="submit"
             aria-label={t("common_retry")}
-            className={`rounded-full border border-travel-500/50 bg-travel-500/10 px-4 py-2 text-meta font-medium text-travel-700 hover:text-travel-800 hover:bg-travel-500/20 motion-sub min-h-[44px] inline-flex items-center justify-center ${travelFocusRingOffset2Classes}`}
+            className={`rounded-full border border-travel-500/50 bg-travel-500/10 px-4 py-2 text-meta font-medium text-travel-700 hover:text-travel-800 hover:bg-travel-500/20 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${travelFocusRingOffset2Classes}`}
           >
             {t("common_retry")}
           </button>
         </form>
         <p>
-          <Link href="/disputes" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/disputes" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("dispute_backList")}
           </Link>
         </p>
@@ -350,7 +385,7 @@ function DisputeDetailPageInner() {
       <main className="min-h-screen space-y-4 bg-bg-main p-8 max-w-3xl mx-auto" aria-label={t("dispute_detailTitle")}>
         <h1 className="sr-only">{t("dispute_notFound")}</h1>
         <p className="text-body text-ink-600">{t("dispute_notFound")}</p>
-        <Link href="/disputes" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+        <Link href="/disputes" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
           {t("dispute_backList")}
         </Link>
         <ProductCrossNav
@@ -400,7 +435,7 @@ function DisputeDetailPageInner() {
                     const oid = dispute.order_id;
                     if (oid) stashEscrowOrderPrefetchForOrderIdNav(oid, "escrow");
                   }}
-                  className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+                  className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
                 >
                   #{dispute.order_id.slice(0, 8)}…
                 </Link>
@@ -411,7 +446,7 @@ function DisputeDetailPageInner() {
                     const oid = dispute.order_id;
                     if (oid) stashEscrowOrderPrefetchForOrderIdNav(oid, "pay");
                   }}
-                  className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+                  className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
                 >
                   {t("orders_payHub")}
                 </Link>
@@ -476,7 +511,17 @@ function DisputeDetailPageInner() {
                   handleEvidenceSubmit();
                 }}
               >
-                <input type="text" value={evidenceHash} onChange={(e) => setEvidenceHash(e.target.value)} placeholder={t("dispute_evidencePlaceholder")} className={`min-h-[44px] border border-ink-200 rounded-[var(--radius-sm)] px-3 py-1.5 text-small font-mono w-64 max-w-full bg-bg-console ${disputeConsoleFocus}`} />
+                <label htmlFor={disputeEvidenceHashInputId} className="sr-only">
+                  {t("dispute_evidencePlaceholder")}
+                </label>
+                <input
+                  id={disputeEvidenceHashInputId}
+                  type="text"
+                  value={evidenceHash}
+                  onChange={(e) => setEvidenceHash(e.target.value)}
+                  placeholder={t("dispute_evidencePlaceholder")}
+                  className={`min-h-[44px] border border-ink-200 rounded-[var(--radius-sm)] px-3 py-1.5 text-small font-mono w-64 max-w-full bg-bg-console ${disputeConsoleFocus}`}
+                />
                 <button type="submit" disabled={evidenceSubmitting || !evidenceHash.trim()} aria-busy={evidenceSubmitting ? true : undefined} className="btn-console rounded-[var(--radius-sm)] bg-trust-600 px-3 py-1.5 text-white text-small disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-trust-600 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-console">{evidenceSubmitting ? t("dispute_uploading") : t("dispute_upload")}</button>
               </form>
               {evidenceError && <p className="text-small text-danger mt-1">{evidenceError}</p>}
@@ -499,10 +544,15 @@ function DisputeDetailPageInner() {
           <section className={sectionClass}>
             <h2 className="text-body font-semibold text-ink-800 mb-3">{t("dispute_execSection")}</h2>
             <p className="text-small text-ink-600">{t("dispute_execNote")}</p>
-            {dispute.order_id && orderEscrowAddr === undefined && (
+            {dispute.order_id && orderEscrowEnvelopeMismatch ? (
+              <div className="mt-3">
+                <ApiErrorAlert message={t("dispute_orderFetchMismatch")} />
+              </div>
+            ) : null}
+            {dispute.order_id && orderEscrowAddr === undefined && !orderEscrowEnvelopeMismatch && (
               <p className="text-meta text-ink-500 mt-3">{t("common_loading")}</p>
             )}
-            {orderEscrowAddr === null && (
+            {orderEscrowAddr === null && !orderEscrowEnvelopeMismatch && (
               <p className="text-small text-ink-600 mt-3">{t("dispute_executeIntentNoEscrow")}</p>
             )}
             {orderEscrowAddr && !dispute.resolution_tx_hash && (
@@ -613,7 +663,7 @@ function DisputeDetailPageInner() {
                           href={`${explorerTxUrl}${dispute.resolution_tx_hash}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className={`${touchTargetLink44Classes} rounded-[var(--radius-sm)] border border-ink-200 px-2 py-0.5 text-meta text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+                          className={`${touchTargetLink44Classes} rounded-[var(--radius-sm)] border border-ink-200 px-2 py-0.5 text-meta text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
                         >
                           {t("escrow_viewTx")}
                         </a>
@@ -676,9 +726,18 @@ function DisputeDetailPageInner() {
                 handleResolve();
               }}
             >
-              <label className="block text-small font-medium text-ink-700">
+              <label htmlFor={disputeRefundRatioInputId} className="block text-small font-medium text-ink-700">
                 {t("dispute_refundLabel")}
-                <input type="number" min="0" max="1" step="0.01" value={refundRatio} onChange={(e) => setRefundRatio(e.target.value)} className={`mt-1 block w-full min-h-[44px] border border-ink-200 rounded-[var(--radius-sm)] px-2 py-1 bg-bg-console ${disputeConsoleFocus}`} />
+                <input
+                  id={disputeRefundRatioInputId}
+                  type="number"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={refundRatio}
+                  onChange={(e) => setRefundRatio(e.target.value)}
+                  className={`mt-1 block w-full min-h-[44px] border border-ink-200 rounded-[var(--radius-sm)] px-2 py-1 bg-bg-console ${disputeConsoleFocus}`}
+                />
               </label>
               <label className="flex items-center gap-2 text-small text-ink-700">
                 <input type="checkbox" checked={slashGuide} onChange={(e) => setSlashGuide(e.target.checked)} className={`rounded-[var(--radius-sm)] border border-ink-300 text-travel-500 ${disputeConsoleFocus}`} />{t("dispute_slashLabel")}
@@ -692,14 +751,14 @@ function DisputeDetailPageInner() {
         <p className="text-meta text-ink-500">
           <Link
             href="/disputes"
-            className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("dispute_backList")}
           </Link>
           {" · "}
           <Link
             href="/orders"
-            className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("disputes_navOrders")}
           </Link>

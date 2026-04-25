@@ -41,59 +41,69 @@ export default function HelpPage() {
           <details className="rounded-[var(--radius-sm)] border border-ink-200 bg-bg-main px-4 py-3 open:shadow-soft">
             <summary className="cursor-pointer text-small font-medium text-ink-800">{t("help_faqPayQ")}</summary>
             <p className="mt-2 text-small text-ink-700 leading-relaxed">{t("help_faqPayA")}</p>
-            <Link href="/pay" className={`mt-2 ${touchTargetLink44Classes} text-small text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}>
-              {t("help_faqPayCta")} →
+            <Link href="/pay" className={`mt-2 ${touchTargetLink44Classes} text-small text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
+              {t("help_faqPayCta")}
+              {t("ui_link_nav_arrow_suffix")}
             </Link>
             <p className="mt-2 text-meta text-ink-600 leading-relaxed">{t("help_faqPayDeepLink")}</p>
           </details>
           <details className="rounded-[var(--radius-sm)] border border-ink-200 bg-bg-main px-4 py-3 open:shadow-soft">
             <summary className="cursor-pointer text-small font-medium text-ink-800">{t("help_faqStakingQ")}</summary>
             <p className="mt-2 text-small text-ink-700 leading-relaxed">{t("help_faqStakingA")}</p>
-            <Link href="/staking" className={`mt-2 ${touchTargetLink44Classes} text-small text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}>
-              {t("help_faqStakingCta")} →
+            <Link href="/staking" className={`mt-2 ${touchTargetLink44Classes} text-small text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
+              {t("help_faqStakingCta")}
+              {t("ui_link_nav_arrow_suffix")}
             </Link>
           </details>
           <details className="rounded-[var(--radius-sm)] border border-ink-200 bg-bg-main px-4 py-3 open:shadow-soft">
             <summary className="cursor-pointer text-small font-medium text-ink-800">{t("help_faqEscrowQ")}</summary>
             <p className="mt-2 text-small text-ink-700 leading-relaxed">{t("help_faqEscrowA")}</p>
-            <Link href="/orders" className={`mt-2 ${touchTargetLink44Classes} text-small text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}>
-              {t("help_faqEscrowCta")} →
+            <Link href="/orders" className={`mt-2 ${touchTargetLink44Classes} text-small text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
+              {t("help_faqEscrowCta")}
+              {t("ui_link_nav_arrow_suffix")}
             </Link>
           </details>
           <details className="rounded-[var(--radius-sm)] border border-ink-200 bg-bg-main px-4 py-3 open:shadow-soft">
             <summary className="cursor-pointer text-small font-medium text-ink-800">{t("help_faqFeeRouterQ")}</summary>
             <p className="mt-2 text-small text-ink-700 leading-relaxed">{t("help_faqFeeRouterA")}</p>
             <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-small">
-              <Link href="/governance/fee-routes" className={`${touchTargetLink44Classes} text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}>
-                {t("footer_link_governance_fee_routes")} →
+              <Link href="/governance/fee-routes" className={`${touchTargetLink44Classes} text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
+                {t("footer_link_governance_fee_routes")}
+                {t("ui_link_nav_arrow_suffix")}
               </Link>
-              <Link href="/traveltrust#fee-router" className={`${touchTargetLink44Classes} text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}>
-                {t("traveltrust_link_feeRouter")} →
+              <Link href="/traveltrust#fee-router" className={`${touchTargetLink44Classes} text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
+                {t("traveltrust_link_feeRouter")}
+                {t("ui_link_nav_arrow_suffix")}
               </Link>
-              <Link href="/traveltrust#token-system" className={`${touchTargetLink44Classes} text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}>
-                {t("traveltrust_link_tokenSystem")} →
+              <Link href="/traveltrust#token-system" className={`${touchTargetLink44Classes} text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
+                {t("traveltrust_link_tokenSystem")}
+                {t("ui_link_nav_arrow_suffix")}
               </Link>
             </p>
           </details>
           <details className="rounded-[var(--radius-sm)] border border-ink-200 bg-bg-main px-4 py-3 open:shadow-soft">
             <summary className="cursor-pointer text-small font-medium text-ink-800">{t("help_faqDisputeQ")}</summary>
             <p className="mt-2 text-small text-ink-700 leading-relaxed">{t("help_faqDisputeA")}</p>
-            <Link href="/disputes" className={`mt-2 ${touchTargetLink44Classes} text-small text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}>
-              {t("help_faqDisputeCta")} →
+            <Link href="/disputes" className={`mt-2 ${touchTargetLink44Classes} text-small text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
+              {t("help_faqDisputeCta")}
+              {t("ui_link_nav_arrow_suffix")}
             </Link>
           </details>
           <details className="rounded-[var(--radius-sm)] border border-ink-200 bg-bg-main px-4 py-3 open:shadow-soft">
             <summary className="cursor-pointer text-small font-medium text-ink-800">{t("help_faqCommunityQ")}</summary>
             <p className="mt-2 text-small text-ink-700 leading-relaxed">{t("help_faqCommunityA")}</p>
             <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-small">
-              <Link href="/community/tt" className={`${touchTargetLink44Classes} text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}>
-                {t("help_faqCommunityCta")} →
+              <Link href="/community/tt" className={`${touchTargetLink44Classes} text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
+                {t("help_faqCommunityCta")}
+                {t("ui_link_nav_arrow_suffix")}
               </Link>
-              <Link href="/community" className={`${touchTargetLink44Classes} text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}>
-                {t("help_faqCommunityCtaFeed")} →
+              <Link href="/community" className={`${touchTargetLink44Classes} text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
+                {t("help_faqCommunityCtaFeed")}
+                {t("ui_link_nav_arrow_suffix")}
               </Link>
-              <Link href="/community/feedback" className={`${touchTargetLink44Classes} text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}>
-                {t("footer_link_feedback")} →
+              <Link href="/community/feedback" className={`${touchTargetLink44Classes} text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
+                {t("footer_link_feedback")}
+                {t("ui_link_nav_arrow_suffix")}
               </Link>
             </p>
           </details>
@@ -102,33 +112,34 @@ export default function HelpPage() {
         <h2 className="text-h4 font-medium text-ink-800 mt-8">{t("help_feedbackTitle")}</h2>
         <p className="mt-2 text-small text-ink-700 leading-relaxed">
           {t("help_feedbackDesc")}{" "}
-          <Link href="/community/feedback" className={`${touchTargetLink44Classes} text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}>
-            {t("footer_link_feedback")} →
+          <Link href="/community/feedback" className={`${touchTargetLink44Classes} text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
+            {t("footer_link_feedback")}
+            {t("ui_link_nav_arrow_suffix")}
           </Link>
         </p>
 
         <p className="text-meta text-ink-600 mt-6">
           {t("help_termsIntro")}
-          <Link href="/terms" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/terms" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("help_terms")}
           </Link>
-          、
-          <Link href="/privacy" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          {t("market_listSeparator")}
+          <Link href="/privacy" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("help_privacy")}
           </Link>
           {t("help_docNote")}
         </p>
 
         <p className="mt-4">
-          <Link href="/" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("help_backHome")}
           </Link>
           {" · "}
-          <Link href="/terms" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/terms" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("help_terms")}
           </Link>
           {" · "}
-          <Link href="/privacy" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link href="/privacy" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
             {t("help_privacy")}
           </Link>
         </p>

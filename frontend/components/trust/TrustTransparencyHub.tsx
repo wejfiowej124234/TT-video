@@ -12,9 +12,9 @@ import { useAutoTransparencyVerification } from "@/lib/trust/useAutoTransparency
 import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
 const CARD =
-  "rounded-[var(--radius-md)] border border-slate-600/55 bg-slate-900/60 backdrop-blur-md px-4 py-4 sm:px-5 sm:py-5";
-const BTN_PRIMARY = `inline-flex min-h-[44px] items-center justify-center rounded-full border border-cyan-400/55 bg-cyan-500/15 px-5 py-2.5 text-meta font-medium text-cyan-200 hover:bg-cyan-500/25 motion-sub disabled:opacity-50 ${travelFocusRingOffset2Classes}`;
-const BTN_SECONDARY = `inline-flex min-h-[44px] items-center justify-center rounded-full border border-slate-500/60 bg-slate-800/70 px-5 py-2.5 text-meta text-slate-200 hover:bg-slate-700/70 motion-sub ${travelFocusRingOffset2Classes}`;
+  "rounded-[var(--radius-md)] border border-slate-600/55 bg-ink-800/60 backdrop-blur-md px-4 py-4 sm:px-5 sm:py-5";
+const BTN_PRIMARY = `inline-flex min-h-[44px] items-center justify-center rounded-full border border-cyan-400/55 bg-cyan-500/15 px-5 py-2.5 text-meta font-medium text-cyan-200 hover:bg-cyan-500/25 motion-sub motion-reduce:transition-none disabled:opacity-50 ${travelFocusRingOffset2Classes}`;
+const BTN_SECONDARY = `inline-flex min-h-[44px] items-center justify-center rounded-full border border-slate-500/60 bg-ink-700/70 px-5 py-2.5 text-meta text-slate-200 hover:bg-ink-600/70 motion-sub motion-reduce:transition-none ${travelFocusRingOffset2Classes}`;
 
 function formatCheckedAt(iso: string | null, t: (k: string) => string): string | null {
   if (!iso) return null;
@@ -84,7 +84,7 @@ export default function TrustTransparencyHub() {
 
   return (
     <main
-      className="min-h-screen relative overflow-hidden bg-slate-950"
+      className="min-h-screen relative overflow-hidden bg-ink-900"
       aria-labelledby={titleId}
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(34,211,238,0.08),_transparent_55%)]" />
@@ -182,16 +182,16 @@ export default function TrustTransparencyHub() {
           <h2 className="text-body font-semibold text-slate-100 mb-2">{t("pux1_three_pillars_title")}</h2>
           <p className="text-meta text-slate-400 mb-4 leading-relaxed max-w-prose">{t("pux1_three_pillars_intro")}</p>
           <div className="grid gap-4 sm:grid-cols-3">
-            <div className={`${CARD} border-emerald-500/20`}>
-              <h3 className="text-meta font-semibold text-emerald-300 mb-2">{t("trust_section_proof_b482_title")}</h3>
+            <div className={`${CARD} border-success/20`}>
+              <h3 className="text-meta font-semibold text-success mb-2">{t("trust_section_proof_b482_title")}</h3>
               <p className="text-meta text-slate-300 leading-relaxed">{t("pux1_pillar_finance_body")}</p>
             </div>
             <div className={`${CARD} border-violet-500/20`}>
               <h3 className="text-meta font-semibold text-violet-300 mb-2">{t("trust_section_proof_b483_title")}</h3>
               <p className="text-meta text-slate-300 leading-relaxed">{t("pux1_pillar_audit_body")}</p>
             </div>
-            <div className={`${CARD} border-amber-500/20`}>
-              <h3 className="text-meta font-semibold text-amber-200 mb-2">{t("trust_section_proof_b484_title")}</h3>
+            <div className={`${CARD} border-warning/20`}>
+              <h3 className="text-meta font-semibold text-white mb-2">{t("trust_section_proof_b484_title")}</h3>
               <p className="text-meta text-slate-300 leading-relaxed">{t("pux1_pillar_gov_body")}</p>
             </div>
           </div>
@@ -230,7 +230,7 @@ export default function TrustTransparencyHub() {
         <ProductCrossNav
           ariaLabelKey="trust_related_nav_aria"
           className="flex flex-wrap items-center gap-x-2 gap-y-1 text-meta text-slate-400 max-w-prose"
-          linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 font-medium motion-sub ${travelFocusRingOffset2Classes}`}
+          linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 font-medium motion-sub motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           separatorClassName="text-slate-500"
           showGuides
         />

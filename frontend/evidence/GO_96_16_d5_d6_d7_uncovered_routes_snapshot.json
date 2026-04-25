@@ -1,0 +1,20 @@
+{
+  "generated_by": "scripts/list-d5d6d7-uncovered-routes.mjs",
+  "total_page_routes": 119,
+  "evidence_hint_count": 118,
+  "uncovered_count": 8,
+  "uncovered_routes": [
+    "/did-rank",
+    "/disputes",
+    "/disputes/[id]",
+    "/guide",
+    "/guide/register",
+    "/help",
+    "/network",
+    "/trust"
+  ],
+  "evidence_files_scanned": [
+    "GO_96_16_d5_d6_d7_*.json excluding this snapshot (script filter)"
+  ],
+  "note": "8 routes: heuristic gap vs free-text D5–D7 evidence; / was 9th before Home→/ hint in list-d5d6d7-uncovered-routes.mjs"
+}

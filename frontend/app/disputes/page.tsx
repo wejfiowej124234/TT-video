@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState, type FormEvent } from "react";
-import { getDisputes, getMe } from "@/lib/apiClient";
+import { getDisputes, getMeFull } from "@/lib/apiClient";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { meRoleFromGetMe } from "@/lib/meRole";
 import Link from "next/link";
@@ -12,12 +12,13 @@ import { useTranslation } from "@/components/LocaleProvider";
 import { stashEscrowOrderPrefetchForOrderIdNav } from "@/lib/orderEscrowPrefetch";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
+import type { LocaleTranslateFn } from "@/lib/i18n";
 
 type DisputeItem = { id?: string; order_id?: string; status?: string; created_at?: string; resolved_at?: string };
 
 function disputeListStatusPresentation(
   status: string | undefined,
-  t: (key: string) => string
+  t: LocaleTranslateFn
 ): { label: string; className: string } {
   const raw = typeof status === "string" ? status.trim() : "";
   const norm = raw.toLowerCase();
@@ -37,7 +38,7 @@ function disputeListStatusPresentation(
         ? `${raw.slice(0, 37)}…`
         : raw;
   return {
-    label: t("disputes_statusUnknown").replace("{{status}}", display),
+    label: t("disputes_statusUnknown", { status: display }),
     className: "bg-ink-200/60 text-ink-700",
   };
 }
@@ -51,11 +52,11 @@ export default function DisputesPage() {
   const [isArbitrator, setIsArbitrator] = useState(false);
 
   useEffect(() => {
-    getMe()
+    getMeFull()
       .then((me) => setIsArbitrator(meRoleFromGetMe(me) === "arbitrator"))
       .catch((err) => {
         if (typeof window !== "undefined") {
-          console.error("DisputesPage getMe:", err);
+          console.error("DisputesPage getMeFull:", err);
         }
         setIsArbitrator(false);
       });
@@ -110,7 +111,7 @@ export default function DisputesPage() {
           <button
             type="submit"
             aria-label={t("common_retry")}
-            className={`rounded-full border border-travel-500/50 bg-travel-500/10 px-4 py-2 text-meta font-medium text-travel-700 hover:text-travel-800 hover:bg-travel-500/20 motion-sub min-h-[44px] inline-flex items-center justify-center ${travelFocusRingOffset2Classes}`}
+            className={`rounded-full border border-travel-500/50 bg-travel-500/10 px-4 py-2 text-meta font-medium text-travel-700 hover:text-travel-800 hover:bg-travel-500/20 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${travelFocusRingOffset2Classes}`}
           >
             {t("common_retry")}
           </button>
@@ -118,7 +119,7 @@ export default function DisputesPage() {
         <p>
           <Link
             href="/"
-            className={`${touchTargetLink44Classes} text-travel-500 underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} text-travel-500 underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("disputes_navHome")}
           </Link>
@@ -171,7 +172,7 @@ export default function DisputesPage() {
                 {d.id ? (
                   <Link
                     href={`/disputes/${encodeURIComponent(d.id)}`}
-                    className={`${touchTargetLink44Classes} text-small text-travel-500 font-medium hover:underline ${travelFocusRingOffset2Classes}`}
+                    className={`${touchTargetLink44Classes} text-small text-travel-500 font-medium hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
                   >
                     {t("disputes_viewDetail")}
                   </Link>
@@ -183,14 +184,14 @@ export default function DisputesPage() {
                       onClick={() =>
                         d.order_id && stashEscrowOrderPrefetchForOrderIdNav(d.order_id, "escrow")
                       }
-                      className={`${touchTargetLink44Classes} text-small text-travel-500 font-medium hover:underline ${travelFocusRingOffset2Classes}`}
+                      className={`${touchTargetLink44Classes} text-small text-travel-500 font-medium hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
                     >
                       {t("orders_viewDetail")}
                     </Link>
                     <Link
                       href={`/pay?orderId=${encodeURIComponent(d.order_id)}`}
                       onClick={() => d.order_id && stashEscrowOrderPrefetchForOrderIdNav(d.order_id, "pay")}
-                      className={`${touchTargetLink44Classes} text-small text-travel-500 font-medium hover:underline ${travelFocusRingOffset2Classes}`}
+                      className={`${touchTargetLink44Classes} text-small text-travel-500 font-medium hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
                     >
                       {t("orders_payHub")}
                     </Link>

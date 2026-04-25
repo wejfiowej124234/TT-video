@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef, useId, type FormEvent } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef, useId, type FormEvent } from "react";
 import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useAccount } from "wagmi";
 import { postGuide, postGuideUploadDoc, getAuthHeaders } from "@/lib/apiClient";
 import { mapApiReadError } from "@/lib/mapApiReadError";
@@ -18,11 +19,19 @@ import {
   travelFocusRingCoreOffset2Classes,
   travelFocusRingOffset2Classes,
 } from "@/lib/travelLinkFocus";
+import { buildLoginReturnPathWithQuery } from "@/lib/marketLoginReturnPath";
+import { GuideRegisterRouteSuspense } from "@/components/guide/GuideRegisterRouteSuspense";
 
 const guideRegConsoleFocus = `${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`;
 
-export default function GuideRegisterPage() {
+function GuideRegisterPageInner() {
   const { t } = useTranslation();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const guideRegisterLoginReturnUrl = useMemo(
+    () => buildLoginReturnPathWithQuery(pathname, searchParams?.toString() ?? "", "/guide/register"),
+    [pathname, searchParams],
+  );
   const [realName, setRealName] = useState("");
   const [idNumber, setIdNumber] = useState("");
   const [walletAddress, setWalletAddress] = useState("");
@@ -44,6 +53,7 @@ export default function GuideRegisterPage() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const [copied, setCopied] = useState(false);
   const [copyWalletBusy, setCopyWalletBusy] = useState(false);
+  const [sessionDraftRestored, setSessionDraftRestored] = useState(false);
   const { address: connectedAddress, isConnected } = useAccount();
   const successFocusRef = useRef<HTMLDivElement>(null);
 
@@ -85,6 +95,7 @@ export default function GuideRegisterPage() {
     try {
       const raw = window.sessionStorage.getItem(PENDING_GUIDE_KEY);
       if (!raw) return;
+      setSessionDraftRestored(true);
       const data = JSON.parse(raw) as PendingGuide;
       if (data.realName) setRealName(data.realName);
       if (data.idNumber) setIdNumber(data.idNumber);
@@ -275,9 +286,9 @@ export default function GuideRegisterPage() {
             <div ref={successFocusRef} tabIndex={-1} className="outline-none" aria-hidden="true" />
             <p className="text-success font-medium">{t("guideRegister_doneMessage")}</p>
             <p className="mt-4">
-              <Link href="/guides" className={`${touchTargetLink44Classes} text-travel-500 text-small hover:underline ${travelFocusRingOffset2Classes}`}>{t("guideRegister_doneGuideList")}</Link>
+              <Link href="/guides" className={`${touchTargetLink44Classes} text-travel-500 text-small hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>{t("guideRegister_doneGuideList")}</Link>
               {" · "}
-              <Link href="/community/me" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("guideRegister_doneMe")}</Link>
+              <Link href="/community/me" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>{t("guideRegister_doneMe")}</Link>
             </p>
           </div>
         </div>
@@ -294,9 +305,9 @@ export default function GuideRegisterPage() {
             <p className="text-body text-ink-800 font-medium">{t("guideRegister_alreadyGuideTitle")}</p>
             <p className="text-small text-ink-600">{t("guideRegister_alreadyGuideDesc")}</p>
             <p className="mt-4">
-              <Link href="/guides" className={`${touchTargetLink44Classes} text-travel-500 text-small hover:underline ${travelFocusRingOffset2Classes}`}>{t("guideRegister_guideList")}</Link>
+              <Link href="/guides" className={`${touchTargetLink44Classes} text-travel-500 text-small hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>{t("guideRegister_guideList")}</Link>
               {" · "}
-              <Link href="/community/me" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("guideRegister_me")}</Link>
+              <Link href="/community/me" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>{t("guideRegister_me")}</Link>
             </p>
           </div>
         </div>
@@ -311,6 +322,14 @@ export default function GuideRegisterPage() {
         <p className="text-meta text-ink-600 mb-4">
           {pendingIdPhoto || pendingLangCert ? t("guideRegister_introFromRegister") : t("guideRegister_introDirect")}
         </p>
+        {sessionDraftRestored ? (
+          <p
+            className="text-meta text-white mb-4 rounded-[var(--radius-sm)] border border-warning/60 bg-warning px-3 py-2"
+            role="note"
+          >
+            {t("guideRegister_draftLocalOnly")}
+          </p>
+        ) : null}
         <div className="mb-4 rounded-[var(--radius-sm)] border border-travel-500/30 bg-travel-500/5 p-3">
           <p className="text-small font-medium text-ink-800">{t("guideRegister_didAboutTitle")}</p>
           <p className="text-meta text-ink-600 mt-0.5">{t("guideRegister_didAboutDesc")}</p>
@@ -318,7 +337,12 @@ export default function GuideRegisterPage() {
         {isLoggedIn === false && (
           <p className="text-small text-ink-600 mb-4 rounded-[var(--radius-sm)] bg-ink-100 px-3 py-2 text-ink-800 border border-ink-200">
             {t("guideRegister_loginRequiredBefore")}
-            <Link href="/auth/login" className={`${touchTargetLink44Classes} font-medium underline ${travelFocusRingOffset2Classes}`}>{t("header_login")}</Link>
+            <Link
+              href={`/auth/login?returnUrl=${encodeURIComponent(guideRegisterLoginReturnUrl)}`}
+              className={`${touchTargetLink44Classes} font-medium underline ${travelFocusRingOffset2Classes}`}
+            >
+              {t("header_login")}
+            </Link>
             {t("guideRegister_loginRequiredAfter")}
           </p>
         )}
@@ -423,9 +447,9 @@ export default function GuideRegisterPage() {
             <input type="checkbox" checked={agreePrivacy} onChange={(e) => { setAgreePrivacy(e.target.checked); clearSubmitError(); }} className={`mt-1 rounded-[var(--radius-sm)] border-ink-300 text-travel-500 ${guideRegConsoleFocus}`} />
             <span className="text-small text-ink-700">
               {t("guideRegister_agreePrivacyBefore")}
-              <Link href="/terms" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("guideRegister_agreePrivacyTerms")}</Link>
+              <Link href="/terms" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>{t("guideRegister_agreePrivacyTerms")}</Link>
               {t("guideRegister_agreePrivacyBetween")}
-              <Link href="/privacy" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("guideRegister_agreePrivacyPrivacy")}</Link>
+              <Link href="/privacy" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>{t("guideRegister_agreePrivacyPrivacy")}</Link>
               {t("guideRegister_agreePrivacyAfter")}
             </span>
           </label>
@@ -452,9 +476,9 @@ export default function GuideRegisterPage() {
           <button type="submit" disabled={loading || isLoggedIn === false || !agreePrivacy} className={`btn-console rounded-[var(--radius-sm)] bg-travel-500 px-4 py-2 text-white text-small disabled:opacity-50 ${guideRegConsoleFocus}`} aria-busy={loading ? true : undefined} aria-describedby={error ? guideRegisterFormErrorId : undefined}>{loading ? t("guideRegister_submitting") : t("guideRegister_submit")}</button>
         </form>
         <p className="mt-4 text-meta text-ink-500">
-          <Link href="/guides" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("guideRegister_guideList")}</Link>
+          <Link href="/guides" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>{t("guideRegister_guideList")}</Link>
           {" · "}
-          <Link href="/community/me" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>{t("guideRegister_me")}</Link>
+          <Link href="/community/me" className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>{t("guideRegister_me")}</Link>
         </p>
         <ProductCrossNav
           ariaLabelKey="guide_register_relatedNav_aria"
@@ -463,5 +487,13 @@ export default function GuideRegisterPage() {
       </section>
       <TrustInfraWall />
     </main>
+  );
+}
+
+export default function GuideRegisterPage() {
+  return (
+    <GuideRegisterRouteSuspense>
+      <GuideRegisterPageInner />
+    </GuideRegisterRouteSuspense>
   );
 }
