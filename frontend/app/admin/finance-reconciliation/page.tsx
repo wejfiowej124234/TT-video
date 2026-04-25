@@ -171,8 +171,8 @@ export default function AdminFinanceReconciliationPage() {
   const hubAlignment = deriveChainAlignmentStatus(driftNorm?.drift_detected);
 
   function alignmentBadgeClass(s: ChainAlignmentHubStatus): string {
-    if (s === "unknown") return "border-amber-300 bg-amber-50 text-amber-950";
-    if (s === "not_aligned") return "border-amber-400 bg-amber-100 text-amber-950";
+    if (s === "unknown") return "border-warning bg-warning text-white";
+    if (s === "not_aligned") return "border-warning bg-warning text-white";
     return "border-ink-200 bg-ink-100 text-ink-800";
   }
 
@@ -203,7 +203,7 @@ export default function AdminFinanceReconciliationPage() {
         </div>
         <Link
           href="/admin"
-          className={`${touchTargetLink44Classes} shrink-0 text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+          className={`${touchTargetLink44Classes} shrink-0 text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
         >
           {t("admin_schema_back")}
         </Link>
@@ -265,14 +265,14 @@ export default function AdminFinanceReconciliationPage() {
               <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
                 <Link
                   href="/admin/indexer/reconcile-reports"
-                  className={`${touchTargetLink44Classes} text-small font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+                  className={`${touchTargetLink44Classes} text-small font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
                 >
                   {t("admin_finance_reconciliation_open_reconcile_reports")}
                 </Link>
                 {hasReportId ? (
                   <Link
                     href={`/admin/indexer/reconcile/${encodeURIComponent(reportIdRaw)}`}
-                    className={`${touchTargetLink44Classes} text-small font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+                    className={`${touchTargetLink44Classes} text-small font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
                   >
                     {t("admin_finance_reconciliation_open_reconcile_detail")}
                   </Link>
@@ -341,7 +341,7 @@ export default function AdminFinanceReconciliationPage() {
                   </dl>
                   <Link
                     href="/admin/drift-summary"
-                    className={`${touchTargetLink44Classes} mt-3 inline-flex text-small font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+                    className={`${touchTargetLink44Classes} mt-3 inline-flex text-small font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
                   >
                     {t("admin_finance_reconciliation_open_drift_full")}
                   </Link>
@@ -372,7 +372,7 @@ export default function AdminFinanceReconciliationPage() {
                   </dl>
                   <Link
                     href="/admin/cross-check"
-                    className={`${touchTargetLink44Classes} mt-3 inline-flex text-small font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+                    className={`${touchTargetLink44Classes} mt-3 inline-flex text-small font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
                   >
                     {t("admin_finance_reconciliation_open_cross_check_full")}
                   </Link>
@@ -394,7 +394,7 @@ export default function AdminFinanceReconciliationPage() {
             <li key={href}>
               <Link
                 href={href}
-                className={`${touchTargetLink44Classes} inline-flex text-body font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+                className={`${touchTargetLink44Classes} inline-flex text-body font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
               >
                 {t(labelKey)}
               </Link>

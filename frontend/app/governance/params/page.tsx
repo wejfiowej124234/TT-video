@@ -179,7 +179,11 @@ export default function GovernanceParamsPage() {
                 <ApiErrorAlert message={pendingErr} />
               </div>
             ) : pending === undefined ? (
-              <p className="mt-3 text-ink-500 motion-sub animate-pulse" role="status" aria-live="polite">
+              <p
+                className="mt-3 text-ink-500 motion-sub motion-reduce:transition-none animate-pulse motion-reduce:animate-none"
+                role="status"
+                aria-live="polite"
+              >
                 {t("governance_params_diff_pending_loading")}
               </p>
             ) : diffRows == null ? (
@@ -197,7 +201,7 @@ export default function GovernanceParamsPage() {
                 </p>
                 {pendingSource ? (
                   <p className="mt-1 text-meta text-ink-500">
-                    {t("governance_params_diff_source_hint").replace("{{source}}", pendingSource)}
+                    {t("governance_params_diff_source_hint", { source: pendingSource })}
                   </p>
                 ) : null}
                 <table className="mt-3 w-full min-w-[520px] border-collapse text-left text-small">
@@ -212,7 +216,7 @@ export default function GovernanceParamsPage() {
                   <tbody>
                     {diffRows.map((row) => {
                       const match = row.cur === row.pen;
-                      const bump = !match ? "bg-amber-50 dark:bg-amber-950/25" : "";
+                      const bump = !match ? "bg-warning dark:bg-warning/25" : "";
                       return (
                         <tr key={row.id} className="border-b border-ink-100 text-ink-800">
                           <td className={`py-2 pr-3 ${bump}`}>{t(row.labelKey)}</td>
@@ -238,18 +242,34 @@ export default function GovernanceParamsPage() {
             {l1 && (
               <ul className="mt-2 list-disc pl-5 text-body text-ink-700">
                 <li>
-                  {t("governance_params_layer1_country")}: {l1.country_bucket}%
+                  {t("governance_params_layer1_country")}
+                  {t("market_fin_colon")}
+                  {l1.country_bucket}%
                 </li>
                 <li>
-                  {t("governance_params_layer1_global")}: {l1.global_pool}%
+                  {t("governance_params_layer1_global")}
+                  {t("market_fin_colon")}
+                  {l1.global_pool}%
                 </li>
               </ul>
             )}
             {gsplit && (
               <ul className="mt-2 list-disc pl-5 text-body text-ink-700">
-                <li>TTG {t("governance_params_stakers")}: {gsplit.ttg_stakers}%</li>
-                <li>{t("governance_params_reserve")}: {gsplit.reserve}%</li>
-                <li>{t("governance_params_operations")}: {gsplit.operations}%</li>
+                <li>
+                  TTG {t("governance_params_stakers")}
+                  {t("market_fin_colon")}
+                  {gsplit.ttg_stakers}%
+                </li>
+                <li>
+                  {t("governance_params_reserve")}
+                  {t("market_fin_colon")}
+                  {gsplit.reserve}%
+                </li>
+                <li>
+                  {t("governance_params_operations")}
+                  {t("market_fin_colon")}
+                  {gsplit.operations}%
+                </li>
               </ul>
             )}
             {data.fee_router?.orthogonality_ref && (

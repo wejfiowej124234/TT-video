@@ -1,0 +1,38 @@
+{
+  "batch": "GO_96_16_d5_d6_d7_admin_finance_disputes_orders_governance_market",
+  "docs_spec_touched": false,
+  "scope": "/admin/finance, /admin/finance-reconciliation, /admin/disputes list, /admin/orders list; /governance/params, /governance/delegate, /governance/distribution-claim; market [id] via AcquisitionListingDetailView/MerchantShowcaseDetailView + detail bodies; no new locale keys",
+  "d5_d6_d7_actions": [
+    "admin disputes/orders filters: label htmlFor + input id for limit/status fields; header links underline-offset + transition + motion-reduce",
+    "admin finance + finance-reconciliation: card/link transitions motion-reduce; text links underline-offset + transition + motion-reduce; export button transition + motion-reduce",
+    "governance params: loading skeleton motion-sub + motion-reduce:transition-none",
+    "governance delegate: delegate target input min-h 44 + focus ring white offset; links/buttons motion-reduce on hovers",
+    "governance distribution-claim: dist field aria-invalid + aria-errormessage + error id; min-h 44 + focus rings; nav + action button transitions",
+    "market acquisition/provider detail: hero CTA + back links transition + motion-reduce; full-page listing image priority=true (LCP); embed drawer keeps non-priority"
+  ],
+  "commands": {
+    "eslint": {
+      "cmd": "npm run lint",
+      "exit": 0
+    },
+    "i18n_ci": {
+      "cmd": "npm run test:i18n:ci",
+      "exit": 0
+    },
+    "vitest": {
+      "cmd": "npm test -- --run lib/p5-4GovernanceRoutes.smoke.test.ts lib/marketSubsiteFilters.test.ts lib/marketSubsiteDemo.test.ts",
+      "exit": 0,
+      "tests_passed": 10
+    },
+    "npm_run_build": {
+      "cmd": "npm run build",
+      "exit": 0
+    }
+  },
+  "playwright_e2e": {
+    "status": "NOT_RUN",
+    "trace": "93",
+    "detail": "E2E not run in this batch."
+  },
+  "claim_96_complete": false
+}

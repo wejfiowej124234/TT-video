@@ -1,8 +1,8 @@
 "use client";
 
-import { type FormEvent, useCallback, useEffect, useId, useState } from "react";
+import { type FormEvent, useCallback, useEffect, useId, useMemo, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useTranslation } from "@/components/LocaleProvider";
 import {
   AUTH_SESSION_TOKEN_KEY,
@@ -22,8 +22,11 @@ import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import {
   touchTargetLink44Classes,
   travelFocusRingCoreOffset2Classes,
+  travelFocusRingCoreOffset2WhiteClasses,
   travelFocusRingOffset2Classes,
 } from "@/lib/travelLinkFocus";
+import { buildLoginReturnPathWithQuery } from "@/lib/marketLoginReturnPath";
+import { GovernanceSearchParamsRouteSuspense } from "@/components/governance/GovernanceSearchParamsRouteSuspense";
 
 function hasClientSession(): boolean {
   if (typeof window === "undefined") return false;
@@ -34,9 +37,10 @@ function hasClientSession(): boolean {
 }
 
 /** B-073：委托 / 撤销 + 回执（request_id / tx_hash） */
-export default function GovernanceDelegatePage() {
+function GovernanceDelegatePageInner() {
   const { t } = useTranslation();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const pageTitleId = useId();
   const formId = useId();
   const targetInputId = useId();
@@ -54,7 +58,10 @@ export default function GovernanceDelegatePage() {
     (GovernanceDelegateWriteResponse & { action: "post" | "delete" }) | null
   >(null);
 
-  const loginHref = `/auth/login?returnUrl=${encodeURIComponent(pathname && pathname.startsWith("/") ? pathname : "/governance/delegate")}`;
+  const loginHref = useMemo(() => {
+    const next = buildLoginReturnPathWithQuery(pathname, searchParams?.toString() ?? "", "/governance/delegate");
+    return `/auth/login?returnUrl=${encodeURIComponent(next)}`;
+  }, [pathname, searchParams]);
 
   const fetchDelegate = useCallback((silent: boolean) => {
     if (!silent) {
@@ -102,7 +109,7 @@ export default function GovernanceDelegatePage() {
     setCopyHint(null);
     try {
       await navigator.clipboard.writeText(value);
-      setCopyHint(`${label}: ${t("agree_copy_done")}`);
+      setCopyHint(`${label}${t("market_fin_colon")}${t("agree_copy_done")}`);
     } catch {
       setCopyHint(t("agree_copy_failed"));
     }
@@ -150,7 +157,7 @@ export default function GovernanceDelegatePage() {
   }
 
   const hasSession = hasClientSession();
-  const btnClass = `min-h-[44px] rounded-[var(--radius-sm)] border border-ink-300 bg-white px-4 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 disabled:opacity-50 disabled:cursor-not-allowed ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-white`;
+  const btnClass = `min-h-[44px] rounded-[var(--radius-sm)] border border-ink-300 bg-white px-4 py-2 text-small font-medium text-ink-800 transition-colors motion-reduce:transition-none hover:bg-ink-50 disabled:opacity-50 disabled:cursor-not-allowed ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-white`;
 
   return (
     <main className="mx-auto max-w-3xl p-8" aria-labelledby={pageTitleId}>
@@ -182,7 +189,7 @@ export default function GovernanceDelegatePage() {
               disabled={loading}
               aria-busy={loading ? true : undefined}
               aria-label={t("common_retry")}
-              className={`${touchTargetLink44Classes} rounded-[var(--radius-sm)] border border-ink-300 bg-white px-3 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 disabled:opacity-50 disabled:cursor-not-allowed ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-white`}
+              className={`${touchTargetLink44Classes} rounded-[var(--radius-sm)] border border-ink-300 bg-white px-3 py-2 text-small font-medium text-ink-800 transition-colors motion-reduce:transition-none hover:bg-ink-50 disabled:opacity-50 disabled:cursor-not-allowed ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-white`}
             >
               {loading ? t("common_retrying") : t("common_retry")}
             </button>
@@ -204,7 +211,7 @@ export default function GovernanceDelegatePage() {
               <p className="text-body text-ink-700 dark:text-ink-200">{t("governance_delegate_login_hint")}</p>
               <Link
                 href={loginHref}
-                className={`${touchTargetLink44Classes} mt-2 inline-flex items-center font-medium text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+                className={`${touchTargetLink44Classes} mt-2 inline-flex items-center font-medium text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
               >
                 {t("governance_delegate_go_login")}
               </Link>
@@ -225,7 +232,7 @@ export default function GovernanceDelegatePage() {
                   value={targetDraft}
                   onChange={(e) => setTargetDraft(e.target.value)}
                   placeholder={t("governance_delegate_target_placeholder")}
-                  className="mt-1 w-full max-w-xl rounded-[var(--radius-sm)] border border-ink-300 bg-white px-3 py-2 font-mono text-small text-ink-900"
+                  className={`mt-1 w-full max-w-xl min-h-[44px] rounded-[var(--radius-sm)] border border-ink-300 bg-white px-3 py-2 font-mono text-small text-ink-900 ${travelFocusRingCoreOffset2WhiteClasses}`}
                 />
               </div>
               <div className="flex flex-wrap gap-2">
@@ -262,7 +269,7 @@ export default function GovernanceDelegatePage() {
                   <dd className="font-mono text-small break-all">{receipt.request_id}</dd>
                   <button
                     type="button"
-                    className={`${touchTargetLink44Classes} text-travel-600 text-small hover:underline ${travelFocusRingOffset2Classes}`}
+                    className={`${touchTargetLink44Classes} text-travel-600 text-small hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
                     onClick={() => void copyLine("request_id", receipt.request_id ?? "")}
                   >
                     {t("agree_copy")}
@@ -295,13 +302,13 @@ export default function GovernanceDelegatePage() {
       <nav className="mt-10 flex flex-wrap gap-4" aria-label={t("governance_nav_label")}>
         <Link
           href="/governance"
-          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
         >
           {t("governance_title")}
         </Link>
         <Link
           href="/governance/proposals"
-          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
         >
           {t("governance_proposals_title")}
         </Link>
@@ -313,5 +320,13 @@ export default function GovernanceDelegatePage() {
         className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-meta text-ink-500"
       />
     </main>
+  );
+}
+
+export default function GovernanceDelegatePage() {
+  return (
+    <GovernanceSearchParamsRouteSuspense pageTitleKey="governance_delegate_title" introKey="governance_delegate_intro">
+      <GovernanceDelegatePageInner />
+    </GovernanceSearchParamsRouteSuspense>
   );
 }

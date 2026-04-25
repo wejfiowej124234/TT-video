@@ -73,10 +73,12 @@ function AdminOrdersPageInner() {
   const pageTitleId = useId();
   const adminAppliedFiltersDescId = useId();
   const adminListApplyResetHintId = useId();
+  const ordersLimitFieldId = useId();
+  const ordersStateFieldId = useId();
   const router = useRouter();
   const searchParams = useSearchParams();
   const { limit, state } = useMemo(
-    () => parseOrdersListQuery(new URLSearchParams(searchParams.toString())),
+    () => parseOrdersListQuery(new URLSearchParams(searchParams?.toString() ?? "")),
     [searchParams],
   );
 
@@ -157,11 +159,14 @@ function AdminOrdersPageInner() {
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-small">
           <Link
             href="/admin/observability"
-            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("admin_observability_title")}
           </Link>
-          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link
+            href="/admin"
+            className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
+          >
             {t("admin_schema_back")}
           </Link>
         </div>
@@ -183,9 +188,10 @@ function AdminOrdersPageInner() {
             {t("admin_list_filters_apply_reset_hint")}
           </p>
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            <label className="text-small text-ink-700">
+            <label htmlFor={ordersLimitFieldId} className="text-small text-ink-700">
               {t("admin_orders_limit_label")}
               <input
+                id={ordersLimitFieldId}
                 className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-md)] border border-ink-300 bg-white px-3 py-2 ${travelFocusRingCoreOffset2WhiteClasses}`}
                 type="number"
                 min={1}
@@ -194,9 +200,10 @@ function AdminOrdersPageInner() {
                 onChange={(e) => setDraftLimit(e.target.value)}
               />
             </label>
-            <label className="text-small text-ink-700">
+            <label htmlFor={ordersStateFieldId} className="text-small text-ink-700">
               {t("admin_orders_state_label")}
               <input
+                id={ordersStateFieldId}
                 className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-md)] border border-ink-300 bg-white px-3 py-2 font-mono text-meta ${travelFocusRingCoreOffset2WhiteClasses}`}
                 value={draftState}
                 onChange={(e) => setDraftState(e.target.value)}

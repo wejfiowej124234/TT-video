@@ -177,7 +177,7 @@ export default function AdminFinancePage() {
         <div className="flex flex-wrap items-center gap-3">
           <Link
             href="/admin/observability"
-            className={`${touchTargetLink44Classes} text-small font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} text-small font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("admin_observability_title")}
           </Link>
@@ -195,7 +195,7 @@ export default function AdminFinancePage() {
             </p>
             <button
               type="submit"
-              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 bg-white px-3 py-1.5 text-small font-medium text-ink-800 hover:bg-ink-50 disabled:opacity-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
+              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 bg-white px-3 py-1.5 text-small font-medium text-ink-800 transition-colors motion-reduce:transition-none hover:bg-ink-50 disabled:opacity-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
               disabled={loading || exporting}
               aria-label={t("admin_finance_export_csv_aria")}
             >
@@ -205,7 +205,10 @@ export default function AdminFinancePage() {
               {t("admin_finance_export_csv_format_hint")}
             </p>
           </form>
-          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link
+            href="/admin"
+            className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
+          >
             {t("admin_schema_back")}
           </Link>
         </div>
@@ -243,7 +246,7 @@ export default function AdminFinancePage() {
             <div className="rounded-[var(--radius-xl)] border border-ink-200 bg-ink-50/80 p-4">
               <Link
                 href="/admin/indexer/reconcile-reports"
-                className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start -mx-1 -mt-1 rounded-[var(--radius-md)] px-1 pt-1 text-left text-ink-800 transition hover:border-travel-400 hover:text-travel-700 ${travelFocusRingCoreOffset2WhiteClasses}`}
+                className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start -mx-1 -mt-1 rounded-[var(--radius-md)] px-1 pt-1 text-left text-ink-800 transition motion-reduce:transition-none hover:border-travel-400 hover:text-travel-700 ${travelFocusRingCoreOffset2WhiteClasses}`}
                 aria-labelledby={financeMetaDlHeadingId}
               >
                 <h2 id={financeMetaDlHeadingId} className="text-body font-medium text-ink-800">
@@ -326,7 +329,7 @@ export default function AdminFinancePage() {
                 <div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                   <Link
                     href="/admin/fee-router#admin-fee-router-events"
-                    className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200 bg-white/60 p-3 text-left text-ink-800 shadow-soft transition hover:border-travel-400 hover:text-travel-600 ${travelFocusRingCoreOffset2WhiteClasses}`}
+                    className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200 bg-white/60 p-3 text-left text-ink-800 shadow-soft transition motion-reduce:transition-none hover:border-travel-400 hover:text-travel-600 ${travelFocusRingCoreOffset2WhiteClasses}`}
                   >
                     <p className="text-meta font-medium text-ink-600">{t("admin_finance_meta_feeRouterHeading")}</p>
                     <dl className="mt-2 text-small text-ink-700">
@@ -371,7 +374,7 @@ export default function AdminFinancePage() {
                   </Link>
                   <Link
                     href="/admin/region-vault#admin-region-vault-events"
-                    className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200 bg-white/60 p-3 text-left text-ink-800 shadow-soft transition hover:border-travel-400 hover:text-travel-600 ${travelFocusRingCoreOffset2WhiteClasses}`}
+                    className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200 bg-white/60 p-3 text-left text-ink-800 shadow-soft transition motion-reduce:transition-none hover:border-travel-400 hover:text-travel-600 ${travelFocusRingCoreOffset2WhiteClasses}`}
                   >
                     <p className="text-meta font-medium text-ink-600">{t("admin_finance_meta_regionVaultHeading")}</p>
                     <dl className="mt-2 text-small text-ink-700">
@@ -420,17 +423,16 @@ export default function AdminFinancePage() {
                         ? `/admin/indexer/reconcile/${encodeURIComponent(lastReportId)}`
                         : "/admin/indexer/reconcile-reports"
                     }
-                    className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200 bg-white/60 p-3 text-left text-ink-800 shadow-soft transition hover:border-travel-400 hover:text-travel-600 sm:col-span-2 xl:col-span-1 ${travelFocusRingCoreOffset2WhiteClasses}`}
+                    className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200 bg-white/60 p-3 text-left text-ink-800 shadow-soft transition motion-reduce:transition-none hover:border-travel-400 hover:text-travel-600 sm:col-span-2 xl:col-span-1 ${travelFocusRingCoreOffset2WhiteClasses}`}
                   >
                     <p className="text-meta font-medium text-ink-600">{t("admin_finance_meta_projectionReconcileHeading")}</p>
                     {lastProjReconcile ? (
                       <div className="mt-2 space-y-1 text-small text-ink-700">
                         {typeof lastProjReconcile.report_type === "string" && lastProjReconcile.report_type.trim() ? (
                           <p className="text-meta font-mono text-ink-700">
-                            {t("admin_indexer_last_reconcile_report_type").replace(
-                              "{type}",
-                              lastProjReconcile.report_type.trim(),
-                            )}
+                            {t("admin_indexer_last_reconcile_report_type", {
+                              type: lastProjReconcile.report_type.trim(),
+                            })}
                           </p>
                         ) : null}
                         <p className="text-body text-ink-700">
@@ -442,21 +444,23 @@ export default function AdminFinancePage() {
                         </p>
                         <p className="text-body text-ink-600">
                           {issuesN != null
-                            ? t("admin_indexer_last_reconcile_issues").replace("{count}", String(issuesN))
-                            : t("admin_indexer_last_reconcile_issues_unknown")}
+                            ? t("admin_indexer_last_reconcile_issues", {
+                                count: String(issuesN),
+                                colon: t("market_fin_colon"),
+                              })
+                            : t("admin_indexer_last_reconcile_issues_unknown", { colon: t("market_fin_colon") })}
                         </p>
                         <p className="text-meta text-ink-600">
                           {typeof lastProjReconcile.chain_id === "number"
-                            ? t("admin_indexer_last_reconcile_chain").replace("{id}", String(lastProjReconcile.chain_id))
+                            ? t("admin_indexer_last_reconcile_chain", { id: String(lastProjReconcile.chain_id) })
                             : t("admin_indexer_last_reconcile_chain_unknown")}
                         </p>
                         {typeof lastProjReconcile.created_at === "string" &&
                           !Number.isNaN(Date.parse(lastProjReconcile.created_at)) && (
                             <p className="text-meta text-ink-500">
-                              {t("admin_indexer_last_reconcile_at").replace(
-                                "{ts}",
-                                new Date(lastProjReconcile.created_at).toLocaleString(),
-                              )}
+                              {t("admin_indexer_last_reconcile_at", {
+                                ts: new Date(lastProjReconcile.created_at).toLocaleString(),
+                              })}
                             </p>
                           )}
                         {lastReportId ? (
@@ -469,19 +473,19 @@ export default function AdminFinancePage() {
                   </Link>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-small">
-                  <Link href="/admin/fee-router" className={`${touchTargetLink44Classes} text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}>
+                  <Link href="/admin/fee-router" className={`${touchTargetLink44Classes} text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
                     {t("admin_finance_link_fee_router")}
                   </Link>
                   <Link
                     href="/admin/region-vault#admin-region-vault-events"
-                    className={`${touchTargetLink44Classes} text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+                    className={`${touchTargetLink44Classes} text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
                   >
                     {t("admin_finance_link_region_vault")}
                   </Link>
-                  <Link href="/admin/indexer" className={`${touchTargetLink44Classes} text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}>
+                  <Link href="/admin/indexer" className={`${touchTargetLink44Classes} text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
                     {t("admin_finance_link_indexer")}
                   </Link>
-                  <Link href="/admin/indexer/reconcile-reports" className={`${touchTargetLink44Classes} text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}>
+                  <Link href="/admin/indexer/reconcile-reports" className={`${touchTargetLink44Classes} text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
                     {t("admin_finance_link_reconcile_reports")}
                   </Link>
                 </div>
@@ -494,7 +498,7 @@ export default function AdminFinancePage() {
           <div className="grid gap-4 sm:grid-cols-2">
             <Link
               href="/admin/orders"
-              className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 text-ink-800 shadow-soft transition hover:border-travel-400 hover:text-travel-600 ${travelFocusRingCoreOffset2WhiteClasses}`}
+              className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 text-ink-800 shadow-soft transition motion-reduce:transition-none hover:border-travel-400 hover:text-travel-600 ${travelFocusRingCoreOffset2WhiteClasses}`}
             >
               <h2 className="text-body font-medium text-ink-800">{t("admin_finance_orderCount")}</h2>
               <p className="mt-2 text-h4 font-semibold text-ink-900">{summary.order_count ?? 0}</p>
@@ -502,7 +506,7 @@ export default function AdminFinancePage() {
 
             <Link
               href="/admin/disputes"
-              className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 text-ink-800 shadow-soft transition hover:border-travel-400 hover:text-travel-600 ${travelFocusRingCoreOffset2WhiteClasses}`}
+              className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 text-ink-800 shadow-soft transition motion-reduce:transition-none hover:border-travel-400 hover:text-travel-600 ${travelFocusRingCoreOffset2WhiteClasses}`}
             >
               <h2 className="text-body font-medium text-ink-800">{t("admin_finance_disputeCount")}</h2>
               <p className="mt-2 text-h4 font-semibold text-ink-900">{summary.dispute_count ?? 0}</p>
@@ -510,7 +514,7 @@ export default function AdminFinancePage() {
 
             <Link
               href="/admin/orders"
-              className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 text-ink-800 shadow-soft transition hover:border-travel-400 hover:text-travel-600 ${travelFocusRingCoreOffset2WhiteClasses}`}
+              className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 text-ink-800 shadow-soft transition motion-reduce:transition-none hover:border-travel-400 hover:text-travel-600 ${travelFocusRingCoreOffset2WhiteClasses}`}
             >
               <h2 className="text-body font-medium text-ink-800">{t("admin_finance_ordersEscrowAddr")}</h2>
               <p className="mt-2 text-h4 font-semibold text-ink-900">
@@ -520,7 +524,7 @@ export default function AdminFinancePage() {
 
             <Link
               href="/admin/orders"
-              className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 text-ink-800 shadow-soft transition hover:border-travel-400 hover:text-travel-600 ${travelFocusRingCoreOffset2WhiteClasses}`}
+              className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 text-ink-800 shadow-soft transition motion-reduce:transition-none hover:border-travel-400 hover:text-travel-600 ${travelFocusRingCoreOffset2WhiteClasses}`}
             >
               <h2 className="text-body font-medium text-ink-800">{t("admin_finance_amountParseErrors")}</h2>
               <p className="mt-2 text-h4 font-semibold text-ink-900">
@@ -530,7 +534,7 @@ export default function AdminFinancePage() {
 
             <Link
               href="/admin/disputes"
-              className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 text-ink-800 shadow-soft transition hover:border-travel-400 hover:text-travel-600 sm:col-span-2 ${travelFocusRingCoreOffset2WhiteClasses}`}
+              className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 text-ink-800 shadow-soft transition motion-reduce:transition-none hover:border-travel-400 hover:text-travel-600 sm:col-span-2 ${travelFocusRingCoreOffset2WhiteClasses}`}
             >
               <h2 className="text-body font-medium text-ink-800">{t("admin_finance_disputeStatusCounts")}</h2>
               <pre className="mt-2 overflow-auto rounded-[var(--radius-md)] bg-ink-50 p-3 text-small text-ink-700">
@@ -540,7 +544,7 @@ export default function AdminFinancePage() {
 
             <Link
               href="/admin/orders"
-              className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 text-ink-800 shadow-soft transition hover:border-travel-400 hover:text-travel-600 sm:col-span-2 ${travelFocusRingCoreOffset2WhiteClasses}`}
+              className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 text-ink-800 shadow-soft transition motion-reduce:transition-none hover:border-travel-400 hover:text-travel-600 sm:col-span-2 ${travelFocusRingCoreOffset2WhiteClasses}`}
             >
               <h2 className="text-body font-medium text-ink-800">{t("admin_finance_stateCounts")}</h2>
               <pre className="mt-2 overflow-auto rounded-[var(--radius-md)] bg-ink-50 p-3 text-small text-ink-700">
@@ -550,7 +554,7 @@ export default function AdminFinancePage() {
 
             <Link
               href="/admin/orders"
-              className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 text-ink-800 shadow-soft transition hover:border-travel-400 hover:text-travel-600 sm:col-span-2 ${travelFocusRingCoreOffset2WhiteClasses}`}
+              className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 text-ink-800 shadow-soft transition motion-reduce:transition-none hover:border-travel-400 hover:text-travel-600 sm:col-span-2 ${travelFocusRingCoreOffset2WhiteClasses}`}
             >
               <h2 className="text-body font-medium text-ink-800">{t("admin_finance_totalByCurrency")}</h2>
               <pre className="mt-2 overflow-auto rounded-[var(--radius-md)] bg-ink-50 p-3 text-small text-ink-700">
@@ -560,7 +564,7 @@ export default function AdminFinancePage() {
 
             <Link
               href="/admin/orders"
-              className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 text-ink-800 shadow-soft transition hover:border-travel-400 hover:text-travel-600 sm:col-span-2 ${travelFocusRingCoreOffset2WhiteClasses}`}
+              className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 text-ink-800 shadow-soft transition motion-reduce:transition-none hover:border-travel-400 hover:text-travel-600 sm:col-span-2 ${travelFocusRingCoreOffset2WhiteClasses}`}
             >
               <h2 className="text-body font-medium text-ink-800">{t("admin_finance_escrowedByCurrency")}</h2>
               <pre className="mt-2 overflow-auto rounded-[var(--radius-md)] bg-ink-50 p-3 text-small text-ink-700">

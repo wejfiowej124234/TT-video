@@ -68,10 +68,12 @@ function AdminDisputesPageInner() {
   const pageTitleId = useId();
   const adminAppliedFiltersDescId = useId();
   const adminListApplyResetHintId = useId();
+  const disputesLimitFieldId = useId();
+  const disputesStatusFieldId = useId();
   const router = useRouter();
   const searchParams = useSearchParams();
   const { limit, status } = useMemo(
-    () => parseDisputesListQuery(new URLSearchParams(searchParams.toString())),
+    () => parseDisputesListQuery(new URLSearchParams(searchParams?.toString() ?? "")),
     [searchParams],
   );
 
@@ -152,11 +154,14 @@ function AdminDisputesPageInner() {
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-small">
           <Link
             href="/admin/observability"
-            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
           >
             {t("admin_observability_title")}
           </Link>
-          <Link href="/admin" className={`${touchTargetLink44Classes} text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}>
+          <Link
+            href="/admin"
+            className={`${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
+          >
             {t("admin_schema_back")}
           </Link>
         </div>
@@ -178,9 +183,10 @@ function AdminDisputesPageInner() {
             {t("admin_list_filters_apply_reset_hint")}
           </p>
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            <label className="text-small text-ink-700">
+            <label htmlFor={disputesLimitFieldId} className="text-small text-ink-700">
               {t("admin_disputes_limit_label")}
               <input
+                id={disputesLimitFieldId}
                 className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-md)] border border-ink-300 bg-white px-3 py-2 ${travelFocusRingCoreOffset2WhiteClasses}`}
                 type="number"
                 min={1}
@@ -189,9 +195,10 @@ function AdminDisputesPageInner() {
                 onChange={(e) => setDraftLimit(e.target.value)}
               />
             </label>
-            <label className="text-small text-ink-700">
+            <label htmlFor={disputesStatusFieldId} className="text-small text-ink-700">
               {t("admin_disputes_status_filter_label")}
               <input
+                id={disputesStatusFieldId}
                 className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-md)] border border-ink-300 bg-white px-3 py-2 font-mono text-meta ${travelFocusRingCoreOffset2WhiteClasses}`}
                 value={draftStatus}
                 onChange={(e) => setDraftStatus(e.target.value)}
