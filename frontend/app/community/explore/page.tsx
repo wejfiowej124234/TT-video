@@ -19,8 +19,11 @@ import {
   CommunityExplorePhotoMasonry,
   COMMUNITY_EXPLORE_MASONRY_DEFAULT_MAX,
 } from "@/components/community/CommunityExplorePhotoMasonry";
+import { communityFeedDegradedMessage } from "@/lib/communityFeedDegradedMessage";
+import { parseCommunityFeedPageEnvelope } from "@/lib/communityFeedPageEnvelope";
 import { getFeed, getMeFollowing } from "@/lib/apiClient/community";
-import { getMe } from "@/lib/apiClient/me";
+import { getMeFull } from "@/lib/apiClient/me";
+import { countCommunityMeSocialList } from "@/lib/communityMeSocialListsContract";
 import { userFromGetMePayload } from "@/lib/meTrust";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import {
@@ -32,8 +35,13 @@ import {
 } from "@/lib/communityA11yFocus";
 import { communityStoredRoleLabelI18nKey } from "@/lib/meRoleDisplay";
 
-/** 31 §2.1 P3：发现页——热门目的地入口（`?destination=`）+ 话题入口（`/community/topic/…`）+ 推荐作者网格 */
-const EXPLORE_TOPIC_TAGS = ["旅行", "美食", "摄影", "攻略"] as const;
+/** 31 §2.1 P3：发现页——热门目的地入口（`?destination=`）+ 话题入口（`/community/topic/…`）+ 推荐作者网格；`pathTag` 与历史分享 URL 一致，标签文案走 i18n。 */
+const EXPLORE_TOPIC_LINKS = [
+  { pathTag: "旅行", labelKey: "community_explore_topic_label_travel" },
+  { pathTag: "美食", labelKey: "community_explore_topic_label_food" },
+  { pathTag: "摄影", labelKey: "community_explore_topic_label_photo" },
+  { pathTag: "攻略", labelKey: "community_explore_topic_label_guide" },
+] as const;
 
 const EXPLORE_FEED_STALE_MS = 60_000;
 const EXPLORE_FEED_PAGE_SIZE = 24;
@@ -59,15 +67,16 @@ export default function CommunityExplorePage() {
         ...(pageParam ? { cursor: pageParam } : {}),
       }),
     getNextPageParam: (last) => {
-      if (!last || last.status !== "ok") return undefined;
-      const c = last.next_cursor;
-      return typeof c === "string" && c.length > 0 ? c : undefined;
+      const parsed = parseCommunityFeedPageEnvelope(last);
+      if (parsed.kind !== "ok") return undefined;
+      const c = parsed.nextCursor;
+      return c != null && c.length > 0 ? c : undefined;
     },
   });
 
   const [meQ, followingQ] = useQueries({
     queries: [
-      { queryKey: ["community", "exploreMe"], queryFn: getMe, staleTime: EXPLORE_FEED_STALE_MS },
+      { queryKey: ["community", "exploreMe", "meFull"], queryFn: () => getMeFull(), staleTime: EXPLORE_FEED_STALE_MS },
       {
         queryKey: ["community", "exploreFollowing"],
         queryFn: getMeFollowing,
@@ -88,8 +97,9 @@ export default function CommunityExplorePage() {
     const seen = new Set<string>();
     const raw: ApiPostInput[] = [];
     for (const page of pages) {
-      if (page?.status !== "ok" || !Array.isArray(page.posts)) continue;
-      for (const row of page.posts) {
+      const parsed = parseCommunityFeedPageEnvelope(page);
+      if (parsed.kind === "invalid") continue;
+      for (const row of parsed.posts as ApiPostInput[]) {
         const id = row?.id;
         if (!id || seen.has(id)) continue;
         seen.add(id);
@@ -107,9 +117,18 @@ export default function CommunityExplorePage() {
 
   const meId = userFromGetMePayload(meQ.data)?.id ?? null;
 
+  const followingEnvelopeInvalid = useMemo(() => {
+    if (!followingQ.isSuccess || followingQ.data == null) return false;
+    return countCommunityMeSocialList(followingQ.data, "following").kind === "invalid";
+  }, [followingQ.isSuccess, followingQ.data]);
+
   const followingIds = useMemo(() => {
-    const raw = followingQ.data?.following ?? [];
-    return new Set(raw.map((x) => x.id));
+    const d = followingQ.data;
+    if (d == null) return new Set<string>();
+    const p = countCommunityMeSocialList(d, "following");
+    if (p.kind !== "ok") return new Set<string>();
+    const raw = (d as { following: { id?: string }[] }).following;
+    return new Set(raw.map((x) => x.id).filter((id): id is string => typeof id === "string" && id.length > 0));
   }, [followingQ.data]);
 
   const suggestedAuthors = useMemo(
@@ -126,7 +145,24 @@ export default function CommunityExplorePage() {
     isPending: explorePending,
     data: exploreData,
     fetchNextPage: exploreFetchNext,
+    refetch: exploreFeedRefetch,
   } = feedInfinite;
+
+  const exploreFeedDegradedBanner = useMemo(() => {
+    const pages = exploreData?.pages ?? [];
+    for (const page of pages) {
+      const parsed = parseCommunityFeedPageEnvelope(page);
+      if (parsed.kind === "degraded") {
+        return communityFeedDegradedMessage(parsed.envelope, t);
+      }
+    }
+    return null;
+  }, [exploreData?.pages, t]);
+
+  const exploreFeedContractInvalid = useMemo(() => {
+    const pages = exploreData?.pages ?? [];
+    return pages.some((page) => parseCommunityFeedPageEnvelope(page).kind === "invalid");
+  }, [exploreData?.pages]);
 
   /** 31 §3.2：瀑布流区块近底自动拉取下一页（与手动「加载更多」并存） */
   useEffect(() => {
@@ -153,7 +189,7 @@ export default function CommunityExplorePage() {
       className="max-w-4xl mx-auto px-3 py-4 sm:px-4 sm:py-6 pb-24 safe-area-pb"
       aria-label={t("community_explore_title")}
     >
-      <header className="rounded-[var(--radius-md)] border border-cyan-400/40 bg-slate-900/60 backdrop-blur-md px-4 py-5 mb-4 text-slate-200">
+      <header className="rounded-[var(--radius-md)] border border-cyan-400/40 bg-ink-800/60 backdrop-blur-md px-4 py-5 mb-4 text-slate-200">
         <h1 className="text-h3 font-bold bg-gradient-to-r from-cyan-300 to-fuchsia-400 bg-clip-text text-transparent">
           {t("community_explore_title")}
         </h1>
@@ -161,48 +197,75 @@ export default function CommunityExplorePage() {
         <div className="mt-3 flex flex-wrap gap-2">
           <Link
             href="/community"
-            className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
+            className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
           >
             {t("community_explore_open_feed")}
           </Link>
           <Link
             href="/terms/community-guidelines"
-            className={`rounded-full border border-slate-500/60 bg-slate-800/60 px-4 py-2 text-meta text-slate-300 hover:bg-slate-700/60 motion-sub min-h-[44px] inline-flex items-center justify-center ${communitySlatePillFocus}`}
+            className={`rounded-full border border-slate-500/60 bg-ink-700/60 px-4 py-2 text-meta text-slate-300 hover:bg-ink-600/60 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${communitySlatePillFocus}`}
           >
             {t("community_guidelines")}
           </Link>
           <Link
             href="/community/me/reports"
             title={t("community_explore_reports_link_hint")}
-            className={`rounded-full border border-white/35 bg-warning/20 px-4 py-2 text-meta font-medium text-white hover:bg-warning/30 motion-sub min-h-[44px] inline-flex items-center justify-center ${communityWarningPillFocus}`}
+            className={`rounded-full border border-white/35 bg-warning/20 px-4 py-2 text-meta font-medium text-white hover:bg-warning/30 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${communityWarningPillFocus}`}
           >
             {t("community_me_my_reports")}
           </Link>
         </div>
       </header>
 
+      {exploreFeedDegradedBanner ? (
+        <div className="mb-4" role="status" aria-live="polite">
+          <ApiErrorAlert message={exploreFeedDegradedBanner} tone="dark" />
+        </div>
+      ) : null}
+
+      {exploreFeedContractInvalid ? (
+        <div className="mb-4 space-y-2" role="alert" aria-live="polite">
+          <ApiErrorAlert message={t("api_list_items_contract_error")} tone="dark" />
+          <form
+            className="inline"
+            onSubmit={(e: FormEvent) => {
+              e.preventDefault();
+              void exploreFeedRefetch();
+            }}
+          >
+            <button
+              type="submit"
+              aria-label={t("common_retry")}
+              className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
+            >
+              {t("common_retry")}
+            </button>
+          </form>
+        </div>
+      ) : null}
+
       <section
-        className="rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md p-4 mb-4"
+        className="rounded-[var(--radius-md)] border border-cyan-500/30 bg-ink-800/70 backdrop-blur-md p-4 mb-4"
         aria-labelledby={exploreTopicsHeadingId}
       >
         <h2 id={exploreTopicsHeadingId} className="text-body font-semibold text-slate-200 mb-3">
           {t("community_explore_section_topics")}
         </h2>
         <div className="flex flex-wrap gap-2">
-          {EXPLORE_TOPIC_TAGS.map((tag) => (
+          {EXPLORE_TOPIC_LINKS.map(({ pathTag, labelKey }) => (
             <Link
-              key={tag}
-              href={`/community/topic/${encodeURIComponent(tag)}`}
-              className={`rounded-full border border-cyan-500/45 bg-slate-800/60 px-3 py-1.5 text-meta text-cyan-200 hover:text-cyan-100 hover:bg-cyan-500/15 motion-sub min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
+              key={pathTag}
+              href={`/community/topic/${encodeURIComponent(pathTag)}`}
+              className={`rounded-full border border-cyan-500/45 bg-ink-700/60 px-3 py-1.5 text-meta text-cyan-200 hover:text-cyan-100 hover:bg-cyan-500/15 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
             >
-              #{tag}
+              #{t(labelKey)}
             </Link>
           ))}
         </div>
       </section>
 
       <section
-        className="rounded-[var(--radius-md)] border border-violet-500/30 bg-slate-900/70 backdrop-blur-md p-4 mb-4"
+        className="rounded-[var(--radius-md)] border border-violet-500/30 bg-ink-800/70 backdrop-blur-md p-4 mb-4"
         aria-labelledby={exploreMasonryHeadingId}
       >
         <h2 id={exploreMasonryHeadingId} className="text-body font-semibold text-slate-200 mb-1">
@@ -222,7 +285,7 @@ export default function CommunityExplorePage() {
               <button
                 type="submit"
                 aria-label={t("common_retry")}
-                className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
+                className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
               >
                 {t("common_retry")}
               </button>
@@ -239,17 +302,17 @@ export default function CommunityExplorePage() {
                 <>
                   <Link
                     href="/community"
-                    className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
+                    className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
                   >
                     {t("community_explore_open_feed")}
                   </Link>
-                  {EXPLORE_TOPIC_TAGS.map((tag) => (
+                  {EXPLORE_TOPIC_LINKS.map(({ pathTag, labelKey }) => (
                     <Link
-                      key={tag}
-                      href={`/community/topic/${encodeURIComponent(tag)}`}
-                      className={`rounded-full border border-fuchsia-400/40 bg-fuchsia-500/15 px-3 py-2 text-meta text-fuchsia-100 hover:text-fuchsia-100 hover:bg-fuchsia-500/25 motion-sub min-h-[44px] inline-flex items-center justify-center ${communityFuchsiaPillFocus}`}
+                      key={pathTag}
+                      href={`/community/topic/${encodeURIComponent(pathTag)}`}
+                      className={`rounded-full border border-fuchsia-400/40 bg-fuchsia-500/15 px-3 py-2 text-meta text-fuchsia-100 hover:text-fuchsia-100 hover:bg-fuchsia-500/25 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${communityFuchsiaPillFocus}`}
                     >
-                      #{tag}
+                      #{t(labelKey)}
                     </Link>
                   ))}
                 </>
@@ -270,7 +333,7 @@ export default function CommunityExplorePage() {
                     disabled={feedInfinite.isFetchingNextPage}
                     aria-busy={feedInfinite.isFetchingNextPage ? true : undefined}
                     aria-label={feedInfinite.isFetchingNextPage ? t("common_loading") : t("community_explore_load_more")}
-                    className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-5 py-2.5 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub disabled:opacity-50 min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
+                    className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-5 py-2.5 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub motion-reduce:transition-none disabled:opacity-50 min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
                   >
                     {feedInfinite.isFetchingNextPage ? t("common_loading") : t("community_explore_load_more")}
                   </button>
@@ -282,13 +345,33 @@ export default function CommunityExplorePage() {
       </section>
 
       <section
-        className="rounded-[var(--radius-md)] border border-success/25 bg-slate-900/70 backdrop-blur-md p-4 mb-4"
+        className="rounded-[var(--radius-md)] border border-success/25 bg-ink-800/70 backdrop-blur-md p-4 mb-4"
         aria-labelledby={exploreAuthorsHeadingId}
       >
         <h2 id={exploreAuthorsHeadingId} className="text-body font-semibold text-slate-200 mb-1">
           {t("community_explore_section_authors")}
         </h2>
         <p className="text-meta text-slate-400 mb-3">{t("community_explore_authors_subtitle")}</p>
+        {followingEnvelopeInvalid ? (
+          <div className="mb-3 space-y-2" role="status" aria-live="polite">
+            <ApiErrorAlert message={t("api_list_items_contract_error")} tone="dark" />
+            <form
+              className="inline"
+              onSubmit={(e: FormEvent) => {
+                e.preventDefault();
+                void followingQ.refetch();
+              }}
+            >
+              <button
+                type="submit"
+                aria-label={t("common_retry")}
+                className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
+              >
+                {t("common_retry")}
+              </button>
+            </form>
+          </div>
+        ) : null}
         {authorsLoading ? (
           <div className="py-6 flex justify-center" aria-busy="true" aria-label={t("common_loading")}>
             <LoadingText className="text-slate-300" />
@@ -306,7 +389,7 @@ export default function CommunityExplorePage() {
               <button
                 type="submit"
                 aria-label={t("common_retry")}
-                className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
+                className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
               >
                 {t("common_retry")}
               </button>
@@ -319,13 +402,13 @@ export default function CommunityExplorePage() {
             <div className="flex flex-wrap justify-center gap-2">
               <Link
                 href="/community"
-                className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
+                className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
               >
                 {t("community_explore_open_feed")}
               </Link>
               <Link
                 href="/guides"
-                className={`rounded-full border border-fuchsia-400/40 bg-fuchsia-500/15 px-4 py-2 text-meta text-fuchsia-100 hover:text-fuchsia-100 hover:bg-fuchsia-500/25 motion-sub min-h-[44px] inline-flex items-center justify-center ${communityFuchsiaPillFocus}`}
+                className={`rounded-full border border-fuchsia-400/40 bg-fuchsia-500/15 px-4 py-2 text-meta text-fuchsia-100 hover:text-fuchsia-100 hover:bg-fuchsia-500/25 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${communityFuchsiaPillFocus}`}
               >
                 {t("community_explore_authors_empty_cta_guides")}
               </Link>
@@ -333,15 +416,24 @@ export default function CommunityExplorePage() {
           </div>
         ) : (
           <ul className="grid grid-cols-3 sm:grid-cols-4 gap-3" role="list">
-            {suggestedAuthors.map((a) => (
+            {suggestedAuthors.map((a, authorIdx) => (
               <li key={a.id}>
                 <Link
                   href={`/community/user/${a.id}`}
-                  className={`flex flex-col items-center gap-2 rounded-[var(--radius-xl)] border border-slate-600/50 bg-slate-800/45 p-3 text-center motion-sub hover:border-cyan-500/40 hover:bg-slate-800/70 min-h-[120px] ${communityCardLinkFocus}`}
+                  className={`flex flex-col items-center gap-2 rounded-[var(--radius-xl)] border border-slate-600/50 bg-ink-700/45 p-3 text-center motion-sub motion-reduce:transition-none hover:border-cyan-500/40 hover:bg-ink-700/70 min-h-[120px] ${communityCardLinkFocus}`}
                 >
-                  <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full ring-2 ring-cyan-400/25 bg-slate-700">
+                  <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full ring-2 ring-cyan-400/25 bg-ink-700">
                     {a.avatar_url ? (
-                      <Image src={a.avatar_url} alt="" fill className="object-cover" sizes="56px" unoptimized />
+                      <Image
+                        src={a.avatar_url}
+                        alt={t("guide_card_avatarAlt", { name: a.nickname })}
+                        fill
+                        className="object-cover"
+                        sizes="56px"
+                        unoptimized
+                        priority={authorIdx === 0}
+                        fetchPriority={authorIdx === 0 ? "high" : "low"}
+                      />
                     ) : (
                       <span className="flex h-full w-full items-center justify-center text-body font-semibold text-cyan-300">
                         {a.nickname.slice(0, 1)}
@@ -367,7 +459,7 @@ export default function CommunityExplorePage() {
       </section>
 
       <section
-        className="rounded-[var(--radius-md)] border border-fuchsia-500/25 bg-slate-900/70 backdrop-blur-md p-4 mb-4"
+        className="rounded-[var(--radius-md)] border border-fuchsia-500/25 bg-ink-800/70 backdrop-blur-md p-4 mb-4"
         aria-labelledby={exploreDestHeadingId}
       >
         <h2 id={exploreDestHeadingId} className="text-body font-semibold text-slate-200 mb-3">
@@ -383,7 +475,7 @@ export default function CommunityExplorePage() {
                   <Link
                     key={d}
                     href={`/community?destination=${encodeURIComponent(d)}`}
-                    className={`rounded-full border border-fuchsia-400/35 bg-fuchsia-500/10 px-3 py-1.5 text-meta text-fuchsia-100 hover:bg-fuchsia-500/20 motion-sub min-h-[44px] inline-flex items-center justify-center ${communityFuchsiaPillFocus}`}
+                    className={`rounded-full border border-fuchsia-400/35 bg-fuchsia-500/10 px-3 py-1.5 text-meta text-fuchsia-100 hover:bg-fuchsia-500/20 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${communityFuchsiaPillFocus}`}
                   >
                     {DESTINATION_LABEL_KEYS[d] ? t(DESTINATION_LABEL_KEYS[d]) : d}
                   </Link>

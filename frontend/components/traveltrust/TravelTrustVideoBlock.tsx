@@ -37,7 +37,7 @@ export default function TravelTrustVideoBlock() {
     <div ref={rootRef} className="mt-4 space-y-2">
       {!hasSrc ? (
         <div
-          className="flex min-h-[180px] flex-col items-center justify-center gap-2 rounded-[var(--radius-md)] border border-dashed border-white/20 bg-slate-900/40 px-4 py-8 text-center text-meta text-slate-400"
+          className="flex min-h-[180px] flex-col items-center justify-center gap-2 rounded-[var(--radius-md)] border border-dashed border-white/20 bg-ink-800/40 px-4 py-8 text-center text-meta text-slate-400"
           role="status"
         >
           <span aria-hidden className="text-body-l opacity-60">
@@ -47,14 +47,19 @@ export default function TravelTrustVideoBlock() {
         </div>
       ) : reduceMotion === true ? (
         POSTER ? (
-          <img
-            src={POSTER}
-            alt={t("traveltrust_video_poster_alt")}
-            className="w-full max-h-[min(70vh,520px)] rounded-[var(--radius-md)] border border-white/15 bg-black/40 object-contain shadow-scifi-panel"
-          />
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element -- static poster URL; reduced-motion branch */}
+            <img
+              src={POSTER}
+              alt={t("traveltrust_video_poster_alt")}
+              fetchPriority="high"
+              decoding="async"
+              className="w-full max-h-[min(70vh,520px)] rounded-[var(--radius-md)] border border-white/15 bg-black/40 object-contain shadow-scifi-panel"
+            />
+          </>
         ) : (
           <div
-            className="flex min-h-[200px] flex-col items-center justify-center gap-2 rounded-[var(--radius-md)] border border-white/12 bg-slate-900/50 px-4 py-8 text-center text-meta text-slate-400 backdrop-blur-sm"
+            className="flex min-h-[200px] flex-col items-center justify-center gap-2 rounded-[var(--radius-md)] border border-white/12 bg-ink-800/50 px-4 py-8 text-center text-meta text-slate-400 backdrop-blur-sm"
             role="status"
           >
             <span aria-hidden className="text-body-l opacity-60">
@@ -65,7 +70,7 @@ export default function TravelTrustVideoBlock() {
         )
       ) : !inView ? (
         <div
-          className="flex min-h-[200px] items-center justify-center rounded-[var(--radius-md)] border border-white/12 bg-slate-900/50 text-meta text-slate-400 motion-sub animate-pulse motion-reduce:animate-none backdrop-blur-sm"
+          className="flex min-h-[200px] items-center justify-center rounded-[var(--radius-md)] border border-white/12 bg-ink-800/50 text-meta text-slate-400 motion-sub animate-pulse motion-reduce:animate-none backdrop-blur-sm"
           role="status"
           aria-busy="true"
         >

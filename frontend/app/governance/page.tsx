@@ -10,6 +10,7 @@ import ApiErrorAlert from "@/components/ApiErrorAlert";
 import GovernanceTargetNotice from "@/components/governance/GovernanceTargetNotice";
 import { GovernanceOpsAdminLinks } from "@/components/governance/GovernanceOpsAdminLinks";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
+import type { LocaleInterpolationVars } from "@/lib/i18n";
 import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 import TrustGrowthMomentBanner from "@/components/trust/TrustGrowthMomentBanner";
 
@@ -44,75 +45,6 @@ type PoolRes = {
   rule_version?: string;
   note?: string;
 };
-
-const GOV_POOL_CHAIN_READ_COPY = {
-  zh: {
-    ssotBadge: "链上 SSOT",
-    rawBalanceCaption: "链上原始余额（uint256 hex，非人类可读金额）",
-    tokenContractCaption: "SSOT 代币合约地址",
-    currencyOtherCaption: "币种字段",
-    noTableUpdatedAt: "链上读取，无表更新时间",
-  },
-  en: {
-    ssotBadge: "On-chain SSOT",
-    rawBalanceCaption: "On-chain raw balance (uint256 hex; not a human-formatted amount)",
-    tokenContractCaption: "SSOT token contract address",
-    currencyOtherCaption: "Currency field",
-    noTableUpdatedAt: "Chain read; no database row timestamp",
-  },
-} as const;
-
-/** 仅认响应根级 `country_pool*`；**不**使用 `chain_alignment_hint.ssot_parallel_chain_snapshot.region_vault_erc20_balance_read`。 */
-const GOV_COUNTRY_POOL_ROOT_SSOT_COPY = {
-  zh: {
-    sectionLabel: "国家池（根级链上读）",
-    rawValueCaption: "链上原始值、非人类金额",
-    tokenAddressCaption: "SSOT 代币合约地址",
-    notObservationHint:
-      "展示以根字段 country_pool / country_pool_data_source / country_pool_is_chain_ssot 为准；请勿与 chain_alignment_hint 内 region_vault_erc20_balance_read 观测腿混读。",
-  },
-  en: {
-    sectionLabel: "Country pool (root on-chain read)",
-    rawValueCaption: "On-chain raw value; not a human-readable amount",
-    tokenAddressCaption: "SSOT token contract address",
-    notObservationHint:
-      "Use root keys country_pool / country_pool_data_source / country_pool_is_chain_ssot; do not treat chain_alignment_hint.region_vault_erc20_balance_read as the main display source.",
-  },
-} as const;
-
-/** 仅认响应根级 `treasury_erc20_pool*`；**不**使用 `chain_alignment_hint.ssot_parallel_chain_snapshot` 内观测腿混读主展示。 */
-const GOV_TREASURY_ERC20_POOL_ROOT_SSOT_COPY = {
-  zh: {
-    sectionLabel: "金库 ERC20 池（根级链上读）",
-    rawValueCaption: "链上原始值、非人类金额",
-    tokenAddressCaption: "SSOT 代币合约地址",
-    notObservationHint:
-      "展示以根字段 treasury_erc20_pool / treasury_erc20_pool_data_source / treasury_erc20_pool_is_chain_ssot 为准；请勿与 chain_alignment_hint 内并行观测腿混读。",
-  },
-  en: {
-    sectionLabel: "Treasury ERC20 pool (root on-chain read)",
-    rawValueCaption: "On-chain raw value; not a human-readable amount",
-    tokenAddressCaption: "SSOT token contract address",
-    notObservationHint:
-      "Use root keys treasury_erc20_pool / treasury_erc20_pool_data_source / treasury_erc20_pool_is_chain_ssot; do not mix with observation legs inside chain_alignment_hint.",
-  },
-} as const;
-
-/** 仅认响应根级 `treasury_pool*`；**不**使用 `chain_alignment_hint.ssot_parallel_chain_snapshot.governance_treasury_native_balance_read`。 */
-const GOV_TREASURY_POOL_ROOT_SSOT_COPY = {
-  zh: {
-    sectionLabel: "金库池（根级链上读 · 原生 Wei）",
-    rawWeiHexCaption: "链上原始值、非人类金额",
-    notObservationHint:
-      "展示以根字段 treasury_pool / treasury_pool_data_source / treasury_pool_is_chain_ssot 为准；请勿与 chain_alignment_hint.ssot_parallel_chain_snapshot.governance_treasury_native_balance_read 观测腿混读。",
-  },
-  en: {
-    sectionLabel: "Treasury pool (root on-chain read · native Wei)",
-    rawWeiHexCaption: "On-chain raw Wei (hex); not a human-readable amount",
-    notObservationHint:
-      "Use root keys treasury_pool / treasury_pool_data_source / treasury_pool_is_chain_ssot; do not treat chain_alignment_hint.ssot_parallel_chain_snapshot.governance_treasury_native_balance_read as the main display source.",
-  },
-} as const;
 
 function looksLikeEvmAddress(s: string): boolean {
   return /^0x[a-fA-F0-9]{40}$/.test(s.trim());
@@ -199,19 +131,19 @@ function governanceHttpErrorDetail(body: unknown): string | null {
 }
 
 function governanceHttpErrorLine(
-  t: (k: string) => string,
+  t: (k: string, vars?: LocaleInterpolationVars) => string,
   which: "pool" | "rewards",
   status: number,
   body: unknown
 ): string {
   const key = which === "pool" ? "governance_pool_http_error" : "governance_rewards_http_error";
-  const base = t(key).replace("{{status}}", String(status));
+  const base = t(key, { status });
   const detail = governanceHttpErrorDetail(body);
   return detail ? `${base} — ${detail}` : base;
 }
 
 /** GET /governance/rewards 列表项：与后端 `amount` + `currency` 字段对齐（currency 可空） */
-function governanceRewardListItemLine(item: unknown, t: (k: string) => string): string {
+function governanceRewardListItemLine(item: unknown, t: (k: string, vars?: LocaleInterpolationVars) => string): string {
   if (item == null || typeof item !== "object") return JSON.stringify(item);
   const o = item as { amount?: unknown; currency?: unknown };
   const raw = o.amount;
@@ -225,11 +157,11 @@ function governanceRewardListItemLine(item: unknown, t: (k: string) => string): 
   const c = o.currency;
   const cur = typeof c === "string" && c.trim() ? c.trim() : null;
   if (cur) return `${amountPart} ${cur}`;
-  return t("governance_rewards_amountWithoutCurrency").replace("{{amount}}", amountPart);
+  return t("governance_rewards_amountWithoutCurrency", { amount: amountPart });
 }
 
 export default function GovernancePage() {
-  const { t, locale } = useTranslation();
+  const { t } = useTranslation();
   const pageTitleId = useId();
   const [pool, setPool] = useState<PoolRes | null>(null);
   const [rewards, setRewards] = useState<RewardsRes | null>(null);
@@ -288,15 +220,11 @@ export default function GovernancePage() {
   const poolCurrencyTrim =
     pool != null && typeof pool.currency === "string" ? pool.currency.trim() : "";
   const poolHasBalance = pool?.pool_balance != null;
-  const chainReadCopy = GOV_POOL_CHAIN_READ_COPY[locale === "en" ? "en" : "zh"];
   const showPoolChainSsotBadge =
     governancePoolIsChainReadRow(pool) && pool.is_chain_ssot === true;
   const showCountryPoolRootSsot = governanceCountryPoolRootChainSsot(pool);
   const showTreasuryPoolRootSsot = governanceTreasuryPoolRootChainSsot(pool);
   const showTreasuryErc20PoolRootSsot = governanceTreasuryErc20PoolRootChainSsot(pool);
-  const countryPoolCopy = GOV_COUNTRY_POOL_ROOT_SSOT_COPY[locale === "en" ? "en" : "zh"];
-  const treasuryPoolCopy = GOV_TREASURY_POOL_ROOT_SSOT_COPY[locale === "en" ? "en" : "zh"];
-  const treasuryErc20PoolCopy = GOV_TREASURY_ERC20_POOL_ROOT_SSOT_COPY[locale === "en" ? "en" : "zh"];
 
   return (
     <main className="mx-auto max-w-3xl p-8" aria-labelledby={pageTitleId}>
@@ -368,11 +296,11 @@ export default function GovernancePage() {
                   <div className="space-y-3">
                     {showPoolChainSsotBadge ? (
                       <p className="inline-flex rounded-[var(--radius-sm)] border border-travel-500/30 bg-travel-500/10 px-2 py-1 text-small font-medium text-travel-700 dark:border-travel-400/35 dark:bg-travel-400/15 dark:text-travel-200">
-                        {chainReadCopy.ssotBadge}
+                        {t("governance_chain_read_ssot_badge")}
                       </p>
                     ) : null}
                     <div>
-                      <p className="text-meta text-ink-600">{chainReadCopy.rawBalanceCaption}</p>
+                      <p className="text-meta text-ink-600">{t("governance_chain_read_raw_balance_caption")}</p>
                       <p className="mt-1 break-all font-mono text-small text-ink-800">
                         {pool.pool_balance != null ? String(pool.pool_balance) : "—"}
                       </p>
@@ -381,8 +309,8 @@ export default function GovernancePage() {
                       <div>
                         <p className="text-meta text-ink-600">
                           {looksLikeEvmAddress(poolCurrencyTrim)
-                            ? chainReadCopy.tokenContractCaption
-                            : chainReadCopy.currencyOtherCaption}
+                            ? t("governance_chain_read_token_contract_caption")
+                            : t("governance_chain_read_currency_field_caption")}
                         </p>
                         <p
                           className={
@@ -396,7 +324,7 @@ export default function GovernancePage() {
                       </div>
                     ) : null}
                     {pool.updated_at == null ? (
-                      <p className="text-meta text-ink-500">{chainReadCopy.noTableUpdatedAt}</p>
+                      <p className="text-meta text-ink-500">{t("governance_chain_read_no_table_updated_at")}</p>
                     ) : null}
                   </div>
                 ) : poolHasBalance && poolCurrencyTrim ? (
@@ -405,10 +333,9 @@ export default function GovernancePage() {
                   </p>
                 ) : poolHasBalance && !poolCurrencyTrim ? (
                   <p className="text-body text-ink-700">
-                    {t("governance_pool_balance_currency_unspecified").replace(
-                      "{{amount}}",
-                      String(pool?.pool_balance)
-                    )}
+                    {t("governance_pool_balance_currency_unspecified", {
+                      amount: String(pool?.pool_balance),
+                    })}
                   </p>
                 ) : pool?.data_source === "database" || pool?.data_source === "database_empty" ? (
                   <p className="text-body text-ink-500">{t("governance_pool_db_empty")}</p>
@@ -419,79 +346,79 @@ export default function GovernancePage() {
                 {showCountryPoolRootSsot ? (
                   <div
                     className="space-y-3 border-t border-ink-200/80 pt-4 dark:border-ink-700/80"
-                    aria-label={countryPoolCopy.sectionLabel}
+                    aria-label={t("governance_country_pool_root_section_label")}
                   >
                     <p className="text-meta font-medium text-ink-700 dark:text-ink-300">
-                      {countryPoolCopy.sectionLabel}
+                      {t("governance_country_pool_root_section_label")}
                     </p>
                     <p className="inline-flex rounded-[var(--radius-sm)] border border-travel-500/30 bg-travel-500/10 px-2 py-1 text-small font-medium text-travel-700 dark:border-travel-400/35 dark:bg-travel-400/15 dark:text-travel-200">
-                      {chainReadCopy.ssotBadge}
+                      {t("governance_chain_read_ssot_badge")}
                     </p>
                     <div>
-                      <p className="text-meta text-ink-600">{countryPoolCopy.rawValueCaption}</p>
+                      <p className="text-meta text-ink-600">{t("governance_country_pool_root_raw_value_caption")}</p>
                       <p className="mt-1 break-all font-mono text-small text-ink-800">
                         {pool.country_pool}
                       </p>
                     </div>
                     {poolCurrencyTrim && looksLikeEvmAddress(poolCurrencyTrim) ? (
                       <div>
-                        <p className="text-meta text-ink-600">{countryPoolCopy.tokenAddressCaption}</p>
+                        <p className="text-meta text-ink-600">{t("governance_country_pool_root_token_address_caption")}</p>
                         <p className="mt-1 break-all font-mono text-small text-ink-800">
                           {poolCurrencyTrim}
                         </p>
                       </div>
                     ) : null}
-                    <p className="text-meta text-ink-500">{countryPoolCopy.notObservationHint}</p>
+                    <p className="text-meta text-ink-500">{t("governance_country_pool_root_observation_hint")}</p>
                   </div>
                 ) : null}
 
                 {showTreasuryPoolRootSsot ? (
                   <div
                     className="space-y-3 border-t border-ink-200/80 pt-4 dark:border-ink-700/80"
-                    aria-label={treasuryPoolCopy.sectionLabel}
+                    aria-label={t("governance_treasury_native_root_section_label")}
                   >
                     <p className="text-meta font-medium text-ink-700 dark:text-ink-300">
-                      {treasuryPoolCopy.sectionLabel}
+                      {t("governance_treasury_native_root_section_label")}
                     </p>
                     <p className="inline-flex rounded-[var(--radius-sm)] border border-travel-500/30 bg-travel-500/10 px-2 py-1 text-small font-medium text-travel-700 dark:border-travel-400/35 dark:bg-travel-400/15 dark:text-travel-200">
-                      {chainReadCopy.ssotBadge}
+                      {t("governance_chain_read_ssot_badge")}
                     </p>
                     <div>
-                      <p className="text-meta text-ink-600">{treasuryPoolCopy.rawWeiHexCaption}</p>
+                      <p className="text-meta text-ink-600">{t("governance_treasury_native_root_raw_wei_caption")}</p>
                       <p className="mt-1 break-all font-mono text-small text-ink-800">
                         {pool.treasury_pool}
                       </p>
                     </div>
-                    <p className="text-meta text-ink-500">{treasuryPoolCopy.notObservationHint}</p>
+                    <p className="text-meta text-ink-500">{t("governance_treasury_native_root_observation_hint")}</p>
                   </div>
                 ) : null}
 
                 {showTreasuryErc20PoolRootSsot ? (
                   <div
                     className="space-y-3 border-t border-ink-200/80 pt-4 dark:border-ink-700/80"
-                    aria-label={treasuryErc20PoolCopy.sectionLabel}
+                    aria-label={t("governance_treasury_erc20_root_section_label")}
                   >
                     <p className="text-meta font-medium text-ink-700 dark:text-ink-300">
-                      {treasuryErc20PoolCopy.sectionLabel}
+                      {t("governance_treasury_erc20_root_section_label")}
                     </p>
                     <p className="inline-flex rounded-[var(--radius-sm)] border border-travel-500/30 bg-travel-500/10 px-2 py-1 text-small font-medium text-travel-700 dark:border-travel-400/35 dark:bg-travel-400/15 dark:text-travel-200">
-                      {chainReadCopy.ssotBadge}
+                      {t("governance_chain_read_ssot_badge")}
                     </p>
                     <div>
-                      <p className="text-meta text-ink-600">{treasuryErc20PoolCopy.rawValueCaption}</p>
+                      <p className="text-meta text-ink-600">{t("governance_treasury_erc20_root_raw_value_caption")}</p>
                       <p className="mt-1 break-all font-mono text-small text-ink-800">
                         {pool.treasury_erc20_pool}
                       </p>
                     </div>
                     {poolCurrencyTrim && looksLikeEvmAddress(poolCurrencyTrim) ? (
                       <div>
-                        <p className="text-meta text-ink-600">{treasuryErc20PoolCopy.tokenAddressCaption}</p>
+                        <p className="text-meta text-ink-600">{t("governance_treasury_erc20_root_token_address_caption")}</p>
                         <p className="mt-1 break-all font-mono text-small text-ink-800">
                           {poolCurrencyTrim}
                         </p>
                       </div>
                     ) : null}
-                    <p className="text-meta text-ink-500">{treasuryErc20PoolCopy.notObservationHint}</p>
+                    <p className="text-meta text-ink-500">{t("governance_treasury_erc20_root_observation_hint")}</p>
                   </div>
                 ) : null}
               </div>
@@ -524,68 +451,68 @@ export default function GovernancePage() {
       <nav className="mt-8 flex flex-wrap gap-4" aria-label={t("governance_nav_label")}>
         <Link
           href="/governance/delegate"
-          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 underline-offset-2 transition-colors motion-reduce:transition-none hover:underline ${travelFocusRingOffset2Classes}`}
         >
           {t("governance_delegate_nav")}
         </Link>
         <Link
           href="/governance/proposals"
-          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 underline-offset-2 transition-colors motion-reduce:transition-none hover:underline ${travelFocusRingOffset2Classes}`}
         >
           {t("governance_proposals_title")}
         </Link>
         <Link
           href="/governance/fee-routes"
-          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 underline-offset-2 transition-colors motion-reduce:transition-none hover:underline ${travelFocusRingOffset2Classes}`}
         >
           {t("governance_fee_routes_title")}
         </Link>
         <Link
           href="/governance/vault-forwards"
-          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 underline-offset-2 transition-colors motion-reduce:transition-none hover:underline ${travelFocusRingOffset2Classes}`}
         >
           {t("governance_vault_forwards_title")}
         </Link>
         <Link
           href="/governance/distribution-accruals"
-          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 underline-offset-2 transition-colors motion-reduce:transition-none hover:underline ${travelFocusRingOffset2Classes}`}
         >
           {t("governance_distribution_accruals_title")}
         </Link>
         <Link
           href="/governance/distribution-claim"
-          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 underline-offset-2 transition-colors motion-reduce:transition-none hover:underline ${travelFocusRingOffset2Classes}`}
         >
           {t("governance_claim_title")}
         </Link>
         <Link
           href="/traveltrust#fee-router"
-          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 underline-offset-2 transition-colors motion-reduce:transition-none hover:underline ${travelFocusRingOffset2Classes}`}
         >
           {t("traveltrust_link_feeRouter")}
         </Link>
         <GovernanceOpsAdminLinks />
         <Link
           href="/help"
-          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 underline-offset-2 transition-colors motion-reduce:transition-none hover:underline ${travelFocusRingOffset2Classes}`}
         >
           {t("help_title")}
         </Link>
         <Link
           href="/governance/params"
-          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 underline-offset-2 transition-colors motion-reduce:transition-none hover:underline ${travelFocusRingOffset2Classes}`}
         >
           {t("governance_params_title")}
         </Link>
         <Link
           href="/"
-          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 underline-offset-2 transition-colors motion-reduce:transition-none hover:underline ${travelFocusRingOffset2Classes}`}
         >
           {t("governance_backHome")}
         </Link>
         <Link
           href="/disputes"
-          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+          className={`inline-flex min-h-[44px] items-center justify-start text-travel-500 underline-offset-2 transition-colors motion-reduce:transition-none hover:underline ${travelFocusRingOffset2Classes}`}
         >
           {t("governance_disputes")}
         </Link>

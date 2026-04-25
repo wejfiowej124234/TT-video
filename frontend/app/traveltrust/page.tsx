@@ -68,13 +68,13 @@ export default function TravelTrustNetworkPage() {
 
   /** 深色玻璃卡片 + Tropical jade 竖条（与自由市场 / 排行榜同系） */
   const stepCard =
-    "relative overflow-hidden rounded-[var(--radius-lg)] border border-white/12 bg-slate-900/45 p-5 pl-6 shadow-scifi-panel backdrop-blur-md motion-sub hover:border-ref-cyan/35 before:pointer-events-none before:absolute before:left-3 before:top-4 before:bottom-4 before:w-1 before:rounded-full before:bg-gradient-to-b before:from-ref-coral/90 before:via-ref-cyan/75 before:to-ref-teal/80 before:content-['']";
+    "relative overflow-hidden rounded-[var(--radius-lg)] border border-white/12 bg-ink-800/45 p-5 pl-6 shadow-scifi-panel backdrop-blur-md motion-sub motion-reduce:transition-none hover:border-ref-cyan/35 before:pointer-events-none before:absolute before:left-3 before:top-4 before:bottom-4 before:w-1 before:rounded-full before:bg-gradient-to-b before:from-ref-coral/90 before:via-ref-cyan/75 before:to-ref-teal/80 before:content-['']";
   const sectionTitle = "text-body-l font-bold text-white tracking-tight";
   const sectionBody = "mt-2 text-small leading-relaxed text-slate-300";
   const ctaBtn =
-    "inline-flex min-h-[48px] items-center justify-center rounded-[var(--radius-lg)] bg-cta-gradient px-6 py-2.5 text-small font-semibold text-white shadow-medium transition-transform hover:brightness-110 hover:shadow-[0_0_28px_rgba(59,130,246,0.35)] active:scale-[0.98] motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950";
+    "inline-flex min-h-[48px] items-center justify-center rounded-[var(--radius-lg)] bg-cta-gradient px-6 py-2.5 text-small font-semibold text-white shadow-medium transition-transform hover:brightness-110 hover:shadow-[0_0_28px_rgba(59,130,246,0.35)] active:scale-[0.98] motion-sub motion-reduce:transition-none motion-reduce:hover:brightness-100 motion-reduce:active:scale-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900";
   const ctaBtnSecondary =
-    "inline-flex min-h-[48px] items-center justify-center rounded-[var(--radius-lg)] border border-white/18 bg-slate-900/55 px-6 py-2.5 text-small font-semibold text-slate-100 shadow-scifi-card-faint backdrop-blur-md hover:border-ref-coral/40 hover:bg-slate-800/60 motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-cyan/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950";
+    "inline-flex min-h-[48px] items-center justify-center rounded-[var(--radius-lg)] border border-white/18 bg-ink-800/55 px-6 py-2.5 text-small font-semibold text-slate-100 shadow-scifi-card-faint backdrop-blur-md hover:border-ref-coral/40 hover:bg-ink-700/60 motion-sub motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-cyan/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900";
 
   return (
     <Fragment>
@@ -82,10 +82,10 @@ export default function TravelTrustNetworkPage() {
       className="mx-auto max-w-5xl px-4 py-10 pb-24 sm:px-6 sm:pb-28"
       aria-label={t("traveltrust_title")}
     >
-      <div className="rounded-[var(--radius-xl)] p-[1px] bg-gradient-to-br from-ref-cyan/50 via-ref-coral/40 to-ref-sun/35 shadow-[0_0_48px_-14px_rgba(35,206,217,0.22)]">
+      <div className="rounded-[var(--radius-xl)] p-[1px] bg-gradient-to-br from-ref-cyan/50 via-ref-coral/40 to-ref-sun/35 shadow-[0_0_48px_-14px_rgba(35,206,217,0.22)] motion-reduce:shadow-none">
       <section
         id="hero"
-        className="relative min-h-[min(520px,72svh)] overflow-hidden rounded-[var(--radius-xl)] border border-white/10 bg-slate-900/45 backdrop-blur-md"
+        className="relative min-h-[min(520px,72svh)] overflow-hidden rounded-[var(--radius-xl)] border border-white/10 bg-ink-800/45 backdrop-blur-md"
         aria-labelledby={heroTitleId}
       >
         <TravelTrustHeroBackdrop />
@@ -113,7 +113,7 @@ export default function TravelTrustNetworkPage() {
               <Link href="#demo" className={ctaBtnSecondary}>
                 {t("traveltrust_hero_exploreDemo")}
               </Link>
-              <div className="min-w-[9rem] rounded-[var(--radius-lg)] border border-white/15 bg-slate-950/60 px-3 py-2 shadow-scifi-panel backdrop-blur-md">
+              <div className="min-w-[9rem] rounded-[var(--radius-lg)] border border-white/15 bg-ink-900/60 px-3 py-2 shadow-scifi-panel backdrop-blur-md">
                 <WalletStatusMini variant="dark" />
               </div>
             </div>
@@ -131,14 +131,14 @@ export default function TravelTrustNetworkPage() {
       </section>
       </div>
 
-      <details className="mt-5 rounded-[var(--radius-lg)] border border-white/12 bg-slate-900/40 px-4 py-2 text-meta text-slate-300 shadow-scifi-card-faint backdrop-blur-md">
+      <details className="mt-5 rounded-[var(--radius-lg)] border border-white/12 bg-ink-800/40 px-4 py-2 text-meta text-slate-300 shadow-scifi-card-faint backdrop-blur-md">
         <summary className={`cursor-pointer select-none font-medium text-slate-200 hover:text-white ${communityCardLinkFocus}`}>{t("traveltrust_spec_toggle")}</summary>
         <p className="mt-2 border-t border-white/10 pt-2 font-mono text-kicker leading-snug text-slate-400">{t("traveltrust_specRef")}</p>
       </details>
 
       <section
         id="overview"
-        className="mt-10 scroll-mt-28 space-y-10 rounded-[var(--radius-xl)] border border-white/10 bg-slate-950/35 p-5 shadow-scifi-panel ring-1 ring-ref-cyan/15 backdrop-blur-md sm:p-8"
+        className="mt-10 scroll-mt-28 space-y-10 rounded-[var(--radius-xl)] border border-white/10 bg-ink-900/35 p-5 shadow-scifi-panel ring-1 ring-ref-cyan/15 backdrop-blur-md sm:p-8"
         aria-labelledby={overviewId}
       >
         <div>
@@ -204,7 +204,7 @@ export default function TravelTrustNetworkPage() {
         </h2>
         <p className={`${sectionBody} mb-4`}>{t("traveltrust_liveNetwork_note")}</p>
         <p className="text-meta text-slate-400 mb-3">{t("traveltrust_liveNetwork_interactive_note")}</p>
-        <div className="overflow-hidden rounded-[var(--radius-lg)] border border-white/12 bg-slate-900/50 p-3 shadow-scifi-panel ring-1 ring-ref-cyan/20 backdrop-blur-md sm:p-4">
+        <div className="overflow-hidden rounded-[var(--radius-lg)] border border-white/12 bg-ink-800/50 p-3 shadow-scifi-panel ring-1 ring-ref-cyan/20 backdrop-blur-md sm:p-4">
           <TravelTrustNetworkParticles frameClassName="h-56 w-full sm:h-80" />
         </div>
         <TravelTrustParticleLegend />
@@ -264,7 +264,7 @@ export default function TravelTrustNetworkPage() {
                   →
                 </span>
               ) : null}
-              <span className="rounded-full border border-ref-teal/35 bg-slate-900/70 px-3 py-1.5 text-meta font-semibold text-ref-cyan shadow-scifi-card-faint ring-1 ring-ref-cyan/25 backdrop-blur-sm">
+              <span className="inline-flex min-h-[44px] items-center rounded-full border border-ref-teal/35 bg-ink-800/70 px-3 py-1.5 text-meta font-semibold text-ref-cyan shadow-scifi-card-faint ring-1 ring-ref-cyan/25 backdrop-blur-sm">
                 {t(`traveltrust_flow_step_${k}`)}
               </span>
             </li>
@@ -330,7 +330,7 @@ export default function TravelTrustNetworkPage() {
 
       <section
         id="fee-router"
-        className="mt-8 scroll-mt-24 rounded-[var(--radius-lg)] border border-white/12 bg-slate-900/45 p-6 shadow-scifi-panel ring-1 ring-ref-cyan/15 backdrop-blur-md"
+        className="mt-8 scroll-mt-24 rounded-[var(--radius-lg)] border border-white/12 bg-ink-800/45 p-6 shadow-scifi-panel ring-1 ring-ref-cyan/15 backdrop-blur-md"
         aria-labelledby={feeRouterSectionId}
       >
         <h2 id={feeRouterSectionId} className={sectionTitle}>
@@ -359,7 +359,7 @@ export default function TravelTrustNetworkPage() {
           ).map((key) => (
             <li
               key={key}
-              className="flex gap-2.5 rounded-[var(--radius-lg)] border border-white/10 bg-slate-900/50 px-4 py-3 text-small leading-relaxed text-slate-200 shadow-scifi-card-faint backdrop-blur-md ring-1 ring-ref-cyan/10"
+              className="flex gap-2.5 rounded-[var(--radius-lg)] border border-white/10 bg-ink-800/50 px-4 py-3 text-small leading-relaxed text-slate-200 shadow-scifi-card-faint backdrop-blur-md ring-1 ring-ref-cyan/10"
             >
               <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-br from-ref-cyan to-ref-teal shadow-[0_0_8px_rgba(35,206,217,0.5)]" aria-hidden />
               <span>{t(key)}</span>
@@ -385,12 +385,12 @@ export default function TravelTrustNetworkPage() {
           {TRAVELTRUST_FAQ_KEYS.map(({ q, a }) => (
             <details
               key={q}
-              className="group rounded-[var(--radius-lg)] border border-white/12 bg-slate-900/45 backdrop-blur-md shadow-scifi-card-faint motion-sub open:border-ref-coral/35 open:ring-1 open:ring-ref-cyan/25"
+              className="group rounded-[var(--radius-lg)] border border-white/12 bg-ink-800/45 backdrop-blur-md shadow-scifi-card-faint motion-sub motion-reduce:transition-none open:border-ref-coral/35 open:ring-1 open:ring-ref-cyan/25"
             >
               <summary className={`flex cursor-pointer select-none list-none items-center justify-between gap-2 px-4 py-3 text-small font-semibold text-slate-100 [&::-webkit-details-marker]:hidden ${communityCardLinkFocus}`}>
                 <span>{t(q)}</span>
                 <span
-                  className="shrink-0 text-meta text-slate-400 transition-transform group-open:rotate-180 motion-reduce:transition-none"
+                  className="shrink-0 text-meta text-slate-400 transition-transform group-open:rotate-180 motion-reduce:transition-none motion-reduce:group-open:rotate-0"
                   aria-hidden
                 >
                   ▼

@@ -12,7 +12,7 @@ export default function TravelTrustDemoPreview() {
   const [note, setNote] = useState<string | null>(null);
 
   const field =
-    "rounded-[var(--radius-lg)] border border-white/14 bg-slate-950/70 backdrop-blur-sm px-3 py-2 text-small text-slate-100 shadow-inner ring-1 ring-ref-cyan/15 focus:border-ref-cyan/55 focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-cyan/40 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950";
+    "rounded-[var(--radius-lg)] border border-white/14 bg-ink-900/70 backdrop-blur-sm px-3 py-2 text-small text-slate-100 shadow-inner ring-1 ring-ref-cyan/15 focus:border-ref-cyan/55 focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-cyan/40 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900";
 
   return (
     <section id="demo" className="mt-10 scroll-mt-24" aria-labelledby={titleId}>
@@ -53,7 +53,7 @@ export default function TravelTrustDemoPreview() {
       >
         <button
           type="submit"
-          className="mt-4 inline-flex min-h-[48px] items-center justify-center rounded-[var(--radius-lg)] bg-cta-gradient px-6 py-2.5 text-small font-semibold text-white shadow-medium transition-transform hover:brightness-110 active:scale-[0.98] motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+          className="mt-4 inline-flex min-h-[48px] items-center justify-center rounded-[var(--radius-lg)] bg-cta-gradient px-6 py-2.5 text-small font-semibold text-white shadow-medium motion-safe:transition-transform motion-safe:active:scale-[0.98] hover:brightness-110 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 motion-reduce:hover:brightness-100 motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900"
         >
           {t("traveltrust_demo_start")}
         </button>

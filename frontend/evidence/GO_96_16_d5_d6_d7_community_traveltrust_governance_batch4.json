@@ -1,0 +1,30 @@
+{
+  "batch": "GO_96_16_d5_d6_d7_community_traveltrust_governance_batch4",
+  "docs_spec_touched": false,
+  "scope": "/community/explore + CommunityExplorePhotoMasonry; /traveltrust FAQ + TravelTrustDemoPreview + TravelTrustVideoBlock; /governance root nav",
+  "d5_d6_d7_actions": [
+    "i18n: explore topic pills — pathTag 旅行/美食/摄影/攻略 unchanged for URLs; labels community_explore_topic_label_* (en/zh)",
+    "i18n: masonry thumb alt community_explore_masonry_thumb_alt (+ fallback)",
+    "a11y/LCP: first explore suggested-author avatar priority + fetchPriority + guide_card_avatarAlt",
+    "LCP/CLS: first masonry thumb priority + fetchPriority; motion-safe hover scale + motion-reduce",
+    "motion-reduce: explore motion-sub pills/cards; masonry link border; governance nav link transitions",
+    "motion-reduce: traveltrust FAQ chevron rotate-0; demo CTA matches hero CTA pattern",
+    "LCP: reduced-motion video poster img fetchPriority=high + decoding=async"
+  ],
+  "commands": {
+    "eslint": { "cmd": "npm run lint", "exit": 0 },
+    "i18n_ci": { "cmd": "npm run test:i18n:ci", "exit": 0 },
+    "vitest": {
+      "cmd": "npm test -- --run components/community/communitySuggestedAuthors.test.ts lib/communityFeedPageEnvelope.test.ts app/governance/proposals/governanceProposalsPage.contract.test.ts",
+      "exit": 0,
+      "tests_passed": 11
+    },
+    "npm_run_build": { "cmd": "npm run build", "exit": 0 }
+  },
+  "playwright_e2e": {
+    "status": "NOT_RUN",
+    "trace": "93",
+    "detail": ":8080 API unavailable; E2E not run per batch rules."
+  },
+  "claim_96_complete": false
+}
