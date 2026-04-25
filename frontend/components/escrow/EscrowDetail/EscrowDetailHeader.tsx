@@ -62,12 +62,12 @@ export default function EscrowDetailHeader({
   const titleClass = variantDid ? "text-h4 font-semibold text-cyan-200" : "text-h4 font-semibold text-ink-900";
   const metaClass = variantDid ? "text-small text-slate-300" : "text-small text-ink-500";
   const linkClass = variantDid
-    ? `${touchTargetLink44Classes} text-meta text-cyan-300 hover:text-cyan-100 hover:drop-shadow-scifi-cyan motion-sub print:hidden ${deepShellInlineLinkFocusClasses}`
-    : `${touchTargetLink44Classes} text-meta text-travel-600 hover:text-travel-700 hover:underline motion-sub print:hidden ${travelFocusRingOffset2Classes}`;
+    ? `${touchTargetLink44Classes} text-meta text-cyan-300 hover:text-cyan-100 hover:drop-shadow-scifi-cyan motion-sub motion-reduce:transition-none print:hidden ${deepShellInlineLinkFocusClasses}`
+    : `${touchTargetLink44Classes} text-meta text-travel-600 hover:text-travel-700 hover:underline motion-sub motion-reduce:transition-none print:hidden ${travelFocusRingOffset2Classes}`;
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
       <div>
-        <h1 className={titleClass}>{t("escrow_orderTitle").replace("{{id}}", String(order.id).slice(0, 8))}</h1>
+        <h1 className={titleClass}>{t("escrow_orderTitle", { id: String(order.id).slice(0, 8) })}</h1>
         <p className={metaClass}>
           {hasEscrow ? t("escrow_onChain") : isDraft ? t("escrow_draft") : t("escrow_noEscrow")}
           {hasEscrow && order.escrow_address && (
@@ -108,7 +108,7 @@ export default function EscrowDetailHeader({
         </form>
         <div className="flex flex-col items-end gap-1 max-w-[min(100%,18rem)]">
           {(orderProjectionDivergesFromOrderState(order) || orderProjectionTerminalDegraded(order)) ? (
-            <p className="text-meta text-amber-800 text-right leading-snug" role="note">
+            <p className="text-meta text-white text-right leading-snug" role="note">
               {orderProjectionTerminalDegraded(order)
                 ? t("orders_projection_ssot_degraded")
                 : t("orders_projection_ssot_notice_divergent")}

@@ -9,6 +9,7 @@ import { getOrderMessages, postOrderMessage, getIdempotencyKey } from "@/lib/api
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import OrderChatContextCard from "@/components/community/OrderChatContextCard";
 import type { ItineraryBlock, OrderRow } from "./types";
+import type { LocaleInterpolationVars } from "@/lib/i18n";
 import {
   getDailyItineraryOutline,
   getFirstDayImage,
@@ -40,7 +41,7 @@ function ChatItineraryMicroRibbon({
 }: {
   inline: { order: OrderRow; itinerary: ItineraryBlock | null } | null | undefined;
   isDid: boolean;
-  t: (k: string) => string;
+  t: (k: string, vars?: LocaleInterpolationVars) => string;
 }) {
   if (!inline?.order?.id) return null;
   const daily = inline.itinerary?.daily_itinerary as DailyItemForSummary[] | undefined;
@@ -58,14 +59,20 @@ function ChatItineraryMicroRibbon({
     (typeof orderImg === "string" && orderImg.trim() !== "" ? orderImg.trim() : null);
 
   const shell = isDid
-    ? "rounded-[var(--radius-md)] border border-slate-600/40 bg-slate-800/25 px-2 py-1.5 mb-2 flex gap-2 items-center"
+    ? "rounded-[var(--radius-md)] border border-slate-600/40 bg-ink-700/25 px-2 py-1.5 mb-2 flex gap-2 items-center"
     : "rounded-[var(--radius-md)] border border-ink-200/60 bg-bg-soft/40 px-2 py-1.5 mb-2 flex gap-2 items-center";
 
   return (
     <div className={shell} role="note" aria-label={t("escrow_chat_microItinerary_aria")}>
       {cover ? (
         // eslint-disable-next-line @next/next/no-img-element -- 行程图任意 HTTPS
-        <img src={cover} alt="" className="h-11 w-11 rounded-[var(--radius-sm)] object-cover shrink-0 border border-slate-600/30" />
+        <img
+          src={cover}
+          alt={headline ? t("escrow_chat_microItinerary_thumb_alt", { headline }) : t("escrow_chat_microItinerary_thumb_alt_generic")}
+          className="h-11 w-11 rounded-[var(--radius-sm)] object-cover shrink-0 border border-slate-600/30"
+          fetchPriority="high"
+          decoding="async"
+        />
       ) : null}
       <div className="min-w-0 flex-1">
         <p className={`text-meta font-medium truncate ${isDid ? "text-slate-300" : "text-ink-600"}`}>
@@ -83,13 +90,40 @@ function ChatItineraryMicroRibbon({
 }
 
 /** 无头像时用账户 id 前两字符生成占位头像（保证每条消息都有头像） */
-function SenderAvatar({ senderId, avatarUrl, isDid }: { senderId: string; avatarUrl?: string | null; isDid: boolean }) {
+function SenderAvatar({
+  senderId,
+  avatarUrl,
+  senderName,
+  isDid,
+  avatarPriority,
+}: {
+  senderId: string;
+  avatarUrl?: string | null;
+  senderName?: string | null;
+  isDid: boolean;
+  avatarPriority?: boolean;
+}) {
+  const { t } = useTranslation();
   const initial = senderId.slice(0, 2).toLowerCase();
-  const bgClass = isDid ? "bg-slate-600/80 text-slate-200" : "bg-ink-200/80 text-ink-700";
+  const bgClass = isDid ? "bg-ink-500/80 text-slate-200" : "bg-ink-200/80 text-ink-700";
+  const hint = senderName?.trim() || senderId.slice(0, 8);
+  const alt =
+    avatarUrl && senderName?.trim()
+      ? t("guide_card_avatarAlt", { name: senderName.trim() })
+      : t("escrow_chat_sender_avatar_alt", { hint });
   if (avatarUrl) {
     return (
       <span className="relative h-11 w-11 shrink-0 rounded-full overflow-hidden ring-1 ring-white/20">
-        <Image src={avatarUrl} alt="" fill className="object-cover" sizes="44px" unoptimized />
+        <Image
+          src={avatarUrl}
+          alt={alt}
+          fill
+          className="object-cover"
+          sizes="44px"
+          unoptimized
+          priority={Boolean(avatarPriority)}
+          fetchPriority={avatarPriority ? "high" : "low"}
+        />
       </span>
     );
   }
@@ -198,6 +232,7 @@ export default function ChatBlock({
           >
             <button
               type="submit"
+              data-tt-escrow-chat-fetch-retry="1"
               className={`mt-2 text-meta font-medium underline-offset-2 hover:underline ${isDid ? `${touchTargetLink44Classes} text-cyan-300 ${marketCyanInlineLinkFocusClasses}` : `${touchTargetLink44Classes} text-travel-600 rounded-[var(--radius-sm)] ${travelFocusRingCoreClasses}`}`}
             >
               {t("common_retry")}
@@ -205,17 +240,26 @@ export default function ChatBlock({
           </form>
         </div>
       ) : (
-        <ul className="space-y-3 max-h-48 overflow-y-auto text-small">
+        <ul
+          className="space-y-3 max-h-48 overflow-y-auto text-small"
+          aria-labelledby={chatHeadingId}
+        >
           {messages.length === 0 && (
-            <li className={`flex flex-col items-center justify-center min-h-[200px] rounded-[var(--radius-sm)] border py-6 px-4 text-center ${isDid ? "border-slate-600/50 bg-slate-800/30" : "border-ink-200/50 bg-bg-soft/50"}`} role="status" aria-label={t("empty_messages")}>
-              <span className={`block h-16 w-16 rounded-full flex items-center justify-center text-h3 mb-3 select-none ${isDid ? "bg-slate-600/60 text-slate-200" : "bg-ink-200/60 text-ink-400"}`} aria-hidden>💬</span>
+            <li className={`flex flex-col items-center justify-center min-h-[200px] rounded-[var(--radius-sm)] border py-6 px-4 text-center ${isDid ? "border-slate-600/50 bg-ink-700/30" : "border-ink-200/50 bg-bg-soft/50"}`} role="status" aria-label={t("empty_messages")}>
+              <span className={`block h-16 w-16 rounded-full flex items-center justify-center text-h3 mb-3 select-none ${isDid ? "bg-ink-500/60 text-slate-200" : "bg-ink-200/60 text-ink-400"}`} aria-hidden>💬</span>
               <p className={emptyTitleClass}>{t("empty_messages")}</p>
               <p className={emptyHintClass}>{t("escrow_chatEmptyHint")}</p>
             </li>
           )}
-          {messages.map((m) => (
+          {messages.map((m, msgIdx) => (
             <li key={m.id} className="flex gap-2.5">
-              <SenderAvatar senderId={m.sender_id} avatarUrl={m.sender_avatar_url} isDid={isDid} />
+              <SenderAvatar
+                senderId={m.sender_id}
+                avatarUrl={m.sender_avatar_url}
+                senderName={m.sender_name}
+                isDid={isDid}
+                avatarPriority={msgIdx === 0}
+              />
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
                   <Link
@@ -258,10 +302,11 @@ export default function ChatBlock({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           disabled={posting || !!fetchError}
+          spellCheck={false}
           aria-busy={posting ? true : undefined}
           className={
             isDid
-              ? "flex-1 border border-slate-500/50 rounded-[var(--radius-sm)] px-2 py-1 text-small bg-white text-ink-900 placeholder:text-ink-500 focus:outline-none focus-visible:border-cyan-400 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 disabled:opacity-60 disabled:cursor-wait"
+              ? "flex-1 border border-slate-500/50 rounded-[var(--radius-sm)] px-2 py-1 text-small bg-white text-ink-900 placeholder:text-ink-500 focus:outline-none focus-visible:border-cyan-400 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-800 disabled:opacity-60 disabled:cursor-wait"
               : "flex-1 border border-ink-200 rounded-[var(--radius-sm)] px-2 py-1 text-small bg-white text-ink-900 placeholder:text-ink-500 focus:outline-none focus-visible:border-travel-500 disabled:opacity-60 disabled:cursor-wait " +
                 `${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`
           }
@@ -294,11 +339,12 @@ export default function ChatBlock({
             >
               <button
                 type="submit"
+                data-tt-escrow-chat-post-retry="1"
                 disabled={posting || !!fetchError || !input.trim()}
                 aria-label={t("common_retry")}
                 className={`${touchTargetLink44Classes} rounded-[var(--radius-sm)] border px-3 py-2 text-small font-medium disabled:opacity-50 ${
                   isDid
-                    ? `border-slate-500/60 bg-slate-800/70 text-slate-200 hover:bg-slate-800 ${marketCyanInlineLinkFocusClasses}`
+                    ? `border-slate-500/60 bg-ink-700/70 text-slate-200 hover:bg-ink-800 ${marketCyanInlineLinkFocusClasses}`
                     : `border-ink-300 bg-white text-ink-800 hover:bg-ink-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`
                 }`}
               >
@@ -310,7 +356,7 @@ export default function ChatBlock({
               onClick={() => setPostError(null)}
               className={`${touchTargetLink44Classes} rounded-[var(--radius-sm)] border px-3 py-2 text-small font-medium ${
                 isDid
-                  ? `border-slate-600/50 text-slate-300 hover:bg-slate-800/50 ${marketCyanInlineLinkFocusClasses}`
+                  ? `border-slate-600/50 text-slate-300 hover:bg-ink-700/50 ${marketCyanInlineLinkFocusClasses}`
                   : `border-ink-200 text-ink-700 hover:bg-ink-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`
               }`}
             >

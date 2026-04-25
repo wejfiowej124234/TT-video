@@ -6,9 +6,10 @@ import { useCallback, useEffect, useId, useMemo, useState, type FormEvent } from
 import { useTranslation } from "@/components/LocaleProvider";
 import { PayRouteSuspense } from "@/components/pay/PayRouteSuspense";
 import OrderFlowSteps, { orderStateToStep, type OrderFlowStep } from "@/components/escrow/OrderFlowSteps";
-import { getMe, getIdempotencyKey, getOrder, orderMockPay } from "@/lib/apiClient";
+import { getMeFull, getIdempotencyKey, getOrder, orderMockPay } from "@/lib/apiClient";
 import { useMeta } from "@/components/MetaProvider";
 import { readOrderMockPayEnabledFromMeta } from "@/lib/readOrderMockPayFromMeta";
+import { allowChainOffMockPayUi } from "@/lib/travelTrustUiGuards";
 import { readProtocolPauseFromMeta } from "@/lib/readProtocolPauseFromMeta";
 import type { OrderResponse, OrderRow } from "@/components/escrow/EscrowDetail/types";
 import { mapApiReadError } from "@/lib/mapApiReadError";
@@ -25,6 +26,8 @@ import {
   effectivePayHubOrderId,
   PAY_ORDER_ID_UUID_RE,
 } from "@/lib/payOrderIdSource";
+import { buildPathnameSearchHref } from "@/lib/marketLoginReturnPath";
+import { apiOrderSliceMatchesRoute } from "@/lib/orderGetEnvelopeGuard";
 
 const payOrderIdInputFocusClass = `focus:outline-none ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`;
 
@@ -44,12 +47,15 @@ const PAY_ORDER_FLOW_STEP_LABEL_KEYS = [
 function PayPageInner() {
   const { t } = useTranslation();
   const { meta } = useMeta();
-  const mockPayEnabledFromMeta = useMemo(() => readOrderMockPayEnabledFromMeta(meta), [meta]);
+  const mockPayEnabledFromMeta = useMemo(
+    () => allowChainOffMockPayUi() && readOrderMockPayEnabledFromMeta(meta),
+    [meta],
+  );
   const protocolPaused = useMemo(() => readProtocolPauseFromMeta(meta), [meta]);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const fromQuery = searchParams.get("orderId")?.trim() ?? "";
+  const fromQuery = searchParams?.get("orderId")?.trim() ?? "";
   const [orderIdInput, setOrderIdInput] = useState(fromQuery);
   /** B-032：合法 query 优先；URL 变化时把输入框拉回与 query 一致 */
   useEffect(() => {
@@ -63,18 +69,18 @@ function PayPageInner() {
       setOrderIdInput(nextInput);
       const trimmed = nextInput.trim();
       if (PAY_ORDER_ID_UUID_RE.test(trimmed)) {
-        const params = new URLSearchParams(searchParams.toString());
+        const params = new URLSearchParams(searchParams?.toString() ?? "");
         if ((params.get("orderId") ?? "").trim() !== trimmed) {
           params.set("orderId", trimmed);
-          router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+          router.replace(buildPathnameSearchHref(pathname, params.toString()), { scroll: false });
         }
         return;
       }
-      if (trimmed === "" && searchParams.has("orderId")) {
-        const params = new URLSearchParams(searchParams.toString());
+      if (trimmed === "" && searchParams?.has("orderId")) {
+        const params = new URLSearchParams(searchParams?.toString() ?? "");
         params.delete("orderId");
         const qs = params.toString();
-        router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+        router.replace(buildPathnameSearchHref(pathname, qs), { scroll: false });
       }
     },
     [pathname, router, searchParams]
@@ -116,7 +122,7 @@ function PayPageInner() {
   );
 
   const payLoginReturnPath = useMemo(
-    () => buildPayHubLoginReturnPath(pathname, searchParams.toString(), effectiveOrderId),
+    () => buildPayHubLoginReturnPath(pathname, searchParams?.toString() ?? "", effectiveOrderId),
     [pathname, searchParams, effectiveOrderId]
   );
 
@@ -130,7 +136,7 @@ function PayPageInner() {
       return;
     }
     let cancelled = false;
-    getMe()
+    getMeFull()
       .then((raw) => {
         if (cancelled) return;
         const uid = (raw as { user?: { id?: string } } | null)?.user?.id;
@@ -169,9 +175,7 @@ function PayPageInner() {
       return t("pay_flowBandAria_escrowPhase");
     }
     const labelKey = PAY_ORDER_FLOW_STEP_LABEL_KEYS[payOrderFlowStep - 1];
-    return t("pay_flowBandAria_fromOrder")
-      .replace("{{step}}", String(payOrderFlowStep))
-      .replace("{{label}}", t(labelKey));
+    return t("pay_flowBandAria_fromOrder", { step: payOrderFlowStep, label: t(labelKey) });
   }, [orderLoadError, payDeadlineHints, payOrderFlowStep, effectiveOrderId, orderResponseForEscrowPrefetch, payOrderForbidden, t]);
 
   const payFlowContextText = useMemo(() => {
@@ -192,9 +196,7 @@ function PayPageInner() {
       return t("pay_flowContext_escrowPhaseHub");
     }
     const labelKey = PAY_ORDER_FLOW_STEP_LABEL_KEYS[payOrderFlowStep - 1];
-    return t("pay_flowContext_fromOrder")
-      .replace("{{step}}", String(payOrderFlowStep))
-      .replace("{{label}}", t(labelKey));
+    return t("pay_flowContext_fromOrder", { step: payOrderFlowStep, label: t(labelKey) });
   }, [orderLoadError, payDeadlineHints, payOrderFlowStep, effectiveOrderId, orderResponseForEscrowPrefetch, payOrderForbidden, t]);
 
   useEffect(() => {
@@ -223,6 +225,12 @@ function PayPageInner() {
           setPayDeadlineHints(null);
           setOrderResponseForEscrowPrefetch(null);
           setOrderLoadError(t("pay_orderSliceMissing"));
+          return;
+        }
+        if (!apiOrderSliceMatchesRoute(o, effectiveOrderId)) {
+          setPayDeadlineHints(null);
+          setOrderResponseForEscrowPrefetch(null);
+          setOrderLoadError(t("orderGet_payloadOrderMismatch"));
           return;
         }
         setPayDeadlineHints({
@@ -304,6 +312,31 @@ function PayPageInner() {
     viewerUserId,
   ]);
 
+  /** 旅行者在 Accepted 态但全局未启用 mock（前端生产闸或 /meta 关）：避免「页面无按钮却像故障」 */
+  const showMockPayDisabledExplainer = useMemo(() => {
+    if (mockPayEnabledFromMeta || protocolPaused || payOrderForbidden || !orderLoadedOk || !orderRow) return false;
+    const st = String(orderRow.state ?? orderRow.status ?? "").toLowerCase();
+    if (st !== "accepted") return false;
+    if (!viewerUserId) return false;
+    const tid = orderRow.tourist_id ?? orderRow.traveler_id;
+    if (!tid || String(tid) !== String(viewerUserId)) return false;
+    return true;
+  }, [
+    mockPayEnabledFromMeta,
+    protocolPaused,
+    payOrderForbidden,
+    orderLoadedOk,
+    orderRow,
+    viewerUserId,
+  ]);
+
+  /** 95 · F-010：mock-pay 区三态（E2E / 观测）；与 `showMockPayCta` / `showMockPayDisabledExplainer` 同源 */
+  const payMockPayAuditSurface = useMemo<"none" | "mock_cta" | "mock_disabled_explain">(() => {
+    if (showMockPayCta && escrowHref) return "mock_cta";
+    if (showMockPayDisabledExplainer && escrowHref && !showMockPayCta) return "mock_disabled_explain";
+    return "none";
+  }, [escrowHref, showMockPayCta, showMockPayDisabledExplainer]);
+
   const payPageSubtitle = useMemo(() => {
     if (!PAY_ORDER_ID_UUID_RE.test(effectiveOrderId)) return t("pay_pageSubtitle");
     if (payOrderForbidden) return t("pay_pageSubtitle_orderForbidden");
@@ -314,7 +347,14 @@ function PayPageInner() {
   }, [effectiveOrderId, orderLoadError, orderRow, awaitingOrderSlice, payOrderForbidden, t]);
 
   return (
-    <main className="min-h-screen bg-bg-main text-ink-800" aria-label={t("pay_pageTitle")}>
+    <main
+      className="min-h-screen bg-bg-main text-ink-800"
+      aria-label={t("pay_pageTitle")}
+      aria-busy={awaitingOrderSlice ? true : undefined}
+      data-tt-pay-root="1"
+      data-tt-pay-mock-ui={payMockPayAuditSurface}
+      data-tt-pay-order-fetch-phase={awaitingOrderSlice ? "awaiting_slice" : orderLoadError ? "error" : orderRow ? "ready" : "idle"}
+    >
       <div className="container max-w-2xl py-12 px-4">
         <header className="mb-8">
           <h1 className="text-h3 font-semibold tracking-tight text-ink-900">{t("pay_pageTitle")}</h1>
@@ -366,16 +406,15 @@ function PayPageInner() {
               </h3>
               <p className="mt-2 text-small text-ink-700 leading-relaxed">
                 {orderRow?.escrow_address
-                  ? t("pay_escrowPhase_bodyWithStatus").replace(
-                      "{{status}}",
-                      t(orderStateToStatusLabelKey(orderRow)),
-                    )
+                  ? t("pay_escrowPhase_bodyWithStatus", {
+                      status: t(orderStateToStatusLabelKey(orderRow)),
+                    })
                   : t("pay_escrowPhase_bodyNoEscrow")}
               </p>
               <Link
                 href={escrowHref}
                 onClick={stashEscrowNavPrefetch}
-                className={`${touchTargetLink44Classes} mt-4 inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] bg-trust-600 px-5 py-2.5 text-center text-small font-semibold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-trust-600 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-console`}
+                className={`${touchTargetLink44Classes} mt-4 inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] bg-trust-600 px-5 py-2.5 text-center text-small font-semibold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-trust-600 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-console transition-colors motion-reduce:transition-none`}
               >
                 {t("pay_ctaEscrowPrimary")}
               </Link>
@@ -416,13 +455,13 @@ function PayPageInner() {
                 <Link
                   href={escrowHref}
                   onClick={stashEscrowNavPrefetch}
-                  className={`${touchTargetLink44Classes} btn-console inline-flex justify-center rounded-[var(--radius-sm)] bg-trust-600 px-5 py-2.5 text-center text-small font-semibold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-trust-600 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-console`}
+                  className={`${touchTargetLink44Classes} btn-console inline-flex justify-center rounded-[var(--radius-sm)] bg-trust-600 px-5 py-2.5 text-center text-small font-semibold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-trust-600 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-console transition-colors motion-reduce:transition-none`}
                 >
                   {t("pay_ctaEscrowPrimary")}
                 </Link>
                 <Link
                   href="/orders"
-                  className={`${touchTargetLink44Classes} btn-console inline-flex justify-center rounded-[var(--radius-sm)] border border-ink-300 bg-bg-soft px-5 py-2.5 text-center text-small font-semibold text-ink-800 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+                  className={`${touchTargetLink44Classes} btn-console inline-flex justify-center rounded-[var(--radius-sm)] border border-ink-300 bg-bg-soft px-5 py-2.5 text-center text-small font-semibold text-ink-800 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console transition-colors motion-reduce:transition-none`}
                 >
                   {t("pay_ctaOrders")}
                 </Link>
@@ -439,7 +478,7 @@ function PayPageInner() {
                   <Link
                     href={escrowHref}
                     onClick={stashEscrowNavPrefetch}
-                    className={`${touchTargetLink44Classes} btn-console rounded-[var(--radius-sm)] border border-ink-300 bg-bg-soft px-5 py-2.5 text-center text-small font-semibold text-ink-800 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+                    className={`${touchTargetLink44Classes} btn-console rounded-[var(--radius-sm)] border border-ink-300 bg-bg-soft px-5 py-2.5 text-center text-small font-semibold text-ink-800 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console transition-colors motion-reduce:transition-none`}
                   >
                     {t("pay_ctaEscrow")}
                   </Link>
@@ -458,10 +497,12 @@ function PayPageInner() {
                 type="text"
                 inputMode="text"
                 autoComplete="off"
+                spellCheck={false}
                 placeholder={t("pay_orderIdPlaceholder")}
                 value={orderIdInput}
                 onChange={(e) => syncOrderIdQuery(e.target.value)}
                 className={`w-full rounded-[var(--radius-sm)] border border-ink-300 bg-bg-main px-3 py-2 font-mono text-meta text-ink-900 focus-visible:border-travel-500 ${payOrderIdInputFocusClass}`}
+                aria-busy={awaitingOrderSlice ? true : undefined}
                 aria-invalid={
                   orderIdInput.length > 0 && !PAY_ORDER_ID_UUID_RE.test(orderIdInput.trim())
                 }
@@ -493,7 +534,7 @@ function PayPageInner() {
           </div>
 
           {orderLoadError && escrowHref ? (
-            <div className="mt-4 space-y-2">
+            <div className="mt-4 space-y-2" data-tt-pay-order-load-error="1">
               {payOrderForbidden ? (
                 <div
                   className="rounded-[var(--radius-md)] border border-ink-200 bg-bg-soft p-4"
@@ -504,7 +545,8 @@ function PayPageInner() {
                   <p className="mt-2 text-small text-ink-700 leading-relaxed">{orderLoadError}</p>
                   <Link
                     href="/orders"
-                    className={`${touchTargetLink44Classes} mt-4 inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] bg-trust-600 px-4 py-2 text-center text-small font-semibold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-trust-600 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-console`}
+                    data-tt-pay-order-forbidden-cta-orders="1"
+                    className={`${touchTargetLink44Classes} mt-4 inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] bg-trust-600 px-4 py-2 text-center text-small font-semibold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-trust-600 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-console transition-colors motion-reduce:transition-none`}
                   >
                     {t("pay_orderForbidden_ctaOrders")}
                   </Link>
@@ -516,7 +558,7 @@ function PayPageInner() {
                     {orderLoadError === t("order_error_login_required") ? (
                       <Link
                         href={`/auth/login?returnUrl=${encodeURIComponent(payLoginReturnPath)}`}
-                        className={`${touchTargetLink44Classes} text-travel-600 underline underline-offset-2 font-medium text-small ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+                        className={`${touchTargetLink44Classes} text-travel-600 underline underline-offset-2 font-medium text-small ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console transition-colors motion-reduce:transition-none`}
                       >
                         {t("orders_goLogin")}
                       </Link>
@@ -535,8 +577,9 @@ function PayPageInner() {
                     >
                       <button
                         type="submit"
+                        data-tt-pay-order-fetch-retry="1"
                         aria-label={t("common_retry")}
-                        className={`${touchTargetLink44Classes} rounded-[var(--radius-sm)] border border-ink-300 bg-white px-3 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+                        className={`${touchTargetLink44Classes} rounded-[var(--radius-sm)] border border-ink-300 bg-white px-3 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console transition-colors motion-reduce:transition-none`}
                       >
                         {t("common_retry")}
                       </button>
@@ -571,12 +614,36 @@ function PayPageInner() {
             </div>
           ) : null}
 
+          {showMockPayDisabledExplainer && escrowHref && !showMockPayCta ? (
+            <div
+              className="mt-6 rounded-[var(--radius-md)] border border-warning/40 bg-warning/90 p-4 sm:p-5"
+              role="status"
+              data-tt-pay-surface="mock_pay_disabled_explainer"
+            >
+              <p className="text-small text-white/95 leading-relaxed">{t("pay_mockPay_disabledNotice")}</p>
+              <div className="mt-3">
+                <Link
+                  href={escrowHref}
+                  onClick={stashEscrowNavPrefetch}
+                  className={`${touchTargetLink44Classes} inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] bg-trust-600 px-4 py-2.5 text-small font-semibold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-trust-600 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-console transition-colors motion-reduce:transition-none`}
+                >
+                  {t("pay_ctaEscrow")}
+                </Link>
+              </div>
+            </div>
+          ) : null}
+
           {showMockPayCta && escrowHref ? (
-            <div className="mt-6 rounded-[var(--radius-md)] border border-dashed border-ink-300 bg-bg-soft/80 p-4 sm:p-5">
+            <div
+              className="mt-6 rounded-[var(--radius-md)] border border-dashed border-ink-300 bg-bg-soft/80 p-4 sm:p-5"
+              data-tt-pay-surface="mock_pay_cta"
+            >
               <p className="text-small text-ink-700 leading-relaxed">{t("pay_mockPay_hint")}</p>
               <div className="mt-4 flex flex-wrap gap-3">
                 <button
                   type="button"
+                  data-tt-pay-mock-pay-submit="1"
+                  aria-busy={mockPayBusy ? true : undefined}
                   disabled={mockPayBusy || protocolPaused}
                   title={protocolPaused ? t("escrow_protocolPause_title") : undefined}
                   onClick={() => {
@@ -594,14 +661,14 @@ function PayPageInner() {
                       })
                       .finally(() => setMockPayBusy(false));
                   }}
-                  className={`${touchTargetLink44Classes} rounded-[var(--radius-sm)] border border-ink-400 bg-bg-main px-4 py-2.5 text-small font-semibold text-ink-900 disabled:opacity-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+                  className={`${touchTargetLink44Classes} rounded-[var(--radius-sm)] border border-ink-400 bg-bg-main px-4 py-2.5 text-small font-semibold text-ink-900 disabled:opacity-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console transition-colors motion-reduce:transition-none`}
                 >
                   {mockPayBusy ? t("common_loading") : t("pay_mockPay_cta")}
                 </button>
                 <Link
                   href={escrowHref}
                   onClick={stashEscrowNavPrefetch}
-                  className={`${touchTargetLink44Classes} inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] bg-trust-600 px-4 py-2.5 text-small font-semibold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-trust-600 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-console`}
+                  className={`${touchTargetLink44Classes} inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] bg-trust-600 px-4 py-2.5 text-small font-semibold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-trust-600 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-console transition-colors motion-reduce:transition-none`}
                 >
                   {t("pay_ctaEscrow")}
                 </Link>
@@ -620,7 +687,11 @@ function PayPageInner() {
           ) : null}
         </section>
 
-        <p className="mt-6 text-meta leading-relaxed text-ink-500" role="note">
+        <p
+          className="mt-6 text-meta leading-relaxed text-ink-500"
+          role="note"
+          data-tt-pay-surface="pay_disclaimer"
+        >
           {t("pay_disclaimer")}
         </p>
 

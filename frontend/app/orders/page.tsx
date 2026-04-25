@@ -10,7 +10,7 @@ import { useTranslation } from "@/components/LocaleProvider";
 import { shortEvmAddress } from "@/lib/formatEvmAddress";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import TrustInfraWall from "@/components/trust/TrustInfraWall";
-import LoadingText from "@/components/LoadingText";
+import { OrdersListPageLoadingSkeleton } from "@/components/orders/OrdersListPageLoadingSkeleton";
 import { orderLikeMayOnchainDeposit } from "@/components/escrow/EscrowDetail/escrowOnChainEligibility";
 import {
   orderBadgeVariantFromApiOrder,
@@ -22,6 +22,7 @@ import { mapApiReadError } from "@/lib/mapApiReadError";
 import { dedupeListById, mergeListsUniqueById } from "@/lib/dedupeListById";
 import { ordersNewHrefForGuide } from "@/lib/ordersGuideDeepLink";
 import { isDraftOrderListState } from "@/lib/isDraftOrderListState";
+import { filterOrdersForTransactionalMyOrdersSurface } from "@/lib/communityMeMyOrdersModel";
 import { stashEscrowOrderPrefetchFromListItem } from "@/lib/orderEscrowPrefetch";
 import { patchOrderListAfterCancelSuccess, patchPreviewOrderAfterCancelSuccess } from "@/lib/ordersListAfterCancel";
 import { ORDERS_EXPECT_ORDER_QUERY } from "@/lib/ordersExpectOrderParam";
@@ -41,12 +42,23 @@ import {
   travelFocusRingCoreOffset2Classes,
   travelFocusRingOffset2Classes,
 } from "@/lib/travelLinkFocus";
+import { isUuidString } from "@/lib/isUuidString";
+import { parseGuideDetailForRoute } from "@/lib/guideDetailRoutePayload";
+import { buildPathnameSearchHref } from "@/lib/marketLoginReturnPath";
 
-const ORDER_PLACEHOLDER_IMAGE = "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=400&q=80";
+/** 本地静态资源，避免生产依赖第三方图床与隐私/可用性风险 */
+const ORDER_PLACEHOLDER_IMAGE = "/market-backdrop-travel-guilin-sunset.png";
 
 const ORDERS_PAGE_SIZE = 30;
 
-type BookGuideResolve = "idle" | "checking" | "valid" | "invalid_not_found" | "invalid_load";
+type BookGuideResolve =
+  | "idle"
+  | "checking"
+  | "valid"
+  | "invalid_not_found"
+  | "invalid_load"
+  /** `book_guide` 非 UUID：不发起无意义请求 */
+  | "invalid_book_guide_id";
 
 /** 列表项 → 市场行程抽屉（`GET /api/v1/orders` 与 `GET /api/v1/discover/orders` 同形字段；OrderDetailDrawer 有 embedded itinerary 则跳过 getOrder） */
 function orderListItemToDetailDrawer(item: OrderListItem): OrderDetailItem {
@@ -100,11 +112,19 @@ function OrdersPageInner() {
       setBookGuideResolve("idle");
       return;
     }
+    if (!isUuidString(bookGuideParam)) {
+      setBookGuideResolve("invalid_book_guide_id");
+      return;
+    }
     const gen = ++bookGuideFetchGen.current;
     setBookGuideResolve("checking");
     getGuide(bookGuideParam)
-      .then(() => {
+      .then((raw) => {
         if (gen !== bookGuideFetchGen.current) return;
+        if (!parseGuideDetailForRoute(raw, bookGuideParam)) {
+          setBookGuideResolve("invalid_load");
+          return;
+        }
         setBookGuideResolve("valid");
       })
       .catch((err) => {
@@ -122,7 +142,7 @@ function OrdersPageInner() {
   }, [bookGuideParam]);
   const ordersLoginReturnPath = useMemo(() => {
     const base = pathname && pathname !== "/" ? pathname : "/orders";
-    const q = searchParams.toString();
+    const q = searchParams?.toString() ?? "";
     return q ? `${base}?${q}` : base;
   }, [pathname, searchParams]);
   const [list, setList] = useState<OrderListItem[]>([]);
@@ -143,30 +163,40 @@ function OrdersPageInner() {
   const expectSilentRetryTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const stripExpectOrderQuery = useCallback(() => {
-    const p = new URLSearchParams(searchParams.toString());
+    const p = new URLSearchParams(searchParams?.toString() ?? "");
     if (!p.has(ORDERS_EXPECT_ORDER_QUERY)) return;
     p.delete(ORDERS_EXPECT_ORDER_QUERY);
     const q = p.toString();
-    router.replace(q ? `${pathname}?${q}` : pathname);
+    router.replace(buildPathnameSearchHref(pathname, q));
   }, [pathname, router, searchParams]);
 
   /** B-071：非法 `state=` 从 URL 剔除，避免仅前端假筛选 */
   useEffect(() => {
     if (!rawOrdersStateQ) return;
     if (ordersListStateParam != null) return;
-    const p = new URLSearchParams(searchParams.toString());
+    const p = new URLSearchParams(searchParams?.toString() ?? "");
     p.delete(ORDERS_LIST_STATE_QUERY);
     const q = p.toString();
-    router.replace(q ? `${pathname}?${q}` : pathname);
+    router.replace(buildPathnameSearchHref(pathname, q));
   }, [rawOrdersStateQ, ordersListStateParam, pathname, router, searchParams]);
+
+  /** 非法 `expect_order` 与列表 UUID 不一致时只会误提示；从 URL 剔除（与非法 `state=` 同源策略） */
+  useEffect(() => {
+    if (!expectOrderId) return;
+    if (isUuidString(expectOrderId)) return;
+    const p = new URLSearchParams(searchParams?.toString() ?? "");
+    p.delete(ORDERS_EXPECT_ORDER_QUERY);
+    const q = p.toString();
+    router.replace(buildPathnameSearchHref(pathname, q));
+  }, [expectOrderId, pathname, router, searchParams]);
 
   const setOrdersListStateInUrl = useCallback(
     (next: string) => {
-      const p = new URLSearchParams(searchParams.toString());
+      const p = new URLSearchParams(searchParams?.toString() ?? "");
       if (!next) p.delete(ORDERS_LIST_STATE_QUERY);
       else p.set(ORDERS_LIST_STATE_QUERY, next);
       const q = p.toString();
-      router.replace(q ? `${pathname}?${q}` : pathname);
+      router.replace(buildPathnameSearchHref(pathname, q));
     },
     [pathname, router, searchParams],
   );
@@ -186,11 +216,13 @@ function OrdersPageInner() {
       getOrders({ limit: ORDERS_PAGE_SIZE, state: ordersListStateParam ?? undefined })
         .then((r) => {
           const raw = (r.items as OrderListItem[]) ?? [];
-          setList(dedupeListById(raw, (o) => String(o.id ?? "")));
+          const deduped = dedupeListById(raw, (o) => String(o.id ?? ""));
+          setList(filterOrdersForTransactionalMyOrdersSurface(deduped));
           const p = r.page;
           setOrdersHasMore(!!p?.has_more);
           setOrdersNextCursor(typeof p?.next_cursor === "string" && p.next_cursor ? p.next_cursor : null);
           setPageError(null);
+          setLoadMoreError(null);
         })
         .catch((err) => {
           if (err instanceof Error && err.message === "login_required") {
@@ -224,9 +256,10 @@ function OrdersPageInner() {
       state: ordersListStateParam ?? undefined,
     })
       .then((r) => {
-        setList((prev) =>
-          mergeListsUniqueById(prev, (r.items as OrderListItem[]) ?? [], (o) => String(o.id ?? ""))
-        );
+        setList((prev) => {
+          const merged = mergeListsUniqueById(prev, (r.items as OrderListItem[]) ?? [], (o) => String(o.id ?? ""));
+          return filterOrdersForTransactionalMyOrdersSurface(merged);
+        });
         const p = r.page;
         setOrdersHasMore(!!p?.has_more);
         setOrdersNextCursor(typeof p?.next_cursor === "string" && p.next_cursor ? p.next_cursor : null);
@@ -240,7 +273,7 @@ function OrdersPageInner() {
         if (typeof window !== "undefined") {
           console.error("OrdersPage loadMoreOrders:", err);
         }
-        setLoadMoreError(mapApiReadError(err, t, "orders_requestFailed"));
+        setLoadMoreError(mapApiReadError(err, t, "orders_loadMore_map_fallback"));
       })
       .finally(() => setLoadingMore(false));
   }, [ordersNextCursor, ordersHasMore, loadingMore, router, ordersLoginReturnPath, t, ordersListStateParam]);
@@ -380,16 +413,26 @@ function OrdersPageInner() {
 
   if (loading) {
     return (
-      <main
-        className="min-h-screen flex flex-col items-center justify-center gap-6 bg-bg-main p-8"
-        aria-label={t("orders_myOrders")}
-      >
-        <LoadingText />
-        <ProductCrossNav
-          ariaLabelKey="orders_list_relatedNav_aria"
-          showGuides
-          className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-ink-500"
-        />
+      <main className="min-h-screen bg-bg-main" aria-label={t("orders_myOrders")}>
+        <section className="mx-auto max-w-4xl px-4 sm:px-6 py-8 sm:py-12" aria-busy="true">
+          <h1 className="sr-only">{t("orders_myOrders")}</h1>
+          <p className="sr-only" role="status">
+            {t("common_loading")}
+          </p>
+          <div className="mb-8 space-y-3">
+            <div className="h-10 w-56 max-w-[70%] rounded-lg bg-ink-100 animate-pulse motion-reduce:animate-none" />
+            <div className="h-4 w-full max-w-xl rounded bg-ink-50 animate-pulse motion-reduce:animate-none" />
+            <div className="h-14 w-full max-w-3xl rounded-[var(--radius-md)] bg-ink-50/90 animate-pulse motion-reduce:animate-none" />
+          </div>
+          <OrdersListPageLoadingSkeleton />
+        </section>
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 pb-12 flex justify-center">
+          <ProductCrossNav
+            ariaLabelKey="orders_list_relatedNav_aria"
+            showGuides
+            className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-ink-500"
+          />
+        </div>
       </main>
     );
   }
@@ -408,6 +451,7 @@ function OrdersPageInner() {
           >
             <button
               type="submit"
+              data-tt-orders-page-error-retry="1"
               aria-label={t("common_retry")}
               className={`${touchTargetLink44Classes} rounded-full border border-travel-500/50 bg-travel-500/10 px-4 py-2 text-meta font-medium text-travel-700 hover:text-travel-800 hover:bg-travel-500/20 motion-sub min-h-[44px] inline-flex items-center justify-center ${travelFocusRingOffset2Classes}`}
             >
@@ -446,6 +490,9 @@ function OrdersPageInner() {
         <header className="mb-8">
           <h1 className="text-h2 font-bold text-ink-900 tracking-tight">{t("orders_myOrders")}</h1>
           <p className="text-body text-ink-600 mt-1">{t("orders_desc")}</p>
+          <p className="mt-3 rounded-[var(--radius-md)] border border-ink-200/80 bg-bg-soft/90 px-3 py-2 text-meta leading-snug text-ink-700">
+            {t("orders_list_hides_marketplace_drafts")}
+          </p>
           <div className="mt-4 flex flex-wrap items-center gap-2">
             <label htmlFor={ordersStateFilterId} className="text-small font-medium text-ink-700">
               {t("orders_list_stateFilter_label")}
@@ -479,6 +526,7 @@ function OrdersPageInner() {
               >
                 <button
                   type="submit"
+                  data-tt-orders-inline-action-retry="1"
                   disabled={loading}
                   aria-busy={loading ? true : undefined}
                   className={`${touchTargetLink44Classes} inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 bg-white px-4 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-travel-500 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-console disabled:opacity-50 disabled:cursor-not-allowed ${travelFocusRingCoreOffset2Classes}`}
@@ -522,6 +570,7 @@ function OrdersPageInner() {
             >
               <button
                 type="submit"
+                data-tt-orders-expect-order-refresh="1"
                 disabled={listSyncing}
                 aria-busy={listSyncing ? true : undefined}
                 className={`${touchTargetLink44Classes} inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 bg-white px-4 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-travel-500 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-console disabled:opacity-50 disabled:cursor-not-allowed ${travelFocusRingCoreOffset2Classes}`}
@@ -543,21 +592,27 @@ function OrdersPageInner() {
                 <p className="text-small text-ink-700">{t("orders_bookGuide_checking")}</p>
               </div>
             ) : null}
-            {bookGuideResolve === "invalid_not_found" || bookGuideResolve === "invalid_load" ? (
+            {bookGuideResolve === "invalid_not_found" ||
+            bookGuideResolve === "invalid_load" ||
+            bookGuideResolve === "invalid_book_guide_id" ? (
               <div
                 className="mb-6 rounded-[var(--radius-xl)] border border-warning/45 bg-warning/10 p-4 sm:p-5"
                 role="alert"
                 aria-live="polite"
               >
                 <p className="text-small font-semibold text-ink-900 mb-1">
-                  {bookGuideResolve === "invalid_not_found"
-                    ? t("orders_bookGuide_invalidTitle")
-                    : t("orders_bookGuide_verifyFailedTitle")}
+                  {bookGuideResolve === "invalid_book_guide_id"
+                    ? t("orders_bookGuide_badIdTitle")
+                    : bookGuideResolve === "invalid_not_found"
+                      ? t("orders_bookGuide_invalidTitle")
+                      : t("orders_bookGuide_verifyFailedTitle")}
                 </p>
                 <p className="text-meta text-ink-700 mb-4">
-                  {bookGuideResolve === "invalid_not_found"
-                    ? t("orders_bookGuide_invalidDesc")
-                    : t("orders_bookGuide_verifyFailedDesc")}
+                  {bookGuideResolve === "invalid_book_guide_id"
+                    ? t("orders_bookGuide_badIdDesc")
+                    : bookGuideResolve === "invalid_not_found"
+                      ? t("orders_bookGuide_invalidDesc")
+                      : t("orders_bookGuide_verifyFailedDesc")}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   <Link
@@ -682,7 +737,7 @@ function OrdersPageInner() {
 
               const escrowHref = item?.id ? `/escrow/${encodeURIComponent(String(item.id))}` : null;
               const stashListItemEscrowPayPrefetch = () => stashEscrowOrderPrefetchFromListItem(item);
-              const coverAlt = t("orders_cardCoverAlt").replace("{{dest}}", String(dest));
+              const coverAlt = t("orders_cardCoverAlt", { dest: String(dest) });
 
               const summaryBlock = (
                 <>
@@ -701,7 +756,7 @@ function OrdersPageInner() {
                     )}
                   </div>
                   {(projectionDiverges || projectionDegraded) ? (
-                    <p className="text-meta text-amber-800 mt-1.5 leading-snug" role="note">
+                    <p className="text-meta text-white mt-1.5 leading-snug" role="note">
                       {projectionDegraded
                         ? t("orders_projection_ssot_degraded")
                         : t("orders_projection_ssot_notice_divergent_short")}
@@ -722,7 +777,7 @@ function OrdersPageInner() {
               return (
                 <li key={id}>
                   <article
-                    className={`relative rounded-[var(--radius-xl)] overflow-hidden transition-shadow hover:shadow-medium ${
+                    className={`relative rounded-[var(--radius-xl)] overflow-hidden transition-shadow motion-reduce:transition-none hover:shadow-medium motion-reduce:hover:shadow-none ${
                       isDraftOrder
                         ? "border-2 border-dashed border-travel-500/50 bg-travel-50/60 shadow-soft ring-1 ring-travel-500/10"
                         : "border border-ink-200 bg-white shadow-soft"
@@ -735,7 +790,7 @@ function OrdersPageInner() {
                         href={escrowHref}
                         onClick={stashListItemEscrowPayPrefetch}
                         className={`absolute inset-0 z-0 rounded-[var(--radius-xl)] ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
-                        aria-label={t("orders_cardLinkAria").replace("{{dest}}", String(dest))}
+                        aria-label={t("orders_cardLinkAria", { dest: String(dest) })}
                       />
                     ) : null}
                     <div className="relative z-10 flex flex-col sm:flex-row pointer-events-none">
@@ -747,6 +802,8 @@ function OrdersPageInner() {
                           className="object-cover"
                           sizes="(max-width: 640px) 100vw, 176px"
                           unoptimized
+                          priority={i === 0}
+                          fetchPriority={i === 0 ? "high" : "low"}
                         />
                       </div>
                       <div className="flex-1 min-w-0 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -818,7 +875,9 @@ function OrdersPageInner() {
               className="mt-6 rounded-[var(--radius-lg)] border border-ink-200/80 bg-bg-console/80 p-4 space-y-3 shadow-soft"
               role="alert"
               aria-live="polite"
+              data-tt-orders-load-more-error="1"
             >
+              <p className="text-meta leading-snug text-ink-700">{t("orders_loadMore_failed_intro")}</p>
               <ApiErrorAlert message={loadMoreError} />
               <form
                 className="inline"
@@ -830,6 +889,7 @@ function OrdersPageInner() {
               >
                 <button
                   type="submit"
+                  data-tt-orders-load-more-inline-retry="1"
                   disabled={loadingMore}
                   aria-busy={loadingMore ? true : undefined}
                   className={`${touchTargetLink44Classes} inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 bg-white px-4 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-travel-500 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-console disabled:opacity-50 disabled:cursor-not-allowed`}
@@ -851,6 +911,7 @@ function OrdersPageInner() {
               >
                 <button
                   type="submit"
+                  data-tt-orders-load-more="1"
                   disabled={loadingMore}
                   aria-busy={loadingMore ? true : undefined}
                   className="inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 bg-white px-5 py-2.5 text-small font-medium text-ink-800 hover:bg-ink-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-travel-500 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-console disabled:opacity-50 disabled:cursor-not-allowed"

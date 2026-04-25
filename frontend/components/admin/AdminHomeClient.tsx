@@ -103,7 +103,7 @@ export default function AdminHomeClient() {
           <div className="flex max-w-md flex-col items-end gap-2 sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-end">
             <Link
               href="/admin/observability"
-              className={`${touchTargetLink44Classes} shrink-0 text-small font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+              className={`${touchTargetLink44Classes} shrink-0 text-small font-medium text-travel-600 underline-offset-2 transition-colors motion-reduce:transition-none hover:underline ${travelFocusRingOffset2Classes}`}
             >
               {t("admin_observability_title")}
             </Link>
@@ -112,7 +112,7 @@ export default function AdminHomeClient() {
             </span>
             <Link
               href="/admin/trust-growth"
-              className={`${touchTargetLink44Classes} shrink-0 text-small font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+              className={`${touchTargetLink44Classes} shrink-0 text-small font-medium text-travel-600 underline-offset-2 transition-colors motion-reduce:transition-none hover:underline ${travelFocusRingOffset2Classes}`}
             >
               {t("admin_shell_nav_trust_growth")}
             </Link>
@@ -122,7 +122,7 @@ export default function AdminHomeClient() {
             <Link
               href="/admin/cross-check"
               title={t("admin_audit_tools_read_only_scope")}
-              className={`${touchTargetLink44Classes} shrink-0 text-small font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+              className={`${touchTargetLink44Classes} shrink-0 text-small font-medium text-travel-600 underline-offset-2 transition-colors motion-reduce:transition-none hover:underline ${travelFocusRingOffset2Classes}`}
             >
               {t("admin_shell_nav_cross_check")}
             </Link>
@@ -132,7 +132,7 @@ export default function AdminHomeClient() {
             <Link
               href="/admin/drift-summary"
               title={t("admin_audit_tools_read_only_scope")}
-              className={`${touchTargetLink44Classes} shrink-0 text-small font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+              className={`${touchTargetLink44Classes} shrink-0 text-small font-medium text-travel-600 underline-offset-2 transition-colors motion-reduce:transition-none hover:underline ${travelFocusRingOffset2Classes}`}
             >
               {t("admin_shell_nav_drift_summary")}
             </Link>
@@ -157,7 +157,7 @@ export default function AdminHomeClient() {
                   <Link
                     key={href}
                     href={href}
-                    className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 text-ink-800 shadow-soft transition hover:border-travel-400 hover:text-travel-600 ${travelFocusRingCoreOffset2WhiteClasses}`}
+                    className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 text-ink-800 shadow-soft transition motion-reduce:transition-none hover:border-travel-400 hover:text-travel-600 ${travelFocusRingCoreOffset2WhiteClasses}`}
                   >
                     <h3 className="text-body-l font-medium">{t(tk)}</h3>
                     <p className="mt-1 text-small text-ink-600">{t(descKey)}</p>
