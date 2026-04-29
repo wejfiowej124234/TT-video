@@ -1,11 +1,14 @@
 # Lightweight structural check for registry/spec-path-dependencies.v1.yaml
-# (manual or path-filtered; orthogonal to build.yml)
-# Policy (CONTRIBUTING / registry README / docs/spec-path-dependency-migration-inventory.md):
-#   any add/remove/change to docs/spec path dependencies must sync-update the inventory doc +
-#   registry/spec-path-dependencies.v1.yaml and pass this validator; do not migrate/delete spec
-#   via this track unless separately scoped; do not change default build.yml required jobs.
-# paths-filter also includes docs/spec-path-dependency-migration-inventory.md and
-# scripts/gates/check-ci-exemption.sh so PRs that touch those sync surfaces run this job.
+# (orthogonal to build.yml). Current policy: acceptance is LOCAL — run before commit:
+#   python registry/validate-spec-path-dependencies-registry.py
+#   bash scripts/check-handbook-frontmatter.sh
+#   bash scripts/check-handbook-engineering-content.sh
+# This workflow is OPTIONAL for when GitHub CI is available again; it is NOT a required
+# PR green check while CI is unavailable. Policy refs: CONTRIBUTING, registry/README,
+# docs/spec-path-dependency-migration-inventory.md — sync inventory + YAML; do not
+# migrate/delete spec via this track unless separately scoped; do not change default
+# build.yml required jobs. paths-filter includes inventory + check-ci-exemption.sh so
+# edits to those sync surfaces can optionally re-run the same validator in CI.
 name: Registry spec-path dependencies validate
 
 on:

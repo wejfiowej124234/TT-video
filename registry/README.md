@@ -2,22 +2,26 @@
 
 本目录存放**仅登记、不执行迁移**的机读草稿，与 **`docs/spec-path-dependency-migration-inventory.md`** 同源政策：**不删除、不搬迁 `docs/spec/`**。
 
-**变更纪律（与盘点文、CONTRIBUTING、AGENTS、`.cursor/rules` 同源）**：凡是**新增、删除或改动** **`docs/spec` 路径依赖**，**须同步**更新 **`docs/spec-path-dependency-migration-inventory.md`** 与 **`registry/spec-path-dependencies.v1.yaml`**，并运行 **`python registry/validate-spec-path-dependencies-registry.py`**（**exit 0**）。**不**借此迁移或删除 **`docs/spec`**，**除非单独立项**；**不**改 **`build.yml`** 主链默认必过。
+**变更纪律（与盘点文、CONTRIBUTING、AGENTS、`.cursor/rules` 同源）**：凡是**新增、删除或改动** **`docs/spec` 路径依赖**，**须同步**更新 **`docs/spec-path-dependency-migration-inventory.md`** 与 **`registry/spec-path-dependencies.v1.yaml`**。**提交前**须在仓库根**本地**依次通过下面「三门禁」（**exit 0** 再提交）。**不**借此迁移或删除 **`docs/spec`**，**除非单独立项**；**不**改 **`build.yml`** 主链默认必过。
+
+**完成口径（当前单人 / GitHub CI 暂不可用）**：以**本地**上述命令通过为准；**不以** PR 或 Actions 绿灯作为本条目的收口条件。**Registry 机读 YAML** 的结构与路径存在性以 **`validate-spec-path-dependencies-registry.py`** 为**权威硬门禁**；**`.github/workflows/registry-spec-path-dependencies-validate.yml`** 仅保留为 **CI 恢复后的可选复跑**（逻辑与本地 validator 相同）。
 
 | 文件 | 说明 |
 |------|------|
 | **`spec-path-dependencies.v1.yaml`** | `docs/spec` 路径依赖登记：`classification` **A**=法定壳留 spec · **B**=可迁机读衍生 · **C**=handbook/corpus 导读；含 `consumers`、`target_location`、`migration_prerequisites` |
-| **`validate-spec-path-dependencies-registry.py`** | 轻量结构校验（YAML 可解析、`classification` 枚举、`target_location` / `migration_prerequisites` 必填、consumer 路径形状与**可解析存在性**）；**不**迁移、**不**删 spec、**默认不**接入 CI |
+| **`validate-spec-path-dependencies-registry.py`** | 轻量结构校验（YAML 可解析、`classification` 枚举、`target_location` / `migration_prerequisites` 必填、consumer 路径形状与**可解析存在性**）；**不**迁移、**不**删 spec；**以本地 exit 0 为必过** |
 
-**本地校验（仓库根）**
+**提交前本地三门禁（仓库根）**
 
 依赖：**PyYAML**（与现有 `yaml.safe_load` 脚本相同环境）。
 
 ```bash
 python registry/validate-spec-path-dependencies-registry.py
+bash scripts/check-handbook-frontmatter.sh
+bash scripts/check-handbook-engineering-content.sh
 ```
 
-显式路径：
+显式 registry 文件：
 
 ```bash
 python registry/validate-spec-path-dependencies-registry.py registry/spec-path-dependencies.v1.yaml
@@ -25,11 +29,11 @@ python registry/validate-spec-path-dependencies-registry.py registry/spec-path-d
 
 失败时 **stderr** 前缀 **`REGISTRY-STRUCT:`**，**exit 1**；通过打印一行 **`OK:`** 并 **exit 0**。
 
-**GitHub Actions（低频 · 非 build 主链）**
+**GitHub Actions（可选 · CI 恢复后）**
 
-- Workflow：**`.github/workflows/registry-spec-path-dependencies-validate.yml`**（**`Registry spec-path dependencies validate`**）。
-- 触发：**`workflow_dispatch`**；**`pull_request` / `push`（`main`）** 且 **paths** 命中 **`docs/spec-path-dependency-migration-inventory.md`**、**`registry/spec-path-dependencies*.yaml`**、**`registry/validate-spec-path-dependencies-registry.py`**、**`scripts/gates/check-ci-exemption.sh`**、**本 workflow 文件** 之一时（低频；与 **build** 主链正交）。
-- 与 **`build.yml`** 正交；不改变默认 **Build** PR 必过组合（除非仓库另行勾选本 workflow）。
+- Workflow：**`.github/workflows/registry-spec-path-dependencies-validate.yml`**（**`Registry spec-path dependencies validate`**）：与本地 **validator** 同一步，**非**当前必验收口；**CI 可用时**可 **`workflow_dispatch`** 或依赖 **paths** 触发复跑。
+- **paths** 命中 **`docs/spec-path-dependency-migration-inventory.md`**、**`registry/spec-path-dependencies*.yaml`**、**`registry/validate-spec-path-dependencies-registry.py`**、**`scripts/gates/check-ci-exemption.sh`**、**本 workflow 文件** 之一时会在 PR/push 上跑（与 **build** 主链正交）。
+- 与 **`build.yml`** 正交；**不要求**将本 workflow 纳入 PR 必绿组合。
 
 **字段约定（v1 草稿）**
 
