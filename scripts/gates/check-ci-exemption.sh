@@ -5,6 +5,7 @@
 #   且 evidence 路径须为 evidence/ci_exemptions/PR-<PR号>-<workitem_id>.md 且在本 PR diff 中。
 # 用法: PR_BODY、PR_NUMBER 由 workflow 注入；第一个参数为 BASE_SHA（与 check-08-consistency 一致）。
 # 见: .github/PULL_REQUEST_TEMPLATE.md、evidence/ci_exemptions/README.md、docs/spec/08-5-CI与一致性落地说明.md
+# 文档审计与机器门禁总索引（与 Build 门禁表互证）: docs/spec/00-文档治理总册.md §8.3（锚 #doc-audit-gates-ssot）
 set -euo pipefail
 
 BASE_SHA="${1:-}"

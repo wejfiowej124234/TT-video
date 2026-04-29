@@ -1,0 +1,610 @@
+# spec 路径依赖 registry · v1 草稿
+# 政策：只登记；不迁移、不删除 docs/spec/（见 docs/spec-path-dependency-migration-inventory.md）
+registry_version: "1.0-draft"
+source_inventory: docs/spec-path-dependency-migration-inventory.md
+updated: "2026-04-29"
+classification_enum:
+  A: 法定壳（须长期留在 docs/spec 或同路径兼容壳）
+  B: 可迁机读真源 / 派生清单（双写或生成；正文仍在 A）
+  C: handbook·corpus 导读 / 链接合规（不替代 04/93/14 表体）
+
+entries:
+  - id: spec-04-backend-api
+    spec_path: docs/spec/04-后端与API.md
+    classification: A
+    summary: HTTP 契约与 §3.4 机读路由表（含 Admin/internal 等锚点）
+    consumers:
+      scripts:
+        - scripts/gates/check-04-routes-vs-code.py
+        - scripts/gates/check-04-frontend-routes-vs-app.py
+        - scripts/gates/check-04-api-ts-routes-vs-doc-34.py
+        - scripts/gates/run-check-04-routes.sh
+        - scripts/ops/internal-indexer-ops.sh
+        - scripts/ops/indexer-reconcile-probe.sh
+        - scripts/ops/orders-deadline-ssot-ops-check.sh
+        - scripts/ops/governance-timelock-delay-ssot-ops-check.sh
+        - scripts/ops/governance-timelock-governor-admin-ssot-ops-check.sh
+        - scripts/ops/governance-governor-view-params-ssot-ops-check.sh
+        - scripts/ops/governance-governor-token-timelock-ssot-ops-check.sh
+        - scripts/ops/governance-governor-proposal-threshold-ssot-ops-check.sh
+        - scripts/ops/governance-governor-proposal-count-ssot-ops-check.sh
+        - scripts/dev/dev-preflight.sh
+      workflows:
+        - .github/workflows/build.yml
+        - .github/workflows/secret-key-gate.yml
+        - .github/workflows/job-queue-gate.yml
+        - .github/workflows/feature-flag-gate.yml
+        - .github/workflows/config-center-gate.yml
+        - .github/workflows/community-governance-gate.yml
+        - .github/workflows/internal-drill-gate.yml
+        - .github/workflows/ai-governance-gate.yml
+    docs_areas:
+      - docs/handbook/engineering/**/*.md
+      - docs/runbook/**/*.md
+    target_location: keep:docs/spec/04-后端与API.md
+    migration_prerequisites:
+      - 任何机读窗/表体变更须与 run-check-04-routes 串联同 PR（engineering/04、CONTRIBUTING 同源）
+      - P-C 前禁止删除路径；若引入 B 类派生物，须双跑直至与 04 表一致
+
+  - id: spec-14-contract-abi-alignment
+    spec_path: docs/spec/14-合约-API-ABI-前后端对齐.md
+    classification: A
+    summary: 链上 ABI 与 HTTP/运维边界叙述；job-queue internal outbox 等锚点
+    consumers:
+      scripts:
+        - scripts/gates/run-check-04-routes.sh
+        - scripts/dev/sync-frontend-env-local-from-root.sh
+        - scripts/dev/sync-frontend-env-local-from-root.ps1
+      workflows:
+        - .github/workflows/job-queue-gate.yml
+    target_location: keep:docs/spec/14-合约-API-ABI-前后端对齐.md
+    migration_prerequisites:
+      - ABI 真值仍以 contracts/abi + check-55-s13 闭包为准；14 正文不迁出除非 Owner 程序
+
+  - id: spec-13-1-ui-routes
+    spec_path: docs/spec/13-1-UI产品级SSOT与页面规范.md
+    classification: A
+    summary: 表 1 页面地图与 App Router 对拍
+    consumers:
+      scripts:
+        - scripts/gates/check-13-1-table1-routes-vs-app.py
+    target_location: keep:docs/spec/13-1-UI产品级SSOT与页面规范.md
+    migration_prerequisites:
+      - 与 04 前端路由表同 PR 维护（run-check-04-routes 后半串联）
+
+  - id: spec-07-devflow
+    spec_path: docs/spec/07-开发流程与顺序.md
+    classification: A
+    summary: 阶段顺序、发版叙事、版本三线之一端
+    consumers:
+      scripts:
+        - scripts/gates/check-07-version-triple.sh
+        - scripts/gates/check-governance-doc-linkage.sh
+        - scripts/dev/validate_dual_score_signoff.py
+      workflows:
+        - .github/workflows/governance-doc-linkage-gate.yml
+    target_location: keep:docs/spec/07-开发流程与顺序.md
+    migration_prerequisites:
+      - bump Version 须同批 00 表 + 07 §六 6.5 + check-07-version-triple.sh
+
+  - id: spec-00-index
+    spec_path: docs/spec/00-文档索引.md
+    classification: A
+    summary: spec 主序列、版本表、读前摘要
+    consumers:
+      scripts:
+        - scripts/gates/check-07-version-triple.sh
+        - scripts/gates/check-governance-doc-linkage.sh
+        - scripts/check-runbook-golive-doclink-gate.sh
+        - scripts/dev/sync-spec00-handbook-docs-version-column.py
+        - scripts/release/b421_doclink_gate.py
+      workflows:
+        - .github/workflows/governance-doc-linkage-gate.yml
+        - .github/workflows/check-wave-phase-files.yml
+    target_location: keep:docs/spec/00-文档索引.md
+    migration_prerequisites:
+      - handbook/engineering 母表边界与 00 表对拍（spec/00 节前说明）
+
+  - id: spec-08-3-gate-table
+    spec_path: docs/spec/08-3-参数与门禁表.md
+    classification: A
+    summary: SSOT 映射与 evidence_pointer；与 08-4 版本对拍
+    consumers:
+      scripts:
+        - scripts/gates/check-08-consistency.sh
+        - scripts/gates/check-08-evidence-pointer.sh
+        - scripts/dev/check-strict-ssot-local-prereqs.sh
+        - scripts/dev/preflight-local-stack.ps1
+      workflows:
+        - .github/workflows/check-08-consistency.yml
+        - .github/workflows/check-08-evidence-pointer.yml
+    target_location: keep:docs/spec/08-3-参数与门禁表.md
+    migration_prerequisites:
+      - 改 key 须同步 08-4「文档版本（CI 校验用）」行（W-PDP-SSOT-CONSISTENCY）
+
+  - id: spec-08-3-ssot-sha256-sidecar
+    spec_path: docs/spec/08-3-参数与门禁表.md
+    classification: B
+    summary: 仅 SSOT_SHA256 与严格预检比对（正文仍为 A 条 spec-08-3-gate-table）
+    consumers:
+      scripts:
+        - scripts/dev/check-strict-ssot-local-prereqs.sh
+        - scripts/dev/preflight-local-stack.ps1
+    target_location: registry/derived/08-3.sha256
+    migration_prerequisites:
+      - 生成物须由 08-3 正文确定性导出；CI 可选双校验（文件存在 + sidecar 一致）
+      - 不削弱 W-GATE 与 08-2 豁免程序
+
+  - id: spec-08-4-external-pack
+    spec_path: docs/spec/08-4-对外口径包.md
+    classification: A
+    summary: 与 08-3 成对；CI 版本行机读
+    consumers:
+      scripts:
+        - scripts/gates/check-08-consistency.sh
+      workflows:
+        - .github/workflows/check-08-consistency.yml
+    target_location: keep:docs/spec/08-4-对外口径包.md
+    migration_prerequisites:
+      - 与 08-3 同 PR 对拍；PR 模板 08 门禁必填
+
+  - id: spec-08-5-ci-consistency
+    spec_path: docs/spec/08-5-CI与一致性落地说明.md
+    classification: A
+    summary: CI 豁免与一致性叙述引用
+    consumers:
+      scripts:
+        - scripts/gates/check-ci-exemption.sh
+    target_location: keep:docs/spec/08-5-CI与一致性落地说明.md
+    migration_prerequisites: []
+
+  - id: spec-00-doc-governance-gates-index
+    spec_path: docs/spec/00-文档治理总册.md
+    classification: A
+    summary: 文档审计与机器门禁索引（§8.3）；与 check-ci-exemption 头注释互证
+    consumers:
+      scripts:
+        - scripts/gates/check-ci-exemption.sh
+    target_location: keep:docs/spec/00-文档治理总册.md
+    migration_prerequisites:
+      - 与 08-5、PR 模板、evidence/ci_exemptions 叙事一致
+
+  - id: spec-48-modular-split
+    spec_path: docs/spec/48-后端模块化拆分与落地清单.md
+    classification: A
+    summary: 行数门禁约定出处
+    consumers:
+      scripts:
+        - scripts/gates/check-48-line-count.sh
+    target_location: keep:docs/spec/48-后端模块化拆分与落地清单.md
+    migration_prerequisites: []
+
+  - id: spec-r001-regression-json
+    spec_path: docs/spec/R-001-全站回归报告模板与汇总JSON结构.md
+    classification: A
+    summary: report.json 字段与 orchestration 可选节
+    consumers:
+      scripts:
+        - scripts/validate-regression-report.py
+    target_location: keep:docs/spec/R-001-全站回归报告模板与汇总JSON结构.md
+    migration_prerequisites:
+      - JSON Schema 若外置须与 R-001 正文同批版本
+
+  - id: spec-93-matrix
+    spec_path: docs/spec/93-全站功能验证矩阵-域别回归清单.md
+    classification: A
+    summary: 域矩阵与 PASS 判据 SSOT
+    consumers:
+      scripts:
+        - scripts/check-spec93-routes-vs-app.py
+        - scripts/dev/extract_93_case_inventory.py
+    target_location: keep:docs/spec/93-全站功能验证矩阵-域别回归清单.md
+    migration_prerequisites:
+      - 表体不迁入 handbook（engineering 边界）
+
+  - id: derive-93-section5-routes
+    spec_path: docs/spec/93-全站功能验证矩阵-域别回归清单.md
+    classification: B
+    summary: 从 §5 解析的 /path 集合（与 app 路由 diff）
+    consumers:
+      scripts:
+        - scripts/check-spec93-routes-vs-app.py
+        - scripts/dev/extract_93_case_inventory.py
+    target_location: registry/derived/93-matrix-section5-routes.v1.json
+    migration_prerequisites:
+      - 生成管道须可复现；默认 ENV 仍可读 spec；CI 双跑通过后再切换默认
+      - 93 正文保持 A
+
+  - id: spec-96-18-backlog
+    spec_path: docs/spec/96-18-未完成清单与多维检查.md
+    classification: A
+    summary: 9618 批次与命令筛子真源
+    consumers:
+      scripts:
+        - scripts/gates/tt-9618-onboarding-pg-evidence.sh
+        - scripts/gates/check-ops-monitoring-prometheus-examples.sh
+    target_location: keep:docs/spec/96-18-未完成清单与多维检查.md
+    migration_prerequisites:
+      - 与 TT-9618、README #9618 锚同批维护
+
+  - id: derive-96-booklets-paths
+    classification: B
+    summary: 96 Hub + 分册路径元组（与 verify_96_booklets_registry 列表同源）
+    primary_spec_paths:
+      - docs/spec/96-索引-全链路外生产验收分册.md
+      - docs/spec/96-01-总则与95边界和执行顺序.md
+      - docs/spec/96-02-法务合规与对外披露.md
+      - docs/spec/96-03-安全密钥与供应链.md
+      - docs/spec/96-04-合规风控与跨境数据.md
+      - docs/spec/96-05-运维SRE与可靠性.md
+      - docs/spec/96-06-数据隐私备份与迁移.md
+      - docs/spec/96-07-链上资金与合约终验.md
+      - docs/spec/96-08-索引器对账与财务.md
+      - docs/spec/96-09-消息通知与异步任务.md
+      - docs/spec/96-10-配置灰度与特性开关.md
+      - docs/spec/96-11-发布签字与回归门禁.md
+      - docs/spec/96-12-文档真值与卫星债.md
+      - docs/spec/96-13-UI-UX-i18n-a11y-性能走查.md
+      - docs/spec/96-14-专项Wallet社区治理与扩展域.md
+      - docs/spec/96-15-深度多维度检查与审计体系.md
+      - docs/spec/96-16-全页面UI-UX优化方案总册.md
+      - docs/spec/96-17-多重身份与钱包真值.md
+      - docs/spec/96-UI-UX-生产级验收与全链路外必查项.md
+    consumers:
+      scripts:
+        - scripts/release/verify_96_booklets_registry.py
+    target_location: registry/derived/96-booklets.v1.json
+    migration_prerequisites:
+      - JSON 与脚本内 tuple 列表 diff 为 0 后再改脚本读 JSON
+      - 分册正文仍为 A；删 spec 不在本草稿范围
+
+  - id: spec-wave-phase-nnn-glob
+    spec_path: "docs/spec/{NNN}-*.md"
+    path_pattern: true
+    classification: A
+    summary: 90～550 阶段文存在性（号段来自 00 主表 + check-wave-phase-files ALLOW_EMPTY）
+    consumers:
+      scripts:
+        - scripts/gates/check-wave-phase-files.sh
+        - scripts/gates/check-wave-phase-files.ps1
+      workflows:
+        - .github/workflows/check-wave-phase-files.yml
+    target_location: keep:docs/spec/{NNN}-阶段*.md
+    migration_prerequisites:
+      - 若改为 B 列文件名集合，须与 00 主表生成同源并保留防误删语义
+
+  - id: spec-27-archived-subtree
+    spec_path: "prefix:docs/spec/27-archived/"
+    classification: A
+    summary: 考古兼容树与链修复脚本
+    consumers:
+      scripts:
+        - scripts/gates/fix_27_archived_links.sh
+        - scripts/gates/fix_27_archived_links.ps1
+    target_location: keep:docs/spec/27-archived/
+    migration_prerequisites:
+      - 删旧跟 98 §2；不由此 registry 授权删除
+
+  - id: spec-code-maps-subtree
+    spec_path: "prefix:docs/spec/code-maps/"
+    classification: A
+    summary: 代码映射考古子树
+    consumers:
+      scripts:
+        - scripts/tools/fix_spec_code_maps_snapshots_links.py
+    target_location: keep:docs/spec/code-maps/
+    migration_prerequisites: []
+
+  - id: spec-snapshots-subtree
+    spec_path: "prefix:docs/spec/snapshots/"
+    classification: A
+    summary: 时点快照子树
+    consumers:
+      scripts:
+        - scripts/tools/fix_spec_code_maps_snapshots_links.py
+    target_location: keep:docs/spec/snapshots/
+    migration_prerequisites: []
+
+  - id: spec-00-doc-chaining-legacy
+    spec_path: docs/spec/00-文档体系与阅读串联.md
+    classification: A
+    summary: 兼容壳；治理联动 grep 与 bulk_update 模板字符串
+    consumers:
+      scripts:
+        - scripts/gates/check-governance-doc-linkage.sh
+        - scripts/gates/bulk_update_doc_ssot_07.py
+    target_location: keep:docs/spec/00-文档体系与阅读串联.md
+    migration_prerequisites:
+      - 正文权威已并入 07；删路径须 Owner+98
+
+  - id: spec-00-module-master-table
+    spec_path: docs/spec/00-最终版架构图对应模块清单总表.md
+    classification: A
+    summary: 治理 token 互链 grep
+    consumers:
+      scripts:
+        - scripts/gates/check-governance-doc-linkage.sh
+    target_location: keep:docs/spec/00-最终版架构图对应模块清单总表.md
+    migration_prerequisites: []
+
+  - id: spec-82-gov-token-overview
+    spec_path: docs/spec/82-治理币-文档总览.md
+    classification: A
+    summary: 治理币叙事与互链
+    consumers:
+      scripts:
+        - scripts/gates/check-governance-doc-linkage.sh
+        - scripts/ops/ttg-transfer-team-15pct-single-address.example.sh
+    target_location: keep:docs/spec/82-治理币-文档总览.md
+    migration_prerequisites: []
+
+  - id: spec-83-regional-governance
+    spec_path: docs/spec/83-区域治理与收益分配-协议白皮书.md
+    classification: A
+    consumers:
+      scripts:
+        - scripts/gates/check-governance-doc-linkage.sh
+    target_location: keep:docs/spec/83-区域治理与收益分配-协议白皮书.md
+    migration_prerequisites: []
+
+  - id: spec-84-country-pool-params
+    spec_path: docs/spec/84-第一阶段10国Country-Pool发行参数总表.md
+    classification: A
+    consumers:
+      scripts:
+        - scripts/gates/check-governance-doc-linkage.sh
+      workflows:
+        - .github/workflows/governance-doc-linkage-gate.yml
+    target_location: keep:docs/spec/84-第一阶段10国Country-Pool发行参数总表.md
+    migration_prerequisites: []
+
+  - id: spec-governance-token-subtree
+    spec_path: "prefix:docs/spec/governance-token/"
+    classification: A
+    summary: 治理 token 子树存在性与 README 链 07
+    consumers:
+      scripts:
+        - scripts/gates/check-governance-doc-linkage.sh
+    target_location: keep:docs/spec/governance-token/
+    migration_prerequisites:
+      - 子文件清单以脚本内 test -f 列表为准；改列表须同批更新本 registry 条
+
+  - id: spec-08-4-annex-feerouter-target
+    spec_path: docs/spec/08-4-附录-收益流闭环图-FeeRouter-Target.md
+    classification: A
+    consumers:
+      scripts:
+        - scripts/gates/check-governance-doc-linkage.sh
+    target_location: keep:docs/spec/08-4-附录-收益流闭环图-FeeRouter-Target.md
+    migration_prerequisites: []
+
+  - id: spec-gap-official-table
+    spec_path: docs/spec/缺口与待补-官方总表.md
+    classification: A
+    consumers:
+      scripts:
+        - scripts/check-runbook-golive-doclink-gate.sh
+        - scripts/release/b421_doclink_gate.py
+    target_location: keep:docs/spec/缺口与待补-官方总表.md
+    migration_prerequisites: []
+
+  - id: spec-15-multidim-checklist
+    spec_path: docs/spec/15-多维度文档与技术检查报告.md
+    classification: A
+    consumers:
+      scripts:
+        - scripts/check-runbook-golive-doclink-gate.sh
+        - scripts/release/b421_doclink_gate.py
+        - scripts/release/run_96_15_orchestration.py
+    target_location: keep:docs/spec/15-多维度文档与技术检查报告.md
+    migration_prerequisites: []
+
+  - id: spec-66-deep-audit
+    spec_path: docs/spec/66-深度检查-缺口与遗留问题.md
+    classification: A
+    consumers:
+      scripts:
+        - scripts/release/run_96_15_orchestration.py
+        - scripts/release/tier_bc_machine_gates.py
+    target_location: keep:docs/spec/66-深度检查-缺口与遗留问题.md
+    migration_prerequisites: []
+
+  - id: spec-51-stage-tech
+    spec_path: docs/spec/51-阶段开发技术文档.md
+    classification: A
+    consumers:
+      scripts:
+        - scripts/release/run_96_15_orchestration.py
+        - scripts/release/tier_bc_machine_gates.py
+    target_location: keep:docs/spec/51-阶段开发技术文档.md
+    migration_prerequisites: []
+
+  - id: spec-53-stage-tech-alt
+    spec_path: docs/spec/53-阶段开发技术文档.md
+    classification: A
+    consumers:
+      scripts:
+        - scripts/release/run_96_15_orchestration.py
+        - scripts/release/tier_bc_machine_gates.py
+    target_location: keep:docs/spec/53-阶段开发技术文档.md
+    migration_prerequisites: []
+
+  - id: spec-27-p0-p50-checklist
+    spec_path: docs/spec/27-P0至P50开发流程勾选清单.md
+    classification: A
+    consumers:
+      scripts:
+        - scripts/release/run_96_15_orchestration.py
+        - scripts/release/tier_bc_machine_gates.py
+    target_location: keep:docs/spec/27-P0至P50开发流程勾选清单.md
+    migration_prerequisites: []
+
+  - id: spec-240-feature-flags
+    spec_path: docs/spec/240-阶段Feature-Flag与灰度系统.md
+    classification: A
+    consumers:
+      workflows:
+        - .github/workflows/build.yml
+        - .github/workflows/feature-flag-gate.yml
+    target_location: keep:docs/spec/240-阶段Feature-Flag与灰度系统.md
+    migration_prerequisites: []
+
+  - id: spec-250-job-queue
+    spec_path: docs/spec/250-阶段Job-Queue-异步任务系统.md
+    classification: A
+    consumers:
+      workflows:
+        - .github/workflows/build.yml
+        - .github/workflows/job-queue-gate.yml
+    target_location: keep:docs/spec/250-阶段Job-Queue-异步任务系统.md
+    migration_prerequisites: []
+
+  - id: spec-230-secret-management
+    spec_path: docs/spec/230-阶段Secret与Key管理系统.md
+    classification: A
+    consumers:
+      workflows:
+        - .github/workflows/build.yml
+        - .github/workflows/secret-key-gate.yml
+    target_location: keep:docs/spec/230-阶段Secret与Key管理系统.md
+    migration_prerequisites: []
+
+  - id: spec-160-community
+    spec_path: docs/spec/160-阶段开发内容与社区系统.md
+    classification: A
+    consumers:
+      workflows:
+        - .github/workflows/community-governance-gate.yml
+    target_location: keep:docs/spec/160-阶段开发内容与社区系统.md
+    migration_prerequisites: []
+
+  - id: spec-170-ai-governance
+    spec_path: docs/spec/170-阶段开发AI行程系统运行管理治理层.md
+    classification: A
+    consumers:
+      workflows:
+        - .github/workflows/ai-governance-gate.yml
+    target_location: keep:docs/spec/170-阶段开发AI行程系统运行管理治理层.md
+    migration_prerequisites: []
+
+  - id: spec-200-finance-reconcile
+    spec_path: docs/spec/200-阶段财务对账结算与报表.md
+    classification: A
+    consumers:
+      workflows:
+        - .github/workflows/finance-reconcile-gate.yml
+    target_location: keep:docs/spec/200-阶段财务对账结算与报表.md
+    migration_prerequisites: []
+
+  - id: spec-70-admin
+    spec_path: docs/spec/70-管理员系统开发文档.md
+    classification: A
+    consumers:
+      workflows:
+        - .github/workflows/finance-reconcile-gate.yml
+    target_location: keep:docs/spec/70-管理员系统开发文档.md
+    migration_prerequisites: []
+
+  - id: spec-140-cloud-deploy
+    spec_path: docs/spec/140-阶段开发云部署与交付架构.md
+    classification: A
+    consumers:
+      workflows:
+        - .github/workflows/internal-drill-gate.yml
+    target_location: keep:docs/spec/140-阶段开发云部署与交付架构.md
+    migration_prerequisites: []
+
+  - id: spec-96-md-size-readonly-gate
+    spec_path: "docs/spec/96-*.md"
+    path_pattern: true
+    classification: A
+    summary: run_96_full_automation 只读体量闸（glob 语义）
+    consumers:
+      scripts:
+        - scripts/release/run_96_full_automation.py
+    target_location: keep:docs/spec/96-*.md
+    migration_prerequisites:
+      - 若收窄 glob，须同步脚本与 96-索引台账
+
+  - id: meta-r003-template-string
+    spec_path: null
+    classification: C
+    summary: 生成文本内嵌 R-002 链接（非文件系统硬依赖）
+    consumers:
+      scripts:
+        - scripts/dev/r003_staging_full_regression.py
+    target_location: docs/runbook/（执行说明聚合）
+    migration_prerequisites:
+      - 模板字符串变更须与 R-002 锚稳定互指
+
+  - id: meta-go-wave-preflight-hint
+    spec_path: null
+    classification: C
+    summary: 证据目录说明中提及 spec/15（弱引用）
+    consumers:
+      scripts:
+        - scripts/ops/go_wave_evidence_dir_preflight.py
+    target_location: evidence/README.md
+    migration_prerequisites: []
+
+  - id: conformance-handbook-engineering-to-spec
+    spec_path: null
+    classification: C
+    summary: handbook engineering 内 ](...spec/...) 外链存在性（目标为多条 A 路径）
+    consumers:
+      scripts:
+        - scripts/gates/check-handbook-engineering-content.py
+        - scripts/gates/check-handbook-engineering-content.sh
+    target_location: docs/handbook/engineering/
+    migration_prerequisites:
+      - HBOOK-ENG-EVIDENCE 与 EVIDENCE 母版 22 对拍；不替代 04/93
+
+  - id: derive-ci-check-anchor-manifest
+    spec_path: null
+    classification: B
+    summary: 分散在 workflows 的 check_anchor（子串+spec 文件）可收束为 manifest（法定叙事仍在各 A 文件）
+    consumers:
+      workflows:
+        - .github/workflows/build.yml
+        - .github/workflows/secret-key-gate.yml
+        - .github/workflows/job-queue-gate.yml
+        - .github/workflows/feature-flag-gate.yml
+        - .github/workflows/config-center-gate.yml
+        - .github/workflows/community-governance-gate.yml
+        - .github/workflows/finance-reconcile-gate.yml
+        - .github/workflows/internal-drill-gate.yml
+        - .github/workflows/ai-governance-gate.yml
+    target_location: registry/derived/ci-check-anchors.v1.yaml
+    migration_prerequisites:
+      - 双跑：manifest 与现行 workflow 内联 grep 等价
+      - 不删除 spec；P-C 更新 SPEC-MIGRATION-STATUS 后再切换默认读 manifest
+
+  - id: docs-pr-template-08-2
+    spec_path: docs/spec/08-2-附录-闭合工单表.md
+    classification: A
+    summary: PR 模板 W-PDP / 豁免指针
+    consumers:
+      docs_areas:
+        - .github/PULL_REQUEST_TEMPLATE.md
+    target_location: keep:docs/spec/08-2-附录-闭合工单表.md
+    migration_prerequisites:
+      - 改 CI 豁免叙事须同步 08-5 / evidence/ci_exemptions
+
+  - id: workflow-broadcast-batch-blockers-nameonly
+    spec_path: null
+    classification: C
+    summary: 步骤名检查多源含 docs/spec（非单文件锚）
+    consumers:
+      workflows:
+        - .github/workflows/broadcast-batch-blockers.yml
+    target_location: N/A
+    migration_prerequisites:
+      - 若收紧为 manifest，登记具体路径后再降级本条
+
+consumer_index:
+  - consumer: scripts/gates/check-handbook-engineering-content.py
+    role: validate_markdown_links_to_spec
+    default_classification_of_targets: A
+  - consumer: scripts/tools/_fix_doc_links_batch.py
+    role: maintenance_replace_spec_link_style
+    note: 非运行时门禁

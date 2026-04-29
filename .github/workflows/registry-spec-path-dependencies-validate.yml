@@ -1,0 +1,49 @@
+# Lightweight structural check for registry/spec-path-dependencies.v1.yaml
+# (manual or path-filtered; orthogonal to build.yml)
+# Policy (CONTRIBUTING / registry README / docs/spec-path-dependency-migration-inventory.md):
+#   any add/remove/change to docs/spec path dependencies must sync-update the inventory doc +
+#   registry/spec-path-dependencies.v1.yaml and pass this validator; do not migrate/delete spec
+#   via this track unless separately scoped; do not change default build.yml required jobs.
+# paths-filter also includes docs/spec-path-dependency-migration-inventory.md and
+# scripts/gates/check-ci-exemption.sh so PRs that touch those sync surfaces run this job.
+name: Registry spec-path dependencies validate
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'docs/spec-path-dependency-migration-inventory.md'
+      - 'registry/spec-path-dependencies*.yaml'
+      - 'registry/validate-spec-path-dependencies-registry.py'
+      - 'scripts/gates/check-ci-exemption.sh'
+      - '.github/workflows/registry-spec-path-dependencies-validate.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/spec-path-dependency-migration-inventory.md'
+      - 'registry/spec-path-dependencies*.yaml'
+      - 'registry/validate-spec-path-dependencies-registry.py'
+      - 'scripts/gates/check-ci-exemption.sh'
+      - '.github/workflows/registry-spec-path-dependencies-validate.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install PyYAML
+        run: pip install --disable-pip-version-check pyyaml
+      - name: Validate registry YAML structure
+        run: python3 registry/validate-spec-path-dependencies-registry.py
