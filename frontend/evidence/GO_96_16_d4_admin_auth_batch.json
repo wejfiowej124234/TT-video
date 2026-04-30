@@ -1,0 +1,46 @@
+{
+  "batch": "GO_96_16_d4_admin_auth_batch",
+  "docs_spec_touched": false,
+  "build": { "cmd": "npm run build", "cwd": "frontend", "exit": 0 },
+  "tests_sample": [
+    {
+      "cmd": "npm test -- --run lib/adminFetchDisplay.test.ts app/governance/distribution-accruals/distributionAccrualsPages.contract.test.ts",
+      "exit": 0
+    }
+  ],
+  "code_changes_summary": [
+    "components/admin/AdminRouteErrorShell.tsx — shared admin segment error UI",
+    "app/admin/error.tsx — delegates to AdminRouteErrorShell",
+    "app/admin/**/error.tsx — generated for each segment with page+loading and no prior error (except orders/[id] restored to AdminSubrouteError)",
+    "components/auth/AuthRouteErrorShell.tsx — shared auth segment error UI",
+    "app/auth/error.tsx — delegates to AuthRouteErrorShell",
+    "app/auth/{login,register,...}/error.tsx — thin wrappers"
+  ],
+  "accepted_risk": [
+    {
+      "id": "Lighthouse_LCP_CLS_TTFB",
+      "status": "FAIL",
+      "trace": "96-13 13.7; 93",
+      "detail": "No Lighthouse artifact in repo from this run."
+    },
+    {
+      "id": "E2E_start",
+      "status": "ACCEPTED_RISK",
+      "trace": "93; R-002",
+      "detail": "npm run start + full E2E not executed in agent session."
+    },
+    {
+      "id": "report_json",
+      "status": "FAIL",
+      "trace": "R-002",
+      "detail": "No validate-regression-report.py output / report.json merge in this batch."
+    },
+    {
+      "id": "screenshots",
+      "status": "FAIL",
+      "trace": "96-13",
+      "detail": "No screenshot files produced."
+    }
+  ],
+  "note": "Governance list D4 gaps closed in frontend/evidence/GO_96_16_d4_segment_gap_close.json (same repo, later batch)."
+}

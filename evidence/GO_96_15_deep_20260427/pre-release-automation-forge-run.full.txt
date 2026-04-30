@@ -1,0 +1,1625 @@
+=== pre-release-automation: check-invariants ===
+OK: frontend package-lock.json covers package.json direct deps (B-158)
+OK: ssot-guard-ci-v2 passed (static B-097 + B-110 + response contract)
+OK: invariants passed
+=== pre-release-automation: 55-S13 ===
+55-S13 OK: API router and routes dir present
+55-S13 OK: ABI dirs present; Escrow canonical + frontend minimal include openDispute (manual: full byte match optional; deploy version vs ABI)
+55-S13 OK: GuideIdentityStakingPool/ProviderIdentityStakingPool/Registry/EscrowFactory/FeeRouter/RegionVault JSON byte-identical (contracts/abi ↔ frontend/dapp/abis)
+55-S13 OK: env.example present (manual: PORT and NEXT_PUBLIC_API_BASE_URL consistent across envs)
+55-S13 OK: 55 key routes registered
+
+55-S13 自动检查通过。发版前请人工执行：
+  - 04 §3.4 表与 crates/api 注册路径逐项对照（机器预检：./scripts/run-check-04-routes.sh，Build CI 已跑）；
+  - frontend 调用的 path 与 04 一致；
+  - ABI 与部署合约版本一致；
+  - 15 附录〇 发版前检查总表勾选。
+=== pre-release-automation: 04 API + 04/13-1 routes (app + doc subset) ===
+check-04-routes-vs-code OK: 04 sec 3.4 table paths are mounted (except DOC_ONLY_SCHEDULED).
+  (no undocumented public /api/v1 routes vs sec 3.4 table)
+check-04-frontend-routes-vs-app OK: 04 sec 3.4 frontend page routes match frontend/app.
+check-04-api-ts-routes-vs-doc-34 OK: all routes block /api/v1|/auth|/meta|/health paths match 04 ��3.4 (183 checked).
+check-13-1-table1-routes-vs-app OK: 13-1 sec 2 table 1 routes match frontend/app.
+check-13-1-routes-covered-by-04-frontend-table OK: 13-1 table 1 routes are covered by 04 sec 3.4 frontend path table.
+check-b432-governance-ui-ssot-surface OK: B-428/B-432 governance closeloop surface pinned.
+check-b450: OK (B450-REVIEW-POST-SSOT-DOC-ANCHORS-V1)
+check-b451: OK (B451-REVIEW-JSON-CONTRACT-EVOLUTION-GATE-V1)
+check-b452: OK (B452-REVIEW-JSON-CONTRACT-CLIENT-GATE-V1)
+check-b453: OK (B453-REVIEW-JSON-CONTRACT-OBSERVABILITY-GATE-V1)
+check-b454: OK (B454-REVIEW-JSON-CONTRACT-DEGRADE-EVIDENCE-GATE-V1)
+check-b455: OK (B455-REVIEW-JSON-CONTRACT-ROLLOUT-GATE-V1)
+check-b456: OK (B456-REVIEW-JSON-CONTRACT-RELEASE-CONTROLLER-GATE-V1)
+check-b457: OK (B457-REVIEW-JSON-CONTRACT-RELEASE-ADAPTER-GATE-V1)
+=== pre-release-automation: forge build + verify-abi-forge ===
+No files changed, compilation skipped
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\GovernanceTreasury.sol:4:8
+  |
+4 | import "./IERC20.sol";
+  |        ^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\EscrowFactory.sol:4:8
+  |
+4 | import "./Escrow.sol";
+  |        ^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\GuideIdentityStakingPool.sol:4:8
+  |
+4 | import "./IdentityStakingPool.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\GovernanceTimelock.t.sol:4:8
+  |
+4 | import "forge-std/Test.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\GovernanceTimelock.t.sol:5:8
+  |
+5 | import "../src/GovernanceTimelock.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unwrapped-modifier-logic]: wrap modifier logic to reduce code size
+  --> src\EscrowFactory.sol:32:5
+   |
+32 | /     modifier onlyGuardian() {
+33 | |         if (msg.sender != guardian) revert OnlyGuardian();
+34 | |         _;
+35 | |     }
+   | |_____^
+   |
+help: wrap modifier logic to reduce code size
+   |
+32 ~     modifier onlyGuardian() {
+33 +         _onlyGuardian();
+34 +         _;
+35 +     }
+36 + 
+37 +     function _onlyGuardian() internal {
+38 +         if (msg.sender != guardian) revert OnlyGuardian();
+39 +     }
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unwrapped-modifier-logic
+
+note[mixed-case-function]: function names should use mixedCase
+  --> src\GovernanceTreasury.sol:84:14
+   |
+84 |     function spendETH(address to, uint256 amount) external onlySpender {
+   |              ^^^^^^^^ help: consider using: `spendEth`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#mixed-case-function
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\TravelTrustGovernor.sol:39:39
+   |
+39 |     IGovernanceVotes public immutable token;
+   |                                       ^^^^^ help: consider using: `TOKEN`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\IdentityStakingPool.sol:4:8
+  |
+4 | import "./IERC20.sol";
+  |        ^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\IdentityStakingPool.sol:5:8
+  |
+5 | import "./ISlashRouter.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\IdentityStakingPool.sol:6:8
+  |
+6 | import "./StakeAccountingLib.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\TravelTrustGovernor.sol:40:48
+   |
+40 |     IGovernanceTimelockForGov public immutable timelock;
+   |                                                ^^^^^^^^ help: consider using: `TIMELOCK`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\GovernanceTimelock.t.sol:6:8
+  |
+6 | import "../src/FeeRouter.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\GovernanceTimelock.t.sol:7:8
+  |
+7 | import "../src/RegionVault.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\InvestorDistributionClaim.sol:4:8
+  |
+4 | import "./IERC20.sol";
+  |        ^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\IdentityStakingPool.sol:17:29
+   |
+17 |     IERC20 public immutable token;
+   |                             ^^^^^ help: consider using: `TOKEN`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\IdentityStakingPool.sol:18:30
+   |
+18 |     address public immutable slasher;
+   |                              ^^^^^^^ help: consider using: `SLASHER`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+note[unwrapped-modifier-logic]: wrap modifier logic to reduce code size
+  --> src\InvestorDistributionClaim.sol:34:5
+   |
+34 | /     modifier onlyOwner() {
+35 | |         if (msg.sender != owner) revert OnlyOwner();
+36 | |         _;
+37 | |     }
+   | |_____^
+   |
+help: wrap modifier logic to reduce code size
+   |
+34 ~     modifier onlyOwner() {
+35 +         _onlyOwner();
+36 +         _;
+37 +     }
+38 + 
+39 +     function _onlyOwner() internal {
+40 +         if (msg.sender != owner) revert OnlyOwner();
+41 +     }
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unwrapped-modifier-logic
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\TravelTrustGovernor.sol:41:30
+   |
+41 |     uint256 public immutable votingDelayBlocks;
+   |                              ^^^^^^^^^^^^^^^^^ help: consider using: `VOTING_DELAY_BLOCKS`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\TravelTrustGovernor.sol:42:30
+   |
+42 |     uint256 public immutable votingPeriodBlocks;
+   |                              ^^^^^^^^^^^^^^^^^^ help: consider using: `VOTING_PERIOD_BLOCKS`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\TravelTrustGovernor.sol:43:30
+   |
+43 |     uint256 public immutable proposalThresholdVotes;
+   |                              ^^^^^^^^^^^^^^^^^^^^^^ help: consider using: `PROPOSAL_THRESHOLD_VOTES`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\TravelTrustGovernor.sol:45:30
+   |
+45 |     uint256 public immutable quorumNumeratorBps;
+   |                              ^^^^^^^^^^^^^^^^^^ help: consider using: `QUORUM_NUMERATOR_BPS`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\GovernanceTreasury.t.sol:4:8
+  |
+4 | import "forge-std/Test.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\GovernanceTreasury.t.sol:5:8
+  |
+5 | import "../src/GovernanceTreasury.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\GovernanceTreasury.t.sol:6:8
+  |
+6 | import "../src/GovernanceTimelock.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\GovernanceTreasury.t.sol:7:8
+  |
+7 | import "../src/MockERC20.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\FeeRouter.sol:4:8
+  |
+4 | import "./IERC20.sol";
+  |        ^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\RegionVault.t.sol:4:8
+  |
+4 | import "forge-std/Test.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\RegionVault.t.sol:5:8
+  |
+5 | import "../src/RegionVault.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\MockERC20.sol:4:8
+  |
+4 | import "./IERC20.sol";
+  |        ^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unwrapped-modifier-logic]: wrap modifier logic to reduce code size
+  --> src\GovernanceTreasury.sol:39:5
+   |
+39 | /     modifier onlyOwner() {
+40 | |         if (msg.sender != owner) revert OnlyOwner();
+41 | |         _;
+42 | |     }
+   | |_____^
+   |
+help: wrap modifier logic to reduce code size
+   |
+39 ~     modifier onlyOwner() {
+40 +         _onlyOwner();
+41 +         _;
+42 +     }
+43 + 
+44 +     function _onlyOwner() internal {
+45 +         if (msg.sender != owner) revert OnlyOwner();
+46 +     }
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unwrapped-modifier-logic
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\CountryPoolLedgerV0.sol:4:8
+  |
+4 | import "./IERC20.sol";
+  |        ^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\CountryPoolLedgerV0.sol:14:29
+   |
+14 |     bytes2 public immutable pilotJurisdiction;
+   |                             ^^^^^^^^^^^^^^^^^ help: consider using: `PILOT_JURISDICTION`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+note[asm-keccak256]: use of inefficient hashing mechanism; consider using inline assembly
+   --> src\TravelTrustGovernor.sol:206:24
+    |
+206 |         bytes32 salt = keccak256(abi.encode(proposalId, uint256(0)));
+    |                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: https://book.getfoundry.sh/reference/forge/forge-lint#asm-keccak256
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\GuideIdentityStakingPool.t.sol:4:8
+  |
+4 | import "forge-std/Test.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\GuideIdentityStakingPool.t.sol:5:8
+  |
+5 | import "../src/GuideIdentityStakingPool.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\GuideIdentityStakingPool.t.sol:6:8
+  |
+6 | import "../src/MockERC20.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unwrapped-modifier-logic]: wrap modifier logic to reduce code size
+  --> src\CountryPoolLedgerV0.sol:27:5
+   |
+27 | /     modifier onlyOwner() {
+28 | |         if (msg.sender != owner) revert OnlyOwner();
+29 | |         _;
+30 | |     }
+   | |_____^
+   |
+help: wrap modifier logic to reduce code size
+   |
+27 ~     modifier onlyOwner() {
+28 +         _onlyOwner();
+29 +         _;
+30 +     }
+31 + 
+32 +     function _onlyOwner() internal {
+33 +         if (msg.sender != owner) revert OnlyOwner();
+34 +     }
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unwrapped-modifier-logic
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\CountryPoolLedgerV0.t.sol:4:8
+  |
+4 | import "forge-std/Test.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\CountryPoolLedgerV0.t.sol:5:8
+  |
+5 | import "../src/CountryPoolLedgerV0.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\Escrow.sol:4:8
+  |
+4 | import "./IERC20.sol";
+  |        ^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\InvestorDistributionClaim.t.sol:4:8
+  |
+4 | import "forge-std/Test.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\RegionVault.t.sol:6:8
+  |
+6 | import "../src/FeeRouter.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\RegionVault.t.sol:7:8
+  |
+7 | import "../src/IERC20.sol";
+  |        ^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\RegionVault.t.sol:8:8
+  |
+8 | import "../src/MockERC20.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\CountryPoolLedgerV0.t.sol:6:8
+  |
+6 | import "../src/IERC20.sol";
+  |        ^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\CountryPoolLedgerV0.t.sol:7:8
+  |
+7 | import "../src/MockERC20.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\ProviderIdentityStakingPool.sol:4:8
+  |
+4 | import "./IdentityStakingPool.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unwrapped-modifier-logic]: wrap modifier logic to reduce code size
+  --> src\FeeRouter.sol:59:5
+   |
+59 | /     modifier onlyOwner() {
+60 | |         if (msg.sender != owner) revert OnlyOwner();
+61 | |         _;
+62 | |     }
+   | |_____^
+   |
+help: wrap modifier logic to reduce code size
+   |
+59 ~     modifier onlyOwner() {
+60 +         _onlyOwner();
+61 +         _;
+62 +     }
+63 + 
+64 +     function _onlyOwner() internal {
+65 +         if (msg.sender != owner) revert OnlyOwner();
+66 +     }
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unwrapped-modifier-logic
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\IdentityStakingPool.sol:21:30
+   |
+21 |     address public immutable slashRouter;
+   |                              ^^^^^^^^^^^ help: consider using: `SLASH_ROUTER`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+note[unwrapped-modifier-logic]: wrap modifier logic to reduce code size
+  --> src\GovernanceTreasury.sol:44:5
+   |
+44 | /     modifier onlySpender() {
+45 | |         if (msg.sender != spender) revert OnlySpender();
+46 | |         _;
+47 | |     }
+   | |_____^
+   |
+help: wrap modifier logic to reduce code size
+   |
+44 ~     modifier onlySpender() {
+45 +         _onlySpender();
+46 +         _;
+47 +     }
+48 + 
+49 +     function _onlySpender() internal {
+50 +         if (msg.sender != spender) revert OnlySpender();
+51 +     }
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unwrapped-modifier-logic
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\InvestorDistributionClaim.t.sol:5:8
+  |
+5 | import "../src/InvestorDistributionClaim.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\InvestorDistributionClaim.t.sol:6:8
+  |
+6 | import "../src/MockERC20.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\GovernanceTimelock.sol:20:30
+   |
+20 |     uint256 public immutable delay;
+   |                              ^^^^^ help: consider using: `DELAY`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\RouterTreasuryGovernancePayload.t.sol:4:8
+  |
+4 | import "forge-std/Test.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\RouterTreasuryGovernancePayload.t.sol:5:8
+  |
+5 | import "../src/FeeRouter.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\RouterTreasuryGovernancePayload.t.sol:6:8
+  |
+6 | import "../src/GovernanceTreasury.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\RouterTreasuryGovernancePayload.t.sol:7:8
+  |
+7 | import "../src/ReserveVault.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\RouterTreasuryGovernancePayload.t.sol:8:8
+  |
+8 | import "../src/RouterTreasuryGovernancePayload.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\IdentityStakingPool.sol:23:30
+   |
+23 |     uint256 public immutable minIdentityStake;
+   |                              ^^^^^^^^^^^^^^^^ help: consider using: `MIN_IDENTITY_STAKE`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+  --> test\CountryPoolLedgerV0.t.sol:17:39
+   |
+17 |     bytes2 internal constant J_STAR = bytes2("DE");
+   |                                       ^^^^^^^^^^^^
+   |
+   = note: consider disabling this lint if you're certain the cast is safe
+           
+           // casting to 'bytes2' is safe because [explain why]
+           // forge-lint: disable-next-line(unsafe-typecast)
+           
+           
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unsafe-typecast
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\RegionDistributionClaim.sol:4:8
+  |
+4 | import "./IERC20.sol";
+  |        ^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\Deploy.s.sol:4:8
+  |
+4 | import "forge-std/Script.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\Deploy.s.sol:5:8
+  |
+5 | import "../src/EscrowFactory.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\Deploy.s.sol:6:8
+  |
+6 | import "../src/GuideIdentityStakingPool.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\Deploy.s.sol:7:8
+  |
+7 | import "../src/ProviderIdentityStakingPool.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\Deploy.s.sol:8:8
+  |
+8 | import "../src/Registry.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\Deploy.s.sol:9:8
+  |
+9 | import "../src/MockERC20.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+  --> script\Deploy.s.sol:10:8
+   |
+10 | import "../src/FeeRouter.sol";
+   |        ^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+  --> script\Deploy.s.sol:11:8
+   |
+11 | import "../src/RegionVault.sol";
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+  --> script\Deploy.s.sol:12:8
+   |
+12 | import "../src/InvestorDistributionClaim.sol";
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+  --> script\Deploy.s.sol:13:8
+   |
+13 | import "../src/RegionDistributionClaim.sol";
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+  --> script\Deploy.s.sol:14:8
+   |
+14 | import "../src/GovernanceTimelock.sol";
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+  --> script\Deploy.s.sol:15:8
+   |
+15 | import "../src/GovernanceTreasury.sol";
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+  --> script\Deploy.s.sol:16:8
+   |
+16 | import "../src/ReserveVault.sol";
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unwrapped-modifier-logic]: wrap modifier logic to reduce code size
+  --> src\RegionDistributionClaim.sol:31:5
+   |
+31 | /     modifier onlyOwner() {
+32 | |         if (msg.sender != owner) revert RegionOnlyOwner();
+33 | |         _;
+34 | |     }
+   | |_____^
+   |
+help: wrap modifier logic to reduce code size
+   |
+31 ~     modifier onlyOwner() {
+32 +         _onlyOwner();
+33 +         _;
+34 +     }
+35 + 
+36 +     function _onlyOwner() internal {
+37 +         if (msg.sender != owner) revert RegionOnlyOwner();
+38 +     }
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unwrapped-modifier-logic
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+  --> test\CountryPoolLedgerV0.t.sol:36:68
+   |
+36 |         emit CountryLedgerCredited(J_STAR, address(token), amount, bytes32("ref1"));
+   |                                                                    ^^^^^^^^^^^^^^^
+   |
+   = note: consider disabling this lint if you're certain the cast is safe
+           
+           // casting to 'bytes32' is safe because [explain why]
+           // forge-lint: disable-next-line(unsafe-typecast)
+           
+           
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unsafe-typecast
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\InvestorShareLockLedger.t.sol:4:8
+  |
+4 | import "forge-std/Test.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unwrapped-modifier-logic]: wrap modifier logic to reduce code size
+  --> src\GovernanceTimelock.sol:50:5
+   |
+50 | /     modifier onlyAdmin() {
+51 | |         if (msg.sender != admin) revert OnlyAdmin();
+52 | |         _;
+53 | |     }
+   | |_____^
+   |
+help: wrap modifier logic to reduce code size
+   |
+50 ~     modifier onlyAdmin() {
+51 +         _onlyAdmin();
+52 +         _;
+53 +     }
+54 + 
+55 +     function _onlyAdmin() internal {
+56 +         if (msg.sender != admin) revert OnlyAdmin();
+57 +     }
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unwrapped-modifier-logic
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\DeployFundStackUnderTimelock.s.sol:4:8
+  |
+4 | import "forge-std/Script.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\DeployFundStackUnderTimelock.s.sol:5:8
+  |
+5 | import "../src/EscrowFactory.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\DeployFundStackUnderTimelock.s.sol:6:8
+  |
+6 | import "../src/GuideIdentityStakingPool.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\DeployFundStackUnderTimelock.s.sol:7:8
+  |
+7 | import "../src/ProviderIdentityStakingPool.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+  --> test\CountryPoolLedgerV0.t.sol:37:46
+   |
+37 |         ledger.credit(J_STAR, token, amount, bytes32("ref1"));
+   |                                              ^^^^^^^^^^^^^^^
+   |
+   = note: consider disabling this lint if you're certain the cast is safe
+           
+           // casting to 'bytes32' is safe because [explain why]
+           // forge-lint: disable-next-line(unsafe-typecast)
+           
+           
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unsafe-typecast
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\SlashRouter.t.sol:4:8
+  |
+4 | import "forge-std/Test.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\SlashRouter.t.sol:5:8
+  |
+5 | import "../src/SlashRouter.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\SlashRouter.t.sol:6:8
+  |
+6 | import "../src/ReserveVault.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\SlashRouter.t.sol:7:8
+  |
+7 | import "../src/GuideIdentityStakingPool.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\SlashRouter.t.sol:8:8
+  |
+8 | import "../src/MockERC20.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[screaming-snake-case-const]: constants should use SCREAMING_SNAKE_CASE
+ --> src\GovernanceVotesToken.sol:8:28
+  |
+8 |     string public constant name = "TravelTrust Governance";
+  |                            ^^^^ help: consider using: `NAME`
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-const
+
+note[unwrapped-modifier-logic]: wrap modifier logic to reduce code size
+  --> src\GovernanceTimelock.sol:55:5
+   |
+55 | /     modifier onlyGovernor() {
+56 | |         if (msg.sender != governor) revert OnlyGovernor();
+57 | |         _;
+58 | |     }
+   | |_____^
+   |
+help: wrap modifier logic to reduce code size
+   |
+55 ~     modifier onlyGovernor() {
+56 +         _onlyGovernor();
+57 +         _;
+58 +     }
+59 + 
+60 +     function _onlyGovernor() internal {
+61 +         if (msg.sender != governor) revert OnlyGovernor();
+62 +     }
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unwrapped-modifier-logic
+
+note[unwrapped-modifier-logic]: wrap modifier logic to reduce code size
+  --> src\Escrow.sol:93:5
+   |
+93 | /     modifier onlyFactory() {
+94 | |         if (msg.sender != factory) revert OnlyFactory();
+95 | |         _;
+96 | |     }
+   | |_____^
+   |
+help: wrap modifier logic to reduce code size
+   |
+93 ~     modifier onlyFactory() {
+94 +         _onlyFactory();
+95 +         _;
+96 +     }
+97 + 
+98 +     function _onlyFactory() internal {
+99 +         if (msg.sender != factory) revert OnlyFactory();
+100+     }
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unwrapped-modifier-logic
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\InvestorShareLockLedger.t.sol:5:8
+  |
+5 | import "../src/InvestorShareLockLedger.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\RegionVault.sol:4:8
+  |
+4 | import "./IERC20.sol";
+  |        ^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\DeployFundStackUnderTimelock.s.sol:8:8
+  |
+8 | import "../src/Registry.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\DeployFundStackUnderTimelock.s.sol:9:8
+  |
+9 | import "../src/MockERC20.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+  --> script\DeployFundStackUnderTimelock.s.sol:10:8
+   |
+10 | import "../src/FeeRouter.sol";
+   |        ^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+  --> script\DeployFundStackUnderTimelock.s.sol:11:8
+   |
+11 | import "../src/RegionVault.sol";
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+  --> script\DeployFundStackUnderTimelock.s.sol:12:8
+   |
+12 | import "../src/InvestorDistributionClaim.sol";
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+  --> script\DeployFundStackUnderTimelock.s.sol:13:8
+   |
+13 | import "../src/RegionDistributionClaim.sol";
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+  --> script\DeployFundStackUnderTimelock.s.sol:14:8
+   |
+14 | import "../src/GovernanceTimelock.sol";
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+  --> script\DeployFundStackUnderTimelock.s.sol:15:8
+   |
+15 | import "../src/GovernanceTreasury.sol";
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+  --> script\DeployFundStackUnderTimelock.s.sol:16:8
+   |
+16 | import "../src/ReserveVault.sol";
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+  --> test\CountryPoolLedgerV0.t.sol:50:23
+   |
+50 |         ledger.credit(bytes2("FR"), token, 100, bytes32(0));
+   |                       ^^^^^^^^^^^^
+   |
+   = note: consider disabling this lint if you're certain the cast is safe
+           
+           // casting to 'bytes2' is safe because [explain why]
+           // forge-lint: disable-next-line(unsafe-typecast)
+           
+           
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unsafe-typecast
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+  --> test\CountryPoolLedgerV0.t.sol:80:43
+   |
+80 |         ledger.credit(J_STAR, token, 200, bytes32("a"));
+   |                                           ^^^^^^^^^^^^
+   |
+   = note: consider disabling this lint if you're certain the cast is safe
+           
+           // casting to 'bytes32' is safe because [explain why]
+           // forge-lint: disable-next-line(unsafe-typecast)
+           
+           
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unsafe-typecast
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+  --> test\CountryPoolLedgerV0.t.sol:81:43
+   |
+81 |         ledger.credit(J_STAR, token, 300, bytes32("b"));
+   |                                           ^^^^^^^^^^^^
+   |
+   = note: consider disabling this lint if you're certain the cast is safe
+           
+           // casting to 'bytes32' is safe because [explain why]
+           // forge-lint: disable-next-line(unsafe-typecast)
+           
+           
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unsafe-typecast
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\RegionDistributionClaim.t.sol:4:8
+  |
+4 | import "forge-std/Test.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\Escrow.t.sol:4:8
+  |
+4 | import "forge-std/Test.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\Escrow.t.sol:5:8
+  |
+5 | import "../src/Escrow.sol";
+  |        ^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\Escrow.t.sol:6:8
+  |
+6 | import "../src/EscrowFactory.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\Escrow.t.sol:7:8
+  |
+7 | import "../src/MockERC20.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[asm-keccak256]: use of inefficient hashing mechanism; consider using inline assembly
+  --> src\GovernanceTimelock.sol:73:16
+   |
+73 |         return keccak256(abi.encode(target, value, keccak256(data), salt));
+   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#asm-keccak256
+
+note[unwrapped-modifier-logic]: wrap modifier logic to reduce code size
+  --> src\RegionVault.sol:33:5
+   |
+33 | /     modifier onlyOwner() {
+34 | |         if (msg.sender != owner) revert OnlyOwner();
+35 | |         _;
+36 | |     }
+   | |_____^
+   |
+help: wrap modifier logic to reduce code size
+   |
+33 ~     modifier onlyOwner() {
+34 +         _onlyOwner();
+35 +         _;
+36 +     }
+37 + 
+38 +     function _onlyOwner() internal {
+39 +         if (msg.sender != owner) revert OnlyOwner();
+40 +     }
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unwrapped-modifier-logic
+
+note[screaming-snake-case-const]: constants should use SCREAMING_SNAKE_CASE
+ --> src\GovernanceVotesToken.sol:9:28
+  |
+9 |     string public constant symbol = "TTG";
+  |                            ^^^^^^ help: consider using: `SYMBOL`
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-const
+
+note[screaming-snake-case-const]: constants should use SCREAMING_SNAKE_CASE
+  --> src\GovernanceVotesToken.sol:10:27
+   |
+10 |     uint8 public constant decimals = 18;
+   |                           ^^^^^^^^ help: consider using: `DECIMALS`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-const
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\RegionDistributionClaim.t.sol:5:8
+  |
+5 | import "../src/RegionDistributionClaim.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\RegionDistributionClaim.t.sol:6:8
+  |
+6 | import "../src/MockERC20.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\TravelTrustGovernor.t.sol:4:8
+  |
+4 | import "forge-std/Test.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\TravelTrustGovernor.t.sol:5:8
+  |
+5 | import "../src/GovernanceVotesToken.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\TravelTrustGovernor.t.sol:6:8
+  |
+6 | import "../src/GovernanceTimelock.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\TravelTrustGovernor.t.sol:7:8
+  |
+7 | import "../src/TravelTrustGovernor.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+  --> src\GovernanceVotesToken.sol:38:52
+   |
+38 |         return _upperLookup(_checkpoints[account], uint32(blockNumber));
+   |                                                    ^^^^^^^^^^^^^^^^^^^
+   |
+   = note: consider disabling this lint if you're certain the cast is safe
+           
+           // casting to 'uint32' is safe because [explain why]
+           // forge-lint: disable-next-line(unsafe-typecast)
+           
+           
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unsafe-typecast
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+  --> src\GovernanceVotesToken.sol:43:54
+   |
+43 |         return _upperLookup(_totalSupplyCheckpoints, uint32(blockNumber));
+   |                                                      ^^^^^^^^^^^^^^^^^^^
+   |
+   = note: consider disabling this lint if you're certain the cast is safe
+           
+           // casting to 'uint32' is safe because [explain why]
+           // forge-lint: disable-next-line(unsafe-typecast)
+           
+           
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unsafe-typecast
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\SepoliaProposeMinimal.s.sol:4:8
+  |
+4 | import "forge-std/Script.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\SepoliaProposeMinimal.s.sol:5:8
+  |
+5 | import "../src/TravelTrustGovernor.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\CreateEscrowB407.s.sol:4:8
+  |
+4 | import "forge-std/Script.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\CreateEscrowB407.s.sol:5:8
+  |
+5 | import "../src/EscrowFactory.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\TravelTrustGovernor.t.sol:8:8
+  |
+8 | import "../src/FeeRouter.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\FeeRouter.t.sol:4:8
+  |
+4 | import "forge-std/Test.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\FeeRouter.t.sol:5:8
+  |
+5 | import "../src/FeeRouter.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test\FeeRouter.t.sol:6:8
+  |
+6 | import "../src/MockERC20.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\CreateEscrowB407.s.sol:6:8
+  |
+6 | import "../src/Escrow.sol";
+  |        ^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\SepoliaProposeTreasurySpend.s.sol:4:8
+  |
+4 | import "forge-std/Script.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\SepoliaProposeTreasurySpend.s.sol:5:8
+  |
+5 | import "../src/TravelTrustGovernor.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+  --> src\GovernanceVotesToken.sol:49:72
+   |
+49 |         _writeCheckpoint(_checkpoints[to], _latest(_checkpoints[to]) + uint224(amount));
+   |                                                                        ^^^^^^^^^^^^^^^
+   |
+   = note: consider disabling this lint if you're certain the cast is safe
+           
+           // casting to 'uint224' is safe because [explain why]
+           // forge-lint: disable-next-line(unsafe-typecast)
+           
+           
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unsafe-typecast
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+  --> src\GovernanceVotesToken.sol:50:86
+   |
+50 |         _writeCheckpoint(_totalSupplyCheckpoints, _latest(_totalSupplyCheckpoints) + uint224(amount));
+   |                                                                                      ^^^^^^^^^^^^^^^
+   |
+   = note: consider disabling this lint if you're certain the cast is safe
+           
+           // casting to 'uint224' is safe because [explain why]
+           // forge-lint: disable-next-line(unsafe-typecast)
+           
+           
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unsafe-typecast
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+  --> src\GovernanceVotesToken.sol:59:56
+   |
+59 |         _writeCheckpoint(_checkpoints[from], fromVal - uint224(amount));
+   |                                                        ^^^^^^^^^^^^^^^
+   |
+   = note: consider disabling this lint if you're certain the cast is safe
+           
+           // casting to 'uint224' is safe because [explain why]
+           // forge-lint: disable-next-line(unsafe-typecast)
+           
+           
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unsafe-typecast
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+  --> src\GovernanceVotesToken.sol:60:52
+   |
+60 |         _writeCheckpoint(_checkpoints[to], toVal + uint224(amount));
+   |                                                    ^^^^^^^^^^^^^^^
+   |
+   = note: consider disabling this lint if you're certain the cast is safe
+           
+           // casting to 'uint224' is safe because [explain why]
+           // forge-lint: disable-next-line(unsafe-typecast)
+           
+           
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unsafe-typecast
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\SlashRouter.sol:4:8
+  |
+4 | import "./IERC20.sol";
+  |        ^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[named-struct-fields]: prefer initializing structs with named fields
+  --> src\GovernanceVotesToken.sol:76:21
+   |
+76 |             ck.push(Checkpoint(blk, value));
+   |                     ^^^^^^^^^^^^^^^^^^^^^^ help: consider using named fields: `Checkpoint({ fromBlock: blk, value: value })`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#named-struct-fields
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\ReserveVault.sol:4:8
+  |
+4 | import "./IERC20.sol";
+  |        ^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[mixed-case-function]: function names should use mixedCase
+   --> test\TravelTrustGovernor.t.sol:147:14
+    |
+147 |     function _b431_propose_vote_queue()
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^ help: consider using: `_b431ProposeVoteQueue`
+    |
+    = help: https://book.getfoundry.sh/reference/forge/forge-lint#mixed-case-function
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\DeployGovernanceStack.s.sol:4:8
+  |
+4 | import "forge-std/Script.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\DeployGovernanceStack.s.sol:5:8
+  |
+5 | import "../src/GovernanceVotesToken.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\DeployGovernanceStack.s.sol:6:8
+  |
+6 | import "../src/GovernanceTimelock.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\DeployGovernanceStack.s.sol:7:8
+  |
+7 | import "../src/TravelTrustGovernor.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unwrapped-modifier-logic]: wrap modifier logic to reduce code size
+  --> src\Registry.sol:26:5
+   |
+26 | /     modifier onlyAuthority() {
+27 | |         if (msg.sender != authority) revert OnlyAuthority();
+28 | |         _;
+29 | |     }
+   | |_____^
+   |
+help: wrap modifier logic to reduce code size
+   |
+26 ~     modifier onlyAuthority() {
+27 +         _onlyAuthority();
+28 +         _;
+29 +     }
+30 + 
+31 +     function _onlyAuthority() internal {
+32 +         if (msg.sender != authority) revert OnlyAuthority();
+33 +     }
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unwrapped-modifier-logic
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\ReserveVault.sol:12:29
+   |
+12 |     IERC20 public immutable asset;
+   |                             ^^^^^ help: consider using: `ASSET`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\SlashRouter.sol:5:8
+  |
+5 | import "./ISlashRouter.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\SlashRouter.sol:14:29
+   |
+14 |     IERC20 public immutable token;
+   |                             ^^^^^ help: consider using: `TOKEN`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\SlashRouter.sol:15:30
+   |
+15 |     address public immutable reserveVault;
+   |                              ^^^^^^^^^^^^ help: consider using: `RESERVE_VAULT`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\DeployP51CountryLedger.s.sol:4:8
+  |
+4 | import "forge-std/Script.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script\DeployP51CountryLedger.s.sol:5:8
+  |
+5 | import "../src/CountryPoolLedgerV0.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\SlashRouter.sol:16:30
+   |
+16 |     address public immutable protocolTreasury;
+   |                              ^^^^^^^^^^^^^^^^ help: consider using: `PROTOCOL_TREASURY`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\SlashRouter.sol:17:30
+   |
+17 |     address public immutable sink;
+   |                              ^^^^ help: consider using: `SINK`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+note[mixed-case-function]: function names should use mixedCase
+   --> test\TravelTrustGovernor.t.sol:196:14
+    |
+196 |     function _b431_execute_and_assert_alignment(uint256 pid, bytes32 queuedOpId, B431SetRoutingExpect memory exp)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider using: `_b431ExecuteAndAssertAlignment`
+    |
+    = help: https://book.getfoundry.sh/reference/forge/forge-lint#mixed-case-function
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\RouterTreasuryGovernancePayload.sol:4:8
+  |
+4 | import "./FeeRouter.sol";
+  |        ^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\SlashRouter.sol:19:29
+   |
+19 |     uint16 public immutable slashToReserveBps;
+   |                             ^^^^^^^^^^^^^^^^^ help: consider using: `SLASH_TO_RESERVE_BPS`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\SlashRouter.sol:20:29
+   |
+20 |     uint16 public immutable slashToTreasuryBps;
+   |                             ^^^^^^^^^^^^^^^^^^ help: consider using: `SLASH_TO_TREASURY_BPS`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\SlashRouter.sol:21:29
+   |
+21 |     uint16 public immutable slashToSinkBps;
+   |                             ^^^^^^^^^^^^^^ help: consider using: `SLASH_TO_SINK_BPS`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\RouterTreasuryGovernancePayload.sol:5:8
+  |
+5 | import "./GovernanceTreasury.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\RouterTreasuryGovernancePayload.sol:6:8
+  |
+6 | import "./ReserveVault.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  --> src\ReserveVault.sol:13:30
+   |
+13 |     address public immutable timelock;
+   |                              ^^^^^^^^ help: consider using: `TIMELOCK`
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#screaming-snake-case-immutable
+
+warning[erc20-unchecked-transfer]: ERC20 'transfer' and 'transferFrom' calls should check the return value
+  --> test\TravelTrustGovernor.t.sol:33:9
+   |
+33 |         token.transfer(voter, 5_000_000e18);
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#erc20-unchecked-transfer
+
+note[unwrapped-modifier-logic]: wrap modifier logic to reduce code size
+  --> src\ReserveVault.sol:29:5
+   |
+29 | /     modifier onlyTimelock() {
+30 | |         if (msg.sender != timelock) revert OnlyTimelock();
+31 | |         _;
+32 | |     }
+   | |_____^
+   |
+help: wrap modifier logic to reduce code size
+   |
+29 ~     modifier onlyTimelock() {
+30 +         _onlyTimelock();
+31 +         _;
+32 +     }
+33 + 
+34 +     function _onlyTimelock() internal {
+35 +         if (msg.sender != timelock) revert OnlyTimelock();
+36 +     }
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unwrapped-modifier-logic
+
+verify-abi-forge: OK Escrow.json
+verify-abi-forge: OK EscrowFactory.json
+verify-abi-forge: OK FeeRouter.json
+verify-abi-forge: OK GovernanceTimelock.json
+verify-abi-forge: OK GovernanceTreasury.json
+verify-abi-forge: OK GovernanceVotesToken.json
+verify-abi-forge: OK GuideIdentityStakingPool.json
+verify-abi-forge: OK InvestorDistributionClaim.json
+verify-abi-forge: OK ProviderIdentityStakingPool.json
+verify-abi-forge: OK RegionVault.json
+verify-abi-forge: OK Registry.json
+verify-abi-forge: OK ReserveVault.json
+verify-abi-forge: OK SlashRouter.json
+verify-abi-forge: OK TravelTrustGovernor.json
+
+pre-release-automation: 机器步骤完成。
+须人工（不可替代）：缺口与待补-官方总表 P0、15 附录〇、53-收口-09-04-36-确认表、55 §八附续.9、08-4/08-2/evidence/Runbook。

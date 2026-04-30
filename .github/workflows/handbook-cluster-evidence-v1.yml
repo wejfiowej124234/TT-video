@@ -1,0 +1,52 @@
+# Union re-run of commands documented in docs/handbook/engineering/EVIDENCE-*-cluster-verified.md §V-1
+# Central script: scripts/gates/run-handbook-cluster-evidence-v1.sh (root: scripts/run-handbook-cluster-evidence-v1.sh)
+# Acceptance: script exit 0 + final TT_EVIDENCE_V1_SUMMARY: line grep-stable and aligned with each EVIDENCE-* ## V-1 (CONTRIBUTING + scripts/README + engineering/22 §3).
+name: Handbook cluster EVIDENCE V-1 smoke
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'docs/handbook/engineering/EVIDENCE-*-cluster-verified.md'
+      - 'scripts/gates/run-handbook-cluster-evidence-v1.sh'
+      - 'scripts/run-handbook-cluster-evidence-v1.sh'
+      - '.github/workflows/handbook-cluster-evidence-v1.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  evidence-v1-union:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: traveltrust
+          POSTGRES_PASSWORD: traveltrust
+          POSTGRES_DB: traveltrust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U traveltrust -d traveltrust"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      CARGO_INCREMENTAL: "0"
+      DATABASE_URL: postgres://traveltrust:traveltrust@127.0.0.1:5432/traveltrust
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: traveltrust-evidence-v1-${{ runner.os }}
+      - name: Run handbook cluster EVIDENCE V-1 union gate
+        run: bash scripts/gates/run-handbook-cluster-evidence-v1.sh

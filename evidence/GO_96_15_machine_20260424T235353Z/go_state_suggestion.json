@@ -1,0 +1,26 @@
+{
+  "schema_version": "1",
+  "kind": "traveltrust.go_state_suggestion.v1",
+  "release_verdict_suggestion": "SOFT_GO",
+  "release_verdict_allowed_values": [
+    "NO_GO",
+    "SOFT_GO"
+  ],
+  "policy": "tier_a_p0_minimal_binary_v1",
+  "attributions": [
+    {
+      "domain": "93",
+      "reason": "no regression report.json — orchestration-only SOFT_GO"
+    }
+  ],
+  "inputs": {
+    "had_regression_report": false,
+    "regression_release_gate": null,
+    "orchestration_run_id": "GO_96_15_machine_20260424T235353Z",
+    "tier_a_all_pass": true,
+    "tier_a_fail": false,
+    "tier_bc_all_pass": true,
+    "tier_bc_scope_manual_only": false,
+    "tier_bc_ignored_for_verdict": true
+  }
+}

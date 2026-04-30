@@ -1,0 +1,35 @@
+{
+  "batch": "GO_96_16_smoke_ui_release",
+  "docs_spec_touched": false,
+  "when": "2026-04-25",
+  "one_click": {
+    "cmd": "cd frontend && npm run smoke:ui-release",
+    "exit": 0,
+    "steps": [
+      "npm run build",
+      "vitest run lib/adminFetchDisplay.test.ts app/governance/distribution-accruals/distributionAccrualsPages.contract.test.ts (9 tests)",
+      "node scripts/ui-release-request-smoke.mjs --with-start → next start -p 3012, GET 关键路径, taskkill/SIGTERM 子进程"
+    ],
+    "artifact": "frontend/evidence/http-smoke-ui-release-last.json"
+  },
+  "fail_or_accepted_risk": [
+    {
+      "id": "playwright_chromium_e2e",
+      "status": "FAIL",
+      "trace": "93",
+      "detail": "`npm run e2e` / chromium 仍依赖 setup-meta-chain → GET :8080/meta；不在 smoke:ui-release 内。需 API 或 PLAYWRIGHT_FULL_STACK=1。"
+    },
+    {
+      "id": "r002_full_local_ci_merge_orchestration",
+      "status": "FAIL",
+      "trace": "R-002; 96",
+      "detail": "未在本脚本中执行 run_local_ci.sh 全链路；独立 prereport 见 frontend/evidence/report-r002-snippet-96_16.json 与 evidence/GO_r002_prereport_96_16/。"
+    },
+    {
+      "id": "lighthouse_in_smoke",
+      "status": "ACCEPTED_RISK",
+      "trace": "96-13; 93",
+      "detail": "smoke:ui-release 不含 Lighthouse；另行 npm run lighthouse:ci（须已有 Next 监听）。"
+    }
+  ]
+}

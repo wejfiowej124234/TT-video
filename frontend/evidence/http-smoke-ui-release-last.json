@@ -1,0 +1,75 @@
+{
+  "base": "http://127.0.0.1:3012",
+  "withStart": true,
+  "at": "2026-04-25T02:40:19.977Z",
+  "rows": [
+    {
+      "path": "/",
+      "status": 200,
+      "allowed": [
+        200
+      ]
+    },
+    {
+      "path": "/governance",
+      "status": 200,
+      "allowed": [
+        200
+      ]
+    },
+    {
+      "path": "/governance/fee-routes",
+      "status": 200,
+      "allowed": [
+        200
+      ]
+    },
+    {
+      "path": "/auth/login",
+      "status": 200,
+      "allowed": [
+        200
+      ]
+    },
+    {
+      "path": "/community",
+      "status": 200,
+      "allowed": [
+        200
+      ]
+    },
+    {
+      "path": "/did-rank",
+      "status": 200,
+      "allowed": [
+        200
+      ]
+    },
+    {
+      "path": "/terms/community-guidelines",
+      "status": 200,
+      "allowed": [
+        200
+      ]
+    },
+    {
+      "path": "/guide/register",
+      "status": 200,
+      "allowed": [
+        200
+      ]
+    },
+    {
+      "path": "/admin",
+      "status": 307,
+      "allowed": [
+        200,
+        301,
+        302,
+        303,
+        307,
+        308
+      ]
+    }
+  ]
+}

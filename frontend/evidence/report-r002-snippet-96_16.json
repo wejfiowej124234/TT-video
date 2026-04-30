@@ -1,0 +1,15 @@
+{
+  "source": "evidence/GO_r002_prereport_96_16/r002_iss007_prereport/report.json",
+  "validate_regression_report": {
+    "cmd": "python scripts/validate-regression-report.py evidence/GO_r002_prereport_96_16/r002_iss007_prereport/report.json",
+    "exit": 0,
+    "stdout_tail": "OK: ... release_gate=PARTIAL_GO cases=43"
+  },
+  "snippet": {
+    "schema_version": "1",
+    "release_gate": "PARTIAL_GO",
+    "cases_count": 43,
+    "case0": { "id": "D-IDX-001", "status": "NOT_RUN" },
+    "note": "Anchors NOT_RUN when DATABASE_URL unset (gen-r002-iss007-prereport.py); R-002 schema validates."
+  }
+}

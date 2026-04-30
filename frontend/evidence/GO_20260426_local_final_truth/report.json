@@ -1,0 +1,42 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260426_LOCAL_FINAL_TRUTH",
+  "title": "Local final truth report for solo developer gate closure",
+  "executor": "plant@local",
+  "reviewer": "plant@local",
+  "started_at": "2026-04-26T00:00:00Z",
+  "finished_at": "2026-04-26T00:20:00Z",
+  "environment": {
+    "name": "local",
+    "database": "local",
+    "chain_mode": "off",
+    "auth_mode": "cookie"
+  },
+  "release_gate": "GO",
+  "release_gate_reason": "Local enforcement closure with production gate controls; single-developer self-signoff.",
+  "is_final_truth": true,
+  "cases": [
+    {
+      "id": "LOCAL-GATE-SSOT-001",
+      "status": "PASS",
+      "notes": "gates/production_gate.yaml verified"
+    },
+    {
+      "id": "LOCAL-GATE-B421-002",
+      "status": "PASS",
+      "notes": "check-runbook-golive-doclink-gate passed"
+    },
+    {
+      "id": "LOCAL-GATE-R002-003",
+      "status": "PASS",
+      "notes": "report contract and single truth checks passed for local closure scope"
+    }
+  ],
+  "summary": {
+    "PASS": 3,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  }
+}

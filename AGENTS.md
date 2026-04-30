@@ -12,6 +12,12 @@ Work is ordered in **three phases**. **Finish what the current phase means befor
 
 **Do not** present **① or ②** results as **③** unless the user explicitly asks to verify **③** in this session.
 
+### Solo maintainer (one person)
+
+If you are the **only** maintainer, treat **Owner** in checklists as **yourself**; **four-gate `pd-*` alignment** means **you** keep **08 §3.1c**, **98 §2.1**, **SPEC-MIGRATION-STATUS**, and **96-Index** **mutually consistent** before a spec-deletion PR. Same **SSOT** rules apply (handbook does **not** replace **04/93/14/07** in `docs/spec/`). See **[docs/solo-dev-rhythm.md](docs/solo-dev-rhythm.md)** (especially **§7**).
+
+**Pre-release development (not publicly shipped):** Treat heavy **PR / full enterprise-audit matrices / release-grade production gates** as **tighten before repo freeze or public release**, not daily mandatory bars. Readable SSOT for that carve-out: **[docs/runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md §0](docs/runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md)** (with **[CONTRIBUTING](CONTRIBUTING.md)** and **[solo-dev-rhythm §6.5](docs/solo-dev-rhythm.md)**). The **spec-deletion program chain** (98 / STATUS / 08 / 96-Index) is **not** waived.
+
 **Human SSOT:** root [README.md](README.md) «工程规划方向», [docs/runbook/TT-9618-onboarding-local-testnet.md](docs/runbook/TT-9618-onboarding-local-testnet.md), [go-live-checklist · GO Decision](docs/go-live-checklist.md#go-decision-entry-point). **Spec index read-before** (same discipline): [docs/spec/00-文档索引.md](docs/spec/00-文档索引.md) — **planning direction** row «**全仓库规划方向（本地/测试网 → 主网真链）**»; **ADR (Why)** and **handbook engineering Wave/phase vocabulary** rows; **handbook** short rows (**00** master / **L0** README / **`corpus/`** / **spec boundary**); **`handbook/engineering*` document version matrix boundary** (only **`00–50`** main-sequence **`NN-*.md`** + **`engineering/README`** + **`engineering/adr/README`**; **`EVIDENCE-*` / `_TEMPLATE`** not listed row-by-row) in the lead-in before **§文档版本与最后更新** on the same page; **programmer handbook entry** [docs/handbook/README.md](docs/handbook/README.md). **`docs/handbook/engineering/EVIDENCE-*-cluster-verified.md`:** run **`bash scripts/check-handbook-engineering-content.sh`** (failure code **`HBOOK-ENG-EVIDENCE`**); template **[22 §2](docs/handbook/engineering/22-横切-簇级verified证据模板.md#vtpl-2-naming)**; see **[CONTRIBUTING](CONTRIBUTING.md)** (same gate as the Chinese summary below).
 
 **Verified cluster EVIDENCE §V-1 (union):** for changes to **`EVIDENCE-*-cluster-verified.md` §V-1** commands, **`scripts/run-handbook-cluster-evidence-v1.sh`** / **`scripts/gates/run-handbook-cluster-evidence-v1.sh`**, or **`.github/workflows/handbook-cluster-evidence-v1.yml`**, treat **`bash scripts/run-handbook-cluster-evidence-v1.sh` exit 0** and a **stable, greppable** final **`TT_EVIDENCE_V1_SUMMARY:`** line as the **only acceptance entry** for that slice; union steps must stay **semantically aligned** with each file’s **`## V-1`** — otherwise the work is **not done**. See **[CONTRIBUTING](CONTRIBUTING.md)** (pre-PR), **[scripts/README.md](scripts/README.md)**, **[engineering/22 §3](docs/handbook/engineering/22-横切-簇级verified证据模板.md#vtpl-3-v1)** (complements **`check-handbook-engineering-content.sh`** / **`HBOOK-ENG-EVIDENCE`**).
@@ -31,6 +37,10 @@ Work is ordered in **three phases**. **Finish what the current phase means befor
 ## 中文摘要（与上表同源）
 
 **① 本地 → ② 测试网 → ③ 公网/生产**；**须顺序完成当前阶可验证目标，再进入下一阶**；**禁止跳阶**；**禁止**用 **①②** 冒充 **③**。读仓库内**任意** `docs/` 文档做方案或汇报时，仍须遵守本阶次；单篇 spec 可不重复写三阶全文，但**进度与「已闭/GO」结论必须写明落在哪一阶**。
+
+**单维护者**：条文 **Owner**、**四门** `pd-*` 对拍 = **本人自检**（与 **[docs/solo-dev-rhythm.md](docs/solo-dev-rhythm.md)** **§7** 同读）；**不**降低 **spec** 契约真源与删径门禁的技术含义。
+
+**未发布开发期**：**PR**、完整企业审计矩阵、发版级 **production gate** **非每日必达** 的分寸见 **[TT — spec→handbook 全量替代清单 §0](docs/runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md)**；**删 spec**、**路径依赖 registry** 等程序**不因此放宽**。
 
 **`docs/handbook/` 净写树**：「目录干不干净」、**英文文件名**能否改、属于 **L0～L3** 哪一级，以 **[手册 00 §2.1.0](docs/handbook/00-手册总览与编制规范.md#hb-00-doc-cleanliness)**（行业 / 企业级 / 生产级口径）、**[§2.1.3](docs/handbook/00-手册总览与编制规范.md#hb-00-naming-latin-tiers)** 为准；与上文英文段 **Handbook tree hygiene…** 同源。
 

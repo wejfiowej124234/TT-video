@@ -1,0 +1,15 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/v1/admin/users?limit=5",
+    "headers": {}
+  },
+  "response": {
+    "status": 401,
+    "body": {
+      "error": "unauthorized",
+      "message": "unauthorized",
+      "detail": "需登录：请提供 X-User-Id 或 Authorization"
+    }
+  }
+}

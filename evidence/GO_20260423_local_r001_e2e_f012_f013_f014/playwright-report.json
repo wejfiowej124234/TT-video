@@ -1,0 +1,427 @@
+{
+  "config": {
+    "configFile": "D:\\Wbe3-TravelTrust\\frontend\\playwright.config.ts",
+    "rootDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "setup-meta-chain",
+        "name": "setup-meta-chain",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/setup/meta-chain-contracts.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-auth-chromium",
+        "name": "api-auth-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/auth-login-logout-me.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-b-orders-chromium",
+        "name": "api-b-orders-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/orders-b-domain-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-itin-feed-chromium",
+        "name": "api-itin-feed-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f012-f013-f014-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-d-com-015-017-chromium",
+        "name": "api-d-com-015-017-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f015-f016-f017-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-d-com-018-020-chromium",
+        "name": "api-d-com-018-020-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f018-f019-f020-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-mkt-guides-021-023-chromium",
+        "name": "api-mkt-guides-021-023-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f021-f022-f023-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-b-gde-dsp-msg-024-026-chromium",
+        "name": "api-b-gde-dsp-msg-024-026-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f024-f025-f026-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-f027-f028-f033-chromium",
+        "name": "api-f027-f028-f033-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f027-f028-f033-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-f029-f030-f031-chromium",
+        "name": "api-f029-f030-f031-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f029-f030-f031-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-f007-f010-f032-chromium",
+        "name": "api-f007-f010-f032-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f007-f010-f032-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [
+          "**/setup/**"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-sepolia",
+        "name": "chromium-sepolia",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [
+          "**/setup/**"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 1,
+    "webServer": {
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File ../scripts/dev/start-api-for-playwright.ps1",
+      "url": "http://127.0.0.1:8080/health",
+      "reuseExistingServer": true,
+      "timeout": 420000
+    }
+  },
+  "suites": [
+    {
+      "title": "f012-f013-f014-request.spec.ts",
+      "file": "f012-f013-f014-request.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "§8.2 E2E F-012 / F-013 — itineraries + confirm-final-plan",
+          "file": "f012-f013-f014-request.spec.ts",
+          "line": 22,
+          "column": 15,
+          "specs": [
+            {
+              "title": "F-012 · POST /api/v1/itineraries creates draft + order_id",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api-itin-feed-chromium",
+                  "projectName": "api-itin-feed-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 516,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-23T12:40:18.587Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "de218c6e153391c2e26b-7add854fe82ca77a80a8",
+              "file": "f012-f013-f014-request.spec.ts",
+              "line": 28,
+              "column": 7
+            },
+            {
+              "title": "F-013 · POST …/confirm-final-plan returns snapshot_hash",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api-itin-feed-chromium",
+                  "projectName": "api-itin-feed-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-23T12:40:19.119Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "de218c6e153391c2e26b-f99e849af9e2ec153905",
+              "file": "f012-f013-f014-request.spec.ts",
+              "line": 73,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "§8.2 E2E F-014 — community feed lists created post",
+          "file": "f012-f013-f014-request.spec.ts",
+          "line": 93,
+          "column": 6,
+          "specs": [
+            {
+              "title": "F-014 · POST post then GET feed includes id",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api-itin-feed-chromium",
+                  "projectName": "api-itin-feed-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 514,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-23T12:40:19.146Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "de218c6e153391c2e26b-4425ef148d0ff517d0a7",
+              "file": "f012-f013-f014-request.spec.ts",
+              "line": 94,
+              "column": 7
+            },
+            {
+              "title": "F-014 · HTTP follow then follower GET feed mode=follow includes author post",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api-itin-feed-chromium",
+                  "projectName": "api-itin-feed-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1093,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-23T12:40:19.668Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "de218c6e153391c2e26b-e81eb07362e5a6c9c422",
+              "file": "f012-f013-f014-request.spec.ts",
+              "line": 134,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-04-23T12:40:17.757Z",
+    "duration": 3033.7160000000003,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

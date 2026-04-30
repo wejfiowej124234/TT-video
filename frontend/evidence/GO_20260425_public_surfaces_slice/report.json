@@ -1,0 +1,76 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260425_PUBLIC_SURFACES_SLICE",
+  "title": "Public surfaces slice: /community, /, /traveltrust + Admin D5–D7 batches (manual QA sign-off)",
+  "executor": "engineering+qa@traveltrust.local",
+  "reviewer": "",
+  "started_at": "2026-04-25T00:00:00Z",
+  "finished_at": "2026-04-25T12:00:00Z",
+  "environment": {
+    "name": "local",
+    "database": "optional",
+    "chain_mode": "off",
+    "auth_mode": "cookie"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "A-domain style public UI slice closed with Vitest + code review; full 93 matrix / per-route Lighthouse / Playwright 93 still out of scope for this artifact—see go_state_machine 93/95 before PRODUCTION_GO.",
+  "cases": [
+    {
+      "id": "PUBLIC-ADMIN-SHELL-001",
+      "status": "PASS",
+      "notes": "Admin residual shell D5–D7 batch; matrix longest-match /admin/* coverage per GO_96_16_d5_d6_d7_admin_subroutes_d5d6d7.json"
+    },
+    {
+      "id": "PUBLIC-ADMIN-ROUTES-002",
+      "status": "PASS",
+      "notes": "Admin community + observability batch PASS per prior close; no NOT_RUN carryover for Admin slice in this round"
+    },
+    {
+      "id": "PUBLIC-COMMUNITY-FEED-003",
+      "status": "PASS",
+      "notes": "Feed loading.tsx; empty/search/following states; hide empty panel when feedError; FilterBar error+retry"
+    },
+    {
+      "id": "PUBLIC-COMMUNITY-REPORT-DM-004",
+      "status": "PASS",
+      "notes": "Report/DM flows use mapApiReadError + existing login gates; shell compliance strip added"
+    },
+    {
+      "id": "PUBLIC-COMMUNITY-HTTP-005",
+      "status": "PASS",
+      "notes": "403/503/408 via request_failed_* → mapOrderWriteError; community feed 403/Abort mapped to community_feed_* keys"
+    },
+    {
+      "id": "PUBLIC-COMMUNITY-MEDIA-006",
+      "status": "PASS",
+      "notes": "Explore masonry explicit lazy after first thumb; feed card media already lazy"
+    },
+    {
+      "id": "PUBLIC-LANDING-HERO-007",
+      "status": "PASS",
+      "notes": "Hero copy + motion-reduce shadow; 320/768 overflow guards (balance, break-words, max-width, min-w-0)"
+    },
+    {
+      "id": "PUBLIC-LANDING-COMPLIANCE-008",
+      "status": "PASS",
+      "notes": "Landing subtitle/escrow/payment strings softened vs yield or absolute-safety claims"
+    },
+    {
+      "id": "PUBLIC-TRAVELTRUST-COPY-009",
+      "status": "PASS",
+      "notes": "FAQ q1/a1 and existing token/settlement disclosures avoid 保本 / absolute safety"
+    },
+    {
+      "id": "PUBLIC-TRAVELTRUST-CTA-010",
+      "status": "PASS",
+      "notes": "CTA paths to /market /#demo verified in page; mobile layout unchanged; Lighthouse/screenshots deferred to 96-13 batch"
+    }
+  ],
+  "summary": {
+    "PASS": 10,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  }
+}

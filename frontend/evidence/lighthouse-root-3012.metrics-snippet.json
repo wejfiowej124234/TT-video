@@ -1,0 +1,31 @@
+{
+  "requestedUrl": "http://127.0.0.1:3012/",
+  "fetchTime": "2026-04-25T02:26:20.450Z",
+  "lighthouseVersion": "12.8.2",
+  "categories": {
+    "performance": 0.98,
+    "accessibility": 0.98
+  },
+  "metrics": {
+    "serverResponseTime": {
+      "id": "server-response-time",
+      "score": 6.358,
+      "display": "Root document took 10 ms"
+    },
+    "largestContentfulPaint": {
+      "id": "largest-contentful-paint",
+      "score": 1097.6533,
+      "display": "1.1 s"
+    },
+    "cumulativeLayoutShift": {
+      "id": "cumulative-layout-shift",
+      "score": 0,
+      "display": "0"
+    },
+    "firstContentfulPaint": {
+      "id": "first-contentful-paint",
+      "score": 947.6533,
+      "display": "0.9 s"
+    }
+  }
+}

@@ -1,0 +1,54 @@
+# Source: Cursor terminal 631839.txt — 2026-04-26 run-production-gate-local.sh (PYTHON_BIN=python PLAYWRIGHT_E2E_STABILITY=1)
+# Chromium: 51 failed, 319 passed (39.2m)
+
+e2e/93-matrix-path-f1-f4.spec.ts:55:7 › 93-matrix · A-REG-001 /auth/register UI (F1 register branch) › 注册页提交 → 跳转登录 → 可进 /market
+e2e/93-matrix-path-p1-remediation.spec.ts:87:7 › 93-matrix · P1 governance vote UI (C-GOV-004) › 登录态种子提案：赞成可提交且无 alert（API 模式）
+e2e/93-matrix-path-p1-remediation.spec.ts:202:7 › 93-matrix · P1 admin finance hub slice (D-ADM-002 extension) › 信任增长、对拍、差异摘要、财务枢纽、RegionVault
+e2e/auth-register-login-market-chain.spec.ts:60:7 › auth chain: register → login → /market (network bodies) › POST /auth/*、GET /me、GET discover/orders 与同一 user_id 对齐
+e2e/b463-browser-reviews-contract.spec.ts:131:7 › B-463 · browser reviews + reviewJsonContractClient › 表单提交 → 列表展示 → 成功体 weight_breakdown（post_review 消费） @e2e-chain-off-mock-pay
+e2e/b464-guide-order-review-journey.spec.ts:56:7 › B-464 · guide order journey (accept · status · review visible) › 向导 UI 接单 → 状态可见 → 完成后被评价在详情可见 @e2e-chain-off-mock-pay
+e2e/b465-bilateral-review-ui-e2e.spec.ts:64:7 › B-465 · bilateral review (guide UI + tourist UI + guide sees) › 旅行者 /rate 表单提交后向导 /escrow 即时可见 @e2e-chain-off-mock-pay
+e2e/b466-browser-chain-off-pay-complete.spec.ts:68:7 › B-466 · browser chain-off pay + confirm completion (no REST for those steps) › 旅行者 /pay 模拟入金 + 向导 /escrow 链下确认完成 @e2e-chain-off-mock-pay
+e2e/b467-full-ui-order-journey.spec.ts:74:7 › B-467 · full UI journey (create on /orders/new → pay → complete → review) › 建单→接单→模拟入金→确认完成→评价→向导可见 @e2e-chain-off-mock-pay
+e2e/b468-market-discovery-full-ui-journey.spec.ts:104:7 › B-468 · market discovery → book modal → full UI journey (extends B-467) › /market 预订 CTA → 建单→履约→评价 闭环 @e2e-chain-off-mock-pay
+e2e/b469-guides-drawer-booking-convergence.spec.ts:110:7 › B-469 · /guides/[id] & GuideDetailDrawer → BookGuideModal → orders/new (B-468 parity) › GuideDetailDrawer → 预约 → 建单（与 B-468 同源弹层与 query）
+e2e/community-me-data-state.spec.ts:15:7 › community/me · DataState audit (P1) › 访客：鉴权闸 invalid 暴露 data-tt
+e2e/community-me-data-state.spec.ts:23:7 › community/me · DataState audit (P1) › 举报列表访客：鉴权闸 invalid 暴露 data-tt
+e2e/community-me-data-state.spec.ts:32:7 › community/me · DataState audit (P1) › 访客：社区帖子抽屉深链展示 IA scope 徽章（非市场目录）
+e2e/community-me-data-state.spec.ts:53:7 › community/me · DataState audit (P1) › 举报详情：非法 id → invalid 暴露 data-tt
+e2e/community-me-data-state.spec.ts:71:7 › community/me · DataState audit (P1) › 已登录：拦截 following API → 社交统计条 error 暴露 data-tt
+e2e/community-me-data-state.spec.ts:91:7 › community/me · DataState audit (P1) › 已登录：likes-received 契约畸形 → 社交统计条 success + 部分提示 + 获赞为 —
+e2e/community-me-data-state.spec.ts:126:7 › community/me · DataState audit (P1) › 已登录：`tab=community_posts` 深链 + API 发帖 → 抽屉橱窗含正文
+e2e/core-path.spec.ts:40:7 › 核心路径 Landing → Market → Escrow Detail › 整条路径：Landing → Market → Escrow Detail
+e2e/f024-f025-f026-request.spec.ts:255:7 › §8.2 F-024/025/026 — guides stake list, disputes, order messages › F-025 · B-DSP-003 · seed arbitrator POST …/disputes/:id/resolve → resolved (PG)
+e2e/f029-f030-f031-request.spec.ts:54:5 › F-029 · GET internal indexer-status returns ok with indexer block
+e2e/itinerary-52.spec.ts:24:7 › 52 行程与金额展示 › Landing Hero 自由市场进入 /market（25→29） ───
+e2e/market-d8.spec.ts:74:7 › 自由市场子站 94 › 商家子站列表与橱窗详情可访问 ───────────────────────────
+e2e/market-d8.spec.ts:93:7 › 自由市场子站 94 › 商家子站「橱窗工作台」打开创作台弹窗且不离开 /market/provider ──
+e2e/market-d8.spec.ts:105:7 › 自由市场子站 94 › 旅行收购子站「收购工作台」打开收购创作台且不离开 /market/acquisition
+e2e/market-d8.spec.ts:149:7 › 自由市场子站 94 › 旅行收购子站列表与详情可访问 ──────────────────────────
+e2e/market-deep-link.spec.ts:10:7 › Market deep link (orderId / guideId) › guideId opens guide detail drawer
+e2e/market-deep-link.spec.ts:28:7 › Market deep link (orderId / guideId) › closing guide drawer removes guideId from URL
+e2e/p01-login-market-auth.spec.ts:14:7 › P01 login → market header auth › 登录后进入 market 顶栏显示用户菜单
+e2e/p02-tourist-order-create-list.spec.ts:17:7 › P02 create order + list › 登录后从 /orders/new 创建订单，/orders 列表出现该单
+e2e/p03-tourist-guide-accept.spec.ts:44:7 › P03 guide accept (cross-account) › 向导接单后旅行者与向导侧订单状态一致，会话不串
+e2e/p04-bilateral-confirm.spec.ts:36:7 › P04 bilateral confirm › 仅一方确认时 sub_status 仍为 pending_bilateral；双方确认后一致为已确认·待付款
+e2e/section10-5-login-community-feed.spec.ts:15:7 › §10.5 minimal E2E: login → community Feed › 注册后登录进入社区 Feed 主区可见
+e2e/smoke-community.spec.ts:101:5 › 社区我的页可访问 ──────────────────────────────────────
+e2e/smoke-community.spec.ts:107:5 › 旧收藏路由重定向到社区我的页（带 tab 深链） ──────────────────────
+e2e/smoke-community.spec.ts:114:5 › 旧赞过路由重定向到社区我的页（tab 与 NEXT_PUBLIC_COMMUNITY_ME_LIKES_LIST 对齐）
+e2e/smoke-community.spec.ts:123:5 › 旧社区帖子路由重定向到社区我的页（带 tab 深链） ────────────────────
+e2e/smoke-community.spec.ts:130:5 › 社区我的页：`tab=community_posts` IA 别名可直达 ──────────
+e2e/smoke-community.spec.ts:188:5 › 社区举报工单详情可访问（未登录提示） ────────────────────────────
+e2e/smoke.spec.ts:59:5 › 社区话题聚合页可访问 ───────────────────────────────────────────────
+e2e/smoke.spec.ts:103:5 › 社区我的页可访问 ────────────────────────────────────────────────
+e2e/smoke.spec.ts:115:5 › 社区我的页可访问（收藏已并入弹层，旧 /collects 重定向） ───────────────────────
+e2e/smoke.spec.ts:122:5 › 社区我的页可访问（赞过已并入弹层，旧 /likes 重定向） ──────────────────────────
+e2e/smoke.spec.ts:131:5 › 社区我的页可访问（社区帖子旧 /posts 重定向） ──────────────────────────────
+e2e/smoke.spec.ts:138:5 › 社区我的页可访问（`tab=community_posts` IA 别名，不 302） ─────────────
+e2e/smoke.spec.ts:145:5 › 社区我的举报列表页可访问 ────────────────────────────────────────────
+e2e/smoke.spec.ts:185:5 › 全局应用 404 壳可观测（data-tt-not-found） ────────────────────────
+e2e/smoke.spec.ts:300:5 › 我的页可访问（未登录回登录或已登录留个人中心） ─────────────────────────────────
+e2e/smoke.spec.ts:524:5 › 修改密码页可访问 ────────────────────────────────────────────────
+e2e/smoke.spec.ts:627:5 › 社区举报工单详情可访问（未登录提示） ──────────────────────────────────────
+e2e/smoke.spec.ts:1063:7 › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 订单详情页可访问（占位 id）

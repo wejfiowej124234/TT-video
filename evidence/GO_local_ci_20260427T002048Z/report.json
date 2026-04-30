@@ -1,0 +1,1324 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_local_ci_20260427T002048Z_r002_iss007_prereport",
+  "title": "R-002 prereport · ISS-007 narrow slice (43× matrix_93 ↔ §8.2 F rows)",
+  "executor": "scripts/gen-r002-iss007-prereport.py",
+  "started_at": "2026-04-27T00:20:52Z",
+  "finished_at": "2026-04-27T00:20:52Z",
+  "environment": {
+    "name": "local",
+    "database": "disabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "ISS-007 prereport shell: anchors NOT_RUN (no DATABASE_URL or skipped); full 93 matrix + CI e2e still required for ISS-007 close.",
+  "iss007_narrow_slice": {
+    "scope_note": "ISS-007 main line (staging full-matrix report.json + CI-wide closure) remains open; this artifact binds forty-three 93 anchors (8.2 F rows) to matrix_93 + Playwright request specs.",
+    "f_rows_8_2": [
+      "F-029",
+      "F-025",
+      "F-031",
+      "F-030",
+      "F-010",
+      "F-032",
+      "F-033",
+      "F-009",
+      "F-025",
+      "F-014",
+      "F-008",
+      "F-012",
+      "F-028",
+      "F-011",
+      "F-013",
+      "F-026",
+      "F-007",
+      "F-015",
+      "F-027",
+      "F-016",
+      "F-017",
+      "F-018",
+      "F-019",
+      "F-020",
+      "F-021",
+      "F-022",
+      "F-023",
+      "F-024",
+      "F-021",
+      "F-023",
+      "F-025",
+      "F-022",
+      "F-021",
+      "F-010",
+      "F-022",
+      "F-025",
+      "F-020",
+      "F-029",
+      "F-026",
+      "F-033",
+      "F-029",
+      "F-012",
+      "F-014"
+    ],
+    "anchors_93": [
+      "D-IDX-001",
+      "B-DSP-003",
+      "D-COM-011",
+      "D-ADM-003",
+      "B-ESC-001",
+      "B-TGR-001",
+      "D-ITN-002",
+      "B-MKT-002",
+      "B-DSP-001",
+      "D-COM-001",
+      "B-ORD-004",
+      "D-ITN-001",
+      "B-IDM-001",
+      "B-ORD-006",
+      "B-ORD-005",
+      "B-MSG-002",
+      "A-AVA-001",
+      "D-COM-002",
+      "B-ESC-003",
+      "D-COM-003",
+      "D-COM-008",
+      "D-COM-010",
+      "D-COM-009",
+      "B-MKT-004",
+      "B-MKT-007",
+      "B-MKT-008",
+      "B-GDE-001",
+      "B-GDE-003",
+      "B-MKT-005",
+      "B-GDE-002",
+      "B-DSP-002",
+      "B-MKT-006",
+      "B-MKT-009",
+      "B-ESC-002",
+      "B-MKT-010",
+      "B-TRN-003",
+      "B-MKT-013",
+      "B-ESC-004",
+      "B-MSG-002C",
+      "D-ITN-003",
+      "A-ENV-001",
+      "D-ITN-001B",
+      "D-COM-001C"
+    ]
+  },
+  "cases": [
+    {
+      "id": "D-IDX-001",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-IDX-001",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-IDX-001/notes.md",
+      "f_row_8_2": "F-029",
+      "matrix_93_cargo_filter": "matrix_93_d_idx_001b_f029_get_internal_indexer_status_ok_shape_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f029-f030-f031-request.spec.ts",
+      "e2e_test_title": "F-029 · GET internal indexer-status returns ok with indexer block"
+    },
+    {
+      "id": "B-DSP-003",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-DSP-003",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-DSP-003/notes.md",
+      "f_row_8_2": "F-025",
+      "matrix_93_cargo_filter": "matrix_93_b_dsp_003b_f025_post_dispute_resolve_then_pg_status_resolved_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f024-f025-f026-request.spec.ts",
+      "e2e_test_title": "F-025 · B-DSP-003 · seed arbitrator POST …/disputes/:id/resolve → resolved (PG)"
+    },
+    {
+      "id": "D-COM-011",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-COM-011",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-COM-011/notes.md",
+      "f_row_8_2": "F-031",
+      "matrix_93_cargo_filter": "matrix_93_d_com_011_f031_post_community_post_acquisition_led_listing_pg",
+      "e2e_spec": "frontend/e2e/f029-f030-f031-request.spec.ts",
+      "e2e_test_title": "F-031 · acquisition listing then community post acquisition_led showcase"
+    },
+    {
+      "id": "D-ADM-003",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-ADM-003",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-ADM-003/notes.md",
+      "f_row_8_2": "F-030",
+      "matrix_93_cargo_filter": "matrix_93_d_adm_003b_f030_get_admin_schema_migrations_ok_when_sqlx_migrations_applied_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f029-f030-f031-request.spec.ts",
+      "e2e_test_title": "F-030 · tourist Bearer cannot GET admin schema migrations (403 admin_required)"
+    },
+    {
+      "id": "B-ESC-001",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-ESC-001",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-ESC-001/notes.md",
+      "f_row_8_2": "F-010",
+      "matrix_93_cargo_filter": "matrix_93_b_esc_001b_f010_mock_pay_then_get_order_escrowed_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f007-f010-f032-request.spec.ts",
+      "e2e_test_title": "F-010 · accept then mock-pay leaves order escrowed (GET confirms)"
+    },
+    {
+      "id": "B-TGR-001",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-TGR-001",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-TGR-001/notes.md",
+      "f_row_8_2": "F-032",
+      "matrix_93_cargo_filter": "matrix_93_b_tgr_001_f032_get_trust_growth_config_autopilot_gen_matches_runtime_state_pg",
+      "e2e_spec": "frontend/e2e/f007-f010-f032-request.spec.ts",
+      "e2e_test_title": "F-032 · GET trust-growth/config returns ok + postgres storage hint"
+    },
+    {
+      "id": "D-ITN-002",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-ITN-002",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-ITN-002/notes.md",
+      "f_row_8_2": "F-033",
+      "matrix_93_cargo_filter": "matrix_93_d_itn_002_f033_post_itineraries_custom_persists_orders_pg",
+      "e2e_spec": "frontend/e2e/f027-f028-f033-request.spec.ts",
+      "e2e_test_title": "F-033 · POST custom itinerary then draft POST+GET round-trip"
+    },
+    {
+      "id": "B-MKT-002",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MKT-002",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MKT-002/notes.md",
+      "f_row_8_2": "F-009",
+      "matrix_93_cargo_filter": "matrix_93_b_mkt_001e_f009_get_discover_orders_limit_only_includes_draft_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/93-matrix-enterprise-p1-batch.spec.ts",
+      "e2e_test_title": "B-MKT-002 · GET /api/v1/discover/orders deep-link country/city vs API shape"
+    },
+    {
+      "id": "B-DSP-001",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-DSP-001",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-DSP-001/notes.md",
+      "f_row_8_2": "F-025",
+      "matrix_93_cargo_filter": "matrix_93_b_dsp_001b_f025_post_order_dispute_then_list_contains_dispute_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f024-f025-f026-request.spec.ts",
+      "e2e_test_title": "F-025 · B-DSP-001 · mock-pay→POST …/dispute→GET /disputes contains row (PG)"
+    },
+    {
+      "id": "D-COM-001",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-COM-001",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-COM-001/notes.md",
+      "f_row_8_2": "F-014",
+      "matrix_93_cargo_filter": "matrix_93_d_com_001e_f014_get_feed_hot_mode_includes_seeded_post_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f012-f013-f014-request.spec.ts",
+      "e2e_test_title": "F-014 · GET /community/feed includes created post (D-COM-001 feed surface)"
+    },
+    {
+      "id": "B-ORD-004",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-ORD-004",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-ORD-004/notes.md",
+      "f_row_8_2": "F-008",
+      "matrix_93_cargo_filter": "matrix_93_b_ord_004b_f008_patch_itinerary_then_get_detail_reflects_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/orders-b-domain-request.spec.ts",
+      "e2e_test_title": "F-008 · B-ORD-004 · PATCH …/orders/:id/itinerary then GET detail reflects"
+    },
+    {
+      "id": "D-ITN-001",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-ITN-001",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-ITN-001/notes.md",
+      "f_row_8_2": "F-012",
+      "matrix_93_cargo_filter": "matrix_93_d_itn_001d_f012_post_itineraries_patch_order_itinerary_reflects_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f012-f013-f014-request.spec.ts",
+      "e2e_test_title": "F-012 · D-ITN-001 · POST itineraries + PATCH itinerary + GET order detail read-back"
+    },
+    {
+      "id": "B-IDM-001",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-IDM-001",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-IDM-001/notes.md",
+      "f_row_8_2": "F-028",
+      "matrix_93_cargo_filter": "matrix_93_b_idm_001b_f028_trust_growth_ingest_duplicate_x_idempotency_key_identical_body_pg",
+      "e2e_spec": "frontend/e2e/f027-f028-f033-request.spec.ts",
+      "e2e_test_title": "F-028 · B-IDM-001 · trust-growth ingest duplicate X-Idempotency-Key identical 200 body"
+    },
+    {
+      "id": "B-ORD-006",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-ORD-006",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-ORD-006/notes.md",
+      "f_row_8_2": "F-011",
+      "matrix_93_cargo_filter": "matrix_93_b_ord_006b_f011_set_escrow_address_get_detail_reflects_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/orders-b-domain-request.spec.ts",
+      "e2e_test_title": "F-011 · set-escrow-address then GET detail read-back"
+    },
+    {
+      "id": "B-ORD-005",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-ORD-005",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-ORD-005/notes.md",
+      "f_row_8_2": "F-013",
+      "matrix_93_cargo_filter": "matrix_93_b_ord_005b_f013_itinerary_then_confirm_final_snapshot_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f012-f013-f014-request.spec.ts",
+      "e2e_test_title": "F-013 · POST …/confirm-final-plan returns snapshot_hash"
+    },
+    {
+      "id": "B-MSG-002",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MSG-002",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MSG-002/notes.md",
+      "f_row_8_2": "F-026",
+      "matrix_93_cargo_filter": "matrix_93_b_msg_002_f026_post_get_order_messages_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f024-f025-f026-request.spec.ts",
+      "e2e_test_title": "F-026 · POST order message then GET lists content"
+    },
+    {
+      "id": "A-AVA-001",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/A-AVA-001",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/A-AVA-001/notes.md",
+      "f_row_8_2": "F-007",
+      "matrix_93_cargo_filter": "matrix_93_a_ava_001b_f007_post_profile_avatar_local_persists_avatar_url_on_get_me_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f007-f010-f032-request.spec.ts",
+      "e2e_test_title": "F-007 · POST profile-avatar (local allow) then GET /me has avatar_url"
+    },
+    {
+      "id": "D-COM-002",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-COM-002",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-COM-002/notes.md",
+      "f_row_8_2": "F-015",
+      "matrix_93_cargo_filter": "matrix_93_d_com_002b_f015_post_bearer_then_get_detail_unauthenticated_ok_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f015-f016-f017-request.spec.ts",
+      "e2e_test_title": "F-015 · Bearer POST post then unauthenticated GET detail matches body"
+    },
+    {
+      "id": "B-ESC-003",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-ESC-003",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-ESC-003/notes.md",
+      "f_row_8_2": "F-027",
+      "matrix_93_cargo_filter": "matrix_93_b_esc_003c_f027_tourist_first_review_then_get_list_contains_comment_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f027-f028-f033-request.spec.ts",
+      "e2e_test_title": "F-027 · completed order POST review then GET lists comment"
+    },
+    {
+      "id": "D-COM-003",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-COM-003",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-COM-003/notes.md",
+      "f_row_8_2": "F-016",
+      "matrix_93_cargo_filter": "matrix_93_d_com_003b_f016_post_like_delete_relike_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f015-f016-f017-request.spec.ts",
+      "e2e_test_title": "F-016 · DELETE like then GET liked_by_me false then POST like relike"
+    },
+    {
+      "id": "D-COM-008",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-COM-008",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-COM-008/notes.md",
+      "f_row_8_2": "F-017",
+      "matrix_93_cargo_filter": "matrix_93_d_com_008b_f017_post_collect_delete_recollect_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f015-f016-f017-request.spec.ts",
+      "e2e_test_title": "F-017 · DELETE collect then GET collected_by_me false then POST collect recollect"
+    },
+    {
+      "id": "D-COM-010",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-COM-010",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-COM-010/notes.md",
+      "f_row_8_2": "F-018",
+      "matrix_93_cargo_filter": "matrix_93_d_com_010b_f018_report_then_get_post_detail_unauthenticated_ok_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f018-f019-f020-request.spec.ts",
+      "e2e_test_title": "F-018 · unauthenticated GET post detail after report still readable"
+    },
+    {
+      "id": "D-COM-009",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-COM-009",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-COM-009/notes.md",
+      "f_row_8_2": "F-019",
+      "matrix_93_cargo_filter": "matrix_93_d_com_009_f019_get_me_posts_lists_own_post_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f018-f019-f020-request.spec.ts",
+      "e2e_test_title": "F-019 · GET community me posts lists own post"
+    },
+    {
+      "id": "B-MKT-004",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MKT-004",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MKT-004/notes.md",
+      "f_row_8_2": "F-020",
+      "matrix_93_cargo_filter": "matrix_93_b_mkt_004c_f020_post_get_delete_get_market_bookmarks_order_absent_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f018-f019-f020-request.spec.ts",
+      "e2e_test_title": "F-020 · DELETE order market bookmark then GET omits order_id"
+    },
+    {
+      "id": "B-MKT-007",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MKT-007",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MKT-007/notes.md",
+      "f_row_8_2": "F-021",
+      "matrix_93_cargo_filter": "matrix_93_b_mkt_007_f021_post_provider_listing_then_get_catalog_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f021-f022-f023-request.spec.ts",
+      "e2e_test_title": "F-021 · POST provider listing then GET catalog includes id"
+    },
+    {
+      "id": "B-MKT-008",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MKT-008",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MKT-008/notes.md",
+      "f_row_8_2": "F-022",
+      "matrix_93_cargo_filter": "matrix_93_b_mkt_008_f022_post_acquisition_listing_then_get_catalog_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f021-f022-f023-request.spec.ts",
+      "e2e_test_title": "F-022 · POST acquisition listing then GET catalog includes id"
+    },
+    {
+      "id": "B-GDE-001",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-GDE-001",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-GDE-001/notes.md",
+      "f_row_8_2": "F-023",
+      "matrix_93_cargo_filter": "matrix_93_b_gde_001_f023_post_guide_get_detail_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f021-f022-f023-request.spec.ts",
+      "e2e_test_title": "F-023 · POST guide then GET detail and availability"
+    },
+    {
+      "id": "B-GDE-003",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-GDE-003",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-GDE-003/notes.md",
+      "f_row_8_2": "F-024",
+      "matrix_93_cargo_filter": "matrix_93_b_gde_003b_f024_stake_post_persists_guide_row_active_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f024-f025-f026-request.spec.ts",
+      "e2e_test_title": "F-024 · stake then GET guides list includes active guide"
+    },
+    {
+      "id": "B-MKT-005",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MKT-005",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MKT-005/notes.md",
+      "f_row_8_2": "F-021",
+      "matrix_93_cargo_filter": "matrix_93_b_mkt_005_f021_get_provider_listings_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f021-f022-f023-request.spec.ts",
+      "e2e_test_title": "F-021 · POST provider listing then GET catalog includes id"
+    },
+    {
+      "id": "B-GDE-002",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-GDE-002",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-GDE-002/notes.md",
+      "f_row_8_2": "F-023",
+      "matrix_93_cargo_filter": "matrix_93_b_gde_002b_f023_get_guide_availability_ok_shape_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f021-f022-f023-request.spec.ts",
+      "e2e_test_title": "F-023 · POST guide then GET detail and availability"
+    },
+    {
+      "id": "B-DSP-002",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-DSP-002",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-DSP-002/notes.md",
+      "f_row_8_2": "F-025",
+      "matrix_93_cargo_filter": "matrix_93_b_dsp_002b_f025_dispute_detail_links_order_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f024-f025-f026-request.spec.ts",
+      "e2e_test_title": "F-025 · escrowed order open dispute then GET list and detail"
+    },
+    {
+      "id": "B-MKT-006",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MKT-006",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MKT-006/notes.md",
+      "f_row_8_2": "F-022",
+      "matrix_93_cargo_filter": "matrix_93_b_mkt_006_f022_get_acquisition_listings_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f021-f022-f023-request.spec.ts",
+      "e2e_test_title": "F-022 · POST acquisition listing then GET catalog includes id"
+    },
+    {
+      "id": "B-MKT-009",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MKT-009",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MKT-009/notes.md",
+      "f_row_8_2": "F-021",
+      "matrix_93_cargo_filter": "matrix_93_b_mkt_009_f021_get_provider_listing_detail_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f021-f022-f023-request.spec.ts",
+      "e2e_test_title": "F-021 · POST provider listing then GET listing detail matches id"
+    },
+    {
+      "id": "B-ESC-002",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-ESC-002",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-ESC-002/notes.md",
+      "f_row_8_2": "F-010",
+      "matrix_93_cargo_filter": "matrix_93_b_esc_002b_f010_guide_confirm_completion_then_get_order_completed_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f007-f010-f032-request.spec.ts",
+      "e2e_test_title": "F-010 · mock-pay then guide POST confirm-completion leaves order completed (GET confirms)"
+    },
+    {
+      "id": "B-MKT-010",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MKT-010",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MKT-010/notes.md",
+      "f_row_8_2": "F-022",
+      "matrix_93_cargo_filter": "matrix_93_b_mkt_010_f022_get_acquisition_listing_detail_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f021-f022-f023-request.spec.ts",
+      "e2e_test_title": "F-022 · POST acquisition listing then GET listing detail matches id"
+    },
+    {
+      "id": "B-TRN-003",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-TRN-003",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-TRN-003/notes.md",
+      "f_row_8_2": "F-025",
+      "matrix_93_cargo_filter": "matrix_93_b_trn_003b_f025_get_order_detail_disputed_after_open_dispute_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f024-f025-f026-request.spec.ts",
+      "e2e_test_title": "F-025 · escrowed order open dispute then GET list and detail"
+    },
+    {
+      "id": "B-MKT-013",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MKT-013",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MKT-013/notes.md",
+      "f_row_8_2": "F-020",
+      "matrix_93_cargo_filter": "matrix_93_b_mkt_004d_f020_post_guide_bookmark_then_get_guide_ids_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f018-f019-f020-request.spec.ts",
+      "e2e_test_title": "F-020 · order+guide bookmarks then invalid listing POST preserves both lists"
+    },
+    {
+      "id": "B-ESC-004",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-ESC-004",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-ESC-004/notes.md",
+      "f_row_8_2": "F-029",
+      "matrix_93_cargo_filter": "matrix_93_b_esc_004b_f029_get_order_chain_sync_status_ok_shape_after_escrow_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f029-f030-f031-request.spec.ts",
+      "e2e_test_title": "F-029 · mock-pay then GET order chain-sync-status shows escrowed last_event"
+    },
+    {
+      "id": "B-MSG-002C",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MSG-002C",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/B-MSG-002C/notes.md",
+      "f_row_8_2": "F-026",
+      "matrix_93_cargo_filter": "matrix_93_b_msg_002c_f026_tourist_posts_guide_reads_messages_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f024-f025-f026-request.spec.ts",
+      "e2e_test_title": "F-026 · tourist POST order message then guide GET lists same line"
+    },
+    {
+      "id": "D-ITN-003",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-ITN-003",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-ITN-003/notes.md",
+      "f_row_8_2": "F-033",
+      "matrix_93_cargo_filter": "matrix_93_d_itn_003b_f033_post_custom_draft_then_get_roundtrip_bearer_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f027-f028-f033-request.spec.ts",
+      "e2e_test_title": "F-033 · POST custom itinerary then draft POST+GET round-trip"
+    },
+    {
+      "id": "A-ENV-001",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/A-ENV-001",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/A-ENV-001/notes.md",
+      "f_row_8_2": "F-029",
+      "matrix_93_cargo_filter": "matrix_93_a_env_001b_f029_get_health_and_meta_contract_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f029-f030-f031-request.spec.ts",
+      "e2e_test_title": "F-029 · GET /health returns ok and GET /meta includes build api_version database"
+    },
+    {
+      "id": "D-ITN-001B",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-ITN-001B",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-ITN-001B/notes.md",
+      "f_row_8_2": "F-012",
+      "matrix_93_cargo_filter": "matrix_93_d_itn_001b_f012_post_itineraries_draft_persists_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f012-f013-f014-request.spec.ts",
+      "e2e_test_title": "F-012 · POST /api/v1/itineraries creates draft + order_id"
+    },
+    {
+      "id": "D-COM-001C",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-COM-001C",
+      "blocker": false,
+      "notes": "evidence/GO_local_ci_20260427T002048Z/r002_iss007_prereport/D-COM-001C/notes.md",
+      "f_row_8_2": "F-014",
+      "matrix_93_cargo_filter": "matrix_93_d_com_001c_f014_get_feed_tag_filter_includes_tagged_post_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f012-f013-f014-request.spec.ts",
+      "e2e_test_title": "F-014 · POST tagged post then GET feed?tag includes same post id"
+    }
+  ],
+  "summary": {
+    "PASS": 0,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 43
+  },
+  "orchestration": {
+    "schema_version": "2",
+    "kind": "traveltrust.release_orchestration.v2",
+    "source_spec": "96-automation-v2",
+    "run_id": "GO_local_ci_20260427T002048Z",
+    "started_at": "2026-04-27T00:20:53Z",
+    "finished_at": "2026-04-27T00:20:53Z",
+    "executor": "local",
+    "control_taxonomy_note": "control_framework_refs: ISO27001-A.x (Annex A), SOC2-CCx.x (Common Criteria), OWASP-ASVS-Vx (chapter), CIS-CSCx, SRE-SLO (error budget / availability). Missing external inputs => FAIL unless TT_96_ACCEPTED_RISK_<BOOKLET> points to a JSON file => ACCEPTED_RISK. Out-of-scope booklets => N_A when TT_96_SCOPE_BOOKLETS is set (comma-separated booklet ids e.g. 96-13,96-16).",
+    "tiers": [
+      {
+        "tier": "A",
+        "steps": [
+          {
+            "id": "TIER-A-1",
+            "seq": 1,
+            "title": "15 appendix + gap table P0 twelve / signoff bundle (semiauto: README evidence)",
+            "machine_runnable": true,
+            "status": "PASS",
+            "primary_attribution_if_fail": "96",
+            "input_source": "legacy_96_15_orchestration",
+            "expected_outcome": "Tier A/B/C contracts per 96-15 machine gates",
+            "control_framework_refs": [
+              "SOC2-CC8.1",
+              "ISO27001-A.12"
+            ],
+            "commands": [
+              "semiauto:evidence-file",
+              "D:\\TravelTrust\\evidence\\GO_local_ci_20260427T002048Z\\deep_evidence\\README.md"
+            ],
+            "observed_exit_code": 0,
+            "stdout_tail": "ok 493 bytes: D:\\TravelTrust\\evidence\\GO_local_ci_20260427T002048Z\\deep_evidence\\README.md",
+            "stderr_tail": "",
+            "evidence_paths_expected": [
+              "D:\\TravelTrust\\evidence\\GO_local_ci_20260427T002048Z\\deep_evidence\\README.md"
+            ],
+            "f_row_hints": [
+              "F-bundle",
+              "96-11",
+              "ISS-signoff-hygiene"
+            ],
+            "96_booklet": "96-11"
+          },
+          {
+            "id": "TIER-A-2",
+            "seq": 2,
+            "title": "59 nine-dimension P0 table snapshot (semiauto: markdown evidence)",
+            "machine_runnable": true,
+            "status": "PASS",
+            "primary_attribution_if_fail": "96",
+            "input_source": "legacy_96_15_orchestration",
+            "expected_outcome": "Tier A/B/C contracts per 96-15 machine gates",
+            "control_framework_refs": [
+              "SOC2-CC8.1",
+              "ISO27001-A.12"
+            ],
+            "commands": [
+              "semiauto:evidence-file",
+              "D:\\TravelTrust\\evidence\\GO_local_ci_20260427T002048Z\\deep_evidence\\59_p0_table.md"
+            ],
+            "observed_exit_code": 0,
+            "stdout_tail": "ok 704 bytes: D:\\TravelTrust\\evidence\\GO_local_ci_20260427T002048Z\\deep_evidence\\59_p0_table.md",
+            "stderr_tail": "",
+            "evidence_paths_expected": [
+              "D:\\TravelTrust\\evidence\\GO_local_ci_20260427T002048Z\\deep_evidence\\59_p0_table.md"
+            ],
+            "f_row_hints": [
+              "F-59-P0",
+              "96-15",
+              "ISS-planning"
+            ],
+            "96_booklet": "96-15"
+          },
+          {
+            "id": "TIER-A-3",
+            "seq": 3,
+            "title": "B-421 runbook/go-live doclink gate",
+            "machine_runnable": true,
+            "status": "PASS",
+            "primary_attribution_if_fail": "GATE",
+            "input_source": "legacy_96_15_orchestration",
+            "expected_outcome": "Tier A/B/C contracts per 96-15 machine gates",
+            "control_framework_refs": [
+              "SOC2-CC8.1",
+              "ISO27001-A.12"
+            ],
+            "commands": [
+              "C:\\Users\\plant\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+              "D:\\TravelTrust\\scripts\\release\\b421_doclink_gate.py",
+              "--repo-root",
+              "D:\\TravelTrust"
+            ],
+            "observed_exit_code": 0,
+            "stdout_tail": "",
+            "stderr_tail": "b421_doclink_gate: ok\n",
+            "evidence_paths_expected": [
+              "evidence\\GO_local_ci_20260427T002048Z\\b421.log"
+            ],
+            "f_row_hints": [
+              "F-033",
+              "GATE-B421",
+              "R002-doclink"
+            ],
+            "96_booklet": "96-11"
+          }
+        ]
+      },
+      {
+        "tier": "B",
+        "steps": [
+          {
+            "id": "TIER-B-4",
+            "seq": 4,
+            "title": "66/51/53 anchors present (machine)",
+            "machine_runnable": true,
+            "status": "PASS",
+            "primary_attribution_if_fail": "96",
+            "input_source": "legacy_96_15_orchestration",
+            "expected_outcome": "Tier A/B/C contracts per 96-15 machine gates",
+            "control_framework_refs": [
+              "ISO27001-A.16"
+            ],
+            "commands": [
+              "python",
+              "scripts/release/tier_bc_machine_gates.py",
+              "--gate",
+              "b4"
+            ],
+            "observed_exit_code": 0,
+            "stdout_tail": "ok: docs/spec/66-深度检查-缺口与遗留问题.md, docs/spec/51-阶段开发技术文档.md, docs/spec/53-阶段开发技术文档.md\n",
+            "stderr_tail": "",
+            "evidence_paths_expected": [
+              "docs/spec/66-深度检查-缺口与遗留问题.md",
+              "docs/spec/51-阶段开发技术文档.md",
+              "docs/spec/53-阶段开发技术文档.md"
+            ],
+            "f_row_hints": [
+              "F-doc",
+              "96-12",
+              "66-51-53-anchors"
+            ],
+            "96_booklet": "96-12"
+          },
+          {
+            "id": "TIER-B-5",
+            "seq": 5,
+            "title": "27-P0..P50 checklist present + min size (machine)",
+            "machine_runnable": true,
+            "status": "PASS",
+            "primary_attribution_if_fail": "96",
+            "input_source": "legacy_96_15_orchestration",
+            "expected_outcome": "Tier A/B/C contracts per 96-15 machine gates",
+            "control_framework_refs": [
+              "ISO27001-A.16"
+            ],
+            "commands": [
+              "python",
+              "scripts/release/tier_bc_machine_gates.py",
+              "--gate",
+              "b5"
+            ],
+            "observed_exit_code": 0,
+            "stdout_tail": "ok: docs/spec/27-P0至P50开发流程勾选清单.md bytes=107596\n",
+            "stderr_tail": "",
+            "evidence_paths_expected": [
+              "docs/spec/27-P0至P50开发流程勾选清单.md"
+            ],
+            "f_row_hints": [
+              "F-27-Pn",
+              "96-12"
+            ],
+            "96_booklet": "96-12"
+          }
+        ]
+      },
+      {
+        "tier": "C",
+        "steps": [
+          {
+            "id": "TIER-C-6",
+            "seq": 6,
+            "title": "frontend/app page.tsx smoke count (machine)",
+            "machine_runnable": true,
+            "status": "PASS",
+            "primary_attribution_if_fail": "96",
+            "input_source": "legacy_96_15_orchestration",
+            "expected_outcome": "Tier A/B/C contracts per 96-15 machine gates",
+            "control_framework_refs": [
+              "OWASP-ASVS-V1"
+            ],
+            "commands": [
+              "python",
+              "scripts/release/tier_bc_machine_gates.py",
+              "--gate",
+              "c6"
+            ],
+            "observed_exit_code": 0,
+            "stdout_tail": "ok: page.tsx count=121\n",
+            "stderr_tail": "",
+            "evidence_paths_expected": [
+              "frontend/app/**/page.tsx"
+            ],
+            "f_row_hints": [
+              "F-010",
+              "F-008",
+              "F-021",
+              "96-13",
+              "96-16"
+            ],
+            "96_booklet": "96-13"
+          },
+          {
+            "id": "TIER-C-7",
+            "seq": 7,
+            "title": "04 routes gate: scripts/run-check-04-routes.sh (machine)",
+            "machine_runnable": true,
+            "status": "PASS",
+            "primary_attribution_if_fail": "GATE",
+            "input_source": "legacy_96_15_orchestration",
+            "expected_outcome": "Tier A/B/C contracts per 96-15 machine gates",
+            "control_framework_refs": [
+              "OWASP-ASVS-V1"
+            ],
+            "commands": [
+              "C:\\Program Files\\Git\\bin\\bash.exe",
+              "D:\\TravelTrust\\scripts\\run-check-04-routes.sh"
+            ],
+            "observed_exit_code": 0,
+            "stdout_tail": "check-04-routes-vs-code OK: 04 sec 3.4 table paths are mounted (except DOC_ONLY_SCHEDULED).\n  (no undocumented public /api/v1 routes vs sec 3.4 table)\ncheck-04-frontend-routes-vs-app OK: 04 sec 3.4 frontend page routes match frontend/app.\ncheck-04-api-ts-routes-vs-doc-34 OK: all routes block /api/v1|/auth|/meta|/health paths match 04 ��3.4 (183 checked).\ncheck-13-1-table1-routes-vs-app OK: 13-1 sec 2 table 1 routes match frontend/app.\ncheck-13-1-routes-covered-by-04-frontend-table OK: 13-1 table 1 routes are covered by 04 sec 3.4 frontend path table.\ncheck-b432-governance-ui-ssot-surface OK: B-428/B-432 governance closeloop surface pinned.\n",
+            "stderr_tail": "check-b450: OK (B450-REVIEW-POST-SSOT-DOC-ANCHORS-V1)\ncheck-b451: OK (B451-REVIEW-JSON-CONTRACT-EVOLUTION-GATE-V1)\ncheck-b452: OK (B452-REVIEW-JSON-CONTRACT-CLIENT-GATE-V1)\ncheck-b453: OK (B453-REVIEW-JSON-CONTRACT-OBSERVABILITY-GATE-V1)\ncheck-b454: OK (B454-REVIEW-JSON-CONTRACT-DEGRADE-EVIDENCE-GATE-V1)\ncheck-b455: OK (B455-REVIEW-JSON-CONTRACT-ROLLOUT-GATE-V1)\ncheck-b456: OK (B456-REVIEW-JSON-CONTRACT-RELEASE-CONTROLLER-GATE-V1)\ncheck-b457: OK (B457-REVIEW-JSON-CONTRACT-RELEASE-ADAPTER-GATE-V1)\n",
+            "evidence_paths_expected": [
+              "scripts/run-check-04-routes.sh"
+            ],
+            "f_row_hints": [
+              "F-033",
+              "04-routes",
+              "96-12"
+            ],
+            "96_booklet": "96-12"
+          }
+        ]
+      },
+      {
+        "tier": "F",
+        "steps": [
+          {
+            "id": "AUTO-96-01",
+            "seq": 1,
+            "title": "96-01 boundary / execution-order evidence (external pack or accepted risk)",
+            "machine_runnable": true,
+            "status": "N_A",
+            "primary_attribution_if_fail": "96",
+            "input_source": "env:TT_96_LIGHT",
+            "expected_outcome": "heavy gate skipped in light smoke mode",
+            "control_framework_refs": [
+              "ISO27001-A.5",
+              "SOC2-CC2.1"
+            ],
+            "commands": [
+              "env:TT_96_LIGHT"
+            ],
+            "observed_exit_code": null,
+            "stdout_tail": "",
+            "stderr_tail": "",
+            "evidence_paths_expected": [],
+            "f_row_hints": [
+              "F-96-01-boundary",
+              "96-01"
+            ],
+            "96_booklet": "96-01",
+            "n_a_reason": "TT_96_LIGHT"
+          },
+          {
+            "id": "AUTO-96-02",
+            "seq": 2,
+            "title": "96-02 legal / disclosure external evidence pack (path required)",
+            "machine_runnable": true,
+            "status": "N_A",
+            "primary_attribution_if_fail": "96",
+            "input_source": "env:TT_96_LIGHT",
+            "expected_outcome": "heavy gate skipped in light smoke mode",
+            "control_framework_refs": [
+              "ISO27001-A.18",
+              "SOC2-CC9.2"
+            ],
+            "commands": [
+              "env:TT_96_LIGHT"
+            ],
+            "observed_exit_code": null,
+            "stdout_tail": "",
+            "stderr_tail": "",
+            "evidence_paths_expected": [],
+            "f_row_hints": [
+              "F-legal",
+              "ISO27001-A.18"
+            ],
+            "96_booklet": "96-02",
+            "n_a_reason": "TT_96_LIGHT"
+          },
+          {
+            "id": "AUTO-96-03",
+            "seq": 3,
+            "title": "96-03 security / supply chain external evidence",
+            "machine_runnable": true,
+            "status": "N_A",
+            "primary_attribution_if_fail": "96",
+            "input_source": "env:TT_96_LIGHT",
+            "expected_outcome": "heavy gate skipped in light smoke mode",
+            "control_framework_refs": [
+              "ISO27001-A.12",
+              "SOC2-CC6.1",
+              "CIS-CSC16"
+            ],
+            "commands": [
+              "env:TT_96_LIGHT"
+            ],
+            "observed_exit_code": null,
+            "stdout_tail": "",
+            "stderr_tail": "",
+            "evidence_paths_expected": [],
+            "f_row_hints": [
+              "F-security",
+              "ISO27001-A.12"
+            ],
+            "96_booklet": "96-03",
+            "n_a_reason": "TT_96_LIGHT"
+          },
+          {
+            "id": "AUTO-96-04",
+            "seq": 4,
+            "title": "96-04 compliance / data residency external evidence",
+            "machine_runnable": true,
+            "status": "N_A",
+            "primary_attribution_if_fail": "96",
+            "input_source": "env:TT_96_LIGHT",
+            "expected_outcome": "heavy gate skipped in light smoke mode",
+            "control_framework_refs": [
+              "ISO27001-A.18",
+              "SOC2-CC6.7"
+            ],
+            "commands": [
+              "env:TT_96_LIGHT"
+            ],
+            "observed_exit_code": null,
+            "stdout_tail": "",
+            "stderr_tail": "",
+            "evidence_paths_expected": [],
+            "f_row_hints": [
+              "F-compliance",
+              "ISO27001-A.18"
+            ],
+            "96_booklet": "96-04",
+            "n_a_reason": "TT_96_LIGHT"
+          },
+          {
+            "id": "AUTO-96-05",
+            "seq": 5,
+            "title": "96-05 SRE / reliability external evidence",
+            "machine_runnable": true,
+            "status": "N_A",
+            "primary_attribution_if_fail": "96",
+            "input_source": "env:TT_96_LIGHT",
+            "expected_outcome": "heavy gate skipped in light smoke mode",
+            "control_framework_refs": [
+              "SRE-SLO",
+              "ISO27001-A.17"
+            ],
+            "commands": [
+              "env:TT_96_LIGHT"
+            ],
+            "observed_exit_code": null,
+            "stdout_tail": "",
+            "stderr_tail": "",
+            "evidence_paths_expected": [],
+            "f_row_hints": [
+              "F-sre",
+              "SRE-SLO"
+            ],
+            "96_booklet": "96-05",
+            "n_a_reason": "TT_96_LIGHT"
+          },
+          {
+            "id": "AUTO-96-06",
+            "seq": 6,
+            "title": "96-06 backup / migration external evidence",
+            "machine_runnable": true,
+            "status": "N_A",
+            "primary_attribution_if_fail": "96",
+            "input_source": "env:TT_96_LIGHT",
+            "expected_outcome": "heavy gate skipped in light smoke mode",
+            "control_framework_refs": [
+              "ISO27001-A.12",
+              "SOC2-CC9.1"
+            ],
+            "commands": [
+              "env:TT_96_LIGHT"
+            ],
+            "observed_exit_code": null,
+            "stdout_tail": "",
+            "stderr_tail": "",
+            "evidence_paths_expected": [],
+            "f_row_hints": [
+              "F-backup",
+              "ISO27001-A.12"
+            ],
+            "96_booklet": "96-06",
+            "n_a_reason": "TT_96_LIGHT"
+          },
+          {
+            "id": "AUTO-96-07",
+            "seq": 7,
+            "title": "96-07 chain / contract attestation bundle",
+            "machine_runnable": true,
+            "status": "N_A",
+            "primary_attribution_if_fail": "96",
+            "input_source": "env:TT_96_LIGHT",
+            "expected_outcome": "heavy gate skipped in light smoke mode",
+            "control_framework_refs": [
+              "SOC2-CC8.1",
+              "OWASP-ASVS-V10"
+            ],
+            "commands": [
+              "env:TT_96_LIGHT"
+            ],
+            "observed_exit_code": null,
+            "stdout_tail": "",
+            "stderr_tail": "",
+            "evidence_paths_expected": [],
+            "f_row_hints": [
+              "F-chain",
+              "OWASP-ASVS-V10"
+            ],
+            "96_booklet": "96-07",
+            "n_a_reason": "TT_96_LIGHT"
+          },
+          {
+            "id": "AUTO-96-08",
+            "seq": 8,
+            "title": "96-08 indexer / finance reconcile evidence",
+            "machine_runnable": true,
+            "status": "N_A",
+            "primary_attribution_if_fail": "96",
+            "input_source": "env:TT_96_LIGHT",
+            "expected_outcome": "heavy gate skipped in light smoke mode",
+            "control_framework_refs": [
+              "SOC2-CC7.2",
+              "SRE-SLO"
+            ],
+            "commands": [
+              "env:TT_96_LIGHT"
+            ],
+            "observed_exit_code": null,
+            "stdout_tail": "",
+            "stderr_tail": "",
+            "evidence_paths_expected": [],
+            "f_row_hints": [
+              "F-indexer",
+              "SOC2-CC7.2"
+            ],
+            "96_booklet": "96-08",
+            "n_a_reason": "TT_96_LIGHT"
+          },
+          {
+            "id": "AUTO-96-09",
+            "seq": 9,
+            "title": "96-09 messaging / async tasks evidence",
+            "machine_runnable": true,
+            "status": "N_A",
+            "primary_attribution_if_fail": "96",
+            "input_source": "env:TT_96_LIGHT",
+            "expected_outcome": "heavy gate skipped in light smoke mode",
+            "control_framework_refs": [
+              "ISO27001-A.13",
+              "SOC2-CC7.1"
+            ],
+            "commands": [
+              "env:TT_96_LIGHT"
+            ],
+            "observed_exit_code": null,
+            "stdout_tail": "",
+            "stderr_tail": "",
+            "evidence_paths_expected": [],
+            "f_row_hints": [
+              "F-messaging",
+              "ISO27001-A.13"
+            ],
+            "96_booklet": "96-09",
+            "n_a_reason": "TT_96_LIGHT"
+          },
+          {
+            "id": "AUTO-96-10",
+            "seq": 10,
+            "title": "96-10 config / feature flags evidence",
+            "machine_runnable": true,
+            "status": "N_A",
+            "primary_attribution_if_fail": "96",
+            "input_source": "env:TT_96_LIGHT",
+            "expected_outcome": "heavy gate skipped in light smoke mode",
+            "control_framework_refs": [
+              "ISO27001-A.12",
+              "CIS-CSC4"
+            ],
+            "commands": [
+              "env:TT_96_LIGHT"
+            ],
+            "observed_exit_code": null,
+            "stdout_tail": "",
+            "stderr_tail": "",
+            "evidence_paths_expected": [],
+            "f_row_hints": [
+              "F-config",
+              "CIS-CSC4"
+            ],
+            "96_booklet": "96-10",
+            "n_a_reason": "TT_96_LIGHT"
+          },
+          {
+            "id": "AUTO-96-12",
+            "seq": 12,
+            "title": "96-12 documentation / snapshot drift evidence",
+            "machine_runnable": true,
+            "status": "N_A",
+            "primary_attribution_if_fail": "96",
+            "input_source": "env:TT_96_LIGHT",
+            "expected_outcome": "heavy gate skipped in light smoke mode",
+            "control_framework_refs": [
+              "SOC2-CC8.1"
+            ],
+            "commands": [
+              "env:TT_96_LIGHT"
+            ],
+            "observed_exit_code": null,
+            "stdout_tail": "",
+            "stderr_tail": "",
+            "evidence_paths_expected": [],
+            "f_row_hints": [
+              "F-8.2-satellite",
+              "95-11"
+            ],
+            "96_booklet": "96-12",
+            "n_a_reason": "TT_96_LIGHT"
+          },
+          {
+            "id": "AUTO-96-14",
+            "seq": 14,
+            "title": "96-14 wallet / community / governance extension evidence",
+            "machine_runnable": true,
+            "status": "N_A",
+            "primary_attribution_if_fail": "96",
+            "input_source": "env:TT_96_LIGHT",
+            "expected_outcome": "heavy gate skipped in light smoke mode",
+            "control_framework_refs": [
+              "OWASP-ASVS-V4",
+              "OWASP-ASVS-V9"
+            ],
+            "commands": [
+              "env:TT_96_LIGHT"
+            ],
+            "observed_exit_code": null,
+            "stdout_tail": "",
+            "stderr_tail": "",
+            "evidence_paths_expected": [],
+            "f_row_hints": [
+              "F-wallet-community",
+              "OWASP-ASVS-V4"
+            ],
+            "96_booklet": "96-14",
+            "n_a_reason": "TT_96_LIGHT"
+          },
+          {
+            "id": "AUTO-96-11-R002",
+            "seq": 110,
+            "title": "96-11 / R-002: validate regression report.json (machine)",
+            "machine_runnable": true,
+            "status": "N_A",
+            "primary_attribution_if_fail": "96",
+            "input_source": "env:TT_96_LIGHT",
+            "expected_outcome": "heavy gate skipped in light smoke mode",
+            "control_framework_refs": [
+              "SOC2-CC8.1",
+              "R002",
+              "R-001"
+            ],
+            "commands": [
+              "env:TT_96_LIGHT"
+            ],
+            "observed_exit_code": null,
+            "stdout_tail": "",
+            "stderr_tail": "",
+            "evidence_paths_expected": [],
+            "f_row_hints": [
+              "F-8.2",
+              "R002",
+              "R-001",
+              "ISS-007"
+            ],
+            "96_booklet": "96-11",
+            "n_a_reason": "TT_96_LIGHT"
+          },
+          {
+            "id": "AUTO-96-13-UI-TEST",
+            "seq": 130,
+            "title": "96-13 UI: frontend vitest (machine)",
+            "machine_runnable": true,
+            "status": "N_A",
+            "primary_attribution_if_fail": "96",
+            "input_source": "env:TT_96_LIGHT",
+            "expected_outcome": "heavy gate skipped in light smoke mode",
+            "control_framework_refs": [
+              "OWASP-ASVS-V5",
+              "OWASP-ASVS-V8"
+            ],
+            "commands": [
+              "env:TT_96_LIGHT"
+            ],
+            "observed_exit_code": null,
+            "stdout_tail": "",
+            "stderr_tail": "",
+            "evidence_paths_expected": [],
+            "f_row_hints": [
+              "F-010",
+              "F-015",
+              "93-matrix"
+            ],
+            "96_booklet": "96-13",
+            "n_a_reason": "TT_96_LIGHT"
+          },
+          {
+            "id": "AUTO-96-13-I18N",
+            "seq": 131,
+            "title": "96-13 i18n coverage gate (machine)",
+            "machine_runnable": true,
+            "status": "N_A",
+            "primary_attribution_if_fail": "96",
+            "input_source": "env:TT_96_LIGHT",
+            "expected_outcome": "heavy gate skipped in light smoke mode",
+            "control_framework_refs": [
+              "OWASP-ASVS-V5"
+            ],
+            "commands": [
+              "env:TT_96_LIGHT"
+            ],
+            "observed_exit_code": null,
+            "stdout_tail": "",
+            "stderr_tail": "",
+            "evidence_paths_expected": [],
+            "f_row_hints": [
+              "F-010",
+              "150-i18n"
+            ],
+            "96_booklet": "96-13",
+            "n_a_reason": "TT_96_LIGHT"
+          },
+          {
+            "id": "AUTO-96-16-ROUTES",
+            "seq": 160,
+            "title": "96-16 route inventory: page.tsx count == 119",
+            "machine_runnable": true,
+            "status": "N_A",
+            "primary_attribution_if_fail": "96",
+            "input_source": "env:TT_96_LIGHT",
+            "expected_outcome": "heavy gate skipped in light smoke mode",
+            "control_framework_refs": [
+              "OWASP-ASVS-V1",
+              "SRE-SLO"
+            ],
+            "commands": [
+              "env:TT_96_LIGHT"
+            ],
+            "observed_exit_code": null,
+            "stdout_tail": "",
+            "stderr_tail": "",
+            "evidence_paths_expected": [],
+            "f_row_hints": [
+              "F-008",
+              "96-16"
+            ],
+            "96_booklet": "96-16",
+            "n_a_reason": "TT_96_LIGHT"
+          },
+          {
+            "id": "AUTO-95-F-REGISTRY",
+            "seq": 950,
+            "title": "96 booklets registry volume gate (read-only spec paths)",
+            "machine_runnable": true,
+            "status": "PASS",
+            "primary_attribution_if_fail": "96",
+            "input_source": "docs/spec/96-*.md read-only size gate",
+            "expected_outcome": "verify_96_booklets_registry exit 0",
+            "control_framework_refs": [
+              "SOC2-CC8.1",
+              "ISO27001-A.12"
+            ],
+            "commands": [
+              "C:\\Users\\plant\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+              "D:\\TravelTrust\\scripts\\release\\verify_96_booklets_registry.py",
+              "--repo-root",
+              "D:\\TravelTrust",
+              "--out",
+              "D:\\TravelTrust\\evidence\\GO_local_ci_20260427T002048Z\\96_booklets_registry.json"
+            ],
+            "observed_exit_code": 0,
+            "stdout_tail": "Wrote D:\\TravelTrust\\evidence\\GO_local_ci_20260427T002048Z\\96_booklets_registry.json\n",
+            "stderr_tail": "",
+            "evidence_paths_expected": [
+              "evidence\\GO_local_ci_20260427T002048Z\\96_booklets_registry.json"
+            ],
+            "f_row_hints": [
+              "F-doc-registry",
+              "96-Hub"
+            ],
+            "96_booklet": "96-15",
+            "evidence_path_actual": "D:\\TravelTrust\\evidence\\GO_local_ci_20260427T002048Z\\96_booklets_registry.json"
+          }
+        ]
+      }
+    ],
+    "summary": {
+      "steps_total": 24,
+      "steps_pass": 8,
+      "steps_fail": 0,
+      "steps_na": 16,
+      "steps_accepted_risk": 0,
+      "steps_skip": 0,
+      "machine_steps_executed": 8,
+      "tier_a_all_pass": true,
+      "tier_bc_all_pass": true,
+      "tier_bc_scope_manual_only": false,
+      "any_fail": false,
+      "any_accepted_risk": false,
+      "accepted_risks_production_acknowledged": false
+    }
+  }
+}

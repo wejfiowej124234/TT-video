@@ -1,0 +1,27 @@
+{
+  "batch": "GO_96_16_d5_d6_d7_routes_followup2",
+  "docs_spec_touched": false,
+  "scope": "/market (MarketContent LCP + motion-reduce), /community/tt (motion-reduce shell + primary CTA)",
+  "d5_d6_d7_actions": [
+    "LCP/images: MarketContent — at most one list cover uses next/image priority + fetchPriority high (first order when split/orders has orders; else first guide when guides-only or split with empty orders)",
+    "motion-reduce: GuideCard + OrderCard — card hover translate disabled; cover zoom uses motion-safe; fav transition-none",
+    "motion-reduce: MarketContent sort pills + ViewSwitcher tab buttons",
+    "motion-reduce: community/tt gradient shell + primary CTA scale"
+  ],
+  "commands": {
+    "eslint": { "cmd": "npm run lint", "exit": 0 },
+    "i18n_ci": { "cmd": "npm run test:i18n:ci", "exit": 0 },
+    "vitest": {
+      "cmd": "npm test -- --run components/market/GuideDetailDrawer.test.tsx components/market/EmptyState.test.tsx",
+      "exit": 0,
+      "tests_passed": 8
+    },
+    "npm_run_build": { "cmd": "npm run build", "exit": 0 }
+  },
+  "playwright_e2e": {
+    "status": "NOT_RUN",
+    "trace": "93",
+    "detail": ":8080-dependent E2E not run; does not block this batch."
+  },
+  "claim_96_complete": false
+}

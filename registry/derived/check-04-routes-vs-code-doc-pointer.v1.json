@@ -1,0 +1,9 @@
+{
+  "kind": "traveltrust.check_04_routes_vs_code_doc_pointer.v1",
+  "summary": "Doc pointer for scripts/gates/check-04-routes-vs-code.py; same segments as code DOC joinpath (04 §3.4 API 主表).",
+  "doc_04_markdown_segments": [
+    "docs",
+    "spec",
+    "04-后端与API.md"
+  ]
+}

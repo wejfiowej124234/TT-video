@@ -1,0 +1,18 @@
+{
+  "components": [
+    "components/community/CommentDrawer.tsx",
+    "components/community/CommunityLoginModal.tsx",
+    "components/community/PostDetailDrawer.tsx",
+    "components/community/useCommunityFeed.ts",
+    "components/escrow/EscrowDetail/index.tsx",
+    "components/market/MarketStandaloneBusinessPage.tsx",
+    "components/market/MarketSubsiteFilterBar.tsx",
+    "components/market/useMarketPage.ts",
+    "components/me/CommunityMeAccountPanel.tsx",
+    "components/me/communityMeNotes/CommunityMeCollectsExperience.tsx",
+    "components/me/communityMeNotes/CommunityMeLikesExperience.tsx",
+    "components/me/communityMeNotes/CommunityMeOrdersDrawerPreview.tsx",
+    "components/me/communityMeNotes/CommunityMePostsExperience.tsx",
+    "components/me/useMePage.ts"
+  ]
+}

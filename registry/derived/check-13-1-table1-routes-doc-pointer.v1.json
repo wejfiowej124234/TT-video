@@ -1,0 +1,9 @@
+{
+  "kind": "traveltrust.check_13_1_table1_routes_doc_pointer.v1",
+  "summary": "Doc pointer for scripts/gates/check-13-1-table1-routes-vs-app.py; same segments as code DOC joinpath.",
+  "doc_13_1_markdown_segments": [
+    "docs",
+    "spec",
+    "13-1-UI产品级SSOT与页面规范.md"
+  ]
+}

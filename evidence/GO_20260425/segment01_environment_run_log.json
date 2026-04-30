@@ -1,0 +1,34 @@
+{
+  "segment": "01_database_migrations_iss007_r002",
+  "started_at": "2026-04-25T09:04:21Z",
+  "environment_hint": {
+    "compose_file": "docker-compose.yml",
+    "postgres_service": "postgres",
+    "default_database_url": "postgresql://traveltrust:traveltrust@127.0.0.1:5432/traveltrust"
+  },
+  "steps": [
+    {
+      "id": "docker_compose_up_postgres",
+      "cmd": "docker compose up -d postgres",
+      "exit_code": 1,
+      "detail": "Docker Desktop Linux engine unavailable (dockerDesktopLinuxEngine pipe missing). Start Docker Desktop or supply DATABASE_URL to a reachable Postgres."
+    },
+    {
+      "id": "probe_127_0_0_1_5432",
+      "ok": false,
+      "detail": "Port 5432 closed."
+    },
+    {
+      "id": "b421_check_runbook_golive_doclink_gate",
+      "cmd": "bash scripts/check-runbook-golive-doclink-gate.sh",
+      "exit_code": 0,
+      "detail": "ok"
+    }
+  ],
+  "next_commands_when_db_ready": [
+    "export DATABASE_URL=postgresql://traveltrust:traveltrust@127.0.0.1:5432/traveltrust",
+    "sqlx migrate run --source crates/api/migrations",
+    "TRAVELTRUST_R002_REPORT_PARENT=evidence/GO_20260425 python scripts/gen-r002-iss007-prereport.py"
+  ],
+  "blocker": "No DATABASE_URL / Postgres in this session; ISS-007 cargo anchors not executed."
+}

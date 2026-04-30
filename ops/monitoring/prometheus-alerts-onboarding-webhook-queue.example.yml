@@ -1,0 +1,111 @@
+# TravelTrust API — example Prometheus rule file: onboarding webhook queue alerts + optional HTTP recording rules.
+# SSOT narrative: docs/runbook/TT-9618-onboarding-local-testnet.md §3.6.1–§3.6.3, docs/spec/96-18-未完成清单与多维检查.md, docs/spec/120-阶段开发观测告警日志与审计链路.md §2.1 / §2.1.1 (SLI/SLO seeds)
+#
+# Metrics (text names; see crates/api/src/routes/health_meta/handlers.rs):
+#   traveltrust_onboarding_quote_get_requests_total (counter; handler entries)
+#   traveltrust_onboarding_payment_intents_post_requests_total
+#   traveltrust_onboarding_entitlements_me_get_requests_total
+#   traveltrust_onboarding_role_confirm_post_requests_total
+#   traveltrust_onboarding_http_responses_total{route,status_class} (counter; 2xx/4xx/5xx coarse buckets)
+#   traveltrust_onboarding_webhook_jobs_pending
+#   traveltrust_onboarding_webhook_jobs_processing
+#   traveltrust_onboarding_webhook_jobs_done
+#   traveltrust_onboarding_webhook_jobs_dead
+#   traveltrust_onboarding_webhook_dlq_total
+#   traveltrust_onboarding_webhook_dlq_unreplayed (replayed_at IS NULL; prefer for backlog alerts)
+# When PostgreSQL pool is not mounted or the snapshot query fails, webhook gauges above are -1
+# (same convention as traveltrust_active_sessions_missing_token_hash).
+#
+# Recording (optional, second group): traveltrust:onboarding_*_http_4xx_per_second_5m (four routes),
+#   plus traveltrust:onboarding_quote_http_5xx_per_second_5m (503 chain_off_unavailable, matrix_93_d_onb_011).
+#
+# Usage: merge into your Prometheus rule_files after scraping the API job that exposes /metrics.
+# Ops checklist + on-call 工单模板: docs/runbook/TT-9618-onboarding-local-testnet.md §3.6.3
+#   (#tt-9618-prometheus-onboarding-rules-merge, #tt-9618-onboarding-on-call-template).
+# Tune thresholds, `for:` durations, and severities per environment. Do NOT enable
+# "metrics unavailable" alerts on demo targets that intentionally run without DATABASE_URL.
+#
+# Pair with: docs/runbook/TT-9618-onboarding-local-testnet.md §3.6.2 (DLQ manual replay checklist).
+#
+# Optional recording rules (example only): onboarding HTTP 4xx/5xx rates (5m rate).
+# Build error ratios in Grafana as: rate(4xx) / clamp_min(sum by (route)(rate(...[5m])), 1e-9).
+
+groups:
+  - name: traveltrust_onboarding_webhook_queue
+    interval: 30s
+    rules:
+      - alert: TravelTrustOnboardingWebhookPendingBacklogHigh
+        expr: traveltrust_onboarding_webhook_jobs_pending > 20
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: Onboarding webhook job queue has a sustained pending backlog
+          description: >-
+            traveltrust_onboarding_webhook_jobs_pending is above the example threshold. Verify worker
+            (spawn vs onboarding-webhook-worker + EXTERNAL_ONLY), DB health, and apply errors. See TT-9618 §3.6.
+
+      - alert: TravelTrustOnboardingWebhookProcessingElevated
+        expr: traveltrust_onboarding_webhook_jobs_processing > 5
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: Many onboarding webhook jobs stuck in processing state
+          description: >-
+            Elevated processing count may indicate slow apply, crash mid-apply, or worker starvation.
+            Cross-check updated_at in PG, stale requeue (ONBOARDING_WEBHOOK_REQUEUE_STALE_PROCESSING_SECS), TT-9618 §3.6.
+
+      - alert: TravelTrustOnboardingWebhookDlqUnreplayedBacklog
+        expr: traveltrust_onboarding_webhook_dlq_unreplayed > 0
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: Onboarding webhook DLQ has unreplayed rows (replayed_at IS NULL)
+          description: >-
+            Rows still need review or successful worker apply after requeue. Optional ONBOARDING_WEBHOOK_DLQ_AUTO_REPLAY
+            requeues raw_body to pending jobs and sets replayed_at (DLQ rows are retained for audit). Follow TT-9618 §3.6.2;
+            use Admin GET …/webhook-dlq. dlq_total includes replayed history; use dlq_unreplayed for actionable backlog.
+
+      - alert: TravelTrustOnboardingWebhookDeadJobsPresent
+        expr: traveltrust_onboarding_webhook_jobs_dead > 0
+        for: 30m
+        labels:
+          severity: info
+        annotations:
+          summary: Dead onboarding webhook jobs exist (inspect last_error / resolution)
+          description: >-
+            Inspect onboarding_webhook_jobs for status=dead. May require product/support decision; see 96-18-未完成 P2.
+
+      # Enable only on targets that MUST have PostgreSQL (traveltrust_database_connected == 1).
+      - alert: TravelTrustOnboardingWebhookQueueMetricsBroken
+        expr: >-
+          traveltrust_database_connected == 1
+          and traveltrust_onboarding_webhook_jobs_pending < 0
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: Onboarding webhook queue metrics returned -1 while DB is supposedly connected
+          description: >-
+            Snapshot query may be failing (migration missing, permissions, or handler regression).
+            Check API logs and PG grants for onboarding_webhook_* tables. See matrix_93_d_onb_011 IT.
+
+  - name: traveltrust_onboarding_http_recording
+    interval: 30s
+    rules:
+      - record: traveltrust:onboarding_quote_http_4xx_per_second_5m
+        expr: sum(rate(traveltrust_onboarding_http_responses_total{route="quote",status_class="4xx"}[5m]))
+
+      - record: traveltrust:onboarding_payment_intents_http_4xx_per_second_5m
+        expr: sum(rate(traveltrust_onboarding_http_responses_total{route="payment_intents",status_class="4xx"}[5m]))
+
+      - record: traveltrust:onboarding_entitlements_me_http_4xx_per_second_5m
+        expr: sum(rate(traveltrust_onboarding_http_responses_total{route="entitlements_me",status_class="4xx"}[5m]))
+
+      - record: traveltrust:onboarding_role_confirm_http_4xx_per_second_5m
+        expr: sum(rate(traveltrust_onboarding_http_responses_total{route="role_confirm",status_class="4xx"}[5m]))
+
+      - record: traveltrust:onboarding_quote_http_5xx_per_second_5m
+        expr: sum(rate(traveltrust_onboarding_http_responses_total{route="quote",status_class="5xx"}[5m]))

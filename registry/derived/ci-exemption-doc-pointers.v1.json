@@ -1,0 +1,17 @@
+{
+  "kind": "traveltrust.ci_exemption_doc_pointer.v1",
+  "summary": "Human cross-links for scripts/gates/check-ci-exemption.sh header comments; paths as segments for P-C consumer-literal hygiene.",
+  "pointers": {
+    "08_5_ci_consistency_markdown": [
+      "docs",
+      "spec",
+      "08-5-CI与一致性落地说明.md"
+    ],
+    "00_doc_governance_gates_index": [
+      "docs",
+      "spec",
+      "00-文档治理总册.md"
+    ],
+    "gates_index_anchor": "00 §8.3 #doc-audit-gates-ssot (see 00 body in spec tree)"
+  }
+}

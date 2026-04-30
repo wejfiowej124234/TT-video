@@ -1,0 +1,64 @@
+# pre-release-automation — machine summary (auto)
+# source: evidence/GO_96_15_deep_20260427/pre-release-automation-forge-run.txt
+# lines in full: 1625
+
+# --- line 1 ---
+=== pre-release-automation: check-invariants ===
+OK: frontend package-lock.json covers package.json direct deps (B-158)
+OK: ssot-guard-ci-v2 passed (static B-097 + B-110 + response contract)
+OK: invariants passed
+=== pre-release-automation: 55-S13 ===
+55-S13 OK: API router and routes dir present
+55-S13 OK: ABI dirs present; Escrow canonical + frontend minimal include openDispute (manual: full byte match optional; deploy version vs ABI)
+55-S13 OK: GuideIdentityStakingPool/ProviderIdentityStakingPool/Registry/EscrowFactory/FeeRouter/RegionVault JSON byte-identical (contracts/abi ↔ frontend/dapp/abis)
+55-S13 OK: env.example present (manual: PORT and NEXT_PUBLIC_API_BASE_URL consistent across envs)
+55-S13 OK: 55 key routes registered
+
+55-S13 自动检查通过。发版前请人工执行：
+  - 04 §3.4 表与 crates/api 注册路径逐项对照（机器预检：./scripts/run-check-04-routes.sh，Build CI 已跑）；
+  - frontend 调用的 path 与 04 一致；
+  - ABI 与部署合约版本一致；
+  - 15 附录〇 发版前检查总表勾选。
+=== pre-release-automation: 04 API + 04/13-1 routes (app + doc subset) ===
+check-04-routes-vs-code OK: 04 sec 3.4 table paths are mounted (except DOC_ONLY_SCHEDULED).
+  (no undocumented public /api/v1 routes vs sec 3.4 table)
+check-04-frontend-routes-vs-app OK: 04 sec 3.4 frontend page routes match frontend/app.
+check-04-api-ts-routes-vs-doc-34 OK: all routes block /api/v1|/auth|/meta|/health paths match 04 ��3.4 (183 checked).
+check-13-1-table1-routes-vs-app OK: 13-1 sec 2 table 1 routes match frontend/app.
+check-13-1-routes-covered-by-04-frontend-table OK: 13-1 table 1 routes are covered by 04 sec 3.4 frontend path table.
+check-b432-governance-ui-ssot-surface OK: B-428/B-432 governance closeloop surface pinned.
+check-b450: OK (B450-REVIEW-POST-SSOT-DOC-ANCHORS-V1)
+check-b451: OK (B451-REVIEW-JSON-CONTRACT-EVOLUTION-GATE-V1)
+check-b452: OK (B452-REVIEW-JSON-CONTRACT-CLIENT-GATE-V1)
+check-b453: OK (B453-REVIEW-JSON-CONTRACT-OBSERVABILITY-GATE-V1)
+check-b454: OK (B454-REVIEW-JSON-CONTRACT-DEGRADE-EVIDENCE-GATE-V1)
+check-b455: OK (B455-REVIEW-JSON-CONTRACT-ROLLOUT-GATE-V1)
+check-b456: OK (B456-REVIEW-JSON-CONTRACT-RELEASE-CONTROLLER-GATE-V1)
+check-b457: OK (B457-REVIEW-JSON-CONTRACT-RELEASE-ADAPTER-GATE-V1)
+=== pre-release-automation: forge build + verify-abi-forge ===
+No files changed, compilation skipped
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> src\GovernanceTreasury.sol:4:8
+  |
+4 | import "./IERC20.sol";
+  |        ^^^^^^^^^^^^^^
+  |
+
+# --- line 1609 ---
+verify-abi-forge: OK Escrow.json
+verify-abi-forge: OK EscrowFactory.json
+verify-abi-forge: OK FeeRouter.json
+verify-abi-forge: OK GovernanceTimelock.json
+verify-abi-forge: OK GovernanceTreasury.json
+verify-abi-forge: OK GovernanceVotesToken.json
+verify-abi-forge: OK GuideIdentityStakingPool.json
+verify-abi-forge: OK InvestorDistributionClaim.json
+verify-abi-forge: OK ProviderIdentityStakingPool.json
+verify-abi-forge: OK RegionVault.json
+verify-abi-forge: OK Registry.json
+verify-abi-forge: OK ReserveVault.json
+verify-abi-forge: OK SlashRouter.json
+verify-abi-forge: OK TravelTrustGovernor.json
+
+pre-release-automation: 机器步骤完成。
+须人工（不可替代）：缺口与待补-官方总表 P0、15 附录〇、53-收口-09-04-36-确认表、55 §八附续.9、08-4/08-2/evidence/Runbook。

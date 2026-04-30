@@ -1,0 +1,6 @@
+{
+  "component": "tier_96_15",
+  "expires_utc": "2026-05-03T00:00:00Z",
+  "ticket": "local-waiver-20260426-001",
+  "reason": "Local CI budget outage: use waiver for PR-level 96-15 machine gap while retaining B-421/report policy local enforcement."
+}

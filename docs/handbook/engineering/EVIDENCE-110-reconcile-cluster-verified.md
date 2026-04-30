@@ -1,0 +1,84 @@
+# EVIDENCE · **110 / 96-08 索引与对账（reconcile）** 簇 · **09 §2b**（V-1 / V-2 / V-3）
+
+**Version:** 1.0.8 · **最后更新：** 2026-04-29  
+**受众**：审计 **110+96-08** 数据一致性与对账承接（**41-D**）与 **CI** 对齐的 Owner / Tech lead  
+**状态**：现行  
+**与 spec 关系**：**证据包**；**不替代** **[110](../../spec/110-阶段开发链上索引器与事件同步器.md)**、**[96-08](../../spec/96-08-索引器对账与财务.md)**、**[04](../../spec/04-后端与API.md)**、**[93](../../spec/93-全站功能验证矩阵-域别回归清单.md)**；**链上终态** 仍以 **spec/110** 与 **Runbook** 为 SSOT。  
+**母版**：[22-横切-簇级verified证据模板](./22-横切-簇级verified证据模板.md)
+
+> **SSOT（必读）**：**engineering 仅为**（**Explanation / How-to**）**导读**；**不替代** **spec**。**HTTP 机读**真源 **[04 §3.4](../../spec/04-后端与API.md)**；**域矩阵**真源 **[93](../../spec/93-全站功能验证矩阵-域别回归清单.md)**；**链上 ABI 与对齐叙述**真源 **[14](../../spec/14-合约-API-ABI-前后端对齐.md)** + **`contracts/`** + **`check-55-s13`** 等脚本；**实现**真源 **`crates/`·`contracts/`·`frontend/`** 与当次 **PR** 可复核产物（含**同 PR 脚本闭包**）。本文件仅为导读，**不**形成第二套机读 SSOT（与 **[手册 00 §3](../00-手册总览与编制规范.md#hb-00-master-table)**、**[engineering/README](./README.md)**、磁盘 **`NN`** 主序 **[三处对拍](./02-生产级文档约束与合入门禁.md#hb-prod-doc-triple-sync)**）。
+
+---
+
+<a id="ev110rec-v1"></a>
+
+## V-1 · 本地运行记录（与 **[41-D §6](./41-D-索引与对账导读.md#d41-6-verify)** 同名命令）
+
+**环境**：仓库根 **`D:/TravelTrust`**（Windows **Git Bash**）。**捕获（UTC）**：**2026-04-29**（时效性抽检复跑）。
+
+```text
+=== V-1 capture 2026-04-29 UTC · cluster 110-reconcile ===
+--- routes vs 04 ---
+bash scripts/run-check-04-routes.sh
+(exit 0; check-04-* 下游均 OK)
+--- D-IDX-001b PG IT ---
+cargo test -p traveltrust-api matrix_93_d_idx_001b_f029_get_internal_indexer_status_ok_shape_app_stack_ok_pg
+test result: ok. 1 passed; … finished in 0.00s
+(exit 0)
+--- indexer-reorg-recovery status（无 API 时 curl (7) 预期）---
+bash scripts/ops/indexer-reorg-recovery.sh status
+curl: (7) Failed to connect …  # 与 EVIDENCE-70 同惯例；主证以 **run-check-04** + **cargo test** 为准
+--- handbook ---
+bash scripts/check-handbook-frontmatter.sh
+(exit 0)
+bash scripts/check-handbook-engineering-content.sh
+(exit 0；stderr 可出现 **HBOOK-ENG-TABLE-WARN** 提示行，**exit 仍 0**)
+```
+
+**`bash scripts/check-indexer-lag-locate-gate.sh`**：须 **`ADMIN_BEARER_TOKEN`** + **`INTERNAL_API_SECRET`** + **本机已起 `traveltrust-api`**；未满足时 **exit 1** 为**预期**，**不**单独作为 **V-1** 否定项；**起服并 export 后**可补 **exit 0** 日志进 PR。
+
+**台账对拍（文档 → 08 → 本证据）**：[08 §3](./08-文档与spec迁移台账.md#mig-2-matrix) **spec/110** 与 **spec/96-08** 行 **覆盖度 full**；[09 §3](./09-文档迁移覆盖审计报告.md#audit-coverage) **110 / 96-08** 簇 **verified**（**[09 §2b.6](./09-文档迁移覆盖审计报告.md#audit-verified-evidence-110reconcile)**）；**[41-D §2b](./41-D-索引与对账导读.md#d41-6-verify)** 文内证据句与上列 **同 PR** 可读。
+
+---
+
+<a id="ev110rec-v2"></a>
+
+## V-2 · CI 具名 step（**GitHub Actions** · 可复核 log）
+
+| Workflow | Job | Step `name:`（摘录） | 与 **41-D §6** 的对应 |
+|----------|-----|----------------------|------------------------|
+| **`.github/workflows/build.yml`** | **`build`** | **`04 section 3.4 API table vs mounted routes (STRICT_WARNINGS)`** | **`bash scripts/run-check-04-routes.sh`** **同目的** |
+| 同上 | **`build`** | **`Run tests`**（`cargo test --workspace`） | **超集**于 **`cargo test -p traveltrust-api matrix_93_d_idx_001b_f029_*`** |
+| 同上 | **`build`** | **`Handbook engineering content hygiene …`** | **`bash scripts/check-handbook-engineering-content.sh`** **同门禁族** |
+| **`.github/workflows/indexer-reconcile-gate.yml`** | **`indexer-reconcile`** | **`Verify indexer/reconcile route anchors`** | **`internal/indexer-reconcile`**、**`indexer-status`**、**`110-*`** 锚与 **110** 叙事 **互证**（grep 锚点矩阵） |
+| 同上 | **`indexer-reconcile`** | **`Self-test Ed25519 reconcile export verify script`** | **对账导出** 自测链（与 **96-08** / **Admin export** 叙述同源族） |
+
+---
+
+<a id="ev110rec-v3"></a>
+
+## V-3 · Owner 文档签收（**Reviewed-by**）
+
+**[41-D-索引与对账导读](./41-D-索引与对账导读.md)** 文内 **`Reviewed-by: @ghost 2026-04-28`** 同时服务 **70 Admin（§2b.1）** 与本 **110/96-08（§2b.6）** 簇（**CODEOWNERS** 占位与 **EVIDENCE-70** **§V-3** 同惯例）。
+
+**盲测四问（110-reconcile）**（辅助 Owner；**非**单独 **V-3**）：
+
+1. **§6** 能否找到 **`matrix_93_d_idx_001b_f029_*`** 与 **`run-check-04-routes`**？  
+2. **`indexer-reconcile`** 与 **`indexer-status`** 凭证面（**Admin** vs **internal**）是否在 **§2** 区分？  
+3. **96-08** 与 **110** 分工一句是否在 **§1** 或 **§8**？  
+4. 本文是否**未**粘贴 **04 §3.4 / 93** 宽表？
+
+---
+
+## 变更记录
+
+| Version | 日期 | 摘要 |
+|---------|------|------|
+| 1.0.8 | 2026-04-29 | **V-1**：时效性抽检复跑；**engineering-content** stderr 口径与当前 checker 一致。 |
+| 1.0.7 | 2026-04-29 | **V-1**：补 **台账对拍**（**41-D §2b** ↔ **08 §3** **spec/110** + **spec/96-08** ↔ **09 §2b.6**）。 |
+| 1.0.6 | 2026-04-29 | 文首 **SSOT（必读）** 与 **08/README** 对拍：补 **14** + **`contracts/`** + **`check-55-s13`** 等脚本句（无正文语义变更）。 |
+| 1.0.5 | 2026-04-29 | 文首 **SSOT（必读）** 与 **engineering/README** 同形（**仅为导读**；**不替代 spec**；**PR** 闭包链）。 |
+| 1.0.4 | 2026-04-29 | 文首 **SSOT（必读）** 与 **手册 00 §3**/**README**/**三处对拍** 同形（**04 §3.4**/**93**/代码+门禁）。 |
+| 1.0.2 | 2026-04-29 | 文首 **SSOT（必读）** 标准句。 |
+| 1.0.1 | 2026-04-28 | **V-1**：**engineering-content** 捕获与 **40-D** 无 **TABLE-WARN**、checker **`return`** 修复对齐。 |
+| 1.0.0 | 2026-04-28 | 首版：**110-reconcile** 簇 **V-1～V-3**（**41-D**）。 |

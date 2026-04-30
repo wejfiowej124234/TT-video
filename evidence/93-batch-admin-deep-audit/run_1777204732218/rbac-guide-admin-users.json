@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/v1/admin/users?limit=5",
+    "auth": "Bearer guide"
+  },
+  "response": {
+    "status": 403,
+    "body": {
+      "error": "admin_required",
+      "message": "admin_required"
+    }
+  }
+}

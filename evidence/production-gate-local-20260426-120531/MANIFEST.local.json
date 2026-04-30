@@ -1,0 +1,16 @@
+{
+  "schema_version": "1",
+  "kind": "traveltrust.production_gate_local_manifest.v1",
+  "generated_at_utc": "2026-04-26T04:05:40Z",
+  "run_id": "local-20260426-120531",
+  "commit_sha": "303c0a3c49a800aee11cea4c1ef6d98b7a399b53",
+  "base_ref": "main",
+  "skip_e2e": true,
+  "skip_api_tests": true,
+  "local_smoke_gate": "SKIPPED",
+  "report_validate": "PASS",
+  "production_gate_local": "PASS",
+  "chain_deferred_gate": "NOT_RUN",
+  "gate_ssot": "gates/production_gate.yaml",
+  "notes": "Local smoke: core production gate + chromium E2E excluding @e2e-sepolia-deferred. Chain deferred: run scripts/gates/run-production-gate-chain-deferred.sh separately."
+}

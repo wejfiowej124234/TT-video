@@ -1,0 +1,53 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260423_local_r001_e2e_f029_f030_f031",
+  "title": "Local E2E (Playwright request): F-029/F-030/F-031 — indexer + admin gate + community/market",
+  "executor": "cursor-agent-local",
+  "started_at": "2026-04-23T12:31:00Z",
+  "finished_at": "2026-04-23T12:32:30Z",
+  "environment": {
+    "name": "local",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "Playwright api-f029-f030-f031-chromium: 4 passed (playwright-report.json). Maps F-029→D-IDX-001, F-030→D-ADM-003, F-031→D-COM-011 + D-COM-001 (follow-feed). ISS-007 CI e2e full matrix / staging GO report.json still open.",
+  "cases": [
+    {
+      "id": "D-IDX-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_e2e_f029_f030_f031/D-IDX-001/",
+      "blocker": false,
+      "notes": "F-029 GET /internal/indexer-status"
+    },
+    {
+      "id": "D-ADM-003",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_e2e_f029_f030_f031/D-ADM-003/",
+      "blocker": false,
+      "notes": "F-030 non-admin GET admin/schema/migrations → 403"
+    },
+    {
+      "id": "D-COM-011",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_e2e_f029_f030_f031/D-COM-011/",
+      "blocker": false,
+      "notes": "F-031 acquisition_led showcase (spec test 1)"
+    },
+    {
+      "id": "D-COM-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_e2e_f029_f030_f031/D-COM-001/",
+      "blocker": false,
+      "notes": "F-031 follow + mode=follow feed (spec test 2)"
+    }
+  ],
+  "summary": {
+    "PASS": 4,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  }
+}

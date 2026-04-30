@@ -1,0 +1,10 @@
+{
+  "kind": "traveltrust.fix_27_archived_links_doc_pointer.v1",
+  "summary": "Header for scripts/gates/fix_27_archived_links.ps1; bash gate uses find on archived tree segments.",
+  "bash_delegate_repo_relative": "scripts/fix_27_archived_links.sh",
+  "archived_markdown_tree_segments": [
+    "docs",
+    "spec",
+    "27-archived"
+  ]
+}

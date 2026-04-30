@@ -1,0 +1,46 @@
+name: Auth audit retention (staging)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 2 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: auth-audit-retention-staging-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  auth-audit-retention:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Ensure psql client
+        run: |
+          set -euo pipefail
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq postgresql-client
+          fi
+          psql --version
+
+      - name: Run auth audit retention (optional secrets)
+        env:
+          DATABASE_URL: ${{ secrets.STAGING_AUTH_AUDIT_RETENTION_DATABASE_URL }}
+          AUTH_AUDIT_RETENTION_DAYS: ${{ vars.STAGING_AUTH_AUDIT_RETENTION_DAYS }}
+          AUTH_AUDIT_RETENTION_DRY_RUN: ${{ vars.STAGING_AUTH_AUDIT_RETENTION_DRY_RUN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${DATABASE_URL}" ]; then
+            echo "::notice title=auth-audit-retention::skipped — secret STAGING_AUTH_AUDIT_RETENTION_DATABASE_URL unset."
+            exit 0
+          fi
+          echo "::group::auth_audit_retention config"
+          echo "AUTH_AUDIT_RETENTION_DAYS=${AUTH_AUDIT_RETENTION_DAYS:-90}"
+          echo "AUTH_AUDIT_RETENTION_DRY_RUN=${AUTH_AUDIT_RETENTION_DRY_RUN:-1}"
+          echo "::endgroup::"
+          bash scripts/auth-audit-retention.sh
+

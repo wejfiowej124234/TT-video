@@ -1,0 +1,46 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260423_local_r001_close_loop_f007_f010_f032",
+  "title": "close-loop slice F-007 F-010 F-032: API\u00b7IT matrix_93 + Playwright E2E",
+  "executor": "local-cursor-agent",
+  "started_at": "2026-04-23T12:46:45Z",
+  "finished_at": "2026-04-23T12:46:53Z",
+  "environment": {
+    "name": "local",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "mixed"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "3/3 Playwright PASS; 3x router::app matrix_93 API\u00b7IT PASS (logs in bundle). Not CI e2e run_id / staging full matrix; ISS-007 remains open.",
+  "cases": [
+    {
+      "id": "A-AVA-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_close_loop_f007_f010_f032/playwright-report.json",
+      "blocker": false,
+      "notes": "F-007 E2E: local profile-avatar. API\u00b7IT: api_it_f007.log -> matrix_93_a_ava_001b_f007_* (me_profile_avatar_db_api_tests)."
+    },
+    {
+      "id": "B-ESC-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_close_loop_f007_f010_f032/playwright-report.json",
+      "blocker": false,
+      "notes": "F-010 E2E mock-pay escrowed. API\u00b7IT: api_it_f010.log -> matrix_93_b_esc_001b_f010_* (orders_accept_mock_pay_itinerary_confirm_db_api_tests)."
+    },
+    {
+      "id": "B-TGR-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_close_loop_f007_f010_f032/playwright-report.json",
+      "blocker": false,
+      "notes": "F-032 E2E GET trust-growth/config. API\u00b7IT: api_it_f032.log -> matrix_93_b_tgr_001_f032_get_trust_growth_config_autopilot_gen_matches_runtime_state_pg (f031_f032_f033_app_http_db_api_tests)."
+    }
+  ],
+  "summary": {
+    "PASS": 3,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  }
+}

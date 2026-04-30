@@ -1,0 +1,11 @@
+{
+  "kind": "traveltrust.tt_9618_onboarding_pg_evidence_doc_pointer.v1",
+  "summary": "Header doc cross-links for scripts/gates/tt-9618-onboarding-pg-evidence.sh (replaces inline markdown to spec tree).",
+  "runbook_tt9618_repo_relative": "docs/runbook/TT-9618-onboarding-local-testnet.md",
+  "spec_96_18_backlog_segments": [
+    "docs",
+    "spec",
+    "96-18-未完成清单与多维检查.md"
+  ],
+  "anchor_fragments_note": "In 96-18 body: #9618-one-page-priority and #9618-cmd-cheatsheet (see §4)."
+}

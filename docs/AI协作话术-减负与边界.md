@@ -3,6 +3,8 @@
 与 [CONTRIBUTING.md](../CONTRIBUTING.md) 并列：**给人用的可复制话术** + **给 AI 的约束摘要**。详细工程门禁仍以 **07**、**scripts/README** 为准。  
 **任务来源与执行**：Backlog 见 [任务母表.md](./任务母表.md)；可执行 TT 见 [AI任务卡索引.md](./AI任务卡索引.md)（说「执行任务卡 TT-XXX」即按索引条目执行）。
 
+> **开发期（未发布）**：下文「分两批 PR」等话术是**控 diff 体量**的工具，**不**等于「每轮必须走 GitHub PR UI」。是否开 PR 见 **[CONTRIBUTING · 单人 push](../CONTRIBUTING.md#solo-push-vs-pr)** 与 **[TT — spec→handbook 全量替代清单 · §0](runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md)**。
+
 ---
 
 ## 极简版（复制这一条即可开场）
@@ -213,3 +215,15 @@ bash scripts/check-07-version-triple.sh && bash scripts/run-check-04-routes.sh &
 | 全量测试 + 多脚本 | 每批合并的固定墙钟时间。 |
 
 详见日常排障仍以 **07 读前摘要**、**scripts/README** 为准。
+
+---
+
+## 12. 迭代期 vs 发版闸（开发期减负）
+
+| 场景 | 口径 |
+|------|------|
+| **功能迭代、仓库未对外发布** | **不必**以 **full production gate** 或「完整企业审计矩阵全文」作为**每轮**完成标准；日常以快速检查 + 受影响单测 / E2E + **[solo-dev-rhythm §6.5](solo-dev-rhythm.md)** 裁剪为主。 |
+| **删 `docs/spec`、改 `build.yml` 必过链、里程碑封口、准备对外发版** | 按 **CONTRIBUTING**、**07**、**TT 清单 §14** 等**专程序**；**不因「开发期」而跳过**。 |
+| **权威一句** | **[TT — spec→handbook 全量替代清单 · §0](runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md)**（与根 **AGENTS**、**CONTRIBUTING** 文首 **开发期** blockquote 同源）。 |
+
+三层门禁与话术变体仍可与 **§7.x（CI 新红链）** 联用；区别是：**§7** 排障，**§12** 定「本轮要不要扛发版级全量」的预期。

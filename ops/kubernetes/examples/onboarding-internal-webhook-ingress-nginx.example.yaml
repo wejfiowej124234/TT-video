@@ -1,0 +1,46 @@
+# 96-18 / TT-9618 §3.5 · ingress-nginx：内网 internal 入口（含可选 mTLS）
+#
+# SSOT 叙述：docs/runbook/TT-9618-onboarding-local-testnet.md §3.5
+# 应用层边缘闸：ONBOARDING_INTERNAL_WEBHOOK_ALLOWLIST_CIDRS、ONBOARDING_INTERNAL_WEBHOOK_REQUIRE_HTTPS_FORWARDED
+# （见 docs/spec/04-附录-商家主理人准入费HTTP契约草案-配96-18.md §1）
+#
+# 使用前：替换 api-internal.staging.example.com、TLS secret、Service 名、ingressClassName、namespace。
+# mTLS：取消注释 auth-tls-* 前，须在目标 namespace 创建 Secret（含 CA；详见 kubernetes/ingress-nginx 文档
+# 「Client Certificate Authentication」）。与 Stripe 公网 Ingress 分轨；API 进程不读客户端证书。
+#
+# 可选（P1 · 边缘粗限流）：私网亦可能对误配或脚本风暴限 RPS；与内网调用方并发对拍 tuned。
+# kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#rate-limiting
+# nginx.ingress.kubernetes.io/limit-rps: "50"
+# nginx.ingress.kubernetes.io/limit-burst-multiplier: "5"
+#
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traveltrust-api-internal
+  namespace: traveltrust-staging
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    # 若上游 Service 为 HTTP，ingress-nginx 默认会注入 X-Forwarded-Proto: https（TLS 在 Ingress 终止）。
+    # 与 ONBOARDING_INTERNAL_WEBHOOK_REQUIRE_HTTPS_FORWARDED=1 对拍前，用 curl -v 确认到达 Pod 的头。
+    # 可选：双向 TLS（客户端证书由网关校验；upstream 不接收 cert）
+    # nginx.ingress.kubernetes.io/auth-tls-secret: traveltrust/ingress-mtls-ca
+    # nginx.ingress.kubernetes.io/auth-tls-verify-client: "on"
+    # nginx.ingress.kubernetes.io/auth-tls-pass-certificate-to-upstream: "false"
+spec:
+  ingressClassName: nginx-internal
+  rules:
+    - host: api-internal.staging.example.com
+      http:
+        paths:
+          - path: /api/v1/internal
+            pathType: Prefix
+            backend:
+              service:
+                name: traveltrust-api
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - api-internal.staging.example.com
+      secretName: api-internal-tls

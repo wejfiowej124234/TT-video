@@ -1,0 +1,23 @@
+# Same run as playwright-chromium-failed-20260426-gate.list.txt — failure modes from terminal 631839.txt body
+
+A) Explicit API/assert failures (not UI flake alone)
+  - f024-f025-f026 F-025: "expected role=arbitrator … got tourist" → P3_SEED / stale DB row vs PLAYWRIGHT arbitrator email.
+  - f029: "indexer-status 403" → INTERNAL_API_SECRET on API but Playwright request missing X-Internal-Api-Secret.
+
+B) Session / header / navigation (same log shows many of these)
+  - waitForURL timeouts after register/login (93-matrix A-REG-001, auth-register-login-market-chain, section10-5, core-path, itinerary-52).
+  - b463: expect(User menu).toBeVisible failed — logged-in chrome not established after prior steps.
+
+C) Next dev instability
+  - page.goto timeout; net::ERR_CONNECTION_RESET on /me/password — dev server restart / memory threshold symptoms in long gate.
+
+D) Likely cascades from A+B+C
+  - Large blocks: smoke.spec + smoke-community + community-me-data-state + market-d8/deep-link + P01–P04 + B463–B469 + p1-remediation + smoke Admin placeholder — many need stable auth + /market + Next.
+
+Remediation already merged in repo (see recent commits / prior chat): register/login without blocking getMeFull; getMeFull Bearer 401 retry; P3 defaults in playwright webServer + gate scripts + start-api-for-playwright; INTERNAL_API_SECRET lift in run-e2e-default + all run-e2e-api-* + auth-chain + sepolia; login DB repair for P3 seed tourist row; PLAYWRIGHT_E2E_STABILITY workers/memory.
+
+2026-04-26 follow-up (same failure class):
+- playwright.config.ts loads: mirror e2e-align from repo root .env + P3 defaults so `npx playwright test` without npm run e2e still gets F-029/F-025 env.
+- When PLAYWRIGHT_E2E_STABILITY=1 and not CI: per-test timeout 90s, expect timeout 20s, retries=1 (local gate / long smoke).
+- PLAYWRIGHT_E2E_STABILITY=1 → API webServer env aligned with run-production-gate-local.sh: TRAVELTRUST_DEPLOYMENT_PROFILE=local, PRODUCTION_SAFE_DEFAULTS=0, ALLOW_LOCAL_PROFILE_AVATAR=0, default P3_CHAIN_OFF=1, empty CHAIN_RPC_URL/WS, PLAYWRIGHT_RELAX_META_CHAIN_GUARD=1 (fixes API exit on production+local avatar; start-api script then clears RPC / governance probes → /meta 408 缓解).
+- npm script e2e:chromium-failed-20260426 + scripts/run-e2e-chromium-failed-gate-20260426.mjs: DATABASE_URL from root .env + 51 line targets only.

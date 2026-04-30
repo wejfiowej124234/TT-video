@@ -1,0 +1,7 @@
+{
+  "kind": "traveltrust.dev_preflight_doc_pointer.v1",
+  "summary": "Human segments for scripts/dev/dev-preflight.sh header; 04 HTTP/§3.4 SSOT remains in spec tree per handbook boundary.",
+  "handbook_entry_repo_relative": "docs/handbook/README.md",
+  "spec_04_backend_api_segments": ["docs", "spec", "04-后端与API.md"],
+  "note_zh": "「三连」聚合所涉 04 文首「零、」单人默认流程；程序员入口见 handbook README。"
+}

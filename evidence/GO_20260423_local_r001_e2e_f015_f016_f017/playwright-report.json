@@ -1,0 +1,478 @@
+{
+  "config": {
+    "configFile": "D:\\Wbe3-TravelTrust\\frontend\\playwright.config.ts",
+    "rootDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "setup-meta-chain",
+        "name": "setup-meta-chain",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/setup/meta-chain-contracts.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-auth-chromium",
+        "name": "api-auth-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/auth-login-logout-me.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-b-orders-chromium",
+        "name": "api-b-orders-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/orders-b-domain-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-itin-feed-chromium",
+        "name": "api-itin-feed-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f012-f013-f014-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-d-com-015-017-chromium",
+        "name": "api-d-com-015-017-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f015-f016-f017-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-d-com-018-020-chromium",
+        "name": "api-d-com-018-020-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f018-f019-f020-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-mkt-guides-021-023-chromium",
+        "name": "api-mkt-guides-021-023-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f021-f022-f023-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-b-gde-dsp-msg-024-026-chromium",
+        "name": "api-b-gde-dsp-msg-024-026-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f024-f025-f026-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-f027-f028-f033-chromium",
+        "name": "api-f027-f028-f033-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f027-f028-f033-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-f029-f030-f031-chromium",
+        "name": "api-f029-f030-f031-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f029-f030-f031-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-f007-f010-f032-chromium",
+        "name": "api-f007-f010-f032-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f007-f010-f032-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [
+          "**/setup/**"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-sepolia",
+        "name": "chromium-sepolia",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [
+          "**/setup/**"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 1,
+    "webServer": {
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File ../scripts/dev/start-api-for-playwright.ps1",
+      "url": "http://127.0.0.1:8080/health",
+      "reuseExistingServer": true,
+      "timeout": 420000
+    }
+  },
+  "suites": [
+    {
+      "title": "f015-f016-f017-request.spec.ts",
+      "file": "f015-f016-f017-request.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "F-015 · POST community post then GET detail matches body",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "api-d-com-015-017-chromium",
+              "projectName": "api-d-com-015-017-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 566,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-04-23T12:37:14.816Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6de59e20fdc25be3ff3d-02b16d099f07ad89bcf5",
+          "file": "f015-f016-f017-request.spec.ts",
+          "line": 22,
+          "column": 5
+        },
+        {
+          "title": "F-015 · Bearer POST post then unauthenticated GET detail matches body",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "api-d-com-015-017-chromium",
+              "projectName": "api-d-com-015-017-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 519,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-04-23T12:37:15.400Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6de59e20fdc25be3ff3d-40936e8b87ec8ffc00de",
+          "file": "f015-f016-f017-request.spec.ts",
+          "line": 59,
+          "column": 5
+        },
+        {
+          "title": "F-016 · POST like returns created true",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "api-d-com-015-017-chromium",
+              "projectName": "api-d-com-015-017-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 560,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-04-23T12:37:15.927Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6de59e20fdc25be3ff3d-bccd7b2e375749bbbfd4",
+          "file": "f015-f016-f017-request.spec.ts",
+          "line": 94,
+          "column": 5
+        },
+        {
+          "title": "F-016 · DELETE like then GET liked_by_me false then POST like relike",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "api-d-com-015-017-chromium",
+              "projectName": "api-d-com-015-017-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 601,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-04-23T12:37:16.496Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6de59e20fdc25be3ff3d-c352ae8864882c909e42",
+          "file": "f015-f016-f017-request.spec.ts",
+          "line": 127,
+          "column": 5
+        },
+        {
+          "title": "F-017 · POST collect returns created true",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "api-d-com-015-017-chromium",
+              "projectName": "api-d-com-015-017-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 539,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-04-23T12:37:17.105Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6de59e20fdc25be3ff3d-486a70276896398b5686",
+          "file": "f015-f016-f017-request.spec.ts",
+          "line": 191,
+          "column": 5
+        },
+        {
+          "title": "F-017 · DELETE collect then GET collected_by_me false then POST collect recollect",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "api-d-com-015-017-chromium",
+              "projectName": "api-d-com-015-017-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 602,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-04-23T12:37:17.651Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6de59e20fdc25be3ff3d-2d33bbc681557915b8fe",
+          "file": "f015-f016-f017-request.spec.ts",
+          "line": 224,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-04-23T12:37:13.968Z",
+    "duration": 4314.998,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

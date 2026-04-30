@@ -1,0 +1,24 @@
+{
+  "batch": "GO_96_16_d5_d6_d7_landing_batch",
+  "docs_spec_touched": false,
+  "scope": "Home / LandingHeroForm + ItineraryResultsSection (no loading/error.tsx changes)",
+  "d5_d6_d7_actions": [
+    "i18n: calendar month via locale (zh-CN / en-US); date range sep + pending via keys; prev/next month aria keys (no t-fallback to English)",
+    "i18n: new keys landing_calendar_prev_month, landing_calendar_next_month, landing_date_display_sep, landing_date_display_pending (en + zh)",
+    "keyboard/focus: calendar weekday row still t(landing_calendar_weekdays); day cells enlarged to 44x44 min touch",
+    "44px: Hero CTAs, country/city/attraction/dining/hotel chips, unlock CTA",
+    "motion-reduce: hero card animate-fadeUp; CTA/chip transitions; submit active scale; itinerary card hover + unlocked image zoom",
+    "LCP/images: first itinerary card scenic/cover img eager + fetchPriority high; others lazy/low"
+  ],
+  "commands": {
+    "eslint": { "cmd": "npm run lint", "exit": 0 },
+    "i18n_ci": { "cmd": "npm run test:i18n:ci", "exit": 0 },
+    "vitest": { "cmd": "npm test -- --run lib/landingHeroFormAlert.test.ts", "exit": 0, "tests_passed": 3 },
+    "npm_run_build": { "cmd": "npm run build", "exit": 0, "note": "tail in agent log" }
+  },
+  "playwright_e2e": {
+    "status": "NOT_RUN",
+    "trace": "93",
+    "detail": "Per user: :8080-dependent Playwright not blocking this static/build batch."
+  }
+}

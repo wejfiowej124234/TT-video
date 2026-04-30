@@ -1,0 +1,7 @@
+{
+  "kind": "traveltrust.bulk_update_doc_ssot_07_doc_pointer.v1",
+  "summary": "Human segments for scripts/gates/bulk_update_doc_ssot_07.py: legacy shell path + 07/00 link replacement pairs. Script builds match strings from Path segments; does not read this file.",
+  "spec_tree_root_segments": ["docs", "spec"],
+  "chaining_shell_markdown": ["docs", "spec", "00-文档体系与阅读串联.md"],
+  "scan_root": "scripts/gates/bulk_update_doc_ssot_07.py uses SPEC = repo_root.joinpath('docs','spec'); REPLACEMENTS old bullets use as_posix() legacy path."
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260428_r002_onboarding_96_18_prereport",
+  "title": "R-002 prereport · 96-18 G15 (onboarding API pack + optional Playwright shell)",
+  "executor": "scripts/gen-r002-onboarding-96-18-prereport.py",
+  "started_at": "2026-04-28T04:54:05Z",
+  "finished_at": "2026-04-28T04:54:05Z",
+  "environment": {
+    "name": "local",
+    "database": "disabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "96-18 / G15 narrow slice: cargo `onboarding` pack + optional Playwright shell; does not claim staging full-matrix report.json GO (R-002 / ISS-007 remain broader). Playwright G15 shell NOT_RUN unless PLAYWRIGHT_ONBOARDING_G15_OUTCOME set.",
+  "onboarding_96_18_narrow_slice": {
+    "scope_note": "Admission-fee domain only (96-18 §12 / G15). Does not substitute ISS-007 or full 93 matrix R-002 GO.",
+    "cargo_command": "cargo test -p traveltrust-api onboarding",
+    "playwright_spec": "frontend/e2e/me-onboarding-96-18-shell.spec.ts"
+  },
+  "cases": [
+    {
+      "id": "G15-ONB-CARGO",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260428_r002_onboarding_96_18_prereport/G15-ONB-CARGO",
+      "blocker": false,
+      "notes": "evidence/GO_20260428_r002_onboarding_96_18_prereport/G15-ONB-CARGO/notes.md | database=disabled",
+      "matrix_93_cargo_filter": "onboarding"
+    },
+    {
+      "id": "G15-ONB-E2E-SHELL",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_20260428_r002_onboarding_96_18_prereport/G15-ONB-E2E-SHELL",
+      "blocker": false,
+      "notes": "evidence/GO_20260428_r002_onboarding_96_18_prereport/G15-ONB-E2E-SHELL/notes.md",
+      "playwright_spec": "frontend/e2e/me-onboarding-96-18-shell.spec.ts"
+    }
+  ],
+  "summary": {
+    "PASS": 1,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 1
+  }
+}

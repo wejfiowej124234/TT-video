@@ -1,0 +1,34 @@
+{
+  "version": "1",
+  "description": "Maps orchestration step ids to 95 F-row style anchors and release hygiene tags (machine-readable; not a replacement for 95 SSOT).",
+  "by_step_id": {
+    "TIER-A-1": ["F-bundle", "96-11", "ISS-signoff-hygiene"],
+    "TIER-A-2": ["F-59-P0", "96-15", "ISS-planning"],
+    "TIER-A-3": ["F-033", "GATE-B421", "R002-doclink"],
+    "TIER-B-4": ["F-doc", "96-12", "66-51-53-anchors"],
+    "TIER-B-5": ["F-27-Pn", "96-12"],
+    "TIER-C-6": ["F-010", "F-008", "F-021", "96-13", "96-16"],
+    "TIER-C-7": ["F-033", "04-routes", "96-12"],
+    "AUTO-96-02": ["F-legal", "ISO27001-A.18"],
+    "AUTO-96-03": ["F-security", "ISO27001-A.12"],
+    "AUTO-96-04": ["F-compliance", "ISO27001-A.18"],
+    "AUTO-96-05": ["F-sre", "SRE-SLO"],
+    "AUTO-96-06": ["F-backup", "ISO27001-A.12"],
+    "AUTO-96-07": ["F-chain", "OWASP-ASVS-V10"],
+    "AUTO-96-08": ["F-indexer", "SOC2-CC7.2"],
+    "AUTO-96-09": ["F-messaging", "ISO27001-A.13"],
+    "AUTO-96-10": ["F-config", "CIS-CSC4"],
+    "AUTO-96-12": ["F-8.2-satellite", "95-11"],
+    "AUTO-96-14": ["F-wallet-community", "OWASP-ASVS-V4"],
+    "AUTO-96-13-UI-TEST": ["F-010", "F-015", "93-matrix"],
+    "AUTO-96-13-I18N": ["F-010", "150-i18n"],
+    "AUTO-96-16-ROUTES": ["F-008", "96-16"],
+    "AUTO-95-F-REGISTRY": ["F-doc-registry", "96-Hub"],
+    "AUTO-96-01": ["F-96-01-boundary", "96-01"],
+    "AUTO-96-11-R002": ["F-8.2", "R002", "R-001", "ISS-007"]
+  },
+  "report_json_alignment": {
+    "release_gate": "95 orchestration top-level; must be GO for PRODUCTION_GO in tri_state_v2",
+    "cases_status_fail": "Maps to §8.2 / §9 ISS hygiene when any case FAIL"
+  }
+}

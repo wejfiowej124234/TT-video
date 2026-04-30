@@ -1,6 +1,6 @@
 # `docs/spec` 路径依赖盘点与真源迁移方案（只读）
 
-**性质**：工程盘点与方案草案；**不**删除、**不**搬迁 `docs/spec/` 内任何文件。执行删旧仍须 **[engineering/08 §2](handbook/engineering/08-文档与spec迁移台账.md#mig-delete-policy)**、**[SPEC-MIGRATION-STATUS](handbook/corpus/SPEC-MIGRATION-STATUS.md)**（含 **P-C** 脚本去硬编码）、**[98 §2](spec/98-以代码为真源的文档体系与旧文档替代路线图.md)** 与 **CI/链接** 同批。
+**性质**：工程盘点与方案草案；**不**删除、**不**搬迁 `docs/spec/` 内任何文件。执行删旧仍须 **[engineering/08 §2](handbook/engineering/08-文档与spec迁移台账.md#mig-delete-policy)**、**[SPEC-MIGRATION-STATUS](handbook/corpus/SPEC-MIGRATION-STATUS.md)**（含 **P-C** 脚本去硬编码）、**[98 §2](spec/98-以代码为真源的文档体系与旧文档替代路线图.md)** 与 **CI/链接** 同批（**GitHub Actions 不可用** 时以 **[`docs/solo-dev-rhythm.md` §6.5](solo-dev-rhythm.md)** **本地命令 + 证据** 为等价闸，**不以**远端绿为唯一依据）。
 
 **盘点方法**：对 `scripts/`、`.github/`、`docs/`（不含 `docs/spec/` 内部自链的穷尽统计）做 `docs/spec`、`docs\spec`、`../../spec/` 形态检索；抽样核对脚本硬编码路径。**日期**：2026-04-29。
 
@@ -151,14 +151,14 @@
 
 | 聚合 id（= STATUS / 08 §3.1） | 覆盖的盘点段落 / registry id（摘要） | §1 类 | **默认可删 spec？** | Owner ☐ |
 |------------------------------|----------------------------------------|-------|---------------------|--------|
-| `mig-3-1-gate-04-routes` | §2.1；`check-04-*` | **A** | **否** | - [ ] |
-| `mig-3-1-gate-07-08` | §2.2；`check-07-version-triple`、`check-08-*` | **A** | **否** | - [ ] |
-| `mig-3-1-gate-wave` | §2.3；`check-wave-phase-files` | **A** | **否** | - [ ] |
-| `mig-3-1-gate-govlink` | §2.4；`check-governance-doc-linkage` | **A** | **否** | - [ ] |
-| `mig-3-1-gate-96-18` | registry `spec-96-18-backlog`；`tt-9618-*` | **A** | **否** | - [ ] |
-| `mig-3-1-derive-93-96` | §2.1–2.3 派生；`derive-93-section5-routes`、`derive-96-booklets-paths` | **B** | **仅生成物可迁；正文否** | - [ ] |
-| `mig-3-1-subtree-arch` | §2.5–2.6；`27-archived`、`code-maps`、`snapshots` | **A** | **否** | - [ ] |
-| `wf-build-anchors` | §3 `build.yml` 等 workflow 锚点族 | **A** | **否**（改 manifest 属另立项） | - [ ] |
+| `mig-3-1-gate-04-routes` | §2.1；`check-04-*` | **A** | **否** | - [x] |
+| `mig-3-1-gate-07-08` | §2.2；`check-07-version-triple`、`check-08-*` | **A** | **否** | - [x] |
+| `mig-3-1-gate-wave` | §2.3；`check-wave-phase-files` | **A** | **否** | - [x] |
+| `mig-3-1-gate-govlink` | §2.4；`check-governance-doc-linkage` | **A** | **否** | - [x] |
+| `mig-3-1-gate-96-18` | registry `spec-96-18-backlog`；`tt-9618-*` | **A** | **否** | - [x] |
+| `mig-3-1-derive-93-96` | §2.1–2.3 派生；`derive-93-section5-routes`、`derive-96-booklets-paths` | **B** | **仅生成物可迁；正文否** | - [x] |
+| `mig-3-1-subtree-arch` | §2.5–2.6；`27-archived`、`code-maps`、`snapshots` | **A** | **否** | - [x] |
+| `wf-build-anchors` | §3 `build.yml` 等 workflow 锚点族 | **A** | **否**（改 manifest 属另立项） | - [x] |
 
 **「清单全绿」定义（书面）**：上表 **Owner ☐** 全为 `[x]`，且 **STATUS P-A～P-D**、**96-索引 Owner 表**、**98 §3** 同步为全勾选。
 
@@ -166,4 +166,4 @@
 
 **维护**：若新增脚本/workflow 硬编码 `docs/spec/`，请在本文件 **§2/§3** 增补一行，并在 **08** 台账侧考虑是否触发 **P-C**。**仓库完整性对齐（2026-04-30）**：`registry/spec-path-dependencies.v1.yaml` 已收敛为**仅登记盘上存在的** `scripts/` 路径；`scripts/release/*`、`scripts/gates/check-04-api-ts-routes-vs-doc-34.py`、`96-18` 等条目标为 **migration_prerequisites** 待恢复后再登记；**`scripts/check-handbook-*.sh`** 与 **`scripts/gates/check-handbook-*.py`** 已落地，可与 **`python registry/validate-spec-path-dependencies-registry.py`** 同轮复跑。
 
-**机器登记（草稿）**：[`registry/spec-path-dependencies.v1.yaml`](../registry/spec-path-dependencies.v1.yaml)（字段：`classification`、`consumers`、`target_location`、`migration_prerequisites`；说明见 [`registry/README.md`](../registry/README.md)）。
+**机器登记（草稿）**：[`registry/spec-path-dependencies.v1.yaml`](../registry/spec-path-dependencies.v1.yaml)（字段：`classification`、`consumers`、`target_location`、`migration_prerequisites`；说明见 [`registry/README.md`](../registry/README.md)）。**§7×registry 嗅探**：`python registry/audit-inv7-vs-registry-classification.py`（**P-A** 辅助；**exit 0** 见 `evidence/GO_20260430_mig-local/`）。

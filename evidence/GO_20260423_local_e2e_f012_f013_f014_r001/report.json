@@ -1,0 +1,46 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260423_local_e2e_f012_f013_f014_r001",
+  "title": "local E2E slice · f012-f013-f014-request (Playwright API)",
+  "executor": "cursor-agent-local",
+  "started_at": "2026-04-23T11:34:35Z",
+  "finished_at": "2026-04-23T11:34:35Z",
+  "environment": {
+    "name": "local",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "Playwright api-itin-feed-chromium: 4/4 passed (F-012/F-013/F-014). Not 93 full matrix nor CI e2e job (ISS-007 main stem open).",
+  "cases": [
+    {
+      "id": "D-ITN-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_e2e_f012_f013_f014_r001/README.md",
+      "blocker": false,
+      "notes": "E2E: F-012 · POST /api/v1/itineraries (Playwright request; npm run e2e:api-itin-feed-local)"
+    },
+    {
+      "id": "B-ORD-005",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_e2e_f012_f013_f014_r001/README.md",
+      "blocker": false,
+      "notes": "E2E: F-013 · confirm-final-plan snapshot_hash (same run)"
+    },
+    {
+      "id": "D-COM-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_e2e_f012_f013_f014_r001/README.md",
+      "blocker": false,
+      "notes": "E2E: F-014 · GET feed + mode=follow (2 tests, same run)"
+    }
+  ],
+  "summary": {
+    "PASS": 3,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  }
+}

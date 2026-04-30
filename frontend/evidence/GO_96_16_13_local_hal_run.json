@@ -1,0 +1,82 @@
+{
+  "batch": "GO_96_16_13_local_hal_run",
+  "docs_spec_touched": false,
+  "when": "2026-04-25T02:26Z",
+  "commands": {
+    "build": { "cmd": "npm run build", "cwd": "frontend", "exit": 0 },
+    "start": {
+      "cmd": "npm run start",
+      "cwd": "frontend",
+      "port": 3012,
+      "note": "Next logs ECONNREFUSED on proxy to http://127.0.0.1:8080/meta when traveltrust-api not running; HTML routes still returned 200 in curl smoke."
+    },
+    "vitest_sample": {
+      "cmd": "npm test -- --run lib/adminFetchDisplay.test.ts app/governance/distribution-accruals/distributionAccrualsPages.contract.test.ts",
+      "exit": 0
+    },
+    "lighthouse": {
+      "cmd": "npx lighthouse http://127.0.0.1:3012 --only-categories=performance,accessibility --output=json (metrics extracted to lighthouse-root-3012.metrics-snippet.json; full LH JSON removed to limit repo size)",
+      "exit": 0
+    },
+    "playwright_screenshot": {
+      "cmd": "npx playwright screenshot http://127.0.0.1:3012/ ./evidence/screenshot-home-root.png --viewport-size=1280,720",
+      "exit": 0
+    },
+    "playwright_setup_meta_chain": {
+      "cmd": "CI=true PLAYWRIGHT_FULL_STACK=0 PLAYWRIGHT_REUSE_FE_SERVER=1 npx playwright test e2e/setup/meta-chain-contracts.spec.ts --project=setup-meta-chain",
+      "exit": 1,
+      "stderr_tail": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:8080 → GET http://127.0.0.1:8080/meta"
+    }
+  },
+  "artifacts": {
+    "http_smoke": "frontend/evidence/http-smoke-3012.json",
+    "lighthouse_metrics_snippet": "frontend/evidence/lighthouse-root-3012.metrics-snippet.json",
+    "screenshot_home": "frontend/evidence/screenshot-home-root.png",
+    "report_json_r002_prereport": "evidence/GO_r002_prereport_96_16/r002_iss007_prereport/report.json",
+    "report_json_snippet_manifest": "frontend/evidence/report-r002-snippet-96_16.json"
+  },
+  "r002_prereport": {
+    "gen_cmd": "TRAVELTRUST_R002_REPORT_PARENT=evidence/GO_r002_prereport_96_16 python scripts/gen-r002-iss007-prereport.py",
+    "validate_cmd": "python scripts/validate-regression-report.py evidence/GO_r002_prereport_96_16/r002_iss007_prereport/report.json",
+    "validate_exit": 0,
+    "release_gate": "PARTIAL_GO",
+    "cases": 43,
+    "anchor_status_note": "NOT_RUN without DATABASE_URL (expected for UI-only host)."
+  },
+  "lighthouse_metrics_snippet_inline": {
+    "requestedUrl": "http://127.0.0.1:3012/",
+    "categories": { "performance": 0.98, "accessibility": 0.98 },
+    "audits_numeric_excerpt": {
+      "server-response-time_ms": 6.358,
+      "largest-contentful-paint_ms": 1097.65,
+      "cumulative-layout-shift": 0,
+      "first-contentful-paint_ms": 947.65
+    }
+  },
+  "fail_or_accepted_risk": [
+    {
+      "id": "playwright_chromium_dependency_setup_meta",
+      "status": "FAIL",
+      "trace": "93",
+      "detail": "setup-meta-chain requires GET http://127.0.0.1:8080/meta; no API on 8080 in this run → ECONNREFUSED. Full `npm run e2e` chromium path not green without traveltrust-api (or PLAYWRIGHT_FULL_STACK=1 stack)."
+    },
+    {
+      "id": "r002_prereport_json_validate",
+      "status": "PASS",
+      "trace": "R-002",
+      "detail": "gen-r002-iss007-prereport.py → report.json; validate-regression-report.py exit 0 (PARTIAL_GO, 43 cases). Paths in artifacts.report_json_*."
+    },
+    {
+      "id": "r002_full_local_ci_merge_orchestration",
+      "status": "FAIL",
+      "trace": "R-002; 96",
+      "detail": "scripts/ci/run_local_ci.sh (95→93→96-15 merge→validate orchestration→go_state_machine) not executed in this batch; only standalone prereport + validate."
+    },
+    {
+      "id": "npm_run_start_without_api_meta_noise",
+      "status": "ACCEPTED_RISK",
+      "trace": "93",
+      "detail": "Production Next start emits proxy /meta errors when API absent; pages tested still HTTP 200."
+    }
+  ]
+}

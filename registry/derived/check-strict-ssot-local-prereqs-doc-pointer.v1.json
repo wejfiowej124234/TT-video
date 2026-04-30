@@ -1,0 +1,7 @@
+{
+  "kind": "traveltrust.check_strict_ssot_local_prereqs_doc_pointer.v1",
+  "summary": "Human segments for scripts/dev/check-strict-ssot-local-prereqs.sh and .ps1; SSOT_SHA256 precheck still hashes the 08-3 gate table file (join/segments at runtime). Scripts do not read this JSON.",
+  "handbook_entry_repo_relative": "docs/handbook/README.md",
+  "spec_tree_root_segments": ["docs", "spec"],
+  "ssot_gate_table_08_3": ["docs", "spec", "08-3-参数与门禁表.md"]
+}

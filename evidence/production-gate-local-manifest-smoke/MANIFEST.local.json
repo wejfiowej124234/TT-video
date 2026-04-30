@@ -1,0 +1,12 @@
+{
+  "schema_version": "1",
+  "kind": "traveltrust.production_gate_local_manifest.v1",
+  "generated_at_utc": "2026-04-26T02:33:00Z",
+  "run_id": "local-manifest-smoke",
+  "commit_sha": "303c0a3c49a800aee11cea4c1ef6d98b7a399b53",
+  "base_ref": "main",
+  "skip_e2e": true,
+  "skip_api_tests": true,
+  "gate_ssot": "gates/production_gate.yaml",
+  "notes": "Local enforcement run for solo developer / CI budget outage."
+}

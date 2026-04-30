@@ -1,0 +1,26 @@
+# 可选：限制 traveltrust-api 仅接受来自 ingress-nginx 的流量（示例骨架）
+#
+# 须按集群修改：namespace、pod 标签、ingress controller 的 namespace 标签（不同发行版可能不是 ingress-nginx）。
+# 与公网 Stripe Ingress 正交：仅保护「误把 internal Service 暴露到公网 LB」之外的第二层；仍以 VPC/防火墙为主。
+# 分层：同 **[TT-9618 §3.5](../../docs/runbook/TT-9618-onboarding-local-testnet.md)** 与 **`onboarding-internal-webhook-ingress-nginx.example.yaml`**（可选 **mTLS** / **`limit-rps`**）一起读；本 Policy **不**替代网关限流或 **`ONBOARDING_INTERNAL_WEBHOOK_*`** 应用闸。
+#
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: traveltrust-api-internal-ingress-only
+  namespace: traveltrust-staging
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: traveltrust-api
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: ingress-nginx
+      ports:
+        - protocol: TCP
+          port: 8080

@@ -17,6 +17,8 @@ alwaysApply: true
 - **文档**：默认只改 **04**（§3.4 / §三 契约句）。**07**、**00** 版本表、**缺口官方总表**、**27-archived tail** 仅当用户写明 **「台账同批」** 或 **「合 07 门禁」** 时同批修改；否则不动 6.4 长表。
 - **版本三线**：若 bump **07** `Version:`，必须同批 **00** 中 07 行与 **§六 6.5** 表顶，并跑 `bash scripts/check-07-version-triple.sh`。
 - **测试**：默认 `cargo test -p traveltrust-api`；勿擅自 `cargo test --workspace` 或 `npm test`，除非用户要求全量。
-- **迭代期 vs 发版**：功能迭代期**不以** full production gate 作为每日完成标准；日常以快速检查 + 受影响 E2E + `scripts/gates/e2e-stability-probe.sh` 为主；**冻结后再跑** full production gate。话术与三层门禁见 [docs/AI协作话术-减负与边界.md](docs/AI协作话术-减负与边界.md) §12。
+- **迭代期 vs 发版**：功能迭代期**不以** full production gate 作为每日完成标准；日常以快速检查 + 受影响 E2E + `scripts/gates/e2e-stability-probe.sh` 为主；**冻结后再跑** full production gate。全仓口径见 [docs/runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md](docs/runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md) **§0**；话术表见 [docs/AI协作话术-减负与边界.md](docs/AI协作话术-减负与边界.md) **§12**。
 - **完成度 %**：无新业务代码合入的纯文档轮，**勿改** **07** 文首（1）（2）百分比（见 **07 §6.6** 复审注）。
 - **可复制话术全集**：[docs/AI协作话术-减负与边界.md](docs/AI协作话术-减负与边界.md)
+- **单维护者**：条文 **Owner**、**四门** `pd-*` 对拍 = **本人自检**；**不**降低 **spec SSOT** 与删径专 PR 的技术含义。读 **[docs/solo-dev-rhythm.md](docs/solo-dev-rhythm.md)** **§7**（与根 **`AGENTS.md`**「Solo maintainer」段同源）。
+- **GitHub Actions 关闭或欠费**：**不以**远端 workflow **顶栏绿**为唯一收口依据；合并 / 推送前按 **[`docs/solo-dev-rhythm.md` §6.5](docs/solo-dev-rhythm.md)** 在仓库根跑**默认本地命令集**并**自留 `exit 0` 证据**（与根 **`CONTRIBUTING.md`**「**GitHub Actions 不可用**」小节、**[`docs/runbook/TT-LOCAL-CI-DELIVERY-GATE-001.md`](docs/runbook/TT-LOCAL-CI-DELIVERY-GATE-001.md)** 同读）。恢复计费并重新打开 Actions 后，再接回 **根 `README.md` · CI 与本地开发** 中「push 后看 Actions」习惯。

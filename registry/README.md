@@ -10,6 +10,8 @@
 |------|------|
 | **`spec-path-dependencies.v1.yaml`** | `docs/spec` 路径依赖登记：`classification` **A**=法定壳留 spec · **B**=可迁机读衍生 · **C**=handbook/corpus 导读；含 `consumers`、`target_location`、`migration_prerequisites` |
 | **`validate-spec-path-dependencies-registry.py`** | 轻量结构校验（YAML 可解析、`classification` 枚举、`target_location` / `migration_prerequisites` 必填、consumer 路径形状与**可解析存在性**）；**不**迁移、**不**删 spec；**以本地 exit 0 为必过** |
+| **`audit-inv7-vs-registry-classification.py`** | **P-A 辅助**：盘点 **§7**「默认可删」列与 **A** 类互斥 + registry **A→`keep:`** 嗅探；**exit 0** 见 **`evidence/GO_20260430_mig-local/README.md`** |
+| **`scan-spec-consumer-refs.py`** | 消费侧 `docs/spec` 字面量扫描；**`--strict`** 与盘点 **§7.5** 允许表对齐（**P-C**） |
 
 **提交前本地三门禁（仓库根）**
 
@@ -17,8 +19,10 @@
 
 ```bash
 python registry/validate-spec-path-dependencies-registry.py
+python registry/audit-inv7-vs-registry-classification.py
 bash scripts/check-handbook-frontmatter.sh
 bash scripts/check-handbook-engineering-content.sh
+python registry/scan-spec-consumer-refs.py --strict
 ```
 
 显式 registry 文件：

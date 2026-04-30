@@ -1,0 +1,48 @@
+name: User security notifications dispatch (staging)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/10 * * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: user-security-notifications-dispatch-staging-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  user-security-notifications-dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Ensure psql client
+        run: |
+          set -euo pipefail
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq postgresql-client
+          fi
+          psql --version
+
+      - name: Run user security notifications dispatch (optional secrets)
+        env:
+          DATABASE_URL: ${{ secrets.STAGING_USER_SECURITY_NOTIFICATIONS_DATABASE_URL }}
+          USER_SECURITY_NOTIFICATION_DISPATCH_BATCH_SIZE: ${{ vars.STAGING_USER_SECURITY_NOTIFICATION_DISPATCH_BATCH_SIZE }}
+          USER_SECURITY_NOTIFICATION_DISPATCH_DRY_RUN: ${{ vars.STAGING_USER_SECURITY_NOTIFICATION_DISPATCH_DRY_RUN }}
+          USER_SECURITY_NOTIFICATION_DISPATCH_FORCE_FAIL: ${{ vars.STAGING_USER_SECURITY_NOTIFICATION_DISPATCH_FORCE_FAIL }}
+        run: |
+          set -euo pipefail
+          if [ -z "${DATABASE_URL}" ]; then
+            echo "::notice title=user-security-notifications-dispatch::skipped — secret STAGING_USER_SECURITY_NOTIFICATIONS_DATABASE_URL unset."
+            exit 0
+          fi
+          echo "::group::user_security_notifications_dispatch config"
+          echo "USER_SECURITY_NOTIFICATION_DISPATCH_BATCH_SIZE=${USER_SECURITY_NOTIFICATION_DISPATCH_BATCH_SIZE:-50}"
+          echo "USER_SECURITY_NOTIFICATION_DISPATCH_DRY_RUN=${USER_SECURITY_NOTIFICATION_DISPATCH_DRY_RUN:-1}"
+          echo "USER_SECURITY_NOTIFICATION_DISPATCH_FORCE_FAIL=${USER_SECURITY_NOTIFICATION_DISPATCH_FORCE_FAIL:-0}"
+          echo "::endgroup::"
+          bash scripts/user-security-notifications-dispatch.sh
+

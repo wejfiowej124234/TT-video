@@ -1,0 +1,56 @@
+# TT-9615: Tier A + Tier B/C machine gates (orchestration) + go_state_machine.
+# PR 默认路径：见 .github/workflows/production-gate.yml job「tier-96-15」（同源脚本，避免重复长跑）。
+name: 96-15-orchestration-gate
+
+on:
+  workflow_dispatch:
+    inputs:
+      regression_report:
+        description: "Optional path to existing report.json to merge + validate (repo-relative)"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  tier-machine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Run 96-15 orchestration + go_state (Tier A–C machine, B-421)
+        run: |
+          set -euo pipefail
+          OUT="evidence/GO_96_15_machine_${{ github.run_id }}"
+          export OUT
+          mkdir -p "$OUT/deep_evidence"
+          python3 scripts/release/gen_tier_a_evidence_bundle.py "$OUT/deep_evidence"
+          python3 scripts/release/verify_96_booklets_registry.py --out "$OUT/96_booklets_registry.json"
+          python3 scripts/release/run_96_15_orchestration.py \
+            --out-dir "$OUT" \
+            --executor "github-actions-${{ github.run_id }}" \
+            --tier-a1-readme "$OUT/deep_evidence/README.md" \
+            --tier-a2-markdown "$OUT/deep_evidence/59_p0_table.md" \
+            --require-tier-a-semiauto \
+            --require-tier-a-all-pass \
+            --require-tier-bc-all-pass
+          REG="${{ github.event.inputs.regression_report }}"
+          if [[ -n "$REG" && -f "$REG" ]]; then
+            python3 scripts/release/merge_orchestration_into_report.py "$REG" "$OUT/release_orchestration.json" -o "$OUT/report.merged.json"
+            python3 scripts/release/go_state_machine.py \
+              --orchestration "$OUT/release_orchestration.json" \
+              --regression "$OUT/report.merged.json" \
+              --out "$OUT/go_state_suggestion.json"
+            python3 scripts/validate-regression-report.py "$OUT/report.merged.json" --fail-on-no-go --validate-orchestration
+          else
+            python3 scripts/release/go_state_machine.py \
+              --orchestration "$OUT/release_orchestration.json" \
+              --out "$OUT/go_state_suggestion.json"
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: "96-15-orchestration-${{ github.run_id }}"
+          path: |
+            evidence/GO_96_15_machine_${{ github.run_id }}/**

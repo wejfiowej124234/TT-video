@@ -1,0 +1,56 @@
+# Release/tag gate: enforce final truth report is GO and production-ready.
+name: Production release require-go
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      report_path:
+        description: "Path to final truth report.json (repo-relative)"
+        required: true
+        default: "frontend/evidence/GO_20260425_public_surfaces_slice/report.json"
+
+permissions:
+  contents: read
+
+jobs:
+  require-go:
+    name: Release final report must be GO
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Resolve report path
+        id: rp
+        run: |
+          set -euo pipefail
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            RP="${{ github.event.inputs.report_path }}"
+          else
+            # tag push: require caller to keep a stable pointer file
+            RP_FILE="gates/final_truth_report_path.txt"
+            test -f "$RP_FILE"
+            RP="$(tr -d '\r' < "$RP_FILE" | head -n 1)"
+            test -n "$RP"
+          fi
+          echo "report_path=$RP" >> "$GITHUB_OUTPUT"
+          test -f "$RP"
+
+      - name: Validate report contract (require GO + no NOT_RUN)
+        run: |
+          set -euo pipefail
+          python3 scripts/validate-regression-report.py "${{ steps.rp.outputs.report_path }}" \
+            --require-go \
+            --fail-on-case-not-run
+
+      - name: Validate production readiness summary
+        run: |
+          set -euo pipefail
+          python3 scripts/gates/check_report_production_readiness.py "${{ steps.rp.outputs.report_path }}"

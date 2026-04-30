@@ -1,0 +1,46 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260423_local_r001_close_loop_f001_f002_f003",
+  "title": "close-loop F-001 F-002 F-003: register / login+me / logout",
+  "executor": "local-cursor-agent",
+  "started_at": "2026-04-23T13:04:02Z",
+  "finished_at": "2026-04-23T13:04:12Z",
+  "environment": {
+    "name": "local",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "3/3 Playwright (F-001..003 slice) PASS; 3x matrix_93 router::app API\u00b7IT PASS. CI e2e run_id / staging full-matrix still ISS-007.",
+  "cases": [
+    {
+      "id": "A-REG-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_close_loop_f001_f002_f003/playwright-report.json",
+      "blocker": false,
+      "notes": "F-001 E2E register. API\u00b7IT: api_it_f001.log -> matrix_93_a_reg_001b_f001_register_success_pg_users_row_app_stack_ok_pg (auth_register_login_logout_db_api_tests)."
+    },
+    {
+      "id": "A-LOG-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_close_loop_f001_f002_f003/playwright-report.json",
+      "blocker": false,
+      "notes": "F-002 E2E login+GET /me. API\u00b7IT: api_it_f002.log -> matrix_93_a_log_001b_f002_login_then_get_me_200_app_stack_ok_pg."
+    },
+    {
+      "id": "A-LOG-003",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_close_loop_f001_f002_f003/playwright-report.json",
+      "blocker": false,
+      "notes": "F-003 E2E logout+GET /me 401. API\u00b7IT: api_it_f003.log -> matrix_93_a_log_003b_f003_logout_then_get_me_unauthorized_app_stack_ok_pg."
+    }
+  ],
+  "summary": {
+    "PASS": 3,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  }
+}

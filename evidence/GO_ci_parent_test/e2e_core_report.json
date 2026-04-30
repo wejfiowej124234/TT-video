@@ -1,0 +1,66 @@
+{
+  "workflow": "Build",
+  "job": "e2e",
+  "check": "e2e-playwright-core+r002-prereport",
+  "commit_sha": "",
+  "ci_run_id": "",
+  "env": "ci",
+  "rule_id": "e2e-playwright-chromium-with-iss007-r002",
+  "severity": "gate",
+  "owner": "frontend-team",
+  "generated_at": "2026-04-23T21:00:55Z",
+  "passed": false,
+  "suite": "playwright chromium + matrix_93 ISS-007 narrow slice",
+  "iss007_r002_prereport": {
+    "report_json": "evidence/GO_ci_parent_test/r002_iss007_prereport/report.json",
+    "release_gate": "PARTIAL_GO",
+    "release_gate_reason": "ISS-007 prereport shell: anchors NOT_RUN (no DATABASE_URL or skipped); full 93 matrix + CI e2e still required for ISS-007 close.",
+    "summary": {
+      "PASS": 0,
+      "FAIL": 0,
+      "BLOCKED": 0,
+      "N_A": 0,
+      "NOT_RUN": 4
+    },
+    "playwright_e2e_outcome": null,
+    "anchors_93": [
+      "D-IDX-001",
+      "B-DSP-003",
+      "D-COM-011",
+      "D-ADM-003"
+    ],
+    "f_rows_8_2": [
+      "F-029",
+      "F-025",
+      "F-031",
+      "F-030"
+    ],
+    "cases_compact": [
+      {
+        "id": "D-IDX-001",
+        "status": "NOT_RUN",
+        "f_row_8_2": "F-029",
+        "matrix_93_cargo_filter": "matrix_93_d_idx_001b_f029_get_internal_indexer_status_ok_shape_app_stack_ok_pg"
+      },
+      {
+        "id": "B-DSP-003",
+        "status": "NOT_RUN",
+        "f_row_8_2": "F-025",
+        "matrix_93_cargo_filter": "matrix_93_b_dsp_003b_f025_post_dispute_resolve_then_pg_status_resolved_app_stack_ok_pg"
+      },
+      {
+        "id": "D-COM-011",
+        "status": "NOT_RUN",
+        "f_row_8_2": "F-031",
+        "matrix_93_cargo_filter": "matrix_93_d_com_011_f031_post_community_post_acquisition_led_listing_pg"
+      },
+      {
+        "id": "D-ADM-003",
+        "status": "NOT_RUN",
+        "f_row_8_2": "F-030",
+        "matrix_93_cargo_filter": "matrix_93_d_adm_003b_f030_get_admin_schema_migrations_ok_when_sqlx_migrations_applied_app_stack_ok_pg"
+      }
+    ],
+    "r002_anchors_all_pass": false
+  }
+}

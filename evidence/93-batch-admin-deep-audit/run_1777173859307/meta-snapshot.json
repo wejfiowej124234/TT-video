@@ -1,0 +1,7 @@
+{
+  "apiBase": "http://127.0.0.1:8080",
+  "health_ok": true,
+  "meta_status": 200,
+  "did_rank": null,
+  "chain_off_mounted": false
+}

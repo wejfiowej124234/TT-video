@@ -1,0 +1,733 @@
+{
+  "schema_version": "2",
+  "kind": "traveltrust.release_orchestration.v2",
+  "source_spec": "96-automation-v2",
+  "run_id": "_local_ci_test_run",
+  "started_at": "2026-04-25T00:24:10Z",
+  "finished_at": "2026-04-25T00:24:10Z",
+  "executor": "local",
+  "control_taxonomy_note": "control_framework_refs: ISO27001-A.x (Annex A), SOC2-CCx.x (Common Criteria), OWASP-ASVS-Vx (chapter), CIS-CSCx, SRE-SLO (error budget / availability). Missing external inputs => FAIL unless TT_96_ACCEPTED_RISK_<BOOKLET> points to a JSON file => ACCEPTED_RISK. Out-of-scope booklets => N_A when TT_96_SCOPE_BOOKLETS is set (comma-separated booklet ids e.g. 96-13,96-16).",
+  "tiers": [
+    {
+      "tier": "A",
+      "steps": [
+        {
+          "id": "TIER-A-1",
+          "seq": 1,
+          "title": "15 appendix + gap table P0 twelve / signoff bundle (semiauto: README evidence)",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "96",
+          "input_source": "legacy_96_15_orchestration",
+          "expected_outcome": "Tier A/B/C contracts per 96-15 machine gates",
+          "control_framework_refs": [
+            "SOC2-CC8.1",
+            "ISO27001-A.12"
+          ],
+          "commands": [
+            "semiauto:evidence-file",
+            "D:\\TravelTrust\\evidence\\_local_ci_test_run\\deep_evidence\\README.md"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "ok 493 bytes: D:\\TravelTrust\\evidence\\_local_ci_test_run\\deep_evidence\\README.md",
+          "stderr_tail": "",
+          "evidence_paths_expected": [
+            "D:\\TravelTrust\\evidence\\_local_ci_test_run\\deep_evidence\\README.md"
+          ],
+          "f_row_hints": [
+            "F-bundle",
+            "96-11",
+            "ISS-signoff-hygiene"
+          ],
+          "96_booklet": "96-11"
+        },
+        {
+          "id": "TIER-A-2",
+          "seq": 2,
+          "title": "59 nine-dimension P0 table snapshot (semiauto: markdown evidence)",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "96",
+          "input_source": "legacy_96_15_orchestration",
+          "expected_outcome": "Tier A/B/C contracts per 96-15 machine gates",
+          "control_framework_refs": [
+            "SOC2-CC8.1",
+            "ISO27001-A.12"
+          ],
+          "commands": [
+            "semiauto:evidence-file",
+            "D:\\TravelTrust\\evidence\\_local_ci_test_run\\deep_evidence\\59_p0_table.md"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "ok 704 bytes: D:\\TravelTrust\\evidence\\_local_ci_test_run\\deep_evidence\\59_p0_table.md",
+          "stderr_tail": "",
+          "evidence_paths_expected": [
+            "D:\\TravelTrust\\evidence\\_local_ci_test_run\\deep_evidence\\59_p0_table.md"
+          ],
+          "f_row_hints": [
+            "F-59-P0",
+            "96-15",
+            "ISS-planning"
+          ],
+          "96_booklet": "96-15"
+        },
+        {
+          "id": "TIER-A-3",
+          "seq": 3,
+          "title": "B-421 runbook/go-live doclink gate",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "GATE",
+          "input_source": "legacy_96_15_orchestration",
+          "expected_outcome": "Tier A/B/C contracts per 96-15 machine gates",
+          "control_framework_refs": [
+            "SOC2-CC8.1",
+            "ISO27001-A.12"
+          ],
+          "commands": [
+            "C:\\Users\\plant\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+            "D:\\TravelTrust\\scripts\\release\\b421_doclink_gate.py",
+            "--repo-root",
+            "D:\\TravelTrust"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "",
+          "stderr_tail": "b421_doclink_gate: ok\n",
+          "evidence_paths_expected": [
+            "evidence\\_local_ci_test_run\\b421.log"
+          ],
+          "f_row_hints": [
+            "F-033",
+            "GATE-B421",
+            "R002-doclink"
+          ],
+          "96_booklet": "96-11"
+        }
+      ]
+    },
+    {
+      "tier": "B",
+      "steps": [
+        {
+          "id": "TIER-B-4",
+          "seq": 4,
+          "title": "66/51/53 anchors present (machine)",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "96",
+          "input_source": "legacy_96_15_orchestration",
+          "expected_outcome": "Tier A/B/C contracts per 96-15 machine gates",
+          "control_framework_refs": [
+            "ISO27001-A.16"
+          ],
+          "commands": [
+            "python",
+            "scripts/release/tier_bc_machine_gates.py",
+            "--gate",
+            "b4"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "ok: docs/spec/66-深度检查-缺口与遗留问题.md, docs/spec/51-阶段开发技术文档.md, docs/spec/53-阶段开发技术文档.md\n",
+          "stderr_tail": "",
+          "evidence_paths_expected": [
+            "docs/spec/66-深度检查-缺口与遗留问题.md",
+            "docs/spec/51-阶段开发技术文档.md",
+            "docs/spec/53-阶段开发技术文档.md"
+          ],
+          "f_row_hints": [
+            "F-doc",
+            "96-12",
+            "66-51-53-anchors"
+          ],
+          "96_booklet": "96-12"
+        },
+        {
+          "id": "TIER-B-5",
+          "seq": 5,
+          "title": "27-P0..P50 checklist present + min size (machine)",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "96",
+          "input_source": "legacy_96_15_orchestration",
+          "expected_outcome": "Tier A/B/C contracts per 96-15 machine gates",
+          "control_framework_refs": [
+            "ISO27001-A.16"
+          ],
+          "commands": [
+            "python",
+            "scripts/release/tier_bc_machine_gates.py",
+            "--gate",
+            "b5"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "ok: docs/spec/27-P0至P50开发流程勾选清单.md bytes=107596\n",
+          "stderr_tail": "",
+          "evidence_paths_expected": [
+            "docs/spec/27-P0至P50开发流程勾选清单.md"
+          ],
+          "f_row_hints": [
+            "F-27-Pn",
+            "96-12"
+          ],
+          "96_booklet": "96-12"
+        }
+      ]
+    },
+    {
+      "tier": "C",
+      "steps": [
+        {
+          "id": "TIER-C-6",
+          "seq": 6,
+          "title": "frontend/app page.tsx smoke count (machine)",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "96",
+          "input_source": "legacy_96_15_orchestration",
+          "expected_outcome": "Tier A/B/C contracts per 96-15 machine gates",
+          "control_framework_refs": [
+            "OWASP-ASVS-V1"
+          ],
+          "commands": [
+            "python",
+            "scripts/release/tier_bc_machine_gates.py",
+            "--gate",
+            "c6"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "ok: page.tsx count=119\n",
+          "stderr_tail": "",
+          "evidence_paths_expected": [
+            "frontend/app/**/page.tsx"
+          ],
+          "f_row_hints": [
+            "F-010",
+            "F-008",
+            "F-021",
+            "96-13",
+            "96-16"
+          ],
+          "96_booklet": "96-13"
+        },
+        {
+          "id": "TIER-C-7",
+          "seq": 7,
+          "title": "04 routes gate: scripts/run-check-04-routes.sh (machine)",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "GATE",
+          "input_source": "legacy_96_15_orchestration",
+          "expected_outcome": "Tier A/B/C contracts per 96-15 machine gates",
+          "control_framework_refs": [
+            "OWASP-ASVS-V1"
+          ],
+          "commands": [
+            "C:\\Program Files\\Git\\bin\\bash.exe",
+            "D:\\TravelTrust\\scripts\\run-check-04-routes.sh"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "check-04-routes-vs-code OK: 04 sec 3.4 table paths are mounted (except DOC_ONLY_SCHEDULED).\n  (no undocumented public /api/v1 routes vs sec 3.4 table)\ncheck-04-frontend-routes-vs-app OK: 04 sec 3.4 frontend page routes match frontend/app.\ncheck-04-api-ts-routes-vs-doc-34 OK: all routes block /api/v1|/auth|/meta|/health paths match 04 ��3.4 (178 checked).\ncheck-13-1-table1-routes-vs-app OK: 13-1 sec 2 table 1 routes match frontend/app.\ncheck-13-1-routes-covered-by-04-frontend-table OK: 13-1 table 1 routes are covered by 04 sec 3.4 frontend path table.\ncheck-b432-governance-ui-ssot-surface OK: B-428/B-432 governance closeloop surface pinned.\n",
+          "stderr_tail": "check-b450: OK (B450-REVIEW-POST-SSOT-DOC-ANCHORS-V1)\ncheck-b451: OK (B451-REVIEW-JSON-CONTRACT-EVOLUTION-GATE-V1)\ncheck-b452: OK (B452-REVIEW-JSON-CONTRACT-CLIENT-GATE-V1)\ncheck-b453: OK (B453-REVIEW-JSON-CONTRACT-OBSERVABILITY-GATE-V1)\ncheck-b454: OK (B454-REVIEW-JSON-CONTRACT-DEGRADE-EVIDENCE-GATE-V1)\ncheck-b455: OK (B455-REVIEW-JSON-CONTRACT-ROLLOUT-GATE-V1)\ncheck-b456: OK (B456-REVIEW-JSON-CONTRACT-RELEASE-CONTROLLER-GATE-V1)\ncheck-b457: OK (B457-REVIEW-JSON-CONTRACT-RELEASE-ADAPTER-GATE-V1)\n",
+          "evidence_paths_expected": [
+            "scripts/run-check-04-routes.sh"
+          ],
+          "f_row_hints": [
+            "F-033",
+            "04-routes",
+            "96-12"
+          ],
+          "96_booklet": "96-12"
+        }
+      ]
+    },
+    {
+      "tier": "F",
+      "steps": [
+        {
+          "id": "AUTO-96-01",
+          "seq": 1,
+          "title": "96-01 boundary / execution-order evidence (external pack or accepted risk)",
+          "machine_runnable": true,
+          "status": "N_A",
+          "primary_attribution_if_fail": "96",
+          "input_source": "env:TT_96_LIGHT",
+          "expected_outcome": "heavy gate skipped in light smoke mode",
+          "control_framework_refs": [
+            "ISO27001-A.5",
+            "SOC2-CC2.1"
+          ],
+          "commands": [
+            "env:TT_96_LIGHT"
+          ],
+          "observed_exit_code": null,
+          "stdout_tail": "",
+          "stderr_tail": "",
+          "evidence_paths_expected": [],
+          "f_row_hints": [
+            "F-96-01-boundary",
+            "96-01"
+          ],
+          "96_booklet": "96-01",
+          "n_a_reason": "TT_96_LIGHT"
+        },
+        {
+          "id": "AUTO-96-02",
+          "seq": 2,
+          "title": "96-02 legal / disclosure external evidence pack (path required)",
+          "machine_runnable": true,
+          "status": "N_A",
+          "primary_attribution_if_fail": "96",
+          "input_source": "env:TT_96_LIGHT",
+          "expected_outcome": "heavy gate skipped in light smoke mode",
+          "control_framework_refs": [
+            "ISO27001-A.18",
+            "SOC2-CC9.2"
+          ],
+          "commands": [
+            "env:TT_96_LIGHT"
+          ],
+          "observed_exit_code": null,
+          "stdout_tail": "",
+          "stderr_tail": "",
+          "evidence_paths_expected": [],
+          "f_row_hints": [
+            "F-legal",
+            "ISO27001-A.18"
+          ],
+          "96_booklet": "96-02",
+          "n_a_reason": "TT_96_LIGHT"
+        },
+        {
+          "id": "AUTO-96-03",
+          "seq": 3,
+          "title": "96-03 security / supply chain external evidence",
+          "machine_runnable": true,
+          "status": "N_A",
+          "primary_attribution_if_fail": "96",
+          "input_source": "env:TT_96_LIGHT",
+          "expected_outcome": "heavy gate skipped in light smoke mode",
+          "control_framework_refs": [
+            "ISO27001-A.12",
+            "SOC2-CC6.1",
+            "CIS-CSC16"
+          ],
+          "commands": [
+            "env:TT_96_LIGHT"
+          ],
+          "observed_exit_code": null,
+          "stdout_tail": "",
+          "stderr_tail": "",
+          "evidence_paths_expected": [],
+          "f_row_hints": [
+            "F-security",
+            "ISO27001-A.12"
+          ],
+          "96_booklet": "96-03",
+          "n_a_reason": "TT_96_LIGHT"
+        },
+        {
+          "id": "AUTO-96-04",
+          "seq": 4,
+          "title": "96-04 compliance / data residency external evidence",
+          "machine_runnable": true,
+          "status": "N_A",
+          "primary_attribution_if_fail": "96",
+          "input_source": "env:TT_96_LIGHT",
+          "expected_outcome": "heavy gate skipped in light smoke mode",
+          "control_framework_refs": [
+            "ISO27001-A.18",
+            "SOC2-CC6.7"
+          ],
+          "commands": [
+            "env:TT_96_LIGHT"
+          ],
+          "observed_exit_code": null,
+          "stdout_tail": "",
+          "stderr_tail": "",
+          "evidence_paths_expected": [],
+          "f_row_hints": [
+            "F-compliance",
+            "ISO27001-A.18"
+          ],
+          "96_booklet": "96-04",
+          "n_a_reason": "TT_96_LIGHT"
+        },
+        {
+          "id": "AUTO-96-05",
+          "seq": 5,
+          "title": "96-05 SRE / reliability external evidence",
+          "machine_runnable": true,
+          "status": "N_A",
+          "primary_attribution_if_fail": "96",
+          "input_source": "env:TT_96_LIGHT",
+          "expected_outcome": "heavy gate skipped in light smoke mode",
+          "control_framework_refs": [
+            "SRE-SLO",
+            "ISO27001-A.17"
+          ],
+          "commands": [
+            "env:TT_96_LIGHT"
+          ],
+          "observed_exit_code": null,
+          "stdout_tail": "",
+          "stderr_tail": "",
+          "evidence_paths_expected": [],
+          "f_row_hints": [
+            "F-sre",
+            "SRE-SLO"
+          ],
+          "96_booklet": "96-05",
+          "n_a_reason": "TT_96_LIGHT"
+        },
+        {
+          "id": "AUTO-96-06",
+          "seq": 6,
+          "title": "96-06 backup / migration external evidence",
+          "machine_runnable": true,
+          "status": "N_A",
+          "primary_attribution_if_fail": "96",
+          "input_source": "env:TT_96_LIGHT",
+          "expected_outcome": "heavy gate skipped in light smoke mode",
+          "control_framework_refs": [
+            "ISO27001-A.12",
+            "SOC2-CC9.1"
+          ],
+          "commands": [
+            "env:TT_96_LIGHT"
+          ],
+          "observed_exit_code": null,
+          "stdout_tail": "",
+          "stderr_tail": "",
+          "evidence_paths_expected": [],
+          "f_row_hints": [
+            "F-backup",
+            "ISO27001-A.12"
+          ],
+          "96_booklet": "96-06",
+          "n_a_reason": "TT_96_LIGHT"
+        },
+        {
+          "id": "AUTO-96-07",
+          "seq": 7,
+          "title": "96-07 chain / contract attestation bundle",
+          "machine_runnable": true,
+          "status": "N_A",
+          "primary_attribution_if_fail": "96",
+          "input_source": "env:TT_96_LIGHT",
+          "expected_outcome": "heavy gate skipped in light smoke mode",
+          "control_framework_refs": [
+            "SOC2-CC8.1",
+            "OWASP-ASVS-V10"
+          ],
+          "commands": [
+            "env:TT_96_LIGHT"
+          ],
+          "observed_exit_code": null,
+          "stdout_tail": "",
+          "stderr_tail": "",
+          "evidence_paths_expected": [],
+          "f_row_hints": [
+            "F-chain",
+            "OWASP-ASVS-V10"
+          ],
+          "96_booklet": "96-07",
+          "n_a_reason": "TT_96_LIGHT"
+        },
+        {
+          "id": "AUTO-96-08",
+          "seq": 8,
+          "title": "96-08 indexer / finance reconcile evidence",
+          "machine_runnable": true,
+          "status": "N_A",
+          "primary_attribution_if_fail": "96",
+          "input_source": "env:TT_96_LIGHT",
+          "expected_outcome": "heavy gate skipped in light smoke mode",
+          "control_framework_refs": [
+            "SOC2-CC7.2",
+            "SRE-SLO"
+          ],
+          "commands": [
+            "env:TT_96_LIGHT"
+          ],
+          "observed_exit_code": null,
+          "stdout_tail": "",
+          "stderr_tail": "",
+          "evidence_paths_expected": [],
+          "f_row_hints": [
+            "F-indexer",
+            "SOC2-CC7.2"
+          ],
+          "96_booklet": "96-08",
+          "n_a_reason": "TT_96_LIGHT"
+        },
+        {
+          "id": "AUTO-96-09",
+          "seq": 9,
+          "title": "96-09 messaging / async tasks evidence",
+          "machine_runnable": true,
+          "status": "N_A",
+          "primary_attribution_if_fail": "96",
+          "input_source": "env:TT_96_LIGHT",
+          "expected_outcome": "heavy gate skipped in light smoke mode",
+          "control_framework_refs": [
+            "ISO27001-A.13",
+            "SOC2-CC7.1"
+          ],
+          "commands": [
+            "env:TT_96_LIGHT"
+          ],
+          "observed_exit_code": null,
+          "stdout_tail": "",
+          "stderr_tail": "",
+          "evidence_paths_expected": [],
+          "f_row_hints": [
+            "F-messaging",
+            "ISO27001-A.13"
+          ],
+          "96_booklet": "96-09",
+          "n_a_reason": "TT_96_LIGHT"
+        },
+        {
+          "id": "AUTO-96-10",
+          "seq": 10,
+          "title": "96-10 config / feature flags evidence",
+          "machine_runnable": true,
+          "status": "N_A",
+          "primary_attribution_if_fail": "96",
+          "input_source": "env:TT_96_LIGHT",
+          "expected_outcome": "heavy gate skipped in light smoke mode",
+          "control_framework_refs": [
+            "ISO27001-A.12",
+            "CIS-CSC4"
+          ],
+          "commands": [
+            "env:TT_96_LIGHT"
+          ],
+          "observed_exit_code": null,
+          "stdout_tail": "",
+          "stderr_tail": "",
+          "evidence_paths_expected": [],
+          "f_row_hints": [
+            "F-config",
+            "CIS-CSC4"
+          ],
+          "96_booklet": "96-10",
+          "n_a_reason": "TT_96_LIGHT"
+        },
+        {
+          "id": "AUTO-96-12",
+          "seq": 12,
+          "title": "96-12 documentation / snapshot drift evidence",
+          "machine_runnable": true,
+          "status": "N_A",
+          "primary_attribution_if_fail": "96",
+          "input_source": "env:TT_96_LIGHT",
+          "expected_outcome": "heavy gate skipped in light smoke mode",
+          "control_framework_refs": [
+            "SOC2-CC8.1"
+          ],
+          "commands": [
+            "env:TT_96_LIGHT"
+          ],
+          "observed_exit_code": null,
+          "stdout_tail": "",
+          "stderr_tail": "",
+          "evidence_paths_expected": [],
+          "f_row_hints": [
+            "F-8.2-satellite",
+            "95-11"
+          ],
+          "96_booklet": "96-12",
+          "n_a_reason": "TT_96_LIGHT"
+        },
+        {
+          "id": "AUTO-96-14",
+          "seq": 14,
+          "title": "96-14 wallet / community / governance extension evidence",
+          "machine_runnable": true,
+          "status": "N_A",
+          "primary_attribution_if_fail": "96",
+          "input_source": "env:TT_96_LIGHT",
+          "expected_outcome": "heavy gate skipped in light smoke mode",
+          "control_framework_refs": [
+            "OWASP-ASVS-V4",
+            "OWASP-ASVS-V9"
+          ],
+          "commands": [
+            "env:TT_96_LIGHT"
+          ],
+          "observed_exit_code": null,
+          "stdout_tail": "",
+          "stderr_tail": "",
+          "evidence_paths_expected": [],
+          "f_row_hints": [
+            "F-wallet-community",
+            "OWASP-ASVS-V4"
+          ],
+          "96_booklet": "96-14",
+          "n_a_reason": "TT_96_LIGHT"
+        },
+        {
+          "id": "AUTO-96-11-R002",
+          "seq": 110,
+          "title": "96-11 / R-002: validate regression report.json (machine)",
+          "machine_runnable": true,
+          "status": "N_A",
+          "primary_attribution_if_fail": "96",
+          "input_source": "env:TT_96_LIGHT",
+          "expected_outcome": "heavy gate skipped in light smoke mode",
+          "control_framework_refs": [
+            "SOC2-CC8.1",
+            "R002",
+            "R-001"
+          ],
+          "commands": [
+            "env:TT_96_LIGHT"
+          ],
+          "observed_exit_code": null,
+          "stdout_tail": "",
+          "stderr_tail": "",
+          "evidence_paths_expected": [],
+          "f_row_hints": [
+            "F-8.2",
+            "R002",
+            "R-001",
+            "ISS-007"
+          ],
+          "96_booklet": "96-11",
+          "n_a_reason": "TT_96_LIGHT"
+        },
+        {
+          "id": "AUTO-96-13-UI-TEST",
+          "seq": 130,
+          "title": "96-13 UI: frontend vitest (machine)",
+          "machine_runnable": true,
+          "status": "N_A",
+          "primary_attribution_if_fail": "96",
+          "input_source": "env:TT_96_LIGHT",
+          "expected_outcome": "heavy gate skipped in light smoke mode",
+          "control_framework_refs": [
+            "OWASP-ASVS-V5",
+            "OWASP-ASVS-V8"
+          ],
+          "commands": [
+            "env:TT_96_LIGHT"
+          ],
+          "observed_exit_code": null,
+          "stdout_tail": "",
+          "stderr_tail": "",
+          "evidence_paths_expected": [],
+          "f_row_hints": [
+            "F-010",
+            "F-015",
+            "93-matrix"
+          ],
+          "96_booklet": "96-13",
+          "n_a_reason": "TT_96_LIGHT"
+        },
+        {
+          "id": "AUTO-96-13-I18N",
+          "seq": 131,
+          "title": "96-13 i18n coverage gate (machine)",
+          "machine_runnable": true,
+          "status": "N_A",
+          "primary_attribution_if_fail": "96",
+          "input_source": "env:TT_96_LIGHT",
+          "expected_outcome": "heavy gate skipped in light smoke mode",
+          "control_framework_refs": [
+            "OWASP-ASVS-V5"
+          ],
+          "commands": [
+            "env:TT_96_LIGHT"
+          ],
+          "observed_exit_code": null,
+          "stdout_tail": "",
+          "stderr_tail": "",
+          "evidence_paths_expected": [],
+          "f_row_hints": [
+            "F-010",
+            "150-i18n"
+          ],
+          "96_booklet": "96-13",
+          "n_a_reason": "TT_96_LIGHT"
+        },
+        {
+          "id": "AUTO-96-16-ROUTES",
+          "seq": 160,
+          "title": "96-16 route inventory: page.tsx count == 119",
+          "machine_runnable": true,
+          "status": "N_A",
+          "primary_attribution_if_fail": "96",
+          "input_source": "env:TT_96_LIGHT",
+          "expected_outcome": "heavy gate skipped in light smoke mode",
+          "control_framework_refs": [
+            "OWASP-ASVS-V1",
+            "SRE-SLO"
+          ],
+          "commands": [
+            "env:TT_96_LIGHT"
+          ],
+          "observed_exit_code": null,
+          "stdout_tail": "",
+          "stderr_tail": "",
+          "evidence_paths_expected": [],
+          "f_row_hints": [
+            "F-008",
+            "96-16"
+          ],
+          "96_booklet": "96-16",
+          "n_a_reason": "TT_96_LIGHT"
+        },
+        {
+          "id": "AUTO-95-F-REGISTRY",
+          "seq": 950,
+          "title": "96 booklets registry volume gate (read-only spec paths)",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "96",
+          "input_source": "docs/spec/96-*.md read-only size gate",
+          "expected_outcome": "verify_96_booklets_registry exit 0",
+          "control_framework_refs": [
+            "SOC2-CC8.1",
+            "ISO27001-A.12"
+          ],
+          "commands": [
+            "C:\\Users\\plant\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+            "D:\\TravelTrust\\scripts\\release\\verify_96_booklets_registry.py",
+            "--repo-root",
+            "D:\\TravelTrust",
+            "--out",
+            "D:\\TravelTrust\\evidence\\_local_ci_test_run\\96_booklets_registry.json"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "Wrote D:\\TravelTrust\\evidence\\_local_ci_test_run\\96_booklets_registry.json\n",
+          "stderr_tail": "",
+          "evidence_paths_expected": [
+            "evidence\\_local_ci_test_run\\96_booklets_registry.json"
+          ],
+          "f_row_hints": [
+            "F-doc-registry",
+            "96-Hub"
+          ],
+          "96_booklet": "96-15",
+          "evidence_path_actual": "D:\\TravelTrust\\evidence\\_local_ci_test_run\\96_booklets_registry.json"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "steps_total": 24,
+    "steps_pass": 8,
+    "steps_fail": 0,
+    "steps_na": 16,
+    "steps_accepted_risk": 0,
+    "steps_skip": 0,
+    "machine_steps_executed": 8,
+    "tier_a_all_pass": true,
+    "tier_bc_all_pass": true,
+    "tier_bc_scope_manual_only": false,
+    "any_fail": false,
+    "any_accepted_risk": false,
+    "accepted_risks_production_acknowledged": false
+  }
+}

@@ -1,0 +1,269 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 4, "w": 24, "x": 0, "y": 0 },
+      "id": 1,
+      "options": {
+        "content": "## TravelTrust API — Onboarding HTTP (example)\n\n- **Counters**: **`traveltrust_onboarding_http_responses_total{route,status_class}`** (2xx / 4xx / 5xx coarse) and **`traveltrust_onboarding_*_requests_total`** from **`GET /metrics`** (see **`crates/api/src/routes/health_meta/handlers.rs`**).\n- **Webhook queue / DLQ**: **`traveltrust_onboarding_webhook_jobs_pending`**; **`traveltrust_onboarding_webhook_dlq_unreplayed`** (actionable **`replayed_at IS NULL`**); **`traveltrust_onboarding_webhook_dlq_total`** (all DLQ rows incl. replayed — audit only).\n- **Optional recording rules**: **`ops/monitoring/prometheus-alerts-onboarding-webhook-queue.example.yml`** → group **`traveltrust_onboarding_http_recording`** (`traveltrust:onboarding_*_http_4xx_per_second_5m`, **`…quote…5xx…`**).\n- **Evidence**: **`cargo test -p traveltrust-api matrix_93_d_onb_011`** / **`matrix_93_d_onb_012`** — **[TT-9618 §3.6.1–§3.6.2](../../docs/runbook/TT-9618-onboarding-local-testnet.md)**, **[96-18-未完成 §4](../../docs/spec/96-18-未完成清单与多维检查.md#9618-cmd-cheatsheet)**.\n- **Import**: map Prometheus datasource **UID** to panels (placeholder **`prometheus`**).",
+        "mode": "markdown"
+      },
+      "title": "Read me",
+      "type": "text"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 12,
+            "lineWidth": 1,
+            "showPoints": "never"
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 9, "w": 24, "x": 0, "y": 4 },
+      "id": 2,
+      "options": {
+        "legend": { "calcs": [], "displayMode": "table", "placement": "right" },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "expr": "sum by (route, status_class) (rate(traveltrust_onboarding_http_responses_total[5m]))",
+          "legendFormat": "{{route}} {{status_class}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Onboarding HTTP responses (rate by route × class)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "lineWidth": 1,
+            "showPoints": "never"
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 13 },
+      "id": 3,
+      "options": {
+        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi", "sort": "none" }
+      },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "expr": "rate(traveltrust_onboarding_quote_get_requests_total[5m])",
+          "legendFormat": "quote_get",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "expr": "rate(traveltrust_onboarding_payment_intents_post_requests_total[5m])",
+          "legendFormat": "payment_intents_post",
+          "refId": "B"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "expr": "rate(traveltrust_onboarding_entitlements_me_get_requests_total[5m])",
+          "legendFormat": "entitlements_me_get",
+          "refId": "C"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "expr": "rate(traveltrust_onboarding_role_confirm_post_requests_total[5m])",
+          "legendFormat": "role_confirm_post",
+          "refId": "D"
+        }
+      ],
+      "title": "Handler entry counters (rate)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 8,
+            "lineWidth": 1,
+            "showPoints": "never"
+          },
+          "max": 1,
+          "min": 0,
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 13 },
+      "id": 4,
+      "options": {
+        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi", "sort": "none" }
+      },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "expr": "sum(rate(traveltrust_onboarding_http_responses_total{route=\"quote\",status_class=\"4xx\"}[5m])) / clamp_min(sum(rate(traveltrust_onboarding_http_responses_total{route=\"quote\"}[5m])), 1e-9)",
+          "legendFormat": "quote 4xx / all responses",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "expr": "sum(rate(traveltrust_onboarding_http_responses_total{route=\"quote\",status_class=\"5xx\"}[5m])) / clamp_min(sum(rate(traveltrust_onboarding_http_responses_total{route=\"quote\"}[5m])), 1e-9)",
+          "legendFormat": "quote 5xx / all responses",
+          "refId": "B"
+        }
+      ],
+      "title": "Quote: error-class share of responses (5m)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "blue", "value": null },
+              { "color": "green", "value": 0 }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 5, "w": 8, "x": 0, "y": 21 },
+      "id": 5,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "expr": "traveltrust_onboarding_webhook_jobs_pending",
+          "legendFormat": "pending",
+          "refId": "A"
+        }
+      ],
+      "title": "Webhook jobs pending (gauge; -1 if DB snapshot failed)",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "blue", "value": null },
+              { "color": "orange", "value": 0 }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 5, "w": 8, "x": 8, "y": 21 },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "expr": "traveltrust_onboarding_webhook_dlq_unreplayed",
+          "legendFormat": "dlq_unreplayed",
+          "refId": "A"
+        }
+      ],
+      "title": "Webhook DLQ unreplayed rows (replayed_at IS NULL)",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "blue", "value": null },
+              { "color": "purple", "value": 0 }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 5, "w": 8, "x": 16, "y": 21 },
+      "id": 7,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "expr": "traveltrust_onboarding_webhook_dlq_total",
+          "legendFormat": "dlq_total",
+          "refId": "A"
+        }
+      ],
+      "title": "Webhook DLQ all rows (includes replayed; audit)",
+      "type": "stat"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": ["traveltrust", "onboarding", "96-18", "120", "example"],
+  "templating": { "list": [] },
+  "time": { "from": "now-6h", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "TravelTrust API - Onboarding HTTP",
+  "uid": "traveltrust-onboarding-http-example",
+  "version": 1,
+  "weekStart": ""
+}

@@ -1,0 +1,48 @@
+name: User security notifications retry (staging)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/20 * * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: user-security-notifications-retry-staging-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  user-security-notifications-retry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Ensure psql client
+        run: |
+          set -euo pipefail
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq postgresql-client
+          fi
+          psql --version
+
+      - name: Run user security notifications retry (optional secrets)
+        env:
+          DATABASE_URL: ${{ secrets.STAGING_USER_SECURITY_NOTIFICATIONS_RETRY_DATABASE_URL }}
+          USER_SECURITY_NOTIFICATION_RETRY_BATCH_SIZE: ${{ vars.STAGING_USER_SECURITY_NOTIFICATION_RETRY_BATCH_SIZE }}
+          USER_SECURITY_NOTIFICATION_RETRY_MAX_ATTEMPTS: ${{ vars.STAGING_USER_SECURITY_NOTIFICATION_RETRY_MAX_ATTEMPTS }}
+          USER_SECURITY_NOTIFICATION_RETRY_DRY_RUN: ${{ vars.STAGING_USER_SECURITY_NOTIFICATION_RETRY_DRY_RUN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${DATABASE_URL}" ]; then
+            echo "::notice title=user-security-notifications-retry::skipped — secret STAGING_USER_SECURITY_NOTIFICATIONS_RETRY_DATABASE_URL unset."
+            exit 0
+          fi
+          echo "::group::user_security_notifications_retry config"
+          echo "USER_SECURITY_NOTIFICATION_RETRY_BATCH_SIZE=${USER_SECURITY_NOTIFICATION_RETRY_BATCH_SIZE:-50}"
+          echo "USER_SECURITY_NOTIFICATION_RETRY_MAX_ATTEMPTS=${USER_SECURITY_NOTIFICATION_RETRY_MAX_ATTEMPTS:-5}"
+          echo "USER_SECURITY_NOTIFICATION_RETRY_DRY_RUN=${USER_SECURITY_NOTIFICATION_RETRY_DRY_RUN:-1}"
+          echo "::endgroup::"
+          bash scripts/user-security-notifications-retry.sh
+

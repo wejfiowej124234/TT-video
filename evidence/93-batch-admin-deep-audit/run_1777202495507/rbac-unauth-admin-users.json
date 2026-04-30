@@ -1,0 +1,15 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/v1/admin/users?limit=5",
+    "headers": {}
+  },
+  "response": {
+    "status": 401,
+    "body": {
+      "error": "unauthorized",
+      "message": "unauthorized",
+      "detail": "STRICT_SESSION_GATE=1：须提供 Authorization: Bearer <session_token>（不接受仅 X-User-Id）"
+    }
+  }
+}

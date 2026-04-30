@@ -1,0 +1,13 @@
+{
+  "id": "B-MSG-002",
+  "status": "PASS",
+  "note": "API POST+GET OK；UI 因协议区未展开跳过（见 escrow-messages-ui-skipped.json）",
+  "evidence": [
+    "escrow-messages-post.json",
+    "escrow-messages-readback.json",
+    "escrow-messages-ui-no-chatblock.png",
+    "escrow-messages-ui-skipped.json",
+    "report-escrow-messages.json"
+  ],
+  "at": "2026-04-26T11:22:06.583Z"
+}

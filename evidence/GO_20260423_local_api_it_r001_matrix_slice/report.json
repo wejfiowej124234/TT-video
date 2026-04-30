@@ -1,0 +1,46 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260423_local_api_it_r001_matrix_slice",
+  "title": "local · matrix_93 API·IT slice (F-012 / F-013 / F-029 anchors)",
+  "executor": "cursor-agent-local",
+  "started_at": "2026-04-23T11:27:50Z",
+  "finished_at": "2026-04-23T11:28:20Z",
+  "environment": {
+    "name": "local",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "Three 93 anchors (D-ITN-001 / B-ORD-005 / D-IDX-003) PASS via cargo test + DATABASE_URL + Router::oneshot; not full 93 matrix or CI e2e (ISS-007 main stem still open).",
+  "cases": [
+    {
+      "id": "D-ITN-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_api_it_r001_matrix_slice/README.md",
+      "blocker": false,
+      "notes": "Rust: routes::orders::tests::orders_accept_mock_pay_itinerary_confirm_db_api_tests::matrix_93_d_itn_001b_f012_post_itineraries_draft_persists_app_stack_ok_pg"
+    },
+    {
+      "id": "B-ORD-005",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_api_it_r001_matrix_slice/README.md",
+      "blocker": false,
+      "notes": "Rust: routes::orders::tests::orders_accept_mock_pay_itinerary_confirm_db_api_tests::matrix_93_b_ord_005b_f013_itinerary_then_confirm_final_snapshot_app_stack_ok_pg"
+    },
+    {
+      "id": "D-IDX-003",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_api_it_r001_matrix_slice/README.md",
+      "blocker": false,
+      "notes": "Rust: routes::internal_indexer_admin_db_api_tests::matrix_93_d_idx_001f_f029_post_internal_indexer_reconcile_persist_true_app_stack_ok_pg"
+    }
+  ],
+  "summary": {
+    "PASS": 3,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  }
+}

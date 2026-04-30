@@ -1,0 +1,8 @@
+{
+  "source_url": "http://127.0.0.1:3012/auth/login?returnUrl=%2Fadmin%2Findexer",
+  "requested_url": "http://127.0.0.1:3012/admin/indexer",
+  "fetchTime": "2026-04-25T05:52:33.918Z",
+  "performance": 0.86,
+  "accessibility": 1,
+  "lhr_version": "11.6.0"
+}

@@ -1,0 +1,25 @@
+{
+  "apiBase": "http://127.0.0.1:18080",
+  "health_ok": true,
+  "meta_status": 200,
+  "did_rank": {
+    "strict_db_write": false,
+    "dual_write_order": "GET /meta did_rank is read-only observation of chain_off mount and db_pool; ranking JSON is served by GET /api/v1/did-rank/* (routes/did_rank.rs), not this block; guides_community_penalty_exclusion explains guides list filtering vs community_penalties (685)",
+    "rule": "有 chain_off.db_pool 时 guides 社区处罚剔除生效：PostgreSQL list_guides_did_rank_* 内联 NOT EXISTS，或 list_guides_did_rank 失败时 list_subject_user_ids_excluded_from_did_rank_guides 过滤内存榜（批 685）；仅 chain_off 无 db_pool 时不读 community_penalties；无 chain_off 时 guides 为空+note（routes/did_rank.rs）；747 GET /meta did_rank 对象 did_rank_top_keys / did_rank_top_keys_contract_747 与 DID_RANK_META_TOP_KEYS 八键顺序同源",
+    "chain_off_mounted": true,
+    "chain_off_db_pool": true,
+    "guides_community_penalty_exclusion": "db_backed",
+    "did_rank_top_keys": [
+      "strict_db_write",
+      "dual_write_order",
+      "rule",
+      "chain_off_mounted",
+      "chain_off_db_pool",
+      "guides_community_penalty_exclusion",
+      "did_rank_top_keys",
+      "did_rank_top_keys_contract_747"
+    ],
+    "did_rank_top_keys_contract_747": "**747**：**`did_rank_top_keys`** **与 **`DID_RANK_META_TOP_KEYS`** **同源（顺序 `strict_db_write`****→**`dual_write_order`****→**`rule`****→**`chain_off_mounted`****→**`chain_off_db_pool`****→**`guides_community_penalty_exclusion`****→**`did_rank_top_keys`****→**`did_rank_top_keys_contract_747`）"
+  },
+  "chain_off_mounted": true
+}

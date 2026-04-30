@@ -1,0 +1,39 @@
+# 96-18 / TT-9618 · ingress-nginx：Stripe 公网 webhook 入口（TLS 终止 + 签名校验在 API）
+#
+# Stripe 投递 **HTTPS** **POST** **`/api/v1/hooks/stripe/onboarding`**；**请求体签名校验** 由 API 使用 **`TRAVELTRUST_STRIPE_WEBHOOK_SECRET`**
+#（**`Stripe-Signature`**）完成 — **Ingress 层不做 mTLS 客户端证书**（与内网 internal webhook 示例分轨）。
+#
+# 替换 api.staging.example.com、TLS secret、Service 名、ingressClassName、namespace。
+# 生产硬闸仍须：**HSTS**、**WAF**、**速率限制**、**Stripe Dashboard endpoint secret** 轮换 Runbook（见 docs/runbook/TT-9618-onboarding-local-testnet.md §3.2）。
+#
+# 可选（P1 · 边缘粗限流，ingress-nginx）：按客户端 IP 限制 RPS；须与 Stripe 重试/突发对拍调参，避免误杀合法投递。
+# 文档：kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#rate-limiting
+# nginx.ingress.kubernetes.io/limit-rps: "20"
+# nginx.ingress.kubernetes.io/limit-burst-multiplier: "3"
+# nginx.ingress.kubernetes.io/limit-connections: "10"
+#
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traveltrust-api-stripe-webhook
+  namespace: traveltrust-staging
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: api.staging.example.com
+      http:
+        paths:
+          - path: /api/v1/hooks/stripe
+            pathType: Prefix
+            backend:
+              service:
+                name: traveltrust-api
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - api.staging.example.com
+      secretName: api-public-tls

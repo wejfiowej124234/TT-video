@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://traveltrust.local/schemas/release_orchestration_report.schema.json",
+  "title": "TravelTrust release_orchestration v1",
+  "type": "object",
+  "required": ["schema_version", "kind", "source_spec", "run_id", "started_at", "finished_at", "executor", "tiers", "summary"],
+  "properties": {
+    "schema_version": { "const": "1" },
+    "kind": { "const": "traveltrust.release_orchestration.v1" },
+    "source_spec": { "type": "string" },
+    "run_id": { "type": "string" },
+    "started_at": { "type": "string" },
+    "finished_at": { "type": "string" },
+    "executor": { "type": "string" },
+    "tiers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["tier", "steps"],
+        "properties": {
+          "tier": { "type": "string", "pattern": "^[ABC]$" },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "seq", "title", "machine_runnable", "status"],
+              "properties": {
+                "id": { "type": "string" },
+                "seq": { "type": "integer" },
+                "title": { "type": "string" },
+                "machine_runnable": { "type": "boolean" },
+                "status": {
+                  "type": "string",
+                  "enum": ["PASS", "FAIL", "SKIP", "MANUAL_REQUIRED", "NOT_RUN"]
+                },
+                "primary_attribution_if_fail": {
+                  "type": "string",
+                  "enum": ["95", "96", "93", "R002", "GATE"]
+                },
+                "commands": { "type": "array", "items": { "type": "string" } },
+                "observed_exit_code": { "type": ["integer", "null"] },
+                "stdout_tail": { "type": "string" },
+                "stderr_tail": { "type": "string" },
+                "evidence_paths_expected": { "type": "array", "items": { "type": "string" } },
+                "f_row_hints": { "type": "array", "items": { "type": "string" } },
+                "96_booklet": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "steps_total",
+        "steps_pass",
+        "steps_fail",
+        "steps_manual",
+        "machine_steps_executed",
+        "tier_a_all_pass",
+        "tier_bc_all_pass",
+        "tier_bc_scope_manual_only"
+      ],
+      "properties": {
+        "steps_total": { "type": "integer" },
+        "steps_pass": { "type": "integer" },
+        "steps_fail": { "type": "integer" },
+        "steps_manual": { "type": "integer" },
+        "machine_steps_executed": { "type": "integer" },
+        "tier_a_all_pass": { "type": "boolean" },
+        "tier_bc_all_pass": { "type": "boolean" },
+        "tier_bc_scope_manual_only": { "type": "boolean" }
+      }
+    }
+  }
+}

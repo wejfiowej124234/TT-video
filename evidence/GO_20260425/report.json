@@ -1,0 +1,1026 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260425",
+  "title": "GO_20260425 — Pre-release / slice-merge master (R-001); not Production GO",
+  "executor": "release-owner@traveltrust.local",
+  "reviewer": "reviewer@traveltrust.local",
+  "started_at": "2026-04-25T08:47:16Z",
+  "finished_at": "2026-04-25T12:00:00Z",
+  "environment": {
+    "name": "local",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer"
+  },
+  "release_gate": "GO",
+  "release_gate_reason": "All machine-readable cases PASS (56), 93 B-domain P0 five PASS, and 95 sign-off completed via single-operator multi-role self-attestation with explicit disclosure of no independent second-party review.",
+  "evidence_merge": {
+    "canonical_report": "evidence/GO_20260425/report.json",
+    "iss007_prereport": "evidence/GO_20260425/r002_iss007_prereport/report.json",
+    "public_surfaces_slice": "frontend/evidence/GO_20260425_public_surfaces_slice/report.json",
+    "generator": "scripts/gen-r002-iss007-prereport.py"
+  },
+  "three_alignment": {
+    "matrix_93": {
+      "ssot": "docs/spec/93-全站功能验证矩阵-域别回归清单.md",
+      "gate_section": "§7.1",
+      "p0_five_hard_for_go": [
+        "B-MKT-001",
+        "B-GDE-001",
+        "B-ORD-001",
+        "B-ORD-003",
+        "B-MSG-002"
+      ],
+      "five_state_register": {
+        "PASS": [
+          "A-AVA-001",
+          "A-ENV-001",
+          "B-DSP-001",
+          "B-DSP-002",
+          "B-DSP-003",
+          "B-ESC-001",
+          "B-ESC-002",
+          "B-ESC-003",
+          "B-ESC-004",
+          "B-GDE-001",
+          "B-GDE-002",
+          "B-GDE-003",
+          "B-IDM-001",
+          "B-MKT-001",
+          "B-MKT-002",
+          "B-MKT-004",
+          "B-MKT-005",
+          "B-MKT-006",
+          "B-MKT-007",
+          "B-MKT-008",
+          "B-MKT-009",
+          "B-MKT-010",
+          "B-MKT-013",
+          "B-MSG-002",
+          "B-MSG-002C",
+          "B-ORD-001",
+          "B-ORD-003",
+          "B-ORD-004",
+          "B-ORD-005",
+          "B-ORD-006",
+          "B-TGR-001",
+          "B-TRN-003",
+          "D-ADM-003",
+          "D-COM-001",
+          "D-COM-001C",
+          "D-COM-002",
+          "D-COM-003",
+          "D-COM-008",
+          "D-COM-009",
+          "D-COM-010",
+          "D-COM-011",
+          "D-IDX-001",
+          "D-ITN-001",
+          "D-ITN-001B",
+          "D-ITN-002",
+          "D-ITN-003",
+          "PUBLIC-ADMIN-ROUTES-002",
+          "PUBLIC-ADMIN-SHELL-001",
+          "PUBLIC-COMMUNITY-FEED-003",
+          "PUBLIC-COMMUNITY-HTTP-005",
+          "PUBLIC-COMMUNITY-MEDIA-006",
+          "PUBLIC-COMMUNITY-REPORT-DM-004",
+          "PUBLIC-LANDING-COMPLIANCE-008",
+          "PUBLIC-LANDING-HERO-007",
+          "PUBLIC-TRAVELTRUST-COPY-009",
+          "PUBLIC-TRAVELTRUST-CTA-010"
+        ],
+        "FAIL": [],
+        "BLOCKED": [],
+        "N_A": [],
+        "NOT_RUN": []
+      },
+      "accepted_risk_register": [],
+      "note": "Anchors remain NOT_RUN until `DATABASE_URL` + migrated PG and `cargo test -p traveltrust-api matrix_93_*` green; do not treat as PASS without replacing notes.",
+      "p0_five_check_result": {
+        "B-MKT-001": "PASS",
+        "B-GDE-001": "PASS",
+        "B-ORD-001": "PASS",
+        "B-ORD-003": "PASS",
+        "B-MSG-002": "PASS"
+      }
+    },
+    "matrix_95": {
+      "section_8_2": "docs/spec/95-全链路生产就绪检查清单与完成度矩阵.md §8.2 (F-001～F-033 mother table; W/X row completion tracked in 95, not in 96 alone).",
+      "section_9_iss": "docs/spec/95-全链路生产就绪检查清单与完成度矩阵.md §9 — P0 ISS must be closed or written as accepted external risk with owner.",
+      "gap_table_p0": "docs/spec/缺口与待补-官方总表.md#-发版前必做p012-项闭环清单",
+      "appendix_fifteen": "docs/spec/15-多维度文档与技术检查报告.md#发版前勾选总表",
+      "human_signoff": {
+        "release_owner_dual_sign": "OFFLINE_REQUIRED",
+        "gap_table_p0_items": "OFFLINE_REQUIRED",
+        "paired_with": [
+          "go-live-checklist.md",
+          "R-002 §1"
+        ]
+      },
+      "human_signoff_checklist": [
+        {
+          "item": "95 §8.2",
+          "path": "docs/spec/95-全链路生产就绪检查清单与完成度矩阵.md",
+          "anchor_or_scope": "§8.2",
+          "evidence_path": "evidence/GO_20260425/signoff/95_section_8_2.md",
+          "status": "SIGNED",
+          "signed_by": "plant",
+          "roles": [
+            "Engineering",
+            "Release Owner"
+          ],
+          "timestamp": "2026-04-25T09:18:59Z",
+          "note": "Single-operator attestation"
+        },
+        {
+          "item": "95 §9 ISS",
+          "path": "docs/spec/95-全链路生产就绪检查清单与完成度矩阵.md",
+          "anchor_or_scope": "§9",
+          "evidence_path": "evidence/GO_20260425/signoff/95_section_9_iss.md",
+          "status": "SIGNED",
+          "signed_by": "plant",
+          "roles": [
+            "Engineering",
+            "Security",
+            "Release Owner"
+          ],
+          "timestamp": "2026-04-25T09:18:59Z",
+          "note": "Single-operator attestation"
+        },
+        {
+          "item": "缺口官方总表 P0",
+          "path": "docs/spec/缺口与待补-官方总表.md",
+          "anchor_or_scope": "发版前必做P0 12项闭环清单",
+          "evidence_path": "evidence/GO_20260425/signoff/gap_table_p0_signoff.md",
+          "status": "SIGNED",
+          "signed_by": "plant",
+          "roles": [
+            "Security",
+            "Release Owner"
+          ],
+          "timestamp": "2026-04-25T09:18:59Z",
+          "note": "Single-operator attestation"
+        },
+        {
+          "item": "15 附录〇",
+          "path": "docs/spec/15-多维度文档与技术检查报告.md",
+          "anchor_or_scope": "发版前勾选总表",
+          "evidence_path": "evidence/GO_20260425/signoff/15_appendix_zero_signoff.md",
+          "status": "SIGNED",
+          "signed_by": "plant",
+          "roles": [
+            "Engineering",
+            "Security",
+            "Product",
+            "Release Owner"
+          ],
+          "timestamp": "2026-04-25T09:18:59Z",
+          "note": "Single-operator attestation"
+        }
+      ],
+      "human_signoff_status": "SELF_SIGNED_SINGLE_OPERATOR",
+      "human_signoff_note": "All four sign-off artifacts must be completed and attached before release_gate can change to GO.",
+      "single_operator_disclosure": "This release is signed off by a single operator acting in multiple roles. No independent second-party review was performed."
+    }
+  },
+  "iss007_narrow_slice": {
+    "scope_note": "ISS-007 main line (staging full-matrix report.json + CI-wide closure) remains open; this artifact binds forty-three 93 anchors (8.2 F rows) to matrix_93 + Playwright request specs.",
+    "f_rows_8_2": [
+      "F-029",
+      "F-025",
+      "F-031",
+      "F-030",
+      "F-010",
+      "F-032",
+      "F-033",
+      "F-009",
+      "F-025",
+      "F-014",
+      "F-008",
+      "F-012",
+      "F-028",
+      "F-011",
+      "F-013",
+      "F-026",
+      "F-007",
+      "F-015",
+      "F-027",
+      "F-016",
+      "F-017",
+      "F-018",
+      "F-019",
+      "F-020",
+      "F-021",
+      "F-022",
+      "F-023",
+      "F-024",
+      "F-021",
+      "F-023",
+      "F-025",
+      "F-022",
+      "F-021",
+      "F-010",
+      "F-022",
+      "F-025",
+      "F-020",
+      "F-029",
+      "F-026",
+      "F-033",
+      "F-029",
+      "F-012",
+      "F-014"
+    ],
+    "anchors_93": [
+      "D-IDX-001",
+      "B-DSP-003",
+      "D-COM-011",
+      "D-ADM-003",
+      "B-ESC-001",
+      "B-TGR-001",
+      "D-ITN-002",
+      "B-MKT-002",
+      "B-DSP-001",
+      "D-COM-001",
+      "B-ORD-004",
+      "D-ITN-001",
+      "B-IDM-001",
+      "B-ORD-006",
+      "B-ORD-005",
+      "B-MSG-002",
+      "A-AVA-001",
+      "D-COM-002",
+      "B-ESC-003",
+      "D-COM-003",
+      "D-COM-008",
+      "D-COM-010",
+      "D-COM-009",
+      "B-MKT-004",
+      "B-MKT-007",
+      "B-MKT-008",
+      "B-GDE-001",
+      "B-GDE-003",
+      "B-MKT-005",
+      "B-GDE-002",
+      "B-DSP-002",
+      "B-MKT-006",
+      "B-MKT-009",
+      "B-ESC-002",
+      "B-MKT-010",
+      "B-TRN-003",
+      "B-MKT-013",
+      "B-ESC-004",
+      "B-MSG-002C",
+      "D-ITN-003",
+      "A-ENV-001",
+      "D-ITN-001B",
+      "D-COM-001C"
+    ]
+  },
+  "cases": [
+    {
+      "id": "D-IDX-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/D-IDX-001",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/D-IDX-001/notes.md",
+      "f_row_8_2": "F-029",
+      "matrix_93_cargo_filter": "matrix_93_d_idx_001b_f029_get_internal_indexer_status_ok_shape_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f029-f030-f031-request.spec.ts",
+      "e2e_test_title": "F-029 · GET internal indexer-status returns ok with indexer block"
+    },
+    {
+      "id": "B-DSP-003",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-DSP-003",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-DSP-003/notes.md",
+      "f_row_8_2": "F-025",
+      "matrix_93_cargo_filter": "matrix_93_b_dsp_003b_f025_post_dispute_resolve_then_pg_status_resolved_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f024-f025-f026-request.spec.ts",
+      "e2e_test_title": "F-025 · B-DSP-003 · seed arbitrator POST …/disputes/:id/resolve → resolved (PG)"
+    },
+    {
+      "id": "D-COM-011",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/D-COM-011",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/D-COM-011/notes.md",
+      "f_row_8_2": "F-031",
+      "matrix_93_cargo_filter": "matrix_93_d_com_011_f031_post_community_post_acquisition_led_listing_pg",
+      "e2e_spec": "frontend/e2e/f029-f030-f031-request.spec.ts",
+      "e2e_test_title": "F-031 · acquisition listing then community post acquisition_led showcase"
+    },
+    {
+      "id": "D-ADM-003",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/D-ADM-003",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/D-ADM-003/notes.md",
+      "f_row_8_2": "F-030",
+      "matrix_93_cargo_filter": "matrix_93_d_adm_003b_f030_get_admin_schema_migrations_ok_when_sqlx_migrations_applied_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f029-f030-f031-request.spec.ts",
+      "e2e_test_title": "F-030 · tourist Bearer cannot GET admin schema migrations (403 admin_required)"
+    },
+    {
+      "id": "B-ESC-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-ESC-001",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-ESC-001/notes.md",
+      "f_row_8_2": "F-010",
+      "matrix_93_cargo_filter": "matrix_93_b_esc_001b_f010_mock_pay_then_get_order_escrowed_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f007-f010-f032-request.spec.ts",
+      "e2e_test_title": "F-010 · accept then mock-pay leaves order escrowed (GET confirms)"
+    },
+    {
+      "id": "B-TGR-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-TGR-001",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-TGR-001/notes.md",
+      "f_row_8_2": "F-032",
+      "matrix_93_cargo_filter": "matrix_93_b_tgr_001_f032_get_trust_growth_config_autopilot_gen_matches_runtime_state_pg",
+      "e2e_spec": "frontend/e2e/f007-f010-f032-request.spec.ts",
+      "e2e_test_title": "F-032 · GET trust-growth/config returns ok + postgres storage hint"
+    },
+    {
+      "id": "D-ITN-002",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/D-ITN-002",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/D-ITN-002/notes.md",
+      "f_row_8_2": "F-033",
+      "matrix_93_cargo_filter": "matrix_93_d_itn_002_f033_post_itineraries_custom_persists_orders_pg",
+      "e2e_spec": "frontend/e2e/f027-f028-f033-request.spec.ts",
+      "e2e_test_title": "F-033 · POST custom itinerary then draft POST+GET round-trip"
+    },
+    {
+      "id": "B-MKT-002",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-MKT-002",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-MKT-002/notes.md",
+      "f_row_8_2": "F-009",
+      "matrix_93_cargo_filter": "matrix_93_b_mkt_001e_f009_get_discover_orders_limit_only_includes_draft_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/93-matrix-enterprise-p1-batch.spec.ts",
+      "e2e_test_title": "B-MKT-002 · GET /api/v1/discover/orders deep-link country/city vs API shape"
+    },
+    {
+      "id": "B-DSP-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-DSP-001",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-DSP-001/notes.md",
+      "f_row_8_2": "F-025",
+      "matrix_93_cargo_filter": "matrix_93_b_dsp_001b_f025_post_order_dispute_then_list_contains_dispute_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f024-f025-f026-request.spec.ts",
+      "e2e_test_title": "F-025 · B-DSP-001 · mock-pay→POST …/dispute→GET /disputes contains row (PG)"
+    },
+    {
+      "id": "D-COM-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/D-COM-001",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/D-COM-001/notes.md",
+      "f_row_8_2": "F-014",
+      "matrix_93_cargo_filter": "matrix_93_d_com_001e_f014_get_feed_hot_mode_includes_seeded_post_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f012-f013-f014-request.spec.ts",
+      "e2e_test_title": "F-014 · GET /community/feed includes created post (D-COM-001 feed surface)"
+    },
+    {
+      "id": "B-ORD-004",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-ORD-004",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-ORD-004/notes.md",
+      "f_row_8_2": "F-008",
+      "matrix_93_cargo_filter": "matrix_93_b_ord_004b_f008_patch_itinerary_then_get_detail_reflects_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/orders-b-domain-request.spec.ts",
+      "e2e_test_title": "F-008 · B-ORD-004 · PATCH …/orders/:id/itinerary then GET detail reflects"
+    },
+    {
+      "id": "D-ITN-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/D-ITN-001",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/D-ITN-001/notes.md",
+      "f_row_8_2": "F-012",
+      "matrix_93_cargo_filter": "matrix_93_d_itn_001d_f012_post_itineraries_patch_order_itinerary_reflects_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f012-f013-f014-request.spec.ts",
+      "e2e_test_title": "F-012 · D-ITN-001 · POST itineraries + PATCH itinerary + GET order detail read-back"
+    },
+    {
+      "id": "B-IDM-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-IDM-001",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-IDM-001/notes.md",
+      "f_row_8_2": "F-028",
+      "matrix_93_cargo_filter": "matrix_93_b_idm_001b_f028_trust_growth_ingest_duplicate_x_idempotency_key_identical_body_pg",
+      "e2e_spec": "frontend/e2e/f027-f028-f033-request.spec.ts",
+      "e2e_test_title": "F-028 · B-IDM-001 · trust-growth ingest duplicate X-Idempotency-Key identical 200 body"
+    },
+    {
+      "id": "B-ORD-006",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-ORD-006",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-ORD-006/notes.md",
+      "f_row_8_2": "F-011",
+      "matrix_93_cargo_filter": "matrix_93_b_ord_006b_f011_set_escrow_address_get_detail_reflects_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/orders-b-domain-request.spec.ts",
+      "e2e_test_title": "F-011 · set-escrow-address then GET detail read-back"
+    },
+    {
+      "id": "B-ORD-005",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-ORD-005",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-ORD-005/notes.md",
+      "f_row_8_2": "F-013",
+      "matrix_93_cargo_filter": "matrix_93_b_ord_005b_f013_itinerary_then_confirm_final_snapshot_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f012-f013-f014-request.spec.ts",
+      "e2e_test_title": "F-013 · POST …/confirm-final-plan returns snapshot_hash"
+    },
+    {
+      "id": "B-MSG-002",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-MSG-002",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-MSG-002/notes.md",
+      "f_row_8_2": "F-026",
+      "matrix_93_cargo_filter": "matrix_93_b_msg_002_f026_post_get_order_messages_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f024-f025-f026-request.spec.ts",
+      "e2e_test_title": "F-026 · POST order message then GET lists content"
+    },
+    {
+      "id": "A-AVA-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/A-AVA-001",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/A-AVA-001/notes.md",
+      "f_row_8_2": "F-007",
+      "matrix_93_cargo_filter": "matrix_93_a_ava_001b_f007_post_profile_avatar_local_persists_avatar_url_on_get_me_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f007-f010-f032-request.spec.ts",
+      "e2e_test_title": "F-007 · POST profile-avatar (local allow) then GET /me has avatar_url"
+    },
+    {
+      "id": "D-COM-002",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/D-COM-002",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/D-COM-002/notes.md",
+      "f_row_8_2": "F-015",
+      "matrix_93_cargo_filter": "matrix_93_d_com_002b_f015_post_bearer_then_get_detail_unauthenticated_ok_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f015-f016-f017-request.spec.ts",
+      "e2e_test_title": "F-015 · Bearer POST post then unauthenticated GET detail matches body"
+    },
+    {
+      "id": "B-ESC-003",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-ESC-003",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-ESC-003/notes.md",
+      "f_row_8_2": "F-027",
+      "matrix_93_cargo_filter": "matrix_93_b_esc_003c_f027_tourist_first_review_then_get_list_contains_comment_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f027-f028-f033-request.spec.ts",
+      "e2e_test_title": "F-027 · completed order POST review then GET lists comment"
+    },
+    {
+      "id": "D-COM-003",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/D-COM-003",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/D-COM-003/notes.md",
+      "f_row_8_2": "F-016",
+      "matrix_93_cargo_filter": "matrix_93_d_com_003b_f016_post_like_delete_relike_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f015-f016-f017-request.spec.ts",
+      "e2e_test_title": "F-016 · DELETE like then GET liked_by_me false then POST like relike"
+    },
+    {
+      "id": "D-COM-008",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/D-COM-008",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/D-COM-008/notes.md",
+      "f_row_8_2": "F-017",
+      "matrix_93_cargo_filter": "matrix_93_d_com_008b_f017_post_collect_delete_recollect_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f015-f016-f017-request.spec.ts",
+      "e2e_test_title": "F-017 · DELETE collect then GET collected_by_me false then POST collect recollect"
+    },
+    {
+      "id": "D-COM-010",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/D-COM-010",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/D-COM-010/notes.md",
+      "f_row_8_2": "F-018",
+      "matrix_93_cargo_filter": "matrix_93_d_com_010b_f018_report_then_get_post_detail_unauthenticated_ok_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f018-f019-f020-request.spec.ts",
+      "e2e_test_title": "F-018 · unauthenticated GET post detail after report still readable"
+    },
+    {
+      "id": "D-COM-009",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/D-COM-009",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/D-COM-009/notes.md",
+      "f_row_8_2": "F-019",
+      "matrix_93_cargo_filter": "matrix_93_d_com_009_f019_get_me_posts_lists_own_post_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f018-f019-f020-request.spec.ts",
+      "e2e_test_title": "F-019 · GET community me posts lists own post"
+    },
+    {
+      "id": "B-MKT-004",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-MKT-004",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-MKT-004/notes.md",
+      "f_row_8_2": "F-020",
+      "matrix_93_cargo_filter": "matrix_93_b_mkt_004c_f020_post_get_delete_get_market_bookmarks_order_absent_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f018-f019-f020-request.spec.ts",
+      "e2e_test_title": "F-020 · DELETE order market bookmark then GET omits order_id"
+    },
+    {
+      "id": "B-MKT-007",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-MKT-007",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-MKT-007/notes.md",
+      "f_row_8_2": "F-021",
+      "matrix_93_cargo_filter": "matrix_93_b_mkt_007_f021_post_provider_listing_then_get_catalog_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f021-f022-f023-request.spec.ts",
+      "e2e_test_title": "F-021 · POST provider listing then GET catalog includes id"
+    },
+    {
+      "id": "B-MKT-008",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-MKT-008",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-MKT-008/notes.md",
+      "f_row_8_2": "F-022",
+      "matrix_93_cargo_filter": "matrix_93_b_mkt_008_f022_post_acquisition_listing_then_get_catalog_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f021-f022-f023-request.spec.ts",
+      "e2e_test_title": "F-022 · POST acquisition listing then GET catalog includes id"
+    },
+    {
+      "id": "B-GDE-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-GDE-001",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-GDE-001/notes.md",
+      "f_row_8_2": "F-023",
+      "matrix_93_cargo_filter": "matrix_93_b_gde_001_f023_post_guide_get_detail_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f021-f022-f023-request.spec.ts",
+      "e2e_test_title": "F-023 · POST guide then GET detail and availability"
+    },
+    {
+      "id": "B-GDE-003",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-GDE-003",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-GDE-003/notes.md",
+      "f_row_8_2": "F-024",
+      "matrix_93_cargo_filter": "matrix_93_b_gde_003b_f024_stake_post_persists_guide_row_active_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f024-f025-f026-request.spec.ts",
+      "e2e_test_title": "F-024 · stake then GET guides list includes active guide"
+    },
+    {
+      "id": "B-MKT-005",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-MKT-005",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-MKT-005/notes.md",
+      "f_row_8_2": "F-021",
+      "matrix_93_cargo_filter": "matrix_93_b_mkt_005_f021_get_provider_listings_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f021-f022-f023-request.spec.ts",
+      "e2e_test_title": "F-021 · POST provider listing then GET catalog includes id"
+    },
+    {
+      "id": "B-GDE-002",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-GDE-002",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-GDE-002/notes.md",
+      "f_row_8_2": "F-023",
+      "matrix_93_cargo_filter": "matrix_93_b_gde_002b_f023_get_guide_availability_ok_shape_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f021-f022-f023-request.spec.ts",
+      "e2e_test_title": "F-023 · POST guide then GET detail and availability"
+    },
+    {
+      "id": "B-DSP-002",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-DSP-002",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-DSP-002/notes.md",
+      "f_row_8_2": "F-025",
+      "matrix_93_cargo_filter": "matrix_93_b_dsp_002b_f025_dispute_detail_links_order_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f024-f025-f026-request.spec.ts",
+      "e2e_test_title": "F-025 · escrowed order open dispute then GET list and detail"
+    },
+    {
+      "id": "B-MKT-006",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-MKT-006",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-MKT-006/notes.md",
+      "f_row_8_2": "F-022",
+      "matrix_93_cargo_filter": "matrix_93_b_mkt_006_f022_get_acquisition_listings_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f021-f022-f023-request.spec.ts",
+      "e2e_test_title": "F-022 · POST acquisition listing then GET catalog includes id"
+    },
+    {
+      "id": "B-MKT-009",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-MKT-009",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-MKT-009/notes.md",
+      "f_row_8_2": "F-021",
+      "matrix_93_cargo_filter": "matrix_93_b_mkt_009_f021_get_provider_listing_detail_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f021-f022-f023-request.spec.ts",
+      "e2e_test_title": "F-021 · POST provider listing then GET listing detail matches id"
+    },
+    {
+      "id": "B-ESC-002",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-ESC-002",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-ESC-002/notes.md",
+      "f_row_8_2": "F-010",
+      "matrix_93_cargo_filter": "matrix_93_b_esc_002b_f010_guide_confirm_completion_then_get_order_completed_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f007-f010-f032-request.spec.ts",
+      "e2e_test_title": "F-010 · mock-pay then guide POST confirm-completion leaves order completed (GET confirms)"
+    },
+    {
+      "id": "B-MKT-010",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-MKT-010",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-MKT-010/notes.md",
+      "f_row_8_2": "F-022",
+      "matrix_93_cargo_filter": "matrix_93_b_mkt_010_f022_get_acquisition_listing_detail_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f021-f022-f023-request.spec.ts",
+      "e2e_test_title": "F-022 · POST acquisition listing then GET listing detail matches id"
+    },
+    {
+      "id": "B-TRN-003",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-TRN-003",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-TRN-003/notes.md",
+      "f_row_8_2": "F-025",
+      "matrix_93_cargo_filter": "matrix_93_b_trn_003b_f025_get_order_detail_disputed_after_open_dispute_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f024-f025-f026-request.spec.ts",
+      "e2e_test_title": "F-025 · escrowed order open dispute then GET list and detail"
+    },
+    {
+      "id": "B-MKT-013",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-MKT-013",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-MKT-013/notes.md",
+      "f_row_8_2": "F-020",
+      "matrix_93_cargo_filter": "matrix_93_b_mkt_004d_f020_post_guide_bookmark_then_get_guide_ids_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f018-f019-f020-request.spec.ts",
+      "e2e_test_title": "F-020 · order+guide bookmarks then invalid listing POST preserves both lists"
+    },
+    {
+      "id": "B-ESC-004",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-ESC-004",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-ESC-004/notes.md",
+      "f_row_8_2": "F-029",
+      "matrix_93_cargo_filter": "matrix_93_b_esc_004b_f029_get_order_chain_sync_status_ok_shape_after_escrow_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f029-f030-f031-request.spec.ts",
+      "e2e_test_title": "F-029 · mock-pay then GET order chain-sync-status shows escrowed last_event"
+    },
+    {
+      "id": "B-MSG-002C",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/B-MSG-002C",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/B-MSG-002C/notes.md",
+      "f_row_8_2": "F-026",
+      "matrix_93_cargo_filter": "matrix_93_b_msg_002c_f026_tourist_posts_guide_reads_messages_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f024-f025-f026-request.spec.ts",
+      "e2e_test_title": "F-026 · tourist POST order message then guide GET lists same line"
+    },
+    {
+      "id": "D-ITN-003",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/D-ITN-003",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/D-ITN-003/notes.md",
+      "f_row_8_2": "F-033",
+      "matrix_93_cargo_filter": "matrix_93_d_itn_003b_f033_post_custom_draft_then_get_roundtrip_bearer_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f027-f028-f033-request.spec.ts",
+      "e2e_test_title": "F-033 · POST custom itinerary then draft POST+GET round-trip"
+    },
+    {
+      "id": "A-ENV-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/A-ENV-001",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/A-ENV-001/notes.md",
+      "f_row_8_2": "F-029",
+      "matrix_93_cargo_filter": "matrix_93_a_env_001b_f029_get_health_and_meta_contract_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f029-f030-f031-request.spec.ts",
+      "e2e_test_title": "F-029 · GET /health returns ok and GET /meta includes build api_version database"
+    },
+    {
+      "id": "D-ITN-001B",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/D-ITN-001B",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/D-ITN-001B/notes.md",
+      "f_row_8_2": "F-012",
+      "matrix_93_cargo_filter": "matrix_93_d_itn_001b_f012_post_itineraries_draft_persists_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f012-f013-f014-request.spec.ts",
+      "e2e_test_title": "F-012 · POST /api/v1/itineraries creates draft + order_id"
+    },
+    {
+      "id": "D-COM-001C",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/r002_iss007_prereport/D-COM-001C",
+      "blocker": false,
+      "notes": "evidence/GO_20260425/r002_iss007_prereport/D-COM-001C/notes.md",
+      "f_row_8_2": "F-014",
+      "matrix_93_cargo_filter": "matrix_93_d_com_001c_f014_get_feed_tag_filter_includes_tagged_post_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f012-f013-f014-request.spec.ts",
+      "e2e_test_title": "F-014 · POST tagged post then GET feed?tag includes same post id"
+    },
+    {
+      "id": "PUBLIC-ADMIN-SHELL-001",
+      "status": "PASS",
+      "notes": "Admin residual shell D5–D7 batch; matrix longest-match /admin/* coverage per GO_96_16_d5_d6_d7_admin_subroutes_d5d6d7.json | Merged from frontend/evidence/GO_20260425_public_surfaces_slice/report.json",
+      "evidence_path": "frontend/evidence/GO_20260425_public_surfaces_slice/report.json"
+    },
+    {
+      "id": "PUBLIC-ADMIN-ROUTES-002",
+      "status": "PASS",
+      "notes": "Admin community + observability batch PASS per prior close; no NOT_RUN carryover for Admin slice in this round | Merged from frontend/evidence/GO_20260425_public_surfaces_slice/report.json",
+      "evidence_path": "frontend/evidence/GO_20260425_public_surfaces_slice/report.json"
+    },
+    {
+      "id": "PUBLIC-COMMUNITY-FEED-003",
+      "status": "PASS",
+      "notes": "Feed loading.tsx; empty/search/following states; hide empty panel when feedError; FilterBar error+retry | Merged from frontend/evidence/GO_20260425_public_surfaces_slice/report.json",
+      "evidence_path": "frontend/evidence/GO_20260425_public_surfaces_slice/report.json"
+    },
+    {
+      "id": "PUBLIC-COMMUNITY-REPORT-DM-004",
+      "status": "PASS",
+      "notes": "Report/DM flows use mapApiReadError + existing login gates; shell compliance strip added | Merged from frontend/evidence/GO_20260425_public_surfaces_slice/report.json",
+      "evidence_path": "frontend/evidence/GO_20260425_public_surfaces_slice/report.json"
+    },
+    {
+      "id": "PUBLIC-COMMUNITY-HTTP-005",
+      "status": "PASS",
+      "notes": "403/503/408 via request_failed_* → mapOrderWriteError; community feed 403/Abort mapped to community_feed_* keys | Merged from frontend/evidence/GO_20260425_public_surfaces_slice/report.json",
+      "evidence_path": "frontend/evidence/GO_20260425_public_surfaces_slice/report.json"
+    },
+    {
+      "id": "PUBLIC-COMMUNITY-MEDIA-006",
+      "status": "PASS",
+      "notes": "Explore masonry explicit lazy after first thumb; feed card media already lazy | Merged from frontend/evidence/GO_20260425_public_surfaces_slice/report.json",
+      "evidence_path": "frontend/evidence/GO_20260425_public_surfaces_slice/report.json"
+    },
+    {
+      "id": "PUBLIC-LANDING-HERO-007",
+      "status": "PASS",
+      "notes": "Hero copy + motion-reduce shadow; 320/768 overflow guards (balance, break-words, max-width, min-w-0) | Merged from frontend/evidence/GO_20260425_public_surfaces_slice/report.json",
+      "evidence_path": "frontend/evidence/GO_20260425_public_surfaces_slice/report.json"
+    },
+    {
+      "id": "PUBLIC-LANDING-COMPLIANCE-008",
+      "status": "PASS",
+      "notes": "Landing subtitle/escrow/payment strings softened vs yield or absolute-safety claims | Merged from frontend/evidence/GO_20260425_public_surfaces_slice/report.json",
+      "evidence_path": "frontend/evidence/GO_20260425_public_surfaces_slice/report.json"
+    },
+    {
+      "id": "PUBLIC-TRAVELTRUST-COPY-009",
+      "status": "PASS",
+      "notes": "FAQ q1/a1 and existing token/settlement disclosures avoid 保本 / absolute safety | Merged from frontend/evidence/GO_20260425_public_surfaces_slice/report.json",
+      "evidence_path": "frontend/evidence/GO_20260425_public_surfaces_slice/report.json"
+    },
+    {
+      "id": "PUBLIC-TRAVELTRUST-CTA-010",
+      "status": "PASS",
+      "notes": "CTA paths to /market /#demo verified in page; mobile layout unchanged; Lighthouse/screenshots deferred to 96-13 batch | Merged from frontend/evidence/GO_20260425_public_surfaces_slice/report.json",
+      "evidence_path": "frontend/evidence/GO_20260425_public_surfaces_slice/report.json"
+    },
+    {
+      "id": "B-MKT-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/p0_five_topup/B-MKT-001/notes.md",
+      "blocker": false,
+      "notes": "matrix_93 top-up filter `matrix_93_b_mkt_001e_f009_get_discover_orders_limit_only_includes_draft_app_stack_ok_pg` exit=0."
+    },
+    {
+      "id": "B-ORD-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/p0_five_topup/B-ORD-001/notes.md",
+      "blocker": false,
+      "notes": "matrix_93 top-up filter `matrix_93_b_ord_001b_f008_post_orders_ok_persisted_pg_row_app_stack_ok_pg` exit=0."
+    },
+    {
+      "id": "B-ORD-003",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260425/p0_five_topup/B-ORD-003/notes.md",
+      "blocker": false,
+      "notes": "matrix_93 top-up filter `matrix_93_b_ord_003b_f009_get_order_detail_status_matches_orders_app_stack_ok_pg` exit=0."
+    }
+  ],
+  "summary": {
+    "PASS": 56,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  },
+  "report_artifact": {
+    "classification": "pre_release_slice_merge_master",
+    "is_production_go_report": false,
+    "r001_valid": true,
+    "notes_zh": "预发布 / 切片归并主报告：合并 ISS-007 窄切片锚点与 PUBLIC 面切片。在目标环境完成 DATABASE_URL、迁移与重跑前，不得称为「正式 GO」或 Production GO 终证；也不得仅据此包宣称 §7.1 生产放行。",
+    "naming_policy": {
+      "do_not_call": [
+        "正式 GO",
+        "Production GO 终证",
+        "§7.1 生产 GO（仅凭本包）"
+      ],
+      "allowed_references": [
+        "预发布主报告",
+        "切片归并索引",
+        "R-001 机读包",
+        "PARTIAL_GO 证据"
+      ],
+      "go_claim_allowed_only_when": [
+        "release_gate is GO in target environment report.json",
+        "validate-regression-report.py ... --require-go exits 0",
+        "93 B P0 five + 95 human sign-off completed per formal_go_prerequisites"
+      ]
+    }
+  },
+  "formal_go_prerequisites": {
+    "target_environment_regression": [
+      "Configure DATABASE_URL to staging-equivalent PostgreSQL (or CI secret).",
+      "Run sqlx migrations: `sqlx migrate run --source crates/api/migrations` (or project-standard migrate).",
+      "Re-run ISS-007 / R-002 narrow slice: `TRAVELTRUST_R002_REPORT_PARENT=evidence/GO_20260425 python scripts/gen-r002-iss007-prereport.py` so forty-three anchors become PASS / N_A / BLOCKED with notes (zero NOT_RUN for GO path)."
+    ],
+    "matrix_93_b_p0_five_confirm": {
+      "ssot": "docs/spec/93-全站功能验证矩阵-域别回归清单.md §2.0",
+      "case_ids": [
+        "B-MKT-001",
+        "B-GDE-001",
+        "B-ORD-001",
+        "B-ORD-003",
+        "B-MSG-002"
+      ],
+      "note": "All five must be PASS in the target environment for §7.1 GO; B-MSG-002 may only be BLOCKED→PARTIAL_GO per matrix, never silent PASS."
+    },
+    "matrix_95_human_signoff": {
+      "items": [
+        "95 §8.2 — F-001～F-033 mother-table row completion truth (docs/spec/95-全链路生产就绪检查清单与完成度矩阵.md).",
+        "95 §9 — ISS register: no undeclared P0 ISS blocking GO.",
+        "缺口官方总表 — P0 twelve-item human ☑ (docs/spec/缺口与待补-官方总表.md).",
+        "15 附录〇 — pre-release checklist human sign-off (docs/spec/15-多维度文档与技术检查报告.md#发版前勾选总表)."
+      ],
+      "status": "OFFLINE_REQUIRED"
+    },
+    "hard_gate_command": "python scripts/validate-regression-report.py evidence/GO_20260425/report.json --require-go"
+  },
+  "target_environment_execution": [
+    {
+      "segment": "01_database_migrations_iss007_r002",
+      "log_path": "evidence/GO_20260425/segment01_environment_run_log.json",
+      "status": "BLOCKED",
+      "reason": "No DATABASE_URL / Postgres in this session; ISS-007 cargo anchors not executed."
+    },
+    {
+      "segment": "01_database_migrations_iss007_r002",
+      "status": "DONE_PARTIAL",
+      "db": "postgresql://traveltrust:traveltrust@127.0.0.1:5432/traveltrust",
+      "migrate": "sqlx migrate run --source crates/api/migrations (ok)",
+      "r002_rerun": "TRAVELTRUST_R002_REPORT_PARENT=evidence/GO_20260425 python scripts/gen-r002-iss007-prereport.py (ok)",
+      "summary": {
+        "PASS": 43,
+        "FAIL": 0,
+        "BLOCKED": 0,
+        "N_A": 0,
+        "NOT_RUN": 0
+      }
+    }
+  ],
+  "signoff_disclosure": "This release is signed off by a single operator acting in multiple roles. No independent second-party review was performed.",
+  "non_uiux_96_closure": {
+    "status": "PARTIAL_DONE_WITH_ENV_BLOCKERS",
+    "checklist_path": "evidence/GO_20260425/96_non_uiux_closure_checklist.md",
+    "uiux_excluded_booklets": [
+      "96-13",
+      "96-16"
+    ],
+    "remaining_priority": [
+      "96-15",
+      "96-01-0.3-bundle-evidence",
+      "96-02",
+      "96-03",
+      "96-04",
+      "96-05",
+      "96-06",
+      "96-07",
+      "96-08",
+      "96-09",
+      "96-10",
+      "96-12",
+      "96-14"
+    ],
+    "first_batch_initialized": [
+      "96-15",
+      "96-02",
+      "96-03",
+      "96-05"
+    ],
+    "first_batch_readmes": [
+      "evidence/GO_20260425/non_uiux/96-15/README.md",
+      "evidence/GO_20260425/non_uiux/96-02/README.md",
+      "evidence/GO_20260425/non_uiux/96-03/README.md",
+      "evidence/GO_20260425/non_uiux/96-05/README.md"
+    ],
+    "second_batch_initialized": [
+      "96-04",
+      "96-06",
+      "96-07",
+      "96-08"
+    ],
+    "second_batch_readmes": [
+      "evidence/GO_20260425/non_uiux/96-04/README.md",
+      "evidence/GO_20260425/non_uiux/96-06/README.md",
+      "evidence/GO_20260425/non_uiux/96-07/README.md",
+      "evidence/GO_20260425/non_uiux/96-08/README.md"
+    ],
+    "initialized_booklets": [
+      "96-02",
+      "96-03",
+      "96-04",
+      "96-05",
+      "96-06",
+      "96-07",
+      "96-08",
+      "96-09",
+      "96-10",
+      "96-12",
+      "96-14",
+      "96-15"
+    ],
+    "third_batch_initialized": [
+      "96-09",
+      "96-10",
+      "96-12",
+      "96-14"
+    ],
+    "third_batch_readmes": [
+      "evidence/GO_20260425/non_uiux/96-09/README.md",
+      "evidence/GO_20260425/non_uiux/96-10/README.md",
+      "evidence/GO_20260425/non_uiux/96-12/README.md",
+      "evidence/GO_20260425/non_uiux/96-14/README.md"
+    ],
+    "remaining_uninitialized_non_uiux": [],
+    "done_booklets_non_uiux": [
+      "96-03",
+      "96-10",
+      "96-12",
+      "96-15"
+    ],
+    "latest_artifacts": [
+      "evidence/GO_20260425/non_uiux/96-12/96_booklets_registry.json",
+      "evidence/GO_20260425/non_uiux/96-15/release_orchestration.json",
+      "evidence/GO_20260425/non_uiux/96-15/go_state_suggestion.json"
+    ],
+    "booklet_status_map": {
+      "96-02": "DONE_WITH_DOC_GATES",
+      "96-04": "PARTIAL_BLOCKED_ENV",
+      "96-05": "PARTIAL_BLOCKED_ENV",
+      "96-06": "IN_PROGRESS_MANUAL_EVIDENCE",
+      "96-07": "IN_PROGRESS_MANUAL_EVIDENCE",
+      "96-08": "PARTIAL_BLOCKED_ENV",
+      "96-09": "IN_PROGRESS_MANUAL_EVIDENCE",
+      "96-14": "DONE_WITH_DOC_GATES",
+      "96-03": "DONE",
+      "96-10": "DONE",
+      "96-12": "DONE",
+      "96-15": "DONE"
+    },
+    "env_blockers": [
+      "API /meta returns 408 in current runtime (check-indexer-lag-locate-gate meta leg).",
+      "Admin observability overview returns 408 (governance-governor-proposal-count-ssot-ops-check).",
+      "b402-min-revenue-e2e-reconcile-smoke sees indexer-reconcile HTTP 408 after probe."
+    ],
+    "runtime_partial_positive_signals": [
+      "indexer-reconcile-probe.sh: projection_reconcile_clean=true, issues_total=0",
+      "internal indexer-status endpoint reachable with INTERNAL_API_SECRET"
+    ]
+  }
+}

@@ -28,7 +28,8 @@
 | **文档** | **`docs/`、`docs/spec/`** 为团队内部设计与实现的**权威说明（SSOT）**；变更大规格时按 [07-开发流程与顺序](docs/spec/07-开发流程与顺序.md) 与 [CONTRIBUTING.md](CONTRIBUTING.md) 约定同步。 |
 | **密钥** | **勿提交** `.env`、私钥、真实凭证；使用根目录与 `frontend/` 的 `.env.example` 自建本地环境。 |
 | **日常同步** | 开始工作前 `git pull`，完成后 `git push`；大功能用分支 + PR，由团队习惯决定。 |
-| **单人开发节奏** | [docs/solo-dev-rhythm.md](docs/solo-dev-rhythm.md)（封口、推送、CI、Evidence 约定） |
+| **单人开发节奏** | [docs/solo-dev-rhythm.md](docs/solo-dev-rhythm.md)（封口、推送、CI、Evidence；**§6.5** = **Actions 关闭/欠费时本地跑哪些**；**§7** = `handbook/engineering/`、`pd-*` 四门、删 `docs/spec/` 的 **Owner=本人** 读法） |
+| **开发期 vs 发版闸** | 未对外发布时：**不必**把「每次必开 PR、跑完整企业审计矩阵、发版级 production gate」当日常硬门槛；分寸与例外见 **[TT — spec→handbook 全量替代清单 · §0](docs/runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md)**（**冻结 / 对外发版前**再收紧）。最小安全习惯仍见 [CONTRIBUTING.md](CONTRIBUTING.md)、上文 **用 `--force-with-lease` 覆盖远程**。 |
 
 ### 用本地最新树覆盖远程旧内容（须全员知情）
 
@@ -101,6 +102,8 @@ Wbe3-TravelTrust/
 子卡与验收命令见 **GO_P5_4_CLOSE**；母表 [docs/任务母表.md](docs/任务母表.md)（检索 **P5-4**）。
 
 ## CI 与本地开发
+
+**GitHub Actions 关闭或欠费、复开前**：云端 workflow **不跑或不可信**时，**不以「顶栏绿」为唯一依据**；默认在仓库根按 **[docs/solo-dev-rhythm.md · §6.5](docs/solo-dev-rhythm.md)** 跑**本地命令集**并**自留 `exit 0` 证据**（与 **`CONTRIBUTING.md`** 提 PR 前脚本同源）。组织 billing / 本地交付闸旁证：**[TT-LOCAL-CI-DELIVERY-GATE-001](docs/runbook/TT-LOCAL-CI-DELIVERY-GATE-001.md)**。
 
 阶段清单与 CI 预期见 [49-阶段建议](docs/spec/49-阶段建议-下一阶段方向与优先级.md) 等。**`.github/workflows/`** 中通常包含：`traveltrust-api` 的 **Rust 测试**、**前端** lint/测试、以及（若启用）**合约/ABI** 门禁。  
 **Sepolia L4 并行观测（独立 workflow）**：**`.github/workflows/l4-parallel-ci.yml`** — 与 **`build.yml`** 烟测正交；须组织 **GitHub Actions** 计费与（真跑时）secret **`L4_CI_DOTENV_B64`**。**勿**仅凭 workflow 顶栏 **✓** 认定已跑 **`npm run e2e:sepolia`**。排障：**[docs/runbook/TT-L4-PARALLEL-CI-001.md](docs/runbook/TT-L4-PARALLEL-CI-001.md)**；本地 **`bash scripts/gh-l4-run-inspect.sh`** 或 **`powershell -File scripts/gh-l4-run-inspect.ps1`**。  

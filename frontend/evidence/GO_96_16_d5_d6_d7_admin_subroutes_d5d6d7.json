@@ -1,0 +1,20 @@
+{
+  "batch": "GO_96_16_d5_d6_d7_admin_subroutes_d5d6d7",
+  "docs_spec_touched": false,
+  "scope": "Matrix batch 1 (Admin): residual /admin/* routes previously NEEDS_FIX — /admin/alerts/incidents(+[id]), /admin/api-versions, /admin/approvals(+[id]), /admin/audit(+logs/[id]/operations), /admin/cross-check, /admin/drift-summary, /admin/fee-router, /admin/flags, /admin/guides(+[id]), /admin/indexer(+reconcile-reports/reconcile/[id]), /admin/internal-tools/audits, /admin/jobs, /admin/lifecycle, /admin/media/access-logs|signed-url-tokens, /admin/policies, /admin/region-vault, /admin/reviews(+[id]), /admin/schema, /admin/secrets/metadata, /admin/tenants/scopes, /admin/trust-growth, /admin/users(+[id]). Longer matrix rules (e.g. /admin/community, /admin/config, /admin/orders) still win; this file is the longest-match fallback for /admin/*. Code: app/admin/layout.tsx AdminShellBar; D6: AdminShellBar header + errorBoundaryMotionSafeClasses (prefers-reduced-motion).",
+  "d5_d6_d7_actions": [
+    "D5: sticky AdminShellBar + existing per-route pages (main, fetch/retry patterns) unchanged except shared shell",
+    "D6: AdminShellBar header composes errorBoundaryMotionSafeClasses with existing touchTargetLink44 + travel focus rings (travelLinkFocus § admin)",
+    "D7: i18n for admin_shell_* / page keys as before; plus en/zh keys for market merchant & acquisition studio modals (locales/en.ts, zh.ts) so full `npm test` passes — keys are D7 surface for those modals, not /admin routes",
+    "Matrix: scripts/build-d5d6d7-coverage-matrix.mjs adds prefix /admin → this evidence (longest-prefix resolution)"
+  ],
+  "commands": {
+    "eslint": { "cmd": "npm run lint", "exit": 0 },
+    "i18n_ci": { "cmd": "npm run test:i18n:ci", "exit": 0 },
+    "vitest": { "cmd": "npm test", "exit": 0, "tests_passed": 1553, "test_files": 235 },
+    "npm_run_build": { "cmd": "npm run build", "exit": 0 }
+  },
+  "playwright_e2e": { "status": "NOT_RUN", "trace": "93", "detail": "E2E not run; matrix Playwright 93 NOT_RUN unchanged." },
+  "claim_96_complete": false,
+  "matrix_batch_order": "1_Admin"
+}

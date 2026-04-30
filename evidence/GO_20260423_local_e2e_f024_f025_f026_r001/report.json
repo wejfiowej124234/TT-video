@@ -1,0 +1,53 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260423_local_e2e_f024_f025_f026_r001",
+  "title": "local E2E slice · f024-f025-f026-request (Playwright API)",
+  "executor": "cursor-agent-local",
+  "started_at": "2026-04-23T11:44:10Z",
+  "finished_at": "2026-04-23T11:44:10Z",
+  "environment": {
+    "name": "local",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "Playwright api-b-gde-dsp-msg-024-026-chromium: 3/3 passed. Not 93 full matrix nor CI e2e job (ISS-007 main stem open).",
+  "cases": [
+    {
+      "id": "B-GDE-003",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_e2e_f024_f025_f026_r001/README.md",
+      "blocker": false,
+      "notes": "E2E: F-024 POST guides + stake + GET guides?city=Shanghai"
+    },
+    {
+      "id": "B-DSP-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_e2e_f024_f025_f026_r001/README.md",
+      "blocker": false,
+      "notes": "E2E: F-025 POST …/orders/:id/dispute after mock-pay"
+    },
+    {
+      "id": "B-DSP-002",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_e2e_f024_f025_f026_r001/README.md",
+      "blocker": false,
+      "notes": "E2E: F-025 GET /disputes + GET /disputes/:id (same test as B-DSP-001)"
+    },
+    {
+      "id": "B-MSG-002",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_e2e_f024_f025_f026_r001/README.md",
+      "blocker": false,
+      "notes": "E2E: F-026 POST|GET …/orders/:id/messages"
+    }
+  ],
+  "summary": {
+    "PASS": 4,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  }
+}

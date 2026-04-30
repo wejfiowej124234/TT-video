@@ -1,0 +1,194 @@
+{
+  "schema_version": "1",
+  "kind": "traveltrust.release_orchestration.v1",
+  "source_spec": "96-15",
+  "run_id": "96_15_orchestration_rerun_20260425T1016Z",
+  "started_at": "2026-04-25T10:16:19Z",
+  "finished_at": "2026-04-25T10:16:20Z",
+  "executor": "plant",
+  "tiers": [
+    {
+      "tier": "A",
+      "steps": [
+        {
+          "id": "TIER-A-1",
+          "seq": 1,
+          "title": "15 appendix + gap table P0 twelve / signoff bundle (semiauto: README evidence)",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "96",
+          "commands": [
+            "semiauto:evidence-file",
+            "D:\\TravelTrust\\evidence\\GO_20260425\\96_15_orchestration_rerun_20260425T1006Z\\README.md"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "ok 335 bytes: D:\\TravelTrust\\evidence\\GO_20260425\\96_15_orchestration_rerun_20260425T1006Z\\README.md",
+          "stderr_tail": "",
+          "evidence_paths_expected": [
+            "evidence\\GO_20260425\\96_15_orchestration_rerun_20260425T1006Z\\README.md"
+          ],
+          "f_row_hints": [],
+          "96_booklet": "96-11",
+          "semiauto_detail": "ok 335 bytes: D:\\TravelTrust\\evidence\\GO_20260425\\96_15_orchestration_rerun_20260425T1006Z\\README.md"
+        },
+        {
+          "id": "TIER-A-2",
+          "seq": 2,
+          "title": "59 nine-dimension P0 table snapshot (semiauto: markdown evidence)",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "96",
+          "commands": [
+            "semiauto:evidence-file",
+            "D:\\TravelTrust\\evidence\\GO_20260425\\RELEASE_SUMMARY_GO_20260425.md"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "ok 842 bytes: D:\\TravelTrust\\evidence\\GO_20260425\\RELEASE_SUMMARY_GO_20260425.md",
+          "stderr_tail": "",
+          "evidence_paths_expected": [
+            "evidence\\GO_20260425\\RELEASE_SUMMARY_GO_20260425.md"
+          ],
+          "f_row_hints": [],
+          "96_booklet": "96-15",
+          "semiauto_detail": "ok 842 bytes: D:\\TravelTrust\\evidence\\GO_20260425\\RELEASE_SUMMARY_GO_20260425.md"
+        },
+        {
+          "id": "TIER-A-3",
+          "seq": 3,
+          "title": "B-421 runbook/go-live doclink gate",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "GATE",
+          "commands": [
+            "C:\\Users\\plant\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+            "D:\\TravelTrust\\scripts\\release\\b421_doclink_gate.py",
+            "--repo-root",
+            "D:\\TravelTrust"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "",
+          "stderr_tail": "b421_doclink_gate: ok\n",
+          "evidence_paths_expected": [
+            "evidence\\GO_20260425\\96_15_orchestration_rerun_20260425T1016Z\\b421.log"
+          ],
+          "f_row_hints": [],
+          "96_booklet": "96-11"
+        }
+      ]
+    },
+    {
+      "tier": "B",
+      "steps": [
+        {
+          "id": "TIER-B-4",
+          "seq": 4,
+          "title": "66/51/53 anchors present (machine)",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "96",
+          "commands": [
+            "python",
+            "scripts/release/tier_bc_machine_gates.py",
+            "--gate",
+            "b4"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "ok: docs/spec/66-深度检查-缺口与遗留问题.md, docs/spec/51-阶段开发技术文档.md, docs/spec/53-阶段开发技术文档.md\n",
+          "stderr_tail": "",
+          "evidence_paths_expected": [
+            "docs/spec/66-深度检查-缺口与遗留问题.md",
+            "docs/spec/51-阶段开发技术文档.md",
+            "docs/spec/53-阶段开发技术文档.md"
+          ],
+          "f_row_hints": [],
+          "96_booklet": "96-12"
+        },
+        {
+          "id": "TIER-B-5",
+          "seq": 5,
+          "title": "27-P0..P50 checklist present + min size (machine)",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "96",
+          "commands": [
+            "python",
+            "scripts/release/tier_bc_machine_gates.py",
+            "--gate",
+            "b5"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "ok: docs/spec/27-P0至P50开发流程勾选清单.md bytes=107596\n",
+          "stderr_tail": "",
+          "evidence_paths_expected": [
+            "docs/spec/27-P0至P50开发流程勾选清单.md"
+          ],
+          "f_row_hints": [],
+          "96_booklet": "96-12"
+        }
+      ]
+    },
+    {
+      "tier": "C",
+      "steps": [
+        {
+          "id": "TIER-C-6",
+          "seq": 6,
+          "title": "frontend/app page.tsx smoke count (machine)",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "96",
+          "commands": [
+            "python",
+            "scripts/release/tier_bc_machine_gates.py",
+            "--gate",
+            "c6"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "ok: page.tsx count=120\n",
+          "stderr_tail": "",
+          "evidence_paths_expected": [
+            "frontend/app/**/page.tsx"
+          ],
+          "f_row_hints": [
+            "F-010",
+            "F-008",
+            "F-021"
+          ],
+          "96_booklet": "96-13"
+        },
+        {
+          "id": "TIER-C-7",
+          "seq": 7,
+          "title": "04 routes gate: scripts/run-check-04-routes.sh (machine)",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "GATE",
+          "commands": [
+            "C:\\Program Files\\Git\\bin\\bash.exe",
+            "D:\\TravelTrust\\scripts\\run-check-04-routes.sh"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "check-04-routes-vs-code OK: 04 sec 3.4 table paths are mounted (except DOC_ONLY_SCHEDULED).\n  (no undocumented public /api/v1 routes vs sec 3.4 table)\ncheck-04-frontend-routes-vs-app OK: 04 sec 3.4 frontend page routes match frontend/app.\ncheck-04-api-ts-routes-vs-doc-34 OK: all routes block /api/v1|/auth|/meta|/health paths match 04 ��3.4 (178 checked).\ncheck-13-1-table1-routes-vs-app OK: 13-1 sec 2 table 1 routes match frontend/app.\ncheck-13-1-routes-covered-by-04-frontend-table OK: 13-1 table 1 routes are covered by 04 sec 3.4 frontend path table.\ncheck-b432-governance-ui-ssot-surface OK: B-428/B-432 governance closeloop surface pinned.\n",
+          "stderr_tail": "check-b450: OK (B450-REVIEW-POST-SSOT-DOC-ANCHORS-V1)\ncheck-b451: OK (B451-REVIEW-JSON-CONTRACT-EVOLUTION-GATE-V1)\ncheck-b452: OK (B452-REVIEW-JSON-CONTRACT-CLIENT-GATE-V1)\ncheck-b453: OK (B453-REVIEW-JSON-CONTRACT-OBSERVABILITY-GATE-V1)\ncheck-b454: OK (B454-REVIEW-JSON-CONTRACT-DEGRADE-EVIDENCE-GATE-V1)\ncheck-b455: OK (B455-REVIEW-JSON-CONTRACT-ROLLOUT-GATE-V1)\ncheck-b456: OK (B456-REVIEW-JSON-CONTRACT-RELEASE-CONTROLLER-GATE-V1)\ncheck-b457: OK (B457-REVIEW-JSON-CONTRACT-RELEASE-ADAPTER-GATE-V1)\n",
+          "evidence_paths_expected": [
+            "scripts/run-check-04-routes.sh"
+          ],
+          "f_row_hints": [
+            "F-033"
+          ],
+          "96_booklet": "96-12"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "steps_total": 7,
+    "steps_pass": 7,
+    "steps_fail": 0,
+    "steps_manual": 0,
+    "machine_steps_executed": 7,
+    "tier_a_all_pass": true,
+    "tier_bc_all_pass": true,
+    "tier_bc_scope_manual_only": false
+  }
+}

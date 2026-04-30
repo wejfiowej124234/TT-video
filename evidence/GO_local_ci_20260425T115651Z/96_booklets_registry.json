@@ -1,0 +1,174 @@
+{
+  "schema_version": "1",
+  "kind": "traveltrust.96_booklets_registry_gate.v1",
+  "generated_at": "2026-04-25T11:56:57Z",
+  "repo_root": "D:\\TravelTrust",
+  "min_volume_placeholder_bytes": 400,
+  "all_pass": true,
+  "all_registry_pass": true,
+  "all_volume_placeholder_pass": true,
+  "booklets": [
+    {
+      "id": "96-Hub",
+      "rel_path": "docs/spec/96-索引-全链路外生产验收分册.md",
+      "registry": "PASS",
+      "bytes": 21753,
+      "registry_detail": "ok",
+      "volume_placeholder_gate": "PASS",
+      "volume_placeholder_detail": "bytes=21753>=400"
+    },
+    {
+      "id": "96-01",
+      "rel_path": "docs/spec/96-01-总则与95边界和执行顺序.md",
+      "registry": "PASS",
+      "bytes": 9561,
+      "registry_detail": "ok",
+      "volume_placeholder_gate": "PASS",
+      "volume_placeholder_detail": "bytes=9561>=400"
+    },
+    {
+      "id": "96-02",
+      "rel_path": "docs/spec/96-02-法务合规与对外披露.md",
+      "registry": "PASS",
+      "bytes": 3379,
+      "registry_detail": "ok",
+      "volume_placeholder_gate": "PASS",
+      "volume_placeholder_detail": "bytes=3379>=400"
+    },
+    {
+      "id": "96-03",
+      "rel_path": "docs/spec/96-03-安全密钥与供应链.md",
+      "registry": "PASS",
+      "bytes": 3754,
+      "registry_detail": "ok",
+      "volume_placeholder_gate": "PASS",
+      "volume_placeholder_detail": "bytes=3754>=400"
+    },
+    {
+      "id": "96-04",
+      "rel_path": "docs/spec/96-04-合规风控与跨境数据.md",
+      "registry": "PASS",
+      "bytes": 2764,
+      "registry_detail": "ok",
+      "volume_placeholder_gate": "PASS",
+      "volume_placeholder_detail": "bytes=2764>=400"
+    },
+    {
+      "id": "96-05",
+      "rel_path": "docs/spec/96-05-运维SRE与可靠性.md",
+      "registry": "PASS",
+      "bytes": 3157,
+      "registry_detail": "ok",
+      "volume_placeholder_gate": "PASS",
+      "volume_placeholder_detail": "bytes=3157>=400"
+    },
+    {
+      "id": "96-06",
+      "rel_path": "docs/spec/96-06-数据隐私备份与迁移.md",
+      "registry": "PASS",
+      "bytes": 2646,
+      "registry_detail": "ok",
+      "volume_placeholder_gate": "PASS",
+      "volume_placeholder_detail": "bytes=2646>=400"
+    },
+    {
+      "id": "96-07",
+      "rel_path": "docs/spec/96-07-链上资金与合约终验.md",
+      "registry": "PASS",
+      "bytes": 3137,
+      "registry_detail": "ok",
+      "volume_placeholder_gate": "PASS",
+      "volume_placeholder_detail": "bytes=3137>=400"
+    },
+    {
+      "id": "96-08",
+      "rel_path": "docs/spec/96-08-索引器对账与财务.md",
+      "registry": "PASS",
+      "bytes": 2933,
+      "registry_detail": "ok",
+      "volume_placeholder_gate": "PASS",
+      "volume_placeholder_detail": "bytes=2933>=400"
+    },
+    {
+      "id": "96-09",
+      "rel_path": "docs/spec/96-09-消息通知与异步任务.md",
+      "registry": "PASS",
+      "bytes": 2663,
+      "registry_detail": "ok",
+      "volume_placeholder_gate": "PASS",
+      "volume_placeholder_detail": "bytes=2663>=400"
+    },
+    {
+      "id": "96-10",
+      "rel_path": "docs/spec/96-10-配置灰度与特性开关.md",
+      "registry": "PASS",
+      "bytes": 2271,
+      "registry_detail": "ok",
+      "volume_placeholder_gate": "PASS",
+      "volume_placeholder_detail": "bytes=2271>=400"
+    },
+    {
+      "id": "96-11",
+      "rel_path": "docs/spec/96-11-发布签字与回归门禁.md",
+      "registry": "PASS",
+      "bytes": 3863,
+      "registry_detail": "ok",
+      "volume_placeholder_gate": "PASS",
+      "volume_placeholder_detail": "bytes=3863>=400"
+    },
+    {
+      "id": "96-12",
+      "rel_path": "docs/spec/96-12-文档真值与卫星债.md",
+      "registry": "PASS",
+      "bytes": 2995,
+      "registry_detail": "ok",
+      "volume_placeholder_gate": "PASS",
+      "volume_placeholder_detail": "bytes=2995>=400"
+    },
+    {
+      "id": "96-13",
+      "rel_path": "docs/spec/96-13-UI-UX-i18n-a11y-性能走查.md",
+      "registry": "PASS",
+      "bytes": 4629,
+      "registry_detail": "ok",
+      "volume_placeholder_gate": "PASS",
+      "volume_placeholder_detail": "bytes=4629>=400"
+    },
+    {
+      "id": "96-14",
+      "rel_path": "docs/spec/96-14-专项Wallet社区治理与扩展域.md",
+      "registry": "PASS",
+      "bytes": 3133,
+      "registry_detail": "ok",
+      "volume_placeholder_gate": "PASS",
+      "volume_placeholder_detail": "bytes=3133>=400"
+    },
+    {
+      "id": "96-15",
+      "rel_path": "docs/spec/96-15-深度多维度检查与审计体系.md",
+      "registry": "PASS",
+      "bytes": 13959,
+      "registry_detail": "ok",
+      "volume_placeholder_gate": "PASS",
+      "volume_placeholder_detail": "bytes=13959>=400"
+    },
+    {
+      "id": "96-16",
+      "rel_path": "docs/spec/96-16-全页面UI-UX优化方案总册.md",
+      "registry": "PASS",
+      "bytes": 17486,
+      "registry_detail": "ok",
+      "volume_placeholder_gate": "PASS",
+      "volume_placeholder_detail": "bytes=17486>=400"
+    },
+    {
+      "id": "96-UI",
+      "rel_path": "docs/spec/96-UI-UX-生产级验收与全链路外必查项.md",
+      "registry": "PASS",
+      "bytes": 3504,
+      "registry_detail": "ok",
+      "volume_placeholder_gate": "PASS",
+      "volume_placeholder_detail": "bytes=3504>=400"
+    }
+  ]
+}

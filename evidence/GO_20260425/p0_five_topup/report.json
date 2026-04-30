@@ -1,0 +1,26 @@
+{
+  "batch": "GO_20260425_p0_five_topup",
+  "results": [
+    {
+      "id": "B-MKT-001",
+      "status": "PASS",
+      "filter": "matrix_93_b_mkt_001e_f009_get_discover_orders_limit_only_includes_draft_app_stack_ok_pg",
+      "exit": 0,
+      "evidence_path": "evidence/GO_20260425/p0_five_topup/B-MKT-001/notes.md"
+    },
+    {
+      "id": "B-ORD-001",
+      "status": "PASS",
+      "filter": "matrix_93_b_ord_001b_f008_post_orders_ok_persisted_pg_row_app_stack_ok_pg",
+      "exit": 0,
+      "evidence_path": "evidence/GO_20260425/p0_five_topup/B-ORD-001/notes.md"
+    },
+    {
+      "id": "B-ORD-003",
+      "status": "PASS",
+      "filter": "matrix_93_b_ord_003b_f009_get_order_detail_status_matches_orders_app_stack_ok_pg",
+      "exit": 0,
+      "evidence_path": "evidence/GO_20260425/p0_five_topup/B-ORD-003/notes.md"
+    }
+  ]
+}

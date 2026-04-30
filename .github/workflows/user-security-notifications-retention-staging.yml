@@ -1,0 +1,46 @@
+name: User security notifications retention (staging)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "45 2 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: user-security-notifications-retention-staging-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  user-security-notifications-retention:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Ensure psql client
+        run: |
+          set -euo pipefail
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq postgresql-client
+          fi
+          psql --version
+
+      - name: Run user security notifications retention (optional secrets)
+        env:
+          DATABASE_URL: ${{ secrets.STAGING_USER_SECURITY_NOTIFICATIONS_RETENTION_DATABASE_URL }}
+          USER_SECURITY_NOTIFICATION_RETENTION_DAYS: ${{ vars.STAGING_USER_SECURITY_NOTIFICATION_RETENTION_DAYS }}
+          USER_SECURITY_NOTIFICATION_RETENTION_DRY_RUN: ${{ vars.STAGING_USER_SECURITY_NOTIFICATION_RETENTION_DRY_RUN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${DATABASE_URL}" ]; then
+            echo "::notice title=user-security-notifications-retention::skipped — secret STAGING_USER_SECURITY_NOTIFICATIONS_RETENTION_DATABASE_URL unset."
+            exit 0
+          fi
+          echo "::group::user_security_notifications_retention config"
+          echo "USER_SECURITY_NOTIFICATION_RETENTION_DAYS=${USER_SECURITY_NOTIFICATION_RETENTION_DAYS:-180}"
+          echo "USER_SECURITY_NOTIFICATION_RETENTION_DRY_RUN=${USER_SECURITY_NOTIFICATION_RETENTION_DRY_RUN:-1}"
+          echo "::endgroup::"
+          bash scripts/user-security-notifications-retention.sh
+

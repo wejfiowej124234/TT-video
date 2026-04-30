@@ -1,0 +1,8 @@
+{
+  "kind": "traveltrust.handbook_engineering_gate_doc_pointer.v1",
+  "summary": "Module-doc cross-link for scripts/gates/check-handbook-engineering-content.py rule 1; code builds SPEC_ROOT from spec_tree_root_segments.",
+  "spec_tree_root_segments": [
+    "docs",
+    "spec"
+  ]
+}

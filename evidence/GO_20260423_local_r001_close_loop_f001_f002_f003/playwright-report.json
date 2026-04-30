@@ -1,0 +1,401 @@
+{
+  "config": {
+    "configFile": "D:\\Wbe3-TravelTrust\\frontend\\playwright.config.ts",
+    "rootDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "setup-meta-chain",
+        "name": "setup-meta-chain",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/setup/meta-chain-contracts.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-auth-chromium",
+        "name": "api-auth-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/auth-login-logout-me.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-b-orders-chromium",
+        "name": "api-b-orders-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/orders-b-domain-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-itin-feed-chromium",
+        "name": "api-itin-feed-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f012-f013-f014-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-d-com-015-017-chromium",
+        "name": "api-d-com-015-017-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f015-f016-f017-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-d-com-018-020-chromium",
+        "name": "api-d-com-018-020-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f018-f019-f020-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-mkt-guides-021-023-chromium",
+        "name": "api-mkt-guides-021-023-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f021-f022-f023-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-b-gde-dsp-msg-024-026-chromium",
+        "name": "api-b-gde-dsp-msg-024-026-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f024-f025-f026-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-f027-f028-f033-chromium",
+        "name": "api-f027-f028-f033-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f027-f028-f033-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-f029-f030-f031-chromium",
+        "name": "api-f029-f030-f031-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f029-f030-f031-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api-f007-f010-f032-chromium",
+        "name": "api-f007-f010-f032-chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/f007-f010-f032-request.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [
+          "**/setup/**"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/Wbe3-TravelTrust/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-sepolia",
+        "name": "chromium-sepolia",
+        "testDir": "D:/Wbe3-TravelTrust/frontend/e2e",
+        "testIgnore": [
+          "**/setup/**"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 1,
+    "webServer": {
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File ../scripts/dev/start-api-for-playwright.ps1",
+      "url": "http://127.0.0.1:8080/health",
+      "reuseExistingServer": true,
+      "timeout": 420000
+    }
+  },
+  "suites": [
+    {
+      "title": "auth-login-logout-me.spec.ts",
+      "file": "auth-login-logout-me.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "§8.2 E2E F-001 — POST /auth/register",
+          "file": "auth-login-logout-me.spec.ts",
+          "line": 25,
+          "column": 6,
+          "specs": [
+            {
+              "title": "F-001 · register returns ok + token",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api-auth-chromium",
+                  "projectName": "api-auth-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 568,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-23T13:03:51.456Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "172eda7abd501d973c2f-34f69e5436c0577c47ef",
+              "file": "auth-login-logout-me.spec.ts",
+              "line": 26,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "§8.2 E2E F-002 — POST /auth/login + GET /me",
+          "file": "auth-login-logout-me.spec.ts",
+          "line": 46,
+          "column": 6,
+          "specs": [
+            {
+              "title": "F-002 · login then GET /me 200",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api-auth-chromium",
+                  "projectName": "api-auth-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 551,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-23T13:03:52.041Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "172eda7abd501d973c2f-ffe8d8463f181ba31f62",
+              "file": "auth-login-logout-me.spec.ts",
+              "line": 47,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "§8.2 E2E F-003 — POST /auth/logout invalidates session",
+          "file": "auth-login-logout-me.spec.ts",
+          "line": 69,
+          "column": 6,
+          "specs": [
+            {
+              "title": "F-003 · logout then GET /me returns 401",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api-auth-chromium",
+                  "projectName": "api-auth-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 540,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-23T13:03:52.601Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "172eda7abd501d973c2f-eab3f21aeb5ecaa952db",
+              "file": "auth-login-logout-me.spec.ts",
+              "line": 70,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-04-23T13:03:50.565Z",
+    "duration": 2603.591,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "id": "B-MSG-002-api-post",
+      "marker": "deep-e2e-msg-1777202500397"
+    },
+    {
+      "id": "B-MSG-002-api-get",
+      "contains": "deep-e2e-msg-1777202500397"
+    },
+    {
+      "id": "B-MSG-002-ui",
+      "status": "SKIP",
+      "note": "ChatBlock 未挂载"
+    }
+  ]
+}

@@ -1,0 +1,192 @@
+{
+  "schema_version": "1",
+  "kind": "traveltrust.release_orchestration.v1",
+  "source_spec": "96-15",
+  "run_id": "GO_96_15_machine_20260424T235119Z",
+  "started_at": "2026-04-24T23:51:20Z",
+  "finished_at": "2026-04-24T23:51:21Z",
+  "executor": "local",
+  "tiers": [
+    {
+      "tier": "A",
+      "steps": [
+        {
+          "id": "TIER-A-1",
+          "seq": 1,
+          "title": "15 appendix + gap table P0 twelve / signoff bundle (semiauto: README evidence)",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "96",
+          "commands": [
+            "semiauto:evidence-file",
+            "D:\\TravelTrust\\evidence\\GO_96_15_machine_20260424T235119Z\\deep_evidence\\README.md"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "ok 493 bytes: D:\\TravelTrust\\evidence\\GO_96_15_machine_20260424T235119Z\\deep_evidence\\README.md",
+          "stderr_tail": "",
+          "evidence_paths_expected": [
+            "evidence\\GO_96_15_machine_20260424T235119Z\\deep_evidence\\README.md"
+          ],
+          "f_row_hints": [],
+          "96_booklet": "96-11",
+          "semiauto_detail": "ok 493 bytes: D:\\TravelTrust\\evidence\\GO_96_15_machine_20260424T235119Z\\deep_evidence\\README.md"
+        },
+        {
+          "id": "TIER-A-2",
+          "seq": 2,
+          "title": "59 nine-dimension P0 table snapshot (semiauto: markdown evidence)",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "96",
+          "commands": [
+            "semiauto:evidence-file",
+            "D:\\TravelTrust\\evidence\\GO_96_15_machine_20260424T235119Z\\deep_evidence\\59_p0_table.md"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "ok 704 bytes: D:\\TravelTrust\\evidence\\GO_96_15_machine_20260424T235119Z\\deep_evidence\\59_p0_table.md",
+          "stderr_tail": "",
+          "evidence_paths_expected": [
+            "evidence\\GO_96_15_machine_20260424T235119Z\\deep_evidence\\59_p0_table.md"
+          ],
+          "f_row_hints": [],
+          "96_booklet": "96-15",
+          "semiauto_detail": "ok 704 bytes: D:\\TravelTrust\\evidence\\GO_96_15_machine_20260424T235119Z\\deep_evidence\\59_p0_table.md"
+        },
+        {
+          "id": "TIER-A-3",
+          "seq": 3,
+          "title": "B-421 runbook/go-live doclink gate",
+          "machine_runnable": true,
+          "status": "FAIL",
+          "primary_attribution_if_fail": "GATE",
+          "commands": [
+            "bash",
+            "scripts/check-runbook-golive-doclink-gate.sh"
+          ],
+          "observed_exit_code": 1,
+          "stdout_tail": "",
+          "stderr_tail": "w\u0000s\u0000l\u0000:\u0000 \u0000w\u0000s\u0000l\u00002\u0000.\u0000p\u0000a\u0000g\u0000e\u0000R\u0000e\u0000p\u0000o\u0000r\u0000t\u0000i\u0000n\u0000g\u0000:\u0000C\u0000:\u0000\\\u0000U\u0000s\u0000e\u0000r\u0000s\u0000\\\u0000p\u0000l\u0000a\u0000n\u0000t\u0000\\\u0000.\u0000w\u0000s\u0000l\u0000c\u0000o\u0000n\u0000f\u0000i\u0000g\u0000 \u0000-N�v.�\u001c 8\u0000\u001d *g�w\n\u0000\n\u0000w\u0000s\u0000l\u0000:\u0000 \u0000�hKm0R \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006tM�n\f�FO*g\\��P0R \u0000W\u0000S\u0000L\u0000\u00020N\u0000A\u0000T\u0000 \u0000!j\u000f_\u000bN�v \u0000W\u0000S\u0000L\u0000 \u0000\nN/e\u0001c \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006t\u00020\n\u0000\n\u0000<3>WSL (10 - Relay) ERROR: CreateProcessCommon:798: execvpe(/bin/bash) failed: No such file or directory\n",
+          "evidence_paths_expected": [
+            "evidence\\GO_96_15_machine_20260424T235119Z\\b421.log"
+          ],
+          "f_row_hints": [],
+          "96_booklet": "96-11"
+        }
+      ]
+    },
+    {
+      "tier": "B",
+      "steps": [
+        {
+          "id": "TIER-B-4",
+          "seq": 4,
+          "title": "66/51/53 anchors present (machine)",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "96",
+          "commands": [
+            "python",
+            "scripts/release/tier_bc_machine_gates.py",
+            "--gate",
+            "b4"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "ok: docs/spec/66-深度检查-缺口与遗留问题.md, docs/spec/51-阶段开发技术文档.md, docs/spec/53-阶段开发技术文档.md\n",
+          "stderr_tail": "",
+          "evidence_paths_expected": [
+            "docs/spec/66-深度检查-缺口与遗留问题.md",
+            "docs/spec/51-阶段开发技术文档.md",
+            "docs/spec/53-阶段开发技术文档.md"
+          ],
+          "f_row_hints": [],
+          "96_booklet": "96-12"
+        },
+        {
+          "id": "TIER-B-5",
+          "seq": 5,
+          "title": "27-P0..P50 checklist present + min size (machine)",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "96",
+          "commands": [
+            "python",
+            "scripts/release/tier_bc_machine_gates.py",
+            "--gate",
+            "b5"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "ok: docs/spec/27-P0至P50开发流程勾选清单.md bytes=107596\n",
+          "stderr_tail": "",
+          "evidence_paths_expected": [
+            "docs/spec/27-P0至P50开发流程勾选清单.md"
+          ],
+          "f_row_hints": [],
+          "96_booklet": "96-12"
+        }
+      ]
+    },
+    {
+      "tier": "C",
+      "steps": [
+        {
+          "id": "TIER-C-6",
+          "seq": 6,
+          "title": "frontend/app page.tsx smoke count (machine)",
+          "machine_runnable": true,
+          "status": "PASS",
+          "primary_attribution_if_fail": "96",
+          "commands": [
+            "python",
+            "scripts/release/tier_bc_machine_gates.py",
+            "--gate",
+            "c6"
+          ],
+          "observed_exit_code": 0,
+          "stdout_tail": "ok: page.tsx count=119\n",
+          "stderr_tail": "",
+          "evidence_paths_expected": [
+            "frontend/app/**/page.tsx"
+          ],
+          "f_row_hints": [
+            "F-010",
+            "F-008",
+            "F-021"
+          ],
+          "96_booklet": "96-13"
+        },
+        {
+          "id": "TIER-C-7",
+          "seq": 7,
+          "title": "04 routes gate: scripts/run-check-04-routes.sh (machine)",
+          "machine_runnable": true,
+          "status": "FAIL",
+          "primary_attribution_if_fail": "GATE",
+          "commands": [
+            "bash",
+            "scripts/run-check-04-routes.sh"
+          ],
+          "observed_exit_code": 1,
+          "stdout_tail": "",
+          "stderr_tail": "w\u0000s\u0000l\u0000:\u0000 \u0000�hKm0R \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006tM�n\f�FO*g\\��P0R \u0000W\u0000S\u0000L\u0000\u00020N\u0000A\u0000T\u0000 \u0000!j\u000f_\u000bN�v \u0000W\u0000S\u0000L\u0000 \u0000\nN/e\u0001c \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006t\u00020\n\u0000\n\u0000<3>WSL (13 - Relay) ERROR: CreateProcessCommon:798: execvpe(/bin/bash) failed: No such file or directory\n",
+          "evidence_paths_expected": [
+            "scripts/run-check-04-routes.sh"
+          ],
+          "f_row_hints": [
+            "F-033"
+          ],
+          "96_booklet": "96-12"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "steps_total": 7,
+    "steps_pass": 5,
+    "steps_fail": 2,
+    "steps_manual": 0,
+    "machine_steps_executed": 7,
+    "tier_a_all_pass": false,
+    "tier_bc_all_pass": false,
+    "tier_bc_scope_manual_only": false
+  }
+}

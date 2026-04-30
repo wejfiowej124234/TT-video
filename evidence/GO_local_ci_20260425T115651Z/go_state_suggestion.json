@@ -1,0 +1,30 @@
+{
+  "schema_version": "2",
+  "kind": "traveltrust.go_state_suggestion.v2",
+  "release_verdict_suggestion": "SOFT_GO",
+  "release_verdict_allowed_values": [
+    "NO_GO",
+    "PRODUCTION_GO",
+    "SOFT_GO"
+  ],
+  "policy": "tri_state_v2",
+  "attributions": [
+    {
+      "domain": "93",
+      "reason": "release_gate is 'PARTIAL_GO'; PRODUCTION_GO requires GO"
+    }
+  ],
+  "industry_control_mapping_note": "Orchestration steps carry control_framework_refs (ISO 27001 Annex A, SOC 2 CC, OWASP ASVS, CIS CSC, SRE SLO). Verdict does not certify ISO/SOC compliance; it only reflects local machine artifacts.",
+  "inputs": {
+    "had_regression_report": true,
+    "regression_release_gate": "PARTIAL_GO",
+    "orchestration_run_id": "GO_local_ci_20260425T115651Z",
+    "orchestration_schema": "2",
+    "tier_a_all_pass": true,
+    "tier_bc_all_pass": true,
+    "any_fail": false,
+    "any_accepted_risk": false,
+    "accepted_risks_production_acknowledged": false,
+    "cases_any_fail": false
+  }
+}

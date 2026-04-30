@@ -1,0 +1,47 @@
+{
+  "batch": "GO_96_16_d4_segment_gap_close",
+  "docs_spec_touched": false,
+  "build": { "cmd": "npm run build", "cwd": "frontend", "exit": 0 },
+  "tests_sample": [
+    {
+      "cmd": "npm test -- --run lib/adminFetchDisplay.test.ts app/governance/distribution-accruals/distributionAccrualsPages.contract.test.ts",
+      "exit": 0
+    }
+  ],
+  "code_changes_summary": [
+    "components/governance/GovernanceSubrouteError.tsx — extend TitleKey for list/detail segment kickers",
+    "app/governance/{distribution-accruals,distribution-claim,fee-routes,params,proposals,vault-forwards}/error.tsx — segment boundaries (D4)",
+    "app/community/me/reports/[[id]]/error.tsx — re-export community/me/error",
+    "app/{guide/register,guides/[id],itinerary/new,me/password,terms/community-guidelines}/error.tsx — re-export parent segment error"
+  ],
+  "scan": {
+    "cmd": "find app -name page.tsx | while read p; do d=$(dirname \"$p\"); test -f \"$d/error.tsx\" || echo MISSING; done",
+    "missing_error_after": 0
+  },
+  "fail_or_accepted_risk": [
+    {
+      "id": "Lighthouse_LCP_CLS_TTFB",
+      "status": "FAIL",
+      "trace": "96-13 13.7; 93",
+      "detail": "No Lighthouse JSON/HTML captured in this run."
+    },
+    {
+      "id": "npm_run_start_e2e",
+      "status": "FAIL",
+      "trace": "93; R-002",
+      "detail": "npm run start and Playwright/request E2E not executed in this session."
+    },
+    {
+      "id": "report_json",
+      "status": "FAIL",
+      "trace": "R-002",
+      "detail": "No validate-regression-report merge artifact in repo from this run."
+    },
+    {
+      "id": "screenshots",
+      "status": "FAIL",
+      "trace": "96-13",
+      "detail": "No screenshot files produced."
+    }
+  ]
+}

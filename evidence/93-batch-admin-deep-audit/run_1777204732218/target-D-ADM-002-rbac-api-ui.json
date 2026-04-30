@@ -1,0 +1,13 @@
+{
+  "id": "D-ADM-002-rbac-api-ui",
+  "status": "PASS",
+  "note": "401/403 API + 游客 /admin/orders 权限面",
+  "evidence": [
+    "rbac-unauth-admin-users.json",
+    "rbac-tourist-admin-users.json",
+    "rbac-guide-admin-users.json",
+    "admin-orders-403-tourist.png",
+    "report-rbac.json"
+  ],
+  "at": "2026-04-26T11:59:08.379Z"
+}

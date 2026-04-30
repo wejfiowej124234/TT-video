@@ -1,0 +1,1285 @@
+diff --git a/.github/workflows/production-gate.yml b/.github/workflows/production-gate.yml
+new file mode 100644
+index 0000000..46d1a41
+--- /dev/null
++++ b/.github/workflows/production-gate.yml
+@@ -0,0 +1,319 @@
++# Production gate — Enforcement layer（Policy: docs/ci/CI-REQUIRED-PRODUCTION-GATE.md）
++# SSOT: gates/production_gate.yaml + Gate Audit 机器清单 gates/gate_audit.machine.json（42+43=85）
++# 校验: python3 scripts/gates/verify_production_gate_config.py
++# PR/push 默认触发；子 job 不设 continue-on-error；96-15 可 gates/waivers/96-15.waiver.json 豁免。
++name: Production gate
++
++on:
++  pull_request:
++    branches: [main]
++  push:
++    branches: [main]
++
++concurrency:
++  group: production-gate-${{ github.workflow }}-${{ github.ref }}
++  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
++
++permissions:
++  contents: read
++
++jobs:
++  verify-gate-config:
++    name: Verify gates/production_gate.yaml (SSOT)
++    runs-on: ubuntu-latest
++    timeout-minutes: 5
++    steps:
++      - uses: actions/checkout@v6
++      - name: verify_production_gate_config.py
++        run: python3 scripts/gates/verify_production_gate_config.py
++
++  b421-doclink:
++    name: B-421 runbook / go-live doclink
++    runs-on: ubuntu-latest
++    timeout-minutes: 10
++    steps:
++      - uses: actions/checkout@v6
++      - name: B-421 six-path gate
++        run: bash scripts/check-runbook-golive-doclink-gate.sh
++
++  broadcast-all:
++    name: Legacy SSOT + broadcast batches 1–3
++    runs-on: ubuntu-latest
++    timeout-minutes: 45
++    steps:
++      - uses: actions/checkout@v6
++      - name: broadcast-batch-all-required
++        run: bash scripts/gates/broadcast-batch-all-required.sh
++
++  traveltrust-api-tests:
++    name: traveltrust-api (cargo test)
++    runs-on: ubuntu-latest
++    timeout-minutes: 90
++    services:
++      postgres:
++        image: postgres:16-alpine
++        env:
++          POSTGRES_USER: traveltrust
++          POSTGRES_PASSWORD: traveltrust
++          POSTGRES_DB: traveltrust
++        ports:
++          - 5432:5432
++        options: >-
++          --health-cmd "pg_isready -U traveltrust -d traveltrust"
++          --health-interval 5s
++          --health-timeout 5s
++          --health-retries 12
++    env:
++      DATABASE_URL: postgres://traveltrust:traveltrust@127.0.0.1:5432/traveltrust
++    steps:
++      - uses: actions/checkout@v6
++      - uses: dtolnay/rust-toolchain@master
++        with:
++          toolchain: stable
++      - uses: Swatinem/rust-cache@v2
++        with:
++          shared-key: traveltrust-production-gate-api-${{ runner.os }}
++      - name: cargo test -p traveltrust-api
++        env:
++          TRAVELTRUST_BUILD_GIT_SHA: ${{ github.sha }}
++          CARGO_INCREMENTAL: "0"
++        run: cargo test -p traveltrust-api
++
++  tier-96-15:
++    name: 96-15 Tier A–C machine (or waiver)
++    runs-on: ubuntu-latest
++    timeout-minutes: 25
++    steps:
++      - uses: actions/checkout@v6
++      - name: Resolve 96-15 waiver
++        id: waiver
++        run: python3 scripts/gates/resolve_96_15_waiver.py
++      - name: 96-15 booklets + orchestration
++        if: steps.waiver.outputs.skip_96_15 != 'true'
++        env:
++          GITHUB_RUN_ID: ${{ github.run_id }}
++        run: |
++          set -euo pipefail
++          OUT="evidence/GO_96_15_pr_${GITHUB_RUN_ID}"
++          mkdir -p "$OUT/deep_evidence"
++          python3 scripts/release/verify_96_booklets_registry.py --out "$OUT/96_booklets_registry.json"
++          python3 scripts/release/run_96_15_orchestration.py \
++            --out-dir "$OUT" \
++            --executor "github-actions-${GITHUB_RUN_ID}" \
++            --tier-a1-readme gates/tier_a_ci/README.md \
++            --tier-a2-markdown gates/tier_a_ci/59_p0_table.md \
++            --require-tier-a-semiauto \
++            --require-tier-a-all-pass \
++            --require-tier-bc-all-pass
++      - name: 96-15 skipped (waiver)
++        if: steps.waiver.outputs.skip_96_15 == 'true'
++        run: 'echo "::notice::tier-96-15 skipped per active gates/waivers/96-15.waiver.json"'
++      - name: Upload 96-15 evidence
++        uses: actions/upload-artifact@v4
++        if: success() && steps.waiver.outputs.skip_96_15 != 'true'
++        with:
++          name: production-gate-96-15-${{ github.run_id }}
++          path: evidence/GO_96_15_pr_${{ github.run_id }}/**
++          retention-days: 30
++
++  report-policy:
++    name: report.json policy (PARTIAL sunset + single final truth)
++    runs-on: ubuntu-latest
++    timeout-minutes: 10
++    steps:
++      - uses: actions/checkout@v6
++        with:
++          fetch-depth: 0
++      - name: check_pr_partial_go_expiry.py
++        env:
++          GITHUB_EVENT_NAME: ${{ github.event_name }}
++          GITHUB_BASE_REF: ${{ github.base_ref }}
++          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
++          GITHUB_SHA: ${{ github.sha }}
++        run: python3 scripts/gates/check_pr_partial_go_expiry.py
++      - name: check_report_single_truth.py
++        env:
++          GITHUB_EVENT_NAME: ${{ github.event_name }}
++          GITHUB_BASE_REF: ${{ github.base_ref }}
++          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
++          GITHUB_SHA: ${{ github.sha }}
++        run: python3 scripts/gates/check_report_single_truth.py
++      - name: check_pr_final_truth_presence.py
++        env:
++          GITHUB_EVENT_NAME: ${{ github.event_name }}
++          GITHUB_BASE_REF: ${{ github.base_ref }}
++          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
++          GITHUB_SHA: ${{ github.sha }}
++        run: python3 scripts/gates/check_pr_final_truth_presence.py
++
++  e2e-r002-93:
++    name: Playwright + R-002 ISS-007 validate (fail-closed)
++    runs-on: ubuntu-latest
++    timeout-minutes: 60
++    services:
++      postgres:
++        image: postgres:16-alpine
++        env:
++          POSTGRES_USER: traveltrust
++          POSTGRES_PASSWORD: traveltrust
++          POSTGRES_DB: traveltrust
++        ports:
++          - 5432:5432
++        options: >-
++          --health-cmd "pg_isready -U traveltrust -d traveltrust"
++          --health-interval 5s
++          --health-timeout 5s
++          --health-retries 12
++    steps:
++      - uses: actions/checkout@v6
++      - uses: actions/setup-node@v4
++        with:
++          node-version: "20"
++          cache: "npm"
++          cache-dependency-path: frontend/package-lock.json
++      - name: Set evidence dir
++        run: echo "EVIDENCE_DIR=evidence/GO_$(date +%Y%m%d)" >> "$GITHUB_ENV"
++      - name: Install frontend deps
++        run: cd frontend && npm ci
++      - name: Install Playwright browsers
++        run: cd frontend && npx playwright install --with-deps chromium
++      - name: Build frontend
++        run: cd frontend && npm run build
++      - uses: dtolnay/rust-toolchain@master
++        with:
++          toolchain: stable
++      - uses: Swatinem/rust-cache@v2
++        with:
++          shared-key: traveltrust-production-gate-e2e-${{ runner.os }}
++      - name: Build traveltrust-api (E2E rewrite target)
++        env:
++          TRAVELTRUST_BUILD_GIT_SHA: ${{ github.sha }}
++          CARGO_INCREMENTAL: "0"
++        run: cargo build -p traveltrust-api
++      - name: Start API on 8080 for E2E
++        env:
++          PORT: "8080"
++          SEED_TEST_ACCOUNTS: "1"
++          P3_CHAIN_OFF: "1"
++          API_RATE_LIMIT_PER_MINUTE: "0"
++          CRITICAL_WRITE_RATE_LIMIT_PER_MINUTE: "0"
++          P3_SEED_ARBITRATOR_EMAIL: "e2e-ci-arbitrator-seed@traveltrust.test"
++          TRAVELTRUST_BUILD_GIT_SHA: ${{ github.sha }}
++          DATABASE_URL: postgres://traveltrust:traveltrust@127.0.0.1:5432/traveltrust
++          CHAIN_RPC_URL: ""
++        run: |
++          set -euo pipefail
++          ./target/debug/traveltrust-api > /tmp/traveltrust-api-e2e.log 2>&1 &
++          for i in $(seq 1 120); do
++            if curl -sf "http://127.0.0.1:8080/health" >/dev/null; then
++              echo "API ready on :8080"
++              exit 0
++            fi
++            sleep 1
++          done
++          echo "API did not become ready on :8080"
++          cat /tmp/traveltrust-api-e2e.log || true
++          exit 1
++      - name: E2E (Playwright)
++        id: e2e_playwright
++        env:
++          PORT: "3012"
++          PLAYWRIGHT_BASE_URL: "http://localhost:3012"
++          DATABASE_URL: postgres://traveltrust:traveltrust@127.0.0.1:5432/traveltrust
++          PLAYWRIGHT_ARBITRATOR_SEED_EMAIL: "e2e-ci-arbitrator-seed@traveltrust.test"
++          PLAYWRIGHT_RELAX_META_CHAIN_GUARD: "1"
++          STRICT_SESSION_GATE: "1"
++        run: cd frontend && npm run e2e -- --project=chromium --grep-invert "@e2e-sepolia-deferred"
++      - name: R-002 ISS-007 narrow slice + validate-regression-report
++        env:
++          DATABASE_URL: postgres://traveltrust:traveltrust@127.0.0.1:5432/traveltrust
++          P3_CHAIN_OFF: "1"
++          CARGO_INCREMENTAL: "0"
++          GITHUB_RUN_ID: ${{ github.run_id }}
++          GITHUB_SHA: ${{ github.sha }}
++          PLAYWRIGHT_E2E_STEP_OUTCOME: ${{ steps.e2e_playwright.outcome }}
++        run: |
++          set -euo pipefail
++          export TRAVELTRUST_R002_REPORT_PARENT="${EVIDENCE_DIR}"
++          python3 scripts/gen-r002-iss007-prereport.py
++          RPT="${EVIDENCE_DIR}/r002_iss007_prereport/report.json"
++          test -f "${RPT}"
++          python3 scripts/validate-regression-report.py "${RPT}" \
++            --fail-on-no-go \
++            --fail-on-case-not-run
++      - name: Upload R-002 report + e2e evidence (production gate)
++        uses: actions/upload-artifact@v4
++        if: success()
++        with:
++          name: production-gate-e2e-r002-${{ github.run_id }}
++          path: |
++            evidence/GO_*/r002_iss007_prereport/report.json
++            evidence/GO_*/r002_iss007_prereport/*/notes.md
++          retention-days: 30
++
++  production-gate-summary:
++    name: Production gate (trinity) — gate closed
++    runs-on: ubuntu-latest
++    needs:
++      - verify-gate-config
++      - b421-doclink
++      - broadcast-all
++      - traveltrust-api-tests
++      - tier-96-15
++      - report-policy
++      - e2e-r002-93
++    steps:
++      - uses: actions/checkout@v6
++      - name: Write MANIFEST.json (evidence pointer)
++        env:
++          GITHUB_RUN_ID: ${{ github.run_id }}
++          GITHUB_SHA: ${{ github.sha }}
++          GITHUB_REF: ${{ github.ref }}
++          GITHUB_EVENT_NAME: ${{ github.event_name }}
++        run: |
++          set -euo pipefail
++          OUT="evidence/production-gate-${GITHUB_RUN_ID}"
++          TS="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
++          export OUT TS
++          python3 <<'PY'
++          import json, os
++
++          out = os.environ["OUT"]
++          os.makedirs(out, exist_ok=True)
++          d = {
++              "schema_version": "1",
++              "kind": "traveltrust.production_gate_manifest.v1",
++              "generated_at_utc": os.environ["TS"],
++              "workflow": "production-gate",
++              "github_run_id": os.environ["GITHUB_RUN_ID"],
++              "commit_sha": os.environ["GITHUB_SHA"],
++              "ref": os.environ["GITHUB_REF"],
++              "event": os.environ["GITHUB_EVENT_NAME"],
++              "gate_ssot": "gates/production_gate.yaml",
++              "jobs_required": [
++                  "verify-gate-config",
++                  "b421-doclink",
++                  "broadcast-all",
++                  "traveltrust-api-tests",
++                  "tier-96-15",
++                  "report-policy",
++                  "e2e-r002-93",
++              ],
++              "policy_doc": "docs/ci/CI-REQUIRED-PRODUCTION-GATE.md",
++              "notes": (
++                  "Enforcement: B-421 + broadcast + cargo test -p traveltrust-api + "
++                  "96-15 machine (or waiver) + PARTIAL_GO sunset on changed reports + "
++                  "Playwright (chromium, STRICT_SESSION_GATE, excludes @e2e-sepolia-deferred) + R-002 validate."
++              ),
++          }
++          path = os.path.join(out, "MANIFEST.json")
++          with open(path, "w", encoding="utf-8") as f:
++              json.dump(d, f, indent=2, ensure_ascii=False)
++          print("Wrote", path)
++          PY
++      - name: Upload production gate manifest
++        uses: actions/upload-artifact@v4
++        with:
++          name: production-gate-manifest-${{ github.run_id }}
++          path: evidence/production-gate-${{ github.run_id }}/MANIFEST.json
++          retention-days: 90
+diff --git a/docs/ci/CI-REQUIRED-PRODUCTION-GATE.md b/docs/ci/CI-REQUIRED-PRODUCTION-GATE.md
+new file mode 100644
+index 0000000..22d51ce
+--- /dev/null
++++ b/docs/ci/CI-REQUIRED-PRODUCTION-GATE.md
+@@ -0,0 +1,109 @@
++# Production gate（96 / 93 / 95 · Enforcement 层）
++
++**Workflow**：`.github/workflows/production-gate.yml`（Actions 显示名一般为 **Production gate**）。
++
++**SSOT（机器）**：`gates/production_gate.yaml` — 首 job 运行 `python3 scripts/gates/verify_production_gate_config.py`，确保路径与脚本存在、**Gate Audit** 清单计数（`gates/gate_audit.machine.json`：**BLOCK 42 + HARDEN 43 = 85**）与 YAML 声明一致，且与 workflow 行为对齐。
++
++### Gate Audit（BLOCK LIST + HARDEN LIST → 机器可读）
++
++| 文件 | 含义 |
++|------|------|
++| `gates/gate_audit.machine.json` | **block_list**：合并阻断项（对应各 job 失败面）；**harden_list**：韧性/对齐措施（脚本与 CI 加固）。 |
++| `gates/production_gate.yaml` | `gate_audit_machine_json`、`gate_audit_block_count`、`gate_audit_harden_count` 与 **E2E 口径**（`ci_e2e_strict_session`、`ci_e2e_grep_invert`）登记在 SSOT。 |
++
++**可直接应用的补丁**：仓库内执行 `git apply patches/gate-audit-enforcement-v1.patch`（若已合入主干则跳过；补丁随发布迭代更新文件名）。
++
++### 验证「42 → 85」机器级 checklist（闭合）
++
++以下 **5 步** 即「SSOT + 85 条机器规则 + 本地同构」的最低验收（不替代人签缺口表）：
++
++1. `python3 scripts/gates/verify_production_gate_config.py` — 通过且打印 `OK traveltrust.production_gate.v1`。
++2. `python3 -c "import json; d=json.load(open('gates/gate_audit.machine.json')); assert len(d['block_list'])==42 and len(d['harden_list'])==43"` — 静默退出 0。
++3. 对照 `gates/production_gate.yaml` 中 `ci_e2e_grep_invert` 与 `.github/workflows/production-gate.yml` 中 **E2E** 步骤的 `--grep-invert` 一致。
++4. `bash scripts/gates/run-production-gate-local.sh --base main` — 结束行仅关注三项结论：`LOCAL_SMOKE_GATE`、`REPORT_VALIDATE`、`PRODUCTION_GATE_LOCAL`（由 EXIT trap 打印）。
++5. `MANIFEST.local.json` 中 `local_smoke_gate` / `report_validate` / `production_gate_local` 与上述三行一致。
++
++**Policy**：合并到 **`main`** 若宣称 **Production GO**（与 `docs/go-live-checklist.md` 并联），除 **人签 / 缺口表** 外，须将 **Production gate (trinity) — gate closed**（`production-gate-summary`）列为 **branch protection 必过**，使下列项在 **同一 `run_id`** 下默认不可绕过：
++
++| 维度 | Job | 说明 |
++|------|-----|------|
++| SSOT | `verify-gate-config` | `gates/production_gate.yaml` |
++| 96 · B-421 | `b421-doclink` | `scripts/check-runbook-golive-doclink-gate.sh` |
++| 既有 batch | `broadcast-all` | `broadcast-batch-all-required.sh` |
++| 95 · API | `traveltrust-api-tests` | `cargo test -p traveltrust-api` |
++| 96-15 机跑 | `tier-96-15` | `verify_96_booklets_registry` + `run_96_15_orchestration.py`（Tier A 使用 `gates/tier_a_ci/*`）；可用 **`gates/waivers/96-15.waiver.json`** 豁免（见 `gates/waivers/README.md`） |
++| report policy | `report-policy` | 任意 **变更** 的 `**/report.json`：1) 若 `release_gate=PARTIAL_GO`，须含 **`partial_go_expires_utc`**（未来 UTC）；2) 变更集合中必须且仅能有一个文件 `is_final_truth=true` |
++| 93 / R-002 | `e2e-r002-93` | Playwright（**`STRICT_SESSION_GATE=1`**，**排除** **`@e2e-sepolia-deferred`**；链上套件见 `run-production-gate-chain-deferred.sh`）+ `validate-regression-report.py --fail-on-no-go --fail-on-case-not-run`（ISS-007 窄片） |
++
++## 必过 check（branch protection）
++
++**Repository → Settings → Rulesets**（或 **Branches → `main` → Require status checks**，经典分支保护）中配置 **Required status checks**：
++
++| 建议勾选（与 Actions 检查运行名称一致） | Workflow / 说明 |
++|----------------------------------------|-----------------|
++| **Production gate (trinity) — gate closed** | Job id：`production-gate-summary`（workflow `production-gate.yml`） |
++
++勾选 **汇总 job** 即强制 **同一 workflow** 内 `needs` 所列 **全部** 子 job 成功（`verify-gate-config`、`b421-doclink`、`broadcast-all`、`traveltrust-api-tests`、`tier-96-15`、`report-policy`、`e2e-r002-93`）。**无需**再逐子 job 勾选，除非要在 PR 上分列展示。
++
++**GitHub UI 操作摘要**：Settings → Rules → Rulesets → 目标分支 `main` → **Require status checks** → 搜索并添加 **`Production gate (trinity) — gate closed`**（名称以仓库 Actions 实际显示为准，若重命名 workflow 需同步更新 ruleset）。
++
++**Fork / 个人仓库**：若无 Team/Enterprise rulesets，使用 **Branch protection rule** → **Require status checks to pass before merging** → 在列表中勾选上述检查名。
++
++## 与 Broadcast batch blockers
++
++- **`broadcast-all`** 与 **Broadcast batch blockers** workflow 同源脚本。
++- 迁移：见 `.github/CI-REQUIRED-BROADCAST-BATCHES.md`（可仅保留 `production-gate-summary` 必过以避免 batch 双跑）。
++
++## Evidence（发布证据）
++
++- **`production-gate-manifest-<run_id>`** — `MANIFEST.json`（含 `gate_ssot`、`jobs_required`、`commit_sha`）。
++- **`production-gate-e2e-r002-<run_id>`** — ISS-007 `report.json` 与 notes。
++- **`production-gate-96-15-<run_id>`** — `release_orchestration.json` 等（豁免时不生成）。
++
++## PARTIAL_GO 与 `report.json`（统一口径：变更集，不要求 PR）
++
++- **合并/推送**时：若 diff 修改了某 `**/report.json` 且其中 **`release_gate` 为 `PARTIAL_GO`**，必须增加顶层字段 **`partial_go_expires_utc`**（ISO-8601，建议 `…Z`），且时间须 **晚于** workflow 运行时刻；否则 gate 失败。
++- **single truth**：若一次变更修改了一个或多个 `**/report.json`，其中必须且仅能有一个顶层字段 **`is_final_truth: true`**，作为该次变更最终真值报告；否则 gate 失败。
++- **critical-change truth requirement**：若一次变更修改了关键路径（`.github/workflows/`、`crates/api/`、`frontend/`、`contracts/`、`scripts/`），即使未改任何 `report.json`，也必须在该次变更中包含至少一个 `is_final_truth: true` 的 `report.json`；脚本：`scripts/gates/check_pr_final_truth_presence.py`。
++- **未修改**的历史 `report.json` 不要求补字段。
++
++## 其他 workflow
++
++- **`regression-report-validate`**：保留 **`workflow_dispatch`**；对 **`main` 的 PR** 且 paths 命中 `**/report.json` 时，自动跑 **`check_pr_partial_go_expiry.py`**（与 Production gate 同源）。
++- **`96-15-orchestration-gate`**：仍以 **`workflow_dispatch`** 做可选全量（含可选 merged report）；**PR 默认** 由 **Production gate · tier-96-15** 覆盖（见该 workflow 头注释）。
++- **`production-release-require-go`**：`push tags: v*` 与 `workflow_dispatch`，强制最终真值报告通过 `--require-go --fail-on-case-not-run`，并要求 `summary.FAIL/BLOCKED/NOT_RUN == 0`；tag 触发默认读取 `gates/final_truth_report_path.txt`。
++
++## 单人开发 / CI 欠费本地封口
++
++可不走 PR，直接在仓库根执行本地同构门禁（推荐单人默认流程）：
++
++`bash scripts/gates/run-production-gate-local.sh --base main`
++
++常用参数：
++
++- `--skip-e2e`：跳过本地 Playwright + R-002（只做结构封口）
++- `--skip-api-tests`：跳过 `cargo test -p traveltrust-api`
++
++成功后会写入：
++
++- `frontend/evidence/production-gate-local-*/MANIFEST.local.json`（当前 Windows 本地默认路径）
++- （若仓库根 `evidence/` 可写）`evidence/production-gate-local-*/MANIFEST.local.json`
++
++该方式适用于单人开发的**本地验收封口**；若后续恢复 CI，仍建议在 Actions 上再跑一次 `Production gate` 作为远端佐证。
++
++## Build workflow 与 E2E
++
++- **`build.yml`** 中 **`e2e` job** 已设为 **`continue-on-error: false`**，使 E2E 失败在 Build 时间线显红（合并阻断仍以 branch protection 所选 check 为准）。
++
++## 边界
++
++- 本 gate **不**替代 **缺口官方总表**、**15 附录〇** 等人签。
++- **ISS-007 窄片** **不**等同于 **93 全矩阵**；全量 staging `report.json` 仍以 **R-002** 为准。
++- 单人独立开发场景可采用**自签**：在缺口表/附录中同一人签字并保留时间戳即可，不额外强制第二审批人；但 CI 门禁（`production-gate-summary` 必过）仍不得绕过。
++
++## 相关路径
++
++- `gates/production_gate.yaml`、`gates/tier_a_ci/`、`gates/waivers/README.md`
++- `scripts/gates/verify_production_gate_config.py`、`resolve_96_15_waiver.py`、`check_pr_partial_go_expiry.py`
++- `scripts/check-runbook-golive-doclink-gate.sh`、`scripts/gates/broadcast-batch-all-required.sh`
++- `scripts/validate-regression-report.py`、`docs/go-live-checklist.md`
+diff --git a/gates/gate_audit.machine.json b/gates/gate_audit.machine.json
+new file mode 100644
+index 0000000..82ffdba
+--- /dev/null
++++ b/gates/gate_audit.machine.json
+@@ -0,0 +1,348 @@
++{
++  "schema": "traveltrust.gate_audit.machine.v1",
++  "description": "Gate Audit：BLOCK=合并阻断；HARDEN=韧性/对齐措施。计数 42+43=85 供机器基线校验。",
++  "block_list": [
++    {
++      "id": "B-SSOT-01",
++      "rule": "production_gate.yaml 缺失或 schema_version≠1 时门禁失败"
++    },
++    {
++      "id": "B-SSOT-02",
++      "rule": "verify_production_gate_config.py 报错的任一路径键在仓库中不存在"
++    },
++    {
++      "id": "B-SSOT-03",
++      "rule": "gate_id 非 traveltrust.production_gate.v1"
++    },
++    {
++      "id": "B-SSOT-04",
++      "rule": "report_final_truth_field 非 is_final_truth"
++    },
++    {
++      "id": "B-SSOT-05",
++      "rule": "release_final_truth_pointer 指向缺失或非文件"
++    },
++    {
++      "id": "B-SSOT-06",
++      "rule": "gate_audit.machine.json 缺失或 block/harden 计数不等于 42/43"
++    },
++    {
++      "id": "B-BAT-01",
++      "rule": "B-421：runbook / go-live 六径 doclink 任一路径失败"
++    },
++    {
++      "id": "B-BAT-02",
++      "rule": "legacy_path_ssot_gates 规则包缺失或校验失败"
++    },
++    {
++      "id": "B-BAT-03",
++      "rule": "broadcast batch 1 断言或 blockers 失败"
++    },
++    {
++      "id": "B-BAT-04",
++      "rule": "broadcast batch 2 断言或 blockers 失败"
++    },
++    {
++      "id": "B-BAT-05",
++      "rule": "broadcast batch 3 断言或 blockers 失败"
++    },
++    {
++      "id": "B-BAT-06",
++      "rule": "region_vault 相关自测或 merkle/openssl 烟测失败"
++    },
++    {
++      "id": "B-BAT-07",
++      "rule": "broadcast 证据 bundle 或 registry 校验失败"
++    },
++    {
++      "id": "B-BAT-08",
++      "rule": "batch JSON assert 与 CI 配置不同步"
++    },
++    {
++      "id": "B-API-01",
++      "rule": "cargo test -p traveltrust-api 任一例失败（CI 须带 DATABASE_URL）"
++    },
++    {
++      "id": "B-API-02",
++      "rule": "API 包名与 production_gate.yaml 中 api_cargo_package 不一致"
++    },
++    {
++      "id": "B-API-03",
++      "rule": "本地 gate：DATABASE_URL 未配置且 .env 无可用连接串"
++    },
++    {
++      "id": "B-API-04",
++      "rule": "本地 gate：Postgres TCP 探测失败且 docker compose 拉起后仍失败"
++    },
++    {
++      "id": "B-API-05",
++      "rule": "CI E2E：API 在 :8080 未在超时内 healthy"
++    },
++    {
++      "id": "B-API-06",
++      "rule": "traveltrust-api 构建失败或二进制无法启动"
++    },
++    {
++      "id": "B-9615-01",
++      "rule": "96-15：无有效 waiver 时 booklets registry 校验失败"
++    },
++    {
++      "id": "B-9615-02",
++      "rule": "96-15：orchestration Tier A semi-auto 未满足"
++    },
++    {
++      "id": "B-9615-03",
++      "rule": "96-15：Tier A 全 PASS 未满足"
++    },
++    {
++      "id": "B-9615-04",
++      "rule": "96-15：Tier B/C 全 PASS 未满足"
++    },
++    {
++      "id": "B-9615-05",
++      "rule": "96-15：evidence 目录不可写或 orchestration 崩溃"
++    },
++    {
++      "id": "B-RPT-01",
++      "rule": "变更的 report.json 为 PARTIAL_GO 但缺少 partial_go_expires_utc"
++    },
++    {
++      "id": "B-RPT-02",
++      "rule": "partial_go_expires_utc 非未来时间（相对 workflow 运行时）"
++    },
++    {
++      "id": "B-RPT-03",
++      "rule": "同次变更多个 report.json 出现多个 is_final_truth=true"
++    },
++    {
++      "id": "B-RPT-04",
++      "rule": "同次变更多个 report.json 出现零个 is_final_truth=true（若适用 single-truth）"
++    },
++    {
++      "id": "B-RPT-05",
++      "rule": "关键路径变更但未包含 is_final_truth=true 的 report（final truth presence）"
++    },
++    {
++      "id": "B-RPT-06",
++      "rule": "final_truth_report_path.txt 指向的报告未通过 validate-regression-report（本地 relax 模式另口径）"
++    },
++    {
++      "id": "B-RPT-07",
++      "rule": "validate-regression-report --require-go 失败（release_gate 非 GO）"
++    },
++    {
++      "id": "B-RPT-08",
++      "rule": "validate-regression-report --fail-on-case-not-run 有未运行用例"
++    },
++    {
++      "id": "B-RPT-09",
++      "rule": "check_report_production_readiness 对最终真值报告失败"
++    },
++    {
++      "id": "B-E2E-01",
++      "rule": "Playwright chromium 项目失败（CI 或本地）"
++    },
++    {
++      "id": "B-E2E-02",
++      "rule": "本地 core smoke：未排除 @e2e-sepolia-deferred 却仍宣称 local smoke（策略违背）"
++    },
++    {
++      "id": "B-E2E-03",
++      "rule": "STRICT_SESSION_GATE=1 下仍依赖 X-User-Id 捷径导致用例失败"
++    },
++    {
++      "id": "B-E2E-04",
++      "rule": "R-002 ISS-007 prereport 未生成 report.json"
++    },
++    {
++      "id": "B-E2E-05",
++      "rule": "R-002 validate --fail-on-no-go 对 prereport 失败"
++    },
++    {
++      "id": "B-E2E-06",
++      "rule": "R-002 validate --fail-on-case-not-run 对 prereport 失败"
++    },
++    {
++      "id": "B-E2E-07",
++      "rule": "CI：frontend npm ci / build / playwright install 失败"
++    },
++    {
++      "id": "B-E2E-08",
++      "rule": "E2E 与 API 端口/rewrite 不一致导致 /auth 落到 HTML 非 API"
++    }
++  ],
++  "harden_list": [
++    {
++      "id": "H-CI-01",
++      "measure": "production_gate.yaml 为 SSOT；workflow 头注释指向该文件"
++    },
++    {
++      "id": "H-CI-02",
++      "measure": "verify-gate-config job 先于其它门禁 job（逻辑顺序由 needs 汇总保证）"
++    },
++    {
++      "id": "H-CI-03",
++      "measure": "production-gate-summary 汇总 needs 全量子 job，便于 branch protection 单勾"
++    },
++    {
++      "id": "H-CI-04",
++      "measure": "concurrency 取消 in-progress 非 main 引用"
++    },
++    {
++      "id": "H-CI-05",
++      "measure": "96-15 waiver 由 resolve_96_15_waiver.py 统一解析"
++    },
++    {
++      "id": "H-CI-06",
++      "measure": "artifacts：MANIFEST、e2e-r002、96-15 保留天数策略一致"
++    },
++    {
++      "id": "H-CI-07",
++      "measure": "api_cargo_package 与 workflow cargo 子包一致"
++    },
++    {
++      "id": "H-CI-08",
++      "measure": "regression-report-validate 与 production gate 报告策略同源脚本"
++    },
++    {
++      "id": "H-LCL-01",
++      "measure": "run-production-gate-local.sh 使用 PYTHON_BIN 探测并 export"
++    },
++    {
++      "id": "H-LCL-02",
++      "measure": "本地 smoke 导出 CHAIN_RPC_URL/CHAIN_WS_URL 为空隔离 Sepolia"
++    },
++    {
++      "id": "H-LCL-03",
++      "measure": "TRAVELTRUST_GATE_ENSURE_FRESH_API=1 强制 API 继承 DATABASE_URL"
++    },
++    {
++      "id": "H-LCL-04",
++      "measure": "PLAYWRIGHT_REUSE_API_SERVER=0 避免复用陈旧 8080 进程"
++    },
++    {
++      "id": "H-LCL-05",
++      "measure": "STRICT_SESSION_GATE=1 与 Cookie 会话口径一致"
++    },
++    {
++      "id": "H-LCL-06",
++      "measure": "PLAYWRIGHT_RELAX_META_CHAIN_GUARD=1 关闭重 RPC /meta 探针"
++    },
++    {
++      "id": "H-LCL-07",
++      "measure": "grep-invert @e2e-sepolia-deferred 与链上 deferred 脚本分离"
++    },
++    {
++      "id": "H-LCL-08",
++      "measure": "pg_tcp_check.py / read_dotenv_value.py 支撑 DATABASE_URL 探测"
++    },
++    {
++      "id": "H-LCL-09",
++      "measure": "run-e2e-default.mjs：GATE_ENSURE_FRESH 时 taskkill/lsof 回收端口"
++    },
++    {
++      "id": "H-LCL-10",
++      "measure": "start-api-for-playwright：RELAX 时显式清空 RPC 与 governance eth_call SSOT"
++    },
++    {
++      "id": "H-LCL-11",
++      "measure": "apiSession.gotoWithBearerSession：addCookies 仅 url（Playwright 1.49+）"
++    },
++    {
++      "id": "H-LCL-12",
++      "measure": "sync-frontend-env-local-from-root 对齐 NEXT_PUBLIC_API_BASE_URL"
++    },
++    {
++      "id": "H-DB-01",
++      "measure": "CI traveltrust-api-tests 使用 postgres:16 service + healthcheck"
++    },
++    {
++      "id": "H-DB-02",
++      "measure": "CI DATABASE_URL 与 service 凭据一致"
++    },
++    {
++      "id": "H-DB-03",
++      "measure": "CI E2E job 同步注入 DATABASE_URL 防 webServer 子进程丢失"
++    },
++    {
++      "id": "H-DB-04",
++      "measure": "本地可选 docker compose up -d postgres 自愈"
++    },
++    {
++      "id": "H-DB-05",
++      "measure": "SEED_TEST_ACCOUNTS 在 Playwright API 启动链路默认开启"
++    },
++    {
++      "id": "H-DB-06",
++      "measure": "P3_CHAIN_OFF=1 在链下烟测路径显式注入"
++    },
++    {
++      "id": "H-TIER-01",
++      "measure": "broadcast-batch-all-required.sh 单入口聚合三批"
++    },
++    {
++      "id": "H-TIER-02",
++      "measure": "tier_a_ci README + 59_p0_table 由 orchestration 引用"
++    },
++    {
++      "id": "H-TIER-03",
++      "measure": "CARGO_INCREMENTAL=0 降低 CI/本地非确定性"
++    },
++    {
++      "id": "H-TIER-04",
++      "measure": "TRAVELTRUST_BUILD_GIT_SHA 注入 API 构建（可观测）"
++    },
++    {
++      "id": "H-TIER-05",
++      "measure": "PLAYWRIGHT_BASE_URL 与 Next 端口一致"
++    },
++    {
++      "id": "H-TIER-06",
++      "measure": "生产放行 workflow production-release-require-go 与 final_truth_report_path 联动"
++    },
++    {
++      "id": "H-TIER-07",
++      "measure": "MANIFEST.local.json / write_local_manifest 记录 LOCAL_SMOKE 与 CHAIN_DEFERRED 状态"
++    },
++    {
++      "id": "H-EXT-01",
++      "measure": "run-production-gate-chain-deferred.sh 独立承载 @e2e-sepolia-deferred，与本地 core smoke 解耦"
++    },
++    {
++      "id": "H-EXT-02",
++      "measure": "r002_report_generator 与 gen-r002-iss007-prereport.py 由 production_gate.yaml 指向"
++    },
++    {
++      "id": "H-EXT-03",
++      "measure": "r002_validate_flags 在 YAML 声明并与 CI validate 命令对齐"
++    },
++    {
++      "id": "H-EXT-04",
++      "measure": "本地 E2E 默认单 worker，降低限流与登录竞态"
++    },
++    {
++      "id": "H-EXT-05",
++      "measure": "本地 manifest 写入 GITHUB_SHA/RUN_ID 便于与远端 run 对照"
++    },
++    {
++      "id": "H-EXT-06",
++      "measure": "EVIDENCE_DIR 使用 evidence/GO_YYYYMMDD 与 R-002 目录约定一致"
++    },
++    {
++      "id": "H-EXT-07",
++      "measure": "b421_shell / broadcast_shell 单路径 SSOT，禁止 workflow 硬编码分叉脚本"
++    },
++    {
++      "id": "H-EXT-08",
++      "measure": "waivers_readme 记录 96-15 豁免格式与审计要求"
++    },
++    {
++      "id": "H-EXT-09",
++      "measure": "partial_go_expiry / single_truth / final_truth_presence 三脚本同源复用于 CI 与本地 strict 模式"
++    },
++    {
++      "id": "H-EXT-10",
++      "measure": "本地/CI production gate 对 API 注入 API_RATE_LIMIT_PER_MINUTE=0（及 CRITICAL_WRITE_*=0），避免 E2E 种子登录 429 拖死主路径"
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/gates/production_gate.yaml b/gates/production_gate.yaml
+new file mode 100644
+index 0000000..9ab2d24
+--- /dev/null
++++ b/gates/production_gate.yaml
+@@ -0,0 +1,31 @@
++# Production Gate SSOT — CI 与 docs/ci/CI-REQUIRED-PRODUCTION-GATE.md 须与此一致。
++# Gate Audit 机器清单（BLOCK 42 + HARDEN 43 = 85）：gates/gate_audit.machine.json
++# 机器校验：python3 scripts/gates/verify_production_gate_config.py
++# 字段均为仓库根相对路径或固定标识；勿写密钥。
++schema_version: "1"
++gate_id: traveltrust.production_gate.v1
++gate_audit_machine_json: gates/gate_audit.machine.json
++gate_audit_block_count: "42"
++gate_audit_harden_count: "43"
++local_run_script: scripts/gates/run-production-gate-local.sh
++chain_deferred_gate_script: scripts/gates/run-production-gate-chain-deferred.sh
++ci_e2e_strict_session: "1"
++ci_e2e_grep_invert: "@e2e-sepolia-deferred"
++b421_shell: scripts/check-runbook-golive-doclink-gate.sh
++broadcast_shell: scripts/gates/broadcast-batch-all-required.sh
++api_cargo_package: traveltrust-api
++r002_validate_flags: "--fail-on-no-go --fail-on-case-not-run"
++r002_report_generator: scripts/gen-r002-iss007-prereport.py
++tier_96_15_orchestration: scripts/release/run_96_15_orchestration.py
++tier_96_15_booklets_check: scripts/release/verify_96_booklets_registry.py
++tier_a1_readme: gates/tier_a_ci/README.md
++tier_a2_markdown: gates/tier_a_ci/59_p0_table.md
++tier_96_15_out_dir_prefix: evidence/GO_96_15_pr_
++waivers_readme: gates/waivers/README.md
++partial_go_expiry_required_on_change: "true"
++report_single_truth_required_on_change: "true"
++report_final_truth_field: is_final_truth
++report_single_truth_checker: scripts/gates/check_report_single_truth.py
++report_final_truth_presence_checker: scripts/gates/check_pr_final_truth_presence.py
++release_require_go_workflow: .github/workflows/production-release-require-go.yml
++release_final_truth_pointer: gates/final_truth_report_path.txt
+diff --git a/scripts/gates/run-production-gate-local.sh b/scripts/gates/run-production-gate-local.sh
+new file mode 100644
+index 0000000..21fd670
+--- /dev/null
++++ b/scripts/gates/run-production-gate-local.sh
+@@ -0,0 +1,269 @@
++#!/usr/bin/env bash
++# Local stable production gate (core smoke). Does NOT run full Sepolia-deferred E2E.
++#
++# Usage:
++#   bash scripts/gates/run-production-gate-local.sh [--base main] [--skip-e2e] [--skip-api-tests]
++#
++# Second step (chain / deferred E2E only):
++#   bash scripts/gates/run-production-gate-chain-deferred.sh
++#
++# Python: set PYTHON_BIN or rely on detection (python3 → python). Do not use py -3.
++#
++# Environment model:
++# - Local smoke isolates CHAIN_RPC_URL / CHAIN_WS_URL (empty) so /meta does not hit Sepolia probes.
++# - DATABASE_URL must point at a running Postgres (local gate auth/session are durable).
++# - STRICT_SESSION_GATE=1 for Playwright (no X-User-Id shortcuts in local smoke paths).
++# - Chromium E2E excludes describe titles matching @e2e-sepolia-deferred.
++set -euo pipefail
++
++ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
++cd "$ROOT"
++
++BASE_REF="main"
++SKIP_E2E=0
++SKIP_API_TESTS=0
++LOCAL_RELAX_DIFF_POLICIES="${LOCAL_RELAX_DIFF_POLICIES:-1}"
++PYTHON_BIN="${PYTHON_BIN:-python3}"
++if ! command -v "$PYTHON_BIN" >/dev/null 2>&1; then
++  if command -v python >/dev/null 2>&1; then
++    PYTHON_BIN="python"
++  else
++    echo "run-production-gate-local: python not found (set PYTHON_BIN or install python3/python)" >&2
++    exit 1
++  fi
++fi
++if ! "$PYTHON_BIN" -c 'import sys; print(sys.version)' >/dev/null 2>&1; then
++  if [[ "$PYTHON_BIN" != "python" ]] && command -v python >/dev/null 2>&1; then
++    PYTHON_BIN="python"
++  fi
++fi
++if ! "$PYTHON_BIN" -c 'import sys; print(sys.version)' >/dev/null 2>&1; then
++  echo "run-production-gate-local: usable python interpreter not found" >&2
++  exit 1
++fi
++export PYTHON_BIN
++
++while [[ $# -gt 0 ]]; do
++  case "$1" in
++    --base)
++      BASE_REF="${2:-main}"
++      shift 2
++      ;;
++    --skip-e2e)
++      SKIP_E2E=1
++      shift
++      ;;
++    --skip-api-tests)
++      SKIP_API_TESTS=1
++      shift
++      ;;
++    *)
++      echo "run-production-gate-local: unknown option: $1" >&2
++      exit 1
++      ;;
++  esac
++done
++
++RUN_ID="local-$(date +%Y%m%d-%H%M%S)"
++OUT_DIR="evidence/production-gate-${RUN_ID}"
++mkdir -p "$OUT_DIR"
++
++# 三项结论（EXIT trap 保证任一路径退出都会打印）
++GATE_LOCAL_SMOKE_STATUS="NOT_RUN"
++REPORT_VALIDATE_STATUS="NOT_REACHED"
++PRODUCTION_GATE_LOCAL="BLOCKED"
++
++gate_emit_three_conclusions() {
++  echo "LOCAL_SMOKE_GATE: ${GATE_LOCAL_SMOKE_STATUS}"
++  echo "REPORT_VALIDATE: ${REPORT_VALIDATE_STATUS}"
++  echo "PRODUCTION_GATE_LOCAL: ${PRODUCTION_GATE_LOCAL}"
++}
++trap gate_emit_three_conclusions EXIT
++
++require_local_postgres() {
++  local db_url="${DATABASE_URL:-}"
++  if [[ -z "$db_url" ]] && [[ -f "$ROOT/.env" ]]; then
++    db_url="$("$PYTHON_BIN" "$ROOT/scripts/gates/read_dotenv_value.py" "$ROOT/.env" DATABASE_URL)"
++  fi
++  if [[ -z "$db_url" ]]; then
++    echo "run-production-gate-local: DATABASE_URL missing — set in environment or root .env (local gate requires Postgres)" >&2
++    exit 1
++  fi
++  export DATABASE_URL="$db_url"
++
++  if "$PYTHON_BIN" "$ROOT/scripts/gates/pg_tcp_check.py"; then
++    return 0
++  fi
++
++  if command -v docker >/dev/null 2>&1 && [[ "$db_url" == *"@localhost:"* || "$db_url" == *"@127.0.0.1:"* ]]; then
++    echo "run-production-gate-local: Postgres TCP check failed; trying: docker compose up -d postgres" >&2
++    docker compose -f "$ROOT/docker-compose.yml" up -d postgres
++    for _ in {1..60}; do
++      if docker inspect --format='{{json .State.Health.Status}}' traveltrust-postgres 2>/dev/null | grep -q healthy; then
++        break
++      fi
++      sleep 1
++    done
++  fi
++
++  if "$PYTHON_BIN" "$ROOT/scripts/gates/pg_tcp_check.py"; then
++    return 0
++  fi
++  echo "run-production-gate-local: Postgres still unreachable — start DB or fix DATABASE_URL" >&2
++  exit 1
++}
++
++write_local_smoke_status() {
++  echo "$1" >"$OUT_DIR/LOCAL_SMOKE_GATE.status"
++  echo "run-production-gate-local: LOCAL_SMOKE_GATE=$1 (evidence: $OUT_DIR/LOCAL_SMOKE_GATE.status)"
++}
++
++echo "=== [1/8] verify gate SSOT ==="
++"$PYTHON_BIN" scripts/gates/verify_production_gate_config.py
++
++echo "=== [2/8] B-421 doclink gate ==="
++bash scripts/check-runbook-golive-doclink-gate.sh
++
++echo "=== [3/8] legacy+broadcast batch gate ==="
++bash scripts/gates/broadcast-batch-all-required.sh
++
++if [[ "$SKIP_API_TESTS" == "0" ]]; then
++  echo "=== [4/8] cargo test -p traveltrust-api ==="
++  cargo test -p traveltrust-api -- --test-threads=1
++else
++  echo "=== [4/8] cargo test -p traveltrust-api (skipped by --skip-api-tests) ==="
++fi
++
++echo "=== [5/8] 96-15 orchestration (or waiver) ==="
++if [[ -f "gates/waivers/96-15.waiver.json" ]]; then
++  "$PYTHON_BIN" scripts/gates/resolve_96_15_waiver.py gates/waivers/96-15.waiver.json
++  echo "tier-96-15: skipped by active waiver"
++else
++  ORCH_OUT="evidence/GO_96_15_pr_${RUN_ID}"
++  mkdir -p "$ORCH_OUT/deep_evidence"
++  "$PYTHON_BIN" scripts/release/verify_96_booklets_registry.py --out "$ORCH_OUT/96_booklets_registry.json"
++  "$PYTHON_BIN" scripts/release/run_96_15_orchestration.py \
++    --out-dir "$ORCH_OUT" \
++    --executor "local-${RUN_ID}" \
++    --tier-a1-readme gates/tier_a_ci/README.md \
++    --tier-a2-markdown gates/tier_a_ci/59_p0_table.md \
++    --require-tier-a-semiauto \
++    --require-tier-a-all-pass \
++    --require-tier-bc-all-pass
++fi
++
++echo "=== [6/8] report policy checks ==="
++if [[ "$LOCAL_RELAX_DIFF_POLICIES" == "1" ]]; then
++  echo "local mode: validating final truth pointer report (diff policies relaxed)" >&2
++  FINAL_REPORT="$(tr -d '\r' < gates/final_truth_report_path.txt | head -n 1)"
++  test -n "$FINAL_REPORT"
++  test -f "$FINAL_REPORT"
++  if ! "$PYTHON_BIN" scripts/validate-regression-report.py "$FINAL_REPORT" --require-go --fail-on-case-not-run; then
++    REPORT_VALIDATE_STATUS="BLOCKED"
++    exit 1
++  fi
++  if ! "$PYTHON_BIN" scripts/gates/check_report_production_readiness.py "$FINAL_REPORT"; then
++    REPORT_VALIDATE_STATUS="BLOCKED"
++    exit 1
++  fi
++else
++  export GITHUB_EVENT_NAME="pull_request"
++  export GITHUB_BASE_REF="$BASE_REF"
++  unset GITHUB_EVENT_BEFORE
++  export GITHUB_SHA="$(git rev-parse HEAD)"
++  export LOCAL_GATE_INCLUDE_WORKTREE="1"
++  if ! "$PYTHON_BIN" scripts/gates/check_pr_partial_go_expiry.py; then
++    REPORT_VALIDATE_STATUS="BLOCKED"
++    exit 1
++  fi
++  if ! "$PYTHON_BIN" scripts/gates/check_report_single_truth.py; then
++    REPORT_VALIDATE_STATUS="BLOCKED"
++    exit 1
++  fi
++  if ! "$PYTHON_BIN" scripts/gates/check_pr_final_truth_presence.py; then
++    REPORT_VALIDATE_STATUS="BLOCKED"
++    exit 1
++  fi
++fi
++REPORT_VALIDATE_STATUS="PASS"
++
++export GATE_CHAIN_DEFERRED_STATUS="NOT_RUN"
++
++if [[ "$SKIP_E2E" == "0" ]]; then
++  echo "=== [7/8] local core smoke E2E + R-002 check ==="
++  require_local_postgres
++
++  export EVIDENCE_DIR="evidence/GO_$(date +%Y%m%d)"
++  export TRAVELTRUST_R002_REPORT_PARENT="$EVIDENCE_DIR"
++  export P3_CHAIN_OFF="1"
++  export CARGO_INCREMENTAL="0"
++  # 与 start-api-for-playwright 一致：全栈 E2E 高频登录易触发 per-email 429，导致 53 主路径等 goto 超时
++  export API_RATE_LIMIT_PER_MINUTE="${API_RATE_LIMIT_PER_MINUTE:-0}"
++  export CRITICAL_WRITE_RATE_LIMIT_PER_MINUTE="${CRITICAL_WRITE_RATE_LIMIT_PER_MINUTE:-0}"
++  export GITHUB_RUN_ID="$RUN_ID"
++  export GITHUB_SHA="$(git rev-parse HEAD)"
++
++  export TRAVELTRUST_ALLOW_LOCAL_PROFILE_AVATAR="0"
++  export TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS="0"
++  export TRAVELTRUST_DEPLOYMENT_PROFILE="local"
++
++  export PLAYWRIGHT_RELAX_META_CHAIN_GUARD="1"
++  export STRICT_SESSION_GATE="1"
++  # Stale :8080 API may lack DATABASE_URL (health OK skips rebuild); force fresh binary + Playwright-owned process.
++  export TRAVELTRUST_GATE_ENSURE_FRESH_API="1"
++  export PLAYWRIGHT_REUSE_API_SERVER="0"
++
++  # Isolate root .env Sepolia / RPC for this smoke (process env wins over dotenv fill in API).
++  export CHAIN_RPC_URL=""
++  export CHAIN_WS_URL=""
++
++  export PLAYWRIGHT_GREP_INVERT="${PLAYWRIGHT_GREP_INVERT:-@e2e-sepolia-deferred}"
++
++  set +e
++  (
++    cd frontend && npm run e2e -- --project=chromium --grep-invert "$PLAYWRIGHT_GREP_INVERT"
++  )
++  EC=$?
++  set -e
++
++  if [[ "$EC" -ne 0 ]]; then
++    export GATE_LOCAL_SMOKE_STATUS="BLOCKED"
++    GATE_LOCAL_SMOKE_STATUS="BLOCKED"
++    REPORT_VALIDATE_STATUS="BLOCKED"
++    PRODUCTION_GATE_LOCAL="BLOCKED"
++    write_local_smoke_status "BLOCKED"
++    "$PYTHON_BIN" scripts/gen-r002-iss007-prereport.py || true
++    echo "=== [8/8] write local manifest (after E2E failure) ==="
++    TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
++    export REPORT_VALIDATE_STATUS PRODUCTION_GATE_LOCAL
++    export OUT_DIR TS RUN_ID BASE_REF SKIP_E2E SKIP_API_TESTS GATE_LOCAL_SMOKE_STATUS GATE_CHAIN_DEFERRED_STATUS
++    "$PYTHON_BIN" scripts/gates/write_local_manifest.py || true
++    exit "$EC"
++  fi
++
++  export GATE_LOCAL_SMOKE_STATUS="PASS"
++  GATE_LOCAL_SMOKE_STATUS="PASS"
++  write_local_smoke_status "PASS"
++
++  "$PYTHON_BIN" scripts/gen-r002-iss007-prereport.py
++  RPT="${EVIDENCE_DIR}/r002_iss007_prereport/report.json"
++  test -f "$RPT"
++  if ! "$PYTHON_BIN" scripts/validate-regression-report.py "$RPT" --fail-on-no-go --fail-on-case-not-run; then
++    REPORT_VALIDATE_STATUS="BLOCKED"
++    PRODUCTION_GATE_LOCAL="BLOCKED"
++    exit 1
++  fi
++else
++  echo "=== [7/8] local E2E + R-002 (skipped by --skip-e2e) ==="
++  export GATE_LOCAL_SMOKE_STATUS="SKIPPED"
++  GATE_LOCAL_SMOKE_STATUS="SKIPPED"
++  write_local_smoke_status "SKIPPED"
++fi
++
++echo "=== [8/8] write local manifest ==="
++TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
++export REPORT_VALIDATE_STATUS PRODUCTION_GATE_LOCAL
++export OUT_DIR TS RUN_ID BASE_REF SKIP_E2E SKIP_API_TESTS GATE_LOCAL_SMOKE_STATUS GATE_CHAIN_DEFERRED_STATUS
++PRODUCTION_GATE_LOCAL="PASS"
++export PRODUCTION_GATE_LOCAL
++"$PYTHON_BIN" scripts/gates/write_local_manifest.py
+diff --git a/scripts/gates/verify_production_gate_config.py b/scripts/gates/verify_production_gate_config.py
+new file mode 100644
+index 0000000..3a297b4
+--- /dev/null
++++ b/scripts/gates/verify_production_gate_config.py
+@@ -0,0 +1,130 @@
++#!/usr/bin/env python3
++"""
++Verify gates/production_gate.yaml (flat key: value) and referenced paths exist.
++
++Usage (repo root):
++  python3 scripts/gates/verify_production_gate_config.py
++"""
++
++from __future__ import annotations
++
++import json
++import re
++import sys
++from pathlib import Path
++
++
++def load_flat_yaml(path: Path) -> dict[str, str]:
++    data: dict[str, str] = {}
++    for raw in path.read_text(encoding="utf-8").splitlines():
++        line = raw.split("#", 1)[0].strip()
++        if not line:
++            continue
++        m = re.match(r"^([A-Za-z0-9_]+):\s*(.+?)\s*$", line)
++        if not m:
++            continue
++        k, v = m.group(1), m.group(2).strip()
++        if (v.startswith('"') and v.endswith('"')) or (v.startswith("'") and v.endswith("'")):
++            v = v[1:-1]
++        data[k] = v
++    return data
++
++
++REQUIRED = (
++    "schema_version",
++    "gate_id",
++    "gate_audit_machine_json",
++    "gate_audit_block_count",
++    "gate_audit_harden_count",
++    "local_run_script",
++    "chain_deferred_gate_script",
++    "ci_e2e_strict_session",
++    "ci_e2e_grep_invert",
++    "b421_shell",
++    "broadcast_shell",
++    "api_cargo_package",
++    "r002_validate_flags",
++    "r002_report_generator",
++    "tier_96_15_orchestration",
++    "tier_96_15_booklets_check",
++    "tier_a1_readme",
++    "tier_a2_markdown",
++    "tier_96_15_out_dir_prefix",
++    "waivers_readme",
++    "partial_go_expiry_required_on_change",
++    "report_single_truth_required_on_change",
++    "report_final_truth_field",
++    "report_single_truth_checker",
++    "report_final_truth_presence_checker",
++    "release_require_go_workflow",
++    "release_final_truth_pointer",
++)
++
++
++def main() -> int:
++    root = Path(__file__).resolve().parents[2]
++    cfg_path = root / "gates" / "production_gate.yaml"
++    if not cfg_path.is_file():
++        print(f"ERROR: missing {cfg_path}", file=sys.stderr)
++        return 2
++    cfg = load_flat_yaml(cfg_path)
++    missing = [k for k in REQUIRED if k not in cfg]
++    if missing:
++        print(f"ERROR: production_gate.yaml missing keys: {missing}", file=sys.stderr)
++        return 1
++    if cfg["schema_version"] != "1":
++        print("ERROR: schema_version must be 1", file=sys.stderr)
++        return 1
++    if cfg["report_final_truth_field"] != "is_final_truth":
++        print("ERROR: report_final_truth_field must be is_final_truth", file=sys.stderr)
++        return 1
++    path_keys = (
++        "gate_audit_machine_json",
++        "local_run_script",
++        "chain_deferred_gate_script",
++        "b421_shell",
++        "broadcast_shell",
++        "r002_report_generator",
++        "tier_96_15_orchestration",
++        "tier_96_15_booklets_check",
++        "tier_a1_readme",
++        "tier_a2_markdown",
++        "waivers_readme",
++        "report_single_truth_checker",
++        "report_final_truth_presence_checker",
++        "release_require_go_workflow",
++        "release_final_truth_pointer",
++    )
++    for k in path_keys:
++        p = root / cfg[k]
++        if not p.is_file():
++            print(f"ERROR: path for {k} does not exist: {p}", file=sys.stderr)
++            return 1
++
++    audit_path = root / cfg["gate_audit_machine_json"]
++    try:
++        audit = json.loads(audit_path.read_text(encoding="utf-8"))
++    except (json.JSONDecodeError, OSError) as e:
++        print(f"ERROR: invalid gate audit JSON {audit_path}: {e}", file=sys.stderr)
++        return 1
++    blocks = audit.get("block_list")
++    hardens = audit.get("harden_list")
++    if not isinstance(blocks, list) or not isinstance(hardens, list):
++        print("ERROR: gate_audit.machine.json must have block_list and harden_list arrays", file=sys.stderr)
++        return 1
++    exp_b = int(cfg["gate_audit_block_count"])
++    exp_h = int(cfg["gate_audit_harden_count"])
++    if len(blocks) != exp_b or len(hardens) != exp_h:
++        print(
++            f"ERROR: gate audit counts want block={exp_b} harden={exp_h}, "
++            f"got {len(blocks)}/{len(hardens)} (42+43=85 machine baseline)",
++            file=sys.stderr,
++        )
++        return 1
++
++    print("verify_production_gate_config: OK", cfg["gate_id"])
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/scripts/gates/write_local_manifest.py b/scripts/gates/write_local_manifest.py
+new file mode 100644
+index 0000000..51ebce4
+--- /dev/null
++++ b/scripts/gates/write_local_manifest.py
+@@ -0,0 +1,36 @@
++#!/usr/bin/env python3
++import json
++import os
++import subprocess
++from pathlib import Path
++
++
++def main() -> None:
++    out = Path(os.environ["OUT_DIR"])
++    out.mkdir(parents=True, exist_ok=True)
++    sha = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
++    data = {
++        "schema_version": "1",
++        "kind": "traveltrust.production_gate_local_manifest.v1",
++        "generated_at_utc": os.environ["TS"],
++        "run_id": os.environ["RUN_ID"],
++        "commit_sha": sha,
++        "base_ref": os.environ["BASE_REF"],
++        "skip_e2e": os.environ["SKIP_E2E"] == "1",
++        "skip_api_tests": os.environ["SKIP_API_TESTS"] == "1",
++        "local_smoke_gate": os.environ.get("GATE_LOCAL_SMOKE_STATUS", ""),
++        "report_validate": os.environ.get("REPORT_VALIDATE_STATUS", ""),
++        "production_gate_local": os.environ.get("PRODUCTION_GATE_LOCAL", ""),
++        "chain_deferred_gate": os.environ.get("GATE_CHAIN_DEFERRED_STATUS", "NOT_RUN"),
++        "gate_ssot": "gates/production_gate.yaml",
++        "notes": "Local smoke: core production gate + chromium E2E excluding @e2e-sepolia-deferred. "
++        "Chain deferred: run scripts/gates/run-production-gate-chain-deferred.sh separately.",
++    }
++    path = out / "MANIFEST.local.json"
++    with path.open("w", encoding="utf-8") as file:
++        json.dump(data, file, indent=2, ensure_ascii=False)
++    print("Wrote", path)
++
++
++if __name__ == "__main__":
++    main()

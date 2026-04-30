@@ -1,0 +1,9 @@
+{
+  "kind": "traveltrust.extract_93_case_inventory_doc_pointer.v1",
+  "summary": "Default 93 matrix path for scripts/dev/extract_93_case_inventory.py; same segments as default joinpath.",
+  "spec_93_markdown_segments": [
+    "docs",
+    "spec",
+    "93-全站功能验证矩阵-域别回归清单.md"
+  ]
+}

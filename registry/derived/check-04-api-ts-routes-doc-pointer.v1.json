@@ -1,0 +1,9 @@
+{
+  "kind": "traveltrust.check_04_api_ts_routes_doc_pointer.v1",
+  "summary": "Doc / SSOT pointer for scripts/gates/check-04-api-ts-routes-vs-doc-34.py; same segments as code DOC joinpath.",
+  "doc_04_markdown_segments": [
+    "docs",
+    "spec",
+    "04-后端与API.md"
+  ]
+}

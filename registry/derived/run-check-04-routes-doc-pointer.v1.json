@@ -1,0 +1,21 @@
+{
+  "kind": "traveltrust.run_check_04_routes_doc_pointer.v1",
+  "summary": "Header policy for scripts/gates/run-check-04-routes.sh; shell header points here instead of embedding path literals.",
+  "http_anchor_documents": {
+    "doc_04": [
+      "docs",
+      "spec",
+      "04-后端与API.md"
+    ],
+    "doc_14": [
+      "docs",
+      "spec",
+      "14-合约-API-ABI-前后端对齐.md"
+    ]
+  },
+  "freeze_policy_lines_zh": [
+    "冻结口径（工程约定）：以本脚本 exit 0 作为 04 与 14 两份法定壳文档当前「HTTP 机读路由表与门禁锚点」验收冻结点（路径段见 http_anchor_documents）。",
+    "（含 04 §3.4 / 14 表结构与为 B450～B457 等门禁服务的字面锚点）。不在同一 PR 内混做「版式/可读性重排」与上述锚点变更；",
+    "若仅优化 04/14 排版或拆表，须另开独立 PR，且仍须保持本串联绿。默认不再提交「仅为扩写锚点、无路由真值变更」的 04/14 文档 PR。"
+  ]
+}

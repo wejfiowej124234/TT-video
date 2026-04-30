@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "kind": "traveltrust.production_gate_local_manifest.v1",
+  "generated_at_utc": "2026-04-26T01:44:00Z",
+  "run_id": "local-20260426-094359",
+  "commit_sha": "303c0a3c49a800aee11cea4c1ef6d98b7a399b53",
+  "gate_ssot": "gates/production_gate.yaml",
+  "final_truth_report": "frontend/evidence/GO_20260426_local_final_truth/report.json",
+  "checks": [
+    "b421",
+    "broadcast-all",
+    "cargo test -p traveltrust-api",
+    "verify_gate_config",
+    "96-15 waiver active",
+    "validate-report --require-go",
+    "check_report_production_readiness"
+  ],
+  "verdict": "GO"
+}

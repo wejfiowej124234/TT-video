@@ -3,6 +3,7 @@
 **/target
 dist
 Cargo.lock
+.cargo-home-mig-evidence/
 
 # Foundry（合约构建产物，本地 `forge build` 再生）
 contracts/out/
@@ -40,6 +41,12 @@ frontend/.data/
 
 # 本地工具目录（如 jq.exe 等缓存，不入库）
 .tools/
+
+# 本地 gate / 工具缓存目录（勿入仓）
+.tmp-gate-bin/
+
+# API 包内本地数据/上传烟测产物（勿入仓；与 `frontend/.data/` 同类）
+crates/api/data/
 
 # Python 字节码（勿提交）
 **/__pycache__/

@@ -1,0 +1,194 @@
+{
+  "files": [
+    {
+      "basename": "GO_96_16_13_local_hal_run.json",
+      "batch": "GO_96_16_13_local_hal_run",
+      "docs_spec_touched": false,
+      "fail_or_accepted_risk": [
+        {
+          "id": "playwright_chromium_dependency_setup_meta",
+          "status": "FAIL",
+          "trace": "93",
+          "detail": "setup-meta-chain requires GET http://127.0.0.1:8080/meta; no API on 8080 in this run → ECONNREFUSED. Full `npm run e2e` chromium path not green without traveltrust-api (or PLAYWRIGHT_FULL_STACK=1 stac"
+        },
+        {
+          "id": "r002_prereport_json_validate",
+          "status": "PASS",
+          "trace": "R-002",
+          "detail": "gen-r002-iss007-prereport.py → report.json; validate-regression-report.py exit 0 (PARTIAL_GO, 43 cases). Paths in artifacts.report_json_*."
+        },
+        {
+          "id": "r002_full_local_ci_merge_orchestration",
+          "status": "FAIL",
+          "trace": "R-002; 96",
+          "detail": "scripts/ci/run_local_ci.sh (95→93→96-15 merge→validate orchestration→go_state_machine) not executed in this batch; only standalone prereport + validate."
+        },
+        {
+          "id": "npm_run_start_without_api_meta_noise",
+          "status": "ACCEPTED_RISK",
+          "trace": "93",
+          "detail": "Production Next start emits proxy /meta errors when API absent; pages tested still HTTP 200."
+        }
+      ],
+      "lighthouse_cmd": "present in GO_96_16_13_local_hal_run"
+    },
+    {
+      "basename": "GO_96_16_d4_138_motion_touch_batch.json",
+      "batch": "GO_96_16_d4_138_motion_touch_batch",
+      "docs_spec_touched": false
+    },
+    {
+      "basename": "GO_96_16_d4_admin_auth_batch.json",
+      "batch": "GO_96_16_d4_admin_auth_batch",
+      "docs_spec_touched": false
+    },
+    {
+      "basename": "GO_96_16_d4_segment_gap_close.json",
+      "batch": "GO_96_16_d4_segment_gap_close",
+      "docs_spec_touched": false,
+      "fail_or_accepted_risk": [
+        {
+          "id": "Lighthouse_LCP_CLS_TTFB",
+          "status": "FAIL",
+          "trace": "96-13 13.7; 93",
+          "detail": "No Lighthouse JSON/HTML captured in this run."
+        },
+        {
+          "id": "npm_run_start_e2e",
+          "status": "FAIL",
+          "trace": "93; R-002",
+          "detail": "npm run start and Playwright/request E2E not executed in this session."
+        },
+        {
+          "id": "report_json",
+          "status": "FAIL",
+          "trace": "R-002",
+          "detail": "No validate-regression-report merge artifact in repo from this run."
+        },
+        {
+          "id": "screenshots",
+          "status": "FAIL",
+          "trace": "96-13",
+          "detail": "No screenshot files produced."
+        }
+      ]
+    },
+    {
+      "basename": "GO_96_16_d5_d6_d7_admin_community_observability_config_guides_staking_traveltrust.json",
+      "batch": "GO_96_16_d5_d6_d7_admin_community_observability_config_guides_staking_traveltrust",
+      "docs_spec_touched": false
+    },
+    {
+      "basename": "GO_96_16_d5_d6_d7_admin_finance_disputes_orders_governance_market.json",
+      "batch": "GO_96_16_d5_d6_d7_admin_finance_disputes_orders_governance_market",
+      "docs_spec_touched": false
+    },
+    {
+      "basename": "GO_96_16_d5_d6_d7_admin_orders_escrow_pay_batch5.json",
+      "batch": "GO_96_16_d5_d6_d7_admin_orders_escrow_pay_batch5",
+      "docs_spec_touched": false
+    },
+    {
+      "basename": "GO_96_16_d5_d6_d7_admin_subroutes_d5d6d7.json",
+      "batch": "GO_96_16_d5_d6_d7_admin_subroutes_d5d6d7",
+      "docs_spec_touched": false
+    },
+    {
+      "basename": "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json",
+      "batch": "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch",
+      "docs_spec_touched": false
+    },
+    {
+      "basename": "GO_96_16_d5_d6_d7_community_traveltrust_governance_batch4.json",
+      "batch": "GO_96_16_d5_d6_d7_community_traveltrust_governance_batch4",
+      "docs_spec_touched": false
+    },
+    {
+      "basename": "GO_96_16_d5_d6_d7_coverage_matrix_v1.json",
+      "batch": null,
+      "docs_spec_touched": null
+    },
+    {
+      "basename": "GO_96_16_d5_d6_d7_governance_subroutes_d5d6d7.json",
+      "batch": "GO_96_16_d5_d6_d7_governance_subroutes_d5d6d7",
+      "docs_spec_touched": false
+    },
+    {
+      "basename": "GO_96_16_d5_d6_d7_landing_batch.json",
+      "batch": "GO_96_16_d5_d6_d7_landing_batch",
+      "docs_spec_touched": false
+    },
+    {
+      "basename": "GO_96_16_d5_d6_d7_me_community_itinerary_discover_traveltrust.json",
+      "batch": "GO_96_16_d5_d6_d7_me_community_itinerary_discover_traveltrust",
+      "docs_spec_touched": false
+    },
+    {
+      "basename": "GO_96_16_d5_d6_d7_reports_orders_admin_deep.json",
+      "batch": "GO_96_16_d5_d6_d7_reports_orders_admin_deep",
+      "docs_spec_touched": false
+    },
+    {
+      "basename": "GO_96_16_d5_d6_d7_routes_batch.json",
+      "batch": "GO_96_16_d5_d6_d7_routes_batch",
+      "docs_spec_touched": false
+    },
+    {
+      "basename": "GO_96_16_d5_d6_d7_routes_followup2.json",
+      "batch": "GO_96_16_d5_d6_d7_routes_followup2",
+      "docs_spec_touched": false
+    },
+    {
+      "basename": "GO_96_16_d5_d6_d7_routes_followup3.json",
+      "batch": "GO_96_16_d5_d6_d7_routes_followup3",
+      "docs_spec_touched": false
+    },
+    {
+      "basename": "GO_96_16_d5_d6_d7_uncovered_routes_snapshot.json",
+      "batch": null,
+      "docs_spec_touched": null
+    },
+    {
+      "basename": "GO_96_16_d5_d6_d7_uncovered_routes_sweep.json",
+      "batch": "GO_96_16_d5_d6_d7_uncovered_routes_sweep",
+      "docs_spec_touched": false
+    },
+    {
+      "basename": "GO_96_16_smoke_ui_release.json",
+      "batch": "GO_96_16_smoke_ui_release",
+      "docs_spec_touched": false,
+      "fail_or_accepted_risk": [
+        {
+          "id": "playwright_chromium_e2e",
+          "status": "FAIL",
+          "trace": "93",
+          "detail": "`npm run e2e` / chromium 仍依赖 setup-meta-chain → GET :8080/meta；不在 smoke:ui-release 内。需 API 或 PLAYWRIGHT_FULL_STACK=1。"
+        },
+        {
+          "id": "r002_full_local_ci_merge_orchestration",
+          "status": "FAIL",
+          "trace": "R-002; 96",
+          "detail": "未在本脚本中执行 run_local_ci.sh 全链路；独立 prereport 见 frontend/evidence/report-r002-snippet-96_16.json 与 evidence/GO_r002_prereport_96_16/。"
+        },
+        {
+          "id": "lighthouse_in_smoke",
+          "status": "ACCEPTED_RISK",
+          "trace": "96-13; 93",
+          "detail": "smoke:ui-release 不含 Lighthouse；另行 npm run lighthouse:ci（须已有 Next 监听）。"
+        }
+      ]
+    }
+  ],
+  "playwright_e2e": {
+    "status": "NOT_RUN",
+    "trace": "93"
+  },
+  "lighthouse_per_route": {
+    "status": "NOT_RUN",
+    "trace": "96-13; 93; smoke:ui-release does not run Lighthouse per 119 routes"
+  },
+  "lighthouse_root_snippet": {
+    "path": "frontend/evidence/lighthouse-root-3012.metrics-snippet.json",
+    "url_sample": "http://127.0.0.1:3012/ only"
+  }
+}

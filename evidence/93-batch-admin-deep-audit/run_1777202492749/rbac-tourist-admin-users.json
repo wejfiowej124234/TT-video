@@ -1,0 +1,77 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/v1/admin/users?limit=5",
+    "auth": "Bearer tourist"
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "status": "ok",
+      "items": [
+        {
+          "id": "fc0e3b6f-d63e-42a8-9898-4417e39e20ab",
+          "email": "93-f1-probe-1777193327302@traveltrust.test",
+          "role": "tourist",
+          "kyc_status": "none",
+          "created_at": "2026-04-26T08:48:47.623923Z",
+          "updated_at": "2026-04-26T08:48:47.623923Z"
+        },
+        {
+          "id": "35940eca-24fa-44f8-962d-d9596c9a1e63",
+          "email": "93-f1-probe-1777193262634@traveltrust.test",
+          "role": "tourist",
+          "kyc_status": "none",
+          "created_at": "2026-04-26T08:47:42.923010Z",
+          "updated_at": "2026-04-26T08:47:42.923010Z"
+        },
+        {
+          "id": "d1daf6ed-0dfb-4cb2-960e-ee1294f7d195",
+          "email": "e2e-f001-1777190963722-ozuvdnqg@traveltrust.test",
+          "role": "tourist",
+          "kyc_status": "none",
+          "created_at": "2026-04-26T08:09:23.984527Z",
+          "updated_at": "2026-04-26T08:09:23.984527Z"
+        },
+        {
+          "id": "497b3db2-0d1b-4d25-8004-33ee557cabd5",
+          "email": "esc003t-497b3db2-0d1b-4d25-8004-33ee557cabd5@traveltrust.test",
+          "role": "tourist",
+          "kyc_status": "none",
+          "created_at": "2026-04-26T06:44:57.168539Z",
+          "updated_at": "2026-04-26T06:44:57.168539Z"
+        },
+        {
+          "id": "94df8a61-6fa6-4270-b9a4-d4a8555a5468",
+          "email": "esc003g-94df8a61-6fa6-4270-b9a4-d4a8555a5468@traveltrust.test",
+          "role": "guide",
+          "kyc_status": "none",
+          "created_at": "2026-04-26T06:44:57.168539Z",
+          "updated_at": "2026-04-26T06:44:57.168539Z"
+        }
+      ],
+      "applied_filters": {
+        "limit": 5,
+        "role": null,
+        "kyc_status": null,
+        "data_plane": "chain_off_store",
+        "ssot_note": "Rows from in-process ChainOffStore (startup hydrate from PostgreSQL when DATABASE_URL is set, then mutations). Not a direct SQL snapshot; see GET /meta.dual_write and TRAVELTRUST_STRICT_*_DB_WRITE."
+      },
+      "meta": {
+        "build": {
+          "git_sha": "unknown",
+          "deployed_at": null,
+          "rule": "120/140：预发/生产建议在容器或进程注入 TRAVELTRUST_GIT_SHA（或 GIT_COMMIT_SHA、SOURCE_VERSION）与 TRAVELTRUST_DEPLOYED_AT（UTC ISO8601）；镜像构建可在 cargo 前 export TRAVELTRUST_BUILD_GIT_SHA 写入编译期兜底；730 GET /meta build 对象 build_top_keys / build_top_keys_contract_730 与 META_BUILD_TOP_KEYS 五键顺序同源",
+          "build_top_keys": [
+            "git_sha",
+            "deployed_at",
+            "rule",
+            "build_top_keys",
+            "build_top_keys_contract_730"
+          ],
+          "build_top_keys_contract_730": "**730**：**`build_top_keys`** **与 **`META_BUILD_TOP_KEYS`** **同源（顺序 `git_sha`****→**`deployed_at`****→**`rule`****→**`build_top_keys`****→**`build_top_keys_contract_730`）"
+        }
+      }
+    }
+  }
+}

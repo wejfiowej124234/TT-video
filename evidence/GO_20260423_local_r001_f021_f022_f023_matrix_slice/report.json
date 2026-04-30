@@ -1,0 +1,46 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260423_local_r001_f021_f022_f023_matrix_slice",
+  "title": "Local 93 slice: B-MKT-007 / B-MKT-008 / B-GDE-001 (F-021/F-022/F-023 matrix IT)",
+  "executor": "cursor-agent-local",
+  "started_at": "2026-04-23T12:00:00Z",
+  "finished_at": "2026-04-23T12:10:00Z",
+  "environment": {
+    "name": "local",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "Three AUTO-P0 93 rows PASS via DATABASE_URL + Router::oneshot matrix IT (007c/008c/001c). Does not replace staging full-matrix report.json or CI build.yml e2e; ISS-007 remains open for those.",
+  "cases": [
+    {
+      "id": "B-MKT-007",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_f021_f022_f023_matrix_slice/B-MKT-007/",
+      "blocker": false,
+      "notes": "matrix_93_b_mkt_007c_f021_* listing.payload.title round-trip."
+    },
+    {
+      "id": "B-MKT-008",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_f021_f022_f023_matrix_slice/B-MKT-008/",
+      "blocker": false,
+      "notes": "matrix_93_b_mkt_008c_f022_* listing.payload.title round-trip."
+    },
+    {
+      "id": "B-GDE-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_f021_f022_f023_matrix_slice/B-GDE-001/",
+      "blocker": false,
+      "notes": "matrix_93_b_gde_001c_f023_* POST /guides -> GET /guides/:id bio."
+    }
+  ],
+  "summary": {
+    "PASS": 3,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  }
+}

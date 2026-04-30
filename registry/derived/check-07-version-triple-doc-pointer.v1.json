@@ -1,0 +1,10 @@
+{
+  "kind": "traveltrust.check_07_version_triple_doc_pointer.v1",
+  "summary": "Human path segments for scripts/gates/check-07-version-triple.sh (07 **Version:** = 00 index 07 row = 07 §6.5 first data row). Gate uses $SPECROOT join; does not read this file.",
+  "spec_tree_root_segments": ["docs", "spec"],
+  "triple_check_files": {
+    "spec_07_devflow": ["docs", "spec", "07-开发流程与顺序.md"],
+    "spec_00_index": ["docs", "spec", "00-文档索引.md"]
+  },
+  "read_semantics_zh": "文首 **Version:** 与 00 版本表「07-开发流程与顺序」行、07 内 ### 6.5 变更记录首条数据行三者同号"
+}

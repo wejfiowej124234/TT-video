@@ -1,0 +1,46 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260423_close_loop_f015_f016_f017_api_it_e2e_r002",
+  "title": "local API·IT + E2E · F-015/F-016/F-017 (community post detail decode fix)",
+  "executor": "cursor-agent-local",
+  "started_at": "2026-04-23T12:13:04Z",
+  "finished_at": "2026-04-23T12:13:04Z",
+  "environment": {
+    "name": "local",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "Rust matrix_93 D-COM-002/003/008 (router::app+PG) + Playwright 6/6. Fixes PG INT4 decode for liked_by_me/collected_by_me. Not staging full-matrix report.json nor CI e2e run_id (ISS-007).",
+  "cases": [
+    {
+      "id": "D-COM-002",
+      "status": "PASS",
+      "evidence_path": "evidence\\GO_20260423_close_loop_f015_f016_f017_api_it_e2e_r002\\README.md",
+      "blocker": false,
+      "notes": "API·IT matrix_93_d_com_002_f015_* + E2E F-015 POST/GET detail + anon GET"
+    },
+    {
+      "id": "D-COM-003",
+      "status": "PASS",
+      "evidence_path": "evidence\\GO_20260423_close_loop_f015_f016_f017_api_it_e2e_r002\\README.md",
+      "blocker": false,
+      "notes": "API·IT matrix_93_d_com_003_f016_* + E2E F-016 like + DELETE/GET/POST relike"
+    },
+    {
+      "id": "D-COM-008",
+      "status": "PASS",
+      "evidence_path": "evidence\\GO_20260423_close_loop_f015_f016_f017_api_it_e2e_r002\\README.md",
+      "blocker": false,
+      "notes": "API·IT matrix_93_d_com_008_f017_* + E2E F-017 collect + DELETE/GET/POST recollect"
+    }
+  ],
+  "summary": {
+    "PASS": 3,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  }
+}

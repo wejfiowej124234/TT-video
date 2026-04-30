@@ -1,0 +1,46 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260423_close_loop_f018_f019_f020_api_it_e2e_r002",
+  "title": "local API·IT + E2E · F-018/F-019/F-020 (reports, me/*, market bookmarks)",
+  "executor": "cursor-agent-local",
+  "started_at": "2026-04-23T12:15:24Z",
+  "finished_at": "2026-04-23T12:15:24Z",
+  "environment": {
+    "name": "local",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "Rust matrix_93 D-COM-010/D-COM-009/B-MKT-004 (router::app+PG) + Playwright 7/7. Not staging full-matrix nor CI e2e job (ISS-007).",
+  "cases": [
+    {
+      "id": "D-COM-010",
+      "status": "PASS",
+      "evidence_path": "evidence\\GO_20260423_close_loop_f018_f019_f020_api_it_e2e_r002\\README.md",
+      "blocker": false,
+      "notes": "API·IT matrix_93_d_com_010_f018_* + E2E F-018 report + anon GET post"
+    },
+    {
+      "id": "D-COM-009",
+      "status": "PASS",
+      "evidence_path": "evidence\\GO_20260423_close_loop_f018_f019_f020_api_it_e2e_r002\\README.md",
+      "blocker": false,
+      "notes": "API·IT matrix_93_d_com_009_f019_* + E2E F-019 me/posts + me/likes + me/collects cycles"
+    },
+    {
+      "id": "B-MKT-004",
+      "status": "PASS",
+      "evidence_path": "evidence\\GO_20260423_close_loop_f018_f019_f020_api_it_e2e_r002\\README.md",
+      "blocker": false,
+      "notes": "API·IT matrix_93_b_mkt_004_f020_* + E2E F-020 bookmark order + DELETE + invalid listing 400 parity"
+    }
+  ],
+  "summary": {
+    "PASS": 3,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  }
+}

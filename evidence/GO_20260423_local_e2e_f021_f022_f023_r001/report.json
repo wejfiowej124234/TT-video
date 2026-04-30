@@ -1,0 +1,46 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260423_local_e2e_f021_f022_f023_r001",
+  "title": "local E2E slice · f021-f022-f023-request (Playwright API)",
+  "executor": "cursor-agent-local",
+  "started_at": "2026-04-23T11:43:13Z",
+  "finished_at": "2026-04-23T11:43:13Z",
+  "environment": {
+    "name": "local",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "Playwright api-mkt-guides-021-023-chromium: 3/3 passed. Not 93 full matrix nor CI e2e job (ISS-007 main stem open).",
+  "cases": [
+    {
+      "id": "B-MKT-005",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_e2e_f021_f022_f023_r001/README.md",
+      "blocker": false,
+      "notes": "E2E: F-021 POST provider listing + GET catalog"
+    },
+    {
+      "id": "B-MKT-006",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_e2e_f021_f022_f023_r001/README.md",
+      "blocker": false,
+      "notes": "E2E: F-022 POST acquisition listing + GET catalog"
+    },
+    {
+      "id": "B-GDE-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_e2e_f021_f022_f023_r001/README.md",
+      "blocker": false,
+      "notes": "E2E: F-023 POST guide + GET detail + availability"
+    }
+  ],
+  "summary": {
+    "PASS": 3,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  }
+}

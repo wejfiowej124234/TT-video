@@ -1,0 +1,23 @@
+{
+  "batch": "GO_96_16_d5_d6_d7_routes_followup3",
+  "docs_spec_touched": false,
+  "scope": "/guides (first GuideCard LCP), /market/provider + /market/acquisition via MarketSubsiteMasonry + MarketRemoteListingImage, /market filter StickyFilterBar",
+  "d5_d6_d7_actions": [
+    "LCP: app/guides/page.tsx — first grid GuideCard gets coverImagePriority (reuses GuideCard priority + fetchPriority)",
+    "LCP: MarketSubsiteMasonry — first listing image priority=true; MarketRemoteListingImage passes fetchPriority high/low from priority",
+    "motion-reduce: MarketSubsiteMasonry cardFrame border/ring transition + image hover scale; CTA span transition-colors",
+    "motion-reduce: StickyFilterBar pill transition-colors"
+  ],
+  "commands": {
+    "eslint": { "cmd": "npm run lint", "exit": 0 },
+    "i18n_ci": { "cmd": "npm run test:i18n:ci", "exit": 0 },
+    "vitest": { "cmd": "npm test -- --run lib/marketSubsiteFilters.test.ts", "exit": 0, "tests_passed": 6 },
+    "npm_run_build": { "cmd": "npm run build", "exit": 0 }
+  },
+  "playwright_e2e": {
+    "status": "NOT_RUN",
+    "trace": "93",
+    "detail": ":8080-dependent E2E not run."
+  },
+  "claim_96_complete": false
+}

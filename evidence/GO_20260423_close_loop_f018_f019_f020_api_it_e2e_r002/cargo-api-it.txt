@@ -1,0 +1,3 @@
+matrix_93_d_com_010_f018_post_report_persists_pg_row_app_stack_ok_pg: ok
+matrix_93_d_com_009_f019_get_me_posts_lists_own_post_app_stack_ok_pg: ok
+matrix_93_b_mkt_004_f020_post_get_market_bookmarks_app_stack_ok_pg: ok

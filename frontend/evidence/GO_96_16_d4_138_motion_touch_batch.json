@@ -1,0 +1,36 @@
+{
+  "batch": "GO_96_16_d4_138_motion_touch_batch",
+  "docs_spec_touched": false,
+  "d4_scan_missing_loading_error": "none (all app/**/page.tsx siblings present)",
+  "code": [
+    "lib/travelLinkFocus.ts — export errorBoundaryMotionSafeClasses",
+    "components/admin/AdminRouteErrorShell.tsx — motion-safe on shell",
+    "components/governance/GovernanceSubrouteError.tsx — motion-safe on shell",
+    "app/governance/error.tsx — motion-safe on shell",
+    "app/pay/error.tsx — motion-safe on shell",
+    "app/escrow/error.tsx — motion-safe; home Link touchTargetLink44Classes",
+    "app/market/error.tsx — motion-safe; home Link 44px",
+    "app/market/acquisition/error.tsx — motion-safe; segment Links 44px",
+    "app/market/provider/error.tsx — motion-safe; segment Links 44px",
+    "app/market/acquisition/[id]/error.tsx — motion-safe; Links 44px",
+    "app/market/provider/showcase/[id]/error.tsx — motion-safe; Links 44px"
+  ],
+  "invariants": [
+    "No user-visible error.message in edited files (console-only logging unchanged).",
+    "Retry + focus ring + i18n keys unchanged for edited shells."
+  ],
+  "commands": {
+    "eslint": { "cmd": "npm run lint", "cwd": "frontend", "exit": 0 },
+    "vitest_sample": {
+      "cmd": "npm test -- --run lib/adminFetchDisplay.test.ts app/governance/distribution-accruals/distributionAccrualsPages.contract.test.ts",
+      "exit": 0,
+      "tests_passed": 9
+    },
+    "npm_run_build": { "cmd": "npm run build", "cwd": "frontend", "exit": 0, "note": "tail-only in agent log" }
+  },
+  "e2e_playwright_chromium": {
+    "status": "FAIL",
+    "trace": "93",
+    "detail": "Not re-run this batch; chromium still depends on :8080/meta via setup-meta-chain when API absent."
+  }
+}

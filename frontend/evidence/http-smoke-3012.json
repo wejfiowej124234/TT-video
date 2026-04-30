@@ -1,0 +1,35 @@
+{
+  "base": "http://127.0.0.1:3012",
+  "rows": [
+    {
+      "path": "/",
+      "status": 200,
+      "ms": 10,
+      "len": 39077
+    },
+    {
+      "path": "/governance",
+      "status": 200,
+      "ms": 4,
+      "len": 27535
+    },
+    {
+      "path": "/auth/login",
+      "status": 200,
+      "ms": 3,
+      "len": 25995
+    },
+    {
+      "path": "/community",
+      "status": 200,
+      "ms": 3,
+      "len": 41839
+    },
+    {
+      "path": "/admin",
+      "status": 307,
+      "ms": 4,
+      "len": 30
+    }
+  ]
+}

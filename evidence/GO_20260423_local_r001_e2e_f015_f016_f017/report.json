@@ -1,0 +1,46 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260423_local_r001_e2e_f015_f016_f017",
+  "title": "Local E2E: F-015/F-016/F-017 — posts, like, collect (6 Playwright tests)",
+  "executor": "cursor-agent-local",
+  "started_at": "2026-04-23T12:37:00Z",
+  "finished_at": "2026-04-23T12:38:00Z",
+  "environment": {
+    "name": "local",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "Playwright api-d-com-015-017-chromium: 6 passed. R-001 aggregates D-COM-002 / D-COM-003 / D-COM-008. ISS-007 CI e2e full matrix / staging GO report.json still open.",
+  "cases": [
+    {
+      "id": "D-COM-002",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_e2e_f015_f016_f017/D-COM-002/",
+      "blocker": false,
+      "notes": "F-015: 2 E2E tests"
+    },
+    {
+      "id": "D-COM-003",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_e2e_f015_f016_f017/D-COM-003/",
+      "blocker": false,
+      "notes": "F-016: 2 E2E tests"
+    },
+    {
+      "id": "D-COM-008",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_e2e_f015_f016_f017/D-COM-008/",
+      "blocker": false,
+      "notes": "F-017: 2 E2E tests"
+    }
+  ],
+  "summary": {
+    "PASS": 3,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  }
+}

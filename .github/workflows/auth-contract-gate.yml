@@ -1,0 +1,53 @@
+name: Auth contract gate
+
+on:
+  pull_request:
+    paths:
+      - "crates/api/src/routes/auth.rs"
+      - "crates/api/src/routes/auth_*"
+      - "crates/api/src/routes/auth*/**"
+      - "crates/api/src/chain_off/auth.rs"
+      - "crates/api/src/db/users_sessions.rs"
+      - "crates/api/src/db/auth_email_tokens.rs"
+      - "crates/api/src/state.rs"
+      - "crates/api/src/session_cookie.rs"
+      - "scripts/gates/auth-contract-gate.sh"
+      - "scripts/auth-contract-gate.sh"
+      - ".github/workflows/auth-contract-gate.yml"
+  push:
+    branches: [main]
+    paths:
+      - "crates/api/src/routes/auth.rs"
+      - "crates/api/src/routes/auth_*"
+      - "crates/api/src/routes/auth*/**"
+      - "crates/api/src/chain_off/auth.rs"
+      - "crates/api/src/db/users_sessions.rs"
+      - "crates/api/src/db/auth_email_tokens.rs"
+      - "crates/api/src/state.rs"
+      - "crates/api/src/session_cookie.rs"
+      - "scripts/gates/auth-contract-gate.sh"
+      - "scripts/auth-contract-gate.sh"
+      - ".github/workflows/auth-contract-gate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  auth-contract-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo registry + target
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            . -> target
+
+      - name: Run auth contract gate
+        run: bash scripts/auth-contract-gate.sh
+

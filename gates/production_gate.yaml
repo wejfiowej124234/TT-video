@@ -1,0 +1,31 @@
+# Production Gate SSOT — CI 与 docs/ci/CI-REQUIRED-PRODUCTION-GATE.md 须与此一致。
+# Gate Audit 机器清单（BLOCK 42 + HARDEN 43 = 85）：gates/gate_audit.machine.json
+# 机器校验：python3 scripts/gates/verify_production_gate_config.py
+# 字段均为仓库根相对路径或固定标识；勿写密钥。
+schema_version: "1"
+gate_id: traveltrust.production_gate.v1
+gate_audit_machine_json: gates/gate_audit.machine.json
+gate_audit_block_count: "42"
+gate_audit_harden_count: "43"
+local_run_script: scripts/gates/run-production-gate-local.sh
+chain_deferred_gate_script: scripts/gates/run-production-gate-chain-deferred.sh
+ci_e2e_strict_session: "1"
+ci_e2e_grep_invert: "@e2e-sepolia-deferred"
+b421_shell: scripts/check-runbook-golive-doclink-gate.sh
+broadcast_shell: scripts/gates/broadcast-batch-all-required.sh
+api_cargo_package: traveltrust-api
+r002_validate_flags: "--fail-on-no-go --fail-on-case-not-run"
+r002_report_generator: scripts/gen-r002-iss007-prereport.py
+tier_96_15_orchestration: scripts/release/run_96_15_orchestration.py
+tier_96_15_booklets_check: scripts/release/verify_96_booklets_registry.py
+tier_a1_readme: gates/tier_a_ci/README.md
+tier_a2_markdown: gates/tier_a_ci/59_p0_table.md
+tier_96_15_out_dir_prefix: evidence/GO_96_15_pr_
+waivers_readme: gates/waivers/README.md
+partial_go_expiry_required_on_change: "true"
+report_single_truth_required_on_change: "true"
+report_final_truth_field: is_final_truth
+report_single_truth_checker: scripts/gates/check_report_single_truth.py
+report_final_truth_presence_checker: scripts/gates/check_pr_final_truth_presence.py
+release_require_go_workflow: .github/workflows/production-release-require-go.yml
+release_final_truth_pointer: gates/final_truth_report_path.txt

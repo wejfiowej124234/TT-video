@@ -1,0 +1,26 @@
+{
+  "kind": "traveltrust.96_booklets_paths.v1",
+  "summary": "Per-booklet repo-relative paths for verify_96_booklets_registry.py; segments avoid docs+slash+spec contiguous literal in consumers.",
+  "handbook_entry_repo_relative": "docs/handbook/README.md",
+  "booklets": [
+    {"id": "96-Hub", "path_segments": ["docs", "spec", "96-索引-全链路外生产验收分册.md"]},
+    {"id": "96-01", "path_segments": ["docs", "spec", "96-01-总则与95边界和执行顺序.md"]},
+    {"id": "96-02", "path_segments": ["docs", "spec", "96-02-法务合规与对外披露.md"]},
+    {"id": "96-03", "path_segments": ["docs", "spec", "96-03-安全密钥与供应链.md"]},
+    {"id": "96-04", "path_segments": ["docs", "spec", "96-04-合规风控与跨境数据.md"]},
+    {"id": "96-05", "path_segments": ["docs", "spec", "96-05-运维SRE与可靠性.md"]},
+    {"id": "96-06", "path_segments": ["docs", "spec", "96-06-数据隐私备份与迁移.md"]},
+    {"id": "96-07", "path_segments": ["docs", "spec", "96-07-链上资金与合约终验.md"]},
+    {"id": "96-08", "path_segments": ["docs", "spec", "96-08-索引器对账与财务.md"]},
+    {"id": "96-09", "path_segments": ["docs", "spec", "96-09-消息通知与异步任务.md"]},
+    {"id": "96-10", "path_segments": ["docs", "spec", "96-10-配置灰度与特性开关.md"]},
+    {"id": "96-11", "path_segments": ["docs", "spec", "96-11-发布签字与回归门禁.md"]},
+    {"id": "96-12", "path_segments": ["docs", "spec", "96-12-文档真值与卫星债.md"]},
+    {"id": "96-13", "path_segments": ["docs", "spec", "96-13-UI-UX-i18n-a11y-性能走查.md"]},
+    {"id": "96-14", "path_segments": ["docs", "spec", "96-14-专项Wallet社区治理与扩展域.md"]},
+    {"id": "96-15", "path_segments": ["docs", "spec", "96-15-深度多维度检查与审计体系.md"]},
+    {"id": "96-16", "path_segments": ["docs", "spec", "96-16-全页面UI-UX优化方案总册.md"]},
+    {"id": "96-17", "path_segments": ["docs", "spec", "96-17-多重身份与钱包真值.md"]},
+    {"id": "96-UI", "path_segments": ["docs", "spec", "96-UI-UX-生产级验收与全链路外必查项.md"]}
+  ]
+}

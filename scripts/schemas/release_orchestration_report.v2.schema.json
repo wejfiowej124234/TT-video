@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://traveltrust.local/schemas/release_orchestration_report.v2.schema.json",
+  "title": "TravelTrust release_orchestration v2 (machine-only statuses)",
+  "type": "object",
+  "required": ["schema_version", "kind", "source_spec", "run_id", "started_at", "finished_at", "executor", "tiers", "summary"],
+  "properties": {
+    "schema_version": { "const": "2" },
+    "kind": { "const": "traveltrust.release_orchestration.v2" },
+    "source_spec": { "type": "string" },
+    "run_id": { "type": "string" },
+    "started_at": { "type": "string" },
+    "finished_at": { "type": "string" },
+    "executor": { "type": "string" },
+    "control_taxonomy_note": {
+      "type": "string",
+      "description": "Maps control_framework_refs tokens to industry frameworks (ISO 27001, SOC 2, OWASP ASVS, CIS, SRE SLO)."
+    },
+    "tiers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["tier", "steps"],
+        "properties": {
+          "tier": { "type": "string", "pattern": "^[A-Z]$" },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "seq",
+                "title",
+                "machine_runnable",
+                "status",
+                "input_source",
+                "expected_outcome",
+                "control_framework_refs",
+                "commands",
+                "evidence_paths_expected"
+              ],
+              "properties": {
+                "id": { "type": "string" },
+                "seq": { "type": "integer" },
+                "title": { "type": "string" },
+                "machine_runnable": { "const": true },
+                "status": {
+                  "type": "string",
+                  "enum": ["PASS", "FAIL", "SKIP", "NOT_RUN", "N_A", "ACCEPTED_RISK"]
+                },
+                "primary_attribution_if_fail": {
+                  "type": "string",
+                  "enum": ["95", "96", "93", "R002", "GATE"]
+                },
+                "input_source": { "type": "string" },
+                "expected_outcome": { "type": "string" },
+                "control_framework_refs": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                },
+                "commands": { "type": "array", "items": { "type": "string" } },
+                "observed_exit_code": { "type": ["integer", "null"] },
+                "stdout_tail": { "type": "string" },
+                "stderr_tail": { "type": "string" },
+                "evidence_paths_expected": { "type": "array", "items": { "type": "string" } },
+                "evidence_path_actual": { "type": "string" },
+                "f_row_hints": { "type": "array", "items": { "type": "string" } },
+                "96_booklet": { "type": "string" },
+                "accepted_risk_record_path": { "type": "string" },
+                "n_a_reason": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "steps_total",
+        "steps_pass",
+        "steps_fail",
+        "steps_na",
+        "steps_accepted_risk",
+        "steps_skip",
+        "machine_steps_executed",
+        "tier_a_all_pass",
+        "tier_bc_all_pass",
+        "tier_bc_scope_manual_only",
+        "any_fail",
+        "any_accepted_risk",
+        "accepted_risks_production_acknowledged"
+      ],
+      "properties": {
+        "steps_total": { "type": "integer" },
+        "steps_pass": { "type": "integer" },
+        "steps_fail": { "type": "integer" },
+        "steps_na": { "type": "integer" },
+        "steps_accepted_risk": { "type": "integer" },
+        "steps_skip": { "type": "integer" },
+        "machine_steps_executed": { "type": "integer" },
+        "tier_a_all_pass": { "type": "boolean" },
+        "tier_bc_all_pass": { "type": "boolean" },
+        "tier_bc_scope_manual_only": { "type": "boolean" },
+        "any_fail": { "type": "boolean" },
+        "any_accepted_risk": { "type": "boolean" },
+        "accepted_risks_production_acknowledged": { "type": "boolean" }
+      }
+    }
+  }
+}

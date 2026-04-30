@@ -1,0 +1,210 @@
+{
+  "workflow": "Build",
+  "job": "e2e",
+  "check": "e2e-playwright-core+r002-prereport",
+  "commit_sha": "",
+  "ci_run_id": "",
+  "env": "ci",
+  "rule_id": "e2e-playwright-chromium-with-iss007-r002",
+  "severity": "gate",
+  "owner": "frontend-team",
+  "generated_at": "2026-04-23T21:52:03Z",
+  "passed": true,
+  "suite": "playwright chromium + matrix_93 ISS-007 narrow slice",
+  "iss007_r002_prereport": {
+    "report_json": "evidence/GO_local_r002_verify_round296/r002_iss007_prereport/report.json",
+    "release_gate": "PARTIAL_GO",
+    "release_gate_reason": "ISS-007 narrow slice: D-IDX-001, B-DSP-003, D-COM-011, D-ADM-003, B-ESC-001, B-TGR-001, D-ITN-002, B-MKT-002, B-DSP-001, D-COM-001, B-ORD-004, D-ITN-001, B-IDM-001, B-ORD-006, B-ORD-005, B-MSG-002, A-AVA-001, D-COM-002, B-ESC-003, D-COM-003, D-COM-008, D-COM-010 PASS via matrix_93_* on PG+chain_off; staging full-matrix report.json still per ISS-007.",
+    "summary": {
+      "PASS": 22,
+      "FAIL": 0,
+      "BLOCKED": 0,
+      "N_A": 0,
+      "NOT_RUN": 0
+    },
+    "playwright_e2e_outcome": null,
+    "anchors_93": [
+      "D-IDX-001",
+      "B-DSP-003",
+      "D-COM-011",
+      "D-ADM-003",
+      "B-ESC-001",
+      "B-TGR-001",
+      "D-ITN-002",
+      "B-MKT-002",
+      "B-DSP-001",
+      "D-COM-001",
+      "B-ORD-004",
+      "D-ITN-001",
+      "B-IDM-001",
+      "B-ORD-006",
+      "B-ORD-005",
+      "B-MSG-002",
+      "A-AVA-001",
+      "D-COM-002",
+      "B-ESC-003",
+      "D-COM-003",
+      "D-COM-008",
+      "D-COM-010"
+    ],
+    "f_rows_8_2": [
+      "F-029",
+      "F-025",
+      "F-031",
+      "F-030",
+      "F-010",
+      "F-032",
+      "F-033",
+      "F-009",
+      "F-025",
+      "F-014",
+      "F-008",
+      "F-012",
+      "F-028",
+      "F-011",
+      "F-013",
+      "F-026",
+      "F-007",
+      "F-015",
+      "F-027",
+      "F-016",
+      "F-017",
+      "F-018"
+    ],
+    "cases_compact": [
+      {
+        "id": "D-IDX-001",
+        "status": "PASS",
+        "f_row_8_2": "F-029",
+        "matrix_93_cargo_filter": "matrix_93_d_idx_001b_f029_get_internal_indexer_status_ok_shape_app_stack_ok_pg"
+      },
+      {
+        "id": "B-DSP-003",
+        "status": "PASS",
+        "f_row_8_2": "F-025",
+        "matrix_93_cargo_filter": "matrix_93_b_dsp_003b_f025_post_dispute_resolve_then_pg_status_resolved_app_stack_ok_pg"
+      },
+      {
+        "id": "D-COM-011",
+        "status": "PASS",
+        "f_row_8_2": "F-031",
+        "matrix_93_cargo_filter": "matrix_93_d_com_011_f031_post_community_post_acquisition_led_listing_pg"
+      },
+      {
+        "id": "D-ADM-003",
+        "status": "PASS",
+        "f_row_8_2": "F-030",
+        "matrix_93_cargo_filter": "matrix_93_d_adm_003b_f030_get_admin_schema_migrations_ok_when_sqlx_migrations_applied_app_stack_ok_pg"
+      },
+      {
+        "id": "B-ESC-001",
+        "status": "PASS",
+        "f_row_8_2": "F-010",
+        "matrix_93_cargo_filter": "matrix_93_b_esc_001b_f010_mock_pay_then_get_order_escrowed_app_stack_ok_pg"
+      },
+      {
+        "id": "B-TGR-001",
+        "status": "PASS",
+        "f_row_8_2": "F-032",
+        "matrix_93_cargo_filter": "matrix_93_b_tgr_001_f032_get_trust_growth_config_autopilot_gen_matches_runtime_state_pg"
+      },
+      {
+        "id": "D-ITN-002",
+        "status": "PASS",
+        "f_row_8_2": "F-033",
+        "matrix_93_cargo_filter": "matrix_93_d_itn_002_f033_post_itineraries_custom_persists_orders_pg"
+      },
+      {
+        "id": "B-MKT-002",
+        "status": "PASS",
+        "f_row_8_2": "F-009",
+        "matrix_93_cargo_filter": "matrix_93_b_mkt_001e_f009_get_discover_orders_limit_only_includes_draft_app_stack_ok_pg"
+      },
+      {
+        "id": "B-DSP-001",
+        "status": "PASS",
+        "f_row_8_2": "F-025",
+        "matrix_93_cargo_filter": "matrix_93_b_dsp_001b_f025_post_order_dispute_then_list_contains_dispute_app_stack_ok_pg"
+      },
+      {
+        "id": "D-COM-001",
+        "status": "PASS",
+        "f_row_8_2": "F-014",
+        "matrix_93_cargo_filter": "matrix_93_d_com_001e_f014_get_feed_hot_mode_includes_seeded_post_app_stack_ok_pg"
+      },
+      {
+        "id": "B-ORD-004",
+        "status": "PASS",
+        "f_row_8_2": "F-008",
+        "matrix_93_cargo_filter": "matrix_93_b_ord_004b_f008_patch_itinerary_then_get_detail_reflects_app_stack_ok_pg"
+      },
+      {
+        "id": "D-ITN-001",
+        "status": "PASS",
+        "f_row_8_2": "F-012",
+        "matrix_93_cargo_filter": "matrix_93_d_itn_001d_f012_post_itineraries_patch_order_itinerary_reflects_app_stack_ok_pg"
+      },
+      {
+        "id": "B-IDM-001",
+        "status": "PASS",
+        "f_row_8_2": "F-028",
+        "matrix_93_cargo_filter": "matrix_93_b_idm_001b_f028_trust_growth_ingest_duplicate_x_idempotency_key_identical_body_pg"
+      },
+      {
+        "id": "B-ORD-006",
+        "status": "PASS",
+        "f_row_8_2": "F-011",
+        "matrix_93_cargo_filter": "matrix_93_b_ord_006b_f011_set_escrow_address_get_detail_reflects_app_stack_ok_pg"
+      },
+      {
+        "id": "B-ORD-005",
+        "status": "PASS",
+        "f_row_8_2": "F-013",
+        "matrix_93_cargo_filter": "matrix_93_b_ord_005b_f013_itinerary_then_confirm_final_snapshot_app_stack_ok_pg"
+      },
+      {
+        "id": "B-MSG-002",
+        "status": "PASS",
+        "f_row_8_2": "F-026",
+        "matrix_93_cargo_filter": "matrix_93_b_msg_002_f026_post_get_order_messages_app_stack_ok_pg"
+      },
+      {
+        "id": "A-AVA-001",
+        "status": "PASS",
+        "f_row_8_2": "F-007",
+        "matrix_93_cargo_filter": "matrix_93_a_ava_001b_f007_post_profile_avatar_local_persists_avatar_url_on_get_me_app_stack_ok_pg"
+      },
+      {
+        "id": "D-COM-002",
+        "status": "PASS",
+        "f_row_8_2": "F-015",
+        "matrix_93_cargo_filter": "matrix_93_d_com_002b_f015_post_bearer_then_get_detail_unauthenticated_ok_app_stack_ok_pg"
+      },
+      {
+        "id": "B-ESC-003",
+        "status": "PASS",
+        "f_row_8_2": "F-027",
+        "matrix_93_cargo_filter": "matrix_93_b_esc_003c_f027_tourist_first_review_then_get_list_contains_comment_app_stack_ok_pg"
+      },
+      {
+        "id": "D-COM-003",
+        "status": "PASS",
+        "f_row_8_2": "F-016",
+        "matrix_93_cargo_filter": "matrix_93_d_com_003b_f016_post_like_delete_relike_app_stack_ok_pg"
+      },
+      {
+        "id": "D-COM-008",
+        "status": "PASS",
+        "f_row_8_2": "F-017",
+        "matrix_93_cargo_filter": "matrix_93_d_com_008b_f017_post_collect_delete_recollect_app_stack_ok_pg"
+      },
+      {
+        "id": "D-COM-010",
+        "status": "PASS",
+        "f_row_8_2": "F-018",
+        "matrix_93_cargo_filter": "matrix_93_d_com_010b_f018_report_then_get_post_detail_unauthenticated_ok_app_stack_ok_pg"
+      }
+    ],
+    "r002_anchors_all_pass": true
+  }
+}

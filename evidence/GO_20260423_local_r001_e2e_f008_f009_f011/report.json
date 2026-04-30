@@ -1,0 +1,46 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260423_local_r001_e2e_f008_f009_f011",
+  "title": "Local E2E: F-008/F-009/F-011 — B-domain orders (create, list, set-escrow)",
+  "executor": "cursor-agent-local",
+  "started_at": "2026-04-23T12:38:30Z",
+  "finished_at": "2026-04-23T12:39:30Z",
+  "environment": {
+    "name": "local",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "Playwright api-b-orders-chromium: 3 passed (playwright-report.json). B-ORD-001/002/006 E2E slice; ISS-007 CI e2e full matrix / staging GO report.json / on-chain escrow still open.",
+  "cases": [
+    {
+      "id": "B-ORD-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_e2e_f008_f009_f011/B-ORD-001/",
+      "blocker": false,
+      "notes": "F-008 POST /orders"
+    },
+    {
+      "id": "B-ORD-002",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_e2e_f008_f009_f011/B-ORD-002/",
+      "blocker": false,
+      "notes": "F-009 GET /orders list"
+    },
+    {
+      "id": "B-ORD-006",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_e2e_f008_f009_f011/B-ORD-006/",
+      "blocker": false,
+      "notes": "F-011 set-escrow-address read-back"
+    }
+  ],
+  "summary": {
+    "PASS": 3,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  }
+}

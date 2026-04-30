@@ -4,6 +4,8 @@
 
 > **阶次纪律（读任意 `docs/` 仍适用）：** **① 本地 → ② 测试网 → ③ 公网/生产**；**须先完成当前阶可验证目标，再进入下一阶**；**禁止跳阶**；**禁止**用 **①②** 冒充 **③**。单篇规范未必复述三阶全文，但**进度与「已闭/GO」须标明阶次**（与 **[`.cursor/rules/traveltrust-ai-collab.mdc`](.cursor/rules/traveltrust-ai-collab.mdc)**、**[AI协作话术 §0](docs/AI协作话术-减负与边界.md)**、根 **[AGENTS.md](AGENTS.md)** 同源）。从 **`docs/spec/00-文档索引.md`** 跳读任意 spec 时**仍须**遵守本阶次。
 
+> **开发期（未对外发布 · 减负）**：下文「建议走 PR」「跑全 CI」「企业审计 Phase」「必设 required check」等，在**未发布、单人主导**场景下按 **[TT — spec→handbook 全量替代清单 · §0](docs/runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md)** 解读：**日常**以直推 `main` + 按改动裁剪 **[solo-dev-rhythm §6.5](docs/solo-dev-rhythm.md)** 与本页「提 PR 前」脚本**子集**为主；**删 `docs/spec`、改 `build.yml` 默认必过集、分支保护、新增 `evidence/GO_*`、准备对外发版** 等仍须单独程序，**不因开发期而豁免**。仓库**冻结或对外发版前**再收紧 PR 与全量闸。
+
 **全仓库规划方向（默认）：** **验收顺序三阶（强制）** — **① 本地** → **② 测试网** → **③ 公网 / 生产真实链路**（**禁止跳阶**；**③** 含主网真链、**Production GO** 等 **另闸**）。入口：**[README.md](README.md)**「工程规划方向」、**[TT-9618](docs/runbook/TT-9618-onboarding-local-testnet.md)**（三阶说明 + 两阶段表）、**[96-索引](docs/spec/96-索引-全链路外生产验收分册.md)**、**[TT-9600](docs/runbook/TT-9600-96-HUB-LOCAL-VERIFICATION-PACK.md)**（**CI 非必须** 时本地 **96** 收口）、**[go-live-checklist · GO Decision](docs/go-live-checklist.md#go-decision-entry-point)**。**Hub / 分册 Version** 以 **[00 · 文档版本与最后更新](docs/spec/00-文档索引.md#文档版本与最后更新)** 为准；**Declaration** 见 **[96-索引 #95-96-execution-linkage-declaration](docs/spec/96-索引-全链路外生产验收分册.md#95-96-execution-linkage-declaration)**。**`#9618`（96-18 准入费）** 与根 **README** **`#9618-one-page-priority`** / **`#9618-cmd-cheatsheet`** 同源互指：**[96-18-未完成](docs/spec/96-18-未完成清单与多维检查.md#9618-one-page-priority)** **v1.0.118+**、**[`#9618-batches` · §1 批次台账](docs/spec/96-18-未完成清单与多维检查.md#9618-batches)**、**[§4 命令筛子](docs/spec/96-18-未完成清单与多维检查.md#9618-cmd-cheatsheet)**；**Hub** 文首见 **96-索引**（与 **README** 两锚对读）。
 
 <a id="post-freeze-ext-dev"></a>
@@ -46,6 +48,7 @@
 | **全仓库规划方向（本地 → 测试网 → 公网/生产）** | **[README.md](README.md)**「工程规划方向」（**三阶 · 禁止跳阶**）；**[TT-9618](docs/runbook/TT-9618-onboarding-local-testnet.md)**；**[96-索引](docs/spec/96-索引-全链路外生产验收分册.md)**；**[TT-9600](docs/runbook/TT-9600-96-HUB-LOCAL-VERIFICATION-PACK.md)**；**[go-live-checklist](docs/go-live-checklist.md#go-decision-entry-point)**；**Version 真值** **[00](docs/spec/00-文档索引.md#文档版本与最后更新)** |
 | **Post-Freeze · EXT / F-034+** | **[§0-EXT 受控开发模式](docs/spec/95-附录-Next-Scope-EXT.md#post-freeze-controlled-development-mode)**；工作分支 **`feature/ui-and-95-expansion`**；工程侧摘要见本节 **[Post-Freeze Controlled Development](#post-freeze-ext-dev)** |
 | **单人直推 vs PR** | 本节上文 **[单人 push 与 PR 建议](#solo-push-vs-pr)** |
+| **开发期减负（未发布 · PR/审计/发版闸）** | **[TT — spec→handbook 全量替代清单 · §0](docs/runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md)**（与上文 **开发期** blockquote、**[AI协作话术 §12](docs/AI协作话术-减负与边界.md)** 同条） |
 | **单人节奏 · 规划方向 §0** | [docs/solo-dev-rhythm.md](docs/solo-dev-rhythm.md)（与根 **[README.md](README.md)**「工程规划方向」同源） |
 | 阶段顺序、开工/发版 bar | [07-开发流程与顺序](docs/spec/07-开发流程与顺序.md)（**唯一入口**：**§零**、**§二 2.5**、**§二 2.4**、**§四 4.3**、§五）；**文档审计与机器门禁一览**见 [00-文档治理总册 §8.3](docs/spec/00-文档治理总册.md#doc-audit-gates-ssot) |
 | **handbook 工作台、ADR（Why）、`engineering` 内 Wave/阶段词** | [handbook/README.md](docs/handbook/README.md)；**团队口径**（与 **[engineering/README 段首](docs/handbook/engineering/README.md)**/**[09 · §10c 表后](docs/handbook/engineering/09-文档迁移覆盖审计报告.md#audit-cluster-exec-list)** 对读）：**engineering 仅为导读，不替代 spec**；**04 §3.4 / 93 / 14 / 代码与脚本** 为契约与机读真源；**ADR** 唯一 **`docs/adr/*.md`** — [docs/adr/README.md](docs/adr/README.md) + [07-架构决策记录ADR规范](docs/handbook/engineering/07-架构决策记录ADR规范.md)（**不**替代 **04/93/14/代码与脚本**）；**Wave/阶段消费词** [32 §0](docs/handbook/engineering/32-横切-Wave与阶段体系导读.md#x32-0-terminology)（与 **07** 对读）；**engineering 空 `NN`（60～99）非遗漏**见 [engineering/README · 号段预留](docs/handbook/engineering/README.md#eng-read-number-blocks)（[手册 00 §5](docs/handbook/00-手册总览与编制规范.md#hb-00-number-blocks)）；**读前摘要** 同行见 **[spec/00](docs/spec/00-文档索引.md)**；**`handbook/engineering*` 文档版本母表边界**（**主序 `00～50` + `engineering/README` + `engineering/adr/README`**；**`EVIDENCE-*`/`_TEMPLATE` 不逐行入表**）见 **[spec/00 · 文档版本与最后更新](docs/spec/00-文档索引.md#文档版本与最后更新)** 节前 **「handbook/engineering 版本母表边界」** 段；**`EVIDENCE-*-cluster-verified.md`**：**`bash scripts/check-handbook-engineering-content.sh`**（**`HBOOK-ENG-EVIDENCE`**）；母版 **[22 §2](docs/handbook/engineering/22-横切-簇级verified证据模板.md#vtpl-2-naming)**（与下文 **「提 PR 前」** 同条） |
@@ -107,6 +110,10 @@ cd frontend && npm run lint && npx tsc --noEmit && npm test
 ### PR 须声明 F/X/G 分区（spec/92 · 涉及 UI 动效或路由时）
 
 **下列** **任一** **情形** **，** **PR** **描述** **须** **写明** **：** **（** **1** **）** **影响** **路由** **或** **页面** **范围** **；** **（** **2** **）** **对应** **[spec/92](docs/spec/92-P0-全站UI分区控制表-金融体验灰区与动效裁决.md)** **表** **A** **之** **F** **/** **X** **/** **G** **分区** **。** **范围** **包括** **：** **修改** **路由** **；** **新增** **/** **调整** **动效** **、** **粒子** **、** **全页** **背景** **；** **修改** **资金** **相关** **UI** **。** **未** **注明** **者** **，** **review** **可** **要求** **补全** **或** **拒绝** **合入** **（** **防** **Spec** **Collision** **）** **。** **执行** **入口** **见** **[07 §五 5.3](docs/spec/07-开发流程与顺序.md)** **文首** **「** **入口** **强制** **」** **段** **。**
+
+### GitHub Actions 不可用（欠费 / 关闭）时
+
+**不以**远端 workflow **顶栏是否绿**作为**唯一**收口依据；**合并 / 推送前**在仓库根按 **[`docs/solo-dev-rhythm.md` §6.5](docs/solo-dev-rhythm.md)** 跑**默认本地集**并保存 **`exit 0`** 证据（与本节下列脚本、**路径依赖** 段「**完成口径：以本地为准**」同条）。组织 **Billing / runner** 旁证：**[`TT-LOCAL-CI-DELIVERY-GATE-001`](docs/runbook/TT-LOCAL-CI-DELIVERY-GATE-001.md)**。复开 Actions 后仍建议抽查远端。
 
 ### 路由与 `04` / `13-1` / `frontend/app` 契约（建议）
 

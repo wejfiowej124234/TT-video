@@ -1,0 +1,325 @@
+# CI anchor checks: pattern must appear in target_file (grep -nF).
+# P-C: workflows read slices from this manifest — avoid scattering docs/spec literals in YAML.
+schema_version: 1
+
+slices:
+  feature-flag-gate:
+    summary: PC-UNIT-GATES-SLICE-01 — same anchors as legacy feature-flag-gate.yml. PC-UNIT-BUILD-ANCHORS batch-2 — build.yml job feature-flag consumes this slice.
+    evidence:
+      routes_log: feature_flag_routes.log
+      counts_env: feature_flag_anchor_counts.env
+      header:
+        - "# Feature Flag Checks"
+        - "- workflow: Feature Flag Gate (manifest-driven anchors)"
+    checks:
+      - kind: route
+        pattern: "/api/v1/admin/flags"
+        target_file: docs/spec/04-后端与API.md
+      - kind: route
+        pattern: "/api/v1/admin/flags/:id/publish"
+        target_file: docs/spec/04-后端与API.md
+      - kind: route
+        pattern: "/api/v1/admin/approvals"
+        target_file: crates/api/src/routes/admin/mod.rs
+      - kind: route
+        pattern: "/api/v1/admin/approvals/:id/approve"
+        target_file: crates/api/src/routes/admin/mod.rs
+      - kind: policy
+        pattern: "Flag Before Release"
+        target_file: docs/spec/240-阶段Feature-Flag与灰度系统.md
+      - kind: policy
+        pattern: "Scoped Rollout"
+        target_file: docs/spec/240-阶段Feature-Flag与灰度系统.md
+
+  secret-key-gate:
+    summary: PC-UNIT-GATES-SLICE-02a — Secret Key Gate anchors. PC-UNIT-BUILD-ANCHORS batch-4 — build.yml job secret-key consumes this slice.
+    evidence:
+      routes_log: secret_key_routes.log
+      counts_env: secret_key_anchor_counts.env
+      header:
+        - "# Secret Key Checks"
+        - "- workflow: Secret Key Gate (manifest-driven anchors)"
+    checks:
+      - kind: route
+        pattern: "/api/v1/admin/secrets/metadata"
+        target_file: docs/spec/04-后端与API.md
+      - kind: route
+        pattern: "/api/v1/admin/approvals"
+        target_file: crates/api/src/routes/admin/mod.rs
+      - kind: route
+        pattern: "/api/v1/admin/approvals/:id/approve"
+        target_file: crates/api/src/routes/admin/mod.rs
+      - kind: policy
+        pattern: "不得将真实密钥明文存入业务 DB"
+        target_file: docs/spec/230-阶段Secret与Key管理系统.md
+      - kind: policy
+        pattern: "后台严禁展示完整 key"
+        target_file: docs/spec/230-阶段Secret与Key管理系统.md
+
+  job-queue-gate:
+    summary: PC-UNIT-GATES-SLICE-02b — Job Queue Gate anchors. PC-UNIT-BUILD-ANCHORS batch-3 — build.yml job job-queue consumes this slice.
+    evidence:
+      routes_log: job_queue_routes.log
+      counts_env: job_queue_anchor_counts.env
+      header:
+        - "# Job Queue Checks"
+        - "- workflow: Job Queue Gate (manifest-driven anchors)"
+    checks:
+      - kind: route
+        pattern: "/api/v1/admin/jobs"
+        target_file: docs/spec/04-后端与API.md
+      - kind: route
+        pattern: "/api/v1/admin/scheduler/jobs"
+        target_file: docs/spec/04-后端与API.md
+      - kind: route
+        pattern: "/api/v1/internal/process-resolution-outbox"
+        target_file: docs/spec/14-合约-API-ABI-前后端对齐.md
+      - kind: policy
+        pattern: "retry"
+        target_file: docs/spec/250-阶段Job-Queue-异步任务系统.md
+      - kind: policy
+        pattern: "dead letter"
+        target_file: docs/spec/250-阶段Job-Queue-异步任务系统.md
+
+  config-center-gate:
+    summary: PC-UNIT-GATES-SLICE-03 — Config Center Gate (route-only; legacy 5× check_anchor). PC-UNIT-BUILD-ANCHORS batch-1 — build.yml job config-center consumes this slice.
+    evidence:
+      routes_log: config_center_routes.log
+      counts_env: config_center_anchor_counts.env
+      header:
+        - "# Config Center Checks"
+        - "- workflow: Config Center Gate (manifest-driven anchors)"
+    checks:
+      - kind: route
+        pattern: "/api/v1/admin/flags"
+        target_file: docs/spec/04-后端与API.md
+      - kind: route
+        pattern: "/api/v1/admin/flags/:id/publish"
+        target_file: docs/spec/04-后端与API.md
+      - kind: route
+        pattern: "/api/v1/admin/secrets/metadata"
+        target_file: docs/spec/04-后端与API.md
+      - kind: route
+        pattern: "/api/v1/admin/approvals"
+        target_file: crates/api/src/routes/admin/mod.rs
+      - kind: route
+        pattern: "/api/v1/admin/approvals/:id/approve"
+        target_file: crates/api/src/routes/admin/mod.rs
+
+  finance-reconcile-gate:
+    failure_model: anchors_plus_rates
+    summary: PC-UNIT-GATES-SLICE-13a — Finance Reconcile Gate (routes + roles; one regex)
+    evidence:
+      routes_log: finance_reconcile_routes.log
+      counts_env: finance_reconcile_anchor_counts.env
+      header:
+        - "# Finance Reconcile Checks"
+        - "- workflow: Finance Reconcile Gate (manifest-driven anchors)"
+    checks:
+      - kind: route
+        pattern: "/api/v1/admin/finance/summary"
+        target_file: crates/api/src/routes/admin/mod.rs
+      - kind: route
+        pattern: "/api/v1/admin/finance/summary/export"
+        target_file: crates/api/src/routes/admin/mod.rs
+      - kind: route
+        pattern: "/api/v1/admin/indexer/reconcile-report/:id"
+        target_file: crates/api/src/routes/admin/mod.rs
+      - kind: route
+        pattern: "/api/v1/internal/indexer-reconcile"
+        target_file: crates/api/src/routes/internal/mod.rs
+      - kind: route
+        pattern: "/api/v1/internal/indexer-replay"
+        target_file: crates/api/src/routes/internal/mod.rs
+      - kind: route
+        pattern: "/api/v1/internal/indexer-status"
+        target_file: crates/api/src/routes/internal/mod.rs
+      - kind: role
+        pattern: "FINANCE_VIEWER"
+        target_file: docs/spec/70-管理员系统开发文档.md
+      - kind: role
+        pattern: "FINANCE_OPERATOR"
+        target_file: docs/spec/70-管理员系统开发文档.md
+      - kind: role
+        pattern: "RECON_MANAGER"
+        target_file: docs/spec/70-管理员系统开发文档.md
+      - kind: role
+        pattern: "FINANCE_AUDITOR"
+        target_file: docs/spec/70-管理员系统开发文档.md
+      - kind: role
+        pattern: "冲突优先规则|与 `70` 角色体系映射"
+        match: regex
+        target_file: docs/spec/200-阶段财务对账结算与报表.md
+
+  community-governance-gate:
+    community_branching: true
+    failure_model: anchors_only
+    summary: PC-UNIT-GATES-SLICE-13b — Community Governance Gate (core + placeholder vs implemented)
+    evidence:
+      routes_log: community_governance_routes.log
+      counts_env: community_governance_anchor_counts.env
+      meta_env: community_governance_anchor_meta.env
+      header:
+        - "# Community Governance Route Checks"
+        - "- workflow: Community Governance Gate (manifest-driven anchors)"
+    branch_selector:
+      threshold: 5
+      regex: "/api/v1/community/reports|/api/v1/admin/community/reports|/api/v1/admin/community/moderation/:id|/api/v1/admin/community/appeals/:id/review|/api/v1/admin/community/ranking/snapshots"
+      search_dir: crates/api/src/routes
+      include_glob: "*.rs"
+    core_checks:
+      - kind: route
+        pattern: "/api/v1/community/feedback"
+        target_file: crates/api/src/routes/community/router.rs
+      - kind: route
+        pattern: "/api/v1/internal/community/feedback/:id"
+        target_file: crates/api/src/routes/internal/mod.rs
+      - kind: route
+        pattern: "/api/v1/community/posts/:id/comments"
+        target_file: crates/api/src/routes/community/router.rs
+      - kind: route
+        pattern: "/api/v1/admin/community/comments/:id"
+        target_file: crates/api/src/routes/admin/mod.rs
+      - kind: route
+        pattern: "/api/v1/admin/community/risk-signals"
+        target_file: crates/api/src/routes/admin/mod.rs
+      - kind: route
+        pattern: "/api/v1/admin/community/policy-change-logs"
+        target_file: crates/api/src/routes/admin/mod.rs
+      - kind: route
+        pattern: "/api/v1/admin/community/abuse-policy"
+        target_file: crates/api/src/routes/admin/mod.rs
+    placeholder_checks:
+      - kind: route
+        pattern: "/api/v1/community/reports"
+        target_file: docs/spec/04-后端与API.md
+      - kind: route
+        pattern: "/api/v1/admin/community/reports"
+        target_file: docs/spec/04-后端与API.md
+      - kind: route
+        pattern: "/api/v1/admin/community/moderation/:id"
+        target_file: docs/spec/04-后端与API.md
+      - kind: route
+        pattern: "/api/v1/admin/community/appeals/:id/review"
+        target_file: docs/spec/04-后端与API.md
+      - kind: route
+        pattern: "/api/v1/admin/community/ranking/snapshots"
+        target_file: docs/spec/04-后端与API.md
+      - kind: route
+        pattern: "### 5.2 待补路由清单"
+        target_file: docs/spec/160-阶段开发内容与社区系统.md
+      - kind: route
+        pattern: "Target/Implemented 生效边界"
+        target_file: docs/spec/160-阶段开发内容与社区系统.md
+    implemented_checks:
+      - kind: route
+        pattern: "/api/v1/community/reports"
+        target_file: crates/api/src/routes/community/router.rs
+      - kind: route
+        pattern: "/api/v1/admin/community/reports"
+        target_file: crates/api/src/routes/admin/mod.rs
+      - kind: route
+        pattern: "/api/v1/admin/community/moderation/:id"
+        target_file: crates/api/src/routes/admin/mod.rs
+      - kind: route
+        pattern: "/api/v1/admin/community/appeals/:id/review"
+        target_file: crates/api/src/routes/admin/mod.rs
+      - kind: route
+        pattern: "/api/v1/admin/community/ranking/snapshots"
+        target_file: crates/api/src/routes/admin/mod.rs
+
+  internal-drill-gate:
+    failure_model: anchors_only
+    summary: PC-UNIT-GATES-SLICE-14 — Internal Drill Gate policy anchors (04 + 140)
+    evidence:
+      routes_log: internal_drill_spec_policy_anchors.log
+      counts_env: internal_drill_anchor_counts.env
+      header:
+        - "# Internal Drill — Policy Anchors (manifest)"
+        - "- workflow: Internal Drill Gate (manifest-driven spec anchors)"
+    checks:
+      - kind: policy
+        pattern: "禁止公网暴露"
+        target_file: docs/spec/04-后端与API.md
+      - kind: policy
+        pattern: "内外网隔离策略"
+        target_file: docs/spec/140-阶段开发云部署与交付架构.md
+
+  ai-governance-gate:
+    community_branching: true
+    allow_empty_core_checks: true
+    failure_model: anchors_only
+    summary: PC-UNIT-GATES-SLICE-04 — AI Governance Gate (admin route branch + 170 schema guard)
+    evidence:
+      routes_log: ai_governance_manifest_anchors.log
+      counts_env: ai_governance_manifest_anchor_counts.env
+      meta_env: ai_governance_manifest_anchor_meta.env
+      header:
+        - "# AI Governance — manifest anchors"
+        - "- workflow: AI Governance Gate (branch + always doc checks)"
+    branch_selector:
+      threshold: 3
+      regex: "/api/v1/admin/flags|/api/v1/admin/secrets/metadata|/api/v1/admin/internal-tools/audits"
+      search_dir: crates/api/src/routes
+      include_glob: "*.rs"
+    core_checks: []
+    placeholder_checks:
+      - kind: route
+        pattern: "/api/v1/admin/flags"
+        target_file: docs/spec/04-后端与API.md
+      - kind: route
+        pattern: "/api/v1/admin/secrets/metadata"
+        target_file: docs/spec/04-后端与API.md
+      - kind: route
+        pattern: "/api/v1/admin/internal-tools/audits"
+        target_file: docs/spec/04-后端与API.md
+      - kind: policy
+        pattern: "Target 升级为 Implemented 的触发条件"
+        target_file: docs/spec/170-阶段开发AI行程系统运行管理治理层.md
+    implemented_checks:
+      - kind: route
+        pattern: "/api/v1/admin/flags"
+        target_file: crates/api/src/routes/admin/mod.rs
+      - kind: route
+        pattern: "/api/v1/admin/secrets/metadata"
+        target_file: crates/api/src/routes/admin/mod.rs
+      - kind: route
+        pattern: "/api/v1/admin/internal-tools/audits"
+        target_file: crates/api/src/routes/admin/mod.rs
+    always_checks:
+      - kind: policy
+        pattern: "JSON Schema|schema"
+        match: regex
+        target_file: docs/spec/170-阶段开发AI行程系统运行管理治理层.md
+
+  check-08-evidence-pointer-gate:
+    failure_model: anchors_only
+    summary: PC-UNIT-GATES-SLICE-16 — 08-3 evidence_pointer 列/引用最小锚（原 check-08-evidence-pointer.sh）
+    evidence:
+      routes_log: check_08_evidence_pointer_anchors.log
+      counts_env: check_08_evidence_pointer_anchor_counts.env
+      header:
+        - "# Check 08-3 evidence_pointer (manifest)"
+        - "- workflow: check-08-evidence-pointer (slice-driven)"
+    checks:
+      - kind: policy
+        pattern: "evidence_pointer|evidence pointer"
+        match: regex
+        target_file: docs/spec/08-3-参数与门禁表.md
+
+  check-08-consistency-gate:
+    failure_model: anchors_only
+    summary: PC-UNIT-08-WFS — 08-3/08-4 存在性 + 08-4 CI 版本行锚（与 check-08-consistency.sh git 规则互补）
+    evidence:
+      routes_log: check_08_consistency_anchors.log
+      counts_env: check_08_consistency_anchor_counts.env
+      header:
+        - "# Check 08-3 / 08-4 consistency (manifest anchors)"
+        - "- workflow: check-08-consistency (slice-driven)"
+    checks:
+      - kind: policy
+        pattern: "参数与门禁表（SSOT — Single Source of Truth）"
+        target_file: docs/spec/08-3-参数与门禁表.md
+      - kind: policy
+        pattern: "文档版本（CI 校验用）"
+        target_file: docs/spec/08-4-对外口径包.md

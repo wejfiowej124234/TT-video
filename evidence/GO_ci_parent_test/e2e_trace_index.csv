@@ -1,0 +1,7 @@
+suite,artifact,status
+playwright,frontend/playwright-report,passed
+r002_iss007_prereport,evidence/GO_ci_parent_test/r002_iss007_prereport/report.json,PARTIAL_GO
+r002_anchor,D-IDX-001,NOT_RUN
+r002_anchor,B-DSP-003,NOT_RUN
+r002_anchor,D-COM-011,NOT_RUN
+r002_anchor,D-ADM-003,NOT_RUN

@@ -1,0 +1,9 @@
+{
+  "kind": "traveltrust.check_spec93_routes_doc_pointer.v1",
+  "summary": "Default 93 matrix path for scripts/check-spec93-routes-vs-app.py; same segments as default joinpath (§5 vs app).",
+  "spec_93_markdown_segments": [
+    "docs",
+    "spec",
+    "93-全站功能验证矩阵-域别回归清单.md"
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "schema_version": "1",
+  "kind": "traveltrust.96_booklets_registry_gate.v1",
+  "generated_at": "2026-04-24T23:51:19Z",
+  "repo_root": "D:\\TravelTrust",
+  "all_pass": true,
+  "booklets": [
+    {
+      "id": "96-Hub",
+      "rel_path": "docs/spec/96-索引-全链路外生产验收分册.md",
+      "status": "PASS",
+      "bytes": 21117,
+      "detail": "ok"
+    },
+    {
+      "id": "96-01",
+      "rel_path": "docs/spec/96-01-总则与95边界和执行顺序.md",
+      "status": "PASS",
+      "bytes": 9448,
+      "detail": "ok"
+    },
+    {
+      "id": "96-02",
+      "rel_path": "docs/spec/96-02-法务合规与对外披露.md",
+      "status": "PASS",
+      "bytes": 3379,
+      "detail": "ok"
+    },
+    {
+      "id": "96-03",
+      "rel_path": "docs/spec/96-03-安全密钥与供应链.md",
+      "status": "PASS",
+      "bytes": 3754,
+      "detail": "ok"
+    },
+    {
+      "id": "96-04",
+      "rel_path": "docs/spec/96-04-合规风控与跨境数据.md",
+      "status": "PASS",
+      "bytes": 2764,
+      "detail": "ok"
+    },
+    {
+      "id": "96-05",
+      "rel_path": "docs/spec/96-05-运维SRE与可靠性.md",
+      "status": "PASS",
+      "bytes": 3157,
+      "detail": "ok"
+    },
+    {
+      "id": "96-06",
+      "rel_path": "docs/spec/96-06-数据隐私备份与迁移.md",
+      "status": "PASS",
+      "bytes": 2646,
+      "detail": "ok"
+    },
+    {
+      "id": "96-07",
+      "rel_path": "docs/spec/96-07-链上资金与合约终验.md",
+      "status": "PASS",
+      "bytes": 3137,
+      "detail": "ok"
+    },
+    {
+      "id": "96-08",
+      "rel_path": "docs/spec/96-08-索引器对账与财务.md",
+      "status": "PASS",
+      "bytes": 2933,
+      "detail": "ok"
+    },
+    {
+      "id": "96-09",
+      "rel_path": "docs/spec/96-09-消息通知与异步任务.md",
+      "status": "PASS",
+      "bytes": 2663,
+      "detail": "ok"
+    },
+    {
+      "id": "96-10",
+      "rel_path": "docs/spec/96-10-配置灰度与特性开关.md",
+      "status": "PASS",
+      "bytes": 2271,
+      "detail": "ok"
+    },
+    {
+      "id": "96-11",
+      "rel_path": "docs/spec/96-11-发布签字与回归门禁.md",
+      "status": "PASS",
+      "bytes": 3735,
+      "detail": "ok"
+    },
+    {
+      "id": "96-12",
+      "rel_path": "docs/spec/96-12-文档真值与卫星债.md",
+      "status": "PASS",
+      "bytes": 2995,
+      "detail": "ok"
+    },
+    {
+      "id": "96-13",
+      "rel_path": "docs/spec/96-13-UI-UX-i18n-a11y-性能走查.md",
+      "status": "PASS",
+      "bytes": 4629,
+      "detail": "ok"
+    },
+    {
+      "id": "96-14",
+      "rel_path": "docs/spec/96-14-专项Wallet社区治理与扩展域.md",
+      "status": "PASS",
+      "bytes": 3133,
+      "detail": "ok"
+    },
+    {
+      "id": "96-15",
+      "rel_path": "docs/spec/96-15-深度多维度检查与审计体系.md",
+      "status": "PASS",
+      "bytes": 13863,
+      "detail": "ok"
+    },
+    {
+      "id": "96-16",
+      "rel_path": "docs/spec/96-16-全页面UI-UX优化方案总册.md",
+      "status": "PASS",
+      "bytes": 16259,
+      "detail": "ok"
+    },
+    {
+      "id": "96-UI",
+      "rel_path": "docs/spec/96-UI-UX-生产级验收与全链路外必查项.md",
+      "status": "PASS",
+      "bytes": 3348,
+      "detail": "ok"
+    }
+  ]
+}

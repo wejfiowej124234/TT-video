@@ -1,0 +1,46 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260423_local_r001_e2e_f018_f019_f020",
+  "title": "Local E2E: F-018/F-019/F-020 — reports, me lists, market bookmarks (7 Playwright tests)",
+  "executor": "cursor-agent-local",
+  "started_at": "2026-04-23T12:34:00Z",
+  "finished_at": "2026-04-23T12:35:30Z",
+  "environment": {
+    "name": "local",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "Playwright api-d-com-018-020-chromium: 7 passed (playwright-report.json). R-001 cases aggregate to D-COM-010 / D-COM-009 / B-MKT-004 (ISS-007 CI/staging full matrix still open).",
+  "cases": [
+    {
+      "id": "D-COM-010",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_e2e_f018_f019_f020/D-COM-010/",
+      "blocker": false,
+      "notes": "F-018: 2 E2E tests (report + anonymous GET post detail)"
+    },
+    {
+      "id": "D-COM-009",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_e2e_f018_f019_f020/D-COM-009/",
+      "blocker": false,
+      "notes": "F-019: 2 E2E tests (me/posts + likes/collects cycles)"
+    },
+    {
+      "id": "B-MKT-004",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_e2e_f018_f019_f020/B-MKT-004/",
+      "blocker": false,
+      "notes": "F-020: 3 E2E tests (bookmark CRUD + invalid listing preserves lists)"
+    }
+  ],
+  "summary": {
+    "PASS": 3,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  }
+}

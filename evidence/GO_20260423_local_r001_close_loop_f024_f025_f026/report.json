@@ -1,0 +1,46 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260423_local_r001_close_loop_f024_f025_f026",
+  "title": "close-loop F-024 F-025 F-026: stake / dispute / order messages",
+  "executor": "local-cursor-agent",
+  "started_at": "2026-04-23T13:00:21Z",
+  "finished_at": "2026-04-23T13:00:33Z",
+  "environment": {
+    "name": "local",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "mixed"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "3/3 Playwright PASS; 3x matrix_93 router::app API\u00b7IT PASS (logs). Chain-off mock-pay slice; not CI e2e run_id.",
+  "cases": [
+    {
+      "id": "B-GDE-003",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_close_loop_f024_f025_f026/playwright-report.json",
+      "blocker": false,
+      "notes": "F-024 E2E stake+list. API\u00b7IT: api_it_f024.log -> matrix_93_b_gde_003b_f024_stake_post_persists_guide_row_active_app_stack_ok_pg (guides_disputes_db_api_tests)."
+    },
+    {
+      "id": "B-DSP-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_close_loop_f024_f025_f026/playwright-report.json",
+      "blocker": false,
+      "notes": "F-025 E2E dispute list/detail. API\u00b7IT: api_it_f025.log -> matrix_93_b_dsp_001b_f025_post_order_dispute_then_list_contains_dispute_app_stack_ok_pg (orders_accept_mock_pay_itinerary_confirm_db_api_tests)."
+    },
+    {
+      "id": "B-MSG-002",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_close_loop_f024_f025_f026/playwright-report.json",
+      "blocker": false,
+      "notes": "F-026 E2E POST/GET order messages. API\u00b7IT: api_it_f026.log -> matrix_93_b_msg_002_f026_post_get_order_messages_app_stack_ok_pg (messages_db_api_tests)."
+    }
+  ],
+  "summary": {
+    "PASS": 3,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  }
+}

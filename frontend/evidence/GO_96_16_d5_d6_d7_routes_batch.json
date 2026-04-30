@@ -1,0 +1,28 @@
+{
+  "batch": "GO_96_16_d5_d6_d7_routes_batch",
+  "docs_spec_touched": false,
+  "scope": "/governance (root page i18n), /traveltrust (motion-reduce + 44px flow chips + FAQ details), /market (MarketHeroFrame motion-reduce on CTA/toolbar links), /community (CommunityRouteShell motion-reduce + unread badge i18n)",
+  "d5_d6_d7_actions": [
+    "i18n: governance/page.tsx — removed GOV_* zh/en copy objects; chain/country/treasury blocks use t(governance_*) keys; locales en/zh extended",
+    "i18n: community_unread_badge_overflow (99+) for desktop + mobile shell badges",
+    "motion-reduce: traveltrust stepCard/ctaBtn/hero shell/flow chips/FAQ details; market hero CTA + toolbar custom link; community shell tabs + publish FAB",
+    "44px: traveltrust flow step chips min-h-[44px] inline-flex items-center",
+    "bundle/LCP: no new heavy imports; governance page string data inlined in locale files only (parity with prior copy)"
+  ],
+  "commands": {
+    "eslint": { "cmd": "npm run lint", "exit": 0 },
+    "i18n_ci": { "cmd": "npm run test:i18n:ci", "exit": 0 },
+    "vitest": {
+      "cmd": "npm test -- --run app/governance/proposals/governanceProposalsPage.contract.test.ts",
+      "exit": 0,
+      "tests_passed": 3
+    },
+    "npm_run_build": { "cmd": "npm run build", "exit": 0, "note": "tail in agent log" }
+  },
+  "playwright_e2e": {
+    "status": "NOT_RUN",
+    "trace": "93",
+    "detail": "Per user: :8080-dependent Playwright not blocking this static/build batch."
+  },
+  "claim_96_complete": false
+}

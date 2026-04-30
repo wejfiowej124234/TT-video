@@ -1,0 +1,19 @@
+{
+  "order_id": "b6868da3-7207-4340-bbe8-acb3542b4640",
+  "response": {
+    "status": 200,
+    "body": {
+      "status": "ok",
+      "message": {
+        "id": "57bce606-2aa7-41ab-a0f3-0101840d4886",
+        "order_id": "b6868da3-7207-4340-bbe8-acb3542b4640",
+        "sender_id": "bd55441c-caed-4949-811a-9e4d4035b110",
+        "content": "deep-e2e-msg-1776820666206",
+        "created_at": "2026-04-22T01:17:46.212431200+00:00",
+        "sender_name": "测试游客"
+      },
+      "tourist_id": "bd55441c-caed-4949-811a-9e4d4035b110",
+      "traveler_id": "bd55441c-caed-4949-811a-9e4d4035b110"
+    }
+  }
+}

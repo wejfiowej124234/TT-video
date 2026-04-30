@@ -1,0 +1,51 @@
+name: Auth audit alerts (staging)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/15 * * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: auth-audit-alerts-staging-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  auth-audit-alerts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Ensure psql client
+        run: |
+          set -euo pipefail
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq postgresql-client
+          fi
+          psql --version
+
+      - name: Run auth audit alerts check (optional secrets)
+        env:
+          DATABASE_URL: ${{ secrets.STAGING_AUTH_AUDIT_ALERTS_DATABASE_URL }}
+          AUTH_AUDIT_ALERT_WEBHOOK_URL: ${{ secrets.STAGING_AUTH_AUDIT_ALERT_WEBHOOK_URL }}
+          AUTH_AUDIT_ALERT_WINDOW_MINUTES: ${{ vars.STAGING_AUTH_AUDIT_ALERT_WINDOW_MINUTES }}
+          AUTH_AUDIT_ALERT_MAX_401_INVALIDATED: ${{ vars.STAGING_AUTH_AUDIT_ALERT_MAX_401_INVALIDATED }}
+          AUTH_AUDIT_ALERT_MAX_RESET_REQUESTED: ${{ vars.STAGING_AUTH_AUDIT_ALERT_MAX_RESET_REQUESTED }}
+          AUTH_AUDIT_ALERT_MAX_FORGOT_BY_IP: ${{ vars.STAGING_AUTH_AUDIT_ALERT_MAX_FORGOT_BY_IP }}
+          AUTH_AUDIT_ALERT_WEBHOOK_TIMEOUT_SECS: ${{ vars.STAGING_AUTH_AUDIT_ALERT_WEBHOOK_TIMEOUT_SECS }}
+        run: |
+          set -euo pipefail
+          if [ -z "${DATABASE_URL}" ]; then
+            echo "::notice title=auth-audit-alerts::skipped — secret STAGING_AUTH_AUDIT_ALERTS_DATABASE_URL unset."
+            exit 0
+          fi
+          echo "::group::auth_audit_alerts config"
+          echo "AUTH_AUDIT_ALERT_WINDOW_MINUTES=${AUTH_AUDIT_ALERT_WINDOW_MINUTES:-15}"
+          echo "AUTH_AUDIT_ALERT_MAX_401_INVALIDATED=${AUTH_AUDIT_ALERT_MAX_401_INVALIDATED:-50}"
+          echo "AUTH_AUDIT_ALERT_MAX_RESET_REQUESTED=${AUTH_AUDIT_ALERT_MAX_RESET_REQUESTED:-40}"
+          echo "AUTH_AUDIT_ALERT_MAX_FORGOT_BY_IP=${AUTH_AUDIT_ALERT_MAX_FORGOT_BY_IP:-12}"
+          echo "::endgroup::"
+          bash scripts/auth-audit-alerts.sh

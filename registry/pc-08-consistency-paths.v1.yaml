@@ -1,0 +1,7 @@
+# P-C / PC-UNIT-08-WFS：check-08-consistency.sh 机读路径（法定正文仍在 docs/spec 08-3/08-4）
+schema_version: 1
+summary: 08-3/08-4 文件路径与 git diff 触发子串（须与 ci-anchor-manifest slices.check-08-consistency-gate 同批维护）
+spec_08_3: docs/spec/08-3-参数与门禁表.md
+spec_08_4: docs/spec/08-4-对外口径包.md
+# 当 BASE..HEAD 任一变更路径包含该子串时，要求 08-4「文档版本（CI 校验用）」行相对 BASE 有变化
+git_name_trigger_substring: docs/spec/08-3

@@ -1,0 +1,16 @@
+"use client";
+
+import { useTranslation } from "@/components/LocaleProvider";
+
+export default function CommunityMeLikesRedirectLoading() {
+  const { t } = useTranslation();
+  return (
+    <div
+      className="fixed left-0 top-0 right-0 z-[400] h-0.5 bg-travel-500 animate-pulse motion-reduce:animate-none"
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+      aria-label={t("common_loading")}
+    />
+  );
+}

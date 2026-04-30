@@ -1,0 +1,62 @@
+{
+  "schema_version": "1",
+  "description": "Seed index: 95 §8.2 F-row hints ↔ 96 evidence / Tier steps (non-SSOT; maintain with PRs).",
+  "mappings": [
+    {
+      "f_row": "F-008",
+      "hint": "Orders list / detail API vs escrow semantics",
+      "primary_96_booklets": ["96-07", "96-08"],
+      "tier_step_ids": ["TIER-C-6"],
+      "notes": "Chain + indexer reconcile; see 04 §3.4 orders."
+    },
+    {
+      "f_row": "F-010",
+      "hint": "Escrow / mock-pay / chain-off tests",
+      "primary_96_booklets": ["96-07"],
+      "tier_step_ids": ["TIER-C-6"],
+      "notes": "Funds path UI F-zone; 96-13 D1/D4."
+    },
+    {
+      "f_row": "F-021",
+      "hint": "Market subsite catalog",
+      "primary_96_booklets": ["96-14", "96-16"],
+      "tier_step_ids": ["TIER-C-6"],
+      "notes": "29 / market UX; 96-16 domain 2.2."
+    },
+    {
+      "f_row": "F-029",
+      "hint": "Internal indexer admin / reconcile",
+      "primary_96_booklets": ["96-08"],
+      "tier_step_ids": ["TIER-C-6", "TIER-C-7"],
+      "notes": "110 + reconcile evidence paths."
+    },
+    {
+      "f_row": "F-014",
+      "hint": "Community feed / posts",
+      "primary_96_booklets": ["96-14", "96-13"],
+      "tier_step_ids": ["TIER-C-6"],
+      "notes": "31 / 160; i18n D5."
+    },
+    {
+      "f_row": "F-001",
+      "hint": "Auth register / login baseline",
+      "primary_96_booklets": ["96-03", "96-13"],
+      "tier_step_ids": ["TIER-B-4"],
+      "notes": "Security + a11y main path."
+    },
+    {
+      "f_row": "F-033",
+      "hint": "Itinerary / drafts / PG",
+      "primary_96_booklets": ["96-16", "96-12"],
+      "tier_step_ids": ["TIER-C-6", "TIER-C-7"],
+      "notes": "Full-route D2/D4; snapshots vs 04."
+    },
+    {
+      "f_row": "F-032",
+      "hint": "Trust growth / observability",
+      "primary_96_booklets": ["96-05", "96-13"],
+      "tier_step_ids": ["TIER-A-2", "TIER-C-6"],
+      "notes": "SRE + performance D7."
+    }
+  ]
+}

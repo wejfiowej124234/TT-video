@@ -1,0 +1,348 @@
+{
+  "schema": "traveltrust.gate_audit.machine.v1",
+  "description": "Gate Audit：BLOCK=合并阻断；HARDEN=韧性/对齐措施。计数 42+43=85 供机器基线校验。",
+  "block_list": [
+    {
+      "id": "B-SSOT-01",
+      "rule": "production_gate.yaml 缺失或 schema_version≠1 时门禁失败"
+    },
+    {
+      "id": "B-SSOT-02",
+      "rule": "verify_production_gate_config.py 报错的任一路径键在仓库中不存在"
+    },
+    {
+      "id": "B-SSOT-03",
+      "rule": "gate_id 非 traveltrust.production_gate.v1"
+    },
+    {
+      "id": "B-SSOT-04",
+      "rule": "report_final_truth_field 非 is_final_truth"
+    },
+    {
+      "id": "B-SSOT-05",
+      "rule": "release_final_truth_pointer 指向缺失或非文件"
+    },
+    {
+      "id": "B-SSOT-06",
+      "rule": "gate_audit.machine.json 缺失或 block/harden 计数不等于 42/43"
+    },
+    {
+      "id": "B-BAT-01",
+      "rule": "B-421：runbook / go-live 六径 doclink 任一路径失败"
+    },
+    {
+      "id": "B-BAT-02",
+      "rule": "legacy_path_ssot_gates 规则包缺失或校验失败"
+    },
+    {
+      "id": "B-BAT-03",
+      "rule": "broadcast batch 1 断言或 blockers 失败"
+    },
+    {
+      "id": "B-BAT-04",
+      "rule": "broadcast batch 2 断言或 blockers 失败"
+    },
+    {
+      "id": "B-BAT-05",
+      "rule": "broadcast batch 3 断言或 blockers 失败"
+    },
+    {
+      "id": "B-BAT-06",
+      "rule": "region_vault 相关自测或 merkle/openssl 烟测失败"
+    },
+    {
+      "id": "B-BAT-07",
+      "rule": "broadcast 证据 bundle 或 registry 校验失败"
+    },
+    {
+      "id": "B-BAT-08",
+      "rule": "batch JSON assert 与 CI 配置不同步"
+    },
+    {
+      "id": "B-API-01",
+      "rule": "cargo test -p traveltrust-api 任一例失败（CI 须带 DATABASE_URL）"
+    },
+    {
+      "id": "B-API-02",
+      "rule": "API 包名与 production_gate.yaml 中 api_cargo_package 不一致"
+    },
+    {
+      "id": "B-API-03",
+      "rule": "本地 gate：DATABASE_URL 未配置且 .env 无可用连接串"
+    },
+    {
+      "id": "B-API-04",
+      "rule": "本地 gate：Postgres TCP 探测失败且 docker compose 拉起后仍失败"
+    },
+    {
+      "id": "B-API-05",
+      "rule": "CI E2E：API 在 :8080 未在超时内 healthy"
+    },
+    {
+      "id": "B-API-06",
+      "rule": "traveltrust-api 构建失败或二进制无法启动"
+    },
+    {
+      "id": "B-9615-01",
+      "rule": "96-15：无有效 waiver 时 booklets registry 校验失败"
+    },
+    {
+      "id": "B-9615-02",
+      "rule": "96-15：orchestration Tier A semi-auto 未满足"
+    },
+    {
+      "id": "B-9615-03",
+      "rule": "96-15：Tier A 全 PASS 未满足"
+    },
+    {
+      "id": "B-9615-04",
+      "rule": "96-15：Tier B/C 全 PASS 未满足"
+    },
+    {
+      "id": "B-9615-05",
+      "rule": "96-15：evidence 目录不可写或 orchestration 崩溃"
+    },
+    {
+      "id": "B-RPT-01",
+      "rule": "变更的 report.json 为 PARTIAL_GO 但缺少 partial_go_expires_utc"
+    },
+    {
+      "id": "B-RPT-02",
+      "rule": "partial_go_expires_utc 非未来时间（相对 workflow 运行时）"
+    },
+    {
+      "id": "B-RPT-03",
+      "rule": "同次变更多个 report.json 出现多个 is_final_truth=true"
+    },
+    {
+      "id": "B-RPT-04",
+      "rule": "同次变更多个 report.json 出现零个 is_final_truth=true（若适用 single-truth）"
+    },
+    {
+      "id": "B-RPT-05",
+      "rule": "关键路径变更但未包含 is_final_truth=true 的 report（final truth presence）"
+    },
+    {
+      "id": "B-RPT-06",
+      "rule": "final_truth_report_path.txt 指向的报告未通过 validate-regression-report（本地 relax 模式另口径）"
+    },
+    {
+      "id": "B-RPT-07",
+      "rule": "validate-regression-report --require-go 失败（release_gate 非 GO）"
+    },
+    {
+      "id": "B-RPT-08",
+      "rule": "validate-regression-report --fail-on-case-not-run 有未运行用例"
+    },
+    {
+      "id": "B-RPT-09",
+      "rule": "check_report_production_readiness 对最终真值报告失败"
+    },
+    {
+      "id": "B-E2E-01",
+      "rule": "Playwright chromium 项目失败（CI 或本地）"
+    },
+    {
+      "id": "B-E2E-02",
+      "rule": "本地 core smoke：未排除 @e2e-sepolia-deferred 却仍宣称 local smoke（策略违背）"
+    },
+    {
+      "id": "B-E2E-03",
+      "rule": "STRICT_SESSION_GATE=1 下仍依赖 X-User-Id 捷径导致用例失败"
+    },
+    {
+      "id": "B-E2E-04",
+      "rule": "R-002 ISS-007 prereport 未生成 report.json"
+    },
+    {
+      "id": "B-E2E-05",
+      "rule": "R-002 validate --fail-on-no-go 对 prereport 失败"
+    },
+    {
+      "id": "B-E2E-06",
+      "rule": "R-002 validate --fail-on-case-not-run 对 prereport 失败"
+    },
+    {
+      "id": "B-E2E-07",
+      "rule": "CI：frontend npm ci / build / playwright install 失败"
+    },
+    {
+      "id": "B-E2E-08",
+      "rule": "E2E 与 API 端口/rewrite 不一致导致 /auth 落到 HTML 非 API"
+    }
+  ],
+  "harden_list": [
+    {
+      "id": "H-CI-01",
+      "measure": "production_gate.yaml 为 SSOT；workflow 头注释指向该文件"
+    },
+    {
+      "id": "H-CI-02",
+      "measure": "verify-gate-config job 先于其它门禁 job（逻辑顺序由 needs 汇总保证）"
+    },
+    {
+      "id": "H-CI-03",
+      "measure": "production-gate-summary 汇总 needs 全量子 job，便于 branch protection 单勾"
+    },
+    {
+      "id": "H-CI-04",
+      "measure": "concurrency 取消 in-progress 非 main 引用"
+    },
+    {
+      "id": "H-CI-05",
+      "measure": "96-15 waiver 由 resolve_96_15_waiver.py 统一解析"
+    },
+    {
+      "id": "H-CI-06",
+      "measure": "artifacts：MANIFEST、e2e-r002、96-15 保留天数策略一致"
+    },
+    {
+      "id": "H-CI-07",
+      "measure": "api_cargo_package 与 workflow cargo 子包一致"
+    },
+    {
+      "id": "H-CI-08",
+      "measure": "regression-report-validate 与 production gate 报告策略同源脚本"
+    },
+    {
+      "id": "H-LCL-01",
+      "measure": "run-production-gate-local.sh 使用 PYTHON_BIN 探测并 export"
+    },
+    {
+      "id": "H-LCL-02",
+      "measure": "本地 smoke 导出 CHAIN_RPC_URL/CHAIN_WS_URL 为空隔离 Sepolia"
+    },
+    {
+      "id": "H-LCL-03",
+      "measure": "TRAVELTRUST_GATE_ENSURE_FRESH_API=1 强制 API 继承 DATABASE_URL"
+    },
+    {
+      "id": "H-LCL-04",
+      "measure": "PLAYWRIGHT_REUSE_API_SERVER=0 避免复用陈旧 8080 进程"
+    },
+    {
+      "id": "H-LCL-05",
+      "measure": "STRICT_SESSION_GATE=1 与 Cookie 会话口径一致"
+    },
+    {
+      "id": "H-LCL-06",
+      "measure": "PLAYWRIGHT_RELAX_META_CHAIN_GUARD=1 关闭重 RPC /meta 探针"
+    },
+    {
+      "id": "H-LCL-07",
+      "measure": "grep-invert @e2e-sepolia-deferred 与链上 deferred 脚本分离"
+    },
+    {
+      "id": "H-LCL-08",
+      "measure": "pg_tcp_check.py / read_dotenv_value.py 支撑 DATABASE_URL 探测"
+    },
+    {
+      "id": "H-LCL-09",
+      "measure": "run-e2e-default.mjs：GATE_ENSURE_FRESH 时 taskkill/lsof 回收端口"
+    },
+    {
+      "id": "H-LCL-10",
+      "measure": "start-api-for-playwright：RELAX 时显式清空 RPC 与 governance eth_call SSOT"
+    },
+    {
+      "id": "H-LCL-11",
+      "measure": "apiSession.gotoWithBearerSession：addCookies 仅 url（Playwright 1.49+）"
+    },
+    {
+      "id": "H-LCL-12",
+      "measure": "sync-frontend-env-local-from-root 对齐 NEXT_PUBLIC_API_BASE_URL"
+    },
+    {
+      "id": "H-DB-01",
+      "measure": "CI traveltrust-api-tests 使用 postgres:16 service + healthcheck"
+    },
+    {
+      "id": "H-DB-02",
+      "measure": "CI DATABASE_URL 与 service 凭据一致"
+    },
+    {
+      "id": "H-DB-03",
+      "measure": "CI E2E job 同步注入 DATABASE_URL 防 webServer 子进程丢失"
+    },
+    {
+      "id": "H-DB-04",
+      "measure": "本地可选 docker compose up -d postgres 自愈"
+    },
+    {
+      "id": "H-DB-05",
+      "measure": "SEED_TEST_ACCOUNTS 在 Playwright API 启动链路默认开启"
+    },
+    {
+      "id": "H-DB-06",
+      "measure": "P3_CHAIN_OFF=1 在链下烟测路径显式注入"
+    },
+    {
+      "id": "H-TIER-01",
+      "measure": "broadcast-batch-all-required.sh 单入口聚合三批"
+    },
+    {
+      "id": "H-TIER-02",
+      "measure": "tier_a_ci README + 59_p0_table 由 orchestration 引用"
+    },
+    {
+      "id": "H-TIER-03",
+      "measure": "CARGO_INCREMENTAL=0 降低 CI/本地非确定性"
+    },
+    {
+      "id": "H-TIER-04",
+      "measure": "TRAVELTRUST_BUILD_GIT_SHA 注入 API 构建（可观测）"
+    },
+    {
+      "id": "H-TIER-05",
+      "measure": "PLAYWRIGHT_BASE_URL 与 Next 端口一致"
+    },
+    {
+      "id": "H-TIER-06",
+      "measure": "生产放行 workflow production-release-require-go 与 final_truth_report_path 联动"
+    },
+    {
+      "id": "H-TIER-07",
+      "measure": "MANIFEST.local.json / write_local_manifest 记录 LOCAL_SMOKE 与 CHAIN_DEFERRED 状态"
+    },
+    {
+      "id": "H-EXT-01",
+      "measure": "run-production-gate-chain-deferred.sh 独立承载 @e2e-sepolia-deferred，与本地 core smoke 解耦"
+    },
+    {
+      "id": "H-EXT-02",
+      "measure": "r002_report_generator 与 gen-r002-iss007-prereport.py 由 production_gate.yaml 指向"
+    },
+    {
+      "id": "H-EXT-03",
+      "measure": "r002_validate_flags 在 YAML 声明并与 CI validate 命令对齐"
+    },
+    {
+      "id": "H-EXT-04",
+      "measure": "本地 E2E 默认单 worker，降低限流与登录竞态"
+    },
+    {
+      "id": "H-EXT-05",
+      "measure": "本地 manifest 写入 GITHUB_SHA/RUN_ID 便于与远端 run 对照"
+    },
+    {
+      "id": "H-EXT-06",
+      "measure": "EVIDENCE_DIR 使用 evidence/GO_YYYYMMDD 与 R-002 目录约定一致"
+    },
+    {
+      "id": "H-EXT-07",
+      "measure": "b421_shell / broadcast_shell 单路径 SSOT，禁止 workflow 硬编码分叉脚本"
+    },
+    {
+      "id": "H-EXT-08",
+      "measure": "waivers_readme 记录 96-15 豁免格式与审计要求"
+    },
+    {
+      "id": "H-EXT-09",
+      "measure": "partial_go_expiry / single_truth / final_truth_presence 三脚本同源复用于 CI 与本地 strict 模式"
+    },
+    {
+      "id": "H-EXT-10",
+      "measure": "本地/CI production gate 对 API 注入 API_RATE_LIMIT_PER_MINUTE=0（及 CRITICAL_WRITE_*=0），避免 E2E 种子登录 429 拖死主路径"
+    }
+  ]
+}

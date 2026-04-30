@@ -1,0 +1,26 @@
+{
+  "kind": "traveltrust.governance_doc_linkage_doc_pointer.v1",
+  "summary": "Human path segments for scripts/gates/check-governance-doc-linkage.sh; mirrors grep/test targets. Machine checks use $SPECROOT (docs + spec); this file is not read by the gate.",
+  "spec_tree_root_segments": ["docs", "spec"],
+  "governance_linkage_targets": {
+    "00_index": ["docs", "spec", "00-文档索引.md"],
+    "00_module_master": ["docs", "spec", "00-最终版架构图对应模块清单总表.md"],
+    "00_doc_chaining": ["docs", "spec", "00-文档体系与阅读串联.md"],
+    "07_devflow": ["docs", "spec", "07-开发流程与顺序.md"],
+    "82_overview": ["docs", "spec", "82-治理币-文档总览.md"],
+    "83_whitepaper": ["docs", "spec", "83-区域治理与收益分配-协议白皮书.md"],
+    "84_country_pool": ["docs", "spec", "84-第一阶段10国Country-Pool发行参数总表.md"],
+    "governance_token_readme": ["docs", "spec", "governance-token", "README.md"],
+    "governance_token_01": ["docs", "spec", "governance-token", "01-对外白皮书-草案.md"],
+    "governance_token_02": ["docs", "spec", "governance-token", "02-对内技术规格-草案.md"],
+    "governance_token_en_readme": ["docs", "spec", "governance-token", "en", "README.md"],
+    "governance_token_en_01": ["docs", "spec", "governance-token", "en", "01-external-litepaper-draft.md"],
+    "governance_token_en_02": ["docs", "spec", "governance-token", "en", "02-internal-tech-spec-draft.md"],
+    "governance_token_legal": ["docs", "spec", "governance-token", "LEGAL-SIGNOFF-CHECKLIST.md"],
+    "governance_token_03": ["docs", "spec", "governance-token", "03-对外材料-PPT与白皮书数据页摘抄索引.md"],
+    "08_4_annex_feerouter": ["docs", "spec", "08-4-附录-收益流闭环图-FeeRouter-Target.md"]
+  },
+  "code_anchors": {
+    "governance_doc_reference_rs": ["crates", "api", "src", "routes", "governance_doc_reference.rs"]
+  }
+}

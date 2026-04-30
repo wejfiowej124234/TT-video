@@ -1,0 +1,46 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_20260423_local_r001_e2e_f012_f013_f014",
+  "title": "local E2E slice F-012 F-013 F-014 (itin+feed)",
+  "executor": "local-cursor-agent",
+  "started_at": "2026-04-23T12:41:37Z",
+  "finished_at": "2026-04-23T12:41:42Z",
+  "environment": {
+    "name": "local",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "mixed"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "Playwright api-itin-feed-chromium 4/4 expected; R-001 cases D-ITN-001 B-ORD-005 D-COM-001 PASS. Not staging full-matrix GO; ISS-007 CI e2e run_id still required for closure.",
+  "cases": [
+    {
+      "id": "D-ITN-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_e2e_f012_f013_f014/playwright-report.json",
+      "blocker": false,
+      "notes": "F-012: e2e/f012-f013-f014-request.spec.ts project api-itin-feed-chromium"
+    },
+    {
+      "id": "B-ORD-005",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_e2e_f012_f013_f014/playwright-report.json",
+      "blocker": false,
+      "notes": "F-013: confirm-final-plan snapshot_hash"
+    },
+    {
+      "id": "D-COM-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_20260423_local_r001_e2e_f012_f013_f014/playwright-report.json",
+      "blocker": false,
+      "notes": "F-014: two tests (feed + follow mode) aggregated; ISS-007 narrow slice only"
+    }
+  ],
+  "summary": {
+    "PASS": 3,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  }
+}

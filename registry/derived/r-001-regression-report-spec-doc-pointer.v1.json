@@ -1,0 +1,9 @@
+{
+  "kind": "traveltrust.regression_report_ssot_pointer.v1",
+  "summary": "Human SSOT for R-001 markdown; path as path_segments for P-C consumer-literal hygiene (no slash-packed repo path token in this JSON).",
+  "spec_markdown_segments": [
+    "docs",
+    "spec",
+    "R-001-全站回归报告模板与汇总JSON结构.md"
+  ]
+}

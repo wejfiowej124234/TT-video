@@ -1,0 +1,66 @@
+# Cursor indexing: keep cold-open responsive (high file-count / churn dirs).
+# Safe to edit: remove a block if you need @-mentions or search inside that tree.
+
+# Dependencies & JS/TS build output
+**/node_modules/**
+**/.next/**
+**/dist/
+
+# Rust build trees (often hundreds of thousands of files)
+**/target/**
+
+# Next export / legacy frontend output
+frontend/out/
+frontend/.lighthouse*
+frontend/.data/
+frontend/playwright-report/
+frontend/test-results/
+
+# Foundry artifacts
+contracts/out/
+contracts/cache/
+contracts/broadcast/
+
+# Evidence batches: huge file counts; omit from AI index (tracked snapshots stay in git).
+evidence/**
+
+# Temporary evidence runs (high churn / file count)
+**/evidence_tmp*/
+# Alternate Cargo target dir (see .gitignore)
+target-r003-evidence/
+
+# Local tooling cache
+.tools/
+
+# API runtime uploads & high-churn local data (not source)
+crates/api/data/
+data/profile_avatars/
+
+# Root data churn (indexer streams; not application source)
+data/*.jsonl
+data/*.runtime
+
+# VCS / coverage / Python caches (reduce @codebase churn)
+.git/
+**/coverage/**
+**/.nyc_output/**
+**/.eslintcache
+**/.parcel-cache/**
+**/.turbo/**
+**/__pycache__/**
+**/.pytest_cache/**
+**/.ruff_cache/**
+**/htmlcov/**
+**/.venv/**
+**/venv/**
+
+# OS junk (high churn)
+**/.DS_Store
+**/Thumbs.db
+
+# Optional local package manager caches (if created under repo)
+**/.pnpm-store/**
+
+# Playwright / test output anywhere under repo (defense in depth)
+**/playwright-report/**
+**/test-results/**

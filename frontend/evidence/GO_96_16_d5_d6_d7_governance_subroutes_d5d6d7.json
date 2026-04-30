@@ -1,0 +1,21 @@
+{
+  "batch": "GO_96_16_d5_d6_d7_governance_subroutes_d5d6d7",
+  "docs_spec_touched": false,
+  "scope": "Matrix batch 2 (Governance): /governance/distribution-accruals(+[id]), /governance/proposals(+[id]), /governance/fee-routes, /governance/vault-forwards. Pages already use travelLinkFocus (ProductCrossNav, links, ApiErrorAlert/retry), loading skeletons motion-reduce:animate-none where present; matrix ties this batch to one evidence file for longest-prefix / exact rules under /governance/* after /governance hub. Batch 3 (其它): no further NEEDS_FIX rows once Admin+Governance rules land (38 → 0).",
+  "d5_d6_d7_actions": [
+    "D5: list/detail data pages + GovernanceTargetNotice / ops links; contract tests already cover several routes",
+    "D6: focus rings + motion-safe loading (existing patterns on these pages)",
+    "D7: existing governance_* / common keys; same en/zh market studio keys batch as admin evidence when full vitest is required",
+    "Matrix: prefix /governance/distribution-accruals, /governance/proposals; exact /governance/fee-routes, /governance/vault-forwards → this evidence"
+  ],
+  "commands": {
+    "eslint": { "cmd": "npm run lint", "exit": 0 },
+    "i18n_ci": { "cmd": "npm run test:i18n:ci", "exit": 0 },
+    "vitest": { "cmd": "npm test", "exit": 0, "tests_passed": 1553, "test_files": 235 },
+    "npm_run_build": { "cmd": "npm run build", "exit": 0 }
+  },
+  "playwright_e2e": { "status": "NOT_RUN", "trace": "93", "detail": "E2E not run; matrix Playwright 93 NOT_RUN unchanged." },
+  "claim_96_complete": false,
+  "matrix_batch_order": "2_Governance",
+  "other_routes_note": "Batch 3 (其它): zero remaining NEEDS_FIX rows after Admin+Governance matrix rules."
+}

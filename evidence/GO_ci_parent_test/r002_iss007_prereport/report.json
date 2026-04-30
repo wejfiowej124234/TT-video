@@ -1,0 +1,84 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_ci_parent_test_r002_iss007_prereport",
+  "title": "R-002 prereport · ISS-007 narrow slice (F-029 / F-025 / F-031 / F-030)",
+  "executor": "scripts/gen-r002-iss007-prereport.py",
+  "started_at": "2026-04-23T21:00:55Z",
+  "finished_at": "2026-04-23T21:00:55Z",
+  "environment": {
+    "name": "local",
+    "database": "disabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer"
+  },
+  "release_gate": "PARTIAL_GO",
+  "release_gate_reason": "ISS-007 prereport shell: anchors NOT_RUN (no DATABASE_URL or skipped); full 93 matrix + CI e2e still required for ISS-007 close.",
+  "iss007_narrow_slice": {
+    "scope_note": "ISS-007 main line (staging full-matrix report.json + CI-wide closure) remains open; this artifact binds four 8.2 rows to matrix_93 + Playwright request specs.",
+    "f_rows_8_2": [
+      "F-029",
+      "F-025",
+      "F-031",
+      "F-030"
+    ],
+    "anchors_93": [
+      "D-IDX-001",
+      "B-DSP-003",
+      "D-COM-011",
+      "D-ADM-003"
+    ]
+  },
+  "cases": [
+    {
+      "id": "D-IDX-001",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_ci_parent_test/r002_iss007_prereport/D-IDX-001",
+      "blocker": false,
+      "notes": "evidence/GO_ci_parent_test/r002_iss007_prereport/D-IDX-001/notes.md",
+      "f_row_8_2": "F-029",
+      "matrix_93_cargo_filter": "matrix_93_d_idx_001b_f029_get_internal_indexer_status_ok_shape_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f029-f030-f031-request.spec.ts",
+      "e2e_test_title": "F-029 · GET internal indexer-status returns ok with indexer block"
+    },
+    {
+      "id": "B-DSP-003",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_ci_parent_test/r002_iss007_prereport/B-DSP-003",
+      "blocker": false,
+      "notes": "evidence/GO_ci_parent_test/r002_iss007_prereport/B-DSP-003/notes.md",
+      "f_row_8_2": "F-025",
+      "matrix_93_cargo_filter": "matrix_93_b_dsp_003b_f025_post_dispute_resolve_then_pg_status_resolved_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f024-f025-f026-request.spec.ts",
+      "e2e_test_title": "F-025 · B-DSP-003 · seed arbitrator POST …/disputes/:id/resolve → resolved (PG)"
+    },
+    {
+      "id": "D-COM-011",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_ci_parent_test/r002_iss007_prereport/D-COM-011",
+      "blocker": false,
+      "notes": "evidence/GO_ci_parent_test/r002_iss007_prereport/D-COM-011/notes.md",
+      "f_row_8_2": "F-031",
+      "matrix_93_cargo_filter": "matrix_93_d_com_011_f031_post_community_post_acquisition_led_listing_pg",
+      "e2e_spec": "frontend/e2e/f029-f030-f031-request.spec.ts",
+      "e2e_test_title": "F-031 · acquisition listing then community post acquisition_led showcase"
+    },
+    {
+      "id": "D-ADM-003",
+      "status": "NOT_RUN",
+      "evidence_path": "evidence/GO_ci_parent_test/r002_iss007_prereport/D-ADM-003",
+      "blocker": false,
+      "notes": "evidence/GO_ci_parent_test/r002_iss007_prereport/D-ADM-003/notes.md",
+      "f_row_8_2": "F-030",
+      "matrix_93_cargo_filter": "matrix_93_d_adm_003b_f030_get_admin_schema_migrations_ok_when_sqlx_migrations_applied_app_stack_ok_pg",
+      "e2e_spec": "frontend/e2e/f029-f030-f031-request.spec.ts",
+      "e2e_test_title": "F-030 · tourist Bearer cannot GET admin schema migrations (403 admin_required)"
+    }
+  ],
+  "summary": {
+    "PASS": 0,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 4
+  }
+}
