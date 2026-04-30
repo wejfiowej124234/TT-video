@@ -2,7 +2,7 @@
 # 政策：只登记；不迁移、不删除 docs/spec/（见 docs/spec-path-dependency-migration-inventory.md）
 registry_version: "1.0-draft"
 source_inventory: docs/spec-path-dependency-migration-inventory.md
-updated: "2026-04-29"
+updated: "2026-04-30"
 classification_enum:
   A: 法定壳（须长期留在 docs/spec 或同路径兼容壳）
   B: 可迁机读真源 / 派生清单（双写或生成；正文仍在 A）
@@ -17,7 +17,6 @@ entries:
       scripts:
         - scripts/gates/check-04-routes-vs-code.py
         - scripts/gates/check-04-frontend-routes-vs-app.py
-        - scripts/gates/check-04-api-ts-routes-vs-doc-34.py
         - scripts/gates/run-check-04-routes.sh
         - scripts/ops/internal-indexer-ops.sh
         - scripts/ops/indexer-reconcile-probe.sh
@@ -96,8 +95,6 @@ entries:
         - scripts/gates/check-07-version-triple.sh
         - scripts/gates/check-governance-doc-linkage.sh
         - scripts/check-runbook-golive-doclink-gate.sh
-        - scripts/dev/sync-spec00-handbook-docs-version-column.py
-        - scripts/release/b421_doclink_gate.py
       workflows:
         - .github/workflows/governance-doc-linkage-gate.yml
         - .github/workflows/check-wave-phase-files.yml
@@ -215,47 +212,16 @@ entries:
       - 生成管道须可复现；默认 ENV 仍可读 spec；CI 双跑通过后再切换默认
       - 93 正文保持 A
 
-  - id: spec-96-18-backlog
-    spec_path: docs/spec/96-18-未完成清单与多维检查.md
-    classification: A
-    summary: 9618 批次与命令筛子真源
-    consumers:
-      scripts:
-        - scripts/gates/tt-9618-onboarding-pg-evidence.sh
-        - scripts/gates/check-ops-monitoring-prometheus-examples.sh
-    target_location: keep:docs/spec/96-18-未完成清单与多维检查.md
-    migration_prerequisites:
-      - 与 TT-9618、README #9618 锚同批维护
-
   - id: derive-96-booklets-paths
     classification: B
-    summary: 96 Hub + 分册路径元组（与 verify_96_booklets_registry 列表同源）
+    summary: 96 Hub + 分册路径元组（与 verify_96_booklets_registry 列表同源；当前工作树仅登记已存在的分册路径）
     primary_spec_paths:
       - docs/spec/96-索引-全链路外生产验收分册.md
-      - docs/spec/96-01-总则与95边界和执行顺序.md
-      - docs/spec/96-02-法务合规与对外披露.md
-      - docs/spec/96-03-安全密钥与供应链.md
-      - docs/spec/96-04-合规风控与跨境数据.md
-      - docs/spec/96-05-运维SRE与可靠性.md
-      - docs/spec/96-06-数据隐私备份与迁移.md
-      - docs/spec/96-07-链上资金与合约终验.md
-      - docs/spec/96-08-索引器对账与财务.md
-      - docs/spec/96-09-消息通知与异步任务.md
-      - docs/spec/96-10-配置灰度与特性开关.md
-      - docs/spec/96-11-发布签字与回归门禁.md
-      - docs/spec/96-12-文档真值与卫星债.md
-      - docs/spec/96-13-UI-UX-i18n-a11y-性能走查.md
-      - docs/spec/96-14-专项Wallet社区治理与扩展域.md
-      - docs/spec/96-15-深度多维度检查与审计体系.md
-      - docs/spec/96-16-全页面UI-UX优化方案总册.md
-      - docs/spec/96-17-多重身份与钱包真值.md
-      - docs/spec/96-UI-UX-生产级验收与全链路外必查项.md
     consumers:
-      scripts:
-        - scripts/release/verify_96_booklets_registry.py
+      scripts: []
     target_location: registry/derived/96-booklets.v1.json
     migration_prerequisites:
-      - JSON 与脚本内 tuple 列表 diff 为 0 后再改脚本读 JSON
+      - 当 docs/spec/96-*.md 分册齐套并恢复 scripts/release/verify_96_booklets_registry.py 后，再补全 primary_spec_paths 与 consumers
       - 分册正文仍为 A；删 spec 不在本草稿范围
 
   - id: spec-wave-phase-nnn-glob
@@ -384,7 +350,6 @@ entries:
     consumers:
       scripts:
         - scripts/check-runbook-golive-doclink-gate.sh
-        - scripts/release/b421_doclink_gate.py
     target_location: keep:docs/spec/缺口与待补-官方总表.md
     migration_prerequisites: []
 
@@ -394,50 +359,36 @@ entries:
     consumers:
       scripts:
         - scripts/check-runbook-golive-doclink-gate.sh
-        - scripts/release/b421_doclink_gate.py
-        - scripts/release/run_96_15_orchestration.py
     target_location: keep:docs/spec/15-多维度文档与技术检查报告.md
     migration_prerequisites: []
 
   - id: spec-66-deep-audit
     spec_path: docs/spec/66-深度检查-缺口与遗留问题.md
     classification: A
-    consumers:
-      scripts:
-        - scripts/release/run_96_15_orchestration.py
-        - scripts/release/tier_bc_machine_gates.py
     target_location: keep:docs/spec/66-深度检查-缺口与遗留问题.md
-    migration_prerequisites: []
+    migration_prerequisites:
+      - 恢复 scripts/release/run_96_15_orchestration.py / tier_bc_machine_gates.py 后再登记 consumers
 
   - id: spec-51-stage-tech
     spec_path: docs/spec/51-阶段开发技术文档.md
     classification: A
-    consumers:
-      scripts:
-        - scripts/release/run_96_15_orchestration.py
-        - scripts/release/tier_bc_machine_gates.py
     target_location: keep:docs/spec/51-阶段开发技术文档.md
-    migration_prerequisites: []
+    migration_prerequisites:
+      - 恢复 scripts/release/run_96_15_orchestration.py / tier_bc_machine_gates.py 后再登记 consumers
 
   - id: spec-53-stage-tech-alt
     spec_path: docs/spec/53-阶段开发技术文档.md
     classification: A
-    consumers:
-      scripts:
-        - scripts/release/run_96_15_orchestration.py
-        - scripts/release/tier_bc_machine_gates.py
     target_location: keep:docs/spec/53-阶段开发技术文档.md
-    migration_prerequisites: []
+    migration_prerequisites:
+      - 恢复 scripts/release/run_96_15_orchestration.py / tier_bc_machine_gates.py 后再登记 consumers
 
   - id: spec-27-p0-p50-checklist
     spec_path: docs/spec/27-P0至P50开发流程勾选清单.md
     classification: A
-    consumers:
-      scripts:
-        - scripts/release/run_96_15_orchestration.py
-        - scripts/release/tier_bc_machine_gates.py
     target_location: keep:docs/spec/27-P0至P50开发流程勾选清单.md
-    migration_prerequisites: []
+    migration_prerequisites:
+      - 恢复 scripts/release/run_96_15_orchestration.py / tier_bc_machine_gates.py 后再登记 consumers
 
   - id: spec-240-feature-flags
     spec_path: docs/spec/240-阶段Feature-Flag与灰度系统.md
@@ -513,18 +464,6 @@ entries:
         - .github/workflows/internal-drill-gate.yml
     target_location: keep:docs/spec/140-阶段开发云部署与交付架构.md
     migration_prerequisites: []
-
-  - id: spec-96-md-size-readonly-gate
-    spec_path: "docs/spec/96-*.md"
-    path_pattern: true
-    classification: A
-    summary: run_96_full_automation 只读体量闸（glob 语义）
-    consumers:
-      scripts:
-        - scripts/release/run_96_full_automation.py
-    target_location: keep:docs/spec/96-*.md
-    migration_prerequisites:
-      - 若收窄 glob，须同步脚本与 96-索引台账
 
   - id: meta-r003-template-string
     spec_path: null

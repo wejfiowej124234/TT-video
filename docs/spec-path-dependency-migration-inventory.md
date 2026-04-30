@@ -164,6 +164,6 @@
 
 ---
 
-**维护**：若新增脚本/workflow 硬编码 `docs/spec/`，请在本文件 **§2/§3** 增补一行，并在 **08** 台账侧考虑是否触发 **P-C**。
+**维护**：若新增脚本/workflow 硬编码 `docs/spec/`，请在本文件 **§2/§3** 增补一行，并在 **08** 台账侧考虑是否触发 **P-C**。**仓库完整性对齐（2026-04-30）**：`registry/spec-path-dependencies.v1.yaml` 已收敛为**仅登记盘上存在的** `scripts/` 路径；`scripts/release/*`、`scripts/gates/check-04-api-ts-routes-vs-doc-34.py`、`96-18` 等条目标为 **migration_prerequisites** 待恢复后再登记；**`scripts/check-handbook-*.sh`** 与 **`scripts/gates/check-handbook-*.py`** 已落地，可与 **`python registry/validate-spec-path-dependencies-registry.py`** 同轮复跑。
 
 **机器登记（草稿）**：[`registry/spec-path-dependencies.v1.yaml`](../registry/spec-path-dependencies.v1.yaml)（字段：`classification`、`consumers`、`target_location`、`migration_prerequisites`；说明见 [`registry/README.md`](../registry/README.md)）。

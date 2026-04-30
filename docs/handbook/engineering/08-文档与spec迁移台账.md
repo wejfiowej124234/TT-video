@@ -1,5 +1,9 @@
 # 08 — 文档与 spec 迁移台账（engineering）
 
+Version: v0.1.0
+
+**工程验证段**：变更本台账时建议本地跑 `bash scripts/gates/run-check-04-routes.sh` 与 **04 §3.4** 机读契约同链。
+
 > **SSOT（必读）**：**`engineering/`** 仅为导读，**不**替代 **04 §3.4、93、14、07** 及 **代码与脚本门禁**（与 **CONTRIBUTING**、**spec/00 读前** 同键）。**执行** `git rm docs/spec/...` **须** **[§2 五条件](#mig-delete-policy)** + **[SPEC-MIGRATION-STATUS](../corpus/SPEC-MIGRATION-STATUS.md)** + **[98 §2](../../spec/98-以代码为真源的文档体系与旧文档替代路线图.md)** + **[盘点 §7](../../spec-path-dependency-migration-inventory.md#inv-per-path-delete-keep)** + **CI/链接** **同批**。
 
 **三处对拍提醒**：若仓库后续合入完整 **`docs/handbook/00-手册总览与编制规范.md`** 与 **`engineering/README.md`** 主序全表，须将 **本文档** 与 **SPEC-MIGRATION-STATUS** 纳入 **手册 00 §3** / **engineering/README** 行级登记（**HB-PROD-DOC-TRIPLE-SYNC**）。

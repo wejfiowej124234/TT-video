@@ -1,5 +1,7 @@
 # SPEC-MIGRATION-STATUS（P-A～P-D · 删 `docs/spec` 前置登记）
 
+Version: v0.1.0
+
 > **SSOT（必读）**：本文件为 **corpus 登记态**（**P-C 真源之一**），**不**替代 **04 §3.4 / 93 / 14 / 07** 契约正文；与 **[engineering/08 §2](../engineering/08-文档与spec迁移台账.md#mig-delete-policy)**、**[98 §2](../../spec/98-以代码为真源的文档体系与旧文档替代路线图.md#98-claim-table)**、**[盘点 §7](../../spec-path-dependency-migration-inventory.md#inv-per-path-delete-keep)** 同轮对读。**engineering/** 导读边界见 **[spec/00 读前](../../spec/00-文档索引.md)**。
 
 **冻结声明（与工程约定对齐）**：在 **GitHub Actions 计费/配额恢复前**，仓库默认 **冻结** 工程合入与 PR 扩面；本 STATUS 仅承载 **书面证据链** 与 **Owner 可勾选** 字段，**不**宣称 **CI 全绿** 或 **`git rm docs/spec/...` 已执行**。
