@@ -10,6 +10,8 @@
 
 ---
 
+<a id="inv-classification-abc"></a>
+
 ## 1. 分类口径（方案层）
 
 | 类别 | 含义 | 典型归属 |
@@ -19,6 +21,8 @@
 | **C · `handbook` / `corpus` 可接管（导读 / REG / 执行 Runbook）** | **How-to**、域 Hub、登记与迁移矩阵；**不**替代 **04/93/14** 表体 | **engineering/** 域篇、**REG-***、**09/08** 矩阵、**runbook/** 执行卡、**product-manager/** 运营表；已 **migrated / partial / full** 的叙事（仍链回 spec 锚点） |
 
 ---
+
+<a id="inv-section-2-scripts"></a>
 
 ## 2. `scripts/`：硬编码 `docs/spec` 依赖（按闸门类型）
 
@@ -78,6 +82,8 @@
 
 ---
 
+<a id="inv-section-3-workflows"></a>
+
 ## 3. `.github/workflows/`：`docs/spec` 路径依赖
 
 以下 workflow **内联** `docs/spec/…` 作为 **check_anchor** 或 **grep** 目标（与 `build.yml` 局部步骤同源模式）：
@@ -131,6 +137,30 @@
 - **[SPEC-MIGRATION-STATUS](handbook/corpus/SPEC-MIGRATION-STATUS.md)**（**P-C**）  
 - **[98 §2](spec/98-以代码为真源的文档体系与旧文档替代路线图.md)**  
 - **[spec/00 读前 · handbook 与 spec 边界](spec/00-文档索引.md)**  
+- **逐路径可删/保留（书面）** → **[§7](#inv-per-path-delete-keep)**  
+
+---
+
+<a id="inv-per-path-delete-keep"></a>
+
+## 7. 逐路径「可删 / 须保留」证据链（书面闭环 · CI 冻结期）
+
+**目的**：在 **不** 新开工程 PR、**不** 依赖 Actions 绿灯的前提下，把 **[§2](#inv-section-2-scripts)**、**[§3](#inv-section-3-workflows)** 的闸门族 **压缩为可勾选行**，并与 **[SPEC-MIGRATION-STATUS](handbook/corpus/SPEC-MIGRATION-STATUS.md#status-per-path-rows)**、**[engineering/08 §3.1](handbook/engineering/08-文档与spec迁移台账.md#mig-3-1-per-path-evidence)**、**[98 §2](spec/98-以代码为真源的文档体系与旧文档替代路线图.md#98-claim-table)**、**[96-索引 · Owner 勾选](spec/96-索引-全链路外生产验收分册.md#spec-delete-closure-owner)** **同键互指**。
+
+**填表规则**：新增 **脚本 / workflow** 行时，先补 **§2 或 §3**，再在本表增 **聚合行**，并在 **STATUS** 增 **`STATUS 行 id`**。
+
+| 聚合 id（= STATUS / 08 §3.1） | 覆盖的盘点段落 / registry id（摘要） | §1 类 | **默认可删 spec？** | Owner ☐ |
+|------------------------------|----------------------------------------|-------|---------------------|--------|
+| `mig-3-1-gate-04-routes` | §2.1；`check-04-*` | **A** | **否** | - [ ] |
+| `mig-3-1-gate-07-08` | §2.2；`check-07-version-triple`、`check-08-*` | **A** | **否** | - [ ] |
+| `mig-3-1-gate-wave` | §2.3；`check-wave-phase-files` | **A** | **否** | - [ ] |
+| `mig-3-1-gate-govlink` | §2.4；`check-governance-doc-linkage` | **A** | **否** | - [ ] |
+| `mig-3-1-gate-96-18` | registry `spec-96-18-backlog`；`tt-9618-*` | **A** | **否** | - [ ] |
+| `mig-3-1-derive-93-96` | §2.1–2.3 派生；`derive-93-section5-routes`、`derive-96-booklets-paths` | **B** | **仅生成物可迁；正文否** | - [ ] |
+| `mig-3-1-subtree-arch` | §2.5–2.6；`27-archived`、`code-maps`、`snapshots` | **A** | **否** | - [ ] |
+| `wf-build-anchors` | §3 `build.yml` 等 workflow 锚点族 | **A** | **否**（改 manifest 属另立项） | - [ ] |
+
+**「清单全绿」定义（书面）**：上表 **Owner ☐** 全为 `[x]`，且 **STATUS P-A～P-D**、**96-索引 Owner 表**、**98 §3** 同步为全勾选。
 
 ---
 
