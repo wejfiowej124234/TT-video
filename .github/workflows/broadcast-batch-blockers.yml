@@ -17,6 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
       - name: Check docs/spec, docs, crates, contracts sources
         run: python3 scripts/check_no_legacy_staking_path_as_ssot.py
 
@@ -25,6 +28,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
       - name: Batch-1 gate (B-380 / B-366 / B-379 / B-368)
         run: bash scripts/gates/broadcast-batch-1-blockers.sh
 
@@ -33,6 +39,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
       - name: Batch-2 gate (B-367 / B-373 / B-374)
         run: bash scripts/gates/broadcast-batch-2-blockers.sh
 
@@ -41,5 +50,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
       - name: Batch-3 gate (B-369 / B-370 / B-375)
         run: bash scripts/gates/broadcast-batch-3-blockers.sh

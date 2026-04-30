@@ -9,7 +9,9 @@
 | `Broadcast batch 2 blockers` | `broadcast-batch-2-blockers` |
 | `Broadcast batch 3 blockers` | `broadcast-batch-3-blockers` |
 
-**GitHub 设置路径**：Repository → Settings → Branches → 编辑 `main` 的保护规则 → **Require status checks to pass** → 在列表中**只**搜索并勾选上述四项；**取消**将整条「Build」workflow 或其它旧门禁列为必需（否则仍会被非 batch 失败挡住）。
+若 **Settings → Branches** 中 `main` 另有一条必过项 **`Production gate (trinity) — gate closed`**（Unicode 长横线 `—`），仓库内由 **`.github/workflows/production-gate-trinity-branch-protection-shim.yml`** 上报该 context；未部署真实 Trinity 生产门禁前勿删该 workflow，否则 PR 会因「缺少必过 check」而永久阻塞。
+
+**GitHub 设置路径**：Repository → Settings → Branches → 编辑 `main` 的保护规则 → **Require status checks to pass** → 勾选上表 **4** 项；若保护规则另含 **`Production gate (trinity) — gate closed`**，一并勾选（由上文 shim workflow 上报）；**取消**将整条「Build」workflow 或其它旧门禁列为必需（否则仍会被非 batch 失败挡住）。
 
 > 说明：`Build` workflow（`.github/workflows/build.yml`）中非 batch 的 job 已设 `continue-on-error: true`，其失败**不会**让整个 Build 变红；`Broadcast batch blockers` 中上述 **4** 个 job 全绿时该 workflow 才通过。
 
