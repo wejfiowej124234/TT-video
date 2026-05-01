@@ -3,6 +3,7 @@
 #![allow(dead_code)]
 
 mod auth_pause_metrics;
+mod onboarding_write_rate_limit;
 mod rate_limit;
 mod timeout_cors;
 mod trace;
@@ -14,6 +15,7 @@ pub use auth_pause_metrics::{
 pub use rate_limit::{
     critical_write_rate_limit_layer, meta_rate_limits_snapshot, rate_limit_layer,
 };
+pub use onboarding_write_rate_limit::onboarding_user_write_rate_limit_response_if_exceeded;
 #[cfg(test)]
 pub use rate_limit::{format_guide_upload_meta_top_keys_contract_761, GUIDE_UPLOAD_META_TOP_KEYS};
 pub use timeout_cors::build_cors;
