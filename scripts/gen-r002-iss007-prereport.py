@@ -21,7 +21,8 @@ plus F-029/012/014 (A-ENV-001 GET /health + /meta contract / D-ITN-001B itinerar
 When DATABASE_URL is set and docker Postgres is migrated, runs:
   cargo test -p traveltrust-api <one filter per anchor>
 
-On full PASS: all anchors -> PASS, release_gate PARTIAL_GO.
+On full PASS: all anchors -> PASS, release_gate stays PARTIAL_GO (narrow slice; do not use
+`validate-regression-report.py --require-go` on this artifact — use `--fail-on-no-go` only).
 Otherwise: NOT_RUN or FAIL reflected from subprocess exit / stdout heuristics.
 
 Does not claim staging full-matrix GO (ISS-007 main line remains open).
@@ -232,12 +233,12 @@ ANCHORS: tuple[dict[str, str], ...] = (
     {
         "id": "B-ESC-003",
         "matrix_93_cargo_filter": (
-            "matrix_93_b_esc_003c_f027_tourist_first_review_then_get_list_contains_comment_app_stack_ok_pg"
+            "matrix_93_b_esc_005b_f027_dual_reviews_after_completed_get_list_len_two_app_stack_ok_pg"
         ),
         "f_row": "F-027",
         "e2e_spec": "frontend/e2e/f027-f028-f033-request.spec.ts",
         "e2e_test_title": (
-            "F-027 · completed order POST review then GET lists comment"
+            "F-027 · completed order dual POST reviews then GET list len 2"
         ),
     },
     {

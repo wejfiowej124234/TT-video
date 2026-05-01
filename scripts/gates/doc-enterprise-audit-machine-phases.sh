@@ -17,6 +17,14 @@ pick_py() {
     echo "${PYTHON}"
     return 0
   fi
+  # Windows: PATH may prefer Store `python3` stub; `py -3` resolves a real interpreter.
+  if command -v py >/dev/null 2>&1; then
+    _py_exe="$(py -3 -c "import sys; print(sys.executable)" 2>/dev/null || true)"
+    if [[ -n "${_py_exe}" ]] && [[ -f "${_py_exe}" ]] && "${_py_exe}" -c "import sys" >/dev/null 2>&1; then
+      echo "${_py_exe}"
+      return 0
+    fi
+  fi
   for c in python python3; do
     if command -v "$c" >/dev/null 2>&1 && "$c" -c "import sys" >/dev/null 2>&1; then
       echo "$c"
@@ -40,8 +48,9 @@ run_07() {
 }
 
 run_ai() {
-  echo "== [TT-DOC machine] Phase 3.3 · AI task card index overview =="
+  echo "== [TT-DOC machine] Phase 3.3 · AI task card index overview (main + from-stash) =="
   "$py" scripts/check-ai-task-card-index-overview.py docs/AI任务卡索引.md
+  "$py" scripts/check-ai-task-card-index-overview.py docs/AI任务卡索引.from-stash.md
 }
 
 run_links() {

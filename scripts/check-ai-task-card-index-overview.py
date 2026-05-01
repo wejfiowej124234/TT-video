@@ -2,6 +2,10 @@
 """
 Validate docs/AI任务卡索引.md overview table: rules A, E, B, C, D (F disabled).
 
+Windows Git Bash: PATH may put the Microsoft Store ``python3`` stub first (often exits **49**
+without running this file); use ``py -3`` or a real ``python``/``python3`` — same note as
+``scripts/gates/check-invariants.sh`` (~L35) and ``scripts/dev/run-verify-abi-forge.sh`` (header).
+
 - **A**: 序号唯一；默认还要求与行数 n 一致且覆盖 1..n（无缺号）。历史缺号时用 `--allow-seq-gaps`
   （仍要求 min(seq)==1 且无重复）。
 - **E**: 一览 ID（TT-*）唯一。

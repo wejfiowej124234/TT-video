@@ -11,8 +11,14 @@ Usage:
   python scripts/validate-regression-report.py evidence/GO_20260418/report.json
   python scripts/validate-regression-report.py evidence/GO_20260418/report.json --fail-on-no-go
   python scripts/validate-regression-report.py evidence/GO_20260418/report.json --require-go
+  python scripts/validate-regression-report.py evidence/GO_20260418/report.json --fail-on-no-go --fail-on-case-not-run
 
 See docs/spec/R-001-全站回归报告模板与汇总JSON结构.md
+
+When invoked via scripts/gates/vertical-slice-tt9627-segment3-r002-validate.sh or
+ci-local (argv1 / REPORT_JSON / TRAVELTRUST_R002_REPORT_PATH), path rules and the
+① vs R-002 §1 staging/prod split are documented at:
+  docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-report-json-path-convention
 """
 
 from __future__ import annotations
@@ -107,6 +113,11 @@ def main() -> int:
         action="store_true",
         help="Exit 1 unless release_gate is exactly GO (staging/production hard gate)",
     )
+    ap.add_argument(
+        "--fail-on-case-not-run",
+        action="store_true",
+        help="Exit 1 if summary/cases contain NOT_RUN, FAIL, or BLOCKED (CI R-002 prereport strict)",
+    )
     args = ap.parse_args()
 
     p: Path = args.report_json
@@ -130,6 +141,25 @@ def main() -> int:
     if args.fail_on_no_go and rg == "NO_GO":
         print(f"ERROR: release_gate is NO_GO", file=sys.stderr)
         return 1
+
+    if args.fail_on_case_not_run:
+        summ = data.get("summary") or {}
+        for key in ("NOT_RUN", "FAIL", "BLOCKED"):
+            n = summ.get(key, 0)
+            if n != 0:
+                print(
+                    f"ERROR: summary.{key}={n} (--fail-on-case-not-run)",
+                    file=sys.stderr,
+                )
+                return 1
+        for i, c in enumerate(data.get("cases") or []):
+            st = c.get("status")
+            if st in ("NOT_RUN", "FAIL", "BLOCKED"):
+                print(
+                    f"ERROR: cases[{i}] id={c.get('id')!r} status={st} (--fail-on-case-not-run)",
+                    file=sys.stderr,
+                )
+                return 1
 
     print(f"OK: {p} release_gate={rg} cases={len(data.get('cases', []))}")
     return 0

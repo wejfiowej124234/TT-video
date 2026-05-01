@@ -3,7 +3,9 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
-python3 scripts/check_no_legacy_staking_path_as_ssot.py
+# shellcheck source=scripts/gates/_resolve_python_bin.sh
+source "$ROOT/scripts/gates/_resolve_python_bin.sh"
+"$PYTHON_BIN" scripts/check_no_legacy_staking_path_as_ssot.py
 bash scripts/gates/broadcast-batch-1-blockers.sh
 bash scripts/gates/broadcast-batch-2-blockers.sh
 bash scripts/gates/broadcast-batch-3-blockers.sh

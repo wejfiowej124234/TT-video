@@ -20,6 +20,6 @@ if not "%EC%"=="0" (
     exit /b %EC%
 )
 echo.
-echo 准备完成。下一步：scripts\start-api-with-seed.bat
+echo 准备完成。下一步：scripts\dev\start-api-with-seed.bat
 pause
 exit /b 0

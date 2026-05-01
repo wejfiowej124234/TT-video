@@ -25,7 +25,7 @@
 | 07 版本三元组 | `gates/check-07-version-triple.sh`（或根转发同名） |
 | internal 探针 / 快照 | `ops/indexer-reconcile-probe.sh`、`ops/indexer-public-snapshot.sh`、`ops/internal-indexer-ops.sh` |
 | **91 保险层（manifest / chain_id / FeeRouter 快照）** | `ops/evidence-run-sha256-manifest.sh`、`gates/check-evidence-run-insurance-gate.sh`、`ops/fee-router-ops-snapshot.sh`；**`tt-testnet-fullstack-seal.sh`** 串联 |
-| 本地三连预检 | `dev/dev-preflight.sh`（或根转发） |
+| 本地三连预检 | `dev/dev-preflight.sh`（或根转发；**`gates/maybe-run-ai-task-card-index-overview-on-diff.sh`** 与 **`gates/ci-local-delivery-minimum.sh`** 同源条件串 **AI 一览**） |
 | **L4 parallel CI（GitHub · `gh`）** | `dev/gh-l4-run-inspect.sh`（根 **`gh-l4-run-inspect.sh`** / **`gh-l4-run-inspect.ps1`**）；与 **TT-L4-PARALLEL-CI-001** 对读 |
 | **TT-DOC 企业审计机读** | `doc-enterprise-audit-machine-phases.sh`（**`DOC_AUDIT_FULL`**、**`DOC_AUDIT_SKIP_*`**、**`DOC_AUDIT_LINKS_ENFORCE`**）；与 **TT-DOC-ENTERPRISE-AUDIT-CHECKLIST-001** 对读 |
 | TT-MAINNET **G0～G6+SL** | `check-mainnet-launch-precheck-gate.sh` → `gates/…`（**`${MAINNET_EVIDENCE_RUN_DIR}/shadow_go_no_go.json`** **机读** **）；** **`broadcast-batch-blockers.yml`** **job** **`TT-MAINNET G0–G6+SL`** **；** **§0** **SL** **包** **`evidence/mainnet_shadow_launch/run_<UTC>/`** |

@@ -8,6 +8,10 @@
 #   bash scripts/gates/local-verify-r002-prereport-chain.sh
 #
 # Without DATABASE_URL: only Python compile + soft validate (anchors may be NOT_RUN).
+#
+# ISS-007 prereport: gen-r002 sets release_gate=PARTIAL_GO even when all anchors PASS (narrow slice).
+# validate-regression-report.py: use --fail-on-no-go on this report.json; do not use --require-go alone
+# as a staging full-matrix GO substitute. See evidence/GO_local_r002_verify/README.md (default EVDIR).
 
 set -euo pipefail
 
