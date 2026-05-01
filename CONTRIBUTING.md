@@ -2,11 +2,15 @@
 
 本仓库的**开发顺序、阶段与发版门禁**以 `docs/spec` 为准；本页只列**工程侧最低标准**与入口，避免与长篇 spec 重复。
 
-> **阶次纪律（读任意 `docs/` 仍适用）：** **① 本地 → ② 测试网 → ③ 公网/生产**；**须先完成当前阶可验证目标，再进入下一阶**；**禁止跳阶**；**禁止**用 **①②** 冒充 **③**。单篇规范未必复述三阶全文，但**进度与「已闭/GO」须标明阶次**（与 **[`.cursor/rules/traveltrust-ai-collab.mdc`](.cursor/rules/traveltrust-ai-collab.mdc)**、**[AI协作话术 §0](docs/AI协作话术-减负与边界.md)**、根 **[AGENTS.md](AGENTS.md)** 同源）。从 **`docs/spec/00-文档索引.md`** 跳读任意 spec 时**仍须**遵守本阶次。
+> **阶次纪律（读任意 `docs/` 仍适用）：** **① 本地 → ② 测试网 → ③ 公网/生产**；**须先完成当前阶可验证目标，再进入下一阶**；**禁止跳阶**；**禁止**用 **①②** 冒充 **③**。单篇规范未必复述三阶全文，但**进度与「已闭/GO」须标明阶次**（与 **[`.cursor/rules/traveltrust-ai-collab.mdc`](.cursor/rules/traveltrust-ai-collab.mdc)**、**[AI协作话术 §0](docs/AI协作话术-减负与边界.md)**、**[§0.2 · 多文互指](docs/AI协作话术-减负与边界.md#ai-collab-doc-hygiene-0-2)**、根 **[AGENTS.md](AGENTS.md)** 同源）。从 **`docs/spec/00-文档索引.md`** 跳读任意 spec 时**仍须**遵守本阶次。
 
-> **开发期（未对外发布 · 减负）**：下文「建议走 PR」「跑全 CI」「企业审计 Phase」「必设 required check」等，在**未发布、单人主导**场景下按 **[TT — spec→handbook 全量替代清单 · §0](docs/runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md)** 解读：**日常**以直推 `main` + 按改动裁剪 **[solo-dev-rhythm §6.5](docs/solo-dev-rhythm.md)** 与本页「提 PR 前」脚本**子集**为主；**删 `docs/spec`、改 `build.yml` 默认必过集、分支保护、新增 `evidence/GO_*`、准备对外发版** 等仍须单独程序，**不因开发期而豁免**。仓库**冻结或对外发版前**再收紧 PR 与全量闸。
+<a id="no-false-completion"></a>
 
-**全仓库规划方向（默认）：** **验收顺序三阶（强制）** — **① 本地** → **② 测试网** → **③ 公网 / 生产真实链路**（**禁止跳阶**；**③** 含主网真链、**Production GO** 等 **另闸**）。入口：**[README.md](README.md)**「工程规划方向」、**[TT-9618](docs/runbook/TT-9618-onboarding-local-testnet.md)**（三阶说明 + 两阶段表）、**[96-索引](docs/spec/96-索引-全链路外生产验收分册.md)**、**[TT-9600](docs/runbook/TT-9600-96-HUB-LOCAL-VERIFICATION-PACK.md)**（**CI 非必须** 时本地 **96** 收口）、**[go-live-checklist · GO Decision](docs/go-live-checklist.md#go-decision-entry-point)**。**Hub / 分册 Version** 以 **[00 · 文档版本与最后更新](docs/spec/00-文档索引.md#文档版本与最后更新)** 为准；**Declaration** 见 **[96-索引 #95-96-execution-linkage-declaration](docs/spec/96-索引-全链路外生产验收分册.md#95-96-execution-linkage-declaration)**。**`#9618`（96-18 准入费）** 与根 **README** **`#9618-one-page-priority`** / **`#9618-cmd-cheatsheet`** 同源互指：**[96-18-未完成](docs/spec/96-18-未完成清单与多维检查.md#9618-one-page-priority)** **v1.0.118+**、**[`#9618-batches` · §1 批次台账](docs/spec/96-18-未完成清单与多维检查.md#9618-batches)**、**[§4 命令筛子](docs/spec/96-18-未完成清单与多维检查.md#9618-cmd-cheatsheet)**；**Hub** 文首见 **96-索引**（与 **README** 两锚对读）。
+> **禁止假完成（真实数据与证据链）：** **不得**把 **仅文档改写 / 矩阵枚举**、**R-002 窄切片或 stub `report.json` 的「全矩阵已 GO」宣称**（**ISS-007** **`gen-r002-iss007-prereport.py`** 窄切片在 43 锚 **PASS** 时 **`release_gate` 仍为 `PARTIAL_GO`**；**勿**对本品单独 **`validate-regression-report.py --require-go`** 冒充 **staging 全矩阵 `GO`**；自述 **`evidence/GO_local_r002_verify/README.md`**）、**① 本地单测或脚本绿**、**远端 CI 顶栏绿（或欠费期无 log）** 说成 **② 测试网已用真实测试库与网关验收** 或 **③ 生产真链 / 真 PSP / Production GO**。**96-20 §5** 某 URL 在未满 **[96-20 §0.2](docs/spec/96-20-前后端页面对齐与UI生产级审计报告.md#96-20-pending-to-pass)** 前 **不得**对外称「该页已 PASS/已对齐」。**`release_gate: GO`** 只对当次 **`cases[]`** 负责（**[R-002](docs/spec/R-002-回归执行闭环与发布准入.md)**、**[93 §8.0](docs/spec/93-全站功能验证矩阵-域别回归清单.md)**）。**清单与禁止项真源：** **[TT-9628 · §0.0.5](docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-no-false-completion)**；与 **[96-18-未完成](docs/spec/96-18-未完成清单与多维检查.md)** 篇首「生产级收口」blockquote、**[go-live-checklist](docs/go-live-checklist.md#go-decision-entry-point)** 同键。
+
+> **开发期（未对外发布 · 减负 · 独立开发模式）**：下文「建议走 PR」「跑全 CI」「企业审计 Phase」「必设 required check」等，在**未发布、单人主导**场景下按 **[TT — spec→handbook 全量替代清单 · §0](docs/runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md)** 与 **[缺口与待补-官方总表 · §独立开发期口径](docs/spec/缺口与待补-官方总表.md)** 解读：**日常**以直推 `main` + 按改动裁剪 **[solo-dev-rhythm §6.5](docs/solo-dev-rhythm.md)** 与本页 **[「推送前本地检查」](#pre-push-local)** 脚本**子集**为主；**不以**远端 **Actions 绿灯**或**是否开了 PR**为唯一收口。**删 `docs/spec`、改 `build.yml` 默认必过集、分支保护、新增 `evidence/GO_*`、准备对外发版** 等仍须单独程序，**不因开发期而豁免**。仓库**冻结或对外发版前**再收紧 PR 与全量闸。
+
+**全仓库规划方向（默认）：** **验收顺序三阶（强制）** — **① 本地** → **② 测试网** → **③ 公网 / 生产真实链路**（**禁止跳阶**；**③** 含主网真链、**Production GO** 等 **另闸**）。入口：**[README.md](README.md)**「工程规划方向」、**[TT-9618](docs/runbook/TT-9618-onboarding-local-testnet.md)**（三阶说明 + 两阶段表）、**[96-索引](docs/spec/96-索引-全链路外生产验收分册.md)**、**[TT-9600](docs/runbook/TT-9600-96-HUB-LOCAL-VERIFICATION-PACK.md)**（**CI 非必须** 时本地 **96** 收口）、**[go-live-checklist · GO Decision](docs/go-live-checklist.md#go-decision-entry-point)**。**Hub / 分册 Version** 以 **[00 · 文档版本与最后更新](docs/spec/00-文档索引.md#文档版本与最后更新)** 为准；**Declaration** 见 **[96-索引 #95-96-execution-linkage-declaration](docs/spec/96-索引-全链路外生产验收分册.md#95-96-execution-linkage-declaration)**。**`#9618`（96-18 准入费）** 与根 **README** **`#9618-one-page-priority`** / **`#9618-cmd-cheatsheet`** 同源互指：**[96-18-未完成](docs/spec/96-18-未完成清单与多维检查.md#9618-one-page-priority)** **v1.0.125+**、**[`#9618-batches` · §1 批次台账](docs/spec/96-18-未完成清单与多维检查.md#9618-batches)**、**[§4 命令筛子](docs/spec/96-18-未完成清单与多维检查.md#9618-cmd-cheatsheet)**；**Hub** 文首见 **96-索引**（与 **README** 两锚对读）。
 
 <a id="post-freeze-ext-dev"></a>
 
@@ -24,13 +28,14 @@
 
 ## 单人 push 与 PR 建议（路径策略）
 
-**默认可直推 `main`**：普通小改、无风险脚本、**非核心**文档（与 `docs/spec` 核心契约无强耦合的说明、注释、小修复）。
+**默认（独立开发模式）**：**默认可直推 `main`** — 普通小改、无风险脚本、**非核心**文档（与 `docs/spec` 核心契约无强耦合的说明、注释、小修复）；**推送前**仍须按改动裁剪 **[「推送前本地检查」](#pre-push-local)** 与 **solo-dev-rhythm §6.5**（**≠** 跳过自检）。
 
-**建议走 PR**（单人亦适用）：触及下列**任一**时，用分支 + PR 合并，便于留 diff、跑全 CI、降低误伤 **`main`** 的概率：
+**可选走 PR**（控 diff / 留评审记录 / 触达高风险路径时）：触及下列**任一**时，**建议**用分支 + PR 合并，便于留 diff、在 **CI 可用时**跑远端全链、降低误伤 **`main`** 的概率：
 
 | 类别 | 路径或范围（示例） |
 |------|-------------------|
 | **AI 任务卡索引** | `docs/AI任务卡索引.md` |
+| **AI 任务卡草稿（未封口）** | `docs/AI任务卡索引.from-stash.md`（**一览机读** 与主索引 **同一 `.py` 规则**；**[`check-ai-task-card-index-overview.yml`](.github/workflows/check-ai-task-card-index-overview.yml)** **job** 内 **主 + from-stash** **两步**；**[`build.yml`](.github/workflows/build.yml)** **仍只跑主索引** **—** **不**扩大 **Build** **必过主链**；**角色裁断** 见 **from-stash 文首「文件角色」**、**[任务母表 · 流程](docs/任务母表.md)**、**[主索引篇首](docs/AI任务卡索引.md)**） |
 | **CI workflow** | `.github/workflows/**` |
 | **Gate 脚本** | `scripts/gates/**` |
 | **广播 / 证据 / production-go 链** | 如 **`scripts/gates/broadcast-batch-*.sh`**、**`scripts/ops/*broadcast*`**、**`scripts/ops/*production*go*`**（例 **`region_vault_claim_production_go_gate.py`**）、**`write-indexer-evidence.*`**，及 **`.github/workflows/broadcast-batch-blockers.yml`** 等与其强绑定的 **evidence 落盘 / 链上留痕** 脚本；以「动了 GO 闸、batch 证据 JSON、广播归档」为准。 |
@@ -39,26 +44,31 @@
 
 **已封口 L4 / 本地交付证据 · 纯文档勘误**：若仅合入 **spec/母表/59/27** 等 **文字勘误** 与 **`internal` 测试** **未使用 `use` 清理**，**不**必据此 **重跑** 全量 **Sepolia E2E**；**一行引用** **[TT-L4-PARALLEL-CI-001 §10](docs/runbook/TT-L4-PARALLEL-CI-001.md)** **与** **[TT-LOCAL-CI-DELIVERY-GATE-001](docs/runbook/TT-LOCAL-CI-DELIVERY-GATE-001.md)** **篇首「文档对齐勘误」** **即可** **。** **触及** **`frontend/`** **路由** **/** **`crates/api` 契约** **/** **合约 ABI** **的** **diff** **仍** **须** **按** **上表** **与** **本节** **重跑** **相关** **门禁** **。**
 
-**最省事单人用法**：**日常**改动 **直推 `main`**；改 **索引、CI、gate、广播证据链** 时 **走 PR**。
+**最省事单人用法**：**日常**改动 **直推 `main`** + **[推送前本地检查](#pre-push-local)**；改 **索引、CI、gate、广播证据链** 时 **优先走 PR**（或直推前自觉跑满相关脚本并自留证据）。
 
 ## 必读入口
 
 | 用途 | 文档 |
 |------|------|
 | **全仓库规划方向（本地 → 测试网 → 公网/生产）** | **[README.md](README.md)**「工程规划方向」（**三阶 · 禁止跳阶**）；**[TT-9618](docs/runbook/TT-9618-onboarding-local-testnet.md)**；**[96-索引](docs/spec/96-索引-全链路外生产验收分册.md)**；**[TT-9600](docs/runbook/TT-9600-96-HUB-LOCAL-VERIFICATION-PACK.md)**；**[go-live-checklist](docs/go-live-checklist.md#go-decision-entry-point)**；**Version 真值** **[00](docs/spec/00-文档索引.md#文档版本与最后更新)** |
+| **`docs/runbook` 太杂从哪读起** | **[docs/runbook/README.md](docs/runbook/README.md)**（日常 A 层 vs 专项 C 层；**勿**随机点开 **TT-B…** 排障册） |
+| **一条用户路径串全栈（单页总脊 · 找集成入口）** | **[TT-9625](docs/runbook/TT-9625-golden-path-system-spine.md)**（注册→`/meta`→市场→创单→托管）；**落地顺序**仍跟 **[TT-9621](docs/runbook/TT-9621-master-order-96-backend-db-chain-frontend.md)** |
+| **闭环 → 生产 GO（单序列）** | **[TT-9626](docs/runbook/TT-9626-zero-to-production-go-single-path.md)**（阶段 **0～6**；**不**替代 **[go-live-checklist](docs/go-live-checklist.md)** 逐项勾选） |
+| **先主脊→全站→生产（段式清单）** | **[TT-9627](docs/runbook/TT-9627-delivery-order-spine-then-full-site.md)**（**段 1～6**；与 **TT-9625/9626** 串读） |
+| **主线 vs 支线 · 全站 UI 覆盖边界（读前）** | **[TT-9628 · 覆盖边界](docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-coverage-boundary)**（**93 §8.0**、**96-20**、**R-002**；**不**把矩阵批次或单份 **`report.json` GO** 当成「每页每弹窗每权限已穷举」）；**禁止假完成** **[§0.0.5](docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-no-false-completion)**、**[CONTRIBUTING · 禁止假完成](#no-false-completion)**；**拆线机读闸一行表** **[§0.0.2a](docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-tt9627-gates-index)**；**`report.json` 路径（段 3）** **[§0.0.3](docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-report-json-path-convention)**；**双人拆线（双 Owner · 合线主持人）** **[§0.0.2b](docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-dual-owner-split)** |
 | **Post-Freeze · EXT / F-034+** | **[§0-EXT 受控开发模式](docs/spec/95-附录-Next-Scope-EXT.md#post-freeze-controlled-development-mode)**；工作分支 **`feature/ui-and-95-expansion`**；工程侧摘要见本节 **[Post-Freeze Controlled Development](#post-freeze-ext-dev)** |
 | **单人直推 vs PR** | 本节上文 **[单人 push 与 PR 建议](#solo-push-vs-pr)** |
 | **开发期减负（未发布 · PR/审计/发版闸）** | **[TT — spec→handbook 全量替代清单 · §0](docs/runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md)**（与上文 **开发期** blockquote、**[AI协作话术 §12](docs/AI协作话术-减负与边界.md)** 同条） |
 | **单人节奏 · 规划方向 §0** | [docs/solo-dev-rhythm.md](docs/solo-dev-rhythm.md)（与根 **[README.md](README.md)**「工程规划方向」同源） |
 | 阶段顺序、开工/发版 bar | [07-开发流程与顺序](docs/spec/07-开发流程与顺序.md)（**唯一入口**：**§零**、**§二 2.5**、**§二 2.4**、**§四 4.3**、§五）；**文档审计与机器门禁一览**见 [00-文档治理总册 §8.3](docs/spec/00-文档治理总册.md#doc-audit-gates-ssot) |
-| **handbook 工作台、ADR（Why）、`engineering` 内 Wave/阶段词** | [handbook/README.md](docs/handbook/README.md)；**团队口径**（与 **[engineering/README 段首](docs/handbook/engineering/README.md)**/**[09 · §10c 表后](docs/handbook/engineering/09-文档迁移覆盖审计报告.md#audit-cluster-exec-list)** 对读）：**engineering 仅为导读，不替代 spec**；**04 §3.4 / 93 / 14 / 代码与脚本** 为契约与机读真源；**ADR** 唯一 **`docs/adr/*.md`** — [docs/adr/README.md](docs/adr/README.md) + [07-架构决策记录ADR规范](docs/handbook/engineering/07-架构决策记录ADR规范.md)（**不**替代 **04/93/14/代码与脚本**）；**Wave/阶段消费词** [32 §0](docs/handbook/engineering/32-横切-Wave与阶段体系导读.md#x32-0-terminology)（与 **07** 对读）；**engineering 空 `NN`（60～99）非遗漏**见 [engineering/README · 号段预留](docs/handbook/engineering/README.md#eng-read-number-blocks)（[手册 00 §5](docs/handbook/00-手册总览与编制规范.md#hb-00-number-blocks)）；**读前摘要** 同行见 **[spec/00](docs/spec/00-文档索引.md)**；**`handbook/engineering*` 文档版本母表边界**（**主序 `00～50` + `engineering/README` + `engineering/adr/README`**；**`EVIDENCE-*`/`_TEMPLATE` 不逐行入表**）见 **[spec/00 · 文档版本与最后更新](docs/spec/00-文档索引.md#文档版本与最后更新)** 节前 **「handbook/engineering 版本母表边界」** 段；**`EVIDENCE-*-cluster-verified.md`**：**`bash scripts/check-handbook-engineering-content.sh`**（**`HBOOK-ENG-EVIDENCE`**）；母版 **[22 §2](docs/handbook/engineering/22-横切-簇级verified证据模板.md#vtpl-2-naming)**（与下文 **「提 PR 前」** 同条） |
-| **spec→handbook 迁移矩阵与簇态审计** | **[engineering/08 §3](docs/handbook/engineering/08-文档与spec迁移台账.md#mig-2-matrix)**（台账矩阵）· **[engineering/09 §3](docs/handbook/engineering/09-文档迁移覆盖审计报告.md#audit-coverage)**（覆盖审计；**与 08 §3 同 PR 对拍**）；与 **[engineering/README](docs/handbook/engineering/README.md)** 段首 **簇态台账** 同轮对拍；**migrated / 覆盖度 full 仍不意味可删 `docs/spec`**（见 **[08 §2](docs/handbook/engineering/08-文档与spec迁移台账.md#mig-delete-policy)**、**[SPEC-MIGRATION-STATUS](docs/handbook/corpus/SPEC-MIGRATION-STATUS.md)**、**[98 §2](docs/spec/98-以代码为真源的文档体系与旧文档替代路线图.md)**） |
+| **handbook 工作台、ADR（Why）、`engineering` 内 Wave/阶段词** | [handbook/README.md](docs/handbook/README.md)；**团队口径**（与 **[engineering/README 段首](docs/handbook/engineering/README.md)**/**[09 · §10c 表后](docs/handbook/engineering/09-文档迁移覆盖审计报告.md#audit-cluster-exec-list)** 对读）：**engineering 仅为导读，不替代 spec**；**04 §3.4 / 93 / 14 / 代码与脚本** 为契约与机读真源；**ADR** 唯一 **`docs/adr/*.md`** — [docs/adr/README.md](docs/adr/README.md) + [07-架构决策记录ADR规范](docs/handbook/engineering/07-架构决策记录ADR规范.md)（**不**替代 **04/93/14/代码与脚本**）；**Wave/阶段消费词** [32 §0](docs/handbook/engineering/32-横切-Wave与阶段体系导读.md#x32-0-terminology)（与 **07** 对读）；**engineering 空 `NN`（60～99）非遗漏**见 [engineering/README · 号段预留](docs/handbook/engineering/README.md#eng-read-number-blocks)（[手册 00 §5](docs/handbook/00-手册总览与编制规范.md#hb-00-number-blocks)）；**读前摘要** 同行见 **[spec/00](docs/spec/00-文档索引.md)**；**`handbook/engineering*` 文档版本母表边界**（**主序 `00～50` + `engineering/README` + `engineering/adr/README`**；**`EVIDENCE-*`/`_TEMPLATE` 不逐行入表**）见 **[spec/00 · 文档版本与最后更新](docs/spec/00-文档索引.md#文档版本与最后更新)** 节前 **「handbook/engineering 版本母表边界」** 段；**`EVIDENCE-*-cluster-verified.md`**：**`bash scripts/check-handbook-engineering-content.sh`**（**`HBOOK-ENG-EVIDENCE`**）；母版 **[22 §2](docs/handbook/engineering/22-横切-簇级verified证据模板.md#vtpl-2-naming)**（与下文 **[「推送前本地检查」](#pre-push-local)** 同条） |
+| **spec→handbook 迁移矩阵与簇态审计** | **[engineering/08 §3](docs/handbook/engineering/08-文档与spec迁移台账.md#mig-2-matrix)**（台账矩阵）· **[engineering/09 §3](docs/handbook/engineering/09-文档迁移覆盖审计报告.md#audit-coverage)**（覆盖审计；**与 08 §3 同批对拍**）；与 **[engineering/README](docs/handbook/engineering/README.md)** 段首 **簇态台账** 同轮对拍；**migrated / 覆盖度 full 仍不意味可删 `docs/spec`**（见 **[08 §2](docs/handbook/engineering/08-文档与spec迁移台账.md#mig-delete-policy)**、**[SPEC-MIGRATION-STATUS](docs/handbook/corpus/SPEC-MIGRATION-STATUS.md)**、**[98 §2](docs/spec/98-以代码为真源的文档体系与旧文档替代路线图.md)**） |
 | 文档命名、索引、迁移 | [00-文档治理总册](docs/spec/00-文档治理总册.md) |
 | API 单源 | [04-后端与API](docs/spec/04-后端与API.md) §3.4 |
 | 合约 / ABI / 前端对齐 | [14-合约-API-ABI-前后端对齐](docs/spec/14-合约-API-ABI-前后端对齐.md) |
 | 缺口与迭代优先级 | [缺口与待补-官方总表](docs/spec/缺口与待补-官方总表.md)、[51-阶段开发技术文档](docs/spec/51-阶段开发技术文档.md) |
 | 脚本与门禁 | [scripts/README.md](scripts/README.md) |
-| **96-18 准入费 · PG 机读一键（② · 须 `DATABASE_URL`）** | **`bash scripts/gates/tt-9618-onboarding-pg-evidence.sh`** — **[TT-9618 §3.5.3](docs/runbook/TT-9618-onboarding-local-testnet.md#tt-9618-pg-evidence-one-shot)**（**§3.1 步 5** **`matrix_93_admin_onb`** **含** **`029`/`030`/`031_*`** **`GET …/admin/jobs?queue_name=onboarding_webhook`** **+** **步 7** **`005_f036_ext`→`017`→`014`→`016`** **+** **§3.6** **`008b`→`009`–`012`**（**`matrix_93_d_onb_009`** **子串** **含** **`009b_*`** **`PRIMARY_CLAIM`** **`async_jobs`** **主选队**），与脚本头注释同源）；命令筛子 **[96-18-未完成 §4](docs/spec/96-18-未完成清单与多维检查.md#9618-cmd-cheatsheet)**；**一页优先级 / backlog** **[`#9618-one-page-priority`](docs/spec/96-18-未完成清单与多维检查.md#9618-one-page-priority)** **v1.0.118+**；**批次台账** **[`#9618-batches`](docs/spec/96-18-未完成清单与多维检查.md#9618-batches)**；与 **[`93-matrix-batch-tracker`](docs/runbook/93-matrix-batch-tracker.md)** **互指表** **「TT-9618」** **行** **对读** |
+| **96-18 准入费 · PG 机读一键（② · 须 `DATABASE_URL`）** | **`bash scripts/gates/tt-9618-onboarding-pg-evidence.sh`** — **[TT-9618 §3.5.3](docs/runbook/TT-9618-onboarding-local-testnet.md#tt-9618-pg-evidence-one-shot)**（**§3.1 步 5** **`matrix_93_admin_onb`** **含** **`029`/`030`/`031_*`** **`GET …/admin/jobs?queue_name=onboarding_webhook`** **+** **步 7** **`005_f036_ext`→`017`→`014`→`016`** **+** **§3.6** **`008b`→`009`–`012`**（**`matrix_93_d_onb_009`** **子串** **含** **`009b_*`** **`PRIMARY_CLAIM`** **`async_jobs`** **主选队**），与脚本头注释同源）；命令筛子 **[96-18-未完成 §4](docs/spec/96-18-未完成清单与多维检查.md#9618-cmd-cheatsheet)**；**一页优先级 / backlog** **[`#9618-one-page-priority`](docs/spec/96-18-未完成清单与多维检查.md#9618-one-page-priority)** **v1.0.125+**；**批次台账** **[`#9618-batches`](docs/spec/96-18-未完成清单与多维检查.md#9618-batches)**；与 **[`93-matrix-batch-tracker`](docs/runbook/93-matrix-batch-tracker.md)** **互指表** **「TT-9618」** **行** **对读** |
 | 本地起停（Win / Unix · Next 15 · 3012） | [scripts/README.md](scripts/README.md) **§一「日常开发」** 与篇首**快速使用**；[07-开发流程与顺序](docs/spec/07-开发流程与顺序.md) 文首**读前摘要**「**本地开发起停（Win · Unix · Next 15）**」行；[docs/测试账号与本地联调.md](docs/测试账号与本地联调.md) |
 | 旧文档 / 归档 / 现行分层（可读性整理） | [00-文档使用分层说明-旧整合与现行SSOT](docs/spec/00-文档使用分层说明-旧整合与现行SSOT.md) |
 | **与 AI 协作（减负话术 · 项目规则）** | [AI协作话术-减负与边界](docs/AI协作话术-减负与边界.md)；Cursor 见 [.cursor/rules/traveltrust-ai-collab.mdc](.cursor/rules/traveltrust-ai-collab.mdc)（`alwaysApply`） |
@@ -82,9 +92,11 @@
 - **`read_contract_scan_matches_registry`** 与/或 **`read_contract_router_get_smoke_for_all_registered_paths`** 将失败（CI 与本地 `cargo test -p traveltrust-api` 同源）。
 - 该改动视为**未完成**：合入前须补全；**禁止**为过关而削弱门禁或篡改封口实现（B-115 / B-116 / P5）。
 
-## 提 PR 前（本地）
+<a id="pre-push-local"></a>
 
-在根目录执行（按你改动范围取舍）：
+## 推送前本地检查（独立开发默认；合并到主线前亦同）
+
+在仓库根执行（按你改动范围取舍；**直推 `main` 与合并到主线前同一套**）：
 
 ```bash
 # 后端
@@ -101,7 +113,9 @@ cd frontend && npm run lint && npx tsc --noEmit && npm test
 # E2E 稳定性探针同次：CHECK_FRONTEND_NPM_BUILD=1 bash scripts/gates/e2e-stability-probe.sh
 ```
 
-**触及 `crates/api` 准入费 / onboarding webhook / `matrix_93_*_onb_*` 时（建议）**：在已迁移 **PostgreSQL** 上导出 **`DATABASE_URL`** 后执行 **`bash scripts/gates/tt-9618-onboarding-pg-evidence.sh`**（**[TT-9618 §3.5.3](docs/runbook/TT-9618-onboarding-local-testnet.md#tt-9618-pg-evidence-one-shot)**；**串跑顺序** 见 **`scripts/gates/tt-9618-onboarding-pg-evidence.sh`** **头注释**（**`admin_onb`→`006`→`005_f036_ext`→`017`→`014`→`016`→`008b`→`009`–`012`**；**首段** **`matrix_93_admin_onb`** **子串** **已含** **`matrix_93_admin_onb_031_*`** **`admin/jobs`** **`queue_name`** **对拍**；**`matrix_93_d_onb_009`** **子串** **已含** **`009b_*`** **`async_jobs`** **主选队** **`PRIMARY_CLAIM`** **PG·IT**）；未设 **`DATABASE_URL`** 时 **exit 2**，**不**冒充 **②** 已验收）。可选 **`CHECK_FRONTEND_NPM_BUILD=1`** 串 **`npm run build`**。单条筛子见 **[96-18-未完成 §4](docs/spec/96-18-未完成清单与多维检查.md#9618-cmd-cheatsheet)**；**P0/P1/P2 真源** 见 **`#9618-one-page-priority`**（**[同文件](docs/spec/96-18-未完成清单与多维检查.md#9618-one-page-priority)** **v1.0.118+**）与 **`#9618-batches`**（**[§1 批次台账](docs/spec/96-18-未完成清单与多维检查.md#9618-batches)**）。
+**若 `git diff` 含 `docs/AI任务卡索引.md` 或 `docs/AI任务卡索引.from-stash.md`（一览表 / 正文）**：对**有变**的文件，仓库根 **`bash scripts/check-ai-task-card-index-overview.sh <该路径>`** **须** **exit 0**（与下文 **[main · AI 任务卡索引一览门禁](#main-branch-ai-index-gate)** 同源；**Win** **勿** **单独** **依赖** **PATH** **首位** **`python3`** **商店占位体**）。**`bash scripts/gates/ci-local-delivery-minimum.sh`**（根 **`scripts/ci-local-delivery-minimum.sh`** 同编排）与 **`bash scripts/dev-preflight.sh`**（**`dev/dev-preflight.sh`**，**`check-strict` + 三连** 之后）在 **unset** **`SKIP_AI_TASK_CARD_INDEX_OVERVIEW`** 且 **unset** **`CI_LOCAL_SKIP_AI_TASK_CARD_INDEX`**（默认）时，若 **`docs/AI任务卡索引.md`** **或** **`docs/AI任务卡索引.from-stash.md`** **相对 `HEAD`（工作区 / 暂存）** 或 **（存在本地 `main` 时）`main..HEAD`** **有变**，**自动**串 **`bash scripts/gates/maybe-run-ai-task-card-index-overview-on-diff.sh`** 内同一 **`check-ai-task-card-index-overview.sh`**；**仅**在确有理由跳过机读时设 **`SKIP_AI_TASK_CARD_INDEX_OVERVIEW=1`**（推荐）或 **`CI_LOCAL_SKIP_AI_TASK_CARD_INDEX=1`**（历史名）。
+
+**触及 `crates/api` 准入费 / onboarding webhook / `matrix_93_*_onb_*` 时（建议）**：在已迁移 **PostgreSQL** 上导出 **`DATABASE_URL`** 后执行 **`bash scripts/gates/tt-9618-onboarding-pg-evidence.sh`**（**[TT-9618 §3.5.3](docs/runbook/TT-9618-onboarding-local-testnet.md#tt-9618-pg-evidence-one-shot)**；**串跑顺序** 见 **`scripts/gates/tt-9618-onboarding-pg-evidence.sh`** **头注释**（**`admin_onb`→`006`→`005_f036_ext`→`017`→`014`→`016`→`008b`→`009`–`012`**；**首段** **`matrix_93_admin_onb`** **子串** **已含** **`matrix_93_admin_onb_031_*`** **`admin/jobs`** **`queue_name`** **对拍**；**`matrix_93_d_onb_009`** **子串** **已含** **`009b_*`** **`async_jobs`** **主选队** **`PRIMARY_CLAIM`** **PG·IT**）；未设 **`DATABASE_URL`** 时 **exit 2**，**不**冒充 **②** 已验收）。可选 **`CHECK_FRONTEND_NPM_BUILD=1`** 串 **`npm run build`**。单条筛子见 **[96-18-未完成 §4](docs/spec/96-18-未完成清单与多维检查.md#9618-cmd-cheatsheet)**；**P0/P1/P2 真源** 见 **`#9618-one-page-priority`**（**[同文件](docs/spec/96-18-未完成清单与多维检查.md#9618-one-page-priority)** **v1.0.125+**）与 **`#9618-batches`**（**[§1 批次台账](docs/spec/96-18-未完成清单与多维检查.md#9618-batches)**）。
 
 **GitHub · L4 parallel CI（观测 workflow）**：与 **`build.yml`** 的链关烟测 **正交**；须配置组织 **Actions 计费** 与（若要真跑）secret **`L4_CI_DOTENV_B64`**。**不得**仅凭 workflow **总结论 ✓** 认定已在 CI 跑完 **`npm run e2e:sepolia`**。长寿命 PR（含 Dependabot）请 **定期合并 `main`**，避免 **`frontend/package.json`** 与 **`e2e:sepolia`** 契约漂移。排障与归因：**[docs/runbook/TT-L4-PARALLEL-CI-001.md](docs/runbook/TT-L4-PARALLEL-CI-001.md)**；本地 **`bash scripts/gh-l4-run-inspect.sh`** 或 **`powershell -File scripts/gh-l4-run-inspect.ps1`**（须已 **`gh auth login`**；可选 **`GH_BRANCH=<ref>`** 筛分支）。
 
@@ -110,6 +124,8 @@ cd frontend && npm run lint && npx tsc --noEmit && npm test
 ### PR 须声明 F/X/G 分区（spec/92 · 涉及 UI 动效或路由时）
 
 **下列** **任一** **情形** **，** **PR** **描述** **须** **写明** **：** **（** **1** **）** **影响** **路由** **或** **页面** **范围** **；** **（** **2** **）** **对应** **[spec/92](docs/spec/92-P0-全站UI分区控制表-金融体验灰区与动效裁决.md)** **表** **A** **之** **F** **/** **X** **/** **G** **分区** **。** **范围** **包括** **：** **修改** **路由** **；** **新增** **/** **调整** **动效** **、** **粒子** **、** **全页** **背景** **；** **修改** **资金** **相关** **UI** **。** **未** **注明** **者** **，** **review** **可** **要求** **补全** **或** **拒绝** **合入** **（** **防** **Spec** **Collision** **）** **。** **执行** **入口** **见** **[07 §五 5.3](docs/spec/07-开发流程与顺序.md)** **文首** **「** **入口** **强制** **」** **段** **。**
+
+<a id="github-actions-unavailable"></a>
 
 ### GitHub Actions 不可用（欠费 / 关闭）时
 
@@ -151,25 +167,25 @@ bash scripts/check-handbook-engineering-content.sh
 
 **可选（I5）**：若改动 **`docs/handbook/engineering/*.md`** 内指向 **`contracts/`**、**`corpus/`**、**`ops/`** 等仓内相对路径，建议再跑 **`bash scripts/check-handbook-engineering-local-md-links.sh`**（与 **`check-handbook-engineering-content`** 互补；**CI 默认**不串跑）。
 
-**`engineering/00～50` 主序 `NN-*.md` 增删改**：须 **[手册 00 §3 工程栏](docs/handbook/00-手册总览与编制规范.md#hb-00-master-table)**、**[engineering/README 主序列](docs/handbook/engineering/README.md)**、磁盘文件名 **NN** **三处对拍**（同序、同号）；勾选项 **[engineering/02 · §4a](docs/handbook/engineering/02-生产级文档约束与合入门禁.md#hb-prod-doc-triple-sync)**。文首 **`SSOT（必读）`** blockquote 须与 **[engineering/README](docs/handbook/engineering/README.md)** 段首及 **[手册 00 · §2.2 最小集](docs/handbook/00-手册总览与编制规范.md#hb-00-frontmatter-min)** 同键（**`engineering/`** **仅为导读，不替代 spec**；链 **04 §3.4** / **93** / **14** / **`crates/`·`contracts/`·`frontend/`** 与当次 **PR** **脚本门禁**；**HTTP/ABI 同 PR 闭包**见 **[04 · §1a](docs/handbook/engineering/04-HTTP与路由契约导读.md#hb-eng-04-drift-checklist)**、**[50 · §5](docs/handbook/engineering/50-链上与ABI导读.md#b50-5-usage)**）。
+**`engineering/00～50` 主序 `NN-*.md` 增删改**：须 **[手册 00 §3 工程栏](docs/handbook/00-手册总览与编制规范.md#hb-00-master-table)**、**[engineering/README 主序列](docs/handbook/engineering/README.md)**、磁盘文件名 **NN** **三处对拍**（同序、同号）；勾选项 **[engineering/02 · §4a](docs/handbook/engineering/02-生产级文档约束与合入门禁.md#hb-prod-doc-triple-sync)**。文首 **`SSOT（必读）`** blockquote 须与 **[engineering/README](docs/handbook/engineering/README.md)** 段首及 **[手册 00 · §2.2 最小集](docs/handbook/00-手册总览与编制规范.md#hb-00-frontmatter-min)** 同键（**`engineering/`** **仅为导读，不替代 spec**；链 **04 §3.4** / **93** / **14** / **`crates/`·`contracts/`·`frontend/`** 与当次变更的 **脚本门禁**；**HTTP/ABI 同批闭包**见 **[04 · §1a](docs/handbook/engineering/04-HTTP与路由契约导读.md#hb-eng-04-drift-checklist)**、**[50 · §5](docs/handbook/engineering/50-链上与ABI导读.md#b50-5-usage)**）。
 
 **手册侧评审口径**（「目录干不干净」、**英文文件名**能否改、分属 **L0～L3** 哪一级）：**[docs/handbook/00-手册总览与编制规范.md · §2.1.0](docs/handbook/00-手册总览与编制规范.md#hb-00-doc-cleanliness)**、**[§2.1.3](docs/handbook/00-手册总览与编制规范.md#hb-00-naming-latin-tiers)**。
 
-**合并前默认建议**：改动触及 **`crates/api/src/routes/**`**、**`frontend/lib/api.ts`** 或 **`frontend/lib/apiClient/**`** 中与 **`/api/v1/*`** 相关的路径或常量时，**应在 PR 合并前**执行本脚本（与 **Build** CI、`scripts/dev-preflight.sh` 第二步同源）；PR 描述可附通过日志或截图。
+**合并前默认建议**：改动触及 **`crates/api/src/routes/**`**、**`frontend/lib/api.ts`** 或 **`frontend/lib/apiClient/**`** 中与 **`/api/v1/*`** 相关的路径或常量时，**应在合并到主线前**执行本脚本（与 **Build** CI、`scripts/dev-preflight.sh` 第二步同源）；合并说明可附通过日志或截图。
 
 串联四步：**`check-04-routes-vs-code.py`**（§3.4 API 表 vs `crates/api` **`.route`**）→ **`check-04-frontend-routes-vs-app.py`** → **`check-13-1-table1-routes-vs-app.py`** → **`check-13-1-routes-covered-by-04-frontend-table.py`**（**13-1 表 1** ⊆ **04** 前端路径表）。默认 **`STRICT_WARNINGS=1`**（与 CI 一致；排障可 `STRICT_WARNINGS=0`）。
 
-**04 / 14 HTTP 机读路由表与门禁锚点冻结（约定）**：以 **`bash scripts/run-check-04-routes.sh`** **exit 0** 作为 **[04 §3.4](docs/spec/04-后端与API.md)** 与 **[14](docs/spec/14-合约-API-ABI-前后端对齐.md)** 当前**表格结构**及 **`run-check-04-routes`** 后半串联门禁（**B450～B457** 等）所依赖的**字面锚点**的冻结验收点。**不要**在同一 PR 内混做「版式 / 可读性重排」与上述锚点/表结构变更；若只做 04/14 排版或拆表，请**另开独立 PR**，且合并前仍须本脚本绿。**默认**不再提交「仅为扩写 **`run-check-04-routes`** 表锚点、无 HTTP/路由真值变更」的单独 04/14 文档 PR；若 API 或挂载路由真值变更，须与 **`crates/api` / `frontend`** **同批**更新 04 §3.4 / 14 并保持本脚本绿。
+**04 / 14 HTTP 机读路由表与门禁锚点冻结（约定）**：以 **`bash scripts/run-check-04-routes.sh`** **exit 0** 作为 **[04 §3.4](docs/spec/04-后端与API.md)** 与 **[14](docs/spec/14-合约-API-ABI-前后端对齐.md)** 当前**表格结构**及 **`run-check-04-routes`** 后半串联门禁（**B450～B457** 等）所依赖的**字面锚点**的冻结验收点。**不要**在同一合并批次内混做「版式 / 可读性重排」与上述锚点/表结构变更；若只做 04/14 排版或拆表，请**另开独立合并**，且合并前仍须本脚本绿。**默认**不再提交「仅为扩写 **`run-check-04-routes`** 表锚点、无 HTTP/路由真值变更」的单独 04/14 文档向合并；若 API 或挂载路由真值变更，须与 **`crates/api` / `frontend`** **同批**更新 04 §3.4 / 14 并保持本脚本绿。
 
-**后续工作重心（约定）**：在 04/14 冻结前提下，优先把 **[spec/93](docs/spec/93-全站功能验证矩阵-域别回归清单.md)** 功能链路做成**真实环境执行**：对先前记 **BLOCKED** 的用例，在具备依赖的环境（staging、本地全栈、链/邮件等）上**逐条重跑**，落盘为 **PASS** 或 **FAIL**（**禁止**长期停留在无证据的 BLOCKED）；最小证据集与汇总 **`report.json`** 见 **93 §0.5**、**[R-001](docs/spec/R-001-全站回归报告模板与汇总JSON结构.md)**；批次排期与证据目录模板见 **[`docs/runbook/93-matrix-batch-tracker.md`](docs/runbook/93-matrix-batch-tracker.md)**，自动化回填见 **[R-002 §4](docs/spec/R-002-回归执行闭环与发布准入.md)**。
+**后续工作重心（约定）**：在 04/14 冻结前提下，优先把 **[spec/93](docs/spec/93-全站功能验证矩阵-域别回归清单.md)** 功能链路做成**真实环境执行**：对先前记 **BLOCKED** 的用例，在具备依赖的环境（staging、本地全栈、链/邮件等）上**逐条重跑**，落盘为 **PASS** 或 **FAIL**（**禁止**长期停留在无证据的 BLOCKED）；最小证据集与汇总 **`report.json`** 见 **93 §0.5**、**[R-001](docs/spec/R-001-全站回归报告模板与汇总JSON结构.md)**；批次排期与证据目录模板见 **[`docs/runbook/93-matrix-batch-tracker.md`](docs/runbook/93-matrix-batch-tracker.md)**，自动化回填见 **[R-002 §4](docs/spec/R-002-回归执行闭环与发布准入.md)**。**UI 覆盖边界（矩阵 / 批次 / `report.json` ≠ 每页·每弹窗·每权限穷举）**：[TT-9628 · 覆盖边界](docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-coverage-boundary)（**[93 §8.0](docs/spec/93-全站功能验证矩阵-域别回归清单.md)**、**[96-20](docs/spec/96-20-前后端页面对齐与UI生产级审计报告.md)**、**R-002** 读前同键）。
 
 Windows：`.\scripts\run-check-04-routes.ps1`。命令参数、**`STRICT_WARNINGS`** 与 **59**/**14 §2.1**/**07 §二 2.4·A1** 配套说明见 [scripts/README.md](scripts/README.md) **§三** 验收清单表内 **`run-check-04-routes`** / **`check-04-routes-vs-code.py`** 行；总览见 [07 §二 2.3](docs/spec/07-开发流程与顺序.md)。**`api_router()`** 在 `crates/api/src/routes/mod.rs` 中 **`merge` 共 22 次**（与 [07 §零 0.6](docs/spec/07-开发流程与顺序.md)、[14 §2.1](docs/spec/14-合约-API-ABI-前后端对齐.md)、[95 §12.3](docs/spec/95-全链路生产就绪检查清单与完成度矩阵.md) 同序：`health_meta`、`auth`、`admin`、`me`、`market_subsite`、`guides`、`orders`、`traveltrust_page`、`itineraries`、`discover`、`messages`、`disputes`、`evidence`、`media`、`intents`、`community`、`country_ledger_jurisdiction`、`did_rank`、`governance`、`trust_growth`、`onboarding`、`internal`）；**ABI** 静态核对叙事见 **14 §2.1**、**§1.2**；全域检查清单篇首机读互链见 [59](docs/spec/59-企业级全域检查清单与文档补充计划.md)。
 
-**`docs/spec/snapshots/`** 与 **`docs/spec/27-archived/`**：**不**作为现行 HTTP/路由/合约契约 SSOT；变更路由或 API 契约须以 **[04 §3.4](docs/spec/04-后端与API.md)**、**[13-1 表 1](docs/spec/13-1-UI产品级SSOT与页面规范.md)**、**[14](docs/spec/14-合约-API-ABI-前后端对齐.md)** 与 **[00](docs/spec/00-文档索引.md)** 为准，**禁止**仅凭 snapshots 或归档 27 正文替代 **04/13-1/14** 的 PR 对读。
+**`docs/spec/snapshots/`** 与 **`docs/spec/27-archived/`**：**不**作为现行 HTTP/路由/合约契约 SSOT；变更路由或 API 契约须以 **[04 §3.4](docs/spec/04-后端与API.md)**、**[13-1 表 1](docs/spec/13-1-UI产品级SSOT与页面规范.md)**、**[14](docs/spec/14-合约-API-ABI-前后端对齐.md)** 与 **[00](docs/spec/00-文档索引.md)** 为准，**禁止**仅凭 snapshots 或归档 27 正文替代 **04/13-1/14** 的合并前对读。
 
 改动 **合约** 或 **`contracts/abi` / `frontend/dapp/abis`** 时：在 `contracts/` 下 `forge build` / `forge test`，按 [scripts/README.md](scripts/README.md) **§三** **`sync-abi-from-forge`** / **`check-55-s13`** 行同步 ABI，并执行 `bash scripts/check-55-s13.sh`（Windows：`.\scripts\check-55-s13.ps1`）。契约与 **sync-abi → dapp/abis → 55-S13** 有序清单见 [14 §1.2](docs/spec/14-合约-API-ABI-前后端对齐.md)、[ops/RUNBOOK.md](ops/RUNBOOK.md) **§12.4**；总览见 [07 §二 2.3](docs/spec/07-开发流程与顺序.md) **55-S13** 子弹与文首**读前摘要**「**ABI·55-S13**」行。**上测试网/主网前**：须先 **Anvil** 本地闭环（订单主路径 + 治理相关 **Target** 若已开发），见 [contracts/README](contracts/README.md)、[Runbook §2.56](ops/RUNBOOK.md)、[governance-token/02 §1.3](docs/spec/governance-token/02-对内技术规格-草案.md)、[07 §二 Phase 3](docs/spec/07-开发流程与顺序.md)。
 
-**Handbook 一行对拍**：**[engineering/05 · §3](docs/handbook/engineering/05-本地环境与常用门禁速查.md)**「改动类型 × 建议门禁」矩阵与上段同序互补。**B-181**（**spec/00** 读前、部分 **workflow** 仍写历史 **`routes/*.rs`** 字面；**开文件**以 **`crates/api/src/routes/*/mod.rs`** 为准；**HTTP** 仍以 **04 §3.4 + `run-check-04-routes`**）见 **[engineering/04 §2](docs/handbook/engineering/04-HTTP与路由契约导读.md)**、**[REG-04](docs/handbook/corpus/REG-04-API叙事.md)**。
+**Handbook 一行对拍**：**[engineering/05 · §3](docs/handbook/engineering/05-本地环境与常用门禁速查.md)**「改动类型 × 建议门禁」矩阵与上段同序互补。**B-181**（**spec/00** 读前；主链 **`.github/workflows`** **`check_anchor`** 已与 **`internal/`**、**`community/router.rs`** 等对拍；**旧分支 / 未拉最新** 仍可能见历史 **`routes/*.rs`** 字面；**开文件**以 **`crates/api/src/routes/*/mod.rs`** 为准；**HTTP** 仍以 **04 §3.4 + `run-check-04-routes`**）见 **[engineering/04 §2](docs/handbook/engineering/04-HTTP与路由契约导读.md)**、**[REG-04](docs/handbook/corpus/REG-04-API叙事.md)**。若同时改 **「CI 欠费 / 覆盖边界 / 禁止假完成 / ISS-007·`gen-r002`·`PARTIAL_GO`·`GO_local_r002_verify` / §0.0.2a 机读闸索引 / §0.0.3 `report.json` 路径 / AI 任务卡主索引与 `from-stash` 角色裁断 / 任务母表流程 / AI 任务卡索引一览与 `maybe-run-ai-task-card-index-overview-on-diff`（`SKIP_AI_*` / `CI_LOCAL_SKIP_*`）/ `dev-preflight`·`ci-local` / `docs/AI协作话术-减负与边界` §0.2（多文互指）或极简版里的 **TT-9628 §0.0.4** 句」** 叙事，**合并前**按 **[TT-9628 §0.0.4](docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-0-0-4-doc-hygiene)** **`rg`** 清单扫 **CONTRIBUTING / 根 README / solo-dev / go-live（根 + `docs/runbook/go-live-checklist`）/ handbook/engineering/05 / 96-索引 / R-001 / R-002 / R-003 / 96-11 / 130 / spec/04（零、）/ spec/00 / scripts/README / TT-LOCAL / `.github/PULL_REQUEST_TEMPLATE.md` / `scripts/gates/maybe-run-ai-task-card-index-overview-on-diff.sh` / Cursor 规则 / TT-9628 / `docs/AI协作话术-减负与边界.md` / AGENTS / docs/00-文档索引 / docs/README.md / `docs/AI任务卡索引.from-stash.md` / `docs/任务母表.md` / runbook/README / `evidence/GO_local_r002_verify/README.md` / 缺口官方总表** 防分叉。
 
 ## API 已启动时的快速验收（可选）
 
@@ -204,17 +220,19 @@ bash scripts/validate-evidence-manifest.sh self-test
 
 实现：`scripts/dev/validate_evidence_manifest.py`（**Python 3** 标准库）。详见 [evidence/README.md](evidence/README.md) **manifest 格式与必填字段**。
 
-**IMP-EV-001**：**`evidence/GO_20260409`** 为仓库内**唯一**机读基线（frozen baseline，**禁止**在常规 PR 中改其内容）。**凡含 `manifest.json` 的新增或变更 evidence bundle**（新 **`GO_YYYYMMDD`**、**`GO_RC_*`** 等），在**合并入 `main` 之前**须已通过 **`python3 scripts/dev/validate_evidence_manifest.py validate <DIR> --emit-summary --verify-artifact-files`**（**`scripts/validate-evidence-manifest.sh`** **参数透传**）；否则 **一律禁止合并**。**`main`** 须将 **`Evidence manifest validate / IMP-EV-001 validate + JSON summary`** 设为 **required status check**。细则与 CI 编排见 **[docs/runbook/evidence-gate.md](docs/runbook/evidence-gate.md)**。
+**IMP-EV-001**：**`evidence/GO_20260409`** 为仓库内**唯一**机读基线（frozen baseline，**禁止**在常规变更中改其内容）。**凡含 `manifest.json` 的新增或变更 evidence bundle**（新 **`GO_YYYYMMDD`**、**`GO_RC_*`** 等），在**写入 `main` 之前**（**直推或合并到主线**均适用）须已通过 **`python3 scripts/dev/validate_evidence_manifest.py validate <DIR> --emit-summary --verify-artifact-files`**（**`scripts/validate-evidence-manifest.sh`** **参数透传**）；否则 **不得推送/合入**。**组织已启用分支保护且将该校验列为 `main` 必过时**，另须满足 GitHub **required status check**；**独立开发、未开该必过时**，仍以本地 **`exit 0`** 与上文命令为硬要求。细则与 CI 编排见 **[docs/runbook/evidence-gate.md](docs/runbook/evidence-gate.md)**。
 
 <a id="sqlx-migration-pr-checklist"></a>
 
-## PR 检表：新增 SQLx 迁移（IMP-DB-002）
+## 合并检表：新增 SQLx 迁移（IMP-DB-002）
 
-向 **`crates/api/migrations/`** 增加或实质修改 **`.sql`** 时，PR **描述或评审**中须能回答（与 [04 §四](docs/spec/04-后端与API.md) **数据库迁移策略（P0）**、[41](docs/spec/41-后端数据库接库与落地清单.md)、[55 §1.2](docs/spec/55-阶段-数据同步与数据库功能同步.md) **O10** 对读）：
+**运维单入口（apply / 回滚叙事 / 只读账本）**：[sqlx-migration-ops.md](docs/runbook/sqlx-migration-ops.md)。
+
+向 **`crates/api/migrations/`** 增加或实质修改 **`.sql`** 时，**变更说明**（合并说明、或直推时的 commit 正文 / 旁注）中须能回答（与 [04 §四](docs/spec/04-后端与API.md) **数据库迁移策略（P0）**、[41](docs/spec/41-后端数据库接库与落地清单.md)、[55 §1.2](docs/spec/55-阶段-数据同步与数据库功能同步.md) **O10** 对读）：
 
 - [ ] **回滚或前滚修复路径**：本次 schema 变更的 **down migration**、**备份恢复** 或 **前滚热修脚本** 方案之一已写明（**不要求** 历史迁移一次性补全 **down**）。
 - [ ] **数据一致性影响**：是否锁表 / 是否需双写或回填；若有破坏性变更，与 **RUNBOOK §2.6** 发版回滚叙事可衔接。
-- [ ] **文档联动**：若本 PR 新增迁移文件，**须** 计划同批或跟进更新 **55 §1.2** 迁移一览、**04**/**41** 接库范围（**O10** 纪律）。
+- [ ] **文档联动**：若本合并引入新的迁移文件，**须** 计划同批或跟进更新 **55 §1.2** 迁移一览、**04**/**41** 接库范围（**O10** 纪律）。
 
 ## 变更类型与文档义务
 
@@ -227,24 +245,31 @@ bash scripts/validate-evidence-manifest.sh self-test
 - **`crates/api/src` 大改**（易触达 **50-O-B2** 行数上限）：合并前建议 `bash scripts/check-48-line-count.sh`（严格模式 **`STRICT=1 bash scripts/check-48-line-count.sh`**）；见 [48 §1.1](docs/spec/48-后端模块化拆分与落地清单.md)、[scripts/README.md](scripts/README.md) **§二「CI 门禁」**；入口总览 [07-开发流程与顺序](docs/spec/07-开发流程与顺序.md) 文首**读前摘要**「**API 单文件行数 · 27-archived 链（50-O-B2 · 工具）**」行、**§二 2.3**。
 - **批量改动 `docs/spec/27-archived/` 下 Markdown 相对链接**：可 `bash scripts/fix_27_archived_links.sh`（须 **perl**、**Git Bash**）；说明见 [27-archived/README](docs/spec/27-archived/README.md)、上文 **07** 读前摘要同表行、**scripts/README** **§二「CI 门禁」**。
 - **阶段规格文件（`docs/spec/90～550` 主表登记）**：合并前建议执行 `bash scripts/check-wave-phase-files.sh`（Windows：**`.\scripts\check-wave-phase-files.ps1`**，须 Git Bash），防止误删 `NNN-*.md`（见 [scripts/README.md](scripts/README.md) **§二「CI 门禁」** **`check-wave-phase-files`** 行；入口总览见 [07-开发流程与顺序](docs/spec/07-开发流程与顺序.md) 文首**读前摘要**「**阶段规格文件存在性**」行、**§零 0.4**；CI：[check-wave-phase-files.yml](.github/workflows/check-wave-phase-files.yml)）。
-- **AI 任务卡索引一览表（`docs/AI任务卡索引.md`）**：见下文 **[main · AI 任务卡索引一览门禁](#main-branch-ai-index-gate)**（**须** 本地严格通过后再提交；**main** 上须将 CI 检查 **`AI task card index overview / check`** 设为必过）。
+- **AI 任务卡索引一览表（`docs/AI任务卡索引.md` · `docs/AI任务卡索引.from-stash.md`）**：见下文 **[main · AI 任务卡索引一览门禁](#main-branch-ai-index-gate)**（**须** 本地对**改动过的路径**严格 **`exit 0`**；**main** 上 **`check-ai-task-card-index-overview.yml`** 必跑 **主 + from-stash** 两步；**`build.yml`** 仍只跑主索引 — 见 **[scripts/README.md](scripts/README.md)** **AI 一览** 段）。
 - **密钥与生产配置**：勿提交 `.env`、私钥；仅更新 `.env.example` 与 [ops/RUNBOOK.md](ops/RUNBOOK.md) 中已约定的说明。
 
 <a id="main-branch-ai-index-gate"></a>
 
 ## main · AI 任务卡索引一览门禁
 
-### 提交者（凡 `git diff` 含 `docs/AI任务卡索引.md`）
+### 提交者（凡 `git diff` 含 `docs/AI任务卡索引.md` 或 `docs/AI任务卡索引.from-stash.md`）
 
-**须**在 **`git commit`** 或 **`git push`** 之前于仓库根执行，且 **exit 0**（**严格模式**，**不传** **`--allow-seq-gaps`**）：
+**须**在 **`git commit`** 或 **`git push`** 之前于仓库根对**有 diff 的路径**执行，且 **exit 0**（**严格模式**，**不传** **`--allow-seq-gaps`**）：
 
 ```bash
-python3 scripts/check-ai-task-card-index-overview.py docs/AI任务卡索引.md
+bash scripts/check-ai-task-card-index-overview.sh docs/AI任务卡索引.md
+bash scripts/check-ai-task-card-index-overview.sh docs/AI任务卡索引.from-stash.md
 ```
+
+（若本轮**仅**改其中一文件，可**只跑**对应路径；**CI** **[`check-ai-task-card-index-overview.yml`](.github/workflows/check-ai-task-card-index-overview.yml)** 对 **`main`** **两步全跑**。**`.sh`** 内依次 **`python3` → `py -3` → `python`**，缓解 **Windows** **PATH** **首位** **商店** **`python3`** **占位体** **exit 49** **问题** — 与 **`scripts/gates/check-invariants.sh`** **≈L35** **同源**；**亦可** **手动** **`py -3 scripts/check-ai-task-card-index-overview.py <path>`**。）
 
 **`--allow-seq-gaps`** 仅允许用于**排障或临时分支**，**不得**作为合并 **`main`** 前的默认门槛。失败时脚本在 **stderr** 输出机读行：**`RULE=`**、**`seq=`**、**`id=`**、**`msg=`**（含义见 [scripts/README.md](scripts/README.md) 篇首与 **§二** **`check-ai-task-card-index-overview.py`**）。
 
-### 维护者（将 CI `check` job 设为 `main` 必过）
+**编排**：**`bash scripts/gates/ci-local-delivery-minimum.sh`** 与 **`bash scripts/dev-preflight.sh`** 在检出 **`docs/AI任务卡索引.md`** **或** **`docs/AI任务卡索引.from-stash.md`** **相对 `HEAD` 或 `main..HEAD` 有变** 时，**自动**委托 **`bash scripts/gates/maybe-run-ai-task-card-index-overview-on-diff.sh`**（与上式 **`.sh`** 同核）。跳过机读（**不推荐** 作为合并 **`main`** 前的常态）：**`SKIP_AI_TASK_CARD_INDEX_OVERVIEW=1`** 或 **`CI_LOCAL_SKIP_AI_TASK_CARD_INDEX=1`**。
+
+### 维护者（将 CI `check` job 设为 `main` 必过 · 可选）
+
+**独立开发、未开分支保护时**：以下 GitHub **Settings** 步骤可跳过；**仍以**上文「提交者」本地 **`exit 0`** 为硬要求。
 
 Workflow 文件：[`.github/workflows/check-ai-task-card-index-overview.yml`](.github/workflows/check-ai-task-card-index-overview.yml)。在 GitHub **Actions** 中对应的 **必过检查显示名**为：
 

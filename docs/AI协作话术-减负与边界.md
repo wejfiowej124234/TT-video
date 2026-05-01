@@ -3,15 +3,35 @@
 与 [CONTRIBUTING.md](../CONTRIBUTING.md) 并列：**给人用的可复制话术** + **给 AI 的约束摘要**。详细工程门禁仍以 **07**、**scripts/README** 为准。  
 **任务来源与执行**：Backlog 见 [任务母表.md](./任务母表.md)；可执行 TT 见 [AI任务卡索引.md](./AI任务卡索引.md)（说「执行任务卡 TT-XXX」即按索引条目执行）。
 
-> **开发期（未发布）**：下文「分两批 PR」等话术是**控 diff 体量**的工具，**不**等于「每轮必须走 GitHub PR UI」。是否开 PR 见 **[CONTRIBUTING · 单人 push](../CONTRIBUTING.md#solo-push-vs-pr)** 与 **[TT — spec→handbook 全量替代清单 · §0](runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md)**。
+> **开发期（未发布）**：下文「分两批合并」等话术是**控 diff 体量**的工具，**不**等于「每轮必须走 GitHub 合并请求 UI」。是否建合并请求见 **[CONTRIBUTING · 单人 push](../CONTRIBUTING.md#solo-push-vs-pr)** 与 **[TT — spec→handbook 全量替代清单 · §0](runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md)**。
 
 ---
 
 ## 极简版（复制这一条即可开场）
 
 ```
-【TravelTrust · 本轮约束】先列将读文件清单（≤8）再改。代码范围：[填写]；禁止无关重构与删注释。文档默认只改 04 §3.4/§三；仅当我说「台账同批」时再改 07/00/缺口/27-archived tail。测试：cargo test -p traveltrust-api。长 spec 用搜索定位段落，勿通读全文。纯文档审计勿改 07 文首（1）（2）完成度 %。
+【TravelTrust · 本轮约束】先列将读文件清单（≤8）再改。代码范围：[填写]；禁止无关重构与删注释。文档默认只改 04 §3.4/§三；仅当我说「台账同批」时再改 07/00/缺口/27-archived tail。测试：cargo test -p traveltrust-api。若本轮改 docs/AI任务卡索引.md：push 前 bash scripts/check-ai-task-card-index-overview.sh docs/AI任务卡索引.md 须 exit 0（Win 勿单靠 PATH 首位 python3）；走 dev-preflight/ci-local 且未设 SKIP_AI_TASK_CARD_INDEX_OVERVIEW 时 maybe-run 条件串行同核。长 spec 用搜索定位段落，勿通读全文。纯文档审计勿改 07 文首（1）（2）完成度 %。禁止假完成：进度/已闭/GO 须标明 ①本地 / ②测试网 / ③生产；勿用文档勾选或本地绿冒充 ②③；见 CONTRIBUTING#no-false-completion 与 TT-9628#tt-9628-no-false-completion。拆线机读/段3报告路径：TT-9628#tt-9628-tt9627-gates-index · TT-9628#tt-9628-report-json-path-convention。双人并行时另见 TT-9628#tt-9628-dual-owner-split（话术 §13）。
 ```
+
+---
+
+## 0.1 禁止假完成（可贴一句）
+
+```
+【禁止假完成】宣称已验收须写清阶次 ①②③ + 证据路径或 report.json；勿把矩阵枚举、窄切片 GO、单测绿说成测试网/生产真实链路已闭。ISS-007 `gen-r002-iss007-prereport.py`：43 锚全过仍常 `PARTIAL_GO`，勿对本品单独 `validate-regression-report.py --require-go` 当 staging 全矩阵 GO；`evidence/GO_local_r002_verify/README.md`。CONTRIBUTING#no-false-completion · TT-9628 §0.0.5。机读闸/report 路径：TT-9628 §0.0.2a / §0.0.3。
+```
+
+---
+
+<a id="ai-collab-doc-hygiene-0-2"></a>
+
+## 0.2 多文叙事互指（可贴一句）
+
+```
+【多文互指】同轮若动到 CI 欠费旁证 / 覆盖边界 / report 段3 / 机读闸索引 / 双人拆线 / AI任务卡一览 / docs/00 / docs/README 的交叉叙述：合并前在仓库根跑 TT-9628 §0.0.4 所列 rg 互扫（CONTRIBUTING「Handbook 一行对拍」同清单；TT-9628#tt-9628-0-0-4-doc-hygiene）。
+```
+
+**读链**：[TT-9628 · §0.0.4](runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-0-0-4-doc-hygiene) · [runbook/README · 步 10e-c](runbook/README.md)
 
 ---
 
@@ -227,3 +247,20 @@ bash scripts/check-07-version-triple.sh && bash scripts/run-check-04-routes.sh &
 | **权威一句** | **[TT — spec→handbook 全量替代清单 · §0](runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md)**（与根 **AGENTS**、**CONTRIBUTING** 文首 **开发期** blockquote 同源）。 |
 
 三层门禁与话术变体仍可与 **§7.x（CI 新红链）** 联用；区别是：**§7** 排障，**§12** 定「本轮要不要扛发版级全量」的预期。
+
+---
+
+## 13. 双人拆线（后端 / 前端分 Owner，可复制）
+
+**规范真源**：[TT-9628 · §0.0.2b](runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-dual-owner-split)。
+
+```
+【双人拆线 · 本轮】
+- Owner A（我）：[角色，例：后端 / 社区支线] | 负责：[API+DB+本域 96-20 URL 行+证据路径]
+- Owner B（搭档）：[角色，例：前端 / Admin 支线] | 负责：[页面+E2E/手点+96-20 另一侧]
+- 全局顺序：TT-9627 段 [1～6 中本轮段号]；本人映射 TT-9626 阶段 [0～6 中本轮阶段]；进度只报 ①②③；未完成本段/本阶不宣称下一段/下一阶已闭。
+- 文档并联：只改本人 scope 内 96-20 / 93 / go-live / 缺口 P0 行；不替对方改 04、不打对方终局勾。
+- 证据：evidence/[owner]-[batch]-[run_id]/ ；若共用 staging 写库：[书面 env/库划分 或「已书面划分」]
+- 96-15：若本轮触发对外深度审计/合同附录义务 → 触发方按 96-15「何时必跑」Tier+P0 留证并与 TT-9627 段 4～6 同周对拍；否则 N/A 一句写明范围。
+- 合线/发版：主持人 [姓名] 按 go-live + 缺口 P0 + R-002 差集补跑 + 一份终局索引（禁止两人各写一份矛盾「已全站闭」）。
+```

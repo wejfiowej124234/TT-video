@@ -26,10 +26,15 @@
 |----|------|
 | **访问** | 仓库为 **Private**；仅被邀请的协作者可 clone / pull / push。新成员由管理员在 GitHub **Settings → Collaborators** 授权。 |
 | **文档** | **`docs/`、`docs/spec/`** 为团队内部设计与实现的**权威说明（SSOT）**；变更大规格时按 [07-开发流程与顺序](docs/spec/07-开发流程与顺序.md) 与 [CONTRIBUTING.md](CONTRIBUTING.md) 约定同步。 |
+| **全站 UI/矩阵验收边界（读前）** | **[TT-9628 · 覆盖边界](docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-coverage-boundary)**（**93 §8.0**、**96-20**、**R-002**；**不**把「矩阵已写」当成「每页每弹窗每权限已验完」） |
+| **拆线机读闸 / `report.json` 路径（①）** | **[TT-9628 · §0.0.2a](docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-tt9627-gates-index)**（竖切脚本 × 段 × **`ci-local`**）· **[§0.0.3](docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-report-json-path-convention)**（**无**仓库根默认 **`report.json`**；**`REPORT_JSON`** 等） |
+| **双人并行（后端 / 前端分 Owner）** | **[TT-9628 · §0.0.2b](docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-dual-owner-split)**（任务卡段号与阶段、证据分目录、合线主持人一份终局索引） |
+| **多文叙事互指（`rg` 清单 · AI 一览等）** | **[TT-9628 · §0.0.4](docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-0-0-4-doc-hygiene)**（与 **[CONTRIBUTING](CONTRIBUTING.md)**「Handbook 一行对拍」同扫描面；含 **`maybe-run-*`**、**`SKIP_AI_*`**、**`dev-preflight`/`ci-local`**；**[`docs/AI协作话术-减负与边界`](docs/AI协作话术-减负与边界.md)** **§0.2** / **极简版** 中的 **§0.0.4** 句；**`spec/00`** 版本表伴侣 **`docs/00`** / **`docs/README`** 叙事） |
+| **TT-9627 ① 合线证据包（机读链留痕）** | **[evidence/GO_20260501_tt9627_local_chain_001/README.md](evidence/GO_20260501_tt9627_local_chain_001/README.md)**（主 `report.json` 指针、`MANIFEST.json`、日志；**① only**；**不**替代 [evidence/README.md](evidence/README.md) 篇首 **Production** 唯一总入口） |
 | **密钥** | **勿提交** `.env`、私钥、真实凭证；使用根目录与 `frontend/` 的 `.env.example` 自建本地环境。 |
 | **日常同步** | 开始工作前 `git pull`，完成后 `git push`；大功能用分支 + PR，由团队习惯决定。 |
 | **单人开发节奏** | [docs/solo-dev-rhythm.md](docs/solo-dev-rhythm.md)（封口、推送、CI、Evidence；**§6.5** = **Actions 关闭/欠费时本地跑哪些**；**§7** = `handbook/engineering/`、`pd-*` 四门、删 `docs/spec/` 的 **Owner=本人** 读法） |
-| **开发期 vs 发版闸** | 未对外发布时：**不必**把「每次必开 PR、跑完整企业审计矩阵、发版级 production gate」当日常硬门槛；分寸与例外见 **[TT — spec→handbook 全量替代清单 · §0](docs/runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md)**（**冻结 / 对外发版前**再收紧）。最小安全习惯仍见 [CONTRIBUTING.md](CONTRIBUTING.md)、上文 **用 `--force-with-lease` 覆盖远程**。 |
+| **开发期 vs 发版闸** | 未对外发布时：**不必**把「每次必建合并请求、跑完整企业审计矩阵、发版级 production gate」当日常硬门槛；分寸与例外见 **[TT — spec→handbook 全量替代清单 · §0](docs/runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md)**（**冻结 / 对外发版前**再收紧）。最小安全习惯仍见 [CONTRIBUTING.md](CONTRIBUTING.md)、上文 **用 `--force-with-lease` 覆盖远程**。 |
 
 ### 用本地最新树覆盖远程旧内容（须全员知情）
 
@@ -103,7 +108,7 @@ Wbe3-TravelTrust/
 
 ## CI 与本地开发
 
-**GitHub Actions 关闭或欠费、复开前**：云端 workflow **不跑或不可信**时，**不以「顶栏绿」为唯一依据**；默认在仓库根按 **[docs/solo-dev-rhythm.md · §6.5](docs/solo-dev-rhythm.md)** 跑**本地命令集**并**自留 `exit 0` 证据**（与 **`CONTRIBUTING.md`** 提 PR 前脚本同源）。组织 billing / 本地交付闸旁证：**[TT-LOCAL-CI-DELIVERY-GATE-001](docs/runbook/TT-LOCAL-CI-DELIVERY-GATE-001.md)**。
+**GitHub Actions 关闭或欠费、复开前**：云端 workflow **不跑或不可信**时，**不以「顶栏绿」为唯一依据**；默认在仓库根按 **[docs/solo-dev-rhythm.md · §6.5](docs/solo-dev-rhythm.md)** 跑**本地命令集**并**自留 `exit 0` 证据**（与 **`CONTRIBUTING.md`** **[GitHub Actions 不可用](CONTRIBUTING.md#github-actions-unavailable)**、**[推送前本地检查](CONTRIBUTING.md#pre-push-local)** 同源；其它文档中的 **required checks / 分支保护** 叙述按 **CI 恢复后旁证** 理解）。组织 billing / 本地交付闸旁证：**[TT-LOCAL-CI-DELIVERY-GATE-001](docs/runbook/TT-LOCAL-CI-DELIVERY-GATE-001.md)**。
 
 阶段清单与 CI 预期见 [49-阶段建议](docs/spec/49-阶段建议-下一阶段方向与优先级.md) 等。**`.github/workflows/`** 中通常包含：`traveltrust-api` 的 **Rust 测试**、**前端** lint/测试、以及（若启用）**合约/ABI** 门禁。  
 **Sepolia L4 并行观测（独立 workflow）**：**`.github/workflows/l4-parallel-ci.yml`** — 与 **`build.yml`** 烟测正交；须组织 **GitHub Actions** 计费与（真跑时）secret **`L4_CI_DOTENV_B64`**。**勿**仅凭 workflow 顶栏 **✓** 认定已跑 **`npm run e2e:sepolia`**。排障：**[docs/runbook/TT-L4-PARALLEL-CI-001.md](docs/runbook/TT-L4-PARALLEL-CI-001.md)**；本地 **`bash scripts/gh-l4-run-inspect.sh`** 或 **`powershell -File scripts/gh-l4-run-inspect.ps1`**。  
@@ -162,6 +167,11 @@ cd frontend && npm install && npm run dev
 
 ## 文档索引
 
+- **[docs/runbook/README.md](docs/runbook/README.md)** — **`docs/runbook` 里上百份 Runbook 怎么分层**（日常导航 vs 专项排障）；乱的时候先读这一页。
+- **[TT-9625 · 系统总脊（黄金路径一页）](docs/runbook/TT-9625-golden-path-system-spine.md)** — **集成入口**：注册 → `/meta` → `/market` → 创单 → `/escrow/:id`（Next → `apiUrl` → Axum → 数据/链）；**日常执行顺序**仍跟 **[TT-9621](docs/runbook/TT-9621-master-order-96-backend-db-chain-frontend.md)**。
+- **[TT-9626 · 到生产 GO 的一条路](docs/runbook/TT-9626-zero-to-production-go-single-path.md)** — **闭环 + 竖切 + R-002 + go-live + 签字** 串成 **阶段 0～6**（**法务/主网另闸**见文内 **§0**）。
+- **[TT-9627 · 交付顺序：主脊→全站→生产](docs/runbook/TT-9627-delivery-order-spine-then-full-site.md)** — **段 1～6** 勾选：**先 TT-9625 主脊**，再 **96-20+93**，再 **UI/闭环**，最后 **TT-9626+go-live**；**独立维护 / CI 欠费 / 生产向真值** 见该文 **§0.a**；**② 测试网新建治理币+投票+UI**（scope 触发）见 **§0.b** / **§0.b.1** 证据包；**Windows 本地栈** 见 **[TT-WINDOWS](docs/runbook/TT-WINDOWS-LOCAL-STACK-ENV-001.md)**；**每项完成即标记、避免无因复跑全链** 见 **§0.c**。
+- **[TT-9628 · 主线与支线（拆线 / 合线）](docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md)** — **社区等扩展** 按 **93 分批** 独立跑通；**发版或改共享契约** 时再 **合线** 对拍主线（与 **TT-9627 §0.c** 叠加）；**§0** **独立开发模式** 与 **缺口总表 §独立开发期** 同读；**§0.0.2a** **机读闸索引**、**§0.0.3** **`report.json` 路径**；**§6** **补全执行单**（可勾选命令清单）。
 - [封口项目与 Epic 总索引（B-115 / B-116 / P5 / Epic A～F）](docs/runbook/sealed-programs-and-epics-master-index.md) — GO、Runbook、evidence/README 锚点、边界与后续方向（导航-only）
 - [00-文档索引](docs/spec/00-文档索引.md) — 阅读顺序
 - [01-总库总览](docs/spec/01-总库总览.md) — 总览
