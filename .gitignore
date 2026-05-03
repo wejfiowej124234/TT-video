@@ -48,6 +48,15 @@ frontend/.data/
 # API 包内本地数据/上传烟测产物（勿入仓；与 `frontend/.data/` 同类）
 crates/api/data/
 
+# API 本机运行时暂存（索引/审计 JSON；勿入仓）
+crates/api/test.runtime
+
+# 93 管理深测批次的本机导出（按时间戳子目录；勿整仓堆积）
+evidence/93-batch-admin-deep-audit/run_*/
+
+# 社区发帖媒体本地上传（API 进程 CWD 通常为仓库根 `data/`；勿入仓）
+data/community_post_media/
+
 # Python 字节码（勿提交）
 **/__pycache__/
 *.py[cod]

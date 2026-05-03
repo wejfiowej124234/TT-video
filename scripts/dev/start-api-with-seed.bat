@@ -5,17 +5,22 @@ REM 从项目根运行: scripts\start-api-with-seed.bat
 REM 环境变量（可选）：
 REM   RESET_DOCKER_DB=1          清空 Postgres 卷后重建（默认保留数据，仅 docker compose up -d）
 REM   SKIP_API_BUILD=1           跳过 cargo build（确认二进制已最新时；改 auth/logout 后勿跳过）
-REM   SKIP_API_WAIT=1            跳过 wait-for-api.ps1（不轮询 /health）
+REM   SKIP_API_WAIT=1            跳过 wait-for-api.ps1（不轮询 /health）；Step 6b 可能竞态失败，可设 SKIP_POST_SEED_TEST_ACCOUNTS=1 或 API 就绪后手动 POST /auth/seed-test-accounts
 REM   SKIP_PREFLIGHT=1           跳过 Step 0 预检（不推荐）
 REM   SKIP_ABI_GATE=1            跳过 Step 1b 的 55-S13（contracts/abi vs frontend/dapp/abis）；合约/ABI 变更后勿长期跳过
 REM   TRAVELTRUST_ABI_FORGE_VERIFY=1  Step 1b2：额外跑 forge multiset（须 Foundry + scripts\dev\run-verify-abi-forge.ps1）
 REM   SKIP_ROUTES_GATE=1         跳过 Step 1c 的 run-check-04-routes（须 Python；改 HTTP/前端路由后勿长期跳过）
 REM   SKIP_AUTH_EMAIL_RESEND_GATE=1  跳过 Step 1d 的 Resend 出站变量检查（与 gates\check-auth-email-resend-gate.ps1 同源）
 REM   SKIP_WAIT_POSTGRES=1       跳过 Step 3b 的 wait-for-postgres（不推荐；仅 Docker 已就绪时应急）
+REM   SKIP_FRONTEND_ENV_SYNC=1   跳过 Step 7（不写 frontend/.env.local；与 start_dev.sh SKIP_FRONTEND_ENV_SYNC 同源）
+REM   NO_PAUSE=1                 末尾不 pause（自动化/子进程调用）
+REM   TRAVELTRUST_STRICT_API_RATE_LIMIT=1  Step 5：不注入限流 0；完全沿用根 .env（默认：未定义时注入 API_RATE_LIMIT_PER_MINUTE=0 与 CRITICAL_WRITE_RATE_LIMIT_PER_MINUTE=0，与 start-api-for-playwright.* 手测同源，避免高频手测 429）
 REM   TRAVELTRUST_PREP_CLEAN=1   启动前执行 frontend\npm run clean（删 .next，避免 dev/build 混用 404）
 REM   TRAVELTRUST_CLEAN_TURBO=1  同时删除 frontend\.turbo（Turbopack 缓存）
 REM   TRAVELTRUST_CLEAN_FRONTEND_NEXT=1  在 Step 8 启动前端窗口内再 clean 一次（与 run-frontend.bat 一致）
 REM   WAIT_API_MAX_ATTEMPTS / WAIT_API_INTERVAL_SEC  传给 wait-for-api.ps1（可选）
+REM   SKIP_POST_SEED_TEST_ACCOUNTS=1  跳过 Step 6b：HTTP POST /auth/seed-test-accounts（默认执行；幂等；与 Playwright seedTestAccounts、96-18 市场 PG 写闸资格同源）
+REM   Step 6b：有 curl 用 curl；where 不到 curl 时用 PowerShell Invoke-WebRequest（仍写审计日志到控制台）
 REM   DATABASE_URL               若已在外部或根目录 .env 中设置，则优先使用；未设置时 API 窗口注入 Docker 默认串（与 docker-compose.yml）
 REM 手测前「停进程 + 清缓存 + 可选清库」：先运行 scripts\prepare-local-manual-test.bat（见 scripts\dev\prepare-local-manual-test.ps1）
 REM 根 .env：推荐 PORT=8080（与 Next 3012 分离；误写 3012 时预检会 WARN）。本脚本 Step 5 仍对 API 进程强制 PORT=8080（B-445 与 Playwright 契约）。
@@ -193,8 +198,15 @@ if "%SKIP_API_BUILD%"=="1" (
 echo Step 5 - Start API !BACKEND_PORT!（PORT=!BACKEND_PORT! SEED_TEST_ACCOUNTS=1 DATABASE_URL 默认 Docker Postgres 若当前未定义）
 echo     提示：若刚修改 auth/logout 或 session 逻辑，请勿设 SKIP_API_BUILD=1；须以 Step 4 的编译产物启动。
 echo     若 !BACKEND_PORT! 上仍是旧 traveltrust-api.exe，POST /auth/logout 可能不删会话 — 先停旧进程再编译再起。
+if /i not "%TRAVELTRUST_STRICT_API_RATE_LIMIT%"=="1" (
+    echo     默认：API 子进程未定义限流变量时注入每分钟 0（与 start-api-for-playwright 同源；手测不易 429）。严格模式：set TRAVELTRUST_STRICT_API_RATE_LIMIT=1
+)
 REM 避免 cmd /k "cd /d "%ROOT%" …" 的内层引号截断；用 ^&^& 串联且不在同一对引号内嵌套路径引号
-start "TravelTrust-API" cmd /k cd /d "%ROOT%" ^&^& if not defined DATABASE_URL set "DATABASE_URL=postgres://traveltrust:traveltrust@127.0.0.1:5432/traveltrust" ^&^& set "PORT=!BACKEND_PORT!" ^&^& set "SEED_TEST_ACCOUNTS=1" ^&^& cargo run -p traveltrust-api
+if /i "%TRAVELTRUST_STRICT_API_RATE_LIMIT%"=="1" (
+    start "TravelTrust-API" cmd /k cd /d "%ROOT%" ^&^& if not defined DATABASE_URL set "DATABASE_URL=postgres://traveltrust:traveltrust@127.0.0.1:5432/traveltrust" ^&^& set "PORT=!BACKEND_PORT!" ^&^& set "SEED_TEST_ACCOUNTS=1" ^&^& cargo run -p traveltrust-api
+) else (
+    start "TravelTrust-API" cmd /k cd /d "%ROOT%" ^&^& if not defined DATABASE_URL set "DATABASE_URL=postgres://traveltrust:traveltrust@127.0.0.1:5432/traveltrust" ^&^& set "PORT=!BACKEND_PORT!" ^&^& set "SEED_TEST_ACCOUNTS=1" ^&^& if not defined API_RATE_LIMIT_PER_MINUTE set "API_RATE_LIMIT_PER_MINUTE=0" ^&^& if not defined CRITICAL_WRITE_RATE_LIMIT_PER_MINUTE set "CRITICAL_WRITE_RATE_LIMIT_PER_MINUTE=0" ^&^& cargo run -p traveltrust-api
+)
 
 echo Step 6 - Wait for API /health
 if /i "%SKIP_API_WAIT%"=="1" (
@@ -207,10 +219,32 @@ if /i "%SKIP_API_WAIT%"=="1" (
     )
 )
 
+echo Step 6b - POST /auth/seed-test-accounts（幂等；与 E2E seed、96-18 市场 PG 资格补全同源）
+if /i "%SKIP_POST_SEED_TEST_ACCOUNTS%"=="1" (
+    echo     已跳过 SKIP_POST_SEED_TEST_ACCOUNTS=1
+) else (
+    set "POST_SEED_URL=http://127.0.0.1:!BACKEND_PORT!/auth/seed-test-accounts"
+    where curl >nul 2>&1
+    if not errorlevel 1 (
+        curl -sS -o nul -w "     HTTP %%{http_code} POST /auth/seed-test-accounts\n" -X POST "!POST_SEED_URL!" -H "Content-Type: application/json" -d "{}" --connect-timeout 10 --max-time 30
+        if errorlevel 1 (
+            echo     警告：curl 失败（可忽略；SEED_TEST_ACCOUNTS=1 启动仍会补种子）。可手动 POST !POST_SEED_URL!
+        )
+    ) else (
+        echo     未检测到 curl，改用 PowerShell Invoke-RestMethod
+        powershell -NoProfile -ExecutionPolicy Bypass -Command "try { $u=$env:POST_SEED_URL; $r=Invoke-WebRequest -Uri $u -Method Post -ContentType 'application/json' -Body '{}' -UseBasicParsing -TimeoutSec 30; Write-Host ('     HTTP '+[int]$r.StatusCode+' POST /auth/seed-test-accounts') } catch { Write-Host ('     警告：POST seed 失败（'+$_.Exception.Message+'）；可忽略若 API 仍在启动') }"
+    )
+    set "POST_SEED_URL="
+)
+
 echo Step 7 - Sync frontend\.env.local NEXT_PUBLIC_* from root .env
-powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\sync-frontend-env-local-from-root.ps1" -ApiListenPort !BACKEND_PORT!
-if errorlevel 1 (
-    echo 警告：sync-frontend-env-local 失败；请检查根目录 .env 与 frontend\.env.local（可手动运行 scripts\dev\sync-frontend-env-local-from-root.ps1）
+if /i "%SKIP_FRONTEND_ENV_SYNC%"=="1" (
+    echo     已跳过 SKIP_FRONTEND_ENV_SYNC=1（与 start_dev.sh 同源；须自行保证 NEXT_PUBLIC_API_BASE_URL 指向 !BACKEND_PORT!）
+) else (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\sync-frontend-env-local-from-root.ps1" -ApiListenPort !BACKEND_PORT!
+    if errorlevel 1 (
+        echo 警告：sync-frontend-env-local 失败；请检查根目录 .env 与 frontend\.env.local（可手动运行 scripts\dev\sync-frontend-env-local-from-root.ps1）
+    )
 )
 
 echo Step 8 - Start frontend !FRONTEND_PORT!（FRONTEND_PORT / TRAVELTRUST_FRONTEND_PORT 传入 run-dev.mjs）
@@ -243,10 +277,16 @@ echo   自由市场  http://localhost:!FRONTEND_PORT!/market
 echo   DID 排行榜  http://localhost:!FRONTEND_PORT!/did-rank
 echo   旅行收购脊签  http://localhost:!FRONTEND_PORT!/did-rank?board=acquisition
 echo.
+echo 可选 Playwright 切片（须本脚本已起 API+PG；另开终端）：cd frontend ^&^& npm run e2e:market-community
+echo   94 子站 + 31 社区发布 + 49A 自定义行程双角色；见 docs\runbook\TT-LOCAL-CI-DELIVERY-GATE-001.md（切片 2.1）
+echo.
 echo 请等待前端窗口出现 Ready 后再用浏览器打开登录页。
 echo 若打不开或 market 静态 404：scripts\prepare-local-manual-test.bat 或 set TRAVELTRUST_PREP_CLEAN=1 后重跑本脚本
 echo.
 echo 文档：docs\测试账号与本地联调.md  ·  全链烟测：bash scripts/smoke-ab-core-chain.sh
 echo 可选：scripts\e2e-verify.bat  ·  前端单测：cd frontend ^&^& npm test
+echo 内部路由手测：根 .env 配置 INTERNAL_API_SECRET 后 curl /api/v1/internal/*（须 Header；见 .env.example）
+echo 手测 Runbook：docs\runbook\TT-9618-onboarding-local-testnet.md  ·  账号与联调：docs\测试账号与本地联调.md
+echo 若须验证限流 429：set TRAVELTRUST_STRICT_API_RATE_LIMIT=1 后重跑（不注入 0，完全沿用根 .env）
 echo ============================
-pause
+if /i not "%NO_PAUSE%"=="1" pause
