@@ -20,7 +20,10 @@ REM   TRAVELTRUST_CLEAN_TURBO=1  同时删除 frontend\.turbo（Turbopack 缓存
 REM   TRAVELTRUST_CLEAN_FRONTEND_NEXT=1  在 Step 8 启动前端窗口内再 clean 一次（与 run-frontend.bat 一致）
 REM   WAIT_API_MAX_ATTEMPTS / WAIT_API_INTERVAL_SEC  传给 wait-for-api.ps1（可选）
 REM   SKIP_POST_SEED_TEST_ACCOUNTS=1  跳过 Step 6b：HTTP POST /auth/seed-test-accounts（默认执行；幂等；与 Playwright seedTestAccounts、96-18 市场 PG 写闸资格同源）
-REM   Step 6b：有 curl 用 curl；where 不到 curl 时用 PowerShell Invoke-WebRequest（仍写审计日志到控制台）
+REM   Step 6b：有 curl 用 curl；where 不到 curl 时用 PowerShell Invoke-WebRequest（控制台打印 HTTP 状态）
+REM   TRAVELTRUST_POST_START_META_CHECK=1  Step 6c：GET /meta 200 烟测（链上元数据；可选）
+REM   TRAVELTRUST_OPEN_BROWSER=1  收尾自动用默认浏览器打开登录页（默认关闭，免打断）
+REM   快速 UI 走查（不等价 ABI/04 合门）：可临时 set SKIP_ABI_GATE=1 SKIP_ROUTES_GATE=1 SKIP_AUTH_EMAIL_RESEND_GATE=1（仅本地扫页面；合线前勿长期跳过）
 REM   DATABASE_URL               若已在外部或根目录 .env 中设置，则优先使用；未设置时 API 窗口注入 Docker 默认串（与 docker-compose.yml）
 REM 手测前「停进程 + 清缓存 + 可选清库」：先运行 scripts\prepare-local-manual-test.bat（见 scripts\dev\prepare-local-manual-test.ps1）
 REM 根 .env：推荐 PORT=8080（与 Next 3012 分离；误写 3012 时预检会 WARN）。本脚本 Step 5 仍对 API 进程强制 PORT=8080（B-445 与 Playwright 契约）。
@@ -231,10 +234,22 @@ if /i "%SKIP_POST_SEED_TEST_ACCOUNTS%"=="1" (
             echo     警告：curl 失败（可忽略；SEED_TEST_ACCOUNTS=1 启动仍会补种子）。可手动 POST !POST_SEED_URL!
         )
     ) else (
-        echo     未检测到 curl，改用 PowerShell Invoke-RestMethod
+        echo     未检测到 curl，改用 PowerShell Invoke-WebRequest
         powershell -NoProfile -ExecutionPolicy Bypass -Command "try { $u=$env:POST_SEED_URL; $r=Invoke-WebRequest -Uri $u -Method Post -ContentType 'application/json' -Body '{}' -UseBasicParsing -TimeoutSec 30; Write-Host ('     HTTP '+[int]$r.StatusCode+' POST /auth/seed-test-accounts') } catch { Write-Host ('     警告：POST seed 失败（'+$_.Exception.Message+'）；可忽略若 API 仍在启动') }"
     )
     set "POST_SEED_URL="
+)
+
+echo Step 6c - Optional GET /meta smoke（TRAVELTRUST_POST_START_META_CHECK=1）
+if /i "%TRAVELTRUST_POST_START_META_CHECK%"=="1" (
+    set "META_URL=http://127.0.0.1:!BACKEND_PORT!/meta"
+    where curl >nul 2>&1
+    if not errorlevel 1 (
+        curl -sS -o nul -w "     HTTP %%{http_code} GET /meta\n" -g "!META_URL!" --connect-timeout 5 --max-time 15
+    ) else (
+        powershell -NoProfile -ExecutionPolicy Bypass -Command "try { $u=$env:META_URL; $r=Invoke-WebRequest -Uri $u -UseBasicParsing -TimeoutSec 15; Write-Host ('     HTTP '+[int]$r.StatusCode+' GET /meta') } catch { Write-Host ('     警告：GET /meta 失败（'+$_.Exception.Message+'）') }"
+    )
+    set "META_URL="
 )
 
 echo Step 7 - Sync frontend\.env.local NEXT_PUBLIC_* from root .env
@@ -254,8 +269,17 @@ cd /d "%ROOT%"
 echo.
 echo ========== 已启动 ==========
 echo 数据库：PostgreSQL 容器 traveltrust-postgres 端口 5432
-echo 后端：  http://127.0.0.1:!BACKEND_PORT!  （健康检查 GET /health）
+echo 后端：  http://127.0.0.1:!BACKEND_PORT!  （GET /health  GET /meta）
 echo 前端：  http://localhost:!FRONTEND_PORT!  窗口标题 TravelTrust-Frontend
+echo.
+echo --- 本地 UI / 功能手测速览（① 本地；与 96-13 走查清单对读）---
+echo   登录 / 注册 / 注销：/auth/login  /auth/register  登录后各页顶栏身份与退出
+echo   个人中心脊：http://localhost:!FRONTEND_PORT!/me
+echo   链元数据经 Next 代理：http://localhost:!FRONTEND_PORT!/meta  （应对 200 JSON）
+echo   社区 Feed + 发布抽屉：http://localhost:!FRONTEND_PORT!/community  与  ?publish=1
+echo   市场 + 自定义行程：http://localhost:!FRONTEND_PORT!/market
+echo   DID 榜：http://localhost:!FRONTEND_PORT!/did-rank  收购板 ?board=acquisition
+echo   UI/UX/i18n/a11y 走查母单：docs\spec\96-13-UI-UX-i18n-a11y-性能走查.md
 echo.
 echo API 路由提示（与当前 crates\api 一致）：
 echo   认证为 REST：POST /auth/register 、POST /auth/login （非 /api/v1/auth/*）
@@ -288,5 +312,10 @@ echo 可选：scripts\e2e-verify.bat  ·  前端单测：cd frontend ^&^& npm te
 echo 内部路由手测：根 .env 配置 INTERNAL_API_SECRET 后 curl /api/v1/internal/*（须 Header；见 .env.example）
 echo 手测 Runbook：docs\runbook\TT-9618-onboarding-local-testnet.md  ·  账号与联调：docs\测试账号与本地联调.md
 echo 若须验证限流 429：set TRAVELTRUST_STRICT_API_RATE_LIMIT=1 后重跑（不注入 0，完全沿用根 .env）
+echo 可选环境：set TRAVELTRUST_OPEN_BROWSER=1 与本脚本同开，收尾自动打开登录页；set TRAVELTRUST_POST_START_META_CHECK=1 启用 Step 6c
 echo ============================
+if /i "%TRAVELTRUST_OPEN_BROWSER%"=="1" (
+    echo TRAVELTRUST_OPEN_BROWSER=1：打开默认浏览器至登录页
+    start "" "http://localhost:!FRONTEND_PORT!/auth/login"
+)
 if /i not "%NO_PAUSE%"=="1" pause
