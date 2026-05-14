@@ -9,7 +9,7 @@
 # Second step (chain / deferred E2E only):
 #   bash scripts/gates/run-production-gate-chain-deferred.sh
 #
-# Python: set PYTHON_BIN or rely on detection (python3 → python). Do not use py -3.
+# Python: set PYTHON_BIN or source scripts/gates/_resolve_python_bin.sh (python before broken python3 shims). Do not use py -3.
 #
 # Environment model:
 # - Local smoke isolates CHAIN_RPC_URL / CHAIN_WS_URL (empty) so /meta does not hit Sepolia probes.
@@ -25,14 +25,13 @@ BASE_REF="main"
 SKIP_E2E=0
 SKIP_API_TESTS=0
 LOCAL_RELAX_DIFF_POLICIES="${LOCAL_RELAX_DIFF_POLICIES:-1}"
-PYTHON_BIN="${PYTHON_BIN:-python3}"
+if [[ -z "${PYTHON_BIN:-}" ]]; then
+  # shellcheck source=scripts/gates/_resolve_python_bin.sh
+  source "$ROOT/scripts/gates/_resolve_python_bin.sh"
+fi
 if ! command -v "$PYTHON_BIN" >/dev/null 2>&1; then
-  if command -v python >/dev/null 2>&1; then
-    PYTHON_BIN="python"
-  else
-    echo "run-production-gate-local: python not found (set PYTHON_BIN or install python3/python)" >&2
-    exit 1
-  fi
+  echo "run-production-gate-local: python not found (set PYTHON_BIN or install python/python3)" >&2
+  exit 1
 fi
 if ! "$PYTHON_BIN" -c 'import sys; print(sys.version)' >/dev/null 2>&1; then
   if [[ "$PYTHON_BIN" != "python" ]] && command -v python >/dev/null 2>&1; then
@@ -240,7 +239,8 @@ if [[ "$SKIP_E2E" == "0" ]]; then
 
   set +e
   (
-    cd frontend && npm run e2e -- --project=chromium --grep-invert "$PLAYWRIGHT_GREP_INVERT"
+    # 与 e2e-stability-probe.sh 同源：走 run-e2e-default.mjs，Windows 上回收端口 / 杀陈旧 API / cargo build，避免裸 playwright 占口失败。
+    cd frontend && node ./scripts/run-e2e-default.mjs --project=chromium --grep-invert "$PLAYWRIGHT_GREP_INVERT"
   )
   EC=$?
   set -e

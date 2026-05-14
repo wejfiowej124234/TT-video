@@ -8,7 +8,7 @@ pick_py() {
     echo "${PYTHON}"
     return 0
   fi
-  for c in python3 python; do
+  for c in python python3; do
     if command -v "$c" >/dev/null 2>&1 && "$c" -c "import sys" >/dev/null 2>&1; then
       echo "$c"
       return 0
@@ -17,7 +17,7 @@ pick_py() {
   return 1
 }
 py="$(pick_py)" || {
-  echo "check-handbook-engineering-content: need python3 or python on PATH (or set PYTHON)" >&2
+  echo "check-handbook-engineering-content: need python or python3 on PATH (or set PYTHON)" >&2
   exit 2
 }
 "$py" scripts/gates/check-handbook-engineering-content.py

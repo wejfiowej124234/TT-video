@@ -29,14 +29,13 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-PYTHON_BIN="${PYTHON_BIN:-python3}"
+if [[ -z "${PYTHON_BIN:-}" ]]; then
+  # shellcheck source=scripts/gates/_resolve_python_bin.sh
+  source "$ROOT/scripts/gates/_resolve_python_bin.sh"
+fi
 if ! command -v "$PYTHON_BIN" >/dev/null 2>&1; then
-  if command -v python >/dev/null 2>&1; then
-    PYTHON_BIN="python"
-  else
-    echo "run-production-gate-chain-deferred: python not found (set PYTHON_BIN or install python3/python)" >&2
-    exit 1
-  fi
+  echo "run-production-gate-chain-deferred: python not found (set PYTHON_BIN or install python/python3)" >&2
+  exit 1
 fi
 if ! "$PYTHON_BIN" -c 'import sys; print(sys.version)' >/dev/null 2>&1; then
   if [[ "$PYTHON_BIN" != "python" ]] && command -v python >/dev/null 2>&1; then

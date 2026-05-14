@@ -23,7 +23,7 @@ pick_py() {
     echo "${PYTHON}"
     return 0
   fi
-  for c in python3 python; do
+  for c in python python3; do
     if command -v "$c" >/dev/null 2>&1 && "$c" -c "import sys" >/dev/null 2>&1; then
       echo "$c"
       return 0
@@ -32,7 +32,7 @@ pick_py() {
   return 1
 }
 py="$(pick_py)" || {
-  echo "vertical-slice-tt9627-segment3-r002-validate: need python3 or python on PATH (or set PYTHON)" >&2
+  echo "vertical-slice-tt9627-segment3-r002-validate: need python or python3 on PATH (or set PYTHON)" >&2
   exit 2
 }
 

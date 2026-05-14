@@ -13,14 +13,9 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-if command -v python3 >/dev/null 2>&1 && python3 -c "import sys; sys.exit(0)" 2>/dev/null; then
-  PY=python3
-elif command -v python >/dev/null 2>&1; then
-  PY=python
-else
-  echo "check-evidence-run-insurance-gate: need python3 or python on PATH" >&2
-  exit 1
-fi
+# shellcheck source=scripts/gates/_resolve_python_bin.sh
+source "$ROOT/scripts/gates/_resolve_python_bin.sh"
+PY="$PYTHON_BIN"
 RUN="${EVIDENCE_RUN_DIR:-${1:-}}"
 RUN="${RUN//$'\r'/}"
 if [[ -z "$RUN" ]]; then
@@ -46,6 +41,11 @@ if [[ ! -f "$MAN" ]]; then
   fi
   echo "check-evidence-run-insurance-gate: SKIP (no manifest; set CHECK_EVIDENCE_RUN_STRICT=1 to require)" >&2
   exit 2
+fi
+
+if ! command -v "$PY" >/dev/null 2>&1 || ! "$PY" -c "import sys; sys.exit(0)" 2>/dev/null; then
+  echo "check-evidence-run-insurance-gate: need working python or python3 on PATH (or set PYTHON_BIN)" >&2
+  exit 1
 fi
 
 "$PY" "$ROOT/scripts/ops/evidence_run_sha256_manifest.py" verify "$RUN"

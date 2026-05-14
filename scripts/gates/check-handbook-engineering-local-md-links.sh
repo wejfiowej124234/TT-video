@@ -21,12 +21,12 @@ _try_eng_local_links_py() {
 }
 
 _pick_python() {
-  if _try_eng_local_links_py python3; then
-    printf '%s\n' "python3"
-    return 0
-  fi
   if _try_eng_local_links_py python; then
     printf '%s\n' "python"
+    return 0
+  fi
+  if _try_eng_local_links_py python3; then
+    printf '%s\n' "python3"
     return 0
   fi
   if command -v py >/dev/null 2>&1 && py -3 -c "import pathlib" >/dev/null 2>&1; then
