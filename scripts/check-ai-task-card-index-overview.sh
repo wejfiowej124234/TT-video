@@ -7,13 +7,13 @@ set -euo pipefail
 _here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 _py="$_here/check-ai-task-card-index-overview.py"
 
-if python3 "$_py" "$@"; then
+# shellcheck source=scripts/gates/_resolve_python_bin.sh
+source "$_here/gates/_resolve_python_bin.sh"
+
+if "$PYTHON_BIN" "$_py" "$@"; then
   exit 0
 fi
 if command -v py >/dev/null 2>&1 && py -3 "$_py" "$@"; then
-  exit 0
-fi
-if command -v python >/dev/null 2>&1 && python "$_py" "$@"; then
   exit 0
 fi
 exit 1

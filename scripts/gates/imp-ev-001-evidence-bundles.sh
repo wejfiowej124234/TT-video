@@ -7,6 +7,9 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 cd "$ROOT"
 
+# shellcheck source=scripts/gates/_resolve_python_bin.sh
+source "$ROOT/scripts/gates/_resolve_python_bin.sh"
+
 FROM="${1:?FROM ref}"
 TO="${2:?TO ref}"
 
@@ -38,7 +41,7 @@ validate_one() {
   local err
   err="$(mktemp)"
   local summary
-  summary="$(python3 scripts/dev/validate_evidence_manifest.py validate "$dir" \
+  summary="$("$PYTHON_BIN" "$ROOT/scripts/dev/validate_evidence_manifest.py" validate "$dir" \
     --emit-summary --verify-artifact-files 2>"$err")"
   cat "$err" >&2
   rm -f "$err"
