@@ -12,7 +12,7 @@
     "eslint": { "cmd": "npm run lint", "exit": 0 },
     "i18n_ci": { "cmd": "npm run test:i18n:ci", "exit": 0 },
     "vitest": {
-      "cmd": "npm test -- --run lib/mapAuthLoginSubmitError.test.ts lib/mapApiReadError.test.ts lib/guideDetailRoutePayload.test.ts",
+      "cmd": "npm test -- --run lib/mapAuthLoginSubmitError.test.ts lib/mapApiReadError.complianceAndFallback.test.ts lib/mapApiReadError.delegationToOrderWrite.test.ts lib/mapApiReadError.retryAfterAndI18n.test.ts lib/guideDetailRoutePayload.test.ts",
       "exit": 0,
       "tests_passed": 15
     },

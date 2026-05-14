@@ -5,11 +5,11 @@
   "route_rules": "scripts/matrix-96-16-shared.mjs",
   "methodology": "119 app routes = all app/**/page.tsx. N_A = exact set NA_EXACT (evaluated first; redirect/thin/legacy). COVERED = among COVERED_RULES that match, take those with maximum rule.path.length (longest prefix or exact), union their evidence file basenames; ties at max length are unioned. Unmatched = NEEDS_FIX. Matrix is rules-driven (not by re-reading evidence body text for gaps).",
   "match_policy": "N_A first; then longest matching rule path wins; evidence_files = unique evidence from winning rule row(s) only.",
-  "total_routes": 123,
+  "total_routes": 124,
   "counts": {
-    "COVERED": 115,
+    "COVERED": 118,
     "N_A": 6,
-    "NEEDS_FIX": 2
+    "NEEDS_FIX": 0
   },
   "playwright_e2e": {
     "status": "NOT_RUN",
@@ -980,6 +980,20 @@
       "remaining_risks": "Evidence-based COVERED; still spot-check and extend Vitest as modules change. E2E 93 NOT_RUN."
     },
     {
+      "file": "frontend/app/community/guidelines/page.tsx",
+      "route": "/community/guidelines",
+      "d5d6d7": "COVERED",
+      "evidence_files": [
+        "GO_96_16_d5_d6_d7_routes_batch.json"
+      ],
+      "test_commands": [
+        "npm run lint",
+        "npm run test:i18n:ci",
+        "npm run build"
+      ],
+      "remaining_risks": "Evidence-based COVERED; still spot-check and extend Vitest as modules change. E2E 93 NOT_RUN."
+    },
+    {
       "file": "frontend/app/community/me/page.tsx",
       "route": "/community/me",
       "d5d6d7": "COVERED",
@@ -1539,14 +1553,16 @@
     {
       "file": "frontend/app/me/identities/page.tsx",
       "route": "/me/identities",
-      "d5d6d7": "NEEDS_FIX",
-      "evidence_files": [],
+      "d5d6d7": "COVERED",
+      "evidence_files": [
+        "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+      ],
       "test_commands": [
         "npm run lint",
         "npm run test:i18n:ci",
         "npm run build"
       ],
-      "remaining_risks": "No D5–D7 matrix rule or N_A; likely gap until audited or rule added. Playwright E2E 93 NOT_RUN — no per-route a11y proof."
+      "remaining_risks": "Evidence-based COVERED; still spot-check and extend Vitest as modules change. E2E 93 NOT_RUN."
     },
     {
       "file": "frontend/app/me/onboarding/page.tsx",
@@ -1579,14 +1595,16 @@
     {
       "file": "frontend/app/me/security/page.tsx",
       "route": "/me/security",
-      "d5d6d7": "NEEDS_FIX",
-      "evidence_files": [],
+      "d5d6d7": "COVERED",
+      "evidence_files": [
+        "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+      ],
       "test_commands": [
         "npm run lint",
         "npm run test:i18n:ci",
         "npm run build"
       ],
-      "remaining_risks": "No D5–D7 matrix rule or N_A; likely gap until audited or rule added. Playwright E2E 93 NOT_RUN — no per-route a11y proof."
+      "remaining_risks": "Evidence-based COVERED; still spot-check and extend Vitest as modules change. E2E 93 NOT_RUN."
     },
     {
       "file": "frontend/app/network/page.tsx",

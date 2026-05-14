@@ -17,73 +17,72 @@
     },
     "root_snippet": "frontend/evidence/lighthouse-root-3012.metrics-snippet.json"
   },
-  "total_routes": 123,
+  "total_routes": 124,
   "dim_counts": {
     "D1": {
-      "COVERED": 115,
+      "COVERED": 118,
       "N_A": 6,
-      "NEEDS_FIX": 2
+      "NEEDS_FIX": 0
     },
     "D2": {
-      "COVERED": 115,
+      "COVERED": 118,
       "N_A": 6,
-      "NEEDS_FIX": 2
+      "NEEDS_FIX": 0
     },
     "D3": {
-      "COVERED": 115,
+      "COVERED": 118,
       "N_A": 6,
-      "NEEDS_FIX": 2
+      "NEEDS_FIX": 0
     },
     "D4": {
-      "COVERED": 117,
+      "COVERED": 118,
       "N_A": 6,
       "NEEDS_FIX": 0
     },
     "D5": {
-      "COVERED": 115,
+      "COVERED": 118,
       "N_A": 6,
-      "NEEDS_FIX": 2
+      "NEEDS_FIX": 0
     },
     "D6": {
-      "COVERED": 115,
+      "COVERED": 118,
       "N_A": 6,
-      "NEEDS_FIX": 2
+      "NEEDS_FIX": 0
     },
     "D7": {
       "COVERED": 1,
       "N_A": 6,
-      "NEEDS_FIX": 116
+      "NEEDS_FIX": 117
     },
     "D8": {
-      "COVERED": 115,
+      "COVERED": 118,
       "N_A": 6,
-      "NEEDS_FIX": 2
+      "NEEDS_FIX": 0
     },
     "D9": {
-      "COVERED": 115,
+      "COVERED": 118,
       "N_A": 6,
-      "NEEDS_FIX": 2
+      "NEEDS_FIX": 0
     },
     "D10": {
-      "COVERED": 104,
+      "COVERED": 107,
       "N_A": 17,
-      "NEEDS_FIX": 2
+      "NEEDS_FIX": 0
     },
     "D11": {
-      "COVERED": 115,
+      "COVERED": 118,
       "N_A": 6,
-      "NEEDS_FIX": 2
+      "NEEDS_FIX": 0
     },
     "D12": {
-      "COVERED": 115,
+      "COVERED": 118,
       "N_A": 6,
-      "NEEDS_FIX": 2
+      "NEEDS_FIX": 0
     }
   },
   "route_class_d5d6d7_counts": {
-    "COVERED": 115,
-    "N_A": 6,
-    "NEEDS_FIX": 2
+    "COVERED": 118,
+    "N_A": 6
   },
   "evidence_aggregation": "frontend/evidence/GO_96_16_evidence_aggregation_d1_d12.json",
   "rows": [
@@ -6482,6 +6481,100 @@
       ]
     },
     {
+      "file": "frontend/app/community/guidelines/page.tsx",
+      "route": "/community/guidelines",
+      "route_class_d5d6d7": "COVERED",
+      "evidence_files_d5d6d7": [
+        "GO_96_16_d5_d6_d7_routes_batch.json"
+      ],
+      "test_commands": [
+        "npm run lint",
+        "npm run test:i18n:ci",
+        "npm run build"
+      ],
+      "dimensions": {
+        "D1": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json"
+          ]
+        },
+        "D2": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json"
+          ]
+        },
+        "D3": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json"
+          ]
+        },
+        "D4": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d4_138_motion_touch_batch.json",
+            "GO_96_16_d4_admin_auth_batch.json",
+            "GO_96_16_d4_segment_gap_close.json"
+          ],
+          "trace": "global_d4_batch_scan"
+        },
+        "D5": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json"
+          ]
+        },
+        "D6": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json"
+          ]
+        },
+        "D7": {
+          "status": "NEEDS_FIX",
+          "evidence_files": [],
+          "trace": "93; 96-13.7; no per-route Lighthouse"
+        },
+        "D8": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json"
+          ]
+        },
+        "D9": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json"
+          ]
+        },
+        "D10": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json"
+          ]
+        },
+        "D11": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json"
+          ]
+        },
+        "D12": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json"
+          ]
+        }
+      },
+      "remaining_risks": [
+        "96 未完成：本矩阵为机读汇总，不宣布 GO 全站完成。",
+        "E2E 93：chromium/全栈 未在矩阵内重跑，见 evidence 聚合。",
+        "D7：除 /(home) 根与 snippet 外，无逐页 Lighthouse（NEEDS_FIX）。"
+      ]
+    },
+    {
       "file": "frontend/app/community/me/page.tsx",
       "route": "/community/me",
       "route_class_d5d6d7": "COVERED",
@@ -10179,8 +10272,10 @@
     {
       "file": "frontend/app/me/identities/page.tsx",
       "route": "/me/identities",
-      "route_class_d5d6d7": "NEEDS_FIX",
-      "evidence_files_d5d6d7": [],
+      "route_class_d5d6d7": "COVERED",
+      "evidence_files_d5d6d7": [
+        "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+      ],
       "test_commands": [
         "npm run lint",
         "npm run test:i18n:ci",
@@ -10188,16 +10283,22 @@
       ],
       "dimensions": {
         "D1": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         },
         "D2": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         },
         "D3": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         },
         "D4": {
           "status": "COVERED",
@@ -10209,12 +10310,16 @@
           "trace": "global_d4_batch_scan"
         },
         "D5": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         },
         "D6": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         },
         "D7": {
           "status": "NEEDS_FIX",
@@ -10222,31 +10327,40 @@
           "trace": "93; 96-13.7; no per-route Lighthouse"
         },
         "D8": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         },
         "D9": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         },
         "D10": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         },
         "D11": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         },
         "D12": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         }
       },
       "remaining_risks": [
         "96 未完成：本矩阵为机读汇总，不宣布 GO 全站完成。",
         "E2E 93：chromium/全栈 未在矩阵内重跑，见 evidence 聚合。",
-        "D7：除 /(home) 根与 snippet 外，无逐页 Lighthouse（NEEDS_FIX）。",
-        "路由未命中 D5–D7 基线规则：须补 rules 于 scripts/matrix-96-16-shared.mjs 或补证据。"
+        "D7：除 /(home) 根与 snippet 外，无逐页 Lighthouse（NEEDS_FIX）。"
       ]
     },
     {
@@ -10440,8 +10554,10 @@
     {
       "file": "frontend/app/me/security/page.tsx",
       "route": "/me/security",
-      "route_class_d5d6d7": "NEEDS_FIX",
-      "evidence_files_d5d6d7": [],
+      "route_class_d5d6d7": "COVERED",
+      "evidence_files_d5d6d7": [
+        "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+      ],
       "test_commands": [
         "npm run lint",
         "npm run test:i18n:ci",
@@ -10449,16 +10565,22 @@
       ],
       "dimensions": {
         "D1": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         },
         "D2": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         },
         "D3": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         },
         "D4": {
           "status": "COVERED",
@@ -10470,12 +10592,16 @@
           "trace": "global_d4_batch_scan"
         },
         "D5": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         },
         "D6": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         },
         "D7": {
           "status": "NEEDS_FIX",
@@ -10483,31 +10609,40 @@
           "trace": "93; 96-13.7; no per-route Lighthouse"
         },
         "D8": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         },
         "D9": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         },
         "D10": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         },
         "D11": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         },
         "D12": {
-          "status": "NEEDS_FIX",
-          "evidence_files": []
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json"
+          ]
         }
       },
       "remaining_risks": [
         "96 未完成：本矩阵为机读汇总，不宣布 GO 全站完成。",
         "E2E 93：chromium/全栈 未在矩阵内重跑，见 evidence 聚合。",
-        "D7：除 /(home) 根与 snippet 外，无逐页 Lighthouse（NEEDS_FIX）。",
-        "路由未命中 D5–D7 基线规则：须补 rules 于 scripts/matrix-96-16-shared.mjs 或补证据。"
+        "D7：除 /(home) 根与 snippet 外，无逐页 Lighthouse（NEEDS_FIX）。"
       ]
     },
     {
