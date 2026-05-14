@@ -21,6 +21,25 @@ from ssot_guard_v2_constants import GATE_ID, REPORT_SCHEMA_VERSION
 
 ROOT = Path(__file__).resolve().parents[2]
 REPORT_PATH = ROOT / "target" / "ssot-guard-ci-v2-report.json"
+
+
+def _child_python() -> str:
+    """Windows Git Bash: `sys.executable` may point at WindowsApps `python3.exe` stub (child exit 49). Prefer real `python`."""
+    import shutil
+
+    for key in ("SSOT_GUARD_PYTHON", "PYTHON"):
+        raw = (os.environ.get(key) or "").strip()
+        if raw:
+            p = raw if os.path.isfile(raw) else shutil.which(raw)
+            if p and "windowsapps" not in p.lower():
+                return p
+    exe = (sys.executable or "").strip()
+    if exe and "windowsapps" not in exe.lower():
+        return exe
+    w = shutil.which("python") or shutil.which("py")
+    return w or exe or "python"
+
+
 REMEDIATION = [
     "Review scripts/gates/templates/SSOT_GUARD_FAILURE_REPORT.md for report field meanings.",
     "New root-level chain SSOT on another HTTP surface: follow scripts/SSOT_GUARD_NEW_ENDPOINT.md (TT + allowlist).",
@@ -31,7 +50,7 @@ REMEDIATION = [
 def run_script(rel: str) -> tuple[int, str]:
     path = ROOT / rel
     p = subprocess.run(
-        [sys.executable, str(path)],
+        [_child_python(), str(path)],
         cwd=str(ROOT),
         capture_output=True,
         text=True,

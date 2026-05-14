@@ -4,7 +4,8 @@ CI SSOT guard — B-110 governance/pool four-pool root chain SSOT (TT-SSOT-GUARD
 
 Static checks:
   • Root **country_pool*** / **treasury_pool*** / **treasury_erc20_pool*** `m.insert("…".to_string(), …)`
-    only in `crates/api/src/routes/governance/pool_chain.rs` (merge helpers) and `governance/mod.rs` (**#[cfg(test)]** 镜像断言).
+    only in `crates/api/src/routes/governance/pool_chain.rs` (merge helpers), `governance/mod.rs` (**#[cfg(test)]** 镜像断言),
+    and **`routes/governance/tests/fee_pool_aggregates.rs`**（**仅**构造「Σ 体不得含根级池键」的负例 / 污染克隆；与 **TT-SSOT-AGGREGATE-EXCLUDE-ERC20-POOL-006** 同源）。
   • **merge_*_chain_ssot_fields**: `*_data_source` → `json!("chain_read")`; `*_is_chain_ssot` → `json!(true)`;
     no `json!(0)` / no literal all-zero u256 in those merges (**不写 0** 占位).
   • **pool_balance** chain SSOT branch: same `json!` block contains **pool_balance** (hex), **data_source** chain_read,
@@ -31,6 +32,7 @@ SRC_POOL_CHAIN = GOV_DIR / "pool_chain.rs"
 SRC_GOV_POOL = GOV_DIR / "governance_pool.rs"
 SRC_FEE_AGG = GOV_DIR / "fee_pool_aggregate.rs"
 SRC_GOV_MOD = GOV_DIR / "mod.rs"
+FEE_POOL_AGGREGATES_TESTS = GOV_DIR / "tests" / "fee_pool_aggregates.rs"
 
 # m.insert("country_pool" | … ".to_string(), …) — multiline OK
 INSERT_KEY_RE = re.compile(
@@ -98,6 +100,8 @@ def main() -> None:
             fail(f"missing {req}")
 
     allowed_insert = {SRC_POOL_CHAIN.resolve(), SRC_GOV_MOD.resolve()}
+    if FEE_POOL_AGGREGATES_TESTS.is_file():
+        allowed_insert.add(FEE_POOL_AGGREGATES_TESTS.resolve())
     for path in sorted(API_SRC.rglob("*.rs")):
         txt = path.read_text(encoding="utf-8")
         for m in INSERT_KEY_RE.finditer(txt):
@@ -105,13 +109,17 @@ def main() -> None:
                 rel = path.relative_to(ROOT)
                 fail(
                     f"B-110 pool SSOT m.insert key {m.group(1)!r} forbidden outside "
-                    f"routes/governance/pool_chain.rs or routes/governance/mod.rs (tests) (seen in {rel})"
+                    f"routes/governance/pool_chain.rs, routes/governance/mod.rs, or "
+                    f"routes/governance/tests/fee_pool_aggregates.rs (negative fixtures) (seen in {rel})"
                 )
 
     pool_chain = SRC_POOL_CHAIN.read_text(encoding="utf-8")
     gov_pool = SRC_GOV_POOL.read_text(encoding="utf-8")
     fee_agg = SRC_FEE_AGG.read_text(encoding="utf-8")
-    gov_mod = SRC_GOV_MOD.read_text(encoding="utf-8")
+    helpers_tests = GOV_DIR / "tests" / "helpers.rs"
+    if not helpers_tests.is_file():
+        fail(f"missing {helpers_tests}")
+    helpers_txt = helpers_tests.read_text(encoding="utf-8")
 
     cty = slice_fn_rust(
         pool_chain, "fn merge_country_pool_chain_ssot_fields", "routes/governance/pool_chain.rs"
@@ -159,19 +167,19 @@ def main() -> None:
             fail(f"build_fee_pool_aggregate_body must not contain {sub!r} (Σ 不得带后三池根级键)")
 
     def assert_three_gets(sig: str) -> None:
-        body = slice_fn_rust(gov_mod, sig, "routes/governance/mod.rs (tests)")
+        body = slice_fn_rust(helpers_txt, sig, "routes/governance/tests/helpers.rs")
         n = len(re.findall(r'v\.get\("[^"]+"\)', body))
         if n != 3:
             fail(f"{sig!r} must contain exactly 3 v.get(...) (got {n})")
 
     assert_three_gets(
-        "    fn assert_fee_pool_aggregates_has_no_root_country_pool_ssot_keys(v: &serde_json::Value)"
+        "fn assert_fee_pool_aggregates_has_no_root_country_pool_ssot_keys(v: &serde_json::Value)"
     )
     assert_three_gets(
-        "    fn assert_fee_pool_aggregates_has_no_root_treasury_pool_ssot_keys(v: &serde_json::Value)"
+        "fn assert_fee_pool_aggregates_has_no_root_treasury_pool_ssot_keys(\n    v: &serde_json::Value,\n)"
     )
     assert_three_gets(
-        "    fn assert_fee_pool_aggregates_has_no_root_treasury_erc20_pool_ssot_keys(v: &serde_json::Value)"
+        "fn assert_fee_pool_aggregates_has_no_root_treasury_erc20_pool_ssot_keys(\n    v: &serde_json::Value,\n)"
     )
 
     print("OK: ssot-guard-b110-pool-ssot passed")

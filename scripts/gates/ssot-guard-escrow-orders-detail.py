@@ -3,14 +3,15 @@
 CI SSOT guard — order detail escrow root keys (B-097 family).
 
 Static checks:
-  • m.insert("escrow_*"…).to_string() only in crates/api/src/routes/orders/mod.rs
+  • m.insert("escrow_*"…).to_string() only in crates/api/src/routes/orders/order_detail_chain_ssot.rs
     (aggregate / other routes must not emit these root keys).
   • merge_escrow_chain_state_ssot_into_order_detail_if_ok and
     merge_escrow_locked_amount_ssot_into_order_detail_if_ok: no order.* reads
     (no DB / order row backfill).
   • *_data_source → json!("chain_read"); *_is_chain_ssot → json!(true) for all four families.
   • assert_orders_envelope_has_no_escrow_chain_state_ssot_root_keys covers 12 root keys (002);
-    implementation is read from routes/orders/tests/suite.rs (fallback: mod.rs).
+    implementation is read from routes/orders/tests/suite.rs **or** routes/orders/tests/suite/*.rs
+    (fallback: order_detail_chain_ssot.rs).
 
 Horizontal extension: list or other endpoints need chain-read → **new TT** + sibling guard or
 explicit allowlist here — **do not** widen B-097 without spec sign-off.
@@ -26,8 +27,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 API_SRC = ROOT / "crates" / "api" / "src"
-ORDERS_MOD = API_SRC / "routes" / "orders" / "mod.rs"
-ORDERS_ASSERT_SUITE = API_SRC / "routes" / "orders" / "tests" / "suite.rs"
+ORDERS_DETAIL_CHAIN_SSOT = API_SRC / "routes" / "orders" / "order_detail_chain_ssot.rs"
+ORDERS_ASSERT_SUITE_LEGACY = API_SRC / "routes" / "orders" / "tests" / "suite.rs"
+ORDERS_ASSERT_SUITE_DIR = API_SRC / "routes" / "orders" / "tests" / "suite"
 
 INSERT_KEY_RE = re.compile(
     r'"((escrow_(?:chain_state|release_state|dispute_state|locked_amount)'
@@ -83,7 +85,7 @@ def slice_async_fn(text: str, fn_name: str) -> str:
     key = f"async fn {fn_name}"
     start = text.find(key)
     if start < 0:
-        fail(f"missing {key} in routes/orders/mod.rs")
+        fail(f"missing {key} in routes/orders/order_detail_chain_ssot.rs")
     brace_open = text.find("{", start)
     if brace_open < 0:
         fail(f"missing '{{' after {key}")
@@ -117,10 +119,10 @@ def must_pair(block: str, ds_key: str, flag_key: str) -> None:
 
 
 def main() -> None:
-    if not ORDERS_MOD.is_file():
-        fail(f"missing {ORDERS_MOD}")
+    if not ORDERS_DETAIL_CHAIN_SSOT.is_file():
+        fail(f"missing {ORDERS_DETAIL_CHAIN_SSOT}")
 
-    allowed = ORDERS_MOD.resolve()
+    allowed = ORDERS_DETAIL_CHAIN_SSOT.resolve()
     for path in sorted(API_SRC.rglob("*.rs")):
         txt = path.read_text(encoding="utf-8")
         for m in INSERT_KEY_RE.finditer(txt):
@@ -128,10 +130,10 @@ def main() -> None:
                 rel = path.relative_to(ROOT)
                 fail(
                     f"escrow SSOT insert key {m.group(1)!r} forbidden outside "
-                    f"routes/orders/mod.rs (seen in {rel})"
+                    f"routes/orders/order_detail_chain_ssot.rs (seen in {rel})"
                 )
 
-    orders_text = ORDERS_MOD.read_text(encoding="utf-8")
+    orders_text = ORDERS_DETAIL_CHAIN_SSOT.read_text(encoding="utf-8")
 
     chain_fn = slice_async_fn(
         orders_text, "merge_escrow_chain_state_ssot_into_order_detail_if_ok"
@@ -157,7 +159,13 @@ def main() -> None:
     assert_fn_block = ""
     assert_src = ""
     fn_assert = "assert_orders_envelope_has_no_escrow_chain_state_ssot_root_keys"
-    for path in (ORDERS_ASSERT_SUITE, ORDERS_MOD):
+    assert_candidates: list[Path] = []
+    if ORDERS_ASSERT_SUITE_LEGACY.is_file():
+        assert_candidates.append(ORDERS_ASSERT_SUITE_LEGACY)
+    if ORDERS_ASSERT_SUITE_DIR.is_dir():
+        assert_candidates.extend(sorted(ORDERS_ASSERT_SUITE_DIR.rglob("*.rs")))
+    assert_candidates.append(ORDERS_DETAIL_CHAIN_SSOT)
+    for path in assert_candidates:
         if not path.is_file():
             continue
         t = path.read_text(encoding="utf-8")

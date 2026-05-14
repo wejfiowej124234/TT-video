@@ -32,9 +32,9 @@ grep -q "security_headers_layer" "$api_router" || fail "API router missing secur
 grep -q "x-content-type-options" "$api_mw_headers" || fail "API security headers missing x-content-type-options"
 
 # SSOT Guard CI v2：B-097 + B-110 静态门禁 + 响应快照契约（编排器写 target/ssot-guard-ci-v2-report.json）
-# Windows Git Bash: `python3` may be a store stub (exit 49); fall back to `python`.
-python3 "$root_dir/scripts/gates/ssot-guard-ci-v2.py" \
-  || python "$root_dir/scripts/gates/ssot-guard-ci-v2.py" \
+# Windows Git Bash: `python3` 常为 WindowsApps 占位（子进程 exit 49）；**优先** `python` 再回退 `python3`。
+python "$root_dir/scripts/gates/ssot-guard-ci-v2.py" \
+  || python3 "$root_dir/scripts/gates/ssot-guard-ci-v2.py" \
   || fail "ssot-guard-ci-v2.py failed (see target/ssot-guard-ci-v2-report.json)"
 
 echo "OK: invariants passed"
