@@ -20,13 +20,22 @@
 #   TT_LOCAL_CI_REQUIRE_GO=1   — validate --require-go (staging-style hard gate)
 #   TT_LOCAL_CI_FAIL_ON_CASE_FAIL=1 — validate --fail-on-case-fail
 #   TT_LOCAL_CI_FAIL_ON_VERDICT_NO_GO=1 — exit 1 if go_state_suggestion is NO_GO
-#   PYTHON / python3          — interpreter (default: python3 then python)
+#   PYTHON                    — interpreter (overrides auto-detect via _resolve_python_bin.sh)
 #
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
-PY="${PYTHON:-python3}"
-if ! "$PY" -V >/dev/null 2>&1; then PY=python; fi
+if [[ -n "${PYTHON:-}" ]]; then
+  PY="$PYTHON"
+else
+  # shellcheck source=scripts/gates/_resolve_python_bin.sh
+  source "$ROOT/scripts/gates/_resolve_python_bin.sh"
+  PY="$PYTHON_BIN"
+fi
+if ! "$PY" -V >/dev/null 2>&1; then
+  echo "run_local_ci: python interpreter not working: $PY" >&2
+  exit 1
+fi
 
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 EV_REL="${TT_LOCAL_CI_EVIDENCE_DIR:-evidence/GO_local_ci_${STAMP}}"

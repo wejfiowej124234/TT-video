@@ -30,10 +30,8 @@ if ! git diff --exit-code "${BASE}" "${HEAD}" -- "${EV}"; then
   exit 1
 fi
 
-py="python3"
-if ! command -v python3 >/dev/null 2>&1; then
-  py="python"
-fi
-"${py}" scripts/validate-regression-report.py "${EV}/report.json" --fail-on-no-go --require-go
+# shellcheck source=scripts/gates/_resolve_python_bin.sh
+source "$ROOT/scripts/gates/_resolve_python_bin.sh"
+"${PYTHON_BIN}" scripts/validate-regression-report.py "${EV}/report.json" --fail-on-no-go --require-go
 
 echo "r003-go-freeze: OK (${EV}/report.json is GO and tree unchanged vs base for ${EV})."

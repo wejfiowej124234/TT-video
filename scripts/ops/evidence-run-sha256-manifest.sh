@@ -5,4 +5,6 @@
 #   bash scripts/ops/evidence-run-sha256-manifest.sh verify evidence/.../run_<UTC>
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-exec python3 "$ROOT/scripts/ops/evidence_run_sha256_manifest.py" "${1:?cmd}" "${2:?dir}"
+# shellcheck source=scripts/gates/_resolve_python_bin.sh
+source "$ROOT/scripts/gates/_resolve_python_bin.sh"
+exec "$PYTHON_BIN" "$ROOT/scripts/ops/evidence_run_sha256_manifest.py" "${1:?cmd}" "${2:?dir}"

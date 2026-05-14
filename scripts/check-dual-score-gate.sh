@@ -5,14 +5,14 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PY=
-for cand in python3 python; do
+for cand in python python3; do
   if command -v "$cand" >/dev/null 2>&1 && "$cand" -c "import json" >/dev/null 2>&1; then
     PY=$cand
     break
   fi
 done
 if [ -z "${PY}" ]; then
-  echo "check-dual-score-gate: need python3 or python on PATH" >&2
+  echo "check-dual-score-gate: need python or python3 on PATH" >&2
   exit 127
 fi
 exec "$PY" "${ROOT}/scripts/dev/validate_dual_score_signoff.py" "$@"

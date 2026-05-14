@@ -1,11 +1,20 @@
 #!/usr/bin/env bash
 # 96-15 Tier A→B/C machine path (no spec edits): evidence stubs + orchestration + go_state_machine.
-# Requires: bash, python3|python, repo-relative paths from cwd = repo root.
+# Requires: bash, python|python3, repo-relative paths from cwd = repo root.
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
-PY="${PYTHON:-python3}"
-if ! "$PY" -V >/dev/null 2>&1; then PY=python; fi
+if [[ -n "${PYTHON:-}" ]]; then
+  PY="$PYTHON"
+else
+  # shellcheck source=scripts/gates/_resolve_python_bin.sh
+  source "$ROOT/scripts/gates/_resolve_python_bin.sh"
+  PY="$PYTHON_BIN"
+fi
+if ! "$PY" -V >/dev/null 2>&1; then
+  echo "run_96_tier_a_p0_full_chain: python interpreter not working: $PY" >&2
+  exit 1
+fi
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 RUN_ID="${TT_96_RUN_ID:-GO_96_15_machine_${STAMP}}"
 OUT="evidence/${RUN_ID}"

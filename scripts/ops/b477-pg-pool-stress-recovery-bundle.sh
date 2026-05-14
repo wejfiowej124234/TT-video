@@ -6,11 +6,9 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 cd "$ROOT"
 
-PY=python3
-if ! command -v "$PY" >/dev/null 2>&1; then
-  PY=python
-fi
+# shellcheck source=scripts/gates/_resolve_python_bin.sh
+source "$ROOT/scripts/gates/_resolve_python_bin.sh"
 
 export B477_API_BASE="${B477_API_BASE:-http://127.0.0.1:8080}"
 
-exec "$PY" "${ROOT}/scripts/ops/b477-pg-pool-stress-recovery-acceptance.py" "$@"
+exec "$PYTHON_BIN" "${ROOT}/scripts/ops/b477-pg-pool-stress-recovery-acceptance.py" "$@"
