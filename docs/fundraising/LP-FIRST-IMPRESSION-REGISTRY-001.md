@@ -5,9 +5,11 @@
 | 字段 | 值 |
 |------|-----|
 | **Tag** | `ir-pitch-v1.3-candidate` |
-| **Commit** | `PLACEHOLDER_IR_PITCH_V13_CANDIDATE_SHA` |
+| **Commit** | `88034ac9fee5a0268ee7b602e0c0f0a45aa75014` |
 
-**回滚**：`git checkout ir-pitch-v1.3-candidate`（或 `git reset --hard ir-pitch-v1.3-candidate`，**慎用**；推送前确认无未保存工作）。校验：`git rev-parse ir-pitch-v1.3-candidate` 应等于上表 **Commit**。
+**回滚（本轮唯一）**：`git checkout ir-pitch-v1.3-candidate`（或 `git reset --hard ir-pitch-v1.3-candidate`，**慎用**；执行前确认工作区已保存）。
+
+**校验**：`git merge-base --is-ancestor 88034ac9fee5a0268ee7b602e0c0f0a45aa75014 ir-pitch-v1.3-candidate` 退出码为 `0`；且 `git show ir-pitch-v1.3-candidate:docs/fundraising/LP-FIRST-IMPRESSION-REGISTRY-001.md` 含上表 **Commit** 字段。
 
 ---
 
