@@ -31,12 +31,12 @@
 
 **对外二进制（candidate）**：
 
-- `docs/fundraising/external/export-ready/04-PitchDeck-v1.3-CN.pptx`
+- `docs/fundraising/internal/deck-editable/04-PitchDeck-v1.3-CN.pptx`
 - `docs/fundraising/external/export-ready/04-PitchDeck-v1.3-CN.pdf`
-- `docs/fundraising/external/export-ready/04-PitchDeck-v1.3-EN.pptx`
+- `docs/fundraising/internal/deck-editable/04-PitchDeck-v1.3-EN.pptx`
 - `docs/fundraising/external/export-ready/04-PitchDeck-v1.3-EN.pdf`
 
-**同批附录（非首印主链，但与 Deck 同源导出）**：`04-IC-Memo-v1.3-*`（可选分发）。
+**IC 附录（非 LP zip 默认链）**：`internal/deck-editable/04-IC-Memo-v1.3-*.pptx`（IR 单发时再导出 PDF）。
 
 **本地重生成（不改变「candidate」语义，除非发起新版本）**：
 

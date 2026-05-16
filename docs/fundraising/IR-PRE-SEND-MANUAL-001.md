@@ -55,7 +55,7 @@
 | ☐ | 项 |
 |---|-----|
 | ☐ | **版本**：zip 名与各 PDF **`v{release}`** 与 `registry/fundraising-external-numeric-anchors.v1.json` 一致 |
-| ☐ | **读序**：口头/邮件与 [external/00-START-HERE.md](external/00-START-HERE.md) 一致（**Pitch → Memo → FAQ**；**非**按 01→08 文件名顺读） |
+| ☐ | **读序**：口头/邮件与 [external/00-START-HERE.md](external/00-START-HERE.md) 一致（**04 Pitch → 03 FAQ**；**非**按 01→08 文件名顺读；IC 附录**不进** LP zip 默认链） |
 | ☐ | **Deck**：主 Deck **15** 页；抽检 **p4–p5** 协议栈图例为 **1–5**（非圈号）；Speaker Notes 无对内俚语 |
 | ☐ | **FAQ / 导读**：包内 **无** `monorepo`、**连招**、裸露 `.md` 路径；`00-START-HERE.txt` 主路径干净 |
 | ☐ | **08**：已说明 **NDA 后** 才开 Data Room 索引；未暗示 zip 含未授权经营明细 |
@@ -115,8 +115,8 @@
 
 附件为 TravelTrust 投资人材料预览包 TravelTrust-Investor-Materials-v{release}.zip（① 本地机读已生成）。
 
-建议读序：04 路演 Deck →（可选）04 合伙人附录或 02 执行摘要 → 03 FAQ（详见包内 00-START-HERE.txt）。
-本包当前不含产品演示视频；如需录屏可在 NDA 后另行安排。
+建议读序：04 路演 Deck → 03 FAQ（详见包内 00-START-HERE.txt）。合伙人 IC 附录不在本 zip 内，如需可在 NDA 后由 IR 另行提供。
+本包当前不含产品演示视频（demo/ 无 mp4）；如需录屏可在 NDA 后另行安排。
 
 本材料为 preview，不构成投资建议或要约；法律定稿与 Data Room 完整件在 NDA 后提供。
 
@@ -137,8 +137,8 @@
 ```
 感谢今日交流。附件为投资人材料包 v{release}（preview，非最终法律定稿）。
 
-建议读序：04 路演 Deck → 02 执行摘要 → 03 FAQ（详见 00-START-HERE.txt）。
-{无 demo 则写：本包不含产品演示视频。}
+建议读序：04 路演 Deck → 03 FAQ（详见 00-START-HERE.txt）。
+{无 demo 则写：本包不含产品演示视频（demo/ 目录无 mp4）。}
 
 期待您的反馈。
 ```

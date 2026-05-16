@@ -51,7 +51,7 @@
 |------|------|----------|
 | **A 语言 / 边界** | 已收口 | 包内无 `monorepo`/连招/LP 主路径俚语；`00-START-HERE.txt` 机读 |
 | **B 合规表述** | 源稿层 | 01–06 / FAQ 非要约；**PDF 目视 + Legal** 仍待签 |
-| **C 叙事** | 已对齐 | Pitch→Memo→FAQ；Partner 深问仅 **IR only** |
+| **C 叙事** | 已对齐 | **04 Pitch → 03 FAQ**（LP zip）；IC 附录仅 `internal/deck-editable/`；Partner 深问仅 **IR only** |
 | **D 一致性** | 维护者闸 | governance + CN/EN release 对拍 |
 | **E 外发形态** | 脚本化 | zip 结构校验；单发模板在导读 txt |
 | **F 机读** | 一键 | `release-investor-lp-pack.sh` + pre-send |
@@ -155,4 +155,5 @@ bash scripts/gates/runbook-iii-pack-a-preflight.sh
 | 2026-05-16 | **定稿闸**：`check-fundraising-lp-final-human-blockers.sh` + [LP-HUMAN-BLOCKERS-STATUS](data-room/evidence/LP-HUMAN-BLOCKERS-STATUS.v1.md)；**① 机读已闭** / **final 仍 4 项人工作业**（preview 不受阻）。 |
 | 2026-05-16 | **严格 LP 加深**：`check-fundraising-lp-receiver-strict` 扫描 zip 内 `signed-pdfs/*.pdf` + 双份 `00-START-HERE.txt`；`FUNDRAISING_IR_CONTACT_*` 打 zip 注入联系人（**不**代填 Legal/登记）。 |
 | 2026-05-16 | `ir-preview-send-preflight` 增 zip layout + 定稿阻塞信息段；`verify-investor-zip-layout.sh` Win Python 探测与 release 链对齐。 |
-| 2026-05-16 | `check-fundraising-lp-receiver-strict` 增 LP PDF 草稿标记扫描（TODO/WIP/待补 等）。 | |
+| 2026-05-16 | `check-fundraising-lp-receiver-strict` 增 LP PDF 草稿标记扫描（TODO/WIP/待补 等）。 |
+| 2026-05-16 | **export-ready 收口文档同批**：PACK / 33 / IR-PRE-SEND / 38 / LP-OUTBOUND / START-HERE-SSOT — **04 仅 Pitch PDF**、读序 **04→03 FAQ**；`inject-ir-contact-repack.sh`；页差 01/03 登记于 PACK §2.7。 |

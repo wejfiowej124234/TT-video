@@ -42,7 +42,7 @@
 
 ## 3. 命名与版本
 
-- **文件名**：与 [external/00-README.md](external/00-README.md) 一致，使用 `export-ready/` 内 **`{编号}-{主题}-v{release}-CN|EN.{pdf|pptx}`**（及包内 `00-START-HERE.txt`、demo 等）。
+- **文件名**：与 [external/00-README.md](external/00-README.md) 一致；**LP zip 内**为 **`{编号}-{主题}-v{release}-CN|EN.pdf`**（及 `00-START-HERE.txt`、demo 等）。**PPTX** 仅 [internal/deck-editable/](internal/deck-editable/README.md)。
 - **下文清单**以「**当前 Release**」表述；执行时把 `{release}` 换成当次 zip 的同一版本号（例如 **1.3**），并保证中英 **Release** 行一致。
 
 ---
@@ -71,12 +71,12 @@
 
 | 勾选 | 外发物（external / export-ready） | 备注 |
 |:----:|-----------------------------------|------|
-| ☐ | `04-PitchDeck-v{release}-CN.pdf` / `EN.pdf`（及视需要 `.pptx`） | **主路演材料**；页数与页序以 Storyboard 与导出为准，**本页不**改 Deck |
+| ☐ | `04-PitchDeck-v{release}-CN.pdf` / `EN.pdf` | **主路演材料**；页数与页序以 Storyboard 与导出为准，**本页不**改 Deck |
 | ☐ | `02-Executive-Summary-v{release}-CN.pdf` / `EN.pdf` | 机构内转述优先 |
 | ☐ | `03-FAQ-v{release}-CN.pdf` / `EN.pdf` | 会后答疑 |
 | ☐ | `demo/TravelTrust-Product-Demo-v{release}.mp4`（若包内包含） | 与 [00-START-HERE.md](external/00-START-HERE.md) Demo 段一致（**~90s** 目标） |
 
-**可选（视对方职级与合伙人会前节奏）**：`04-IC-Memo-v{release}-*.pdf` / `.pptx`（**04b**；与主 Deck 对齐，见 [00-README](external/00-README.md)）。
+**可选（IR 单发 · 不进默认 zip）**：自 `internal/deck-editable/` 导出 `04-IC-Memo-v{release}-*.pdf`（**04b**；见 [00-README](external/00-README.md)）。
 
 **本阶段仍默认不发**：`06` 全文作冷附件（可口述「需要时发 Litepaper / 白皮书节选」）、`08` Data Room 索引（**NDA 后**，见阶段三）。
 

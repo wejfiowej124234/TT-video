@@ -29,8 +29,8 @@
 | 01 | 首次接触 | [01-OnePager.md](01-OnePager.md) / [en/01-OnePager.md](en/01-OnePager.md) | `01-OnePager-v{release}-CN.pdf` / `EN.pdf` |
 | 02 | 机构初筛 | [02-Investor-Executive-Summary.md](02-Investor-Executive-Summary.md) | `02-Executive-Summary-v{release}-…` |
 | 03 | 会后答疑 | [03-FAQ.md](03-FAQ.md) | `03-FAQ-v{release}-…` |
-| 04 | 路演主材料 | [04-PitchDeck-Storyboard.md](04-PitchDeck-Storyboard.md) | `04-PitchDeck-v{release}-CN/EN.pptx` 与同名 `.pdf`（**15** 页压缩主 Deck） |
-| 04b | 合伙人会前 / IC 附录（可选） | 叙事与主 Deck / 06 对齐；构建与页序见 **internal** 侧 Pitch / 导出清单 | `04-IC-Memo-v{release}-CN/EN.pptx` 与同名 `.pdf` |
+| 04 | 路演主材料 | [04-PitchDeck-Storyboard.md](04-PitchDeck-Storyboard.md) | **`04-PitchDeck-v{release}-CN.pdf` + `04-PitchDeck-v{release}-EN.pdf` only**（PPTX：`internal/deck-editable/`） |
+| 04b | 合伙人 IC 附录（**不对外**） | 仅团队维护 | `internal/deck-editable/04-IC-Memo-v{release}-*.pptx`（**不在** `export-ready/`） |
 | 05 | 中度尽调 | [05-Litepaper.md](05-Litepaper.md) | `05-Litepaper-v{release}-…` |
 | 06 | 深度尽调 | [06-Whitepaper.md](06-Whitepaper.md)（**片段**：摘要 → 第 06 节 → 第 11 节；全文仍非冷启动首读） | `06-Whitepaper-v{release}-…` |
 | 07 | Web3 / 协议经济补充（矢量 PDF） | **叙述真源仍以 [06-Whitepaper.md](06-Whitepaper.md) 与 [03-FAQ.md](03-FAQ.md) 为主**；**不是**第二套 Tokenomics 故事。阅读指针（无新数字）：[07-Protocol-Tokenomics-Reader.md](07-Protocol-Tokenomics-Reader.md) | `07-Protocol-Tokenomics-v{release}-…` |

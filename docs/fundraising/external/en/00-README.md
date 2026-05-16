@@ -29,14 +29,14 @@ The table lists **`export-ready/` artifact names** (same as the **READ IN ORDER*
 | 01 | First touch | [01-OnePager.md](01-OnePager.md) | `01-OnePager-v{release}-CN.pdf` / `EN.pdf` |
 | 02 | Screen | [02-Investor-Executive-Summary.md](02-Investor-Executive-Summary.md) | `02-Executive-Summary-v{release}-…` |
 | 03 | FAQ | [03-FAQ.md](03-FAQ.md) | `03-FAQ-v{release}-…` |
-| 04 | Roadshow | [04-PitchDeck-Storyboard.md](04-PitchDeck-Storyboard.md) | `04-PitchDeck-v{release}-CN/EN.pptx` + `.pdf` |
-| 04b | Partner / IC appendix (optional) | Same narrative guardrails as the main deck / **06**; build steps on the team **internal** checklist | `04-IC-Memo-v{release}-CN/EN.pptx` + `.pdf` |
+| 04 | Roadshow | [04-PitchDeck-Storyboard.md](04-PitchDeck-Storyboard.md) | `export-ready/04-PitchDeck-v{release}-CN/EN.pdf`（PPTX: `internal/deck-editable/`) |
+| 04b | Partner / IC appendix (**internal / IR only**) | Same narrative guardrails as the main deck / **06**; build on team checklist | `internal/deck-editable/04-IC-Memo-v{release}-CN/EN.pptx` (**not** in `export-ready/`) |
 | 05 | Medium DD | [05-Litepaper.md](05-Litepaper.md) | `05-Litepaper-v{release}-…` |
 | 06 | Deep DD | [06-Whitepaper.md](06-Whitepaper.md) (**skim**: Abstract → §06 → §11; full doc still not cold-start) | `06-Whitepaper-v{release}-…` |
 | 07 | Web3 / protocol economics (vector PDF) | **Narrative authority remains [06-Whitepaper.md](../06-Whitepaper.md) + [03-FAQ.md](../03-FAQ.md)**—**not** a second economics story. Reader pointer (no new numbers): [07-Protocol-Tokenomics-Reader.md](../07-Protocol-Tokenomics-Reader.md) | `07-Protocol-Tokenomics-v{release}-…` |
 | 08 | Post-NDA map | — (generated index) | `08-Data-Room-Index-v{release}.pdf` |
 
-**Demo** (optional): `export-ready/demo/TravelTrust-Product-Demo-v{release}.mp4` — same **default path** as [**00-START-HERE.md**](../00-START-HERE.md): after **Pitch → Memo → FAQ**; live briefings may jump to video right after Pitch (same beat sheet as [04-PitchDeck-Storyboard.md](04-PitchDeck-Storyboard.md) **Appendix A**). Target **~90s** (the 15p main deck has **no** dedicated Demo slide). **After re-export**, replace the binary in the shipped zip. **Before external send:** replace placeholder footage if needed; label **demo/testnet vs production**.
+**Demo** (optional): `export-ready/demo/TravelTrust-Product-Demo-v{release}.mp4` — same **default path** as [**00-START-HERE.md**](../00-START-HERE.md): after **04 Pitch → 03 FAQ**; live briefings may jump to video right after Pitch (same beat sheet as [04-PitchDeck-Storyboard.md](04-PitchDeck-Storyboard.md) **Appendix A**). Target **~90s** (the 15p main deck has **no** dedicated Demo slide). **Current v1.3 zip** may ship **without** mp4 — state that in the cover email. **Before external send:** replace placeholder footage if needed; label **demo/testnet vs production**.
 
 Use **01** for product/market audiences and **02** for protocol- and custody-focused investors.
 

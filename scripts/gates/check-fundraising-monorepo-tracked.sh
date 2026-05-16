@@ -23,7 +23,7 @@ while IFS= read -r -d '' f; do
     echo "MISSING from git index: $rel"
     missing=1
   fi
-done < <(find "$erd" -maxdepth 1 -type f \( -name "*.pdf" -o -name "*.pptx" -o -name "00-START-HERE.txt" \) -print0)
+done < <(find "$erd" -maxdepth 1 -type f \( -name "*.pdf" -o -name "00-START-HERE.txt" \) -print0)
 
 demo_mp4="$erd/demo/TravelTrust-Product-Demo-v${release}.mp4"
 if [[ -f "$demo_mp4" ]]; then

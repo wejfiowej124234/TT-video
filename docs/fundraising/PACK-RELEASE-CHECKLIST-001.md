@@ -39,15 +39,15 @@ bash scripts/gates/check-fundraising-lp-pack-pre-send.sh
 | ☐ | 检查项 |
 |---|--------|
 | ☐ | `registry/fundraising-external-numeric-anchors.v1.json` 中 **`release`** 与包名 `TravelTrust-Investor-Materials-v{release}`、各文件 **`v{release}`** 一致。 |
-| ☐ | `export-ready/` 根下仅允许 [export-ready/README.md](external/export-ready/README.md) 所列类型（`00-START-HERE.txt`、`01`–`08` 编号 PDF/PPTX、`demo/`、README），无遗留 `TravelTrust-IR-*` 等禁止名。 |
-| ☐ | 存在 **`00-START-HERE.txt`**，且**开篇**含（1）**中英阶段定性**（与 [external/00-START-HERE.md](external/00-START-HERE.md) 融资阶段一致：正式公告 + 环境标签；演示/测试≠全面生产）及（2）**DEFAULT READ ORDER**（Pitch → Memo → FAQ → Demo）。 |
+| ☐ | `export-ready/` 根下**仅 PDF** + `00-START-HERE.txt` + `demo/` + [export-ready/README.md](external/export-ready/README.md)；**无** `.pptx`、**无** `_editable/`、**无** `04-IC-Memo-*.pdf`；PPTX 真源在 [internal/deck-editable/](internal/deck-editable/README.md)。 |
+| ☐ | 存在 **`00-START-HERE.txt`**，且**开篇**含（1）**中英阶段定性**（与 [external/00-START-HERE.md](external/00-START-HERE.md) 融资阶段一致：正式公告 + 环境标签；演示/测试≠全面生产）及（2）**DEFAULT READ ORDER**（**04 Pitch → 03 FAQ**；Demo 若有则其后；**非** Pitch→Memo→FAQ）。 |
 
-### 2.2 页数（与 README 声明一致）
+### 2.2 页数（与 README / 脚本声明一致）
 
 | ☐ | 检查项 |
 |---|--------|
-| ☐ | 主路演 **`04-PitchDeck-v{release}-*.pptx`**：**15** 页（压缩主 Deck）。 |
-| ☐ | **`04-IC-Memo-v{release}-*.pptx`**（若包含）：**8** 页（IC 附录）。 |
+| ☐ | 主路演 **`04-PitchDeck-v{release}-*.pdf`**（export-ready）：**15** 页（与 `internal/deck-editable/04-PitchDeck-v{release}-*.pptx` 同源导出）。 |
+| ☐ | **`04-IC-Memo-v{release}-*.pptx`**（**仅** `internal/deck-editable/`，**不进** zip）：**8** 页；若合伙人会前单发 IC，须 IR 书面同意且**不**混入 LP 默认 zip。 |
 
 ### 2.3 Demo 时长口径
 
@@ -76,7 +76,7 @@ bash scripts/gates/check-fundraising-lp-pack-pre-send.sh
 | ☐ | 检查项 |
 |---|--------|
 | ☐ | `01`–`03`、`05`–`07`：`-CN.pdf` 与 `-EN.pdf` 成对存在（与本次发行策略一致）。 |
-| ☐ | `04-PitchDeck`、`04-IC-Memo`（若发）：CN/EN **pdf + pptx** 均存在。 |
+| ☐ | `04-PitchDeck-v{release}-CN.pdf` / `-EN.pdf` **仅此二份**（slot **04**）；**无** `04-IC-Memo` / **无** 根目录 `.pptx`。 |
 | ☐ | `08-Data-Room-Index-v{release}.pdf` 存在。 |
 | ☐ | **`demo/`**：若对外承诺包内含录屏，则 **`TravelTrust-Product-Demo-v{release}.mp4`** 存在且可播放。 |
 
@@ -86,7 +86,7 @@ bash scripts/gates/check-fundraising-lp-pack-pre-send.sh
 |---|--------|
 | ☐ | **A 语言**：包内 `00-START-HERE.txt` **无** `monorepo` / `repo` / `SSOT` / `gate` / `P0`；**无** LP 主路径上的「连招/Combo/反杀」；**建议读序**与 **READ IN ORDER（编目）** 已区分。 |
 | ☐ | **B 合规**：PDF 文首/页脚 **非要约** 仍在；阶段为 **已公告 + 环境标签**；**45/55/100** 不与旅资/仲裁混讲；**TTG** 与订单款分轨。 |
-| ☐ | **C 叙事**：主 Deck 先 **旅行交易 + 托管/争议**；IC 为增量；FAQ 不替代 Deck 首读。 |
+| ☐ | **C 叙事**：主 Deck 先 **旅行交易 + 托管/争议**；**03 FAQ** 接 Pitch 首读；IC 附录**仅**团队维护或 IR 单发，**非** LP zip 默认读序。 |
 | ☐ | **D 一致**：01/02/04/06 产品 vs 协议分工一致；路线图与 FAQ「非承诺」一致；**08** 不暗示包内含未授权经营明细。 |
 | ☐ | **E 外发**：单发 Pitch/IC 已用 `00-START-HERE.txt` **可复制段**；zip 内 txt 由脚本生成、未手改冒充真源。 |
 | ☐ | **F 执行**：抽 1 PDF + 1 PPTX 目视免责/版本；Notes **无**工程指令；若改过 `.md` 已重打 PDF/PPTX；`demo/` zip **仅**终版 mp4（**无**维护用 brief/README）。 |
@@ -99,6 +99,7 @@ bash scripts/gates/check-fundraising-lp-pack-pre-send.sh
 |---|--------|
 | ☐ | 本轮若改过 `docs/fundraising/external/**/*.md`（含 `en/`）或 **`build-investor-ir-pdf-pack.py` / `build-investor-pitch-deck.py` / `ir_ic_appendix.py`**：已在**同一 `release`** 重跑相应脚本，`export-ready/` 内 PDF/PPTX **mtime** 不早于源稿提交时间。 |
 | ☐ | 已运行 `python scripts/tools/ir_pdf_pagecount_diff.py`；若对 **CN/EN** 报告 **>1 页差**，已在发行备注或 **35** 勾选表写明原因并完成目视抽检。 |
+| ☐ | **v1.3 已知 ≤1 页差（已登记）**：`01-OnePager` CN **6** / EN **7**；`03-FAQ` CN **11** / EN **12** — 排版换行所致；发前仍须按 **35** 抽 01/03/04/06 目视。 |
 
 ### 2.9 IR 发前一页纸（① · 可复制）
 

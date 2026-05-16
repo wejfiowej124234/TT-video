@@ -31,7 +31,7 @@ Use this page when recipients are **international** or when the record must be *
 
 | Date | Recipient | Materials | Channel | Sender | NDA | Notes |
 |------|-----------|-----------|---------|--------|-----|-------|
-| 2026-05-16 | Example Fund I LP · Zhang (sample) | `TravelTrust-Investor-Materials-v1.3.zip`; no `demo/*.mp4` | Encrypted email | IR A | Y | **preview**; read order Pitch→Memo→FAQ per `00-START-HERE.txt` |
+| 2026-05-16 | Example Fund I LP · Zhang (sample) | `TravelTrust-Investor-Materials-v1.3.zip`; no `demo/*.mp4` | Encrypted email | IR A | Y | **preview**; read order **04 Pitch → 03 FAQ** per `00-START-HERE.txt` |
 | 2026-05-16 | Example Capital · Li (sample) | `04-PitchDeck-v1.3-EN.pdf` only | WeChat file | IR A | N | **preview**; single-deck forward per handoff template |
 
 ## Rules (same as 19)

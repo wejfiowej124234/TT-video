@@ -22,7 +22,7 @@
 
 | 对象 | 路径 | 角色 |
 |------|------|------|
-| **主（叙事与首读路径）** | [external/00-START-HERE.md](external/00-START-HERE.md) | **唯一对外叙事真源**：一句话、阶段、**Pitch → Memo → FAQ**、Demo **~90s**、**08（Data Room 索引）NDA 期望**、**附件转发链**、联系占位、英文。 **Partner 深问顺序** 仅 IR 段（见 `.md` 与 PACK-RELEASE **§2.4**），**不**进 LP 默认路径。 |
+| **主（叙事与首读路径）** | [external/00-START-HERE.md](external/00-START-HERE.md) | **唯一对外叙事真源**：一句话、阶段、**04 Pitch → 03 FAQ**、Demo **~90s**（若有）、**08（Data Room 索引）NDA 期望**、**附件转发链**、联系占位、英文。 **Partner 深问顺序** 仅 IR 段（见 `.md` 与 PACK-RELEASE **§2.4**），**不**进 LP 默认路径。 |
 | **从（包内纯文本）** | `external/export-ready/00-START-HERE.txt`；`--omit-markdown` zip 根另有 `00-START-HERE.txt`（`zip_root_start_here_text`） | **与主同源**：开篇 **中英阶段定性** + **RECOMMENDED READ ORDER**；**LP 可复制**外发模板（单发 Pitch/IC、zip、微信）；文末 **`IR only`** 块含 Partner 深问顺序备忘（**不**在 LP 主路径）；**READ IN ORDER** = 文件名编目，**非**第二套必读序。包内说明 **不含代码工程仓库**（无 monorepo 用语）。 |
 
 **结论**：对外沟通、邮件与路演 briefing **只引用** **`external/00-START-HERE.md`**；说明「包内从哪打开」时指 **`00-START-HERE.txt` 开篇**（阶段句 + 默认读序），二者语义已对齐。

@@ -79,16 +79,24 @@ bash scripts/gates/check-fundraising-lp-final-human-blockers.sh   # 须 exit 0
 export FUNDRAISING_IR_CONTACT_NAME="..."
 export FUNDRAISING_IR_CONTACT_EMAIL="..."
 export FUNDRAISING_IR_CONTACT_PHONE="..."   # 可选
-bash scripts/gates/release-investor-lp-pack.sh
+bash scripts/gates/inject-ir-contact-repack.sh
+# 或全量重打：bash scripts/gates/release-investor-lp-pack.sh
 ```
 
 ### 2.3 Preview 外发（① 当前允许 · 不等 §2.1 全闭）
 
 | # | 项 | 已完成？ | 事实日期 | 备注 |
 |---|-----|--------|----------|------|
-| P1 | 机读 preflight | **可发** | | `bash scripts/gates/ir-preview-send-preflight.sh` |
-| P2 | 邮件/IM 标 **preview** + **无 demo** | **否** | | 模板 [IR-PRE-SEND §7](../../IR-PRE-SEND-MANUAL-001.md) |
+| P1 | 机读 preflight | **可发** | 2026-05-16 | `bash scripts/gates/ir-preview-send-preflight.sh` |
+| P2 | 邮件/IM 标 **preview** + **无 demo** | **政策已定** | 2026-05-16 | 模板 [IR-PRE-SEND §7](../../IR-PRE-SEND-MANUAL-001.md)；zip **无** `demo/*.mp4` 时正文须写明 |
 | P3 | 外发登记（preview 也要记） | **否** | | [internal/19](../../internal/19-对外分发与访问登记.md) 备注含 `preview` |
+
+### 2.4 PDF 目视 QA（① · 非机读 · 发前建议）
+
+| # | 项 | 已完成？ | 事实日期 | 证据 |
+|---|-----|--------|----------|------|
+| Q1 | 按 [internal/35](../../internal/35-IR-PDF-出版-QA-02-05-06.md) 抽 **04 / 06 / 03**（+ 可选 01）翻页：免责、版本行、链接表述 | **否** | | 勾选表填于 **35** 或本表补日期 |
+| Q2 | CN/EN 页差 **01**（6/7）、**03**（11/12）已知情并接受排版原因 | **是** | 2026-05-16 | [PACK §2.7](../../PACK-RELEASE-CHECKLIST-001.md) 登记行 |
 
 ---
 
