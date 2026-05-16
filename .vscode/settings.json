@@ -1,5 +1,18 @@
 {
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": true,
+  "explorer.fileNesting.patterns": {
+    "01-OnePager-v*-CN.pdf": "01-OnePager-v*-EN.pdf",
+    "02-Executive-Summary-v*-CN.pdf": "02-Executive-Summary-v*-EN.pdf",
+    "03-FAQ-v*-CN.pdf": "03-FAQ-v*-EN.pdf",
+    "05-Litepaper-v*-CN.pdf": "05-Litepaper-v*-EN.pdf",
+    "06-Whitepaper-v*-CN.pdf": "06-Whitepaper-v*-EN.pdf",
+    "07-Protocol-Tokenomics-v*-CN.pdf": "07-Protocol-Tokenomics-v*-EN.pdf",
+    "04-PitchDeck-v*-CN.pdf": "04-PitchDeck-v*-EN.pdf, 04-PitchDeck-v*.pptx",
+    "04-IC-Memo-v*-CN.pdf": "04-IC-Memo-v*-EN.pdf, 04-IC-Memo-v*.pptx"
+  },
   "files.exclude": {
+    "dist/archive": true,
     "**/node_modules": true,
     "**/target": true,
     "**/.next": true,
@@ -60,6 +73,7 @@
     "**/test-results/**": true
   },
   "search.exclude": {
+    "dist/archive": true,
     "**/node_modules": true,
     "**/target": true,
     "**/.next": true,

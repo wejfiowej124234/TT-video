@@ -1,0 +1,81 @@
+TravelTrust — Investor Materials
+Release: 1.3
+Sole external handoff artifact: TravelTrust-Investor-Materials-v1.3.zip (PDF/PPTX pack only — no source-code repository).
+（中文）对外仅交付本材料包（PDF/PPTX 等），**不含**代码工程仓库或内部文档树。
+
+Qualitative stage: public launch cadence and production domains follow published announcements plus environment labels (do not imply full production rollout from demos or test hosts).
+（中文）阶段定性：公开发布节奏与生产域名以正式公告与环境标签为准；演示/测试环境不可替代为已全面生产上线。
+
+Demo recording (if included): demo/TravelTrust-Product-Demo-v1.3.mp4 should be your final ~90s walk-through. Label demo/testnet vs production in-frame or VO. If the mp4 is absent, skip video—IR will confirm whether a recording is available.
+（中文）演示片（若有）：上述 mp4 应为约 90 秒终版一镜；画面或口播须标明演示/测试网与生产。包内无该文件则跳过，可向 IR 确认是否另有录屏。
+
+IR contact (fill before external send — same fields for CN/EN packs):
+Name: ________________    Email: ________________    Phone / Signal / Telegram (optional): ________________
+（中文）IR 外发前填写（与中英包同栏）：姓名 ________________ · 邮箱 ________________ · 电话 / Signal / Telegram（可选）________________
+
+OPTIONAL FIRST PASS (unfamiliar LPs): 01 OnePager → 04 Pitch Deck (CN or EN), then follow the recommended read order below.
+（中文）陌生 LP 可选先读：01 一页摘要 → 04 路演 Deck，再进入下方建议读序。
+
+RECOMMENDED READ ORDER: 04 Pitch Deck → 04 IC Memo (optional) or 02 Executive Summary → 03 FAQ. If and only if demo/TravelTrust-Product-Demo-v1.3.mp4 is present in this folder, watch it next (~90s one-take; label demo/testnet vs production in-frame or VO). If the mp4 is absent, skip video—do not assume one was withheld.
+（中文）建议读序：04 路演 Deck →（可选）04 合伙人附录或 02 执行摘要 → 03 FAQ；仅当本目录存在上述 mp4 时再观看，否则跳过。
+The READ IN ORDER section below is an alphabetical file index for this folder; it is not the recommended reading path.
+
+Optional cover notes (copy/paste for email / WeChat / IM)
+（中文）外发包盖注：单发 PDF / 仅 zip / 微信单文件时，收件人易错过「建议读序 + 演示片有则无 + 08 期望」。以下块可由发送方粘贴至邮件/IM，便于对齐；**不**构成对收件人的新增法律承诺。
+
+--- Snippet: Pitch PDF only (CN) — paste in email/IM body ---
+【TravelTrust v1.3 · 单发路演 Deck】附件为 `04-PitchDeck-v1.3-CN.pdf`，**不含**包内 `00-START-HERE.txt`。
+完整读序与 Demo 政策见完整材料包；若包内无 `demo/*.mp4` 即表示**无**默认录屏，勿推断「另有隐藏视频」。
+阶段口径：公开发布节奏与生产域名以**正式公告与环境标签**为准。
+如需 FAQ / 导读 / 同版 IC，请向 IR 索取 `TravelTrust-Investor-Materials-v1.3.zip` 或说明需要的编号文件。
+
+--- Snippet: Pitch PDF only (EN) ---
+[TravelTrust v1.3 · Pitch only] Attached: `04-PitchDeck-v1.3-EN.pdf` — **no** in-pack `00-START-HERE.txt`.
+Default read order + demo policy live in the full zip; **if** `demo/*.mp4` is absent, **skip** video—do not assume withheld footage.
+Stage: cadence and production domains follow **published announcements + environment labels**.
+Ask IR for the full `TravelTrust-Investor-Materials-v1.3.zip` (or specific numbered PDFs) for FAQ / guide / IC.
+
+--- Snippet: IC Memo PDF only (CN) ---
+【TravelTrust v1.3 · 单发 IC Memo】附件为 `04-IC-Memo-v1.3-CN.pdf`（合伙人会前附录）。
+页码与主 Deck 互指：若手中**无**同版 `04-PitchDeck`，请先向 IR 索取 Pitch PDF 或完整 zip，避免「悬空互指」。
+
+--- Snippet: IC Memo PDF only (EN) ---
+[TravelTrust v1.3 · IC memo only] Attached: `04-IC-Memo-v1.3-EN.pdf` (partner / IC appendix).
+Slide cross-refs assume the main Pitch deck—if you **lack** `04-PitchDeck` of the same release, ask IR for the Pitch PDF or full zip.
+
+--- Snippet: Full zip (cover note when attaching zip) ---
+[TravelTrust v1.3 · investor pack] Attached zip `TravelTrust-Investor-Materials-v1.3.zip` (PDF/PPTX pack only — no source-code repository).
+（中文）附件为投资者材料 zip（仅 PDF/PPTX），不含代码工程仓库。
+After unzip, open **`00-START-HERE.txt` in this folder** first, then follow the **recommended read order** in this file; do **not** cold-open 06/07/08 by filename sort; **08** is post-NDA only.
+If corporate mail blocks zip, use approved cloud **folder** view or ask IR for split PDFs + the snippets above.
+（中文）完整包 zip：解压完整包后**先打开**本目录 `00-START-HERE.txt`，再按本文件中的**建议读序**阅读；**勿**按文件名从 06/07/08 冷启动；**08** 仅 NDA 后。企业邮箱若拦截 zip，请用合规网盘「目录」或请 IR 拆发单文件并粘贴上文「单发」模板。
+
+--- Snippet: WeChat / mobile — one-liner (CN) ---
+【TravelTrust v1.3】先电脑解压 zip 打开根目录 `00-START-HERE.txt`；若仅收到单 PDF，回邮 IR 要完整包或 FAQ。手机端弱目录/易误触深读文件。
+
+--- Snippet: WeChat / mobile — one-liner (EN) ---
+[TravelTrust v1.3] Prefer laptop: unzip → open root `00-START-HERE.txt`. If you only got one PDF, reply to IR for the full pack or FAQ. Mobile readers are weak on multi-doc navigation.
+
+--- IR only (sender — do not expect LPs to read this block) ---
+Partner 深问顺序（FAQ，发件人备忘）：`03-FAQ-v1.3-*.pdf` 与 Deck ~p13 / IC Notes 同序 — 28→3→23→29→30·p13·18→20→31→16（条目 28–31）。
+Partner deep-dive order (FAQ, sender memo): `03-FAQ-v1.3-*.pdf` — 28→3→23→29→30·p13·18→20→31·16 (items 28–31), aligned with Deck ~p13 / IC notes.
+
+READ IN ORDER (paths relative to this folder)
+00 — This file — recommended read order above + file index below; 08 is a post-NDA semantic index PDF (not executed originals; open only after NDA/access terms with IR/legal).
+01 — 01-OnePager-v1.3-CN.pdf / EN.pdf — first touch / quick scan
+02 — 02-Executive-Summary-v1.3-CN.pdf / EN.pdf — institutional screen
+03 — 03-FAQ-v1.3-CN.pdf / EN.pdf — post-meeting Q&A
+04 — 04-PitchDeck-v1.3-CN.pdf / EN.pdf — roadshow (print)
+    04-PitchDeck-v1.3-CN.pptx / EN.pptx — editable
+    04-IC-Memo-v1.3-CN.pdf / EN.pdf — Partner Summary / IC appendix (optional)
+    04-IC-Memo-v1.3-CN.pptx / EN.pptx — IC appendix editable
+05 — 05-Litepaper-v1.3-CN.pdf / EN.pdf — medium due diligence
+06 — 06-Whitepaper-v1.3-CN.pdf / EN.pdf — deep DD only (NOT cold-start); legal / technical / fund partners
+07 — 07-Protocol-Tokenomics-v1.3-CN.pdf / EN.pdf — Web3/token-aware IC, legal, tech partners
+08 — 08-Data-Room-Index-v1.3.pdf — post-NDA directory/semantic index (not executed originals; no unaudited ops detail in the public pack)
+—  demo/TravelTrust-Product-Demo-v1.3.mp4 — optional ~90s walkthrough when present; label demo/testnet vs production in-frame or VO
+
+This handoff set is PDF, PPTX, and (when included) one short demo video.
+
+General information only. Not an offer to sell securities or any investment product.
+

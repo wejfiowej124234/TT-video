@@ -1,0 +1,12 @@
+# 企业级 Data Room：默认不把敏感原件提交到 Git（按需 --force 或走加密对象存储）
+*.pdf
+*.key
+*.pptx
+*.xlsx
+*.csv
+*.zip
+*.7z
+.env
+*.pem
+*_unredacted*
+*_raw*

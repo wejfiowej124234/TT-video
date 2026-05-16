@@ -17,6 +17,7 @@
 |------|------|
 | **Owner** | IR |
 | **ID** | LP-FIRST-IMPRESSION-REGISTRY-001 |
+| **Version** | 1.0.0-ir |
 | **Status** | **candidate_frozen**（PitchDeck **v1.3** 首印候选；**不再**基于内部「猜 LP」迭代） |
 | **Classification** | internal |
 | **Last Updated** | 2026-05-15 |
@@ -98,6 +99,7 @@ python scripts/tools/build-investor-pitch-deck.py
 
 - 对外 zip 与目录规范仍以 **`internal/33`**、**`external/export-ready/README.md`** 为操作真源。
 - 本台账 **不**替代法务/披露审签；**不**改变 **84/83/06** 数字 SSOT。
+- **preview 外发（①）**：`bash scripts/gates/ir-outbound-status.sh` → `release-investor-lp-pack.sh`；当前 **v1.3** zip **可无** demo mp4（邮件须说明）；登记 [internal/19](internal/19-对外分发与访问登记.md)。
 
 ---
 
