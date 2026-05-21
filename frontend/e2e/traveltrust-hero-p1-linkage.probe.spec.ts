@@ -88,14 +88,20 @@ function resolveGlobeFocusedRegion(s: Awaited<ReturnType<typeof readFocusState>>
   return "";
 }
 
-/** 清空 CTA/roster 残留 focus，再移到画布无针脚区，避免 priorFocus 挡住网格命中判定 */
+/** 清空 CTA/roster + Canvas hover，再移到无针脚区（避免 0.16/0.68 误命中 cn） */
 async function resetHeroP1FocusBeforeCanvasPin(page: import("@playwright/test").Page) {
-  await page.evaluate(() => window.__ttHeroGlobeP1Probe?.setFocusedRegion?.(null));
+  const resetPt = await page.evaluate(() => {
+    window.__ttHeroGlobeP1Probe?.clearFocus?.();
+    return (
+      window.__ttHeroGlobeP1Probe?.resolveResetFraction?.() ?? { fx: 0.78, fy: 0.28 }
+    );
+  });
   const canvas = page.locator('[data-tt-traveltrust-page-cinematic-3d="1"] canvas');
   await expect(canvas).toBeVisible();
   const box = await canvas.boundingBox();
   if (!box) throw new Error("canvas bounding box missing");
-  await page.mouse.move(box.x + box.width * 0.16, box.y + box.height * 0.68);
+  await page.mouse.move(box.x + box.width * resetPt.fx, box.y + box.height * resetPt.fy);
+  await dispatchCanvasPointer(page, "move", resetPt.fx, resetPt.fy);
   await expect
     .poll(async () => resolveGlobeFocusedRegion(await readFocusState(page)), {
       timeout: 8_000,

@@ -28,3 +28,30 @@ export function listHeroGlobeP1PinProbeFractions(): HeroGlobeP1PinProbeFraction[
       };
     });
 }
+
+const PROBE_RESET_CANDIDATES: { fx: number; fy: number }[] = [
+  { fx: 0.78, fy: 0.28 },
+  { fx: 0.62, fy: 0.78 },
+  { fx: 0.38, fy: 0.22 },
+  { fx: 0.52, fy: 0.48 },
+];
+
+/** 与全部针脚 fraction 保持最大间隔，避免 reset 时误命中 cn 等枢纽 */
+export function resolveHeroGlobeP1ProbeResetFraction(): { fx: number; fy: number } {
+  const pins = listHeroGlobeP1PinProbeFractions();
+  let best = PROBE_RESET_CANDIDATES[0]!;
+  let bestMinDist = -1;
+  for (const c of PROBE_RESET_CANDIDATES) {
+    let minDist = Infinity;
+    for (const p of pins) {
+      const dx = c.fx - p.fx;
+      const dy = c.fy - p.fy;
+      minDist = Math.min(minDist, Math.hypot(dx, dy));
+    }
+    if (minDist > bestMinDist) {
+      bestMinDist = minDist;
+      best = c;
+    }
+  }
+  return best;
+}

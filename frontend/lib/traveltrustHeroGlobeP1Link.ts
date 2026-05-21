@@ -15,8 +15,10 @@ import {
   isTraveltrustStartL5StepId,
   type TraveltrustStartL5StepId,
 } from "@/lib/traveltrustStartStepIds";
+import { clearHeroGlobeFocusForProbe } from "@/lib/traveltrustHeroGlobeE2eProbe";
 import {
   listHeroGlobeP1PinProbeFractions,
+  resolveHeroGlobeP1ProbeResetFraction,
   type HeroGlobeP1PinProbeFraction,
 } from "@/lib/traveltrustHeroGlobeP1ProbeTargets";
 
@@ -207,7 +209,9 @@ export type HeroGlobeP1ProbeBridge = {
   navigateToStartWithRegion: typeof navigateToStartWithRegion;
   writeStartHash: typeof writeTraveltrustStartHash;
   setFocusedRegion: typeof setHeroGlobeP1FocusedRegion;
+  clearFocus: typeof clearHeroGlobeFocusForProbe;
   listPinProbeFractions: () => HeroGlobeP1PinProbeFraction[];
+  resolveResetFraction: typeof resolveHeroGlobeP1ProbeResetFraction;
 };
 
 declare global {
@@ -217,11 +221,20 @@ declare global {
   }
 }
 
-if (typeof window !== "undefined" && process.env.NEXT_PUBLIC_TRAVELTRUST_E2E_PROBE === "1") {
+function isHeroGlobeP1ProbeBridgeEnabled(): boolean {
+  return (
+    process.env.NEXT_PUBLIC_TRAVELTRUST_E2E_PROBE === "1" ||
+    process.env.NODE_ENV === "development"
+  );
+}
+
+if (typeof window !== "undefined" && isHeroGlobeP1ProbeBridgeEnabled()) {
   window.__ttHeroGlobeP1Probe = {
     navigateToStartWithRegion,
     writeStartHash: writeTraveltrustStartHash,
     setFocusedRegion: setHeroGlobeP1FocusedRegion,
+    clearFocus: clearHeroGlobeFocusForProbe,
     listPinProbeFractions: listHeroGlobeP1PinProbeFractions,
+    resolveResetFraction: resolveHeroGlobeP1ProbeResetFraction,
   };
 }

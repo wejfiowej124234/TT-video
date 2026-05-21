@@ -2,7 +2,8 @@
 
 /** @frozen TT-GLOBE-L5-FROZEN-2026-05 — see `traveltrustHeroGlobeFrozenManifest.ts` */
 
-import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { registerGlobeCanvasHoverProbeClear } from "@/lib/traveltrustHeroGlobeE2eProbe";
 
 type TravelTrustGlobeInteractionContextValue = {
   hoveredRegionId: string | null;
@@ -22,6 +23,16 @@ export function TravelTrustGlobeInteractionProvider({
   children: ReactNode;
 }) {
   const [hoveredRegionId, setHoveredRegionId] = useState<string | null>(null);
+  useEffect(() => {
+    if (
+      process.env.NEXT_PUBLIC_TRAVELTRUST_E2E_PROBE !== "1" &&
+      process.env.NODE_ENV !== "development"
+    ) {
+      return;
+    }
+    registerGlobeCanvasHoverProbeClear(() => setHoveredRegionId(null));
+    return () => registerGlobeCanvasHoverProbeClear(null);
+  }, []);
   const value = useMemo(
     () => ({ hoveredRegionId, setHoveredRegionId, interactive }),
     [hoveredRegionId, interactive],
