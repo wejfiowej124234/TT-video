@@ -1,0 +1,19 @@
+{
+  "phase": "①",
+  "tests": [
+    "deep-link",
+    "hero-cta",
+    "step-pill"
+  ],
+  "state": {
+    "hash": "#start?region=th&step=escrow",
+    "prefill": "th",
+    "corridor": "asia",
+    "stepId": "escrow",
+    "activeStep": "2",
+    "previewCorridor": "asia",
+    "previewStepId": "escrow",
+    "previewActiveStep": "2",
+    "stepMatchHighlighted": false
+  }
+}

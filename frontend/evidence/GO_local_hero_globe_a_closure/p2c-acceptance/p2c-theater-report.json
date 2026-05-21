@@ -1,0 +1,11 @@
+{
+  "hash": "#start?region=cn&step=match",
+  "corridor": "asia",
+  "region": "cn",
+  "stepId": "match",
+  "activeRole": "guide",
+  "defaultRole": "guide",
+  "p2": "1",
+  "enterHref": "#start?region=cn&step=match",
+  "guideSelected": true
+}

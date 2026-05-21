@@ -1,0 +1,11 @@
+{
+  "hash": "#start?region=cn&step=match",
+  "prefill": "cn",
+  "corridor": "asia",
+  "stepId": "match",
+  "activeStep": "1",
+  "previewCorridor": "asia",
+  "previewStepId": "match",
+  "previewActiveStep": "1",
+  "stepMatchHighlighted": true
+}

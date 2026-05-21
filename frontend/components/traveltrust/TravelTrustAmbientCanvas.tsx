@@ -1,5 +1,6 @@
 "use client";
 
+import { useReducedMotion } from "framer-motion";
 import { useEffect, useRef } from "react";
 
 /** 全页环境粒子：青绿连线 + 四色节点，慢漂移；无交互，尊重 prefers-reduced-motion */
@@ -19,9 +20,11 @@ function pickKind(i: number): keyof typeof NODE {
 }
 
 export default function TravelTrustAmbientCanvas() {
+  const reduceMotion = useReducedMotion();
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    if (reduceMotion) return;
     const canvas = ref.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -144,12 +147,14 @@ export default function TravelTrustAmbientCanvas() {
       ro?.disconnect();
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [reduceMotion]);
+
+  if (reduceMotion) return null;
 
   return (
     <canvas
       ref={ref}
-      className="pointer-events-none fixed inset-0 z-[1] h-full w-full opacity-[0.68] motion-reduce:opacity-40"
+      className="pointer-events-none fixed inset-0 z-[1] h-full w-full opacity-[0.55] motion-reduce:opacity-40"
       aria-hidden
     />
   );

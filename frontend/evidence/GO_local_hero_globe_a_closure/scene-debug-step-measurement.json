@@ -1,0 +1,31 @@
+{
+  "date": "2026-05-21",
+  "phase": "① local",
+  "url": "http://127.0.0.1:3012/traveltrust?tt_scene_debug=1",
+  "method": "Playwright __ttSceneLayerDebug.setStep(0..5) + PNG pixel sample (50%w, 20%h) on scene-debug-*-step-N.png",
+  "firstStepBlueGone": null,
+  "verdict": "step0 through step5: upper-band screenshot pixels unchanged rgb(8,7,77) blueExcess≈69.5 — no scene-debug step removes the visible blue block",
+  "perStepPngRgb": {
+    "0": [8, 7, 77],
+    "1": [8, 7, 77],
+    "2": [8, 7, 77],
+    "3": [8, 7, 77],
+    "4": [8, 7, 77],
+    "5": [8, 7, 77]
+  },
+  "layerMap": {
+    "1": "warmSkyShell — PageCinematicWarmSkyShell",
+    "2": "+ fog/background",
+    "3": "+ atmosphere",
+    "4": "+ arcs",
+    "5": "+ ocean/globe"
+  },
+  "note": "Canvas drawImage sampling shows warm ink (~#0c0a09) not cold blue; PNG screenshots stay (8,7,77) across all steps — blue block likely outside tagged WebGL layers (DOM/CSS composite). Per maintainer rule: do not patch scene layers until a step removes the visible blue block.",
+  "artifacts": [
+    "scene-debug-step-0.png",
+    "scene-debug-step-5.png",
+    "scene-debug-canvas-step-0.png",
+    "scene-debug-canvas-step-5.png"
+  ],
+  "repro": "cd frontend && npx playwright test --config=playwright.scene-debug.probe.config.ts"
+}

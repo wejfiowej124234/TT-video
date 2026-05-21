@@ -1,0 +1,97 @@
+{
+  "phase": "①",
+  "viewport": "1536x960",
+  "baseline": {
+    "heroFocused": "",
+    "canvasFocused": "",
+    "ctaPrefill": "cn",
+    "startPrefill": "",
+    "hash": "",
+    "globeInteractive": "1",
+    "blockers": {
+      "#hero video": 0,
+      "[data-tt-traveltrust-hero-sky-wash-l5]": 0,
+      "[data-tt-traveltrust-canvas-warm-base-l5]": 0,
+      "[data-tt-traveltrust-hero-copy-scrim=\"1\"]": 0
+    }
+  },
+  "afterCtaHover": {
+    "heroFocused": "cn",
+    "canvasFocused": "cn",
+    "ctaPrefill": "cn",
+    "startPrefill": "",
+    "hash": "",
+    "globeInteractive": "1",
+    "blockers": {
+      "#hero video": 0,
+      "[data-tt-traveltrust-hero-sky-wash-l5]": 0,
+      "[data-tt-traveltrust-canvas-warm-base-l5]": 0,
+      "[data-tt-traveltrust-hero-copy-scrim=\"1\"]": 0
+    }
+  },
+  "afterCompactHover": {
+    "heroFocused": "cn",
+    "canvasFocused": "cn",
+    "ctaPrefill": "cn",
+    "startPrefill": "",
+    "hash": "",
+    "globeInteractive": "1",
+    "blockers": {
+      "#hero video": 0,
+      "[data-tt-traveltrust-hero-sky-wash-l5]": 0,
+      "[data-tt-traveltrust-canvas-warm-base-l5]": 0,
+      "[data-tt-traveltrust-hero-copy-scrim=\"1\"]": 0
+    }
+  },
+  "afterPinHover": {
+    "heroFocused": "us",
+    "canvasFocused": "us",
+    "ctaPrefill": "us",
+    "startPrefill": "us",
+    "hash": "#start?region=us&step=plan",
+    "globeInteractive": "0",
+    "blockers": {
+      "#hero video": 0,
+      "[data-tt-traveltrust-hero-sky-wash-l5]": 0,
+      "[data-tt-traveltrust-canvas-warm-base-l5]": 1,
+      "[data-tt-traveltrust-hero-copy-scrim=\"1\"]": 0
+    }
+  },
+  "afterPinClick": {
+    "heroFocused": "us",
+    "canvasFocused": "us",
+    "ctaPrefill": "us",
+    "startPrefill": "us",
+    "hash": "#start?region=us&step=plan",
+    "globeInteractive": "0",
+    "blockers": {
+      "#hero video": 0,
+      "[data-tt-traveltrust-hero-sky-wash-l5]": 0,
+      "[data-tt-traveltrust-canvas-warm-base-l5]": 1,
+      "[data-tt-traveltrust-hero-copy-scrim=\"1\"]": 0
+    }
+  },
+  "pinProbe": {
+    "hoverRegion": "us",
+    "clickHash": "#start?region=us&step=plan",
+    "clickVia": "canvas-synthetic-click",
+    "hitFx": 0.36,
+    "hitFy": 0.3999999999999999
+  },
+  "afterCtaClick": {
+    "heroFocused": "cn",
+    "canvasFocused": "cn",
+    "ctaPrefill": "cn",
+    "startPrefill": "cn",
+    "hash": "#start?region=cn&step=plan",
+    "globeInteractive": "1",
+    "blockers": {
+      "#hero video": 0,
+      "[data-tt-traveltrust-hero-sky-wash-l5]": 0,
+      "[data-tt-traveltrust-canvas-warm-base-l5]": 0,
+      "[data-tt-traveltrust-hero-copy-scrim=\"1\"]": 0
+    }
+  },
+  "planHref": "#start?region=cn&step=plan",
+  "hrefBeforeClick": "#start?region=cn&step=plan"
+}

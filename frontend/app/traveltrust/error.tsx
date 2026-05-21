@@ -6,6 +6,7 @@ import { useTranslation } from "@/components/LocaleProvider";
 import { communityCardLinkFocus } from "@/lib/communityA11yFocus";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
+import { TT_MARKETING_BTN_PRIMARY_WARM_SUBMIT } from "@/lib/marketingUi";
 
 /** /traveltrust 品牌入口 · 页面级错误边界；与 85 规格、顶栏深色「TravelTrust」字标一致 */
 export default function TraveltrustError({
@@ -28,6 +29,7 @@ export default function TraveltrustError({
       className="relative z-10 mx-auto flex min-h-[50vh] max-w-lg flex-col items-center justify-center px-6 py-12"
       role="alert"
       data-tt-error-boundary-root="traveltrust"
+      data-tt-ui-generation="v2"
     >
       <div className="rounded-[var(--radius-lg)] border border-white/12 bg-ink-800/70 p-6 shadow-scifi-panel backdrop-blur-md ring-1 ring-ref-cyan/15">
         <p className="text-meta font-medium text-slate-400 mb-1">{t("traveltrust_title")}</p>
@@ -50,7 +52,7 @@ export default function TraveltrustError({
             <button
               type="submit"
               aria-label={t("common_retry")}
-              className="inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] bg-travel-500 px-4 py-2 text-small font-medium text-white hover:bg-travel-400 outline-none focus-visible:ring-2 focus-visible:ring-ref-cyan/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900"
+              className={`${TT_MARKETING_BTN_PRIMARY_WARM_SUBMIT} outline-none focus-visible:ring-2 focus-visible:ring-ref-cyan/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900`}
             >
               {t("common_retry")}
             </button>

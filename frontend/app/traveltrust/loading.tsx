@@ -2,23 +2,33 @@
 
 import { useTranslation } from "@/components/LocaleProvider";
 
-/** 与 /traveltrust 网络落地页壳一致（85 路由；仅骨架） */
+const shimmer = "animate-traveltrust-shimmer bg-gradient-to-r from-white/5 via-white/12 to-white/5 bg-[length:200%_100%]";
+
+/** v6 cinematic shell skeleton（PH1-UI-35） */
 export default function TravelTrustLoading() {
   const { t } = useTranslation();
   return (
-    <main className="relative z-10 mx-auto max-w-5xl px-4 py-10 sm:px-6" role="status" aria-label={t("traveltrust_title")} aria-busy="true">
-      <div className="min-h-[44px] h-11 w-4/5 max-w-lg rounded-[var(--radius-lg)] bg-white/10 animate-pulse" aria-hidden />
-      <div className="mt-4 h-4 w-full rounded-[var(--radius-md)] bg-white/8 animate-pulse" aria-hidden />
-      <div className="mt-2 h-4 w-11/12 rounded-[var(--radius-md)] bg-white/8 animate-pulse" aria-hidden />
-      <div className="mt-4 h-3 w-48 rounded-[var(--radius-md)] bg-ref-cyan/20 animate-pulse" aria-hidden />
-      <section
-        className="mt-10 space-y-2 rounded-[var(--radius-xl)] border border-white/10 bg-slate-900/40 p-6 shadow-scifi-panel backdrop-blur-sm"
+    <main
+      className="relative z-10 mx-auto max-w-5xl bg-[#0c0a09] px-4 py-6 sm:px-6"
+      role="status"
+      aria-label={t("traveltrust_title")}
+      aria-busy="true"
+    >
+      <div className={`h-11 w-48 rounded-lg ${shimmer}`} aria-hidden />
+      
+      <div
+        className={`mt-8 min-h-[min(52vh,480px)] rounded-2xl border border-ref-sun/14 ${shimmer}`}
         aria-hidden
-      >
-        <div className="h-5 w-40 rounded-[var(--radius-md)] bg-white/12 animate-pulse" />
-        <div className="h-3 w-full rounded-[var(--radius-md)] bg-white/8 animate-pulse" />
-        <div className="h-3 w-full rounded-[var(--radius-md)] bg-white/8 animate-pulse" />
-      </section>
+      />
+      <div className="mt-10 flex gap-2" aria-hidden>
+        {[1, 2, 3, 4].map((n) => (
+          <div key={n} className={`h-12 w-24 rounded-xl ${shimmer}`} />
+        ))}
+      </div>
+      <div
+        className={`mt-6 min-h-[min(48vh,400px)] rounded-2xl border border-ref-sun/14 ${shimmer}`}
+        aria-hidden
+      />
     </main>
   );
 }

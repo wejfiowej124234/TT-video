@@ -1,0 +1,2046 @@
+{
+  "audit": {
+    "layers": [
+      {
+        "id": "hero-sky-wash",
+        "label": "HeroSkyWash",
+        "selector": "[data-tt-traveltrust-hero-sky-wash-l5]",
+        "found": false,
+        "note": "not in DOM",
+        "rect": null,
+        "opacity": null,
+        "zIndex": null,
+        "position": null,
+        "display": null,
+        "width": null,
+        "height": null,
+        "background": null,
+        "backgroundColor": null,
+        "backgroundImage": null,
+        "maskImage": null,
+        "webkitMaskImage": null
+      },
+      {
+        "id": "viewport-ink",
+        "label": "CinematicViewportInk (root)",
+        "selector": "[data-tt-traveltrust-cinematic-viewport-ink]",
+        "found": true,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 1536,
+          "h": 960
+        },
+        "opacity": "1",
+        "zIndex": "2",
+        "position": "fixed",
+        "display": "block",
+        "width": "1536px",
+        "height": "960px",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "maskImage": "none",
+        "webkitMaskImage": "none",
+        "inlineBackground": null,
+        "inlineOpacity": null
+      },
+      {
+        "id": "equator-strip",
+        "label": "TT_HERO_EQUATOR_INK_STRIP_L5 (deprecated · 若未挂载则 skip)",
+        "selector": "[data-tt-traveltrust-hero-equator-ink-strip-l5]",
+        "found": false,
+        "note": "not in DOM",
+        "rect": null,
+        "opacity": null,
+        "zIndex": null,
+        "position": null,
+        "display": null,
+        "width": null,
+        "height": null,
+        "background": null,
+        "backgroundColor": null,
+        "backgroundImage": null,
+        "maskImage": null,
+        "webkitMaskImage": null
+      },
+      {
+        "id": "canvas-warm-band",
+        "label": "canvas-warm-band-l5",
+        "selector": "[data-tt-traveltrust-canvas-warm-band-l5]",
+        "found": false,
+        "note": "not in DOM",
+        "rect": null,
+        "opacity": null,
+        "zIndex": null,
+        "position": null,
+        "display": null,
+        "width": null,
+        "height": null,
+        "background": null,
+        "backgroundColor": null,
+        "backgroundImage": null,
+        "maskImage": null,
+        "webkitMaskImage": null
+      },
+      {
+        "id": "globe-underlay-decor",
+        "label": "TravelTrustHeroGlobeUnderlayDecor",
+        "selector": "[data-tt-traveltrust-hero-globe-underlay-decor-l5]",
+        "found": false,
+        "note": "not in DOM",
+        "rect": null,
+        "opacity": null,
+        "zIndex": null,
+        "position": null,
+        "display": null,
+        "width": null,
+        "height": null,
+        "background": null,
+        "backgroundColor": null,
+        "backgroundImage": null,
+        "maskImage": null,
+        "webkitMaskImage": null
+      },
+      {
+        "id": "viewport-ink-left-wing",
+        "label": "viewport-ink wing left",
+        "selector": "[data-tt-traveltrust-cinematic-viewport-ink-wing=\"left\"]",
+        "found": true,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 128,
+          "h": 960
+        },
+        "opacity": "1",
+        "zIndex": "auto",
+        "position": "absolute",
+        "display": "block",
+        "width": "128px",
+        "height": "960px",
+        "background": "rgba(0, 0, 0, 0) linear-gradient(to right, rgb(12, 10, 9), rgba(0, 0, 0, 0)) repeat scroll 0% 0% / auto padding-box border-box",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "linear-gradient(to right, rgb(12, 10, 9), rgba(0, 0, 0, 0))",
+        "maskImage": "none",
+        "webkitMaskImage": "none",
+        "inlineBackground": null,
+        "inlineOpacity": null
+      },
+      {
+        "id": "viewport-ink-right-wing",
+        "label": "viewport-ink wing right",
+        "selector": "[data-tt-traveltrust-cinematic-viewport-ink-wing=\"right\"]",
+        "found": true,
+        "rect": {
+          "x": 1408,
+          "y": 0,
+          "w": 128,
+          "h": 960
+        },
+        "opacity": "1",
+        "zIndex": "auto",
+        "position": "absolute",
+        "display": "block",
+        "width": "128px",
+        "height": "960px",
+        "background": "rgba(0, 0, 0, 0) linear-gradient(to left, rgb(12, 10, 9) 35%, rgba(0, 0, 0, 0)) repeat scroll 0% 0% / auto padding-box border-box",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "linear-gradient(to left, rgb(12, 10, 9) 35%, rgba(0, 0, 0, 0))",
+        "maskImage": "none",
+        "webkitMaskImage": "none",
+        "inlineBackground": null,
+        "inlineOpacity": null
+      },
+      {
+        "id": "hero-warm-backdrop",
+        "label": "underlay warm-backdrop child",
+        "selector": "[data-tt-traveltrust-hero-warm-backdrop-l5]",
+        "found": false,
+        "note": "not in DOM",
+        "rect": null,
+        "opacity": null,
+        "zIndex": null,
+        "position": null,
+        "display": null,
+        "width": null,
+        "height": null,
+        "background": null,
+        "backgroundColor": null,
+        "backgroundImage": null,
+        "maskImage": null,
+        "webkitMaskImage": null
+      },
+      {
+        "id": "canvas-hero-sky-cap",
+        "label": "canvas hero sky cap",
+        "selector": "[data-tt-traveltrust-canvas-hero-sky-cap-l5]",
+        "found": false,
+        "note": "not in DOM",
+        "rect": null,
+        "opacity": null,
+        "zIndex": null,
+        "position": null,
+        "display": null,
+        "width": null,
+        "height": null,
+        "background": null,
+        "backgroundColor": null,
+        "backgroundImage": null,
+        "maskImage": null,
+        "webkitMaskImage": null
+      },
+      {
+        "id": "page-cinematic-3d",
+        "label": "fixed WebGL shell",
+        "selector": "[data-tt-traveltrust-page-cinematic-3d]",
+        "found": true,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 1536,
+          "h": 960
+        },
+        "opacity": "1",
+        "zIndex": "auto",
+        "position": "fixed",
+        "display": "block",
+        "width": "1536px",
+        "height": "960px",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "maskImage": "none",
+        "webkitMaskImage": "none",
+        "inlineBackground": null,
+        "inlineOpacity": "1"
+      }
+    ],
+    "viewport": {
+      "w": 1536,
+      "h": 960
+    }
+  },
+  "kills": [
+    {
+      "id": "baseline",
+      "hidden": false,
+      "screenshot": "00-baseline.png",
+      "viewport": {
+        "tag": "baseline",
+        "probe": "顶栏实心暖墨区（50%,14%）",
+        "probes": {
+          "x": 768,
+          "y": 134,
+          "stack": [
+            {
+              "tag": "a",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "li",
+              "id": null,
+              "data": {},
+              "zIndex": "0",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "ul",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "section",
+              "id": "pulse",
+              "data": {
+                "ttTraveltrustPulseVariant": "inline",
+                "ttTraveltrustPulseScrollMode": "marquee",
+                "ttTraveltrustPulseAnchor": "1",
+                "ttTraveltrustPulseTicker": "1",
+                "ttTraveltrustPulseL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromePulseRowL5": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgb(12, 10, 9)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromeLayout": "stacked-l5",
+                "ttTraveltrustLandingChromeXlSingleRowL5": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChrome": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0",
+                "ttTraveltrustLandingChromeHeroT": "0.00",
+                "ttTraveltrustLandingChromeL5": "1",
+                "ttTraveltrustLandingChromeSlimL5": "1",
+                "ttTraveltrustLandingChromeMergedHeaderL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "linear-gradient(rgba(252, 164, 124, 0) 0%, rgba(0, 0, 0, 0) 72%)",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingNavSlot": "sticky"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            }
+          ]
+        },
+        "shotRgb": "rgb(136,137,138)",
+        "webgl": {
+          "x": 768,
+          "y": 134,
+          "rgb": "rgb(0,0,0)",
+          "a": 0
+        }
+      }
+    },
+    {
+      "id": "hero-sky-wash",
+      "hidden": false,
+      "screenshot": "kill-hero-sky-wash.png",
+      "viewport": {
+        "tag": "hero-sky-wash",
+        "probe": "顶栏实心暖墨区（50%,14%）",
+        "probes": {
+          "x": 768,
+          "y": 134,
+          "stack": [
+            {
+              "tag": "a",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "li",
+              "id": null,
+              "data": {},
+              "zIndex": "0",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "ul",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "section",
+              "id": "pulse",
+              "data": {
+                "ttTraveltrustPulseVariant": "inline",
+                "ttTraveltrustPulseScrollMode": "marquee",
+                "ttTraveltrustPulseAnchor": "1",
+                "ttTraveltrustPulseTicker": "1",
+                "ttTraveltrustPulseL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromePulseRowL5": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgb(12, 10, 9)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromeLayout": "stacked-l5",
+                "ttTraveltrustLandingChromeXlSingleRowL5": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChrome": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0",
+                "ttTraveltrustLandingChromeHeroT": "0.00",
+                "ttTraveltrustLandingChromeL5": "1",
+                "ttTraveltrustLandingChromeSlimL5": "1",
+                "ttTraveltrustLandingChromeMergedHeaderL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "linear-gradient(rgba(252, 164, 124, 0) 0%, rgba(0, 0, 0, 0) 72%)",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingNavSlot": "sticky"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            }
+          ]
+        },
+        "shotRgb": "rgb(136,137,138)",
+        "webgl": {
+          "x": 768,
+          "y": 134,
+          "rgb": "rgb(0,0,0)",
+          "a": 0
+        }
+      }
+    },
+    {
+      "id": "viewport-ink",
+      "hidden": true,
+      "screenshot": "kill-viewport-ink.png",
+      "viewport": {
+        "tag": "viewport-ink",
+        "probe": "顶栏实心暖墨区（50%,14%）",
+        "probes": {
+          "x": 768,
+          "y": 134,
+          "stack": [
+            {
+              "tag": "a",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "li",
+              "id": null,
+              "data": {},
+              "zIndex": "0",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "ul",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "section",
+              "id": "pulse",
+              "data": {
+                "ttTraveltrustPulseVariant": "inline",
+                "ttTraveltrustPulseScrollMode": "marquee",
+                "ttTraveltrustPulseAnchor": "1",
+                "ttTraveltrustPulseTicker": "1",
+                "ttTraveltrustPulseL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromePulseRowL5": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgb(12, 10, 9)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromeLayout": "stacked-l5",
+                "ttTraveltrustLandingChromeXlSingleRowL5": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChrome": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0",
+                "ttTraveltrustLandingChromeHeroT": "0.00",
+                "ttTraveltrustLandingChromeL5": "1",
+                "ttTraveltrustLandingChromeSlimL5": "1",
+                "ttTraveltrustLandingChromeMergedHeaderL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "linear-gradient(rgba(252, 164, 124, 0) 0%, rgba(0, 0, 0, 0) 72%)",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingNavSlot": "sticky"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            }
+          ]
+        },
+        "shotRgb": "rgb(136,137,138)",
+        "webgl": {
+          "x": 768,
+          "y": 134,
+          "rgb": "rgb(0,0,0)",
+          "a": 0
+        }
+      }
+    },
+    {
+      "id": "equator-strip",
+      "hidden": false,
+      "screenshot": "kill-equator-strip.png",
+      "viewport": {
+        "tag": "equator-strip",
+        "probe": "顶栏实心暖墨区（50%,14%）",
+        "probes": {
+          "x": 768,
+          "y": 134,
+          "stack": [
+            {
+              "tag": "a",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "li",
+              "id": null,
+              "data": {},
+              "zIndex": "0",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "ul",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "section",
+              "id": "pulse",
+              "data": {
+                "ttTraveltrustPulseVariant": "inline",
+                "ttTraveltrustPulseScrollMode": "marquee",
+                "ttTraveltrustPulseAnchor": "1",
+                "ttTraveltrustPulseTicker": "1",
+                "ttTraveltrustPulseL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromePulseRowL5": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgb(12, 10, 9)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromeLayout": "stacked-l5",
+                "ttTraveltrustLandingChromeXlSingleRowL5": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChrome": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0",
+                "ttTraveltrustLandingChromeHeroT": "0.00",
+                "ttTraveltrustLandingChromeL5": "1",
+                "ttTraveltrustLandingChromeSlimL5": "1",
+                "ttTraveltrustLandingChromeMergedHeaderL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "linear-gradient(rgba(252, 164, 124, 0) 0%, rgba(0, 0, 0, 0) 72%)",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingNavSlot": "sticky"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            }
+          ]
+        },
+        "shotRgb": "rgb(136,137,138)",
+        "webgl": {
+          "x": 768,
+          "y": 134,
+          "rgb": "rgb(0,0,0)",
+          "a": 0
+        }
+      }
+    },
+    {
+      "id": "canvas-warm-band",
+      "hidden": false,
+      "screenshot": "kill-canvas-warm-band.png",
+      "viewport": {
+        "tag": "canvas-warm-band",
+        "probe": "顶栏实心暖墨区（50%,14%）",
+        "probes": {
+          "x": 768,
+          "y": 134,
+          "stack": [
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "li",
+              "id": null,
+              "data": {},
+              "zIndex": "0",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "ul",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "section",
+              "id": "pulse",
+              "data": {
+                "ttTraveltrustPulseVariant": "inline",
+                "ttTraveltrustPulseScrollMode": "marquee",
+                "ttTraveltrustPulseAnchor": "1",
+                "ttTraveltrustPulseTicker": "1",
+                "ttTraveltrustPulseL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromePulseRowL5": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgb(12, 10, 9)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromeLayout": "stacked-l5",
+                "ttTraveltrustLandingChromeXlSingleRowL5": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChrome": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0",
+                "ttTraveltrustLandingChromeHeroT": "0.00",
+                "ttTraveltrustLandingChromeL5": "1",
+                "ttTraveltrustLandingChromeSlimL5": "1",
+                "ttTraveltrustLandingChromeMergedHeaderL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "linear-gradient(rgba(252, 164, 124, 0) 0%, rgba(0, 0, 0, 0) 72%)",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingNavSlot": "sticky"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "canvas",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgb(12, 10, 9)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            }
+          ]
+        },
+        "shotRgb": "rgb(90,89,90)",
+        "webgl": {
+          "x": 768,
+          "y": 134,
+          "rgb": "rgb(0,0,0)",
+          "a": 0
+        }
+      }
+    },
+    {
+      "id": "globe-underlay-decor",
+      "hidden": false,
+      "screenshot": "kill-globe-underlay-decor.png",
+      "viewport": {
+        "tag": "globe-underlay-decor",
+        "probe": "顶栏实心暖墨区（50%,14%）",
+        "probes": {
+          "x": 768,
+          "y": 134,
+          "stack": [
+            {
+              "tag": "ul",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "section",
+              "id": "pulse",
+              "data": {
+                "ttTraveltrustPulseVariant": "inline",
+                "ttTraveltrustPulseScrollMode": "marquee",
+                "ttTraveltrustPulseAnchor": "1",
+                "ttTraveltrustPulseTicker": "1",
+                "ttTraveltrustPulseL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromePulseRowL5": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgb(12, 10, 9)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromeLayout": "stacked-l5",
+                "ttTraveltrustLandingChromeXlSingleRowL5": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChrome": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0",
+                "ttTraveltrustLandingChromeHeroT": "0.00",
+                "ttTraveltrustLandingChromeL5": "1",
+                "ttTraveltrustLandingChromeSlimL5": "1",
+                "ttTraveltrustLandingChromeMergedHeaderL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "linear-gradient(rgba(252, 164, 124, 0) 0%, rgba(0, 0, 0, 0) 72%)",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingNavSlot": "sticky"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "canvas",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgb(12, 10, 9)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            }
+          ]
+        },
+        "shotRgb": "rgb(12,10,9)",
+        "webgl": {
+          "x": 768,
+          "y": 134,
+          "rgb": "rgb(0,0,0)",
+          "a": 0
+        }
+      }
+    },
+    {
+      "id": "hero-warm-backdrop",
+      "hidden": false,
+      "screenshot": "kill-hero-warm-backdrop.png",
+      "viewport": {
+        "tag": "hero-warm-backdrop",
+        "probe": "顶栏实心暖墨区（50%,14%）",
+        "probes": {
+          "x": 768,
+          "y": 134,
+          "stack": [
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "li",
+              "id": null,
+              "data": {},
+              "zIndex": "0",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "ul",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "section",
+              "id": "pulse",
+              "data": {
+                "ttTraveltrustPulseVariant": "inline",
+                "ttTraveltrustPulseScrollMode": "marquee",
+                "ttTraveltrustPulseAnchor": "1",
+                "ttTraveltrustPulseTicker": "1",
+                "ttTraveltrustPulseL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromePulseRowL5": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgb(12, 10, 9)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromeLayout": "stacked-l5",
+                "ttTraveltrustLandingChromeXlSingleRowL5": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChrome": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0",
+                "ttTraveltrustLandingChromeHeroT": "0.00",
+                "ttTraveltrustLandingChromeL5": "1",
+                "ttTraveltrustLandingChromeSlimL5": "1",
+                "ttTraveltrustLandingChromeMergedHeaderL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "linear-gradient(rgba(252, 164, 124, 0) 0%, rgba(0, 0, 0, 0) 72%)",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingNavSlot": "sticky"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "canvas",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgb(12, 10, 9)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            }
+          ]
+        },
+        "shotRgb": "rgb(12,10,9)",
+        "webgl": {
+          "x": 768,
+          "y": 134,
+          "rgb": "rgb(0,0,0)",
+          "a": 0
+        }
+      }
+    },
+    {
+      "id": "canvas-hero-sky-cap",
+      "hidden": false,
+      "screenshot": "kill-canvas-hero-sky-cap.png",
+      "viewport": {
+        "tag": "canvas-hero-sky-cap",
+        "probe": "顶栏实心暖墨区（50%,14%）",
+        "probes": {
+          "x": 768,
+          "y": 134,
+          "stack": [
+            {
+              "tag": "a",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "li",
+              "id": null,
+              "data": {},
+              "zIndex": "0",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "ul",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "section",
+              "id": "pulse",
+              "data": {
+                "ttTraveltrustPulseVariant": "inline",
+                "ttTraveltrustPulseScrollMode": "marquee",
+                "ttTraveltrustPulseAnchor": "1",
+                "ttTraveltrustPulseTicker": "1",
+                "ttTraveltrustPulseL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromePulseRowL5": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgb(12, 10, 9)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromeLayout": "stacked-l5",
+                "ttTraveltrustLandingChromeXlSingleRowL5": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChrome": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0",
+                "ttTraveltrustLandingChromeHeroT": "0.00",
+                "ttTraveltrustLandingChromeL5": "1",
+                "ttTraveltrustLandingChromeSlimL5": "1",
+                "ttTraveltrustLandingChromeMergedHeaderL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "linear-gradient(rgba(252, 164, 124, 0) 0%, rgba(0, 0, 0, 0) 72%)",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingNavSlot": "sticky"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            }
+          ]
+        },
+        "shotRgb": "rgb(136,137,138)",
+        "webgl": {
+          "x": 768,
+          "y": 134,
+          "rgb": "rgb(0,0,0)",
+          "a": 0
+        }
+      }
+    },
+    {
+      "id": "page-cinematic-3d",
+      "hidden": true,
+      "screenshot": "kill-page-cinematic-3d.png",
+      "viewport": {
+        "tag": "page-cinematic-3d",
+        "probe": "顶栏实心暖墨区（50%,14%）",
+        "probes": {
+          "x": 768,
+          "y": 134,
+          "stack": [
+            {
+              "tag": "a",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "li",
+              "id": null,
+              "data": {},
+              "zIndex": "0",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "ul",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "section",
+              "id": "pulse",
+              "data": {
+                "ttTraveltrustPulseVariant": "inline",
+                "ttTraveltrustPulseScrollMode": "marquee",
+                "ttTraveltrustPulseAnchor": "1",
+                "ttTraveltrustPulseTicker": "1",
+                "ttTraveltrustPulseL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromePulseRowL5": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgb(12, 10, 9)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromeLayout": "stacked-l5",
+                "ttTraveltrustLandingChromeXlSingleRowL5": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChrome": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0",
+                "ttTraveltrustLandingChromeHeroT": "0.00",
+                "ttTraveltrustLandingChromeL5": "1",
+                "ttTraveltrustLandingChromeSlimL5": "1",
+                "ttTraveltrustLandingChromeMergedHeaderL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "linear-gradient(rgba(252, 164, 124, 0) 0%, rgba(0, 0, 0, 0) 72%)",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingNavSlot": "sticky"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            }
+          ]
+        },
+        "shotRgb": "rgb(136,137,138)",
+        "webgl": {
+          "x": 768,
+          "y": 134,
+          "rgb": "rgb(12,10,9)",
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "hero-dom-sky-veil",
+      "hidden": false,
+      "screenshot": "kill-hero-dom-sky-veil.png",
+      "viewport": {
+        "tag": "hero-dom-sky-veil",
+        "probe": "顶栏实心暖墨区（50%,14%）",
+        "probes": {
+          "x": 768,
+          "y": 134,
+          "stack": [
+            {
+              "tag": "a",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "li",
+              "id": null,
+              "data": {},
+              "zIndex": "0",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "ul",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "section",
+              "id": "pulse",
+              "data": {
+                "ttTraveltrustPulseVariant": "inline",
+                "ttTraveltrustPulseScrollMode": "marquee",
+                "ttTraveltrustPulseAnchor": "1",
+                "ttTraveltrustPulseTicker": "1",
+                "ttTraveltrustPulseL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromePulseRowL5": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgb(12, 10, 9)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromeLayout": "stacked-l5",
+                "ttTraveltrustLandingChromeXlSingleRowL5": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChrome": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0",
+                "ttTraveltrustLandingChromeHeroT": "0.00",
+                "ttTraveltrustLandingChromeL5": "1",
+                "ttTraveltrustLandingChromeSlimL5": "1",
+                "ttTraveltrustLandingChromeMergedHeaderL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "linear-gradient(rgba(252, 164, 124, 0) 0%, rgba(0, 0, 0, 0) 72%)",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingNavSlot": "sticky"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            }
+          ]
+        },
+        "shotRgb": "rgb(136,137,138)",
+        "webgl": {
+          "x": 768,
+          "y": 134,
+          "rgb": "rgb(0,0,0)",
+          "a": 0
+        }
+      }
+    },
+    {
+      "id": "hero-section",
+      "hidden": true,
+      "screenshot": "kill-hero-section.png",
+      "viewport": {
+        "tag": "hero-section",
+        "probe": "顶栏实心暖墨区（50%,14%）",
+        "probes": {
+          "x": 768,
+          "y": 134,
+          "stack": [
+            {
+              "tag": "section",
+              "id": "roles",
+              "data": {
+                "ttTraveltrustTheaterEntered": "1",
+                "ttTraveltrustTheaterL5": "1",
+                "ttTraveltrustActiveRoleId": "traveler",
+                "ttTraveltrustSectionMotionL5": "theater",
+                "ttTraveltrustSpacingSection": "theater",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "a",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "li",
+              "id": null,
+              "data": {},
+              "zIndex": "0",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "ul",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "section",
+              "id": "pulse",
+              "data": {
+                "ttTraveltrustPulseVariant": "inline",
+                "ttTraveltrustPulseScrollMode": "marquee",
+                "ttTraveltrustPulseAnchor": "1",
+                "ttTraveltrustPulseTicker": "1",
+                "ttTraveltrustPulseL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromePulseRowL5": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgb(12, 10, 9)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChromeLayout": "stacked-l5",
+                "ttTraveltrustLandingChromeXlSingleRowL5": "0"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {
+                "ttTraveltrustLandingChrome": "1",
+                "ttTraveltrustLandingChromePulseExpanded": "0",
+                "ttTraveltrustLandingChromeHeroT": "0.00",
+                "ttTraveltrustLandingChromeL5": "1",
+                "ttTraveltrustLandingChromeSlimL5": "1",
+                "ttTraveltrustLandingChromeMergedHeaderL5": "1",
+                "ttTraveltrustCinematicNonGlobeL5": "TT-CINEMATIC-L5-NON-GLOBE-2026-05"
+              },
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "linear-gradient(rgba(252, 164, 124, 0) 0%, rgba(0, 0, 0, 0) 72%)",
+              "rect": "NaNxNaN"
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "data": {},
+              "zIndex": "auto",
+              "opacity": "1",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "backgroundImage": "none",
+              "rect": "NaNxNaN"
+            }
+          ]
+        },
+        "shotRgb": "rgb(44,42,42)",
+        "webgl": {
+          "x": 768,
+          "y": 134,
+          "rgb": "rgb(0,0,0)",
+          "a": 0
+        }
+      }
+    }
+  ]
+}
