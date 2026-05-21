@@ -1,0 +1,35 @@
+---
+description: Locks approved /traveltrust homepage spacing, structure, and seamless background seams (May 2026 v2)
+globs: frontend/components/traveltrust/cinematic/**,frontend/lib/traveltrustCinematicNonGlobeL5.ts,frontend/lib/traveltrustPageSpacingAuditL5.ts,frontend/lib/traveltrustHomeLayoutLockL5.ts,frontend/lib/traveltrustSpacingDebug.ts,frontend/app/traveltrust/**
+---
+
+# TravelTrust 首页布局锁定（`/traveltrust` · v2 无缝版）
+
+用户已认可当前营销首页：**垂直节奏、经济簇结构、CTA 间距、背景无明显接缝**；默认**禁止**静默改动。
+
+## 真源
+
+- 冻结快照：`frontend/lib/traveltrustHomeLayoutLockL5.ts` → `TRAVELTRUST_HOME_LAYOUT_LOCK_L5`（`lockId` 含 `v2`）
+- 契约测试：`frontend/lib/traveltrustHomeLayoutLockL5.test.ts`
+- 间距 SSOT：`TT_PAGE_VERTICAL_RHYTHM_L5`（`traveltrustCinematicNonGlobeL5.ts`）
+
+## 变更前必须
+
+1. 用户明确要求调整首页叙事/间距/接缝，或同步更新 lock 快照。
+2. 同批更新 `TRAVELTRUST_HOME_LAYOUT_LOCK_L5` 与 `traveltrustHomeLayoutLockL5.test.ts`。
+3. 本地：`cd frontend && npx vitest run lib/traveltrustHomeLayoutLockL5.test.ts lib/traveltrustPageSpacingAuditL5.test.ts`
+
+## 结构基线（勿擅自改）
+
+| 项 | 基线 |
+| --- | --- |
+| scroll-snap | **关闭**（`TravelTrustPageScrollSnap` 不挂载） |
+| Film 占位 | 全页 **2** 处（剧场→经济簇、结算→FAQ）；**仅 margin**，无 `via-[#0c0a09]` 压暗带 |
+| 经济簇 | `liquidity` + `trust` + `settlement` 同一 cluster；**仅一条** `economy-cluster-atmosphere` |
+| 长页底光 | `BelowFoldAtmosphere` **统一**（`below-fold-atmosphere-unified-l5`），不按 nav 节跳色 |
+| FAQ→启程 | 仅 padding，无 Film / `border-t` |
+| 合规→页脚 | 无合规顶装饰线；`grouped` 页脚**无**顶 `ambience` |
+
+## 范围
+
+仅约束 L5 营销长页 cinematic 与上述 lib；不限制业务路由、合约、后端。

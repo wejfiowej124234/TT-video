@@ -17,6 +17,7 @@ import {
   isTraveltrustCinematicLowQuality,
   scheduleTraveltrustWebGLMount,
 } from "@/lib/traveltrustCinematicPerf";
+import { TT_HERO_GLOBE_OPTICAL_FALLBACK } from "@/lib/traveltrustHeroGlobeAlign";
 import { smoothstep } from "./traveltrustCinematicEasing3d";
 import { UNIFIED_PAGE_3D } from "./traveltrustPageCinematicConfig";
 import { useTravelTrustHeroScrollProgress } from "./TravelTrustHeroScrollContext";
@@ -48,6 +49,10 @@ import {
   TT_CINEMATIC_PAGE_INK_HEX,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
 } from "@/lib/traveltrustCinematicNonGlobeL5";
+import {
+  TRAVELTRUST_HERO_GLOBE_PASS_A_BRIGHTEN_ID,
+  TRAVELTRUST_HERO_GLOBE_PASS_A_MATERIAL_TUNE_ID,
+} from "@/lib/traveltrustHeroGlobeBrighten";
 import { resolveTraveltrustCanvasPower } from "@/lib/traveltrustCinematicPower";
 import { useHeroGlobeP1Link } from "@/lib/traveltrustHeroGlobeP1Link";
 import { bindTravelTrustWebGLContextHandlers } from "./traveltrustWebGLContext";
@@ -260,7 +265,7 @@ export function TravelTrustPageCinematicCanvas() {
   const heroSplitBlend = resolveHeroSplitLayoutBlend(heroT, isMobile);
   /** 全宽 Canvas + 3D 位移/遮罩插值（TT-PH1-150）；勿再叠 CSS mask / split 硬切，易丢球或乱版 */
   const cinematicViewportClass = `${TT_MARKETING_TRAVELTRUST_CINEMATIC_LAYER_BASE} ${TT_MARKETING_TRAVELTRUST_CINEMATIC_LAYER_FULL_LG}`;
-  const globeOpticalX = `var(--tt-hero-globe-optical-x, calc(50% + (28% - 50%) * ${heroSplitBlend.toFixed(3)}))`;
+  const globeOpticalX = `var(--tt-hero-globe-optical-x, calc(50% + (${TT_HERO_GLOBE_OPTICAL_FALLBACK} - 50%) * ${heroSplitBlend.toFixed(3)}))`;
   const heroBridgeFade =
     heroT < 0.38 ? 0 : heroT > 0.9 ? Math.max(0, 1 - (heroT - 0.9) / 0.1) : (heroT - 0.38) / 0.52;
   const heroBridgeEase = heroBridgeFade * heroBridgeFade * (3 - 2 * heroBridgeFade);
@@ -341,6 +346,10 @@ export function TravelTrustPageCinematicCanvas() {
       data-tt-traveltrust-webgl-lost={webglLost ? "1" : "0"}
       data-tt-traveltrust-hero-t={heroT.toFixed(3)}
       data-tt-traveltrust-hero-warm-ink-sky={heroT < 0.58 ? "1" : "0"}
+      data-tt-traveltrust-hero-globe-pass-a-brighten={heroT < 0.58 ? TRAVELTRUST_HERO_GLOBE_PASS_A_BRIGHTEN_ID : "0"}
+      data-tt-traveltrust-hero-globe-pass-a-material-tune={
+        heroT < 0.58 ? TRAVELTRUST_HERO_GLOBE_PASS_A_MATERIAL_TUNE_ID : "0"
+      }
       data-tt-traveltrust-hero-canvas-overlay-empty={heroOuterRingOverlay ? "0" : heroGlobeUnobstructed ? "1" : "0"}
       data-tt-traveltrust-hero-canvas-overlay-mode={heroOuterRingOverlay ? "outer-ring" : "warm-page"}
       data-tt-traveltrust-hero-globe-unobstructed={heroGlobeUnobstructed ? "1" : "0"}

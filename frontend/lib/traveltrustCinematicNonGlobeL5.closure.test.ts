@@ -89,6 +89,7 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
     const src = readFileSync(join(CINEMATIC, "TravelTrustStartSection.tsx"), "utf8");
     expect(src).toContain("TT_START_SECTION_L5.mainGridClass");
     expect(src).toContain("data-tt-traveltrust-start-preview-col-l5");
+    expect(src).toContain("data-tt-traveltrust-start-preview-col-entrance-l5");
   });
 
   it("hero scroll hint sits outside copy card", () => {
@@ -110,13 +111,15 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
     expect(header).toContain("data-tt-traveltrust-header-merged-chrome-l5");
     expect(ui).toMatch(/shouldSuppressGlobalSiteNav[\s\S]*return false/);
     const stable = readFileSync(join(CINEMATIC, "TravelTrustStablecoinGateway.tsx"), "utf8");
-    expect(stable).toContain("data-tt-traveltrust-liquidity-atmosphere-l5");
+    expect(readFileSync(join(CINEMATIC, "TravelTrustBelowFoldSections.tsx"), "utf8")).toContain(
+      "data-tt-traveltrust-economy-cluster-atmosphere-l5",
+    );
     expect(stable).toContain("traveltrustLiquidityGatewayModel");
     expect(stable).toContain("data-tt-traveltrust-ttg-gateway-preview");
     expect(stable).not.toContain('to: "USDC"');
     expect(stable).not.toContain('from: "USDT", to: "USDC"');
     const settlement = readFileSync(join(CINEMATIC, "TravelTrustSettlementStrip.tsx"), "utf8");
-    expect(settlement).toContain("data-tt-traveltrust-settlement-atmosphere-l5");
+    expect(settlement).not.toContain("data-tt-traveltrust-settlement-atmosphere-l5");
     const lib = readFileSync(join(REPO, "frontend/lib/traveltrustCinematicNonGlobeL5.ts"), "utf8");
     expect(lib).toContain("export const TT_LANDING_CHROME_L5");
     expect(lib).toContain("5.5rem+env(safe-area-inset-top");
@@ -222,7 +225,11 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
     const footer = readFileSync(join(CINEMATIC, "TravelTrustFooterCrossNav.tsx"), "utf8");
     const network = readFileSync(join(CINEMATIC, "TravelTrustNetworkFooter.tsx"), "utf8");
     const notice = readFileSync(join(CINEMATIC, "TravelTrustReducedMotionNotice.tsx"), "utf8");
-    expect(footer).toContain("traveltrust_footer_site_map_short");
+    expect(footer).toContain("traveltrust_footer_plan");
+    expect(footer).toContain("/traveltrust#start");
+    expect(footer).not.toContain("data-tt-traveltrust-footer-site-map-panel-l5");
+    expect(footer).not.toContain("traveltrust_footer_network");
+    expect(footer).not.toContain("MARKETING_SITE_FOOTER_ID");
     expect(footer).toContain("traveltrust_footer_governance_hub");
     expect(network).toContain("data-tt-traveltrust-network-footer-ambience-l5");
     expect(notice).toContain("TT_REDUCED_MOTION_NOTICE_L5.dismissButtonClass");
@@ -313,6 +320,8 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
     expect(src).toContain("data-tt-traveltrust-start-route-hub-label-l5");
     expect(src).toContain("data-tt-traveltrust-start-route-hub-dot-inactive-l5");
     expect(src).toContain("data-tt-traveltrust-start-route-step-title-l5");
+    expect(src).toContain("data-tt-traveltrust-start-route-copy-crossfade-l5");
+    expect(src).toContain("AnimatePresence");
     expect(src).toContain('data-tt-traveltrust-start-route-hub-state={selected ? "active" : "inactive"}');
     expect(src).not.toContain("foreignObject");
     expect(src).toContain("data-tt-traveltrust-start-route-corridor-ghost-l5");

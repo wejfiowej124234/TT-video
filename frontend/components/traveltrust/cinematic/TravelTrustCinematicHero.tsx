@@ -43,6 +43,8 @@ import {
   TT_SCROLL_PROGRESS_L5,
   TT_PAGE_LAYOUT_L5,
   TT_PAGE_SCROLL_SNAP_L5,
+  traveltrustChapterBeatDataAttrs,
+  traveltrustChapterViewportDataAttrs,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
 } from "@/lib/traveltrustCinematicNonGlobeL5";
 import {
@@ -72,6 +74,11 @@ import {
 import { UNIFIED_PAGE_3D } from "./traveltrustPageCinematicConfig";
 import { TravelTrustPhase1RegionRoster } from "./TravelTrustPhase1RegionRoster";
 import { TravelTrustHeroGlobeNetworkDecor } from "./TravelTrustHeroGlobeNetworkDecor";
+import { TravelTrustHeroL5ExperienceLayers } from "./TravelTrustHeroL5ExperienceLayers";
+import {
+  TRAVELTRUST_HERO_GLOBE_BRIGHTEN_ACTIVE_ID,
+  TRAVELTRUST_HERO_GLOBE_BRIGHTEN_ACTIVE_STEP,
+} from "@/lib/traveltrustHeroGlobeBrighten";
 import { TravelTrustHeroDestinationLabels } from "./TravelTrustHeroDestinationLabels";
 import { TravelTrustHeroNetworkNarrative } from "./TravelTrustHeroNetworkNarrative";
 import { useTraveltrustGlobeHeroHud } from "@/lib/traveltrustGlobeHeroHud";
@@ -151,7 +158,8 @@ export function TravelTrustCinematicHero({ heroRef: heroRefProp }: Props = {}) {
     <section
       ref={heroRef}
       id="hero"
-      className={`${UNIFIED_PAGE_3D ? TT_MARKETING_TRAVELTRUST_HERO_SECTION_UNIFIED_3D_CLASS : TT_MARKETING_TRAVELTRUST_HERO_SECTION_CLASS} relative ${ttZClass(TT_Z.HERO_SKY)} scroll-mt-28 ${TT_PAGE_SCROLL_SNAP_L5.sectionAlignClass}`}
+      className={`${UNIFIED_PAGE_3D ? TT_MARKETING_TRAVELTRUST_HERO_SECTION_UNIFIED_3D_CLASS : TT_MARKETING_TRAVELTRUST_HERO_SECTION_CLASS} relative ${ttZClass(TT_Z.HERO_SKY)} scroll-snap-center`}
+      data-tt-traveltrust-snap-align="center"
       style={{
         position: "relative",
         ...TT_HERO_SPLIT_CSS_VARS_STYLE,
@@ -165,8 +173,13 @@ export function TravelTrustCinematicHero({ heroRef: heroRefProp }: Props = {}) {
       data-tt-traveltrust-hero-media-hydration-settled={heroMediaHydrationSettled ? "1" : "0"}
       data-tt-traveltrust-hero-loop-env-key={heroMedia.loopEnvKey}
       data-tt-traveltrust-hero-section="1"
+      {...traveltrustChapterBeatDataAttrs(TT_PAGE_SCROLL_SNAP_L5.chapterBeatHero)}
+      {...traveltrustChapterViewportDataAttrs()}
       data-tt-traveltrust-hero-narrative-l5="web3-network"
       data-tt-traveltrust-hero-globe-p1-link="1"
+      data-tt-traveltrust-hero-l5-director-final-pass="TT-HERO-L5-DIRECTOR-FINAL-PASS-2026-05"
+      data-tt-traveltrust-hero-globe-brighten-step={String(TRAVELTRUST_HERO_GLOBE_BRIGHTEN_ACTIVE_STEP)}
+      data-tt-traveltrust-hero-globe-brighten-id={TRAVELTRUST_HERO_GLOBE_BRIGHTEN_ACTIVE_ID}
       data-tt-traveltrust-globe-focused-region={focusedRegionId ?? ""}
       data-tt-traveltrust-hero-cta-prefill-region={ctaRegionId}
     >
@@ -274,6 +287,7 @@ export function TravelTrustCinematicHero({ heroRef: heroRefProp }: Props = {}) {
         >
           <TravelTrustPhase1RegionRoster />
           <TravelTrustPhase1RegionRoster compactOnLg />
+          <TravelTrustHeroL5ExperienceLayers />
           <TravelTrustHeroGlobeNetworkDecor />
           <TravelTrustHeroDestinationLabels />
           <motion.div
@@ -367,10 +381,6 @@ export function TravelTrustCinematicHero({ heroRef: heroRefProp }: Props = {}) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: TT_HERO_ENTRANCE.cta.duration, delay: TT_HERO_ENTRANCE.cta.delay, ease: TT_CINEMATIC_EASE }}
               data-tt-traveltrust-hero-cta-dock="1"
-              onMouseEnter={() => setHeroGlobeP1FocusedRegion(resolveHeroGlobeP1DefaultRegion(routeBias))}
-              onMouseLeave={() => setHeroGlobeP1FocusedRegion(null)}
-              onFocusCapture={() => setHeroGlobeP1FocusedRegion(resolveHeroGlobeP1DefaultRegion(routeBias))}
-              onBlurCapture={() => setHeroGlobeP1FocusedRegion(null)}
             >
               <motion.div className={TT_HERO_CTA_ROW_CLASS}>
                 <motion.div

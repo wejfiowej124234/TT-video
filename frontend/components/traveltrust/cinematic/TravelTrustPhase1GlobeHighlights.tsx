@@ -25,6 +25,7 @@ import {
   TRAVELTRUST_PHASE1_GLOBE_REGIONS,
   latLonToUnitVector,
 } from "@/lib/traveltrustPhase1GlobeRegions";
+import { TRAVELTRUST_HERO_GLOBE_MARKER_PULSE_ENABLED } from "@/lib/traveltrustGlobeHeroTuning";
 import { useTravelTrustGlobeInteraction } from "./TravelTrustGlobeInteractionContext";
 
 function regionLocaleKey(id: string): string {
@@ -81,6 +82,7 @@ function DestinationPin({
   }, [pos, surfaceR]);
 
   useFrame((state) => {
+    if (!TRAVELTRUST_HERO_GLOBE_MARKER_PULSE_ENABLED) return;
     const pulse = 1 + Math.sin(state.clock.elapsedTime * 2.2 + index) * (isHovered ? 0.06 : 0.1);
     if (core.current) core.current.scale.setScalar(pulse);
     if (halo.current) halo.current.scale.setScalar(pulse * (isHovered ? 1.12 : 1.05));
@@ -151,7 +153,7 @@ function DestinationPin({
           toneMapped={false}
         />
       </mesh>
-      {isS ? (
+      {isS && TRAVELTRUST_HERO_GLOBE_MARKER_PULSE_ENABLED ? (
         <mesh position={[0, base * 1.05, 0]}>
           <sphereGeometry args={[base * 0.14, 10, 10]} />
           <meshBasicMaterial

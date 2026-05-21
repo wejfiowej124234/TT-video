@@ -37,11 +37,6 @@ export function TravelTrustSettlementStrip() {
       transition={sectionMotion.transition}
     >
       <div
-        className={TT_SETTLEMENT_L5.atmosphereClass}
-        aria-hidden
-        data-tt-traveltrust-settlement-atmosphere-l5="1"
-      />
-      <div
         className={TT_SECTION_CONTENT_L5.bodyClass}
         data-tt-traveltrust-trust-faq-liquidity-surface-l5="1"
       >

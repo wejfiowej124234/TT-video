@@ -8,7 +8,6 @@ import type { Group, Mesh } from "three";
 import * as THREE from "three";
 import {
   arcFlowPulseNearLandHub,
-  filterHeroTravelRoutes,
   globeVectorToLatLon,
   resolveHeroGlobeRouteBias,
   selectFacingArcsWorld,
@@ -30,6 +29,17 @@ import {
 } from "@/lib/traveltrustPhase1TravelRoutes";
 import { TT_HERO_GLOBE_L5_PALETTE } from "@/lib/traveltrustCinematicPageL5";
 import { TT_CINEMATIC_GLOBE_VISUAL } from "@/lib/traveltrustCinematicVisual";
+import {
+  TRAVELTRUST_HERO_GLOBE_ARC_DIM_MUL,
+  TRAVELTRUST_HERO_GLOBE_ARC_FLOW_PULSE_ENABLED,
+  TRAVELTRUST_HERO_GLOBE_ARC_HOVER_BOOST_MUL,
+  TRAVELTRUST_HERO_GLOBE_ARC_MAX_COUNT,
+  TRAVELTRUST_HERO_GLOBE_ARC_MAX_COUNT_LITE,
+  TRAVELTRUST_HERO_GLOBE_ARC_OPACITY_MUL,
+  TRAVELTRUST_HERO_GLOBE_ARC_RADIUS_MUL,
+  filterHeroTravelRoutesForL5Hero,
+  heroGlobeArcCorridorOpacityMul,
+} from "@/lib/traveltrustGlobeHeroTuning";
 import { useTravelTrustGlobeInteraction } from "./TravelTrustGlobeInteractionContext";
 import { useTravelTrustHeroScrollProgress } from "./TravelTrustHeroScrollContext";
 
@@ -154,11 +164,10 @@ export function TravelTrustPhase1TravelArcs({
 }) {
   const routes = lite ? TRAVELTRUST_PHASE1_TRAVEL_ROUTES_LITE : TRAVELTRUST_PHASE1_TRAVEL_ROUTES;
   const segments = lite ? 48 : 72;
-  const maxArcs = lite
-    ? TT_CINEMATIC_GLOBE_VISUAL.travelArcMaxCountLite
-    : TT_CINEMATIC_GLOBE_VISUAL.travelArcMaxCount;
+  const maxArcs = lite ? TRAVELTRUST_HERO_GLOBE_ARC_MAX_COUNT_LITE : TRAVELTRUST_HERO_GLOBE_ARC_MAX_COUNT;
 
-  const tubeScale = radius * TT_CINEMATIC_GLOBE_VISUAL.travelArcTubeRadiusMul;
+  const tubeScale =
+    radius * TT_CINEMATIC_GLOBE_VISUAL.travelArcTubeRadiusMul * TRAVELTRUST_HERO_GLOBE_ARC_RADIUS_MUL;
   const { hoveredRegionId, interactive } = useTravelTrustGlobeInteraction();
   const { camera } = useThree();
   const heroScroll = useTravelTrustHeroScrollProgress();
@@ -170,6 +179,7 @@ export function TravelTrustPhase1TravelArcs({
   const heroSky = heroT < 0.58;
   const groupRef = useRef<Group>(null);
   const [arcs, setArcs] = useState<GlobeArcPick<BuiltArc>[]>([]);
+  const [routeBias, setRouteBias] = useState<ReturnType<typeof resolveHeroGlobeRouteBias>>("any");
 
   useLayoutEffect(() => {
     const g = groupRef.current;
@@ -191,7 +201,8 @@ export function TravelTrustPhase1TravelArcs({
     const mw = groupRef.current?.matrixWorld;
     if (!mw) return;
     const bias = resolveHeroGlobeRouteBias(camera, mw);
-    const pool = filterHeroTravelRoutes(arcsBuilt, bias);
+    setRouteBias(bias);
+    const pool = filterHeroTravelRoutesForL5Hero(arcsBuilt, bias);
     const next = selectFacingArcsWorld(pool, maxArcs, camera, mw);
     setArcs((prev) => (arcIdsEqual(prev, next) ? prev : next));
     setTraveltrustGlobeHeroHud({ routeBias: bias });
@@ -201,9 +212,9 @@ export function TravelTrustPhase1TravelArcs({
     const activeRegionId = resolveHeroGlobeActiveRegionId(hoveredRegionId);
     if (!interactive || !activeRegionId) return 1;
     if (traveltrustRouteTouchesRegion(routeId, activeRegionId)) {
-      return TT_CINEMATIC_GLOBE_VISUAL.travelArcHoverBoostMul;
+      return TRAVELTRUST_HERO_GLOBE_ARC_HOVER_BOOST_MUL;
     }
-    return TT_CINEMATIC_GLOBE_VISUAL.travelArcDimMul;
+    return TRAVELTRUST_HERO_GLOBE_ARC_DIM_MUL;
   };
 
   if (arcs.length === 0) {
@@ -214,19 +225,25 @@ export function TravelTrustPhase1TravelArcs({
     <group ref={groupRef} renderOrder={2}>
       {arcs.map((arc, i) => {
         const hoverMul = arcHoverMul(arc.id);
+        const corridorMul = heroGlobeArcCorridorOpacityMul(arc.id, routeBias);
         const mainOpacity =
           TT_CINEMATIC_GLOBE_VISUAL.travelArcOpacity *
+          TRAVELTRUST_HERO_GLOBE_ARC_OPACITY_MUL *
           qualityMul *
           hoverMul *
+          corridorMul *
           (arc.pulse ? 1 : 0.9) *
           (1 - i * 0.006);
         const glowOpacity =
           (arc.tier === "S"
             ? TT_CINEMATIC_GLOBE_VISUAL.travelArcGlowOpacity
             : TT_CINEMATIC_GLOBE_VISUAL.travelArcTierAGlowOpacity) *
+          TRAVELTRUST_HERO_GLOBE_ARC_OPACITY_MUL *
           qualityMul *
-          hoverMul;
-        const showFlow = arc.flow && arc.bothEndpointsVisible;
+          hoverMul *
+          corridorMul;
+        const showFlow =
+          TRAVELTRUST_HERO_GLOBE_ARC_FLOW_PULSE_ENABLED && arc.flow && arc.bothEndpointsVisible;
 
         return (
           <group key={arc.id}>

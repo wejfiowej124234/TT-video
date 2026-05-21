@@ -246,6 +246,10 @@ export const TT_ROLE_VIDEO_L5 = {
     "pointer-events-none absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(252,164,124,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(252,164,124,0.06)_1px,transparent_1px)] [background-size:24px_24px]",
   panelRotateDuration: 0.45,
   panelShellClass: "overflow-hidden rounded-2xl isolate [transform-origin:center_center]",
+  /** 16:9 画框；禁止 sm+ aspect-auto + 50–58vh min-h（会变成竖长「手机屏」） */
+  frameClass:
+    "relative aspect-video w-full max-h-[min(56vh,480px)] overflow-hidden rounded-2xl border bg-ink-950/80 max-lg:max-h-[min(52vw,280px)]",
+  mediaCoverClass: "h-full w-full object-cover",
   panelScrimClass:
     "pointer-events-none absolute inset-0 z-[5] bg-[linear-gradient(to_bottom,rgba(12,10,9,0.42)_0%,transparent_22%,transparent_78%,rgba(12,10,9,0.52)_100%)]",
   panelWarmLiftClass:
@@ -337,49 +341,187 @@ export const TT_HORIZON_ARC_L5 = {
     "pointer-events-none absolute inset-x-[10%] bottom-0 h-8 bg-[radial-gradient(ellipse_80%_100%_at_50%_100%,rgba(252,164,124,0.22),transparent_70%)]",
 } as const;
 
-/** 长页垂直节奏 SSOT（区块间距 · 2026-05 截图审计批） */
+/**
+ * 长页垂直节奏 SSOT（企业叙事流 · 8px 网格）
+ * 同主题簇（兑换·信任·结算）用 cluster*；大转折仅用 padding（全页 ≤2 处 Film 软过渡 · 见 `TT_PAGE_SPACING_AUDIT_L5`）。
+ * **首页布局已锁定** · 变更须同步 `TRAVELTRUST_HOME_LAYOUT_LOCK_L5` + `traveltrustHomeLayoutLockL5.test.ts`。
+ */
 export const TT_PAGE_VERTICAL_RHYTHM_L5 = {
-  /** 标准大节：trust 等 */
-  sectionY: "py-10 sm:py-12",
-  /** 紧凑节：liquidity / settlement / faq */
-  sectionYCompact: "py-9 sm:py-10",
-  /** 剧场节底：与下一节（兑换网关）拉开，避免贴 card 下缘 */
-  sectionBottomTheater: "pb-10 sm:pb-12",
-  /** 兑换网关节底：大卡+免责声明后需额外留白 */
-  sectionBottomLiquidity: "pb-11 sm:pb-12",
-  /** 信任节顶：接在兑换网关 film 缝后，kicker 勿贴上一节 */
-  sectionTopTrust: "pt-12 sm:pt-14",
-  /** 结算条底 / FAQ 顶底 / 开始顶（结算→FAQ→Start 成组，勿贴 CTA 或手风琴） */
-  sectionBottomSettlement: "pb-11 sm:pb-12",
-  sectionTopFaq: "pt-8 sm:pt-9",
-  sectionBottomFaq: "pb-10 sm:pb-11",
-  sectionTopStart: "pt-10 sm:pt-11",
-  sectionYStart: "scroll-mt-28 pb-8 sm:pb-10",
+  /** 标准独立大节：FAQ / 启程 */
+  sectionY: "py-8 sm:py-9",
+  /** 紧凑节（单节默认） */
+  sectionYCompact: "py-6 sm:py-8",
+  /** 经济簇首段：兑换网关（与剧场底 + Film 缝叠层，勿再大 pt） */
+  sectionClusterFirst: "pt-6 sm:pt-7 pb-4 sm:pb-5",
+  /** 经济簇中段：可核对的事实 */
+  sectionClusterMid: "py-4 sm:py-5",
+  /** 经济簇末段：结算 */
+  sectionClusterLast: "pt-4 sm:pt-5 pb-6 sm:pb-8",
+  /** 大转折后首段（FAQ） */
+  sectionAfterMajorBreak: "pt-6 sm:pt-8 pb-6 sm:pb-8",
+  /** 剧场节底：与兑换簇衔接 */
+  sectionBottomTheater: "pb-6 sm:pb-8",
+  /** @deprecated 用 sectionCluster* */
+  sectionBottomLiquidity: "pb-5 sm:pb-6",
+  sectionTopTrust: "py-5 sm:py-6",
+  sectionBottomSettlement: "pb-8 sm:pb-9",
+  sectionTopFaq: "pt-7 sm:pt-8",
+  sectionBottomFaq: "pb-7 sm:pb-8",
+  sectionTopStart: "pt-6 sm:pt-8",
+  sectionYStart: "scroll-mt-28 pb-6 sm:pb-8",
   headerStackGap: "mt-4 sm:mt-5",
   headingToIntro: "mt-3 max-w-3xl",
   contentStackGap: "mt-5 sm:mt-6",
   contentStackGapTight: "mt-4 sm:mt-5",
   faqListGap: "space-y-3.5 sm:space-y-4",
   settlementCtaRow:
-    "mt-5 flex w-full flex-wrap items-stretch justify-center gap-3 sm:mt-6 lg:max-w-3xl lg:justify-center lg:mx-auto [&_a]:flex-1 [&_a]:sm:flex-none [&_a]:sm:min-w-[11rem]",
+    "mt-5 flex w-full flex-wrap items-stretch justify-center gap-4 sm:mt-6 sm:gap-5 lg:max-w-3xl lg:justify-center lg:mx-auto [&_a]:flex-1 [&_a]:sm:flex-none [&_a]:sm:min-w-[11rem]",
   heroChromeMinH: "min-h-[2.5rem] sm:min-h-[2.625rem]",
   liquidityMaxWidth: "max-w-3xl",
   disclaimerAfterGrid: "mt-6 sm:mt-7",
-  startStepsToPreview: "mt-6 sm:mt-7",
-  complianceShell: "relative mt-4 w-full border-t border-ref-sun/10 pt-4 pb-6 sm:mt-5 sm:pt-5 sm:pb-8",
+  startStepsToPreview: "mt-7 sm:mt-8",
+  complianceShell: "relative mt-8 w-full border-t-0 pt-0 pb-4 sm:mt-10 sm:pb-5",
   complianceContent: "relative mx-auto w-full max-w-3xl px-0.5 sm:px-0 xl:max-w-5xl",
 } as const;
 
 /**
  * `/traveltrust` 叙事节距吸附（CSS scroll-snap · ①）
- * 由 `TravelTrustPageScrollSnap` 在用户首次滚轮/触摸后于 `<html>` 启用；`prefers-reduced-motion` 或 `?tt_snap=0` 时关闭。
- * `?tt_snap=mandatory` 更强吸附（FAQ/开始等长节内仍可用滚轮细读）。
+ * CSS / 滚轮步进默认**关闭**（`TravelTrustPageScrollSnap` 未挂载）。
+ * 开发调试可临时挂载该组件；`?tt_snap=proximity` / `?tt_snap=0` 仍作用于 globals。
  */
 export const TT_PAGE_SCROLL_SNAP_L5 = {
   htmlRootClass: "tt-traveltrust-scroll-snap-y",
-  sectionAlignClass: "scroll-snap-start",
-  scrollPaddingTop: "7rem",
+  /** @deprecated 用 chapterBeatSnapClass；保留给旧引用 */
+  sectionAlignClass: "scroll-snap-start snap-always",
+  /** 叙事大节：顶对齐 + 滚轮优先停在该节（配合 `TT_PAGE_CHAPTER_VIEWPORT_L5.minHeightClass`） */
+  chapterBeatSnapClass: "scroll-snap-start snap-always",
+  /** 与 `TT_LANDING_CHROME_L5.shellClass` sticky top + 下行高度近似 */
+  scrollPaddingTop: "calc(5.5rem + env(safe-area-inset-top, 0px))",
+  chapterBeatDataAttr: "data-tt-traveltrust-scroll-chapter-beat",
+  chapterBeatHero: "hero",
+  chapterBeatTheater: "theater",
+  chapterBeatLiquidity: "liquidity",
+  chapterBeatTrust: "trust",
+  chapterBeatSettlement: "settlement",
+  /** @deprecated 已拆为 liquidity / trust / settlement；勿新引用 */
+  chapterBeatEconomy: "economy",
+  chapterBeatFaq: "faq",
+  chapterBeatClose: "close",
 } as const;
+
+export type TraveltrustScrollChapterBeatId =
+  | typeof TT_PAGE_SCROLL_SNAP_L5.chapterBeatHero
+  | typeof TT_PAGE_SCROLL_SNAP_L5.chapterBeatTheater
+  | typeof TT_PAGE_SCROLL_SNAP_L5.chapterBeatLiquidity
+  | typeof TT_PAGE_SCROLL_SNAP_L5.chapterBeatTrust
+  | typeof TT_PAGE_SCROLL_SNAP_L5.chapterBeatSettlement
+  | typeof TT_PAGE_SCROLL_SNAP_L5.chapterBeatFaq
+  | typeof TT_PAGE_SCROLL_SNAP_L5.chapterBeatClose;
+
+/** 吸附章外壳（snap 关闭时仅用 flowShellClass） */
+export const TT_PAGE_CHAPTER_VIEWPORT_L5 = {
+  minHeightClass: "min-h-[100svh] min-h-[100dvh]",
+  scrollMarginClass: "scroll-mt-28",
+  gapAfterClass: "mb-[clamp(1.5rem,4vh,2.75rem)]",
+  paddingYClass: "py-[clamp(2.5rem,6vh,4rem)] sm:py-[clamp(3rem,7vh,4.75rem)]",
+  /** 普通滚动：无 100svh、无额外壳 padding */
+  flowShellClass: "relative isolate mb-0 min-h-0 py-0",
+  layoutCenterClass: "box-border flex flex-col justify-center",
+  layoutStartClass: "box-border flex flex-col justify-start",
+} as const;
+
+/** 叙事流布局（无 snap · 与 `TT_PAGE_VERTICAL_RHYTHM_L5` 配套） */
+export const TT_PAGE_SECTION_FLOW_L5 = {
+  economyClusterClass: "relative flex flex-col gap-0",
+  /** 经济簇唯一顶光（兑换/信任/结算不再各叠一层） */
+  economyClusterAtmosphereClass:
+    "pointer-events-none absolute inset-x-0 top-0 z-0 h-[min(26rem,52vh)] bg-[radial-gradient(ellipse_72%_58%_at_50%_0%,rgba(252,164,124,0.07),transparent_72%)]",
+} as const;
+
+/** 合并章内子节间距（兑换→信任→结算；启程→页脚） */
+export const TT_SNAP_CHAPTER_GROUP_L5 = {
+  innerStackClass: "flex flex-col gap-0",
+  innerSectionFirstClass: "pt-0",
+  innerSectionClass: "py-8 sm:py-9",
+  innerSectionTightClass: "py-6 sm:py-8",
+  innerDividerClass:
+    "pointer-events-none relative z-[0] my-6 h-px w-full bg-gradient-to-r from-transparent via-ref-sun/18 to-transparent sm:my-7",
+} as const;
+
+/** 叙事章外壳（默认 flow；fillViewport 仅调试 snap） */
+export function ttTraveltrustSnapChapterShellClass(opts?: {
+  align?: "center" | "start";
+  /** 默认 false；true 时 100svh + snap 对齐 */
+  fillViewport?: boolean;
+  extra?: string;
+}): string {
+  const fillViewport = opts?.fillViewport ?? false;
+  const v = TT_PAGE_CHAPTER_VIEWPORT_L5;
+  if (!fillViewport) {
+    return [v.flowShellClass, opts?.extra?.trim() ?? ""].filter(Boolean).join(" ");
+  }
+  const align = opts?.align ?? "center";
+  const layout = align === "start" ? v.layoutStartClass : v.layoutCenterClass;
+  const snapAlignClass =
+    align === "start" ? "scroll-snap-start" : "scroll-snap-center";
+  return [
+    "relative isolate overflow-hidden",
+    snapAlignClass,
+    v.minHeightClass,
+    v.gapAfterClass,
+    v.paddingYClass,
+    layout,
+    opts?.extra?.trim() ?? "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
+
+/**
+ * 章内 `<section>` 或独立叙事节（剧场/FAQ 单节）
+ * @param snap  true = 本节单独作为吸附停点（Hero/剧场）；合并章内置 false
+ */
+export function ttTraveltrustSnapSectionInnerClass(opts?: {
+  snap?: boolean;
+  align?: "center" | "start";
+  padding?: "default" | "tight" | "none";
+  extra?: string;
+}): string {
+  const snap = opts?.snap ?? false;
+  const align = opts?.align ?? "start";
+  const pad =
+    opts?.padding === "none"
+      ? ""
+      : opts?.padding === "tight"
+        ? TT_SNAP_CHAPTER_GROUP_L5.innerSectionTightClass
+        : TT_SNAP_CHAPTER_GROUP_L5.innerSectionClass;
+  const layout =
+    align === "center"
+      ? "flex flex-col justify-center"
+      : "flex flex-col justify-start";
+  return [
+    "relative isolate overflow-hidden",
+    snap ? TT_PAGE_SCROLL_SNAP_L5.chapterBeatSnapClass : "",
+    snap ? TT_PAGE_CHAPTER_VIEWPORT_L5.scrollMarginClass : "",
+    pad,
+    layout,
+    opts?.extra?.trim() ?? "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
+
+/** @deprecated 用 snapChapterShell / snapSectionInner */
+export function ttTraveltrustChapterSectionClass(opts?: {
+  align?: "center" | "start";
+  extra?: string;
+}): string {
+  return ttTraveltrustSnapChapterShellClass(opts);
+}
+
+export function traveltrustChapterViewportDataAttrs(): Record<string, string> {
+  return { "data-tt-traveltrust-scroll-chapter-viewport": "1" };
+}
 
 /** 顶栏滚动条 · 全暖色（无 teal 尾） */
 /** 长页区块正文排版（与 PAGE_FRAME 对齐 · trust/faq/liquidity/settlement 共用） */
@@ -391,7 +533,7 @@ export const TT_SECTION_CONTENT_L5 = {
   introClass: `${TT_PAGE_VERTICAL_RHYTHM_L5.headingToIntro} text-meta leading-relaxed text-slate-300/92`,
   stackAfterHeadingClass: TT_PAGE_VERTICAL_RHYTHM_L5.contentStackGap,
   disclaimerClass: `${TT_PAGE_VERTICAL_RHYTHM_L5.disclaimerAfterGrid} max-w-3xl text-meta leading-relaxed text-slate-300/90`,
-  cardGridClass: `${TT_PAGE_VERTICAL_RHYTHM_L5.contentStackGap} mx-auto grid w-full max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:max-w-5xl`,
+  cardGridClass: `${TT_PAGE_VERTICAL_RHYTHM_L5.contentStackGap} mx-auto grid w-full max-w-4xl grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:max-w-5xl`,
 } as const;
 
 /** 长页区块表面（无冷 border-t；区块间由 film-divider 衔接） */
@@ -407,19 +549,18 @@ export const TT_SECTION_META_L5 = {
 export const TT_SECTION_KICKER_L5 =
   "text-kicker font-semibold uppercase tracking-[0.2em] text-ref-sun/96";
 
-const TT_SECTION_SNAP = TT_PAGE_SCROLL_SNAP_L5.sectionAlignClass;
-
+const _flowSectionBase = "relative isolate overflow-hidden flex flex-col";
 export const TT_SECTION_SURFACE_L5 = {
-  trust: `relative overflow-hidden scroll-mt-28 ${TT_SECTION_SNAP} ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionTopTrust} pb-10 sm:pb-12`,
-  settlement: `relative overflow-hidden scroll-mt-28 ${TT_SECTION_SNAP} pt-9 sm:pt-10 ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionBottomSettlement}`,
-  faq: `relative overflow-visible scroll-mt-28 ${TT_SECTION_SNAP} ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionTopFaq} ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionBottomFaq}`,
-  liquidity: `relative overflow-hidden scroll-mt-28 ${TT_SECTION_SNAP} ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionYCompact}`,
-  trustAtmosphere:
-    "pointer-events-none absolute inset-x-0 top-0 h-32 bg-[radial-gradient(ellipse_70%_80%_at_18%_0%,rgba(252,164,124,0.08),transparent_70%)]",
+  liquidity: `${_flowSectionBase} justify-center opacity-[0.97] ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionClusterFirst}`,
+  trust: `${_flowSectionBase} justify-center ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionClusterMid}`,
+  settlement: `${_flowSectionBase} justify-center ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionClusterLast}`,
+  faq: `${_flowSectionBase} justify-start overflow-visible ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionAfterMajorBreak}`,
+  /** @deprecated 经济簇顶光见 `TT_PAGE_SECTION_FLOW_L5.economyClusterAtmosphereClass` */
+  trustAtmosphere: "hidden",
   faqAtmosphere:
-    "pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(ellipse_78%_80%_at_50%_0%,rgba(252,164,124,0.14),transparent_72%)]",
+    "pointer-events-none absolute inset-x-0 top-0 h-28 bg-[radial-gradient(ellipse_78%_75%_at_50%_0%,rgba(252,164,124,0.06),transparent_74%)]",
   faqWarmScrimClass:
-    "pointer-events-none absolute inset-x-4 top-24 bottom-8 rounded-3xl bg-[radial-gradient(ellipse_90%_70%_at_50%_40%,rgba(252,164,124,0.06),transparent_68%)] sm:inset-x-8",
+    "pointer-events-none absolute inset-x-4 top-24 bottom-8 rounded-3xl bg-[radial-gradient(ellipse_90%_70%_at_50%_40%,rgba(252,164,124,0.03),transparent_72%)] sm:inset-x-8",
 } as const;
 
 /** 左下章节 chrome / Hero「向下」提示共用 pill（L5-3 · G5） */
@@ -521,14 +662,13 @@ export const TT_SECTION_FILM_DIVIDER_L5 =
 
 /** 区块间竖向压暗带（避免固定 Canvas 在缝处露底；与 sectionY 叠成标准节间距） */
 export const TT_SECTION_FILM_DIVIDER_HANDOFF_L5 = {
-  wrapperClass:
-    "pointer-events-none relative z-[0] my-[clamp(0.625rem,1.75vh,1.125rem)] h-[clamp(1.25rem,3.25vh,2.25rem)] w-full bg-gradient-to-b from-transparent via-[#0c0a09]/18 to-transparent",
-  lineClass: "absolute inset-x-0 top-1/2 h-px -translate-y-1/2",
+  /** 大转折仅留白，不叠竖向压暗带（避免接缝色带） */
+  wrapperClass: "pointer-events-none relative z-[0] my-7 sm:my-8 h-0 w-full",
+  lineClass: "absolute inset-x-0 top-1/2 h-px -translate-y-1/2 opacity-0",
 } as const;
 
 export const TT_BELOW_FOLD_SCROLL_PLATE_L5 = {
-  backdropClass:
-    "pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-[#0c0a09]/22 via-[#0c0a09]/48 to-[#0c0a09]/22",
+  backdropClass: "pointer-events-none absolute inset-0 z-0 bg-[#0c0a09]/38",
 } as const;
 
 export const TT_SECTION_FILM_DIVIDER_MOTION_L5 = {
@@ -568,8 +708,8 @@ export const TT_FAQ_ACCORDION_L5 = {
 } as const;
 
 export const TT_SETTLEMENT_L5 = {
-  atmosphereClass:
-    "pointer-events-none absolute inset-x-0 top-0 h-32 bg-[radial-gradient(ellipse_72%_70%_at_42%_0%,rgba(252,164,124,0.09),transparent_72%)]",
+  /** @deprecated 经济簇顶光见 `TT_PAGE_SECTION_FLOW_L5.economyClusterAtmosphereClass` */
+  atmosphereClass: "hidden",
   protocolShellClass:
     "mx-auto w-full max-w-3xl overflow-hidden rounded-2xl border border-ref-sun/14 bg-ink-900/28 backdrop-blur-sm transition-colors",
   protocolShellOpenClass: "border-ref-sun/28 bg-ref-sun/6 shadow-[0_0_24px_-12px_rgba(252,164,124,0.18)]",
@@ -706,6 +846,16 @@ export const TT_BELOW_FOLD_ATMOSPHERE_L5 = {
   warmPulseOpacity: [0.35, 0.55, 0.35] as const,
 } as const;
 
+/** 首屏以下长页统一底光（不按 liquidity/trust/settlement 跳色） */
+export const TT_BELOW_FOLD_ATMOSPHERE_UNIFIED_L5 = {
+  background: [
+    "radial-gradient(ellipse 82% 58% at 50% 18%, rgba(252,164,124,0.055) 0%, transparent 68%)",
+    "linear-gradient(to bottom, rgba(12,10,9,0.06) 0%, transparent 28%, transparent 100%)",
+  ].join(", "),
+  warmPulseBackground:
+    "radial-gradient(ellipse 80% 60% at 50% 30%, rgba(252,164,124,0.08), transparent 72%)",
+} as const;
+
 /** 章节入场（非地球区块 · 与 traveltrustSectionMotion 同值） */
 export const TT_SECTION_MOTION_L5 = {
   theater: { duration: 0.72 },
@@ -767,7 +917,7 @@ export const TT_SCROLL_HINT_L5_CLASS =
 
 export const TT_SCROLL_HINT_L5 = {
   /** 置于文案卡外，与左下 scroll chrome 同 pill（J·P1-H4） */
-  outsideCardClass: "mt-3 w-full sm:mt-4",
+  outsideCardClass: "mt-3 mb-1 w-full sm:mt-4 sm:mb-2",
   mobileBorderPulse: { duration: 2.8, opacity: [0.4, 0.95, 0.4] as const },
   mobileBorderPulseRepeat: 0 as const,
   mobileBorderPulseClass: "pointer-events-none absolute inset-0 rounded-lg ring-1 ring-inset ring-ref-sun/30",
@@ -803,18 +953,23 @@ export const TT_VIEWPORT_INK_L5 = {
 } as const;
 
 export const TT_THEATER_SECTION_L5 = {
-  introBlockClass: "relative z-[3] mx-auto w-full max-w-3xl px-0.5 sm:px-0",
+  introBlockClass: "relative z-[3] mx-auto w-full max-w-3xl px-0.5 pt-1 sm:px-0 sm:pt-2",
+  /** 眉题「角色剧场」与主标题之间：显式分线 + 企业级留白（勿贴标题） */
+  introKickerClass: "mb-0",
+  introHeadlineBlockClass: "mt-5 space-y-4 sm:mt-6 sm:space-y-5",
   introHeadlineClass: "max-w-3xl text-h3 font-bold text-white sm:text-h2",
   introSublineClass: "max-w-3xl text-small leading-relaxed text-slate-300",
   theaterPanelFrameClass:
     "relative min-w-0 overflow-hidden rounded-2xl border border-ref-sun/20 bg-gradient-to-b from-[#1c1612]/92 to-ink-950/96 shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_12px_40px_-16px_rgba(252,164,124,0.22)]",
-  stageShellClass: "relative z-[3] mt-7 overflow-hidden [perspective:1600px] lg:mt-8",
+  stageShellClass: "relative z-[3] mt-5 overflow-hidden [perspective:1600px] sm:mt-6 lg:mt-7",
   stageGridClass: "relative grid gap-5 lg:grid-cols-[minmax(0,12.5rem)_minmax(0,1fr)] lg:items-start lg:gap-6 xl:gap-7",
   panelStackClass: "relative z-[1] flex min-w-0 flex-col gap-4 lg:gap-5",
   roleMetaStackClass: "flex flex-col gap-3.5",
   roleCtaStackClass: "flex w-full flex-col gap-2.5 pt-0.5 sm:max-w-[22rem]",
-  sectionSurfaceClass: `relative isolate scroll-mt-28 ${TT_PAGE_SCROLL_SNAP_L5.sectionAlignClass} overflow-hidden -mt-[clamp(1.25rem,4vh,2.75rem)] pt-[clamp(2.25rem,6vh,3.75rem)] sm:pt-[clamp(2.75rem,6.5vh,4.25rem)] max-lg:[&_[data-tt-traveltrust-role-video]]:aspect-video ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionBottomTheater}`,
-  introBlockGap: "space-y-3.5 sm:space-y-4",
+  /** 吸附由外层 `TravelTrustSnapChapter` 承担；本节仅保留内容与 Hero 接缝 */
+  sectionSurfaceClass: `relative isolate overflow-hidden -mt-[clamp(0.5rem,1.5vh,1.25rem)] pt-[clamp(1.75rem,4.5vh,2.75rem)] sm:pt-[clamp(2rem,5vh,3.25rem)] max-lg:[&_[data-tt-traveltrust-role-video]]:aspect-video ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionBottomTheater}`,
+  /** @deprecated 用 introHeadlineBlockClass */
+  introBlockGap: "space-y-4 sm:space-y-5",
   videoPlaceholderHintClass: "mt-1 text-meta leading-relaxed text-slate-300/88",
   roleMetaPanelClass: "border-t border-ref-sun/12 bg-ink-950/35 px-5 pb-6 pt-6 sm:px-6 sm:pb-7 sm:pt-7",
   roleMetaTitleClass: "text-h4 font-bold leading-tight text-white sm:text-h3",
@@ -824,10 +979,12 @@ export const TT_THEATER_SECTION_L5 = {
   sectionFloorCapClass:
     "pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[min(30vh,300px)] bg-gradient-to-t from-[#0c0a09] via-[#0c0a09]/72 to-transparent",
   sectionTopCapClass:
-    "pointer-events-none absolute inset-x-0 top-0 z-[1] h-[clamp(2.75rem,7vh,5rem)] bg-gradient-to-b from-[#0c0a09]/92 via-[#0c0a09]/52 to-transparent",
+    "pointer-events-none absolute inset-x-0 top-0 z-[1] h-[clamp(2rem,5vh,3.5rem)] bg-gradient-to-b from-[#0c0a09]/88 via-[#0c0a09]/40 to-transparent",
   topHandoffScrimStyle:
-    "linear-gradient(to bottom, rgba(12,10,9,0.58) 0%, rgba(12,10,9,0.36) 38%, rgba(12,10,9,0.14) 68%, rgba(252,164,124,0.06) 86%, transparent 100%)",
-  topHandoffScrimHeightClass: "h-[clamp(3rem,8vh,5.25rem)] sm:h-[clamp(3.5rem,9vh,6rem)]",
+    "linear-gradient(to bottom, rgba(12,10,9,0.5) 0%, rgba(12,10,9,0.28) 42%, rgba(12,10,9,0.08) 78%, transparent 100%)",
+  topHandoffScrimHeightClass: "h-[clamp(2.25rem,6vh,4rem)] sm:h-[clamp(2.5rem,6.5vh,4.5rem)]",
+  theater3dWrapClass:
+    "pointer-events-none absolute top-2 right-0 z-0 left-[24%] h-[min(58vh,480px)] motion-reduce:hidden sm:top-3 sm:left-[30%] lg:left-[36%] xl:left-[38%]",
   topHandoffFadeDuration: 0.9,
   entranceDuration: 0.65,
   videoPanelStagger: 0.2,
@@ -861,8 +1018,8 @@ export const TT_BELOW_FOLD_PLACEHOLDER_L5 = {
 
 export const TT_BELOW_HERO_FADE_L5 = {
   wrapperClass:
-    "relative pointer-events-none -mt-[clamp(1.5rem,4vh,2.75rem)] sm:-mt-[clamp(2rem,5vh,3.25rem)] mb-[clamp(-1.25rem,-3vh,-2rem)] w-full",
-  heightClass: "h-[clamp(2.75rem,7.5vh,5.25rem)] sm:h-[clamp(3.25rem,8.5vh,5.75rem)]",
+    "relative pointer-events-none -mt-[clamp(0.5rem,1.25vh,1rem)] mb-[clamp(0.5rem,1.25vh,1rem)] w-full",
+  heightClass: "h-[clamp(3rem,7vh,4.25rem)] sm:h-[clamp(3.5rem,8vh,4.75rem)]",
   /** 与 `TT_THEATER_SECTION_L5.topHandoffScrimStyle` 同族 · 消除 Hero/剧场接缝 */
   gradient: TT_THEATER_SECTION_L5.topHandoffScrimStyle,
   inkBridgeClass: "hidden",
@@ -911,17 +1068,28 @@ export const TT_START_ROUTE_DESTINATIONS_L5 = [
 ] as const;
 
 export const TT_START_ROUTE_HUBS_L5 = [
-  { cx: 14, cy: 44, labelY: 52, stepKey: "plan" as const },
-  { cx: 50, cy: 30, labelY: 38, stepKey: "match" as const },
-  { cx: 86, cy: 44, labelY: 52, stepKey: "escrow" as const },
+  { cx: 14, cy: 44, labelY: 52, labelYActive: 56, stepKey: "plan" as const },
+  { cx: 50, cy: 30, labelY: 38, labelYActive: 43, stepKey: "match" as const },
+  { cx: 86, cy: 44, labelY: 52, labelYActive: 56, stepKey: "escrow" as const },
 ] as const;
 
 export const TT_START_ROUTE_PREVIEW_L5 = {
-  entranceDuration: 0.5,
+  entranceDuration: 0.58,
+  entranceScale: [0.98, 1] as const,
   pathLengthDuration: 1.2,
   pathMorphDuration: 0.55,
-  hubPopDuration: 0.35,
+  stepCopyFadeDuration: 0.28,
+  /** 仅 opacity 交叉淡入，避免 y 位移牵动整页 */
+  stepCopyFadeY: 0,
+  /** 锁定示意文案区高度（含第 2 步「角色剧场」占位 · 防 1↔2 整页跳动） */
+  copyShellMinHeightClass: "relative min-h-[7.25rem] sm:min-h-[7.5rem]",
+  corridorCopyClass: "mt-1 min-h-[2.75rem] text-meta leading-[1.55] text-slate-300/88 line-clamp-2",
+  rolesSlotClass: "mt-2 min-h-[1.625rem]",
+  rolesLinkHiddenClass: "invisible pointer-events-none select-none",
+  hubPopDuration: 0.42,
   hubPopDelayBase: 0.35,
+  hubEntranceStagger: 0.14,
+  hubEntranceDelayAfterPath: 0.45,
   hubFill: "#fca47c",
   hubActiveFill: "#ffd4a8",
   hubRingStroke: "rgba(252,164,124,0.45)",
@@ -954,12 +1122,14 @@ export const TT_START_ROUTE_PREVIEW_L5 = {
   cardShimmerClipClass: "pointer-events-none absolute inset-0 overflow-hidden rounded-xl",
   kickerClass:
     "relative text-[11px] font-medium uppercase tracking-[0.16em] text-ref-sun/85",
-  stepTitleClass: "relative mt-1.5 text-sm font-semibold leading-snug",
-  stepTitleIndexClass: "text-ref-sun/92",
-  stepTitleLabelClass: "text-slate-100/95",
+  stepTitleClass:
+    "relative mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm font-semibold leading-snug",
+  stepTitleIndexClass: "shrink-0 text-ref-sun/92",
+  stepTitleSepClass: "shrink-0 text-slate-500/70",
+  stepTitleLabelClass: "min-w-0 text-slate-100/95",
   svgClass: "relative mt-3 h-32 w-full sm:h-36",
   captionClass:
-    "relative mt-3 border-t border-ref-sun/14 pt-3 text-meta leading-relaxed text-slate-200/90",
+    "relative mt-4 border-t border-ref-sun/14 pt-4 text-meta leading-relaxed text-slate-200/90 sm:mt-5 sm:pt-4",
   rolesLinkClass:
     "mt-2 inline-flex text-meta font-medium text-ref-sun/90 underline-offset-2 transition hover:text-ref-sun hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45",
   cardShimmerDuration: 5,
@@ -1060,7 +1230,7 @@ export const TT_CANVAS_LAYER_L5 = {
 } as const;
 
 export const TT_CINEMATIC_SHELL_L5_VIGNETTE =
-  "radial-gradient(ellipse 92% 82% at var(--tt-hero-globe-optical-x, 28%) var(--tt-hero-globe-optical-y, 52%), transparent 58%, rgba(12,10,9,0.14) 100%), linear-gradient(90deg, transparent 0%, transparent 52%, rgba(12,10,9,0.08) 78%, rgba(12,10,9,0.22) 100%), linear-gradient(to bottom, transparent 0%, transparent 76%, rgba(252,164,124,0.04) 92%, rgba(252,164,124,0.07) 100%)";
+  "radial-gradient(ellipse 92% 82% at var(--tt-hero-globe-optical-x, 24%) var(--tt-hero-globe-optical-y, 52%), transparent 58%, rgba(12,10,9,0.14) 100%), linear-gradient(90deg, transparent 0%, transparent 52%, rgba(12,10,9,0.08) 78%, rgba(12,10,9,0.22) 100%), linear-gradient(to bottom, transparent 0%, transparent 76%, rgba(252,164,124,0.04) 92%, rgba(252,164,124,0.07) 100%)";
 
 export const TT_CINEMATIC_SHELL_L5 = {
   grainOpacityRange: [0.01, 0.018] as const,
@@ -1152,23 +1322,45 @@ export const TT_WEBGL_FALLBACK_L5 = {
     "rounded-md border border-ref-sun/32 bg-ref-sun/10 px-3 py-1.5 text-meta font-medium text-ref-sun transition hover:bg-ref-sun/18 hover:shadow-[0_0_14px_-6px_rgba(252,164,124,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45",
 } as const;
 
+/** 页脚 / 启程区块 · 子项逐一入场（第二张截图 · 逐列排序） */
+export const TT_FOOTER_L5_SEQUENTIAL = {
+  slotStagger: 0.085,
+  slotDelayChildren: 0.14,
+  linkStagger: 0.055,
+  linkDelayChildren: 0.1,
+  groupStagger: 0.12,
+  childEntranceDuration: 0.38,
+  childEntranceY: 12,
+  linkHoverSpring: { type: "spring" as const, stiffness: 420, damping: 28 },
+} as const;
+
 export const TT_START_STEP_L5 = {
-  activePulseDuration: 0.75,
-  activePulseRepeat: 0 as const,
-  activeGlow: "0 0 20px -6px rgba(252,164,124,0.35)",
+  activePulseDuration: 2.6,
+  activePulseRepeat: Infinity as const,
+  activeGlow: [
+    "0 0 0 0 rgba(252,164,124,0)",
+    "0 0 22px -8px rgba(252,164,124,0.32)",
+    "0 0 0 0 rgba(252,164,124,0)",
+  ] as const,
+  surfaceSpring: { type: "spring" as const, stiffness: 400, damping: 32 },
   listClass:
-    "mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-3.5 xl:grid-cols-3",
+    "mt-6 grid grid-cols-1 gap-3.5 sm:grid-cols-2 sm:gap-4 xl:grid-cols-3 xl:items-stretch",
   itemClass:
-    "flex min-h-[3.5rem] min-w-0 items-center gap-2.5 rounded-xl border px-4 py-3.5 text-meta backdrop-blur-sm sm:px-4 sm:py-4",
-  textClass: "min-w-0 flex-1 leading-snug",
-  activeClass: "border-ref-sun/45 bg-ref-sun/12 text-ref-sun/95 shadow-[0_0_24px_-10px_rgba(252,164,124,0.38)]",
-  doneClass: "border-ref-sun/28 bg-ink-950/64 text-slate-100",
-  idleClass: "border-ref-sun/22 bg-ink-950/58 text-slate-200",
-  upcomingClass: "border-ref-sun/18 bg-ink-950/52 text-slate-200/92",
+    "flex h-full min-h-[3.75rem] min-w-0 items-stretch rounded-xl border px-4 py-3.5 text-meta backdrop-blur-sm transition-[background-color,border-color,box-shadow,color] duration-300 sm:min-h-[4rem] sm:px-5 sm:py-4",
+  stepButtonInnerClass:
+    "grid min-w-0 flex-1 grid-cols-[auto_minmax(0,1fr)] items-center gap-x-4 gap-y-0.5 text-left sm:gap-x-[1.125rem] focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 rounded-lg",
+  textClass: "min-w-0 leading-snug tracking-normal",
+  activeClass:
+    "border-ref-sun/65 bg-gradient-to-br from-ref-sun/[0.32] via-ref-sun/[0.2] to-ref-sun/[0.1] text-ref-sun shadow-[inset_0_1px_0_rgba(255,220,180,0.18),0_0_24px_-12px_rgba(252,164,124,0.35)] ring-1 ring-ref-sun/30",
+  doneClass: "border-ref-sun/30 bg-ink-950/62 text-slate-100",
+  idleClass: "border-ref-sun/22 bg-ink-950/54 text-slate-200 hover:border-ref-sun/32 hover:bg-ink-950/62",
+  upcomingClass: "border-ref-sun/18 bg-ink-950/48 text-slate-200/90",
   stepBadgeActiveClass: "bg-ref-sun/22 text-ref-sun ring-1 ring-ref-sun/35",
   stepBadgeIdleClass: "bg-white/12 text-slate-200",
   stepBadgeClass:
-    "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[12px] font-bold",
+    "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[13px] font-bold tabular-nums",
+  contentWaveBase: 0.08,
+  contentWaveStep: 0.07,
 } as const;
 
 /** 剧场走廊环角色色混入（暖色 hex · 替代冷青 ROLE_CINEMATIC_3D_COLORS） */
@@ -1380,7 +1572,7 @@ export const TT_STABLECOIN_GATEWAY_L5 = {
   cardBodyClass: "relative px-1 sm:px-2",
   fieldLabelClass: "mb-1.5 block text-meta text-slate-400/95",
   previewBannerClass:
-    "flex flex-col gap-2 border-b border-amber-400/28 bg-gradient-to-r from-amber-950/50 via-amber-950/35 to-transparent px-5 py-3.5 sm:gap-2.5 sm:px-6 sm:py-4",
+    "flex flex-col gap-2 border-b border-amber-400/28 bg-gradient-to-r from-amber-950/50 via-amber-950/35 to-transparent px-5 py-4 sm:gap-2.5 sm:px-6 sm:py-4",
   previewBannerLeadClass: "flex w-full flex-wrap items-center gap-2.5 sm:gap-3",
   previewBannerLegalClass: "w-full text-meta leading-relaxed text-amber-100/90",
   previewBannerIconOnly: true,
@@ -1389,12 +1581,13 @@ export const TT_STABLECOIN_GATEWAY_L5 = {
     "flex min-h-[3.25rem] w-full items-center gap-2 rounded-xl border border-ref-sun/28 bg-black/35 px-4 py-3 shadow-[0_0_20px_-12px_rgba(252,164,124,0.25)]",
   fieldIdleClass:
     "flex min-h-[3.25rem] w-full items-center gap-2 rounded-xl border border-ref-sun/14 bg-black/35 px-4 py-3",
-  sectionSurfaceClass: `relative overflow-hidden scroll-mt-28 ${TT_PAGE_SCROLL_SNAP_L5.sectionAlignClass} pt-8 sm:pt-9 ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionBottomLiquidity} opacity-[0.97]`,
-  atmosphereClass:
-    "pointer-events-none absolute inset-x-0 top-0 h-36 bg-[radial-gradient(ellipse_78%_80%_at_50%_0%,rgba(232,201,106,0.08),transparent_72%)]",
+  sectionSurfaceClass: TT_SECTION_SURFACE_L5.liquidity,
+  /** @deprecated 经济簇顶光见 `TT_PAGE_SECTION_FLOW_L5.economyClusterAtmosphereClass` */
+  atmosphereClass: "hidden",
   amountLockedHintClass: "relative mt-2 text-meta leading-relaxed text-slate-400/95",
-  cardBodyStackClass: "relative space-y-5 px-1 pt-5 sm:space-y-6 sm:px-2 sm:pt-6",
-  ctaStackClass: "relative mt-7 flex flex-col gap-4 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-5",
+  cardBodyStackClass: "relative space-y-5 px-1 pt-6 sm:space-y-6 sm:px-2 sm:pt-7",
+  ctaStackClass:
+    "relative mt-6 flex flex-col gap-4 sm:mt-7 sm:flex-row sm:flex-nowrap sm:items-center gap-x-8 sm:gap-x-10",
   ctaEscrowPrimaryClass:
     "inline-flex min-h-[48px] w-full items-center justify-center rounded-[var(--radius-lg)] border border-ref-sun/38 bg-gradient-to-r from-ref-sun/22 via-ref-sun/16 to-ref-sun/22 px-8 py-3 text-small font-bold text-white shadow-[0_8px_28px_-10px_rgba(252,164,124,0.38)] transition hover:-translate-y-0.5 hover:border-ref-sun/50 motion-sub motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 sm:w-auto",
   previewBannerEntranceOnly: true,
@@ -1412,10 +1605,10 @@ export const TT_STABLECOIN_GATEWAY_L5 = {
 } as const;
 
 export const TT_START_SECTION_L5 = {
-  sectionClass: `relative overflow-hidden scroll-mt-28 ${TT_PAGE_SCROLL_SNAP_L5.sectionAlignClass} ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionYStart} ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionTopStart}`,
+  sectionClass: `${ttTraveltrustSnapSectionInnerClass({ align: "start", padding: "none" })} ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionTopStart}`,
   bodyClass: "relative z-[2] mx-auto w-full max-w-3xl px-0.5 sm:px-0 xl:max-w-5xl",
   mainGridClass:
-    "lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,17.5rem)] lg:items-start lg:gap-x-8 xl:grid-cols-[minmax(0,1fr)_minmax(0,19rem)] xl:gap-x-10",
+    "lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,17.5rem)] lg:items-start lg:gap-x-10 xl:grid-cols-[minmax(0,1fr)_minmax(0,19rem)] xl:gap-x-12",
   kickerSpanClass: "lg:col-span-2",
   mainColClass: "min-w-0 lg:col-start-1 lg:row-start-2",
   previewColClass: "min-w-0 lg:col-start-2 lg:row-start-2 lg:self-start",
@@ -1430,14 +1623,20 @@ export const TT_START_SECTION_L5 = {
   activeStepCaptionClass: "relative mt-3 text-small font-medium leading-snug text-ref-sun/92",
   ctaGhostClass:
     "inline-flex min-h-[48px] items-center justify-center rounded-[var(--radius-lg)] border border-ref-sun/32 bg-ref-sun/10 px-6 py-3 text-small font-semibold text-slate-100 shadow-[0_0_18px_-10px_rgba(252,164,124,0.32)] transition hover:-translate-y-0.5 hover:border-ref-sun/45 hover:bg-ref-sun/16 hover:text-white motion-sub motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45",
-  ctaStackClass: "mt-6 flex flex-wrap items-stretch gap-3.5 sm:mt-8 sm:gap-4 [&_a]:min-w-[10.5rem] [&_button]:min-w-[10.5rem]",
-  feePanelWrapClass: "scroll-mt-28 mt-4 max-w-xl sm:mt-4",
+  ctaStackClass:
+    "mt-8 flex w-full max-w-xl flex-col gap-4 sm:mt-10 sm:w-auto sm:flex-row sm:flex-nowrap sm:items-center gap-x-8 sm:gap-x-10",
+  ctaPrimaryWrapClass: "relative isolate shrink-0",
+  ctaSecondaryWrapClass: "shrink-0 sm:ml-0",
+  ctaLinkMinWidthClass: "min-w-[10.5rem] sm:min-w-[11rem]",
+  feePanelWrapClass: "scroll-mt-28 mt-8 max-w-xl sm:mt-10",
   feePanelEnter: { duration: 0.32, ease: TT_L5_MOTION_EASE },
   feePanelExit: { duration: 0.22, ease: TT_L5_MOTION_EASE },
   feePanelDividerClass: "border-t border-ref-sun/12 px-5 pb-5 pt-4",
   ctaStackEntrance: { duration: 0.4, ease: TT_L5_MOTION_EASE },
   ctaPrimaryTap: { scale: 0.98 },
-  ctaPrimaryPulse: { duration: 0.9, opacity: [0.55, 1, 0.55] as const, repeat: 0 as const },
+  ctaPrimaryPulse: { duration: 2.8, opacity: [0.38, 0.72, 0.38] as const, repeat: Infinity as const },
+  previewColEntrance: { delay: 0.28, duration: 0.55 },
+  stepSurfaceSpring: { type: "spring" as const, stiffness: 400, damping: 32 },
   ctaPrimaryPulseClass:
     "pointer-events-none absolute inset-0 rounded-[var(--radius-lg)] shadow-[0_0_28px_-6px_rgba(252,164,124,0.45)]",
 } as const;
@@ -1454,7 +1653,6 @@ export const TT_ILLUSTRATIVE_BADGE_L5 = {
 
 export const TT_PAGE_COMPLIANCE_L5 = {
   entrance: { duration: 0.4, ease: TT_L5_MOTION_EASE },
-  topBorderPulse: { duration: 0.9, opacity: [0.35, 0.7, 0.35] as const, repeat: 0 as const },
   summaryTap: { scale: 0.995 },
   detailsClass:
     "rounded-lg border border-transparent px-1 transition-[border-color,background-color,box-shadow] open:border-ref-sun/22 open:bg-ref-sun/[0.03] open:px-4 open:py-3 open:shadow-[0_0_24px_-14px_rgba(252,164,124,0.22)] open:ring-1 open:ring-ref-sun/12 sm:open:px-5",
@@ -1476,29 +1674,47 @@ export const TT_NETWORK_FOOTER_L5 = {
     "pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(ellipse_80%_90%_at_50%_0%,rgba(252,164,124,0.08),transparent_72%)]",
   ambiencePulse: { duration: 6.5, opacity: [0.4, 0.75, 0.4] as const, repeat: 0 as const },
   contentGridClass:
-    "mx-auto grid w-full max-w-7xl grid-cols-1 items-start gap-8 px-4 pb-2 sm:gap-9 sm:px-6 lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] lg:items-start lg:gap-x-12 lg:gap-y-5 lg:px-8 xl:grid-cols-[minmax(16rem,1.05fr)_minmax(0,1fr)_minmax(0,1fr)] xl:items-start xl:gap-x-10 xl:px-12",
+    "mx-auto grid w-full max-w-7xl grid-cols-1 items-start gap-8 px-4 pb-2 sm:gap-9 sm:px-6 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)_minmax(0,1fr)] lg:items-start lg:gap-x-10 lg:gap-y-6 lg:px-8 xl:grid-cols-[minmax(0,22rem)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)] xl:gap-x-10 xl:gap-y-0 xl:px-12",
+  socialWrapClass: "min-w-0 lg:col-start-1 lg:row-start-1",
+  crossNavWrapClass:
+    "min-w-0 lg:col-span-2 lg:col-start-2 lg:row-start-1 xl:col-span-3 xl:col-start-2",
   shellClass:
-    `relative ${ttZClass(TT_Z.HERO_SKY)} mt-0 w-full overflow-visible border-t border-ref-sun/18 bg-ink-950/80 px-4 pt-8 pb-[max(2.5rem,env(safe-area-inset-bottom))] pr-[max(1rem,env(safe-area-inset-right))] sm:px-6 sm:pt-9 sm:pb-11`,
+    `relative ${ttZClass(TT_Z.HERO_SKY)} mt-0 w-full overflow-visible border-t border-ref-sun/18 bg-ink-950/80 px-4 pt-7 pb-[max(2.5rem,env(safe-area-inset-bottom))] pr-[max(1rem,env(safe-area-inset-right))] sm:px-6 sm:pt-8 sm:pb-11`,
+  /** grouped 时不叠顶氛围（与合规块无缝衔接） */
+  ambienceGroupedClass: "hidden",
+  /** 并入「启程+页脚」章：无顶边/顶光、收紧上留白 */
+  shellGroupedClass:
+    `relative ${ttZClass(TT_Z.HERO_SKY)} mt-0 w-full overflow-visible border-t-0 bg-transparent px-4 pt-4 pb-[max(2rem,env(safe-area-inset-bottom))] pr-[max(1rem,env(safe-area-inset-right))] sm:px-6 sm:pt-5 sm:pb-8`,
+} as const;
+
+/** 页脚栏目标题（关注我们 / 产品与订单 / 信任… 同阶） */
+export const TT_FOOTER_NAV_GROUP_TITLE_L5 = {
+  titleClass: "text-small font-semibold leading-snug tracking-normal text-slate-200",
+  titleSpacingClass: "mb-3.5 sm:mb-4",
+  captionClass: "text-[13px] leading-[1.6] text-slate-400/92",
+  captionSpacingClass: "mt-5 sm:mt-6",
+  captionStackClass: "flex max-w-[17.5rem] flex-col gap-2.5 sm:max-w-[18rem] sm:gap-3",
 } as const;
 
 export const TT_FOOTER_CROSS_NAV_L5 = {
   shellClass:
-    "mb-2 grid w-full min-w-0 grid-cols-1 gap-y-8 sm:gap-y-9 lg:col-start-2 lg:row-start-1 lg:gap-y-10 lg:pb-0 xl:contents",
-  groupTitleClass: "mb-3 text-small font-semibold text-slate-200",
-  productNavClass: "min-w-0 xl:col-start-2 xl:row-start-1",
+    "mb-2 grid w-full min-w-0 grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-6 lg:grid-cols-2 lg:gap-x-10 xl:grid-cols-3 xl:gap-x-10",
+  groupTitleClass: `${TT_FOOTER_NAV_GROUP_TITLE_L5.titleSpacingClass} ${TT_FOOTER_NAV_GROUP_TITLE_L5.titleClass}`,
+  productNavClass: "min-w-0 sm:col-span-2 lg:col-span-1 xl:col-span-1",
   trustNavDesktopClass:
-    "hidden min-w-0 border-t border-ref-sun/10 pt-7 md:block xl:col-start-3 xl:row-start-1 xl:border-t-0 xl:pt-0",
+    "hidden min-w-0 border-t border-ref-sun/10 pt-7 sm:col-span-2 md:block md:border-t-0 md:pt-0 lg:col-span-1 xl:col-span-1",
   linkGridClass:
-    "grid max-w-[26rem] grid-cols-1 gap-x-8 gap-y-2 sm:max-w-[28rem] sm:grid-cols-2 sm:gap-x-8 sm:gap-y-2 lg:max-w-none lg:gap-x-6 xl:max-w-none [&_a]:min-h-[40px] sm:[&_a]:min-h-[36px]",
+    "grid w-full grid-cols-1 gap-x-8 gap-y-1.5 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-2 [&_li]:min-w-0 [&_a]:min-h-[36px] sm:[&_a]:min-h-[34px]",
   siteMapDividerClass: "mt-4 w-full border-t border-ref-sun/12 pt-4 sm:mt-5 sm:pt-5",
   crossLinkClass:
-    "inline-flex max-w-full items-center justify-start px-0.5 py-1 text-small font-medium text-slate-300 underline-offset-2 transition hover:text-ref-sun hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950",
+    "inline-flex max-w-full items-center justify-start px-0.5 py-1 text-small font-medium text-slate-300 underline-offset-2 transition-colors duration-200 hover:text-ref-sun hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950",
   siteMapLinkClass:
-    "inline-flex min-h-[40px] w-full items-center text-small font-normal text-slate-300/95 underline-offset-2 transition hover:text-ref-sun hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45",
+    "inline-flex min-h-[40px] w-full items-center text-small font-normal text-slate-300/95 underline-offset-2 transition-colors duration-200 hover:text-ref-sun hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45",
+  secondaryLinkClass: "text-slate-400/90",
   siteMapKickerClass: "mb-1 text-meta font-medium text-slate-400",
   linkHoverClass:
-    "transition hover:-translate-y-0.5 hover:text-ref-sun/95 hover:shadow-[0_0_12px_-8px_rgba(252,164,124,0.25)] motion-sub motion-reduce:transition-none motion-reduce:hover:translate-y-0",
-  linkTap: { scale: 0.98 },
+    "transition-colors duration-200 hover:text-ref-sun/95 motion-reduce:transition-none",
+  linkTap: { scale: 0.99 },
   groupEntrance: { duration: 0.4, ease: TT_L5_MOTION_EASE },
   trustSummaryHover: "transition hover:text-ref-sun/90",
   trustDetailsOpenClass:
@@ -1519,19 +1735,24 @@ export const TT_TRAVELTRUST_MARKETING_WARM_L5 = {
 } as const;
 
 export const TT_FOOTER_SOCIAL_L5 = {
-  shellClass: "mb-4 sm:mb-5 lg:mb-0 lg:max-w-[19rem] lg:pr-2 xl:col-start-1 xl:row-start-1",
-  headingClass: "text-small font-semibold text-slate-200",
-  rowClass: "mt-3 flex w-full flex-wrap items-center gap-3",
+  shellClass: "mb-4 flex min-w-0 flex-col sm:mb-5 lg:mb-0 lg:max-w-none lg:self-start",
+  headingClass: `${TT_FOOTER_NAV_GROUP_TITLE_L5.titleSpacingClass} ${TT_FOOTER_NAV_GROUP_TITLE_L5.titleClass}`,
+  brandTaglineClass:
+    "max-w-[22rem] text-[13px] leading-[1.55] text-slate-400/95",
+  rowClass:
+    "flex w-full max-w-[22rem] flex-wrap items-center gap-x-2.5 gap-y-2 sm:gap-x-3",
+  glyphClass: "h-6 w-6 shrink-0 text-[#f9d779] fill-[#f9d779]",
+  notesStackClass: "mt-4 flex max-w-[22rem] flex-col gap-2 sm:mt-5",
+  pendingNoteClass: "sr-only",
+  disclaimerClass: "text-[12px] leading-[1.55] text-slate-400/92",
   iconLinkClass:
-    "inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-ref-sun/16 bg-ref-sun/[0.06] text-slate-200 transition hover:border-ref-sun/35 hover:bg-ref-sun/10 hover:text-ref-sun focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50",
+    "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[#f9d779] transition hover:text-[#ffe8b8] focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950",
   iconLinkPendingClass:
-    "inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-dashed border-ref-sun/32 bg-ref-sun/[0.04] text-slate-300/85",
-  pendingNoteClass: "text-meta text-slate-300/88",
-  disclaimerClass: "mt-4 max-w-md pt-1 text-meta leading-relaxed text-slate-200/95",
-  iconHover: { y: -2, scale: 1.06 },
+    "inline-flex h-9 w-9 shrink-0 cursor-default items-center justify-center rounded-full text-[#f9d779]/90 transition hover:text-[#ffe8b8]",
+  iconHover: { y: -1, scale: 1.05 },
   iconTap: { scale: 0.96 },
   iconTransition: { duration: 0.2, ease: TT_L5_MOTION_EASE },
-  activeGlow: "hover:border-ref-sun/38 hover:bg-ref-sun/10 hover:shadow-[0_0_16px_-8px_rgba(252,164,124,0.32)]",
+  activeGlow: "",
 } as const;
 
 export const TT_DEV_CHUNK_NOTICE_L5 = {
@@ -1582,6 +1803,16 @@ export function traveltrustSectionL5DataAttrs(sectionId: string): Record<string,
     "data-tt-traveltrust-spacing-section": sectionId,
     "data-tt-traveltrust-cinematic-non-globe-l5": TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
   };
+}
+
+export function traveltrustChapterBeatDataAttrs(beat: TraveltrustScrollChapterBeatId): Record<string, string> {
+  return { [TT_PAGE_SCROLL_SNAP_L5.chapterBeatDataAttr]: beat };
+}
+
+export function traveltrustSnapChapterBeatDataAttrs(
+  chapterId: Exclude<TraveltrustScrollChapterBeatId, typeof TT_PAGE_SCROLL_SNAP_L5.chapterBeatHero>,
+): Record<string, string> {
+  return traveltrustChapterBeatDataAttrs(chapterId);
 }
 
 export function resolveTheaterRoleWarmUi(roleId: TravelTrustRoleId) {
@@ -1729,15 +1960,15 @@ export function buildHeroOuterSkyWarmAccentLayer(globeOpticalX: string): string 
 export const TT_HERO_GLOBE_WARM_LIMB_SHELL_L5 = {
   scaleMul: 1.34,
   color: "#0c0a09",
-  opacity: 0.32,
+  opacity: 0.14,
   heroFadeEnd: 0.62,
 } as const;
 
-/** Hero 首屏：贴球暖雾（FrontSide · 轻薄可读 · 非地球 mesh） */
+/** Hero 首屏：贴球暖雾（FrontSide · 禁用 · 易成屏幕空间中心白斑） */
 export const TT_HERO_GLOBE_WARM_FRONT_VEIL_L5 = {
   scaleMul: 1.045,
   color: "#2a221c",
-  opacity: 0.08,
+  opacity: 0,
   heroFadeEnd: 0.62,
 } as const;
 

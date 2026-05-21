@@ -4,11 +4,12 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { useTranslation } from "@/components/LocaleProvider";
 import { trackTravelTrustEvent } from "@/lib/analytics";
-import { MARKETING_SITE_FOOTER_ID } from "@/lib/marketingSiteFooter";
 import {
   TT_FOOTER_CROSS_NAV_L5,
+  TT_FOOTER_L5_SEQUENTIAL,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
 } from "@/lib/traveltrustCinematicNonGlobeL5";
+import { traveltrustL5SequentialChildProps } from "./traveltrustSectionMotion";
 import {
   TT_MARKETING_TRAVELTRUST_FOOTER_CROSS_NAV_TRUST_DETAILS,
   TT_MARKETING_TRAVELTRUST_FOOTER_CROSS_NAV_TRUST_SUMMARY,
@@ -18,29 +19,27 @@ type CrossNavLink = {
   href: string;
   key: string;
   titleKey?: string;
-  siteMap?: true;
+  secondary?: boolean;
 };
 
 const PRODUCT_LINKS: readonly CrossNavLink[] = [
-  { href: "/traveltrust", key: "traveltrust_footer_network" },
-  { href: "/", key: "traveltrust_footer_product_home" },
-  { href: "/market", key: "header_market" },
+  { href: "/traveltrust#start", key: "traveltrust_footer_plan", titleKey: "traveltrust_start_cta" },
   { href: "/orders", key: "itin_nav_orders" },
   { href: "/pay", key: "header_payHub" },
   { href: "/guides", key: "nav_guides" },
+  { href: "/market", key: "header_market" },
   { href: "/market/provider", key: "traveltrust_footer_merchant" },
-  { href: "/market/acquisition", key: "traveltrust_footer_acquisition" },
-  { href: "/community", key: "footer_link_community" },
   {
-    href: `/#${MARKETING_SITE_FOOTER_ID}`,
-    key: "traveltrust_footer_site_map_short",
-    titleKey: "traveltrust_footer_site_map",
-    siteMap: true,
+    href: "/market/acquisition",
+    key: "traveltrust_footer_acquisition_secondary",
+    titleKey: "traveltrust_footer_acquisition",
+    secondary: true,
   },
+  { href: "/community", key: "footer_link_community" },
+  { href: "/", key: "traveltrust_footer_web3_home", titleKey: "traveltrust_footer_product_home" },
 ];
 
 const TRUST_LINKS: readonly CrossNavLink[] = [
-  { href: "/help", key: "help_title", titleKey: "traveltrust_footer_help_title" },
   { href: "/trust", key: "trust_nav_short" },
   { href: "/governance", key: "traveltrust_footer_governance_hub", titleKey: "traveltrust_start_governance_title" },
   {
@@ -48,39 +47,52 @@ const TRUST_LINKS: readonly CrossNavLink[] = [
     key: "traveltrust_footer_fee_routes_short",
     titleKey: "traveltrust_footer_fee_routes_title",
   },
+  { href: "/help", key: "help_title", titleKey: "traveltrust_footer_help_title" },
   { href: "/privacy", key: "footer_link_privacy" },
   { href: "/terms", key: "footer_link_terms" },
 ];
 
-function CrossNavLinks({
+function CrossNavLinkGrid({
   links,
   groupLabel,
+  linkWaveOffset = 0,
 }: {
   links: readonly CrossNavLink[];
   groupLabel: string;
+  linkWaveOffset?: number;
 }) {
   const { t } = useTranslation();
   const reduceMotion = useReducedMotion();
 
   return (
-    <ul className={TT_FOOTER_CROSS_NAV_L5.linkGridClass} aria-label={groupLabel}>
-      {links.map(({ href, key, titleKey, siteMap }) => (
-        <li key={href}>
+    <ul
+      className={TT_FOOTER_CROSS_NAV_L5.linkGridClass}
+      aria-label={groupLabel}
+      data-tt-traveltrust-footer-cross-nav-links-l5="1"
+    >
+      {links.map(({ href, key, titleKey, secondary }, index) => (
+        <motion.li
+          key={`${href}-${key}`}
+          className="list-none"
+          {...traveltrustL5SequentialChildProps(index, reduceMotion, {
+            baseDelay: linkWaveOffset + TT_FOOTER_L5_SEQUENTIAL.linkDelayChildren,
+            step: TT_FOOTER_L5_SEQUENTIAL.linkStagger,
+          })}
+          data-tt-traveltrust-footer-cross-nav-link-index={String(index)}
+        >
           <motion.div
-            whileHover={reduceMotion ? undefined : { y: -1 }}
             whileTap={reduceMotion ? undefined : TT_FOOTER_CROSS_NAV_L5.linkTap}
             data-tt-traveltrust-footer-cross-nav-tap-l5="1"
           >
             <Link
               href={href}
-              className={`${
-                siteMap ? TT_FOOTER_CROSS_NAV_L5.siteMapLinkClass : TT_FOOTER_CROSS_NAV_L5.crossLinkClass
-              } ${TT_FOOTER_CROSS_NAV_L5.linkHoverClass}`}
+              className={`${TT_FOOTER_CROSS_NAV_L5.crossLinkClass} ${TT_FOOTER_CROSS_NAV_L5.linkHoverClass} ${
+                secondary ? TT_FOOTER_CROSS_NAV_L5.secondaryLinkClass : ""
+              }`}
               title={titleKey ? t(titleKey) : undefined}
-              data-tt-traveltrust-footer-site-map={siteMap ? "1" : undefined}
               onClick={() =>
                 trackTravelTrustEvent("traveltrust_secondary_cta_click", {
-                  source: siteMap ? "footer_site_map" : "footer_cross_nav",
+                  source: "footer_cross_nav",
                   target: href,
                 })
               }
@@ -88,7 +100,7 @@ function CrossNavLinks({
               {t(key)}
             </Link>
           </motion.div>
-        </li>
+        </motion.li>
       ))}
     </ul>
   );
@@ -112,13 +124,18 @@ export function TravelTrustFooterCrossNav() {
       viewport={{ once: true, margin: "-8% 0px" }}
       transition={TT_FOOTER_CROSS_NAV_L5.groupEntrance}
     >
-      <nav aria-label={productLabel} className={TT_FOOTER_CROSS_NAV_L5.productNavClass}>
+      <motion.nav
+        aria-label={productLabel}
+        className={TT_FOOTER_CROSS_NAV_L5.productNavClass}
+        {...traveltrustL5SequentialChildProps(0, reduceMotion, { step: TT_FOOTER_L5_SEQUENTIAL.groupStagger })}
+        data-tt-traveltrust-footer-cross-nav-group-l5="product"
+      >
         <p className={TT_FOOTER_CROSS_NAV_L5.groupTitleClass}>{productLabel}</p>
-        <CrossNavLinks links={PRODUCT_LINKS} groupLabel={productLabel} />
-      </nav>
+        <CrossNavLinkGrid links={PRODUCT_LINKS} groupLabel={productLabel} linkWaveOffset={0} />
+      </motion.nav>
 
       <details
-        className={`${TT_MARKETING_TRAVELTRUST_FOOTER_CROSS_NAV_TRUST_DETAILS} ${TT_FOOTER_CROSS_NAV_L5.trustDetailsOpenClass} ${TT_FOOTER_CROSS_NAV_L5.trustDetailsMobileClass} md:hidden`}
+        className={`${TT_MARKETING_TRAVELTRUST_FOOTER_CROSS_NAV_TRUST_DETAILS} ${TT_FOOTER_CROSS_NAV_L5.trustDetailsOpenClass} ${TT_FOOTER_CROSS_NAV_L5.trustDetailsMobileClass} sm:col-span-2 md:hidden`}
         data-tt-traveltrust-footer-cross-nav-trust-collapsible="1"
         data-tt-traveltrust-footer-trust-details-warm-l5="1"
       >
@@ -131,12 +148,25 @@ export function TravelTrustFooterCrossNav() {
             −
           </span>
         </summary>
-        <CrossNavLinks links={TRUST_LINKS} groupLabel={trustLabel} />
+        <CrossNavLinkGrid
+          links={TRUST_LINKS}
+          groupLabel={trustLabel}
+          linkWaveOffset={PRODUCT_LINKS.length * TT_FOOTER_L5_SEQUENTIAL.linkStagger}
+        />
       </details>
-      <nav className={TT_FOOTER_CROSS_NAV_L5.trustNavDesktopClass} aria-label={trustLabel}>
+      <motion.nav
+        className={TT_FOOTER_CROSS_NAV_L5.trustNavDesktopClass}
+        aria-label={trustLabel}
+        {...traveltrustL5SequentialChildProps(1, reduceMotion, { step: TT_FOOTER_L5_SEQUENTIAL.groupStagger })}
+        data-tt-traveltrust-footer-cross-nav-group-l5="trust"
+      >
         <p className={TT_FOOTER_CROSS_NAV_L5.groupTitleClass}>{trustLabel}</p>
-        <CrossNavLinks links={TRUST_LINKS} groupLabel={trustLabel} />
-      </nav>
+        <CrossNavLinkGrid
+          links={TRUST_LINKS}
+          groupLabel={trustLabel}
+          linkWaveOffset={PRODUCT_LINKS.length * TT_FOOTER_L5_SEQUENTIAL.linkStagger}
+        />
+      </motion.nav>
     </motion.div>
   );
 }

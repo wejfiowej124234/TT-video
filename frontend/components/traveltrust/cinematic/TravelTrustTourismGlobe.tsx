@@ -23,6 +23,7 @@ import {
   enhanceTraveltrustGlobeEarthMap,
 } from "@/lib/traveltrustGlobeEarthTexture";
 import { traveltrustGlobeSunLightPosition } from "@/lib/traveltrustGlobeSun";
+import { TRAVELTRUST_HERO_GLOBE_SUN_DAYLIGHT_RIM } from "@/lib/traveltrustHeroGlobeBrighten";
 import { TT_CINEMATIC_GLOBE_VISUAL } from "@/lib/traveltrustCinematicVisual";
 import { TT_BRAND_3D, type TravelTrustCinematic3dConfig } from "./traveltrustCinematic3dConfig";
 import {
@@ -196,7 +197,13 @@ function TourismGlobeBody({
         </Suspense>
       ) : null}
       <TourismGlobeAtmosphereHaze radius={r} />
-      <TourismGlobeDaylightAtmosphereRim radius={r} />
+      <TourismGlobeDaylightAtmosphereRim
+        radius={r}
+        sunRimIntensity={
+          heroWarmInkSky ? TRAVELTRUST_HERO_GLOBE_SUN_DAYLIGHT_RIM.intensity : undefined
+        }
+        sunRimPower={heroWarmInkSky ? TRAVELTRUST_HERO_GLOBE_SUN_DAYLIGHT_RIM.power : undefined}
+      />
       {tier.fresnelRim ? <TourismGlobeFresnelRim radius={r} /> : null}
       {tier.glassShell ? <TourismGlobeGlassShell radius={r} /> : null}
       {tier.holoGrid ? <TourismGlobeHoloGrid radius={r} /> : null}

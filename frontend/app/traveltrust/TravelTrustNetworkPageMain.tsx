@@ -23,14 +23,6 @@ const TravelTrustLandingChrome = dynamic(
   { ssr: true, loading: () => <ChromeNavPlaceholder /> },
 );
 
-const TravelTrustNetworkFooter = dynamic(
-  () =>
-    import("@/components/traveltrust/cinematic/TravelTrustNetworkFooter").then((m) => ({
-      default: m.TravelTrustNetworkFooter,
-    })),
-  { ssr: true, loading: () => <FooterPlaceholder /> },
-);
-
 const TravelTrustScrollProgress = dynamic(
   () =>
     import("@/components/traveltrust/cinematic/TravelTrustScrollProgress").then((m) => ({
@@ -59,14 +51,6 @@ const TravelTrustDomCompositorAudit = dynamic(
   () =>
     import("@/components/traveltrust/cinematic/TravelTrustDomCompositorAudit").then((m) => ({
       default: m.TravelTrustDomCompositorAudit,
-    })),
-  { ssr: false },
-);
-
-const TravelTrustPageScrollSnap = dynamic(
-  () =>
-    import("@/components/traveltrust/cinematic/TravelTrustPageScrollSnap").then((m) => ({
-      default: m.TravelTrustPageScrollSnap,
     })),
   { ssr: false },
 );
@@ -220,7 +204,6 @@ function TravelTrustNetworkPageMainBody() {
       {domOutlineDebug ? <TravelTrustDomLayoutDebug /> : null}
       {domCompositorAudit ? <TravelTrustDomCompositorAudit /> : null}
       <TravelTrustPageScrollBoot />
-      <TravelTrustPageScrollSnap layoutReady={ready} />
       <TravelTrustTheaterRoleProvider>
         <TravelTrustHeroScrollContext.Provider value={heroScroll}>
           <TravelTrustPageScrollContext.Provider value={pageScroll}>
@@ -266,7 +249,6 @@ function TravelTrustNetworkPageMainBody() {
                     <TravelTrustBelowFoldSections onTheaterViewportChange={onTheaterViewport} />
                   </div>
                 </div>
-                <TravelTrustNetworkFooter />
               </main>
             </TravelTrustTheaterViewportContext.Provider>
           </TravelTrustPageScrollContext.Provider>

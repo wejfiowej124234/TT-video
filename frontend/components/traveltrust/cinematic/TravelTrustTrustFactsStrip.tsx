@@ -65,15 +65,6 @@ export function TravelTrustTrustFactsStrip() {
       viewport={sectionMotion.viewport}
       transition={sectionMotion.transition}
     >
-      <motion.div
-        className={TT_SECTION_SURFACE_L5.trustAtmosphere}
-        aria-hidden
-        data-tt-traveltrust-trust-atmosphere-l5="1"
-        initial={reduceMotion ? false : { opacity: 0 }}
-        whileInView={reduceMotion ? undefined : { opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: TT_TRUST_FACTS_L5.atmosphereEntranceDuration }}
-      />
       <div
         className={TT_SECTION_CONTENT_L5.bodyClass}
         data-tt-traveltrust-trust-faq-liquidity-surface-l5="1"

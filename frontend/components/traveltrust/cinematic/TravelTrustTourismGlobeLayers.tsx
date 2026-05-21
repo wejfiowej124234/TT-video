@@ -41,6 +41,27 @@ void main() {
 }
 `;
 
+const DAYLIGHT_SUN_VERT = /* glsl */ `
+varying vec3 vNormalWorld;
+void main() {
+  vNormalWorld = normalize(mat3(modelMatrix) * normal);
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+`;
+
+const DAYLIGHT_SUN_FRAG = /* glsl */ `
+uniform vec3 uColor;
+uniform vec3 uSunDir;
+uniform float uIntensity;
+uniform float uPower;
+varying vec3 vNormalWorld;
+void main() {
+  float ndl = max(dot(normalize(vNormalWorld), normalize(uSunDir)), 0.0);
+  float sun = pow(ndl, uPower);
+  gl_FragColor = vec4(uColor, sun * uIntensity);
+}
+`;
+
 const NIGHT_VERT = /* glsl */ `
 varying vec2 vUv;
 varying vec3 vNormalWorld;
@@ -114,16 +135,36 @@ export function TourismGlobeAtmosphereHaze({ radius }: { radius: number }) {
   );
 }
 
-/** L5 · 极薄昼侧蓝大气边（BackSide Fresnel · 非整球染色） */
-export function TourismGlobeDaylightAtmosphereRim({ radius }: { radius: number }) {
+/** L5 · 极薄昼侧暖边（太阳向 · 非 view 中心 Fresnel 白斑） */
+export function TourismGlobeDaylightAtmosphereRim({
+  radius,
+  sunRimIntensity,
+  sunRimPower,
+}: {
+  radius: number;
+  sunRimIntensity?: number;
+  sunRimPower?: number;
+}) {
   const v = TT_CINEMATIC_GLOBE_VISUAL;
-  const mat = useFresnelMaterial(
-    v.atmosphereDaylightRimColor,
-    v.atmosphereDaylightRimIntensity,
-    v.atmosphereDaylightRimPower,
-    THREE.AdditiveBlending,
-  );
-  if (v.atmosphereDaylightRimIntensity <= 0.001) return null;
+  const intensity = sunRimIntensity ?? v.atmosphereDaylightRimIntensity;
+  const power = sunRimPower ?? v.atmosphereDaylightRimPower;
+  const mat = useMemo(() => {
+    return new THREE.ShaderMaterial({
+      uniforms: {
+        uColor: { value: new THREE.Color(v.atmosphereDaylightRimColor) },
+        uSunDir: { value: TRAVELTRUST_GLOBE_SUN_DIR.clone() },
+        uIntensity: { value: intensity },
+        uPower: { value: power },
+      },
+      vertexShader: DAYLIGHT_SUN_VERT,
+      fragmentShader: DAYLIGHT_SUN_FRAG,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      side: THREE.BackSide,
+    });
+  }, [intensity, power, v.atmosphereDaylightRimColor]);
+  if (intensity <= 0.001) return null;
   return (
     <mesh scale={radius * 1.012} material={mat}>
       <sphereGeometry args={[1, 48, 48]} />

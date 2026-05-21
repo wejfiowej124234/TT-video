@@ -4,10 +4,13 @@ import dynamic from "next/dynamic";
 import { motion, useReducedMotion } from "framer-motion";
 import type { TheaterViewportAnchor } from "./TravelTrustTheaterViewportContext";
 import { TravelTrustSectionFilmDivider } from "./TravelTrustSectionFilmDivider";
+import { TravelTrustSnapChapter } from "./TravelTrustSnapChapter";
 import {
   TT_BELOW_FOLD_PLACEHOLDER_L5,
   TT_BELOW_FOLD_SCROLL_PLATE_L5,
   TT_BELOW_HERO_FADE_L5,
+  TT_PAGE_SECTION_FLOW_L5,
+  TT_SNAP_CHAPTER_GROUP_L5,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
 } from "@/lib/traveltrustCinematicNonGlobeL5";
 import { TT_Z, ttZClass } from "@/lib/traveltrustZ";
@@ -53,6 +56,14 @@ const TravelTrustStartSection = dynamic(
   () =>
     import("./TravelTrustStartSection").then((m) => ({
       default: m.TravelTrustStartSection,
+    })),
+  { ssr: true, loading: () => <BelowFoldPlaceholder /> },
+);
+
+const TravelTrustNetworkFooter = dynamic(
+  () =>
+    import("./TravelTrustNetworkFooter").then((m) => ({
+      default: m.TravelTrustNetworkFooter,
     })),
   { ssr: true, loading: () => <BelowFoldPlaceholder /> },
 );
@@ -141,15 +152,34 @@ export function TravelTrustBelowFoldSections({ onTheaterViewportChange }: Props)
         data-tt-traveltrust-below-hero-fade-l5="1"
         data-tt-traveltrust-below-hero-fade-disabled="1"
       />
-      <TravelTrustIdentityTheater onViewportChange={onTheaterViewportChange} />
+      <TravelTrustSnapChapter chapterId="theater" align="center">
+        <TravelTrustIdentityTheater onViewportChange={onTheaterViewportChange} />
+      </TravelTrustSnapChapter>
       <TravelTrustSectionFilmDivider />
-      <TravelTrustStablecoinGateway />
+      <div
+        className={TT_PAGE_SECTION_FLOW_L5.economyClusterClass}
+        data-tt-traveltrust-economy-cluster="1"
+        data-tt-traveltrust-scroll-chapter-beat="economy"
+      >
+        <div
+          className={TT_PAGE_SECTION_FLOW_L5.economyClusterAtmosphereClass}
+          aria-hidden
+          data-tt-traveltrust-economy-cluster-atmosphere-l5="1"
+        />
+        <TravelTrustStablecoinGateway />
+        <TravelTrustTrustFactsStrip />
+        <TravelTrustSettlementStrip />
+      </div>
       <TravelTrustSectionFilmDivider />
-      <TravelTrustTrustFactsStrip />
-      <TravelTrustSettlementStrip />
-      <TravelTrustFaqStrip />
-      <TravelTrustSectionFilmDivider />
-      <TravelTrustStartSection />
+      <TravelTrustSnapChapter chapterId="faq" align="start">
+        <TravelTrustFaqStrip />
+      </TravelTrustSnapChapter>
+      <TravelTrustSnapChapter chapterId="close" align="start">
+        <div className={TT_SNAP_CHAPTER_GROUP_L5.innerStackClass}>
+          <TravelTrustStartSection />
+          <TravelTrustNetworkFooter grouped />
+        </div>
+      </TravelTrustSnapChapter>
       </motion.div>
     </motion.div>
   );

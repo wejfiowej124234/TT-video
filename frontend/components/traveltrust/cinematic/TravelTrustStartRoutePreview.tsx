@@ -4,7 +4,7 @@
 
 import Link from "next/link";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 import { useMemo } from "react";
 
@@ -100,13 +100,15 @@ export function TravelTrustStartRoutePreview({ activeStep, prefillRegionId = nul
 
       data-tt-traveltrust-start-prefill-region={prefillRegionId ?? ""}
 
-      initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+      initial={reduceMotion ? false : { opacity: 0, y: 14, scale: TT_START_ROUTE_PREVIEW_L5.entranceScale[0] }}
 
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, scale: TT_START_ROUTE_PREVIEW_L5.entranceScale[1] }}
 
       viewport={{ once: true, margin: "-8% 0px" }}
 
       transition={{ duration: TT_START_ROUTE_PREVIEW_L5.entranceDuration, ease: TT_L5_MOTION_EASE }}
+
+      data-tt-traveltrust-start-route-card-entrance-l5="1"
 
     >
 
@@ -170,35 +172,53 @@ export function TravelTrustStartRoutePreview({ activeStep, prefillRegionId = nul
 
       </p>
 
-      <p
-
-        className={TT_START_ROUTE_PREVIEW_L5.stepTitleClass}
-
-        id="tt-start-route-visible-step"
-
-        aria-live="polite"
-
-        data-tt-traveltrust-start-route-step-title-l5="1"
-
-        data-tt-traveltrust-start-corridor-subtitle-l5="1"
-
+      <div
+        className={TT_START_ROUTE_PREVIEW_L5.copyShellMinHeightClass}
+        data-tt-traveltrust-start-route-copy-shell-l5="1"
       >
-
-        <span className={TT_START_ROUTE_PREVIEW_L5.stepTitleIndexClass}>
-
-          {t("traveltrust_start_route_preview_step_index", { step: String(stepIndex + 1) })}
-
-        </span>
-
-        <span className={TT_START_ROUTE_PREVIEW_L5.stepTitleLabelClass}> · {stepLabel}</span>
-
-      </p>
-
-      <p className="mt-1 text-meta leading-snug text-slate-300/88" data-tt-traveltrust-start-corridor-copy-l5="1">
-
-        {corridorSubtitle}
-
-      </p>
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={`${binding.corridorId}-${stepId}-${stepIndex}`}
+            id="tt-start-route-visible-step"
+            aria-live="polite"
+            className="absolute inset-x-0 top-0"
+            initial={reduceMotion ? false : { opacity: 0 }}
+            animate={reduceMotion ? undefined : { opacity: 1 }}
+            exit={reduceMotion ? undefined : { opacity: 0 }}
+            transition={{ duration: TT_START_ROUTE_PREVIEW_L5.stepCopyFadeDuration, ease: TT_L5_MOTION_EASE }}
+            data-tt-traveltrust-start-route-copy-crossfade-l5="1"
+          >
+            <p
+              className={TT_START_ROUTE_PREVIEW_L5.stepTitleClass}
+              data-tt-traveltrust-start-route-step-title-l5="1"
+            >
+              <span className={TT_START_ROUTE_PREVIEW_L5.stepTitleIndexClass}>
+                {t("traveltrust_start_route_preview_step_index", { step: String(stepIndex + 1) })}
+              </span>
+              <span className={TT_START_ROUTE_PREVIEW_L5.stepTitleSepClass} aria-hidden>
+                ·
+              </span>
+              <span className={TT_START_ROUTE_PREVIEW_L5.stepTitleLabelClass}>{stepLabel}</span>
+            </p>
+            <p className={TT_START_ROUTE_PREVIEW_L5.corridorCopyClass} data-tt-traveltrust-start-corridor-copy-l5="1">
+              {corridorSubtitle}
+            </p>
+            <div className={TT_START_ROUTE_PREVIEW_L5.rolesSlotClass} data-tt-traveltrust-start-route-roles-slot-l5="1">
+              <Link
+                href="#roles"
+                className={`${TT_START_ROUTE_PREVIEW_L5.rolesLinkClass} ${
+                  stepIndex === 1 ? "" : TT_START_ROUTE_PREVIEW_L5.rolesLinkHiddenClass
+                }`}
+                tabIndex={stepIndex === 1 ? 0 : -1}
+                aria-hidden={stepIndex !== 1}
+                data-tt-traveltrust-start-route-roles-link-l5="1"
+              >
+                {t("traveltrust_start_route_preview_roles_link")}
+              </Link>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
 
 
@@ -421,15 +441,21 @@ export function TravelTrustStartRoutePreview({ activeStep, prefillRegionId = nul
           return (
 
             <g
-
               key={hub.stepKey}
-
               data-tt-traveltrust-start-route-hub-l5={hub.stepKey}
-
               data-tt-traveltrust-start-route-hub-state={selected ? "active" : "inactive"}
-
+              data-tt-traveltrust-start-route-hub-index={String(i)}
             >
-
+              {!reduceMotion ? (
+                <animate
+                  attributeName="opacity"
+                  from="0"
+                  to="1"
+                  dur={`${TT_START_ROUTE_PREVIEW_L5.hubPopDuration}s`}
+                  begin={`${TT_START_ROUTE_PREVIEW_L5.hubEntranceDelayAfterPath + i * TT_START_ROUTE_PREVIEW_L5.hubEntranceStagger}s`}
+                  fill="freeze"
+                />
+              ) : null}
               {selected ? (
 
                 <>
@@ -501,11 +527,8 @@ export function TravelTrustStartRoutePreview({ activeStep, prefillRegionId = nul
                   </circle>
 
                   <text
-
                     x={hub.cx}
-
-                    y={hub.labelY}
-
+                    y={hub.labelYActive}
                     textAnchor="middle"
 
                     fontSize={TT_START_ROUTE_PREVIEW_L5.hubLabelActiveFontSize}
@@ -613,26 +636,6 @@ export function TravelTrustStartRoutePreview({ activeStep, prefillRegionId = nul
         )}
 
       </svg>
-
-
-
-      {stepIndex === 1 ? (
-
-        <Link
-
-          href="#roles"
-
-          className={TT_START_ROUTE_PREVIEW_L5.rolesLinkClass}
-
-          data-tt-traveltrust-start-route-roles-link-l5="1"
-
-        >
-
-          {t("traveltrust_start_route_preview_roles_link")}
-
-        </Link>
-
-      ) : null}
 
 
 

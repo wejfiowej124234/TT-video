@@ -37,7 +37,6 @@ import {
   TT_SECTION_KICKER_L5,
   TT_THEATER_SECTION_L5,
   TT_THEATER_TAB_L5,
-  TT_SCROLL_PROGRESS_L5,
   traveltrustSectionL5DataAttrs,
 } from "@/lib/traveltrustCinematicNonGlobeL5";
 
@@ -237,10 +236,10 @@ export function TravelTrustIdentityTheater({ onViewportChange }: Props = {}) {
           ease: TT_CINEMATIC_EASE,
         }}
       >
-        <p className={TT_SECTION_KICKER_L5}>
+        <p className={`${TT_SECTION_KICKER_L5} ${TT_THEATER_SECTION_L5.introKickerClass}`}>
           {t("traveltrust_roles_eyebrow")}
         </p>
-        <motion.div className={TT_THEATER_SECTION_L5.introBlockGap}>
+        <motion.div className={TT_THEATER_SECTION_L5.introHeadlineBlockClass}>
           <h2 className={TT_THEATER_SECTION_L5.introHeadlineClass}>{t("traveltrust_roles_headline")}</h2>
           <p className={TT_THEATER_SECTION_L5.introSublineClass}>{t("traveltrust_roles_subline")}</p>
           <p
@@ -254,7 +253,7 @@ export function TravelTrustIdentityTheater({ onViewportChange }: Props = {}) {
           </p>
         </motion.div>
         <motion.p
-          className="mt-1.5 text-meta font-medium text-ref-sun/80"
+          className="mt-4 text-meta font-medium text-ref-sun/80 sm:mt-5"
           initial={reduceMotion ? false : { opacity: 0, y: 6 }}
           animate={showTheater ? { opacity: 1, y: 0 } : undefined}
           transition={{
@@ -281,6 +280,7 @@ export function TravelTrustIdentityTheater({ onViewportChange }: Props = {}) {
           aria-label={t("traveltrust_roles_tablist")}
           className={`relative z-[2] flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${TT_THEATER_SECTION_L5.mobileTablistClass} ${TT_MARKETING_SITE_HEADER_STICKY_OFFSET_CLASS} lg:z-[1] lg:w-full lg:flex-col lg:overflow-visible lg:border-b-0 lg:bg-transparent lg:px-0 lg:py-0 lg:backdrop-blur-none`}
           data-tt-traveltrust-roles-tablist-mobile="1"
+          data-tt-traveltrust-roles-count={String(TRAVELTRUST_ROLES.length)}
           onKeyDown={onKeyDown}
           data-tt-traveltrust-roles-order="traveler,guide,merchant,acquisition,region_steward"
           animate={

@@ -1,7 +1,7 @@
 /** v6 章节入场分轨（波次 2.1 · 与 traveltrustCinematicMotion 同源） */
 import type { Transition, TargetAndTransition } from "framer-motion";
 import { TT_CINEMATIC_EASE } from "./traveltrustCinematicMotion";
-import { TT_SECTION_MOTION_L5 } from "@/lib/traveltrustCinematicNonGlobeL5";
+import { TT_FOOTER_L5_SEQUENTIAL, TT_SECTION_MOTION_L5 } from "@/lib/traveltrustCinematicNonGlobeL5";
 
 export type TraveltrustSectionMotionId =
   | "theater"
@@ -87,5 +87,28 @@ export function traveltrustSectionChildStagger(
     duration: TT_SECTION_MOTION_L5.childStaggerDuration,
     delay: index * base,
     ease: TT_CINEMATIC_EASE,
+  };
+}
+
+/** L5 · 区块内子项波次入场（启程步骤 / 页脚链） */
+export function traveltrustL5SequentialChildProps(
+  index: number,
+  reduceMotion: boolean | null,
+  opts?: { baseDelay?: number; step?: number },
+) {
+  const step = opts?.step ?? TT_FOOTER_L5_SEQUENTIAL.linkStagger;
+  const baseDelay = opts?.baseDelay ?? 0;
+  if (reduceMotion) {
+    return { initial: false as const, animate: undefined, transition: { duration: 0 } };
+  }
+  return {
+    initial: { opacity: 0, y: TT_FOOTER_L5_SEQUENTIAL.childEntranceY },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true as const, margin: "-8% 0px" },
+    transition: {
+      duration: TT_FOOTER_L5_SEQUENTIAL.childEntranceDuration,
+      delay: baseDelay + index * step,
+      ease: TT_CINEMATIC_EASE,
+    },
   };
 }

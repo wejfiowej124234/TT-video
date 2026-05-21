@@ -8,6 +8,7 @@ import type { Group } from "three";
 import * as THREE from "three";
 import {
   TT_LEGACY_THEATER_3D_L5,
+  TT_THEATER_SECTION_L5,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
 } from "@/lib/traveltrustCinematicNonGlobeL5";
 import { UNIFIED_PAGE_3D } from "./traveltrustPageCinematicConfig";
@@ -123,7 +124,7 @@ export function TravelTrustTheaterScene3D() {
   return (
     <motion.div
       ref={wrapRef}
-      className="pointer-events-none absolute -inset-x-4 top-0 z-0 h-[min(62vh,520px)] motion-reduce:hidden sm:-inset-x-8"
+      className={TT_THEATER_SECTION_L5.theater3dWrapClass}
       aria-hidden
       data-tt-traveltrust-theater-3d="1"
       data-tt-traveltrust-theater-3d-l5="1"

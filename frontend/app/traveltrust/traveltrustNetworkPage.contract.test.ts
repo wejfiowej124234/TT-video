@@ -212,7 +212,7 @@ describe("traveltrust network page (contract)", () => {
       "data-tt-traveltrust-trust-facts-l5",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustBelowFoldAtmosphere.tsx"), "utf8")).toContain(
-      "resolveNonGlobeSectionAtmosphere",
+      "data-tt-traveltrust-below-fold-atmosphere-unified-l5",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustScrollProgress.tsx"), "utf8")).not.toContain(
       "to-ref-teal",
@@ -328,10 +328,13 @@ describe("traveltrust network page (contract)", () => {
     expect(readFileSync(join(__dir, "../../lib/marketingSiteFooter.ts"), "utf8")).toContain(
       "MARKETING_SITE_FOOTER_ID",
     );
-    expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).not.toContain(
+    expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).toContain(
       "traveltrust_footer_plan",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).toContain(
+      "/traveltrust#start",
+    );
+    expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).not.toContain(
       "traveltrust_footer_network",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).toContain(
@@ -357,7 +360,10 @@ describe("traveltrust network page (contract)", () => {
       "TT_FOOTER_CROSS_NAV_L5.groupTitleClass",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).toContain(
-      "traveltrust_footer_site_map",
+      "traveltrust_footer_web3_home",
+    );
+    expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).not.toContain(
+      "data-tt-traveltrust-footer-site-map-panel-l5",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustStartSection.tsx"), "utf8")).toContain(
       "traveltrust_start_governance_cta",
@@ -431,12 +437,16 @@ describe("traveltrust network page (contract)", () => {
     );
     expect(marketingSocialSrc).toContain('"data-tt-traveltrust-footer-social": "1"');
     expect(marketingSocialSrc).toContain('"data-tt-traveltrust-footer-social-slots": "1"');
+    expect(marketingSocialSrc).toContain("traveltrust_footer_brand_tagline");
     expect(marketingSocialSrc).toContain('"data-tt-traveltrust-footer-social-pending": "1"');
     expect(readFileSync(join(cinematicDir, "TravelTrustFooterSocial.tsx"), "utf8")).toContain(
       "MarketingFooterSocial",
     );
     expect(readFileSync(join(__dir, "../../lib/traveltrustOfficialSocialLinks.ts"), "utf8")).toContain(
-      'platform: "douyin"',
+      'platform: "github"',
+    );
+    expect(readFileSync(join(__dir, "../../lib/traveltrustOfficialSocialLinks.ts"), "utf8")).toContain(
+      'platform: "telegram"',
     );
     expect(marketingSocialSrc).toContain('href="/community"');
     expect(readFileSync(join(__dir, "../../lib/traveltrustOfficialSocialLinks.ts"), "utf8")).toContain(
@@ -613,8 +623,16 @@ describe("traveltrust network page (contract)", () => {
     expect(readFileSync(join(cinematicDir, "TravelTrustPageComplianceBlock.tsx"), "utf8")).toContain(
       "traveltrust_footer_t2",
     );
-    expect(src).toContain("TravelTrustNetworkFooter");
-    expect(src).toContain('data-tt-traveltrust-network-footer="1"');
+    const belowFold = readFileSync(join(cinematicDir, "TravelTrustBelowFoldSections.tsx"), "utf8");
+    expect(belowFold).toContain("TravelTrustNetworkFooter");
+    expect(belowFold).toContain("TravelTrustSnapChapter");
+    expect(belowFold).toContain("data-tt-traveltrust-economy-cluster");
+    expect(belowFold).toContain("TravelTrustTrustFactsStrip");
+    expect(belowFold).toContain('chapterId="close"');
+    expect(belowFold).toContain("grouped");
+    expect(readFileSync(join(__dir, "TravelTrustNetworkPageMain.tsx"), "utf8")).not.toContain(
+      "<TravelTrustNetworkFooter",
+    );
     expect(src).toContain("useTraveltrustSectionNav");
     expect(src).toContain("traveltrustHeroUi");
     expect(src).toContain('data-tt-traveltrust-landing-nav-slot="sticky"');

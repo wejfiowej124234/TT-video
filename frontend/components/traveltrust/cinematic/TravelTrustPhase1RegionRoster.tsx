@@ -9,6 +9,7 @@ import {
   type TravelTrustPhase1GlobeRegion,
 } from "@/lib/traveltrustPhase1GlobeRegions";
 import { useTraveltrustGlobeHeroHud } from "@/lib/traveltrustGlobeHeroHud";
+import { resolveHeroGlobeCompactRosterLabel } from "@/lib/traveltrustHeroGlobeRosterCopy";
 import { traveltrustPhase1RegionNameKey } from "@/lib/traveltrustPhase1RegionKeys";
 import { TRAVELTRUST_V6_IN_PAGE_PLAN_HREF } from "@/lib/traveltrustPlanTripHref";
 import {
@@ -45,30 +46,12 @@ type Props = {
   compactOnLg?: boolean;
 };
 
-/** 可聚焦的第一阶段区域列表 — 替代 3D 节点假可点（TT-PH1-157 · ①） */
-function resolveCompactRosterLabel(
-  t: (key: string, vars?: Record<string, string>) => string,
-  routeBias: string,
-  visibleHubIds: string[],
-): string {
-  if (routeBias === "atlantic") return t("traveltrust_phase1_roster_compact_atlantic");
-  if (routeBias === "asia") return t("traveltrust_phase1_roster_compact_asia");
-  if (visibleHubIds.length >= 2) {
-    const hubs = visibleHubIds
-      .slice(0, 3)
-      .map((id) => t(traveltrustPhase1RegionNameKey(id)))
-      .join("、");
-    return t("traveltrust_phase1_roster_compact_hubs", { hubs });
-  }
-  return t("traveltrust_phase1_roster_compact");
-}
-
 export function TravelTrustPhase1RegionRoster({ compactOnLg = false }: Props) {
   const { t } = useTranslation();
   const { routeBias, visibleHubIds } = useTraveltrustGlobeHeroHud();
   const headingId = TT_TRAVELTRUST_SECTION_A11Y.regionRoster.heading;
   const hintId = TT_TRAVELTRUST_SECTION_A11Y.regionRoster.hint;
-  const compactLabel = resolveCompactRosterLabel(t, routeBias, visibleHubIds);
+  const compactLabel = resolveHeroGlobeCompactRosterLabel(t, routeBias, visibleHubIds);
 
   if (compactOnLg) {
     return (

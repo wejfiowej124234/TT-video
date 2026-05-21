@@ -35,6 +35,7 @@ export function TravelTrustHeroNetworkNarrative() {
     <motion.div
       className="mt-1.5 space-y-2"
       data-tt-traveltrust-hero-p3-narrative="1"
+      data-tt-traveltrust-hero-l5-narrative="1"
       data-tt-traveltrust-hero-p3-corridor={ctx.corridorId}
       data-tt-traveltrust-hero-p3-step-id={ctx.stepId}
       data-tt-traveltrust-cinematic-non-globe-l5={TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID}

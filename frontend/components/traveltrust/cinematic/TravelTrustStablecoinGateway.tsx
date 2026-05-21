@@ -74,11 +74,6 @@ export function TravelTrustStablecoinGateway() {
       viewport={sectionMotion.viewport}
       transition={sectionMotion.transition}
     >
-      <div
-        className={TT_STABLECOIN_GATEWAY_L5.atmosphereClass}
-        aria-hidden
-        data-tt-traveltrust-liquidity-atmosphere-l5="1"
-      />
       <motion.div
         className="pointer-events-none absolute inset-x-0 h-px opacity-0"
         aria-hidden

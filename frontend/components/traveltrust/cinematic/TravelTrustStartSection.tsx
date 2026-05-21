@@ -18,9 +18,14 @@ import {
   TT_MARKETING_TRAVELTRUST_FEE_ROUTER_PANEL_TRIGGER,
 } from "@/lib/marketingUi";
 import { TravelTrustPageComplianceBlock } from "./TravelTrustPageComplianceBlock";
-import { traveltrustSectionChildStagger, traveltrustSectionMotionProps } from "./traveltrustSectionMotion";
+import {
+  traveltrustL5SequentialChildProps,
+  traveltrustSectionChildStagger,
+  traveltrustSectionMotionProps,
+} from "./traveltrustSectionMotion";
 import { TravelTrustStartRoutePreview } from "./TravelTrustStartRoutePreview";
 import {
+  TT_L5_MOTION_EASE,
   TT_SECTION_CONTENT_L5,
   TT_SECTION_KICKER_L5,
   TT_SECTION_META_L5,
@@ -178,14 +183,38 @@ export function TravelTrustStartSection() {
         onFocusCapture={reduceMotion ? undefined : pauseCycle}
         onBlurCapture={reduceMotion ? undefined : resumeCycle}
       >
-      <p className={`${TT_SECTION_KICKER_L5} ${TT_START_SECTION_L5.kickerSpanClass}`}>{t("traveltrust_start_eyebrow")}</p>
+      <motion.p
+        className={`${TT_SECTION_KICKER_L5} ${TT_START_SECTION_L5.kickerSpanClass}`}
+        {...traveltrustL5SequentialChildProps(0, reduceMotion, {
+          baseDelay: TT_START_STEP_L5.contentWaveBase,
+          step: TT_START_STEP_L5.contentWaveStep,
+        })}
+        data-tt-traveltrust-start-content-wave-l5="0"
+      >
+        {t("traveltrust_start_eyebrow")}
+      </motion.p>
       <div className={TT_START_SECTION_L5.mainColClass}>
-      <h2 id={titleId} className={`${TT_SECTION_CONTENT_L5.kickerToHeadingClass} max-w-xl text-h3 font-bold text-white sm:text-h2`}>
+      <motion.h2
+        id={titleId}
+        className={`${TT_SECTION_CONTENT_L5.kickerToHeadingClass} max-w-xl text-h3 font-bold text-white sm:text-h2`}
+        {...traveltrustL5SequentialChildProps(1, reduceMotion, {
+          baseDelay: TT_START_STEP_L5.contentWaveBase,
+          step: TT_START_STEP_L5.contentWaveStep,
+        })}
+        data-tt-traveltrust-start-content-wave-l5="1"
+      >
         {t("traveltrust_start_title")}
-      </h2>
-      <p className={TT_SECTION_META_L5.bodyClass}>
+      </motion.h2>
+      <motion.p
+        className={TT_SECTION_META_L5.bodyClass}
+        {...traveltrustL5SequentialChildProps(2, reduceMotion, {
+          baseDelay: TT_START_STEP_L5.contentWaveBase,
+          step: TT_START_STEP_L5.contentWaveStep,
+        })}
+        data-tt-traveltrust-start-content-wave-l5="2"
+      >
         {t("traveltrust_start_disclaimer")}
-      </p>
+      </motion.p>
       <ol
         className={TT_START_STEP_L5.listClass}
         aria-label={t("traveltrust_start_steps_aria")}
@@ -212,28 +241,39 @@ export function TravelTrustStartSection() {
             animate={
               reduceMotion
                 ? undefined
-                : {
-                    scale: active ? [1, 1.02, 1] : 1,
-                    boxShadow: active ? TT_START_STEP_L5.activeGlow : "0 0 0 0 rgba(252,164,124,0)",
-                  }
+                : active
+                  ? { boxShadow: TT_START_STEP_L5.activeGlow }
+                  : { boxShadow: "0 0 0 0 rgba(252,164,124,0)" }
             }
             transition={
               reduceMotion
-                ? traveltrustSectionChildStagger(i, reduceMotion, 0.08)
+                ? traveltrustSectionChildStagger(i, reduceMotion, TT_START_STEP_L5.contentWaveStep)
                 : active
                   ? {
-                      duration: TT_START_STEP_L5.activePulseDuration,
-                      repeat: TT_START_STEP_L5.activePulseRepeat,
-                      ease: "easeInOut",
+                      boxShadow: {
+                        duration: TT_START_STEP_L5.activePulseDuration,
+                        repeat: TT_START_STEP_L5.activePulseRepeat,
+                        ease: "easeInOut",
+                      },
+                      default: TT_START_STEP_L5.surfaceSpring,
                     }
-                  : traveltrustSectionChildStagger(i, reduceMotion, 0.08)
+                  : {
+                      ...traveltrustSectionChildStagger(
+                        i,
+                        reduceMotion,
+                        TT_START_STEP_L5.contentWaveStep,
+                      ),
+                      default: TT_START_STEP_L5.surfaceSpring,
+                    }
             }
+            whileHover={reduceMotion || active ? undefined : { y: -1, transition: { duration: 0.2 } }}
+            whileTap={reduceMotion ? undefined : TT_START_SECTION_L5.stepTap}
             data-tt-traveltrust-start-step={step}
             data-tt-traveltrust-start-step-index={String(i)}
           >
             <button
               type="button"
-              className="flex min-w-0 flex-1 items-center gap-2.5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 rounded-lg"
+              className={TT_START_STEP_L5.stepButtonInnerClass}
               aria-current={active ? "step" : undefined}
               aria-describedby="tt-start-route-visible-step"
               onClick={() => onSelectStartStep(i)}
@@ -263,7 +303,7 @@ export function TravelTrustStartSection() {
         data-tt-traveltrust-start-cta-stack-l5="1"
       >
         <motion.div
-          className="relative"
+          className={TT_START_SECTION_L5.ctaPrimaryWrapClass}
           whileHover={reduceMotion ? undefined : { y: -2 }}
           whileTap={reduceMotion ? undefined : TT_START_SECTION_L5.ctaPrimaryTap}
           data-tt-traveltrust-start-cta-primary-pulse-l5="1"
@@ -286,13 +326,14 @@ export function TravelTrustStartSection() {
             onClick={() =>
               trackTravelTrustEvent("traveltrust_plan_trip_click", { source: "start", target: planHref })
             }
-            className={`${TT_MARKETING_BTN_PRIMARY_WARM_HERO} ${TT_START_SECTION_L5.ctaPrimaryGlow} ${TT_START_SECTION_L5.ctaPrimaryClass}`}
+            className={`${TT_MARKETING_BTN_PRIMARY_WARM_HERO} ${TT_START_SECTION_L5.ctaPrimaryGlow} ${TT_START_SECTION_L5.ctaPrimaryClass} ${TT_START_SECTION_L5.ctaLinkMinWidthClass}`}
             data-tt-traveltrust-start-cta-plan-warm="1"
           >
             {t("traveltrust_start_cta")}
           </Link>
         </motion.div>
         <motion.div
+          className={TT_START_SECTION_L5.ctaSecondaryWrapClass}
           whileHover={reduceMotion ? undefined : { y: -2 }}
           whileTap={reduceMotion ? undefined : TT_START_SECTION_L5.ghostCtaTap}
           data-tt-traveltrust-start-ghost-cta-tap-l5="1"
@@ -306,7 +347,7 @@ export function TravelTrustStartSection() {
                 target: governanceHref,
               })
             }
-            className={ghostCtaClass}
+            className={`${ghostCtaClass} ${TT_START_SECTION_L5.ctaLinkMinWidthClass}`}
           >
             {t("traveltrust_start_governance_cta")}
           </Link>
@@ -377,11 +418,19 @@ export function TravelTrustStartSection() {
         </AnimatePresence>
       </div>
       </div>
-      <div className={TT_START_SECTION_L5.previewColClass} data-tt-traveltrust-start-preview-col-l5="1">
+      <motion.div
+        className={TT_START_SECTION_L5.previewColClass}
+        data-tt-traveltrust-start-preview-col-l5="1"
+        initial={reduceMotion ? false : { opacity: 0, x: 18 }}
+        whileInView={reduceMotion ? undefined : { opacity: 1, x: 0 }}
+        viewport={{ once: true, margin: "-8% 0px" }}
+        transition={{ ...TT_START_SECTION_L5.previewColEntrance, ease: TT_L5_MOTION_EASE }}
+        data-tt-traveltrust-start-preview-col-entrance-l5="1"
+      >
         <motion.div className={TT_START_SECTION_L5.routePreviewWrapClass} data-tt-traveltrust-start-route-preview-wrap-l5="1">
           <TravelTrustStartRoutePreview activeStep={activeStartStep} prefillRegionId={startPrefillRegionId} />
         </motion.div>
-      </div>
+      </motion.div>
       </div>
       </motion.div>
       <TravelTrustPageComplianceBlock />

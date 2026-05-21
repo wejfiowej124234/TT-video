@@ -54,6 +54,16 @@ import {
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
 } from "@/lib/traveltrustCinematicNonGlobeL5";
 import {
+  TRAVELTRUST_HERO_GLOBE_PASS_A_BRIGHTEN_ID,
+  TRAVELTRUST_HERO_GLOBE_PASS_A_MATERIAL_TUNE_ID,
+  TRAVELTRUST_HERO_GLOBE_SHADOW_FILL,
+} from "@/lib/traveltrustHeroGlobeBrighten";
+import { TRAVELTRUST_HERO_GLOBE_AMBIENT_PARTICLES_ENABLED } from "@/lib/traveltrustGlobeHeroTuning";
+import {
+  TRAVELTRUST_HERO_GLOBE_BRIGHTEN_ACTIVE_STEP,
+  TRAVELTRUST_HERO_GLOBE_PIN_DECOR_MUL,
+} from "@/lib/traveltrustHeroGlobeBrighten";
+import {
   resolveHeroGlobeExitProgress,
   resolveHeroGlobeOpacityExit,
   resolveHeroGlobeScaleExit,
@@ -171,13 +181,15 @@ function PageCinematicHeroWarmFill() {
   useFrame(() => {
     const heroT = heroScroll?.get() ?? 0;
     const k = Math.max(0, 1 - smoothstep(0.1, 0.52, heroT));
-    if (hemiRef.current) hemiRef.current.intensity = k * 1.02;
-    if (ambRef.current) ambRef.current.intensity = k * 0.52;
+    const fill = TRAVELTRUST_HERO_GLOBE_SHADOW_FILL;
+    if (hemiRef.current) hemiRef.current.intensity = k * fill.hemiIntensity;
+    if (ambRef.current) ambRef.current.intensity = k * fill.ambIntensity;
   });
+  const fill = TRAVELTRUST_HERO_GLOBE_SHADOW_FILL;
   return (
     <>
-      <hemisphereLight ref={hemiRef} args={["#0c0a09", "#0c0a09", 0]} />
-      <ambientLight ref={ambRef} color="#0c0a09" intensity={0} />
+      <hemisphereLight ref={hemiRef} args={[fill.hemiSky, fill.hemiGround, 0]} />
+      <ambientLight ref={ambRef} color={fill.ambColor} intensity={0} />
     </>
   );
 }
@@ -577,12 +589,22 @@ function PageHeroGlobeRig({
         <Float speed={0.65} rotationIntensity={0.06} floatIntensity={0.1}>
           <group rotation={[0.18, 0.38, 0]}>
             <TravelTrustTourismGlobeFillLight radius={config.globeRadius} />
-            {enableGlow && globeTier.ambientParticles ? (
+            {enableGlow &&
+            TRAVELTRUST_HERO_GLOBE_AMBIENT_PARTICLES_ENABLED &&
+            globeTier.ambientParticles ? (
               <TourismGlobeAmbientParticles radius={config.globeRadius} />
             ) : null}
             <TravelTrustGlobeInteractionProvider interactive={globeInteractive}>
               <TravelTrustTourismGlobeSpin config={config}>
-                <group userData={{ ttSceneDebugLayer: "ocean", ttSceneDebugName: "TravelTrustTourismGlobe" }}>
+                <group
+                  userData={{
+                    ttSceneDebugLayer: "ocean",
+                    ttSceneDebugName: "TravelTrustTourismGlobe",
+                    ttTraveltrustHeroGlobePassABrighten: TRAVELTRUST_HERO_GLOBE_PASS_A_BRIGHTEN_ID,
+                    ttTraveltrustHeroGlobePassAMaterialTune: TRAVELTRUST_HERO_GLOBE_PASS_A_MATERIAL_TUNE_ID,
+                    ttTraveltrustHeroGlobeBrightenStep: String(TRAVELTRUST_HERO_GLOBE_BRIGHTEN_ACTIVE_STEP),
+                  }}
+                >
                   <TravelTrustTourismGlobe
                     config={config}
                     tier={globeTier}
@@ -598,13 +620,17 @@ function PageHeroGlobeRig({
                       radius={config.globeRadius}
                       lite={globeTier.travelArcLite}
                       qualityMul={
-                        (lowQuality ? TT_CINEMATIC_GLOBE_VISUAL.phase1DecorLowQualityMul : 1) * decorFadeSm.current
+                        (lowQuality ? TT_CINEMATIC_GLOBE_VISUAL.phase1DecorLowQualityMul : 1) *
+                        decorFadeSm.current *
+                        TRAVELTRUST_HERO_GLOBE_PIN_DECOR_MUL
                       }
                     />
                     <TravelTrustPhase1GlobeHighlights
                       radius={config.globeRadius}
                       qualityMul={
-                        (lowQuality ? TT_CINEMATIC_GLOBE_VISUAL.phase1DecorLowQualityMul : 1) * decorFadeSm.current
+                        (lowQuality ? TT_CINEMATIC_GLOBE_VISUAL.phase1DecorLowQualityMul : 1) *
+                        decorFadeSm.current *
+                        TRAVELTRUST_HERO_GLOBE_PIN_DECOR_MUL
                       }
                     />
                   </group>

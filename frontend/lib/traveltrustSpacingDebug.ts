@@ -12,13 +12,13 @@ export const TT_SPACING_DEBUG_SECTION_LABELS: Record<string, string> = {
   start: "开始",
 };
 
-/** 节与节之间期望外间距参考（px，仅调试面板展示） */
+/** 节与节之间期望外间距（ideal · 对齐 `TT_PAGE_SPACING_AUDIT_L5`） */
 export const TT_SPACING_DEBUG_GAP_TARGETS_PX: Record<string, number> = {
-  "theater→liquidity": 72,
-  "liquidity→trust": 72,
-  "trust→settlement": 64,
-  "settlement→faq": 72,
-  "faq→start": 72,
+  "theater→liquidity": 64,
+  "liquidity→trust": 44,
+  "trust→settlement": 44,
+  "settlement→faq": 64,
+  "faq→start": 64,
 };
 
 export function isTravelTrustSpacingDebugDevHost(): boolean {

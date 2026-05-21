@@ -40,7 +40,8 @@ export function TravelTrustRoleVideoPlayer({ role, active, flashKey }: Props) {
   const hintId = `tt-traveltrust-role-video-hint-${role.id}`;
   const videoRegionLabel = t("traveltrust_role_video_region_aria", { role: roleLabel });
   const posterAlt = t("traveltrust_role_video_poster_alt", { role: roleLabel });
-  const playable = Boolean(mp4Src) && !mediaError && !preferWarmPlaceholder;
+  /** tier-1 暖占位仍保留 public MP4 — 与「有无播放入口」解耦 */
+  const playable = Boolean(mp4Src) && !mediaError;
 
   useEffect(() => {
     if (!active) {
@@ -50,9 +51,9 @@ export function TravelTrustRoleVideoPlayer({ role, active, flashKey }: Props) {
     }
   }, [active, role.id]);
 
-  /** Tab 切换后静音自动预览（E2E 仍可通过播放钮断言） */
+  /** 生产素材：Tab 切换后静音自动预览；暖占位需用户点播放 */
   useEffect(() => {
-    if (!active || !playable || reduceMotion || mediaError) return;
+    if (!active || !playable || reduceMotion || mediaError || preferWarmPlaceholder) return;
     const el = videoRef.current;
     if (!el) return;
     el.muted = true;
@@ -65,7 +66,7 @@ export function TravelTrustRoleVideoPlayer({ role, active, flashKey }: Props) {
         });
     }, 400);
     return () => window.clearTimeout(timer);
-  }, [active, playable, reduceMotion, mediaError, role.id, flashKey]);
+  }, [active, playable, reduceMotion, mediaError, preferWarmPlaceholder, role.id, flashKey]);
 
   const onPlay = useCallback(() => {
     const el = videoRef.current;
@@ -104,11 +105,16 @@ export function TravelTrustRoleVideoPlayer({ role, active, flashKey }: Props) {
         data-tt-traveltrust-role-video-playing={playing ? "1" : "0"}
         data-tt-traveltrust-role-video-autoplay="muted"
         data-tt-traveltrust-role-video-static-frame={showStaticFrame ? "1" : "0"}
-        className={`relative aspect-video w-full max-lg:max-h-[min(52vw,280px)] min-h-[min(44vw,220px)] overflow-hidden rounded-2xl border bg-ink-950/80 sm:min-h-[min(50vh,420px)] sm:max-h-none sm:aspect-auto lg:min-h-[min(58vh,520px)] ${warmUi.ring} ${active ? warmUi.glow : TT_ROLE_VIDEO_L5.idleFrameBorderClass}`}
+        className={`${TT_ROLE_VIDEO_L5.frameClass} ${warmUi.ring} ${active ? warmUi.glow : TT_ROLE_VIDEO_L5.idleFrameBorderClass} ${playable && !playing && !reduceMotion ? "cursor-pointer" : ""}`}
         initial={reduceMotion ? false : { opacity: 0.92 }}
         animate={active && !reduceMotion ? { opacity: 1 } : { opacity: 1 }}
         transition={{ opacity: { duration: TT_ROLE_VIDEO_L5.panelRotateDuration } }}
         whileHover={active && !reduceMotion ? TT_ROLE_VIDEO_L5.panelHoverLift : undefined}
+        onClick={(e) => {
+          if (!playable || playing || reduceMotion) return;
+          if ((e.target as HTMLElement).closest("[data-tt-traveltrust-role-video-play-cta]")) return;
+          onPlay();
+        }}
       >
         <motion.div className={TT_ROLE_VIDEO_L5.panelWarmLiftClass} aria-hidden />
         <motion.div className={TT_ROLE_VIDEO_L5.panelScrimClass} aria-hidden />
@@ -166,7 +172,7 @@ export function TravelTrustRoleVideoPlayer({ role, active, flashKey }: Props) {
                 <img
                   src={posterSrc}
                   alt={posterAlt}
-                  className={`h-full min-h-[min(50vh,420px)] w-full object-cover sm:min-h-[min(58vh,520px)] ${reduceMotion ? "opacity-95" : "opacity-80"}`}
+                  className={`${TT_ROLE_VIDEO_L5.mediaCoverClass} ${reduceMotion ? "opacity-95" : "opacity-80"}`}
                   fetchPriority={reduceMotion ? "high" : undefined}
                   decoding="async"
                 />
@@ -277,37 +283,39 @@ export function TravelTrustRoleVideoPlayer({ role, active, flashKey }: Props) {
                   ease: "easeInOut",
                 }}
               />
-              <motion.div
-                className={TT_ROLE_VIDEO_L5.placeholderCopyClass}
-                initial={reduceMotion ? false : { opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: TT_ROLE_VIDEO_L5.posterFadeDuration, ease: TT_L5_MOTION_EASE }}
-                data-tt-traveltrust-role-video-placeholder-copy-l5="1"
-              >
-                <p className={TT_ROLE_VIDEO_L5.placeholderRoleTitleClass}>{roleLabel}</p>
-                {preferWarmPlaceholder ? (
-                  <span
-                    className={TT_ROLE_VIDEO_L5.placeholderTourismBadgeClass}
-                    data-tt-traveltrust-role-video-tourism-badge-l5="1"
-                  >
-                    {t("traveltrust_role_video_placeholder_tourism_badge")}
-                  </span>
-                ) : null}
-                <p
-                  className={
-                    preferWarmPlaceholder
-                      ? TT_ROLE_VIDEO_L5.placeholderTourismHintClass
-                      : TT_ROLE_VIDEO_L5.placeholderHintClass
-                  }
-                  data-tt-traveltrust-role-video-tourism-hint-l5={preferWarmPlaceholder ? "1" : "0"}
+              {!(playable && !playing) ? (
+                <motion.div
+                  className={TT_ROLE_VIDEO_L5.placeholderCopyClass}
+                  initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: TT_ROLE_VIDEO_L5.posterFadeDuration, ease: TT_L5_MOTION_EASE }}
+                  data-tt-traveltrust-role-video-placeholder-copy-l5="1"
                 >
-                  {mediaError
-                    ? t("traveltrust_role_video_error")
-                    : preferWarmPlaceholder
-                      ? t("traveltrust_role_video_placeholder_tourism")
-                      : t("traveltrust_video_placeholder_short")}
-                </p>
-              </motion.div>
+                  <p className={TT_ROLE_VIDEO_L5.placeholderRoleTitleClass}>{roleLabel}</p>
+                  {preferWarmPlaceholder ? (
+                    <span
+                      className={TT_ROLE_VIDEO_L5.placeholderTourismBadgeClass}
+                      data-tt-traveltrust-role-video-tourism-badge-l5="1"
+                    >
+                      {t("traveltrust_role_video_placeholder_tourism_badge")}
+                    </span>
+                  ) : null}
+                  <p
+                    className={
+                      preferWarmPlaceholder
+                        ? TT_ROLE_VIDEO_L5.placeholderTourismHintClass
+                        : TT_ROLE_VIDEO_L5.placeholderHintClass
+                    }
+                    data-tt-traveltrust-role-video-tourism-hint-l5={preferWarmPlaceholder ? "1" : "0"}
+                  >
+                    {mediaError
+                      ? t("traveltrust_role_video_error")
+                      : preferWarmPlaceholder
+                        ? t("traveltrust_role_video_placeholder_tourism")
+                        : t("traveltrust_video_placeholder_short")}
+                  </p>
+                </motion.div>
+              ) : null}
             </motion.div>
           ) : null}
         </AnimatePresence>
@@ -315,7 +323,7 @@ export function TravelTrustRoleVideoPlayer({ role, active, flashKey }: Props) {
         {active && playable && !reduceMotion ? (
           <video
             ref={videoRef}
-            className={`absolute inset-0 z-[2] box-border h-full min-h-[min(50vh,420px)] w-full max-w-full object-cover transition-opacity duration-300 motion-reduce:hidden sm:min-h-[min(58vh,520px)] ${showVideoLayer ? "opacity-95 saturate-[0.92] sepia-[0.14] hue-rotate-[-6deg]" : "opacity-0"}`}
+            className={`absolute inset-0 z-[2] box-border ${TT_ROLE_VIDEO_L5.mediaCoverClass} max-w-full transition-opacity duration-300 motion-reduce:hidden ${showVideoLayer ? "opacity-95 saturate-[0.92] sepia-[0.14] hue-rotate-[-6deg]" : "opacity-0"}`}
             playsInline
             muted
             preload={active ? "metadata" : "none"}
@@ -342,7 +350,10 @@ export function TravelTrustRoleVideoPlayer({ role, active, flashKey }: Props) {
         ) : null}
 
         {!playing && active && !showStaticFrame ? (
-          <motion.div className="absolute inset-0 z-[3] flex flex-col items-center justify-center gap-3 px-4">
+          <motion.div
+            className="absolute inset-0 z-[3] flex flex-col items-center justify-center gap-2.5 px-4"
+            data-tt-traveltrust-role-video-play-overlay="1"
+          >
             {playable && !reduceMotion ? (
               <>
                 <motion.div
@@ -358,7 +369,10 @@ export function TravelTrustRoleVideoPlayer({ role, active, flashKey }: Props) {
                 />
                 <motion.button
                   type="button"
-                  onClick={onPlay}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onPlay();
+                  }}
                   className={TT_ROLE_VIDEO_L5.playCtaClass}
                   aria-label={t("traveltrust_video_play")}
                   aria-describedby={hintId}
@@ -377,12 +391,18 @@ export function TravelTrustRoleVideoPlayer({ role, active, flashKey }: Props) {
                         }
                   }
                 >
-                  <span className="ml-1 text-h4" aria-hidden>
+                  <span className="ml-0.5 text-h4" aria-hidden>
                     ▶
                   </span>
                 </motion.button>
-                <p id={hintId} className="sr-only">
-                  {t("traveltrust_role_video_play_hint")}
+                <p
+                  id={hintId}
+                  className="max-w-[16rem] text-center text-meta font-medium leading-snug text-slate-100/92 drop-shadow-sm"
+                  data-tt-traveltrust-role-video-play-hint-visible-l5="1"
+                >
+                  {preferWarmPlaceholder
+                    ? t("traveltrust_role_video_tap_to_play")
+                    : t("traveltrust_role_video_play_hint")}
                 </p>
               </>
             ) : posterSrc ? (

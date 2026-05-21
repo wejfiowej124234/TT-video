@@ -52,6 +52,7 @@ import {
   TT_PAGE_HORIZON_FOG_L5,
   TT_PAGE_LAYOUT_L5,
   TT_START_STEP_CYCLE_MS,
+  TT_BELOW_FOLD_ATMOSPHERE_UNIFIED_L5,
   TT_CANVAS_STATIC_FALLBACK_L5,
   TT_HORIZON_ARC_L5,
   TT_PULSE_TICKER_L5,
@@ -72,12 +73,15 @@ import {
   TT_THEATER_TAB_L5,
   TT_TRUST_FACTS_L5,
   TT_THEATER_ROLE_WARM_3D_HEX,
+  TT_PAGE_CHAPTER_VIEWPORT_L5,
   TT_PAGE_SCROLL_SNAP_L5,
+  TT_SECTION_SURFACE_L5,
   TT_THEATER_SECTION_L5,
   TT_WARM_ROUTE_ARC_SVG,
   TT_LANDING_NAV_L5,
   TT_PAGE_COMPLIANCE_L5,
   TT_START_SECTION_L5,
+  TT_NETWORK_FOOTER_L5,
   TT_LEGACY_THEATER_3D_L5,
   resolveTheaterRoleWarm3dHex,
 } from "./traveltrustCinematicNonGlobeL5";
@@ -309,13 +313,27 @@ describe("traveltrustCinematicNonGlobeL5", () => {
     expect(TT_PAGE_HORIZON_FOG_L5.color).toBe("#ffe8d4");
     expect(TT_PAGE_HORIZON_FOG_L5.opacityPeakMul).toBe(0);
     expect(resolveNonGlobeHorizonFogOpacity(0.5, 0.4)).toBe(0);
-    expect(TT_PAGE_SCROLL_SNAP_L5.sectionAlignClass).toBe("scroll-snap-start");
-    expect(TT_THEATER_SECTION_L5.sectionSurfaceClass).toContain("scroll-snap-start");
+    expect(TT_PAGE_SCROLL_SNAP_L5.chapterBeatSnapClass).toContain("snap-always");
+    expect(TT_PAGE_CHAPTER_VIEWPORT_L5.minHeightClass).toContain("100svh");
+    expect(TT_THEATER_SECTION_L5.sectionSurfaceClass).not.toContain("snap-always");
+    expect(TT_THEATER_SECTION_L5.sectionSurfaceClass).not.toContain("min-h-[100svh]");
+    expect(TT_SECTION_SURFACE_L5.faq).not.toContain("min-h-[100svh]");
+    expect(TT_START_SECTION_L5.sectionClass).not.toContain("min-h-[100svh]");
+    expect(TT_NETWORK_FOOTER_L5.shellGroupedClass).toContain("border-t-0");
+    const globals = readFileSync(join(__dirname, "..", "app", "globals.css"), "utf8");
+    expect(globals).toContain("html.tt-traveltrust-scroll-snap-y");
+    expect(globals).toContain("scroll-snap-type: y mandatory");
+    expect(globals).toContain('data-tt-scroll-snap-strength="proximity"');
+    expect(globals).toContain('data-tt-traveltrust-scroll-chapter-viewport="1"');
+    expect(TT_PAGE_SCROLL_SNAP_L5.chapterBeatHero).toBe("hero");
     expect(TT_THEATER_SECTION_L5.mobileTablistClass).toContain("ref-sun");
     expect(TT_HERO_CHAIN_HUD_L5.connectedDotClass).toBe("bg-ref-sun");
     expect(TT_FAQ_ACCORDION_L5.panelDuration).toBe(0.28);
-    expect(TT_START_STEP_L5.activePulseDuration).toBe(0.75);
-    expect(TT_START_STEP_L5.activePulseRepeat).toBe(0);
+    expect(TT_START_STEP_L5.activePulseDuration).toBe(2.6);
+    expect(TT_START_STEP_L5.activePulseRepeat).toBe(Infinity);
+    expect(TT_START_ROUTE_PREVIEW_L5.stepCopyFadeY).toBe(0);
+    expect(TT_START_ROUTE_PREVIEW_L5.copyShellMinHeightClass).toContain("min-h-");
+    expect(TT_START_STEP_L5.activeClass).toContain("bg-gradient");
     expect(TT_START_ROUTE_PREVIEW_L5.cardBorderPulseRepeat).toBe(0);
     expect(TT_PULSE_TICKER_L5.marqueeDuration).toBe(48);
     expect(TT_PULSE_TICKER_L5.inlineUsesStaticScroll).toBe(false);
@@ -352,7 +370,7 @@ describe("traveltrustCinematicNonGlobeL5", () => {
     expect(TT_START_ROUTE_DESTINATIONS_L5).toHaveLength(3);
     expect(TT_START_ROUTE_CORRIDOR_GHOST_L5).toContain("M 14 44");
     expect(TT_LANDING_NAV_L5.linkTap.scale).toBe(0.98);
-    expect(TT_PAGE_COMPLIANCE_L5.topBorderPulse.duration).toBe(0.9);
+    expect(TT_BELOW_FOLD_ATMOSPHERE_UNIFIED_L5.background).toContain("radial-gradient");
     expect(TT_START_SECTION_L5.ghostCtaTap.scale).toBe(0.98);
     expect(TT_START_STEP_L5.itemClass).toContain("py-3");
     expect(TT_START_ROUTE_PREVIEW_L5.cardClass).toContain("p-4");
@@ -361,6 +379,9 @@ describe("traveltrustCinematicNonGlobeL5", () => {
     expect(TT_ROUTE_ARC_THEATER_LABELS_L5[0].labelY).toBe(12);
     expect(TT_ROUTE_ARC_THEATER_LABELS_L5[0].labelX).toBe(58);
     expect(TT_ROLE_VIDEO_L5.playHaloDuration).toBe(1.1);
+    expect(TT_ROLE_VIDEO_L5.frameClass).toContain("aspect-video");
+    expect(TT_ROLE_VIDEO_L5.frameClass).not.toContain("aspect-auto");
+    expect(TT_ROLE_VIDEO_L5.frameClass).not.toContain("58vh");
     expect(TT_STABLECOIN_GATEWAY_L5.amountLockedClass).toContain("border-ref-sun");
     expect(TT_CORRIDOR_RING_L5.primaryLineWidth).toBeGreaterThan(1);
     expect(TT_ENVIRONMENT_L5_EXTRA.rolesHideStarsPageT).toBeLessThan(0.68);

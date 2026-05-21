@@ -10,6 +10,7 @@ import {
   TT_CINEMATIC_SHELL_L5,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
 } from "@/lib/traveltrustCinematicNonGlobeL5";
+import { TT_HERO_GLOBE_OPTICAL_FALLBACK } from "@/lib/traveltrustHeroGlobeAlign";
 import { TT_Z, ttZClass } from "@/lib/traveltrustZ";
 
 import { UNIFIED_PAGE_3D } from "./traveltrustPageCinematicConfig";
@@ -44,7 +45,7 @@ export function TravelTrustCinematicShell({ children }: { children: ReactNode })
 
           ? ({
 
-              ["--tt-hero-globe-optical-x" as string]: "28%",
+              ["--tt-hero-globe-optical-x" as string]: TT_HERO_GLOBE_OPTICAL_FALLBACK,
 
               ["--tt-hero-globe-optical-y" as string]: "52%",
 

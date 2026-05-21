@@ -23,15 +23,19 @@ import {
 
 const _globeSurfaceMatrix = new THREE.Matrix4();
 
-function resolveGlobeSpinGroup(root: Group): Group | null {
-  let spin: Group | null = null;
+/** 与贴图球面同源的世界矩阵（含 Float / 倾角组 / globeRig，不仅是自转 spin 组） */
+function resolveGlobeSurfaceMatrixWorld(root: Group): boolean {
+  let surfaceGroup: THREE.Object3D | null = null;
   root.traverse((obj) => {
-    if (spin) return;
-    if (obj.userData?.ttSceneDebugName === "TravelTrustTourismGlobe" && obj.parent) {
-      spin = obj.parent as Group;
+    if (surfaceGroup) return;
+    if (obj.userData?.ttSceneDebugName === "TravelTrustTourismGlobe") {
+      surfaceGroup = obj;
     }
   });
-  return spin;
+  if (!surfaceGroup) return false;
+  surfaceGroup.updateWorldMatrix(true, false);
+  _globeSurfaceMatrix.copy(surfaceGroup.matrixWorld);
+  return true;
 }
 
 export function TravelTrustHeroGlobeProjectionPublisher({
@@ -52,8 +56,7 @@ export function TravelTrustHeroGlobeProjectionPublisher({
       resetHeroGlobeProjectionSnapshot();
       return;
     }
-    const spinGroup = resolveGlobeSpinGroup(rig);
-    if (!spinGroup) {
+    if (!resolveGlobeSurfaceMatrixWorld(rig)) {
       resetHeroGlobeProjectionSnapshot();
       return;
     }
@@ -70,9 +73,6 @@ export function TravelTrustHeroGlobeProjectionPublisher({
       resetHeroGlobeProjectionSnapshot();
       return;
     }
-
-    spinGroup.updateWorldMatrix(true, false);
-    _globeSurfaceMatrix.copy(spinGroup.matrixWorld);
 
     const points: Record<string, ReturnType<typeof projectGlobeSurfaceToHeroViewport>> = {};
     for (const node of TRAVELTRUST_HERO_P3_DECOR_NODES) {
