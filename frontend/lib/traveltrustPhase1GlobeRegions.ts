@@ -1,31 +1,38 @@
 /** @frozen TT-GLOBE-L5-FROZEN-2026-05 — see `traveltrustHeroGlobeFrozenManifest.ts` */
 import { TT_HERO_GLOBE_L5_PALETTE } from "@/lib/traveltrustCinematicPageL5";
+import { getTraveltrustHubGeo, type TraveltrustHubGeoId } from "@/lib/traveltrustHubGeo";
 
 /** Phase 1 country anchors for globe highlights (84 / protocol-reference · mock ①). */
 export type TravelTrustPhase1GlobeRegion = {
   id: string;
   nameZh: string;
   tier: "S" | "A" | "B";
+  /** 与 `traveltrustHubGeo` 同步 · 仅供类型兼容；读取请用 `resolveTraveltrustHubLatLon` */
   lat: number;
   lon: number;
-  /** Optional visual-only pin offset (great-circle arcs use `lat`/`lon`). */
-  pinLat?: number;
-  pinLon?: number;
 };
 
-/** Tourism hub coords on land (pins + arcs share `lat`/`lon` · illustrative). */
-export const TRAVELTRUST_PHASE1_GLOBE_REGIONS: TravelTrustPhase1GlobeRegion[] = [
-  { id: "cn", nameZh: "中国", tier: "S", lat: 31.2, lon: 121.5 },
-  { id: "us", nameZh: "美国", tier: "S", lat: 40.7, lon: -74 },
-  { id: "fr", nameZh: "法国", tier: "S", lat: 48.86, lon: 2.35, pinLat: 47.2, pinLon: 4.5 },
-  { id: "es", nameZh: "西班牙", tier: "S", lat: 40.4, lon: -3.7, pinLat: 36.5, pinLon: -8.5 },
-  { id: "jp", nameZh: "日本", tier: "A", lat: 35.68, lon: 139.69 },
-  { id: "th", nameZh: "泰国", tier: "A", lat: 13.75, lon: 100.5 },
-  { id: "sg", nameZh: "新加坡", tier: "A", lat: 1.29, lon: 103.85 },
-  { id: "kr", nameZh: "韩国", tier: "A", lat: 37.57, lon: 126.98 },
-  { id: "au", nameZh: "澳大利亚", tier: "B", lat: -33.87, lon: 151.21 },
-  { id: "ae", nameZh: "阿联酋", tier: "B", lat: 25.2, lon: 55.27 },
-];
+const PHASE1_REGION_META: { id: TraveltrustHubGeoId; nameZh: string; tier: TravelTrustPhase1GlobeRegion["tier"] }[] =
+  [
+    { id: "cn", nameZh: "中国", tier: "S" },
+    { id: "us", nameZh: "美国", tier: "S" },
+    { id: "fr", nameZh: "法国", tier: "S" },
+    { id: "es", nameZh: "西班牙", tier: "S" },
+    { id: "jp", nameZh: "日本", tier: "A" },
+    { id: "th", nameZh: "泰国", tier: "A" },
+    { id: "sg", nameZh: "新加坡", tier: "A" },
+    { id: "kr", nameZh: "韩国", tier: "A" },
+    { id: "au", nameZh: "澳大利亚", tier: "B" },
+    { id: "ae", nameZh: "阿联酋", tier: "B" },
+  ];
+
+/** Tourism hub coords on land (pins + arcs · city SSOT · illustrative). */
+export const TRAVELTRUST_PHASE1_GLOBE_REGIONS: TravelTrustPhase1GlobeRegion[] = PHASE1_REGION_META.map(
+  (meta) => {
+    const hub = getTraveltrustHubGeo(meta.id);
+    return { id: meta.id, nameZh: meta.nameZh, tier: meta.tier, lat: hub.lat, lon: hub.lon };
+  },
+);
 
 export function latLonToUnitVector(latDeg: number, lonDeg: number): [number, number, number] {
   const lat = (latDeg * Math.PI) / 180;

@@ -4,7 +4,7 @@ import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
   testDir: "./e2e",
   testMatch:
-    "**/{traveltrust-scene-debug-blue-band,traveltrust-dom-compositor-audit,traveltrust-layer-kill-audit,traveltrust-blue-block-dom-origin,traveltrust-hero-p0-globe-acceptance,traveltrust-hero-p1-linkage,traveltrust-start-corridor-p2,traveltrust-hero-p2-theater,traveltrust-hero-p3-network-decor,capture-earth-realism-pass-a}.probe.spec.ts",
+    "**/{traveltrust-scene-debug-blue-band,traveltrust-dom-compositor-audit,traveltrust-layer-kill-audit,traveltrust-blue-block-dom-origin,traveltrust-hero-p0-globe-acceptance,traveltrust-hero-p1-linkage,traveltrust-start-corridor-p2,traveltrust-hero-p2-theater,traveltrust-hero-p3-network-decor,capture-earth-realism-pass-a,capture-hub-geo-pass-b}.probe.spec.ts",
   timeout: 180_000,
   workers: 1,
   reporter: "list",

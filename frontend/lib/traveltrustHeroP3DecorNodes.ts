@@ -1,8 +1,9 @@
 /**
  * P3-A · Hero 装饰城市节点（DOM/SVG · 示意 · 非 WebGL · ①）
- * 不写入 traveltrustPhase1GlobeRegions（冻结清单）。
+ * 坐标 SSOT：`traveltrustHubGeo.ts` · `resolveHeroP3HubLatLon`
  */
 import type { TraveltrustStartCorridorId } from "@/lib/traveltrustStartCorridorBinding";
+import { resolveTraveltrustHubLatLonById } from "@/lib/traveltrustHubGeo";
 
 export type HeroP3DecorNodeTier = "S" | "A" | "B";
 
@@ -10,40 +11,40 @@ export type HeroP3DecorNode = {
   id: string;
   /** 与 Phase1 枢纽对齐时用于 P1 focus 高亮 */
   phase1RegionId?: string;
-  lat: number;
-  lon: number;
   tier: HeroP3DecorNodeTier;
   corridorId: TraveltrustStartCorridorId;
   labelKey: string;
 };
 
-/** 24 示意枢纽 · 全球链上旅游网络密度（① · 非航班数据） */
-export const TRAVELTRUST_HERO_P3_DECOR_NODES: readonly HeroP3DecorNode[] = [
-  { id: "cn", phase1RegionId: "cn", lat: 31.2, lon: 121.5, tier: "S", corridorId: "asia", labelKey: "traveltrust_phase1_region_cn" },
-  { id: "jp", phase1RegionId: "jp", lat: 35.68, lon: 139.69, tier: "A", corridorId: "asia", labelKey: "traveltrust_phase1_region_jp" },
-  { id: "th", phase1RegionId: "th", lat: 13.75, lon: 100.5, tier: "A", corridorId: "asia", labelKey: "traveltrust_phase1_region_th" },
-  { id: "sg", phase1RegionId: "sg", lat: 1.29, lon: 103.85, tier: "A", corridorId: "asia", labelKey: "traveltrust_phase1_region_sg" },
-  { id: "kr", phase1RegionId: "kr", lat: 37.57, lon: 126.98, tier: "A", corridorId: "asia", labelKey: "traveltrust_phase1_region_kr" },
-  { id: "in", lat: 19.08, lon: 72.88, tier: "A", corridorId: "asia", labelKey: "traveltrust_hero_p3_city_in" },
-  { id: "vn", lat: 10.82, lon: 106.63, tier: "B", corridorId: "asia", labelKey: "traveltrust_hero_p3_city_vn" },
-  { id: "us", phase1RegionId: "us", lat: 40.7, lon: -74, tier: "S", corridorId: "atlantic", labelKey: "traveltrust_phase1_region_us" },
-  { id: "fr", phase1RegionId: "fr", lat: 48.86, lon: 2.35, tier: "S", corridorId: "atlantic", labelKey: "traveltrust_phase1_region_fr" },
-  { id: "es", phase1RegionId: "es", lat: 40.4, lon: -3.7, tier: "S", corridorId: "atlantic", labelKey: "traveltrust_phase1_region_es" },
-  { id: "gb", lat: 51.51, lon: -0.13, tier: "A", corridorId: "atlantic", labelKey: "traveltrust_hero_p3_city_gb" },
-  { id: "de", lat: 52.52, lon: 13.41, tier: "A", corridorId: "atlantic", labelKey: "traveltrust_hero_p3_city_de" },
-  { id: "it", lat: 41.9, lon: 12.5, tier: "B", corridorId: "atlantic", labelKey: "traveltrust_hero_p3_city_it" },
-  { id: "br", lat: -23.55, lon: -46.63, tier: "B", corridorId: "atlantic", labelKey: "traveltrust_hero_p3_city_br" },
-  { id: "au", phase1RegionId: "au", lat: -33.87, lon: 151.21, tier: "B", corridorId: "pacific", labelKey: "traveltrust_phase1_region_au" },
-  { id: "nz", lat: -36.85, lon: 174.76, tier: "B", corridorId: "pacific", labelKey: "traveltrust_hero_p3_city_nz" },
-  { id: "fj", lat: -18.14, lon: 178.44, tier: "B", corridorId: "pacific", labelKey: "traveltrust_hero_p3_city_fj" },
-  { id: "ae", phase1RegionId: "ae", lat: 25.2, lon: 55.27, tier: "B", corridorId: "mena", labelKey: "traveltrust_phase1_region_ae" },
-  { id: "eg", lat: 30.04, lon: 31.24, tier: "B", corridorId: "mena", labelKey: "traveltrust_hero_p3_city_eg" },
-  { id: "tr", lat: 41.01, lon: 28.98, tier: "B", corridorId: "mena", labelKey: "traveltrust_hero_p3_city_tr" },
-  { id: "za", lat: -26.2, lon: 28.04, tier: "B", corridorId: "mena", labelKey: "traveltrust_hero_p3_city_za" },
-  { id: "mx", lat: 19.43, lon: -99.13, tier: "A", corridorId: "atlantic", labelKey: "traveltrust_hero_p3_city_mx" },
-  { id: "ca", lat: 43.65, lon: -79.38, tier: "A", corridorId: "atlantic", labelKey: "traveltrust_hero_p3_city_ca" },
-  { id: "id", lat: -6.21, lon: 106.85, tier: "A", corridorId: "asia", labelKey: "traveltrust_hero_p3_city_id" },
-] as const;
+/** P3 装饰节点元数据（无内嵌 lat/lon） */
+const P3_DECOR_NODE_META: HeroP3DecorNode[] = [
+  { id: "cn", phase1RegionId: "cn", tier: "S", corridorId: "asia", labelKey: "traveltrust_phase1_region_cn" },
+  { id: "jp", phase1RegionId: "jp", tier: "A", corridorId: "asia", labelKey: "traveltrust_phase1_region_jp" },
+  { id: "th", phase1RegionId: "th", tier: "A", corridorId: "asia", labelKey: "traveltrust_phase1_region_th" },
+  { id: "sg", phase1RegionId: "sg", tier: "A", corridorId: "asia", labelKey: "traveltrust_phase1_region_sg" },
+  { id: "kr", phase1RegionId: "kr", tier: "A", corridorId: "asia", labelKey: "traveltrust_phase1_region_kr" },
+  { id: "in", tier: "A", corridorId: "asia", labelKey: "traveltrust_hero_p3_city_in" },
+  { id: "vn", tier: "B", corridorId: "asia", labelKey: "traveltrust_hero_p3_city_vn" },
+  { id: "us", phase1RegionId: "us", tier: "S", corridorId: "atlantic", labelKey: "traveltrust_phase1_region_us" },
+  { id: "fr", phase1RegionId: "fr", tier: "S", corridorId: "atlantic", labelKey: "traveltrust_phase1_region_fr" },
+  { id: "es", phase1RegionId: "es", tier: "S", corridorId: "atlantic", labelKey: "traveltrust_phase1_region_es" },
+  { id: "gb", tier: "A", corridorId: "atlantic", labelKey: "traveltrust_hero_p3_city_gb" },
+  { id: "de", tier: "A", corridorId: "atlantic", labelKey: "traveltrust_hero_p3_city_de" },
+  { id: "it", tier: "B", corridorId: "atlantic", labelKey: "traveltrust_hero_p3_city_it" },
+  { id: "br", tier: "B", corridorId: "atlantic", labelKey: "traveltrust_hero_p3_city_br" },
+  { id: "au", phase1RegionId: "au", tier: "B", corridorId: "pacific", labelKey: "traveltrust_phase1_region_au" },
+  { id: "nz", tier: "B", corridorId: "pacific", labelKey: "traveltrust_hero_p3_city_nz" },
+  { id: "fj", tier: "B", corridorId: "pacific", labelKey: "traveltrust_hero_p3_city_fj" },
+  { id: "ae", phase1RegionId: "ae", tier: "B", corridorId: "mena", labelKey: "traveltrust_phase1_region_ae" },
+  { id: "eg", tier: "B", corridorId: "mena", labelKey: "traveltrust_hero_p3_city_eg" },
+  { id: "tr", tier: "B", corridorId: "mena", labelKey: "traveltrust_hero_p3_city_tr" },
+  { id: "za", tier: "B", corridorId: "mena", labelKey: "traveltrust_hero_p3_city_za" },
+  { id: "mx", tier: "A", corridorId: "atlantic", labelKey: "traveltrust_hero_p3_city_mx" },
+  { id: "ca", tier: "A", corridorId: "atlantic", labelKey: "traveltrust_hero_p3_city_ca" },
+  { id: "id", tier: "A", corridorId: "asia", labelKey: "traveltrust_hero_p3_city_id" },
+];
+
+export const TRAVELTRUST_HERO_P3_DECOR_NODES: readonly HeroP3DecorNode[] = P3_DECOR_NODE_META;
 
 export const TRAVELTRUST_HERO_P3_DECOR_NODE_COUNT = TRAVELTRUST_HERO_P3_DECOR_NODES.length;
 
@@ -64,6 +65,15 @@ export function isHeroP3CoreLabelNode(nodeId: string): nodeId is HeroP3CoreLabel
 }
 
 export const TRAVELTRUST_HERO_P3_CORE_LABEL_COUNT = TRAVELTRUST_HERO_P3_CORE_LABEL_NODE_IDS.length;
+
+/** P3 / 光点 / 标签 · 与 Phase1 针脚同源 hub 坐标 */
+export function resolveHeroP3HubLatLon(node: Pick<HeroP3DecorNode, "id" | "phase1RegionId">): {
+  lat: number;
+  lon: number;
+} {
+  const hubId = node.phase1RegionId ?? node.id;
+  return resolveTraveltrustHubLatLonById(hubId);
+}
 
 export function resolveHeroP3DecorNodeFocusId(focusedRegionId: string | null): string | null {
   if (!focusedRegionId) return null;

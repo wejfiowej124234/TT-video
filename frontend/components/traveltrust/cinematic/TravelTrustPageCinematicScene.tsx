@@ -13,6 +13,7 @@ import {
 import { useTravelTrustTheaterRole } from "./TravelTrustTheaterRoleContext";
 import { DepthDust } from "./TravelTrustCinematicScene3DContent";
 import { TravelTrustPhase1TravelArcs } from "./TravelTrustPhase1TravelArcs";
+import { TravelTrustHeroGlobeProjectionPublisher } from "./TravelTrustHeroGlobeProjectionPublisher";
 import {
   TourismGlobeAmbientParticles,
   TravelTrustTourismGlobe,
@@ -21,7 +22,10 @@ import {
 } from "./TravelTrustTourismGlobe";
 import { damp, easeInOutCubic, lerp, lerpHex, smoothstep } from "./traveltrustCinematicEasing3d";
 import { resolveTravelTrustBlendedChapterPreset } from "./traveltrustCinematicChapters";
-import { resolveTraveltrustGlobeRenderTier } from "@/lib/traveltrustGlobeEarthAsset";
+import {
+  resolveTraveltrustGlobeRenderTier,
+  TT_GLOBE_EARTH_SURFACE_RADIUS_MUL,
+} from "@/lib/traveltrustGlobeEarthAsset";
 import { TT_CINEMATIC_GLOBE_VISUAL } from "@/lib/traveltrustCinematicVisual";
 import { TravelTrustCinematicBloom } from "./TravelTrustCinematicBloom";
 import { TravelTrustGlobeInteractionProvider } from "./TravelTrustGlobeInteractionContext";
@@ -612,6 +616,10 @@ function PageHeroGlobeRig({
             ) : null}
           </group>
         </Float>
+        <TravelTrustHeroGlobeProjectionPublisher
+          globeRigRef={globeRig}
+          surfaceRadius={config.globeRadius * TT_GLOBE_EARTH_SURFACE_RADIUS_MUL}
+        />
       </group>
       <group ref={ringRig}>
         <PageTravelCorridorRing isMobile={isMobile} />
