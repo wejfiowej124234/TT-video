@@ -19,6 +19,7 @@ import {
   navigateToStartWithRegion,
 } from "@/lib/traveltrustHeroGlobeP1Link";
 import { TT_CINEMATIC_GLOBE_VISUAL } from "@/lib/traveltrustCinematicVisual";
+import { TT_GLOBE_EARTH_SURFACE_RADIUS_MUL } from "@/lib/traveltrustGlobeEarthAsset";
 import {
   PHASE1_TIER_GLOW,
   TRAVELTRUST_PHASE1_GLOBE_REGIONS,
@@ -59,7 +60,7 @@ function DestinationPin({
   const hit = useRef<Mesh>(null);
   const [localHover, setLocalHover] = useState(false);
   const base = 0.046 * scale;
-  const surfaceR = radius * 1.022;
+  const surfaceR = radius * TT_GLOBE_EARTH_SURFACE_RADIUS_MUL;
   const isS = tier === "S";
   const isEuCluster = regionId === "fr" || regionId === "es";
   const p1Focused = getHeroGlobeP1FocusedRegion();

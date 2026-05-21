@@ -15,6 +15,7 @@ import {
   TT_CINEMATIC_GLOBE_RENDER_TIER_DEFAULT,
   resolveHeroWarmInkGlobeTier,
   resolveTraveltrustGlobeRenderTier,
+  TT_GLOBE_EARTH_SURFACE_RADIUS_MUL,
   type GlobeRenderTierConfig,
 } from "@/lib/traveltrustGlobeEarthAsset";
 import {
@@ -156,7 +157,7 @@ function TourismGlobeBody({
 }) {
   const r = config.globeRadius;
   const segments = tier.earthSegments;
-  const earthR = r * 0.998;
+  const earthR = r * TT_GLOBE_EARTH_SURFACE_RADIUS_MUL;
   const cloudSeg = Math.min(segments, 64);
 
   const earthMesh = tier.texturedEarth ? (
@@ -172,7 +173,11 @@ function TourismGlobeBody({
       {earthMesh}
       {tier.nightLights ? (
         <Suspense fallback={null}>
-          <TourismGlobeNightLights radius={earthR} segments={segments} />
+          <TourismGlobeNightLights
+            radius={earthR}
+            segments={segments}
+            strengthScale={heroWarmInkSky ? TT_CINEMATIC_GLOBE_VISUAL.heroWarmInkNightLightsStrength / TT_CINEMATIC_GLOBE_VISUAL.nightLightsStrength : 1}
+          />
         </Suspense>
       ) : null}
       {tier.cloudLayer ? (
@@ -180,7 +185,13 @@ function TourismGlobeBody({
           <TourismGlobeCloudLayer
             radius={r}
             segments={cloudSeg}
-            opacityScale={heroWarmInkSky ? 0.18 : tier.texturedEarth ? 1 : 0.45}
+            opacityScale={
+              heroWarmInkSky
+                ? TT_CINEMATIC_GLOBE_VISUAL.heroWarmInkCloudOpacityScale
+                : tier.texturedEarth
+                  ? 1
+                  : 0.45
+            }
           />
         </Suspense>
       ) : null}
@@ -199,7 +210,7 @@ export function TravelTrustTourismGlobe({
   tier: tierProp,
   isMobile = false,
   lowQuality = false,
-  /** Hero 首屏：Basic 材质展示暖化贴图，避免 Standard + 蓝海反光像「蓝色背景」 */
+  /** Hero 首屏：弱 PBR + 轻暖化贴图（earth-realism pass） */
   heroWarmInkSky = false,
 }: {
   config: TravelTrustCinematic3dConfig;
@@ -244,13 +255,13 @@ export function TravelTrustTourismGlobeFillLight({ radius }: { radius: number })
   fillPos.y += radius * 0.35;
   return (
     <>
-      <ambientLight intensity={0.1} color="#14100e" />
+      <ambientLight intensity={0.14} color="#14100e" />
       <directionalLight position={sunPos.toArray()} intensity={2.12} color="#fff2e4" />
-      <directionalLight position={fillPos.toArray()} intensity={0.12} color="#d4a878" />
+      <directionalLight position={fillPos.toArray()} intensity={0.14} color="#d4a878" />
       <hemisphereLight
         color="#1c1612"
         groundColor="#0c0a09"
-        intensity={0.055}
+        intensity={0.07}
         position={[0, radius * 2, 0]}
       />
     </>

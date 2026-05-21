@@ -12,8 +12,15 @@ export const TRAVELTRUST_HERO_GLOBE_FROZEN_ID = "TT-GLOBE-L5-FROZEN-2026-05" as 
 /** 用户书面解除锁定后暖化批次（空域 + 球面 · L5 色系统一） */
 export const TRAVELTRUST_HERO_GLOBE_UNLOCK_PASS = "TT-GLOBE-L5-UNLOCK-WARM-INK-2026-05" as const;
 
+/** Pass A · 地球写实（褐化/弱 PBR/半径 SSOT · ①）— 已书面批准 2026-05-21 */
+export const TRAVELTRUST_HERO_GLOBE_EARTH_REALISM_UNLOCK_PASS =
+  "TT-GLOBE-L5-UNLOCK-EARTH-REALISM-2026-05" as const;
+
 /** 解除锁定日（①） */
 export const TRAVELTRUST_HERO_GLOBE_UNLOCKED_AT = "2026-05-20";
+
+/** Pass A 地球写实解锁日（①） */
+export const TRAVELTRUST_HERO_GLOBE_EARTH_REALISM_UNLOCKED_AT = "2026-05-21";
 
 /** 本批次收口复锁日（P0 目视冻结后更新 · ①） */
 export const TRAVELTRUST_HERO_GLOBE_FROZEN_LOCKED_AT = "2026-05-21";

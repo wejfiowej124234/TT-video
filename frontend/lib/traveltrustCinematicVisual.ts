@@ -82,7 +82,7 @@ export const TT_CINEMATIC_GLOBE_VISUAL = {
   /** 初始 Y 旋转（弧度）— 昼侧朝向镜头（欧亚非 daylight 面） */
   /** 默认昼侧偏欧亚（定制游叙事 · L5） */
   heroYawOffset: 0.52,
-  earthDisplayBrightness: 1.14,
+  earthDisplayBrightness: 1.22,
   earthArcticSuppress: 0.72,
   earthRoughness: 0.58,
   earthMetalness: 0.04,
@@ -108,6 +108,10 @@ export const TT_CINEMATIC_GLOBE_VISUAL = {
   cloudOpacity: 0.32,
   cloudRoughness: 0.92,
   nightLightsStrength: 0.22,
+  /** Hero 暖墨首屏夜灯（`TT-GLOBE-L5-UNLOCK-EARTH-REALISM-2026-05` · 0.12–0.18） */
+  heroWarmInkNightLightsStrength: 0.15,
+  /** Hero 暖墨首屏云层（相对 `cloudOpacity` · 0.28–0.35） */
+  heroWarmInkCloudOpacityScale: 0.32,
   glassShellOpacity: 0,
   glassTransmission: 0,
   holoGridOpacity: 0,

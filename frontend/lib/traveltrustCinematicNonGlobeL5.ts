@@ -1729,7 +1729,7 @@ export function buildHeroOuterSkyWarmAccentLayer(globeOpticalX: string): string 
 export const TT_HERO_GLOBE_WARM_LIMB_SHELL_L5 = {
   scaleMul: 1.34,
   color: "#0c0a09",
-  opacity: 0.62,
+  opacity: 0.32,
   heroFadeEnd: 0.62,
 } as const;
 
@@ -1737,7 +1737,7 @@ export const TT_HERO_GLOBE_WARM_LIMB_SHELL_L5 = {
 export const TT_HERO_GLOBE_WARM_FRONT_VEIL_L5 = {
   scaleMul: 1.045,
   color: "#2a221c",
-  opacity: 0.16,
+  opacity: 0.08,
   heroFadeEnd: 0.62,
 } as const;
 

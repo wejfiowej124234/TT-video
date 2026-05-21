@@ -94,29 +94,29 @@ export function enhanceTraveltrustGlobeEarthMap(source: THREE.Texture): THREE.Ca
     fallback.colorSpace = THREE.SRGBColorSpace;
     return fallback;
   }
-  /** 压 NASA 蓝海：空域暖墨由 layout/Canvas 承担，球面单独暖化（勿 hue-rotate 负角发紫） */
-  ctx.filter = "brightness(1.08) contrast(1.1) saturate(0.34) sepia(0.32) hue-rotate(18deg)";
+  /** 轻暖化：空域 `#0c0a09` 由 layout/Canvas 承担，球面保留海陆色阶（earth-realism pass） */
+  ctx.filter = "brightness(1.06) contrast(1.08) saturate(0.82) sepia(0.08) hue-rotate(10deg)";
   ctx.drawImage(image, 0, 0, w, h);
   ctx.filter = "none";
   ctx.globalCompositeOperation = "multiply";
-  ctx.fillStyle = "rgba(52,36,22,0.44)";
+  ctx.fillStyle = "rgba(52,36,22,0.18)";
   ctx.fillRect(0, 0, w, h);
   ctx.globalCompositeOperation = "source-over";
-  const poleGain = 0.72;
-  const band = Math.floor(h * 0.11);
+  const poleGain = 0.86;
+  const band = Math.floor(h * 0.08);
   ctx.globalCompositeOperation = "multiply";
   for (let y = 0; y < band; y++) {
     const t = 1 - (y / band) * (1 - poleGain);
-    ctx.fillStyle = `rgba(${Math.floor(90 * t)},${Math.floor(72 * t)},${Math.floor(58 * t)},0.48)`;
+    ctx.fillStyle = `rgba(${Math.floor(72 * t)},${Math.floor(58 * t)},${Math.floor(48 * t)},0.22)`;
     ctx.fillRect(0, y, w, 1);
     ctx.fillRect(0, h - 1 - y, w, 1);
   }
   ctx.globalCompositeOperation = "source-over";
-  /** 赤道带压青（equirect 中线 ≈ 屏幕赤道蓝海横条 · unlock warm-ink） */
-  const eqHalf = Math.max(6, Math.floor(h * 0.095));
+  /** 赤道轻压青（勿再抹平蓝海横带） */
+  const eqHalf = Math.max(4, Math.floor(h * 0.055));
   const midY = Math.floor(h * 0.5);
   ctx.globalCompositeOperation = "multiply";
-  ctx.fillStyle = "rgba(44,32,22,0.58)";
+  ctx.fillStyle = "rgba(44,36,28,0.22)";
   for (let y = midY - eqHalf; y <= midY + eqHalf; y++) {
     if (y >= 0 && y < h) ctx.fillRect(0, y, w, 1);
   }

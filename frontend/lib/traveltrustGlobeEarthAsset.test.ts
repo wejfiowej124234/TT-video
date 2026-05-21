@@ -8,7 +8,9 @@ import {
   resolveHeroWarmInkGlobeTier,
   resolveTraveltrustGlobeRenderTier,
   TT_CINEMATIC_GLOBE_RENDER_TIER,
+  TT_GLOBE_EARTH_SURFACE_RADIUS_MUL,
 } from "@/lib/traveltrustGlobeEarthAsset";
+import { TT_CINEMATIC_GLOBE_VISUAL } from "@/lib/traveltrustCinematicVisual";
 
 const publicRoot = join(process.cwd(), "public");
 
@@ -44,13 +46,21 @@ describe("traveltrustGlobeEarthAsset (A closure)", () => {
     );
   });
 
-  it("resolveHeroWarmInkGlobeTier uses procedural earth without night lights", () => {
+  it("TT_GLOBE_EARTH_SURFACE_RADIUS_MUL aligns mesh with pins/projection", () => {
+    expect(TT_GLOBE_EARTH_SURFACE_RADIUS_MUL).toBe(0.998);
+  });
+
+  it("resolveHeroWarmInkGlobeTier enables weak PBR, night lights, and hero cloud scale", () => {
     const base = TT_CINEMATIC_GLOBE_RENDER_TIER.desktop;
     const hero = resolveHeroWarmInkGlobeTier(base);
-    expect(hero.texturedEarth).toBe(false);
-    expect(hero.litEarth).toBe(false);
-    expect(hero.nightLights).toBe(false);
+    expect(hero.texturedEarth).toBe(true);
+    expect(hero.litEarth).toBe(true);
+    expect(hero.nightLights).toBe(true);
     expect(hero.cloudLayer).toBe(true);
     expect(hero.earthSegments).toBe(base.earthSegments);
+    expect(TT_CINEMATIC_GLOBE_VISUAL.heroWarmInkCloudOpacityScale).toBeGreaterThanOrEqual(0.28);
+    expect(TT_CINEMATIC_GLOBE_VISUAL.heroWarmInkCloudOpacityScale).toBeLessThanOrEqual(0.35);
+    expect(TT_CINEMATIC_GLOBE_VISUAL.heroWarmInkNightLightsStrength).toBeGreaterThanOrEqual(0.12);
+    expect(TT_CINEMATIC_GLOBE_VISUAL.heroWarmInkNightLightsStrength).toBeLessThanOrEqual(0.18);
   });
 });

@@ -9,6 +9,12 @@ export const TRAVELTRUST_GLOBE_A_CLOSURE_ID = "TT-GLOBE-A-2026-05" as const;
 /** L5 sprint marker (Phase B interactive · ①). */
 export const TRAVELTRUST_GLOBE_L5_SPRINT_ID = "TT-GLOBE-L5-2026-05" as const;
 
+/**
+ * 地球贴图 mesh / Phase1 针脚 / Hero 投影共用表面半径（相对 `globeRadius`）。
+ * Pass A `TT-GLOBE-L5-UNLOCK-EARTH-REALISM-2026-05`：与 `TravelTrustTourismGlobe` earthR 对齐。
+ */
+export const TT_GLOBE_EARTH_SURFACE_RADIUS_MUL = 0.998 as const;
+
 /** Public URL (Next static `public/`). */
 export const TRAVELTRUST_GLOBE_EARTH_TEXTURE_PATH = "/media/traveltrust/globe-earth-equirect-2k.jpg";
 
@@ -74,18 +80,17 @@ export function resolveTraveltrustGlobeRenderTier(opts: {
 }
 
 /**
- * Hero 首屏 · 暖墨空域与球面分离（排查结论：NASA JPEG 蓝海 ≠ `#0c0a09` 空域）
- * - procedural 褐绿海洋（非 `globe-earth-equirect-2k.jpg`）
- * - Basic 材质、无夜灯、薄云
+ * Hero 首屏 · 暖墨空域 + 写实球面（`TT-GLOBE-L5-UNLOCK-EARTH-REALISM-2026-05`）
+ * - 保留 JPEG + 轻暖化 `enhanceTraveltrustGlobeEarthMap`
+ * - 弱 PBR（`meshStandard`）+ 低强度夜灯 + 减薄云
  */
 export function resolveHeroWarmInkGlobeTier(
   base: GlobeRenderTierConfig,
 ): GlobeRenderTierConfig {
-  /** 保留 JPEG + `enhanceTraveltrustGlobeEarthMap`；Basic 材质减蓝海反光（`TT-GLOBE-L5-UNLOCK-WARM-INK`） */
   return {
     ...base,
-    litEarth: false,
-    nightLights: false,
+    litEarth: true,
+    nightLights: true,
     texturedEarth: true,
     cloudLayer: true,
   };

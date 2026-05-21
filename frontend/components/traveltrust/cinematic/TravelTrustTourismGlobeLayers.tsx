@@ -188,9 +188,12 @@ export function TourismGlobeCloudLayer({
 export function TourismGlobeNightLights({
   radius,
   segments,
+  strengthScale = 1,
 }: {
   radius: number;
   segments: number;
+  /** Hero 首屏缩放 `nightLightsStrength`（earth-realism pass） */
+  strengthScale?: number;
 }) {
   const nightMap = useMemo(() => createTraveltrustGlobeNightLightsTextureProcedural(), []);
   useEffect(() => () => nightMap.dispose(), [nightMap]);
@@ -200,7 +203,7 @@ export function TourismGlobeNightLights({
       uniforms: {
         uMap: { value: nightMap },
         uSunDir: { value: TRAVELTRUST_GLOBE_SUN_DIR.clone() },
-        uStrength: { value: TT_CINEMATIC_GLOBE_VISUAL.nightLightsStrength },
+        uStrength: { value: TT_CINEMATIC_GLOBE_VISUAL.nightLightsStrength * strengthScale },
       },
       vertexShader: NIGHT_VERT,
       fragmentShader: NIGHT_FRAG,
