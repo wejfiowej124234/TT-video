@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import zh from "@/locales/zh";
-import AdminShellBar from "@/components/admin/AdminShellBar";
+import { AdminCapabilitiesShell } from "@/components/admin/AdminCapabilitiesShell";
 
 /** 70：Admin 子树统一壳；metadata 惯例取 zh（与 governance 同构）。页身仍由客户端 i18n。 */
 const title = zh.admin_meta_title;
@@ -32,10 +32,5 @@ export const metadata: Metadata = {
 };
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <AdminShellBar />
-      {children}
-    </>
-  );
+  return <AdminCapabilitiesShell>{children}</AdminCapabilitiesShell>;
 }

@@ -1,0 +1,151 @@
+"use client";
+
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { type FormEvent, useId, useMemo } from "react";
+
+import { useTranslation } from "@/components/LocaleProvider";
+import AdminAuditCompareLinks from "@/components/admin/AdminAuditCompareLinks";
+import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
+import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
+import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
+import { AdminPermissionDeniedBanner } from "@/components/admin/AdminPermissionDeniedBanner";
+import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
+import { AdminMetaBuildSection, isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
+import { adminErrorUserText } from "@/lib/adminFetchDisplay";
+import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
+
+import { AdminFinanceSuiteDepthNotice } from "@/components/admin/AdminFinanceSuiteDepthNotice";
+import { AdminFinanceModuleDepthWorkspace } from "@/components/admin/AdminFinanceModuleDepthWorkspace";
+import { AdminFinanceSuitePartialChecklist } from "@/components/admin/AdminFinanceSuitePartialChecklist";
+import { AdminFinanceMetaLedgerSection } from "./AdminFinanceMetaLedgerSection";
+import { AdminFinanceSummaryGridSection } from "./AdminFinanceSummaryGridSection";
+import { resolveAdminFinanceDerived } from "./adminFinancePageDerived";
+import { useAdminFinancePage } from "./useAdminFinancePage";
+import {
+  ADMIN_FIN_SUITE_EXPORT_FOCUS_RING_CLASS,
+  ADMIN_FORM_FIELD_FOCUS_CLASS,
+  ADMIN_LINK_FOCUS_CLASS,
+  adminPageNavLinkClass,
+} from "@/lib/adminUi";
+
+export default function AdminFinancePageMain() {
+  const { t } = useTranslation();
+  const pageTitleId = useId();
+  const financeMetaDlHeadingId = useId();
+  const exportCsvFormatHintId = useId();
+  const financeExportSubmitFilterHintId = useId();
+  const {
+    loading,
+    error,
+    exporting,
+    exportError,
+    meta,
+    summary,
+    downloadFinanceSummaryCsv,
+  } = useAdminFinancePage();
+
+  const derived = useMemo(() => resolveAdminFinanceDerived(meta), [meta]);
+  const finSuiteModule = useSearchParams().get("fin_suite_module") ?? "";
+  const exportFromSuite = finSuiteModule === "export";
+
+  return (
+    <AdminListPageChrome
+      titleId={pageTitleId}
+      title={t("admin_finance_title")}
+      subtitle={t("admin_finance_subtitle")}
+      headerAside={
+        <>
+          <Link
+            href="/admin/observability"
+            className={`${adminPageNavLinkClass()}`}
+          >
+            {t("admin_observability_title")}
+          </Link>
+          <form
+            className={`flex max-w-sm flex-col gap-1 sm:max-w-xs sm:items-end ${exportFromSuite ? ADMIN_FIN_SUITE_EXPORT_FOCUS_RING_CLASS : ""}`}
+            aria-label={t("admin_finance_export_csv_aria")}
+            data-tt-admin-fin-suite-export-focus={exportFromSuite ? "1" : undefined}
+            aria-describedby={`${financeExportSubmitFilterHintId} ${exportCsvFormatHintId}`}
+            onSubmit={(e: FormEvent) => {
+              e.preventDefault();
+              void downloadFinanceSummaryCsv();
+            }}
+          >
+            <p id={financeExportSubmitFilterHintId} className="text-meta text-ink-600 leading-relaxed sm:text-right">
+              {t("admin_finance_export_submit_filter_hint")}
+            </p>
+            <button
+              type="submit"
+              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 bg-white px-3 py-1.5 text-small font-medium text-ink-800 transition-colors motion-reduce:transition-none hover:bg-ink-50 disabled:opacity-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              disabled={loading || exporting}
+              aria-label={t("admin_finance_export_csv_aria")}
+            >
+              {exporting ? t("admin_finance_exporting") : t("admin_finance_export_csv")}
+            </button>
+            <p id={exportCsvFormatHintId} className="text-meta text-ink-500 sm:text-right">
+              {t("admin_finance_export_csv_format_hint")}
+            </p>
+          </form>
+          <Link
+            href="/admin"
+            className={`${adminPageNavLinkClass()}`}
+          >
+            {t("admin_schema_back")}
+          </Link>
+        </>
+      }
+    >
+      <AdminPermissionDeniedBanner
+        permission={ADMIN_PERM.FINANCE_READ}
+        messageKey="admin_perm_denied_finance_read"
+      />
+
+      <AdminFinanceSuiteDepthNotice />
+      <AdminFinanceSuitePartialChecklist />
+      <AdminFinanceModuleDepthWorkspace
+        settlement={{
+          summary: (summary ?? null) as Record<string, unknown> | null,
+          meta: meta as Record<string, unknown> | null,
+          loading,
+        }}
+        exportPanel={{
+          exporting,
+          onExport: () => void downloadFinanceSummaryCsv(),
+          meta: meta as Record<string, unknown> | null,
+        }}
+      />
+
+      <AdminAuditCompareLinks />
+
+      <AdminMetaBuildSection meta={meta && isAdminMetaRecord(meta) ? meta : null} loading={loading} error={error} />
+
+      {loading ? (
+        <AdminListLoadingStatus message={t("admin_loading")} />
+      ) : null}
+
+      {error ? (
+        <AdminListFetchError errorKind={error} message={adminErrorUserText(error, t)} />
+      ) : null}
+
+      {exportError ? (
+        <AdminListFetchError errorKind={exportError} message={adminErrorUserText(exportError, t)} />
+      ) : null}
+
+      {!loading && !error && summary && (
+        <section className="mt-6 space-y-4" aria-label={t("admin_finance_summary_aria")}>
+          {meta && (
+            <AdminFinanceMetaLedgerSection
+              t={t}
+              financeMetaDlHeadingId={financeMetaDlHeadingId}
+              meta={meta}
+              derived={derived}
+            />
+          )}
+
+          <AdminFinanceSummaryGridSection t={t} summary={summary} />
+        </section>
+      )}
+    </AdminListPageChrome>
+  );
+}

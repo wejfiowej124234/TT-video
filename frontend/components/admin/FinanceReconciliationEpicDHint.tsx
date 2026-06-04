@@ -1,5 +1,6 @@
 "use client";
 
+import { adminPageNavLinkClass } from "@/lib/adminUi";
 import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
@@ -51,7 +52,7 @@ export default function FinanceReconciliationEpicDHint() {
           href={EPIC_D_LADDER_HREF}
           target="_blank"
           rel="noopener noreferrer"
-          className={`${touchTargetLink44Classes} text-small font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+          className={`${adminPageNavLinkClass()}`}
         >
           {t("admin_finance_reconciliation_epic_d_link_ladder")}
         </a>
@@ -59,7 +60,7 @@ export default function FinanceReconciliationEpicDHint() {
           href={EPIC_D_EXAMPLE_D10_HREF}
           target="_blank"
           rel="noopener noreferrer"
-          className={`${touchTargetLink44Classes} text-small font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+          className={`${adminPageNavLinkClass()}`}
         >
           {t("admin_finance_reconciliation_epic_d_link_example")}
         </a>

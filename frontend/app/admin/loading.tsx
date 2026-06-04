@@ -1,12 +1,13 @@
 "use client";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { TT_ADMIN_PAGE_INNER_LIST } from "@/lib/adminUi";
 
 /** 与 admin 首页：顶栏 + 模块卡片网格骨架（07 §五 5.6C / 70） */
 export default function AdminLoading() {
   const { t } = useTranslation();
   return (
-    <main className="mx-auto max-w-4xl p-6 sm:p-8" role="status" aria-label={t("admin_workspace_title")} aria-busy="true">
+    <main className={TT_ADMIN_PAGE_INNER_LIST} role="status" aria-label={t("admin_workspace_title")} aria-busy="true">
       <header className="rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-5 space-y-3" aria-hidden>
         <div className="min-h-[44px] h-11 w-56 max-w-full bg-ink-200 rounded-[var(--radius-sm)] animate-pulse" />
         <div className="h-4 w-full max-w-2xl bg-ink-100 rounded-[var(--radius-sm)] animate-pulse" />

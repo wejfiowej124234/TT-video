@@ -5,8 +5,14 @@ import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import {
+  TT_ADMIN_ERROR_CARD,
+  TT_ADMIN_ERROR_MAIN,
+  adminErrorRetryBtnClass,
+  adminErrorSecondaryBtnClass,
+  adminPageNavLinkClass,
+} from "@/lib/adminUi";
+import {
   touchTargetLink44Classes,
-  travelFocusRingCoreOffset2Classes,
   travelFocusRingOffset2Classes,
 } from "@/lib/travelLinkFocus";
 
@@ -30,8 +36,8 @@ export default function AdminError({
   }, [error]);
 
   return (
-    <main className="mx-auto flex min-h-[50vh] max-w-lg flex-col items-center justify-center px-6 py-12 bg-bg-main" role="alert">
-      <div className="rounded-[var(--radius-md)] border border-ink-200 bg-bg-console p-6 shadow-soft">
+    <main className={TT_ADMIN_ERROR_MAIN} role="alert">
+      <div className={TT_ADMIN_ERROR_CARD}>
         <p className="text-meta font-medium text-ink-500 mb-1">{t("admin_workspace_title")}</p>
         <h1 className="text-h4 font-semibold text-ink-900">{t("common_errorTitle")}</h1>
         <p className="mt-2 text-body text-ink-600">{t("common_errorMessage")}</p>
@@ -50,7 +56,7 @@ export default function AdminError({
             <button
               type="submit"
               aria-label={t("common_retry")}
-              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] bg-travel-500 px-4 py-2 text-small font-medium text-white hover:bg-travel-400 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] px-4 py-2 text-small font-medium ${adminErrorRetryBtnClass}`}
             >
               {t("common_retry")}
             </button>
@@ -58,7 +64,7 @@ export default function AdminError({
           <Link
             href="/"
             aria-label={t("common_backToHome")}
-            className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] border border-ink-300 px-4 py-2 text-small font-medium text-ink-700 hover:bg-ink-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+            className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] px-4 py-2 text-small font-medium ${adminErrorSecondaryBtnClass}`}
           >
             {t("common_backToHome")}
           </Link>
@@ -66,28 +72,28 @@ export default function AdminError({
         <p className="mt-5 text-meta text-ink-600 text-center flex flex-wrap justify-center gap-x-2 gap-y-1">
           <Link
             href="/admin"
-            className={`${touchTargetLink44Classes} text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${adminPageNavLinkClass()}`}
           >
             {t("admin_workspace_title")}
           </Link>
           <span aria-hidden>·</span>
           <Link
             href="/admin/observability"
-            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${adminPageNavLinkClass()}`}
           >
             {t("admin_observability_title")}
           </Link>
           <span aria-hidden>·</span>
           <Link
             href="/orders"
-            className={`${touchTargetLink44Classes} text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${adminPageNavLinkClass()}`}
           >
             {t("nav_orders")}
           </Link>
           <span aria-hidden>·</span>
           <Link
             href="/pay"
-            className={`${touchTargetLink44Classes} text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${adminPageNavLinkClass()}`}
           >
             {t("header_payHub")}
           </Link>

@@ -5,7 +5,7 @@ import { Suspense, type ReactNode } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import LoadingText from "@/components/LoadingText";
-import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
+import { adminPageNavLinkClass } from "@/lib/adminUi";
 
 const ADMIN_SEARCH_PARAMS_MAIN_DEFAULT =
   "mx-auto flex min-h-[40vh] max-w-6xl flex-col items-center justify-center gap-6 p-6 sm:p-8";
@@ -26,7 +26,7 @@ function AdminSearchParamsSuspenseFallback({
       <LoadingText />
       <Link
         href="/admin"
-        className={`${touchTargetLink44Classes} text-small text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`}
+        className={adminPageNavLinkClass()}
       >
         {t(backLinkLabelKey)}
       </Link>

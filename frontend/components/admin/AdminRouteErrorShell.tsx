@@ -1,5 +1,6 @@
 "use client";
 
+import { ADMIN_CONSOLE_ERROR_RETRY_BTN_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
 import { type FormEvent, useEffect, useId } from "react";
 import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
@@ -63,7 +64,7 @@ export default function AdminRouteErrorShell({
             <button
               type="submit"
               aria-label={t("common_retry")}
-              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] bg-travel-500 px-4 py-2 text-small font-medium text-white hover:bg-travel-400 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+              className={`${ADMIN_CONSOLE_ERROR_RETRY_BTN_CLASS} ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
             >
               {t("common_retry")}
             </button>
@@ -79,28 +80,28 @@ export default function AdminRouteErrorShell({
         <p className="mt-5 text-meta text-ink-600 text-center flex flex-wrap justify-center gap-x-2 gap-y-1">
           <Link
             href="/admin"
-            className={`${touchTargetLink44Classes} text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${adminPageNavLinkClass()}`}
           >
             {t("admin_workspace_title")}
           </Link>
           <span aria-hidden>·</span>
           <Link
             href="/admin/observability"
-            className={`${touchTargetLink44Classes} font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${adminPageNavLinkClass()}`}
           >
             {t("admin_observability_title")}
           </Link>
           <span aria-hidden>·</span>
           <Link
             href="/orders"
-            className={`${touchTargetLink44Classes} text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${adminPageNavLinkClass()}`}
           >
             {t("nav_orders")}
           </Link>
           <span aria-hidden>·</span>
           <Link
             href="/pay"
-            className={`${touchTargetLink44Classes} text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+            className={`${adminPageNavLinkClass()}`}
           >
             {t("header_payHub")}
           </Link>

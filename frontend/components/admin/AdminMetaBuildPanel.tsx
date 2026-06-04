@@ -9,6 +9,7 @@ import {
   travelFocusRingCoreOffset2WhiteClasses,
   travelFocusRingOffset2Classes,
 } from "@/lib/travelLinkFocus";
+import { ADMIN_META_NOTE_ACCENT_BORDER_CLASS, ADMIN_MOTION_CARD_HOVER_CLASS } from "@/lib/adminUi";
 
 export function isAdminMetaRecord(v: unknown): v is Record<string, unknown> {
   return typeof v === "object" && v !== null && !Array.isArray(v);
@@ -31,9 +32,17 @@ export function AdminMetaBuildPanel({ meta }: Props) {
   if (!b) {
     return <p className="mt-2 text-small text-ink-500">{t("admin_finance_meta_na")}</p>;
   }
-  const sha = typeof b.git_sha === "string" ? b.git_sha : null;
-  if (!sha) {
-    return <p className="mt-2 text-small text-ink-500">{t("admin_finance_meta_na")}</p>;
+  const sha = typeof b.git_sha === "string" ? b.git_sha.trim() : null;
+  const shaKnown = !!sha && sha !== "unknown";
+  if (!shaKnown) {
+    return (
+      <p
+        className="mt-2 text-small text-ink-500"
+        data-tt-admin-build-git-unknown="1"
+      >
+        {t("admin_meta_build_git_unknown")}
+      </p>
+    );
   }
   const dep =
     b.deployed_at === null || b.deployed_at === undefined
@@ -67,10 +76,10 @@ export function AdminMetaNoteLink({
   return (
     <Link
       href="/admin/observability"
-      className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200/60 bg-bg-console/20 py-2 text-left text-small text-ink-600 transition hover:border-travel-400 hover:text-ink-800 ${travelFocusRingOffset2Classes}${className ? ` ${className}` : ""}`}
+      className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200/60 bg-bg-console/20 py-2 text-left text-small text-ink-600 hover:border-ink-400 hover:text-ink-800 ${ADMIN_MOTION_CARD_HOVER_CLASS} ${travelFocusRingOffset2Classes}${className ? ` ${className}` : ""}`}
       aria-label={`${t("admin_finance_meta_build_title")} — ${t("admin_observability_title")}`}
     >
-      <span className="block border-l-2 border-travel-400 pl-3 pr-1">{children}</span>
+      <span className={`block ${ADMIN_META_NOTE_ACCENT_BORDER_CLASS}`}>{children}</span>
     </Link>
   );
 }
@@ -87,7 +96,7 @@ export function AdminMetaBuildSection({ meta, loading, error }: SectionProps) {
   return (
     <Link
       href="/admin/observability"
-      className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start mt-6 rounded-[var(--radius-xl)] border border-ink-200 bg-ink-50/80 p-4 text-left text-ink-800 transition hover:border-travel-400 hover:text-travel-700 ${travelFocusRingCoreOffset2WhiteClasses}`}
+      className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start mt-6 rounded-[var(--radius-xl)] border border-ink-200 bg-ink-50/80 p-4 text-left text-ink-800 hover:border-ink-400 hover:text-ink-900 ${ADMIN_MOTION_CARD_HOVER_CLASS} ${travelFocusRingCoreOffset2WhiteClasses}`}
       aria-label={`${t("admin_finance_meta_build_title")} — ${t("admin_observability_title")}`}
     >
       <h2 className="text-body font-medium text-ink-800">{t("admin_finance_meta_build_title")}</h2>

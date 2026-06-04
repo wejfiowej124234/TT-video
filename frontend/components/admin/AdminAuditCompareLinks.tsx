@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
-import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
+import { adminPageNavLinkClass } from "@/lib/adminUi";
 
 /**
  * Epic C-09：在其它只读 Admin 页轻量互链至对拍 / 差异摘要；不嵌入三槽、不复用数据逻辑。
@@ -27,7 +27,7 @@ export default function AdminAuditCompareLinks() {
         <Link
           href="/admin/cross-check"
           title={scopeTitle}
-          className={`${touchTargetLink44Classes} text-meta font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+          className={`${adminPageNavLinkClass()} text-meta`}
         >
           {t("admin_shell_nav_cross_check")}
         </Link>
@@ -37,7 +37,7 @@ export default function AdminAuditCompareLinks() {
         <Link
           href="/admin/drift-summary"
           title={scopeTitle}
-          className={`${touchTargetLink44Classes} text-meta font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
+          className={`${adminPageNavLinkClass()} text-meta`}
         >
           {t("admin_shell_nav_drift_summary")}
         </Link>
