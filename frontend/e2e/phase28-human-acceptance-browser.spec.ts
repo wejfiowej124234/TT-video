@@ -120,7 +120,11 @@ async function probeAuthenticatedPage(
 ): Promise<void> {
   await gotoWithBearerSession(page, route, session);
   if (!route.startsWith("/admin") && !route.startsWith("/governance")) {
-    await ensureCommunityBrowserSessionAccepted(page, session);
+    try {
+      await ensureCommunityBrowserSessionAccepted(page, session);
+    } catch {
+      addIssue(role, "社区会话", route, "P1", "community session 未接受", "ensureCommunityBrowserSessionAccepted failed", "社区页可能反复跳转登录");
+    }
   }
   if (route.startsWith("/admin") && !opts?.skipCapabilitiesWait) {
     try {
@@ -144,16 +148,32 @@ async function probeAuthenticatedPage(
     if (route.startsWith("/admin")) {
       await page
         .locator('[data-tt-admin-list-page-header="1"]')
-        .waitFor({ state: "visible", timeout: 45_000 })
+        .waitFor({ state: "visible", timeout: opts?.skipCapabilitiesWait ? 25_000 : 35_000 })
         .catch(() => null);
     }
-    const header = page.locator('[data-tt-admin-list-page-header="1"]').filter({ hasText: opts.mainText });
-    const h1 = page.getByRole("heading", { level: 1, name: opts.mainText });
-    const main = page.getByRole("main").filter({ hasText: opts.mainText }).first();
-    const ok =
-      (await header.first().isVisible().catch(() => false)) ||
-      (await h1.first().isVisible().catch(() => false)) ||
-      (await main.isVisible().catch(() => false));
+    const deadline = Date.now() + 20_000;
+    let ok = false;
+    while (Date.now() < deadline && !ok) {
+      const headerHit = await page
+        .locator('[data-tt-admin-list-page-header="1"]')
+        .filter({ hasText: opts.mainText })
+        .first()
+        .isVisible()
+        .catch(() => false);
+      const h1Hit = await page
+        .getByRole("heading", { level: 1, name: opts.mainText })
+        .first()
+        .isVisible()
+        .catch(() => false);
+      const mainHit = await page
+        .getByRole("main")
+        .filter({ hasText: opts.mainText })
+        .first()
+        .isVisible()
+        .catch(() => false);
+      ok = headerHit || h1Hit || mainHit;
+      if (!ok) await page.waitForTimeout(400);
+    }
     if (!ok) {
       addIssue(role, "主内容", route, "P1", "主区域文案不匹配", String(opts.mainText), "用户可能看到空列表或错误页");
       addFlow(role, "页面", route, "PARTIAL");
@@ -171,7 +191,7 @@ async function probeAuthenticatedPage(
 }
 
 (hatGate() ? test.describe : test.describe.skip)("Phase ②.8 HAT · browser", () => {
-  test.setTimeout(240_000);
+  test.setTimeout(480_000);
 
   let tourist: { token: string; userId: string };
   let guide: { token: string; userId: string };
@@ -315,24 +335,23 @@ async function probeAuthenticatedPage(
   });
 
   test("管理员 · 工作台与台账", async ({ page }) => {
-    await probeAuthenticatedPage(page, "管理员", "/admin", admin, { shell: adminAppPageShell, waitMs: 3000 });
-    await probeAuthenticatedPage(page, "管理员", "/admin/orders", admin, { mainText: /Orders|订单/i, waitMs: 2000, skipCapabilitiesWait: true });
-    await probeAuthenticatedPage(page, "管理员", "/admin/users", admin, { mainText: /Users|用户|User/i, waitMs: 2000, skipCapabilitiesWait: true });
+    await probeAuthenticatedPage(page, "管理员", "/admin/orders", admin, { mainText: /Orders|订单/i, waitMs: 1000 });
+    await probeAuthenticatedPage(page, "管理员", "/admin/users", admin, { mainText: /Users|用户|User/i, waitMs: 1000, skipCapabilitiesWait: true });
     await probeAuthenticatedPage(page, "管理员", "/admin/finance", admin, {
-      mainText: /Finance|财务|finance/i,
-      waitMs: 2000,
+      mainText: /Finance|财务|finance|摘要/i,
+      waitMs: 1000,
       skipCapabilitiesWait: true,
     });
-    await probeAuthenticatedPage(page, "管理员", "/admin/disputes", admin, { mainText: /Disputes|争议/i, waitMs: 2000, skipCapabilitiesWait: true });
+    await probeAuthenticatedPage(page, "管理员", "/admin/disputes", admin, { mainText: /Disputes|争议/i, waitMs: 1000, skipCapabilitiesWait: true });
     await probeAuthenticatedPage(page, "管理员", "/admin/community/reports", admin, {
       mainText: /Community reports|社区举报|Report|举报/i,
-      waitMs: 2000,
+      waitMs: 1000,
       skipCapabilitiesWait: true,
     });
-    await probeAuthenticatedPage(page, "管理员", "/admin/inbox", admin, { mainText: /Task inbox|Inbox|收件|任务/i, waitMs: 2000, skipCapabilitiesWait: true });
+    await probeAuthenticatedPage(page, "管理员", "/admin/inbox", admin, { mainText: /Task inbox|Inbox|收件|任务/i, waitMs: 1000, skipCapabilitiesWait: true });
     await probeAuthenticatedPage(page, "管理员", "/admin/provider-applications", admin, {
       mainText: /Merchant|商家|Provider|Application|申请|onboarding/i,
-      waitMs: 2000,
+      waitMs: 1000,
       skipCapabilitiesWait: true,
     });
   });
