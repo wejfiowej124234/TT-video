@@ -7,6 +7,8 @@ use serde_json::{json, Value};
 
 pub const DOC_REF: &str = "docs/spec/84-第一阶段10国Country-Pool发行参数总表.md";
 pub const DOC_VERSION: &str = "1.0.21";
+/// 与 **protocol-ssot.v1** 同源；pregate / registry 对拍。
+pub const PROTOCOL_SSOT_REF: &str = "docs/spec/governance-token/protocol-ssot.v1.yaml";
 
 /// 与 84 §四 主表行顺序一致。
 pub fn protocol_reference_json() -> Value {
@@ -14,6 +16,7 @@ pub fn protocol_reference_json() -> Value {
         "status": "ok",
         "doc_ref": DOC_REF,
         "doc_version": DOC_VERSION,
+        "protocol_ssot": protocol_ssot_json(),
         "note": "Target 叙事参数；非链上 FeeRouter/RegionVault 读数。募资列为拟定展示值（84 §三 3.4、3.5）；对外定稿前勿当作募资承诺。",
         "fee_router": {
             "layer1_percent_of_allocatable_platform_fee": {
@@ -94,6 +97,107 @@ pub fn protocol_reference_pending_json() -> Value {
             .ok()
             .as_deref(),
     )
+}
+
+/// [protocol-ssot.v1.yaml](../../../../docs/spec/governance-token/protocol-ssot.v1.yaml) 只读镜像（Protocol Convergence P2）。
+pub const PROTOCOL_SSOT_VERSION: &str = "1.0.1";
+
+/// 与 **protocol-ssot.v1** 同源；**`GET /steward/stake-quote`** 等只读路由消费。
+pub fn protocol_ssot_json() -> Value {
+    json!({
+        "version": PROTOCOL_SSOT_VERSION,
+        "ttg": {
+            "symbol": "TTG",
+            "decimals": 18,
+            "total_supply": 10_000_000
+        },
+        "lock_tiers": {
+            "snapshot_min_lock_days": 7,
+            "seat_buyout_min_lock_days": 90,
+            "buyout_cooldown_days": 180,
+            "steward_seat_min_tenure_months": 24,
+            "steward_resign_notice_days": 180,
+            "steward_stake_release_delay_days": 90,
+            "steward_stake_release_vest_days": 365,
+            "country_pool_subscription_lock_months": 24,
+            "redemption_window_days_per_quarter": 15,
+            "redemption_max_nav_pct_bps": 1000
+        },
+        "jurisdictions": [
+            {"id": "CN", "tier": "S", "fee_route_bps": 400, "phase1_open_bps": 300, "steward_stake_bps": 400, "min_hold_bps": 300, "seat_cap": 1, "subscription_lock_months": 24},
+            {"id": "US", "tier": "S", "fee_route_bps": 400, "phase1_open_bps": 300, "steward_stake_bps": 400, "min_hold_bps": 300, "seat_cap": 1, "subscription_lock_months": 24},
+            {"id": "FR", "tier": "S", "fee_route_bps": 450, "phase1_open_bps": 350, "steward_stake_bps": 450, "min_hold_bps": 350, "seat_cap": 1, "subscription_lock_months": 24},
+            {"id": "ES", "tier": "S", "fee_route_bps": 450, "phase1_open_bps": 350, "steward_stake_bps": 450, "min_hold_bps": 350, "seat_cap": 1, "subscription_lock_months": 24},
+            {"id": "JP", "tier": "A", "fee_route_bps": 250, "phase1_open_bps": 200, "steward_stake_bps": 250, "min_hold_bps": 200, "seat_cap": 1, "subscription_lock_months": 24},
+            {"id": "TH", "tier": "A", "fee_route_bps": 250, "phase1_open_bps": 200, "steward_stake_bps": 250, "min_hold_bps": 200, "seat_cap": 1, "subscription_lock_months": 24},
+            {"id": "SG", "tier": "A", "fee_route_bps": 200, "phase1_open_bps": 150, "steward_stake_bps": 200, "min_hold_bps": 200, "seat_cap": 1, "subscription_lock_months": 24},
+            {"id": "KR", "tier": "A", "fee_route_bps": 200, "phase1_open_bps": 150, "steward_stake_bps": 200, "min_hold_bps": 200, "seat_cap": 1, "subscription_lock_months": 24},
+            {"id": "AU", "tier": "B", "fee_route_bps": 150, "phase1_open_bps": 100, "steward_stake_bps": 150, "min_hold_bps": 100, "seat_cap": 1, "subscription_lock_months": 24},
+            {"id": "AE", "tier": "B", "fee_route_bps": 150, "phase1_open_bps": 100, "steward_stake_bps": 150, "min_hold_bps": 100, "seat_cap": 1, "subscription_lock_months": 24}
+        ],
+        "p1_resolutions": {
+            "steward_stake_equals_fee_route_phase1": true,
+            "nav_redemption_non_principal": true,
+            "legal_signoff_pending": true
+        }
+    })
+}
+
+fn valid_jurisdiction_ids() -> Vec<String> {
+    protocol_ssot_json()["jurisdictions"]
+        .as_array()
+        .map(|rows| {
+            rows.iter()
+                .filter_map(|r| r["id"].as_str().map(str::to_uppercase))
+                .collect()
+        })
+        .unwrap_or_default()
+}
+
+/// **`GET /api/v1/steward/stake-quote`** 文档 SSOT 计算（多国 bps 累加）。
+pub fn steward_stake_quote_for_jurisdictions(
+    jurisdiction_ids: &[String],
+) -> Result<Value, &'static str> {
+    let valid = valid_jurisdiction_ids();
+    let ssot = protocol_ssot_json();
+    let jurisdictions_rows = ssot["jurisdictions"].as_array();
+    let mut cumulative_bps: u64 = 0;
+    let mut lines = Vec::new();
+    for jid in jurisdiction_ids {
+        let id = jid.trim().to_uppercase();
+        if id.is_empty() {
+            continue;
+        }
+        let row = jurisdictions_rows
+            .and_then(|rows| rows.iter().find(|r| r["id"].as_str() == Some(id.as_str())));
+        let Some(row) = row else {
+            return Err("invalid_jurisdiction");
+        };
+        let bps = row["steward_stake_bps"].as_u64().unwrap_or(0);
+        cumulative_bps += bps;
+        let supply = ssot["ttg"]["total_supply"].as_u64().unwrap_or(10_000_000);
+        let ttg_units = supply * bps / 10_000;
+        lines.push(json!({
+            "jurisdiction_id": id,
+            "steward_stake_bps": bps,
+            "ttg_units_required": ttg_units
+        }));
+    }
+    if lines.is_empty() {
+        return Err("jurisdictions_required");
+    }
+    let supply = ssot["ttg"]["total_supply"].as_u64().unwrap_or(10_000_000);
+    Ok(json!({
+        "status": "ok",
+        "ttg_symbol": "TTG",
+        "ttg_total_supply": supply,
+        "cumulative_steward_stake_bps": cumulative_bps,
+        "cumulative_ttg_units_required": supply * cumulative_bps / 10_000,
+        "jurisdictions": lines,
+        "lock_tiers": ssot["lock_tiers"],
+        "valid_jurisdiction_ids": valid,
+        "meta": { "implementation_status": "steward_stake_quote_doc_ssot" }
+    }))
 }
 
 #[cfg(test)]

@@ -14,6 +14,7 @@ pub mod indexer;
 pub mod region_vault_verify;
 pub mod outbox;
 pub mod resolution_tx;
+pub mod steward_stake_pool;
 
 use digest::Digest;
 use serde::{Deserialize, Serialize};

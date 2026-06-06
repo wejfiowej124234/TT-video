@@ -26,16 +26,24 @@ use crate::onboarding_counters::{
     inc_onboarding_entitlements_me_get, inc_onboarding_payment_intents_post, inc_onboarding_quote_get,
     inc_onboarding_role_confirm_post, onboarding_http_response_metrics_layer,
 };
-use crate::state::{extract_user_with_session_check, ApiMetaState, SessionAuthOutcome};
+use crate::state::{extract_session_auth_outcome, ApiMetaState, SessionAuthOutcome};
 use crate::stripe_onboarding;
 
 use super::not_impl_json;
+
+mod fee_schedule_v1;
+mod local_dev;
+
+pub fn onboarding_local_dev_enabled() -> bool {
+    env::var("TRAVELTRUST_ONBOARDING_LOCAL_DEV").as_deref() == Ok("1")
+}
 
 #[derive(Debug, Deserialize)]
 pub struct OnboardingQuoteQuery {
     pub role: Option<String>,
     pub sku: Option<String>,
     pub fee_schedule_version: Option<String>,
+    pub jurisdictions: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -43,6 +51,8 @@ struct PaymentIntentBody {
     pub role: String,
     #[serde(default)]
     pub sku: Option<String>,
+    #[serde(default)]
+    pub jurisdictions: Option<String>,
     #[serde(default)]
     pub return_url: Option<String>,
 }
@@ -377,6 +387,15 @@ fn onboarding_payment_intents_disabled() -> bool {
     matches!(env::var("ONBOARDING_PAYMENT_INTENTS_DISABLED").as_deref(), Ok("1"))
 }
 
+fn merge_payment_intent_pricing_fields(mut base: serde_json::Value, pricing: &serde_json::Value) -> serde_json::Value {
+    if let (Some(o), Some(p)) = (base.as_object_mut(), pricing.as_object()) {
+        for (k, v) in p {
+            o.insert(k.clone(), v.clone());
+        }
+    }
+    base
+}
+
 fn idempotency_key_from_headers(headers: &HeaderMap) -> Option<String> {
     headers
         .get("Idempotency-Key")
@@ -402,16 +421,33 @@ pub fn router() -> Router<ApiMetaState> {
             "/api/v1/onboarding/role-confirm",
             post(post_onboarding_role_confirm),
         )
+        .merge(local_dev::router())
         .layer(from_fn(onboarding_http_response_metrics_layer))
 }
 
 async fn get_onboarding_quote(
     State(state): State<ApiMetaState>,
     Query(q): Query<OnboardingQuoteQuery>,
+    headers: HeaderMap,
 ) -> impl IntoResponse {
     inc_onboarding_quote_get();
     if state.chain_off.is_none() {
-        return not_impl_json("GET /api/v1/onboarding/quote").into_response();
+        return (
+            StatusCode::SERVICE_UNAVAILABLE,
+            Json(json!({
+                "status": "error",
+                "error": "chain_off_unavailable",
+                "message": "chain_off_unavailable",
+                "path": "GET /api/v1/onboarding/quote",
+            })),
+        )
+            .into_response();
+    }
+    let pool_ref = state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref());
+    if let Some(resp) =
+        crate::middleware::onboarding_quote_rate_limit_response_if_exceeded(pool_ref, &headers).await
+    {
+        return resp.into_response();
     }
     let role = q.role.as_deref().unwrap_or("provider").to_ascii_lowercase();
     if role != "provider" && role != "region_steward" {
@@ -425,34 +461,54 @@ async fn get_onboarding_quote(
         )
             .into_response();
     }
-    let sku = q.sku.as_deref().unwrap_or("default");
-    let fee_schedule_version = q.fee_schedule_version.as_deref().unwrap_or("stub-v0");
-    let expires_at = Utc::now() + Duration::hours(1);
-    let amount_minor = if stripe_onboarding::stripe_onboarding_enabled() {
-        stripe_onboarding::onboarding_stripe_amount_minor()
-    } else {
-        0
-    };
-    let impl_quote = if stripe_onboarding::stripe_onboarding_enabled() {
-        "onboarding_quote_with_charge_amount"
-    } else {
-        "onboarding_quote_stub"
-    };
-    Json(json!({
-        "status": "ok",
-        "role": role,
-        "sku": sku,
-        "fee_schedule_version": fee_schedule_version,
-        "currency": "USD",
-        "amount_minor": amount_minor,
-        "expires_at": expires_at.to_rfc3339(),
-        "refund_policy_version": "stub-v0",
-        "meta": {
-            "implementation_status": impl_quote,
-            "doc": concat!("docs", "/spec/", "04-附录-商家主理人准入费HTTP契约草案-配96-18.md", " §2")
+    let jurisdictions = match fee_schedule_v1::parse_jurisdictions_csv(q.jurisdictions.as_deref()) {
+        Ok(j) => j,
+        Err(e) => {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(json!({
+                    "status": "error",
+                    "error": e.error_code(),
+                    "message": e.error_code(),
+                })),
+            )
+                .into_response();
         }
-    }))
-    .into_response()
+    };
+    let local_dev = std::env::var("TRAVELTRUST_ONBOARDING_LOCAL_DEV").as_deref() == Ok("1");
+    match fee_schedule_v1::quote_fee_schedule_v1(&role, q.sku.as_deref(), &jurisdictions, local_dev)
+    {
+        Ok(quote) => {
+            let impl_status = if quote.local_dev_override {
+                "onboarding_quote_fee_schedule_v1_local_dev_override"
+            } else {
+                "onboarding_quote_fee_schedule_v1"
+            };
+            let expires_at = (Utc::now() + Duration::hours(1)).to_rfc3339();
+            Json(fee_schedule_v1::quote_to_json(
+                &quote,
+                &jurisdictions,
+                &expires_at,
+                impl_status,
+            ))
+            .into_response()
+        }
+        Err(e) => {
+            let status = match e {
+                fee_schedule_v1::FeeScheduleError::YamlLoad(_) => StatusCode::SERVICE_UNAVAILABLE,
+                _ => StatusCode::BAD_REQUEST,
+            };
+            (
+                status,
+                Json(json!({
+                    "status": "error",
+                    "error": e.error_code(),
+                    "message": e.error_code(),
+                })),
+            )
+                .into_response()
+        }
+    }
 }
 
 async fn post_onboarding_payment_intents(
@@ -464,7 +520,7 @@ async fn post_onboarding_payment_intents(
     if state.chain_off.is_none() {
         return not_impl_json("POST /api/v1/onboarding/payment-intents").into_response();
     }
-    let uid = match extract_user_with_session_check(&state, &headers).await {
+    let uid = match extract_session_auth_outcome(&state, &headers).await {
         SessionAuthOutcome::User(u) => u,
         SessionAuthOutcome::Unauthorized => {
             return (
@@ -583,10 +639,53 @@ async fn post_onboarding_payment_intents(
             .into_response();
     }
 
-    let sku = parsed.sku.as_deref().unwrap_or("default").trim();
-    let sku = if sku.is_empty() { "default" } else { sku };
-    let fee_schedule_version = "stub-v0";
+    let sku_for_quote = parsed
+        .sku
+        .as_deref()
+        .map(str::trim)
+        .filter(|s| !s.is_empty() && *s != "default");
+    let jurisdictions = match fee_schedule_v1::resolve_jurisdictions_for_role(
+        &role,
+        parsed.jurisdictions.as_deref(),
+        None,
+    ) {
+        Ok(j) => j,
+        Err(e) => {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(json!({
+                    "status": "error",
+                    "error": e.error_code(),
+                    "message": e.error_code(),
+                })),
+            )
+                .into_response();
+        }
+    };
+    let local_dev = env::var("TRAVELTRUST_ONBOARDING_LOCAL_DEV").as_deref() == Ok("1");
+    let quote = match fee_schedule_v1::quote_fee_schedule_v1(&role, sku_for_quote, &jurisdictions, local_dev)
+    {
+        Ok(q) => q,
+        Err(e) => {
+            let status = match e {
+                fee_schedule_v1::FeeScheduleError::YamlLoad(_) => StatusCode::SERVICE_UNAVAILABLE,
+                _ => StatusCode::BAD_REQUEST,
+            };
+            return (
+                status,
+                Json(json!({
+                    "status": "error",
+                    "error": e.error_code(),
+                    "message": e.error_code(),
+                })),
+            )
+                .into_response();
+        }
+    };
+    let fee_schedule_version = quote.fee_schedule_version.clone();
     let expires_at = Utc::now() + Duration::hours(1);
+    let pricing_metadata = fee_schedule_v1::entitlement_pricing_metadata(&quote, &jurisdictions);
+    let pricing_fields = fee_schedule_v1::payment_intent_pricing_fields(&quote, &jurisdictions);
 
     let user_row = match get_user_by_id(&pool, uid).await {
         Ok(Some(u)) => u,
@@ -661,10 +760,11 @@ async fn post_onboarding_payment_intents(
         &pool,
         uid,
         &role,
-        sku,
-        fee_schedule_version,
+        &quote.sku,
+        &fee_schedule_version,
         &idem,
         Some(expires_at),
+        &pricing_metadata,
     )
     .await
     {
@@ -738,7 +838,8 @@ async fn post_onboarding_payment_intents(
                 } else {
                     "Open psp.checkout_url in browser to pay. Webhook checkout.session.completed (or payment_intent.succeeded) marks paid."
                 };
-                return Json(json!({
+                return Json(merge_payment_intent_pricing_fields(
+                    json!({
                     "status": "ok",
                     "entitlement_id": row.id,
                     "idempotency_key": idem,
@@ -756,7 +857,9 @@ async fn post_onboarding_payment_intents(
                         "detail": detail,
                         "doc": concat!("docs", "/spec/", "04-附录-商家主理人准入费HTTP契约草案-配96-18.md", " §2")
                     }
-                }))
+                }),
+                    &pricing_fields,
+                ))
                 .into_response();
             }
             Err(e) => {
@@ -790,7 +893,8 @@ async fn post_onboarding_payment_intents(
                 } else {
                     "Use psp.client_secret with Stripe.js; configure Stripe webhook POST /api/v1/hooks/stripe/onboarding."
                 };
-                return Json(json!({
+                return Json(merge_payment_intent_pricing_fields(
+                    json!({
                     "status": "ok",
                     "entitlement_id": row.id,
                     "idempotency_key": idem,
@@ -807,7 +911,9 @@ async fn post_onboarding_payment_intents(
                         "detail": detail,
                         "doc": concat!("docs", "/spec/", "04-附录-商家主理人准入费HTTP契约草案-配96-18.md", " §2")
                     }
-                }))
+                }),
+                    &pricing_fields,
+                ))
                 .into_response();
             }
             Err(e) => {
@@ -826,7 +932,8 @@ async fn post_onboarding_payment_intents(
         }
     }
 
-    Json(json!({
+    Json(merge_payment_intent_pricing_fields(
+        json!({
         "status": "ok",
         "entitlement_id": row.id,
         "idempotency_key": idem,
@@ -840,7 +947,9 @@ async fn post_onboarding_payment_intents(
             "detail": "PSP client_secret/checkout not wired — entitlement stays pending until POST /api/v1/internal/onboarding/payments/webhook marks paid.",
             "doc": concat!("docs", "/spec/", "04-附录-商家主理人准入费HTTP契约草案-配96-18.md", " §2")
         }
-    }))
+    }),
+        &pricing_fields,
+    ))
     .into_response()
 }
 
@@ -852,7 +961,7 @@ async fn get_onboarding_entitlements_me(
     if state.chain_off.is_none() {
         return not_impl_json("GET /api/v1/onboarding/entitlements/me").into_response();
     }
-    let uid = match extract_user_with_session_check(&state, &headers).await {
+    let uid = match extract_session_auth_outcome(&state, &headers).await {
         SessionAuthOutcome::User(u) => u,
         SessionAuthOutcome::Unauthorized => {
             return (
@@ -920,7 +1029,7 @@ async fn post_onboarding_role_confirm(
     if state.chain_off.is_none() {
         return not_impl_json("POST /api/v1/onboarding/role-confirm").into_response();
     }
-    let uid = match extract_user_with_session_check(&state, &headers).await {
+    let uid = match extract_session_auth_outcome(&state, &headers).await {
         SessionAuthOutcome::User(u) => u,
         SessionAuthOutcome::Unauthorized => {
             return (
@@ -1108,6 +1217,15 @@ async fn post_onboarding_role_confirm(
                 .into_response();
         }
     };
+
+    if n > 0 {
+        if let Some(co) = state.chain_off.as_ref() {
+            let mut store = co.store.write().await;
+            if let Some(u) = store.users.get_mut(&uid) {
+                u.role = role.clone();
+            }
+        }
+    }
 
     Json(json!({
         "status": "ok",

@@ -129,5 +129,6 @@ pub(crate) fn build_state() -> ApiMetaState {
         indexer_state: None,
         indexer_tick_fail_skip_bucket_obs_last: Arc::new(RwLock::new(None)),
         guide_upload_rate: Arc::new(RwLock::new(HashMap::new())),
+        community_media_upload_rate: Arc::new(RwLock::new(HashMap::new())),
     }
 }

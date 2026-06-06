@@ -45,4 +45,5 @@ pub fn router() -> Router<ApiMetaState> {
             get(get_protocol_reference_pending),
         )
         .route("/api/v1/governance/params", get(get_governance_params))
+        .merge(super::state_machines::state_machines_route())
 }

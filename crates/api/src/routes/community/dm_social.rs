@@ -93,6 +93,73 @@ pub(super) async fn get_conversations(
     placeholder_ok("conversations", json!([]))
 }
 
+/// POST /api/v1/community/conversations/ensure — 与对端用户幂等创建会话（须鉴权）。
+pub(super) async fn post_ensure_conversation(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+    body: Option<axum::Json<serde_json::Value>>,
+) -> impl IntoResponse {
+    let pool = state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref());
+    let uid = match extract_user_with_session_check(&state, &headers).await {
+        Some(u) => u,
+        None => {
+            return Json(
+                json!({"status": "error", "error": "unauthorized", "message": "unauthorized"}),
+            )
+            .into_response();
+        }
+    };
+    let Some(pool) = pool else {
+        return Json(json!({"status": "error", "error": "service_unavailable", "message": "service_unavailable"})).into_response();
+    };
+    let empty: serde_json::Map<String, serde_json::Value> = serde_json::Map::new();
+    let j = body.as_ref().and_then(|b| b.as_object()).unwrap_or(&empty);
+    let peer_str = j
+        .get("peer_user_id")
+        .or_else(|| j.get("user_id"))
+        .and_then(|v| v.as_str());
+    let Some(peer_str) = peer_str else {
+        return Json(json!({
+            "status": "error",
+            "error": "peer_user_id_required",
+            "message": "peer_user_id_required",
+            "errors": { "peer_user_id": "peer_user_id_required" }
+        }))
+        .into_response();
+    };
+    let Ok(peer_id) = Uuid::parse_str(peer_str) else {
+        return Json(json!({
+            "status": "error",
+            "error": "invalid_peer_user_id",
+            "message": "invalid_peer_user_id",
+            "errors": { "peer_user_id": "invalid_peer_user_id" }
+        }))
+        .into_response();
+    };
+    if peer_id == uid {
+        return Json(json!({
+            "status": "error",
+            "error": "cannot_message_self",
+            "message": "cannot_message_self",
+            "errors": { "peer_user_id": "cannot_message_self" }
+        }))
+        .into_response();
+    }
+    if let Err(resp) = enforce_no_active_write_penalty(pool, uid, "peer_user_id").await {
+        return resp;
+    }
+    match db::ensure_conversation(pool, uid, peer_id).await {
+        Ok(conv_id) => Json(json!({ "status": "ok", "id": conv_id.to_string() })).into_response(),
+        Err(_) => Json(json!({
+            "status": "error",
+            "error": "conversation_ensure_failed",
+            "message": "conversation_ensure_failed",
+            "errors": { "peer_user_id": "conversation_ensure_failed" }
+        }))
+        .into_response(),
+    }
+}
+
 pub(super) async fn get_conversation_messages(
     Path(id): Path<String>,
     State(state): State<ApiMetaState>,
@@ -610,6 +677,66 @@ pub(super) async fn get_me_likes_received(
         }
     }
     Json(json!({ "status": "ok", "likes_received": 0 })).into_response()
+}
+
+/// GET /api/v1/community/me/activity — 获赞汇总 + 近期互动事件（赞/评/关注）。
+pub(super) async fn get_me_activity(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    let pool = state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref());
+    let uid = match extract_user_with_session_check(&state, &headers).await {
+        Some(u) => u,
+        None => {
+            return Json(
+                json!({"status": "error", "error": "unauthorized", "message": "unauthorized"}),
+            )
+            .into_response();
+        }
+    };
+    let Some(pool) = pool else {
+        return Json(json!({
+            "status": "ok",
+            "likes_received": 0,
+            "items": [],
+            "activity_scope": "likes-summary-v1",
+            "note": "50-O-31 占位"
+        }))
+        .into_response();
+    };
+    let likes_received = db::count_likes_received_for_user(pool, uid)
+        .await
+        .unwrap_or(0);
+    let rows = db::list_me_activity_events(pool, uid, 20).await.unwrap_or_default();
+    let items: Vec<serde_json::Value> = rows
+        .into_iter()
+        .map(|r| {
+            json!({
+                "kind": r.kind,
+                "actor_user_id": r.actor_user_id.to_string(),
+                "actor_nickname": r.actor_nickname,
+                "post_id": r.post_id.map(|id| id.to_string()),
+                "created_at": r.created_at.to_rfc3339(),
+            })
+        })
+        .collect();
+    Json(json!({
+        "status": "ok",
+        "likes_received": likes_received,
+        "items": items,
+        "activity_scope": "activity-events-v1",
+        "rank_basis": "activity_union_v1",
+        "notification_inbox": "partial_v1"
+    }))
+    .into_response()
+}
+
+/// GET /api/v1/community/me/notifications — 与 **`…/me/activity`** 同源（31 §5 · 互动收件箱 v1）。
+pub(super) async fn get_me_notifications(
+    state: State<ApiMetaState>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    get_me_activity(state, headers).await
 }
 
 // POST/DELETE /api/v1/community/posts/:id/collect

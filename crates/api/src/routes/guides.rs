@@ -25,6 +25,9 @@ pub(crate) struct GuidesQuery {
     city: Option<String>,
     language: Option<String>,
     service_type: Option<String>,
+    country_code: Option<String>,
+    limit: Option<u32>,
+    cursor: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -40,9 +43,29 @@ pub async fn guides_list(
     Query(q): Query<GuidesQuery>,
 ) -> impl IntoResponse {
     if let Some(ref co) = state.chain_off {
-        return chain_off::guides_list_impl(co.clone(), q.city, q.language, q.service_type)
-            .await
-            .into_response();
+        let page = match chain_off::parse_order_list_page(q.limit, q.cursor) {
+            Ok(p) => p,
+            Err(key) => {
+                return (
+                    StatusCode::BAD_REQUEST,
+                    Json(json!({"error": key, "message": key})),
+                )
+                    .into_response();
+            }
+        };
+        return match chain_off::guides_list_impl(
+            co.clone(),
+            q.city,
+            q.language,
+            q.service_type,
+            q.country_code,
+            page,
+        )
+        .await
+        {
+            Ok(j) => j.into_response(),
+            Err((code, j)) => (code, j).into_response(),
+        };
     }
     Json(json!({ "status": "ok", "items": [] })).into_response()
 }

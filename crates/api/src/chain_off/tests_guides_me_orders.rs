@@ -4,8 +4,8 @@ use super::{
     get_me_impl, guide_create_impl, guide_get_impl, guide_stake_impl, guides_list_impl,
     order_accept_impl, order_cancel_impl, order_confirm_completion_impl, order_create_impl,
     order_mock_pay_impl, put_me_impl, ChainOffConfig, ChainOffState, ChainOffStore,
-    CreateGuideBody, CreateOrderBody, DisputeRow, GuideRow, OrderRow, PutMeBody, ReviewRow,
-    StakeBody, UserRow,
+    CreateGuideBody, CreateOrderBody, DisputeRow, GuideRow, OrderListPage, OrderRow, PutMeBody,
+    ReviewRow, StakeBody, UserRow,
 };
 use axum::http::StatusCode;
 use axum::Json;
@@ -65,7 +65,11 @@ async fn p21_guides_create_list_get_stake() {
     let guide_id = Uuid::parse_str(create_json["guide"]["id"].as_str().unwrap()).unwrap();
     assert_eq!(create_json["guide"]["status"], "pending");
 
-    let Json(list_json) = guides_list_impl(state.clone(), None, None, None).await;
+    let Ok(Json(list_json)) =
+        guides_list_impl(state.clone(), None, None, None, None, OrderListPage::default()).await
+    else {
+        panic!("guides_list");
+    };
     let items = list_json["items"].as_array().unwrap();
     assert!(items.is_empty()); // pending not in list
 
@@ -82,8 +86,18 @@ async fn p21_guides_create_list_get_stake() {
     };
     assert_eq!(stake_json["stake_amount"], "100");
 
-    let Json(list2) =
-        guides_list_impl(state.clone(), Some("Hangzhou".to_string()), None, None).await;
+    let Ok(Json(list2)) = guides_list_impl(
+        state.clone(),
+        Some("Hangzhou".to_string()),
+        None,
+        None,
+        None,
+        OrderListPage::default(),
+    )
+    .await
+    else {
+        panic!("guides_list filtered");
+    };
     assert_eq!(list2["items"].as_array().unwrap().len(), 1);
     let Ok(Json(get_json)) = guide_get_impl(state.clone(), guide_id).await else {
         panic!("guide_get");
@@ -238,6 +252,7 @@ async fn p21_get_me_put_me() {
             nickname: Some("Alice".to_string()),
             avatar_url: None,
             default_wallet_address: None,
+            settings_preferences: None,
         }),
     )
     .await
@@ -245,11 +260,85 @@ async fn p21_get_me_put_me() {
         panic!("put_me");
     };
     assert_eq!(put_json["user"]["nickname"], "Alice");
+    let prefs = serde_json::json!({
+        "notification": { "emailDigest": true, "push": false },
+        "communityVisibility": "followers",
+        "updatedAt": "2026-06-02T00:00:00Z"
+    });
+    let Ok(Json(put_prefs)) = put_me_impl(
+        state.clone(),
+        user_id,
+        Json(PutMeBody {
+            nickname: None,
+            avatar_url: None,
+            default_wallet_address: None,
+            settings_preferences: Some(prefs.clone()),
+        }),
+    )
+    .await
+    else {
+        panic!("put_me settings_preferences");
+    };
+    assert_eq!(put_prefs["user"]["settings_preferences"], prefs);
     assert_eq!(put_json["user"]["role_traveltrust"], "traveler");
     let Ok(Json(me2)) = get_me_impl(state.clone(), user_id).await else {
         panic!("get_me after put");
     };
     assert_eq!(me2["user"]["nickname"], "Alice");
+}
+
+#[tokio::test]
+async fn p22_chain_off_verify_email_and_resend() {
+    let mut store = ChainOffStore::default();
+    let now = Utc::now();
+    let user_id = Uuid::new_v4();
+    let session_token = format!("bearer_{}", user_id);
+    store.users.insert(
+        user_id,
+        UserRow {
+            id: user_id,
+            email: "verify@test.com".to_string(),
+            password_hash: None,
+            role: "tourist".to_string(),
+            kyc_status: "none".to_string(),
+            nickname: None,
+            avatar_url: None,
+            default_wallet_address: None,
+            created_at: now,
+            updated_at: now,
+        },
+    );
+    store.sessions.insert(session_token.clone(), user_id);
+    let state = ChainOffState {
+        store: Arc::new(RwLock::new(store)),
+        config: ChainOffConfig::default(),
+        db_pool: None,
+    };
+    let mut headers = axum::http::HeaderMap::new();
+    headers.insert(
+        axum::http::header::AUTHORIZATION,
+        format!("Bearer {}", session_token).parse().unwrap(),
+    );
+    let Ok(Json(resend)) = super::auth::auth_resend_verification_email(state.clone(), headers.clone()).await
+    else {
+        panic!("resend_verification_email");
+    };
+    let dev_token = resend["email_verification_dev_token"]
+        .as_str()
+        .expect("dev token");
+    let Ok(Json(verify)) = super::auth::auth_verify_email_stub(
+        state.clone(),
+        Json(serde_json::json!({ "token": dev_token })),
+    )
+    .await
+    else {
+        panic!("verify_email");
+    };
+    assert_eq!(verify["message"], "email_verified");
+    let Ok(Json(me)) = super::me::get_me_impl(state.clone(), user_id).await else {
+        panic!("get_me after verify");
+    };
+    assert!(me["user"]["email_verified_at"].is_string());
 }
 
 #[tokio::test]
@@ -311,6 +400,7 @@ async fn p21_order_create_accept_mock_pay_confirm() {
             rejection_message: None,
             created_at: now,
             updated_at: now,
+            data_origin: "production".into(),
         },
     );
     store.guides_by_user.insert(guide_id, guide_row_id);
@@ -430,6 +520,7 @@ async fn order_accept_forbidden_when_guide_pending_review() {
             rejection_message: None,
             created_at: now,
             updated_at: now,
+            data_origin: "production".into(),
         },
     );
     store.guides_by_user.insert(guide_user_id, guide_row_id);
@@ -459,6 +550,9 @@ async fn order_accept_forbidden_when_guide_pending_review() {
             rating_tourist_confirmed: None,
             rating_guide_confirmed: None,
             chain_id: None,
+            data_origin: "production".into(),
+        order_kind: None,
+        market_listing_id: None,
         },
     );
     let state = ChainOffState {
@@ -518,6 +612,7 @@ async fn order_accept_forbidden_when_trust_risk_high() {
             rejection_message: None,
             created_at: now,
             updated_at: now,
+            data_origin: "production".into(),
         },
     );
     store.guides_by_user.insert(guide_user_id, guide_row_id);
@@ -564,6 +659,9 @@ async fn order_accept_forbidden_when_trust_risk_high() {
                 rating_tourist_confirmed: None,
                 rating_guide_confirmed: None,
                 chain_id: None,
+                data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
             },
         );
         let did = Uuid::new_v4();
@@ -692,6 +790,7 @@ async fn order_create_forbidden_when_tourist_kyc_pending() {
             rejection_message: None,
             created_at: now,
             updated_at: now,
+            data_origin: "production".into(),
         },
     );
     store.guides_by_user.insert(guide_user_id, guide_row_id);
@@ -780,6 +879,7 @@ async fn order_create_forbidden_when_tourist_risk_high() {
             rejection_message: None,
             created_at: now,
             updated_at: now,
+            data_origin: "production".into(),
         },
     );
     store.guides_by_user.insert(guide_user_id, guide_row_id);
@@ -810,6 +910,9 @@ async fn order_create_forbidden_when_tourist_risk_high() {
                 rating_tourist_confirmed: None,
                 rating_guide_confirmed: None,
                 chain_id: None,
+                data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
             },
         );
         let did = Uuid::new_v4();
@@ -917,6 +1020,7 @@ async fn order_mock_pay_forbidden_when_tourist_becomes_restricted() {
             rejection_message: None,
             created_at: now,
             updated_at: now,
+            data_origin: "production".into(),
         },
     );
     store.guides_by_user.insert(guide_id, guide_row_id);
@@ -1016,6 +1120,7 @@ async fn p21_order_cancel_created() {
             rejection_message: None,
             created_at: now,
             updated_at: now,
+            data_origin: "production".into(),
         },
     );
     store.guides_by_user.insert(guide_id, guide_row_id);
@@ -1045,6 +1150,9 @@ async fn p21_order_cancel_created() {
             rating_tourist_confirmed: None,
             rating_guide_confirmed: None,
             chain_id: None,
+            data_origin: "production".into(),
+        order_kind: None,
+        market_listing_id: None,
         },
     );
     let state = ChainOffState {
@@ -1103,6 +1211,7 @@ async fn p21_get_me_trust_identity_and_risk_from_store() {
             rejection_message: None,
             created_at: now,
             updated_at: now,
+            data_origin: "production".into(),
         },
     );
     store.guides_by_user.insert(user_id, gid);
@@ -1134,6 +1243,9 @@ async fn p21_get_me_trust_identity_and_risk_from_store() {
             rating_tourist_confirmed: None,
             rating_guide_confirmed: None,
             chain_id: None,
+            data_origin: "production".into(),
+        order_kind: None,
+        market_listing_id: None,
         },
     );
     let did = Uuid::new_v4();
@@ -1226,6 +1338,9 @@ async fn p21_get_me_trust_medium_risk_recommended_actions() {
                 rating_tourist_confirmed: None,
                 rating_guide_confirmed: None,
                 chain_id: None,
+                data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
             },
         );
         let did = Uuid::new_v4();

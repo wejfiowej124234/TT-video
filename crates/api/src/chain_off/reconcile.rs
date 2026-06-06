@@ -403,6 +403,9 @@ mod tests {
                 rating_tourist_confirmed: None,
                 rating_guide_confirmed: None,
                 chain_id: None,
+                data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
             },
         );
         assert!(project_chain_event_onto_order(
@@ -445,6 +448,9 @@ mod tests {
                 rating_tourist_confirmed: None,
                 rating_guide_confirmed: None,
                 chain_id: None,
+                data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
             },
         );
         assert!(project_chain_event_onto_order(
@@ -485,6 +491,9 @@ mod tests {
                 rating_tourist_confirmed: None,
                 rating_guide_confirmed: None,
                 chain_id: None,
+                data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
             },
         );
         assert!(project_chain_event_onto_order(
@@ -533,6 +542,9 @@ mod tests {
                 rating_tourist_confirmed: None,
                 rating_guide_confirmed: None,
                 chain_id: None,
+                data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
             },
         );
         assert!(project_chain_event_onto_order(

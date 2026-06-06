@@ -334,7 +334,13 @@ pub async fn get_dispute_public_detail(
 ) -> Result<Option<JsonValue>, sqlx::Error> {
     let row = sqlx::query_as::<_, DisputeDetailJoinRow>(
         r#"
-        SELECT d.id, d.order_id, d.status, d.evidence_hashes, d.arbitrator_id, d.refund_ratio, d.slash_guide,
+        SELECT d.id, d.order_id, d.status,
+               CASE
+                 WHEN pg_typeof(d.evidence_hashes)::text = 'jsonb'
+                   THEN d.evidence_hashes::jsonb
+                 ELSE COALESCE(to_jsonb(d.evidence_hashes), '[]'::jsonb)
+               END AS evidence_hashes,
+               d.arbitrator_id, d.refund_ratio, d.slash_guide,
                d.resolved_at, d.created_at, d.updated_at, d.arb_fee_paid, d.dispute_sequence,
                o.tourist_id AS order_tourist_id
         FROM disputes d

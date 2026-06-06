@@ -309,6 +309,24 @@ pub async fn dispute_resolve_impl(
         }
     }
 
+    if let Some(ref pool) = state.db_pool {
+        if let Err(e) = crate::db::apply_acquisition_dispute_outcomes(
+            pool,
+            order_id,
+            order_after.tourist_id,
+            order_after.guide_id,
+            body.refund_ratio,
+            body.slash_guide,
+        )
+        .await
+        {
+            eprintln!(
+                "[audit] dispute_resolve: apply_acquisition_dispute_outcomes failed order_id={} error={}",
+                order_id, e
+            );
+        }
+    }
+
     let (tourist_id, traveler_id) = dispute_party_mirror(Some(&order_after));
     Ok(Json(json!({
         "status": "ok",
@@ -520,6 +538,9 @@ mod resolution_outbox_tests {
                 rating_tourist_confirmed: None,
                 rating_guide_confirmed: None,
                 chain_id: None,
+                data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
             },
         );
         store.disputes.insert(

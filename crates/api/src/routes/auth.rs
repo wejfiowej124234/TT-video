@@ -26,8 +26,31 @@ pub async fn auth_register(
     not_impl_json("/auth/register").into_response()
 }
 
+pub async fn auth_register_send_verification_code(
+    State(state): State<ApiMetaState>,
+    Json(body): Json<chain_off::AuthRegisterSendVerificationCodeBody>,
+) -> impl IntoResponse {
+    if let Some(ref co) = state.chain_off {
+        return match chain_off::auth_register_send_verification_code(co.clone(), Json(body)).await
+        {
+            Ok(j) => j.into_response(),
+            Err((code, j)) => (code, j).into_response(),
+        };
+    }
+    not_impl_json("/auth/register/send-verification-code").into_response()
+}
+
+#[derive(Debug, serde::Deserialize, Default)]
+struct SeedTestAccountsBody {
+    #[serde(default)]
+    promote_admin_email: Option<String>,
+}
+
 /// POST /auth/seed-test-accounts：仅当 SEED_TEST_ACCOUNTS=1 时补建测试账号
-pub async fn auth_seed_test_accounts(State(state): State<ApiMetaState>) -> impl IntoResponse {
+pub async fn auth_seed_test_accounts(
+    State(state): State<ApiMetaState>,
+    body: Option<Json<SeedTestAccountsBody>>,
+) -> impl IntoResponse {
     if std::env::var("SEED_TEST_ACCOUNTS").as_deref() != Ok("1") {
         return (
             StatusCode::FORBIDDEN,
@@ -37,6 +60,34 @@ pub async fn auth_seed_test_accounts(State(state): State<ApiMetaState>) -> impl 
     }
     if let Some(ref co) = state.chain_off {
         chain_off::seed_test_accounts_if_empty(co).await;
+        chain_off::seed_me_settings_security_notification_fixture(co).await;
+        if let Some(email) = body
+            .as_ref()
+            .and_then(|b| b.promote_admin_email.as_deref())
+            .map(str::trim)
+            .filter(|s| !s.is_empty())
+        {
+            match chain_off::seed_promote_user_to_admin_if_enabled(co, email).await {
+                Ok(()) => {}
+                Err("user_not_found") => {
+                    return (
+                        StatusCode::BAD_REQUEST,
+                        Json(serde_json::json!({
+                            "error": "seed_promote_user_not_found",
+                            "message": "seed_promote_user_not_found",
+                        })),
+                    )
+                        .into_response();
+                }
+                Err(code) => {
+                    return (
+                        StatusCode::BAD_REQUEST,
+                        Json(serde_json::json!({"error": code, "message": code})),
+                    )
+                        .into_response();
+                }
+            }
+        }
         return (
             StatusCode::OK,
             Json(serde_json::json!({"status": "ok", "message": "seed_done"})),
@@ -124,6 +175,19 @@ pub async fn auth_verify_email(
     not_impl_json("/auth/verify-email").into_response()
 }
 
+pub async fn auth_resend_verification_email(
+    State(state): State<ApiMetaState>,
+    headers: axum::http::HeaderMap,
+) -> impl IntoResponse {
+    if let Some(ref co) = state.chain_off {
+        return match chain_off::auth_resend_verification_email(co.clone(), headers).await {
+            Ok(j) => j.into_response(),
+            Err((code, j)) => (code, j).into_response(),
+        };
+    }
+    not_impl_json("/auth/resend-verification-email").into_response()
+}
+
 pub async fn auth_forgot_password(
     State(state): State<ApiMetaState>,
     Json(body): Json<serde_json::Value>,
@@ -153,12 +217,20 @@ pub async fn auth_reset_password(
 pub fn router() -> Router<ApiMetaState> {
     Router::new()
         .route("/auth/register", post(auth_register))
+        .route(
+            "/auth/register/send-verification-code",
+            post(auth_register_send_verification_code),
+        )
         .route("/auth/seed-test-accounts", post(auth_seed_test_accounts))
         .route("/auth/seed-governance-e2e", post(auth_seed_governance_e2e))
         .route("/auth/login", post(auth_login))
         .route("/auth/logout", post(auth_logout))
         .route("/auth/refresh", post(auth_refresh))
         .route("/auth/verify-email", post(auth_verify_email))
+        .route(
+            "/auth/resend-verification-email",
+            post(auth_resend_verification_email),
+        )
         .route("/auth/forgot-password", post(auth_forgot_password))
         .route("/auth/reset-password", post(auth_reset_password))
 }

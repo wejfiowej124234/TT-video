@@ -71,6 +71,7 @@ fn build_state(users: Vec<UserRow>) -> ApiMetaState {
         indexer_state: None,
         indexer_tick_fail_skip_bucket_obs_last: Arc::new(tokio::sync::RwLock::new(None)),
         guide_upload_rate: Arc::new(tokio::sync::RwLock::new(HashMap::new())),
+        community_media_upload_rate: Arc::new(tokio::sync::RwLock::new(HashMap::new())),
     }
 }
 
@@ -208,7 +209,7 @@ async fn role_change_request_requires_db_pool() {
 
 #[tokio::test]
 async fn get_admin_approvals_returns_note_without_db() {
-    let admin = user_with_role("admin");
+    let admin = user_with_role("super_admin");
     let resp = get_admin_approvals(
         State(build_state(vec![admin.clone()])),
         Query(AdminApprovalQuery {
@@ -229,6 +230,24 @@ async fn get_admin_approvals_returns_note_without_db() {
         Some("admin_approvals_no_db")
     );
     assert!(meta.get("build").is_some());
+}
+
+#[tokio::test]
+async fn get_admin_approvals_forbidden_for_ops_console_role() {
+    let admin = user_with_role("admin");
+    let resp = get_admin_approvals(
+        State(build_state(vec![admin.clone()])),
+        Query(AdminApprovalQuery {
+            status: None,
+            limit: None,
+        }),
+        auth_headers(admin.id),
+    )
+    .await
+    .into_response();
+    assert_eq!(resp.status(), StatusCode::FORBIDDEN);
+    let body = body_json(resp).await;
+    assert_eq!(body["error"], "admin_permission_denied");
 }
 
 #[tokio::test]
@@ -764,7 +783,7 @@ async fn admin_require_admin_actor_not_impl_without_chain_off_with_bearer() {
     )
     .await;
 
-    let admin = user_with_role("admin");
+    let admin = user_with_role("super_admin");
     let mut st = build_state(vec![admin.clone()]);
     st.chain_off = None;
     assert_chain_off_not_impl(
@@ -1375,6 +1394,8 @@ async fn admin_require_super_admin_uid_not_impl_without_chain_off_with_bearer() 
                 expected_version: 1,
                 status: None,
                 notes: None,
+                export_signature: None,
+                record_hash_fingerprint: None,
                 event_type: "internal_note".to_string(),
                 event_detail: None,
             }),
@@ -1490,6 +1511,7 @@ async fn admin_guides_ok_for_admin_includes_guide_row() {
                 rejection_message: None,
                 created_at: Utc::now(),
                 updated_at: Utc::now(),
+                data_origin: "production".into(),
             },
         );
     }
@@ -1549,6 +1571,9 @@ async fn admin_orders_list_includes_traveler_id_mirror() {
                 rating_tourist_confirmed: None,
                 rating_guide_confirmed: None,
                 chain_id: None,
+                data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
             },
         );
     }
@@ -1608,6 +1633,9 @@ async fn admin_disputes_list_includes_tourist_traveler_mirror() {
                 rating_tourist_confirmed: None,
                 rating_guide_confirmed: None,
                 chain_id: None,
+                data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
             },
         );
         store.disputes.insert(
@@ -1686,6 +1714,9 @@ async fn admin_reviews_list_includes_tourist_traveler_mirror() {
                 rating_tourist_confirmed: None,
                 rating_guide_confirmed: None,
                 chain_id: None,
+                data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
             },
         );
         store.reviews.push(ReviewRow {
@@ -1793,6 +1824,7 @@ async fn admin_guide_detail_ok_matches_list_shape() {
                 rejection_message: None,
                 created_at: Utc::now(),
                 updated_at: Utc::now(),
+                data_origin: "production".into(),
             },
         );
     }
@@ -1886,6 +1918,9 @@ async fn admin_order_detail_ok_matches_public_order_shape() {
                 rating_tourist_confirmed: None,
                 rating_guide_confirmed: None,
                 chain_id: None,
+                data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
             },
         );
     }
@@ -2128,6 +2163,9 @@ async fn admin_review_detail_ok_from_memory() {
                 rating_tourist_confirmed: None,
                 rating_guide_confirmed: None,
                 chain_id: None,
+                data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
             },
         );
         store.reviews.push(ReviewRow {
@@ -4570,6 +4608,8 @@ async fn admin_compliance_data_request_update_requires_super_admin() {
             expected_version: 1,
             status: None,
             notes: None,
+            export_signature: None,
+            record_hash_fingerprint: None,
             event_type: "comment".to_string(),
             event_detail: None,
         }),
@@ -4590,6 +4630,8 @@ async fn admin_compliance_data_request_update_invalid_event_type() {
             expected_version: 1,
             status: None,
             notes: None,
+            export_signature: None,
+            record_hash_fingerprint: None,
             event_type: "   ".to_string(),
             event_detail: None,
         }),

@@ -27,6 +27,15 @@ use crate::state::{extract_user_with_session_check, ApiMetaState};
 use super::not_impl_json;
 
 mod trust_growth_obs;
+mod admin_acquisition_suspend_http;
+mod admin_metrics_home_http;
+mod admin_steward_application_http;
+mod admin_provider_application_http;
+mod admin_onboarding;
+pub(crate) mod admin_rbac;
+pub(crate) mod admin_security_totp;
+
+use admin_acquisition_suspend_http::attach_acquisition_suspend_fields;
 
 fn parse_optional_penalty_expires_at(s: &Option<String>) -> Result<Option<DateTime<Utc>>, ()> {
     match s {
@@ -584,6 +593,10 @@ pub fn router() -> Router<ApiMetaState> {
             "/api/v1/admin/approvals/:id/approve",
             post(post_admin_approval_approve),
         )
+        .route(
+            "/api/v1/admin/approvals/:id/reject",
+            post(post_admin_approval_reject),
+        )
         .route("/api/v1/admin/flags", get(get_admin_flags))
         .route(
             "/api/v1/admin/flags/:id/publish",
@@ -702,6 +715,13 @@ pub fn router() -> Router<ApiMetaState> {
             get(get_admin_drift_summary),
         )
         .merge(trust_growth_obs::router())
+        .merge(admin_acquisition_suspend_http::router())
+        .merge(admin_metrics_home_http::router())
+        .merge(admin_steward_application_http::router())
+        .merge(admin_provider_application_http::router())
+        .merge(admin_onboarding::router())
+        .merge(admin_rbac::router())
+        .merge(admin_security_totp::router())
 }
 
 #[derive(Debug, Deserialize)]
@@ -873,6 +893,10 @@ pub struct AdminComplianceDataRequestUpdateBody {
     pub status: Option<String>,
     #[serde(default)]
     pub notes: Option<String>,
+    #[serde(default)]
+    pub export_signature: Option<String>,
+    #[serde(default)]
+    pub record_hash_fingerprint: Option<String>,
     pub event_type: String,
     #[serde(default)]
     pub event_detail: Option<String>,
@@ -1304,15 +1328,61 @@ async fn require_super_admin_uid(
     state: &ApiMetaState,
     headers: &HeaderMap,
 ) -> Result<Uuid, Response> {
-    let (uid, role) = require_admin_actor(state, headers).await?;
-    if role != "super_admin" {
-        return Err((
+    match admin_rbac::require_super_admin_permission(state, headers).await {
+        Ok(uid) => Ok(uid),
+        Err(_) => Err((
             StatusCode::FORBIDDEN,
             Json(crate::api_json::err_key("super_admin_required")),
         )
-            .into_response());
+            .into_response()),
     }
-    Ok(uid)
+}
+
+/// Live router handlers in this file call this (not the split `admin_*_http.rs` stubs).
+async fn require_admin_perm_uid(
+    state: &ApiMetaState,
+    headers: &HeaderMap,
+    permission: &str,
+) -> Result<Uuid, Response> {
+    match admin_rbac::require_admin_permission(state, headers, permission).await {
+        Ok((uid, _)) => Ok(uid),
+        Err(r) => Err(r),
+    }
+}
+
+async fn require_read_uid(state: &ApiMetaState, headers: &HeaderMap) -> Result<Uuid, Response> {
+    require_admin_perm_uid(state, headers, admin_rbac::PERM_READ).await
+}
+
+async fn require_users_read_uid(state: &ApiMetaState, headers: &HeaderMap) -> Result<Uuid, Response> {
+    require_admin_perm_uid(state, headers, admin_rbac::PERM_USERS_READ).await
+}
+
+async fn require_finance_read_uid(state: &ApiMetaState, headers: &HeaderMap) -> Result<Uuid, Response> {
+    require_admin_perm_uid(state, headers, admin_rbac::PERM_FINANCE_READ).await
+}
+
+async fn require_platform_read_uid(state: &ApiMetaState, headers: &HeaderMap) -> Result<Uuid, Response> {
+    require_admin_perm_uid(state, headers, admin_rbac::PERM_PLATFORM_READ).await
+}
+
+async fn require_platform_publish_uid(state: &ApiMetaState, headers: &HeaderMap) -> Result<Uuid, Response> {
+    require_admin_perm_uid(state, headers, admin_rbac::PERM_PLATFORM_PUBLISH).await
+}
+
+async fn require_community_super_uid(state: &ApiMetaState, headers: &HeaderMap) -> Result<Uuid, Response> {
+    require_admin_perm_uid(state, headers, admin_rbac::PERM_COMMUNITY_SUPER).await
+}
+
+async fn require_admin_actor_with_perm(
+    state: &ApiMetaState,
+    headers: &HeaderMap,
+    permission: &str,
+) -> Result<(Uuid, String), Response> {
+    match admin_rbac::require_admin_permission(state, headers, permission).await {
+        Ok(v) => Ok(v),
+        Err(r) => Err(r),
+    }
 }
 
 fn admin_db_pool_required(state: &ApiMetaState) -> Result<&sqlx::PgPool, Response> {
@@ -1410,38 +1480,78 @@ pub async fn get_admin_users(
         .map(str::trim)
         .filter(|s| !s.is_empty());
 
-    let store = co.store.read().await;
+    let pool_opt = co.db_pool.clone();
 
-    let mut items: Vec<_> = store
-        .users
-        .values()
-        .filter(|u| {
-            role_filter.map_or(true, |r| u.role == r)
-                && kyc_filter.map_or(true, |k| u.kyc_status == k)
-        })
-        .map(|u| {
-            json!({
-                "id": u.id,
-                "email": u.email,
-                "role": u.role,
-                "kyc_status": u.kyc_status,
-                "created_at": u.created_at,
-                "updated_at": u.updated_at,
+    let items = {
+        let store = co.store.read().await;
+
+        let mut items: Vec<_> = store
+            .users
+            .values()
+            .filter(|u| {
+                role_filter.map_or(true, |r| u.role == r)
+                    && kyc_filter.map_or(true, |k| u.kyc_status == k)
             })
-        })
-        .collect();
-    items.sort_by(|a, b| {
-        b.get("created_at")
-            .and_then(|v| v.as_str())
-            .unwrap_or_default()
-            .cmp(
-                a.get("created_at")
+            .map(|u| {
+                json!({
+                    "id": u.id,
+                    "email": u.email,
+                    "role": u.role,
+                    "kyc_status": u.kyc_status,
+                    "created_at": u.created_at,
+                    "updated_at": u.updated_at,
+                })
+            })
+            .collect();
+        items.sort_by(|a, b| {
+            b.get("created_at")
+                .and_then(|v| v.as_str())
+                .unwrap_or_default()
+                .cmp(
+                    a.get("created_at")
+                        .and_then(|v| v.as_str())
+                        .unwrap_or_default(),
+                )
+        });
+        let total_after_filter = items.len();
+        items.truncate(limit as usize);
+        (items, total_after_filter)
+    };
+
+    let (mut items, total_after_filter) = items;
+
+    if let Some(ref pool) = pool_opt {
+        let user_ids: Vec<Uuid> = items
+            .iter()
+            .filter_map(|it| {
+                it.get("id")
                     .and_then(|v| v.as_str())
-                    .unwrap_or_default(),
-            )
-    });
-    let total_after_filter = items.len();
-    items.truncate(limit as usize);
+                    .and_then(|s| Uuid::parse_str(s).ok())
+            })
+            .collect();
+        if let Ok(map) = db::acquisition_publish_suspended_until_batch(pool, &user_ids).await {
+            for it in &mut items {
+                let Some(id_str) = it.get("id").and_then(|v| v.as_str()) else {
+                    continue;
+                };
+                let Ok(uid) = Uuid::parse_str(id_str) else {
+                    continue;
+                };
+                let until = map.get(&uid).copied().flatten();
+                let (suspended, until_rfc3339) = db::acquisition_suspend_admin_projection(until);
+                if let Some(obj) = it.as_object_mut() {
+                    obj.insert("acquisition_publish_suspended".to_string(), json!(suspended));
+                    obj.insert(
+                        "acquisition_publish_suspended_until".to_string(),
+                        match until_rfc3339 {
+                            Some(s) => json!(s),
+                            None => json!(null),
+                        },
+                    );
+                }
+            }
+        }
+    }
 
     write_admin_audit_log_best_effort(
         &state,
@@ -1499,10 +1609,13 @@ pub async fn get_admin_user_by_id(
         }
     };
 
-    let request_id = request_id_from_headers(&headers);
+    let pool_opt = co.db_pool.clone();
 
-    let store = co.store.read().await;
-    let Some(u) = store.users.get(&user_uuid) else {
+    let user_row = {
+        let store = co.store.read().await;
+        store.users.get(&user_uuid).cloned()
+    };
+    let Some(u) = user_row else {
         return (
             StatusCode::NOT_FOUND,
             Json(json!({"error": "user_not_found", "message": "user_not_found"})),
@@ -1510,7 +1623,14 @@ pub async fn get_admin_user_by_id(
             .into_response();
     };
 
-    let mut body = chain_off::user_admin_detail_envelope(u);
+    let request_id = request_id_from_headers(&headers);
+
+    let mut body = chain_off::user_admin_detail_envelope(&u);
+    if let Some(ref pool) = pool_opt {
+        if let Some(user_obj) = body.get_mut("user").and_then(|v| v.as_object_mut()) {
+            attach_acquisition_suspend_fields(pool, user_uuid, user_obj).await;
+        }
+    }
     admin_attach_meta_build(&mut body);
 
     let resource_id = user_uuid.to_string();
@@ -1668,8 +1788,8 @@ pub async fn patch_admin_guide_registration(
     let Some(ref co) = state.chain_off else {
         return not_impl_json("PATCH /api/v1/admin/guides/:id").into_response();
     };
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_USERS_WRITE).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
 
@@ -1814,8 +1934,8 @@ pub async fn get_admin_orders(
     let Some(ref co) = state.chain_off else {
         return not_impl_json("GET /api/v1/admin/orders").into_response();
     };
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_ORDERS_READ).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
 
@@ -1901,8 +2021,8 @@ pub async fn get_admin_order_by_id(
     let Some(ref co) = state.chain_off else {
         return not_impl_json("GET /api/v1/admin/orders/:id").into_response();
     };
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_ORDERS_READ).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
 
@@ -2277,8 +2397,8 @@ pub async fn get_admin_finance_summary(
     let Some(ref co) = state.chain_off else {
         return not_impl_json("GET /api/v1/admin/finance/summary").into_response();
     };
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_FINANCE_READ).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
 
@@ -2316,8 +2436,8 @@ pub async fn get_admin_finance_summary_export(
     let Some(ref co) = state.chain_off else {
         return not_impl_json("GET /api/v1/admin/finance/summary/export").into_response();
     };
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_FINANCE_READ).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
 
@@ -2893,8 +3013,8 @@ pub async fn get_admin_disputes(
     let Some(ref co) = state.chain_off else {
         return not_impl_json("GET /api/v1/admin/disputes").into_response();
     };
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_ORDERS_READ).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
 
@@ -2982,8 +3102,8 @@ pub async fn get_admin_dispute_by_id(
     let Some(ref co) = state.chain_off else {
         return not_impl_json("GET /api/v1/admin/disputes/:id").into_response();
     };
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_ORDERS_READ).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
 
@@ -4193,7 +4313,12 @@ pub async fn get_admin_observability_overview(
     State(state): State<ApiMetaState>,
     headers: HeaderMap,
 ) -> impl IntoResponse {
-    let (actor_id, actor_role) = match require_admin_actor(&state, &headers).await {
+    let (actor_id, actor_role) = match require_admin_actor_with_perm(
+        &state,
+        &headers,
+        admin_rbac::PERM_READ,
+    )
+    .await {
         Ok(v) => v,
         Err(resp) => return resp,
     };
@@ -4995,7 +5120,13 @@ pub async fn post_admin_user_role_change_request(
     headers: HeaderMap,
     Json(body): Json<AdminRoleChangeRequestBody>,
 ) -> impl IntoResponse {
-    let (actor_id, _) = match require_admin_actor(&state, &headers).await {
+    let (actor_id, _) = match admin_rbac::require_admin_permission(
+        &state,
+        &headers,
+        admin_rbac::PERM_USERS_WRITE,
+    )
+    .await
+    {
         Ok(v) => v,
         Err(resp) => return resp,
     };
@@ -5102,7 +5233,7 @@ pub async fn get_admin_approvals(
     Query(query): Query<AdminApprovalQuery>,
     headers: HeaderMap,
 ) -> impl IntoResponse {
-    let (actor_id, _) = match require_admin_actor(&state, &headers).await {
+    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_APPROVE).await {
         Ok(v) => v,
         Err(resp) => return resp,
     };
@@ -5182,7 +5313,7 @@ pub async fn get_admin_approval_by_id(
     Path(id): Path<String>,
     headers: HeaderMap,
 ) -> impl IntoResponse {
-    let (actor_id, _) = match require_admin_actor(&state, &headers).await {
+    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_APPROVE).await {
         Ok(v) => v,
         Err(resp) => return resp,
     };
@@ -5251,7 +5382,7 @@ pub async fn post_admin_approval_approve(
     headers: HeaderMap,
     Json(body): Json<AdminApprovalActionBody>,
 ) -> impl IntoResponse {
-    let approver_id = match require_super_admin_uid(&state, &headers).await {
+    let approver_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_APPROVE).await {
         Ok(v) => v,
         Err(resp) => return resp,
     };
@@ -5304,19 +5435,181 @@ pub async fn post_admin_approval_approve(
         )
             .into_response();
     }
-    if existing.action != "admin.user.role.change" {
+    match existing.action.as_str() {
+        "admin.user.role.change" => {
+            let result = match db::approve_admin_user_role_change_request_with_audit(
+                pool,
+                approval_uuid,
+                approver_id,
+                body.reason.as_deref(),
+                request_id.as_deref(),
+            )
+            .await
+            {
+                Ok(v) => v,
+                Err(_) => {
+                    return (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        Json(crate::api_json::err_key("admin_approval_apply_failed")),
+                    )
+                        .into_response();
+                }
+            };
+
+            let Some(result) = result else {
+                return (
+                    StatusCode::CONFLICT,
+                    Json(crate::api_json::err_key("approval_request_apply_conflict")),
+                )
+                    .into_response();
+            };
+
+            if let Some(ref co) = state.chain_off {
+                let mut store = co.store.write().await;
+                if let Some(target_user) = store.users.get_mut(&result.target_user_id) {
+                    target_user.role = result.to_role.clone();
+                    target_user.updated_at = Utc::now();
+                }
+            }
+
+            let mut body = json!({
+                "status": "ok",
+                "approval_request_id": result.approval_id,
+                "target_user_id": result.target_user_id,
+                "from_role": result.from_role,
+                "to_role": result.to_role,
+                "approved_by": approver_id,
+            });
+            admin_attach_meta_build(&mut body);
+            return Json(body).into_response();
+        }
+        "admin.console_role.change" => {
+            let result = match db::approve_admin_console_role_change_request_with_audit(
+                pool,
+                approval_uuid,
+                approver_id,
+                body.reason.as_deref(),
+                request_id.as_deref(),
+            )
+            .await
+            {
+                Ok(v) => v,
+                Err(_) => {
+                    return (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        Json(crate::api_json::err_key("admin_approval_apply_failed")),
+                    )
+                        .into_response();
+                }
+            };
+
+            let Some(result) = result else {
+                return (
+                    StatusCode::CONFLICT,
+                    Json(crate::api_json::err_key("approval_request_apply_conflict")),
+                )
+                    .into_response();
+            };
+
+            let mut body = json!({
+                "status": "ok",
+                "approval_request_id": result.approval_id,
+                "target_user_id": result.target_user_id,
+                "from_console_role_70": result.from_console_role,
+                "to_console_role_70": result.to_console_role,
+                "approved_by": approver_id,
+            });
+            admin_attach_meta_build(&mut body);
+            return Json(body).into_response();
+        }
+        _ => {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(crate::api_json::err_key("unsupported_approval_action")),
+            )
+                .into_response();
+        }
+    }
+}
+
+pub async fn post_admin_approval_reject(
+    State(state): State<ApiMetaState>,
+    Path(approval_id): Path<String>,
+    headers: HeaderMap,
+    Json(body): Json<AdminApprovalActionBody>,
+) -> impl IntoResponse {
+    let rejector_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_APPROVE).await {
+        Ok(v) => v,
+        Err(resp) => return resp,
+    };
+
+    let reject_reason = body
+        .reason
+        .as_deref()
+        .map(str::trim)
+        .filter(|s| !s.is_empty());
+    let Some(reject_reason) = reject_reason else {
         return (
             StatusCode::BAD_REQUEST,
-            Json(crate::api_json::err_key("unsupported_approval_action")),
+            Json(crate::api_json::err_key("admin_approval_reject_reason_required")),
+        )
+            .into_response();
+    };
+
+    let approval_uuid = match Uuid::parse_str(approval_id.trim()) {
+        Ok(v) => v,
+        Err(_) => {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(crate::api_json::err_key("invalid_approval_id")),
+            )
+                .into_response()
+        }
+    };
+
+    let pool = match admin_db_pool_required(&state) {
+        Ok(p) => p,
+        Err(resp) => return resp,
+    };
+    let request_id = request_id_from_headers(&headers);
+
+    let existing = match db::get_admin_approval_request_by_id(pool, approval_uuid).await {
+        Ok(v) => v,
+        Err(_) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(crate::api_json::err_key("admin_approval_query_failed")),
+            )
+                .into_response()
+        }
+    };
+    let Some(existing) = existing else {
+        return (
+            StatusCode::NOT_FOUND,
+            Json(crate::api_json::err_key("approval_request_not_found")),
+        )
+            .into_response();
+    };
+    if existing.status != "pending" {
+        return (
+            StatusCode::CONFLICT,
+            Json(crate::api_json::err_key("approval_request_not_pending")),
+        )
+            .into_response();
+    }
+    if existing.requested_by == rejector_id {
+        return (
+            StatusCode::FORBIDDEN,
+            Json(crate::api_json::err_key("self_approval_not_allowed")),
         )
             .into_response();
     }
 
-    let result = match db::approve_admin_user_role_change_request_with_audit(
+    let ok = match db::reject_admin_approval_request_with_audit(
         pool,
         approval_uuid,
-        approver_id,
-        body.reason.as_deref(),
+        rejector_id,
+        reject_reason,
         request_id.as_deref(),
     )
     .await
@@ -5330,32 +5623,18 @@ pub async fn post_admin_approval_approve(
                 .into_response()
         }
     };
-
-    let Some(result) = result else {
+    if !ok {
         return (
             StatusCode::CONFLICT,
             Json(crate::api_json::err_key("approval_request_apply_conflict")),
         )
             .into_response();
-    };
-
-    if let Some(ref co) = state.chain_off {
-        let mut store = co.store.write().await;
-        if let Some(target_user) = store.users.get_mut(&result.target_user_id) {
-            target_user.role = result.to_role.clone();
-            target_user.updated_at = Utc::now();
-        }
     }
 
     let mut body = json!({
         "status": "ok",
-        "approval_request_id": result.approval_id,
-        "target_user_id": result.target_user_id,
-        "from_role": result.from_role,
-        "to_role": result.to_role,
-        "approved_by": approver_id,
-        "meta": {
-        }
+        "approval_request_id": approval_uuid,
+        "rejected_by": rejector_id,
     });
     admin_attach_meta_build(&mut body);
     Json(body).into_response()
@@ -5631,7 +5910,8 @@ pub async fn post_admin_flag_publish(
     headers: HeaderMap,
     Json(body): Json<AdminFlagPublishBody>,
 ) -> impl IntoResponse {
-    let actor_id = match require_super_admin_uid(&state, &headers).await {
+    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_PLATFORM_PUBLISH).await
+    {
         Ok(v) => v,
         Err(resp) => return resp,
     };
@@ -6486,7 +6766,7 @@ pub async fn post_admin_policy_publish(
     headers: HeaderMap,
     Json(body): Json<AdminPolicyPublishBody>,
 ) -> impl IntoResponse {
-    let actor_id = match require_super_admin_uid(&state, &headers).await {
+    let actor_id = match require_platform_publish_uid(&state, &headers).await {
         Ok(v) => v,
         Err(resp) => return resp,
     };
@@ -6758,7 +7038,7 @@ pub async fn post_admin_tenant_scope_publish(
     headers: HeaderMap,
     Json(body): Json<AdminTenantScopePublishBody>,
 ) -> impl IntoResponse {
-    let actor_id = match require_super_admin_uid(&state, &headers).await {
+    let actor_id = match require_platform_publish_uid(&state, &headers).await {
         Ok(v) => v,
         Err(resp) => return resp,
     };
@@ -6875,8 +7155,8 @@ pub async fn get_admin_community_reports(
     Query(query): Query<AdminCommunityReportsQuery>,
     headers: HeaderMap,
 ) -> impl IntoResponse {
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_COMMUNITY_READ).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
     let request_id = request_id_from_headers(&headers);
@@ -7052,8 +7332,8 @@ pub async fn get_admin_community_appeals(
     Query(query): Query<AdminCommunityAppealsQuery>,
     headers: HeaderMap,
 ) -> impl IntoResponse {
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_COMMUNITY_READ).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
     let request_id = request_id_from_headers(&headers);
@@ -7166,10 +7446,11 @@ pub async fn patch_admin_community_moderation(
     headers: HeaderMap,
     Json(body): Json<AdminCommunityModerationBody>,
 ) -> impl IntoResponse {
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
-        Err(resp) => return resp,
-    };
+    let actor_id =
+        match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_COMMUNITY_MODERATE).await {
+            Ok(uid) => uid,
+            Err(resp) => return resp,
+        };
     let id = match Uuid::parse_str(raw_id.trim()) {
         Ok(v) => v,
         Err(_) => {
@@ -7375,6 +7656,21 @@ pub async fn patch_admin_community_moderation(
                         .into_response();
                 }
             };
+            if act == "content_remove" {
+                if db::apply_content_remove_for_report_conn(&mut *tx, &cur)
+                    .await
+                    .is_err()
+                {
+                    let _ = tx.rollback().await;
+                    return (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        Json(crate::api_json::err_key(
+                            "admin_community_content_remove_failed",
+                        )),
+                    )
+                        .into_response();
+                }
+            }
             if db::insert_community_moderation_case_conn(
                 &mut *tx,
                 id,
@@ -7548,7 +7844,7 @@ pub async fn post_admin_community_appeal_review(
     headers: HeaderMap,
     Json(body): Json<AdminCommunityAppealReviewBody>,
 ) -> impl IntoResponse {
-    let actor_id = match require_super_admin_uid(&state, &headers).await {
+    let actor_id = match require_community_super_uid(&state, &headers).await {
         Ok(v) => v,
         Err(resp) => return resp,
     };
@@ -7682,8 +7978,8 @@ pub async fn get_admin_community_ranking_snapshots(
     Query(query): Query<AdminCommunityRankingSnapshotsQuery>,
     headers: HeaderMap,
 ) -> impl IntoResponse {
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_COMMUNITY_READ).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
     let request_id = request_id_from_headers(&headers);
@@ -7757,8 +8053,8 @@ pub async fn get_admin_community_penalties(
     Query(query): Query<AdminCommunityPenaltiesQuery>,
     headers: HeaderMap,
 ) -> impl IntoResponse {
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_COMMUNITY_READ).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
     let request_id = request_id_from_headers(&headers);
@@ -7891,8 +8187,8 @@ pub async fn get_admin_community_moderation_cases(
     Query(query): Query<AdminCommunityModerationCasesQuery>,
     headers: HeaderMap,
 ) -> impl IntoResponse {
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_COMMUNITY_READ).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
     let request_id = request_id_from_headers(&headers);
@@ -8037,8 +8333,8 @@ pub async fn get_admin_community_risk_signals(
     Query(query): Query<AdminCommunityRiskSignalsQuery>,
     headers: HeaderMap,
 ) -> impl IntoResponse {
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_COMMUNITY_READ).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
     let request_id = request_id_from_headers(&headers);
@@ -8170,8 +8466,8 @@ pub async fn get_admin_community_policy_change_logs(
     Query(query): Query<AdminCommunityPolicyChangeLogsQuery>,
     headers: HeaderMap,
 ) -> impl IntoResponse {
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_COMMUNITY_READ).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
     let request_id = request_id_from_headers(&headers);
@@ -8379,10 +8675,11 @@ pub async fn patch_admin_community_comment(
     headers: HeaderMap,
     Json(body): Json<AdminCommunityCommentVisibilityBody>,
 ) -> impl IntoResponse {
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
-        Err(resp) => return resp,
-    };
+    let actor_id =
+        match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_COMMUNITY_MODERATE).await {
+            Ok(uid) => uid,
+            Err(resp) => return resp,
+        };
     let id = match Uuid::parse_str(raw_id.trim()) {
         Ok(v) => v,
         Err(_) => {
@@ -8452,10 +8749,11 @@ pub async fn post_admin_community_penalty(
     headers: HeaderMap,
     Json(body): Json<AdminCommunityPenaltyCreateBody>,
 ) -> impl IntoResponse {
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
-        Err(resp) => return resp,
-    };
+    let actor_id =
+        match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_COMMUNITY_MODERATE).await {
+            Ok(uid) => uid,
+            Err(resp) => return resp,
+        };
     let hdr_request_id = request_id_from_headers(&headers);
     let pool = match admin_db_pool_required(&state) {
         Ok(p) => p,
@@ -8744,6 +9042,8 @@ pub async fn get_admin_compliance_data_requests(
                 "sla": sla,
                 "jurisdiction": r.jurisdiction,
                 "notes": r.notes,
+                "export_signature": r.export_signature,
+                "record_hash_fingerprint": r.record_hash_fingerprint,
                 "version": r.version,
                 "created_at": r.created_at.to_rfc3339(),
                 "updated_at": r.updated_at.to_rfc3339(),
@@ -8764,7 +9064,7 @@ pub async fn get_admin_compliance_data_requests(
         "meta": {
             "source": "db",
             "generated_at": now.to_rfc3339(),
-            "note": "DSAR ledger; events/export_signature/approval_no still 500 phase",
+            "note": "DSAR ledger; export_signature/record_hash_fingerprint ① prep; full 500 archive ②",
         }
     });
     admin_attach_meta_build(&mut body);
@@ -8778,8 +9078,8 @@ pub async fn post_admin_compliance_data_request_update(
     headers: HeaderMap,
     Json(body): Json<AdminComplianceDataRequestUpdateBody>,
 ) -> impl IntoResponse {
-    let actor_id = match require_super_admin_uid(&state, &headers).await {
-        Ok(v) => v,
+    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_APPROVE).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
     let rid = match Uuid::parse_str(request_id.trim()) {
@@ -8823,6 +9123,16 @@ pub async fn post_admin_compliance_data_request_update(
         .filter(|s| !s.is_empty());
     let event_detail: Option<String> = body
         .event_detail
+        .as_ref()
+        .map(|s| s.trim().to_string())
+        .filter(|s| !s.is_empty());
+    let export_signature: Option<String> = body
+        .export_signature
+        .as_ref()
+        .map(|s| s.trim().to_string())
+        .filter(|s| !s.is_empty());
+    let record_hash: Option<String> = body
+        .record_hash_fingerprint
         .as_ref()
         .map(|s| s.trim().to_string())
         .filter(|s| !s.is_empty());
@@ -8871,6 +9181,8 @@ pub async fn post_admin_compliance_data_request_update(
         body.expected_version,
         new_status.as_deref(),
         new_notes.as_deref(),
+        export_signature.as_deref(),
+        record_hash.as_deref(),
         event_type,
         event_detail.as_deref(),
     )
@@ -8937,6 +9249,8 @@ pub async fn post_admin_compliance_data_request_update(
             "sla": sla,
             "jurisdiction": updated.jurisdiction,
             "notes": updated.notes,
+            "export_signature": updated.export_signature,
+            "record_hash_fingerprint": updated.record_hash_fingerprint,
             "version": updated.version,
             "created_at": updated.created_at.to_rfc3339(),
             "updated_at": updated.updated_at.to_rfc3339(),

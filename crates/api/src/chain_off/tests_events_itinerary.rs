@@ -350,6 +350,7 @@ async fn itinerary_create_impl_with_guide_id_persists_guide_on_order() {
             rejection_message: None,
             created_at: now,
             updated_at: now,
+            data_origin: "production".into(),
         },
     );
     let state = ChainOffState {
@@ -621,6 +622,65 @@ async fn patch_order_itinerary_impl_accepts_preset_city() {
     assert_eq!(b.days[0].city.as_deref(), Some("上海"));
 }
 
+#[tokio::test]
+async fn patch_order_itinerary_impl_publishes_draft_to_market() {
+    let store = ChainOffStore::default();
+    let state = ChainOffState {
+        store: Arc::new(RwLock::new(store)),
+        config: ChainOffConfig::default(),
+        db_pool: None,
+    };
+    let user_id = Uuid::new_v4();
+    let body = CreateItineraryBody {
+        destination: "中国".to_string(),
+        city: "北京".to_string(),
+        travel_date: "2025-08-01".to_string(),
+        days: 1,
+        cities: None,
+        hotel_type: None,
+        food_preference: None,
+        transport: None,
+        budget_min: Some(500.0),
+        budget_max: None,
+        notes: None,
+        guide_id: None,
+    };
+    let Ok(Json(j)) = itinerary_create_impl(state.clone(), user_id, Json(body)).await else {
+        panic!("create");
+    };
+    let order_id = Uuid::parse_str(j["order_id"].as_str().unwrap()).unwrap();
+    {
+        let store = state.store.read().await;
+        assert_eq!(
+            store.orders.get(&order_id).expect("order").state,
+            OrderState::Draft
+        );
+    }
+
+    let patch = PatchItineraryBody {
+        daily_itinerary: Some(vec![ItineraryDayRow {
+            day_index: 1,
+            city: Some("北京".to_string()),
+            content_text: "publish save".to_string(),
+            ..Default::default()
+        }]),
+        amount_breakdown: None,
+    };
+    let Ok(Json(out)) =
+        patch_order_itinerary_impl(state.clone(), None, order_id, user_id, Json(patch)).await
+    else {
+        panic!("patch ok");
+    };
+    assert_eq!(out["status"], "ok");
+    assert_eq!(out["published_to_market"], true);
+    assert_eq!(out["order_state"], "created");
+    let store = state.store.read().await;
+    assert_eq!(
+        store.orders.get(&order_id).expect("order").state,
+        OrderState::Created
+    );
+}
+
 /// 07 §5.2：非产品期中文 `destination` 的存量行程包，PATCH 不强制 `daily_itinerary[].city` 落在 preset 清单。
 #[tokio::test]
 async fn patch_order_itinerary_impl_non_product_destination_skips_city_validation() {
@@ -653,6 +713,9 @@ async fn patch_order_itinerary_impl_non_product_destination_skips_city_validatio
             rating_tourist_confirmed: None,
             rating_guide_confirmed: None,
             chain_id: None,
+            data_origin: "production".into(),
+        order_kind: None,
+        market_listing_id: None,
         },
     );
     store.itineraries.insert(
@@ -779,6 +842,7 @@ async fn itinerary_custom_create_impl_with_guide_id_persists_guide_on_order() {
             rejection_message: None,
             created_at: now,
             updated_at: now,
+            data_origin: "production".into(),
         },
     );
     let state = ChainOffState {
@@ -909,7 +973,7 @@ async fn s55_custom_create_then_orders_and_discover_contain_draft() {
     assert_eq!(found.unwrap()["status"], "draft");
 
     let Json(discover) =
-        discover_orders_list_impl(state.clone(), None, None, OrderListPage::default())
+        discover_orders_list_impl(state.clone(), None, None, None, OrderListPage::default())
             .await
             .expect("discover_orders_list_impl");
     let discover_items = discover["items"].as_array().expect("items");
@@ -985,7 +1049,7 @@ async fn discover_card_itinerary_matches_order_get() {
         .await
         .expect("order_get_impl");
     let Json(discover) =
-        discover_orders_list_impl(state.clone(), None, None, OrderListPage::default())
+        discover_orders_list_impl(state.clone(), None, None, None, OrderListPage::default())
             .await
             .expect("discover_orders_list_impl");
     let disc_card = discover["items"]
@@ -1239,7 +1303,7 @@ async fn discover_orders_list_includes_draft() {
     let _ = itinerary_create_impl(state.clone(), user_id, Json(body)).await;
 
     let Json(discover) =
-        discover_orders_list_impl(state.clone(), None, None, OrderListPage::default())
+        discover_orders_list_impl(state.clone(), None, None, None, OrderListPage::default())
             .await
             .expect("discover");
     let items = discover["items"].as_array().expect("items");
@@ -1253,6 +1317,7 @@ async fn discover_orders_list_includes_draft() {
         state.clone(),
         None,
         Some("西安".to_string()),
+        None,
         OrderListPage::default(),
     )
     .await
@@ -1262,11 +1327,75 @@ async fn discover_orders_list_includes_draft() {
         state.clone(),
         None,
         Some("其他".to_string()),
+        None,
         OrderListPage::default(),
     )
     .await
     .expect("discover_nomatch");
     assert!(discover_nomatch["items"].as_array().unwrap().is_empty());
+}
+
+#[tokio::test]
+async fn discover_orders_list_includes_created_without_guide() {
+    let store = ChainOffStore::default();
+    let state = ChainOffState {
+        store: Arc::new(RwLock::new(store)),
+        config: ChainOffConfig::default(),
+        db_pool: None,
+    };
+    let user_id = Uuid::new_v4();
+    let body = CreateItineraryBody {
+        destination: "中国".to_string(),
+        city: "成都".to_string(),
+        travel_date: "2025-10-01".to_string(),
+        days: 3,
+        cities: None,
+        hotel_type: None,
+        food_preference: None,
+        transport: None,
+        budget_min: Some(1500.0),
+        budget_max: None,
+        notes: None,
+        guide_id: None,
+    };
+    let Ok(Json(create_json)) = itinerary_create_impl(state.clone(), user_id, Json(body)).await else {
+        panic!("create itinerary");
+    };
+    let order_id = Uuid::parse_str(create_json["order_id"].as_str().unwrap()).unwrap();
+    {
+        let mut store = state.store.write().await;
+        let order = store.orders.get_mut(&order_id).expect("order");
+        order.state = OrderState::Created;
+    }
+
+    let Json(discover) =
+        discover_orders_list_impl(state.clone(), None, None, None, OrderListPage::default())
+            .await
+            .expect("discover");
+    let items = discover["items"].as_array().expect("items");
+    assert!(
+        items.iter().any(|o| o["id"].as_str().map(|s| Uuid::parse_str(s).ok()) == Some(Some(order_id))),
+        "Created order without guide should appear in discover"
+    );
+    assert_eq!(items.iter().find(|o| o["id"].as_str() == Some(order_id.to_string().as_str())).unwrap()["state"], "created");
+
+    {
+        let mut store = state.store.write().await;
+        let order = store.orders.get_mut(&order_id).expect("order");
+        order.guide_id = Uuid::new_v4();
+    }
+    let Json(after_guide) =
+        discover_orders_list_impl(state.clone(), None, None, None, OrderListPage::default())
+            .await
+            .expect("discover after guide");
+    assert!(
+        !after_guide["items"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|o| o["id"].as_str().map(|s| Uuid::parse_str(s).ok()) == Some(Some(order_id))),
+        "order with guide assigned must not appear in discover"
+    );
 }
 
 #[tokio::test]
@@ -1300,6 +1429,7 @@ async fn discover_orders_list_pagination_limit_and_cursor() {
         state.clone(),
         None,
         None,
+        None,
         OrderListPage {
             limit: Some(2),
             cursor: None,
@@ -1319,6 +1449,7 @@ async fn discover_orders_list_pagination_limit_and_cursor() {
 
     let Ok(Json(p2)) = discover_orders_list_impl(
         state.clone(),
+        None,
         None,
         None,
         OrderListPage {
@@ -1573,7 +1704,7 @@ async fn p16_integration_discover_chat_confirm_flow() {
     let order_id = Uuid::parse_str(create_json["order_id"].as_str().unwrap()).unwrap();
 
     let Json(discover) =
-        discover_orders_list_impl(state.clone(), None, None, OrderListPage::default())
+        discover_orders_list_impl(state.clone(), None, None, None, OrderListPage::default())
             .await
             .expect("discover");
     let items = discover["items"].as_array().expect("items");
@@ -1717,7 +1848,7 @@ async fn set_order_escrow_address_impl_writes_address() {
     assert_eq!(order.escrow_address.as_deref(), Some(addr));
     drop(store);
 
-    let Json(disc) = discover_orders_list_impl(state.clone(), None, None, OrderListPage::default())
+    let Json(disc) = discover_orders_list_impl(state.clone(), None, None, None, OrderListPage::default())
         .await
         .expect("discover after set escrow");
     let items = disc["items"].as_array().expect("discover items");

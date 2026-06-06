@@ -1,8 +1,9 @@
 //! 中间件：幂等、traceId、RequestBodyLimit、Timeout、CORS、鉴权占位、安全头、指标（48 §4.2；50-O-B4 拆为 mod + timeout_cors + **auth_pause_metrics/** + **rate_limit** + **trace**）
 
-#![allow(dead_code)]
+#![allow(dead_code, unused_imports)]
 
 mod auth_pause_metrics;
+mod onboarding_quote_rate_limit;
 mod onboarding_write_rate_limit;
 mod rate_limit;
 mod timeout_cors;
@@ -15,6 +16,8 @@ pub use auth_pause_metrics::{
 pub use rate_limit::{
     critical_write_rate_limit_layer, meta_rate_limits_snapshot, rate_limit_layer,
 };
+pub use onboarding_quote_rate_limit::onboarding_quote_rate_limit_response_if_exceeded;
+#[allow(unused_imports)] // `routes/onboarding` 并入 `api_router` 前保留
 pub use onboarding_write_rate_limit::onboarding_user_write_rate_limit_response_if_exceeded;
 #[cfg(test)]
 pub use rate_limit::{format_guide_upload_meta_top_keys_contract_761, GUIDE_UPLOAD_META_TOP_KEYS};
@@ -55,6 +58,9 @@ pub const REQUEST_TIMEOUT_SECS: u64 = 30;
 pub const REQUEST_BODY_LIMIT_BYTES: usize = 1024 * 1024;
 pub const GUIDE_UPLOAD_RATE_LIMIT: usize = 10;
 pub const GUIDE_UPLOAD_RATE_WINDOW_SECS: u64 = 60;
+/** 社区视频 multipart 会话 / presign / complete 限流（与 `media_asset_sessions` 同源）。 */
+pub const COMMUNITY_MEDIA_UPLOAD_RATE_LIMIT: usize = 60;
+pub const COMMUNITY_MEDIA_UPLOAD_RATE_WINDOW_SECS: u64 = 60;
 
 #[derive(Default)]
 pub struct IdempotencyCache {

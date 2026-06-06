@@ -71,6 +71,7 @@ async fn p21_reviews_list_submit() {
             rejection_message: None,
             created_at: now,
             updated_at: now,
+            data_origin: "production".into(),
         },
     );
     store.guides_by_user.insert(guide_id, guide_row_id);
@@ -100,6 +101,9 @@ async fn p21_reviews_list_submit() {
             rating_tourist_confirmed: None,
             rating_guide_confirmed: None,
             chain_id: None,
+            data_origin: "production".into(),
+        order_kind: None,
+        market_listing_id: None,
         },
     );
     let state = ChainOffState {
@@ -208,6 +212,7 @@ async fn p21_review_low_score_requires_comment() {
             rejection_message: None,
             created_at: now,
             updated_at: now,
+            data_origin: "production".into(),
         },
     );
     store.guides_by_user.insert(guide_id, guide_row_id);
@@ -237,6 +242,9 @@ async fn p21_review_low_score_requires_comment() {
             rating_tourist_confirmed: None,
             rating_guide_confirmed: None,
             chain_id: None,
+            data_origin: "production".into(),
+        order_kind: None,
+        market_listing_id: None,
         },
     );
     let state = ChainOffState {
@@ -335,6 +343,9 @@ async fn p21_evidence_list_post() {
             rating_tourist_confirmed: None,
             rating_guide_confirmed: None,
             chain_id: None,
+            data_origin: "production".into(),
+        order_kind: None,
+        market_listing_id: None,
         },
     );
     let state = ChainOffState {

@@ -189,6 +189,33 @@ pub async fn insert_community_penalty_conn(
     Ok(id)
 }
 
+/// **`content_remove`** 处置：按工单目标下架内容（帖子 → **`archived`**；评论 → **`removed`**）。
+pub async fn apply_content_remove_for_report_conn(
+    conn: &mut sqlx::postgres::PgConnection,
+    report: &CommunityReportRow,
+) -> Result<(), sqlx::Error> {
+    match report.target_type.as_str() {
+        "post" => {
+            sqlx::query(
+                "UPDATE community_posts SET visibility_status = 'archived' WHERE id = $1",
+            )
+            .bind(report.target_id)
+            .execute(conn)
+            .await?;
+        }
+        "comment" => {
+            sqlx::query(
+                "UPDATE community_comments SET visibility_status = 'removed' WHERE id = $1",
+            )
+            .bind(report.target_id)
+            .execute(conn)
+            .await?;
+        }
+        _ => {}
+    }
+    Ok(())
+}
+
 pub async fn insert_community_penalty(
     pool: &PgPool,
     report_id: Option<Uuid>,

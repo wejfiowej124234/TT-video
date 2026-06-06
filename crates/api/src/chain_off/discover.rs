@@ -8,6 +8,15 @@ use serde_json::json;
 use super::itineraries::{infer_cover_image_from_days, ItineraryBundle};
 use super::{order_state_to_str, ChainOffState, OrderListPage, OrderRow};
 use traveltrust_core::OrderState;
+use uuid::Uuid;
+
+/// 自由市场左栏可展示：Draft 草稿 + Created 已发布，且尚未指派向导（与前端 `isOrderPublishedToDiscover` 对拍）。
+pub(crate) fn order_eligible_for_discover_market(o: &OrderRow) -> bool {
+    if o.guide_id != Uuid::nil() {
+        return false;
+    }
+    matches!(o.state, OrderState::Draft | OrderState::Created)
+}
 
 /// 与 GET `/orders/:id` 之 **itinerary** 及卡片 **breakdown** 同源；供 GET discover 与 GET `/orders` 列表复用（07 §5.1 / 56-S11）。
 pub(crate) fn bundle_discover_preview_fields(bundle: &ItineraryBundle) -> serde_json::Value {
@@ -84,12 +93,13 @@ fn discover_card_json(o: &OrderRow, bundle: &ItineraryBundle) -> serde_json::Val
     card
 }
 
-/// 可被浏览的订单列表（status=Draft，供前端 **自由市场 `/market`** 卡片消费；HTTP 路径保留 **`GET /api/v1/discover/orders`**）；49 D：country/city 筛选；50-80-5 按 created_at 倒序。
+/// 可被浏览的订单列表（Draft + Created 且未指派向导，供前端 **自由市场 `/market`** 卡片消费；HTTP 路径保留 **`GET /api/v1/discover/orders`**）；49 D：country/city 筛选；50-80-5 按 created_at 倒序。
 /// 55-S12：按 order_id 唯一；**可选** `limit`+`cursor` 分页（`updated_at DESC, id DESC`），不传 limit 时行为与历史一致（全量、按 created_at 倒序）。
 pub async fn discover_orders_list_impl(
     state: ChainOffState,
     country: Option<String>,
     city: Option<String>,
+    days: Option<u32>,
     page: OrderListPage,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
     let store = state.store.read().await;
@@ -98,19 +108,26 @@ pub async fn discover_orders_list_impl(
         .map(|s| s.trim())
         .filter(|s| !s.is_empty());
     let city_trim = city.as_deref().map(|s| s.trim()).filter(|s| !s.is_empty());
+    let days_filter = days.filter(|d| (1..=30).contains(d));
 
     let business = state.config.business_chain_id;
     let pairs: Vec<(OrderRow, ItineraryBundle)> = store
         .orders
         .values()
         .filter(|o| {
-            o.state == OrderState::Draft
+            order_eligible_for_discover_market(o)
                 && super::orders::order_matches_orders_list_chain_scope(o, business, None)
         })
         .filter_map(|o| {
             let bundle = store.itineraries.get(&o.id)?;
+            if super::public_catalog_surface_filter_enabled()
+                && super::market_public_surface::is_smoke_discover_order(&store, o, bundle)
+            {
+                return None;
+            }
             if country_trim.map_or(true, |c| bundle.destination.eq_ignore_ascii_case(c))
                 && city_trim.map_or(true, |c| bundle.city.eq_ignore_ascii_case(c))
+                && days_filter.map_or(true, |d| bundle.days.len() as u32 == d)
             {
                 Some((o.clone(), bundle.clone()))
             } else {
@@ -234,6 +251,9 @@ mod discover_participant_id_tests {
             rating_tourist_confirmed: None,
             rating_guide_confirmed: None,
             chain_id: None,
+            data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
         };
         let card = discover_card_json(&o, &minimal_bundle(oid));
         assert_eq!(card["tourist_id"].as_str().unwrap(), tid.to_string());

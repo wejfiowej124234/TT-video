@@ -130,6 +130,7 @@ pub(in crate::routes::orders::tests) fn build_store(
             rejection_message: None,
             created_at: anchor,
             updated_at: anchor,
+            data_origin: "production".into(),
         },
     );
     store.guides_by_user.insert(guide_user_id, guide_row_id);
@@ -158,6 +159,9 @@ pub(in crate::routes::orders::tests) fn build_store(
             rating_tourist_confirmed: None,
             rating_guide_confirmed: None,
             chain_id: None,
+            data_origin: "production".into(),
+        order_kind: None,
+        market_listing_id: None,
         },
     );
     store

@@ -34,31 +34,47 @@ pub async fn hydrate_from_db(
     }
     if let Ok(guides) = db::list_guides(pool).await {
         for g in guides {
-            store.guides.insert(
-                g.id,
-                chain_off::GuideRow {
-                    id: g.id,
-                    user_id: g.user_id,
-                    city: g.city,
-                    country_code: g.country_code,
-                    languages: g.languages,
-                    service_types: g.service_types,
-                    bio: g.bio,
-                    wallet_address: g.wallet_address,
-                    real_name: g.real_name,
-                    passport_number_hash: g.passport_number_hash,
-                    id_photo_url: g.id_photo_url,
-                    language_cert_url: g.language_cert_url,
-                    guide_license_url: g.guide_license_url,
-                    stake_amount: g.stake_amount,
-                    status: g.status,
-                    rejection_codes: g.rejection_codes,
-                    rejection_message: g.rejection_message,
-                    created_at: g.created_at,
-                    updated_at: g.updated_at,
-                },
-            );
-            store.guides_by_user.insert(g.user_id, g.id);
+            let guide_row = chain_off::GuideRow {
+                id: g.id,
+                user_id: g.user_id,
+                city: g.city,
+                country_code: g.country_code,
+                languages: crate::chain_off::market_guide_filter::normalize_languages_for_storage(
+                    &g.languages,
+                ),
+                service_types:
+                    crate::chain_off::market_guide_filter::normalize_service_types_for_storage(
+                        &g.service_types,
+                    ),
+                bio: g.bio,
+                wallet_address: g.wallet_address,
+                real_name: g.real_name,
+                passport_number_hash: g.passport_number_hash,
+                id_photo_url: g.id_photo_url,
+                language_cert_url: g.language_cert_url,
+                guide_license_url: g.guide_license_url,
+                stake_amount: g.stake_amount,
+                status: g.status,
+                rejection_codes: g.rejection_codes,
+                rejection_message: g.rejection_message,
+                data_origin: g.data_origin.clone(),
+                created_at: g.created_at,
+                updated_at: g.updated_at,
+            };
+            store.guides.insert(g.id, guide_row);
+            store
+                .guides_by_user
+                .entry(g.user_id)
+                .and_modify(|existing_id| {
+                    let keep_existing = store
+                        .guides
+                        .get(existing_id)
+                        .is_some_and(|existing| existing.updated_at >= g.updated_at);
+                    if !keep_existing {
+                        *existing_id = g.id;
+                    }
+                })
+                .or_insert(g.id);
         }
     }
     if let Ok(orders) = db::list_orders(pool).await {

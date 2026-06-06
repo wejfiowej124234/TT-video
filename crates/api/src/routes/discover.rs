@@ -16,6 +16,7 @@ use crate::state::ApiMetaState;
 pub struct DiscoverOrdersQuery {
     pub country: Option<String>,
     pub city: Option<String>,
+    pub days: Option<u32>,
     pub limit: Option<u32>,
     pub cursor: Option<String>,
 }
@@ -35,7 +36,14 @@ pub async fn get_discover_orders(
                     .into_response();
             }
         };
-        return match chain_off::discover_orders_list_impl(co.clone(), q.country, q.city, page).await
+        return match chain_off::discover_orders_list_impl(
+            co.clone(),
+            q.country,
+            q.city,
+            q.days,
+            page,
+        )
+        .await
         {
             Ok(j) => j.into_response(),
             Err((code, j)) => (code, j).into_response(),

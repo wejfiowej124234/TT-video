@@ -17,20 +17,14 @@ pub async fn order_accept_impl(
     user_id: Uuid,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
     let mut store = state.store.write().await;
-    let guide_row_id = store.orders.get(&order_id).map(|o| o.guide_id).ok_or((
-        StatusCode::NOT_FOUND,
-        Json(json!({"error": "order_not_found", "message": "order_not_found"})),
+    let guide_row_id = store.guides_by_user.get(&user_id).copied().ok_or((
+        StatusCode::FORBIDDEN,
+        Json(crate::api_json::err_key("not_guide")),
     ))?;
     let guide = store.guides.get(&guide_row_id).ok_or((
         StatusCode::INTERNAL_SERVER_ERROR,
         Json(crate::api_json::err_key("guide_not_found")),
     ))?;
-    if guide.user_id != user_id {
-        return Err((
-            StatusCode::FORBIDDEN,
-            Json(crate::api_json::err_key("not_guide")),
-        ));
-    }
     if let Some(err_key) = crate::chain_off::me::order_accept_trust_gate(&store, user_id, guide) {
         return Err((
             StatusCode::FORBIDDEN,
@@ -45,10 +39,19 @@ pub async fn order_accept_impl(
             Json(json!({"error": "order_not_found", "message": "order_not_found"})),
         ))?
         .clone();
+    if !order_before.guide_id.is_nil() && order_before.guide_id != guide_row_id {
+        return Err((
+            StatusCode::FORBIDDEN,
+            Json(crate::api_json::err_key("not_guide")),
+        ));
+    }
     let order = store.orders.get_mut(&order_id).ok_or((
         StatusCode::NOT_FOUND,
         Json(json!({"error": "order_not_found", "message": "order_not_found"})),
     ))?;
+    if order.guide_id.is_nil() {
+        order.guide_id = guide_row_id;
+    }
     let now = Utc::now();
     if order.state == OrderState::Created {
         let deadline = order.created_at + chrono::Duration::seconds(state.config.accept_ttl_secs);

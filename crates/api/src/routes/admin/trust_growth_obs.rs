@@ -12,7 +12,8 @@ use crate::db::{
 };
 use crate::state::ApiMetaState;
 
-use super::{admin_db_pool_required, request_id_from_headers, require_admin_actor, write_admin_audit_log_best_effort};
+use super::admin_rbac::{self, PERM_READ, PERM_TRUST_GROWTH_WRITE};
+use super::{admin_db_pool_required, request_id_from_headers, write_admin_audit_log_best_effort};
 
 #[derive(Debug, Deserialize, Default)]
 pub struct TrustGrowthControlPatchBody {
@@ -41,8 +42,8 @@ async fn get_trust_growth_observability(
     State(state): State<ApiMetaState>,
     headers: HeaderMap,
 ) -> impl IntoResponse {
-    let _actor = match require_admin_actor(&state, &headers).await {
-        Ok(a) => a,
+    let _actor = match admin_rbac::require_admin_permission(&state, &headers, PERM_READ).await {
+        Ok((uid, _)) => uid,
         Err(resp) => return resp,
     };
     let pool = match admin_db_pool_required(&state) {
@@ -65,7 +66,8 @@ async fn patch_trust_growth_control(
     headers: HeaderMap,
     Json(body): Json<TrustGrowthControlPatchBody>,
 ) -> impl IntoResponse {
-    let (actor_id, _) = match require_admin_actor(&state, &headers).await {
+    let (actor_id, _) = match admin_rbac::require_admin_permission(&state, &headers, PERM_TRUST_GROWTH_WRITE).await
+    {
         Ok(a) => a,
         Err(resp) => return resp,
     };
@@ -140,7 +142,8 @@ async fn post_trust_growth_rollback_control(
     State(state): State<ApiMetaState>,
     headers: HeaderMap,
 ) -> impl IntoResponse {
-    let (actor_id, _) = match require_admin_actor(&state, &headers).await {
+    let (actor_id, _) = match admin_rbac::require_admin_permission(&state, &headers, PERM_TRUST_GROWTH_WRITE).await
+    {
         Ok(a) => a,
         Err(resp) => return resp,
     };

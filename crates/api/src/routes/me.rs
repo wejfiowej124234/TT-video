@@ -79,6 +79,48 @@ pub async fn put_me(
     not_impl_json("PUT /api/v1/me").into_response()
 }
 
+pub async fn get_me_wallets(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    if let Some(ref co) = state.chain_off {
+        match extract_user_with_session_check(&state, &headers).await {
+            Some(uid) => match chain_off::get_me_wallets_impl(co.clone(), uid).await {
+                Ok(j) => j.into_response(),
+                Err((code, j)) => (code, j).into_response(),
+            },
+            None => (
+                StatusCode::UNAUTHORIZED,
+                Json(json!({"error": "login_required", "message": "login_required"})),
+            )
+                .into_response(),
+        }
+    } else {
+        not_impl_json("GET /api/v1/me/wallets").into_response()
+    }
+}
+
+pub async fn get_me_role_applications(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    if let Some(ref co) = state.chain_off {
+        match extract_user_with_session_check(&state, &headers).await {
+            Some(uid) => match chain_off::get_me_role_applications_impl(co.clone(), uid).await {
+                Ok(j) => j.into_response(),
+                Err((code, j)) => (code, j).into_response(),
+            },
+            None => (
+                StatusCode::UNAUTHORIZED,
+                Json(json!({"error": "login_required", "message": "login_required"})),
+            )
+                .into_response(),
+        }
+    } else {
+        not_impl_json("GET /api/v1/me/role-applications").into_response()
+    }
+}
+
 pub async fn get_me_stats(
     State(state): State<ApiMetaState>,
     headers: HeaderMap,
@@ -226,5 +268,8 @@ pub fn router() -> Router<ApiMetaState> {
         .route("/api/v1/me", get(get_me).put(put_me))
         .route("/api/v1/me/", get(get_me).put(put_me))
         .route("/api/v1/me/stats", get(get_me_stats))
+        .route("/api/v1/me/wallets", get(get_me_wallets))
+        .route("/api/v1/me/role-applications", get(get_me_role_applications))
         .route("/api/v1/me/password", put(put_me_password))
+        .merge(super::me_profile_avatar::router())
 }

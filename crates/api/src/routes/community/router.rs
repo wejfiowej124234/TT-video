@@ -6,22 +6,34 @@ use crate::state::ApiMetaState;
 use super::dm_social::{
     delete_collect, delete_follow, get_conversation_messages, get_conversations,
     get_friends_list, get_friends_requests, get_friends_requests_sent, get_me_collects,
-    get_me_followers, get_me_following, get_me_likes_received, post_collect,
-    post_conversation_message, post_follow, post_friends_accept, post_friends_reject,
-    post_friends_request,
+    get_me_activity, get_me_followers, get_me_following, get_me_likes_received, get_me_notifications,
+    post_collect,
+    post_conversation_message, post_ensure_conversation, post_follow, post_friends_accept,
+    post_friends_reject, post_friends_request,
 };
 use super::feedback_reports::{
     get_community_report_detail, get_feedback, get_me_community_reports, post_community_report,
     post_community_report_appeal, post_feedback,
 };
+use super::media_asset_sessions::{
+    get_community_media_asset_status, post_community_media_asset_session_complete,
+    post_community_media_asset_session_create, post_community_media_asset_session_presign_parts,
+};
+use super::media_capabilities::get_community_media_capabilities;
+use super::media_upload::{get_serve_community_post_media, post_community_post_media_upload};
 use super::posts::{
-    create_post, delete_like, delete_post, get_comments, get_feed, get_me_posts, get_post_detail,
-    get_public_posts_by_tag_count, get_user_posts, patch_post, post_comment, post_like,
+    create_post, delete_like, delete_post, get_comments, get_explore_destinations, get_feed,
+    get_me_posts, get_post_detail, get_public_posts_by_tag_count, get_user_posts, patch_post,
+    post_comment, post_like,
 };
 
 pub fn router() -> Router<ApiMetaState> {
     Router::new()
         .route("/api/v1/community/feed", get(get_feed))
+        .route(
+            "/api/v1/community/explore/destinations",
+            get(get_explore_destinations),
+        )
         .route(
             "/api/v1/community/stats/posts-by-tag",
             get(get_public_posts_by_tag_count),
@@ -41,6 +53,10 @@ pub fn router() -> Router<ApiMetaState> {
         )
         .route("/api/v1/community/conversations", get(get_conversations))
         .route(
+            "/api/v1/community/conversations/ensure",
+            post(post_ensure_conversation),
+        )
+        .route(
             "/api/v1/community/conversations/:id/messages",
             get(get_conversation_messages).post(post_conversation_message),
         )
@@ -58,6 +74,8 @@ pub fn router() -> Router<ApiMetaState> {
             "/api/v1/community/me/likes-received",
             get(get_me_likes_received),
         )
+        .route("/api/v1/community/me/activity", get(get_me_activity))
+        .route("/api/v1/community/me/notifications", get(get_me_notifications))
         .route(
             "/api/v1/community/friends/request",
             post(post_friends_request),
@@ -101,5 +119,33 @@ pub fn router() -> Router<ApiMetaState> {
         .route(
             "/api/v1/community/reports/:id",
             get(get_community_report_detail),
+        )
+        .route(
+            "/api/v1/community/media/capabilities",
+            get(get_community_media_capabilities),
+        )
+        .route(
+            "/api/v1/community/posts/upload-media",
+            post(post_community_post_media_upload),
+        )
+        .route(
+            "/api/v1/uploads/community-posts/:name",
+            get(get_serve_community_post_media),
+        )
+        .route(
+            "/api/v1/community/media-assets/sessions",
+            post(post_community_media_asset_session_create),
+        )
+        .route(
+            "/api/v1/community/media-assets/sessions/:asset_id/parts",
+            post(post_community_media_asset_session_presign_parts),
+        )
+        .route(
+            "/api/v1/community/media-assets/sessions/:asset_id/complete",
+            post(post_community_media_asset_session_complete),
+        )
+        .route(
+            "/api/v1/community/media-assets/:asset_id",
+            get(get_community_media_asset_status),
         )
 }

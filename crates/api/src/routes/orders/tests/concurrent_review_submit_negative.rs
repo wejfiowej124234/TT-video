@@ -78,6 +78,7 @@ fn chain_off_state_completed_order_with_users(
             rejection_message: None,
             created_at: now,
             updated_at: now,
+            data_origin: "production".into(),
         },
     );
     store.guides_by_user.insert(guide_user_id, guide_row_id);
@@ -106,6 +107,9 @@ fn chain_off_state_completed_order_with_users(
             rating_tourist_confirmed: None,
             rating_guide_confirmed: None,
             chain_id: None,
+            data_origin: "production".into(),
+        order_kind: None,
+        market_listing_id: None,
         },
     );
     ChainOffState {

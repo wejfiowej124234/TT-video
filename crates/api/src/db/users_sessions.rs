@@ -41,6 +41,20 @@ pub async fn insert_user(
     Ok(())
 }
 
+/// 更新用户头像 URL（`POST …/profile-avatar` / commit / `PUT /me` 双写 PG）。
+pub async fn update_user_avatar_url(
+    pool: &PgPool,
+    user_id: Uuid,
+    avatar_url: &str,
+) -> Result<(), sqlx::Error> {
+    sqlx::query("UPDATE users SET avatar_url = $1, updated_at = now() WHERE id = $2")
+        .bind(avatar_url)
+        .bind(user_id)
+        .execute(pool)
+        .await?;
+    Ok(())
+}
+
 /// 插入会话（注册/登录时双写）
 pub async fn insert_session(pool: &PgPool, token: &str, user_id: Uuid) -> Result<(), sqlx::Error> {
     sqlx::query(
@@ -84,6 +98,41 @@ pub struct SessionRow {
     pub user_id: Uuid,
 }
 
+/// 按 id 加载用户（Admin / 门闸 / 子站写路径）。
+pub async fn get_user_by_id(pool: &PgPool, id: Uuid) -> Result<Option<UserRow>, sqlx::Error> {
+    let row = sqlx::query_as::<_, (Uuid, String, Option<String>, String, String, Option<String>, Option<String>, Option<String>, DateTime<Utc>, DateTime<Utc>)>(
+        "SELECT id, email, password_hash, role, kyc_status, nickname, avatar_url, default_wallet_address, created_at, updated_at FROM users WHERE id = $1",
+    )
+    .bind(id)
+    .fetch_optional(pool)
+    .await?;
+    Ok(row.map(
+        |(
+            id,
+            email,
+            password_hash,
+            role,
+            kyc_status,
+            nickname,
+            avatar_url,
+            default_wallet_address,
+            created_at,
+            updated_at,
+        )| UserRow {
+            id,
+            email,
+            password_hash,
+            role,
+            kyc_status,
+            nickname,
+            avatar_url,
+            default_wallet_address,
+            created_at,
+            updated_at,
+        },
+    ))
+}
+
 /// 加载所有用户（启动 hydrate）
 pub async fn list_users(pool: &PgPool) -> Result<Vec<UserRow>, sqlx::Error> {
     let rows = sqlx::query_as::<_, (Uuid, String, Option<String>, String, String, Option<String>, Option<String>, Option<String>, DateTime<Utc>, DateTime<Utc>)>(
@@ -119,6 +168,98 @@ pub async fn list_users(pool: &PgPool) -> Result<Vec<UserRow>, sqlx::Error> {
             },
         )
         .collect())
+}
+
+/// 用户会话列表行（`GET /api/v1/me/sessions`）
+#[derive(Debug, Clone)]
+pub struct UserSessionListRow {
+    pub token: String,
+    pub user_id: Uuid,
+    pub created_at: DateTime<Utc>,
+    pub last_seen_at: Option<DateTime<Utc>>,
+    pub expires_at: Option<DateTime<Utc>>,
+    pub idle_expires_at: Option<DateTime<Utc>>,
+    pub revoked_at: Option<DateTime<Utc>>,
+    pub revoked_reason: Option<String>,
+}
+
+/// 按用户列出会话（账号安全中心）
+pub async fn list_sessions_for_user(
+    pool: &PgPool,
+    user_id: Uuid,
+) -> Result<Vec<UserSessionListRow>, sqlx::Error> {
+    let rows = sqlx::query_as::<
+        _,
+        (
+            String,
+            Uuid,
+            DateTime<Utc>,
+            Option<DateTime<Utc>>,
+            Option<DateTime<Utc>>,
+            Option<DateTime<Utc>>,
+            Option<DateTime<Utc>>,
+            Option<String>,
+        ),
+    >(
+        r#"
+        SELECT token, user_id, created_at, last_seen_at, expires_at, idle_expires_at, revoked_at, revoked_reason
+        FROM sessions
+        WHERE user_id = $1
+        ORDER BY created_at DESC
+        "#,
+    )
+    .bind(user_id)
+    .fetch_all(pool)
+    .await?;
+    Ok(rows
+        .into_iter()
+        .map(
+            |(
+                token,
+                user_id,
+                created_at,
+                last_seen_at,
+                expires_at,
+                idle_expires_at,
+                revoked_at,
+                revoked_reason,
+            )| UserSessionListRow {
+                token,
+                user_id,
+                created_at,
+                last_seen_at,
+                expires_at,
+                idle_expires_at,
+                revoked_at,
+                revoked_reason,
+            },
+        )
+        .collect())
+}
+
+/// 按 token 后缀查找用户会话（`DELETE /api/v1/me/sessions/:suffix`）
+pub async fn find_session_token_by_suffix_for_user(
+    pool: &PgPool,
+    user_id: Uuid,
+    suffix: &str,
+) -> Result<Option<String>, sqlx::Error> {
+    if suffix.is_empty() {
+        return Ok(None);
+    }
+    let rows = list_sessions_for_user(pool, user_id).await?;
+    Ok(rows
+        .into_iter()
+        .find(|r| session_token_suffix(&r.token) == suffix || r.token == suffix)
+        .map(|r| r.token))
+}
+
+fn session_token_suffix(token: &str) -> String {
+    const SUFFIX_LEN: usize = 6;
+    if token.len() <= SUFFIX_LEN {
+        token.to_string()
+    } else {
+        token[token.len() - SUFFIX_LEN..].to_string()
+    }
 }
 
 /// 加载所有会话（启动 hydrate）
@@ -573,6 +714,36 @@ pub async fn get_user_default_wallet_by_id(
             .fetch_optional(pool)
             .await?;
     Ok(row.flatten())
+}
+
+/// **`PUT /api/v1/me`** · 昵称（PG 双写，与 chain_off 内存一致）。
+pub async fn update_user_nickname(
+    pool: &PgPool,
+    user_id: Uuid,
+    nickname: &str,
+) -> Result<(), sqlx::Error> {
+    sqlx::query("UPDATE users SET nickname = $1, updated_at = now() WHERE id = $2")
+        .bind(nickname)
+        .bind(user_id)
+        .execute(pool)
+        .await?;
+    Ok(())
+}
+
+/// **`PUT /api/v1/me`** · 主钱包列（**PD-004**；与 **`wallets.is_primary`** 双写由 `role_identity::sync_primary_wallet_dual_write` 完成）。
+pub async fn update_user_default_wallet_address(
+    pool: &PgPool,
+    user_id: Uuid,
+    default_wallet_address: &str,
+) -> Result<(), sqlx::Error> {
+    sqlx::query(
+        "UPDATE users SET default_wallet_address = $1, updated_at = now() WHERE id = $2",
+    )
+    .bind(default_wallet_address)
+    .bind(user_id)
+    .execute(pool)
+    .await?;
+    Ok(())
 }
 
 /// 更新用户密码（50-B2 put_me_password 真实实现）

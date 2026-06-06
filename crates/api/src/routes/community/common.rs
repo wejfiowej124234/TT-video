@@ -13,6 +13,41 @@ use crate::db;
 pub(super) const LIST_LIMIT: i64 = 100;
 pub(super) const FEED_LIMIT: i64 = 20;
 
+/// Git Bash MSYS may prefix site paths as `C:/Program Files/Git/api/...`; strip to `/api/...`.
+pub(super) fn normalize_persisted_site_media_path(s: &str) -> String {
+    let t = s.trim();
+    if t.is_empty() {
+        return String::new();
+    }
+    if t.starts_with('/')
+        || t.starts_with("http://")
+        || t.starts_with("https://")
+        || t.starts_with("blob:")
+        || t.starts_with("data:")
+    {
+        return t.to_string();
+    }
+    let lower = t.to_ascii_lowercase();
+    if let Some(idx) = lower.find("/api/") {
+        if idx > 0 {
+            return t[idx..].to_string();
+        }
+    }
+    if let Some(idx) = lower.find("/auth/") {
+        if idx > 0 {
+            return t[idx..].to_string();
+        }
+    }
+    t.to_string()
+}
+
+pub(super) fn normalize_persisted_site_media_paths(urls: &[String]) -> Vec<String> {
+    urls.iter()
+        .map(|u| normalize_persisted_site_media_path(u))
+        .filter(|u| !u.is_empty())
+        .collect()
+}
+
 /// 160：`mute`/`ban`/`shadow_ban` 且未过期时拦截社区 UGC 写；DB 异常 fail-closed（与无 pool 区分：`service_unavailable`）。
 pub(super) fn response_community_penalty_active(penalty_action: &str, errors_field: &str) -> Response {
     Json(json!({
@@ -130,6 +165,9 @@ pub(super) async fn enforce_community_post_abuse(
     pool: &PgPool,
     user_id: Uuid,
     body_trim: &str,
+    post_type: &str,
+    primary_media_asset_id: Option<Uuid>,
+    first_media_url: Option<&str>,
 ) -> Result<(), Response> {
     let p = db::get_community_abuse_policy(pool).await;
     let now = Utc::now();
@@ -166,7 +204,16 @@ pub(super) async fn enforce_community_post_abuse(
     }
     if p.post_duplicate_lookback_sec > 0 && !body_trim.is_empty() {
         let dup_since = now - Duration::seconds(i64::from(p.post_duplicate_lookback_sec));
-        match db::duplicate_post_body_exists(pool, user_id, body_trim, dup_since).await {
+        match db::duplicate_post_content_exists(
+            pool,
+            user_id,
+            body_trim,
+            post_type,
+            primary_media_asset_id,
+            first_media_url,
+            dup_since,
+        )
+        .await {
             Ok(true) => {
                 return Err(community_abuse_reject(
                     pool,
@@ -306,6 +353,36 @@ pub(super) fn json_profiles_to_author_map(profiles: Vec<serde_json::Value>) -> H
         .collect()
 }
 
+/// 首页 Feed：登录作者可见自己的 `test` 帖（公众面仍过滤 automation；与 `me/posts` 同源）。
+pub(super) async fn merge_viewer_own_non_production_feed_page(
+    pool: &PgPool,
+    viewer_id: Option<Uuid>,
+    mut posts: Vec<db::PostRow>,
+    page_limit: i64,
+    production_only: bool,
+    is_first_page: bool,
+    tag_filter: Option<&str>,
+) -> Result<Vec<db::PostRow>, sqlx::Error> {
+    if !production_only || !is_first_page {
+        return Ok(posts);
+    }
+    let Some(uid) = viewer_id else {
+        return Ok(posts);
+    };
+    let existing: HashSet<Uuid> = posts.iter().map(|p| p.id).collect();
+    let supplement =
+        db::list_viewer_own_non_production_feed_supplement(pool, uid, tag_filter, 8).await?;
+    let mut merged = Vec::with_capacity(supplement.len() + posts.len());
+    for p in supplement {
+        if !existing.contains(&p.id) {
+            merged.push(p);
+        }
+    }
+    merged.append(&mut posts);
+    merged.truncate(page_limit as usize);
+    Ok(merged)
+}
+
 pub(super) async fn posts_json_with_engagement_counts(
     pool: &PgPool,
     posts: Vec<db::PostRow>,
@@ -380,6 +457,12 @@ pub(super) async fn posts_json_with_engagement_counts(
                     (nn, a.clone(), role.clone(), *esc, w.clone())
                 })
                 .unwrap_or((short8, None, "tourist".to_string(), false, None));
+            let media_urls_json = normalize_persisted_site_media_paths(&p.media_urls);
+            let cover_url_json = p
+                .cover_url
+                .as_ref()
+                .map(|u| normalize_persisted_site_media_path(u))
+                .filter(|u| !u.is_empty());
             let mut row = json!({
                 "id": p.id.to_string(),
                 "user_id": p.user_id.to_string(),
@@ -387,8 +470,12 @@ pub(super) async fn posts_json_with_engagement_counts(
                 "post_type": p.post_type,
                 "destination": p.destination,
                 "tags": p.tags,
-                "media_urls": p.media_urls,
-                "cover_url": p.cover_url,
+                "media_urls": media_urls_json,
+                "cover_url": cover_url_json,
+                "primary_media_asset_id": match p.primary_media_asset_id {
+                    Some(id) => json!(id.to_string()),
+                    None => json!(null),
+                },
                 "visibility_status": p.visibility_status,
                 "created_at": p.created_at.to_rfc3339(),
                 "like_count": lc,
@@ -546,3 +633,24 @@ pub(super) fn comment_body_visible_to_viewer(
     viewer == Some(comment_author)
 }
 
+pub(crate) use super::embedded_http_urls::validate_market_listing_payload_embedded_http_urls;
+
+#[cfg(test)]
+mod normalize_media_path_tests {
+    use super::normalize_persisted_site_media_path;
+
+    #[test]
+    fn strips_git_bash_msys_prefix_from_api_path() {
+        let polluted = "C:/Program Files/Git/api/v1/uploads/community-posts/x.png";
+        assert_eq!(
+            normalize_persisted_site_media_path(polluted),
+            "/api/v1/uploads/community-posts/x.png"
+        );
+    }
+
+    #[test]
+    fn keeps_clean_site_relative_paths() {
+        let clean = "/api/v1/uploads/community-posts/x.png";
+        assert_eq!(normalize_persisted_site_media_path(clean), clean);
+    }
+}

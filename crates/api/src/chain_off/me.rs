@@ -6,6 +6,7 @@ use serde_json::{json, Map, Value as JsonValue};
 use uuid::Uuid;
 
 use super::{ChainOffState, ChainOffStore, PutMeBody, ReviewRow};
+use crate::db;
 use traveltrust_core::OrderState;
 
 /// 87：对外 API 角色标签，与存量 `users.role` 并存（`tourist` → `traveler`；**697** 起 `traveler` 落库则直通）。
@@ -337,6 +338,90 @@ fn me_trust_json(
     JsonValue::Object(m)
 }
 
+/// PD-009：`GET /me.trust` 扩展 — 有 **`db_pool`** 时从 PG **`acquisition_trust_snapshot`** 投影（与前端 **`meTrust.ts`** 同源字段）。
+async fn merge_acquisition_trust_from_pg(
+    pool: &sqlx::PgPool,
+    user_id: Uuid,
+    user: &super::UserRow,
+    guide: Option<&super::GuideRow>,
+    open_disputes: usize,
+    trust: &mut JsonValue,
+) {
+    let identity_status = identity_status_for_trust(user, guide);
+    let (risk_level, _) = risk_level_for_trust(open_disputes);
+    let db_user = match db::get_user_by_id(pool, user_id).await {
+        Ok(Some(u)) => u,
+        Ok(None) => db::UserRow {
+            id: user.id,
+            email: user.email.clone(),
+            password_hash: None,
+            role: user.role.clone(),
+            kyc_status: user.kyc_status.clone(),
+            nickname: user.nickname.clone(),
+            avatar_url: user.avatar_url.clone(),
+            default_wallet_address: user.default_wallet_address.clone(),
+            created_at: user.created_at,
+            updated_at: user.updated_at,
+        },
+        Err(e) => {
+            eprintln!("WARN: get_user_by_id for acquisition trust snapshot: {e}");
+            return;
+        }
+    };
+    let snap = match db::acquisition_trust_snapshot(
+        pool,
+        user_id,
+        &db_user,
+        identity_status,
+        risk_level,
+    )
+    .await
+    {
+        Ok(s) => s,
+        Err(e) => {
+            eprintln!("WARN: acquisition_trust_snapshot for GET /me: {e}");
+            return;
+        }
+    };
+    let JsonValue::Object(m) = trust else {
+        return;
+    };
+    m.insert(
+        "acquisition_trust_score".to_string(),
+        json!(snap.trust_score),
+    );
+    m.insert(
+        "acquisition_publish_eligible".to_string(),
+        json!(snap.publish_eligible),
+    );
+    m.insert(
+        "acquisition_publish_bond_waived".to_string(),
+        json!(snap.bond_waived_by_trust),
+    );
+    m.insert(
+        "acquisition_publish_bond_active".to_string(),
+        json!(snap.has_publish_bond),
+    );
+    if let Some(d) = snap.bond_display {
+        m.insert("acquisition_publish_bond_display".to_string(), json!(d));
+    }
+    m.insert(
+        "acquisition_listings_published_24h".to_string(),
+        json!(snap.listings_published_24h),
+    );
+    m.insert(
+        "acquisition_publish_suspended".to_string(),
+        json!(snap.publish_suspended),
+    );
+    m.insert(
+        "acquisition_fulfillment_bond_active".to_string(),
+        json!(snap.has_fulfillment_bond),
+    );
+    if let Some(d) = snap.fulfillment_bond_display {
+        m.insert("acquisition_fulfillment_bond_display".to_string(), json!(d));
+    }
+}
+
 /// 90 §6 Reputation API（Partial）：向导侧加权均分 + 全角色「已提交评价」权重合计（与 POST …/reviews 同源 ReviewWeight）
 fn me_reputation_json(
     role: &str,
@@ -507,6 +592,9 @@ pub async fn get_me_impl(
     if let JsonValue::Object(ref mut m) = trust {
         m.insert("reputation".to_string(), reputation);
     }
+    if let Some(ref pool) = state.db_pool {
+        merge_acquisition_trust_from_pg(pool, user_id, user, guide_ref, open_d, &mut trust).await;
+    }
     Ok(Json(json!({
         "status": "ok",
         "user": {
@@ -518,6 +606,11 @@ pub async fn get_me_impl(
             "nickname": user.nickname,
             "avatar_url": user.avatar_url,
             "default_wallet_address": user.default_wallet_address,
+            "email_verified_at": store
+                .user_email_verified_at
+                .get(&user_id)
+                .map(|t| t.to_rfc3339()),
+            "settings_preferences": store.user_settings_preferences.get(&user_id).cloned(),
             "created_at": user.created_at.to_rfc3339()
         },
         "guide": guide_json,
@@ -532,21 +625,74 @@ pub async fn put_me_impl(
     user_id: Uuid,
     Json(body): Json<PutMeBody>,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    let nickname_patch = body.nickname.clone();
+    let avatar_patch = body.avatar_url.clone();
+    let wallet_patch = body.default_wallet_address.clone();
     let mut store = state.store.write().await;
-    let user = store.users.get_mut(&user_id).ok_or((
+    {
+        let user = store.users.get_mut(&user_id).ok_or((
+            StatusCode::NOT_FOUND,
+            Json(crate::api_json::err_key("user_not_found")),
+        ))?;
+        if let Some(ref n) = nickname_patch {
+            user.nickname = Some(n.clone());
+        }
+        if let Some(ref a) = avatar_patch {
+            user.avatar_url = Some(a.clone());
+        }
+        if let Some(ref w) = wallet_patch {
+            user.default_wallet_address = Some(w.clone());
+        }
+        user.updated_at = chrono::Utc::now();
+    }
+    let updated_at = store
+        .users
+        .get(&user_id)
+        .map(|u| u.updated_at)
+        .unwrap_or_else(chrono::Utc::now);
+    if let Some(ref pool) = state.db_pool {
+        if let Some(ref nickname) = nickname_patch {
+            if let Err(e) = crate::db::update_user_nickname(pool, user_id, nickname).await {
+                eprintln!(
+                    "[put_me] update_user_nickname user_id={user_id} error={e}"
+                );
+            }
+        }
+        if let Some(ref avatar) = avatar_patch {
+            if let Err(e) = crate::db::update_user_avatar_url(pool, user_id, avatar).await {
+                eprintln!("[put_me] update_user_avatar_url user_id={user_id} error={e}");
+            }
+        }
+        if let Some(ref wallet) = wallet_patch {
+            if let Err(e) =
+                crate::db::update_user_default_wallet_address(pool, user_id, wallet).await
+            {
+                eprintln!(
+                    "[put_me] update_user_default_wallet_address user_id={user_id} error={e}"
+                );
+            }
+            if let Err(e) = crate::db::sync_primary_wallet_dual_write(
+                pool,
+                user_id,
+                wallet,
+                updated_at,
+            )
+            .await
+            {
+                eprintln!(
+                    "[put_me] sync_primary_wallet_dual_write user_id={user_id} error={e}"
+                );
+            }
+        }
+    }
+    if let Some(prefs) = body.settings_preferences {
+        store.user_settings_preferences.insert(user_id, prefs);
+    }
+    let user = store.users.get(&user_id).ok_or((
         StatusCode::NOT_FOUND,
         Json(crate::api_json::err_key("user_not_found")),
     ))?;
-    if let Some(n) = body.nickname {
-        user.nickname = Some(n);
-    }
-    if let Some(a) = body.avatar_url {
-        user.avatar_url = Some(a);
-    }
-    if let Some(w) = body.default_wallet_address {
-        user.default_wallet_address = Some(w);
-    }
-    user.updated_at = chrono::Utc::now();
+    let settings_preferences = store.user_settings_preferences.get(&user_id).cloned();
     Ok(Json(json!({
         "status": "ok",
         "user": {
@@ -557,7 +703,73 @@ pub async fn put_me_impl(
             "nickname": user.nickname,
             "avatar_url": user.avatar_url,
             "default_wallet_address": user.default_wallet_address,
+            "email_verified_at": store
+                .user_email_verified_at
+                .get(&user_id)
+                .map(|t| t.to_rfc3339()),
+            "settings_preferences": settings_preferences,
             "updated_at": user.updated_at.to_rfc3339()
         }
     })))
+}
+
+/// **`GET /api/v1/me/wallets`**（**PD-004** · 有 PG 读表；无 PG 时由内存主钱包合成）。
+pub async fn get_me_wallets_impl(
+    state: ChainOffState,
+    user_id: Uuid,
+) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    if let Some(ref pool) = state.db_pool {
+        let wallets = crate::db::list_wallets_for_user(pool, user_id)
+            .await
+            .map_err(|e| {
+                eprintln!("[get_me_wallets] list_wallets_for_user error={e}");
+                (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    Json(crate::api_json::err_key("internal_error")),
+                )
+            })?;
+        return Ok(Json(json!({ "status": "ok", "wallets": wallets })));
+    }
+    let store = state.store.read().await;
+    let user = store.users.get(&user_id).ok_or((
+        StatusCode::NOT_FOUND,
+        Json(crate::api_json::err_key("user_not_found")),
+    ))?;
+    let wallets = user
+        .default_wallet_address
+        .as_ref()
+        .filter(|a| !a.trim().is_empty())
+        .map(|addr| {
+            vec![json!({
+                "id": format!("memory-primary-{user_id}"),
+                "address": addr,
+                "label": null,
+                "is_primary": true,
+                "verified_at": null,
+                "created_at": user.updated_at.to_rfc3339(),
+                "updated_at": user.updated_at.to_rfc3339()
+            })]
+        })
+        .unwrap_or_default();
+    Ok(Json(json!({ "status": "ok", "wallets": wallets })))
+}
+
+/// **`GET /api/v1/me/role-applications`**（**PD-007** · 有 PG 读 **`role_applications`**）。
+pub async fn get_me_role_applications_impl(
+    state: ChainOffState,
+    user_id: Uuid,
+) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    if let Some(ref pool) = state.db_pool {
+        let applications = crate::db::list_role_applications_for_user(pool, user_id)
+            .await
+            .map_err(|e| {
+                eprintln!("[get_me_role_applications] list error={e}");
+                (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    Json(crate::api_json::err_key("internal_error")),
+                )
+            })?;
+        return Ok(Json(json!({ "status": "ok", "applications": applications })));
+    }
+    Ok(Json(json!({ "status": "ok", "applications": [] })))
 }

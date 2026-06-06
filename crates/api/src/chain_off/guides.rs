@@ -89,38 +89,97 @@ pub async fn guides_list_impl(
     city: Option<String>,
     language: Option<String>,
     service_type: Option<String>,
-) -> Json<serde_json::Value> {
+    country_code: Option<String>,
+    page: super::OrderListPage,
+) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
     let store = state.store.read().await;
-    let list: Vec<serde_json::Value> = store
+    let country_trim = country_code
+        .as_deref()
+        .map(|s| s.trim())
+        .filter(|s| !s.is_empty());
+    let filtered: Vec<&GuideRow> = store
         .guides
         .values()
         .filter(|g| g.status == "active")
+        .filter(|g| !super::market_public_surface::is_placeholder_global_guide(g))
         .filter(|g| {
-            city.as_ref()
-                .map_or(true, |c| g.city.eq_ignore_ascii_case(c))
+            !super::public_catalog_surface_filter_enabled()
+                || !super::should_hide_guide_from_public_catalog(g, &store)
+        })
+        .filter(|g| {
+            country_trim.map_or(true, |cc| g.country_code.eq_ignore_ascii_case(cc))
+                && city.as_ref()
+                    .map_or(true, |c| g.city.eq_ignore_ascii_case(c))
                 && language.as_ref().map_or(true, |l| {
-                    g.languages.iter().any(|x| x.eq_ignore_ascii_case(l))
+                    super::market_guide_filter::guide_matches_language_filter(&g.languages, l)
                 })
                 && service_type.as_ref().map_or(true, |s| {
-                    g.service_types.iter().any(|x| x.eq_ignore_ascii_case(s))
+                    super::market_guide_filter::guide_matches_service_filter(&g.service_types, s)
                 })
         })
-        .map(|g| {
-            json!({
-                "id": g.id.to_string(),
-                "user_id": g.user_id.to_string(),
-                "city": g.city,
-                "country_code": g.country_code,
-                "languages": g.languages,
-                "service_types": g.service_types,
-                "bio": g.bio,
-                "stake_amount": g.stake_amount,
-                "status": g.status,
-                "created_at": g.created_at.to_rfc3339()
-            })
-        })
         .collect();
-    Json(json!({ "status": "ok", "items": list }))
+    let visible = super::market_public_surface::dedupe_guides_latest_per_user(filtered);
+    let mut guides: Vec<&GuideRow> = visible;
+
+    if let Some(lim) = page.limit {
+        guides.sort_by(|a, b| (b.created_at, b.id).cmp(&(a.created_at, a.id)));
+        let start = match page.cursor {
+            None => 0usize,
+            Some(cid) => guides
+                .iter()
+                .position(|g| g.id == cid)
+                .map(|i| i + 1)
+                .ok_or_else(|| {
+                    (
+                        StatusCode::BAD_REQUEST,
+                        Json(crate::api_json::err_key_detail(
+                            "invalid_cursor",
+                            "cursor must be the id field of the last item from the previous page",
+                        )),
+                    )
+                })?,
+        };
+        let total = guides.len();
+        let page_guides: Vec<_> = guides.into_iter().skip(start).take(lim).collect();
+        let has_more = start + page_guides.len() < total;
+        let next_cursor = if has_more {
+            page_guides.last().map(|g| g.id.to_string())
+        } else {
+            None
+        };
+        let list: Vec<serde_json::Value> = page_guides
+            .iter()
+            .map(|g| guide_list_card_json(g))
+            .collect();
+        return Ok(Json(json!({
+            "status": "ok",
+            "items": list,
+            "page": {
+                "limit": lim,
+                "next_cursor": next_cursor,
+                "has_more": has_more
+            }
+        })));
+    }
+
+    guides.sort_by(|a, b| b.created_at.cmp(&a.created_at));
+    let list: Vec<serde_json::Value> = guides.iter().map(|g| guide_list_card_json(g)).collect();
+    Ok(Json(json!({ "status": "ok", "items": list })))
+}
+
+fn guide_list_card_json(g: &GuideRow) -> serde_json::Value {
+    json!({
+        "id": g.id.to_string(),
+        "user_id": g.user_id.to_string(),
+        "city": g.city,
+        "country_code": g.country_code,
+        "languages": g.languages,
+        "service_types": g.service_types,
+        "bio": g.bio,
+        "stake_amount": g.stake_amount,
+        "status": g.status,
+        "created_at": g.created_at.to_rfc3339()
+    })
 }
 
 /// Admin 列表/详情共用：与 `GET /api/v1/admin/guides` 行同形；不含 `passport_number` / `passport_number_hash`。
@@ -163,6 +222,20 @@ pub async fn guide_get_impl(
         StatusCode::NOT_FOUND,
         Json(crate::api_json::err_key("guide_not_found")),
     ))?;
+    if super::market_public_surface::is_placeholder_global_guide(g) {
+        return Err((
+            StatusCode::NOT_FOUND,
+            Json(crate::api_json::err_key("guide_not_found")),
+        ));
+    }
+    if super::public_catalog_surface_filter_enabled()
+        && super::should_hide_guide_from_public_catalog(g, &store)
+    {
+        return Err((
+            StatusCode::NOT_FOUND,
+            Json(crate::api_json::err_key("guide_not_found")),
+        ));
+    }
     Ok(Json(json!({
         "status": "ok",
         "guide": {
@@ -362,13 +435,29 @@ pub async fn guide_create_impl(
         hasher.update(s.as_bytes());
         format!("{:x}", hasher.finalize())
     });
+    let user_email = store
+        .users
+        .get(&user_id)
+        .map(|u| u.email.clone())
+        .unwrap_or_default();
+    let data_origin = super::infer_entity_data_origin_from_email(&user_email).to_string();
+    let languages_store = body
+        .languages
+        .as_ref()
+        .map(|v| super::market_guide_filter::normalize_languages_for_storage(v))
+        .unwrap_or_default();
+    let service_types_store = body
+        .service_types
+        .as_ref()
+        .map(|v| super::market_guide_filter::normalize_service_types_for_storage(v))
+        .unwrap_or_default();
     let guide = GuideRow {
         id,
         user_id,
         city: city_trim.to_string(),
         country_code: cc_norm.to_string(),
-        languages: body.languages.unwrap_or_default(),
-        service_types: body.service_types.unwrap_or_default(),
+        languages: languages_store,
+        service_types: service_types_store,
         bio: body.bio.clone(),
         wallet_address: wallet_to_store,
         real_name: body.real_name.clone(),
@@ -380,6 +469,7 @@ pub async fn guide_create_impl(
         status: "pending".to_string(),
         rejection_codes: vec![],
         rejection_message: None,
+        data_origin,
         created_at: now,
         updated_at: now,
     };
@@ -387,7 +477,7 @@ pub async fn guide_create_impl(
     store.guides_by_user.insert(user_id, id);
 
     if let Some(ref pool) = state.db_pool {
-        if let Err(e) = crate::db::insert_guide(
+        if let Err(e) = crate::db::insert_guide_with_data_origin(
             pool,
             guide.id,
             guide.user_id,
@@ -406,6 +496,7 @@ pub async fn guide_create_impl(
             &guide.status,
             guide.created_at,
             guide.updated_at,
+            &guide.data_origin,
         )
         .await
         {

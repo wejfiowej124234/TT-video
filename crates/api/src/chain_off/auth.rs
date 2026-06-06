@@ -4,7 +4,7 @@ use axum::{
     http::{HeaderMap, StatusCode},
     Json,
 };
-use chrono::Utc;
+use chrono::{Duration, Utc};
 use serde::Deserialize;
 use serde_json::json;
 use uuid::Uuid;
@@ -40,9 +40,13 @@ fn is_self_serve_registration_role(role: &str) -> bool {
     matches!(role, "tourist" | "traveler" | "provider" | "region_steward")
 }
 
-/// **`users.role`** 存储值（与自服务请求一致；**697**：`traveler` 不再归一为 `tourist`）。
+/// **`users.role`** 存储值（**PD-003**）：自服务注册 **仅** 即时落 **`traveler`/`tourist`**；
+/// **`provider`/`region_steward`** 意图 **不** 直写 `users.role`，须 **`role_applications` 审核后** 生效。
 fn registration_role_stored(role_after_trim: &str) -> String {
-    role_after_trim.to_string()
+    match role_after_trim {
+        "provider" | "region_steward" => "traveler".to_string(),
+        other => other.to_string(),
+    }
 }
 
 #[derive(Deserialize)]
@@ -56,6 +60,14 @@ pub struct AuthRegisterBody {
     /// 自服务注册角色（缺省 `tourist`）。**693**/**695**/**697**：允许 `tourist` \| **`traveler`**（**87** 协议名，**697** 起存 **`traveler`**）\| `provider` \| `region_steward`；`guide` 须走 `/guide/register`；`arbitrator` 仅 **`P3_SEED_ARBITRATOR_EMAIL`** 命中；`admin`/`super_admin` 等须 Admin 审批。
     #[serde(default)]
     pub role: Option<String>,
+    /// 注册前邮箱 6 位验证码（`POST /auth/register/send-verification-code`）
+    #[serde(default)]
+    pub verification_code: Option<String>,
+}
+
+#[derive(Deserialize)]
+pub struct AuthRegisterSendVerificationCodeBody {
+    pub email: String,
 }
 
 #[derive(Deserialize)]
@@ -69,6 +81,8 @@ pub struct PutMeBody {
     pub nickname: Option<String>,
     pub avatar_url: Option<String>,
     pub default_wallet_address: Option<String>,
+    /// 设置偏好 JSON（通知开关 · 社区可见性意向）
+    pub settings_preferences: Option<serde_json::Value>,
 }
 
 #[derive(Deserialize)]
@@ -129,6 +143,13 @@ pub async fn auth_register(
             Json(crate::api_json::err_key("email_already_registered")),
         ));
     }
+    if let Err(err_key) = verify_register_verification_code(&mut store, email_trim, &body.verification_code)
+    {
+        return Err((
+            StatusCode::BAD_REQUEST,
+            Json(crate::api_json::err_key(err_key)),
+        ));
+    }
     let id = Uuid::new_v4();
     let now = Utc::now();
     let role = if std::env::var("P3_SEED_ARBITRATOR_EMAIL")
@@ -182,6 +203,11 @@ pub async fn auth_register(
         updated_at: now,
     };
     store.users.insert(id, user.clone());
+    let verify_dev_token = if state.db_pool.is_none() {
+        Some(issue_chain_off_email_verify_token(&mut store, id))
+    } else {
+        None
+    };
     // 有 DB 时不透明会话令牌（不可从 user_id 推导）；纯内存模式保留 bearer_<uuid> 便于联调。
     let token = if state.db_pool.is_some() {
         format!("tts_{}", Uuid::new_v4())
@@ -243,6 +269,20 @@ pub async fn auth_register(
                     })),
                 ));
             }
+            if let Some(ref w) = user.default_wallet_address {
+                if let Err(e) = crate::db::sync_primary_wallet_dual_write(
+                    pool,
+                    user_id_reg,
+                    w,
+                    user.updated_at,
+                )
+                .await
+                {
+                    eprintln!(
+                        "[audit] strict auth_register: sync_primary_wallet_dual_write user_id={user_id_reg} error={e}"
+                    );
+                }
+            }
         } else {
             if let Err(e) = crate::db::insert_user(
                 pool,
@@ -272,15 +312,238 @@ pub async fn auth_register(
                     user.id, e
                 );
             }
+            if let Some(ref w) = user.default_wallet_address {
+                if let Err(e) = crate::db::sync_primary_wallet_dual_write(
+                    pool,
+                    user.id,
+                    w,
+                    user.updated_at,
+                )
+                .await
+                {
+                    eprintln!(
+                        "[audit] auth_register: sync_primary_wallet_dual_write user_id={} error={e}",
+                        user.id
+                    );
+                }
+            }
         }
     }
 
-    Ok(Json(json!({
+    let mut reg_json = json!({
         "status": "ok",
         "user_id": user.id.to_string(),
         "token": token,
         "role": user.role
-    })))
+    });
+    if let Some(vt) = verify_dev_token {
+        if let Some(obj) = reg_json.as_object_mut() {
+            obj.insert("email_verification_dev_token".to_string(), json!(vt));
+        }
+    }
+    Ok(Json(reg_json))
+}
+
+fn register_verification_required() -> bool {
+    match std::env::var("TRAVELTRUST_AUTH_REGISTER_REQUIRE_CODE")
+        .ok()
+        .as_deref()
+        .map(str::trim)
+    {
+        Some("0") => false,
+        Some("1") => true,
+        _ => !cfg!(test),
+    }
+}
+
+fn normalize_register_email_key(email: &str) -> String {
+    email.trim().to_ascii_lowercase()
+}
+
+fn generate_register_verification_code() -> String {
+    let n = Uuid::new_v4().as_u128() % 1_000_000;
+    format!("{:06}", n)
+}
+
+fn is_valid_register_verification_code_format(code: &str) -> bool {
+    code.len() == 6 && code.chars().all(|c| c.is_ascii_digit())
+}
+
+fn verify_register_verification_code(
+    store: &mut super::ChainOffStore,
+    email_trim: &str,
+    verification_code: &Option<String>,
+) -> Result<(), &'static str> {
+    if !register_verification_required() {
+        return Ok(());
+    }
+    let code_trim = verification_code
+        .as_ref()
+        .map(|s| s.trim())
+        .filter(|s| !s.is_empty());
+    let Some(code) = code_trim else {
+        return Err("verification_code_required");
+    };
+    if !is_valid_register_verification_code_format(code) {
+        return Err("verification_code_invalid");
+    }
+    let email_key = normalize_register_email_key(email_trim);
+    let Some(entry) = store.register_verification_codes.get(&email_key) else {
+        return Err("verification_code_invalid");
+    };
+    if entry.expires_at <= Utc::now() {
+        store.register_verification_codes.remove(&email_key);
+        return Err("verification_code_expired");
+    }
+    if entry.code != code {
+        return Err("verification_code_invalid");
+    }
+    store.register_verification_codes.remove(&email_key);
+    Ok(())
+}
+
+async fn dispatch_register_verification_code_email(to_email: &str, code: &str) -> bool {
+    let transport = std::env::var("TRAVELTRUST_EMAIL_TRANSPORT")
+        .unwrap_or_default()
+        .trim()
+        .to_ascii_lowercase();
+    let subject = "TravelTrust registration verification code";
+    match transport.as_str() {
+        "log" => {
+            eprintln!(
+                "{}",
+                json!({
+                    "traveltrust_email_outbound": true,
+                    "kind": "register_verification_code",
+                    "to": to_email,
+                    "subject": subject,
+                    "code": code,
+                })
+            );
+            true
+        }
+        _ => false,
+    }
+}
+
+fn register_verification_returns_dev_code() -> bool {
+    match std::env::var("TRAVELTRUST_AUTH_REGISTER_DEV_CODE_IN_RESPONSE")
+        .ok()
+        .as_deref()
+        .map(str::trim)
+    {
+        Some("1") | Some("true") => return true,
+        Some("0") | Some("false") => return false,
+        _ => {}
+    }
+    let transport = std::env::var("TRAVELTRUST_EMAIL_TRANSPORT")
+        .unwrap_or_default()
+        .trim()
+        .to_ascii_lowercase();
+    transport.is_empty() || transport == "off" || transport == "log"
+}
+
+pub async fn auth_register_send_verification_code(
+    state: ChainOffState,
+    Json(body): Json<AuthRegisterSendVerificationCodeBody>,
+) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    let email_trim = body.email.trim();
+    if !is_valid_email_format(&body.email) {
+        return Err((
+            StatusCode::BAD_REQUEST,
+            Json(crate::api_json::err_key_detail(
+                "invalid_email",
+                "email format invalid or too long",
+            )),
+        ));
+    }
+    let email_key = normalize_register_email_key(email_trim);
+    {
+        let store = state.store.read().await;
+        if store
+            .users
+            .values()
+            .any(|u| u.email.eq_ignore_ascii_case(email_trim))
+        {
+            return Err((
+                StatusCode::CONFLICT,
+                Json(crate::api_json::err_key("email_already_registered")),
+            ));
+        }
+        if let Some(entry) = store.register_verification_codes.get(&email_key) {
+            if entry.sent_at + Duration::seconds(60) > Utc::now() {
+                return Err((
+                    StatusCode::TOO_MANY_REQUESTS,
+                    Json(crate::api_json::err_key("verification_code_rate_limited")),
+                ));
+            }
+        }
+    }
+    let code = generate_register_verification_code();
+    let now = Utc::now();
+    let entry = super::RegisterVerificationCodeEntry {
+        code: code.clone(),
+        expires_at: now + Duration::minutes(10),
+        sent_at: now,
+    };
+    {
+        let mut store = state.store.write().await;
+        store
+            .register_verification_codes
+            .insert(email_key, entry);
+    }
+    let email_sent = dispatch_register_verification_code_email(email_trim, &code).await;
+    let mut resp = json!({
+        "status": "ok",
+        "message": "verification_code_sent",
+        "email_sent": email_sent,
+    });
+    if register_verification_returns_dev_code() {
+        if let Some(obj) = resp.as_object_mut() {
+            obj.insert(
+                "registration_verification_dev_code".to_string(),
+                json!(code),
+            );
+        }
+    }
+    Ok(Json(resp))
+}
+
+fn issue_chain_off_email_verify_token(store: &mut super::ChainOffStore, user_id: Uuid) -> String {
+    let token = format!("ev_{}", Uuid::new_v4().simple());
+    store.email_verify_tokens.insert(token.clone(), user_id);
+    token
+}
+
+async fn resolve_session_user_id(
+    state: &ChainOffState,
+    token: &str,
+) -> Result<Uuid, (StatusCode, Json<serde_json::Value>)> {
+    if let Some(ref pool) = state.db_pool {
+        match crate::db::get_user_id_by_token(pool, token).await {
+            Ok(Some(uid)) => Ok(uid),
+            Ok(None) => Err((
+                StatusCode::UNAUTHORIZED,
+                Json(crate::api_json::err_key_detail(
+                    "login_required",
+                    "session not found or expired",
+                )),
+            )),
+            Err(_) => Err((
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(crate::api_json::err_key("db_error")),
+            )),
+        }
+    } else {
+        let store = state.store.read().await;
+        store.sessions.get(token).copied().ok_or((
+            StatusCode::UNAUTHORIZED,
+            Json(crate::api_json::err_key_detail(
+                "login_required",
+                "session not found or expired",
+            )),
+        ))
+    }
 }
 
 pub async fn auth_login(
@@ -367,6 +630,72 @@ pub async fn auth_login(
 }
 
 /// 开发/测试用：当 SEED_TEST_ACCOUNTS=1 且 store 中尚无测试账号时，注入游客与向导。
+/// **① 仅开发**：`POST /auth/seed-test-accounts` body **`promote_admin_email`** → **admin**（内存 + PG 同步）。
+pub async fn seed_promote_user_to_admin_if_enabled(
+    state: &ChainOffState,
+    email: &str,
+) -> Result<(), &'static str> {
+    if std::env::var("SEED_TEST_ACCOUNTS").as_deref() != Ok("1") {
+        return Err("seed_test_accounts_disabled");
+    }
+    let email_norm = email.trim().to_ascii_lowercase();
+    if email_norm.is_empty() || !is_valid_email_format(&email_norm) {
+        return Err("invalid_email");
+    }
+    let uid = {
+        let store = state.store.read().await;
+        store
+            .users
+            .values()
+            .find(|u| u.email.trim().eq_ignore_ascii_case(&email_norm))
+            .map(|u| u.id)
+    };
+    let Some(uid) = uid else {
+        return Err("user_not_found");
+    };
+    if let Some(ref pool) = state.db_pool {
+        let r = sqlx::query(
+            r#"UPDATE users SET role = 'admin', updated_at = now() WHERE id = $1 AND role NOT IN ('admin', 'super_admin')"#,
+        )
+        .bind(uid)
+        .execute(pool)
+        .await
+        .map_err(|_| "db_failed")?;
+        if r.rows_affected() == 0 {
+            let role: Option<String> = sqlx::query_scalar(
+                r#"SELECT role::text FROM users WHERE id = $1"#,
+            )
+            .bind(uid)
+            .fetch_optional(pool)
+            .await
+            .map_err(|_| "db_failed")?;
+            if !matches!(role.as_deref(), Some("admin") | Some("super_admin")) {
+                return Err("user_not_found");
+            }
+        }
+    }
+    let mut store = state.store.write().await;
+    if let Some(u) = store.users.get_mut(&uid) {
+        if let Some(ref pool) = state.db_pool {
+            if let Ok(Some(role)) = sqlx::query_scalar::<_, String>(
+                r#"SELECT role::text FROM users WHERE id = $1"#,
+            )
+            .bind(uid)
+            .fetch_optional(pool)
+            .await
+            {
+                if role == "admin" || role == "super_admin" {
+                    u.role = role;
+                }
+            }
+        } else if u.role != "super_admin" {
+            u.role = "admin".to_string();
+        }
+        u.updated_at = Utc::now();
+    }
+    Ok(())
+}
+
 pub async fn seed_test_accounts_if_empty(state: &ChainOffState) {
     const SEED_PASSWORD: &str = "Test123!";
     const TOURIST_EMAIL: &str = "tourist@test.com";
@@ -376,6 +705,8 @@ pub async fn seed_test_accounts_if_empty(state: &ChainOffState) {
     let has_tourist = store.users.values().any(|u| u.email == TOURIST_EMAIL);
     let has_guide = store.users.values().any(|u| u.email == GUIDE_EMAIL);
     if has_tourist && has_guide {
+        drop(store);
+        seed_me_settings_security_notification_fixture(state).await;
         return;
     }
     let password_hash = match bcrypt::hash(SEED_PASSWORD, bcrypt::DEFAULT_COST) {
@@ -484,6 +815,7 @@ pub async fn seed_test_accounts_if_empty(state: &ChainOffState) {
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
+            data_origin: "test".into(),
             created_at: now,
             updated_at: now,
         };
@@ -508,7 +840,7 @@ pub async fn seed_test_accounts_if_empty(state: &ChainOffState) {
                         "[audit] strict seed: guide insert_user failed — skipped memory: {}",
                         e
                     );
-                } else if let Err(e) = crate::db::insert_guide(
+                } else if let Err(e) = crate::db::insert_guide_with_data_origin(
                     pool,
                     guide_row.id,
                     guide_row.user_id,
@@ -527,6 +859,7 @@ pub async fn seed_test_accounts_if_empty(state: &ChainOffState) {
                     &guide_row.status,
                     guide_row.created_at,
                     guide_row.updated_at,
+                    &guide_row.data_origin,
                 )
                 .await
                 {
@@ -561,7 +894,7 @@ pub async fn seed_test_accounts_if_empty(state: &ChainOffState) {
                 {
                     eprintln!("[audit] seed: guide insert_user failed: {}", e);
                 }
-                if let Err(e) = crate::db::insert_guide(
+                if let Err(e) = crate::db::insert_guide_with_data_origin(
                     pool,
                     guide_row.id,
                     guide_row.user_id,
@@ -580,6 +913,7 @@ pub async fn seed_test_accounts_if_empty(state: &ChainOffState) {
                     &guide_row.status,
                     guide_row.created_at,
                     guide_row.updated_at,
+                    &guide_row.data_origin,
                 )
                 .await
                 {
@@ -600,6 +934,103 @@ pub async fn seed_test_accounts_if_empty(state: &ChainOffState) {
             TOURIST_EMAIL, GUIDE_EMAIL, SEED_PASSWORD
         );
     }
+    drop(store);
+    seed_me_settings_security_notification_fixture(state).await;
+}
+
+/// ① E2E：`GET /me/security-notifications` 至少 2 条（pending + sent · 幂等）
+pub async fn seed_me_settings_security_notification_fixture(state: &ChainOffState) {
+    const TOURIST_EMAIL: &str = "tourist@test.com";
+    let Some(ref pool) = state.db_pool else {
+        return;
+    };
+    let uid = {
+        let store = state.store.read().await;
+        store
+            .users
+            .values()
+            .find(|u| u.email == TOURIST_EMAIL)
+            .map(|u| u.id)
+    };
+    let Some(uid) = uid else {
+        return;
+    };
+
+    let now = Utc::now();
+    {
+        let mut store = state.store.write().await;
+        if !store.user_email_verified_at.contains_key(&uid) {
+            store.user_email_verified_at.insert(uid, now);
+        }
+    }
+    if let Err(e) = sqlx::query(
+        r#"UPDATE users SET email_verified_at = $1, updated_at = now() WHERE id = $2 AND email_verified_at IS NULL"#,
+    )
+    .bind(now)
+    .bind(uid)
+    .execute(pool)
+    .await
+    {
+        eprintln!("[seed] me_settings tourist email_verified_at err={e}");
+    }
+
+    async fn ensure(
+        pool: &sqlx::postgres::PgPool,
+        uid: uuid::Uuid,
+        event_type: &str,
+        template_key: &str,
+        delivery_status: &str,
+    ) {
+        if let Ok(rows) = crate::db::list_user_security_notifications(
+            pool,
+            uid,
+            None,
+            Some(event_type),
+            20,
+        )
+        .await
+        {
+            if rows.iter().any(|r| r.template_key == template_key) {
+                return;
+            }
+        }
+        let payload = serde_json::json!({
+            "source": "seed_test_accounts",
+            "phase": "local-1",
+            "template_key": template_key,
+        });
+        if let Err(e) = crate::db::insert_user_security_notification_with_status(
+            pool,
+            uid,
+            event_type,
+            template_key,
+            &payload,
+            delivery_status,
+        )
+        .await
+        {
+            eprintln!(
+                "[seed] me_settings security notification {template_key} err={e}"
+            );
+        }
+    }
+
+    ensure(
+        pool,
+        uid,
+        "login_alert",
+        "me_settings_e2e_fixture",
+        "pending",
+    )
+    .await;
+    ensure(
+        pool,
+        uid,
+        "password_changed",
+        "me_settings_e2e_sent",
+        "sent",
+    )
+    .await;
 }
 
 fn bearer_token_from_headers(headers: &HeaderMap) -> Option<String> {
@@ -732,16 +1163,89 @@ pub async fn auth_refresh_stub(
     Ok(Json(json!({"status": "ok", "message": "chain_off_stub"})))
 }
 
-/// 50-B2 占位：verify-email 真实实现待产品排期邮件/令牌后替换。落点 04 §3.1/3.2。
+/// ① chain_off：`POST /auth/verify-email` 消费 `email_verify_tokens` 并写入 `email_verified_at`。
 pub async fn auth_verify_email_stub(
-    _state: ChainOffState,
-    Json(_body): Json<serde_json::Value>,
+    state: ChainOffState,
+    Json(body): Json<serde_json::Value>,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    let token = body
+        .get("token")
+        .or_else(|| body.get("code"))
+        .and_then(|v| v.as_str())
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+        .map(String::from);
+    let token = match token {
+        Some(t) => t,
+        None => {
+            return Err((
+                StatusCode::BAD_REQUEST,
+                Json(crate::api_json::err_key("invalid_verify_token")),
+            ));
+        }
+    };
+    let mut store = state.store.write().await;
+    let user_id = match store.email_verify_tokens.remove(&token) {
+        Some(uid) => uid,
+        None => {
+            return Err((
+                StatusCode::BAD_REQUEST,
+                Json(crate::api_json::err_key("invalid_verify_token")),
+            ));
+        }
+    };
+    let now = Utc::now();
+    {
+        let user = store.users.get_mut(&user_id).ok_or((
+            StatusCode::NOT_FOUND,
+            Json(crate::api_json::err_key("user_not_found")),
+        ))?;
+        user.updated_at = now;
+    }
+    store.user_email_verified_at.insert(user_id, now);
     Ok(Json(json!({
         "status": "ok",
-        "message": "chain_off_stub",
-        "note": "50-B2 占位，待产品排期邮件/令牌后替换，04 §3.1/3.2"
+        "message": "email_verified"
     })))
+}
+
+/// ① chain_off：已登录用户重发验证令牌（无 PG 邮件时响应含 `email_verification_dev_token` 供本地粘贴）。
+pub async fn auth_resend_verification_email(
+    state: ChainOffState,
+    headers: HeaderMap,
+) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    let token = bearer_token_from_headers(&headers).ok_or((
+        StatusCode::UNAUTHORIZED,
+        Json(crate::api_json::err_key("login_required")),
+    ))?;
+    let user_id = resolve_session_user_id(&state, &token).await?;
+    let mut store = state.store.write().await;
+    if store.users.get(&user_id).is_none() {
+        return Err((
+            StatusCode::NOT_FOUND,
+            Json(crate::api_json::err_key("user_not_found")),
+        ));
+    }
+    if store.user_email_verified_at.contains_key(&user_id) {
+        return Ok(Json(json!({
+            "status": "ok",
+            "message": "email_already_verified"
+        })));
+    }
+    let dev_token = issue_chain_off_email_verify_token(&mut store, user_id);
+    let mut out = json!({
+        "status": "ok",
+        "message": "verification_sent"
+    });
+    if state.db_pool.is_none() {
+        if let Some(obj) = out.as_object_mut() {
+            obj.insert(
+                "email_verification_dev_token".to_string(),
+                json!(dev_token),
+            );
+        }
+    }
+    Ok(Json(out))
 }
 
 /// 50-B2 占位：forgot-password 真实实现待产品排期邮件/令牌后替换。落点 04 §3.1/3.2。
@@ -904,10 +1408,50 @@ mod registration_role_tests {
     }
 
     #[test]
-    fn registration_role_stored_traveler_passthrough_697() {
+    fn registration_role_stored_pd003_traveler_side_only() {
         assert_eq!(registration_role_stored("traveler"), "traveler");
         assert_eq!(registration_role_stored("tourist"), "tourist");
-        assert_eq!(registration_role_stored("provider"), "provider");
-        assert_eq!(registration_role_stored("region_steward"), "region_steward");
+        assert_eq!(registration_role_stored("provider"), "traveler");
+        assert_eq!(registration_role_stored("region_steward"), "traveler");
+    }
+}
+
+#[cfg(test)]
+mod register_verification_code_tests {
+    use super::{
+        generate_register_verification_code, is_valid_register_verification_code_format,
+        verify_register_verification_code,
+    };
+    use chrono::{Duration, Utc};
+    use std::collections::HashMap;
+
+    #[test]
+    fn generated_code_is_six_digits() {
+        let code = generate_register_verification_code();
+        assert!(is_valid_register_verification_code_format(&code));
+    }
+
+    #[test]
+    fn verify_consumes_valid_code() {
+        let mut store = super::super::ChainOffStore {
+            register_verification_codes: HashMap::from([(
+                "user@example.com".to_string(),
+                super::super::RegisterVerificationCodeEntry {
+                    code: "123456".to_string(),
+                    expires_at: Utc::now() + Duration::minutes(10),
+                    sent_at: Utc::now(),
+                },
+            )]),
+            ..Default::default()
+        };
+        std::env::set_var("TRAVELTRUST_AUTH_REGISTER_REQUIRE_CODE", "1");
+        let ok = verify_register_verification_code(
+            &mut store,
+            "user@example.com",
+            &Some("123456".to_string()),
+        );
+        std::env::remove_var("TRAVELTRUST_AUTH_REGISTER_REQUIRE_CODE");
+        assert!(ok.is_ok());
+        assert!(!store.register_verification_codes.contains_key("user@example.com"));
     }
 }

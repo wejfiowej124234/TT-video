@@ -16,6 +16,7 @@ mod chain_off;
 mod db;
 mod jurisdiction_country_ledger_template;
 mod middleware;
+mod onboarding_counters;
 mod order_deadline_clock;
 mod router;
 mod routes;
@@ -23,12 +24,18 @@ mod schedule_engine;
 mod source_kind;
 mod ssot;
 mod startup;
+mod stripe_onboarding;
 mod state;
+mod storage;
 mod trust_growth_autopilot;
 mod u256_hex;
+mod wallet_verify_crypto;
 
 #[cfg(test)]
 mod jsonrpc_mock_server;
+
+#[cfg(test)]
+mod it_db_pool;
 
 fn main() {
     // 加载 .env：先当前目录，再项目根（crates/api 的上级两级 = 仓库根），使 SEED_TEST_ACCOUNTS、DATABASE_URL 等生效
@@ -47,6 +54,25 @@ fn main() {
         && std::env::var("SEED_TEST_ACCOUNTS").as_deref() != Ok("1")
     {
         std::env::set_var("SEED_TEST_ACCOUNTS", "1");
+    }
+    // 本地种子栈：强制开启公众 catalog 过滤（覆盖根 .env 中 =0；与 start-api-with-seed.bat 同源）
+    if std::env::var("SEED_TEST_ACCOUNTS").as_deref() == Ok("1") {
+        std::env::set_var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE", "1");
+        if std::env::var("TRAVELTRUST_MARKET_PUBLIC_SHOWCASE").is_err() {
+            std::env::set_var("TRAVELTRUST_MARKET_PUBLIC_SHOWCASE", "1");
+        }
+        if std::env::var("TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE").is_err() {
+            std::env::set_var("TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE", "1");
+        }
+    } else if std::env::var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE").is_err()
+        && std::env::var("TRAVELTRUST_MARKET_PUBLIC_SURFACE").is_err()
+        && std::env::var("CORS_ORIGINS")
+            .as_deref()
+            .map(|s| s.trim())
+            .unwrap_or("")
+            .is_empty()
+    {
+        std::env::set_var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE", "1");
     }
     if let Err(e) = run() {
         eprintln!("TravelTrust API 启动失败: {}", e);

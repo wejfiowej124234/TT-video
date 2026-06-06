@@ -81,7 +81,7 @@ fn default_currency() -> String {
 
 /// `POST /api/v1/orders` 创建的 Created 订单无行程包；为 confirm-final-plan / GET 详情
 /// 与 50-80-3 canonical 快照提供与订单金额一致的最小只读 bundle（目的地取产品期允许中文国名）。
-fn minimal_itinerary_bundle_for_simple_order(order: &OrderRow) -> ItineraryBundle {
+pub(super) fn minimal_itinerary_bundle_for_simple_order(order: &OrderRow) -> ItineraryBundle {
     let amount_f64: f64 = order.amount.trim().replace(',', "").parse().unwrap_or(0.0);
     let ab = AmountBreakdown {
         hotel: 0.0,
@@ -1004,6 +1004,12 @@ pub fn order_detail_envelope(
         "rating_deadline": rating_deadline,
         "deadline_rating_observability": deadline_obs
     });
+    if let Some(ref kind) = o.order_kind {
+        order_json["order_kind"] = json!(kind);
+    }
+    if let Some(listing_id) = o.market_listing_id {
+        order_json["market_listing_id"] = json!(listing_id.to_string());
+    }
     if let Some(cid) = o.chain_id {
         order_json["chain_id"] = json!(cid);
     }
@@ -1186,6 +1192,12 @@ pub async fn order_create_impl(
         parse_optional_date_range(body.start_date.as_deref(), body.end_date.as_deref());
     let id = Uuid::new_v4();
     let now = Utc::now();
+    let tourist_email = store
+        .users
+        .get(&user_id)
+        .map(|u| u.email.clone())
+        .unwrap_or_default();
+    let data_origin = super::infer_entity_data_origin_from_email(&tourist_email).to_string();
     let order = OrderRow {
         id,
         tourist_id: user_id,
@@ -1209,6 +1221,9 @@ pub async fn order_create_impl(
         rating_tourist_confirmed: None,
         rating_guide_confirmed: None,
         chain_id: state.config.business_chain_id,
+        data_origin,
+        order_kind: None,
+        market_listing_id: None,
     };
     store.orders.insert(id, order.clone());
     store.itineraries.insert(id, minimal_itinerary_bundle_for_simple_order(&order));
@@ -1483,6 +1498,8 @@ pub async fn patch_order_itinerary_impl(
             })),
         ));
     }
+    let publish_on_save = order.state == OrderState::Draft && order.guide_id.is_nil();
+    let order_state_before = order.state;
     let bundle_before = store.itineraries.get(&order_id).ok_or((
         StatusCode::NOT_FOUND,
         Json(crate::api_json::err_key("itinerary_not_found")),
@@ -1547,11 +1564,137 @@ pub async fn patch_order_itinerary_impl(
             }
         }
     }
+    let mut published_to_market = false;
+    let mut order_state_str = order_state_to_str(order_state_before);
+    if publish_on_save {
+        let mut store = state.store.write().await;
+        if let Some(ord) = store.orders.get_mut(&order_id) {
+            if ord.state == OrderState::Draft && ord.guide_id.is_nil() {
+                ord.state = OrderState::Created;
+                ord.updated_at = Utc::now();
+                published_to_market = true;
+                order_state_str = order_state_to_str(ord.state);
+                let ord_clone = ord.clone();
+                drop(store);
+                persist_order_if_db(&state, &ord_clone).await;
+            }
+        }
+    } else {
+        let store = state.store.read().await;
+        if let Some(ord) = store.orders.get(&order_id) {
+            order_state_str = order_state_to_str(ord.state);
+        }
+    }
     audit_key_write_stderr("patch_order_itinerary", request_id, user_id, order_id);
     Ok(Json(json!({
         "status": "ok",
         "order_id": order_id.to_string(),
-        "version": version
+        "version": version,
+        "published_to_market": published_to_market,
+        "order_state": order_state_str
+    })))
+}
+
+#[derive(Debug, Deserialize)]
+pub struct PatchOrderGuideBody {
+    pub guide_id: String,
+}
+
+/// PATCH /api/v1/orders/:id/guide — 草稿订单选定向导（04 §3.4；仅 tourist、未 Escrowed、guide 仍为 nil、未 confirm-final-plan）
+pub async fn patch_order_guide_impl(
+    state: ChainOffState,
+    request_id: Option<&str>,
+    order_id: Uuid,
+    user_id: Uuid,
+    Json(body): Json<PatchOrderGuideBody>,
+) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    let guide_id = Uuid::parse_str(body.guide_id.trim()).map_err(|_| {
+        (
+            StatusCode::BAD_REQUEST,
+            Json(json!({"error": "invalid_guide_id", "message": "invalid_guide_id"})),
+        )
+    })?;
+
+    let mut store = state.store.write().await;
+    let order = store
+        .orders
+        .get(&order_id)
+        .ok_or((
+            StatusCode::NOT_FOUND,
+            Json(json!({"error": "order_not_found", "message": "order_not_found"})),
+        ))?
+        .clone();
+
+    if order.tourist_id != user_id {
+        return Err((
+            StatusCode::FORBIDDEN,
+            Json(json!({"error": "forbidden", "message": "forbidden"})),
+        ));
+    }
+    if let Some(err_key) = crate::chain_off::me::tourist_order_trust_gate(&store, user_id) {
+        return Err((
+            StatusCode::FORBIDDEN,
+            Json(crate::api_json::err_key(err_key)),
+        ));
+    }
+    if !order.guide_id.is_nil() {
+        return Err((
+            StatusCode::CONFLICT,
+            Json(json!({"error": "guide_already_assigned", "message": "guide_already_assigned"})),
+        ));
+    }
+    if order.state == OrderState::Escrowed
+        || order.state == OrderState::Completed
+        || order.state == OrderState::Cancelled
+        || order.state == OrderState::Disputed
+    {
+        return Err((
+            StatusCode::BAD_REQUEST,
+            Json(json!({"error": "order_not_editable", "message": "order_not_editable"})),
+        ));
+    }
+    if let Some(bundle) = store.itineraries.get(&order_id) {
+        if bundle.snapshot_hash.is_some() {
+            return Err((
+                StatusCode::CONFLICT,
+                Json(json!({
+                    "error": "itinerary_already_confirmed",
+                    "message": "itinerary_already_confirmed"
+                })),
+            ));
+        }
+    }
+    let guide = store.guides.get(&guide_id).ok_or((
+        StatusCode::NOT_FOUND,
+        Json(crate::api_json::err_key("guide_not_found")),
+    ))?;
+    if guide.status != "active" {
+        return Err((
+            StatusCode::BAD_REQUEST,
+            Json(crate::api_json::err_key("guide_not_active")),
+        ));
+    }
+    if store.guide_slot.get(&guide_id).is_some() {
+        return Err((
+            StatusCode::CONFLICT,
+            Json(json!({"error": "guide_has_active_order", "message": "guide_has_active_order"})),
+        ));
+    }
+
+    let order = store.orders.get_mut(&order_id).expect("order exists");
+    order.guide_id = guide_id;
+    order.updated_at = Utc::now();
+    let order_clone = order.clone();
+    drop(store);
+
+    if state.db_pool.is_some() {
+        persist_order_if_db(&state, &order_clone).await;
+    }
+    audit_key_write_stderr("patch_order_guide", request_id, user_id, order_id);
+    Ok(Json(json!({
+        "status": "ok",
+        "order_id": order_id.to_string(),
+        "guide_id": guide_id.to_string()
     })))
 }
 
@@ -1589,6 +1732,9 @@ mod traveler_id_alias_tests {
             rating_tourist_confirmed: None,
             rating_guide_confirmed: None,
             chain_id: None,
+            data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
         }
     }
 
@@ -2102,6 +2248,7 @@ mod traveler_id_alias_tests {
                 rejection_message: None,
                 created_at: now,
                 updated_at: now,
+                data_origin: "production".into(),
             },
         );
         let mut o = sample_order(tid);
@@ -2254,6 +2401,9 @@ mod b097_projection_terminal_order_get_tests {
                 rating_tourist_confirmed: None,
                 rating_guide_confirmed: None,
                 chain_id: None,
+                data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
             },
         );
         let store = Arc::new(RwLock::new(store));

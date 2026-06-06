@@ -14,6 +14,7 @@ mod governance_reads;
 mod pool_chain;
 mod governance_pool_meta_alignment_b177;
 mod router;
+mod state_machines;
 
 /// `router` 与 `doc_params` 直连；**`get_protocol_reference`** 供 **`admin_cross_check`** 等同源组装；其余供契约测试。
 pub use doc_params::get_protocol_reference;

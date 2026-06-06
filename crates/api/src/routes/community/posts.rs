@@ -10,11 +10,15 @@ use uuid::Uuid;
 use crate::db;
 use crate::state::{extract_user_with_session_check, ApiMetaState};
 
+use super::feed_geo::{enrich_and_filter_feed_posts, FeedGeoContext};
 use super::common::{
     comment_body_visible_to_viewer, enforce_community_comment_abuse,
     enforce_community_post_abuse, enforce_no_active_write_penalty, json_profiles_to_author_map,
-    normalize_comment_sort, order_comments_thread, placeholder_ok,
-    posts_json_with_engagement_counts, user_ids_to_json_profiles, AuthorEnrich, FEED_LIMIT,
+    normalize_comment_sort, normalize_persisted_site_media_path,
+    normalize_persisted_site_media_paths, order_comments_thread, placeholder_ok,
+    posts_json_with_engagement_counts, user_ids_to_json_profiles, validate_market_listing_payload_embedded_http_urls,
+    merge_viewer_own_non_production_feed_page,
+    AuthorEnrich, FEED_LIMIT,
     LIST_LIMIT,
 };
 
@@ -27,8 +31,16 @@ pub(super) struct FeedQuery {
     mode: Option<String>,
     /// 与 `community_posts.tags` 某一元素 **精确相等**；空或超长（>64）忽略，不按标签过滤。
     tag: Option<String>,
+    /// ① 附近锚点（前端 `anchor_poi_id` · 响应 enrich `distance_m`）
+    anchor_poi_id: Option<String>,
+    /// ① 最大距离米（与 enrich 同源 · 服务端过滤）
+    max_distance_m: Option<i64>,
+    anchor_lat: Option<f64>,
+    anchor_lng: Option<f64>,
     /// 31 §2.3：`GET …/me/posts` 与本人看自己的 `users/…/posts`：`all`|`public`|`private`|`archived`。
     visibility: Option<String>,
+    /// Feed 正文/目的地 ILIKE 子串（`latest`/`recommend` 路径；有值时 **`hot`/`follow`** 亦回落时间序检索）。
+    q: Option<String>,
 }
 
 fn parse_post_list_visibility(raw: Option<&str>) -> Option<&'static str> {
@@ -91,6 +103,8 @@ pub(super) async fn create_post(
         .map(|a| {
             a.iter()
                 .filter_map(|v| v.as_str().map(String::from))
+                .map(|s| normalize_persisted_site_media_path(&s))
+                .filter(|s| !s.is_empty())
                 .collect()
         })
         .unwrap_or_default();
@@ -99,7 +113,58 @@ pub(super) async fn create_post(
         .and_then(|v| v.as_str())
         .map(str::trim)
         .filter(|s| !s.is_empty())
-        .map(|s| s.chars().take(2048).collect());
+        .map(|s| s.chars().take(2048).collect::<String>())
+        .map(|s| normalize_persisted_site_media_path(&s))
+        .filter(|s| !s.is_empty());
+    let media_asset_id_raw = j
+        .get("media_asset_id")
+        .and_then(|v| v.as_str())
+        .map(str::trim)
+        .filter(|s| !s.is_empty());
+    let media_asset_id = media_asset_id_raw.and_then(|s| Uuid::parse_str(s).ok());
+    let mut media_urls_resolved = media_urls;
+    let mut primary_media_asset_id: Option<Uuid> = None;
+    if let Some(asset_id) = media_asset_id {
+        match db::get_community_media_asset_owned(pool, asset_id, uid).await {
+            Ok(Some(row)) if row.state == "ready" => {
+                primary_media_asset_id = Some(asset_id);
+                if media_urls_resolved.is_empty() {
+                    if let Some(ref pb) = row.playback_url {
+                        let t = pb.trim();
+                        if !t.is_empty() {
+                            media_urls_resolved.push(t.to_string());
+                        }
+                    }
+                }
+            }
+            Ok(Some(_)) => {
+                return Json(json!({
+                    "status": "error",
+                    "error": "media_asset_not_ready",
+                    "message": "media_asset_not_ready",
+                    "errors": { "media_asset_id": "media_asset_not_ready" }
+                }))
+                .into_response();
+            }
+            Ok(None) => {
+                return Json(json!({
+                    "status": "error",
+                    "error": "media_asset_not_found",
+                    "message": "media_asset_not_found",
+                    "errors": { "media_asset_id": "media_asset_not_found" }
+                }))
+                .into_response();
+            }
+            Err(_) => {
+                return Json(json!({
+                    "status": "error",
+                    "error": "service_unavailable",
+                    "message": "service_unavailable"
+                }))
+                .into_response();
+            }
+        }
+    }
     let body_trim = body_text.trim();
     let pt_lc = post_type.to_ascii_lowercase();
     if pt_lc == "text" && body_trim.is_empty() {
@@ -111,7 +176,12 @@ pub(super) async fn create_post(
         }))
         .into_response();
     }
-    if pt_lc != "text" && media_urls.is_empty() {
+    media_urls_resolved = media_urls_resolved
+        .into_iter()
+        .map(|s| normalize_persisted_site_media_path(&s))
+        .filter(|s| !s.is_empty())
+        .collect();
+    if pt_lc != "text" && media_urls_resolved.is_empty() {
         return Json(json!({
             "status": "error",
             "error": "media_required",
@@ -123,8 +193,56 @@ pub(super) async fn create_post(
     if let Err(resp) = enforce_no_active_write_penalty(pool, uid, "body").await {
         return resp;
     }
-    if let Err(resp) = enforce_community_post_abuse(pool, uid, body_trim).await {
+    if let Err(resp) = enforce_community_post_abuse(
+        pool,
+        uid,
+        body_trim,
+        post_type.as_str(),
+        primary_media_asset_id,
+        media_urls_resolved.first().map(String::as_str),
+    )
+    .await {
         return resp;
+    }
+    let data_origin = match db::get_user_by_id(pool, uid).await {
+        Ok(Some(u)) => crate::chain_off::infer_community_post_data_origin(
+            &u.email,
+            body_trim,
+            u.nickname.as_deref(),
+        ),
+        _ => {
+            if crate::chain_off::is_automation_community_post_body(body_trim) {
+                "test"
+            } else {
+                "production"
+            }
+        }
+    };
+    let mut validate_map = serde_json::Map::new();
+    validate_map.insert("body".to_string(), json!(body_trim));
+    validate_map.insert("post_type".to_string(), json!(post_type));
+    if primary_media_asset_id.is_none() && media_asset_id_raw.is_none() {
+        validate_map.insert("media_urls".to_string(), json!(media_urls_resolved));
+    }
+    if let Some(ref cv) = cover_url {
+        let t = cv.trim();
+        let is_trusted_upload = t.contains("/api/v1/uploads/community-posts/")
+            || t.starts_with("/api/v1/uploads/")
+            || t.starts_with("/uploads/community-posts/");
+        if !t.is_empty() && !is_trusted_upload {
+            validate_map.insert("cover_url".to_string(), json!(cv));
+        }
+    }
+    if let Err(code) = validate_market_listing_payload_embedded_http_urls(&serde_json::Value::Object(
+        validate_map,
+    )) {
+        return Json(json!({
+            "status": "error",
+            "error": code,
+            "message": code,
+            "errors": { "media_urls": code }
+        }))
+        .into_response();
     }
     match db::insert_post(
         pool,
@@ -133,8 +251,10 @@ pub(super) async fn create_post(
         post_type.as_str(),
         destination.as_deref(),
         &tags,
-        &media_urls,
+        &media_urls_resolved,
         cover_url.as_deref(),
+        primary_media_asset_id,
+        data_origin,
     )
     .await
     {
@@ -174,10 +294,21 @@ pub(super) async fn get_feed(
         .map(str::trim)
         .filter(|s| !s.is_empty())
         .and_then(|s| (s.len() <= 64).then_some(s));
+    let text_q = db::normalize_feed_text_q(q.q.as_deref());
+    let text_q_ref = text_q.as_deref();
+
+    let production_only = crate::chain_off::public_community_feed_filter_enabled();
 
     let viewer = extract_user_with_session_check(&state, &headers).await;
+    let is_first_feed_page = cursor_raw.map(str::trim).filter(|s| !s.is_empty()).is_none();
+    let geo = FeedGeoContext::from_query(
+        q.anchor_poi_id.as_deref(),
+        q.max_distance_m,
+        q.anchor_lat,
+        q.anchor_lng,
+    );
 
-    if is_follow {
+    if is_follow && text_q_ref.is_none() {
         let uid = match viewer {
             Some(u) => u,
             None => {
@@ -187,10 +318,24 @@ pub(super) async fn get_feed(
                 .into_response()
             }
         };
-        match db::list_feed_by_following(pool, uid, feed_cursor, limit, tag_filter).await {
+        match db::list_feed_by_following(pool, uid, feed_cursor, limit, tag_filter, production_only).await {
             Ok((posts, next_cursor)) => {
+                let posts = match merge_viewer_own_non_production_feed_page(
+                    pool,
+                    Some(uid),
+                    posts,
+                    limit,
+                    production_only,
+                    is_first_feed_page,
+                    tag_filter,
+                )
+                .await
+                {
+                    Ok(p) => p,
+                    Err(_) => return placeholder_ok("posts", json!([])),
+                };
                 let list = match posts_json_with_engagement_counts(pool, posts, Some(uid)).await {
-                    Ok(l) => l,
+                    Ok(l) => enrich_and_filter_feed_posts(l, &geo),
                     Err(_) => return placeholder_ok("posts", json!([])),
                 };
                 let mut out = json!({ "status": "ok", "posts": list });
@@ -201,11 +346,25 @@ pub(super) async fn get_feed(
             }
             Err(_) => placeholder_ok("posts", json!([])),
         }
-    } else if is_hot {
-        match db::list_feed_hot(pool, feed_cursor, limit, tag_filter).await {
+    } else if is_hot && text_q_ref.is_none() {
+        match db::list_feed_hot(pool, feed_cursor, limit, tag_filter, production_only).await {
             Ok((posts, next_cursor)) => {
+                let posts = match merge_viewer_own_non_production_feed_page(
+                    pool,
+                    viewer,
+                    posts,
+                    limit,
+                    production_only,
+                    is_first_feed_page,
+                    tag_filter,
+                )
+                .await
+                {
+                    Ok(p) => p,
+                    Err(_) => return placeholder_ok("posts", json!([])),
+                };
                 let list = match posts_json_with_engagement_counts(pool, posts, viewer).await {
-                    Ok(l) => l,
+                    Ok(l) => enrich_and_filter_feed_posts(l, &geo),
                     Err(_) => return placeholder_ok("posts", json!([])),
                 };
                 let mut out = json!({ "status": "ok", "posts": list });
@@ -217,15 +376,32 @@ pub(super) async fn get_feed(
             Err(_) => placeholder_ok("posts", json!([])),
         }
     } else {
-        match db::list_feed(pool, feed_cursor, limit, tag_filter).await {
+        match db::list_feed(pool, feed_cursor, limit, tag_filter, production_only, text_q_ref).await {
             Ok((posts, next_cursor)) => {
+                let posts = match merge_viewer_own_non_production_feed_page(
+                    pool,
+                    viewer,
+                    posts,
+                    limit,
+                    production_only,
+                    is_first_feed_page,
+                    tag_filter,
+                )
+                .await
+                {
+                    Ok(p) => p,
+                    Err(_) => return placeholder_ok("posts", json!([])),
+                };
                 let list = match posts_json_with_engagement_counts(pool, posts, viewer).await {
-                    Ok(l) => l,
+                    Ok(l) => enrich_and_filter_feed_posts(l, &geo),
                     Err(_) => return placeholder_ok("posts", json!([])),
                 };
                 let mut out = json!({ "status": "ok", "posts": list });
                 if let Some(c) = next_cursor {
                     out["next_cursor"] = json!(c);
+                }
+                if text_q_ref.is_some() {
+                    out["rank_basis"] = json!("feed_text_search_v1");
                 }
                 Json(out).into_response()
             }
@@ -367,6 +543,12 @@ pub(super) async fn get_post_detail(
                 }
                 Err(_) => (short8, None, "tourist".to_string(), false, None),
             };
+            let media_urls_json = normalize_persisted_site_media_paths(&p.media_urls);
+            let cover_url_json = p
+                .cover_url
+                .as_ref()
+                .map(|u| normalize_persisted_site_media_path(u))
+                .filter(|u| !u.is_empty());
             let mut post_json = json!({
                 "id": p.id.to_string(),
                 "user_id": p.user_id.to_string(),
@@ -374,8 +556,12 @@ pub(super) async fn get_post_detail(
                 "post_type": p.post_type,
                 "destination": p.destination,
                 "tags": p.tags,
-                "media_urls": p.media_urls,
-                "cover_url": p.cover_url,
+                "media_urls": media_urls_json,
+                "cover_url": cover_url_json,
+                "primary_media_asset_id": match p.primary_media_asset_id {
+                    Some(id) => json!(id.to_string()),
+                    None => json!(null),
+                },
                 "visibility_status": p.visibility_status,
                 "created_at": p.created_at.to_rfc3339(),
                 "like_count": like_count,
@@ -538,6 +724,50 @@ pub(super) async fn get_public_posts_by_tag_count(
         Ok(n) => Json(json!({ "status": "ok", "tag": tag, "post_count": n })).into_response(),
         Err(_) => Json(json!({"status": "error", "error": "db_error", "message": "db_error"}))
             .into_response(),
+    }
+}
+
+/// GET /api/v1/community/explore/destinations — 公开帖目的地聚合（发现页 catalog 优先于纯静态表）。
+pub(super) async fn get_explore_destinations(State(state): State<ApiMetaState>) -> impl IntoResponse {
+    let pool = state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref());
+    let Some(pool) = pool else {
+        return Json(
+            json!({
+                "status": "ok",
+                "destinations": [],
+                "catalog": "static-fallback-v1",
+                "note": "50-O-31 占位"
+            }),
+        )
+        .into_response();
+    };
+    match db::list_explore_destination_counts(pool, 48).await {
+        Ok(rows) => {
+            let destinations: Vec<serde_json::Value> = rows
+                .into_iter()
+                .map(|r| {
+                    json!({
+                        "destination": r.destination,
+                        "post_count": r.post_count
+                    })
+                })
+                .collect();
+            Json(json!({
+                "status": "ok",
+                "destinations": destinations,
+                "catalog": "api-aggregate-v1",
+                "rank_basis": "destination_post_count_v1"
+            }))
+            .into_response()
+        }
+        Err(_) => Json(
+            json!({
+                "status": "ok",
+                "destinations": [],
+                "catalog": "static-fallback-v1"
+            }),
+        )
+        .into_response(),
     }
 }
 

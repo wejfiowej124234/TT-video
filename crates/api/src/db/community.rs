@@ -19,9 +19,41 @@ pub struct PostRow {
     pub media_urls: Vec<String>,
     /// 视频帖可选封面（HTTP(S) URL）；列表/卡片优先展示
     pub cover_url: Option<String>,
+    /// S3 multipart 视频资产（`community_posts.primary_media_asset_id` · 04 A1）
+    pub primary_media_asset_id: Option<Uuid>,
     /// `public` | `private` | `archived`（31 §2.3）
     pub visibility_status: String,
     pub created_at: DateTime<Utc>,
+}
+
+type PostSqlRow = (
+    Uuid,
+    Uuid,
+    String,
+    String,
+    Option<String>,
+    Vec<String>,
+    Vec<String>,
+    Option<String>,
+    Option<Uuid>,
+    String,
+    DateTime<Utc>,
+);
+
+fn post_row_from_sql(row: &PostSqlRow) -> PostRow {
+    PostRow {
+        id: row.0,
+        user_id: row.1,
+        body: row.2.clone(),
+        post_type: row.3.clone(),
+        destination: row.4.clone(),
+        tags: row.5.clone(),
+        media_urls: row.6.clone(),
+        cover_url: row.7.clone(),
+        primary_media_asset_id: row.8,
+        visibility_status: row.9.clone(),
+        created_at: row.10,
+    }
 }
 
 pub async fn insert_post(
@@ -33,10 +65,12 @@ pub async fn insert_post(
     tags: &[String],
     media_urls: &[String],
     cover_url: Option<&str>,
+    primary_media_asset_id: Option<Uuid>,
+    data_origin: &str,
 ) -> Result<Uuid, sqlx::Error> {
     let row = sqlx::query_scalar::<_, Uuid>(
-        r#"INSERT INTO community_posts (user_id, body, post_type, destination, tags, media_urls, cover_url)
-           VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id"#,
+        r#"INSERT INTO community_posts (user_id, body, post_type, destination, tags, media_urls, cover_url, primary_media_asset_id, data_origin)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id"#,
     )
     .bind(user_id)
     .bind(body)
@@ -45,43 +79,21 @@ pub async fn insert_post(
     .bind(tags)
     .bind(media_urls)
     .bind(cover_url)
+    .bind(primary_media_asset_id)
+    .bind(data_origin)
     .fetch_one(pool)
     .await?;
     Ok(row)
 }
 
 pub async fn get_post_by_id(pool: &PgPool, post_id: Uuid) -> Result<Option<PostRow>, sqlx::Error> {
-    let row = sqlx::query_as::<_, (Uuid, Uuid, String, String, Option<String>, Vec<String>, Vec<String>, Option<String>, String, DateTime<Utc>)>(
-        "SELECT id, user_id, body, post_type, destination, COALESCE(tags, '{}'), COALESCE(media_urls, '{}'), cover_url, visibility_status, created_at FROM community_posts WHERE id = $1",
+    let row = sqlx::query_as::<_, PostSqlRow>(
+        "SELECT id, user_id, body, post_type, destination, COALESCE(tags, '{}'), COALESCE(media_urls, '{}'), cover_url, primary_media_asset_id, visibility_status, created_at FROM community_posts WHERE id = $1",
     )
     .bind(post_id)
     .fetch_optional(pool)
     .await?;
-    Ok(row.map(
-        |(
-            id,
-            user_id,
-            body,
-            post_type,
-            destination,
-            tags,
-            media_urls,
-            cover_url,
-            visibility_status,
-            created_at,
-        )| PostRow {
-            id,
-            user_id,
-            body,
-            post_type,
-            destination,
-            tags,
-            media_urls,
-            cover_url,
-            visibility_status,
-            created_at,
-        },
-    ))
+    Ok(row.as_ref().map(post_row_from_sql))
 }
 
 pub fn is_allowed_post_visibility_status(s: &str) -> bool {
@@ -153,21 +165,54 @@ pub async fn delete_post_owned(
     Ok(true)
 }
 
+/// ILIKE 通配符转义（`%` / `_` / `\`）并包 `%…%`。
+fn feed_text_ilike_pattern(q: &str) -> String {
+    let mut out = String::with_capacity(q.len() + 4);
+    out.push('%');
+    for c in q.chars().take(64) {
+        match c {
+            '%' | '_' | '\\' => {
+                out.push('\\');
+                out.push(c);
+            }
+            _ => out.push(c),
+        }
+    }
+    out.push('%');
+    out
+}
+
+/// `text_q`：trim 后空则 `None`；最长 64 字符（与 Feed `tag` 上限同量级）。
+pub fn normalize_feed_text_q(raw: Option<&str>) -> Option<String> {
+    let s = raw.map(str::trim).filter(|s| !s.is_empty())?;
+    let trimmed: String = s.chars().take(64).collect();
+    if trimmed.is_empty() {
+        None
+    } else {
+        Some(trimmed)
+    }
+}
+
 /// 游标分页：cursor 为上一页最后一条的 created_at (RFC3339) 或空；返回 (posts, next_cursor).
 /// `tag_filter`：与 `tags` 数组某一元素 **精确相等** 时命中；`None` 不按标签过滤。
+/// `text_q`：正文/目的地 ILIKE 子串（`None` 不筛）。
 pub async fn list_feed(
     pool: &PgPool,
     cursor: Option<&str>,
     limit: i64,
     tag_filter: Option<&str>,
+    production_only: bool,
+    text_q: Option<&str>,
 ) -> Result<(Vec<PostRow>, Option<String>), sqlx::Error> {
+    let text_q_norm = normalize_feed_text_q(text_q);
+    let ilike_pat = text_q_norm.as_deref().map(feed_text_ilike_pattern);
     let limit_plus = limit + 1;
     let rows = if let Some(c) = cursor {
         let ts = chrono::DateTime::parse_from_rfc3339(c).ok();
         match ts {
             Some(t) => {
-                sqlx::query_as::<_, (Uuid, Uuid, String, String, Option<String>, Vec<String>, Vec<String>, Option<String>, String, DateTime<Utc>)>(
-                    r#"SELECT p.id, p.user_id, p.body, p.post_type, p.destination, COALESCE(p.tags, '{}'), COALESCE(p.media_urls, '{}'), p.cover_url, p.visibility_status, p.created_at
+                sqlx::query_as::<_, PostSqlRow>(
+                    r#"SELECT p.id, p.user_id, p.body, p.post_type, p.destination, COALESCE(p.tags, '{}'), COALESCE(p.media_urls, '{}'), p.cover_url, p.primary_media_asset_id, p.visibility_status, p.created_at
                        FROM community_posts p
                        WHERE p.created_at < $1
                          AND p.visibility_status = 'public'
@@ -179,54 +224,62 @@ pub async fn list_feed(
                              AND (pen.expires_at IS NULL OR pen.expires_at > now())
                          )
                          AND ($3::text IS NULL OR $3 = ANY(p.tags))
+                         AND ($4::bool = false OR p.data_origin = 'production')
+                         AND ($5::text IS NULL OR (p.body ILIKE $5 OR COALESCE(p.destination, '') ILIKE $5))
                        ORDER BY p.created_at DESC
                        LIMIT $2"#,
                 )
                 .bind(t.with_timezone(&Utc))
                 .bind(limit_plus)
                 .bind(tag_filter)
+                .bind(production_only)
+                .bind(ilike_pat.as_deref())
                 .fetch_all(pool)
                 .await?
             }
-            None => list_feed_first_page(pool, limit_plus, tag_filter).await?,
+            None => {
+                list_feed_first_page(pool, limit_plus, tag_filter, production_only, ilike_pat.as_deref())
+                    .await?
+            }
         }
     } else {
-        list_feed_first_page(pool, limit_plus, tag_filter).await?
+        list_feed_first_page(pool, limit_plus, tag_filter, production_only, ilike_pat.as_deref()).await?
     };
     let has_more = rows.len() as i64 > limit;
     let posts: Vec<PostRow> = rows
         .iter()
         .take(limit as usize)
-        .map(
-            |(
-                id,
-                user_id,
-                body,
-                post_type,
-                destination,
-                tags,
-                media_urls,
-                cover_url,
-                visibility_status,
-                created_at,
-            )| PostRow {
-                id: *id,
-                user_id: *user_id,
-                body: body.clone(),
-                post_type: post_type.clone(),
-                destination: destination.clone(),
-                tags: tags.clone(),
-                media_urls: media_urls.clone(),
-                cover_url: cover_url.clone(),
-                visibility_status: visibility_status.clone(),
-                created_at: *created_at,
-            },
-        )
+        .map(post_row_from_sql)
         .collect();
     let next = has_more
         .then(|| posts.last().map(|p| p.created_at.to_rfc3339()))
         .flatten();
     Ok((posts, next))
+}
+
+/// 公众 Feed 过滤 `production` 时，作者自己的 `test` 帖补入首页（① 种子账号 / 本地联调）。
+pub async fn list_viewer_own_non_production_feed_supplement(
+    pool: &PgPool,
+    viewer_id: Uuid,
+    tag_filter: Option<&str>,
+    cap: i64,
+) -> Result<Vec<PostRow>, sqlx::Error> {
+    let rows = sqlx::query_as::<_, PostSqlRow>(
+        r#"SELECT p.id, p.user_id, p.body, p.post_type, p.destination, COALESCE(p.tags, '{}'), COALESCE(p.media_urls, '{}'), p.cover_url, p.primary_media_asset_id, p.visibility_status, p.created_at
+           FROM community_posts p
+           WHERE p.user_id = $1
+             AND p.visibility_status = 'public'
+             AND p.data_origin <> 'production'
+             AND ($2::text IS NULL OR $2 = ANY(p.tags))
+           ORDER BY p.created_at DESC
+           LIMIT $3"#,
+    )
+    .bind(viewer_id)
+    .bind(tag_filter)
+    .bind(cap)
+    .fetch_all(pool)
+    .await?;
+    Ok(rows.iter().map(post_row_from_sql).collect())
 }
 
 /// 热门 Feed 游标：`H|{engagement}|{RFC3339}|{post_uuid}`（engagement = likes + comments，与排序一致）。
@@ -254,6 +307,7 @@ pub async fn list_feed_hot(
     cursor: Option<&str>,
     limit: i64,
     tag_filter: Option<&str>,
+    production_only: bool,
 ) -> Result<(Vec<PostRow>, Option<String>), sqlx::Error> {
     let limit_plus = limit + 1;
     type HotRow = (
@@ -265,13 +319,14 @@ pub async fn list_feed_hot(
         Vec<String>,
         Vec<String>,
         Option<String>,
+        Option<Uuid>,
         DateTime<Utc>,
         i64,
     );
     let rows: Vec<HotRow> = if let Some(c) = cursor.and_then(decode_hot_feed_cursor) {
         let (e_last, ts_last, id_last) = c;
         sqlx::query_as::<_, HotRow>(
-            r#"SELECT p.id, p.user_id, p.body, p.post_type, p.destination, COALESCE(p.tags, '{}'), COALESCE(p.media_urls, '{}'), p.cover_url, p.created_at,
+            r#"SELECT p.id, p.user_id, p.body, p.post_type, p.destination, COALESCE(p.tags, '{}'), COALESCE(p.media_urls, '{}'), p.cover_url, p.primary_media_asset_id, p.created_at,
                       (COALESCE(lc.c, 0) + COALESCE(cc.c, 0)) AS engagement
                FROM community_posts p
                LEFT JOIN (SELECT post_id, COUNT(*)::bigint AS c FROM community_likes GROUP BY post_id) lc ON lc.post_id = p.id
@@ -286,6 +341,7 @@ pub async fn list_feed_hot(
                      AND (pen.expires_at IS NULL OR pen.expires_at > now())
                  )
                  AND ($5::text IS NULL OR $5 = ANY(p.tags))
+                 AND ($6::bool = false OR p.data_origin = 'production')
                ORDER BY engagement DESC, p.created_at DESC, p.id DESC
                LIMIT $4"#,
         )
@@ -294,11 +350,12 @@ pub async fn list_feed_hot(
         .bind(id_last)
         .bind(limit_plus)
         .bind(tag_filter)
+        .bind(production_only)
         .fetch_all(pool)
         .await?
     } else {
         sqlx::query_as::<_, HotRow>(
-            r#"SELECT p.id, p.user_id, p.body, p.post_type, p.destination, COALESCE(p.tags, '{}'), COALESCE(p.media_urls, '{}'), p.cover_url, p.created_at,
+            r#"SELECT p.id, p.user_id, p.body, p.post_type, p.destination, COALESCE(p.tags, '{}'), COALESCE(p.media_urls, '{}'), p.cover_url, p.primary_media_asset_id, p.created_at,
                       (COALESCE(lc.c, 0) + COALESCE(cc.c, 0)) AS engagement
                FROM community_posts p
                LEFT JOIN (SELECT post_id, COUNT(*)::bigint AS c FROM community_likes GROUP BY post_id) lc ON lc.post_id = p.id
@@ -312,11 +369,13 @@ pub async fn list_feed_hot(
                    AND (pen.expires_at IS NULL OR pen.expires_at > now())
                )
                AND ($2::text IS NULL OR $2 = ANY(p.tags))
+               AND ($3::bool = false OR p.data_origin = 'production')
                ORDER BY engagement DESC, p.created_at DESC, p.id DESC
                LIMIT $1"#,
         )
         .bind(limit_plus)
         .bind(tag_filter)
+        .bind(production_only)
         .fetch_all(pool)
         .await?
     };
@@ -324,37 +383,27 @@ pub async fn list_feed_hot(
     let taken: Vec<HotRow> = rows.into_iter().take(limit as usize).collect();
     let posts: Vec<PostRow> = taken
         .iter()
-        .map(
-            |(
-                id,
-                user_id,
-                body,
-                post_type,
-                destination,
-                tags,
-                media_urls,
-                cover_url,
-                created_at,
-                _engagement,
-            )| PostRow {
-                id: *id,
-                user_id: *user_id,
-                body: body.clone(),
-                post_type: post_type.clone(),
-                destination: destination.clone(),
-                tags: tags.clone(),
-                media_urls: media_urls.clone(),
-                cover_url: cover_url.clone(),
-                visibility_status: "public".to_string(),
-                created_at: *created_at,
-            },
-        )
+        .map(|row| {
+            post_row_from_sql(&(
+                row.0,
+                row.1,
+                row.2.clone(),
+                row.3.clone(),
+                row.4.clone(),
+                row.5.clone(),
+                row.6.clone(),
+                row.7.clone(),
+                row.8,
+                "public".to_string(),
+                row.9,
+            ))
+        })
         .collect();
     let next = has_more
         .then(|| {
             taken
                 .last()
-                .map(|row| encode_hot_feed_cursor(row.9, row.8, row.0))
+                .map(|row| encode_hot_feed_cursor(row.10, row.9, row.0))
         })
         .flatten();
     Ok((posts, next))
@@ -367,14 +416,15 @@ pub async fn list_feed_by_following(
     cursor: Option<&str>,
     limit: i64,
     tag_filter: Option<&str>,
+    production_only: bool,
 ) -> Result<(Vec<PostRow>, Option<String>), sqlx::Error> {
     let limit_plus = limit + 1;
     let rows = if let Some(c) = cursor {
         let ts = chrono::DateTime::parse_from_rfc3339(c).ok();
         match ts {
             Some(t) => {
-                sqlx::query_as::<_, (Uuid, Uuid, String, String, Option<String>, Vec<String>, Vec<String>, Option<String>, String, DateTime<Utc>)>(
-                    r#"SELECT p.id, p.user_id, p.body, p.post_type, p.destination, COALESCE(p.tags, '{}'), COALESCE(p.media_urls, '{}'), p.cover_url, p.visibility_status, p.created_at
+                sqlx::query_as::<_, PostSqlRow>(
+                    r#"SELECT p.id, p.user_id, p.body, p.post_type, p.destination, COALESCE(p.tags, '{}'), COALESCE(p.media_urls, '{}'), p.cover_url, p.primary_media_asset_id, p.visibility_status, p.created_at
                        FROM community_posts p
                        INNER JOIN community_follows f ON f.following_id = p.user_id AND f.follower_id = $1
                        WHERE p.created_at < $2
@@ -387,6 +437,7 @@ pub async fn list_feed_by_following(
                              AND (pen.expires_at IS NULL OR pen.expires_at > now())
                          )
                          AND ($4::text IS NULL OR $4 = ANY(p.tags))
+                         AND ($5::bool = false OR p.data_origin = 'production')
                        ORDER BY p.created_at DESC
                        LIMIT $3"#,
                 )
@@ -394,43 +445,36 @@ pub async fn list_feed_by_following(
                 .bind(t.with_timezone(&Utc))
                 .bind(limit_plus)
                 .bind(tag_filter)
+                .bind(production_only)
                 .fetch_all(pool)
                 .await?
             }
-            None => list_feed_by_following_first_page(pool, follower_id, limit_plus, tag_filter).await?,
+            None => {
+                list_feed_by_following_first_page(
+                    pool,
+                    follower_id,
+                    limit_plus,
+                    tag_filter,
+                    production_only,
+                )
+                .await?
+            }
         }
     } else {
-        list_feed_by_following_first_page(pool, follower_id, limit_plus, tag_filter).await?
+        list_feed_by_following_first_page(
+            pool,
+            follower_id,
+            limit_plus,
+            tag_filter,
+            production_only,
+        )
+        .await?
     };
     let has_more = rows.len() as i64 > limit;
     let posts: Vec<PostRow> = rows
         .iter()
         .take(limit as usize)
-        .map(
-            |(
-                id,
-                user_id,
-                body,
-                post_type,
-                destination,
-                tags,
-                media_urls,
-                cover_url,
-                visibility_status,
-                created_at,
-            )| PostRow {
-                id: *id,
-                user_id: *user_id,
-                body: body.clone(),
-                post_type: post_type.clone(),
-                destination: destination.clone(),
-                tags: tags.clone(),
-                media_urls: media_urls.clone(),
-                cover_url: cover_url.clone(),
-                visibility_status: visibility_status.clone(),
-                created_at: *created_at,
-            },
-        )
+        .map(post_row_from_sql)
         .collect();
     let next = has_more
         .then(|| posts.last().map(|p| p.created_at.to_rfc3339()))
@@ -443,23 +487,10 @@ async fn list_feed_by_following_first_page(
     follower_id: Uuid,
     limit: i64,
     tag_filter: Option<&str>,
-) -> Result<
-    Vec<(
-        Uuid,
-        Uuid,
-        String,
-        String,
-        Option<String>,
-        Vec<String>,
-        Vec<String>,
-        Option<String>,
-        String,
-        DateTime<Utc>,
-    )>,
-    sqlx::Error,
-> {
-    sqlx::query_as(
-        r#"SELECT p.id, p.user_id, p.body, p.post_type, p.destination, COALESCE(p.tags, '{}'), COALESCE(p.media_urls, '{}'), p.cover_url, p.visibility_status, p.created_at
+    production_only: bool,
+) -> Result<Vec<PostSqlRow>, sqlx::Error> {
+    sqlx::query_as::<_, PostSqlRow>(
+        r#"SELECT p.id, p.user_id, p.body, p.post_type, p.destination, COALESCE(p.tags, '{}'), COALESCE(p.media_urls, '{}'), p.cover_url, p.primary_media_asset_id, p.visibility_status, p.created_at
            FROM community_posts p
            INNER JOIN community_follows f ON f.following_id = p.user_id AND f.follower_id = $1
            WHERE p.visibility_status = 'public'
@@ -471,12 +502,14 @@ async fn list_feed_by_following_first_page(
                AND (pen.expires_at IS NULL OR pen.expires_at > now())
            )
            AND ($3::text IS NULL OR $3 = ANY(p.tags))
+           AND ($4::bool = false OR p.data_origin = 'production')
            ORDER BY p.created_at DESC
            LIMIT $2"#,
     )
     .bind(follower_id)
     .bind(limit)
     .bind(tag_filter)
+    .bind(production_only)
     .fetch_all(pool)
     .await
 }
@@ -485,23 +518,11 @@ async fn list_feed_first_page(
     pool: &PgPool,
     limit: i64,
     tag_filter: Option<&str>,
-) -> Result<
-    Vec<(
-        Uuid,
-        Uuid,
-        String,
-        String,
-        Option<String>,
-        Vec<String>,
-        Vec<String>,
-        Option<String>,
-        String,
-        DateTime<Utc>,
-    )>,
-    sqlx::Error,
-> {
-    sqlx::query_as(
-        r#"SELECT p.id, p.user_id, p.body, p.post_type, p.destination, COALESCE(p.tags, '{}'), COALESCE(p.media_urls, '{}'), p.cover_url, p.visibility_status, p.created_at
+    production_only: bool,
+    text_ilike: Option<&str>,
+) -> Result<Vec<PostSqlRow>, sqlx::Error> {
+    sqlx::query_as::<_, PostSqlRow>(
+        r#"SELECT p.id, p.user_id, p.body, p.post_type, p.destination, COALESCE(p.tags, '{}'), COALESCE(p.media_urls, '{}'), p.cover_url, p.primary_media_asset_id, p.visibility_status, p.created_at
            FROM community_posts p
            WHERE p.visibility_status = 'public'
            AND NOT EXISTS (
@@ -512,11 +533,15 @@ async fn list_feed_first_page(
                AND (pen.expires_at IS NULL OR pen.expires_at > now())
            )
            AND ($2::text IS NULL OR $2 = ANY(p.tags))
+           AND ($3::bool = false OR p.data_origin = 'production')
+           AND ($4::text IS NULL OR (p.body ILIKE $4 OR COALESCE(p.destination, '') ILIKE $4))
            ORDER BY p.created_at DESC
            LIMIT $1"#,
     )
     .bind(limit)
     .bind(tag_filter)
+    .bind(production_only)
+    .bind(text_ilike)
     .fetch_all(pool)
     .await
 }
@@ -532,25 +557,15 @@ pub async fn list_posts_by_user(
     public_only: bool,
     visibility_filter: Option<&str>,
 ) -> Result<(Vec<PostRow>, Option<String>), sqlx::Error> {
+    let production_only = public_only && crate::chain_off::public_community_feed_filter_enabled();
     let limit_plus = limit + 1;
-    type URow = (
-        Uuid,
-        Uuid,
-        String,
-        String,
-        Option<String>,
-        Vec<String>,
-        Vec<String>,
-        Option<String>,
-        String,
-        DateTime<Utc>,
-    );
+    type URow = PostSqlRow;
     let rows = if let Some(c) = cursor {
         let ts = chrono::DateTime::parse_from_rfc3339(c).ok();
         match ts {
             Some(t) => {
                 sqlx::query_as::<_, URow>(
-                    r#"SELECT id, user_id, body, post_type, destination, COALESCE(tags, '{}'), COALESCE(media_urls, '{}'), cover_url, visibility_status, created_at
+                    r#"SELECT id, user_id, body, post_type, destination, COALESCE(tags, '{}'), COALESCE(media_urls, '{}'), cover_url, primary_media_asset_id, visibility_status, created_at
                        FROM community_posts
                        WHERE user_id = $1
                          AND created_at < $2
@@ -563,6 +578,7 @@ pub async fn list_posts_by_user(
                          ))
                          AND ($5::bool = false OR visibility_status = 'public')
                          AND ($6::text IS NULL OR visibility_status = $6)
+                         AND ($7::bool = false OR data_origin = 'production')
                        ORDER BY created_at DESC
                        LIMIT $3"#,
                 )
@@ -572,6 +588,7 @@ pub async fn list_posts_by_user(
                 .bind(skip_limit_feed_exclusion)
                 .bind(public_only)
                 .bind(visibility_filter)
+                .bind(production_only)
                 .fetch_all(pool)
                 .await?
             }
@@ -583,6 +600,7 @@ pub async fn list_posts_by_user(
                     skip_limit_feed_exclusion,
                     public_only,
                     visibility_filter,
+                    production_only,
                 )
                 .await?
             }
@@ -595,6 +613,7 @@ pub async fn list_posts_by_user(
             skip_limit_feed_exclusion,
             public_only,
             visibility_filter,
+            production_only,
         )
         .await?
     };
@@ -602,31 +621,7 @@ pub async fn list_posts_by_user(
     let posts: Vec<PostRow> = rows
         .iter()
         .take(limit as usize)
-        .map(
-            |(
-                id,
-                user_id,
-                body,
-                post_type,
-                destination,
-                tags,
-                media_urls,
-                cover_url,
-                visibility_status,
-                created_at,
-            )| PostRow {
-                id: *id,
-                user_id: *user_id,
-                body: body.clone(),
-                post_type: post_type.clone(),
-                destination: destination.clone(),
-                tags: tags.clone(),
-                media_urls: media_urls.clone(),
-                cover_url: cover_url.clone(),
-                visibility_status: visibility_status.clone(),
-                created_at: *created_at,
-            },
-        )
+        .map(post_row_from_sql)
         .collect();
     let next = has_more
         .then(|| posts.last().map(|p| p.created_at.to_rfc3339()))
@@ -641,23 +636,10 @@ async fn list_posts_by_user_first(
     skip_limit_feed_exclusion: bool,
     public_only: bool,
     visibility_filter: Option<&str>,
-) -> Result<
-    Vec<(
-        Uuid,
-        Uuid,
-        String,
-        String,
-        Option<String>,
-        Vec<String>,
-        Vec<String>,
-        Option<String>,
-        String,
-        DateTime<Utc>,
-    )>,
-    sqlx::Error,
-> {
-    sqlx::query_as(
-        r#"SELECT id, user_id, body, post_type, destination, COALESCE(tags, '{}'), COALESCE(media_urls, '{}'), cover_url, visibility_status, created_at
+    production_only: bool,
+) -> Result<Vec<PostSqlRow>, sqlx::Error> {
+    sqlx::query_as::<_, PostSqlRow>(
+        r#"SELECT id, user_id, body, post_type, destination, COALESCE(tags, '{}'), COALESCE(media_urls, '{}'), cover_url, primary_media_asset_id, visibility_status, created_at
            FROM community_posts
            WHERE user_id = $1
              AND ($3::bool OR NOT EXISTS (
@@ -669,6 +651,7 @@ async fn list_posts_by_user_first(
              ))
              AND ($4::bool = false OR visibility_status = 'public')
              AND ($5::text IS NULL OR visibility_status = $5)
+             AND ($6::bool = false OR data_origin = 'production')
            ORDER BY created_at DESC
            LIMIT $2"#,
     )
@@ -677,6 +660,7 @@ async fn list_posts_by_user_first(
     .bind(skip_limit_feed_exclusion)
     .bind(public_only)
     .bind(visibility_filter)
+    .bind(production_only)
     .fetch_all(pool)
     .await
 }
@@ -1055,6 +1039,53 @@ pub async fn duplicate_post_body_exists(
     )
     .bind(user_id)
     .bind(body)
+    .bind(since)
+    .fetch_one(pool)
+    .await
+}
+
+/// 160 §3.3：重复帖 = **同正文 + 同 `post_type` + 同媒体指纹**（`primary_media_asset_id` 或首条 `media_urls`）。
+/// 避免「同一句 caption + 不同视频/图片」被误判为重复（UGC 常见：短标题 + 新素材）。
+pub async fn duplicate_post_content_exists(
+    pool: &PgPool,
+    user_id: Uuid,
+    body: &str,
+    post_type: &str,
+    primary_media_asset_id: Option<Uuid>,
+    first_media_url: Option<&str>,
+    since: DateTime<Utc>,
+) -> Result<bool, sqlx::Error> {
+    let first_url = first_media_url.map(str::trim).filter(|s| !s.is_empty());
+    sqlx::query_scalar::<_, bool>(
+        r#"SELECT EXISTS(
+            SELECT 1 FROM community_posts
+            WHERE user_id = $1 AND created_at >= $6
+              AND lower(regexp_replace(trim(body), '[[:space:]]+', ' ', 'g'))
+                  = lower(regexp_replace(trim($2), '[[:space:]]+', ' ', 'g'))
+              AND lower(trim(post_type)) = lower(trim($3))
+              AND (
+                ($4::uuid IS NOT NULL AND primary_media_asset_id IS NOT DISTINCT FROM $4)
+                OR (
+                  $4::uuid IS NULL
+                  AND $5::text IS NOT NULL AND btrim($5::text) <> ''
+                  AND primary_media_asset_id IS NULL
+                  AND cardinality(COALESCE(media_urls, '{}')) > 0
+                  AND media_urls[1] = $5::text
+                )
+                OR (
+                  $4::uuid IS NULL
+                  AND ($5::text IS NULL OR btrim($5::text) = '')
+                  AND primary_media_asset_id IS NULL
+                  AND cardinality(COALESCE(media_urls, '{}')) = 0
+                )
+              )
+        )"#,
+    )
+    .bind(user_id)
+    .bind(body)
+    .bind(post_type)
+    .bind(primary_media_asset_id)
+    .bind(first_url)
     .bind(since)
     .fetch_one(pool)
     .await
@@ -1471,6 +1502,39 @@ pub async fn get_conversation_by_id(
     )
 }
 
+/// 幂等创建或返回已有私信会话（`user1_id < user2_id` 约束）。
+pub async fn ensure_conversation(
+    pool: &PgPool,
+    user_a: Uuid,
+    user_b: Uuid,
+) -> Result<Uuid, sqlx::Error> {
+    if user_a == user_b {
+        return Err(sqlx::Error::RowNotFound);
+    }
+    let (user1_id, user2_id) = if user_a < user_b {
+        (user_a, user_b)
+    } else {
+        (user_b, user_a)
+    };
+    if let Some(id) = sqlx::query_scalar::<_, Uuid>(
+        "INSERT INTO community_conversations (user1_id, user2_id) VALUES ($1, $2) ON CONFLICT (user1_id, user2_id) DO NOTHING RETURNING id",
+    )
+    .bind(user1_id)
+    .bind(user2_id)
+    .fetch_optional(pool)
+    .await?
+    {
+        return Ok(id);
+    }
+    sqlx::query_scalar::<_, Uuid>(
+        "SELECT id FROM community_conversations WHERE user1_id = $1 AND user2_id = $2",
+    )
+    .bind(user1_id)
+    .bind(user2_id)
+    .fetch_one(pool)
+    .await
+}
+
 // ---------- 好友与好友请求 ----------
 pub async fn list_friend_ids(
     pool: &PgPool,
@@ -1709,4 +1773,86 @@ pub async fn update_feedback_official_reply_and_status(
         return Ok(false);
     };
     Ok(rows.rows_affected() > 0)
+}
+
+#[derive(Debug, sqlx::FromRow)]
+pub struct CommunityActivityEventRow {
+    pub kind: String,
+    pub actor_user_id: Uuid,
+    pub actor_nickname: Option<String>,
+    pub post_id: Option<Uuid>,
+    pub created_at: DateTime<Utc>,
+}
+
+/// 当前用户相关互动事件（赞/评/关注）· 时间倒序 · 供 **`GET …/me/activity`**。
+pub async fn list_me_activity_events(
+    pool: &PgPool,
+    author_id: Uuid,
+    limit: i64,
+) -> Result<Vec<CommunityActivityEventRow>, sqlx::Error> {
+    let lim = limit.clamp(1, 50);
+    sqlx::query_as::<_, CommunityActivityEventRow>(
+        r#"
+        SELECT * FROM (
+            SELECT 'like'::text AS kind, l.user_id AS actor_user_id, u.nickname AS actor_nickname,
+                   l.post_id, l.created_at
+            FROM community_likes l
+            INNER JOIN community_posts p ON p.id = l.post_id
+            INNER JOIN users u ON u.id = l.user_id
+            WHERE p.user_id = $1
+            UNION ALL
+            SELECT 'comment'::text, c.user_id, u.nickname, c.post_id, c.created_at
+            FROM community_comments c
+            INNER JOIN community_posts p ON p.id = c.post_id
+            INNER JOIN users u ON u.id = c.user_id
+            WHERE p.user_id = $1 AND c.parent_id IS NULL
+            UNION ALL
+            SELECT 'follow'::text, f.follower_id, u.nickname, NULL::uuid, f.created_at
+            FROM community_follows f
+            INNER JOIN users u ON u.id = f.follower_id
+            WHERE f.following_id = $1
+            UNION ALL
+            SELECT 'mention'::text, c.user_id, u.nickname, c.post_id, c.created_at
+            FROM community_comments c
+            INNER JOIN community_posts p ON p.id = c.post_id
+            INNER JOIN users u ON u.id = c.user_id
+            WHERE p.user_id = $1
+              AND c.parent_id IS NULL
+              AND position('@' in c.body) > 0
+        ) ev
+        ORDER BY ev.created_at DESC
+        LIMIT $2
+        "#,
+    )
+    .bind(author_id)
+    .bind(lim)
+    .fetch_all(pool)
+    .await
+}
+
+#[derive(Debug, sqlx::FromRow)]
+pub struct ExploreDestinationCountRow {
+    pub destination: String,
+    pub post_count: i64,
+}
+
+/// 公开帖目的地聚合（发现页 catalog · 有 DB 时优先于前端静态表）。
+pub async fn list_explore_destination_counts(
+    pool: &PgPool,
+    limit: i64,
+) -> Result<Vec<ExploreDestinationCountRow>, sqlx::Error> {
+    let lim = limit.clamp(1, 80);
+    sqlx::query_as::<_, ExploreDestinationCountRow>(
+        r#"SELECT destination, COUNT(*)::bigint AS post_count
+           FROM community_posts
+           WHERE visibility_status = 'public'
+             AND destination IS NOT NULL
+             AND btrim(destination) <> ''
+           GROUP BY destination
+           ORDER BY post_count DESC, destination ASC
+           LIMIT $1"#,
+    )
+    .bind(lim)
+    .fetch_all(pool)
+    .await
 }

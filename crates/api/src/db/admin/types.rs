@@ -42,6 +42,14 @@ pub struct AdminRoleChangeApprovalResult {
 }
 
 #[derive(Debug)]
+pub struct AdminConsoleRoleChangeApprovalResult {
+    pub approval_id: Uuid,
+    pub target_user_id: Uuid,
+    pub from_console_role: Option<String>,
+    pub to_console_role: String,
+}
+
+#[derive(Debug)]
 pub struct SchemaVersionRow {
     pub version_no: String,
     pub status: String,

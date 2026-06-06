@@ -4,7 +4,7 @@
 //! **`POST …/listings/drafts`** / **`GET …/drafts/:id`**：仍走 **`market_listing_drafts`**（创作台草稿，非公开目录 SSOT）。**`POST …/drafts`** 须登录并写入 **`owner_user_id`**（与 **`POST …/listings`** 一致），并走 **`ensure_durable_writes_available`**；**`payload`** 若提供则须为 JSON **object**（允许 `{}`），否则 **400** **`invalid_market_listing_payload`**。**`GET …/drafts/:id`** 须登录且**仅**返回 **`owner_user_id`** 与当前会话一致之行（他人 UUID **404** **`listing_draft_not_found`**，防枚举）。
 //! **外链**：**`payload`** 内 **`url` / `*_url` / `src` / `href` / `thumbnail` / `media_urls`…** 下的 **`http(s)`** 字符串走与社区发帖相同的 **`TRAVELTRUST_COMMUNITY_POST_MEDIA_URL_PREFIXES`** + **`TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS`** 护栏（**400** **`invalid_market_listing_payload`**，`reason` 与社区同源，如 **`media_url_invalid_scheme`**）。
 
-use axum::extract::{Path, State};
+use axum::extract::{Path, Query, State};
 use axum::http::{HeaderMap, StatusCode};
 use axum::response::IntoResponse;
 use axum::routing::{get, post};
@@ -16,10 +16,14 @@ use serde_json::Value;
 use uuid::Uuid;
 
 use crate::db;
+use crate::routes::acquisition_publish_gate::acquisition_body_agrees_escrow_copy;
+use crate::routes::market_merchant_gate::ensure_market_merchant_write_allowed;
 use crate::routes::community::common as community_common;
 use crate::state::{extract_user_with_session_check, require_session_user, ApiMetaState};
 
 use super::not_impl_json;
+
+use crate::routes::market_subsite_list_query::{filter_and_sort_market_listings, MarketListingsListQuery};
 
 const MARKET_LISTINGS_PAGE_CAP: i64 = 200;
 
@@ -112,6 +116,7 @@ fn market_listings_database_required(variant: &'static str) -> axum::response::R
 async fn listings_for_variant(
     state: &ApiMetaState,
     variant: &'static str,
+    query: &MarketListingsListQuery,
 ) -> axum::response::Response {
     let Some(co) = state.chain_off.as_ref() else {
         return market_listings_chain_off_unavailable();
@@ -119,10 +124,34 @@ async fn listings_for_variant(
     let Some(pool) = co.db_pool.as_ref() else {
         return market_listings_database_required(variant);
     };
-    match db::list_market_listings_by_variant(pool, variant, MARKET_LISTINGS_PAGE_CAP).await {
+    match db::list_market_listings_by_variant(
+        pool,
+        variant,
+        MARKET_LISTINGS_PAGE_CAP,
+        false,
+    )
+    .await {
         Ok(rows) => {
+            let rows = filter_and_sort_market_listings(rows, variant, query);
+            let store = co.store.read().await;
+            let filter_on = crate::chain_off::public_catalog_surface_filter_enabled();
             let items: Vec<Value> = rows
                 .iter()
+                .filter(|r| {
+                    if !filter_on {
+                        return true;
+                    }
+                    let email = store
+                        .users
+                        .get(&r.owner_user_id)
+                        .map(|u| u.email.as_str())
+                        .unwrap_or("");
+                    !crate::chain_off::is_non_production_market_listing(
+                        &r.data_origin,
+                        email,
+                        &r.payload,
+                    )
+                })
                 .map(|r| {
                     json!({
                         "id": r.id.to_string(),
@@ -132,10 +161,18 @@ async fn listings_for_variant(
                 })
                 .collect();
             let count = items.len();
+            let has_more = (count as i64) >= MARKET_LISTINGS_PAGE_CAP;
             Json(json!({
                 "status": "ok",
                 "items": items,
-                "meta": { "variant": variant, "source": "postgres_catalog", "count": count }
+                "meta": {
+                    "variant": variant,
+                    "source": "postgres_catalog",
+                    "count": count,
+                    "limit": MARKET_LISTINGS_PAGE_CAP,
+                    "has_more": has_more,
+                    "next_cursor": null
+                }
             }))
             .into_response()
         }
@@ -155,12 +192,18 @@ async fn listings_for_variant(
     }
 }
 
-async fn provider_listings(State(state): State<ApiMetaState>) -> impl IntoResponse {
-    listings_for_variant(&state, "provider").await
+async fn provider_listings(
+    State(state): State<ApiMetaState>,
+    Query(query): Query<MarketListingsListQuery>,
+) -> impl IntoResponse {
+    listings_for_variant(&state, "provider", &query).await
 }
 
-async fn acquisition_listings(State(state): State<ApiMetaState>) -> impl IntoResponse {
-    listings_for_variant(&state, "acquisition").await
+async fn acquisition_listings(
+    State(state): State<ApiMetaState>,
+    Query(query): Query<MarketListingsListQuery>,
+) -> impl IntoResponse {
+    listings_for_variant(&state, "acquisition", &query).await
 }
 
 async fn listing_detail_for_variant(
@@ -187,20 +230,46 @@ async fn listing_detail_for_variant(
             .into_response();
     };
     match db::select_market_listing_by_id(pool, listing_uuid, variant).await {
-        Ok(Some(row)) => (
-            StatusCode::OK,
-            Json(json!({
-                "status": "ok",
-                "listing": {
-                    "id": row.id.to_string(),
-                    "payload": row.payload,
-                    "updated_at": row.updated_at.to_rfc3339(),
-                    "owner_user_id": row.owner_user_id.to_string(),
-                },
-                "meta": { "variant": variant, "source": "postgres_catalog" }
-            })),
-        )
-            .into_response(),
+        Ok(Some(row)) => {
+            if crate::chain_off::public_catalog_surface_filter_enabled() {
+                let store = co.store.read().await;
+                let email = store
+                    .users
+                    .get(&row.owner_user_id)
+                    .map(|u| u.email.as_str())
+                    .unwrap_or("");
+                if crate::chain_off::is_non_production_market_listing(
+                    &row.data_origin,
+                    email,
+                    &row.payload,
+                ) {
+                    return (
+                        StatusCode::NOT_FOUND,
+                        Json(json!({
+                            "status": "error",
+                            "error": "not_found",
+                            "message": "listing_not_found",
+                            "id": id
+                        })),
+                    )
+                        .into_response();
+                }
+            }
+            (
+                StatusCode::OK,
+                Json(json!({
+                    "status": "ok",
+                    "listing": {
+                        "id": row.id.to_string(),
+                        "payload": row.payload,
+                        "updated_at": row.updated_at.to_rfc3339(),
+                        "owner_user_id": row.owner_user_id.to_string(),
+                    },
+                    "meta": { "variant": variant, "source": "postgres_catalog" }
+                })),
+            )
+                .into_response()
+        }
         Ok(None) => (
             StatusCode::NOT_FOUND,
             Json(json!({
@@ -281,7 +350,7 @@ async fn get_market_listing_draft_for_variant(
     headers: &HeaderMap,
     draft_id: &str,
     variant: &'static str,
-    not_impl_path: &'static str,
+    _not_impl_path: &'static str,
 ) -> axum::response::Response {
     let Ok(uid) = Uuid::parse_str(draft_id.trim()) else {
         return (
@@ -291,7 +360,7 @@ async fn get_market_listing_draft_for_variant(
             .into_response();
     };
     let Some(co) = state.chain_off.as_ref() else {
-        return not_impl_json(not_impl_path).into_response();
+        return market_listings_chain_off_unavailable();
     };
     let Some(pool) = co.db_pool.as_ref() else {
         return market_listing_draft_requires_db().into_response();
@@ -492,6 +561,78 @@ async fn post_acquisition_listing_draft(
         .into_response()
 }
 
+fn onboarding_entitlement_required_response(role_target: &'static str) -> axum::response::Response {
+    (
+        StatusCode::BAD_REQUEST,
+        Json(json!({
+            "status": "error",
+            "error": "onboarding_entitlement_required",
+            "message": "onboarding_entitlement_required",
+            "detail": "No paid entitlement for required role.",
+            "role_target": role_target,
+        })),
+    )
+        .into_response()
+}
+
+fn onboarding_entitlement_lookup_failed_response() -> axum::response::Response {
+    (
+        StatusCode::INTERNAL_SERVER_ERROR,
+        Json(json!({
+            "status": "error",
+            "error": "onboarding_entitlement_lookup_failed",
+            "message": "onboarding_entitlement_lookup_failed",
+        })),
+    )
+        .into_response()
+}
+
+async fn user_has_paid_onboarding_entitlement(
+    pool: &sqlx::PgPool,
+    user_id: Uuid,
+    role_target: &str,
+) -> Result<bool, sqlx::Error> {
+    let n: i64 = sqlx::query_scalar(
+        r#"SELECT COUNT(*)::bigint FROM onboarding_entitlements
+           WHERE user_id = $1 AND role_target = $2 AND status = 'paid'"#,
+    )
+    .bind(user_id)
+    .bind(role_target)
+    .fetch_one(pool)
+    .await?;
+    Ok(n > 0)
+}
+
+async fn ensure_market_write_onboarding_entitlement(
+    pool: &sqlx::PgPool,
+    user_id: Uuid,
+    variant: &'static str,
+) -> Result<(), axum::response::Response> {
+    let role_target: &'static str = match variant {
+        "provider" => "provider",
+        "acquisition" => "region_steward",
+        _ => {
+            return Err((
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(json!({
+                    "status": "error",
+                    "error": "invalid_variant",
+                    "message": "invalid_variant",
+                })),
+            )
+                .into_response());
+        }
+    };
+    match user_has_paid_onboarding_entitlement(pool, user_id, role_target).await {
+        Ok(true) => Ok(()),
+        Ok(false) => Err(onboarding_entitlement_required_response(role_target)),
+        Err(e) => {
+            eprintln!("WARN: market onboarding entitlement lookup: {e}");
+            Err(onboarding_entitlement_lookup_failed_response())
+        }
+    }
+}
+
 async fn post_listing_publish_for_variant(
     state: &ApiMetaState,
     headers: &HeaderMap,
@@ -512,6 +653,12 @@ async fn post_listing_publish_for_variant(
     let Some(pool) = co.db_pool.as_ref() else {
         return market_listing_draft_requires_db().into_response();
     };
+    if variant == "acquisition" && !acquisition_body_agrees_escrow_copy(&body) {
+        return crate::routes::acquisition_publish_gate::acquisition_escrow_ack_required_response();
+    }
+    if let Err(resp) = ensure_market_merchant_write_allowed(state, pool, uid, variant).await {
+        return resp;
+    }
     let listing_id = Uuid::new_v4();
     let now = Utc::now();
     let payload = body.get("payload").cloned().unwrap_or_else(|| json!({}));
@@ -523,7 +670,25 @@ async fn post_listing_publish_for_variant(
     {
         return invalid_market_listing_payload_response(reason);
     }
-    match db::insert_market_listing(pool, listing_id, variant, uid, &payload, now).await {
+    let data_origin = {
+        let store = co.store.read().await;
+        let email = store
+            .users
+            .get(&uid)
+            .map(|u| u.email.as_str())
+            .unwrap_or("");
+        crate::chain_off::infer_market_listing_data_origin(email, &payload)
+    };
+    match db::insert_market_listing(
+        pool,
+        listing_id,
+        variant,
+        uid,
+        &payload,
+        now,
+        &data_origin,
+    )
+    .await {
         Ok(1) => {}
         Ok(n) => {
             eprintln!("WARN: market_listing_catalog_insert_unexpected_rows_affected: {n}");
@@ -582,6 +747,57 @@ async fn post_acquisition_listing(
     .await
 }
 
+async fn post_market_listing_order(
+    state: &ApiMetaState,
+    headers: &HeaderMap,
+    listing_id: String,
+    variant: &'static str,
+) -> axum::response::Response {
+    let uid = match require_session_user(extract_user_with_session_check(state, headers).await) {
+        Ok(u) => u,
+        Err(e) => return e.into_response(),
+    };
+    let listing_uuid = match Uuid::parse_str(listing_id.trim()) {
+        Ok(u) => u,
+        Err(_) => {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(json!({
+                    "error": "invalid_listing_id",
+                    "message": "invalid_listing_id",
+                })),
+            )
+                .into_response()
+        }
+    };
+    let Some(co) = state.chain_off.clone() else {
+        return not_impl_json(&format!(
+            "POST /api/v1/market/{variant}/listings/:id/orders"
+        ))
+        .into_response();
+    };
+    match crate::chain_off::market_listing_order_create_impl(co, uid, variant, listing_uuid).await {
+        Ok(j) => j.into_response(),
+        Err((code, j)) => (code, j).into_response(),
+    }
+}
+
+async fn post_provider_listing_order(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+    Path(listing_id): Path<String>,
+) -> impl IntoResponse {
+    post_market_listing_order(&state, &headers, listing_id, "provider").await
+}
+
+async fn post_acquisition_listing_order(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+    Path(listing_id): Path<String>,
+) -> impl IntoResponse {
+    post_market_listing_order(&state, &headers, listing_id, "acquisition").await
+}
+
 pub fn router() -> Router<ApiMetaState> {
     Router::new()
         .route(
@@ -601,6 +817,10 @@ pub fn router() -> Router<ApiMetaState> {
             get(provider_listing_detail),
         )
         .route(
+            "/api/v1/market/provider/listings/:id/orders",
+            post(post_provider_listing_order),
+        )
+        .route(
             "/api/v1/market/acquisition/listings/drafts/:draft_id",
             get(get_acquisition_listing_draft),
         )
@@ -615,6 +835,10 @@ pub fn router() -> Router<ApiMetaState> {
         .route(
             "/api/v1/market/acquisition/listings/:id",
             get(acquisition_listing_detail),
+        )
+        .route(
+            "/api/v1/market/acquisition/listings/:id/orders",
+            post(post_acquisition_listing_order),
         )
 }
 

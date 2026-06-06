@@ -15,19 +15,33 @@ mod governance_country_ledger;
 mod governance_delegation_store;
 mod governance_investor_share;
 mod governance_delegate;
-mod governance_doc_reference;
+pub(crate) mod governance_doc_reference;
 mod governance_proposals;
 mod governance_voting_power;
+mod governance_state_machines;
 mod guides;
 mod health_meta;
+mod hooks;
 mod intents;
 mod internal;
 mod investor_distribution;
 mod itineraries;
 mod me;
+mod me_security;
+mod me_subroutes;
+mod me_profile_avatar;
+mod me_market_bookmarks;
 mod media;
 mod messages;
+mod onboarding;
+mod provider_applications;
+mod market_subsite;
+mod market_subsite_list_query;
+mod market_merchant_gate;
+mod acquisition_publish_gate;
 mod orders;
+mod redemption;
+mod steward;
 mod traveltrust_page;
 mod trust_growth;
 
@@ -39,6 +53,18 @@ mod admin_read_contract_contract_tests;
 
 #[cfg(test)]
 mod read_contract_route_guard;
+
+#[cfg(test)]
+mod market_subsite_catalog_db_api_tests;
+
+#[cfg(test)]
+mod profile_avatar_env_serial;
+#[cfg(test)]
+mod me_profile_avatar_db_api_tests;
+#[cfg(test)]
+mod me_profile_avatar_http_contract_tests;
+#[cfg(test)]
+mod me_profile_avatar_s3_minio_db_api_tests;
 
 use axum::http::StatusCode;
 use axum::response::IntoResponse;
@@ -79,6 +105,9 @@ pub fn api_router() -> Router<ApiMetaState> {
         .merge(auth::router())
         .merge(admin::router())
         .merge(me::router())
+        .merge(me_security::router())
+        .merge(me_subroutes::router())
+        .merge(me_market_bookmarks::router())
         .merge(guides::router())
         .merge(orders::router())
         .merge(traveltrust_page::router())
@@ -90,9 +119,15 @@ pub fn api_router() -> Router<ApiMetaState> {
         .merge(media::router())
         .merge(intents::router())
         .merge(community::router())
+        .merge(onboarding::router())
+        .merge(hooks::router())
+        .merge(provider_applications::router())
+        .merge(market_subsite::router())
         .merge(country_ledger_jurisdiction::router())
         .merge(did_rank::router())
         .merge(governance::router())
+        .merge(steward::router())
+        .merge(redemption::router())
         .merge(trust_growth::router())
         .merge(internal::router())
 }

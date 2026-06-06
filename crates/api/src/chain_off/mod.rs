@@ -12,6 +12,10 @@ use tokio::sync::RwLock;
 use traveltrust_core::OrderState;
 use uuid::Uuid;
 
+pub(crate) fn data_origin_production_string() -> String {
+    "production".to_string()
+}
+
 // ---------- 配置（01/03 超时与争议窗口：dispute_deadline ≥ auto_complete_at） ----------
 
 #[derive(Clone)]
@@ -259,6 +263,9 @@ pub struct GuideRow {
     /// 人读拒绝说明（`guides.rejection_message`）
     #[serde(default)]
     pub rejection_message: Option<String>,
+    /// 企业级数据分离：`production` | `test` | `demo`
+    #[serde(default = "data_origin_production_string")]
+    pub data_origin: String,
     pub created_at: DateTime<Utc>,
     pub updated_at: DateTime<Utc>,
 }
@@ -304,6 +311,14 @@ pub struct OrderRow {
     /// 业务归属链（**`orders.chain_id`** 同源）；**None** = 未配置或未 hydrate
     #[serde(default)]
     pub chain_id: Option<i64>,
+    /// 企业级数据分离：`production` | `test` | `demo`
+    #[serde(default = "data_origin_production_string")]
+    pub data_origin: String,
+    /// PD-009 / F-021：**`acquisition_listing`** · **`merchant_listing`** 等
+    #[serde(default)]
+    pub order_kind: Option<String>,
+    #[serde(default)]
+    pub market_listing_id: Option<Uuid>,
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
@@ -338,6 +353,45 @@ pub struct DisputeRow {
     pub dispute_sequence: u32,
 }
 
+impl Default for OrderRow {
+    fn default() -> Self {
+        let now = Utc::now();
+        Self {
+            id: Uuid::nil(),
+            tourist_id: Uuid::nil(),
+            guide_id: Uuid::nil(),
+            amount: String::new(),
+            currency: String::new(),
+            escrow_address: None,
+            state: OrderState::Created,
+            created_at: now,
+            accepted_at: None,
+            escrowed_at: None,
+            completed_at: None,
+            dispute_deadline_at: None,
+            auto_complete_at: None,
+            updated_at: now,
+            start_date: None,
+            end_date: None,
+            sub_status: None,
+            tourist_confirmed: None,
+            guide_confirmed: None,
+            rating_tourist_confirmed: None,
+            rating_guide_confirmed: None,
+            chain_id: None,
+            data_origin: data_origin_production_string(),
+            order_kind: None,
+            market_listing_id: None,
+        }
+    }
+}
+
+mod steward_application;
+pub use steward_application::*;
+mod provider_kyb;
+mod provider_application;
+pub use provider_application::*;
+
 pub struct ChainOffStore {
     pub users: HashMap<Uuid, UserRow>,
     pub guides: HashMap<Uuid, GuideRow>,
@@ -355,6 +409,26 @@ pub struct ChainOffStore {
     pub itineraries: HashMap<Uuid, ItineraryBundle>,
     /// P16/17 ② 聊天消息（order_id -> 消息列表，按时间序）
     pub messages: HashMap<Uuid, Vec<MessageRow>>,
+    /// 区域主理人申请（user_id -> 申请行；① chain_off 内存真源）
+    pub steward_applications_by_user: HashMap<Uuid, steward_application::StewardApplicationRow>,
+    /// 商家资质申请（user_id -> 申请行；① chain_off 内存真源）
+    pub provider_applications_by_user: HashMap<Uuid, provider_application::ProviderApplicationRow>,
+    /// `PUT /me` `settings_preferences`（通知 / 社区可见性 · ① chain_off）
+    pub user_settings_preferences: HashMap<Uuid, serde_json::Value>,
+    /// `POST /auth/verify-email` 一次性令牌 → user_id（① chain_off · 无 PG 邮件时）
+    pub email_verify_tokens: HashMap<String, Uuid>,
+    /// 邮箱验证完成时间（侧表 · 避免扩展 `UserRow` 全仓初始化）
+    pub user_email_verified_at: HashMap<Uuid, DateTime<Utc>>,
+    /// `POST /auth/register/send-verification-code` → 注册前 6 位验证码（key = 小写邮箱）
+    pub register_verification_codes: HashMap<String, RegisterVerificationCodeEntry>,
+}
+
+/// 注册验证码条目（① chain_off 内存 · 10 分钟有效）
+#[derive(Clone, Debug)]
+pub struct RegisterVerificationCodeEntry {
+    pub code: String,
+    pub expires_at: DateTime<Utc>,
+    pub sent_at: DateTime<Utc>,
 }
 
 impl Default for ChainOffStore {
@@ -372,6 +446,12 @@ impl Default for ChainOffStore {
             evidence_receipts: HashMap::new(),
             itineraries: HashMap::new(),
             messages: HashMap::new(),
+            steward_applications_by_user: HashMap::new(),
+            provider_applications_by_user: HashMap::new(),
+            user_settings_preferences: HashMap::new(),
+            email_verify_tokens: HashMap::new(),
+            user_email_verified_at: HashMap::new(),
+            register_verification_codes: HashMap::new(),
         }
     }
 }
@@ -452,6 +532,9 @@ pub(crate) fn audit_key_write_stderr(
     );
 }
 
+mod json_response;
+pub(crate) use json_response::status_json_response_with_429_retry_header;
+
 mod roles;
 pub(crate) use roles::users_role_is_traveler_side;
 mod auth;
@@ -462,6 +545,20 @@ mod pagination;
 pub use pagination::{parse_order_list_page, OrderListPage};
 mod discover;
 pub use discover::*;
+mod community_public_surface;
+mod market_public_surface;
+pub mod market_guide_filter;
+pub use community_public_surface::*;
+pub use market_public_surface::*;
+mod acquisition_trust;
+#[allow(unused_imports)] // PD-009 parity 测试经 `crate::chain_off::check_acquisition_trust_pg_memory_parity`
+pub use acquisition_trust::*;
+mod market_listing_orders;
+pub use market_listing_orders::*;
+mod trust_gate_context;
+pub use trust_gate_context::trust_gate_context_for_user;
+mod persistence_gate;
+pub(crate) use persistence_gate::ensure_durable_writes_available;
 mod messages;
 pub use messages::*;
 mod reviews;
@@ -581,6 +678,9 @@ pub(crate) fn order_from_db(o: &crate::db::DbOrderRow) -> OrderRow {
         rating_tourist_confirmed: o.rating_tourist_confirmed,
         rating_guide_confirmed: o.rating_guide_confirmed,
         chain_id: o.chain_id,
+        data_origin: o.data_origin.clone(),
+        order_kind: o.order_kind.clone(),
+        market_listing_id: o.market_listing_id,
     }
 }
 
@@ -622,7 +722,7 @@ pub(crate) async fn try_persist_order_to_db(
         Some(order.guide_id)
     };
     let chain_id = order.chain_id.or(state.config.business_chain_id);
-    crate::db::upsert_order(
+    crate::db::upsert_order_with_data_origin(
         pool,
         order.id,
         order.tourist_id,
@@ -646,6 +746,9 @@ pub(crate) async fn try_persist_order_to_db(
         order.rating_tourist_confirmed,
         order.rating_guide_confirmed,
         chain_id,
+        &order.data_origin,
+        order.order_kind.as_deref(),
+        order.market_listing_id,
     )
     .await
 }

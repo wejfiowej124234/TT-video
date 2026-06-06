@@ -8,9 +8,11 @@ mod common;
 mod community;
 mod indexer;
 mod messages;
+mod onboarding;
 mod observability;
 mod observability_shell;
 mod reconcile;
+mod public_catalog_surface;
 mod reconcile_gates;
 
 #[cfg(test)]
@@ -95,5 +97,13 @@ pub fn router() -> axum::Router<ApiMetaState> {
         .route(
             "/api/v1/internal/scheduler/run-next",
             post(post_internal_scheduler_run_next),
+        )
+        .route(
+            "/api/v1/internal/public-catalog-surface/stats",
+            get(public_catalog_surface::get_public_catalog_surface_stats),
+        )
+        .route(
+            "/api/v1/internal/onboarding/payments/webhook",
+            post(onboarding::post_internal_onboarding_payments_webhook),
         )
 }

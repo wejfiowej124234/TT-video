@@ -14,9 +14,10 @@ use std::sync::atomic::{AtomicU64, Ordering};
 pub async fn auth_placeholder_layer(req: Request<Body>, next: axum::middleware::Next) -> Response {
     let path = req.uri().path();
     let method = req.method();
+    let read = *method == Method::GET || *method == Method::HEAD;
 
-    // 社区只读：Feed、帖子详情、评论、会话列表等 GET 允许未登录访问（51-31、31 附录）
-    let community_read = method == Method::GET
+    // 社区只读：Feed、帖子详情、评论、会话列表等 GET/HEAD 允许未登录访问（51-31、31 附录）
+    let community_read = read
         && path.starts_with("/api/v1/community/")
         && !path.contains("/me/")
         && !path.contains("/friends/");
@@ -26,14 +27,40 @@ pub async fn auth_placeholder_layer(req: Request<Body>, next: axum::middleware::
         || path == "/meta"
         || path == "/meta/build"
         || path.starts_with("/auth/")
-        || (method == Method::GET && path == "/api/v1/guides")
-        || (method == Method::GET && path == "/api/v1/discover/orders")
+        || (read && path == "/api/v1/guides")
+        || (read && path == "/api/v1/discover/orders")
         || (method == Method::POST && path == "/api/v1/trust-growth/ingest")
-        || (method == Method::GET && path == "/api/v1/trust-growth/config")
-        || (method == Method::GET && path == "/api/v1/did-rank/travelers")
-        || (method == Method::GET && path == "/api/v1/did-rank/guides")
-        || (method == Method::GET && path == "/api/v1/did-rank/itineraries")
-        || (method == Method::GET && path.starts_with("/api/v1/media/access/"))
+        // Stripe / PSP webhooks：公开 POST，handler 内 Stripe-Signature 验签（hooks.rs）
+        || (method == Method::POST && path.starts_with("/api/v1/hooks/"))
+        || (read && path == "/api/v1/trust-growth/config")
+        || (read && path == "/api/v1/did-rank/travelers")
+        || (read && path == "/api/v1/did-rank/guides")
+        || (read && path == "/api/v1/did-rank/itineraries")
+        || (read && path == "/api/v1/did-rank/prize-pool")
+        || (read && path == "/api/v1/did-rank/providers")
+        || (read && path == "/api/v1/did-rank/acquisitions")
+        || (read && path.starts_with("/api/v1/media/access/"))
+        || (read && path.starts_with("/api/v1/uploads/community-posts/"))
+        // F-007 · 04 §三：本机头像 UUID 文件名匿名读（与 community-posts 同形）
+        || (read && path.starts_with("/api/v1/uploads/profile-avatars/"))
+        // 94 自由市场：已发布 listing 公开目录（drafts/orders 写路径仍须 Bearer）
+        || (read && path == "/api/v1/market/provider/listings")
+        || (read && path == "/api/v1/market/acquisition/listings")
+        || (read
+            && path.starts_with("/api/v1/market/provider/listings/")
+            && !path.contains("/drafts")
+            && !path.ends_with("/orders"))
+        || (read
+            && path.starts_with("/api/v1/market/acquisition/listings/")
+            && !path.contains("/drafts")
+            && !path.ends_with("/orders"))
+        // B-191 / PH-1：TravelTrust 落地页只读机读锚 + 84 协议镜像 + 主理人 stake 公开读
+        || (read && path == "/api/v1/traveltrust/page-brief")
+        || (read && path == "/api/v1/governance/protocol-reference")
+        || (read && path == "/api/v1/governance/state-machines")
+        || (read && path == "/api/v1/steward/stake-quote")
+        || (read && path == "/api/v1/steward/stake-status")
+        || (read && path == "/api/v1/redemption/quote")
         || path.starts_with("/api/v1/internal/")
         || community_read;
     if public {
@@ -289,10 +316,13 @@ pub async fn security_headers_layer(req: Request<Body>, next: axum::middleware::
         HeaderName::from_static("referrer-policy"),
         HeaderValue::from_static("no-referrer"),
     );
-    res.headers_mut().insert(
-        HeaderName::from_static("cache-control"),
-        HeaderValue::from_static("no-store"),
-    );
+    // 保留 handler 已设置的 Cache-Control（如 community-posts UUID 媒体 `immutable`）。
+    if !res.headers().contains_key(HeaderName::from_static("cache-control")) {
+        res.headers_mut().insert(
+            HeaderName::from_static("cache-control"),
+            HeaderValue::from_static("no-store"),
+        );
+    }
     res.headers_mut().insert(
         HeaderName::from_static("permissions-policy"),
         HeaderValue::from_static("geolocation=(), microphone=(), camera=()"),

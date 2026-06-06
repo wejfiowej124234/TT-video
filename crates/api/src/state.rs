@@ -135,6 +135,7 @@ pub struct ApiMetaState {
     /// **B-174**：最近一次 **`indexer_tick` 成功路径**（含 **`no_new_blocks` / `awaiting_finality`**）落盘的 **failed/skip 分桶** 快照；**HTTP 5xx** 中断的 tick **不**更新。
     pub indexer_tick_fail_skip_bucket_obs_last: Arc<RwLock<Option<serde_json::Value>>>,
     pub guide_upload_rate: Arc<RwLock<std::collections::HashMap<Uuid, Vec<Instant>>>>,
+    pub community_media_upload_rate: Arc<RwLock<std::collections::HashMap<Uuid, Vec<Instant>>>>,
 }
 
 impl ApiMetaState {
@@ -193,6 +194,54 @@ pub async fn extract_user_with_session_check(
         return chain_off::extract_user_from_headers(headers);
     }
     chain_off::extract_user_from_headers(headers)
+}
+
+/// **96-18 onboarding** 写路径鉴权三分支（**401** / **503** / **200+uid**）。
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum SessionAuthOutcome {
+    User(Uuid),
+    Unauthorized,
+    SessionStoreUnavailable,
+}
+
+/// 与 **`extract_user_with_session_check`** 同源，但区分 **Bearer 无效** 与 **会话存储不可用**。
+pub async fn extract_session_auth_outcome(
+    state: &ApiMetaState,
+    headers: &HeaderMap,
+) -> SessionAuthOutcome {
+    let Some(token) = bearer_raw_token(headers) else {
+        return SessionAuthOutcome::Unauthorized;
+    };
+    if let Some(ref co) = state.chain_off {
+        if let Some(ref pool) = co.db_pool {
+            return match db::get_user_id_by_token(pool, token).await {
+                Ok(Some(uid)) => SessionAuthOutcome::User(uid),
+                Ok(None) => SessionAuthOutcome::Unauthorized,
+                Err(_) => SessionAuthOutcome::SessionStoreUnavailable,
+            };
+        }
+        let store = co.store.read().await;
+        if let Some(&uid) = store.sessions.get(token) {
+            return SessionAuthOutcome::User(uid);
+        }
+    }
+    if let Some(uid) = extract_user_with_session_check(state, headers).await {
+        return SessionAuthOutcome::User(uid);
+    }
+    SessionAuthOutcome::Unauthorized
+}
+
+/// 写路径：须已登录；否则 **401** **`login_required`**（与 **`routes/market_subsite`** 等 Bearer 写路径同源）。
+pub fn require_session_user(
+    uid: Option<Uuid>,
+) -> Result<Uuid, (axum::http::StatusCode, axum::Json<serde_json::Value>)> {
+    use axum::http::StatusCode;
+    use axum::Json;
+    use serde_json::json;
+    uid.ok_or((
+        StatusCode::UNAUTHORIZED,
+        Json(json!({"error": "login_required", "message": "login_required"})),
+    ))
 }
 
 /// 50-O-R1 / Runbook §9：运维声明的链下 **DB 双写失败** 处置策略（`GET /meta` + `startup_snapshot`）。
@@ -386,6 +435,7 @@ pub(crate) mod test_support {
             indexer_state: None,
             indexer_tick_fail_skip_bucket_obs_last: Arc::new(RwLock::new(None)),
             guide_upload_rate: Arc::new(RwLock::new(HashMap::<Uuid, Vec<Instant>>::new())),
+            community_media_upload_rate: Arc::new(RwLock::new(HashMap::<Uuid, Vec<Instant>>::new())),
         }
     }
 }

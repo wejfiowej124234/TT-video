@@ -288,6 +288,18 @@ pub fn infer_cover_image_from_days(days: &[ItineraryDayRow]) -> Option<String> {
     None
 }
 
+const MOCK_ITINERARY_DAY_IMAGES: [&str; 4] = [
+    "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=80",
+    "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&q=80",
+    "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800&q=80",
+    "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800&q=80",
+];
+
+fn mock_itinerary_day_image(day_index: u32) -> String {
+    let idx = (day_index.saturating_sub(1) as usize) % MOCK_ITINERARY_DAY_IMAGES.len();
+    MOCK_ITINERARY_DAY_IMAGES[idx].to_string()
+}
+
 /// 56-S3 多城市契约：有 cities 时仅生成所选城市对应天数的日行，不生成未选城市；无 cities 时沿用单 city 逻辑
 pub(crate) fn generate_itinerary_mock(
     body: &CreateItineraryBody,
@@ -342,7 +354,7 @@ pub(crate) fn generate_itinerary_mock(
                             body.transport.as_deref().unwrap_or("当地交通"),
                             body.food_preference.as_deref().unwrap_or("当地特色")
                         ),
-                        content_images: vec![],
+                        content_images: vec![mock_itinerary_day_image(d)],
                         date: None,
                         city: Some(city),
                         description: None,
@@ -374,7 +386,7 @@ pub(crate) fn generate_itinerary_mock(
                         body.transport.as_deref().unwrap_or("当地交通"),
                         body.food_preference.as_deref().unwrap_or("当地特色")
                     ),
-                    content_images: vec![],
+                    content_images: vec![mock_itinerary_day_image(d)],
                     date: None,
                     city: Some(body.city.clone()),
                     description: None,
@@ -581,6 +593,25 @@ pub async fn itinerary_create_impl(
     let order_id = Uuid::new_v4();
     let now = Utc::now();
     let total_str = format!("{:.2}", amount_breakdown.total_budget);
+    let bundle = ItineraryBundle {
+        order_id,
+        version: 1,
+        destination: body.destination.clone(),
+        city: body.city.clone(),
+        days: days_vec.clone(),
+        amount_breakdown: amount_breakdown.clone(),
+        snapshot_hash: None,
+        cover_image: None,
+    };
+    let tourist_email = {
+        let store = state.store.read().await;
+        store
+            .users
+            .get(&user_id)
+            .map(|u| u.email.clone())
+            .unwrap_or_default()
+    };
+    let data_origin = super::infer_order_data_origin(&tourist_email, &bundle);
     let order = OrderRow {
         id: order_id,
         tourist_id: user_id,
@@ -604,16 +635,9 @@ pub async fn itinerary_create_impl(
         rating_tourist_confirmed: None,
         rating_guide_confirmed: None,
         chain_id: state.config.business_chain_id,
-    };
-    let bundle = ItineraryBundle {
-        order_id,
-        version: 1,
-        destination: body.destination.clone(),
-        city: body.city.clone(),
-        days: days_vec.clone(),
-        amount_breakdown: amount_breakdown.clone(),
-        snapshot_hash: None,
-        cover_image: None,
+        data_origin,
+        order_kind: None,
+        market_listing_id: None,
     };
     {
         let mut store = state.store.write().await;
@@ -1121,6 +1145,25 @@ pub async fn itinerary_custom_create_impl(
         })
         .unwrap_or_else(|| body.country.clone());
 
+    let bundle = ItineraryBundle {
+        order_id,
+        version: 1,
+        destination: destination.clone(),
+        city: city.clone(),
+        days: days_vec.clone(),
+        amount_breakdown: amount_breakdown.clone(),
+        snapshot_hash: None,
+        cover_image: None,
+    };
+    let tourist_email = {
+        let store = state.store.read().await;
+        store
+            .users
+            .get(&user_id)
+            .map(|u| u.email.clone())
+            .unwrap_or_default()
+    };
+    let data_origin = super::infer_order_data_origin(&tourist_email, &bundle);
     let order = OrderRow {
         id: order_id,
         tourist_id: user_id,
@@ -1144,6 +1187,9 @@ pub async fn itinerary_custom_create_impl(
         rating_tourist_confirmed: None,
         rating_guide_confirmed: None,
         chain_id: state.config.business_chain_id,
+        data_origin,
+        order_kind: None,
+        market_listing_id: None,
     };
     let bundle = ItineraryBundle {
         order_id,

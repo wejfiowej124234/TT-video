@@ -37,19 +37,19 @@ async fn execute_community_ranking_snapshot_core(
     let mode_lc = mode.trim().to_lowercase();
     let (posts, feed_mode_stored) = match mode_lc.as_str() {
         "hot" => {
-            let (p, _) = db::list_feed_hot(pool, None, lim, None)
+            let (p, _) = db::list_feed_hot(pool, None, lim, None, false)
                 .await
                 .map_err(|_| "list_feed_hot failed".to_string())?;
             (p, "hot")
         }
         "recommend" => {
-            let (p, _) = db::list_feed(pool, None, lim, None)
+            let (p, _) = db::list_feed(pool, None, lim, None, false, None)
                 .await
                 .map_err(|_| "list_feed failed".to_string())?;
             (p, "recommend")
         }
         "latest" => {
-            let (p, _) = db::list_feed(pool, None, lim, None)
+            let (p, _) = db::list_feed(pool, None, lim, None, false, None)
                 .await
                 .map_err(|_| "list_feed failed".to_string())?;
             (p, "latest")

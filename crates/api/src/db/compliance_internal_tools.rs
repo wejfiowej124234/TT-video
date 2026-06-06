@@ -15,6 +15,8 @@ pub struct ComplianceDataRequestRow {
     pub sla_hours: Option<i32>,
     pub jurisdiction: Option<String>,
     pub notes: Option<String>,
+    pub export_signature: Option<String>,
+    pub record_hash_fingerprint: Option<String>,
     pub created_at: DateTime<Utc>,
     pub updated_at: DateTime<Utc>,
     pub version: i32,
@@ -59,6 +61,8 @@ pub async fn get_compliance_data_request_by_id(
             sla_hours,
             jurisdiction,
             notes,
+            export_signature,
+            record_hash_fingerprint,
             created_at,
             updated_at,
             version
@@ -93,6 +97,8 @@ pub async fn list_compliance_data_requests(
             sla_hours,
             jurisdiction,
             notes,
+            export_signature,
+            record_hash_fingerprint,
             created_at,
             updated_at,
             version
@@ -123,6 +129,8 @@ pub async fn admin_update_compliance_data_request(
     expected_version: i32,
     new_status: Option<&str>,
     new_notes: Option<&str>,
+    new_export_signature: Option<&str>,
+    new_record_hash_fingerprint: Option<&str>,
     event_type: &str,
     event_detail: Option<&str>,
 ) -> Result<Option<ComplianceDataRequestRow>, sqlx::Error> {
@@ -132,9 +140,11 @@ pub async fn admin_update_compliance_data_request(
         UPDATE compliance_data_requests SET
             status = COALESCE($1, status),
             notes = COALESCE($2, notes),
+            export_signature = COALESCE($3, export_signature),
+            record_hash_fingerprint = COALESCE($4, record_hash_fingerprint),
             version = version + 1,
             updated_at = now()
-        WHERE id = $3 AND version = $4
+        WHERE id = $5 AND version = $6
         RETURNING
             id,
             request_ref,
@@ -145,6 +155,8 @@ pub async fn admin_update_compliance_data_request(
             sla_hours,
             jurisdiction,
             notes,
+            export_signature,
+            record_hash_fingerprint,
             created_at,
             updated_at,
             version
@@ -152,6 +164,8 @@ pub async fn admin_update_compliance_data_request(
     )
     .bind(new_status)
     .bind(new_notes)
+    .bind(new_export_signature)
+    .bind(new_record_hash_fingerprint)
     .bind(id)
     .bind(expected_version)
     .fetch_optional(&mut *tx)

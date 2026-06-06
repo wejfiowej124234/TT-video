@@ -10,16 +10,42 @@ pub async fn insert_user_security_notification(
     template_key: &str,
     payload: &Value,
 ) -> Result<(), sqlx::Error> {
+    insert_user_security_notification_with_status(
+        pool,
+        user_id,
+        event_type,
+        template_key,
+        payload,
+        "pending",
+    )
+    .await
+}
+
+pub async fn insert_user_security_notification_with_status(
+    pool: &PgPool,
+    user_id: Uuid,
+    event_type: &str,
+    template_key: &str,
+    payload: &Value,
+    delivery_status: &str,
+) -> Result<(), sqlx::Error> {
+    let sent_at = if delivery_status == "sent" {
+        Some(Utc::now())
+    } else {
+        None
+    };
     sqlx::query(
         r#"
         INSERT INTO user_security_notifications (user_id, event_type, template_key, payload, delivery_status, attempts, last_error, sent_at, created_at)
-        VALUES ($1, $2, $3, $4, 'pending', 0, NULL, NULL, $5)
+        VALUES ($1, $2, $3, $4, $5, 0, NULL, $6, $7)
         "#,
     )
     .bind(user_id)
     .bind(event_type)
     .bind(template_key)
     .bind(payload)
+    .bind(delivery_status)
+    .bind(sent_at)
     .bind(Utc::now())
     .execute(pool)
     .await?;

@@ -48,6 +48,7 @@ fn build_state() -> ApiMetaState {
         indexer_state: None,
         indexer_tick_fail_skip_bucket_obs_last: Arc::new(RwLock::new(None)),
         guide_upload_rate: Arc::new(RwLock::new(HashMap::new())),
+        community_media_upload_rate: Arc::new(RwLock::new(HashMap::new())),
     }
 }
 
@@ -330,6 +331,7 @@ async fn b102_get_orders_chain_scope_matches_db_ssot_and_filters_rows() {
             rejection_message: None,
             created_at: now,
             updated_at: now,
+            data_origin: "production".into(),
         },
     );
 
@@ -356,6 +358,9 @@ async fn b102_get_orders_chain_scope_matches_db_ssot_and_filters_rows() {
         rating_tourist_confirmed: None,
         rating_guide_confirmed: None,
         chain_id: cid,
+        data_origin: "production".into(),
+        order_kind: None,
+        market_listing_id: None,
     };
     let o_null = mk(None);
     let o137 = mk(Some(137));
@@ -462,6 +467,7 @@ async fn tt_b122_get_orders_strict_chain_scope_matches_backfill_dry_run_embed() 
             rejection_message: None,
             created_at: now,
             updated_at: now,
+            data_origin: "production".into(),
         },
     );
 
@@ -488,6 +494,9 @@ async fn tt_b122_get_orders_strict_chain_scope_matches_backfill_dry_run_embed() 
         rating_tourist_confirmed: None,
         rating_guide_confirmed: None,
         chain_id: cid,
+        data_origin: "production".into(),
+        order_kind: None,
+        market_listing_id: None,
     };
     let o_null = mk(None);
     let o137 = mk(Some(137));
@@ -595,6 +604,9 @@ async fn b097_get_order_by_id_order_object_has_projection_terminal_key() {
             rating_tourist_confirmed: None,
             rating_guide_confirmed: None,
             chain_id: None,
+            data_origin: "production".into(),
+        order_kind: None,
+        market_listing_id: None,
         },
     );
 
@@ -669,6 +681,7 @@ async fn b095_get_order_by_id_split_addresses_ssot_matches_get_meta_chain_contra
             rejection_message: None,
             created_at: now,
             updated_at: now,
+            data_origin: "production".into(),
         },
     );
     store.orders.insert(
@@ -696,6 +709,9 @@ async fn b095_get_order_by_id_split_addresses_ssot_matches_get_meta_chain_contra
             rating_tourist_confirmed: None,
             rating_guide_confirmed: None,
             chain_id: None,
+            data_origin: "production".into(),
+        order_kind: None,
+        market_listing_id: None,
         },
     );
 
@@ -838,6 +854,7 @@ async fn b083_get_order_fee_route_country_aligns_meta_orders_ssot_mapped_and_rej
             rejection_message: None,
             created_at: now,
             updated_at: now,
+            data_origin: "production".into(),
         },
     );
     for (oid, dest) in [(oid_mapped, "中国"), (oid_reject, "意大利")] {
@@ -867,6 +884,9 @@ async fn b083_get_order_fee_route_country_aligns_meta_orders_ssot_mapped_and_rej
                 rating_tourist_confirmed: None,
                 rating_guide_confirmed: None,
                 chain_id: None,
+                data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
             },
         );
     }

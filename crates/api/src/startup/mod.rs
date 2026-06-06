@@ -20,6 +20,8 @@ use crate::state::ApiMetaState;
 mod hydrate;
 mod ingest;
 mod outbox;
+#[cfg(test)]
+pub(crate) use hydrate::hydrate_from_db;
 pub use ingest::*;
 
 /// Append a JSON value as a single line to a JSONL file.
@@ -369,6 +371,11 @@ pub async fn run() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
             db_pool: db_pool.clone(),
         };
         chain_off::seed_test_accounts_if_empty(&co_state).await;
+        if let Some(ref pool) = db_pool {
+            let mut store = chain_off_store.write().await;
+            crate::db::seed_market_public_showcase_if_sparse(pool, &mut store).await;
+            crate::db::seed_community_public_showcase_if_sparse(pool, &mut store).await;
+        }
     }
 
     if let Err(e) = crate::schedule_engine::init_from_env() {
@@ -440,6 +447,7 @@ pub async fn run() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         }),
         indexer_tick_fail_skip_bucket_obs_last: Arc::new(RwLock::new(None)),
         guide_upload_rate: Arc::new(RwLock::new(HashMap::new())),
+        community_media_upload_rate: Arc::new(RwLock::new(HashMap::new())),
     };
 
     let app = router::app(meta_state, idem_cache, db_pool);

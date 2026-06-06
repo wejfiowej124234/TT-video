@@ -26,12 +26,63 @@ pub async fn insert_guide(
     created_at: DateTime<Utc>,
     updated_at: DateTime<Utc>,
 ) -> Result<(), sqlx::Error> {
-    let lang_json = serde_json::to_value(languages).unwrap_or_else(|_| JsonValue::Array(vec![]));
-    let svc_json = serde_json::to_value(service_types).unwrap_or_else(|_| JsonValue::Array(vec![]));
+    insert_guide_with_data_origin(
+        pool,
+        id,
+        user_id,
+        city,
+        country_code,
+        languages,
+        service_types,
+        bio,
+        wallet_address,
+        real_name,
+        passport_number_hash,
+        id_photo_url,
+        language_cert_url,
+        guide_license_url,
+        stake_amount,
+        status,
+        created_at,
+        updated_at,
+        "production",
+    )
+    .await
+}
+
+pub async fn insert_guide_with_data_origin(
+    pool: &PgPool,
+    id: Uuid,
+    user_id: Uuid,
+    city: &str,
+    country_code: &str,
+    languages: &[String],
+    service_types: &[String],
+    bio: Option<&str>,
+    wallet_address: Option<&str>,
+    real_name: Option<&str>,
+    passport_number_hash: Option<&str>,
+    id_photo_url: Option<&str>,
+    language_cert_url: Option<&str>,
+    guide_license_url: Option<&str>,
+    stake_amount: &str,
+    status: &str,
+    created_at: DateTime<Utc>,
+    updated_at: DateTime<Utc>,
+    data_origin: &str,
+) -> Result<(), sqlx::Error> {
+    let languages_norm =
+        crate::chain_off::market_guide_filter::normalize_languages_for_storage(languages);
+    let service_types_norm =
+        crate::chain_off::market_guide_filter::normalize_service_types_for_storage(service_types);
+    let lang_json =
+        serde_json::to_value(&languages_norm).unwrap_or_else(|_| JsonValue::Array(vec![]));
+    let svc_json =
+        serde_json::to_value(&service_types_norm).unwrap_or_else(|_| JsonValue::Array(vec![]));
     sqlx::query(
         r#"
-        INSERT INTO guides (id, user_id, city, country_code, languages, service_types, bio, wallet_address, real_name, passport_number_hash, id_photo_url, language_cert_url, guide_license_url, stake_amount, status, created_at, updated_at)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+        INSERT INTO guides (id, user_id, city, country_code, languages, service_types, bio, wallet_address, real_name, passport_number_hash, id_photo_url, language_cert_url, guide_license_url, stake_amount, status, created_at, updated_at, data_origin)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
         ON CONFLICT (id) DO NOTHING
         "#,
     )
@@ -52,6 +103,7 @@ pub async fn insert_guide(
     .bind(status)
     .bind(created_at)
     .bind(updated_at)
+    .bind(data_origin)
     .execute(pool)
     .await?;
     Ok(())
@@ -104,6 +156,7 @@ pub struct GuideRow {
     pub status: String,
     pub rejection_codes: Vec<String>,
     pub rejection_message: Option<String>,
+    pub data_origin: String,
     pub created_at: DateTime<Utc>,
     pub updated_at: DateTime<Utc>,
 }
@@ -129,11 +182,12 @@ pub async fn list_guides(pool: &PgPool) -> Result<Vec<GuideRow>, sqlx::Error> {
         status: String,
         rejection_codes: JsonValue,
         rejection_message: Option<String>,
+        data_origin: String,
         created_at: DateTime<Utc>,
         updated_at: DateTime<Utc>,
     }
     let rows = sqlx::query_as::<_, Row>(
-        "SELECT id, user_id, city, country_code, languages, service_types, bio, wallet_address, real_name, passport_number_hash, id_photo_url, language_cert_url, guide_license_url, stake_amount, status, rejection_codes, rejection_message, created_at, updated_at FROM guides",
+        "SELECT id, user_id, city, country_code, languages, service_types, bio, wallet_address, real_name, passport_number_hash, id_photo_url, language_cert_url, guide_license_url, stake_amount, status, rejection_codes, rejection_message, data_origin, created_at, updated_at FROM guides",
     )
     .fetch_all(pool)
     .await?;
@@ -161,9 +215,28 @@ pub async fn list_guides(pool: &PgPool) -> Result<Vec<GuideRow>, sqlx::Error> {
                 status: r.status,
                 rejection_codes,
                 rejection_message: r.rejection_message,
+                data_origin: r.data_origin,
                 created_at: r.created_at,
                 updated_at: r.updated_at,
             }
         })
         .collect())
+}
+
+pub async fn select_guide_by_id(pool: &PgPool, id: Uuid) -> Result<Option<GuideRow>, sqlx::Error> {
+    let rows = list_guides(pool).await?;
+    Ok(rows.into_iter().find(|g| g.id == id))
+}
+
+pub async fn select_active_guide_id_for_user(
+    pool: &PgPool,
+    user_id: Uuid,
+) -> Result<Option<Uuid>, sqlx::Error> {
+    let id: Option<Uuid> = sqlx::query_scalar(
+        "SELECT id FROM guides WHERE user_id = $1 AND status = 'active' ORDER BY created_at DESC LIMIT 1",
+    )
+    .bind(user_id)
+    .fetch_optional(pool)
+    .await?;
+    Ok(id)
 }

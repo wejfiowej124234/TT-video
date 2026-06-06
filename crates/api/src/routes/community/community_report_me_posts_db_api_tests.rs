@@ -167,7 +167,7 @@ async fn run_d_com_010_report_flow(pool: &PgPool, app: Router) -> (Uuid, Uuid, U
         &[],
         None,
         None,
-        None,
+        "production",
     )
     .await
     .expect("insert_post");
@@ -236,7 +236,7 @@ async fn run_d_com_009_me_posts_flow(pool: &PgPool, app: Router) -> (Uuid, Uuid)
         &[],
         None,
         None,
-        None,
+        "production",
     )
     .await
     .expect("insert_post");

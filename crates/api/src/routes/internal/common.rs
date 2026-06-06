@@ -1,4 +1,6 @@
 //! Shared helpers for `internal` routes (B-181 split).
+use axum::http::{HeaderMap, StatusCode};
+use axum::response::{IntoResponse, Response};
 use axum::Json;
 use chrono::Utc;
 use serde_json::{json, Value};
@@ -243,5 +245,71 @@ pub(crate) fn indexer_tick_fail_skip_bucket_observability_no_snapshot_yet() -> V
         },
         "observation_note": "no_completed_tick_snapshot_yet",
     })
+}
+
+/// **`INTERNAL_API_SECRET`** 由 **`internal_api_secret_gate_layer`** 统一校验；handler 内保留钩子以兼容 **96-18** 子路由测试。
+pub fn internal_operator_secret_required_response() -> Option<Response> {
+    None
+}
+
+/// **`ONBOARDING_INTERNAL_WEBHOOK_REQUIRE_HTTPS_FORWARDED`** / **`ONBOARDING_INTERNAL_WEBHOOK_ALLOWLIST_CIDRS`** 可选边缘闸。
+pub fn onboarding_internal_webhook_request_gate_response(headers: &HeaderMap) -> Option<Response> {
+    use serde_json::json;
+    use std::env;
+
+    if env::var("ONBOARDING_INTERNAL_WEBHOOK_REQUIRE_HTTPS_FORWARDED").as_deref() == Ok("1") {
+        let proto = headers
+            .get("x-forwarded-proto")
+            .and_then(|v| v.to_str().ok())
+            .unwrap_or("");
+        if proto.trim().eq_ignore_ascii_case("https") == false {
+            return Some(
+                (
+                    StatusCode::FORBIDDEN,
+                    Json(json!({
+                        "status": "error",
+                        "error": "onboarding_webhook_https_required",
+                        "message": "onboarding_webhook_https_required",
+                    })),
+                )
+                    .into_response(),
+            );
+        }
+    }
+
+    let allowlist = env::var("ONBOARDING_INTERNAL_WEBHOOK_ALLOWLIST_CIDRS")
+        .ok()
+        .map(|s| s.trim().to_string())
+        .filter(|s| !s.is_empty());
+    if let Some(list) = allowlist {
+        let client = headers
+            .get("x-forwarded-for")
+            .and_then(|v| v.to_str().ok())
+            .and_then(|s| s.split(',').next())
+            .map(str::trim)
+            .unwrap_or("");
+        let allowed = list.split(',').map(str::trim).any(|entry| {
+            if let Some(base) = entry.strip_suffix("/32") {
+                client == base
+            } else {
+                client == entry
+            }
+        });
+        if !allowed {
+            return Some(
+                (
+                    StatusCode::FORBIDDEN,
+                    Json(json!({
+                        "status": "error",
+                        "error": "onboarding_webhook_ip_not_allowed",
+                        "message": "onboarding_webhook_ip_not_allowed",
+                    })),
+                )
+                    .into_response(),
+            );
+        }
+    }
+
+    None
 }
 

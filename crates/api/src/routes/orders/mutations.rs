@@ -337,3 +337,36 @@ pub async fn patch_order_itinerary(
     }
     not_impl_json("PATCH /api/v1/orders/:id/itinerary").into_response()
 }
+
+pub async fn patch_order_guide(
+    State(state): State<ApiMetaState>,
+    Path(id): Path<String>,
+    headers: HeaderMap,
+    Json(body): Json<chain_off::PatchOrderGuideBody>,
+) -> impl IntoResponse {
+    if let Some(ref co) = state.chain_off {
+        let uid = match extract_user_with_session_check(&state, &headers).await {
+            Some(u) => u,
+            None => {
+                return (
+                    StatusCode::UNAUTHORIZED,
+                    Json(json!({"error": "login_required", "message": "login_required"})),
+                )
+                    .into_response()
+            }
+        };
+        let Ok(oid) = Uuid::parse_str(&id) else {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(json!({"error": "invalid_uuid", "message": "invalid_uuid"})),
+            )
+                .into_response();
+        };
+        let rid = hdr_request_id(&headers);
+        return match chain_off::patch_order_guide_impl(co.clone(), rid, oid, uid, Json(body)).await {
+            Ok(j) => j.into_response(),
+            Err((code, j)) => (code, j).into_response(),
+        };
+    }
+    not_impl_json("PATCH /api/v1/orders/:id/guide").into_response()
+}

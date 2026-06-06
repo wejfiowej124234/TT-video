@@ -2,12 +2,15 @@
 
 mod approvals;
 mod audit_and_lists;
+mod home_metrics;
 mod types;
 
 pub use approvals::*;
 pub use audit_and_lists::*;
+pub use home_metrics::*;
 #[allow(unused_imports)]
 pub use types::{
-    AdminApprovalRequestRow, AdminAuditLogRow, AdminRoleChangeApprovalResult, BackfillJobRow,
+    AdminApprovalRequestRow, AdminAuditLogRow, AdminConsoleRoleChangeApprovalResult,
+    AdminRoleChangeApprovalResult, BackfillJobRow,
     DualWriteCheckRow, MigrationHistoryRow, MigrationRollbackRow, SchemaVersionRow,
 };

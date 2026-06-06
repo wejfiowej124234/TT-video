@@ -64,8 +64,8 @@ mod auth_placeholder_strict_gate_tests {
     use super::super::auth_placeholder_layer;
     use axum::{
         body::Body,
-        http::{Request, StatusCode},
-        routing::get,
+        http::{Method, Request, StatusCode},
+        routing::{get, post},
         Router,
     };
     use std::sync::{Mutex, OnceLock};
@@ -105,7 +105,38 @@ mod auth_placeholder_strict_gate_tests {
         Router::new()
             .route("/api/v1/orders", get(|| async { "ok" }))
             .route("/api/v1/community/feed", get(|| async { "pub" }))
+            .route("/api/v1/did-rank/prize-pool", get(|| async { "pool" }))
+            .route(
+                "/api/v1/uploads/profile-avatars/:name",
+                get(|| async { "avatar" }),
+            )
+            .route(
+                "/api/v1/hooks/stripe/onboarding",
+                post(|| async { "hook-ok" }),
+            )
             .layer(axum::middleware::from_fn(auth_placeholder_layer))
+    }
+
+    #[test]
+    fn stripe_onboarding_webhook_post_public_without_auth() {
+        let rt = tokio::runtime::Builder::new_current_thread()
+            .enable_all()
+            .build()
+            .expect("runtime");
+        let res = rt.block_on(async {
+            test_app()
+                .oneshot(
+                    Request::builder()
+                        .uri("/api/v1/hooks/stripe/onboarding")
+                        .method(Method::POST)
+                        .header("Content-Type", "application/json")
+                        .body(Body::from("{}"))
+                        .unwrap(),
+                )
+                .await
+                .unwrap()
+        });
+        assert_eq!(res.status(), StatusCode::OK);
     }
 
     #[test]
@@ -193,6 +224,52 @@ mod auth_placeholder_strict_gate_tests {
                 .oneshot(
                     Request::builder()
                         .uri("/api/v1/community/feed")
+                        .method(axum::http::Method::GET)
+                        .body(Body::empty())
+                        .unwrap(),
+                )
+                .await
+                .unwrap()
+        });
+        assert_eq!(res.status(), StatusCode::OK);
+    }
+
+    #[test]
+    fn strict_on_profile_avatar_upload_get_public_without_auth() {
+        let _lock = env_lock();
+        let _g = StrictGateEnvGuard::set("1");
+        let rt = tokio::runtime::Builder::new_current_thread()
+            .enable_all()
+            .build()
+            .expect("runtime");
+        let res = rt.block_on(async {
+            test_app()
+                .oneshot(
+                    Request::builder()
+                        .uri("/api/v1/uploads/profile-avatars/550e8400-e29b-41d4-a716-446655440000.jpg")
+                        .method(axum::http::Method::GET)
+                        .body(Body::empty())
+                        .unwrap(),
+                )
+                .await
+                .unwrap()
+        });
+        assert_eq!(res.status(), StatusCode::OK);
+    }
+
+    #[test]
+    fn strict_on_did_rank_prize_pool_get_public_without_auth() {
+        let _lock = env_lock();
+        let _g = StrictGateEnvGuard::set("1");
+        let rt = tokio::runtime::Builder::new_current_thread()
+            .enable_all()
+            .build()
+            .expect("runtime");
+        let res = rt.block_on(async {
+            test_app()
+                .oneshot(
+                    Request::builder()
+                        .uri("/api/v1/did-rank/prize-pool")
                         .method(axum::http::Method::GET)
                         .body(Body::empty())
                         .unwrap(),

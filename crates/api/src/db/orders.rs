@@ -43,6 +43,10 @@ pub struct DbOrderRow {
     pub rating_guide_confirmed: Option<bool>,
     /// 业务归属链（**`CHAIN_ID`** / 与 **`chain::ChainConfig`** 同源口径）；**NULL** = 历史行或未配置 RPC
     pub chain_id: Option<i64>,
+    /// 企业级数据分离：`production` | `test` | `demo`
+    pub data_origin: String,
+    pub order_kind: Option<String>,
+    pub market_listing_id: Option<Uuid>,
 }
 
 /// 插入或更新订单（创建与状态变更时双写；53 含 sub_status 与确认字段；55-S1 guide_id 可选）
@@ -71,10 +75,69 @@ pub async fn upsert_order(
     rating_guide_confirmed: Option<bool>,
     chain_id: Option<i64>,
 ) -> Result<(), sqlx::Error> {
+    upsert_order_with_data_origin(
+        pool,
+        id,
+        tourist_id,
+        guide_id,
+        amount,
+        currency,
+        status,
+        escrow_address,
+        created_at,
+        updated_at,
+        accepted_at,
+        escrowed_at,
+        completed_at,
+        dispute_deadline_at,
+        auto_complete_at,
+        start_date,
+        end_date,
+        sub_status,
+        tourist_confirmed,
+        guide_confirmed,
+        rating_tourist_confirmed,
+        rating_guide_confirmed,
+        chain_id,
+        "production",
+        None,
+        None,
+    )
+    .await
+}
+
+pub async fn upsert_order_with_data_origin(
+    pool: &PgPool,
+    id: Uuid,
+    tourist_id: Uuid,
+    guide_id: Option<Uuid>,
+    amount: &str,
+    currency: &str,
+    status: &str,
+    escrow_address: Option<&str>,
+    created_at: DateTime<Utc>,
+    updated_at: DateTime<Utc>,
+    accepted_at: Option<DateTime<Utc>>,
+    escrowed_at: Option<DateTime<Utc>>,
+    completed_at: Option<DateTime<Utc>>,
+    dispute_deadline_at: Option<DateTime<Utc>>,
+    auto_complete_at: Option<DateTime<Utc>>,
+    start_date: Option<NaiveDate>,
+    end_date: Option<NaiveDate>,
+    sub_status: Option<&str>,
+    tourist_confirmed: Option<bool>,
+    guide_confirmed: Option<bool>,
+    rating_tourist_confirmed: Option<bool>,
+    rating_guide_confirmed: Option<bool>,
+    chain_id: Option<i64>,
+    data_origin: &str,
+    order_kind: Option<&str>,
+    market_listing_id: Option<Uuid>,
+) -> Result<(), sqlx::Error> {
     sqlx::query(
         r#"
-        INSERT INTO orders (id, tourist_id, guide_id, amount, currency, status, escrow_address, created_at, updated_at, accepted_at, escrowed_at, completed_at, dispute_deadline_at, auto_complete_at, start_date, end_date, sub_status, tourist_confirmed, guide_confirmed, rating_tourist_confirmed, rating_guide_confirmed, chain_id)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22)
+        INSERT INTO orders (id, tourist_id, guide_id, amount, currency, status, escrow_address, created_at, updated_at, accepted_at, escrowed_at, completed_at, dispute_deadline_at, auto_complete_at, start_date, end_date, sub_status, tourist_confirmed, guide_confirmed, rating_tourist_confirmed, rating_guide_confirmed, chain_id, data_origin, order_kind, market_listing_id)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)
         ON CONFLICT (id) DO UPDATE SET
             status = EXCLUDED.status,
             escrow_address = EXCLUDED.escrow_address,
@@ -91,7 +154,10 @@ pub async fn upsert_order(
             guide_confirmed = EXCLUDED.guide_confirmed,
             rating_tourist_confirmed = EXCLUDED.rating_tourist_confirmed,
             rating_guide_confirmed = EXCLUDED.rating_guide_confirmed,
-            chain_id = COALESCE(orders.chain_id, EXCLUDED.chain_id)
+            chain_id = COALESCE(orders.chain_id, EXCLUDED.chain_id),
+            data_origin = EXCLUDED.data_origin,
+            order_kind = COALESCE(EXCLUDED.order_kind, orders.order_kind),
+            market_listing_id = COALESCE(EXCLUDED.market_listing_id, orders.market_listing_id)
         "#,
     )
     .bind(id)
@@ -116,6 +182,9 @@ pub async fn upsert_order(
     .bind(rating_tourist_confirmed)
     .bind(rating_guide_confirmed)
     .bind(chain_id)
+    .bind(data_origin)
+    .bind(order_kind)
+    .bind(market_listing_id)
     .execute(pool)
     .await?;
     Ok(())
@@ -147,10 +216,65 @@ pub async fn upsert_order_tx(
     rating_guide_confirmed: Option<bool>,
     chain_id: Option<i64>,
 ) -> Result<(), sqlx::Error> {
+    upsert_order_tx_with_data_origin(
+        tx,
+        id,
+        tourist_id,
+        guide_id,
+        amount,
+        currency,
+        status,
+        escrow_address,
+        created_at,
+        updated_at,
+        accepted_at,
+        escrowed_at,
+        completed_at,
+        dispute_deadline_at,
+        auto_complete_at,
+        start_date,
+        end_date,
+        sub_status,
+        tourist_confirmed,
+        guide_confirmed,
+        rating_tourist_confirmed,
+        rating_guide_confirmed,
+        chain_id,
+        "production",
+    )
+    .await
+}
+
+pub async fn upsert_order_tx_with_data_origin(
+    tx: &mut Transaction<'_, Postgres>,
+    id: Uuid,
+    tourist_id: Uuid,
+    guide_id: Option<Uuid>,
+    amount: &str,
+    currency: &str,
+    status: &str,
+    escrow_address: Option<&str>,
+    created_at: DateTime<Utc>,
+    updated_at: DateTime<Utc>,
+    accepted_at: Option<DateTime<Utc>>,
+    escrowed_at: Option<DateTime<Utc>>,
+    completed_at: Option<DateTime<Utc>>,
+    dispute_deadline_at: Option<DateTime<Utc>>,
+    auto_complete_at: Option<DateTime<Utc>>,
+    start_date: Option<NaiveDate>,
+    end_date: Option<NaiveDate>,
+    sub_status: Option<&str>,
+    tourist_confirmed: Option<bool>,
+    guide_confirmed: Option<bool>,
+    rating_tourist_confirmed: Option<bool>,
+    rating_guide_confirmed: Option<bool>,
+    chain_id: Option<i64>,
+    data_origin: &str,
+) -> Result<(), sqlx::Error> {
     sqlx::query(
         r#"
-        INSERT INTO orders (id, tourist_id, guide_id, amount, currency, status, escrow_address, created_at, updated_at, accepted_at, escrowed_at, completed_at, dispute_deadline_at, auto_complete_at, start_date, end_date, sub_status, tourist_confirmed, guide_confirmed, rating_tourist_confirmed, rating_guide_confirmed, chain_id)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22)
+        INSERT INTO orders (id, tourist_id, guide_id, amount, currency, status, escrow_address, created_at, updated_at, accepted_at, escrowed_at, completed_at, dispute_deadline_at, auto_complete_at, start_date, end_date, sub_status, tourist_confirmed, guide_confirmed, rating_tourist_confirmed, rating_guide_confirmed, chain_id, data_origin)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23)
         ON CONFLICT (id) DO UPDATE SET
             status = EXCLUDED.status,
             escrow_address = EXCLUDED.escrow_address,
@@ -167,7 +291,8 @@ pub async fn upsert_order_tx(
             guide_confirmed = EXCLUDED.guide_confirmed,
             rating_tourist_confirmed = EXCLUDED.rating_tourist_confirmed,
             rating_guide_confirmed = EXCLUDED.rating_guide_confirmed,
-            chain_id = COALESCE(orders.chain_id, EXCLUDED.chain_id)
+            chain_id = COALESCE(orders.chain_id, EXCLUDED.chain_id),
+            data_origin = EXCLUDED.data_origin
         "#,
     )
     .bind(id)
@@ -192,6 +317,7 @@ pub async fn upsert_order_tx(
     .bind(rating_tourist_confirmed)
     .bind(rating_guide_confirmed)
     .bind(chain_id)
+    .bind(data_origin)
     .execute(&mut **tx)
     .await?;
     Ok(())
@@ -200,7 +326,7 @@ pub async fn upsert_order_tx(
 /// 加载所有订单（启动 hydrate）；53 含 sub_status 与确认字段
 pub async fn list_orders(pool: &PgPool) -> Result<Vec<DbOrderRow>, sqlx::Error> {
     let rows = sqlx::query_as::<_, DbOrderRow>(
-        "SELECT id, tourist_id, guide_id, amount, currency, status, escrow_address, created_at, updated_at, accepted_at, escrowed_at, completed_at, dispute_deadline_at, auto_complete_at, start_date, end_date, sub_status, tourist_confirmed, guide_confirmed, rating_tourist_confirmed, rating_guide_confirmed, chain_id FROM orders",
+        "SELECT id, tourist_id, guide_id, amount, currency, status, escrow_address, created_at, updated_at, accepted_at, escrowed_at, completed_at, dispute_deadline_at, auto_complete_at, start_date, end_date, sub_status, tourist_confirmed, guide_confirmed, rating_tourist_confirmed, rating_guide_confirmed, chain_id, data_origin, order_kind, market_listing_id FROM orders",
     )
     .fetch_all(pool)
     .await?;
@@ -234,7 +360,7 @@ pub async fn list_orders_with_escrow_id_status_limit(
 
 pub async fn get_order_by_id(pool: &PgPool, id: Uuid) -> Result<Option<DbOrderRow>, sqlx::Error> {
     sqlx::query_as::<_, DbOrderRow>(
-        "SELECT id, tourist_id, guide_id, amount, currency, status, escrow_address, created_at, updated_at, accepted_at, escrowed_at, completed_at, dispute_deadline_at, auto_complete_at, start_date, end_date, sub_status, tourist_confirmed, guide_confirmed, rating_tourist_confirmed, rating_guide_confirmed, chain_id FROM orders WHERE id = $1",
+        "SELECT id, tourist_id, guide_id, amount, currency, status, escrow_address, created_at, updated_at, accepted_at, escrowed_at, completed_at, dispute_deadline_at, auto_complete_at, start_date, end_date, sub_status, tourist_confirmed, guide_confirmed, rating_tourist_confirmed, rating_guide_confirmed, chain_id, data_origin, order_kind, market_listing_id FROM orders WHERE id = $1",
     )
     .bind(id)
     .fetch_optional(pool)

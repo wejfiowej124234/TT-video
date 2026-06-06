@@ -87,6 +87,7 @@ async fn dispute_list_get_resolve_flow() {
             rejection_message: None,
             created_at: now,
             updated_at: now,
+            data_origin: "production".into(),
         },
     );
     store.guides_by_user.insert(guide_id, guide_row_id);
@@ -116,6 +117,9 @@ async fn dispute_list_get_resolve_flow() {
             rating_tourist_confirmed: None,
             rating_guide_confirmed: None,
             chain_id: None,
+            data_origin: "production".into(),
+        order_kind: None,
+        market_listing_id: None,
         },
     );
     store.guide_slot.insert(guide_id, order_id);
@@ -246,6 +250,9 @@ async fn order_open_dispute_impl_insufficient_arb_fee_returns_400() {
             rating_tourist_confirmed: None,
             rating_guide_confirmed: None,
             chain_id: None,
+            data_origin: "production".into(),
+        order_kind: None,
+        market_listing_id: None,
         },
     );
     let mut config = ChainOffConfig::default();

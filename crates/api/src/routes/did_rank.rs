@@ -5,7 +5,7 @@
 //! **guides** 可选 **`?sort=reviews`**：按窗口内评价均分优先（**新** `rank_basis`）；**仅** **`reception_count` ≥ N** 的向导入榜（默认 **N=3**，**`DID_RANK_GUIDE_MIN_COMPLETED_FOR_REPUTATION_SORTS`**）。**`?sort=weighted`**：同上 + §3.1 加权（默认 **0.6/0.4**，**`DID_RANK_GUIDE_WEIGHTED_W_*`** 成对覆盖）；缺省主序**无**该门槛（30 §3）。
 
 use std::borrow::Cow;
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 use std::env;
 
 use axum::extract::{Query, State};
@@ -25,8 +25,15 @@ use crate::chain_off;
 use crate::db;
 use crate::state::{extract_user_with_session_check, ApiMetaState};
 
-const DID_RANK_LIMIT: i64 = 30;
-const DID_RANK_LIMIT_USIZE: usize = 30;
+const DID_RANK_LIMIT: i64 = 100;
+const DID_RANK_LIMIT_USIZE: usize = 100;
+const MARKET_DID_RANK_LIMIT: i64 = 100;
+const MARKET_DID_RANK_LIMIT_USIZE: usize = 100;
+const RANK_BASIS_PROVIDER: &str =
+    "provider_fulfillment_orders_then_gross_then_published_listings_in_window";
+const RANK_BASIS_ACQUISITION: &str =
+    "acquisition_fulfillment_orders_then_gross_then_published_listings_in_window";
+const PRIZE_POOL_DEFAULT_AMOUNT: f64 = 100_000.0;
 
 #[derive(Debug, Deserialize, Default)]
 pub struct DidRankQuery {
@@ -177,6 +184,41 @@ fn did_rank_meta(label: &str, since: Option<DateTime<Utc>>, rank_basis: &str) ->
     })
 }
 
+/// 公众 DID 榜：与 [`chain_off::public_catalog_surface_filter_enabled`] 同源，排除烟测/演示账号与非 production 向导。
+fn did_rank_traveler_board_visible_email(email: &str) -> bool {
+    !chain_off::public_catalog_surface_filter_enabled()
+        || !chain_off::is_dev_catalog_email(email)
+}
+
+fn did_rank_traveler_board_visible(u: &chain_off::UserRow) -> bool {
+    did_rank_traveler_board_visible_email(&u.email)
+}
+
+fn did_rank_guide_board_visible(store: &chain_off::ChainOffStore, u: &chain_off::UserRow) -> bool {
+    did_rank_guide_board_visible_db(Some(store), u.id, &u.email)
+}
+
+fn did_rank_guide_board_visible_db(
+    store: Option<&chain_off::ChainOffStore>,
+    user_id: Uuid,
+    email: &str,
+) -> bool {
+    if !chain_off::public_catalog_surface_filter_enabled() {
+        return true;
+    }
+    if chain_off::is_dev_catalog_email(email) {
+        return false;
+    }
+    if let Some(store) = store {
+        if let Some(gid) = store.guides_by_user.get(&user_id) {
+            if let Some(g) = store.guides.get(gid) {
+                return !chain_off::should_hide_guide_from_public_catalog(g, store);
+            }
+        }
+    }
+    true
+}
+
 fn count_tourist_completed_in_window(
     store: &chain_off::ChainOffStore,
     tourist_id: Uuid,
@@ -260,6 +302,7 @@ fn travelers_from_chain_off_store(
         .users
         .values()
         .filter(|u| chain_off::users_role_is_traveler_side(u.role.as_str()))
+        .filter(|u| did_rank_traveler_board_visible(u))
         .cloned()
         .collect();
     users.sort_by(|a, b| {
@@ -312,6 +355,7 @@ fn guides_from_chain_off_store(
         .filter(|u| {
             u.role.eq_ignore_ascii_case("guide")
                 && !penalty_excluded.map_or(false, |ex| ex.contains(&u.id))
+                && did_rank_guide_board_visible(store, u)
         })
         .map(|u| {
             let (vol, cnt) = guide_reception_totals_chain_off(store, u.id, since);
@@ -405,8 +449,10 @@ pub async fn get_did_rank_travelers(
         if let Ok(rows) =
             db::list_tourists_did_rank_by_completed_orders(pool, DID_RANK_LIMIT, since).await
         {
-            let travelers: Vec<serde_json::Value> = rows
+            let mut travelers: Vec<serde_json::Value> = rows
                 .into_iter()
+                .filter(|(u, _)| did_rank_traveler_board_visible_email(&u.email))
+                .take(DID_RANK_LIMIT_USIZE)
                 .enumerate()
                 .map(|(i, (u, completed_orders))| {
                     json!({
@@ -420,6 +466,12 @@ pub async fn get_did_rank_travelers(
                     })
                 })
                 .collect();
+            apply_market_board_rank_deltas(
+                Some(pool),
+                &did_rank_travelers_snapshot_key(label),
+                &mut travelers,
+            )
+            .await;
             let mut m = did_rank_meta(label, since, "tourist_completed_orders_in_window");
             m["travelers"] = json!(travelers);
             return Json(m).into_response();
@@ -427,7 +479,15 @@ pub async fn get_did_rank_travelers(
     }
     if let Some(ref co) = state.chain_off {
         let store = co.store.read().await;
-        let travelers = travelers_from_chain_off_store(&store, since, viewer);
+        let mut travelers = travelers_from_chain_off_store(&store, since, viewer);
+        if let Some(pool) = pool {
+            apply_market_board_rank_deltas(
+                Some(pool),
+                &did_rank_travelers_snapshot_key(label),
+                &mut travelers,
+            )
+            .await;
+        }
         let mut m = did_rank_meta(label, since, "tourist_completed_orders_in_window");
         m["travelers"] = json!(travelers);
         return Json(m).into_response();
@@ -476,8 +536,20 @@ pub async fn get_did_rank_guides(
         )
         .await
         {
-            let guides: Vec<serde_json::Value> = rows
+            let store_filter = if let Some(co) = state.chain_off.as_ref() {
+                Some(co.store.read().await)
+            } else {
+                None
+            };
+            let mut guides: Vec<serde_json::Value> = rows
                 .into_iter()
+                .filter(|e| match store_filter.as_ref() {
+                    Some(store) => {
+                        did_rank_guide_board_visible_db(Some(store), e.user.id, &e.user.email)
+                    }
+                    None => did_rank_traveler_board_visible_email(&e.user.email),
+                })
+                .take(DID_RANK_LIMIT_USIZE)
                 .enumerate()
                 .map(|(i, e)| {
                     let u = e.user;
@@ -495,6 +567,12 @@ pub async fn get_did_rank_guides(
                     })
                 })
                 .collect();
+            apply_market_board_rank_deltas(
+                Some(pool),
+                &did_rank_guides_snapshot_key(label, guide_sort),
+                &mut guides,
+            )
+            .await;
             let mut m = did_rank_meta(label, since, rank_basis.as_ref());
             m["guides"] = json!(guides);
             return Json(m).into_response();
@@ -510,7 +588,7 @@ pub async fn get_did_rank_guides(
         };
     if let Some(ref co) = state.chain_off {
         let store = co.store.read().await;
-        let guides = guides_from_chain_off_store(
+        let mut guides = guides_from_chain_off_store(
             &store,
             since,
             viewer,
@@ -520,6 +598,14 @@ pub async fn get_did_rank_guides(
             rt.weighted_w_reputation,
             penalty_excluded.as_ref(),
         );
+        if let Some(pool) = pool {
+            apply_market_board_rank_deltas(
+                Some(pool),
+                &did_rank_guides_snapshot_key(label, guide_sort),
+                &mut guides,
+            )
+            .await;
+        }
         let mut m = did_rank_meta(label, since, rank_basis.as_ref());
         m["guides"] = json!(guides);
         return Json(m).into_response();
@@ -557,16 +643,18 @@ pub async fn get_did_rank_itineraries(
             }
         }
         if !rows.is_empty() {
-            let itineraries: Vec<serde_json::Value> = rows
+            let mut itineraries: Vec<serde_json::Value> = rows
                 .into_iter()
                 .enumerate()
                 .map(|(i, e)| {
                     let r = &e.row;
                     let is_me = viewer.is_some_and(|v| e.order_tourist_id == Some(v));
                     let tid = e.order_tourist_id.map(|u| u.to_string());
+                    let oid = r.order_id.to_string();
                     json!({
                         "rank": i + 1,
-                        "order_id": r.order_id.to_string(),
+                        "id": oid.clone(),
+                        "order_id": oid,
                         "destination": r.destination,
                         "city": r.city,
                         "total_days": r.days_json.as_array().map(|a| a.len()).unwrap_or(0),
@@ -578,6 +666,12 @@ pub async fn get_did_rank_itineraries(
                     })
                 })
                 .collect();
+            apply_market_board_rank_deltas(
+                Some(pool),
+                &format!("itineraries:{label}"),
+                &mut itineraries,
+            )
+            .await;
             let mut m = did_rank_meta(label, since, rank_basis);
             m["itineraries"] = json!(itineraries);
             return Json(m).into_response();
@@ -616,9 +710,11 @@ pub async fn get_did_rank_itineraries(
             .map(
                 |(i, (_ct, order_id, tourist_id, dest, city, days, version))| {
                     let ts = tourist_id.to_string();
+                    let oid = order_id.to_string();
                     json!({
                         "rank": i + 1,
-                        "order_id": order_id.to_string(),
+                        "id": oid.clone(),
+                        "order_id": oid,
                         "destination": dest,
                         "city": city,
                         "total_days": days,
@@ -665,9 +761,11 @@ pub async fn get_did_rank_itineraries(
                         _ => false,
                     };
                     let tid = tourist_id.map(|u| u.to_string());
+                    let oid = order_id.to_string();
                     json!({
                         "rank": i + 1,
-                        "order_id": order_id.to_string(),
+                        "id": oid.clone(),
+                        "order_id": oid,
                         "destination": dest,
                         "city": city,
                         "total_days": days,
@@ -679,6 +777,14 @@ pub async fn get_did_rank_itineraries(
                 })
                 .collect();
         }
+        if let Some(pool) = pool {
+            apply_market_board_rank_deltas(
+                Some(pool),
+                &format!("itineraries:{label}"),
+                &mut itineraries,
+            )
+            .await;
+        }
         let mut m = did_rank_meta(label, since, rank_basis);
         m["itineraries"] = json!(itineraries);
         return Json(m).into_response();
@@ -689,6 +795,229 @@ pub async fn get_did_rank_itineraries(
     Json(m).into_response()
 }
 
+fn prize_pool_balance_as_amount(raw: Option<&str>) -> Option<f64> {
+    let s = raw?.trim();
+    if s.is_empty() {
+        return None;
+    }
+    s.parse::<f64>().ok().filter(|&n| n.is_finite() && n >= 0.0)
+}
+
+fn guide_rank_snapshot_sort_key(guide_sort: db::GuideDidRankSort) -> &'static str {
+    match guide_sort {
+        db::GuideDidRankSort::ReceptionGrossThenCount => "reception",
+        db::GuideDidRankSort::AvgReceivedReviewThenReception => "reviews",
+        db::GuideDidRankSort::WeightedActivityAndReputation => "weighted",
+    }
+}
+
+fn did_rank_travelers_snapshot_key(label: &str) -> String {
+    format!("travelers:{label}")
+}
+
+fn did_rank_guides_snapshot_key(label: &str, guide_sort: db::GuideDidRankSort) -> String {
+    format!(
+        "guides:{label}:{}",
+        guide_rank_snapshot_sort_key(guide_sort)
+    )
+}
+
+async fn apply_market_board_rank_deltas(
+    pool: Option<&sqlx::PgPool>,
+    cache_key: &str,
+    rows: &mut [serde_json::Value],
+) {
+    let mut current: HashMap<String, i64> = HashMap::new();
+    for row in rows.iter() {
+        if let (Some(id), Some(rank)) = (row["id"].as_str(), row["rank"].as_i64()) {
+            current.insert(id.to_string(), rank);
+        }
+    }
+    if let Some(pool) = pool {
+        if let Ok(Some(prev)) = db::load_did_rank_rank_snapshot(pool, cache_key).await {
+            for row in rows.iter_mut() {
+                let Some(id) = row["id"].as_str() else {
+                    continue;
+                };
+                let Some(rank) = row["rank"].as_i64() else {
+                    continue;
+                };
+                if let Some(prev_rank) = prev.get(id) {
+                    row["rank_delta"] = json!(*prev_rank - rank);
+                }
+            }
+        }
+        let _ = db::upsert_did_rank_rank_snapshot(pool, cache_key, &current).await;
+    }
+}
+
+fn market_did_rank_meta(
+    label: &str,
+    since: Option<DateTime<Utc>>,
+    rank_basis: &str,
+) -> serde_json::Value {
+    json!({
+        "status": "ok",
+        "period": label,
+        "since": since.map(|s| s.to_rfc3339()),
+        "limit": MARKET_DID_RANK_LIMIT,
+        "rank_basis": rank_basis,
+    })
+}
+
+fn market_board_owner_visible(email: &str) -> bool {
+    !chain_off::public_catalog_surface_filter_enabled()
+        || !chain_off::is_dev_catalog_email(email)
+}
+
+pub async fn get_did_rank_prize_pool(State(state): State<ApiMetaState>) -> impl IntoResponse {
+    if let Ok(raw) = env::var("DID_RANK_PRIZE_POOL_MONTHLY_AMOUNT") {
+        if let Ok(n) = raw.trim().parse::<f64>() {
+            if n.is_finite() && n >= 0.0 {
+                return Json(json!({
+                    "status": "ok",
+                    "monthly_amount": n,
+                    "illustrative": true,
+                    "source": "env"
+                }))
+                .into_response();
+            }
+        }
+    }
+    if let Some(pool) = state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref()) {
+        if let Ok(Some(row)) = db::get_governance_pool(pool).await {
+            if let Some(n) = prize_pool_balance_as_amount(row.balance.as_deref()) {
+                return Json(json!({
+                    "status": "ok",
+                    "monthly_amount": n,
+                    "illustrative": true,
+                    "source": "governance_pool_db"
+                }))
+                .into_response();
+            }
+        }
+    }
+    Json(json!({
+        "status": "ok",
+        "monthly_amount": PRIZE_POOL_DEFAULT_AMOUNT,
+        "illustrative": true,
+        "source": "default"
+    }))
+    .into_response()
+}
+
+pub async fn get_did_rank_providers(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+    Query(q): Query<DidRankQuery>,
+) -> impl IntoResponse {
+    let viewer = extract_user_with_session_check(&state, &headers).await;
+    let period = resolve_period(q.period.as_deref());
+    let since = period_start(period);
+    let label = period_label(period);
+    let cache_key = format!("did_rank:providers:{label}");
+
+    let pool = state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref());
+    if let Some(pool) = pool {
+        if let Ok(entries) = db::list_market_did_rank_by_fulfillment(
+            pool,
+            "provider",
+            Some("provider"),
+            since,
+            MARKET_DID_RANK_LIMIT,
+        )
+        .await
+        {
+            let mut providers: Vec<serde_json::Value> = entries
+                .into_iter()
+                .filter(|e| market_board_owner_visible(&e.user.email))
+                .take(MARKET_DID_RANK_LIMIT_USIZE)
+                .enumerate()
+                .map(|(i, e)| {
+                    let u = e.user;
+                    json!({
+                        "rank": i + 1,
+                        "id": u.id.to_string(),
+                        "nickname": u.nickname,
+                        "avatar_url": u.avatar_url,
+                        "default_wallet_address": u.default_wallet_address,
+                        "is_me": viewer == Some(u.id),
+                        "completed_fulfillment_orders": e.completed_fulfillment_orders,
+                        "fulfillment_gross_total": e.fulfillment_gross_total,
+                        "published_listings": e.published_listings,
+                    })
+                })
+                .collect();
+            apply_market_board_rank_deltas(Some(pool), &cache_key, &mut providers).await;
+            let mut m = market_did_rank_meta(label, since, RANK_BASIS_PROVIDER);
+            m["owner_role_filter"] = json!("provider");
+            m["providers"] = json!(providers);
+            return Json(m).into_response();
+        }
+    }
+    let mut m = market_did_rank_meta(label, since, RANK_BASIS_PROVIDER);
+    m["owner_role_filter"] = json!("provider");
+    m["providers"] = json!([]);
+    m["note"] = json!("P2 占位：无 DB 或查询失败");
+    Json(m).into_response()
+}
+
+pub async fn get_did_rank_acquisitions(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+    Query(q): Query<DidRankQuery>,
+) -> impl IntoResponse {
+    let viewer = extract_user_with_session_check(&state, &headers).await;
+    let period = resolve_period(q.period.as_deref());
+    let since = period_start(period);
+    let label = period_label(period);
+    let cache_key = format!("did_rank:acquisitions:{label}");
+
+    let pool = state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref());
+    if let Some(pool) = pool {
+        if let Ok(entries) = db::list_market_did_rank_by_fulfillment(
+            pool,
+            "acquisition",
+            None,
+            since,
+            MARKET_DID_RANK_LIMIT,
+        )
+        .await
+        {
+            let mut acquisitions: Vec<serde_json::Value> = entries
+                .into_iter()
+                .filter(|e| market_board_owner_visible(&e.user.email))
+                .take(MARKET_DID_RANK_LIMIT_USIZE)
+                .enumerate()
+                .map(|(i, e)| {
+                    let u = e.user;
+                    json!({
+                        "rank": i + 1,
+                        "id": u.id.to_string(),
+                        "nickname": u.nickname,
+                        "avatar_url": u.avatar_url,
+                        "default_wallet_address": u.default_wallet_address,
+                        "is_me": viewer == Some(u.id),
+                        "completed_fulfillment_orders": e.completed_fulfillment_orders,
+                        "fulfillment_gross_total": e.fulfillment_gross_total,
+                        "published_listings": e.published_listings,
+                    })
+                })
+                .collect();
+            apply_market_board_rank_deltas(Some(pool), &cache_key, &mut acquisitions).await;
+            let mut m = market_did_rank_meta(label, since, RANK_BASIS_ACQUISITION);
+            m["owner_role_filter"] = json!("region_steward");
+            m["acquisitions"] = json!(acquisitions);
+            return Json(m).into_response();
+        }
+    }
+    let mut m = market_did_rank_meta(label, since, RANK_BASIS_ACQUISITION);
+    m["owner_role_filter"] = json!("region_steward");
+    m["acquisitions"] = json!([]);
+    m["note"] = json!("P2 占位：无 DB 或查询失败");
+    Json(m).into_response()
+}
+
 pub fn router() -> Router<ApiMetaState> {
     Router::new()
         .route("/api/v1/did-rank/travelers", get(get_did_rank_travelers))
@@ -696,6 +1025,12 @@ pub fn router() -> Router<ApiMetaState> {
         .route(
             "/api/v1/did-rank/itineraries",
             get(get_did_rank_itineraries),
+        )
+        .route("/api/v1/did-rank/prize-pool", get(get_did_rank_prize_pool))
+        .route("/api/v1/did-rank/providers", get(get_did_rank_providers))
+        .route(
+            "/api/v1/did-rank/acquisitions",
+            get(get_did_rank_acquisitions),
         )
 }
 
@@ -848,7 +1183,7 @@ mod tests {
     }
 
     #[test]
-    fn did_rank_meta_all_has_null_since_and_limit_30() {
+    fn did_rank_meta_all_has_null_since_and_limit_100() {
         let v = did_rank_meta("all", None, "test");
         assert_eq!(v["status"], json!("ok"));
         assert_eq!(v["period"], json!("all"));
@@ -911,6 +1246,9 @@ mod tests {
                 rating_tourist_confirmed: None,
                 rating_guide_confirmed: None,
                 chain_id: None,
+                data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
             },
         );
         store.itineraries.insert(
