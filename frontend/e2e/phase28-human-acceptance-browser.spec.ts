@@ -141,6 +141,12 @@ async function probeAuthenticatedPage(
       addFlow(role, "页面壳", route, "PARTIAL");
     }
   } else if (opts?.mainText) {
+    if (route.startsWith("/admin")) {
+      await page
+        .locator('[data-tt-admin-list-page-header="1"]')
+        .waitFor({ state: "visible", timeout: 45_000 })
+        .catch(() => null);
+    }
     const header = page.locator('[data-tt-admin-list-page-header="1"]').filter({ hasText: opts.mainText });
     const h1 = page.getByRole("heading", { level: 1, name: opts.mainText });
     const main = page.getByRole("main").filter({ hasText: opts.mainText }).first();
@@ -200,6 +206,8 @@ async function probeAuthenticatedPage(
     }
     const p0 = mergedIssues.filter((i) => i.priority === "P0").length;
     const p1 = mergedIssues.filter((i) => i.priority === "P1").length;
+    const p2 = mergedIssues.filter((i) => i.priority === "P2").length;
+    const adminP1 = mergedIssues.filter((i) => i.priority === "P1" && i.role === "管理员").length;
     const verdict =
       p0 > 0 ? "NO-GO" : p1 > 3 ? "CONDITIONAL" : "PASS";
     writeFileSync(
@@ -217,7 +225,8 @@ async function probeAuthenticatedPage(
           summary: {
             p0,
             p1,
-            p2: mergedIssues.filter((i) => i.priority === "P2").length,
+            p2,
+            admin_p1: adminP1,
             flows_pass: mergedFlows.filter((f) => f.status === "PASS").length,
             flows_fail: mergedFlows.filter((f) => f.status === "FAIL").length,
             flows_partial: mergedFlows.filter((f) => f.status === "PARTIAL").length,
