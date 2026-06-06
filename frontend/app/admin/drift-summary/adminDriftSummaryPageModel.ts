@@ -1,3 +1,6 @@
+/** Normalized drift summary stashed in list-fetch meta. */
+export const ADMIN_DRIFT_SUMMARY_MODEL_META_KEY = "__adminDriftSummaryModel";
+
 export function formatDriftSummaryUnknownJson(value: unknown): string {
   if (value === undefined) return "undefined";
   try {

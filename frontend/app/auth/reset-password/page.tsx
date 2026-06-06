@@ -6,17 +6,29 @@ import { useSearchParams } from "next/navigation";
 import { postResetPassword } from "@/lib/apiClient";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { useTranslation } from "@/components/LocaleProvider";
-import AuthShellCrossNav from "@/components/auth/AuthShellCrossNav";
+import AuthL5Card from "@/components/auth/AuthL5Card";
+import AuthL5FlowPage from "@/components/auth/AuthL5FlowPage";
 import { AuthFullBleedSearchParamsSuspense } from "@/components/auth/AuthSearchParamsSuspense";
-import {
-  touchTargetLink44Classes,
-  travelFocusRingCoreOffset2Classes,
-  travelFocusRingOffset2Classes,
-} from "@/lib/travelLinkFocus";
+import { authL5FieldClass, TT_AUTH_L5_FORM } from "@/lib/auth/authL5Form";
+import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { AUTH_LOGIN_RETURN_HOME } from "@/lib/headerLoginHref";
 
-const cardClass =
-  "w-full max-w-sm rounded-[var(--radius-sm)] border border-ink-200 bg-bg-console shadow-soft p-6 space-y-4";
+function ResetPasswordFooterLinks({ t }: { t: (key: string) => string }) {
+  const footerLinkClass = `${touchTargetLink44Classes} ${TT_AUTH_L5_FORM.footerLinks}`;
+  return (
+    <p className={TT_AUTH_L5_FORM.footerMeta}>
+      <Link href={AUTH_LOGIN_RETURN_HOME} className={footerLinkClass}>
+        {t("auth_reset_backLogin")}
+      </Link>
+      <span className="text-ref-sun/30" aria-hidden>
+        ·
+      </span>
+      <Link href="/" className={footerLinkClass}>
+        {t("auth_forgot_home")}
+      </Link>
+    </p>
+  );
+}
 
 /** 重置密码（POST /auth/reset-password）；04 §三 3.1。`token` 可来自邮件链接 query 或手动粘贴（与 `/auth/verify-email` 同源 UX）。 */
 function ResetPasswordInner() {
@@ -34,7 +46,8 @@ function ResetPasswordInner() {
   const confirmPasswordId = useId();
   const formErrorId = useId();
   const tokenHelpId = useId();
-  const footerLinkClass = `${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`;
+  const fieldInvalid = !!error;
+  const inputClass = authL5FieldClass(fieldInvalid);
 
   useEffect(() => {
     setToken(qToken);
@@ -70,129 +83,122 @@ function ResetPasswordInner() {
 
   if (done) {
     return (
-      <main
-        className="min-h-screen bg-bg-main flex flex-col items-center justify-center gap-4 p-6 py-10"
-        aria-label={t("auth_reset_title")}
-        data-tt-auth-root="1"
-        data-tt-auth-route="reset-password"
-        data-tt-auth-surface="reset_done"
-      >
-        <div className={cardClass}>
-          <h1 className="text-h4 font-semibold text-ink-900">{t("auth_reset_title")}</h1>
-          <p className="text-small text-ink-600">{t("auth_reset_doneMessage")}</p>
-          <p className="text-meta text-ink-500">
-            <Link href={AUTH_LOGIN_RETURN_HOME} className={footerLinkClass}>
-              {t("auth_reset_goLogin")}
-            </Link>{" "}
-            ·{" "}
-            <Link href="/" className={footerLinkClass}>
-              {t("auth_forgot_home")}
-            </Link>
-          </p>
+      <AuthL5FlowPage route="reset-password" ariaLabel={t("auth_reset_title")}>
+        <div data-tt-auth-surface="reset_done">
+          <AuthL5Card surface="reset_l5_card">
+            <h1 className={TT_AUTH_L5_FORM.titleCompact}>{t("auth_reset_title")}</h1>
+            <p className={TT_AUTH_L5_FORM.bodyText}>{t("auth_reset_doneMessage")}</p>
+            <p className={TT_AUTH_L5_FORM.footerMeta}>
+              <Link
+                href={AUTH_LOGIN_RETURN_HOME}
+                className={`${touchTargetLink44Classes} ${TT_AUTH_L5_FORM.footerLinks}`}
+              >
+                {t("auth_reset_goLogin")}
+              </Link>
+              <span className="text-ref-sun/30" aria-hidden>
+                ·
+              </span>
+              <Link href="/" className={`${touchTargetLink44Classes} ${TT_AUTH_L5_FORM.footerLinks}`}>
+                {t("auth_forgot_home")}
+              </Link>
+            </p>
+          </AuthL5Card>
         </div>
-        <AuthShellCrossNav />
-      </main>
+      </AuthL5FlowPage>
     );
   }
+
   return (
-    <main
-      className="min-h-screen bg-bg-main flex flex-col items-center justify-center gap-4 p-6 py-10"
-      aria-label={t("auth_reset_title")}
-      data-tt-auth-root="1"
-      data-tt-auth-route="reset-password"
-      data-tt-auth-surface="reset_form"
-    >
-      <div className={cardClass}>
-        <h1 className="text-h4 font-semibold text-ink-900">{t("auth_reset_title")}</h1>
-        <p id={tokenHelpId} className="text-small text-ink-600">
-          {t("auth_reset_token_help")}
-        </p>
-        <form onSubmit={handleSubmit} className="space-y-3" aria-describedby={tokenHelpId} data-tt-auth-surface="reset_form_fields">
-          <div>
-            <label htmlFor={tokenInputId} className="block text-meta text-ink-600 mb-0.5">
-              {t("auth_reset_token_label")}
-            </label>
-            <input
-              type="text"
-              id={tokenInputId}
-              placeholder={t("auth_reset_token_placeholder")}
-              value={token}
-              onChange={(e) => {
-                setError(null);
-                setToken(e.target.value);
-              }}
-              disabled={loading}
-              autoComplete="off"
-              spellCheck={false}
-              aria-invalid={!!error}
-              aria-errormessage={error ? formErrorId : undefined}
-              data-tt-auth-reset-token-input="1"
-              className={`w-full min-h-[44px] border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 text-ink-800 bg-bg-console ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console disabled:opacity-60`}
-            />
-          </div>
-          <div>
-            <label htmlFor={newPasswordId} className="mb-0.5 block text-meta text-ink-600">
-              {t("auth_reset_newPassword")}
-            </label>
-            <input
-              type="password"
-              id={newPasswordId}
-              placeholder={t("auth_reset_newPassword")}
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              required
-              disabled={loading}
-              autoComplete="new-password"
-              aria-invalid={!!error}
-              aria-errormessage={error ? formErrorId : undefined}
-              className={`w-full min-h-[44px] border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 text-ink-800 bg-bg-console ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console disabled:opacity-60`}
-            />
-          </div>
-          <div>
-            <label htmlFor={confirmPasswordId} className="mb-0.5 block text-meta text-ink-600">
-              {t("auth_reset_confirmPassword")}
-            </label>
-            <input
-              type="password"
-              id={confirmPasswordId}
-              placeholder={t("auth_reset_confirmPassword")}
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              disabled={loading}
-              autoComplete="new-password"
-              aria-invalid={!!error}
-              aria-errormessage={error ? formErrorId : undefined}
-              className={`w-full min-h-[44px] border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 text-ink-800 bg-bg-console ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console disabled:opacity-60`}
-            />
-          </div>
-          {error && (
-            <p id={formErrorId} className="text-danger text-small" role="alert" data-tt-auth-surface="reset_form_error">
-              {error}
-            </p>
-          )}
-          <button
-            type="submit"
-            data-tt-auth-reset-submit="1"
-            disabled={loading}
-            aria-busy={loading ? true : undefined}
-            className={`btn-console inline-flex min-h-[44px] w-full items-center justify-center rounded-[var(--radius-sm)] bg-travel-500 px-3 py-2 text-small font-medium text-white transition-colors motion-reduce:transition-none disabled:opacity-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+    <AuthL5FlowPage route="reset-password" ariaLabel={t("auth_reset_title")}>
+      <div data-tt-auth-surface="reset_form">
+        <AuthL5Card surface="reset_l5_card">
+          <h1 className={TT_AUTH_L5_FORM.titleCompact}>{t("auth_reset_title")}</h1>
+          <p id={tokenHelpId} className={TT_AUTH_L5_FORM.subtitle}>
+            {t("auth_reset_token_help")}
+          </p>
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-4"
+            aria-describedby={tokenHelpId}
+            data-tt-auth-surface="reset_form_fields"
           >
-            {loading ? t("auth_reset_submitting") : t("auth_reset_submit")}
-          </button>
-        </form>
-        <p className="text-meta text-ink-500">
-          <Link href={AUTH_LOGIN_RETURN_HOME} className={footerLinkClass}>
-            {t("auth_reset_backLogin")}
-          </Link>{" "}
-          ·{" "}
-          <Link href="/" className={footerLinkClass}>
-            {t("auth_forgot_home")}
-          </Link>
-        </p>
+            <div className={TT_AUTH_L5_FORM.fieldGroup}>
+              <label htmlFor={tokenInputId} className={TT_AUTH_L5_FORM.label}>
+                {t("auth_reset_token_label")}
+              </label>
+              <input
+                type="text"
+                id={tokenInputId}
+                placeholder={t("auth_reset_token_placeholder")}
+                value={token}
+                onChange={(e) => {
+                  setError(null);
+                  setToken(e.target.value);
+                }}
+                disabled={loading}
+                autoComplete="off"
+                spellCheck={false}
+                aria-invalid={!!error}
+                aria-errormessage={error ? formErrorId : undefined}
+                data-tt-auth-reset-token-input="1"
+                className={inputClass}
+              />
+            </div>
+            <div className={TT_AUTH_L5_FORM.fieldGroup}>
+              <label htmlFor={newPasswordId} className={TT_AUTH_L5_FORM.label}>
+                {t("auth_reset_newPassword")}
+              </label>
+              <input
+                type="password"
+                id={newPasswordId}
+                placeholder={t("auth_reset_newPassword")}
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+                disabled={loading}
+                autoComplete="new-password"
+                aria-invalid={!!error}
+                aria-errormessage={error ? formErrorId : undefined}
+                className={inputClass}
+              />
+            </div>
+            <div className={TT_AUTH_L5_FORM.fieldGroup}>
+              <label htmlFor={confirmPasswordId} className={TT_AUTH_L5_FORM.label}>
+                {t("auth_reset_confirmPassword")}
+              </label>
+              <input
+                type="password"
+                id={confirmPasswordId}
+                placeholder={t("auth_reset_confirmPassword")}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                disabled={loading}
+                autoComplete="new-password"
+                aria-invalid={!!error}
+                aria-errormessage={error ? formErrorId : undefined}
+                className={inputClass}
+              />
+            </div>
+            {error ? (
+              <p id={formErrorId} className={TT_AUTH_L5_FORM.error} role="alert" data-tt-auth-surface="reset_form_error">
+                {error}
+              </p>
+            ) : null}
+            <button
+              type="submit"
+              data-tt-auth-reset-submit="1"
+              disabled={loading}
+              aria-busy={loading ? true : undefined}
+              className={TT_AUTH_L5_FORM.primaryCta}
+            >
+              {loading ? t("auth_reset_submitting") : t("auth_reset_submit")}
+            </button>
+          </form>
+          <ResetPasswordFooterLinks t={t} />
+        </AuthL5Card>
       </div>
-      <AuthShellCrossNav />
-    </main>
+    </AuthL5FlowPage>
   );
 }
 

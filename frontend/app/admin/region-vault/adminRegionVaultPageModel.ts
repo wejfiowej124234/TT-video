@@ -32,6 +32,10 @@ export type AdminRegionVaultRes = {
 
 export const REGION_VAULT_PAGE_LIMIT = 25;
 
+/** First-page snapshot extras in list-fetch meta (`useAdminRegionVaultPage`). */
+export const ADMIN_REGION_VAULT_SUMMARY_META_KEY = "__adminRegionVaultSummary";
+export const ADMIN_REGION_VAULT_PAGE_META_KEY = "__adminRegionVaultPage";
+
 export function shortHex(s: string, head = 6, tail = 4): string {
   const t = s.trim();
   if (t.length <= head + tail + 2) return t;

@@ -12,6 +12,8 @@ import {
   marketDetailDrawerInnerCol,
   marketDetailDrawerPanel,
   marketDetailDrawerScrim,
+  marketDetailDrawerSecondaryBtn,
+  marketDetailDrawerSkeletonLine,
   marketDetailDrawerTitle,
 } from "@/components/market/marketDetailDrawerClasses";
 import {
@@ -28,6 +30,7 @@ import { getMarketAcquisitionListing, getMarketProviderListing } from "@/lib/api
 import { marketSubsiteDemoStudioFallbackEnabled } from "@/lib/marketSubsiteProductionGate";
 import { trackMarketEvent } from "@/lib/analytics";
 import { mapApiReadError } from "@/lib/mapApiReadError";
+import { TT_MARKETING_BTN_MARKET_PRIMARY } from "@/lib/marketingUi";
 
 /**
  * 商家橱窗 / 旅行收购：列表「查看详情」与旅行预约订单侧栏一致，从右侧抽屉打开。
@@ -177,6 +180,7 @@ export function MarketSubsiteListingDetailDrawer({
   if (isCatalogDetailLoading) {
     return (
       <div
+        data-tt-market-subsite-listing-drawer="1"
         className={marketDetailDrawerScrim}
         role="dialog"
         aria-modal="true"
@@ -205,9 +209,9 @@ export function MarketSubsiteListingDetailDrawer({
               </form>
             </div>
             <div className={`${marketDetailDrawerBody} space-y-3`}>
-              <div className="h-6 w-48 animate-pulse motion-reduce:animate-none rounded bg-white/15" aria-hidden />
-              <div className="h-4 w-full max-w-md animate-pulse motion-reduce:animate-none rounded bg-white/10" aria-hidden />
-              <div className="h-4 w-[90%] animate-pulse motion-reduce:animate-none rounded bg-white/10" aria-hidden />
+              <div className={`h-6 w-48 ${marketDetailDrawerSkeletonLine}`} aria-hidden />
+              <div className={`h-4 w-full max-w-md ${marketDetailDrawerSkeletonLine}`} aria-hidden />
+              <div className={`h-4 w-[90%] ${marketDetailDrawerSkeletonLine}`} aria-hidden />
               <p className="text-small text-slate-400 pt-2" role="status" aria-live="polite">
                 {t("common_loading")}
               </p>
@@ -221,6 +225,7 @@ export function MarketSubsiteListingDetailDrawer({
   if (isCatalogDetailError && remoteCatalogLoadError) {
     return (
       <div
+        data-tt-market-subsite-listing-drawer="1"
         className={marketDetailDrawerScrim}
         role="dialog"
         aria-modal="true"
@@ -254,7 +259,7 @@ export function MarketSubsiteListingDetailDrawer({
               <div className="mt-4 flex flex-wrap gap-2">
                 <button
                   type="button"
-                  className="rounded-[var(--radius-sm)] bg-cyan-500/80 hover:bg-cyan-500 px-4 py-2 text-white text-small font-medium"
+                  className={TT_MARKETING_BTN_MARKET_PRIMARY}
                   onClick={() => {
                     setRemoteCatalogLoadError(null);
                     setCatalogFetchRetryTick((n) => n + 1);
@@ -271,7 +276,7 @@ export function MarketSubsiteListingDetailDrawer({
                 >
                   <button
                     type="submit"
-                    className="rounded-[var(--radius-sm)] border border-white/25 px-4 py-2 text-small text-slate-200 hover:bg-white/10"
+                    className={marketDetailDrawerSecondaryBtn}
                   >
                     {t("common_cancel")}
                   </button>
@@ -288,6 +293,7 @@ export function MarketSubsiteListingDetailDrawer({
 
   return (
     <div
+      data-tt-market-subsite-listing-drawer="1"
       className={marketDetailDrawerScrim}
       role="dialog"
       aria-modal="true"
@@ -316,9 +322,9 @@ export function MarketSubsiteListingDetailDrawer({
           </div>
           <div className={marketDetailDrawerBody}>
             {merchant != null ? (
-              <MerchantShowcaseDetailBody listing={merchant} embed={{ onClose }} />
+              <MerchantShowcaseDetailBody listing={merchant} embed={{ onClose }} catalogSourced={catalogSourced} />
             ) : (
-              <AcquisitionListingDetailBody listing={acquisition!} embed={{ onClose }} />
+              <AcquisitionListingDetailBody listing={acquisition!} embed={{ onClose }} catalogSourced={catalogSourced} />
             )}
           </div>
         </div>

@@ -3,15 +3,22 @@
 import Link from "next/link";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { adminErrorUserText, type AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { asRecord, type LastStoredReconciliation, type OverviewBody } from "./observabilityPageModel";
 import { AdminObservabilityJsonBlock } from "./AdminObservabilityJsonBlock";
-import { ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass,
+  ADMIN_HUB_DEPTH_LINK_CARD_CLASS,
+  ADMIN_MOTION_CARD_HOVER_CLASS,
+  ADMIN_INNER_DIVIDER_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+} from "@/lib/adminUi";
 type Props = {
   loading: boolean;
+  refreshing?: boolean;
   error: AdminFetchErrorKind | null;
   ov: OverviewBody["overview"] | undefined;
   chainBlockId: string;
@@ -21,6 +28,7 @@ type Props = {
 
 export function AdminObservabilityOverviewSection({
   loading,
+  refreshing = false,
   error,
   ov,
   chainBlockId,
@@ -30,16 +38,19 @@ export function AdminObservabilityOverviewSection({
   const { t } = useTranslation();
 
   return (
-    <section className="mt-6 rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-4" aria-label={t("admin_observability_overview_aria")}>
+    <AdminWarmL5Surface as="section" className="mt-6" aria-label={t("admin_observability_overview_aria")}>
       {loading ? (
         <AdminListLoadingStatus message={t("admin_observability_loading")} className="text-body text-ink-600" />
       ) : error ? (
         <AdminListFetchError errorKind={error} message={adminErrorUserText(error, t)} />
       ) : ov ? (
-        <div className="space-y-6">
+        <div
+          className={`space-y-6${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
+          data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
+        >
           <Link
             href="/admin/indexer"
-            className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200/70 bg-bg-console/50 p-3 text-left text-ink-800 transition motion-reduce:transition-none hover:border-ink-400 hover:text-ink-900 ${ADMIN_LINK_FOCUS_CLASS}`}
+            className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start ${ADMIN_HUB_DEPTH_LINK_CARD_CLASS} ${ADMIN_MOTION_CARD_HOVER_CLASS} ${ADMIN_LINK_FOCUS_CLASS}`}
             aria-labelledby={chainBlockId}
           >
             <h2 id={chainBlockId} className="text-small font-semibold uppercase tracking-wide text-ink-500">
@@ -95,7 +106,7 @@ export function AdminObservabilityOverviewSection({
               return (
                 <Link
                   href={summaryHref}
-                  className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start mb-4 space-y-2 rounded-[var(--radius-md)] border border-ink-200 bg-white/90 p-4 text-left text-ink-800 transition motion-reduce:transition-none hover:border-ink-400 hover:text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                  className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start mb-4 space-y-2 ${ADMIN_HUB_DEPTH_LINK_CARD_CLASS} ${ADMIN_MOTION_CARD_HOVER_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                   aria-label={summaryAria}
                 >
                   <h3 className="text-small font-semibold text-ink-800">{t("admin_observability_indexer_summary_heading")}</h3>
@@ -124,7 +135,7 @@ export function AdminObservabilityOverviewSection({
                     {replayReq ? t("admin_observability_indexer_replay_required") : t("admin_observability_indexer_replay_ok")}
                   </p>
                   {reportId ? (
-                    <div className="border-t border-ink-200 pt-3 mt-2">
+                    <div className={`${ADMIN_INNER_DIVIDER_CLASS} pt-3 mt-2`}>
                       <h4 className="text-small font-semibold text-ink-800">{t("admin_indexer_last_reconcile_heading")}</h4>
                       {rtLabel ? (
                         <p className="mt-2 text-meta font-mono text-ink-700">
@@ -160,7 +171,7 @@ export function AdminObservabilityOverviewSection({
             })()}
             <Link
               href="/admin/indexer"
-              className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200/50 p-1 text-left transition motion-reduce:transition-none hover:border-ink-400 ${ADMIN_LINK_FOCUS_CLASS}`}
+              className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start ${ADMIN_HUB_DEPTH_LINK_CARD_CLASS} p-1 ${ADMIN_MOTION_CARD_HOVER_CLASS} ${ADMIN_LINK_FOCUS_CLASS}`}
               aria-label={t("admin_observability_linkIndexer")}
             >
               <AdminObservabilityJsonBlock value={ov.indexer ?? {}} />
@@ -168,7 +179,7 @@ export function AdminObservabilityOverviewSection({
           </div>
           <Link
             href="/admin/audit"
-            className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200/70 bg-bg-console/30 p-3 text-left text-ink-800 transition motion-reduce:transition-none hover:border-ink-400 hover:text-ink-900 ${ADMIN_LINK_FOCUS_CLASS}`}
+            className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start ${ADMIN_HUB_DEPTH_LINK_CARD_CLASS} ${ADMIN_MOTION_CARD_HOVER_CLASS} ${ADMIN_LINK_FOCUS_CLASS}`}
             aria-labelledby={rateLimitsBlockId}
           >
             <h2 id={rateLimitsBlockId} className="text-small font-semibold uppercase tracking-wide text-ink-500">
@@ -178,7 +189,7 @@ export function AdminObservabilityOverviewSection({
           </Link>
           <Link
             href="/admin/alerts/incidents"
-            className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200/70 bg-bg-console/30 p-3 text-left text-ink-800 transition motion-reduce:transition-none hover:border-ink-400 hover:text-ink-900 ${ADMIN_LINK_FOCUS_CLASS}`}
+            className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start ${ADMIN_HUB_DEPTH_LINK_CARD_CLASS} ${ADMIN_MOTION_CARD_HOVER_CLASS} ${ADMIN_LINK_FOCUS_CLASS}`}
             aria-labelledby={alertsBlockId}
           >
             <h2 id={alertsBlockId} className="text-small font-semibold uppercase tracking-wide text-ink-500">
@@ -190,6 +201,6 @@ export function AdminObservabilityOverviewSection({
       ) : (
         <p className="text-body text-ink-600">{t("admin_observability_noData")}</p>
       )}
-    </section>
+    </AdminWarmL5Surface>
   );
 }

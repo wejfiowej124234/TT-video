@@ -45,6 +45,9 @@ export type ReconcileReportRow = {
 /** Export job label for header/disable wiring (`null` = idle). */
 export type ReconcileExportJob = null | "csv" | "json" | "csv_all" | "json_all";
 
+/** Stashed in list-fetch meta by `useAdminIndexerReconcileReportsPage`. */
+export const ADMIN_RECONCILE_PAGE_META_KEY = "__adminReconcilePage";
+
 export type ListRes = {
   status?: string;
   error?: string;

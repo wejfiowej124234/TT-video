@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 
+import { AdminInboxQueueBackLinks } from "@/components/admin/AdminInboxQueueBackLinks";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminConfigPublishApprovalNotice } from "@/components/admin/AdminConfigPublishApprovalNotice";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
@@ -18,22 +19,9 @@ export function AdminFlagsPageMain() {
     <AdminListPageChrome
       titleId={vm.pageTitleId}
       title={vm.t("admin_flags_title")}
-      subtitle={vm.t("admin_flags_subtitle")}
+      subtitle={vm.t("admin_flags_subtitle_l5")}
       headerAside={
-        <>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {vm.t("admin_observability_title")}
-          </Link>
-          <Link
-            href="/admin"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {vm.t("admin_flags_back")}
-          </Link>
-        </>
+        <AdminInboxQueueBackLinks />
       }
     >
       <AdminConfigPublishApprovalNotice />
@@ -72,6 +60,7 @@ export function AdminFlagsPageMain() {
       <AdminFlagsListSection
         t={vm.t}
         loading={vm.loading}
+        refreshing={vm.refreshing}
         error={vm.error}
         appliedFilters={vm.appliedFilters}
         items={vm.items}

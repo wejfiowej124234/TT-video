@@ -8,7 +8,7 @@ import {
   TT_NETWORK_FOOTER_L5,
   TT_SECTION_META_L5,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 import { TravelTrustFooterCrossNav } from "./TravelTrustFooterCrossNav";
 import { TravelTrustFooterSocial } from "./TravelTrustFooterSocial";
 

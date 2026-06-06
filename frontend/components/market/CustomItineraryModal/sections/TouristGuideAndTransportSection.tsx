@@ -1,5 +1,6 @@
 "use client";
 
+import { CIM, CIM_CHOICE, CIM_FOCUS, CIM_FOCUS_WITHIN } from '../customItineraryModalTheme';
 import type { CustomItineraryForm, GuideLevelOptionWithPricing } from "../types";
 import type { BudgetBreakdown, TransportLine, InterCityLine } from "../useQuoteCalculation";
 import { TRANSPORT_OPTIONS, CITY_TRANSPORT_OPTIONS } from "../constants";
@@ -31,7 +32,7 @@ export default function TouristGuideAndTransportSection({
   t,
 }: TouristGuideAndTransportSectionProps) {
   return (
-    <div className="rounded-[var(--radius-md)] border border-white/25 bg-white/5 p-4 space-y-4">
+    <div className={CIM.customItineraryPanelMd}>
       <h3 className="text-small font-semibold text-white drop-shadow-market-pill">
         {t("market_web3Guide")}
       </h3>
@@ -51,7 +52,7 @@ export default function TouristGuideAndTransportSection({
                     guideFee: String(level.suggestedPerDay * f.totalDays),
                   }))
                 }
-                className="rounded-full border-white/25 text-travel-500 bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-travel-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+                className={CIM_CHOICE}
               />
               {t(level.labelKey)}（{level.suggestedPerDay}/天）
             </label>
@@ -69,7 +70,7 @@ export default function TouristGuideAndTransportSection({
       <div>
         <span className={labelClass}>{t("market_transportFeeTotal")}</span>
         <p className="text-meta text-white/70 mt-0.5">{t("market_transportFeeFromSelection")}</p>
-        <div className="mt-2 space-y-1.5 rounded-[var(--radius-sm)] border border-white/20 bg-white/5 px-3 py-2">
+        <div className={CIM.customItineraryInsetRow}>
           {touristCityTransportLines.length > 0 ? (
             touristCityTransportLines.map((line, idx) => (
               <p key={idx} className="text-meta text-white/90">
@@ -95,7 +96,7 @@ export default function TouristGuideAndTransportSection({
                 </span>
               </p>
             ))}
-          <p className="text-small font-medium text-white pt-1 border-t border-white/20">
+          <p className="text-small font-medium text-white pt-1 border-t border-ref-sun/14">
             {t("market_transportFee")}：{suggestedTransportFee}
             {t("ui_currency_suffix_usdc")}
           </p>

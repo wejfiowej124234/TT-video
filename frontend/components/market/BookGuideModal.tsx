@@ -1,54 +1,90 @@
 "use client";
 
-import { useEffect, useId } from "react";
+import { useEffect, useId, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "@/components/LocaleProvider";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { trackMarketEvent } from "@/lib/analytics";
+import { getIdempotencyKey, patchOrderGuide } from "@/lib/apiClient";
+import { mapOrderWriteError } from "@/lib/mapOrderWriteError";
 import { marketHrefForGuideCustomItinerary, ordersNewHrefForGuide } from "@/lib/ordersGuideDeepLink";
+import { stashEscrowOrderPrefetchForOrderIdNav } from "@/lib/orderEscrowPrefetch";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
+import { TT_MARKETING_BTN_MARKET_GLASS, TT_MARKETING_BTN_MARKET_PRIMARY, TT_MARKETING_BTN_MARKET_SUCCESS_GHOST, TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
 
 /**
- * P29 预约向导弹窗：进入创建订单（预填 guide_id）或先建行程；与 5.1 / orders/new 一致。
+ * P29 预约向导弹窗：创建新订单预填 guide_id，或为 Escrow 草稿订单绑定向导。
  */
 export default function BookGuideModal({
   guideId,
   guideName,
+  bindOrderId,
   onClose,
 }: {
   guideId: string;
   guideName?: string;
+  /** 为既有草稿订单选向导（PATCH /orders/:id/guide） */
+  bindOrderId?: string | null;
   onClose: () => void;
 }) {
   const { t } = useTranslation();
+  const router = useRouter();
   const trapRef = useFocusTrap(true, onClose);
   const titleId = useId();
   const descId = useId();
   const subtitleId = useId();
+  const [binding, setBinding] = useState(false);
+  const [bindError, setBindError] = useState<string | null>(null);
+  const bindTrimmed = bindOrderId?.trim() ?? "";
+  const isBindMode = bindTrimmed.length > 0;
 
   useEffect(() => {
-    if (guideId) trackMarketEvent("market_book_guide_open", { guideId });
+    if (guideId) trackMarketEvent("market_book_guide_open", { guideId, bindOrderId: bindTrimmed || undefined });
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prevOverflow; };
-  }, [guideId]);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [guideId, bindTrimmed]);
+
+  const handleBindToOrder = () => {
+    if (!isBindMode || binding) return;
+    setBinding(true);
+    setBindError(null);
+    void (async () => {
+      try {
+        await patchOrderGuide(bindTrimmed, guideId, getIdempotencyKey());
+        trackMarketEvent("market_escrow_guide_bound", { orderId: bindTrimmed, guideId });
+        stashEscrowOrderPrefetchForOrderIdNav(bindTrimmed, "escrow");
+        onClose();
+        router.push(`/escrow/${encodeURIComponent(bindTrimmed)}`);
+      } catch (err) {
+        setBindError(mapOrderWriteError(err, t, { fallbackKey: "escrow_bindGuideFailed" }));
+      } finally {
+        setBinding(false);
+      }
+    })();
+  };
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
+      className={TT_MARKETING_MARKET_DARK_PATH.glassModalScrim}
       role="dialog"
       aria-modal="true"
       aria-labelledby={titleId}
       aria-describedby={guideName ? `${subtitleId} ${descId}` : descId}
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
     >
       <div
         ref={trapRef}
-        className="w-full max-w-md rounded-[var(--radius-md)] border border-white/25 bg-white/5 backdrop-blur-md shadow-strong p-6 text-white"
+        className={TT_MARKETING_MARKET_DARK_PATH.glassModalPanel}
         onClick={(e) => e.stopPropagation()}
       >
         <h2 id={titleId} className="text-body font-semibold">
-          {t("book_guide_title")}
+          {isBindMode ? t("book_guide_bindTitle") : t("book_guide_title")}
         </h2>
         {guideName ? (
           <p id={subtitleId} className="text-small text-white/90 mt-1">
@@ -56,35 +92,56 @@ export default function BookGuideModal({
           </p>
         ) : null}
         <p id={descId} className="text-small text-white/85 mt-3">
-          {t("book_guide_desc")}
+          {isBindMode ? t("book_guide_bindDesc") : t("book_guide_desc")}
         </p>
+        {bindError ? (
+          <p className="mt-3 text-small text-red-300/95" role="alert">
+            {bindError}
+          </p>
+        ) : null}
         <div className="mt-4 flex flex-col gap-2">
-          <Link
-            href={ordersNewHrefForGuide(guideId)}
-            onClick={() => trackMarketEvent("market_book_guide_click", { guideId })}
-            className={`${touchTargetLink44Classes} btn-console rounded-[var(--radius-sm)] bg-travel-500 px-4 py-2 text-white text-small font-medium text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white/20`}
-          >
-            {t("book_guide_selectAndBook")}
-          </Link>
-          <Link
-            href={`/itinerary/new?guide_id=${encodeURIComponent(guideId)}`}
-            className={`${touchTargetLink44Classes} btn-console rounded-[var(--radius-sm)] border border-white/30 bg-white/10 backdrop-blur-sm px-4 py-2 text-white text-small text-center hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white/20`}
-          >
-            {t("book_guide_createFirst")}
-          </Link>
-          <Link
-            href={marketHrefForGuideCustomItinerary(guideId)}
-            onClick={() => trackMarketEvent("market_book_guide_market_custom", { guideId })}
-            className={`${touchTargetLink44Classes} btn-console rounded-[var(--radius-sm)] border border-white/30 bg-white/10 backdrop-blur-sm px-4 py-2 text-white text-small text-center hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white/20`}
-          >
-            {t("book_guide_marketCustom")}
-          </Link>
-          <Link
-            href="/pay"
-            className={`${touchTargetLink44Classes} btn-console rounded-[var(--radius-sm)] border border-success/35 bg-success/10 px-4 py-2 text-white text-small text-center hover:bg-success/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white/20`}
-          >
-            {t("header_payHub")}
-          </Link>
+          {isBindMode ? (
+            <button
+              type="button"
+              disabled={binding}
+              className={`${touchTargetLink44Classes} ${TT_MARKETING_BTN_MARKET_PRIMARY} w-full text-center disabled:opacity-50`}
+              aria-busy={binding ? true : undefined}
+              onClick={handleBindToOrder}
+            >
+              {binding ? t("common_submitting") : t("book_guide_bindSelect")}
+            </button>
+          ) : (
+            <Link
+              href={ordersNewHrefForGuide(guideId)}
+              onClick={() => trackMarketEvent("market_book_guide_click", { guideId })}
+              className={`${touchTargetLink44Classes} ${TT_MARKETING_BTN_MARKET_PRIMARY} w-full text-center`}
+            >
+              {t("book_guide_selectAndBook")}
+            </Link>
+          )}
+          {!isBindMode ? (
+            <>
+              <Link
+                href={`/itinerary/new?guide_id=${encodeURIComponent(guideId)}`}
+                className={`${touchTargetLink44Classes} ${TT_MARKETING_BTN_MARKET_GLASS} w-full text-center`}
+              >
+                {t("book_guide_createFirst")}
+              </Link>
+              <Link
+                href={marketHrefForGuideCustomItinerary(guideId)}
+                onClick={() => trackMarketEvent("market_book_guide_market_custom", { guideId })}
+                className={`${touchTargetLink44Classes} ${TT_MARKETING_BTN_MARKET_GLASS} w-full text-center`}
+              >
+                {t("book_guide_marketCustom")}
+              </Link>
+              <Link
+                href="/pay"
+                className={`${touchTargetLink44Classes} ${TT_MARKETING_BTN_MARKET_SUCCESS_GHOST} w-full text-center`}
+              >
+                {t("header_payHub")}
+              </Link>
+            </>
+          ) : null}
         </div>
         <form
           className="mt-4 w-full"
@@ -95,7 +152,7 @@ export default function BookGuideModal({
         >
           <button
             type="submit"
-            className={`${touchTargetLink44Classes} w-full text-meta text-white/70 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white/20 rounded-[var(--radius-sm)]`}
+            className={`${touchTargetLink44Classes} w-full ${TT_MARKETING_MARKET_DARK_PATH.glassModalDismissLink}`}
             aria-label={t("book_guide_cancelClose")}
           >
             {t("common_cancel")}

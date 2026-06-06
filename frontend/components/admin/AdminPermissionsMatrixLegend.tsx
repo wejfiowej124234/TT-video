@@ -2,7 +2,9 @@
 
 import { useTranslation } from "@/components/LocaleProvider";
 import {
+  ADMIN_ROLE_MATRIX_CURRENT_SWATCH_CLASS,
   ADMIN_ROLE_MATRIX_DIFF_ROW_CLASS,
+  ADMIN_ROLE_MATRIX_DIFF_SWATCH_CLASS,
   ADMIN_ROLE_MATRIX_DIFF_TEXT_CLASS,
 } from "@/lib/adminUi";
 
@@ -17,12 +19,12 @@ export function AdminPermissionsMatrixLegend() {
       aria-label={t("admin_permissions_matrix_legend_aria")}
     >
       <span className="inline-flex items-center gap-2">
-        <span className="inline-block h-3 w-6 rounded border border-ink-200 bg-ink-50/80" aria-hidden />
+        <span className={ADMIN_ROLE_MATRIX_CURRENT_SWATCH_CLASS} aria-hidden />
         {t("admin_permissions_matrix_legend_current")}
       </span>
       <span className="inline-flex items-center gap-2">
         <span
-          className={`inline-block h-3 w-6 rounded border border-ink-200 ${ADMIN_ROLE_MATRIX_DIFF_ROW_CLASS}`}
+          className={`${ADMIN_ROLE_MATRIX_DIFF_SWATCH_CLASS} ${ADMIN_ROLE_MATRIX_DIFF_ROW_CLASS}`}
           aria-hidden
         />
         <span className={ADMIN_ROLE_MATRIX_DIFF_TEXT_CLASS}>

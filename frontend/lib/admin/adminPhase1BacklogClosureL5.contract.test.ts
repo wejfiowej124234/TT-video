@@ -37,9 +37,8 @@ describe("admin phase1 backlog closure L5 (①)", () => {
   });
 
   it("conclusion states Phase ① machine-read closure", () => {
-    expect(backlog).toMatch(/① Admin 工作台 L5 已全部机读收口/);
-    expect(backlog).toMatch(
-      /184 tests|187 tests|188 tests|189 tests|190 tests|195 tests|228 tests|229 tests|230 tests|231 tests|232 tests|235 tests|239 tests|242 tests|244 tests|249 tests|251 tests|255 tests|261 tests|262 tests|269 tests|270 tests|291 tests|292 tests|293 tests|294 tests|295 tests|296 tests|297 tests|298 tests|299 tests|300 tests|301 tests|302 tests|303 tests|304 tests|305 tests|306 tests|307 tests|308 tests|309 tests|310 tests|311 tests|312 tests|313 tests|314 tests|315 tests|316 tests|317 tests|318 tests|319 tests|320 tests|321 tests|322 tests|327 tests|328 tests|329 tests|330 tests|331 tests|332 tests|333 tests|334 tests|335 tests|336 tests|337 tests|338 tests|339 tests|340 tests|341 tests|342 tests|343 tests|344 tests|345 tests|346 tests|347 tests|348 tests|349 tests|350 tests|351 tests|352 tests|353 tests|354 tests|355 tests|356 tests|357 tests|358 tests|359 tests|360 tests|361 tests|362 tests|363 tests|364 tests|365 tests|366 tests|367 tests|368 tests|369 tests/,
-    );
+    expect(backlog).toMatch(/① Admin 工作台 L5 ① 阶段满分/);
+    expect(backlog).toContain("TT-ADMIN-PHASE1-FULL-CLOSURE.md");
+    expect(backlog).toMatch(/run-admin-l5-green\.sh/);
   });
 });

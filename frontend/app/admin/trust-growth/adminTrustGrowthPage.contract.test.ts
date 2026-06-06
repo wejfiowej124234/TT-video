@@ -11,6 +11,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminTrustGrowthPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminTrustGrowthLoadErrorBlock.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminTrustGrowthPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminTrustGrowthPageModel.ts"), "utf8"),
     readFileSync(join(__dir, "AdminTrustGrowthMetricsSection.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminTrustGrowthTimelineSection.tsx"), "utf8"),
@@ -22,6 +23,7 @@ describe("admin trust-growth page", () => {
 
   it("keeps observability GET + control PATCH/rollback routes", () => {
     expect(src).toContain("routes.admin.trustGrowthObservability");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("routes.admin.trustGrowthControl");
     expect(src).toContain("routes.admin.trustGrowthRollbackControl");
   });
@@ -37,5 +39,6 @@ describe("admin trust-growth page", () => {
     expect(src).toContain("AdminListPageChrome");
     expect(src).toContain('"AdminTrustGrowthPage"');
     expect(src).toContain("AdminListFetchError");
+    expect(src).toContain("AdminObservabilitySectionBackLinks");
   });
 });

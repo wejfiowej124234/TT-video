@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminNoticeBanner } from "@/components/admin/AdminNoticeBanner";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import { isAdminMaintainerUi } from "@/lib/admin/adminMaintainerUiMode";
 import {
   CONSOLE_ROLE_70_LABEL_KEYS,
@@ -17,8 +18,9 @@ import { getMe } from "@/lib/apiClient";
 import {
   ADMIN_FORM_FIELD_FOCUS_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  adminFilterChipClass,
   adminPageNavLinkClass,
-} from "@/lib/adminUi";
+  ADMIN_FORM_CONTROL_SM_CLASS,} from "@/lib/adminUi";
 
 type Props = {
   canAssign: boolean;
@@ -67,9 +69,10 @@ export function AdminPermissionsSelfConsoleRole(props: Props) {
   if (!dbPrep || !canAssign || (!consoleRoleDirectAllowed && !approvalWired)) return null;
 
   return (
-    <section
+    <AdminWarmL5Surface
+      as="section"
       id="admin-console-role-self-assign"
-      className="mt-6 rounded-[var(--radius-lg)] border border-ink-200 bg-white p-4 scroll-mt-24"
+      className="mt-6 scroll-mt-24"
       aria-label={t("admin_permissions_self_role_aria")}
       data-tt-admin-console-role-self-assign="1"
     >
@@ -103,11 +106,7 @@ export function AdminPermissionsSelfConsoleRole(props: Props) {
           <button
             key={r}
             type="button"
-            className={`rounded-full border px-3 py-1 text-small ${
-              pickRole === r
-                ? "border-ink-800 bg-ink-900 text-white"
-                : "border-ink-200 bg-white text-ink-800 hover:bg-ink-50"
-            }`}
+            className={`rounded-full border px-3 py-1 text-small ${adminFilterChipClass(pickRole === r)}`}
             onClick={() => setPickRole(r)}
           >
             {t(CONSOLE_ROLE_70_LABEL_KEYS[r])}
@@ -118,7 +117,7 @@ export function AdminPermissionsSelfConsoleRole(props: Props) {
         <label className="block text-small">
           <span className="font-medium text-ink-800">{t("admin_permissions_self_role_pick")}</span>
           <select
-            className={`mt-1 block rounded border border-ink-200 px-2 py-1.5 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+            className={`mt-1 block ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1.5 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             value={pickRole}
             onChange={(e) => setPickRole(e.target.value as ConsoleRole70)}
           >
@@ -132,7 +131,7 @@ export function AdminPermissionsSelfConsoleRole(props: Props) {
         <label className="block flex-1 min-w-[200px] text-small">
           <span className="font-medium text-ink-800">{t("admin_permissions_assign_reason")}</span>
           <input
-            className={`mt-1 block w-full rounded border border-ink-200 px-2 py-1.5 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+            className={`mt-1 block w-full ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1.5 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             value={reason}
             onChange={(e) => setReason(e.target.value)}
           />
@@ -169,6 +168,6 @@ export function AdminPermissionsSelfConsoleRole(props: Props) {
         <p className="mt-2 text-meta text-ink-500">{t("admin_permissions_self_role_no_session")}</p>
       ) : null}
       {message ? <p className="mt-3 text-small text-ink-700">{message}</p> : null}
-    </section>
+    </AdminWarmL5Surface>
   );
 }

@@ -3,7 +3,7 @@
   "version": 3,
   "generated_by": "scripts/build-d1-d12-coverage-matrix.mjs",
   "route_rules": "scripts/matrix-96-16-shared.mjs",
-  "baseline": "96-16: 119 routes = app/**/page.tsx (same as build-d5d6d7-coverage-matrix.mjs / GO_96_16_d5_d6_d7_coverage_matrix_v1.json)",
+  "baseline": "96-16: app/**/page.tsx count = total_routes (same as build-d5d6d7-coverage-matrix.mjs / GO_96_16_d5_d6_d7_coverage_matrix_v1.json)",
   "methodology": "D5/D6 + route 命中规则与 d5d6d7 矩阵同构（NA_EXACT + COVERED_RULES 见 matrix-96-16-shared.mjs）。D4：GLOBAL_D4_FILES 在 evidence 内存在则全部非 N_A 路由记 COVERED。D1–D3/D8/D9/D10/D11/D12：由命中 evidence 的 EVIDENCE_TO_DIMS 并集；未列维度或路由未覆盖 → NEEDS_FIX。D11：与各路族 d5_d6_d7 批次同 scope（可观测/排障面随页走查，非独立 x-request-id 单测）。D7：有 lighthouse-root-3012.metrics-snippet 且 13 报告存在时仅 /(home) 记 COVERED，余路由 NEEDS_FIX（93/性能）。D10：无链/无钱包界面之路由 N_A。不扩展 D5–D7 新批次，不重读 evidence 正文做缺口推断。v2：补全 D11 映射。v3：路由规则单源 shared 模块。",
   "claim_96_complete": false,
   "playwright_e2e": {
@@ -13,75 +13,75 @@
   "lighthouse": {
     "per_route": {
       "status": "NOT_RUN",
-      "note": "119 routes without per-route Lighthouse; D7 mostly NEEDS_FIX"
+      "note": "No per-route Lighthouse; D7 mostly NEEDS_FIX (see total_routes)"
     },
     "root_snippet": "frontend/evidence/lighthouse-root-3012.metrics-snippet.json"
   },
-  "total_routes": 124,
+  "total_routes": 126,
   "dim_counts": {
     "D1": {
-      "COVERED": 118,
+      "COVERED": 120,
       "N_A": 6,
       "NEEDS_FIX": 0
     },
     "D2": {
-      "COVERED": 118,
+      "COVERED": 120,
       "N_A": 6,
       "NEEDS_FIX": 0
     },
     "D3": {
-      "COVERED": 118,
+      "COVERED": 120,
       "N_A": 6,
       "NEEDS_FIX": 0
     },
     "D4": {
-      "COVERED": 118,
+      "COVERED": 120,
       "N_A": 6,
       "NEEDS_FIX": 0
     },
     "D5": {
-      "COVERED": 118,
+      "COVERED": 120,
       "N_A": 6,
       "NEEDS_FIX": 0
     },
     "D6": {
-      "COVERED": 118,
+      "COVERED": 120,
       "N_A": 6,
       "NEEDS_FIX": 0
     },
     "D7": {
       "COVERED": 1,
       "N_A": 6,
-      "NEEDS_FIX": 117
+      "NEEDS_FIX": 119
     },
     "D8": {
-      "COVERED": 118,
+      "COVERED": 120,
       "N_A": 6,
       "NEEDS_FIX": 0
     },
     "D9": {
-      "COVERED": 118,
+      "COVERED": 120,
       "N_A": 6,
       "NEEDS_FIX": 0
     },
     "D10": {
-      "COVERED": 107,
+      "COVERED": 109,
       "N_A": 17,
       "NEEDS_FIX": 0
     },
     "D11": {
-      "COVERED": 118,
+      "COVERED": 120,
       "N_A": 6,
       "NEEDS_FIX": 0
     },
     "D12": {
-      "COVERED": 118,
+      "COVERED": 120,
       "N_A": 6,
       "NEEDS_FIX": 0
     }
   },
   "route_class_d5d6d7_counts": {
-    "COVERED": 118,
+    "COVERED": 120,
     "N_A": 6
   },
   "evidence_aggregation": "frontend/evidence/GO_96_16_evidence_aggregation_d1_d12.json",
@@ -947,6 +947,100 @@
     {
       "file": "frontend/app/admin/audit/operations/page.tsx",
       "route": "/admin/audit/operations",
+      "route_class_d5d6d7": "COVERED",
+      "evidence_files_d5d6d7": [
+        "GO_96_16_d5_d6_d7_admin_subroutes_d5d6d7.json"
+      ],
+      "test_commands": [
+        "npm run lint",
+        "npm run test:i18n:ci",
+        "npm run build"
+      ],
+      "dimensions": {
+        "D1": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_admin_subroutes_d5d6d7.json"
+          ]
+        },
+        "D2": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_admin_subroutes_d5d6d7.json"
+          ]
+        },
+        "D3": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_admin_subroutes_d5d6d7.json"
+          ]
+        },
+        "D4": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d4_138_motion_touch_batch.json",
+            "GO_96_16_d4_admin_auth_batch.json",
+            "GO_96_16_d4_segment_gap_close.json"
+          ],
+          "trace": "global_d4_batch_scan"
+        },
+        "D5": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_admin_subroutes_d5d6d7.json"
+          ]
+        },
+        "D6": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_admin_subroutes_d5d6d7.json"
+          ]
+        },
+        "D7": {
+          "status": "NEEDS_FIX",
+          "evidence_files": [],
+          "trace": "93; 96-13.7; no per-route Lighthouse"
+        },
+        "D8": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_admin_subroutes_d5d6d7.json"
+          ]
+        },
+        "D9": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_admin_subroutes_d5d6d7.json"
+          ]
+        },
+        "D10": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_admin_subroutes_d5d6d7.json"
+          ]
+        },
+        "D11": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_admin_subroutes_d5d6d7.json"
+          ]
+        },
+        "D12": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_admin_subroutes_d5d6d7.json"
+          ]
+        }
+      },
+      "remaining_risks": [
+        "96 未完成：本矩阵为机读汇总，不宣布 GO 全站完成。",
+        "E2E 93：chromium/全栈 未在矩阵内重跑，见 evidence 聚合。",
+        "D7：除 /(home) 根与 snippet 外，无逐页 Lighthouse（NEEDS_FIX）。"
+      ]
+    },
+    {
+      "file": "frontend/app/admin/auth-audit-events/page.tsx",
+      "route": "/admin/auth-audit-events",
       "route_class_d5d6d7": "COVERED",
       "evidence_files_d5d6d7": [
         "GO_96_16_d5_d6_d7_admin_subroutes_d5d6d7.json"
@@ -11471,6 +11565,133 @@
     {
       "file": "frontend/app/traveltrust/page.tsx",
       "route": "/traveltrust",
+      "route_class_d5d6d7": "COVERED",
+      "evidence_files_d5d6d7": [
+        "GO_96_16_d5_d6_d7_routes_batch.json",
+        "GO_96_16_d5_d6_d7_me_community_itinerary_discover_traveltrust.json",
+        "GO_96_16_d5_d6_d7_community_traveltrust_governance_batch4.json",
+        "GO_96_16_d5_d6_d7_admin_community_observability_config_guides_staking_traveltrust.json"
+      ],
+      "test_commands": [
+        "npm run lint",
+        "npm run test:i18n:ci",
+        "npm run build"
+      ],
+      "dimensions": {
+        "D1": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json",
+            "GO_96_16_d5_d6_d7_me_community_itinerary_discover_traveltrust.json",
+            "GO_96_16_d5_d6_d7_community_traveltrust_governance_batch4.json",
+            "GO_96_16_d5_d6_d7_admin_community_observability_config_guides_staking_traveltrust.json"
+          ]
+        },
+        "D2": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json",
+            "GO_96_16_d5_d6_d7_me_community_itinerary_discover_traveltrust.json",
+            "GO_96_16_d5_d6_d7_community_traveltrust_governance_batch4.json",
+            "GO_96_16_d5_d6_d7_admin_community_observability_config_guides_staking_traveltrust.json"
+          ]
+        },
+        "D3": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json",
+            "GO_96_16_d5_d6_d7_me_community_itinerary_discover_traveltrust.json",
+            "GO_96_16_d5_d6_d7_community_traveltrust_governance_batch4.json",
+            "GO_96_16_d5_d6_d7_admin_community_observability_config_guides_staking_traveltrust.json"
+          ]
+        },
+        "D4": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d4_138_motion_touch_batch.json",
+            "GO_96_16_d4_admin_auth_batch.json",
+            "GO_96_16_d4_segment_gap_close.json"
+          ],
+          "trace": "global_d4_batch_scan"
+        },
+        "D5": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json",
+            "GO_96_16_d5_d6_d7_me_community_itinerary_discover_traveltrust.json",
+            "GO_96_16_d5_d6_d7_community_traveltrust_governance_batch4.json",
+            "GO_96_16_d5_d6_d7_admin_community_observability_config_guides_staking_traveltrust.json"
+          ]
+        },
+        "D6": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json",
+            "GO_96_16_d5_d6_d7_me_community_itinerary_discover_traveltrust.json",
+            "GO_96_16_d5_d6_d7_community_traveltrust_governance_batch4.json",
+            "GO_96_16_d5_d6_d7_admin_community_observability_config_guides_staking_traveltrust.json"
+          ]
+        },
+        "D7": {
+          "status": "NEEDS_FIX",
+          "evidence_files": [],
+          "trace": "93; 96-13.7; no per-route Lighthouse"
+        },
+        "D8": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json",
+            "GO_96_16_d5_d6_d7_me_community_itinerary_discover_traveltrust.json",
+            "GO_96_16_d5_d6_d7_community_traveltrust_governance_batch4.json",
+            "GO_96_16_d5_d6_d7_admin_community_observability_config_guides_staking_traveltrust.json"
+          ]
+        },
+        "D9": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json",
+            "GO_96_16_d5_d6_d7_me_community_itinerary_discover_traveltrust.json",
+            "GO_96_16_d5_d6_d7_community_traveltrust_governance_batch4.json",
+            "GO_96_16_d5_d6_d7_admin_community_observability_config_guides_staking_traveltrust.json"
+          ]
+        },
+        "D10": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json",
+            "GO_96_16_d5_d6_d7_me_community_itinerary_discover_traveltrust.json",
+            "GO_96_16_d5_d6_d7_community_traveltrust_governance_batch4.json",
+            "GO_96_16_d5_d6_d7_admin_community_observability_config_guides_staking_traveltrust.json"
+          ]
+        },
+        "D11": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json",
+            "GO_96_16_d5_d6_d7_me_community_itinerary_discover_traveltrust.json",
+            "GO_96_16_d5_d6_d7_community_traveltrust_governance_batch4.json",
+            "GO_96_16_d5_d6_d7_admin_community_observability_config_guides_staking_traveltrust.json"
+          ]
+        },
+        "D12": {
+          "status": "COVERED",
+          "evidence_files": [
+            "GO_96_16_d5_d6_d7_routes_batch.json",
+            "GO_96_16_d5_d6_d7_me_community_itinerary_discover_traveltrust.json",
+            "GO_96_16_d5_d6_d7_community_traveltrust_governance_batch4.json",
+            "GO_96_16_d5_d6_d7_admin_community_observability_config_guides_staking_traveltrust.json"
+          ]
+        }
+      },
+      "remaining_risks": [
+        "96 未完成：本矩阵为机读汇总，不宣布 GO 全站完成。",
+        "E2E 93：chromium/全栈 未在矩阵内重跑，见 evidence 聚合。",
+        "D7：除 /(home) 根与 snippet 外，无逐页 Lighthouse（NEEDS_FIX）。"
+      ]
+    },
+    {
+      "file": "frontend/app/traveltrust/announcements/page.tsx",
+      "route": "/traveltrust/announcements",
       "route_class_d5d6d7": "COVERED",
       "evidence_files_d5d6d7": [
         "GO_96_16_d5_d6_d7_routes_batch.json",

@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { resetTraveltrustPageScrollChapterStepCooldown } from "@/lib/traveltrustPageScrollChapterStep";
-import { TT_PAGE_SCROLL_SNAP_L5 } from "@/lib/traveltrustCinematicNonGlobeL5";
+import { TT_PAGE_SCROLL_SNAP_L5 } from "@/lib/traveltrust/l5";
 
 type Props = {
   layoutReady?: boolean;

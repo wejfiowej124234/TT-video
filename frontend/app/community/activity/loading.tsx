@@ -13,11 +13,11 @@ export default function CommunityActivityLoading() {
       aria-busy="true"
     >
       <header className="mb-4 space-y-3" aria-hidden>
-        <div className="min-h-[44px] h-11 w-56 max-w-full rounded-[var(--radius-md)] bg-gradient-to-r from-cyan-500/25 to-fuchsia-500/25 animate-pulse" />
+        <div className="min-h-[44px] h-11 w-56 max-w-full rounded-[var(--radius-md)] bg-gradient-to-r from-ref-sun/25 to-ref-coral/20 animate-pulse" />
         <div className="h-4 w-72 max-w-full rounded-[var(--radius-sm)] bg-slate-700/50 animate-pulse" />
       </header>
       <div
-        className="rounded-[var(--radius-xl)] border border-cyan-500/25 bg-slate-900/70 backdrop-blur-md p-6 min-h-[12rem] space-y-4"
+        className="rounded-[var(--radius-xl)] border border-ref-sun/22 bg-slate-900/70 backdrop-blur-md p-6 min-h-[12rem] space-y-4"
         aria-hidden
       >
         <div className="h-5 w-40 rounded-[var(--radius-md)] bg-slate-700/60 animate-pulse" />

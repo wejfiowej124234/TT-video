@@ -27,6 +27,7 @@ describe("parseMeTrustFromMeResponse", () => {
       kyc_status: "pending",
       wallet_linked: true,
       guide_registration_status: "active",
+      provider_registration_status: null,
       identity_status: "pending_review",
       risk_level: "medium",
       risk_basis: "open_disputes_as_party:2",

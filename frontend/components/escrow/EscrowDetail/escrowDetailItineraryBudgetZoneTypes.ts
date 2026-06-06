@@ -1,0 +1,37 @@
+import type { Dispatch, SetStateAction } from "react";
+import type { UnifiedDayRow } from "@/lib/itineraryUnified";
+import type { ItineraryBlock, OrderRow } from "./types";
+
+export type EscrowDetailItineraryBudgetZoneProps = {
+  escrowId: string;
+  order: OrderRow;
+  itinerary: ItineraryBlock;
+  amount: string;
+  currency: string;
+  snapshotHash: string | null;
+  allowConfirmFinalPlan: boolean;
+  isDraft: boolean;
+  state: string;
+  showItineraryBudgetZone: boolean;
+  panelClass: string;
+  protocolPaused: boolean;
+  savingItinerary: boolean;
+  patchItineraryError: string | null;
+  patchItinerarySuccess: boolean;
+  deleteOrderPending: boolean;
+  deleteOrderError: string | null;
+  canPatchItinerary: boolean;
+  showDraftDayEditor: boolean;
+  showCityEditor: boolean;
+  cityOptions: { value: string; label: string }[];
+  draftRowsAligned: boolean;
+  draftDailyItinerary: UnifiedDayRow[];
+  rowsFromApi: UnifiedDayRow[];
+  itineraryListDays: UnifiedDayRow[];
+  setDraftDailyItinerary: Dispatch<SetStateAction<UnifiedDayRow[]>>;
+  chatOrderContextInline: { order: OrderRow; itinerary: ItineraryBlock | null } | null;
+  onSaveItinerary: () => void | Promise<void>;
+  onDeleteOrder: () => void | Promise<void>;
+  onConfirmFinalPlanSuccess: () => void;
+  t: (key: string) => string;
+};

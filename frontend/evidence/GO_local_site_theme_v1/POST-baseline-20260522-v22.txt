@@ -1,0 +1,11 @@
+# TT-PH1-SITE-THEME-V1 · POST baseline (v22 · 批次二 P1/P2)
+# Phase: ① 本地 only
+# Date: 2026-05-22
+
+## Delta
+- Market: StickyFilterBar 去 ref-cyan；BookGuideModal/MarketHeroFrame/MarketSubsiteListFooterStrip/GuideDetailDrawer 暖色
+- Did-rank: rankRow、骨架 ink pulse、GuideModal scrim
+- Community: LoginModal、InteractionSummary、SupportMenu、PostDetail 子模块
+
+## §6.1
+Result: exit 0 · 74 tests (marketTheme 14 + didRankTheme 14 + communityFeedAction 7 + …)

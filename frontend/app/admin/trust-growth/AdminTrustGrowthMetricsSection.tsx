@@ -5,7 +5,10 @@ import { useMemo } from "react";
 import { AdminSortableTh } from "@/components/admin/AdminSortableTh";
 import { useTranslation } from "@/components/LocaleProvider";
 import { sortRowsByKey, useAdminTableSort } from "@/lib/admin/useAdminTableSort";
-import { ADMIN_FILTER_CARD_CLASS, ADMIN_TABLE_ROW_CLASS, ADMIN_TABLE_THEAD_CLASS } from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
+import { ADMIN_TABLE_ROW_CLASS, ADMIN_TABLE_THEAD_CLASS,
+  ADMIN_CONSOLE_JSON_BLOCK_CLASS,
+  ADMIN_TABLE_ROW_DIVIDER_CLASS,} from "@/lib/adminUi";
 
 import {
   VARIANT_BAR_CLASS,
@@ -52,10 +55,7 @@ export function AdminTrustGrowthMetricsSection({ runtime: rt, moments }: AdminTr
         {t("admin_trust_growth_section_metrics")}
       </h2>
       {sortedMoments.map((m) => (
-        <div
-          key={m.moment ?? "?"}
-          className={`${ADMIN_FILTER_CARD_CLASS} shadow-soft`}
-        >
+        <AdminWarmL5Surface key={m.moment ?? "?"}>
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h3 className="text-body font-semibold text-ink-900">{m.moment ?? "—"}</h3>
             <span className="text-meta text-ink-500">
@@ -64,11 +64,11 @@ export function AdminTrustGrowthMetricsSection({ runtime: rt, moments }: AdminTr
           </div>
 
           <div className="mt-3" aria-hidden>
-            <div className="flex h-4 w-full overflow-hidden rounded-sm bg-ink-100">
+            <div className="flex h-4 w-full overflow-hidden rounded-sm bg-ref-sun/10">
               {(m.view_distribution ?? []).map((d) => {
                 const vid = d.variant_id ?? "";
                 const w = Math.max(0, (d.view_share ?? 0) * 100);
-                const bar = VARIANT_BAR_CLASS[vid] ?? "bg-ink-300";
+                const bar = VARIANT_BAR_CLASS[vid] ?? "bg-ref-sun/40";
                 return (
                   <div
                     key={vid}
@@ -91,7 +91,7 @@ export function AdminTrustGrowthMetricsSection({ runtime: rt, moments }: AdminTr
           <div className="mt-4 overflow-x-auto">
             <table className="w-full min-w-[28rem] border-collapse text-left text-small">
               <thead className={ADMIN_TABLE_THEAD_CLASS}>
-                <tr className="border-b border-ink-200 text-meta text-ink-500">
+                <tr className={`${ADMIN_TABLE_ROW_DIVIDER_CLASS} text-meta text-ink-500`}>
                   <AdminSortableTh
                     label={t("admin_trust_growth_variant")}
                     ariaSort={ariaSort("variant_id")}
@@ -137,11 +137,11 @@ export function AdminTrustGrowthMetricsSection({ runtime: rt, moments }: AdminTr
             <summary className="cursor-pointer text-small text-ink-700 hover:underline">
               {t("admin_trust_growth_weights_json")}
             </summary>
-            <pre className="mt-2 max-h-40 overflow-auto rounded-[var(--radius-md)] bg-ink-900/90 p-3 text-left text-meta text-ink-100">
+            <pre className={`mt-2 max-h-40 overflow-auto ${ADMIN_CONSOLE_JSON_BLOCK_CLASS}`}>
               {JSON.stringify(rt?.moments?.[m.moment ?? ""] ?? {}, null, 2)}
             </pre>
           </details>
-        </div>
+        </AdminWarmL5Surface>
       ))}
     </section>
   );

@@ -17,8 +17,10 @@ import {
   ADMIN_TABLE_ROW_CLASS,
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
-  adminTableInlineLinkClass,
-} from "@/lib/adminUi";
+  adminTableRowPrimaryActionClass,
+  ADMIN_TABLE_SECTION_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,} from "@/lib/adminUi";
 import { ADMIN_EMPTY_NEXT_FLAGS_EMPTY } from "@/lib/admin/adminListEmptyStateNextLinks";
 import { formatAdminAppliedFiltersHuman } from "@/lib/admin/formatAdminAppliedFiltersHuman";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
@@ -29,6 +31,7 @@ type Props = Pick<
   AdminFlagsPageViewModel,
   | "t"
   | "loading"
+  | "refreshing"
   | "error"
   | "appliedFilters"
   | "items"
@@ -41,6 +44,7 @@ type Props = Pick<
 export function AdminFlagsListSection({
   t,
   loading,
+  refreshing = false,
   error,
   appliedFilters,
   items,
@@ -68,7 +72,7 @@ export function AdminFlagsListSection({
         </AdminAppliedFiltersBanner>
       ) : null}
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <AdminListLoadingStatus message={t("admin_flags_loading")} />
       ) : null}
       {error ? (
@@ -89,12 +93,13 @@ export function AdminFlagsListSection({
         />
       ) : null}
 
-      {!loading && !error && items.length > 0 && (
+      {!loading && items.length > 0 && (
         <section
-          className="mt-6 overflow-x-auto rounded-[var(--radius-xl)] border border-ink-200 bg-white"
+          className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
           aria-label={t("admin_flags_table_aria")}
+          data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
         >
-          <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+          <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
             <thead className={ADMIN_TABLE_THEAD_CLASS}>
               <tr>
                 <AdminSortableTh
@@ -132,26 +137,26 @@ export function AdminFlagsListSection({
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-ink-100 text-ink-700">
+            <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
               {sortedItems.map((r: AdminFlagRow, idx: number) => {
                 const dash = t("admin_em_dash");
                 const reg = adminFlagRegionPreview(r.region, dash);
                 const code = r.flag_code ?? r.id ?? "";
                 return (
                   <tr key={r.id ?? `ff-${idx}`} className={ADMIN_TABLE_ROW_CLASS}>
-                    <td className="px-3 py-2 font-mono text-meta">{r.flag_code ?? dash}</td>
-                    <td className="px-3 py-2 font-mono text-meta">{r.enabled == null ? dash : String(r.enabled)}</td>
-                    <td className="px-3 py-2 font-mono text-meta">{r.rollout_percent ?? dash}</td>
-                    <td className="px-3 py-2 font-mono text-meta max-w-[8rem] truncate" title={r.scope ?? ""}>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800">{r.flag_code ?? dash}</td>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800">{r.enabled == null ? dash : String(r.enabled)}</td>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800">{r.rollout_percent ?? dash}</td>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800 max-w-[8rem] truncate" title={r.scope ?? ""}>
                       {r.scope ?? dash}
                     </td>
-                    <td className="px-3 py-2 font-mono text-meta max-w-[8rem]">
+                    <td className="px-3 py-2 font-mono text-small text-ink-800 max-w-[8rem]">
                       <span className="block truncate" title={reg}>
                         {reg}
                       </span>
                     </td>
-                    <td className="px-3 py-2 font-mono text-meta">{r.version ?? dash}</td>
-                    <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">{r.updated_at ?? dash}</td>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800">{r.version ?? dash}</td>
+                    <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">{r.updated_at ?? dash}</td>
                     <td className="px-3 py-2 max-w-xs truncate" title={r.description ?? ""}>
                       {r.description ?? dash}
                     </td>
@@ -166,7 +171,7 @@ export function AdminFlagsListSection({
                         >
                           <button
                             type="submit"
-                            className={`${adminTableInlineLinkClass()} ${ADMIN_LINK_FOCUS_CLASS}`}
+                            className={adminTableRowPrimaryActionClass()}
                             aria-label={t("admin_flags_publish_row_aria", { code: String(code) })}
                           >
                             {t("admin_flags_publish")}

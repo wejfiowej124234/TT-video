@@ -48,7 +48,7 @@ describe("admin VIS L5 (①)", () => {
     expect(detailChrome).toContain("data-tt-admin-detail-page");
     expect(detailChrome).toContain("AdminPageAccessBadge");
     expect(writePerm).toContain("adminWritePermissionForPathname");
-    expect(queueChrome).toContain("ADMIN_PAGE_HEADER_CARD_CLASS");
+    expect(queueChrome).toContain("AdminWarmL5Surface");
     expect(queueChrome).toContain("AdminPageAccessBadge");
     expect(queueChrome).toContain("AdminSubpageBreadcrumb");
   });
@@ -60,6 +60,8 @@ describe("admin VIS L5 (①)", () => {
     expect(breadcrumb).toContain("data-tt-admin-subpage-shell-group");
     expect(breadcrumb).toContain("adminShellContextForPath");
     expect(breadcrumb).toContain("adminBreadcrumbLeafForPath");
+    expect(breadcrumb).toContain("data-tt-admin-subpage-breadcrumb-inbox");
+    expect(breadcrumb).toContain("adminPathShowsInboxBreadcrumb");
   });
 
   it("app/admin uses semantic width aliases not raw marketing inner tokens", () => {

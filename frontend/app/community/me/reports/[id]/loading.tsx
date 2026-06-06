@@ -14,10 +14,10 @@ export default function CommunityMeReportDetailLoading() {
     >
       <div className="flex items-center gap-3 mb-6" aria-hidden>
         <div className="h-4 w-20 bg-slate-600/50 rounded-[var(--radius-sm)] animate-pulse" />
-        <div className="min-h-[44px] h-11 flex-1 bg-cyan-500/15 rounded-[var(--radius-sm)] animate-pulse" />
+        <div className="min-h-[44px] h-11 flex-1 bg-ref-sun/12 rounded-[var(--radius-sm)] animate-pulse" />
       </div>
       <div
-        className="space-y-4 rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 p-4"
+        className="space-y-4 rounded-[var(--radius-md)] border border-ref-sun/25 bg-slate-900/70 p-4"
         aria-hidden
       >
         {Array.from({ length: 5 }).map((_, i) => (

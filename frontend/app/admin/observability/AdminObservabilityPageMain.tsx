@@ -1,14 +1,19 @@
 "use client";
 
-import Link from "next/link";
-import { useId } from "react";
+import { useId, useMemo } from "react";
 
 import AdminAuditCompareLinks from "@/components/admin/AdminAuditCompareLinks";
+import { AdminFinanceModuleDepthWorkspace } from "@/components/admin/AdminFinanceModuleDepthWorkspace";
+import { AdminFinanceSuiteDepthNotice } from "@/components/admin/AdminFinanceSuiteDepthNotice";
+import { AdminFinanceSuitePartialChecklist } from "@/components/admin/AdminFinanceSuitePartialChecklist";
+import { AdminPermissionDeniedBanner } from "@/components/admin/AdminPermissionDeniedBanner";
+import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
+import { adminObservabilityOverviewSnapshot } from "@/lib/admin/adminObservabilityOverviewSnapshot";
 import { AdminObservabilityOpsStrip } from "@/components/admin/AdminObservabilityOpsStrip";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
-import { AdminMetaBuildSection, isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
+import { AdminMetaBuildSection } from "@/components/admin/AdminMetaBuildPanel";
 import { useTranslation } from "@/components/LocaleProvider";
-import { adminPageNavLinkClass } from "@/lib/adminUi";
+import { AdminObservabilityHubRelatedNav } from "@/components/admin/AdminObservabilityHubRelatedNav";
 
 import { AdminObservabilityOverviewSection } from "./AdminObservabilityOverviewSection";
 import { useAdminObservabilityPage } from "./useAdminObservabilityPage";
@@ -20,44 +25,40 @@ export function AdminObservabilityPageMain() {
   const chainBlockId = useId();
   const rateLimitsBlockId = useId();
   const alertsBlockId = useId();
-  const { loading, error, body } = useAdminObservabilityPage();
+  const { loading, refreshing, error, body, meta } = useAdminObservabilityPage();
 
   const ov = body?.overview;
-  const meta = body && isAdminMetaRecord(body.meta) ? body.meta : null;
+  const obsSnapshot = useMemo(
+    () => adminObservabilityOverviewSnapshot(ov, body?.status ?? null),
+    [ov, body?.status],
+  );
 
   return (
     <AdminDetailPageChrome
       titleId={pageTitleId}
       title={t("admin_observability_title")}
-      subtitle={t("admin_observability_subtitle")}
-      headerAside={
-        <>
-          <Link href="/admin/audit" className={adminPageNavLinkClass()}>
-            {t("admin_observability_linkAuditLogs")}
-          </Link>
-          <Link href="/admin/audit/operations" className={adminPageNavLinkClass()}>
-            {t("admin_observability_linkAuditOps")}
-          </Link>
-          <Link href="/admin/indexer/reconcile-reports" className={adminPageNavLinkClass()}>
-            {t("admin_observability_linkReconcileReports")}
-          </Link>
-          <Link href="/admin/alerts/incidents" className={adminPageNavLinkClass()}>
-            {t("admin_observability_linkIncidents")}
-          </Link>
-          <Link href="/admin/trust-growth" className={adminPageNavLinkClass()}>
-            {t("admin_shell_nav_trust_growth")}
-          </Link>
-          <Link href="/admin" className={adminPageNavLinkClass()}>
-            {t("admin_schema_back")}
-          </Link>
-        </>
-      }
+      subtitle={t("admin_observability_subtitle_l5")}
     >
+      <AdminObservabilityHubRelatedNav />
+      <AdminPermissionDeniedBanner
+        permission={ADMIN_PERM.FINANCE_READ}
+        messageKey="admin_perm_denied_finance_read"
+      />
+      <AdminFinanceSuiteDepthNotice />
+      <AdminFinanceSuitePartialChecklist />
+      <AdminFinanceModuleDepthWorkspace
+        observability={{
+          ...obsSnapshot,
+          loading,
+          error: Boolean(error),
+        }}
+      />
       <AdminAuditCompareLinks />
       <AdminObservabilityOpsStrip />
       <AdminMetaBuildSection meta={meta} loading={loading} error={error} />
       <AdminObservabilityOverviewSection
-        loading={loading}
+        loading={loading && !body}
+        refreshing={refreshing}
         error={error}
         ov={ov}
         chainBlockId={chainBlockId}

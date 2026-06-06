@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { TT_START_ROUTE_PREVIEW_L5, TT_START_STEP_CYCLE_MS } from "@/lib/traveltrustCinematicNonGlobeL5";
+import { TT_START_ROUTE_PREVIEW_L5, TT_START_STEP_CYCLE_MS } from "@/lib/traveltrust/l5";
 import {
   TRAVELTRUST_START_L5_STEP_IDS,
   type TraveltrustStartL5StepId,

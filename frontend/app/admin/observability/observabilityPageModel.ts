@@ -15,6 +15,9 @@ export type OverviewBody = {
   actor?: Record<string, unknown>;
 };
 
+/** Full overview payload stashed in list-fetch meta by `useAdminObservabilityPage`. */
+export const ADMIN_OBS_OVERVIEW_META_KEY = "__adminObsOverview";
+
 export type LastStoredReconciliation = {
   report_id?: string;
   report_type?: string;

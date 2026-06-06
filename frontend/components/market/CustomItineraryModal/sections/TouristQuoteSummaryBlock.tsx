@@ -1,5 +1,6 @@
 "use client";
 
+import { CIM, CIM_CHOICE, CIM_FOCUS, CIM_FOCUS_WITHIN } from '../customItineraryModalTheme';
 import type { BudgetBreakdown } from "../useQuoteCalculation";
 
 export interface TouristQuoteSummaryBlockProps {
@@ -16,7 +17,7 @@ export default function TouristQuoteSummaryBlock({
   t,
 }: TouristQuoteSummaryBlockProps) {
   return (
-    <div className="rounded-[var(--radius-md)] border border-white/25 bg-white/5 p-4 space-y-2">
+    <div className={CIM.customItineraryPanelQuote}>
       <h3 className="text-small font-semibold text-white drop-shadow-market-pill">
         {t("market_quoteListTitle")}
       </h3>
@@ -64,7 +65,7 @@ export default function TouristQuoteSummaryBlock({
           </li>
         )}
       </ul>
-      <p className="text-small font-semibold text-white pt-2 border-t border-white/25">
+      <p className="text-small font-semibold text-white pt-2 border-t border-ref-sun/14">
         {t("market_quoteTotal")}：{budgetBreakdown.total}
         {t("ui_currency_suffix_usdc")}
       </p>

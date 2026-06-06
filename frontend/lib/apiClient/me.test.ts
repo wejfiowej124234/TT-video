@@ -1,5 +1,5 @@
 /**
- * 个人中心：getMe（缓存/404/401）、getMeStats、putMe、putMePassword
+ * 账户 API（社区资料 / GET /me）：getMe（缓存/404/401）、getMeStats、putMe、putMePassword
  */
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { apiUrl, routes } from "../api";

@@ -4,12 +4,13 @@ import { Suspense, type ReactNode } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import AuthRouteLoading, { type AuthRouteLoadingVariant } from "@/components/auth/AuthRouteLoading";
+import LoginRouteLoading from "@/app/auth/login/LoginRouteLoading";
 import AuthShellCrossNav from "@/components/auth/AuthShellCrossNav";
 
 /** `/auth/login`：外层已有 `main` + `AuthShellCrossNav`，内层 `useSearchParams` 须 Suspense（Next 15 · 07 §5.3） */
 export function AuthLoginSearchParamsSuspense({ children }: { children: ReactNode }) {
   return (
-    <Suspense fallback={<AuthRouteLoading embedded variant="narrow" mainAriaLabelKey="common_loading" />}>
+    <Suspense fallback={<LoginRouteLoading embedded mainAriaLabelKey="auth_login_title" />}>
       {children}
     </Suspense>
   );

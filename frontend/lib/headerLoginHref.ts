@@ -60,3 +60,16 @@ export function buildAuthRegisterRoleHref(
   const returnPath = buildHeaderReturnUrlCandidate(pathname, searchParams);
   return `/auth/register?${new URLSearchParams({ role, returnUrl: returnPath }).toString()}`;
 }
+
+/**
+ * 从 Hub（或其它页）进入申请子路由时附带 `returnUrl`（与顶栏 B-060 同源）。
+ * 例：`/guide/register?returnUrl=%2Fme%2Fidentities`
+ */
+export function buildIdentitiesApplyChildHref(
+  childPath: string,
+  pathname: string | null | undefined,
+  searchParams?: { toString(): string } | null,
+): string {
+  const returnPath = buildHeaderReturnUrlCandidate(pathname, searchParams);
+  return `${childPath}?${new URLSearchParams({ returnUrl: returnPath }).toString()}`;
+}

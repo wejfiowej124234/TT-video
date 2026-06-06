@@ -1,6 +1,8 @@
 "use client";
 
-import { adminPageNavLinkClass } from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
+import { adminPageNavLinkClass,
+  ADMIN_TABLE_ROW_DIVIDER_CLASS,} from "@/lib/adminUi";
 import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
@@ -34,9 +36,11 @@ export default function FinanceReconciliationEpicDHint() {
   ];
 
   return (
-    <section
-      className="mt-8 rounded-[var(--radius-xl)] border border-ink-200 bg-white p-5 shadow-soft"
+    <AdminWarmL5Surface
+      as="section"
+      className="mt-8"
       aria-labelledby={sectionId}
+      data-tt-admin-fin-reconciliation-epic-d="1"
     >
       <h2 id={sectionId} className="text-body font-semibold text-ink-900">
         {t("admin_finance_reconciliation_epic_d_title")}
@@ -72,7 +76,7 @@ export default function FinanceReconciliationEpicDHint() {
             {t("admin_finance_reconciliation_epic_d_table_caption")}
           </caption>
           <thead>
-            <tr className="border-b border-ink-200">
+            <tr className={`${ADMIN_TABLE_ROW_DIVIDER_CLASS}`}>
               <th scope="col" className="py-2 pr-3 font-mono text-small font-semibold text-ink-700">
                 bundle_closure.included_tasks
               </th>
@@ -83,7 +87,7 @@ export default function FinanceReconciliationEpicDHint() {
           </thead>
           <tbody>
             {rows.map(({ task, hintKey }) => (
-              <tr key={task} className="border-b border-ink-100 align-top">
+              <tr key={task} className={`${ADMIN_TABLE_ROW_DIVIDER_CLASS} align-top`}>
                 <td className="py-2 pr-3 font-mono text-meta text-ink-600 whitespace-nowrap">{task}</td>
                 <td className="py-2 text-small text-ink-800">{t(hintKey)}</td>
               </tr>
@@ -91,6 +95,6 @@ export default function FinanceReconciliationEpicDHint() {
           </tbody>
         </table>
       </div>
-    </section>
+    </AdminWarmL5Surface>
   );
 }

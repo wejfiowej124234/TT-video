@@ -135,6 +135,7 @@ describe("admin remaining six L5 implementation (①)", () => {
     const nav = readFileSync(join(componentsAdmin, "AdminOnboardingDualLedgerNavStrip.tsx"), "utf8");
     expect(list).toContain("AdminOnboardingDualLedgerNavStrip");
     expect(nav).toContain("data-tt-admin-onboarding-dual-ledger-nav");
+    expect(nav).toContain("data-tt-admin-onboarding-dual-ledger-inbox");
   });
 
   it("FIN-02: finance suite supplement strip", () => {

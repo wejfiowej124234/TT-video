@@ -3,21 +3,34 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { type FormEvent, useEffect, useMemo, useState } from "react";
 
 import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
+import { routes } from "@/lib/api";
 import {
-  type AdminFetchErrorKind,
-  adminFetchErrorKind,
-  adminFetchJson,
-  logAdminFetch,
-} from "@/lib/adminFetchDisplay";
-import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders } from "@/lib/apiClient";
+  defaultAdminListFetchSnapshot,
+  type AdminStandardListBody,
+  useAdminStandardListFetch,
+} from "@/lib/admin/useAdminStandardListFetch";
 
 import {
+  ADMIN_JOBS_SUMMARY_META_KEY,
   type AdminJobRow,
   type AdminJobsRes,
   buildJobsListPath,
   parseJobsListQuery,
 } from "./adminJobsPageModel";
+
+function jobsListToSnapshot(body: AdminStandardListBody<AdminJobRow> & Pick<AdminJobsRes, "summary">) {
+  const base = defaultAdminListFetchSnapshot(body);
+  if (body.summary && typeof body.summary === "object") {
+    return {
+      ...base,
+      meta: {
+        ...(base.meta ?? {}),
+        [ADMIN_JOBS_SUMMARY_META_KEY]: body.summary,
+      },
+    };
+  }
+  return base;
+}
 
 export function useAdminJobsPage() {
   const router = useRouter();
@@ -28,12 +41,32 @@ export function useAdminJobsPage() {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [summary, setSummary] = useState<Record<string, number> | null>(null);
-  const [items, setItems] = useState<AdminJobRow[]>([]);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
+  const listUrl = useMemo(
+    () =>
+      routes.admin.jobs({
+        limit,
+        status: status || undefined,
+      }),
+    [limit, status],
+  );
+
+  const { items, meta, appliedFilters, loading, refreshing, error } = useAdminStandardListFetch<AdminJobRow>({
+    scope: "jobs",
+    context: "AdminJobsPage",
+    listUrl,
+    toSnapshot: jobsListToSnapshot,
+  });
+
+  const summary = useMemo(() => {
+    const raw = meta?.[ADMIN_JOBS_SUMMARY_META_KEY];
+    return raw && typeof raw === "object" && !Array.isArray(raw) ? (raw as Record<string, number>) : null;
+  }, [meta]);
+
+  const displayMeta = useMemo(() => {
+    if (!meta) return null;
+    const { [ADMIN_JOBS_SUMMARY_META_KEY]: _drop, ...rest } = meta;
+    return isAdminMetaRecord(rest) && Object.keys(rest).length > 0 ? rest : null;
+  }, [meta]);
 
   const [draftLimit, setDraftLimit] = useState(String(limit));
   const [draftStatus, setDraftStatus] = useState(status);
@@ -41,42 +74,6 @@ export function useAdminJobsPage() {
   useEffect(() => {
     setDraftLimit(String(limit));
     setDraftStatus(status);
-  }, [limit, status]);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-
-    const headers: Record<string, string> = { "x-request-id": `admin-jobs-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    const path = routes.admin.jobs({
-      limit,
-      status: status || undefined,
-    });
-
-    adminFetchJson<AdminJobsRes>("AdminJobsPage", apiUrl(path), { headers })
-      .then(({ res, body }) => {
-        if (!res.ok) {
-          throw new Error(body.error || `request_failed_${res.status}`);
-        }
-        return body;
-      })
-      .then((body) => {
-        setSummary(body.summary && typeof body.summary === "object" ? body.summary : null);
-        setItems(Array.isArray(body.items) ? body.items : []);
-        setMeta(isAdminMetaRecord(body.meta) ? body.meta : null);
-        setAppliedFilters(body.applied_filters ?? null);
-      })
-      .catch((e: unknown) => {
-        logAdminFetch("AdminJobsPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
   }, [limit, status]);
 
   const apply = (e?: FormEvent) => {
@@ -98,10 +95,11 @@ export function useAdminJobsPage() {
     limit,
     status,
     loading,
+    refreshing,
     error,
     summary,
     items,
-    meta,
+    meta: displayMeta,
     appliedFilters,
     draftLimit,
     setDraftLimit,

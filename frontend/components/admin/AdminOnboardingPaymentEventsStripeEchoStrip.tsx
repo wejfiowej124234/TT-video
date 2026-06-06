@@ -10,7 +10,7 @@ import { useTranslation } from "@/components/LocaleProvider";
 
 import { useAdminOnboardingPaymentEventsStripeEcho } from "@/lib/admin/useAdminOnboardingPaymentEventsStripeEcho";
 
-import { ADMIN_INLINE_LINK_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { ADMIN_CONSOLE_CALLOUT_PANEL_CLASS, ADMIN_INLINE_LINK_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
 import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
 
@@ -55,7 +55,7 @@ export function AdminOnboardingPaymentEventsStripeEchoStrip() {
 
     <section
 
-      className="mt-4 rounded-[var(--radius-lg)] border border-ink-200 bg-white p-4"
+      className={`mt-4 ${ADMIN_CONSOLE_CALLOUT_PANEL_CLASS}`}
 
       data-tt-admin-onboarding-payment-stripe-echo-card="1"
 

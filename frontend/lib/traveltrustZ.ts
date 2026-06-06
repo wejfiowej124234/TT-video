@@ -22,8 +22,12 @@ export const TT_Z = {
   CONTENT: 20,
   /** shell 胶片颗粒 */
   GRAIN: 24,
-  /** landing nav · brief banner · reduced-motion notice */
+  /** landing nav · brief banner · reduced-motion notice（main 内 sticky 用） */
   NAV: 25,
+  /**
+   * L1 LandingChrome · portal 到 body（高于 #main-content/入口闸 · 低于 Header z-300）
+   */
+  LANDING_CHROME: 280,
 } as const;
 
 export type TtZLayer = (typeof TT_Z)[keyof typeof TT_Z];

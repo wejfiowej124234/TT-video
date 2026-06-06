@@ -14,7 +14,7 @@ export default defineConfig({
     navigationTimeout: 120_000,
   },
   webServer: {
-    command: "npm run dev",
+    command: "npm run dev:webpack",
     url: process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3012",
     reuseExistingServer: process.env.PLAYWRIGHT_REUSE_FE_SERVER !== "0",
     timeout: 300_000,

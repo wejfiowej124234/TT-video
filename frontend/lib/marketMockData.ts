@@ -74,3 +74,8 @@ export const MOCK_GUIDES: GuideCardItem[] = [
   { id: "mock-guide-7", user_id: "u-dali-1", city: "大理", country_code: "CN", languages: ["中文", "英语"], service_types: ["向导服务", "司机服务"], bio: "大理与丽江线路资深向导，洱海、古城、雪山路线均可安排。", stake_amount: "900", hourly_rate: "52", hourly_currency: DEFAULT_SETTLEMENT_CURRENCY_CODE, avatar_url: GUIDE_AVATARS["mock-guide-7"], status: "active", created_at: "2024-01-25T08:30:00Z" },
   { id: "mock-guide-8", user_id: "u-qingdao-1", city: "青岛", country_code: "CN", languages: ["中文", "英语"], service_types: ["向导服务", "陪玩服务", "摄影服务"], bio: "青岛本地向导，熟悉栈桥、八大关与啤酒文化，可安排海鲜与啤酒节行程。", stake_amount: "400", hourly_rate: "40", hourly_currency: DEFAULT_SETTLEMENT_CURRENCY_CODE, avatar_url: GUIDE_AVATARS["mock-guide-8"], status: "active", created_at: "2024-02-05T16:00:00Z" },
 ];
+
+/** 分文件实现 · 与 `lib/marketMockData/index.ts` 同源（避免仅解析到本文件时缺导出） */
+export { MARKET_TRAVEL_SHOWCASE_ORDERS } from "./marketMockData/showcaseOrders";
+export { MARKET_GUIDE_SHOWCASE } from "./marketMockData/showcaseGuides";
+export { isMarketGuideMockShowcaseId } from "./marketMockData/guides";

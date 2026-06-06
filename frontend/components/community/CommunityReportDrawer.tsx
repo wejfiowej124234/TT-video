@@ -6,7 +6,11 @@ import ApiErrorAlert from "@/components/ApiErrorAlert";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import type { CommunityReportReasonCode } from "@/lib/apiClient/community";
 import type { CommunityReportFlowContext } from "@/components/community/useCommunityPostReport";
-import { communitySlatePillFocus, communityWarningPillFocus } from "@/lib/communityA11yFocus";
+import {
+  communitySlatePillFocus,
+  communityWarningPillFocus,
+} from "@/lib/communityA11yFocus";
+import { TT_COMMUNITY_DRAWER_L5, TT_COMMUNITY_FEED_ACTION } from "@/lib/marketingUi";
 
 const REASON_CODES = [
   "spam",
@@ -21,7 +25,7 @@ function contextKey(ctx: CommunityReportFlowContext): string {
   return ctx.kind === "post" ? `post:${ctx.post.id}` : `comment:${ctx.comment.id}`;
 }
 
-/** 160 / 31：举报帖子或评论（`POST …/community/reports`） */
+/** 160 / 31：举报帖子或评论（居中 Sheet · L5） */
 export function CommunityReportDrawer({
   context,
   onClose,
@@ -45,10 +49,9 @@ export function CommunityReportDrawer({
   const [reason, setReason] = useState<CommunityReportReasonCode>("spam");
   const [details, setDetails] = useState("");
   const [sending, setSending] = useState(false);
-  /** `onSubmit` 抛错（非父级已映射的 API 拒绝） */
   const [unexpectedSubmitError, setUnexpectedSubmitError] = useState<string | null>(null);
   const backButtonRef = useRef<HTMLButtonElement>(null);
-  const containerRef = useFocusTrap(true, onClose);
+  const sheetRef = useFocusTrap(true, onClose);
   const titleId = useId();
   const descId = useId();
   const detailsFieldId = useId();
@@ -105,131 +108,140 @@ export function CommunityReportDrawer({
 
   return (
     <div
-      ref={containerRef}
-      className="fixed inset-0 z-[100] flex flex-col bg-slate-950/95 backdrop-blur-sm overflow-hidden"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby={titleId}
-      aria-describedby={descId}
+      data-tt-community-report-drawer="1"
+      className={TT_COMMUNITY_DRAWER_L5.reportOverlay}
+      role="presentation"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
     >
-      <header className="flex shrink-0 items-center gap-3 border-b border-cyan-500/20 px-4 py-3">
-        <form
-          className="inline"
-          onSubmit={(e: FormEvent) => {
-            e.preventDefault();
-            onClose();
-          }}
-        >
-          <button
-            ref={backButtonRef}
-            type="submit"
-            className={`rounded-[var(--radius-md)] border border-slate-600 bg-slate-800/80 px-3 py-2 text-meta text-slate-200 motion-sub min-h-[44px] inline-flex items-center justify-center ${communitySlatePillFocus}`}
-          >
-            {t("community_report_cancel")}
-          </button>
-        </form>
-        <h2 id={titleId} className="text-body font-semibold text-slate-100 flex-1 truncate">
-          {t(titleKey)}
-        </h2>
-      </header>
+      <div
+        ref={sheetRef}
+        className={TT_COMMUNITY_DRAWER_L5.reportSheet}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        aria-describedby={descId}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="mx-auto mt-2 h-1 w-10 shrink-0 rounded-full bg-white/20 sm:hidden" aria-hidden />
 
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
-        <div id={descId} className="space-y-4">
-          {context.kind === "comment" ? (
-            <>
-              <p className="text-meta text-slate-400">{t("community_report_context_post_label")}</p>
+        <header className="flex shrink-0 items-center gap-3 border-b border-ref-sun/18 px-4 py-3">
+          <form
+            className="inline"
+            onSubmit={(e: FormEvent) => {
+              e.preventDefault();
+              onClose();
+            }}
+          >
+            <button
+              ref={backButtonRef}
+              type="submit"
+              className={`${TT_COMMUNITY_DRAWER_L5.postDetailGhostBtn} ${communitySlatePillFocus}`}
+            >
+              {t("community_report_cancel")}
+            </button>
+          </form>
+          <h2 id={titleId} className="text-body font-semibold text-slate-100 flex-1 truncate">
+            {t(titleKey)}
+          </h2>
+        </header>
+
+        <div className={TT_COMMUNITY_DRAWER_L5.reportSheetScroll}>
+          <div id={descId} className="rounded-[var(--radius-md)] border border-ref-sun/14 bg-ink-900/50 px-3 py-2.5 space-y-2">
+            {context.kind === "comment" ? (
+              <>
+                <p className="text-meta text-slate-400">{t("community_report_context_post_label")}</p>
+                <p className="text-small text-slate-300">{postSnippet || dash}</p>
+                <p className="text-meta text-slate-400 pt-1">{t("community_report_context_comment_label")}</p>
+                <p className="text-small text-slate-200">{commentSnippet || dash}</p>
+              </>
+            ) : (
               <p className="text-small text-slate-300">{postSnippet || dash}</p>
-              <p className="text-meta text-slate-400 pt-1">{t("community_report_context_comment_label")}</p>
-              <p className="text-small text-slate-200">{commentSnippet || dash}</p>
-            </>
-          ) : (
-            <p className="text-meta text-slate-300">{postSnippet || dash}</p>
-          )}
-        </div>
-
-        {unexpectedSubmitError ? <ApiErrorAlert message={unexpectedSubmitError} /> : null}
-        {reportSendFailed && reportErrorMessage ? (
-          <ApiErrorAlert message={reportErrorMessage} />
-        ) : null}
-        {bodyErr ? <p className="text-meta text-danger/95" role="alert">{bodyErr}</p> : null}
-
-        <fieldset className="space-y-2">
-          <legend className="text-meta font-medium text-slate-300 mb-2">{t("community_report_reason_label")}</legend>
-          <div className="flex flex-col gap-2">
-            {REASON_CODES.map((code) => (
-              <label
-                key={code}
-                className="flex min-h-[44px] items-center justify-start gap-2 rounded-[var(--radius-md)] border border-slate-600/80 bg-slate-900/60 px-3 py-2.5 text-small text-slate-200 cursor-pointer focus-within:ring-2 focus-within:ring-cyan-400"
-              >
-                <input
-                  type="radio"
-                  name="community-report-reason"
-                  value={code}
-                  checked={reason === code}
-                  onChange={() => setReason(code)}
-                  className="h-4 w-4 accent-cyan-500"
-                />
-                <span>{t(`community_report_reason_${code}`)}</span>
-              </label>
-            ))}
+            )}
           </div>
-        </fieldset>
 
-        <div className="space-y-1">
-          <label htmlFor={detailsFieldId} className="text-meta font-medium text-slate-300">
-            {t("community_report_details_label")}
-          </label>
-          <textarea
-            id={detailsFieldId}
-            value={details}
-            onChange={(e) => setDetails(e.target.value)}
-            rows={4}
-            maxLength={2000}
-            placeholder={t("community_report_details_placeholder")}
-            className="w-full rounded-[var(--radius-md)] border border-slate-600 bg-slate-900/80 px-3 py-2 text-small text-slate-100 placeholder:text-slate-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-            aria-invalid={!!reportFieldMessages?.details}
-            aria-describedby={reportFieldMessages?.details ? detailsErrId : undefined}
-          />
-          {reportFieldMessages?.details ? (
-            <p id={detailsErrId} className="text-meta text-danger/95" role="alert">
-              {reportFieldMessages.details}
-            </p>
+          {unexpectedSubmitError ? <ApiErrorAlert message={unexpectedSubmitError} /> : null}
+          {reportSendFailed && reportErrorMessage ? (
+            <ApiErrorAlert message={reportErrorMessage} />
           ) : null}
-        </div>
-      </div>
+          {bodyErr ? <p className="text-meta text-danger/95" role="alert">{bodyErr}</p> : null}
 
-      <footer className="shrink-0 border-t border-cyan-500/20 px-4 py-3 flex gap-3 justify-end safe-area-pb">
-        <form
-          className="inline"
-          onSubmit={(e: FormEvent) => {
-            e.preventDefault();
-            onClose();
-          }}
-        >
-          <button
-            type="submit"
-            className={`rounded-full border border-slate-600 px-4 py-2.5 text-meta text-slate-300 motion-sub min-h-[44px] inline-flex items-center justify-center ${communitySlatePillFocus}`}
+          <fieldset className="space-y-2">
+            <legend className="text-meta font-medium text-slate-300 mb-2">{t("community_report_reason_label")}</legend>
+            <div className="flex flex-col gap-2">
+              {REASON_CODES.map((code) => (
+                <label key={code} className={TT_COMMUNITY_DRAWER_L5.reportReasonRow}>
+                  <input
+                    type="radio"
+                    name="community-report-reason"
+                    value={code}
+                    checked={reason === code}
+                    onChange={() => setReason(code)}
+                    className="h-4 w-4 shrink-0 accent-ref-sun"
+                  />
+                  <span className="text-small">{t(`community_report_reason_${code}`)}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <div className="space-y-1">
+            <label htmlFor={detailsFieldId} className="text-meta font-medium text-slate-300">
+              {t("community_report_details_label")}
+            </label>
+            <textarea
+              id={detailsFieldId}
+              value={details}
+              onChange={(e) => setDetails(e.target.value)}
+              rows={4}
+              maxLength={2000}
+              placeholder={t("community_report_details_placeholder")}
+              className={TT_COMMUNITY_DRAWER_L5.publishTextarea}
+              aria-invalid={!!reportFieldMessages?.details}
+              aria-describedby={reportFieldMessages?.details ? detailsErrId : undefined}
+            />
+            {reportFieldMessages?.details ? (
+              <p id={detailsErrId} className="text-meta text-danger/95" role="alert">
+                {reportFieldMessages.details}
+              </p>
+            ) : null}
+          </div>
+        </div>
+
+        <footer className={TT_COMMUNITY_DRAWER_L5.reportSheetFooter}>
+          <form
+            className="inline"
+            onSubmit={(e: FormEvent) => {
+              e.preventDefault();
+              onClose();
+            }}
           >
-            {t("community_report_cancel")}
-          </button>
-        </form>
-        <form
-          className="inline"
-          onSubmit={(e: FormEvent) => {
-            e.preventDefault();
-            void handleSubmit();
-          }}
-        >
-          <button
-            type="submit"
-            disabled={sending}
-            aria-busy={sending ? true : undefined}
-            className={`rounded-full border border-warning/50 bg-warning/20 px-5 py-2.5 text-meta font-medium text-warning/95 motion-sub min-h-[44px] inline-flex items-center justify-center hover:bg-warning/30 disabled:opacity-60 ${communityWarningPillFocus}`}
+            <button
+              type="submit"
+              className={`${TT_COMMUNITY_FEED_ACTION.asideGhostPill} ${communitySlatePillFocus}`}
+            >
+              {t("community_report_cancel")}
+            </button>
+          </form>
+          <form
+            className="inline flex-1 sm:flex-none"
+            onSubmit={(e: FormEvent) => {
+              e.preventDefault();
+              void handleSubmit();
+            }}
           >
-            {sending ? t("common_loading") : t("community_report_submit")}
-          </button>
-        </form>
-      </footer>
+            <button
+              type="submit"
+              disabled={sending}
+              aria-busy={sending ? true : undefined}
+              className={`w-full sm:w-auto rounded-full border border-warning/50 bg-warning/20 px-5 py-2.5 text-meta font-medium text-warning/95 motion-sub min-h-[44px] inline-flex items-center justify-center hover:bg-warning/30 disabled:opacity-60 ${communityWarningPillFocus}`}
+            >
+              {sending ? t("common_loading") : t("community_report_submit")}
+            </button>
+          </form>
+        </footer>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import { useAdminMetaBuildFromPublicMeta } from "@/lib/useAdminMetaBuildFromPublicMeta";
 import {
   adminFetchJson,
@@ -21,6 +22,7 @@ import {
 
 export function useAdminCommunityCommentVisibilityPage() {
   const { t } = useTranslation();
+  const requestConfirm = useAdminL5ConfirmRequest();
   const { meta: buildMeta, loading: buildLoading, error: buildError } =
     useAdminMetaBuildFromPublicMeta("AdminCommentVisibilityMetaBuild");
   const [commentId, setCommentId] = useState("");
@@ -40,7 +42,7 @@ export function useAdminCommunityCommentVisibilityPage() {
     setError(null);
   };
 
-  const submit = useCallback(() => {
+  const submitImpl = useCallback(() => {
     const id = commentId.trim();
     if (!id) {
       setFormError("invalid_request", t("admin_comment_vis_needId"));
@@ -93,6 +95,20 @@ export function useAdminCommunityCommentVisibilityPage() {
       })
       .finally(() => setSubmitting(false));
   }, [commentId, t, visibility]);
+
+  const submit = useCallback(() => {
+    if (!commentId.trim()) {
+      setFormError("invalid_request", t("admin_comment_vis_needId"));
+      return;
+    }
+    const visLabel = t(COMMENT_VIS_I18N[visibility]);
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_write",
+      descKey: "admin_l5_confirm_desc_comment_vis",
+      descVars: { vis: visLabel },
+      onConfirm: () => submitImpl(),
+    });
+  }, [commentId, requestConfirm, submitImpl, t, visibility]);
 
   return {
     buildMeta,

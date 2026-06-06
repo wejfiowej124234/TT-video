@@ -15,11 +15,8 @@ function AdminCommunityRiskSignalsPageInner() {
 
 export default function AdminCommunityRiskSignalsPage() {
   return (
-    <AdminSearchParamsSuspense
-      ariaLabelKey="admin_risk_signals_title"
-      backLinkLabelKey="admin_risk_signals_back"
-    >
-      <AdminCommunityPageShell currentLabelKey="admin_risk_signals_title">
+    <AdminSearchParamsSuspense ariaLabelKey="admin_risk_signals_title">
+      <AdminCommunityPageShell>
         <AdminPermissionDeniedBanner permission={ADMIN_PERM.COMMUNITY_READ} />
         <AdminCommunityRiskSignalsPageInner />
       </AdminCommunityPageShell>

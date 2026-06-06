@@ -1,0 +1,32 @@
+# WAVE-C · D9 证据签字（① 本地 · 起草）
+
+Phase: ① local only
+Date: 2026-05-24
+Run: PLAYWRIGHT_REUSE_FE_SERVER=1 npm run e2e:site-theme-v1-capture → 2 passed (1.4m)
+
+## POST-screenshots（TT-PH1-232 · G1 · G16）
+
+- [x] home/desktop-1280x800.png + home/mobile-390x844.png（G1 · `/` 入机采）
+- [x] market · market-provider · market-acquisition · did-rank · community
+- [x] explore · friends · messages · me · feedback · tt（community 子路由同批）
+
+Log: POST-visual-20260524-d9.txt
+
+## 机读（D8 已闭 · D9 增）
+
+- [x] siteThemeV1PostRoutes.contract（G1/G16 路由表）
+- [x] POST-baseline-20260524-d8.txt · 119/119
+
+## WAVE-C 目视拼板（D10 闭卷）
+
+- [ ] Q1 five-routes-cta.png（手拼）
+- [ ] Q6 home-full-scroll.png（手拼）
+- [ ] WAVE-C-signoff-YYYYMMDD.txt 最终签字（§3.2.11 总闸）
+
+## TT-PH1 台账（D9）
+
+- [x] TT-PH1-232 证据入仓（POST 含 home）
+- [x] TT-PH1-231 §2.4 `/` 行 + POST home 旁证
+- [x] TT-PH1-234▸ 主路径 △ 已对账；矩阵次要 ○/defer 留 D10 §3.2.6
+
+Status: D9 closed ① · D10 = §3.2.11 总闸 + Q1/Q6 拼板 + PI-1 复闸

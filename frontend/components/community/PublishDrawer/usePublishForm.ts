@@ -2,278 +2,464 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import type { CommunityPostType } from "@/lib/communityMockData";
+import { centerSquareCropImageFile } from "@/lib/communityImageCenterCrop";
+import {
+  communityObjectStorageVideoBannerKey,
+  communityVideoPublishPipelineReady,
+} from "@/lib/communityVideoPublishGate";
 import {
   MAX_CHARS,
   MAX_IMAGES,
-  MAX_FILE_SIZE,
+  ACCEPT_IMAGE,
   MAX_FILE_SIZE_MB,
-  MAX_VIDEO_SIZE,
-  MAX_VIDEO_SIZE_MB,
   MAX_VIDEO_DURATION_SEC,
-  VIDEO_METADATA_TIMEOUT_MS,
+  getCommunityPostMediaMaxDecodedBytes,
+  getCommunityMediaAssetMaxBytesClient,
+  communityPostMediaMaxSizeMbLabel,
 } from "./constants";
 import type { PublishPayload } from "./types";
 import { mapApiReadError } from "@/lib/mapApiReadError";
+import { usePublishFormDrawerEffects } from "./usePublishFormDrawerEffects";
+import { probeCommunityPublishVideoBlob } from "./publishFormVideoBlobProbe";
+import { persistCommunityMediaUrlIfBlob } from "./publishFormMediaPersistence";
+import { getCommunityMediaCapabilities, type CommunityMediaCapabilities } from "@/lib/apiClient/community/mediaCapabilities";
+import type { CommunityMultipartProgress } from "@/lib/apiClient/community/mediaAssetsMultipart";
+import { uploadPosterJpegFromVideoBlobUrl } from "@/lib/communityVideoPosterCapture";
+import {
+  normalizeCommunityPostTagsForApi,
+  splitCommunityPostTagsInput,
+} from "@/lib/communityPostTagsPayload";
+import type { LocaleTranslateFn } from "@/lib/i18n";
+import { isCommunityPublishParentOwnedError } from "@/lib/communityPublishSubmitError";
 
 export interface UsePublishFormOptions {
   onClose: () => void;
   onSubmit: (payload: PublishPayload) => void | Promise<void>;
-  t: (key: string) => string;
+  t: LocaleTranslateFn;
 }
 
-function isHttpImageUrl(s: string): boolean {
-  try {
-    const u = new URL(s);
-    return u.protocol === "http:" || u.protocol === "https:";
-  } catch {
-    return false;
+function isAcceptedCoverImage(file: File): boolean {
+  const ct = (file.type || "").trim().toLowerCase();
+  return ct === "image/jpeg" || ct === "image/png" || ct === "image/webp";
+}
+
+function multipartErrCode(err: unknown): string | null {
+  if (!(err instanceof Error) || err.name !== "CommunityMultipartUploadError") return null;
+  const code = (err as { code?: string }).code;
+  return typeof code === "string" && code.trim() ? code.trim() : err.message.trim() || null;
+}
+
+function mapMultipartUploadError(err: unknown, t: LocaleTranslateFn): string {
+  const code = multipartErrCode(err);
+  if (code) {
+    if (code === "multipart_not_configured" || code === "community_video_requires_object_storage_multipart") {
+      const mb = communityPostMediaMaxSizeMbLabel(getCommunityPostMediaMaxDecodedBytes());
+      return t("community_video_multipart_not_configured").replace(/\{\{mb\}\}/g, mb);
+    }
+    if (code.includes("part") || code.startsWith("part_upload")) {
+      return t("community_video_multipart_part_failed").replace(/\{\{code\}\}/g, code);
+    }
+    if (code.includes("complete") || code === "presign_missing_part") {
+      return t("community_video_multipart_complete_failed").replace(/\{\{code\}\}/g, code);
+    }
+    if (code.includes("asset") || code === "media_asset_poll_timeout") {
+      const detail = err instanceof Error ? err.message || code : code;
+      return t("community_video_multipart_asset_failed").replace(/\{\{detail\}\}/g, detail);
+    }
+    return t("community_publish_failed");
   }
+  if (err instanceof Error) {
+    const msg = err.message.trim();
+    if (msg.startsWith("file_too_large|")) {
+      const m = msg.match(/max_bytes=(\d+)/);
+      const maxMb = m
+        ? communityPostMediaMaxSizeMbLabel(Number.parseInt(m[1]!, 10))
+        : String(MAX_FILE_SIZE_MB);
+      return t("community_upload_error_size").replace(/\{\{max\}\}/g, maxMb);
+    }
+    if (msg.startsWith("video_too_long|")) {
+      const m = msg.match(/max_duration_sec=(\d+)/);
+      const sec = m ? m[1]! : String(MAX_VIDEO_DURATION_SEC);
+      return t("community_upload_error_video_duration").replace(/\{\{max\}\}/g, sec);
+    }
+  }
+  return mapApiReadError(err, t, "community_publish_failed");
+}
+
+function progressHint(t: LocaleTranslateFn, p: CommunityMultipartProgress): string {
+  const pct = Math.round(p.ratio * 100);
+  if (p.phase === "creating") return t("community_video_upload_phase_creating");
+  if (p.phase === "uploading") {
+    return t("community_video_upload_phase_uploading").replace(/\{\{pct\}\}/g, String(pct));
+  }
+  if (p.phase === "completing") return t("community_video_upload_phase_completing");
+  return t("community_video_upload_phase_confirming");
 }
 
 export function usePublishForm({ onClose, onSubmit, t }: UsePublishFormOptions) {
   const [type, setType] = useState<CommunityPostType>("photo");
   const [content, setContent] = useState("");
+  const [tagsInput, setTagsInput] = useState("");
+  const [destination, setDestination] = useState("");
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [videoPreviewUrl, setVideoPreviewUrl] = useState<string | null>(null);
+  const [videoCoverUrl, setVideoCoverUrl] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
+  const coverInputRef = useRef<HTMLInputElement>(null);
   const backButtonRef = useRef<HTMLButtonElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  /** 与 `/orders/new` 同口径：在 `setSubmitting(true)` 提交前阻断同帧连点，避免重复 POST `/community/posts`。 */
   const submitInFlightRef = useRef(false);
-  const [entered, setEntered] = useState(false);
-  const [videoCoverUrl, setVideoCoverUrl] = useState("");
+  const pendingVideoFileRef = useRef<File | null>(null);
+  const capabilitiesRef = useRef<CommunityMediaCapabilities | null>(null);
+  const [mediaCapabilities, setMediaCapabilities] = useState<CommunityMediaCapabilities | null>(null);
+  const [capabilitiesLoaded, setCapabilitiesLoaded] = useState(false);
+  const [videoUploadProgress, setVideoUploadProgress] = useState<{ pct: number } | null>(null);
+  const [videoUploadHint, setVideoUploadHint] = useState<string | null>(null);
+
+  const { entered } = usePublishFormDrawerEffects({
+    onClose,
+    backButtonRef,
+    containerRef,
+    previewUrls,
+  });
+
+  capabilitiesRef.current = mediaCapabilities;
 
   useEffect(() => {
-    backButtonRef.current?.focus({ preventScroll: true });
-  }, []);
-
-  useEffect(() => {
-    const id = requestAnimationFrame(() => setEntered(true));
-    return () => cancelAnimationFrame(id);
-  }, []);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const focusables = "button:not([disabled]), [href], input:not([type=hidden]):not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex=-1])";
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key !== "Tab") return;
-      const nodes = el.querySelectorAll<HTMLElement>(focusables);
-      const list = Array.from(nodes).filter((n) => n.offsetParent != null && !n.hasAttribute("aria-hidden"));
-      if (list.length === 0) return;
-      const active = document.activeElement as HTMLElement | null;
-      const idx = active ? list.indexOf(active) : -1;
-      const first = list[0];
-      const last = list[list.length - 1];
-      let target: HTMLElement | undefined;
-      if (e.shiftKey) {
-        target = active === first ? last : idx > 0 ? list[idx - 1] : undefined;
-      } else {
-        target = active === last ? first : idx >= 0 && idx < list.length - 1 ? list[idx + 1] : undefined;
+    if (!entered) {
+      setMediaCapabilities(null);
+      setCapabilitiesLoaded(false);
+      return;
+    }
+    let cancelled = false;
+    void (async () => {
+      try {
+        const data = await getCommunityMediaCapabilities();
+        if (cancelled) return;
+        setMediaCapabilities(data);
+      } catch {
+        if (cancelled) return;
+        setMediaCapabilities(null);
+      } finally {
+        if (!cancelled) setCapabilitiesLoaded(true);
       }
-      if (target) {
-        e.preventDefault();
-        target.focus();
-      }
+    })();
+    return () => {
+      cancelled = true;
     };
-    el.addEventListener("keydown", handleKeyDown);
-    return () => el.removeEventListener("keydown", handleKeyDown);
+  }, [entered]);
+
+  const videoPublishPipelineReady = communityVideoPublishPipelineReady(
+    capabilitiesLoaded,
+    mediaCapabilities,
+  );
+  const objectStorageVideoBanner = communityObjectStorageVideoBannerKey(
+    capabilitiesLoaded,
+    mediaCapabilities,
+  );
+
+  const revokeBlob = useCallback((url: string | null | undefined) => {
+    if (url?.startsWith("blob:")) URL.revokeObjectURL(url);
   }, []);
 
   const removeVideo = useCallback(() => {
-    if (videoPreviewUrl?.startsWith("blob:")) URL.revokeObjectURL(videoPreviewUrl);
+    revokeBlob(videoPreviewUrl);
     setVideoPreviewUrl(null);
+    pendingVideoFileRef.current = null;
+    revokeBlob(videoCoverUrl);
     setVideoCoverUrl("");
+    if (videoInputRef.current) videoInputRef.current.value = "";
+    if (coverInputRef.current) coverInputRef.current.value = "";
+    setVideoUploadProgress(null);
+    setVideoUploadHint(null);
     setUploadError(null);
-  }, [videoPreviewUrl]);
+  }, [revokeBlob, videoCoverUrl, videoPreviewUrl]);
 
-  const removeImage = useCallback((index: number) => {
-    setPreviewUrls((prev) => {
-      const next = prev.filter((_, i) => i !== index);
-      const url = prev[index];
-      if (url?.startsWith("blob:")) URL.revokeObjectURL(url);
-      return next;
-    });
-  }, []);
+  const removeCover = useCallback(() => {
+    revokeBlob(videoCoverUrl);
+    setVideoCoverUrl("");
+    if (coverInputRef.current) coverInputRef.current.value = "";
+  }, [revokeBlob, videoCoverUrl]);
 
-  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files?.length) return;
-    setUploadError(null);
-    const urls: string[] = [];
-    setPreviewUrls((prev) => {
-      const rest = MAX_IMAGES - prev.length;
-      for (let i = 0; i < Math.min(files.length, rest); i++) {
-        const file = files[i];
-        if (file.size > MAX_FILE_SIZE) {
-          setUploadError(t("community_upload_error_size").replace("{{max}}", String(MAX_FILE_SIZE_MB)));
-          break;
-        }
-        urls.push(URL.createObjectURL(file));
-      }
-      return [...prev, ...urls].slice(0, MAX_IMAGES);
-    });
-    e.target.value = "";
-  }, [t]);
+  const removeImage = useCallback(
+    (index: number) => {
+      setPreviewUrls((prev) => {
+        revokeBlob(prev[index]);
+        return prev.filter((_, i) => i !== index);
+      });
+    },
+    [revokeBlob],
+  );
 
-  /** 51-31-2：视频大小与时长校验 + i18n 错误文案 */
-  const handleVideoChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploadError(null);
-    if (file.size > MAX_VIDEO_SIZE) {
-      setUploadError(t("community_upload_error_video_size").replace("{{max}}", String(MAX_VIDEO_SIZE_MB)));
+  const handleFileChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const files = e.target.files;
+      if (!files?.length) return;
+      setUploadError(null);
+      const maxDecoded = getCommunityPostMediaMaxDecodedBytes();
+      const maxMb = communityPostMediaMaxSizeMbLabel(maxDecoded);
+      const picked = Array.from(files);
       e.target.value = "";
-      return;
-    }
-    const url = URL.createObjectURL(file);
-    const video = document.createElement("video");
-    video.preload = "metadata";
-    let settled = false;
-    let timeoutId: number | undefined;
-    const settle = () => {
-      if (settled) return;
-      settled = true;
-      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
-    };
-    timeoutId = window.setTimeout(() => {
-      if (settled) return;
-      settled = true;
-      video.onloadedmetadata = null;
-      video.onerror = null;
-      video.removeAttribute("src");
-      URL.revokeObjectURL(url);
-      setUploadError(t("community_upload_error_video_metadata"));
-    }, VIDEO_METADATA_TIMEOUT_MS);
-    video.onloadedmetadata = () => {
-      if (settled) return;
-      settle();
-      const dur = video.duration;
-      if (!Number.isFinite(dur) || dur <= 0 || dur > MAX_VIDEO_DURATION_SEC) {
-        URL.revokeObjectURL(url);
-        setUploadError(t("community_upload_error_video_duration").replace("{{max}}", String(MAX_VIDEO_DURATION_SEC)));
+      setPreviewUrls((prev) => {
+        const next = [...prev];
+        const rest = MAX_IMAGES - prev.length;
+        for (let i = 0; i < Math.min(picked.length, rest); i++) {
+          const file = picked[i]!;
+          if (file.size > maxDecoded) {
+            setUploadError(t("community_upload_error_size").replace(/\{\{max\}\}/g, maxMb));
+            break;
+          }
+          const immediate = URL.createObjectURL(file);
+          next.push(immediate);
+          void centerSquareCropImageFile(file)
+            .then((cropped) => {
+              if (cropped === file) return;
+              const croppedUrl = URL.createObjectURL(cropped);
+              setPreviewUrls((current) =>
+                current.map((u) => {
+                  if (u !== immediate) return u;
+                  revokeBlob(immediate);
+                  return croppedUrl;
+                }),
+              );
+            })
+            .catch(() => undefined);
+        }
+        return next.slice(0, MAX_IMAGES);
+      });
+    },
+    [revokeBlob, t],
+  );
+
+  const handleVideoChange = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      e.target.value = "";
+      if (!file) return;
+      setUploadError(null);
+      setVideoUploadProgress(null);
+      setVideoUploadHint(null);
+
+      const caps = capabilitiesRef.current;
+      if (!caps?.public_video_publish_ready) {
+        setUploadError(t("community_object_storage_video_unavailable_banner"));
         return;
       }
+
+      const maxBytes =
+        caps.max_video_bytes > 0 ? caps.max_video_bytes : getCommunityMediaAssetMaxBytesClient();
+      const maxDur = caps.max_video_seconds > 0 ? caps.max_video_seconds : MAX_VIDEO_DURATION_SEC;
+      const result = await probeCommunityPublishVideoBlob(file, maxBytes, maxDur, t);
+      if (!result.ok) {
+        setUploadError(result.errorMessage);
+        return;
+      }
+
+      pendingVideoFileRef.current = file;
       setVideoPreviewUrl((prev) => {
-        if (prev?.startsWith("blob:")) URL.revokeObjectURL(prev);
+        revokeBlob(prev);
+        return result.objectUrl;
+      });
+      revokeBlob(videoCoverUrl);
+      setVideoCoverUrl("");
+      if (coverInputRef.current) coverInputRef.current.value = "";
+    },
+    [revokeBlob, t, videoCoverUrl],
+  );
+
+  const handleCoverChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      e.target.value = "";
+      if (!file) return;
+      setUploadError(null);
+      if (!isAcceptedCoverImage(file)) {
+        setUploadError(t("community_publish_video_cover_image_only"));
+        return;
+      }
+      const maxDecoded = getCommunityPostMediaMaxDecodedBytes();
+      if (file.size > maxDecoded) {
+        setUploadError(
+          t("community_upload_error_size").replace(
+            /\{\{max\}\}/g,
+            communityPostMediaMaxSizeMbLabel(maxDecoded),
+          ),
+        );
+        return;
+      }
+      const url = URL.createObjectURL(file);
+      setVideoCoverUrl((prev) => {
+        revokeBlob(prev);
         return url;
       });
-    };
-    video.onerror = () => {
-      if (settled) return;
-      settle();
-      URL.revokeObjectURL(url);
-      setUploadError(t("community_media_load_failed"));
-    };
-    video.src = url;
-    e.target.value = "";
-  }, [t]);
+    },
+    [revokeBlob, t],
+  );
 
   const moveImage = useCallback((index: number, dir: 1 | -1) => {
     setPreviewUrls((prev) => {
       const next = index + dir;
       if (next < 0 || next >= prev.length) return prev;
       const arr = [...prev];
-      [arr[index], arr[next]] = [arr[next], arr[index]];
+      [arr[index], arr[next]] = [arr[next]!, arr[index]!];
       return arr;
     });
   }, []);
 
+  const uploadPendingVideo = useCallback(
+    async (file: File): Promise<{ assetId: string; playbackUrl: string }> => {
+      setVideoUploadProgress({ pct: 2 });
+      setVideoUploadHint(t("community_video_upload_phase_creating"));
+      try {
+        const { uploadCommunityVideoMultipart } = await import(
+          "@/lib/apiClient/community/mediaAssetsMultipart"
+        );
+        const out = await uploadCommunityVideoMultipart(file, {
+          onProgress: (p) => {
+            setVideoUploadProgress({ pct: Math.round(p.ratio * 100) });
+            setVideoUploadHint(progressHint(t, p));
+          },
+        });
+        setVideoUploadProgress({ pct: 100 });
+        return out;
+      } finally {
+        setVideoUploadProgress(null);
+        setVideoUploadHint(null);
+      }
+    },
+    [t],
+  );
+
   const handleSubmit = useCallback(async () => {
     const trimmed = content.trim();
     if (!trimmed || submitting || submitInFlightRef.current) return;
-    if (type === "photo" && previewUrls.length === 0) {
-      setUploadError(t("community_api_msg_media_required"));
+
+    const tagNorm = normalizeCommunityPostTagsForApi(splitCommunityPostTagsInput(tagsInput));
+    if (!tagNorm.ok) {
+      setUploadError(t(`community_api_msg_${tagNorm.code}`));
       return;
     }
+
+      if (type === "photo" && previewUrls.length === 0) {
+        setUploadError(t("community_api_msg_media_required"));
+        return;
+      }
     if (type === "video" && !videoPreviewUrl) {
       setUploadError(t("community_api_msg_media_required"));
       return;
     }
-    const coverTrim = type === "video" ? videoCoverUrl.trim() : "";
-    if (type === "video" && coverTrim && !isHttpImageUrl(coverTrim)) {
-      setUploadError(t("community_publish_video_cover_invalid"));
-      return;
-    }
+
     setUploadError(null);
     submitInFlightRef.current = true;
     setSubmitting(true);
+
     try {
-      const mediaUrls =
-        type === "text"
-          ? undefined
-          : type === "video" && videoPreviewUrl
-            ? [videoPreviewUrl]
-            : type === "photo" && previewUrls.length > 0
-              ? previewUrls
-              : undefined;
+      let mediaUrls: string[] | undefined;
+      let mediaAssetId: string | undefined;
+      let coverUrl: string | undefined;
+
+      if (type === "photo" && previewUrls.length > 0) {
+        mediaUrls = await Promise.all(previewUrls.map((u) => persistCommunityMediaUrlIfBlob(u)));
+      } else if ((type === "food" || type === "travel") && previewUrls.length > 0) {
+        mediaUrls = await Promise.all(previewUrls.map((u) => persistCommunityMediaUrlIfBlob(u)));
+      } else if (type === "video" && videoPreviewUrl) {
+        const caps = capabilitiesRef.current;
+        const pendingFile = pendingVideoFileRef.current;
+        if (caps?.public_video_publish_ready && pendingFile) {
+          const uploaded = await uploadPendingVideo(pendingFile);
+          mediaAssetId = uploaded.assetId;
+          mediaUrls = [uploaded.playbackUrl];
+        } else {
+          mediaUrls = [await persistCommunityMediaUrlIfBlob(videoPreviewUrl)];
+        }
+
+        const coverTrim = videoCoverUrl.trim();
+        if (coverTrim) {
+          coverUrl = await persistCommunityMediaUrlIfBlob(coverTrim);
+        } else if (videoPreviewUrl.startsWith("blob:")) {
+          const autoCover = await uploadPosterJpegFromVideoBlobUrl(
+            videoPreviewUrl,
+            getCommunityPostMediaMaxDecodedBytes(),
+          );
+          if (autoCover) coverUrl = autoCover;
+        }
+      }
+
       await onSubmit({
         type,
         content: trimmed,
-        mediaUrls,
-        ...(type === "video" && coverTrim ? { coverUrl: coverTrim } : {}),
+        ...(mediaUrls ? { mediaUrls } : {}),
+        ...(coverUrl ? { coverUrl } : {}),
+        ...(tagNorm.tags.length > 0 ? { tags: tagNorm.tags } : {}),
+        ...(destination.trim() ? { destination: destination.trim() } : {}),
+        ...(mediaAssetId ? { mediaAssetId } : {}),
       });
-      previewUrls.forEach((u) => {
-        if (u.startsWith("blob:")) URL.revokeObjectURL(u);
-      });
-      if (videoPreviewUrl?.startsWith("blob:")) URL.revokeObjectURL(videoPreviewUrl);
+
+      previewUrls.forEach((u) => revokeBlob(u));
+      revokeBlob(videoPreviewUrl);
+      revokeBlob(videoCoverUrl);
       setPreviewUrls([]);
       setVideoPreviewUrl(null);
       setVideoCoverUrl("");
+      setTagsInput("");
+      pendingVideoFileRef.current = null;
       onClose();
     } catch (err) {
-      if (typeof window !== "undefined") {
+      if (isCommunityPublishParentOwnedError(err)) {
+        return;
+      }
+      if (typeof window !== "undefined" && process.env.NODE_ENV !== "production") {
         console.error("usePublishForm handleSubmit:", err);
       }
-      setUploadError(mapApiReadError(err, t, "community_publish_failed"));
+      setUploadError(mapMultipartUploadError(err, t));
     } finally {
       submitInFlightRef.current = false;
       setSubmitting(false);
     }
-  }, [content, type, videoPreviewUrl, previewUrls, videoCoverUrl, submitting, onSubmit, onClose, t]);
+  }, [
+    content,
+    tagsInput,
+    destination,
+    type,
+    videoPreviewUrl,
+    previewUrls,
+    videoCoverUrl,
+    submitting,
+    onSubmit,
+    onClose,
+    t,
+    uploadPendingVideo,
+    revokeBlob,
+  ]);
 
-  const previewUrlsRef = useRef<string[]>([]);
-  previewUrlsRef.current = previewUrls;
-  useEffect(() => {
-    return () => {
-      previewUrlsRef.current.forEach((u) => { if (u.startsWith("blob:")) URL.revokeObjectURL(u); });
-    };
-  }, []);
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
-
-  useEffect(() => {
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, []);
-
-  const setTypeWithCleanup = useCallback((next: CommunityPostType) => {
-    setType(next);
+  const retryVideoUpload = useCallback(() => {
     setUploadError(null);
-    if (next === "video" || next === "text") {
-      setPreviewUrls((prev) => {
-        prev.forEach((u) => {
-          if (u.startsWith("blob:")) URL.revokeObjectURL(u);
+    void handleSubmit();
+  }, [handleSubmit]);
+
+  const clearUploadError = useCallback(() => {
+    setUploadError(null);
+  }, []);
+
+  const setTypeWithCleanup = useCallback(
+    (next: CommunityPostType) => {
+      setType(next);
+      setUploadError(null);
+      if (next === "video" || next === "text") {
+        setPreviewUrls((prev) => {
+          prev.forEach((u) => revokeBlob(u));
+          return [];
         });
-        return [];
-      });
-    }
-    if (next !== "video") {
-      removeVideo();
-    }
-  }, [removeVideo]);
+      }
+      if (next !== "video") {
+        removeVideo();
+      }
+    },
+    [removeVideo, revokeBlob],
+  );
 
   const charCount = content.length;
   const atLimit = charCount >= MAX_CHARS;
@@ -284,26 +470,41 @@ export function usePublishForm({ onClose, onSubmit, t }: UsePublishFormOptions) 
     setType: setTypeWithCleanup,
     content,
     setContent,
+    tagsInput,
+    setTagsInput,
+    destination,
+    setDestination,
     previewUrls,
-    setPreviewUrls,
     videoPreviewUrl,
+    videoCoverUrl,
     fileInputRef,
     videoInputRef,
+    coverInputRef,
     backButtonRef,
     containerRef,
     uploadError,
     submitting,
     entered,
     removeVideo,
+    removeCover,
     removeImage,
     moveImage,
     handleFileChange,
     handleVideoChange,
+    handleCoverChange,
     handleSubmit,
+    retryVideoUpload,
+    clearUploadError,
     charCount,
     atLimit,
     nearLimit,
-    videoCoverUrl,
-    setVideoCoverUrl,
+    videoUploadProgress,
+    videoUploadHint,
+    videoPublishPipelineReady,
+    objectStorageVideoBanner,
+    mediaCapabilities,
+    capabilitiesLoaded,
   };
 }
+
+export type PublishDrawerFormModel = ReturnType<typeof usePublishForm>;

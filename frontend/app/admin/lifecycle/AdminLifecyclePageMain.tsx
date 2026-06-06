@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { AdminInboxQueueBackLinks } from "@/components/admin/AdminInboxQueueBackLinks";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { useAdminLifecyclePage } from "./useAdminLifecyclePage";
@@ -31,6 +32,7 @@ export function AdminLifecyclePageMain() {
 
   const {
     loading,
+    refreshing,
     error,
     items,
     meta,
@@ -58,19 +60,9 @@ export function AdminLifecyclePageMain() {
     <AdminListPageChrome
       titleId={pageTitleId}
       title={t("admin_lifecycle_title")}
-      subtitle={t("admin_lifecycle_subtitle")}
+      subtitle={t("admin_lifecycle_subtitle_l5")}
       headerAside={
-        <>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_lifecycle_back")}
-          </Link>
-        </>
+        <AdminInboxQueueBackLinks />
       }
     >
       <AdminLifecycleFiltersBlock
@@ -108,11 +100,13 @@ export function AdminLifecyclePageMain() {
         <AdminLifecycleAppliedFiltersInline id={adminAppliedFiltersDescId} appliedFilters={appliedFilters} />
       ) : null}
 
-      <AdminLifecycleStatusBlock loading={loading} error={error} />
+      <AdminLifecycleStatusBlock loading={loading && items.length === 0} error={error} />
 
       <AdminLifecycleMetaAndNoteSection meta={meta} loading={loading} error={error} />
 
-      {!loading && !error && <AdminLifecycleTableSection items={items} />}
+      {!error && (!loading || items.length > 0) ? (
+        <AdminLifecycleTableSection items={items} refreshing={refreshing} />
+      ) : null}
     </AdminListPageChrome>
   );
 }

@@ -3,8 +3,10 @@
 import { useId } from "react";
 import { COUNTRY_OPTIONS } from "@/lib/geoOptions";
 import GlassSelect from "@/components/market/GlassSelect";
+import CustomItineraryTotalDaysPills from "../CustomItineraryTotalDaysPills";
 import type { TouristFormProps } from "../types";
 import { TOTAL_DAYS_OPTIONS } from "../constants";
+import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
 import TouristDayCard from "./TouristDayCard";
 import TouristGuideAndTransportSection from "./TouristGuideAndTransportSection";
 import TouristQuoteSummaryBlock from "./TouristQuoteSummaryBlock";
@@ -46,10 +48,20 @@ export default function TouristForm({
   const countryFieldId = useId();
   return (
     <>
-      <div>
-        <label htmlFor={totalDaysFieldId} className={labelClass}>
+      <div className="space-y-2">
+        <span id={totalDaysFieldId} className={labelClass}>
           {t("market_totalDays")} *
-        </label>
+        </span>
+        <CustomItineraryTotalDaysPills
+          value={form.totalDays}
+          onChange={setTotalDays}
+          pillSelected={pillSelected}
+          pillIdle={pillUnselected}
+          focusRingClass={TT_MARKETING_MARKET_DARK_PATH.drawerControlFocus}
+          groupAriaLabel={t("market_totalDays")}
+          dayLabel={(n) => t("market_dayUnit").replace("{{n}}", String(n))}
+        />
+        <p className="text-meta text-slate-400">{t("market_totalDays_select_hint")}</p>
         <GlassSelect
           id={totalDaysFieldId}
           value={form.totalDays}

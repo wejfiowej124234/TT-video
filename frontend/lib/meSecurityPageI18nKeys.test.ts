@@ -36,6 +36,8 @@ const ME_SECURITY_PAGE_I18N_KEYS = [
   "me_security_page_btn_current_session",
   "me_security_page_btn_revoke",
   "me_security_page_section_notifications",
+  "me_security_page_link_notification_prefs",
+  "me_security_page_subtitle",
   "me_security_page_aria_notif_status",
   "me_security_page_notif_all_statuses",
   "me_security_page_notif_event_placeholder",

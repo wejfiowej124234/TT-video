@@ -91,3 +91,22 @@ export function slaHint(sla: Sla | undefined, dash: string): string {
   if (sla.seconds_until_due != null) return `${sla.seconds_until_due}s`;
   return sla.due_at ?? dash;
 }
+
+/** DSAR 事件页 · 折叠交叉入口（顶栏仅保留合规回链 + 返回列表）。 */
+export function complianceDsarEventsRelatedFoldLinks(requestId: string) {
+  const id = encodeURIComponent(requestId);
+  return [
+    { href: `/admin/compliance/requests/${id}/update`, labelKey: "admin_compliance_requests_openUpdate" },
+    { href: "/admin/compliance", labelKey: "admin_compliance_hub_title" },
+  ];
+}
+
+/** DSAR 更新页 · 折叠交叉入口。 */
+export function complianceDsarUpdateRelatedFoldLinks(requestId: string) {
+  const id = encodeURIComponent(requestId);
+  return [
+    { href: `/admin/compliance/requests/${id}/events`, labelKey: "admin_compliance_update_backEvents" },
+    { href: "/admin/compliance", labelKey: "admin_compliance_hub_title" },
+  ];
+}
+

@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 
+import { AdminFinanceSuiteBackLinks } from "@/components/admin/AdminFinanceSuiteBackLinks";
 import { useTranslation } from "@/components/LocaleProvider";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
-import { ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass,
+  ADMIN_CONSOLE_MUTED_PANEL_CLASS,} from "@/lib/adminUi";
 type Props = {
   pageTitleId: string;
   disclaimerId: string;
@@ -21,19 +23,16 @@ export function AdminFinanceReconciliationPageHeader({ pageTitleId, disclaimerId
         </h1>
         <div
           id={disclaimerId}
-          className="mt-3 rounded-[var(--radius-lg)] border border-ink-200 bg-ink-50/90 p-4 text-body text-ink-800"
+          className={`mt-3 ${ADMIN_CONSOLE_MUTED_PANEL_CLASS} p-4 text-body text-ink-800`}
           role="note"
         >
           {t("admin_finance_reconciliation_disclaimer")}
         </div>
         <p className="mt-3 text-body text-ink-600">{t("admin_finance_reconciliation_intro")}</p>
       </div>
-      <Link
-        href="/admin"
-        className={`${adminPageNavLinkClass()} shrink-0`}
-      >
-        {t("admin_schema_back")}
-      </Link>
+      <div className="flex shrink-0 flex-wrap items-center gap-2">
+        <AdminFinanceSuiteBackLinks />
+      </div>
     </header>
   );
 }

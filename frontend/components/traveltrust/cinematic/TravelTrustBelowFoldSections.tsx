@@ -2,18 +2,15 @@
 
 import dynamic from "next/dynamic";
 import { motion, useReducedMotion } from "framer-motion";
+import { TravelTrustHomeBelowFoldShell } from "@/lib/traveltrust/home/BelowFoldSectionsShell";
+import {
+  TT_BELOW_FOLD_PLACEHOLDER_L5,
+  TT_PAGE_SECTION_FLOW_L5,
+  TT_SNAP_CHAPTER_GROUP_L5,
+} from "@/lib/traveltrust/l5";
 import type { TheaterViewportAnchor } from "./TravelTrustTheaterViewportContext";
 import { TravelTrustSectionFilmDivider } from "./TravelTrustSectionFilmDivider";
 import { TravelTrustSnapChapter } from "./TravelTrustSnapChapter";
-import {
-  TT_BELOW_FOLD_PLACEHOLDER_L5,
-  TT_BELOW_FOLD_SCROLL_PLATE_L5,
-  TT_BELOW_HERO_FADE_L5,
-  TT_PAGE_SECTION_FLOW_L5,
-  TT_SNAP_CHAPTER_GROUP_L5,
-  TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
-import { TT_Z, ttZClass } from "@/lib/traveltrustZ";
 
 const TravelTrustIdentityTheater = dynamic(
   () =>
@@ -123,35 +120,13 @@ type Props = {
   onTheaterViewportChange?: (anchor: TheaterViewportAnchor | null) => void;
 };
 
-/** 首屏以下区块 code-split（L5 · TT-PH1-020 · ①） */
+/**
+ * Cinematic 层 Below-fold 编排（契约 / closure 扫描锚点）。
+ * 外壳 SSOT：`TravelTrustHomeBelowFoldShell` · 线上 `TravelTrustHomeBelowFoldSection`。
+ */
 export function TravelTrustBelowFoldSections({ onTheaterViewportChange }: Props) {
-  const reduceMotion = useReducedMotion();
   return (
-    <motion.div
-      className={`relative ${ttZClass(TT_Z.HERO_SKY)} isolate`}
-      data-tt-traveltrust-below-fold-sections="1"
-      data-tt-traveltrust-below-fold-sections-l5="1"
-      data-tt-traveltrust-cinematic-non-globe-l5={TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID}
-    >
-      <div
-        className={TT_BELOW_FOLD_SCROLL_PLATE_L5.backdropClass}
-        aria-hidden
-        data-tt-traveltrust-below-fold-scroll-plate-l5="1"
-      />
-      <div
-        className={`${TT_BELOW_HERO_FADE_L5.wrapperClass} ${TT_BELOW_HERO_FADE_L5.heightClass}`}
-        style={{ background: TT_BELOW_HERO_FADE_L5.gradient }}
-        aria-hidden
-        data-tt-traveltrust-below-hero-ink-bridge-l5="1"
-      />
-      <motion.div className="relative z-[1]">
-      <div
-        className="pointer-events-none h-0 w-full overflow-hidden"
-        aria-hidden
-        data-tt-traveltrust-below-hero-fade="1"
-        data-tt-traveltrust-below-hero-fade-l5="1"
-        data-tt-traveltrust-below-hero-fade-disabled="1"
-      />
+    <TravelTrustHomeBelowFoldShell>
       <TravelTrustSnapChapter chapterId="theater" align="center">
         <TravelTrustIdentityTheater onViewportChange={onTheaterViewportChange} />
       </TravelTrustSnapChapter>
@@ -180,7 +155,6 @@ export function TravelTrustBelowFoldSections({ onTheaterViewportChange }: Props)
           <TravelTrustNetworkFooter grouped />
         </div>
       </TravelTrustSnapChapter>
-      </motion.div>
-    </motion.div>
+    </TravelTrustHomeBelowFoldShell>
   );
 }

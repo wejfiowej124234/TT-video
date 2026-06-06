@@ -6,6 +6,7 @@ export default {
     "./app/**/*.{ts,tsx}",
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
+    "./lib/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
   ],
   theme: {
@@ -77,6 +78,7 @@ export default {
         },
         // Neutral
         ink: {
+          950: "#0a0a0a",
           900: "#0B1220",
           800: "#111827",
           700: "#1F2937",
@@ -218,11 +220,28 @@ export default {
           "0%": { transform: "translateX(-120%)" },
           "100%": { transform: "translateX(320%)" },
         },
+        landingAmbientKenBurns: {
+          "0%": { transform: "scale(1.04) translate3d(0%, 0%, 0)" },
+          "50%": { transform: "scale(1.2) translate3d(-3%, -2%, 0)" },
+          "100%": { transform: "scale(1.08) translate3d(-1.2%, -0.8%, 0)" },
+        },
+        landingAmbientDrift: {
+          "0%, 100%": { transform: "scale(1.03) translate3d(0, 0, 0)" },
+          "50%": { transform: "scale(1.06) translate3d(-0.4%, -0.25%, 0)" },
+        },
+        /** L1 inline 公告 · 双份列表 -50% 无缝循环（勿用 framer % 在 portal 下易停住） */
+        traveltrustPulseInlineMarquee: {
+          "0%": { transform: "translate3d(0, 0, 0)" },
+          "100%": { transform: "translate3d(-50%, 0, 0)" },
+        },
       },
       animation: {
         fadeUp: "fadeUp 600ms ease forwards",
         fadeIn: "fadeIn 200ms ease forwards",
         "traveltrust-shimmer": "traveltrustShimmer 2.2s ease-in-out infinite",
+        "landing-ambient-ken-burns": "landingAmbientKenBurns 20s ease-in-out infinite alternate",
+        "landing-ambient-drift": "landingAmbientDrift 24s ease-in-out infinite",
+        "traveltrust-pulse-inline-marquee": "traveltrustPulseInlineMarquee 72s linear infinite",
       },
     },
   },

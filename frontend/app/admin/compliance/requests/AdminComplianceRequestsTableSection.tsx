@@ -12,16 +12,23 @@ import {
   ADMIN_TABLE_ROW_CLASS,
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
-  adminTableInlineLinkClass,
-} from "@/lib/adminUi";
+  adminTableRowPrimaryActionClass,
+  adminTableRowSecondaryActionClass,
+  ADMIN_TABLE_SECTION_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,} from "@/lib/adminUi";
 
 type ComplianceSortKey = "status" | "due_at" | "updated_at";
 
 type AdminComplianceRequestsTableSectionProps = {
   items: DsarRow[];
+  refreshing?: boolean;
 };
 
-export function AdminComplianceRequestsTableSection({ items }: AdminComplianceRequestsTableSectionProps) {
+export function AdminComplianceRequestsTableSection({
+  items,
+  refreshing = false,
+}: AdminComplianceRequestsTableSectionProps) {
   const { t } = useTranslation();
   const { sort, toggle, ariaSort } = useAdminTableSort<ComplianceSortKey>("due_at", "desc");
   const sortedItems = useMemo(
@@ -48,10 +55,11 @@ export function AdminComplianceRequestsTableSection({ items }: AdminComplianceRe
 
   return (
     <section
-      className="mt-6 overflow-x-auto rounded-[var(--radius-xl)] border border-ink-200 bg-white"
+      className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
       aria-label={t("admin_compliance_requests_table_aria")}
+      data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
     >
-      <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+      <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
         <thead className={ADMIN_TABLE_THEAD_CLASS}>
           <tr>
             <th scope="col" className={`${ADMIN_TABLE_TH_CELL_CLASS} font-medium`}>
@@ -81,30 +89,30 @@ export function AdminComplianceRequestsTableSection({ items }: AdminComplianceRe
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-ink-100 text-ink-700">
+        <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
           {sortedItems.map((r, idx) => {
             const id = r.id?.trim();
             const dash = t("admin_em_dash");
             const ref = r.request_ref ?? id ?? "";
             return (
               <tr key={id ?? `dsar-${idx}`} className={ADMIN_TABLE_ROW_CLASS}>
-                <td className="px-3 py-2 font-mono text-meta max-w-[12rem] truncate" title={r.request_ref}>
+                <td className="px-3 py-2 font-mono text-small text-ink-800 max-w-[12rem] truncate" title={r.request_ref}>
                   {r.request_ref ?? dash}
                 </td>
-                <td className="px-3 py-2 font-mono text-meta">{r.request_type ?? dash}</td>
-                <td className="px-3 py-2 font-mono text-meta">{r.status ?? dash}</td>
+                <td className="px-3 py-2 font-mono text-small text-ink-800">{r.request_type ?? dash}</td>
+                <td className="px-3 py-2 font-mono text-small text-ink-800">{r.status ?? dash}</td>
                 <td
-                  className={`px-3 py-2 font-mono text-meta ${r.sla?.overdue ? "text-danger font-semibold" : ""}`}
+                  className={`px-3 py-2 font-mono text-small text-ink-800 ${r.sla?.overdue ? "text-danger font-semibold" : ""}`}
                   title={r.due_at ?? ""}
                 >
                   {slaHint(r.sla, dash)}
                 </td>
-                <td className="px-3 py-2 font-mono text-meta">{r.version ?? dash}</td>
+                <td className="px-3 py-2 font-mono text-small text-ink-800">{r.version ?? dash}</td>
                 <td className="px-3 py-2">
                   {id ? (
                     <Link
                       href={`/admin/compliance/requests/${encodeURIComponent(id)}/events`}
-                      className={adminTableInlineLinkClass()}
+                      className={adminTableRowPrimaryActionClass()}
                       aria-label={t("admin_compliance_requests_events_row_aria", { ref: String(ref) })}
                     >
                       {t("admin_compliance_requests_openEvents")}
@@ -117,7 +125,7 @@ export function AdminComplianceRequestsTableSection({ items }: AdminComplianceRe
                   {id ? (
                     <Link
                       href={`/admin/compliance/requests/${encodeURIComponent(id)}/update`}
-                      className={adminTableInlineLinkClass()}
+                      className={adminTableRowSecondaryActionClass()}
                       aria-label={t("admin_compliance_requests_update_row_aria", { ref: String(ref) })}
                     >
                       {t("admin_compliance_requests_openUpdate")}

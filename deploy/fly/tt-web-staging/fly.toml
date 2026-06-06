@@ -1,0 +1,17 @@
+# tt-web-staging · Fly.io 索引（机读配置在 frontend/fly.staging.toml）
+#
+# Fly 的 build context 相对 fly.toml 目录解析；Windows 下跨目录 context 易失败，
+# 故 **canonical** 配置位于 frontend/（context = '.'）。
+#
+# 部署：
+#   bash scripts/dev/deploy-tt-web-staging.sh
+#
+# 本目录 Dockerfile 与 frontend/Dockerfile.fly-staging 保持同步。
+
+app = 'tt-web-staging'
+primary_region = 'sin'
+
+# 指向 frontend/ 内 canonical 配置（勿直接 fly deploy 本文件）
+[build]
+  dockerfile = '../../../frontend/Dockerfile.fly-staging'
+  context = '../../../frontend'

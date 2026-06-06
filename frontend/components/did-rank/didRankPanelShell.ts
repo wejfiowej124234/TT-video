@@ -1,10 +1,15 @@
-/** 三榜共用壳：旅行者 / 向导 / 商家 同比例、同边框与字阶（书页式主内容区） */
-export const didRankMainPanelClass =
-  "rounded-[var(--radius-lg)] border border-white/20 bg-slate-900/70 backdrop-blur-md overflow-hidden shadow-scifi-panel-md motion-sub ring-1 ring-white/5 hover:border-cyan-400/35 hover:shadow-scifi-hover";
+import {
+  TT_MARKETING_DID_RANK_MAIN_PANEL,
+  TT_MARKETING_DID_RANK_MAIN_PANEL_DESC,
+  TT_MARKETING_DID_RANK_MAIN_PANEL_HEADER,
+  TT_MARKETING_DID_RANK_MAIN_PANEL_TITLE,
+} from "@/lib/marketingUi";
 
-export const didRankMainPanelHeaderClass =
-  "border-b border-white/10 bg-slate-950/50 backdrop-blur-md px-3 py-2.5 sm:px-4 sm:py-3";
+/** 三榜共用壳：旅行者 / 向导 / 商家（SSOT · `marketingUi`） */
+export const didRankMainPanelClass = TT_MARKETING_DID_RANK_MAIN_PANEL;
 
-export const didRankMainPanelTitleClass = "text-body font-semibold text-slate-100";
+export const didRankMainPanelHeaderClass = TT_MARKETING_DID_RANK_MAIN_PANEL_HEADER;
 
-export const didRankMainPanelDescClass = "text-meta text-slate-400 mt-0.5";
+export const didRankMainPanelTitleClass = TT_MARKETING_DID_RANK_MAIN_PANEL_TITLE;
+
+export const didRankMainPanelDescClass = TT_MARKETING_DID_RANK_MAIN_PANEL_DESC;

@@ -16,11 +16,30 @@ export function AdminShellPendingBadge(props: {
   sidebarLayoutActive: boolean;
   inboxKey: string;
   legacyMarker?: AdminShellPendingBadgeLegacyMarker;
+  suppressTopInboxHubOnWorkspace?: boolean;
+  suppressSidebarLeafOnWorkspaceInboxFocus?: boolean;
 }) {
   const { t } = useTranslation();
-  const { count, label, placement, sidebarLayoutActive, inboxKey, legacyMarker } = props;
+  const {
+    count,
+    label,
+    placement,
+    sidebarLayoutActive,
+    inboxKey,
+    legacyMarker,
+    suppressTopInboxHubOnWorkspace,
+    suppressSidebarLeafOnWorkspaceInboxFocus,
+  } = props;
 
-  if (!adminShellPendingBadgeVisible({ placement, sidebarLayoutActive, count })) {
+  if (
+    !adminShellPendingBadgeVisible({
+      placement,
+      sidebarLayoutActive,
+      count,
+      suppressTopInboxHubOnWorkspace,
+      suppressSidebarLeafOnWorkspaceInboxFocus,
+    })
+  ) {
     return null;
   }
 

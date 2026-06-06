@@ -1,0 +1,22 @@
+# POST visual capture · TT-PH1-213 / §6.2（① 本地）
+# 2026-05-22
+
+Command:
+  cd frontend && PLAYWRIGHT_REUSE_FE_SERVER=1 npm run e2e:site-theme-v1-capture
+
+Config: playwright.site-theme-v1.config.ts（仅 FE · 无 setup-meta-chain）
+
+Result: 1 passed (41.2s)
+
+Output (9 routes × desktop-1280x800.png):
+  POST-screenshots/market/desktop-1280x800.png
+  POST-screenshots/did-rank/desktop-1280x800.png
+  POST-screenshots/community/desktop-1280x800.png
+  POST-screenshots/explore/desktop-1280x800.png
+  POST-screenshots/friends/desktop-1280x800.png
+  POST-screenshots/messages/desktop-1280x800.png
+  POST-screenshots/me/desktop-1280x800.png
+  POST-screenshots/feedback/desktop-1280x800.png
+  POST-screenshots/tt/desktop-1280x800.png
+
+Note: Playwright 机采旁证；212 闭卷仍建议维护者硬刷新目视签字（§7）。

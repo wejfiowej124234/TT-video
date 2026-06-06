@@ -1,3 +1,4 @@
+import { ADMIN_CONSOLE_JSON_BLOCK_CLASS, ADMIN_CONSOLE_MUTED_BLOCK_CLASS } from "@/lib/adminUi";
 import {
   formatDigestChainLine,
   formatDigestEconomicLine,
@@ -6,7 +7,7 @@ import {
 
 export function JsonBlock({ value }: { value: unknown }) {
   return (
-    <pre className="mt-1 max-h-[min(28rem,70vh)] overflow-auto rounded-[var(--radius-md)] bg-ink-900/90 p-3 text-left text-meta text-ink-100">
+    <pre className={`mt-1 max-h-[min(28rem,70vh)] overflow-auto ${ADMIN_CONSOLE_JSON_BLOCK_CLASS}`}>
       {JSON.stringify(value, null, 2)}
     </pre>
   );
@@ -61,7 +62,7 @@ export function StoredReportSummaryDigest({
   if (chainLine) rows.push({ label: t("admin_indexer_reconcile_digest_chain"), value: chainLine });
 
   return (
-    <div className="rounded-[var(--radius-md)] border border-ink-200 bg-bg-console/80 p-3">
+    <div className={`p-3 ${ADMIN_CONSOLE_MUTED_BLOCK_CLASS}`}>
       <h3 className="text-small font-semibold uppercase tracking-wide text-ink-500">
         {t("admin_indexer_reconcile_digest_title")}
       </h3>

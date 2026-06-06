@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
+import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
 
 /** 子站瀑布流底部：演示说明 + 次级导航（与筛选带上方 CTA 形成「列表终点」收口）。 */
 export default function MarketSubsiteListFooterStrip({
@@ -16,7 +17,7 @@ export default function MarketSubsiteListFooterStrip({
 
   return (
     <section
-      className="mx-auto max-w-5xl border-t border-white/10 px-4 pb-12 pt-6"
+      className={TT_MARKETING_MARKET_DARK_PATH.subsiteFooterStrip}
       aria-label={t("market_subsite_list_footer_aria")}
     >
       <p className="max-w-3xl text-left text-meta leading-relaxed text-slate-400">{t("market_subsite_list_footer_notice")}</p>
@@ -29,14 +30,14 @@ export default function MarketSubsiteListFooterStrip({
         </Link>
         <Link
           href="/market"
-          className={`${touchTargetLink44Classes} inline-flex min-h-[44px] items-center justify-center rounded-full border border-white/20 bg-white/[0.06] px-5 py-2.5 text-small font-medium text-slate-100 hover:bg-white/10 ${travelFocusRingOffset2Classes}`}
+          className={`${touchTargetLink44Classes} ${TT_MARKETING_MARKET_DARK_PATH.subsiteFooterCta} ${travelFocusRingOffset2Classes}`}
         >
           {t("market_segment_back_travel")}
         </Link>
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-meta">
           <Link
             href="/terms"
-            className={`${touchTargetLink44Classes} text-slate-300 underline decoration-white/30 underline-offset-4 hover:text-cyan-100 ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} ${TT_MARKETING_MARKET_DARK_PATH.footerLink} ${travelFocusRingOffset2Classes}`}
           >
             {t("market_subsite_demo_terms_cta")}
           </Link>

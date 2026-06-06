@@ -6,6 +6,7 @@ import {
   marketCyanPillControlFocusClasses,
   travelFocusRingCoreOffset2Classes,
 } from "@/lib/travelLinkFocus";
+import { escrowExperienceCompactFlowClass } from "@/lib/escrowExperienceUi";
 
 /**
  * 53-S1：OrderFlow 步骤条（13-1 表4、53 §3.2）
@@ -15,18 +16,33 @@ import {
  */
 export type OrderFlowStep = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 
+/** Draft Experience：保存 → 确认终版 → 付款（① 三步，非 53 八步） */
+export type DraftJourneyStep = 1 | 2 | 3;
+
 export interface OrderFlowStepsProps {
   /** 当前步骤 1～8 */
   currentStep: OrderFlowStep;
   /** 可选：订单状态/终态，用于无障碍描述或终态展示 */
   statusLabel?: string;
   /** 53-S4：did = 30-DID 赛博朋克风格（协议控制台区） */
-  variant?: "default" | "did";
+  variant?: "default" | "did" | "experience";
+  /** Draft pre-escrow: compact status strip instead of full 8-step bar */
+  compact?: boolean;
+  /** Experience 草稿：三步可视化进度（与 compact + experience 同用） */
+  draftJourneyStep?: DraftJourneyStep;
+  /** 第 2 步子状态：已发布但尚未选向导时显示「待选向导」而非「确认终版」 */
+  draftStep2Phase?: "pickGuide" | "confirm";
 }
 
 const STEPS: OrderFlowStep[] = [1, 2, 3, 4, 5, 6, 7, 8];
 
 /** 53 §4.6.1 / 37 §2.4：八步与附录 B index 一一对应 */
+const DRAFT_JOURNEY_LABEL_KEYS = [
+  "order_flow_journey_save",
+  "order_flow_journey_confirm",
+  "order_flow_journey_pay",
+] as const;
+
 const STEP_LABEL_KEYS = [
   "order_steps_step_draft",
   "order_steps_step_guide_confirm",
@@ -123,12 +139,143 @@ function useStepListKeyboardNav() {
   return { setItemRef, onStepKeyDown };
 }
 
-export default function OrderFlowSteps({ currentStep, statusLabel, variant = "default" }: OrderFlowStepsProps) {
+function DraftJourneyStepper({
+  activeStep,
+  draftStep2Phase = "confirm",
+  t,
+  statusLabel,
+}: {
+  activeStep: DraftJourneyStep;
+  draftStep2Phase?: "pickGuide" | "confirm";
+  t: (key: string) => string;
+  statusLabel?: string;
+}) {
+  const navId = useId();
+  return (
+    <nav
+      className={escrowExperienceCompactFlowClass}
+      aria-label={t("order_flow_journey_aria")}
+      aria-describedby={statusLabel ? navId : undefined}
+    >
+      {statusLabel ? (
+        <span id={navId} className="sr-only">
+          {statusLabel}
+        </span>
+      ) : null}
+      <ol className="flex items-center gap-1 sm:gap-2 list-none m-0 p-0 min-w-0">
+        {([1, 2, 3] as const).map((step, index) => {
+          const step2PickGuide = step === 2 && draftStep2Phase === "pickGuide";
+          const isCurrent = step === activeStep || step2PickGuide;
+          const isPast = step < activeStep && !step2PickGuide;
+          const label =
+            step2PickGuide
+              ? t("order_flow_journey_pickGuide")
+              : t(DRAFT_JOURNEY_LABEL_KEYS[step - 1]);
+          const circleClass = step2PickGuide
+            ? "bg-ref-sun/20 text-ref-sun ring-2 ring-ref-sun/45"
+            : isCurrent
+              ? "bg-ref-sun/35 text-ink-950 ring-2 ring-ref-sun/70 shadow-[0_0_14px_-2px_rgba(255,200,100,0.55)]"
+              : isPast
+                ? "bg-ref-sun/15 text-ref-sun/95"
+                : "bg-white/10 text-white/50";
+          const textClass = step2PickGuide
+            ? "text-ref-sun/95 font-medium"
+            : isCurrent
+              ? "text-ref-sun font-medium"
+              : isPast
+                ? "text-ref-sun/90"
+                : "text-white/50";
+          return (
+            <li key={step} className="flex flex-1 items-center min-w-0">
+              <div className="flex flex-col items-center flex-1 min-w-[4.5rem] gap-1">
+                <span
+                  className={`inline-flex items-center justify-center min-h-[36px] min-w-[36px] h-9 w-9 rounded-full text-meta font-semibold shrink-0 ${circleClass}`}
+                  aria-current={isCurrent ? "step" : undefined}
+                >
+                  {isPast ? (
+                    <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  ) : (
+                    step
+                  )}
+                </span>
+                <span className={`text-meta text-center leading-tight px-0.5 ${textClass}`}>{label}</span>
+              </div>
+              {index < 2 ? (
+                <div
+                  className={`flex-1 min-w-[6px] max-w-[20px] h-0.5 rounded-full mx-0.5 shrink ${
+                    step < activeStep ? "bg-ref-sun/40" : "bg-white/15"
+                  }`}
+                  aria-hidden
+                />
+              ) : null}
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
+}
+
+export default function OrderFlowSteps({
+  currentStep,
+  statusLabel,
+  variant = "default",
+  compact = false,
+  draftJourneyStep,
+  draftStep2Phase,
+}: OrderFlowStepsProps) {
   const { t } = useTranslation();
   const { setItemRef, onStepKeyDown } = useStepListKeyboardNav();
   const statusRegionId = useId();
-  const isDid = variant === "did";
-  const navClass = isDid
+  const isExperience = variant === "experience";
+  const isDid = variant === "did" || isExperience;
+
+  if (compact) {
+    const stepKey = STEP_LABEL_KEYS[currentStep - 1];
+    if (isExperience && draftJourneyStep) {
+      return (
+        <DraftJourneyStepper
+          activeStep={draftJourneyStep}
+          draftStep2Phase={draftStep2Phase}
+          t={t}
+          statusLabel={statusLabel}
+        />
+      );
+    }
+    if (isExperience) {
+      return (
+        <div
+          className={escrowExperienceCompactFlowClass}
+          role="status"
+          aria-label={`${statusLabel ?? t(stepKey)}. ${t("order_flow_draft_compact_next")}`}
+        >
+          <p className="text-meta text-white/85 leading-relaxed">{t("order_flow_draft_compact_next")}</p>
+        </div>
+      );
+    }
+    return (
+      <div
+        className={escrowExperienceCompactFlowClass}
+        role="status"
+        aria-label={statusLabel ?? t(stepKey)}
+      >
+        <p className="text-small font-semibold text-ref-sun/95">
+          {statusLabel ?? t(stepKey)}
+        </p>
+        <p className="text-meta text-white/75">{t("order_flow_draft_compact_next")}</p>
+      </div>
+    );
+  }
+
+  const navClass = isExperience
+    ? "flex items-center gap-2 py-3 px-2 rounded-[var(--radius-md)] border border-ref-sun/22 bg-ref-sun/8 overflow-x-auto min-w-0"
+    : isDid
     ? "flex items-center gap-2 py-3 px-2 rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md overflow-x-auto min-w-0 shadow-scifi-panel-md"
     : "flex items-center gap-2 py-3 px-2 rounded-[var(--radius-sm)] border border-ink-200 bg-bg-console/60 overflow-x-auto min-w-0";
   return (
@@ -152,7 +299,13 @@ export default function OrderFlowSteps({ currentStep, statusLabel, variant = "de
           const stepAriaLabel = isPast
             ? `${step}. ${stepName}, ${t("order_flow_step_completed_suffix")}`
             : `${step}. ${stepName}`;
-          const stepCircleClass = isDid
+          const stepCircleClass = isExperience
+            ? isCurrent
+              ? "bg-ref-sun/25 text-ref-sun ring-2 ring-ref-sun/45"
+              : isPast
+                ? "bg-ref-sun/12 text-ref-sun/90"
+                : "bg-white/10 text-white/60"
+            : isDid
             ? isCurrent
               ? "bg-cyan-500/20 text-cyan-300 ring-2 ring-cyan-400/50 shadow-scifi-step"
               : isPast
@@ -191,14 +344,44 @@ export default function OrderFlowSteps({ currentStep, statusLabel, variant = "de
                   )}
                 </span>
                 <span
-                  className={`mt-1 text-meta truncate max-w-full ${isDid ? (isCurrent ? "text-cyan-300 font-medium" : isPast ? "text-cyan-300" : "text-slate-300") : isCurrent ? "text-ink-900 font-medium" : isPast ? "text-ink-600" : "text-ink-500"}`}
+                  className={`mt-1 text-meta truncate max-w-full ${
+                    isExperience
+                      ? isCurrent
+                        ? "text-ref-sun font-medium"
+                        : isPast
+                          ? "text-ref-sun/90"
+                          : "text-white/55"
+                      : isDid
+                        ? isCurrent
+                          ? "text-cyan-300 font-medium"
+                          : isPast
+                            ? "text-cyan-300"
+                            : "text-slate-300"
+                        : isCurrent
+                          ? "text-ink-900 font-medium"
+                          : isPast
+                            ? "text-ink-600"
+                            : "text-ink-500"
+                  }`}
                 >
                   {t(key)}
                 </span>
               </div>
               {index < STEPS.length - 1 && (
                 <div
-                  className={`flex-1 min-w-[8px] max-w-[24px] h-0.5 rounded-[var(--radius-sm)] mx-0.5 ${step < currentStep ? (isDid ? "bg-cyan-400/40" : "bg-success/40") : isDid ? "bg-slate-600/50" : "bg-ink-200"}`}
+                  className={`flex-1 min-w-[8px] max-w-[24px] h-0.5 rounded-[var(--radius-sm)] mx-0.5 ${
+                    step < currentStep
+                      ? isExperience
+                        ? "bg-ref-sun/40"
+                        : isDid
+                          ? "bg-cyan-400/40"
+                          : "bg-success/40"
+                      : isExperience
+                        ? "bg-white/15"
+                        : isDid
+                          ? "bg-slate-600/50"
+                          : "bg-ink-200"
+                  }`}
                   aria-hidden
                 />
               )}

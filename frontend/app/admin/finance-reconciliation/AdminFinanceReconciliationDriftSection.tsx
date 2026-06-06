@@ -11,12 +11,19 @@ import { formatApiPathDisplayValue } from "@/lib/financeReconciliationPathValue"
 import type { NormalizedAdminCrossCheck, NormalizedAdminDriftSummary } from "@/lib/apiClient";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { financeReconciliationAlignmentBadgeClass } from "./adminFinanceReconciliationPageModel";
-import { adminPageNavLinkClass } from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
+import { adminPageNavLinkClass,
+  ADMIN_CONSOLE_MUTED_BLOCK_CLASS,
+  ADMIN_CONSOLE_MUTED_PANEL_CLASS,
+  ADMIN_CONSOLE_MUTED_PANEL_PAD_CLASS,
+  ADMIN_FIN_RECON_ALIGNMENT_BADGE_BASE_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,} from "@/lib/adminUi";
 type Props = {
   driftSectionId: string;
   driftSemanticNoteId: string;
   na: string;
   driftStripLoading: boolean;
+  driftStripRefreshing: boolean;
   crossErr: AdminFetchErrorKind | null;
   driftSummaryErr: AdminFetchErrorKind | null;
   crossNorm: NormalizedAdminCrossCheck | null;
@@ -31,6 +38,7 @@ export function AdminFinanceReconciliationDriftSection({
   driftSemanticNoteId,
   na,
   driftStripLoading,
+  driftStripRefreshing,
   crossErr,
   driftSummaryErr,
   crossNorm,
@@ -40,6 +48,7 @@ export function AdminFinanceReconciliationDriftSection({
   crossDriftDeltaLine,
 }: Props) {
   const { t } = useTranslation();
+  const hasDriftStripData = crossNorm != null || driftNorm != null;
 
   function chainAlignmentLabel(s: ChainAlignmentHubStatus): string {
     if (s === "aligned") return t("admin_finance_reconciliation_chain_alignment_aligned");
@@ -48,9 +57,11 @@ export function AdminFinanceReconciliationDriftSection({
   }
 
   return (
-    <section
-      className="mt-8 rounded-[var(--radius-xl)] border border-ink-200 bg-white p-5 shadow-soft"
+    <AdminWarmL5Surface
+      as="section"
+      className="mt-8"
       aria-labelledby={driftSectionId}
+      data-tt-admin-fin-reconciliation-drift="1"
     >
       <h2 id={driftSectionId} className="text-body font-semibold text-ink-900">
         {t("admin_finance_reconciliation_drift_section_title")}
@@ -58,19 +69,19 @@ export function AdminFinanceReconciliationDriftSection({
       <p className="mt-1 text-meta text-ink-600">{t("admin_finance_reconciliation_drift_section_hint")}</p>
       <div
         id={driftSemanticNoteId}
-        className="mt-3 rounded-[var(--radius-lg)] border border-ink-200 bg-ink-50/90 p-4 text-body text-ink-800"
+        className={`mt-3 ${ADMIN_CONSOLE_MUTED_PANEL_CLASS} p-4 text-body text-ink-800`}
         role="note"
       >
         <p className="font-medium text-ink-900">{t("admin_finance_reconciliation_drift_semantic_note_title")}</p>
         <p className="mt-1 text-meta text-ink-700">{t("admin_finance_reconciliation_drift_semantic_note_body")}</p>
         <dl className="mt-3 grid gap-2 sm:grid-cols-2">
-          <div className="rounded-[var(--radius-md)] border border-ink-200 bg-ink-50 px-3 py-2">
+          <div className={`px-3 py-2 ${ADMIN_CONSOLE_MUTED_BLOCK_CLASS}`}>
             <dt className="font-mono text-meta text-ink-500">data_source</dt>
             <dd className="mt-1 text-small font-medium text-ink-800">
               {t("admin_finance_reconciliation_drift_data_source_projection")}
             </dd>
           </div>
-          <div className={`rounded-[var(--radius-md)] border px-3 py-2 ${financeReconciliationAlignmentBadgeClass(hubAlignment)}`}>
+          <div className={`${ADMIN_FIN_RECON_ALIGNMENT_BADGE_BASE_CLASS} ${financeReconciliationAlignmentBadgeClass(hubAlignment)}`}>
             <dt className="font-mono text-meta opacity-90">chain_alignment_status</dt>
             <dd className="mt-1 text-small font-semibold">{chainAlignmentLabel(hubAlignment)}</dd>
             <p className="mt-1 text-meta opacity-90">{t("admin_finance_reconciliation_chain_alignment_derived_hint")}</p>
@@ -78,11 +89,14 @@ export function AdminFinanceReconciliationDriftSection({
         </dl>
       </div>
 
-      {driftStripLoading ? (
+      {driftStripLoading && !hasDriftStripData ? (
         <AdminListLoadingStatus message={t("admin_finance_reconciliation_drift_loading")} className="mt-4 text-body text-ink-600" />
       ) : (
-        <div className="mt-4 grid gap-4 md:grid-cols-2">
-          <div className="rounded-[var(--radius-lg)] border border-ink-100 p-4">
+        <div
+          className={`mt-4 grid gap-4 md:grid-cols-2${driftStripRefreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
+          data-tt-admin-list-refreshing={driftStripRefreshing ? "1" : undefined}
+        >
+          <div className={ADMIN_CONSOLE_MUTED_PANEL_PAD_CLASS}>
             <h3 className="text-small font-semibold text-ink-800">
               {t("admin_finance_reconciliation_drift_from_summary_heading")}
             </h3>
@@ -109,7 +123,7 @@ export function AdminFinanceReconciliationDriftSection({
               </>
             )}
           </div>
-          <div className="rounded-[var(--radius-lg)] border border-ink-100 p-4">
+          <div className={ADMIN_CONSOLE_MUTED_PANEL_PAD_CLASS}>
             <h3 className="text-small font-semibold text-ink-800">
               {t("admin_finance_reconciliation_drift_from_cross_check_heading")}
             </h3>
@@ -140,6 +154,6 @@ export function AdminFinanceReconciliationDriftSection({
           </div>
         </div>
       )}
-    </section>
+    </AdminWarmL5Surface>
   );
 }

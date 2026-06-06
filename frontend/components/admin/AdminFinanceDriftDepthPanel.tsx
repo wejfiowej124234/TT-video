@@ -7,7 +7,7 @@ import { useTranslation } from "@/components/LocaleProvider";
 import { AdminFinanceDepthActionLinks } from "@/components/admin/AdminFinanceDepthActionLinks";
 
 import { adminFinancePartialDepthHref } from "@/lib/admin/adminFinancePartialDepthHref";
-import { ADMIN_FIN_DEPTH_PANEL_CLASS } from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 
 
 
@@ -75,9 +75,10 @@ export function AdminFinanceDriftDepthPanel({ driftDetected, status, loading, er
 
   return (
 
-    <section
-
-      className={ADMIN_FIN_DEPTH_PANEL_CLASS}
+    <AdminWarmL5Surface
+      as="section"
+      className="mb-4"
+      data-tt-admin-fin-depth-panel="1"
 
       aria-label={t("admin_fin_drift_depth_aria")}
 
@@ -131,7 +132,7 @@ export function AdminFinanceDriftDepthPanel({ driftDetected, status, loading, er
 
       <AdminFinanceDepthActionLinks links={driftDepthLinks()} />
 
-    </section>
+    </AdminWarmL5Surface>
 
   );
 

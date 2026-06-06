@@ -12,6 +12,7 @@ import { AdminOnboardingPaymentEventsStripeEchoStrip } from "@/components/admin/
 import { AdminOnboardingWebhookStripeEchoStrip } from "@/components/admin/AdminOnboardingWebhookStripeEchoStrip";
 import { AdminPageAccessBadge } from "@/components/admin/AdminPageAccessBadge";
 import { AdminPermissionDeniedBanner } from "@/components/admin/AdminPermissionDeniedBanner";
+import { AdminOnboardingHubBackLinks } from "@/components/admin/AdminOnboardingHubBackLinks";
 import { AdminSubpageBreadcrumb } from "@/components/admin/AdminSubpageBreadcrumb";
 import { extractWebhookStripeEcho } from "@/lib/admin/adminOnboardingWebhookStripeEcho";
 import { ADMIN_EMPTY_NEXT_ONBOARDING_LIST_EMPTY } from "@/lib/admin/adminListEmptyStateNextLinks";
@@ -19,20 +20,19 @@ import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import type { AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
 import { fetchAdminQueueList } from "@/lib/admin/fetchAdminQueueList";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import {
   ADMIN_ATTENTION_CALLOUT_CLASS,
   ADMIN_FILTER_CARD_CLASS,
   ADMIN_INLINE_LINK_CLASS,
   ADMIN_LIST_PAGE_BODY_CANVAS_CLASS,
-  ADMIN_PAGE_HEADER_CARD_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
   ADMIN_TABLE_ROW_CLASS,
   ADMIN_TABLE_SECTION_CLASS,
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
   TT_ADMIN_PAGE_INNER_DETAIL,
-  adminPageNavLinkClass,
-} from "@/lib/adminUi";
+  ADMIN_INNER_DIVIDER_CLASS,} from "@/lib/adminUi";
 
 function stripeEchoCell(row: Record<string, unknown>): string {
   const echo = extractWebhookStripeEcho(row);
@@ -105,8 +105,10 @@ export function AdminOnboardingListPage(props: {
       data-tt-admin-onboarding-webhook-jobs={webhookStripeEcho ? "1" : undefined}
     >
       <AdminSubpageBreadcrumb />
-      <header
-        className={`${ADMIN_PAGE_HEADER_CARD_CLASS} flex flex-wrap items-start justify-between gap-3`}
+      <AdminWarmL5Surface
+        as="header"
+        innerClassName="flex flex-wrap items-start justify-between gap-3"
+        data-tt-admin-onboarding-list-header="1"
       >
         <div>
           <h1 id={titleId} className="text-h3 font-semibold text-ink-900">
@@ -117,10 +119,10 @@ export function AdminOnboardingListPage(props: {
             <AdminPageAccessBadge writePermissionId={ADMIN_PERM.ONBOARDING_WRITE} />
           </p>
         </div>
-        <Link href="/admin/onboarding" className={adminPageNavLinkClass()}>
-          {t("admin_onboarding_hub_title")}
-        </Link>
-      </header>
+        <div className="flex flex-wrap items-center justify-end gap-2">
+          <AdminOnboardingHubBackLinks />
+        </div>
+      </AdminWarmL5Surface>
 
       <AdminPermissionDeniedBanner
         permission={ADMIN_PERM.ONBOARDING_READ}
@@ -158,7 +160,7 @@ export function AdminOnboardingListPage(props: {
           />
         ) : null}
 
-        {!loading && !error && items.length > 0 ? (
+        {!loading && items.length > 0 ? (
           <div className={ADMIN_TABLE_SECTION_CLASS}>
             <table className="min-w-full text-left text-small" aria-label={t(titleKey)}>
               <thead className={ADMIN_TABLE_THEAD_CLASS}>
@@ -177,7 +179,7 @@ export function AdminOnboardingListPage(props: {
               </thead>
               <tbody className={ADMIN_TABLE_ROW_CLASS}>
                 {items.map((row, i) => (
-                  <tr key={String(row.id ?? row.job_id ?? i)} className="border-t border-ink-100">
+                  <tr key={String(row.id ?? row.job_id ?? i)} className={ADMIN_INNER_DIVIDER_CLASS}>
                     {columns.map((c) => {
                       const raw = cell(row, c.key);
                       const href = c.key === "id" && detailHref ? detailHref(row) : null;

@@ -2,6 +2,17 @@ import { userFromGetMePayload } from "@/lib/meTrust";
 
 export type MeIdentitySlotId = "traveler" | "guide" | "acquisition" | "merchant" | "region_steward";
 
+/** 顶栏脊签披露四槽（不含 region_steward · 96-17 §0.3.5）。 */
+export const ME_IDENTITY_SPINE_SLOT_IDS = ["traveler", "guide", "merchant", "acquisition"] as const;
+
+export type MeIdentitySpineSlotId = (typeof ME_IDENTITY_SPINE_SLOT_IDS)[number];
+
+const SLOT_ORDER: MeIdentitySlotId[] = ["traveler", "guide", "acquisition", "merchant", "region_steward"];
+
+function isSpineSlotId(id: MeIdentitySlotId): id is MeIdentitySpineSlotId {
+  return (ME_IDENTITY_SPINE_SLOT_IDS as readonly string[]).includes(id);
+}
+
 export type MeIdentitySlotState = "active" | "inactive" | "pending" | "restricted";
 
 export type MeIdentitySlot = {
@@ -51,45 +62,74 @@ function identitySlotsFromUserOnly(data: unknown): MeIdentitySlot[] {
   ];
 }
 
+function parseIdentitySlotRow(row: unknown): MeIdentitySlot | null {
+  if (row == null || typeof row !== "object") return null;
+  const o = row as Record<string, unknown>;
+  const id = o.id;
+  const state = o.state;
+  if (
+    id !== "traveler" &&
+    id !== "guide" &&
+    id !== "acquisition" &&
+    id !== "merchant" &&
+    id !== "region_steward"
+  ) {
+    return null;
+  }
+  if (state !== "active" && state !== "inactive" && state !== "pending" && state !== "restricted") {
+    return null;
+  }
+  const sd = o.stake_display;
+  const stake_display =
+    sd === null || sd === undefined
+      ? null
+      : typeof sd === "string" && sd.trim() !== ""
+        ? sd.trim()
+        : null;
+  const slot: MeIdentitySlot = { id, state, stake_display };
+  return id === "traveler" ? { ...slot, stake_display: null } : slot;
+}
+
 export function parseIdentitySlotsFromMe(data: unknown): MeIdentitySlot[] {
   const raw = (data as { identity_slots?: unknown } | null | undefined)?.identity_slots;
   if (!Array.isArray(raw) || raw.length === 0) return identitySlotsFromUserOnly(data);
-  const out: MeIdentitySlot[] = [];
+
+  const byId = new Map<MeIdentitySlotId, MeIdentitySlot>();
+  for (const slot of identitySlotsFromUserOnly(data)) byId.set(slot.id, slot);
   for (const row of raw) {
-    if (row == null || typeof row !== "object") continue;
-    const o = row as Record<string, unknown>;
-    const id = o.id;
-    const state = o.state;
-    if (
-      id !== "traveler" &&
-      id !== "guide" &&
-      id !== "acquisition" &&
-      id !== "merchant" &&
-      id !== "region_steward"
-    ) {
-      continue;
-    }
-    if (state !== "active" && state !== "inactive" && state !== "pending" && state !== "restricted") {
-      continue;
-    }
-    const sd = o.stake_display;
-    const stake_display =
-      sd === null || sd === undefined
-        ? null
-        : typeof sd === "string" && sd.trim() !== ""
-          ? sd.trim()
-          : null;
-    out.push({ id, state, stake_display });
+    const parsed = parseIdentitySlotRow(row);
+    if (parsed) byId.set(parsed.id, parsed);
   }
-  if (out.length === 5) {
-    /** 旅行者身份不展示质押（产品规则；与后端 traveler 槽位一致） */
-    return out.map((s) =>
-      s.id === "traveler" ? { ...s, stake_display: null } : s
-    ) as MeIdentitySlot[];
-  }
-  return identitySlotsFromUserOnly(data);
+  return SLOT_ORDER.map((id) => byId.get(id)!);
 }
 
 export function meIdentityActiveCount(slots: MeIdentitySlot[]): number {
   return slots.filter((s) => s.state === "active").length;
+}
+
+export function meIdentitySpineActiveCount(slots: MeIdentitySlot[]): number {
+  return slots.filter((s) => isSpineSlotId(s.id) && s.state === "active").length;
+}
+
+export function meIdentitySpineActiveCountFromMePayload(data: unknown): number {
+  const raw = (data as { identity_slots_spine_active_count?: unknown } | null | undefined)
+    ?.identity_slots_spine_active_count;
+  if (typeof raw === "number" && Number.isInteger(raw) && raw >= 0 && raw <= 4) return raw;
+  if (typeof raw === "string" && raw.trim() !== "") {
+    const n = Number(raw);
+    if (Number.isInteger(n) && n >= 0 && n <= 4) return n;
+  }
+  return meIdentitySpineActiveCount(parseIdentitySlotsFromMe(data));
+}
+
+/** 顶栏用户菜单按钮：已开通脊签名称，按固定槽序拼接。 */
+export function joinActiveSpineSlotLabels(
+  data: unknown,
+  label: (id: MeIdentitySpineSlotId) => string,
+  sep: string
+): string {
+  const slots = parseIdentitySlotsFromMe(data);
+  return ME_IDENTITY_SPINE_SLOT_IDS.filter((id) => slots.find((s) => s.id === id)?.state === "active")
+    .map(label)
+    .join(sep);
 }

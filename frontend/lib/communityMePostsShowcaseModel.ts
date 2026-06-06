@@ -1,4 +1,5 @@
 import type { CommunityPost } from "@/lib/communityPostTypes";
+import { communityPostGridThumbRaw } from "@/components/community/communityFeedMappersRoleAndMedia";
 
 /**
  * 个人中心「社区帖子」弹层：展示型角标归类；**后端 `commerce_showcase_kind` 为权威**，缺省时才用正文/标签启发式（见 `isCommunityMePostsShowcaseKindFromApi`）。
@@ -71,12 +72,9 @@ export function formatPostsShowcaseCardTitle(post: CommunityPost, untitled: stri
 }
 
 export function pickPostsShowcaseCoverUrl(post: CommunityPost): string | null {
-  const fromList = post.media_urls?.map((u) => u?.trim()).find(Boolean);
-  if (fromList) return fromList;
-  const single = (post.media_url ?? "").trim();
-  if (single) return single;
-  const cover = (post.cover_url ?? "").trim();
-  return cover || null;
+  const thumb = communityPostGridThumbRaw(post).trim();
+  if (thumb) return thumb;
+  return null;
 }
 
 export function formatPostIdShort(id: string): string {

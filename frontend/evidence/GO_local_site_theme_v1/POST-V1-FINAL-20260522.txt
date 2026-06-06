@@ -1,0 +1,35 @@
+# 全站主题 V1 · 未完成项收口（① 本地）
+# 2026-05-22
+
+## 本批补齐
+- PRE-screenshots/README.md（改前 PNG 未采 · 口径说明）
+- TT-PH1-216 `/guides*` 桥接：TT_MARKETING_GUIDES_ATMOSPHERE + 主路径暖金
+- 内联 Link 仍 marketCyan*（88 §3.5）
+- 台账 §4.1 / §1.5.7 勾选同步；208 页面 L5 列改为 closed ①
+- §6.1 收口子集 **35/35**（含 guides + traveltrust error contracts）
+
+## §6.1 Vitest（exit 0）
+cd frontend && npm run test -- --run \
+  lib/uiSystem.test.ts lib/marketingUi.test.ts \
+  components/market/marketTheme.contract.test.ts \
+  components/did-rank/didRankTheme.contract.test.ts \
+  components/community/communityShellTheme.contract.test.ts \
+  components/community/communityPageTheme.contract.test.ts \
+  components/guides/guidesTheme.contract.test.ts \
+  app/traveltrust/traveltrustErrorTheme.contract.test.ts
+
+Result: 9 files, 39 passed (39)
+
+## 波次 B 机采（含 guides）
+PLAYWRIGHT_REUSE_FE_SERVER=1 npm run e2e:site-theme-v1-wave-b-capture
+→ WAVE-B-screenshots/{home,traveltrust,guides}/desktop-1280x800.png
+
+## 续批 217（auth/help 桥接审计）
+- authHelpBridgeTheme.contract 4/4
+- WAVE-B auth-login + help PNG
+- 程序收口：THEME-V1-PROGRAM-CLOSED-20260522.md
+
+## 仍 defer（非本轨阻塞）
+- D2 Feed 霓虹、D3 market 抽屉 cyan focus
+- marketingUi-import-hygiene 全仓存量红
+- ② 测试网 / ③ 生产

@@ -26,6 +26,8 @@ describe("admin batch11 UX L5 (①)", () => {
     expect(panel).toContain("useFocusTrap");
     expect(panel).toContain("data-tt-admin-dialog-focus-trap");
     expect(scrim).toContain("data-tt-admin-dialog-scrim");
+    expect(scrim).toContain("ADMIN_MODAL_SCRIM_CLASS");
+    expect(scrim).not.toContain("bg-black/40");
   });
 
   it("all app/admin Modal and Wizard files use focus panel", () => {

@@ -1,0 +1,28 @@
+=== PRE SCOPE inventory 2026-05-22 ===
+frontend/app/did-rank\page.tsx:1
+frontend/app/did-rank\loading.tsx:1
+frontend/components/did-rank\DidRankRouteAmbientDecor.tsx:1
+frontend/components/did-rank\DidRankHeader.tsx:1
+frontend/components/did-rank\DidRankPrizePoolSection.tsx:1
+frontend/components/market\MarketAmbientBackdrop.tsx:1
+frontend/components/market\MarketHubSubNav.tsx:1
+frontend/components/market\MarketPageHero.tsx:1
+frontend/components/market\MarketHeroFrame.tsx:2
+frontend/components/market\MerchantShowcaseStudioModal.tsx:1
+frontend/components/market\MerchantShowcaseStudioModalFooter.tsx:1
+frontend/components/market\ViewSwitcher.tsx:1
+--- did-rank ref-cyan/teal ---
+frontend/components/did-rank\DidRankPrizePoolSection.tsx:1
+frontend/components/did-rank\web3SciFiBackgroundConfig.ts:1
+frontend/components/did-rank\DidRankHeaderSkeleton.tsx:1
+frontend/components/did-rank\DidRankFetchErrorBanner.tsx:2
+frontend/components/did-rank\DidRankHeader.tsx:2
+frontend/components/did-rank\ItineraryRankBlockTopCard.tsx:1
+frontend/components/did-rank\DidRankRouteAmbientDecor.tsx:1
+frontend/components/did-rank\TravelerRankBlock.tsx:2
+frontend/components/did-rank\TravelerRankBlockRow.tsx:1
+frontend/components/did-rank\ItineraryRankSkeleton.tsx:2
+frontend/components/did-rank\ItineraryRankBlock.tsx:6
+frontend/components/did-rank\itineraryRankBlockTop3Styles.ts:5
+--- community fuchsia ---
+59

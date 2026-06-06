@@ -10,7 +10,7 @@ import { useTravelTrustPageBriefContext } from "@/app/traveltrust/TravelTrustPag
 import {
   TT_HERO_GUIDANCE_L5,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 
 /**
  * Hero 内可行动提示：brief 降级 / 钱包不可用 / 连接失败 / 错链（TT-PH1-181 · ①）

@@ -10,6 +10,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "page.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminOrdersPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminOrdersPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminOrdersPageModel.ts"), "utf8"),
     readFileSync(join(__dir, "..", "..", "..", "lib/admin/adminOrdersLabels.ts"), "utf8"),
     readFileSync(join(__dir, "..", "..", "..", "components/admin/AdminListPageChrome.tsx"), "utf8"),
@@ -21,6 +22,7 @@ describe("admin orders page", () => {
 
   it("keeps admin orders route + escrow prefetch + DOM anchor", () => {
     expect(src).toContain("routes.admin.orders");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("stashEscrowOrderPrefetchFromAdminOrderListRow");
     expect(src).toContain('data-tt-admin-list-page="1"');
@@ -31,5 +33,10 @@ describe("admin orders page", () => {
     expect(src).toContain("ORDERS_READ");
     expect(src).toContain("ADMIN_EMPTY_NEXT_ORDERS_FILTERED_EMPTY");
     expect(src).toContain("AdminAppliedFiltersBanner");
+    expect(src).toContain("ORDERS_LIST_RELATED_FOLD_LINKS");
+    expect(src).not.toContain("headerAside={<AdminOpsQueueBackLinks />}");
+    expect(src).toContain("formatAdminMoney");
+    expect(src).toContain("created");
+    expect(src).toContain("admin_orders_readonly_escrow_footnote");
   });
 });

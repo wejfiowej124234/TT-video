@@ -3,6 +3,7 @@
 import { useId } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import { ADMIN_HOME_CARDS, ADMIN_HOME_DEV_API_BY_HREF } from "@/lib/admin/adminHomeModel";
+import { ADMIN_HOME_DEV_API_FOLD_CLASS } from "@/lib/adminUi";
 
 /** ① 开发对照：REST 路径折叠区，不替代卡片业务描述。 */
 export function AdminHomeDevApiReference() {
@@ -10,7 +11,7 @@ export function AdminHomeDevApiReference() {
   const summaryId = useId();
 
   return (
-    <details className="mt-10 rounded-[var(--radius-xl)] border border-ink-200 bg-ink-50/80 p-4" data-tt-admin-home-dev-api="1">
+    <details className={ADMIN_HOME_DEV_API_FOLD_CLASS} data-tt-admin-home-dev-api="1">
       <summary
         id={summaryId}
         className="cursor-pointer text-small font-medium text-ink-700 hover:text-ink-900"

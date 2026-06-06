@@ -2,58 +2,139 @@
 
 import { useEffect, useId, useState } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { postVerifyEmail } from "@/lib/apiClient";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { useTranslation } from "@/components/LocaleProvider";
-import AuthShellCrossNav from "@/components/auth/AuthShellCrossNav";
+import AuthL5Card from "@/components/auth/AuthL5Card";
+import AuthL5FlowPage from "@/components/auth/AuthL5FlowPage";
 import { AuthFullBleedSearchParamsSuspense } from "@/components/auth/AuthSearchParamsSuspense";
-import {
-  touchTargetLink44Classes,
-  travelFocusRingCoreOffset2Classes,
-  travelFocusRingOffset2Classes,
-} from "@/lib/travelLinkFocus";
+import MeSettingsL5FlowPage from "@/components/me/MeSettingsL5FlowPage";
+import { authL5FieldClass, TT_AUTH_L5_FORM } from "@/lib/auth/authL5Form";
+import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
+import { MeSettingsHubBackLink } from "@/components/me/MeSettingsHubBackLink";
+import { MeSettingsResendVerifyEmailPanel } from "@/components/me/MeSettingsResendVerifyEmailPanel";
+import { ME_SETTINGS_HUB_PATH } from "@/lib/me/meSettingsL5";
 import { AUTH_LOGIN_RETURN_HOME } from "@/lib/headerLoginHref";
 
-const authShellFooterLinkClass = `${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`;
-
-const cardClass =
-  "w-full max-w-sm rounded-[var(--radius-sm)] border border-ink-200 bg-bg-console shadow-soft p-6 space-y-4";
-
-/** 成功态单独渲染：无 token 输入、无 `role="alert"` 表单错误区 */
-function VerifyEmailSuccessView({ t }: { t: (key: string) => string }) {
+function VerifyEmailFooterLinks({
+  t,
+  fromSettings,
+}: {
+  t: (key: string) => string;
+  fromSettings: boolean;
+}) {
+  const footerLinkClass = `${touchTargetLink44Classes} ${TT_AUTH_L5_FORM.footerLinks}`;
   return (
-    <main
-      className="min-h-screen bg-bg-main flex flex-col items-center justify-center gap-4 p-6 py-10"
-      aria-label={t("auth_verify_title")}
-      data-tt-auth-root="1"
-      data-tt-auth-route="verify-email"
-      data-tt-auth-surface="verify_done"
-    >
-      <div className={cardClass}>
-        <h1 className="text-h4 font-semibold text-ink-900">{t("auth_verify_title")}</h1>
-        <p className="text-small text-ink-600" role="status" aria-live="polite">
-          {t("auth_verify_doneMessage")}
-        </p>
-        <p className="text-meta text-ink-500">
-          <Link href={AUTH_LOGIN_RETURN_HOME} className={authShellFooterLinkClass}>
-            {t("auth_verify_goLogin")}
-          </Link>{" "}
-          ·{" "}
-          <Link href="/" className={authShellFooterLinkClass}>
-            {t("auth_forgot_home")}
+    <p className={TT_AUTH_L5_FORM.footerMeta}>
+      {fromSettings ? (
+        <>
+          <Link href={ME_SETTINGS_HUB_PATH} className={footerLinkClass}>
+            {t("me_settings_verify_back_settings")}
           </Link>
-        </p>
-      </div>
-      <AuthShellCrossNav />
-    </main>
+          <span className="text-ref-sun/30" aria-hidden>
+            ·
+          </span>
+        </>
+      ) : null}
+      <Link href={AUTH_LOGIN_RETURN_HOME} className={footerLinkClass}>
+        {t("auth_verify_backLogin")}
+      </Link>
+      <span className="text-ref-sun/30" aria-hidden>
+        ·
+      </span>
+      <Link href="/" className={footerLinkClass}>
+        {t("auth_forgot_home")}
+      </Link>
+    </p>
   );
 }
 
-/** 邮箱验证（POST /auth/verify-email）；04 §三 3.1。`token`/`code` 可从邮件链接 query 或手动粘贴。 */
+function VerifyEmailPageShell({
+  fromSettings,
+  ariaLabel,
+  t,
+  children,
+}: {
+  fromSettings: boolean;
+  ariaLabel: string;
+  t: (key: string) => string;
+  children: React.ReactNode;
+}) {
+  if (fromSettings) {
+    return (
+      <MeSettingsL5FlowPage
+        route="settings-verify-email"
+        ariaLabel={ariaLabel}
+        dataAttrs={{
+          "data-tt-me-settings-route": "verify-email",
+          "data-tt-auth-verify-from-settings": "1",
+        }}
+        showMinimalFooter={false}
+      >
+        <MeSettingsHubBackLink t={t} />
+        {children}
+      </MeSettingsL5FlowPage>
+    );
+  }
+  return (
+    <AuthL5FlowPage route="verify-email" ariaLabel={ariaLabel}>
+      {children}
+    </AuthL5FlowPage>
+  );
+}
+
+function VerifyEmailSuccessView({
+  t,
+  fromSettings,
+}: {
+  t: (key: string) => string;
+  fromSettings: boolean;
+}) {
+  const router = useRouter();
+  return (
+    <VerifyEmailPageShell fromSettings={fromSettings} ariaLabel={t("auth_verify_title")} t={t}>
+      <div data-tt-auth-surface="verify_done" data-tt-auth-verify-email-done="1">
+        <AuthL5Card surface="verify_l5_card">
+          <h1 className={TT_AUTH_L5_FORM.titleCompact}>{t("auth_verify_title")}</h1>
+          <p className={TT_AUTH_L5_FORM.bodyText} role="status" aria-live="polite">
+            {t("auth_verify_doneMessage")}
+          </p>
+          {fromSettings ? (
+            <Link
+              href={ME_SETTINGS_HUB_PATH}
+              className={`${touchTargetLink44Classes} ${TT_AUTH_L5_FORM.primaryCta}`}
+              onClick={() => router.refresh()}
+            >
+              {t("me_settings_verify_back_settings")}
+            </Link>
+          ) : (
+            <p className={TT_AUTH_L5_FORM.footerMeta}>
+              <Link
+                href={AUTH_LOGIN_RETURN_HOME}
+                className={`${touchTargetLink44Classes} ${TT_AUTH_L5_FORM.footerLinks}`}
+              >
+                {t("auth_verify_goLogin")}
+              </Link>
+              <span className="text-ref-sun/30" aria-hidden>
+                ·
+              </span>
+              <Link href="/" className={`${touchTargetLink44Classes} ${TT_AUTH_L5_FORM.footerLinks}`}>
+                {t("auth_forgot_home")}
+              </Link>
+            </p>
+          )}
+        </AuthL5Card>
+      </div>
+    </VerifyEmailPageShell>
+  );
+}
+
+/** 邮箱验证（POST /auth/verify-email）；`token`/`code` 可从邮件链接 query 或手动粘贴。 */
 function VerifyEmailInner() {
   const { t } = useTranslation();
   const searchParams = useSearchParams();
+  const fromSettings = searchParams.get("from") === "settings";
   const qToken = searchParams.get("token") ?? searchParams.get("code") ?? "";
   const [token, setToken] = useState(qToken);
   const [error, setError] = useState<string | null>(null);
@@ -61,6 +142,8 @@ function VerifyEmailInner() {
   const [loading, setLoading] = useState(false);
   const tokenInputId = useId();
   const formErrorId = useId();
+  const fieldInvalid = !!error;
+  const inputClass = authL5FieldClass(fieldInvalid);
 
   useEffect(() => {
     setToken(qToken);
@@ -98,71 +181,65 @@ function VerifyEmailInner() {
   }
 
   if (verified) {
-    return <VerifyEmailSuccessView t={t} />;
+    return <VerifyEmailSuccessView t={t} fromSettings={fromSettings} />;
   }
+
   return (
-    <main
-      className="min-h-screen bg-bg-main flex flex-col items-center justify-center gap-4 p-6 py-10"
-      aria-label={t("auth_verify_title")}
-      data-tt-auth-root="1"
-      data-tt-auth-route="verify-email"
-      data-tt-auth-surface="verify_form"
-    >
-      <div className={cardClass}>
-        <h1 className="text-h4 font-semibold text-ink-900">{t("auth_verify_title")}</h1>
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-3"
-          aria-busy={loading ? true : undefined}
-          data-tt-auth-surface="verify_form_fields"
-        >
-          <div>
-            <label htmlFor={tokenInputId} className="mb-0.5 block text-meta text-ink-600">
-              {t("auth_verify_token_label")}
-            </label>
-            <input
-              type="text"
-              id={tokenInputId}
-              placeholder={t("auth_verify_placeholder")}
-              value={token}
-              onChange={(e) => {
-                setError(null);
-                setToken(e.target.value);
-              }}
-              disabled={loading}
-              autoComplete="one-time-code"
-              aria-invalid={!!error}
-              aria-errormessage={error ? formErrorId : undefined}
-              className={`w-full min-h-[44px] border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 text-ink-800 bg-bg-console ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console disabled:opacity-60`}
-            />
-          </div>
-          {error && (
-            <p id={formErrorId} className="text-danger text-small" role="alert" data-tt-auth-surface="verify_form_error">
-              {error}
-            </p>
-          )}
-          <button
-            type="submit"
-            data-tt-auth-verify-email-submit="1"
-            disabled={loading}
+    <VerifyEmailPageShell fromSettings={fromSettings} ariaLabel={t("auth_verify_title")} t={t}>
+      <div data-tt-auth-surface="verify_form">
+        <AuthL5Card surface="verify_l5_card">
+          <h1 className={TT_AUTH_L5_FORM.titleCompact}>{t("auth_verify_title")}</h1>
+          {fromSettings ? <MeSettingsResendVerifyEmailPanel onDevToken={(tkn) => setToken(tkn)} /> : null}
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-4"
             aria-busy={loading ? true : undefined}
-            className={`btn-console inline-flex min-h-[44px] w-full items-center justify-center rounded-[var(--radius-sm)] bg-travel-500 px-3 py-2 text-small font-medium text-white transition-colors motion-reduce:transition-none disabled:opacity-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+            data-tt-auth-surface="verify_form_fields"
           >
-            {loading ? t("auth_verify_submitting") : t("auth_verify_submit")}
-          </button>
-        </form>
-        <p className="text-meta text-ink-500">
-          <Link href={AUTH_LOGIN_RETURN_HOME} className={authShellFooterLinkClass}>
-            {t("auth_verify_backLogin")}
-          </Link>{" "}
-          ·{" "}
-          <Link href="/" className={authShellFooterLinkClass}>
-            {t("auth_forgot_home")}
-          </Link>
-        </p>
+            <div className={TT_AUTH_L5_FORM.fieldGroup}>
+              <label htmlFor={tokenInputId} className={TT_AUTH_L5_FORM.label}>
+                {t("auth_verify_token_label")}
+              </label>
+              <input
+                type="text"
+                id={tokenInputId}
+                placeholder={t("auth_verify_placeholder")}
+                value={token}
+                onChange={(e) => {
+                  setError(null);
+                  setToken(e.target.value);
+                }}
+                disabled={loading}
+                autoComplete="one-time-code"
+                aria-invalid={!!error}
+                aria-errormessage={error ? formErrorId : undefined}
+                className={inputClass}
+              />
+            </div>
+            {error ? (
+              <p
+                id={formErrorId}
+                className={TT_AUTH_L5_FORM.error}
+                role="alert"
+                data-tt-auth-surface="verify_form_error"
+              >
+                {error}
+              </p>
+            ) : null}
+            <button
+              type="submit"
+              data-tt-auth-verify-email-submit="1"
+              disabled={loading}
+              aria-busy={loading ? true : undefined}
+              className={TT_AUTH_L5_FORM.primaryCta}
+            >
+              {loading ? t("auth_verify_submitting") : t("auth_verify_submit")}
+            </button>
+          </form>
+          <VerifyEmailFooterLinks t={t} fromSettings={fromSettings} />
+        </AuthL5Card>
       </div>
-      <AuthShellCrossNav />
-    </main>
+    </VerifyEmailPageShell>
   );
 }
 

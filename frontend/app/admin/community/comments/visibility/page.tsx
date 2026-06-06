@@ -8,7 +8,7 @@ import { AdminCommunityCommentVisibilityPageMain } from "./AdminCommunityComment
 
 export default function AdminCommunityCommentVisibilityPage() {
   return (
-    <AdminCommunityPageShell currentLabelKey="admin_comment_vis_title">
+    <AdminCommunityPageShell>
       <AdminPermissionDeniedBanner permission={ADMIN_PERM.COMMUNITY_MODERATE} />
       <AdminCommunityCommentVisibilityPageMain />
     </AdminCommunityPageShell>

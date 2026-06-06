@@ -1,42 +1,28 @@
 "use client";
 
+import { DisputesL5PageShell } from "@/components/disputes/DisputesL5PageShell";
+import { TT_DISPUTES_L5 } from "@/lib/me/disputesL5";
 import { useTranslation } from "@/components/LocaleProvider";
 
-const SECTION = "rounded-[var(--radius-sm)] bg-bg-console p-6 shadow-soft border border-ink-200";
-
-/** 与 disputes/[id] 控制台布局一致：标题行 + 多段 glass 面板骨架 */
+/** 争议详情 L5 骨架（与 `DISPUTE_DETAIL_SECTION_CLASS` 同族） */
 export default function DisputeDetailLoading() {
   const { t } = useTranslation();
+  const section = TT_DISPUTES_L5.detailSection;
+
   return (
-    <main className="min-h-screen bg-bg-main" role="status" aria-label={t("dispute_detailTitle")} aria-busy="true">
-      <div className="mx-auto max-w-3xl px-6 py-12 space-y-8">
+    <DisputesL5PageShell t={t} ariaLabel={t("dispute_detailTitle")} variant="detail">
+      <div className="space-y-6" role="status" aria-busy="true">
         <div className="flex items-center justify-between gap-4" aria-hidden>
-          <div className="min-h-[44px] h-11 w-56 max-w-[70%] bg-ink-200 rounded-[var(--radius-sm)] animate-pulse" />
-          <div className="min-h-[44px] h-11 w-20 rounded-[var(--radius-sm)] bg-warning/20 animate-pulse shrink-0" />
+          <div className="h-11 min-h-[44px] w-56 max-w-[70%] animate-pulse rounded-md bg-ref-sun/15" />
+          <div className="h-11 min-h-[44px] w-20 shrink-0 animate-pulse rounded-md bg-warning/20" />
         </div>
-        <section className={SECTION} aria-hidden>
-          <div className="h-5 w-32 bg-ink-200 rounded-[var(--radius-sm)] animate-pulse mb-3" />
-          <ul className="space-y-2">
-            {[1, 2, 3].map((i) => (
-              <li key={i} className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-ink-300 animate-pulse" />
-                <div className="h-4 flex-1 max-w-md bg-ink-100 rounded-[var(--radius-sm)] animate-pulse" />
-              </li>
-            ))}
-          </ul>
-        </section>
-        <section className={SECTION} aria-hidden>
-          <div className="h-5 w-40 bg-ink-200 rounded-[var(--radius-sm)] animate-pulse mb-3" />
-          <div className="space-y-2">
-            <div className="h-4 w-full bg-ink-100 rounded-[var(--radius-sm)] animate-pulse" />
-            <div className="h-4 w-11/12 bg-ink-100 rounded-[var(--radius-sm)] animate-pulse" />
-          </div>
-        </section>
-        <section className={SECTION} aria-hidden>
-          <div className="h-5 w-36 bg-ink-200 rounded-[var(--radius-sm)] animate-pulse mb-3" />
-          <div className="min-h-[44px] h-11 w-full bg-ink-50 border border-ink-200 rounded-[var(--radius-sm)] animate-pulse" />
-        </section>
+        {[1, 2, 3].map((i) => (
+          <section key={i} className={section} aria-hidden>
+            <div className="mb-3 h-5 w-32 animate-pulse rounded-md bg-ref-sun/12" />
+            <div className="h-4 w-full animate-pulse rounded-md bg-slate-700/50" />
+          </section>
+        ))}
       </div>
-    </main>
+    </DisputesL5PageShell>
   );
 }

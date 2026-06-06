@@ -9,7 +9,14 @@ import {
   travelFocusRingCoreOffset2WhiteClasses,
   travelFocusRingOffset2Classes,
 } from "@/lib/travelLinkFocus";
-import { ADMIN_META_NOTE_ACCENT_BORDER_CLASS, ADMIN_MOTION_CARD_HOVER_CLASS } from "@/lib/adminUi";
+import {
+  ADMIN_INLINE_LINK_CLASS,
+  ADMIN_META_NOTE_LINK_CLASS,
+  ADMIN_META_BUILD_FOLD_CARD_CLASS,
+  ADMIN_META_NOTE_ACCENT_BORDER_CLASS,
+  ADMIN_MOTION_CARD_HOVER_CLASS,
+  ADMIN_TEXT_META_CLASS,
+} from "@/lib/adminUi";
 
 export function isAdminMetaRecord(v: unknown): v is Record<string, unknown> {
   return typeof v === "object" && v !== null && !Array.isArray(v);
@@ -36,10 +43,7 @@ export function AdminMetaBuildPanel({ meta }: Props) {
   const shaKnown = !!sha && sha !== "unknown";
   if (!shaKnown) {
     return (
-      <p
-        className="mt-2 text-small text-ink-500"
-        data-tt-admin-build-git-unknown="1"
-      >
+      <p className="mt-2 text-small text-ink-500" data-tt-admin-build-git-unknown="1">
         {t("admin_meta_build_git_unknown")}
       </p>
     );
@@ -52,13 +56,14 @@ export function AdminMetaBuildPanel({ meta }: Props) {
         : null;
   return (
     <div className="mt-2 space-y-1">
-      <p className="font-mono text-small text-ink-800">
+      <p className={`font-mono text-small text-ink-800 ${ADMIN_TEXT_META_CLASS}`}>
         <span className="text-ink-500">{t("admin_observability_build_git_sha")}</span> {sha}
       </p>
-      <p className="font-mono text-small text-ink-800">
+      <p className={`font-mono text-small text-ink-800 ${ADMIN_TEXT_META_CLASS}`}>
         <span className="text-ink-500">{t("admin_observability_build_deployed_at")}</span>{" "}
         {dep ?? t("admin_observability_build_deployed_unset")}
       </p>
+      <p className={`text-meta text-ink-500 ${ADMIN_TEXT_META_CLASS}`}>{t("admin_meta_build_dev_path")}</p>
       <p className="text-meta text-ink-500">{t("admin_observability_build_hint")}</p>
     </div>
   );
@@ -76,7 +81,7 @@ export function AdminMetaNoteLink({
   return (
     <Link
       href="/admin/observability"
-      className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200/60 bg-bg-console/20 py-2 text-left text-small text-ink-600 hover:border-ink-400 hover:text-ink-800 ${ADMIN_MOTION_CARD_HOVER_CLASS} ${travelFocusRingOffset2Classes}${className ? ` ${className}` : ""}`}
+      className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start ${ADMIN_META_NOTE_LINK_CLASS} ${ADMIN_MOTION_CARD_HOVER_CLASS} ${travelFocusRingOffset2Classes}${className ? ` ${className}` : ""}`}
       aria-label={`${t("admin_finance_meta_build_title")} — ${t("admin_observability_title")}`}
     >
       <span className={`block ${ADMIN_META_NOTE_ACCENT_BORDER_CLASS}`}>{children}</span>
@@ -88,19 +93,48 @@ type SectionProps = {
   meta: Record<string, unknown> | null;
   loading: boolean;
   error: unknown;
+  /** 首页 tech fold 内嵌时可设为 true，避免双层折叠。 */
+  inline?: boolean;
 };
 
-export function AdminMetaBuildSection({ meta, loading, error }: SectionProps) {
+export function AdminMetaBuildSection({ meta, loading, error, inline = false }: SectionProps) {
   const { t } = useTranslation();
   if (loading || error || !meta) return null;
-  return (
-    <Link
-      href="/admin/observability"
-      className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start mt-6 rounded-[var(--radius-xl)] border border-ink-200 bg-ink-50/80 p-4 text-left text-ink-800 hover:border-ink-400 hover:text-ink-900 ${ADMIN_MOTION_CARD_HOVER_CLASS} ${travelFocusRingCoreOffset2WhiteClasses}`}
-      aria-label={`${t("admin_finance_meta_build_title")} — ${t("admin_observability_title")}`}
-    >
-      <h2 className="text-body font-medium text-ink-800">{t("admin_finance_meta_build_title")}</h2>
+
+  const panel = (
+    <>
       <AdminMetaBuildPanel meta={meta} />
-    </Link>
+      <Link
+        href="/admin/observability"
+        className={`${touchTargetLink44Classes} mt-3 inline-block text-small font-medium ${ADMIN_INLINE_LINK_CLASS} ${travelFocusRingOffset2Classes}`}
+        data-tt-admin-meta-build-observability-link="1"
+      >
+        {t("admin_meta_build_link_observability")}
+      </Link>
+    </>
+  );
+
+  if (inline) {
+    return (
+      <div className={`${ADMIN_META_BUILD_FOLD_CARD_CLASS}`} data-tt-admin-meta-build-inline="1">
+        <h2 className="text-body font-medium text-ink-800">{t("admin_finance_meta_build_title")}</h2>
+        {panel}
+      </div>
+    );
+  }
+
+  return (
+    <details
+      className={`${ADMIN_META_BUILD_FOLD_CARD_CLASS} ${travelFocusRingCoreOffset2WhiteClasses}`}
+      data-tt-admin-meta-build-fold="1"
+      data-tt-admin-meta-build-default-open="0"
+    >
+      <summary
+        className={`${touchTargetLink44Classes} cursor-pointer list-none text-body font-medium text-ink-800 marker:content-none [&::-webkit-details-marker]:hidden ${travelFocusRingOffset2Classes}`}
+      >
+        {t("admin_meta_build_fold_summary")}
+      </summary>
+      <div className="mt-2">{panel}</div>
+    </details>
   );
 }

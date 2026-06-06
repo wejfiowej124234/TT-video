@@ -2,6 +2,8 @@
  * DID 排行榜 · 纯函数工具（分页、period 解析），便于单测与复用
  */
 
+import { DID_RANK_DEV_PREVIEW_ID_PREFIX } from "@/lib/didRankConstants";
+
 export type Period = "week" | "month" | "all";
 
 const PERIOD_VALUES: Period[] = ["week", "month", "all"];
@@ -13,8 +15,18 @@ export type GuideLeaderboardSort = "reception" | "reviews" | "weighted";
 const COMMUNITY_USER_UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
+/** `didRankDevPreview` 注入的稳定预览 UUID（形如 RFC4122 但非真实用户） */
+export function isDidRankDevPreviewId(id: string): boolean {
+  return typeof id === "string" && id.startsWith(DID_RANK_DEV_PREVIEW_ID_PREFIX);
+}
+
 export function isDidRankCommunityProfileId(id: string): boolean {
-  return typeof id === "string" && id.length > 0 && COMMUNITY_USER_UUID_RE.test(id);
+  return (
+    typeof id === "string" &&
+    id.length > 0 &&
+    !isDidRankDevPreviewId(id) &&
+    COMMUNITY_USER_UUID_RE.test(id)
+  );
 }
 
 /** 解析 URL ?period= 参数，非法则返回 defaultPeriod（trim + 大小写不敏感） */
@@ -32,12 +44,13 @@ export function parseGuideSortParam(param: string | null): GuideLeaderboardSort 
   return "weighted";
 }
 
-/** 书页式主榜：`?board=` 与页内脊签同步（**30 §3.2** · **`acquisition`** = 旅行收购） */
-export type DidRankBoardTab = "traveler" | "guide" | "provider" | "acquisition";
+/** 书页式主榜：`?board=` 与页内脊签同步（**30 §3.2** · **`acquisition`** = 旅行收购 · **`itinerary`** = 行程榜） */
+export type DidRankBoardTab = "traveler" | "guide" | "itinerary" | "provider" | "acquisition";
 
 export function parseDidRankBoardParam(param: string | null): DidRankBoardTab {
   const p = param == null ? "" : String(param).trim().toLowerCase();
   if (p === "guide") return "guide";
+  if (p === "itinerary" || p === "itineraries") return "itinerary";
   if (p === "provider" || p === "merchant") return "provider";
   if (p === "acquisition") return "acquisition";
   return "traveler";
@@ -85,5 +98,53 @@ export function buildDidRankGuideHighlightSearch(
   } else if (opts?.guideSort === "reception") {
     qs.set("guide_sort", "reception");
   }
+  return `?${qs.toString()}`;
+}
+
+const ME_HIGHLIGHT_PREFIXES: { prefix: string; board: DidRankBoardTab }[] = [
+  { prefix: "traveler-", board: "traveler" },
+  { prefix: "guide-", board: "guide" },
+  { prefix: "itinerary-", board: "itinerary" },
+  { prefix: "provider-", board: "provider" },
+  { prefix: "acquisition-", board: "acquisition" },
+];
+
+/** 解析 `?me=traveler-|guide-|itinerary-|provider-|acquisition-<id>`（30 §8；行程 id = order_id） */
+export function parseDidRankMeHighlight(
+  me: string,
+): { board: DidRankBoardTab; userId: string } | null {
+  const m = me.trim();
+  if (!m) return null;
+  for (const { prefix, board } of ME_HIGHLIGHT_PREFIXES) {
+    if (m.startsWith(prefix)) {
+      const userId = m.slice(prefix.length).trim();
+      if (userId) return { board, userId };
+    }
+  }
+  return null;
+}
+
+export function buildDidRankProviderHighlightSearch(period: Period, userId: string): string {
+  const qs = new URLSearchParams();
+  qs.set("period", period);
+  qs.set("me", `provider-${userId}`);
+  qs.set("board", "provider");
+  return `?${qs.toString()}`;
+}
+
+export function buildDidRankAcquisitionHighlightSearch(period: Period, userId: string): string {
+  const qs = new URLSearchParams();
+  qs.set("period", period);
+  qs.set("me", `acquisition-${userId}`);
+  qs.set("board", "acquisition");
+  return `?${qs.toString()}`;
+}
+
+/** 行程榜：`me=itinerary-<order_id>` + `board=itinerary` */
+export function buildDidRankItineraryHighlightSearch(period: Period, orderId: string): string {
+  const qs = new URLSearchParams();
+  qs.set("period", period);
+  qs.set("me", `itinerary-${orderId}`);
+  qs.set("board", "itinerary");
   return `?${qs.toString()}`;
 }

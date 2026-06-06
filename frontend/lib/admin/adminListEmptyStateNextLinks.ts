@@ -80,8 +80,14 @@ export const ADMIN_EMPTY_NEXT_COMMUNITY_PENALTIES: AdminEmptyNextLink = {
   labelKey: "admin_penalties_title",
 };
 
+export const ADMIN_EMPTY_NEXT_UNIFIED_INBOX: AdminEmptyNextLink = {
+  href: "/admin/inbox",
+  labelKey: "admin_unified_inbox_nav_short",
+};
+
 /** 商家入驻队列为空 · 交叉链 SSOT */
 export const ADMIN_EMPTY_NEXT_PROVIDER_QUEUE_EMPTY: AdminEmptyNextLink[] = [
+  ADMIN_EMPTY_NEXT_UNIFIED_INBOX,
   ADMIN_EMPTY_NEXT_STEWARD_QUEUE,
   ADMIN_EMPTY_NEXT_APPROVALS_QUEUE,
   ADMIN_EMPTY_NEXT_ONBOARDING_HUB,
@@ -89,6 +95,7 @@ export const ADMIN_EMPTY_NEXT_PROVIDER_QUEUE_EMPTY: AdminEmptyNextLink[] = [
 
 /** 主理人入驻队列为空 · 交叉链 SSOT */
 export const ADMIN_EMPTY_NEXT_STEWARD_QUEUE_EMPTY: AdminEmptyNextLink[] = [
+  ADMIN_EMPTY_NEXT_UNIFIED_INBOX,
   ADMIN_EMPTY_NEXT_PROVIDER_QUEUE,
   ADMIN_EMPTY_NEXT_APPROVALS_QUEUE,
   ADMIN_EMPTY_NEXT_ONBOARDING_HUB,
@@ -96,6 +103,9 @@ export const ADMIN_EMPTY_NEXT_STEWARD_QUEUE_EMPTY: AdminEmptyNextLink[] = [
 
 /** 统一收件箱全部清空 · 交叉链 SSOT */
 export const ADMIN_EMPTY_NEXT_UNIFIED_INBOX_CLEAR: AdminEmptyNextLink[] = [
+  ADMIN_EMPTY_NEXT_PROVIDER_QUEUE,
+  ADMIN_EMPTY_NEXT_STEWARD_QUEUE,
+  ADMIN_EMPTY_NEXT_APPROVALS_QUEUE,
   ADMIN_EMPTY_NEXT_REPORTS_QUEUE,
   { href: "/admin/orders", labelKey: "admin_orders_title" },
   { href: "/admin", labelKey: "admin_shell_nav_workspace" },
@@ -103,6 +113,7 @@ export const ADMIN_EMPTY_NEXT_UNIFIED_INBOX_CLEAR: AdminEmptyNextLink[] = [
 
 /** 审批列表筛选空 · 交叉链 SSOT */
 export const ADMIN_EMPTY_NEXT_APPROVALS_FILTERED_EMPTY: AdminEmptyNextLink[] = [
+  ADMIN_EMPTY_NEXT_UNIFIED_INBOX,
   ADMIN_EMPTY_NEXT_PROVIDER_QUEUE_PINNED,
   ADMIN_EMPTY_NEXT_REPORTS_QUEUE_PINNED,
   ADMIN_EMPTY_NEXT_ONBOARDING_HUB,
@@ -110,6 +121,7 @@ export const ADMIN_EMPTY_NEXT_APPROVALS_FILTERED_EMPTY: AdminEmptyNextLink[] = [
 
 /** 社区举报列表空 · 交叉链 SSOT */
 export const ADMIN_EMPTY_NEXT_COMMUNITY_REPORTS_EMPTY: AdminEmptyNextLink[] = [
+  ADMIN_EMPTY_NEXT_UNIFIED_INBOX,
   ADMIN_EMPTY_NEXT_COMMUNITY_APPEALS,
   ADMIN_EMPTY_NEXT_COMMUNITY_PENALTIES,
   ADMIN_EMPTY_NEXT_APPROVALS_QUEUE,

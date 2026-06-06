@@ -1,7 +1,20 @@
 import type { MarketView } from "@/components/market/ViewSwitcher";
 import { CITIES_BY_COUNTRY, LANGUAGES_BY_COUNTRY, SERVICE_TYPE_OPTIONS } from "@/lib/geoOptions";
+import { hasMarketGuideFacetFilters } from "@/lib/marketGuideFilterQuery";
 import type { LocaleTranslateFn } from "@/lib/i18n";
 import { PRODUCT_COUNTRIES } from "@/lib/productCountries";
+import type { MarketPageSortKey } from "@/lib/marketPageQuery";
+
+function marketSortSummaryLabel(t: LocaleTranslateFn, view: MarketView, sortBy: MarketPageSortKey): string {
+  if (sortBy === "latest") return t("market_sort_latest");
+  if (view === "guides") {
+    return sortBy === "priceDesc" ? t("market_sort_priceDesc_guides") : t("market_sort_priceAsc_guides");
+  }
+  if (view === "orders") {
+    return sortBy === "priceDesc" ? t("market_sort_priceDesc_orders") : t("market_sort_priceAsc_orders");
+  }
+  return sortBy === "priceDesc" ? t("market_sort_priceDesc_split") : t("market_sort_priceAsc_split");
+}
 
 function countrySummaryLabel(t: LocaleTranslateFn, countryZh: string): string {
   const row = PRODUCT_COUNTRIES.find((c) => c.nameZh === countryZh);
@@ -34,14 +47,21 @@ function buildSides(
         return `${cLab}${sep}${cityRow?.label ?? args.city}`;
       })();
 
-  const guideSide = !args.country
-    ? t("market_travel_summary_guides_need_country")
-    : (() => {
-        const labels = guideFilterLabels(args.country, args.languages, args.serviceTypes);
-        if (labels.length === 0) return t("market_travel_summary_guides_open");
+  const guideSide = (() => {
+    const labels = guideFilterLabels(args.country, args.languages, args.serviceTypes);
+    if (!args.country) {
+      if (labels.length > 0) {
         if (labels.length <= 2) return labels.join(sep);
         return t("market_travel_summary_guides_picked", { n: labels.length });
-      })();
+      }
+      return hasMarketGuideFacetFilters(args)
+        ? t("market_travel_summary_guides_open")
+        : t("market_travel_summary_guides_any");
+    }
+    if (labels.length === 0) return t("market_travel_summary_guides_open");
+    if (labels.length <= 2) return labels.join(sep);
+    return t("market_travel_summary_guides_picked", { n: labels.length });
+  })();
 
   return { orderSide, guideSide };
 }
@@ -63,12 +83,7 @@ export function formatMarketTravelFilterSummaryBlocks(
   const { orderSide, guideSide } = buildSides(t, args);
   const viewLabel =
     args.view === "split" ? t("view_split") : args.view === "orders" ? t("view_orders") : t("view_guides");
-  const sortLabel =
-    args.sortBy === "latest"
-      ? t("market_sort_latest")
-      : args.sortBy === "priceDesc"
-        ? t("market_sort_priceDesc")
-        : t("market_sort_priceAsc");
+  const sortLabel = marketSortSummaryLabel(t, args.view, args.sortBy);
 
   const filterLine = t("market_travel_filter_summary_filters", { orderSide, guideSide });
 
@@ -99,12 +114,7 @@ export function formatMarketTravelFilterSummaryLine(
   const { orderSide, guideSide } = buildSides(t, args);
   const viewLabel =
     args.view === "split" ? t("view_split") : args.view === "orders" ? t("view_orders") : t("view_guides");
-  const sortLabel =
-    args.sortBy === "latest"
-      ? t("market_sort_latest")
-      : args.sortBy === "priceDesc"
-        ? t("market_sort_priceDesc")
-        : t("market_sort_priceAsc");
+  const sortLabel = marketSortSummaryLabel(t, args.view, args.sortBy);
 
   return t("market_travel_filter_summary_line", {
     orderSide,

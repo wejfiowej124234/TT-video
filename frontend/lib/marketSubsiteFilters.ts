@@ -6,8 +6,6 @@ import type {
   DemoMerchantListing,
   MerchantCategorySlug,
 } from "@/lib/marketSubsiteDemo";
-
-/** 与 spec/94 §2.3 对齐 */
 export type MarketSubsiteCountryParam = "all" | ProductCountryIso;
 
 /** 子站列表页：详情抽屉与 URL 同步的 query 键（商家橱窗 / 旅行收购「查看详情」→ 右侧抽屉） */
@@ -99,3 +97,38 @@ export const MARKET_SUBSITE_COUNTRY_STORAGE = {
   provider: "tt_market_subsite_country_pref_provider",
   acquisition: "tt_market_subsite_country_pref_acquisition",
 } as const;
+
+export type MarketSubsiteListingsQueryParams = {
+  country: MarketSubsiteCountryParam;
+  category: "all" | MerchantCategorySlug | AcquisitionCategorySlug;
+  sort: MerchantSortId | AcquisitionSortId;
+};
+
+/** `GET …/market/{segment}/listings` query（94 §2.3.5 · 与 UI URL 同键） */
+export function buildMarketSubsiteListingsQueryString(
+  params: MarketSubsiteListingsQueryParams,
+): string {
+  const sp = new URLSearchParams();
+  if (params.country !== "all") sp.set("country", params.country);
+  if (params.category !== "all") sp.set("category", params.category);
+  if (params.sort !== "recent") sp.set("sort", params.sort);
+  return sp.toString();
+}
+
+export function applyMarketSubsiteProviderFilters(
+  list: DemoMerchantListing[],
+  country: MarketSubsiteCountryParam,
+  category: "all" | MerchantCategorySlug,
+  sort: MerchantSortId,
+): DemoMerchantListing[] {
+  return sortMerchantListings(filterMerchantListings(list, country, category), sort);
+}
+
+export function applyMarketSubsiteAcquisitionFilters(
+  list: DemoAcquisitionListing[],
+  country: MarketSubsiteCountryParam,
+  category: "all" | AcquisitionCategorySlug,
+  sort: AcquisitionSortId,
+): DemoAcquisitionListing[] {
+  return sortAcquisitionListings(filterAcquisitionListings(list, country, category), sort);
+}

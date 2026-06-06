@@ -9,23 +9,39 @@ import {
   type SortBy,
   type RegionKey,
 } from "./communityFeedConstants";
+import type { CommunityFeedAnchorPoiId } from "./communityFeedAnchorPoi";
+import {
+  communityFeedEnrichPostsForAnchor,
+  communityFeedFilterByProximity,
+  type CommunityFeedGeoCoords,
+  type CommunityFeedProximityFilter,
+} from "./communityFeedProximity";
 
-export type { FeedTab, SortBy, RegionKey };
+export type { FeedTab, SortBy, RegionKey, CommunityFeedProximityFilter };
 
 export interface UseCommunityFeedFiltersProps {
   allPosts: CommunityPost[];
-  /** 51-F1：真实 API getMeFollowing 返回的 id 列表 */
   followingIds?: string[];
-  /** 可选：由父组件控制的 feedTab，用于打破与 useCommunityFeedApi 的循环依赖 */
   feedTab?: FeedTab;
   setFeedTab?: (tab: FeedTab) => void;
-  /** 推荐流且主列表来自 Feed API 时已按 mode 排序，避免客户端再按 hot/latest 重排 */
   preserveApiFeedOrder?: boolean;
   sortBy?: SortBy;
   setSortBy?: (s: SortBy) => void;
+  anchorPoiId?: CommunityFeedAnchorPoiId;
+  gpsCoords?: CommunityFeedGeoCoords;
+  proximityFilter?: CommunityFeedProximityFilter;
+  setProximityFilter?: (v: CommunityFeedProximityFilter) => void;
+  /** ① API 已带 `max_distance_m` 筛选时 · 跳过客户端二次过滤 */
+  serverProximityFilterApplied?: boolean;
+  /** `mode=follow` API 已筛作者时 · 勿再用空 `followingIds` 客户端滤空 */
+  skipFollowingAuthorFilter?: boolean;
+  /** `GET …/feed?q=` 已筛正文时 · 跳过客户端 searchQuery 二次过滤 */
+  skipClientTextSearch?: boolean;
+  searchQuery?: string;
+  setSearchQuery?: (q: string) => void;
 }
 
-/** 社区 Feed 筛选态与列表派生：Tab/类型/地区/目的地/标签/排序/搜索（从 useCommunityFeed 拆出） */
+/** 社区 Feed 筛选态与列表派生：Tab/类型/地区/目的地/标签/排序/搜索/附近 */
 export function useCommunityFeedFilters({
   allPosts,
   followingIds = [],
@@ -34,6 +50,15 @@ export function useCommunityFeedFilters({
   preserveApiFeedOrder = false,
   sortBy: controlledSortBy,
   setSortBy: controlledSetSortBy,
+  anchorPoiId = "hotel_lavande",
+  gpsCoords = null,
+  proximityFilter: controlledProximity,
+  setProximityFilter: controlledSetProximity,
+  serverProximityFilterApplied = false,
+  skipFollowingAuthorFilter = false,
+  skipClientTextSearch = false,
+  searchQuery: controlledSearchQuery,
+  setSearchQuery: controlledSetSearchQuery,
 }: UseCommunityFeedFiltersProps) {
   const followingIdSet = useMemo(() => new Set(followingIds), [followingIds]);
   const [internalFeedTab, setInternalFeedTab] = useState<FeedTab>("recommend");
@@ -46,11 +71,21 @@ export function useCommunityFeedFilters({
   const [destinationFilter, setDestinationFilter] = useState<string | "all">("all");
   const [regionFilter, setRegionFilter] = useState<RegionKey>("all");
   const [tagFilter, setTagFilter] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [internalSearchQuery, setInternalSearchQuery] = useState("");
+  const searchQuery = controlledSearchQuery ?? internalSearchQuery;
+  const setSearchQuery = controlledSetSearchQuery ?? setInternalSearchQuery;
+  const [internalProximity, setInternalProximity] = useState<CommunityFeedProximityFilter>("none");
+  const proximityFilter = controlledProximity ?? internalProximity;
+  const setProximityFilter = controlledSetProximity ?? setInternalProximity;
+
+  const enrichedPosts = useMemo(
+    () => communityFeedEnrichPostsForAnchor(allPosts, anchorPoiId, gpsCoords, proximityFilter),
+    [allPosts, anchorPoiId, gpsCoords, proximityFilter],
+  );
 
   const hotDestinations = useMemo(() => {
     const count: Record<string, number> = {};
-    allPosts.forEach((p) => {
+    enrichedPosts.forEach((p) => {
       if (!p.destination) return;
       if (regionFilter !== "all") {
         const list = DESTINATION_BY_REGION[regionFilter];
@@ -62,37 +97,55 @@ export function useCommunityFeedFilters({
       .sort((a, b) => b[1] - a[1])
       .slice(0, 8)
       .map(([d]) => d);
-  }, [allPosts, regionFilter]);
+  }, [enrichedPosts, regionFilter]);
 
   const filteredPosts = useMemo(() => {
-    let list = [...allPosts];
-    if (feedTab === "following") list = list.filter((p) => followingIdSet.has(p.author.id));
-    if (typeFilter !== "all") list = list.filter((p) => p.type === typeFilter);
+    let list = [...enrichedPosts];
+    if (feedTab === "following" && !skipFollowingAuthorFilter) {
+      list = list.filter((p) => followingIdSet.has(p.author.id));
+    }
+    if (typeFilter !== "all") {
+      list =
+        typeFilter === "video"
+          ? list.filter((p) => p.is_video === true || p.type === "video")
+          : list.filter((p) => p.type === typeFilter);
+    }
     if (regionFilter !== "all") {
       const allowed = new Set(DESTINATION_BY_REGION[regionFilter] ?? []);
       list = list.filter((p) => p.destination && allowed.has(p.destination));
     }
     if (destinationFilter !== "all") list = list.filter((p) => p.destination === destinationFilter);
     if (tagFilter) list = list.filter((p) => (p.tags ?? []).some((tag) => tag === tagFilter));
-    const skipSort = preserveApiFeedOrder && feedTab === "recommend";
-    if (!skipSort) {
+    if (proximityFilter !== "none" && !serverProximityFilterApplied) {
+      list = communityFeedFilterByProximity(list, proximityFilter, anchorPoiId, gpsCoords);
+    }
+    const skipSort =
+      (preserveApiFeedOrder && feedTab === "recommend" && proximityFilter === "none") ||
+      (preserveApiFeedOrder && serverProximityFilterApplied && proximityFilter !== "none");
+    if (!skipSort && proximityFilter === "none") {
       if (sortBy === "hot") list.sort((a, b) => b.likes + b.comments - (a.likes + a.comments));
       else list.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     }
     return list;
   }, [
-    allPosts,
+    enrichedPosts,
     feedTab,
     typeFilter,
     sortBy,
     destinationFilter,
     regionFilter,
     tagFilter,
+    proximityFilter,
+    anchorPoiId,
+    gpsCoords,
     followingIdSet,
     preserveApiFeedOrder,
+    serverProximityFilterApplied,
+    skipFollowingAuthorFilter,
   ]);
 
   const searchFilteredPosts = useMemo(() => {
+    if (skipClientTextSearch) return filteredPosts;
     const q = searchQuery.trim().toLowerCase();
     if (!q) return filteredPosts;
     return filteredPosts.filter(
@@ -101,9 +154,10 @@ export function useCommunityFeedFilters({
         (p.title ?? "").toLowerCase().includes(q) ||
         p.author.nickname.toLowerCase().includes(q) ||
         (p.destination ?? "").toLowerCase().includes(q) ||
-        (p.tags ?? []).some((tag) => tag.toLowerCase().includes(q))
+        (p.venueName ?? "").toLowerCase().includes(q) ||
+        (p.tags ?? []).some((tag) => tag.toLowerCase().includes(q)),
     );
-  }, [filteredPosts, searchQuery]);
+  }, [filteredPosts, searchQuery, skipClientTextSearch]);
 
   const clearFilters = useCallback(() => {
     setDestinationFilter("all");
@@ -111,6 +165,7 @@ export function useCommunityFeedFilters({
     setRegionFilter("all");
     setTagFilter(null);
     setSearchQuery("");
+    setProximityFilter("none");
   }, []);
 
   return {
@@ -128,6 +183,9 @@ export function useCommunityFeedFilters({
     setTagFilter,
     searchQuery,
     setSearchQuery,
+    proximityFilter,
+    setProximityFilter,
+    anchorPoiId,
     hotDestinations,
     filteredPosts,
     searchFilteredPosts,

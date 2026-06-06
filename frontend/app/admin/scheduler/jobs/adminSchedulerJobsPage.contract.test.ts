@@ -14,6 +14,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminSchedulerJobsTableSection.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminSchedulerJobsStatusBlock.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminSchedulerJobsPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminSchedulerJobsPageModel.ts"), "utf8"),
   ].join("\n");
 }
@@ -23,6 +24,7 @@ describe("admin scheduler jobs page", () => {
 
   it("keeps scheduler jobs route + admin fetch + list chrome anchor", () => {
     expect(src).toContain("routes.admin.schedulerJobs");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("AdminSchedulerJobsPageMain");
     expect(src).toContain("AdminListPageChrome");

@@ -9,7 +9,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import {
   TT_CINEMATIC_SHELL_L5,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 import { TT_HERO_GLOBE_OPTICAL_FALLBACK } from "@/lib/traveltrustHeroGlobeAlign";
 import { TT_Z, ttZClass } from "@/lib/traveltrustZ";
 

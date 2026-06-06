@@ -1,9 +1,21 @@
+import { ADMIN_INBOX_QUEUE_HREFS } from "@/lib/admin/adminInboxQueueHrefs";
+import type { AdminOpsDetailRelatedLink } from "@/components/admin/AdminOpsDetailRelatedFold";
+import { ADMIN_OPS_OBSERVABILITY_RELATED_LINK } from "@/lib/admin/adminOpsListRelatedFoldLinks";
+
 export type AdminUserDetailRes = {
   status?: string;
   error?: string;
   user?: Record<string, unknown>;
   meta?: unknown;
 };
+
+export const USER_DETAIL_RELATED_FOLD_LINKS: AdminOpsDetailRelatedLink[] = [
+  { href: "/admin/users", labelKey: "admin_user_detail_back_list", dataTt: "admin-user-detail-back-list" },
+  { href: "/admin/approvals", labelKey: "admin_users_linkApprovals" },
+  { href: ADMIN_INBOX_QUEUE_HREFS.provider, labelKey: "admin_provider_list_title" },
+  { href: ADMIN_INBOX_QUEUE_HREFS.steward, labelKey: "admin_steward_list_title" },
+  ADMIN_OPS_OBSERVABILITY_RELATED_LINK,
+];
 
 export const ADMIN_USER_OUTBOUND_URL_KEYS = new Set(["avatar_url"]);
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
 
 export interface GlassSelectOption {
   value: string | number;
@@ -51,13 +52,11 @@ export default function GlassSelect({
     };
   }, [open]);
 
-  const triggerClass =
-    "w-full rounded-[var(--radius-sm)] border border-white/25 bg-slate-900/80 px-3 py-2 text-small text-white placeholder-white/50 focus:outline-none focus-visible:border-travel-400 focus-visible:ring-2 focus-visible:ring-travel-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 flex items-center justify-between gap-2 text-left";
-  const panelClass =
-    "absolute left-0 right-0 top-full z-50 mt-1 max-h-48 overflow-y-auto rounded-[var(--radius-sm)] border border-white/20 bg-slate-900/95 backdrop-blur-sm shadow-strong py-1";
+  const triggerClass = TT_MARKETING_MARKET_DARK_PATH.glassSelectTrigger;
+  const panelClass = TT_MARKETING_MARKET_DARK_PATH.glassSelectPanel;
   const optionBase =
-    "px-3 py-2 text-small text-white cursor-pointer hover:bg-slate-700/80 focus:outline-none";
-  const optionSelected = "bg-travel-500/80";
+    "px-3 py-2 text-small text-white cursor-pointer hover:bg-ref-sun/12 focus:outline-none";
+  const optionSelected = TT_MARKETING_MARKET_DARK_PATH.glassSelectOptionSelected;
 
   return (
     <div ref={ref} className="relative">

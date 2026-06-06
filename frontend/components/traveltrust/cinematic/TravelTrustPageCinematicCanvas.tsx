@@ -48,7 +48,7 @@ import {
   TT_CANVAS_WARM_BAND_L5,
   TT_CINEMATIC_PAGE_INK_HEX,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 import {
   TRAVELTRUST_HERO_GLOBE_PASS_A_BRIGHTEN_ID,
   TRAVELTRUST_HERO_GLOBE_PASS_A_MATERIAL_TUNE_ID,
@@ -62,6 +62,7 @@ import {
   TT_MARKETING_TRAVELTRUST_CINEMATIC_LAYER_FULL_LG,
 } from "@/lib/marketingUi";
 import { resolveHeroSplitLayoutBlend } from "@/lib/traveltrustHeroCinematicAlign";
+import { TRAVELTRUST_HOME_WEBGL_MOUNT_MS } from "@/lib/traveltrust/home/constants";
 import { PageCinematicSceneDebugHud } from "./PageCinematicSceneLayerDebug";
 
 const TravelTrustPageCinematicScene = dynamic(
@@ -143,7 +144,8 @@ export function TravelTrustPageCinematicCanvas() {
   useEffect(() => {
     initTraveltrustCinematicQualityPrefs();
     const mobile = window.matchMedia("(max-width: 768px)").matches;
-    return scheduleTraveltrustWebGLMount(() => setMountReady(true), mobile ? 320 : 140);
+    const delay = mobile ? TRAVELTRUST_HOME_WEBGL_MOUNT_MS.mobile : TRAVELTRUST_HOME_WEBGL_MOUNT_MS.desktop;
+    return scheduleTraveltrustWebGLMount(() => setMountReady(true), delay);
   }, []);
 
   useEffect(() => {

@@ -1,0 +1,53 @@
+import type { FormEvent } from "react";
+
+export type OrderActionsBlockViewHidden = { visible: false };
+
+export type OrderActionsBlockViewShown = {
+  visible: true;
+  orderActionsHeadingId: string;
+  guideWalletAlertId: string;
+  acceptOtherPendingId: string;
+  rootClass: string;
+  hClass: string;
+  metaClass: string;
+  labelClass: string;
+  pillFocusClass: string;
+  isDid: boolean;
+  busy: boolean;
+  t: (key: string) => string;
+  guideWalletMismatch: boolean;
+  acceptBlockedByOtherPending: boolean;
+  acceptButtonTitle: string | undefined;
+  acceptButtonDescribedBy: string | undefined;
+  escrowHex: `0x${string}` | undefined;
+  onRetryAccept: () => void;
+  onClearErr: () => void;
+  canAccept: boolean;
+  canCancel: boolean;
+  showOffchainConfirm: boolean;
+  showIntentConfirm: boolean;
+  protocolPaused: boolean;
+  loading: string | null;
+  err: string | null;
+  errAction: string | null;
+  intentOk: string | null;
+  intentWalletDisconnectedTap: boolean;
+  onAcceptSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  onCancelSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  onConfirmOffchainSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  onIntentConfirmSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  onOpenDisputeOffchain: (e: FormEvent<HTMLFormElement>) => void;
+  onOpenDisputeIntent: (e: FormEvent<HTMLFormElement>) => void;
+  disputeReasonSummary: string;
+  setDisputeReasonSummary: (v: string) => void;
+  canChainOffDispute: boolean;
+  canEscrowDisputeIntent: boolean;
+  orderId: string;
+  expectedChainId: number;
+  variantDid: boolean | undefined;
+  chainMismatch: boolean;
+  isSigning: boolean;
+  isConnected: boolean;
+};
+
+export type OrderActionsBlockViewModel = OrderActionsBlockViewHidden | OrderActionsBlockViewShown;

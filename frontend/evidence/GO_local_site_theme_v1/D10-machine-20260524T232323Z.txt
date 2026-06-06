@@ -1,0 +1,3 @@
+phase=local-1
+gate=site-theme-v1-d10-machine.sh
+status=exit_0

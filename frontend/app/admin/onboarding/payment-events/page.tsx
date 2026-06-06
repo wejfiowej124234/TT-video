@@ -7,7 +7,7 @@ export default function AdminOnboardingPaymentEventsPage() {
   return (
     <AdminOnboardingListPage
       titleKey="admin_onb_payment_events_title"
-      subtitleKey="admin_onb_payment_events_subtitle"
+      subtitleKey="admin_onb_payment_events_subtitle_l5"
       listUrl={routes.admin.paymentEvents({ limit: 100 })}
       fetchContext="AdminOnboardingPaymentEvents"
       stripeEchoColumn

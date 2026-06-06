@@ -4,7 +4,12 @@ import type { FormEvent } from "react";
 import { AdminAppliedFiltersBanner } from "@/components/admin/AdminAppliedFiltersBanner";
 import { formatAdminAppliedFiltersHuman } from "@/lib/admin/formatAdminAppliedFiltersHuman";
 import type { ProjectionCleanFilter } from "./reconcileReportsPageModel";
-import {ADMIN_FILTER_CARD_CLASS, ADMIN_FOCUS_RING_CORE_CLASS, ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS } from "@/lib/adminUi";
+import {ADMIN_FILTER_CARD_CLASS, ADMIN_FOCUS_RING_CORE_CLASS, ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_FILTER_INPUT_SM_CLASS,
+  ADMIN_FILTER_ACTIONS_CLASS,
+  ADMIN_FILTER_HINT_CLASS,
+  ADMIN_FILTER_TITLE_CLASS} from "@/lib/adminUi";
 import {
   buildListPath,
   CHAIN_ID_PARAM_MAX_LEN,
@@ -120,8 +125,8 @@ export function ReconcileReportsFilterCard(props: {
           }
           onSubmit={onApplyFilters}
         >
-          <p className="text-small font-medium text-ink-800">{t("admin_indexer_reconcile_reports_filters_heading")}</p>
-          <p id={adminListApplyResetHintId} className="text-meta text-ink-600 leading-relaxed">
+          <p className={ADMIN_FILTER_TITLE_CLASS}>{t("admin_indexer_reconcile_reports_filters_heading")}</p>
+          <p id={adminListApplyResetHintId} className={ADMIN_FILTER_HINT_CLASS}>
             {t("admin_list_filters_apply_reset_hint")}
           </p>
           <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
@@ -131,7 +136,7 @@ export function ReconcileReportsFilterCard(props: {
               </label>
               <input
                 id={reportTypeInputId}
-                className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-300 bg-white px-3 py-2 font-mono text-small text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_SM_CLASS} px-3 py-2 font-mono text-small text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 name="report_type"
                 list={datalistId}
                 maxLength={REPORT_TYPE_MAX_LEN}
@@ -155,7 +160,7 @@ export function ReconcileReportsFilterCard(props: {
               </label>
               <input
                 id={chainIdInputId}
-                className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-300 bg-white px-3 py-2 font-mono text-small text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_SM_CLASS} px-3 py-2 font-mono text-small text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 name="chain_id"
                 inputMode="numeric"
                 maxLength={CHAIN_ID_PARAM_MAX_LEN}
@@ -174,7 +179,7 @@ export function ReconcileReportsFilterCard(props: {
               </label>
               <select
                 id={projectionCleanSelectId}
-                className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start rounded-[var(--radius-sm)] border border-ink-300 bg-white px-3 py-2 text-small text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start ${ADMIN_FILTER_INPUT_SM_CLASS} px-3 py-2 text-small text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 value={cleanFilterDraft}
                 onChange={(e) => {
                   const v = e.target.value;
@@ -192,7 +197,7 @@ export function ReconcileReportsFilterCard(props: {
               </label>
               <input
                 id={issuesMinInputId}
-                className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-300 bg-white px-3 py-2 font-mono text-small text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_SM_CLASS} px-3 py-2 font-mono text-small text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 name="issues_min"
                 inputMode="numeric"
                 maxLength={ISSUES_MIN_INPUT_MAX_LEN}
@@ -213,7 +218,7 @@ export function ReconcileReportsFilterCard(props: {
               </label>
               <select
                 id={limitSelectId}
-                className={`mt-1 inline-flex w-full min-h-[44px] min-w-[7rem] items-center justify-start rounded-[var(--radius-sm)] border border-ink-300 bg-white px-3 py-2 text-small text-ink-900 sm:w-auto ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 inline-flex w-full min-h-[44px] min-w-[7rem] items-center justify-start ${ADMIN_FILTER_INPUT_SM_CLASS} px-3 py-2 text-small text-ink-900 sm:w-auto ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 value={limit}
                 onChange={(e) => {
                   const next = Number.parseInt(e.target.value, 10);
@@ -239,7 +244,7 @@ export function ReconcileReportsFilterCard(props: {
             </div>
           </div>
         </form>
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className={ADMIN_FILTER_ACTIONS_CLASS}>
           <button
             form={RECONCILE_REPORTS_FILTER_FORM_ID}
             type="submit"
@@ -258,7 +263,7 @@ export function ReconcileReportsFilterCard(props: {
             >
               <button
                 type="submit"
-                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 px-4 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`inline-flex min-h-[44px] items-center justify-center ${ADMIN_FILTER_RESET_BTN_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               >
                 {t("admin_indexer_reconcile_reports_filter_clear")}
               </button>

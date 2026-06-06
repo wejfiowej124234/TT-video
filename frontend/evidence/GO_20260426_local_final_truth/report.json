@@ -2,8 +2,8 @@
   "schema_version": "1",
   "run_id": "GO_20260426_LOCAL_FINAL_TRUTH",
   "title": "Local final truth report for solo developer gate closure",
-  "executor": "plant@local",
-  "reviewer": "plant@local",
+  "executor": "Sebastian Ward <owner@local>",
+  "reviewer": "Sebastian Ward <owner@local>",
   "started_at": "2026-04-26T00:00:00Z",
   "finished_at": "2026-04-26T00:20:00Z",
   "environment": {

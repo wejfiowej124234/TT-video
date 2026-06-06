@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { localeMessagesFromAcceptLanguage } from "@/lib/pickMetadataLocale";
+import { getSiteMetadataBase } from "@/lib/siteMetadataBase";
 
 export async function generateMetadata(): Promise<Metadata> {
   const h = await headers();
@@ -8,6 +9,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = t.didRank_meta_title;
   const description = t.didRank_meta_description;
   return {
+    metadataBase: getSiteMetadataBase(),
     alternates: {
       canonical: "/did-rank",
       languages: {

@@ -9,6 +9,7 @@
 
 
 import { TT_HERO_SPLIT_ALIGN_CSS_VARS } from "./traveltrustHeroCinematicAlign";
+import { TT_HERO_L5_DIRECTOR_COPY_SHIFT_PX } from "./traveltrustHeroL5DirectorFinalPass";
 
 
 
@@ -46,6 +47,8 @@ export const TT_HERO_SPLIT_CSS_VARS_STYLE = {
   ["--tt-hero-copy-w" as string]: TT_HERO_SPLIT_COPY_COL_WIDTH_CSS,
 
   ["--tt-hero-split-gap" as string]: `${TT_HERO_SPLIT_GRID_GAP_PX}px`,
+
+  ["--tt-hero-copy-shift-x" as string]: `${TT_HERO_L5_DIRECTOR_COPY_SHIFT_PX}px`,
 
 } as const;
 

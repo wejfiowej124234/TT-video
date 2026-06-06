@@ -12,17 +12,24 @@ import {
   ADMIN_TABLE_ROW_CLASS,
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
-  adminTableInlineLinkClass,
-} from "@/lib/adminUi";
+  adminTableRowPrimaryActionClass,
+  ADMIN_TABLE_SECTION_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,} from "@/lib/adminUi";
 
 type SchedulerSortKey = "status" | "started_at";
 
 type AdminSchedulerJobsTableSectionProps = {
   items: AdminSchedulerJobRow[];
+  refreshing?: boolean;
   openRerun: (code: string) => void;
 };
 
-export function AdminSchedulerJobsTableSection({ items, openRerun }: AdminSchedulerJobsTableSectionProps) {
+export function AdminSchedulerJobsTableSection({
+  items,
+  refreshing = false,
+  openRerun,
+}: AdminSchedulerJobsTableSectionProps) {
   const { t } = useTranslation();
   const { sort, toggle, ariaSort } = useAdminTableSort<SchedulerSortKey>("started_at", "desc");
   const sortedItems = useMemo(
@@ -48,10 +55,11 @@ export function AdminSchedulerJobsTableSection({ items, openRerun }: AdminSchedu
 
   return (
     <section
-      className="mt-6 overflow-x-auto rounded-[var(--radius-xl)] border border-ink-200 bg-white"
+      className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
       aria-label={t("admin_scheduler_jobs_table_aria")}
+      data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
     >
-      <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+      <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
         <thead className={ADMIN_TABLE_THEAD_CLASS}>
           <tr>
             <th scope="col" className={`${ADMIN_TABLE_TH_CELL_CLASS} font-medium`}>
@@ -81,20 +89,20 @@ export function AdminSchedulerJobsTableSection({ items, openRerun }: AdminSchedu
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-ink-100 text-ink-700">
+        <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
           {sortedItems.map((r, idx) => {
             const jc = r.job_code?.trim() ?? "";
             const dash = t("admin_em_dash");
             return (
               <tr key={r.id ?? `sj-${idx}`} className={ADMIN_TABLE_ROW_CLASS}>
-                <td className="px-3 py-2 font-mono text-meta max-w-[12rem] truncate" title={r.job_code}>
+                <td className="px-3 py-2 font-mono text-small text-ink-800 max-w-[12rem] truncate" title={r.job_code}>
                   {r.job_code ?? dash}
                 </td>
-                <td className="px-3 py-2 font-mono text-meta">{r.status ?? dash}</td>
-                <td className="px-3 py-2 font-mono text-meta">{r.trigger_source ?? dash}</td>
-                <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">{r.started_at ?? dash}</td>
-                <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">{r.finished_at ?? dash}</td>
-                <td className="px-3 py-2 max-w-md font-mono text-meta">
+                <td className="px-3 py-2 font-mono text-small text-ink-800">{r.status ?? dash}</td>
+                <td className="px-3 py-2 font-mono text-small text-ink-800">{r.trigger_source ?? dash}</td>
+                <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">{r.started_at ?? dash}</td>
+                <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">{r.finished_at ?? dash}</td>
+                <td className="px-3 py-2 max-w-md font-mono text-small text-ink-800">
                   <span className="block truncate" title={r.error_summary ?? ""}>
                     {truncSchedulerCell(r.error_summary, 96, dash)}
                   </span>
@@ -110,7 +118,7 @@ export function AdminSchedulerJobsTableSection({ items, openRerun }: AdminSchedu
                     >
                       <button
                         type="submit"
-                        className={`${adminTableInlineLinkClass()} ${ADMIN_LINK_FOCUS_CLASS}`}
+                        className={adminTableRowPrimaryActionClass()}
                         aria-label={t("admin_scheduler_jobs_rerun_row_aria", { code: jc })}
                       >
                         {t("admin_scheduler_rerun")}

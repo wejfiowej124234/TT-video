@@ -11,7 +11,7 @@ import { useAdminCanWrite } from "@/lib/admin/useAdminCanWrite";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
 import { formatReportsAppliedFiltersHuman } from "./adminCommunityReportsLabels";
 import { AdminCommunityReportsFilterCard } from "./AdminCommunityReportsFilterCard";
-import { AdminCommunityReportsHeaderLinks } from "./AdminCommunityReportsHeaderLinks";
+import { AdminCommunityRelatedLinks } from "@/components/admin/AdminCommunityRelatedLinks";
 import { AdminCommunityReportsInboxStrip } from "./AdminCommunityReportsInboxStrip";
 import { AdminCommunityReportsModerationWizard } from "./AdminCommunityReportsModerationWizard";
 import { ADMIN_EMPTY_NEXT_COMMUNITY_REPORTS_EMPTY } from "@/lib/admin/adminListEmptyStateNextLinks";
@@ -57,8 +57,12 @@ export function AdminCommunityReportsPageInner() {
     <AdminListPageChrome
       titleId={pageTitleId}
       title={m.t("admin_community_reports_title")}
-      subtitle={m.t("admin_community_reports_subtitle_l5")}
-      headerAside={<AdminCommunityReportsHeaderLinks t={m.t} />}
+      subtitle={
+        <>
+          <span>{m.t("admin_community_reports_subtitle_l5")}</span>
+          <AdminCommunityRelatedLinks />
+        </>
+      }
     >
       <AdminPermissionDeniedBanner
         permission={ADMIN_PERM.COMMUNITY_MODERATE}
@@ -112,7 +116,7 @@ export function AdminCommunityReportsPageInner() {
 
       <AdminMetaBuildSection meta={m.meta} loading={m.loading} error={m.error} />
 
-      {m.loading ? (
+      {m.loading && m.items.length === 0 ? (
         <AdminListLoadingStatus message={m.t("admin_community_reports_loading")} className="mt-6 text-body text-ink-500" />
       ) : null}
 
@@ -131,6 +135,7 @@ export function AdminCommunityReportsPageInner() {
       {!m.loading && !m.error && m.items.length > 0 ? (
         <AdminCommunityReportsTable
           items={m.items}
+          refreshing={m.refreshing}
           t={m.t}
           openMod={m.openMod}
           canModerate={canModerate}

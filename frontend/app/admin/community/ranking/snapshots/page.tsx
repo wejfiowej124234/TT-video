@@ -9,11 +9,8 @@ import { AdminCommunityRankingSnapshotsPageMain } from "./AdminCommunityRankingS
 
 export default function AdminCommunityRankingSnapshotsPage() {
   return (
-    <AdminSearchParamsSuspense
-      ariaLabelKey="admin_rank_snapshots_title"
-      backLinkLabelKey="admin_rank_snapshots_back"
-    >
-      <AdminCommunityPageShell currentLabelKey="admin_rank_snapshots_title">
+    <AdminSearchParamsSuspense ariaLabelKey="admin_rank_snapshots_title">
+      <AdminCommunityPageShell>
         <AdminPermissionDeniedBanner permission={ADMIN_PERM.COMMUNITY_READ} />
         <AdminCommunityRankingSnapshotsPageMain />
       </AdminCommunityPageShell>

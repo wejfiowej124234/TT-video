@@ -5,7 +5,7 @@ import {
   ttTraveltrustSnapChapterShellClass,
   traveltrustChapterViewportDataAttrs,
   traveltrustSnapChapterBeatDataAttrs,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 
 export type TravelTrustSnapChapterId =
   | "theater"

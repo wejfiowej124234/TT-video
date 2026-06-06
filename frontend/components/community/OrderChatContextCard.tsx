@@ -17,6 +17,7 @@ import type { AmountBreakdownDisplay } from "@/components/escrow/EscrowDetail/Qu
 import { stashEscrowOrderPrefetchFromOrderAndItinerary } from "@/lib/orderEscrowPrefetch";
 import { communityCyanPillFocus } from "@/lib/communityA11yFocus";
 import { formatEvenSplitAmount, resolveEvenSplitPerDay } from "@/lib/itineraryEvenSplit";
+import { TT_COMMUNITY_FEED_ACTION } from "@/lib/marketingUi";
 
 type DailyRow = NonNullable<ItineraryBlock["daily_itinerary"]>[number] & {
   city?: string;
@@ -124,13 +125,12 @@ export default function OrderChatContextCard({
       breakdown.total_budget,
     ].some((v) => v != null);
 
-  const shellClass = embedded
-    ? "rounded-[var(--radius-md)] border border-slate-600/50 bg-slate-800/30 p-3 mb-3"
-    : "rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md p-4 mb-4";
+  const A = TT_COMMUNITY_FEED_ACTION;
+  const shellClass = embedded ? A.orderContextShellEmbedded : A.orderContextShell;
 
   return (
     <div className={shellClass} role="region" aria-labelledby={headingId}>
-      <h2 id={headingId} className={`text-small font-semibold mb-1 ${embedded ? "text-slate-200" : "text-cyan-200"}`}>
+      <h2 id={headingId} className={`text-small font-semibold mb-1 ${embedded ? "text-slate-200" : "text-ref-sun"}`}>
         {t("community_orderContext_title")}
       </h2>
       <p className={`text-meta ${embedded ? "text-slate-300 mb-2" : "text-slate-400 mb-3"}`}>{t("community_orderContext_readOnly")}</p>
@@ -143,12 +143,12 @@ export default function OrderChatContextCard({
           aria-label={t("common_loading")}
         >
           <div
-            className={`w-full sm:w-28 h-36 sm:h-20 shrink-0 rounded-[var(--radius-md)] bg-slate-700/40 border ${embedded ? "border-slate-600/30" : "border-cyan-500/15"}`}
+            className={embedded ? A.orderContextSkeletonMediaEmbedded : A.orderContextSkeletonMedia}
           />
           <div className="min-w-0 flex-1 space-y-2 py-0.5">
-            <div className="h-4 rounded-[var(--radius-sm)] bg-slate-700/45 w-4/5 max-w-xs" />
-            <div className="h-3 rounded-[var(--radius-sm)] bg-slate-700/35 w-3/5 max-w-[14rem]" />
-            <div className="h-3 rounded-[var(--radius-sm)] bg-slate-700/30 w-full max-w-md" />
+            <div className={`h-4 ${A.orderContextSkeletonBar} w-4/5 max-w-xs`} />
+            <div className={`h-3 ${A.orderContextSkeletonBar} w-3/5 max-w-[14rem]`} />
+            <div className={`h-3 ${A.orderContextSkeletonBar} w-full max-w-md`} />
           </div>
         </div>
       ) : fetchError ? (
@@ -165,7 +165,7 @@ export default function OrderChatContextCard({
             <button
               type="submit"
               aria-label={t("common_retry")}
-              className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
+              className={`${TT_COMMUNITY_FEED_ACTION.retryPill} ${communityCyanPillFocus}`}
             >
               {t("common_retry")}
             </button>
@@ -180,7 +180,7 @@ export default function OrderChatContextCard({
             <img
               src={coverUrl}
               alt=""
-              className={`w-full sm:w-28 h-36 sm:h-20 object-cover rounded-[var(--radius-md)] shrink-0 bg-slate-800 ${embedded ? "border border-slate-600/40" : "border border-cyan-500/20"}`}
+              className={`w-full sm:w-28 h-36 sm:h-20 object-cover rounded-[var(--radius-md)] shrink-0 bg-ink-800 ${embedded ? "border border-ref-sun/16" : "border border-ref-sun/18"}`}
             />
           ) : null}
           <div className="min-w-0 flex-1 space-y-1.5">
@@ -200,13 +200,13 @@ export default function OrderChatContextCard({
             )}
             <p className="text-small text-slate-300">
               <span className="text-slate-400">{t("community_orderContext_total")}: </span>
-              <span className="font-medium text-cyan-100 tabular-nums">
+              <span className="font-medium text-ref-sun/95 tabular-nums">
                 {formatQuote(order.amount as string | undefined, order.currency as string | undefined, dash)}
               </span>
             </p>
             {hasBreakdown && breakdown && (
               <div
-                className={`mt-2 rounded-[var(--radius-md)] border px-2.5 py-2 ${embedded ? "border-slate-600/35 bg-slate-900/50" : "border-cyan-500/15 bg-slate-800/40"}`}
+                className={embedded ? A.orderContextBreakdownEmbedded : A.orderContextBreakdown}
               >
                 <p className="text-meta font-medium text-slate-300 mb-1">{t("community_orderContext_breakdown")}</p>
                 <ul className="text-meta text-slate-300 list-disc pl-4 space-y-0.5" role="list">
@@ -241,7 +241,7 @@ export default function OrderChatContextCard({
                     </li>
                   )}
                   {breakdown.total_budget != null && (
-                    <li className="font-medium text-slate-300 pt-0.5 border-t border-cyan-500/10 mt-0.5">
+                    <li className="font-medium text-slate-300 pt-0.5 border-t border-ref-sun/10 mt-0.5">
                       {t("escrow_totalBudget")} {breakdown.total_budget} {cur}
                     </li>
                   )}
@@ -249,7 +249,7 @@ export default function OrderChatContextCard({
               </div>
             )}
             {daily && daily.length > 0 ? (
-              <div className={`mt-2 border-t pt-2 ${embedded ? "border-slate-600/40" : "border-cyan-500/10"}`}>
+              <div className={`mt-2 pt-2 ${embedded ? A.orderContextDividerEmbedded : A.orderContextDivider}`}>
                 <p className="text-meta font-medium text-slate-300 mb-1">{t("community_orderContext_itineraryOutline")}</p>
                 <ul
                   className="text-meta text-slate-300 list-disc pl-4 space-y-0.5 max-h-36 overflow-y-auto pr-1"
@@ -285,11 +285,11 @@ export default function OrderChatContextCard({
 
       {!loading &&
         (embedded ? (
-        <div className="mt-2 pt-2 border-t border-slate-600/40">
+        <div className={A.orderContextDeepLinkDivider}>
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
             <Link
               href={`/community/messages?orderId=${encodeURIComponent(orderId)}`}
-              className="inline-flex min-h-[44px] items-center justify-center text-small font-medium text-cyan-300 hover:text-cyan-100 rounded-[var(--radius-sm)] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              className="inline-flex min-h-[44px] items-center justify-center text-small font-medium text-ref-sun/90 hover:text-ref-sun/95 rounded-[var(--radius-sm)] focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
               {t("order_messageLinkCta")} →
             </Link>
@@ -297,7 +297,7 @@ export default function OrderChatContextCard({
               <Link
                 href={`/pay?orderId=${encodeURIComponent(orderId)}`}
                 onClick={() => stashEscrowOrderPrefetchFromOrderAndItinerary(orderId, order, itinerary ?? null)}
-                className="inline-flex min-h-[44px] items-center justify-center text-small font-medium text-cyan-200 hover:text-cyan-100 rounded-[var(--radius-sm)] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                className="inline-flex min-h-[44px] items-center justify-center text-small font-medium text-ref-sun hover:text-ref-sun/95 rounded-[var(--radius-sm)] focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
               >
                 {t("orders_payHub")} →
               </Link>
@@ -305,13 +305,13 @@ export default function OrderChatContextCard({
           </div>
         </div>
       ) : (
-        <div className="mt-3 pt-3 border-t border-cyan-500/20">
+        <div className="mt-3 pt-3 border-t border-ref-sun/18">
           <p className="text-small text-slate-300 mb-2">{t("community_orderChatBanner")}</p>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
             <Link
               href={`/escrow/${encodeURIComponent(orderId)}`}
               onClick={() => stashEscrowOrderPrefetchFromOrderAndItinerary(orderId, order, itinerary)}
-              className="inline-flex min-h-[44px] items-center justify-center text-small font-medium text-cyan-300 hover:text-cyan-100 rounded-[var(--radius-sm)] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              className="inline-flex min-h-[44px] items-center justify-center text-small font-medium text-ref-sun/90 hover:text-ref-sun/95 rounded-[var(--radius-sm)] focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
               {t("community_viewOrder")} →
             </Link>
@@ -319,7 +319,7 @@ export default function OrderChatContextCard({
               <Link
                 href={`/pay?orderId=${encodeURIComponent(orderId)}`}
                 onClick={() => stashEscrowOrderPrefetchFromOrderAndItinerary(orderId, order, itinerary ?? null)}
-                className="inline-flex min-h-[44px] items-center justify-center text-small font-medium text-cyan-200 hover:text-cyan-100 rounded-[var(--radius-sm)] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                className="inline-flex min-h-[44px] items-center justify-center text-small font-medium text-ref-sun hover:text-ref-sun/95 rounded-[var(--radius-sm)] focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
               >
                 {t("orders_payHub")} →
               </Link>

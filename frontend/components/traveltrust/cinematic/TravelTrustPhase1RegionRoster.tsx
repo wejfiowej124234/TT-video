@@ -18,7 +18,7 @@ import {
   setHeroGlobeP1FocusedRegion,
   setHeroGlobeP1StartPrefill,
 } from "@/lib/traveltrustHeroGlobeP1Link";
-import { TT_CORRIDOR_ROSTER_L5 } from "@/lib/traveltrustCinematicNonGlobeL5";
+import { TT_CORRIDOR_ROSTER_L5 } from "@/lib/traveltrust/l5";
 
 const TIER_LABEL: Record<TravelTrustPhase1GlobeRegion["tier"], string> = {
   S: "traveltrust_phase1_tier_s",

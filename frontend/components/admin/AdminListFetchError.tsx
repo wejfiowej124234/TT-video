@@ -3,24 +3,26 @@
 import type { AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
 
 import { AdminAlertError } from "@/components/admin/AdminAlertError";
+import { ADMIN_LIST_FETCH_ERROR_CLASS } from "@/lib/adminUi";
 
-/** 列表页统一 API 失败展示（HON-03）。 */
+/** 列表页统一 API 失败展示（HON-03 · ADM-P1-06 stale-while-error 诚实）。 */
 export function AdminListFetchError(props: {
   errorKind: AdminFetchErrorKind;
   message: string;
   className?: string;
+  staleWhileError?: boolean;
 }) {
-  const { errorKind, message, className } = props;
+  const { errorKind, message, className, staleWhileError = false } = props;
 
   return (
-    <div data-tt-admin-list-fetch-error={errorKind}>
+    <div
+      data-tt-admin-list-fetch-error={errorKind}
+      data-tt-admin-list-stale-while-error={staleWhileError ? "1" : undefined}
+    >
       <AdminAlertError
         errorKind={errorKind}
         message={message}
-        className={
-          className ??
-          "mt-6 rounded-[var(--radius-md)] border border-danger/20 bg-danger/5 p-3 text-body text-danger"
-        }
+        className={className ?? ADMIN_LIST_FETCH_ERROR_CLASS}
       />
     </div>
   );

@@ -62,7 +62,7 @@ test.describe("P2-B start corridor binding · ①", () => {
     writeFileSync(join(OUT_DIR, "p2b-deep-link-report.json"), JSON.stringify(state, null, 2), "utf8");
   });
 
-  test("hero CTA defaults to step=plan and asia corridor for cn", async ({ page }) => {
+  test("hero CTA defaults to step=plan and corridor matches prefill region", async ({ page }) => {
     test.setTimeout(180_000);
     await page.setViewportSize({ width: 1536, height: 960 });
     await page.goto("/traveltrust", { waitUntil: "domcontentloaded" });
@@ -81,10 +81,24 @@ test.describe("P2-B start corridor binding · ①", () => {
     });
 
     const state = await readStartState(page);
+    const region = href?.match(/region=([a-z]{2})/)?.[1] ?? state.prefill;
     expect(state.hash).toMatch(/step=plan/);
     expect(state.stepId).toBe("plan");
     expect(state.activeStep).toBe("0");
-    expect(state.corridor).toMatch(/^(asia|any)$/);
+    expect(state.prefill).toBe(region);
+    const expectedCorridor: Record<string, RegExp> = {
+      cn: /^(asia|any)$/,
+      jp: /^(asia|any)$/,
+      th: /^(asia|any)$/,
+      sg: /^(asia|any)$/,
+      kr: /^(asia|any)$/,
+      us: /^(atlantic|any)$/,
+      fr: /^(atlantic|any)$/,
+      es: /^(atlantic|any)$/,
+      au: /^(pacific|any)$/,
+      ae: /^(mena|any)$/,
+    };
+    expect(state.corridor).toMatch(expectedCorridor[region] ?? /^(asia|atlantic|pacific|mena|any)$/);
 
     await page.screenshot({ path: join(OUT_DIR, "02-hero-cta-to-start-plan.png") });
   });

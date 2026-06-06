@@ -164,6 +164,7 @@ export interface GuideFormProps extends FormSectionStyles {
   guideLevelsWithPricing: GuideLevelOptionWithPricing[];
   form: CustomItineraryForm;
   setForm: Dispatch<SetStateAction<CustomItineraryForm>>;
+  setTotalDays: (days: number) => void;
   setGuideDayPlan: (dayIndex: number, patch: Partial<GuideDayPlan>) => void;
   cities: { value: string; label: string }[];
   guideDayPlansNormalized: GuideDayPlan[];

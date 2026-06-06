@@ -84,9 +84,7 @@ export function resolveTraveltrustGlobeRenderTier(opts: {
  * - 保留 JPEG + 轻暖化 `enhanceTraveltrustGlobeEarthMap`
  * - 弱 PBR（`meshStandard`）+ 低强度夜灯 + 减薄云
  */
-export function resolveHeroWarmInkGlobeTier(
-  base: GlobeRenderTierConfig,
-): GlobeRenderTierConfig {
+export function resolveHeroWarmInkGlobeTier<T extends GlobeRenderTierConfig>(base: T): T {
   return {
     ...base,
     litEarth: true,

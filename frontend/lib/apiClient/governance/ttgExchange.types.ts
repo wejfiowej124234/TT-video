@@ -1,0 +1,26 @@
+/** `GET /api/v1/governance/ttg-exchange/quote` — 与 `crates/api/routes/governance/ttg_exchange_quote.rs` 同源 */
+
+export type TtgExchangePayStable = "USDC" | "USDT";
+
+export type TtgExchangeQuoteResponse = {
+  status: "ok";
+  schema_version: number;
+  pair_type: "stablecoin_to_governance_token";
+  pay_stable: TtgExchangePayStable;
+  receive_symbol: "TTG";
+  receive_token_role: "governance";
+  pay_amount?: string | null;
+  receive_amount: string | null;
+  rate: string | null;
+  expires_at: string;
+  escrow_settlement: {
+    allowed_pay_stablecoins: TtgExchangePayStable[];
+    default_pay_stable: TtgExchangePayStable;
+    rule: string;
+  };
+  meta: {
+    implementation_status: string;
+    execute_path: string | null;
+    doc?: string;
+  };
+};

@@ -28,8 +28,9 @@ describe("admin batch25 UX L5 (①)", () => {
     expect(bar).not.toContain('shellNav("/admin/permissions"');
   });
 
-  it("preview role badge hidden on shell bar (homepage banner SSOT)", () => {
-    expect(bar).not.toContain("data-tt-admin-shell-preview-active");
+  it("preview vs account role badges on shell bar + home banner readonly (F7)", () => {
+    expect(bar).toContain("data-tt-admin-shell-preview-active");
+    expect(bar).toContain("data-tt-admin-shell-account-role");
     expect(preview).toContain("data-tt-admin-home-shell-preview-readonly");
   });
 

@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useId } from "react";
 
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { useTranslation } from "@/components/LocaleProvider";
@@ -10,8 +10,7 @@ import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminMetaBuildSection } from "@/components/admin/AdminMetaBuildPanel";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
-import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
-import { ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { APPROVALS_LIST_RELATED_FOLD_LINKS } from "@/lib/admin/adminOpsListRelatedFoldLinks";
 
 import { AdminApprovalsAppliedFiltersSection } from "./AdminApprovalsAppliedFiltersSection";
 import { AdminApprovalsBatchBar } from "./AdminApprovalsBatchBar";
@@ -32,7 +31,7 @@ export function AdminApprovalsPageMain() {
   const approvalsListFilterHintId = useId();
 
   const vm = useAdminApprovalsPage();
-  const { loading, error, meta, note } = vm;
+  const { loading, refreshing, error, meta, note, filteredItems } = vm;
 
   return (
     <AdminListPageChrome
@@ -40,29 +39,13 @@ export function AdminApprovalsPageMain() {
       title={t("admin_approvals_title")}
       subtitle={t("admin_approvals_subtitle_l5")}
       writePermissionId={ADMIN_PERM.APPROVE}
-      headerAside={
-        <>
-          <Link
-            href="/admin/users"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_approvals_linkUsers")}
-          </Link>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link
-            href="/admin"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_schema_back")}
-          </Link>
-        </>
-      }
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={APPROVALS_LIST_RELATED_FOLD_LINKS}
+        ariaLabelKey="admin_ops_list_related_aria"
+        foldSummaryKey="admin_ops_list_related_fold"
+        dataTtFold="approvals-list"
+      />
       <AdminApprovalsPermissionHints />
       <AdminApprovalsInboxStrip vm={vm} />
       <AdminApprovalsQuickFilters vm={vm} />
@@ -75,7 +58,7 @@ export function AdminApprovalsPageMain() {
       />
       <AdminApprovalsBatchBar vm={vm} />
 
-      {loading ? (
+      {loading && filteredItems.length === 0 ? (
         <AdminListLoadingStatus message={t("admin_loading")} />
       ) : null}
 

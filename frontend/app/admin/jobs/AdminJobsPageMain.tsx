@@ -1,5 +1,7 @@
 "use client";
 
+import { formatAdminAppliedFiltersHuman } from "@/lib/admin/formatAdminAppliedFiltersHuman";
+
 import Link from "next/link";
 import { useId, useMemo } from "react";
 import { AdminSortableTh } from "@/components/admin/AdminSortableTh";
@@ -7,6 +9,7 @@ import { AdminSortableTh } from "@/components/admin/AdminSortableTh";
 import { AdminAppliedFiltersBanner } from "@/components/admin/AdminAppliedFiltersBanner";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
+import { AdminInboxQueueBackLinks } from "@/components/admin/AdminInboxQueueBackLinks";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
 import { AdminMetaBuildSection, AdminMetaNoteLink } from "@/components/admin/AdminMetaBuildPanel";
@@ -25,7 +28,14 @@ import {
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
   adminPageNavLinkClass,
-} from "@/lib/adminUi";
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_CONSOLE_JSON_BLOCK_CLASS,
+  ADMIN_FILTER_INPUT_SM_CLASS,
+  ADMIN_TABLE_SECTION_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,
+  ADMIN_FILTER_FIELD_LABEL_CLASS,
+  ADMIN_FILTER_HINT_CLASS} from "@/lib/adminUi";
 
 type JobSortKey = "status" | "updated_at";
 export function AdminJobsPageMain() {
@@ -40,6 +50,7 @@ export function AdminJobsPageMain() {
   const {
     status,
     loading,
+    refreshing,
     error,
     summary,
     items,
@@ -68,22 +79,12 @@ export function AdminJobsPageMain() {
     <AdminListPageChrome
       titleId={pageTitleId}
       title={t("admin_jobs_title")}
-      subtitle={t("admin_jobs_subtitle")}
+      subtitle={t("admin_jobs_subtitle_l5")}
       headerAside={
-        <>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_jobs_back")}
-          </Link>
-        </>
+        <AdminInboxQueueBackLinks />
       }
     >
-      <div className="mt-6 rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-4 space-y-3">
+      <div className={`mt-6 ${ADMIN_FILTER_CARD_CLASS} space-y-3`}>
         <form
           id="admin-jobs-filter-form"
           aria-label={t("admin_jobs_filters")}
@@ -100,12 +101,12 @@ export function AdminJobsPageMain() {
           onSubmit={apply}
         >
           <p className="text-small font-medium text-ink-800">{t("admin_jobs_filters")}</p>
-          <p id={adminListApplyResetHintId} className="mt-2 text-meta text-ink-600 leading-relaxed">
+          <p id={adminListApplyResetHintId} className={ADMIN_FILTER_HINT_CLASS}>
             {t("admin_list_filters_apply_reset_hint")}
           </p>
           <div className="mt-3 flex flex-wrap items-end gap-3">
             <div>
-              <label htmlFor={limitInputId} className="block text-small text-ink-700">
+              <label htmlFor={limitInputId} className={`block ${ADMIN_FILTER_FIELD_LABEL_CLASS}`}>
                 {t("admin_jobs_limit")}
               </label>
               <input
@@ -114,18 +115,18 @@ export function AdminJobsPageMain() {
                 inputMode="numeric"
                 value={draftLimit}
                 onChange={(e) => setDraftLimit(e.target.value)}
-                className={`mt-1 min-h-[44px] w-20 rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 min-h-[44px] w-20 ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               />
             </div>
             <div>
-              <label htmlFor={statusSelectId} className="block text-small text-ink-700">
+              <label htmlFor={statusSelectId} className={`block ${ADMIN_FILTER_FIELD_LABEL_CLASS}`}>
                 {t("admin_jobs_status")}
               </label>
               <select
                 id={statusSelectId}
                 value={draftStatus}
                 onChange={(e) => setDraftStatus(e.target.value)}
-                className={`mt-1 inline-flex min-h-[44px] items-center justify-start rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 inline-flex min-h-[44px] items-center justify-start ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               >
                 {JOB_STATUSES.map((v) => (
                   <option key={v || "all"} value={v}>
@@ -168,7 +169,7 @@ export function AdminJobsPageMain() {
             >
               <button
                 type="submit"
-                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 px-4 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`inline-flex min-h-[44px] items-center justify-center ${ADMIN_FILTER_RESET_BTN_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               >
                 {t("admin_jobs_filter_clear")}
               </button>
@@ -183,13 +184,13 @@ export function AdminJobsPageMain() {
           aria-label={t("admin_jobs_summary_aria")}
         >
           <h2 className="text-small font-semibold text-ink-700">{t("admin_jobs_summary")}</h2>
-          <pre className="mt-2 max-h-32 overflow-auto rounded-[var(--radius-md)] bg-ink-900/90 p-3 text-left text-meta text-ink-100">
+          <pre className={`mt-2 max-h-32 overflow-auto ${ADMIN_CONSOLE_JSON_BLOCK_CLASS}`}>
             {JSON.stringify(summary, null, 2)}
           </pre>
         </section>
       ) : null}
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <AdminListLoadingStatus message={t("admin_jobs_loading")} />
       ) : null}
       {error ? (
@@ -212,9 +213,13 @@ export function AdminJobsPageMain() {
         />
       ) : null}
 
-      {!loading && !error && items.length > 0 && (
-        <section className="mt-6 overflow-x-auto rounded-[var(--radius-xl)] border border-ink-200 bg-white" aria-label={t("admin_jobs_table_aria")}>
-          <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+      {!loading && items.length > 0 && (
+        <section
+          className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
+          aria-label={t("admin_jobs_table_aria")}
+          data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
+        >
+          <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
             <thead className={ADMIN_TABLE_THEAD_CLASS}>
               <tr>
                 <AdminSortableTh
@@ -241,27 +246,27 @@ export function AdminJobsPageMain() {
                 />
               </tr>
             </thead>
-            <tbody className="divide-y divide-ink-100 text-ink-700">
+            <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
               {sortedItems.map((r, idx) => {
                 const dash = t("admin_em_dash");
                 return (
                   <tr key={r.id ?? `job-${idx}`} className={ADMIN_TABLE_ROW_CLASS}>
-                    <td className="px-3 py-2 font-mono text-meta">{r.status ?? dash}</td>
-                    <td className="px-3 py-2 font-mono text-meta max-w-[8rem] truncate" title={r.queue_name}>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800">{r.status ?? dash}</td>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800 max-w-[8rem] truncate" title={r.queue_name}>
                       {r.queue_name ?? dash}
                     </td>
-                    <td className="px-3 py-2 font-mono text-meta max-w-[10rem] truncate" title={r.job_type}>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800 max-w-[10rem] truncate" title={r.job_type}>
                       {r.job_type ?? dash}
                     </td>
-                    <td className="px-3 py-2 font-mono text-meta">
+                    <td className="px-3 py-2 font-mono text-small text-ink-800">
                       {r.attempt_count ?? dash}/{r.max_attempts ?? dash}
                     </td>
-                    <td className="px-3 py-2 max-w-xs font-mono text-meta">
+                    <td className="px-3 py-2 max-w-xs font-mono text-small text-ink-800">
                       <span className="block truncate" title={r.last_error ?? ""}>
                         {trunc(r.last_error, 80, dash)}
                       </span>
                     </td>
-                    <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">{r.updated_at ?? dash}</td>
+                    <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">{r.updated_at ?? dash}</td>
                   </tr>
                 );
               })}

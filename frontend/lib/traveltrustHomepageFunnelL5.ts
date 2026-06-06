@@ -1,6 +1,8 @@
 /**
  * 首页 `/traveltrust` 导流 · 波 0 对齐真源（① · L5）
  * 叙事页 CTA / 五角色 / 页脚 / 信任三角 → 落地页路径与壳层 tier。
+ * ① UI 视觉收口： `frontend/evidence/GO_local_marketing_front_closure/README.md`
+ * ②③ API/真链： `GO_local_cinematic_l5_closure/HOMEPAGE-NON-DATA-CLOSURE.md`
  */
 
 import { TRAVELTRUST_ROLES, type TravelTrustRoleId } from "@/app/traveltrust/traveltrustIdentityModel";
@@ -74,10 +76,11 @@ export const TRAVELTRUST_FOOTER_TRUST_ROUTES = [
   "/terms",
 ] as const;
 
-/** Pulse 可点击公告 href（① 静态） */
-export const TRAVELTRUST_PULSE_HREFS = TRAVELTRUST_NETWORK_ANNOUNCEMENTS.filter((a) => a.href).map(
-  (a) => a.href as string,
-);
+/** Pulse 归档页 + 公告内「查看详情」链（① 静态） */
+export const TRAVELTRUST_PULSE_HREFS = [
+  "/traveltrust/announcements",
+  ...TRAVELTRUST_NETWORK_ANNOUNCEMENTS.filter((a) => a.href).map((a) => a.href as string),
+] as const;
 
 /** 首页导流落地页 · L5 壳层 tier（TT-PH1-194 产品浅壳 vs 市场/向导深壳） */
 export const HOMEPAGE_FUNNEL_LANDINGS: readonly HomepageFunnelLanding[] = [

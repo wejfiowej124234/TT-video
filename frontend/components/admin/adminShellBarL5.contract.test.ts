@@ -45,27 +45,16 @@ describe("admin shell bar L5", () => {
 
     expect(src).toContain("admin_shell_nav_group_community");
 
-    expect(src).toContain("/admin/onboarding");
+    expect(src).toContain("ADMIN_SHELL_ONBOARDING_NAV_LINKS");
+    expect(src).toContain("adminShellOnboardingNavLinkMatch");
+    expect(src).toContain("ADMIN_SHELL_COMMUNITY_NAV_LINKS");
+    expect(src).toContain("ADMIN_SHELL_MORE_NAV_LINKS");
+    expect(src).toContain("ADMIN_SHELL_FINANCE_NAV_LINKS");
+    expect(src).toContain("ADMIN_SHELL_GOVERNANCE_NAV_LINKS");
+    expect(src).toContain("ADMIN_SHELL_OPERATIONS_NAV_LINKS");
+    expect(src).toContain("adminShellNavLinkMatch");
 
-    expect(src).toContain("data-tt-admin-shell-nav-group");
-
-    expect(src).toContain("admin_shell_nav_provider_queue");
-
-    expect(src).toContain("ADMIN_INBOX_QUEUE_HREFS.provider");
-    expect(src).toContain("ADMIN_INBOX_QUEUE_HREFS.reports");
-    expect(src).toContain("/admin/auth-audit-events");
-    expect(src).toContain("ADMIN_SHELL_COMMUNITY_EXTRA_LINKS");
-    expect(src).toContain("ADMIN_SHELL_COMMUNITY_EXTRA_LINKS.map");
-
-    expect(src).toContain("/admin/permissions");
-
-    expect(src).toContain("/admin/finance-suite");
     expect(src).toContain("AdminFinanceShellNavGroupGate");
-    expect(src).toContain("ADMIN_PERM.FINANCE_READ");
-
-    expect(src).toContain("/admin/compliance");
-
-    expect(src).toContain("/admin/community/moderation/cases");
 
     expect(src).toContain("shellNav");
 
@@ -77,7 +66,10 @@ describe("admin shell bar L5", () => {
     expect(src).toContain("admU01ShellGroupVisible");
 
     expect(src).toContain("data-tt-admin-shell-top-nav-groups");
-    expect(src).not.toContain("data-tt-admin-shell-preview-active");
+    expect(src).toContain("data-tt-admin-shell-preview-active");
+    expect(src).toContain("data-tt-admin-shell-account-role");
+    expect(src).toContain("ADMIN_SHELL_PREVIEW_BADGE_CLASS");
+    expect(src).toContain("ADMIN_SHELL_BRAND_ACCENT_CLASS");
     expect(src).toContain("/admin/inbox");
     expect(src).toContain("resolveAdminDeployEnv");
     expect(src).toContain("isAdminMaintainerUi");
@@ -89,6 +81,11 @@ describe("admin shell bar L5", () => {
     expect(src).toContain("ADMIN_ATTENTION_STRIP_CLASS");
     expect(src).toContain("data-tt-admin-shell-role-perspective-link");
     expect(src).toContain("AdminShellBarRolePerspectiveSwitcher");
+    expect(src).toContain("adminShellRolePerspectiveSwitcherVisible");
+    expect(src).toContain("adminShellPreviewBadgeVisible");
+    expect(src).toContain("adminShellNavGroupDefaultOpen");
+    expect(src).toContain("adminShellCommandPaletteTriggerVisible");
+    expect(src).toContain("data-tt-admin-shell-preview-deferred");
   });
 
 });

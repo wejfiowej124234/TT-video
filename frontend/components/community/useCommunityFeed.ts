@@ -7,22 +7,26 @@ import {
 } from "@/components/community/useCommunityPostReport";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useTranslation } from "@/components/LocaleProvider";
-import type { CommunityPostType, CommunityPost, CommunityComment } from "@/lib/communityMockData";
+import type { CommunityPost, CommunityComment } from "@/lib/communityMockData";
+import { useCommunityFeedPublishSubmit } from "@/components/community/useCommunityFeedPublishSubmit";
 import { useCommunityAuth, type CommunityMeUser } from "@/components/community/CommunityAuthContext";
 import { useCommunityPublish } from "@/components/community/CommunityPublishContext";
 import {
   FEED_PAGE_SIZE,
-  TRAVEL_IMG,
   type FeedTab,
   type SortBy,
 } from "@/components/community/communityFeedConstants";
 import { useCommunityFeedFilters } from "@/components/community/useCommunityFeedFilters";
+import { useCommunityFeedAnchorPoi } from "@/components/community/useCommunityFeedAnchorPoi";
 import {
-  createPost as apiCreatePost,
+  communityFeedGeoQueryFromDiscovery,
+  type CommunityFeedProximityFilter,
+} from "@/components/community/communityFeedProximity";
+import type { CommunityFeedGeoQuery } from "@/components/community/communityFeedGeoQuery";
+import { mergeCommunityFeedLocalAndApiPosts } from "@/components/community/mergeCommunityFeedLocalAndApiPosts";
+import {
   getMeFollowing,
   getMeCollects,
-  getPostById,
-  getPostComments as apiGetPostComments,
   postComment as apiPostComment,
   postLike,
   deleteLike,
@@ -33,6 +37,8 @@ import {
   type CommunityCommentSort,
 } from "@/lib/apiClient/community";
 import { useCommunityFeedApi } from "@/components/community/useCommunityFeedApi";
+import { useCommunityDrawerCommentsQuery } from "@/components/community/useCommunityDrawerCommentsQuery";
+import { useCommunityFeedPostDeepLink } from "@/components/community/useCommunityFeedPostDeepLink";
 import {
   mapApiCommentToCommunityComment,
   mapApiPostToCommunityPost,
@@ -48,13 +54,27 @@ import {
 import {
   communityTopicPathForTag as communityTopicPathForTagFromSort,
   feedSortQuerySuffix,
+  normalizeCommunityTopicTagFromSearchInput,
   parseCommunityFeedSortFromQuery,
   pathnameWithFeedSort,
 } from "@/lib/communityFeedSortUrl";
+import {
+  COMMUNITY_FEED_TAG_QUERY_MAX_LEN,
+  communityPostTagExceedsServerUtf8Limit,
+} from "@/lib/apiClient/community";
+import { isShowcaseAuthorId, isShowcasePostId } from "@/lib/communityShowcase";
+import {
+  loadShowcaseEngagementSets,
+  persistShowcaseCollectedIds,
+  persistShowcaseLikedIds,
+} from "@/lib/communityShowcaseEngagementStorage";
+import { persistShowcaseFollowIds } from "@/lib/communityShowcaseFollowStorage";
+import type { CommunityFeedInitialSnapshot } from "@/lib/community/communityFeedInitialData";
+import { useDebouncedValue } from "@/lib/useDebouncedValue";
 
-function authorForSelf(u: CommunityMeUser | null, dash: string): CommunityPost["author"] {
+function authorForSelf(u: CommunityMeUser | null, guestLabel: string): CommunityPost["author"] {
   if (!u?.id) {
-    return { id: "unknown", nickname: dash, avatar_url: null, role: "tourist" };
+    return { id: "local-guest", nickname: guestLabel, avatar_url: null, role: "traveler" };
   }
   const walletShort = formatWalletOrDidShort(u.default_wallet_address ?? undefined);
   return {
@@ -70,7 +90,8 @@ function authorForSelf(u: CommunityMeUser | null, dash: string): CommunityPost["
 export { mapApiPostToCommunityPost, mapApiCommentToCommunityComment } from "./communityFeedMappers";
 
 /** 社区 Feed 页：状态、筛选、分页、评论/发帖/详情/视频/登录弹层逻辑（43 阶段拆出） */
-export function useCommunityFeed() {
+export function useCommunityFeed(options?: { initialSnapshot?: CommunityFeedInitialSnapshot | null }) {
+  const initialSnapshot = options?.initialSnapshot ?? null;
   const { t } = useTranslation();
   const dash = t("ui_em_dash");
   const { isLoggedIn, isLoading: authLoading, user: communityUser } = useCommunityAuth();
@@ -81,10 +102,11 @@ export function useCommunityFeed() {
 
   const [commentPost, setCommentPost] = useState<CommunityPost | null>(null);
   const [detailPost, setDetailPost] = useState<CommunityPost | null>(null);
+  /** Feed 评论入口：打开详情并滚至评论区（P1-03 统一路径） */
+  const [detailFocusComments, setDetailFocusComments] = useState(false);
   const [publishOpen, setPublishOpen] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [localPosts, setLocalPosts] = useState<CommunityPost[]>([]);
-  const [videoPost, setVideoPost] = useState<CommunityPost | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   /** 非 i18n key 的 Toast 正文（如关注失败时展示 API 映射文案） */
   const [toastBodyOverride, setToastBodyOverride] = useState<string | null>(null);
@@ -94,9 +116,22 @@ export function useCommunityFeed() {
   const [commentSendErrorMessage, setCommentSendErrorMessage] = useState<string | null>(null);
   /** 后端 `errors` 映射后的字段文案（31 §二：输入旁 + aria） */
   const [commentFieldMessages, setCommentFieldMessages] = useState<Record<string, string> | null>(null);
-  const [commentsLoadError, setCommentsLoadError] = useState<string | null>(null);
   const [commentsRetryTick, setCommentsRetryTick] = useState(0);
   const [commentSort, setCommentSort] = useState<CommunityCommentSort>("chronological");
+  const activeCommentPostId = commentPost?.id ?? detailPost?.id ?? null;
+  const {
+    apiCommentsByPostId,
+    commentsLoadError,
+    commentsHasMore,
+    loadMoreComments,
+    commentsLoadMoreBusy,
+  } = useCommunityDrawerCommentsQuery({
+    postIdOpen: activeCommentPostId,
+    commentSort,
+    commentsRetryTick,
+    t,
+    logContext: "useCommunityFeed",
+  });
   const [publishSendFailed, setPublishSendFailed] = useState(false);
   const [publishErrorMessage, setPublishErrorMessage] = useState<string | null>(null);
   const [publishFieldMessages, setPublishFieldMessages] = useState<Record<string, string> | null>(null);
@@ -148,7 +183,37 @@ export function useCommunityFeed() {
     if (trimmed.length > 64) return null;
     return trimmed;
   }, [pathname, searchParams]);
-  const feedApi = useCommunityFeedApi(feedApiMode, feedTagFromUrl);
+
+  const { anchorPoiId, setAnchorPoiId, gpsCoords, anchorRevision } = useCommunityFeedAnchorPoi();
+  const [proximityFilter, setProximityFilter] = useState<CommunityFeedProximityFilter>("none");
+
+  const feedGeoQuery = useMemo(
+    () => communityFeedGeoQueryFromDiscovery(anchorPoiId, proximityFilter, gpsCoords),
+    [anchorPoiId, proximityFilter, gpsCoords],
+  );
+
+  const feedInitialSnapshot = useMemo(() => {
+    if (!initialSnapshot) return null;
+    if (feedTagFromUrl) return null;
+    if (feedApiMode !== initialSnapshot.mode) return null;
+    if (anchorPoiId || proximityFilter !== "none") return null;
+    return initialSnapshot;
+  }, [initialSnapshot, feedTagFromUrl, feedApiMode, anchorPoiId, proximityFilter]);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const feedApiTextQRaw = useMemo(() => {
+    const tagFromInput = normalizeCommunityTopicTagFromSearchInput(searchQuery);
+    if (tagFromInput || feedTagFromUrl) return "";
+    const q = searchQuery.trim();
+    return q.length >= 2 ? q : "";
+  }, [searchQuery, feedTagFromUrl]);
+  const feedApiTextQ = useDebouncedValue(feedApiTextQRaw, 300);
+  const serverFeedTextSearch = feedApiTextQ.length > 0;
+
+  const feedApi = useCommunityFeedApi(feedApiMode, feedTagFromUrl, feedGeoQuery, anchorRevision, {
+    initialSnapshot: feedInitialSnapshot,
+    textQ: serverFeedTextSearch ? feedApiTextQ : null,
+  });
   const {
     apiPosts,
     setApiPosts,
@@ -162,8 +227,9 @@ export function useCommunityFeed() {
     refetchFeed: feedApiRefetch,
     loadMore: feedApiLoadMore,
   } = feedApi;
+  const serverProximityFilterApplied =
+    feedFromApi && proximityFilter !== "none" && feedGeoQuery.max_distance_m != null;
   const [localCommentsByPostId, setLocalCommentsByPostId] = useState<Record<string, CommunityComment[]>>({});
-  const [apiCommentsByPostId, setApiCommentsByPostId] = useState<Record<string, CommunityComment[]>>({});
   const [feedPage, setFeedPage] = useState(1);
   const [feedLoadingMore, setFeedLoadingMore] = useState(false);
   const [pullY, setPullY] = useState(0);
@@ -173,11 +239,22 @@ export function useCommunityFeed() {
   const followingAuthorIdSet = useMemo(() => new Set(followingIds), [followingIds]);
   const [likedPostIds, setLikedPostIds] = useState<Set<string>>(new Set());
   const [collectedPostIds, setCollectedPostIds] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    const { liked, collected } = loadShowcaseEngagementSets();
+    if (liked.size === 0 && collected.size === 0) return;
+    setLikedPostIds((prev) => new Set([...prev, ...liked]));
+    setCollectedPostIds((prev) => new Set([...prev, ...collected]));
+  }, []);
   /** `getMeCollects` 失败时不得清空 Set 冒充「未收藏」；用文案提示并重试 */
   const [meCollectsLoadError, setMeCollectsLoadError] = useState<string | null>(null);
   const [meCollectsRetryTick, setMeCollectsRetryTick] = useState(0);
 
-  const allPosts = useMemo(() => [...localPosts, ...apiPosts], [localPosts, apiPosts]);
+  /** 发布后 local 与 refetch 的 api 可能同 id；api 为准，local 仅保留尚未入 api 的乐观项。 */
+  const allPosts = useMemo(
+    () => mergeCommunityFeedLocalAndApiPosts(localPosts, apiPosts),
+    [localPosts, apiPosts],
+  );
   const filterApi = useCommunityFeedFilters({
     allPosts,
     followingIds,
@@ -186,6 +263,15 @@ export function useCommunityFeed() {
     sortBy,
     setSortBy,
     preserveApiFeedOrder: feedFromApi,
+    anchorPoiId,
+    gpsCoords,
+    proximityFilter,
+    setProximityFilter,
+    serverProximityFilterApplied,
+    skipFollowingAuthorFilter: feedFromApi && feedTab === "following",
+    skipClientTextSearch: serverFeedTextSearch,
+    searchQuery,
+    setSearchQuery,
   });
   const {
     searchFilteredPosts,
@@ -194,6 +280,18 @@ export function useCommunityFeed() {
     setDestinationFilter: setDestinationFilterFromUrl,
   } = filterApi;
 
+  const { dismissPostDeepLinkIssue, retryPostDeepLinkFetch } = useCommunityFeedPostDeepLink({
+    searchParams,
+    allPosts,
+    searchFilteredPosts,
+    postDeepLinkLastId,
+    t,
+    setDetailPost,
+    setPostDeepLinkBusy,
+    setPostDeepLinkAlert,
+    setPostDeepLinkLastId,
+  });
+
   const pullYRef = useRef(0);
   pullYRef.current = pullY;
   const feedLoadingRef = useRef(false);
@@ -201,7 +299,8 @@ export function useCommunityFeed() {
   const pullStartYRef = useRef<number | null>(null);
   const refreshFeedRef = useRef<() => void>(() => {});
   const focusReturnTargetRef = useRef<HTMLElement | null>(null);
-  const videoBackButtonRef = useRef<HTMLButtonElement>(null);
+  /** `?publish=1` 在 `authLoading` 期间保留意图（与 `useCommunityFeedPublishQueryAndRegister` 同源）。 */
+  const pendingPublishFromQueryRef = useRef(false);
   const loginBackButtonRef = useRef<HTMLButtonElement>(null);
   /** §3.2：触底与按钮共用 loadMore，防止游标请求重叠 */
   const loadMoreInFlightRef = useRef(false);
@@ -214,6 +313,24 @@ export function useCommunityFeed() {
       setToastBodyOverride(null);
     }, ms);
   }, []);
+
+  const { handlePublishSubmit, clearPublishSendError } = useCommunityFeedPublishSubmit({
+    t,
+    dash,
+    communityUser,
+    feedApiRefetch,
+    setLocalPosts,
+    setPublishSendFailed,
+    setPublishErrorMessage,
+    setPublishFieldMessages,
+    setToast,
+    setToastBodyOverride,
+    setToastHint,
+    scheduleToastClear,
+    onPublishSuccess: (payload) => {
+      if (payload.type === "video") setSortBy("latest");
+    },
+  });
 
   const [reportSuccessId, setReportSuccessId] = useState<string | null>(null);
 
@@ -253,16 +370,6 @@ export function useCommunityFeed() {
     setFocusReturnTarget(el);
     focusReturnTargetRef.current = el;
   }, []);
-
-  useEffect(() => {
-    if (!videoPost) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    videoBackButtonRef.current?.focus({ preventScroll: true });
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [videoPost]);
 
   useEffect(() => {
     if (!showLoginModal) return;
@@ -513,115 +620,84 @@ export function useCommunityFeed() {
     [router, pathname, sortBy]
   );
 
-  useEffect(() => {
-    if (searchParams.get("publish") !== "1") return;
-    if (authLoading) return;
-    if (typeof window !== "undefined") {
-      const u = new URL(window.location.href);
-      u.searchParams.delete("publish");
-      window.history.replaceState({}, "", `${u.pathname}${u.search || ""}`);
+  /** 搜索框 Enter：将输入作为 `GET …/feed` `tag`（与 `/community/topic/…` 同源） */
+  const applySearchAsTopicTag = useCallback(() => {
+    const tag = normalizeCommunityTopicTagFromSearchInput(searchQuery);
+    if (!tag) return;
+    if (communityPostTagExceedsServerUtf8Limit(tag)) {
+      setToastHint(null);
+      setToastBodyOverride(
+        t("community_search_server_tag_skipped_too_long", { n: COMMUNITY_FEED_TAG_QUERY_MAX_LEN }),
+      );
+      setToast("community_notice");
+      scheduleToastClear(4200);
+      return;
     }
+    setSearchQuery("");
+    setTagFilter(tag);
+  }, [searchQuery, setSearchQuery, setTagFilter, scheduleToastClear, t, setToastHint, setToastBodyOverride, setToast]);
+
+  useEffect(() => {
+    let hasPublishParam = searchParams.get("publish") === "1";
+    if (!hasPublishParam && typeof window !== "undefined") {
+      try {
+        hasPublishParam = new URL(window.location.href).searchParams.get("publish") === "1";
+      } catch {
+        /* ignore */
+      }
+    }
+
+    if (!hasPublishParam) {
+      pendingPublishFromQueryRef.current = false;
+      return;
+    }
+    if (authLoading) {
+      pendingPublishFromQueryRef.current = true;
+      return;
+    }
+
+    pendingPublishFromQueryRef.current = false;
+
     if (!isLoggedIn) {
       setShowLoginModal(true);
       return;
     }
+
+    setShowLoginModal(false);
     setPublishSendFailed(false);
     setPublishErrorMessage(null);
     setPublishOpen(true);
   }, [searchParams, authLoading, isLoggedIn]);
 
-  const dismissPostDeepLinkIssue = useCallback(() => {
-    setPostDeepLinkAlert(null);
-    setPostDeepLinkLastId(null);
-  }, []);
-
-  const retryPostDeepLinkFetch = useCallback(() => {
-    const id = postDeepLinkLastId?.trim();
-    if (!id) return;
-    setPostDeepLinkAlert(null);
-    setPostDeepLinkBusy(true);
-    void (async () => {
-      try {
-        const res = await getPostById(id);
-        const row = res.post;
-        if (res.status === "ok" && row?.id) {
-          setDetailPost(mapApiPostToCommunityPost(row));
-          setPostDeepLinkLastId(null);
-          setPostDeepLinkAlert(null);
-        } else {
-          setPostDeepLinkAlert({ kind: "unavailable" });
-        }
-      } catch (e) {
-        setPostDeepLinkAlert({
-          kind: "load_failed",
-          message: mapApiReadError(e, t, "community_postDeepLink_loadFailed"),
-        });
-      } finally {
-        setPostDeepLinkBusy(false);
-      }
-    })();
-  }, [postDeepLinkLastId, t]);
-
-  /** 31 §2.2：分享链接 `?post=` — 列表命中直接打开；否则按 id 拉详情；失败 / `post: null` 中性说明（B-055） */
   useEffect(() => {
-    const raw = searchParams.get("post")?.trim();
-    if (!raw || typeof window === "undefined") {
-      setPostDeepLinkBusy(false);
-      return;
-    }
+    if (authLoading) return;
+    if (!pendingPublishFromQueryRef.current) return;
 
-    const stripPostParam = () => {
-      const u = new URL(window.location.href);
-      if (!u.searchParams.has("post")) return;
-      u.searchParams.delete("post");
-      window.history.replaceState({}, "", `${u.pathname}${u.search || ""}`);
-    };
-
-    const found =
-      allPosts.find((p) => p.id === raw) ?? searchFilteredPosts.find((p) => p.id === raw);
-    if (found) {
-      setDetailPost(found);
-      stripPostParam();
-      setPostDeepLinkBusy(false);
-      setPostDeepLinkAlert(null);
-      setPostDeepLinkLastId(null);
-      return;
-    }
-
-    setPostDeepLinkAlert(null);
-    setPostDeepLinkLastId(raw);
-    setPostDeepLinkBusy(true);
-
-    let cancelled = false;
-    void (async () => {
+    let hasPublishParam = searchParams.get("publish") === "1";
+    if (!hasPublishParam && typeof window !== "undefined") {
       try {
-        const res = await getPostById(raw);
-        if (cancelled) return;
-        const row = res.post;
-        if (res.status === "ok" && row?.id) {
-          setDetailPost(mapApiPostToCommunityPost(row));
-          setPostDeepLinkAlert(null);
-          setPostDeepLinkLastId(null);
-        } else {
-          setPostDeepLinkAlert({ kind: "unavailable" });
-        }
-      } catch (e) {
-        if (cancelled) return;
-        setPostDeepLinkAlert({
-          kind: "load_failed",
-          message: mapApiReadError(e, t, "community_postDeepLink_loadFailed"),
-        });
-      } finally {
-        if (!cancelled) {
-          stripPostParam();
-          setPostDeepLinkBusy(false);
-        }
+        hasPublishParam = new URL(window.location.href).searchParams.get("publish") === "1";
+      } catch {
+        /* ignore */
       }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [searchParams, allPosts, searchFilteredPosts, t]);
+    }
+    if (!hasPublishParam) {
+      pendingPublishFromQueryRef.current = false;
+      return;
+    }
+
+    pendingPublishFromQueryRef.current = false;
+
+    if (!isLoggedIn) {
+      setShowLoginModal(true);
+      return;
+    }
+
+    setShowLoginModal(false);
+    setPublishSendFailed(false);
+    setPublishErrorMessage(null);
+    setPublishOpen(true);
+  }, [authLoading, isLoggedIn, searchParams]);
 
   const registerOpenPublish = publishContext?.registerOpenPublish;
   useEffect(() => {
@@ -641,19 +717,6 @@ export function useCommunityFeed() {
   }, [registerOpenPublish, setFocusReturn, authLoading, isLoggedIn]);
 
   useEffect(() => {
-    if (!videoPost) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key !== "Escape") return;
-      const prev = focusReturnTargetRef.current;
-      setFocusReturn(null);
-      setVideoPost(null);
-      requestAnimationFrame(() => prev?.focus());
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [videoPost, setFocusReturn]);
-
-  useEffect(() => {
     if (!showLoginModal) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setShowLoginModal(false);
@@ -663,36 +726,20 @@ export function useCommunityFeed() {
   }, [showLoginModal]);
 
   useEffect(() => {
-    const postId = commentPost?.id ?? detailPost?.id;
-    if (!postId) return;
-    let cancelled = false;
-    setCommentsLoadError(null);
-    apiGetPostComments(postId, { sort: commentSort })
-      .then((data) => {
-        if (cancelled) return;
-        if (data?.status === "ok" && Array.isArray(data.comments)) {
-          setApiCommentsByPostId((prev) => ({
-            ...prev,
-            [postId]: data.comments!.map(mapApiCommentToCommunityComment),
-          }));
-          setCommentsLoadError(null);
-        } else {
-          setApiCommentsByPostId((prev) => ({ ...prev, [postId]: [] }));
-        setCommentsLoadError(t("community_comments_loadFailed"));
-      }
-    })
-      .catch((err) => {
-        if (cancelled) return;
-        if (typeof window !== "undefined") {
-          console.error("useCommunityFeed apiGetPostComments:", err);
-        }
-        setApiCommentsByPostId((prev) => ({ ...prev, [postId]: [] }));
-        setCommentsLoadError(mapApiReadError(err, t, "community_comments_loadFailed"));
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [commentPost?.id, detailPost?.id, commentsRetryTick, commentSort, t]);
+    setCommentSendFailed(false);
+    setCommentSendErrorMessage(null);
+    setCommentFieldMessages(null);
+  }, [commentPost?.id, detailPost?.id]);
+
+  const mergeCommentsForPost = useCallback(
+    (postId: string) => {
+      const api = apiCommentsByPostId[postId] ?? [];
+      const local = localCommentsByPostId[postId] ?? [];
+      const locals = local.filter((l) => !api.some((a) => a.id === l.id));
+      return [...api, ...locals];
+    },
+    [apiCommentsByPostId, localCommentsByPostId],
+  );
 
   const retryCommentsLoad = useCallback(() => {
     setCommentsRetryTick((n) => n + 1);
@@ -715,13 +762,6 @@ export function useCommunityFeed() {
     return [...api, ...locals];
   }, [detailPost, localCommentsByPostId, apiCommentsByPostId]);
 
-  const commentDrawerContextPostId = commentPost?.id ?? detailPost?.id;
-  useEffect(() => {
-    setCommentSendFailed(false);
-    setCommentSendErrorMessage(null);
-    setCommentFieldMessages(null);
-  }, [commentDrawerContextPostId]);
-
   const clearCommentSendError = useCallback(() => {
     setCommentSendFailed(false);
     setCommentSendErrorMessage(null);
@@ -741,7 +781,7 @@ export function useCommunityFeed() {
       const newComment: CommunityComment = {
         id: `comment-local-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
         post_id: postId,
-        author: authorForSelf(communityUser, dash),
+        author: authorForSelf(communityUser, t("community_comment_guest_author")),
         content,
         parent_id: parentId,
         created_at: new Date().toISOString(),
@@ -750,6 +790,13 @@ export function useCommunityFeed() {
         ...prev,
         [postId]: [...(prev[postId] ?? []), newComment],
       }));
+      if (isShowcasePostId(postId)) {
+        setToastBodyOverride(null);
+        setToastHint(null);
+        setToast("community_showcase_comment_toast");
+        scheduleToastClear(3200);
+        return;
+      }
       const rollback = () =>
         setLocalCommentsByPostId((prev) => ({
           ...prev,
@@ -765,6 +812,10 @@ export function useCommunityFeed() {
               c.id === newComment.id ? { ...c, id: r.id! } : c
             ),
           }));
+          setToastBodyOverride(null);
+          setToastHint(null);
+          setToast("community_comment_send_success");
+          scheduleToastClear(2600);
           return;
         }
         if (typeof window !== "undefined") {
@@ -793,93 +844,7 @@ export function useCommunityFeed() {
         throw e instanceof Error ? e : new Error("comment_send_failed");
       }
     },
-    [communityUser, t, dash]
-  );
-
-  const clearPublishSendError = useCallback(() => {
-    setPublishSendFailed(false);
-    setPublishErrorMessage(null);
-    setPublishFieldMessages(null);
-  }, []);
-
-  const handlePublishSubmit = useCallback(
-    async (payload: { type: CommunityPostType; content: string; mediaUrls?: string[]; coverUrl?: string }) => {
-      setPublishSendFailed(false);
-      setPublishErrorMessage(null);
-      setPublishFieldMessages(null);
-      if (typeof navigator !== "undefined" && !navigator.onLine) {
-        setPublishErrorMessage(t("community_publish_offline"));
-        setPublishSendFailed(true);
-        throw new Error("publish_offline");
-      }
-      const urls =
-        payload.type === "text"
-          ? []
-          : payload.mediaUrls?.length
-            ? payload.mediaUrls
-            : [TRAVEL_IMG];
-      const coverOpt = payload.coverUrl?.trim();
-      const newPost: CommunityPost = {
-        id: `post-local-${Date.now()}`,
-        type: payload.type,
-        content: payload.content,
-        media_url: urls[0] ?? "",
-        media_urls: urls.length > 1 ? urls : undefined,
-        is_video: payload.type === "video",
-        ...(coverOpt ? { cover_url: coverOpt } : {}),
-        tags: [],
-        author: authorForSelf(communityUser, dash),
-        likes: 0,
-        comments: 0,
-        collects: 0,
-        created_at: new Date().toISOString(),
-      };
-      setLocalPosts((prev) => [newPost, ...prev]);
-      try {
-        const res = await apiCreatePost({
-          body: payload.content,
-          post_type: payload.type,
-          media_urls: payload.type === "text" ? [] : urls,
-          ...(coverOpt ? { cover_url: coverOpt } : {}),
-        });
-        if (res?.status === "ok" && res.id) {
-          setLocalPosts((prev) =>
-            prev.map((p) => (p.id === newPost.id ? { ...p, id: res.id! } : p))
-          );
-          feedApiRefetch();
-          setToastBodyOverride(null);
-          setToast("community_publish_success");
-          setToastHint("community_publish_success_hint");
-          scheduleToastClear(3400);
-          return;
-        }
-        if (typeof window !== "undefined") {
-          console.error("handlePublishSubmit createPost not ok:", res);
-        }
-        setLocalPosts((prev) => prev.filter((p) => p.id !== newPost.id));
-        const { topMessage, fieldMessages } = interpretCommunityWriteError(res, t, "community_publish_failed");
-        setPublishErrorMessage(topMessage);
-        setPublishFieldMessages(Object.keys(fieldMessages).length > 0 ? fieldMessages : null);
-        setPublishSendFailed(true);
-        throw new Error("publish_post_not_ok");
-      } catch (e) {
-        if (e instanceof Error && e.message === "publish_post_not_ok") {
-          throw e;
-        }
-        if (e instanceof Error && e.message === "publish_offline") {
-          throw e;
-        }
-        if (typeof window !== "undefined") {
-          console.error("handlePublishSubmit:", e);
-        }
-        setLocalPosts((prev) => prev.filter((p) => p.id !== newPost.id));
-        setPublishErrorMessage(null);
-        setPublishFieldMessages(null);
-        setPublishSendFailed(true);
-        throw e instanceof Error ? e : new Error("publish_failed");
-      }
-    },
-    [feedApiRefetch, communityUser, scheduleToastClear, t, dash]
+    [communityUser, t, dash, scheduleToastClear, setToast, setToastBodyOverride, setToastHint]
   );
 
   const followBusyRef = useRef(false);
@@ -902,6 +867,16 @@ export function useCommunityFeed() {
       followBusyRef.current = true;
       setFollowBusyAuthorId(id);
       const wasFollowing = followingAuthorIdSet.has(id);
+      if (isShowcaseAuthorId(id)) {
+        setFollowingIds((prev) => {
+          const next = wasFollowing ? prev.filter((x) => x !== id) : prev.includes(id) ? prev : [...prev, id];
+          persistShowcaseFollowIds(new Set(next.filter(isShowcaseAuthorId)));
+          return next;
+        });
+        followBusyRef.current = false;
+        setFollowBusyAuthorId(null);
+        return;
+      }
       try {
         if (wasFollowing) {
           const res = await deleteUserFollow(id);
@@ -972,8 +947,10 @@ export function useCommunityFeed() {
       const s = new Set(prev);
       if (next) s.add(postId);
       else s.delete(postId);
+      if (isShowcasePostId(postId)) persistShowcaseLikedIds(s);
       return s;
     });
+    if (isShowcasePostId(postId)) return;
     const rollbackLike = () =>
       setLikedPostIds((prev) => {
         const s = new Set(prev);
@@ -1018,8 +995,10 @@ export function useCommunityFeed() {
       const s = new Set(prev);
       if (next) s.add(postId);
       else s.delete(postId);
+      if (isShowcasePostId(postId)) persistShowcaseCollectedIds(s);
       return s;
     });
+    if (isShowcasePostId(postId)) return;
     const rollbackCollect = () =>
       setCollectedPostIds((prev) => {
         const s = new Set(prev);
@@ -1181,9 +1160,20 @@ export function useCommunityFeed() {
   const closeDetailDrawer = useCallback(() => {
     const prev = focusReturnTargetRef.current;
     setFocusReturn(null);
+    setDetailFocusComments(false);
     setDetailPost(null);
     requestAnimationFrame(() => prev?.focus());
   }, [setFocusReturn]);
+
+  const openPostDetail = useCallback(
+    (p: CommunityPost, trigger?: HTMLElement | null, focusComments = false) => {
+      setFocusReturn(trigger ?? null);
+      setDetailFocusComments(focusComments);
+      setCommentPost(null);
+      setDetailPost(p);
+    },
+    [setFocusReturn],
+  );
 
   const closePublishDrawer = useCallback(() => {
     const prev = focusReturnTargetRef.current;
@@ -1194,21 +1184,22 @@ export function useCommunityFeed() {
     requestAnimationFrame(() => prev?.focus());
   }, [setFocusReturn]);
 
-  const closeVideoOverlay = useCallback(() => {
-    const prev = focusReturnTargetRef.current;
-    setFocusReturn(null);
-    setVideoPost(null);
-    requestAnimationFrame(() => prev?.focus());
-  }, [setFocusReturn]);
+  const feedSearchMode = serverFeedTextSearch ? ("api-text-q-v1" as const) : ("client-filter-topic-v1" as const);
 
   return {
     t,
     isLoggedIn,
     authLoading,
+    feedSearchMode,
     ...filterApi,
+    anchorPoiId,
+    setAnchorPoiId,
+    proximityFilter,
+    setProximityFilter,
     hrefTopicPathForTag,
     setTagFilter,
     clearFilters,
+    applySearchAsTopicTag,
     feedError,
     refreshFeed,
     pullY,
@@ -1224,7 +1215,6 @@ export function useCommunityFeed() {
     setFocusReturn,
     setDetailPost,
     setCommentPost,
-    setVideoPost,
     openPublish,
     handleReport,
     handleReportComment,
@@ -1260,10 +1250,16 @@ export function useCommunityFeed() {
     retryCommentsLoad,
     commentSort,
     setCommentSort,
+    commentsHasMore,
+    loadMoreComments,
+    commentsLoadMoreBusy,
     commentPost,
     commentsForPost,
     detailPost,
     commentsForDetail,
+    detailFocusComments,
+    setDetailFocusComments,
+    openPostDetail,
     detailPostAuthorFollow,
     showLoginModal,
     setShowLoginModal,
@@ -1271,14 +1267,13 @@ export function useCommunityFeed() {
     toast,
     toastBodyOverride,
     toastHint,
-    videoPost,
+    mergeCommentsForPost,
+    apiCommentsByPostId,
     focusReturnTargetRef,
-    videoBackButtonRef,
     loginBackButtonRef,
     closeCommentDrawer,
     closeDetailDrawer,
     closePublishDrawer,
-    closeVideoOverlay,
     postDeepLinkBusy,
     postDeepLinkAlert,
     dismissPostDeepLinkIssue,

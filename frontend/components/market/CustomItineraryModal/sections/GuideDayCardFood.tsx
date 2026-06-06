@@ -1,5 +1,6 @@
 "use client";
 
+import { CIM, CIM_CHOICE, CIM_FOCUS, CIM_FOCUS_WITHIN } from '../customItineraryModalTheme';
 import Image from "next/image";
 import type { GuideDayPlan } from "../types";
 import { MAX_COVER_FILE_SIZE } from "../constants";
@@ -22,7 +23,7 @@ export default function GuideDayCardFood(props: GuideDayCardFoodProps) {
       <span className={labelClass}>{t("market_food")}</span>
       <p className="text-meta text-white/60 mb-1">{t("market_guideUploadPhotoHint")}</p>
       <div className="flex flex-wrap gap-2 items-center">
-        <label className="cursor-pointer rounded-[var(--radius-sm)] border border-white/25 bg-white/5 px-3 py-2 text-small text-white hover:bg-white/10 focus-within:ring-1 focus-within:ring-travel-400">
+        <label className="cursor-pointer rounded-[var(--radius-sm)] border border-ref-sun/24 bg-ink-900/55 px-3 py-2 text-small text-white hover:bg-white/10 {CIM_FOCUS_WITHIN}">
           <span className="sr-only">{t("market_guideFoodPhoto")}</span>
           <input
             type="file"
@@ -50,7 +51,7 @@ export default function GuideDayCardFood(props: GuideDayCardFoodProps) {
             >
               <button
                 type="submit"
-                className="shrink-0 w-36 rounded-[var(--radius-sm)] border border-white/20 bg-slate-900/60 overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-travel-400"
+                className="shrink-0 w-36 rounded-[var(--radius-sm)] border border-ref-sun/16 bg-ink-950/60 overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]"
               >
                 <div className="relative aspect-[4/3] bg-slate-800">
                   <Image src={day.foodImage} alt="" fill className="object-cover" unoptimized onError={() => setGuideDayPlan(dayIndex, { foodImage: "" })} />
@@ -67,7 +68,7 @@ export default function GuideDayCardFood(props: GuideDayCardFoodProps) {
             >
               <button
                 type="submit"
-                className={`${touchTargetLink44Classes} text-meta text-white/80 hover:text-white border border-white/30 rounded-[var(--radius-sm)] px-2 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-travel-400`}
+                className={`${touchTargetLink44Classes} text-meta text-white/80 hover:text-white border border-ref-sun/24 rounded-[var(--radius-sm)] px-2 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]`}
               >
                 {t("market_coverClear")}
               </button>

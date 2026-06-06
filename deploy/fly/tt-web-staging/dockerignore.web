@@ -1,0 +1,14 @@
+# tt-web-staging 专用 · 勿继承根 .dockerignore（根目录排除 frontend/）
+.git
+.github
+target
+crates
+contracts
+evidence
+data
+.mcps
+.cursor
+**/node_modules
+**/.next
+frontend/node_modules
+frontend/.next

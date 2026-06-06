@@ -11,9 +11,18 @@ export type UserShape = {
   kyc_status?: string | null;
   nickname?: string | null;
   avatar_url?: string | null;
+  bio?: string | null;
   default_wallet_address?: string | null;
   created_at?: string;
+  email_verified_at?: string | null;
   [key: string]: unknown;
+};
+
+export type MeProfileEditForm = {
+  nickname: string;
+  avatar_url: string;
+  default_wallet_address: string;
+  bio: string;
 };
 
 /** 格式化 ISO 时间为本地日期 */

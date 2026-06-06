@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { type FormEvent, useId, useMemo } from "react";
 
@@ -13,8 +12,10 @@ import { AdminPermissionDeniedBanner } from "@/components/admin/AdminPermissionD
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import { AdminMetaBuildSection, isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
-import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
+import { financePeerRelatedFoldLinks } from "@/lib/admin/adminFinanceRelatedFoldLinks";
 
+import { AdminFinanceSectionBackLinks } from "@/components/admin/AdminFinanceSectionBackLinks";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminFinanceSuiteDepthNotice } from "@/components/admin/AdminFinanceSuiteDepthNotice";
 import { AdminFinanceModuleDepthWorkspace } from "@/components/admin/AdminFinanceModuleDepthWorkspace";
 import { AdminFinanceSuitePartialChecklist } from "@/components/admin/AdminFinanceSuitePartialChecklist";
@@ -25,8 +26,8 @@ import { useAdminFinancePage } from "./useAdminFinancePage";
 import {
   ADMIN_FIN_SUITE_EXPORT_FOCUS_RING_CLASS,
   ADMIN_FORM_FIELD_FOCUS_CLASS,
-  ADMIN_LINK_FOCUS_CLASS,
-  adminPageNavLinkClass,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+  ADMIN_SHELL_SECONDARY_BTN_CLASS,
 } from "@/lib/adminUi";
 
 export default function AdminFinancePageMain() {
@@ -37,6 +38,7 @@ export default function AdminFinancePageMain() {
   const financeExportSubmitFilterHintId = useId();
   const {
     loading,
+    refreshing,
     error,
     exporting,
     exportError,
@@ -53,15 +55,10 @@ export default function AdminFinancePageMain() {
     <AdminListPageChrome
       titleId={pageTitleId}
       title={t("admin_finance_title")}
-      subtitle={t("admin_finance_subtitle")}
+      subtitle={t("admin_finance_subtitle_l5")}
       headerAside={
         <>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
+          <AdminFinanceSectionBackLinks />
           <form
             className={`flex max-w-sm flex-col gap-1 sm:max-w-xs sm:items-end ${exportFromSuite ? ADMIN_FIN_SUITE_EXPORT_FOCUS_RING_CLASS : ""}`}
             aria-label={t("admin_finance_export_csv_aria")}
@@ -77,7 +74,7 @@ export default function AdminFinancePageMain() {
             </p>
             <button
               type="submit"
-              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 bg-white px-3 py-1.5 text-small font-medium text-ink-800 transition-colors motion-reduce:transition-none hover:bg-ink-50 disabled:opacity-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`${ADMIN_SHELL_SECONDARY_BTN_CLASS} disabled:opacity-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               disabled={loading || exporting}
               aria-label={t("admin_finance_export_csv_aria")}
             >
@@ -87,15 +84,15 @@ export default function AdminFinancePageMain() {
               {t("admin_finance_export_csv_format_hint")}
             </p>
           </form>
-          <Link
-            href="/admin"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_schema_back")}
-          </Link>
         </>
       }
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={financePeerRelatedFoldLinks("/admin/finance")}
+        ariaLabelKey="admin_finance_related_aria"
+        foldSummaryKey="admin_finance_related_fold"
+        dataTtFold="finance-summary"
+      />
       <AdminPermissionDeniedBanner
         permission={ADMIN_PERM.FINANCE_READ}
         messageKey="admin_perm_denied_finance_read"
@@ -133,7 +130,12 @@ export default function AdminFinancePageMain() {
       ) : null}
 
       {!loading && !error && summary && (
-        <section className="mt-6 space-y-4" aria-label={t("admin_finance_summary_aria")}>
+        <section
+          className={`mt-6 space-y-4${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
+          aria-label={t("admin_finance_summary_aria")}
+          aria-busy={refreshing || undefined}
+          data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
+        >
           {meta && (
             <AdminFinanceMetaLedgerSection
               t={t}

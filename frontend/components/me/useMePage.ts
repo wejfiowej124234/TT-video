@@ -4,11 +4,15 @@ import { useEffect, useLayoutEffect, useState, useCallback, useRef } from "react
 import { useRouter, usePathname } from "next/navigation";
 import { useAccount } from "wagmi";
 import { getMe, clearGetMeCache, putMe, getMeStats } from "@/lib/apiClient";
+import { isCommunityMeBioEnabled } from "@/lib/communityMeFeatureFlags";
+import { ME_SETTINGS_PROFILE_PATH } from "@/lib/me/meSettingsL5";
 import { mapApiReadError } from "@/lib/mapApiReadError";
-import { runMeLogoutFlow } from "@/lib/meLogoutFlow";
 import type { UserShape } from "./constants";
 
-export function useMePage(t: (k: string) => string) {
+export function useMePage(
+  t: (k: string) => string,
+  opts?: { /** 社区 `/community/me`：头像仅走顶卡本地上传，保存资料时不 PATCH avatar_url */ skipAvatarUrlOnProfileSave?: boolean },
+) {
   const router = useRouter();
   const pathname = usePathname();
   const { address: connectedAddress } = useAccount();
@@ -16,7 +20,7 @@ export function useMePage(t: (k: string) => string) {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
-  const [editForm, setEditForm] = useState({ nickname: "", avatar_url: "", default_wallet_address: "" });
+  const [editForm, setEditForm] = useState({ nickname: "", avatar_url: "", default_wallet_address: "", bio: "" });
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [stats, setStats] = useState<Record<string, unknown> | null>(null);
@@ -84,7 +88,7 @@ export function useMePage(t: (k: string) => string) {
       .then((res) => {
         if (gen !== meFetchGen.current) return;
         if (res == null) {
-          const returnUrl = pathname && pathname !== "/" ? pathname : "/community/me";
+          const returnUrl = pathname && pathname !== "/" ? pathname : ME_SETTINGS_PROFILE_PATH;
           router.replace(`/auth/login?returnUrl=${encodeURIComponent(returnUrl)}`);
           return;
         }
@@ -95,6 +99,7 @@ export function useMePage(t: (k: string) => string) {
             nickname: u.nickname ?? "",
             avatar_url: u.avatar_url ?? "",
             default_wallet_address: u.default_wallet_address ?? "",
+            bio: typeof u.bio === "string" ? u.bio : "",
           });
           setAvatarError(false);
         }
@@ -102,7 +107,7 @@ export function useMePage(t: (k: string) => string) {
       .catch((err) => {
         if (gen !== meFetchGen.current) return;
         if (err instanceof Error && err.message === "login_required") {
-          const returnUrl = pathname && pathname !== "/" ? pathname : "/community/me";
+          const returnUrl = pathname && pathname !== "/" ? pathname : ME_SETTINGS_PROFILE_PATH;
           router.replace(`/auth/login?returnUrl=${encodeURIComponent(returnUrl)}`);
           return;
         }
@@ -149,8 +154,11 @@ export function useMePage(t: (k: string) => string) {
     setSubmitting(true);
     putMe({
       nickname: editForm.nickname || undefined,
-      avatar_url: editForm.avatar_url || undefined,
+      ...(opts?.skipAvatarUrlOnProfileSave
+        ? {}
+        : { avatar_url: editForm.avatar_url || undefined }),
       default_wallet_address: editForm.default_wallet_address || undefined,
+      ...(isCommunityMeBioEnabled() ? { bio: editForm.bio } : {}),
     })
       .then(() => {
         setEditing(false);
@@ -165,7 +173,7 @@ export function useMePage(t: (k: string) => string) {
         setSubmitError(mapApiReadError(err, t, "me_saveFail"));
       })
       .finally(() => setSubmitting(false));
-  }, [editForm, loadMe, t]);
+  }, [editForm, loadMe, opts?.skipAvatarUrlOnProfileSave, t]);
 
   const handleSyncWallet = useCallback(() => {
     if (!connectedAddress) return;
@@ -184,10 +192,6 @@ export function useMePage(t: (k: string) => string) {
       })
       .finally(() => setSyncingWallet(false));
   }, [connectedAddress, loadMe, t]);
-
-  const handleLogout = useCallback(() => {
-    runMeLogoutFlow(t);
-  }, [t]);
 
   return {
     data,
@@ -214,6 +218,5 @@ export function useMePage(t: (k: string) => string) {
     loadMe,
     handleSubmit,
     handleSyncWallet,
-    handleLogout,
   };
 }

@@ -16,6 +16,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminApiVersionsMetaNote.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminApiVersionsTableSection.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminApiVersionsPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminApiVersionsPageModel.ts"), "utf8"),
   ].join("\n");
 }
@@ -25,6 +26,7 @@ describe("admin api-versions page", () => {
 
   it("keeps admin api versions list route and query helpers", () => {
     expect(src).toContain("routes.admin.apiVersions");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("parseAdminApiVersionsListQuery");
     expect(src).toContain("buildAdminApiVersionsListPath");

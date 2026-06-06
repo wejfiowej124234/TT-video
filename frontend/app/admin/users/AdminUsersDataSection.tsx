@@ -18,8 +18,12 @@ import {
   ADMIN_TABLE_ROW_CLASS,
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
-  adminTableInlineLinkClass,
-} from "@/lib/adminUi";
+  adminTableRowPrimaryActionClass,
+  adminTableRowSecondaryActionClass,
+  ADMIN_TABLE_SECTION_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,
+  ADMIN_ACQUISITION_SUSPENDED_ROW_BADGE_CLASS,} from "@/lib/adminUi";
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 import type { AdminUser } from "./adminUsersPageTypes";
 import { formatAdminAppliedFiltersHuman } from "@/lib/admin/formatAdminAppliedFiltersHuman";
@@ -29,6 +33,7 @@ type UserSortKey = "email" | "role" | "created_at";
 export function AdminUsersDataSection({
   adminAppliedFiltersDescId,
   loading,
+  refreshing = false,
   error,
   appliedFilters,
   items,
@@ -44,6 +49,7 @@ export function AdminUsersDataSection({
 }: {
   adminAppliedFiltersDescId: string;
   loading: boolean;
+  refreshing?: boolean;
   error: AdminFetchErrorKind | null;
   appliedFilters: Record<string, unknown> | null;
   items: AdminUser[];
@@ -96,12 +102,13 @@ export function AdminUsersDataSection({
         />
       ) : null}
 
-      {!loading && !error && items.length > 0 && (
+      {!loading && items.length > 0 && (
         <section
-          className="mt-6 overflow-hidden rounded-[var(--radius-xl)] border border-ink-200 bg-white"
+          className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
           aria-label={t("admin_users_table_aria")}
+          data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
         >
-          <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+          <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
             <thead className={ADMIN_TABLE_THEAD_CLASS}>
               <tr>
                 <AdminSortableTh
@@ -130,7 +137,7 @@ export function AdminUsersDataSection({
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-ink-100 text-ink-700">
+            <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
               {sortedItems.map((u) => (
                 <tr key={u.id} className={ADMIN_TABLE_ROW_CLASS}>
                   <td className="px-4 py-3">{u.email}</td>
@@ -141,7 +148,7 @@ export function AdminUsersDataSection({
                       {u.acquisition_publish_suspended === true ? (
                         <Link
                           href={`/admin/users/${encodeURIComponent(u.id)}#admin-acquisition-suspend`}
-                          className={`inline-flex rounded-[var(--radius-sm)] border border-danger/30 bg-danger/5 px-2 py-0.5 text-meta font-medium text-danger hover:underline ${travelFocusRingOffset2Classes}`}
+                          className={`${ADMIN_ACQUISITION_SUSPENDED_ROW_BADGE_CLASS} ${travelFocusRingOffset2Classes}`}
                           aria-label={t("admin_users_acquisition_suspend_row_aria", { email: u.email })}
                         >
                           {t("admin_users_acquisitionSuspendedBadge")}
@@ -179,14 +186,14 @@ export function AdminUsersDataSection({
                     <div className="flex flex-col gap-1 items-start">
                       <Link
                         href={`/admin/users/${encodeURIComponent(u.id)}`}
-                        className={adminTableInlineLinkClass()}
+                        className={adminTableRowPrimaryActionClass()}
                         aria-label={t("admin_users_detail_row_aria", { email: u.email })}
                       >
                         {t("admin_ops_userDetailAdmin")}
                       </Link>
                       <button
                         type="button"
-                        className={`${touchTargetLink44Classes} !justify-start text-left whitespace-nowrap ${ADMIN_INLINE_LINK_CLASS} ${ADMIN_LINK_FOCUS_CLASS}`}
+                        className={adminTableRowSecondaryActionClass()}
                         aria-label={t("admin_users_roleRequest_aria", { email: u.email })}
                         onClick={() => openRoleModal(u)}
                       >

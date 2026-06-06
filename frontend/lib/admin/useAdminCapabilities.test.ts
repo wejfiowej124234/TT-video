@@ -16,6 +16,9 @@ describe("useAdminCapabilities wiring", () => {
     expect(src).toContain("phase2_prep");
     expect(src).toContain("permissionsLoaded");
     expect(src).toContain("capabilitiesUnavailable");
+    expect(src).toContain("applyAdminSessionExpiredClientReset");
+    expect(src).toContain("maybeApplyAdminSessionExpiredFromAdminFetch");
+    expect(src).toContain("adminApiEnvelopeCode");
     expect(src).toContain("AdminCapabilitiesProvider");
     expect(src).toContain("AdminCapabilitiesContext");
     expect(ADMIN_PERM.APPROVE).toBe("admin.approve");

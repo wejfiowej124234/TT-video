@@ -3,7 +3,13 @@
  */
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { apiUrl, routes } from "../api";
-import { getDidRankTravelers, getDidRankGuides, getDidRankItineraries } from "./didRank";
+import {
+  getDidRankTravelers,
+  getDidRankGuides,
+  getDidRankItineraries,
+  getDidRankProviders,
+  getDidRankAcquisitions,
+} from "./didRank";
 
 function mockTextResponse(ok: boolean, body: unknown, status?: number) {
   const st = status ?? (ok ? 200 : 500);
@@ -24,7 +30,7 @@ describe("getDidRankTravelers", () => {
         status: "ok",
         period: "week",
         since: "2026-03-21T00:00:00Z",
-        limit: 30,
+        limit: 100,
         rank_basis: "tourist_completed_orders_in_window",
         travelers: [],
       })
@@ -69,7 +75,7 @@ describe("getDidRankGuides", () => {
         status: "ok",
         period: "week",
         since: "2026-03-21T00:00:00Z",
-        limit: 30,
+        limit: 100,
         rank_basis: "guide_reception_gross_total_then_completed_count",
         guides: [],
       })
@@ -87,7 +93,7 @@ describe("getDidRankGuides", () => {
         status: "ok",
         period: "week",
         since: "2026-03-21T00:00:00Z",
-        limit: 30,
+        limit: 100,
         rank_basis:
           "guide_avg_received_review_then_reception_gross_then_completed_count_min_completed_ge_3",
         guides: [],
@@ -111,7 +117,7 @@ describe("getDidRankGuides", () => {
         status: "ok",
         period: "week",
         since: "2026-03-21T00:00:00Z",
-        limit: 30,
+        limit: 100,
         rank_basis:
           "guide_weighted_volume_norm_w60_review_avg_norm_w40_then_reception_gross_then_completed_count_min_completed_ge_3",
         guides: [],
@@ -151,7 +157,7 @@ describe("getDidRankItineraries", () => {
         status: "ok",
         period: "week",
         since: "2026-03-21T00:00:00Z",
-        limit: 30,
+        limit: 100,
         rank_basis: "order_completed_at",
         itineraries: [],
       })
@@ -161,5 +167,59 @@ describe("getDidRankItineraries", () => {
       status: "ok",
       rank_basis: "order_completed_at",
     });
+  });
+});
+
+describe("getDidRankProviders", () => {
+  beforeEach(() => vi.stubGlobal("fetch", vi.fn()));
+  afterEach(() => vi.restoreAllMocks());
+
+  it("GETs with period=all and owner_role_filter", async () => {
+    (globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce(
+      mockTextResponse(true, {
+        status: "ok",
+        period: "all",
+        since: null,
+        limit: 100,
+        rank_basis: "provider_fulfillment_orders_then_gross_then_published_listings_in_window",
+        owner_role_filter: "provider",
+        providers: [{ id: "p1", rank: 1, nickname: "Shop", published_listings: 3 }],
+      }),
+    );
+    const out = (await getDidRankProviders("all")) as {
+      owner_role_filter?: string;
+      providers?: unknown[];
+    };
+    expect(out.owner_role_filter).toBe("provider");
+    expect(out.providers).toHaveLength(1);
+    expect(globalThis.fetch).toHaveBeenCalledWith(
+      `${apiUrl(routes.didRankProviders)}?period=all`,
+      expect.objectContaining({ headers: expect.any(Object) }),
+    );
+  });
+});
+
+describe("getDidRankAcquisitions", () => {
+  beforeEach(() => vi.stubGlobal("fetch", vi.fn()));
+  afterEach(() => vi.restoreAllMocks());
+
+  it("GETs with period=week and owner_role_filter", async () => {
+    (globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce(
+      mockTextResponse(true, {
+        status: "ok",
+        period: "week",
+        since: "2026-03-21T00:00:00Z",
+        limit: 100,
+        rank_basis: "acquisition_fulfillment_orders_then_gross_then_published_listings_in_window",
+        owner_role_filter: "region_steward",
+        acquisitions: [],
+      }),
+    );
+    const out = (await getDidRankAcquisitions("week")) as { owner_role_filter?: string };
+    expect(out.owner_role_filter).toBe("region_steward");
+    expect(globalThis.fetch).toHaveBeenCalledWith(
+      `${apiUrl(routes.didRankAcquisitions)}?period=week`,
+      expect.any(Object),
+    );
   });
 });

@@ -402,7 +402,7 @@ test.describe("Escrow 订单页订单写错误文案（mock API）", () => {
     ).toBeVisible({ timeout: 30_000 });
   });
 
-  test("旅行者点接单 403 not_guide 映射为角色提示（order_error_not_guide）", async ({ page }) => {
+  test("旅行者不展示接单按钮（与 order_accept_impl not_guide 同源）", async ({ page }) => {
     await page.addInitScript((uid) => {
       window.localStorage.setItem("traveltrust_user_id", uid);
     }, TOURIST_ID);
@@ -417,13 +417,12 @@ test.describe("Escrow 订单页订单写错误文案（mock API）", () => {
 
     const actionsHeading = page.getByRole("heading", { name: /订单操作|Order actions/i });
     await expect(actionsHeading).toBeVisible({ timeout: 30_000 });
-    await actionsHeading.locator("..").getByRole("button", { name: /接单|Accept order/i }).click({ timeout: 25_000 });
-
     await expect(
-      page.getByRole("alert").filter({
-        hasText: /该操作仅限向导|only available to guides/i,
-      }),
-    ).toBeVisible({ timeout: 30_000 });
+      actionsHeading.locator("..").getByRole("button", { name: /接单|Accept order/i }),
+    ).toHaveCount(0, { timeout: 15_000 });
+    await expect(
+      actionsHeading.locator("..").getByRole("button", { name: /取消订单|Cancel order/i }),
+    ).toBeVisible({ timeout: 15_000 });
   });
 
   test("接单 403 trust_guide_pending_review 映射为可读的向导审核提示", async ({ page }) => {

@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useId, type FormEvent } from "react";
 
+import { AdminComplianceSectionBackLinks } from "@/components/admin/AdminComplianceSectionBackLinks";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
 import { AdminComplianceDsarWorkflowNotice } from "@/components/admin/AdminComplianceDsarWorkflowNotice";
 import { AdminAlertError } from "@/components/admin/AdminAlertError";
@@ -11,10 +13,18 @@ import { AdminNoticeBanner } from "@/components/admin/AdminNoticeBanner";
 import { AdminSuccessBanner } from "@/components/admin/AdminSuccessBanner";
 import { useTranslation } from "@/components/LocaleProvider";
 import { useAdminMetaBuildFromPublicMeta } from "@/lib/useAdminMetaBuildFromPublicMeta";
-import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { DSAR_STATUSES, DSAR_STATUS_I18N } from "./adminComplianceRequestUpdatePageModel";
+import { complianceDsarUpdateRelatedFoldLinks } from "../../adminComplianceRequestsPageModel";
 import { useAdminComplianceRequestUpdatePage } from "./useAdminComplianceRequestUpdatePage";
-import { ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_LINK_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS, TT_ADMIN_PAGE_INNER_FORM, adminPageNavLinkClass } from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
+import {
+  ADMIN_FORM_CONTROL_SM_CLASS,
+  ADMIN_FORM_FIELD_FOCUS_CLASS,
+  ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  TT_ADMIN_PAGE_INNER_FORM,
+  adminPageNavLinkClass,
+  adminTableRowPrimaryActionClass,
+} from "@/lib/adminUi";
 
 /** 500：DSAR 登记更新（super_admin + 乐观锁 + 幂等键）。 */
 export function AdminComplianceRequestUpdatePageMain() {
@@ -66,7 +76,7 @@ export function AdminComplianceRequestUpdatePageMain() {
       title={t("admin_compliance_update_title")}
       subtitle={
         <>
-          <span>{t("admin_compliance_update_subtitle")}</span>
+          <span>{t("admin_compliance_update_subtitle_l5")}</span>
           {requestId ? (
             <p className="mt-2 font-mono text-small text-ink-500 break-all">
               {t("admin_compliance_events_requestId")}
@@ -77,35 +87,46 @@ export function AdminComplianceRequestUpdatePageMain() {
         </>
       }
       headerAside={
-        <>
+        <AdminComplianceSectionBackLinks>
           <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
+            href="/admin/compliance/requests"
+            className={adminPageNavLinkClass()}
+            data-tt-admin-compliance-update-back-list="1"
           >
-            {t("admin_observability_title")}
-          </Link>
-          {requestId ? (
-            <Link
-              href={`/admin/compliance/requests/${encodeURIComponent(requestId)}/events`}
-              className={`${adminPageNavLinkClass()}`}
-            >
-              {t("admin_compliance_update_backEvents")}
-            </Link>
-          ) : null}
-          <Link href="/admin/compliance/requests" className={`${adminPageNavLinkClass()}`}>
             {t("admin_compliance_events_backList")}
           </Link>
-        </>
+        </AdminComplianceSectionBackLinks>
       }
     >
+      {requestId ? (
+        <AdminOpsDetailRelatedFold
+          relatedLinks={complianceDsarUpdateRelatedFoldLinks(requestId)}
+          ariaLabelKey="admin_compliance_dsar_related_aria"
+          foldSummaryKey="admin_compliance_dsar_related_fold"
+          dataTtFold="compliance-update"
+        />
+      ) : null}
       <AdminComplianceDsarWorkflowNotice />
       <AdminMetaBuildSection meta={buildMeta} loading={buildLoading} error={buildError} />
 
       {!requestId ? (
         <AdminAlertError className="mt-6" message={t("admin_compliance_update_missingId")} />
       ) : (
-        <section
-          className="mt-8 space-y-4 rounded-[var(--radius-xl)] border border-ink-200 bg-white p-5"
+        <>
+          {requestId ? (
+            <div className="mt-6 flex flex-wrap gap-3" data-tt-admin-compliance-update-actions="1">
+              <Link
+                href={`/admin/compliance/requests/${encodeURIComponent(requestId)}/events`}
+                className={adminTableRowPrimaryActionClass()}
+                data-tt-admin-compliance-update-action-primary="events"
+              >
+                {t("admin_compliance_update_backEvents")}
+              </Link>
+            </div>
+          ) : null}
+        <AdminWarmL5Surface
+          as="section"
+          className="mt-8 space-y-4"
           aria-label={t("admin_compliance_update_form_aria")}
         >
           <p id={complianceUpdateFilterHintId} className="text-meta text-ink-600">
@@ -135,7 +156,7 @@ export function AdminComplianceRequestUpdatePageMain() {
                 onChange={(e) => setExpectedVersion(e.target.value)}
                 aria-invalid={!!writeError}
                 aria-errormessage={writeError ? writeErrorId : undefined}
-                className={`mt-1 min-h-[44px] w-full rounded-[var(--radius-sm)] border border-ink-200 px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 min-h-[44px] w-full ${ADMIN_FORM_CONTROL_SM_CLASS} px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               />
             </label>
 
@@ -149,7 +170,7 @@ export function AdminComplianceRequestUpdatePageMain() {
                 onChange={(e) => setEventType(e.target.value)}
                 aria-invalid={!!writeError}
                 aria-errormessage={writeError ? writeErrorId : undefined}
-                className={`mt-1 min-h-[44px] w-full rounded-[var(--radius-sm)] border border-ink-200 px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 min-h-[44px] w-full ${ADMIN_FORM_CONTROL_SM_CLASS} px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 placeholder={t("admin_compliance_update_eventTypePh")}
               />
             </label>
@@ -161,7 +182,7 @@ export function AdminComplianceRequestUpdatePageMain() {
                 name="status"
                 value={statusSel}
                 onChange={(e) => setStatusSel(e.target.value)}
-                className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start rounded-[var(--radius-sm)] border border-ink-200 bg-white px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start ${ADMIN_FORM_CONTROL_SM_CLASS} px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               >
                 {DSAR_STATUSES.map((s) => (
                   <option key={s || "omit"} value={s}>
@@ -179,7 +200,7 @@ export function AdminComplianceRequestUpdatePageMain() {
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 rows={2}
-                className={`mt-1 min-h-[44px] w-full rounded-[var(--radius-sm)] border border-ink-200 px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 min-h-[44px] w-full ${ADMIN_FORM_CONTROL_SM_CLASS} px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               />
             </label>
 
@@ -191,7 +212,7 @@ export function AdminComplianceRequestUpdatePageMain() {
                 value={eventDetail}
                 onChange={(e) => setEventDetail(e.target.value)}
                 rows={2}
-                className={`mt-1 min-h-[44px] w-full rounded-[var(--radius-sm)] border border-ink-200 px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 min-h-[44px] w-full ${ADMIN_FORM_CONTROL_SM_CLASS} px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               />
             </label>
 
@@ -200,7 +221,7 @@ export function AdminComplianceRequestUpdatePageMain() {
               <input
                 value={exportSignature}
                 onChange={(e) => setExportSignature(e.target.value)}
-                className={`mt-1 min-h-[44px] w-full rounded-[var(--radius-sm)] border border-ink-200 px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 min-h-[44px] w-full ${ADMIN_FORM_CONTROL_SM_CLASS} px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               />
             </label>
 
@@ -209,7 +230,7 @@ export function AdminComplianceRequestUpdatePageMain() {
               <input
                 value={recordHashFingerprint}
                 onChange={(e) => setRecordHashFingerprint(e.target.value)}
-                className={`mt-1 min-h-[44px] w-full rounded-[var(--radius-sm)] border border-ink-200 px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 min-h-[44px] w-full ${ADMIN_FORM_CONTROL_SM_CLASS} px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               />
             </label>
 
@@ -227,7 +248,8 @@ export function AdminComplianceRequestUpdatePageMain() {
               {submitting ? t("admin_compliance_update_submitting") : t("admin_compliance_update_submit")}
             </button>
           </form>
-        </section>
+        </AdminWarmL5Surface>
+        </>
       )}
     </AdminDetailPageChrome>
   );

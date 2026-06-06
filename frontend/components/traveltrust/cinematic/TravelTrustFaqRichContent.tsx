@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
-import { TT_FAQ_ACCORDION_L5 } from "@/lib/traveltrustCinematicNonGlobeL5";
+import { TT_FAQ_ACCORDION_L5 } from "@/lib/traveltrust/l5";
 
 const faqLinkClass =
   "font-medium text-ref-sun underline-offset-2 transition hover:text-ref-coral hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45";

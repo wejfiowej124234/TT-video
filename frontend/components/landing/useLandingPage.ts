@@ -1,12 +1,32 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { postItineraryCreate, getOrder } from "@/lib/apiClient";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import {
+  hydrateLandingUnlockedOrderDetails,
+} from "@/lib/landingItineraryHydrate";
+import { buildLandingToMarketHref } from "@/lib/landingMarketDeepLink";
+import {
+  LANDING_RESULT_ORDER_IDS_KEY,
+  LANDING_UNLOCKED_ORDER_IDS_KEY,
+  readLandingFavoriteOrderIds,
+  readLandingResultOrderIds,
+  readLandingUnlockedOrderIds,
+  subscribeLandingItineraryStorage,
+  writeLandingFavoriteOrderIds,
+  writeLandingResultOrderIds,
+  writeLandingUnlockedOrderIds,
+} from "@/lib/landingItinerarySession";
+import { FAV_ORDERS_KEY, loadFavSet, saveFavSet } from "@/lib/marketFavoritesStorage";
+import {
+  hasMarketAuthSession,
+  pullMarketTravelBookmarksIntoLocal,
+  pushMarketOrderBookmarkToggle,
+} from "@/lib/marketTravelBookmarksSync";
+import {
   dateToString,
   daysFromRange,
-  ITINERARY_CARD_COUNT,
 } from "./constants";
 
 export function useLandingPage(t: (key: string) => string) {
@@ -24,7 +44,7 @@ export function useLandingPage(t: (key: string) => string) {
   });
   const days = daysFromRange(startDate, endDate);
   const [attractionTypes, setAttractionTypes] = useState<string[]>(["世界遗产"]);
-  const [diningStandards, setDiningStandards] = useState<string[]>(["标准"]);
+  const [diningStandards, setDiningStandards] = useState<string[]>(["当地特色"]);
   const [hotelStandards, setHotelStandards] = useState<string[]>(["标准"]);
   const [budget, setBudget] = useState("");
   const [partySize, setPartySize] = useState(1);
@@ -34,30 +54,123 @@ export function useLandingPage(t: (key: string) => string) {
   const [validationErrorKey, setValidationErrorKey] = useState<string | null>(null);
   /** POST /itineraries / getOrder 等：已由 `mapApiReadError` 翻译的文案 */
   const [submitError, setSubmitError] = useState<string | null>(null);
+  /** 未登录提交：Hero 区展示登录 CTA（returnUrl=/） */
+  const [loginRequired, setLoginRequired] = useState(false);
   const [resultOrderIds, setResultOrderIds] = useState<string[]>([]);
-  /** 按「订单+卡片下标」记录解锁，避免同一订单多张卡时一点击就全解锁；key = `${orderId}-${index}` */
-  const [unlockedCardKeys, setUnlockedCardKeys] = useState<Set<string>>(new Set());
+  /** 按订单 ID 记录解锁（一单一卡，整单解锁） */
+  const [unlockedOrderIds, setUnlockedOrderIds] = useState<Set<string>>(new Set());
+  /** 解锁弹窗内错误（与 Hero submitError 分离） */
+  const [unlockError, setUnlockError] = useState<string | null>(null);
   const [selectedForUnlock, setSelectedForUnlock] = useState<{ orderId: string; index: number } | null>(null);
   const [unlockPaying, setUnlockPaying] = useState(false);
   const [orderDetails, setOrderDetails] = useState<Record<string, unknown>>({});
   const [favoritedIds, setFavoritedIds] = useState<Set<string>>(new Set());
   const resultsSectionRef = useRef<HTMLElement>(null);
   const unlockPayGen = useRef(0);
+  const sessionHydratedRef = useRef(false);
 
-  const toggleFavorite = (orderId: string) => {
-    setFavoritedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(orderId)) next.delete(orderId);
-      else next.add(orderId);
-      return next;
-    });
-  };
+  const marketHref = useMemo(
+    () => buildLandingToMarketHref({ country, city: cities[0], days }),
+    [country, cities, days],
+  );
 
   useEffect(() => {
-    if (resultOrderIds.length > 0 && resultsSectionRef.current) {
+    if (hasMarketAuthSession()) {
+      void pullMarketTravelBookmarksIntoLocal().then(() => {
+        setFavoritedIds(readLandingFavoriteOrderIds());
+      });
+    }
+  }, []);
+
+  const toggleFavorite = useCallback((orderId: string) => {
+    const prev = loadFavSet(FAV_ORDERS_KEY);
+    const next = new Set(prev);
+    const willFavorite = !next.has(orderId);
+    if (willFavorite) next.add(orderId);
+    else next.delete(orderId);
+    saveFavSet(FAV_ORDERS_KEY, next);
+    setFavoritedIds(next);
+    void pushMarketOrderBookmarkToggle(orderId, willFavorite).catch(() => {
+      saveFavSet(FAV_ORDERS_KEY, prev);
+      setFavoritedIds(prev);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (sessionHydratedRef.current) return;
+    sessionHydratedRef.current = true;
+
+    const storedResults = readLandingResultOrderIds();
+    const storedUnlocked = readLandingUnlockedOrderIds();
+    const storedFavorites = readLandingFavoriteOrderIds();
+    if (storedResults.length > 0) setResultOrderIds(storedResults);
+    if (storedUnlocked.size > 0) setUnlockedOrderIds(storedUnlocked);
+    if (storedFavorites.size > 0) setFavoritedIds(storedFavorites);
+
+    if (storedUnlocked.size === 0) return;
+
+    let cancelled = false;
+    void hydrateLandingUnlockedOrderDetails([...storedUnlocked], getOrder).then(({ details, staleIds }) => {
+      if (cancelled) return;
+      if (Object.keys(details).length > 0) {
+        setOrderDetails((prev) => ({ ...prev, ...details }));
+      }
+      if (staleIds.length === 0) return;
+      const stale = new Set(staleIds);
+      setResultOrderIds((prev) => prev.filter((id) => !stale.has(id)));
+      setUnlockedOrderIds((prev) => new Set([...prev].filter((id) => !stale.has(id))));
+      setFavoritedIds((prev) => new Set([...prev].filter((id) => !stale.has(id))));
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    writeLandingResultOrderIds(resultOrderIds);
+  }, [resultOrderIds]);
+
+  useEffect(() => {
+    writeLandingUnlockedOrderIds(unlockedOrderIds);
+  }, [unlockedOrderIds]);
+
+  useEffect(() => {
+    writeLandingFavoriteOrderIds(favoritedIds);
+  }, [favoritedIds]);
+
+  useEffect(() => {
+    return subscribeLandingItineraryStorage((key) => {
+      if (key === LANDING_RESULT_ORDER_IDS_KEY) {
+        setResultOrderIds(readLandingResultOrderIds());
+        return;
+      }
+      if (key === LANDING_UNLOCKED_ORDER_IDS_KEY) {
+        const storedUnlocked = readLandingUnlockedOrderIds();
+        setUnlockedOrderIds(storedUnlocked);
+        if (storedUnlocked.size === 0) return;
+        void hydrateLandingUnlockedOrderDetails([...storedUnlocked], getOrder).then(({ details, staleIds }) => {
+          if (Object.keys(details).length > 0) {
+            setOrderDetails((prev) => ({ ...prev, ...details }));
+          }
+          if (staleIds.length === 0) return;
+          const stale = new Set(staleIds);
+          setResultOrderIds((prev) => prev.filter((id) => !stale.has(id)));
+          setUnlockedOrderIds((prev) => new Set([...prev].filter((id) => !stale.has(id))));
+          setFavoritedIds((prev) => new Set([...prev].filter((id) => !stale.has(id))));
+        });
+        return;
+      }
+      if (key === FAV_ORDERS_KEY) {
+        setFavoritedIds(readLandingFavoriteOrderIds());
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if ((submitting || resultOrderIds.length > 0) && resultsSectionRef.current) {
       resultsSectionRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-  }, [resultOrderIds.length]);
+  }, [submitting, resultOrderIds.length]);
 
   useEffect(() => {
     if (!selectedForUnlock) return;
@@ -68,10 +181,11 @@ export function useLandingPage(t: (key: string) => string) {
     return () => window.removeEventListener("keydown", onKey);
   }, [selectedForUnlock]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setValidationErrorKey(null);
     setSubmitError(null);
+    setLoginRequired(false);
     const budgetNum = budget ? parseFloat(budget) : undefined;
     if (budgetNum !== undefined && (isNaN(budgetNum) || budgetNum <= 0)) {
       setValidationErrorKey("landing_error_budget");
@@ -113,8 +227,9 @@ export function useLandingPage(t: (key: string) => string) {
             : undefined,
         budget_min: budgetNum ? budgetNum * 0.8 : undefined,
         budget_max: budgetNum,
+        party_size: partySize,
+        num_rooms: numRooms,
       };
-      // 只创建 1 个订单，避免自由市场出现多张相同行程卡（53/49：一单一流程）
       const res = await postItineraryCreate(body);
       const data = res as { order_id?: string };
       const orderIdRaw = typeof data.order_id === "string" ? data.order_id.trim() : "";
@@ -122,11 +237,11 @@ export function useLandingPage(t: (key: string) => string) {
         setValidationErrorKey("landing_error_missingOrderId");
         return;
       }
-      const singleId = orderIdRaw;
-      setResultOrderIds(Array(ITINERARY_CARD_COUNT).fill(singleId));
+      setResultOrderIds([orderIdRaw]);
     } catch (err) {
       const msg = err instanceof Error ? err.message : "";
       if (msg === "login_required" || msg === "unauthorized") {
+        setLoginRequired(true);
         setSubmitError(t("landing_error_login"));
       } else {
         setSubmitError(mapApiReadError(err, t, "landing_error_request"));
@@ -134,25 +249,38 @@ export function useLandingPage(t: (key: string) => string) {
     } finally {
       setSubmitting(false);
     }
-  };
+  }, [
+    budget,
+    country,
+    cities,
+    startDate,
+    endDate,
+    days,
+    attractionTypes,
+    diningStandards,
+    hotelStandards,
+    partySize,
+    numRooms,
+    t,
+  ]);
 
-  const handleUnlockClick = (orderId: string, index: number) => {
-    const key = `${orderId}-${index}`;
-    if (unlockedCardKeys.has(key)) return;
+  const handleUnlockClick = useCallback((orderId: string, index: number) => {
+    if (unlockedOrderIds.has(orderId)) return;
+    setUnlockError(null);
     setSelectedForUnlock({ orderId, index });
-  };
+  }, [unlockedOrderIds]);
 
-  const handleUnlockPay = async () => {
+  const handleUnlockPay = useCallback(async () => {
     if (!selectedForUnlock) return;
-    const { orderId, index } = selectedForUnlock;
-    const key = `${orderId}-${index}`;
+    const { orderId } = selectedForUnlock;
     const gen = ++unlockPayGen.current;
     setUnlockPaying(true);
+    setUnlockError(null);
     try {
       const order = await getOrder(orderId);
       if (gen !== unlockPayGen.current) return;
       setOrderDetails((prev) => ({ ...prev, [orderId]: order }));
-      setUnlockedCardKeys((prev) => new Set(prev).add(key));
+      setUnlockedOrderIds((prev) => new Set(prev).add(orderId));
       setSelectedForUnlock(null);
     } catch (err) {
       if (gen !== unlockPayGen.current) return;
@@ -161,16 +289,17 @@ export function useLandingPage(t: (key: string) => string) {
       }
       const msg = err instanceof Error ? err.message : "";
       if (msg === "login_required" || msg === "unauthorized") {
-        setSubmitError(t("landing_error_login"));
+        setLoginRequired(true);
+        setUnlockError(t("landing_error_login"));
       } else {
-        setSubmitError(mapApiReadError(err, t, "landing_error_request"));
+        setUnlockError(mapApiReadError(err, t, "landing_error_request"));
       }
     } finally {
       if (gen === unlockPayGen.current) {
         setUnlockPaying(false);
       }
     }
-  };
+  }, [selectedForUnlock, t]);
 
   return {
     country,
@@ -197,11 +326,13 @@ export function useLandingPage(t: (key: string) => string) {
     submitting,
     validationErrorKey,
     submitError,
+    loginRequired,
     resultOrderIds,
-    unlockedCardKeys,
+    unlockedOrderIds,
     selectedForUnlock,
     setSelectedForUnlock,
     unlockPaying,
+    unlockError,
     orderDetails,
     favoritedIds,
     toggleFavorite,
@@ -209,5 +340,6 @@ export function useLandingPage(t: (key: string) => string) {
     handleSubmit,
     handleUnlockClick,
     handleUnlockPay,
+    marketHref,
   };
 }

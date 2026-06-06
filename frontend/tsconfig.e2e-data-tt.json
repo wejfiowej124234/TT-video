@@ -1,0 +1,10 @@
+{
+  // Narrow slice: `e2e/helpers/pageShells` ↔ `test-utils/dataTtSelectors` (root tsconfig excludes full `e2e/`).
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["node", "@playwright/test"]
+  },
+  "include": ["e2e/helpers/pageShells.ts", "test-utils/dataTtSelectors.ts"],
+  "exclude": ["node_modules"]
+}

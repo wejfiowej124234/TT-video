@@ -2,33 +2,16 @@
 
 import { useTranslation } from "@/components/LocaleProvider";
 
-const shimmer = "animate-traveltrust-shimmer bg-gradient-to-r from-white/5 via-white/12 to-white/5 bg-[length:200%_100%]";
-
-/** v6 cinematic shell skeleton（PH1-UI-35） */
+/** 路由切换：仅顶栏进度条，勿全屏遮罩盖住 L1 公告 */
 export default function TravelTrustLoading() {
   const { t } = useTranslation();
   return (
-    <main
-      className="relative z-10 mx-auto max-w-5xl bg-[#0c0a09] px-4 py-6 sm:px-6"
-      role="status"
-      aria-label={t("traveltrust_title")}
-      aria-busy="true"
-    >
-      <div className={`h-11 w-48 rounded-lg ${shimmer}`} aria-hidden />
-      
-      <div
-        className={`mt-8 min-h-[min(52vh,480px)] rounded-2xl border border-ref-sun/14 ${shimmer}`}
-        aria-hidden
-      />
-      <div className="mt-10 flex gap-2" aria-hidden>
-        {[1, 2, 3, 4].map((n) => (
-          <div key={n} className={`h-12 w-24 rounded-xl ${shimmer}`} />
-        ))}
-      </div>
-      <div
-        className={`mt-6 min-h-[min(48vh,400px)] rounded-2xl border border-ref-sun/14 ${shimmer}`}
-        aria-hidden
-      />
-    </main>
+    <div
+      className="pointer-events-none fixed left-0 top-0 right-0 z-[400] h-0.5 animate-pulse bg-travel-500"
+      role="progressbar"
+      aria-valuenow={undefined}
+      aria-label={t("common_loading")}
+      data-tt-traveltrust-route-loading-bar="1"
+    />
   );
 }

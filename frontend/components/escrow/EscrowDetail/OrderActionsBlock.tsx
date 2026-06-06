@@ -17,8 +17,14 @@ import { mapIntentError } from "@/lib/mapIntentError";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import IntentSignFacts from "./IntentSignFacts";
 import {
-  marketCyanInlineLinkFocusClasses,
-  marketCyanPillControlFocusClasses,
+  escrowProtocolCompactInputClass,
+  escrowProtocolInlineLinkClass,
+  escrowProtocolMetaClass,
+  escrowProtocolPillFocusClass,
+  escrowProtocolSubheadingClass,
+  TT_ESCROW_PROTOCOL_SECTION,
+} from "@/lib/escrowProtocolUi";
+import {
   touchTargetLink44Classes,
   travelFocusRingCoreOffset2Classes,
 } from "@/lib/travelLinkFocus";
@@ -48,6 +54,9 @@ export interface OrderActionsBlockProps {
    * 对有托管地址的订单仍走 REST `confirm-completion`，便于测试网链下闭环；为假时保持「有 escrow 则 EIP-712 intent」。
    */
   chainOffRestConfirmCompletionEnabled?: boolean;
+  /** Experience 草稿：非向导身份不展示「接单」 */
+  allowAccept?: boolean;
+  variantExperience?: boolean;
 }
 
 /** P23：订单操作；有 escrow_address 时确认完成默认走 EIP-712 + intents（202）；P3 链下闸开启时可走 REST confirm-completion（见 `chainOffRestConfirmCompletionEnabled`） */
@@ -64,6 +73,8 @@ export default function OrderActionsBlock({
   variantDid,
   protocolPaused = false,
   chainOffRestConfirmCompletionEnabled = false,
+  allowAccept = true,
+  variantExperience = false,
 }: OrderActionsBlockProps) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState<string | null>(null);
@@ -116,7 +127,7 @@ export default function OrderActionsBlock({
       .finally(() => setLoading(null));
   };
 
-  const canAccept = state === "created";
+  const canAccept = state === "created" && allowAccept;
   const canCancel = state === "created" || state === "accepted";
   const canConfirmCompletion =
     state === "accepted" || state === "escrowed" || state === "funded";
@@ -153,16 +164,33 @@ export default function OrderActionsBlock({
   }
 
   const busy = loading !== null || isSigning;
-  const isDid = !!variantDid;
+  const isExperience = !!variantExperience;
+  const isDid = !!variantDid && !isExperience;
   const pillFocusClass = isDid
-    ? marketCyanPillControlFocusClasses
-    : `${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`;
-  const rootClass = isDid
-    ? "rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md p-6 shadow-scifi-panel space-y-3"
-    : "rounded-[var(--radius-sm)] bg-bg-console p-6 shadow-soft space-y-3";
-  const hClass = isDid ? "text-body font-semibold text-cyan-200" : "text-body font-semibold text-ink-800";
-  const metaClass = isDid ? "text-meta text-slate-300" : "text-meta text-ink-500";
-  const labelClass = isDid ? "block text-meta text-slate-300" : "block text-meta text-ink-600";
+    ? escrowProtocolPillFocusClass
+    : isExperience
+      ? `${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-ink-950`
+      : `${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`;
+  const rootClass = isExperience
+    ? "rounded-[var(--radius-md)] border border-white/12 bg-black/20 p-4 space-y-3"
+    : isDid
+      ? TT_ESCROW_PROTOCOL_SECTION
+      : "rounded-[var(--radius-sm)] bg-bg-console p-6 shadow-soft space-y-3";
+  const hClass = isExperience
+    ? "text-body font-semibold text-ref-sun/95"
+    : isDid
+      ? escrowProtocolSubheadingClass
+      : "text-body font-semibold text-ink-800";
+  const metaClass = isExperience
+    ? "text-meta text-white/70"
+    : isDid
+      ? escrowProtocolMetaClass
+      : "text-meta text-ink-500";
+  const labelClass = isExperience
+    ? "block text-meta text-white/75"
+    : isDid
+      ? `block ${escrowProtocolMetaClass}`
+      : "block text-meta text-ink-600";
 
   const acceptBlockedByOtherPending = canAccept && busy && loading !== "accept";
   const acceptButtonTitle =
@@ -181,7 +209,7 @@ export default function OrderActionsBlock({
   return (
     <div className={rootClass}>
       <h3 id={orderActionsHeadingId} className={hClass}>
-        {t("escrow_orderActions")}
+        {t(isExperience ? "escrow_orderActions_experience" : "escrow_orderActions")}
       </h3>
       {guideWalletMismatch && (
         <p id={guideWalletAlertId} className="text-small text-warning" role="alert">
@@ -241,7 +269,7 @@ export default function OrderActionsBlock({
               }}
               className={`${touchTargetLink44Classes} rounded-[var(--radius-sm)] border px-3 py-2 text-small font-medium ${
                 isDid
-                  ? `border-slate-600/50 text-slate-300 hover:bg-slate-800/50 ${marketCyanInlineLinkFocusClasses}`
+                  ? `border-white/20 text-slate-200 hover:bg-white/10 ${escrowProtocolPillFocusClass}`
                   : `border-ink-200 text-ink-700 hover:bg-ink-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`
               }`}
             >
@@ -274,7 +302,11 @@ export default function OrderActionsBlock({
               aria-busy={loading === "accept" ? true : undefined}
               title={protocolPaused ? t("escrow_protocolPause_title") : acceptButtonTitle}
               aria-describedby={acceptButtonDescribedBy}
-              className={`btn-console rounded-[var(--radius-sm)] bg-success px-3 py-1.5 text-white text-small disabled:opacity-50 ${pillFocusClass}`}
+              className={`btn-console rounded-[var(--radius-sm)] px-3 py-1.5 text-small disabled:opacity-50 ${pillFocusClass} ${
+                isExperience
+                  ? "bg-ref-sun !text-ink-950 border border-ref-sun hover:bg-ref-sun/95 hover:!text-ink-950 font-semibold"
+                  : "bg-success text-white"
+              }`}
             >
               {loading === "accept" ? t("common_submitting") : t("escrow_accept")}
             </button>
@@ -296,7 +328,11 @@ export default function OrderActionsBlock({
               disabled={protocolPaused || busy}
               title={protocolPaused ? t("escrow_protocolPause_title") : undefined}
               aria-busy={loading === "cancel" ? true : undefined}
-              className={`btn-console rounded-[var(--radius-sm)] border border-warning px-3 py-1.5 text-warning text-small disabled:opacity-50 ${pillFocusClass}`}
+              className={`btn-console rounded-[var(--radius-sm)] px-3 py-1.5 text-small disabled:opacity-50 ${pillFocusClass} ${
+                isExperience
+                  ? "border border-amber-400/55 text-amber-200 hover:bg-amber-500/12"
+                  : "border border-warning text-warning"
+              }`}
             >
               {loading === "cancel" ? t("common_submitting") : t("escrow_cancelOrder")}
             </button>
@@ -437,7 +473,7 @@ export default function OrderActionsBlock({
               value={disputeReasonSummary}
               onChange={(e) => setDisputeReasonSummary(e.target.value)}
               rows={2}
-              className={`w-full max-w-md rounded-[var(--radius-sm)] border bg-white px-2 py-1.5 text-small text-ink-800 placeholder:text-ink-400 ${isDid ? "border-slate-500/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900" : "border-ink-200"}`}
+              className={`w-full max-w-md ${isDid ? escrowProtocolCompactInputClass : "rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 text-small text-ink-800 placeholder:text-ink-400"}`}
               placeholder={t("escrow_disputeReasonPlaceholder")}
               disabled={protocolPaused || busy}
               aria-busy={busy ? true : undefined}

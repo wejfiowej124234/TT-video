@@ -1,5 +1,6 @@
 "use client";
 
+import { CIM, CIM_CHOICE, CIM_FOCUS, CIM_FOCUS_WITHIN } from '../customItineraryModalTheme';
 import Image from "next/image";
 import { useId, type Dispatch, type SetStateAction } from "react";
 import type { MutableRefObject, RefObject } from "react";
@@ -54,7 +55,7 @@ export default function GuideFormQuoteAndCoverSection({
   const coverImageUrlId = useId();
   return (
     <>
-      <div className="rounded-[var(--radius-md)] border border-white/25 bg-white/5 p-4 space-y-3">
+      <div className={CIM.customItineraryPanelDay}>
         <h3 className="text-small font-semibold text-white drop-shadow-market-pill">
           {t("market_guideTripCostDetail")}
         </h3>
@@ -92,7 +93,7 @@ export default function GuideFormQuoteAndCoverSection({
       </div>
 
       {form.country && (
-        <div className="rounded-[var(--radius-md)] border border-white/25 bg-white/5 p-4 space-y-2">
+        <div className={CIM.customItineraryPanelQuote}>
           <h3 className="text-small font-semibold text-white drop-shadow-market-pill">
             {t("market_quoteListTitle")}
           </h3>
@@ -137,7 +138,7 @@ export default function GuideFormQuoteAndCoverSection({
               </li>
             )}
           </ul>
-          <p className="text-small font-semibold text-white pt-2 border-t border-white/25">
+          <p className="text-small font-semibold text-white pt-2 border-t border-ref-sun/14">
             {t("market_quoteTotal")}：{guideQuoteBreakdown.total}
             {t("ui_currency_suffix_usdc")}
           </p>
@@ -220,7 +221,7 @@ export default function GuideFormQuoteAndCoverSection({
         </label>
         <p className="text-meta text-white/70 mb-1">{t("market_guideCoverHint")}</p>
         <div className="flex flex-wrap gap-2 items-center">
-          <label className="inline-flex min-h-[44px] cursor-pointer items-center justify-start rounded-[var(--radius-sm)] border border-white/25 bg-white/5 px-3 py-2 text-small text-white hover:bg-white/10 focus-within:ring-1 focus-within:ring-travel-400">
+          <label className="inline-flex min-h-[44px] cursor-pointer items-center justify-start rounded-[var(--radius-sm)] border border-ref-sun/24 bg-ink-900/55 px-3 py-2 text-small text-white hover:bg-white/10 {CIM_FOCUS_WITHIN}">
             <span className="sr-only">{t("market_coverImage")}</span>
             <input
               type="file"
@@ -264,7 +265,7 @@ export default function GuideFormQuoteAndCoverSection({
             >
               <button
                 type="submit"
-                className="relative w-20 h-20 rounded-[var(--radius-sm)] overflow-hidden border border-white/20 bg-slate-800 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-travel-400"
+                className="relative w-20 h-20 rounded-[var(--radius-sm)] overflow-hidden border border-ref-sun/16 bg-ink-950/60 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]"
               >
                 <Image
                   src={form.image}
@@ -286,7 +287,7 @@ export default function GuideFormQuoteAndCoverSection({
             >
               <button
                 type="submit"
-                className={`${touchTargetLink44Classes} text-meta text-white/80 hover:text-white border border-white/30 rounded-[var(--radius-sm)] px-2 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-travel-400`}
+                className={`${touchTargetLink44Classes} text-meta text-white/80 hover:text-white border border-ref-sun/24 rounded-[var(--radius-sm)] px-2 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]`}
               >
                 {t("market_coverClear")}
               </button>
@@ -305,7 +306,7 @@ export default function GuideFormQuoteAndCoverSection({
           onClick={() => setViewingGuideImage(null)}
         >
           <div
-            className="relative max-w-md w-full rounded-[var(--radius-lg)] border border-white/25 bg-slate-900/95 overflow-hidden shadow-strong"
+            className={CIM.customItineraryOverlayPanel}
             onClick={(e) => e.stopPropagation()}
           >
             <p id={guideImagePreviewDescId} className="sr-only">

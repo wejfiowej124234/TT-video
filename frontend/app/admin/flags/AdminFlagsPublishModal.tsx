@@ -2,11 +2,14 @@
 
 import { AdminAlertError } from "@/components/admin/AdminAlertError";
 import { AdminDialogFocusPanel } from "@/components/admin/AdminDialogFocusPanel";
+import { AdminModalWarmL5Panel } from "@/components/admin/AdminModalWarmL5Panel";
 import { AdminDialogScrim } from "@/components/admin/AdminDialogScrim";
 import { escrowModalPortalRootClass } from "@/components/market/marketStudioModalLayout";
 import type { AdminFlagRegionMode } from "./adminFlagsPageTypes";
 import type { AdminFlagsPageViewModel } from "./useAdminFlagsPage";
-import {ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS } from "@/lib/adminUi";
+import {ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_FORM_CONTROL_SM_CLASS,} from "@/lib/adminUi";
 type Props = Pick<
   AdminFlagsPageViewModel,
   | "t"
@@ -67,8 +70,9 @@ export function AdminFlagsPublishModal({
       <AdminDialogFocusPanel
         onClose={closePublish}
         trapId="flags-publish"
-        className="relative z-10 max-w-md w-full rounded-[var(--radius-xl)] border border-ink-200 bg-white p-5 shadow-medium my-8"
+        className="relative z-10 w-full flex justify-center px-4 my-8"
       >
+        <AdminModalWarmL5Panel className="max-w-md w-full">
         <h2 id={publishDialogTitleId} className="text-body-l font-semibold text-ink-900">
           {t("admin_flags_publishTitle")}
         </h2>
@@ -105,7 +109,7 @@ export function AdminFlagsPublishModal({
               value={pubRollout}
               onChange={(e) => setPubRollout(e.target.value)}
               placeholder={t("admin_flags_publishRolloutPh")}
-              className="mt-1 w-full rounded-[var(--radius-sm)] border border-ink-200 px-3 py-2 font-mono text-small"
+              className={`mt-1 w-full ${ADMIN_FORM_CONTROL_SM_CLASS} px-3 py-2 font-mono text-small`}
             />
           </label>
 
@@ -115,7 +119,7 @@ export function AdminFlagsPublishModal({
               name="region_mode"
               value={pubRegionMode}
               onChange={(e) => setPubRegionMode(e.target.value as AdminFlagRegionMode)}
-              className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start rounded-[var(--radius-sm)] border border-ink-200 bg-white px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start ${ADMIN_FORM_CONTROL_SM_CLASS} px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             >
               <option value="unchanged">{t("admin_flags_publishRegionUnchanged")}</option>
               <option value="clear">{t("admin_flags_publishRegionClear")}</option>
@@ -130,7 +134,7 @@ export function AdminFlagsPublishModal({
                 name="region"
                 value={pubRegionText}
                 onChange={(e) => setPubRegionText(e.target.value)}
-                className="mt-1 w-full rounded-[var(--radius-sm)] border border-ink-200 px-3 py-2 font-mono text-small"
+                className={`mt-1 w-full ${ADMIN_FORM_CONTROL_SM_CLASS} px-3 py-2 font-mono text-small`}
               />
             </label>
           ) : null}
@@ -143,7 +147,7 @@ export function AdminFlagsPublishModal({
               inputMode="numeric"
               value={pubVersion}
               onChange={(e) => setPubVersion(e.target.value)}
-              className="mt-1 w-full rounded-[var(--radius-sm)] border border-ink-200 px-3 py-2 font-mono text-small"
+              className={`mt-1 w-full ${ADMIN_FORM_CONTROL_SM_CLASS} px-3 py-2 font-mono text-small`}
             />
           </label>
 
@@ -157,7 +161,7 @@ export function AdminFlagsPublishModal({
               name="admin_modal_intent"
               value="cancel"
               formNoValidate
-              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-200 px-4 py-2 text-small text-ink-800 hover:bg-bg-console ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`inline-flex min-h-[44px] items-center justify-center ${ADMIN_FILTER_RESET_BTN_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             >
               {t("admin_flags_publishCancel")}
             </button>
@@ -171,6 +175,7 @@ export function AdminFlagsPublishModal({
             </button>
           </div>
         </form>
+            </AdminModalWarmL5Panel>
       </AdminDialogFocusPanel>
     </div>
   );

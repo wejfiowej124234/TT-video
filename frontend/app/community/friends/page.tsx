@@ -1,4 +1,5 @@
 "use client";
+import { TT_COMMUNITY_PAGE_L5 } from "@/lib/marketingUi";
 
 import { useState, useEffect, useCallback, useRef, type FormEvent } from "react";
 import Image from "next/image";
@@ -7,24 +8,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslation } from "@/components/LocaleProvider";
 import { useCommunityAuth } from "@/components/community/CommunityAuthContext";
 import {
-  getMeFollowing,
-  getMeFollowers,
-  getFriendsList,
-  getFriendsRequests,
-  getFriendsRequestsSent,
-  getConversations,
   postFriendsRequest,
   postFriendsAccept,
   postFriendsReject,
   deleteUserFollow,
 } from "@/lib/apiClient/community";
-import { getMe } from "@/lib/apiClient/me";
 import type { CommunityUserItem } from "@/lib/communityMockData";
 import { CommunityFriendsListSkeleton } from "@/components/community/CommunityFriendsListSkeleton";
-import {
-  communityStoredRolePillClassName,
-  mapApiUserRoleToCommunity,
-} from "@/components/community/communityFeedMappers";
+import { communityStoredRolePillClassName } from "@/components/community/communityFeedMappers";
 import { marketHrefForCommunityUser } from "@/lib/communityMarketDeepLink";
 import { COMMUNITY_BOOK_GUIDE_CTA_CLASS } from "@/components/community/communityFeedConstants";
 import { formatWalletOrDidShort } from "@/lib/formatWalletOrDidShort";
@@ -32,41 +23,22 @@ import ApiErrorAlert from "@/components/ApiErrorAlert";
 import { messageForCommunityActionResponse } from "@/lib/formatCommunityApiMessage";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import {
+  CommunityRelationalShowcaseHonestyNote,
+  communityRelationalShowcaseDataAttr,
+} from "@/components/community/CommunityRelationalShowcaseHonestyNote";
+import {
   communityAvatarLinkFocus,
   communityCardLinkFocus,
   communityCyanPillFocus,
-  communityFuchsiaPillFocus,
   communityShellTabFocus,
   communitySlatePillFocus,
 } from "@/lib/communityA11yFocus";
 import { communityStoredRoleLabelI18nKey } from "@/lib/meRoleDisplay";
 import { CommunityParamRouteSuspense } from "@/components/community/CommunityParamRouteSuspense";
-
-type FriendsTab = "following" | "followers" | "friends" | "requests";
-
-/** 51-31-7：关注/粉丝/好友列表（API 可带 nickname、avatar_url、role） */
-function apiUsersToItems(
-  items: Array<{
-    id: string;
-    nickname?: string | null;
-    avatar_url?: string | null;
-    role?: string | null;
-    is_escrow_guide?: boolean | null;
-    default_wallet_address?: string | null;
-  }>
-): CommunityUserItem[] {
-  return items.map((u) => {
-    const wallet = formatWalletOrDidShort(u.default_wallet_address ?? undefined);
-    return {
-      id: u.id,
-      nickname: (u.nickname && String(u.nickname).trim()) || u.id.slice(0, 8),
-      avatar_url: u.avatar_url ?? null,
-      role: mapApiUserRoleToCommunity(u.role),
-      ...(u.is_escrow_guide === true ? { isEscrowGuide: true } : {}),
-      ...(wallet ? { wallet } : {}),
-    };
-  });
-}
+import {
+  useCommunityFriendsPageData,
+  type FriendsTab,
+} from "./useCommunityFriendsPageData";
 
 /** 88 §3.2：好友申请子 Tab 空态 — 虚线框 + 说明 + Feed/发现 CTA（与探索页结构化空态同口径） */
 function FriendsRequestsEmptyPanel({
@@ -78,12 +50,12 @@ function FriendsRequestsEmptyPanel({
 }) {
   return (
     <div
-      className="rounded-[var(--radius-md)] border border-dashed border-cyan-500/35 bg-slate-900/45 px-5 py-10 text-center space-y-4"
+      className="rounded-[var(--radius-md)] border border-dashed border-ref-sun/30 bg-slate-900/45 px-5 py-10 text-center space-y-4"
       role="region"
       aria-label={variant === "sent" ? t("community_requests_sent_empty") : t("community_requests_empty")}
     >
       <div
-        className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-cyan-400/35 bg-cyan-500/10 text-cyan-300"
+        className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-ref-sun/28 bg-ref-sun/10 text-ref-sun"
         aria-hidden
       >
         <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -105,13 +77,13 @@ function FriendsRequestsEmptyPanel({
       <div className="flex flex-wrap justify-center gap-3 pt-1">
         <Link
           href="/community"
-          className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub inline-flex items-center justify-center min-h-[44px] ${communityCyanPillFocus}`}
+          className={`${TT_COMMUNITY_PAGE_L5.pill} ${communityCyanPillFocus}`}
         >
           {t("community_tab_feed")}
         </Link>
         <Link
           href="/community/explore"
-          className={`rounded-full border border-fuchsia-400/45 bg-fuchsia-500/15 px-4 py-2 text-meta font-medium text-fuchsia-100 hover:bg-fuchsia-500/25 motion-sub inline-flex items-center justify-center min-h-[44px] ${communityFuchsiaPillFocus}`}
+          className={`${TT_COMMUNITY_PAGE_L5.primaryCtaFilled} ${communityCyanPillFocus}`}
         >
           {t("community_explore_title")}
         </Link>
@@ -135,39 +107,25 @@ function CommunityFriendsPageInner() {
   const [addRequestPendingId, setAddRequestPendingId] = useState<string | null>(null);
   const [unfollowPendingId, setUnfollowPendingId] = useState<string | null>(null);
 
-  const [apiFollowing, setApiFollowing] = useState<CommunityUserItem[]>([]);
-  const [apiFollowers, setApiFollowers] = useState<CommunityUserItem[]>([]);
-  const [apiFriends, setApiFriends] = useState<CommunityUserItem[]>([]);
-  const [apiRequestsReceived, setApiRequestsReceived] = useState<
-    Array<{
-      id: string;
-      from_user_id: string;
-      to_user_id: string;
-      status: string;
-      from_nickname?: string;
-      from_avatar_url?: string | null;
-      from_role?: string | null;
-      from_is_escrow_guide?: boolean | null;
-      from_default_wallet?: string | null;
-    }>
-  >([]);
-  const [apiRequestsSent, setApiRequestsSent] = useState<
-    Array<{
-      id: string;
-      from_user_id: string;
-      to_user_id: string;
-      status: string;
-      to_nickname?: string;
-      to_avatar_url?: string | null;
-      to_role?: string | null;
-      to_is_escrow_guide?: boolean | null;
-      to_default_wallet?: string | null;
-    }>
-  >([]);
-  const [loading, setLoading] = useState(true);
-  const [loadError, setLoadError] = useState<string | null>(null);
   const [retryKey, setRetryKey] = useState(0);
-  const [convByPeer, setConvByPeer] = useState<Record<string, string>>({});
+
+  const {
+    apiFollowing,
+    apiFollowers,
+    apiFriends,
+    apiRequestsReceived,
+    apiRequestsSent,
+    convByPeer,
+    loading,
+    loadError,
+    setApiRequestsReceived,
+  } = useCommunityFriendsPageData({
+    tab,
+    retryKey,
+    t,
+    isLoggedIn,
+    authLoading,
+  });
 
   useEffect(() => {
     const raw = searchParams.get("tab")?.trim().toLowerCase();
@@ -209,99 +167,6 @@ function CommunityFriendsPageInner() {
     if (friendsToastTimerRef.current) clearTimeout(friendsToastTimerRef.current);
   }, []);
 
-  useEffect(() => {
-    if (authLoading) {
-      setLoading(true);
-      return;
-    }
-
-    if (!isLoggedIn) {
-      setApiFollowing([]);
-      setApiFollowers([]);
-      setApiFriends([]);
-      setApiRequestsReceived([]);
-      setApiRequestsSent([]);
-      setConvByPeer({});
-      setLoadError(null);
-      setLoading(false);
-      return;
-    }
-
-    let cancelled = false;
-    setLoading(true);
-    setLoadError(null);
-    void Promise.allSettled([
-      getMeFollowing(),
-      getMeFollowers(),
-      getFriendsList(),
-      getFriendsRequests(),
-      getFriendsRequestsSent(),
-      getConversations(),
-      getMe(),
-    ]).then((settled) => {
-      if (cancelled) return;
-      const okCount = settled.filter((s) => s.status === "fulfilled").length;
-      if (okCount === 0) {
-        const firstRej = settled.find((s) => s.status === "rejected") as PromiseRejectedResult | undefined;
-        setLoadError(
-          mapApiReadError(firstRej?.reason ?? new Error("network"), t, "community_friends_loadFailed")
-        );
-        setLoading(false);
-        return;
-      }
-
-      const followingData = settled[0].status === "fulfilled" ? settled[0].value : null;
-      const followersData = settled[1].status === "fulfilled" ? settled[1].value : null;
-      const friendsData = settled[2].status === "fulfilled" ? settled[2].value : null;
-      const requestsData = settled[3].status === "fulfilled" ? settled[3].value : null;
-      const sentData = settled[4].status === "fulfilled" ? settled[4].value : null;
-      const convData = settled[5].status === "fulfilled" ? settled[5].value : null;
-      const meData = settled[6].status === "fulfilled" ? settled[6].value : null;
-
-      for (let i = 0; i < settled.length; i++) {
-        if (settled[i].status === "rejected" && typeof window !== "undefined") {
-          console.error("CommunityFriendsPage load fragment failed:", i, (settled[i] as PromiseRejectedResult).reason);
-        }
-      }
-
-      const following = followingData?.following ?? [];
-      const followers = followersData?.followers ?? [];
-      const friends = friendsData?.friends ?? [];
-      const requests = requestsData?.requests ?? [];
-      const sent = sentData?.requests ?? [];
-      setApiFollowing(apiUsersToItems(following));
-      setApiFollowers(apiUsersToItems(followers));
-      setApiFriends(apiUsersToItems(friends));
-      setApiRequestsReceived(requests);
-      setApiRequestsSent(sent);
-
-      const rawMe = meData as Record<string, unknown> | null;
-      const meInner =
-        rawMe?.user && typeof rawMe.user === "object" && rawMe.user !== null
-          ? (rawMe.user as { id?: string })
-          : (rawMe as { id?: string } | null);
-      const meId =
-        typeof meInner?.id === "string" && meInner.id !== "anonymous" ? meInner.id : undefined;
-      const convs = convData?.conversations ?? [];
-      if (meId && convs.length > 0) {
-        const m: Record<string, string> = {};
-        for (const c of convs) {
-          const peer = c.peer_id ?? (c.user1_id === meId ? c.user2_id : c.user1_id);
-          m[peer] = c.id;
-        }
-        setConvByPeer(m);
-      } else {
-        setConvByPeer({});
-      }
-
-      setLoadError(null);
-      setLoading(false);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [retryKey, t, authLoading, isLoggedIn]);
-
   const TABS: { key: FriendsTab; keyLabel: string; list: CommunityUserItem[] }[] = [
     { key: "following", keyLabel: "community_friends_following", list: apiFollowing },
     { key: "followers", keyLabel: "community_friends_followers", list: apiFollowers },
@@ -318,28 +183,41 @@ function CommunityFriendsPageInner() {
     return convId ? `/community/messages/${convId}` : "/community/messages";
   };
 
+  const relationalShowcaseAttr = communityRelationalShowcaseDataAttr();
+
   return (
     <main
+      data-tt-community-friends-page="1"
+      {...relationalShowcaseAttr}
       className="max-w-4xl mx-auto px-3 py-4 sm:px-4 sm:py-6 pb-24 safe-area-pb text-slate-200"
       aria-label={t("community_tab_friends")}
+      aria-describedby={
+        relationalShowcaseAttr
+          ? "community-relational-showcase-hint-community_friends_relational_showcase_hint"
+          : undefined
+      }
     >
       <header className="mb-4">
-        <h1 className="text-h3 font-bold bg-gradient-to-r from-cyan-300 to-fuchsia-400 bg-clip-text text-transparent">
+        <h1 className={TT_COMMUNITY_PAGE_L5.pageTitle}>
           {t("community_tab_friends")}
         </h1>
         <p className="text-small text-slate-300 mt-0.5">{t("community_friends_desc")}</p>
+        <CommunityRelationalShowcaseHonestyNote
+          t={t}
+          hintKey="community_friends_relational_showcase_hint"
+        />
       </header>
 
       {!authLoading && !isLoggedIn ? (
         <section
-          className="rounded-[var(--radius-md)] border border-cyan-500/35 bg-slate-900/70 backdrop-blur-md px-6 py-10 text-center space-y-4 mb-4"
+          className="rounded-[var(--radius-md)] border border-ref-sun/28 bg-slate-900/70 backdrop-blur-md px-6 py-10 text-center space-y-4 mb-4"
           role="region"
           aria-label={t("community_tab_friends")}
         >
           <p className="text-body text-slate-200">{t("community_friends_login_hint")}</p>
           <Link
             href={`/auth/login?returnUrl=${encodeURIComponent("/community/friends")}`}
-            className={`inline-flex rounded-full border border-cyan-400/50 bg-cyan-500/20 px-5 py-2.5 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub min-h-[44px] items-center justify-center ${communityCyanPillFocus}`}
+            className={`${TT_COMMUNITY_PAGE_L5.pill} ${communityCyanPillFocus}`}
           >
             {t("community_activity_go_login")}
           </Link>
@@ -363,7 +241,7 @@ function CommunityFriendsPageInner() {
             <button
               type="submit"
               aria-label={t("common_retry")}
-              className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
+              className={`${TT_COMMUNITY_PAGE_L5.pill} ${communityCyanPillFocus}`}
             >
               {t("common_retry")}
             </button>
@@ -387,7 +265,7 @@ function CommunityFriendsPageInner() {
               type="submit"
               className={`rounded-[var(--radius-md)] px-3 py-2 text-meta font-medium motion-sub min-h-[44px] inline-flex items-center justify-center ${communityShellTabFocus} ${
                 tab === key
-                  ? "bg-cyan-500/30 text-cyan-200 border border-cyan-400/40"
+                  ? "bg-ref-sun/22 text-ref-sun/90 border border-ref-sun/32"
                   : "text-slate-300 hover:text-slate-200"
               }`}
             >
@@ -398,7 +276,7 @@ function CommunityFriendsPageInner() {
       </div>
 
       {tab === "requests" ? (
-        <section className="rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md overflow-hidden mb-4">
+        <section className="rounded-[var(--radius-md)] border border-ref-sun/25 bg-slate-900/70 backdrop-blur-md overflow-hidden mb-4">
           <div className="flex gap-2 p-2 border-b border-slate-600/50">
             <form
               className="contents"
@@ -410,7 +288,7 @@ function CommunityFriendsPageInner() {
               <button
                 type="submit"
                 className={`flex-1 rounded-[var(--radius-md)] px-3 py-2 text-meta font-medium min-h-[44px] inline-flex items-center justify-center ${communityShellTabFocus} ${
-                  requestSubTab === "sent" ? "bg-cyan-500/30 text-cyan-200" : "text-slate-300"
+                  requestSubTab === "sent" ? "bg-ref-sun/22 text-ref-sun/90" : "text-slate-300"
                 }`}
               >
                 {t("community_requests_sent")}
@@ -426,7 +304,7 @@ function CommunityFriendsPageInner() {
               <button
                 type="submit"
                 className={`flex-1 rounded-[var(--radius-md)] px-3 py-2 text-meta font-medium min-h-[44px] inline-flex items-center justify-center ${communityShellTabFocus} ${
-                  requestSubTab === "received" ? "bg-cyan-500/30 text-cyan-200" : "text-slate-300"
+                  requestSubTab === "received" ? "bg-ref-sun/22 text-ref-sun/90" : "text-slate-300"
                 }`}
               >
                 {t("community_requests_received")}
@@ -448,13 +326,13 @@ function CommunityFriendsPageInner() {
                     >
                       <Link
                         href={`/community/user/${req.to_user_id}`}
-                        className={`relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-slate-700 ring-2 ring-cyan-400/30 motion-sub hover:ring-cyan-400/50 ${communityAvatarLinkFocus}`}
+                        className={`relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-slate-700 ring-2 ring-ref-sun/22 motion-sub hover:ring-ref-sun/40 ${communityAvatarLinkFocus}`}
                         aria-label={req.to_nickname ?? req.to_user_id.slice(0, 8)}
                       >
                         {req.to_avatar_url ? (
                           <Image src={req.to_avatar_url} alt="" fill className="object-cover" sizes="44px" unoptimized />
                         ) : (
-                          <span className="flex h-full w-full items-center justify-center text-meta font-medium text-cyan-300">
+                          <span className="flex h-full w-full items-center justify-center text-meta font-medium text-ref-sun">
                             {(req.to_nickname ?? req.to_user_id).slice(0, 1)}
                           </span>
                         )}
@@ -466,7 +344,7 @@ function CommunityFriendsPageInner() {
                           </span>
                           <Link
                             href={`/community/user/${req.to_user_id}`}
-                            className={`inline-flex min-h-[44px] max-w-full min-w-0 items-center justify-start truncate font-medium hover:text-cyan-100 motion-sub rounded-sm ${communityCardLinkFocus}`}
+                            className={`inline-flex min-h-[44px] max-w-full min-w-0 items-center justify-start truncate font-medium hover:text-ref-coral motion-sub rounded-sm ${communityCardLinkFocus}`}
                           >
                             {req.to_nickname ?? req.to_user_id.slice(0, 8)}
                           </Link>
@@ -533,7 +411,7 @@ function CommunityFriendsPageInner() {
         </section>
       ) : loading ? (
         <section
-          className="rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md overflow-hidden shadow-scifi-panel"
+          className="rounded-[var(--radius-md)] border border-ref-sun/25 bg-slate-900/70 backdrop-blur-md overflow-hidden shadow-scifi-panel"
           aria-label={t(current.keyLabel)}
         >
           <div role="status" aria-label={t("common_loading")}>
@@ -542,22 +420,22 @@ function CommunityFriendsPageInner() {
         </section>
       ) : (
         <section
-          className="rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md overflow-hidden shadow-scifi-panel"
+          className="rounded-[var(--radius-md)] border border-ref-sun/25 bg-slate-900/70 backdrop-blur-md overflow-hidden shadow-scifi-panel [content-visibility:auto]"
           aria-label={t(current.keyLabel)}
         >
           {followingList.length === 0 ? (
-            <div className="mx-3 sm:mx-4 my-4 rounded-[var(--radius-md)] border border-dashed border-cyan-500/30 bg-slate-900/40 px-5 py-10 sm:px-6 sm:py-12 text-center">
+            <div className="mx-3 sm:mx-4 my-4 rounded-[var(--radius-md)] border border-dashed border-ref-sun/28 bg-slate-900/40 px-5 py-10 sm:px-6 sm:py-12 text-center">
               <p className="text-body text-slate-200 mb-4">{t("community_friends_empty")}</p>
               <div className="flex flex-wrap justify-center gap-3">
                 <Link
                   href="/community"
-                  className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub inline-flex items-center justify-center min-h-[44px] ${communityCyanPillFocus}`}
+                  className={`${TT_COMMUNITY_PAGE_L5.pill} ${communityCyanPillFocus}`}
                 >
                   {t("community_tab_feed")}
                 </Link>
                 <Link
                   href="/community/explore"
-                  className={`rounded-full border border-fuchsia-400/45 bg-fuchsia-500/15 px-4 py-2 text-meta font-medium text-fuchsia-100 hover:bg-fuchsia-500/25 motion-sub inline-flex items-center justify-center min-h-[44px] ${communityFuchsiaPillFocus}`}
+                  className={`${TT_COMMUNITY_PAGE_L5.primaryCtaFilled} ${communityCyanPillFocus}`}
                 >
                   {t("community_explore_title")}
                 </Link>
@@ -569,13 +447,13 @@ function CommunityFriendsPageInner() {
                 <li key={user.id} className="flex items-center gap-3 px-4 py-3">
                   <Link
                     href={`/community/user/${user.id}`}
-                    className={`relative h-11 w-11 shrink-0 overflow-hidden rounded-full ring-2 ring-cyan-400/30 motion-sub hover:ring-cyan-400/50 ${communityAvatarLinkFocus}`}
+                    className={`relative h-11 w-11 shrink-0 overflow-hidden rounded-full ring-2 ring-ref-sun/22 motion-sub hover:ring-ref-sun/40 ${communityAvatarLinkFocus}`}
                     aria-label={user.nickname}
                   >
                     {user.avatar_url ? (
                       <Image src={user.avatar_url} alt="" fill className="object-cover" sizes="44px" />
                     ) : (
-                      <span className="flex h-full w-full items-center justify-center bg-slate-700 text-meta font-medium text-cyan-300">
+                      <span className="flex h-full w-full items-center justify-center bg-slate-700 text-meta font-medium text-ref-sun">
                         {user.nickname.slice(0, 1)}
                       </span>
                     )}
@@ -584,7 +462,7 @@ function CommunityFriendsPageInner() {
                     <div className="flex flex-wrap items-center gap-2">
                       <Link
                         href={`/community/user/${user.id}`}
-                        className={`inline-flex min-h-[44px] max-w-full min-w-0 items-center justify-start truncate text-body font-medium text-slate-200 hover:text-cyan-100 motion-sub rounded-sm ${communityCardLinkFocus}`}
+                        className={`inline-flex min-h-[44px] max-w-full min-w-0 items-center justify-start truncate text-body font-medium text-slate-200 hover:text-ref-coral motion-sub rounded-sm ${communityCardLinkFocus}`}
                       >
                         {user.nickname}
                       </Link>
@@ -686,7 +564,7 @@ function CommunityFriendsPageInner() {
                           type="submit"
                           disabled={addRequestSent.has(user.id) || addRequestPendingId === user.id}
                           aria-busy={addRequestPendingId === user.id ? true : undefined}
-                          className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-3 py-1.5 text-meta text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub disabled:opacity-70 disabled:cursor-wait min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
+                          className={`${TT_COMMUNITY_PAGE_L5.pillCompact} disabled:opacity-70 disabled:cursor-wait ${communityCyanPillFocus}`}
                         >
                           {addRequestPendingId === user.id
                             ? t("common_loading")
@@ -698,7 +576,7 @@ function CommunityFriendsPageInner() {
                     )}
                     <Link
                       href={msgHref(user.id)}
-                      className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-3 py-1.5 text-meta text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
+                      className={`${TT_COMMUNITY_PAGE_L5.pillCompact} ${communityCyanPillFocus}`}
                     >
                       {t("community_chat")}
                     </Link>
@@ -799,13 +677,13 @@ function RequestReceivedApiRow({
     <li className="flex items-center gap-3 rounded-[var(--radius-md)] border border-slate-600/50 bg-slate-800/50 px-3 py-2">
       <Link
         href={`/community/user/${req.from_user_id}`}
-        className={`relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-slate-700 ring-2 ring-cyan-400/30 motion-sub hover:ring-cyan-400/50 ${communityAvatarLinkFocus}`}
+        className={`relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-slate-700 ring-2 ring-ref-sun/22 motion-sub hover:ring-ref-sun/40 ${communityAvatarLinkFocus}`}
         aria-label={req.from_nickname ?? req.from_user_id.slice(0, 8)}
       >
         {req.from_avatar_url ? (
           <Image src={req.from_avatar_url} alt="" fill className="object-cover" sizes="44px" unoptimized />
         ) : (
-          <span className="flex h-full w-full items-center justify-center text-meta font-medium text-cyan-300">
+          <span className="flex h-full w-full items-center justify-center text-meta font-medium text-ref-sun">
             {(req.from_nickname ?? req.from_user_id).slice(0, 1)}
           </span>
         )}
@@ -814,7 +692,7 @@ function RequestReceivedApiRow({
         <div className="flex flex-wrap items-center gap-2 text-body text-slate-200">
           <Link
             href={`/community/user/${req.from_user_id}`}
-            className={`inline-flex min-h-[44px] max-w-full min-w-0 items-center justify-start truncate font-medium hover:text-cyan-100 motion-sub rounded-sm ${communityCardLinkFocus}`}
+            className={`inline-flex min-h-[44px] max-w-full min-w-0 items-center justify-start truncate font-medium hover:text-ref-coral motion-sub rounded-sm ${communityCardLinkFocus}`}
           >
             {req.from_nickname ?? req.from_user_id.slice(0, 8)}
           </Link>
@@ -858,7 +736,7 @@ function RequestReceivedApiRow({
             value="accept"
             disabled={busy}
             aria-busy={busy ? true : undefined}
-            className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub disabled:opacity-50 min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
+            className={`${TT_COMMUNITY_PAGE_L5.pill} disabled:opacity-50 disabled:cursor-not-allowed ${communityCyanPillFocus}`}
           >
             {t("common_accept")}
           </button>

@@ -27,6 +27,8 @@ describe("admin finance partial depth L5 (①)", () => {
 
   it("mounts partial checklist on finance and disputes when fin_suite_depth=partial", () => {
     expect(checklist).toContain("data-tt-admin-fin-suite-partial-checklist");
+    expect(checklist).toContain("data-tt-admin-fin-suite-partial-checklist-fold");
+    expect(checklist).toContain("AdminWarmL5Surface");
     expect(checklist).toContain("admin_fin_partial_check_common_03");
     expect(financeMain).toContain("AdminFinanceSuitePartialChecklist");
     expect(disputesMain).toContain("AdminFinanceSuitePartialChecklist");
@@ -42,6 +44,7 @@ describe("admin finance partial depth L5 (①)", () => {
     expect(reconMain).toContain("AdminFinanceModuleDepthWorkspace");
     expect(reconMain).toContain("AdminPermissionDeniedBanner");
     expect(reconMain).toContain("AdminFinanceSuiteDepthNotice");
+    expect(reconMain).toContain("AdminFinanceSuiteBackLinks");
   });
 
   it("mounts cross-check depth workspace on cross-check page", () => {
@@ -90,5 +93,67 @@ describe("admin finance partial depth L5 (①)", () => {
     expect(vaultMain).toContain("AdminFinanceModuleDepthWorkspace");
     expect(vaultMain).toContain("regionVault={{");
     expect(vaultMain).toContain("FINANCE_READ");
+  });
+
+  it("mounts indexer depth workspace on indexer page", () => {
+    const indexerMain = readFileSync(
+      join(__dir, "..", "..", "app", "admin", "indexer", "AdminIndexerPageMain.tsx"),
+      "utf8",
+    );
+    const workspace = readFileSync(join(componentsAdmin, "AdminFinanceModuleDepthWorkspace.tsx"), "utf8");
+    const model = readFileSync(
+      join(__dir, "..", "..", "app", "admin", "finance-suite", "adminFinanceSuitePageModel.ts"),
+      "utf8",
+    );
+    expect(model).toContain('id: "indexer"');
+    expect(workspace).toContain("AdminFinanceIndexerDepthPanel");
+    expect(workspace).toContain('moduleId === "indexer"');
+    expect(indexerMain).toContain("AdminFinanceModuleDepthWorkspace");
+    expect(indexerMain).toContain("indexer={{");
+    expect(indexerMain).toContain("adminIndexerHealthSnapshot");
+  });
+
+  it("mounts reconcile-reports and observability depth workspaces", () => {
+    const reportsMain = readFileSync(
+      join(__dir, "..", "..", "app", "admin", "indexer", "reconcile-reports", "ReconcileReportsPageMain.tsx"),
+      "utf8",
+    );
+    const obsMain = readFileSync(
+      join(__dir, "..", "..", "app", "admin", "observability", "AdminObservabilityPageMain.tsx"),
+      "utf8",
+    );
+    const workspace = readFileSync(join(componentsAdmin, "AdminFinanceModuleDepthWorkspace.tsx"), "utf8");
+    const model = readFileSync(
+      join(__dir, "..", "..", "app", "admin", "finance-suite", "adminFinanceSuitePageModel.ts"),
+      "utf8",
+    );
+    expect(model).toContain('id: "reconcile-reports"');
+    expect(model).toContain('id: "observability"');
+    expect(workspace).toContain("AdminFinanceReconcileReportsDepthPanel");
+    expect(workspace).toContain("AdminFinanceObservabilityDepthPanel");
+    expect(reportsMain).toContain("reconcileReports={{");
+    expect(obsMain).toContain("observability={{");
+  });
+
+  it("mounts trust-growth and alert-incidents depth workspaces", () => {
+    const tgMain = readFileSync(
+      join(__dir, "..", "..", "app", "admin", "trust-growth", "AdminTrustGrowthPageMain.tsx"),
+      "utf8",
+    );
+    const alertsMain = readFileSync(
+      join(__dir, "..", "..", "app", "admin", "alerts", "incidents", "AdminAlertIncidentsHubPageMain.tsx"),
+      "utf8",
+    );
+    const workspace = readFileSync(join(componentsAdmin, "AdminFinanceModuleDepthWorkspace.tsx"), "utf8");
+    const model = readFileSync(
+      join(__dir, "..", "..", "app", "admin", "finance-suite", "adminFinanceSuitePageModel.ts"),
+      "utf8",
+    );
+    expect(model).toContain('id: "trust-growth"');
+    expect(model).toContain('id: "alert-incidents"');
+    expect(workspace).toContain("AdminFinanceTrustGrowthDepthPanel");
+    expect(workspace).toContain("AdminFinanceAlertIncidentsDepthPanel");
+    expect(tgMain).toContain("trustGrowth={{");
+    expect(alertsMain).toContain("alertIncidents={{");
   });
 });

@@ -37,7 +37,10 @@ describe("admin permissions page", () => {
     expect(src).toContain("AdminPermissionsMatrixLegend");
     expect(src).toContain("console_role_direct_allowed");
     expect(src).toContain("data-tt-admin-console-role-self-assign");
+    expect(src).toContain("AdminWarmL5Surface");
     expect(src).toContain('id="admin-console-role-self-assign"');
+    expect(src).not.toContain("headerAside={<AdminInboxQueueBackLinks />}");
+    expect(src).not.toContain("data-tt-admin-permissions-footer-nav");
     expect(src).toContain("userConsoleRoleChangeRequest");
     expect(src).toContain("router.refresh");
     expect(src).toContain("AdminPermissions2faPolicyPanel");

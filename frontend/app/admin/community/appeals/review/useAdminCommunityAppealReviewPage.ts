@@ -3,6 +3,7 @@ import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import {
   adminFetchJson,
   adminLogApiJsonStatus,
@@ -23,6 +24,7 @@ import {
 
 export function useAdminCommunityAppealReviewPage() {
   const { t } = useTranslation();
+  const requestConfirm = useAdminL5ConfirmRequest();
   const { meta: buildMeta, loading: buildLoading, error: buildError } =
     useAdminMetaBuildFromPublicMeta("AdminAppealReviewMetaBuild");
   const searchParams = useSearchParams();
@@ -52,7 +54,7 @@ export function useAdminCommunityAppealReviewPage() {
     if (qVer) setExpectedVersion(qVer);
   }, [searchParams]);
 
-  const submit = useCallback(() => {
+  const submitImpl = useCallback(() => {
     const aid = appealId.trim();
     if (!aid) {
       setFormError("invalid_request", t("admin_appeal_review_needId"));
@@ -119,6 +121,28 @@ export function useAdminCommunityAppealReviewPage() {
       })
       .finally(() => setSubmitting(false));
   }, [appealId, decision, expectedVersion, reviewerNote, t]);
+
+  const submit = useCallback(() => {
+    const aid = appealId.trim();
+    if (!aid) {
+      setFormError("invalid_request", t("admin_appeal_review_needId"));
+      return;
+    }
+    const ev = Number.parseInt(expectedVersion.trim(), 10);
+    if (!Number.isFinite(ev)) {
+      setFormError("invalid_request", t("admin_appeal_review_needVer"));
+      return;
+    }
+    const stNorm = decision === "accepted" || decision === "rejected" ? decision : decision;
+    const stLabel = stNorm === "accepted" || stNorm === "rejected" ? t(APPEAL_DECISION_I18N[stNorm]) : stNorm;
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_write",
+      descKey: "admin_l5_confirm_desc_appeal_review",
+      descVars: { decision: stLabel },
+      danger: decision === "rejected",
+      onConfirm: () => submitImpl(),
+    });
+  }, [appealId, decision, expectedVersion, requestConfirm, submitImpl, t]);
 
   return {
     buildMeta,

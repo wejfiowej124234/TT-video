@@ -4,6 +4,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useId, useMemo, useState, type FormEvent } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import { useAdminFormErrorState } from "@/lib/admin/adminFormErrorState";
 import {
   type AdminFetchErrorKind,
@@ -21,12 +22,13 @@ import {
   parseAdminFlagsListQuery,
 } from "./adminFlagsPageQuery";
 import type { AdminFlagPublishRes, AdminFlagRow } from "./adminFlagsPageTypes";
-import { useAdminFlagsPageListFetch } from "./useAdminFlagsPageListFetch";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
+import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
 
 export function useAdminFlagsPage() {
   const { t } = useTranslation();
+  const requestConfirm = useAdminL5ConfirmRequest();
   const caps = useAdminCapabilities();
   const canPublish = caps.hasPermission(ADMIN_PERM.PLATFORM_PUBLISH);
   const pageTitleId = useId();
@@ -51,12 +53,33 @@ export function useAdminFlagsPage() {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<AdminFlagRow[]>([]);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
   const [reloadTick, setReloadTick] = useState(0);
+
+  const listUrl = useMemo(
+    () =>
+      routes.admin.flags({
+        limit,
+        ...(flagCode ? { flag_code: flagCode } : {}),
+        ...(enabled === "true" || enabled === "false" ? { enabled } : {}),
+        ...(scope ? { scope } : {}),
+      }),
+    [limit, flagCode, enabled, scope],
+  );
+
+  const {
+    items,
+    meta,
+    appliedFilters,
+    loading,
+    refreshing,
+    error,
+    setItems,
+  } = useAdminStandardListFetch<AdminFlagRow>({
+    scope: "flags",
+    context: "AdminFlagsPage",
+    listUrl,
+    refreshToken: reloadTick,
+  });
 
   const [draftLimit, setDraftLimit] = useState(String(limit));
   const [draftFlagCode, setDraftFlagCode] = useState(flagCode);
@@ -95,19 +118,6 @@ export function useAdminFlagsPage() {
     setPubVersion(r.version != null ? String(r.version) : "");
   }, [canPublish]);
 
-  useAdminFlagsPageListFetch(
-    limit,
-    flagCode,
-    enabled,
-    scope,
-    reloadTick,
-    setLoading,
-    setError,
-    setItems,
-    setMeta,
-    setAppliedFilters,
-  );
-
   const apply = useCallback(
     (e?: FormEvent) => {
       e?.preventDefault();
@@ -137,7 +147,7 @@ export function useAdminFlagsPage() {
 
   const hasActiveFilters = Boolean(flagCode) || enabled === "true" || enabled === "false" || Boolean(scope);
 
-  const submitPublish = useCallback(() => {
+  const submitPublishImpl = useCallback(() => {
     if (!canPublish) return;
     const id = publishRow?.id?.trim();
     if (!id) return;
@@ -218,6 +228,14 @@ export function useAdminFlagsPage() {
       .finally(() => setPublishSubmitting(false));
   }, [canPublish, closePublish, pubEnabled, pubRegionMode, pubRegionText, pubRollout, pubVersion, publishRow, t]);
 
+  const submitPublish = useCallback(() => {
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_write",
+      descKey: "admin_l5_confirm_desc_publish",
+      onConfirm: () => submitPublishImpl(),
+    });
+  }, [requestConfirm, submitPublishImpl]);
+
   return {
     canPublish,
     t,
@@ -240,6 +258,7 @@ export function useAdminFlagsPage() {
     enabled,
     scope,
     loading,
+    refreshing,
     error,
     items,
     meta,

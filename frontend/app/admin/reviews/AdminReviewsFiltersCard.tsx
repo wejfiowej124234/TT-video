@@ -1,5 +1,7 @@
 "use client";
 
+import { formatAdminAppliedFiltersHuman } from "@/lib/admin/formatAdminAppliedFiltersHuman";
+
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminAppliedFiltersBanner } from "@/components/admin/AdminAppliedFiltersBanner";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
@@ -8,7 +10,10 @@ import {
   ADMIN_FORM_FIELD_FOCUS_CLASS,
   ADMIN_INLINE_LINK_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
-} from "@/lib/adminUi";
+  ADMIN_FILTER_INPUT_SM_CLASS,
+  ADMIN_FILTER_FIELD_LABEL_CLASS,
+  ADMIN_FILTER_HINT_CLASS,
+  ADMIN_FILTER_TITLE_CLASS} from "@/lib/adminUi";
 type Props = {
   vm: AdminReviewsPageViewModel;
   adminAppliedFiltersDescId: string;
@@ -31,47 +36,47 @@ export function AdminReviewsFiltersCard({ vm, adminAppliedFiltersDescId, adminLi
   } = vm;
 
   return (
-    <div className="mt-6 rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-4 space-y-3">
+    <div className={`mt-6 ${ADMIN_FILTER_CARD_CLASS} space-y-3`}>
       <form
         id="admin-reviews-filter-form"
         aria-label={t("admin_reviews_filters")}
         aria-describedby={[adminListApplyResetHintId, appliedFilters ? adminAppliedFiltersDescId : ""].filter(Boolean).join(" ")}
         onSubmit={apply}
       >
-        <p className="text-small font-medium text-ink-800">{t("admin_reviews_filters")}</p>
-        <p id={adminListApplyResetHintId} className="mt-2 text-meta text-ink-600 leading-relaxed">
+        <p className={ADMIN_FILTER_TITLE_CLASS}>{t("admin_reviews_filters")}</p>
+        <p id={adminListApplyResetHintId} className={ADMIN_FILTER_HINT_CLASS}>
           {t("admin_list_filters_apply_reset_hint")}
         </p>
         <div className="mt-3 flex flex-wrap items-end gap-3">
-          <label className="text-small text-ink-700">
+          <label className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
             {t("admin_reviews_limit")}
             <input
               type="text"
               inputMode="numeric"
               value={draftLimit}
               onChange={(e) => setDraftLimit(e.target.value)}
-              className={`ml-2 min-h-[44px] w-24 rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`ml-2 min-h-[44px] w-24 ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             />
           </label>
-          <label className="text-small text-ink-700">
+          <label className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
             {t("admin_reviews_maxScore")}
             <input
               type="text"
               inputMode="numeric"
               value={draftMax}
               onChange={(e) => setDraftMax(e.target.value)}
-              className={`ml-2 min-h-[44px] w-20 rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`ml-2 min-h-[44px] w-20 ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               placeholder={t("admin_reviews_maxScorePh")}
             />
           </label>
-          <label className="text-small text-ink-700">
+          <label className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
             {t("admin_reviews_minScore")}
             <input
               type="text"
               inputMode="numeric"
               value={draftMin}
               onChange={(e) => setDraftMin(e.target.value)}
-              className={`ml-2 min-h-[44px] w-20 rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`ml-2 min-h-[44px] w-20 ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               placeholder={t("admin_reviews_minScorePh")}
             />
           </label>

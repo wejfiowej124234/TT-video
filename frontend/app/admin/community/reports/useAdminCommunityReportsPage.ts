@@ -4,11 +4,11 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState, type FormEvent } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import {
   adminFetchJson,
   adminLogApiJsonStatus,
   logAdminFetch,
-  type AdminFetchErrorKind,
 } from "@/lib/adminFetchDisplay";
 import { apiUrl, routes } from "@/lib/api";
 import { writeRequestHeaders } from "@/lib/apiClient";
@@ -26,13 +26,14 @@ import {
   type ReportRow,
 } from "./adminCommunityReportsTypes";
 import type { ModerationWizardStep } from "./AdminCommunityReportsModerationWizard";
-import { useAdminCommunityReportsPageListFetch } from "./useAdminCommunityReportsPageListFetch";
+import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
 import { useAdminFormErrorState } from "@/lib/admin/adminFormErrorState";
 import { adminUserFacingErrorFromUnknown } from "@/lib/adminFetchDisplay";
 import { validateAdminReportsModerationSubmit } from "@/lib/admin/adminReportsModerationWizardValidation";
 
 export function useAdminCommunityReportsPage() {
   const { t } = useTranslation();
+  const requestConfirm = useAdminL5ConfirmRequest();
   const router = useRouter();
   const searchParams = useSearchParams();
   const listQ = useMemo(
@@ -40,18 +41,41 @@ export function useAdminCommunityReportsPage() {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<ReportRow[]>([]);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
+  const [reloadTick, setReloadTick] = useState(0);
+
+  const listUrl = useMemo(
+    () =>
+      routes.admin.communityReports({
+        limit: listQ.limit,
+        ...(listQ.status ? { status: listQ.status } : {}),
+        ...(listQ.reporterId ? { reporter_id: listQ.reporterId } : {}),
+        ...(listQ.targetType ? { target_type: listQ.targetType } : {}),
+        ...(listQ.reasonCode ? { reason_code: listQ.reasonCode } : {}),
+        ...(listQ.targetId ? { target_id: listQ.targetId } : {}),
+      }),
+    [listQ],
+  );
+
+  const {
+    items,
+    meta,
+    appliedFilters,
+    loading,
+    refreshing,
+    error,
+  } = useAdminStandardListFetch<ReportRow>({
+    scope: "community-reports",
+    context: "AdminCommunityReportsPage",
+    listUrl,
+    refreshToken: reloadTick,
+  });
+
   const [draftLimit, setDraftLimit] = useState(String(listQ.limit));
   const [draftStatus, setDraftStatus] = useState(listQ.status);
   const [draftReporterId, setDraftReporterId] = useState(listQ.reporterId);
   const [draftTargetType, setDraftTargetType] = useState(listQ.targetType);
   const [draftReasonCode, setDraftReasonCode] = useState(listQ.reasonCode);
   const [draftTargetId, setDraftTargetId] = useState(listQ.targetId);
-  const [reloadTick, setReloadTick] = useState(0);
 
   useEffect(() => {
     setDraftLimit(String(listQ.limit));
@@ -102,16 +126,6 @@ export function useAdminCommunityReportsPage() {
     setModPenaltyExpires("");
   };
 
-  useAdminCommunityReportsPageListFetch(
-    listQ,
-    reloadTick,
-    setLoading,
-    setError,
-    setItems,
-    setMeta,
-    setAppliedFilters,
-  );
-
   const apply = (e?: FormEvent) => {
     e?.preventDefault();
     const n = Number.parseInt(draftLimit.trim(), 10);
@@ -158,7 +172,7 @@ export function useAdminCommunityReportsPage() {
     Boolean(listQ.reasonCode) ||
     Boolean(listQ.targetId);
 
-  const submitModeration = useCallback(() => {
+  const submitModerationImpl = useCallback(() => {
     const rid = modRow?.id?.trim();
     if (!rid) return;
     const fieldErrors = validateAdminReportsModerationSubmit({
@@ -253,10 +267,20 @@ export function useAdminCommunityReportsPage() {
     t,
   ]);
 
+  const submitModeration = useCallback(() => {
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_write",
+      descKey: "admin_l5_confirm_desc_report_mod",
+      danger: true,
+      onConfirm: () => submitModerationImpl(),
+    });
+  }, [requestConfirm, submitModerationImpl]);
+
   return {
     t,
     listQ,
     loading,
+    refreshing,
     error,
     items,
     meta,

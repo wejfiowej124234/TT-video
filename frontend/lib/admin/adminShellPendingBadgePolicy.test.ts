@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import { ADMIN_INBOX_QUEUE_HREFS } from "./adminInboxQueueHrefs";
 import {
   adminShellNavGroupPendingRollup,
+  adminShellNavGroupSummaryAttentionDotVisible,
   adminShellNavGroupSummaryBadgeVisible,
   adminShellPendingBadgeVisible,
 } from "./adminShellPendingBadgePolicy";
@@ -16,7 +17,7 @@ describe("adminShellPendingBadgePolicy", () => {
     reports: { permissionDenied: false },
   } as const;
 
-  it("top inbox hub always shows numeric badge", () => {
+  it("top inbox hub shows numeric badge unless suppressed on workspace focus", () => {
     expect(
       adminShellPendingBadgeVisible({
         placement: "top_inbox_hub",
@@ -24,6 +25,14 @@ describe("adminShellPendingBadgePolicy", () => {
         count: 81,
       }),
     ).toBe(true);
+    expect(
+      adminShellPendingBadgeVisible({
+        placement: "top_inbox_hub",
+        sidebarLayoutActive: true,
+        count: 81,
+        suppressTopInboxHubOnWorkspace: true,
+      }),
+    ).toBe(false);
   });
 
   it("hides top nav dropdown badges when sidebar layout is active", () => {
@@ -64,6 +73,14 @@ describe("adminShellPendingBadgePolicy", () => {
     expect(
       adminShellPendingBadgeVisible({
         placement: "sidebar_queue_leaf",
+        sidebarLayoutActive: true,
+        count: 78,
+        suppressSidebarLeafOnWorkspaceInboxFocus: true,
+      }),
+    ).toBe(false);
+    expect(
+      adminShellPendingBadgeVisible({
+        placement: "sidebar_queue_leaf",
         sidebarLayoutActive: false,
         count: 78,
       }),
@@ -87,5 +104,19 @@ describe("adminShellPendingBadgePolicy", () => {
     expect(
       adminShellNavGroupSummaryBadgeVisible({ sidebarLayoutActive: true, rollup: 78 }),
     ).toBe(false);
+    expect(
+      adminShellNavGroupSummaryBadgeVisible({
+        sidebarLayoutActive: true,
+        rollup: 78,
+        workspaceInboxFocus: true,
+      }),
+    ).toBe(false);
+    expect(
+      adminShellNavGroupSummaryAttentionDotVisible({
+        sidebarLayoutActive: true,
+        rollup: 78,
+        workspaceInboxFocus: true,
+      }),
+    ).toBe(true);
   });
 });

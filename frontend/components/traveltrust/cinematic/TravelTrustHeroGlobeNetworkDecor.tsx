@@ -16,7 +16,7 @@ import {
   isHeroP3DecorNodeHighlighted,
 } from "@/lib/traveltrustHeroP3DecorNodes";
 import { resolveTraveltrustStartCorridorId } from "@/lib/traveltrustStartCorridorBinding";
-import { TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID } from "@/lib/traveltrustCinematicNonGlobeL5";
+import { TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID } from "@/lib/traveltrust/l5";
 import {
   TRAVELTRUST_HERO_GLOBE_DOM_CORE_HUBS_ONLY,
   TRAVELTRUST_HERO_GLOBE_DOM_CORRIDOR_PULSE_ENABLED,

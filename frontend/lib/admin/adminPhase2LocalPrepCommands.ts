@@ -68,12 +68,23 @@ export const ADMIN_PHASE2_STAGING_ONLY_COMMANDS = [
   "bash scripts/dev/record-phase2-admin-adm-u01-then-u02.sh",
 ] as const;
 
-/** 操作手册 Phase② 预备命令列表（SSOT · 与 UI 复制同源）。 */
-export const OPERATOR_GUIDE_PHASE2_PREP_COMMANDS = [
+function uniqueCommandsInOrder(commands: readonly string[]): readonly string[] {
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const cmd of commands) {
+    if (seen.has(cmd)) continue;
+    seen.add(cmd);
+    out.push(cmd);
+  }
+  return out;
+}
+
+/** 操作手册 Phase② 预备命令列表（SSOT · 与 UI 复制同源；合并 runbook/u01 时去重保 React key 唯一）。 */
+export const OPERATOR_GUIDE_PHASE2_PREP_COMMANDS = uniqueCommandsInOrder([
   "bash scripts/dev/run-admin-remaining-local-prep.sh",
   "bash scripts/dev/run-admin-phase2-prep-skeleton-local.sh",
   "ADM_U02_UI_PREP=1 bash scripts/dev/run-admin-adm-u02-local-prep.sh",
   ...ADMIN_PHASE2_RUNBOOK_QUICK_COMMANDS.map((row) => row.command),
   ...ADMIN_ADM_U01_SHELL_PREP_FLOWS.map((row) => row.command),
   ...ADMIN_PHASE2_STAGING_ONLY_COMMANDS,
-] as const;
+]);

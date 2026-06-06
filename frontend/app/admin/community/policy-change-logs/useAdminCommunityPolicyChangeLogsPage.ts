@@ -2,23 +2,15 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { type FormEvent, useEffect, useMemo, useState } from "react";
 
-import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
-import {
-  type AdminFetchErrorKind,
-  adminFetchErrorKind,
-  adminFetchJson,
-  logAdminFetch,
-} from "@/lib/adminFetchDisplay";
-import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders } from "@/lib/apiClient";
+import { routes } from "@/lib/api";
 import { isUuidString } from "@/lib/isUuidString";
+import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
 
 import {
   SOURCE_MAX,
   SCOPE_MAX,
   SUMMARY_MAX,
   type PolicyChangeLogRow,
-  type PolicyChangeLogsRes,
   buildPolicyLogsPath,
   parsePolicyLogsQuery,
 } from "./adminCommunityPolicyChangeLogsPageModel";
@@ -31,11 +23,25 @@ export function useAdminCommunityPolicyChangeLogsPage() {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<PolicyChangeLogRow[]>([]);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
+  const listUrl = useMemo(
+    () =>
+      routes.admin.communityPolicyChangeLogs({
+        limit: listQ.limit,
+        ...(listQ.scope ? { scope: listQ.scope } : {}),
+        ...(listQ.summary ? { summary: listQ.summary } : {}),
+        ...(listQ.source ? { source: listQ.source } : {}),
+        ...(listQ.actorId ? { actor_id: listQ.actorId } : {}),
+      }),
+    [listQ],
+  );
+
+  const { items, meta, appliedFilters, loading, refreshing, error } =
+    useAdminStandardListFetch<PolicyChangeLogRow>({
+      scope: "community-policy-change-logs",
+      context: "AdminCommunityPolicyChangeLogsPage",
+      listUrl,
+    });
+
   const [draftLimit, setDraftLimit] = useState(String(listQ.limit));
   const [draftScope, setDraftScope] = useState(listQ.scope);
   const [draftSummary, setDraftSummary] = useState(listQ.summary);
@@ -48,50 +54,6 @@ export function useAdminCommunityPolicyChangeLogsPage() {
     setDraftSummary(listQ.summary);
     setDraftSource(listQ.source);
     setDraftActorId(listQ.actorId);
-  }, [listQ]);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    setMeta(null);
-    setAppliedFilters(null);
-
-    const headers: Record<string, string> = { "x-request-id": `admin-policy-logs-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    adminFetchJson<PolicyChangeLogsRes>(
-      "AdminCommunityPolicyChangeLogsPage",
-      apiUrl(
-        routes.admin.communityPolicyChangeLogs({
-          limit: listQ.limit,
-          ...(listQ.scope ? { scope: listQ.scope } : {}),
-          ...(listQ.summary ? { summary: listQ.summary } : {}),
-          ...(listQ.source ? { source: listQ.source } : {}),
-          ...(listQ.actorId ? { actor_id: listQ.actorId } : {}),
-        }),
-      ),
-      { headers },
-    )
-      .then(({ res, body }) => {
-        if (!res.ok) {
-          throw new Error(body.error || `request_failed_${res.status}`);
-        }
-        return body;
-      })
-      .then((body) => {
-        setItems(Array.isArray(body.items) ? body.items : []);
-        setMeta(isAdminMetaRecord(body.meta) ? body.meta : null);
-        setAppliedFilters(body.applied_filters ?? null);
-      })
-      .catch((e: unknown) => {
-        logAdminFetch("AdminCommunityPolicyChangeLogsPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
   }, [listQ]);
 
   const apply = (e?: FormEvent) => {
@@ -130,6 +92,7 @@ export function useAdminCommunityPolicyChangeLogsPage() {
 
   return {
     loading,
+    refreshing,
     error,
     items,
     meta,

@@ -46,6 +46,13 @@ export function AdminOnboardingDualLedgerNavStrip() {
       >
         {t("admin_onboarding_hub_title")}
       </Link>
+      <Link
+        href="/admin/inbox"
+        className={`inline-flex min-h-[36px] items-center px-2 text-small font-medium ${adminPageNavLinkClass()} ${travelFocusRingOffset2Classes}`}
+        data-tt-admin-onboarding-dual-ledger-inbox="1"
+      >
+        {t("admin_unified_inbox_nav_short")}
+      </Link>
     </nav>
   );
 }

@@ -1,4 +1,4 @@
-import { ADMIN_VARIANT_BAR_CONTROL_CLASS } from "@/lib/adminUi";
+import { ADMIN_VARIANT_BAR_CONTROL_CLASS, ADMIN_VARIANT_BAR_MINIMAL_CLASS } from "@/lib/adminUi";
 
 export type VariantRow = {
   variant_id?: string;
@@ -43,9 +43,12 @@ export type ObsBody = {
   thresholds?: Record<string, unknown>;
 };
 
+/** Full observability payload stashed in list-fetch meta by `useAdminTrustGrowthPage`. */
+export const ADMIN_TRUST_GROWTH_OBS_META_KEY = "__adminTrustGrowthObs";
+
 export const VARIANT_BAR_CLASS: Record<string, string> = {
   control: ADMIN_VARIANT_BAR_CONTROL_CLASS,
-  minimal_delayed: "bg-ink-400",
+  minimal_delayed: ADMIN_VARIANT_BAR_MINIMAL_CLASS,
   alt_copy: "bg-warning",
 };
 

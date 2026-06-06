@@ -10,8 +10,11 @@ describe("admin community risk signals page L5 (①)", () => {
     const src = [
       readFileSync(join(__dir, "page.tsx"), "utf8"),
       readFileSync(join(__dir, "AdminCommunityRiskSignalsPageMain.tsx"), "utf8"),
+      readFileSync(join(__dir, "useAdminCommunityRiskSignalsPage.ts"), "utf8"),
+      readFileSync(join(__dir, "..", "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     ].join("\n");
     expect(src).toContain("AdminCommunityRiskSignalsPageMain");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("AdminCommunityPageShell");
   });
 });

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { AdminInboxQueueBackLinks } from "@/components/admin/AdminInboxQueueBackLinks";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { useAdminInternalToolAuditsPage } from "./useAdminInternalToolAuditsPage";
@@ -33,6 +34,7 @@ export function AdminInternalToolAuditsPageMain() {
 
   const {
     loading,
+    refreshing,
     error,
     items,
     meta,
@@ -60,19 +62,9 @@ export function AdminInternalToolAuditsPageMain() {
     <AdminListPageChrome
       titleId={pageTitleId}
       title={t("admin_tool_audits_title")}
-      subtitle={t("admin_tool_audits_subtitle")}
+      subtitle={t("admin_tool_audits_subtitle_l5")}
       headerAside={
-        <>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_tool_audits_back")}
-          </Link>
-        </>
+        <AdminInboxQueueBackLinks />
       }
     >
       <AdminInternalToolAuditsFiltersBlock
@@ -114,9 +106,11 @@ export function AdminInternalToolAuditsPageMain() {
 
       <AdminInternalToolAuditsMetaSection meta={meta} loading={loading} error={error} />
 
-      <AdminInternalToolAuditsStatusBlock loading={loading} error={error} />
+      <AdminInternalToolAuditsStatusBlock loading={loading && items.length === 0} error={error} />
 
-      {!loading && !error && <AdminInternalToolAuditsTableSection items={items} />}
+      {!error && (!loading || items.length > 0) ? (
+        <AdminInternalToolAuditsTableSection items={items} refreshing={refreshing} />
+      ) : null}
     </AdminListPageChrome>
   );
 }

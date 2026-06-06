@@ -1,13 +1,18 @@
 "use client";
 
-import { useState, useEffect, useId, type FormEvent } from "react";
+/**
+ * @deprecated 主 Feed 已改用 `CommunityFeedDiscoveryChrome`（`/community` · 2026-05+）。
+ * 保留供 contract / 历史引用；新功能勿接入。
+ */
+
+import { useState, useEffect, useId, useMemo, type FormEvent } from "react";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import type { CommunityPostType } from "@/lib/communityMockData";
 import type { FeedTab, SortBy, RegionKey } from "./communityFeedConstants";
 import { TYPE_OPTIONS, REGION_KEYS, DESTINATION_LABEL_KEYS } from "./communityFeedConstants";
+import { TT_COMMUNITY_FEED_ACTION } from "@/lib/marketingUi";
 import {
-  communityCyanPillFocus,
-  communityFuchsiaPillFocus,
+  communityCardLinkFocus,
   communitySlatePillFocus,
 } from "@/lib/communityA11yFocus";
 
@@ -34,6 +39,8 @@ export interface CommunityFeedFilterBarProps {
   onClearFilters: () => void;
   /** 与 Feed 列表一致：话题筛选时的匹配条数 */
   tagTopicMatchCount?: number;
+  /** 桌面搜索已并入 composer 行时隐藏此处搜索框 */
+  hideSearchRow?: boolean;
 }
 
 /** 主 Tab：推荐/关注 + 排序；类型/地区/目的地筛选；当前筛选汇总与清除；Feed 错误与重试 */
@@ -58,6 +65,7 @@ export default function CommunityFeedFilterBar({
   onRefresh,
   onClearFilters,
   tagTopicMatchCount,
+  hideSearchRow = false,
 }: CommunityFeedFilterBarProps) {
   const chipFiltersRegionId = useId();
   const hasStreamContext = feedTab === "following" || sortBy === "hot";
@@ -80,24 +88,40 @@ export default function CommunityFeedFilterBar({
     if (chipFiltersActive) setFiltersExpanded(true);
   }, [chipFiltersActive]);
 
+  const filterToggleSummary = useMemo(() => {
+    if (
+      typeFilter === "all" &&
+      regionFilter === "all" &&
+      destinationFilter === "all" &&
+      sortBy === "latest" &&
+      !tagFilter &&
+      !searchQuery.trim()
+    ) {
+      return t("community_filters_toggle");
+    }
+    const typeLabel =
+      typeFilter === "all" ? t("community_type_all") : t(`community_type_${typeFilter}`);
+    const regionLabel = t(`community_region_${regionFilter}`);
+    const sortLabel = t(sortBy === "latest" ? "community_sort_latest" : "community_sort_hot");
+    return `${typeLabel} · ${regionLabel} · ${sortLabel}`;
+  }, [t, typeFilter, regionFilter, destinationFilter, sortBy, tagFilter, searchQuery]);
+
   return (
     <>
-      <div className="mb-4">
-        <input
-          type="search"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder={t("community_search_placeholder")}
-          className="w-full rounded-[var(--radius-xl)] border border-cyan-500/40 bg-slate-900/80 px-4 py-2.5 text-small text-slate-200 placeholder:text-slate-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-          aria-label={t("community_search_placeholder")}
-        />
-      </div>
+      {!hideSearchRow ? (
+        <div className={TT_COMMUNITY_FEED_ACTION.searchWrap}>
+          <input
+            type="search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={t("community_search_placeholder")}
+            className={TT_COMMUNITY_FEED_ACTION.searchInput}
+            aria-label={t("community_search_placeholder")}
+          />
+        </div>
+      ) : null}
 
-      <div
-        className="sticky top-12 z-20 mb-3 flex items-center gap-4 border-b border-slate-600/80 bg-slate-900/90 backdrop-blur-md -mx-1 px-1"
-        role="tablist"
-        aria-label={t("community_title")}
-      >
+      <div className={TT_COMMUNITY_FEED_ACTION.feedTabBar} role="tablist" aria-label={t("community_title")}>
         {(["recommend", "following"] as const).map((tab) => (
           <form
             key={tab}
@@ -111,14 +135,11 @@ export default function CommunityFeedFilterBar({
               type="submit"
               role="tab"
               aria-selected={feedTab === tab}
-              className={`relative inline-flex min-h-[44px] items-end justify-center pb-2.5 pt-1 px-1 text-body font-semibold motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded-[var(--radius-sm)] ${
-                feedTab === tab ? "text-cyan-300" : "text-slate-300 hover:text-slate-300"
+              className={`text-body motion-sub ${TT_COMMUNITY_FEED_ACTION.feedTabFocus} ${
+                feedTab === tab ? TT_COMMUNITY_FEED_ACTION.feedTabActive : TT_COMMUNITY_FEED_ACTION.feedTabIdle
               }`}
             >
               {t(tab === "recommend" ? "community_feed_recommend" : "community_feed_following")}
-              {feedTab === tab && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-400 rounded-full" aria-hidden />
-              )}
             </button>
           </form>
         ))}
@@ -134,10 +155,8 @@ export default function CommunityFeedFilterBar({
             >
               <button
                 type="submit"
-                className={`rounded-full border px-2.5 py-1 text-meta motion-sub min-h-[44px] inline-flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
-                  sortBy === s
-                    ? "border-cyan-400/60 bg-cyan-500/20 text-cyan-300"
-                    : "border-slate-600 bg-slate-800/60 text-slate-300 hover:border-cyan-500/40 hover:text-slate-300"
+                className={`${TT_COMMUNITY_FEED_ACTION.sortChipBase} ${
+                  sortBy === s ? TT_COMMUNITY_FEED_ACTION.sortChipActive : TT_COMMUNITY_FEED_ACTION.sortChipIdle
                 }`}
               >
                 {t(s === "latest" ? "community_sort_latest" : "community_sort_hot")}
@@ -147,7 +166,7 @@ export default function CommunityFeedFilterBar({
         </div>
       </div>
 
-      <div className="mb-2 lg:hidden">
+      <div className={TT_COMMUNITY_FEED_ACTION.filterToggleWrap}>
         <form
           className="block w-full"
           onSubmit={(e: FormEvent<HTMLFormElement>) => {
@@ -157,17 +176,19 @@ export default function CommunityFeedFilterBar({
         >
           <button
             type="submit"
-            className="flex w-full min-h-[44px] items-center justify-between gap-2 rounded-[var(--radius-xl)] border border-slate-600/70 bg-slate-800/70 px-3 py-2.5 text-meta font-medium text-slate-300 motion-sub hover:border-cyan-500/40 hover:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            className={TT_COMMUNITY_FEED_ACTION.filterToggle}
             aria-expanded={filtersExpanded}
             aria-controls={chipFiltersRegionId}
           >
             <span className="flex items-center gap-2 min-w-0">
-              <svg className="h-4 w-4 shrink-0 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+              <svg className={TT_COMMUNITY_FEED_ACTION.filterToggleIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
               </svg>
-              <span className="truncate">{t("community_filters_toggle")}</span>
+              <span className="truncate text-slate-400">
+                {filtersExpanded ? t("community_filters_toggle") : filterToggleSummary}
+              </span>
               {chipFiltersActive ? (
-                <span className="h-2 w-2 shrink-0 rounded-full bg-cyan-400 shadow-scifi-dot-glow" aria-hidden />
+                <span className={TT_COMMUNITY_FEED_ACTION.filterToggleDotActive} aria-hidden />
               ) : null}
             </span>
             <svg
@@ -185,7 +206,7 @@ export default function CommunityFeedFilterBar({
 
       <div
         id={chipFiltersRegionId}
-        className={`mb-3 space-y-3 lg:mb-4 ${filtersExpanded ? "block" : "hidden lg:block"}`}
+        className={`mb-3 space-y-3 lg:mb-4 ${filtersExpanded ? "block" : "hidden"}`}
       >
       <div className="-mx-3 px-3 overflow-x-auto overflow-y-hidden scrollbar-hide" aria-label={t("community_filter_type_aria")}>
         <div className="flex gap-2 pb-1 min-w-max">
@@ -198,10 +219,8 @@ export default function CommunityFeedFilterBar({
           >
             <button
               type="submit"
-              className={`inline-flex shrink-0 items-center justify-center rounded-full border px-3 py-1.5 min-h-[44px] text-meta motion-sub ${communityFuchsiaPillFocus} ${
-                typeFilter === "all"
-                  ? "border-fuchsia-400/60 bg-fuchsia-500/20 text-fuchsia-300"
-                  : "border-slate-600 bg-slate-800/60 text-slate-300 hover:border-fuchsia-500/40 hover:text-slate-300"
+              className={`${TT_COMMUNITY_FEED_ACTION.filterChipBase} ${
+                typeFilter === "all" ? TT_COMMUNITY_FEED_ACTION.filterChipActive : TT_COMMUNITY_FEED_ACTION.filterChipIdle
               }`}
             >
               {t("community_type_all")}
@@ -218,10 +237,8 @@ export default function CommunityFeedFilterBar({
             >
               <button
                 type="submit"
-                className={`inline-flex shrink-0 items-center justify-center rounded-full border px-3 py-1.5 min-h-[44px] text-meta motion-sub ${communityFuchsiaPillFocus} ${
-                  typeFilter === type
-                    ? "border-fuchsia-400/60 bg-fuchsia-500/20 text-fuchsia-300"
-                    : "border-slate-600 bg-slate-800/60 text-slate-300 hover:border-fuchsia-500/40 hover:text-slate-300"
+                className={`${TT_COMMUNITY_FEED_ACTION.filterChipBase} ${
+                  typeFilter === type ? TT_COMMUNITY_FEED_ACTION.filterChipActive : TT_COMMUNITY_FEED_ACTION.filterChipIdle
                 }`}
               >
                 {t(`community_type_${type}`)}
@@ -245,10 +262,8 @@ export default function CommunityFeedFilterBar({
             >
               <button
                 type="submit"
-                className={`inline-flex shrink-0 items-center justify-center rounded-full border px-3 py-1.5 min-h-[44px] text-meta motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
-                  regionFilter === key
-                    ? "border-cyan-400/60 bg-cyan-500/20 text-cyan-300"
-                    : "border-slate-600 bg-slate-800/60 text-slate-300 hover:text-slate-300"
+                className={`${TT_COMMUNITY_FEED_ACTION.filterChipBase} ${
+                  regionFilter === key ? TT_COMMUNITY_FEED_ACTION.filterChipActive : TT_COMMUNITY_FEED_ACTION.filterChipIdle
                 }`}
               >
                 {t(`community_region_${key}`)}
@@ -270,10 +285,10 @@ export default function CommunityFeedFilterBar({
             >
               <button
                 type="submit"
-                className={`inline-flex shrink-0 items-center justify-center rounded-full border px-3 py-1.5 min-h-[44px] text-meta motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
+                className={`${TT_COMMUNITY_FEED_ACTION.filterChipBase} ${
                   destinationFilter === "all"
-                    ? "border-cyan-400/60 bg-cyan-500/20 text-cyan-300"
-                    : "border-slate-600 bg-slate-800/60 text-slate-300 hover:text-slate-300"
+                    ? TT_COMMUNITY_FEED_ACTION.filterChipActive
+                    : TT_COMMUNITY_FEED_ACTION.filterChipIdle
                 }`}
               >
                 {t("community_destination_all")}
@@ -290,10 +305,10 @@ export default function CommunityFeedFilterBar({
               >
                 <button
                   type="submit"
-                  className={`inline-flex shrink-0 items-center justify-center rounded-full border px-3 py-1.5 min-h-[44px] text-meta motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
+                  className={`${TT_COMMUNITY_FEED_ACTION.filterChipBase} ${
                     destinationFilter === d
-                      ? "border-cyan-400/60 bg-cyan-500/20 text-cyan-300"
-                      : "border-slate-600 bg-slate-800/60 text-slate-300 hover:text-slate-300"
+                      ? TT_COMMUNITY_FEED_ACTION.filterChipActive
+                      : TT_COMMUNITY_FEED_ACTION.filterChipIdle
                   }`}
                 >
                   {d}
@@ -306,7 +321,7 @@ export default function CommunityFeedFilterBar({
       </div>
 
       {hasActiveFilters && (
-        <div className="mb-3 flex flex-wrap items-center gap-2 rounded-[var(--radius-md)] border border-slate-600/60 bg-slate-800/50 px-3 py-2">
+        <div className={TT_COMMUNITY_FEED_ACTION.filterSummaryBar}>
           <span className="text-meta text-slate-400">{t("community_filter_current")}:</span>
           <span className="text-meta text-slate-300">
             {[
@@ -336,7 +351,7 @@ export default function CommunityFeedFilterBar({
           >
             <button
               type="submit"
-              className={`rounded-full border border-slate-500/60 bg-slate-700/60 px-2.5 py-1 text-meta text-slate-300 hover:text-slate-200 hover:bg-slate-600/60 motion-sub min-h-[44px] inline-flex items-center justify-center ${communitySlatePillFocus}`}
+              className={`${TT_COMMUNITY_FEED_ACTION.asideGhostPill} ${communitySlatePillFocus}`}
             >
               {t("community_filter_clear")}
             </button>
@@ -357,7 +372,7 @@ export default function CommunityFeedFilterBar({
             <button
               type="submit"
               aria-label={t("common_retry")}
-              className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
+              className={`${TT_COMMUNITY_FEED_ACTION.retryPill} ${communityCardLinkFocus}`}
             >
               {t("common_retry")}
             </button>

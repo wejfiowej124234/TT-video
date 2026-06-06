@@ -43,6 +43,9 @@ export type MeTrustSummary = {
   guide_registration_rejection_codes?: string[];
   /** 人读拒绝说明（可缺省） */
   guide_registration_rejection_message?: string;
+  provider_registration_status?: string | null;
+  provider_registration_rejection_codes?: string[];
+  provider_registration_rejection_message?: string;
   /** 90 §3.1：active | pending_review | restricted（后端规则版） */
   identity_status?: string;
   /** 90 §3.4：low | medium | high（未决争议计数规则版） */
@@ -55,6 +58,16 @@ export type MeTrustSummary = {
   recommended_actions?: string[];
   /** 向导加权信誉可解释块；旧后端无 `trust.reputation` 时为 undefined */
   reputation?: MeReputationSummary;
+  /** PD-009 收购发布（`GET /me.trust` 扩展） */
+  acquisition_trust_score?: number;
+  acquisition_publish_eligible?: boolean;
+  acquisition_publish_bond_waived?: boolean;
+  acquisition_publish_bond_active?: boolean;
+  acquisition_publish_bond_display?: string;
+  acquisition_listings_published_24h?: number;
+  acquisition_publish_suspended?: boolean;
+  acquisition_fulfillment_bond_active?: boolean;
+  acquisition_fulfillment_bond_display?: string;
 };
 
 function parseStringArray(raw: unknown, key: string): string[] | undefined {
@@ -156,19 +169,83 @@ export function parseMeTrustFromMeResponse(data: unknown, user: UserShape | null
       typeof tr.risk_basis === "string" && tr.risk_basis.trim() !== "" ? tr.risk_basis.trim() : undefined;
     const risk_reason_codes = parseStringArray(tr, "risk_reason_codes");
     const recommended_actions = parseStringArray(tr, "recommended_actions");
+    let pr: string | null = null;
+    if (tr.provider_registration_status === null) pr = null;
+    else if (typeof tr.provider_registration_status === "string") pr = tr.provider_registration_status;
+    const provider_registration_rejection_codes = parseStringArray(tr, "provider_registration_rejection_codes");
+    const prmsgRaw = tr.provider_registration_rejection_message;
+    const provider_registration_rejection_message =
+      typeof prmsgRaw === "string" && prmsgRaw.trim() !== "" ? prmsgRaw.trim() : undefined;
     const reputation = parseMeReputation(tr.reputation);
+    const acquisition_trust_score =
+      typeof tr.acquisition_trust_score === "number" && Number.isFinite(tr.acquisition_trust_score)
+        ? tr.acquisition_trust_score
+        : undefined;
+    const acquisition_publish_eligible =
+      typeof tr.acquisition_publish_eligible === "boolean"
+        ? tr.acquisition_publish_eligible
+        : undefined;
+    const acquisition_publish_bond_waived =
+      typeof tr.acquisition_publish_bond_waived === "boolean"
+        ? tr.acquisition_publish_bond_waived
+        : undefined;
+    const acquisition_publish_bond_active =
+      typeof tr.acquisition_publish_bond_active === "boolean"
+        ? tr.acquisition_publish_bond_active
+        : undefined;
+    const acquisition_publish_bond_display =
+      typeof tr.acquisition_publish_bond_display === "string" &&
+      tr.acquisition_publish_bond_display.trim() !== ""
+        ? tr.acquisition_publish_bond_display.trim()
+        : undefined;
+    const acquisition_listings_published_24h =
+      typeof tr.acquisition_listings_published_24h === "number" &&
+      Number.isFinite(tr.acquisition_listings_published_24h)
+        ? tr.acquisition_listings_published_24h
+        : undefined;
+    const acquisition_publish_suspended =
+      typeof tr.acquisition_publish_suspended === "boolean"
+        ? tr.acquisition_publish_suspended
+        : undefined;
+    const acquisition_fulfillment_bond_active =
+      typeof tr.acquisition_fulfillment_bond_active === "boolean"
+        ? tr.acquisition_fulfillment_bond_active
+        : undefined;
+    const acquisition_fulfillment_bond_display =
+      typeof tr.acquisition_fulfillment_bond_display === "string" &&
+      tr.acquisition_fulfillment_bond_display.trim() !== ""
+        ? tr.acquisition_fulfillment_bond_display.trim()
+        : undefined;
     return {
       kyc_status: kyc,
       wallet_linked: wl,
       guide_registration_status: gr,
       ...(guide_registration_rejection_codes != null ? { guide_registration_rejection_codes } : {}),
       ...(guide_registration_rejection_message != null ? { guide_registration_rejection_message } : {}),
+      provider_registration_status: pr,
+      ...(provider_registration_rejection_codes != null ? { provider_registration_rejection_codes } : {}),
+      ...(provider_registration_rejection_message != null ? { provider_registration_rejection_message } : {}),
       identity_status,
       risk_level,
       risk_basis,
       ...(risk_reason_codes != null ? { risk_reason_codes } : {}),
       ...(recommended_actions != null ? { recommended_actions } : {}),
       ...(reputation != null ? { reputation } : {}),
+      ...(acquisition_trust_score != null ? { acquisition_trust_score } : {}),
+      ...(acquisition_publish_eligible != null ? { acquisition_publish_eligible } : {}),
+      ...(acquisition_publish_bond_waived != null ? { acquisition_publish_bond_waived } : {}),
+      ...(acquisition_publish_bond_active != null ? { acquisition_publish_bond_active } : {}),
+      ...(acquisition_publish_bond_display != null ? { acquisition_publish_bond_display } : {}),
+      ...(acquisition_listings_published_24h != null
+        ? { acquisition_listings_published_24h }
+        : {}),
+      ...(acquisition_publish_suspended != null ? { acquisition_publish_suspended } : {}),
+      ...(acquisition_fulfillment_bond_active != null
+        ? { acquisition_fulfillment_bond_active }
+        : {}),
+      ...(acquisition_fulfillment_bond_display != null
+        ? { acquisition_fulfillment_bond_display }
+        : {}),
     };
   }
   return {

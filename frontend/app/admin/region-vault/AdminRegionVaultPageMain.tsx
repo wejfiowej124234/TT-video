@@ -1,5 +1,7 @@
 "use client";
 
+import { formatAdminAppliedFiltersHuman } from "@/lib/admin/formatAdminAppliedFiltersHuman";
+
 import Link from "next/link";
 import { useId, useMemo } from "react";
 import { AdminSortableTh } from "@/components/admin/AdminSortableTh";
@@ -11,23 +13,30 @@ import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptySt
 import { AdminAppliedFiltersBanner } from "@/components/admin/AdminAppliedFiltersBanner";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminMetaBuildSection } from "@/components/admin/AdminMetaBuildPanel";
+import { AdminFinanceSectionBackLinks } from "@/components/admin/AdminFinanceSectionBackLinks";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminFinanceModuleDepthWorkspace } from "@/components/admin/AdminFinanceModuleDepthWorkspace";
 import { AdminFinanceSuiteDepthNotice } from "@/components/admin/AdminFinanceSuiteDepthNotice";
 import { AdminFinanceSuitePartialChecklist } from "@/components/admin/AdminFinanceSuitePartialChecklist";
 import { AdminPermissionDeniedBanner } from "@/components/admin/AdminPermissionDeniedBanner";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
-import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
+import { financePeerRelatedFoldLinks } from "@/lib/admin/adminFinanceRelatedFoldLinks";
 import { shortHex } from "./adminRegionVaultPageModel";
 import { useAdminRegionVaultPage } from "./useAdminRegionVaultPage";
 import { sortRowsByKey, useAdminTableSort } from "@/lib/admin/useAdminTableSort";
 import {
-  ADMIN_FILTER_CARD_CLASS,
   ADMIN_FORM_FIELD_FOCUS_CLASS,
+  adminHubKpiLinkClass,
+  ADMIN_HUB_LINK_CARD_INNER_CLASS,
   ADMIN_TABLE_ROW_CLASS,
+  ADMIN_TABLE_SCROLL_SECTION_CLASS,
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
   adminPageNavLinkClass,
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
 } from "@/lib/adminUi";
 
 type RegionVaultSortKey = "chain_id" | "block_number";
@@ -38,6 +47,7 @@ export function AdminRegionVaultPageMain() {
   const regionVaultLoadMoreFilterHintId = useId();
   const {
     loading,
+    refreshing,
     loadingMore,
     error,
     summary,
@@ -65,33 +75,15 @@ export function AdminRegionVaultPageMain() {
     <AdminListPageChrome
       titleId={pageTitleId}
       title={t("admin_region_vault_title")}
-      subtitle={t("admin_region_vault_subtitle")}
-      headerAside={
-        <>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link
-            href="/admin/finance"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_finance_title")}
-          </Link>
-          <Link
-            href="/admin/fee-router"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_fee_router_title")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_schema_back")}
-          </Link>
-        </>
-      }
+      subtitle={t("admin_region_vault_subtitle_l5")}
+      headerAside={<AdminFinanceSectionBackLinks />}
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={financePeerRelatedFoldLinks("/admin/region-vault")}
+        ariaLabelKey="admin_finance_related_aria"
+        foldSummaryKey="admin_finance_related_fold"
+        dataTtFold="region-vault"
+      />
       <AdminPermissionDeniedBanner
         permission={ADMIN_PERM.FINANCE_READ}
         messageKey="admin_perm_denied_finance_read"
@@ -109,7 +101,7 @@ export function AdminRegionVaultPageMain() {
         }}
       />
 
-      {loading ? (
+      {loading && items.length === 0 && !summary ? (
         <AdminListLoadingStatus message={t("admin_loading")} />
       ) : null}
 
@@ -119,7 +111,7 @@ export function AdminRegionVaultPageMain() {
 
       <AdminMetaBuildSection meta={meta} loading={loading} error={error} />
 
-      {!loading && !error && summary && (
+      {!error && (!loading || summary) && summary && (
         <section
           className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
           aria-label={t("admin_region_vault_summary_aria")}
@@ -129,34 +121,43 @@ export function AdminRegionVaultPageMain() {
         >
           <Link
             href="#admin-region-vault-events"
-            className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start ${ADMIN_FILTER_CARD_CLASS} text-ink-800 shadow-soft transition hover:border-ink-400 hover:text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+            className={adminHubKpiLinkClass()}
+            data-tt-admin-hub-kpi-link="1"
           >
-            <h2 className="text-body font-medium text-ink-800">{t("admin_region_vault_summaryTotal")}</h2>
-            <p className="mt-2 text-h4 font-semibold text-ink-900">{summary.total ?? 0}</p>
+            <span className={ADMIN_HUB_LINK_CARD_INNER_CLASS}>
+              <h2 className="text-body font-medium text-ink-800">{t("admin_region_vault_summaryTotal")}</h2>
+              <p className="mt-2 text-h4 font-semibold text-ink-900">{summary.total ?? 0}</p>
+            </span>
           </Link>
           <Link
             href="#admin-region-vault-events"
-            className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start ${ADMIN_FILTER_CARD_CLASS} text-ink-800 shadow-soft transition hover:border-ink-400 hover:text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+            className={adminHubKpiLinkClass()}
+            data-tt-admin-hub-kpi-link="1"
           >
-            <h2 className="text-body font-medium text-ink-800">{t("admin_region_vault_blockRange")}</h2>
-            <p className="mt-2 font-mono text-small text-ink-700">
-              {summary.min_block_number ?? t("admin_em_dash")} →{" "}
-              {summary.max_block_number ?? t("admin_em_dash")}
-            </p>
+            <span className={ADMIN_HUB_LINK_CARD_INNER_CLASS}>
+              <h2 className="text-body font-medium text-ink-800">{t("admin_region_vault_blockRange")}</h2>
+              <p className="mt-2 font-mono text-small text-ink-700">
+                {summary.min_block_number ?? t("admin_em_dash")} →{" "}
+                {summary.max_block_number ?? t("admin_em_dash")}
+              </p>
+            </span>
           </Link>
           <Link
             href="#admin-region-vault-events"
-            className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start ${ADMIN_FILTER_CARD_CLASS} text-ink-800 shadow-soft transition hover:border-ink-400 hover:text-ink-900 sm:col-span-2 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+            className={`${adminHubKpiLinkClass()} sm:col-span-2`}
+            data-tt-admin-hub-kpi-link="1"
           >
-            <h2 className="text-body font-medium text-ink-800">{t("admin_region_vault_latestInserted")}</h2>
-            <p className="mt-2 font-mono text-small text-ink-700">
-              {summary.latest_inserted_at ?? t("admin_em_dash")}
-            </p>
+            <span className={ADMIN_HUB_LINK_CARD_INNER_CLASS}>
+              <h2 className="text-body font-medium text-ink-800">{t("admin_region_vault_latestInserted")}</h2>
+              <p className="mt-2 font-mono text-small text-ink-700">
+                {summary.latest_inserted_at ?? t("admin_em_dash")}
+              </p>
+            </span>
           </Link>
         </section>
       )}
 
-      {!loading && !error && appliedFilters ? (
+      {!error && appliedFilters && (!loading || items.length > 0) ? (
         <AdminAppliedFiltersBanner
           key={appliedFiltersKey}
           id={adminAppliedFiltersDescId}
@@ -167,13 +168,14 @@ export function AdminRegionVaultPageMain() {
         </AdminAppliedFiltersBanner>
       ) : null}
 
-      {!loading && !error && items.length > 0 && (
+      {!error && (!loading || items.length > 0) && items.length > 0 && (
         <section
           id="admin-region-vault-events"
-          className="mt-8 scroll-mt-24 overflow-x-auto rounded-[var(--radius-md)] border border-ink-200"
+          className={`${ADMIN_TABLE_SCROLL_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
           aria-label={t("admin_region_vault_events_table_aria")}
+          data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
         >
-          <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+          <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
             <thead className={ADMIN_TABLE_THEAD_CLASS}>
               <tr>
                 <AdminSortableTh
@@ -203,7 +205,7 @@ export function AdminRegionVaultPageMain() {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-ink-100 font-mono text-meta text-ink-800">
+            <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} font-mono text-small text-ink-800 text-ink-800`}>
               {sortedItems.map((row) => (
                 <tr key={row.id} className={ADMIN_TABLE_ROW_CLASS}>
                   <td className="whitespace-nowrap px-3 py-2">{row.chain_id}</td>
@@ -232,7 +234,7 @@ export function AdminRegionVaultPageMain() {
         </section>
       )}
 
-      {!loading && !error && items.length === 0 && summary && (summary.total ?? 0) === 0 && (
+      {!error && (!loading || summary) && items.length === 0 && summary && (summary.total ?? 0) === 0 && (
         <AdminListPageEmptyState
           messageKey="admin_region_vault_empty"
           nextLinks={[
@@ -259,7 +261,7 @@ export function AdminRegionVaultPageMain() {
           >
             <button
               type="submit"
-              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 bg-white px-4 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 disabled:opacity-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`inline-flex min-h-[44px] items-center justify-center ${ADMIN_FILTER_RESET_BTN_CLASS} disabled:opacity-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               disabled={loadingMore}
               aria-busy={loadingMore ? true : undefined}
             >

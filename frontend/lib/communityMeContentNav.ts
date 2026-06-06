@@ -1,5 +1,7 @@
 import { communityMeTabBarLinkFocus } from "@/lib/communityA11yFocus";
 import { buildPathnameSearchHref } from "@/lib/marketLoginReturnPath";
+import { ME_SETTINGS_PROFILE_PATH } from "@/lib/me/meSettingsL5";
+import { TT_COMMUNITY_ME_PANEL_L5 } from "@/lib/marketingUi";
 
 /**
  * `/community/me?tab=` 与弹层面板对齐（书签深链）。
@@ -7,7 +9,37 @@ import { buildPathnameSearchHref } from "@/lib/marketLoginReturnPath";
  */
 export type CommunityMeUrlTab = "likes" | "collects" | "posts" | "orders";
 
-type TabSearch = { get: (name: string) => string | null };
+/** 已登录用户：Hub `?tab=` 深链归一化至独立页 / 全站订单（与资料卡分段 href 一致）。 */
+const COMMUNITY_ME_TAB_DEDICATED_PATH: Record<CommunityMeUrlTab, string> = {
+  posts: "/community/me/posts",
+  collects: "/community/me/collects",
+  likes: "/community/me/likes",
+  orders: "/orders",
+};
+
+type TabSearch = { get: (name: string) => string | null; toString(): string };
+
+/**
+ * 将 Hub `?tab=` 映射为已登录用户的规范路径；`likes` 在功能关闭时返回 `null`（由 Hub 侧剔除 tab）。
+ */
+export function communityMeDedicatedPathForTab(
+  tab: CommunityMeUrlTab,
+  likesListEnabled: boolean,
+): string | null {
+  if (tab === "likes" && !likesListEnabled) return null;
+  return COMMUNITY_ME_TAB_DEDICATED_PATH[tab] ?? null;
+}
+
+/** 合并 query：剔除 `tab`，保留其它投放 / 筛选参数。 */
+export function communityMeDedicatedHrefFromHubQuery(
+  dedicatedPath: string,
+  searchParams: TabSearch | null | undefined,
+): string {
+  const sp = new URLSearchParams(searchParams?.toString() ?? "");
+  sp.delete("tab");
+  const qs = sp.toString();
+  return qs ? `${dedicatedPath}?${qs}` : dedicatedPath;
+}
 
 export function parseCommunityMeTabQuery(
   pathname: string,
@@ -30,22 +62,25 @@ export function parseCommunityMeTabQuery(
 export function communityMeContentSegmentClass(active: boolean): string {
   const base = `relative flex min-h-[44px] items-center justify-center px-2 py-2 text-kicker sm:text-meta motion-sub motion-reduce:transition-none ${communityMeTabBarLinkFocus}`;
   return active
-    ? `${base} bg-slate-800/95 font-semibold text-cyan-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]`
-    : `${base} text-slate-400 hover:bg-slate-800/55 hover:text-slate-200`;
+    ? `${base} ${TT_COMMUNITY_ME_PANEL_L5.segmentLinkActive}`
+    : `${base} ${TT_COMMUNITY_ME_PANEL_L5.segmentLinkInactive}`;
 }
 
-/** 社区帖子：`?tab=posts` 或 IA 别名 `?tab=community_posts`；文案键 `community_me_tab_community_posts`。 */
+/** 社区帖子：`?tab=posts`、IA 别名，或独立页 `/community/me/posts`。 */
 export function communityMePostsPathActive(pathname: string, searchParams?: TabSearch | null): boolean {
+  if (pathname === "/community/me/posts" || pathname.startsWith("/community/me/posts/")) return true;
   return parseCommunityMeTabQuery(pathname, searchParams ?? null) === "posts";
 }
 
-/** 收藏弹层；`?tab=collects` 时高亮。 */
+/** 收藏：独立页 `/community/me/collects` 或 `?tab=collects`。 */
 export function communityMeCollectsPathActive(pathname: string, searchParams?: TabSearch | null): boolean {
+  if (pathname === "/community/me/collects" || pathname.startsWith("/community/me/collects/")) return true;
   return parseCommunityMeTabQuery(pathname, searchParams ?? null) === "collects";
 }
 
-/** 赞过弹层；`?tab=likes` 时高亮。 */
+/** 赞过：独立页 `/community/me/likes` 或 `?tab=likes` 弹层。 */
 export function communityMeLikesPathActive(pathname: string, searchParams?: TabSearch | null): boolean {
+  if (pathname === "/community/me/likes" || pathname.startsWith("/community/me/likes/")) return true;
   return parseCommunityMeTabQuery(pathname, searchParams ?? null) === "likes";
 }
 
@@ -61,39 +96,52 @@ const LEGACY_ME_HUB_PATH_TO_TAB: Record<string, CommunityMeUrlTab> = {
   "/community/me/likes": "likes",
 };
 
-function mergeLegacyMeSubpathToHub(
-  pathname: string,
+function mergeLegacyMeSubpathToDedicated(
   searchParams: { toString(): string } | null | undefined,
   tab: CommunityMeUrlTab,
 ): string {
-  const sp = new URLSearchParams(searchParams?.toString() ?? "");
-  const merged = new URLSearchParams();
-  sp.forEach((value, key) => {
-    if (key !== "tab") merged.set(key, value);
-  });
-  merged.set("tab", tab);
-  return `/community/me?${merged.toString()}`;
+  const dedicated = communityMeDedicatedPathForTab(tab, true);
+  if (dedicated != null) {
+    return communityMeDedicatedHrefFromHubQuery(dedicated, searchParams);
+  }
+  return ME_SETTINGS_PROFILE_PATH;
 }
 
 /**
  * 社区个人中心登录回流路径：在 `/community/me` 上保留当前 query（`tab`、投放参数等）；
  * **`/community/me/reports`** 与 **`/community/me/reports/:id`** 保持规范路径 + query（与 160 举报子站一致）；
- * 在 **`/community/me/posts|collects|likes`**（已重定向的遗留路径）上合并为 `/community/me?tab=…` 并保留非 `tab` 参数；
- * 否则回退到 `/community/me?tab=<fallback>`。
+ * 在 **`/community/me/posts|collects|likes`** 独立页上保留 pathname + query；
+ * 其它路径回退到 **`communityMeDedicatedPathForTab(fallback)`**（likes/posts/collects/orders → 独立页或 `/orders`）。
  */
 export function communityMeLoginReturnUrl(
   pathname: string | null | undefined,
   searchParams: { toString(): string } | null | undefined,
   tabFallback: CommunityMeUrlTab,
 ): string {
-  const fb = `/community/me?tab=${tabFallback}`;
   if (pathname === "/community/me") {
+    const tab = parseCommunityMeTabQuery(pathname, searchParams);
+    if (tab != null) {
+      const dedicated = communityMeDedicatedPathForTab(tab, true);
+      if (dedicated != null) {
+        return communityMeDedicatedHrefFromHubQuery(dedicated, searchParams);
+      }
+    }
     const q = (searchParams?.toString() ?? "").trim();
-    return q.length > 0 ? `/community/me?${q}` : fb;
+    if (q.length > 0) {
+      const sp = new URLSearchParams(q);
+      sp.delete("tab");
+      const rest = sp.toString();
+      return rest.length > 0 ? `${ME_SETTINGS_PROFILE_PATH}?${rest}` : ME_SETTINGS_PROFILE_PATH;
+    }
+    return ME_SETTINGS_PROFILE_PATH;
   }
   if (pathname === "/community/me/reports") {
     const q = (searchParams?.toString() ?? "").trim();
     return q.length > 0 ? `/community/me/reports?${q}` : "/community/me/reports";
+  }
+  if (pathname === "/community/me/posts" || pathname === "/community/me/collects" || pathname === "/community/me/likes") {
+    const q = (searchParams?.toString() ?? "").trim();
+    return q.length > 0 ? `${pathname}?${q}` : pathname;
   }
   if (typeof pathname === "string" && pathname.startsWith("/community/me/reports/")) {
     const idPart = pathname.slice("/community/me/reports/".length).trim();
@@ -105,8 +153,9 @@ export function communityMeLoginReturnUrl(
   if (pathname != null) {
     const legacyTab = LEGACY_ME_HUB_PATH_TO_TAB[pathname];
     if (legacyTab != null) {
-      return mergeLegacyMeSubpathToHub(pathname, searchParams, legacyTab);
+      return mergeLegacyMeSubpathToDedicated(searchParams, legacyTab);
     }
   }
-  return fb;
+  const dedicatedFallback = communityMeDedicatedPathForTab(tabFallback, true);
+  return dedicatedFallback ?? ME_SETTINGS_PROFILE_PATH;
 }

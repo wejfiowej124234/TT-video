@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import { isAdminMaintainerUi } from "@/lib/admin/adminMaintainerUiMode";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
+import { ADMIN_PERMISSIONS_MAINTAINER_FOLD_CLASS } from "@/lib/adminUi";
 import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
 type Props = {
@@ -25,7 +26,7 @@ export function AdminPermissionsMaintainerFold({ children }: Props) {
 
   return (
     <details
-      className="mt-6 rounded-[var(--radius-lg)] border border-ink-200 bg-ink-50/40 p-3"
+      className={ADMIN_PERMISSIONS_MAINTAINER_FOLD_CLASS}
       data-tt-admin-permissions-maintainer-fold="collapsed"
     >
       <summary

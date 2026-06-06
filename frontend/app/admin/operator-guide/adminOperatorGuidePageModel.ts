@@ -1,6 +1,7 @@
 import { ADMIN_INBOX_QUEUE_HREFS } from "@/lib/admin/adminInboxQueueHrefs";
 
 export const OPERATOR_GUIDE_FLOW_LINKS = [
+  { href: "/admin/inbox", key: "admin_operator_flow_inbox" },
   { href: ADMIN_INBOX_QUEUE_HREFS.provider, key: "admin_operator_flow_provider" },
   { href: ADMIN_INBOX_QUEUE_HREFS.steward, key: "admin_operator_flow_steward" },
   { href: ADMIN_INBOX_QUEUE_HREFS.approvals, key: "admin_operator_flow_approvals" },

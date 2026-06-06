@@ -5,9 +5,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useId, useMemo, useState, type FormEvent } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import { useAdminFormErrorState } from "@/lib/admin/adminFormErrorState";
 import {
-  type AdminFetchErrorKind,
   adminFetchJson,
   adminLogApiJsonStatus,
   adminUserFacingErrorFromUnknown,
@@ -15,13 +15,14 @@ import {
 } from "@/lib/adminFetchDisplay";
 import { apiUrl, routes } from "@/lib/api";
 import { writeRequestHeaders } from "@/lib/apiClient";
+import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
 import { PUBLISH_STATUSES, REGION_MAX, TENANT_KEY_MAX } from "./adminTenantScopesPageConstants";
 import { buildTenantScopesListPath, parseTenantScopesListQuery } from "./adminTenantScopesPageQuery";
 import type { TenantScopePublishRes, TenantScopeRow } from "./adminTenantScopesPageTypes";
-import { useAdminTenantScopesPageListFetch } from "./useAdminTenantScopesPageListFetch";
 
 export function useAdminTenantScopesPage() {
   const { t } = useTranslation();
+  const requestConfirm = useAdminL5ConfirmRequest();
   const pageTitleId = useId();
   const limitInputId = useId();
   const tenantKeyInputId = useId();
@@ -46,12 +47,33 @@ export function useAdminTenantScopesPage() {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<TenantScopeRow[]>([]);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
   const [reloadTick, setReloadTick] = useState(0);
+
+  const listUrl = useMemo(
+    () =>
+      routes.admin.tenantScopes({
+        limit,
+        ...(tenantKey ? { tenant_key: tenantKey } : {}),
+        ...(regionCode ? { region_code: regionCode } : {}),
+        ...(status ? { status } : {}),
+        ...(scopeClass ? { scope_class: scopeClass } : {}),
+      }),
+    [limit, tenantKey, regionCode, status, scopeClass],
+  );
+
+  const {
+    items,
+    meta,
+    appliedFilters,
+    loading,
+    refreshing,
+    error,
+  } = useAdminStandardListFetch<TenantScopeRow>({
+    scope: "tenant-scopes",
+    context: "AdminTenantScopesPage",
+    listUrl,
+    refreshToken: reloadTick,
+  });
 
   const [draftLimit, setDraftLimit] = useState(String(limit));
   const [draftTenantKey, setDraftTenantKey] = useState(tenantKey);
@@ -85,20 +107,6 @@ export function useAdminTenantScopesPage() {
     publishFormError.clearError();
   }, [publishFormError]);
 
-  useAdminTenantScopesPageListFetch(
-    limit,
-    tenantKey,
-    regionCode,
-    status,
-    scopeClass,
-    reloadTick,
-    setLoading,
-    setError,
-    setItems,
-    setMeta,
-    setAppliedFilters,
-  );
-
   const apply = (e?: FormEvent) => {
     e?.preventDefault();
     const n = Number.parseInt(draftLimit.trim(), 10);
@@ -130,7 +138,7 @@ export function useAdminTenantScopesPage() {
 
   const hasActiveFilters = Boolean(tenantKey) || Boolean(regionCode) || Boolean(status) || Boolean(scopeClass);
 
-  const submitPublish = useCallback(() => {
+  const submitPublishImpl = useCallback(() => {
     if (!publishRow?.id?.trim()) return;
     const ev = Number.parseInt(publishVersion.trim(), 10);
     if (!Number.isFinite(ev)) {
@@ -190,6 +198,14 @@ export function useAdminTenantScopesPage() {
       .finally(() => setPublishSubmitting(false));
   }, [closePublish, publishRow, publishStatus, publishVersion, publishFormError, t]);
 
+  const submitPublish = useCallback(() => {
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_write",
+      descKey: "admin_l5_confirm_desc_publish",
+      onConfirm: () => submitPublishImpl(),
+    });
+  }, [requestConfirm, submitPublishImpl]);
+
   return {
     t,
     pageTitleId,
@@ -214,6 +230,7 @@ export function useAdminTenantScopesPage() {
     status,
     scopeClass,
     loading,
+    refreshing,
     error,
     items,
     meta,

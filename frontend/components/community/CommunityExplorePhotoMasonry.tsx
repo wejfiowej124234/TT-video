@@ -8,6 +8,7 @@ import type { CommunityPost } from "@/lib/communityPostTypes";
 import type { LocaleInterpolationVars } from "@/lib/i18n";
 import { communityCardLinkFocus } from "@/lib/communityA11yFocus";
 import LoadingText from "@/components/LoadingText";
+import { communityMediaAbsoluteUrlForRender } from "@/lib/communityMediaClientUrl";
 
 /** 首屏默认展示缩略图数；发现页可通过 `maxThumbs` 随分页增大（上限见 explore 页） */
 export const COMMUNITY_EXPLORE_MASONRY_DEFAULT_MAX = 36;
@@ -65,9 +66,15 @@ export function CommunityExplorePhotoMasonry({
   }
 
   return (
-    <div className="columns-2 sm:columns-3 lg:columns-4 gap-2 space-y-2" role="list" aria-label={t("community_explore_section_masonry")}>
+    <div
+      className="columns-2 sm:columns-3 lg:columns-4 gap-2 space-y-2 [content-visibility:auto]"
+      role="list"
+      aria-label={t("community_explore_section_masonry")}
+    >
       {items.map((post, thumbIdx) => {
-        const src = thumbSrc(post)!;
+        const srcRaw = thumbSrc(post);
+        const src = srcRaw ? communityMediaAbsoluteUrlForRender(srcRaw) : null;
+        if (!src) return null;
         const href = `/community?post=${encodeURIComponent(post.id)}`;
         const titleTrim = post.title?.trim();
         const alt = titleTrim
@@ -78,7 +85,7 @@ export function CommunityExplorePhotoMasonry({
             key={post.id}
             href={href}
             role="listitem"
-            className={`group block break-inside-avoid mb-2 rounded-[var(--radius-md)] overflow-hidden border border-cyan-500/25 bg-ink-800/60 motion-sub motion-reduce:transition-none hover:border-cyan-400/50 hover:shadow-scifi-masonry-hover ${communityCardLinkFocus}`}
+            className={`group block break-inside-avoid mb-2 rounded-[var(--radius-md)] overflow-hidden border border-ref-sun/22 bg-ink-800/60 motion-sub motion-reduce:transition-none hover:border-ref-sun/40 hover:shadow-scifi-masonry-hover ${communityCardLinkFocus}`}
           >
             <div className="relative w-full aspect-[3/4]">
               <Image

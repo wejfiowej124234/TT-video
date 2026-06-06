@@ -8,7 +8,9 @@ import { ADMIN_COMMAND_PALETTE_OPEN_EVENT } from "@/lib/admin/adminCommandPalett
 import { adminCommandPaletteEntries } from "@/lib/admin/adminCommandPaletteEntries";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
 import { useAdminShellActor } from "@/lib/admin/useAdminShellActor";
-import { ADMIN_FORM_FIELD_FOCUS_CLASS } from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
+import { useAdminShellPrefetchHref } from "@/lib/admin/useAdminShellLinkPrefetch";
+import { ADMIN_COMMAND_PALETTE_HEADER_CLASS, ADMIN_COMMAND_PALETTE_HIT_CLASS, ADMIN_FORM_CONTROL_MD_CLASS, ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_MODAL_OVERLAY_CLASS } from "@/lib/adminUi";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2WhiteClasses } from "@/lib/travelLinkFocus";
 
 function matchEntry(
@@ -28,6 +30,7 @@ export function AdminCommandPalette() {
   const router = useRouter();
   const actor = useAdminShellActor();
   const caps = useAdminCapabilities();
+  const prefetchHref = useAdminShellPrefetchHref();
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -79,23 +82,32 @@ export function AdminCommandPalette() {
     }
   }, [open]);
 
+  useEffect(() => {
+    if (!open || hits.length === 0) return;
+    for (const entry of hits.slice(0, 8)) {
+      prefetchHref(entry.href);
+    }
+  }, [open, hits, prefetchHref]);
+
   if (!open) return null;
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-start justify-center bg-ink-900/40 p-4 pt-[12vh]"
+      className={`${ADMIN_MODAL_OVERLAY_CLASS} flex items-start justify-center p-4 pt-[12vh]`}
       role="presentation"
       data-tt-admin-command-palette="1"
       onClick={close}
     >
-      <div
+      <AdminWarmL5Surface
+        as="div"
         role="dialog"
         aria-modal="true"
         aria-label={t("admin_command_palette_aria")}
-        className="w-full max-w-lg rounded-[var(--radius-xl)] border border-ink-200 bg-white shadow-soft"
+        className="w-full max-w-lg"
+        pad="none"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="border-b border-ink-100 p-4">
+        <div className={ADMIN_COMMAND_PALETTE_HEADER_CLASS}>
           <label className="block text-small font-medium text-ink-800">
             {t("admin_command_palette_label")}
             <input
@@ -104,7 +116,7 @@ export function AdminCommandPalette() {
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder={t("admin_command_palette_ph")}
-              className={`mt-2 block w-full min-h-[44px] rounded-[var(--radius-md)] border border-ink-300 px-3 py-2 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-2 block w-full min-h-[44px] px-3 py-2 text-small ${ADMIN_FORM_CONTROL_MD_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             />
           </label>
           <p className="mt-2 text-meta text-ink-500">{t("admin_command_palette_hint")}</p>
@@ -118,10 +130,13 @@ export function AdminCommandPalette() {
                 <Link
                   href={entry.href}
                   role="option"
-                  className={`${touchTargetLink44Classes} block rounded-[var(--radius-md)] px-3 py-2.5 hover:bg-ink-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
+                  prefetch
+                  onPointerEnter={() => prefetchHref(entry.href)}
+                  className={`${touchTargetLink44Classes} ${ADMIN_COMMAND_PALETTE_HIT_CLASS} ${travelFocusRingCoreOffset2WhiteClasses}`}
                   onClick={(e) => {
                     e.preventDefault();
                     close();
+                    prefetchHref(entry.href);
                     router.push(entry.href);
                   }}
                 >
@@ -132,7 +147,7 @@ export function AdminCommandPalette() {
             ))
           )}
         </ul>
-      </div>
+      </AdminWarmL5Surface>
     </div>
   );
 }

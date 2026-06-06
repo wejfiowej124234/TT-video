@@ -2,12 +2,10 @@
 
 import { type FormEvent, useState } from "react";
 import { AdminDialogFocusPanel } from "@/components/admin/AdminDialogFocusPanel";
+import { AdminModalWarmL5Panel } from "@/components/admin/AdminModalWarmL5Panel";
 import { AdminDialogScrim } from "@/components/admin/AdminDialogScrim";
 import { AdminAlertError } from "@/components/admin/AdminAlertError";
-import {
-  adminModalPortalRootSheetClass,
-  adminModalScrimClass,
-} from "@/components/market/marketStudioModalLayout";
+import { adminModalPortalRootSheetClass } from "@/components/market/marketStudioModalLayout";
 import type { AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
 import {
   ADMIN_FORM_FIELD_FOCUS_CLASS,
@@ -15,7 +13,16 @@ import {
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
   ADMIN_STEP_MARKER_CLASS,
   adminWizardStepClass,
-} from "@/lib/adminUi";
+  ADMIN_MODAL_CANCEL_BTN_CLASS,
+  ADMIN_WARM_L5_MODAL_FORM_CONTROL_CLASS,
+  ADMIN_WARM_L5_MODAL_FORM_LABEL_CLASS,
+  ADMIN_PAGE_CHROME_SUBTITLE_ID_CLASS,
+  ADMIN_PAGE_CHROME_TITLE_CLASS,
+  ADMIN_TEXT_META_CLASS,
+  ADMIN_FORM_ERROR_BANNER_CLASS,
+  ADMIN_FORM_FIELD_ERROR_BORDER_CLASS,
+  ADMIN_FORM_FIELD_ERROR_TEXT_CLASS,
+  ADMIN_CONSOLE_INNER_PANEL_CLASS,} from "@/lib/adminUi";
 import type { LocaleTranslateFn } from "@/lib/i18n";
 import {
   type AdminReportsWizardFieldErrors,
@@ -191,12 +198,13 @@ export function AdminCommunityReportsModerationWizard(props: Props) {
       <AdminDialogFocusPanel
         onClose={closeMod}
         trapId="reports-wizard"
-        className="relative z-10 max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-[var(--radius-xl)] border border-ink-200 bg-white p-5 shadow-medium"
+        className="relative z-10 w-full flex justify-center px-4"
       >
-        <h2 id={modDialogTitleId} className="text-body-l font-semibold text-ink-900">
+        <AdminModalWarmL5Panel className="max-w-lg w-full max-h-[90vh] overflow-y-auto">
+        <h2 id={modDialogTitleId} className={ADMIN_PAGE_CHROME_TITLE_CLASS}>
           {t("admin_reports_wizard_title")}
         </h2>
-        <p id={modDialogDescId} className="mt-1 text-meta font-mono text-ink-600 break-all">
+        <p id={modDialogDescId} className={`mt-1 ${ADMIN_PAGE_CHROME_SUBTITLE_ID_CLASS}`}>
           {modRow.id}
         </p>
 
@@ -239,7 +247,7 @@ export function AdminCommunityReportsModerationWizard(props: Props) {
 
         {adminReportsWizardFieldErrorKeys(fieldErrors).length > 0 ? (
           <div
-            className="mt-3 rounded-[var(--radius-md)] border border-red-200 bg-red-50/80 p-3 text-small text-red-900"
+            className={`mt-3 ${ADMIN_FORM_ERROR_BANNER_CLASS}`}
             role="alert"
             aria-live="polite"
             data-tt-admin-reports-wizard-step-errors="1"
@@ -257,8 +265,8 @@ export function AdminCommunityReportsModerationWizard(props: Props) {
         <form className="mt-4 space-y-3 text-small" onSubmit={onSubmit}>
           {step === 1 ? (
             <>
-              <p className="text-meta text-ink-600">{t("admin_reports_wizard_step1_hint")}</p>
-              <label className="block text-ink-700">
+              <p className={ADMIN_TEXT_META_CLASS}>{t("admin_reports_wizard_step1_hint")}</p>
+              <label className={ADMIN_WARM_L5_MODAL_FORM_LABEL_CLASS}>
                 {t("admin_reports_modExpectedVer")}
                 <input
                   type="text"
@@ -270,24 +278,25 @@ export function AdminCommunityReportsModerationWizard(props: Props) {
                   }}
                   aria-invalid={fieldErrors.expectedVer ? true : undefined}
                   aria-describedby={fieldErrors.expectedVer ? "admin-reports-wizard-err-ver" : undefined}
-                  className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border bg-white px-2 py-1 font-mono ${ADMIN_FORM_FIELD_FOCUS_CLASS} ${
-                    fieldErrors.expectedVer ? "border-red-400" : "border-ink-200"
+                  className={`mt-1 w-full min-h-[44px] ${ADMIN_WARM_L5_MODAL_FORM_CONTROL_CLASS} px-2 py-1 font-mono ${ADMIN_FORM_FIELD_FOCUS_CLASS} ${
+                    fieldErrors.expectedVer ? ADMIN_FORM_FIELD_ERROR_BORDER_CLASS : ""
                   }`}
                 />
                 {fieldErrors.expectedVer ? (
-                  <p id="admin-reports-wizard-err-ver" className="mt-1 text-meta text-red-700">
+                  <p id="admin-reports-wizard-err-ver" className={ADMIN_FORM_FIELD_ERROR_TEXT_CLASS}>
                     {fieldErrorMessage("expectedVer")}
                   </p>
                 ) : null}
               </label>
-              <label className="block text-ink-700">
+              <label className={ADMIN_WARM_L5_MODAL_FORM_LABEL_CLASS}>
                 {t("admin_reports_modStatus")}
                 <select
                   value={modStatus}
                   onChange={(e) =>
                     setModStatus(e.target.value as (typeof MOD_STATUS_OPTIONS)[number])
                   }
-                  className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                  data-tt-admin-warm-l5-modal-control="1"
+                  className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start ${ADMIN_WARM_L5_MODAL_FORM_CONTROL_CLASS} px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 >
                   {MOD_STATUS_OPTIONS.map((v) => (
                     <option key={v} value={v}>
@@ -301,8 +310,8 @@ export function AdminCommunityReportsModerationWizard(props: Props) {
 
           {step === 2 ? (
             <>
-              <p className="text-meta text-ink-600">{t("admin_reports_wizard_step2_hint")}</p>
-              <label className="block text-ink-700">
+              <p className={ADMIN_TEXT_META_CLASS}>{t("admin_reports_wizard_step2_hint")}</p>
+              <label className={ADMIN_WARM_L5_MODAL_FORM_LABEL_CLASS}>
                 {t("admin_reports_modNotes")}
                 <textarea
                   value={modNotes}
@@ -313,24 +322,24 @@ export function AdminCommunityReportsModerationWizard(props: Props) {
                   rows={3}
                   aria-invalid={fieldErrors.notes ? true : undefined}
                   aria-describedby={fieldErrors.notes ? "admin-reports-wizard-err-notes" : undefined}
-                  className={`mt-1 w-full min-h-[88px] rounded-[var(--radius-sm)] border bg-white px-2 py-2 ${ADMIN_FORM_FIELD_FOCUS_CLASS} ${
-                    fieldErrors.notes ? "border-red-400" : "border-ink-200"
+                  className={`mt-1 w-full min-h-[88px] ${ADMIN_WARM_L5_MODAL_FORM_CONTROL_CLASS} px-2 py-2 ${ADMIN_FORM_FIELD_FOCUS_CLASS} ${
+                    fieldErrors.notes ? ADMIN_FORM_FIELD_ERROR_BORDER_CLASS : ""
                   }`}
                   placeholder={t("admin_reports_wizard_notes_ph")}
                 />
                 {fieldErrors.notes ? (
-                  <p id="admin-reports-wizard-err-notes" className="mt-1 text-meta text-red-700">
+                  <p id="admin-reports-wizard-err-notes" className={ADMIN_FORM_FIELD_ERROR_TEXT_CLASS}>
                     {fieldErrorMessage("notes")}
                   </p>
                 ) : null}
               </label>
-              <label className="block text-ink-700">
+              <label className={ADMIN_WARM_L5_MODAL_FORM_LABEL_CLASS}>
                 {t("admin_reports_modDisposition")}
                 <input
                   type="text"
                   value={modDisposition}
                   onChange={(e) => setModDisposition(e.target.value)}
-                  className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                  className={`mt-1 w-full min-h-[44px] ${ADMIN_WARM_L5_MODAL_FORM_CONTROL_CLASS} px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                   placeholder={t("admin_reports_wizard_disposition_ph")}
                 />
               </label>
@@ -339,8 +348,8 @@ export function AdminCommunityReportsModerationWizard(props: Props) {
 
           {step === 3 && showPenaltyStep ? (
             <>
-              <p className="text-meta text-ink-600">{t("admin_reports_wizard_step3_hint")}</p>
-              <label className="flex items-center gap-2 text-ink-800">
+              <p className={ADMIN_TEXT_META_CLASS}>{t("admin_reports_wizard_step3_hint")}</p>
+              <label className="flex items-center gap-2 text-slate-200">
                 <input
                   type="checkbox"
                   checked={modRecordPenalty}
@@ -349,15 +358,16 @@ export function AdminCommunityReportsModerationWizard(props: Props) {
                 {t("admin_reports_modRecordPenalty")}
               </label>
               {modRecordPenalty ? (
-                <div className="space-y-2 rounded-[var(--radius-md)] border border-ink-100 bg-bg-console p-3">
-                  <label className="block text-ink-700">
+                <div className={`space-y-2 ${ADMIN_CONSOLE_INNER_PANEL_CLASS} p-3`}>
+                  <label className={ADMIN_WARM_L5_MODAL_FORM_LABEL_CLASS}>
                     {t("admin_reports_modPenaltyAction")}
                     <select
                       value={modPenaltyAction}
                       onChange={(e) =>
                         setModPenaltyAction(e.target.value as (typeof PENALTY_ACTIONS)[number])
                       }
-                      className={`mt-1 inline-flex w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                      data-tt-admin-warm-l5-modal-control="1"
+                      className={`mt-1 inline-flex w-full min-h-[44px] ${ADMIN_WARM_L5_MODAL_FORM_CONTROL_CLASS} px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                     >
                       {PENALTY_ACTIONS.map((a) => (
                         <option key={a} value={a}>
@@ -366,7 +376,7 @@ export function AdminCommunityReportsModerationWizard(props: Props) {
                       ))}
                     </select>
                   </label>
-                  <label className="block text-ink-700">
+                  <label className={ADMIN_WARM_L5_MODAL_FORM_LABEL_CLASS}>
                     {t("admin_reports_modPenaltySubject")}
                     <input
                       type="text"
@@ -378,17 +388,17 @@ export function AdminCommunityReportsModerationWizard(props: Props) {
                         }
                       }}
                       aria-invalid={fieldErrors.penaltySubject ? true : undefined}
-                      className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border bg-white px-2 py-1 font-mono text-meta ${ADMIN_FORM_FIELD_FOCUS_CLASS} ${
-                        fieldErrors.penaltySubject ? "border-red-400" : "border-ink-200"
+                      className={`mt-1 w-full min-h-[44px] ${ADMIN_WARM_L5_MODAL_FORM_CONTROL_CLASS} px-2 py-1 font-mono text-meta ${ADMIN_FORM_FIELD_FOCUS_CLASS} ${
+                        fieldErrors.penaltySubject ? ADMIN_FORM_FIELD_ERROR_BORDER_CLASS : ""
                       }`}
                       placeholder={t("admin_reports_modPenaltySubjectPh")}
                       autoComplete="off"
                     />
                     {fieldErrors.penaltySubject ? (
-                      <p className="mt-1 text-meta text-red-700">{fieldErrorMessage("penaltySubject")}</p>
+                      <p className={ADMIN_FORM_FIELD_ERROR_TEXT_CLASS}>{fieldErrorMessage("penaltySubject")}</p>
                     ) : null}
                   </label>
-                  <label className="block text-ink-700">
+                  <label className={ADMIN_WARM_L5_MODAL_FORM_LABEL_CLASS}>
                     {t("admin_reports_modPenaltyReason")}
                     <input
                       type="text"
@@ -400,21 +410,21 @@ export function AdminCommunityReportsModerationWizard(props: Props) {
                         }
                       }}
                       aria-invalid={fieldErrors.penaltyReason ? true : undefined}
-                      className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border bg-white px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS} ${
-                        fieldErrors.penaltyReason ? "border-red-400" : "border-ink-200"
+                      className={`mt-1 w-full min-h-[44px] ${ADMIN_WARM_L5_MODAL_FORM_CONTROL_CLASS} px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS} ${
+                        fieldErrors.penaltyReason ? ADMIN_FORM_FIELD_ERROR_BORDER_CLASS : ""
                       }`}
                     />
                     {fieldErrors.penaltyReason ? (
-                      <p className="mt-1 text-meta text-red-700">{fieldErrorMessage("penaltyReason")}</p>
+                      <p className={ADMIN_FORM_FIELD_ERROR_TEXT_CLASS}>{fieldErrorMessage("penaltyReason")}</p>
                     ) : null}
                   </label>
-                  <label className="block text-ink-700">
+                  <label className={ADMIN_WARM_L5_MODAL_FORM_LABEL_CLASS}>
                     {t("admin_reports_modPenaltyExpires")}
                     <input
                       type="text"
                       value={modPenaltyExpires}
                       onChange={(e) => setModPenaltyExpires(e.target.value)}
-                      className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 font-mono text-meta ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                      className={`mt-1 w-full min-h-[44px] ${ADMIN_WARM_L5_MODAL_FORM_CONTROL_CLASS} px-2 py-1 font-mono text-meta ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                       placeholder={t("admin_reports_modPenaltyExpiresPh")}
                       autoComplete="off"
                     />
@@ -436,7 +446,7 @@ export function AdminCommunityReportsModerationWizard(props: Props) {
                   name="admin_modal_intent"
                   value="back"
                   formNoValidate
-                  className={`inline-flex min-h-[44px] items-center rounded-[var(--radius-md)] border border-ink-200 bg-white px-4 py-2 text-small font-medium text-ink-800 hover:bg-bg-console ${ADMIN_FOCUS_RING_CORE_CLASS}`}
+                  className={`inline-flex min-h-[44px] items-center ${ADMIN_MODAL_CANCEL_BTN_CLASS} ${ADMIN_FOCUS_RING_CORE_CLASS}`}
                 >
                   {t("admin_reports_wizard_back")}
                 </button>
@@ -446,7 +456,7 @@ export function AdminCommunityReportsModerationWizard(props: Props) {
                 name="admin_modal_intent"
                 value="cancel"
                 formNoValidate
-                className={`inline-flex min-h-[44px] items-center rounded-[var(--radius-md)] border border-ink-200 bg-white px-4 py-2 text-small font-medium text-ink-800 hover:bg-bg-console ${ADMIN_FOCUS_RING_CORE_CLASS}`}
+                className={`inline-flex min-h-[44px] items-center ${ADMIN_MODAL_CANCEL_BTN_CLASS} ${ADMIN_FOCUS_RING_CORE_CLASS}`}
               >
                 {t("admin_reports_modCancel")}
               </button>
@@ -466,7 +476,8 @@ export function AdminCommunityReportsModerationWizard(props: Props) {
             </button>
           </div>
         </form>
-        <p className="mt-3 text-meta text-ink-500">{t("admin_approvals_idempotency_hint")}</p>
+        <p className={`mt-3 ${ADMIN_TEXT_META_CLASS}`}>{t("admin_approvals_idempotency_hint")}</p>
+            </AdminModalWarmL5Panel>
       </AdminDialogFocusPanel>
     </div>
   );

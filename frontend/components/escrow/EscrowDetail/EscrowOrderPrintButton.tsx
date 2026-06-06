@@ -1,13 +1,14 @@
 "use client";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { escrowExperienceGhostButtonClass } from "@/lib/escrowExperienceUi";
+import { escrowProtocolFooterActionClass } from "@/lib/escrowProtocolUi";
 import {
-  deepShellPillControlFocusClasses,
   touchTargetLink44Classes,
   travelFocusRingCoreOffset2Classes,
 } from "@/lib/travelLinkFocus";
 
-const protocolDidButtonClass = `text-cyan-300 hover:text-cyan-100 hover:drop-shadow-scifi-cyan-lg transition-colors rounded-[var(--radius-sm)] motion-sub print:hidden ${deepShellPillControlFocusClasses}`;
+const protocolDidButtonClass = escrowProtocolFooterActionClass;
 
 const consoleButtonClass = `${touchTargetLink44Classes} inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] border border-ink-300 bg-bg-console px-4 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 motion-sub print:hidden ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`;
 
@@ -15,10 +16,15 @@ const consoleButtonClass = `${touchTargetLink44Classes} inline-flex min-h-[44px]
 export default function EscrowOrderPrintButton({
   variant = "protocolDid",
 }: {
-  variant?: "protocolDid" | "console";
+  variant?: "protocolDid" | "console" | "experience";
 }) {
   const { t } = useTranslation();
-  const cls = variant === "protocolDid" ? protocolDidButtonClass : consoleButtonClass;
+  const cls =
+    variant === "experience"
+      ? `${escrowExperienceGhostButtonClass} motion-sub print:hidden`
+      : variant === "protocolDid"
+        ? protocolDidButtonClass
+        : consoleButtonClass;
   return (
     <form
       className="inline"

@@ -1,8 +1,8 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import type { Locale } from "@/lib/i18n";
-import { DEFAULT_LOCALE, getStoredLocale, setStoredLocale } from "@/lib/i18n";
+import type { Locale, LocaleInterpolationVars } from "@/lib/i18n";
+import { applyLocalePlaceholders, DEFAULT_LOCALE, getStoredLocale, setStoredLocale } from "@/lib/i18n";
 import zh from "@/locales/zh";
 import en from "@/locales/en";
 
@@ -16,7 +16,7 @@ const LANG_MAP: Record<Locale, string> = { zh: "zh-CN", en: "en" };
 type LocaleContextValue = {
   locale: Locale;
   setLocale: (next: Locale) => void;
-  t: (key: string) => string;
+  t: (key: string, vars?: LocaleInterpolationVars) => string;
 };
 
 const LocaleContext = createContext<LocaleContextValue | null>(null);
@@ -38,9 +38,10 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const t = useCallback(
-    (key: string): string => {
+    (key: string, vars?: LocaleInterpolationVars): string => {
       const dict = messages[locale];
-      return dict?.[key] ?? key;
+      const raw = dict?.[key] ?? key;
+      return applyLocalePlaceholders(raw, vars);
     },
     [locale]
   );

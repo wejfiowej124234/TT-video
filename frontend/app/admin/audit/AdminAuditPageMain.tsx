@@ -1,11 +1,14 @@
 "use client";
 
-import Link from "next/link";
+import { formatAdminAppliedFiltersHuman } from "@/lib/admin/formatAdminAppliedFiltersHuman";
+
 import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminAppliedFiltersBanner } from "@/components/admin/AdminAppliedFiltersBanner";
 import { AdminFinanceModuleDepthWorkspace } from "@/components/admin/AdminFinanceModuleDepthWorkspace";
+import { AdminFinanceSectionBackLinks } from "@/components/admin/AdminFinanceSectionBackLinks";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminFinanceSuiteDepthNotice } from "@/components/admin/AdminFinanceSuiteDepthNotice";
 import { AdminFinanceSuitePartialChecklist } from "@/components/admin/AdminFinanceSuitePartialChecklist";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
@@ -15,11 +18,10 @@ import { AdminMetaBuildSection, AdminMetaNoteLink } from "@/components/admin/Adm
 import { AdminPermissionDeniedBanner } from "@/components/admin/AdminPermissionDeniedBanner";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
-import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
+import { AUDIT_LIST_RELATED_FOLD_LINKS } from "@/lib/admin/adminFinanceRelatedFoldLinks";
 import { AdminAuditFiltersBlock } from "./AdminAuditFiltersBlock";
 import { AdminAuditTableSection } from "./AdminAuditTableSection";
 import type { AdminAuditPageViewModel } from "./useAdminAuditPage";
-import { ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
 
 type Props = AdminAuditPageViewModel;
 
@@ -32,6 +34,7 @@ export function AdminAuditPageMain(props: Props) {
   const {
     listQ,
     loading,
+    refreshing,
     error,
     items,
     note,
@@ -53,33 +56,15 @@ export function AdminAuditPageMain(props: Props) {
     <AdminListPageChrome
       titleId={pageTitleId}
       title={t("admin_audit_list_title")}
-      subtitle={t("admin_audit_list_subtitle")}
-      headerAside={
-        <>
-          <Link
-            href="/admin/auth-audit-events"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_auth_audit_events_title")}
-          </Link>
-          <Link
-            href="/admin/audit/operations"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_audit_link_operations")}
-          </Link>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_schema_back")}
-          </Link>
-        </>
-      }
+      subtitle={t("admin_audit_list_subtitle_l5")}
+      headerAside={<AdminFinanceSectionBackLinks />}
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={AUDIT_LIST_RELATED_FOLD_LINKS}
+        ariaLabelKey="admin_finance_related_aria"
+        foldSummaryKey="admin_finance_related_fold"
+        dataTtFold="audit-list"
+      />
       <AdminPermissionDeniedBanner
         permission={ADMIN_PERM.READ}
         messageKey="admin_perm_denied_read"
@@ -115,7 +100,7 @@ export function AdminAuditPageMain(props: Props) {
         reset={reset}
       />
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <AdminListLoadingStatus message={t("admin_loading")} />
       ) : null}
 
@@ -131,7 +116,9 @@ export function AdminAuditPageMain(props: Props) {
         </AdminAppliedFiltersBanner>
       )}
 
-      {!loading && !error && <AdminAuditTableSection listQ={listQ} items={items} />}
+      {!error && (!loading || items.length > 0) ? (
+        <AdminAuditTableSection listQ={listQ} items={items} refreshing={refreshing} />
+      ) : null}
     </AdminListPageChrome>
   );
 }

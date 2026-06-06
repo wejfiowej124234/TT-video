@@ -7,25 +7,31 @@ import { buildAdminHomeDomainHealth, type AdminDomainHealthTone } from "@/lib/ad
 import type { AdminHomeInboxChannels, AdminHomeInboxCounts } from "@/lib/admin/useAdminHomeInbox";
 import type { AdminHomeKpiCounts } from "@/lib/admin/useAdminHomeKpi";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import {
+  ADMIN_DOMAIN_HEALTH_OK_CARD_CLASS,
+  ADMIN_DOMAIN_HEALTH_OK_DOT_CLASS,
   ADMIN_DOMAIN_HEALTH_ATTENTION_CARD_CLASS,
   ADMIN_DOMAIN_HEALTH_ATTENTION_DOT_CLASS,
-  ADMIN_HOME_WIDGET_CARD_CLASS,
+  ADMIN_DOMAIN_HEALTH_NEUTRAL_CARD_CLASS,
+  ADMIN_DOMAIN_HEALTH_NEUTRAL_DOT_CLASS,
+  ADMIN_DOMAIN_HEALTH_UNKNOWN_CARD_CLASS,
+  ADMIN_DOMAIN_HEALTH_UNKNOWN_DOT_CLASS,
 } from "@/lib/adminUi";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2WhiteClasses } from "@/lib/travelLinkFocus";
 
 const TONE_CLASS: Record<AdminDomainHealthTone, string> = {
-  ok: "border-emerald-200 bg-emerald-50 text-emerald-900",
+  ok: ADMIN_DOMAIN_HEALTH_OK_CARD_CLASS,
   attention: ADMIN_DOMAIN_HEALTH_ATTENTION_CARD_CLASS,
-  neutral: "border-ink-200 bg-ink-50 text-ink-700",
-  unknown: "border-ink-200 bg-ink-50/60 text-ink-500",
+  neutral: ADMIN_DOMAIN_HEALTH_NEUTRAL_CARD_CLASS,
+  unknown: ADMIN_DOMAIN_HEALTH_UNKNOWN_CARD_CLASS,
 };
 
 const DOT_CLASS: Record<AdminDomainHealthTone, string> = {
-  ok: "bg-emerald-500",
+  ok: ADMIN_DOMAIN_HEALTH_OK_DOT_CLASS,
   attention: ADMIN_DOMAIN_HEALTH_ATTENTION_DOT_CLASS,
-  neutral: "bg-ink-400",
-  unknown: "bg-ink-300",
+  neutral: ADMIN_DOMAIN_HEALTH_NEUTRAL_DOT_CLASS,
+  unknown: ADMIN_DOMAIN_HEALTH_UNKNOWN_DOT_CLASS,
 };
 
 export function AdminHomeDomainHealthStrip(props: {
@@ -34,8 +40,10 @@ export function AdminHomeDomainHealthStrip(props: {
   kpi: AdminHomeKpiCounts;
   inboxLoading: boolean;
   kpiLoading: boolean;
+  embedded?: boolean;
 }) {
   const { t } = useTranslation();
+  const { embedded } = props;
   const caps = useAdminCapabilities();
   const items = useMemo(
     () =>
@@ -50,12 +58,8 @@ export function AdminHomeDomainHealthStrip(props: {
 
   if (!caps.permissionsLoaded) return null;
 
-  return (
-    <section
-      className={ADMIN_HOME_WIDGET_CARD_CLASS}
-      aria-label={t("admin_home_domain_health_aria")}
-      data-tt-admin-home-domain-health="1"
-    >
+  const body = (
+    <>
       <h2 className="text-body font-semibold text-ink-900">{t("admin_home_domain_health_title")}</h2>
       <p className="mt-1 text-meta text-ink-500" data-tt-admin-domain-health-legend="1">
         {t("admin_home_domain_health_legend")}
@@ -82,6 +86,24 @@ export function AdminHomeDomainHealthStrip(props: {
           </li>
         ))}
       </ul>
-    </section>
+    </>
+  );
+
+  if (embedded) {
+    return (
+      <div data-tt-admin-home-domain-health="1" data-tt-admin-home-domain-health-embedded="1">
+        {body}
+      </div>
+    );
+  }
+
+  return (
+    <AdminWarmL5Surface
+      as="section"
+      aria-label={t("admin_home_domain_health_aria")}
+      data-tt-admin-home-domain-health="1"
+    >
+      {body}
+    </AdminWarmL5Surface>
   );
 }

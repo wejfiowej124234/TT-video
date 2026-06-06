@@ -6,7 +6,7 @@ export function resolveEvenSplitPerDay(
   totalBudget: number | string | null | undefined,
   dayCount: number,
 ): number | null {
-  if (dayCount <= 0) return null;
+  if (dayCount <= 1) return null;
   const raw =
     typeof totalBudget === "number"
       ? totalBudget

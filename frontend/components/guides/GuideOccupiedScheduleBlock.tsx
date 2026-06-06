@@ -6,7 +6,11 @@ import { mapApiReadError } from "@/lib/mapApiReadError";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import LoadingText from "@/components/LoadingText";
 import { useTranslation } from "@/components/LocaleProvider";
-import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
+import {
+  GUIDE_DETAIL_PANEL_SLATE_CLASS,
+  GUIDE_DETAIL_RETRY_PILL_CLASS,
+  GUIDE_DETAIL_SECTION_HEADING_CLASS,
+} from "@/app/guides/[id]/guideDetailPageConstants";
 
 export type OccupiedRange = {
   order_id: string;
@@ -94,14 +98,8 @@ export default function GuideOccupiedScheduleBlock({ guideId }: { guideId: strin
   }
 
   return (
-    <section
-      className="rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md shadow-scifi-panel-md"
-      aria-labelledby={headingId}
-    >
-      <h2
-        id={headingId}
-        className="text-body font-semibold text-cyan-200 px-4 pt-4 pb-2 border-b border-slate-600/50"
-      >
+    <section className={GUIDE_DETAIL_PANEL_SLATE_CLASS} aria-labelledby={headingId}>
+      <h2 id={headingId} className={GUIDE_DETAIL_SECTION_HEADING_CLASS}>
         {t("guide_availability_title")}
       </h2>
       <div className="p-4 space-y-4">
@@ -124,7 +122,7 @@ export default function GuideOccupiedScheduleBlock({ guideId }: { guideId: strin
               <button
                 type="submit"
                 aria-label={t("common_retry")}
-                className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub min-h-[44px] inline-flex items-center justify-center ${travelFocusRingOffset2Classes}`}
+                className={GUIDE_DETAIL_RETRY_PILL_CLASS}
               >
                 {t("common_retry")}
               </button>

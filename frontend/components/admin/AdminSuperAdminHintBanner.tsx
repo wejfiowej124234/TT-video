@@ -5,7 +5,7 @@ import { useTranslation } from "@/components/LocaleProvider";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import { isSuperAdminActorRole } from "@/lib/admin/adminActorFromMe";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
-import { ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { ADMIN_SUPER_HINT_BANNER_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
 
 /** 非 super_admin 但需 super 权限时的明示引导（IA-04）。 */
 export function AdminSuperAdminHintBanner(props: {
@@ -26,7 +26,7 @@ export function AdminSuperAdminHintBanner(props: {
 
   return (
     <p
-      className="mt-4 rounded-[var(--radius-md)] border border-ink-200 bg-ink-50 p-3 text-small text-ink-700"
+      className={ADMIN_SUPER_HINT_BANNER_CLASS}
       role="status"
       data-tt-admin-super-hint="1"
     >

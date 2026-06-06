@@ -27,7 +27,7 @@ const keyRouteChecks = [
   },
   {
     id: "disputes",
-    file: "app/disputes/page.tsx",
+    file: "app/disputes/DisputesListPageMain.tsx",
     rule: "must contain useTranslation and t(...)",
     pass: (content) => content.includes("useTranslation(") && /\bt\(/.test(content),
   },
@@ -46,7 +46,7 @@ const hardcodedAllowlist = {
   "app/auth/login/page.tsx": ["auth_login_error_failed"],
   "app/itinerary/new/page.tsx": [],
   "app/orders/page.tsx": [],
-  "app/disputes/page.tsx": [],
+  "app/disputes/DisputesListPageMain.tsx": [],
   "components/escrow/EscrowDetail/index.tsx": [],
 };
 

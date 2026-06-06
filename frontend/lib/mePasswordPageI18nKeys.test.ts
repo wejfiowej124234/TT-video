@@ -5,26 +5,30 @@ import { describe, it, expect } from "vitest";
 import zh from "@/locales/zh";
 import en from "@/locales/en";
 
-/** 与 `app/me/password/page.tsx` / `loading.tsx` 中 `t("…")` 及 `ariaLabelKey` 同步维护 */
 const ME_PASSWORD_PAGE_I18N_KEYS = [
   "mePassword_mismatch",
   "mePassword_required",
   "mePassword_tooShort",
   "mePassword_failed",
   "mePassword_title",
+  "mePassword_subtitle",
   "mePassword_successMessage",
-  "mePassword_backMe",
+  "mePassword_goLogin",
+  "mePassword_backSettings",
   "mePassword_currentPassword",
   "mePassword_currentPlaceholder",
   "mePassword_newPassword",
-  "mePassword_requiredPlaceholder",
+  "mePassword_newPlaceholder",
   "mePassword_confirmPassword",
+  "mePassword_confirmPlaceholder",
+  "mePassword_forgotLink",
+  "mePassword_hintMin",
   "common_submitting",
   "mePassword_submit",
   "mePassword_cancel",
-  "mePassword_me",
-  "auth_forgot_home",
-  "me_password_relatedNav_aria",
+  "me_settings_eyebrow",
+  "auth_login_passwordShow",
+  "auth_login_passwordHide",
 ] as const;
 
 describe("me_password page i18n keys", () => {
@@ -42,5 +46,14 @@ describe("me_password page i18n keys", () => {
     const e = en as Record<string, string>;
     expect(z.mePassword_tooShort).toContain("{{n}}");
     expect(e.mePassword_tooShort).toContain("{{n}}");
+  });
+
+  it("product copy does not expose chain_off in password strings", () => {
+    const z = zh as Record<string, string>;
+    const e = en as Record<string, string>;
+    for (const k of ME_PASSWORD_PAGE_I18N_KEYS) {
+      expect(z[k] ?? "", `zh ${k}`).not.toMatch(/chain_off/i);
+      expect(e[k] ?? "", `en ${k}`).not.toMatch(/chain_off/i);
+    }
   });
 });

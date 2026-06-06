@@ -23,7 +23,7 @@ import {
   TT_LANDING_NAV_L5,
   TT_LANDING_NAV_MOBILE_L5,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 import { useTraveltrustSectionNav, type TraveltrustSectionId } from "./useTraveltrustSectionNav";
 
 const NAV_ITEMS = TRAVELTRUST_SECTION_NAV_ITEMS;

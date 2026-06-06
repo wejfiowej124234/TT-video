@@ -8,7 +8,7 @@ import { AdminCommunityAbusePolicyPageMain } from "./AdminCommunityAbusePolicyPa
 
 export default function AdminCommunityAbusePolicyPage() {
   return (
-    <AdminCommunityPageShell currentLabelKey="admin_abuse_title">
+    <AdminCommunityPageShell>
       <AdminPermissionDeniedBanner permission={ADMIN_PERM.COMMUNITY_SUPER} />
       <AdminCommunityAbusePolicyPageMain />
     </AdminCommunityPageShell>

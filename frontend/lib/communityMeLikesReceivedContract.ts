@@ -2,6 +2,8 @@
  * `GET /api/v1/community/me/likes-received` 响应契约：成功包络下须含可解析的非负 `likes_received`。
  * 避免将缺失/畸形字段静默当成 0（生产 IA：不得冒充「真实获赞为零」）。
  */
+export const communityMeLikesReceivedQueryKey = ["community", "meLikesReceived"] as const;
+
 export type MeLikesReceivedParse =
   | { kind: "ok"; n: number }
   | { kind: "invalid"; reason: "not_object" | "bad_status" | "missing" | "bad_type" | "not_finite" | "negative" };

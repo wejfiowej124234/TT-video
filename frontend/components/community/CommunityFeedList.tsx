@@ -1,21 +1,16 @@
 "use client";
 
-import { useCallback, useEffect, useRef, type FormEvent } from "react";
+import { useEffect, useRef, type FormEvent } from "react";
 import Link from "next/link";
-import type { CommunityPost, CommunityComment } from "@/lib/communityMockData";
-import { CommunityFeedCard } from "@/components/community/CommunityFeedCard";
-import { CommunityFeedCardCompact } from "@/components/community/CommunityFeedCardCompact";
-import { CommunityFeedDesktopWindowVirtual } from "@/components/community/CommunityFeedDesktopWindowVirtual";
-import { buildAuthorFollowForPost } from "@/components/community/communityFeedFollowUtils";
+import type { CommunityComment } from "@/lib/communityMockData";
 import { FeedSkeleton, FeedGridSkeleton } from "./FeedSkeleton";
 import {
-  communityCyanPillFocus,
-  communityFuchsiaPillFocus,
+  communityCardLinkFocus,
   communityShellTabFocus,
 } from "@/lib/communityA11yFocus";
-
-/** 超过此条数时桌面单列使用窗口虚拟列表（31 / 51-31-26） */
-const FEED_DESKTOP_VIRTUAL_MIN = 14;
+import { CommunityFeedMasonryGrid } from "@/components/community/CommunityFeedMasonryGrid";
+import { CommunityFeedEmptyFooter } from "@/components/community/CommunityFeedEmptyFooter";
+import { TT_COMMUNITY_FEED_ACTION, TT_COMMUNITY_PAGE_L5, TT_COMMUNITY_FEED_L5 } from "@/lib/marketingUi";
 
 export interface CommunityFeedListProps {
   t: (key: string) => string;
@@ -52,16 +47,21 @@ export interface CommunityFeedListProps {
   tagTopicMatchCount?: number;
   /** B-077：紧凑卡话题链与 Feed `sort=` 一致 */
   topicTagHref?: (tag: string) => string;
+  /** 推荐流排序（瀑布 promo 插槽显隐） */
+  sortBy?: "latest" | "hot";
+  hotDestinations?: readonly string[];
+  proximityFilter?: "none" | "nearby" | "nearby_1km";
+  setProximityFilter?: (v: "none" | "nearby" | "nearby_1km") => void;
 }
 
-/** 信息流：骨架 / 空态 / 双列紧凑卡 + 单列大卡 / 加载更多 */
+/** 信息流：骨架 / 空态 / 瀑布 masonry（推荐+关注）/ 加载更多 */
 export default function CommunityFeedList({
   t,
   feedLoading,
   isEmpty,
   isEmptySearch,
   feedTab,
-  isLoggedIn,
+  isLoggedIn: _isLoggedIn,
   postsToShow,
   localCommentsByPostId,
   hasMore,
@@ -86,56 +86,35 @@ export default function CommunityFeedList({
   onAuthorFollowToggle,
   tagTopicMatchCount,
   topicTagHref,
+  sortBy = "latest",
+  hotDestinations = [],
+  proximityFilter = "none",
+  setProximityFilter,
 }: CommunityFeedListProps) {
   const loadSentinelRef = useRef<HTMLDivElement>(null);
-
-  const renderDesktopPost = useCallback(
-    (post: CommunityPost) => {
-      const authorFollow =
-        onAuthorFollowToggle && followingAuthorIds
-          ? buildAuthorFollowForPost(post, {
-              meUserId,
-              followingAuthorIds,
-              followBusyAuthorId,
-              onAuthorFollowToggle,
-            })
-          : undefined;
-      return (
-        <CommunityFeedCard
-          post={post}
-          commentCount={post.comments + (localCommentsByPostId[post.id]?.length ?? 0)}
-          t={t}
-          liked={likedPostIds?.has(post.id)}
-          onLike={onLike ? () => onLike(post.id) : undefined}
-          collected={collectedPostIds?.has(post.id)}
-          onCollect={onCollect ? () => onCollect(post.id) : undefined}
-          onCommentClick={(p, trigger) => onCommentClick(p, trigger)}
-          onViewFull={(p, trigger) => onViewFull(p, trigger)}
-          onPlayVideo={post.is_video ? onPlayVideo : undefined}
-          onReport={onReport}
-          onTagClick={setTagFilter}
-          authorFollow={authorFollow}
-        />
-      );
-    },
-    [
-      t,
-      localCommentsByPostId,
-      likedPostIds,
-      onLike,
-      collectedPostIds,
-      onCollect,
-      onCommentClick,
-      onViewFull,
-      onPlayVideo,
-      onReport,
-      setTagFilter,
-      meUserId,
-      followingAuthorIds,
-      followBusyAuthorId,
-      onAuthorFollowToggle,
-    ]
-  );
+  const isEmptyProximity =
+    !isEmptySearch &&
+    feedTab !== "following" &&
+    proximityFilter !== "none" &&
+    typeof setProximityFilter === "function";
+  const emptyTitle = isEmptySearch
+    ? t("community_search_empty")
+    : isEmptyProximity
+      ? proximityFilter === "nearby_1km"
+        ? t("community_proximity_1km_empty")
+        : t("community_proximity_nearby_empty")
+      : feedTab === "following"
+        ? t("community_following_empty")
+        : t("community_empty");
+  const emptyAria = isEmptySearch
+    ? t("community_search_placeholder")
+    : isEmptyProximity
+      ? emptyTitle
+      : feedTab === "following"
+        ? t("community_following_empty")
+        : t("community_empty");
+  const showPromoSlots =
+    feedTab === "recommend" && sortBy === "latest" && !tagFilter && !isEmpty && proximityFilter === "none";
 
   /** 31 §3.2：触底（或接近底部）自动加载；与按钮共用 onLoadMore，由 hook 内防重入 */
   useEffect(() => {
@@ -155,7 +134,7 @@ export default function CommunityFeedList({
   }, [hasMore, feedLoading, feedLoadingMore, onLoadMore]);
 
   return (
-    <div className="space-y-4 pb-24 safe-area-pb">
+    <div className={`${TT_COMMUNITY_FEED_ACTION.feedListAfterFilters} space-y-3 pb-24 safe-area-pb`}>
       {feedLoading ? (
         <>
           <div className="md:hidden">
@@ -167,14 +146,58 @@ export default function CommunityFeedList({
         </>
       ) : isEmpty ? (
         <section
-          className="rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md px-6 py-12 text-center"
-          aria-label={isEmptySearch ? t("community_search_placeholder") : feedTab === "following" ? t("community_following_empty") : t("community_empty")}
+          className={TT_COMMUNITY_FEED_ACTION.emptyPanel}
+          aria-label={emptyAria}
         >
-          <p className="text-body text-slate-300 mb-4">
-            {isEmptySearch ? t("community_search_empty") : feedTab === "following" ? t("community_following_empty") : t("community_empty")}
-          </p>
-          {isEmptySearch ? (
-            <div className="flex flex-col items-center gap-4">
+          <p className={TT_COMMUNITY_FEED_ACTION.emptyTitle}>{emptyTitle}</p>
+          {!isEmptySearch && !isEmptyProximity && feedTab !== "following" ? (
+            <p className={TT_COMMUNITY_FEED_ACTION.emptyHint}>{t("community_empty_hint")}</p>
+          ) : null}
+          {isEmptyProximity ? (
+            <div className={TT_COMMUNITY_FEED_ACTION.emptyActions}>
+              <p className={TT_COMMUNITY_FEED_ACTION.emptyHint}>{t("community_proximity_empty_hint")}</p>
+              <div className="flex flex-wrap justify-center gap-3">
+                {proximityFilter === "nearby_1km" ? (
+                  <form
+                    className="inline"
+                    onSubmit={(e: FormEvent<HTMLFormElement>) => {
+                      e.preventDefault();
+                      setProximityFilter!("nearby");
+                    }}
+                  >
+                    <button
+                      type="submit"
+                      className={`${TT_COMMUNITY_FEED_ACTION.retryPill} ${communityCardLinkFocus}`}
+                    >
+                      {t("community_proximity_empty_widen")}
+                    </button>
+                  </form>
+                ) : null}
+                <form
+                  className="inline"
+                  onSubmit={(e: FormEvent<HTMLFormElement>) => {
+                    e.preventDefault();
+                    setProximityFilter!("none");
+                  }}
+                >
+                  <button
+                    type="submit"
+                    className={`${TT_COMMUNITY_FEED_ACTION.retryPill} ${communityCardLinkFocus}`}
+                  >
+                    {t("community_proximity_empty_clear")}
+                  </button>
+                </form>
+                <Link
+                  href="/community/explore"
+                  className={`${TT_COMMUNITY_PAGE_L5.pill} ${communityCardLinkFocus}`}
+                >
+                  {t("community_explore_title")}
+                </Link>
+              </div>
+              <CommunityFeedEmptyFooter t={t} showGuidelines={false} />
+            </div>
+          ) : isEmptySearch ? (
+            <div className={TT_COMMUNITY_FEED_ACTION.emptyActions}>
               <form
                 className="inline"
                 onSubmit={(e: FormEvent<HTMLFormElement>) => {
@@ -184,31 +207,15 @@ export default function CommunityFeedList({
               >
                 <button
                   type="submit"
-                  className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub ${communityCyanPillFocus}`}
+                  className={`${TT_COMMUNITY_FEED_ACTION.retryPill} ${communityCardLinkFocus}`}
                 >
                   {t("community_search_clear")}
                 </button>
               </form>
-              <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-400">
-                <Link
-                  href="/community/explore"
-                  className={`inline-flex min-h-[44px] items-center justify-center rounded-sm px-0.5 text-cyan-300 hover:text-cyan-100 underline-offset-2 hover:underline ${communityShellTabFocus}`}
-                >
-                  {t("community_explore_title")}
-                </Link>
-                <span className="text-slate-500" aria-hidden>
-                  ·
-                </span>
-                <Link
-                  href="/help"
-                  className={`inline-flex min-h-[44px] items-center justify-center rounded-sm px-0.5 text-cyan-300 hover:text-cyan-100 underline-offset-2 hover:underline ${communityShellTabFocus}`}
-                >
-                  {t("help_title")}
-                </Link>
-              </p>
+              <CommunityFeedEmptyFooter t={t} showGuidelines={false} />
             </div>
           ) : feedTab === "following" ? (
-            <div className="flex flex-col items-center gap-4">
+            <div className={TT_COMMUNITY_FEED_ACTION.emptyActions}>
               <div className="flex flex-wrap justify-center gap-3">
                 <form
                   className="inline"
@@ -219,47 +226,32 @@ export default function CommunityFeedList({
                 >
                   <button
                     type="submit"
-                    className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub ${communityCyanPillFocus}`}
+                    className={`${TT_COMMUNITY_FEED_ACTION.retryPill} ${communityCardLinkFocus}`}
                   >
                     {t("community_following_see_recommend")}
                   </button>
                 </form>
                 <Link
                   href="/community/friends"
-                  className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-fuchsia-400/50 bg-fuchsia-500/20 px-4 py-2 text-meta font-medium text-fuchsia-300 hover:text-fuchsia-100 hover:bg-fuchsia-500/30 motion-sub ${communityFuchsiaPillFocus}`}
+                  className={`${TT_COMMUNITY_PAGE_L5.pill} ${communityCardLinkFocus}`}
                 >
                   {t("community_following_follow_more")}
                 </Link>
               </div>
-              <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-400">
-                <Link
-                  href="/community/explore"
-                  className={`inline-flex min-h-[44px] items-center justify-center rounded-sm px-0.5 text-cyan-300 hover:text-cyan-100 underline-offset-2 hover:underline ${communityShellTabFocus}`}
-                >
-                  {t("community_explore_title")}
-                </Link>
-                <span className="text-slate-500" aria-hidden>
-                  ·
-                </span>
-                <Link
-                  href="/help"
-                  className={`inline-flex min-h-[44px] items-center justify-center rounded-sm px-0.5 text-cyan-300 hover:text-cyan-100 underline-offset-2 hover:underline ${communityShellTabFocus}`}
-                >
-                  {t("help_title")}
-                </Link>
-                <span className="text-slate-500" aria-hidden>
-                  ·
-                </span>
-                <Link
-                  href="/terms/community-guidelines"
-                  className={`inline-flex min-h-[44px] items-center justify-center rounded-sm px-0.5 text-cyan-300 hover:text-cyan-100 underline-offset-2 hover:underline ${communityShellTabFocus}`}
-                >
-                  {t("community_guidelines")}
-                </Link>
-              </p>
+              <CommunityFeedEmptyFooter t={t} />
             </div>
           ) : (
-            <div className="flex flex-col items-center gap-4">
+            <div className={TT_COMMUNITY_FEED_ACTION.emptyActions}>
+              <div className={TT_COMMUNITY_FEED_ACTION.emptyIconWrap} aria-hidden>
+                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.75}
+                    d="M12 4.5v15m7.5-7.5h-15"
+                  />
+                </svg>
+              </div>
               <form
                 className="inline"
                 onSubmit={(e) => {
@@ -270,45 +262,20 @@ export default function CommunityFeedList({
               >
                 <button
                   type="submit"
-                  className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub ${communityCyanPillFocus}`}
+                  className={`${TT_COMMUNITY_FEED_ACTION.emptyPrimaryCta} ${communityCardLinkFocus}`}
                 >
                   {t("community_empty_cta")}
                 </button>
               </form>
-              <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-400">
-                <Link
-                  href="/community/explore"
-                  className={`inline-flex min-h-[44px] items-center justify-center rounded-sm px-0.5 text-cyan-300 hover:text-cyan-100 underline-offset-2 hover:underline ${communityShellTabFocus}`}
-                >
-                  {t("community_explore_title")}
-                </Link>
-                <span className="text-slate-500" aria-hidden>
-                  ·
-                </span>
-                <Link
-                  href="/help"
-                  className={`inline-flex min-h-[44px] items-center justify-center rounded-sm px-0.5 text-cyan-300 hover:text-cyan-100 underline-offset-2 hover:underline ${communityShellTabFocus}`}
-                >
-                  {t("help_title")}
-                </Link>
-                <span className="text-slate-500" aria-hidden>
-                  ·
-                </span>
-                <Link
-                  href="/terms/community-guidelines"
-                  className={`inline-flex min-h-[44px] items-center justify-center rounded-sm px-0.5 text-cyan-300 hover:text-cyan-100 underline-offset-2 hover:underline ${communityShellTabFocus}`}
-                >
-                  {t("community_guidelines")}
-                </Link>
-              </p>
+              <CommunityFeedEmptyFooter t={t} />
             </div>
           )}
         </section>
       ) : (
         <>
           {tagFilter && (
-            <div className="flex flex-wrap items-center gap-2 mb-2 text-meta text-cyan-300">
-              <span className="font-medium text-cyan-200">#{tagFilter}</span>
+            <div className="flex flex-wrap items-center gap-2 mb-2 text-meta text-ref-sun/90">
+              <span className="font-medium text-ref-sun">#{tagFilter}</span>
               {typeof tagTopicMatchCount === "number" ? (
                 <span className="text-slate-400">
                   {t("community_tag_topic_count").replace("{{count}}", String(tagTopicMatchCount))}
@@ -323,7 +290,7 @@ export default function CommunityFeedList({
               >
                 <button
                   type="submit"
-                  className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-[var(--radius-md)] border border-cyan-400/50 text-body font-medium text-cyan-200 hover:bg-cyan-500/20 ${communityShellTabFocus}`}
+                  className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ref-sun/40 text-body font-medium text-ref-sun hover:bg-ref-sun/12 ${communityShellTabFocus}`}
                   aria-label={t("community_tag_clear_filter")}
                 >
                   ×
@@ -331,39 +298,26 @@ export default function CommunityFeedList({
               </form>
             </div>
           )}
-          <div className="md:hidden grid grid-cols-2 gap-3">
-            {postsToShow.map((post) => (
-              <CommunityFeedCardCompact
-                key={post.id}
-                post={post}
-                commentCount={post.comments + (localCommentsByPostId[post.id]?.length ?? 0)}
-                t={t}
-                liked={likedPostIds?.has(post.id)}
-                onLike={onLike ? () => onLike(post.id) : undefined}
-                onViewFull={(p, trigger) => onViewFull(p, trigger)}
-                onPlayVideo={post.is_video ? onPlayVideo : undefined}
-                onReport={onReport}
-                topicTagHref={topicTagHref}
-                authorFollow={
-                  onAuthorFollowToggle && followingAuthorIds
-                    ? buildAuthorFollowForPost(post, {
-                        meUserId,
-                        followingAuthorIds,
-                        followBusyAuthorId,
-                        onAuthorFollowToggle,
-                      })
-                    : undefined
-                }
-              />
-            ))}
-          </div>
-          <div className="hidden md:block space-y-4">
-            {postsToShow.length >= FEED_DESKTOP_VIRTUAL_MIN ? (
-              <CommunityFeedDesktopWindowVirtual posts={postsToShow} renderItem={renderDesktopPost} />
-            ) : (
-              postsToShow.map((post) => <div key={post.id}>{renderDesktopPost(post)}</div>)
-            )}
-          </div>
+          <CommunityFeedMasonryGrid
+            t={t}
+            postsToShow={postsToShow}
+            localCommentsByPostId={localCommentsByPostId}
+            likedPostIds={likedPostIds}
+            collectedPostIds={collectedPostIds}
+            onLike={onLike}
+            onCollect={onCollect}
+            onCommentClick={onCommentClick}
+            onViewFull={onViewFull}
+            onPlayVideo={onPlayVideo}
+            onReport={onReport}
+            topicTagHref={topicTagHref}
+            meUserId={meUserId}
+            followingAuthorIds={followingAuthorIds}
+            followBusyAuthorId={followBusyAuthorId}
+            onAuthorFollowToggle={onAuthorFollowToggle}
+            showPromoSlots={showPromoSlots}
+            hotDestinations={[...hotDestinations]}
+          />
           {hasMore && (
             <>
               <div ref={loadSentinelRef} className="h-px w-full shrink-0" aria-hidden />
@@ -380,7 +334,7 @@ export default function CommunityFeedList({
                     disabled={feedLoadingMore}
                     aria-busy={feedLoadingMore ? true : undefined}
                     aria-label={feedLoadingMore ? t("common_loading") : t("community_load_more")}
-                    className={`inline-flex items-center justify-center rounded-full border border-cyan-400/50 bg-cyan-500/20 px-6 py-2.5 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub min-h-[44px] disabled:opacity-70 disabled:cursor-wait ${communityCyanPillFocus}`}
+                    className={`${TT_COMMUNITY_FEED_L5.loadMoreBtn} ${communityCardLinkFocus}`}
                   >
                     {feedLoadingMore ? t("common_loading") : t("community_load_more")}
                   </button>
@@ -388,6 +342,11 @@ export default function CommunityFeedList({
               </div>
             </>
           )}
+          {!hasMore && postsToShow.length > 0 ? (
+            <p className={TT_COMMUNITY_FEED_L5.feedEndHint} role="status">
+              {t("community_feed_end_hint")}
+            </p>
+          ) : null}
         </>
       )}
     </div>

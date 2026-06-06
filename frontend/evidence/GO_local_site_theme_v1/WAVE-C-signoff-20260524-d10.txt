@@ -1,0 +1,43 @@
+# WAVE-C · D10 阶段一① 签字（感知层 + PI-1 复闸）
+
+Phase: ① local only
+Date: 2026-05-24
+
+## A · 主题 V1 感知层
+
+- [x] §6.1 vitest **122/122** exit 0 → `POST-baseline-20260524-d10.txt`
+- [x] POST-screenshots 12 slug + 4 mobile（D9 · G1/G16/G9）
+- [x] `communityMainPathRg` · D8 G13
+- [x] D10 rg 主路径
+- [x] TT-PH1-220～225 · 229/230 · 224/225-E/F/G · 231/232 closed ①
+- [x] TT-PH1-234▸ 主路径已对账 · 次要 ○ 见 `D10-DEFER-20260524.txt`
+
+## Q1～Q8
+
+| Q | D10 状态 | 旁证 |
+|---|----------|------|
+| Q1 | [x] `WAVE-C-screenshots/five-routes-cta.png` | POST 四路由 CTA 裁切手拼 · 2026-05-24 |
+| Q2 | [x]▸ 四链连点 + orders 桥 | G21 defer P3 · `D10-DEFER-20260524.txt` |
+| Q3 | [x] POST 首屏 + mobile 390 | D9 PNG |
+| Q4 | [x] 机读 + G13 rg 0 | D8/D10 |
+| Q5 | [x] POST 暗底路由目视 | market/did-rank/community PNG |
+| Q6 | [x] `WAVE-C-screenshots/home-full-scroll.png` | POST home desktop · 2026-05-24 |
+| Q7 | [x] **122/122** | D10 复跑 |
+| Q8 | [x]▸ 234 + defer 表 | `D10-DEFER-20260524.txt` |
+
+## B · PI-1（D10 复闸）
+
+- [x] setup-meta-chain **2/2**
+- [x] `e2e:pi1-traveltrust` **33/33** · gate rerun8 · `last-local-gate-20260524T141958Z.txt`
+- [x] `traveltrust-ph1-homepage-local.sh` E2E_FULL + VERIFY exit 0
+- [x] `human-verify-checklist` 150～158 / 190～193
+- [x] `phase-signoff.md` **PH-1** · 2026-05-24
+
+## defer（不挡 ①→② 跳阶）
+
+- [x] 电影 L5 **202/203** → defer **②** · `D10-DEFER-20260524.txt` + issues-phase1-local
+- [x] G2/G5/G8 · 226-F · 227-G/H/I → P3 登记
+
+**判据：** §3.2.11 **A+B 全 true（① 本地）** · **C 测网 D11+ 未开**
+
+Status: **阶段一 ① 本地总闸可签字** · **禁止跳阶开 D11 测网直至 maintainer 确认**

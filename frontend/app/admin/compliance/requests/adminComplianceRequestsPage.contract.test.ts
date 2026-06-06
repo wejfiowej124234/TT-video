@@ -13,6 +13,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminComplianceRequestsPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminComplianceRequestsStatusBlock.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminComplianceRequestsPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminComplianceRequestsPageModel.ts"), "utf8"),
   ].join("\n");
 }
@@ -23,6 +24,7 @@ describe("admin compliance requests page", () => {
   it("keeps compliance DSAR list route + admin fetch + DOM anchor", () => {
     expect(src).toContain("routes.admin.complianceDataRequests");
     expect(src).toContain("adminFetchJson");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("AdminComplianceRequestsPageMain");
     expect(src).toContain("AdminListPageChrome");
     expect(src).toContain("AdminListFetchError");

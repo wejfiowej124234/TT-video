@@ -2,17 +2,18 @@
 
 import Link from "next/link";
 import { useId } from "react";
-import AuthShellCrossNav from "@/components/auth/AuthShellCrossNav";
-import {
-  touchTargetLink44Classes,
-  travelFocusRingCoreOffset2Classes,
-  travelFocusRingOffset2Classes,
-} from "@/lib/travelLinkFocus";
+import AuthL5Card from "@/components/auth/AuthL5Card";
+import AuthL5CrossNavFooter from "@/components/auth/AuthL5CrossNavFooter";
+import AuthL5PageBackdrop from "@/components/auth/AuthL5PageBackdrop";
+import { TT_AUTH_L5_PAGE_COLUMN } from "@/lib/auth/authL5Shell";
+import { TT_AUTH_L5_FORM } from "@/lib/auth/authL5Form";
+import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { ACCEPT_ID, ACCEPT_LANG } from "./constants";
-import RegisterPageBackdrop from "./RegisterPageBackdrop";
 import { registerPageShellClass, type RegisterVisualKind } from "./registerBackgrounds";
+import AuthL5Checkbox from "@/components/auth/AuthL5Checkbox";
 import TrustGrowthMomentBanner from "@/components/trust/TrustGrowthMomentBanner";
 import { passwordStrength } from "./utils";
+import RegisterVerificationCodeField from "./RegisterVerificationCodeField";
 
 export type RegisterGuideFormProps = {
   mainClassName?: string;
@@ -22,6 +23,12 @@ export type RegisterGuideFormProps = {
   autoFocusAccountEmail?: boolean;
   email: string;
   setEmail: (v: string) => void;
+  verificationCode: string;
+  setVerificationCode: (v: string) => void;
+  sendCodeBusy: boolean;
+  sendCodeCooldown: number;
+  devCodeHint: string | null;
+  onSendVerificationCode: () => void;
   nickname: string;
   setNickname: (v: string) => void;
   password: string;
@@ -69,6 +76,12 @@ export default function RegisterGuideForm({
   autoFocusAccountEmail = true,
   email,
   setEmail,
+  verificationCode,
+  setVerificationCode,
+  sendCodeBusy,
+  sendCodeCooldown,
+  devCodeHint,
+  onSendVerificationCode,
   nickname,
   setNickname,
   password,
@@ -111,6 +124,7 @@ export default function RegisterGuideForm({
   const guideTwoStepCalloutId = useId();
   const fid = useId();
   const emailInputId = `${fid}-email`;
+  const verificationCodeInputId = `${fid}-verification-code`;
   const nicknameInputId = `${fid}-nickname`;
   const passwordInputId = `${fid}-password`;
   const passwordConfirmInputId = `${fid}-password-confirm`;
@@ -125,8 +139,8 @@ export default function RegisterGuideForm({
   const serviceTypesInputId = `${fid}-service-types`;
   const bioInputId = `${fid}-bio`;
   const agreePrivacyInputId = `${fid}-agree-privacy`;
-  const footerLinkClass = `${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`;
-  const fieldWrapClass = "flex min-w-0 flex-col gap-1.5";
+  const footerLinkClass = `${touchTargetLink44Classes} ${TT_AUTH_L5_FORM.footerLinks}`;
+  const fieldWrapClass = TT_AUTH_L5_FORM.fieldGroup;
   return (
     <main
       className={mainClassName}
@@ -135,42 +149,36 @@ export default function RegisterGuideForm({
       data-tt-auth-route="register"
       data-tt-auth-surface="register_form_shell"
       data-tt-auth-register-role="guide"
+      data-tt-auth-visual="l5"
+      data-tt-auth-register-ui-frozen="1"
     >
-      <RegisterPageBackdrop kind={backdropKind} />
-      <div className="relative z-10 flex w-full min-w-0 flex-col items-center gap-6">
-        <div className="mx-auto flex w-full min-w-0 max-w-lg flex-col gap-6 rounded-[var(--radius-sm)] border border-ink-200 bg-bg-console p-6 shadow-soft">
-        <div className="flex items-center gap-2">
-          <form
-            className="inline"
-            onSubmit={(e) => {
-              e.preventDefault();
-              onBack();
-            }}
-          >
-            <button
-              type="submit"
-              data-tt-auth-register-back="1"
-              className={`inline-flex min-h-[44px] items-center px-1 text-meta text-ink-500 transition-colors hover:text-travel-500 motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
-            >
-              {t("auth_register_back")}
-            </button>
-          </form>
-        </div>
-        <h1 className="shrink-0 text-h4 font-semibold leading-snug text-ink-900">{t("auth_register_guide")}</h1>
-        <p className="text-meta text-ink-600">{t("auth_register_guideDesc")}</p>
-        <TrustGrowthMomentBanner moment="register" surface="auth" />
-
-        <div
-          id={guideTwoStepCalloutId}
-          role="note"
-          className="rounded-[var(--radius-sm)] border border-travel-300/50 bg-travel-500/10 px-3 py-2.5 text-meta leading-snug text-ink-800"
+      <AuthL5PageBackdrop />
+      <div className={`${TT_AUTH_L5_PAGE_COLUMN} gap-6`}>
+        <AuthL5Card maxWidth="wide" surface="register_l5_card">
+        <form
+          className="inline"
+          onSubmit={(e) => {
+            e.preventDefault();
+            onBack();
+          }}
         >
+          <button type="submit" data-tt-auth-register-back="1" className={TT_AUTH_L5_FORM.backButton}>
+            {t("auth_register_back")}
+          </button>
+        </form>
+        <header className={`${TT_AUTH_L5_FORM.headerBlock} pb-4`}>
+          <h1 className={TT_AUTH_L5_FORM.titleLogin}>{t("auth_register_guide")}</h1>
+          <p className={TT_AUTH_L5_FORM.subtitle}>{t("auth_register_guideDesc")}</p>
+        </header>
+        <TrustGrowthMomentBanner moment="register" surface="l5" preferCollapsedSummary />
+
+        <div id={guideTwoStepCalloutId} role="note" className={TT_AUTH_L5_FORM.callout}>
           {t("auth_register_guide_two_step_callout")}
         </div>
 
         <form noValidate onSubmit={onSubmit} className="flex min-w-0 flex-col gap-5" data-tt-auth-surface="register_form_fields">
           <section className="flex min-w-0 flex-col gap-3">
-            <h2 className="text-small font-semibold text-ink-800 border-b border-ink-200 pb-1">{t("auth_register_accountSection")}</h2>
+            <h2 className={TT_AUTH_L5_FORM.sectionTitle}>{t("auth_register_accountSection")}</h2>
             <div className={fieldWrapClass}>
               <label htmlFor={emailInputId} className={labelClass}>
                 {t("auth_register_email")} *
@@ -189,6 +197,18 @@ export default function RegisterGuideForm({
                 aria-describedby={error ? formErrorId : undefined}
               />
             </div>
+            <RegisterVerificationCodeField
+              t={t}
+              labelClass={labelClass}
+              inputClass={inputClass}
+              codeInputId={verificationCodeInputId}
+              verificationCode={verificationCode}
+              setVerificationCode={setVerificationCode}
+              sendCodeBusy={sendCodeBusy}
+              sendCodeCooldown={sendCodeCooldown}
+              devCodeHint={devCodeHint}
+              onSendCode={onSendVerificationCode}
+            />
             <div className={fieldWrapClass}>
               <label htmlFor={nicknameInputId} className={labelClass}>
                 {t("auth_register_nickname")}
@@ -221,7 +241,7 @@ export default function RegisterGuideForm({
                 const s = passwordStrength(password);
                 if (!s.labelKey) return null;
                 return (
-                  <p className={`text-meta mt-0.5 ${s.ok ? "text-ink-500" : "text-warning"}`}>{t(s.labelKey)}</p>
+                  <p className={s.ok ? TT_AUTH_L5_FORM.passwordHintOk : TT_AUTH_L5_FORM.passwordHintWarn}>{t(s.labelKey)}</p>
                 );
               })()}
             </div>
@@ -243,7 +263,7 @@ export default function RegisterGuideForm({
           </section>
 
           <section className="flex min-w-0 flex-col gap-3">
-            <h2 className="text-small font-semibold text-ink-800 border-b border-ink-200 pb-1">{t("auth_register_didSection")}</h2>
+            <h2 className={TT_AUTH_L5_FORM.sectionTitle}>{t("auth_register_didSection")}</h2>
             <div className={fieldWrapClass}>
               <label htmlFor={idNumberInputId} className={labelClass}>
                 {t("auth_register_idNumber")}
@@ -267,10 +287,10 @@ export default function RegisterGuideForm({
                 type="file"
                 accept={ACCEPT_ID}
                 onChange={(e) => setIdPhotoFile(e.target.files?.[0] ?? null)}
-                className={`w-full min-h-[44px] border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 text-small text-ink-600 bg-bg-console file:mr-3 file:rounded file:border-0 file:bg-travel-500 file:px-2 file:py-1 file:text-small file:text-white ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+                className={TT_AUTH_L5_FORM.fileInput}
               />
-              <p className="text-meta text-ink-500 mt-0.5">{t("auth_register_idPhotoHint")}</p>
-              {idPhotoFile && <p className="text-meta text-travel-600 mt-0.5">{idPhotoFile.name}</p>}
+              <p className={TT_AUTH_L5_FORM.fileMeta}>{t("auth_register_idPhotoHint")}</p>
+              {idPhotoFile ? <p className={TT_AUTH_L5_FORM.fileSelected}>{idPhotoFile.name}</p> : null}
             </div>
             <div className={fieldWrapClass}>
               <label htmlFor={languageCertInputId} className={labelClass}>
@@ -281,10 +301,10 @@ export default function RegisterGuideForm({
                 type="file"
                 accept={ACCEPT_LANG}
                 onChange={(e) => setLanguageCertFile(e.target.files?.[0] ?? null)}
-                className={`w-full min-h-[44px] border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 text-small text-ink-600 bg-bg-console file:mr-3 file:rounded file:border-0 file:bg-travel-500 file:px-2 file:py-1 file:text-small file:text-white ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+                className={TT_AUTH_L5_FORM.fileInput}
               />
-              <p className="text-meta text-ink-500 mt-0.5">{t("auth_register_languageCertOptional")}</p>
-              {languageCertFile && <p className="text-meta text-travel-600 mt-0.5">{languageCertFile.name}</p>}
+              <p className={TT_AUTH_L5_FORM.fileMeta}>{t("auth_register_languageCertOptional")}</p>
+              {languageCertFile ? <p className={TT_AUTH_L5_FORM.fileSelected}>{languageCertFile.name}</p> : null}
             </div>
             <div className={fieldWrapClass}>
               <label htmlFor={realNameInputId} className={labelClass}>
@@ -373,56 +393,65 @@ export default function RegisterGuideForm({
               </label>
               <textarea id={bioInputId} value={bio} onChange={(e) => setBio(e.target.value)} rows={3} className={textareaClass} />
             </div>
-            <label htmlFor={agreePrivacyInputId} className="flex cursor-pointer items-start gap-2">
-              <input
-                id={agreePrivacyInputId}
-                type="checkbox"
-                checked={agreePrivacy}
-                onChange={(e) => setAgreePrivacy(e.target.checked)}
-                className="mt-1 rounded-[var(--radius-sm)] border-ink-300"
-              />
-              <span className="text-meta text-ink-600">
-                {t("auth_register_agreePrefix")}
-                <Link href="/terms" className={footerLinkClass}>
-                  {t("auth_register_agreeTerms")}
-                </Link>
-                {t("auth_register_agreeAnd")}
-                <Link href="/privacy" className={footerLinkClass}>
-                  {t("auth_register_agreePrivacyLink")}
-                </Link>
-                {t("auth_register_agreeSuffix")}
-              </span>
-            </label>
+            <AuthL5Checkbox
+              id={agreePrivacyInputId}
+              checked={agreePrivacy}
+              onChange={setAgreePrivacy}
+              asRow
+              className={`${TT_AUTH_L5_FORM.rememberRow} items-start gap-2.5 mb-0 min-h-[44px]`}
+              labelClassName={`${TT_AUTH_L5_FORM.agreeText} pt-0.5`}
+              label={
+                <>
+                  {t("auth_register_agreePrefix")}
+                  <Link href="/terms" className={footerLinkClass}>
+                    {t("auth_register_agreeTerms")}
+                  </Link>
+                  {t("auth_register_agreeAnd")}
+                  <Link href="/privacy" className={footerLinkClass}>
+                    {t("auth_register_agreePrivacyLink")}
+                  </Link>
+                  {t("auth_register_agreeSuffix")}
+                </>
+              }
+            />
           </section>
 
-          {error && (
-            <p id={formErrorId} className="text-danger text-small whitespace-pre-line" role="alert" data-tt-auth-surface="register_form_error">
+          {error ? (
+            <p id={formErrorId} className={TT_AUTH_L5_FORM.error} role="alert" data-tt-auth-surface="register_form_error">
               {getErrorDisplay(error)}
             </p>
-          )}
+          ) : null}
           <button
             type="submit"
             data-tt-auth-register-submit="1"
             disabled={loading}
             aria-busy={loading ? true : undefined}
             aria-describedby={guideTwoStepCalloutId}
-            className={`btn-console inline-flex min-h-[44px] w-full items-center justify-center rounded-[var(--radius-sm)] bg-travel-500 px-3 py-2 text-small font-medium text-white transition-colors motion-reduce:transition-none disabled:opacity-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+            className={TT_AUTH_L5_FORM.primaryCta}
           >
             {loading ? t("auth_register_submitting") : t("auth_register_guideSubmit")}
           </button>
         </form>
 
-        <p className="text-meta text-ink-500">
+        <p className={TT_AUTH_L5_FORM.footerMeta} data-tt-auth-surface="register_footer_links">
           <Link href={loginHref} className={footerLinkClass}>
             {t("auth_register_loginLink")}
-          </Link>{" "}
-          ·{" "}
+          </Link>
+          <span className="text-ref-sun/30" aria-hidden>
+            ·
+          </span>
           <Link href="/" className={footerLinkClass}>
             {t("auth_register_web3Travel")}
           </Link>
+          <span className="text-ref-sun/30" aria-hidden>
+            ·
+          </span>
+          <Link href="/me/identities" className={footerLinkClass}>
+            {t("header_multiIdentity")}
+          </Link>
         </p>
-        </div>
-        <AuthShellCrossNav />
+        </AuthL5Card>
+        <AuthL5CrossNavFooter />
       </div>
     </main>
   );

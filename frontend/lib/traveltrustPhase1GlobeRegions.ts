@@ -1,6 +1,10 @@
 /** @frozen TT-GLOBE-L5-FROZEN-2026-05 — see `traveltrustHeroGlobeFrozenManifest.ts` */
 import { TT_HERO_GLOBE_L5_PALETTE } from "@/lib/traveltrustCinematicPageL5";
-import { getTraveltrustHubGeo, type TraveltrustHubGeoId } from "@/lib/traveltrustHubGeo";
+import {
+  getTraveltrustHubGeo,
+  wgs84LonToGlobeSurfaceLonDeg,
+  type TraveltrustHubGeoId,
+} from "@/lib/traveltrustHubGeo";
 
 /** Phase 1 country anchors for globe highlights (84 / protocol-reference · mock ①). */
 export type TravelTrustPhase1GlobeRegion = {
@@ -34,9 +38,10 @@ export const TRAVELTRUST_PHASE1_GLOBE_REGIONS: TravelTrustPhase1GlobeRegion[] = 
   },
 );
 
+/** WGS84 lat/lon → unit sphere (Y-up). Lon sign matches Three.js equirect + `SphereGeometry` (①). */
 export function latLonToUnitVector(latDeg: number, lonDeg: number): [number, number, number] {
   const lat = (latDeg * Math.PI) / 180;
-  const lon = (lonDeg * Math.PI) / 180;
+  const lon = (wgs84LonToGlobeSurfaceLonDeg(lonDeg) * Math.PI) / 180;
   const cosLat = Math.cos(lat);
   return [cosLat * Math.cos(lon), Math.sin(lat), cosLat * Math.sin(lon)];
 }

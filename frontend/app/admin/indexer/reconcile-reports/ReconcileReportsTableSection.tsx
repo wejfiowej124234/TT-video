@@ -23,7 +23,14 @@ import {
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
   adminPageNavLinkClass,
-  adminTableInlineLinkClass,
+  adminTableRowPrimaryActionClass,
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_PAGINATION_DISABLED_CLASS,
+  ADMIN_TABLE_ROW_DIVIDER_CLASS,
+  ADMIN_FORM_CONTROL_SM_CLASS,
+
+  ADMIN_TABLE_SECTION_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
 } from "@/lib/adminUi";
 
 type ReconcileSortKey = "created_at" | "issues_total";
@@ -39,6 +46,7 @@ import type { LocaleTranslateFn } from "@/lib/i18n";
 export function ReconcileReportsTableSection(props: {
   t: LocaleTranslateFn;
   loading: boolean;
+  refreshing: boolean;
   error: AdminFetchErrorKind | null;
   items: ReconcileReportRow[];
   total: number;
@@ -54,6 +62,7 @@ export function ReconcileReportsTableSection(props: {
   const {
     t,
     loading,
+    refreshing,
     error,
     items,
     total,
@@ -80,10 +89,11 @@ export function ReconcileReportsTableSection(props: {
   return (
     <>
       <section
-        className="mt-6 overflow-x-auto rounded-[var(--radius-xl)] border border-ink-200 bg-white shadow-soft"
+        className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
         aria-label={t("admin_indexer_reconcile_reports_page_aria")}
+        data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
       >
-        {loading ? (
+        {loading && items.length === 0 ? (
           <AdminListLoadingStatus message={t("admin_indexer_reconcile_reports_loading")} className="p-4 text-body text-ink-600" />
         ) : error ? (
           <div className="p-4">
@@ -149,32 +159,32 @@ export function ReconcileReportsTableSection(props: {
             </thead>
             <tbody>
               {sortedItems.map((row) => (
-                <tr key={row.id} className={`border-b border-ink-100 ${ADMIN_TABLE_ROW_CLASS}`}>
-                  <td className="max-w-[14rem] truncate px-3 py-2 font-mono text-meta text-ink-800" title={row.id}>
+                <tr key={row.id} className={`${ADMIN_TABLE_ROW_DIVIDER_CLASS} ${ADMIN_TABLE_ROW_CLASS}`}>
+                  <td className="max-w-[14rem] truncate px-3 py-2 font-mono text-small text-ink-800 text-ink-800" title={row.id}>
                     {row.id}
                   </td>
                   <td className="px-3 py-2 text-ink-800">{row.report_type}</td>
-                  <td className="px-3 py-2 font-mono text-meta text-ink-700">
+                  <td className="px-3 py-2 font-mono text-small text-ink-800 text-ink-700">
                     {row.chain_id != null ? String(row.chain_id) : "—"}
                   </td>
-                  <td className="px-3 py-2 font-mono text-meta text-ink-800">
+                  <td className="px-3 py-2 font-mono text-small text-ink-800 text-ink-800">
                     {row.issues_total != null ? String(row.issues_total) : "—"}
                   </td>
                   <td className="px-3 py-2 text-meta text-ink-700">{reconcileReportCleanCellText(row, t)}</td>
                   <td
-                    className="max-w-[18rem] truncate px-3 py-2 font-mono text-meta text-ink-700"
+                    className="max-w-[18rem] truncate px-3 py-2 font-mono text-small text-ink-800 text-ink-700"
                     title={reconcileReportBreakdownTitle(row, t)}
                   >
                     {formatStatsBreakdownOneLine(row.stats_breakdown ?? undefined) || "—"}
                   </td>
                   <td
-                    className="max-w-[12rem] truncate px-3 py-2 font-mono text-meta text-ink-700"
+                    className="max-w-[12rem] truncate px-3 py-2 font-mono text-small text-ink-800 text-ink-700"
                     title={reconcileReportEconomicProjectionTitle(row, t)}
                   >
                     {formatEconomicProjectionOneLine(row.economic_projection_row_counts ?? undefined) || "—"}
                   </td>
                   <td
-                    className="max-w-[11rem] truncate px-3 py-2 font-mono text-meta text-ink-700"
+                    className="max-w-[11rem] truncate px-3 py-2 font-mono text-small text-ink-800 text-ink-700"
                     title={reconcileReportEventLogEscrowTitle(row, t)}
                   >
                     {formatEventLogEscrowCoverageOneLine(row.event_log_escrow_coverage ?? undefined) || "—"}
@@ -183,7 +193,7 @@ export function ReconcileReportsTableSection(props: {
                   <td className="px-3 py-2 text-right">
                     <Link
                       href={`/admin/indexer/reconcile/${encodeURIComponent(row.id)}`}
-                      className={`${adminTableInlineLinkClass()} rounded-[var(--radius-sm)]`}
+                      className={adminTableRowPrimaryActionClass()}
                       aria-label={t("admin_indexer_reconcile_reports_open_row_aria", { id: row.id })}
                     >
                       {t("admin_indexer_reconcile_reports_open")}
@@ -196,7 +206,7 @@ export function ReconcileReportsTableSection(props: {
         )}
       </section>
 
-      {!loading && !error && total > 0 ? (
+      {!error && (items.length > 0 || !loading) && total > 0 ? (
         <nav
           className="mt-4 flex flex-wrap items-center justify-between gap-3 text-body text-ink-700"
           aria-label={t("admin_indexer_reconcile_reports_pagination_aria")}
@@ -213,7 +223,7 @@ export function ReconcileReportsTableSection(props: {
           </p>
           <div className="flex flex-wrap items-center gap-2">
             <select
-              className={`inline-flex min-h-[44px] items-center justify-start rounded-[var(--radius-sm)] border border-ink-300 bg-white px-2 py-1.5 text-small text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`inline-flex min-h-[44px] items-center justify-start ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1.5 text-small text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               value={limit}
               aria-label={t("admin_indexer_reconcile_reports_per_page_label")}
               title={t("admin_indexer_reconcile_reports_per_page_label")}
@@ -232,26 +242,26 @@ export function ReconcileReportsTableSection(props: {
             {page > 1 ? (
               <Link
                 href={listQuery(page - 1, limit)}
-                className={`${touchTargetLink44Classes} rounded-[var(--radius-sm)] border border-ink-300 px-3 py-1.5 text-small font-medium text-ink-800 hover:bg-ink-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`${touchTargetLink44Classes} ${ADMIN_FILTER_RESET_BTN_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 aria-label={t("admin_indexer_reconcile_reports_prev_aria", { page: String(page - 1) })}
               >
                 {t("admin_indexer_reconcile_reports_prev")}
               </Link>
             ) : (
-              <span className="inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] border border-ink-100 px-3 py-1.5 text-small text-ink-400">
+              <span className={ADMIN_PAGINATION_DISABLED_CLASS}>
                 {t("admin_indexer_reconcile_reports_prev")}
               </span>
             )}
             {page < totalPages ? (
               <Link
                 href={listQuery(page + 1, limit)}
-                className={`${touchTargetLink44Classes} rounded-[var(--radius-sm)] border border-ink-300 px-3 py-1.5 text-small font-medium text-ink-800 hover:bg-ink-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`${touchTargetLink44Classes} ${ADMIN_FILTER_RESET_BTN_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 aria-label={t("admin_indexer_reconcile_reports_next_aria", { page: String(page + 1) })}
               >
                 {t("admin_indexer_reconcile_reports_next")}
               </Link>
             ) : (
-              <span className="inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] border border-ink-100 px-3 py-1.5 text-small text-ink-400">
+              <span className={ADMIN_PAGINATION_DISABLED_CLASS}>
                 {t("admin_indexer_reconcile_reports_next")}
               </span>
             )}

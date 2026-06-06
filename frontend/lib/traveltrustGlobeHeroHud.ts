@@ -2,7 +2,7 @@
 
 /** @frozen TT-GLOBE-L5-FROZEN-2026-05 — see `traveltrustHeroGlobeFrozenManifest.ts` */
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import type { HeroGlobeRouteBias } from "@/lib/traveltrustGlobeArcCull";
 
 type GlobeHeroHudState = {
@@ -10,10 +10,12 @@ type GlobeHeroHudState = {
   routeBias: HeroGlobeRouteBias;
 };
 
-let state: GlobeHeroHudState = {
+const GLOBE_HERO_HUD_SERVER_SNAPSHOT: GlobeHeroHudState = {
   visibleHubIds: [],
   routeBias: "any",
 };
+
+let state: GlobeHeroHudState = GLOBE_HERO_HUD_SERVER_SNAPSHOT;
 
 const listeners = new Set<() => void>();
 
@@ -37,14 +39,22 @@ export function getTraveltrustGlobeHeroHud(): GlobeHeroHudState {
   return state;
 }
 
-export function useTraveltrustGlobeHeroHud(): GlobeHeroHudState {
-  const [, tick] = useState(0);
-  useEffect(() => {
-    const sub = () => tick((n) => n + 1);
-    listeners.add(sub);
-    return () => {
-      listeners.delete(sub);
-    };
-  }, []);
+function subscribeGlobeHeroHud(onStoreChange: () => void) {
+  listeners.add(onStoreChange);
+  return () => {
+    listeners.delete(onStoreChange);
+  };
+}
+
+function getGlobeHeroHudSnapshot(): GlobeHeroHudState {
   return state;
+}
+
+function getGlobeHeroHudServerSnapshot(): GlobeHeroHudState {
+  return GLOBE_HERO_HUD_SERVER_SNAPSHOT;
+}
+
+/** SSR 与首帧客户端均用 `routeBias: "any"`，hydration 后再跟 WebGL 走廊同步。 */
+export function useTraveltrustGlobeHeroHud(): GlobeHeroHudState {
+  return useSyncExternalStore(subscribeGlobeHeroHud, getGlobeHeroHudSnapshot, getGlobeHeroHudServerSnapshot);
 }

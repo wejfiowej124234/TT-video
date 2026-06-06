@@ -1,11 +1,12 @@
 "use client";
 
-import { useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import StickyFilterBar from "@/components/market/StickyFilterBar";
 import type { MarketView } from "@/components/market/ViewSwitcher";
 import { formatMarketTravelFilterSummaryBlocks } from "@/lib/marketTravelFilterSummary";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
+import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
 
 export type MarketTravelSortBy = "latest" | "priceDesc" | "priceAsc";
 
@@ -61,6 +62,7 @@ export default function MarketTravelFilterPanel({
   onFavoriteToggleAlertDismiss,
 }: MarketTravelFilterPanelProps) {
   const { t } = useTranslation();
+  const [filterExpanded, setFilterExpanded] = useState(false);
   const loading = loadingOrders || loadingGuides;
   const summaryBlocks = useMemo(
     () =>
@@ -79,8 +81,8 @@ export default function MarketTravelFilterPanel({
 
   return (
     <div className="flex flex-col" data-testid="market-travel-filter-panel">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 px-4 py-2.5">
-        <span className="text-small font-semibold uppercase tracking-wide text-cyan-200">
+      <div className={`flex flex-wrap items-center justify-between gap-2 border-b ${TT_MARKETING_MARKET_DARK_PATH.marketFilterPanelDivider} px-4 py-2.5`}>
+        <span className={TT_MARKETING_MARKET_DARK_PATH.filterBandLabel}>
           {t("market_subsite_filter_band_title")}
         </span>
         <button
@@ -96,6 +98,8 @@ export default function MarketTravelFilterPanel({
         city={city}
         languages={languages}
         serviceTypes={serviceTypes}
+        filterExpanded={filterExpanded}
+        onFilterExpandedChange={setFilterExpanded}
         onCountryChange={onCountryChange}
         onCityChange={onCityChange}
         onLanguagesChange={onLanguagesChange}
@@ -103,7 +107,7 @@ export default function MarketTravelFilterPanel({
         glass
       />
       <div
-        className="flex min-h-[3.25rem] flex-col justify-center gap-1 border-t border-white/10 px-4 py-2 sm:min-h-[2.75rem]"
+        className={`flex min-h-[3.25rem] flex-col justify-center gap-1 border-t ${TT_MARKETING_MARKET_DARK_PATH.marketFilterPanelDivider} px-4 py-2 sm:min-h-[2.75rem]`}
         data-testid="market-travel-filter-summary"
       >
         {loading ? (

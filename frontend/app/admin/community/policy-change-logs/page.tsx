@@ -9,11 +9,8 @@ import { AdminCommunityPolicyChangeLogsPageMain } from "./AdminCommunityPolicyCh
 
 export default function AdminCommunityPolicyChangeLogsPage() {
   return (
-    <AdminSearchParamsSuspense
-      ariaLabelKey="admin_policy_logs_title"
-      backLinkLabelKey="admin_policy_logs_back"
-    >
-      <AdminCommunityPageShell currentLabelKey="admin_policy_logs_title">
+    <AdminSearchParamsSuspense ariaLabelKey="admin_policy_logs_title">
+      <AdminCommunityPageShell>
         <AdminPermissionDeniedBanner permission={ADMIN_PERM.COMMUNITY_READ} />
         <AdminCommunityPolicyChangeLogsPageMain />
       </AdminCommunityPageShell>

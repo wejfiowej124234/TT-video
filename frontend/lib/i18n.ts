@@ -28,3 +28,20 @@ export function setStoredLocale(locale: Locale): void {
   if (typeof window === "undefined") return;
   localStorage.setItem(LOCALE_STORAGE_KEY, locale);
 }
+
+export type LocaleInterpolationVars = Record<string, string | number | boolean | undefined | null>;
+
+/** 替换 `locales` 中 `{{key}}` 占位（双花括号 · 非 `{key}`） */
+export function applyLocalePlaceholders(
+  template: string,
+  vars?: LocaleInterpolationVars,
+): string {
+  if (!vars || Object.keys(vars).length === 0) return template;
+  return template.replace(/\{\{(\w+)\}\}/g, (_, key: string) => {
+    const v = vars[key];
+    if (v === undefined || v === null) return "";
+    return String(v);
+  });
+}
+
+export type LocaleTranslateFn = (key: string, vars?: LocaleInterpolationVars) => string;

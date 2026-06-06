@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { TT_MARKETING_TRUST_BADGE_HOME } from "@/lib/marketingUi";
 
 /** Hero 下三徽章：非托管 · 链上托管 · 争议支持（28 融合规范；随 app locale 切换） */
 const BADGE_KEYS = [
@@ -9,9 +10,13 @@ const BADGE_KEYS = [
   { labelKey: "trust_badge_dispute_label", titleKey: "trust_badge_dispute_title" },
 ] as const;
 
-export default function TrustBadgesRow() {
+export default function TrustBadgesRow({ variant = "default" }: { variant?: "default" | "home" }) {
   const { t } = useTranslation();
   const delayClass = ["delay-150", "delay-200", "delay-300"];
+  const badgeClass =
+    variant === "home"
+      ? TT_MARKETING_TRUST_BADGE_HOME
+      : "rounded-full bg-white/20 backdrop-blur-sm px-3 py-1 text-meta font-medium text-white/95 border border-white/20";
   return (
     <div
       className="mt-4 flex flex-wrap items-center justify-center gap-2 animate-fadeIn delay-100"
@@ -20,7 +25,7 @@ export default function TrustBadgesRow() {
       {BADGE_KEYS.map((b, i) => (
         <span
           key={b.labelKey}
-          className={`rounded-full bg-white/20 backdrop-blur-sm px-3 py-1 text-meta font-medium text-white/95 border border-white/20 animate-fadeIn ${delayClass[i] ?? ""}`}
+          className={`${badgeClass} animate-fadeIn ${delayClass[i] ?? ""}`}
           title={t(b.titleKey)}
         >
           {t(b.labelKey)}

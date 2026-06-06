@@ -21,8 +21,24 @@ import {
 } from "./escrowOnChainEligibility";
 import { orderAmountToBigInt } from "./utils";
 import { getExpectedChainId } from "@/lib/chainEnv";
+import { orderAllowsConfirmFinalPlan } from "@/lib/escrowDraftFlow";
 import { walletErrorRaw } from "@/lib/mapWalletWriteError";
 import { isDisplayableSnapshotHash } from "@/lib/snapshotHashDisplay";
+import {
+  normalizeBreakdownTotals,
+  resolveEscrowDisplayAmount,
+  type EscrowAmountBreakdownLike,
+} from "@/lib/escrowOrderAmountSsot";
+import type { UnifiedDayRow } from "@/lib/itineraryUnified";
+
+/** ① 草稿页：合并 GET、退避 429，避免 PATCH 后连刷 */
+const ORDER_GET_MIN_INTERVAL_MS = 8_000;
+const ORDER_GET_DEBOUNCE_MS = 1_500;
+const ORDER_GET_RATE_LIMIT_BACKOFF_MS = 60_000;
+/** 有 prefetch 时延后 GET，避免与首页解锁连击 429 */
+const ORDER_GET_PREFETCH_DEFER_MS = 2_500;
+
+type OrderGetFetchResult = "ok" | "throttled" | "rate_limited";
 
 const ESCROW_ABI = escrowAbiJson as readonly unknown[];
 
@@ -48,14 +64,23 @@ export interface UseEscrowDetailResult {
   order: OrderRow | null;
   itinerary: ItineraryBlock | null;
   error: string | null;
-  refreshOrder: () => void;
+  refreshOrder: (options?: { force?: boolean }) => void;
+  /** PATCH itinerary 后本地对齐 order.amount / breakdown，避免立刻 GET（易 429） */
+  applyOptimisticItineraryPatch: (patch: {
+    amountBreakdown?: EscrowAmountBreakdownLike | null;
+    dailyItinerary?: UnifiedDayRow[];
+    version?: number;
+    orderState?: string;
+  }) => void;
+  /** GET 订单触发 429 退避中（保留 prefetch / 乐观态） */
+  orderGetRateLimited: boolean;
   confirmAction: ConfirmAction;
   setConfirmAction: (a: ConfirmAction) => void;
   dismissReorgBanner: boolean;
   setDismissReorgBanner: (v: boolean) => void;
   meData: {
     user?: { id?: string; default_wallet_address?: string | null };
-    guide?: { wallet_address?: string | null };
+    guide?: { id?: string; wallet_address?: string | null };
   } | null;
   state: string;
   amount: string;
@@ -136,13 +161,14 @@ export interface UseEscrowDetailResult {
 
 export function useEscrowDetail(escrowId: string, t: (key: string) => string): UseEscrowDetailResult {
   const [order, setOrder] = useState<OrderRow | null>(null);
+  const [orderGetRateLimited, setOrderGetRateLimited] = useState(false);
   const [itinerary, setItinerary] = useState<ItineraryBlock | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [confirmAction, setConfirmAction] = useState<ConfirmAction>(null);
   const [dismissReorgBanner, setDismissReorgBanner] = useState(false);
   const [meData, setMeData] = useState<{
     user?: { id?: string; default_wallet_address?: string | null };
-    guide?: { wallet_address?: string | null };
+    guide?: { id?: string; wallet_address?: string | null };
   } | null>(null);
   const [chainSync, setChainSync] = useState<OrderChainSyncState | null>(null);
   const [lastChainContractReadOkAt, setLastChainContractReadOkAt] = useState<number | null>(null);
@@ -444,38 +470,159 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
     fetchChainSync();
   }, [fetchChainSync]);
 
+  const orderGetGateRef = useRef({
+    inFlight: null as Promise<OrderGetFetchResult> | null,
+    lastOkAt: 0,
+    rateLimitedUntil: 0,
+  });
+  const refreshDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const applyOrderResponse = useCallback(
+    (data: unknown) => {
+      const res = data as OrderResponse;
+      const o = res?.order ?? (data as OrderRow);
+      const normalized = o?.id ? o : { ...o, id: escrowId };
+      setOrder(normalized);
+      setItinerary(itineraryOrPlaceholderForPreEscrow(normalized as OrderRow, res?.itinerary ?? null));
+      if (normalized?.escrow_address) fetchChainSync();
+      return normalized as OrderRow;
+    },
+    [escrowId, fetchChainSync],
+  );
+
+  const isOrderGetRateLimited = useCallback((err: unknown) => {
+    const msg = err instanceof Error ? err.message : String(err ?? "");
+    return (
+      /rate_limit|429|过于频繁|too many requests/i.test(msg) || msg === "rate_limit_exceeded"
+    );
+  }, []);
+
+  const fetchOrderFromApi = useCallback(
+    async (options?: { bypassThrottle?: boolean }): Promise<OrderGetFetchResult> => {
+      const gate = orderGetGateRef.current;
+      const now = Date.now();
+      if (now < gate.rateLimitedUntil) {
+        setOrderGetRateLimited(true);
+        return "rate_limited";
+      }
+      if (
+        !options?.bypassThrottle &&
+        gate.lastOkAt > 0 &&
+        now - gate.lastOkAt < ORDER_GET_MIN_INTERVAL_MS
+      ) {
+        return "throttled";
+      }
+      if (gate.inFlight) return gate.inFlight;
+
+      const run = (async (): Promise<OrderGetFetchResult> => {
+        try {
+          const data = await getOrder(escrowId);
+          applyOrderResponse(data);
+          setError(null);
+          setOrderGetRateLimited(false);
+          gate.lastOkAt = Date.now();
+          return "ok";
+        } catch (err) {
+          if (isOrderGetRateLimited(err)) {
+            gate.rateLimitedUntil = Date.now() + ORDER_GET_RATE_LIMIT_BACKOFF_MS;
+            setOrderGetRateLimited(true);
+            if (typeof window !== "undefined") {
+              console.warn("useEscrowDetail getOrder rate limited; backing off GET");
+            }
+            return "rate_limited";
+          }
+          throw err;
+        } finally {
+          gate.inFlight = null;
+        }
+      })();
+      gate.inFlight = run;
+      return run;
+    },
+    [applyOrderResponse, escrowId, isOrderGetRateLimited],
+  );
+
+  const applyOptimisticItineraryPatch = useCallback(
+    (patch: {
+      amountBreakdown?: EscrowAmountBreakdownLike | null;
+      dailyItinerary?: UnifiedDayRow[];
+      version?: number;
+      orderState?: string;
+    }) => {
+      const normalized = patch.amountBreakdown
+        ? normalizeBreakdownTotals(patch.amountBreakdown)
+        : undefined;
+      setItinerary((prev) => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          ...(patch.dailyItinerary ? { daily_itinerary: patch.dailyItinerary } : {}),
+          ...(normalized ? { amount_breakdown: normalized } : {}),
+          version: patch.version ?? (prev.version ?? 1) + 1,
+        };
+      });
+      if (normalized) {
+        const resolved = resolveEscrowDisplayAmount(undefined, normalized);
+        if (resolved.canonicalTotal != null) {
+          setOrder((prev) =>
+            prev ? { ...prev, amount: resolved.canonicalTotal!.toFixed(2) } : prev,
+          );
+        }
+      }
+      const nextState = patch.orderState?.trim().toLowerCase();
+      if (nextState) {
+        setOrder((prev) =>
+          prev ? { ...prev, state: nextState, status: nextState } : prev,
+        );
+      }
+    },
+    [],
+  );
+
   useEffect(() => {
     let cancelled = false;
     setError(null);
     const pref = consumeEscrowOrderPrefetch(escrowId);
+    let deferTimer: ReturnType<typeof setTimeout> | undefined;
     if (pref) {
       setOrder(pref.order);
       setItinerary(itineraryOrPlaceholderForPreEscrow(pref.order as OrderRow, pref.itinerary));
     }
-    getOrder(escrowId)
-      .then((data: unknown) => {
-        if (cancelled) return;
-        setError(null);
-        const res = data as OrderResponse;
-        const o = res?.order ?? (data as OrderRow);
-        const normalized = o?.id ? o : { ...o, id: escrowId };
-        setOrder(normalized);
-        setItinerary(itineraryOrPlaceholderForPreEscrow(normalized as OrderRow, res?.itinerary ?? null));
-      })
-      .catch((err) => {
-        if (cancelled) return;
-        if (typeof window !== "undefined") {
-          console.error("useEscrowDetail getOrder:", err);
-        }
-        const msg = err instanceof Error ? err.message : "";
-        if (isComplianceError(err)) setError(msg || t("escrow_loadFailed"));
-        else if (/403|forbidden|权限|暂无权限/i.test(msg)) setError(t("escrow_403_message"));
-        else setError(mapApiReadError(err, t, "escrow_loadFailed"));
-      });
+    const runInitialFetch = () => {
+      void fetchOrderFromApi({ bypassThrottle: true })
+        .then((result) => {
+          if (cancelled) return;
+          if (result === "rate_limited") setOrderGetRateLimited(true);
+        })
+        .catch((err) => {
+          if (cancelled) return;
+          if (typeof window !== "undefined") {
+            console.error("useEscrowDetail getOrder:", err);
+          }
+          const msg = err instanceof Error ? err.message : "";
+          if (isComplianceError(err)) setError(msg || t("escrow_loadFailed"));
+          else if (/403|forbidden|权限|暂无权限/i.test(msg)) setError(t("escrow_403_message"));
+          else setError(mapApiReadError(err, t, "escrow_loadFailed"));
+        });
+    };
+    if (pref) {
+      deferTimer = setTimeout(runInitialFetch, ORDER_GET_PREFETCH_DEFER_MS);
+    } else {
+      runInitialFetch();
+    }
     return () => {
       cancelled = true;
+      if (deferTimer) clearTimeout(deferTimer);
     };
-  }, [escrowId, t]);
+  }, [escrowId, t, fetchOrderFromApi]);
+
+  useEffect(() => {
+    if (!orderGetRateLimited) return;
+    const timer = window.setTimeout(() => {
+      void fetchOrderFromApi({ bypassThrottle: true });
+    }, ORDER_GET_RATE_LIMIT_BACKOFF_MS);
+    return () => window.clearTimeout(timer);
+  }, [orderGetRateLimited, fetchOrderFromApi]);
 
   useEffect(() => {
     getMe()
@@ -483,7 +630,7 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
         setMeData(
           res as {
             user?: { id?: string; default_wallet_address?: string | null };
-            guide?: { wallet_address?: string | null };
+            guide?: { id?: string; wallet_address?: string | null };
           }
         )
       )
@@ -495,26 +642,47 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
       });
   }, []);
 
-  const refreshOrder = useCallback(() => {
-    getOrder(escrowId)
-      .then((data: unknown) => {
-        setError(null);
-        const res = data as OrderResponse;
-        const o = res?.order ?? (data as OrderRow);
-        if (o?.id) setOrder(o);
-        setItinerary(itineraryOrPlaceholderForPreEscrow(o as OrderRow | undefined, res?.itinerary ?? null));
-        fetchChainSync();
-      })
-      .catch((err) => {
-        if (typeof window !== "undefined") {
-          console.error("useEscrowDetail refreshOrder getOrder:", err);
+  const refreshOrder = useCallback(
+    (options?: { force?: boolean }) => {
+      const run = () => {
+        void fetchOrderFromApi({ bypassThrottle: options?.force === true })
+          .then((result) => {
+            if (result === "rate_limited") return;
+          })
+          .catch((err) => {
+          if (typeof window !== "undefined") {
+            console.error("useEscrowDetail refreshOrder getOrder:", err);
+          }
+          if (isOrderGetRateLimited(err)) return;
+          const msg = err instanceof Error ? err.message : "";
+          if (isComplianceError(err)) setError(msg || t("escrow_loadFailed"));
+          else if (/403|forbidden|权限|暂无权限/i.test(msg)) setError(t("escrow_403_message"));
+          else setError(mapApiReadError(err, t, "escrow_loadFailed"));
+          });
+      };
+      if (options?.force === true) {
+        if (refreshDebounceRef.current) {
+          clearTimeout(refreshDebounceRef.current);
+          refreshDebounceRef.current = null;
         }
-        const msg = err instanceof Error ? err.message : "";
-        if (isComplianceError(err)) setError(msg || t("escrow_loadFailed"));
-        else if (/403|forbidden|权限|暂无权限/i.test(msg)) setError(t("escrow_403_message"));
-        else setError(mapApiReadError(err, t, "escrow_loadFailed"));
-      });
-  }, [escrowId, t, fetchChainSync]);
+        run();
+        return;
+      }
+      if (refreshDebounceRef.current) clearTimeout(refreshDebounceRef.current);
+      refreshDebounceRef.current = setTimeout(() => {
+        refreshDebounceRef.current = null;
+        run();
+      }, ORDER_GET_DEBOUNCE_MS);
+    },
+    [fetchOrderFromApi, isOrderGetRateLimited, t],
+  );
+
+  useEffect(
+    () => () => {
+      if (refreshDebounceRef.current) clearTimeout(refreshDebounceRef.current);
+    },
+    [],
+  );
 
   useEscrowChainSync(escrowAddress, readEscrowEnabled, refreshOrder);
 
@@ -572,9 +740,11 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
   const snapshotHash = isDisplayableSnapshotHash(snapshotHashRaw) ? snapshotHashRaw.trim() : null;
 
   const showItineraryBudgetZone = Boolean(isPreEscrowProtocol && itinerary);
-  const allowConfirmFinalPlan = Boolean(
-    !snapshotHash && (isDraft || (stateLower === "accepted" && bilateralConfirmed)),
-  );
+  const allowConfirmFinalPlan = orderAllowsConfirmFinalPlan({
+    state: stateLower,
+    sub_status: (order as OrderRow & { sub_status?: string })?.sub_status,
+    snapshotHash,
+  });
 
   const canDepositOnChain = canDepositToEscrow(order, hasEscrow, depositAmount);
   const canReleaseOnChain = canReleaseAfterRating(order, hasEscrow);
@@ -596,6 +766,8 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
     itinerary,
     error,
     refreshOrder,
+    applyOptimisticItineraryPatch,
+    orderGetRateLimited,
     confirmAction,
     setConfirmAction,
     dismissReorgBanner,

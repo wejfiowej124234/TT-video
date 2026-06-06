@@ -2,6 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+/** `/escrow/[id]` Experience 金底主 CTA：压过 `a { color: inherit }`，避免白字贴黄底 */
+.order-experience-zone a.tt-escrow-experience-primary-cta,
+.order-experience-zone a.tt-escrow-experience-primary-cta:hover {
+  color: #12100e !important;
+}
+
+.order-experience-zone button.bg-ref-sun,
+.order-experience-zone button.bg-ref-sun:hover {
+  color: #12100e !important;
+}
+
+/** Experience 草稿页脚：压过 `a/button { color: inherit }`，避免浅底区看不见 */
+.order-experience-zone [data-tt-escrow-experience-footer="1"] a,
+.order-experience-zone [data-tt-escrow-experience-footer="1"] button.tt-escrow-experience-footer-action,
+.order-experience-zone [data-tt-escrow-experience-footer="1"] summary.tt-escrow-experience-footer-action {
+  color: var(--ref-sun) !important;
+}
+.order-experience-zone [data-tt-escrow-experience-footer="1"] a:hover,
+.order-experience-zone [data-tt-escrow-experience-footer="1"] button.tt-escrow-experience-footer-action:hover,
+.order-experience-zone [data-tt-escrow-experience-footer="1"] summary.tt-escrow-experience-footer-action:hover {
+  color: #ffe9a8 !important;
+}
+
 :root {
   /* Brand Tokens (22-Design-Tokens) */
   --travel-500: #2e6fff;
@@ -27,6 +57,10 @@
   --bg-main: #f9fafb;
   --bg-soft: #f3f4f6;
   --bg-console: #ffffff;
+  /** `/orders` 等暖金 Console 浅底（同源 L0 `#faf8f6` · 非冷灰 `bg-main`） */
+  --orders-warm-bg-top: #fff8f2;
+  --orders-warm-bg-mid: #faf8f6;
+  --orders-warm-bg-bottom: #f5efe8;
   --bg-dark-console: #0f172a;
 
   --radius-sm: 6px;
@@ -143,6 +177,7 @@
   --ref-coral: #fca47c;
   --ref-cyan: #23ced9;
   --ref-sun: #f9d779;
+  --auth-login-l5-field: rgba(249, 215, 121, 0.4);
   --ref-sage: #a1cca6;
   --ref-teal: #097c87;
 }
@@ -164,15 +199,127 @@
   background-image: var(--tt-hero-mesh);
 }
 
-/* Experience /：首页底图叠层 — 明亮顶 → 天蓝 → 深底（对齐 UI 文档 7.1 滚动渐变观感，非资金主界面） */
+/* Experience /：首页底图叠层 — 顶栏深压暗（L0 可读）→ 中部暖光 → 深底（玻璃卡对比） */
 .bg-experience-landing-vignette {
   background: linear-gradient(
     to bottom,
-    rgba(248, 250, 252, 0.88),
-    rgba(252, 164, 124, 0.12),
-    rgba(224, 242, 254, 0.38),
-    rgba(15, 23, 42, 0.72)
+    rgba(12, 10, 9, 0.72) 0%,
+    rgba(12, 10, 9, 0.38) 22%,
+    rgba(252, 164, 124, 0.14) 48%,
+    rgba(15, 23, 42, 0.52) 72%,
+    rgba(12, 10, 9, 0.84) 100%
   );
+}
+
+/* `/orders` 等暖金 Console 浅底叠层 — 顶右暖光 · 非首页深色 vignette */
+.bg-orders-console-vignette {
+  background: linear-gradient(
+    to bottom,
+    rgba(252, 164, 124, 0.11) 0%,
+    rgba(249, 215, 121, 0.07) 24%,
+    transparent 52%,
+    rgba(252, 164, 124, 0.05) 100%
+  );
+}
+
+/** `/admin` · 同源 `/`/`/orders` cinematic 深壳（`#0c0a09` + vignette/glow/dot · 无 Ken Burns） */
+.bg-admin-console-vignette {
+  background-color: #faf8f6;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(252, 164, 124, 0.18) 0%,
+    rgba(249, 215, 121, 0.11) 18%,
+    rgba(250, 248, 246, 0.55) 42%,
+    rgba(245, 239, 232, 0.92) 100%
+  );
+}
+
+/**
+ * Admin 深壳 · `text-ink-*` 语义映射（白卡 `bg-bg-console` 数据区内恢复深色字）。
+ * 与 **86 §6.0.1 `/admin/*`** · **`frontend/app/admin/README.md`** 同源。
+ */
+[data-tt-admin-zone-content-stack] .text-ink-900 {
+  color: rgb(248 250 252);
+}
+[data-tt-admin-zone-content-stack] .text-ink-800 {
+  color: rgb(226 232 240);
+}
+[data-tt-admin-zone-content-stack] .text-ink-700 {
+  color: rgb(203 213 225);
+}
+[data-tt-admin-zone-content-stack] .text-ink-600 {
+  color: rgb(148 163 184);
+}
+[data-tt-admin-zone-content-stack] .text-ink-500 {
+  color: rgb(148 163 184);
+}
+
+/** Shell 奶油底 native `<select>`：深壳 ink remap 不作用于 option 白底列表 */
+select[data-tt-admin-shell-light-select="1"],
+select[data-tt-admin-warm-l5-modal-control="1"] {
+  color-scheme: light;
+  color: rgb(15 23 42);
+}
+select[data-tt-admin-shell-light-select="1"] option,
+select[data-tt-admin-warm-l5-modal-control="1"] option {
+  color: rgb(15 23 42);
+  background-color: rgb(255 255 255);
+}
+
+[data-tt-admin-zone-content-stack] :is(.bg-bg-console, .bg-bg-console *) :is(.text-ink-900) {
+  color: rgb(17 24 39);
+}
+[data-tt-admin-zone-content-stack] :is(.bg-bg-console, .bg-bg-console *) :is(.text-ink-800) {
+  color: rgb(31 41 55);
+}
+[data-tt-admin-zone-content-stack] :is(.bg-bg-console, .bg-bg-console *) :is(.text-ink-700) {
+  color: rgb(55 65 81);
+}
+[data-tt-admin-zone-content-stack] :is(.bg-bg-console, .bg-bg-console *) :is(.text-ink-600, .text-ink-500) {
+  color: rgb(75 85 99);
+}
+
+[data-tt-admin-warm-l5-surface] .text-ink-900 {
+  color: rgb(248 250 252);
+}
+[data-tt-admin-warm-l5-surface] .text-ink-800 {
+  color: rgb(226 232 240);
+}
+[data-tt-admin-warm-l5-surface] .text-ink-700 {
+  color: rgb(203 213 225);
+}
+[data-tt-admin-warm-l5-surface] .text-ink-600,
+[data-tt-admin-warm-l5-surface] .text-ink-500 {
+  color: rgb(148 163 184);
+}
+
+/* `/` Hero · Phase A Cinematic Still（Ken Burns）：内层放大平移，外层 overflow 裁切 */
+@keyframes tt-home-ambient-ken-burns {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.2) translate3d(-4%, -3%, 0);
+  }
+}
+.tt-home-ambient-ken-burns {
+  animation: tt-home-ambient-ken-burns 16s ease-in-out infinite alternate;
+  will-change: transform;
+  transform-origin: center center;
+}
+.tt-home-ambient-ken-burns-paused {
+  animation-play-state: paused;
+}
+@keyframes tt-home-ambient-crossfade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.tt-home-ambient-crossfade-out {
+  animation: tt-home-ambient-crossfade-out 0.65s ease forwards;
 }
 
 /*
@@ -266,6 +413,309 @@
     radial-gradient(rgba(35, 206, 217, 0.042) 1px, transparent 1px);
   background-size: 22px 22px;
   background-position: 0 0, 11px 11px;
+}
+
+/*
+ * `/market` · `/did-rank` · `/community` 页身底（对齐 `/` 暖金 DNA · 弱化青绿底脚）。
+ * 仅 `WarmRouteFieldBackdrop` 引用；不改 `/traveltrust` 的 `.bg-traveltrust-atmosphere`。
+ */
+.bg-traveltrust-atmosphere-market-dark {
+  background-color: #14100d;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 56px,
+      rgba(252, 200, 140, 0.028) 56px,
+      rgba(252, 200, 140, 0.028) 57px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 56px,
+      rgba(249, 215, 121, 0.022) 56px,
+      rgba(249, 215, 121, 0.022) 57px
+    ),
+    radial-gradient(ellipse 82% 58% at 10% 6%, rgba(249, 215, 121, 0.34), transparent 58%),
+    radial-gradient(ellipse 74% 54% at 92% 8%, rgba(252, 164, 124, 0.28), transparent 56%),
+    radial-gradient(ellipse 68% 48% at 38% 18%, rgba(35, 206, 217, 0.06), transparent 58%),
+    radial-gradient(ellipse 88% 48% at 50% 96%, rgba(249, 215, 121, 0.14), transparent 58%),
+    radial-gradient(ellipse 100% 60% at 50% 48%, rgba(230, 200, 160, 0.05), transparent 62%),
+    radial-gradient(ellipse 115% 58% at 50% 112%, rgba(52, 28, 18, 0.42), transparent 54%),
+    linear-gradient(
+      to bottom,
+      rgba(252, 164, 124, 0.09) 0%,
+      rgba(249, 215, 121, 0.07) 14%,
+      rgba(20, 16, 13, 0.55) 48%,
+      rgba(12, 10, 9, 0.92) 100%
+    );
+}
+
+.bg-traveltrust-dot-grid-market-dark {
+  background-image: radial-gradient(rgba(249, 215, 121, 0.05) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/*
+ * `/market` 试色 · premium 高级暗底（`NEXT_PUBLIC_TRAVELTRUST_MARKET_DARK_PREMIUM_BG=1`）
+ * 中性近黑 + 顶缘轻金晕；弱化底脚褐雾与青绿残留。
+ */
+.bg-traveltrust-atmosphere-market-dark-premium {
+  background-color: #0a0a0a;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 56px,
+      rgba(249, 215, 121, 0.012) 56px,
+      rgba(249, 215, 121, 0.012) 57px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 56px,
+      rgba(252, 164, 124, 0.01) 56px,
+      rgba(252, 164, 124, 0.01) 57px
+    ),
+    radial-gradient(ellipse 78% 52% at 12% 4%, rgba(249, 215, 121, 0.14), transparent 56%),
+    radial-gradient(ellipse 70% 48% at 92% 10%, rgba(252, 164, 124, 0.08), transparent 54%),
+    radial-gradient(ellipse 100% 55% at 50% 108%, rgba(0, 0, 0, 0.55), transparent 52%),
+    linear-gradient(
+      to bottom,
+      rgba(249, 215, 121, 0.04) 0%,
+      rgba(10, 10, 10, 0.2) 22%,
+      rgba(10, 10, 10, 0.88) 72%,
+      rgba(0, 0, 0, 0.98) 100%
+    );
+}
+
+.bg-traveltrust-dot-grid-market-dark-premium {
+  background-image: radial-gradient(rgba(249, 215, 121, 0.035) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/** `/auth/login` L5 · 暖金场域（无青绿 vignette / 无冷青点阵） */
+.bg-auth-login-l5-atmosphere {
+  background-color: #0a0a0a;
+  background-image:
+    radial-gradient(ellipse 95% 42% at 50% 44%, rgba(249, 215, 121, 0.14), transparent 68%),
+    radial-gradient(ellipse 70% 50% at 50% 38%, rgba(252, 164, 124, 0.08), transparent 62%),
+    radial-gradient(ellipse 55% 38% at 6% 12%, rgba(249, 215, 121, 0.06), transparent 58%),
+    radial-gradient(ellipse 100% 65% at 50% 108%, rgba(0, 0, 0, 0.82), transparent 56%),
+    linear-gradient(180deg, rgba(22, 16, 12, 0.5) 0%, rgba(10, 10, 10, 1) 85%);
+}
+
+/** 保留类名供可选启用；默认 backdrop 不铺 mesh，避免 scan-line 感 */
+.bg-auth-login-l5-mesh {
+  background-image: radial-gradient(rgba(249, 215, 121, 0.014) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.35;
+}
+
+/**
+ * Auth L5 · 满分抛光 SSOT（暗玻璃 + 暖金边 · 压 autofill 浅蓝/浅灰）
+ */
+[data-tt-auth-visual="l5"] {
+  color-scheme: dark;
+}
+
+[data-tt-auth-visual="l5"] .auth-l5-glass-surface,
+header[data-tt-header-utility-l5="1"] .auth-l5-glass-surface {
+  border-color: rgba(249, 215, 121, 0.54) !important;
+  background-color: rgba(12, 10, 9, 0.55) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(1.18);
+  backdrop-filter: blur(28px) saturate(1.18);
+  box-shadow:
+    0 40px 100px -40px rgba(0, 0, 0, 0.94),
+    0 0 120px -16px rgba(252, 164, 124, 0.38),
+    inset 0 1px 0 rgba(252, 164, 124, 0.2),
+    0 0 0 1px rgba(252, 164, 124, 0.18) !important;
+}
+
+/** 顶栏 utility 下拉：轻阴影 · 禁大卡 inset 横线叠层 */
+header[data-tt-header-utility-l5="1"] .header-utility-dropdown-panel {
+  background-color: rgba(12, 10, 9, 0.94) !important;
+  box-shadow:
+    0 24px 56px -16px rgba(0, 0, 0, 0.92),
+    0 0 40px -8px rgba(252, 164, 124, 0.28),
+    0 0 0 1px rgba(249, 215, 121, 0.42) !important;
+}
+
+[data-tt-auth-visual="l5"] .auth-l5-card-ambient {
+  box-shadow: 0 0 72px 8px rgba(252, 164, 124, 0.14);
+}
+
+[data-tt-auth-visual="l5"] .auth-l5-glass-vignette::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 48px rgba(252, 164, 124, 0.06);
+}
+
+[data-tt-auth-visual="l5"] .auth-l5-field-control {
+  border-color: rgba(249, 215, 121, 0.5) !important;
+  background-color: rgba(20, 16, 13, 0.94) !important;
+  color: rgb(241 245 249) !important;
+  caret-color: #f9d779;
+  box-shadow: inset 0 1px 0 rgba(252, 164, 124, 0.12), 0 0 0 1px rgba(252, 164, 124, 0.1) !important;
+}
+
+[data-tt-auth-visual="l5"] .auth-l5-field-control::placeholder {
+  color: rgba(148, 163, 184, 0.72) !important;
+}
+
+[data-tt-auth-visual="l5"] .auth-l5-field-control:hover {
+  border-color: rgba(249, 215, 121, 0.62) !important;
+  background-color: rgba(24, 18, 14, 0.96) !important;
+}
+
+[data-tt-auth-visual="l5"] .auth-l5-field-control:focus-visible {
+  border-color: rgba(249, 215, 121, 0.78) !important;
+  background-color: rgba(24, 18, 14, 0.98) !important;
+  box-shadow:
+    0 0 0 3px rgba(252, 164, 124, 0.32),
+    inset 0 1px 0 rgba(252, 164, 124, 0.14) !important;
+  outline: none !important;
+}
+
+[data-tt-auth-visual="l5"] .auth-l5-field-control:-webkit-autofill,
+[data-tt-auth-visual="l5"] .auth-l5-field-control:-webkit-autofill:hover,
+[data-tt-auth-visual="l5"] .auth-l5-field-control:-webkit-autofill:focus,
+[data-tt-auth-visual="l5"] .auth-l5-field-control:-webkit-autofill:active,
+[data-tt-auth-visual="l5"] .auth-l5-field-control:-internal-autofill-selected {
+  -webkit-text-fill-color: rgb(241 245 249) !important;
+  caret-color: #f9d779;
+  border-color: rgba(249, 215, 121, 0.55) !important;
+  -webkit-box-shadow: 0 0 0 1000px #14100d inset !important;
+  box-shadow:
+    0 0 0 1000px #14100d inset,
+    inset 0 1px 0 rgba(252, 164, 124, 0.12),
+    0 0 0 1px rgba(252, 164, 124, 0.1) !important;
+  transition: background-color 99999s ease-out 0s;
+}
+
+[data-tt-auth-visual="l5"] .auth-l5-callout-surface {
+  border-color: rgba(249, 215, 121, 0.42) !important;
+  background-color: rgba(252, 164, 124, 0.07) !important;
+  box-shadow: inset 0 1px 0 rgba(252, 164, 124, 0.12) !important;
+}
+
+[data-tt-auth-visual="l5"] .auth-l5-trust-growth-details {
+  outline: none;
+}
+
+[data-tt-auth-visual="l5"] .auth-l5-trust-growth-details[open] {
+  outline: none;
+  box-shadow: none;
+}
+
+[data-tt-auth-visual="l5"] .auth-l5-checkbox-track {
+  border-color: rgba(249, 215, 121, 0.48) !important;
+  background-color: rgba(20, 16, 13, 0.94) !important;
+  box-shadow: inset 0 1px 0 rgba(252, 164, 124, 0.1) !important;
+}
+
+[data-tt-auth-visual="l5"] .auth-l5-checkbox-track[aria-checked="true"] {
+  border-color: rgba(249, 215, 121, 0.65) !important;
+  background-color: rgba(252, 164, 124, 0.16) !important;
+}
+
+/** `/auth/*` 与 utility L5 顶栏：暖金胶囊（压 white/14 冷描边） */
+header[data-tt-auth-header-l5="1"] button.rounded-full,
+header[data-tt-header-utility-l5="1"] button.rounded-full {
+  border-color: rgba(249, 215, 121, 0.42) !important;
+  background-color: rgba(252, 164, 124, 0.07) !important;
+}
+
+header[data-tt-auth-header-l5="1"] button.rounded-full:hover,
+header[data-tt-header-utility-l5="1"] button.rounded-full:hover {
+  border-color: rgba(249, 215, 121, 0.58) !important;
+  background-color: rgba(252, 164, 124, 0.12) !important;
+}
+
+.auth-login-l5-card-halo {
+  background: radial-gradient(
+    ellipse 100% 72% at 50% 50%,
+    rgba(249, 215, 121, 0.2),
+    rgba(252, 164, 124, 0.08) 42%,
+    transparent 72%
+  );
+  filter: blur(3px);
+}
+
+/** 压过 `a { color: inherit }` 与 Console 蓝链，保证 auth L5 暗底可读（登录 / 注册） */
+[data-tt-auth-visual="l5"] [data-tt-auth-surface="login_site_cross_nav"] a,
+[data-tt-auth-visual="l5"] nav[data-tt-auth-surface="login_footer_links"] a {
+  color: var(--ref-sun);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-color: rgba(249, 215, 121, 0.48);
+}
+
+[data-tt-auth-visual="l5"] [data-tt-auth-surface="login_site_cross_nav"] a:hover,
+[data-tt-auth-visual="l5"] nav[data-tt-auth-surface="login_footer_links"] a:hover {
+  color: #fde9a8;
+  text-decoration-color: rgba(249, 215, 121, 0.72);
+}
+
+/** `/market` L5 · 暗底链可读（`a:visited` · inherit 链） */
+[data-tt-market-l5="1"] a.tt-market-l5-cta-link {
+  color: #ffffff !important;
+}
+[data-tt-market-l5="1"] a.tt-market-l5-cta-link:hover,
+[data-tt-market-l5="1"] a.tt-market-l5-cta-link:visited {
+  color: #ffffff !important;
+}
+[data-tt-market-l5="1"] footer[role="contentinfo"] a {
+  color: rgb(203 213 225) !important;
+}
+[data-tt-market-l5="1"] footer[role="contentinfo"] a:visited {
+  color: rgb(203 213 225) !important;
+}
+[data-tt-market-l5="1"] footer[role="contentinfo"] a:hover {
+  color: rgb(248 250 252) !important;
+}
+[data-tt-market-l5="1"] [data-testid="market-flow-context-banner"] .tt-market-l5-banner-count {
+  color: var(--ref-sun) !important;
+}
+[data-tt-market-l5="1"] .tt-market-guide-tag,
+[data-tt-market-l5="1"] .tt-market-guide-hourly-note {
+  color: var(--ref-sun) !important;
+}
+[data-tt-market-l5="1"] .tt-market-guides-more-hint {
+  color: #c9c2bc !important;
+}
+
+/*
+ * `/community` premium · 无 56px 横纹（避免与 L1 Tab 叠层处出现「切线」）
+ */
+.bg-traveltrust-atmosphere-community-premium {
+  background-color: #0a0a0a;
+  background-image:
+    radial-gradient(ellipse 78% 52% at 12% 4%, rgba(249, 215, 121, 0.12), transparent 56%),
+    radial-gradient(ellipse 70% 48% at 92% 10%, rgba(252, 164, 124, 0.07), transparent 54%),
+    radial-gradient(ellipse 100% 55% at 50% 108%, rgba(0, 0, 0, 0.55), transparent 52%),
+    linear-gradient(
+      to bottom,
+      rgba(249, 215, 121, 0.03) 0%,
+      rgba(10, 10, 10, 0.15) 18%,
+      rgba(10, 10, 10, 0.92) 78%,
+      rgba(0, 0, 0, 0.98) 100%
+    );
+}
+
+/* 替代 `bg-scifi-gradient-static`：无 cyan/teal 色带，仅暖墨深浅过渡 */
+.bg-market-dark-warm-veil {
+  background: linear-gradient(
+    145deg,
+    rgba(20, 16, 13, 0.15) 0%,
+    rgba(28, 18, 12, 0.22) 38%,
+    rgba(12, 10, 9, 0.35) 72%,
+    rgba(8, 6, 5, 0.5) 100%
+  );
 }
 
 /*
@@ -382,11 +832,6 @@ body {
   font-family: var(--font-sans);
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
 /* 25 §6.1 全站动效：主动效 600ms，次级 200–300ms；25 §6.2 按钮 hover 2px + 阴影 */
 .motion-main {
   transition-duration: 600ms;
@@ -438,6 +883,19 @@ a:focus-visible,
   0%, 100% { box-shadow: 0 0 20px rgba(217, 70, 239, 0.25); }
   50% { box-shadow: 0 0 32px rgba(217, 70, 239, 0.45); }
 }
+@keyframes did-rank-glow-pulse-sun {
+  0%, 100% { box-shadow: 0 0 22px rgba(252, 164, 124, 0.28); }
+  50% { box-shadow: 0 0 40px rgba(252, 164, 124, 0.52); }
+}
+@keyframes did-rank-prize-shimmer {
+  0% { transform: translateX(-120%); opacity: 0; }
+  35% { opacity: 0.85; }
+  100% { transform: translateX(220%); opacity: 0; }
+}
+@keyframes did-rank-highlight-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.92; }
+}
 @keyframes did-rank-gradient {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -446,7 +904,166 @@ a:focus-visible,
 .animate-did-bg { animation: did-rank-bg-shift 10s ease-in-out infinite; }
 .animate-did-glow { animation: did-rank-glow-pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
 .animate-did-glow-fuchsia { animation: did-rank-glow-pulse-fuchsia 3s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+.animate-did-glow-sun { animation: did-rank-glow-pulse-sun 3s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+.animate-did-rank-prize-shimmer {
+  animation: did-rank-prize-shimmer 1.1s ease-out 1;
+  animation-delay: 1.35s;
+  animation-fill-mode: both;
+}
+.animate-did-rank-highlight-pulse {
+  /* 仅一次弱提示，避免 ring/box-shadow 无限脉冲导致文字发糊跳动 */
+  animation: did-rank-highlight-pulse 0.55s ease-out 1;
+}
 .animate-did-gradient { animation: did-rank-gradient 14s ease-in-out infinite; }
+@keyframes did-rank-refresh-indeterminate {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(320%); }
+}
+.animate-did-rank-refresh-bar {
+  animation: did-rank-refresh-indeterminate 1.15s ease-in-out infinite;
+}
+@keyframes did-rank-champion-glow {
+  0%,
+  100% {
+    opacity: 0.38;
+  }
+  50% {
+    opacity: 0.88;
+  }
+}
+.animate-did-rank-champion-glow {
+  animation: did-rank-champion-glow 3.2s ease-in-out infinite;
+}
+@keyframes did-rank-prize-border-glow {
+  0%,
+  100% {
+    opacity: 0.28;
+  }
+  50% {
+    opacity: 0.72;
+  }
+}
+.animate-did-rank-prize-border-glow {
+  animation: did-rank-prize-border-glow 4.8s ease-in-out infinite;
+}
+@keyframes orders-list-l5-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+[data-tt-orders-list-l5="l5"] .orders-list-l5-rise {
+  animation: orders-list-l5-rise 0.48s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes orders-list-l5-shimmer {
+  0% {
+    background-position: 120% 0;
+  }
+  100% {
+    background-position: -120% 0;
+  }
+}
+[data-tt-orders-list-l5="l5"] .orders-list-l5-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(252, 164, 124, 0.07) 0%,
+    rgba(249, 215, 121, 0.24) 48%,
+    rgba(252, 164, 124, 0.07) 96%
+  );
+  background-size: 220% 100%;
+  animation: orders-list-l5-shimmer 1.75s ease-in-out infinite;
+}
+@keyframes orders-list-l5-sync-progress {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(320%);
+  }
+}
+[data-tt-orders-list-l5="l5"] .orders-list-l5-sync-progress {
+  animation: orders-list-l5-sync-progress 1.35s ease-in-out infinite;
+}
+@keyframes orders-list-l5-count-bump {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.14);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+[data-tt-orders-list-l5="l5"] .orders-list-l5-count-bump {
+  animation: orders-list-l5-count-bump 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes did-rank-row-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-did-rank-row-enter {
+  animation: did-rank-row-enter 0.38s ease-out both;
+}
+@keyframes did-rank-top10-refresh-flash {
+  0% {
+    box-shadow: inset 0 0 0 0 rgba(252, 164, 124, 0);
+  }
+  45% {
+    box-shadow: inset 0 0 32px -8px rgba(252, 164, 124, 0.2);
+  }
+  100% {
+    box-shadow: inset 0 0 0 0 rgba(252, 164, 124, 0);
+  }
+}
+.animate-did-rank-top10-refresh-flash {
+  animation: did-rank-top10-refresh-flash 0.65s ease-out 1;
+}
+@keyframes did-rank-delta-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.animate-did-rank-delta-pop {
+  animation: did-rank-delta-pop 0.32s ease-out 1;
+}
+@keyframes did-rank-crown-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+.animate-did-rank-crown-float {
+  animation: did-rank-crown-float 2.8s ease-in-out infinite;
+}
+@keyframes did-rank-copy-ok {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.72;
+  }
+}
+.animate-did-rank-copy-ok {
+  animation: did-rank-copy-ok 0.45s ease-out 1;
+}
 
 /* TravelTrust /traveltrust Hero：旅游感柔光 blob 慢漂（85 · Tropical jade，仅 transform/opacity） */
 @keyframes traveltrust-aurora-a {
@@ -554,11 +1171,129 @@ a:focus-visible,
   background-color: var(--bg-scifi-canvas);
 }
 
+/*
+ * /traveltrust 章节式全屏吸附（mandatory + 滚轮步进 · 见 traveltrustPageScrollChapterStep）
+ * `?tt_snap=proximity` 减弱 CSS；`?tt_snap=0` 关闭。
+ */
+html.tt-traveltrust-scroll-snap-y {
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: var(
+    --tt-scroll-padding-top,
+    calc(5.5rem + env(safe-area-inset-top, 0px))
+  );
+  /* 章间滚轮步进用 JS 缓动；原生滚动保持 auto，避免与 snap 叠双层 smooth */
+  scroll-behavior: auto;
+}
+@media (min-width: 640px) {
+  html.tt-traveltrust-scroll-snap-y {
+    scroll-padding-top: var(
+      --tt-scroll-padding-top,
+      calc(5.5rem + env(safe-area-inset-top, 0px))
+    );
+  }
+}
+html.tt-traveltrust-scroll-snap-y[data-tt-scroll-snap-strength="proximity"] {
+  scroll-snap-type: y proximity;
+}
+/* 顶栏留白仅由 scroll-padding；章级勿再叠 scroll-margin */
+html.tt-traveltrust-scroll-snap-y [data-tt-traveltrust-scroll-chapter-viewport="1"],
+html.tt-traveltrust-scroll-snap-y [data-tt-traveltrust-scroll-chapter-beat] {
+  scroll-snap-stop: normal;
+  scroll-margin-top: 0;
+}
+html.tt-traveltrust-scroll-snap-y [data-tt-traveltrust-snap-align="center"],
+html.tt-traveltrust-scroll-snap-y #hero[data-tt-traveltrust-snap-align="center"] {
+  scroll-snap-align: center;
+}
+html.tt-traveltrust-scroll-snap-y [data-tt-traveltrust-snap-align="start"] {
+  scroll-snap-align: start;
+}
 @media (prefers-reduced-motion: reduce) {
+  html.tt-traveltrust-scroll-snap-y {
+    scroll-behavior: auto;
+  }
+}
+
+/* L1 顶栏公告跑马灯 — 写在 globals，避免 Tailwind animate-* 漏编译导致「不滚动」 */
+@keyframes tt-traveltrust-pulse-inline-marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.tt-traveltrust-pulse-inline-marquee-track {
+  animation: tt-traveltrust-pulse-inline-marquee 48s linear infinite;
+  will-change: transform;
+}
+
+.group\/marquee:hover .tt-traveltrust-pulse-inline-marquee-track {
+  animation-play-state: paused;
+}
+
+/** 五主路由切换：仅 opacity 165ms 淡入（禁止位移/缩放/模糊/背景变色） */
+@keyframes tt-marketing-route-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.tt-marketing-route-fade-in {
+  animation: tt-marketing-route-fade-in 165ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tt-marketing-route-fade-in {
+    animation: none;
+  }
+}
+
+/** L1 公告标签簇：压过 body `text-ink-900` + `a { color: inherit }`（portal 到 body 时易发黑字贴暗底） */
+[data-tt-traveltrust-pulse-label-cluster-l5="1"] [data-tt-traveltrust-pulse-label-l5="1"] {
+  color: rgba(249, 215, 121, 0.92);
+}
+[data-tt-traveltrust-pulse-label-cluster-l5="1"] a[data-tt-traveltrust-pulse-view-all="1"] {
+  color: rgba(249, 215, 121, 0.85) !important;
+}
+[data-tt-traveltrust-pulse-label-cluster-l5="1"] a[data-tt-traveltrust-pulse-view-all="1"]:hover {
+  color: #f9d779 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tt-traveltrust-pulse-inline-marquee-track {
+    animation: none;
+    transform: none;
+  }
+  .tt-home-ambient-ken-burns {
+    animation: none;
+    transform: none;
+  }
   .animate-did-bg,
   .animate-did-glow,
   .animate-did-glow-fuchsia,
-  .animate-did-gradient {
+  .animate-did-glow-sun,
+  .animate-did-gradient,
+  .animate-did-rank-refresh-bar,
+  .animate-did-rank-champion-glow,
+  .animate-did-rank-prize-shimmer,
+  .animate-did-rank-highlight-pulse,
+  .animate-did-rank-prize-border-glow,
+  .animate-did-rank-row-enter,
+  [data-tt-orders-list-l5="l5"] .orders-list-l5-rise,
+  [data-tt-orders-list-l5="l5"] .orders-list-l5-shimmer,
+  [data-tt-orders-list-l5="l5"] .orders-list-l5-sync-progress,
+  [data-tt-orders-list-l5="l5"] .orders-list-l5-count-bump {
+    animation: none;
+  }
+  .animate-did-rank-top10-refresh-flash,
+  .animate-did-rank-delta-pop,
+  .animate-did-rank-crown-float,
+  .animate-did-rank-copy-ok {
     animation: none;
   }
   .traveltrust-hero-aurora-a,

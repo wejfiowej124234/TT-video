@@ -46,12 +46,25 @@ export const communityMessagesThreadPageShell = (page: Page) =>
   page.locator(dataTt.communityMessagesThreadPage);
 export const communityLoginForPublishShell = (page: Page) => page.locator(dataTt.communityLoginForPublish);
 export const communityPublishDrawerShell = (page: Page) => page.locator(dataTt.communityPublishDrawer);
+export const communityReportDrawerShell = (page: Page) => page.locator(dataTt.communityReportDrawer);
+export const communityMeQuickLinksDrawerShell = (page: Page) => page.locator(dataTt.communityMeQuickLinksDrawer);
 export const communityMeCollectsPageShell = (page: Page) => page.locator(dataTt.communityMeCollectsPage);
+export const communityMeLikesPageShell = (page: Page) => page.locator(dataTt.communityMeLikesPage);
+export const communityMePageSessionPinNoteShell = (page: Page) => page.locator(dataTt.communityMePageSessionPinNote);
+export const communityMeDrawerSessionPinNoteShell = (page: Page) => page.locator(dataTt.communityMeDrawerSessionPinNote);
 export const communityMePostsPageShell = (page: Page) => page.locator(dataTt.communityMePostsPage);
+export const communityMeLoadMorePageButton = (page: Page) => page.locator(dataTt.communityMeLoadMorePage);
+export const communityMeLoadMoreDrawerButton = (page: Page) => page.locator(dataTt.communityMeLoadMoreDrawer);
+export const communityDeletePostConfirmShell = (page: Page) => page.locator(dataTt.communityDeletePostConfirm);
+export const communityUncollectConfirmShell = (page: Page) => page.locator(dataTt.communityUncollectConfirm);
+export const communityUnlikeConfirmShell = (page: Page) => page.locator(dataTt.communityUnlikeConfirm);
+export const communityOrderCancelConfirmShell = (page: Page) => page.locator(dataTt.communityOrderCancelConfirm);
 export const communityGuidelinesPageShell = (page: Page) => page.locator(dataTt.communityGuidelinesPage);
 export const homePageShell = (page: Page) => page.locator(dataTt.homePage);
 export const didRankPageShell = (page: Page) => page.locator(dataTt.didRankPage);
 export const termsPageShell = (page: Page) => page.locator(dataTt.termsPage);
+export const termsCommunityGuidelinesPageShell = (page: Page) =>
+  page.locator(dataTt.termsCommunityGuidelinesPage);
 export const privacyPageShell = (page: Page) => page.locator(dataTt.privacyPage);
 export const helpPageShell = (page: Page) => page.locator(dataTt.helpPage);
 export const authRouteLoginShell = (page: Page) => page.locator(dataTt.authRouteLogin);
@@ -105,6 +118,8 @@ export const acquisitionCarryStudioShell = (page: Page) => page.locator(dataTt.a
 /** Community post drawer, feed CTA, trust / extra governance / pay / chrome. */
 export const communityPostDetailDrawerShell = (page: Page) =>
   page.locator(dataTt.communityPostDetailDrawer);
+export const communityPostDetailShowcaseShell = (page: Page) =>
+  page.locator(dataTt.communityPostDetailShowcase);
 export const communityFeedPublishEntryShell = (root: Page | Locator) =>
   root.locator(dataTt.communityFeedPublishEntry);
 export const trustPageShell = (page: Page) => page.locator(dataTt.trustPage);

@@ -14,3 +14,11 @@ export function buildLoginReturnPathWithQuery(
   const q = raw.startsWith("?") ? raw.slice(1) : raw;
   return q ? `${base}?${q}` : base;
 }
+
+/**
+ * App Router `router.replace`：保留当前 pathname，写入 query（`searchString` 为 `URLSearchParams#toString()` 或裸 query）。
+ */
+export function buildPathnameSearchHref(pathname: string, searchString: string): string {
+  const base = pathname.trim() || "/";
+  return buildLoginReturnPathWithQuery(pathname, searchString, base);
+}

@@ -13,6 +13,17 @@ const FIN_SUITE_MODULE_TITLE_KEYS: Record<string, string> = {
   "finance-summary": "admin_fin_suite_settlement",
   export: "admin_fin_suite_export",
   refunds: "admin_fin_suite_refunds",
+  reconciliation: "admin_fin_suite_reconciliation",
+  "fee-router": "admin_fin_suite_fee_router",
+  "cross-check": "admin_fin_suite_anomaly",
+  audit: "admin_fin_suite_audit_export",
+  drift: "admin_fin_suite_supplement_drift",
+  "region-vault": "admin_fin_suite_supplement_vault",
+  indexer: "admin_fin_suite_supplement_indexer",
+  "reconcile-reports": "admin_fin_suite_supplement_reconcile_reports",
+  observability: "admin_fin_suite_supplement_observability",
+  "trust-growth": "admin_fin_suite_supplement_trust_growth",
+  "alert-incidents": "admin_fin_suite_supplement_alert_incidents",
 };
 
 /** FIN-02 · ① 从七件套进入 partial 模块时的页内深度诚实条（非 ② 闭环）。 */

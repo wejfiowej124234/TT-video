@@ -32,6 +32,9 @@ export type AdminJobsRes = {
   meta?: Record<string, unknown>;
 };
 
+/** Cached alongside list meta by `useAdminJobsPage` (not rendered in AdminMetaBuildPanel). */
+export const ADMIN_JOBS_SUMMARY_META_KEY = "__adminJobsSummary";
+
 export function parseJobsListQuery(sp: URLSearchParams): { limit: number; status: string } {
   let limit = Number.parseInt(sp.get("limit") ?? "50", 10);
   if (!Number.isFinite(limit) || limit < 1) limit = 50;

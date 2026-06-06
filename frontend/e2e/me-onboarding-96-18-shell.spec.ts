@@ -33,7 +33,7 @@ test.describe("96-18 · /me/onboarding shell (quote + entitlements stub)", () =>
       "API quote not in stub or stripe-amount mode (chain_off off or different build)",
     );
 
-    await page.goto("/me/onboarding");
+    await page.goto("/me/onboarding?role=provider&from=identities_hub");
     await expect(page.getByRole("heading", { level: 1, name: /onboarding|准入/i })).toBeVisible({
       timeout: 90_000,
     });
@@ -124,7 +124,7 @@ test.describe("96-18 · /me/onboarding shell (quote + entitlements stub)", () =>
           return_url: null,
           psp: { client_secret: null, checkout_url: null },
           meta: {
-            implementation_status: "onboarding_payment_intent_persisted",
+            implementation_status: "onboarding_payment_intent_persisted_fee_schedule_v1",
             detail: "playwright route mock",
             doc: "e2e/me-onboarding-96-18-shell.spec.ts",
           },
@@ -198,7 +198,7 @@ test.describe("96-18 · /me/onboarding shell (quote + entitlements stub)", () =>
           return_url: null,
           psp: { client_secret: null, checkout_url: null },
           meta: {
-            implementation_status: "onboarding_payment_intent_persisted",
+            implementation_status: "onboarding_payment_intent_persisted_fee_schedule_v1",
             detail: "playwright route mock 429→retry",
             doc: "e2e/me-onboarding-96-18-shell.spec.ts",
           },

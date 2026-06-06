@@ -1,0 +1,21 @@
+export type GuideDetailShape = {
+  id?: string;
+  user_id?: string;
+  city?: string;
+  country_code?: string;
+  languages?: string[];
+  service_types?: string[];
+  bio?: string | null;
+  stake_amount?: string;
+  status?: string;
+  created_at?: string;
+  avatar_url?: string | null;
+  wallet_address?: string | null;
+  real_name?: string | null;
+  passport_number?: string | null;
+  id_photo_url?: string | null;
+  language_cert_url?: string | null;
+  guide_license_url?: string | null;
+  hourly_rate?: string | number | null;
+  hourly_currency?: string | null;
+};

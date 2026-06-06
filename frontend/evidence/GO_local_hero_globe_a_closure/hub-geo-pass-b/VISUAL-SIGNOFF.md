@@ -31,3 +31,5 @@
 - after：DOM 标签 / 光点 / Phase1 针脚 / 弧线均 `traveltrustHubGeo.ts`。
 
 **机读：** `traveltrustHubGeoAlignment` 6/6 · P0/P1 Playwright PASS。
+
+**签字：** **Sebastian Ward（塞巴斯蒂安·沃德）**　**日期：** 2026-06-03

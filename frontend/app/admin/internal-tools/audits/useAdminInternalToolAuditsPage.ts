@@ -2,15 +2,8 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { type FormEvent, useEffect, useMemo, useState } from "react";
 
-import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
-import {
-  type AdminFetchErrorKind,
-  adminFetchErrorKind,
-  adminFetchJson,
-  logAdminFetch,
-} from "@/lib/adminFetchDisplay";
-import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders } from "@/lib/apiClient";
+import { routes } from "@/lib/api";
+import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
 import { isUuidString } from "@/lib/isUuidString";
 
 import {
@@ -18,7 +11,6 @@ import {
   TOOL_AUDITS_ACTOR_MAX,
   TOOL_AUDITS_TOOL_ID_MAX,
   type InternalToolAuditRow,
-  type InternalToolAuditsListRes,
   buildToolAuditsListPath,
   parseToolAuditsListQuery,
 } from "./adminInternalToolAuditsPageModel";
@@ -32,11 +24,24 @@ export function useAdminInternalToolAuditsPage() {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<InternalToolAuditRow[]>([]);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
+  const listUrl = useMemo(() => {
+    const n = Number.parseInt(String(limit), 10);
+    const effLimit = Number.isFinite(n) ? Math.min(200, Math.max(1, n)) : 50;
+    return routes.admin.internalToolAudits({
+      limit: effLimit,
+      ...(toolId ? { tool_id: toolId } : {}),
+      ...(actionCode ? { action_code: actionCode } : {}),
+      ...(actorId ? { actor_id: actorId } : {}),
+      ...(approvalRequestId ? { approval_request_id: approvalRequestId } : {}),
+    });
+  }, [limit, toolId, actionCode, actorId, approvalRequestId]);
+
+  const { items, meta, appliedFilters, loading, refreshing, error } =
+    useAdminStandardListFetch<InternalToolAuditRow>({
+      scope: "internal-tool-audits",
+      context: "AdminInternalToolAuditsPage",
+      listUrl,
+    });
 
   const [draftLimit, setDraftLimit] = useState(String(limit));
   const [draftToolId, setDraftToolId] = useState(toolId);
@@ -50,53 +55,6 @@ export function useAdminInternalToolAuditsPage() {
     setDraftActionCode(actionCode);
     setDraftActorId(actorId);
     setDraftApproval(approvalRequestId);
-  }, [limit, toolId, actionCode, actorId, approvalRequestId]);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    setMeta(null);
-    setAppliedFilters(null);
-
-    const n = Number.parseInt(String(limit), 10);
-    const effLimit = Number.isFinite(n) ? Math.min(200, Math.max(1, n)) : 50;
-
-    const headers: Record<string, string> = { "x-request-id": `admin-tool-audits-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    adminFetchJson<InternalToolAuditsListRes>(
-      "AdminInternalToolAuditsPage",
-      apiUrl(
-        routes.admin.internalToolAudits({
-          limit: effLimit,
-          ...(toolId ? { tool_id: toolId } : {}),
-          ...(actionCode ? { action_code: actionCode } : {}),
-          ...(actorId ? { actor_id: actorId } : {}),
-          ...(approvalRequestId ? { approval_request_id: approvalRequestId } : {}),
-        }),
-      ),
-      { headers },
-    )
-      .then(({ res, body }) => {
-        if (!res.ok) {
-          throw new Error(body.error || `request_failed_${res.status}`);
-        }
-        return body;
-      })
-      .then((body) => {
-        setItems(Array.isArray(body.items) ? body.items : []);
-        setMeta(isAdminMetaRecord(body.meta) ? body.meta : null);
-        setAppliedFilters(body.applied_filters ?? null);
-      })
-      .catch((e: unknown) => {
-        logAdminFetch("AdminInternalToolAuditsPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
   }, [limit, toolId, actionCode, actorId, approvalRequestId]);
 
   const apply = (e?: FormEvent) => {
@@ -141,6 +99,7 @@ export function useAdminInternalToolAuditsPage() {
 
   return {
     loading,
+    refreshing,
     error,
     items,
     meta,

@@ -1,33 +1,49 @@
 // search-params gate: parent route provides Suspense boundary.
 import { useRouter, useSearchParams } from "next/navigation";
-import { type FormEvent, useEffect, useMemo, useState } from "react";
+import { type FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 
-import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
+
 import {
   type AdminFetchErrorKind,
   adminFetchErrorKind,
   adminFetchJson,
   logAdminFetch,
 } from "@/lib/adminFetchDisplay";
-import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders, getIdempotencyKey, writeRequestHeaders } from "@/lib/apiClient";
-
 import { ADMIN_INBOX_QUEUE_APPROVALS_LIST_HREF } from "@/lib/admin/adminInboxQueueHrefs";
 import { downloadAdminCsv } from "@/lib/admin/downloadAdminCsv";
+import {
+  defaultAdminListFetchSnapshot,
+  useAdminStandardListFetch,
+  type AdminStandardListBody,
+} from "@/lib/admin/useAdminStandardListFetch";
+import { apiUrl, routes } from "@/lib/api";
+import { getAuthHeaders, getIdempotencyKey, writeRequestHeaders } from "@/lib/apiClient";
 
 import { filterApprovalsBySearch } from "./adminApprovalWorkflowModel";
 import {
   type ApprovalItem,
-  type ApprovalRes,
   buildApprovalsListPath,
   clampApprovalLimit,
   parseApprovalsListQuery,
   parseApprovalsSearchQuery,
 } from "./adminApprovalsPageModel";
 
+function approvalsListSnapshot(body: AdminStandardListBody<ApprovalItem>) {
+  const snap = defaultAdminListFetchSnapshot(body);
+  const metaNote = snap.meta && typeof snap.meta.note === "string" ? snap.meta.note : null;
+  const note = metaNote ?? (typeof body.note === "string" ? body.note : null);
+  if (!note) return snap;
+  return {
+    ...snap,
+    meta: snap.meta ? { ...snap.meta, note } : { note },
+  };
+}
+
 export function useAdminApprovalsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const requestConfirm = useAdminL5ConfirmRequest();
   const listQ = useMemo(
     () => parseApprovalsListQuery(new URLSearchParams(searchParams.toString())),
     [searchParams],
@@ -37,13 +53,37 @@ export function useAdminApprovalsPage() {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<ApprovalItem[]>([]);
-  const [note, setNote] = useState<string | null>(null);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
   const [reloadTick, setReloadTick] = useState(0);
+
+  const listUrl = useMemo(
+    () =>
+      routes.admin.approvals({
+        limit: listQ.limit,
+        ...(listQ.status !== undefined ? { status: listQ.status } : {}),
+      }),
+    [listQ.limit, listQ.status],
+  );
+
+  const {
+    items,
+    appliedFilters,
+    meta,
+    loading,
+    refreshing,
+    error,
+    setItems,
+  } = useAdminStandardListFetch<ApprovalItem>({
+    scope: "approvals",
+    context: "AdminApprovalsPage.load",
+    listUrl,
+    refreshToken: reloadTick,
+    toSnapshot: approvalsListSnapshot,
+  });
+
+  const note = useMemo(() => {
+    if (meta && typeof meta.note === "string") return meta.note;
+    return null;
+  }, [meta]);
 
   const [draftLimit, setDraftLimit] = useState(String(listQ.limit));
   const [draftStatus, setDraftStatus] = useState(() => (listQ.status === undefined ? "" : listQ.status));
@@ -59,51 +99,7 @@ export function useAdminApprovalsPage() {
   const [batchReason, setBatchReason] = useState("");
   const [batchBusy, setBatchBusy] = useState(false);
   const [actionMessage, setActionMessage] = useState<string | null>(null);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    setNote(null);
-    setMeta(null);
-
-    const headers: Record<string, string> = { "x-request-id": `admin-approvals-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    void adminFetchJson<ApprovalRes>(
-      "AdminApprovalsPage.load",
-      apiUrl(
-        routes.admin.approvals({
-          limit: listQ.limit,
-          ...(listQ.status !== undefined ? { status: listQ.status } : {}),
-        }),
-      ),
-      { headers },
-    )
-      .then(({ res, body }) => {
-        if (!res.ok) {
-          throw new Error(body.error || `request_failed_${res.status}`);
-        }
-        return body;
-      })
-      .then((body) => {
-        setItems(Array.isArray(body.items) ? body.items : []);
-        const m = isAdminMetaRecord(body.meta) ? body.meta : null;
-        setMeta(m);
-        const metaNote = m && typeof m.note === "string" ? m.note : null;
-        setNote(metaNote ?? (typeof body.note === "string" ? body.note : null));
-        setAppliedFilters(body.applied_filters ?? null);
-      })
-      .catch((e: unknown) => {
-        logAdminFetch("AdminApprovalsPage.load", e);
-        setError(adminFetchErrorKind(e));
-        setItems([]);
-      })
-      .finally(() => setLoading(false));
-  }, [listQ.limit, listQ.status, reloadTick]);
+  const [actionError, setActionError] = useState<AdminFetchErrorKind | null>(null);
 
   const filteredItems = useMemo(
     () => filterApprovalsBySearch(items, listSearch),
@@ -222,10 +218,10 @@ export function useAdminApprovalsPage() {
     downloadAdminCsv(`admin-approvals-pending-${ts}.csv`, headers, rows);
   };
 
-  const batchApprove = async () => {
+  const batchApproveImpl = async () => {
     if (selectedIds.size === 0) return;
     setBatchBusy(true);
-    setError(null);
+    setActionError(null);
     setActionMessage(null);
     const reason = batchReason.trim() || null;
     let ok = 0;
@@ -244,17 +240,30 @@ export function useAdminApprovalsPage() {
       bumpReload();
     } catch (e: unknown) {
       logAdminFetch("AdminApprovalsPage.batchApprove", e);
-      setError(adminFetchErrorKind(e));
+      setActionError(adminFetchErrorKind(e));
     } finally {
       setBatchBusy(false);
     }
   };
 
+  const batchApprove = useCallback(() => {
+    if (selectedIds.size === 0) return;
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_approve",
+      descKey: "admin_l5_confirm_desc_batch_approve",
+      descVars: { count: selectedIds.size },
+      onConfirm: () => batchApproveImpl(),
+    });
+  }, [requestConfirm, selectedIds]);
+
+  const mergedError = actionError ?? error;
+
   return {
     listQ,
     listSearch,
     loading,
-    error,
+    refreshing,
+    error: mergedError,
     items,
     filteredItems,
     pendingInView,
@@ -280,6 +289,7 @@ export function useAdminApprovalsPage() {
     batchApprove,
     exportPendingCsv,
     bumpReload,
+    setItems,
   };
 }
 

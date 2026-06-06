@@ -5,3 +5,4 @@ export type {
   UnifiedDayRow,
 } from "./types";
 export { getDayDescription, getDayImages } from "./types";
+export { dayHasStructuredBlocks, itineraryHasStructuredBlocks } from "./dayStructured";

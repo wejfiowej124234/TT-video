@@ -1,87 +1,131 @@
 "use client";
 
+import { memo } from "react";
 import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
 import TrustInfraWall from "@/components/trust/TrustInfraWall";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
-import { travelFocusRingCoreSoftOffset2Classes } from "@/lib/travelLinkFocus";
-
-const FOOTER_LINK_CLASS =
-  `inline-flex min-h-[44px] items-center justify-center text-ink-500 hover:text-travel-500 hover:underline transition-colors duration-150 rounded ${travelFocusRingCoreSoftOffset2Classes}`;
+import { MARKETING_FOOTER_PRODUCT_LINKS } from "@/lib/marketingSiteFooter";
+import {
+  TT_MARKETING_HOME_FOOTER,
+  TT_MARKETING_HOME_FOOTER_BODY,
+  TT_MARKETING_HOME_FOOTER_CROSS_LINK,
+  TT_MARKETING_HOME_FOOTER_DIVIDER,
+  TT_MARKETING_HOME_FOOTER_HEADING,
+  TT_MARKETING_HOME_FOOTER_LINK,
+} from "@/lib/marketingUi";
 
 /** 54-S16、§2.9：页脚多栏（关于/产品/账户/法律/技术栈），仅 Web3 旅游相关；不含未运营社交链接；版权年 + 视觉优化 */
-export default function LandingFooter() {
+function LandingFooter() {
   const { t } = useTranslation();
   const year = new Date().getFullYear();
   return (
-    <footer className="border-t-2 border-ref-teal/15 bg-bg-console/95 backdrop-blur-sm px-6 py-12 shadow-[0_-12px_40px_-20px_rgba(9,124,135,0.06)]" role="contentinfo">
+    <footer className={TT_MARKETING_HOME_FOOTER} role="contentinfo">
       <div className="mx-auto max-w-5xl">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 text-meta">
-          <div>
-            <h3 className="font-semibold text-ink-800 mb-3">{t("footer_col_about")}</h3>
-            <p className="text-ink-600 mb-2 leading-relaxed">{t("footer_about_desc")}</p>
-            <Link href="/market" className={FOOTER_LINK_CLASS}>{t("footer_link_about")}</Link>
+        <div className={`grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-5 ${TT_MARKETING_HOME_FOOTER_BODY}`}>
+          <div className="col-span-2 sm:col-span-1">
+            <h3 className={TT_MARKETING_HOME_FOOTER_HEADING}>{t("footer_col_about")}</h3>
+            <p className="mb-3 max-w-xs leading-relaxed">{t("footer_about_desc")}</p>
+            <Link href="/traveltrust" className={TT_MARKETING_HOME_FOOTER_LINK}>
+              {t("footer_link_about")}
+            </Link>
           </div>
           <div>
-            <h3 className="font-semibold text-ink-800 mb-3">{t("footer_col_product")}</h3>
-            <ul className="space-y-2 text-ink-600">
-              <li><Link href="/traveltrust" className={FOOTER_LINK_CLASS}>{t("footer_link_traveltrust_network")}</Link></li>
-              <li><Link href="/market" className={FOOTER_LINK_CLASS}>{t("header_market")}</Link></li>
-              <li><Link href="/itinerary/new" className={FOOTER_LINK_CLASS}>{t("footer_link_create")}</Link></li>
-              <li><Link href="/orders" className={FOOTER_LINK_CLASS}>{t("footer_link_orders")}</Link></li>
-              <li><Link href="/guides" className={FOOTER_LINK_CLASS}>{t("footer_link_guides")}</Link></li>
-              <li><Link href="/community" className={FOOTER_LINK_CLASS}>{t("footer_link_community")}</Link></li>
+            <h3 className={TT_MARKETING_HOME_FOOTER_HEADING}>{t("footer_col_product")}</h3>
+            <ul className="space-y-1">
+              {MARKETING_FOOTER_PRODUCT_LINKS.map(({ href, labelKey }) => (
+                <li key={href}>
+                  <Link href={href} className={TT_MARKETING_HOME_FOOTER_LINK}>
+                    {t(labelKey)}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold text-ink-800 mb-3">{t("footer_col_account")}</h3>
-            <ul className="space-y-2 text-ink-600">
-              <li><Link href="/auth/login" className={FOOTER_LINK_CLASS}>{t("footer_link_login")}</Link></li>
-              <li><Link href="/auth/register" className={FOOTER_LINK_CLASS}>{t("footer_link_register")}</Link></li>
-              <li><Link href="/community/me" className={FOOTER_LINK_CLASS}>{t("footer_link_me")}</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold text-ink-800 mb-3">{t("footer_col_legal")}</h3>
-            <ul className="space-y-2 text-ink-600">
-              <li><Link href="/terms" className={FOOTER_LINK_CLASS}>{t("footer_link_terms")}</Link></li>
-              <li><Link href="/privacy" className={FOOTER_LINK_CLASS}>{t("footer_link_privacy")}</Link></li>
-              <li><Link href="/terms/community-guidelines" className={FOOTER_LINK_CLASS}>{t("footer_link_community_guidelines")}</Link></li>
-              <li><Link href="/help" className={FOOTER_LINK_CLASS}>{t("footer_link_help")}</Link></li>
-              <li><Link href="/community/feedback" className={FOOTER_LINK_CLASS}>{t("footer_link_feedback")}</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold text-ink-800 mb-3">{t("footer_col_tech")}</h3>
-            <TrustInfraWall />
-            <ul className="mt-4 space-y-2 text-ink-600">
+            <h3 className={TT_MARKETING_HOME_FOOTER_HEADING}>{t("footer_col_account")}</h3>
+            <ul className="space-y-1">
               <li>
-                <Link href="/governance/fee-routes" className={FOOTER_LINK_CLASS}>
+                <Link href="/auth/login" className={TT_MARKETING_HOME_FOOTER_LINK}>
+                  {t("footer_link_login")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/auth/register" className={TT_MARKETING_HOME_FOOTER_LINK}>
+                  {t("footer_link_register")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/me/settings/profile" className={TT_MARKETING_HOME_FOOTER_LINK}>
+                  {t("footer_link_me")}
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className={TT_MARKETING_HOME_FOOTER_HEADING}>{t("footer_col_legal")}</h3>
+            <ul className="space-y-1">
+              <li>
+                <Link href="/terms" className={TT_MARKETING_HOME_FOOTER_LINK}>
+                  {t("footer_link_terms")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className={TT_MARKETING_HOME_FOOTER_LINK}>
+                  {t("footer_link_privacy")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms/community-guidelines" className={TT_MARKETING_HOME_FOOTER_LINK}>
+                  {t("footer_link_community_guidelines")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/help" className={TT_MARKETING_HOME_FOOTER_LINK}>
+                  {t("footer_link_help")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/community/feedback" className={TT_MARKETING_HOME_FOOTER_LINK}>
+                  {t("footer_link_feedback")}
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div className="col-span-2 sm:col-span-1">
+            <h3 className={TT_MARKETING_HOME_FOOTER_HEADING}>{t("footer_col_tech")}</h3>
+            <TrustInfraWall tone="dark" align="start" />
+            <ul className="mt-3 space-y-1">
+              <li>
+                <Link href="/governance/fee-routes" className={TT_MARKETING_HOME_FOOTER_LINK}>
                   {t("footer_link_governance_fee_routes")}
                 </Link>
               </li>
               <li>
-                <Link href="/traveltrust#fee-router" className={FOOTER_LINK_CLASS}>
+                <Link href="/traveltrust#fee-router" className={TT_MARKETING_HOME_FOOTER_LINK}>
                   {t("traveltrust_link_feeRouter")}
                 </Link>
               </li>
             </ul>
           </div>
         </div>
-        <div className="mt-10 pt-6 border-t border-ink-100 text-center space-y-1">
+        <div className={`mt-10 pt-6 text-center ${TT_MARKETING_HOME_FOOTER_DIVIDER}`}>
           <ProductCrossNav
             ariaLabelKey="landing_relatedNav_aria"
             showGuides
-            className="mb-6 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-ink-500"
-            linkClassName={FOOTER_LINK_CLASS}
-            separatorClassName="text-ink-300"
+            hideFeeRouterLinks
+            className="mb-5 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-400"
+            linkClassName={TT_MARKETING_HOME_FOOTER_CROSS_LINK}
+            separatorClassName="text-slate-500"
           />
-          <p className="text-meta text-ink-500 font-medium">
+          <p className="text-meta font-medium text-slate-200">
             {t("footer_copyright").replace("{{year}}", String(year))}
           </p>
-          <p className="text-meta text-ink-400">{t("footer_tagline")}</p>
+          <p className="mt-1 text-meta text-slate-400">{t("footer_tagline")}</p>
         </div>
       </div>
     </footer>
   );
 }
+
+export default memo(LandingFooter);

@@ -34,5 +34,6 @@ describe("admin onboarding hub L5 (①)", () => {
     expect(hook).toContain("extractWebhookStripeEcho");
     expect(hub).toContain("useAdminOnboardingPaymentEventsStripeEcho");
     expect(notice).toContain("data-tt-admin-onboarding-hub-payment-ledger");
+    expect(notice).toContain("ADMIN_HUB_NESTED_KPI_CARD_CLASS");
   });
 });

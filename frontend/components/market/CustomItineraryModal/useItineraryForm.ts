@@ -21,6 +21,8 @@ export interface UseItineraryFormProps {
   onSuccess: (orderId: string) => void;
   /** 深链：与 `/itinerary/new?guide_id=` 一致，写入 POST /itineraries/custom */
   preselectedGuideId?: string;
+  /** 弹窗打开时的默认总天数 */
+  initialTotalDays?: number;
 }
 
 function withGuideId<T extends object>(body: T, guideId?: string): T & { guide_id?: string } {
@@ -29,9 +31,16 @@ function withGuideId<T extends object>(body: T, guideId?: string): T & { guide_i
   return { ...body, guide_id: g };
 }
 
-export function useItineraryForm({ open, onClose, onSuccess, preselectedGuideId }: UseItineraryFormProps) {
+export function useItineraryForm({
+  open,
+  onClose,
+  onSuccess,
+  preselectedGuideId,
+  initialTotalDays = 5,
+}: UseItineraryFormProps) {
   const { t } = useTranslation();
-  const [form, setForm] = useState<CustomItineraryForm>(() => defaultForm(5));
+  const clampedInitialDays = Math.max(1, Math.min(30, initialTotalDays));
+  const [form, setForm] = useState<CustomItineraryForm>(() => defaultForm(clampedInitialDays));
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [viewingAttraction, setViewingAttraction] = useState<AttractionDetail | null>(null);
   const [viewingFood, setViewingFood] = useState<FoodDetail | null>(null);
@@ -62,6 +71,13 @@ export function useItineraryForm({ open, onClose, onSuccess, preselectedGuideId 
 
   const setTotalDays = useCallback((days: number) => {
     setForm((f) => {
+      if (f.creatorType === "guide") {
+        return {
+          ...f,
+          totalDays: days,
+          guideDayPlans: Array.from({ length: days }, (_, i) => (f.guideDayPlans ?? [])[i] ?? defaultGuideDayPlan()),
+        };
+      }
       const current = f.dayPlans;
       const nextPlans = Array.from({ length: days }, (_, i) =>
         i < current.length ? current[i] : defaultDayPlan()
@@ -91,11 +107,11 @@ export function useItineraryForm({ open, onClose, onSuccess, preselectedGuideId 
   }, []);
 
   const resetForm = useCallback(() => {
-    setForm(defaultForm(5));
+    setForm(defaultForm(clampedInitialDays));
     setSubmitError(null);
     setSubmitting(false);
     setCoverFileTooBig(false);
-  }, []);
+  }, [clampedInitialDays]);
 
   useEffect(() => {
     viewingAttractionRef.current = viewingAttraction;

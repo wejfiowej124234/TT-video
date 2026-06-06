@@ -11,7 +11,7 @@ import {
 import {
   TT_CINEMATIC_QUALITY_L5,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 
 type Props = { /** 顶栏首屏：短标签，减横条占用（TT-PH1-155） */ compact?: boolean };
 

@@ -1,7 +1,8 @@
 "use client";
 
 import { useTranslation } from "@/components/LocaleProvider";
-import { ADMIN_TIMELINE_DOT_CLASS, ADMIN_TIMELINE_RAIL_CLASS } from "@/lib/adminUi";
+import { ADMIN_TIMELINE_DOT_CLASS, ADMIN_TIMELINE_RAIL_CLASS,
+  ADMIN_CONSOLE_MUTED_BLOCK_CLASS,} from "@/lib/adminUi";
 
 import type { ApprovalTimelineStep } from "../adminApprovalWorkflowModel";
 
@@ -44,7 +45,7 @@ export function AdminApprovalDetailTimeline({ steps }: Props) {
               </p>
             ) : null}
             {step.note ? (
-              <p className="mt-1 rounded-[var(--radius-md)] bg-ink-50 p-2 text-meta text-ink-700 whitespace-pre-wrap break-words">
+              <p className={`mt-1 p-2 text-meta text-ink-700 whitespace-pre-wrap break-words ${ADMIN_CONSOLE_MUTED_BLOCK_CLASS}`}>
                 {step.note}
               </p>
             ) : null}

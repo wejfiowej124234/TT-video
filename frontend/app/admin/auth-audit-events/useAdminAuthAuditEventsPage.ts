@@ -4,15 +4,13 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { type FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 
-import {
-  adminFetchErrorKind,
-  type AdminFetchErrorKind,
-} from "@/lib/adminFetchDisplay";
+import { routes } from "@/lib/api";
+import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
 import {
   buildAdminAuthAuditEventsPath,
   parseAdminAuthAuditListQuery,
 } from "@/lib/adminAuthAuditEventsPath";
-import { getAdminAuthAuditEvents, type AuthAuditEventItem } from "@/lib/apiClient/adminAuthAudit";
+import type { AuthAuditEventItem } from "@/lib/apiClient/adminAuthAudit/types";
 
 export function useAdminAuthAuditEventsPage() {
   const router = useRouter();
@@ -22,40 +20,31 @@ export function useAdminAuthAuditEventsPage() {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<AuthAuditEventItem[]>([]);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
+  const listUrl = useMemo(
+    () =>
+      routes.admin.authAuditEvents({
+        limit: listQ.limit,
+        ...(listQ.event_type ? { event_type: listQ.event_type } : {}),
+        ...(listQ.reason ? { reason: listQ.reason } : {}),
+        ...(listQ.user_id ? { user_id: listQ.user_id } : {}),
+      }),
+    [listQ.limit, listQ.event_type, listQ.reason, listQ.user_id],
+  );
+
+  const [reloadTick, setReloadTick] = useState(0);
+
+  const { items, appliedFilters, loading, refreshing, error } =
+    useAdminStandardListFetch<AuthAuditEventItem>({
+      scope: "auth-audit-events",
+      context: "AdminAuthAuditEventsPage",
+      listUrl,
+      refreshToken: reloadTick,
+    });
 
   const [draftLimit, setDraftLimit] = useState(String(listQ.limit));
   const [draftEventType, setDraftEventType] = useState(listQ.event_type);
   const [draftReason, setDraftReason] = useState(listQ.reason);
   const [draftUserId, setDraftUserId] = useState(listQ.user_id);
-
-  const load = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await getAdminAuthAuditEvents({
-        limit: listQ.limit,
-        event_type: listQ.event_type || undefined,
-        reason: listQ.reason || undefined,
-        user_id: listQ.user_id || undefined,
-      });
-      setItems(data.items ?? []);
-      setAppliedFilters((data.applied_filters as Record<string, unknown>) ?? null);
-    } catch (e) {
-      setError(adminFetchErrorKind(e));
-      setItems([]);
-      setAppliedFilters(null);
-    } finally {
-      setLoading(false);
-    }
-  }, [listQ]);
-
-  useEffect(() => {
-    void load();
-  }, [load]);
 
   useEffect(() => {
     setDraftLimit(String(listQ.limit));
@@ -82,9 +71,14 @@ export function useAdminAuthAuditEventsPage() {
     router.push(buildAdminAuthAuditEventsPath({ limit: 50, event_type: "", reason: "", user_id: "" }));
   }, [router]);
 
+  const reload = useCallback(() => {
+    setReloadTick((x) => x + 1);
+  }, []);
+
   return {
     listQ,
     loading,
+    refreshing,
     error,
     items,
     appliedFilters,
@@ -98,7 +92,7 @@ export function useAdminAuthAuditEventsPage() {
     setDraftUserId,
     apply,
     reset,
-    reload: load,
+    reload,
   };
 }
 

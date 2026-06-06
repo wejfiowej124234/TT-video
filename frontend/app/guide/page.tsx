@@ -17,6 +17,12 @@ import { FOCUS_RING, type UserShape } from "@/components/me/constants";
 import { parseIdentitySlotsFromMe } from "@/lib/meIdentitySlots";
 import { parseMeTrustFromMeResponse } from "@/lib/meTrust";
 import { userIsGuide } from "@/lib/meRoleDisplay";
+import {
+  MeSettingsExtensionIngressBlock,
+  meSettingsExtensionIngressDataAttrs,
+} from "@/components/me/MeSettingsExtensionIngressBlock";
+import { isMeSettingsExtensionFromQuery } from "@/lib/me/meSettingsExtensionContext";
+import { ME_SETTINGS_PROFILE_PATH } from "@/lib/me/meSettingsL5";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import { GuideDashboardRouteSuspense } from "@/components/guide/GuideDashboardRouteSuspense";
 
@@ -26,6 +32,8 @@ function GuideDashboardPageInner() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const fromSettings = isMeSettingsExtensionFromQuery(searchParams.get("from"));
+  const communityMeHref = ME_SETTINGS_PROFILE_PATH;
   const guideLoginReturnPath = useMemo(() => {
     const base = pathname && pathname !== "/" ? pathname : "/guide";
     const q = searchParams?.toString() ?? "";
@@ -114,9 +122,18 @@ function GuideDashboardPageInner() {
 
   if (error) {
     return (
-      <main className="min-h-screen relative overflow-hidden bg-ink-900" aria-label={t("guide_dashboard_title")}>
+      <main
+        className="min-h-screen relative overflow-hidden bg-ink-900"
+        aria-label={t("guide_dashboard_title")}
+        {...meSettingsExtensionIngressDataAttrs(fromSettings, "data-tt-guide-from-settings")}
+      >
         <MePageBackground />
         <div className="relative z-10 max-w-2xl mx-auto px-4 py-12">
+          <MeSettingsExtensionIngressBlock
+            fromSettings={fromSettings}
+            noticeKey="me_settings_guide_from_settings_notice"
+            t={t}
+          />
           <div className="rounded-[var(--radius-md)] border border-slate-600/60 bg-ink-700/50 px-4 py-4 space-y-4">
             <h1 className="text-h2 font-bold bg-gradient-to-r from-cyan-300 via-cyan-400 to-fuchsia-400 bg-clip-text text-transparent">
               {t("guide_dashboard_title")}
@@ -138,19 +155,21 @@ function GuideDashboardPageInner() {
                 </button>
               </form>
               <Link
-                href="/community/me"
+                href={communityMeHref}
                 className={`inline-flex items-center justify-center rounded-full border border-slate-500/60 bg-ink-700/60 px-4 py-2.5 min-h-[44px] text-meta text-slate-300 hover:bg-ink-600/60 motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
               >
                 {t("guide_dashboard_link_me")}
               </Link>
             </div>
-            <ProductCrossNav
-              ariaLabelKey="guide_dashboard_relatedNav_aria"
-              showGuides
-              className="pt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-meta text-slate-300"
-              linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 font-medium motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
-              separatorClassName="text-slate-500"
-            />
+            {!fromSettings ? (
+              <ProductCrossNav
+                ariaLabelKey="guide_dashboard_relatedNav_aria"
+                showGuides
+                className="pt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-meta text-slate-300"
+                linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 font-medium motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
+                separatorClassName="text-slate-500"
+              />
+            ) : null}
           </div>
         </div>
       </main>
@@ -171,9 +190,18 @@ function GuideDashboardPageInner() {
     typeof stats?.period_settled_orders_count === "number" ? stats.period_settled_orders_count : 0;
 
   return (
-    <main className="min-h-screen relative overflow-hidden bg-ink-900" aria-label={t("guide_dashboard_title")}>
+    <main
+      className="min-h-screen relative overflow-hidden bg-ink-900"
+      aria-label={t("guide_dashboard_title")}
+      {...meSettingsExtensionIngressDataAttrs(fromSettings, "data-tt-guide-from-settings")}
+    >
       <MePageBackground />
       <div className="relative z-10 max-w-3xl mx-auto px-3 py-6 sm:px-4 sm:py-8">
+        <MeSettingsExtensionIngressBlock
+          fromSettings={fromSettings}
+          noticeKey="me_settings_guide_from_settings_notice"
+          t={t}
+        />
         {isGuide && trustSummary != null ? (
           <GuideRegistrationStatusBanner trust={trustSummary} t={t} onRefresh={() => void loadMe({ force: true })} />
         ) : null}
@@ -191,6 +219,7 @@ function GuideDashboardPageInner() {
             showGuideRegisterLink={!userIsGuide(user)}
             hideGuideRegistrationRow={isGuide}
             identitySlots={mePayload ? parseIdentitySlotsFromMe(mePayload) : undefined}
+            onTrustRefresh={() => void loadMe({ force: true })}
           />
         ) : null}
 
@@ -209,7 +238,7 @@ function GuideDashboardPageInner() {
                 {t("guide_dashboard_cta_register")}
               </Link>
               <Link
-                href="/community/me"
+                href={communityMeHref}
                 className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-slate-500/60 bg-ink-700/60 px-4 py-2 text-meta text-slate-300 hover:bg-ink-600/60 motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
               >
                 {t("guide_dashboard_link_me")}
@@ -260,7 +289,7 @@ function GuideDashboardPageInner() {
                   {t("header_community")}
                 </Link>
                 <Link
-                  href="/community/me"
+                  href={communityMeHref}
                   className={`rounded-full border border-slate-500/60 bg-ink-700/60 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-slate-300 hover:bg-ink-600/60 motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
                 >
                   {t("me_title")}
@@ -270,15 +299,17 @@ function GuideDashboardPageInner() {
           </>
         )}
 
-        <footer className="mt-8 pt-6 border-t border-slate-700/50">
-          <ProductCrossNav
-            ariaLabelKey="guide_dashboard_relatedNav_aria"
-            showGuides
-            className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-300"
-            linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 font-medium motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
-            separatorClassName="text-slate-500"
-          />
-        </footer>
+        {!fromSettings ? (
+          <footer className="mt-8 pt-6 border-t border-slate-700/50">
+            <ProductCrossNav
+              ariaLabelKey="guide_dashboard_relatedNav_aria"
+              showGuides
+              className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-300"
+              linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 font-medium motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
+              separatorClassName="text-slate-500"
+            />
+          </footer>
+        ) : null}
       </div>
     </main>
   );

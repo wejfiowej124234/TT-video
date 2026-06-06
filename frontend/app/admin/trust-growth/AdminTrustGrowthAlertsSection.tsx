@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import { ADMIN_ALERT_CRITICAL_ITEM_CLASS, ADMIN_ALERT_WARN_ITEM_CLASS } from "@/lib/adminUi";
 
 import type { ObsBody } from "./adminTrustGrowthPageModel";
@@ -13,8 +14,8 @@ export function AdminTrustGrowthAlertsSection({ alerts }: AdminTrustGrowthAlerts
   const { t } = useTranslation();
 
   return (
-    <section
-      className="rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-4"
+    <AdminWarmL5Surface
+      as="section"
       aria-label={t("admin_trust_growth_section_alerts")}
     >
       <h2 className="text-small font-semibold uppercase tracking-wide text-ink-500">
@@ -44,6 +45,6 @@ export function AdminTrustGrowthAlertsSection({ alerts }: AdminTrustGrowthAlerts
           })}
         </ul>
       )}
-    </section>
+    </AdminWarmL5Surface>
   );
 }

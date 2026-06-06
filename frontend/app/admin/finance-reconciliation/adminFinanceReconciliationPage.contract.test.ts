@@ -14,6 +14,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminFinanceReconciliationNavSection.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminFinanceReconciliationPage.ts"), "utf8"),
     readFileSync(join(__dir, "adminFinanceReconciliationPageModel.ts"), "utf8"),
+    readFileSync(join(__dir, "../../../lib/admin/adminFinanceReconciliationBundleFetch.ts"), "utf8"),
   ].join("\n");
 }
 
@@ -26,5 +27,8 @@ describe("admin finance-reconciliation page (contract)", () => {
     expect(src).toContain("FinanceReconciliationEpicDHint");
     expect(src).toContain("FINANCE_RECONCILIATION_NAV_LINKS");
     expect(src).toContain("AdminListFetchError");
+    expect(src).toContain("adminFinanceReconciliationBundleFetch");
+    expect(src).toContain("Promise.all");
+    expect(src).toContain("finance-reconciliation-summary");
   });
 });

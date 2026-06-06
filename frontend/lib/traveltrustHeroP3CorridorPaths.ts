@@ -10,9 +10,10 @@ export type HeroP3CorridorRoute = {
   pathD: string;
 };
 
-/** 8 条示意走廊 · DOM 流光（非 Phase1 WebGL arcs） */
+/** 9 条示意走廊 · DOM 流光（非 Phase1 WebGL arcs） */
 export const TRAVELTRUST_HERO_P3_CORRIDOR_ROUTES: readonly HeroP3CorridorRoute[] = [
   { id: "asia-cn-jp", corridorId: "asia", pathD: "M 72 28 Q 78 22 84 24" },
+  { id: "asia-kr-bridge", corridorId: "asia", pathD: "M 74 26 Q 78 24 82 25" },
   { id: "asia-sea", corridorId: "asia", pathD: "M 68 32 Q 74 30 80 28 L 86 26" },
   { id: "asia-india-hub", corridorId: "asia", pathD: "M 62 30 Q 68 26 74 28" },
   { id: "atlantic-us-eu", corridorId: "atlantic", pathD: "M 22 26 Q 38 22 52 24" },

@@ -2,9 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import type { OrderListItem } from "@/lib/apiClient";
-import { getIdempotencyKey, orderCancel } from "@/lib/apiClient";
 import {
   orderBadgeVariantFromApiOrder,
   orderStatusLabelKeyFromApiOrder,
@@ -18,7 +17,6 @@ import {
   orderBusinessLineFromApi,
 } from "@/lib/communityMeOrdersDrawerModel";
 import { orderListItemMayRequestCancel } from "@/lib/communityMeMyOrdersModel";
-import { mapApiReadError } from "@/lib/mapApiReadError";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
 import type { LocaleTranslateFn } from "@/lib/i18n";
 
@@ -40,22 +38,22 @@ export function CommunityMeNotesOrderThumbGrid({
   t,
   listAriaLabel,
   onNavigate,
-  onOrderCancelled,
   onNotify,
   onPinToTop,
+  onRequestCancel,
+  cancelBusyId,
 }: {
   orders: readonly OrderListItem[];
   t: LocaleTranslateFn;
   listAriaLabel: string;
   onNavigate?: () => void;
-  onOrderCancelled?: (id: string) => void;
   onNotify?: (message: string) => void;
-  /** 本弹窗内调整卡片顺序；不调用服务端（与 `community_me_notes_menu_pin_hint` 一致） */
   onPinToTop?: (orderId: string) => void;
+  onRequestCancel?: (orderId: string, trigger?: HTMLElement | null) => void;
+  cancelBusyId?: string | null;
 }) {
   const menuHeadingId = useId();
   const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
-  const [cancellingId, setCancellingId] = useState<string | null>(null);
   const menuPanelRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -77,32 +75,6 @@ export function CommunityMeNotesOrderThumbGrid({
       document.removeEventListener("keydown", onKey);
     };
   }, [menuOpenId]);
-
-  const tryCancel = useCallback(
-    async (id: string) => {
-      const item = orders.find((o) => String(o.id) === id);
-      if (!item || !orderListItemMayRequestCancel(item)) {
-        onNotify?.(t("community_me_orders_cancel_unavailable"));
-        setMenuOpenId(null);
-        return;
-      }
-      if (typeof window !== "undefined" && !window.confirm(t("community_me_orders_cancel_confirm"))) {
-        setMenuOpenId(null);
-        return;
-      }
-      setCancellingId(id);
-      try {
-        await orderCancel(id, getIdempotencyKey());
-        onOrderCancelled?.(id);
-        setMenuOpenId(null);
-      } catch (e) {
-        onNotify?.(mapApiReadError(e, t, "orders_requestFailed"));
-      } finally {
-        setCancellingId(null);
-      }
-    },
-    [orders, t, onNotify, onOrderCancelled],
-  );
 
   return (
     <ul className="m-0 grid list-none grid-cols-3 gap-2 p-0" aria-label={listAriaLabel}>
@@ -128,7 +100,7 @@ export function CommunityMeNotesOrderThumbGrid({
         });
         const mayCancel = orderListItemMayRequestCancel(item);
         const menuOpen = menuOpenId === id;
-        const busy = cancellingId === id;
+        const busy = cancelBusyId === id;
 
         return (
           <li key={id} className="min-w-0">
@@ -199,11 +171,17 @@ export function CommunityMeNotesOrderThumbGrid({
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        void tryCancel(id);
+                        if (!mayCancel) {
+                          onNotify?.(t("community_me_orders_cancel_unavailable"));
+                          setMenuOpenId(null);
+                          return;
+                        }
+                        onRequestCancel?.(id, e.currentTarget);
+                        setMenuOpenId(null);
                       }}
                       className={`${touchTargetLink44Classes} block w-full px-3 py-2 text-left text-[0.7rem] font-medium text-white hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-45`}
                     >
-                      {busy ? t("community_me_notes_menu_delete_pending") : t("community_me_notes_menu_delete")}
+                      {busy ? t("community_me_orders_cancel_menu_pending") : t("community_me_orders_cancel_menu")}
                     </button>
                     {onPinToTop ? (
                       <button

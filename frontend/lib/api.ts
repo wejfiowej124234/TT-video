@@ -3,6 +3,8 @@
  * 见 docs/spec/14-合约-API-ABI-前后端对齐.md、docs/spec/04-后端与API.md
  */
 
+import { routesAdminOnboarding } from "./api/routesAdminOnboarding";
+
 const BASE =
   typeof process !== "undefined" && process.env.NEXT_PUBLIC_API_BASE_URL?.trim()
     ? process.env.NEXT_PUBLIC_API_BASE_URL.trim().replace(/\/$/, "")
@@ -26,6 +28,19 @@ function isLoopbackApiBase(base: string): boolean {
   } catch {
     return false;
   }
+}
+
+/**
+ * Staging FE（`NEXT_PUBLIC_SITE_URL` 与当前页 origin 一致）：与 loopback 相同，浏览器走同源 + Next rewrites，
+ * 避免 `/api/v1/*`、`/meta` 跨域 Failed to fetch（② tt-web-staging P0 bugfix）。
+ */
+function browserUsesSameOriginApiProxy(): boolean {
+  if (isLoopbackApiBase(BASE)) return true;
+  if (typeof globalThis === "undefined") return false;
+  const loc = (globalThis as { window?: { location?: { origin?: string } } }).window?.location?.origin;
+  const site = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/$/, "");
+  if (typeof loc !== "string" || !loc || !site) return false;
+  return loc === site;
 }
 
 /** 浏览器端：指向前端自身 origin，由 Next `rewrites` 代理到 BASE，避免直连 :8080 触发 CORS。 */
@@ -56,6 +71,8 @@ export const routes = {
     logout: "/auth/logout",
     refresh: "/auth/refresh",
     verifyEmail: "/auth/verify-email",
+    registerSendVerificationCode: "/auth/register/send-verification-code",
+    resendVerificationEmail: "/auth/resend-verification-email",
     forgotPassword: "/auth/forgot-password",
     resetPassword: "/auth/reset-password",
   },
@@ -64,6 +81,37 @@ export const routes = {
   me: "/api/v1/me",
   meStats: "/api/v1/me/stats",
   mePassword: "/api/v1/me/password",
+  /** F-007：本机/允许路径下 content_base64 头像；对象存储环境须 presign（见 me.rs） */
+  meProfileAvatar: "/api/v1/me/profile-avatar",
+  meProfileAvatarPresign: "/api/v1/me/profile-avatar/presign",
+  meProfileAvatarCommit: "/api/v1/me/profile-avatar/commit",
+  meWalletVerifyChallenge: "/api/v1/me/wallet/verify/challenge",
+  meWalletVerifyConfirm: "/api/v1/me/wallet/verify/confirm",
+  meWalletVerificationStatus: "/api/v1/me/wallet/verification-status",
+  /** PD-004 · ①.5：多钱包列表（主钱包 `is_primary`） */
+  meWallets: "/api/v1/me/wallets",
+  /** PD-007 · ①.5：`role_applications` SSOT 状态 */
+  meRoleApplications: "/api/v1/me/role-applications",
+  /** 账户安全（会话 / 通知；与 `/me/security` · Hub 状态条同源；`lib/api/routes.ts` 对拍） */
+  meSessions: "/api/v1/me/sessions",
+  meSecurityNotifications: (params?: { limit?: number; status?: string; event_type?: string }) => {
+    const q = new URLSearchParams();
+    if (params?.limit != null) q.set("limit", String(params.limit));
+    if (params?.status) q.set("status", params.status);
+    if (params?.event_type) q.set("event_type", params.event_type);
+    const qs = q.toString();
+    return `/api/v1/me/security-notifications${qs ? `?${qs}` : ""}`;
+  },
+  meSessionCurrent: "/api/v1/me/sessions/current",
+  meSessionBySuffix: (suffix: string) => `/api/v1/me/sessions/${encodeURIComponent(suffix)}`,
+  /** PD-009：① 本地 mock 锁定收购发布保证金 */
+  meAcquisitionPublishBond: "/api/v1/me/acquisition/publish-bond",
+  /** PD-009：① 本地 mock 锁定收购履约保证金（高 bounty 接单） */
+  meAcquisitionFulfillmentBond: "/api/v1/me/acquisition/fulfillment-bond",
+  /** 自由市场星标（`market_travel_bookmarks`；与 `lib/apiClient/marketTravelBookmarks/` 同源） */
+  meMarketBookmarks: "/api/v1/me/market-bookmarks",
+  meMarketBookmarkByTarget: (targetType: "order" | "guide", targetId: string) =>
+    `/api/v1/me/market-bookmarks/${encodeURIComponent(targetType)}/${encodeURIComponent(targetId)}`,
 
   /** 向导 */
   guides: "/api/v1/guides",
@@ -82,6 +130,24 @@ export const routes = {
   /** P16/17 ② 自由市场列表数据源（HTTP 路径保留 discover；页面主入口 `/market`，见 04 §3.4） */
   discoverOrders: "/api/v1/discover/orders",
 
+  /** 94 自由市场子站（`crates/api/src/routes/market_subsite.rs`；与 `lib/apiClient/marketSubsite/` 同源） */
+  marketProviderListings: "/api/v1/market/provider/listings",
+  marketAcquisitionListings: "/api/v1/market/acquisition/listings",
+  marketProviderListingById: (id: string) =>
+    `/api/v1/market/provider/listings/${encodeURIComponent(id)}`,
+  marketAcquisitionListingById: (id: string) =>
+    `/api/v1/market/acquisition/listings/${encodeURIComponent(id)}`,
+  marketProviderListingDrafts: "/api/v1/market/provider/listings/drafts",
+  marketAcquisitionListingDrafts: "/api/v1/market/acquisition/listings/drafts",
+  marketProviderListingDraftById: (draftId: string) =>
+    `/api/v1/market/provider/listings/drafts/${encodeURIComponent(draftId)}`,
+  marketAcquisitionListingDraftById: (draftId: string) =>
+    `/api/v1/market/acquisition/listings/drafts/${encodeURIComponent(draftId)}`,
+  marketProviderListingOrderById: (id: string) =>
+    `/api/v1/market/provider/listings/${encodeURIComponent(id)}/orders`,
+  marketAcquisitionListingOrderById: (id: string) =>
+    `/api/v1/market/acquisition/listings/${encodeURIComponent(id)}/orders`,
+
   /** 订单 */
   orders: "/api/v1/orders",
   orderById: (id: string) => `/api/v1/orders/${id}`,
@@ -96,6 +162,8 @@ export const routes = {
   orderMessages: (id: string) => `/api/v1/orders/${id}/messages`,
   /** 53 行程修改写回（04 PATCH；仅参与方、未 Escrowed 前可改） */
   orderPatchItinerary: (id: string) => `/api/v1/orders/${id}/itinerary`,
+  /** 草稿订单选定向导（PATCH；仅 tourist、未分配 guide_id） */
+  orderPatchGuide: (id: string) => `/api/v1/orders/${id}/guide`,
   orderConfirmFinalPlan: (id: string) =>
     `/api/v1/orders/${id}/confirm-final-plan`,
   /** 53 双边确认：旅行者/向导各自确认行程与金额 */
@@ -130,6 +198,9 @@ export const routes = {
   didRankTravelers: "/api/v1/did-rank/travelers",
   didRankGuides: "/api/v1/did-rank/guides",
   didRankItineraries: "/api/v1/did-rank/itineraries",
+  didRankPrizePool: "/api/v1/did-rank/prize-pool",
+  didRankProviders: "/api/v1/did-rank/providers",
+  didRankAcquisitions: "/api/v1/did-rank/acquisitions",
 
   /** 49 G 治理与激励（占位，待产品定稿后对接） */
   governancePool: "/api/v1/governance/pool",
@@ -166,8 +237,39 @@ export const routes = {
   /** 待生效参数包（默认与上同形；可选 PROTOCOL_REFERENCE_PENDING_OVERLAY 深度合并）；头 doc-reference-pending */
   governanceProtocolReferencePending: "/api/v1/governance/protocol-reference/pending",
 
+  /** 入驻申请（与 `lib/api/routes.ts` 顶栏键同源；`@/lib/api` 单体须对拍） */
+  meProviderApplication: "/api/v1/me/provider-application",
+  meStewardApplication: "/api/v1/me/steward-application",
+  providerApplications: "/api/v1/provider-applications",
+  stewardApplications: "/api/v1/steward/applications",
+  stewardStakeQuote: "/api/v1/steward/stake-quote",
+  stewardStakeStatus: "/api/v1/steward/stake-status",
+  adminProviderApplications: "/api/v1/admin/provider-applications",
+  adminStewardApplications: "/api/v1/admin/steward-applications",
+  adminStewardApplication: (userId: string) =>
+    `/api/v1/admin/users/${encodeURIComponent(userId)}/steward-application`,
+  adminStewardApplicationReview: (userId: string) =>
+    `/api/v1/admin/users/${encodeURIComponent(userId)}/steward-application-review`,
+  adminProviderApplication: (userId: string) =>
+    `/api/v1/admin/users/${encodeURIComponent(userId)}/provider-application`,
+  adminProviderApplicationReview: (userId: string) =>
+    `/api/v1/admin/users/${encodeURIComponent(userId)}/provider-application-review`,
+  adminUserAcquisitionPublishSuspend: (userId: string) =>
+    `/api/v1/admin/users/${encodeURIComponent(userId)}/acquisition-publish-suspend`,
+
   /** 70 Admin 最小收口 */
   admin: {
+    /** ① RBAC 能力包（`admin_rbac.rs`；与 `lib/api/routesAdminCore.ts` 同源） */
+    capabilities: "/api/v1/admin/capabilities",
+    rbacRouteMatrix: "/api/v1/admin/rbac/route-matrix",
+    security2faPolicy: "/api/v1/admin/security/2fa-policy",
+    userConsoleRole: (userId: string) =>
+      `/api/v1/admin/users/${encodeURIComponent(userId)}/console-role`,
+    userConsoleRoleChangeRequest: (userId: string) =>
+      `/api/v1/admin/users/${encodeURIComponent(userId)}/console-role-change-request`,
+    totpStatus: "/api/v1/admin/security/totp/status",
+    totpEnroll: "/api/v1/admin/security/totp/enroll",
+    totpVerify: "/api/v1/admin/security/totp/verify",
     /** 用户列表；query **`limit`**（1～500，缺省 100）、**`role`**、**`kyc_status`**（精确匹配） */
     users: (params?: { limit?: number; role?: string; kyc_status?: string }) => {
       const sp = new URLSearchParams();
@@ -285,9 +387,12 @@ export const routes = {
     /** 单条审批单只读；与列表项同形；须 PostgreSQL */
     approvalById: (id: string) =>
       `/api/v1/admin/approvals/${encodeURIComponent(id)}`,
-    approvalApprove: (id: string) => `/api/v1/admin/approvals/${id}/approve`,
+    approvalApprove: (id: string) => `/api/v1/admin/approvals/${encodeURIComponent(id)}/approve`,
+    approvalReject: (id: string) => `/api/v1/admin/approvals/${encodeURIComponent(id)}/reject`,
     /** Phase 5：运维快照（chain、indexer、rate_limits） */
     observabilityOverview: "/api/v1/admin/observability/overview",
+    /** 工作台系统概况 · 7 日趋势（`admin_metrics_home_http.rs`） */
+    metricsHomeOverview: "/api/v1/admin/metrics/home-overview",
     /** P-OBS1：信任增长 CTR/分布/generation/告警；须 admin + DB */
     trustGrowthObservability: "/api/v1/admin/trust-growth/observability",
     /** P-OBS1：PATCH 冻结权重、强制对照、变体占比上限 */
@@ -844,6 +949,7 @@ export const routes = {
     /** 500：DSAR 更新 + 事件；super_admin + 乐观锁 + Idempotency-Key */
     complianceDataRequestUpdate: (requestId: string) =>
       `/api/v1/admin/compliance/data-requests/${encodeURIComponent(requestId)}/update`,
+    ...routesAdminOnboarding,
   },
 
   /** 50-O-31 / 51-31-9 社区（有 DB 时后端真实数据；31 附录 §11、§7） */
@@ -852,10 +958,21 @@ export const routes = {
     /** 31 §2.1：话题下公开帖子总数 */
     statsPostsByTag: "/api/v1/community/stats/posts-by-tag",
     posts: "/api/v1/community/posts",
+    /** 31：发帖前媒体落盘（`content_base64` → `/api/v1/uploads/community-posts/…`） */
+    postsUploadMedia: "/api/v1/community/posts/upload-media",
+    /** 社区视频上传能力（multipart / 小体上限）；与 `lib/api/routesCommunity.ts` 同源 */
+    mediaCapabilities: "/api/v1/community/media/capabilities",
+    mediaAssetsSessions: "/api/v1/community/media-assets/sessions",
+    mediaAssetsSessionParts: (assetId: string) =>
+      `/api/v1/community/media-assets/sessions/${assetId}/parts`,
+    mediaAssetsSessionComplete: (assetId: string) =>
+      `/api/v1/community/media-assets/sessions/${assetId}/complete`,
+    mediaAssetById: (assetId: string) => `/api/v1/community/media-assets/${assetId}`,
     postById: (id: string) => `/api/v1/community/posts/${id}`,
     postLike: (postId: string) => `/api/v1/community/posts/${postId}/like`,
     postComments: (postId: string) => `/api/v1/community/posts/${postId}/comments`,
     conversations: "/api/v1/community/conversations",
+    conversationsEnsure: "/api/v1/community/conversations/ensure",
     conversationMessages: (id: string) =>
       `/api/v1/community/conversations/${id}/messages`,
     /** 指定用户公开帖子（游标分页） */
@@ -864,6 +981,11 @@ export const routes = {
     meFollowing: "/api/v1/community/me/following",
     meFollowers: "/api/v1/community/me/followers",
     meLikesReceived: "/api/v1/community/me/likes-received",
+    meActivity: "/api/v1/community/me/activity",
+    meNotifications: "/api/v1/community/me/notifications",
+    exploreDestinations: "/api/v1/community/explore/destinations",
+    /** 当前用户赞过的帖子 id 列表（与 `get_me_collects` 对称） */
+    meLikes: "/api/v1/community/me/likes",
     friendsRequest: "/api/v1/community/friends/request",
     friendsAccept: "/api/v1/community/friends/accept",
     friendsReject: "/api/v1/community/friends/reject",
@@ -885,13 +1007,17 @@ export const routes = {
 } as const;
 
 /** 完整 URL（base + path）。浏览器 + loopback 基址时通常返回「当前页 origin + path」（经 `next.config.js` rewrites 代理）。
- * `/auth/*` 例外：App Router 在同路径有页面时 **afterFiles** rewrite 不覆盖，**POST** 会落到 Next 返回 HTML；开发态 API CORS 已放宽，须直连 `BASE`。
- * `/api/*` 在 loopback 下亦直连 `BASE`：与 rewrites 等价，但避免 Playwright/部分环境下 Node 侧代理连 :8080 失败导致 `getGuides`/`postOrder` 等 **Failed to fetch**（仍受 API `CORS`/`localhost:3012` 允许）。
+ * `/auth/*` 例外：App Router 在同路径有页面时 **afterFiles** rewrite 不覆盖，**POST** 会落到 Next 返回 HTML；开发态须直连 `BASE`（依赖 API `CORS_ORIGINS` 含前端 origin）。
+ * `/api/*` 在浏览器 loopback 下走同源 + rewrites，避免 `localhost:3012` → `127.0.0.1:8080` 跨域与 CORS 误配导致 **Failed to fetch**。
+ * SSR/Node（无 `window`）仍用 `${BASE}${p}`，由 Next 服务端直连 API。
  */
 export function apiUrl(path: string): string {
+  if (typeof path !== "string" || path.length === 0) {
+    throw new Error("apiUrl: path must be a non-empty string");
+  }
   const p = path.startsWith("/") ? path : `/${path}`;
-  if (isLoopbackApiBase(BASE)) {
-    if (p.startsWith("/auth/") || p.startsWith("/api/")) {
+  if (browserUsesSameOriginApiProxy()) {
+    if (p.startsWith("/auth/")) {
       return `${BASE}${p}`;
     }
     const same = sameOriginApiPathInBrowser(p);

@@ -1,0 +1,13 @@
+# TT-PH1-SITE-THEME-V1 · POST baseline (v20 · PostDetail + Report 抽屉)
+# Phase: ① 本地 only
+# Date: 2026-05-22
+
+## Delta (this batch)
+- TT_COMMUNITY_DRAWER_L5: postDetail* + reportOverlay/reportReasonRow tokens
+- PostDetailDrawer: no border-slate/bg-slate on shell, chrome, composer, tags, follow, share
+- CommunityReportDrawer + CommunityPostShareMenu report row + PostDetailDrawerHeader aligned
+- communityDrawerTheme.contract.test.ts +1 (ReportDrawer)
+
+## §6.1 Vitest
+
+Result: exit 0 · 13 files · 62 tests passed (communityDrawerTheme 6 cases)

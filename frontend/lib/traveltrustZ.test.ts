@@ -17,6 +17,8 @@ describe("traveltrustZ", () => {
     expect(TT_Z.CONTENT).toBe(20);
     expect(TT_Z.GRAIN).toBe(24);
     expect(TT_Z.NAV).toBe(25);
+    expect(TT_Z.LANDING_CHROME).toBe(280);
+    expect(TT_Z.LANDING_CHROME).toBeGreaterThan(TT_Z.NAV);
   });
 
   it("ttZClass / ttZStyle use the same integer", () => {

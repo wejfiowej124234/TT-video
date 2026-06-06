@@ -4,22 +4,32 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { type FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 
-import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
-import {
-  type AdminFetchErrorKind,
-  adminFetchErrorKind,
-  adminFetchJson,
-  logAdminFetch,
-} from "@/lib/adminFetchDisplay";
 import { buildAdminAuditLogsPath, clampAdminAuditLimit } from "@/lib/adminAuditLogsPath";
-import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders } from "@/lib/apiClient";
-import type { AdminAuditLog, AdminAuditLogsRes } from "./adminAuditPageTypes";
+import { routes } from "@/lib/api";
+import {
+  defaultAdminListFetchSnapshot,
+  useAdminStandardListFetch,
+  type AdminStandardListBody,
+} from "@/lib/admin/useAdminStandardListFetch";
+import type { AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
+import type { AdminAuditLog } from "./adminAuditPageTypes";
 import { parseAuditListQuery } from "./adminAuditPageQuery";
+
+function auditListSnapshot(body: AdminStandardListBody<AdminAuditLog>) {
+  const snap = defaultAdminListFetchSnapshot(body);
+  const metaNote = snap.meta && typeof snap.meta.note === "string" ? snap.meta.note : null;
+  const note = metaNote ?? (typeof body.note === "string" ? body.note : null);
+  if (!note) return snap;
+  return {
+    ...snap,
+    meta: snap.meta ? { ...snap.meta, note } : { note },
+  };
+}
 
 export type AdminAuditPageViewModel = {
   listQ: ReturnType<typeof parseAuditListQuery>;
   loading: boolean;
+  refreshing: boolean;
   error: AdminFetchErrorKind | null;
   items: AdminAuditLog[];
   note: string | null;
@@ -45,12 +55,29 @@ export function useAdminAuditPage(): AdminAuditPageViewModel {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<AdminAuditLog[]>([]);
-  const [note, setNote] = useState<string | null>(null);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
+  const listUrl = useMemo(
+    () =>
+      routes.admin.auditLogs({
+        limit: listQ.limit,
+        ...(listQ.actor_id ? { actor_id: listQ.actor_id } : {}),
+        ...(listQ.action ? { action: listQ.action } : {}),
+        ...(listQ.resource_type ? { resource_type: listQ.resource_type } : {}),
+      }),
+    [listQ.limit, listQ.actor_id, listQ.action, listQ.resource_type],
+  );
+
+  const { items, appliedFilters, meta, loading, refreshing, error } =
+    useAdminStandardListFetch<AdminAuditLog>({
+      scope: "audit-logs",
+      context: "AdminAuditPage",
+      listUrl,
+      toSnapshot: auditListSnapshot,
+    });
+
+  const note = useMemo(() => {
+    if (meta && typeof meta.note === "string") return meta.note;
+    return null;
+  }, [meta]);
 
   const [draftLimit, setDraftLimit] = useState(String(listQ.limit));
   const [draftActorId, setDraftActorId] = useState(listQ.actor_id);
@@ -62,50 +89,6 @@ export function useAdminAuditPage(): AdminAuditPageViewModel {
     setDraftActorId(listQ.actor_id);
     setDraftAction(listQ.action);
     setDraftResourceType(listQ.resource_type);
-  }, [listQ.limit, listQ.actor_id, listQ.action, listQ.resource_type]);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    setNote(null);
-    setMeta(null);
-
-    const headers: Record<string, string> = { "x-request-id": `admin-audit-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    adminFetchJson<AdminAuditLogsRes>(
-      "AdminAuditPage",
-      apiUrl(
-        routes.admin.auditLogs({
-          limit: listQ.limit,
-          ...(listQ.actor_id ? { actor_id: listQ.actor_id } : {}),
-          ...(listQ.action ? { action: listQ.action } : {}),
-          ...(listQ.resource_type ? { resource_type: listQ.resource_type } : {}),
-        }),
-      ),
-      { headers },
-    )
-      .then(({ res, body }) => {
-        if (!res.ok) {
-          throw new Error(body.error || `request_failed_${res.status}`);
-        }
-        return body;
-      })
-      .then((body) => {
-        setItems(Array.isArray(body.items) ? body.items : []);
-        setNote(typeof body.note === "string" ? body.note : null);
-        setAppliedFilters(body.applied_filters ?? null);
-        setMeta(isAdminMetaRecord(body.meta) ? body.meta : null);
-      })
-      .catch((e: unknown) => {
-        logAdminFetch("AdminAuditPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
   }, [listQ.limit, listQ.actor_id, listQ.action, listQ.resource_type]);
 
   const apply = useCallback(
@@ -131,6 +114,7 @@ export function useAdminAuditPage(): AdminAuditPageViewModel {
   return {
     listQ,
     loading,
+    refreshing,
     error,
     items,
     note,

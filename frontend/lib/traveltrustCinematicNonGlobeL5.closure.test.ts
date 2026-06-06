@@ -8,14 +8,53 @@ import {
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ENGINEERING_LOCK,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_MODULES,
-} from "./traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 
 const REPO = join(__dirname, "..", "..");
 const CINEMATIC = join(REPO, "frontend/components/traveltrust/cinematic");
+const L5_DIR = join(REPO, "frontend/lib/traveltrust/l5");
+
+function readL5SourceBundle(): string {
+  return [
+    "frontend/lib/traveltrustCinematicNonGlobeL5.ts",
+    "frontend/lib/traveltrust/l5/meta.ts",
+    "frontend/lib/traveltrust/l5/rhythm.ts",
+    "frontend/lib/traveltrust/l5/sections-layout.ts",
+    "frontend/lib/traveltrust/l5/atmosphere.ts",
+    "frontend/lib/traveltrust/l5/hero-ui.ts",
+    "frontend/lib/traveltrust/l5/theater.ts",
+    "frontend/lib/traveltrust/l5/landing-chrome.ts",
+    "frontend/lib/traveltrust/l5/start.ts",
+    "frontend/lib/traveltrust/l5/economy.ts",
+    "frontend/lib/traveltrust/l5/footer.ts",
+    "frontend/lib/traveltrust/l5/shell-legacy.ts",
+    "frontend/lib/traveltrust/l5/resolvers.ts",
+    "frontend/lib/traveltrust/l5/hero-canvas.ts",
+    "frontend/lib/traveltrust/l5/anchors.ts",
+  ]
+    .map((rel) => readFileSync(join(REPO, rel), "utf8"))
+    .join("\n");
+}
+
+const PAGE_SCENE_L5_ANCHOR_FILES = [
+  "page-scene/PageTravelCorridorRing.tsx",
+  "page-scene/PageCinematicEnvironment.tsx",
+] as const;
+
+const PAGE_SCENE_FILES = [
+  ...PAGE_SCENE_L5_ANCHOR_FILES,
+  "page-scene/PageHeroGlobeRig.tsx",
+  "page-scene/PageCinematicCameraRig.tsx",
+  "page-scene/PageHeroGlobeWarmShell.tsx",
+] as const;
+
+function readPageSceneBundle(): string {
+  return PAGE_SCENE_FILES.map((rel) => readFileSync(join(CINEMATIC, rel), "utf8")).join("\n");
+}
 
 const L5_COMPONENT_FILES = [
   "TravelTrustPageCinematicCanvas.tsx",
-  "TravelTrustPageCinematicScene.tsx",
+  ...PAGE_SCENE_L5_ANCHOR_FILES,
   "TravelTrustIdentityTheater.tsx",
   "TravelTrustRoleVideoPlayer.tsx",
   "TravelTrustRouteArc.tsx",
@@ -57,6 +96,16 @@ const L5_COMPONENT_FILES = [
 ] as const;
 
 const COLD_COLOR_PATTERN = /ref-teal|ref-cyan|#23ced9|rgba\(35,\s*206,\s*217\)/;
+const HOME_BELOW_FOLD_SHELL = join(REPO, "frontend/lib/traveltrust/home/BelowFoldSectionsShell.tsx");
+
+/** Below-fold 外壳迁至 home lib；closure 扫描 cinematic 文件时并入 shell 源 */
+function readCinematicComponentSource(file: string): string {
+  const src = readFileSync(join(CINEMATIC, file), "utf8");
+  if (file === "TravelTrustBelowFoldSections.tsx" && existsSync(HOME_BELOW_FOLD_SHELL)) {
+    return `${src}\n${readFileSync(HOME_BELOW_FOLD_SHELL, "utf8")}`;
+  }
+  return src;
+}
 
 describe("traveltrustCinematicNonGlobeL5 closure", () => {
   it("exports sprint id and module list", () => {
@@ -68,7 +117,7 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
     for (const file of L5_COMPONENT_FILES) {
       const abs = join(CINEMATIC, file);
       expect(existsSync(abs), `missing ${file}`).toBe(true);
-      const src = readFileSync(abs, "utf8");
+      const src = readCinematicComponentSource(file);
       const anchored =
         src.includes("data-tt-traveltrust-cinematic-non-globe-l5") ||
         src.includes("traveltrustSectionL5DataAttrs") ||
@@ -109,7 +158,8 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
     expect(trust).toContain("data-tt-traveltrust-trust-warm-plate-l5");
     expect(faq).toContain("TT_FAQ_ACCORDION_L5.warmPlateClass");
     expect(header).toContain("data-tt-traveltrust-header-merged-chrome-l5");
-    expect(ui).toMatch(/shouldSuppressGlobalSiteNav[\s\S]*return false/);
+    expect(ui).toContain("isAdminHeaderPath");
+    expect(ui).toMatch(/shouldSuppressGlobalSiteNav[\s\S]*isAdminHeaderPath/);
     const stable = readFileSync(join(CINEMATIC, "TravelTrustStablecoinGateway.tsx"), "utf8");
     expect(readFileSync(join(CINEMATIC, "TravelTrustBelowFoldSections.tsx"), "utf8")).toContain(
       "data-tt-traveltrust-economy-cluster-atmosphere-l5",
@@ -120,14 +170,17 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
     expect(stable).not.toContain('from: "USDT", to: "USDC"');
     const settlement = readFileSync(join(CINEMATIC, "TravelTrustSettlementStrip.tsx"), "utf8");
     expect(settlement).not.toContain("data-tt-traveltrust-settlement-atmosphere-l5");
-    const lib = readFileSync(join(REPO, "frontend/lib/traveltrustCinematicNonGlobeL5.ts"), "utf8");
+    const lib = readL5SourceBundle();
+    const navSlot = readFileSync(
+      join(REPO, "frontend/modules/traveltrust-home/presentation/TravelTrustHomeLandingNavSlot.tsx"),
+      "utf8",
+    );
     expect(lib).toContain("export const TT_LANDING_CHROME_L5");
-    expect(lib).toContain("5.5rem+env(safe-area-inset-top");
-    expect(lib).toContain("3rem+env(safe-area-inset-top");
+    expect(navSlot).toContain("TT_MARKETING_SITE_HEADER_STICKY_OFFSET_TRAVELTRUST_L1_CLASS");
   });
 
   it("scroll chrome pill is shared with hero scroll hint", () => {
-    const lib = readFileSync(join(REPO, "frontend/lib/traveltrustCinematicNonGlobeL5.ts"), "utf8");
+    const lib = readL5SourceBundle();
     expect(lib).toContain("TT_SCROLL_CHROME_PILL_L5");
     expect(lib).toMatch(/TT_SCROLL_HINT_L5_CLASS[\s\S]*TT_SCROLL_CHROME_PILL_L5/);
     const hero = readFileSync(join(CINEMATIC, "TravelTrustCinematicHero.tsx"), "utf8");
@@ -135,7 +188,7 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
   });
 
   it("hero-theater handoff uses ink bridge and theater top scrim (no cold border-t)", () => {
-    const below = readFileSync(join(CINEMATIC, "TravelTrustBelowFoldSections.tsx"), "utf8");
+    const below = readCinematicComponentSource("TravelTrustBelowFoldSections.tsx");
     const theater = readFileSync(join(CINEMATIC, "TravelTrustIdentityTheater.tsx"), "utf8");
     const divider = readFileSync(join(CINEMATIC, "TravelTrustSectionFilmDivider.tsx"), "utf8");
     expect(below).toContain("data-tt-traveltrust-below-hero-ink-bridge-l5");
@@ -150,14 +203,17 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
   });
 
   it("page vertical rhythm token is wired in section surfaces", () => {
-    const lib = readFileSync(join(REPO, "frontend/lib/traveltrustCinematicNonGlobeL5.ts"), "utf8");
+    const lib = readL5SourceBundle();
+    const rhythm = readFileSync(join(L5_DIR, "rhythm.ts"), "utf8");
     expect(lib).toContain("TT_PAGE_VERTICAL_RHYTHM_L5");
-    expect(lib).toContain("TT_PAGE_VERTICAL_RHYTHM_L5.sectionY");
+    expect(rhythm).toContain('sectionY: "py-8 sm:py-9"');
     expect(lib).toContain("flex-nowrap");
     const pulse = readFileSync(join(CINEMATIC, "TravelTrustPulseTicker.tsx"), "utf8");
     expect(pulse).toContain("marqueeListClass");
     expect(pulse).toContain("inlineStaticListClass");
     expect(pulse).toContain("data-tt-traveltrust-pulse-inline-static-l5");
+    expect(pulse).toContain("data-tt-traveltrust-pulse-inline-marquee-l5");
+    expect(pulse).toContain("inlineMarqueeTrackClass");
     const roleVideo = readFileSync(join(CINEMATIC, "TravelTrustRoleVideoPlayer.tsx"), "utf8");
     expect(roleVideo).toContain("placeholderCopyClass");
     const theater = readFileSync(join(CINEMATIC, "TravelTrustIdentityTheater.tsx"), "utf8");
@@ -197,7 +253,7 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
     expect(stable).toContain("data-tt-traveltrust-liquidity-disclaimer-single-l5");
     expect(stable).toContain("data-tt-traveltrust-liquidity-section-header-l5");
     expect(stable).toContain("TT_STABLECOIN_GATEWAY_L5.sectionHeaderClass");
-    const libSettlement = readFileSync(join(REPO, "frontend/lib/traveltrustCinematicNonGlobeL5.ts"), "utf8");
+    const libSettlement = readL5SourceBundle();
     expect(libSettlement).toMatch(/TT_SETTLEMENT_L5[\s\S]*protocolShellClass[\s\S]*max-w-3xl/);
     expect(stable).not.toMatch(/border-t\s+border-white\/10/);
   });
@@ -205,13 +261,13 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
   it("landing chrome and nav use warm L5 chrome tokens", () => {
     const nav = readFileSync(join(CINEMATIC, "TravelTrustLandingNav.tsx"), "utf8");
     const chrome = readFileSync(join(CINEMATIC, "TravelTrustLandingChrome.tsx"), "utf8");
-    const libChrome = readFileSync(join(REPO, "frontend/lib/traveltrustCinematicNonGlobeL5.ts"), "utf8");
+    const libChrome = readL5SourceBundle();
     expect(nav).toContain("TT_LANDING_NAV_L5.mobileToggleClass");
-    expect(chrome).toContain("data-tt-traveltrust-landing-chrome-border-shimmer-l5");
+    expect(chrome).toContain('data-tt-traveltrust-landing-chrome-layout="stacked-dual-row-l5"');
     expect(chrome).toContain("TT_LANDING_CHROME_L5.shellClass");
-    expect(chrome).toContain("TT_LANDING_CHROME_L5.controlsToolbarClass");
+    expect(chrome).toContain("TT_LANDING_CHROME_L5.liveSlotClass");
     expect(chrome).toContain("data-tt-traveltrust-landing-chrome-slim-l5");
-    expect(chrome).toContain('data-tt-traveltrust-landing-chrome-layout="stacked-l5"');
+    expect(chrome).toContain('data-tt-traveltrust-landing-chrome-layout="stacked-dual-row-l5"');
     expect(chrome).toContain("data-tt-traveltrust-landing-chrome-live-slot-l5");
     expect(chrome).toContain("data-tt-traveltrust-landing-chrome-pulse-row-l5");
     expect(libChrome).toContain("liveSlotClass");
@@ -269,7 +325,7 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
     const badge = readFileSync(join(CINEMATIC, "TravelTrustPageBriefModeBadge.tsx"), "utf8");
     const chunk = readFileSync(join(CINEMATIC, "TravelTrustDevChunkRecoveryNotice.tsx"), "utf8");
     expect(fallback).toContain("data-tt-traveltrust-webgl-fallback-recovery-l5");
-    const lib = readFileSync(join(REPO, "frontend/lib/traveltrustCinematicNonGlobeL5.ts"), "utf8");
+    const lib = readL5SourceBundle();
     expect(lib).toMatch(/TT_WEBGL_FALLBACK_L5[\s\S]*pointer-events-auto/);
     const roleVideo = readFileSync(join(CINEMATIC, "TravelTrustRoleVideoPlayer.tsx"), "utf8");
     expect(roleVideo).toContain("data-tt-traveltrust-role-video-tourism-hint-l5");
@@ -283,6 +339,8 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
     expect(compliance).toContain("data-tt-traveltrust-page-compliance-readable-l5");
     const pulse = readFileSync(join(CINEMATIC, "TravelTrustPulseTicker.tsx"), "utf8");
     expect(pulse).toContain("TT_PULSE_TICKER_L5.itemSeparatorClass");
+    expect(pulse).toContain("TT_PULSE_TICKER_L5.labelSeparatorClass");
+    expect(pulse).toContain("TT_PULSE_TICKER_L5.viewAllChevronClass");
     const zh = readFileSync(join(REPO, "frontend/locales/zh.ts"), "utf8");
     const en = readFileSync(join(REPO, "frontend/locales/en.ts"), "utf8");
     expect(zh).toContain("traveltrust_role_video_placeholder_tourism");
@@ -338,13 +396,13 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
   });
 
   it("PageCinematicScene uses warm corridor role colors not cold 3D table", () => {
-    const src = readFileSync(join(CINEMATIC, "TravelTrustPageCinematicScene.tsx"), "utf8");
+    const src = readPageSceneBundle();
     expect(src).not.toContain("ROLE_CINEMATIC_3D_COLORS");
     expect(src).toContain("resolveTheaterRoleWarm3dHex");
   });
 
   it("PageCinematicScene anchors L5 on userData not data-* (R3F cannot set DOM attrs)", () => {
-    const src = readFileSync(join(CINEMATIC, "TravelTrustPageCinematicScene.tsx"), "utf8");
+    const src = readPageSceneBundle();
     expect(src).not.toMatch(/<group[\s\S]*?data-tt-traveltrust/);
     expect(src).not.toMatch(/<mesh[\s\S]*?data-tt-traveltrust/);
     expect(src).toContain("ttTraveltrustCinematicNonGlobeL5");
@@ -377,6 +435,22 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
     const nav = readFileSync(join(CINEMATIC, "TravelTrustLandingNav.tsx"), "utf8");
     expect(nav).toContain('data-tt-traveltrust-landing-nav-contrast="high"');
     expect(nav).toContain("TT_LANDING_NAV_L5");
+  });
+
+  it("L1 pulse label cluster uses explicit warm contrast tokens (2026-06-03 freeze)", () => {
+    const libChrome = readL5SourceBundle();
+    expect(libChrome).toContain("labelSeparatorClass");
+    expect(libChrome).toContain("viewAllChevronClass");
+    expect(libChrome).toContain("rgba(249,215,121");
+    const globals = readFileSync(join(REPO, "frontend/app/globals.css"), "utf8");
+    expect(globals).toContain('[data-tt-traveltrust-pulse-label-cluster-l5="1"]');
+    expect(globals).toContain('[data-tt-traveltrust-pulse-view-all="1"]');
+    const freezeDoc = readFileSync(
+      join(REPO, "frontend/evidence/GO_local_cinematic_l5_closure/L1-PULSE-LABEL-CONTRAST-FREEZE.md"),
+      "utf8",
+    );
+    expect(freezeDoc).toContain("closed ①");
+    expect(freezeDoc).toContain("TT_PULSE_TICKER_L5");
   });
 
   it("exposes engineering lock and batch ledger (W)", () => {

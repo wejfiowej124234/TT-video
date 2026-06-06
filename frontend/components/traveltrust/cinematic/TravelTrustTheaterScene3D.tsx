@@ -10,7 +10,7 @@ import {
   TT_LEGACY_THEATER_3D_L5,
   TT_THEATER_SECTION_L5,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 import { UNIFIED_PAGE_3D } from "./traveltrustPageCinematicConfig";
 import {
   TRAVELTRUST_CINEMATIC_CANVAS_STYLE,

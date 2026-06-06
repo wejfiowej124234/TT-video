@@ -1,13 +1,20 @@
 "use client";
 
-import Link from "next/link";
-import { useId } from "react";
+import { useId, useMemo } from "react";
+
+import { AdminFinanceModuleDepthWorkspace } from "@/components/admin/AdminFinanceModuleDepthWorkspace";
+import { AdminFinanceSuiteDepthNotice } from "@/components/admin/AdminFinanceSuiteDepthNotice";
+import { AdminFinanceSuitePartialChecklist } from "@/components/admin/AdminFinanceSuitePartialChecklist";
+import { adminTrustGrowthObsSnapshot } from "@/lib/admin/adminTrustGrowthObsSnapshot";
 
 import type { AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
+import { AdminObservabilitySectionBackLinks } from "@/components/admin/AdminObservabilitySectionBackLinks";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminPermissionDeniedBanner } from "@/components/admin/AdminPermissionDeniedBanner";
 import { useTranslation } from "@/components/LocaleProvider";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
+import { observabilityPeerRelatedFoldLinks } from "@/lib/admin/adminObservabilityRelatedFoldLinks";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 
 import type { ObsBody } from "./adminTrustGrowthPageModel";
@@ -19,10 +26,11 @@ import { AdminTrustGrowthMetricsSection } from "./AdminTrustGrowthMetricsSection
 import { AdminTrustGrowthThresholdsSection } from "./AdminTrustGrowthThresholdsSection";
 import { AdminTrustGrowthTimelineSection } from "./AdminTrustGrowthTimelineSection";
 import { AdminTrustGrowthWriteNoticeBanner } from "./AdminTrustGrowthWriteNoticeBanner";
-import { ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { ADMIN_SHELL_SECONDARY_BTN_CLASS, ADMIN_FOCUS_RING_CORE_CLASS, ADMIN_LIST_REFRESHING_SURFACE_CLASS } from "@/lib/adminUi";
 
 export type AdminTrustGrowthPageMainProps = {
   loading: boolean;
+  refreshing: boolean;
   error: AdminFetchErrorKind | null;
   data: ObsBody | null;
   draftFrozen: boolean;
@@ -42,6 +50,7 @@ export type AdminTrustGrowthPageMainProps = {
 
 export default function AdminTrustGrowthPageMain({
   loading,
+  refreshing,
   error,
   data,
   draftFrozen,
@@ -65,39 +74,52 @@ export default function AdminTrustGrowthPageMain({
   const genHist = data?.generation_history ?? [];
   const alerts = data?.alerts ?? [];
   const moments = data?.metrics?.by_moment ?? [];
+  const tgSnapshot = useMemo(() => adminTrustGrowthObsSnapshot(data), [data]);
 
   return (
     <AdminListPageChrome
       titleId={pageTitleId}
       title={t("admin_trust_growth_title")}
-      subtitle={t("admin_trust_growth_subtitle")}
-      headerAside={
-        <>
-          <button
-            type="button"
-            className={`rounded-[var(--radius-md)] border border-ink-200 bg-white px-3 py-2 text-small font-medium text-ink-800 hover:border-ink-400 ${ADMIN_LINK_FOCUS_CLASS}`}
-            onClick={() => load()}
-            disabled={loading}
-          >
-            {t("admin_trust_growth_refresh")}
-          </button>
-          <Link
-            href="/admin"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_schema_back")}
-          </Link>
-        </>
-      }
+      subtitle={t("admin_trust_growth_subtitle_l5")}
+      headerAside={<AdminObservabilitySectionBackLinks />}
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={observabilityPeerRelatedFoldLinks("/admin/trust-growth")}
+        ariaLabelKey="admin_observability_hub_related_aria"
+        foldSummaryKey="admin_observability_hub_related_fold"
+        dataTtFold="obs-trust-growth"
+      />
+      <div className="mb-4 flex flex-wrap items-center justify-end gap-2">
+        <button
+          type="button"
+          className={`${touchTargetLink44Classes} ${ADMIN_SHELL_SECONDARY_BTN_CLASS} ${ADMIN_FOCUS_RING_CORE_CLASS} focus-visible:ring-offset-bg-console`}
+          onClick={() => load()}
+          disabled={loading && !data}
+          data-tt-admin-trust-growth-refresh="1"
+        >
+          {t("admin_trust_growth_refresh")}
+        </button>
+      </div>
       <AdminPermissionDeniedBanner
         permission={ADMIN_PERM.TRUST_GROWTH_WRITE}
         messageKey="admin_perm_denied_trust_growth_write"
       />
+      <AdminFinanceSuiteDepthNotice />
+      <AdminFinanceSuitePartialChecklist />
+      <AdminFinanceModuleDepthWorkspace
+        trustGrowth={{
+          ...tgSnapshot,
+          loading,
+          error: Boolean(error),
+        }}
+      />
       <AdminTrustGrowthWriteNoticeBanner />
-      <AdminTrustGrowthLoadErrorBlock loading={loading} error={error} />
-      {!loading && !error && data ? (
-        <div className="mt-6 space-y-8">
+      <AdminTrustGrowthLoadErrorBlock loading={loading && !data} error={error} />
+      {!error && (!loading || data) && data ? (
+        <div
+          className={`mt-6 space-y-8${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
+          data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
+        >
           <AdminTrustGrowthKpiSection data={data} />
           <AdminTrustGrowthControlSection
             controlSectionId={controlSectionId}

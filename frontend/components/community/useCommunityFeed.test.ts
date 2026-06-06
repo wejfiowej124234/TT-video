@@ -27,15 +27,15 @@ describe("mapApiUserRoleToCommunity", () => {
 
 describe("communityStoredRolePillClassName (701)", () => {
   it("returns distinct tones per normalized role", () => {
-    expect(communityStoredRolePillClassName("guide")).toContain("fuchsia");
+    expect(communityStoredRolePillClassName("guide")).toContain("ref-sun");
     expect(communityStoredRolePillClassName("provider")).toContain("amber");
     expect(communityStoredRolePillClassName("region_steward")).toContain("violet");
     expect(communityStoredRolePillClassName("arbitrator")).toContain("slate");
     expect(communityStoredRolePillClassName("admin")).toContain("orange");
     expect(communityStoredRolePillClassName("super_admin")).toContain("rose");
-    expect(communityStoredRolePillClassName("traveler")).toContain("cyan");
-    expect(communityStoredRolePillClassName("tourist")).toContain("cyan");
-    expect(communityStoredRolePillClassName("unknown_fallback")).toContain("cyan");
+    expect(communityStoredRolePillClassName("traveler")).toContain("ref-sun");
+    expect(communityStoredRolePillClassName("tourist")).toContain("ref-sun");
+    expect(communityStoredRolePillClassName("unknown_fallback")).toContain("ref-sun");
   });
 });
 

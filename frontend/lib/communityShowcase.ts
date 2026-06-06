@@ -7,10 +7,12 @@ import type { CommunityPost, CommunityPostAuthor, CommunityUserItem } from "@/li
 import { AVATARS, FOOD_IMAGES_POOL, TRAVEL_IMAGES_POOL, pick } from "@/lib/communityMockData/constants";
 import type { CommunityDmMessageRow } from "@/lib/apiClient/community";
 
+/** ① 本地 demo · 可直连 MP4（剔除 GCS 等不稳定源） */
 const VIDEO_SAMPLES = [
-  "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-  "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-  "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+  "https://www.w3schools.com/html/mov_bbb.mp4",
+  "https://download.samplelib.com/mp4/sample-5s.mp4",
+  "https://download.samplelib.com/mp4/sample-10s.mp4",
+  "https://filesamples.com/samples/video/mp4/sample_640x360.mp4",
 ] as const;
 
 /** 关注流演示：这些作者的帖子会出现在「关注」Tab */
@@ -20,15 +22,44 @@ export const SHOWCASE_FOLLOW_AUTHOR_IDS: readonly string[] = [
   "tt-demo-mei",
 ];
 
+function communityShowcaseExplicitlyOff(): boolean {
+  const v = (process.env.NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_SHOWCASE ?? "").trim().toLowerCase();
+  return v === "0" || v === "false" || v === "off";
+}
+
+/** ② 测试网构建档：默认不注入 showcase（与 staging 真 UGC 密度对齐）。 */
+function communityShowcaseTestnetProfile(): boolean {
+  const phase = (process.env.NEXT_PUBLIC_TRAVELTRUST_PHASE ?? "").trim();
+  const profile = (process.env.NEXT_PUBLIC_TRAVELTRUST_DEPLOY_PROFILE ?? "").trim().toLowerCase();
+  return phase === "2" || profile === "testnet" || profile === "staging";
+}
+
 export function shouldUseCommunityShowcaseOnEmpty(): boolean {
   if (typeof process === "undefined") return false;
+  if (process.env.NODE_ENV === "production") return false;
+  if (communityShowcaseTestnetProfile()) return false;
+  if (communityShowcaseExplicitlyOff()) return false;
   if (process.env.NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_SHOWCASE === "1") return true;
-  if (process.env.NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_SHOWCASE === "0") return false;
   return process.env.NODE_ENV === "development";
+}
+
+/** 关系链空态（friends / messages）演示数据：与 Feed `onEmpty` 同门闸（dev 默认开、`=0` 关、`=1` 强制开）。 */
+export function shouldUseCommunityShowcaseForRelationalUi(): boolean {
+  return shouldUseCommunityShowcaseOnEmpty();
 }
 
 export function isShowcaseConversationId(conversationId: string): boolean {
   return conversationId.startsWith("tt-showcase-conv-");
+}
+
+/** ① 本地 Feed 注入帖（`COMMUNITY_SHOWCASE_POSTS`）；写接口会返回 `invalid_post`。 */
+export function isShowcasePostId(postId: string): boolean {
+  return postId.startsWith("tt-showcase-post-");
+}
+
+/** ① 演示作者（`tt-demo-*`）；关注写接口在空库/本地演示下不可用。 */
+export function isShowcaseAuthorId(authorId: string): boolean {
+  return authorId.startsWith("tt-demo-");
 }
 
 function sa(i: number): string {
@@ -156,7 +187,7 @@ export const COMMUNITY_SHOWCASE_POSTS: CommunityPost[] = [
     id: "tt-showcase-post-005",
     type: "text",
     content:
-      "本周快闪：周五晚飞大阪，周日回。只带 20L 背包，行程表在评论区置顶（演示文案）。#周末游",
+      "本周快闪：周五晚飞大阪，周日回。只带 20L 背包，行程要点见正文（演示文案）。#周末游",
     media_url: pick(TRAVEL_IMAGES_POOL, 4),
     destination: "大阪",
     tags: ["#周末游", "#旅行"],
@@ -212,7 +243,44 @@ export const COMMUNITY_SHOWCASE_POSTS: CommunityPost[] = [
     collects: 28,
     authorFollowedByMe: true,
   }),
+  makeShowcasePost({
+    id: "tt-showcase-post-009",
+    type: "video",
+    content: "东京台场夜景延时，彩虹大桥车流像流动的光带。下一支拍晴空塔蓝调时刻。#摄影 #东京",
+    media_url: VIDEO_SAMPLES[3],
+    cover_url: pick(TRAVEL_IMAGES_POOL, 0),
+    is_video: true,
+    destination: "东京",
+    tags: ["#摄影", "#东京", "#视频"],
+    author: YUKI,
+    created_at: iso(0, 21),
+    likes: 312,
+    comments: 28,
+    collects: 67,
+  }),
+  makeShowcasePost({
+    id: "tt-showcase-post-010",
+    type: "video",
+    content: "滨海湾花园超级树灯光秀，建议 19:45 前占位。风大记得带薄外套。#攻略 #新加坡",
+    media_url: VIDEO_SAMPLES[2],
+    cover_url: pick(TRAVEL_IMAGES_POOL, 10),
+    is_video: true,
+    destination: "新加坡",
+    tags: ["#攻略", "#新加坡", "#视频"],
+    author: MEI,
+    created_at: iso(1, 20),
+    likes: 421,
+    comments: 35,
+    collects: 88,
+    authorFollowedByMe: true,
+  }),
 ];
+
+/** 深链 / 分享：`?post=tt-showcase-post-*` 不依赖 Feed 首屏已 hydrate。 */
+export function findCommunityShowcasePostById(postId: string): CommunityPost | undefined {
+  if (!isShowcasePostId(postId)) return undefined;
+  return COMMUNITY_SHOWCASE_POSTS.find((p) => p.id === postId);
+}
 
 export function communityShowcasePostsForFeedMode(mode: "follow" | "hot" | "latest"): CommunityPost[] {
   if (mode === "follow") {
@@ -359,4 +427,32 @@ export function buildShowcaseDmMessages(conversationId: string, meUserId: string
 
 export function getShowcaseThreadPeer(conversationId: string): CommunityPostAuthor | undefined {
   return SHOWCASE_THREAD_DEFS[conversationId]?.peer;
+}
+
+/** Curated 演示作者昵称集合（与 PG public showcase seed 对读 · 防混池） */
+let showcaseAuthorNicknamesCache: Set<string> | null = null;
+
+export function showcaseAuthorNicknameSet(): ReadonlySet<string> {
+  if (!showcaseAuthorNicknamesCache) {
+    showcaseAuthorNicknamesCache = new Set(
+      COMMUNITY_SHOWCASE_POSTS.map((p) => p.author?.nickname?.trim()).filter((n): n is string => Boolean(n)),
+    );
+  }
+  return showcaseAuthorNicknamesCache;
+}
+
+/** PG seed 作者与 client curated 演示 persona 同名但 id 不同 → 展示层视为重复 */
+export function isPgSeedDuplicateOfShowcasePersona(
+  post: Pick<CommunityPost, "author">,
+): boolean {
+  const id = post.author?.id ?? "";
+  if (isShowcaseAuthorId(id)) return false;
+  const nick = post.author?.nickname?.trim();
+  if (!nick) return false;
+  return showcaseAuthorNicknameSet().has(nick);
+}
+
+export function filterPgSeedDuplicatesWhenShowcaseActive(posts: CommunityPost[]): CommunityPost[] {
+  if (!shouldUseCommunityShowcaseOnEmpty()) return posts;
+  return posts.filter((p) => !isPgSeedDuplicateOfShowcasePersona(p));
 }

@@ -2,6 +2,12 @@
 
 import { useId, useState } from "react";
 import { PERIOD_VALUES, type Period } from "@/lib/didRankUtils";
+import {
+  TT_MARKETING_DID_RANK_PERIOD_TAB_ACTIVE,
+  TT_MARKETING_DID_RANK_PERIOD_TAB_IDLE,
+  TT_MARKETING_DID_RANK_PATH,
+  TT_MARKETING_DID_RANK_SURFACE,
+} from "@/lib/marketingUi";
 
 type TFunc = (key: string) => string;
 
@@ -57,7 +63,7 @@ export default function DidRankHeaderSkeleton({
   const periodLabelId = useId();
   return (
     <header
-      className="rounded-[var(--radius-lg)] border border-cyan-400/35 bg-slate-900/55 backdrop-blur-md px-4 py-4 sm:px-6 sm:py-5 mb-6 sm:mb-8 shadow-[0_0_40px_-12px_rgba(35,206,217,0.12),0_0_48px_-16px_rgba(252,164,124,0.06)] ring-1 ring-white/5 motion-sub hover:border-cyan-400/55 hover:shadow-scifi-hover-strong flex flex-col lg:flex-row lg:items-center lg:gap-8"
+      className={TT_MARKETING_DID_RANK_SURFACE.headerShell}
       aria-labelledby={h1Id}
       aria-busy="true"
     >
@@ -66,12 +72,12 @@ export default function DidRankHeaderSkeleton({
           {t("didRank_title")}
         </h1>
         <div
-          className="h-9 sm:h-10 w-64 max-w-full rounded-[var(--radius-sm)] bg-gradient-to-r from-cyan-500/30 via-fuchsia-400/25 to-ref-coral/25 animate-pulse"
+          className="h-9 sm:h-10 w-64 max-w-full rounded-[var(--radius-sm)] bg-gradient-to-r from-ref-sun/30 via-ref-coral/25 to-ref-sun/20 animate-pulse"
           aria-hidden
         />
-        <div className="h-4 w-full max-w-lg mt-2 rounded bg-slate-600/40 animate-pulse" aria-hidden />
+        <div className={`h-4 w-full max-w-lg mt-2 rounded ${TT_MARKETING_DID_RANK_SURFACE.skeletonPulseSoft}`} aria-hidden />
         <div
-          className="inline-flex mt-2 min-h-[1.75rem] w-40 rounded-full border border-amber-500/35 bg-amber-500/10 animate-pulse"
+          className="inline-flex mt-2 min-h-[1.75rem] w-40 rounded-full border border-ref-sun/28 bg-ref-sun/10 animate-pulse"
           aria-hidden
         />
         <p className="text-meta text-slate-300 mt-3 mb-1" id={periodLabelId}>
@@ -87,11 +93,7 @@ export default function DidRankHeaderSkeleton({
               aria-controls={rankTabPanelId}
               id={`${rankTabIdPrefix}-${range}`}
               onClick={() => setTimeRange(range)}
-              className={`rounded-full border px-3 py-1 text-meta font-medium motion-sub ${
-                timeRange === range
-                  ? "border-transparent bg-gradient-to-r from-fuchsia-600/85 to-ref-coral/75 text-white shadow-[0_0_20px_-4px_rgba(252,164,124,0.35)]"
-                  : "border-slate-600/80 bg-slate-800/70 text-slate-300 hover:border-ref-cyan/35 hover:text-slate-200"
-              }`}
+              className={timeRange === range ? TT_MARKETING_DID_RANK_PERIOD_TAB_ACTIVE : TT_MARKETING_DID_RANK_PERIOD_TAB_IDLE}
             >
               {t(`didRank_${range}`)}
             </button>
@@ -99,8 +101,8 @@ export default function DidRankHeaderSkeleton({
         </div>
         {showMeHint && <DidRankMeHint t={t} />}
         <div className="flex flex-wrap gap-2 mt-3" aria-hidden>
-          <div className="h-6 w-24 rounded-full border border-cyan-400/40 bg-cyan-400/10 animate-pulse" />
-          <div className="h-6 w-28 rounded-full border border-fuchsia-400/40 bg-fuchsia-400/10 animate-pulse" />
+          <div className="h-6 w-24 rounded-full border border-ref-sun/35 bg-ref-sun/10 animate-pulse" />
+          <div className={`h-6 w-28 rounded-full animate-pulse ${TT_MARKETING_DID_RANK_PATH.skeletonBadgeShimmer}`} />
         </div>
       </div>
     </header>

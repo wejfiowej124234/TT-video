@@ -12,6 +12,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "page.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminLifecyclePageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminLifecyclePage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminLifecyclePageModel.ts"), "utf8"),
   ].join("\n");
 }
@@ -21,6 +22,7 @@ describe("admin lifecycle page", () => {
 
   it("keeps lifecycle state machines route + admin fetch + list chrome anchor", () => {
     expect(src).toContain("routes.admin.lifecycleStateMachines");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("AdminLifecyclePageMain");
     expect(src).toContain("AdminListPageChrome");

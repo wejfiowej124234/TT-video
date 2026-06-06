@@ -27,7 +27,7 @@ describe("traveltrust PH-1 local gate index", () => {
     expect(gate).toContain("TRAVELTRUST_PH1_LIGHTHOUSE=1");
     expect(gate).toContain("e2e:pi1-traveltrust");
     expect(gate).toContain("e2e:traveltrust-visual");
-    expect(gate).toContain("home-landing-marketing-v2.spec.ts");
+    expect(gate).toContain("home-landing-shell.spec.ts");
     expect(gate).toContain("e2e:traveltrust-visual");
     expect(gate).toContain("GO_local_traveltrust_ph1");
     expect(gate).toContain("TRAVELTRUST_PH1_VERIFY_SCREENSHOTS");

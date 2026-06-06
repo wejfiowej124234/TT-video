@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
 
-/** 个人中心主入口已并入 TT 社区 `/community/me`（顶栏「个人中心」与社区底栏一致）。 */
+import { POST_AUTH_DEFAULT_RETURN_PATH } from "@/lib/auth/postAuthReturnPath";
+
+/** `/me` 默认入口 → 多重身份 Hub（社区资料见 `/community/me`）。 */
 export default function MeIndexPage() {
-  redirect("/community/me");
+  redirect(POST_AUTH_DEFAULT_RETURN_PATH);
 }

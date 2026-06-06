@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useTranslation } from "@/components/LocaleProvider";
 import { TRAVELTRUST_CINEMATIC_A11Y_CHAPTERS } from "@/lib/traveltrustCinematicA11yChapters";
-import { TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID } from "@/lib/traveltrustCinematicNonGlobeL5";
+import { TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID } from "@/lib/traveltrust/l5";
 
 /** 3D 电影层文字替代（TT-PH1-081 / 161 · ①） */
 export function TravelTrustCinematicA11y() {

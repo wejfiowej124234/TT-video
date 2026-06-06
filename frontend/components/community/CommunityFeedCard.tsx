@@ -6,6 +6,9 @@ import CommunityFeedCardMedia from "./CommunityFeedCardMedia";
 import CommunityFeedCardContent from "./CommunityFeedCardContent";
 import CommunityFeedCardActions from "./CommunityFeedCardActions";
 import { communityStoredRoleLabelI18nKey } from "@/lib/meRoleDisplay";
+import { warmCommunityPostDetailDrawer } from "@/lib/communityDrawerPrefetch";
+import { TT_COMMUNITY_FEED_ACTION } from "@/lib/marketingUi";
+import { CommunityMeNotesCardOverflowMenu } from "@/components/me/communityMeNotes/CommunityMeNotesCardOverflowMenu";
 
 /** 首页 Feed：传入时关注对接 `POST/DELETE .../community/users/:id/follow`（04 §3.4） */
 export type CommunityFeedCardAuthorFollow = {
@@ -31,6 +34,9 @@ export function CommunityFeedCard({
   onTagClick,
   authorFollow,
   showVisibilityStatusBadge,
+  onDeletePost,
+  deletePostBusyId,
+  onPinToTop,
 }: {
   post: CommunityPost;
   commentCount?: number;
@@ -46,6 +52,11 @@ export function CommunityFeedCard({
   onTagClick?: (tag: string) => void;
   authorFollow?: CommunityFeedCardAuthorFollow;
   showVisibilityStatusBadge?: boolean;
+  /** 本人主页 feed：⋮ 删除（L5 确认由调用方负责） */
+  onDeletePost?: (postId: string) => void;
+  deletePostBusyId?: string | null;
+  /** 本人主页 feed：会话内置顶（与独立页 `useCommunityMePageSessionPin` 同源） */
+  onPinToTop?: (postId: string) => void;
 }) {
   const { type, media_url, media_urls, is_video, destination } = post;
   const tags = post.tags ?? [];
@@ -66,9 +77,20 @@ export function CommunityFeedCard({
 
   return (
     <article
-      className="rounded-[var(--radius-md)] border border-cyan-500/30 border-fuchsia-500/20 bg-slate-900/70 backdrop-blur-md overflow-hidden shadow-scifi-panel motion-sub hover:border-cyan-500/50 hover:shadow-scifi-hover-soft"
+      className={`${TT_COMMUNITY_FEED_ACTION.feedCard}${onDeletePost || onPinToTop ? " relative" : ""}`}
       aria-labelledby={post.id}
+      onPointerEnter={warmCommunityPostDetailDrawer}
     >
+      {onDeletePost || onPinToTop ? (
+        <CommunityMeNotesCardOverflowMenu
+          itemId={post.id}
+          t={t}
+          onDelete={onDeletePost ?? (() => {})}
+          onPinToTop={onPinToTop ?? (() => {})}
+          deleteBusyId={deletePostBusyId}
+          showPinOption={Boolean(onPinToTop)}
+        />
+      ) : null}
       <CommunityFeedCardMedia
         post={post}
         images={images}
@@ -82,7 +104,7 @@ export function CommunityFeedCard({
             setLocalLiked(true);
           }
         }}
-        onPlayVideo={onPlayVideo}
+        onPlayVideo={onPlayVideo ?? onViewFull}
       />
       <CommunityFeedCardContent
         post={post}

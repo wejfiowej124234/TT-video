@@ -1,5 +1,5 @@
-import AuthRouteLoading from "@/components/auth/AuthRouteLoading";
+import LoginRouteLoading from "./LoginRouteLoading";
 
 export default function AuthLoginLoading() {
-  return <AuthRouteLoading variant="narrow" mainAriaLabelKey="auth_login_title" />;
+  return <LoginRouteLoading mainAriaLabelKey="auth_login_title" />;
 }

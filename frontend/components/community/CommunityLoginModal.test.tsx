@@ -17,6 +17,7 @@ describe("CommunityLoginModal", () => {
   it("dialog references title and hint by id", () => {
     render(<CommunityLoginModal open onClose={vi.fn()} t={(k) => k} />);
     const dialog = screen.getByRole("dialog", { name: "community_login_to_publish" });
+    expect(dialog.getAttribute("data-tt-community-login-for-publish")).toBe("1");
     const labelledby = dialog.getAttribute("aria-labelledby");
     const describedby = dialog.getAttribute("aria-describedby");
     expect(labelledby).toBeTruthy();

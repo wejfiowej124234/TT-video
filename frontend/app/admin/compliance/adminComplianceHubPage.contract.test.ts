@@ -22,5 +22,8 @@ describe("admin compliance hub page", () => {
     expect(src).toContain("ADMIN_PERM.READ");
     expect(src).toContain("useAdminCanWrite");
     expect(src).toContain('"data-tt-admin-compliance-hub": "1"');
+    expect(src).toContain("AdminPlatformHubRelatedNav");
+    expect(src).toContain("COMPLIANCE_HUB_RELATED_FOLD_LINKS");
+    expect(src).not.toContain("headerAside={<AdminInboxQueueBackLinks />}");
   });
 });

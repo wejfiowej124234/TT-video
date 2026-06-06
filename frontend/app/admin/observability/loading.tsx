@@ -1,5 +1,6 @@
-import AdminSubpageRouteLoading from "@/components/admin/AdminSubpageRouteLoading";
+import AdminRouteLoadingBoundary from "@/components/admin/AdminRouteLoadingBoundary";
 
-export default function AdminObservabilityLoading() {
-  return <AdminSubpageRouteLoading variant="observability" mainAriaLabelKey="admin_observability_title" />;
+/** boot 就绪时 null → AdminNavContentTransition 保留上一页；冷启动仍轻量 segment loading。 */
+export default function AdminRouteLoading() {
+  return <AdminRouteLoadingBoundary />;
 }

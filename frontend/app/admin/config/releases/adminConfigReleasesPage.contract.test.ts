@@ -14,6 +14,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminConfigReleasesFiltersCard.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminConfigReleasesTableSection.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminConfigReleasesPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "configReleasesPageModel.ts"), "utf8"),
   ].join("\n");
 }
@@ -23,6 +24,7 @@ describe("admin config releases page", () => {
 
   it("keeps admin config releases list route and query helpers", () => {
     expect(src).toContain("routes.admin.configReleases");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("parseConfigReleasesListQuery");
     expect(src).toContain("buildConfigReleasesListPath");

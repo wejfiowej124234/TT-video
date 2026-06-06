@@ -54,7 +54,7 @@ describe("AdminCrossCheckPage C-08 read-only contract", () => {
     expect(screen.getByTestId("admin-audit-read-only-scope").textContent).toContain(
       "admin_audit_tools_read_only_scope",
     );
-    expect(screen.getByText("admin_cross_check_subtitle")).toBeTruthy();
+    expect(screen.getByText("admin_cross_check_subtitle_l5")).toBeTruthy();
     await waitFor(() => {
       expect(screen.getByText("admin_cross_check_slots_region_hint")).toBeTruthy();
     });

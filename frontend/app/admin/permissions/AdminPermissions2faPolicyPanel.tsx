@@ -1,13 +1,16 @@
 "use client";
 
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import { useCallback, useEffect, useId, useState } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import {
   ADMIN_2FA_POLICY_ACTIVE_BADGE_CLASS,
+  ADMIN_FIN_SUITE_STATUS_PLACEHOLDER_CLASS,
   ADMIN_STEP_MARKER_CLASS,
-} from "@/lib/adminUi";
+  ADMIN_INNER_DIVIDER_CLASS,} from "@/lib/adminUi";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import { useAdminCanWrite } from "@/lib/admin/useAdminCanWrite";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
@@ -24,6 +27,7 @@ export function AdminPermissions2faPolicyPanel() {
   const { t } = useTranslation();
   const sectionId = useId();
   const caps = useAdminCapabilities();
+  const requestConfirm = useAdminL5ConfirmRequest();
   const { canWrite } = useAdminCanWrite(ADMIN_PERM.APPROVE);
   const [enforced, setEnforced] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -51,7 +55,7 @@ export function AdminPermissions2faPolicyPanel() {
     load();
   }, [load]);
 
-  async function onSave(next: boolean) {
+  async function onSaveImpl(next: boolean) {
     if (!canWrite) return;
     setBusy(true);
     setMsg(null);
@@ -83,12 +87,23 @@ export function AdminPermissions2faPolicyPanel() {
     }
   }
 
+  const onSave = (next: boolean) => {
+    if (!canWrite || next === enforced) return;
+    requestConfirm({
+      titleKey: next ? "admin_l5_confirm_title_danger" : "admin_l5_confirm_title_write",
+      descKey: next ? "admin_l5_confirm_desc_2fa_policy_enforce" : "admin_l5_confirm_desc_2fa_policy_relax",
+      danger: next,
+      onConfirm: () => void onSaveImpl(next),
+    });
+  };
+
   if (!caps.phase2Prep?.totp_verification_wired) return null;
 
   return (
-    <section
+    <AdminWarmL5Surface
+      as="section"
       id={sectionId}
-      className="mt-6 rounded-[var(--radius-lg)] border border-ink-200 bg-white p-4"
+      className="mt-6"
       data-tt-admin-2fa-policy-panel="1"
       aria-labelledby={`${sectionId}-title`}
     >
@@ -96,7 +111,7 @@ export function AdminPermissions2faPolicyPanel() {
         {t("admin_permissions_2fa_policy_title")}
       </h2>
       <p className="mt-1 text-small text-ink-600">{t("admin_permissions_2fa_policy_hint")}</p>
-      <ol className="mt-4 space-y-2 border-t border-ink-100 pt-4" aria-label={t("admin_permissions_2fa_steps_aria")}>
+      <ol className={`mt-4 space-y-2 ${ADMIN_INNER_DIVIDER_CLASS} pt-4`} aria-label={t("admin_permissions_2fa_steps_aria")}>
         {(["admin_permissions_2fa_step1", "admin_permissions_2fa_step2", "admin_permissions_2fa_step3"] as const).map(
           (key, i) => (
             <li key={key} className="flex gap-2 text-small text-ink-700">
@@ -128,7 +143,7 @@ export function AdminPermissions2faPolicyPanel() {
             </span>
           ) : (
             <span
-              className="rounded-full border border-ink-200 bg-ink-50 px-2 py-0.5 text-meta font-medium text-ink-700"
+              className={ADMIN_FIN_SUITE_STATUS_PLACEHOLDER_CLASS}
               data-tt-admin-2fa-staging-prep="1"
             >
               {t("admin_permissions_2fa_staging_prep")}
@@ -140,6 +155,6 @@ export function AdminPermissions2faPolicyPanel() {
       {!canWrite ? (
         <p className="mt-2 text-meta text-ink-500">{t("admin_permissions_2fa_policy_readonly")}</p>
       ) : null}
-    </section>
+    </AdminWarmL5Surface>
   );
 }

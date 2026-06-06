@@ -1,6 +1,26 @@
 /**
  * API 客户端公共能力：请求 id、响应解析、鉴权头（与 04 §三、14 一致）
+ *
+ * `apiFetch` 等限流/重试辅助在 **`./core/rateLimitAndFetch`**；本文件为历史单体实现，须 re-export 以免 `core.ts` 遮蔽 `core/` 目录。
  */
+
+export { apiFetch, fetchGetWithTransitRetry } from "./core/rateLimitAndFetch";
+export {
+  getApiRetryAfterSeconds,
+  coalesceRetryAfterSecondsFromJson,
+  retryAfterSecondsFrom429Response,
+  RATE_LIMIT_HTTP_BACKOFF_DEFAULT_MS,
+  RATE_LIMIT_HTTP_BACKOFF_CAP_MS,
+  RATE_LIMIT_HTTP_BACKOFF_MIN_MS,
+  waitMsFromRateLimitHttpSnapshot,
+} from "./core/rateLimitAndFetch";
+
+import { fetchGetWithTransitRetry } from "./core/rateLimitAndFetch";
+
+import {
+  clearAdmin2faSession,
+  getAdmin2faSessionHeaders,
+} from "../admin/admin2faSession";
 
 export function requestId(): string {
   if (typeof crypto !== "undefined" && crypto.randomUUID) return crypto.randomUUID();
@@ -15,7 +35,11 @@ export function getIdempotencyKey(): string {
 
 /** 50-F2：写请求统一头（含 x-request-id、鉴权、Idempotency-Key）；所有 POST/PUT 使用 */
 export function writeRequestHeaders(idempotencyKey?: string): Record<string, string> {
-  const h: Record<string, string> = { "x-request-id": requestId(), ...getAuthHeaders() };
+  const h: Record<string, string> = {
+    "x-request-id": requestId(),
+    ...getAuthHeaders(),
+    ...getAdmin2faSessionHeaders(),
+  };
   const key = idempotencyKey ?? getIdempotencyKey();
   h["Idempotency-Key"] = key;
   h["X-Idempotency-Key"] = key;
@@ -210,6 +234,9 @@ export async function parseResponse(res: Response): Promise<unknown> {
       else if (typeof j.error === "string" && !/forbidden/i.test(j.error)) msg = j.error;
       else msg = "您暂无权限查看该内容，请返回订单列表或自由市场。";
     }
+    if (res.status === 401) {
+      throw new Error("login_required");
+    }
     throw new Error(msg);
   }
   return parseSuccessJsonBody(text);
@@ -224,10 +251,18 @@ export function isComplianceError(e: unknown): boolean {
 /**
  * HTTP 已成功但 JSON 根级含 `status` 且不为 `ok` 时打控制台（13-1：仅供排障，勿直接展示给用户）。
  */
+const QUIET_API_STATUS_CODES = new Set([
+  "admin_capabilities_route_missing",
+  "traveltrust-api offline",
+]);
+
 export function logApiJsonStatusNotOk(context: string, data: unknown): void {
   if (typeof window === "undefined" || data == null || typeof data !== "object") return;
-  const status = (data as Record<string, unknown>).status;
+  const row = data as Record<string, unknown>;
+  const status = row.status;
   if (status !== undefined && status !== null && status !== "ok") {
+    const code = typeof row.code === "string" ? row.code : "";
+    if (context === "AdminCapabilities" && QUIET_API_STATUS_CODES.has(code)) return;
     console.error(`${context} API status not ok:`, data);
   }
 }
@@ -263,9 +298,11 @@ export async function fetchJsonWithApiStatusLog<T>(
   input: string | URL,
   init?: RequestInit
 ): Promise<{ res: Response; body: T }> {
-  const res = await fetch(input, init);
+  const res = await fetchGetWithTransitRetry(String(input), init);
   const body = (await res.json().catch(() => ({}))) as T;
-  logApiJsonStatusNotOk(context, body);
+  if (!(context === "AdminCapabilities" && !res.ok)) {
+    logApiJsonStatusNotOk(context, body);
+  }
   if (res.ok) throwUnlessApiOk(body);
   return { res, body };
 }
@@ -280,17 +317,19 @@ export function clearClientAuthStorage(): void {
   if (typeof window === "undefined") return;
   localStorage.removeItem(AUTH_USER_ID_KEY);
   localStorage.removeItem(AUTH_SESSION_TOKEN_KEY);
+  clearAdmin2faSession();
 }
 
 /** 开发/链下模式可从 localStorage 或 env 取；登录后优先带 Bearer（DB 模式下须带 token，勿仅 X-User-Id）。 */
-export function getAuthHeaders(): AuthHeaders {
+export function getAuthHeaders(): AuthHeaders & Record<string, string> {
+  const twoFa = getAdmin2faSessionHeaders();
   if (typeof window !== "undefined") {
     const tok = localStorage.getItem(AUTH_SESSION_TOKEN_KEY)?.trim();
-    if (tok) return { Authorization: `Bearer ${tok}` };
+    if (tok) return { Authorization: `Bearer ${tok}`, ...twoFa };
     const uid = localStorage.getItem(AUTH_USER_ID_KEY);
-    if (uid) return { "X-User-Id": uid };
+    if (uid) return { "X-User-Id": uid, ...twoFa };
   }
   const dev = typeof process !== "undefined" && process.env.NEXT_PUBLIC_DEV_USER_ID;
-  if (dev) return { "X-User-Id": process.env.NEXT_PUBLIC_DEV_USER_ID! };
-  return {};
+  if (dev) return { "X-User-Id": process.env.NEXT_PUBLIC_DEV_USER_ID!, ...twoFa };
+  return { ...twoFa };
 }

@@ -7,7 +7,7 @@ export default function AdminOnboardingEntitlementsPage() {
   return (
     <AdminOnboardingListPage
       titleKey="admin_onb_entitlements_title"
-      subtitleKey="admin_onb_entitlements_subtitle"
+      subtitleKey="admin_onb_entitlements_subtitle_l5"
       listUrl={routes.admin.entitlements({ limit: 100 })}
       fetchContext="AdminOnboardingEntitlements"
       detailHref={(row) =>

@@ -20,8 +20,10 @@ export function AdminFinanceExportDepthPanel({ exporting, onExport, meta }: Prop
     maintainer && meta && typeof meta.git_sha === "string" ? meta.git_sha : null;
 
   return (
-    <section
-      className={ADMIN_FIN_DEPTH_PANEL_CLASS}
+    <AdminWarmL5Surface
+      as="section"
+      className="mb-4"
+      data-tt-admin-fin-depth-panel="1"
       aria-label={t("admin_fin_export_depth_aria")}
       data-tt-admin-fin-export-depth="1"
     >
@@ -49,6 +51,6 @@ export function AdminFinanceExportDepthPanel({ exporting, onExport, meta }: Prop
         </p>
       ) : null}
       <AdminFinanceDepthHonestyFooter />
-    </section>
+    </AdminWarmL5Surface>
   );
 }

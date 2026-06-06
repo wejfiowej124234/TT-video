@@ -1,0 +1,15 @@
+# D10 · §3.2.6 defer 登记（① · 不挡主题 V1 机读闭卷）
+
+Date: 2026-05-24
+Phase: ① local
+
+| ID | 项 | defer | 理由 |
+|----|-----|-------|------|
+| G20 | 社区扩展路由 `activity` · `topic/*` · `post/*` · `me/*` 抽验 | P3 | D9 POST 已覆盖主链 12 slug；扩展路由 D11 或抽 2 条 |
+| G21 | Q2 `/orders` 浅色桥（226） | P3 | **TT-PH1-226** 路由 cross-fade 未做；Q2 目视记「桥接 defer」 |
+| G2 | market-provider/acquisition 硬刷新目视 | P3 | POST PNG 已采（`e2e:site-theme-v1-capture`）；硬刷新对照见 `LOCAL-HARD-REFRESH-V2-20260524.md` |
+| G5 | did-rank 榜内弹窗开 1 次 | ① closed | `e2e/site-theme-v1-did-rank-guide-modal.spec.ts` + `G5-did-rank-guide-modal/*.png`（API mock） |
+| G8 | P5-4 · 44px 主路径 token | ① closed | `siteThemeV1TouchTarget.contract` + Hub/周期/Feed Tab `min-h-[44px]` · 2026-05-24 |
+| 227 | `/` 微动效 · motion-reduce | P3 | **TT-PH1-227-G** 按需 |
+| 233 | 88 正文历史 cyan 句 | P3 | **TT-PH1-233** 台账同批 |
+| CINEMATIC | 电影 L5 | ② | issues-phase1-local 电影轨 defer ② |

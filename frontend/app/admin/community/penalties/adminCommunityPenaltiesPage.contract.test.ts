@@ -10,8 +10,11 @@ describe("admin community penalties page L5 (①)", () => {
     const src = [
       readFileSync(join(__dir, "page.tsx"), "utf8"),
       readFileSync(join(__dir, "AdminCommunityPenaltiesPageMain.tsx"), "utf8"),
+      readFileSync(join(__dir, "useAdminCommunityPenaltiesPage.ts"), "utf8"),
+      readFileSync(join(__dir, "..", "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     ].join("\n");
     expect(src).toContain("AdminCommunityPenaltiesPageMain");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("AdminCommunityPageShell");
     expect(src).toContain("admin_penalties_title");
     expect(src).toContain("AdminPermissionDeniedBanner");

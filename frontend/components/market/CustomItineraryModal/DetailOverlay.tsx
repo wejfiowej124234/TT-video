@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useId } from "react";
+import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
 
 export interface DetailOverlayProps {
   image: string;
@@ -34,7 +35,7 @@ export default function DetailOverlay({
       onClick={onClose}
     >
       <div
-        className="relative max-w-md w-full rounded-[var(--radius-lg)] border border-white/25 bg-slate-900/95 overflow-hidden shadow-strong"
+        className={TT_MARKETING_MARKET_DARK_PATH.customItineraryOverlayPanel}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative aspect-[4/3] bg-slate-800">
@@ -64,7 +65,7 @@ export default function DetailOverlay({
         >
           <button
             type="submit"
-            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-ink-950/60 text-slate-100 hover:bg-ref-sun/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/55"
             aria-label={closeLabel}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>

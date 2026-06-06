@@ -30,7 +30,11 @@ describe("admin theme L5 (① · U8)", () => {
     expect(adminUi).toContain("ADMIN_INBOX_TASK_CTA_ACTIVE_CLASS");
     expect(adminUi).toContain("adminShellTopNavLinkClass");
     expect(adminUi).toContain("adminTableInlineLinkClass");
-    expect(adminUi).toMatch(/ADMIN_SHELL_NAV_IDLE_CLASS[\s\S]*text-ink-600/);
+    expect(adminUi).toContain("ADMIN_TABLE_INLINE_LINK_CLASS");
+    expect(adminUi).toMatch(/ADMIN_TABLE_INLINE_LINK_CLASS[\s\S]*text-travel-700/);
+    expect(adminUi).toContain("ADMIN_TABLE_TD_MONO_CLASS");
+    expect(adminUi).toContain("ADMIN_TABLE_TD_TIMESTAMP_CLASS");
+    expect(adminUi).toMatch(/ADMIN_SHELL_NAV_IDLE_CLASS[\s\S]*text-slate-200/);
   });
 
   it("shell bar + nav group use adminShellTopNavLinkClass not travel nav colors", () => {
@@ -86,7 +90,7 @@ describe("admin theme L5 (① · U8)", () => {
 
   it("unified inbox uses ADMIN_INBOX_TASK_PENDING_CARD_CLASS not travel surface", () => {
     const inbox = readFileSync(join(fe, "app", "admin", "inbox", "AdminUnifiedInboxPageMain.tsx"), "utf8");
-    expect(inbox).toContain("ADMIN_INBOX_TASK_PENDING_CARD_CLASS");
+    expect(inbox).toMatch(/ADMIN_INBOX_TASK_PENDING_CARD_CLASS|data-tt-admin-unified-inbox-task-pending/);
     expect(inbox).toContain("ADMIN_INBOX_TASK_CTA_ACTIVE_CLASS");
     expect(inbox).not.toContain("TT_MARKETING_BTN_CONSOLE_TRUST");
     expect(inbox).not.toMatch(/border-travel-300 bg-travel-50/);
@@ -137,7 +141,7 @@ describe("admin theme L5 (① · U8)", () => {
       join(fe, "app", "admin", "approvals/AdminApprovalsInboxStrip.tsx"),
       "utf8",
     );
-    expect(approvals).toContain("ADMIN_HOME_WIDGET_CARD_CLASS");
+    expect(approvals).toMatch(/AdminWarmL5Surface|data-tt-admin-warm-l5-surface/);
     expect(approvals).toContain("data-tt-admin-approvals-inbox-pending-filter");
     expect(approvals).toContain('data-tt-admin-approvals-inbox-empty');
     expect(approvals).not.toMatch(/border-travel-200 bg-travel-50/);
@@ -146,7 +150,7 @@ describe("admin theme L5 (① · U8)", () => {
       join(fe, "app", "admin", "community/reports/AdminCommunityReportsInboxStrip.tsx"),
       "utf8",
     );
-    expect(reports).toContain("ADMIN_HOME_WIDGET_CARD_CLASS");
+    expect(reports).toMatch(/AdminWarmL5Surface|data-tt-admin-warm-l5-surface/);
     expect(reports).toContain("data-tt-admin-reports-inbox-open-filter");
     expect(reports).toContain('data-tt-admin-reports-inbox-empty');
     expect(reports).not.toMatch(/border-travel-200 bg-travel-50/);

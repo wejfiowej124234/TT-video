@@ -18,6 +18,8 @@ describe("admin phase ① data honesty anchors", () => {
 
     expect(home).toContain('data-tt-admin-home="1"');
     expect(inbox).toContain('data-tt-admin-home-inbox="1"');
+    expect(inbox).toContain("data-tt-admin-home-inbox-scope-honesty");
+    expect(inbox).toContain("admin_home_inbox_scope_honesty");
     expect(inbox).toContain("admin_home_inbox_retry");
     expect(shell).toContain("admin_shell_nav_group_onboarding");
     expect(shell).toContain("resolveAdminDeployEnv");
@@ -34,7 +36,17 @@ describe("admin phase ① data honesty anchors", () => {
     expect(capStrip).toContain("data-tt-admin-capability-strip-suppressed");
     expect(capStrip).toContain("data-tt-admin-capability-strip-collapsible");
     expect(adminShell).toContain("AdminCapabilitiesProvider");
+    expect(adminShell).toContain("AdminHomeQueuesProvider");
+    expect(adminShell).toContain("AdminL5ConfirmProvider");
     expect(readFileSync(join(FE, "lib/admin/useAdminHomeInbox.ts"), "utf8")).toContain("fetchAdminQueueList");
+    expect(readFileSync(join(FE, "lib/admin/useAdminHomeInbox.ts"), "utf8")).toContain("AdminHomeInboxProvider");
+    expect(readFileSync(join(FE, "lib/admin/useAdminHomeKpi.ts"), "utf8")).toContain("AdminHomeKpiProvider");
+    expect(
+      readFileSync(join(FE, "..", "scripts", "dev", "check-frontend-api-routes-admin.ps1"), "utf8"),
+    ).toContain("AdminHomeQueuesProvider");
+    expect(readFileSync(join(FE, "lib/admin/useAdminHomeInbox.ts"), "utf8")).toContain(
+      "runAdminQueueFetchesInSeries",
+    );
     expect(readFileSync(join(FE, "lib/admin/useAdminHomeKpi.ts"), "utf8")).toContain("ADMIN_PERM.ORDERS_READ");
     expect(readFileSync(join(FE, "lib/admin/useAdminHomeInbox.ts"), "utf8")).toContain(
       "AdminHomeInbox.reports",
@@ -74,6 +86,15 @@ describe("admin phase ① data honesty anchors", () => {
     expect(adminRbac).toContain("console_role_70");
     expect(adminRbac).toContain("admin-rbac-v3-db-prep");
     expect(adminRbac).toContain("role_matrix_preview");
+    expect(
+      readFileSync(join(FE, "..", "scripts", "dev", "smoke-admin-rbac-matrix-local.sh"), "utf8"),
+    ).toContain("smoke-admin-rbac-matrix-local");
+    expect(
+      readFileSync(
+        join(FE, "evidence", "GO_local_admin_workspace_closure", "ADMIN-L5-PHASE-GAP-TASK-LIST.md"),
+        "utf8",
+      ),
+    ).toContain("P1-ADM-CONF-02");
     expect(readFileSync(join(FE, "app/admin/permissions/AdminPermissionsPageMain.tsx"), "utf8")).toContain(
       "data-tt-admin-phase2-prep-banner",
     );
@@ -88,6 +109,9 @@ describe("admin phase ① data honesty anchors", () => {
     );
     expect(readFileSync(join(FE, "components/admin/AdminCapabilitiesShell.tsx"), "utf8")).toContain(
       "AdminRoutePermissionBanner",
+    );
+    expect(readFileSync(join(FE, "components/admin/AdminCapabilitiesShell.tsx"), "utf8")).toMatch(
+      /AdminDevChunkRecoveryNotice[\s\S]*ssr:\s*false/,
     );
     expect(readFileSync(join(FE, "components/admin/AdminShellNavGroup.tsx"), "utf8")).toContain(
       "permissionsLoaded",

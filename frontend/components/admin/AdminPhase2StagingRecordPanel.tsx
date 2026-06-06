@@ -9,7 +9,8 @@ import {
   ADMIN_PHASE2_STAGING_ONLY_COMMANDS,
   OPERATOR_GUIDE_PHASE2_PREP_COMMANDS,
 } from "@/lib/admin/adminPhase2LocalPrepCommands";
-import { ADMIN_NOTICE_INFO_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
+import { ADMIN_NOTICE_INFO_CLASS, ADMIN_PHASE2_RECORD_CODE_BLOCK_CLASS, ADMIN_PHASE2_RECORD_DETAILS_CLASS, ADMIN_PHASE2_STAGING_NOTICE_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
 
 /** CI-02 · ② Staging 收口编排诚实面板（① 仅预备 · 非 TT_PHASE2_ADMIN_STAGING: PASS）。 */
 export function AdminPhase2StagingRecordPanel() {
@@ -17,9 +18,10 @@ export function AdminPhase2StagingRecordPanel() {
   const recordCmd = ADMIN_PHASE2_STAGING_ONLY_COMMANDS[0] ?? "";
 
   return (
-    <section
+    <AdminWarmL5Surface
+      as="section"
       id="admin-phase2-staging-record"
-      className="mt-6 scroll-mt-24 rounded-[var(--radius-lg)] border border-amber-200 bg-amber-50/40 p-4"
+      className={`mt-6 scroll-mt-24 ${ADMIN_PHASE2_STAGING_NOTICE_CLASS}`}
       aria-label={t("admin_phase2_staging_record_aria")}
       data-tt-admin-phase2-staging-record-panel="1"
     >
@@ -46,7 +48,7 @@ export function AdminPhase2StagingRecordPanel() {
 
       <p className="mt-4 text-meta font-medium text-ink-700">{t("admin_phase2_staging_record_cmd_label")}</p>
       <code
-        className="mt-2 block break-all rounded-[var(--radius-sm)] border border-ink-200 bg-white p-2 font-mono text-meta text-ink-800"
+        className={ADMIN_PHASE2_RECORD_CODE_BLOCK_CLASS}
         data-tt-admin-phase2-staging-record-cmd="1"
       >
         {recordCmd}
@@ -60,13 +62,16 @@ export function AdminPhase2StagingRecordPanel() {
         dataAttr="ci02-record"
       />
 
-      <details className="mt-4 rounded-[var(--radius-md)] border border-ink-200 bg-white p-3">
+      <details className={ADMIN_PHASE2_RECORD_DETAILS_CLASS}>
         <summary className="cursor-pointer text-small font-medium text-ink-800">
           {t("admin_phase2_staging_record_prep_chain_title")}
         </summary>
         <ol className="mt-2 list-inside list-decimal space-y-1 font-mono text-meta text-ink-700">
-          {OPERATOR_GUIDE_PHASE2_PREP_COMMANDS.map((cmd) => (
-            <li key={cmd} data-tt-admin-phase2-staging-record-prep-cmd={cmd.slice(0, 24)}>
+          {OPERATOR_GUIDE_PHASE2_PREP_COMMANDS.map((cmd, index) => (
+            <li
+              key={`${index}-${cmd}`}
+              data-tt-admin-phase2-staging-record-prep-cmd={cmd.slice(0, 24)}
+            >
               {cmd}
             </li>
           ))}
@@ -82,6 +87,6 @@ export function AdminPhase2StagingRecordPanel() {
           {t("admin_phase2_backlog_anchor")}
         </Link>
       </p>
-    </section>
+    </AdminWarmL5Surface>
   );
 }

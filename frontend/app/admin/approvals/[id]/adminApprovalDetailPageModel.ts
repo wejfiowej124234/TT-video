@@ -1,9 +1,23 @@
+import type { AdminOpsDetailRelatedLink } from "@/components/admin/AdminOpsDetailRelatedFold";
+import { ADMIN_INBOX_QUEUE_APPROVALS_LIST_HREF } from "@/lib/admin/adminInboxQueueHrefs";
+import { ADMIN_OPS_OBSERVABILITY_RELATED_LINK } from "@/lib/admin/adminOpsListRelatedFoldLinks";
+
 export type AdminApprovalDetailRes = {
   status?: string;
   error?: string;
   approval_request?: Record<string, unknown>;
   meta?: unknown;
 };
+
+export const APPROVAL_DETAIL_RELATED_FOLD_LINKS: AdminOpsDetailRelatedLink[] = [
+  {
+    href: ADMIN_INBOX_QUEUE_APPROVALS_LIST_HREF,
+    labelKey: "admin_approval_detail_back_list",
+    dataTt: "admin-approval-detail-back-queue",
+  },
+  { href: "/admin/users", labelKey: "admin_approvals_linkUsers" },
+  ADMIN_OPS_OBSERVABILITY_RELATED_LINK,
+];
 
 export function fmtApprovalDetailValue(v: unknown): string {
   if (v === null || v === undefined) return "";

@@ -1,0 +1,2 @@
+/** 与后端默认 REVIEW_LOW_SCORE_COMMENT_MIN_CHARS 一致（未读 env 时） */
+export const REVIEW_BLOCK_LOW_SCORE_COMMENT_MIN = 20;

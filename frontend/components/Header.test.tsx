@@ -1,5 +1,5 @@
 /**
- * 54-S18：登录后顶栏用户菜单（个人中心、我的订单等）
+ * 54-S18：登录后顶栏用户菜单（社区资料、多重身份 Hub、我的订单等）
  */
 import React from "react";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
@@ -27,6 +27,10 @@ vi.mock("next/image", () => ({
   },
 }));
 
+vi.mock("@/components/header/headerUserMenuButtonA11y", () => ({
+  headerUserMenuButtonA11yLabel: () => "用户菜单",
+}));
+
 vi.mock("wagmi", () => ({
   useAccount: () => ({ address: undefined, isConnected: false }),
   useChainId: () => 137,
@@ -39,11 +43,13 @@ vi.mock("wagmi", () => ({
 }));
 
 const getMe = vi.fn();
+const getAuthHeaders = vi.fn();
 const postLogout = vi.fn();
 const applyLocalLogoutAfterServerOk = vi.fn();
 vi.mock("@/lib/apiClient", () => ({
   getMe: (...args: unknown[]) => getMe(...args),
   clearGetMeCache: vi.fn(),
+  getAuthHeaders: (...args: unknown[]) => getAuthHeaders(...args),
   postLogout: (...args: unknown[]) => postLogout(...args),
   applyLocalLogoutAfterServerOk: (...args: unknown[]) => applyLocalLogoutAfterServerOk(...args),
   AUTH_USER_ID_KEY: "traveltrust_user_id",
@@ -54,8 +60,9 @@ describe("Header (54-S18 UserMenu)", () => {
     mockPush.mockClear();
     postLogout.mockReset();
     applyLocalLogoutAfterServerOk.mockReset();
+    getAuthHeaders.mockReturnValue({ "X-User-Id": "test-user-1" });
     postLogout.mockResolvedValue({ status: "ok" });
-    getMe.mockResolvedValue({ user: { nickname: "MenuUser" } });
+    getMe.mockResolvedValue({ user: { id: "test-user-1", nickname: "MenuUser" } });
     localStorage.setItem("traveltrust_user_id", "test-user-1");
   });
 
@@ -94,7 +101,7 @@ describe("Header (54-S18 UserMenu)", () => {
     expect(mockPush).toHaveBeenCalledWith("/");
   });
 
-  it("opens user menu and exposes profile link to /me", async () => {
+  it("opens user menu and exposes profile via clickable profile strip", async () => {
     render(
       <LocaleProvider>
         <Header />
@@ -102,11 +109,15 @@ describe("Header (54-S18 UserMenu)", () => {
     );
     await waitFor(() => screen.getByRole("button", { name: "用户菜单" }));
     fireEvent.click(screen.getByRole("button", { name: "用户菜单" }));
-    const profile = screen.getByRole("link", { name: "个人中心" });
-    expect(profile.getAttribute("href")).toBe("/community/me");
+    await waitFor(() => {
+      const profileLinks = screen
+        .getAllByRole("link")
+        .filter((el) => el.getAttribute("href") === "/me/settings/profile");
+      expect(profileLinks).toHaveLength(1);
+    });
   });
 
-  it("user menu includes 多重身份 links (guide / provider register / steward)", async () => {
+  it("user menu exposes orders, tools section (reports + settings), and mine content links", async () => {
     render(
       <LocaleProvider>
         <Header />
@@ -114,18 +125,45 @@ describe("Header (54-S18 UserMenu)", () => {
     );
     await waitFor(() => screen.getByRole("button", { name: "用户菜单" }));
     fireEvent.click(screen.getByRole("button", { name: "用户菜单" }));
-    expect(screen.getByRole("group", { name: "多重身份" })).toBeTruthy();
-    expect(screen.getByRole("link", { name: "申请向导" }).getAttribute("href")).toBe("/guide/register");
-    expect(screen.getByRole("link", { name: "商家 / 服务方入驻" }).getAttribute("href")).toBe(
-      "/auth/register?role=provider"
+    const ordersLink = screen.getByRole("link", { name: /我的订单|订单/i });
+    expect(ordersLink.getAttribute("href")).toBe("/orders");
+    expect(screen.getByRole("link", { name: "我的举报" }).getAttribute("href")).toBe("/community/me/reports");
+    expect(screen.getByRole("link", { name: "设置" }).getAttribute("href")).toBe("/me/settings");
+    expect(screen.getByText("我的")).toBeTruthy();
+    expect(screen.getByText("工具与设置")).toBeTruthy();
+  });
+
+  it("user menu exposes my posts and saved links for published community content", async () => {
+    render(
+      <LocaleProvider>
+        <Header />
+      </LocaleProvider>
     );
-    expect(screen.getByRole("link", { name: "区域主理人申请" }).getAttribute("href")).toBe(
-      "/auth/register?role=steward"
+    await waitFor(() => screen.getByRole("button", { name: "用户菜单" }));
+    fireEvent.click(screen.getByRole("button", { name: "用户菜单" }));
+    expect(screen.getByRole("link", { name: "我的发布" }).getAttribute("href")).toBe("/community/me/posts");
+    expect(screen.getByRole("link", { name: "我的收藏" }).getAttribute("href")).toBe("/community/me/collects");
+    expect(screen.getByRole("link", { name: "赞过" }).getAttribute("href")).toBe("/community/me/likes");
+  });
+
+  it("user menu links 多重身份 / 角色与入驻 to /me/identities hub (not inline role apply links)", async () => {
+    render(
+      <LocaleProvider>
+        <Header />
+      </LocaleProvider>
     );
+    await waitFor(() => screen.getByRole("button", { name: "用户菜单" }));
+    fireEvent.click(screen.getByRole("button", { name: "用户菜单" }));
+    const hub = screen.getByRole("link", { name: "多重身份 / 角色与入驻" });
+    expect(hub.getAttribute("href")).toBe("/me/identities");
+    expect(screen.queryByRole("group", { name: "多重身份" })).toBeNull();
+    expect(screen.queryByRole("link", { name: "申请向导" })).toBeNull();
   });
 
   it("without traveltrust_user_id shows login link, not user menu", () => {
     localStorage.removeItem("traveltrust_user_id");
+    getAuthHeaders.mockReturnValue({});
+    getMe.mockResolvedValue({ user: null });
     render(
       <LocaleProvider>
         <Header />
@@ -144,7 +182,7 @@ describe("Header (54-S18 UserMenu)", () => {
     getMe.mockImplementation(() => {
       getMeCall += 1;
       if (getMeCall === 1) return slow;
-      return Promise.resolve({ user: { nickname: "Fresh" } });
+      return Promise.resolve({ user: { id: "test-user-1", nickname: "Fresh" } });
     });
 
     render(
@@ -162,7 +200,7 @@ describe("Header (54-S18 UserMenu)", () => {
       expect(screen.getByText("Fresh")).toBeTruthy();
     });
 
-    resolveSlow!({ user: { nickname: "Stale" } });
+    resolveSlow!({ user: { id: "test-user-1", nickname: "Stale" } });
     await waitFor(() => {
       expect(screen.queryByText("Stale")).toBeNull();
     });

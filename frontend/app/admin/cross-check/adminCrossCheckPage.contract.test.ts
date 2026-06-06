@@ -10,6 +10,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "page.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminCrossCheckPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminCrossCheckPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminCrossCheckPageModel.ts"), "utf8"),
   ].join("\n");
 }
@@ -18,7 +19,8 @@ describe("admin cross-check page", () => {
   const src = readModuleSources();
 
   it("keeps cross-check client fetch + normalize", () => {
-    expect(src).toContain("getAdminCrossCheck");
+    expect(src).toContain("routes.admin.crossCheck");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("normalizeAdminCrossCheckRead");
   });
 

@@ -25,7 +25,7 @@ describe("admin batch19 UX L5 (①)", () => {
   it("defines inbox perm-denied and queue row card tokens", () => {
     expect(adminUi).toContain("ADMIN_INBOX_PERM_DENIED_ROW_CLASS");
     expect(adminUi).toContain("ADMIN_QUEUE_LIST_ROW_CARD_CLASS");
-    expect(adminUi).toMatch(/ADMIN_QUEUE_LIST_ROW_CARD_CLASS[\s\S]*ADMIN_HOME_WIDGET_CARD_CLASS/);
+    expect(adminUi).toMatch(/ADMIN_QUEUE_LIST_ROW_CARD_CLASS[\s\S]*ADMIN_SURFACE_PLAIN_CLASS/);
     expect(adminUi).not.toMatch(/ADMIN_INBOX_PERM_DENIED_ROW_CLASS[\s\S]*border-dashed/);
   });
 
@@ -35,8 +35,8 @@ describe("admin batch19 UX L5 (①)", () => {
     expect(inbox).not.toMatch(/data-tt-admin-inbox-channel-denied[\s\S]*border-dashed/);
   });
 
-  it("finance suite hub depth section uses widget card token", () => {
-    expect(finHub).toContain("ADMIN_HOME_WIDGET_CARD_CLASS");
+  it("finance suite hub depth section uses warm L5 frame token", () => {
+    expect(finHub).toContain("ADMIN_WARM_L5_FRAME_CLASS");
     expect(finHub).toContain('data-tt-admin-fin-suite-hub-depth="1"');
     expect(finHub).not.toMatch(/data-tt-admin-fin-suite-hub-depth[\s\S]*rounded-\[var\(--radius-xl\)\] border border-ink-200 bg-white/);
   });

@@ -1,6 +1,11 @@
 "use client";
 
-import { ADMIN_CONSOLE_ERROR_RETRY_BTN_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import {
+  ADMIN_CONSOLE_ERROR_RETRY_BTN_CLASS,
+  ADMIN_CONSOLE_ERROR_PANEL_CLASS,
+  ADMIN_ERROR_SECONDARY_BTN_CLASS,
+  adminPageNavLinkClass,
+  ADMIN_INNER_DIVIDER_CLASS,} from "@/lib/adminUi";
 import { type FormEvent, useEffect, useId } from "react";
 import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
@@ -44,7 +49,7 @@ export default function AdminRouteErrorShell({
       data-tt-error-boundary-root={dataTtRoot}
     >
       <div
-        className={`rounded-[var(--radius-md)] border border-ink-200 bg-bg-console p-6 shadow-soft ${errorBoundaryMotionSafeClasses}`}
+        className={`${ADMIN_CONSOLE_ERROR_PANEL_CLASS} ${errorBoundaryMotionSafeClasses}`}
       >
         <p className="text-meta font-medium text-ink-500 mb-1">{t(kickerKey)}</p>
         <h1 className="text-h4 font-semibold text-ink-900">{t("common_errorTitle")}</h1>
@@ -72,7 +77,7 @@ export default function AdminRouteErrorShell({
           <Link
             href="/"
             aria-label={t("common_backToHome")}
-            className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] border border-ink-300 px-4 py-2 text-small font-medium text-ink-700 hover:bg-ink-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+            className={`inline-flex min-h-[44px] items-center justify-center ${ADMIN_ERROR_SECONDARY_BTN_CLASS} ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
           >
             {t("common_backToHome")}
           </Link>
@@ -110,7 +115,7 @@ export default function AdminRouteErrorShell({
           ariaLabelKey="app_error_relatedNav_aria"
           showGuides
           errorBoundaryCrossNavMarker
-          className="mt-6 flex flex-wrap justify-center gap-x-2 gap-y-1 border-t border-ink-200 pt-5 text-meta text-ink-600"
+          className={`mt-6 flex flex-wrap justify-center gap-x-2 gap-y-1 ${ADMIN_INNER_DIVIDER_CLASS} pt-5 text-meta text-ink-600`}
         />
       </div>
     </main>

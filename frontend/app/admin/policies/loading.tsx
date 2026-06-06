@@ -1,5 +1,6 @@
-import AdminSubpageRouteLoading from "@/components/admin/AdminSubpageRouteLoading";
+import AdminRouteLoadingBoundary from "@/components/admin/AdminRouteLoadingBoundary";
 
-export default function Loading() {
-  return <AdminSubpageRouteLoading variant="table-wide" mainAriaLabelKey="admin_policies_title" />;
+/** boot 就绪时 null → AdminNavContentTransition 保留上一页；冷启动仍轻量 segment loading。 */
+export default function AdminRouteLoading() {
+  return <AdminRouteLoadingBoundary />;
 }

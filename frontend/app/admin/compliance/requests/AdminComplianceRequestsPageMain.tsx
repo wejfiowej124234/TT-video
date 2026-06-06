@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { AdminComplianceSectionBackLinks } from "@/components/admin/AdminComplianceSectionBackLinks";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminComplianceDsarWorkflowNotice } from "@/components/admin/AdminComplianceDsarWorkflowNotice";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
@@ -13,6 +15,7 @@ import { AdminComplianceRequestsFiltersBlock } from "./AdminComplianceRequestsFi
 import { AdminComplianceRequestsMetaSection } from "./AdminComplianceRequestsMetaSection";
 import { AdminComplianceRequestsStatusBlock } from "./AdminComplianceRequestsStatusBlock";
 import { AdminComplianceRequestsTableSection } from "./AdminComplianceRequestsTableSection";
+import { COMPLIANCE_REQUESTS_LIST_RELATED_FOLD_LINKS } from "@/lib/admin/adminComplianceRelatedFoldLinks";
 import { ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
 
 /** 500：DSAR 请求台账只读（须 admin + DB）。 */
@@ -31,6 +34,7 @@ export function AdminComplianceRequestsPageMain() {
 
   const {
     loading,
+    refreshing,
     error,
     items,
     meta,
@@ -56,24 +60,17 @@ export function AdminComplianceRequestsPageMain() {
     <AdminListPageChrome
       titleId={pageTitleId}
       title={t("admin_compliance_requests_title")}
-      subtitle={t("admin_compliance_requests_subtitle")}
+      subtitle={t("admin_compliance_requests_subtitle_l5")}
       headerAside={
-        <>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link
-            href="/admin"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_compliance_requests_back")}
-          </Link>
-        </>
+        <AdminComplianceSectionBackLinks />
       }
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={COMPLIANCE_REQUESTS_LIST_RELATED_FOLD_LINKS}
+        ariaLabelKey="admin_compliance_dsar_related_aria"
+        foldSummaryKey="admin_compliance_dsar_related_fold"
+        dataTtFold="compliance-requests-list"
+      />
       <AdminComplianceDsarWorkflowNotice />
 
       <AdminComplianceRequestsFiltersBlock
@@ -110,9 +107,14 @@ export function AdminComplianceRequestsPageMain() {
 
       <AdminComplianceRequestsMetaSection meta={meta} loading={loading} error={error} />
 
-      <AdminComplianceRequestsStatusBlock loading={loading} error={error} />
+      <AdminComplianceRequestsStatusBlock
+        loading={loading && items.length === 0}
+        error={error}
+      />
 
-      {!loading && !error && <AdminComplianceRequestsTableSection items={items} />}
+      {!error && (!loading || items.length > 0) ? (
+        <AdminComplianceRequestsTableSection items={items} refreshing={refreshing} />
+      ) : null}
     </AdminListPageChrome>
   );
 }

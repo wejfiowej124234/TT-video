@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildLoginReturnPathWithQuery } from "./marketLoginReturnPath";
+import { buildLoginReturnPathWithQuery, buildPathnameSearchHref } from "./marketLoginReturnPath";
 
 describe("buildLoginReturnPathWithQuery", () => {
   it("preserves pathname and query for market travel", () => {
@@ -24,5 +24,23 @@ describe("buildLoginReturnPathWithQuery", () => {
     expect(
       buildLoginReturnPathWithQuery("/orders", "book_guide=x", "/orders"),
     ).toBe("/orders?book_guide=x");
+  });
+});
+
+describe("buildPathnameSearchHref", () => {
+  it("preserves pathname and query for router.replace", () => {
+    expect(buildPathnameSearchHref("/market", "view=orders&country=JP")).toBe(
+      "/market?view=orders&country=JP",
+    );
+  });
+
+  it("strips leading ? from search string", () => {
+    expect(buildPathnameSearchHref("/orders", "?tab=open")).toBe("/orders?tab=open");
+  });
+
+  it("returns pathname only when query empty", () => {
+    expect(buildPathnameSearchHref("/community/me/reports/r1", "")).toBe(
+      "/community/me/reports/r1",
+    );
   });
 });

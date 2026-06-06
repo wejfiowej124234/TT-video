@@ -11,6 +11,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminConfigReleaseDetailPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminConfigReleaseDetailPage.ts"), "utf8"),
     readFileSync(join(__dir, "adminConfigReleaseDetailPageModel.ts"), "utf8"),
+    readFileSync(join(__dir, "../../../../../lib/admin/useAdminStandardDetailFetch.ts"), "utf8"),
   ].join("\n");
 }
 
@@ -19,10 +20,15 @@ describe("admin config release detail page", () => {
 
   it("keeps config release route + relist nav + admin fetch + DOM anchor", () => {
     expect(src).toContain("routes.admin.configRelease");
+    expect(src).toContain("useAdminStandardDetailFetch");
+    expect(src).toContain("config-release-detail");
     expect(src).toContain("releasesListHrefFromRelistParam");
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("AdminDetailPageChrome");
     expect(src).toContain('"AdminConfigReleaseDetailPage"');
     expect(src).toContain("AdminListFetchError");
+    expect(src).toContain("AdminConfigPlatformSubnav");
+    expect(src).not.toContain("AdminInboxQueueBackLinks");
+    expect(src).not.toContain("AdminConfigPlatformBackLinks");
   });
 });

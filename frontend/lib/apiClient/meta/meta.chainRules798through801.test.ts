@@ -1,0 +1,123 @@
+/**
+ * GET /meta — chain.rule 798–801 与 798–806→728 序（与 `meta.chainRules802through806.test` 互补）
+ */
+import { describe, it, expect } from "vitest";
+import {
+  META_ROOT_TOP_KEYS,
+  META_CHAIN_RULE_798_META_TOP_KEYS_TRIPLE_THIRTY_SIX_SYNERGY_CLAUSE,
+  META_CHAIN_RULE_799_META_TOP_KEYS_728_ADJACENT_DUAL_ANCHOR_CLOSURE_CLAUSE,
+  META_CHAIN_RULE_800_799_CLOSURE_CHAIN729_AND_766_SERIES_CLAUSE,
+  META_CHAIN_RULE_801_800_CHAIN_CONTRACTS_759_TRIPLE_WITH_799_766_729_CLAUSE,
+  META_CHAIN_RULE_802_801_CONTRACTS_RULE_759_EMBED_QUAD_CLAUSE,
+  META_CHAIN_RULE_803_802_800_766_CHAIN_META_SIX_WAY_CLOSURE_CLAUSE,
+  META_CHAIN_RULE_804_803_CHAIN_ID_RULE_PREAMBLE_SEVEN_WAY_CLAUSE,
+  META_CHAIN_RULE_805_804_CONTRACTS_CHAIN_META_SECOND_KEY_EIGHT_WAY_CLAUSE,
+  META_CHAIN_RULE_806_805_CHAIN_RULE_CHAIN_META_THIRD_KEY_NINE_WAY_CLAUSE,
+} from ".";
+
+describe("META_CHAIN_RULE_798_META_TOP_KEYS_TRIPLE_THIRTY_SIX_SYNERGY_CLAUSE (798)", () => {
+  it("embeds 798 + thirty-six + meta_top_keys JSON + contract + 796/797/728 chain", () => {
+    expect(META_ROOT_TOP_KEYS.length).toBe(36);
+    expect(META_CHAIN_RULE_798_META_TOP_KEYS_TRIPLE_THIRTY_SIX_SYNERGY_CLAUSE).toContain("798");
+    expect(META_CHAIN_RULE_798_META_TOP_KEYS_TRIPLE_THIRTY_SIX_SYNERGY_CLAUSE).toContain("三十六");
+    expect(META_CHAIN_RULE_798_META_TOP_KEYS_TRIPLE_THIRTY_SIX_SYNERGY_CLAUSE).toContain("meta_top_keys");
+    expect(META_CHAIN_RULE_798_META_TOP_KEYS_TRIPLE_THIRTY_SIX_SYNERGY_CLAUSE).toContain("META_ROOT_TOP_KEYS");
+    expect(META_CHAIN_RULE_798_META_TOP_KEYS_TRIPLE_THIRTY_SIX_SYNERGY_CLAUSE).toContain("meta_top_keys_contract_728");
+    expect(META_CHAIN_RULE_798_META_TOP_KEYS_TRIPLE_THIRTY_SIX_SYNERGY_CLAUSE).toContain("796");
+    expect(META_CHAIN_RULE_798_META_TOP_KEYS_TRIPLE_THIRTY_SIX_SYNERGY_CLAUSE).toContain("797");
+    expect(META_CHAIN_RULE_798_META_TOP_KEYS_TRIPLE_THIRTY_SIX_SYNERGY_CLAUSE).toContain("728");
+  });
+});
+
+describe("META_CHAIN_RULE_799_META_TOP_KEYS_728_ADJACENT_DUAL_ANCHOR_CLOSURE_CLAUSE (799)", () => {
+  it("embeds 799 + 798 + 728 adjacent lock + dual anchor thirty-six keys", () => {
+    expect(META_ROOT_TOP_KEYS.length).toBe(36);
+    expect(META_CHAIN_RULE_799_META_TOP_KEYS_728_ADJACENT_DUAL_ANCHOR_CLOSURE_CLAUSE).toContain("799");
+    expect(META_CHAIN_RULE_799_META_TOP_KEYS_728_ADJACENT_DUAL_ANCHOR_CLOSURE_CLAUSE).toContain("798");
+    expect(META_CHAIN_RULE_799_META_TOP_KEYS_728_ADJACENT_DUAL_ANCHOR_CLOSURE_CLAUSE).toContain("728");
+    expect(META_CHAIN_RULE_799_META_TOP_KEYS_728_ADJACENT_DUAL_ANCHOR_CLOSURE_CLAUSE).toContain("meta_top_keys");
+    expect(META_CHAIN_RULE_799_META_TOP_KEYS_728_ADJACENT_DUAL_ANCHOR_CLOSURE_CLAUSE).toContain("META_ROOT_TOP_KEYS");
+    expect(META_CHAIN_RULE_799_META_TOP_KEYS_728_ADJACENT_DUAL_ANCHOR_CLOSURE_CLAUSE).toContain(
+      "meta_top_keys_contract_728",
+    );
+  });
+});
+
+describe("META_CHAIN_RULE_800_799_CLOSURE_CHAIN729_AND_766_SERIES_CLAUSE (800)", () => {
+  it("embeds 800 + 799 + 729 chain five-key + META_ROOT_TOP_KEYS fourth chain + 766", () => {
+    expect(META_ROOT_TOP_KEYS.length).toBe(36);
+    expect(META_ROOT_TOP_KEYS[3]).toBe("chain");
+    expect(META_CHAIN_RULE_800_799_CLOSURE_CHAIN729_AND_766_SERIES_CLAUSE).toContain("800");
+    expect(META_CHAIN_RULE_800_799_CLOSURE_CHAIN729_AND_766_SERIES_CLAUSE).toContain("799");
+    expect(META_CHAIN_RULE_800_799_CLOSURE_CHAIN729_AND_766_SERIES_CLAUSE).toContain("729");
+    expect(META_CHAIN_RULE_800_799_CLOSURE_CHAIN729_AND_766_SERIES_CLAUSE).toContain("766");
+    expect(META_CHAIN_RULE_800_799_CLOSURE_CHAIN729_AND_766_SERIES_CLAUSE).toContain("CHAIN_META_TOP_KEYS");
+    expect(META_CHAIN_RULE_800_799_CLOSURE_CHAIN729_AND_766_SERIES_CLAUSE).toContain("META_ROOT_TOP_KEYS");
+  });
+});
+
+describe("META_CHAIN_RULE_801_800_CHAIN_CONTRACTS_759_TRIPLE_WITH_799_766_729_CLAUSE (801)", () => {
+  it("embeds 801 + 800 + 759 contracts ten-key + 799 + 766/729 chain subtree triple proof", () => {
+    expect(META_CHAIN_RULE_801_800_CHAIN_CONTRACTS_759_TRIPLE_WITH_799_766_729_CLAUSE).toBe(
+      "801：800 串联与 GET /meta chain.contracts 非 null 时 759 chain_contracts_top_keys / chain_contracts_top_keys_contract_759 及 CHAIN_CONTRACTS_META_TOP_KEYS 十键机读同源，与 799 双锚闭环及 766/729 chain 子树三向互证",
+    );
+    expect(META_CHAIN_RULE_801_800_CHAIN_CONTRACTS_759_TRIPLE_WITH_799_766_729_CLAUSE).toContain("801");
+    expect(META_CHAIN_RULE_801_800_CHAIN_CONTRACTS_759_TRIPLE_WITH_799_766_729_CLAUSE).toContain("800");
+    expect(META_CHAIN_RULE_801_800_CHAIN_CONTRACTS_759_TRIPLE_WITH_799_766_729_CLAUSE).toContain("759");
+    expect(META_CHAIN_RULE_801_800_CHAIN_CONTRACTS_759_TRIPLE_WITH_799_766_729_CLAUSE).toContain("799");
+    expect(META_CHAIN_RULE_801_800_CHAIN_CONTRACTS_759_TRIPLE_WITH_799_766_729_CLAUSE).toContain("766");
+    expect(META_CHAIN_RULE_801_800_CHAIN_CONTRACTS_759_TRIPLE_WITH_799_766_729_CLAUSE).toContain("729");
+    expect(META_CHAIN_RULE_801_800_CHAIN_CONTRACTS_759_TRIPLE_WITH_799_766_729_CLAUSE).toContain(
+      "CHAIN_CONTRACTS_META_TOP_KEYS",
+    );
+    expect(META_CHAIN_RULE_801_800_CHAIN_CONTRACTS_759_TRIPLE_WITH_799_766_729_CLAUSE).toContain(
+      "chain_contracts_top_keys_contract_759",
+    );
+  });
+
+  it("orders 798/799/800/801/802/803/804/805/806 before 728 tail in chain.rule (parity with crates/api health_meta)", () => {
+    const chr = [
+      META_CHAIN_RULE_798_META_TOP_KEYS_TRIPLE_THIRTY_SIX_SYNERGY_CLAUSE,
+      META_CHAIN_RULE_799_META_TOP_KEYS_728_ADJACENT_DUAL_ANCHOR_CLOSURE_CLAUSE,
+      META_CHAIN_RULE_800_799_CLOSURE_CHAIN729_AND_766_SERIES_CLAUSE,
+      META_CHAIN_RULE_801_800_CHAIN_CONTRACTS_759_TRIPLE_WITH_799_766_729_CLAUSE,
+      META_CHAIN_RULE_802_801_CONTRACTS_RULE_759_EMBED_QUAD_CLAUSE,
+      META_CHAIN_RULE_803_802_800_766_CHAIN_META_SIX_WAY_CLOSURE_CLAUSE,
+      META_CHAIN_RULE_804_803_CHAIN_ID_RULE_PREAMBLE_SEVEN_WAY_CLAUSE,
+      META_CHAIN_RULE_805_804_CONTRACTS_CHAIN_META_SECOND_KEY_EIGHT_WAY_CLAUSE,
+      META_CHAIN_RULE_806_805_CHAIN_RULE_CHAIN_META_THIRD_KEY_NINE_WAY_CLAUSE,
+      "728 GET /meta 根级 meta_top_keys / meta_top_keys_contract_728 与 META_ROOT_TOP_KEYS 三十六键顺序同源",
+    ].join("；");
+    const p798 = chr.indexOf("798：");
+    const p799 = chr.indexOf("799：");
+    const p800 = chr.indexOf("800：");
+    const p801 = chr.indexOf("801：");
+    const p802 = chr.indexOf("802：");
+    const p803 = chr.indexOf("803：");
+    const p804 = chr.indexOf("804：");
+    const p805 = chr.indexOf("805：");
+    const p806 = chr.indexOf("806：");
+    const p728Tail = chr.indexOf("728 GET /meta 根级 meta_top_keys");
+    expect(p798).toBeGreaterThanOrEqual(0);
+    expect(p799).toBeGreaterThanOrEqual(0);
+    expect(p800).toBeGreaterThanOrEqual(0);
+    expect(p801).toBeGreaterThanOrEqual(0);
+    expect(p802).toBeGreaterThanOrEqual(0);
+    expect(p803).toBeGreaterThanOrEqual(0);
+    expect(p804).toBeGreaterThanOrEqual(0);
+    expect(p805).toBeGreaterThanOrEqual(0);
+    expect(p806).toBeGreaterThanOrEqual(0);
+    expect(p728Tail).toBeGreaterThanOrEqual(0);
+    expect(
+      p798 < p799 &&
+        p799 < p800 &&
+        p800 < p801 &&
+        p801 < p802 &&
+        p802 < p803 &&
+        p803 < p804 &&
+        p804 < p805 &&
+        p805 < p806 &&
+        p806 < p728Tail,
+    ).toBe(true);
+  });
+});

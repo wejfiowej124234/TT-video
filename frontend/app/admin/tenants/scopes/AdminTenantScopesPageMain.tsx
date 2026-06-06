@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 
+import { AdminInboxQueueBackLinks } from "@/components/admin/AdminInboxQueueBackLinks";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminConfigPublishApprovalNotice } from "@/components/admin/AdminConfigPublishApprovalNotice";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
@@ -20,19 +21,9 @@ export function AdminTenantScopesPageMain() {
     <AdminListPageChrome
       titleId={vm.pageTitleId}
       title={vm.t("admin_tenant_scopes_title")}
-      subtitle={vm.t("admin_tenant_scopes_subtitle")}
+      subtitle={vm.t("admin_tenant_scopes_subtitle_l5")}
       headerAside={
-        <>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {vm.t("admin_observability_title")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {vm.t("admin_tenant_scopes_back")}
-          </Link>
-        </>
+        <AdminInboxQueueBackLinks />
       }
     >
       <AdminConfigPublishApprovalNotice />
@@ -76,6 +67,7 @@ export function AdminTenantScopesPageMain() {
       <AdminTenantScopesListSection
         t={vm.t}
         loading={vm.loading}
+        refreshing={vm.refreshing}
         error={vm.error}
         appliedFilters={vm.appliedFilters}
         items={vm.items}

@@ -20,6 +20,9 @@ function readAdminHomeSources(): string {
     readFileSync(join(__dir, "AdminHomeClient.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminHomePhase2PrepNotice.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminHomeMaintainerFold.tsx"), "utf8"),
+    readFileSync(join(__dir, "AdminHomeFocusCompanion.tsx"), "utf8"),
+    readFileSync(join(__dir, "AdminHomeSystemOverview.tsx"), "utf8"),
+    readFileSync(join(__dir, "AdminHomeSystemOverviewTrends.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminHomePrimaryCtas.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminHomeDomainHealthStrip.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminCommandPalette.tsx"), "utf8"),
@@ -40,6 +43,8 @@ function readAdminHomeSources(): string {
     readFileSync(join(__dir, "AdminHomeOperatorGuide.tsx"), "utf8"),
 
     readFileSync(join(__dir, "AdminHomeInboxStrip.tsx"), "utf8"),
+    readFileSync(join(__dir, "AdminInboxWorkflowQuickNav.tsx"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "lib", "admin", "adminInboxWorkflowOrder.ts"), "utf8"),
     readFileSync(join(__dir, "AdminHomeCollapsibleSection.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminHomePinnedShortcuts.tsx"), "utf8"),
 
@@ -53,8 +58,14 @@ function readAdminHomeSources(): string {
 
     readFileSync(join(__dir, "..", "..", "lib", "admin", "adminHomeKpiMetric.ts"), "utf8"),
     readFileSync(join(__dir, "..", "..", "lib", "admin", "adminHomeInboxPendingTotal.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "lib", "admin", "adminHomeSystemOverviewMetrics.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "lib", "admin", "useAdminHomeSystemOverview.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "lib", "admin", "adminHomeOverviewFetchCache.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "lib", "admin", "adminShellUxPolicy.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "lib", "admin", "adminShellMoreNavLinks.ts"), "utf8"),
 
     readFileSync(join(__dir, "..", "..", "lib", "admin", "useAdminHomeInbox.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "lib", "admin", "adminHomeInboxQueueListCache.ts"), "utf8"),
 
     readFileSync(join(__dir, "..", "..", "lib", "admin", "useAdminHomeKpi.ts"), "utf8"),
     readFileSync(join(__dir, "..", "..", "lib", "admin", "adminHomeSectionPending.ts"), "utf8"),
@@ -109,6 +120,7 @@ describe("admin home L5", () => {
     expect(src).toContain("admin-phase2-remaining-backlog");
     expect(src).toContain("admin_home_section_collapsed_summary");
     expect(src).toContain("sectionDefaultOpenByPending");
+    expect(src).toContain("adminInboxQueueListFetchConfig");
     expect(src).toContain("communityReports");
     expect(src).toContain("data-tt-admin-home-domain-health");
     expect(src).toContain("AdminCommandPalette");
@@ -133,11 +145,82 @@ describe("admin home L5", () => {
     expect(src).toContain("rolePrimaryCtaFallback");
     expect(src).toContain("admin_home_card_tier_read");
     expect(src).toContain("data-tt-admin-home-widget-grid");
+    expect(src).toContain("adminHomeInboxFocusLayoutActive");
+    expect(src).toContain("AdminHomeSystemOverviewSection");
+    expect(src).toContain("adminHomeSystemOverviewDefaultOpen");
+    expect(src).toContain("home-system-overview");
+    expect(src).toContain("data-tt-admin-home-inbox-column");
+    expect(src).toContain("metricsHomeOverview");
+    expect(src).toContain("AdminHomeSystemOverviewTrends");
+    expect(src).toContain("admin_home_system_overview_trend_signups");
+    expect(src).toContain("writeAdminHomeInboxPendingTotalCache");
+    expect(src).toContain("resolveAdminHomeInboxPendingTotal");
+    expect(src).toContain("adminHomeKpiFoldDefaultOpen");
+    expect(src).toContain("kpiFoldDefaultOpen");
+    expect(src).toContain("data-tt-admin-home-inbox-focus");
+    expect(src).toContain("admin_home_kpi_fold_title");
+    expect(src).toContain("data-tt-admin-home-shell-preview-banner-collapsible");
+    expect(src).toContain("adminShellLinkTierBadgeVisible");
+    expect(src).toContain("adminHomeModuleCardTierBadgeVisible");
+    expect(src).toContain("data-tt-admin-home-inbox-focus-surface");
+    expect(src).toContain("admin_home_inbox_open_unified");
+    expect(src).toContain("data-tt-admin-home-kpi-embedded");
+    expect(src).toContain("ADMIN_SHELL_MORE_NAV_LINKS");
+    expect(src).toContain("AdminInboxWorkflowQuickNav");
+    expect(src).toContain("data-tt-admin-inbox-workflow-quick-nav");
+    expect(src).toContain("adminInboxWorkflowOrder");
+    expect(src).toContain("data-tt-admin-home-domain-health-embedded");
     expect(src).toContain("AdminShellSidebar");
     expect(src).toContain("data-tt-admin-shell-sidebar");
     expect(src).toContain("data-tt-admin-home-recent");
     expect(src).toContain("/admin/inbox");
     expect(src).toContain("data-tt-admin-home-inbox-unified-link");
+    expect(src).toContain("data-tt-admin-home-inbox-operator-guide");
+
+    const inboxStrip = readFileSync(join(__dir, "AdminHomeInboxStrip.tsx"), "utf8");
+    const maintainer = readFileSync(join(__dir, "AdminHomeMaintainerFold.tsx"), "utf8");
+    const sidebar = readFileSync(join(__dir, "AdminShellSidebar.tsx"), "utf8");
+    const companion = readFileSync(join(__dir, "AdminHomeFocusCompanion.tsx"), "utf8");
+    expect(inboxStrip).toContain("data-tt-admin-home-inbox-focus-defer");
+    expect(inboxStrip).toContain("data-tt-admin-inbox-focus-unified-link");
+    expect(inboxStrip).not.toContain("ADMIN_INBOX_FOCUS_CTA_CLASS");
+    expect(inboxStrip).toContain("ADMIN_INBOX_PENDING_COUNT_DISPLAY_CLASS");
+    expect(inboxStrip).toContain("data-tt-admin-home-inbox-focus-surface");
+    expect(inboxStrip).toContain("admin_home_inbox_focus_banner_aria");
+    expect(src).toContain("ADMIN_COMMAND_PALETTE_KBD_CLASS");
+    expect(src).toContain("ADMIN_WORKSPACE_TITLE_FOCUS_CLASS");
+    expect(src).toContain("ADMIN_HOME_FOCUS_CANVAS_CLASS");
+    expect(src).toContain("data-tt-admin-home-workspace-header-compact");
+    expect(src).toContain("useAdminHomeInboxFocusMode");
+    expect(src).toContain("admin_home_kpi_collapsed_summary");
+    expect(src).toContain('frame="compact"');
+    expect(src).toContain("ADMIN_HOME_SECTION_COMPACT_FRAME_CLASS");
+    expect(src).toContain("persistOpen={false}");
+    expect(src).toContain('frame={focusInbox ? "compact" : "warm"}');
+    expect(src).toContain("adminHomeMaintainerFoldVisible");
+    expect(src).toContain("AdminHomeFocusCompanion");
+    expect(src).toContain("data-tt-admin-home-focus-companion");
+    expect(src).not.toContain("home-secondary-insights");
+    expect(sidebar).toContain("suppressSidebarLeafOnWorkspaceInboxFocus");
+    expect(sidebar).toContain("adminShellNavGroupSummaryAttentionDotVisible");
+    expect(sidebar).toContain("AdminShellNavIcon");
+    expect(sidebar).toContain("ADMIN_SHELL_SIDEBAR_LINK_CLASS");
+    expect(companion).toContain("ADMIN_TEXT_FOOTNOTE_CLASS");
+    expect(companion).toContain("admin_home_focus_companion_kpi_links_prefix");
+    expect(companion).not.toContain("admin_home_focus_companion_kpi_line");
+    expect(maintainer).toContain("admin_home_maintainer_fold_summary_focus");
+    expect(inboxStrip).toContain("singleQueueFocus");
+    expect(inboxStrip).toContain("hideZeroCounts");
+    expect(inboxStrip).toContain("hasFocusWork ?");
+    expect(src).toContain("admin_home_workspace_heading");
+    expect(src).toContain("data-tt-admin-home-workspace-heading");
+    expect(src).toContain("data-tt-admin-home-shell-preview-deferred");
+    expect(inboxStrip).toContain("data-tt-admin-home-inbox-operator-guide");
+    expect(inboxStrip).toContain("/admin/operator-guide");
+
+    const operatorGuide = readFileSync(join(__dir, "AdminHomeOperatorGuide.tsx"), "utf8");
+    expect(operatorGuide).toContain("AdminWarmL5Surface");
+    expect(operatorGuide).toContain("ADMIN_STEP_MARKER_CLASS");
 
     expect(src).toContain("data-tt-admin-home-kpi");
 
@@ -146,6 +229,9 @@ describe("admin home L5", () => {
     expect(src).toContain("data-tt-admin-home-command-palette-hint");
     expect(src).toContain("data-tt-admin-home-modules-fold");
     expect(src).toContain("adminHomeModulesFoldDefaultOpen");
+    expect(src).toContain("filterAdminHomeCardsForFocusMode");
+    expect(src).toContain("data-tt-admin-home-modules-expand-all");
+    expect(src).toContain("admin_home_modules_fold_summary_focus");
     expect(src).toContain("AdminHomeInbox.reports");
     expect(src).toContain('inboxKey: "reports"');
 
@@ -186,7 +272,20 @@ describe("admin home L5", () => {
     expect(src).toContain("data-tt-admin-inbox-approve-denied-cta");
 
     expect(src).toContain("AdminActorCapabilityStrip");
-    expect(src).toContain("shouldShowAdminCapabilityStrip");
+    const capStrip = readFileSync(join(__dir, "AdminActorCapabilityStrip.tsx"), "utf8");
+    const previewNotice = readFileSync(join(__dir, "AdminShellPreviewNotice.tsx"), "utf8");
+    expect(capStrip).toContain("shouldShowAdminCapabilityStrip");
+    expect(capStrip).toContain("useAdminHomeInboxFocusMode");
+    expect(capStrip).toContain("homeInboxFocus");
+    expect(previewNotice).toContain("useAdminHomeInboxFocusMode");
+    expect(previewNotice).toContain("data-tt-admin-shell-preview-notice-deferred");
+    const inboxFocusHook = readFileSync(
+      join(__dir, "..", "..", "lib", "admin", "useAdminHomeInboxFocusMode.ts"),
+      "utf8",
+    );
+    expect(inboxFocusHook.indexOf("useAdminHomeInbox()")).toBeLessThan(
+      inboxFocusHook.indexOf("if (!onWorkspace) return false"),
+    );
     expect(src).toContain("data-tt-admin-capability-strip-suppressed");
     expect(src).toContain("data-tt-admin-capability-strip-collapsible");
     expect(src).toContain("data-tt-admin-capability-strip-permissions-link");
@@ -198,6 +297,26 @@ describe("admin home L5", () => {
     expect(src).toContain("superAdminOnly");
     expect(src).toContain('"placeholder"');
 
+    const systemOverviewSection = readFileSync(
+      join(__dir, "AdminHomeSystemOverviewSection.tsx"),
+      "utf8",
+    );
+    expect(systemOverviewSection).toContain("AdminHomeCollapsibleSection");
+    expect(systemOverviewSection).toContain("adminHomeSystemOverviewDefaultOpen");
+    expect(systemOverviewSection).toContain("persistOpen={!props.focusInbox}");
+
+    const systemOverview = readFileSync(join(__dir, "AdminHomeSystemOverview.tsx"), "utf8");
+    expect(systemOverview).toContain("admin_home_system_overview_users_memory");
+    expect(systemOverview).toContain("admin_home_system_overview_console_roles_heading");
+    expect(systemOverview).toContain("data-tt-admin-system-overview-trends-hidden");
+    expect(systemOverview).toContain("isAdminHomeMetricsPostgresSource");
+
+    const systemOverviewTrends = readFileSync(join(__dir, "AdminHomeSystemOverviewTrends.tsx"), "utf8");
+    expect(systemOverviewTrends).toContain("data-tt-admin-system-overview-trend-grid");
+    expect(systemOverviewTrends).not.toMatch(/<ul[\s\S]*data-tt-admin-system-overview-trend-grid/);
+
+    expect(src).toContain("readAdminHomeOverviewCache");
+    expect(src).toContain("invalidateAdminHomeOverviewCache");
   });
 
 });

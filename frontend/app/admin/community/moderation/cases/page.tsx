@@ -15,11 +15,8 @@ function AdminCommunityModerationCasesPageInner() {
 
 export default function AdminCommunityModerationCasesPage() {
   return (
-    <AdminSearchParamsSuspense
-      ariaLabelKey="admin_mod_cases_title"
-      backLinkLabelKey="admin_mod_cases_back"
-    >
-      <AdminCommunityPageShell currentLabelKey="admin_mod_cases_title">
+    <AdminSearchParamsSuspense ariaLabelKey="admin_mod_cases_title">
+      <AdminCommunityPageShell>
         <AdminPermissionDeniedBanner permission={ADMIN_PERM.COMMUNITY_READ} />
         <AdminCommunityModerationCasesPageInner />
       </AdminCommunityPageShell>

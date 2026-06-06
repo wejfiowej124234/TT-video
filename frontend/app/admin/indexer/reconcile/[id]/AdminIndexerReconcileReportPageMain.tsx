@@ -4,24 +4,33 @@ import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
+import { AdminFinanceSectionBackLinks } from "@/components/admin/AdminFinanceSectionBackLinks";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { AdminAlertError } from "@/components/admin/AdminAlertError";
 import { AdminMetaBuildSection, AdminMetaNoteLink } from "@/components/admin/AdminMetaBuildPanel";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
+import { INDEXER_RECONCILE_DETAIL_RELATED_FOLD_LINKS } from "@/lib/admin/adminIndexerReconcileDetailRelatedFoldLinks";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { JsonBlock, StoredReportSummaryDigest } from "./adminIndexerReconcileReportPageDigests";
 import { downloadJsonFile } from "./adminIndexerReconcileReportPageModel";
 import { useAdminIndexerReconcileReportPage } from "./useAdminIndexerReconcileReportPage";
-import { ADMIN_FOCUS_RING_CORE_CLASS, ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { ADMIN_FOCUS_RING_CORE_CLASS, ADMIN_LINK_FOCUS_CLASS, ADMIN_SHELL_SECONDARY_BTN_CLASS, adminPageNavLinkClass,
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_HUB_DEPTH_LINK_CARD_CLASS,
+  ADMIN_MOTION_CARD_HOVER_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+} from "@/lib/adminUi";
 /** 70 / 110 / 200：对账报告最小只读（须 admin）。 */
 export function AdminIndexerReconcileReportPageMain() {
   const { t } = useTranslation();
   const pageTitleId = useId();
   const reportJsonBlockHeadingId = useId();
   const reconcileDetailToolsFilterHintId = useId();
-  const { reportId, loading, error, payload, meta, refresh } = useAdminIndexerReconcileReportPage();
+  const { reportId, loading, refreshing, error, payload, meta, refresh } = useAdminIndexerReconcileReportPage();
 
   const [jsonCopied, setJsonCopied] = useState(false);
   const copyFlashTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -49,13 +58,13 @@ export function AdminIndexerReconcileReportPageMain() {
       title={t("admin_indexer_reconcile_title")}
       subtitle={
         <>
-          <p>{t("admin_indexer_reconcile_subtitle")}</p>
+          <p>{t("admin_indexer_reconcile_subtitle_l5")}</p>
           {reportId ? (
             <p className="mt-2 font-mono text-small text-ink-500 break-all">
               {t("admin_indexer_reconcile_idLabel")}: {reportId}
             </p>
           ) : null}
-          {rep && !loading && !error ? (
+          {rep && !(loading && !payload) && !error ? (
             <div className="mt-2 space-y-1">
               {headerReportType ? (
                 <p className="font-mono text-small text-ink-700">
@@ -72,109 +81,103 @@ export function AdminIndexerReconcileReportPageMain() {
         </>
       }
       headerAside={
-        <div className="flex min-w-0 flex-1 flex-col items-stretch gap-2 sm:items-end">
-          {reportId ? (
-            <p id={reconcileDetailToolsFilterHintId} className="max-w-xl text-meta text-ink-600 leading-relaxed sm:text-right">
-              {t("admin_indexer_reconcile_detail_tools_filter_hint")}
-            </p>
-          ) : null}
-          <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3">
-            {reportId ? (
-              <form
-                className="inline"
-                aria-describedby={reconcileDetailToolsFilterHintId}
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  refresh();
-                }}
-              >
-                <button
-                  type="submit"
-                  className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 px-3 py-1.5 text-small font-medium text-ink-800 hover:bg-ink-50 disabled:opacity-50 ${ADMIN_FOCUS_RING_CORE_CLASS} focus-visible:ring-offset-bg-console`}
-                  disabled={loading}
-                >
-                  {t("admin_indexer_reconcile_refresh")}
-                </button>
-              </form>
-            ) : null}
-            {reportJson ? (
-              <form
-                className="inline"
-                aria-describedby={reconcileDetailToolsFilterHintId}
-                onSubmit={async (e) => {
-                  e.preventDefault();
-                  if (typeof navigator === "undefined" || !navigator.clipboard?.writeText || !reportJson) return;
-                  try {
-                    await navigator.clipboard.writeText(reportJson);
-                    setJsonCopied(true);
-                    if (copyFlashTimer.current) clearTimeout(copyFlashTimer.current);
-                    copyFlashTimer.current = setTimeout(() => setJsonCopied(false), 2000);
-                  } catch {
-                    setJsonCopied(false);
-                  }
-                }}
-              >
-                <button
-                  type="submit"
-                  className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 px-3 py-1.5 text-small font-medium text-ink-800 hover:bg-ink-50 ${ADMIN_FOCUS_RING_CORE_CLASS} focus-visible:ring-offset-bg-console`}
-                >
-                  {jsonCopied ? t("admin_indexer_reconcile_copied") : t("admin_indexer_reconcile_copy_json")}
-                </button>
-              </form>
-            ) : null}
-            {reportJson ? (
-              <form
-                className="inline"
-                aria-describedby={reconcileDetailToolsFilterHintId}
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  downloadJsonFile(reportId, reportJson);
-                }}
-              >
-                <button
-                  type="submit"
-                  className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 px-3 py-1.5 text-small font-medium text-ink-800 hover:bg-ink-50 ${ADMIN_FOCUS_RING_CORE_CLASS} focus-visible:ring-offset-bg-console`}
-                >
-                  {t("admin_indexer_reconcile_download_json")}
-                </button>
-              </form>
-            ) : null}
-            <Link
-              href="/admin/indexer/reconcile-reports"
-              className={`${adminPageNavLinkClass()}`}
-            >
-              {t("admin_indexer_reconcile_list_link")}
-            </Link>
-            <Link
-              href="/admin/observability"
-              className={`${adminPageNavLinkClass()}`}
-            >
-              {t("admin_observability_title")}
-            </Link>
-            <Link
-              href="/admin/indexer"
-              className={`${adminPageNavLinkClass()}`}
-            >
-              {t("admin_indexer_reconcile_backIndexer")}
-            </Link>
-            <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-              {t("admin_indexer_back")}
-            </Link>
-          </div>
-        </div>
+        <AdminFinanceSectionBackLinks>
+          <Link
+            href="/admin/indexer/reconcile-reports"
+            className={adminPageNavLinkClass()}
+            data-tt-admin-indexer-reconcile-back-list="1"
+          >
+            {t("admin_indexer_reconcile_list_link")}
+          </Link>
+        </AdminFinanceSectionBackLinks>
       }
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={INDEXER_RECONCILE_DETAIL_RELATED_FOLD_LINKS}
+        ariaLabelKey="admin_finance_related_aria"
+        foldSummaryKey="admin_finance_related_fold"
+        dataTtFold="indexer-reconcile-detail"
+      />
+      {reportId ? (
+        <div className="mb-4 flex flex-wrap items-center justify-end gap-2">
+          <p id={reconcileDetailToolsFilterHintId} className="w-full text-meta text-ink-600 sm:text-end">
+            {t("admin_indexer_reconcile_detail_tools_filter_hint")}
+          </p>
+          <form
+            className="inline"
+            aria-describedby={reconcileDetailToolsFilterHintId}
+            onSubmit={(e) => {
+              e.preventDefault();
+              refresh();
+            }}
+          >
+            <button
+              type="submit"
+              className={`inline-flex min-h-[44px] items-center justify-center ${ADMIN_FILTER_RESET_BTN_CLASS} disabled:opacity-50 ${ADMIN_FOCUS_RING_CORE_CLASS} focus-visible:ring-offset-bg-console`}
+              disabled={loading && !payload}
+              data-tt-admin-indexer-reconcile-refresh="1"
+            >
+              {t("admin_indexer_reconcile_refresh")}
+            </button>
+          </form>
+          {reportJson ? (
+            <form
+              className="inline"
+              aria-describedby={reconcileDetailToolsFilterHintId}
+              onSubmit={async (e) => {
+                e.preventDefault();
+                if (typeof navigator === "undefined" || !navigator.clipboard?.writeText || !reportJson) return;
+                try {
+                  await navigator.clipboard.writeText(reportJson);
+                  setJsonCopied(true);
+                  if (copyFlashTimer.current) clearTimeout(copyFlashTimer.current);
+                  copyFlashTimer.current = setTimeout(() => setJsonCopied(false), 2000);
+                } catch {
+                  setJsonCopied(false);
+                }
+              }}
+            >
+              <button
+                type="submit"
+                className={`${ADMIN_SHELL_SECONDARY_BTN_CLASS} ${ADMIN_FOCUS_RING_CORE_CLASS} focus-visible:ring-offset-bg-console`}
+              >
+                {jsonCopied ? t("admin_indexer_reconcile_copied") : t("admin_indexer_reconcile_copy_json")}
+              </button>
+            </form>
+          ) : null}
+          {reportJson ? (
+            <form
+              className="inline"
+              aria-describedby={reconcileDetailToolsFilterHintId}
+              onSubmit={(e) => {
+                e.preventDefault();
+                downloadJsonFile(reportId, reportJson);
+              }}
+            >
+              <button
+                type="submit"
+                className={`${ADMIN_SHELL_SECONDARY_BTN_CLASS} ${ADMIN_FOCUS_RING_CORE_CLASS} focus-visible:ring-offset-bg-console`}
+              >
+                {t("admin_indexer_reconcile_download_json")}
+              </button>
+            </form>
+          ) : null}
+        </div>
+      ) : null}
       <AdminMetaBuildSection meta={meta} loading={loading} error={error} />
 
-      <section className="mt-6 rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-4" aria-label={t("admin_indexer_reconcile_payload_aria")}>
+      <AdminWarmL5Surface as="section" className="mt-6" aria-label={t("admin_indexer_reconcile_payload_aria")}>
         {!reportId ? (
           <AdminAlertError message={t("admin_indexer_reconcile_missingId")} />
-        ) : loading ? (
+        ) : loading && !payload ? (
             <AdminListLoadingStatus message={t("admin_indexer_reconcile_loading")} className="text-body text-ink-600" />
-          ) : error ? (
+          ) : error && !payload ? (
           <AdminListFetchError errorKind={error} message={adminErrorUserText(error, t)} />
         ) : payload?.report ? (
-          <div className="space-y-4">
+          <div
+            className={`space-y-4${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
+            data-tt-admin-detail-refreshing={refreshing ? "1" : undefined}
+          >
             {payload.note ? (
               <AdminMetaNoteLink>{payload.note}</AdminMetaNoteLink>
             ) : null}
@@ -183,7 +186,7 @@ export function AdminIndexerReconcileReportPageMain() {
             ) : null}
             <Link
               href="/admin/indexer/reconcile-reports"
-              className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200/70 p-1 text-left transition hover:border-ink-400 ${ADMIN_LINK_FOCUS_CLASS}`}
+              className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start ${ADMIN_HUB_DEPTH_LINK_CARD_CLASS} p-1 ${ADMIN_MOTION_CARD_HOVER_CLASS} ${ADMIN_LINK_FOCUS_CLASS}`}
               aria-labelledby={reportJsonBlockHeadingId}
             >
               <h2 id={reportJsonBlockHeadingId} className="text-small font-semibold uppercase tracking-wide text-ink-500">
@@ -197,7 +200,7 @@ export function AdminIndexerReconcileReportPageMain() {
             {t("admin_indexer_reconcile_empty")}
           </p>
         )}
-      </section>
+      </AdminWarmL5Surface>
     </AdminDetailPageChrome>
   );
 }

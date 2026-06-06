@@ -10,13 +10,27 @@ import ApiErrorAlert from "@/components/ApiErrorAlert";
 import LoadingText from "@/components/LoadingText";
 import { useTranslation } from "@/components/LocaleProvider";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
-import { marketCyanInlineLinkFocusClasses, touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
+import { marketCyanInlineLinkFocusClasses, touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { GuideDetailRouteSuspense } from "@/components/guides/GuideDetailRouteSuspense";
 import GuideOccupiedScheduleBlock from "@/components/guides/GuideOccupiedScheduleBlock";
 import BookGuideModal from "@/components/market/BookGuideModal";
 import { formatGuideDisplayName } from "@/lib/guideDisplayName";
 import { buildLoginReturnPathWithQuery } from "@/lib/marketLoginReturnPath";
 import { parseGuideDetailForRoute } from "@/lib/guideDetailRoutePayload";
+import {
+  GUIDE_DETAIL_ACCENT_TEXT_CLASS,
+  GUIDE_DETAIL_AVATAR_FALLBACK_TEXT_CLASS,
+  GUIDE_DETAIL_DID_COPY_BTN_CLASS,
+  GUIDE_DETAIL_HERO_RING_CLASS,
+  GUIDE_DETAIL_INPUT_FOCUS_CLASS,
+  GUIDE_DETAIL_PANEL_CLASS,
+  GUIDE_DETAIL_PRIMARY_BTN_CLASS,
+  GUIDE_DETAIL_PRIMARY_CTA_CLASS,
+  GUIDE_DETAIL_RETRY_PILL_CLASS,
+  GUIDE_DETAIL_SECONDARY_BTN_CLASS,
+  GUIDE_DETAIL_SECTION_HEADING_CLASS,
+  GUIDE_DETAIL_SECTION_HEADING_META_CLASS,
+} from "./guideDetailPageConstants";
 
 type GuideShape = {
   id?: string;
@@ -40,8 +54,6 @@ type GuideShape = {
   hourly_currency?: string | null;
 };
 
-const PANEL_CLASS = "rounded-[var(--radius-md)] border border-cyan-500/30 bg-ink-800/70 backdrop-blur-md shadow-scifi-panel";
-
 function CredentialCard({
   title,
   children,
@@ -53,7 +65,7 @@ function CredentialCard({
 }) {
   return (
     <div className={`rounded-[var(--radius-md)] border border-slate-600/50 bg-ink-700/50 p-4 ${className}`}>
-      <h4 className="text-meta font-semibold text-cyan-200 mb-2">{title}</h4>
+      <h4 className={GUIDE_DETAIL_SECTION_HEADING_META_CLASS}>{title}</h4>
       {children}
     </div>
   );
@@ -197,7 +209,7 @@ function GuideDetailPageInner() {
         <div className="fixed inset-0 z-0 bg-market-atmosphere pointer-events-none" aria-hidden />
         <div className="fixed inset-0 z-0 bg-web3-dot-grid opacity-[0.22] pointer-events-none" aria-hidden />
         <div className="relative z-10 w-full max-w-md">
-          <div className={`${PANEL_CLASS} p-6 w-full text-center space-y-3`}>
+          <div className={`${GUIDE_DETAIL_PANEL_CLASS} p-6 w-full text-center space-y-3`}>
             <h1 className="sr-only">{t("guideDetail_title")}</h1>
             <ApiErrorAlert message={error} tone="dark" />
             <form
@@ -210,7 +222,7 @@ function GuideDetailPageInner() {
               <button
                 type="submit"
                 aria-label={t("common_retry")}
-                className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${travelFocusRingOffset2Classes}`}
+                className={GUIDE_DETAIL_RETRY_PILL_CLASS}
               >
                 {t("common_retry")}
               </button>
@@ -241,7 +253,7 @@ function GuideDetailPageInner() {
         <div className="fixed inset-0 z-0 bg-market-atmosphere pointer-events-none" aria-hidden />
         <div className="fixed inset-0 z-0 bg-web3-dot-grid opacity-[0.22] pointer-events-none" aria-hidden />
         <div className="relative z-10 w-full max-w-md">
-          <div className={`${PANEL_CLASS} p-6 w-full text-center`}>
+          <div className={`${GUIDE_DETAIL_PANEL_CLASS} p-6 w-full text-center`}>
             <h1 className="sr-only">{t("guideDetail_notFound")}</h1>
             <p className="text-body text-slate-200">{t("guideDetail_notFound")}</p>
             <Link
@@ -291,9 +303,9 @@ function GuideDetailPageInner() {
           </p>
 
           {/* Hero：头像 + 名称 + 地区 + DID（56-S6 与 P56-002 附一致） */}
-          <section className={`${PANEL_CLASS} p-6`} aria-labelledby={guideHeroNameId}>
+          <section className={`${GUIDE_DETAIL_PANEL_CLASS} p-6`} aria-labelledby={guideHeroNameId}>
             <div className="flex flex-col sm:flex-row gap-4 items-start">
-              <div className="relative w-24 h-24 shrink-0 rounded-full overflow-hidden ring-2 ring-cyan-400/50 bg-ink-700">
+              <div className={`relative w-24 h-24 shrink-0 rounded-full overflow-hidden ${GUIDE_DETAIL_HERO_RING_CLASS} bg-ink-700`}>
                 {guide.avatar_url ? (
                   <Image
                     src={guide.avatar_url}
@@ -306,7 +318,7 @@ function GuideDetailPageInner() {
                     unoptimized
                   />
                 ) : (
-                  <span className="flex h-full w-full items-center justify-center text-h3 font-bold text-cyan-300" aria-hidden>
+                  <span className={`flex h-full w-full items-center justify-center text-h3 font-bold ${GUIDE_DETAIL_AVATAR_FALLBACK_TEXT_CLASS}`} aria-hidden>
                     {guide.city?.charAt(0) ?? t("market_guideAvatarFallback")}
                   </span>
                 )}
@@ -333,12 +345,12 @@ function GuideDetailPageInner() {
                         type="submit"
                         disabled={copyDidBusy}
                         aria-busy={copyDidBusy ? true : undefined}
-                        className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-[var(--radius-md)] border border-cyan-500/40 bg-cyan-500/10 px-3 py-1.5 text-meta font-mono text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-800 disabled:opacity-60 disabled:cursor-wait"
+                        className={GUIDE_DETAIL_DID_COPY_BTN_CLASS}
                         title={guide.wallet_address ?? undefined}
                         aria-label={copiedDid ? t("guideRegister_copied") : t("guideDetail_didCopy")}
                       >
                         <span>{didShort}</span>
-                        <span className="text-cyan-300">{copiedDid ? t("guideRegister_copied") : t("guideDetail_didCopy")}</span>
+                        <span className="text-ref-sun/95">{copiedDid ? t("guideRegister_copied") : t("guideDetail_didCopy")}</span>
                       </button>
                     </form>
                   )}
@@ -348,8 +360,8 @@ function GuideDetailPageInner() {
           </section>
 
           {/* 资质与凭证（56-S6 区域标注） */}
-          <section className={PANEL_CLASS} aria-labelledby={guideCredentialsHeadingId}>
-            <h2 id={guideCredentialsHeadingId} className="text-body font-semibold text-cyan-200 px-4 pt-4 pb-2 border-b border-slate-600/50">
+          <section className={GUIDE_DETAIL_PANEL_CLASS} aria-labelledby={guideCredentialsHeadingId}>
+            <h2 id={guideCredentialsHeadingId} className={GUIDE_DETAIL_SECTION_HEADING_CLASS}>
               {t("guideDetail_credentials")}
             </h2>
             <div className="p-4 grid gap-4 sm:grid-cols-2">
@@ -405,8 +417,8 @@ function GuideDetailPageInner() {
           </section>
 
           {/* 介绍 */}
-          <section className={PANEL_CLASS}>
-            <h2 className="text-body font-semibold text-cyan-200 px-4 pt-4 pb-2 border-b border-slate-600/50">
+          <section className={GUIDE_DETAIL_PANEL_CLASS}>
+            <h2 className={GUIDE_DETAIL_SECTION_HEADING_CLASS}>
               {t("guideDetail_intro")}
             </h2>
             <div className="p-4">
@@ -417,7 +429,7 @@ function GuideDetailPageInner() {
           {guide.id ? <GuideOccupiedScheduleBlock guideId={guide.id} /> : null}
 
           {/* 语言 · 服务 · 报价 */}
-          <section className={`${PANEL_CLASS} p-4`}>
+          <section className={`${GUIDE_DETAIL_PANEL_CLASS} p-4`}>
             {guide.languages?.length ? (
               <p className="text-small text-slate-300">
                 <span className="text-slate-300">{t("guideDetail_languages")}</span>
@@ -431,7 +443,7 @@ function GuideDetailPageInner() {
               </p>
             ) : null}
             {(guide.hourly_rate != null && guide.hourly_rate !== "") && (
-              <p className="text-small text-cyan-300 mt-2 font-medium">
+              <p className={GUIDE_DETAIL_ACCENT_TEXT_CLASS}>
                 {t("guide_detail_perHour", {
                   amount: String(guide.hourly_rate),
                   currency:
@@ -444,7 +456,7 @@ function GuideDetailPageInner() {
           </section>
 
           {/* 质押（向导本人可操作） */}
-          <section className={`${PANEL_CLASS} p-4`}>
+          <section className={`${GUIDE_DETAIL_PANEL_CLASS} p-4`}>
             <h3 className="text-small font-semibold text-slate-200 mb-2">{t("guideDetail_stakeSection")}</h3>
             <form
               className="flex gap-2 items-center flex-wrap"
@@ -462,7 +474,7 @@ function GuideDetailPageInner() {
                 value={stakeAmount}
                 onChange={(e) => setStakeAmount(e.target.value)}
                 placeholder={t("guideDetail_amountPlaceholder")}
-                className="min-h-[44px] rounded-[var(--radius-md)] border border-slate-600 bg-ink-700/80 px-3 py-2 text-small text-slate-200 placeholder:text-slate-400 w-28 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-800"
+                className={`min-h-[44px] rounded-[var(--radius-md)] border border-slate-600 bg-ink-700/80 px-3 py-2 text-small text-slate-200 placeholder:text-slate-400 w-28 ${GUIDE_DETAIL_INPUT_FOCUS_CLASS}`}
                 autoComplete="off"
                 aria-label={t("guideDetail_amountPlaceholder")}
               />
@@ -470,7 +482,7 @@ function GuideDetailPageInner() {
                 type="submit"
                 disabled={stakeLoading || !stakeAmount.trim()}
                 aria-busy={stakeLoading ? true : undefined}
-                className="rounded-[var(--radius-md)] border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-small font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-800"
+                className={GUIDE_DETAIL_PRIMARY_BTN_CLASS}
               >
                 {stakeLoading ? t("guideDetail_submitting") : t("guideDetail_stake")}
               </button>
@@ -488,14 +500,14 @@ function GuideDetailPageInner() {
               <button
                 type="button"
                 onClick={() => setBookGuideOpen(true)}
-                className="rounded-[var(--radius-md)] border border-cyan-400/50 bg-cyan-500/30 px-5 py-3 text-small font-medium text-cyan-200 hover:text-cyan-100 hover:bg-cyan-500/40 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-800"
+                className={GUIDE_DETAIL_PRIMARY_CTA_CLASS}
               >
                 {t("guideDetail_orderLink")}
               </button>
             )}
             <Link
               href="/market"
-              className="rounded-[var(--radius-md)] border border-cyan-400/40 bg-ink-700/60 px-5 py-3 text-small text-slate-300 hover:bg-ink-600/60 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-800"
+              className={GUIDE_DETAIL_SECONDARY_BTN_CLASS}
             >
               {t("market_meta_title")}
             </Link>

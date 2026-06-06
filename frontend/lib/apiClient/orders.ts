@@ -124,6 +124,23 @@ export async function getOrderChainSyncStatus(id: string): Promise<unknown> {
 }
 
 /** 53 行程修改写回 — PATCH /api/v1/orders/:id/itinerary（04 已登记；仅参与方、未 Escrowed 前可改；body 与 52 统一表一致） */
+/** PATCH /api/v1/orders/:id/guide — 为草稿订单选定向导 */
+export async function patchOrderGuide(
+  orderId: string,
+  guideId: string,
+  idempotencyKey?: string
+): Promise<unknown> {
+  const res = await fetch(apiUrl(routes.orderPatchGuide(orderId)), {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json", ...writeRequestHeaders(idempotencyKey) },
+    body: JSON.stringify({ guide_id: guideId.trim() }),
+  });
+  const data = await parseResponse(res);
+  logApiJsonStatusNotOk("patchOrderGuide", data);
+  throwUnlessApiOk(data);
+  return data;
+}
+
 export async function patchOrderItinerary(
   orderId: string,
   body: Record<string, unknown>,

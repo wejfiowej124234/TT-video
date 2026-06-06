@@ -1,16 +1,16 @@
 "use client";
 
+import { AdminDetailContentPanel } from "@/components/admin/AdminDetailContentPanel";
 import Link from "next/link";
 import type { FormEvent } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import {
-  ADMIN_FILTER_CARD_CLASS,
   ADMIN_FORM_FIELD_FOCUS_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
   adminPageNavLinkClass,
-} from "@/lib/adminUi";
+  ADMIN_FORM_CONTROL_MD_CLASS,} from "@/lib/adminUi";
 type AdminIndexerReconcileJumpSectionProps = {
   indexerReconcileOpenFilterHintId: string;
   reconcileId: string;
@@ -34,9 +34,10 @@ export function AdminIndexerReconcileJumpSection({
   };
 
   return (
-    <section
+    <AdminDetailContentPanel
+      as="section"
       id="admin-indexer-reconcile"
-      className={`mt-8 ${ADMIN_FILTER_CARD_CLASS} shadow-soft scroll-mt-24`}
+      className="mt-8 scroll-mt-24"
       aria-label={t("admin_indexer_reconcile_sectionTitle")}
     >
       <h2 className="text-small font-semibold uppercase tracking-wide text-ink-500">{t("admin_indexer_reconcile_sectionTitle")}</h2>
@@ -60,7 +61,7 @@ export function AdminIndexerReconcileJumpSection({
             name="report_id"
             value={reconcileId}
             onChange={(e) => setReconcileId(e.target.value)}
-            className={`min-h-[44px] w-full rounded-[var(--radius-md)] border border-ink-200 bg-white px-3 py-2 font-mono text-body text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS} focus-visible:ring-offset-white`}
+            className={`min-h-[44px] w-full ${ADMIN_FORM_CONTROL_MD_CLASS} px-3 py-2 font-mono text-body text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS} focus-visible:ring-offset-white`}
             placeholder={t("admin_indexer_reconcile_placeholder")}
             autoComplete="off"
           />
@@ -73,6 +74,6 @@ export function AdminIndexerReconcileJumpSection({
           {t("admin_indexer_reconcile_open")}
         </button>
       </form>
-    </section>
+    </AdminDetailContentPanel>
   );
 }

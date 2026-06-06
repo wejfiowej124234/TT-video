@@ -2,29 +2,28 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState, type FormEvent } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
-import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import { useAdminFormErrorState } from "@/lib/admin/adminFormErrorState";
 import {
-  type AdminFetchErrorKind,
-  adminFetchErrorKind,
   adminFetchJson,
   adminLogApiJsonStatus,
   adminUserFacingErrorFromUnknown,
   logAdminFetch,
 } from "@/lib/adminFetchDisplay";
+import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
 import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders, writeRequestHeaders } from "@/lib/apiClient";
+import { writeRequestHeaders } from "@/lib/apiClient";
 import {
   buildSchedulerListPath,
   parseSchedulerListQuery,
   sanitizeJobCodeInput,
   type AdminSchedulerJobRerunRes,
   type AdminSchedulerJobRow,
-  type AdminSchedulerJobsListRes,
 } from "./adminSchedulerJobsPageModel";
 
 export function useAdminSchedulerJobsPage() {
   const { t } = useTranslation();
+  const requestConfirm = useAdminL5ConfirmRequest();
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -33,12 +32,24 @@ export function useAdminSchedulerJobsPage() {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<AdminSchedulerJobRow[]>([]);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
   const [reloadTick, setReloadTick] = useState(0);
+
+  const listUrl = useMemo(
+    () =>
+      routes.admin.schedulerJobs({
+        limit,
+        job_code: jobCode || undefined,
+      }),
+    [limit, jobCode],
+  );
+
+  const { items, meta, appliedFilters, loading, refreshing, error } =
+    useAdminStandardListFetch<AdminSchedulerJobRow>({
+      scope: "scheduler-jobs",
+      context: "AdminSchedulerJobsPage",
+      listUrl,
+      refreshToken: reloadTick,
+    });
 
   const [draftLimit, setDraftLimit] = useState(String(limit));
   const [draftJobCode, setDraftJobCode] = useState(jobCode);
@@ -65,41 +76,6 @@ export function useAdminSchedulerJobsPage() {
     setRerunCode(code.trim());
   };
 
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-
-    const headers: Record<string, string> = { "x-request-id": `admin-scheduler-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    const path = routes.admin.schedulerJobs({
-      limit,
-      job_code: jobCode || undefined,
-    });
-
-    adminFetchJson<AdminSchedulerJobsListRes>("AdminSchedulerJobsPage", apiUrl(path), { headers })
-      .then(({ res, body }) => {
-        if (!res.ok) {
-          throw new Error(body.error || `request_failed_${res.status}`);
-        }
-        return body;
-      })
-      .then((body) => {
-        setItems(Array.isArray(body.items) ? body.items : []);
-        setMeta(isAdminMetaRecord(body.meta) ? body.meta : null);
-        setAppliedFilters(body.applied_filters ?? null);
-      })
-      .catch((e: unknown) => {
-        logAdminFetch("AdminSchedulerJobsPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
-  }, [limit, jobCode, reloadTick]);
-
   const apply = (e?: FormEvent) => {
     e?.preventDefault();
     const n = Number.parseInt(draftLimit.trim(), 10);
@@ -120,7 +96,7 @@ export function useAdminSchedulerJobsPage() {
 
   const hasJobCodeFilter = Boolean(jobCode);
 
-  const submitRerun = useCallback(() => {
+  const submitRerunImpl = useCallback(() => {
     const code = rerunCode?.trim();
     if (!code) return;
     setRerunSubmitting(true);
@@ -166,11 +142,24 @@ export function useAdminSchedulerJobsPage() {
       .finally(() => setRerunSubmitting(false));
   }, [closeRerun, rerunCode, rerunReason, rerunFormError, t]);
 
+  const submitRerun = useCallback(() => {
+    const code = rerunCode?.trim();
+    if (!code) return;
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_danger",
+      descKey: "admin_l5_confirm_desc_scheduler_rerun",
+      descVars: { code },
+      danger: true,
+      onConfirm: () => submitRerunImpl(),
+    });
+  }, [rerunCode, requestConfirm, submitRerunImpl]);
+
   return {
     t,
     limit,
     jobCode,
     loading,
+    refreshing,
     error,
     items,
     meta,

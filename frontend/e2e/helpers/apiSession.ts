@@ -7,6 +7,10 @@ export function defaultApiBase(): string {
   return (process.env.PLAYWRIGHT_API_BASE_URL ?? `http://127.0.0.1:${apiPort}`).replace(/\/$/, "");
 }
 
+export function defaultApiHealthUrl(): string {
+  return process.env.PLAYWRIGHT_API_HEALTH_URL ?? `http://127.0.0.1:${apiPort}/health`;
+}
+
 export async function seedTestAccounts(request: APIRequestContext, apiBase: string): Promise<void> {
   await request
     .post(`${apiBase}/auth/seed-test-accounts`, {
@@ -72,6 +76,7 @@ export async function gotoWithBearerSession(
   await page.addInitScript(
     ([tok, uid]) => {
       try {
+        sessionStorage.removeItem("traveltrust_dev_api_offline_v1");
         localStorage.setItem(LS_TOKEN_KEY, tok);
         if (uid) {
           localStorage.setItem(LS_USER_KEY, uid);
@@ -83,5 +88,140 @@ export async function gotoWithBearerSession(
     },
     [token, userId] as [string, string],
   );
-  await page.goto(path);
+  await page.goto(path, {
+    waitUntil: "domcontentloaded",
+    timeout: Number(process.env.PLAYWRIGHT_GOTO_TIMEOUT_MS ?? 120_000),
+  });
+}
+
+export type BearerSessionCredentials = { token: string; userId?: string };
+
+export async function seedAndLoginTouristTestCredentials(
+  request: APIRequestContext,
+  apiBase: string,
+  password = "Test123!",
+): Promise<BearerSessionCredentials | null> {
+  await seedTestAccounts(request, apiBase);
+  return apiLoginReturnCredentials(request, apiBase, "tourist@test.com", password);
+}
+
+export async function seedAndLoginGuideTestCredentials(
+  request: APIRequestContext,
+  apiBase: string,
+  password = "Test123!",
+): Promise<BearerSessionCredentials | null> {
+  await seedTestAccountsAndReleaseGuideSlot(request, apiBase);
+  return apiLoginReturnCredentials(request, apiBase, "guide@test.com", password);
+}
+
+export async function apiLoginReturnRoleEnvelope(
+  request: APIRequestContext,
+  apiBase: string,
+  email: string,
+  password: string,
+): Promise<{ token: string; userId: string; role?: string } | null> {
+  const res = await request.post(`${apiBase.replace(/\/$/, "")}/auth/login`, {
+    headers: { "Content-Type": "application/json" },
+    data: { email, password },
+  });
+  if (!res.ok()) return null;
+  const body = (await res.json()) as { token?: string; user_id?: string; role?: string };
+  const token = body.token?.trim();
+  if (!token) return null;
+  return { token, userId: body.user_id?.trim() ?? "", role: body.role?.trim() };
+}
+
+export async function injectBearerSessionInPage(
+  page: Page,
+  session: BearerSessionCredentials,
+): Promise<void> {
+  const token = session.token;
+  const userId = session.userId?.trim() ?? "";
+  await page.evaluate(
+    ([tok, uid]) => {
+      try {
+        sessionStorage.removeItem("traveltrust_dev_api_offline_v1");
+        localStorage.setItem("traveltrust_session_token", tok);
+        if (uid) {
+          localStorage.setItem("traveltrust_user_id", uid);
+          document.cookie = `traveltrust_user_id=${encodeURIComponent(uid)}; Path=/; SameSite=Lax`;
+        }
+      } catch {
+        /* ignore */
+      }
+    },
+    [token, userId] as [string, string],
+  );
+}
+
+/**
+ * Next 冷启时首屏 `getMe` 可能触发 dev-api-offline 并清 token；Feed 壳就绪后重注入并等浏览器侧 `GET /api/v1/me` 200。
+ * 已登录页重注入时 `/me` 可能不再发起 — 回退 `fetch('/api/v1/me')` 探针。
+ */
+export async function ensureCommunityBrowserSessionAccepted(
+  page: Page,
+  session: BearerSessionCredentials,
+  timeoutMs = 90_000,
+): Promise<void> {
+  const token = session.token.trim();
+  if (!token) throw new Error("community_session_not_accepted");
+
+  await injectBearerSessionInPage(page, session);
+  await page.evaluate(() => {
+    window.dispatchEvent(new CustomEvent("traveltrust:auth-change"));
+  });
+
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    const slice = Math.min(8_000, deadline - Date.now());
+    if (slice <= 0) break;
+    try {
+      await page.waitForResponse((res) => {
+        if (res.request().method() !== "GET" || res.status() !== 200) return false;
+        try {
+          return new URL(res.url()).pathname.replace(/\/+$/, "") === "/api/v1/me";
+        } catch {
+          return false;
+        }
+      }, { timeout: slice });
+      return;
+    } catch {
+      const ok = await page.evaluate(async (tok) => {
+        const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+        for (let attempt = 0; attempt < 4; attempt++) {
+          try {
+            const r = await fetch("/api/v1/me", {
+              headers: { Authorization: `Bearer ${tok}`, "Content-Type": "application/json" },
+            });
+            if (r.status === 200) return true;
+            if ([502, 503, 504].includes(r.status) && attempt < 3) {
+              await sleep(600 * (attempt + 1));
+              continue;
+            }
+          } catch {
+            if (attempt < 3) {
+              await sleep(600 * (attempt + 1));
+              continue;
+            }
+          }
+        }
+        return false;
+      }, token);
+      if (ok) return;
+      await page.waitForTimeout(400);
+    }
+  }
+  throw new Error("community_session_not_accepted");
+}
+
+export async function clearBearerSessionInBrowser(page: Page): Promise<void> {
+  await page.evaluate(() => {
+    try {
+      localStorage.removeItem("traveltrust_session_token");
+      localStorage.removeItem("traveltrust_user_id");
+      document.cookie = "traveltrust_user_id=; Path=/; Max-Age=0; SameSite=Lax";
+    } catch {
+      /* ignore */
+    }
+  });
 }

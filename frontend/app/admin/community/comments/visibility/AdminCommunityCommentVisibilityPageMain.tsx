@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useId } from "react";
 
+import { AdminCommunityListHeaderAside } from "@/components/admin/AdminCommunityListHeaderAside";
 import { AdminSuccessBanner } from "@/components/admin/AdminSuccessBanner";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
 import { AdminAlertError } from "@/components/admin/AdminAlertError";
@@ -16,7 +17,9 @@ import {
   COMMENT_VISIBILITY_STATUSES,
 } from "./adminCommunityCommentVisibilityPageModel";
 import { useAdminCommunityCommentVisibilityPage } from "./useAdminCommunityCommentVisibilityPage";
-import { ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_LINK_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_LINK_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS, adminPageNavLinkClass, ADMIN_FILTER_CARD_CLASS,
+  ADMIN_FILTER_INPUT_SM_CLASS,
+  ADMIN_FILTER_FIELD_LABEL_CLASS} from "@/lib/adminUi";
 
 /** 160：评论可见性 PATCH（须 admin + DB）。 */
 export function AdminCommunityCommentVisibilityPageMain() {
@@ -43,28 +46,18 @@ export function AdminCommunityCommentVisibilityPageMain() {
     <AdminDetailPageChrome
       titleId={pageTitleId}
       title={t("admin_comment_vis_title")}
-      subtitle={t("admin_comment_vis_subtitle")}
+      subtitle={t("admin_comment_vis_subtitle_l5")}
       headerAside={
-        <>
+        <AdminCommunityListHeaderAside>
           <Link href="/admin/community/reports" className={`${adminPageNavLinkClass()}`}>
             {t("admin_penalties_linkReports")}
-          </Link>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_community_reports_back")}
-          </Link>
-        </>
+          </Link></AdminCommunityListHeaderAside>
       }
     >
       <AdminMetaBuildSection meta={buildMeta} loading={buildLoading} error={buildError} />
 
       <section
-        className="mt-6 rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-4 space-y-4 max-w-md"
+        className={`mt-6 ${ADMIN_FILTER_CARD_CLASS} space-y-4 max-w-md`}
         aria-label={t("admin_comment_vis_form_aria")}
       >
         <p id={commentVisFilterHintId} className="text-meta text-ink-600">
@@ -78,24 +71,24 @@ export function AdminCommunityCommentVisibilityPageMain() {
             submit();
           }}
         >
-          <label className="block text-small text-ink-700">
+          <label className={`block ${ADMIN_FILTER_FIELD_LABEL_CLASS}`}>
             {t("admin_comment_vis_commentId")}
             <input
               type="text"
               name="comment_id"
               value={commentId}
               onChange={(e) => setCommentId(e.target.value)}
-              className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 font-mono text-meta ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1 font-mono text-small text-ink-800 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               autoComplete="off"
             />
           </label>
-          <label className="block text-small text-ink-700">
+          <label className={`block ${ADMIN_FILTER_FIELD_LABEL_CLASS}`}>
             {t("admin_comment_vis_status")}
             <select
               name="visibility_status"
               value={visibility}
               onChange={(e) => setVisibility(e.target.value as (typeof COMMENT_VISIBILITY_STATUSES)[number])}
-              className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 font-mono ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1 font-mono ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             >
               {COMMENT_VISIBILITY_STATUSES.map((v) => (
                 <option key={v} value={v}>

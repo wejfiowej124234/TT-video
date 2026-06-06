@@ -8,10 +8,12 @@ import { useTranslation } from "@/components/LocaleProvider";
 import { AdminAppliedFiltersBanner } from "@/components/admin/AdminAppliedFiltersBanner";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
 import { AdminMetaBuildSection } from "@/components/admin/AdminMetaBuildPanel";
 import { ADMIN_EMPTY_NEXT_GUIDES_EMPTY } from "@/lib/admin/adminListEmptyStateNextLinks";
+import { GUIDES_LIST_RELATED_FOLD_LINKS } from "@/lib/admin/adminOpsListRelatedFoldLinks";
 import { formatAdminAppliedFiltersHuman } from "@/lib/admin/formatAdminAppliedFiltersHuman";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
 import { shortEvmAddress } from "@/lib/formatEvmAddress";
@@ -26,8 +28,18 @@ import {
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
   adminPageNavLinkClass,
-  adminTableInlineLinkClass,
-} from "@/lib/adminUi";
+  adminTableRowPrimaryActionClass,
+  adminTableRowSecondaryActionClass,
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_FILTER_INPUT_MD_CLASS,
+  ADMIN_TABLE_SECTION_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,
+  ADMIN_FILTER_ACTIONS_CLASS,
+  ADMIN_FILTER_FIELD_LABEL_CLASS,
+  ADMIN_FILTER_GRID_CLASS,
+  ADMIN_FILTER_HINT_CLASS,
+  ADMIN_FILTER_TITLE_CLASS} from "@/lib/adminUi";
 
 type GuideSortKey = "status" | "updated_at" | "city";
 
@@ -39,6 +51,7 @@ export function AdminGuidesPageMain() {
   const adminListApplyResetHintId = useId();
   const {
     loading,
+    refreshing,
     error,
     items,
     appliedFilters,
@@ -66,21 +79,14 @@ export function AdminGuidesPageMain() {
     <AdminListPageChrome
       titleId={pageTitleId}
       title={t("admin_guides_title")}
-      subtitle={t("admin_guides_subtitle")}
-      headerAside={
-        <>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_schema_back")}
-          </Link>
-        </>
-      }
+      subtitle={t("admin_guides_subtitle_l5")}
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={GUIDES_LIST_RELATED_FOLD_LINKS}
+        ariaLabelKey="admin_ops_list_related_aria"
+        foldSummaryKey="admin_ops_list_related_fold"
+        dataTtFold="guides-list"
+      />
       <div className={`mt-6 ${ADMIN_FILTER_CARD_CLASS}`}>
         <form
           id="admin-guides-filter-form"
@@ -92,15 +98,15 @@ export function AdminGuidesPageMain() {
           }
           onSubmit={apply}
         >
-          <h2 className="text-body font-medium text-ink-800">{t("admin_guides_filters_title")}</h2>
-          <p id={adminListApplyResetHintId} className="mt-2 text-meta text-ink-600 leading-relaxed">
+          <h2 className={ADMIN_FILTER_TITLE_CLASS}>{t("admin_guides_filters_title")}</h2>
+          <p id={adminListApplyResetHintId} className={ADMIN_FILTER_HINT_CLASS}>
             {t("admin_list_filters_apply_reset_hint")}
           </p>
-          <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            <label className="text-small text-ink-700">
+          <div className={ADMIN_FILTER_GRID_CLASS}>
+            <label className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
               {t("admin_guides_limit_label")}
               <input
-                className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-md)] border border-ink-300 bg-white px-3 py-2 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_MD_CLASS} px-3 py-2 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 type="number"
                 min={1}
                 max={500}
@@ -108,10 +114,10 @@ export function AdminGuidesPageMain() {
                 onChange={(e) => setDraftLimit(e.target.value)}
               />
             </label>
-            <label className="text-small text-ink-700">
+            <label className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
               {t("admin_guides_status_filter_label")}
               <input
-                className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-md)] border border-ink-300 bg-white px-3 py-2 font-mono text-meta ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_MD_CLASS} px-3 py-2 font-mono text-small text-ink-800 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 value={draftStatus}
                 onChange={(e) => setDraftStatus(e.target.value)}
                 placeholder={t("admin_guides_status_placeholder")}
@@ -119,7 +125,7 @@ export function AdminGuidesPageMain() {
             </label>
           </div>
         </form>
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className={ADMIN_FILTER_ACTIONS_CLASS}>
           <button form="admin-guides-filter-form" className={ADMIN_PRIMARY_ACTION_BTN_CLASS} type="submit">
             {t("admin_guides_apply")}
           </button>
@@ -132,7 +138,7 @@ export function AdminGuidesPageMain() {
             }}
           >
             <button
-              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 px-3 py-2 text-small font-medium text-ink-700 hover:bg-ink-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`inline-flex min-h-[44px] items-center justify-center ${ADMIN_FILTER_RESET_BTN_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               type="submit"
             >
               {t("admin_guides_reset")}
@@ -141,7 +147,7 @@ export function AdminGuidesPageMain() {
         </div>
       </div>
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <AdminListLoadingStatus message={t("admin_loading")} />
       ) : null}
 
@@ -163,12 +169,13 @@ export function AdminGuidesPageMain() {
         />
       ) : null}
 
-      {!loading && !error && items.length > 0 && (
+      {!loading && items.length > 0 && (
         <section
-          className="mt-6 overflow-hidden rounded-[var(--radius-xl)] border border-ink-200 bg-white"
+          className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
           aria-label={t("admin_guides_table_aria")}
+          data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
         >
-          <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+          <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
             <thead className={ADMIN_TABLE_THEAD_CLASS}>
               <tr>
                 <th scope="col" className={`${ADMIN_TABLE_TH_CELL_CLASS} font-medium`}>
@@ -212,20 +219,20 @@ export function AdminGuidesPageMain() {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-ink-100 text-ink-800">
+            <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-800`}>
               {sortedItems.map((row) => {
                 const w = row.wallet_address?.trim();
                 const hasDocs =
                   !!(row.id_photo_url?.trim() || row.language_cert_url?.trim() || row.guide_license_url?.trim());
                 return (
                   <tr key={row.id} className={ADMIN_TABLE_ROW_CLASS}>
-                    <td className="px-4 py-2 font-mono text-meta">{row.id}</td>
-                    <td className="px-4 py-2 font-mono text-meta">{row.user_id}</td>
+                    <td className="px-4 py-2 font-mono text-small text-ink-800">{row.id}</td>
+                    <td className="px-4 py-2 font-mono text-small text-ink-800">{row.user_id}</td>
                     <td className="px-4 py-2">{row.city ?? t("admin_em_dash")}</td>
                     <td className="px-4 py-2">{row.country_code ?? t("admin_em_dash")}</td>
                     <td className="px-4 py-2">{row.status ?? t("admin_em_dash")}</td>
                     <td className="px-4 py-2 tabular-nums">{row.stake_amount ?? t("admin_em_dash")}</td>
-                    <td className="px-4 py-2 font-mono text-meta">{w ? shortEvmAddress(w) : t("admin_em_dash")}</td>
+                    <td className="px-4 py-2 font-mono text-small text-ink-800">{w ? shortEvmAddress(w) : t("admin_em_dash")}</td>
                     <td className="px-4 py-2 text-meta">
                       {hasDocs ? t("admin_guides_docsPresent") : t("admin_guides_docsMissing")}
                     </td>
@@ -233,7 +240,7 @@ export function AdminGuidesPageMain() {
                     <td className="px-4 py-3">
                       <Link
                         href={`/admin/guides/${encodeURIComponent(row.id)}`}
-                        className={`${adminTableInlineLinkClass()}`}
+                        className={adminTableRowPrimaryActionClass()}
                         aria-label={t("admin_guides_detail_row_aria", { id: row.id })}
                       >
                         {t("admin_ops_guideDetailAdmin")}
@@ -242,7 +249,7 @@ export function AdminGuidesPageMain() {
                     <td className="px-4 py-2">
                       <Link
                         href={`/guides/${encodeURIComponent(row.id)}`}
-                        className={adminTableInlineLinkClass()}
+                        className={adminTableRowSecondaryActionClass()}
                         aria-label={t("admin_guides_public_row_aria", { id: row.id })}
                       >
                         {t("admin_guides_linkPublic")}

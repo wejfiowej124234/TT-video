@@ -2,7 +2,10 @@
 
 import { RELEASE_KEY_MAX_LEN } from "./configReleasesPageModel";
 import type { AdminConfigReleasesPageViewModel } from "./useAdminConfigReleasesPage";
-import {ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS } from "@/lib/adminUi";
+import {ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_FILTER_INPUT_SM_CLASS,
+  ADMIN_FILTER_HINT_CLASS} from "@/lib/adminUi";
 type Props = { vm: AdminConfigReleasesPageViewModel };
 
 export function AdminConfigReleasesFiltersCard({ vm }: Props) {
@@ -31,7 +34,7 @@ export function AdminConfigReleasesFiltersCard({ vm }: Props) {
   } = vm;
 
   return (
-    <div className="mt-6 rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-4 space-y-3">
+    <div className={`mt-6 ${ADMIN_FILTER_CARD_CLASS} space-y-3`}>
       <form
         id="admin-config-releases-filter-form"
         className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end"
@@ -49,7 +52,7 @@ export function AdminConfigReleasesFiltersCard({ vm }: Props) {
         }
         onSubmit={apply}
       >
-        <p id={adminListApplyResetHintId} className="w-full text-meta text-ink-600 leading-relaxed sm:basis-full">
+        <p id={adminListApplyResetHintId} className={`w-full ${ADMIN_FILTER_HINT_CLASS} sm:basis-full`}>
           {t("admin_list_filters_apply_reset_hint")}
         </p>
         <div className="min-w-[10rem] flex-1">
@@ -58,7 +61,7 @@ export function AdminConfigReleasesFiltersCard({ vm }: Props) {
           </label>
           <input
             id={releaseKeyInputId}
-            className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+            className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             maxLength={RELEASE_KEY_MAX_LEN}
             value={draftReleaseKey}
             onChange={(e) => setDraftReleaseKey(e.target.value.slice(0, RELEASE_KEY_MAX_LEN))}
@@ -72,7 +75,7 @@ export function AdminConfigReleasesFiltersCard({ vm }: Props) {
           </label>
           <select
             id={statusSelectId}
-            className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+            className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             value={draftStatus}
             onChange={(e) => setDraftStatus(e.target.value)}
           >
@@ -92,7 +95,7 @@ export function AdminConfigReleasesFiltersCard({ vm }: Props) {
             inputMode="numeric"
             value={draftLimit}
             onChange={(e) => setDraftLimit(e.target.value)}
-            className={`mt-1 min-h-[44px] w-20 rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+            className={`mt-1 min-h-[44px] w-20 ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
           />
         </div>
       </form>
@@ -115,7 +118,7 @@ export function AdminConfigReleasesFiltersCard({ vm }: Props) {
           >
             <button
               type="submit"
-              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 px-4 py-2 text-small font-medium text-ink-800 transition-colors motion-reduce:transition-none hover:bg-ink-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`inline-flex min-h-[44px] items-center justify-center ${ADMIN_FILTER_RESET_BTN_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             >
               {t("admin_config_releases_filter_clear")}
             </button>

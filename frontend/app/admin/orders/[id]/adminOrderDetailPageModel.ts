@@ -1,3 +1,7 @@
+import { formatAdminMoney } from "@/lib/admin/formatAdminMoney";
+import type { AdminOpsDetailRelatedLink } from "@/components/admin/AdminOpsDetailRelatedFold";
+import { ADMIN_OPS_OBSERVABILITY_RELATED_LINK } from "@/lib/admin/adminOpsListRelatedFoldLinks";
+
 export type AdminOrderDetailRes = {
   status?: string;
   error?: string;
@@ -6,8 +10,12 @@ export type AdminOrderDetailRes = {
   meta?: unknown;
 };
 
-export function formatAdminOrderDetailField(v: unknown): string {
+export function formatAdminOrderDetailField(key: string, v: unknown): string {
   if (v === null || v === undefined) return "";
+  if (key === "amount") {
+    const formatted = formatAdminMoney(v as string | number);
+    return formatted || (typeof v === "string" ? v : String(v));
+  }
   if (typeof v === "string") return v;
   try {
     return JSON.stringify(v);
@@ -33,3 +41,12 @@ export const ADMIN_ORDER_DETAIL_FIELDS = [
   { key: "completed_at", labelKey: "admin_order_detail_completedAt" },
   { key: "sub_status", labelKey: "admin_order_detail_subStatus" },
 ] as const;
+
+/** 订单详情 · 折叠交叉入口。 */
+export const ORDER_DETAIL_RELATED_FOLD_LINKS: AdminOpsDetailRelatedLink[] = [
+  { href: "/admin/orders", labelKey: "admin_order_detail_back_list", dataTt: "admin-order-detail-back-list" },
+  { href: "/admin/disputes", labelKey: "admin_disputes_title" },
+  { href: "/admin/reviews", labelKey: "admin_reviews_title" },
+  { href: "/admin/users", labelKey: "admin_users_title" },
+  ADMIN_OPS_OBSERVABILITY_RELATED_LINK,
+];

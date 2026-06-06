@@ -1,0 +1,903 @@
+
+> traveltrust-frontend@0.1.0 e2e:pi1-traveltrust
+> node ./scripts/run-e2e-default.mjs --project=chromium e2e/pi1-traveltrust-v6-browser-acceptance.spec.ts
+
+[e2e] local default → PLAYWRIGHT_FULL_STACK=1 (API + Next via playwright webServer)
+[e2e] REQUEST_TIMEOUT_SECS → 120 (GET /meta governance eth_call stack; avoid 408)
+[e2e] INTERNAL_API_SECRET aligned from root .env (internal/*)
+[e2e] DATABASE_URL loaded from repo root .env
+sync-frontend-env: wrote D:\TravelTrust-V1\frontend\.env.local (NEXT_PUBLIC aligned with root .env)
+[e2e] D:\TravelTrust-V1\frontend\.env.local → NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8080
+[e2e] TRAVELTRUST_GATE_ENSURE_FRESH_API=1 — reclaim port / rebuild so API inherits current env
+[e2e] cargo build -p traveltrust-api (Playwright webServer runs target/debug binary)
+warning: unused import: `migrate_embed::*`
+  --> crates\api\src\db\mod.rs:91:9
+   |
+91 | pub use migrate_embed::*;
+   |         ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `traveltrust-api` (bin "traveltrust-api") generated 1 warning (run `cargo fix --bin "traveltrust-api"` to apply 1 suggestion)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.48s
+[1A[2K[WebServer] warning: unused import: `migrate_embed::*`
+[WebServer]   --> crates\api\src\db\mod.rs:91:9
+[WebServer]    |
+[WebServer] 91 | pub use migrate_embed::*;
+[WebServer]    |         ^^^^^^^^^^^^^^^^
+[WebServer]    |
+[WebServer]    = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+[WebServer] 
+
+[1A[2K[WebServer] warning: `traveltrust-api` (bin "traveltrust-api") generated 1 warning (run `cargo fix --bin "traveltrust-api"` to apply 1 suggestion)
+[WebServer]     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.28s
+
+[1A[2K[WebServer]      Running `target\debug\traveltrust-api.exe`
+
+[1A[2K[WebServer] [req] x-request-id=fea7d674-5f33-4f33-adb2-db5b7b1ce023 path=/health status=200
+[WebServer] [req] x-message-id=79795b35-edba-4095-98b7-bdaf29fe4d51 path=/health status=200
+
+[1A[2K[WebServer] [traveltrust] dev: Webpack on Windows (avoid Turbopack HMR manifest races). Use `npm run dev:turbopack` or TRAVELTRUST_DEV_TURBO=1 for Turbopack.
+
+
+Running 33 tests using 1 worker
+
+[1A[2K(node:10664) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:10664) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/33] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:41:66 › setup: GET /meta chain.contracts › API /meta satisfies chain guard
+[1A[2K[WebServer] [req] x-request-id=35044bf6-741e-4243-8763-b1cce8a6327b path=/meta status=200
+[WebServer] [req] x-message-id=9aac70c8-3154-4126-88d5-cb9fce9cb7eb
+
+[1A[2K[WebServer]  path=/meta status=200
+
+[1A[2K[2/33] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:73:79 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only)
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627128048 path=/meta status=200
+[WebServer] [req] x-message-id=92332456-f8eb-44c5-a0df-433ce5321345 path=/meta
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K(node:36384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:36384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[3/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:25:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-UI-30: opengraph-image route returns PNG
+[1A[2K  1) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:25:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-UI-30: opengraph-image route returns PNG 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:29108) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:29108) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[4/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:31:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › page-brief v6 CTA contract hydrates
+[1A[2K  2) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:31:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › page-brief v6 CTA contract hydrates 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:17996) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:17996) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[5/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:47:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-08: v6 shell — hero / roles / start, no legacy fold
+[1A[2K  3) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:47:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-08: v6 shell — hero / roles / start, no legacy fold 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:1736) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:1736) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[6/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:110:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-09: role tabs keyboard + trust chips
+[1A[2K  4) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:110:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-09: role tabs keyboard + trust chips 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:26600) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:26600) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[7/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:138:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-10: role tab switch + video frame visible
+[1A[2K  5) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:138:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-10: role tab switch + video frame visible 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:31104) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:31104) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[8/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:151:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-012: traveler enter stays in-page (#start)
+[1A[2K  6) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:151:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-012: traveler enter stays in-page (#start) 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:7240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:7240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[9/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:160:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-168c: trust chips and footer carry compliance disclosure copy
+[1A[2K  7) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:160:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-168c: trust chips and footer carry compliance disclosure copy 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:36472) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:36472) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[10/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:173:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-193: hero split layout — copy column beside globe at desktop
+[1A[2K  8) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:173:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-193: hero split layout — copy column beside globe at desktop 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:37492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:37492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[11/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:182:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-150: hero letterbox uses gradient tone not solid black bars
+[1A[2K  9) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:182:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-150: hero letterbox uses gradient tone not solid black bars 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:30836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:30836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[12/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:192:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-022d: section hash matrix (page-brief anchors)
+[1A[2K  10) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:192:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-022d: section hash matrix (page-brief anchors) 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:2592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:2592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[13/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:219:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-022c: trust and settlement hash deep-links
+[1A[2K  11) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:219:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-022c: trust and settlement hash deep-links 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:19740) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:19740) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[14/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:230:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-022: role hash deep-link selects tab
+[1A[2K  12) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:230:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-022: role hash deep-link selects tab 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:34860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:34860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[15/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:239:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-157: phase-1 region roster is keyboard focusable
+[1A[2K  13) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:239:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-157: phase-1 region roster is keyboard focusable 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:13436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:13436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[16/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:248:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-090b: scroll progress fades when WebGL idle
+[1A[2K  14) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:248:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-090b: scroll progress fades when WebGL idle 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:22636) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:22636) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[17/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:271:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-11:首屏 1.2s 入场 — 剧场露边
+[1A[2K  15) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:271:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-11:首屏 1.2s 入场 — 剧场露边 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:23248) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:23248) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[18/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:286:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-12: v6 impact — 无旧 IA 文案
+[1A[2K  16) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:286:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-12: v6 impact — 无旧 IA 文案 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:29412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:29412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[19/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:300:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-092: role video static frame when reduced motion
+[1A[2K  17) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:300:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-092: role video static frame when reduced motion 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:18888) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:18888) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[20/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:311:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-13: prefers-reduced-motion 降级
+[1A[2K  18) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:311:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-13: prefers-reduced-motion 降级 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:7412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:7412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[21/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:326:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-15: WebGL power idle past narrative bands (TT-PH1-145)
+[1A[2K  19) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:326:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-15: WebGL power idle past narrative bands (TT-PH1-145) 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:33680) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:33680) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[22/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:349:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-01: wheel scroll reaches roles, liquidity, trust, start
+[1A[2K  20) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:349:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-01: wheel scroll reaches roles, liquidity, trust, start 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:16992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:16992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[23/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:357:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-14: trust facts + illustrative badge + tier-1 mp4 sources
+[1A[2K  21) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:357:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-14: trust facts + illustrative badge + tier-1 mp4 sources 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:9980) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:9980) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[24/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:380:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-14b: liquidity preview banner + locked amount
+[1A[2K  22) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:380:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-14b: liquidity preview banner + locked amount 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:15180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:15180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[25/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:394:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-14c: page-brief Live/Demo badge + role primary CTA
+[1A[2K  23) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:394:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-14c: page-brief Live/Demo badge + role primary CTA 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:13632) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:13632) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[26/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:406:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-153 / PH1-FE-08b: narrow viewport hero CTA dock safe-area
+[1A[2K  24) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:406:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-153 / PH1-FE-08b: narrow viewport hero CTA dock safe-area 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:5064) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:5064) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[27/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:421:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-08c: narrow viewport role theater tabs + video aspect
+[1A[2K  25) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:421:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-08c: narrow viewport role theater tabs + video aspect 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:3180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:3180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[28/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:435:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-090: canvas idles below fold
+[1A[2K  26) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:435:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-090: canvas idles below fold 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:25204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:25204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[29/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:447:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-177: FAQ accordion keyboard navigation
+[1A[2K  27) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:447:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-177: FAQ accordion keyboard navigation 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:32356) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:32356) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[30/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:470:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-155b: compact nav more menu opens upward
+[1A[2K  28) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:470:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-155b: compact nav more menu opens upward 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:18676) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:18676) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[31/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:497:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-190b: network footer links to home site map
+[1A[2K  29) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:497:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-190b: network footer links to home site map 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:10256) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:10256) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[32/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:505:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-190c: settlement protocol notes expand
+[1A[2K  30) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:505:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-190c: settlement protocol notes expand 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K(node:2180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:2180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[33/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:523:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-11b: hero scroll cue jumps to roles and start
+[1A[2K  31) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:523:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-11b: hero scroll cue jumps to roles and start 
+
+    TypeError: (0 , _apiSession.defaultApiHealthUrl) is not a function
+
+       at helpers\skipIfApiDown.ts:14
+
+      12 | /** 探活成功时返回 **`GET /health`** 响应，便于调用方复用正文（避免二次请求）。 */
+      13 | export async function skipIfApiDown(request: APIRequestContext): Promise<APIResponse> {
+    > 14 |   const healthUrl = defaultApiHealthUrl();
+         |                                        ^
+      15 |   const health = await requestGetWith429Retry(request, healthUrl, { timeout: 90_000 }).catch(() => null);
+      16 |   if (!health?.ok()) {
+      17 |     test.skip(true, `API not reachable at ${healthUrl}; start traveltrust-api`);
+        at skipIfApiDown (D:\TravelTrust-V1\frontend\e2e\helpers\skipIfApiDown.ts:14:40)
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:20:24
+
+
+[1A[2K  31 failed
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:25:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-UI-30: opengraph-image route returns PNG 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:31:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › page-brief v6 CTA contract hydrates 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:47:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-08: v6 shell — hero / roles / start, no legacy fold 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:110:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-09: role tabs keyboard + trust chips 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:138:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-10: role tab switch + video frame visible 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:151:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-012: traveler enter stays in-page (#start) 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:160:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-168c: trust chips and footer carry compliance disclosure copy 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:173:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-193: hero split layout — copy column beside globe at desktop 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:182:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-150: hero letterbox uses gradient tone not solid black bars 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:192:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-022d: section hash matrix (page-brief anchors) 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:219:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-022c: trust and settlement hash deep-links 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:230:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-022: role hash deep-link selects tab 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:239:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-157: phase-1 region roster is keyboard focusable 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:248:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-090b: scroll progress fades when WebGL idle 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:271:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-11:首屏 1.2s 入场 — 剧场露边 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:286:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-12: v6 impact — 无旧 IA 文案 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:300:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-092: role video static frame when reduced motion 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:311:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-13: prefers-reduced-motion 降级 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:326:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-15: WebGL power idle past narrative bands (TT-PH1-145) 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:349:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-01: wheel scroll reaches roles, liquidity, trust, start 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:357:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-14: trust facts + illustrative badge + tier-1 mp4 sources 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:380:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-14b: liquidity preview banner + locked amount 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:394:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-14c: page-brief Live/Demo badge + role primary CTA 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:406:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-153 / PH1-FE-08b: narrow viewport hero CTA dock safe-area 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:421:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-08c: narrow viewport role theater tabs + video aspect 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:435:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-090: canvas idles below fold 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:447:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-177: FAQ accordion keyboard navigation 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:470:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-155b: compact nav more menu opens upward 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:497:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-190b: network footer links to home site map 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:505:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-190c: settlement protocol notes expand 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:523:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-11b: hero scroll cue jumps to roles and start 
+  2 passed (2.6m)

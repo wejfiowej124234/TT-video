@@ -7,6 +7,8 @@ import { AdminSortableTh } from "@/components/admin/AdminSortableTh";
 import { sortRowsByKey, useAdminTableSort } from "@/lib/admin/useAdminTableSort";
 
 import { AdminAppliedFiltersBanner } from "@/components/admin/AdminAppliedFiltersBanner";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
+import { AdminFinanceSectionBackLinks } from "@/components/admin/AdminFinanceSectionBackLinks";
 import { AdminFinanceSuiteDepthNotice } from "@/components/admin/AdminFinanceSuiteDepthNotice";
 import { AdminFinanceModuleDepthWorkspace } from "@/components/admin/AdminFinanceModuleDepthWorkspace";
 import { AdminFinanceSuitePartialChecklist } from "@/components/admin/AdminFinanceSuitePartialChecklist";
@@ -17,6 +19,7 @@ import { AdminMetaBuildSection } from "@/components/admin/AdminMetaBuildPanel";
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminPermissionDeniedBanner } from "@/components/admin/AdminPermissionDeniedBanner";
+import { DISPUTES_LIST_RELATED_FOLD_LINKS } from "@/lib/admin/adminFinanceRelatedFoldLinks";
 import { ADMIN_EMPTY_NEXT_DISPUTES_FILTERED_EMPTY } from "@/lib/admin/adminListEmptyStateNextLinks";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import {
@@ -26,9 +29,17 @@ import {
 } from "@/lib/admin/adminDisputesLabels";
 import { shortAdminId } from "@/lib/admin/shortAdminId";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
-import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
-import { useAdminDisputesPage } from "./useAdminDisputesPage";
-import { ADMIN_FILTER_CARD_CLASS, ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_LINK_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS, ADMIN_TABLE_ROW_CLASS, ADMIN_TABLE_THEAD_CLASS, ADMIN_TABLE_TH_CELL_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { ADMIN_FILTER_CARD_CLASS, ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_LINK_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS, ADMIN_STATUS_NEUTRAL_BADGE_CLASS, ADMIN_TABLE_ROW_CLASS, ADMIN_TABLE_THEAD_CLASS, ADMIN_TABLE_TH_CELL_CLASS, adminTableRowPrimaryActionClass,
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_FILTER_INPUT_MD_CLASS,
+  ADMIN_TABLE_SECTION_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,
+  ADMIN_FILTER_ACTIONS_CLASS,
+  ADMIN_FILTER_FIELD_LABEL_CLASS,
+  ADMIN_FILTER_GRID_CLASS,
+  ADMIN_FILTER_HINT_CLASS,
+  ADMIN_FILTER_TITLE_CLASS} from "@/lib/adminUi";
 
 type DisputeSortKey = "status" | "created_at";
 
@@ -41,6 +52,7 @@ export function AdminDisputesPageMain() {
   const disputesStatusFieldId = useId();
   const {
     loading,
+    refreshing,
     error,
     items,
     appliedFilters,
@@ -70,23 +82,14 @@ export function AdminDisputesPageMain() {
       titleId={pageTitleId}
       title={t("admin_disputes_title")}
       subtitle={t("admin_disputes_subtitle_l5")}
-      headerAside={
-        <>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link
-            href="/admin"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_schema_back")}
-          </Link>
-        </>
-      }
+      headerAside={<AdminFinanceSectionBackLinks />}
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={DISPUTES_LIST_RELATED_FOLD_LINKS}
+        ariaLabelKey="admin_finance_related_aria"
+        foldSummaryKey="admin_finance_related_fold"
+        dataTtFold="disputes-list"
+      />
       <AdminPermissionDeniedBanner
         permission={ADMIN_PERM.ORDERS_READ}
         messageKey="admin_perm_denied_orders_read"
@@ -116,16 +119,16 @@ export function AdminDisputesPageMain() {
           }
           onSubmit={apply}
         >
-          <h2 className="text-body font-medium text-ink-800">{t("admin_disputes_filters_title")}</h2>
-          <p id={adminListApplyResetHintId} className="mt-2 text-meta text-ink-600 leading-relaxed">
+          <h2 className={ADMIN_FILTER_TITLE_CLASS}>{t("admin_disputes_filters_title")}</h2>
+          <p id={adminListApplyResetHintId} className={ADMIN_FILTER_HINT_CLASS}>
             {t("admin_list_filters_apply_reset_hint")}
           </p>
-          <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            <label htmlFor={disputesLimitFieldId} className="text-small text-ink-700">
+          <div className={ADMIN_FILTER_GRID_CLASS}>
+            <label htmlFor={disputesLimitFieldId} className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
               {t("admin_disputes_limit_label")}
               <input
                 id={disputesLimitFieldId}
-                className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-md)] border border-ink-300 bg-white px-3 py-2 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_MD_CLASS} px-3 py-2 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 type="number"
                 min={1}
                 max={500}
@@ -133,11 +136,11 @@ export function AdminDisputesPageMain() {
                 onChange={(e) => setDraftLimit(e.target.value)}
               />
             </label>
-            <label htmlFor={disputesStatusFieldId} className="text-small text-ink-700">
+            <label htmlFor={disputesStatusFieldId} className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
               {t("admin_disputes_status_filter_label")}
               <select
                 id={disputesStatusFieldId}
-                className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-md)] border border-ink-300 bg-white px-3 py-2 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_MD_CLASS} px-3 py-2 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 value={draftStatus}
                 onChange={(e) => setDraftStatus(e.target.value)}
               >
@@ -151,7 +154,7 @@ export function AdminDisputesPageMain() {
             </label>
           </div>
         </form>
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className={ADMIN_FILTER_ACTIONS_CLASS}>
           <button form="admin-disputes-filter-form" className={ADMIN_PRIMARY_ACTION_BTN_CLASS} type="submit">
             {t("admin_disputes_apply")}
           </button>
@@ -164,7 +167,7 @@ export function AdminDisputesPageMain() {
             }}
           >
             <button
-              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 px-3 py-2 text-small font-medium text-ink-700 hover:bg-ink-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`inline-flex min-h-[44px] items-center justify-center ${ADMIN_FILTER_RESET_BTN_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               type="submit"
             >
               {t("admin_disputes_reset")}
@@ -198,12 +201,13 @@ export function AdminDisputesPageMain() {
         />
       ) : null}
 
-      {!loading && !error && items.length > 0 ? (
+      {!loading && items.length > 0 ? (
         <section
-          className="mt-6 overflow-hidden rounded-[var(--radius-xl)] border border-ink-200 bg-white"
+          className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
           aria-label={t("admin_disputes_table_aria")}
+          data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
         >
-          <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+          <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
             <thead className={ADMIN_TABLE_THEAD_CLASS}>
               <tr>
                 <th scope="col" className={`${ADMIN_TABLE_TH_CELL_CLASS} font-medium`}>
@@ -227,11 +231,11 @@ export function AdminDisputesPageMain() {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-ink-100 text-ink-700">
+            <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
               {sortedItems.map((d) => (
                 <tr key={d.id} className={ADMIN_TABLE_ROW_CLASS}>
                   <td className="px-4 py-3">
-                    <p className="font-mono text-meta font-medium text-ink-900" title={d.id}>
+                    <p className="font-mono text-small text-ink-800 font-medium text-ink-900" title={d.id}>
                       {shortAdminId(d.id) || t("admin_em_dash")}
                     </p>
                     <p className="mt-0.5 text-meta text-ink-500" title={d.order_id}>
@@ -239,7 +243,7 @@ export function AdminDisputesPageMain() {
                     </p>
                   </td>
                   <td className="px-4 py-3">
-                    <span className="inline-flex rounded-full bg-ink-100 px-2 py-0.5 text-meta font-medium">
+                    <span className={ADMIN_STATUS_NEUTRAL_BADGE_CLASS}>
                       {t(disputeStatusLabelKey(d.status))}
                     </span>
                   </td>
@@ -257,7 +261,7 @@ export function AdminDisputesPageMain() {
                   <td className="px-4 py-3">
                     <Link
                       href={`/admin/disputes/${encodeURIComponent(d.id)}`}
-                      className={`${adminPageNavLinkClass()}`}
+                      className={adminTableRowPrimaryActionClass()}
                       aria-label={t("admin_disputes_open_row_aria", { id: d.id })}
                     >
                       {t("admin_disputes_opsOpen")}

@@ -4,17 +4,11 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { type FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 
-import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
-import {
-  type AdminFetchErrorKind,
-  adminFetchErrorKind,
-  adminFetchJson,
-  logAdminFetch,
-} from "@/lib/adminFetchDisplay";
-import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders } from "@/lib/apiClient";
+import { routes } from "@/lib/api";
 import { isUuidString } from "@/lib/isUuidString";
-import type { AdminModerationCaseRow, AdminModerationCasesRes } from "./adminModerationCasesPageTypes";
+import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
+import type { AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
+import type { AdminModerationCaseRow } from "./adminModerationCasesPageTypes";
 import {
   ADMIN_MOD_CASES_STATUS_AFTER_MAX,
   ADMIN_MOD_CASES_STATUS_BEFORE_MAX,
@@ -25,6 +19,7 @@ import {
 export type AdminModerationCasesPageViewModel = {
   listQ: ReturnType<typeof parseModerationCasesQuery>;
   loading: boolean;
+  refreshing: boolean;
   error: AdminFetchErrorKind | null;
   items: AdminModerationCaseRow[];
   meta: Record<string, unknown> | null;
@@ -52,11 +47,25 @@ export function useAdminModerationCasesPage(): AdminModerationCasesPageViewModel
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<AdminModerationCaseRow[]>([]);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
+  const listUrl = useMemo(
+    () =>
+      routes.admin.communityModerationCases({
+        limit: listQ.limit,
+        report_id: listQ.reportId || undefined,
+        actor_id: listQ.actorId || undefined,
+        status_before: listQ.statusBefore || undefined,
+        status_after: listQ.statusAfter || undefined,
+      }),
+    [listQ],
+  );
+
+  const { items, meta, appliedFilters, loading, refreshing, error } =
+    useAdminStandardListFetch<AdminModerationCaseRow>({
+      scope: "community-moderation-cases",
+      context: "AdminCommunityModerationCasesPage",
+      listUrl,
+    });
+
   const [draftLimit, setDraftLimit] = useState(String(listQ.limit));
   const [draftReportId, setDraftReportId] = useState(listQ.reportId);
   const [draftActorId, setDraftActorId] = useState(listQ.actorId);
@@ -69,45 +78,6 @@ export function useAdminModerationCasesPage(): AdminModerationCasesPageViewModel
     setDraftActorId(listQ.actorId);
     setDraftStatusBefore(listQ.statusBefore);
     setDraftStatusAfter(listQ.statusAfter);
-  }, [listQ]);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    setMeta(null);
-
-    const headers: Record<string, string> = { "x-request-id": `admin-mod-cases-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    const path = routes.admin.communityModerationCases({
-      limit: listQ.limit,
-      report_id: listQ.reportId || undefined,
-      actor_id: listQ.actorId || undefined,
-      status_before: listQ.statusBefore || undefined,
-      status_after: listQ.statusAfter || undefined,
-    });
-
-    adminFetchJson<AdminModerationCasesRes>("AdminCommunityModerationCasesPage", apiUrl(path), { headers })
-      .then(({ res, body }) => {
-        if (!res.ok) {
-          throw new Error(body.error || `request_failed_${res.status}`);
-        }
-        return body;
-      })
-      .then((body) => {
-        setItems(Array.isArray(body.items) ? body.items : []);
-        setMeta(isAdminMetaRecord(body.meta) ? body.meta : null);
-        setAppliedFilters(body.applied_filters ?? null);
-      })
-      .catch((e: unknown) => {
-        logAdminFetch("AdminCommunityModerationCasesPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
   }, [listQ]);
 
   const apply = useCallback(
@@ -155,6 +125,7 @@ export function useAdminModerationCasesPage(): AdminModerationCasesPageViewModel
   return {
     listQ,
     loading,
+    refreshing,
     error,
     items,
     meta,

@@ -28,7 +28,7 @@ import {
 
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
 
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 
 import { TRAVELTRUST_START_L5_STEPS } from "./traveltrustStartStepL5";
 

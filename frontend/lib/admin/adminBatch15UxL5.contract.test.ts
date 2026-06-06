@@ -18,6 +18,7 @@ describe("admin batch15 UX L5 (①)", () => {
 
   it("defines capability strip visibility SSOT", () => {
     expect(visibility).toContain("shouldShowAdminCapabilityStrip");
+    expect(visibility).toContain("homeInboxFocus");
     expect(visibility).toContain("maintainerUi");
     expect(visibility).toContain("canApprove");
   });

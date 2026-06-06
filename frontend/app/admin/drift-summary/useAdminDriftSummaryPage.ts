@@ -1,28 +1,42 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 
+import { routes } from "@/lib/api";
 import {
-  adminFetchErrorKind,
-  logAdminFetch,
-  type AdminFetchErrorKind,
-} from "@/lib/adminFetchDisplay";
-import { getAdminDriftSummary, normalizeAdminDriftSummaryRead, type NormalizedAdminDriftSummary } from "@/lib/apiClient";
+  type AdminListFetchSnapshot,
+  type AdminStandardListBody,
+  useAdminStandardListFetch,
+} from "@/lib/admin/useAdminStandardListFetch";
+import { normalizeAdminDriftSummaryRead, type NormalizedAdminDriftSummary } from "@/lib/apiClient";
+
+import { ADMIN_DRIFT_SUMMARY_MODEL_META_KEY } from "./adminDriftSummaryPageModel";
+
+function driftSummaryToSnapshot(body: AdminStandardListBody<never>): AdminListFetchSnapshot<never> {
+  return {
+    items: [],
+    appliedFilters: null,
+    meta: {
+      [ADMIN_DRIFT_SUMMARY_MODEL_META_KEY]: normalizeAdminDriftSummaryRead(body),
+    },
+  };
+}
 
 export function useAdminDriftSummaryPage() {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [model, setModel] = useState<NormalizedAdminDriftSummary | null>(null);
+  const listUrl = routes.admin.driftSummary;
 
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    getAdminDriftSummary()
-      .then((raw) => setModel(normalizeAdminDriftSummaryRead(raw)))
-      .catch((e: unknown) => {
-        logAdminFetch("AdminDriftSummaryPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
-  }, []);
+  const { meta: rawMeta, loading, refreshing, error } = useAdminStandardListFetch<never>({
+    scope: "drift-summary",
+    context: "AdminDriftSummaryPage",
+    listUrl,
+    toSnapshot: driftSummaryToSnapshot,
+  });
 
-  return { loading, error, model };
+  const model = useMemo((): NormalizedAdminDriftSummary | null => {
+    const raw = rawMeta?.[ADMIN_DRIFT_SUMMARY_MODEL_META_KEY];
+    if (raw && typeof raw === "object" && !Array.isArray(raw)) {
+      return raw as NormalizedAdminDriftSummary;
+    }
+    return null;
+  }, [rawMeta]);
+
+  return { loading, refreshing, error, model };
 }

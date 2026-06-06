@@ -12,7 +12,10 @@ import {
   travelFocusRingOffset2Classes,
 } from "@/lib/travelLinkFocus";
 
-export type FeeRouterWiringNoticeVariant = "did" | "light";
+export type FeeRouterWiringNoticeVariant = "did" | "light" | "experience";
+
+const FEE_ROUTER_NOTICE_BOX_BASE =
+  "rounded-[var(--radius-md)] border px-3 py-2.5 text-small leading-snug";
 
 /**
  * EscrowFactory.createEscrow 前：展示 platformFeeRecipient（FeeRouter）与 GET /meta、构建变量是否一致。
@@ -26,6 +29,45 @@ export default function FeeRouterWiringNotice({
   const { meta, loading, error: metaLoadError } = useMeta();
   const ui = useMemo(() => computeFeeRouterWiringUi(meta), [meta]);
   const light = variant === "light";
+  const experience = variant === "experience";
+  const darkBox = (tone: "neutral" | "warn" | "danger" | "ok") => {
+    if (light) {
+      if (tone === "warn") return `${FEE_ROUTER_NOTICE_BOX_BASE} border-warning/30 bg-warning/10 text-ink-900`;
+      if (tone === "danger") return `${FEE_ROUTER_NOTICE_BOX_BASE} border-danger/25 bg-danger/5 text-ink-900`;
+      if (tone === "ok") return `${FEE_ROUTER_NOTICE_BOX_BASE} border-success/25 bg-success/10 text-ink-800`;
+      return `${FEE_ROUTER_NOTICE_BOX_BASE} border-ink-200/90 bg-ink-50/90 text-ink-900`;
+    }
+    if (experience) {
+      if (tone === "warn") return `${FEE_ROUTER_NOTICE_BOX_BASE} border-amber-400/40 bg-black/35 text-slate-200`;
+      if (tone === "danger") return `${FEE_ROUTER_NOTICE_BOX_BASE} border-danger/45 bg-black/35 text-slate-200`;
+      if (tone === "ok") return `${FEE_ROUTER_NOTICE_BOX_BASE} border-emerald-400/35 bg-black/30 text-slate-200`;
+      return `${FEE_ROUTER_NOTICE_BOX_BASE} border-ref-sun/20 bg-black/35 text-slate-200`;
+    }
+    if (tone === "warn") return `${FEE_ROUTER_NOTICE_BOX_BASE} border-warning/45 bg-warning/15 text-white/95`;
+    if (tone === "danger") return `${FEE_ROUTER_NOTICE_BOX_BASE} border-danger/40 bg-danger/10 text-white/95`;
+    if (tone === "ok") return `${FEE_ROUTER_NOTICE_BOX_BASE} border-success/35 bg-success/5 text-slate-300`;
+    return `${FEE_ROUTER_NOTICE_BOX_BASE} border-slate-500/40 bg-slate-900/45 text-white/95`;
+  };
+  const titleCls = light
+    ? "font-medium text-ink-900"
+    : experience
+      ? "font-medium text-ref-sun/95"
+      : "font-medium text-white/95";
+  const bodyCls = light
+    ? "mt-1 text-meta text-ink-700"
+    : experience
+      ? "mt-1 text-meta text-slate-300"
+      : "mt-1 text-meta text-white/80";
+  const monoCls = light
+    ? "mt-1 font-mono text-meta text-ink-600 break-all"
+    : experience
+      ? "mt-1 font-mono text-meta text-slate-300 break-all"
+      : "mt-1 font-mono text-meta text-slate-300 break-all";
+  const govLinkCls = light
+    ? `mt-2 ${touchTargetLink44Classes} text-meta font-medium text-travel-700 underline underline-offset-2 hover:text-travel-800 ${travelFocusRingOffset2Classes}`
+    : experience
+      ? `mt-2 ${touchTargetLink44Classes} text-meta font-medium text-ref-sun/95 underline underline-offset-2 hover:text-ref-sun ${travelFocusRingOffset2Classes} focus-visible:ring-offset-ink-950`
+      : `mt-2 ${touchTargetLink44Classes} text-meta text-cyan-300 underline underline-offset-2 hover:text-cyan-100 ${marketCyanInlineLinkFocusClasses}`;
 
   if (loading && !meta) {
     return (
@@ -35,31 +77,14 @@ export default function FeeRouterWiringNotice({
     );
   }
 
-  const boxBase = "rounded-[var(--radius-md)] border px-3 py-2.5 text-small leading-snug";
-
   /** B-052：GET /meta 失败时禁止静默空白；生产短句 + dev 附 mapApiReadError 文案 */
   if (metaLoadError != null) {
-    const metaFailBox = light
-      ? `${boxBase} border-ink-200/90 bg-ink-50/90 text-ink-900`
-      : `${boxBase} border-slate-500/40 bg-slate-900/45 text-white/95`;
     return (
-      <div className={metaFailBox} role="status" aria-live="polite">
-        <p className={light ? "font-medium text-ink-900" : "font-medium text-white/95"}>
-          {t("escrow_feeRouterWiring_metaUnavailable_title")}
-        </p>
-        <p className={light ? "mt-1 text-meta text-ink-700" : "mt-1 text-meta text-white/80"}>
-          {t("escrow_feeRouterWiring_metaUnavailable_body")}
-        </p>
+      <div className={darkBox("neutral")} role="status" aria-live="polite">
+        <p className={titleCls}>{t("escrow_feeRouterWiring_metaUnavailable_title")}</p>
+        <p className={bodyCls}>{t("escrow_feeRouterWiring_metaUnavailable_body")}</p>
         {process.env.NODE_ENV !== "production" ? (
-          <p
-            className={
-              light
-                ? "mt-2 font-mono text-meta text-ink-600 break-all"
-                : "mt-2 font-mono text-meta text-slate-400 break-all"
-            }
-          >
-            {metaLoadError}
-          </p>
+          <p className={monoCls}>{metaLoadError}</p>
         ) : null}
       </div>
     );
@@ -67,46 +92,16 @@ export default function FeeRouterWiringNotice({
 
   if (ui.mismatch) {
     return (
-      <div
-        className={
-          light
-            ? `${boxBase} border-warning/30 bg-warning/10 text-ink-900`
-            : `${boxBase} border-warning/45 bg-warning/15 text-white/95`
-        }
-        role="alert"
-      >
-        <p className={light ? "font-medium text-ink-900" : "font-medium text-white/95"}>
-          {t("escrow_feeRouterWiring_title")}
-        </p>
-        <p className={light ? "mt-1 text-meta text-ink-700" : "mt-1 text-meta text-white/80"}>
-          {t("governance_fee_routes_wiring_mismatch")}
-        </p>
-        <p
-          className={
-            light
-              ? "mt-1 font-mono text-meta text-ink-800 break-all"
-              : "mt-1 font-mono text-meta break-all opacity-95"
-          }
-        >
+      <div className={darkBox("warn")} role="alert">
+        <p className={titleCls}>{t("escrow_feeRouterWiring_title")}</p>
+        <p className={bodyCls}>{t("governance_fee_routes_wiring_mismatch")}</p>
+        <p className={monoCls}>
           {t("governance_fee_routes_wiring_api")}: {ui.metaRaw ? shortHexAddr(ui.metaRaw) : t("governance_fee_routes_wiring_none")}
         </p>
-        <p
-          className={
-            light
-              ? "mt-0.5 font-mono text-meta text-ink-800 break-all"
-              : "mt-0.5 font-mono text-meta break-all opacity-95"
-          }
-        >
+        <p className={`${monoCls} mt-0.5`}>
           {t("governance_fee_routes_wiring_build")}: {ui.envAddr ? shortHexAddr(ui.envAddr) : t("governance_fee_routes_wiring_none")}
         </p>
-        <Link
-          href="/governance/fee-routes"
-          className={
-            light
-              ? `mt-2 ${touchTargetLink44Classes} text-meta font-medium text-travel-700 underline underline-offset-2 hover:text-travel-800 ${travelFocusRingOffset2Classes}`
-              : `mt-2 ${touchTargetLink44Classes} text-meta text-cyan-300 underline underline-offset-2 hover:text-cyan-100 ${marketCyanInlineLinkFocusClasses}`
-          }
-        >
+        <Link href="/governance/fee-routes" className={govLinkCls}>
           {t("escrow_feeRouterWiring_openGovernance")}
         </Link>
       </div>
@@ -115,50 +110,20 @@ export default function FeeRouterWiringNotice({
 
   if (ui.neither) {
     return (
-      <div
-        className={
-          light
-            ? `${boxBase} border-danger/25 bg-danger/5 text-ink-900`
-            : `${boxBase} border-danger/40 bg-danger/10 text-white/95`
-        }
-        role="status"
-      >
-        <p className={light ? "font-medium text-ink-900" : "font-medium text-white/95"}>
-          {t("escrow_feeRouterWiring_title")}
-        </p>
-        <p className={light ? "mt-1 text-meta text-ink-700" : "mt-1 text-meta text-white/80"}>
-          {t("escrow_feeRouterWiring_unconfigured")}
-        </p>
+      <div className={darkBox("danger")} role="status">
+        <p className={titleCls}>{t("escrow_feeRouterWiring_title")}</p>
+        <p className={bodyCls}>{t("escrow_feeRouterWiring_unconfigured")}</p>
       </div>
     );
   }
 
   return (
-    <div
-      className={
-        light
-          ? `${boxBase} border-success/25 bg-success/10 text-ink-800`
-          : `${boxBase} border-success/35 bg-success/5 text-slate-300`
-      }
-      role="status"
-    >
-      <p className={light ? "font-medium text-success" : "font-medium text-success/95"}>
+    <div className={darkBox("ok")} role="status">
+      <p className={light ? "font-medium text-success" : experience ? "font-medium text-emerald-300/95" : "font-medium text-success/95"}>
         {t("escrow_feeRouterWiring_title")}
       </p>
-      <p className={light ? "mt-1 text-meta text-ink-700" : "mt-1 text-meta text-slate-300"}>
-        {t("escrow_feeRouterWiring_ok")}
-      </p>
-      {ui.metaAddr ? (
-        <p
-          className={
-            light
-              ? "mt-1 font-mono text-meta text-ink-600 break-all"
-              : "mt-1 font-mono text-meta text-slate-300 break-all"
-          }
-        >
-          {shortHexAddr(ui.metaAddr)}
-        </p>
-      ) : null}
+      <p className={bodyCls}>{t("escrow_feeRouterWiring_ok")}</p>
+      {ui.metaAddr ? <p className={monoCls}>{shortHexAddr(ui.metaAddr)}</p> : null}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 
 import type { ObsBody } from "./adminTrustGrowthPageModel";
 
@@ -13,8 +14,8 @@ export function AdminTrustGrowthKpiSection({ data }: AdminTrustGrowthKpiSectionP
   const rt = data.runtime;
 
   return (
-    <section
-      className="rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-4"
+    <AdminWarmL5Surface
+      as="section"
       aria-label={t("admin_trust_growth_section_kpi")}
     >
       <h2 className="text-small font-semibold uppercase tracking-wide text-ink-500">
@@ -34,6 +35,6 @@ export function AdminTrustGrowthKpiSection({ data }: AdminTrustGrowthKpiSectionP
           <dd className="font-mono text-small text-ink-900">{rt?.updated_at ?? "—"}</dd>
         </div>
       </dl>
-    </section>
+    </AdminWarmL5Surface>
   );
 }

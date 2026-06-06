@@ -1,41 +1,37 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useTranslation } from "@/components/LocaleProvider";
 import { useLandingPage } from "@/components/landing/useLandingPage";
 import LandingHeroForm from "@/components/landing/LandingHeroForm";
 import ItineraryResultsSection from "@/components/landing/ItineraryResultsSection";
-import UnlockModal from "@/components/landing/UnlockModal";
 import LandingFooter from "@/components/landing/LandingFooter";
-import { landingAmbientImageUrl } from "@/lib/landingAmbientByCountry";
+import LandingHomeAmbientBackdrop from "@/components/landing/LandingHomeAmbientBackdrop";
+import LandingHomeDecorLayers from "@/components/landing/LandingHomeDecorLayers";
+import {
+  TT_MARKETING_HOME_FOOTER_TOP_FADE,
+  TT_MARKETING_HOME_SECTION_BRIDGE,
+  TT_MARKETING_HOME_SECTION_BRIDGE_LINE,
+} from "@/lib/marketingUi";
 
-/** 25 §3.1 + 28 Cinematic/Glassmorphism：Hero + 首页中央规划表单 + 盲盒行程卡 + 解锁 */
+const UnlockModal = dynamic(
+  () => import("@/components/landing/UnlockModal"),
+  { ssr: false, loading: () => null },
+);
+
+/** 25 §3.1 + 28：Hero + 规划表单 + 行程预览卡 */
 export default function Home() {
   const { t } = useTranslation();
   const data = useLandingPage(t);
-  const ambientSrc = landingAmbientImageUrl(data.country);
 
   return (
-    <main className="relative min-h-screen" aria-label={t("landing_hero_title")}>
-      {/* 禁止用 next/image 铺全屏 Unsplash：Turbopack 在 images.loader 异常时会抛 next-image-missing-loader */}
-      <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden>
-        <img
-          key={ambientSrc}
-          src={ambientSrc}
-          alt=""
-          decoding="async"
-          fetchPriority="high"
-          className="absolute inset-0 h-full w-full object-cover object-center"
-        />
-      </div>
-      <div className="absolute inset-0 z-0 bg-experience-landing-vignette pointer-events-none" aria-hidden />
-      <div
-        className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_70%_45%_at_50%_18%,rgba(249,215,121,0.16),transparent_55%),radial-gradient(circle_at_85%_30%,rgba(35,206,217,0.12),transparent_50%),radial-gradient(circle_at_12%_55%,rgba(252,164,124,0.08),transparent_45%)]"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-0 z-0 bg-web3-dot-grid opacity-[0.14] mix-blend-overlay"
-        aria-hidden
-      />
+    <main
+      className="relative min-h-screen"
+      aria-label={t("landing_hero_kicker")}
+      data-tt-home-favorites-mode="localstorage-f020-sync-v1"
+    >
+      <LandingHomeAmbientBackdrop country={data.country} />
+      <LandingHomeDecorLayers />
       <div className="relative z-10 min-h-screen">
         <LandingHeroForm
           country={data.country}
@@ -62,11 +58,17 @@ export default function Home() {
           submitting={data.submitting}
           validationErrorKey={data.validationErrorKey}
           submitError={data.submitError}
+          loginRequired={data.loginRequired}
           handleSubmit={data.handleSubmit}
+          marketHref={data.marketHref}
         />
+        <div className={TT_MARKETING_HOME_SECTION_BRIDGE} aria-hidden>
+          <div className={TT_MARKETING_HOME_SECTION_BRIDGE_LINE} />
+        </div>
         <ItineraryResultsSection
           resultOrderIds={data.resultOrderIds}
-          unlockedCardKeys={data.unlockedCardKeys}
+          submitting={data.submitting}
+          unlockedOrderIds={data.unlockedOrderIds}
           orderDetails={data.orderDetails}
           favoritedIds={data.favoritedIds}
           toggleFavorite={data.toggleFavorite}
@@ -75,13 +77,19 @@ export default function Home() {
           cities={data.cities}
           resultsSectionRef={data.resultsSectionRef}
         />
-        <UnlockModal
-          selectedForUnlock={data.selectedForUnlock}
-          setSelectedForUnlock={data.setSelectedForUnlock}
-          handleUnlockPay={data.handleUnlockPay}
-          unlockPaying={data.unlockPaying}
-        />
-        <LandingFooter />
+        {data.selectedForUnlock ? (
+          <UnlockModal
+            selectedForUnlock={data.selectedForUnlock}
+            setSelectedForUnlock={data.setSelectedForUnlock}
+            handleUnlockPay={data.handleUnlockPay}
+            unlockPaying={data.unlockPaying}
+            unlockError={data.unlockError}
+          />
+        ) : null}
+        <div className="relative">
+          <div className={TT_MARKETING_HOME_FOOTER_TOP_FADE} aria-hidden />
+          <LandingFooter />
+        </div>
       </div>
     </main>
   );

@@ -7,6 +7,8 @@ import {
   parseMerchantCategoryParam,
   sortAcquisitionListings,
   sortMerchantListings,
+  buildMarketSubsiteListingsQueryString,
+  applyMarketSubsiteProviderFilters,
 } from "./marketSubsiteFilters";
 
 describe("marketSubsiteFilters", () => {
@@ -32,7 +34,7 @@ describe("marketSubsiteFilters", () => {
 
   it("filters acquisition by destination country", () => {
     const cnHealth = filterAcquisitionListings(DEMO_ACQUISITION_LISTINGS, "CN", "health");
-    expect(cnHealth.map((x) => x.id)).toEqual(["a-vitamins-bundle"]);
+    expect(cnHealth.map((x) => x.id)).toEqual(["a-vitamins-bundle", "a-tea-gift"]);
     const sg = filterAcquisitionListings(DEMO_ACQUISITION_LISTINGS, "SG", "all");
     expect(sg.length).toBe(0);
   });
@@ -45,5 +47,20 @@ describe("marketSubsiteFilters", () => {
   it("sorts acquisition by bounty", () => {
     const list = sortAcquisitionListings([...DEMO_ACQUISITION_LISTINGS], "bounty_desc");
     expect(list[0].bountyMaxUsdc).toBeGreaterThanOrEqual(list[list.length - 1].bountyMaxUsdc);
+  });
+
+  it("buildMarketSubsiteListingsQueryString omits defaults", () => {
+    expect(
+      buildMarketSubsiteListingsQueryString({ country: "all", category: "all", sort: "recent" }),
+    ).toBe("");
+    expect(
+      buildMarketSubsiteListingsQueryString({ country: "JP", category: "dining", sort: "price_asc" }),
+    ).toBe("country=JP&category=dining&sort=price_asc");
+  });
+
+  it("applyMarketSubsiteProviderFilters matches filter+sort pipeline", () => {
+    const out = applyMarketSubsiteProviderFilters(DEMO_MERCHANT_LISTINGS, "CN", "all", "price_asc");
+    expect(out.length).toBeGreaterThan(0);
+    expect(out[0].priceUsdc).toBeLessThanOrEqual(out[out.length - 1].priceUsdc);
   });
 });

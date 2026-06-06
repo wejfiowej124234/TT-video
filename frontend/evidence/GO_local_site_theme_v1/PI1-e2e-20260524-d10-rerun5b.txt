@@ -1,0 +1,20 @@
+[e2e] local default â†’ PLAYWRIGHT_FULL_STACK=1 (API + Next via playwright webServer)
+[e2e] REQUEST_TIMEOUT_SECS â†’ 120 (GET /meta governance eth_call stack; avoid 408)
+[e2e] INTERNAL_API_SECRET aligned from root .env (internal/*)
+[e2e] DATABASE_URL loaded from repo root .env
+sync-frontend-env: wrote D:\TravelTrust-V1\frontend\.env.local (NEXT_PUBLIC aligned with root .env)
+[e2e] D:\TravelTrust-V1\frontend\.env.local â†’ NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8080
+[e2e] TRAVELTRUST_GATE_ENSURE_FRESH_API=1 â€” reclaim port / rebuild so API inherits current env
+[e2e] cargo build -p traveltrust-api (Playwright webServer runs target/debug binary)
+warning: unused import: `migrate_embed::*`
+  --> crates\api\src\db\mod.rs:91:9
+   |
+91 | pub use migrate_embed::*;
+   |         ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `traveltrust-api` (bin "traveltrust-api") generated 1 warning (run `cargo fix --bin "traveltrust-api"` to apply 1 suggestion)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.29s
+'PH1-FE-090' ²»ÊÇÄÚ²¿»òÍâ²¿ÃüÁî£¬Ò²²»ÊÇ¿ÉÔËĞĞµÄ³ÌĞò
+»òÅú´¦ÀíÎÄ¼ş¡£

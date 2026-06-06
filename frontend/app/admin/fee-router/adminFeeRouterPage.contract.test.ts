@@ -11,6 +11,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminFeeRouterPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminFeeRouterPage.ts"), "utf8"),
     readFileSync(join(__dir, "adminFeeRouterPageModel.ts"), "utf8"),
+    readFileSync(join(__dir, "../../../lib/admin/useAdminStandardListFetch.ts"), "utf8"),
   ].join("\n");
 }
 
@@ -29,5 +30,6 @@ describe("admin fee-router page", () => {
     expect(src).toContain('"AdminFeeRouterPage"');
     expect(src).toContain("AdminPermissionDeniedBanner");
     expect(src).toContain("AdminFinanceModuleDepthWorkspace");
+    expect(src).toContain("useAdminStandardListFetch");
   });
 });

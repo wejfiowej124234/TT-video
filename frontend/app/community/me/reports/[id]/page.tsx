@@ -26,6 +26,7 @@ import CommunityMeDataStateSurface from "@/components/me/CommunityMeDataStateSur
 import { communityMeLoginReturnUrl } from "@/lib/communityMeContentNav";
 import type { DataState } from "@/lib/dataState";
 import { dataStateEmpty, dataStateError, dataStateInvalid, dataStateLoading, dataStateSuccess } from "@/lib/dataState";
+import { TT_COMMUNITY_PAGE_L5 } from "@/lib/marketingUi";
 
 type ReportRow = {
   id: string;
@@ -134,6 +135,7 @@ function CommunityMeReportDetailPageInner() {
   if (authPending) {
     return (
       <main
+        data-tt-community-report-ticket-page="1"
         className="max-w-lg mx-auto px-4 py-6 pb-24 safe-area-pb"
         aria-busy="true"
         aria-label={t("community_report_ticket_title")}
@@ -143,7 +145,7 @@ function CommunityMeReportDetailPageInner() {
           <div className="h-8 w-24 rounded bg-ink-600/40 animate-pulse motion-reduce:animate-none" />
           <div className="h-8 min-w-[12rem] flex-1 rounded bg-ink-600/35 animate-pulse motion-reduce:animate-none" />
         </div>
-        <div className="min-h-[14rem] rounded-[var(--radius-md)] border border-cyan-400/20 bg-ink-800/50 backdrop-blur-md animate-pulse motion-reduce:animate-none" />
+        <div className="min-h-[14rem] rounded-[var(--radius-md)] border border-ref-sun/18 bg-ink-800/50 backdrop-blur-md animate-pulse motion-reduce:animate-none" />
       </main>
     );
   }
@@ -151,19 +153,20 @@ function CommunityMeReportDetailPageInner() {
   if (!isLoggedIn) {
     return (
       <main
+        data-tt-community-report-ticket-page="1"
         className="max-w-lg mx-auto px-4 py-8 pb-24 safe-area-pb"
         aria-label={t("community_report_ticket_title")}
       >
         <h1 className="sr-only">{t("community_report_ticket_title")}</h1>
         <section
-          className="rounded-[var(--radius-md)] border border-cyan-500/35 bg-ink-800/70 backdrop-blur-md px-6 py-10 text-center space-y-4"
+          className="rounded-[var(--radius-md)] border border-ref-sun/28 bg-ink-800/70 backdrop-blur-md px-6 py-10 text-center space-y-4"
           role="region"
           aria-label={t("community_report_ticket_login_required")}
         >
           <p className="text-body text-slate-200">{t("community_report_ticket_login_required")}</p>
           <Link
             href={`/auth/login?returnUrl=${encodeURIComponent(reportDetailLoginReturnUrl)}`}
-            className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-cyan-400/50 bg-cyan-500/20 px-5 py-2.5 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub motion-reduce:transition-none ${communityCyanPillFocus}`}
+            className={`${TT_COMMUNITY_PAGE_L5.pill} motion-reduce:transition-none ${communityCyanPillFocus}`}
           >
             {t("community_activity_go_login")}
           </Link>
@@ -173,15 +176,19 @@ function CommunityMeReportDetailPageInner() {
   }
 
   return (
-    <main className="max-w-lg mx-auto px-4 py-6 pb-24 safe-area-pb" aria-label={t("community_report_ticket_title")}>
+    <main
+      data-tt-community-report-ticket-page="1"
+      className="max-w-lg mx-auto px-4 py-6 pb-24 safe-area-pb"
+      aria-label={t("community_report_ticket_title")}
+    >
       <header className="mb-6 flex flex-wrap items-center gap-3">
         <Link
           href="/community/me/reports"
-          className={`${touchTargetLink44Classes} text-meta text-slate-300 hover:text-cyan-100 motion-sub motion-reduce:transition-none ${communityHeaderInlineFocus}`}
+          className={`${touchTargetLink44Classes} text-meta text-slate-300 hover:text-ref-coral motion-sub motion-reduce:transition-none ${communityHeaderInlineFocus}`}
         >
           {t("community_report_list_back")}
         </Link>
-        <h1 className="text-h4 font-semibold text-cyan-200 flex-1 min-w-[12rem]">{t("community_report_ticket_title")}</h1>
+        <h1 className="text-h4 font-semibold text-ref-sun/90 flex-1 min-w-[12rem]">{t("community_report_ticket_title")}</h1>
       </header>
 
       <CommunityMeDataStateSurface
@@ -195,7 +202,7 @@ function CommunityMeReportDetailPageInner() {
           </section>
         }
         success={(r) => (
-          <div className="space-y-4 rounded-[var(--radius-md)] border border-cyan-500/30 bg-ink-800/70 p-4">
+          <div className="space-y-4 rounded-[var(--radius-md)] border border-ref-sun/25 bg-ink-800/70 p-4">
             <div>
               <p className="text-meta text-slate-400">{t("community_report_ticket_id")}</p>
               <p className="text-small font-mono text-slate-200 break-all">{r.id}</p>
@@ -245,7 +252,7 @@ function CommunityMeReportDetailPageInner() {
                       rows={5}
                       maxLength={4000}
                       placeholder={t("community_report_appeal_placeholder")}
-                      className="w-full rounded-[var(--radius-md)] border border-slate-600 bg-ink-700/80 px-3 py-2 text-small text-slate-100 placeholder:text-slate-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900"
+                      className="w-full rounded-[var(--radius-md)] border border-slate-600 bg-ink-700/80 px-3 py-2 text-small text-slate-100 placeholder:text-slate-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/55 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900"
                       aria-invalid={!!appealFieldErr}
                       aria-errormessage={appealFieldErr ? appealFieldErrId : undefined}
                     />

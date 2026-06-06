@@ -1,90 +1,60 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import { TravelTrustCinematicLowQualityToggle } from "./TravelTrustCinematicLowQualityToggle";
 import { TravelTrustLandingNav } from "./TravelTrustLandingNav";
 import { TravelTrustPageBriefModeBadge } from "./TravelTrustPageBriefModeBadge";
+import { TravelTrustPulseTicker } from "./TravelTrustPulseTicker";
 import { useTravelTrustHeroScrollProgress } from "./TravelTrustHeroScrollContext";
 import {
   TT_LANDING_CHROME_L5,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
-
-const TravelTrustPulseTicker = dynamic(
-  () =>
-    import("./TravelTrustPulseTicker").then((m) => ({
-      default: m.TravelTrustPulseTicker,
-    })),
-  {
-    ssr: true,
-    loading: () => (
-      <motion.div className="min-h-[2rem]" aria-hidden data-tt-traveltrust-pulse-slot-skeleton="1" />
-    ),
-  },
-);
+} from "@/lib/traveltrust/l5";
 
 /**
- * 首屏：薄 HUD — 上行章节 nav + LIVE，下行项目动态（无大圆角空盒 · TT-PH1-155）
+ * 首屏薄 HUD · 双行常驻
+ * 上行 LIVE + 章节 nav · 下行「项目动态」全宽（勿与 toolbar 抢 flex 宽）
  */
 export function TravelTrustLandingChrome() {
   const { t } = useTranslation();
-  const reduceMotion = useReducedMotion();
   const heroScroll = useTravelTrustHeroScrollProgress();
-  const [showPulseExpanded, setShowPulseExpanded] = useState(false);
   const [heroT, setHeroT] = useState(0);
 
   useEffect(() => {
     if (!heroScroll) return;
-    const update = (t: number) => {
-      setHeroT(t);
-      setShowPulseExpanded(t >= 0.12);
-    };
+    const update = (t: number) => setHeroT(t);
     update(heroScroll.get());
     return heroScroll.on("change", update);
   }, [heroScroll]);
 
-  const navScrim = Math.min(1, heroT * 1.4);
-  const bottomBorderAlpha = navScrim * TT_LANDING_CHROME_L5.bottomBorderPeak;
+  const bottomBorderAlpha = Math.min(1, heroT * 1.4) * TT_LANDING_CHROME_L5.bottomBorderPeak;
+  const heroBgAlpha = (heroT * TT_LANDING_CHROME_L5.heroTBackgroundPeak).toFixed(3);
 
   return (
-    <motion.div
+    <div
       className={TT_LANDING_CHROME_L5.shellClass}
       data-tt-traveltrust-landing-chrome="1"
-      data-tt-traveltrust-landing-chrome-pulse-expanded={showPulseExpanded ? "1" : "0"}
+      data-tt-traveltrust-landing-chrome-pulse-expanded="1"
+      data-tt-traveltrust-landing-chrome-l1-panel="both"
       data-tt-traveltrust-landing-chrome-hero-t={heroT.toFixed(2)}
       data-tt-traveltrust-landing-chrome-l5="1"
       data-tt-traveltrust-landing-chrome-slim-l5="1"
       data-tt-traveltrust-landing-chrome-merged-header-l5="1"
       data-tt-traveltrust-cinematic-non-globe-l5={TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID}
-      animate={{
-        background: `linear-gradient(180deg, rgba(252,164,124,${(heroT * TT_LANDING_CHROME_L5.heroTBackgroundPeak).toFixed(3)}) 0%, transparent 72%)`,
+      style={{
+        borderBottomWidth: 1,
+        borderBottomStyle: "solid",
         borderBottomColor: `rgba(252, 164, 124, ${bottomBorderAlpha.toFixed(3)})`,
+        background: `linear-gradient(180deg, rgba(252,164,124,${heroBgAlpha}) 0%, transparent 72%)`,
       }}
-      transition={TT_LANDING_CHROME_L5.heroTTransition}
-      style={{ borderBottomWidth: 1, borderBottomStyle: "solid" }}
     >
-      {!reduceMotion ? (
-        <motion.span
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-ref-sun/55 to-transparent"
-          aria-hidden
-          data-tt-traveltrust-landing-chrome-border-shimmer-l5="1"
-          animate={{ x: ["-25%", "125%"], opacity: [0.35, 0.85, 0.35] }}
-          transition={{
-            x: { duration: TT_LANDING_CHROME_L5.bottomShimmerDuration, repeat: TT_LANDING_CHROME_L5.bottomShimmerRepeat, ease: "easeInOut" },
-            opacity: { duration: TT_LANDING_CHROME_L5.bottomShimmerDuration, repeat: TT_LANDING_CHROME_L5.bottomShimmerRepeat, ease: "easeInOut" },
-          }}
-        />
-      ) : null}
-      <motion.div
-        className={TT_LANDING_CHROME_L5.chromeRowClass}
-        data-tt-traveltrust-landing-chrome-layout="stacked-l5"
-        data-tt-traveltrust-landing-chrome-xl-single-row-l5="0"
+      <div
+        className="flex w-full flex-col gap-0.5 px-0 py-0.5 sm:gap-1 sm:py-1"
+        data-tt-traveltrust-landing-chrome-layout="stacked-dual-row-l5"
       >
-        <motion.div
-          className={TT_LANDING_CHROME_L5.controlsToolbarClass}
+        <div
+          className={`${TT_LANDING_CHROME_L5.controlsToolbarClass} w-full`}
           data-tt-traveltrust-landing-chrome-toolbar-l5="1"
           data-tt-traveltrust-landing-chrome-live-row-l5="1"
           role="group"
@@ -103,25 +73,21 @@ export function TravelTrustLandingChrome() {
           >
             <TravelTrustLandingNav embedded compactOnHero />
           </div>
-          {heroT >= 0.14 || showPulseExpanded ? (
-            <div
-              className={TT_LANDING_CHROME_L5.toolbarToggleSlotClass}
-              data-tt-traveltrust-landing-chrome-toggle-slot-l5="1"
-            >
-              <TravelTrustCinematicLowQualityToggle compact={!showPulseExpanded} />
-            </div>
-          ) : null}
-        </motion.div>
-        <motion.div
-          className={`${TT_LANDING_CHROME_L5.pulseSlotClass} ${TT_LANDING_CHROME_L5.pulseRowDividerClass}`}
+          <div
+            className={TT_LANDING_CHROME_L5.toolbarToggleSlotClass}
+            data-tt-traveltrust-landing-chrome-toggle-slot-l5="1"
+          >
+            <TravelTrustCinematicLowQualityToggle compact />
+          </div>
+        </div>
+        <div
+          className={`${TT_LANDING_CHROME_L5.pulseSlotClass} ${TT_LANDING_CHROME_L5.pulseRowDividerClass} w-full`}
           data-tt-traveltrust-landing-chrome-pulse-row-l5="1"
-          data-tt-traveltrust-landing-chrome-pulse-expanded={showPulseExpanded ? "1" : "0"}
-          layout
-          transition={TT_LANDING_CHROME_L5.pulseLayoutSpring}
+          data-tt-traveltrust-landing-chrome-pulse-expanded="1"
         >
           <TravelTrustPulseTicker variant="inline" />
-        </motion.div>
-      </motion.div>
-    </motion.div>
+        </div>
+      </div>
+    </div>
   );
 }

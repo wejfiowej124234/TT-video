@@ -26,7 +26,7 @@ import {
 import {
   TT_SCROLL_PROGRESS_L5,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 
 
 

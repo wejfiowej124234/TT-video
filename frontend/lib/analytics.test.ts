@@ -2,7 +2,8 @@
  * 埋点：开发态 console.debug；非 development 不输出（07 可观测占位）
  */
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { trackDidRankEvent, trackMarketEvent } from "./analytics";
+import { trackCommunityMeDataStateRender, trackDidRankEvent, trackMarketEvent, trackTravelTrustEvent } from "./analytics";
+import type { DataStateKind } from "./dataState";
 
 describe("analytics", () => {
   afterEach(() => {
@@ -41,10 +42,31 @@ describe("analytics", () => {
     });
   });
 
+  it("trackTravelTrustEvent logs in development", () => {
+    vi.stubEnv("NODE_ENV", "development");
+    const spy = vi.spyOn(console, "debug").mockImplementation(() => {});
+    trackTravelTrustEvent("traveltrust_plan_trip_click", { source: "hero", target: "/market" });
+    expect(spy).toHaveBeenCalledWith("[analytics]", "traveltrust_plan_trip_click", {
+      source: "hero",
+      target: "/market",
+    });
+  });
+
   it("does not console.debug when NODE_ENV is not development", () => {
     vi.stubEnv("NODE_ENV", "test");
     const spy = vi.spyOn(console, "debug").mockImplementation(() => {});
     trackMarketEvent("market_order_click");
     expect(spy).not.toHaveBeenCalled();
+  });
+
+  it("trackCommunityMeDataStateRender logs in development", () => {
+    vi.stubEnv("NODE_ENV", "development");
+    const spy = vi.spyOn(console, "debug").mockImplementation(() => {});
+    trackCommunityMeDataStateRender("community_me_auth_gate", "invalid" as DataStateKind, { path: "/community/me" });
+    expect(spy).toHaveBeenCalledWith(
+      "[analytics]",
+      "community_me_data_state_render",
+      expect.objectContaining({ surface: "community_me_auth_gate", data_state: "invalid", path: "/community/me" }),
+    );
   });
 });

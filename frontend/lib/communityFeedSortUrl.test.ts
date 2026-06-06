@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
   communityTopicPathForTag,
+  communityTopicTagExceedsFeedQueryLimit,
   feedSortQuerySuffix,
+  normalizeCommunityTopicTagFromSearchInput,
   parseCommunityFeedSortFromQuery,
   pathnameWithFeedSort,
 } from "./communityFeedSortUrl";
@@ -45,5 +47,20 @@ describe("pathnameWithFeedSort", () => {
     const withTag = pathnameWithFeedSort("/community/topic/a", "?tag=b", "hot");
     expect(new URL(`http://x${withTag}`).searchParams.get("sort")).toBe("hot");
     expect(new URL(`http://x${withTag}`).searchParams.get("tag")).toBe("b");
+  });
+});
+
+describe("normalizeCommunityTopicTagFromSearchInput", () => {
+  it("trims and strips leading hash", () => {
+    expect(normalizeCommunityTopicTagFromSearchInput("  #京都  ")).toBe("京都");
+    expect(normalizeCommunityTopicTagFromSearchInput("food")).toBe("food");
+    expect(normalizeCommunityTopicTagFromSearchInput("   ")).toBe("");
+  });
+});
+
+describe("communityTopicTagExceedsFeedQueryLimit", () => {
+  it("delegates to server UTF-8 limit", () => {
+    expect(communityTopicTagExceedsFeedQueryLimit("")).toBe(false);
+    expect(communityTopicTagExceedsFeedQueryLimit("a".repeat(65))).toBe(true);
   });
 });

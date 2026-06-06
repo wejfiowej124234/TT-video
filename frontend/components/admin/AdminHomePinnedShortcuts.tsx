@@ -2,12 +2,13 @@
 
 
 
-import Link from "next/link";
+import { AdminShellPrefetchLink } from "@/components/admin/AdminShellPrefetchLink";
 
 import { useTranslation } from "@/components/LocaleProvider";
 
 import { ADMIN_INBOX_QUEUE_HREFS } from "@/lib/admin/adminInboxQueueHrefs";
-import { ADMIN_LINK_FOCUS_CLASS } from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
+import { ADMIN_LINK_FOCUS_CLASS, ADMIN_RECENT_VISIT_CHIP_CLASS } from "@/lib/adminUi";
 
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2WhiteClasses } from "@/lib/travelLinkFocus";
 
@@ -41,14 +42,10 @@ export function AdminHomePinnedShortcuts() {
 
   return (
 
-    <section
-
-      className="rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4"
-
+    <AdminWarmL5Surface
+      as="section"
       aria-label={t("admin_home_pinned_aria")}
-
       data-tt-admin-home-pinned="1"
-
     >
 
       <h2 className="text-body font-semibold text-ink-900">{t("admin_home_pinned_title")}</h2>
@@ -61,17 +58,17 @@ export function AdminHomePinnedShortcuts() {
 
           <li key={href}>
 
-            <Link
+            <AdminShellPrefetchLink
 
               href={href}
 
-              className={`${touchTargetLink44Classes} inline-flex min-h-[44px] items-center rounded-full border border-ink-200 bg-ink-50 px-3 py-1.5 text-small font-medium text-ink-800 hover:border-ink-400 hover:bg-white ${travelFocusRingCoreOffset2WhiteClasses} ${ADMIN_LINK_FOCUS_CLASS}`}
+              className={`${touchTargetLink44Classes} ${ADMIN_RECENT_VISIT_CHIP_CLASS} ${travelFocusRingCoreOffset2WhiteClasses} ${ADMIN_LINK_FOCUS_CLASS}`}
 
             >
 
               {t(labelKey)}
 
-            </Link>
+            </AdminShellPrefetchLink>
 
           </li>
 
@@ -79,7 +76,7 @@ export function AdminHomePinnedShortcuts() {
 
       </ul>
 
-    </section>
+    </AdminWarmL5Surface>
 
   );
 

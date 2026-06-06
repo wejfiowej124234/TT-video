@@ -1,5 +1,9 @@
 import type { ChainAlignmentHubStatus } from "@/lib/financeReconciliationDriftStrip";
 import { formatApiPathDisplayValue } from "@/lib/financeReconciliationPathValue";
+import {
+  ADMIN_FIN_RECON_ALIGNED_BADGE_CLASS,
+  ADMIN_FIN_RECON_MISALIGNED_BADGE_CLASS,
+} from "@/lib/adminUi";
 
 export type FinanceRes = {
   status?: string;
@@ -7,6 +11,9 @@ export type FinanceRes = {
   summary?: unknown;
   error?: string;
 };
+
+/** Full finance summary body stashed in list-fetch meta (`useAdminFinanceReconciliationPage`). */
+export const ADMIN_FINANCE_RECON_BODY_META_KEY = "__adminFinanceReconBody";
 
 export function isRecord(v: unknown): v is Record<string, unknown> {
   return typeof v === "object" && v !== null && !Array.isArray(v);
@@ -34,7 +41,6 @@ export function pathRows(
 }
 
 export function financeReconciliationAlignmentBadgeClass(s: ChainAlignmentHubStatus): string {
-  if (s === "unknown") return "border-warning bg-warning text-white";
-  if (s === "not_aligned") return "border-warning bg-warning text-white";
-  return "border-ink-200 bg-ink-100 text-ink-800";
+  if (s === "unknown" || s === "not_aligned") return ADMIN_FIN_RECON_MISALIGNED_BADGE_CLASS;
+  return ADMIN_FIN_RECON_ALIGNED_BADGE_CLASS;
 }

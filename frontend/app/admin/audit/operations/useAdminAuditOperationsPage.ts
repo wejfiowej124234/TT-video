@@ -3,14 +3,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { type FormEvent, useEffect, useMemo, useState } from "react";
 
 import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
+import { routes } from "@/lib/api";
 import {
-  type AdminFetchErrorKind,
-  adminFetchErrorKind,
-  adminFetchJson,
-  logAdminFetch,
-} from "@/lib/adminFetchDisplay";
-import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders } from "@/lib/apiClient";
+  type AdminListFetchSnapshot,
+  type AdminStandardListBody,
+  useAdminStandardListFetch,
+} from "@/lib/admin/useAdminStandardListFetch";
 
 import {
   type AdminAuditOperationsRes,
@@ -20,6 +18,25 @@ import {
   parseOpsListQuery,
 } from "./adminAuditOperationsPageModel";
 
+type AuditOpRow = { code: string; mutating: boolean };
+
+function auditOpsListToSnapshot(
+  body: AdminStandardListBody<AuditOpRow> &
+    Pick<AdminAuditOperationsRes, "operations" | "catalog_total" | "returned" | "note">,
+): AdminListFetchSnapshot<AuditOpRow> {
+  const ops = Array.isArray(body.operations) ? body.operations.filter(isAuditOpRow) : [];
+  const baseMeta = isAdminMetaRecord(body.meta) ? body.meta : {};
+  const meta: Record<string, unknown> = { ...baseMeta };
+  if (typeof body.catalog_total === "number") meta.catalog_total = body.catalog_total;
+  if (typeof body.returned === "number") meta.returned = body.returned;
+  if (typeof body.note === "string") meta.note = body.note;
+  return {
+    items: ops,
+    appliedFilters: body.applied_filters ?? null,
+    meta: Object.keys(meta).length > 0 ? meta : null,
+  };
+}
+
 export function useAdminAuditOperationsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -28,44 +45,36 @@ export function useAdminAuditOperationsPage() {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [body, setBody] = useState<AdminAuditOperationsRes | null>(null);
+  const listUrl = useMemo(
+    () => routes.admin.auditOperations({ limit }),
+    [limit],
+  );
+
+  const { items, appliedFilters, meta, loading, refreshing, error } =
+    useAdminStandardListFetch<AuditOpRow>({
+      scope: "audit-operations",
+      context: "AdminAuditOperationsPage",
+      listUrl,
+      toSnapshot: auditOpsListToSnapshot,
+    });
+
   const [draftLimit, setDraftLimit] = useState(String(limit));
 
   useEffect(() => {
     setDraftLimit(String(limit));
   }, [limit]);
 
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-
-    const headers: Record<string, string> = { "x-request-id": `admin-audit-ops-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    adminFetchJson<AdminAuditOperationsRes>(
-      "AdminAuditOperationsPage",
-      apiUrl(routes.admin.auditOperations({ limit })),
-      { headers },
-    )
-      .then(({ res, body: json }) => {
-        if (!res.ok) {
-          throw new Error(json.error || `request_failed_${res.status}`);
-        }
-        return json;
-      })
-      .then(setBody)
-      .catch((e: unknown) => {
-        logAdminFetch("AdminAuditOperationsPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
-  }, [limit]);
+  const body = useMemo((): AdminAuditOperationsRes | null => {
+    if (items.length === 0 && !appliedFilters && !meta) return null;
+    return {
+      operations: items,
+      applied_filters: appliedFilters ?? undefined,
+      catalog_total: typeof meta?.catalog_total === "number" ? meta.catalog_total : undefined,
+      returned: typeof meta?.returned === "number" ? meta.returned : undefined,
+      note: typeof meta?.note === "string" ? meta.note : undefined,
+      meta,
+    };
+  }, [items, appliedFilters, meta]);
 
   const apply = (e?: FormEvent) => {
     e?.preventDefault();
@@ -77,16 +86,11 @@ export function useAdminAuditOperationsPage() {
     router.push(buildOpsListPath({ limit: 50 }));
   };
 
-  const meta = body && isAdminMetaRecord(body.meta) ? body.meta : null;
-
-  const operationRows = useMemo(() => {
-    const raw = body?.operations;
-    if (!Array.isArray(raw)) return [];
-    return raw.filter(isAuditOpRow);
-  }, [body?.operations]);
+  const operationRows = items;
 
   return {
     loading,
+    refreshing,
     error,
     body,
     meta,

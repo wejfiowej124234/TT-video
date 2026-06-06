@@ -15,7 +15,8 @@ describe("AdminOnboardingListPage (①)", () => {
     expect(src).toContain("AdminListPageEmptyState");
     expect(src).toContain('data-tt-admin-onboarding-list="1"');
     expect(src).toContain("data-tt-admin-onboarding-list-body-canvas");
-    expect(src).toContain("ADMIN_PAGE_HEADER_CARD_CLASS");
+    expect(src).toContain("AdminWarmL5Surface");
+    expect(src).toContain("AdminOnboardingHubBackLinks");
     expect(src).toContain("ADMIN_TABLE_SECTION_CLASS");
     expect(src).toContain("ADMIN_EMPTY_NEXT_ONBOARDING_LIST_EMPTY");
     expect(src).toContain("setError(errorKind)");

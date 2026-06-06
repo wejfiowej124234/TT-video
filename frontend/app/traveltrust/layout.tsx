@@ -2,15 +2,16 @@ import type { Metadata } from "next";
 import zh from "@/locales/zh";
 import TravelTrustAmbientCanvas from "@/components/traveltrust/TravelTrustAmbientCanvas";
 import { TravelTrustJsonLd } from "@/components/traveltrust/TravelTrustJsonLd";
+import { TravelTrustLayoutDeferredPreload } from "@/components/traveltrust/TravelTrustLayoutDeferredPreload";
 import { TravelTrustRouteFixedAmbientLayers } from "@/components/traveltrust/TravelTrustRouteFixedAmbientLayers";
 import { UNIFIED_PAGE_3D } from "@/components/traveltrust/cinematic/traveltrustPageCinematicConfig";
 import {
   TRAVELTRUST_GLOBE_CLOUD_TEXTURE_PATH,
   TRAVELTRUST_GLOBE_EARTH_TEXTURE_PATH,
 } from "@/lib/traveltrustGlobeEarthAsset";
-import { uniqueRoleVideoPrefetchEntries } from "@/lib/traveltrustMediaFromBrief";
-import { loadTraveltrustLayoutPreload } from "@/lib/traveltrustPageBrief.server";
+import { getTraveltrustLayoutPreloadSync } from "@/lib/traveltrustPageBrief.server";
 import { TT_Z, ttZClass } from "@/lib/traveltrustZ";
+import { TravelTrustHomePrefetchBoot } from "@/modules/traveltrust-home";
 
 const siteUrl =
   (typeof process !== "undefined" && process.env.NEXT_PUBLIC_SITE_URL?.trim()) ||
@@ -47,10 +48,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function TravelTrustNetworkLayout({
+export default function TravelTrustNetworkLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const preload = await loadTraveltrustLayoutPreload();
+  const preload = getTraveltrustLayoutPreloadSync();
 
   return (
     <div className="min-h-screen bg-[#0c0a09] text-slate-100 antialiased relative overflow-x-clip [color-scheme:dark]">
@@ -73,10 +74,9 @@ export default async function TravelTrustNetworkLayout({
       {preload.hero.mp4 && !UNIFIED_PAGE_3D ? (
         <link rel="preload" href={preload.hero.mp4} as="fetch" crossOrigin="anonymous" />
       ) : null}
-      {uniqueRoleVideoPrefetchEntries(preload.roles).map((role) => (
-        <link key={role.roleId} rel="prefetch" href={role.mp4} />
-      ))}
       <TravelTrustJsonLd />
+      <TravelTrustHomePrefetchBoot />
+      <TravelTrustLayoutDeferredPreload />
       <TravelTrustRouteFixedAmbientLayers subdued={UNIFIED_PAGE_3D} />
       {!UNIFIED_PAGE_3D ? <TravelTrustAmbientCanvas /> : null}
       <div

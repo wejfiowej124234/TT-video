@@ -1,15 +1,9 @@
 import { useParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
-import {
-  type AdminFetchErrorKind,
-  adminFetchErrorKind,
-  adminFetchJson,
-  logAdminFetch,
-} from "@/lib/adminFetchDisplay";
-import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders } from "@/lib/apiClient";
+import { useAdminStandardDetailFetch } from "@/lib/admin/useAdminStandardDetailFetch";
+import { routes } from "@/lib/api";
 
 import { type ReconcileReportRes } from "./adminIndexerReconcileReportPageModel";
 
@@ -22,59 +16,30 @@ export function useAdminIndexerReconcileReportPage() {
     return "";
   }, [params]);
 
-  const [refreshTick, setRefreshTick] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [payload, setPayload] = useState<ReconcileReportRes | null>(null);
+  const [refreshToken, setRefreshToken] = useState(0);
 
-  useEffect(() => {
-    if (!reportId) {
-      setLoading(false);
-      setError(null);
-      setPayload(null);
-      return;
-    }
+  const detailUrl = useMemo(
+    () => (reportId ? routes.admin.indexerReconcileReport(reportId) : ""),
+    [reportId],
+  );
 
-    setLoading(true);
-    setError(null);
-
-    const headers: Record<string, string> = {
-      "x-request-id": `admin-reconcile-${reportId}-${Date.now()}`,
-    };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403 handled below
-    }
-
-    const path = routes.admin.indexerReconcileReport(reportId);
-
-    adminFetchJson<ReconcileReportRes>("AdminIndexerReconcileReportPage", apiUrl(path), { headers })
-      .then(({ res, body: json }) => {
-        if (res.status === 403 || res.status === 401) {
-          throw new Error("forbidden");
-        }
-        if (!res.ok) {
-          throw new Error(json.error || `request_failed_${res.status}`);
-        }
-        return json;
-      })
-      .then(setPayload)
-      .catch((e: unknown) => {
-        logAdminFetch("AdminIndexerReconcileReportPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
-  }, [reportId, refreshTick]);
+  const { body: payload, loading, refreshing, error } = useAdminStandardDetailFetch<ReconcileReportRes>({
+    scope: "indexer-reconcile-detail",
+    context: "AdminIndexerReconcileReportPage",
+    detailUrl,
+    resourceId: reportId,
+    refreshToken,
+  });
 
   const meta = payload && isAdminMetaRecord(payload.meta) ? payload.meta : null;
 
   return {
     reportId,
     loading,
+    refreshing,
     error,
     payload,
     meta,
-    refresh: () => setRefreshTick((n) => n + 1),
+    refresh: () => setRefreshToken((n) => n + 1),
   };
 }

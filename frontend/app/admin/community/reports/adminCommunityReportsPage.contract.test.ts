@@ -11,7 +11,9 @@ function readSources(): string {
     readFileSync(join(__dir, "AdminCommunityReportsPageInner.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminCommunityReportsModerationWizard.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminCommunityReportsPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "AdminCommunityReportsInboxStrip.tsx"), "utf8"),
+    readFileSync(join(__dir, "AdminCommunityReportsFilterCard.tsx"), "utf8"),
   ].join("\n");
 }
 
@@ -27,15 +29,20 @@ describe("admin community reports page", () => {
     expect(src).toContain("AdminDialogFocusPanel");
     expect(src).toContain("AdminDialogScrim");
     expect(src).toContain("AdminCommunityReportsPage");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("modWizardStep");
     expect(src).toContain("AdminListPageChrome");
     expect(src).toContain("AdminListFetchError");
     expect(src).toContain("AdminListPageEmptyState");
     expect(src).toContain("AdminPermissionDeniedBanner");
     expect(src).toContain("COMMUNITY_READ");
+    expect(src).toContain("AdminCommunityReportsFilterCard");
+    expect(src).toContain("data-tt-admin-reports-filter-grid");
     expect(src).toContain("data-tt-admin-reports-inbox-open-filter");
-    expect(src).toContain("admin_reports_inbox_open_filter");
     expect(src).toContain("ADMIN_EMPTY_NEXT_COMMUNITY_REPORTS_EMPTY");
     expect(src).toContain('data-tt-admin-reports-inbox-empty');
+    expect(src).toContain("AdminCommunityRelatedLinks");
+    expect(src).not.toContain("AdminCommunityListHeaderAside");
+    expect(src).not.toContain("AdminCommunityReportsHeaderLinks");
   });
 });

@@ -15,6 +15,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminReviewsFetchAlerts.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminReviewsTableSection.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminReviewsPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminReviewsPageModel.ts"), "utf8"),
   ].join("\n");
 }
@@ -25,11 +26,14 @@ describe("admin reviews page", () => {
   it("keeps admin reviews list route + admin fetch + list chrome anchor", () => {
     expect(src).toContain("routes.admin.reviews");
     expect(src).toContain("adminFetchJson");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("AdminReviewsPageMain");
     expect(src).toContain("AdminListPageChrome");
     expect(src).toContain("AdminListFetchError");
     expect(src).toContain('data-tt-admin-list-page="1"');
     expect(src).toContain("admin-reviews-filter-form");
     expect(src).toContain("stashEscrowOrderPrefetchForOrderIdNav");
+    expect(src).toContain("REVIEWS_LIST_RELATED_FOLD_LINKS");
+    expect(src).not.toContain("headerAside={<AdminOpsQueueBackLinks />}");
   });
 });

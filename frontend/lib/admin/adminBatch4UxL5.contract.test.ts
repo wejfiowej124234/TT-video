@@ -9,7 +9,7 @@ const componentsAdmin = join(fe, "components", "admin");
 
 /** ① 第四批 UX · FIN-02 深度 / IA-06 运营 Shell 预览 / 枢纽修复。 */
 describe("admin batch4 UX L5 (①)", () => {
-  it("finance partial depth href SSOT + hub depth uses model supplement modules", () => {
+  it("finance partial depth href SSOT + hub depth main modules only (supplement in fold)", () => {
     const hrefLib = readFileSync(join(__dir, "adminFinancePartialDepthHref.ts"), "utf8");
     const model = readFileSync(
       join(fe, "app", "admin", "finance-suite", "adminFinanceSuitePageModel.ts"),
@@ -19,8 +19,17 @@ describe("admin batch4 UX L5 (①)", () => {
     expect(hrefLib).toContain("fin_suite_depth");
     expect(hrefLib).toContain("fin_suite_module");
     expect(model).toContain("FINANCE_SUITE_SUPPLEMENT_MODULES");
+    expect(model).toContain('id: "indexer"');
+    expect(model).toContain('id: "reconcile-reports"');
+    expect(model).toContain('id: "observability"');
+    expect(model).toContain('id: "trust-growth"');
+    expect(model).toContain('id: "alert-incidents"');
+    expect(model.match(/id: "indexer"/g)?.length).toBe(1);
     expect(hub).toContain("adminFinancePartialDepthHref");
-    expect(hub).toContain("FINANCE_SUITE_SUPPLEMENT_MODULES");
+    expect(hub).toContain("FINANCE_SUITE_MODULES");
+    expect(hub).not.toContain("FINANCE_SUITE_SUPPLEMENT_MODULES");
+    expect(hub).toContain("data-tt-admin-fin-suite-hub-depth-fold");
+    expect(hub).toContain("admin-fin-suite-supplement-fold");
     expect(hub).toContain("useAdminCapabilities");
   });
 
@@ -42,6 +51,15 @@ describe("admin batch4 UX L5 (①)", () => {
     expect(bar).toContain("showRolePerspectiveSwitcher");
     expect(bar).toContain("data-tt-admin-shell-role-perspective-operator");
     expect(switcher).toContain("admin_shell_role_perspective_switcher_visible");
+    expect(switcher).toContain("data-tt-admin-shell-light-select");
+    expect(switcher).toContain("ADMIN_SHELL_FORM_SELECT_CLASS");
+    expect(readFileSync(join(fe, "lib/adminUi.ts"), "utf8")).toMatch(
+      /ADMIN_SHELL_FORM_SELECT_CLASS[\s\S]*text-slate-900[\s\S]*color-scheme:light/,
+    );
+    expect(readFileSync(join(fe, "app/globals.css"), "utf8")).toContain(
+      "select[data-tt-admin-shell-light-select",
+    );
+    expect(switcher).toContain("router.refresh");
   });
 
   it("home shell preview banner and ops guide preview CTA", () => {

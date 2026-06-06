@@ -7,7 +7,8 @@ import { AdminPermissionDeniedBanner } from "@/components/admin/AdminPermissionD
 import { adminPermissionForPathname } from "@/lib/admin/adminRoutePermission";
 import { adminPermDeniedMessageKey } from "@/lib/admin/adminPermDeniedMessageKey";
 
-import { ADMIN_ATTENTION_CALLOUT_CLASS, ADMIN_ROUTE_PERM_BANNER_WRAP_CLASS } from "@/lib/adminUi";
+import { ADMIN_ATTENTION_CALLOUT_CLASS, ADMIN_ROUTE_PERM_BANNER_WRAP_CLASS,
+  ADMIN_ROUTE_PERM_BANNER_BORDER_CLASS,} from "@/lib/adminUi";
 
 const BANNER_CLASS = `${ADMIN_ROUTE_PERM_BANNER_WRAP_CLASS} ${ADMIN_ATTENTION_CALLOUT_CLASS}`;
 
@@ -32,7 +33,11 @@ export function AdminRoutePermissionBanner() {
   if (!permission || hideInlineDuplicate) return null;
 
   return (
-    <div data-tt-admin-route-perm-banner="1" className="border-b border-ink-100/80">
+    <div
+      data-tt-admin-route-perm-banner="1"
+      {...{ "data-tt-admin-ui-rbac-advisory": "banner" }}
+      className={`${ADMIN_ROUTE_PERM_BANNER_BORDER_CLASS}`}
+    >
       <AdminPermissionDeniedBanner
         permission={permission}
         messageKey={adminPermDeniedMessageKey(permission)}

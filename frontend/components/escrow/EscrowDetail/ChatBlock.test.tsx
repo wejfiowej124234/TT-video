@@ -68,7 +68,7 @@ describe("ChatBlock", () => {
     expect(field.hasAttribute("disabled")).toBe(true);
   });
 
-  it("54-S3: did variant message input uses text-ink-900 on light field background", async () => {
+  it("54-S3: did variant message input uses protocol warm field tokens", async () => {
     render(
       <ChatBlock
         orderId="order-1"
@@ -81,8 +81,9 @@ describe("ChatBlock", () => {
     );
     await screen.findByRole("heading", { name: "escrow_chatTitle" });
     const field = screen.getByRole("textbox");
-    expect(field.className).toMatch(/text-ink-900/);
-    expect(field.className).toMatch(/placeholder:text-ink-500/);
+    expect(field.className).toMatch(/text-slate-100/);
+    expect(field.className).toMatch(/border-ref-sun/);
+    expect(field.className).not.toMatch(/cyan/);
   });
 
   it("shows load error and disables compose when getOrderMessages rejects with not_implemented", async () => {

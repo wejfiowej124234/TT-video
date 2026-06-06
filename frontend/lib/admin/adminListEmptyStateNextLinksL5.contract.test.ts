@@ -40,8 +40,9 @@ describe("admin list empty state next links L5 (①)", () => {
     expect(ADMIN_EMPTY_NEXT_STEWARD_QUEUE_EMPTY.map((l) => l.href)).toContain(
       "/admin/provider-applications?status=submitted",
     );
-    expect(ADMIN_EMPTY_NEXT_APPROVALS_FILTERED_EMPTY).toHaveLength(3);
-    expect(ADMIN_EMPTY_NEXT_COMMUNITY_REPORTS_EMPTY).toHaveLength(3);
+    expect(ADMIN_EMPTY_NEXT_APPROVALS_FILTERED_EMPTY).toHaveLength(4);
+    expect(ADMIN_EMPTY_NEXT_COMMUNITY_REPORTS_EMPTY).toHaveLength(4);
+    expect(ADMIN_EMPTY_NEXT_PROVIDER_QUEUE_EMPTY[0]?.href).toBe("/admin/inbox");
     expect(ADMIN_EMPTY_NEXT_ONBOARDING_LIST_EMPTY).toHaveLength(3);
     expect(ADMIN_EMPTY_NEXT_ORDERS_FILTERED_EMPTY).toHaveLength(3);
     expect(ADMIN_EMPTY_NEXT_DISPUTES_FILTERED_EMPTY).toHaveLength(3);

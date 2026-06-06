@@ -4,12 +4,14 @@ import { useMemo } from "react";
 import { AdminSortableTh } from "@/components/admin/AdminSortableTh";
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
-import type { AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
 import { sortRowsByKey, useAdminTableSort } from "@/lib/admin/useAdminTableSort";
 import {
   ADMIN_TABLE_ROW_CLASS,
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
+  ADMIN_TABLE_SECTION_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
 } from "@/lib/adminUi";
 
 import type { SignedUrlTokenRow } from "./adminMediaSignedUrlTokensPageModel";
@@ -17,12 +19,11 @@ import type { SignedUrlTokenRow } from "./adminMediaSignedUrlTokensPageModel";
 type TokenSortKey = "created_at" | "expires_at";
 
 type Props = {
-  loading: boolean;
-  error: AdminFetchErrorKind | null;
+  refreshing: boolean;
   items: SignedUrlTokenRow[];
 };
 
-export function AdminMediaSignedUrlTokensTableSection({ loading, error, items }: Props) {
+export function AdminMediaSignedUrlTokensTableSection({ refreshing, items }: Props) {
   const { t } = useTranslation();
   const { sort, toggle, ariaSort } = useAdminTableSort<TokenSortKey>("created_at", "desc");
   const sortedItems = useMemo(
@@ -33,8 +34,6 @@ export function AdminMediaSignedUrlTokensTableSection({ loading, error, items }:
       }),
     [items, sort.key, sort.dir],
   );
-
-  if (loading || error) return null;
 
   if (items.length === 0) {
     return (
@@ -50,10 +49,11 @@ export function AdminMediaSignedUrlTokensTableSection({ loading, error, items }:
 
   return (
     <section
-      className="mt-6 overflow-x-auto rounded-[var(--radius-xl)] border border-ink-200 bg-white"
+      className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
       aria-label={t("admin_media_signed_url_tokens_table_aria")}
+      data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
     >
-      <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+      <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
         <thead className={ADMIN_TABLE_THEAD_CLASS}>
           <tr>
             <AdminSortableTh
@@ -80,23 +80,23 @@ export function AdminMediaSignedUrlTokensTableSection({ loading, error, items }:
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-ink-100 text-ink-700">
+        <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
           {sortedItems.map((r, idx) => (
             <tr key={`${r.id ?? "row"}-${idx}`} className={ADMIN_TABLE_ROW_CLASS}>
-              <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">
+              <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">
                 {r.created_at ?? t("admin_em_dash")}
               </td>
-              <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">
+              <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">
                 {r.expires_at ?? t("admin_em_dash")}
               </td>
-              <td className="px-3 py-2 font-mono text-meta">{r.url_scope ?? t("admin_em_dash")}</td>
-              <td className="px-3 py-2 font-mono text-meta max-w-[14rem] truncate" title={r.object_id}>
+              <td className="px-3 py-2 font-mono text-small text-ink-800">{r.url_scope ?? t("admin_em_dash")}</td>
+              <td className="px-3 py-2 font-mono text-small text-ink-800 max-w-[14rem] truncate" title={r.object_id}>
                 {r.object_id ?? t("admin_em_dash")}
               </td>
-              <td className="px-3 py-2 font-mono text-meta whitespace-nowrap max-w-[10rem] truncate" title={r.issued_to}>
+              <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap max-w-[10rem] truncate" title={r.issued_to}>
                 {r.issued_to ?? t("admin_em_dash")}
               </td>
-              <td className="px-3 py-2 font-mono text-meta whitespace-nowrap max-w-[10rem] truncate" title={r.id}>
+              <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap max-w-[10rem] truncate" title={r.id}>
                 {r.id ?? t("admin_em_dash")}
               </td>
             </tr>

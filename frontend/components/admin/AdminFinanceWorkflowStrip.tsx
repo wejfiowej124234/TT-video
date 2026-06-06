@@ -10,9 +10,9 @@ import {
   adminFinanceWorkflowSnapshotValue,
   useAdminFinanceWorkflowSnapshots,
 } from "@/lib/admin/useAdminFinanceWorkflowSnapshots";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import {
   ADMIN_FIN_WORKFLOW_STEP_CARD_CLASS,
-  ADMIN_HOME_WIDGET_CARD_CLASS,
   ADMIN_INLINE_LINK_CLASS,
   ADMIN_NOTICE_INFO_CLASS,
   ADMIN_PENDING_COUNT_BADGE_CLASS,
@@ -25,8 +25,9 @@ export function AdminFinanceWorkflowStrip() {
   const snapshots = useAdminFinanceWorkflowSnapshots();
 
   return (
-    <section
-      className={`mt-6 ${ADMIN_HOME_WIDGET_CARD_CLASS}`}
+    <AdminWarmL5Surface
+      as="section"
+      className="mt-6"
       aria-labelledby="admin-fin-workflow-heading"
       data-tt-admin-fin-workflow="1"
     >
@@ -60,7 +61,7 @@ export function AdminFinanceWorkflowStrip() {
               data-tt-admin-fin-workflow-step={step.id}
             >
               <div className="flex items-center justify-between gap-2">
-                <span className="text-meta font-medium text-ink-500">
+                <span className="text-meta font-medium text-slate-400">
                   {t("admin_fin_workflow_step", { n: idx + 1 })}
                 </span>
                 {snapKey ? (
@@ -79,8 +80,8 @@ export function AdminFinanceWorkflowStrip() {
                   </span>
                 ) : null}
               </div>
-              <h3 className="mt-1 text-small font-semibold text-ink-900">{t(step.titleKey)}</h3>
-              <p className="mt-1 text-meta text-ink-600">{t(step.descKey)}</p>
+              <h3 className="mt-1 text-small font-semibold text-slate-100">{t(step.titleKey)}</h3>
+              <p className="mt-1 text-meta text-slate-400">{t(step.descKey)}</p>
               <Link
                 href={step.href}
                 className={`mt-2 inline-block text-small font-medium ${ADMIN_INLINE_LINK_CLASS} ${travelFocusRingOffset2Classes}`}
@@ -91,6 +92,6 @@ export function AdminFinanceWorkflowStrip() {
           );
         })}
       </ol>
-    </section>
+    </AdminWarmL5Surface>
   );
 }

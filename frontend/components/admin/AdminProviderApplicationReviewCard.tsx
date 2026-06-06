@@ -11,7 +11,12 @@ import {
 import { providerRejectionCodeLabel } from "@/lib/provider/providerRejectionCodes";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 
-import { ADMIN_FILTER_CARD_CLASS, ADMIN_INLINE_LINK_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS } from "@/lib/adminUi";
+import { AdminDetailContentPanel } from "@/components/admin/AdminDetailContentPanel";
+import { ADMIN_INLINE_LINK_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  ADMIN_FORM_CONTROL_SM_CLASS,
+  ADMIN_INNER_DIVIDER_CLASS,
+  ADMIN_SEMANTIC_APPROVE_BTN_CLASS,
+  ADMIN_SEMANTIC_REJECT_BTN_CLASS,} from "@/lib/adminUi";
 
 type ProviderApplicationPayload = {
   id?: string;
@@ -137,8 +142,9 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
   const documents = docLinks(payload);
 
   return (
-    <section
-      className={`${ADMIN_FILTER_CARD_CLASS} shadow-soft`}
+    <AdminDetailContentPanel
+      as="section"
+     
       aria-label={t("admin_provider_app_sectionAria")}
       data-testid="admin-provider-application-review"
     >
@@ -256,7 +262,7 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
           ) : null}
 
           {app.status !== "approved" && app.status !== "rejected" ? (
-            <div className="mt-4 space-y-3 border-t border-ink-100 pt-4">
+            <div className={`mt-4 space-y-3 ${ADMIN_INNER_DIVIDER_CLASS} pt-4`}>
               <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
@@ -268,7 +274,7 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
                 </button>
                 <button
                   type="button"
-                  className="rounded-[var(--radius-sm)] bg-success px-3 py-2 text-small font-medium text-white hover:opacity-90 disabled:opacity-50"
+                  className={ADMIN_SEMANTIC_APPROVE_BTN_CLASS}
                   disabled={reviewLoading}
                   onClick={() => void submitReview("approved")}
                 >
@@ -276,7 +282,7 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
                 </button>
                 <button
                   type="button"
-                  className="rounded-[var(--radius-sm)] bg-danger px-3 py-2 text-small font-medium text-white hover:opacity-90 disabled:opacity-50"
+                  className={ADMIN_SEMANTIC_REJECT_BTN_CLASS}
                   disabled={reviewLoading}
                   onClick={() => void submitReview("rejected")}
                 >
@@ -287,7 +293,7 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
                 {t("admin_provider_app_rejectionCodes")}
                 <input
                   type="text"
-                  className="mt-1 w-full rounded border border-ink-200 px-2 py-1.5 font-mono text-meta"
+                  className={`mt-1 w-full ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1.5 font-mono text-meta`}
                   value={rejectionCodes}
                   onChange={(e) => setRejectionCodes(e.target.value)}
                   placeholder="DOC_BLUR, INCOMPLETE"
@@ -296,7 +302,7 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
               <label className="block text-small text-ink-700">
                 {t("admin_provider_app_rejectionMessage")}
                 <textarea
-                  className="mt-1 w-full rounded border border-ink-200 px-2 py-1.5 text-meta"
+                  className={`mt-1 w-full ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1.5 text-meta`}
                   rows={2}
                   value={rejectionMessage}
                   onChange={(e) => setRejectionMessage(e.target.value)}
@@ -311,6 +317,6 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
           ) : null}
         </div>
       )}
-    </section>
+    </AdminDetailContentPanel>
   );
 }

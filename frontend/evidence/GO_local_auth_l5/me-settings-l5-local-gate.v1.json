@@ -1,0 +1,326 @@
+{
+  "schema": "traveltrust.me-settings-l5-local-gate.v1",
+  "phase": "local-1",
+  "freeze_doc": "frontend/evidence/GO_local_auth_l5/ME-SETTINGS-L5-FREEZE.md",
+  "frozen_at": "2026-06-02",
+  "task_id": "ME-SETTINGS-L5-GATE",
+  "tracker_ts": "frontend/lib/me/meSettingsPageTracker.v1.ts",
+  "related_gates": {
+    "account_nav": "evidence/GO_local_auth_l5/account-nav-page-tracker.v1.json",
+    "community_me_l5": "evidence/GO_local_community_me_l5/community-me-l5-local-gate.v1.json"
+  },
+  "routes": [
+    {
+      "path": "/me/settings",
+      "role": "hub",
+      "markers": ["data-tt-me-settings-route=\"hub\"", "data-tt-me-settings-ui-frozen=\"1\""],
+      "vitest": [
+        "lib/me/meSettingsPageTracker.contract.test.ts",
+        "lib/me/meSettingsL5.contract.test.ts",
+        "lib/me/meSettingsHubSection.contract.test.ts",
+        "lib/me/meSettingsHubStatus.contract.test.ts",
+        "lib/me/meSettingsHelpExtension.contract.test.ts"
+      ],
+      "markers_extra": [
+        "data-tt-me-settings-flash-banner"
+      ]
+    },
+    {
+      "path": "/me/settings/profile",
+      "role": "subpage",
+      "markers": [
+        "data-tt-me-settings-route=\"settings-profile\"",
+        "data-tt-me-settings-profile=\"1\"",
+        "data-tt-me-settings-profile-panel=\"1\"",
+        "data-tt-me-settings-profile-edit-form"
+      ],
+      "vitest": [
+        "lib/me/meSettingsPageTracker.contract.test.ts",
+        "lib/me/meSettingsProfileL5.contract.test.ts",
+        "components/me/communityMeProfile.contract.test.ts"
+      ]
+    },
+    {
+      "path": "/me/settings/privacy",
+      "role": "subpage",
+      "markers": ["data-tt-me-settings-route=\"privacy\""],
+      "vitest": ["lib/me/meSettingsPageTracker.contract.test.ts"]
+    },
+    {
+      "path": "/me/settings/language",
+      "role": "subpage",
+      "markers": ["data-tt-me-settings-route=\"language\"", "data-tt-me-settings-language-picker=\"1\""],
+      "vitest": ["lib/me/meSettingsPageTracker.contract.test.ts", "lib/me/meSettingsLanguage.contract.test.ts"]
+    },
+    {
+      "path": "/me/settings/data",
+      "role": "subpage",
+      "markers": ["data-tt-me-settings-route=\"data\"", "data-tt-me-settings-data-export=\"1\""],
+      "vitest": ["lib/me/meSettingsPageTracker.contract.test.ts"]
+    },
+    {
+      "path": "/me/settings/notifications-prefs",
+      "role": "subpage",
+      "markers": ["data-tt-me-settings-route=\"notifications-prefs\""],
+      "vitest": ["lib/me/meSettingsPageTracker.contract.test.ts", "lib/me/meSettingsFamily.contract.test.ts", "lib/me/meSettingsNotificationPrefs.contract.test.ts"]
+    },
+    {
+      "path": "/me/settings/trust",
+      "role": "subpage",
+      "markers": [
+        "data-tt-me-settings-route=\"settings-trust\"",
+        "data-tt-me-settings-trust"
+      ],
+      "vitest": [
+        "lib/me/meSettingsPageTracker.contract.test.ts",
+        "lib/me/meSettingsFamilyFullScore.contract.test.ts",
+        "lib/me/meSettingsTrustExtension.contract.test.ts"
+      ]
+    },
+    {
+      "path": "/trust",
+      "role": "settings-extension",
+      "markers": [
+        "data-tt-trust-from-settings",
+        "data-tt-trust-hub-from-settings",
+        "data-tt-me-settings-extension-chrome"
+      ],
+      "vitest": [
+        "lib/me/meSettingsTrustExtension.contract.test.ts",
+        "lib/me/meSettingsPageTracker.contract.test.ts"
+      ]
+    },
+    {
+      "path": "/me/password",
+      "role": "subpage",
+      "markers": ["data-tt-me-settings-route=\"password\""],
+      "vitest": ["lib/me/meSettingsPageTracker.contract.test.ts", "lib/me/mePasswordPageI18nKeys.test.ts"]
+    },
+    {
+      "path": "/me/security",
+      "role": "subpage",
+      "markers": ["data-tt-me-security-page", "data-tt-me-settings-route=\"security\""],
+      "markers_extra": [
+        "data-tt-me-security-revoke-current",
+        "data-tt-me-security-revoke-suffix",
+        "data-tt-me-security-notif-row",
+        "data-tt-me-security-notif-expand",
+        "#me-security-sessions",
+        "#me-security-notifications"
+      ],
+      "api_proxy_paths": [
+        "app/api/v1/me/sessions/route.ts",
+        "app/api/v1/me/sessions/current/route.ts",
+        "app/api/v1/me/security-notifications/route.ts"
+      ],
+      "vitest": [
+        "lib/me/meSettingsPageTracker.contract.test.ts",
+        "app/me/security/meSecurityPage.contract.test.ts",
+        "lib/me/meSettingsBatch17Deep.contract.test.ts",
+        "lib/me/meSettingsBatch18Deep.contract.test.ts",
+        "lib/me/meSettingsBatch19Deep.contract.test.ts",
+        "lib/me/meSettingsBatch20Deep.contract.test.ts"
+      ]
+    },
+    {
+      "path": "/privacy",
+      "role": "settings-extension",
+      "markers": ["data-tt-privacy-from-settings", "data-tt-me-settings-extension-chrome"],
+      "vitest": [
+        "lib/me/meSettingsLegalExtension.contract.test.ts",
+        "lib/me/meSettingsPageTracker.contract.test.ts"
+      ]
+    },
+    {
+      "path": "/terms",
+      "role": "settings-extension",
+      "markers": ["data-tt-terms-from-settings", "data-tt-me-settings-extension-chrome"],
+      "vitest": [
+        "lib/me/meSettingsLegalExtension.contract.test.ts",
+        "lib/me/meSettingsPageTracker.contract.test.ts"
+      ]
+    },
+    {
+      "path": "/terms/community-guidelines",
+      "role": "settings-extension",
+      "markers": ["data-tt-guidelines-from-settings", "data-tt-me-settings-extension-chrome"],
+      "vitest": [
+        "lib/me/meSettingsLegalExtension.contract.test.ts",
+        "lib/me/meSettingsPageTracker.contract.test.ts"
+      ]
+    },
+    {
+      "path": "/help",
+      "role": "settings-extension",
+      "markers": [
+        "data-tt-help-from-settings",
+        "data-tt-me-settings-extension-chrome"
+      ],
+      "vitest": [
+        "lib/me/meSettingsHelpExtension.contract.test.ts",
+        "lib/me/meSettingsLegalExtension.contract.test.ts",
+        "lib/me/meSettingsPageTracker.contract.test.ts"
+      ]
+    },
+    {
+      "path": "/disputes",
+      "role": "settings-extension",
+      "markers": [
+        "data-tt-me-settings-route=\"disputes-list\"",
+        "data-tt-disputes-l5=\"1\"",
+        "data-tt-disputes-from-settings",
+        "data-tt-disputes-empty"
+      ],
+      "vitest": [
+        "lib/me/disputesL5.contract.test.ts",
+        "lib/me/meSettingsPageTracker.contract.test.ts",
+        "lib/me/meSettingsBatch16Deep.contract.test.ts"
+      ]
+    },
+    {
+      "path": "/community/feedback",
+      "role": "settings-extension",
+      "markers": [
+        "data-tt-community-feedback-from-settings",
+        "data-tt-me-settings-extension-chrome",
+        "data-tt-community-feedback-delete-account-intent"
+      ],
+      "vitest": ["lib/me/meSettingsFeedbackExtension.contract.test.ts", "lib/me/meSettingsPageTracker.contract.test.ts"]
+    },
+    {
+      "path": "/auth/verify-email",
+      "role": "settings-extension",
+      "markers": ["data-tt-me-settings-route=\"verify-email\"", "data-tt-auth-verify-from-settings"],
+      "vitest": ["lib/me/meSettingsVerifyEmail.contract.test.ts", "lib/me/meSettingsPageTracker.contract.test.ts"]
+    },
+    {
+      "path": "/provider/register",
+      "role": "settings-extension",
+      "markers": ["data-tt-provider-register-from-settings", "data-tt-me-settings-extension-chrome"],
+      "vitest": [
+        "lib/me/meSettingsRegisterExtension.contract.test.ts",
+        "lib/me/meSettingsPageTracker.contract.test.ts"
+      ]
+    },
+    {
+      "path": "/steward/register",
+      "role": "settings-extension",
+      "markers": ["data-tt-steward-register-from-settings", "data-tt-me-settings-extension-chrome"],
+      "vitest": [
+        "lib/me/meSettingsRegisterExtension.contract.test.ts",
+        "lib/me/meSettingsPageTracker.contract.test.ts"
+      ]
+    },
+    {
+      "path": "/guide",
+      "role": "settings-extension",
+      "markers": ["data-tt-guide-from-settings", "data-tt-me-settings-extension-chrome"],
+      "vitest": [
+        "lib/me/meSettingsRegisterExtension.contract.test.ts",
+        "lib/me/meSettingsPageTracker.contract.test.ts"
+      ]
+    },
+    {
+      "path": "/me/onboarding",
+      "role": "settings-extension",
+      "markers": ["data-tt-me-settings-route=\"onboarding\"", "data-tt-me-onboarding-from-settings"],
+      "vitest": ["lib/me/meSettingsPageTracker.contract.test.ts"]
+    },
+    {
+      "path": "/disputes/[id]",
+      "role": "settings-extension",
+      "markers": [
+        "data-tt-me-settings-route=\"disputes-detail\"",
+        "data-tt-disputes-l5=\"1\"",
+        "data-tt-disputes-from-settings"
+      ],
+      "vitest": ["lib/me/disputesL5.contract.test.ts", "lib/me/meSettingsPageTracker.contract.test.ts"]
+    },
+    {
+      "path": "/me/settings/error",
+      "role": "error-boundary",
+      "markers": ["data-tt-me-settings-route=\"error\""],
+      "vitest": [
+        "lib/me/meSettingsPageTracker.contract.test.ts",
+        "lib/me/meSettingsFamily.contract.test.ts"
+      ]
+    }
+  ],
+  "hub_ia": {
+    "no_duplicate_header_hrefs": [
+      "/orders",
+      "/me/settings/profile",
+      "/community/me/posts",
+      "/community/me/collects",
+      "/community/me/likes",
+      "/community/me/reports",
+      "/me/identities"
+    ],
+    "community_settings_back_href": "/me/settings"
+  },
+  "vitest_union": [
+    "lib/me/meSettingsL5LocalGate.contract.test.ts",
+    "lib/me/meSettingsPageTracker.contract.test.ts",
+    "lib/me/meSettingsL5.contract.test.ts",
+    "lib/me/meSettingsProfileL5.contract.test.ts",
+    "lib/me/meSettingsPageI18nKeys.test.ts",
+    "lib/me/mePasswordPageI18nKeys.test.ts",
+    "app/me/security/meSecurityPage.contract.test.ts",
+    "lib/me/meSettingsLanguage.contract.test.ts",
+    "lib/me/meSettingsHubStatus.contract.test.ts",
+    "lib/me/meSettingsNavEnrich.contract.test.ts",
+    "lib/me/meSettingsHubSection.contract.test.ts",
+    "lib/me/meSettingsFamily.contract.test.ts",
+    "lib/me/meSettingsHubFlash.contract.test.ts",
+    "lib/me/meSettingsExtensionPlaywrightCoverage.contract.test.ts",
+    "lib/me/meSettingsBatch12Deep.contract.test.ts",
+    "lib/me/meSettingsBatch13Deep.contract.test.ts",
+    "lib/me/meSettingsBatch14Deep.contract.test.ts",
+    "lib/me/meSettingsBatch15Deep.contract.test.ts",
+    "lib/me/meSettingsBatch16Deep.contract.test.ts",
+    "lib/me/meSettingsBatch17Deep.contract.test.ts",
+    "lib/me/meSettingsBatch18Deep.contract.test.ts",
+    "lib/me/meSettingsBatch19Deep.contract.test.ts",
+    "lib/me/meSettingsBatch20Deep.contract.test.ts",
+    "lib/me/meSettingsFamilyFullScore.contract.test.ts",
+    "lib/me/meSettingsNotificationPrefs.contract.test.ts",
+    "lib/me/meSettingsVerifyEmail.contract.test.ts",
+    "lib/me/meSettingsFeedbackExtension.contract.test.ts",
+    "lib/me/meSettingsHelpExtension.contract.test.ts",
+    "lib/me/meSettingsLegalExtension.contract.test.ts",
+    "lib/me/meSettingsRegisterExtension.contract.test.ts",
+    "lib/me/meSettingsTrustExtension.contract.test.ts",
+    "lib/me/disputesL5.contract.test.ts",
+    "components/me/MeQuickLinksSection.contract.test.ts",
+    "components/header/headerUserMenuNavModel.test.ts",
+    "components/header/headerUserMenuNavActive.test.ts",
+    "lib/header/headerUtilityMenuUiFreeze.contract.test.ts",
+    "lib/i18n/accountNavNamingP3.contract.test.ts"
+  ],
+  "http_probe_paths": [
+    "/me/settings",
+    "/me/settings/profile",
+    "/me/password",
+    "/me/security",
+    "/me/settings/privacy",
+    "/me/settings/language",
+    "/me/settings/data",
+    "/me/settings/notifications-prefs",
+    "/me/settings/trust",
+    "/help",
+    "/trust",
+    "/disputes",
+    "/privacy",
+    "/terms",
+    "/community/feedback"
+  ],
+  "playwright_optional": ["e2e/me-settings-l5-hub.spec.ts", "e2e/me-settings-profile-l5.spec.ts"],
+  "playwright_env": "PLAYWRIGHT_ME_SETTINGS=1",
+  "green_script": "scripts/dev/smoke-me-settings-local.sh",
+  "green_summary_line": "smoke-me-settings: OK",
+  "account_nav_full_smoke": {
+    "script": "scripts/dev/smoke-account-nav-full-local.sh",
+    "summary_line": "TT_ACCOUNT_NAV_FULL_SMOKE: OK",
+    "playwright_layer_env": "PLAYWRIGHT_ME_SETTINGS=1"
+  }
+}

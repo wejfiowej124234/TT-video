@@ -1,0 +1,20 @@
+{
+  "schema": "traveltrust.me-routes-local-gate.v1",
+  "phase": "local-1",
+  "gate_script": "scripts/gates/me-routes-local-gate.sh",
+  "routes": [
+    {
+      "path": "/me/identities",
+      "vitest": [
+        "app/me/identities/meIdentitiesPage.contract.test.ts",
+        "lib/me/meIdentitiesL5.contract.test.ts",
+        "lib/me/meIdentitiesUiFreeze.contract.test.ts",
+        "lib/me/meIdentitiesL5FullScore.contract.test.ts"
+      ]
+    },
+    {
+      "path": "/me/security",
+      "vitest": ["app/me/security/meSecurityPage.contract.test.ts"]
+    }
+  ]
+}

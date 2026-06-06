@@ -12,6 +12,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminIndexerHealthPanel.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminIndexerOpsHintCard.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminIndexerPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "indexerPageModel.ts"), "utf8"),
   ].join("\n");
 }
@@ -21,6 +22,7 @@ describe("admin indexer page", () => {
 
   it("keeps indexer health route and admin fetch", () => {
     expect(src).toContain("routes.admin.indexerHealth");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("apiUrl(");
   });

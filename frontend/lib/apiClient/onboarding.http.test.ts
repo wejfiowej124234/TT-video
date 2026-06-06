@@ -2,7 +2,8 @@
  * 96-18：`GET …/onboarding/quote`、`POST …/payment-intents` / `role-confirm` 头与体（04 §3.4）
  */
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { apiUrl, routes } from "../api";
+import { apiUrl } from "../api";
+import { routes } from "../api/routes";
 import { mapApiReadError } from "../mapApiReadError";
 import {
   getOnboardingEntitlementsMe,
@@ -45,10 +46,10 @@ describe("getOnboardingQuote", () => {
         meta: { implementation_status: "onboarding_quote_stub" },
       })
     );
-    const data = await getOnboardingQuote("region_steward");
+    const data = await getOnboardingQuote("region_steward", { jurisdictions: "US,FR" });
     expect(data).toMatchObject({ status: "ok", meta: { implementation_status: "onboarding_quote_stub" } });
     expect(globalThis.fetch).toHaveBeenCalledWith(
-      `${apiUrl(routes.onboardingQuote)}?role=region_steward`,
+      `${apiUrl(routes.onboardingQuote)}?role=region_steward&jurisdictions=US%2CFR`,
       expect.objectContaining({
         headers: expect.objectContaining({ "x-request-id": expect.any(String) }),
       })
@@ -139,7 +140,7 @@ describe("postOnboardingPaymentIntent", () => {
       mockTextResponse(true, {
         status: "ok",
         entitlement_id: "e1",
-        meta: { implementation_status: "onboarding_payment_intent_persisted" },
+        meta: { implementation_status: "onboarding_payment_intent_persisted_fee_schedule_v1" },
       })
     );
     const data = await postOnboardingPaymentIntent({ role: "provider" }, "idem-onb-1");

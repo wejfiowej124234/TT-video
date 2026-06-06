@@ -1,0 +1,389 @@
+
+> traveltrust-frontend@0.1.0 test
+> vitest run --run lib/uiSystem.test.ts lib/marketingUi.test.ts lib/marketingUi-import-hygiene.test.ts app/(home)/homeMarketing.contract.test.ts components/market/useMarketPage.contract.test.ts
+
+
+ RUN  v2.1.9 D:/TravelTrust-V1/frontend
+
+ ✓ app/(home)/homeMarketing.contract.test.ts (3 tests) 2ms
+ ✓ components/market/useMarketPage.contract.test.ts (2 tests) 2ms
+ ✓ lib/marketingUi.test.ts (1 test) 3ms
+ ✓ lib/uiSystem.test.ts (11 tests) 5ms
+ ❯ lib/marketingUi-import-hygiene.test.ts (5 tests | 3 failed) 633ms
+   × marketingUi import hygiene > product paths do not import travelFocusRing* (admin/archive exempt) 106ms
+     → expected [ …(123) ] to deeply equal []
+   × marketingUi import hygiene > product paths do not use legacy travel-* Tailwind color utilities 122ms
+     → expected [ …(126) ] to deeply equal []
+   × marketingUi import hygiene > product paths do not add new btn-console usages (shrink allowlist when migrating) 116ms
+     → expected [ …(37) ] to deeply equal []
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  lib/marketingUi-import-hygiene.test.ts > marketingUi import hygiene > product paths do not import travelFocusRing* (admin/archive exempt)
+AssertionError: expected [ …(123) ] to deeply equal []
+
+- Expected
++ Received
+
+- Array []
++ Array [
++   "app/(home)/error.tsx: travelFocusRing* remains on product path",
++   "app/auth/error.tsx: travelFocusRing* remains on product path",
++   "app/auth/forgot-password/page.tsx: travelFocusRing* remains on product path",
++   "app/auth/login/page.tsx: travelFocusRing* remains on product path",
++   "app/auth/register/page.tsx: travelFocusRing* remains on product path",
++   "app/auth/register/RegisterGuideForm.tsx: travelFocusRing* remains on product path",
++   "app/auth/register/RegisterTouristForm.tsx: travelFocusRing* remains on product path",
++   "app/auth/reset-password/page.tsx: travelFocusRing* remains on product path",
++   "app/auth/verify-email/page.tsx: travelFocusRing* remains on product path",
++   "app/discover/error.tsx: travelFocusRing* remains on product path",
++   "app/disputes/page.tsx: travelFocusRing* remains on product path",
++   "app/disputes/[id]/DisputeDetailPageClient.tsx: travelFocusRing* remains on product path",
++   "app/error.tsx: travelFocusRing* remains on product path",
++   "app/escrow/error.tsx: travelFocusRing* remains on product path",
++   "app/escrow/[id]/error.tsx: travelFocusRing* remains on product path",
++   "app/escrow/[id]/rate/error.tsx: travelFocusRing* remains on product path",
++   "app/global-error.tsx: travelFocusRing* remains on product path",
++   "app/governance/delegate/page.tsx: travelFocusRing* remains on product path",
++   "app/governance/distribution-accruals/page.tsx: travelFocusRing* remains on product path",
++   "app/governance/distribution-accruals/[id]/page.tsx: travelFocusRing* remains on product path",
++   "app/governance/distribution-claim/page.tsx: travelFocusRing* remains on product path",
++   "app/governance/error.tsx: travelFocusRing* remains on product path",
++   "app/governance/fee-routes/page.tsx: travelFocusRing* remains on product path",
++   "app/governance/page.tsx: travelFocusRing* remains on product path",
++   "app/governance/params/page.tsx: travelFocusRing* remains on product path",
++   "app/governance/proposals/page.tsx: travelFocusRing* remains on product path",
++   "app/governance/proposals/[id]/page.tsx: travelFocusRing* remains on product path",
++   "app/governance/vault-forwards/page.tsx: travelFocusRing* remains on product path",
++   "app/guide/error.tsx: travelFocusRing* remains on product path",
++   "app/guide/register/page.tsx: travelFocusRing* remains on product path",
++   "app/guides/error.tsx: travelFocusRing* remains on product path",
++   "app/guides/page.tsx: travelFocusRing* remains on product path",
++   "app/guides/[id]/page.tsx: travelFocusRing* remains on product path",
++   "app/help/error.tsx: travelFocusRing* remains on product path",
++   "app/help/page.tsx: travelFocusRing* remains on product path",
++   "app/itinerary/error.tsx: travelFocusRing* remains on product path",
++   "app/itinerary/new/AgreementSummaryAccordion.tsx: travelFocusRing* remains on product path",
++   "app/itinerary/new/page.tsx: travelFocusRing* remains on product path",
++   "app/market/acquisition/error.tsx: travelFocusRing* remains on product path",
++   "app/market/acquisition/[id]/error.tsx: travelFocusRing* remains on product path",
++   "app/market/error.tsx: travelFocusRing* remains on product path",
++   "app/market/page.tsx: travelFocusRing* remains on product path",
++   "app/market/provider/error.tsx: travelFocusRing* remains on product path",
++   "app/market/provider/showcase/[id]/error.tsx: travelFocusRing* remains on product path",
++   "app/me/identities/page.tsx: travelFocusRing* remains on product path",
++   "app/me/onboarding/page.tsx: travelFocusRing* remains on product path",
++   "app/me/onboarding/StripeOnboardingPayment.tsx: travelFocusRing* remains on product path",
++   "app/me/password/page.tsx: travelFocusRing* remains on product path",
++   "app/not-found.tsx: travelFocusRing* remains on product path",
++   "app/orders/new/page.tsx: travelFocusRing* remains on product path",
++   "app/orders/page.tsx: travelFocusRing* remains on product path",
++   "app/pay/error.tsx: travelFocusRing* remains on product path",
++   "app/pay/page.tsx: travelFocusRing* remains on product path",
++   "app/privacy/error.tsx: travelFocusRing* remains on product path",
++   "app/privacy/page.tsx: travelFocusRing* remains on product path",
++   "app/staking/error.tsx: travelFocusRing* remains on product path",
++   "app/terms/community-guidelines/page.tsx: travelFocusRing* remains on product path",
++   "app/terms/error.tsx: travelFocusRing* remains on product path",
++   "app/terms/page.tsx: travelFocusRing* remains on product path",
++   "components/auth/AuthRouteErrorShell.tsx: travelFocusRing* remains on product path",
++   "components/escrow/EscrowDetail/BilateralConfirmBlock.tsx: travelFocusRing* remains on product path",
++   "components/escrow/EscrowDetail/ChatBlock.tsx: travelFocusRing* remains on product path",
++   "components/escrow/EscrowDetail/ConfirmFinalPlanBlock.tsx: travelFocusRing* remains on product path",
++   "components/escrow/EscrowDetail/CreateOnChainEscrowBlock.tsx: travelFocusRing* remains on product path",
++   "components/escrow/EscrowDetail/DisputeResolutionFundBlock.tsx: travelFocusRing* remains on product path",
++   "components/escrow/EscrowDetail/EscrowChainMismatchActions.tsx: travelFocusRing* remains on product path",
++   "components/escrow/EscrowDetail/EscrowCopySummaryButton.tsx: travelFocusRing* remains on product path",
++   "components/escrow/EscrowDetail/EscrowDetailHeader.tsx: travelFocusRing* remains on product path",
++   "components/escrow/EscrowDetail/EscrowOnChainActions.tsx: travelFocusRing* remains on product path",
++   "components/escrow/EscrowDetail/EscrowOrderPrintButton.tsx: travelFocusRing* remains on product path",
++   "components/escrow/EscrowDetail/EscrowTxModal.tsx: travelFocusRing* remains on product path",
++   "components/escrow/EscrowDetail/index.tsx: travelFocusRing* remains on product path",
++   "components/escrow/EscrowDetail/OrderActionsBlock.tsx: travelFocusRing* remains on product path",
++   "components/escrow/EscrowDetail/OrderMessageLink.tsx: travelFocusRing* remains on product path",
++   "components/escrow/EscrowDetail/ReorgBanner.tsx: travelFocusRing* remains on product path",
++   "components/escrow/EscrowDetail/ReviewBlock.tsx: travelFocusRing* remains on product path",
++   "components/escrow/EscrowDetail/SetEscrowAddressBlock.tsx: travelFocusRing* remains on product path",
++   "components/escrow/FeeRouterWiringNotice.tsx: travelFocusRing* remains on product path",
++   "components/escrow/OnchainEventTimeline.tsx: travelFocusRing* remains on product path",
++   "components/escrow/OrderFlowSteps.tsx: travelFocusRing* remains on product path",
++   "components/governance/GovernanceOpsAdminLinks.tsx: travelFocusRing* remains on product path",
++   "components/governance/GovernanceProposalExecutionActionsSkeleton.tsx: travelFocusRing* remains on product path",
++   "components/governance/GovernanceSearchParamsRouteSuspense.tsx: travelFocusRing* remains on product path",
++   "components/governance/GovernanceSubrouteError.tsx: travelFocusRing* remains on product path",
++   "components/guide/GuideRegisterRouteSuspense.tsx: travelFocusRing* remains on product path",
++   "components/guides/GuideOccupiedScheduleBlock.tsx: travelFocusRing* remains on product path",
++   "components/Header.tsx: travelFocusRing* remains on product path",
++   "components/itinerary/UnifiedItineraryList.tsx: travelFocusRing* remains on product path",
++   "components/landing/ItineraryResultsSection.tsx: travelFocusRing* remains on product path",
++   "components/landing/LandingFooter.tsx: travelFocusRing* remains on product path",
++   "components/landing/UnlockModal.tsx: travelFocusRing* remains on product path",
++   "components/market/AcquisitionCarryStudioModal.tsx: travelFocusRing* remains on product path",
++   "components/market/AcquisitionListingDetailBody.tsx: travelFocusRing* remains on product path",
++   "components/market/AcquisitionListingDetailView.tsx: travelFocusRing* remains on product path",
++   "components/market/EmptyState.tsx: travelFocusRing* remains on product path",
++   "components/market/GuideCard.tsx: travelFocusRing* remains on product path",
++   "components/market/GuideDetailDrawer.tsx: travelFocusRing* remains on product path",
++   "components/market/InviteGuideModal.tsx: travelFocusRing* remains on product path",
++   "components/market/MarketContent.tsx: travelFocusRing* remains on product path",
++   "components/market/marketDetailDrawerClasses.ts: travelFocusRing* remains on product path",
++   "components/market/MarketHubSubNav.tsx: travelFocusRing* remains on product path",
++   "components/market/MarketStandaloneBusinessPage.tsx: travelFocusRing* remains on product path",
++   "components/market/MarketSubsiteComplianceDisclosure.tsx: travelFocusRing* remains on product path",
++   "components/market/MarketSubsiteListFooterStrip.tsx: travelFocusRing* remains on product path",
++   "components/market/MarketSubsiteMasonry.tsx: travelFocusRing* remains on product path",
++   "components/market/MarketTravelFilterPanel.tsx: travelFocusRing* remains on product path",
++   "components/market/MerchantShowcaseDetailBody.tsx: travelFocusRing* remains on product path",
++   "components/market/MerchantShowcaseDetailView.tsx: travelFocusRing* remains on product path",
++   "components/market/MerchantShowcaseStudioModal.tsx: travelFocusRing* remains on product path",
++   "components/market/OrderCard.tsx: travelFocusRing* remains on product path",
++   "components/market/OrderDetailDrawer.tsx: travelFocusRing* remains on product path",
++   "components/market/StickyFilterBar.tsx: travelFocusRing* remains on product path",
++   "components/market/ViewSwitcher.tsx: travelFocusRing* remains on product path",
++   "components/me/communityMeNotes/CommunityMeNotesCardOverflowMenu.tsx: travelFocusRing* remains on product path",
++   "components/me/communityMeNotes/CommunityMeNotesOrderThumbGrid.tsx: travelFocusRing* remains on product path",
++   "components/nav/ProductCrossNav.tsx: travelFocusRing* remains on product path",
++   "components/staking/StakingStakePanel.tsx: travelFocusRing* remains on product path",
++   "components/staking/StakingWithdrawPanel.tsx: travelFocusRing* remains on product path",
++   "components/trust/ExternalVerificationPanel.tsx: travelFocusRing* remains on product path",
++   "components/trust/InlineTransparencyVerification.tsx: travelFocusRing* remains on product path",
++   "components/trust/TechnicalTransparencyDetails.tsx: travelFocusRing* remains on product path",
++   "components/trust/TrustGrowthMomentBanner.tsx: travelFocusRing* remains on product path",
++   "components/trust/TrustTransparencyHub.tsx: travelFocusRing* remains on product path",
++ ]
+
+ ❯ lib/marketingUi-import-hygiene.test.ts:61:24
+     59|     }
+     60| 
+     61|     expect(violations).toEqual([]);
+       |                        ^
+     62|   });
+     63| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  lib/marketingUi-import-hygiene.test.ts > marketingUi import hygiene > product paths do not use legacy travel-* Tailwind color utilities
+AssertionError: expected [ …(126) ] to deeply equal []
+
+- Expected
++ Received
+
+- Array []
++ Array [
++   "app/(home)/error.tsx: legacy travel-* color utility",
++   "app/auth/error.tsx: legacy travel-* color utility",
++   "app/auth/forgot-password/page.tsx: legacy travel-* color utility",
++   "app/auth/login/page.tsx: legacy travel-* color utility",
++   "app/auth/register/RegisterGuideForm.tsx: legacy travel-* color utility",
++   "app/auth/register/RegisterTouristForm.tsx: legacy travel-* color utility",
++   "app/auth/reset-password/page.tsx: legacy travel-* color utility",
++   "app/auth/verify-email/page.tsx: legacy travel-* color utility",
++   "app/community/me/likes/loading.tsx: legacy travel-* color utility",
++   "app/community/post/[id]/loading.tsx: legacy travel-* color utility",
++   "app/discover/error.tsx: legacy travel-* color utility",
++   "app/discover/loading.tsx: legacy travel-* color utility",
++   "app/disputes/page.tsx: legacy travel-* color utility",
++   "app/disputes/[id]/DisputeDetailPageClient.tsx: legacy travel-* color utility",
++   "app/error.tsx: legacy travel-* color utility",
++   "app/escrow/error.tsx: legacy travel-* color utility",
++   "app/escrow/[id]/error.tsx: legacy travel-* color utility",
++   "app/escrow/[id]/rate/error.tsx: legacy travel-* color utility",
++   "app/global-error.tsx: legacy travel-* color utility",
++   "app/governance/delegate/loading.tsx: legacy travel-* color utility",
++   "app/governance/delegate/page.tsx: legacy travel-* color utility",
++   "app/governance/distribution-accruals/page.tsx: legacy travel-* color utility",
++   "app/governance/distribution-accruals/[id]/page.tsx: legacy travel-* color utility",
++   "app/governance/distribution-claim/loading.tsx: legacy travel-* color utility",
++   "app/governance/distribution-claim/page.tsx: legacy travel-* color utility",
++   "app/governance/error.tsx: legacy travel-* color utility",
++   "app/governance/fee-routes/page.tsx: legacy travel-* color utility",
++   "app/governance/page.tsx: legacy travel-* color utility",
++   "app/governance/params/page.tsx: legacy travel-* color utility",
++   "app/governance/proposals/page.tsx: legacy travel-* color utility",
++   "app/governance/proposals/[id]/page.tsx: legacy travel-* color utility",
++   "app/governance/vault-forwards/page.tsx: legacy travel-* color utility",
++   "app/guide/error.tsx: legacy travel-* color utility",
++   "app/guide/register/loading.tsx: legacy travel-* color utility",
++   "app/guide/register/page.tsx: legacy travel-* color utility",
++   "app/guides/error.tsx: legacy travel-* color utility",
++   "app/help/error.tsx: legacy travel-* color utility",
++   "app/help/page.tsx: legacy travel-* color utility",
++   "app/itinerary/error.tsx: legacy travel-* color utility",
++   "app/itinerary/new/AgreementSummaryAccordion.tsx: legacy travel-* color utility",
++   "app/itinerary/new/loading.tsx: legacy travel-* color utility",
++   "app/itinerary/new/page.tsx: legacy travel-* color utility",
++   "app/loading.tsx: legacy travel-* color utility",
++   "app/market/acquisition/error.tsx: legacy travel-* color utility",
++   "app/market/acquisition/[id]/error.tsx: legacy travel-* color utility",
++   "app/market/error.tsx: legacy travel-* color utility",
++   "app/market/page.tsx: legacy travel-* color utility",
++   "app/market/provider/error.tsx: legacy travel-* color utility",
++   "app/market/provider/showcase/[id]/error.tsx: legacy travel-* color utility",
++   "app/me/identities/page.tsx: legacy travel-* color utility",
++   "app/me/onboarding/page.tsx: legacy travel-* color utility",
++   "app/me/onboarding/StripeOnboardingPayment.tsx: legacy travel-* color utility",
++   "app/me/password/loading.tsx: legacy travel-* color utility",
++   "app/me/password/page.tsx: legacy travel-* color utility",
++   "app/me/security/page.tsx: legacy travel-* color utility",
++   "app/network/loading.tsx: legacy travel-* color utility",
++   "app/not-found.tsx: legacy travel-* color utility",
++   "app/orders/new/loading.tsx: legacy travel-* color utility",
++   "app/orders/new/page.tsx: legacy travel-* color utility",
++   "app/orders/page.tsx: legacy travel-* color utility",
++   "app/pay/error.tsx: legacy travel-* color utility",
++   "app/pay/loading.tsx: legacy travel-* color utility",
++   "app/pay/page.tsx: legacy travel-* color utility",
++   "app/privacy/error.tsx: legacy travel-* color utility",
++   "app/privacy/page.tsx: legacy travel-* color utility",
++   "app/staking/error.tsx: legacy travel-* color utility",
++   "app/terms/community-guidelines/page.tsx: legacy travel-* color utility",
++   "app/terms/error.tsx: legacy travel-* color utility",
++   "app/terms/page.tsx: legacy travel-* color utility",
++   "components/auth/AuthRouteErrorShell.tsx: legacy travel-* color utility",
++   "components/auth/AuthRouteLoading.tsx: legacy travel-* color utility",
++   "components/ClientSkipLink.tsx: legacy travel-* color utility",
++   "components/escrow/EscrowDetail/BilateralConfirmBlock.tsx: legacy travel-* color utility",
++   "components/escrow/EscrowDetail/ChatBlock.tsx: legacy travel-* color utility",
++   "components/escrow/EscrowDetail/CreateOnChainEscrowBlock.tsx: legacy travel-* color utility",
++   "components/escrow/EscrowDetail/DisputeResolutionFundBlock.tsx: legacy travel-* color utility",
++   "components/escrow/EscrowDetail/EscrowChainMismatchActions.tsx: legacy travel-* color utility",
++   "components/escrow/EscrowDetail/EscrowDetailHeader.tsx: legacy travel-* color utility",
++   "components/escrow/EscrowDetail/EscrowOnChainActions.tsx: legacy travel-* color utility",
++   "components/escrow/EscrowDetail/EscrowTxModal.tsx: legacy travel-* color utility",
++   "components/escrow/EscrowDetail/OrderActionsBlock.tsx: legacy travel-* color utility",
++   "components/escrow/EscrowDetail/OrderMessageLink.tsx: legacy travel-* color utility",
++   "components/escrow/EscrowDetail/QuoteSummaryCard.tsx: legacy travel-* color utility",
++   "components/escrow/EscrowDetail/ReviewBlock.tsx: legacy travel-* color utility",
++   "components/escrow/FeeRouterWiringNotice.tsx: legacy travel-* color utility",
++   "components/escrow/OnchainEventTimeline.tsx: legacy travel-* color utility",
++   "components/escrow/OrderFlowSteps.tsx: legacy travel-* color utility",
++   "components/governance/GovernanceB090OnChainProposalNotice.tsx: legacy travel-* color utility",
++   "components/governance/GovernanceOpsAdminLinks.tsx: legacy travel-* color utility",
++   "components/governance/GovernanceProposalExecStatusBadge.test.tsx: legacy travel-* color utility",
++   "components/governance/GovernanceProposalExecStatusBadge.tsx: legacy travel-* color utility",
++   "components/governance/GovernanceProposalExecutionActionsSkeleton.tsx: legacy travel-* color utility",
++   "components/governance/GovernanceProposalImpactPanel.tsx: legacy travel-* color utility",
++   "components/governance/GovernanceSearchParamsRouteSuspense.tsx: legacy travel-* color utility",
++   "components/governance/GovernanceSubrouteError.tsx: legacy travel-* color utility",
++   "components/guide/GuideRegisterRouteSuspense.tsx: legacy travel-* color utility",
++   "components/itinerary/UnifiedItineraryList.tsx: legacy travel-* color utility",
++   "components/landing/ItineraryResultsSection.tsx: legacy travel-* color utility",
++   "components/landing/LandingFooter.tsx: legacy travel-* color utility",
++   "components/landing/UnlockModal.tsx: legacy travel-* color utility",
++   "components/market/BookGuideModal.tsx: legacy travel-* color utility",
++   "components/market/CustomItineraryModal/index.tsx: legacy travel-* color utility",
++   "components/market/CustomItineraryModal/sections/GuideDayCardAttractions.tsx: legacy travel-* color utility",
++   "components/market/CustomItineraryModal/sections/GuideDayCardFood.tsx: legacy travel-* color utility",
++   "components/market/CustomItineraryModal/sections/GuideDayCardTransportAndHotels.tsx: legacy travel-* color utility",
++   "components/market/CustomItineraryModal/sections/GuideFeeAndTransportSection.tsx: legacy travel-* color utility",
++   "components/market/CustomItineraryModal/sections/GuideFormQuoteAndCoverSection.tsx: legacy travel-* color utility",
++   "components/market/CustomItineraryModal/sections/TouristCoverImageField.tsx: legacy travel-* color utility",
++   "components/market/CustomItineraryModal/sections/TouristDayCard.tsx: legacy travel-* color utility",
++   "components/market/CustomItineraryModal/sections/TouristGuideAndTransportSection.tsx: legacy travel-* color utility",
++   "components/market/EmptyState.tsx: legacy travel-* color utility",
++   "components/market/GlassSelect.tsx: legacy travel-* color utility",
++   "components/market/GuideCard.tsx: legacy travel-* color utility",
++   "components/market/GuideDetailDrawer.tsx: legacy travel-* color utility",
++   "components/market/InviteGuideModal.tsx: legacy travel-* color utility",
++   "components/market/marketDetailDrawerClasses.ts: legacy travel-* color utility",
++   "components/market/MarketSubsiteMasonry.tsx: legacy travel-* color utility",
++   "components/market/MerchantShowcaseStudioModal.tsx: legacy travel-* color utility",
++   "components/market/OrderCard.tsx: legacy travel-* color utility",
++   "components/market/OrderDetailDrawer.tsx: legacy travel-* color utility",
++   "components/market/StickyFilterBar.tsx: legacy travel-* color utility",
++   "components/me/communityMeNotes/CommunityMeOrdersDrawerPreview.tsx: legacy travel-* color utility",
++   "components/nav/ProductCrossNav.tsx: legacy travel-* color utility",
++   "components/trust/InlineTransparencyVerification.tsx: legacy travel-* color utility",
++   "components/trust/TechnicalTransparencyDetails.tsx: legacy travel-* color utility",
++   "components/trust/TrustGrowthMomentBanner.tsx: legacy travel-* color utility",
++ ]
+
+ ❯ lib/marketingUi-import-hygiene.test.ts:105:24
+    103|     }
+    104| 
+    105|     expect(violations).toEqual([]);
+       |                        ^
+    106|   });
+    107| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  lib/marketingUi-import-hygiene.test.ts > marketingUi import hygiene > product paths do not add new btn-console usages (shrink allowlist when migrating)
+AssertionError: expected [ …(37) ] to deeply equal []
+
+- Expected
++ Received
+
+- Array []
++ Array [
++   "app/auth/forgot-password/page.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "app/auth/login/page.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "app/auth/register/RegisterGuideForm.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "app/auth/register/RegisterTouristForm.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "app/auth/reset-password/page.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "app/auth/verify-email/page.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "app/disputes/[id]/DisputeDetailPageClient.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "app/error.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "app/governance/fee-routes/page.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "app/governance/vault-forwards/page.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "app/guide/register/page.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "app/itinerary/new/page.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "app/me/password/page.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "app/orders/new/page.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "app/pay/page.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "app/staking/page.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/escrow/EscrowDetail/BilateralConfirmBlock.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/escrow/EscrowDetail/ChatBlock.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/escrow/EscrowDetail/ConfirmFinalPlanBlock.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/escrow/EscrowDetail/CreateOnChainEscrowBlock.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/escrow/EscrowDetail/EscrowOnChainActions.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/escrow/EscrowDetail/EscrowTxModal.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/escrow/EscrowDetail/OrderActionsBlock.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/escrow/EscrowDetail/ReorgBanner.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/escrow/EscrowDetail/ReviewBlock.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/escrow/EscrowDetail/SetEscrowAddressBlock.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/landing/UnlockModal.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/market/BookGuideModal.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/market/CustomItineraryModal/index.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/market/EmptyState.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/market/GuideCard.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/market/GuideDetailDrawer.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/market/MarketContent.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/market/OrderCard.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/market/OrderDetailDrawer.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/staking/StakingStakePanel.tsx: btn-console — use @/lib/uiSystem tokens instead",
++   "components/staking/StakingWithdrawPanel.tsx: btn-console — use @/lib/uiSystem tokens instead",
++ ]
+
+ ❯ lib/marketingUi-import-hygiene.test.ts:123:24
+    121|     }
+    122| 
+    123|     expect(violations).toEqual([]);
+       |                        ^
+    124|   });
+    125| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  3 failed | 19 passed (22)
+   Start at  15:13:35
+   Duration  1.80s (transform 184ms, setup 145ms, collect 363ms, tests 645ms, environment 3.31s, prepare 686ms)
+
+
+> traveltrust-frontend@0.1.0 test
+> vitest run --run lib/uiSystem.test.ts lib/marketingUi.test.ts app/(home)/homeMarketing.contract.test.ts components/market/useMarketPage.contract.test.ts
+
+
+ RUN  v2.1.9 D:/TravelTrust-V1/frontend
+
+ ✓ components/market/useMarketPage.contract.test.ts (2 tests) 2ms
+ ✓ app/(home)/homeMarketing.contract.test.ts (3 tests) 3ms
+ ✓ lib/marketingUi.test.ts (1 test) 3ms
+ ✓ lib/uiSystem.test.ts (11 tests) 4ms
+
+ Test Files  4 passed (4)
+      Tests  17 passed (17)
+   Start at  15:13:58
+   Duration  990ms (transform 136ms, setup 54ms, collect 255ms, tests 11ms, environment 1.91s, prepare 479ms)
+

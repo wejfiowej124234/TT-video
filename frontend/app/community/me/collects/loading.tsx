@@ -12,17 +12,17 @@ export default function CommunityMeCollectsLoading() {
       aria-label={t("community_me_my_collects")}
       aria-busy="true"
     >
-      <header className="rounded-[var(--radius-md)] border border-cyan-400/40 bg-slate-900/60 backdrop-blur-md px-4 py-4 mb-4" aria-hidden>
+      <header className="rounded-[var(--radius-md)] border border-ref-sun/28 bg-slate-900/60 backdrop-blur-md px-4 py-4 mb-4" aria-hidden>
         <div className="flex items-center justify-between">
-          <div className="min-h-[44px] h-11 w-40 bg-cyan-500/20 rounded-[var(--radius-sm)] animate-pulse" />
-          <div className="min-h-[44px] h-11 w-24 rounded-full bg-cyan-500/15 border border-cyan-400/35 animate-pulse" />
+          <div className="min-h-[44px] h-11 w-40 bg-ref-sun/12 rounded-[var(--radius-sm)] animate-pulse" />
+          <div className="min-h-[44px] h-11 w-24 rounded-full bg-ref-sun/12 border border-ref-sun/28 animate-pulse" />
         </div>
       </header>
       <div className="space-y-4" aria-hidden>
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md overflow-hidden"
+            className="rounded-[var(--radius-md)] border border-ref-sun/25 bg-slate-900/70 backdrop-blur-md overflow-hidden"
           >
             <div className="flex items-center gap-3 px-4 py-3 border-b border-slate-600/40">
               <div className="h-11 w-11 min-h-[44px] min-w-[44px] rounded-full bg-slate-700/70 animate-pulse" />

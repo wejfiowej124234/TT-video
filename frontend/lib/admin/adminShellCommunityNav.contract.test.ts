@@ -3,7 +3,10 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
-import { ADMIN_SHELL_COMMUNITY_EXTRA_LINKS } from "./adminShellCommunityNav";
+import {
+  ADMIN_SHELL_COMMUNITY_EXTRA_LINKS,
+  ADMIN_SHELL_COMMUNITY_NAV_LINKS,
+} from "./adminShellCommunityNavLinks";
 
 const __dir = dirname(fileURLToPath(import.meta.url));
 const fe = join(__dir, "..", "..");
@@ -17,10 +20,16 @@ describe("admin shell community nav SSOT (① · U2)", () => {
     expect(hrefs).toContain("/admin/community/comments/visibility");
   });
 
-  it("AdminShellBar wires ADMIN_SHELL_COMMUNITY_EXTRA_LINKS spread", () => {
+  it("full community nav includes abuse-policy", () => {
+    expect(ADMIN_SHELL_COMMUNITY_NAV_LINKS.map((l) => l.href)).toContain(
+      "/admin/community/abuse-policy",
+    );
+  });
+
+  it("AdminShellBar wires ADMIN_SHELL_COMMUNITY_NAV_LINKS", () => {
     const shell = readFileSync(join(fe, "components", "admin", "AdminShellBar.tsx"), "utf8");
-    expect(shell).toContain("ADMIN_SHELL_COMMUNITY_EXTRA_LINKS.map");
-    const ssot = readFileSync(join(__dir, "adminShellCommunityNav.ts"), "utf8");
+    expect(shell).toContain("ADMIN_SHELL_COMMUNITY_NAV_LINKS");
+    const ssot = readFileSync(join(__dir, "adminShellCommunityNavLinks.ts"), "utf8");
     for (const { labelKey, href } of ADMIN_SHELL_COMMUNITY_EXTRA_LINKS) {
       expect(ssot, labelKey).toContain(labelKey);
       expect(ssot, href).toContain(href);

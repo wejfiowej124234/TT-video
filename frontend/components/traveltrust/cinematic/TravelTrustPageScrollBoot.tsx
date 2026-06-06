@@ -6,7 +6,7 @@ import {
   scheduleTraveltrustHeroPin,
 } from "@/lib/traveltrustPageScrollBoot";
 import { resetTraveltrustPageScrollChapterStepCooldown } from "@/lib/traveltrustPageScrollChapterStep";
-import { TT_PAGE_SCROLL_SNAP_L5 } from "@/lib/traveltrustCinematicNonGlobeL5";
+import { TT_PAGE_SCROLL_SNAP_L5 } from "@/lib/traveltrust/l5";
 
 /** 挂载即锁 Hero 顶 + bfcache；全页 scroll-snap 已关闭（见 `TRAVELTRUST_HOME_LAYOUT_LOCK_L5`），此处清理残留 class */
 export function TravelTrustPageScrollBoot() {

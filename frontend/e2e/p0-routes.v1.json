@@ -1,0 +1,227 @@
+{
+  "schema_version": "1",
+  "title": "96-20-aligned P0 routes for batched Playwright (local-first)",
+  "last_review": "2026-05-14",
+  "notes": "P0 spine uses p0RealApiWaits + skipIfApiDown; same /api/v1/* paths as staging/production.",
+  "sources": [
+    {
+      "path": "docs/runbook/TT-9625-golden-path-system-spine.md",
+      "note": "§2 golden path URLs"
+    },
+    {
+      "path": "docs/spec/96-20-前后端页面对齐与UI生产级审计报告.md",
+      "note": "§4 domain summary, §6 UI P0 weighting"
+    },
+    {
+      "path": "docs/runbook/TT-96-20-P0-E2E-LADDER-001.md",
+      "anchor": "#tt-96-20-p0-e2e-ladder"
+    }
+  ],
+  "helpers_canonical": [
+    "frontend/e2e/helpers/skipIfApiDown.ts",
+    "frontend/e2e/helpers/playwright429Backoff.ts",
+    "frontend/e2e/helpers/apiSession.ts",
+    "frontend/e2e/helpers/p0RealApiWaits.ts",
+    "frontend/e2e/helpers/smoke-nav.ts",
+    "frontend/e2e/helpers/pageShells.ts",
+    "frontend/e2e/helpers/marketStudioOpen.ts"
+  ],
+  "failure_taxonomy": [
+    "route_missing",
+    "api_contract",
+    "rbac_permission",
+    "seed_data",
+    "test_flake"
+  ],
+  "routes": [
+    {
+      "id": "p0.auth.login",
+      "path": "/auth/login",
+      "lane": "auth",
+      "day_target": 2,
+      "min_role": "guest",
+      "api_hints": ["routes.login"],
+      "existingE2e": [
+        "p0-spine-real-api-public.spec.ts",
+        "p0-spine-real-api-session.spec.ts",
+        "auth-login-logout-me.spec.ts",
+        "auth-register-login-market-chain.spec.ts",
+        "p01-login-market-auth.spec.ts",
+        "smoke.spec.ts"
+      ]
+    },
+    {
+      "id": "p0.auth.register",
+      "path": "/auth/register",
+      "lane": "auth",
+      "day_target": 2,
+      "min_role": "guest",
+      "api_hints": ["routes.register"],
+      "existingE2e": [
+        "p0-spine-real-api-public.spec.ts",
+        "p0-spine-real-api-session.spec.ts",
+        "auth-register-login-market-chain.spec.ts",
+        "smoke.spec.ts"
+      ]
+    },
+    {
+      "id": "p0.market.hub",
+      "path": "/market",
+      "lane": "market",
+      "day_target": 2,
+      "min_role": "guest",
+      "api_hints": ["routes.meta", "routes.discoverOrders", "routes.guides"],
+      "existingE2e": [
+        "p0-spine-real-api-public.spec.ts",
+        "p0-spine-real-api-session.spec.ts",
+        "auth-register-login-market-chain.spec.ts",
+        "p01-login-market-auth.spec.ts",
+        "smoke.spec.ts",
+        "f007-f010-f032-request.spec.ts"
+      ]
+    },
+    {
+      "id": "p0.market.discover_redirect",
+      "path": "/discover",
+      "path_note": "App redirect to /market; P0 waits same as /market (discover/orders + guides list GET 200).",
+      "lane": "market",
+      "day_target": 2,
+      "min_role": "guest",
+      "api_hints": ["routes.discoverOrders", "routes.guides"],
+      "existingE2e": ["p0-spine-real-api-public.spec.ts",
+        "p0-spine-real-api-session.spec.ts", "smoke.spec.ts"]
+    },
+    {
+      "id": "p0.guides.list",
+      "path": "/guides",
+      "lane": "market",
+      "day_target": 2,
+      "min_role": "guest",
+      "api_hints": ["routes.guides"],
+      "existingE2e": ["p0-spine-real-api-public.spec.ts",
+        "p0-spine-real-api-session.spec.ts", "smoke.spec.ts"]
+    },
+    {
+      "id": "p0.orders.list",
+      "path": "/orders",
+      "lane": "orders",
+      "day_target": 3,
+      "min_role": "session",
+      "api_hints": ["routes.orders"],
+      "existingE2e": ["p0-spine-real-api-public.spec.ts",
+        "p0-spine-real-api-session.spec.ts", "smoke.spec.ts", "auth-login-logout-me.spec.ts"]
+    },
+    {
+      "id": "p0.orders.new",
+      "path": "/orders/new",
+      "lane": "orders",
+      "day_target": 3,
+      "min_role": "session",
+      "api_hints": ["routes.orders"],
+      "existingE2e": ["p0-spine-real-api-public.spec.ts",
+        "p0-spine-real-api-session.spec.ts", "smoke.spec.ts"]
+    },
+    {
+      "id": "p0.escrow.detail",
+      "path": "/escrow/:order_id",
+      "path_note": "Replace :order_id with seeded order UUID from apiSession / bilateral flows.",
+      "lane": "orders",
+      "day_target": 3,
+      "min_role": "session",
+      "api_hints": ["routes.orderById", "routes.orderChainSyncStatus"],
+      "existingE2e": [
+        "p0-spine-real-api-public.spec.ts",
+        "p0-spine-real-api-session.spec.ts",
+        "smoke.spec.ts",
+        "p04-bilateral-confirm.spec.ts",
+        "b465-bilateral-review-ui-e2e.spec.ts"
+      ]
+    },
+    {
+      "id": "p0.community.feed",
+      "path": "/community",
+      "lane": "community",
+      "day_target": 2,
+      "min_role": "guest",
+      "api_hints": ["routes.community.feed"],
+      "existingE2e": [
+        "p0-spine-real-api-public.spec.ts",
+        "p0-spine-real-api-session.spec.ts",
+        "smoke-community.spec.ts",
+        "smoke.spec.ts",
+        "section10-5-login-community-feed.spec.ts",
+        "community-post-detail-comment-reply-thread.spec.ts",
+        "community-post-detail-comment-sort.spec.ts",
+        "community-post-detail-like-persist-after-reload.spec.ts",
+        "community-post-detail-collect-persist-after-reload.spec.ts",
+        "93-matrix-path-community-feed-post.spec.ts"
+      ]
+    },
+    {
+      "id": "p0.community.explore",
+      "path": "/community/explore",
+      "lane": "community",
+      "day_target": 2,
+      "min_role": "guest",
+      "api_hints": ["routes.community.feed", "routes.community.statsPostsByTag"],
+      "existingE2e": ["p0-spine-real-api-public.spec.ts",
+        "p0-spine-real-api-session.spec.ts", "smoke-community.spec.ts", "smoke.spec.ts"]
+    },
+    {
+      "id": "p0.community.me_hub",
+      "path": "/community/me",
+      "path_note": "Hub: default social APIs; `?tab=posts|collects|likes|orders` → `GET …/me/posts|collects|likes` or `GET /api/v1/orders` (p0-spine; `likes` probe if feature off).",
+      "lane": "community",
+      "day_target": 3,
+      "min_role": "session",
+      "api_hints": ["routes.community.mePosts", "routes.me"],
+      "existingE2e": [
+        "p0-spine-real-api-public.spec.ts",
+        "p0-spine-real-api-session.spec.ts",
+        "smoke-community.spec.ts",
+        "me-security-community-hub.spec.ts",
+        "community-me-hub-notes-drawer-ia.spec.ts",
+        "community-me-data-state.spec.ts"
+      ]
+    },
+    {
+      "id": "p0.me.profile",
+      "path": "/me",
+      "lane": "me",
+      "day_target": 3,
+      "min_role": "session",
+      "api_hints": ["routes.me"],
+      "existingE2e": ["p0-spine-real-api-public.spec.ts",
+        "p0-spine-real-api-session.spec.ts", "auth-login-logout-me.spec.ts", "smoke.spec.ts"]
+    },
+    {
+      "id": "p0.me.security",
+      "path": "/me/security",
+      "lane": "me",
+      "day_target": 3,
+      "min_role": "session",
+      "api_hints": ["routes.meSessions", "routes.meSecurityNotifications"],
+      "existingE2e": ["p0-spine-real-api-public.spec.ts",
+        "p0-spine-real-api-session.spec.ts", "me-security-community-hub.spec.ts"]
+    },
+    {
+      "id": "p0.me.onboarding",
+      "path": "/me/onboarding",
+      "lane": "me",
+      "day_target": 4,
+      "min_role": "session",
+      "api_hints": [
+        "routes.onboardingQuote",
+        "routes.onboardingEntitlementsMe",
+        "routes.onboardingPaymentIntents",
+        "routes.onboardingRoleConfirm"
+      ],
+      "existingE2e": [
+        "p0-spine-real-api-public.spec.ts",
+        "p0-spine-real-api-session.spec.ts",
+        "me-onboarding-96-18-shell.spec.ts",
+        "smoke.spec.ts"
+      ]
+    }
+  ]
+}

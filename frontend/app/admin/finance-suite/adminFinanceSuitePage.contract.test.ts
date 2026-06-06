@@ -21,5 +21,7 @@ describe("admin finance suite page", () => {
     expect(src).toContain("FINANCE_SUITE_MODULES");
     expect(src).toContain("/admin/finance-reconciliation");
     expect(src).toContain("AdminDetailPageChrome");
+    expect(src).not.toContain("headerAside={<AdminInboxQueueBackLinks />}");
+    expect(src).not.toContain("data-tt-admin-fin-suite-footer-nav");
   });
 });

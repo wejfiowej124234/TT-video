@@ -29,6 +29,11 @@ const PENALTY_KEYS: Record<string, string> = {
   other: "admin_reports_penalty_other",
 };
 
+export function reportReasonCodeIsMapped(code: string | undefined): boolean {
+  const c = (code ?? "").trim().toLowerCase();
+  return Boolean(c && REASON_CODE_KEYS[c]);
+}
+
 export function reportReasonLabel(code: string | undefined, t: LocaleTranslateFn): string {
   const c = (code ?? "").trim().toLowerCase();
   if (!c) return t("admin_em_dash");

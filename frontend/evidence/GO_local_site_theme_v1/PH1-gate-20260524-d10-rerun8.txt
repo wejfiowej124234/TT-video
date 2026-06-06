@@ -1,0 +1,683 @@
+[traveltrust-ph1] tier-1 media
+
+> traveltrust-frontend@0.1.0 media:traveltrust-tier1
+> node ./scripts/copy-traveltrust-tier1-media.mjs
+
+TT-PH1-030b: copied tier-1 placeholder MP4 → public/media/traveltrust/ (+ merchant, acquisition)
+[traveltrust-ph1] vitest (contract + analytics + zh surface)
+
+> traveltrust-frontend@0.1.0 test
+> vitest run --run app/traveltrust/ app/(home)/homeMarketing.contract.test.ts lib/analytics.test.ts lib/traveltrustV6SurfaceCompliance.test.ts lib/traveltrustComplianceDisclosure.test.ts lib/traveltrustCinematicVisual.test.ts lib/traveltrustMediaFromBrief.test.ts lib/traveltrustPageBrief.server.test.ts lib/traveltrustSectionHash.test.ts lib/traveltrustFundraisingLinkPolicy.test.ts lib/traveltrustPh1LocalGate.contract.test.ts lib/traveltrustVisualRegressionManifest.test.ts
+
+
+ RUN  v2.1.9 D:/TravelTrust-V1/frontend
+
+ ✓ lib/traveltrustPh1LocalGate.contract.test.ts (6 tests) 7ms
+ ✓ lib/traveltrustVisualRegressionManifest.test.ts (3 tests) 5ms
+ ✓ app/(home)/homeMarketing.contract.test.ts (4 tests) 6ms
+ ✓ lib/analytics.test.ts (6 tests) 10ms
+ ✓ app/traveltrust/traveltrustFundraisingLinks.contract.test.ts (2 tests) 16ms
+ ✓ app/traveltrust/traveltrustV6CrossLinks.contract.test.ts (1 test) 244ms
+ ✓ app/traveltrust/traveltrustV6CopyBudget.test.ts (6 tests) 5ms
+ ✓ app/traveltrust/traveltrustSeo.contract.test.ts (2 tests) 4ms
+ ✓ lib/traveltrustSectionHash.test.ts (4 tests) 20ms
+ ✓ app/traveltrust/traveltrustNetworkPage.contract.test.ts (8 tests) 77ms
+ ✓ app/traveltrust/traveltrustFaqV6Copy.test.ts (4 tests) 5ms
+ ✓ lib/traveltrustFundraisingLinkPolicy.test.ts (3 tests) 4ms
+ ✓ app/traveltrust/traveltrustNetworkPage.sections.contract.test.ts (13 tests) 7ms
+ ✓ app/traveltrust/traveltrustRolesOrder.test.ts (2 tests) 5ms
+ ✓ app/traveltrust/traveltrustV6EnSurface.test.ts (3 tests) 10ms
+ ✓ app/traveltrust/traveltrustV6ZhSurface.test.ts (3 tests) 12ms
+ ✓ lib/traveltrustPageBrief.server.test.ts (2 tests) 5ms
+ ✓ lib/traveltrustMediaFromBrief.test.ts (4 tests) 6ms
+ ✓ lib/traveltrustCinematicVisual.test.ts (4 tests) 6ms
+ ✓ app/traveltrust/traveltrustErrorTheme.contract.test.ts (1 test) 2ms
+ ✓ lib/traveltrustComplianceDisclosure.test.ts (2 tests) 4ms
+ ✓ lib/traveltrustV6SurfaceCompliance.test.ts (2 tests) 9ms
+
+ Test Files  22 passed (22)
+      Tests  85 passed (85)
+   Start at  22:13:05
+   Duration  3.81s (transform 3.30s, setup 885ms, collect 7.11s, tests 469ms, environment 30.39s, prepare 4.45s)
+
+[traveltrust-ph1] e2e spec typecheck
+
+> traveltrust-frontend@0.1.0 check:e2e:tsc
+> tsc -p e2e/tsconfig.json --noEmit
+
+[traveltrust-ph1] cargo page_brief_doc_version
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.28s
+     Running unittests src\main.rs (target\debug\deps\traveltrust_api-c00abfd781e4c464.exe)
+
+running 1 test
+test routes::traveltrust_page::tests::page_brief_doc_version_matches_protocol_reference ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 918 filtered out; finished in 0.00s
+
+[traveltrust-ph1] playwright home + offline-api (full-stack via run-e2e-default)
+[e2e] local default → PLAYWRIGHT_FULL_STACK=1 (API + Next via playwright webServer)
+[e2e] REQUEST_TIMEOUT_SECS → 120 (GET /meta governance eth_call stack; avoid 408)
+[e2e] INTERNAL_API_SECRET aligned from root .env (internal/*)
+[e2e] DATABASE_URL loaded from repo root .env
+sync-frontend-env: wrote D:\TravelTrust-V1\frontend\.env.local (NEXT_PUBLIC aligned with root .env)
+[e2e] D:\TravelTrust-V1\frontend\.env.local → NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8080
+[e2e] cargo build -p traveltrust-api (Playwright webServer runs target/debug binary)
+warning: unused import: `migrate_embed::*`
+  --> crates\api\src\db\mod.rs:91:9
+   |
+91 | pub use migrate_embed::*;
+   |         ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `traveltrust-api` (bin "traveltrust-api") generated 1 warning (run `cargo fix --bin "traveltrust-api"` to apply 1 suggestion)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.27s
+[1A[2K[WebServer] warning: unused import: `migrate_embed::*`
+[WebServer]   --> crates\api\src\db\mod.rs:91:9
+[WebServer]    |
+[WebServer] 91 | pub use migrate_embed::*;
+[WebServer]    |         ^^^^^^^^^^^^^^^^
+[WebServer]    |
+[WebServer]    = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+[WebServer] 
+
+[1A[2K[WebServer] warning: `traveltrust-api` (bin "traveltrust-api") generated 1 warning (run `cargo fix --bin "traveltrust-api"` to apply 1 suggestion)
+[WebServer]     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.27s
+
+[1A[2K[WebServer]      Running `target\debug\traveltrust-api.exe`
+
+[1A[2K[WebServer] [req] x-request-id=98eb1533-fbd3-4793-a9d8-cdcc89fc709e path=/health status=200
+[WebServer] [req] x-message-id=09276aa2-28a9-4606-aa3b-5315d818203c path=/health
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [traveltrust] dev: Webpack on Windows (avoid Turbopack HMR manifest races). Use `npm run dev:turbopack` or TRAVELTRUST_DEV_TURBO=1 for Turbopack.
+
+
+Running 10 tests using 1 worker
+
+[1A[2K(node:20736) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:20736) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/10] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:41:66 › setup: GET /meta chain.contracts › API /meta satisfies chain guard
+[1A[2K[WebServer] [req] x-request-id=7df377d7-cbc3-4d46-ac6a-bf9303e86dd8 path=/meta status=200
+[WebServer] [req] x-message-id=f381df24-c21a-4dd0-a6fe-68c84d263673 path=/meta status=200
+
+[1A[2K[2/10] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:73:79 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only)
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632058129 path=/meta status=200
+[WebServer] [req] x-message-id=d558a383-5d8a-4eeb-973d-cbd38ed0aba5 path=/meta status=200
+
+[1A[2K(node:33356) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:33356) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[3/10] [chromium] › e2e\home-landing-itinerary-submit.spec.ts:17:7 › PI-1 · home landing itinerary submit (PH1-HOME-02) › creates itinerary results after authenticated submit
+[1A[2K[WebServer] [req] x-request-id=884e4233-8085-463b-9711-cfefc17ceb25 path=/health status=200
+[WebServer] [req] x-message-id=b0f12c9c-5fb7-413a-bbda-d0ce080ae8cc path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=abcb59e6-ca79-4f53-9e3b-5e7d531dbc18 path=/auth/seed-test-accounts status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 05058558-cdde-43bb-b4f3-0b781ccd5ba5 path=/auth/seed-test-accounts status=200
+
+[1A[2K[WebServer] [req] x-request-id=8982ac04-f61b-4e03-a57b-6424833e93d9 path=/auth/login status=200
+[WebServer] [req] x-message-id=bf0e28b1-a94d-4d9b-bf73-dc5110db2cce path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=fb69f385-61bd-44c5-bdf5-83815f5fc3c2 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=7a538280-92fc-4650-98fa-041bd983f46d path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=f3fbbd30-8540-481b-b478-1841583c55f7 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=e37946dc-e1c0-4eff-b0c9-035156a0413d path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=1f8755d2-363e-41c1-95cf-c4a568259cd6 path=/api/v1/itineraries status=200
+[WebServer] [req] x-message-id=72e54772-a02e-4218-989f-3b1823d4c5c1 path=/api/v1/itineraries status=200
+
+[1A[2K[WebServer] [req] x-request-id=06bf20ef-1cf4-468e-a6e5-34c4ab0dbd86 path=/api/v1/itineraries status=200
+[WebServer] [req] x-message-id=c4a2cf04-1267-44de-b8eb-f4e18fbc81fa path=/api/v1/itineraries status=200
+
+[1A[2K[4/10] [chromium] › e2e\home-landing-shell.spec.ts:11:7 › PI-1 · home landing shell › hero form, network CTA, and warm Action submit (§1.7)
+[1A[2K[5/10] [chromium] › e2e\home-landing-shell.spec.ts:33:7 › PI-1 · home landing shell › submit FAB mostly in viewport on 375×812 after scroll
+[1A[2K[WebServer] [req] x-request-id=eddb6379-4086-4742-8254-176defd20677 path=/health status=200
+[WebServer] [req] x-message-id=6de8db44-91ee-4c0b-93a1-0e73d2756ed4 path=/health status=200
+
+[1A[2K[6/10] [chromium] › e2e\pi1-traveltrust-offline-api.spec.ts:11:7 › PI-1 · /traveltrust offline API shell (PH1-FE-02) › GET /meta is not HTTP 500
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632098797 path=/meta status=200
+[WebServer] [req] x-message-id=b312b21b-a859-4249-be77-67d10e58dbdb path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632104929 path=/meta status=200
+[WebServer] [req] x-message-id=02ecbbea-6ae3-44bc-b659-3f29ea92ae75 path=/meta
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632106157 path=/meta status=200
+[WebServer] [req] x-message-id=525d54f4-7b96-4927-80a4-751df76649d1 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632111345 path=/meta status=200
+[WebServer] [req] x-message-id=6048064d-440d-4b0f-a18b-a7e11cf9309d path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632115415 path=/meta status=200
+[WebServer] [req] x-message-id=f6c07d74-80c0-409e-a228-86643e886327 path=/meta status=200
+
+[1A[2K[7/10] [chromium] › e2e\pi1-traveltrust-offline-api.spec.ts:21:7 › PI-1 · /traveltrust offline API shell (PH1-FE-02) › GET /api/v1/me without session is not HTTP 500
+[1A[2K[8/10] [chromium] › e2e\pi1-traveltrust-offline-api.spec.ts:27:7 › PI-1 · /traveltrust offline API shell (PH1-FE-02) › /traveltrust shell loads with page-brief fallback when API down
+[1A[2K[WebServer] [req] x-request-id=8c0182f0-a3a4-408a-8b35-383b92bcd6dd path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=551c6f78-4c1e-4b63-acfe-55c2690a5b98 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[9/10] [chromium] › e2e\traveltrust-ph1-verify-screenshots.spec.ts:24:7 › PH1 verify screenshots (① machine旁证) › home 1280 + 375 (`app/(home)/page.tsx` SSOT)
+[1A[2K[WebServer] [req] x-request-id=5d2ed47d-8f5f-48e3-86bd-36700e2cc373 path=/health status=200
+[WebServer] [req] x-message-id=9b29f1a5-fdaf-49ef-a548-e07a419bf989 path=/health status=200
+
+[1A[2K[10/10] [chromium] › e2e\traveltrust-ph1-verify-screenshots.spec.ts:36:7 › PH1 verify screenshots (① machine旁证) › traveltrust hero + roles + trust (TT-PH1-150～158/193)
+[1A[2K[WebServer] [req] x-request-id=7e40f77d-f07e-436d-a2c4-505123813fde path=/health status=200
+[WebServer] [req] x-message-id=305fac26-1ac4-49f0-9bf7-23df16be6f18 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=cc518712-9e08-43da-906e-b47cc723e674 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=81214366-14a3-47cc-bfaa-1ad5a9e301d1 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=d5a25284-e793-4354-95f2-d64834a2238c path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=d29da93f-1066-4df6-9456-dda20df034a6 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=6af1d414-66a8-4e6a-81ed-95f3c1f748b6 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=1f886fb2-e155-4975-ab51-8114fb3a851e path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=e2b1d994-4edd-44d2-b603-70961225cf8f path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=77576f1b-2cbc-439b-b524-52c4b783f5ae path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=45ad31ba-5424-4d61-9aa9-ebaf8015c4f4 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=eee47996-4c70-4168-8386-112c7a765a9f path=
+
+[1A[2K[WebServer] /api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=386e6550-0b0a-47f4-bbda-2294291493df path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=0072c5e9-c97b-4723-832e-b26865370985
+
+[1A[2K[WebServer]  path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K  10 passed (3.1m)
+[traveltrust-ph1] playwright pi1 traveltrust v6 browser (needs :3012 + API :8080)
+
+> traveltrust-frontend@0.1.0 e2e:pi1-traveltrust
+> node ./scripts/run-e2e-default.mjs --project=chromium e2e/pi1-traveltrust-v6-browser-acceptance.spec.ts
+
+[e2e] local default → PLAYWRIGHT_FULL_STACK=1 (API + Next via playwright webServer)
+[e2e] REQUEST_TIMEOUT_SECS → 120 (GET /meta governance eth_call stack; avoid 408)
+[e2e] INTERNAL_API_SECRET aligned from root .env (internal/*)
+[e2e] DATABASE_URL loaded from repo root .env
+sync-frontend-env: wrote D:\TravelTrust-V1\frontend\.env.local (NEXT_PUBLIC aligned with root .env)
+[e2e] D:\TravelTrust-V1\frontend\.env.local → NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8080
+[e2e] cargo build -p traveltrust-api (Playwright webServer runs target/debug binary)
+warning: unused import: `migrate_embed::*`
+  --> crates\api\src\db\mod.rs:91:9
+   |
+91 | pub use migrate_embed::*;
+   |         ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `traveltrust-api` (bin "traveltrust-api") generated 1 warning (run `cargo fix --bin "traveltrust-api"` to apply 1 suggestion)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.35s
+[1A[2K[WebServer] warning: unused import: `migrate_embed::*`
+[WebServer]   --> crates\api\src\db\mod.rs:91:9
+[WebServer]    |
+[WebServer] 91 | pub use migrate_embed::*;
+[WebServer]    |         ^^^^^^^^^^^^^^^^
+[WebServer]    |
+[WebServer]    = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+[WebServer] 
+
+[1A[2K[WebServer] warning: `traveltrust-api` (bin "traveltrust-api") generated 1 warning (run `cargo fix --bin "traveltrust-api"` to apply 1 suggestion)
+[WebServer]     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.26s
+
+[1A[2K[WebServer]      Running `target\debug\traveltrust-api.exe`
+
+[1A[2K[WebServer] [req] x-request-id=906c12e6-8a4f-46a1-9c18-24f4570013d1 path=/health status=200
+[WebServer] [req] x-message-id=cd18b711-14df-48b2-93ff-4625eee2fb40 path=/health status=200
+
+[1A[2K[WebServer] [traveltrust] dev: Webpack on Windows (avoid Turbopack HMR manifest races). Use `npm run dev:turbopack` or TRAVELTRUST_DEV_TURBO=1 for Turbopack.
+
+
+Running 33 tests using 1 worker
+
+[1A[2K(node:22444) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:22444) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/33] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:41:66 › setup: GET /meta chain.contracts › API /meta satisfies chain guard
+[1A[2K[WebServer] [req] x-request-id=0d279cee-a879-4b44-82ff-a0fd818da6ac path=/meta status=200
+[WebServer] [req] x-message-id=e644f4f1-3f48-4109-a7d7-360aab5e86ca path=/meta status=200
+
+[1A[2K[2/33] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:73:79 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only)
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632240562 path=/meta status=200
+[WebServer] [req] x-message-id=8c01e77e-25bc-4f73-b955-12154bc6e634 path=/meta status=200
+
+[1A[2K(node:15876) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:15876) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[3/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:34:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-UI-30: opengraph-image route returns PNG
+[1A[2K[WebServer] [req] x-request-id=95ccca63-b007-4386-a0a4-dc9e824541f1 path=/health status=200
+[WebServer] [req] x-message-id=7453ea0e-8709-4178-8db0-52bb0edb32c2 path=/health status=200
+
+[1A[2K[4/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:40:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › page-brief v6 CTA contract hydrates
+[1A[2K[WebServer] [req] x-request-id=cd9875b1-ac6c-4ba2-9ab8-8c94a251c0a5 path=/health status=200
+[WebServer] [req] x-message-id=ccd7f847-d9c0-4aef-bc4b-0cd74ba1b1ea path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=00c8ba19-2c8a-4aea-9296-2990f855f7ee path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=2a887fe6-2f1f-41b2-9b3f-915cecc3a3ba path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=3ab09514-f45b-43e5-9d68-9089b177fb1f path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=c075d1a3-9ca6-427c-b95d-070e8992e2aa path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=ccaa7cff-8240-4720-8224-81be862e9148 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-message-id=eca9f9b5-66aa-4b99-abdb-688243407abf path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[5/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:56:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-08: v6 shell — hero / roles / start, no legacy fold
+[1A[2K[WebServer] [req] x-request-id=edbe0dca-3e8e-4bb0-965b-073e63a238cb path=/health status=200
+[WebServer] [req] x-message-id=3304e0d1-f135-4ef6-96c2-2f0817df8e0a path=/health status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] [req] x-request-id=cf04a228-03be-4899-850e-e7a08655b5b3 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=d568dca2-f799-4f1e-8c6d-9886bf6c4b49 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=643bf015-1aca-49d7-aa66-53cff915e4d4 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=39739ed0-43a5-431b-90d0-c8945e449052 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[6/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:110:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-09: role tabs keyboard + trust chips
+[1A[2K[WebServer] [req] x-request-id=2d955714-020c-4f50-a625-2e9c122a5aac path=/health status=200
+[WebServer] [req] x-message-id=ec921b65-a928-463d-91c0-6152c10a6f18 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=
+
+[1A[2K[WebServer] 34167918-d74d-4661-8635-9fe2156e33c7 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=5af684d7-f604-440e-b719-62ba5eddfe91 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=9b165723-bd14-4233-a803-2dbd213c7a6f path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=d3de2c99-11d5-42e6-a15f-855de4a8b4f8 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[7/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:135:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-10: role tab switch + video frame visible
+[1A[2K[WebServer] [req] x-request-id=b602d8a6-6aff-4a1d-8a2e-5f7ea04a3c1b path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=396c5a2c-c4d9-4e67-a9d3-5176033e47e7 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=f5a71c1f-8e83-4dc3-b983-fc5e54cb38cc path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=0058fb84-96e1-47f6-ba37-65bbf65a30ff path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=44f29dbf-b9db-41a6-952b-db1a709bb516 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=194ddd79-843c-4151-a6e7-93e774c0b151 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[8/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:148:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-012: traveler enter stays in-page (#start)
+[1A[2K[WebServer] [req] x-request-id=721b9e1d-28f1-40ca-97dd-6ee27777eacd path=/health status=200
+[WebServer] [req] x-message-id=5b86e517-11bc-4137-a7e3-c36a53ecd397 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=d77a4540-4c07-44e5-a21e-6481abf00c46 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=ed980989-42d0-4ab4-a371-f5f083bf0c82 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=
+
+[1A[2K[WebServer] 97a4d7d9-9737-42e1-ad98-074a2b386c7a path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=bc1bbb95-62ac-4f5d-aeb2-0d1420ce1a73 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[9/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:157:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-168c: trust chips and footer carry compliance disclosure copy
+[1A[2K[WebServer] [req] x-request-id=7d80a257-ec5f-4dd3-95e7-0d1138925ced path=/health status=200
+[WebServer] [req] x-message-id=ff1c2c20-68b3-4ff0-a577-337199f3a5fa path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=6e81c2d9-7e98-4ad0-9357-ab8187c4d1b0 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=4d429782-eedc-4ed0-ac8e-5bdd9b563fcd path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=7bf81b41-bd02-4f72-9a02-fdf94dbe7138 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=b601fa1d-df12-41a9-a0a7-99c30988ca03 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[10/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:170:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-193: hero split layout — copy column beside globe at desktop
+[1A[2K[WebServer] [req] x-request-id=eb346fd6-397c-42e9-9fbc-275bdab870e5 path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=67d9413b-e7cc-4748-8eb7-bbb36073f1e6 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=c7182cf4-2a4a-4431-a21d-968d71697a35 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=8ae5fb9d-57dd-4765-8c1e-3f0259662f3e path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[11/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:179:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-150: hero letterbox uses gradient tone not solid black bars
+[1A[2K[WebServer] [req] x-request-id=10d2be51-8f87-486b-9be7-e9a08e0150e6 path=/health status=200
+[WebServer] [req] x-message-id=c420c13e-7c7c-49ab-b438-143bfb5f8aa8 path=
+
+[1A[2K[WebServer] /health status=200
+
+[1A[2K[WebServer] [req] x-request-id=606759d3-8342-4a7b-83bc-58a526fd432d path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=7ea281f6-ccaf-4c95-98b0-44511c24002a path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=3644017f-6c08-4d7f-870e-650914ab20a1 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=11cbd69f-eb5f-439f-8801-8f339b7a6d2d path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[12/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:189:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-022d: section hash matrix (page-brief anchors)
+[1A[2K[WebServer] [req] x-request-id=63e9f4b0-c17a-492b-90c9-fbd27f6d87db path=/health status=200
+[WebServer] [req] x-message-id=094d73a2-1630-4c9b-9727-27a501cc3b64 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=171056ae-ccbe-44f0-ab6a-7836109721aa path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=a74354c4-91c6-4c26-9143-830ab57b24ef path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=1502dbec-ebbe-402a-99b8-e4441afacb03 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=a9a1d161-f01c-4129-ac1b-2996fb7fd6d0 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[13/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:216:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-022c: trust and settlement hash deep-links
+[1A[2K[WebServer] [req] x-request-id=ad94e706-1ac4-41b8-bb8b-e692d596a6dd path=/health status=200
+[WebServer] [req] x-message-id=94d832fe-87a5-4365-b3de-f2415771a011
+
+[1A[2K[WebServer]  path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=eb38f0d5-d4ed-4f7c-94ae-cb23e918b526 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=747caaf0-013a-4913-9fc1-248a59b44668 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632282201 path=/meta status=200
+
+[1A[2K[WebServer] 
+[WebServer] [req] x-message-id=377291d2-28d6-416b-a5c8-e2be9c208683 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=03f821ab-c56d-4fe7-b848-b3f0da148e71 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=cd6a5a45-f044-4909-861a-45a8c2a087a8 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[14/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:227:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-022: role hash deep-link selects tab
+[1A[2K[WebServer] [req] x-request-id=3513cb5f-7ef0-4f20-9388-cef96483dbb2 path=/health status=200
+[WebServer] [req] x-message-id=52195b7f-0218-4fd3-ac3d-e17e62f64f69 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=f2a0d4cf-0cb4-4e0b-951a-6749bacbc2f8 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=4ab4644b-95d5-4124-9fb2-1acbd94a6269 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632287402 path=/meta
+
+[1A[2K[WebServer]  status=200
+[WebServer] [req] x-message-id=0ad62c07-07c3-455f-a9d8-79fce1abaed6 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=a2922ac6-cab5-4c9a-b2dd-f1e36087084a path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=360b155c-ce1c-456a-95c1-ca6f3dd78570 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[15/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:244:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-157: phase-1 region roster is keyboard focusable
+[1A[2K[WebServer] [req] x-request-id=15a25939-048d-47b2-9c1b-7250115a9474 path=/health status=200
+[WebServer] [req] x-message-id=0ac11f8a-002f-4b86-8574-25c36d28e4b3 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=5bcc25b0-239e-4f24-9a39-997e89e65447 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=98d95c63-b559-4c31-b39b-6ca414940be3 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=db4fab49-d3cd-4842-9cb4-c1259844af7c path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=e15bd665-ca07-484e-a7e2-723065f62544 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[16/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:253:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-090b: scroll progress fades when WebGL idle
+[1A[2K[WebServer] [req] x-request-id=fa2f626b-b332-4412-b419-82a69e5492cb path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=c76e456c-3873-4f70-8f06-b21efc8d15cc path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=130fb940-16fb-468c-b69e-25c2f9d76c56 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=941e04e2-811f-4557-937f-49be6f4aea0d path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=16055eac-4a51-4ea5-a52e-b47d8bf1916b path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=2b4114fe-8c48-4ddf-b08f-06c78203f5aa
+
+[1A[2K[WebServer]  path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[17/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:271:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-11:首屏 1.2s 入场 — 剧场露边
+[1A[2K[WebServer] [req] x-request-id=b76df1ea-850f-4963-a3dc-fec16062793a path=/health status=200
+[WebServer] [req] x-message-id=c0c4b8d5-fde1-4bb0-9612-b65ae231e345
+
+[1A[2K[WebServer]  path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=5a131991-a53d-432e-b57f-687fd4179132 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=b6621077-6a08-4db7-973e-98e3bcbe3fba path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=635fe56d-7bd8-43a0-9c72-669f140b9279 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=bd5758f5-02cc-4583-8a0c-e115f353d38c path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632294320 path=/meta status=200
+[WebServer] [req] x-message-id=20e2b98e-0508-4984-b150-902bc52907cb path=/meta status=200
+
+[1A[2K[18/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:286:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-12: v6 impact — 无旧 IA 文案
+[1A[2K[WebServer] [req] x-request-id=e965e83f-72f9-45bc-ac3d-824cbf272d8b path=/health status=200
+[WebServer] [req] x-message-id=64df0f95-9f47-419c-a762-51d45667a36e path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=19405571-c7ff-4c51-9912-b2159d341a4b path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=a5faed1c-d142-4746-be3c-c4287820f3f2 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[19/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:300:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-092: role video static frame when reduced motion
+[1A[2K[WebServer] [req] x-request-id=e1e39a3c-abf0-4bac-99da-6dbe6fc50349 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=78986d97-d2db-4d40-9e51-10b500bc61a8 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=e31a4d40-cd87-46f7-9663-70ddd808aeaa path=/health status=200
+[WebServer] [req] x-message-id=0e00ffbe-7f2e-4167-8c52-9aa03b3b21cb path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=43af4388-3ea1-4422-a626-55d823cb59f9 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=1984348c-f62d-4eff-9e3c-dfe610f744bf path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632299548 path=/meta status=200
+[WebServer] [req] x-message-id=4d0561b8-5572-4108-8021-5fd6d950d8d2 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632304933 path=/meta status=200
+[WebServer] [req] x-message-id=2025879b-84a8-401e-b4c5-ce9fb9e0de39 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=be828cb2-d575-43a2-932e-31b9cea78de7 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=db02e690-ffbb-4055-be90-8e3f1147baf0 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[20/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:311:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-13: prefers-reduced-motion 降级
+[1A[2K[WebServer] [req] x-request-id=681de8a4-f25d-4153-8fc1-11e14e4891de path=/health status=200
+[WebServer] [req] x-message-id=6c72118c-2401-4c0d-b7a0-467d117edd34 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=15c64ff3-08b0-4f28-8f09-8da06c829724 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=c5433456-d597-46d8-9dc2-914838636fa1 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=1e5c36a1-0a80-4acc-9e4e-a3d55461fac7 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=f3d464a0-7cc5-4a1a-86eb-cf0ee06a80da path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632309358 path=/meta status=200
+[WebServer] [req] x-message-id=26f1072e-a564-4f33-b43a-257f258b7e38
+
+[1A[2K[WebServer]  path=/meta status=200
+
+[1A[2K[21/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:326:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-15: WebGL power idle past narrative bands (TT-PH1-145)
+[1A[2K[WebServer] [req] x-request-id=81f5a996-1572-48a4-9684-35c656ac602d path=/health status=200
+[WebServer] [req] x-message-id=005db020-c4e9-4699-80fe-e57adb39a9e7 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=2253b51a-64d1-49ea-8b3d-dda8c3f64d7f path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=d7e3d252-5d5f-449b-8167-1ee4dd148f4d path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=605962b3-9cd5-4739-a383-d2b42e125bc5 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=59294e8a-a7ca-4dcc-9956-71a57d0fc2a8 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632313943 path=/meta status=200
+[WebServer] [req] x-message-id=39c6f41c-187f-4853-b254-b9cdf37bee55 path=/meta status=200
+
+[1A[2K[22/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:341:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-01: wheel scroll reaches roles, liquidity, trust, start
+[1A[2K[WebServer] [req] x-request-id=f0e0803c-b685-447c-b8e5-8fab563edf20 path=/health status=200
+[WebServer] [req] x-message-id=5ac89c03-f454-47c4-9f87-7c71a14010ea path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=00e38098-afb3-4ea4-9983-13e4f400fd97 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=ef0b4aeb-2ecb-4b1e-a3ad-e74cc5de64c6 path=/api/v1/traveltrust/page-brief status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632318221 path=/meta status=200
+[WebServer] [req] x-message-id=be1d4507-199f-43a4-a0f2-549c4e86fead path=/meta status=200
+
+[1A[2K[23/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:349:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-14: trust facts + illustrative badge + tier-1 mp4 sources
+[1A[2K[WebServer] [req] x-request-id=6f8d84b1-6ddf-41af-8835-44db156a1fd7 path=/health status=200
+[WebServer] [req] x-message-id=5dae97c5-ccd9-475b-86aa-90c9e526d432 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=d10527a4-f537-4dd7-bc4d-e87ae5444521 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=84e34256-6772-4dcc-aa4b-6dc9e61eda52 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632315975 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-message-id=0e928e8e-73cd-4902-a1f9-3340abc421ea path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=2bdf7196-1d81-48bf-ae00-4ddb1a6c1c05 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=2860133b-de9d-4c65-a88b-227628712aa9 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632321561 path=/meta status=200
+[WebServer] [req] x-message-id=d71d72e2-d5c8-445d-b364-58f31b018a0a path=/meta status=200
+
+[1A[2K[24/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:372:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-14b: liquidity preview banner + locked amount
+[1A[2K[WebServer] [req] x-request-id=88d03688-47be-46bc-ab7d-1ecae7f166f5 path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=17e72a68-78bb-4e3f-b483-be86eab8ce06 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=f2313ebb-8cd3-46e6-8c67-3509eb560ef9 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=ac8dd9fc-add3-4c93-99eb-a87da0ba994c path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632323896 path=/meta status=200
+[WebServer] [req] x-message-id=ecaf5bd0-6385-4fee-9d75-75153f5612f6 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=31684b24-dbea-4ede-8bc2-a27d067c8490 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=7b6e8bf3-e144-4566-a4e2-d21f40abab13 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[25/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:388:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-14c: page-brief Live/Demo badge + role primary CTA
+[1A[2K[WebServer] [req] x-request-id=b2d30236-c012-4b8e-baef-4cf144e1aebe path=/health status=200
+[WebServer] [req] x-message-id=f3c1c595-2bfd-4d10-92a8-f92eb52bd0b8 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=2e52eafe-f7d9-4fba-8b59-8f146f4695f9 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=ccaba1e8-ac36-405d-b806-750a68442d24 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=b70dc5a3-4feb-47d5-a157-b2225d6c60a9 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=6f4018bf-556f-470a-bae1-2450d1e32508 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632326785 path=/meta status=200
+[WebServer] [req] x-message-id=b48e0d30-9e14-4292-adb5-8002a6e2f187 path=/meta status=200
+
+[1A[2K[26/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:399:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-153 / PH1-FE-08b: narrow viewport hero CTA dock safe-area
+[1A[2K[WebServer] [req] x-request-id=299d8a82-0915-458b-98ac-6f3113a24e94 path=/health status=200
+[WebServer] [req] x-message-id=b5ca0651-23fb-4ec6-9205-8c19a6a24beb path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=8be9c6fc-1a8e-49b6-8029-1c6c9147ce4c path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=aa012b3c-9022-4a5c-847d-cac4be202332 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632328873 path=/meta status=200
+[WebServer] [req] x-message-id=4c1686a5-6b38-4c18-be9e-c03408d3cd72 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=8db7d8c6-0972-4c17-8372-57e176aa88ec path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=45909fab-7d74-4dca-975c-649fb61c096f path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[27/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:414:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-08c: narrow viewport role theater tabs + video aspect
+[1A[2K[WebServer] [req] x-request-id=13f21c53-975f-468f-8336-3992fa3c4bde path=/health status=200
+[WebServer] [req] x-message-id=e797a2f6-3593-4c27-9139-05731ad16038 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=2fb0e811-a9d7-4116-a85f-476f83b5bcf9 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=f9fc3005-52c4-417b-8f61-65b94f8057ba path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632333822 path=/meta status=200
+[WebServer] [req] x-message-id=51e2029d-bc27-40a3-a119-21377a311b91 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=6ffc22db-6d92-4bab-a0ca-afc85cc3f05b path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=72f3487d-70ac-4bc4-8db8-a63622bbb7c6 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632340047 path=/meta status=200
+[WebServer] [req] x-message-id=44c36014-2ef9-4dd9-a7af-24566aec2f2e path=/meta status=200
+
+[1A[2K[28/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:428:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-090: canvas idles below fold
+[1A[2K[WebServer] [req] x-request-id=4824bc8b-ca20-4c5d-aa59-fd98c95117b2 path=/health status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 8368212e-c788-400a-acb8-779f5e88dbca path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=bc8c7725-aa44-46a4-9c1d-b48c92463586 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=98218a28-c348-438e-af2b-2f87c6ccbae1 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632338106 path=/meta status=200
+[WebServer] [req] x-message-id=236249b8-1b34-4ce3-bebd-c67c2bd9ad6f path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=7ae372c9-a5e2-402e-b99c-b05e489cab21 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=51b98430-7af1-4800-9208-15d1f77c30c5 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[29/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:439:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-177: FAQ accordion keyboard navigation
+[1A[2K[WebServer] [req] x-request-id=6e39d474-bfa3-4cde-a981-1d5b3d0cebbd path=/health status=200
+[WebServer] [req] x-message-id=c7a6860d-8a9d-46f0-b12d-ce23d82c7c4b path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=0e263f47-e45a-4ef2-9c6b-bd7002aa5c28 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=13d259c5-7c95-4e72-a6fc-69b762f3e17d path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=040bd908-ddaf-49ee-b17f-84d7f177bef9 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=99df8a3a-42fe-4435-a6c3-b7c0f7a52483 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632342526 path=/meta status=200
+[WebServer] [req] x-message-id=32e56b62-9983-4fe1-98f3-9b78e8180e31 path=/meta status=200
+
+[1A[2K[30/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:462:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-155b: compact nav more menu opens upward
+[1A[2K[WebServer] [req] x-request-id=88f4bac8-405c-4823-bcfd-b7b5e8243609 path=/health status=200
+[WebServer] [req] x-message-id=170adb6c-6e8b-4aaa-b1f1-4c563ae6d590 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=928289fe-83ff-442c-bd4e-9fcdb1460d1f path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=74d52a4c-889d-455c-aba8-5e9e380f7268 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=
+
+[1A[2K[WebServer] afce6480-0bab-4359-b70d-ec25b6894dcd path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=c4303858-d27f-4967-b298-52efe42ffb28 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[31/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:479:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-190b: network footer links to home site map
+[1A[2K[WebServer] [req] x-request-id=896ab685-cb75-4bad-a37c-484e6bced442 path=/health status=200
+[WebServer] [req] x-message-id=2fc4885e-fa96-4f5f-8624-06054ccc56ff path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=20de0666-1924-48da-95c0-830024bd885a path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=e0434155-481a-4008-9a56-727d052930cc path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632346397 path=/meta status=200
+[WebServer] [req] x-message-id=666ec884-47c0-49a4-a79f-33478a86c116 path=/meta status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] [req] x-request-id=93ef4a0f-b81c-48f0-9439-9abee474241c path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=ca2ee251-3269-4b29-9b6f-42bfc6d71325 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[32/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:489:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-190c: settlement protocol notes expand
+[1A[2K[WebServer] [req] x-request-id=746195c6-7d99-4e67-8dca-cbacf21b4b30 path=/health status=200
+[WebServer] [req] x-message-id=ccf97f59-a00c-4fb4-ae4a-28ddf2c6e857 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=c21d829a-3a18-478f-bd0f-3150698a8fd9 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=c8c0c1d2-ad4b-48b7-8b1c-6438c62d4258
+
+[1A[2K[WebServer]  path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632352923 path=/meta status=200
+[WebServer] [req] x-message-id=21935e56-da3d-4d5c-86c0-1ea7f982dec8 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=
+
+[1A[2K[WebServer] d5c9a819-6705-41ea-8a95-04c10cbafd6d path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=06853aa0-9f9b-46f2-8097-8b3607d0443d path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[33/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:507:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-11b: hero scroll cue jumps to roles and start
+[1A[2K[WebServer] [req] x-request-id=b3345b5d-1a5e-4910-ae7a-1bdc243aa9cf path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=e1e0f311-23eb-4616-882c-593528182456 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=1878ae94-d5e9-4b84-86c7-4dd56a062779 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=d1f51c6a-4487-4b53-ad7c-a6a3a9eddaac path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=8696cb92-a262-473a-83b5-1d24dada471b path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] a27ad6bc-5b30-4744-883a-691d116d0353 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779632354592 path=/meta status=200
+[WebServer] [req] x-message-id=0942b1e8-e9de-428a-a1e6-f214de4282c1 path=/meta status=200
+
+[1A[2K  33 passed (3.5m)
+TT_TRAVELTRUST_PH1_LOCAL: exit 0 (① vitest+media; E2E=1; E2E_FULL=1; VISUAL=0; LH=0; VERIFY=1; stamp=/d/TravelTrust-V1/evidence/GO_local_traveltrust_ph1/last-local-gate-20260524T141958Z.txt)

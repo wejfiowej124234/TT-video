@@ -11,6 +11,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminAuditPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminAuditFiltersBlock.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminAuditPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "AdminAuditTableSection.tsx"), "utf8"),
   ].join("\n");
 }
@@ -21,6 +22,7 @@ describe("admin audit page", () => {
   it("keeps thin shell + audit list fetch + L5 anchors", () => {
     expect(src).toContain("useAdminAuditPage");
     expect(src).toContain("AdminAuditPageMain");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("routes.admin.auditLogs");
     expect(src).toContain("AdminListPageChrome");
     expect(src).toContain("AdminAuditQuickFilters");

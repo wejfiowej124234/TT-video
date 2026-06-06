@@ -9,6 +9,7 @@ import MarketHeroNavToolbar from "@/components/market/MarketHeroNavToolbar";
 import MarketHeroTrustPills from "@/components/market/MarketHeroTrustPills";
 import MarketPageFooter from "@/components/market/MarketPageFooter";
 import type { MarketListingDetailProvenance } from "@/lib/marketSubsiteDetailPageModel";
+import { TT_MARKETING_MARKET_PAGE_H1 } from "@/lib/marketingUi";
 
 type Props = {
   /** `aria-label` for `<main>` */
@@ -57,9 +58,7 @@ export default function MarketSubsitePageChrome({
       <MarketAmbientBackdrop />
       <div className="relative z-10 isolate min-h-screen">
         <MarketHeroFrame variant="subsite">
-          <h1 className="text-center text-h3 font-bold tracking-tight text-white drop-shadow-market-hero sm:text-h2">
-            {heroTitle}
-          </h1>
+          <h1 className={TT_MARKETING_MARKET_PAGE_H1}>{heroTitle}</h1>
           {heroSubtitle ? (
             <div className="mt-2 text-center text-body text-slate-200/95 drop-shadow-market-body">{heroSubtitle}</div>
           ) : null}

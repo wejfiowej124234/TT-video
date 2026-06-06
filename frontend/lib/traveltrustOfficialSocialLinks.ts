@@ -1,6 +1,18 @@
-/** `/traveltrust` 页脚官方社媒 — 槽位常驻；`NEXT_PUBLIC_*` 填 https URL 后自动启用外链 */
+/** `/traveltrust` 页脚官方社媒 — 槽位常驻（参考站金色横排）；`NEXT_PUBLIC_*` 填 https URL 后启用外链 */
 
-export type TraveltrustOfficialSocialPlatform = "douyin" | "x" | "instagram" | "youtube";
+export type TraveltrustOfficialSocialPlatform =
+  | "github"
+  | "youtube"
+  | "snapchat"
+  | "tiktok"
+  | "threads"
+  | "instagram"
+  | "facebook"
+  | "medium"
+  | "reddit"
+  | "discord"
+  | "telegram"
+  | "x";
 
 export type TraveltrustOfficialSocialPlatformConfig = {
   platform: TraveltrustOfficialSocialPlatform;
@@ -8,16 +20,36 @@ export type TraveltrustOfficialSocialPlatformConfig = {
   labelKey: `traveltrust_social_${TraveltrustOfficialSocialPlatform}`;
 };
 
-/** 展示顺序（与 env 键一一对应，便于后续填充） */
+/** 展示顺序（与参考页脚金色图标横排一致） */
 export const TRAVELTRUST_OFFICIAL_SOCIAL_PLATFORMS: readonly TraveltrustOfficialSocialPlatformConfig[] = [
-  { platform: "douyin", envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_DOUYIN_URL", labelKey: "traveltrust_social_douyin" },
-  { platform: "x", envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_X_URL", labelKey: "traveltrust_social_x" },
+  { platform: "github", envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_GITHUB_URL", labelKey: "traveltrust_social_github" },
+  { platform: "youtube", envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_YOUTUBE_URL", labelKey: "traveltrust_social_youtube" },
+  {
+    platform: "snapchat",
+    envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_SNAPCHAT_URL",
+    labelKey: "traveltrust_social_snapchat",
+  },
+  { platform: "tiktok", envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_TIKTOK_URL", labelKey: "traveltrust_social_tiktok" },
+  { platform: "threads", envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_THREADS_URL", labelKey: "traveltrust_social_threads" },
   {
     platform: "instagram",
     envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_INSTAGRAM_URL",
     labelKey: "traveltrust_social_instagram",
   },
-  { platform: "youtube", envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_YOUTUBE_URL", labelKey: "traveltrust_social_youtube" },
+  {
+    platform: "facebook",
+    envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_FACEBOOK_URL",
+    labelKey: "traveltrust_social_facebook",
+  },
+  { platform: "medium", envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_MEDIUM_URL", labelKey: "traveltrust_social_medium" },
+  { platform: "reddit", envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_REDDIT_URL", labelKey: "traveltrust_social_reddit" },
+  { platform: "discord", envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_DISCORD_URL", labelKey: "traveltrust_social_discord" },
+  {
+    platform: "telegram",
+    envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_TELEGRAM_URL",
+    labelKey: "traveltrust_social_telegram",
+  },
+  { platform: "x", envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_X_URL", labelKey: "traveltrust_social_x" },
 ] as const;
 
 export type TraveltrustOfficialSocialSlot = TraveltrustOfficialSocialPlatformConfig & {

@@ -14,7 +14,7 @@ import {
   TT_L5_MOTION_EASE,
   TT_ROLE_VIDEO_L5,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 type Props = {
   role: TravelTrustRoleConfig;
   active: boolean;

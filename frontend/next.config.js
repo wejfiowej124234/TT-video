@@ -6,6 +6,14 @@ const emptyStub = "./lib/empty-module-stub.js";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  /** Fly/Docker staging：`NEXT_STANDALONE=1` 时 standalone + 跳过 build 期 ESLint/TS（② staging 部署；本地仍走 npm run lint / tsc） */
+  ...(process.env.NEXT_STANDALONE === "1"
+    ? {
+        output: "standalone",
+        eslint: { ignoreDuringBuilds: true },
+        typescript: { ignoreBuildErrors: true },
+      }
+    : {}),
   reactStrictMode: true,
   poweredByHeader: false,
   /**
@@ -105,14 +113,37 @@ const nextConfig = {
    * **`/api/v1/uploads/community-posts/*`** 等社区媒体与 JSON API 同条 rewrite，与 **②③** 分源部署时仍走同一 `dest`。
    */
   async rewrites() {
-    const dest = (process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8080").replace(/\/$/, "");
-    return [
+    const dest = (
+      process.env.API_REWRITE_TARGET ||
+      process.env.NEXT_PUBLIC_API_REWRITE_TARGET ||
+      process.env.NEXT_PUBLIC_API_BASE_URL ||
+      "http://127.0.0.1:8080"
+    ).replace(/\/$/, "");
+    const s3Public = (
+      process.env.NEXT_PUBLIC_COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL ||
+      process.env.COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL ||
+      ""
+    )
+      .trim()
+      .replace(/\/$/, "");
+    const rewrites = [
       { source: "/favicon.ico", destination: "/favicon.svg" },
+      { source: "/apple-touch-icon.png", destination: "/favicon.svg" },
       { source: "/api/v1/:path*", destination: `${dest}/api/v1/:path*` },
       { source: "/health", destination: `${dest}/health` },
       { source: "/meta", destination: `${dest}/meta` },
       { source: "/auth/:path*", destination: `${dest}/auth/:path*` },
     ];
+    if (
+      s3Public &&
+      !/^https?:\/\/(127\.0\.0\.1|localhost|\[::1\]|::1)(:|\/|$)/i.test(s3Public)
+    ) {
+      rewrites.push({
+        source: "/tt-community-s3/:path*",
+        destination: `${s3Public}/:path*`,
+      });
+    }
+    return rewrites;
   },
   images: {
     /** 显式默认 loader，避免本地缓存/合并配置残留 `custom` 导致全站 `next-image-missing-loader` */
@@ -131,6 +162,9 @@ const nextConfig = {
        */
       { protocol: "http", hostname: "127.0.0.1", port: "19000", pathname: "/**" },
       { protocol: "http", hostname: "localhost", port: "19000", pathname: "/**" },
+      /** ② staging C4/C5：社区 Feed 视频封面/playback URL（`cdn-staging.example.test`）须列入，否则 `/community` error boundary */
+      { protocol: "https", hostname: "cdn-staging.example.test", pathname: "/**" },
+      { protocol: "https", hostname: "cdn.example.test", pathname: "/**" },
     ],
   },
   async headers() {

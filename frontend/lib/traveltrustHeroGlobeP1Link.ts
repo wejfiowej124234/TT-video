@@ -17,7 +17,7 @@ import {
 } from "@/lib/traveltrustStartStepIds";
 import { clearHeroGlobeFocusForProbe } from "@/lib/traveltrustHeroGlobeE2eProbe";
 import {
-  listHeroGlobeP1PinProbeFractions,
+  listHeroGlobeP1PinProbeFractionsPreferGlobeBound,
   resolveHeroGlobeP1ProbeResetFraction,
   type HeroGlobeP1PinProbeFraction,
 } from "@/lib/traveltrustHeroGlobeP1ProbeTargets";
@@ -234,7 +234,7 @@ if (typeof window !== "undefined" && isHeroGlobeP1ProbeBridgeEnabled()) {
     writeStartHash: writeTraveltrustStartHash,
     setFocusedRegion: setHeroGlobeP1FocusedRegion,
     clearFocus: clearHeroGlobeFocusForProbe,
-    listPinProbeFractions: listHeroGlobeP1PinProbeFractions,
+    listPinProbeFractions: listHeroGlobeP1PinProbeFractionsPreferGlobeBound,
     resolveResetFraction: resolveHeroGlobeP1ProbeResetFraction,
   };
 }

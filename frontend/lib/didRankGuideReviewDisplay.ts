@@ -1,4 +1,4 @@
-import type { GuideRankItem } from "@/lib/didRankMockData";
+import type { GuideRankItem } from "@/lib/didRankTypes";
 
 /**
  * One-line summary for guide leaderboard cards when API provides review stats

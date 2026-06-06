@@ -42,7 +42,7 @@ const out = {
   generated_by: "scripts/build-d5d6d7-coverage-matrix.mjs",
   route_rules: "scripts/matrix-96-16-shared.mjs",
   methodology:
-    "119 app routes = all app/**/page.tsx. N_A = exact set NA_EXACT (evaluated first; redirect/thin/legacy). COVERED = among COVERED_RULES that match, take those with maximum rule.path.length (longest prefix or exact), union their evidence file basenames; ties at max length are unioned. Unmatched = NEEDS_FIX. Matrix is rules-driven (not by re-reading evidence body text for gaps).",
+    "All app/**/page.tsx routes (see total_routes). N_A = exact set NA_EXACT (evaluated first; redirect/thin/legacy). COVERED = among COVERED_RULES that match, take those with maximum rule.path.length (longest prefix or exact), union their evidence file basenames; ties at max length are unioned. Unmatched = NEEDS_FIX. Matrix is rules-driven (not by re-reading evidence body text for gaps).",
   match_policy: "N_A first; then longest matching rule path wins; evidence_files = unique evidence from winning rule row(s) only.",
   total_routes: rows.length,
   counts,

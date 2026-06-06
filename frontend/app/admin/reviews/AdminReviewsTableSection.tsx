@@ -14,20 +14,31 @@ import {
   ADMIN_TABLE_ROW_CLASS,
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
-  adminTableInlineLinkClass,
-} from "@/lib/adminUi";
+  adminTableRowPrimaryActionClass,
+  adminTableRowSecondaryActionClass,
+  ADMIN_TABLE_ROW_ACTIONS_CLASS,
+  ADMIN_TABLE_SECTION_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,} from "@/lib/adminUi";
 import type { AdminReviewRow } from "./adminReviewsPageModel";
 
 type ReviewSortKey = "score" | "created_at";
 
 type Props = {
   loading: boolean;
+  refreshing?: boolean;
   error: AdminFetchErrorKind | null;
   itemsNotArrayError: boolean;
   items: AdminReviewRow[];
 };
 
-export function AdminReviewsTableSection({ loading, error, itemsNotArrayError, items }: Props) {
+export function AdminReviewsTableSection({
+  loading,
+  refreshing = false,
+  error,
+  itemsNotArrayError,
+  items,
+}: Props) {
   const { t } = useTranslation();
   const { sort, toggle, ariaSort } = useAdminTableSort<ReviewSortKey>("created_at", "desc");
   const sortedItems = useMemo(
@@ -39,7 +50,7 @@ export function AdminReviewsTableSection({ loading, error, itemsNotArrayError, i
     [items, sort.key, sort.dir],
   );
 
-  if (loading || error || itemsNotArrayError) return null;
+  if (error || itemsNotArrayError || (loading && items.length === 0)) return null;
 
   if (items.length === 0) {
     return (
@@ -51,8 +62,12 @@ export function AdminReviewsTableSection({ loading, error, itemsNotArrayError, i
   }
 
   return (
-    <section className="mt-6 overflow-hidden rounded-[var(--radius-xl)] border border-ink-200 bg-white" aria-label={t("admin_reviews_table_aria")}>
-      <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+    <section
+      className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
+      aria-label={t("admin_reviews_table_aria")}
+      data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
+    >
+      <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
         <thead className={ADMIN_TABLE_THEAD_CLASS}>
           <tr>
             <AdminSortableTh
@@ -79,12 +94,12 @@ export function AdminReviewsTableSection({ loading, error, itemsNotArrayError, i
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-ink-100 text-ink-700">
+        <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
           {sortedItems.map((r) => (
             <tr key={r.id ?? `${r.order_id}-${r.reviewer_id}`} className={ADMIN_TABLE_ROW_CLASS}>
               <td className="px-4 py-3 font-mono">{r.score ?? t("admin_em_dash")}</td>
-              <td className="px-4 py-3 font-mono text-meta break-all">{r.order_id ?? t("admin_em_dash")}</td>
-              <td className="px-4 py-3 font-mono text-meta break-all">
+              <td className="px-4 py-3 font-mono text-small text-ink-800 break-all">{r.order_id ?? t("admin_em_dash")}</td>
+              <td className="px-4 py-3 font-mono text-small text-ink-800 break-all">
                 {r.reviewer_id ? `${r.reviewer_id.slice(0, 8)}…` : t("admin_em_dash")}
               </td>
               <td className="px-4 py-3 max-w-md truncate" title={r.comment ?? undefined}>
@@ -95,11 +110,11 @@ export function AdminReviewsTableSection({ loading, error, itemsNotArrayError, i
               </td>
               <td className="px-4 py-3">
                 {r.order_id ? (
-                  <div className="flex flex-col gap-1 items-start">
+                  <div className={ADMIN_TABLE_ROW_ACTIONS_CLASS}>
                     {r.id ? (
                       <Link
                         href={`/admin/reviews/${encodeURIComponent(r.id)}`}
-                        className={adminTableInlineLinkClass()}
+                        className={adminTableRowPrimaryActionClass()}
                         aria-label={t("admin_reviews_detail_row_aria", { id: r.id ?? "" })}
                       >
                         {t("admin_ops_reviewDetailAdmin")}
@@ -111,7 +126,7 @@ export function AdminReviewsTableSection({ loading, error, itemsNotArrayError, i
                         const oid = r.order_id;
                         if (oid) stashEscrowOrderPrefetchForOrderIdNav(oid, "escrow");
                       }}
-                      className={adminTableInlineLinkClass()}
+                      className={adminTableRowSecondaryActionClass()}
                       aria-label={t("admin_reviews_escrow_row_aria", { id: r.order_id ?? "" })}
                     >
                       {t("admin_ops_orderEscrow")}
@@ -122,7 +137,7 @@ export function AdminReviewsTableSection({ loading, error, itemsNotArrayError, i
                         const oid = r.order_id;
                         if (oid) stashEscrowOrderPrefetchForOrderIdNav(oid, "pay");
                       }}
-                      className={adminTableInlineLinkClass()}
+                      className={adminTableRowSecondaryActionClass()}
                     >
                       {t("admin_ops_orderPay")}
                     </Link>

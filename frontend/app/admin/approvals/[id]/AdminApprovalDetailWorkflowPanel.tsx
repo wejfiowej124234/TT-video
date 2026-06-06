@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminDetailContentPanel } from "@/components/admin/AdminDetailContentPanel";
 import Link from "next/link";
 
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
@@ -9,12 +10,15 @@ import { adminErrorUserText } from "@/lib/adminFetchDisplay";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
 import {
-  ADMIN_FILTER_CARD_CLASS,
+  ADMIN_APPROVAL_APPROVE_ACTION_CLASS,
+  ADMIN_APPROVAL_REJECT_ACTION_CLASS,
+  ADMIN_APPROVAL_APPROVE_HEADING_CLASS,
+  ADMIN_APPROVAL_REJECT_OUTLINE_BTN_CLASS,
   ADMIN_FORM_FIELD_FOCUS_CLASS,
   ADMIN_FOCUS_RING_CORE_CLASS,
   ADMIN_LINK_FOCUS_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
-} from "@/lib/adminUi";
+  ADMIN_FORM_CONTROL_MD_CLASS,} from "@/lib/adminUi";
 
 import { approvalActionLabelKey } from "../adminApprovalWorkflowModel";
 import type { useAdminApprovalDetailPage } from "./useAdminApprovalDetailPage";
@@ -48,7 +52,7 @@ export function AdminApprovalDetailWorkflowPanel({ vm }: Props) {
   );
 
   return (
-    <div className={`${ADMIN_FILTER_CARD_CLASS} shadow-soft`} data-tt-admin-approval-workflow="1">
+    <AdminDetailContentPanel data-tt-admin-approval-workflow="1">
       <h2 className="text-body font-semibold text-ink-900">{t("admin_approval_workflow_title")}</h2>
       <p className="mt-1 text-meta text-ink-600">
         {t("admin_approval_workflow_action")}: {t(actionKey)}
@@ -60,12 +64,12 @@ export function AdminApprovalDetailWorkflowPanel({ vm }: Props) {
 
       {isPending && canAct ? (
         <div className="mt-4 grid gap-4 lg:grid-cols-2">
-          <div className="rounded-[var(--radius-lg)] border border-emerald-200 bg-emerald-50/50 p-4">
-            <h3 className="text-small font-semibold text-emerald-950">{t("admin_approvals_approve")}</h3>
+          <div className={ADMIN_APPROVAL_APPROVE_ACTION_CLASS}>
+            <h3 className={ADMIN_APPROVAL_APPROVE_HEADING_CLASS}>{t("admin_approvals_approve")}</h3>
             <label className="mt-2 block text-small text-ink-700">
               {t("admin_approvals_approve_note_label")}
               <textarea
-                className={`mt-1 block w-full min-h-[88px] rounded-[var(--radius-md)] border border-ink-300 bg-white px-3 py-2 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 block w-full min-h-[88px] ${ADMIN_FORM_CONTROL_MD_CLASS} px-3 py-2 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 value={approveNote}
                 onChange={(e) => setApproveNote(e.target.value)}
                 placeholder={t("admin_approvals_approvePh")}
@@ -81,12 +85,12 @@ export function AdminApprovalDetailWorkflowPanel({ vm }: Props) {
               {actionBusy === "approve" ? t("admin_approvals_approving") : t("admin_approvals_approve")}
             </button>
           </div>
-          <div className="rounded-[var(--radius-lg)] border border-danger/30 bg-danger/5 p-4">
+          <div className={ADMIN_APPROVAL_REJECT_ACTION_CLASS}>
             <h3 className="text-small font-semibold text-danger">{t("admin_approvals_reject")}</h3>
             <label className="mt-2 block text-small text-ink-700">
               {t("admin_approvals_reject_reason_required")}
               <textarea
-                className={`mt-1 block w-full min-h-[88px] rounded-[var(--radius-md)] border border-ink-300 bg-white px-3 py-2 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 block w-full min-h-[88px] ${ADMIN_FORM_CONTROL_MD_CLASS} px-3 py-2 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 value={rejectReason}
                 onChange={(e) => setRejectReason(e.target.value)}
                 placeholder={t("admin_approvals_reject_ph")}
@@ -95,7 +99,7 @@ export function AdminApprovalDetailWorkflowPanel({ vm }: Props) {
             </label>
             <button
               type="button"
-              className={`mt-3 inline-flex min-h-[44px] w-full items-center justify-center rounded-[var(--radius-md)] border border-danger bg-white px-4 py-2 text-small font-medium text-danger hover:bg-danger/10 disabled:opacity-50 ${ADMIN_FOCUS_RING_CORE_CLASS}`}
+              className={`mt-3 ${ADMIN_APPROVAL_REJECT_OUTLINE_BTN_CLASS} ${ADMIN_FOCUS_RING_CORE_CLASS}`}
               disabled={actionBusy !== null || !rejectReason.trim()}
               aria-busy={actionBusy === "reject" ? true : undefined}
               onClick={() => void runAction("reject")}
@@ -128,6 +132,6 @@ export function AdminApprovalDetailWorkflowPanel({ vm }: Props) {
           {t("admin_approval_audit_trail_link")}
         </Link>
       </p>
-    </div>
+    </AdminDetailContentPanel>
   );
 }

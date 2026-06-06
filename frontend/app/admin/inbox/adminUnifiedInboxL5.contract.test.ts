@@ -21,6 +21,11 @@ describe("admin unified inbox L5 (①)", () => {
     readFileSync(join(__dir, "page.tsx"), "utf8"),
 
     readFileSync(join(__dir, "..", "..", "..", "lib", "admin", "adminUnifiedInboxTasks.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "lib", "admin", "adminInboxWorkflowOrder.ts"), "utf8"),
+    readFileSync(
+      join(__dir, "..", "..", "..", "components", "admin", "AdminInboxWorkflowQuickNav.tsx"),
+      "utf8",
+    ),
 
   ].join("\n");
 
@@ -31,6 +36,11 @@ describe("admin unified inbox L5 (①)", () => {
     expect(src).toContain("data-tt-admin-unified-inbox");
 
     expect(src).toContain("useAdminHomeInbox");
+    const taskDetail = readFileSync(
+      join(__dir, "..", "..", "..", "components", "admin", "AdminUnifiedInboxTaskDetail.tsx"),
+      "utf8",
+    );
+    expect(taskDetail).toContain("ADMIN_UNIFIED_INBOX_TASK_DETAIL_CLASS");
 
     expect(src).toContain('"reports"');
 
@@ -61,6 +71,10 @@ describe("admin unified inbox L5 (①)", () => {
     expect(src).toContain("aria-controls");
     expect(src).toContain("detailToggleRef");
     expect(src).toContain("data-tt-admin-unified-inbox-detail-focus-return");
+    expect(src).toContain("AdminInboxWorkflowQuickNav");
+    expect(src).toContain("data-tt-admin-inbox-workflow-quick-nav");
+    expect(src).toContain("adminInboxWorkflowOrder");
+    expect(src).toContain("AdminInboxQueueBackLinks");
 
   });
 

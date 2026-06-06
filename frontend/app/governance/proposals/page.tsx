@@ -176,7 +176,7 @@ export default function GovernanceProposalsPage() {
   const showOnChainPanel = !loading && !error && dataSource === "governance_proposals_projection";
 
   return (
-    <main className="mx-auto max-w-3xl p-8" aria-labelledby={pageTitleId}>
+    <main className="mx-auto max-w-3xl p-8" aria-labelledby={pageTitleId} data-tt-governance-proposals-page="1">
       <h1 id={pageTitleId} className="text-h3 font-semibold text-ink-900">
         {t("governance_proposals_title")}
       </h1>

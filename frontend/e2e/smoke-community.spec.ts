@@ -3,6 +3,7 @@
  * 见 `e2e/helpers/smoke-nav.ts`（默认 **`page.goto` / `load`**）。
  */
 import { test, expect } from "@playwright/test";
+import { communityMeMainAccessibleNameRe } from "./helpers/communityMeLegacyRedirects";
 import { gotoSmoke } from "./helpers/smoke-nav";
 
 test("社区 Feed 可访问", async ({ page }) => {
@@ -77,10 +78,10 @@ test("社区反馈页可访问", async ({ page }) => {
   await expect(page.getByRole("heading", { name: /Contact us|与官方沟通/i })).toBeVisible();
 });
 
-test("社区我的页可访问", async ({ page }) => {
+test("社区资料页可访问", async ({ page }) => {
   await gotoSmoke(page, "/community/me");
   await expect(page.locator("body")).toBeVisible();
-  await expect(page.getByRole("main", { name: /Me|我/i })).toBeVisible();
+  await expect(page.getByRole("main", { name: communityMeMainAccessibleNameRe })).toBeVisible();
 });
 
 test("社区我的收藏页可访问", async ({ page }) => {

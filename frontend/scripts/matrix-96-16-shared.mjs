@@ -61,6 +61,8 @@ export const COVERED_RULES = [
   { match: "prefix", path: "/auth", evidence: "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json" },
   { match: "exact", path: "/me/password", evidence: "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json" },
   { match: "exact", path: "/me/onboarding", evidence: "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json" },
+  { match: "exact", path: "/me/identities", evidence: "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json", note: "Me identities hub: role links touchTargetLink44 + focus ring + motion-reduce" },
+  { match: "exact", path: "/me/security", evidence: "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json", note: "Me security: sessions/notifications/wallet verify UX baseline" },
   { match: "prefix", path: "/guides", evidence: "GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json" },
   { match: "prefix", path: "/guides", evidence: "GO_96_16_d5_d6_d7_routes_followup3.json" },
   { match: "prefix", path: "/guides", evidence: "GO_96_16_d5_d6_d7_admin_community_observability_config_guides_staking_traveltrust.json" },

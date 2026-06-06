@@ -10,6 +10,7 @@ import {
   gotoWithBearerSession,
   seedTestAccountsAndReleaseGuideSlot,
 } from "./helpers/apiSession";
+import { communityMeMainAccessibleNameRe } from "./helpers/communityMeLegacyRedirects";
 
 test("首页可访问", async ({ page }) => {
   await page.goto("/");
@@ -99,10 +100,10 @@ test("社区反馈页可访问", async ({ page }) => {
   await expect(page.getByRole("heading", { name: /Contact us|与官方沟通/i })).toBeVisible();
 });
 
-test("社区我的页可访问", async ({ page }) => {
+test("社区资料页可访问", async ({ page }) => {
   await page.goto("/community/me");
   await expect(page.locator("body")).toBeVisible();
-  await expect(page.getByRole("main", { name: /Me|我/i })).toBeVisible();
+  await expect(page.getByRole("main", { name: communityMeMainAccessibleNameRe })).toBeVisible();
 });
 
 test("社区我的收藏页可访问", async ({ page }) => {
@@ -185,19 +186,23 @@ test("向导列表页可访问", async ({ page }) => {
   await expect(page.getByRole("heading", { name: /Guides|向导列表/i })).toBeVisible({ timeout: 20_000 });
 });
 
-test("我的页可访问（未登录回登录或已登录留个人中心）", async ({ page }) => {
+test("我的页可访问（未登录回登录；已登录进多重身份 Hub 或社区资料）", async ({ page }) => {
   await page.goto("/me");
   await page.waitForURL(
-    (url) => url.pathname === "/community/me" || url.pathname.startsWith("/auth/login"),
+    (url) =>
+      url.pathname === "/me/identities" ||
+      url.pathname === "/community/me" ||
+      url.pathname.startsWith("/auth/login"),
     { timeout: 15_000 },
   );
   const path = new URL(page.url()).pathname;
   if (path.startsWith("/auth/login")) {
     await expect(page.getByRole("main", { name: /Login|登录/i })).toBeVisible();
     await expect(page.getByRole("heading", { name: /Login|登录/i })).toBeVisible();
+  } else if (path === "/me/identities") {
+    await expect(page.getByRole("heading", { level: 1, name: /多重身份|Multiple roles/i })).toBeVisible();
   } else {
-    await expect(page.getByRole("main", { name: /Profile|个人中心/i })).toBeVisible();
-    await expect(page.getByRole("heading", { name: /Profile|个人中心/i })).toBeVisible();
+    await expect(page.getByRole("main", { name: /Community profile|社区资料/i })).toBeVisible();
   }
 });
 
@@ -504,7 +509,7 @@ test("管理后台首页可访问（middleware 占位 Cookie）", async ({ page,
   await expect(page.locator("body")).toBeVisible();
   await expect(page.getByRole("main", { name: /Admin Workspace|管理后台/i })).toBeVisible();
   await expect(page.getByRole("heading", { level: 1, name: /Admin Workspace|管理后台/i })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Admin orders|Admin 订单/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Orders|订单/i })).toBeVisible();
 });
 
 test.describe("管理后台 FeeRouter、索引器、对账与财务（5.2A / 110 / 200 / 07 §5.7 可达性）", () => {
@@ -564,7 +569,7 @@ test.describe("管理后台订单、争议、评价、审批、可观测性与�
     await page.goto("/admin/orders");
     await expect(page.locator("body")).toBeVisible();
     await expect(
-      page.getByRole("heading", { level: 1, name: /Admin orders|Admin 订单/i }),
+      page.getByRole("heading", { level: 1, name: /Orders|订单/i }),
     ).toBeVisible({ timeout: 20_000 });
     await expect(page.getByRole("main")).toBeVisible();
   });
@@ -591,7 +596,7 @@ test.describe("管理后台订单、争议、评价、审批、可观测性与�
     await page.goto("/admin/users");
     await expect(page.locator("body")).toBeVisible();
     await expect(
-      page.getByRole("heading", { level: 1, name: /Admin users|Admin 用户/i }),
+      page.getByRole("heading", { level: 1, name: /User management|用户管理/i }),
     ).toBeVisible({ timeout: 20_000 });
     await expect(page.getByRole("main")).toBeVisible();
   });
@@ -927,7 +932,7 @@ test.describe("管理后台占位详情与单条报告页（70 / 110 / 07 §5.1�
     await page.goto(`/admin/orders/${ADMIN_DETAIL_PLACEHOLDER_ID}`);
     await expect(page.locator("body")).toBeVisible();
     await expect(
-      page.getByRole("heading", { level: 1, name: /Admin order detail|Admin 订单详情/i }),
+      page.getByRole("heading", { level: 1, name: /Order detail|订单详情/i }),
     ).toBeVisible({ timeout: 20_000 });
     await expect(page.getByRole("main")).toBeVisible();
   });
@@ -945,7 +950,7 @@ test.describe("管理后台占位详情与单条报告页（70 / 110 / 07 §5.1�
     await page.goto(`/admin/users/${ADMIN_DETAIL_PLACEHOLDER_ID}`);
     await expect(page.locator("body")).toBeVisible();
     await expect(
-      page.getByRole("heading", { level: 1, name: /Admin user detail|Admin 用户详情/i }),
+      page.getByRole("heading", { level: 1, name: /User detail|用户详情/i }),
     ).toBeVisible({ timeout: 20_000 });
     await expect(page.getByRole("main")).toBeVisible();
   });

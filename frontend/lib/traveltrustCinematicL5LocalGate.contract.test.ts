@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import {
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_BATCHES,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ENGINEERING_LOCK,
-} from "./traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 
 const repoRoot = join(__dirname, "..", "..");
 const evidence = join(repoRoot, "frontend/evidence/GO_local_cinematic_l5_closure");

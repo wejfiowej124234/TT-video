@@ -2,20 +2,12 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { type FormEvent, useEffect, useMemo, useState } from "react";
 
-import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
-import {
-  type AdminFetchErrorKind,
-  adminFetchErrorKind,
-  adminFetchJson,
-  logAdminFetch,
-} from "@/lib/adminFetchDisplay";
-import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders } from "@/lib/apiClient";
+import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
+import { routes } from "@/lib/api";
 
 import {
   STATUS_MAX,
   type AdminDispute,
-  type AdminDisputesRes,
   buildDisputesListPath,
   clampDisputeLimit,
   parseDisputesListQuery,
@@ -29,11 +21,21 @@ export function useAdminDisputesPage() {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<AdminDispute[]>([]);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
+  const listUrl = useMemo(
+    () =>
+      routes.admin.disputes({
+        limit,
+        ...(status ? { status } : {}),
+      }),
+    [limit, status],
+  );
+
+  const { items, appliedFilters, meta, loading, refreshing, error } =
+    useAdminStandardListFetch<AdminDispute>({
+      scope: "disputes",
+      context: "AdminDisputesPage",
+      listUrl,
+    });
 
   const [draftLimit, setDraftLimit] = useState(String(limit));
   const [draftStatus, setDraftStatus] = useState(status);
@@ -41,46 +43,6 @@ export function useAdminDisputesPage() {
   useEffect(() => {
     setDraftLimit(String(limit));
     setDraftStatus(status);
-  }, [limit, status]);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    setMeta(null);
-
-    const headers: Record<string, string> = { "x-request-id": `admin-disputes-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    adminFetchJson<AdminDisputesRes>(
-      "AdminDisputesPage",
-      apiUrl(
-        routes.admin.disputes({
-          limit,
-          ...(status ? { status } : {}),
-        }),
-      ),
-      { headers },
-    )
-      .then(({ res, body }) => {
-        if (!res.ok) {
-          throw new Error(body.error || `request_failed_${res.status}`);
-        }
-        return body;
-      })
-      .then((body) => {
-        setItems(Array.isArray(body.items) ? body.items : []);
-        setAppliedFilters(body.applied_filters ?? null);
-        setMeta(isAdminMetaRecord(body.meta) ? body.meta : null);
-      })
-      .catch((e: unknown) => {
-        logAdminFetch("AdminDisputesPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
   }, [limit, status]);
 
   const apply = (e?: FormEvent) => {
@@ -96,6 +58,7 @@ export function useAdminDisputesPage() {
 
   return {
     loading,
+    refreshing,
     error,
     items,
     appliedFilters,

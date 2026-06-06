@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
+import type { FormEvent, ReactNode } from "react";
 import type { CommunityPost } from "@/lib/communityPostTypes";
-import type { ReactNode } from "react";
+import { CommunityMePostGridThumb } from "@/components/community/CommunityMePostGridThumb";
 import { CommunityMeNotesCardOverflowMenu } from "@/components/me/communityMeNotes/CommunityMeNotesCardOverflowMenu";
 
 type TFunc = (k: string) => string;
@@ -13,6 +13,9 @@ export type CommunityMeNotesPostCardMenuProps = {
   deleteBusyId?: string | null;
   deleteDisabled?: boolean;
   deleteDisabledTitle?: string;
+  deleteLabelKey?: string;
+  deletePendingLabelKey?: string;
+  showPinOption?: boolean;
 };
 
 /**
@@ -42,7 +45,7 @@ export function CommunityMeNotesPostThumbGrid({
   return (
     <ul className="m-0 grid list-none grid-cols-3 gap-2 p-0" aria-label={listAriaLabel}>
       {posts.map((post) => {
-        const src = post.media_urls?.[0]?.trim() || post.media_url?.trim() || "";
+        const isVideo = post.is_video === true || post.type === "video";
         return (
           <li key={post.id} className="min-w-0">
             <div className="group relative aspect-square overflow-hidden rounded-[var(--radius-md)] border border-cyan-500/30 bg-ink-800/50 shadow-scifi-panel ring-1 ring-white/5">
@@ -52,14 +55,18 @@ export function CommunityMeNotesPostThumbGrid({
                 onClick={(e) => onOpenPost(post, e.currentTarget)}
                 aria-label={t("community_view_full")}
               >
-                {src ? (
-                  <Image src={src} alt="" fill className="object-cover" sizes="120px" loading="lazy" />
-                ) : (
-                  <span className="flex h-full w-full items-center justify-center bg-ink-700/80 text-meta text-slate-500">
-                    {t("community_me_thumb_no_media")}
-                  </span>
-                )}
+                <CommunityMePostGridThumb post={post} t={t} sizes="120px" />
               </button>
+              {isVideo ? (
+                <span
+                  className="pointer-events-none absolute bottom-1 right-1 z-[2] rounded-[var(--radius-sm)] bg-black/60 p-0.5"
+                  aria-hidden
+                >
+                  <svg className="h-3 w-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </span>
+              ) : null}
               {cardMenu ? (
                 <CommunityMeNotesCardOverflowMenu
                   itemId={post.id}
@@ -69,6 +76,9 @@ export function CommunityMeNotesPostThumbGrid({
                   deleteBusyId={cardMenu.deleteBusyId}
                   deleteDisabled={cardMenu.deleteDisabled}
                   deleteDisabledTitle={cardMenu.deleteDisabledTitle}
+                  deleteLabelKey={cardMenu.deleteLabelKey}
+                  deletePendingLabelKey={cardMenu.deletePendingLabelKey}
+                  showPinOption={cardMenu.showPinOption}
                 />
               ) : overlay ? (
                 <div className="pointer-events-none absolute inset-0 z-[2] flex items-start justify-end p-1">

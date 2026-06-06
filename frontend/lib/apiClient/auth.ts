@@ -14,6 +14,11 @@ import {
   logApiJsonStatusNotOk,
   throwUnlessApiOk,
 } from "./core";
+import {
+  clearAuthSessionCookies,
+  clearAuthSessionOkCookie,
+  writeAuthSessionOkCookie,
+} from "./core/authSession";
 import { clearGetMeCache } from "./me";
 
 /**
@@ -23,9 +28,7 @@ import { clearGetMeCache } from "./me";
 export function applyLocalLogoutAfterServerOk(): void {
   clearGetMeCache();
   clearClientAuthStorage();
-  if (typeof document !== "undefined") {
-    document.cookie = "traveltrust_user_id=; Path=/; Max-Age=0; SameSite=Lax";
-  }
+  clearAuthSessionCookies();
   if (typeof window !== "undefined") {
     window.dispatchEvent(new CustomEvent("traveltrust:auth-change"));
   }
@@ -42,11 +45,34 @@ export function applyClientSessionAfterAuth(res: unknown): string | undefined {
   localStorage.setItem(AUTH_USER_ID_KEY, userId);
   if (token) {
     localStorage.setItem(AUTH_SESSION_TOKEN_KEY, token);
+    writeAuthSessionOkCookie();
+  } else {
+    clearAuthSessionOkCookie();
   }
   document.cookie = `traveltrust_user_id=${encodeURIComponent(userId)}; Path=/; SameSite=Lax`;
   clearGetMeCache();
   window.dispatchEvent(new CustomEvent("traveltrust:auth-change"));
   return userId;
+}
+
+/** 将 localStorage 用户 id + Bearer token 同步到 middleware 可读 cookie（硬刷新 Admin 时避免误跳登录）。 */
+export function syncClientSessionUserIdCookieFromStorage(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    const userId = localStorage.getItem(AUTH_USER_ID_KEY)?.trim();
+    const token = localStorage.getItem(AUTH_SESSION_TOKEN_KEY)?.trim();
+    if (!userId || !token) return false;
+    const prefix = `${AUTH_USER_ID_KEY}=`;
+    const okPrefix = "traveltrust_session_ok=";
+    const hasUid = document.cookie.split(";").some((part) => part.trim().startsWith(prefix));
+    const hasOk = document.cookie.split(";").some((part) => part.trim().startsWith(okPrefix));
+    if (hasUid && hasOk) return true;
+    document.cookie = `${AUTH_USER_ID_KEY}=${encodeURIComponent(userId)}; Path=/; SameSite=Lax`;
+    writeAuthSessionOkCookie();
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export async function postSeedTestAccounts(): Promise<{ seeded?: boolean; disabled?: boolean }> {
@@ -79,6 +105,7 @@ export async function postRegister(body: {
   password: string;
   nickname?: string;
   default_wallet_address?: string;
+  verification_code?: string;
   /** 693/697：`tourist` \| **`traveler`**（87 协议名，697 起后端存 `traveler`）\| `provider` \| `region_steward`；缺省为旅行者（后端 `tourist`） */
   role?: string;
 }): Promise<unknown> {
@@ -91,6 +118,28 @@ export async function postRegister(body: {
   logApiJsonStatusNotOk("postRegister", data);
   throwUnlessApiOk(data);
   return data;
+}
+
+export async function postRegisterSendVerificationCode(body: {
+  email: string;
+}): Promise<{
+  registration_verification_dev_code?: string;
+  email_sent?: boolean;
+  message?: string;
+}> {
+  const res = await fetch(apiUrl(routes.auth.registerSendVerificationCode), {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...writeRequestHeaders() },
+    body: JSON.stringify(body),
+  });
+  const data = await parseResponse(res);
+  logApiJsonStatusNotOk("postRegisterSendVerificationCode", data);
+  throwUnlessApiOk(data);
+  return data as {
+    registration_verification_dev_code?: string;
+    email_sent?: boolean;
+    message?: string;
+  };
 }
 
 export async function postLogout(body?: Record<string, unknown>): Promise<unknown> {
@@ -127,6 +176,22 @@ export async function postVerifyEmail(body: Record<string, unknown>): Promise<un
   logApiJsonStatusNotOk("postVerifyEmail", data);
   throwUnlessApiOk(data);
   return data;
+}
+
+/** 已登录用户重发邮箱验证（① chain_off 可含 `email_verification_dev_token`） */
+export async function postResendVerificationEmail(): Promise<{
+  email_verification_dev_token?: string;
+  message?: string;
+}> {
+  const res = await fetch(apiUrl(routes.auth.resendVerificationEmail), {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...writeRequestHeaders() },
+    body: JSON.stringify({}),
+  });
+  const data = await parseResponse(res);
+  logApiJsonStatusNotOk("postResendVerificationEmail", data);
+  throwUnlessApiOk(data);
+  return data as { email_verification_dev_token?: string; message?: string };
 }
 
 export async function postForgotPassword(body: Record<string, unknown>): Promise<unknown> {

@@ -14,8 +14,10 @@ describe("admin shell sidebar L5 (① · U2)", () => {
   const sidebar = readFileSync(join(fe, "components", "admin", "AdminShellSidebar.tsx"), "utf8");
   const model = readFileSync(join(__dir, "adminShellSidebarModel.ts"), "utf8");
 
-  it("sidebar model imports queue SSOT for onboarding + community links", () => {
-    expect(model).toContain("ADMIN_INBOX_QUEUE_HREFS");
+  it("sidebar model imports nav SSOT for onboarding + community links", () => {
+    expect(model).toContain("ADMIN_SHELL_ONBOARDING_NAV_LINKS");
+    expect(model).toContain("ADMIN_SHELL_COMMUNITY_NAV_LINKS");
+    expect(model).toContain("ADMIN_SHELL_FINANCE_NAV_LINKS");
     expect(model).not.toContain("?status=submitted");
     expect(model).not.toContain("?status=pending");
     expect(model).not.toContain("?status=open");
@@ -37,5 +39,10 @@ describe("admin shell sidebar L5 (① · U2)", () => {
     expect(sidebar).toContain("useAdminHomeInbox");
     expect(sidebar).toContain("AdminShellPendingBadge");
     expect(sidebar).toContain('legacyMarker="sidebar"');
+    expect(sidebar).toContain("adminShellNavGroupDefaultOpen");
+    expect(sidebar).toContain("data-tt-admin-shell-sidebar-fold");
+    expect(sidebar).toContain("ADMIN_SHELL_NAV_GROUPS_COLLAPSED_DEFAULT");
+    expect(model).toMatch(/id:\s*"finance"/);
+    expect(sidebar).toContain("data-tt-admin-shell-sidebar-group-pending");
   });
 });

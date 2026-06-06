@@ -12,7 +12,12 @@ import {
   PERIOD_VALUES,
   buildDidRankTravelerHighlightSearch,
   buildDidRankGuideHighlightSearch,
+  buildDidRankProviderHighlightSearch,
+  buildDidRankAcquisitionHighlightSearch,
+  buildDidRankItineraryHighlightSearch,
+  parseDidRankMeHighlight,
   isDidRankCommunityProfileId,
+  isDidRankDevPreviewId,
 } from "./didRankUtils";
 
 describe("didRankUtils", () => {
@@ -106,6 +111,31 @@ describe("didRankUtils", () => {
     });
   });
 
+  describe("buildDidRankItineraryHighlightSearch", () => {
+    it("sets board=itinerary and me=itinerary-<id>", () => {
+      const q = buildDidRankItineraryHighlightSearch("week", "ord-1");
+      expect(q).toContain("board=itinerary");
+      expect(q).toContain("period=week");
+      expect(q).toContain("me=" + encodeURIComponent("itinerary-ord-1"));
+    });
+  });
+
+  /** **96-17 §0.2.1** 四脊签 + **30 §0.1** 行程第五签 · 与 `parseDidRankBoardParam` 同源 */
+  describe("96-17 spine board param parity", () => {
+    const SPINE_BOARDS: Array<[string, ReturnType<typeof parseDidRankBoardParam>]> = [
+      ["traveler", "traveler"],
+      ["guide", "guide"],
+      ["provider", "provider"],
+      ["merchant", "provider"],
+      ["acquisition", "acquisition"],
+      ["itinerary", "itinerary"],
+      ["itineraries", "itinerary"],
+    ];
+    it.each(SPINE_BOARDS)("?board=%s → %s", (input, expected) => {
+      expect(parseDidRankBoardParam(input)).toBe(expected);
+    });
+  });
+
   describe("parseDidRankBoardParam", () => {
     it("parses board tab", () => {
       expect(parseDidRankBoardParam(null)).toBe("traveler");
@@ -114,6 +144,8 @@ describe("didRankUtils", () => {
       expect(parseDidRankBoardParam("merchant")).toBe("provider");
       expect(parseDidRankBoardParam("acquisition")).toBe("acquisition");
       expect(parseDidRankBoardParam(" Acquisition ")).toBe("acquisition");
+      expect(parseDidRankBoardParam("itinerary")).toBe("itinerary");
+      expect(parseDidRankBoardParam("itineraries")).toBe("itinerary");
       expect(parseDidRankBoardParam("unknown")).toBe("traveler");
     });
   });
@@ -141,15 +173,52 @@ describe("didRankUtils", () => {
     });
   });
 
+  describe("parseDidRankMeHighlight", () => {
+    it("parses five board prefixes including itinerary order id", () => {
+      expect(parseDidRankMeHighlight("traveler-u1")).toEqual({
+        board: "traveler",
+        userId: "u1",
+      });
+      expect(parseDidRankMeHighlight("guide-g1")).toEqual({ board: "guide", userId: "g1" });
+      expect(parseDidRankMeHighlight("itinerary-order-abc")).toEqual({
+        board: "itinerary",
+        userId: "order-abc",
+      });
+      expect(parseDidRankMeHighlight("provider-p1")).toEqual({
+        board: "provider",
+        userId: "p1",
+      });
+      expect(parseDidRankMeHighlight("acquisition-a1")).toEqual({
+        board: "acquisition",
+        userId: "a1",
+      });
+    });
+    it("returns null for empty or unknown", () => {
+      expect(parseDidRankMeHighlight("")).toBeNull();
+      expect(parseDidRankMeHighlight("merchant-x")).toBeNull();
+    });
+  });
+
+  describe("buildDidRankProviderHighlightSearch", () => {
+    it("includes board=provider", () => {
+      expect(buildDidRankProviderHighlightSearch("all", "pid")).toContain("board=provider");
+      expect(buildDidRankProviderHighlightSearch("week", "pid")).toContain(
+        "me=" + encodeURIComponent("provider-pid"),
+      );
+    });
+  });
+
   describe("isDidRankCommunityProfileId", () => {
     it("accepts RFC4122-style UUIDs", () => {
       expect(isDidRankCommunityProfileId("550e8400-e29b-41d4-a716-446655440000")).toBe(true);
       expect(isDidRankCommunityProfileId("6ba7b810-9dad-11d1-80b4-00c04fd430c8")).toBe(true);
     });
-    it("rejects mock ids and empty", () => {
+    it("rejects devPreview ids, mock ids and empty", () => {
       expect(isDidRankCommunityProfileId("")).toBe(false);
       expect(isDidRankCommunityProfileId("traveler-1")).toBe(false);
       expect(isDidRankCommunityProfileId("not-a-uuid")).toBe(false);
+      expect(isDidRankCommunityProfileId("00000000-0000-4000-8000-000000000001")).toBe(false);
+      expect(isDidRankDevPreviewId("00000000-0000-4000-8000-000000000099")).toBe(true);
     });
   });
 });

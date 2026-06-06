@@ -1,0 +1,948 @@
+
+> traveltrust-frontend@0.1.0 e2e:pi1-traveltrust
+> node ./scripts/run-e2e-default.mjs --project=chromium e2e/pi1-traveltrust-v6-browser-acceptance.spec.ts
+
+[e2e] local default → PLAYWRIGHT_FULL_STACK=1 (API + Next via playwright webServer)
+[e2e] REQUEST_TIMEOUT_SECS → 120 (GET /meta governance eth_call stack; avoid 408)
+[e2e] INTERNAL_API_SECRET aligned from root .env (internal/*)
+[e2e] DATABASE_URL loaded from repo root .env
+sync-frontend-env: wrote D:\TravelTrust-V1\frontend\.env.local (NEXT_PUBLIC aligned with root .env)
+[e2e] D:\TravelTrust-V1\frontend\.env.local → NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8080
+[e2e] TRAVELTRUST_GATE_ENSURE_FRESH_API=1 — reclaim port / rebuild so API inherits current env
+[e2e] cargo build -p traveltrust-api (Playwright webServer runs target/debug binary)
+   Compiling traveltrust-api v0.1.0 (D:\TravelTrust-V1\crates\api)
+warning: unused import: `migrate_embed::*`
+  --> crates\api\src\db\mod.rs:91:9
+   |
+91 | pub use migrate_embed::*;
+   |         ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `traveltrust-api` (bin "traveltrust-api") generated 1 warning (run `cargo fix --bin "traveltrust-api"` to apply 1 suggestion)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 28.13s
+[1A[2K[WebServer] warning: unused import: `migrate_embed::*`
+[WebServer]   --> crates\api\src\db\mod.rs:91:9
+[WebServer]    |
+[WebServer] 91 | pub use migrate_embed::*;
+[WebServer]    |         ^^^^^^^^^^^^^^^^
+[WebServer]    |
+[WebServer]    = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+[WebServer] 
+
+[1A[2K[WebServer] warning: `traveltrust-api` (bin "traveltrust-api") generated 1 warning (run `cargo fix --bin "traveltrust-api"` to apply 1 suggestion)
+[WebServer]     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.31s
+
+[1A[2K[WebServer]      Running `target\debug\traveltrust-api.exe`
+
+[1A[2K[WebServer] [req] x-request-id=d06e55bc-44c4-42cd-8e1d-0a4c1902f92e path=/health status=200
+[WebServer] [req] x-message-id=124041c1-adf2-4895-83c4-a8b60b230561 path=/health status=200
+
+[1A[2K[WebServer] [traveltrust] dev: Webpack on Windows (avoid Turbopack HMR manifest races). Use `npm run dev:turbopack` or TRAVELTRUST_DEV_TURBO=1 for Turbopack.
+
+
+Running 33 tests using 1 worker
+
+[1A[2K(node:32164) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:32164) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/33] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:41:66 › setup: GET /meta chain.contracts › API /meta satisfies chain guard
+[1A[2K[WebServer] [req] x-request-id=509ec282-8c62-40f4-8685-a5ed3f12a861 path=/meta status=200
+[WebServer] [req] x-message-id=ce47c93e-847b-4d0f-b30d-73012841a9d8 path=/meta
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[2/33] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:73:79 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only)
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627581038 path=/meta status=200
+[WebServer] [req] x-message-id=0d295bb3-b7da-4139-938a-a79122d68378 path=/meta status=200
+
+[1A[2K(node:2652) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:2652) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[3/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:25:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-UI-30: opengraph-image route returns PNG
+[1A[2K[WebServer] [req] x-request-id=34a8086e-dec0-43ae-a841-aa012f286577 path=/health status=200
+[WebServer] [req] x-message-id=e6047d63-dcdd-4e2b-9fb3-0dbe5c6e5c59 path=/health status=200
+
+[1A[2K[4/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:31:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › page-brief v6 CTA contract hydrates
+[1A[2K[WebServer] [req] x-request-id=09ccaf18-7927-4134-9263-6df7bf5d1c1d path=/health status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] ffbdaed9-2988-4690-a598-33212d1cbe1d path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=97808da0-a511-43ea-a1f1-8a1e99f36f1d path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=463ec967-8d37-4c86-9580-01641d9baad0 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=c9d06f54-1f83-480d-ac45-f6dbe0c30989 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=b37fc5ce-c56c-4bb7-a8bd-3e58db5bf3ae path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=8f0587ff-7a75-4d7a-ac2d-4f9e34f1dda3 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=34bb3eaa-1cf0-4355-9b46-dc86da097d28 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[5/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:47:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-08: v6 shell — hero / roles / start, no legacy fold
+[1A[2K[WebServer] [req] x-request-id=73c99b87-b1a6-4c50-bd06-2aaeb03292ab path=/health status=200
+[WebServer] [req] x-message-id=a2df747d-a53f-473a-a0d3-bc4f54b250d3 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=2e765276-3f2b-4054-a869-7b421a9a8fef path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=49369314-96ed-496f-becc-0d1058bb02fd path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=94cc8056-d74e-4fb3-8c0f-ef42584487d6 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=43fa3ec6-f495-4037-bed4-e12ba54fd1f9 path=/api/v1/traveltrust/page-brief status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K  1) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:47:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-08: v6 shell — hero / roles / start, no legacy fold 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveAttribute[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('[data-tt-traveltrust-network-page="1"]').locator('[data-tt-traveltrust-hero-letterbox="top"]')
+    Expected: [32m"gradient"[39m
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toHaveAttribute" with timeout 5000ms[22m
+    [2m  - waiting for locator('[data-tt-traveltrust-network-page="1"]').locator('[data-tt-traveltrust-hero-letterbox="top"]')[22m
+
+
+      67 |     // UNIFIED_PAGE_3D 为 true 时 2D film grain 不挂载（见 TravelTrustCinematicShell）
+      68 |     await expect(page.locator('[data-tt-traveltrust-page-cinematic-3d="1"]').first()).toBeAttached();
+    > 69 |     await expect(shell.locator('[data-tt-traveltrust-hero-letterbox="top"]')).toHaveAttribute(
+         |                                                                               ^
+      70 |       "data-tt-traveltrust-hero-letterbox-tone",
+      71 |       "gradient",
+      72 |     );
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:69:79
+
+    Error Context: test-results\pi1-traveltrust-v6-browser-1a3dd--roles-start-no-legacy-fold-chromium\error-context.md
+
+
+[1A[2K(node:28508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:28508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[6/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:111:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-09: role tabs keyboard + trust chips
+[1A[2K[WebServer] [req] x-request-id=f90b2075-93fd-4aeb-b042-8a1ee09935dc path=/health status=200
+[WebServer] [req] x-message-id=8109f3e4-9c9a-41fd-8a4b-a2b0dbb7971b path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=39a9f5f2-6cc7-4b78-a213-408f802a4209 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=35c0c312-acd0-4ec9-a9cf-b285018abac9 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=ad2e60db-9b66-48a8-be87-2096e416aefc path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=328c1f1b-c1bc-4fa7-bf67-ccca29894bdb path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K  2) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:111:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-09: role tabs keyboard + trust chips 
+
+    Error: locator.scrollIntoViewIfNeeded: Element is not attached to the DOM
+    Call log:
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m    - element is not stable[22m
+    [2m  - retrying scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+
+
+      112 |     await gotoSmoke(page, "/traveltrust");
+      113 |     const shell = traveltrustNetworkPageShell(page);
+    > 114 |     await shell.locator("#roles").scrollIntoViewIfNeeded();
+          |                                   ^
+      115 |     await expect(shell.locator('[data-tt-traveltrust-theater-entered="1"]')).toBeAttached({
+      116 |       timeout: 15_000,
+      117 |     });
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:114:35
+
+    Error Context: test-results\pi1-traveltrust-v6-browser-806e2-e-tabs-keyboard-trust-chips-chromium\error-context.md
+
+
+[1A[2K(node:23980) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:23980) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[7/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:139:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-10: role tab switch + video frame visible
+[1A[2K[WebServer] [req] x-request-id=e244f128-2dc9-431f-af14-35f66b8834aa path=/health status=200
+[WebServer] [req] x-message-id=33cf02de-c0f2-46c1-b301-c30c54694cb8 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=f553ae48-8880-45cf-af18-23ee0a71363f path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=e78847c7-f92a-4de5-bc6d-5ef89ed61c9b path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=b85f3b9e-1d2b-4bbc-a3cb-bce8f33faba0 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-message-id=51f3402b-d64b-4ac4-9555-0766a879ead4 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[8/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:152:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-012: traveler enter stays in-page (#start)
+[1A[2K[WebServer] [req] x-request-id=86533880-2b11-42bc-a01a-a0cb4ad73dd8 path=/health status=200
+[WebServer] [req] x-message-id=d6ed06a6-0d77-45b5-8f55-865d63228cd4 path=
+
+[1A[2K[WebServer] /health status=200
+
+[1A[2K[WebServer] [req] x-request-id=5c7a4ea0-1f6e-490c-bed1-ce7ffd4021ef path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=66380371-519a-4739-9ad9-dde4c6917a4b
+
+[1A[2K[WebServer]  path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=1f972f3c-4256-4284-878a-19cf0c6df489 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=ca8e42fc-fc86-4081-8322-46b85e074f46 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[9/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:161:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-168c: trust chips and footer carry compliance disclosure copy
+[1A[2K[WebServer] [req] x-request-id=38bec709-1bc4-4e60-bb42-ec4e1b4d417b path=/health status=200
+[WebServer] [req] x-message-id=7e8d3580-4546-482a-a8a6-cc79dca709e7 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=f95b1f33-58cd-486e-a025-a060c73f321c path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=10dd9a58-d3c0-463d-bd30-e453b1f36145 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=34d8f0bf-674d-4451-bb0a-1b029686f8fc path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=77886ab1-46e9-4a44-8351-adb189378ace path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627622761 path=/meta status=200
+[WebServer] [req] x-message-id=f40e9d54-e837-4336-99f8-1bb6347ed596 path=/meta status=200
+
+[1A[2K  3) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:161:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-168c: trust chips and footer carry compliance disclosure copy 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('[data-tt-traveltrust-network-page="1"]').locator('[data-tt-traveltrust-network-footer="1"]').locator('[data-tt-traveltrust-footer-compliance="1"]')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('[data-tt-traveltrust-network-page="1"]').locator('[data-tt-traveltrust-network-footer="1"]').locator('[data-tt-traveltrust-footer-compliance="1"]')[22m
+
+
+      168 |     const footer = shell.locator('[data-tt-traveltrust-network-footer="1"]');
+      169 |     await footer.scrollIntoViewIfNeeded();
+    > 170 |     await expect(footer.locator('[data-tt-traveltrust-footer-compliance="1"]')).toBeVisible();
+          |                                                                                 ^
+      171 |     await expect(footer.locator('[data-tt-traveltrust-page-illustrative-notice="1"]')).toBeVisible();
+      172 |   });
+      173 |
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:170:81
+
+    Error Context: test-results\pi1-traveltrust-v6-browser-a7d0c--compliance-disclosure-copy-chromium\error-context.md
+
+
+[1A[2K(node:36360) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627628145 path=/meta status=200
+[WebServer] [req] x-message-id=4e6b095b-0d50-4031-84b3-eefdb07c9778 path=/meta status=200
+
+[1A[2K(node:36360) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[10/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:174:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-193: hero split layout — copy column beside globe at desktop
+[1A[2K[WebServer] [req] x-request-id=9a1803a9-b9e7-4e2b-8fdf-bcc2e987c719 path=/health status=200
+[WebServer] [req] x-message-id=479ee59d-67fd-4339-ab1a-f7ad1c93df7d path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=78f8ae6b-d51a-4dbf-9313-d0a42bd5ae95 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-message-id=f49acdb5-b19e-4af3-8429-dfe34cc00a82 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[11/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:183:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-150: hero letterbox uses gradient tone not solid black bars
+[1A[2K[WebServer] [req] x-request-id=b30ba1b3-2599-401e-92d0-e30a0cb73ccb path=/health status=200
+[WebServer] [req] x-message-id=52c7791e-ca45-4f74-8c9c-fc6fd1122e03 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=07862423-9c63-485a-b448-c5b039584a84 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=aeec4628-8b2f-40aa-a2f0-30f61c6622c4 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=0f5afbce-823c-4a05-a851-c0d7319f08dc path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=2986ba84-b216-42c8-a58b-6ee04d2d33f8 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K  4) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:183:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-150: hero letterbox uses gradient tone not solid black bars 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveAttribute[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('[data-tt-traveltrust-network-page="1"]').locator('[data-tt-traveltrust-hero-letterbox="top"]')
+    Expected: [32m"gradient"[39m
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toHaveAttribute" with timeout 5000ms[22m
+    [2m  - waiting for locator('[data-tt-traveltrust-network-page="1"]').locator('[data-tt-traveltrust-hero-letterbox="top"]')[22m
+
+
+      185 |     const shell = traveltrustNetworkPageShell(page);
+      186 |     const top = shell.locator('[data-tt-traveltrust-hero-letterbox="top"]');
+    > 187 |     await expect(top).toHaveAttribute("data-tt-traveltrust-hero-letterbox-tone", "gradient");
+          |                       ^
+      188 |     await expect(top).not.toHaveClass(/bg-black/);
+      189 |     const cls = (await top.getAttribute("class")) ?? "";
+      190 |     expect(cls).toMatch(/linear-gradient|gradient/);
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:187:23
+
+    Error Context: test-results\pi1-traveltrust-v6-browser-83e6b-t-tone-not-solid-black-bars-chromium\error-context.md
+
+
+[1A[2K(node:29052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:29052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[12/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:193:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-022d: section hash matrix (page-brief anchors)
+[1A[2K[WebServer] [req] x-request-id=c65ae510-6002-4048-8772-7f9d8aa86240 path=/health status=200
+[WebServer] [req] x-message-id=3b581162-dc18-4732-9a9d-d38614111e1e path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=58170a3c-2f5a-4b20-b7b4-7a56e08ed037 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=cd5d57c4-74a9-46c2-b11b-3b5448eff35b path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627636779 path=/meta status=200
+[WebServer] [req] x-message-id=7764c1bf-fb84-4f96-88cb-d740db582e57 path=/meta status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] [req] x-request-id=f9cd9dc6-1665-4f98-a255-44d07c60e4a1 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=fa803dd1-0171-49f2-993e-ffa381399a03 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=
+
+[1A[2K[WebServer] tt-meta-route-1779627639793 path=/meta status=200
+[WebServer] [req] x-message-id=052982d0-1ce0-43fe-808e-c611fd6cf3a6 path=/meta status=200
+
+[1A[2K[13/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:220:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-022c: trust and settlement hash deep-links
+[1A[2K[WebServer] [req] x-request-id=11ea0ede-895d-453b-a13e-52537042f748 path=/health status=200
+[WebServer] [req] x-message-id=989a81fe-167a-4af9-b550-ab114dd298ce path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=cb974ab6-801c-4ad4-a034-6e68e485fd95 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=5720f886-8c66-44ba-ab09-177556909730 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[14/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:231:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-022: role hash deep-link selects tab
+[1A[2K[WebServer] [req] x-request-id=e2412ed9-d817-42fd-a6d6-268ba827c34d path=/health status=200
+[WebServer] [req] x-message-id=a4842ac4-4fc6-4ad8-9fb5-5372e50d0f15 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=9bb028e5-87d6-4e8e-a1ff-5c768380b0f0 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=2bd897d7-abb1-4b61-ace8-8cf58a5589f1 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=e0dc4296-cdac-4755-8a37-3cb65433b027 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=d0e8193b-150b-45bb-b9f4-254869137ba3 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627647037 path=/meta status=200
+[WebServer] [req] x-message-id=32786929-439c-4552-a4c5-57cf98635c49 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627649687 path=/meta status=200
+[WebServer] [req] x-message-id=8d88d96a-2ff7-4bac-b4ca-b953517e6a01 path=/meta status=200
+
+[1A[2K  5) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:231:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-022: role hash deep-link selects tab 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveAttribute[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  locator('[data-tt-traveltrust-network-page="1"]').getByRole('tab', { name: /向导|Guide/i })
+    Expected: [32m"[7mtru[27me"[39m
+    Received: [31m"[7mfals[27me"[39m
+    Timeout:  8000ms
+
+    Call log:
+    [2m  - Expect "toHaveAttribute" with timeout 8000ms[22m
+    [2m  - waiting for locator('[data-tt-traveltrust-network-page="1"]').getByRole('tab', { name: /向导|Guide/i })[22m
+    [2m    9 × locator resolved to <button role="tab" type="button" tabindex="-1" id="tab-guide" aria-selected="false" aria-controls="panel-guide" class="relative flex min-h-[3rem] shrink-0 items-center gap-2 rounded-xl border px-3.5 py-2.5 text-left motion-sub motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45 max-lg:min-h-[2.75rem] max-lg:px-3 max-lg:py-2 max-lg:gap-2 sm:max-lg:px-3.5 lg:min-h-[3.25rem] lg:gap-3 lg:px-5 lg:py-3.5 lg:w-full border-ref-sun/14 bg-ink-900/45 text-slate-300…>…</button>[22m
+    [2m      - unexpected value "false"[22m
+
+
+      232 |     await gotoSmoke(page, "/traveltrust#guide");
+      233 |     const shell = traveltrustNetworkPageShell(page);
+    > 234 |     await expect(shell.getByRole("tab", { name: /向导|Guide/i })).toHaveAttribute("aria-selected", "true", {
+          |                                                                 ^
+      235 |       timeout: 8_000,
+      236 |     });
+      237 |     await expect(shell.locator("#roles")).toBeInViewport();
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:234:65
+
+    Error Context: test-results\pi1-traveltrust-v6-browser-74354--hash-deep-link-selects-tab-chromium\error-context.md
+
+
+[1A[2K(node:37760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:37760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[15/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:240:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-157: phase-1 region roster is keyboard focusable
+[1A[2K[WebServer] [req] x-request-id=5c80cf07-c3fc-4515-9cb5-f68a7b2bccb5 path=/health status=200
+[WebServer] [req] x-message-id=9401f3f6-7810-4df6-8cd3-91a4f435eb15 path=/health status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] [req] x-request-id=22004fca-3823-4c50-9543-7b0d1ebcd185 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=f82e48de-751f-4209-9996-36bccb42a9a2 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K  6) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:240:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-157: phase-1 region roster is keyboard focusable 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('[data-tt-traveltrust-network-page="1"]').locator('[data-tt-traveltrust-phase1-region-roster="1"]')
+    Expected: visible
+    Error: strict mode violation: locator('[data-tt-traveltrust-network-page="1"]').locator('[data-tt-traveltrust-phase1-region-roster="1"]') resolved to 2 elements:
+        1) <nav data-tt-traveltrust-phase1-region-roster="1" aria-describedby="tt-traveltrust-region-roster-hint" data-tt-traveltrust-phase1-region-roster-compact="0" aria-labelledby="tt-traveltrust-region-roster-heading" class="pointer-events-auto mt-2 w-full max-w-md lg:hidden">…</nav> aka getByText('第一阶段区域（示意）悬停地球上的目的地可查看示意走廊；点击下方链接探索定制行程。中国 · 北京S美国 · 纽约S法国 · 巴黎S西班牙 · 马德里S')
+        2) <nav data-tt-traveltrust-phase1-region-roster="1" aria-describedby="tt-traveltrust-region-roster-hint" data-tt-traveltrust-phase1-region-roster-compact="1" aria-labelledby="tt-traveltrust-region-roster-heading" class="pointer-events-auto z-[11] hidden w-full max-w-[min(calc(100%-2rem),19rem)] shrink-0 lg:absolute lg:bottom-6 lg:left-6 lg:block lg:w-max lg:translate-x-0 xl:left-8">…</nav> aka getByRole('navigation', { name: '第一阶段区域（示意）' })
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('[data-tt-traveltrust-network-page="1"]').locator('[data-tt-traveltrust-phase1-region-roster="1"]')[22m
+
+
+      242 |     const shell = traveltrustNetworkPageShell(page);
+      243 |     const roster = shell.locator('[data-tt-traveltrust-phase1-region-roster="1"]');
+    > 244 |     await expect(roster).toBeVisible();
+          |                          ^
+      245 |     await roster.getByRole("link").first().focus();
+      246 |     await expect(roster.getByRole("link").first()).toBeFocused();
+      247 |   });
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:244:26
+
+    Error Context: test-results\pi1-traveltrust-v6-browser-7ef44-oster-is-keyboard-focusable-chromium\error-context.md
+
+
+[1A[2K(node:17608) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:17608) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[16/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:249:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-090b: scroll progress fades when WebGL idle
+[1A[2K[WebServer] [req] x-request-id=e164ee99-5243-4214-acea-41ff2a1c15d0 path=/health status=
+
+[1A[2K[WebServer] 200
+[WebServer] [req] x-message-id=131d9dc7-572f-43de-91af-a22371b60ae4 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=c6baf317-d16d-42d4-a0e9-3762bede6004 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=b98a5342-7302-4a9d-9efe-2cd40e612f90 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627662432 path=/meta status=200
+[WebServer] [req] x-message-id=d781c231-b307-4cc3-a678-a0680a77793e path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627660453 path=/meta status=200
+[WebServer] [req] x-message-id=a123f1bc-a587-4978-aea3-27c28e4042ff path=
+
+[1A[2K[WebServer] /meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=37b632e0-fcaa-45f1-af74-fc889dea710e path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=a8f5b623-c974-46da-8f5e-f5ccf2c8c7b9 path=
+
+[1A[2K[WebServer] /api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627670657 path=/meta status=200
+[WebServer] [req] x-message-id=75eb2cb0-23ee-49df-8fdb-7c38e07d504b path=/meta status=200
+
+[1A[2K  7) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:249:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-090b: scroll progress fades when WebGL idle 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveAttribute[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  locator('[data-tt-traveltrust-scroll-progress="1"]')
+    Expected: [32m"0"[39m
+    Received: [31m"1"[39m
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toHaveAttribute" with timeout 10000ms[22m
+    [2m  - waiting for locator('[data-tt-traveltrust-scroll-progress="1"]')[22m
+    [2m    13 × locator resolved to <div aria-hidden="true" data-tt-traveltrust-scroll-progress="1" data-tt-traveltrust-scroll-progress-l5="1" data-tt-traveltrust-scroll-progress-visible="1" data-tt-traveltrust-page-cinematic-power-hint="active" data-tt-traveltrust-cinematic-non-globe-l5="TT-CINEMATIC-L5-NON-GLOBE-2026-05" class="pointer-events-none fixed left-0 right-0 top-0 z-[29] h-0.5 origin-left bg-gradient-to-r from-ref-sun via-ref-coral/85 to-amber-200/65 motion-reduce:hidden"></div>[22m
+    [2m       - unexpected value "1"[22m
+
+
+      262 |     });
+      263 |     await page.locator("#faq").scrollIntoViewIfNeeded();
+    > 264 |     await expect(progress).toHaveAttribute("data-tt-traveltrust-scroll-progress-visible", "0", {
+          |                            ^
+      265 |       timeout: 10_000,
+      266 |     });
+      267 |     await expect(page.locator('[data-tt-traveltrust-webgl-idle-hint="1"]')).toBeVisible({
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:264:28
+
+    Error Context: test-results\pi1-traveltrust-v6-browser-0763b-gress-fades-when-WebGL-idle-chromium\error-context.md
+
+
+[1A[2K(node:3868) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:3868) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[17/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:272:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-11:首屏 1.2s 入场 — 剧场露边
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627676180 path=/meta status=200
+[WebServer] [req] x-message-id=e90758ad-7519-4e00-8f43-ebaa6185dae2 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=84beefe9-ac12-4eaa-bf48-f52d3e493abb path=/health status=200
+[WebServer] [req] x-message-id=846254fb-fcb2-4463-9677-077d1dcaed9d path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=00259a86-f8f4-4c6c-852a-b02f1740d328 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=2a77f08c-9432-495e-839e-d7a6fd4b123f path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627677916 path=/meta status=200
+[WebServer] [req] x-message-id=af2d0870-e5f9-442d-92c0-b20f9e827224 path=/meta status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=05b0a0f2-eade-41ce-9e4d-ce0580918baf path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=cc85345d-d6be-425c-a03a-69aaa572be04 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[18/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:287:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-12: v6 impact — 无旧 IA 文案
+[1A[2K[WebServer] [req] x-request-id=15e78e94-f542-481e-8d5c-4ccbcef73085 path=/health status=200
+[WebServer] [req] x-message-id=03fff3d0-2ca0-4963-9719-6ea0cdc8f873 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=ec58a793-c2dd-4141-9a44-51fca0d63ba3 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=bdf597b8-a18a-462d-bc41-2045a71e1a17 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[19/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:301:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-092: role video static frame when reduced motion
+[1A[2K[WebServer] [req] x-request-id=20bef758-112a-4987-a609-b65dab5cdbb4 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 1a20c4dc-7406-4191-9e6f-6e8169f32882 path=
+
+[1A[2K[WebServer] /api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=de9935ed-d3be-4884-b714-3ea48e54e775 path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=37c4b1a4-7a67-41aa-966f-33b5076968c7 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=f3e7b116-d0d9-4c83-a218-0a4edf92c1fb path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=211c1912-702d-4ec8-8a54-de87725f6efe path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=6460a588-fc9d-4b27-85e8-7e81e176f33a path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=ca5c9519-6865-46bf-a5e8-b1b7a58bbe06 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K  8) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:301:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-092: role video static frame when reduced motion 
+
+    Error: locator.scrollIntoViewIfNeeded: Element is not attached to the DOM
+    Call log:
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m    - element is not stable[22m
+    [2m  - retrying scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+
+
+      303 |     await gotoSmoke(page, "/traveltrust");
+      304 |     const shell = traveltrustNetworkPageShell(page);
+    > 305 |     await shell.locator("#roles").scrollIntoViewIfNeeded();
+          |                                   ^
+      306 |     await expect(shell.locator('[data-tt-traveltrust-role-video-static-frame="1"]').first()).toBeAttached({
+      307 |       timeout: 10_000,
+      308 |     });
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:305:35
+
+    Error Context: test-results\pi1-traveltrust-v6-browser-d17b5-c-frame-when-reduced-motion-chromium\error-context.md
+
+
+[1A[2K(node:33284) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627689427 path=/meta status=200
+[WebServer] [req] x-message-id=dade5a21-626b-46e4-a6f6-9b99f2ddc983 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627692563 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-message-id=7c72778a-481e-489f-8e7f-6336f6edbfe4 path=/meta status=200
+
+[1A[2K(node:33284) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[20/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:312:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-13: prefers-reduced-motion 降级
+[1A[2K[WebServer] [req] x-request-id=b3e4a4cc-fe52-4c6b-a502-05cf61917657 path=/health status=200
+[WebServer] [req] x-message-id=c8d1843f-5043-4612-b4d4-8c56c8ad1896 path=/health
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=73bbb626-2aa1-4875-a434-e0fd9ff33e50 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=6cae7a21-a248-4e76-916b-60c478c5acdd path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=8c658d1b-0502-48cf-8967-c2195d9f43b2 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-message-id=19d5ba0c-6694-4259-9ffe-680087333dd2 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[21/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:327:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-15: WebGL power idle past narrative bands (TT-PH1-145)
+[1A[2K[WebServer] [req] x-request-id=5f0ff360-d3fc-47e0-85b6-27982d8a3a79 path=/health status=200
+[WebServer] [req] x-message-id=21a20475-3871-4ce4-b552-71e1b9d8ea83 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=ce969462-d413-4516-8f70-1bfe0ad42165 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=6a1f50d6-2ec5-40c0-bf65-1c01c22d5263 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=1718f272-df6d-4fec-85b1-4d61a09b808f path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=24e3794b-0d73-471f-a564-fb604068a883 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627707948 path=/meta status=200
+[WebServer] [req] x-message-id=dfd61df4-1081-437e-b283-b0580a610480 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627712636 path=/meta status=200
+[WebServer] [req] x-message-id=fe9e7e38-9b3b-47e9-8a27-e89b036a6a35 path=/meta status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627715061 path=/meta status=200
+[WebServer] [req] x-message-id=7d692d08-6043-443e-a6af-5453882011e3 path=/meta status=200
+
+[1A[2K  9) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:327:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-15: WebGL power idle past narrative bands (TT-PH1-145) 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveAttribute[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  locator('[data-tt-traveltrust-page-cinematic-3d="1"]')
+    Expected: [32m"[7midl[27me"[39m
+    Received: [31m"[7mactiv[27me"[39m
+    Timeout:  20000ms
+
+    Call log:
+    [2m  - Expect "toHaveAttribute" with timeout 20000ms[22m
+    [2m  - waiting for locator('[data-tt-traveltrust-page-cinematic-3d="1"]')[22m
+    [2m    23 × locator resolved to <div aria-hidden="true" data-tt-traveltrust-webgl-lost="0" data-tt-traveltrust-hero-t="0.799" data-tt-traveltrust-page-cinematic-3d="1" data-tt-traveltrust-globe-interactive="0" data-tt-traveltrust-hero-warm-ink-sky="0" data-tt-traveltrust-page-cinematic-low="0" data-tt-traveltrust-globe-focused-region="" data-tt-traveltrust-page-cinematic-split="1" data-tt-traveltrust-page-cinematic-inview="0" data-tt-traveltrust-globe-earth-source="jpeg" data-tt-traveltrust-hero-globe-unobstructed="1" data-tt-tra…>…</div>[22m
+    [2m       - unexpected value "active"[22m
+
+
+      343 |     await expect(shell.locator("#start")).toBeInViewport({ timeout: 10_000 });
+      344 |     await page.waitForTimeout(500);
+    > 345 |     await expect(canvasLayer).toHaveAttribute("data-tt-traveltrust-page-cinematic-power", "idle", {
+          |                               ^
+      346 |       timeout: 20_000,
+      347 |     });
+      348 |   });
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:345:31
+
+    Error Context: test-results\pi1-traveltrust-v6-browser-29a10-narrative-bands-TT-PH1-145--chromium\error-context.md
+
+
+[1A[2K(node:36660) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:36660) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[22/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:350:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-01: wheel scroll reaches roles, liquidity, trust, start
+[1A[2K[WebServer] [req] x-request-id=3b198f7a-2799-4b1b-a9df-43f0b6a8e888 path=/health status=200
+[WebServer] [req] x-message-id=e23a59a8-c4e7-4d6e-8866-f02f0ca54fdc path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=aec06da9-df42-4090-a135-0b0fdc0ceaab path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=77b7a555-1da9-4ba6-b6f6-0f34e47565c5 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627731215 path=/meta status=200
+[WebServer] [req] x-message-id=cbdcc838-150b-4806-b2c9-e4a7fa600595
+
+[1A[2K[WebServer]  path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=779f8dc8-9c11-47c7-8cd9-b1d766992cbe path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=297dfb63-bf04-48e9-9af8-d02ed9f7438b path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627735082 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-message-id=d84a6411-da85-4c80-8c5b-4b0c72969311 path=/meta status=200
+
+[1A[2K[23/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:358:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-14: trust facts + illustrative badge + tier-1 mp4 sources
+[1A[2K[WebServer] [req] x-request-id=a8e7ab0d-2c80-4724-b6e9-3ef4583be1c7 path=/health status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 1b50220b-962f-40b9-85df-b7f7b3edb313 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=8ea60244-47bb-4683-a6a4-3825a45ce30f path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=3d451351-db0f-4884-8478-f3c91d787cd3 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=a4b060d5-b48e-4471-bc97-dead3dbe84fb path=
+
+[1A[2K[WebServer] /api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=59dccd45-fe95-4fe7-a130-9434193d524f path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K  10) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:358:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-14: trust facts + illustrative badge + tier-1 mp4 sources 
+
+    Error: locator.scrollIntoViewIfNeeded: Element is not attached to the DOM
+    Call log:
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+    [2m    - element is not stable[22m
+    [2m  - retrying scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+
+
+      360 |     const shell = traveltrustNetworkPageShell(page);
+      361 |
+    > 362 |     await shell.locator("#trust").scrollIntoViewIfNeeded();
+          |                                   ^
+      363 |     await expect(shell.getByRole("heading", { name: /可核对|Facts you can verify/i })).toBeVisible();
+      364 |     await expect(shell.locator('[data-tt-traveltrust-trust-fact-card="governance"]').first()).toBeVisible();
+      365 |     await expect(shell.getByText(/示意|Illustrative/i).first()).toBeVisible();
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:362:35
+
+    Error Context: test-results\pi1-traveltrust-v6-browser-6ee0c-ve-badge-tier-1-mp4-sources-chromium\error-context.md
+
+
+[1A[2K(node:27644) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:27644) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[24/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:381:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-14b: liquidity preview banner + locked amount
+[1A[2K[WebServer] [req] x-request-id=20183089-bd84-4d8e-b3b3-bbf872b92259 path=/health status=200
+[WebServer] [req] x-message-id=2f091a35-b410-4dc8-acb3-773a15855572 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=4ac07601-93d7-4503-b8e6-ae019f3d49de path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=3241b8b3-e73e-4682-bd24-06a0a3d06e35 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=27a93979-d874-4699-bdcc-f331e655b55d path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=99586bb6-914d-4d07-8e6b-27298c6c25b0 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627764319 path=/meta status=200
+[WebServer] [req] x-message-id=405a0aa6-2ce1-4719-9b88-0fd5230b0fbf path=/meta status=200
+
+[1A[2K  11) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:381:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-14b: liquidity preview banner + locked amount 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('[data-tt-traveltrust-network-page="1"]').locator('[data-tt-traveltrust-stable-gateway-preview="1"]')
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 20000ms[22m
+    [2m  - waiting for locator('[data-tt-traveltrust-network-page="1"]').locator('[data-tt-traveltrust-stable-gateway-preview="1"]')[22m
+
+
+      382 |     await gotoSmoke(page, "/traveltrust#liquidity");
+      383 |     const shell = traveltrustNetworkPageShell(page);
+    > 384 |     await expect(shell.locator('[data-tt-traveltrust-stable-gateway-preview="1"]')).toBeVisible({
+          |                                                                                     ^
+      385 |       timeout: 20_000,
+      386 |     });
+      387 |     await expect(shell.locator('[data-tt-traveltrust-liquidity-preview-banner="1"]')).toBeVisible();
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:384:85
+
+    Error Context: test-results\pi1-traveltrust-v6-browser-5b045-review-banner-locked-amount-chromium\error-context.md
+
+
+[1A[2K(node:28336) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:28336) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[25/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:395:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-14c: page-brief Live/Demo badge + role primary CTA
+[1A[2K[WebServer] [req] x-request-id=13f8b6a2-2624-4146-b369-5bf8cb2f1150 path=/health status=200
+[WebServer] [req] x-message-id=f283aadd-4ec6-4ed3-b57c-3065204bcb13 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=acb1abcf-700f-4654-9986-14a4c0aaa75f path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-message-id=ede3de9f-66bd-4301-a74d-21bfe73eb99b path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=5f07fd20-4e94-4dc2-b12b-c928e427e9a2 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=d6e5612f-2e74-4fbe-b9f9-cc0638d7b894 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627768342 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-message-id=c43a43a2-6326-4a8b-8615-16b8c55aec54 path=/meta status=200
+
+[1A[2K[26/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:407:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-153 / PH1-FE-08b: narrow viewport hero CTA dock safe-area
+[1A[2K[WebServer] [req] x-request-id=fed0d14d-0445-49fa-9d12-5eca2d731689 path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=4e0bae73-4717-4113-805d-a561eef87bf4 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=f38608c2-88db-4cdf-9e0b-561d6451c6e6 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=ebd8d388-4c2e-455b-8221-26ab1285423a path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627771734 path=/meta status=200
+[WebServer] [req] x-message-id=3eb6401a-9fa1-4bbd-ad31-603e1ddc332e path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=6d0afb49-a2b6-4133-949c-b8837bc9b826 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=dce88d47-dbe4-435c-b758-61fa267d74c4 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K  12) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:407:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-153 / PH1-FE-08b: narrow viewport hero CTA dock safe-area 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeTruthy[2m()[22m
+
+    Received: [31mnull[39m
+
+      414 |     const box = await ctaDock.boundingBox();
+      415 |     expect(box).toBeTruthy();
+    > 416 |     if (box) {
+          |               ^
+      417 |       expect(box.y + box.height).toBeLessThanOrEqual(812 + 24);
+      418 |     }
+      419 |   });
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:416:17
+
+    Error Context: test-results\pi1-traveltrust-v6-browser-2939e-ort-hero-CTA-dock-safe-area-chromium\error-context.md
+
+
+[1A[2K(node:26756) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:26756) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[27/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:422:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-08c: narrow viewport role theater tabs + video aspect
+[1A[2K[WebServer] [req] x-request-id=407d40dc-1a7a-4973-8a6b-9cb64ebb9c73 path=/health status=200
+[WebServer] [req] x-message-id=011b8764-cd56-4ef4-a10b-15a967d4d96e path=/health status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] [req] x-request-id=f3b7db46-51ef-433b-a2db-c88774bb1812 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=b99e3a3f-66b2-4ae9-8325-688474e15750 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=56646279-fef6-420d-8089-5e60ad68eb78 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=4d6622a5-f727-41a3-8aa7-0344828fc8d4 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K  13) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:422:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-08c: narrow viewport role theater tabs + video aspect 
+
+    Error: locator.scrollIntoViewIfNeeded: Element is not attached to the DOM
+    Call log:
+    [2m  - attempting scroll into view action[22m
+    [2m    - waiting for element to be stable[22m
+
+
+      424 |     const shell = traveltrustNetworkPageShell(page);
+      425 |     await shell.locator("#roles").scrollIntoViewIfNeeded();
+    > 426 |     await expect(shell.locator('[data-tt-traveltrust-theater-entered="1"]')).toBeAttached({
+          |                                   ^
+      427 |       timeout: 15_000,
+      428 |     });
+      429 |     await expect(shell.locator('[data-tt-traveltrust-roles-tablist-mobile="1"]')).toBeVisible();
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:426:35
+
+    Error Context: test-results\pi1-traveltrust-v6-browser-0e5f0-e-theater-tabs-video-aspect-chromium\error-context.md
+
+
+[1A[2K(node:12816) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:12816) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[28/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:436:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-090: canvas idles below fold
+[1A[2K[WebServer] [req] x-request-id=d383f0b5-65b5-44a9-88eb-1b361aa1e901 path=/health status=200
+[WebServer] [req] x-message-id=9cdad5fb-c999-456d-9c99-c5c74486af9d path=/health status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] [req] x-request-id=4d44957f-a8c8-458c-9129-54f92145022c path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=c42c8634-94d3-4492-95af-78fb6e7d97ed path=/api/v1/traveltrust/page-brief
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=526837e9-d1ef-42f1-b318-9b7cd56355b5 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=579e3a93-5910-48b1-80fc-6cbdc437eaf3 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K  14) [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:436:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-090: canvas idles below fold 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveAttribute[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  locator('[data-tt-traveltrust-page-cinematic-3d="1"]')
+    Expected: [32m"[7midl[27me"[39m
+    Received: [31m"[7mactiv[27me"[39m
+    Timeout:  20000ms
+
+    Call log:
+    [2m  - Expect "toHaveAttribute" with timeout 20000ms[22m
+    [2m  - waiting for locator('[data-tt-traveltrust-page-cinematic-3d="1"]')[22m
+    [2m    23 × locator resolved to <div aria-hidden="true" data-tt-traveltrust-webgl-lost="0" data-tt-traveltrust-hero-t="0.824" data-tt-traveltrust-page-cinematic-3d="1" data-tt-traveltrust-globe-interactive="0" data-tt-traveltrust-hero-warm-ink-sky="0" data-tt-traveltrust-page-cinematic-low="0" data-tt-traveltrust-globe-focused-region="" data-tt-traveltrust-page-cinematic-split="1" data-tt-traveltrust-page-cinematic-inview="0" data-tt-traveltrust-globe-earth-source="jpeg" data-tt-traveltrust-hero-globe-unobstructed="1" data-tt-tra…>…</div>[22m
+    [2m       - unexpected value "active"[22m
+
+
+      441 |     await page.waitForTimeout(500);
+      442 |     await expect(canvas).toHaveAttribute("data-tt-traveltrust-page-cinematic-power", "idle", {
+    > 443 |       timeout: 20_000,
+          |                       ^
+      444 |     });
+      445 |   });
+      446 |
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:443:26
+
+    Error Context: test-results\pi1-traveltrust-v6-browser-8d253-090-canvas-idles-below-fold-chromium\error-context.md
+
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627794920 path=/meta status=200
+[WebServer] [req] x-message-id=63069672-ee8a-42b2-94be-34c39c2ccaec path=/meta
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K(node:25564) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:25564) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[29/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:448:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-177: FAQ accordion keyboard navigation
+[1A[2K[WebServer] [req] x-request-id=7dff7694-8bd2-42d0-b7c3-2d0fbfa88381 path=/health status=200
+[WebServer] [req] x-message-id=8fb70af0-9270-4b13-9339-8eb446612abe path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=87b165aa-73b2-40ba-9858-163e2ac0bad5 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=18498ec3-d9ce-45f9-96d7-948694ec0794 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=618bdb4b-8580-4b30-b808-f3c83f08d300 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=d7eeadf3-2fdc-48ca-a5f1-95eeec149409 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779627799533 path=/meta status=200
+[WebServer] [req] x-message-id=8372126b-2735-4f08-bfcf-7b138b4fcc08 path=/meta status=200
+
+[1A[2K[30/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:471:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-155b: compact nav more menu opens upward
+[1A[2K[WebServer] error: process didn't exit successfully: `target\debug\traveltrust-api.exe` (exit code: 0xffffffff)
+
+[1A[2K[31/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:498:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-190b: network footer links to home site map
+[1A[2K[32/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:506:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-190c: settlement protocol notes expand
+[1A[2K[33/33] [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:524:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-11b: hero scroll cue jumps to roles and start
+[1A[2K  14 failed
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:47:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-08: v6 shell — hero / roles / start, no legacy fold 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:111:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-09: role tabs keyboard + trust chips 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:161:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-168c: trust chips and footer carry compliance disclosure copy 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:183:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-150: hero letterbox uses gradient tone not solid black bars 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:231:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-022: role hash deep-link selects tab 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:240:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-157: phase-1 region roster is keyboard focusable 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:249:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-090b: scroll progress fades when WebGL idle 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:301:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-092: role video static frame when reduced motion 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:327:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-15: WebGL power idle past narrative bands (TT-PH1-145) 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:358:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-14: trust facts + illustrative badge + tier-1 mp4 sources 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:381:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-14b: liquidity preview banner + locked amount 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:407:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-153 / PH1-FE-08b: narrow viewport hero CTA dock safe-area 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:422:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-08c: narrow viewport role theater tabs + video aspect 
+    [chromium] › e2e\pi1-traveltrust-v6-browser-acceptance.spec.ts:436:7 › PI-1 · /traveltrust v6 (PH1-FE-08～13) › PH1-FE-090: canvas idles below fold 
+  4 skipped
+  15 passed (5.2m)

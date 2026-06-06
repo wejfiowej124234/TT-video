@@ -10,10 +10,17 @@ describe("communityMeFeatureFlags", () => {
     vi.unstubAllEnvs();
   });
 
-  it("likes defaults on when env unset; bio stays off", () => {
+  it("likes defaults on when env unset; bio defaults on in development", () => {
     vi.stubEnv("NEXT_PUBLIC_COMMUNITY_ME_LIKES_LIST", "");
     vi.stubEnv("NEXT_PUBLIC_COMMUNITY_ME_BIO", "");
+    vi.stubEnv("NODE_ENV", "development");
     expect(isCommunityMeLikesListEnabled()).toBe(true);
+    expect(isCommunityMeBioEnabled()).toBe(true);
+  });
+
+  it("bio stays off in production when env unset", () => {
+    vi.stubEnv("NEXT_PUBLIC_COMMUNITY_ME_BIO", "");
+    vi.stubEnv("NODE_ENV", "production");
     expect(isCommunityMeBioEnabled()).toBe(false);
   });
 

@@ -5,7 +5,7 @@ import type { HeroGlobeRouteBias } from "@/lib/traveltrustGlobeArcCull";
 import {
   TT_START_ROUTE_CORRIDOR_GHOST_L5,
   TT_START_ROUTE_PATHS_L5,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 import {
   TRAVELTRUST_START_L5_STEP_IDS,
   type TraveltrustStartL5StepId,

@@ -3,6 +3,7 @@
  * 仅 `NEXT_PUBLIC_TRAVELTRUST_E2E_PROBE=1` 经 `__ttHeroGlobeP1Probe` 暴露；不触碰 WebGL/视觉。
  */
 import { resolveTraveltrustHubLatLon } from "@/lib/traveltrustGlobePinDisplay";
+import { getHeroGlobeProjectionSnapshot } from "@/lib/traveltrustHeroGlobeProjectionStore";
 import { latLonToHeroP3ScreenPercent } from "@/lib/traveltrustHeroP3ScreenProjection";
 import { TRAVELTRUST_PHASE1_GLOBE_REGIONS } from "@/lib/traveltrustPhase1GlobeRegions";
 
@@ -14,6 +15,40 @@ export type HeroGlobeP1PinProbeFraction = {
 
 /** S 枢纽优先，便于探针尽快命中 */
 const TIER_ORDER: Record<string, number> = { S: 0, A: 1, B: 2 };
+
+/** Canvas 归一化坐标 · 与 `TravelTrustHeroGlobeProjectionPublisher` 同源 */
+export function listGlobeBoundHeroGlobeP1PinProbeFractions(): HeroGlobeP1PinProbeFraction[] {
+  if (typeof document === "undefined") return [];
+  const snap = getHeroGlobeProjectionSnapshot();
+  if (!snap.active) return [];
+  const canvas = document.querySelector(
+    '[data-tt-traveltrust-page-cinematic-3d="1"] canvas',
+  ) as HTMLCanvasElement | null;
+  const viewport = document.querySelector('[data-tt-traveltrust-hero-globe-viewport="1"]');
+  if (!canvas || !viewport) return [];
+  const canvasRect = canvas.getBoundingClientRect();
+  const viewportRect = viewport.getBoundingClientRect();
+  if (canvasRect.width < 2 || viewportRect.width < 2) return [];
+
+  return [...TRAVELTRUST_PHASE1_GLOBE_REGIONS]
+    .filter((region) => snap.points[region.id]?.visible)
+    .sort((a, b) => (TIER_ORDER[a.tier] ?? 9) - (TIER_ORDER[b.tier] ?? 9))
+    .map((region) => {
+      const p = snap.points[region.id]!;
+      const canvasX = viewportRect.left + (viewportRect.width * p.leftPct) / 100;
+      const canvasY = viewportRect.top + (viewportRect.height * p.topPct) / 100;
+      return {
+        regionId: region.id,
+        fx: (canvasX - canvasRect.left) / canvasRect.width,
+        fy: (canvasY - canvasRect.top) / canvasRect.height,
+      };
+    });
+}
+
+export function listHeroGlobeP1PinProbeFractionsPreferGlobeBound(): HeroGlobeP1PinProbeFraction[] {
+  const globeBound = listGlobeBoundHeroGlobeP1PinProbeFractions();
+  return globeBound.length > 0 ? globeBound : listHeroGlobeP1PinProbeFractions();
+}
 
 export function listHeroGlobeP1PinProbeFractions(): HeroGlobeP1PinProbeFraction[] {
   return [...TRAVELTRUST_PHASE1_GLOBE_REGIONS]

@@ -48,6 +48,8 @@ export interface OrderCardItem {
   sub_status?: string;
   destination?: string;
   country?: string;
+  /** discover：`derive_route_label_from_days`（如 北京、上海、杭州） */
+  route_label?: string;
   city?: string;
   days?: number;
   headcount?: number;

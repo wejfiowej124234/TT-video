@@ -5,6 +5,7 @@ import Link from "next/link";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
+import { AdminInboxQueueBackLinks } from "@/components/admin/AdminInboxQueueBackLinks";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminMetaBuildSection } from "@/components/admin/AdminMetaBuildPanel";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
@@ -23,28 +24,15 @@ export function AdminApiVersionsPageMain() {
     <AdminListPageChrome
       titleId={vm.pageTitleId}
       title={t("admin_api_versions_title")}
-      subtitle={t("admin_api_versions_subtitle")}
+      subtitle={t("admin_api_versions_subtitle_l5")}
       headerAside={
-        <>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link
-            href="/admin"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_api_versions_back")}
-          </Link>
-        </>
+        <AdminInboxQueueBackLinks />
       }
     >
       <AdminApiVersionsFiltersCard vm={vm} />
       <AdminApiVersionsFiltersTail vm={vm} />
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <AdminListLoadingStatus message={t("admin_api_versions_loading")} />
       ) : null}
 
@@ -54,7 +42,9 @@ export function AdminApiVersionsPageMain() {
 
       <AdminApiVersionsMetaNote loading={loading} error={error} meta={meta} />
 
-      <AdminApiVersionsTableSection loading={loading} error={error} items={items} />
+      {!error && (!loading || items.length > 0) ? (
+        <AdminApiVersionsTableSection refreshing={vm.refreshing} items={items} />
+      ) : null}
     </AdminListPageChrome>
   );
 }

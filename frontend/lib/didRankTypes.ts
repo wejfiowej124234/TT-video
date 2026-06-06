@@ -19,6 +19,8 @@ export interface TravelerRankItem {
   countries?: string[];
   /** 战绩：去过的城市（前若干） */
   cities?: string[];
+  /** 较上一轮名次变化：正=上升（名次数字变小），负=下降；API 或前端 diff */
+  rank_delta?: number;
 }
 
 export interface GuideRankItem {
@@ -35,6 +37,7 @@ export interface GuideRankItem {
   receivedReviewCount?: number;
   /** 上列评价的算术均分；无评价时 API 可能显式 `null` */
   avgReceivedReviewScore?: number | null;
+  rank_delta?: number;
 }
 
 /** 行程排行榜项：按使用次数、评价等多指标综合排名，前 10 奖励创作者治理币 */
@@ -54,4 +57,5 @@ export interface ItineraryRankItem {
   destination?: string;
   /** 与 `community/user/[id]` 对齐的创作者用户 UUID；有值且通过 `isDidRankCommunityProfileId` 时行程卡展示档案链 */
   creatorCommunityUserId?: string | null;
+  rank_delta?: number;
 }

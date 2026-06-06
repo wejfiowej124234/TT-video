@@ -14,6 +14,16 @@ const __dir = dirname(fileURLToPath(import.meta.url));
 
 const cinematicDir = join(__dir, "../../components/traveltrust/cinematic");
 
+const composerLandingNavPath = join(
+  __dir,
+  "../../modules/traveltrust-home/presentation/TravelTrustHomeLandingNavSlot.tsx",
+);
+
+const composerMainColumnPath = join(
+  __dir,
+  "../../modules/traveltrust-home/presentation/TravelTrustHomeMainColumn.tsx",
+);
+
 
 
 const REQUIRED_SECTION_IDS = [...TRAVELTRUST_V6_SECTIONS, "hero", "fee-router"] as const;
@@ -23,8 +33,6 @@ const REQUIRED_SECTION_IDS = [...TRAVELTRUST_V6_SECTIONS, "hero", "fee-router"] 
 function readCinematicSources(): string {
 
   const files = [
-
-    "TravelTrustNetworkPageMain.tsx",
 
     "TravelTrustCinematicHero.tsx",
 
@@ -46,13 +54,7 @@ function readCinematicSources(): string {
 
   return files
 
-    .map((f) => {
-
-      const path = f.includes("Network") ? join(__dir, f) : join(cinematicDir, f);
-
-      return readFileSync(path, "utf8");
-
-    })
+    .map((f) => readFileSync(join(cinematicDir, f), "utf8"))
 
     .join("\n");
 
@@ -94,9 +96,18 @@ describe("traveltrust network page sections (contract)", () => {
 
   it("exposes skip link to hero", () => {
 
-    expect(src).toContain("traveltrust_skip_to_hero");
+    const mainColumnSrc = readFileSync(composerMainColumnPath, "utf8");
 
-    expect(src).toContain('href="#hero"');
+    const composerSrc = readFileSync(
+      join(__dir, "../../modules/traveltrust-home/presentation/TravelTrustNetworkPageComposer.tsx"),
+      "utf8",
+    );
+
+    expect(composerSrc).toContain("traveltrust_skip_to_hero");
+
+    expect(mainColumnSrc).toContain('href="#hero"');
+
+    expect(mainColumnSrc).toContain("skipToHeroLabel");
 
   });
 
@@ -104,13 +115,13 @@ describe("traveltrust network page sections (contract)", () => {
 
   it("keeps sticky in-page nav outside hero (scroll persistence)", () => {
 
-    const mainSrc = readFileSync(join(__dir, "TravelTrustNetworkPageMain.tsx"), "utf8");
+    const navSlotSrc = readFileSync(composerLandingNavPath, "utf8");
 
     const heroSrc = readFileSync(join(cinematicDir, "TravelTrustCinematicHero.tsx"), "utf8");
 
-    expect(mainSrc).toContain('data-tt-traveltrust-landing-nav-slot="sticky"');
+    expect(navSlotSrc).toContain('data-tt-traveltrust-landing-nav-slot="fixed"');
 
-    expect(mainSrc).toContain("TravelTrustLandingChrome");
+    expect(navSlotSrc).toContain("TravelTrustLandingChrome");
 
     expect(heroSrc).not.toContain("TravelTrustLandingNav");
 

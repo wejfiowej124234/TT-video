@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useMemo } from "react";
+import { useEffect, useId, useMemo } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { useItineraryForm } from "./useItineraryForm";
@@ -8,27 +8,41 @@ import { defaultForm } from "./types";
 import { DEFAULT_COUNTRY } from "@/lib/countries";
 import { CITY_TRANSPORT_OPTIONS, CITY_TRANSPORT_DETAILS, getGuideLevelsWithPricing } from "./constants";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
+import { TT_MARKETING_BTN_MARKET_PRIMARY, TT_MARKETING_MARKET_DARK_PATH, TT_MARKETING_MARKET_GLASS_CHOICE_CONTROL } from "@/lib/marketingUi";
+import MarketDetailDrawerFrame from "@/components/market/MarketDetailDrawerFrame";
+import {
+  marketDetailDrawerCloseBtn,
+  marketDetailDrawerFooterSticky,
+  marketDetailDrawerHeaderRow,
+  marketDetailDrawerInnerCol,
+  marketDetailDrawerScrollBody,
+  marketDetailDrawerScrollRegion,
+  marketDetailDrawerTitle,
+} from "@/components/market/marketDetailDrawerClasses";
 import DetailOverlay from "./DetailOverlay";
 import TouristForm from "./sections/TouristForm";
 import GuideForm from "./sections/GuideForm";
 
 export type { TransportType, CityTransportType, GuideLevel, DayPlan } from "./types";
 
-/** 自由市场：自定义行程弹窗。49 A：提交走 POST /itineraries/custom，成功后 onSuccess(orderId) 刷新列表。 */
+/** 自由市场：自定义行程右侧抽屉（与订单详情同 z 层，高于顶栏）。 */
 export default function CustomItineraryModal({
   open,
   onClose,
   onSuccess,
   preselectedGuideId,
+  initialTotalDays,
 }: {
   open: boolean;
   onClose: () => void;
   onSuccess: (orderId: string) => void;
   /** 例如 `/market?guide_id=` 深链，与 POST /itineraries 预选向导语义一致 */
   preselectedGuideId?: string;
+  /** 打开时预选总天数（英雄区快捷 1/3/5/7 天） */
+  initialTotalDays?: number;
 }) {
   const { t } = useTranslation();
-  const bag = useItineraryForm({ open, onClose, onSuccess, preselectedGuideId });
+  const bag = useItineraryForm({ open, onClose, onSuccess, preselectedGuideId, initialTotalDays });
   const {
     form,
     setForm,
@@ -78,10 +92,9 @@ export default function CustomItineraryModal({
     budgetSuggestion,
   } = quote;
 
-  const pillSelected =
-    "inline-flex min-h-[44px] items-center justify-center rounded-full px-3 py-1.5 text-meta font-medium border transition-colors bg-white/30 border-white/40 text-white";
-  const pillUnselected =
-    "inline-flex min-h-[44px] items-center justify-center rounded-full px-3 py-1.5 text-meta font-medium border transition-colors bg-white/10 border-white/20 text-white/80 hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50";
+  const D = TT_MARKETING_MARKET_DARK_PATH;
+  const pillSelected = D.customItineraryPillSelected;
+  const pillUnselected = D.customItineraryPillIdle;
 
   const guideLevelsWithPricing = useMemo(
     () => getGuideLevelsWithPricing(form.country || DEFAULT_COUNTRY),
@@ -94,6 +107,15 @@ export default function CustomItineraryModal({
   const submitErrorNoticeId = useId();
   const mainFormId = useId();
 
+  useEffect(() => {
+    if (!open) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [open]);
+
   if (!open) return null;
 
   const setDialogRef = (el: HTMLDivElement | null) => {
@@ -101,10 +123,9 @@ export default function CustomItineraryModal({
     (trapRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
   };
 
-  const labelClass = "block text-small font-medium text-white mb-1";
-  const inputClass =
-    "w-full rounded-[var(--radius-sm)] border border-white/25 bg-white/5 px-3 py-2 text-small text-white placeholder-white/50 focus:outline-none focus-visible:border-travel-400 focus-visible:ring-2 focus-visible:ring-travel-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 backdrop-blur-sm";
-  const descClass = "text-small text-white/90 mt-0.5 drop-shadow-market-pill";
+  const labelClass = D.studioLabel;
+  const inputClass = D.studioInput;
+  const descClass = `${D.studioDesc} drop-shadow-market-pill`;
   const styles = { labelClass, inputClass, descClass, pillSelected, pillUnselected };
 
   const touristProps = {
@@ -141,6 +162,7 @@ export default function CustomItineraryModal({
     guideLevelsWithPricing,
     form,
     setForm,
+    setTotalDays,
     setGuideDayPlan,
     cities,
     guideDayPlansNormalized,
@@ -164,82 +186,92 @@ export default function CustomItineraryModal({
     t,
   };
 
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby={modalTitleId}
-      aria-describedby={
-        submitError ? `${modalDescId} ${submitErrorNoticeId}` : modalDescId
-      }
-    >
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" aria-hidden onClick={onClose} />
-      <div
-        ref={setDialogRef}
-        className="relative w-full max-w-2xl rounded-[var(--radius-lg)] border border-white/25 bg-white/5 backdrop-blur-md shadow-strong overflow-hidden max-h-[90vh] flex flex-col"
-        tabIndex={-1}
-      >
-        <div className="border-b border-white/15 px-4 py-3 sm:px-6 shrink-0 bg-transparent">
-          <h2
-            id={modalTitleId}
-            className="text-body-l font-semibold text-white drop-shadow-market-body"
-          >
-            {t("market_customItineraryTitle")}
-          </h2>
-          <p id={modalDescId} className={descClass}>
-            {t("market_customItineraryDesc")}
-          </p>
-        </div>
-        <form id={mainFormId} onSubmit={handleSubmit} hidden aria-hidden="true" />
-        <div className="p-4 sm:p-6 space-y-4 overflow-y-auto bg-transparent">
-          <div>
-            <span className={labelClass}>
-              {t("market_createAsTourist")} / {t("market_createAsGuide")}
-            </span>
-            <div className="flex gap-3 mt-1">
-              <label className="flex min-h-[44px] items-center justify-start gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="creatorType"
-                  checked={form.creatorType === "tourist"}
-                  onChange={() => setForm(() => ({ ...defaultForm(5), creatorType: "tourist" }))}
-                  className="rounded-full border-white/25 text-travel-500 bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-travel-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
-                />
-                <span className="text-small text-white">{t("market_createAsTourist")}</span>
-              </label>
-              <label className="flex min-h-[44px] items-center justify-start gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="creatorType"
-                  checked={form.creatorType === "guide"}
-                  onChange={() =>
-                    setForm((f) => {
-                      const base = defaultForm(f.totalDays);
-                      return {
-                        ...base,
-                        creatorType: "guide",
-                        country: f.creatorType === "guide" ? f.country : (f.country || ""),
-                        destinationManual: f.creatorType === "guide" ? f.destinationManual : "",
-                        title: f.creatorType === "guide" ? f.title : "",
-                        amount: f.creatorType === "guide" ? f.amount : "",
-                        description: f.creatorType === "guide" ? f.description : "",
-                        image: f.creatorType === "guide" ? f.image : "",
-                        headcount: f.headcount,
-                        totalDays: f.totalDays,
-                        guideDayPlans: f.creatorType === "guide" ? (f.guideDayPlans ?? base.guideDayPlans) : base.guideDayPlans,
-                      };
-                    })
-                  }
-                  className="rounded-full border-white/25 text-travel-500 bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-travel-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
-                />
-                <span className="text-small text-white">{t("market_createAsGuide")}</span>
-              </label>
-            </div>
-          </div>
+  const preserveDays = form.totalDays;
 
-          {form.creatorType === "tourist" && <TouristForm {...touristProps} />}
-          {form.creatorType === "guide" && <GuideForm {...guideProps} />}
+  return (
+    <MarketDetailDrawerFrame
+      panelVariant="stickyFooter"
+      onRequestClose={bag.requestClose}
+      panelRef={setDialogRef}
+      panelClassName="max-w-lg"
+      aria-labelledby={modalTitleId}
+      aria-describedby={submitError ? `${modalDescId} ${submitErrorNoticeId}` : modalDescId}
+      aria-busy={submitting ? true : undefined}
+      rootHtmlProps={{ "data-tt-custom-itinerary-modal": "1" }}
+      panelHtmlProps={{ "data-testid": "custom-itinerary-panel" }}
+    >
+      <div className={marketDetailDrawerInnerCol}>
+        <div className={marketDetailDrawerHeaderRow}>
+          <div className="min-w-0 flex-1">
+            <h2 id={modalTitleId} className={marketDetailDrawerTitle}>
+              {t("market_customItineraryTitle")}
+            </h2>
+            <p id={modalDescId} className={`mt-1 ${descClass}`}>
+              {t("market_customItineraryDesc")}
+            </p>
+          </div>
+          <button
+            type="button"
+            className={marketDetailDrawerCloseBtn}
+            onClick={bag.requestClose}
+            aria-label={t("common_close")}
+          >
+            ×
+          </button>
+        </div>
+
+        <form id={mainFormId} onSubmit={handleSubmit} hidden aria-hidden="true" />
+
+        <div className={marketDetailDrawerScrollRegion}>
+          <div className={`${marketDetailDrawerScrollBody} space-y-4`}>
+            <div>
+              <span className={labelClass}>
+                {t("market_createAsTourist")} / {t("market_createAsGuide")}
+              </span>
+              <div className="flex gap-3 mt-1">
+                <label className="flex min-h-[44px] items-center justify-start gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="creatorType"
+                    checked={form.creatorType === "tourist"}
+                    onChange={() => setForm(() => ({ ...defaultForm(preserveDays), creatorType: "tourist" }))}
+                    className={TT_MARKETING_MARKET_GLASS_CHOICE_CONTROL}
+                  />
+                  <span className="text-small text-slate-200">{t("market_createAsTourist")}</span>
+                </label>
+                <label className="flex min-h-[44px] items-center justify-start gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="creatorType"
+                    checked={form.creatorType === "guide"}
+                    onChange={() =>
+                      setForm((f) => {
+                        const base = defaultForm(f.totalDays);
+                        return {
+                          ...base,
+                          creatorType: "guide",
+                          country: f.creatorType === "guide" ? f.country : (f.country || ""),
+                          destinationManual: f.creatorType === "guide" ? f.destinationManual : "",
+                          title: f.creatorType === "guide" ? f.title : "",
+                          amount: f.creatorType === "guide" ? f.amount : "",
+                          description: f.creatorType === "guide" ? f.description : "",
+                          image: f.creatorType === "guide" ? f.image : "",
+                          headcount: f.headcount,
+                          totalDays: f.totalDays,
+                          guideDayPlans: f.creatorType === "guide" ? (f.guideDayPlans ?? base.guideDayPlans) : base.guideDayPlans,
+                        };
+                      })
+                    }
+                    className={TT_MARKETING_MARKET_GLASS_CHOICE_CONTROL}
+                  />
+                  <span className="text-small text-slate-200">{t("market_createAsGuide")}</span>
+                </label>
+              </div>
+            </div>
+
+            {form.creatorType === "tourist" && <TouristForm {...touristProps} />}
+            {form.creatorType === "guide" && <GuideForm {...guideProps} />}
+          </div>
         </div>
 
         {viewingAttraction && (
@@ -280,34 +312,28 @@ export default function CustomItineraryModal({
           />
         )}
 
-        <div className="flex flex-wrap gap-2 px-4 sm:px-6 pb-4 sm:pb-6 pt-2 border-t border-white/15 shrink-0 bg-transparent">
+        <div className={`${marketDetailDrawerFooterSticky} flex flex-wrap gap-2`}>
           <button
             type="submit"
             form={mainFormId}
             disabled={submitting}
             aria-busy={submitting ? true : undefined}
-            className={`${touchTargetLink44Classes} btn-console rounded-[var(--radius-sm)] bg-cta-gradient px-4 py-2 text-smallall font-medium text-white hover:brightness-110 motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-white/20 disabled:opacity-60 disabled:pointer-events-none`}
+            data-testid="custom-itinerary-submit"
+            className={`${touchTargetLink44Classes} ${TT_MARKETING_BTN_MARKET_PRIMARY} w-full sm:w-auto disabled:opacity-60 disabled:pointer-events-none`}
           >
             {submitting ? t("market_confirmCreating") : t("market_confirmCreate")}
           </button>
-          <form
-            className="inline"
-            onSubmit={(e) => {
-              e.preventDefault();
-              onClose();
-            }}
+          <button
+            type="button"
+            disabled={submitting}
+            aria-busy={submitting ? true : undefined}
+            onClick={onClose}
+            className={`${touchTargetLink44Classes} ${D.studioFooterGhost} w-full sm:w-auto disabled:opacity-60`}
           >
-            <button
-              type="submit"
-              disabled={submitting}
-              aria-busy={submitting ? true : undefined}
-              className={`${touchTargetLink44Classes} btn-console rounded-[var(--radius-sm)] border border-white/40 px-4 py-2 text-smallall text-white hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-travel-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white/20 disabled:opacity-60`}
-            >
-              {t("common_cancel")}
-            </button>
-          </form>
+            {t("common_cancel")}
+          </button>
         </div>
       </div>
-    </div>
+    </MarketDetailDrawerFrame>
   );
 }

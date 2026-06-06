@@ -28,9 +28,13 @@ export function orderStateToStatusLabelKey(input: OrderStatusInput | string): st
   }
   if (state === "slashed") return "order_status_slashed";
 
-  if (state === "draft" || state === "created" || state === "open") {
+  if (state === "draft") {
     if (sub === "guide_claimed") return "order_status_pending_guide_confirm";
     return "order_status_draft";
+  }
+  if (state === "created" || state === "open") {
+    if (sub === "guide_claimed") return "order_status_pending_guide_confirm";
+    return "order_status_created_listing";
   }
 
   if (state === "accepted") {

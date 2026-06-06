@@ -2,7 +2,12 @@
 
 import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
-import { ADMIN_INLINE_LINK_CLASS, ADMIN_NOTICE_INFO_CLASS } from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
+import {
+  ADMIN_INLINE_LINK_CLASS,
+  ADMIN_NOTICE_INFO_CLASS,
+  ADMIN_WORKFLOW_INNER_CARD_CLASS,
+} from "@/lib/adminUi";
 import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
 /** ① 观测/对账工作流入口（链至既有页 · 非 ② 全矩阵 GO）。 */
@@ -37,8 +42,10 @@ export function AdminObservabilityOpsStrip() {
   const { t } = useTranslation();
 
   return (
-    <section
-      className="mt-6 rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 sm:p-5"
+    <AdminWarmL5Surface
+      as="section"
+      className="mt-6"
+      innerClassName="sm:p-6"
       aria-labelledby="admin-obs-ops-heading"
       data-tt-admin-observability-ops="1"
     >
@@ -50,7 +57,7 @@ export function AdminObservabilityOpsStrip() {
         {OPS_STEPS.map((step, idx) => (
           <li
             key={step.id}
-            className="rounded-[var(--radius-md)] border border-ink-200 bg-ink-50/50 p-3"
+            className={ADMIN_WORKFLOW_INNER_CARD_CLASS}
             data-tt-admin-obs-ops-step={step.id}
           >
             <span className="text-meta font-medium text-ink-500">
@@ -72,6 +79,6 @@ export function AdminObservabilityOpsStrip() {
           {t("admin_fin_suite_back_hub")}
         </Link>
       </p>
-    </section>
+    </AdminWarmL5Surface>
   );
 }

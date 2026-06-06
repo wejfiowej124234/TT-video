@@ -3,23 +3,36 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import AdminCrossCheckPage from "./page";
 
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/admin/cross-check",
+  useSearchParams: () => new URLSearchParams(),
+  useRouter: () => ({ prefetch: vi.fn(), push: vi.fn() }),
+}));
+
 vi.mock("@/components/LocaleProvider", () => ({
   useTranslation: () => ({ t: (k: string) => k }),
 }));
 
-const mockGetAdminCrossCheck = vi.fn();
+const mockAdminFetchJson = vi.fn();
 
-vi.mock("@/lib/apiClient", async (importOriginal) => {
-  const mod = await importOriginal<typeof import("@/lib/apiClient")>();
+vi.mock("@/lib/adminFetchDisplay", async (importOriginal) => {
+  const mod = await importOriginal<typeof import("@/lib/adminFetchDisplay")>();
   return {
     ...mod,
-    getAdminCrossCheck: () => mockGetAdminCrossCheck(),
+    adminFetchJson: (...args: unknown[]) => mockAdminFetchJson(...args),
   };
 });
 
+function mockCrossCheckBody(body: Record<string, unknown>) {
+  mockAdminFetchJson.mockResolvedValue({
+    res: { ok: true, status: 200 },
+    body,
+  });
+}
+
 describe("AdminCrossCheckPage (C-03 / C-05)", () => {
   beforeEach(() => {
-    mockGetAdminCrossCheck.mockReset();
+    mockAdminFetchJson.mockReset();
   });
 
   afterEach(() => {
@@ -27,7 +40,7 @@ describe("AdminCrossCheckPage (C-03 / C-05)", () => {
   });
 
   it("renders three slot sections with source_kind and raw JSON body", async () => {
-    mockGetAdminCrossCheck.mockResolvedValue({
+    mockCrossCheckBody({
       status: "ok",
       fee_pool_projection: { source_kind: "projection", body: { slot: "fee", n: 1 } },
       governance_pool_chain: { source_kind: "chain_ssot", body: { slot: "pool" } },
@@ -55,7 +68,7 @@ describe("AdminCrossCheckPage (C-03 / C-05)", () => {
   });
 
   it("shows shared read-only scope notice (C-06)", async () => {
-    mockGetAdminCrossCheck.mockResolvedValue({
+    mockCrossCheckBody({
       status: "ok",
       fee_pool_projection: { source_kind: "projection", body: {} },
       governance_pool_chain: { source_kind: "chain_ssot", body: {} },
@@ -71,7 +84,7 @@ describe("AdminCrossCheckPage (C-03 / C-05)", () => {
   });
 
   it("groups slots in a landmark region with in-page jump links", async () => {
-    mockGetAdminCrossCheck.mockResolvedValue({
+    mockCrossCheckBody({
       status: "ok",
       fee_pool_projection: { source_kind: "projection", body: {} },
       governance_pool_chain: { source_kind: "chain_ssot", body: {} },

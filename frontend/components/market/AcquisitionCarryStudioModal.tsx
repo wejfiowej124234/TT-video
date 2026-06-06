@@ -13,12 +13,21 @@ import {
 } from "@/lib/marketStudioDraft";
 import type { AcquisitionStudioDraftPersistSource } from "@/lib/marketStudioDraft";
 import {
+  fetchAcquisitionPublishEligibility,
+  type AcquisitionPublishEligibility,
+} from "@/lib/acquisition/acquisitionPublishEligibility";
+import { acquisitionL5BondCalloutDataAttrs, TT_ACQUISITION_L5 } from "@/lib/acquisition/acquisitionL5";
+import { getMeFull } from "@/lib/apiClient";
+import { parseMeTrustFromMeResponse, userFromGetMePayload, type MeTrustSummary } from "@/lib/meTrust";
+import MeAcquisitionPublishBondAction from "@/components/me/MeAcquisitionPublishBondAction";
+import {
   hasCommunityPublishAuth,
   publishAcquisitionCarryCommunityPost,
 } from "@/lib/marketProductCommunityPublish";
 import { PRODUCT_COUNTRIES } from "@/lib/productCountries";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
 import { trackMarketEvent } from "@/lib/analytics";
+import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
 
 const COVER_MAX_BYTES = 2 * 1024 * 1024;
 const PROMO_VIDEO_MAX_BYTES = 20 * 1024 * 1024;
@@ -85,11 +94,11 @@ function emptyDraft(): AcquisitionStudioDraft {
   };
 }
 
-const labelClass = "block text-small font-medium text-white mb-1";
-const inputClass =
-  "w-full rounded-[var(--radius-sm)] border border-white/25 bg-white/5 px-3 py-2 text-small text-white placeholder-white/50 focus:outline-none focus-visible:border-warning/70 focus-visible:ring-2 focus-visible:ring-warning/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-800 backdrop-blur-sm";
-const descClass = "text-small text-white/80 mt-0.5";
-const sectionHeading = "text-small font-semibold uppercase tracking-wide text-white/90";
+const D = TT_MARKETING_MARKET_DARK_PATH;
+const labelClass = D.studioLabel;
+const inputClass = D.studioInput;
+const descClass = D.studioDesc;
+const sectionHeading = D.studioSectionHeading;
 
 export type AcquisitionStudioDraftSavedMeta = {
   communityPostId?: string;
@@ -221,6 +230,20 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
     return () => window.removeEventListener("traveltrust:auth-change", onAuth);
   }, []);
 
+  const [acquisitionGate, setAcquisitionGate] =
+    useState<AcquisitionPublishEligibility | null>(null);
+  const [studioTrust, setStudioTrust] = useState<MeTrustSummary | null>(null);
+  useEffect(() => {
+    if (!open) return;
+    void fetchAcquisitionPublishEligibility().then(setAcquisitionGate);
+    void getMeFull({ force: true })
+      .then((me) => {
+        const user = userFromGetMePayload(me);
+        setStudioTrust(parseMeTrustFromMeResponse(me, user));
+      })
+      .catch(() => setStudioTrust(null));
+  }, [open, authEpoch]);
+
   const publishGate = useMemo(() => {
     void authEpoch;
     const title = form.title.trim();
@@ -239,17 +262,23 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
       minN <= maxN &&
       form.agreeEscrowCopy;
     const sessionOk = hasCommunityPublishAuth();
+    const gateOk = acquisitionGate?.ok ?? false;
     return {
-      canPublish: formOk && sessionOk,
+      canPublish: formOk && sessionOk && gateOk,
       sessionOk,
       formOk,
+      gateOk,
       titleWhenDisabled: !sessionOk
         ? t("market_studio_publish_login_hint")
         : !formOk
           ? t("market_studio_publish_form_incomplete_hint")
-          : "",
+          : !acquisitionGate?.walletOk
+            ? t("market_acquisitionStudio_publish_wallet_hint")
+            : !acquisitionGate?.publishEligible
+              ? t("market_acquisitionStudio_publish_bond_hint")
+              : "",
     };
-  }, [form, t, authEpoch]);
+  }, [form, t, authEpoch, acquisitionGate]);
 
   const runPersistAndSync = useCallback(async () => {
     setSubmitError(null);
@@ -367,11 +396,11 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" aria-hidden onClick={requestClose} />
       <div
         ref={trapRef}
-        className="relative w-full max-w-2xl rounded-[var(--radius-lg)] border border-white/25 bg-white/5 backdrop-blur-md shadow-strong overflow-hidden max-h-[90vh] flex flex-col ring-1 ring-warning/10"
+        className={D.studioModalPanelLg}
         tabIndex={-1}
         onMouseDown={(e) => e.stopPropagation()}
       >
-        <div className="border-b border-white/15 px-4 py-3 sm:px-6 shrink-0 flex items-start justify-between gap-3">
+        <div className={D.studioModalHeader}>
           <div className="min-w-0">
             <h2 id={titleId} className="text-body-l font-semibold text-white drop-shadow-market-body">
               {t("market_acquisitionStudio_title")}
@@ -389,7 +418,7 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
           >
             <button
               type="submit"
-              className={`${touchTargetLink44Classes} ${travelFocusRingCoreOffset2Classes} inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/20 bg-white/10 text-white hover:bg-white/15`}
+              className={`${touchTargetLink44Classes} ${travelFocusRingCoreOffset2Classes} ${D.studioCloseBtn}`}
               aria-label={t("market_acquisitionStudio_close")}
             >
               ✕
@@ -446,7 +475,7 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
                 />
               </div>
 
-              <div className="rounded-[var(--radius-sm)] border border-white/10 bg-white/[0.03] p-3 space-y-3">
+              <div className={D.studioInsetPanel}>
                 <p className="text-meta font-medium text-white/90">{t("market_acquisitionStudio_section_corridor")}</p>
                 <p className="text-meta leading-relaxed text-slate-400">{t("market_acquisitionStudio_corridor_hint")}</p>
                 <div>
@@ -487,9 +516,7 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
                     <label
                       key={opt.value}
                       className={`inline-flex min-h-[44px] cursor-pointer items-center gap-2 rounded-full border px-3 py-1.5 text-meta ${
-                        form.category === opt.value
-                          ? "border-warning/55 bg-warning/20 text-white"
-                          : "border-white/20 bg-white/5 text-white/85 hover:bg-white/10"
+                        form.category === opt.value ? D.studioChipActive : D.studioChipIdle
                       }`}
                     >
                       <input
@@ -600,7 +627,7 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
                   type="button"
                   onClick={() => coverInputRef.current?.click()}
                   aria-labelledby={coverLabelId}
-                  className={`${touchTargetLink44Classes} ${travelFocusRingCoreOffset2Classes} inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] border border-white/20 bg-white/[0.08] px-4 py-2 text-small font-medium text-white hover:bg-white/12`}
+                  className={`${touchTargetLink44Classes} ${travelFocusRingCoreOffset2Classes} ${D.studioMediaBtn}`}
                 >
                   {t("market_merchantStudio_pick_cover")}
                 </button>
@@ -610,7 +637,7 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
                 {form.coverFileName ? (
                   <div className="mt-2 flex flex-wrap items-center gap-2">
                     <span className="text-meta text-slate-400 truncate max-w-full">{form.coverFileName}</span>
-                    <button type="button" onClick={clearCover} className={`${touchTargetLink44Classes} text-meta text-cyan-200 underline`}>
+                    <button type="button" onClick={clearCover} className={`${touchTargetLink44Classes} text-meta ${D.studioClearLink}`}>
                       {t("market_coverClear")}
                     </button>
                   </div>
@@ -633,7 +660,7 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
                   type="button"
                   onClick={() => videoInputRef.current?.click()}
                   aria-labelledby={videoLabelId}
-                  className={`${touchTargetLink44Classes} ${travelFocusRingCoreOffset2Classes} inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] border border-white/20 bg-white/[0.08] px-4 py-2 text-small font-medium text-white hover:bg-white/12`}
+                  className={`${touchTargetLink44Classes} ${travelFocusRingCoreOffset2Classes} ${D.studioMediaBtn}`}
                 >
                   {t("market_merchantStudio_pick_video")}
                 </button>
@@ -645,7 +672,7 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
                   <div className="mt-3 space-y-2">
                     <video
                       src={form.videoPreviewUrl}
-                      className="max-h-48 w-full rounded-[var(--radius-md)] border border-white/15 bg-black/40 object-contain"
+                      className={D.studioImageFrame}
                       controls
                       playsInline
                       muted
@@ -654,7 +681,7 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
                       {form.videoFileName ? (
                         <span className="text-meta text-slate-400 truncate max-w-full">{form.videoFileName}</span>
                       ) : null}
-                      <button type="button" onClick={clearVideo} className={`${touchTargetLink44Classes} text-meta text-cyan-200 underline`}>
+                      <button type="button" onClick={clearVideo} className={`${touchTargetLink44Classes} text-meta ${D.studioClearLink}`}>
                         {t("market_merchantStudio_video_clear")}
                       </button>
                     </div>
@@ -781,14 +808,36 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
                   type="checkbox"
                   checked={form.agreeEscrowCopy}
                   onChange={(e) => setForm((f) => ({ ...f, agreeEscrowCopy: e.target.checked }))}
-                  className="mt-1 rounded border-white/30 text-white bg-white/5"
+                  className={D.studioCheckbox}
                 />
                 <span>{t("market_acquisitionStudio_escrow_ack")}</span>
               </label>
             </section>
+
+            {studioTrust &&
+            acquisitionGate?.sessionOk &&
+            acquisitionGate.walletOk &&
+            !acquisitionGate.publishEligible ? (
+              <div {...acquisitionL5BondCalloutDataAttrs()} className={TT_ACQUISITION_L5.bondCallout}>
+                <MeAcquisitionPublishBondAction
+                  t={t}
+                  trust={studioTrust}
+                  compact
+                  onBondLocked={() => {
+                    void fetchAcquisitionPublishEligibility().then(setAcquisitionGate);
+                    void getMeFull({ force: true })
+                      .then((me) => {
+                        const user = userFromGetMePayload(me);
+                        setStudioTrust(parseMeTrustFromMeResponse(me, user));
+                      })
+                      .catch(() => setStudioTrust(null));
+                  }}
+                />
+              </div>
+            ) : null}
           </div>
 
-          <div className="shrink-0 border-t border-white/10 bg-ink-900/40">
+          <div className={D.studioFooter}>
             {!publishGate.canPublish ? (
               <p
                 className="border-b border-warning/20 px-4 py-2.5 sm:px-6 text-[0.7rem] leading-snug text-white/95"
@@ -803,7 +852,7 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
             <button
               type="button"
               onClick={requestClose}
-              className={`${touchTargetLink44Classes} ${travelFocusRingCoreOffset2Classes} w-full sm:w-auto rounded-[var(--radius-sm)] border border-white/20 bg-white/[0.06] px-4 py-2.5 text-small font-medium text-slate-100 hover:bg-white/10`}
+              className={`${touchTargetLink44Classes} ${travelFocusRingCoreOffset2Classes} ${D.studioFooterGhost}`}
             >
               {t("market_merchantStudio_cancel")}
             </button>
@@ -820,7 +869,7 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
               onClick={() => void runPersistAndSync()}
               className={`${touchTargetLink44Classes} ${travelFocusRingCoreOffset2Classes} w-full sm:w-auto rounded-[var(--radius-sm)] border px-4 py-2.5 text-small font-medium ${
                 saving || !publishGate.canPublish
-                  ? "cursor-not-allowed border-white/15 bg-white/[0.04] text-white/45"
+                  ? D.studioPublishDisabled
                   : "border-warning/45 bg-warning/15 text-white hover:bg-warning/25 motion-sub"
               }`}
             >

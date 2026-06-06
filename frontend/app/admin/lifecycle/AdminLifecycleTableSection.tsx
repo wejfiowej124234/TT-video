@@ -9,6 +9,9 @@ import {
   ADMIN_TABLE_ROW_CLASS,
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
+  ADMIN_TABLE_SECTION_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
 } from "@/lib/adminUi";
 import type { LifecycleStateMachineRow } from "./adminLifecyclePageModel";
 
@@ -16,9 +19,10 @@ type LifecycleSortKey = "machine_code" | "current_state" | "last_transition_at";
 
 type AdminLifecycleTableSectionProps = {
   items: LifecycleStateMachineRow[];
+  refreshing: boolean;
 };
 
-export function AdminLifecycleTableSection({ items }: AdminLifecycleTableSectionProps) {
+export function AdminLifecycleTableSection({ items, refreshing }: AdminLifecycleTableSectionProps) {
   const { t } = useTranslation();
   const { sort, toggle, ariaSort } = useAdminTableSort<LifecycleSortKey>("last_transition_at", "desc");
   const sortedItems = useMemo(
@@ -45,10 +49,11 @@ export function AdminLifecycleTableSection({ items }: AdminLifecycleTableSection
 
   return (
     <section
-      className="mt-6 overflow-x-auto rounded-[var(--radius-xl)] border border-ink-200 bg-white"
+      className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
       aria-label={t("admin_lifecycle_table_aria")}
+      data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
     >
-      <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+      <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
         <thead className={ADMIN_TABLE_THEAD_CLASS}>
           <tr>
             <AdminSortableTh
@@ -83,24 +88,24 @@ export function AdminLifecycleTableSection({ items }: AdminLifecycleTableSection
             />
           </tr>
         </thead>
-        <tbody className="divide-y divide-ink-100 text-ink-700">
+        <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
           {sortedItems.map((r, idx) => (
             <tr key={`${r.machine_code ?? "m"}-${idx}`} className={ADMIN_TABLE_ROW_CLASS}>
-              <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">{r.machine_code ?? t("admin_em_dash")}</td>
-              <td className="px-3 py-2 font-mono text-meta">{r.domain ?? t("admin_em_dash")}</td>
-              <td className="px-3 py-2 font-mono text-meta max-w-[8rem] truncate" title={r.entity_type}>
+              <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">{r.machine_code ?? t("admin_em_dash")}</td>
+              <td className="px-3 py-2 font-mono text-small text-ink-800">{r.domain ?? t("admin_em_dash")}</td>
+              <td className="px-3 py-2 font-mono text-small text-ink-800 max-w-[8rem] truncate" title={r.entity_type}>
                 {r.entity_type ?? t("admin_em_dash")}
               </td>
-              <td className="px-3 py-2 font-mono text-meta">{r.current_state ?? t("admin_em_dash")}</td>
-              <td className="px-3 py-2 font-mono text-meta">{r.expected_state ?? t("admin_em_dash")}</td>
-              <td className="px-3 py-2 font-mono text-meta">
+              <td className="px-3 py-2 font-mono text-small text-ink-800">{r.current_state ?? t("admin_em_dash")}</td>
+              <td className="px-3 py-2 font-mono text-small text-ink-800">{r.expected_state ?? t("admin_em_dash")}</td>
+              <td className="px-3 py-2 font-mono text-small text-ink-800">
                 {r.anomaly_flag == null ? t("admin_em_dash") : String(r.anomaly_flag)}
                 {r.anomaly_type ? ` / ${r.anomaly_type}` : ""}
               </td>
-              <td className="px-3 py-2 font-mono text-meta">
+              <td className="px-3 py-2 font-mono text-small text-ink-800">
                 {r.repairable == null ? t("admin_em_dash") : String(r.repairable)}
               </td>
-              <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">{r.last_transition_at ?? t("admin_em_dash")}</td>
+              <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">{r.last_transition_at ?? t("admin_em_dash")}</td>
             </tr>
           ))}
         </tbody>

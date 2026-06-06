@@ -1,5 +1,6 @@
 import type { CommunityPostType } from "@/lib/communityMockData";
-import { communityFuchsiaPillFocus } from "@/lib/communityA11yFocus";
+import { communityCardLinkFocus } from "@/lib/communityA11yFocus";
+import { TT_COMMUNITY_PAGE_L5 } from "@/lib/marketingUi";
 
 export type FeedTab = "recommend" | "following";
 export type SortBy = "latest" | "hot";
@@ -14,6 +15,11 @@ export const DESTINATION_BY_REGION: Record<string, string[]> = {
   id: ["巴厘岛", "雅加达"],
   sg: ["新加坡"],
 };
+
+/** PublishDrawer 目的地选项（与 Feed 筛选 `DESTINATION_BY_REGION` 同源） */
+export const PUBLISH_DESTINATION_OPTIONS: string[] = [
+  ...new Set(Object.values(DESTINATION_BY_REGION).flat()),
+];
 
 /** 目的地展示 i18n：中文名 -> locale key（用于筛选栏与卡片展示） */
 export const DESTINATION_LABEL_KEYS: Record<string, string> = {
@@ -39,12 +45,12 @@ export const REGION_KEYS = ["all", "cn", "jp", "th", "id", "sg"] as const;
 export type RegionKey = (typeof REGION_KEYS)[number];
 
 export const FEED_PAGE_SIZE = 6;
+/** 乐观评论 id 前缀（`useCommunityFeedCommentSend` · `communityFeedMappersCounts` 同源） */
+export const COMMUNITY_COMMENT_OPTIMISTIC_ID_PREFIX = "comment-local-";
 export const TRAVEL_IMG = "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&q=80";
 
 /** 31 §2.4：评论/详情内「约 TA 当向导」pill，与 Feed 卡片 `CommunityFeedCardContent` 一致；**37** **`min-h-[44px]`** */
-export const COMMUNITY_BOOK_GUIDE_CTA_CLASS =
-  `inline-flex items-center justify-center min-h-[44px] rounded-full border border-fuchsia-500/40 bg-fuchsia-500/10 px-3 py-1.5 text-meta text-fuchsia-100 hover:bg-fuchsia-500/20 motion-sub shrink-0 ${communityFuchsiaPillFocus}`;
+export const COMMUNITY_BOOK_GUIDE_CTA_CLASS = `${TT_COMMUNITY_PAGE_L5.pill} shrink-0 ${communityCardLinkFocus}`;
 
 /** 会话列表等窄行：同语义，**44px** 触摸目标 + 文案过长时截断 */
-export const COMMUNITY_BOOK_GUIDE_CTA_CLASS_COMPACT =
-  `inline-flex items-center justify-center min-h-[44px] min-w-[44px] max-w-[9rem] shrink-0 truncate rounded-full border border-fuchsia-500/40 bg-fuchsia-500/10 px-2 py-1 text-meta font-medium text-fuchsia-100 motion-sub hover:bg-fuchsia-500/20 ${communityFuchsiaPillFocus}`;
+export const COMMUNITY_BOOK_GUIDE_CTA_CLASS_COMPACT = `${TT_COMMUNITY_PAGE_L5.pillCompact} max-w-[9rem] truncate ${communityCardLinkFocus}`;

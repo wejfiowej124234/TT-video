@@ -66,7 +66,7 @@ export function RoutePrefetcher() {
 
     const ric = window.requestIdleCallback;
     if (typeof ric === "function") {
-      const id = ric(() => runPrimary(), { timeout: 4500 });
+      const id = ric(() => runPrimary(), { timeout: 2000 });
       return () => {
         cancelled = true;
         window.cancelIdleCallback?.(id);
@@ -74,7 +74,7 @@ export function RoutePrefetcher() {
       };
     }
 
-    const t = window.setTimeout(runPrimary, 500);
+    const t = window.setTimeout(runPrimary, 200);
     return () => {
       cancelled = true;
       clearTimeout(t);

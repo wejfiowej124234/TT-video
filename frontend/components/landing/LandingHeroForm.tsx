@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useEffect, useState, useCallback, useId } from "react";
+import { memo, useRef, useEffect, useState, useCallback, useId, useSyncExternalStore } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
-import TrustBadgesRow from "@/components/trust/TrustBadgesRow";
+import LandingHeroCityField from "@/components/landing/LandingHeroCityField";
+import LandingHeroAuxLinks from "@/components/landing/LandingHeroAuxLinks";
+import LandingHeroNavTabs from "@/components/landing/LandingHeroNavTabs";
 import {
   COUNTRY_OPTIONS,
-  CITIES_BY_COUNTRY,
   dateToString,
   ATTRACTION_TYPE_OPTIONS,
   STANDARD_OPTIONS,
@@ -14,6 +15,120 @@ import {
 } from "./constants";
 import { applyLandingDatePick } from "@/lib/landingDateRangePick";
 import { landingHeroFormAlertText } from "@/lib/landingHeroFormAlert";
+import {
+  TT_MARKETING_HOME_CALENDAR_DAY_SELECTED,
+  TT_MARKETING_HOME_CALENDAR_POPOVER,
+  TT_MARKETING_HOME_CALENDAR_POPOVER_FOOTER,
+  TT_MARKETING_HOME_FORM_INNER_GLOW,
+  TT_MARKETING_HOME_FORM_PANEL,
+  TT_MARKETING_HOME_FORM_PANEL_GLOW_CLIP,
+  TT_MARKETING_HOME_HERO_CARD_FRAME,
+  TT_MARKETING_HOME_HERO_GRID,
+  TT_MARKETING_HOME_HERO_ACTIONS_DIVIDER,
+  TT_MARKETING_HOME_HERO_ACTIONS_STACK,
+  TT_MARKETING_HOME_HERO_KICKER,
+  TT_MARKETING_HOME_HERO_SECTION,
+  TT_MARKETING_HOME_HERO_TITLE,
+  TT_MARKETING_HOME_SUBMIT_FAB,
+  TT_MARKETING_HOME_GLASS_COUNT_INPUT,
+  TT_MARKETING_HOME_GLASS_BUDGET_SHELL,
+  TT_MARKETING_HOME_GLASS_BUDGET_INPUT,
+  TT_MARKETING_HOME_CALENDAR_DAY_FOCUS,
+  TT_MARKETING_HOME_CALENDAR_DAY_IN_RANGE,
+  TT_MARKETING_HOME_PREFERENCES_DETAILS,
+  TT_MARKETING_HOME_PREFERENCES_SUMMARY,
+  ttMarketingHomeFilterPillClasses,
+} from "@/lib/marketingUi";
+
+const LG_MQL = "(min-width: 1024px)";
+const LANDING_HERO_COUNT_MIN = 1;
+const LANDING_HERO_COUNT_MAX = 20;
+
+function clampLandingHeroCount(n: number): number {
+  return Math.max(LANDING_HERO_COUNT_MIN, Math.min(LANDING_HERO_COUNT_MAX, n));
+}
+
+interface LandingHeroCountFieldProps {
+  label: string;
+  value: number;
+  onChange: (v: number) => void;
+  className?: string;
+}
+
+/** 允许删空后键盘输入；失焦时 clamp 到 1–20（54 §2.8 与预算字段同系玻璃控件） */
+function LandingHeroCountField({ label, value, onChange, className }: LandingHeroCountFieldProps) {
+  const [draft, setDraft] = useState(() => String(value));
+  const [editing, setEditing] = useState(false);
+
+  useEffect(() => {
+    if (!editing) setDraft(String(value));
+  }, [value, editing]);
+
+  const commitDraft = useCallback(
+    (raw: string) => {
+      const trimmed = raw.trim();
+      if (trimmed === "") {
+        onChange(LANDING_HERO_COUNT_MIN);
+        setDraft(String(LANDING_HERO_COUNT_MIN));
+        return;
+      }
+      const parsed = parseInt(trimmed, 10);
+      if (!Number.isFinite(parsed)) {
+        onChange(LANDING_HERO_COUNT_MIN);
+        setDraft(String(LANDING_HERO_COUNT_MIN));
+        return;
+      }
+      const clamped = clampLandingHeroCount(parsed);
+      onChange(clamped);
+      setDraft(String(clamped));
+    },
+    [onChange]
+  );
+
+  return (
+    <label className={className}>
+      <span className="block text-meta font-medium text-white/80 mb-1">{label}</span>
+      <input
+        type="text"
+        inputMode="numeric"
+        autoComplete="off"
+        aria-valuemin={LANDING_HERO_COUNT_MIN}
+        aria-valuemax={LANDING_HERO_COUNT_MAX}
+        aria-valuenow={value}
+        value={editing ? draft : String(value)}
+        onFocus={(e) => {
+          setEditing(true);
+          setDraft(String(value));
+          e.currentTarget.select();
+        }}
+        onChange={(e) => {
+          const digits = e.target.value.replace(/\D/g, "");
+          setDraft(digits);
+          if (digits !== "") onChange(clampLandingHeroCount(parseInt(digits, 10)));
+        }}
+        onBlur={() => {
+          setEditing(false);
+          commitDraft(draft);
+        }}
+        className={TT_MARKETING_HOME_GLASS_COUNT_INPUT}
+      />
+    </label>
+  );
+}
+
+function subscribeLgUp(onStoreChange: () => void) {
+  const mql = window.matchMedia(LG_MQL);
+  mql.addEventListener("change", onStoreChange);
+  return () => mql.removeEventListener("change", onStoreChange);
+}
+
+function getLgUpSnapshot() {
+  return window.matchMedia(LG_MQL).matches;
+}
+
+function getLgUpServerSnapshot() {
+  return true;
+}
 
 export interface LandingHeroFormProps {
   country: string;
@@ -42,10 +157,14 @@ export interface LandingHeroFormProps {
   validationErrorKey: string | null;
   /** API 错误：已由 hook 内 `mapApiReadError` / `t` 翻译 */
   submitError: string | null;
+  /** 未登录提交：展示登录 CTA */
+  loginRequired: boolean;
   handleSubmit: (e: React.FormEvent) => void;
+  /** Hero「自由市场」Tab：带当前目的地/天数 query */
+  marketHref?: string;
 }
 
-export default function LandingHeroForm({
+function LandingHeroForm({
   country,
   setCountry,
   cities,
@@ -70,13 +189,20 @@ export default function LandingHeroForm({
   submitting,
   validationErrorKey,
   submitError,
+  loginRequired,
   handleSubmit,
+  marketHref,
 }: LandingHeroFormProps) {
   const { t } = useTranslation();
+  const heroTitleId = useId();
+  const formAlertId = useId();
+  const countryFieldId = useId();
   const calendarDialogTitleId = useId();
   const calendarDialogDescId = useId();
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [calendarMonth, setCalendarMonth] = useState(() => new Date());
+  const [prefsOpenMobile, setPrefsOpenMobile] = useState(false);
+  const lgUp = useSyncExternalStore(subscribeLgUp, getLgUpSnapshot, getLgUpServerSnapshot);
   const calendarRef = useRef<HTMLDivElement>(null);
 
   const minDate = dateToString(new Date());
@@ -128,6 +254,22 @@ export default function LandingHeroForm({
     [minDate, startDate, endDate, setStartDate, setEndDate]
   );
 
+  const syncCalendarMonthToAnchor = useCallback(() => {
+    const anchor = startDate || endDate || minDate;
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(anchor);
+    if (m) {
+      setCalendarMonth(new Date(Number(m[1]), Number(m[2]) - 1, 1));
+    }
+  }, [startDate, endDate, minDate]);
+
+  const toggleCalendarOpen = useCallback(() => {
+    setCalendarOpen((open) => {
+      if (open) return false;
+      syncCalendarMonthToAnchor();
+      return true;
+    });
+  }, [syncCalendarMonthToAnchor]);
+
   const displayRange =
     startDate && endDate
       ? `${startDate.replace(/-/g, "/")} － ${endDate.replace(/-/g, "/")}`
@@ -136,62 +278,64 @@ export default function LandingHeroForm({
         : null;
   const calendarDays = getCalendarDays(calendarMonth.getFullYear(), calendarMonth.getMonth());
   const monthLabel = calendarMonth.toLocaleDateString(undefined, { month: "long", year: "numeric" });
-  const formAlertText = landingHeroFormAlertText(validationErrorKey, submitError, t);
+  const formAlertText = landingHeroFormAlertText(
+    loginRequired ? null : validationErrorKey,
+    loginRequired ? null : submitError,
+    t
+  );
+  const loginReturnUrl = encodeURIComponent("/");
+  const budgetNum = budget ? parseFloat(budget) : NaN;
+  const budgetQuoteHint =
+    budget && !Number.isNaN(budgetNum) && budgetNum > 0
+      ? t("landing_budget_quote_hint")
+          .replace(/\{\{min\}\}/g, String(Math.round(budgetNum * 0.8)))
+          .replace(/\{\{max\}\}/g, budget.trim())
+          .replace(/\{\{mid\}\}/g, String(Math.round(budgetNum * 0.9)))
+      : null;
 
   return (
-    <section id="form" className="relative flex min-h-[70vh] flex-col items-center justify-center px-4 py-16 scroll-mt-28">
-      <div className="relative z-10 w-full max-w-5xl rounded-[var(--radius-xl)] p-[1px] bg-gradient-to-br from-white/50 via-ref-cyan/35 to-ref-coral/40 shadow-[0_0_48px_-12px_rgba(35,206,217,0.2)] animate-fadeUp">
-      <div
-        className="relative w-full rounded-[var(--radius-xl)] border border-white/15 bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 overflow-hidden"
-      >
-        <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(35,206,217,0.12),transparent_50%),radial-gradient(circle_at_100%_40%,rgba(252,164,124,0.1),transparent_45%)]"
-          aria-hidden
-        />
+    <section id="form" className={TT_MARKETING_HOME_HERO_SECTION} data-tt-home-first-task="plan">
+      <div className={TT_MARKETING_HOME_HERO_GRID}>
+        <div className={TT_MARKETING_HOME_HERO_CARD_FRAME}>
+          <div className={TT_MARKETING_HOME_FORM_PANEL}>
+        <div className={TT_MARKETING_HOME_FORM_PANEL_GLOW_CLIP} aria-hidden>
+          <div className={TT_MARKETING_HOME_FORM_INNER_GLOW} />
+        </div>
         <div className="relative p-6 sm:p-8 lg:p-10">
-          <h1 className="text-h3 font-bold tracking-tight sm:text-h2 text-center bg-gradient-to-r from-white via-ref-cyan/95 to-ref-sun/90 bg-clip-text text-transparent drop-shadow-landing-hero">
+          <p className={`${TT_MARKETING_HOME_HERO_KICKER} break-keep`}>
+            <span className="text-ref-sun">{t("landing_hero_kicker")}</span>
+            <span className="mx-2 text-white/40" aria-hidden>
+              ·
+            </span>
+            <span className="normal-case tracking-normal text-white/85">{t("landing_hero_kicker_task")}</span>
+          </p>
+          <h1 id={heroTitleId} className={`${TT_MARKETING_HOME_HERO_TITLE} break-keep px-1`}>
             {t("landing_hero_title")}
           </h1>
-          <p className="mt-3 text-body-l text-white/90 text-center sm:text-h4">
+          <p className="mt-3 max-w-2xl mx-auto break-keep text-body-l text-white/90 text-center text-pretty leading-relaxed sm:text-h4 sm:leading-snug">
             {t("landing_hero_subtitle")}
           </p>
-          <p className="mt-2 text-small text-white/80 text-center">
+          <p className="mt-2 max-w-xl mx-auto break-keep text-meta text-white/75 text-center text-pretty">
             {t("landing_hero_escrow_note")}
           </p>
-          <TrustBadgesRow />
-          <p className="mt-1 text-meta text-white/70 text-center">{t("landing_payment_note")}</p>
-          <div className="mt-4 flex flex-wrap justify-center gap-3">
-            <Link
-              href="/market"
-              className="rounded-full bg-white/10 backdrop-blur-sm border border-ref-cyan/35 px-4 py-2 text-small font-medium text-white hover:bg-ref-cyan/15 hover:border-ref-cyan/50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-cyan/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-            >
-              {t("header_market")}
-            </Link>
-            {/* 同页 #form：原生 <a href="#form"> 保证写入 hash（next/link `/#form` 在同路径不稳定） */}
-            <a
-              href="#form"
-              className="rounded-full bg-white/10 backdrop-blur-sm border border-white/25 px-4 py-2 text-small font-medium text-white hover:bg-white/18 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-            >
-              {t("landing_cta_create")}
-            </a>
-            <Link
-              href="/guides"
-              className="rounded-full bg-white/10 backdrop-blur-sm border border-ref-sage/35 px-4 py-2 text-small font-medium text-white hover:bg-ref-sage/15 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sage/40 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-            >
-              {t("landing_cta_guides")}
-            </Link>
-            <Link
-              href="/traveltrust"
-              className="rounded-full border border-transparent bg-gradient-to-r from-ref-teal via-ref-cyan to-ref-teal px-4 py-2 text-small font-medium text-white shadow-[0_0_24px_-4px_rgba(35,206,217,0.4)] hover:brightness-110 motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-coral/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-            >
-              {t("landing_cta_traveltrust_network")}
-            </Link>
+          <div className={TT_MARKETING_HOME_HERO_ACTIONS_STACK}>
+            <LandingHeroAuxLinks />
+            <div className={TT_MARKETING_HOME_HERO_ACTIONS_DIVIDER}>
+              <LandingHeroNavTabs marketHref={marketHref} />
+            </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-            <div className="space-y-3">
-              <span className="block text-meta font-medium text-white/80">{t("landing_label_country_single")}</span>
-              <div className="flex flex-wrap gap-2">
+          <form
+            id="landing-hero-form"
+            onSubmit={handleSubmit}
+            className="mt-8 space-y-7"
+            aria-labelledby={heroTitleId}
+          >
+            <fieldset className="space-y-3 border-0 p-0 m-0 min-w-0">
+              <legend id={countryFieldId} className="block w-full text-meta font-medium text-white/80 mb-0">
+                {t("landing_label_country_single")}
+              </legend>
+              <div className="flex flex-wrap gap-2" role="group" aria-labelledby={countryFieldId}>
                 {COUNTRY_OPTIONS.map((c) => {
                   const selected = country === c.value;
                   return (
@@ -202,82 +346,63 @@ export default function LandingHeroForm({
                         setCountry(c.value);
                         setCities([]);
                       }}
-                      className={`rounded-full px-3 py-1.5 text-meta font-medium border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${
-                        selected ? "bg-white/30 border-white/40 text-white" : "bg-white/10 border-white/20 text-white/80 hover:bg-white/15"
-                      }`}
+                      className={ttMarketingHomeFilterPillClasses(selected, "country")}
                     >
                       {c.label}
                     </button>
                   );
                 })}
               </div>
-            </div>
-            <div className="space-y-3">
-              <span className="block text-meta font-medium text-white/80">{t("landing_label_cities_multi")}</span>
-              {!country ? (
-                <span className="block rounded-[var(--radius-xl)] border border-white/30 bg-white/10 px-3 py-2.5 text-meta text-white/60">{t("market_selectCountryFirst")}</span>
-              ) : (
-                <div className="flex flex-wrap gap-2">
-                  {(CITIES_BY_COUNTRY[country] ?? []).map((c) => {
-                    const selected = cities.includes(c.value);
-                    return (
-                      <button
-                        key={c.value}
-                        type="button"
-                        onClick={() => {
-                          setCities((prev) =>
-                            selected ? prev.filter((v) => v !== c.value) : [...prev, c.value]
-                          );
-                        }}
-                        className={`rounded-full px-3 py-1.5 text-meta font-medium border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${
-                          selected ? "bg-white/30 border-white/40 text-white" : "bg-white/10 border-white/20 text-white/80 hover:bg-white/15"
-                        }`}
-                      >
-                        {c.label}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-            {/* 出行日期 + 人数 + 房间数 + 预算 + 提交；54-S12：小屏日期独占一行，人数/房间与预算/提交成组换行，避免挤在一行。
-                sm:items-end：与 /admin 浅色筛选条同系（88 §3.5 v1.0.160）——桌面端 label 与 input/button 底对齐；各行控件 min-h-[44px] 对齐 13/37（86 Experience Landing 与 25 可交叉读）。 */}
-            <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:gap-4">
-              <div className="relative w-full shrink-0 flex flex-col sm:w-auto" ref={calendarRef}>
+            </fieldset>
+            <LandingHeroCityField
+              country={country}
+              cities={cities}
+              setCities={setCities}
+              citiesInvalid={validationErrorKey === "landing_error_cities"}
+              errorDescribedById={
+                validationErrorKey === "landing_error_cities" && formAlertText ? formAlertId : undefined
+              }
+            />
+            {/* 出行日期独占一行；人数/房间/预算/提交次行底对齐；报价说明第三行全宽（避免 hint 撑乱 items-end） */}
+            <div className="space-y-4">
+              <div className="relative w-full max-w-md shrink-0 flex flex-col" ref={calendarRef}>
                 <span className="block text-meta font-medium text-white/80 mb-1">{t("landing_label_date_range")}</span>
-                {/* 54 §2.8：单一「出行日期区间」外框，内为触发器 + 天数（与预算等表单项同系边框） */}
-                <div className="flex w-full items-center gap-2 min-h-[44px] rounded-[var(--radius-xl)] border border-white/30 bg-white/20 backdrop-blur-sm px-1.5 py-1 sm:w-auto">
+                <div className="flex w-full items-center gap-2 min-h-[44px] rounded-[var(--radius-xl)] border border-white/30 bg-white/20 backdrop-blur-sm px-1.5 py-1">
                   <button
                     type="button"
-                    onClick={() => setCalendarOpen((o) => !o)}
-                    className="flex min-h-[44px] min-w-0 w-full flex-1 items-center gap-2 rounded-[var(--radius-md)] border-0 bg-white/10 px-2.5 py-2 text-left text-small text-white placeholder:text-white/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 sm:min-w-[240px] sm:w-auto"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleCalendarOpen();
+                    }}
+                    className="flex min-h-[44px] min-w-0 w-full flex-1 items-center gap-2 rounded-[var(--radius-md)] border-0 bg-white/10 px-2.5 py-2 text-left text-small text-white placeholder:text-white/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 sm:min-w-[240px]"
                     aria-expanded={calendarOpen}
                     aria-haspopup="dialog"
                   >
                     <svg className="w-4 h-4 shrink-0 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    {displayRange || t("landing_label_date_range_placeholder")}
+                    <span className="min-w-0 truncate">{displayRange || t("landing_label_date_range_placeholder")}</span>
                   </button>
                   {days > 0 && (
-                    <span className="text-meta text-white/70 shrink-0 max-w-[5.5rem] sm:max-w-none leading-tight">
+                    <span className="shrink-0 whitespace-nowrap text-meta text-white/70 leading-tight">
                       {t("landing_days_count").replace("{{n}}", String(days))}
                     </span>
                   )}
                 </div>
                 {calendarOpen && (
-                  <>
-                    <div className="fixed inset-0 z-[100]" aria-hidden onClick={() => setCalendarOpen(false)} />
                     <div
                       role="dialog"
                       aria-modal="true"
                       aria-labelledby={calendarDialogTitleId}
                       aria-describedby={calendarDialogDescId}
-                      className="absolute left-0 top-full mt-1 z-[110] rounded-[var(--radius-xl)] border border-white/30 bg-slate-900 shadow-strong pt-4 px-4 pb-6 min-w-[280px]"
+                      className={TT_MARKETING_HOME_CALENDAR_POPOVER}
+                      onClick={(e) => e.stopPropagation()}
+                      onMouseDown={(e) => e.stopPropagation()}
                     >
                     <h2 id={calendarDialogTitleId} className="sr-only">
                       {t("landing_label_date_range")}
                     </h2>
+                    <div className="px-4 pt-4">
                     <div className="flex items-center justify-between mb-3">
                       <button
                         type="button"
@@ -302,7 +427,7 @@ export default function LandingHeroForm({
                         <span key={w} className="py-0.5">{w.trim()}</span>
                       ))}
                     </div>
-                    <div className="grid grid-cols-7 gap-0.5 mb-2">
+                    <div className="grid grid-cols-7 gap-0.5 pb-1">
                       {calendarDays.map((cell, i) => {
                         if (!cell.isCurrentMonth) return <div key={i} />;
                         const disabled = cell.date < minDate;
@@ -319,69 +444,63 @@ export default function LandingHeroForm({
                             type="button"
                             disabled={disabled}
                             onClick={() => handleCalendarDay(cell.date)}
-                            className={`w-8 h-8 rounded-[var(--radius-sm)] text-small font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
+                            className={`w-8 h-8 rounded-[var(--radius-sm)] text-small font-medium ${TT_MARKETING_HOME_CALENDAR_DAY_FOCUS} ${
                               disabled ? "text-white/30 cursor-not-allowed" : "text-white hover:bg-white/20"
-                            } ${isStart || isEnd ? "bg-cyan-500/80 text-white" : inRange ? "bg-white/15 text-white" : ""}`}
+                            } ${isStart || isEnd ? TT_MARKETING_HOME_CALENDAR_DAY_SELECTED : inRange ? TT_MARKETING_HOME_CALENDAR_DAY_IN_RANGE : ""}`}
                           >
                             {cell.day || ""}
                           </button>
                         );
                       })}
                     </div>
-                    <p id={calendarDialogDescId} className="mt-2 text-meta text-white/60">
-                      {t("landing_date_range_hint")}
-                    </p>
                     </div>
-                  </>
+                    <div className={TT_MARKETING_HOME_CALENDAR_POPOVER_FOOTER}>
+                      <p id={calendarDialogDescId} className="text-meta leading-snug text-white/60">
+                        {t("landing_date_range_hint")}
+                      </p>
+                    </div>
+                    </div>
                 )}
               </div>
-              <div className="flex flex-wrap items-end gap-3 sm:gap-4 min-w-0 w-full sm:flex-1">
-                <label className="min-w-[64px] max-w-[80px] shrink-0 flex flex-col">
-                  <span className="block text-meta font-medium text-white/80 mb-1">{t("landing_label_party_size")}</span>
-                  <input
-                    type="number"
-                    min={1}
-                    max={20}
-                    value={partySize}
-                    onChange={(e) => setPartySize(Math.max(1, Math.min(20, parseInt(e.target.value, 10) || 1)))}
-                    className="w-full min-h-[44px] h-11 rounded-[var(--radius-xl)] border border-white/30 bg-white/20 backdrop-blur-sm px-2 text-white text-small focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 [&::placeholder]:text-white/50"
-                  />
-                </label>
-                <label className="min-w-[64px] max-w-[80px] shrink-0 flex flex-col">
-                  <span className="block text-meta font-medium text-white/80 mb-1">{t("landing_label_num_rooms")}</span>
-                  <input
-                    type="number"
-                    min={1}
-                    max={20}
-                    value={numRooms}
-                    onChange={(e) => setNumRooms(Math.max(1, Math.min(20, parseInt(e.target.value, 10) || 1)))}
-                    className="w-full min-h-[44px] h-11 rounded-[var(--radius-xl)] border border-white/30 bg-white/20 backdrop-blur-sm px-2 text-white text-small focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 [&::placeholder]:text-white/50"
-                  />
-                </label>
-                <label className="flex-1 min-w-[100px] max-w-[160px] flex flex-col">
+              <div className="flex flex-wrap items-end gap-x-3 gap-y-3 sm:gap-x-4">
+                <LandingHeroCountField
+                  label={t("landing_label_party_size")}
+                  value={partySize}
+                  onChange={setPartySize}
+                  className="w-[4.5rem] shrink-0 flex flex-col"
+                />
+                <LandingHeroCountField
+                  label={t("landing_label_num_rooms")}
+                  value={numRooms}
+                  onChange={setNumRooms}
+                  className="w-[4.5rem] shrink-0 flex flex-col"
+                />
+                <label className="flex min-w-[7.5rem] flex-1 flex-col sm:max-w-[11rem] sm:flex-none">
                   <span className="block text-meta font-medium text-white/80 mb-1">{t("landing_label_budget")}</span>
-                  <div className="flex items-center min-h-[44px] h-11 rounded-[var(--radius-xl)] border border-white/30 bg-white/20 backdrop-blur-sm overflow-hidden">
-                    <span className="pl-2 text-small text-white/70">$</span>
+                  <div className={TT_MARKETING_HOME_GLASS_BUDGET_SHELL}>
+                    <span className="shrink-0 text-small text-white/70" aria-hidden>
+                      $
+                    </span>
                     <input
-                      type="number"
-                      min="1"
-                      max="999999"
-                      step="1"
-                      placeholder={t("landing_budget_placeholder")}
+                      type="text"
                       inputMode="numeric"
+                      autoComplete="off"
+                      placeholder={t("landing_budget_placeholder")}
                       value={budget}
-                      onChange={(e) => setBudget(e.target.value)}
-                      className="flex-1 min-w-0 h-full py-0 pr-2 pl-0.5 text-white text-small placeholder:text-white/50 bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-inset"
+                      onChange={(e) => setBudget(e.target.value.replace(/\D/g, ""))}
+                      className={TT_MARKETING_HOME_GLASS_BUDGET_INPUT}
                     />
-                    <span className="pr-2 text-meta text-white/60">{t("landing_budget_unit")}</span>
                   </div>
                 </label>
-                <div className="shrink-0 flex items-center gap-2">
+                <div className="ml-auto flex shrink-0 items-center gap-2 self-end sm:ml-0 sm:gap-3">
+                  <span className="hidden sm:inline shrink-0 whitespace-nowrap text-meta font-medium text-white/90">
+                    {submitting ? t("landing_btn_generating") : t("landing_btn_generate")}
+                  </span>
                   <button
                     type="submit"
                     disabled={submitting}
                     aria-busy={submitting ? true : undefined}
-                    className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-cta-gradient text-white flex items-center justify-center shadow-medium transition-transform hover:brightness-110 hover:shadow-[0_0_24px_rgba(139,92,246,0.35)] active:scale-[0.98] disabled:opacity-60 motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-white/90"
+                    className={TT_MARKETING_HOME_SUBMIT_FAB}
                     title={submitting ? t("landing_btn_generating") : t("landing_btn_generate")}
                     aria-label={submitting ? t("landing_btn_generating") : t("landing_btn_generate")}
                   >
@@ -389,12 +508,36 @@ export default function LandingHeroForm({
                       <path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
                     </svg>
                   </button>
-                  {submitting && <span className="text-meta text-white/80">{t("landing_btn_generating")}</span>}
                 </div>
               </div>
+              {budgetQuoteHint ? (
+                <p className="max-w-2xl text-meta leading-snug text-white/85 text-ref-sun/90 break-words">{budgetQuoteHint}</p>
+              ) : null}
+              <p
+                className="max-w-2xl text-meta leading-snug text-white/70"
+                data-tt-home-itinerary-generate-honesty="phase1-mock-ai-not-production"
+              >
+                {t("landing_hero_itinerary_disclaimer")}
+              </p>
             </div>
-            <div className="mt-8 pt-6 border-t border-white/15 space-y-6">
-              <h3 className="text-small font-semibold text-white/95">{t("landing_section_preferences")}</h3>
+            <details
+              className={TT_MARKETING_HOME_PREFERENCES_DETAILS}
+              open={lgUp || prefsOpenMobile}
+              onToggle={(e) => {
+                if (lgUp) return;
+                setPrefsOpenMobile(e.currentTarget.open);
+              }}
+            >
+              <summary className={`${TT_MARKETING_HOME_PREFERENCES_SUMMARY} lg:hidden`}>
+                <span>{t("landing_section_preferences")}</span>
+                <span className="text-meta font-normal text-white/55" aria-hidden>
+                  ▾
+                </span>
+              </summary>
+              <h3 className="hidden lg:block text-small font-semibold text-white/95 mb-4">
+                {t("landing_section_preferences")}
+              </h3>
+              <div className="mt-4 space-y-5 pb-1">
               <div className="space-y-2">
                 <span className="block text-meta text-white/70">{t("landing_label_attraction_types")}</span>
                 <div className="flex flex-wrap gap-2">
@@ -409,9 +552,7 @@ export default function LandingHeroForm({
                             selected ? prev.filter((v) => v !== a.value) : [...prev, a.value]
                           );
                         }}
-                        className={`rounded-full px-3 py-1.5 text-meta font-medium border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${
-                          selected ? "bg-white/30 border-white/40 text-white" : "bg-white/10 border-white/20 text-white/80 hover:bg-white/15"
-                        }`}
+                        className={ttMarketingHomeFilterPillClasses(selected)}
                       >
                         {t(a.labelKey)}
                       </button>
@@ -419,7 +560,7 @@ export default function LandingHeroForm({
                   })}
                 </div>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 items-start gap-5 md:grid-cols-2 md:gap-x-8">
                 <div className="space-y-2">
                   <span className="block text-meta text-white/70">{t("landing_label_dining")}</span>
                   <div className="flex flex-wrap gap-2">
@@ -434,9 +575,7 @@ export default function LandingHeroForm({
                               selected ? prev.filter((v) => v !== s.value) : [...prev, s.value]
                             );
                           }}
-                          className={`rounded-full px-3 py-1.5 text-meta font-medium border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${
-                            selected ? "bg-white/30 border-white/40 text-white" : "bg-white/10 border-white/20 text-white/80 hover:bg-white/15"
-                          }`}
+                          className={ttMarketingHomeFilterPillClasses(selected)}
                         >
                           {t(s.labelKey)}
                         </button>
@@ -458,9 +597,7 @@ export default function LandingHeroForm({
                               selected ? prev.filter((v) => v !== s.value) : [...prev, s.value]
                             );
                           }}
-                          className={`rounded-full px-3 py-1.5 text-meta font-medium border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${
-                            selected ? "bg-white/30 border-white/40 text-white" : "bg-white/10 border-white/20 text-white/80 hover:bg-white/15"
-                          }`}
+                          className={ttMarketingHomeFilterPillClasses(selected)}
                         >
                           {t(s.labelKey)}
                         </button>
@@ -469,16 +606,40 @@ export default function LandingHeroForm({
                   </div>
                 </div>
               </div>
-            </div>
+              </div>
+            </details>
+            {loginRequired && (
+              <div
+                className="mt-3 rounded-[var(--radius-lg)] border border-danger/40 bg-danger/10 px-4 py-3"
+                role="alert"
+                data-testid="landing-login-cta"
+              >
+                <p className="text-small text-white font-medium">{t("landing_error_login")}</p>
+                <Link
+                  href={`/auth/login?returnUrl=${loginReturnUrl}`}
+                  className="mt-2 inline-flex min-h-[44px] items-center rounded-[var(--radius-md)] bg-white/20 px-4 text-small font-semibold text-white hover:bg-white/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                >
+                  {t("landing_error_login_cta")}
+                </Link>
+              </div>
+            )}
             {formAlertText && (
-              <p className="mt-3 text-small text-danger font-medium" role="alert">
+              <p
+                id={formAlertId}
+                className="mt-3 text-small text-danger font-medium"
+                role="alert"
+                aria-live="polite"
+              >
                 {formAlertText}
               </p>
             )}
           </form>
         </div>
-      </div>
+          </div>
+        </div>
       </div>
     </section>
   );
 }
+
+export default memo(LandingHeroForm);

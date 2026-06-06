@@ -4,7 +4,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
-import { TT_HORIZON_ARC_L5, TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID } from "@/lib/traveltrustCinematicNonGlobeL5";
+import { TT_HORIZON_ARC_L5, TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID } from "@/lib/traveltrust/l5";
 
 
 

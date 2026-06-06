@@ -1,46 +1,58 @@
 "use client";
 
+import { useMemo, useCallback, type FormEvent } from "react";
 import dynamic from "next/dynamic";
-import { useMemo, type FormEvent } from "react";
-import { createPortal } from "react-dom";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { getPublicPostsByTagCount } from "@/lib/apiClient/community";
-import { CommentDrawer } from "@/components/community/CommentDrawer";
+import { CommunityFeedDiscoveryChrome } from "@/components/community/CommunityFeedDiscoveryChrome";
+import CommunityFeedDesktopLead from "@/components/community/CommunityFeedDesktopLead";
 import CommunityFeedHeader from "@/components/community/CommunityFeedHeader";
+import { CommunityFeedMediaCapabilitiesBanner } from "@/components/community/CommunityFeedMediaCapabilitiesBanner";
+import { CommunityFeedShowcaseNotice } from "@/components/community/CommunityFeedShowcaseNotice";
 import { useCommunityFeed } from "@/components/community/useCommunityFeed";
-import CommunityFeedFilterBar from "@/components/community/CommunityFeedFilterBar";
-import CommunityFeedDesktopAside from "@/components/community/CommunityFeedDesktopAside";
 import { suggestedAuthorsFromPosts } from "@/components/community/communitySuggestedAuthors";
 import CommunityFeedList from "@/components/community/CommunityFeedList";
-import CommunityLoginModal from "@/components/community/CommunityLoginModal";
-import CommunityVideoOverlay from "@/components/community/CommunityVideoOverlay";
+import { detailVideoFeedPostIdsFromPosts } from "@/components/community/postDetailVideoFeedNav";
 import CommunityTopicHero from "@/components/community/CommunityTopicHero";
-import { CommunityReportDrawer } from "@/components/community/CommunityReportDrawer";
+import CommunityFeedMainPortals from "@/components/community/CommunityFeedMainPortals";
 import {
   communityCardLinkFocus,
-  communityCyanPillFocus,
-  communityPublishFabFocus,
   communitySlatePillFocus,
 } from "@/lib/communityA11yFocus";
+import {
+  TT_COMMUNITY_DRAWER_L5,
+  TT_COMMUNITY_FEED_ACTION,
+  TT_COMMUNITY_FEED_ASIDE_GRID_CELL,
+  TT_COMMUNITY_FEED_DESKTOP_GRID,
+  TT_COMMUNITY_FEED_MAIN_GRID_CELL,
+  TT_COMMUNITY_FEED_STACK,
+  TT_MARKETING_COMMUNITY_FEED_PAGE,
+} from "@/lib/marketingUi";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 
-const PublishDrawer = dynamic(
-  () => import("@/components/community/PublishDrawer").then((m) => ({ default: m.PublishDrawer })),
-  { ssr: false }
-);
-const PostDetailDrawer = dynamic(
-  () => import("@/components/community/PostDetailDrawer").then((m) => ({ default: m.PostDetailDrawer })),
-  { ssr: false }
-);
+const CommunityFeedDesktopAside = dynamic(() => import("@/components/community/CommunityFeedDesktopAside"), {
+  ssr: false,
+  loading: () => null,
+});
+
+const CommunityLoginModal = dynamic(() => import("@/components/community/CommunityLoginModal"), {
+  ssr: false,
+  loading: () => null,
+});
 
 /** 31 附录：Feed 主区（与 `/community`、`/community/topic/[tag]` 共用） */
-export default function CommunityFeedMain() {
+export default function CommunityFeedMain({
+  initialSnapshot = null,
+}: {
+  initialSnapshot?: import("@/lib/community/communityFeedInitialData").CommunityFeedInitialSnapshot | null;
+}) {
   const {
     t,
     isLoggedIn,
     authLoading,
+    feedSearchMode,
     feedTab,
     setFeedTab,
     sortBy,
@@ -57,9 +69,14 @@ export default function CommunityFeedMain() {
     setTagFilter,
     searchQuery,
     setSearchQuery,
+    anchorPoiId,
+    setAnchorPoiId,
+    proximityFilter,
+    setProximityFilter,
     feedError,
     refreshFeed,
     clearFilters,
+    applySearchAsTopicTag,
     pullY,
     feedLoading,
     searchFilteredPosts,
@@ -73,7 +90,6 @@ export default function CommunityFeedMain() {
     setFocusReturn,
     setDetailPost,
     setCommentPost,
-    setVideoPost,
     openPublish,
     handleReport,
     handleReportComment,
@@ -109,10 +125,15 @@ export default function CommunityFeedMain() {
     retryCommentsLoad,
     commentSort,
     setCommentSort,
+    commentsHasMore,
+    loadMoreComments,
+    commentsLoadMoreBusy,
     commentPost,
     commentsForPost,
     detailPost,
     commentsForDetail,
+    detailFocusComments,
+    openPostDetail,
     detailPostAuthorFollow,
     showLoginModal,
     setShowLoginModal,
@@ -120,19 +141,16 @@ export default function CommunityFeedMain() {
     toast,
     toastBodyOverride,
     toastHint,
-    videoPost,
-    focusReturnTargetRef,
-    videoBackButtonRef,
+    apiCommentsByPostId,
     loginBackButtonRef,
     closeCommentDrawer,
     closeDetailDrawer,
     closePublishDrawer,
-    closeVideoOverlay,
     postDeepLinkBusy,
     postDeepLinkAlert,
     dismissPostDeepLinkIssue,
     retryPostDeepLinkFetch,
-  } = useCommunityFeed();
+  } = useCommunityFeed({ initialSnapshot });
 
   const desktopSuggestedAuthors = useMemo(
     () =>
@@ -141,7 +159,20 @@ export default function CommunityFeedMain() {
         followingAuthorIds: followingAuthorIdSet,
         max: 6,
       }),
-    [searchFilteredPosts, meUserId, followingAuthorIdSet]
+    [searchFilteredPosts, meUserId, followingAuthorIdSet],
+  );
+
+  const detailVideoFeedPostIds = useMemo(
+    () => detailVideoFeedPostIdsFromPosts(postsToShow),
+    [postsToShow],
+  );
+
+  const onDetailVideoFeedSelect = useCallback(
+    (postId: string) => {
+      const p = postsToShow.find((x) => x.id === postId);
+      if (p) setDetailPost(p);
+    },
+    [postsToShow, setDetailPost],
   );
 
   const clearTopicOnly = () => setTagFilter(null);
@@ -165,14 +196,32 @@ export default function CommunityFeedMain() {
 
   return (
     <>
-      <main className="max-w-7xl mx-auto px-3 py-4 sm:px-4 sm:py-6" aria-label={t("community_tab_feed")}>
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
-          <div className="min-w-0 flex-1 w-full max-w-4xl mx-auto lg:mx-0">
+      <main
+        className={TT_MARKETING_COMMUNITY_FEED_PAGE}
+        aria-label={t("community_tab_feed")}
+        data-tt-community-feed-page="1"
+      >
+        <h1 className={TT_COMMUNITY_FEED_ACTION.headerTitleSrOnly}>{t("community_title")}</h1>
+        <div className={TT_COMMUNITY_FEED_DESKTOP_GRID}>
+          <CommunityFeedDesktopLead t={t} />
+          <div className={TT_COMMUNITY_FEED_ASIDE_GRID_CELL}>
+            <CommunityFeedDesktopAside
+              t={t}
+              hotDestinations={hotDestinations}
+              destinationFilter={destinationFilter}
+              feedPosts={postsToShow}
+              suggestedAuthors={desktopSuggestedAuthors}
+              followingAuthorIds={followingAuthorIdSet}
+              followBusyAuthorId={followBusyAuthorId}
+              onAuthorFollowToggle={handleAuthorFollowToggle}
+            />
+          </div>
+          <div className={`${TT_COMMUNITY_FEED_MAIN_GRID_CELL} ${TT_COMMUNITY_FEED_STACK}`}>
             <CommunityFeedHeader t={t} onRefresh={refreshFeed} />
 
             {postDeepLinkBusy ? (
               <div
-                className="mb-4 rounded-[var(--radius-md)] border border-slate-600/50 bg-slate-800/50 px-4 py-3 text-small text-slate-200"
+                className={TT_COMMUNITY_DRAWER_L5.feedInlineAlert}
                 role="status"
                 aria-live="polite"
                 aria-busy="true"
@@ -183,7 +232,7 @@ export default function CommunityFeedMain() {
 
             {postDeepLinkAlert?.kind === "unavailable" ? (
               <div
-                className="mb-4 rounded-[var(--radius-md)] border border-slate-500/50 bg-slate-800/40 px-4 py-3 space-y-3"
+                className={TT_COMMUNITY_DRAWER_L5.feedInlineAlertSoft}
                 role="region"
                 aria-label={t("community_postDeepLink_notFoundOrHidden")}
               >
@@ -191,13 +240,13 @@ export default function CommunityFeedMain() {
                 <div className="flex flex-wrap items-center gap-2">
                   <Link
                     href="/community"
-                    className={`${touchTargetLink44Classes} text-meta font-medium text-cyan-300 hover:text-cyan-100`}
+                    className={`${touchTargetLink44Classes} ${TT_COMMUNITY_FEED_ACTION.secondaryLink}`}
                   >
                     {t("community_postDeepLink_backFeed")}
                   </Link>
                   <Link
                     href="/community/explore"
-                    className={`${touchTargetLink44Classes} text-meta font-medium text-cyan-300 hover:text-cyan-100`}
+                    className={`${touchTargetLink44Classes} ${TT_COMMUNITY_FEED_ACTION.secondaryLink}`}
                   >
                     {t("community_postDeepLink_goExplore")}
                   </Link>
@@ -210,7 +259,7 @@ export default function CommunityFeedMain() {
                   >
                     <button
                       type="submit"
-                      className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-slate-500/60 bg-slate-800/60 px-3 py-1.5 text-meta text-slate-300 hover:bg-slate-700/60 ${communitySlatePillFocus}`}
+                      className={`${TT_COMMUNITY_FEED_ACTION.asideGhostPill} ${communitySlatePillFocus}`}
                     >
                       {t("common_closeAlert")}
                     </button>
@@ -233,20 +282,20 @@ export default function CommunityFeedMain() {
                     <button
                       type="submit"
                       aria-label={t("common_retry")}
-                      className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 ${communityCyanPillFocus}`}
+                      className={`${TT_COMMUNITY_FEED_ACTION.retryPill} ${communityCardLinkFocus}`}
                     >
                       {t("common_retry")}
                     </button>
                   </form>
                   <Link
                     href="/community"
-                    className={`${touchTargetLink44Classes} text-meta font-medium text-cyan-300 hover:text-cyan-100`}
+                    className={`${touchTargetLink44Classes} ${TT_COMMUNITY_FEED_ACTION.secondaryLink}`}
                   >
                     {t("community_postDeepLink_backFeed")}
                   </Link>
                   <Link
                     href="/community/explore"
-                    className={`${touchTargetLink44Classes} text-meta font-medium text-cyan-300 hover:text-cyan-100`}
+                    className={`${touchTargetLink44Classes} ${TT_COMMUNITY_FEED_ACTION.secondaryLink}`}
                   >
                     {t("community_postDeepLink_goExplore")}
                   </Link>
@@ -259,7 +308,7 @@ export default function CommunityFeedMain() {
                   >
                     <button
                       type="submit"
-                      className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-slate-500/60 bg-slate-800/60 px-3 py-1.5 text-meta text-slate-300 hover:bg-slate-700/60 ${communitySlatePillFocus}`}
+                      className={`${TT_COMMUNITY_FEED_ACTION.asideGhostPill} ${communitySlatePillFocus}`}
                     >
                       {t("common_closeAlert")}
                     </button>
@@ -283,32 +332,7 @@ export default function CommunityFeedMain() {
               />
             ) : null}
 
-            <form className="mb-4 block w-full" onSubmit={openPublishFromForm}>
-              <button
-                type="submit"
-                className="w-full rounded-[var(--radius-xl)] border border-cyan-400/40 bg-slate-900/70 backdrop-blur-md px-4 py-3 flex items-center gap-3 text-left motion-sub hover:border-cyan-400/60 hover:bg-slate-800/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 min-h-[52px]"
-                aria-label={t("community_publish")}
-                title={t("community_publish_entry_hint")}
-              >
-                <span
-                  className="flex-shrink-0 min-h-[44px] min-w-[44px] h-11 w-11 rounded-full bg-fuchsia-500/20 border border-fuchsia-400/40 flex items-center justify-center text-fuchsia-300"
-                  aria-hidden
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                    />
-                  </svg>
-                </span>
-                <span className="flex-1 text-body text-slate-300 truncate text-left">{t("community_publish_entry_placeholder")}</span>
-                <span className="flex-shrink-0 text-meta text-cyan-300">+ {t("community_publish")}</span>
-              </button>
-            </form>
-
-            <CommunityFeedFilterBar
+            <CommunityFeedDiscoveryChrome
               t={t}
               feedTab={feedTab}
               setFeedTab={setFeedTab}
@@ -321,6 +345,7 @@ export default function CommunityFeedMain() {
               destinationFilter={destinationFilter}
               setDestinationFilter={setDestinationFilter}
               hotDestinations={hotDestinations}
+              feedPosts={postsToShow}
               tagFilter={tagFilter}
               setTagFilter={setTagFilter}
               searchQuery={searchQuery}
@@ -329,7 +354,17 @@ export default function CommunityFeedMain() {
               onRefresh={refreshFeed}
               onClearFilters={clearFilters}
               tagTopicMatchCount={tagFilter ? searchFilteredPosts.length : undefined}
+              onPublishSubmit={openPublishFromForm}
+              anchorPoiId={anchorPoiId}
+              setAnchorPoiId={setAnchorPoiId}
+              proximityFilter={proximityFilter}
+              setProximityFilter={setProximityFilter}
+              onSearchApplyServerTag={applySearchAsTopicTag}
+              feedSearchMode={feedSearchMode}
             />
+
+            <CommunityFeedMediaCapabilitiesBanner t={t} />
+            <CommunityFeedShowcaseNotice posts={postsToShow} t={t} />
 
             {meCollectsLoadError != null && (
               <div className="mb-4 space-y-2" role="alert" aria-live="polite">
@@ -344,7 +379,7 @@ export default function CommunityFeedMain() {
                   <button
                     type="submit"
                     aria-label={t("common_retry")}
-                    className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
+                    className={`${TT_COMMUNITY_FEED_ACTION.retryPill} ${communityCardLinkFocus}`}
                   >
                     {t("common_retry")}
                   </button>
@@ -354,7 +389,7 @@ export default function CommunityFeedMain() {
 
             {pullY > 0 && (
               <div
-                className="md:hidden flex items-center justify-center text-meta text-cyan-300 transition-opacity"
+                className="md:hidden flex items-center justify-center text-meta text-ref-sun/85 transition-opacity"
                 style={{ height: Math.min(pullY, 56) }}
                 role="status"
                 aria-live="polite"
@@ -386,54 +421,28 @@ export default function CommunityFeedMain() {
               onLike={handleLike}
               onCollect={handleCollect}
               onLoadMore={handleLoadMore}
-              onViewFull={(p, trigger) => {
-                setFocusReturn(trigger ?? null);
-                setDetailPost(p);
-              }}
-              onCommentClick={(p, trigger) => {
-                setFocusReturn(trigger ?? null);
-                setCommentPost(p);
-              }}
-              onPlayVideo={(p, trigger) => {
-                setFocusReturn(trigger ?? null);
-                setVideoPost(p);
-              }}
+              onViewFull={(p, trigger) => openPostDetail(p, trigger, false)}
+              onCommentClick={(p, trigger) => openPostDetail(p, trigger, true)}
+              onPlayVideo={(p, trigger) => openPostDetail(p, trigger, false)}
               onReport={handleReport}
               onPublishClick={(trigger) => openPublish(trigger)}
               meUserId={meUserId}
               followingAuthorIds={followingAuthorIdSet}
               followBusyAuthorId={followBusyAuthorId}
               onAuthorFollowToggle={handleAuthorFollowToggle}
+              sortBy={sortBy}
+              hotDestinations={hotDestinations}
+              proximityFilter={proximityFilter}
+              setProximityFilter={setProximityFilter}
             />
           </div>
-          <CommunityFeedDesktopAside
-            t={t}
-            hotDestinations={hotDestinations}
-            destinationFilter={destinationFilter}
-            setDestinationFilter={setDestinationFilter}
-            suggestedAuthors={desktopSuggestedAuthors}
-            followingAuthorIds={followingAuthorIdSet}
-            followBusyAuthorId={followBusyAuthorId}
-            onAuthorFollowToggle={handleAuthorFollowToggle}
-          />
         </div>
 
-        <footer className="hidden md:flex fixed bottom-0 left-0 right-0 z-10 pointer-events-none">
-          <div className="max-w-7xl mx-auto px-4 py-3 flex justify-end w-full">
-            <Link
-              href="/"
-              className={`pointer-events-auto inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-slate-600 bg-slate-800/90 backdrop-blur px-4 py-2 text-meta text-slate-300 hover:bg-slate-700/90 motion-sub ${communitySlatePillFocus}`}
-            >
-              {t("community_back")}
-            </Link>
-          </div>
-        </footer>
-
-        <div className="fixed right-4 bottom-24 z-20 sm:right-8 sm:bottom-24 md:bottom-20">
+        <div className="fixed right-4 bottom-24 z-20 sm:right-8 sm:bottom-24 md:hidden">
           <form className="contents" onSubmit={openPublishFromForm}>
             <button
               type="submit"
-              className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border-2 border-fuchsia-400/60 bg-fuchsia-500/30 px-5 py-2 text-meta font-semibold text-fuchsia-200 shadow-scifi-fuchsia-prominent motion-sub hover:border-fuchsia-400 hover:bg-fuchsia-500/40 hover:text-fuchsia-100 hover:shadow-scifi-fuchsia-prominent-hover ${communityPublishFabFocus}`}
+              className={`${TT_COMMUNITY_FEED_ACTION.publishFab} ${TT_COMMUNITY_FEED_ACTION.publishFabFocus}`}
               aria-label={t("community_publish")}
             >
               + {t("community_publish")}
@@ -448,138 +457,68 @@ export default function CommunityFeedMain() {
           backButtonRef={loginBackButtonRef}
         />
 
-        <div className="relative z-10 pt-6 pb-8 text-center">
-          <p className="text-meta text-slate-400">{t("community_more_coming")}</p>
+        <div className="relative z-10 pt-6 pb-8 text-center md:hidden">
+          <p className="text-meta text-slate-500">{t("community_more_coming")}</p>
         </div>
       </main>
 
-      {toast && (
-        <div
-          className="fixed left-1/2 z-50 w-[min(100vw-1.5rem,22rem)] -translate-x-1/2 rounded-[var(--radius-md)] border border-cyan-500/40 bg-slate-900/95 backdrop-blur px-4 py-3 text-small text-cyan-200 shadow-scifi-toast motion-sub animate-in fade-in duration-200 safe-area-toast-bottom"
-          role="status"
-          aria-live="polite"
-        >
-          <p className="text-center font-medium">{toastBodyOverride ?? t(toast)}</p>
-          {toast === "community_publish_success" && toastHint ? (
-            <div className="mt-2 flex flex-col items-center gap-2 border-t border-cyan-500/20 pt-2">
-              <p className="text-meta text-center text-slate-300">{t(toastHint)}</p>
-              <Link
-                href="/community/me/posts"
-                className={`${touchTargetLink44Classes} text-meta font-medium text-cyan-300 underline underline-offset-2 hover:text-cyan-100 motion-sub ${communityCardLinkFocus}`}
-              >
-                {t("community_publish_view_my_posts")}
-              </Link>
-            </div>
-          ) : null}
-          {toast === "community_report_submitted" && reportSuccessId ? (
-            <div className="mt-2 flex flex-col items-center gap-2 border-t border-cyan-500/20 pt-2">
-              <Link
-                href={`/community/me/reports/${encodeURIComponent(reportSuccessId)}`}
-                className={`${touchTargetLink44Classes} text-meta font-medium text-cyan-300 underline underline-offset-2 hover:text-cyan-100 motion-sub ${communityCardLinkFocus}`}
-              >
-                {t("community_report_view_ticket")}
-              </Link>
-              <Link
-                href="/community/me/reports"
-                className={`${touchTargetLink44Classes} text-meta font-medium text-slate-300 underline underline-offset-2 hover:text-cyan-100 motion-sub ${communityCardLinkFocus}`}
-              >
-                {t("community_report_view_all_reports")}
-              </Link>
-            </div>
-          ) : null}
-        </div>
-      )}
-
-      {commentPost && (
-        <CommentDrawer
-          post={commentPost}
-          comments={commentsForPost}
-          commentCount={commentsForPost.length}
-          onClose={closeCommentDrawer}
-          onSend={(content) => handleCommentSend(commentPost.id, content)}
-          t={t}
-          isLoggedIn={isLoggedIn}
-          authPending={authLoading}
-          meUserId={meUserId}
-          onReportComment={(c) => handleReportComment(commentPost, c)}
-          commentSendError={commentSendFailed}
-          commentSendErrorMessage={commentSendErrorMessage}
-          commentFieldMessages={commentFieldMessages}
-          onRetryComment={clearCommentSendError}
-          commentsLoadError={commentsLoadError}
-          onRetryCommentsLoad={retryCommentsLoad}
-          commentSort={commentSort}
-          onCommentSortChange={setCommentSort}
-        />
-      )}
-
-      {reportContext && (
-        <CommunityReportDrawer
-          context={reportContext}
-          onClose={closeReportDrawer}
-          onSubmit={handleReportSubmit}
-          t={t}
-          reportSendFailed={reportSendFailed}
-          reportErrorMessage={reportErrorMessage}
-          reportFieldMessages={reportFieldMessages}
-          onClearReportError={clearReportSendError}
-        />
-      )}
-
-      {detailPost && (
-        <PostDetailDrawer
-          post={detailPost}
-          comments={commentsForDetail}
-          commentCount={commentsForDetail.length}
-          onClose={closeDetailDrawer}
-          onCommentSend={(content) => handleCommentSend(detailPost.id, content)}
-          t={t}
-          isLoggedIn={isLoggedIn}
-          authPending={authLoading}
-          meUserId={meUserId}
-          onReportComment={(c) => handleReportComment(detailPost, c)}
-          onReport={handleReport}
-          liked={likedPostIds.has(detailPost.id)}
-          collected={collectedPostIds.has(detailPost.id)}
-          onLike={() => void handleLike(detailPost.id)}
-          onCollect={() => void handleCollect(detailPost.id)}
-          commentSendError={commentSendFailed}
-          commentSendErrorMessage={commentSendErrorMessage}
-          commentFieldMessages={commentFieldMessages}
-          onRetryComment={clearCommentSendError}
-          commentsLoadError={commentsLoadError}
-          onRetryCommentsLoad={retryCommentsLoad}
-          commentSort={commentSort}
-          onCommentSortChange={setCommentSort}
-          authorFollow={detailPostAuthorFollow}
-          onAfterTopicTagClick={closeDetailDrawer}
-          topicTagHref={hrefTopicPathForTag}
-        />
-      )}
-
-      {publishOpen &&
-        typeof document !== "undefined" &&
-        createPortal(
-          <PublishDrawer
-            onClose={closePublishDrawer}
-            onSubmit={handlePublishSubmit}
-            t={t}
-            publishError={publishSendFailed}
-            publishErrorMessage={publishErrorMessage}
-            publishFieldMessages={publishFieldMessages}
-            onRetryPublish={clearPublishSendError}
-          />,
-          document.body
-        )}
-
-      <CommunityVideoOverlay
-        open={!!videoPost}
-        onClose={closeVideoOverlay}
+      <CommunityFeedMainPortals
         t={t}
-        backButtonRef={videoBackButtonRef}
-        videoUrl={videoPost?.is_video ? (videoPost.media_urls?.[0] ?? videoPost.media_url) : undefined}
-        posterUrl={videoPost?.cover_url}
+        toast={toast}
+        toastBodyOverride={toastBodyOverride}
+        toastHint={toastHint}
+        reportSuccessId={reportSuccessId}
+        commentPost={commentPost}
+        commentsForPost={commentsForPost}
+        apiCommentsByPostId={apiCommentsByPostId}
+        closeCommentDrawer={closeCommentDrawer}
+        handleCommentSend={handleCommentSend}
+        isLoggedIn={isLoggedIn}
+        authLoading={authLoading}
+        meUserId={meUserId}
+        handleReportComment={handleReportComment}
+        commentSendFailed={commentSendFailed}
+        commentSendErrorMessage={commentSendErrorMessage}
+        commentFieldMessages={commentFieldMessages}
+        clearCommentSendError={clearCommentSendError}
+        commentsLoadError={commentsLoadError}
+        retryCommentsLoad={retryCommentsLoad}
+        commentSort={commentSort}
+        setCommentSort={setCommentSort}
+        commentsHasMore={commentsHasMore}
+        loadMoreComments={loadMoreComments}
+        commentsLoadMoreBusy={commentsLoadMoreBusy}
+        reportContext={reportContext}
+        closeReportDrawer={closeReportDrawer}
+        handleReportSubmit={handleReportSubmit}
+        reportSendFailed={reportSendFailed}
+        reportErrorMessage={reportErrorMessage}
+        reportFieldMessages={reportFieldMessages}
+        clearReportSendError={clearReportSendError}
+        detailPost={detailPost}
+        commentsForDetail={commentsForDetail}
+        closeDetailDrawer={closeDetailDrawer}
+        detailFocusComments={detailFocusComments}
+        handleReport={handleReport}
+        likedPostIds={likedPostIds}
+        collectedPostIds={collectedPostIds}
+        handleLike={handleLike}
+        handleCollect={handleCollect}
+        detailPostAuthorFollow={detailPostAuthorFollow}
+        hrefTopicPathForTag={hrefTopicPathForTag}
+        publishOpen={publishOpen}
+        closePublishDrawer={closePublishDrawer}
+        handlePublishSubmit={handlePublishSubmit}
+        publishSendFailed={publishSendFailed}
+        publishErrorMessage={publishErrorMessage}
+        publishFieldMessages={publishFieldMessages}
+        clearPublishSendError={clearPublishSendError}
+        detailVideoFeedPostIds={detailVideoFeedPostIds}
+        onDetailVideoFeedSelect={onDetailVideoFeedSelect}
+        onDetailVideoFeedLoadMore={hasMore ? handleLoadMore : undefined}
+        detailVideoFeedLoadingMore={feedLoadingMore}
       />
+
     </>
   );
 }

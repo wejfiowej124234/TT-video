@@ -7,7 +7,7 @@ import {
   TT_BRIEF_BADGE_L5,
   TT_BRIEF_BADGE_LIVE_L5_CLASS,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 
 type Props = {
   /** 嵌入 landing chrome 时更矮 */

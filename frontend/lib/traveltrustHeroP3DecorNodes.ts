@@ -48,15 +48,24 @@ export const TRAVELTRUST_HERO_P3_DECOR_NODES: readonly HeroP3DecorNode[] = P3_DE
 
 export const TRAVELTRUST_HERO_P3_DECOR_NODE_COUNT = TRAVELTRUST_HERO_P3_DECOR_NODES.length;
 
-/** P3 精修 · 首屏仅 6 个核心枢纽显示文字标签，其余 18 个仅光点 */
+/**
+ * Phase1 · 十国首屏国名+城市标签（顺序与 `TRAVELTRUST_PHASE1_GLOBE_REGIONS` 一致）
+ * 其余 P3 装饰城仅光点
+ */
 export const TRAVELTRUST_HERO_P3_CORE_LABEL_NODE_IDS = [
   "cn",
   "us",
   "fr",
+  "es",
   "jp",
+  "th",
   "sg",
+  "kr",
+  "au",
   "ae",
 ] as const;
+
+export const TRAVELTRUST_HERO_P3_PHASE1_LABEL_COUNT = TRAVELTRUST_HERO_P3_CORE_LABEL_NODE_IDS.length;
 
 export type HeroP3CoreLabelNodeId = (typeof TRAVELTRUST_HERO_P3_CORE_LABEL_NODE_IDS)[number];
 

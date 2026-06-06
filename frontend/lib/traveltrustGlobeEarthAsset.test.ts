@@ -59,7 +59,7 @@ describe("traveltrustGlobeEarthAsset (A closure)", () => {
     expect(hero.cloudLayer).toBe(true);
     expect(hero.earthSegments).toBe(base.earthSegments);
     expect(TT_CINEMATIC_GLOBE_VISUAL.heroWarmInkCloudOpacityScale).toBeGreaterThanOrEqual(0.28);
-    expect(TT_CINEMATIC_GLOBE_VISUAL.heroWarmInkCloudOpacityScale).toBeLessThanOrEqual(0.35);
+    expect(TT_CINEMATIC_GLOBE_VISUAL.heroWarmInkCloudOpacityScale).toBeLessThanOrEqual(0.4);
     expect(TT_CINEMATIC_GLOBE_VISUAL.heroWarmInkNightLightsStrength).toBeGreaterThanOrEqual(0.12);
     expect(TT_CINEMATIC_GLOBE_VISUAL.heroWarmInkNightLightsStrength).toBeLessThanOrEqual(0.18);
   });

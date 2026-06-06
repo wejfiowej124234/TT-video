@@ -31,11 +31,11 @@ describe("traveltrustHubGeo Pass B · P3 vs Phase1 alignment", () => {
     }
   });
 
-  it("resolveTraveltrustHubLatLon matches hub geo for all Phase1 ids", () => {
+  it("resolveTraveltrustHubLatLon returns WGS84 SSOT (lon sign applied in latLonToUnitVector)", () => {
     for (const region of TRAVELTRUST_PHASE1_GLOBE_REGIONS) {
-      const hub = resolveTraveltrustHubLatLon(region);
+      const pin = resolveTraveltrustHubLatLon(region);
       const ssot = getTraveltrustHubGeo(region.id as keyof typeof TRAVELTRUST_HUB_GEO_BY_ID);
-      expect(hub).toEqual({ lat: ssot.lat, lon: ssot.lon });
+      expect(pin).toEqual({ lat: ssot.lat, lon: ssot.lon });
     }
   });
 

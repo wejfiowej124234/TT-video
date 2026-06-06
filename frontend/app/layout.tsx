@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   title,
   description,
-  icons: { icon: "/favicon.svg" },
+  icons: { icon: "/favicon.svg", apple: "/favicon.svg" },
   openGraph: { title, description, type: "website", url: "/" },
   twitter: { card: "summary_large_image", title, description },
 };
@@ -40,6 +40,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
+      <head>
+        <script src="/tt-session-cookie-bootstrap.js" />
+        <script src="/tt-dev-chunk-recovery.js" />
+      </head>
       <body className="min-h-screen bg-bg-main text-ink-900 antialiased" suppressHydrationWarning>
         <Providers>
           <ClientSkipLink />

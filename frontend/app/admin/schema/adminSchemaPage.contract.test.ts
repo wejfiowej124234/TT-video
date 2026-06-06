@@ -10,6 +10,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "page.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminSchemaPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminSchemaPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminSchemaPageModel.ts"), "utf8"),
   ].join("\n");
 }
@@ -19,10 +20,12 @@ describe("admin schema page", () => {
 
   it("keeps schema migrations route + DOM anchor", () => {
     expect(src).toContain("routes.admin.schemaMigrations");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("AdminListPageChrome");
     expect(src).toContain('"AdminSchemaPage"');
     expect(src).toContain("AdminListFetchError");
     expect(src).toContain("AdminListPageEmptyState");
+    expect(src).toContain("AdminObservabilitySectionBackLinks");
   });
 });

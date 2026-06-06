@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
@@ -10,11 +11,12 @@ import {
 } from "@/lib/admin/adminRole70Matrix";
 import { writeAdminShellPreviewRole } from "@/lib/admin/adminShellPreviewRole";
 import { useAdminEffectiveShellRole } from "@/lib/admin/useAdminEffectiveShellRole";
-import { ADMIN_FORM_FIELD_FOCUS_CLASS } from "@/lib/adminUi";
+import { ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_SHELL_FORM_SELECT_CLASS } from "@/lib/adminUi";
 
 /** IA-06 · 顶栏六角色 Shell 视角快切（session 预览 · 非 ② 真切换）。 */
 export function AdminShellBarRolePerspectiveSwitcher() {
   const { t } = useTranslation();
+  const router = useRouter();
   const selectId = useId();
   const { previewRole, dbRole } = useAdminEffectiveShellRole();
   const value = previewRole ?? "";
@@ -25,6 +27,7 @@ export function AdminShellBarRolePerspectiveSwitcher() {
     } else {
       writeAdminShellPreviewRole(next as ConsoleRole70);
     }
+    router.refresh();
   };
 
   return (
@@ -39,11 +42,12 @@ export function AdminShellBarRolePerspectiveSwitcher() {
       <span className="sr-only sm:hidden">{t("admin_shell_role_perspective_switcher_label")}</span>
       <select
         id={selectId}
-        className={`max-w-[9rem] truncate rounded-[var(--radius-md)] border border-ink-200 bg-white px-2 py-0.5 text-meta font-medium text-ink-800 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+        className={`${ADMIN_SHELL_FORM_SELECT_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+        data-tt-admin-shell-light-select="1"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         data-tt-admin-shell-role-perspective-select={previewRole ?? "db"}
-        title={t("admin_shell_role_perspective_switcher_title")}
+        title={`${t("admin_shell_role_perspective_switcher_title")} ${t("admin_shell_role_perspective_refresh_hint")}`}
       >
         <option value="">
           {dbRole

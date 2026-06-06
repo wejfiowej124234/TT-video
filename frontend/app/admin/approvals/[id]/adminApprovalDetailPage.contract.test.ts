@@ -14,6 +14,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "useAdminApprovalDetailPage.ts"), "utf8"),
     readFileSync(join(__dir, "adminApprovalDetailPageModel.ts"), "utf8"),
     readFileSync(join(__dir, "../adminApprovalWorkflowModel.ts"), "utf8"),
+    readFileSync(join(__dir, "../../../../lib/admin/useAdminStandardDetailFetch.ts"), "utf8"),
   ].join("\n");
 }
 
@@ -22,6 +23,8 @@ describe("admin approval detail page", () => {
 
   it("keeps approval-by-id route + approve/reject + timeline + DOM anchor", () => {
     expect(src).toContain("routes.admin.approvalById");
+    expect(src).toContain("useAdminStandardDetailFetch");
+    expect(src).toContain("approval-detail");
     expect(src).toContain("routes.admin.approvalApprove");
     expect(src).toContain("routes.admin.approvalReject");
     expect(src).toContain("adminFetchJson");
@@ -31,5 +34,12 @@ describe("admin approval detail page", () => {
     expect(src).toContain('data-tt-admin-approval-workflow="1"');
     expect(src).toContain("writeRequestHeaders");
     expect(src).toContain("AdminListFetchError");
+    expect(src).toContain("APPROVAL_DETAIL_RELATED_FOLD_LINKS");
+    expect(src).not.toContain("AdminOpsQueueBackLinks");
+    expect(src).toContain("AdminOpsDetailRelatedFold");
+    expect(src).toContain("APPROVAL_DETAIL_RELATED_FOLD_LINKS");
+    expect(src).toContain("ADMIN_INBOX_QUEUE_APPROVALS_LIST_HREF");
+    expect(src).toContain("admin-approval-detail-back-queue");
+    expect(src).toContain("data-tt-admin-detail-refreshing");
   });
 });

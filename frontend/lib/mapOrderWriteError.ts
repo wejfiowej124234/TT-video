@@ -61,6 +61,8 @@ export function mapOrderWriteError(
   if (code === "invalid_guide_id") return t("itin_error_invalid_guide_id");
   if (code === "guide_not_active") return t("order_error_guide_not_active");
   if (code === "guide_has_active_order") return t("order_error_guide_has_active_order");
+  if (code === "guide_required") return t("escrow_confirmBlocked_pickGuide");
+  if (code === "guide_already_assigned") return t("order_error_guide_already_assigned");
   if (code === "invalid_country_code") return t("guide_error_invalid_country_code");
   if (code === "invalid_destination_country") return t("itinerary_error_invalid_destination_country");
   if (code === "invalid_city_for_country") return t("itinerary_error_invalid_city_for_country");
@@ -129,6 +131,34 @@ export function mapOrderWriteError(
   if (code === "message_db_persist_failed") return t("escrow_chatDbUnavailable");
   if (code === "evidence_db_persist_failed") return t("dispute_evidenceDbUnavailable");
   if (code === "dispute_resolve_db_persist_failed") return t("dispute_resolveDbUnavailable");
+  if (code === "acquisition_fulfillment_bond_required") return t("market_acquisition_fulfillment_bond_required");
+  if (code === "acquisition_publish_bond_required") return t("market_acquisition_publish_bond_required");
+  if (code === "acquisition_publish_suspended") return t("market_acquisition_publish_suspended");
+  if (code === "acquisition_wallet_required") return t("market_acquisition_wallet_required");
+  if (code === "acquisition_publish_rate_limited") return t("market_acquisition_publish_rate_limited");
+
+  if (code === "onboarding_quote_rate_limited") return t("me_onboarding_error_quoteRateLimited");
+  if (code === "onboarding_entitlements_read_failed") return t("me_onboarding_error_serverSide");
+  if (code === "missing_onboarding_idempotency_key") return t("me_onboarding_error_missingIdempotencyKey");
+  if (code === "onboarding_payment_intents_disabled") return t("me_onboarding_error_paymentIntentsDisabled");
+  if (code === "onboarding_compliance_screening_unavailable") return t("me_onboarding_error_complianceScreeningUnavailable");
+  if (code === "onboarding_idempotency_conflict") return t("me_onboarding_error_idempotencyConflict");
+  if (code === "onboarding_forbidden_sanctions") return t("me_onboarding_error_complianceBlocked");
+  if (code === "onboarding_user_write_rate_limited") return t("me_onboarding_error_userWriteRateLimited");
+  if (code === "onboarding_payment_not_configured") return t("me_onboarding_error_paymentNotConfigured");
+  if (code === "onboarding_psp_unavailable") return t("me_onboarding_error_pspUnavailable");
+  if (code === "missing_return_url_for_stripe_checkout") return t("me_onboarding_error_missingReturnUrlCheckout");
+  if (code === "invalid_return_url_for_stripe_checkout") return t("me_onboarding_error_invalidReturnUrlCheckout");
+  if (code === "invalid_onboarding_idempotency_key") return t("me_onboarding_error_invalidIdempotencyKey");
+  if (code === "onboarding_user_missing") return t("me_onboarding_error_serverSide");
+  if (code === "onboarding_intent_user_read_failed") return t("me_onboarding_error_serverSide");
+  if (code === "onboarding_intent_persist_failed") return t("me_onboarding_error_serverSide");
+  if (code === "onboarding_entitlement_required") return t("me_onboarding_error_entitlementRequired");
+  if (code === "onboarding_entitlement_lookup_failed") return t("me_onboarding_error_serverSide");
+  if (code === "invalid_onboarding_role") return t("me_onboarding_error_invalidRole");
+  if (code === "onboarding_role_confirm_user_read_failed") return t("me_onboarding_error_serverSide");
+  if (code === "onboarding_role_confirm_read_failed") return t("me_onboarding_error_serverSide");
+  if (code === "onboarding_role_confirm_write_failed") return t("me_onboarding_error_serverSide");
 
   return t(fb);
 }

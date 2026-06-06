@@ -65,10 +65,12 @@ const MISSING_PAGE_CONTRACTS: { rel: string; mainRel?: string; needles: string[]
   },
   {
     rel: "community/abuse-policy/page.tsx",
+    mainRel: "community/abuse-policy/AdminCommunityAbusePolicyPageMain.tsx",
     needles: ["admin_abuse", "AdminCommunityAbusePolicyPageMain", "AdminCommunityPageShell", "AdminPermissionDeniedBanner"],
   },
   {
     rel: "community/comments/visibility/page.tsx",
+    mainRel: "community/comments/visibility/AdminCommunityCommentVisibilityPageMain.tsx",
     needles: ["admin_comment_vis", "AdminCommunityCommentVisibilityPageMain", "AdminCommunityPageShell", "AdminPermissionDeniedBanner"],
   },
   {

@@ -4,7 +4,7 @@
   "baseline": {
     "heroFocused": "",
     "canvasFocused": "",
-    "ctaPrefill": "cn",
+    "ctaPrefill": "us",
     "startPrefill": "",
     "hash": "",
     "globeInteractive": "1",
@@ -16,9 +16,9 @@
     }
   },
   "afterCtaHover": {
-    "heroFocused": "cn",
-    "canvasFocused": "cn",
-    "ctaPrefill": "cn",
+    "heroFocused": "",
+    "canvasFocused": "",
+    "ctaPrefill": "us",
     "startPrefill": "",
     "hash": "",
     "globeInteractive": "1",
@@ -44,11 +44,11 @@
     }
   },
   "afterPinHover": {
-    "heroFocused": "us",
-    "canvasFocused": "us",
-    "ctaPrefill": "us",
-    "startPrefill": "us",
-    "hash": "#start?region=us&step=plan",
+    "heroFocused": "au",
+    "canvasFocused": "au",
+    "ctaPrefill": "au",
+    "startPrefill": "au",
+    "hash": "#start?region=au&step=plan",
     "globeInteractive": "0",
     "blockers": {
       "#hero video": 0,
@@ -58,11 +58,11 @@
     }
   },
   "afterPinClick": {
-    "heroFocused": "us",
-    "canvasFocused": "us",
-    "ctaPrefill": "us",
-    "startPrefill": "us",
-    "hash": "#start?region=us&step=plan",
+    "heroFocused": "au",
+    "canvasFocused": "au",
+    "ctaPrefill": "au",
+    "startPrefill": "au",
+    "hash": "#start?region=au&step=plan",
     "globeInteractive": "0",
     "blockers": {
       "#hero video": 0,
@@ -72,18 +72,18 @@
     }
   },
   "pinProbe": {
-    "hoverRegion": "us",
-    "clickHash": "#start?region=us&step=plan",
-    "clickVia": "canvas-synthetic-click",
-    "hitFx": 0.36,
-    "hitFy": 0.3999999999999999
+    "hoverRegion": "au",
+    "clickHash": "#start?region=au&step=plan",
+    "clickVia": "onPinClick-ssot-bridge",
+    "hitFx": 0.38801891590542875,
+    "hitFy": 0.7072993434705963
   },
   "afterCtaClick": {
-    "heroFocused": "cn",
-    "canvasFocused": "cn",
-    "ctaPrefill": "cn",
-    "startPrefill": "cn",
-    "hash": "#start?region=cn&step=plan",
+    "heroFocused": "us",
+    "canvasFocused": "us",
+    "ctaPrefill": "us",
+    "startPrefill": "us",
+    "hash": "#start?region=us&step=plan",
     "globeInteractive": "1",
     "blockers": {
       "#hero video": 0,
@@ -92,6 +92,6 @@
       "[data-tt-traveltrust-hero-copy-scrim=\"1\"]": 0
     }
   },
-  "planHref": "#start?region=cn&step=plan",
-  "hrefBeforeClick": "#start?region=cn&step=plan"
+  "planHref": "#start?region=us&step=plan",
+  "hrefBeforeClick": "#start?region=us&step=plan"
 }

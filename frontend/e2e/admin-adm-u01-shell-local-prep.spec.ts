@@ -22,6 +22,7 @@ import {
   gotoWithBearerSession,
   seedTestAccounts,
 } from "./helpers/apiSession";
+import { expectAdminHomeShellPreviewBanner } from "./helpers/adminHomeShellPreview";
 
 const enabled = process.env.ADM_U01_LOCAL_PREP === "1";
 const feBase = (process.env.ADM_U01_PLAYWRIGHT_FE_BASE ?? "http://127.0.0.1:3012").replace(
@@ -112,10 +113,7 @@ test.describe("ADM-U01 local prep · shell preview matrix @adm-u01-local-prep", 
 
       await page.reload({ waitUntil: "domcontentloaded" });
       await expect(page.locator('[data-tt-admin-shell-bar="1"]')).toBeVisible({ timeout: 60_000 });
-      await expect(page.locator('[data-tt-admin-home-shell-preview-banner="1"]')).toBeVisible({
-        timeout: 15_000,
-      });
-      await expect(page.locator('[data-tt-admin-home-shell-preview-readonly="1"]')).toBeVisible();
+      await expectAdminHomeShellPreviewBanner(page);
       await expect(page.locator('[data-tt-admin-shell-preview-active="1"]')).toHaveCount(0);
 
       for (const [groupId, expectations] of Object.entries(ADM_U01_SHELL_GROUP_VISIBILITY)) {
@@ -154,7 +152,7 @@ test.describe("ADM-U01 local prep · shell preview matrix @adm-u01-local-prep", 
     if (!creds?.token) test.skip(true, "login failed");
 
     const origin = feBase.startsWith("http") ? feBase : "http://127.0.0.1:3012";
-    await gotoWithBearerSession(page, `${origin}/admin`, creds);
+    await gotoWithBearerSession(page, `${origin}/admin/inbox`, creds);
 
     await expect(page.locator('[data-tt-admin-shell-role-perspective-switcher]')).toBeVisible({
       timeout: 15_000,
@@ -181,16 +179,15 @@ test.describe("ADM-U01 local prep · shell preview matrix @adm-u01-local-prep", 
         /* ignore */
       }
     });
-    await gotoWithBearerSession(page, `${origin}/admin`, creds);
+    await gotoWithBearerSession(page, `${origin}/admin/inbox`, creds);
 
     const select = page.locator('[data-tt-admin-shell-role-perspective-select]');
     await expect(select).toBeVisible({ timeout: 15_000 });
 
     for (const role of ADM_U01_ROLES) {
       await select.selectOption(role);
-      await expect(page.locator('[data-tt-admin-home-shell-preview-banner="1"]')).toBeVisible({
-        timeout: 10_000,
-      });
+      await gotoWithBearerSession(page, `${origin}/admin`, creds);
+      await expectAdminHomeShellPreviewBanner(page);
       await expect(page.locator('[data-tt-admin-shell-preview-active="1"]')).toHaveCount(0);
 
       for (const [groupId, expectations] of Object.entries(ADM_U01_SHELL_GROUP_VISIBILITY)) {
@@ -223,5 +220,51 @@ test.describe("ADM-U01 local prep · shell preview matrix @adm-u01-local-prep", 
     });
     await expect(page.locator('[data-tt-admin-adm-u01-prep-flow="session-preview"]')).toBeVisible();
     await expect(page.locator('[data-tt-admin-adm-u01-prep-flow="db-console-role"]')).toBeVisible();
+  });
+
+  test("ops and community section back links visible (①)", async ({ page, request }) => {
+    test.skip(!enabled, "ADM_U01_LOCAL_PREP!=1");
+
+    const apiBase = defaultApiBase();
+    await seedTestAccounts(request, apiBase);
+    const creds = await apiLoginReturnCredentials(
+      request,
+      apiBase,
+      process.env.ADM_U01_LOCAL_EMAIL?.trim() || "tourist@test.com",
+      process.env.ADM_U01_LOCAL_PASSWORD?.trim() || "Test123!",
+    );
+    if (!creds?.token) test.skip(true, "login failed");
+
+    const origin = feBase.startsWith("http") ? feBase : "http://127.0.0.1:3012";
+    await gotoWithBearerSession(page, `${origin}/admin/users`, creds);
+    await expect(page.locator('[data-tt-admin-queue-back-inbox="1"]')).toBeVisible({ timeout: 30_000 });
+    await expect(page.locator('[data-tt-admin-ops-cross-approvals="1"]')).toBeVisible();
+    await expect(page.locator('[data-tt-admin-back-observability-hub="1"]')).toBeVisible();
+
+    await gotoWithBearerSession(page, `${origin}/admin/community/penalties`, creds);
+    await expect(page.locator('[data-tt-admin-queue-back-inbox="1"]')).toBeVisible({ timeout: 30_000 });
+    await expect(page.locator('[data-tt-admin-back-observability-hub="1"]')).toBeVisible();
+  });
+
+  test("admin home inbox focus banner or all-clear (①)", async ({ page, request }) => {
+    test.skip(!enabled, "ADM_U01_LOCAL_PREP!=1");
+
+    const apiBase = defaultApiBase();
+    await seedTestAccounts(request, apiBase);
+    const creds = await apiLoginReturnCredentials(
+      request,
+      apiBase,
+      process.env.ADM_U01_LOCAL_EMAIL?.trim() || "tourist@test.com",
+      process.env.ADM_U01_LOCAL_PASSWORD?.trim() || "Test123!",
+    );
+    if (!creds?.token) test.skip(true, "login failed");
+
+    const origin = feBase.startsWith("http") ? feBase : "http://127.0.0.1:3012";
+    await gotoWithBearerSession(page, `${origin}/admin`, creds);
+
+    await expect(page.locator('[data-tt-admin-home-inbox="1"]')).toBeVisible({ timeout: 30_000 });
+    const focusSurface = page.locator('[data-tt-admin-home-inbox-focus-surface="1"]');
+    const allClear = page.locator('[data-tt-admin-inbox-all-clear="1"]');
+    await expect(focusSurface.or(allClear)).toBeVisible({ timeout: 30_000 });
   });
 });

@@ -7,11 +7,14 @@ import { AdminAppliedFiltersBanner } from "@/components/admin/AdminAppliedFilter
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
+import { AdminAuditSectionBackLinks } from "@/components/admin/AdminAuditSectionBackLinks";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminMetaBuildSection, AdminMetaNoteLink } from "@/components/admin/AdminMetaBuildPanel";
 import { useTranslation } from "@/components/LocaleProvider";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
 import { adminAuditListPathForAction } from "@/lib/adminAuditNav";
+import { auditPeerRelatedFoldLinks } from "@/lib/admin/adminAuditRelatedFoldLinks";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { sortRowsByKey, useAdminTableSort } from "@/lib/admin/useAdminTableSort";
 import { useAdminAuditOperationsPage } from "./useAdminAuditOperationsPage";
@@ -22,7 +25,17 @@ import {
   ADMIN_FORM_FIELD_FOCUS_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
   adminPageNavLinkClass,
-  adminTableInlineLinkClass,
+  adminTableRowPrimaryActionClass,
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_CONSOLE_JSON_TABLE_CLASS,
+  ADMIN_CONSOLE_JSON_TABLE_THEAD_CLASS,
+  ADMIN_CONSOLE_JSON_TABLE_WRAPPER_CLASS,
+  ADMIN_FILTER_INPUT_MD_CLASS,
+  ADMIN_FILTER_ACTIONS_CLASS,
+  ADMIN_FILTER_FIELD_LABEL_CLASS,
+  ADMIN_FILTER_HINT_CLASS,
+  ADMIN_FILTER_TITLE_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
 } from "@/lib/adminUi";
 
 export function AdminAuditOperationsPageMain() {
@@ -32,6 +45,7 @@ export function AdminAuditOperationsPageMain() {
   const adminListApplyResetHintId = useId();
   const {
     loading,
+    refreshing,
     error,
     body,
     meta,
@@ -57,24 +71,15 @@ export function AdminAuditOperationsPageMain() {
     <AdminListPageChrome
       titleId={pageTitleId}
       title={t("admin_audit_ops_title")}
-      subtitle={t("admin_audit_ops_subtitle")}
-      headerAside={
-        <>
-          <Link href="/admin/audit" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_audit_ops_linkLogs")}
-          </Link>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_schema_back")}
-          </Link>
-        </>
-      }
+      subtitle={t("admin_audit_ops_subtitle_l5")}
+      headerAside={<AdminAuditSectionBackLinks />}
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={auditPeerRelatedFoldLinks("/admin/audit/operations")}
+        ariaLabelKey="admin_audit_detail_related_aria"
+        foldSummaryKey="admin_audit_detail_related_fold"
+        dataTtFold="audit-operations"
+      />
       <AdminMetaBuildSection meta={meta} loading={loading} error={error} />
 
       <div className={`mt-5 ${ADMIN_FILTER_CARD_CLASS}`}>
@@ -88,15 +93,15 @@ export function AdminAuditOperationsPageMain() {
           }
           onSubmit={apply}
         >
-          <h2 className="text-body font-medium text-ink-800">{t("admin_audit_ops_filters_title")}</h2>
-          <p id={adminListApplyResetHintId} className="mt-2 text-meta text-ink-600 leading-relaxed">
+          <h2 className={ADMIN_FILTER_TITLE_CLASS}>{t("admin_audit_ops_filters_title")}</h2>
+          <p id={adminListApplyResetHintId} className={ADMIN_FILTER_HINT_CLASS}>
             {t("admin_list_filters_apply_reset_hint")}
           </p>
           <div className="mt-3 flex flex-wrap items-end gap-3">
-            <label className="text-small text-ink-700">
+            <label className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
               {t("admin_audit_ops_limit_label")}
               <input
-                className={`mt-1 block min-h-[44px] w-24 rounded-[var(--radius-md)] border border-ink-300 bg-white px-3 py-2 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 block min-h-[44px] w-24 ${ADMIN_FILTER_INPUT_MD_CLASS} px-3 py-2 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 type="number"
                 min={1}
                 max={200}
@@ -106,7 +111,7 @@ export function AdminAuditOperationsPageMain() {
             </label>
           </div>
         </form>
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className={ADMIN_FILTER_ACTIONS_CLASS}>
           <button form="admin-audit-operations-filter-form" className={ADMIN_PRIMARY_ACTION_BTN_CLASS} type="submit">
             {t("admin_audit_ops_apply")}
           </button>
@@ -119,7 +124,7 @@ export function AdminAuditOperationsPageMain() {
             }}
           >
             <button
-              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 px-3 py-2 text-small font-medium text-ink-700 hover:bg-ink-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`inline-flex min-h-[44px] items-center justify-center ${ADMIN_FILTER_RESET_BTN_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               type="submit"
             >
               {t("admin_audit_ops_reset")}
@@ -129,10 +134,10 @@ export function AdminAuditOperationsPageMain() {
       </div>
 
       <section
-        className="mt-6 rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-4 space-y-4"
+        className={`mt-6 ${ADMIN_FILTER_CARD_CLASS} space-y-4`}
         aria-label={t("admin_audit_ops_panel_aria")}
       >
-        {loading ? (
+        {loading && operationRows.length === 0 ? (
           <AdminListLoadingStatus message={t("admin_audit_ops_loading")} className="text-body text-ink-600" />
         ) : error ? (
           <AdminListFetchError errorKind={error} message={adminErrorUserText(error, t)} />
@@ -151,7 +156,10 @@ export function AdminAuditOperationsPageMain() {
                   .replace("{returned}", String(body.returned))}
               </p>
             ) : null}
-            <div>
+            <div
+              className={refreshing ? ADMIN_LIST_REFRESHING_SURFACE_CLASS : undefined}
+              data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
+            >
               <h2 className="text-small font-semibold uppercase tracking-wide text-ink-500">
                 {t("admin_audit_ops_operations")}
               </h2>
@@ -164,17 +172,17 @@ export function AdminAuditOperationsPageMain() {
                   ]}
                 />
               ) : (
-                <div className="mt-2 max-h-[28rem] overflow-auto rounded-[var(--radius-md)] border border-ink-700/50 bg-ink-900/90">
-                  <table className="w-full min-w-[min(100%,36rem)] border-collapse text-left text-meta text-ink-100">
-                    <thead className="sticky top-0 z-[1] bg-ink-900/95 backdrop-blur-sm">
-                      <tr className="border-b border-ink-700/60">
-                        <th scope="col" className="px-3 py-2 font-semibold text-ink-300">
+                <div className={`mt-2 max-h-[28rem] ${ADMIN_CONSOLE_JSON_TABLE_WRAPPER_CLASS}`}>
+                  <table className={ADMIN_CONSOLE_JSON_TABLE_CLASS}>
+                    <thead className={ADMIN_CONSOLE_JSON_TABLE_THEAD_CLASS}>
+                      <tr className="border-b border-ref-sun/20">
+                        <th scope="col" className="px-3 py-2 font-semibold text-[#d4b896]">
                           {t("admin_audit_ops_col_code")}
                         </th>
-                        <th scope="col" className="px-3 py-2 font-semibold text-ink-300 w-[6.5rem]">
+                        <th scope="col" className="px-3 py-2 font-semibold text-[#d4b896] w-[6.5rem]">
                           {t("admin_audit_ops_col_kind")}
                         </th>
-                        <th scope="col" className="px-3 py-2 font-semibold text-ink-300 w-[7.5rem] text-right">
+                        <th scope="col" className="px-3 py-2 font-semibold text-[#d4b896] w-[7.5rem] text-right">
                           {t("admin_audit_ops_col_nav")}
                         </th>
                       </tr>
@@ -183,14 +191,14 @@ export function AdminAuditOperationsPageMain() {
                       {sortedOperationRows.map((row) => {
                         const href = adminAuditListPathForAction(row.code, limit);
                         return (
-                          <tr key={row.code} className="border-b border-ink-800/80 last:border-b-0">
-                            <td className="px-3 py-2 font-mono text-[0.8125rem] break-all text-ink-100">{row.code}</td>
+                          <tr key={row.code} className="border-b border-ref-sun/12 last:border-b-0">
+                            <td className="px-3 py-2 font-mono text-[0.8125rem] break-all text-[#f5ebe3]">{row.code}</td>
                             <td className="px-3 py-2">
                               <span
                                 className={
                                   row.mutating
                                     ? "inline-flex rounded-[var(--radius-sm)] bg-warning/20 px-2 py-0.5 text-warning"
-                                    : "inline-flex rounded-[var(--radius-sm)] bg-ink-700/60 px-2 py-0.5 text-ink-300"
+                                    : "inline-flex rounded-[var(--radius-sm)] bg-ref-sun/15 px-2 py-0.5 text-[#d4b896]"
                                 }
                               >
                                 {row.mutating ? t("admin_audit_ops_kind_write") : t("admin_audit_ops_kind_read")}
@@ -199,7 +207,7 @@ export function AdminAuditOperationsPageMain() {
                             <td className="px-3 py-2 text-right align-middle">
                               <Link
                                 href={href}
-                                className={`${touchTargetLink44Classes} inline-flex ${adminTableInlineLinkClass()}`}
+                                className={adminTableRowPrimaryActionClass()}
                                 aria-label={t("admin_audit_ops_link_logs_aria").replace("{code}", row.code)}
                               >
                                 {t("admin_audit_ops_link_logs")}
@@ -237,7 +245,7 @@ function AdminAuditOpsSortableTh({
   return (
     <th
       scope="col"
-      className={`px-3 py-2 font-semibold text-ink-300 ${className}`.trim()}
+      className={`px-3 py-2 font-semibold text-ref-sun/45 ${className}`.trim()}
       aria-sort={ariaSort}
     >
       <button

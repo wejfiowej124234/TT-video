@@ -1,84 +1,73 @@
 "use client";
 
-import { useId } from "react";
-
 import { useTranslation } from "@/components/LocaleProvider";
-import EscrowCancelPolicySection from "./EscrowCancelPolicySection";
-import EscrowCopySummaryButton from "./EscrowCopySummaryButton";
-import EscrowOrderPrintButton from "./EscrowOrderPrintButton";
-import EscrowRiskNotice from "./EscrowRiskNotice";
+import {
+  TT_ESCROW_EXPERIENCE_PANEL,
+  TT_ESCROW_EXPERIENCE_ZONE,
+  escrowExperienceCompactFlowClass,
+} from "@/lib/escrowExperienceUi";
 
-/** 53 §4.6.8：订单/Escrow 详情骨架与首屏布局同构，减少 CLS；协议区用深色底与 30-DID 协调 */
+/**
+ * 53 §4.6.8 / ① 创新行程草稿：暖色 Experience 骨架（非协议青屏 + 全量风险提示，避免加载闪回 L4）。
+ */
 export default function EscrowDetailSkeleton() {
   const { t } = useTranslation();
-  const cancelPolicyHeadingId = useId();
-  const protocolZoneClass = "order-protocol-zone rounded-[var(--radius-xl)] bg-slate-950 text-slate-200 space-y-6 p-4 md:p-6";
-  const panelClass = "rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md shadow-scifi-panel";
+  const zoneClass = TT_ESCROW_EXPERIENCE_ZONE;
+  const panelClass = TT_ESCROW_EXPERIENCE_PANEL;
 
   return (
     <main className="space-y-10" role="main" aria-label={t("escrow_detailAria")} aria-busy="true">
-      <div data-zone="order-protocol" className={protocolZoneClass} role="region" aria-label={t("order_protocolZoneAria")}>
-        {/* Header: title + meta */}
+      <div data-zone="order-protocol" className={zoneClass} role="region" aria-label={t("order_protocolZoneAria")}>
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <div className="min-h-[44px] h-11 w-48 bg-slate-700/60 rounded-[var(--radius-sm)] animate-pulse" aria-hidden />
-            <div className="h-4 w-32 mt-2 bg-slate-700/40 rounded-[var(--radius-sm)] animate-pulse" aria-hidden />
+          <div className="space-y-2 min-w-0 flex-1">
+            <div className="h-8 w-48 max-w-full bg-white/10 rounded-[var(--radius-sm)] animate-pulse" aria-hidden />
+            <div className="h-4 w-56 max-w-full bg-white/8 rounded-[var(--radius-sm)] animate-pulse" aria-hidden />
           </div>
-          <div className="flex gap-2">
-            <div className="min-h-[44px] h-11 w-20 bg-slate-700/50 rounded-[var(--radius-sm)] animate-pulse" aria-hidden />
-            <div className="min-h-[44px] h-11 w-20 bg-slate-700/50 rounded-[var(--radius-sm)] animate-pulse" aria-hidden />
+          <div className="h-6 w-28 bg-ref-sun/15 rounded-[var(--radius-sm)] animate-pulse shrink-0" aria-hidden />
+        </div>
+
+        <div className={escrowExperienceCompactFlowClass} aria-hidden>
+          <div className="flex items-center gap-2">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="flex flex-1 items-center gap-2 min-w-0">
+                <div className="h-9 w-9 rounded-full bg-ref-sun/20 animate-pulse shrink-0" />
+                <div className="h-3 flex-1 max-w-[4rem] bg-white/10 rounded animate-pulse" />
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Steps bar: 8 steps */}
-        <div className="flex flex-wrap gap-1 sm:gap-2 overflow-x-auto pb-1" aria-hidden>
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-            <div key={i} className="min-h-[44px] h-11 min-w-[4rem] flex-1 max-w-[5rem] rounded-[var(--radius-sm)] bg-slate-800/60 animate-pulse" />
-          ))}
-        </div>
+        <div className={`${panelClass} h-10 animate-pulse`} aria-hidden />
 
-        <div className={`${panelClass} p-4 space-y-2`}>
-          <h3 className="text-body-l font-semibold text-cyan-200">{t("escrow_itineraryBudget")}</h3>
-          <p className="text-meta text-slate-300 leading-relaxed" role="status">
-            {t("escrow_itineraryLockHint")}
-          </p>
-          <p className="text-small text-slate-300 flex flex-wrap items-center gap-4 pt-1">
-            <EscrowOrderPrintButton variant="protocolDid" />
-            <EscrowCopySummaryButton variant="protocolDid" onCopy={() => {}} disabled />
-          </p>
-        </div>
-
-        <EscrowRiskNotice />
-
-        {/* Panel: itinerary / amount / participants area */}
-        <div className={`${panelClass} p-6 md:p-8 space-y-6`}>
-          <div>
-            <div className="h-4 w-24 bg-slate-700/50 rounded-[var(--radius-sm)] animate-pulse mb-2" aria-hidden />
-            <div className="min-h-[44px] h-11 w-32 bg-slate-600/50 rounded-[var(--radius-sm)] animate-pulse" aria-hidden />
-          </div>
-          <div>
-            <div className="h-4 w-20 bg-slate-700/50 rounded-[var(--radius-sm)] animate-pulse mb-2" aria-hidden />
-            <ul className="space-y-2">
-              <li className="h-4 w-full max-w-[12rem] bg-slate-700/40 rounded-[var(--radius-sm)] animate-pulse" aria-hidden />
-              <li className="h-4 w-full max-w-[10rem] bg-slate-700/40 rounded-[var(--radius-sm)] animate-pulse" aria-hidden />
-              <li className="h-4 w-full max-w-[8rem] bg-slate-700/40 rounded-[var(--radius-sm)] animate-pulse" aria-hidden />
-            </ul>
-          </div>
-          <div className="h-12 w-full max-w-md rounded-[var(--radius-sm)] bg-slate-800/50 animate-pulse" aria-hidden />
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <div className="lg:col-span-2 space-y-2">
-              <div className="h-4 w-28 bg-slate-700/50 rounded-[var(--radius-sm)] animate-pulse" aria-hidden />
-              <div className="h-24 rounded-[var(--radius-sm)] bg-slate-800/50 animate-pulse" aria-hidden />
+        <div className={`${panelClass} p-6`}>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 space-y-4 order-2 lg:order-1">
+              <div className="h-5 w-32 bg-ref-sun/20 rounded animate-pulse" aria-hidden />
+              <div className="h-4 w-40 bg-white/10 rounded animate-pulse" aria-hidden />
+              <div className={`${panelClass} p-4 space-y-3`}>
+                <div className="h-4 w-24 bg-ref-sun/25 rounded animate-pulse" aria-hidden />
+                <div className="h-20 bg-black/30 rounded-[var(--radius-md)] animate-pulse" aria-hidden />
+              </div>
             </div>
-            <div className="space-y-2">
-              <div className="h-4 w-24 bg-slate-700/50 rounded-[var(--radius-sm)] animate-pulse" aria-hidden />
-              <div className="h-20 rounded-[var(--radius-sm)] bg-slate-800/50 animate-pulse" aria-hidden />
+            <div className="lg:col-span-1 order-1 lg:order-2 space-y-3">
+              <div className="rounded-[var(--radius-md)] border border-ref-sun/22 bg-ref-sun/8 p-4 space-y-3">
+                <div className="h-4 w-20 bg-ref-sun/30 rounded animate-pulse" aria-hidden />
+                <div className="h-10 w-36 bg-white/15 rounded animate-pulse" aria-hidden />
+                <div className="space-y-2">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="h-3 w-full bg-white/8 rounded animate-pulse" aria-hidden />
+                  ))}
+                </div>
+                <div className="h-10 w-full bg-white/10 rounded-[var(--radius-md)] animate-pulse" aria-hidden />
+                <div className="h-12 w-full bg-ref-sun/25 rounded-[var(--radius-md)] animate-pulse" aria-hidden />
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <p className="text-meta text-ink-500 text-center" role="status">{t("common_loading")}</p>
-      <EscrowCancelPolicySection headingId={cancelPolicyHeadingId} />
+      <p className="text-meta text-ref-sun/80 text-center" role="status">
+        {t("common_loading")}
+      </p>
     </main>
   );
 }

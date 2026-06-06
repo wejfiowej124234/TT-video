@@ -3,7 +3,7 @@
 import {
   TT_VIEWPORT_INK_L5,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 
 /** 超宽屏左右护板：盖住固定 WebGL 灰边（TT_Z.VIEWPORT_INK · 低于 TT_Z.HERO_SKY，不挡整块内容） */
 export function TravelTrustCinematicViewportInk() {

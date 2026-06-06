@@ -13,6 +13,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminObservabilityOverviewSection.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminObservabilityJsonBlock.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminObservabilityPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "observabilityPageModel.ts"), "utf8"),
   ].join("\n");
 }
@@ -22,6 +23,7 @@ describe("admin observability page", () => {
 
   it("keeps observability overview route and admin fetch", () => {
     expect(src).toContain("routes.admin.observabilityOverview");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("apiUrl(");
   });

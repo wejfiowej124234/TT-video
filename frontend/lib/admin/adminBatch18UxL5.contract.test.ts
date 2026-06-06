@@ -17,11 +17,11 @@ describe("admin batch18 UX L5 (①)", () => {
 
   it("defines finance depth panel token SSOT", () => {
     expect(adminUi).toContain("ADMIN_FIN_DEPTH_PANEL_CLASS");
-    expect(adminUi).toMatch(/ADMIN_FIN_DEPTH_PANEL_CLASS[\s\S]*ADMIN_HOME_WIDGET_CARD_CLASS/);
+    expect(adminUi).toMatch(/ADMIN_FIN_DEPTH_PANEL_CLASS[\s\S]*ADMIN_WARM_L5_FRAME_CLASS/);
   });
 
-  it("onboarding list uses page header card + body canvas + table tokens", () => {
-    expect(onboarding).toContain("ADMIN_PAGE_HEADER_CARD_CLASS");
+  it("onboarding list uses warm L5 header + body canvas + table tokens", () => {
+    expect(onboarding).toContain("AdminWarmL5Surface");
     expect(onboarding).toContain("ADMIN_LIST_PAGE_BODY_CANVAS_CLASS");
     expect(onboarding).toContain("data-tt-admin-onboarding-list-body-canvas");
     expect(onboarding).toContain("ADMIN_TABLE_SECTION_CLASS");
@@ -34,9 +34,12 @@ describe("admin batch18 UX L5 (①)", () => {
     expect(workspace).toContain("data-tt-admin-fin-depth-module");
   });
 
-  it("depth panels and supplement strip use shared widget tokens", () => {
-    expect(settlement).toContain("ADMIN_FIN_DEPTH_PANEL_CLASS");
-    expect(supplement).toContain("ADMIN_HOME_WIDGET_CARD_CLASS");
+  it("depth panels and supplement strip use warm L5 surfaces", () => {
+    expect(settlement).toContain("AdminWarmL5Surface");
+    expect(settlement).toContain("data-tt-admin-fin-depth-panel");
+    expect(supplement).toContain("ADMIN_WARM_L5_FRAME_CLASS");
     expect(supplement).not.toContain("border-dashed");
+    expect(supplement).toContain("data-tt-admin-fin-suite-supplement-fold");
+    expect(supplement).toContain("admin_fin_suite_supplement_fold_summary");
   });
 });

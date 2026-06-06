@@ -2,7 +2,10 @@
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { disputeStatusLabelKey, DISPUTE_STATUS_FLOW } from "@/lib/admin/adminDisputesLabels";
-import { ADMIN_DISPUTE_STATUS_ACTIVE_CLASS } from "@/lib/adminUi";
+import { ADMIN_DISPUTE_STATUS_ACTIVE_CLASS,
+  ADMIN_CONSOLE_MUTED_PANEL_CLASS,
+  ADMIN_WIZARD_STEP_IDLE_CLASS,
+  ADMIN_WIZARD_STEP_DONE_CLASS,} from "@/lib/adminUi";
 
 export function AdminDisputeDetailTimeline(props: {
   status: string | undefined;
@@ -14,7 +17,7 @@ export function AdminDisputeDetailTimeline(props: {
 
   return (
     <div
-      className="mt-4 rounded-[var(--radius-lg)] border border-ink-200 bg-ink-50/50 p-4"
+      className={`mt-4 ${ADMIN_CONSOLE_MUTED_PANEL_CLASS} p-4`}
       data-tt-admin-dispute-timeline="1"
       aria-label={t("admin_dispute_timeline_aria")}
     >
@@ -27,12 +30,12 @@ export function AdminDisputeDetailTimeline(props: {
           return (
             <li
               key={step}
-              className={`rounded-full px-3 py-1 text-small font-medium ${
+              className={`rounded-full border px-3 py-1 text-small font-medium ${
                 active
                   ? ADMIN_DISPUTE_STATUS_ACTIVE_CLASS
                   : past
-                    ? "bg-emerald-100 text-emerald-900"
-                    : "border border-ink-200 bg-white text-ink-500"
+                    ? ADMIN_WIZARD_STEP_DONE_CLASS
+                    : ADMIN_WIZARD_STEP_IDLE_CLASS
               }`}
             >
               {t(disputeStatusLabelKey(step))}

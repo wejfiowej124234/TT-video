@@ -12,15 +12,17 @@ import {
   ADMIN_TABLE_ROW_CLASS,
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
-  adminTableInlineLinkClass,
-} from "@/lib/adminUi";
+  adminTableRowPrimaryActionClass,
+  ADMIN_TABLE_SECTION_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,} from "@/lib/adminUi";
 
 type ReleaseSortKey = "status" | "effective_from" | "updated_at";
 
 type Props = { vm: AdminConfigReleasesPageViewModel };
 
 export function AdminConfigReleasesTableSection({ vm }: Props) {
-  const { t, loading, error, items, listQueryString } = vm;
+  const { t, loading, refreshing, error, items, listQueryString } = vm;
   const { sort, toggle, ariaSort } = useAdminTableSort<ReleaseSortKey>("updated_at", "desc");
   const sortedItems = useMemo(
     () =>
@@ -32,7 +34,7 @@ export function AdminConfigReleasesTableSection({ vm }: Props) {
     [items, sort.key, sort.dir],
   );
 
-  if (loading || error) return null;
+  if (error || (loading && items.length === 0)) return null;
 
   if (items.length === 0) {
     return (
@@ -48,10 +50,11 @@ export function AdminConfigReleasesTableSection({ vm }: Props) {
 
   return (
     <section
-      className="mt-6 overflow-x-auto rounded-[var(--radius-xl)] border border-ink-200 bg-white"
+      className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
       aria-label={t("admin_config_releases_table_aria")}
+      data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
     >
-      <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+      <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
         <thead className={ADMIN_TABLE_THEAD_CLASS}>
           <tr>
             <th scope="col" className={`${ADMIN_TABLE_TH_CELL_CLASS} font-medium`}>
@@ -81,28 +84,28 @@ export function AdminConfigReleasesTableSection({ vm }: Props) {
             <th scope="col" className={`${ADMIN_TABLE_TH_CELL_CLASS} font-medium`} />
           </tr>
         </thead>
-        <tbody className="divide-y divide-ink-100 text-ink-700">
+        <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
           {sortedItems.map((r: ConfigReleaseRow, idx: number) => (
             <tr key={r.id ?? `cr-${idx}`} className={ADMIN_TABLE_ROW_CLASS}>
-              <td className="px-3 py-2 font-mono text-meta max-w-[12rem] truncate" title={r.release_key}>
+              <td className="px-3 py-2 font-mono text-small text-ink-800 max-w-[12rem] truncate" title={r.release_key}>
                 {r.release_key ?? t("admin_em_dash")}
               </td>
-              <td className="px-3 py-2 font-mono text-meta">{r.version_label ?? t("admin_em_dash")}</td>
-              <td className="px-3 py-2 font-mono text-meta">{r.status ?? t("admin_em_dash")}</td>
-              <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">
+              <td className="px-3 py-2 font-mono text-small text-ink-800">{r.version_label ?? t("admin_em_dash")}</td>
+              <td className="px-3 py-2 font-mono text-small text-ink-800">{r.status ?? t("admin_em_dash")}</td>
+              <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">
                 {r.effective_from ?? t("admin_em_dash")}
               </td>
-              <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">
+              <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">
                 {r.rolled_back_at ?? t("admin_em_dash")}
               </td>
-              <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">
+              <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">
                 {r.updated_at ?? t("admin_em_dash")}
               </td>
               <td className="px-3 py-2 text-right">
                 {r.id ? (
                   <Link
                     href={`/admin/config/releases/${encodeURIComponent(r.id)}?relist=${encodeURIComponent(listQueryString)}`}
-                    className={adminTableInlineLinkClass()}
+                    className={adminTableRowPrimaryActionClass()}
                     aria-label={t("admin_config_releases_open_row_aria", { key: String(r.release_key ?? r.id ?? "") })}
                   >
                     {t("admin_config_releases_colOpen")}

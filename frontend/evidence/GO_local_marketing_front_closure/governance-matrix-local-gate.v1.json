@@ -1,0 +1,81 @@
+{
+  "schema": "traveltrust.governance-matrix-local-gate.v1",
+  "phase": "local-1",
+  "spec_anchor": "docs/spec/93-全站功能验证矩阵-域别回归清单.md#C-GOV-001",
+  "gate_script": "scripts/gates/governance-matrix-local-gate.sh",
+  "rows": [
+    {
+      "id": "C-GOV-001",
+      "title": "治理池只读",
+      "vitest": [
+        "app/governance/governanceHubPage.contract.test.ts",
+        "app/governance/governanceHubPageModel.test.ts"
+      ]
+    },
+    {
+      "id": "C-GOV-002",
+      "title": "提案列表",
+      "vitest": ["app/governance/proposals/governanceProposalsPage.contract.test.ts"]
+    },
+    {
+      "id": "C-GOV-003",
+      "title": "提案详情",
+      "vitest": ["app/governance/proposals/governanceProposalDetailPage.contract.test.ts"]
+    },
+    {
+      "id": "C-GOV-004",
+      "title": "投票提交",
+      "vitest": ["lib/apiClient/governance/governance.proposalVote.test.ts"]
+    },
+    {
+      "id": "C-GOV-005",
+      "title": "委托",
+      "vitest": [
+        "app/governance/delegate/governanceDelegatePage.contract.test.ts",
+        "lib/apiClient/governanceDelegate/governanceDelegate.test.ts"
+      ],
+      "note": "delegate HTTP 单测未纳入默认 green 集；矩阵闸以 page contract 为主"
+    },
+    {
+      "id": "C-GOV-006",
+      "title": "投票权查询",
+      "vitest": ["lib/apiClient/governance/governance.votingPower.test.ts"]
+    },
+    {
+      "id": "C-GOV-007",
+      "title": "Fee 路由只读",
+      "vitest": ["app/governance/fee-routes/governanceFeeRoutesPage.contract.test.ts"]
+    },
+    {
+      "id": "C-GOV-008",
+      "title": "Vault forwards",
+      "vitest": ["app/governance/vault-forwards/governanceVaultForwardsPage.contract.test.ts"]
+    },
+    {
+      "id": "C-GOV-009",
+      "title": "应计分录只读",
+      "vitest": [
+        "app/governance/distribution-accruals/distributionAccrualsPages.contract.test.ts",
+        "lib/governanceInvestorDistributionAccruals.test.ts"
+      ]
+    },
+    {
+      "id": "C-GOV-010",
+      "title": "分配 Claim 页",
+      "vitest": ["app/governance/distribution-claim/distributionClaimPage.contract.test.ts"]
+    },
+    {
+      "id": "C-GOV-011",
+      "title": "协议引用机读",
+      "vitest": ["lib/governanceParams84Readonly.test.ts"]
+    }
+  ],
+  "epic_a_companion": [
+    "lib/apiClient/governance.proposal-status.test.ts",
+    "components/governance/GovernancePreExecutionHint.contract.test.ts",
+    "components/governance/GovernanceProposalExecStatusBadge.contract.test.ts",
+    "components/governance/GovernanceProposalExecutionActionsSkeleton.contract.test.ts",
+    "lib/governanceExecutionReadiness.test.ts",
+    "lib/governanceExecReadOnlyNarrative.test.ts"
+  ]
+}

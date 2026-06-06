@@ -24,8 +24,7 @@ export interface ItineraryCreateDaysAndCities {
 }
 
 /**
- * 无途经城市时：不发送 cities，天数用表单值。
- * 有途经城市时：cities = [主城市, …途经]，去重键为 `trim` + `toLowerCase`（拉丁城市名大小写合并；中文与拼音视为不同名），days = 路线长度（mock 一日一城）。
+ * 有途经城市时：cities = [主城市, …途经]，days 仍用表单天数（后端按 days 轮询分配城市）。
  */
 export function resolveItineraryCreateDaysAndCities(
   primaryCity: string,
@@ -53,5 +52,5 @@ export function resolveItineraryCreateDaysAndCities(
     return { cities: undefined, days: clampItineraryDays(formDays) };
   }
   const route = out.slice(0, MAX_DAYS);
-  return { cities: route, days: route.length };
+  return { cities: route, days: clampItineraryDays(formDays) };
 }

@@ -1,9 +1,22 @@
 "use client";
 
-import { useState, useRef, type FormEvent } from "react";
+import { useState, useRef, useMemo, useEffect, type FormEvent } from "react";
 import Image from "next/image";
 import type { CommunityPost } from "@/lib/communityMockData";
 import { communityPublishFabFocus } from "@/lib/communityA11yFocus";
+import { TT_COMMUNITY_DRAWER_L5 } from "@/lib/marketingUi";
+import {
+  communityMediaAbsoluteUrlForRender,
+  communityMediaIsStillImageUrl,
+  communityMediaNextImageUnoptimized,
+  communityMediaPlaybackUrlForRender,
+} from "@/lib/communityMediaClientUrl";
+import {
+  resolveCommunityPostPlayableVideoUrl,
+} from "@/components/community/communityFeedMappersRoleAndMedia";
+import {
+  useCommunityFeedCardVideoAutoplay,
+} from "@/components/community/CommunityFeedVideoAutoplayContext";
 
 export type CommunityFeedCardMediaProps = {
   post: CommunityPost;
@@ -28,13 +41,34 @@ export default function CommunityFeedCardMedia({
   const dash = t("ui_em_dash");
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [imageError, setImageError] = useState(false);
+  const [videoInlineError, setVideoInlineError] = useState(false);
   const [showHeart, setShowHeart] = useState(false);
   const lastTapRef = useRef(0);
   const carouselTouchStartX = useRef<number | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const playableRaw = useMemo(() => resolveCommunityPostPlayableVideoUrl(post) ?? "", [post]);
+  const playableSrc = useMemo(
+    () => (playableRaw ? communityMediaPlaybackUrlForRender(playableRaw) : ""),
+    [playableRaw],
+  );
+  const inlineVideoMode = is_video && playableSrc.length > 0 && !videoInlineError;
+  const { containerRef: autoplayContainerRef, isAutoplayActive } = useCommunityFeedCardVideoAutoplay(
+    post.id,
+    videoRef,
+    inlineVideoMode,
+  );
+
+  useEffect(() => {
+    setVideoInlineError(false);
+  }, [post.id, playableSrc]);
 
   const currentImage = images.length > 0 ? images[carouselIndex % images.length] : "";
   const coverStill = post.cover_url?.trim() || "";
   const displayStill = is_video && coverStill ? coverStill : currentImage;
+  const displayStillSrc = displayStill ? communityMediaAbsoluteUrlForRender(displayStill) : "";
+  const videoPosterSrc =
+    displayStillSrc && communityMediaIsStillImageUrl(displayStillSrc) ? displayStillSrc : undefined;
   const showImage = !imageError;
 
   const handleDoubleTapLike = () => {
@@ -95,19 +129,19 @@ export default function CommunityFeedCardMedia({
   if (isTextOnly) {
     return (
       <div
-        className="relative min-h-[5.5rem] border-b border-slate-600/40 bg-gradient-to-br from-slate-800/90 to-slate-900/90 px-4 py-3 select-none outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+        className={`relative min-h-[5.5rem] select-none ${TT_COMMUNITY_DRAWER_L5.feedCardMediaBorder} ${TT_COMMUNITY_DRAWER_L5.feedCardMediaBg} px-4 py-3 ${TT_COMMUNITY_DRAWER_L5.feedCardMediaFocus}`}
         onDoubleClick={handleDoubleTapLike}
         role="region"
         aria-label={ariaLabel}
       >
         {showHeart && (
           <span className="absolute inset-0 flex items-center justify-center pointer-events-none animate-in zoom-in duration-200" aria-hidden>
-            <svg className="h-16 w-16 text-fuchsia-200 drop-shadow-on-dark opacity-90" fill="currentColor" viewBox="0 0 24 24">
+            <svg className="h-16 w-16 text-ref-coral drop-shadow-on-dark opacity-90" fill="currentColor" viewBox="0 0 24 24">
               <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
           </span>
         )}
-        <span className="pointer-events-none absolute top-2 left-2 rounded-full border border-fuchsia-400/50 bg-slate-900/85 px-2 py-0.5 text-meta text-fuchsia-200" aria-hidden>
+        <span className={`pointer-events-none absolute top-2 left-2 ${TT_COMMUNITY_DRAWER_L5.feedCardTypeBadge}`} aria-hidden>
           {t("community_type_text")}
         </span>
         <p className="mt-8 text-small text-slate-300 line-clamp-4 whitespace-pre-wrap">{content || title || dash}</p>
@@ -120,7 +154,8 @@ export default function CommunityFeedCardMedia({
 
   return (
     <div
-      className="relative aspect-[4/3] bg-slate-800/80 select-none touch-pan-y outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+      ref={autoplayContainerRef}
+      className={`relative aspect-[4/3] select-none touch-pan-y ${TT_COMMUNITY_DRAWER_L5.feedCardMediaPlaceholder} ${TT_COMMUNITY_DRAWER_L5.feedCardMediaFocus}`}
       onTouchStart={onCarouselTouchStart}
       onTouchEnd={onCarouselTouchEnd}
       onDoubleClick={handleDoubleTapLike}
@@ -141,15 +176,36 @@ export default function CommunityFeedCardMedia({
           </svg>
         </span>
       )}
-      {displayStill ? (
+      {inlineVideoMode ? (
+        <>
+          <video
+            ref={videoRef}
+            data-testid="community-feed-inline-video"
+            src={playableSrc}
+            poster={videoPosterSrc}
+            className="absolute inset-0 h-full w-full object-cover"
+            muted
+            playsInline
+            loop
+            preload="metadata"
+            aria-label={ariaLabel}
+            onError={() => setVideoInlineError(true)}
+          />
+          {isAutoplayActive ? (
+            <span className="pointer-events-none absolute left-2 bottom-2 rounded-[var(--radius-sm)] bg-black/55 px-1.5 py-0.5 text-[0.65rem] text-white/90" aria-hidden>
+              {t("community_video_muted_autoplay_hint")}
+            </span>
+          ) : null}
+        </>
+      ) : displayStillSrc ? (
         <Image
-          src={displayStill}
+          src={displayStillSrc}
           alt={ariaLabel}
           fill
           className="object-cover"
           sizes="(max-width: 768px) 100vw, 50vw"
           loading="lazy"
-          unoptimized={displayStill.startsWith("blob:")}
+          unoptimized={communityMediaNextImageUnoptimized(displayStillSrc) || displayStillSrc.startsWith("blob:")}
           onError={() => setImageError(true)}
         />
       ) : (
@@ -168,7 +224,7 @@ export default function CommunityFeedCardMedia({
           >
             <button
               type="submit"
-              className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 min-w-[44px] min-h-[44px] flex items-center justify-center text-white hover:bg-black/70 motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              className={`absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 min-w-[44px] min-h-[44px] flex items-center justify-center text-white hover:bg-black/70 motion-sub ${communityPublishFabFocus}`}
               aria-label={t("community_prev_image")}
             >
               <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" /></svg>
@@ -183,7 +239,7 @@ export default function CommunityFeedCardMedia({
           >
             <button
               type="submit"
-              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 min-w-[44px] min-h-[44px] flex items-center justify-center text-white hover:bg-black/70 motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              className={`absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 min-w-[44px] min-h-[44px] flex items-center justify-center text-white hover:bg-black/70 motion-sub ${communityPublishFabFocus}`}
               aria-label={t("community_next_image")}
             >
               <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" /></svg>
@@ -193,13 +249,13 @@ export default function CommunityFeedCardMedia({
             {images.map((_, i) => (
               <span
                 key={i}
-                className={`h-1.5 rounded-full transition-all motion-sub ${i === carouselIndex % images.length ? "w-4 bg-cyan-400" : "w-1.5 bg-white/50"}`}
+                className={`h-1.5 rounded-full transition-all motion-sub ${i === carouselIndex % images.length ? TT_COMMUNITY_DRAWER_L5.feedCardCarouselDotActive : TT_COMMUNITY_DRAWER_L5.feedCardCarouselDotIdle}`}
               />
             ))}
           </div>
         </>
       )}
-      {is_video && onPlayVideo && (
+      {is_video && onPlayVideo && !inlineVideoMode && (
         <>
           <div className="absolute inset-0 bg-black/30 pointer-events-none" aria-hidden />
           <form
@@ -227,7 +283,7 @@ export default function CommunityFeedCardMedia({
           <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
         </span>
       )}
-      <span className="pointer-events-none absolute top-2 left-2 rounded-full border border-cyan-400/50 bg-slate-900/80 px-2 py-0.5 text-meta text-cyan-300" aria-hidden>
+      <span className={`pointer-events-none absolute top-2 left-2 ${TT_COMMUNITY_DRAWER_L5.feedCardTypeBadge}`} aria-hidden>
         {t(`community_type_${type}`)}
       </span>
     </div>

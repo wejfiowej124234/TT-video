@@ -17,13 +17,13 @@ import {
   adminFinanceWorkflowSnapshotValue,
   useAdminFinanceWorkflowSnapshots,
 } from "@/lib/admin/useAdminFinanceWorkflowSnapshots";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import {
   ADMIN_INLINE_LINK_CLASS,
-  ADMIN_HOME_WIDGET_CARD_CLASS,
   ADMIN_PENDING_COUNT_BADGE_CLASS,
   adminFilterChipClass,
   adminPageNavLinkClass,
-} from "@/lib/adminUi";
+  ADMIN_INNER_DIVIDER_CLASS,} from "@/lib/adminUi";
 import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
 /** FIN-02 · ① partial 深度子页横向工作流导航（快照徽标 + 下一步 · 非 ② 页内全深度）。 */
@@ -39,8 +39,9 @@ export function AdminFinanceWorkflowCompactNav() {
   const nextStep = adminFinanceWorkflowNextStep(activeStepId);
 
   return (
-    <nav
-      className={`mb-4 ${ADMIN_HOME_WIDGET_CARD_CLASS}`}
+    <AdminWarmL5Surface
+      as="nav"
+      className="mb-4"
       aria-label={t("admin_fin_workflow_compact_nav_aria")}
       data-tt-admin-fin-workflow-compact-nav="1"
       data-tt-admin-fin-workflow-compact-module={moduleId || undefined}
@@ -118,7 +119,7 @@ export function AdminFinanceWorkflowCompactNav() {
         </button>
       ) : null}
       <div
-        className="mt-4 border-t border-ink-200 pt-3"
+        className={`mt-4 ${ADMIN_INNER_DIVIDER_CLASS} pt-3`}
         data-tt-admin-fin-workflow-compact-supplement="1"
       >
         <p className="text-meta font-medium text-ink-700">
@@ -142,6 +143,6 @@ export function AdminFinanceWorkflowCompactNav() {
           })}
         </ul>
       </div>
-    </nav>
+    </AdminWarmL5Surface>
   );
 }

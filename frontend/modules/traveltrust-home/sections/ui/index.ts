@@ -1,0 +1,1 @@
+export { TravelTrustHomeSectionSlot } from "./TravelTrustHomeSectionSlot";

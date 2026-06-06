@@ -2,19 +2,11 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 
-import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
-import {
-  type AdminFetchErrorKind,
-  adminFetchErrorKind,
-  adminFetchJson,
-  logAdminFetch,
-} from "@/lib/adminFetchDisplay";
-import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders } from "@/lib/apiClient";
+import { routes } from "@/lib/api";
+import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
 
 import {
   type RankSnapshotRow,
-  type RankSnapshotsListRes,
   RANK_SNAPSHOTS_FEED_MODE_MAX,
   buildRankSnapshotsPath,
   parseRankSnapshotsQuery,
@@ -28,58 +20,28 @@ export function useAdminCommunityRankingSnapshotsPage() {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<RankSnapshotRow[]>([]);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
+  const listUrl = useMemo(
+    () =>
+      routes.admin.communityRankingSnapshots({
+        limit,
+        ...(feedMode ? { feed_mode: feedMode } : {}),
+      }),
+    [limit, feedMode],
+  );
+
+  const { items, meta, appliedFilters, loading, refreshing, error } =
+    useAdminStandardListFetch<RankSnapshotRow>({
+      scope: "community-ranking-snapshots",
+      context: "AdminCommunityRankingSnapshotsPage",
+      listUrl,
+    });
+
   const [draftLimit, setDraftLimit] = useState(String(limit));
   const [draftFeedMode, setDraftFeedMode] = useState(feedMode);
 
   useEffect(() => {
     setDraftLimit(String(limit));
     setDraftFeedMode(feedMode);
-  }, [limit, feedMode]);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    setMeta(null);
-    setAppliedFilters(null);
-
-    const headers: Record<string, string> = { "x-request-id": `admin-rank-snap-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    adminFetchJson<RankSnapshotsListRes>(
-      "AdminCommunityRankingSnapshotsPage",
-      apiUrl(
-        routes.admin.communityRankingSnapshots({
-          limit,
-          ...(feedMode ? { feed_mode: feedMode } : {}),
-        }),
-      ),
-      { headers },
-    )
-      .then(({ res, body }) => {
-        if (!res.ok) {
-          throw new Error(body.error || `request_failed_${res.status}`);
-        }
-        return body;
-      })
-      .then((body) => {
-        setItems(Array.isArray(body.items) ? body.items : []);
-        setMeta(isAdminMetaRecord(body.meta) ? body.meta : null);
-        setAppliedFilters(body.applied_filters ?? null);
-      })
-      .catch((e: unknown) => {
-        logAdminFetch("AdminCommunityRankingSnapshotsPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
   }, [limit, feedMode]);
 
   const apply = (e?: FormEvent) => {
@@ -106,6 +68,7 @@ export function useAdminCommunityRankingSnapshotsPage() {
     limit,
     feedMode,
     loading,
+    refreshing,
     error,
     items,
     meta,

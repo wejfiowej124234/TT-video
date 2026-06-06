@@ -1,7 +1,15 @@
 "use client";
+import { TT_COMMUNITY_PAGE_L5 } from "@/lib/marketingUi";
 
 import { useState, useCallback, useEffect, useId, useRef, type FormEvent } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { MeSettingsExtensionChrome } from "@/components/me/MeSettingsExtensionChrome";
+import {
+  isMeSettingsDeleteAccountFeedbackIntent,
+  isMeSettingsExtensionFromSettings,
+  parseMeSettingsExtensionFrom,
+} from "@/lib/me/meSettingsExtensionContext";
 import NextImage from "next/image";
 import { useTranslation } from "@/components/LocaleProvider";
 import { getFeedbackList, postFeedback } from "@/lib/apiClient/community";
@@ -28,11 +36,12 @@ import {
 
 export type { FeedbackMediaItem };
 
-/** 54-S19：TT 社区 · 用户与官方沟通窗口（景区/美食/产品建议）；Web3 风格；后端 API 未就绪时本地暂存（localStorage 持久化） */
+/** 54-S19：反馈窗 · `GET/POST /api/v1/community/feedback` 为主；失败或未同步时合并本机 localStorage */
 const FEEDBACK_CATEGORIES = [
   { value: "feedback_category_attraction", labelKey: "feedback_category_attraction" },
   { value: "feedback_category_dining", labelKey: "feedback_category_dining" },
   { value: "feedback_category_product", labelKey: "feedback_category_product" },
+  { value: "feedback_category_account", labelKey: "feedback_category_account" },
   { value: "feedback_category_other", labelKey: "feedback_category_other" },
 ] as const;
 
@@ -114,6 +123,13 @@ function fileToDataUrl(file: File, maxWidth = MAX_IMAGE_SIZE): Promise<string> {
 
 export default function CommunityFeedbackPage() {
   const { t } = useTranslation();
+  const searchParams = useSearchParams();
+  const settingsFrom = parseMeSettingsExtensionFrom(searchParams.get("from"));
+  const fromSettings = isMeSettingsExtensionFromSettings(settingsFrom);
+  const deleteAccountIntent = isMeSettingsDeleteAccountFeedbackIntent(
+    settingsFrom,
+    searchParams.get("intent"),
+  );
   const feedbackListHeadingId = useId();
   const feedbackModalTitleId = useId();
   const feedbackModalDescId = useId();
@@ -230,6 +246,14 @@ export default function CommunityFeedbackPage() {
       return () => clearTimeout(id);
     }
   }, [postOpen]);
+
+  useEffect(() => {
+    if (!deleteAccountIntent) return;
+    setCategory("feedback_category_account");
+    setContent(t("me_settings_feedback_delete_account_prefill"));
+    setPostOpen(true);
+    clearFeedbackFormErrors();
+  }, [deleteAccountIntent, t, clearFeedbackFormErrors]);
 
   useEffect(() => {
     if (!postOpen) return;
@@ -409,9 +433,25 @@ export default function CommunityFeedbackPage() {
   );
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-6 sm:px-6" aria-label={t("community_feedback_title")}>
-      <header className="rounded-[var(--radius-md)] border border-cyan-400/40 bg-slate-900/60 backdrop-blur-md px-4 py-4 sm:px-6 sm:py-5 mb-6 shadow-scifi-banner-strong">
-        <h1 className="text-h2 font-bold bg-gradient-to-r from-cyan-300 via-fuchsia-400 to-cyan-300 bg-clip-text text-transparent">
+    <main
+      data-tt-community-feedback-page="1"
+      {...(fromSettings ? { "data-tt-community-feedback-from-settings": "1" } : {})}
+      {...(deleteAccountIntent ? { "data-tt-community-feedback-delete-account-intent": "1" } : {})}
+      className="max-w-3xl mx-auto px-4 py-6 sm:px-6"
+      aria-label={t("community_feedback_title")}
+    >
+      {fromSettings ? (
+        <MeSettingsExtensionChrome
+          t={t}
+          noticeKey={
+            deleteAccountIntent
+              ? "me_settings_feedback_delete_account_banner"
+              : "me_settings_feedback_from_settings_notice"
+          }
+        />
+      ) : null}
+      <header className="rounded-[var(--radius-md)] border border-ref-sun/28 bg-slate-900/60 backdrop-blur-md px-4 py-4 sm:px-6 sm:py-5 mb-6 shadow-scifi-banner-strong">
+        <h1 className={TT_COMMUNITY_PAGE_L5.pageTitleH2}>
           {t("community_feedback_title")}
         </h1>
         <p className="text-small text-slate-300 mt-1">{t("community_feedback_subtitle")}</p>
@@ -426,24 +466,33 @@ export default function CommunityFeedbackPage() {
           >
             <button
               type="submit"
-              className={`inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border-2 border-fuchsia-400/70 bg-fuchsia-500/40 px-4 py-2 text-small font-medium text-white hover:bg-fuchsia-500/60 motion-sub ${communityPublishFabFocus}`}
+              className={`inline-flex min-h-[44px] items-center justify-center ${TT_COMMUNITY_PAGE_L5.primaryCtaFilled} ${communityCyanPillFocus}`}
               aria-label={t("community_feedback_post")}
             >
               <span aria-hidden>+</span>
               {t("community_feedback_post")}
             </button>
           </form>
-          <Link
-            href="/community"
-            className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-slate-500/60 bg-slate-800/60 px-3 py-1.5 text-meta text-slate-300 hover:bg-slate-700/60 motion-sub ${communitySlatePillFocus}`}
-          >
-            {t("community_back_to_community")}
-          </Link>
+          {fromSettings ? (
+            <Link
+              href="/me/settings"
+              className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-ref-sun/40 bg-ref-sun/10 px-3 py-1.5 text-meta text-ref-sun/90 hover:bg-ref-sun/15 motion-sub ${communitySlatePillFocus}`}
+            >
+              {t("me_settings_verify_back_settings")}
+            </Link>
+          ) : (
+            <Link
+              href="/community"
+              className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-slate-500/60 bg-slate-800/60 px-3 py-1.5 text-meta text-slate-300 hover:bg-slate-700/60 motion-sub ${communitySlatePillFocus}`}
+            >
+              {t("community_back_to_community")}
+            </Link>
+          )}
         </div>
       </header>
 
       <section className="rounded-[var(--radius-md)] border border-slate-600/50 bg-slate-800/40 p-4 sm:p-6" aria-labelledby={feedbackListHeadingId}>
-        <h2 id={feedbackListHeadingId} className="text-body font-semibold text-cyan-200 mb-4">{t("community_feedback_list_title")}</h2>
+        <h2 id={feedbackListHeadingId} className="text-body font-semibold text-ref-sun/90 mb-4">{t("community_feedback_list_title")}</h2>
         {!hydrated ? (
           <div
             className="space-y-3 py-2"
@@ -473,7 +522,7 @@ export default function CommunityFeedbackPage() {
               <button
                 type="submit"
                 aria-label={t("common_retry")}
-                className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub ${communityCyanPillFocus}`}
+                className={`${TT_COMMUNITY_PAGE_L5.pill} ${communityCyanPillFocus}`}
               >
                 {t("common_retry")}
               </button>
@@ -493,7 +542,7 @@ export default function CommunityFeedbackPage() {
               <button
                 type="submit"
                 aria-label={t("common_retry")}
-                className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub ${communityCyanPillFocus}`}
+                className={`${TT_COMMUNITY_PAGE_L5.pill} ${communityCyanPillFocus}`}
               >
                 {t("common_retry")}
               </button>
@@ -515,7 +564,7 @@ export default function CommunityFeedbackPage() {
               <button
                 type="submit"
                 aria-label={t("community_feedback_post")}
-                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-fuchsia-400/50 bg-fuchsia-500/20 px-4 py-2 text-small font-medium text-fuchsia-300 hover:text-fuchsia-100 hover:bg-fuchsia-500/30 motion-sub ${communityFuchsiaPillFocus}`}
+                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ref-sun/42 bg-ref-sun/12 px-4 py-2 text-small font-medium text-ref-sun/90 hover:text-ref-sun/95 hover:bg-ref-sun/14 motion-sub ${communityFuchsiaPillFocus}`}
               >
                 {t("community_feedback_post")}
               </button>
@@ -547,8 +596,8 @@ export default function CommunityFeedbackPage() {
                 </div>
                 <p className="mt-1 whitespace-pre-wrap">{item.content}</p>
                 {item.official_reply && (
-                  <div className="mt-3 pl-3 border-l-2 border-cyan-500/50">
-                    <p className="text-meta text-cyan-200 mb-0.5">{t("community_feedback_official_reply_label")}</p>
+                  <div className="mt-3 pl-3 border-l-2 border-ref-sun/35">
+                    <p className="text-meta text-ref-sun/90 mb-0.5">{t("community_feedback_official_reply_label")}</p>
                     <p className="text-small text-slate-300 whitespace-pre-wrap">{item.official_reply}</p>
                   </div>
                 )}
@@ -578,12 +627,14 @@ export default function CommunityFeedbackPage() {
         <div
           className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
           role="dialog"
+          data-tt-community-feedback-post-modal="1"
+          {...(deleteAccountIntent ? { "data-tt-community-feedback-delete-account-modal": "1" } : {})}
           aria-modal="true"
           aria-labelledby={feedbackModalTitleId}
           aria-describedby={feedbackModalDescId}
         >
-          <div className="w-full max-w-md rounded-[var(--radius-xl)] border border-cyan-400/40 bg-slate-900/95 backdrop-blur-md p-6 shadow-scifi-modal">
-            <h3 id={feedbackModalTitleId} className="text-body font-semibold text-cyan-200 mb-4">{t("community_feedback_post")}</h3>
+          <div className="w-full max-w-md rounded-[var(--radius-xl)] border border-ref-sun/28 bg-slate-900/95 backdrop-blur-md p-6 shadow-scifi-modal">
+            <h3 id={feedbackModalTitleId} className="text-body font-semibold text-ref-sun/90 mb-4">{t("community_feedback_post")}</h3>
             <p id={feedbackModalDescId} className="sr-only">{t("community_feedback_subtitle")}</p>
             <form onSubmit={handleSubmit} className="space-y-4">
               <button
@@ -633,7 +684,7 @@ export default function CommunityFeedbackPage() {
                   id={feedbackCategoryId}
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="inline-flex w-full min-h-[44px] items-center justify-start rounded-[var(--radius-md)] border border-slate-500/60 bg-slate-800/80 px-3 py-2 text-small text-slate-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                  className="inline-flex w-full min-h-[44px] items-center justify-start rounded-[var(--radius-md)] border border-slate-500/60 bg-slate-800/80 px-3 py-2 text-small text-slate-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                   aria-required
                 >
                   {FEEDBACK_CATEGORIES.map((c) => (
@@ -668,7 +719,7 @@ export default function CommunityFeedbackPage() {
                   className={`w-full rounded-[var(--radius-md)] border bg-slate-800/80 px-3 py-2 text-small text-slate-200 placeholder:text-slate-400 focus:outline-none focus-visible:ring-2 resize-y min-h-[80px] focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
                     feedbackFieldMessages?.content
                       ? "border-danger/70 focus-visible:ring-danger/50"
-                      : "border-slate-500/60 focus-visible:ring-cyan-400/50"
+                      : "border-slate-500/60 focus-visible:ring-ref-sun/50"
                   }`}
                 />
               </div>
@@ -730,7 +781,7 @@ export default function CommunityFeedbackPage() {
                           type="submit"
                           name="fbRemoveMedia"
                           value={String(i)}
-                          className="absolute top-0 right-0 flex min-h-[44px] min-w-[44px] items-center justify-center rounded-bl-[var(--radius-md)] bg-black/60 text-white text-body font-medium hover:bg-black/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-cyan-400/80"
+                          className="absolute top-0 right-0 flex min-h-[44px] min-w-[44px] items-center justify-center rounded-bl-[var(--radius-md)] bg-black/60 text-white text-body font-medium hover:bg-black/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ref-sun/55"
                           aria-label={t("common_close")}
                         >
                           ×
@@ -753,7 +804,7 @@ export default function CommunityFeedbackPage() {
                   name="fbSubmit"
                   disabled={submitting || !content.trim()}
                   aria-busy={submitting ? true : undefined}
-                  className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border-2 border-fuchsia-400/70 bg-fuchsia-500/40 px-4 py-2 text-small font-medium text-white hover:bg-fuchsia-500/60 disabled:opacity-50 disabled:pointer-events-none ${communityPublishFabFocus}`}
+                  className={`inline-flex min-h-[44px] items-center justify-center ${TT_COMMUNITY_PAGE_L5.primaryCtaFilled} ${communityCyanPillFocus}`}
                 >
                   {submitting ? t("common_submitting") : t("community_feedback_submit")}
                 </button>
@@ -768,10 +819,17 @@ export default function CommunityFeedbackPage() {
           className={`fixed left-1/2 z-[120] bottom-24 md:bottom-8 -translate-x-1/2 max-w-[min(100vw-2rem,22rem)] rounded-[var(--radius-md)] border px-4 py-3 text-small shadow-medium backdrop-blur safe-area-pb ${
             feedbackToast === "community_feedback_offline_saved"
               ? "border-warning/50 bg-slate-900/95 text-warning/95"
-              : "border-cyan-500/50 bg-slate-900/95 text-cyan-200"
+              : "border-ref-sun/35 bg-ink-900/95 text-ref-sun/90"
           }`}
           role="status"
           aria-live="polite"
+          data-tt-community-feedback-toast="1"
+          {...(feedbackToast === "community_feedback_submit_ok"
+            ? { "data-tt-community-feedback-submit-ok": "1" }
+            : {})}
+          {...(deleteAccountIntent && feedbackToast === "community_feedback_submit_ok"
+            ? { "data-tt-community-feedback-delete-account-submitted": "1" }
+            : {})}
         >
           {t(feedbackToast)}
         </div>

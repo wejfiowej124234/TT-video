@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useId } from "react";
 
+import { AdminCommunityListHeaderAside } from "@/components/admin/AdminCommunityListHeaderAside";
 import { AdminSuccessBanner } from "@/components/admin/AdminSuccessBanner";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
 import { AdminAlertError } from "@/components/admin/AdminAlertError";
@@ -13,7 +14,9 @@ import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import { useAdminCanWrite } from "@/lib/admin/useAdminCanWrite";
 import { ABUSE_POLICY_KEYS } from "./adminCommunityAbusePolicyPageModel";
 import { useAdminCommunityAbusePolicyPage } from "./useAdminCommunityAbusePolicyPage";
-import { ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_LINK_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_LINK_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS, adminPageNavLinkClass,
+  ADMIN_FILTER_INPUT_SM_CLASS,
+  ADMIN_FILTER_FIELD_LABEL_CLASS} from "@/lib/adminUi";
 
 export function AdminCommunityAbusePolicyPageMain() {
   const { t } = useTranslation();
@@ -38,7 +41,7 @@ export function AdminCommunityAbusePolicyPageMain() {
     () => (
       <div className="grid gap-3 sm:grid-cols-2">
         {ABUSE_POLICY_KEYS.map((k) => (
-          <label key={k} className="block text-small text-ink-700">
+          <label key={k} className={`block ${ADMIN_FILTER_FIELD_LABEL_CLASS}`}>
             {fieldLabel(k)}
             <input
               type="text"
@@ -46,7 +49,7 @@ export function AdminCommunityAbusePolicyPageMain() {
               name={k}
               value={draft[k]}
               onChange={(e) => setField(k, e.target.value)}
-              className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 font-mono text-meta ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1 font-mono text-small text-ink-800 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               autoComplete="off"
             />
           </label>
@@ -60,28 +63,18 @@ export function AdminCommunityAbusePolicyPageMain() {
     <AdminDetailPageChrome
       titleId={pageTitleId}
       title={t("admin_abuse_title")}
-      subtitle={t("admin_abuse_subtitle")}
+      subtitle={t("admin_abuse_subtitle_l5")}
       headerAside={
-        <>
+        <AdminCommunityListHeaderAside>
           <Link href="/admin/community/policy-change-logs" className={`${adminPageNavLinkClass()}`}>
             {t("admin_abuse_linkLogs")}
-          </Link>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_community_reports_back")}
-          </Link>
-        </>
+          </Link></AdminCommunityListHeaderAside>
       }
     >
       <AdminMetaBuildSection meta={buildMeta} loading={buildLoading} error={buildError} />
 
       <section
-        className="mt-6 rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-4 space-y-4"
+        className={`mt-6 ${ADMIN_FILTER_CARD_CLASS} space-y-4`}
         aria-label={t("admin_abuse_form_aria")}
       >
         <p id={abusePolicyFilterHintId} className="text-meta text-ink-600">

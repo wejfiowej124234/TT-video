@@ -1,11 +1,13 @@
 "use client";
 
+import { AdminDetailContentPanel } from "@/components/admin/AdminDetailContentPanel";
 import Link from "next/link";
 import { useEffect, useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminAcquisitionPublishSuspendCard } from "@/components/admin/AdminAcquisitionPublishSuspendCard";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
 import { AdminAlertError } from "@/components/admin/AdminAlertError";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
@@ -14,19 +16,33 @@ import { AdminProviderApplicationReviewCard } from "@/components/admin/AdminProv
 import { AdminStewardApplicationReviewCard } from "@/components/admin/AdminStewardApplicationReviewCard";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
 import { outboundUrlFromPersisted } from "@/lib/communityMediaClientUrl";
-import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
-import { ADMIN_USER_OUTBOUND_URL_KEYS, USER_DETAIL_ROW_DEFS, fmtUserDetailValue } from "./adminUserDetailPageModel";
+import {
+  ADMIN_USER_OUTBOUND_URL_KEYS,
+  USER_DETAIL_RELATED_FOLD_LINKS,
+  USER_DETAIL_ROW_DEFS,
+  fmtUserDetailValue,
+} from "./adminUserDetailPageModel";
 import { useAdminUserDetailPage } from "./useAdminUserDetailPage";
-import { ADMIN_FILTER_CARD_CLASS, ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass, adminTableInlineLinkClass } from "@/lib/adminUi";
+import {
+  ADMIN_DETAIL_FIELD_LABEL_CLASS,
+  ADMIN_DETAIL_FIELD_ROW_CLASS,
+  ADMIN_DETAIL_FIELD_VALUE_MONO_CLASS,
+  ADMIN_DETAIL_SECTION_TITLE_CLASS,
+  ADMIN_PAGE_CHROME_SUBTITLE_HINT_CLASS,
+  ADMIN_PAGE_CHROME_SUBTITLE_ID_CLASS,
+  adminPageNavLinkClass,
+  adminTableInlineLinkClass,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+} from "@/lib/adminUi";
 
 /** 70：用户监管详情；须 admin；响应不含 password_hash。 */
 export function AdminUserDetailPageMain() {
   const { t } = useTranslation();
   const pageTitleId = useId();
-  const { userId, loading, error, user, meta, acquisitionSuspendInitial } = useAdminUserDetailPage();
+  const { userId, loading, refreshing, error, user, meta, acquisitionSuspendInitial } = useAdminUserDetailPage();
 
   useEffect(() => {
-    if (loading || error || !user) return;
+    if ((loading && !user) || (error && !user) || !user) return;
     if (typeof window === "undefined") return;
     if (window.location.hash !== "#admin-acquisition-suspend") return;
     document.getElementById("admin-acquisition-suspend")?.scrollIntoView({
@@ -41,56 +57,35 @@ export function AdminUserDetailPageMain() {
       title={t("admin_user_detail_title")}
       subtitle={
         <>
-          <p className="font-mono text-meta break-all">{userId || t("admin_em_dash")}</p>
-          <p className="mt-1 text-small text-ink-500">{t("admin_user_detail_subtitle")}</p>
-        </>
-      }
-      headerAside={
-        <>
-          <Link href="/admin/users" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_user_detail_back_list")}
-          </Link>
-          <Link href="/admin/approvals" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_users_linkApprovals")}
-          </Link>
-          <Link
-            href="/admin/provider-applications"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_provider_list_title")}
-          </Link>
-          <Link
-            href="/admin/steward-applications"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_steward_list_title")}
-          </Link>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_schema_back")}
-          </Link>
+          <p className={ADMIN_PAGE_CHROME_SUBTITLE_ID_CLASS}>{userId || t("admin_em_dash")}</p>
+          <p className={ADMIN_PAGE_CHROME_SUBTITLE_HINT_CLASS}>{t("admin_user_detail_subtitle_l5")}</p>
         </>
       }
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={USER_DETAIL_RELATED_FOLD_LINKS}
+        ariaLabelKey="admin_user_detail_related_aria"
+        foldSummaryKey="admin_user_detail_related_fold"
+        dataTtFold="user"
+      />
       <AdminMetaBuildSection meta={meta} loading={loading} error={error} />
 
       <section className="mt-6 space-y-4" aria-label={t("admin_user_detail_panel_aria")}>
         {!userId ? (
           <AdminAlertError message={t("admin_user_detail_missingId")} />
-        ) : loading ? (
+        ) : loading && !user ? (
             <AdminListLoadingStatus message={t("admin_users_loading")} className="text-body text-ink-600" />
-          ) : error ? (
+          ) : error && !user ? (
           <AdminListFetchError errorKind={error} message={adminErrorUserText(error, t)} />
         ) : !user ? (
           <p className="text-body text-ink-600">{t("admin_em_dash")}</p>
         ) : (
-          <div className={`${ADMIN_FILTER_CARD_CLASS} shadow-soft`} data-tt-admin-user-identity="1">
-            <h2 className="text-small font-semibold uppercase tracking-wide text-ink-500">
+          <AdminDetailContentPanel
+            data-tt-admin-user-identity="1"
+            className={refreshing ? ADMIN_LIST_REFRESHING_SURFACE_CLASS : undefined}
+            data-tt-admin-detail-refreshing={refreshing ? "1" : undefined}
+          >
+            <h2 className={ADMIN_DETAIL_SECTION_TITLE_CLASS}>
               {t("admin_user_detail_identity_section")}
             </h2>
             <dl className="mt-3 grid gap-2 text-body sm:grid-cols-2">
@@ -101,9 +96,9 @@ export function AdminUserDetailPageMain() {
                 const outboundHref =
                   ADMIN_USER_OUTBOUND_URL_KEYS.has(key) && rawStr.length > 0 ? outboundUrlFromPersisted(rawStr) : "";
                 return (
-                  <div key={key} className="border-b border-ink-100 pb-2 last:border-0 sm:border-0 sm:pb-0">
-                    <dt className="text-meta text-ink-500">{t(labelKey)}</dt>
-                    <dd className="mt-0.5 break-all font-mono text-meta text-ink-800">
+                  <div key={key} className={`${ADMIN_DETAIL_FIELD_ROW_CLASS}`}>
+                    <dt className={ADMIN_DETAIL_FIELD_LABEL_CLASS}>{t(labelKey)}</dt>
+                    <dd className={ADMIN_DETAIL_FIELD_VALUE_MONO_CLASS}>
                       {outboundHref ? (
                         <a
                           href={outboundHref}
@@ -121,17 +116,17 @@ export function AdminUserDetailPageMain() {
                 );
               })}
             </dl>
-          </div>
+          </AdminDetailContentPanel>
         )}
-        {userId && !loading && !error ? (
+        {userId && !(loading && !user) && !(error && !user) ? (
           <div className="space-y-4" data-tt-admin-user-onboarding="1">
-            <h2 className="text-small font-semibold uppercase tracking-wide text-ink-500">
+            <h2 className={ADMIN_DETAIL_SECTION_TITLE_CLASS}>
               {t("admin_user_detail_onboarding_section")}
             </h2>
             <AdminProviderApplicationReviewCard userId={userId} />
             <AdminStewardApplicationReviewCard userId={userId} />
             <div id="admin-acquisition-suspend" data-tt-admin-user-acquisition="1">
-              <h2 className="mb-3 text-small font-semibold uppercase tracking-wide text-ink-500">
+              <h2 className={`mb-3 ${ADMIN_DETAIL_SECTION_TITLE_CLASS}`}>
                 {t("admin_user_detail_acquisition_section")}
               </h2>
               <AdminAcquisitionPublishSuspendCard

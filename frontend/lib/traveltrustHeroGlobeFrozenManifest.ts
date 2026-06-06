@@ -25,6 +25,12 @@ export const TRAVELTRUST_HERO_GLOBE_EARTH_REALISM_UNLOCKED_AT = "2026-05-21";
 /** 本批次收口复锁日（P0 目视冻结后更新 · ①） */
 export const TRAVELTRUST_HERO_GLOBE_FROZEN_LOCKED_AT = "2026-05-21";
 
+/** Pass A 小幅提亮批次（`traveltrustHeroGlobeBrighten.ts` · ①） */
+export const TRAVELTRUST_HERO_GLOBE_PASS_A_BRIGHTEN_AT = "2026-05-21";
+
+/** Director Final Pass · 镜头语言（冻结 Pass A filter · ①） */
+export const TRAVELTRUST_HERO_L5_DIRECTOR_FINAL_PASS_AT = "2026-05-21";
+
 /**
  * 相对仓库根路径。CI / 契约测试：文件存在且含 `TRAVELTRUST_HERO_GLOBE_FROZEN_ID` 或 `@frozen TT-GLOBE-L5-FROZEN`。
  */
@@ -40,6 +46,12 @@ export const TRAVELTRUST_HERO_GLOBE_FROZEN_RELATIVE_PATHS = [
   "frontend/lib/traveltrustGlobeGeodesy.ts",
   "frontend/lib/traveltrustGlobePinDisplay.ts",
   "frontend/lib/traveltrustGlobeHeroHud.ts",
+  "frontend/lib/traveltrustHeroL5DirectorFinalPass.ts",
+  "frontend/lib/traveltrustHeroCinematicAlign.ts",
+  "frontend/lib/traveltrustHeroGlobeAlign.ts",
+  "frontend/lib/traveltrustHeroSplitLayout.ts",
+  "frontend/lib/traveltrustGlobeHeroTuning.ts",
+  "frontend/lib/traveltrustHeroGlobeBrighten.ts",
   "frontend/components/traveltrust/cinematic/TravelTrustTourismGlobe.tsx",
   "frontend/components/traveltrust/cinematic/TravelTrustTourismGlobeLayers.tsx",
   "frontend/components/traveltrust/cinematic/TravelTrustPhase1TravelArcs.tsx",

@@ -5,7 +5,7 @@ import { useLayoutEffect, useRef } from "react";
 import {
   TT_HERO_SKY_WASH_L5,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 import {
   dumpTraveltrustSkyWashNode,
   shouldTraveltrustSkyWashDebug,

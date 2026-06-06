@@ -5,7 +5,7 @@ import { AdminFinanceDepthActionLinks } from "@/components/admin/AdminFinanceDep
 import { adminFinancePartialDepthHref } from "@/lib/admin/adminFinancePartialDepthHref";
 import { isAdminMaintainerUi } from "@/lib/admin/adminMaintainerUiMode";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
-import { ADMIN_FIN_DEPTH_PANEL_CLASS } from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 
 function settlementDepthLinks() {
   return [
@@ -38,8 +38,10 @@ export function AdminFinanceSettlementDepthPanel({ summary, meta, loading }: Pro
     summary && typeof summary.order_count === "number" ? summary.order_count : null;
 
   return (
-    <section
-      className={ADMIN_FIN_DEPTH_PANEL_CLASS}
+    <AdminWarmL5Surface
+      as="section"
+      className="mb-4"
+      data-tt-admin-fin-depth-panel="1"
       aria-label={t("admin_fin_settlement_depth_aria")}
       data-tt-admin-fin-settlement-depth="1"
     >
@@ -59,6 +61,6 @@ export function AdminFinanceSettlementDepthPanel({ summary, meta, loading }: Pro
       ) : null}
 
       <AdminFinanceDepthActionLinks links={settlementDepthLinks()} />
-    </section>
+    </AdminWarmL5Surface>
   );
 }

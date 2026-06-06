@@ -1,13 +1,8 @@
-"use client";
+import { fetchCommunityFeedInitialSnapshot } from "@/lib/community/communityFeedInitialData.server";
+import CommunityPageClient from "./CommunityPageClient";
 
-import CommunityFeedMain from "@/components/community/CommunityFeedMain";
-import { CommunityFeedRouteSuspense } from "@/components/community/CommunityFeedRouteSuspense";
-
-/** 31 附录：潮流社区 · 动态 Feed（主入口；话题页见 `/community/topic/[tag]`）。 */
-export default function CommunityPage() {
-  return (
-    <CommunityFeedRouteSuspense>
-      <CommunityFeedMain />
-    </CommunityFeedRouteSuspense>
-  );
+/** `/community` 主入口：SSR 预取默认 latest Feed，客户端 hydration 后 idle 再校验 */
+export default async function CommunityPage() {
+  const initialSnapshot = await fetchCommunityFeedInitialSnapshot();
+  return <CommunityPageClient initialSnapshot={initialSnapshot} />;
 }

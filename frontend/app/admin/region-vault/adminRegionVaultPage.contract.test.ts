@@ -11,6 +11,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminRegionVaultPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminRegionVaultPage.ts"), "utf8"),
     readFileSync(join(__dir, "adminRegionVaultPageModel.ts"), "utf8"),
+    readFileSync(join(__dir, "../../../lib/admin/useAdminStandardListFetch.ts"), "utf8"),
   ].join("\n");
 }
 
@@ -24,5 +25,6 @@ describe("admin region vault page", () => {
     expect(src).toContain('"AdminRegionVaultPage"');
     expect(src).toContain("AdminFinanceModuleDepthWorkspace");
     expect(src).toContain("AdminSearchParamsSuspense");
+    expect(src).toContain("useAdminStandardListFetch");
   });
 });

@@ -32,10 +32,17 @@ if (!inCi() && (process.env.PLAYWRIGHT_FULL_STACK ?? "") === "") {
   console.log("[e2e] local default → PLAYWRIGHT_FULL_STACK=1 (API + Next via playwright webServer)");
 }
 
+if (process.env.PLAYWRIGHT_FULL_STACK === "1" && !(process.env.REQUEST_TIMEOUT_SECS ?? "").trim()) {
+  process.env.REQUEST_TIMEOUT_SECS = "120";
+  console.log("[e2e] REQUEST_TIMEOUT_SECS → 120 (GET /meta governance eth_call stack; avoid 408)");
+}
+
 alignPlaywrightProcessEnvFromRootDotenv(repoRoot);
 
 const apiPort = process.env.PLAYWRIGHT_API_PORT ?? "8080";
 const stabilityE2e = process.env.PLAYWRIGHT_E2E_STABILITY === "1";
+/** `/community/me` 窄绿集后续 Playwright 步：复用首步已暖 Next/API，勿 purge `.next` / reclaim 端口 */
+const communityMeGreenReuse = process.env.COMMUNITY_ME_L5_GREEN_REUSE === "1";
 if (!process.env.PLAYWRIGHT_API_HEALTH_URL) {
   process.env.PLAYWRIGHT_API_HEALTH_URL = `http://127.0.0.1:${apiPort}/health`;
 }
@@ -168,6 +175,32 @@ function apiHealthOk() {
   }
 }
 
+/** 复用 :8080 时预热 `/meta`，降低 setup-meta-chain 首击 408；失败则返回 false 以触发换进程 */
+function apiMetaWarmOk() {
+  const metaUrl = `http://127.0.0.1:${apiPort}/meta`;
+  for (let attempt = 1; attempt <= 4; attempt += 1) {
+    try {
+      execSync(`curl -sf -m 120 "${metaUrl}" -o /dev/null`, {
+        stdio: "ignore",
+        env: process.env,
+      });
+      console.log(`[e2e] ${metaUrl} warmup OK`);
+      return true;
+    } catch {
+      if (attempt < 4) {
+        console.log(`[e2e] ${metaUrl} warmup attempt ${attempt}/4 — retry in 3s`);
+        try {
+          execSync("sleep 3", { stdio: "ignore", env: process.env });
+        } catch {
+          /* Windows Git Bash has sleep */
+        }
+      }
+    }
+  }
+  console.warn(`[e2e] ${metaUrl} warmup failed after 4 attempts`);
+  return false;
+}
+
 /** Free Playwright API port so a new process can inherit current env (e.g. DATABASE_URL from local gate). */
 function killStrayApiOnPlaywrightPort() {
   if (process.platform === "win32" && process.env.SKIP_API_TASKKILL !== "1") {
@@ -222,29 +255,41 @@ if (stabilityE2e && !(process.env.PLAYWRIGHT_RELAX_META_CHAIN_GUARD ?? "").trim(
 if (process.env.PLAYWRIGHT_FULL_STACK === "1" && process.env.SKIP_API_BUILD !== "1") {
   const gateFresh = process.env.TRAVELTRUST_GATE_ENSURE_FRESH_API === "1";
   const needReclaim = gateFresh || stabilityE2e;
-  const healthy = apiHealthOk();
+  let healthy = apiHealthOk();
   if (healthy && !gateFresh && !stabilityE2e) {
-    console.log(`[e2e] http://127.0.0.1:${apiPort}/health OK — skip cargo build`);
-  } else {
+    if (!apiMetaWarmOk()) {
+      console.log(
+        "[e2e] reused API /meta not ready — reclaim port and rebuild (inherits REQUEST_TIMEOUT_SECS)",
+      );
+      healthy = false;
+    } else {
+      console.log(`[e2e] http://127.0.0.1:${apiPort}/health OK — skip cargo build`);
+    }
+  }
+  const stabilityFresh = stabilityE2e && !communityMeGreenReuse;
+  if (!healthy || gateFresh || stabilityFresh) {
     if (gateFresh) {
       console.log(
         "[e2e] TRAVELTRUST_GATE_ENSURE_FRESH_API=1 — reclaim port / rebuild so API inherits current env",
       );
     }
-    if (stabilityE2e && !gateFresh) {
+    if (stabilityFresh && !gateFresh) {
       console.log(
         "[e2e] PLAYWRIGHT_E2E_STABILITY=1 — reclaim FE/API ports + rebuild so webServer children see DATABASE_URL + rate-limit-off",
       );
     }
-    if (needReclaim) reclaimFrontendListenPort();
-    killStrayApiOnPlaywrightPort();
+    if (communityMeGreenReuse && healthy && !gateFresh) {
+      console.log("[e2e] COMMUNITY_ME_L5_GREEN_REUSE=1 — reuse warm FE/API from prior green step");
+    }
+    if (needReclaim && !communityMeGreenReuse) reclaimFrontendListenPort();
+    if (!communityMeGreenReuse) killStrayApiOnPlaywrightPort();
     console.log("[e2e] cargo build -p traveltrust-api (Playwright webServer runs target/debug binary)");
     execSync("cargo build -p traveltrust-api", { cwd: repoRoot, stdio: "inherit", env: process.env });
   }
 }
 
 /** Windows 稳定性：陈旧 `.next` 易使浏览器仍跑旧 client chunk（注册页 `postRegister`/跳转逻辑与源码脱节）。设 `PLAYWRIGHT_SKIP_NEXT_PURGE=1` 可跳过（加快迭代）。 */
-if (stabilityE2e && !inCi() && process.env.PLAYWRIGHT_SKIP_NEXT_PURGE !== "1") {
+if (stabilityE2e && !inCi() && process.env.PLAYWRIGHT_SKIP_NEXT_PURGE !== "1" && !communityMeGreenReuse) {
   const nextDir = path.join(frontendDir, ".next");
   if (existsSync(nextDir)) {
     try {

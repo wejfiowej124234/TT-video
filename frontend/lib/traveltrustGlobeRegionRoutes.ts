@@ -12,13 +12,18 @@ export function traveltrustRouteTouchesRegion(routeId: string, regionId: string)
   return route.fromId === regionId || route.toId === regionId;
 }
 
-/** Illustrative corridors touching a hub (① · L5 hover). */
-export function listTraveltrustRoutesForRegion(regionId: string): string[] {
+export type TraveltrustRegionRouteLabel = { id: string; label: string };
+
+/** Illustrative corridors touching a hub (① · L5 hover). `id` = route id (keys must be unique; labels may repeat for A↔B pairs). */
+export function listTraveltrustRoutesForRegion(regionId: string): TraveltrustRegionRouteLabel[] {
   return TRAVELTRUST_PHASE1_TRAVEL_ROUTES.filter(
     (route) => route.fromId === regionId || route.toId === regionId,
   ).map((route) => {
     const otherId = route.fromId === regionId ? route.toId : route.fromId;
     const other = REGION_NAME[otherId] ?? otherId;
-    return `${REGION_NAME[regionId] ?? regionId} → ${other}`;
+    return {
+      id: route.id,
+      label: `${REGION_NAME[regionId] ?? regionId} → ${other}`,
+    };
   });
 }

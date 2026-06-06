@@ -7,7 +7,13 @@ import { AdminPageAccessBadge } from "@/components/admin/AdminPageAccessBadge";
 import { AdminSubpageBreadcrumb } from "@/components/admin/AdminSubpageBreadcrumb";
 import type { AdminPermissionId } from "@/lib/admin/adminPermissionIds";
 import { adminWritePermissionForPathname } from "@/lib/admin/adminListPageWritePermission";
-import { TT_ADMIN_PAGE_INNER_DETAIL, ADMIN_PAGE_HEADER_CARD_CLASS, ADMIN_LIST_PAGE_BODY_CANVAS_CLASS } from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
+import {
+  ADMIN_LIST_PAGE_BODY_CANVAS_CLASS,
+  ADMIN_PAGE_CHROME_SUBTITLE_CLASS,
+  ADMIN_PAGE_CHROME_TITLE_CLASS,
+  TT_ADMIN_PAGE_INNER_DETAIL,
+} from "@/lib/adminUi";
 
 /** 详情 / 写表单页 L5 壳：页头卡片 + 子内容（表单 / 时间线 / 只读块）。 */
 export function AdminDetailPageChrome(props: {
@@ -55,18 +61,22 @@ export function AdminDetailPageChrome(props: {
     >
       {showSubpageBreadcrumb !== false ? <AdminSubpageBreadcrumb /> : null}
       {preHeader}
-      <header className={`${ADMIN_PAGE_HEADER_CARD_CLASS} flex flex-wrap items-start justify-between gap-3`}>
+      <AdminWarmL5Surface
+        as="header"
+        innerClassName="flex flex-wrap items-start justify-between gap-3"
+        data-tt-admin-detail-page-header="1"
+      >
         <div>
           <div className="flex flex-wrap items-center gap-2">
-            <h1 id={titleId} className="text-h3 font-semibold text-ink-900">
+            <h1 id={titleId} className={ADMIN_PAGE_CHROME_TITLE_CLASS}>
               {title}
             </h1>
             <AdminPageAccessBadge writePermissionId={resolvedWrite} />
           </div>
-          {subtitle ? <div className="mt-2 max-w-2xl text-body text-ink-600">{subtitle}</div> : null}
+          {subtitle ? <div className={ADMIN_PAGE_CHROME_SUBTITLE_CLASS}>{subtitle}</div> : null}
         </div>
         {headerAside ? <div className="flex flex-wrap gap-2">{headerAside}</div> : null}
-      </header>
+      </AdminWarmL5Surface>
       <div
         className={ADMIN_LIST_PAGE_BODY_CANVAS_CLASS}
         data-tt-admin-detail-page-body-canvas="1"

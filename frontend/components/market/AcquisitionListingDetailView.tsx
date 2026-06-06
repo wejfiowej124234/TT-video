@@ -9,6 +9,7 @@ import type { DemoAcquisitionListing } from "@/lib/marketSubsiteDemo";
 import { pickL10n } from "@/lib/marketSubsiteDemo";
 import type { MarketListingDetailProvenance } from "@/lib/marketSubsiteDetailPageModel";
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
+import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
 import { trackMarketEvent } from "@/lib/analytics";
 
 export function AcquisitionListingDetailView({
@@ -38,7 +39,7 @@ export function AcquisitionListingDetailView({
           <p className="m-0 text-center">
             <Link
               href="/market/acquisition"
-              className={`${touchTargetLink44Classes} font-medium text-cyan-200 underline decoration-cyan-400/45 underline-offset-4 transition-colors motion-reduce:transition-none hover:text-cyan-100 ${travelFocusRingOffset2Classes}`}
+              className={`${touchTargetLink44Classes} ${TT_MARKETING_MARKET_DARK_PATH.inlineLinkUnderline} ${travelFocusRingOffset2Classes}`}
             >
               {t("market_subsite_back_to_acquisition")}
             </Link>
@@ -55,7 +56,7 @@ export function AcquisitionListingDetailView({
           {t("market_subsite_detail_demo_provenance_note")}
         </div>
       ) : null}
-      <AcquisitionListingDetailBody listing={listing} />
+      <AcquisitionListingDetailBody listing={listing} catalogSourced={provenance === "postgres_catalog"} />
     </MarketSubsitePageChrome>
   );
 }

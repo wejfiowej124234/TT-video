@@ -3,7 +3,7 @@
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminFinanceDepthActionLinks } from "@/components/admin/AdminFinanceDepthActionLinks";
 import { adminFinancePartialDepthHref } from "@/lib/admin/adminFinancePartialDepthHref";
-import { ADMIN_FIN_DEPTH_PANEL_CLASS } from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 
 function reconciliationDepthLinks() {
   return [
@@ -41,8 +41,10 @@ export function AdminFinanceReconciliationDepthPanel({
   const { t } = useTranslation();
 
   return (
-    <section
-      className={ADMIN_FIN_DEPTH_PANEL_CLASS}
+    <AdminWarmL5Surface
+      as="section"
+      className="mb-4"
+      data-tt-admin-fin-depth-panel="1"
       aria-label={t("admin_fin_reconciliation_depth_aria")}
       data-tt-admin-fin-reconciliation-depth="1"
     >
@@ -77,6 +79,6 @@ export function AdminFinanceReconciliationDepthPanel({
       )}
 
       <AdminFinanceDepthActionLinks links={reconciliationDepthLinks()} />
-    </section>
+    </AdminWarmL5Surface>
   );
 }

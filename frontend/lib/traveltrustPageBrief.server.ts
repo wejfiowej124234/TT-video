@@ -30,3 +30,12 @@ export async function loadTraveltrustLayoutPreload(): Promise<TraveltrustLayoutP
     source,
   };
 }
+
+/** 同步 fallback：layout 首帧不 await page-brief（切换 /traveltrust 不阻塞 RSC） */
+export function getTraveltrustLayoutPreloadSync(): TraveltrustLayoutPreload {
+  return {
+    hero: resolveHeroMediaUrls(null),
+    roles: resolveAllRoleMediaUrls(null),
+    source: "fallback",
+  };
+}

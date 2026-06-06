@@ -151,5 +151,5 @@ export async function publishAcquisitionCarryStudioCatalog(
   form: AcquisitionStudioDraftPersistSource,
 ): Promise<MarketListingPublishResult> {
   const payload = toAcquisitionPersist(form);
-  return postMarketAcquisitionListing(payload);
+  return postMarketAcquisitionListing(payload, { agreeEscrowCopy: form.agreeEscrowCopy });
 }

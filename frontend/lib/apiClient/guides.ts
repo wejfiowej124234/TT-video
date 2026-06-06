@@ -10,19 +10,37 @@ import {
   writeRequestHeaders,
   logApiJsonStatusNotOk,
   throwUnlessApiOk,
+  fetchGetWithTransitRetry,
 } from "./core";
 
-export async function getGuides(params?: { city?: string; language?: string; service_type?: string }): Promise<unknown[]> {
+export async function getGuides(params?: {
+  city?: string;
+  language?: string;
+  service_type?: string;
+  country_code?: string;
+  limit?: number;
+  cursor?: string;
+}): Promise<{ items: unknown[]; page?: { limit: number; next_cursor: string | null; has_more: boolean } }> {
   const q = new URLSearchParams();
   if (params?.city) q.set("city", params.city);
   if (params?.language) q.set("language", params.language);
   if (params?.service_type) q.set("service_type", params.service_type);
+  if (params?.country_code) q.set("country_code", params.country_code);
+  if (params?.limit != null) q.set("limit", String(params.limit));
+  if (params?.cursor) q.set("cursor", params.cursor);
   const url = apiUrl(routes.guides) + (q.toString() ? `?${q}` : "");
-  const res = await fetch(url, { headers: { "x-request-id": requestId(), ...getAuthHeaders() } });
-  const data = (await parseResponse(res)) as { items?: unknown[]; status?: string };
+  const res = await fetchGetWithTransitRetry(url, {
+    headers: { "x-request-id": requestId(), ...getAuthHeaders() },
+  }, { attempts: 5 });
+  const data = (await parseResponse(res)) as {
+    items?: unknown[];
+    status?: string;
+    page?: { limit: number; next_cursor: string | null; has_more: boolean };
+  };
   logApiJsonStatusNotOk("getGuides", data);
   throwUnlessApiOk(data);
-  return Array.isArray(data?.items) ? data.items : [];
+  const items = Array.isArray(data?.items) ? data.items : [];
+  return data?.page ? { items, page: data.page } : { items };
 }
 
 export async function getGuide(id: string): Promise<unknown> {

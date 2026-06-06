@@ -7,12 +7,16 @@ import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { adminErrorUserText, type AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
-import { ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
+import { ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass,
+  ADMIN_DEFINITION_LIST_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,} from "@/lib/adminUi";
 type Row = { path: string; text: string };
 
 type Props = {
   apiSectionId: string;
   loading: boolean;
+  refreshing: boolean;
   error: AdminFetchErrorKind | null;
   metaRows: Row[];
   summaryRows: Row[];
@@ -24,6 +28,7 @@ type Props = {
 export function AdminFinanceReconciliationApiSection({
   apiSectionId,
   loading,
+  refreshing,
   error,
   metaRows,
   summaryRows,
@@ -32,26 +37,32 @@ export function AdminFinanceReconciliationApiSection({
   reportIdRaw,
 }: Props) {
   const { t } = useTranslation();
+  const hasCachedRows = metaRows.length > 0 || summaryRows.length > 0 || lastRows.length > 0;
 
   return (
-    <section
-      className="mt-8 rounded-[var(--radius-xl)] border border-ink-200 bg-white p-5 shadow-soft"
+    <AdminWarmL5Surface
+      as="section"
+      className="mt-8"
       aria-labelledby={apiSectionId}
+      data-tt-admin-fin-reconciliation-api="1"
     >
       <h2 id={apiSectionId} className="text-body font-semibold text-ink-900">
         {t("admin_finance_reconciliation_finance_summary_api_heading")}
       </h2>
       <p className="mt-1 text-meta text-ink-600">{t("admin_finance_reconciliation_finance_summary_api_hint")}</p>
 
-      {loading ? (
+      {loading && !hasCachedRows ? (
         <AdminListLoadingStatus message={t("admin_finance_reconciliation_summary_loading")} className="mt-4 text-body text-ink-600" />
       ) : error ? (
         <AdminListFetchError className="mt-4" errorKind={error} message={adminErrorUserText(error, t)} />
       ) : (
-        <div className="mt-4 space-y-6">
+        <div
+          className={`mt-4 space-y-6${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
+          data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
+        >
           <div>
             <h3 className="text-small font-semibold text-ink-700">{t("admin_finance_reconciliation_meta_heading")}</h3>
-            <dl className="mt-2 divide-y divide-ink-100 border border-ink-100 rounded-[var(--radius-md)]">
+            <dl className={ADMIN_DEFINITION_LIST_CLASS}>
               {metaRows.map(({ path, text }) => (
                 <div
                   key={path}
@@ -67,7 +78,7 @@ export function AdminFinanceReconciliationApiSection({
             <h3 className="text-small font-semibold text-ink-700">
               {t("admin_finance_reconciliation_summary_heading")}
             </h3>
-            <dl className="mt-2 divide-y divide-ink-100 border border-ink-100 rounded-[var(--radius-md)]">
+            <dl className={ADMIN_DEFINITION_LIST_CLASS}>
               {summaryRows.map(({ path, text }) => (
                 <div
                   key={path}
@@ -83,7 +94,7 @@ export function AdminFinanceReconciliationApiSection({
             <h3 className="text-small font-semibold text-ink-700">
               {t("admin_finance_reconciliation_projection_heading")}
             </h3>
-            <dl className="mt-2 divide-y divide-ink-100 border border-ink-100 rounded-[var(--radius-md)]">
+            <dl className={ADMIN_DEFINITION_LIST_CLASS}>
               {lastRows.map(({ path, text }) => (
                 <div
                   key={path}
@@ -113,6 +124,6 @@ export function AdminFinanceReconciliationApiSection({
           </div>
         </div>
       )}
-    </section>
+    </AdminWarmL5Surface>
   );
 }

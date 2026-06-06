@@ -1,5 +1,7 @@
 "use client";
 
+import { formatAdminAppliedFiltersHuman } from "@/lib/admin/formatAdminAppliedFiltersHuman";
+
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminAppliedFiltersBanner } from "@/components/admin/AdminAppliedFiltersBanner";
 

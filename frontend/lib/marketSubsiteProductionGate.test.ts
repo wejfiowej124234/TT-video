@@ -6,10 +6,10 @@ describe("marketSubsiteDemoStudioFallbackEnabled", () => {
     vi.unstubAllEnvs();
   });
 
-  it("is true in development regardless of env", () => {
+  it("is false by default in development", () => {
     vi.stubEnv("NODE_ENV", "development");
     vi.stubEnv("NEXT_PUBLIC_MARKET_SUBSITE_DEMO_FALLBACK", "");
-    expect(marketSubsiteDemoStudioFallbackEnabled()).toBe(true);
+    expect(marketSubsiteDemoStudioFallbackEnabled()).toBe(false);
   });
 
   it("is false in production when unset", () => {
@@ -18,9 +18,15 @@ describe("marketSubsiteDemoStudioFallbackEnabled", () => {
     expect(marketSubsiteDemoStudioFallbackEnabled()).toBe(false);
   });
 
-  it("is true in production when explicitly on", () => {
+  it("is true when explicitly on", () => {
     vi.stubEnv("NODE_ENV", "production");
     vi.stubEnv("NEXT_PUBLIC_MARKET_SUBSITE_DEMO_FALLBACK", "1");
     expect(marketSubsiteDemoStudioFallbackEnabled()).toBe(true);
+  });
+
+  it("is false when explicitly off", () => {
+    vi.stubEnv("NODE_ENV", "development");
+    vi.stubEnv("NEXT_PUBLIC_MARKET_SUBSITE_DEMO_FALLBACK", "0");
+    expect(marketSubsiteDemoStudioFallbackEnabled()).toBe(false);
   });
 });

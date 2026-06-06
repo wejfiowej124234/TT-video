@@ -34,6 +34,10 @@ export type AdminFeeRouterRes = {
 
 export const ADMIN_FEE_ROUTER_PAGE_LIMIT = 25;
 
+/** First-page snapshot extras in list-fetch meta (`useAdminFeeRouterPage`). */
+export const ADMIN_FEE_ROUTER_SUMMARY_META_KEY = "__adminFeeRouterSummary";
+export const ADMIN_FEE_ROUTER_PAGE_META_KEY = "__adminFeeRouterPage";
+
 export function shortHex(s: string, head = 6, tail = 4): string {
   const t = s.trim();
   if (t.length <= head + tail + 2) return t;

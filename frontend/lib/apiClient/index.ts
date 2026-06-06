@@ -7,6 +7,7 @@ export {
   isComplianceError,
   fetchJsonWithApiStatusLog,
   getAuthHeaders,
+  getApiRetryAfterSeconds,
   writeRequestHeaders,
   getIdempotencyKey,
   clearClientAuthStorage,
@@ -19,6 +20,9 @@ export type { AuthHeaders } from "./core";
 export { getMeta, getMetaBuild, readMetaBuild, readMetaBuildRoot } from "./meta";
 export type { MetaBuildInfo } from "./meta";
 export { getGuides, getGuide, getGuideAvailability, postGuideUploadDoc, postGuide, postGuideStake } from "./guides";
+export { getMeProviderApplication, postProviderApplication } from "./providerApplications";
+export { getMeStewardApplication, postStewardApplication, getStewardStakeQuote, getStewardStakeStatus } from "./stewardApplications";
+export type { StewardStakeStatusResponse } from "./stewardApplications";
 export type {
   OrdersListResult,
   OrderListItem,
@@ -39,6 +43,7 @@ export {
   getOrder,
   getOrderChainSyncStatus,
   patchOrderItinerary,
+  patchOrderGuide,
   orderAccept,
   orderCancel,
   orderMockPay,
@@ -57,7 +62,40 @@ export type { DiscoverOrdersResult } from "./discover";
 export { getDiscoverOrders } from "./discover";
 export { postItineraryCreate, postItineraryCustom } from "./itineraries";
 export type { CustomItineraryBody } from "./itineraries";
-export { getMe, clearGetMeCache, getMeStats, putMe, putMePassword } from "./me";
+export {
+  getMe,
+  clearGetMeCache,
+  getMeFull,
+  isMeFullRequestError,
+} from "./me/meFetch";
+export type { GetMeFullOptions } from "./me/meFetch";
+export {
+  getMeStats,
+  putMe,
+  putMePassword,
+  postMeProfileAvatar,
+} from "./me/meWrite";
+export { getMeWallets, getMeRoleApplications } from "./me/meIdentityPhase15";
+export type { MeWalletRow } from "./me/meIdentityPhase15";
+export type { MeRoleApplicationRow } from "../me/roleApplications";
+export {
+  postMeAcquisitionPublishBond,
+  postMeAcquisitionFulfillmentBond,
+  getWalletVerificationStatus,
+  postWalletVerifyChallenge,
+  postWalletVerifyConfirm,
+} from "./me";
+export type {
+  WalletVerificationStatus,
+  WalletVerifyChallengeResponse,
+} from "./me";
+export {
+  getMeSessions,
+  getMeSecurityNotifications,
+  deleteMeSessionCurrent,
+  deleteMeSessionBySuffix,
+} from "./meSecurity";
+export type { GetMeSecurityNotificationsParams } from "./meSecurity";
 export {
   getDisputes,
   getDispute,
@@ -72,12 +110,15 @@ export { getOrderMessages, postOrderMessage } from "./messages";
 export {
   applyClientSessionAfterAuth,
   applyLocalLogoutAfterServerOk,
+  syncClientSessionUserIdCookieFromStorage,
   postSeedTestAccounts,
   postLogin,
   postRegister,
+  postRegisterSendVerificationCode,
   postLogout,
   postRefresh,
   postVerifyEmail,
+  postResendVerificationEmail,
   postForgotPassword,
   postResetPassword,
 } from "./auth";
@@ -126,7 +167,11 @@ export {
   getDidRankTravelers,
   getDidRankGuides,
   getDidRankItineraries,
+  getDidRankProviders,
+  getDidRankAcquisitions,
 } from "./didRank";
+export { getDidRankPrizePool } from "./didRankPrizePool";
+export type { DidRankPrizePoolResponse } from "./didRankPrizePool";
 export {
   getFeed,
   getPostById,
@@ -170,3 +215,10 @@ export type {
   CommunityApiPostDetailRow,
   CommunityGetPostByIdResponse,
 } from "./community";
+export type { OnboardingQuoteRole, OnboardingPaymentIntentBody } from "./onboarding";
+export {
+  getOnboardingQuote,
+  getOnboardingEntitlementsMe,
+  postOnboardingPaymentIntent,
+  postOnboardingRoleConfirm,
+} from "./onboarding";

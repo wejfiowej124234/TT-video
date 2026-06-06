@@ -240,13 +240,13 @@ const out = {
   version: 3,
   generated_by: "scripts/build-d1-d12-coverage-matrix.mjs",
   route_rules: "scripts/matrix-96-16-shared.mjs",
-  baseline: "96-16: 119 routes = app/**/page.tsx (same as build-d5d6d7-coverage-matrix.mjs / GO_96_16_d5_d6_d7_coverage_matrix_v1.json)",
+  baseline: "96-16: app/**/page.tsx count = total_routes (same as build-d5d6d7-coverage-matrix.mjs / GO_96_16_d5_d6_d7_coverage_matrix_v1.json)",
   methodology:
     "D5/D6 + route 命中规则与 d5d6d7 矩阵同构（NA_EXACT + COVERED_RULES 见 matrix-96-16-shared.mjs）。D4：GLOBAL_D4_FILES 在 evidence 内存在则全部非 N_A 路由记 COVERED。D1–D3/D8/D9/D10/D11/D12：由命中 evidence 的 EVIDENCE_TO_DIMS 并集；未列维度或路由未覆盖 → NEEDS_FIX。D11：与各路族 d5_d6_d7 批次同 scope（可观测/排障面随页走查，非独立 x-request-id 单测）。D7：有 lighthouse-root-3012.metrics-snippet 且 13 报告存在时仅 /(home) 记 COVERED，余路由 NEEDS_FIX（93/性能）。D10：无链/无钱包界面之路由 N_A。不扩展 D5–D7 新批次，不重读 evidence 正文做缺口推断。v2：补全 D11 映射。v3：路由规则单源 shared 模块。",
   claim_96_complete: false,
   playwright_e2e: evidenceAgg.playwright_e2e || { status: "NOT_RUN", trace: "93" },
   lighthouse: {
-    per_route: { status: "NOT_RUN", note: "119 routes without per-route Lighthouse; D7 mostly NEEDS_FIX" },
+    per_route: { status: "NOT_RUN", note: "No per-route Lighthouse; D7 mostly NEEDS_FIX (see total_routes)" },
     root_snippet: homeLighthouse ? "frontend/evidence/lighthouse-root-3012.metrics-snippet.json" : null,
   },
   total_routes: rows.length,

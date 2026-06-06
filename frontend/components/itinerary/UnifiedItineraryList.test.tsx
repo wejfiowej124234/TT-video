@@ -76,6 +76,21 @@ describe("UnifiedItineraryList (54-S2)", () => {
     expect(screen.getByText("Sea view")).toBeTruthy();
   });
 
+  it("marketDark variant quote summary uses warm ref-sun heading", () => {
+    render(
+      <UnifiedItineraryList
+        days={[dayWithAttraction]}
+        amountBreakdown={{ hotel: 10, total_budget: 99 }}
+        collapsible={false}
+        variant="marketDark"
+        t={(k) => k}
+      />,
+    );
+    const quoteTitle = screen.getByRole("heading", { name: "escrow_quoteSummary" });
+    expect(quoteTitle.className).toContain("text-ref-sun");
+    expect(quoteTitle.className).not.toContain("text-cyan");
+  });
+
   it("did variant quote summary uses cyan heading and lists breakdown", () => {
     render(
       <UnifiedItineraryList

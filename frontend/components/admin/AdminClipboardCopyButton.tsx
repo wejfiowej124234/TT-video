@@ -3,7 +3,7 @@
 import { useCallback, useState } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
-import { ADMIN_FOCUS_RING_CORE_CLASS } from "@/lib/adminUi";
+import { ADMIN_FOCUS_RING_CORE_CLASS, ADMIN_SHELL_SECONDARY_BTN_CLASS } from "@/lib/adminUi";
 
 type Props = {
   text: string;
@@ -45,7 +45,7 @@ export function AdminClipboardCopyButton(props: Props) {
     <span className={`inline-flex flex-col items-start gap-1 ${className}`}>
       <button
         type="button"
-        className={`inline-flex min-h-[44px] items-center rounded-[var(--radius-md)] border border-ink-200 bg-white px-3 py-1.5 text-meta font-medium text-ink-800 hover:bg-ink-50 ${ADMIN_FOCUS_RING_CORE_CLASS}`}
+        className={`${ADMIN_SHELL_SECONDARY_BTN_CLASS} ${ADMIN_FOCUS_RING_CORE_CLASS}`}
         onClick={() => void onCopy()}
         data-tt-admin-clipboard-copy={dataAttr ?? "1"}
         aria-label={t(labelKey)}

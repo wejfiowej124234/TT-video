@@ -6,15 +6,17 @@ import type { APIRequestContext } from "@playwright/test";
 export async function getMetaJsonWithRetry(
   request: APIRequestContext,
   url: string,
+  options?: { timeoutMs?: number },
 ): Promise<unknown> {
+  const timeout = options?.timeoutMs ?? 120_000;
   let last = "";
-  for (let i = 0; i < 4; i++) {
-    const r = await request.get(url);
+  for (let i = 0; i < 6; i++) {
+    const r = await request.get(url, { timeout });
     if (r.ok()) return r.json();
     const t = await r.text();
     last = `HTTP ${r.status()} ${t.slice(0, 200)}`;
-    if (i < 3 && [408, 429, 503].includes(r.status())) {
-      await new Promise((res) => setTimeout(res, 1500 * (i + 1)));
+    if (i < 5 && [408, 429, 503].includes(r.status())) {
+      await new Promise((res) => setTimeout(res, 3000 * (i + 1)));
       continue;
     }
     throw new Error(`GET ${url} failed: ${last}`);

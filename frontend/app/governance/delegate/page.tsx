@@ -160,7 +160,7 @@ function GovernanceDelegatePageInner() {
   const btnClass = `min-h-[44px] rounded-[var(--radius-sm)] border border-ink-300 bg-white px-4 py-2 text-small font-medium text-ink-800 transition-colors motion-reduce:transition-none hover:bg-ink-50 disabled:opacity-50 disabled:cursor-not-allowed ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-white`;
 
   return (
-    <main className="mx-auto max-w-3xl p-8" aria-labelledby={pageTitleId}>
+    <main className="mx-auto max-w-3xl p-8" aria-labelledby={pageTitleId} data-tt-governance-delegate-page="1">
       <h1 id={pageTitleId} className="text-h3 font-semibold text-ink-900">
         {t("governance_delegate_title")}
       </h1>

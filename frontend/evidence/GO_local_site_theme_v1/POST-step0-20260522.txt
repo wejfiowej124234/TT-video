@@ -1,0 +1,188 @@
+
+> traveltrust-frontend@0.1.0 test
+> vitest run --run lib/uiSystem.test.ts lib/marketingUi.test.ts app/(home)/homeMarketing.contract.test.ts components/market/useMarketPage.contract.test.ts components/market/marketTheme.contract.test.ts components/did-rank/didRankTheme.contract.test.ts components/community/communityShellTheme.contract.test.ts
+
+
+ RUN  v2.1.9 D:/TravelTrust-V1/frontend
+
+ ✓ components/market/useMarketPage.contract.test.ts (2 tests) 2ms
+ ✓ components/did-rank/didRankTheme.contract.test.ts (4 tests) 3ms
+ ✓ components/market/marketTheme.contract.test.ts (3 tests) 3ms
+ ✓ app/(home)/homeMarketing.contract.test.ts (3 tests) 3ms
+ ❯ components/community/communityShellTheme.contract.test.ts (1 test | 1 failed) 12ms
+   × community shell theme V1 (contract) > CommunityRouteShellInner uses TT_MARKETING_DARK_ROUTE_* tab tokens 12ms
+     → expected 'import React from "react";\r\nimport …' to contain 'TT_MARKETING_DARK_ROUTE_TAB_ACTIVE'
+ ✓ lib/marketingUi.test.ts (2 tests) 3ms
+ ✓ lib/uiSystem.test.ts (11 tests) 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  components/community/communityShellTheme.contract.test.ts > community shell theme V1 (contract) > CommunityRouteShellInner uses TT_MARKETING_DARK_ROUTE_* tab tokens
+AssertionError: expected 'import React from "react";\r\nimport …' to contain 'TT_MARKETING_DARK_ROUTE_TAB_ACTIVE'
+
+- Expected
++ Received
+
+- TT_MARKETING_DARK_ROUTE_TAB_ACTIVE
++ import React from "react";
++ import Link from "next/link";
++ import { CommunitySupportMenu } from "@/components/community/CommunitySupportMenu";
++ import {
++   TT_MARKETING_DARK_ROUTE_DESKTOP_HEADER,
++   TT_MARKETING_DARK_ROUTE_HEADER_LINK_MUTED,
++   TT_MARKETING_DARK_ROUTE_HEADER_LINK_FOCUS,
++   TT_MARKETING_DARK_ROUTE_HEADER_LINK_PRIMARY,
++   TT_MARKETING_DARK_ROUTE_HEADER_SUPPORT_RAIL,
++   TT_MARKETING_DARK_ROUTE_HEADER_TITLE,
++   TT_MARKETING_DARK_ROUTE_MOBILE_BOTTOM_NAV,
++   TT_MARKETING_DARK_ROUTE_MOBILE_HEADER,
++   TT_MARKETING_DARK_ROUTE_PAGE_SHELL,
++   TT_MARKETING_DARK_ROUTE_SCRIM_CYAN,
++   TT_MARKETING_DARK_ROUTE_TAB_PROGRESS,
++   TT_MARKETING_HEADER_INNER_FRAME,
++ } from "@/lib/uiSystem";
++ import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
++ import WarmRouteFieldBackdrop from "@/components/shell/WarmRouteFieldBackdrop";
++ import { Web3PodiumSpotlightLayer } from "@/components/shell/Web3PodiumSpotlightLayer";
++ import { CommunityRouteShellTabLinks } from "./CommunityRouteShellTabLinks";
++ import { CommunityRouteShellMobileBottomNav } from "./CommunityRouteShellMobileBottomNav";
++ import { useCommunityRouteShellInner } from "./useCommunityRouteShellInner";
++ 
++ /** 壳层内容：须在 CommunityAuthProvider 内。 */
++ export function CommunityRouteShellInner({ children }: { children: React.ReactNode }) {
++   const { pathname, t, isOnline, showOnlineRecovery, showTabProgress, totalUnread, onTabNavStart } =
++     useCommunityRouteShellInner();
++ 
++   return (
++     <div
++       className={TT_MARKETING_DARK_ROUTE_PAGE_SHELL}
++       data-tt-ui-generation="v2"
++       data-tt-marketing-dark-route-shell="1"
++     >
++       <WarmRouteFieldBackdrop />
++       <Web3PodiumSpotlightLayer presence="communityRoute" />
++       {!isOnline && (
++         <div
++           className="fixed top-0 left-0 right-0 z-50 border-b border-warning/50 bg-warning/20 px-3 py-2 text-center text-meta text-warning/95 safe-area-inset-t"
++           role="alert"
++           aria-live="polite"
++         >
++           {t("community_offline_hint")}
++         </div>
++       )}
++       {isOnline && showOnlineRecovery && (
++         <div
++           className="fixed top-0 left-0 right-0 z-50 border-b border-success/45 bg-success/15 px-3 py-2 text-center text-meta text-success safe-area-inset-t"
++           role="status"
++           aria-live="polite"
++         >
++           {t("community_online_hint")}
++         </div>
++       )}
++       <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden>
++         <div className="absolute inset-0 bg-scifi-gradient-static opacity-75" />
++         <div className={TT_MARKETING_DARK_ROUTE_SCRIM_CYAN} />
++         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_20%_0%,rgba(252,164,124,0.14),transparent_50%),radial-gradient(circle_at_95%_25%,rgba(249,215,121,0.08),transparent_45%)]" />
++         <div className="absolute inset-0 bg-ref-silhouette-vignette opacity-[0.48]" />
++       </div>
++ 
++       {/* 移动：L1 标题+发现+返回；L2 平台与支持（与主 Tab 底栏分层）。z-[110] 同下 */}
++       <header className={TT_MARKETING_DARK_ROUTE_MOBILE_HEADER}>
++         <div className="px-3 py-2 flex items-center justify-between gap-2 min-h-[44px]">
++           <Link
++             href="/community"
++             className={`${touchTargetLink44Classes} ${TT_MARKETING_DARK_ROUTE_HEADER_TITLE} ${TT_MARKETING_DARK_ROUTE_HEADER_LINK_FOCUS}`}
++           >
++             {t("community_title")}
++           </Link>
++           <div className="flex items-center gap-2 shrink-0 flex-wrap justify-end">
++             <Link
++               href="/community/explore"
++               className={`${touchTargetLink44Classes} ${TT_MARKETING_DARK_ROUTE_HEADER_LINK_PRIMARY} ${TT_MARKETING_DARK_ROUTE_HEADER_LINK_FOCUS}`}
++             >
++               {t("community_explore_title")}
++             </Link>
++             <Link
++               href="/"
++               className={`${touchTargetLink44Classes} ${TT_MARKETING_DARK_ROUTE_HEADER_LINK_MUTED} ${TT_MARKETING_DARK_ROUTE_HEADER_LINK_FOCUS}`}
++             >
++               {t("community_back")}
++             </Link>
++           </div>
++         </div>
++         <div className={TT_MARKETING_DARK_ROUTE_HEADER_SUPPORT_RAIL}>
++           <nav aria-label={t("community_nav_support_aria")} className="flex flex-wrap items-center justify-end">
++             <CommunitySupportMenu size="sm" />
++           </nav>
++         </div>
++       </header>
++ 
++       {/* 桌面：L1 全宽主 Tab；L2 分隔线下的平台与支持（非与 Tab 并排同级视觉） */}
++       <header className={TT_MARKETING_DARK_ROUTE_DESKTOP_HEADER}>
++         {showTabProgress && (
++           <div
++             className={TT_MARKETING_DARK_ROUTE_TAB_PROGRESS}
++             role="progressbar"
++             aria-valuenow={undefined}
++             aria-label={t("common_loading") || "Loading"}
++           />
++         )}
++         <div className={`${TT_MARKETING_HEADER_INNER_FRAME} py-2`}>
++           <nav aria-label={t("community_nav_tabs_aria")}>
++             <CommunityRouteShellTabLinks
++               pathname={pathname}
++               t={t}
++               totalUnread={totalUnread}
++               onNavStart={onTabNavStart}
++               className="w-full"
++             />
++           </nav>
++         </div>
++       </header>
++ 
++       <div className={`relative z-10 isolate pb-20 md:pb-0 ${!isOnline || showOnlineRecovery ? "pt-10" : ""}`}>
++         {children}
++       </div>
++ 
++       {/* 移动端：底部 Tab 导航（动态/消息/发布/好友/我），z-[110] 确保在发布弹窗遮罩留白区内可点击；pointerdown 即显示顶栏进度条，满足 200ms 内可感知反馈 */}
++       <nav
++         className={TT_MARKETING_DARK_ROUTE_MOBILE_BOTTOM_NAV}
++         aria-label={t("community_nav_tabs_aria")}
++       >
++         {showTabProgress && (
++           <div
++             className={TT_MARKETING_DARK_ROUTE_TAB_PROGRESS}
++             role="progressbar"
++             aria-valuenow={undefined}
++             aria-label={t("common_loading") || "Loading"}
++           />
++         )}
++         <div className="max-w-4xl mx-auto px-2 py-2 relative">
++           <CommunityRouteShellMobileBottomNav
++             pathname={pathname}
++             t={t}
++             totalUnread={totalUnread}
++             onNavStart={onTabNavStart}
++           />
++         </div>
++       </nav>
++     </div>
++   );
++ }
++
+
+ ❯ components/community/communityShellTheme.contract.test.ts:10:17
+      8|   it("CommunityRouteShellInner uses TT_MARKETING_DARK_ROUTE_* tab toke…
+      9|     const src = readFileSync(inner, "utf8");
+     10|     expect(src).toContain("TT_MARKETING_DARK_ROUTE_TAB_ACTIVE");
+       |                 ^
+     11|     expect(src).toContain("TT_MARKETING_DARK_ROUTE_TAB_IDLE");
+     12|     expect(src).toContain("TT_MARKETING_DARK_ROUTE_DESKTOP_HEADER");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 6 passed (7)
+      Tests  1 failed | 25 passed (26)
+   Start at  15:16:54
+   Duration  1.41s (transform 163ms, setup 98ms, collect 416ms, tests 29ms, environment 4.18s, prepare 969ms)
+

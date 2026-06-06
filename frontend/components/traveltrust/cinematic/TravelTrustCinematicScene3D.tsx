@@ -13,7 +13,7 @@ import { useTravelTrustHeroScrollProgress } from "./TravelTrustHeroScrollContext
 import {
   TT_LEGACY_HERO_3D_SCRIM_L5,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 import { UNIFIED_PAGE_3D } from "./traveltrustPageCinematicConfig";
 import {
   TRAVELTRUST_CINEMATIC_CANVAS_STYLE,

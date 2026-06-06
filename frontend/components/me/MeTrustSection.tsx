@@ -7,6 +7,8 @@ import { formatGuideRegistrationStatus } from "@/lib/meTrust";
 import type { MeIdentitySlot, MeIdentitySlotState } from "@/lib/meIdentitySlots";
 import { meIdentityActiveCount } from "@/lib/meIdentitySlots";
 import { FOCUS_RING } from "./constants";
+import MeAcquisitionPublishBondAction from "./MeAcquisitionPublishBondAction";
+import MeAcquisitionFulfillmentBondAction from "./MeAcquisitionFulfillmentBondAction";
 
 function slotLabelKey(id: MeIdentitySlot["id"]): string {
   switch (id) {
@@ -64,6 +66,8 @@ export interface MeTrustSectionProps {
   identitySlots?: MeIdentitySlot[];
   /** 社区「我的」等页：收紧间距，次要说明与扩展块收入折叠 */
   compact?: boolean;
+  /** 锁定收购发布保证金成功后刷新 `GET /me` */
+  onTrustRefresh?: () => void;
 }
 
 export default function MeTrustSection({
@@ -74,6 +78,7 @@ export default function MeTrustSection({
   showTrustHubPromo = true,
   identitySlots,
   compact = false,
+  onTrustRefresh,
 }: MeTrustSectionProps) {
   const titleId = useId();
   const matrixId = useId();
@@ -325,6 +330,18 @@ export default function MeTrustSection({
         {t("me_trust_title")}
       </h2>
       {matrixBlock}
+      <MeAcquisitionPublishBondAction
+        t={t}
+        trust={trust}
+        compact={compact}
+        onBondLocked={onTrustRefresh}
+      />
+      <MeAcquisitionFulfillmentBondAction
+        t={t}
+        trust={trust}
+        compact={compact}
+        onBondLocked={onTrustRefresh}
+      />
       {!compact ? <p className="text-meta text-slate-300 mb-3">{t("me_trust_intro")}</p> : null}
       {showTrustHubPromo ? (
         <p className="text-meta text-slate-300 mb-3">

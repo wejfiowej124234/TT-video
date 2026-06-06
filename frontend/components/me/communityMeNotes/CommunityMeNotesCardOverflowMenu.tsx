@@ -1,12 +1,22 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import type { CommunityPostUserVisibility } from "@/lib/communityMockData";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
 
 type TFunc = (k: string) => string;
 
+const VISIBILITY_MENU_OPTIONS: {
+  key: CommunityPostUserVisibility;
+  labelKey: string;
+}[] = [
+  { key: "public", labelKey: "community_post_visibility_public" },
+  { key: "private", labelKey: "community_post_visibility_private" },
+  { key: "archived", labelKey: "community_post_visibility_archived" },
+];
+
 /**
- * 个人中心弹层方格卡片右上角 ⋮：删除 + 本弹窗内置顶（纯前端顺序，不调用服务端）。
+ * 个人中心弹层方格卡片右上角 ⋮：可见性（可选）+ 删除 + 本弹窗内置顶（纯前端顺序，不调用服务端）。
  */
 export function CommunityMeNotesCardOverflowMenu({
   itemId,
@@ -16,6 +26,13 @@ export function CommunityMeNotesCardOverflowMenu({
   deleteBusyId,
   deleteDisabled,
   deleteDisabledTitle,
+  deleteLabelKey = "community_me_notes_menu_delete",
+  deletePendingLabelKey = "community_me_notes_menu_delete_pending",
+  showPinOption = true,
+  showVisibilityOptions = false,
+  currentVisibility = "public",
+  onVisibilityChange,
+  visibilityBusyId,
 }: {
   itemId: string;
   t: TFunc;
@@ -24,12 +41,21 @@ export function CommunityMeNotesCardOverflowMenu({
   deleteBusyId?: string | null;
   deleteDisabled?: boolean;
   deleteDisabledTitle?: string;
+  deleteLabelKey?: string;
+  deletePendingLabelKey?: string;
+  showPinOption?: boolean;
+  showVisibilityOptions?: boolean;
+  currentVisibility?: CommunityPostUserVisibility;
+  onVisibilityChange?: (id: string, next: CommunityPostUserVisibility) => void;
+  visibilityBusyId?: string | null;
 }) {
   const menuHeadingId = useId();
   const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
   const menuPanelRef = useRef<HTMLDivElement | null>(null);
   const open = menuOpenId === itemId;
   const busy = deleteBusyId === itemId;
+  const visBusy = visibilityBusyId === itemId;
+  const menuDisabled = busy || visBusy;
 
   useEffect(() => {
     if (!open) return;
@@ -52,14 +78,14 @@ export function CommunityMeNotesCardOverflowMenu({
   }, [open]);
 
   return (
-    <div className="absolute right-0.5 top-0.5 z-[4]" data-community-me-notes-card-menu>
+    <div className="absolute right-0.5 top-0.5 z-[10]" data-community-me-notes-card-menu>
       <button
         type="button"
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={open ? `${menuHeadingId}-${itemId}` : undefined}
         aria-label={t("community_me_notes_card_menu_aria")}
-        disabled={busy}
+        disabled={menuDisabled}
         onPointerDown={(e) => e.stopPropagation()}
         onClick={(e) => {
           e.preventDefault();
@@ -79,10 +105,29 @@ export function CommunityMeNotesCardOverflowMenu({
           className="min-w-[10rem] rounded-[var(--radius-sm)] border border-white/20 bg-ink-900/95 py-1 text-left shadow-strong ring-1 ring-cyan-500/20"
           onPointerDown={(e) => e.stopPropagation()}
         >
+          {showVisibilityOptions && onVisibilityChange
+            ? VISIBILITY_MENU_OPTIONS.filter((opt) => opt.key !== currentVisibility).map((opt) => (
+                <button
+                  key={opt.key}
+                  type="button"
+                  role="menuitem"
+                  disabled={menuDisabled}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onVisibilityChange(itemId, opt.key);
+                    setMenuOpenId(null);
+                  }}
+                  className={`${touchTargetLink44Classes} block w-full px-3 py-2 text-left text-[0.7rem] font-medium text-white hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-45`}
+                >
+                  {visBusy ? t("common_loading") : t(opt.labelKey)}
+                </button>
+              ))
+            : null}
           <button
             type="button"
             role="menuitem"
-            disabled={deleteDisabled || busy}
+            disabled={deleteDisabled || menuDisabled}
             title={deleteDisabled ? deleteDisabledTitle : undefined}
             onClick={(e) => {
               e.preventDefault();
@@ -92,22 +137,25 @@ export function CommunityMeNotesCardOverflowMenu({
             }}
             className={`${touchTargetLink44Classes} block w-full px-3 py-2 text-left text-[0.7rem] font-medium text-white hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-45`}
           >
-            {busy ? t("community_me_notes_menu_delete_pending") : t("community_me_notes_menu_delete")}
+            {busy ? t(deletePendingLabelKey) : t(deleteLabelKey)}
           </button>
-          <button
-            type="button"
-            role="menuitem"
-            title={t("community_me_notes_menu_pin_hint")}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onPinToTop(itemId);
-              setMenuOpenId(null);
-            }}
-            className={`${touchTargetLink44Classes} block w-full px-3 py-2 text-left text-[0.7rem] font-medium text-white hover:bg-white/10`}
-          >
-            {t("community_me_notes_menu_pin")}
-          </button>
+          {showPinOption ? (
+            <button
+              type="button"
+              role="menuitem"
+              disabled={menuDisabled}
+              title={t("community_me_notes_menu_pin_hint")}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onPinToTop(itemId);
+                setMenuOpenId(null);
+              }}
+              className={`${touchTargetLink44Classes} block w-full px-3 py-2 text-left text-[0.7rem] font-medium text-white hover:bg-white/10`}
+            >
+              {t("community_me_notes_menu_pin")}
+            </button>
+          ) : null}
         </div>
       ) : null}
     </div>

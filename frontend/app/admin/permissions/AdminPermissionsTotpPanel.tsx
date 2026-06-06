@@ -1,8 +1,10 @@
 "use client";
 
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import { useCallback, useEffect, useId, useState } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import { AdminNoticeBanner } from "@/components/admin/AdminNoticeBanner";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import {
@@ -12,7 +14,9 @@ import {
 import { adminFetchJson, adminErrorUserText, adminFetchErrorKind } from "@/lib/adminFetchDisplay";
 import { apiUrl, routes } from "@/lib/api";
 import { getAuthHeaders, writeRequestHeaders } from "@/lib/apiClient";
-import { ADMIN_PRIMARY_ACTION_BTN_CLASS, ADMIN_STEP_MARKER_CLASS } from "@/lib/adminUi";
+import { ADMIN_PRIMARY_ACTION_BTN_CLASS, ADMIN_SHELL_SECONDARY_BTN_CLASS, ADMIN_STEP_MARKER_CLASS,
+  ADMIN_FORM_CONTROL_SM_CLASS,
+  ADMIN_INNER_DIVIDER_CLASS,} from "@/lib/adminUi";
 
 type TotpStatus = {
   enrolled?: boolean;
@@ -34,6 +38,7 @@ type TotpVerifyBody = {
 
 export function AdminPermissionsTotpPanel() {
   const { t } = useTranslation();
+  const requestConfirm = useAdminL5ConfirmRequest();
   const sectionId = useId();
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState<TotpStatus | null>(null);
@@ -89,7 +94,7 @@ export function AdminPermissionsTotpPanel() {
     return () => window.removeEventListener("traveltrust:admin-2fa-change", on2fa);
   }, [reloadStatus]);
 
-  async function onEnroll() {
+  async function onEnrollImpl() {
     setBusy(true);
     setMsg(null);
     setEnrollSecret(null);
@@ -169,16 +174,34 @@ export function AdminPermissionsTotpPanel() {
     }
   }
 
-  function onClearSession() {
+  function onClearSessionImpl() {
     clearAdmin2faSession();
     setMsg(t("admin_permissions_totp_session_cleared"));
     reloadStatus();
   }
 
+  const onEnroll = () => {
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_write",
+      descKey: "admin_l5_confirm_desc_totp_enroll",
+      onConfirm: () => void onEnrollImpl(),
+    });
+  };
+
+  const onClearSession = () => {
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_danger",
+      descKey: "admin_l5_confirm_desc_totp_clear_session",
+      danger: true,
+      onConfirm: () => onClearSessionImpl(),
+    });
+  };
+
   return (
-    <section
+    <AdminWarmL5Surface
+      as="section"
       id="admin-permissions-totp"
-      className="mt-6 scroll-mt-24 rounded-[var(--radius-lg)] border border-ink-200 bg-white p-4"
+      className="mt-6 scroll-mt-24"
       aria-labelledby={sectionId}
       data-tt-admin-totp-panel="1"
     >
@@ -187,7 +210,7 @@ export function AdminPermissionsTotpPanel() {
       </h2>
       <p className="mt-1 text-small text-ink-600">{t("admin_permissions_totp_hint")}</p>
       <ol
-        className="mt-4 space-y-2 border-t border-ink-100 pt-4"
+        className={`mt-4 space-y-2 ${ADMIN_INNER_DIVIDER_CLASS} pt-4`}
         aria-label={t("admin_permissions_totp_steps_aria")}
         data-tt-admin-totp-steps="1"
       >
@@ -230,15 +253,15 @@ export function AdminPermissionsTotpPanel() {
         <button
           type="button"
           disabled={busy}
-          className="rounded border border-ink-300 bg-ink-50 px-4 py-2 text-small font-medium text-ink-900 disabled:opacity-50"
-          onClick={() => void onEnroll()}
+          className={`${ADMIN_SHELL_SECONDARY_BTN_CLASS} px-4 py-2 disabled:opacity-50`}
+          onClick={onEnroll}
         >
           {busy ? t("admin_permissions_totp_busy") : t("admin_permissions_totp_enroll_btn")}
         </button>
         <label className="block text-small">
           <span className="font-medium text-ink-800">{t("admin_permissions_totp_code_label")}</span>
           <input
-            className="mt-1 block w-32 rounded border border-ink-200 px-2 py-1.5 font-mono text-meta tracking-widest"
+            className={`mt-1 block w-32 ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1.5 font-mono text-meta tracking-widest`}
             inputMode="numeric"
             autoComplete="one-time-code"
             maxLength={6}
@@ -257,7 +280,7 @@ export function AdminPermissionsTotpPanel() {
         <button
           type="button"
           disabled={busy}
-          className="rounded border border-ink-200 px-4 py-2 text-small text-ink-700 disabled:opacity-50"
+          className={`${ADMIN_SHELL_SECONDARY_BTN_CLASS} px-4 py-2 disabled:opacity-50`}
           onClick={onClearSession}
         >
           {t("admin_permissions_totp_clear_session")}
@@ -282,6 +305,6 @@ export function AdminPermissionsTotpPanel() {
       ) : null}
 
       {msg ? <p className="mt-3 text-small text-ink-700">{msg}</p> : null}
-    </section>
+    </AdminWarmL5Surface>
   );
 }

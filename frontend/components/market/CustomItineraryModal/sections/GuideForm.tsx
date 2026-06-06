@@ -3,9 +3,10 @@
 import { useId } from "react";
 import { COUNTRY_OPTIONS } from "@/lib/geoOptions";
 import GlassSelect from "@/components/market/GlassSelect";
+import CustomItineraryTotalDaysPills from "../CustomItineraryTotalDaysPills";
 import type { GuideFormProps } from "../types";
-import { defaultGuideDayPlan } from "../types";
 import { TOTAL_DAYS_OPTIONS, TITLE_MAX_LENGTH } from "../constants";
+import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
 import GuideDayCard from "./GuideDayCard";
 import GuideFeeAndTransportSection from "./GuideFeeAndTransportSection";
 import GuideFormQuoteAndCoverSection from "./GuideFormQuoteAndCoverSection";
@@ -14,6 +15,7 @@ export default function GuideForm({
   guideLevelsWithPricing,
   form,
   setForm,
+  setTotalDays,
   setGuideDayPlan,
   cities,
   guideDayPlansNormalized,
@@ -48,21 +50,24 @@ export default function GuideForm({
     <>
       <p className="text-meta text-white/80 mb-4">{t("market_guideFormDesc")}</p>
 
-      <div>
-        <label htmlFor={totalDaysFieldId} className={labelClass}>
+      <div className="space-y-2">
+        <span id={totalDaysFieldId} className={labelClass}>
           {t("market_totalDays")} *
-        </label>
+        </span>
+        <CustomItineraryTotalDaysPills
+          value={form.totalDays}
+          onChange={setTotalDays}
+          pillSelected={pillSelected}
+          pillIdle={pillUnselected}
+          focusRingClass={TT_MARKETING_MARKET_DARK_PATH.drawerControlFocus}
+          groupAriaLabel={t("market_totalDays")}
+          dayLabel={(n) => t("market_dayUnit").replace("{{n}}", String(n))}
+        />
+        <p className="text-meta text-slate-400">{t("market_totalDays_select_hint")}</p>
         <GlassSelect
           id={totalDaysFieldId}
           value={form.totalDays}
-          onChange={(v) => {
-            const days = Number(v);
-            setForm((f) => ({
-              ...f,
-              totalDays: days,
-              guideDayPlans: Array.from({ length: days }, (_, i) => (f.guideDayPlans ?? [])[i] ?? defaultGuideDayPlan()),
-            }));
-          }}
+          onChange={(v) => setTotalDays(Number(v))}
           options={TOTAL_DAYS_OPTIONS.map((d) => ({ value: d, label: t("market_dayUnit").replace("{{n}}", String(d)) }))}
           aria-label={t("market_totalDays")}
         />

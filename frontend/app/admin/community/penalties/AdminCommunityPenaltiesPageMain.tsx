@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { AdminCommunityListHeaderAside } from "@/components/admin/AdminCommunityListHeaderAside";
 import { AdminCommunityRelatedLinks } from "@/components/admin/AdminCommunityRelatedLinks";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
@@ -21,12 +22,12 @@ export function AdminCommunityPenaltiesPageMain() {
       title={vm.t("admin_penalties_title")}
       subtitle={
         <>
-          <span>{vm.t("admin_penalties_subtitle")}</span>
+          <span>{vm.t("admin_penalties_subtitle_l5")}</span>
           <AdminCommunityRelatedLinks />
         </>
       }
       headerAside={
-        <>
+        <AdminCommunityListHeaderAside>
           {canWrite ? (
           <form
             className="inline"
@@ -48,20 +49,7 @@ export function AdminCommunityPenaltiesPageMain() {
             className={`${adminPageNavLinkClass()}`}
           >
             {vm.t("admin_penalties_linkReports")}
-          </Link>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {vm.t("admin_observability_title")}
-          </Link>
-          <Link
-            href="/admin"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {vm.t("admin_penalties_back")}
-          </Link>
-        </>
+          </Link></AdminCommunityListHeaderAside>
       }
     >
       <AdminCommunityPenaltiesFilterCard
@@ -92,6 +80,7 @@ export function AdminCommunityPenaltiesPageMain() {
       <AdminCommunityPenaltiesListSection
         t={vm.t}
         loading={vm.loading}
+        refreshing={vm.refreshing}
         error={vm.error}
         appliedFilters={vm.appliedFilters}
         items={vm.items}

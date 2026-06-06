@@ -17,8 +17,10 @@ import {
   ADMIN_TABLE_ROW_CLASS,
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
-  adminTableInlineLinkClass,
-} from "@/lib/adminUi";
+  adminTableRowPrimaryActionClass,
+  ADMIN_TABLE_SECTION_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,} from "@/lib/adminUi";
 
 type PenaltySortKey = "status" | "created_at" | "expires_at";
 import { adminCommunityPenaltyMetaPreview } from "./adminCommunityPenaltiesPageHelpers";
@@ -29,6 +31,7 @@ type Props = Pick<
   AdminCommunityPenaltiesPageViewModel,
   | "t"
   | "loading"
+  | "refreshing"
   | "error"
   | "appliedFilters"
   | "items"
@@ -39,6 +42,7 @@ type Props = Pick<
 export function AdminCommunityPenaltiesListSection({
   t,
   loading,
+  refreshing = false,
   error,
   appliedFilters,
   items,
@@ -70,7 +74,7 @@ export function AdminCommunityPenaltiesListSection({
         <AdminMetaNoteLink className="mt-3">{String(meta.note)}</AdminMetaNoteLink>
       ) : null}
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <AdminListLoadingStatus message={t("admin_penalties_loading")} />
       ) : null}
       {error ? (
@@ -85,12 +89,13 @@ export function AdminCommunityPenaltiesListSection({
         />
       ) : null}
 
-      {!loading && !error && items.length > 0 && (
+      {!loading && items.length > 0 && (
         <section
-          className="mt-6 overflow-x-auto rounded-[var(--radius-xl)] border border-ink-200 bg-white"
+          className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
           aria-label={t("admin_penalties_table_aria")}
+          data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
         >
-          <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+          <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
             <thead className={ADMIN_TABLE_THEAD_CLASS}>
               <tr>
                 <th scope="col" className={`${ADMIN_TABLE_TH_CELL_CLASS} font-medium`}>
@@ -128,21 +133,21 @@ export function AdminCommunityPenaltiesListSection({
                 />
               </tr>
             </thead>
-            <tbody className="divide-y divide-ink-100 text-ink-700">
+            <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
               {sortedItems.map((r: AdminCommunityPenaltyRow, idx: number) => {
                 const dash = t("admin_em_dash");
                 return (
                   <tr key={r.id ?? `pen-${idx}`} className={ADMIN_TABLE_ROW_CLASS}>
-                    <td className="px-3 py-2 font-mono text-meta">{r.action ?? dash}</td>
-                    <td className="px-3 py-2 font-mono text-meta">{r.status ?? dash}</td>
-                    <td className="px-3 py-2 font-mono text-meta max-w-[8rem] truncate" title={r.subject_user_id}>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800">{r.action ?? dash}</td>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800">{r.status ?? dash}</td>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800 max-w-[8rem] truncate" title={r.subject_user_id}>
                       {r.subject_user_id ?? dash}
                     </td>
-                    <td className="px-3 py-2 font-mono text-meta max-w-[8rem] truncate" title={r.report_id ?? ""}>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800 max-w-[8rem] truncate" title={r.report_id ?? ""}>
                       {r.report_id ? (
                         <Link
                           href="/admin/community/reports"
-                          className={adminTableInlineLinkClass()}
+                          className={adminTableRowPrimaryActionClass()}
                           aria-label={t("admin_penalties_report_row_aria", { id: r.report_id })}
                         >
                           {r.report_id}
@@ -154,16 +159,16 @@ export function AdminCommunityPenaltiesListSection({
                     <td className="px-3 py-2 max-w-[10rem] truncate" title={r.reason ?? ""}>
                       {r.reason ?? dash}
                     </td>
-                    <td className="px-3 py-2 font-mono text-meta max-w-[8rem] truncate" title={r.created_by}>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800 max-w-[8rem] truncate" title={r.created_by}>
                       {r.created_by ?? dash}
                     </td>
-                    <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">{r.expires_at ?? dash}</td>
-                    <td className="px-3 py-2 max-w-[10rem] font-mono text-meta">
+                    <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">{r.expires_at ?? dash}</td>
+                    <td className="px-3 py-2 max-w-[10rem] font-mono text-small text-ink-800">
                       <span className="block truncate" title={adminCommunityPenaltyMetaPreview(r.metadata, dash)}>
                         {adminCommunityPenaltyMetaPreview(r.metadata, dash)}
                       </span>
                     </td>
-                    <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">{r.created_at ?? dash}</td>
+                    <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">{r.created_at ?? dash}</td>
                   </tr>
                 );
               })}

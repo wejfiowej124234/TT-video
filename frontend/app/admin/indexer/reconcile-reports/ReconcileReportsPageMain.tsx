@@ -1,11 +1,24 @@
 "use client";
 
+import Link from "next/link";
+import { useMemo } from "react";
+
+import { AdminFinanceModuleDepthWorkspace } from "@/components/admin/AdminFinanceModuleDepthWorkspace";
+import { AdminFinanceSectionBackLinks } from "@/components/admin/AdminFinanceSectionBackLinks";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
+import { AdminFinanceSuiteDepthNotice } from "@/components/admin/AdminFinanceSuiteDepthNotice";
+import { AdminFinanceSuitePartialChecklist } from "@/components/admin/AdminFinanceSuitePartialChecklist";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminMetaBuildSection } from "@/components/admin/AdminMetaBuildPanel";
+import { AdminPermissionDeniedBanner } from "@/components/admin/AdminPermissionDeniedBanner";
+import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
+import { adminReconcileReportsListSnapshot } from "@/lib/admin/adminReconcileReportsListSnapshot";
+import { RECONCILE_REPORTS_LIST_RELATED_FOLD_LINKS } from "@/lib/admin/adminReconcileReportsListRelatedFoldLinks";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
+import { adminPageNavLinkClass } from "@/lib/adminUi";
+import { ReconcileReportsExportToolbar } from "./ReconcileReportsExportToolbar";
 import { ReconcileReportsFilterCard } from "./ReconcileReportsFilterCard";
-import { ReconcileReportsPageHeader } from "./ReconcileReportsPageHeader";
 import { ReconcileReportsTableSection } from "./ReconcileReportsTableSection";
 import { useAdminIndexerReconcileReportsPage } from "./useAdminIndexerReconcileReportsPage";
 
@@ -15,6 +28,7 @@ export function ReconcileReportsPageMain() {
     pageTitleId,
     reconcileReportsExportFilterHintId,
     loading,
+    refreshing,
     exportingFormat,
     urlCopied,
     onExportCsv,
@@ -69,32 +83,72 @@ export function ReconcileReportsPageMain() {
     onPerPageLimitChange,
   } = useAdminIndexerReconcileReportsPage();
 
+  const listSnapshot = useMemo(
+    () =>
+      adminReconcileReportsListSnapshot({
+        total,
+        page,
+        limit,
+        reportType,
+        hasActiveFilters,
+      }),
+    [total, page, limit, reportType, hasActiveFilters],
+  );
+
   return (
     <AdminListPageChrome
       titleId={pageTitleId}
       title={t("admin_indexer_reconcile_reports_title")}
-      subtitle={t("admin_indexer_reconcile_reports_subtitle")}
+      subtitle={t("admin_indexer_reconcile_reports_subtitle_l5")}
       preHeader={
         <p id={reconcileReportsExportFilterHintId} className="text-meta text-ink-600 leading-relaxed">
           {t("admin_indexer_reconcile_reports_export_filter_hint")}
         </p>
       }
       headerAside={
-        <ReconcileReportsPageHeader
-          t={t}
-          pageTitleId={pageTitleId}
-          reconcileReportsExportFilterHintId={reconcileReportsExportFilterHintId}
-          loading={loading}
-          exportingFormat={exportingFormat}
-          urlCopied={urlCopied}
-          onExportCsv={onExportCsv}
-          onExportJson={onExportJson}
-          onExportCsvAll={onExportCsvAll}
-          onExportJsonAll={onExportJsonAll}
-          onCopyUrl={handleCopyUrl}
-        />
+        <>
+          <AdminFinanceSectionBackLinks />
+          <Link
+            href="/admin/indexer"
+            className={adminPageNavLinkClass()}
+            data-tt-admin-reconcile-reports-back-indexer="1"
+          >
+            {t("admin_indexer_reconcile_reports_back")}
+          </Link>
+        </>
       }
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={RECONCILE_REPORTS_LIST_RELATED_FOLD_LINKS}
+        ariaLabelKey="admin_finance_related_aria"
+        foldSummaryKey="admin_finance_related_fold"
+        dataTtFold="reconcile-reports-list"
+      />
+      <ReconcileReportsExportToolbar
+        t={t}
+        reconcileReportsExportFilterHintId={reconcileReportsExportFilterHintId}
+        loading={loading}
+        exportingFormat={exportingFormat}
+        urlCopied={urlCopied}
+        onExportCsv={onExportCsv}
+        onExportJson={onExportJson}
+        onExportCsvAll={onExportCsvAll}
+        onExportJsonAll={onExportJsonAll}
+        onCopyUrl={handleCopyUrl}
+      />
+      <AdminPermissionDeniedBanner
+        permission={ADMIN_PERM.FINANCE_READ}
+        messageKey="admin_perm_denied_finance_read"
+      />
+      <AdminFinanceSuiteDepthNotice />
+      <AdminFinanceSuitePartialChecklist />
+      <AdminFinanceModuleDepthWorkspace
+        reconcileReports={{
+          ...listSnapshot,
+          loading,
+          error: Boolean(error),
+        }}
+      />
       <AdminMetaBuildSection meta={meta} loading={loading} error={error} />
 
       {exportError ? (
@@ -145,6 +199,7 @@ export function ReconcileReportsPageMain() {
       <ReconcileReportsTableSection
         t={t}
         loading={loading}
+        refreshing={refreshing}
         error={error}
         items={items}
         total={total}

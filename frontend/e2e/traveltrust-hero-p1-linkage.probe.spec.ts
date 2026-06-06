@@ -8,7 +8,10 @@ import { test, expect } from "@playwright/test";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { listHeroGlobeP1PinProbeFractions } from "../lib/traveltrustHeroGlobeP1ProbeTargets";
-import { waitTraveltrustHeroSettled } from "./helpers/stabilizeTraveltrustVisual";
+import {
+  waitTraveltrustHeroP3Ready,
+  waitTraveltrustHeroSettled,
+} from "./helpers/stabilizeTraveltrustVisual";
 
 const OUT_DIR = join(process.cwd(), "evidence/GO_local_hero_globe_a_closure/p1-acceptance");
 
@@ -165,7 +168,7 @@ async function probeCanvasPinInteraction(
       for (const dy of jitter) {
         const fx = Math.min(0.95, Math.max(0.05, target.fx + dx));
         const fy = Math.min(0.95, Math.max(0.05, target.fy + dy));
-        const id = await probePinAtFraction(page, box, fx, fy, 750);
+        const id = await probePinAtFraction(page, box, fx, fy, 1_400);
         if (/^[a-z]{2}$/.test(id)) {
           hoverRegion = id;
           hitFx = fx;
@@ -266,14 +269,15 @@ test.describe("P1 hero linkage acceptance · ①", () => {
       "1",
     );
 
-    // —— CTA hover（dock 强调默认走廊枢纽）——
+    // —— CTA dock（L5.2：hover 不写 focus；prefill/href 为 SSOT）——
     const cta = page.locator('[data-tt-traveltrust-hero-cta-plan-warm="1"]');
     await cta.scrollIntoViewIfNeeded();
     await page.locator('[data-tt-traveltrust-hero-cta-dock="1"]').hover();
     await page.waitForTimeout(350);
     const afterCtaHover = await readFocusState(page);
-    expect(afterCtaHover.heroFocused).toMatch(/^(us|cn|fr|es|jp|th|sg|kr|au|ae)$/);
-    expect(afterCtaHover.canvasFocused).toBe(afterCtaHover.heroFocused);
+    expect(afterCtaHover.ctaPrefill).toMatch(/^(us|cn|fr|es|jp|th|sg|kr|au|ae)$/);
+    expect(afterCtaHover.heroFocused).toBe("");
+    expect(afterCtaHover.canvasFocused).toBe("");
     await page.screenshot({ path: join(OUT_DIR, "02-desktop-cta-dock-hover.png") });
 
     const planHref = await cta.getAttribute("href");
@@ -288,7 +292,15 @@ test.describe("P1 hero linkage acceptance · ①", () => {
     expect(afterCompactHover.heroFocused.length).toBeGreaterThan(0);
     await page.screenshot({ path: join(OUT_DIR, "03-desktop-compact-roster-hover.png") });
 
-    // —— 针脚 hover/click（Canvas 左球区 · 原生 mouse + 网格；探针前清空 CTA/roster focus）——
+    // —— 针脚 hover/click（globe-bound 探针坐标 · 探针前清空 CTA/roster focus）——
+    await waitTraveltrustHeroP3Ready(page, 90_000);
+    await expect
+      .poll(
+        async () =>
+          page.evaluate(() => window.__ttHeroGlobeP1Probe?.listPinProbeFractions?.().length ?? 0),
+        { timeout: 60_000 },
+      )
+      .toBeGreaterThan(0);
     await expect(page.locator('[data-tt-traveltrust-page-cinematic-3d] canvas')).toBeVisible();
     await resetHeroP1FocusBeforeCanvasPin(page);
     await expect(page.locator('[data-tt-traveltrust-page-cinematic-3d="1"]')).toHaveAttribute(

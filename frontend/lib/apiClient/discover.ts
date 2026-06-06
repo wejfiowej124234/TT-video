@@ -4,7 +4,7 @@
  */
 
 import { apiUrl, routes } from "../api";
-import { requestId, parseResponse, logApiJsonStatusNotOk, throwUnlessApiOk } from "./core";
+import { requestId, parseResponse, logApiJsonStatusNotOk, throwUnlessApiOk, fetchGetWithTransitRetry } from "./core";
 
 export type DiscoverOrdersResult = {
   items: unknown[];
@@ -14,18 +14,20 @@ export type DiscoverOrdersResult = {
 export async function getDiscoverOrders(params?: {
   country?: string;
   city?: string;
+  days?: number;
   limit?: number;
   cursor?: string;
 }): Promise<DiscoverOrdersResult> {
   const q = new URLSearchParams();
   if (params?.country) q.set("country", params.country);
   if (params?.city) q.set("city", params.city);
+  if (params?.days != null) q.set("days", String(params.days));
   if (params?.limit != null) q.set("limit", String(params.limit));
   if (params?.cursor) q.set("cursor", params.cursor);
   const url = apiUrl(routes.discoverOrders) + (q.toString() ? `?${q}` : "");
-  const res = await fetch(url, {
+  const res = await fetchGetWithTransitRetry(url, {
     headers: { "x-request-id": requestId() },
-  });
+  }, { attempts: 5 });
   const data = (await parseResponse(res)) as {
     status?: string;
     items?: unknown[];

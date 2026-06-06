@@ -10,6 +10,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "page.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminDisputesPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminDisputesPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminDisputesPageModel.ts"), "utf8"),
     readFileSync(join(__dir, "..", "..", "..", "lib/admin/adminDisputesLabels.ts"), "utf8"),
     readFileSync(join(__dir, "..", "..", "..", "components/admin/AdminListPageChrome.tsx"), "utf8"),
@@ -21,6 +22,7 @@ describe("admin disputes page", () => {
 
   it("keeps admin disputes route + DOM anchor", () => {
     expect(src).toContain("routes.admin.disputes");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("adminFetchJson");
     expect(src).toContain('data-tt-admin-list-page="1"');
     expect(src).toContain("AdminListPageEmptyState");
@@ -38,5 +40,6 @@ describe("admin disputes page", () => {
     expect(src).toContain("ORDERS_READ");
     expect(src).toContain("ADMIN_EMPTY_NEXT_DISPUTES_FILTERED_EMPTY");
     expect(src).toContain("AdminAppliedFiltersBanner");
+    expect(src).toContain("AdminFinanceSectionBackLinks");
   });
 });

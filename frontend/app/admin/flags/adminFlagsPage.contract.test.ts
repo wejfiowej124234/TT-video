@@ -13,7 +13,7 @@ function readFlagsModuleSources(): string {
     readFileSync(join(__dir, "AdminFlagsPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminFlagsListSection.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminFlagsPage.ts"), "utf8"),
-    readFileSync(join(__dir, "useAdminFlagsPageListFetch.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminFlagsPageQuery.ts"), "utf8"),
   ].join("\n");
 }
@@ -27,6 +27,7 @@ describe("admin flags page", () => {
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("parseAdminFlagsListQuery");
     expect(src).toContain("buildAdminFlagsListPath");
+    expect(src).toContain("useAdminStandardListFetch");
   });
 
   it("keeps search-params suspense shell and admin DOM anchor", () => {

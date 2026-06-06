@@ -2,7 +2,18 @@
 
 import { type FormEvent } from "react";
 import type { AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
-import { ADMIN_FILTER_CARD_CLASS, ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS } from "@/lib/adminUi";
+import {
+  ADMIN_FILTER_ACTIONS_CLASS,
+  ADMIN_FILTER_CARD_CLASS,
+  ADMIN_FILTER_FIELD_LABEL_CLASS,
+  ADMIN_FILTER_GRID_CLASS,
+  ADMIN_FILTER_HINT_CLASS,
+  ADMIN_FILTER_TITLE_CLASS,
+  ADMIN_FORM_FIELD_FOCUS_CLASS,
+  ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_FILTER_INPUT_MD_CLASS,
+} from "@/lib/adminUi";
 import {
   RC_MAX,
   STATUS_OPTIONS,
@@ -65,7 +76,7 @@ export function AdminCommunityReportsFilterCard({
 }) {
   const { adminListApplyResetHintId, adminAppliedFiltersDescId, ...inputIds } = ids;
   return (
-    <div className={`mt-5 ${ADMIN_FILTER_CARD_CLASS} space-y-3`}>
+    <div className={`mt-5 ${ADMIN_FILTER_CARD_CLASS}`} data-tt-admin-reports-filter-grid="1">
       <form
         id="admin-community-reports-filter-form"
         aria-label={t("admin_community_reports_filters")}
@@ -75,14 +86,13 @@ export function AdminCommunityReportsFilterCard({
             .join(" ")
         }
         onSubmit={apply}
-        className="flex flex-col gap-3"
       >
-        <p className="text-small font-medium text-ink-800">{t("admin_community_reports_filters")}</p>
-        <p id={adminListApplyResetHintId} className="text-meta text-ink-600 leading-relaxed">
+        <h2 className={ADMIN_FILTER_TITLE_CLASS}>{t("admin_community_reports_filters")}</h2>
+        <p id={adminListApplyResetHintId} className={ADMIN_FILTER_HINT_CLASS}>
           {t("admin_list_filters_apply_reset_hint")}
         </p>
-        <div className="flex flex-wrap items-end gap-3">
-          <label htmlFor={inputIds.communityReportsFilterLimitId} className="text-small text-ink-700">
+        <div className={ADMIN_FILTER_GRID_CLASS}>
+          <label htmlFor={inputIds.communityReportsFilterLimitId} className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
             {t("admin_community_reports_limit")}
             <input
               id={inputIds.communityReportsFilterLimitId}
@@ -90,16 +100,16 @@ export function AdminCommunityReportsFilterCard({
               inputMode="numeric"
               value={draftLimit}
               onChange={(e) => setDraftLimit(e.target.value)}
-              className={`ml-2 min-h-[44px] w-20 rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 block w-full max-w-[8rem] min-h-[44px] ${ADMIN_FILTER_INPUT_MD_CLASS} px-3 py-2 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             />
           </label>
-          <label htmlFor={inputIds.communityReportsFilterStatusId} className="text-small text-ink-700">
+          <label htmlFor={inputIds.communityReportsFilterStatusId} className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
             {t("admin_community_reports_status")}
             <select
               id={inputIds.communityReportsFilterStatusId}
               value={draftStatus}
               onChange={(e) => setDraftStatus(e.target.value)}
-              className={`ml-2 inline-flex min-h-[44px] items-center justify-start rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 block w-full min-h-[44px] ${ADMIN_FILTER_INPUT_MD_CLASS} px-3 py-2 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             >
               {STATUS_OPTIONS.map((v) => (
                 <option key={v || "all"} value={v}>
@@ -108,57 +118,57 @@ export function AdminCommunityReportsFilterCard({
               ))}
             </select>
           </label>
-          <label htmlFor={inputIds.communityReportsFilterReporterId} className="text-small text-ink-700 block min-w-[12rem]">
+          <label htmlFor={inputIds.communityReportsFilterReporterId} className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
             {t("admin_community_reports_reporter_id")}
             <input
               id={inputIds.communityReportsFilterReporterId}
               type="text"
               value={draftReporterId}
               onChange={(e) => setDraftReporterId(e.target.value)}
-              className={`mt-1 block w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 block w-full min-h-[44px] ${ADMIN_FILTER_INPUT_MD_CLASS} px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               placeholder={t("admin_community_reports_reporter_id_ph")}
               autoComplete="off"
             />
           </label>
-          <label htmlFor={inputIds.communityReportsFilterTargetTypeId} className="text-small text-ink-700 block min-w-[8rem]">
+          <label htmlFor={inputIds.communityReportsFilterTargetTypeId} className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
             {t("admin_community_reports_target_type")}
             <input
               id={inputIds.communityReportsFilterTargetTypeId}
               type="text"
               value={draftTargetType}
               onChange={(e) => setDraftTargetType(e.target.value.slice(0, TT_MAX))}
-              className={`mt-1 block w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 block w-full min-h-[44px] ${ADMIN_FILTER_INPUT_MD_CLASS} px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               placeholder={t("admin_community_reports_target_type_ph")}
               autoComplete="off"
             />
           </label>
-          <label htmlFor={inputIds.communityReportsFilterReasonCodeId} className="text-small text-ink-700 block min-w-[10rem]">
+          <label htmlFor={inputIds.communityReportsFilterReasonCodeId} className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
             {t("admin_community_reports_reason_code")}
             <input
               id={inputIds.communityReportsFilterReasonCodeId}
               type="text"
               value={draftReasonCode}
               onChange={(e) => setDraftReasonCode(e.target.value.slice(0, RC_MAX))}
-              className={`mt-1 block w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 block w-full min-h-[44px] ${ADMIN_FILTER_INPUT_MD_CLASS} px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               placeholder={t("admin_community_reports_reason_code_ph")}
               autoComplete="off"
             />
           </label>
-          <label htmlFor={inputIds.communityReportsFilterTargetId} className="text-small text-ink-700 block min-w-[12rem]">
+          <label htmlFor={inputIds.communityReportsFilterTargetId} className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
             {t("admin_community_reports_target_id")}
             <input
               id={inputIds.communityReportsFilterTargetId}
               type="text"
               value={draftTargetId}
               onChange={(e) => setDraftTargetId(e.target.value)}
-              className={`mt-1 block w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 block w-full min-h-[44px] ${ADMIN_FILTER_INPUT_MD_CLASS} px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               placeholder={t("admin_community_reports_target_id_ph")}
               autoComplete="off"
             />
           </label>
         </div>
       </form>
-      <div className="flex flex-wrap gap-2">
+      <div className={ADMIN_FILTER_ACTIONS_CLASS}>
         <button
           form="admin-community-reports-filter-form"
           type="submit"
@@ -177,7 +187,7 @@ export function AdminCommunityReportsFilterCard({
           >
             <button
               type="submit"
-              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 px-4 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`inline-flex min-h-[44px] items-center justify-center ${ADMIN_FILTER_RESET_BTN_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             >
               {t("admin_community_reports_clear_extra")}
             </button>

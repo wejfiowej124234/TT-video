@@ -1,0 +1,67 @@
+
+> traveltrust-frontend@0.1.0 e2e:pi1-traveltrust
+> node ./scripts/run-e2e-default.mjs --project=chromium e2e/pi1-traveltrust-v6-browser-acceptance.spec.ts
+
+[e2e] local default → PLAYWRIGHT_FULL_STACK=1 (API + Next via playwright webServer)
+[e2e] INTERNAL_API_SECRET aligned from root .env (internal/*)
+[e2e] DATABASE_URL loaded from repo root .env
+sync-frontend-env: wrote D:\TravelTrust-V1\frontend\.env.local (NEXT_PUBLIC aligned with root .env)
+[e2e] D:\TravelTrust-V1\frontend\.env.local → NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8080
+[e2e] http://127.0.0.1:8080/health OK — skip cargo build
+
+Running 33 tests using 1 worker
+
+[1A[2K(node:2476) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:2476) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/33] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:21:7 › setup: GET /meta chain.contracts › API /meta satisfies chain guard
+[1A[2K  1) [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:21:7 › setup: GET /meta chain.contracts › API /meta satisfies chain guard 
+
+    Error: GET http://127.0.0.1:8080/meta failed: HTTP 408 
+
+      24 |     });
+      25 |     if (!r.ok()) {
+    > 26 |       throw new Error(`GET ${API_BASE}/meta failed: HTTP ${r.status()} ${(await r.text()).slice(0, 200)}`);
+         |             ^
+      27 |     }
+      28 |     const meta: unknown = await r.json();
+      29 |     if (!isRecord(meta)) {
+        at D:\TravelTrust-V1\frontend\e2e\setup\meta-chain-contracts.spec.ts:26:13
+
+
+[1A[2K(node:35676) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:35676) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[2/33] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:39:7 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only)
+[1A[2K  2) [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:39:7 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only) 
+
+    Error: GET http://127.0.0.1:8080/meta after Next dev fallback: HTTP 408
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBeTruthy[2m()[22m
+
+    Received: [31mfalse[39m
+
+      46 |         timeout: META_REQUEST_TIMEOUT_MS,
+      47 |       });
+    > 48 |       expect(direct.ok(), `GET ${API_BASE}/meta after Next dev fallback: HTTP ${direct.status()}`).toBeTruthy();
+         |                                                                                                    ^
+      49 |       meta = (await direct.json()) as Record<string, unknown>;
+      50 |     }
+      51 |     if (relaxed) {
+        at D:\TravelTrust-V1\frontend\e2e\setup\meta-chain-contracts.spec.ts:48:100
+
+
+[1A[2K  2 failed
+    [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:21:7 › setup: GET /meta chain.contracts › API /meta satisfies chain guard 
+    [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:39:7 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only) 
+  31 did not run

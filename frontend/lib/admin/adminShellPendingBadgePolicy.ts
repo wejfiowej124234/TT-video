@@ -18,17 +18,29 @@ export function adminShellPendingBadgeVisible(input: {
   placement: AdminShellPendingBadgePlacement;
   sidebarLayoutActive: boolean;
   count: number | null;
+  /** P3：工作台有待办聚焦时，顶栏收件箱 hub 不重复角标 */
+  suppressTopInboxHubOnWorkspace?: boolean;
+  /** 工作台收件箱聚焦：首页 hero 已展示数字，侧栏叶节点不再重复 */
+  suppressSidebarLeafOnWorkspaceInboxFocus?: boolean;
 }): boolean {
-  const { placement, sidebarLayoutActive, count } = input;
+  const {
+    placement,
+    sidebarLayoutActive,
+    count,
+    suppressTopInboxHubOnWorkspace,
+    suppressSidebarLeafOnWorkspaceInboxFocus,
+  } = input;
   if (count === null || count <= 0) return false;
   switch (placement) {
     case "top_inbox_hub":
+      if (suppressTopInboxHubOnWorkspace) return false;
       return true;
     case "top_nav_dropdown":
       return !sidebarLayoutActive;
     case "sidebar_inbox_hub":
       return false;
     case "sidebar_queue_leaf":
+      if (suppressSidebarLeafOnWorkspaceInboxFocus) return false;
       return sidebarLayoutActive;
     default:
       return false;
@@ -65,6 +77,19 @@ export function adminShellNavGroupPendingRollup(
 export function adminShellNavGroupSummaryBadgeVisible(input: {
   sidebarLayoutActive: boolean;
   rollup: number;
+  /** 工作台收件箱聚焦：组级仅 attention dot，不重复数字 */
+  workspaceInboxFocus?: boolean;
 }): boolean {
-  return !input.sidebarLayoutActive && input.rollup > 0;
+  if (input.rollup <= 0) return false;
+  if (input.workspaceInboxFocus && input.sidebarLayoutActive) return false;
+  return !input.sidebarLayoutActive;
+}
+
+/** 侧栏分组 summary · 工作台 focus 时橙点（数字已在首页 hero） */
+export function adminShellNavGroupSummaryAttentionDotVisible(input: {
+  sidebarLayoutActive: boolean;
+  rollup: number;
+  workspaceInboxFocus: boolean;
+}): boolean {
+  return input.workspaceInboxFocus && input.sidebarLayoutActive && input.rollup > 0;
 }

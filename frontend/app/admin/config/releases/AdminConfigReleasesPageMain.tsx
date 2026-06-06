@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
+import { AdminInboxQueueBackLinks } from "@/components/admin/AdminInboxQueueBackLinks";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminMetaBuildSection } from "@/components/admin/AdminMetaBuildPanel";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
@@ -18,25 +19,15 @@ import { ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
 
 export function AdminConfigReleasesPageMain() {
   const vm = useAdminConfigReleasesPage();
-  const { t, loading, error, meta } = vm;
+  const { t, loading, error, meta, items } = vm;
 
   return (
     <AdminListPageChrome
       titleId={vm.pageTitleId}
       title={t("admin_config_releases_title")}
-      subtitle={t("admin_config_releases_subtitle")}
+      subtitle={t("admin_config_releases_subtitle_l5")}
       headerAside={
-        <>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_config_releases_back")}
-          </Link>
-        </>
+        <AdminInboxQueueBackLinks />
       }
     >
       <AdminConfigReleasesFiltersCard vm={vm} />
@@ -44,7 +35,7 @@ export function AdminConfigReleasesPageMain() {
 
       <AdminConfigReleasesMetaNote meta={meta} />
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <AdminListLoadingStatus message={t("admin_config_releases_loading")} />
       ) : null}
       {error ? <AdminListFetchError errorKind={error} message={adminErrorUserText(error, t)} /> : null}

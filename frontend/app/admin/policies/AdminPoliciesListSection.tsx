@@ -17,8 +17,10 @@ import {
   ADMIN_TABLE_ROW_CLASS,
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
-  adminTableInlineLinkClass,
-} from "@/lib/adminUi";
+  adminTableRowPrimaryActionClass,
+  ADMIN_TABLE_SECTION_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,} from "@/lib/adminUi";
 
 type PolicySortKey = "code" | "pstatus" | "updated_at";
 
@@ -27,6 +29,7 @@ type TFn = (key: string, params?: Record<string, string>) => string;
 export type AdminPoliciesListSectionProps = {
   t: TFn;
   loading: boolean;
+  refreshing?: boolean;
   error: AdminFetchErrorKind | null;
   appliedFilters: Record<string, unknown> | null;
   items: AdminPolicyRow[];
@@ -36,7 +39,8 @@ export type AdminPoliciesListSectionProps = {
 };
 
 export function AdminPoliciesListSection(props: AdminPoliciesListSectionProps) {
-  const { t, loading, error, appliedFilters, items, meta, openPublish, adminAppliedFiltersDescId } = props;
+  const { t, loading, refreshing = false, error, appliedFilters, items, meta, openPublish, adminAppliedFiltersDescId } =
+    props;
   const { sort, toggle, ariaSort } = useAdminTableSort<PolicySortKey>("updated_at", "desc");
   const sortedItems = useMemo(
     () =>
@@ -60,7 +64,7 @@ export function AdminPoliciesListSection(props: AdminPoliciesListSectionProps) {
 
       {meta?.note ? <AdminMetaNoteLink className="mt-4">{String(meta.note)}</AdminMetaNoteLink> : null}
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <AdminListLoadingStatus message={t("admin_policies_loading")} />
       ) : null}
       {error ? <AdminListFetchError errorKind={error} message={adminErrorUserText(error, t)} /> : null}
@@ -75,12 +79,13 @@ export function AdminPoliciesListSection(props: AdminPoliciesListSectionProps) {
         />
       ) : null}
 
-      {!loading && !error && items.length > 0 && (
+      {!loading && items.length > 0 && (
         <section
-          className="mt-6 overflow-x-auto rounded-[var(--radius-xl)] border border-ink-200 bg-white"
+          className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
           aria-label={t("admin_policies_table_aria")}
+          data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
         >
-          <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+          <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
             <thead className={ADMIN_TABLE_THEAD_CLASS}>
               <tr>
                 <th scope="col" className={`${ADMIN_TABLE_TH_CELL_CLASS} font-medium`}>
@@ -118,7 +123,7 @@ export function AdminPoliciesListSection(props: AdminPoliciesListSectionProps) {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-ink-100 text-ink-700">
+            <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
               {sortedItems.map((row, idx) => {
                 const dash = t("admin_em_dash");
                 const p = row.policy;
@@ -128,24 +133,24 @@ export function AdminPoliciesListSection(props: AdminPoliciesListSectionProps) {
                 const code = p?.code ?? row.id ?? "";
                 return (
                   <tr key={row.id ?? `pol-${idx}`} className={ADMIN_TABLE_ROW_CLASS}>
-                    <td className="px-3 py-2 font-mono text-meta max-w-[7rem] truncate" title={row.id}>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800 max-w-[7rem] truncate" title={row.id}>
                       {row.id ?? dash}
                     </td>
-                    <td className="px-3 py-2 font-mono text-meta">{p?.code ?? dash}</td>
-                    <td className="px-3 py-2 font-mono text-meta">{p?.version ?? dash}</td>
-                    <td className="px-3 py-2 font-mono text-meta">{p?.status ?? dash}</td>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800">{p?.code ?? dash}</td>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800">{p?.version ?? dash}</td>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800">{p?.status ?? dash}</td>
                     <td className="px-3 py-2 max-w-[10rem]">
-                      <span className="block font-mono text-meta truncate" title={sc?.expr ?? ""}>
+                      <span className="block font-mono text-small text-ink-800 truncate" title={sc?.expr ?? ""}>
                         {sc?.type ?? dash}
                       </span>
                     </td>
-                    <td className="px-3 py-2 font-mono text-meta">{b?.role ?? dash}</td>
-                    <td className="px-3 py-2 max-w-[12rem] font-mono text-meta">
+                    <td className="px-3 py-2 font-mono text-small text-ink-800">{b?.role ?? dash}</td>
+                    <td className="px-3 py-2 max-w-[12rem] font-mono text-small text-ink-800">
                       <span className="block truncate" title={resStr}>
                         {resStr}
                       </span>
                     </td>
-                    <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">{row.updated_at ?? dash}</td>
+                    <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">{row.updated_at ?? dash}</td>
                     <td className="px-3 py-2">
                       {row.id ? (
                         <form
@@ -157,7 +162,7 @@ export function AdminPoliciesListSection(props: AdminPoliciesListSectionProps) {
                         >
                           <button
                             type="submit"
-                            className={adminTableInlineLinkClass()}
+                            className={adminTableRowPrimaryActionClass()}
                             aria-label={t("admin_policies_publish_row_aria", { code: String(code) })}
                           >
                             {t("admin_policies_publish")}

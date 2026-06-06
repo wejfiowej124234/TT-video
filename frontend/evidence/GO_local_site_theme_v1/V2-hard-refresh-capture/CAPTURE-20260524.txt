@@ -1,0 +1,6 @@
+phase=local-1
+theme=V2-action-ssot
+baseURL=http://127.0.0.1:3012
+status=captured
+
+files=01-market-hero-hub.png .. 06-community-explore-h1.png

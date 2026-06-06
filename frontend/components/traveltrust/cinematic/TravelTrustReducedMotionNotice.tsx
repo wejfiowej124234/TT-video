@@ -8,7 +8,7 @@ import {
   TT_REDUCED_MOTION_NOTICE_L5,
   TT_REDUCED_MOTION_NOTICE_L5_CLASS,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 
 const DISMISS_KEY = "tt-traveltrust-reduced-motion-notice-dismiss";
 

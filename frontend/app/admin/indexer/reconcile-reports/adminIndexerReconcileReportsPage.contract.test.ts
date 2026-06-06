@@ -13,7 +13,7 @@ function readReconcileReportsModuleSources(): string {
     readFileSync(join(__dir, "ReconcileReportsPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "ReconcileReportsTableSection.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminIndexerReconcileReportsPage.ts"), "utf8"),
-    readFileSync(join(__dir, "useAdminIndexerReconcileReportsPageListFetch.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "reconcileReportsPageExportDownload.ts"), "utf8"),
     readFileSync(join(__dir, "reconcileReportsPageModel.ts"), "utf8"),
   ].join("\n");
@@ -25,6 +25,7 @@ describe("admin indexer reconcile-reports page", () => {
   it("keeps admin list + export route builders wired", () => {
     expect(src).toContain("routes.admin.indexerReconcileReports");
     expect(src).toContain("routes.admin.indexerReconcileReportsExport");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("parseListQuery");
     expect(src).toContain("buildListPath");

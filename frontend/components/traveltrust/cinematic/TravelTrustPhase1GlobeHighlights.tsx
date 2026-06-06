@@ -193,8 +193,8 @@ function DestinationPin({
             </p>
             {routes.length > 0 ? (
               <ul className="mt-1.5 space-y-0.5 border-t border-white/10 pt-1.5 text-[10px] text-ref-sun/88">
-                {routes.slice(0, 3).map((line) => (
-                  <li key={line}>{line}</li>
+                {routes.slice(0, 3).map((route) => (
+                  <li key={route.id}>{route.label}</li>
                 ))}
               </ul>
             ) : null}

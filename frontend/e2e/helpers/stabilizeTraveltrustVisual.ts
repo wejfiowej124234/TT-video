@@ -32,3 +32,34 @@ export async function waitTraveltrustHeroSettled(page: Page, timeoutMs = 20_000)
   await expect(shell.locator('[data-tt-traveltrust-hero-copy-card="1"]')).toBeVisible({ timeout: timeoutMs });
   await page.waitForTimeout(500);
 }
+
+/** P3/L5：globe-bound 投影与目的地标签就绪（DOM 光点可关，仍读 layer 元数据） */
+export async function waitTraveltrustHeroP3Ready(page: Page, timeoutMs = 90_000): Promise<void> {
+  await waitTraveltrustHeroSettled(page, timeoutMs);
+  await expect(page.locator('[data-tt-traveltrust-hero-p3-layer="1"]')).toBeAttached({ timeout: timeoutMs });
+  await expect(page.locator('[data-tt-traveltrust-hero-p3-narrative="1"]')).toBeAttached({
+    timeout: timeoutMs,
+  });
+  await expect(page.locator('[data-tt-traveltrust-hero-l5-destination-labels="1"]')).toHaveAttribute(
+    "data-tt-traveltrust-hero-p3-projection-active",
+    "1",
+    { timeout: timeoutMs },
+  );
+  await expect
+    .poll(
+      async () => page.locator('[data-tt-traveltrust-hero-p3-label="1"]').count(),
+      { timeout: timeoutMs },
+    )
+    .toBeGreaterThanOrEqual(1);
+  await expect
+    .poll(
+      async () =>
+        Number(
+          (await page
+            .locator('[data-tt-traveltrust-hero-l5-destination-labels="1"]')
+            .getAttribute("data-tt-traveltrust-hero-l5-label-rendered")) ?? "0",
+        ),
+      { timeout: timeoutMs },
+    )
+    .toBeGreaterThanOrEqual(1);
+}

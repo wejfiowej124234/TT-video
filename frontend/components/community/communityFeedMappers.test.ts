@@ -37,4 +37,27 @@ describe("mapApiPostToCommunityPost", () => {
     });
     expect(post.commerceMarketListingId).toBe("00000000-0000-4000-8000-000000000099");
   });
+
+  it("maps geo enrich fields from feed API row", () => {
+    const post = mapApiPostToCommunityPost({
+      ...base,
+      destination: "京都",
+      venue_name: "京都",
+      distance_m: 450,
+      is_sponsored: true,
+    });
+    expect(post.venueName).toBe("京都");
+    expect(post.distanceM).toBe(450);
+    expect(post.isSponsored).toBe(true);
+  });
+
+  it("maps commerce_market_listing_id only when showcase kind is valid", () => {
+    const post = mapApiPostToCommunityPost({
+      ...base,
+      commerce_showcase_kind: "acquisition_led",
+      commerce_market_listing_id: " 00000000-0000-4000-8000-000000000099 ",
+    });
+    expect(post.commerceShowcaseKind).toBe("acquisition_led");
+    expect(post.commerceMarketListingId).toBe("00000000-0000-4000-8000-000000000099");
+  });
 });

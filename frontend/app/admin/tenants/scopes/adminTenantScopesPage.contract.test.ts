@@ -13,7 +13,7 @@ function readTenantScopesModuleSources(): string {
     readFileSync(join(__dir, "AdminTenantScopesPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminTenantScopesListSection.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminTenantScopesPage.ts"), "utf8"),
-    readFileSync(join(__dir, "useAdminTenantScopesPageListFetch.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminTenantScopesPageQuery.ts"), "utf8"),
   ].join("\n");
 }
@@ -27,6 +27,7 @@ describe("admin tenant scopes page", () => {
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("parseTenantScopesListQuery");
     expect(src).toContain("buildTenantScopesListPath");
+    expect(src).toContain("useAdminStandardListFetch");
   });
 
   it("keeps search-params suspense shell and list chrome anchor", () => {

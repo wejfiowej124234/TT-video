@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useId, useMemo, useState } from "react";
 
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import { useTranslation } from "@/components/LocaleProvider";
 import {
   patchAdminUserAcquisitionPublishSuspend,
@@ -11,7 +12,17 @@ import {
   defaultSuspendUntilLocal,
   localDatetimeToRfc3339,
 } from "@/lib/adminAcquisitionSuspendUtils";
-import { ADMIN_FORM_FIELD_FOCUS_CLASS } from "@/lib/adminUi";
+import { ADMIN_FORM_FIELD_FOCUS_CLASS,
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_FORM_CONTROL_SM_CLASS,
+  ADMIN_INNER_DIVIDER_CLASS,
+  ADMIN_SEMANTIC_REJECT_BTN_CLASS,
+  ADMIN_ACQUISITION_SUSPEND_ACTIVE_STATUS_CLASS,
+  ADMIN_ACQUISITION_SUSPEND_CLEAR_STATUS_CLASS,} from "@/lib/adminUi";
+import { AdminDialogFocusPanel } from "@/components/admin/AdminDialogFocusPanel";
+import { AdminDialogScrim } from "@/components/admin/AdminDialogScrim";
+import { AdminModalWarmL5Panel } from "@/components/admin/AdminModalWarmL5Panel";
+import { adminModalPortalRootSheetClass } from "@/components/market/marketStudioModalLayout";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { travelFocusRingCoreOffset2WhiteClasses } from "@/lib/travelLinkFocus";
 
@@ -32,6 +43,7 @@ export function AdminAcquisitionPublishSuspendModal({
   onSuccess: (userId: string, result: AdminAcquisitionPublishSuspendResult) => void;
 }) {
   const { t } = useTranslation();
+  const requestConfirm = useAdminL5ConfirmRequest();
   const titleId = useId();
   const descId = useId();
   const [suspendUntilLocal, setSuspendUntilLocal] = useState(defaultSuspendUntilLocal);
@@ -85,21 +97,40 @@ export function AdminAcquisitionPublishSuspendModal({
       setError(t("admin_acquisition_suspend_invalidUntil"));
       return;
     }
-    void applyPatch({ suspended_until: iso });
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_danger",
+      descKey: "admin_l5_confirm_desc_acquisition_suspend",
+      danger: true,
+      onConfirm: () => void applyPatch({ suspended_until: iso }),
+    });
+  };
+
+  const handleLift = () => {
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_write",
+      descKey: "admin_l5_confirm_desc_acquisition_lift",
+      onConfirm: () => void applyPatch({ suspended_until: null }),
+    });
   };
 
   if (!user) return null;
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+      className={adminModalPortalRootSheetClass}
       role="dialog"
       aria-modal="true"
       aria-labelledby={titleId}
       aria-describedby={descId}
       data-testid="admin-acquisition-publish-suspend-modal"
     >
-      <div className="max-w-md w-full rounded-[var(--radius-xl)] border border-ink-200 bg-white p-5 shadow-medium">
+      <AdminDialogScrim onClose={onClose} />
+      <AdminDialogFocusPanel
+        onClose={onClose}
+        trapId="acquisition-publish-suspend"
+        className="relative z-10 w-full flex justify-center px-4"
+      >
+      <AdminModalWarmL5Panel className="max-w-md w-full">
         <h2 id={titleId} className="text-body-l font-semibold text-ink-900">
           {t("admin_acquisition_suspend_modalTitle")}
         </h2>
@@ -110,11 +141,11 @@ export function AdminAcquisitionPublishSuspendModal({
 
         {snapshot != null ? (
           <div
-            className={`mt-3 rounded-[var(--radius-md)] border px-3 py-2.5 text-meta ${
+            className={
               suspended
-                ? "border-danger/30 bg-danger/5 text-danger"
-                : "border-success/30 bg-success/10 text-success"
-            }`}
+                ? ADMIN_ACQUISITION_SUSPEND_ACTIVE_STATUS_CLASS
+                : ADMIN_ACQUISITION_SUSPEND_CLEAR_STATUS_CLASS
+            }
             role="status"
           >
             {suspended
@@ -125,12 +156,12 @@ export function AdminAcquisitionPublishSuspendModal({
           </div>
         ) : null}
 
-        <div className="mt-4 space-y-3 border-t border-ink-100 pt-4">
+        <div className={`mt-4 space-y-3 ${ADMIN_INNER_DIVIDER_CLASS} pt-4`}>
           <label className="block text-small text-ink-700">
             {t("admin_acquisition_suspend_untilLabel")}
             <input
               type="datetime-local"
-              className={`mt-1 w-full rounded border border-ink-200 px-2 py-1.5 font-mono text-meta ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 w-full ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1.5 font-mono text-meta ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               value={suspendUntilLocal}
               onChange={(e) => setSuspendUntilLocal(e.target.value)}
               disabled={loading}
@@ -139,7 +170,7 @@ export function AdminAcquisitionPublishSuspendModal({
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
-              className={`rounded-[var(--radius-sm)] bg-danger px-3 py-2 text-small font-medium text-white hover:opacity-90 disabled:opacity-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
+              className={`${ADMIN_SEMANTIC_REJECT_BTN_CLASS} ${travelFocusRingCoreOffset2WhiteClasses}`}
               disabled={loading}
               onClick={handleSuspend}
             >
@@ -147,15 +178,15 @@ export function AdminAcquisitionPublishSuspendModal({
             </button>
             <button
               type="button"
-              className={`rounded-[var(--radius-sm)] border border-ink-200 bg-white px-3 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 disabled:opacity-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
+              className={`${ADMIN_FILTER_RESET_BTN_CLASS} disabled:opacity-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
               disabled={loading}
-              onClick={() => void applyPatch({ suspended_until: null })}
+              onClick={handleLift}
             >
               {t("admin_acquisition_suspend_actionLift")}
             </button>
             <button
               type="button"
-              className={`rounded-[var(--radius-sm)] border border-ink-200 bg-white px-3 py-2 text-small font-medium text-ink-700 hover:bg-ink-50 disabled:opacity-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
+              className={`${ADMIN_FILTER_RESET_BTN_CLASS} disabled:opacity-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
               disabled={loading}
               onClick={onClose}
             >
@@ -168,7 +199,8 @@ export function AdminAcquisitionPublishSuspendModal({
             </p>
           ) : null}
         </div>
-      </div>
+      </AdminModalWarmL5Panel>
+      </AdminDialogFocusPanel>
     </div>
   );
 }

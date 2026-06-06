@@ -1,23 +1,23 @@
-export const ONBOARDING_HUB_LINKS: { href: string; titleKey: string; descKey: string }[] = [
-  { href: "/admin/users", titleKey: "admin_onboarding_hub_users", descKey: "admin_onboarding_hub_users_desc" },
-  {
-    href: "/admin/onboarding/entitlements",
-    titleKey: "admin_onboarding_hub_entitlements",
-    descKey: "admin_onboarding_hub_entitlements_desc",
-  },
-  {
-    href: "/admin/onboarding/payment-events",
-    titleKey: "admin_onb_payment_events_title",
-    descKey: "admin_onb_payment_events_subtitle",
-  },
-  {
-    href: "/admin/onboarding/webhook-jobs",
-    titleKey: "admin_onboarding_hub_webhooks",
-    descKey: "admin_onboarding_hub_webhooks_desc",
-  },
-  {
-    href: "/admin/onboarding/compliance-audit",
-    titleKey: "admin_onboarding_hub_compliance",
-    descKey: "admin_onboarding_hub_compliance_desc",
-  },
+import type { AdminOpsDetailRelatedLink } from "@/components/admin/AdminOpsDetailRelatedFold";
+
+import { ADMIN_INBOX_QUEUE_HREFS } from "@/lib/admin/adminInboxQueueHrefs";
+import {
+  ADMIN_ONBOARDING_HUB_PAGE_LINKS,
+  ADMIN_SHELL_ONBOARDING_NAV_LINKS,
+} from "@/lib/admin/adminShellOnboardingNavLinks";
+
+export const ONBOARDING_HUB_LINKS = [...ADMIN_ONBOARDING_HUB_PAGE_LINKS];
+
+/** 入驻枢纽 · 折叠交叉入口（卡片入口保留首屏）。 */
+export const ONBOARDING_HUB_RELATED_FOLD_LINKS: AdminOpsDetailRelatedLink[] = [
+  { href: ADMIN_INBOX_QUEUE_HREFS.provider, labelKey: "admin_provider_list_title" },
+  { href: ADMIN_INBOX_QUEUE_HREFS.steward, labelKey: "admin_steward_list_title" },
+  { href: "/admin/approvals", labelKey: "admin_approvals_title" },
+  ...ADMIN_SHELL_ONBOARDING_NAV_LINKS.filter((link) => link.href.startsWith("/admin/onboarding/")).map(
+    ({ href, labelKey }) => ({ href, labelKey }),
+  ),
+  ...ONBOARDING_HUB_LINKS.filter(({ href }) => href === "/admin/users").map(({ href, titleKey }) => ({
+    href,
+    labelKey: titleKey,
+  })),
 ];

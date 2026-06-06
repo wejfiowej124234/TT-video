@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useId, useMemo, type FormEvent } from "react";
 import { AdminSortableTh } from "@/components/admin/AdminSortableTh";
 
+import { AdminCommunityListHeaderAside } from "@/components/admin/AdminCommunityListHeaderAside";
 import { AdminAppliedFiltersBanner } from "@/components/admin/AdminAppliedFiltersBanner";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { AdminMetaBuildSection, AdminMetaNoteLink } from "@/components/admin/AdminMetaBuildPanel";
@@ -29,6 +30,13 @@ import {
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
   adminPageNavLinkClass,
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_FILTER_INPUT_SM_CLASS,
+  ADMIN_TABLE_SECTION_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,
+  ADMIN_FILTER_ACTIONS_CLASS,
+  ADMIN_FILTER_HINT_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
 } from "@/lib/adminUi";
 
 type RankSnapshotSortKey = "created_at" | "feed_mode" | "item_count";
@@ -42,6 +50,7 @@ export function AdminCommunityRankingSnapshotsPageMain() {
   const feedModeInputId = useId();
   const {
     loading,
+    refreshing,
     error,
     items,
     meta,
@@ -72,22 +81,12 @@ export function AdminCommunityRankingSnapshotsPageMain() {
     <AdminListPageChrome
       titleId={pageTitleId}
       title={t("admin_rank_snapshots_title")}
-      subtitle={t("admin_rank_snapshots_subtitle")}
+      subtitle={t("admin_rank_snapshots_subtitle_l5")}
       headerAside={
-        <>
+        <AdminCommunityListHeaderAside>
           <Link href="/admin/community/reports" className={`${adminPageNavLinkClass()}`}>
             {t("admin_rank_snapshots_linkReports")}
-          </Link>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_rank_snapshots_back")}
-          </Link>
-        </>
+          </Link></AdminCommunityListHeaderAside>
       }
     >
       <div className={`mt-5 ${ADMIN_FILTER_CARD_CLASS}`}>
@@ -103,7 +102,7 @@ export function AdminCommunityRankingSnapshotsPageMain() {
           onSubmit={onApply}
         >
           <p className="text-small font-medium text-ink-800">{t("admin_rank_snapshots_filters")}</p>
-          <p id={adminListApplyResetHintId} className="text-meta text-ink-600 leading-relaxed">
+          <p id={adminListApplyResetHintId} className={ADMIN_FILTER_HINT_CLASS}>
             {t("admin_list_filters_apply_reset_hint")}
           </p>
           <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
@@ -117,7 +116,7 @@ export function AdminCommunityRankingSnapshotsPageMain() {
                 inputMode="numeric"
                 value={draftLimit}
                 onChange={(e) => setDraftLimit(e.target.value)}
-                className={`mt-1 min-h-[44px] w-20 rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 min-h-[44px] w-20 ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               />
             </div>
             <div className="min-w-[12rem] flex-1">
@@ -129,14 +128,14 @@ export function AdminCommunityRankingSnapshotsPageMain() {
                 type="text"
                 value={draftFeedMode}
                 onChange={(e) => setDraftFeedMode(e.target.value.slice(0, RANK_SNAPSHOTS_FEED_MODE_MAX))}
-                className={`mt-1 block w-full max-w-md min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 block w-full max-w-md min-h-[44px] ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 placeholder={t("admin_rank_snapshots_feed_mode_ph")}
                 autoComplete="off"
               />
             </div>
           </div>
         </form>
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className={ADMIN_FILTER_ACTIONS_CLASS}>
           <button
             form="admin-rank-snapshots-filter-form"
             type="submit"
@@ -155,7 +154,7 @@ export function AdminCommunityRankingSnapshotsPageMain() {
             >
               <button
                 type="submit"
-                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 px-4 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`inline-flex min-h-[44px] items-center justify-center ${ADMIN_FILTER_RESET_BTN_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               >
                 {t("admin_rank_snapshots_filter_clear")}
               </button>
@@ -178,14 +177,14 @@ export function AdminCommunityRankingSnapshotsPageMain() {
         <AdminMetaNoteLink className="mt-3">{String(meta.note)}</AdminMetaNoteLink>
       ) : null}
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <AdminListLoadingStatus message={t("admin_rank_snapshots_loading")} />
       ) : null}
       {error ? (
         <AdminListFetchError errorKind={error} message={adminErrorUserText(error, t)} />
       ) : null}
 
-      {!loading && !error && items.length === 0 ? (
+      {!error && (!loading || items.length > 0) && items.length === 0 ? (
         <AdminListPageEmptyState
           messageKey="admin_rank_snapshots_empty"
           nextLinks={ADMIN_EMPTY_NEXT_COMMUNITY_RANK_SNAPSHOTS_EMPTY}
@@ -193,9 +192,13 @@ export function AdminCommunityRankingSnapshotsPageMain() {
         />
       ) : null}
 
-      {!loading && !error && items.length > 0 && (
-        <section className="mt-6 overflow-x-auto rounded-[var(--radius-xl)] border border-ink-200 bg-white" aria-label={t("admin_rank_snapshots_table_aria")}>
-          <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+      {!error && (!loading || items.length > 0) && items.length > 0 && (
+        <section
+          className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
+          aria-label={t("admin_rank_snapshots_table_aria")}
+          data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
+        >
+          <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
             <thead className={ADMIN_TABLE_THEAD_CLASS}>
               <tr>
                 <AdminSortableTh
@@ -221,15 +224,15 @@ export function AdminCommunityRankingSnapshotsPageMain() {
                 />
               </tr>
             </thead>
-            <tbody className="divide-y divide-ink-100 text-ink-700">
+            <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
               {sortedItems.map((r, idx) => {
                 const dash = t("admin_em_dash");
                 const topIds = rankSnapshotsIdsPreview(r.top_post_ids, dash);
                 return (
                   <tr key={r.id ?? `rs-${idx}`} className={ADMIN_TABLE_ROW_CLASS}>
-                    <td className="px-3 py-2 font-mono text-meta">{r.feed_mode ?? dash}</td>
-                    <td className="px-3 py-2 font-mono text-meta">{r.item_count ?? dash}</td>
-                    <td className="px-3 py-2 max-w-xl font-mono text-meta">
+                    <td className="px-3 py-2 font-mono text-small text-ink-800">{r.feed_mode ?? dash}</td>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800">{r.item_count ?? dash}</td>
+                    <td className="px-3 py-2 max-w-xl font-mono text-small text-ink-800">
                       <span className="block truncate" title={topIds}>
                         {topIds}
                       </span>
@@ -237,7 +240,7 @@ export function AdminCommunityRankingSnapshotsPageMain() {
                     <td className="px-3 py-2 max-w-xs truncate" title={r.notes ?? ""}>
                       {r.notes ?? dash}
                     </td>
-                    <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">{r.created_at ?? dash}</td>
+                    <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">{r.created_at ?? dash}</td>
                   </tr>
                 );
               })}

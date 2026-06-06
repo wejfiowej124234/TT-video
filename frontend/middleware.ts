@@ -24,7 +24,8 @@ export function middleware(request: NextRequest) {
   }
 
   const uid = request.cookies.get("traveltrust_user_id")?.value?.trim();
-  if (uid) {
+  const sessionOk = request.cookies.get("traveltrust_session_ok")?.value === "1";
+  if (uid && sessionOk) {
     return NextResponse.next();
   }
 
@@ -35,5 +36,13 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/discover", "/discover/", "/market/travel", "/market/travel/", "/admin/:path*"],
+  matcher: [
+    "/discover",
+    "/discover/",
+    "/market/travel",
+    "/market/travel/",
+    "/admin",
+    "/admin/",
+    "/admin/:path*",
+  ],
 };

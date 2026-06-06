@@ -1,5 +1,6 @@
 "use client";
 
+import { CIM, CIM_CHOICE, CIM_FOCUS, CIM_FOCUS_WITHIN } from '../customItineraryModalTheme';
 import { getHotelDetails, getHotels } from "@/lib/cityDetails";
 import type { HotelDetail } from "@/lib/cityDetails";
 import type { CityTransportType, CustomItineraryForm, GuideDayPlan } from "../types";
@@ -46,7 +47,7 @@ export default function GuideDayCard({
   const selectedGuideHotelDetail = (day.hotel ?? "") ? (guideHotelDetails.find((h) => h.value === day.hotel) ?? null) : null;
 
   return (
-    <div className="rounded-[var(--radius-md)] border border-white/25 bg-white/5 p-4 space-y-3">
+    <div className={CIM.customItineraryPanelDay}>
       <h3 className="text-small font-semibold text-white drop-shadow-market-pill">
         {t("market_dayN").replace("{n}", String(dayIndex + 1))}
       </h3>

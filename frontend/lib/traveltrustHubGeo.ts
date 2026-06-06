@@ -1,9 +1,12 @@
 /**
  * 全球枢纽 · 城市级 lat/lon SSOT（Pass B · `TT-GLOBE-L5-UNLOCK-EARTH-REALISM` 地理段 · ①）
- * Phase1 针脚 / P3 标签 / P3 光点 / 走廊弧线端点均经 `resolveTraveltrustHubLatLon` 读取。
+ * Phase1 十国针脚 / P3 标签 / 光点 / WebGL 走廊弧线端点均经 `resolveTraveltrustHubLatLon` 读取。
  */
 
 export const TRAVELTRUST_HUB_GEO_SSOT_ID = "TT-HUB-GEO-SSOT-2026-05" as const;
+
+/** Phase1 地球 · 十国枢纽（与 `TRAVELTRUST_PHASE1_GLOBE_REGIONS` 同集） */
+export const TRAVELTRUST_PHASE1_HUB_COUNT = 10 as const;
 
 export type TraveltrustHubGeoId =
   | "cn"
@@ -41,7 +44,7 @@ export type TraveltrustHubGeo = {
 
 /** 城市级真实坐标（WGS84 · 示意枢纽 · 非航班数据） */
 export const TRAVELTRUST_HUB_GEO_BY_ID: Record<TraveltrustHubGeoId, TraveltrustHubGeo> = {
-  cn: { id: "cn", cityEn: "Shanghai", lat: 31.2304, lon: 121.4737 },
+  cn: { id: "cn", cityEn: "Beijing", lat: 39.9042, lon: 116.4074 },
   us: { id: "us", cityEn: "New York", lat: 40.7128, lon: -74.006 },
   fr: { id: "fr", cityEn: "Paris", lat: 48.8566, lon: 2.3522 },
   es: { id: "es", cityEn: "Madrid", lat: 40.4168, lon: -3.7038 },
@@ -77,10 +80,32 @@ export function getTraveltrustHubGeo(id: TraveltrustHubGeoId): TraveltrustHubGeo
   return TRAVELTRUST_HUB_GEO_BY_ID[id];
 }
 
+/** WGS84 · 东经为正（协议/文档 SSOT，不用于直接 `latLonToUnitVector`） */
 export function resolveTraveltrustHubLatLonById(id: string): { lat: number; lon: number } {
   if (!isTraveltrustHubGeoId(id)) {
     throw new Error(`traveltrustHubGeo: unknown hub id "${id}"`);
   }
   const hub = getTraveltrustHubGeo(id);
   return { lat: hub.lat, lon: hub.lon };
+}
+
+/**
+ * Three.js `SphereGeometry` + equirect JPEG：mesh UV 与 WGS84 经度符号相反（①）。
+ * 由 `latLonToUnitVector` 统一应用；调用方继续传 WGS84 即可。
+ * 机读：`traveltrustGlobeEquirectAlignment.test.ts`
+ */
+export const TRAVELTRUST_GLOBE_EQUIRECT_LON_SIGN = -1 as const;
+
+export function wgs84LonToGlobeSurfaceLonDeg(lonDeg: number): number {
+  return lonDeg * TRAVELTRUST_GLOBE_EQUIRECT_LON_SIGN;
+}
+
+/** `latLonToUnitVector` / `atan2(z,x)` 反算回 WGS84 经度 */
+export function globeSurfaceLonToWgs84LonDeg(lonDeg: number): number {
+  return lonDeg * TRAVELTRUST_GLOBE_EQUIRECT_LON_SIGN;
+}
+
+export function resolveTraveltrustHubGlobeSurfaceLatLonById(id: string): { lat: number; lon: number } {
+  const wgs = resolveTraveltrustHubLatLonById(id);
+  return { lat: wgs.lat, lon: wgs84LonToGlobeSurfaceLonDeg(wgs.lon) };
 }

@@ -1,24 +1,27 @@
 "use client";
 
+import MeSettingsL5FlowPage from "@/components/me/MeSettingsL5FlowPage";
 import { useTranslation } from "@/components/LocaleProvider";
+import { TT_AUTH_L5_FORM } from "@/lib/auth/authL5Form";
 
-const CARD = "rounded-[var(--radius-sm)] border border-ink-200 bg-bg-console shadow-soft p-6";
-
-/** 与 me/password 居中卡片表单一致 */
 export default function MePasswordLoading() {
   const { t } = useTranslation();
   return (
-    <main className="min-h-screen bg-bg-main flex items-center justify-center p-6" role="status" aria-label={t("mePassword_title")} aria-busy="true">
-      <div className={`w-full max-w-md ${CARD} space-y-4`} aria-hidden>
-        <div className="min-h-[44px] h-11 w-40 bg-ink-200 rounded-[var(--radius-sm)] animate-pulse" />
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="space-y-1.5">
-            <div className="h-3 w-28 bg-ink-200 rounded-[var(--radius-sm)] animate-pulse" />
-            <div className="h-11 w-full border border-ink-200 rounded-[var(--radius-sm)] bg-bg-main animate-pulse" />
-          </div>
-        ))}
-        <div className="min-h-[44px] h-11 w-full rounded-[var(--radius-sm)] bg-travel-500/25 border border-travel-500/40 animate-pulse" />
+    <MeSettingsL5FlowPage ariaLabel={t("mePassword_title")} route="password-loading">
+      <div
+        className={`${TT_AUTH_L5_FORM.card} auth-l5-glass-surface max-w-lg w-full p-7`}
+        role="status"
+        aria-busy="true"
+        aria-label={t("mePassword_title")}
+      >
+        <div className="space-y-4" aria-hidden>
+          <div className="h-8 w-40 rounded-lg bg-ref-sun/15 animate-pulse" />
+          <div className="h-11 w-full rounded-xl bg-ref-sun/10 animate-pulse" />
+          <div className="h-11 w-full rounded-xl bg-ref-sun/10 animate-pulse" />
+          <div className="h-11 w-full rounded-xl bg-ref-sun/10 animate-pulse" />
+          <div className="h-12 w-full rounded-xl bg-ref-sun/25 animate-pulse" />
+        </div>
       </div>
-    </main>
+    </MeSettingsL5FlowPage>
   );
 }

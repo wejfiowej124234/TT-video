@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useId, useMemo, useState } from "react";
@@ -18,7 +19,6 @@ import {
   CONSOLE_ROLE_70_LABEL_KEYS,
   type ConsoleRole70,
 } from "@/lib/admin/adminRole70Matrix";
-import { orderConsoleRoles70WithCurrentFirst } from "@/lib/admin/adminConsoleRole70PickOrder";
 import {
   readAdminShellPreviewRole,
   writeAdminShellPreviewRole,
@@ -27,7 +27,13 @@ import {
   ADMIN_FOCUS_RING_CORE_CLASS,
   ADMIN_FORM_FIELD_FOCUS_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
-} from "@/lib/adminUi";
+  ADMIN_SHELL_PREVIEW_ACTIVE_ROLE_CLASS,
+  ADMIN_SHELL_PREVIEW_CURRENT_ROLE_CLASS,
+  ADMIN_SHELL_PREVIEW_IDLE_ROLE_CLASS,
+  ADMIN_SHELL_PREVIEW_GROUP_HIDDEN_CLASS,
+  ADMIN_SHELL_PREVIEW_GROUP_VISIBLE_CLASS,
+  ADMIN_SHELL_SECONDARY_BTN_CLASS,
+  ADMIN_FORM_CONTROL_SM_CLASS,} from "@/lib/adminUi";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { adminPageNavLinkClass } from "@/lib/adminUi";
 
@@ -59,9 +65,10 @@ export function AdminConsoleRoleShellPreview({ currentRole }: Props) {
   );
 
   return (
-    <section
+    <AdminWarmL5Surface
+      as="section"
       id="admin-shell-preview"
-      className="mt-10 scroll-mt-24 rounded-[var(--radius-lg)] border border-ink-200 bg-white p-4"
+      className="mt-10 scroll-mt-24"
       aria-label={t("admin_permissions_shell_preview_aria")}
       data-tt-admin-console-role-shell-preview="1"
     >
@@ -80,7 +87,7 @@ export function AdminConsoleRoleShellPreview({ currentRole }: Props) {
         {t("admin_permissions_shell_preview_select")}
         <select
           id={selectId}
-          className={`mt-1 block w-full max-w-xs rounded border border-ink-200 px-2 py-1.5 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+          className={`mt-1 block w-full max-w-xs ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1.5 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
           value={previewRole}
           onChange={(e) => setPreviewRole(e.target.value as ConsoleRole70)}
           data-tt-admin-shell-preview-role={previewRole}
@@ -107,10 +114,10 @@ export function AdminConsoleRoleShellPreview({ currentRole }: Props) {
             type="button"
             className={`${touchTargetLink44Classes} rounded-[var(--radius-md)] border px-3 py-1 text-small font-medium ${
               previewRole === roleId
-                ? "border-ink-400 bg-ink-100 text-ink-900"
+                ? ADMIN_SHELL_PREVIEW_ACTIVE_ROLE_CLASS
                 : isCurrent
-                  ? "border-ink-300 bg-ink-50 text-ink-800"
-                  : "border-ink-200 bg-white text-ink-700 hover:border-ink-300"
+                  ? ADMIN_SHELL_PREVIEW_CURRENT_ROLE_CLASS
+                  : ADMIN_SHELL_PREVIEW_IDLE_ROLE_CLASS
             } ${ADMIN_FOCUS_RING_CORE_CLASS}`}
             onClick={() => setPreviewRole(roleId)}
             data-tt-admin-shell-preview-quick-role={roleId}
@@ -142,7 +149,7 @@ export function AdminConsoleRoleShellPreview({ currentRole }: Props) {
         {appliedRole ? (
           <button
             type="button"
-            className={`${touchTargetLink44Classes} inline-flex min-h-[44px] items-center rounded-[var(--radius-md)] border border-ink-200 bg-white px-4 text-small font-medium text-ink-700 hover:border-ink-300 ${ADMIN_FOCUS_RING_CORE_CLASS}`}
+            className={`${touchTargetLink44Classes} ${ADMIN_SHELL_SECONDARY_BTN_CLASS} ${ADMIN_FOCUS_RING_CORE_CLASS}`}
             onClick={() => {
               writeAdminShellPreviewRole(null);
               setAppliedRole(null);
@@ -181,7 +188,7 @@ export function AdminConsoleRoleShellPreview({ currentRole }: Props) {
             <li
               key={groupId}
               className={`rounded-[var(--radius-md)] border px-3 py-2 text-small ${
-                visible ? "border-ink-200 bg-ink-50/50 text-ink-800" : "border-ink-200 bg-ink-100/80 text-ink-500"
+                visible ? ADMIN_SHELL_PREVIEW_GROUP_VISIBLE_CLASS : ADMIN_SHELL_PREVIEW_GROUP_HIDDEN_CLASS
               }`}
               data-tt-admin-shell-preview-group={groupId}
               data-tt-admin-shell-preview-visible={visible ? "1" : "0"}
@@ -202,6 +209,6 @@ export function AdminConsoleRoleShellPreview({ currentRole }: Props) {
       ) : (
         <p className="mt-3 text-small text-ink-600">{t("admin_permissions_shell_preview_all_visible")}</p>
       )}
-    </section>
+    </AdminWarmL5Surface>
   );
 }

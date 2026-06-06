@@ -1,4 +1,6 @@
 import type { LocaleTranslateFn } from "@/lib/i18n";
+import { adminAppliedFilterFieldLabel } from "@/lib/admin/adminAppliedFilterFieldLabel";
+import { adminAppliedFilterValueLabel } from "@/lib/admin/adminAppliedFilterValueLabel";
 
 function displayFilterValue(value: unknown): string {
   if (value == null || value === "") return "";
@@ -14,14 +16,15 @@ function displayFilterValue(value: unknown): string {
 /** HON-03 · 通用 applied_filters 人话摘要（非 JSON dump · 社区/配置列表共用）。 */
 export function formatAdminAppliedFiltersHuman(
   filters: Record<string, unknown> | null | undefined,
-  _t: LocaleTranslateFn,
+  t: LocaleTranslateFn,
 ): string {
   if (!filters || typeof filters !== "object") return "";
   const parts: string[] = [];
   for (const [key, value] of Object.entries(filters)) {
-    const display = displayFilterValue(value);
+    const localizedValue = adminAppliedFilterValueLabel(key, value, t);
+    const display = localizedValue ?? displayFilterValue(value);
     if (!display) continue;
-    parts.push(`${key.replace(/_/g, " ")}: ${display}`);
+    parts.push(`${adminAppliedFilterFieldLabel(key, t)}: ${display}`);
   }
   return parts.join(" · ");
 }

@@ -6,6 +6,7 @@ import { describe, expect, it } from "vitest";
 import { ADMIN_PHASE2_REMAINING_BACKLOG_ITEMS } from "@/lib/admin/adminPhase2RemainingBacklog";
 import {
   ADMIN_PHASE2_LOCAL_PREP_COMMANDS,
+  OPERATOR_GUIDE_PHASE2_PREP_COMMANDS,
   adminPhase2LocalPrepCommand,
 } from "@/lib/admin/adminPhase2LocalPrepCommands";
 
@@ -23,6 +24,11 @@ describe("adminPhase2LocalPrepCommands", () => {
     expect(ADMIN_PHASE2_LOCAL_PREP_COMMANDS["ADM-UX-FIN-02"]).toContain(
       "run-admin-l5-green.mjs",
     );
+  });
+
+  it("operator guide prep commands are unique for React list keys", () => {
+    const uniq = new Set(OPERATOR_GUIDE_PHASE2_PREP_COMMANDS);
+    expect(uniq.size).toBe(OPERATOR_GUIDE_PHASE2_PREP_COMMANDS.length);
   });
 
   it("locale cmd keys stay aligned with SSOT (zh)", () => {

@@ -5,6 +5,7 @@ import {
   buildAuthRegisterRoleHref,
   buildHeaderLoginHref,
   buildHeaderRegisterHref,
+  buildIdentitiesApplyChildHref,
 } from "./headerLoginHref";
 
 describe("buildHeaderLoginHref", () => {
@@ -21,6 +22,12 @@ describe("buildHeaderLoginHref", () => {
 
   it("uses pathname only when searchParams omitted", () => {
     expect(buildHeaderLoginHref("/orders", null)).toBe("/auth/login?returnUrl=" + encodeURIComponent("/orders"));
+  });
+
+  it("preserves /community/me as explicit login returnUrl", () => {
+    expect(buildHeaderLoginHref("/community/me", null)).toBe(
+      "/auth/login?returnUrl=" + encodeURIComponent("/community/me"),
+    );
   });
 
   it("preserves query on root path via B-060 helper", () => {
@@ -73,6 +80,14 @@ describe("buildAuthRegisterRoleHref", () => {
   it("omits returnUrl on /auth routes", () => {
     expect(buildAuthRegisterRoleHref("/auth/login", "steward", new URLSearchParams("x=1"))).toBe(
       "/auth/register?role=steward",
+    );
+  });
+});
+
+describe("buildIdentitiesApplyChildHref", () => {
+  it("appends returnUrl from current pathname", () => {
+    expect(buildIdentitiesApplyChildHref("/guide/register", "/me/identities", null)).toBe(
+      "/guide/register?returnUrl=" + encodeURIComponent("/me/identities"),
     );
   });
 });

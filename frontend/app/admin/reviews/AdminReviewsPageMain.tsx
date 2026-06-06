@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { AdminMetaBuildSection } from "@/components/admin/AdminMetaBuildPanel";
@@ -13,6 +14,7 @@ import { AdminReviewsFetchAlerts } from "./AdminReviewsFetchAlerts";
 import { AdminReviewsFiltersCard } from "./AdminReviewsFiltersCard";
 import { AdminReviewsTableSection } from "./AdminReviewsTableSection";
 import { useAdminReviewsPage } from "./useAdminReviewsPage";
+import { REVIEWS_LIST_RELATED_FOLD_LINKS } from "@/lib/admin/adminOpsListRelatedFoldLinks";
 import { ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
 
 /** Phase 5 / 07：低分评价运营抽样（GET /api/v1/admin/reviews） */
@@ -23,34 +25,27 @@ export function AdminReviewsPageMain() {
   const adminListApplyResetHintId = useId();
 
   const vm = useAdminReviewsPage();
-  const { loading, error, itemsNotArrayError, items, meta } = vm;
+  const { loading, refreshing, error, itemsNotArrayError, items, meta } = vm;
 
   return (
     <AdminListPageChrome
       titleId={pageTitleId}
       title={t("admin_reviews_title")}
-      subtitle={t("admin_reviews_subtitle")}
-      headerAside={
-        <>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_schema_back")}
-          </Link>
-        </>
-      }
+      subtitle={t("admin_reviews_subtitle_l5")}
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={REVIEWS_LIST_RELATED_FOLD_LINKS}
+        ariaLabelKey="admin_ops_list_related_aria"
+        foldSummaryKey="admin_ops_list_related_fold"
+        dataTtFold="reviews-list"
+      />
       <AdminReviewsFiltersCard
         vm={vm}
         adminAppliedFiltersDescId={adminAppliedFiltersDescId}
         adminListApplyResetHintId={adminListApplyResetHintId}
       />
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <AdminListLoadingStatus message={t("admin_loading")} />
       ) : null}
 
@@ -58,7 +53,13 @@ export function AdminReviewsPageMain() {
 
       <AdminMetaBuildSection meta={meta} loading={loading} error={error} />
 
-      <AdminReviewsTableSection loading={loading} error={error} itemsNotArrayError={itemsNotArrayError} items={items} />
+      <AdminReviewsTableSection
+        loading={loading}
+        refreshing={refreshing}
+        error={error}
+        itemsNotArrayError={itemsNotArrayError}
+        items={items}
+      />
     </AdminListPageChrome>
   );
 }

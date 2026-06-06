@@ -78,6 +78,7 @@ describe("lib/api", () => {
 
   it("routes.admin includes observability and fee-router (70)", () => {
     expect(routes.admin.observabilityOverview).toBe("/api/v1/admin/observability/overview");
+    expect(routes.admin.metricsHomeOverview).toBe("/api/v1/admin/metrics/home-overview");
     expect(routes.admin.feeRouterRoutedEvents).toBe("/api/v1/admin/fee-router/routed-events");
     expect(routes.admin.regionVaultForwardedEvents).toBe(
       "/api/v1/admin/region-vault/forwarded-events",

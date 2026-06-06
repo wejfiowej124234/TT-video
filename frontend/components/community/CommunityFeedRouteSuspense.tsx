@@ -19,7 +19,7 @@ export function CommunityFeedRouteSuspenseFallback() {
         ariaLabelKey="community_relatedNav_aria"
         showGuides
         className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-400"
-        linkClassName="inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 underline rounded-sm px-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+        linkClassName="inline-flex min-h-[44px] items-center justify-center text-ref-sun/90 hover:text-ref-sun/95 underline rounded-sm px-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
         separatorClassName="text-slate-500"
       />
     </main>

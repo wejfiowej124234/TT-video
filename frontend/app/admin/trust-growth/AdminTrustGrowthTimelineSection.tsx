@@ -4,8 +4,10 @@ import { useMemo } from "react";
 
 import { AdminSortableTh } from "@/components/admin/AdminSortableTh";
 import { useTranslation } from "@/components/LocaleProvider";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import { sortRowsByKey, useAdminTableSort } from "@/lib/admin/useAdminTableSort";
-import { ADMIN_TABLE_ROW_CLASS, ADMIN_TABLE_THEAD_CLASS } from "@/lib/adminUi";
+import { ADMIN_TABLE_ROW_CLASS, ADMIN_TABLE_THEAD_CLASS,
+  ADMIN_TABLE_ROW_DIVIDER_CLASS,} from "@/lib/adminUi";
 
 import type { ObsBody } from "./adminTrustGrowthPageModel";
 
@@ -31,8 +33,8 @@ export function AdminTrustGrowthTimelineSection({
   );
 
   return (
-    <section
-      className="rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-4"
+    <AdminWarmL5Surface
+      as="section"
       aria-label={t("admin_trust_growth_section_timeline")}
     >
       <h2 className="text-small font-semibold uppercase tracking-wide text-ink-500">
@@ -41,7 +43,7 @@ export function AdminTrustGrowthTimelineSection({
       <div className="mt-3 max-h-48 overflow-auto">
         <table className="w-full border-collapse text-left text-meta">
           <thead className={ADMIN_TABLE_THEAD_CLASS}>
-            <tr className="border-b border-ink-200 text-ink-500">
+            <tr className={`${ADMIN_TABLE_ROW_DIVIDER_CLASS} text-ink-500`}>
               <AdminSortableTh
                 label={t("admin_trust_growth_generation")}
                 ariaSort={ariaSort("generation")}
@@ -67,6 +69,6 @@ export function AdminTrustGrowthTimelineSection({
           </tbody>
         </table>
       </div>
-    </section>
+    </AdminWarmL5Surface>
   );
 }

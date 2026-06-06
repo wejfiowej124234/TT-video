@@ -8,9 +8,9 @@
  */
 
 export const TRAVELTRUST_HOME_LAYOUT_LOCK_L5 = {
-  lockId: "TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-05-v2",
-  lockedAt: "2026-05-21",
-  label: "traveltrust-home-approved-seamless-v2",
+    lockId: "TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-05-v10-absolute-modular",
+    lockedAt: "2026-05-21",
+    label: "traveltrust-home-approved-seamless-v10-absolute-modular",
   route: "/traveltrust",
   /** 全页 scroll-snap 与滚轮切章关闭 */
   scrollSnapEnabled: false,
@@ -36,6 +36,64 @@ export const TRAVELTRUST_HOME_LAYOUT_LOCK_L5 = {
     complianceShell: "relative mt-8 w-full border-t-0 pt-0 pb-4 sm:mt-10 sm:pb-5",
   },
   /** 背景接缝策略（无缝长页 · 2026-05 认可版） */
+  entryGate: {
+    enabled: true,
+    minVisibleMs: 720,
+    maxWaitMs: 8000,
+    modulePath: "frontend/modules/traveltrust-home",
+  },
+  modularity: {
+    composerPath: "frontend/modules/traveltrust-home/presentation/TravelTrustNetworkPageComposer.tsx",
+    composerDynamicsPath: "frontend/modules/traveltrust-home/presentation/TravelTrustHomeComposerDynamics.tsx",
+    composerShellPath: "frontend/modules/traveltrust-home/presentation/TravelTrustHomeComposerShell.tsx",
+    composerMainColumnPath: "frontend/modules/traveltrust-home/presentation/TravelTrustHomeMainColumn.tsx",
+    composerScrollProvidersPath:
+      "frontend/modules/traveltrust-home/presentation/TravelTrustHomeScrollProviders.tsx",
+    composerUnified3DBackdropPath:
+      "frontend/modules/traveltrust-home/presentation/TravelTrustHomeUnified3DBackdrop.tsx",
+    composerLifecycleHookPath: "frontend/modules/traveltrust-home/hooks/useTraveltrustComposerPage.ts",
+    cinematicBridgePath: "frontend/lib/traveltrust/home/cinematic-bridge",
+    cinematicBridgeImport: "@/lib/traveltrust/home/cinematic-bridge",
+    belowFoldShellPath: "frontend/lib/traveltrust/home/BelowFoldSectionsShell.tsx",
+    visualQaEvidencePath: "frontend/lib/traveltrust/home/visualQaEvidence.ts",
+    sectionMarkersPath: "frontend/lib/traveltrust/home/sectionMarkers.ts",
+    belowFoldNarrativeBeatsPath: "frontend/lib/traveltrust/home/belowFoldNarrativeBeats.ts",
+    visualQaManifestPath: "frontend/lib/traveltrust/home/visualQaManifest.ts",
+    sectionUiSlotPath: "frontend/modules/traveltrust-home/sections/ui/TravelTrustHomeSectionSlot.tsx",
+    composerOverlaysPath: "frontend/modules/traveltrust-home/presentation/TravelTrustHomeComposerOverlays.tsx",
+    sectionsPath: "frontend/modules/traveltrust-home/sections",
+    sectionWrappers: [
+      "TravelTrustHomeHeroSection",
+      "TravelTrustHomeWebGLLayer",
+      "TravelTrustHomeBelowFoldSection",
+      "TravelTrustHomeRolesSection",
+      "TravelTrustHomeEconomyClusterSection",
+      "TravelTrustHomeLiquiditySection",
+      "TravelTrustHomeTrustSection",
+      "TravelTrustHomeSettlementSection",
+      "TravelTrustHomeFaqSection",
+      "TravelTrustHomeStartCloseSection",
+    ] as const,
+    pageScenePath: "frontend/components/traveltrust/cinematic/page-scene",
+    l5Domains: [
+      "meta",
+      "rhythm",
+      "sections-layout",
+      "atmosphere",
+      "hero-ui",
+      "theater",
+      "landing-chrome",
+      "start",
+      "economy",
+      "footer",
+      "shell-legacy",
+      "resolvers",
+      "hero-canvas",
+      "anchors",
+    ] as const,
+    cinematicMustNotImportHomeModule: true,
+    entryBridgePath: "frontend/lib/traveltrust/home",
+  },
   seams: {
     belowFoldAtmosphereUnified: true,
     economyClusterSingleAtmosphere: true,
@@ -55,7 +113,7 @@ export const TRAVELTRUST_HOME_LAYOUT_LOCK_L5 = {
     pairGapPxIdeal: 40,
   },
   liquidityCta: {
-    stack: "relative mt-6 flex flex-col gap-4 sm:mt-7 sm:flex-row sm:flex-nowrap sm:items-center gap-x-8 sm:gap-x-10",
+    stack: "grid w-full grid-cols-1 gap-2.5 sm:grid-cols-3 sm:gap-3",
   },
   theaterIntro: {
     headlineBlock: "mt-5 space-y-4 sm:mt-6 sm:space-y-5",

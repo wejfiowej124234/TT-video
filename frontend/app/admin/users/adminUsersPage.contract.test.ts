@@ -16,5 +16,9 @@ describe("admin users page L5 (①)", () => {
     expect(src).toContain("AdminPermissionDeniedBanner");
     expect(src).toContain("useAdminUsersPage");
     expect(src).toContain("ADMIN_EMPTY_NEXT_USERS_FILTERED_EMPTY");
+    expect(src).toContain("USERS_LIST_RELATED_FOLD_LINKS");
+    expect(src).not.toContain("headerAside={<AdminOpsQueueBackLinks />}");
+    expect(src).toContain("AdminOpsDetailRelatedFold");
+    expect(src).toContain("USERS_LIST_RELATED_FOLD_LINKS");
   });
 });

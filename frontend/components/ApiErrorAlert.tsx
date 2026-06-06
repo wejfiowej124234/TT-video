@@ -91,8 +91,12 @@ export default function ApiErrorAlert({
     <div
       className={
         isCompliance
-          ? "rounded-[var(--radius-sm)] border border-danger/50 bg-danger/10 p-4"
-          : "rounded-[var(--radius-sm)] border border-danger/30 bg-danger/10 p-4"
+          ? tone === "dark"
+            ? "rounded-[var(--radius-sm)] border border-red-400/45 bg-red-950/40 p-4"
+            : "rounded-[var(--radius-sm)] border border-danger/50 bg-danger/10 p-4"
+          : tone === "dark"
+            ? "rounded-[var(--radius-sm)] border border-red-400/35 bg-red-950/30 p-4"
+            : "rounded-[var(--radius-sm)] border border-danger/30 bg-danger/10 p-4"
       }
       role="alert"
     >

@@ -1,4 +1,4 @@
-import { TT_PAGE_SCROLL_SNAP_L5 } from "@/lib/traveltrustCinematicNonGlobeL5";
+import { TT_PAGE_SCROLL_SNAP_L5 } from "@/lib/traveltrust/l5";
 
 /** 营销长页叙事章顺序（与 `TravelTrustSnapChapter` / `#hero` 一致） */
 export const TT_PAGE_SCROLL_CHAPTER_STEP_L5 = {

@@ -16,12 +16,12 @@ describe("traveltrustHeroGlobeProjectionMath", () => {
     };
 
     const surfaceR = 0.998;
-    const cn = projectGlobeSurfaceToHeroViewport(31.2, 121.5, surfaceR, facingCamera, camera, rects, 0.08);
-    const cnBack = projectGlobeSurfaceToHeroViewport(31.2, 121.5, surfaceR, facingAway, camera, rects, 0.08);
+    const usFront = projectGlobeSurfaceToHeroViewport(40.7, -74, surfaceR, facingCamera, camera, rects, 0.08);
+    const usBack = projectGlobeSurfaceToHeroViewport(40.7, -74, surfaceR, facingAway, camera, rects, 0.08);
 
-    expect(cn.facingDot).toBeGreaterThan(0.12);
-    expect(cn.edgeFade).toBeGreaterThan(0.1);
-    expect(cnBack.facingDot).toBeLessThan(0.08);
-    expect(cnBack.visible).toBe(false);
+    expect(usFront.facingDot).toBeGreaterThan(0.12);
+    expect(usFront.edgeFade).toBeGreaterThan(0.1);
+    expect(usBack.facingDot).toBeLessThan(0.08);
+    expect(usBack.visible).toBe(false);
   });
 });

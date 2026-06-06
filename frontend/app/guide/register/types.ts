@@ -11,6 +11,10 @@ export type PendingGuide = {
   bio?: string;
   idPhotoName?: string;
   languageCertName?: string;
+  /** 注册页已上传后的 URL（优先于 base64） */
+  idPhotoUrl?: string;
+  languageCertUrl?: string;
+  /** @deprecated 仅兼容旧 session；新流使用 idPhotoUrl */
   idPhotoBase64?: string;
   languageCertBase64?: string;
 };

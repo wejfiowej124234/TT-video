@@ -7,6 +7,7 @@ import { useTranslation } from "@/components/LocaleProvider";
 import type { AdminUnifiedInboxTask } from "@/lib/admin/adminUnifiedInboxTasks";
 import {
   ADMIN_INLINE_LINK_CLASS,
+  ADMIN_UNIFIED_INBOX_TASK_DETAIL_CLASS,
   adminPageNavLinkClass,
 } from "@/lib/adminUi";
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
@@ -41,7 +42,7 @@ export const AdminUnifiedInboxTaskDetail = forwardRef<
       ref={ref}
       id={panelId}
       tabIndex={-1}
-      className={`mt-4 rounded-[var(--radius-md)] border border-ink-100 bg-ink-50/80 p-3 text-small outline-none ${travelFocusRingOffset2Classes}`}
+      className={`${ADMIN_UNIFIED_INBOX_TASK_DETAIL_CLASS} ${travelFocusRingOffset2Classes}`}
       data-tt-admin-unified-inbox-task-detail="1"
       data-tt-admin-unified-inbox-task-detail-id={task.id}
       role="region"

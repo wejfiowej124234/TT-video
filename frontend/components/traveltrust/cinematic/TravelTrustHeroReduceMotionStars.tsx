@@ -5,7 +5,7 @@ import {
   TT_HERO_REDUCE_MOTION_STARS_L5,
   TT_HERO_REDUCE_MOTION_STARS_L5_BG,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 
 /** 减动效时替代 WebGL 的 CSS 星野 + 暖光晕（L5 · 非地球 3D） */
 export function TravelTrustHeroReduceMotionStars() {

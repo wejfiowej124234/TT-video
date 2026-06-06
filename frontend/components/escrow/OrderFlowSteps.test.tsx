@@ -111,4 +111,19 @@ describe("OrderFlowSteps component", () => {
     fireEvent.keyDown(items[7]!, { key: "Home" });
     expect(document.activeElement).toBe(items[0]);
   });
+
+  it("experience draft step 2 shows pick-guide label when draftStep2Phase is pickGuide", () => {
+    render(
+      <OrderFlowSteps
+        currentStep={1}
+        variant="experience"
+        compact
+        draftJourneyStep={2}
+        draftStep2Phase="pickGuide"
+      />,
+    );
+    const nav = screen.getByRole("navigation", { name: "order_flow_journey_aria" });
+    expect(nav.textContent).toContain("order_flow_journey_pickGuide");
+    expect(nav.textContent).not.toContain("order_flow_journey_confirm");
+  });
 });

@@ -11,42 +11,42 @@
   "rule_id": "i18n-key-parity-critical-prefix-and-key-routes",
   "severity": "none",
   "owner": "frontend-team",
-  "generated_at": "2026-04-19T12:30:48.840Z",
+  "generated_at": "2026-06-06T12:35:09.992Z",
   "totals": {
-    "zh_keys": 4625,
-    "en_keys": 4625
+    "zh_keys": 8233,
+    "en_keys": 8233
   },
   "missing_in_en": [],
   "missing_in_zh": [],
   "critical_prefix_coverage": [
     {
       "prefix": "common_",
-      "zh_count": 26,
-      "en_count": 26,
+      "zh_count": 28,
+      "en_count": 28,
       "passed": true
     },
     {
       "prefix": "orders_",
-      "zh_count": 65,
-      "en_count": 65,
+      "zh_count": 119,
+      "en_count": 119,
       "passed": true
     },
     {
       "prefix": "disputes_",
-      "zh_count": 20,
-      "en_count": 20,
+      "zh_count": 21,
+      "en_count": 21,
       "passed": true
     },
     {
       "prefix": "order_",
-      "zh_count": 144,
-      "en_count": 144,
+      "zh_count": 158,
+      "en_count": 158,
       "passed": true
     },
     {
       "prefix": "escrow_",
-      "zh_count": 308,
-      "en_count": 308,
+      "zh_count": 423,
+      "en_count": 423,
       "passed": true
     }
   ],
@@ -79,7 +79,7 @@
     },
     {
       "id": "disputes",
-      "file": "app/disputes/page.tsx",
+      "file": "app/disputes/DisputesListPageMain.tsx",
       "rule": "must contain useTranslation and t(...)",
       "status": "passed",
       "hardcoded_samples": []

@@ -1,5 +1,7 @@
 "use client";
 
+import { formatAdminAppliedFiltersHuman } from "@/lib/admin/formatAdminAppliedFiltersHuman";
+
 import Link from "next/link";
 import { useId, useMemo, type FormEvent } from "react";
 import { AdminSortableTh } from "@/components/admin/AdminSortableTh";
@@ -9,25 +11,33 @@ import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatu
 import { AdminAppliedFiltersBanner } from "@/components/admin/AdminAppliedFiltersBanner";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
+import { AdminComplianceSectionBackLinks } from "@/components/admin/AdminComplianceSectionBackLinks";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminComplianceDsarWorkflowNotice } from "@/components/admin/AdminComplianceDsarWorkflowNotice";
 import { AdminMetaBuildSection, AdminMetaNoteLink } from "@/components/admin/AdminMetaBuildPanel";
 import { useTranslation } from "@/components/LocaleProvider";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
-import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import {
   COMPLIANCE_EVENTS_EVENT_TYPE_MAX,
   truncComplianceEventDetail,
 } from "./adminComplianceRequestEventsPageModel";
+import { complianceDsarEventsRelatedFoldLinks } from "../../adminComplianceRequestsPageModel";
 import { useAdminComplianceRequestEventsPage } from "./useAdminComplianceRequestEventsPage";
 import { sortRowsByKey, useAdminTableSort } from "@/lib/admin/useAdminTableSort";
 import {
+  ADMIN_FILTER_CARD_CLASS,
   ADMIN_FORM_FIELD_FOCUS_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,
   ADMIN_TABLE_ROW_CLASS,
+  ADMIN_TABLE_SECTION_CLASS,
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
+  ADMIN_FILTER_INPUT_SM_CLASS,
   adminPageNavLinkClass,
+  adminTableRowPrimaryActionClass,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
 } from "@/lib/adminUi";
 
 type ComplianceEventSortKey = "occurred_at" | "event_type";
@@ -42,6 +52,7 @@ export function AdminComplianceRequestEventsPageMain() {
   const {
     requestId,
     loading,
+    refreshing,
     error,
     items,
     meta,
@@ -71,7 +82,7 @@ export function AdminComplianceRequestEventsPageMain() {
       title={t("admin_compliance_events_title")}
       subtitle={
         <>
-          <span>{t("admin_compliance_events_subtitle")}</span>
+          <span>{t("admin_compliance_events_subtitle_l5")}</span>
           {requestId ? (
             <p className="mt-2 font-mono text-small text-ink-500 break-all">
               {t("admin_compliance_events_requestId")}: {requestId}
@@ -80,40 +91,32 @@ export function AdminComplianceRequestEventsPageMain() {
         </>
       }
       headerAside={
-        <>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          {requestId ? (
-            <Link
-              href={`/admin/compliance/requests/${encodeURIComponent(requestId)}/update`}
-              className={`${adminPageNavLinkClass()}`}
-            >
-              {t("admin_compliance_requests_openUpdate")}
-            </Link>
-          ) : null}
+        <AdminComplianceSectionBackLinks>
           <Link
             href="/admin/compliance/requests"
-            className={`${adminPageNavLinkClass()}`}
+            className={adminPageNavLinkClass()}
+            data-tt-admin-compliance-events-back-list="1"
           >
             {t("admin_compliance_events_backList")}
           </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_compliance_events_back")}
-          </Link>
-        </>
+        </AdminComplianceSectionBackLinks>
       }
     >
+      {requestId ? (
+        <AdminOpsDetailRelatedFold
+          relatedLinks={complianceDsarEventsRelatedFoldLinks(requestId)}
+          ariaLabelKey="admin_compliance_dsar_related_aria"
+          foldSummaryKey="admin_compliance_dsar_related_fold"
+          dataTtFold="compliance-events"
+        />
+      ) : null}
       <AdminComplianceDsarWorkflowNotice />
       {!requestId ? (
         <AdminAlertError className="mt-6" message={t("admin_compliance_events_missingId")} />
       ) : (
         <>
           <form
-            className="mt-6 rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end"
+            className={`mt-6 ${ADMIN_FILTER_CARD_CLASS} flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end`}
             aria-label={t("admin_compliance_events_filters")}
             aria-describedby={appliedFilters ? adminAppliedFiltersDescId : undefined}
             onSubmit={onSubmit}
@@ -128,7 +131,7 @@ export function AdminComplianceRequestEventsPageMain() {
                 inputMode="numeric"
                 value={draftLimit}
                 onChange={(e) => setDraftLimit(e.target.value)}
-                className={`mt-1 min-h-[44px] w-24 rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 min-h-[44px] w-24 ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               />
             </div>
             <div className="min-w-[12rem] flex-1">
@@ -140,7 +143,7 @@ export function AdminComplianceRequestEventsPageMain() {
                 type="text"
                 value={draftEventType}
                 onChange={(e) => setDraftEventType(e.target.value.slice(0, COMPLIANCE_EVENTS_EVENT_TYPE_MAX))}
-                className={`mt-1 w-full max-w-md min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 text-small font-mono ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`mt-1 w-full max-w-md min-h-[44px] ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1 text-small font-mono ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 placeholder={t("admin_compliance_events_eventType_ph")}
                 autoComplete="off"
               />
@@ -160,12 +163,24 @@ export function AdminComplianceRequestEventsPageMain() {
 
           {meta?.note ? <AdminMetaNoteLink className="mt-3">{String(meta.note)}</AdminMetaNoteLink> : null}
 
-          {loading ? (
+          {requestId ? (
+            <div className="mt-4 flex flex-wrap gap-3" data-tt-admin-compliance-events-actions="1">
+              <Link
+                href={`/admin/compliance/requests/${encodeURIComponent(requestId)}/update`}
+                className={adminTableRowPrimaryActionClass()}
+                data-tt-admin-compliance-events-action-primary="update"
+              >
+                {t("admin_compliance_requests_openUpdate")}
+              </Link>
+            </div>
+          ) : null}
+
+          {loading && items.length === 0 ? (
         <AdminListLoadingStatus message={t("admin_compliance_events_loading")} />
       ) : null}
           {error ? <AdminListFetchError errorKind={error} message={adminErrorUserText(error, t)} /> : null}
 
-          {!loading && !error && items.length === 0 ? (
+          {!error && (!loading || items.length > 0) && items.length === 0 ? (
             <AdminListPageEmptyState
               messageKey="admin_compliance_events_empty"
               nextLinks={[
@@ -175,12 +190,13 @@ export function AdminComplianceRequestEventsPageMain() {
             />
           ) : null}
 
-          {!loading && !error && items.length > 0 && (
+          {!error && (!loading || items.length > 0) && items.length > 0 && (
             <section
-              className="mt-6 overflow-x-auto rounded-[var(--radius-xl)] border border-ink-200 bg-white"
+              className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
               aria-label={t("admin_compliance_events_table_aria")}
+              data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
             >
-              <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+              <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
                 <thead className={ADMIN_TABLE_THEAD_CLASS}>
                   <tr>
                     <AdminSortableTh
@@ -198,14 +214,14 @@ export function AdminComplianceRequestEventsPageMain() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-ink-100 text-ink-700">
+                <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
                   {sortedItems.map((r, idx) => {
                     const dash = t("admin_em_dash");
                     return (
                       <tr key={r.id ?? `ev-${idx}`} className={ADMIN_TABLE_ROW_CLASS}>
-                        <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">{r.occurred_at ?? dash}</td>
-                        <td className="px-3 py-2 font-mono text-meta">{r.event_type ?? dash}</td>
-                        <td className="px-3 py-2 max-w-xl font-mono text-meta">
+                        <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">{r.occurred_at ?? dash}</td>
+                        <td className="px-3 py-2 font-mono text-small text-ink-800">{r.event_type ?? dash}</td>
+                        <td className="px-3 py-2 max-w-xl font-mono text-small text-ink-800">
                           <span className="block truncate" title={r.event_detail ?? ""}>
                             {truncComplianceEventDetail(r.event_detail, 200, dash)}
                           </span>

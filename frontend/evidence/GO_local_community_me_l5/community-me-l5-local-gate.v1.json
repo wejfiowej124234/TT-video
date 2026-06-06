@@ -1,0 +1,135 @@
+{
+  "schema": "traveltrust.community-me-l5-local-gate.v1",
+  "phase": "local-1",
+  "freeze_doc": "frontend/evidence/GO_local_community_me_l5/COMMUNITY-ME-L5-FREEZE.md",
+  "frozen_at": "2026-06-01",
+  "task_id": "ME-P1-6",
+  "routes": [
+    {
+      "path": "/community/me",
+      "role": "hub",
+      "markers": ["data-tt-community-me-page=\"1\"", "data-tt-community-me-notes-drawer=\"1\""],
+      "hub_tab_redirects": [
+        { "tab": "posts", "dedicated_path": "/community/me/posts", "alias_tab": "community_posts" },
+        { "tab": "collects", "dedicated_path": "/community/me/collects" },
+        { "tab": "likes", "dedicated_path": "/community/me/likes", "feature_flag": "NEXT_PUBLIC_COMMUNITY_ME_LIKES_LIST" },
+        { "tab": "orders", "dedicated_path": "/orders" }
+      ],
+      "vitest": [
+        "lib/communityMePageTracker.contract.test.ts",
+        "components/me/communityMeProfile.contract.test.ts",
+        "lib/communityMeContentNav.test.ts"
+      ],
+      "playwright": [
+        "e2e/community-me-data-state.spec.ts",
+        "e2e/community-me-hub-notes-drawer-ia.spec.ts",
+        "e2e/community-me-l5-a-parity-closeout.spec.ts"
+      ]
+    },
+    {
+      "path": "/community/me/posts",
+      "role": "dedicated",
+      "markers": ["data-tt-community-me-posts-page=\"1\""],
+      "vitest": ["app/community/me/posts/communityMePostsPage.contract.test.ts"],
+      "playwright": [
+        "e2e/community-me-l5-c-dedicated-l5.spec.ts",
+        "e2e/community-me-l5-b-load-more-mocked.spec.ts",
+        "e2e/community-me-l5-a-parity-closeout.spec.ts"
+      ]
+    },
+    {
+      "path": "/community/me/collects",
+      "role": "dedicated",
+      "markers": ["data-tt-community-me-collects-page=\"1\""],
+      "vitest": ["app/community/me/posts/communityMePostsPage.contract.test.ts"],
+      "playwright": [
+        "e2e/community-me-l5-c-dedicated-l5.spec.ts",
+        "e2e/community-me-l5-b-load-more-mocked.spec.ts",
+        "e2e/community-me-l5-a-parity-closeout.spec.ts"
+      ]
+    },
+    {
+      "path": "/community/me/likes",
+      "role": "dedicated",
+      "feature_flag": "NEXT_PUBLIC_COMMUNITY_ME_LIKES_LIST",
+      "markers": ["data-tt-community-me-likes-page=\"1\""],
+      "vitest": ["app/community/me/posts/communityMePostsPage.contract.test.ts"],
+      "playwright": [
+        "e2e/community-me-l5-c-dedicated-l5.spec.ts",
+        "e2e/community-me-l5-b-load-more-mocked.spec.ts",
+        "e2e/community-me-hub-notes-drawer-ia.spec.ts"
+      ]
+    },
+    {
+      "path": "/community/me/reports",
+      "role": "dedicated",
+      "markers": ["data-tt-community-me-reports-page=\"1\""],
+      "vitest": ["app/community/me/reports/communityMeReportsPage.contract.test.ts"],
+      "playwright": [
+        "e2e/account-nav-header-ia.spec.ts",
+        "e2e/community-me-hub-notes-drawer-ia.spec.ts",
+        "e2e/community-me-data-state.spec.ts",
+        "e2e/community-me-l5-a-parity-closeout.spec.ts",
+        "e2e/community-me-l5-c-dedicated-l5.spec.ts",
+        "e2e/community-subroutes-l5-markers.spec.ts"
+      ]
+    },
+    {
+      "path": "/community/me/reports/[id]",
+      "role": "detail",
+      "vitest": ["app/community/communitySubRoutes.contract.test.ts"],
+      "playwright": ["e2e/community-subroutes-l5-markers.spec.ts"]
+    }
+  ],
+  "related_gate": "frontend/evidence/GO_local_auth_l5/account-nav-page-tracker.v1.json",
+  "vitest_union": [
+    "lib/accountNav/accountNavPageTracker.contract.test.ts",
+    "lib/communityMePageTracker.contract.test.ts",
+    "app/community/me/posts/communityMePostsPage.contract.test.ts",
+    "app/community/me/reports/communityMeReportsPage.contract.test.ts",
+    "components/me/communityMeProfile.contract.test.ts",
+    "lib/communityMeContentNav.test.ts",
+    "app/community/communityRouteDataHooks.contract.test.ts"
+  ],
+  "playwright_parity_closeout": "e2e/community-me-l5-a-parity-closeout.spec.ts",
+  "playwright_tab_redirect_matrix": "e2e/community-me-hub-tab-redirect-matrix.spec.ts",
+  "playwright_deterministic": [
+    "e2e/community-me-l5-a-parity-closeout.spec.ts",
+    "e2e/community-me-l5-b-load-more-mocked.spec.ts",
+    "e2e/community-me-l5-c-dedicated-l5.spec.ts",
+    "e2e/community-me-data-state.spec.ts -g 访客",
+    "e2e/account-nav-header-ia.spec.ts",
+    "e2e/community-me-hub-notes-drawer-ia.spec.ts",
+    "e2e/community-me-hub-tab-redirect-matrix.spec.ts"
+  ],
+  "green_script": "scripts/dev/run-community-me-l5-green.sh",
+  "green_script_npm": "green:community-me-l5",
+  "green_summary_line": "TT_COMMUNITY_ME_L5_GREEN: OK",
+  "related_gates": {
+    "account_nav": "evidence/GO_local_auth_l5/account-nav-page-tracker.v1.json",
+    "me_settings_l5": "evidence/GO_local_auth_l5/me-settings-l5-local-gate.v1.json"
+  },
+  "account_nav_full_smoke": {
+    "script": "scripts/dev/smoke-account-nav-full-local.sh",
+    "summary_line": "TT_ACCOUNT_NAV_FULL_SMOKE: OK",
+    "delegate_skip_env": [
+      "SKIP_COMMUNITY_ME_I18N=1",
+      "SKIP_COMMUNITY_ME_VITEST=1",
+      "SKIP_COMMUNITY_ME_ACCOUNT_NAV_IA=1",
+      "COMMUNITY_ME_L5_GREEN_REUSE=1"
+    ],
+    "playwright_layer_env_any": ["PLAYWRIGHT_COMMUNITY_ME=1", "PLAYWRIGHT_FULL=1"]
+  },
+  "task_ids": ["ME-P1-6", "ME-P1-7"],
+  "segment_active_token": "TT_COMMUNITY_ME_PANEL_L5.segmentLinkActive",
+  "known_limits": {
+    "collects_likes_id_cap": 100,
+    "collects_likes_hydrate_batch": 24,
+    "posts_page_size": 30,
+    "posts_api_limit_max": 100,
+    "orders_drawer_page_size": 30,
+    "orders_drawer_raw_cap": 1200,
+    "reports_list_page_size": 30,
+    "reports_api_limit_max": 100
+  }
+}

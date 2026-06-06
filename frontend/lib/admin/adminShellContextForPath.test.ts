@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { adminPathShowsInboxBreadcrumb } from "./adminInboxQueuePath";
 import { adminBreadcrumbLeafForPath, adminShellContextForPath } from "./adminShellContextForPath";
 
 describe("adminShellContextForPath", () => {
@@ -24,5 +25,10 @@ describe("adminShellContextForPath", () => {
       "admin_compliance_update_title",
     );
     expect(adminBreadcrumbLeafForPath("/admin")).toBeNull();
+  });
+
+  it("flags inbox breadcrumb on four queue list paths", () => {
+    expect(adminPathShowsInboxBreadcrumb("/admin/provider-applications")).toBe(true);
+    expect(adminPathShowsInboxBreadcrumb("/admin/inbox")).toBe(false);
   });
 });

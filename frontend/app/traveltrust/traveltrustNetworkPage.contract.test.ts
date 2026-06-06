@@ -6,6 +6,52 @@ import { TRAVELTRUST_ROLES } from "./traveltrustIdentityModel";
 
 const __dir = dirname(fileURLToPath(import.meta.url));
 const cinematicDir = join(__dir, "../../components/traveltrust/cinematic");
+const networkPageComposerPath = join(
+  __dir,
+  "../../modules/traveltrust-home/presentation/TravelTrustNetworkPageComposer.tsx",
+);
+const composerDynamicsPath = join(
+  __dir,
+  "../../modules/traveltrust-home/presentation/TravelTrustHomeComposerDynamics.tsx",
+);
+const composerLandingNavPath = join(
+  __dir,
+  "../../modules/traveltrust-home/presentation/TravelTrustHomeLandingNavSlot.tsx",
+);
+const composerPresentationPaths = [
+  "../../modules/traveltrust-home/presentation/TravelTrustHomeComposerShell.tsx",
+  "../../modules/traveltrust-home/presentation/TravelTrustHomeScrollProviders.tsx",
+  "../../modules/traveltrust-home/presentation/TravelTrustHomeMainColumn.tsx",
+  "../../modules/traveltrust-home/presentation/TravelTrustHomeUnified3DBackdrop.tsx",
+  "../../modules/traveltrust-home/presentation/TravelTrustHomeComposerOverlays.tsx",
+  "../../modules/traveltrust-home/hooks/useTraveltrustComposerPage.ts",
+  "../../modules/traveltrust-home/sections/TravelTrustHomeBelowFoldSection.tsx",
+  "../../lib/traveltrust/home/BelowFoldSectionsShell.tsx",
+] as const;
+
+function readNetworkPageComposerSource(): string {
+  return [
+    readFileSync(networkPageComposerPath, "utf8"),
+    readFileSync(composerDynamicsPath, "utf8"),
+    readFileSync(composerLandingNavPath, "utf8"),
+    ...composerPresentationPaths.map((rel) => readFileSync(join(__dir, rel), "utf8")),
+  ].join("\n");
+}
+
+function readPageSceneSource(): string {
+  return [
+    "page-scene/PageTravelCorridorRing.tsx",
+    "page-scene/PageHeroGlobeRig.tsx",
+    "page-scene/PageCinematicEnvironment.tsx",
+    "page-scene/PageCinematicCameraRig.tsx",
+  ]
+    .map((rel) => readFileSync(join(cinematicDir, rel), "utf8"))
+    .join("\n");
+}
+
+function readL5ResolversSource(): string {
+  return readFileSync(join(__dir, "../../lib/traveltrust/l5/resolvers.ts"), "utf8");
+}
 
 function readTravelTrustNetworkPageModuleSources(): string {
   const cinematicFiles = [
@@ -67,6 +113,7 @@ function readTravelTrustNetworkPageModuleSources(): string {
   ];
   return [
     readFileSync(join(__dir, "page.tsx"), "utf8"),
+    readNetworkPageComposerSource(),
     readFileSync(join(__dir, "TravelTrustNetworkPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "../../lib/traveltrustSectionHash.ts"), "utf8"),
     readFileSync(join(__dir, "../../hooks/useTraveltrustHashScroll.ts"), "utf8"),
@@ -84,6 +131,10 @@ function readTravelTrustNetworkPageModuleSources(): string {
     readFileSync(join(__dir, "../../lib/traveltrustLocaleLayout.ts"), "utf8"),
     readFileSync(join(__dir, "../../lib/traveltrustV6AnalyticsEvents.ts"), "utf8"),
     ...cinematicFiles.map((f) => readFileSync(join(cinematicDir, f), "utf8")),
+    readFileSync(join(cinematicDir, "page-scene/PageTravelCorridorRing.tsx"), "utf8"),
+    readFileSync(join(cinematicDir, "page-scene/PageHeroGlobeRig.tsx"), "utf8"),
+    readFileSync(join(cinematicDir, "page-scene/PageCinematicEnvironment.tsx"), "utf8"),
+    readFileSync(join(cinematicDir, "page-scene/PageCinematicCameraRig.tsx"), "utf8"),
   ].join("\n");
 }
 
@@ -112,7 +163,7 @@ describe("traveltrust network page (contract)", () => {
     expect(src).toContain("TravelTrustPageScrollContext");
     expect(src).toContain("UNIFIED_PAGE_3D");
     expect(src).toContain("TravelTrustTheaterRoleProvider");
-    expect(readFileSync(join(cinematicDir, "TravelTrustPageCinematicScene.tsx"), "utf8")).toContain(
+    expect(readPageSceneSource()).toContain(
       "resolveTheaterRoleWarm3dHex",
     );
     expect(src).toContain("TravelTrustWeb3CinematicElements");
@@ -201,10 +252,10 @@ describe("traveltrust network page (contract)", () => {
     expect(readFileSync(join(__dirname, "../../lib/traveltrustCinematicPageL5.ts"), "utf8")).toContain(
       "horizonArc",
     );
-    expect(readFileSync(join(__dirname, "../../lib/traveltrustCinematicNonGlobeL5.ts"), "utf8")).toContain(
+    expect(readL5ResolversSource()).toContain(
       "resolveNonGlobeCanvasCyanMul",
     );
-    expect(src).toContain("traveltrustCinematicNonGlobeL5");
+    expect(src).toContain("@/lib/traveltrust/l5");
     expect(readFileSync(join(cinematicDir, "TravelTrustFaqStrip.tsx"), "utf8")).toContain(
       "data-tt-traveltrust-faq-strip-l5",
     );
@@ -287,7 +338,7 @@ describe("traveltrust network page (contract)", () => {
     expect(src).toContain("data-tt-traveltrust-landing-chrome-pulse-expanded");
     expect(readFileSync(join(__dir, "../../lib/marketingUi.ts"), "utf8")).toContain("max-[390px]");
     expect(readFileSync(join(__dir, "../../lib/marketingUi.ts"), "utf8")).toContain("TT_MARKETING_BTN_PRIMARY_WARM");
-    expect(readFileSync(join(__dir, "TravelTrustNetworkPageMain.tsx"), "utf8")).toContain('data-tt-ui-generation="v2"');
+    expect(readNetworkPageComposerSource()).toContain('data-tt-ui-generation="v2"');
     expect(readFileSync(join(__dir, "../../lib/marketingUi.ts"), "utf8")).toContain(
       "TT_MARKETING_TRAVELTRUST_HERO_SECTION_CLASS",
     );
@@ -480,8 +531,8 @@ describe("traveltrust network page (contract)", () => {
     expect(
       readFileSync(join(cinematicDir, "TravelTrustCinematicScene3DContent.tsx"), "utf8"),
     ).toContain("TT_CINEMATIC_GLOBE_VISUAL");
-    expect(readFileSync(join(__dir, "TravelTrustNetworkPageMain.tsx"), "utf8")).toContain(
-      "requestIdleCallback",
+    expect(readNetworkPageComposerSource()).toContain(
+      "initTraveltrustCinematicQualityPrefs",
     );
     expect(readFileSync(join(__dir, "../../lib/traveltrustCinematicPerf.ts"), "utf8")).toContain(
       "initTraveltrustCinematicQualityPrefs",
@@ -495,10 +546,10 @@ describe("traveltrust network page (contract)", () => {
     expect(
       readFileSync(join(cinematicDir, "TravelTrustCinematicLowQualityToggle.tsx"), "utf8"),
     ).toContain("data-tt-traveltrust-cinematic-quality-pref");
-    expect(readFileSync(join(__dir, "TravelTrustNetworkPageMain.tsx"), "utf8")).toMatch(
+    expect(readNetworkPageComposerSource()).toMatch(
       /dynamic\([\s\S]*TravelTrustLandingChrome/,
     );
-    expect(src).toContain("TravelTrustBelowFoldSections");
+    expect(src).toContain("TravelTrustHomeBelowFoldSection");
     expect(src).toContain("data-tt-traveltrust-roles-order");
     expect(src).toContain("traveltrust_hero_globe_decorative");
     expect(src).toContain("traveltrust_cinematic_sr_desc_long");
@@ -507,7 +558,7 @@ describe("traveltrust network page (contract)", () => {
     );
     expect(readFileSync(join(__dir, "opengraph-image.tsx"), "utf8")).toContain("TRAVELTRUST_OG_COPY");
     expect(readFileSync(join(__dir, "../../components/trust/WalletStatusMini.tsx"), "utf8")).toContain(
-      't("header_wallet")',
+      't("wallet_connect")',
     );
     expect(src).toContain("TravelTrustCinematicA11y");
     expect(src).toContain('data-tt-traveltrust-hero-layout="split-lr"');
@@ -524,7 +575,9 @@ describe("traveltrust network page (contract)", () => {
     expect(src).toContain("traveltrustCinematicChapters");
     expect(src).toContain("resolveTravelTrustBlendedChapterPreset");
     expect(src).toContain("useTraveltrustHeroGlobeOpticalAlign");
-    expect(readFileSync(join(__dir, "../../components/Header.tsx"), "utf8")).toContain("deferConnectToHero");
+    expect(readFileSync(join(cinematicDir, "TravelTrustCinematicHero.tsx"), "utf8")).toContain(
+      "TravelTrustHeroWalletConnect",
+    );
     expect(src).toContain("TravelTrustHeroReduceMotionStars");
     expect(src).toContain("data-tt-traveltrust-hero-reduce-motion-stars");
     expect(src).toContain("data-tt-traveltrust-liquidity-preview-banner");
@@ -558,10 +611,10 @@ describe("traveltrust network page (contract)", () => {
     expect(readFileSync(join(cinematicDir, "TravelTrustPageCinematicCanvas.tsx"), "utf8")).toContain(
       "buildHeroWarmSkyBaseBackground",
     );
-    expect(readFileSync(join(cinematicDir, "TravelTrustPageCinematicScene.tsx"), "utf8")).toContain(
+    expect(readFileSync(join(cinematicDir, "page-scene/PageCinematicEnvironment.tsx"), "utf8")).toContain(
       "PageCinematicWarmSkyShell",
     );
-    expect(readFileSync(join(__dirname, "../../lib/traveltrustCinematicNonGlobeL5.ts"), "utf8")).toContain(
+    expect(readL5ResolversSource()).toContain(
       "buildHeroWarmCanvasOverlayLayers",
     );
     expect(readFileSync(join(__dirname, "../../lib/traveltrustCinematicVisual.ts"), "utf8")).toContain(
@@ -570,14 +623,14 @@ describe("traveltrust network page (contract)", () => {
     expect(readFileSync(join(__dirname, "../../lib/traveltrustGlobeEarthAsset.ts"), "utf8")).toContain(
       "TRAVELTRUST_GLOBE_A_CLOSURE_ID",
     );
-    expect(readFileSync(join(__dir, "layout.tsx"), "utf8")).toContain("loadTraveltrustLayoutPreload");
+    expect(readFileSync(join(__dir, "layout.tsx"), "utf8")).toContain("getTraveltrustLayoutPreloadSync");
     expect(readFileSync(join(cinematicDir, "TravelTrustCinematicHero.tsx"), "utf8")).toContain(
       "useHeroMediaUrlsHydrated",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustHeroGlobeUnderlayDecor.tsx"), "utf8")).toContain(
       "P0",
     );
-    expect(readFileSync(join(__dir, "TravelTrustNetworkPageMain.tsx"), "utf8")).not.toContain(
+    expect(readNetworkPageComposerSource()).not.toContain(
       "TravelTrustHeroGlobeUnderlayDecor",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustCinematicHero.tsx"), "utf8")).toContain(
@@ -586,7 +639,7 @@ describe("traveltrust network page (contract)", () => {
     expect(readFileSync(join(cinematicDir, "TravelTrustRoleVideoPlayer.tsx"), "utf8")).toContain(
       "useRoleMediaUrlsHydrated",
     );
-    expect(readFileSync(join(__dir, "layout.tsx"), "utf8")).toContain("uniqueRoleVideoPrefetchEntries");
+    expect(readFileSync(join(__dir, "layout.tsx"), "utf8")).toContain("TravelTrustLayoutDeferredPreload");
     expect(
       readFileSync(join(__dirname, "../../lib/traveltrustPageBrief.server.ts"), "utf8"),
     ).toContain("resolveAllRoleMediaUrls");
@@ -609,6 +662,16 @@ describe("traveltrust network page (contract)", () => {
     expect(src).toContain('id="pulse"');
     expect(src).toContain('id="liquidity"');
     expect(src).toContain('data-tt-traveltrust-pulse-ticker="1"');
+    expect(readFileSync(join(cinematicDir, "TravelTrustPulseTicker.tsx"), "utf8")).toContain(
+      "data-tt-traveltrust-pulse-view-all",
+    );
+    expect(readFileSync(join(cinematicDir, "TravelTrustPulseTicker.tsx"), "utf8")).toContain(
+      "traveltrustAnnouncementPageHref",
+    );
+    expect(existsSync(join(__dir, "announcements/page.tsx"))).toBe(true);
+    expect(readFileSync(join(cinematicDir, "TravelTrustAnnouncementDetailDialog.tsx"), "utf8")).toContain(
+      "data-tt-traveltrust-announcement-detail-panel",
+    );
     expect(src).toContain('data-tt-traveltrust-stable-gateway="1"');
     expect(src).toContain('data-tt-traveltrust-ttg-gateway-preview="1"');
     expect(src).toContain("traveltrustLiquidityGatewayModel");
@@ -630,12 +693,12 @@ describe("traveltrust network page (contract)", () => {
     expect(belowFold).toContain("TravelTrustTrustFactsStrip");
     expect(belowFold).toContain('chapterId="close"');
     expect(belowFold).toContain("grouped");
-    expect(readFileSync(join(__dir, "TravelTrustNetworkPageMain.tsx"), "utf8")).not.toContain(
+    expect(readNetworkPageComposerSource()).not.toContain(
       "<TravelTrustNetworkFooter",
     );
     expect(src).toContain("useTraveltrustSectionNav");
     expect(src).toContain("traveltrustHeroUi");
-    expect(src).toContain('data-tt-traveltrust-landing-nav-slot="sticky"');
+    expect(src).toContain('data-tt-traveltrust-landing-nav-slot="fixed"');
     expect(src).toMatch(/TravelTrustLandingNav/);
     expect(src).toContain("data-tt-traveltrust-theater-entered");
     expect(src).toContain("data-tt-traveltrust-page-brief-ready");
@@ -673,7 +736,8 @@ describe("traveltrust network page (contract)", () => {
   it("keeps L0 site nav on /traveltrust (LandingChrome L1 below four links)", () => {
     const ui = readFileSync(join(__dir, "../../lib/uiSystem.ts"), "utf8");
     const header = readFileSync(join(__dir, "../../components/Header.tsx"), "utf8");
-    expect(ui).toMatch(/shouldSuppressGlobalSiteNav[\s\S]*return false/);
+    expect(ui).toContain("isAdminHeaderPath");
+    expect(ui).toMatch(/shouldSuppressGlobalSiteNav[\s\S]*isAdminHeaderPath/);
     expect(header).toContain('data-tt-marketing-header-site-nav={showSiteNav ? "1" : "0"}');
     expect(header).toContain("data-tt-traveltrust-header-merged-chrome-l5");
     expect(readFileSync(join(cinematicDir, "TravelTrustFaqStrip.tsx"), "utf8")).toContain(

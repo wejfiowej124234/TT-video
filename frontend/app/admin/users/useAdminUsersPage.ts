@@ -6,23 +6,24 @@ import {
   type Dispatch,
   type FormEvent,
   type SetStateAction,
+  useCallback,
   useEffect,
   useMemo,
   useState,
 } from "react";
 
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import { useTranslation } from "@/components/LocaleProvider";
-import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
 import { useAdminFormErrorState } from "@/lib/admin/adminFormErrorState";
 import {
   type AdminFetchErrorKind,
   adminErrorUserText,
-  adminFetchErrorKind,
   adminFetchJson,
   adminLogApiJsonStatus,
   adminUserFacingErrorFromUnknown,
   logAdminFetch,
 } from "@/lib/adminFetchDisplay";
+import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
 import { apiUrl, routes } from "@/lib/api";
 import { getAuthHeaders, writeRequestHeaders } from "@/lib/apiClient";
 import {
@@ -30,7 +31,7 @@ import {
   type AdminAcquisitionPublishSuspendResult,
 } from "@/lib/apiClient/adminAcquisitionPublishSuspend";
 import { mapApiReadError } from "@/lib/mapApiReadError";
-import type { AdminUser, AdminUsersRes, RoleChangeRes } from "./adminUsersPageTypes";
+import type { AdminUser, RoleChangeRes } from "./adminUsersPageTypes";
 import {
   buildUsersListPath,
   clampUserLimit,
@@ -44,6 +45,7 @@ import {
 
 export type UseAdminUsersPageResult = {
   loading: boolean;
+  refreshing: boolean;
   error: AdminFetchErrorKind | null;
   items: AdminUser[];
   appliedFilters: Record<string, unknown> | null;
@@ -85,6 +87,7 @@ export type UseAdminUsersPageResult = {
 
 export function useAdminUsersPage(): UseAdminUsersPageResult {
   const { t } = useTranslation();
+  const requestConfirm = useAdminL5ConfirmRequest();
   const router = useRouter();
   const searchParams = useSearchParams();
   const { limit, role, kyc_status } = useMemo(
@@ -92,12 +95,32 @@ export function useAdminUsersPage(): UseAdminUsersPageResult {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<AdminUser[]>([]);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
   const [reloadTick, setReloadTick] = useState(0);
+
+  const listUrl = useMemo(
+    () =>
+      routes.admin.users({
+        limit,
+        ...(role ? { role } : {}),
+        ...(kyc_status ? { kyc_status } : {}),
+      }),
+    [limit, role, kyc_status],
+  );
+
+  const {
+    items,
+    appliedFilters,
+    meta,
+    loading,
+    refreshing,
+    error,
+    setItems,
+  } = useAdminStandardListFetch<AdminUser>({
+    scope: "users",
+    context: "AdminUsersPage",
+    listUrl,
+    refreshToken: reloadTick,
+  });
 
   const [draftLimit, setDraftLimit] = useState(String(limit));
   const [draftRole, setDraftRole] = useState(role);
@@ -120,48 +143,6 @@ export function useAdminUsersPage(): UseAdminUsersPageResult {
   const [suspendInlineUserId, setSuspendInlineUserId] = useState<string | null>(null);
   const [suspendInlineError, setSuspendInlineError] = useState<string | null>(null);
   const [suspendInlineErrorKind, setSuspendInlineErrorKind] = useState<AdminFetchErrorKind | null>(null);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    setMeta(null);
-
-    const headers: Record<string, string> = { "x-request-id": `admin-users-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    adminFetchJson<AdminUsersRes>(
-      "AdminUsersPage",
-      apiUrl(
-        routes.admin.users({
-          limit,
-          ...(role ? { role } : {}),
-          ...(kyc_status ? { kyc_status } : {}),
-        }),
-      ),
-      { headers },
-    )
-      .then(({ res, body }) => {
-        if (!res.ok) {
-          throw new Error(body.error || `request_failed_${res.status}`);
-        }
-        return body;
-      })
-      .then((body) => {
-        setItems(Array.isArray(body.items) ? body.items : []);
-        setAppliedFilters(body.applied_filters ?? null);
-        setMeta(isAdminMetaRecord(body.meta) ? body.meta : null);
-      })
-      .catch((e: unknown) => {
-        logAdminFetch("AdminUsersPage", e);
-        setError(adminFetchErrorKind(e));
-        setItems([]);
-      })
-      .finally(() => setLoading(false));
-  }, [limit, role, kyc_status, reloadTick]);
 
   const bumpReload = () => setReloadTick((x) => x + 1);
 
@@ -218,20 +199,29 @@ export function useAdminUsersPage(): UseAdminUsersPageResult {
     setSuspendUser(null);
   };
 
-  const quickLiftSuspend = (u: AdminUser) => {
-    setSuspendInlineError(null);
-    setSuspendInlineErrorKind(null);
-    setSuspendInlineUserId(u.id);
-    patchAdminUserAcquisitionPublishSuspend(u.id, { suspended_until: null })
-      .then((result) => applySuspendResult(u.id, result))
-      .catch((e: unknown) => {
-        setSuspendInlineErrorKind(adminFetchErrorKind(e));
-        setSuspendInlineError(mapApiReadError(e, t, "admin_acquisition_suspend_patchFailed"));
-      })
-      .finally(() => setSuspendInlineUserId(null));
-  };
+  const quickLiftSuspend = useCallback(
+    (u: AdminUser) => {
+      requestConfirm({
+        titleKey: "admin_l5_confirm_title_write",
+        descKey: "admin_l5_confirm_desc_acquisition_lift",
+        onConfirm: () => {
+          setSuspendInlineError(null);
+          setSuspendInlineErrorKind(null);
+          setSuspendInlineUserId(u.id);
+          patchAdminUserAcquisitionPublishSuspend(u.id, { suspended_until: null })
+            .then((result) => applySuspendResult(u.id, result))
+            .catch((e: unknown) => {
+              setSuspendInlineErrorKind(adminFetchErrorKind(e));
+              setSuspendInlineError(mapApiReadError(e, t, "admin_acquisition_suspend_patchFailed"));
+            })
+            .finally(() => setSuspendInlineUserId(null));
+        },
+      });
+    },
+    [applySuspendResult, requestConfirm, t],
+  );
 
-  const submitRoleChange = () => {
+  const submitRoleChangeImpl = () => {
     const uid = roleUser?.id?.trim();
     if (!uid) return;
     setRoleSubmitting(true);
@@ -293,8 +283,21 @@ export function useAdminUsersPage(): UseAdminUsersPageResult {
       .finally(() => setRoleSubmitting(false));
   };
 
+  const submitRoleChange = useCallback(() => {
+    const uid = roleUser?.id?.trim();
+    if (!uid) return;
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_danger",
+      descKey: "admin_l5_confirm_desc_role_change",
+      descVars: { role: targetRole.trim() },
+      danger: true,
+      onConfirm: () => submitRoleChangeImpl(),
+    });
+  }, [requestConfirm, roleUser, targetRole]);
+
   return {
     loading,
+    refreshing,
     error,
     items,
     appliedFilters,

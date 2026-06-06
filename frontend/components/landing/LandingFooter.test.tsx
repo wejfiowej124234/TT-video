@@ -25,11 +25,13 @@ describe("LandingFooter (54-S16)", () => {
     expect(screen.getByRole("heading", { name: "法律" })).toBeTruthy();
   });
 
-  it("tech column and main-chain strip link to governance fee routes (07 §5.2A)", () => {
+  it("tech column links to governance fee routes; bottom strip omits duplicate (07 §5.2A)", () => {
     renderFooter();
     const feeRouteLinks = screen.getAllByRole("link", { name: "费路由（治理）" });
-    expect(feeRouteLinks.length).toBeGreaterThanOrEqual(1);
-    expect(feeRouteLinks.every((a) => a.getAttribute("href") === "/governance/fee-routes")).toBe(true);
+    expect(feeRouteLinks.length).toBe(1);
+    expect(feeRouteLinks[0]?.getAttribute("href")).toBe("/governance/fee-routes");
+    const selfCheckLinks = screen.getAllByRole("link", { name: "费路由自检" });
+    expect(selfCheckLinks.length).toBe(1);
   });
 
   it("has no social platform outbound links in footer", () => {

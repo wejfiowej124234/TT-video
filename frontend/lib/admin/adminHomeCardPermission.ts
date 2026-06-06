@@ -60,6 +60,8 @@ export const ADMIN_HOME_CARD_REQUIRED_PERM: Record<string, AdminPermissionId> = 
   "/admin/community/abuse-policy": ADMIN_PERM.COMMUNITY_SUPER,
   "/admin/community/comments/visibility": ADMIN_PERM.COMMUNITY_MODERATE,
   "/admin/community/appeals/review": ADMIN_PERM.COMMUNITY_SUPER,
+  "/admin/inbox": ADMIN_PERM.READ,
+  "/admin/operator-guide": ADMIN_PERM.READ,
 };
 
 export function adminHomeCardRequiredPermission(href: string): AdminPermissionId {

@@ -4,28 +4,32 @@ import { type FormEvent, useMemo } from "react";
 import { AdminSortableTh } from "@/components/admin/AdminSortableTh";
 import { sortRowsByKey, useAdminTableSort } from "@/lib/admin/useAdminTableSort";
 import type { LocaleTranslateFn } from "@/lib/i18n";
-import { reportReasonLabel, reportStatusLabel } from "./adminCommunityReportsLabels";
+import { reportReasonCodeIsMapped, reportReasonLabel, reportStatusLabel } from "./adminCommunityReportsLabels";
 import type { ReportRow } from "./adminCommunityReportsTypes";
 import {
-  ADMIN_FOCUS_RING_CORE_CLASS,
-  ADMIN_PRIMARY_ACTION_BTN_CLASS,
   ADMIN_QUEUE_STATUS_ATTENTION_BADGE_CLASS,
+  adminTableRowPrimaryActionClass,
   ADMIN_QUEUE_STATUS_NEUTRAL_BADGE_CLASS,
   ADMIN_TABLE_ROW_CLASS,
   ADMIN_TABLE_ROW_PENDING_CLASS,
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
+  ADMIN_TABLE_SECTION_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,
 } from "@/lib/adminUi";
 
 type ReportSortKey = "status" | "created_at";
 
 export function AdminCommunityReportsTable({
   items,
+  refreshing = false,
   t,
   openMod,
   canModerate,
 }: {
   items: ReportRow[];
+  refreshing?: boolean;
   t: LocaleTranslateFn;
   openMod: (r: ReportRow) => void;
   canModerate: boolean;
@@ -42,11 +46,12 @@ export function AdminCommunityReportsTable({
 
   return (
     <section
-      className="mt-6 overflow-x-auto rounded-[var(--radius-xl)] border border-ink-200 bg-white"
+      className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
       aria-label={t("admin_community_reports_table_aria")}
       data-tt-admin-reports-table="1"
+      data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
     >
-      <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+      <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
         <thead className={ADMIN_TABLE_THEAD_CLASS}>
           <tr>
             <AdminSortableTh
@@ -73,7 +78,7 @@ export function AdminCommunityReportsTable({
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-ink-100 text-ink-700">
+        <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
           {sortedItems.map((r, idx) => {
             const dash = t("admin_em_dash");
             const details = r.details?.trim() || dash;
@@ -98,12 +103,17 @@ export function AdminCommunityReportsTable({
                   <span className="block truncate" title={`${r.target_type ?? ""} ${r.target_id ?? ""}`}>
                     {r.target_type ?? dash}
                   </span>
-                  <span className="font-mono text-meta text-ink-500 block truncate">{r.target_id ?? dash}</span>
+                  <span className="font-mono text-small text-ink-800 text-ink-500 block truncate">{r.target_id ?? dash}</span>
                 </td>
                 <td className="px-3 py-2">
-                  <span className="font-medium text-ink-800">{reportReasonLabel(r.reason_code, t)}</span>
-                  {r.reason_code ? (
-                    <span className="block font-mono text-meta text-ink-400">{r.reason_code}</span>
+                  <span
+                    className="inline-flex rounded-full border border-ref-sun/22 bg-ref-sun/6 px-2 py-0.5 text-small font-medium text-ink-800"
+                    title={r.reason_code ?? undefined}
+                  >
+                    {reportReasonLabel(r.reason_code, t)}
+                  </span>
+                  {r.reason_code && !reportReasonCodeIsMapped(r.reason_code) ? (
+                    <span className="mt-0.5 block font-mono text-meta text-ink-500">{r.reason_code}</span>
                   ) : null}
                 </td>
                 <td className="px-3 py-2 max-w-xs">
@@ -125,7 +135,7 @@ export function AdminCommunityReportsTable({
                     >
                       <button
                         type="submit"
-                        className={`${ADMIN_PRIMARY_ACTION_BTN_CLASS} ${ADMIN_FOCUS_RING_CORE_CLASS}`}
+                        className={adminTableRowPrimaryActionClass()}
                         aria-label={t("admin_reports_moderate_row_aria", { id: r.id ?? "" })}
                       >
                         {t("admin_reports_wizard_open")}

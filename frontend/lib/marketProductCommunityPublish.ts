@@ -13,6 +13,14 @@ export const TT_MARKET_PROVIDER_TAG = "tt_market_provider";
 export const TT_MARKET_ACQUISITION_TAG = "tt_market_acquisition";
 export const TT_MARKET_MAIN_ITINERARY_TAG = "tt_market_main_itinerary";
 
+/** 与 **`crates/api` 社区帖 `commerce_showcase_kind` allowlist** 对拍（**`marketProductCommunityPublish.test.ts`**）。 */
+export const COMMERCE_SHOWCASE_KIND = {
+  ITINERARY_LED: "itinerary_led",
+  LODGING_LED: "lodging_led",
+  ACQUISITION_LED: "acquisition_led",
+  GENERAL_LED: "general_led",
+} as const;
+
 export function hasCommunityPublishAuth(): boolean {
   const h = getAuthHeaders();
   return Boolean(h.Authorization || h["X-User-Id"]);

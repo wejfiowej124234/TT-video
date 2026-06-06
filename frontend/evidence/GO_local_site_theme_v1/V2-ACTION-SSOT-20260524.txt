@@ -1,0 +1,44 @@
+# §1.7 Action SSOT（口语 Theme V2）· ① local · CLOSED
+
+Phase: ① local only (no ② staging)  
+Status: **Theme V2 ① closed**（机读 + 机采旁证；维护者硬刷新签字见 LOCAL-HARD-REFRESH 可选行）
+
+## Closed
+
+- market → did-rank → community: CTA / Tab / title / active → TT_MARKETING_ACTION_* / TT_COMMUNITY_FEED_ACTION
+- Page titles + section titles + community L2 h1 + messages inner tabs + stat emphasis
+- G8: siteThemeV1TouchTarget.contract.test.ts
+- G5: site-theme-v1-did-rank-guide-modal.spec.ts + PNG
+- G2: POST capture + V2-hard-refresh-capture 02/03
+- Hard refresh machine evidence: V2-hard-refresh-capture/01..06 + CAPTURE-20260524.txt
+- Feed filter chips: CommunityFeedFilterBarChipFilters → filterChipActive/Idle
+- Feed/L2 SSOT tail: retryPill · headerPillWarm · explore/activity/messages L2 CTA → TT_COMMUNITY_PAGE_L5 / TT_COMMUNITY_FEED_ACTION
+- CommunityInteractionSummary: likesMetricSuppressed / likesMetricDisabledByConfig restored
+- Closure gate: bash scripts/gates/site-theme-v1-v2-action-closure.sh (132 vitest + G5 + V2 capture)
+- Gate: site-theme-v1-d10-machine.sh exit 0 (see D10-machine-20260524T*.txt · V2-action-closure-20260524T152535Z.txt)
+
+## Drawer / 帖卡 defer 收口（2026-05-24 续）
+
+- Feed 帖卡关注：`followPillIdle`
+- PostDetail/Comment 评论排序 Tab：`sortTabActive`（暖金实心）
+- 抽屉内 role badge / 关注：`roleGuide`/`roleTourist` · `followPillIdle`
+
+## No further V2 engineering work（① 主路径 + 上述 defer 可视项）
+
+- `/community/me/*`、`/community/user/*`：CTA → `TT_COMMUNITY_PAGE_L5` · 帖子可见性 Tab → `innerTabActive`（2026-05-24 续）
+
+- 抽屉重试/发送、TopicHero 重试、LoginModal 次钮、Feed 侧栏 role badge → `retryPill` / `sendBtn` / `pill` / `roleGuide`
+
+Runbook §2.4 **① Theme V2 工程闭卷**：社区子站 Action 已无已知内联 `bg-ref-sun/12` 主交互（token 定义体 `marketingUi.ts` 除外）。  
+复验：`bash scripts/gates/site-theme-v1-v2-action-closure.sh` → `TT_SITE_THEME_V2_ACTION_CLOSURE: exit 0`
+
+## Last verified（①）
+
+- 2026-05-24：`V2-action-closure-20260524T233514Z.txt` · D10 **139/139** vitest
+- `rg 'border-ref-sun/40 bg-ref-sun/12' frontend/**/*.tsx` → **0**（token 定义在 `marketingUi.ts` 除外）
+
+## Out of scope (not V2 blockers)
+
+- D3 market drawer marketCyan* focus
+- Post-card inner pills / drawer secondary cyan
+- ② testnet §3.3 T1–T9

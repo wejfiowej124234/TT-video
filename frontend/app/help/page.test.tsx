@@ -1,7 +1,7 @@
 /**
  * /help：FAQ 与关键链接（51-H2、官方总表 P1-D）
  */
-import React from "react";
+import React, { Suspense } from "react";
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { LocaleProvider } from "@/components/LocaleProvider";
@@ -10,7 +10,9 @@ import HelpPage from "./page";
 function renderHelp() {
   return render(
     <LocaleProvider>
-      <HelpPage />
+      <Suspense fallback={null}>
+        <HelpPage />
+      </Suspense>
     </LocaleProvider>
   );
 }
@@ -66,10 +68,10 @@ describe("HelpPage", () => {
     expect(net!.getAttribute("href")).toBe("/traveltrust#fee-router");
   });
 
-  it("FAQ FeeRouter row links to traveltrust token-system anchor (85 §14)", async () => {
+  it("FAQ TTG row links to traveltrust liquidity anchor (v6 § liquidity)", async () => {
     renderHelp();
     await screen.findByRole("heading", { level: 1, name: "帮助中心" });
     const token = screen.getByRole("link", { name: /代币分层说明/ });
-    expect(token.getAttribute("href")).toBe("/traveltrust#token-system");
+    expect(token.getAttribute("href")).toBe("/traveltrust#liquidity");
   });
 });

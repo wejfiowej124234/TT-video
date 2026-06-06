@@ -726,13 +726,29 @@ export function readMetaBuildRoot(root: Record<string, unknown>): MetaBuildInfo 
 }
 
 export async function getMeta(): Promise<Record<string, unknown>> {
-  const res = await fetch(apiUrl(routes.meta), {
-    headers: { "x-request-id": requestId() },
-  });
-  const parsed = await parseResponse(res);
-  logApiJsonStatusNotOk("getMeta", parsed);
-  throwUnlessApiOk(parsed);
-  return parsed as Record<string, unknown>;
+  const url = apiUrl(routes.meta);
+  const init = { headers: { "x-request-id": requestId() } };
+  let last: unknown;
+  for (let attempt = 0; attempt < 4; attempt++) {
+    try {
+      const res = await fetch(url, init);
+      if (!res.ok && [408, 429, 502, 503].includes(res.status) && attempt < 3) {
+        await new Promise((r) => setTimeout(r, 600 * (attempt + 1)));
+        continue;
+      }
+      const parsed = await parseResponse(res);
+      logApiJsonStatusNotOk("getMeta", parsed);
+      throwUnlessApiOk(parsed);
+      return parsed as Record<string, unknown>;
+    } catch (e) {
+      last = e;
+      if (attempt < 3) {
+        await new Promise((r) => setTimeout(r, 600 * (attempt + 1)));
+        continue;
+      }
+    }
+  }
+  throw last;
 }
 
 /** **GET /meta/build**：仅取 **`git_sha`** / **`deployed_at`**（与 **`getMeta`+`readMetaBuild`** 同源，688/689）。 */

@@ -3,7 +3,11 @@
 import Link from "next/link";
 import { useId, type FormEvent } from "react";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
-import { communityCyanPillFocus, communitySlatePillFocus } from "@/lib/communityA11yFocus";
+import {
+  communityCyanPillFocus,
+  communitySlatePillFocus,
+} from "@/lib/communityA11yFocus";
+import { TT_COMMUNITY_DRAWER_L5, TT_COMMUNITY_FEED_ACTION, TT_COMMUNITY_PAGE_L5 } from "@/lib/marketingUi";
 
 export interface CommunityLoginModalProps {
   open: boolean;
@@ -20,14 +24,15 @@ export default function CommunityLoginModal({ open, onClose, t, backButtonRef }:
   if (!open) return null;
   return (
     <div
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950/90 backdrop-blur-sm p-4 safe-area-inset-t safe-area-inset-b"
+      data-tt-community-login-for-publish="1"
+      className={TT_COMMUNITY_FEED_ACTION.loginModalScrim}
       role="dialog"
       aria-labelledby={titleId}
       aria-describedby={descId}
       aria-modal="true"
     >
-      <div ref={trapRef} className="w-full max-w-sm rounded-[var(--radius-xl)] border border-cyan-500/40 bg-slate-900/95 shadow-scifi-login overflow-hidden">
-        <div className="relative flex items-center justify-between border-b border-cyan-500/30 px-4 py-3 min-h-[48px]">
+      <div ref={trapRef} className={TT_COMMUNITY_FEED_ACTION.loginModalSheet}>
+        <div className={`relative flex items-center justify-between border-b border-ref-sun/18 px-4 py-3 min-h-[48px] ${TT_COMMUNITY_DRAWER_L5.sheetHeader}`}>
           <form
             className="contents z-10"
             onSubmit={(e: FormEvent) => {
@@ -38,14 +43,14 @@ export default function CommunityLoginModal({ open, onClose, t, backButtonRef }:
             <button
               ref={backButtonRef as React.RefObject<HTMLButtonElement> | undefined}
               type="submit"
-              className={`flex min-h-[44px] items-center justify-start gap-2 rounded-[var(--radius-md)] border border-slate-500/60 bg-slate-800/80 px-3 py-2 text-meta text-slate-300 hover:border-cyan-500/50 hover:text-cyan-100 motion-sub ${communitySlatePillFocus}`}
+              className={`${TT_COMMUNITY_DRAWER_L5.postDetailGhostBtn} ${communitySlatePillFocus}`}
               aria-label={t("community_back_drawer")}
             >
               <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
               <span>{t("community_back_drawer")}</span>
             </button>
           </form>
-          <h2 id={titleId} className="absolute left-1/2 -translate-x-1/2 text-body font-semibold text-cyan-200 pointer-events-none">{t("community_login_to_publish")}</h2>
+          <h2 id={titleId} className="absolute left-1/2 -translate-x-1/2 text-body font-semibold text-ref-sun pointer-events-none">{t("community_login_to_publish")}</h2>
           <div className="w-20 shrink-0" aria-hidden />
         </div>
         <div className="p-5">
@@ -60,14 +65,14 @@ export default function CommunityLoginModal({ open, onClose, t, backButtonRef }:
             >
               <button
                 type="submit"
-                className={`flex flex-1 min-h-[44px] min-w-0 items-center justify-center rounded-[var(--radius-xl)] border border-slate-500/60 bg-slate-800/80 px-4 py-2.5 text-meta text-slate-300 motion-sub hover:bg-slate-700/80 ${communitySlatePillFocus}`}
+                className={`flex flex-1 min-h-[44px] min-w-0 items-center justify-center rounded-[var(--radius-xl)] ${TT_COMMUNITY_FEED_ACTION.asideGhostPill} ${communitySlatePillFocus}`}
               >
                 {t("common_cancel")}
               </button>
             </form>
             <Link
               href="/auth/login?returnUrl=/community"
-              className={`flex-1 rounded-[var(--radius-xl)] border border-cyan-400/50 bg-cyan-500/20 px-4 py-2.5 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub text-center min-h-[44px] flex items-center justify-center ${communityCyanPillFocus}`}
+              className={`flex-1 ${TT_COMMUNITY_PAGE_L5.pill} text-center ${communityCyanPillFocus}`}
             >
               {t("header_login")}
             </Link>

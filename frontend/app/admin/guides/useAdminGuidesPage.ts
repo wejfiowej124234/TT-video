@@ -2,20 +2,12 @@
 import { type FormEvent, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
-import {
-  type AdminFetchErrorKind,
-  adminFetchErrorKind,
-  adminFetchJson,
-  logAdminFetch,
-} from "@/lib/adminFetchDisplay";
-import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders } from "@/lib/apiClient";
+import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
+import { routes } from "@/lib/api";
 
 import {
   ADMIN_GUIDES_STATUS_MAX,
   type AdminGuideRow,
-  type AdminGuidesRes,
   buildGuidesListPath,
   clampGuideLimit,
   parseGuidesListQuery,
@@ -29,11 +21,21 @@ export function useAdminGuidesPage() {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<AdminGuideRow[]>([]);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
+  const listUrl = useMemo(
+    () =>
+      routes.admin.guides({
+        limit,
+        ...(status ? { status } : {}),
+      }),
+    [limit, status],
+  );
+
+  const { items, appliedFilters, meta, loading, refreshing, error } =
+    useAdminStandardListFetch<AdminGuideRow>({
+      scope: "guides",
+      context: "AdminGuidesPage",
+      listUrl,
+    });
 
   const [draftLimit, setDraftLimit] = useState(String(limit));
   const [draftStatus, setDraftStatus] = useState(status);
@@ -41,46 +43,6 @@ export function useAdminGuidesPage() {
   useEffect(() => {
     setDraftLimit(String(limit));
     setDraftStatus(status);
-  }, [limit, status]);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    setMeta(null);
-
-    const headers: Record<string, string> = { "x-request-id": `admin-guides-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    adminFetchJson<AdminGuidesRes>(
-      "AdminGuidesPage",
-      apiUrl(
-        routes.admin.guides({
-          limit,
-          ...(status ? { status } : {}),
-        }),
-      ),
-      { headers },
-    )
-      .then(({ res, body }) => {
-        if (!res.ok) {
-          throw new Error(body.error || `request_failed_${res.status}`);
-        }
-        return body;
-      })
-      .then((body) => {
-        setItems(Array.isArray(body.items) ? body.items : []);
-        setAppliedFilters(body.applied_filters ?? null);
-        setMeta(isAdminMetaRecord(body.meta) ? body.meta : null);
-      })
-      .catch((e: unknown) => {
-        logAdminFetch("AdminGuidesPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
   }, [limit, status]);
 
   const apply = (e?: FormEvent) => {
@@ -98,6 +60,7 @@ export function useAdminGuidesPage() {
     limit,
     status,
     loading,
+    refreshing,
     error,
     items,
     appliedFilters,

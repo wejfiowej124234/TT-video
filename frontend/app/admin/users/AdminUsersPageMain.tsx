@@ -1,18 +1,20 @@
 "use client";
 
-import Link from "next/link";
 import { useId } from "react";
+
+import Link from "next/link";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminAcquisitionPublishSuspendModal } from "@/components/admin/AdminAcquisitionPublishSuspendModal";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
-import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import type { UseAdminUsersPageResult } from "./useAdminUsersPage";
 import { AdminUsersRoleSuccessBanner } from "./AdminUsersRoleSuccessBanner";
 import { AdminUsersFiltersCard } from "./AdminUsersFiltersCard";
 import { AdminUsersDataSection } from "./AdminUsersDataSection";
 import { AdminUsersRoleChangeModal } from "./AdminUsersRoleChangeModal";
-import { ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { USERS_LIST_RELATED_FOLD_LINKS } from "@/lib/admin/adminOpsListRelatedFoldLinks";
+import { adminTableRowPrimaryActionClass } from "@/lib/adminUi";
 
 export function AdminUsersPageMain({ vm }: { vm: UseAdminUsersPageResult }) {
   const { t } = useTranslation();
@@ -25,6 +27,7 @@ export function AdminUsersPageMain({ vm }: { vm: UseAdminUsersPageResult }) {
 
   const {
     loading,
+    refreshing,
     error,
     items,
     appliedFilters,
@@ -65,24 +68,23 @@ export function AdminUsersPageMain({ vm }: { vm: UseAdminUsersPageResult }) {
     <AdminListPageChrome
       titleId={pageTitleId}
       title={t("admin_users_title")}
-      subtitle={t("admin_users_subtitle")}
-      headerAside={
-        <>
-          <Link href="/admin/approvals" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_users_linkApprovals")}
-          </Link>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_schema_back")}
-          </Link>
-        </>
-      }
+      subtitle={t("admin_users_subtitle_l5")}
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={USERS_LIST_RELATED_FOLD_LINKS}
+        ariaLabelKey="admin_ops_list_related_aria"
+        foldSummaryKey="admin_ops_list_related_fold"
+        dataTtFold="users-list"
+      />
+      <div className="mb-4 flex flex-wrap gap-3" data-tt-admin-users-list-actions="1">
+        <Link
+          href="/admin/approvals"
+          className={adminTableRowPrimaryActionClass()}
+          data-tt-admin-ops-cross-approvals="1"
+        >
+          {t("admin_users_linkApprovals")}
+        </Link>
+      </div>
       {roleSuccessApprovalId ? (
         <AdminUsersRoleSuccessBanner
           roleSuccessApprovalId={roleSuccessApprovalId}
@@ -111,6 +113,7 @@ export function AdminUsersPageMain({ vm }: { vm: UseAdminUsersPageResult }) {
       <AdminUsersDataSection
         adminAppliedFiltersDescId={adminAppliedFiltersDescId}
         loading={loading}
+        refreshing={refreshing}
         error={error}
         appliedFilters={appliedFilters}
         items={items}

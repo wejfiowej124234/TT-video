@@ -34,4 +34,18 @@ describe("suggestedAuthorsFromPosts", () => {
     expect(out.map((x) => x.id)).toEqual(["a", "b"]);
     expect(out.find((x) => x.id === "b")?.isEscrowGuide).toBe(true);
   });
+
+  it("prefers tt-demo author over PG seed with same nickname", () => {
+    const posts: CommunityPost[] = [
+      post({ id: "pg-yuki", nickname: "Yuki 周末飞", avatar_url: null, role: "tourist" }),
+      post({ id: "tt-demo-yuki", nickname: "Yuki 周末飞", avatar_url: null, role: "tourist" }),
+    ];
+    const out = suggestedAuthorsFromPosts(posts, {
+      meUserId: null,
+      followingAuthorIds: new Set(),
+      max: 6,
+    });
+    expect(out).toHaveLength(1);
+    expect(out[0]?.id).toBe("tt-demo-yuki");
+  });
 });

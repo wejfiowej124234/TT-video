@@ -8,7 +8,7 @@ import {
   TT_FOOTER_CROSS_NAV_L5,
   TT_FOOTER_L5_SEQUENTIAL,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 import { traveltrustL5SequentialChildProps } from "./traveltrustSectionMotion";
 import {
   TT_MARKETING_TRAVELTRUST_FOOTER_CROSS_NAV_TRUST_DETAILS,

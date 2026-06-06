@@ -1,17 +1,25 @@
 "use client";
 
+import { AdminDetailContentPanel } from "@/components/admin/AdminDetailContentPanel";
 import Link from "next/link";
 import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { AdminOnboardingHubBackLinks } from "@/components/admin/AdminOnboardingHubBackLinks";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { AdminPermissionDeniedBanner } from "@/components/admin/AdminPermissionDeniedBanner";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
-import { ADMIN_FILTER_CARD_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { ADMIN_PRIMARY_ACTION_BTN_CLASS, adminPageNavLinkClass,
+  ADMIN_CONSOLE_MUTED_BLOCK_CLASS,
+  ADMIN_FORM_CONTROL_SM_CLASS,
+  ADMIN_DESTRUCTIVE_SOFT_BTN_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,} from "@/lib/adminUi";
 import { useAdminOnboardingEntitlementDetailPage } from "./useAdminOnboardingEntitlementDetailPage";
+import { ONBOARDING_ENTITLEMENT_DETAIL_RELATED_FOLD_LINKS } from "@/lib/admin/adminOnboardingEntitlementDetailRelatedFoldLinks";
 
 export function AdminOnboardingEntitlementDetailPageMain() {
   const { t } = useTranslation();
@@ -20,6 +28,7 @@ export function AdminOnboardingEntitlementDetailPageMain() {
     id,
     canWrite,
     loading,
+    refreshing,
     error,
     ent,
     metaJson,
@@ -36,36 +45,49 @@ export function AdminOnboardingEntitlementDetailPageMain() {
     <AdminDetailPageChrome
       titleId={titleId}
       title={t("admin_onb_ent_detail_title")}
-      subtitle={<p className="font-mono text-meta text-ink-500">{id}</p>}
+      subtitle={<p className="font-mono text-small text-ink-800 text-ink-500">{id}</p>}
       headerAside={
-        <Link href="/admin/onboarding/entitlements" className={adminPageNavLinkClass()}>
-          {t("admin_onb_ent_back_list")}
-        </Link>
+        <AdminOnboardingHubBackLinks>
+          <Link href="/admin/onboarding/entitlements" className={adminPageNavLinkClass()}>
+            {t("admin_onb_ent_back_list")}
+          </Link>
+        </AdminOnboardingHubBackLinks>
       }
       mainDataAttrs={{ "data-tt-admin-onboarding-entitlement-detail": "1" }}
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={ONBOARDING_ENTITLEMENT_DETAIL_RELATED_FOLD_LINKS}
+        ariaLabelKey="admin_onb_ent_detail_related_aria"
+        foldSummaryKey="admin_onb_ent_detail_related_fold"
+        dataTtFold="onboarding-entitlement-detail"
+      />
       <AdminPermissionDeniedBanner
         permission={ADMIN_PERM.ONBOARDING_WRITE}
         messageKey="admin_perm_denied_onboarding_write"
       />
 
-      {loading ? <AdminListLoadingStatus message={t("admin_home_inbox_loading")} className="mt-6 text-small text-ink-600" /> : null}
-      {error ? (
+      {loading && !ent ? (
+        <AdminListLoadingStatus message={t("admin_home_inbox_loading")} className="mt-6 text-small text-ink-600" />
+      ) : null}
+      {error && !ent ? (
         <AdminListFetchError errorKind={error} message={adminErrorUserText(error, t)} className="mt-6" />
       ) : null}
 
-      {ent && !loading ? (
-        <pre className="mt-6 overflow-x-auto rounded border border-ink-200 bg-ink-50 p-3 text-meta">
+      {ent ? (
+        <pre
+          className={`mt-6 overflow-x-auto p-3 text-meta ${ADMIN_CONSOLE_MUTED_BLOCK_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
+          data-tt-admin-detail-refreshing={refreshing ? "1" : undefined}
+        >
           {JSON.stringify(ent, null, 2)}
         </pre>
       ) : null}
 
-      {canWrite ? (
-        <div className={`${ADMIN_FILTER_CARD_CLASS} mt-6 space-y-4`}>
+      {canWrite && ent ? (
+        <AdminDetailContentPanel className="mt-6 space-y-4">
           <div>
             <label className="text-small font-medium text-ink-800">{t("admin_onb_ent_meta_patch")}</label>
             <textarea
-              className="mt-1 block w-full min-h-[120px] rounded border border-ink-200 font-mono text-meta p-2"
+              className={`mt-1 block w-full min-h-[120px] ${ADMIN_FORM_CONTROL_SM_CLASS} font-mono text-small text-ink-800 p-2`}
               value={metaJson}
               onChange={(e) => setMetaJson(e.target.value)}
             />
@@ -81,7 +103,7 @@ export function AdminOnboardingEntitlementDetailPageMain() {
           <div>
             <label className="text-small font-medium text-ink-800">{t("admin_onb_ent_revoke")}</label>
             <input
-              className="mt-1 block w-full rounded border border-ink-200 px-2 py-1.5 text-small"
+              className={`mt-1 block w-full ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1.5 text-small`}
               value={revokeReason}
               onChange={(e) => setRevokeReason(e.target.value)}
               placeholder={t("admin_onb_ent_revoke_ph")}
@@ -89,13 +111,13 @@ export function AdminOnboardingEntitlementDetailPageMain() {
             <button
               type="button"
               disabled={busy || !revokeReason.trim()}
-              className="mt-2 rounded border border-red-300 bg-red-50 px-3 py-2 text-small font-medium text-red-800 disabled:opacity-50"
+              className={`mt-2 ${ADMIN_DESTRUCTIVE_SOFT_BTN_CLASS}`}
               onClick={() => void revoke()}
             >
               {t("admin_onb_ent_revoke_btn")}
             </button>
           </div>
-        </div>
+        </AdminDetailContentPanel>
       ) : (
         <p className="mt-6 text-small text-ink-600">{t("admin_onb_ent_readonly_hint")}</p>
       )}

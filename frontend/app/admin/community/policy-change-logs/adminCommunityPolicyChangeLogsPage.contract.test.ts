@@ -10,6 +10,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "page.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminCommunityPolicyChangeLogsPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminCommunityPolicyChangeLogsPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminCommunityPolicyChangeLogsPageModel.ts"), "utf8"),
   ].join("\n");
 }
@@ -19,6 +20,7 @@ describe("admin community policy change logs page", () => {
 
   it("keeps policy change logs route + admin fetch + UUID actor filter + DOM anchor", () => {
     expect(src).toContain("routes.admin.communityPolicyChangeLogs");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("isUuidString");
     expect(src).toContain("AdminListPageChrome");

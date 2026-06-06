@@ -39,6 +39,7 @@ vi.mock("@/lib/apiClient", async (importOriginal) => {
     ...mod,
     getDiscoverOrders: (...args: unknown[]) => getDiscoverOrdersMock(...args),
     getGuides: (...args: unknown[]) => getGuidesMock(...args),
+    getOrders: vi.fn().mockResolvedValue({ items: [] }),
   };
 });
 
@@ -51,7 +52,7 @@ describe("useMarketPage discover list epoch (B-061)", () => {
     getDiscoverOrdersMock.mockReset();
     getGuidesMock.mockReset();
     routerReplace.mockReset();
-    getGuidesMock.mockResolvedValue([]);
+    getGuidesMock.mockResolvedValue({ items: [] });
   });
 
   it("ignores stale getDiscoverOrders when a newer loadOrders has started", async () => {

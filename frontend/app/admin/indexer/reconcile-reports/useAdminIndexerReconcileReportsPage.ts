@@ -5,11 +5,19 @@ import { useCallback, useEffect, useId, useMemo, useRef, useState, type FormEven
 import { useTranslation } from "@/components/LocaleProvider";
 import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
 import { type AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
+import { routes } from "@/lib/api";
+import {
+  defaultAdminListFetchSnapshot,
+  type AdminStandardListBody,
+  useAdminStandardListFetch,
+} from "@/lib/admin/useAdminStandardListFetch";
 
 import {
+  ADMIN_RECONCILE_PAGE_META_KEY,
   type ListRes,
   type ProjectionCleanFilter,
   type ReconcileExportJob,
+  type ReconcileReportRow,
   REPORT_TYPE_MAX_LEN,
   buildListPath,
   limitSelectOptions,
@@ -18,7 +26,22 @@ import {
   parseListQuery,
 } from "./reconcileReportsPageModel";
 import { downloadReconcileReportsExport } from "./reconcileReportsPageExportDownload";
-import { useAdminIndexerReconcileReportsPageListFetch } from "./useAdminIndexerReconcileReportsPageListFetch";
+
+function reconcileListToSnapshot(
+  body: AdminStandardListBody<ReconcileReportRow> & Pick<ListRes, "page">,
+) {
+  const base = defaultAdminListFetchSnapshot(body);
+  if (body.page && typeof body.page === "object") {
+    return {
+      ...base,
+      meta: {
+        ...(base.meta ?? {}),
+        [ADMIN_RECONCILE_PAGE_META_KEY]: body.page,
+      },
+    };
+  }
+  return base;
+}
 
 export function useAdminIndexerReconcileReportsPage() {
   const { t } = useTranslation();
@@ -47,9 +70,29 @@ export function useAdminIndexerReconcileReportsPage() {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [data, setData] = useState<ListRes | null>(null);
+  const listUrl = useMemo(
+    () =>
+      routes.admin.indexerReconcileReports({
+        limit,
+        offset,
+        ...(reportType ? { report_type: reportType } : {}),
+        ...(chainIdStr ? { chain_id: chainIdStr } : {}),
+        ...(projectionClean === "true" || projectionClean === "false"
+          ? { projection_reconcile_clean: projectionClean === "true" }
+          : {}),
+        ...(issuesMinStr ? { issues_min: Number.parseInt(issuesMinStr, 10) } : {}),
+      }),
+    [limit, offset, reportType, chainIdStr, projectionClean, issuesMinStr],
+  );
+
+  const { items, appliedFilters, meta: rawMeta, loading, refreshing, error } =
+    useAdminStandardListFetch<ReconcileReportRow>({
+      scope: "indexer-reconcile-reports",
+      context: "AdminIndexerReconcileReportsPage",
+      listUrl,
+      toSnapshot: reconcileListToSnapshot,
+    });
+
   const [filterDraft, setFilterDraft] = useState(reportType);
   const [chainFilterDraft, setChainFilterDraft] = useState(chainIdStr);
   const [cleanFilterDraft, setCleanFilterDraft] = useState<ProjectionCleanFilter>(projectionClean);
@@ -58,18 +101,6 @@ export function useAdminIndexerReconcileReportsPage() {
   const copyFlashTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [exportingFormat, setExportingFormat] = useState<ReconcileExportJob>(null);
   const [exportError, setExportError] = useState<AdminFetchErrorKind | null>(null);
-
-  useAdminIndexerReconcileReportsPageListFetch(
-    limit,
-    offset,
-    reportType,
-    chainIdStr,
-    projectionClean,
-    issuesMinStr,
-    setLoading,
-    setError,
-    setData,
-  );
 
   useEffect(() => {
     setFilterDraft(reportType);
@@ -84,14 +115,21 @@ export function useAdminIndexerReconcileReportsPage() {
     };
   }, []);
 
-  const items = data?.items ?? [];
-  const meta = data && isAdminMetaRecord(data.meta) ? data.meta : null;
-  const afRaw = data?.applied_filters;
-  const appliedFilters =
-    afRaw != null && typeof afRaw === "object" && !Array.isArray(afRaw)
-      ? (afRaw as Record<string, unknown>)
-      : null;
-  const total = data?.page?.total ?? 0;
+  const pageInfo = useMemo(() => {
+    const raw = rawMeta?.[ADMIN_RECONCILE_PAGE_META_KEY];
+    if (raw && typeof raw === "object" && !Array.isArray(raw)) {
+      return raw as NonNullable<ListRes["page"]>;
+    }
+    return undefined;
+  }, [rawMeta]);
+
+  const meta = useMemo(() => {
+    if (!rawMeta) return null;
+    const { [ADMIN_RECONCILE_PAGE_META_KEY]: _drop, ...rest } = rawMeta;
+    return isAdminMetaRecord(rest) && Object.keys(rest).length > 0 ? rest : null;
+  }, [rawMeta]);
+
+  const total = pageInfo?.total ?? 0;
   const totalPages = total > 0 ? Math.max(1, Math.ceil(total / limit)) : 1;
   const rangeFrom = items.length > 0 ? offset + 1 : 0;
   const rangeTo = items.length > 0 ? offset + items.length : 0;
@@ -142,6 +180,18 @@ export function useAdminIndexerReconcileReportsPage() {
     );
   };
 
+  const onPerPageLimitChange = (next: number) =>
+    router.push(
+      buildListPath({
+        page: 1,
+        limit: next,
+        reportType,
+        chainIdStr,
+        projectionClean,
+        issuesMinStr,
+      }),
+    );
+
   const exportParams = useMemo(
     () => ({
       limit,
@@ -178,18 +228,6 @@ export function useAdminIndexerReconcileReportsPage() {
     })();
   };
 
-  const onPerPageLimitChange = (next: number) =>
-    router.push(
-      buildListPath({
-        page: 1,
-        limit: next,
-        reportType,
-        chainIdStr,
-        projectionClean,
-        issuesMinStr,
-      }),
-    );
-
   return {
     t,
     pageTitleId,
@@ -211,6 +249,7 @@ export function useAdminIndexerReconcileReportsPage() {
     adminListApplyResetHintId,
     router,
     loading,
+    refreshing,
     error,
     items,
     meta,

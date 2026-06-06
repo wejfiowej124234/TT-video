@@ -3,12 +3,15 @@
 import { type FormEvent, useEffect, useId } from "react";
 import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
-import { communityCardLinkFocus } from "@/lib/communityA11yFocus";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
-import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
-import { TT_MARKETING_BTN_PRIMARY_WARM_SUBMIT } from "@/lib/marketingUi";
+import {
+  deepShellInlineLinkFocusClasses,
+  deepShellPillControlFocusClasses,
+  touchTargetLink44Classes,
+} from "@/lib/travelLinkFocus";
+import { TT_MARKETING_BTN_MARKET_PRIMARY } from "@/lib/marketingUi";
 
-/** /traveltrust 品牌入口 · 页面级错误边界；与 85 规格、顶栏深色「TravelTrust」字标一致 */
+/** /traveltrust 品牌入口 · 页面级错误边界；深壳暖金（与 did-rank/community error 同族，波次 B） */
 export default function TraveltrustError({
   error,
   reset,
@@ -31,9 +34,9 @@ export default function TraveltrustError({
       data-tt-error-boundary-root="traveltrust"
       data-tt-ui-generation="v2"
     >
-      <div className="rounded-[var(--radius-lg)] border border-white/12 bg-ink-800/70 p-6 shadow-scifi-panel backdrop-blur-md ring-1 ring-ref-cyan/15">
+      <div className="rounded-[var(--radius-lg)] border border-ref-sun/28 bg-ink-800/70 p-6 shadow-scifi-panel backdrop-blur-md">
         <p className="text-meta font-medium text-slate-400 mb-1">{t("traveltrust_title")}</p>
-        <h1 className="text-h4 font-semibold text-white">{t("common_errorTitle")}</h1>
+        <h1 className="text-h4 font-semibold text-ref-sun/90">{t("common_errorTitle")}</h1>
         <p className="mt-2 text-body text-slate-300">
           {t("common_errorMessage")}
         </p>
@@ -52,7 +55,7 @@ export default function TraveltrustError({
             <button
               type="submit"
               aria-label={t("common_retry")}
-              className={`${TT_MARKETING_BTN_PRIMARY_WARM_SUBMIT} outline-none focus-visible:ring-2 focus-visible:ring-ref-cyan/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900`}
+              className={`${TT_MARKETING_BTN_MARKET_PRIMARY} ${deepShellPillControlFocusClasses}`}
             >
               {t("common_retry")}
             </button>
@@ -60,7 +63,7 @@ export default function TraveltrustError({
           <Link
             href="/"
             aria-label={t("common_backToHome")}
-            className="inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] border border-white/20 px-4 py-2 text-small font-medium text-slate-200 hover:bg-white/10 outline-none focus-visible:ring-2 focus-visible:ring-ref-cyan/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900"
+            className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] border border-white/20 px-4 py-2 text-small font-medium text-slate-200 hover:bg-white/10 ${deepShellPillControlFocusClasses}`}
           >
             {t("common_backToHome")}
           </Link>
@@ -68,16 +71,22 @@ export default function TraveltrustError({
         <p className="mt-5 text-meta text-slate-300 text-center flex flex-wrap justify-center gap-x-2 gap-y-1">
           <Link
             href="/traveltrust"
-            className={`${touchTargetLink44Classes} text-ref-cyan hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${communityCardLinkFocus}`}
+            className={`${touchTargetLink44Classes} text-ref-sun/90 hover:text-ref-sun hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${deepShellInlineLinkFocusClasses}`}
           >
             {t("traveltrust_title")}
           </Link>
           <span aria-hidden>·</span>
-          <Link href="/market" className={`${touchTargetLink44Classes} text-ref-cyan hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${communityCardLinkFocus}`}>
+          <Link
+            href="/market"
+            className={`${touchTargetLink44Classes} text-ref-sun/90 hover:text-ref-sun hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${deepShellInlineLinkFocusClasses}`}
+          >
             {t("header_market")}
           </Link>
           <span aria-hidden>·</span>
-          <Link href="/pay" className={`${touchTargetLink44Classes} text-ref-cyan hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${communityCardLinkFocus}`}>
+          <Link
+            href="/pay"
+            className={`${touchTargetLink44Classes} text-ref-sun/90 hover:text-ref-sun hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${deepShellInlineLinkFocusClasses}`}
+          >
             {t("header_payHub")}
           </Link>
         </p>
@@ -86,7 +95,7 @@ export default function TraveltrustError({
           showGuides
           errorBoundaryCrossNavMarker
           className="mt-6 flex flex-wrap justify-center gap-x-2 gap-y-1 border-t border-white/10 pt-5 text-meta text-slate-300"
-          linkClassName={`inline-flex min-h-[44px] items-center justify-center text-ref-cyan/90 hover:text-ref-cyan underline ${communityCardLinkFocus}`}
+          linkClassName={`inline-flex min-h-[44px] items-center justify-center text-ref-sun/90 hover:text-ref-sun underline ${deepShellInlineLinkFocusClasses}`}
           separatorClassName="text-slate-500"
         />
       </div>

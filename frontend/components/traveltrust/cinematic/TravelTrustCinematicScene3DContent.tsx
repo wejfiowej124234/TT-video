@@ -7,7 +7,7 @@ import type { Group, Mesh, PerspectiveCamera } from "three";
 import * as THREE from "three";
 import { TRAVELTRUST_HERO_DEFAULT_POSTER } from "@/app/traveltrust/traveltrustIdentityModel";
 import { resolveTraveltrustGlobeRenderTier } from "@/lib/traveltrustGlobeEarthAsset";
-import { TT_LEGACY_3D_CONTENT_L5 } from "@/lib/traveltrustCinematicNonGlobeL5";
+import { TT_LEGACY_3D_CONTENT_L5 } from "@/lib/traveltrust/l5";
 import { TT_CINEMATIC_ATMOSPHERE, TT_CINEMATIC_GLOBE_VISUAL } from "@/lib/traveltrustCinematicVisual";
 import { TravelTrustPhase1GlobeHighlights } from "./TravelTrustPhase1GlobeHighlights";
 import { TravelTrustPhase1TravelArcs } from "./TravelTrustPhase1TravelArcs";

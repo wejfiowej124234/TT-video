@@ -13,8 +13,15 @@ import {
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { mapReviewSubmitError } from "@/lib/mapReviewSubmitError";
 import {
-  marketCyanInlineLinkFocusClasses,
-  marketCyanPillControlFocusClasses,
+  escrowProtocolCompactInputClass,
+  escrowProtocolCompactSelectClass,
+  escrowProtocolInlineLinkClass,
+  escrowProtocolMetaClass,
+  escrowProtocolPillFocusClass,
+  escrowProtocolSubheadingClass,
+  TT_ESCROW_PROTOCOL_SECTION,
+} from "@/lib/escrowProtocolUi";
+import {
   touchTargetLink44Classes,
   travelFocusRingCoreOffset2Classes,
   travelFocusRingOffset2Classes,
@@ -120,34 +127,32 @@ export default function ReviewBlock({ orderId, variantDid }: { orderId: string; 
 
   const isDid = !!variantDid;
   const pillFocusClass = isDid
-    ? marketCyanPillControlFocusClasses
+    ? escrowProtocolPillFocusClass
     : `${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`;
   const shellClass = isDid
-    ? "rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md p-6 shadow-scifi-panel space-y-3"
+    ? TT_ESCROW_PROTOCOL_SECTION
     : "rounded-[var(--radius-sm)] bg-bg-console p-6 shadow-soft space-y-3";
-  const hClass = isDid ? "text-body font-semibold text-cyan-200" : "text-body font-semibold text-ink-800";
-  const loadingClass = isDid ? "text-small text-slate-300" : "text-small text-ink-500";
+  const hClass = isDid ? escrowProtocolSubheadingClass : "text-body font-semibold text-ink-800";
+  const loadingClass = isDid ? `text-small ${escrowProtocolMetaClass}` : "text-small text-ink-500";
   const errClass = isDid ? "text-small text-warning/95" : "text-small text-warning dark:text-warning/90";
   const retryClass = isDid
-    ? `${touchTargetLink44Classes} text-small font-medium text-cyan-300 hover:text-cyan-100 underline-offset-2 hover:underline ${marketCyanInlineLinkFocusClasses}`
+    ? `${touchTargetLink44Classes} ${escrowProtocolInlineLinkClass}`
     : `${touchTargetLink44Classes} text-small font-medium text-travel-600 hover:text-travel-500 underline-offset-2 hover:underline ${travelFocusRingOffset2Classes}`;
   const listMetaSummaryClass = isDid
-    ? `${touchTargetLink44Classes} cursor-pointer select-none text-cyan-300 hover:text-cyan-100 hover:underline ${marketCyanInlineLinkFocusClasses}`
+    ? `${touchTargetLink44Classes} cursor-pointer select-none ${escrowProtocolInlineLinkClass}`
     : `${touchTargetLink44Classes} cursor-pointer select-none text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`;
   const breakdownSummaryClass = isDid
-    ? `${touchTargetLink44Classes} cursor-pointer font-medium text-cyan-300 hover:text-cyan-100 hover:underline ${marketCyanInlineLinkFocusClasses}`
+    ? `${touchTargetLink44Classes} cursor-pointer font-medium ${escrowProtocolInlineLinkClass}`
     : `${touchTargetLink44Classes} cursor-pointer font-medium text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`;
-  const ulClass = isDid ? "space-y-1 text-small text-slate-300" : "space-y-1 text-small text-ink-700";
-  const emptyLiClass = isDid ? "text-slate-300" : "text-ink-500";
-  const groupBorder = isDid ? "border-t border-slate-600/50" : "border-t border-ink-200";
-  const labelClass = isDid ? "block text-meta text-slate-300" : "block text-meta text-ink-500";
-  const selectClass = isDid
-    ? "inline-flex min-h-[44px] items-center justify-start border border-slate-500/50 rounded-[var(--radius-sm)] px-2 py-1 text-small bg-white text-ink-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
-    : "inline-flex min-h-[44px] items-center justify-start border border-ink-200 rounded-[var(--radius-sm)] px-2 py-1 text-small bg-bg-console text-ink-800";
+  const ulClass = isDid ? `space-y-1 text-small ${escrowProtocolMetaClass}` : "space-y-1 text-small text-ink-700";
+  const emptyLiClass = isDid ? escrowProtocolMetaClass : "text-ink-500";
+  const groupBorder = isDid ? "border-t border-ref-sun/14" : "border-t border-ink-200";
+  const labelClass = isDid ? `block text-meta ${escrowProtocolMetaClass}` : "block text-meta text-ink-500";
+  const selectClass = isDid ? escrowProtocolCompactSelectClass : "inline-flex min-h-[44px] items-center justify-start border border-ink-200 rounded-[var(--radius-sm)] px-2 py-1 text-small bg-bg-console text-ink-800";
   const inputClass = isDid
-    ? "block w-full border border-slate-500/50 rounded-[var(--radius-sm)] px-2 py-1 text-small bg-white text-ink-900 placeholder:text-ink-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+    ? escrowProtocolCompactInputClass
     : "block w-full border border-ink-200 rounded-[var(--radius-sm)] px-2 py-1 text-small bg-bg-console text-ink-800 placeholder:text-ink-500";
-  const lowHintClass = isDid ? "text-meta text-slate-300" : "text-meta text-ink-600";
+  const lowHintClass = isDid ? `text-meta ${escrowProtocolMetaClass}` : "text-meta text-ink-600";
   const metaDetailsClass = isDid ? "text-meta text-slate-300 mt-2" : "text-meta text-ink-600 mt-2";
 
   const showListMeta =
@@ -222,7 +227,7 @@ export default function ReviewBlock({ orderId, variantDid }: { orderId: string; 
       )}
       {lastBreakdown != null ? (
         <details
-          className={isDid ? "rounded-[var(--radius-md)] border border-cyan-500/20 bg-slate-800/40 px-3 py-2 text-small text-slate-300" : "rounded-[var(--radius-md)] border border-ink-200 bg-bg-soft px-3 py-2 text-small text-ink-700"}
+          className={isDid ? "rounded-[var(--radius-md)] border border-ref-sun/15 bg-black/20 px-3 py-2 text-small text-slate-300" : "rounded-[var(--radius-md)] border border-ink-200 bg-bg-soft px-3 py-2 text-small text-ink-700"}
           open
         >
           <summary className={breakdownSummaryClass}>{t("escrow_reviewSubmitBreakdownTitle")}</summary>

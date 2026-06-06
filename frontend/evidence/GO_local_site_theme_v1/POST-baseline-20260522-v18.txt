@@ -1,0 +1,31 @@
+# TT-PH1-SITE-THEME-V1 · POST baseline (v18 · 底色叠层 + Market 主 CTA)
+# Phase: ① 本地 only
+# Date: 2026-05-22
+
+## Delta (this batch)
+- TT_MARKETING_DARK_ROUTE_SCENE + MarketDarkRouteSceneDecor (market / community / didRank tiers)
+- MarketAmbientBackdrop · DidRankRouteAmbientDecor · CommunityRouteShell(Inner) unified scene decor
+- GuideCard glass · BookGuideModal · OrderCard glass grab · GuideDetailDrawer book · OrderDetailDrawer accept/payHub → warm tokens
+- community/did-rank/market components/**/*.tsx: rg fuchsia|cyan-500 → 0 hits
+
+## §6.1 Vitest (runbook core + scene decor + market CTA contracts)
+
+cd frontend && npm run test -- --run \
+  lib/uiSystem.test.ts lib/marketingUi.test.ts \
+  components/market/marketTheme.contract.test.ts \
+  components/did-rank/didRankTheme.contract.test.ts \
+  components/community/communityShellTheme.contract.test.ts \
+  components/community/communityPageTheme.contract.test.ts \
+  components/community/communityFeedActionTheme.contract.test.ts \
+  components/community/communityDrawerTheme.contract.test.ts \
+  components/guides/guidesTheme.contract.test.ts \
+  components/auth/authHelpBridgeTheme.contract.test.ts \
+  app/traveltrust/traveltrustErrorTheme.contract.test.ts \
+  components/shell/marketDarkRouteScene.contract.test.ts
+
+Result: exit 0 · 12 files · 55 tests passed (runbook historical 49/49 + marketTheme +2 + marketDarkRouteScene +3 + communityFeedAction +2 vs v17 table)
+
+## §6.2 目视（维护者）
+- Hard refresh `/market` `/did-rank` `/community` — 三页底色切换色差应减弱
+- `/market` 向导卡「预约向导」、预约弹窗主链、玻璃态抢单 — 暖金 pill
+- Optional: PLAYWRIGHT_REUSE_FE_SERVER=1 npm run e2e:site-theme-v1-capture

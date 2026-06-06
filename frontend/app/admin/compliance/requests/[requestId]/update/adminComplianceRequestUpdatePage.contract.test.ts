@@ -11,6 +11,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminComplianceRequestUpdatePageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminComplianceRequestUpdatePage.ts"), "utf8"),
     readFileSync(join(__dir, "adminComplianceRequestUpdatePageModel.ts"), "utf8"),
+    readFileSync(join(__dir, "../../adminComplianceRequestsPageModel.ts"), "utf8"),
   ].join("\n");
 }
 
@@ -25,5 +26,7 @@ describe("admin compliance request update page", () => {
     expect(src).toContain("useAdminMetaBuildFromPublicMeta");
     expect(src).toContain('"AdminComplianceUpdateMetaBuild"');
     expect(src).toMatch(/data-tt-admin-compliance-update-readonly/);
+    expect(src).toContain("AdminOpsDetailRelatedFold");
+    expect(src).toContain("complianceDsarUpdateRelatedFoldLinks");
   });
 });

@@ -76,6 +76,38 @@ export function resolveTrustGrowthCopyKeys(
             e2: "pgrow1_register_e2",
             e3: "pgrow1_register_e3",
           };
+    case "guide_apply":
+      return copyModule === "alt"
+        ? {
+            title: "pgrow2_alt_guide_apply_title",
+            lead: "pgrow2_alt_guide_apply_lead",
+            e1: "pgrow2_alt_guide_apply_e1",
+            e2: "pgrow2_alt_guide_apply_e2",
+            e3: "pgrow2_alt_guide_apply_e3",
+          }
+        : {
+            title: "pgrow1_guide_apply_title",
+            lead: "pgrow1_guide_apply_lead",
+            e1: "pgrow1_guide_apply_e1",
+            e2: "pgrow1_guide_apply_e2",
+            e3: "pgrow1_guide_apply_e3",
+          };
+    case "steward_apply":
+      return copyModule === "alt"
+        ? {
+            title: "pgrow2_alt_steward_apply_title",
+            lead: "pgrow2_alt_steward_apply_lead",
+            e1: "pgrow2_alt_steward_apply_e1",
+            e2: "pgrow2_alt_steward_apply_e2",
+            e3: "pgrow2_alt_steward_apply_e3",
+          }
+        : {
+            title: "pgrow1_steward_apply_title",
+            lead: "pgrow1_steward_apply_lead",
+            e1: "pgrow1_steward_apply_e1",
+            e2: "pgrow1_steward_apply_e2",
+            e3: "pgrow1_steward_apply_e3",
+          };
     case "first_yield":
       return copyModule === "alt"
         ? {
@@ -167,6 +199,16 @@ export function useTrustGrowthExperiment(moment: TrustGrowthMoment): TrustGrowth
           });
         }
         return;
+      }
+
+      // 首屏不阻塞：先展示 fallback，再异步拉 config 调权
+      if (!cancelled) {
+        setState({
+          ready: true,
+          variant: fallback,
+          experimentVersion: exp.version,
+          subjectId: "pending",
+        });
       }
 
       let runtimeWeights: Record<string, number> | null = null;

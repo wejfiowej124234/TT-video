@@ -2,10 +2,12 @@
  * DID 榜 GET 响应行归一化（与 `app/did-rank/page.tsx` 消费一致，便于单测与复用）。
  */
 
-import type { TravelerRankItem, GuideRankItem, ItineraryRankItem } from "@/lib/didRankMockData";
+import type { TravelerRankItem, GuideRankItem, ItineraryRankItem } from "@/lib/didRankTypes";
 
-/** 后端 `GET /api/v1/did-rank/*` 返回 `{ travelers|guides|itineraries, period, since, limit, rank_basis }`；亦兼容 `items` 或裸数组 */
-export function extractDidRankList(raw: unknown, key: "travelers" | "guides" | "itineraries"): unknown[] {
+export type DidRankListKey = "travelers" | "guides" | "itineraries" | "providers" | "acquisitions";
+
+/** 后端 `GET /api/v1/did-rank/*` 返回 `{ travelers|guides|itineraries|providers|acquisitions, … }`；亦兼容 `items` 或裸数组 */
+export function extractDidRankList(raw: unknown, key: DidRankListKey): unknown[] {
   if (Array.isArray(raw)) return raw;
   if (raw && typeof raw === "object") {
     const o = raw as Record<string, unknown>;
@@ -32,6 +34,11 @@ export function normalizeDidRankTravelerRow(x: unknown): TravelerRankItem | null
     typeof completed_orders_raw === "number" && Number.isFinite(completed_orders_raw)
       ? completed_orders_raw
       : undefined;
+  const rankDeltaRaw = r.rank_delta ?? r.rankDelta;
+  const rank_delta =
+    typeof rankDeltaRaw === "number" && Number.isFinite(rankDeltaRaw) && rankDeltaRaw !== 0
+      ? Math.trunc(rankDeltaRaw)
+      : undefined;
   return {
     id,
     rank,
@@ -44,6 +51,7 @@ export function normalizeDidRankTravelerRow(x: unknown): TravelerRankItem | null
     citiesCount: typeof r.citiesCount === "number" ? r.citiesCount : cities.length,
     countries: countries.length ? countries : undefined,
     cities: cities.length ? cities : undefined,
+    ...(rank_delta !== undefined ? { rank_delta } : {}),
   };
 }
 
@@ -93,6 +101,11 @@ export function normalizeDidRankGuideRow(x: unknown): GuideRankItem | null {
     if (typeof v === "number" && Number.isFinite(v)) avgReceivedReviewScore = v;
     else if (v === null) avgReceivedReviewScore = null;
   }
+  const rankDeltaRaw = r.rank_delta ?? r.rankDelta;
+  const rank_delta =
+    typeof rankDeltaRaw === "number" && Number.isFinite(rankDeltaRaw) && rankDeltaRaw !== 0
+      ? Math.trunc(rankDeltaRaw)
+      : undefined;
   return {
     id,
     rank,
@@ -104,6 +117,64 @@ export function normalizeDidRankGuideRow(x: unknown): GuideRankItem | null {
     receptionCount,
     receivedReviewCount,
     ...(avgReceivedReviewScore !== undefined ? { avgReceivedReviewScore } : {}),
+    ...(rank_delta !== undefined ? { rank_delta } : {}),
+  };
+}
+
+/** 商家 / 收购副榜行 */
+export type DidRankSecondaryRankItem = {
+  id: string;
+  rank: number;
+  nickname: string;
+  is_me?: boolean;
+  avatar_url?: string | null;
+  published_listings?: number;
+  completed_fulfillment_orders?: number;
+  fulfillment_gross_total?: string;
+  rank_delta?: number;
+};
+
+export function normalizeDidRankSecondaryRow(x: unknown): DidRankSecondaryRankItem | null {
+  if (!x || typeof x !== "object") return null;
+  const r = x as Record<string, unknown>;
+  const id = typeof r.id === "string" ? r.id : "";
+  const rank = typeof r.rank === "number" ? r.rank : Number(r.rank);
+  const nickname = typeof r.nickname === "string" ? r.nickname : "";
+  if (!id || !nickname || !Number.isFinite(rank)) return null;
+  const publishedRaw = r.published_listings ?? r.publishedListings;
+  const published_listings =
+    typeof publishedRaw === "number" && Number.isFinite(publishedRaw)
+      ? Math.trunc(publishedRaw)
+      : undefined;
+  const fulfillmentRaw = r.completed_fulfillment_orders ?? r.completedFulfillmentOrders;
+  const completed_fulfillment_orders =
+    typeof fulfillmentRaw === "number" && Number.isFinite(fulfillmentRaw)
+      ? Math.trunc(fulfillmentRaw)
+      : undefined;
+  const grossRaw = r.fulfillment_gross_total ?? r.fulfillmentGrossTotal;
+  const fulfillment_gross_total =
+    typeof grossRaw === "string" && grossRaw.trim() ? grossRaw.trim() : undefined;
+  const avatar_url =
+    typeof r.avatar_url === "string"
+      ? r.avatar_url
+      : typeof r.avatarUrl === "string"
+        ? r.avatarUrl
+        : null;
+  const rankDeltaRaw = r.rank_delta ?? r.rankDelta;
+  const rank_delta =
+    typeof rankDeltaRaw === "number" && Number.isFinite(rankDeltaRaw) && rankDeltaRaw !== 0
+      ? Math.trunc(rankDeltaRaw)
+      : undefined;
+  return {
+    id,
+    rank,
+    nickname,
+    ...(r.is_me === true ? { is_me: true } : {}),
+    ...(avatar_url ? { avatar_url } : {}),
+    ...(published_listings !== undefined ? { published_listings } : {}),
+    ...(completed_fulfillment_orders !== undefined ? { completed_fulfillment_orders } : {}),
+    ...(fulfillment_gross_total !== undefined ? { fulfillment_gross_total } : {}),
+    ...(rank_delta !== undefined ? { rank_delta } : {}),
   };
 }
 
@@ -123,11 +194,17 @@ export function normalizeDidRankItineraryRow(x: unknown, dash: string): Itinerar
   const creatorCommunityRaw = r.creatorCommunityUserId ?? r.creator_community_user_id;
   const creatorCommunityUserId =
     typeof creatorCommunityRaw === "string" && creatorCommunityRaw.trim() ? creatorCommunityRaw.trim() : undefined;
+  const rankDeltaRaw = r.rank_delta ?? r.rankDelta;
+  const rank_delta =
+    typeof rankDeltaRaw === "number" && Number.isFinite(rankDeltaRaw) && rankDeltaRaw !== 0
+      ? Math.trunc(rankDeltaRaw)
+      : undefined;
   return {
     id,
     rank,
     title,
     is_me: r.is_me === true,
+    ...(rank_delta !== undefined ? { rank_delta } : {}),
     creatorName: typeof r.creatorName === "string" ? r.creatorName : dash,
     creatorType: r.creatorType === "traveler" ? "traveler" : "guide",
     creatorCommunityUserId,

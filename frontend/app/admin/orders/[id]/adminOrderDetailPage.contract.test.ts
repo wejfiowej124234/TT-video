@@ -11,6 +11,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminOrderDetailPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminOrderDetailPage.ts"), "utf8"),
     readFileSync(join(__dir, "adminOrderDetailPageModel.ts"), "utf8"),
+    readFileSync(join(__dir, "../../../../lib/admin/useAdminStandardDetailFetch.ts"), "utf8"),
   ].join("\n");
 }
 
@@ -19,10 +20,16 @@ describe("admin order detail page", () => {
 
   it("keeps admin order by id route + admin fetch + DOM anchor", () => {
     expect(src).toContain("routes.admin.orderById");
+    expect(src).toContain("useAdminStandardDetailFetch");
+    expect(src).toContain("order-detail");
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("AdminDetailPageChrome");
     expect(src).toContain('"AdminOrderDetailPage"');
     expect(src).toContain("stashEscrowOrderPrefetchFromAdminOrderDetailBody");
     expect(src).toContain("AdminListFetchError");
+    expect(src).toContain("ORDER_DETAIL_RELATED_FOLD_LINKS");
+    expect(src).not.toContain("AdminOpsQueueBackLinks");
+    expect(src).toContain("admin-order-detail-back-list");
+    expect(src).toContain("data-tt-admin-detail-refreshing");
   });
 });

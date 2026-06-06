@@ -10,19 +10,20 @@ import { ADMIN_EMPTY_NEXT_APPROVALS_FILTERED_EMPTY } from "@/lib/admin/adminList
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
 import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
-import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import {
-  ADMIN_LINK_FOCUS_CLASS,
-  ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  adminTableRowPrimaryActionClass,
   ADMIN_QUEUE_STATUS_ATTENTION_BADGE_CLASS,
   ADMIN_QUEUE_STATUS_DANGER_BADGE_CLASS,
   ADMIN_QUEUE_STATUS_NEUTRAL_BADGE_CLASS,
   ADMIN_QUEUE_STATUS_SUCCESS_BADGE_CLASS,
   ADMIN_TABLE_ROW_CLASS,
   ADMIN_TABLE_ROW_PENDING_CLASS,
+  ADMIN_TABLE_SURFACE_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
-} from "@/lib/adminUi";
+  ADMIN_TABLE_DIVIDE_CLASS,
+  ADMIN_BREADCRUMB_SEPARATOR_CLASS,} from "@/lib/adminUi";
 import {
   approvalActionLabelKey,
   approvalStatusLabelKey,
@@ -42,7 +43,7 @@ export function AdminApprovalsTableSection({ vm }: Props) {
   const caps = useAdminCapabilities();
   const canAct = caps.permissionsLoaded && caps.hasPermission(ADMIN_PERM.APPROVE);
 
-  const { loading, error, filteredItems, pendingInView, selectedIds, toggleSelect, toggleSelectAllPending } =
+  const { loading, refreshing, error, filteredItems, pendingInView, selectedIds, toggleSelect, toggleSelectAllPending } =
     vm;
 
   const { sort, toggle, ariaSort } = useAdminTableSort<ApprovalSortKey>("created_at", "desc");
@@ -55,7 +56,7 @@ export function AdminApprovalsTableSection({ vm }: Props) {
     [filteredItems, sort.key, sort.dir],
   );
 
-  if (loading || error) return null;
+  if (error || (loading && filteredItems.length === 0)) return null;
 
   if (filteredItems.length === 0) {
     return (
@@ -71,11 +72,12 @@ export function AdminApprovalsTableSection({ vm }: Props) {
 
   return (
     <section
-      className="mt-4 overflow-hidden rounded-[var(--radius-xl)] border border-ink-200 bg-white"
+      className={`mt-4 ${ADMIN_TABLE_SURFACE_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
       aria-label={t("admin_approvals_table_aria")}
+      data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
       data-tt-admin-approvals-table="1"
     >
-      <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+      <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
         <thead className={ADMIN_TABLE_THEAD_CLASS}>
           <tr>
             {canAct ? (
@@ -107,7 +109,7 @@ export function AdminApprovalsTableSection({ vm }: Props) {
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-ink-100 text-ink-700">
+        <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
           {sortedItems.map((item: ApprovalItem) => {
             const id = item.id;
             const isPending = (item.status ?? "").trim() === "pending";
@@ -133,7 +135,7 @@ export function AdminApprovalsTableSection({ vm }: Props) {
                         onChange={() => toggleSelect(id)}
                       />
                     ) : (
-                      <span className="text-ink-300" aria-hidden>
+                      <span className={ADMIN_BREADCRUMB_SEPARATOR_CLASS} aria-hidden>
                         —
                       </span>
                     )}
@@ -141,7 +143,7 @@ export function AdminApprovalsTableSection({ vm }: Props) {
                 ) : null}
                 <td className="px-4 py-3">
                   <p className="font-medium text-ink-900">{t(approvalActionLabelKey(item.action))}</p>
-                  <p className="mt-0.5 font-mono text-meta text-ink-500 break-all">{id}</p>
+                  <p className="mt-0.5 font-mono text-small text-ink-800 text-ink-500 break-all">{id}</p>
                   <p className="mt-1 text-meta text-ink-600">
                     {item.resource_type ?? t("admin_em_dash")} · {item.resource_id ?? t("admin_em_dash")}
                   </p>
@@ -170,7 +172,7 @@ export function AdminApprovalsTableSection({ vm }: Props) {
                 <td className="px-4 py-3 align-top">
                   <Link
                     href={`/admin/approvals/${encodeURIComponent(id)}`}
-                    className={`${touchTargetLink44Classes} ${ADMIN_PRIMARY_ACTION_BTN_CLASS} ${ADMIN_LINK_FOCUS_CLASS}`}
+                    className={adminTableRowPrimaryActionClass()}
                     aria-label={t("admin_approvals_review_row_aria", { id })}
                   >
                     {isPending ? t("admin_approvals_review_cta") : t("admin_ops_approvalDetailAdmin")}

@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import {
   adminFetchJson,
   adminLogApiJsonStatus,
@@ -23,6 +24,7 @@ import {
 
 export function useAdminCommunityAbusePolicyPage() {
   const { t } = useTranslation();
+  const requestConfirm = useAdminL5ConfirmRequest();
   const { meta: buildMeta, loading: buildLoading, error: buildError } =
     useAdminMetaBuildFromPublicMeta("AdminAbusePolicyMetaBuild");
   const [draft, setDraft] = useState<AbusePolicyDraft>(() => emptyAbusePolicyDraft());
@@ -47,7 +49,7 @@ export function useAdminCommunityAbusePolicyPage() {
     setDraft((d) => ({ ...d, [k]: v }));
   }, []);
 
-  const submit = useCallback(() => {
+  const submitImpl = useCallback(() => {
     const patch: Partial<Record<AbusePolicyKey, number>> = {};
     for (const k of ABUSE_POLICY_KEYS) {
       const raw = draft[k].trim();
@@ -102,6 +104,29 @@ export function useAdminCommunityAbusePolicyPage() {
       })
       .finally(() => setSubmitting(false));
   }, [draft, fieldLabel, t]);
+
+  const submit = useCallback(() => {
+    for (const k of ABUSE_POLICY_KEYS) {
+      const raw = draft[k].trim();
+      if (raw === "") continue;
+      const n = Number.parseInt(raw, 10);
+      if (!Number.isFinite(n)) {
+        setFormError("invalid_request", t("admin_abuse_errBadNumber", { field: fieldLabel(k) }));
+        return;
+      }
+    }
+    if (
+      ABUSE_POLICY_KEYS.every((k) => draft[k].trim() === "")
+    ) {
+      setFormError("invalid_request", t("admin_abuse_errEmpty"));
+      return;
+    }
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_write",
+      descKey: "admin_l5_confirm_desc_abuse_policy",
+      onConfirm: () => submitImpl(),
+    });
+  }, [draft, fieldLabel, requestConfirm, submitImpl, t]);
 
   return {
     buildMeta,

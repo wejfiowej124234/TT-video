@@ -3,10 +3,8 @@
 import { type FormEvent, useEffect, useId } from "react";
 import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
-import {
-  communityCyanPillFocus,
-  communitySlatePillFocus,
-} from "@/lib/communityA11yFocus";
+import { communityCardLinkFocus, communitySlatePillFocus } from "@/lib/communityA11yFocus";
+import { TT_COMMUNITY_FEED_ACTION } from "@/lib/marketingUi";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import { deepShellInlineLinkFocusClasses } from "@/lib/travelLinkFocus";
 
@@ -29,8 +27,8 @@ export default function CommunityError({
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-slate-950 px-4 safe-area-inset-t safe-area-inset-b" role="alert">
-      <div className="rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md px-6 py-8 max-w-md text-center">
-        <h1 className="text-h4 font-semibold text-cyan-200">{t("community_errorTitle")}</h1>
+      <div className="rounded-[var(--radius-md)] border border-ref-sun/25 bg-slate-900/70 backdrop-blur-md px-6 py-8 max-w-md text-center">
+        <h1 className="text-h4 font-semibold text-ref-sun/90">{t("community_errorTitle")}</h1>
         <p className="mt-2 text-small text-slate-300">
           {t("common_errorMessage")}
         </p>
@@ -48,7 +46,7 @@ export default function CommunityError({
           >
             <button
               type="submit"
-              className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
+              className={`${TT_COMMUNITY_FEED_ACTION.retryPill} ${communityCardLinkFocus}`}
               aria-label={t("common_retry")}
             >
               {t("common_retry")}
@@ -65,21 +63,21 @@ export default function CommunityError({
         <p className="mt-5 text-meta text-slate-400 flex flex-wrap justify-center gap-x-2 gap-y-1">
           <Link
             href="/community"
-            className={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 hover:underline ${deepShellInlineLinkFocusClasses}`}
+            className={`inline-flex min-h-[44px] items-center justify-center text-ref-sun hover:text-ref-coral hover:underline ${deepShellInlineLinkFocusClasses}`}
           >
             {t("header_community")}
           </Link>
           <span aria-hidden>·</span>
           <Link
             href="/orders"
-            className={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 hover:underline ${deepShellInlineLinkFocusClasses}`}
+            className={`inline-flex min-h-[44px] items-center justify-center text-ref-sun hover:text-ref-coral hover:underline ${deepShellInlineLinkFocusClasses}`}
           >
             {t("nav_orders")}
           </Link>
           <span aria-hidden>·</span>
           <Link
             href="/pay"
-            className={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 hover:underline ${deepShellInlineLinkFocusClasses}`}
+            className={`inline-flex min-h-[44px] items-center justify-center text-ref-sun hover:text-ref-coral hover:underline ${deepShellInlineLinkFocusClasses}`}
           >
             {t("header_payHub")}
           </Link>
@@ -87,8 +85,8 @@ export default function CommunityError({
         <ProductCrossNav
           ariaLabelKey="app_error_relatedNav_aria"
           showGuides
-          className="mt-6 flex flex-wrap justify-center gap-x-2 gap-y-1 border-t border-cyan-500/20 pt-5 text-meta text-slate-400"
-          linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 hover:underline ${deepShellInlineLinkFocusClasses}`}
+          className="mt-6 flex flex-wrap justify-center gap-x-2 gap-y-1 border-t border-ref-sun/18 pt-5 text-meta text-slate-400"
+          linkClassName={`inline-flex min-h-[44px] items-center justify-center text-ref-sun hover:text-ref-coral hover:underline ${deepShellInlineLinkFocusClasses}`}
           separatorClassName="text-slate-500"
         />
       </div>

@@ -13,6 +13,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminInternalToolAuditsPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminInternalToolAuditsStatusBlock.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminInternalToolAuditsPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminInternalToolAuditsPageModel.ts"), "utf8"),
   ].join("\n");
 }
@@ -22,6 +23,7 @@ describe("admin internal tool audits page", () => {
 
   it("keeps internal tool audits route + admin fetch + list chrome anchor", () => {
     expect(src).toContain("routes.admin.internalToolAudits");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("AdminInternalToolAuditsPageMain");
     expect(src).toContain("AdminListPageChrome");

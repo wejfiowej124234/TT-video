@@ -8,7 +8,8 @@ import {
   ADMIN_FORM_FIELD_FOCUS_CLASS,
   ADMIN_FOCUS_RING_CORE_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
-} from "@/lib/adminUi";
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_FILTER_INPUT_MD_CLASS,} from "@/lib/adminUi";
 
 import type { AdminApprovalsPageViewModel } from "./useAdminApprovalsPage";
 
@@ -41,7 +42,7 @@ export function AdminApprovalsBatchBar({ vm }: Props) {
         <label className="flex-1 min-w-[12rem] text-small text-ink-700">
           {t("admin_approvals_batch_reason_label")}
           <input
-            className={`mt-1 block w-full min-h-[44px] rounded-[var(--radius-md)] border border-ink-300 bg-white px-3 py-2 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+            className={`mt-1 block w-full min-h-[44px] ${ADMIN_FILTER_INPUT_MD_CLASS} px-3 py-2 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             value={batchReason}
             onChange={(e) => setBatchReason(e.target.value)}
             placeholder={t("admin_approvals_approvePh")}
@@ -60,7 +61,7 @@ export function AdminApprovalsBatchBar({ vm }: Props) {
         </button>
         <button
           type="button"
-          className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 bg-white px-4 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 disabled:opacity-50 ${ADMIN_FOCUS_RING_CORE_CLASS}`}
+          className={`inline-flex min-h-[44px] items-center justify-center ${ADMIN_FILTER_RESET_BTN_CLASS} disabled:opacity-50 ${ADMIN_FOCUS_RING_CORE_CLASS}`}
           disabled={pendingInView.length === 0 || batchBusy}
           onClick={() => exportPendingCsv()}
         >

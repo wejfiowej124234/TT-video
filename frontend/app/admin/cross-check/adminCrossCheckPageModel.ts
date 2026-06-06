@@ -1,5 +1,8 @@
 import type { NormalizedAdminCrossCheck } from "@/lib/apiClient";
 
+/** Normalized cross-check model stashed in list-fetch meta. */
+export const ADMIN_CROSS_CHECK_MODEL_META_KEY = "__adminCrossCheckModel";
+
 export function formatAdminCrossCheckUnknownJson(value: unknown): string {
   if (value === undefined) return "undefined";
   try {

@@ -10,14 +10,11 @@ import { useTranslation } from "@/components/LocaleProvider";
 import { ADMIN_EMPTY_NEXT_APPROVALS_FILTERED_EMPTY } from "@/lib/admin/adminListEmptyStateNextLinks";
 import { AdminInboxStripEmptyNextLinks } from "@/components/admin/AdminInboxStripEmptyNextLinks";
 
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import {
-
-  ADMIN_HOME_WIDGET_CARD_CLASS,
-
   ADMIN_LINK_FOCUS_CLASS,
-
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
-
+  ADMIN_SHELL_SECONDARY_BTN_CLASS,
 } from "@/lib/adminUi";
 
 
@@ -52,12 +49,10 @@ export function AdminApprovalsInboxStrip({ vm }: Props) {
 
   return (
 
-    <section
-
-      className={`mt-5 ${ADMIN_HOME_WIDGET_CARD_CLASS}`}
-
+    <AdminWarmL5Surface
+      as="section"
+      className="mt-5"
       aria-label={t("admin_approvals_inbox_aria")}
-
       data-tt-admin-approvals-inbox="1"
 
       data-tt-admin-approvals-inbox-pending-filter={onPendingFilter ? "1" : undefined}
@@ -105,7 +100,7 @@ export function AdminApprovalsInboxStrip({ vm }: Props) {
 
             href="/admin/permissions"
 
-            className={`inline-flex min-h-[44px] items-center rounded-[var(--radius-md)] border border-ink-300 bg-white px-3 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 ${ADMIN_LINK_FOCUS_CLASS}`}
+            className={`${ADMIN_SHELL_SECONDARY_BTN_CLASS} px-3 py-2 text-small ${ADMIN_LINK_FOCUS_CLASS}`}
 
           >
 
@@ -142,7 +137,7 @@ export function AdminApprovalsInboxStrip({ vm }: Props) {
         />
       ) : null}
 
-    </section>
+    </AdminWarmL5Surface>
 
   );
 

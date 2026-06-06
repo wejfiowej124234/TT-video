@@ -17,7 +17,8 @@ describe("orderStateToStatusLabelKey", () => {
 
   it("draft family + sub_status guide_claimed", () => {
     expect(orderStateToStatusLabelKey({ state: "draft" })).toBe("order_status_draft");
-    expect(orderStateToStatusLabelKey({ state: "open" })).toBe("order_status_draft");
+    expect(orderStateToStatusLabelKey({ state: "created" })).toBe("order_status_created_listing");
+    expect(orderStateToStatusLabelKey({ state: "open" })).toBe("order_status_created_listing");
     expect(orderStateToStatusLabelKey({ state: "draft", sub_status: "guide_claimed" })).toBe(
       "order_status_pending_guide_confirm"
     );

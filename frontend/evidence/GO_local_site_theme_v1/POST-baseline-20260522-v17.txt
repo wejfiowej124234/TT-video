@@ -1,0 +1,24 @@
+
+> traveltrust-frontend@0.1.0 test
+> vitest run --run lib/uiSystem.test.ts lib/marketingUi.test.ts components/market/marketTheme.contract.test.ts components/did-rank/didRankTheme.contract.test.ts components/community/communityShellTheme.contract.test.ts components/community/communityPageTheme.contract.test.ts components/community/communityFeedActionTheme.contract.test.ts components/community/communityDrawerTheme.contract.test.ts components/guides/guidesTheme.contract.test.ts components/auth/authHelpBridgeTheme.contract.test.ts app/traveltrust/traveltrustErrorTheme.contract.test.ts
+
+
+ RUN  v2.1.9 D:/TravelTrust-V1/frontend
+
+ ✓ components/community/communityPageTheme.contract.test.ts (4 tests) 5ms
+ ✓ components/market/marketTheme.contract.test.ts (4 tests) 5ms
+ ✓ components/did-rank/didRankTheme.contract.test.ts (9 tests) 7ms
+ ✓ components/community/communityFeedActionTheme.contract.test.ts (4 tests) 5ms
+ ✓ components/community/communityShellTheme.contract.test.ts (3 tests) 4ms
+ ✓ components/guides/guidesTheme.contract.test.ts (3 tests) 4ms
+ ✓ lib/marketingUi.test.ts (3 tests) 5ms
+ ✓ lib/uiSystem.test.ts (11 tests) 6ms
+ ✓ components/auth/authHelpBridgeTheme.contract.test.ts (4 tests) 9ms
+ ✓ components/community/communityDrawerTheme.contract.test.ts (3 tests) 6ms
+ ✓ app/traveltrust/traveltrustErrorTheme.contract.test.ts (1 test) 3ms
+
+ Test Files  11 passed (11)
+      Tests  49 passed (49)
+   Start at  18:02:59
+   Duration  2.39s (transform 1.35s, setup 194ms, collect 1.99s, tests 60ms, environment 12.51s, prepare 2.70s)
+

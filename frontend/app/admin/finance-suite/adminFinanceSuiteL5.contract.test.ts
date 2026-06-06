@@ -24,6 +24,15 @@ describe("admin finance suite L5 (①)", () => {
     expect(pageMain).toContain("AdminFinanceSuiteSupplementStrip");
     expect(pageMain).toContain("AdminFinancePspPhase2DepthNotice");
     expect(pageMain).toContain("AdminFinanceSuiteHubDepthSection");
+    const hubIdx = pageMain.indexOf("<AdminFinanceSuiteHubDepthSection");
+    const supplementIdx = pageMain.indexOf("<AdminFinanceSuiteSupplementStrip");
+    expect(hubIdx).toBeGreaterThan(-1);
+    expect(supplementIdx).toBeGreaterThan(hubIdx);
+    expect(pageMain.indexOf("AdminFinancePspPhase2DepthNotice")).toBeLessThan(
+      pageMain.indexOf("data-tt-admin-fin-suite-module-grid"),
+    );
+    expect(pageMain).not.toContain("headerAside={<AdminInboxQueueBackLinks />}");
+    expect(pageMain).not.toContain("data-tt-admin-fin-suite-footer-nav");
     expect(
       readFileSync(
         join(__dir, "..", "..", "..", "components", "admin", "AdminFinanceSuiteHubDepthSection.tsx"),
@@ -31,6 +40,9 @@ describe("admin finance suite L5 (①)", () => {
       ),
     ).toContain("data-tt-admin-fin-suite-hub-depth");
     expect(pspNotice).toContain("data-tt-admin-fin-psp-phase2-notice");
+    expect(pspNotice).toContain("data-tt-admin-fin-phase-honesty-fold");
+    expect(pageMain).toContain("data-tt-admin-fin-suite-module-grid");
+    expect(pageMain).toContain("lg:grid-cols-4");
     const workflowModel = readFileSync(
       join(__dir, "..", "..", "..", "lib", "admin", "adminFinanceWorkflowModel.ts"),
       "utf8",
@@ -56,6 +68,17 @@ describe("admin finance suite L5 (①)", () => {
     expect(readFileSync(join(__dir, "adminFinanceSuitePageModel.ts"), "utf8")).toContain('status: "partial"');
     expect(readFileSync(join(__dir, "adminFinanceSuitePageModel.ts"), "utf8")).toContain('"fee-router"');
     expect(readFileSync(join(__dir, "adminFinanceSuitePageModel.ts"), "utf8")).toContain('"audit"');
+    const supplement = readFileSync(
+      join(__dir, "..", "..", "..", "components", "admin", "AdminFinanceSuiteSupplementStrip.tsx"),
+      "utf8",
+    );
+    const model = readFileSync(join(__dir, "adminFinanceSuitePageModel.ts"), "utf8");
+    expect(supplement).toContain("data-tt-admin-fin-suite-supplement-fold");
+    expect(supplement).toContain('data-tt-admin-fin-suite-supplement-default-open="0"');
+    expect(supplement).toContain("xl:grid-cols-3");
+    expect(model.match(/id: "indexer"/g)?.length).toBe(1);
+    expect(model).toContain('id: "trust-growth"');
+    expect(model).toContain('id: "alert-incidents"');
     expect(badge).toContain("admin_fin_suite_status_");
     expect(badge).toContain("data-tt-admin-fin-suite-status-badge");
   });

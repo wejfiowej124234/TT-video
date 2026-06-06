@@ -1,0 +1,31 @@
+# TT-PH1-SITE-THEME-V1 · POST baseline (v24 · 批次六 子站+行程弹窗+抽屉)
+# Phase: ① 本地 only
+# Date: 2026-05-22
+# Delta: CustomItineraryModal; marketStudioModalLayout; 子站 Masonry/详情/Filter/Footer; drawer classes; ESCROW ghost
+# Result: exit 0 · 81/81
+
+> traveltrust-frontend@0.1.0 test
+> vitest run --run lib/uiSystem.test.ts lib/marketingUi.test.ts components/market/marketTheme.contract.test.ts components/market/marketDetailDrawerClasses.contract.test.ts components/did-rank/didRankTheme.contract.test.ts components/community/communityShellTheme.contract.test.ts components/community/communityPageTheme.contract.test.ts components/community/communityFeedActionTheme.contract.test.ts components/community/communityDrawerTheme.contract.test.ts components/guides/guidesTheme.contract.test.ts components/auth/authHelpBridgeTheme.contract.test.ts app/traveltrust/traveltrustErrorTheme.contract.test.ts components/shell/marketDarkRouteScene.contract.test.ts
+
+
+ RUN  v2.1.9 D:/TravelTrust-V1/frontend
+
+ ✓ components/shell/marketDarkRouteScene.contract.test.ts (3 tests) 5ms
+ ✓ components/community/communityFeedActionTheme.contract.test.ts (9 tests) 6ms
+ ✓ components/market/marketTheme.contract.test.ts (19 tests) 8ms
+ ✓ components/did-rank/didRankTheme.contract.test.ts (14 tests) 7ms
+ ✓ components/community/communityDrawerTheme.contract.test.ts (6 tests) 7ms
+ ✓ components/market/marketDetailDrawerClasses.contract.test.ts (1 test) 3ms
+ ✓ components/guides/guidesTheme.contract.test.ts (3 tests) 4ms
+ ✓ lib/marketingUi.test.ts (3 tests) 5ms
+ ✓ components/auth/authHelpBridgeTheme.contract.test.ts (4 tests) 7ms
+ ✓ lib/uiSystem.test.ts (11 tests) 6ms
+ ✓ app/traveltrust/traveltrustErrorTheme.contract.test.ts (1 test) 3ms
+ ✓ components/community/communityPageTheme.contract.test.ts (4 tests) 4ms
+ ✓ components/community/communityShellTheme.contract.test.ts (3 tests) 5ms
+
+ Test Files  13 passed (13)
+      Tests  81 passed (81)
+   Start at  21:24:29
+   Duration  1.86s (transform 721ms, setup 285ms, collect 1.59s, tests 70ms, environment 11.64s, prepare 1.80s)
+

@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
 import {
+  ADMIN_EMPTY_NEXT_COMMUNITY_REPORTS_EMPTY,
   ADMIN_EMPTY_NEXT_PROVIDER_QUEUE_EMPTY,
   ADMIN_EMPTY_NEXT_STEWARD_QUEUE_EMPTY,
   ADMIN_EMPTY_NEXT_UNIFIED_INBOX_CLEAR,
@@ -44,7 +45,7 @@ describe("admin batch20 UX L5 (①)", () => {
   });
 
   it("finance workflow strip uses widget card + step token", () => {
-    expect(finWorkflow).toContain("ADMIN_HOME_WIDGET_CARD_CLASS");
+    expect(finWorkflow).toContain("AdminWarmL5Surface");
     expect(finWorkflow).toContain("ADMIN_FIN_WORKFLOW_STEP_CARD_CLASS");
     expect(finWorkflow).toContain('data-tt-admin-fin-workflow="1"');
     expect(finWorkflow).not.toMatch(
@@ -56,12 +57,13 @@ describe("admin batch20 UX L5 (①)", () => {
     expect(nextLinks).toContain("ADMIN_EMPTY_NEXT_PROVIDER_QUEUE_EMPTY");
     expect(nextLinks).toContain("ADMIN_EMPTY_NEXT_STEWARD_QUEUE_EMPTY");
     expect(nextLinks).toContain("ADMIN_EMPTY_NEXT_UNIFIED_INBOX_CLEAR");
-    expect(ADMIN_EMPTY_NEXT_PROVIDER_QUEUE_EMPTY).toHaveLength(3);
-    expect(ADMIN_EMPTY_NEXT_STEWARD_QUEUE_EMPTY).toHaveLength(3);
-    expect(ADMIN_EMPTY_NEXT_UNIFIED_INBOX_CLEAR).toHaveLength(3);
+    expect(ADMIN_EMPTY_NEXT_PROVIDER_QUEUE_EMPTY).toHaveLength(4);
+    expect(ADMIN_EMPTY_NEXT_STEWARD_QUEUE_EMPTY).toHaveLength(4);
+    expect(ADMIN_EMPTY_NEXT_COMMUNITY_REPORTS_EMPTY).toHaveLength(4);
+    expect(ADMIN_EMPTY_NEXT_UNIFIED_INBOX_CLEAR).toHaveLength(6);
     expect(provider).toContain("ADMIN_EMPTY_NEXT_PROVIDER_QUEUE_EMPTY");
     expect(steward).toContain("ADMIN_EMPTY_NEXT_STEWARD_QUEUE_EMPTY");
     expect(unifiedInbox).toContain("ADMIN_EMPTY_NEXT_UNIFIED_INBOX_CLEAR");
-    expect(unifiedInbox).toContain("ADMIN_HOME_WIDGET_CARD_CLASS");
+    expect(unifiedInbox).toContain("AdminWarmL5Surface");
   });
 });

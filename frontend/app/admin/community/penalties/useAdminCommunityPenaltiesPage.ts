@@ -5,18 +5,17 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useId, useMemo, useState, type FormEvent } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
-import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import { useAdminFormErrorState } from "@/lib/admin/adminFormErrorState";
 import {
-  adminFetchErrorKind,
   adminFetchJson,
   adminLogApiJsonStatus,
   adminUserFacingErrorFromUnknown,
   logAdminFetch,
-  type AdminFetchErrorKind,
 } from "@/lib/adminFetchDisplay";
+import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
 import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders, writeRequestHeaders } from "@/lib/apiClient";
+import { writeRequestHeaders } from "@/lib/apiClient";
 import { isUuidString } from "@/lib/isUuidString";
 import {
   PENALTY_ACTIONS,
@@ -28,12 +27,12 @@ import { penaltyCreateErr } from "./adminCommunityPenaltiesPageHelpers";
 import { buildPenaltiesListPath, parsePenaltiesListQuery } from "./adminCommunityPenaltiesPageQuery";
 import type {
   AdminCommunityPenaltyCreateRes,
-  AdminCommunityPenaltiesListRes,
   AdminCommunityPenaltyRow,
 } from "./adminCommunityPenaltiesPageTypes";
 
 export function useAdminCommunityPenaltiesPage() {
   const { t } = useTranslation();
+  const requestConfirm = useAdminL5ConfirmRequest();
   const pageTitleId = useId();
   const createDialogTitleId = useId();
   const createDialogDescId = useId();
@@ -51,16 +50,31 @@ export function useAdminCommunityPenaltiesPage() {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<AdminCommunityPenaltyRow[]>([]);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
+  const [reloadTick, setReloadTick] = useState(0);
+
+  const listUrl = useMemo(
+    () =>
+      routes.admin.communityPenalties({
+        limit: listQ.limit,
+        subject_user_id: listQ.subjectUserId || undefined,
+        report_id: listQ.reportId || undefined,
+        status: listQ.status || undefined,
+      }),
+    [listQ],
+  );
+
+  const { items, meta, appliedFilters, loading, refreshing, error } =
+    useAdminStandardListFetch<AdminCommunityPenaltyRow>({
+      scope: "community-penalties",
+      context: "AdminCommunityPenaltiesPage",
+      listUrl,
+      refreshToken: reloadTick,
+    });
+
   const [draftLimit, setDraftLimit] = useState(String(listQ.limit));
   const [draftSubject, setDraftSubject] = useState(listQ.subjectUserId);
   const [draftReportId, setDraftReportId] = useState(listQ.reportId);
   const [draftStatus, setDraftStatus] = useState(listQ.status);
-  const [reloadTick, setReloadTick] = useState(0);
 
   useEffect(() => {
     setDraftLimit(String(listQ.limit));
@@ -83,44 +97,6 @@ export function useAdminCommunityPenaltiesPage() {
     setShowCreate(false);
     createFormError.clearError();
   }, [createFormError]);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    setMeta(null);
-
-    const headers: Record<string, string> = { "x-request-id": `admin-penalties-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    const path = routes.admin.communityPenalties({
-      limit: listQ.limit,
-      subject_user_id: listQ.subjectUserId || undefined,
-      report_id: listQ.reportId || undefined,
-      status: listQ.status || undefined,
-    });
-
-    adminFetchJson<AdminCommunityPenaltiesListRes>("AdminCommunityPenaltiesPage", apiUrl(path), { headers })
-      .then(({ res, body }) => {
-        if (!res.ok) {
-          throw new Error(body.error || `request_failed_${res.status}`);
-        }
-        return body;
-      })
-      .then((body) => {
-        setItems(Array.isArray(body.items) ? body.items : []);
-        setMeta(isAdminMetaRecord(body.meta) ? body.meta : null);
-        setAppliedFilters(body.applied_filters ?? null);
-      })
-      .catch((e: unknown) => {
-        logAdminFetch("AdminCommunityPenaltiesPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
-  }, [listQ, reloadTick]);
 
   const apply = useCallback(
     (e?: FormEvent) => {
@@ -163,7 +139,7 @@ export function useAdminCommunityPenaltiesPage() {
     setShowCreate(true);
   }, []);
 
-  const submitCreate = useCallback(() => {
+  const submitCreateImpl = useCallback(() => {
     const sub = cSubject.trim();
     if (!sub) {
       createFormError.setError("invalid_request", t("admin_penalties_createNeedSubject"));
@@ -232,6 +208,29 @@ export function useAdminCommunityPenaltiesPage() {
       .finally(() => setCSubmitting(false));
   }, [cAction, cExpires, cMetaJson, cReason, cReportId, cSubject, closeCreate, t]);
 
+  const submitCreate = useCallback(() => {
+    const sub = cSubject.trim();
+    if (!sub) {
+      createFormError.setError("invalid_request", t("admin_penalties_createNeedSubject"));
+      return;
+    }
+    const mj = cMetaJson.trim();
+    if (mj) {
+      try {
+        JSON.parse(mj) as unknown;
+      } catch {
+        createFormError.setError("invalid_request", t("admin_penalties_createBadMeta"));
+        return;
+      }
+    }
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_danger",
+      descKey: "admin_l5_confirm_desc_penalty_create",
+      danger: true,
+      onConfirm: () => submitCreateImpl(),
+    });
+  }, [cMetaJson, cSubject, createFormError, requestConfirm, submitCreateImpl, t]);
+
   return {
     t,
     pageTitleId,
@@ -246,6 +245,7 @@ export function useAdminCommunityPenaltiesPage() {
     statusSelectId,
     listQ,
     loading,
+    refreshing,
     error,
     items,
     meta,

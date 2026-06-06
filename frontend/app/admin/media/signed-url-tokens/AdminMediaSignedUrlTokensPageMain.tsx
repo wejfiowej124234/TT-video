@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
@@ -9,13 +8,11 @@ import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatu
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminMetaBuildSection } from "@/components/admin/AdminMetaBuildPanel";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
-import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 
 import { AdminMediaSignedUrlTokensFiltersCard } from "./AdminMediaSignedUrlTokensFiltersCard";
 import { AdminMediaSignedUrlTokensMetaNote } from "./AdminMediaSignedUrlTokensMetaNote";
 import { AdminMediaSignedUrlTokensTableSection } from "./AdminMediaSignedUrlTokensTableSection";
 import { useAdminMediaSignedUrlTokensPage } from "./useAdminMediaSignedUrlTokensPage";
-import { ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
 
 /** 270 / 70：`signed_url_tokens` 签发台账只读（须 admin + DB）。 */
 export function AdminMediaSignedUrlTokensPageMain() {
@@ -30,32 +27,13 @@ export function AdminMediaSignedUrlTokensPageMain() {
   const adminListApplyResetHintId = useId();
 
   const vm = useAdminMediaSignedUrlTokensPage();
-  const { loading, error, items, meta } = vm;
+  const { loading, refreshing, error, items, meta } = vm;
 
   return (
     <AdminListPageChrome
       titleId={pageTitleId}
       title={t("admin_media_signed_url_tokens_title")}
-      subtitle={t("admin_media_signed_url_tokens_subtitle")}
-      headerAside={
-        <>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link
-            href="/admin/media/access-logs"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_media_signed_url_tokens_link_logs")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_media_signed_url_tokens_back")}
-          </Link>
-        </>
-      }
+      subtitle={t("admin_media_signed_url_tokens_subtitle_l5")}
     >
       <AdminMediaSignedUrlTokensFiltersCard
         vm={vm}
@@ -68,14 +46,16 @@ export function AdminMediaSignedUrlTokensPageMain() {
         adminListApplyResetHintId={adminListApplyResetHintId}
       />
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <AdminListLoadingStatus message={t("admin_media_signed_url_tokens_loading")} />
       ) : null}
       {error ? <AdminListFetchError errorKind={error} message={adminErrorUserText(error, t)} /> : null}
 
       <AdminMetaBuildSection meta={meta} loading={loading} error={error} />
       <AdminMediaSignedUrlTokensMetaNote loading={loading} error={error} meta={meta} />
-      <AdminMediaSignedUrlTokensTableSection loading={loading} error={error} items={items} />
+      {!error && (!loading || items.length > 0) ? (
+        <AdminMediaSignedUrlTokensTableSection refreshing={refreshing} items={items} />
+      ) : null}
     </AdminListPageChrome>
   );
 }

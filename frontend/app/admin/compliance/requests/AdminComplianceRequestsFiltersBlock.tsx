@@ -3,7 +3,10 @@
 import type { FormEvent } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
-import {ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS } from "@/lib/adminUi";
+import {ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_FILTER_INPUT_SM_CLASS,
+  ADMIN_FILTER_HINT_CLASS} from "@/lib/adminUi";
 import {
   COMPLIANCE_REQUESTS_JURIS_MAX,
   COMPLIANCE_REQUESTS_REF_MAX,
@@ -69,7 +72,7 @@ export function AdminComplianceRequestsFiltersBlock({
 
   return (
     <>
-      <div className="mt-6 rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-4 space-y-3">
+      <div className={`mt-6 ${ADMIN_FILTER_CARD_CLASS} space-y-3`}>
         <form
           id="admin-compliance-requests-filter-form"
           className="flex flex-col gap-3 lg:flex-row lg:flex-wrap lg:items-end"
@@ -81,7 +84,7 @@ export function AdminComplianceRequestsFiltersBlock({
           }
           onSubmit={apply}
         >
-          <p id={adminListApplyResetHintId} className="w-full text-meta text-ink-600 leading-relaxed lg:basis-full">
+          <p id={adminListApplyResetHintId} className={`w-full ${ADMIN_FILTER_HINT_CLASS} lg:basis-full`}>
             {t("admin_list_filters_apply_reset_hint")}
           </p>
           <div className="min-w-[8rem]">
@@ -94,7 +97,7 @@ export function AdminComplianceRequestsFiltersBlock({
               inputMode="numeric"
               value={draftLimit}
               onChange={(e) => setDraftLimit(e.target.value)}
-              className={`mt-1 min-h-[44px] w-20 rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 min-h-[44px] w-20 ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             />
           </div>
           <div className="min-w-[9rem] flex-1">
@@ -103,7 +106,7 @@ export function AdminComplianceRequestsFiltersBlock({
             </label>
             <input
               id={refInputId}
-              className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               maxLength={COMPLIANCE_REQUESTS_REF_MAX}
               value={draftRequestRef}
               onChange={(e) => setDraftRequestRef(e.target.value.slice(0, COMPLIANCE_REQUESTS_REF_MAX))}
@@ -117,7 +120,7 @@ export function AdminComplianceRequestsFiltersBlock({
             </label>
             <input
               id={subjectInputId}
-              className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               maxLength={COMPLIANCE_REQUESTS_SUBJECT_MAX}
               value={draftSubjectId}
               onChange={(e) => setDraftSubjectId(e.target.value.slice(0, COMPLIANCE_REQUESTS_SUBJECT_MAX))}
@@ -131,7 +134,7 @@ export function AdminComplianceRequestsFiltersBlock({
             </label>
             <select
               id={typeInputId}
-              className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               value={draftRequestType}
               onChange={(e) => setDraftRequestType(e.target.value)}
             >
@@ -146,7 +149,7 @@ export function AdminComplianceRequestsFiltersBlock({
             </label>
             <select
               id={statusInputId}
-              className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               value={draftStatus}
               onChange={(e) => setDraftStatus(e.target.value)}
             >
@@ -164,7 +167,7 @@ export function AdminComplianceRequestsFiltersBlock({
             </label>
             <input
               id={jurisInputId}
-              className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               maxLength={COMPLIANCE_REQUESTS_JURIS_MAX}
               value={draftJurisdiction}
               onChange={(e) => setDraftJurisdiction(e.target.value.slice(0, COMPLIANCE_REQUESTS_JURIS_MAX))}
@@ -192,7 +195,7 @@ export function AdminComplianceRequestsFiltersBlock({
             >
               <button
                 type="submit"
-                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 px-4 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`inline-flex min-h-[44px] items-center justify-center ${ADMIN_FILTER_RESET_BTN_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               >
                 {t("admin_compliance_requests_filter_clear")}
               </button>

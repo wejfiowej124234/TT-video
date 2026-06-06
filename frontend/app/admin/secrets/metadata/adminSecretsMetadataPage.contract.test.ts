@@ -13,6 +13,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminSecretsMetadataPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminSecretsMetadataFiltersCard.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminSecretsMetadataPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminSecretsMetadataPageModel.ts"), "utf8"),
   ].join("\n");
 }
@@ -22,6 +23,7 @@ describe("admin secrets metadata page", () => {
 
   it("keeps secrets metadata route + admin fetch + list chrome anchor", () => {
     expect(src).toContain("routes.admin.secretsMetadata");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("AdminSecretsMetadataPageMain");
     expect(src).toContain("AdminListPageChrome");

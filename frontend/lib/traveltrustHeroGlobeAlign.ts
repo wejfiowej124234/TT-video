@@ -13,8 +13,10 @@ export function formatHeroGlobeOpticalYPercent(centerRatio: number): string {
   return `${(clamped * 100).toFixed(2)}%`;
 }
 
-/** 无 DOM 时的桌面默认（与 split 网格左栏心对齐） */
-export const TT_HERO_GLOBE_OPTICAL_FALLBACK = "28%";
+import { TT_HERO_L5_DIRECTOR_OPTICAL_X_FALLBACK } from "@/lib/traveltrustHeroL5DirectorFinalPass";
+
+/** 无 DOM 时的桌面默认（Director Final · 光心左移） */
+export const TT_HERO_GLOBE_OPTICAL_FALLBACK = TT_HERO_L5_DIRECTOR_OPTICAL_X_FALLBACK;
 
 /** 与 `traveltrustHeroCinematicAlign` 光心纵轴同源 */
 export const TT_HERO_GLOBE_OPTICAL_Y_FALLBACK = "54%";

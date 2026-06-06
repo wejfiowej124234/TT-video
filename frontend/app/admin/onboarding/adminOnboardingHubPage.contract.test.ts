@@ -10,6 +10,10 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "page.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminOnboardingHubPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "adminOnboardingHubPageModel.ts"), "utf8"),
+    readFileSync(
+      join(__dir, "..", "..", "..", "components", "admin", "AdminOnboardingHubBackLinks.tsx"),
+      "utf8",
+    ),
   ].join("\n");
 }
 
@@ -18,9 +22,13 @@ describe("admin onboarding hub page", () => {
 
   it("keeps onboarding hub links + permission banner + DOM anchor", () => {
     expect(src).toContain("ONBOARDING_HUB_LINKS");
-    expect(src).toContain("/admin/onboarding/entitlements");
+    expect(src).toContain("ADMIN_ONBOARDING_HUB_PAGE_LINKS");
     expect(src).toContain("AdminPermissionDeniedBanner");
     expect(src).toContain('"data-tt-admin-onboarding-hub": "1"');
     expect(src).toContain("AdminDetailPageChrome");
+    const main = readFileSync(join(__dir, "AdminOnboardingHubPageMain.tsx"), "utf8");
+    expect(main).not.toContain("headerAside");
+    expect(main).not.toContain("AdminOnboardingHubBackLinks");
+    expect(main).not.toContain("data-tt-admin-back-onboarding-hub");
   });
 });

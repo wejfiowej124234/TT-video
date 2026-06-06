@@ -7,8 +7,11 @@
  */
 const q = "auto=format&fit=max&w=3840&q=90";
 
-/** 体验层首页：暖霞 + 青绿海水（Tropical jade sunrise 主情绪） */
-export const AMBIENT_BG_HOME = `https://images.unsplash.com/photo-1507525428034-b723cf961d3e?${q}`;
+/**
+ * 体验层首页默认：云海雪山 · 金色暮光（大气景区意象；避免过曝沙滩天空）
+ * Unsplash: Simon Berger — https://unsplash.com/photos/snow-covered-mountain-1506905925346
+ */
+export const AMBIENT_BG_HOME = `https://images.unsplash.com/photo-1506905925346-21bda4d32df4?${q}`;
 
 /**
  * 自由市场 `/market`：纯 CSS `MarketAmbientBackdrop`（暖场三叠层 + **弱** podium/赛博渐变/vignette，**88 §1.1**；无全屏摄影）。

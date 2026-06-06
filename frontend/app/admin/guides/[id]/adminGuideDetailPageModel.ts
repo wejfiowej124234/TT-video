@@ -1,4 +1,6 @@
 import { shortEvmAddress } from "@/lib/formatEvmAddress";
+import type { AdminOpsDetailRelatedLink } from "@/components/admin/AdminOpsDetailRelatedFold";
+import { ADMIN_OPS_OBSERVABILITY_RELATED_LINK } from "@/lib/admin/adminOpsListRelatedFoldLinks";
 
 export type AdminGuideDetailRes = {
   status?: string;
@@ -51,3 +53,10 @@ export function buildAdminGuideDetailRowDefs(guide: Record<string, unknown>): Ad
     { key: "updated_at", labelKey: "admin_guide_detail_updatedAt" },
   ];
 }
+
+export const GUIDE_DETAIL_RELATED_FOLD_LINKS: AdminOpsDetailRelatedLink[] = [
+  { href: "/admin/guides", labelKey: "admin_guide_detail_back_list", dataTt: "admin-guide-detail-back-list" },
+  { href: "/admin/users", labelKey: "admin_users_title" },
+  { href: "/admin/reviews", labelKey: "admin_reviews_title" },
+  ADMIN_OPS_OBSERVABILITY_RELATED_LINK,
+];

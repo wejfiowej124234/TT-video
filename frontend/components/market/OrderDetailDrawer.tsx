@@ -21,11 +21,62 @@ import {
 } from "@/lib/orderProjectionDisplayStatus";
 import type { MarketOrderItinerary } from "@/lib/marketTypes";
 import { stashEscrowOrderPrefetchFromDetailDrawer } from "@/lib/orderEscrowPrefetch";
-import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
+import { isMarketDevVarietyOrderId } from "@/lib/marketDevVarietyOrders";
+import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
+import { TT_MARKETING_BTN_MARKET_PRIMARY, TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
+import MarketDetailDrawerFrame from "@/components/market/MarketDetailDrawerFrame";
+import {
+  marketDetailDrawerAccordionToggle,
+  marketDetailDrawerAgreementBody,
+  marketDetailDrawerBlockLink,
+  marketDetailDrawerHintText,
+  marketDetailDrawerPrimaryCtaMatte,
+  marketDetailDrawerSummaryStrip,
+  marketDetailDrawerCard,
+  marketDetailDrawerFooterSticky,
+  marketDetailDrawerHeroScrim,
+  marketDetailDrawerScrollBody,
+  marketDetailDrawerScrollRegion,
+  marketDetailDrawerCloseBtn,
+  marketDetailDrawerHeaderRow,
+  marketDetailDrawerHeroMedia,
+  marketDetailDrawerInnerCol,
+  marketDetailDrawerPricePill,
+  marketDetailDrawerMeta,
+  marketDetailDrawerMetaList,
+  marketDetailDrawerSecondaryBtn,
+  marketDetailDrawerSkeletonBlock,
+  marketDetailDrawerSkeletonLine,
+  marketDetailDrawerSubtle,
+  marketDetailDrawerTitle,
+} from "@/components/market/marketDetailDrawerClasses";
+import {
+  formatMarketOrderDestination,
+  marketOrderCardTeaser,
+  resolveMarketOrderCoverUrl,
+} from "@/lib/marketMediaFallback";
+import { communityMediaNextImageUnoptimized } from "@/lib/communityMediaClientUrl";
 import {
   ORDERS_ESCROW_AUTO_SYNC_POLL_MS,
   orderDetailItemWatchesForBackendEscrowSync,
 } from "@/lib/ordersEscrowAutoSyncPoll";
+
+function DrawerAccordionChevron({ open }: { open: boolean }) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      className={`shrink-0 text-ref-sun/75 transition-transform duration-200 motion-reduce:transition-none ${open ? "rotate-90" : ""}`}
+      aria-hidden
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9 18l6-6-6-6" />
+    </svg>
+  );
+}
 
 /** 29 §9、52 §3.2 费用拆分（与统一表金额项顺序一致） */
 export interface OrderDetailBreakdown {
@@ -98,9 +149,6 @@ export interface OrderDetailItem {
 
 /** 53-S5：向导在右侧弹窗内「确认接该项目」后的回调；成功后可关闭抽屉并刷新列表 */
 export type OnConfirmAccept = (orderId: string) => Promise<void>;
-
-/** 顶栏高度，抽屉内容与 sticky 标题栏留白，避免被遮挡（P56-004/企业级优化） */
-const DRAWER_TOP_SAFE = "3.5rem"; // 56px，与 Header 高度一致
 
 /** 金额展示：保留两位小数，避免 54.599999、7.800000000000001 等浮点噪音 */
 function formatAmount(value: number | undefined | null, dash: string): string {
@@ -176,6 +224,7 @@ export default function OrderDetailDrawer({
   const { t } = useTranslation();
   const router = useRouter();
   const [agreementOpen, setAgreementOpen] = useState(false);
+  const [itineraryDetailOpen, setItineraryDetailOpen] = useState(false);
   const [acceptLoading, setAcceptLoading] = useState(false);
   const [acceptError, setAcceptError] = useState<string | null>(null);
   const [enrichedOrder, setEnrichedOrder] = useState<OrderDetailItem | null>(null);
@@ -198,9 +247,14 @@ export default function OrderDetailDrawer({
   const drawerDescId = useId();
   const agreementHeadingId = useId();
   const agreementBodyId = useId();
+  const itineraryDetailHeadingId = useId();
+  const itineraryDetailBodyId = useId();
 
   useEffect(() => {
-    if (order) setAgreementOpen(false);
+    if (order) {
+      setAgreementOpen(false);
+      setItineraryDetailOpen(false);
+    }
   }, [order]);
 
   useEffect(() => {
@@ -217,6 +271,10 @@ export default function OrderDetailDrawer({
   /** B-046：换单首帧即进入 loading（需 GET 时），避免仍显示上一单的骨架/闲态 */
   useLayoutEffect(() => {
     if (!order?.id) {
+      setLoadingDetail(false);
+      return;
+    }
+    if (isMarketDevVarietyOrderId(order.id)) {
       setLoadingDetail(false);
       return;
     }
@@ -247,6 +305,13 @@ export default function OrderDetailDrawer({
     }
     const hasItinerary = o.itinerary?.daily_itinerary && o.itinerary.daily_itinerary.length > 0;
     if (hasItinerary) {
+      setEnrichedOrder(null);
+      setLoadingDetail(false);
+      setDetailFetchError(null);
+      setDetailFetchErrorForId(null);
+      return;
+    }
+    if (isMarketDevVarietyOrderId(orderId)) {
       setEnrichedOrder(null);
       setLoadingDetail(false);
       setDetailFetchError(null);
@@ -410,122 +475,165 @@ export default function OrderDetailDrawer({
     Boolean(displayOrder.state) ||
     Boolean(displayOrder.status);
   const statusText = hasMainStatus ? t(statusKey) : null;
-  const dest = [displayOrder.country, displayOrder.city, displayOrder.destination].filter(Boolean).join(" · ") || dash;
+  const dest = formatMarketOrderDestination(displayOrder, dash);
+  const orderHeroImageSrc = resolveMarketOrderCoverUrl(displayOrder);
   const imageAlt = dest !== dash ? t("order_imageAlt").replace("{{dest}}", dest) : t("order_imageAltFallback");
+  const amountDisplay =
+    displayOrder.amount != null
+      ? formatAmount(parseFloat(String(displayOrder.amount).replace(/,/g, "")), dash)
+      : dash;
   const itineraryDayCount = displayOrder.itinerary?.daily_itinerary?.length ?? 0;
   const amountBreakdownForList = mergeAmountBreakdownWithLegacy(
     displayOrder.itinerary?.amount_breakdown,
     displayOrder.breakdown,
   );
+  const hasItineraryDays = (displayOrder.itinerary?.daily_itinerary?.length ?? 0) > 0;
+  const hasLegacyBreakdown =
+    !hasItineraryDays &&
+    displayOrder.breakdown != null &&
+    (displayOrder.breakdown.guideFee != null ||
+      displayOrder.breakdown.carFee != null ||
+      displayOrder.breakdown.hotel != null ||
+      displayOrder.breakdown.food != null ||
+      displayOrder.breakdown.tickets != null);
+  const hasQuoteDetail = hasItineraryDays || hasLegacyBreakdown;
+  const itineraryTeaser =
+    marketOrderCardTeaser(displayOrder) ??
+    displayOrder.itinerary?.daily_itinerary?.[0]?.description?.trim() ??
+    null;
+  const itineraryTeaserCollapsed =
+    itineraryTeaser ??
+    (displayOrder.days != null
+      ? t("order_daysItinerary").replace("{{n}}", String(displayOrder.days))
+      : null) ??
+    (dest !== dash ? dest : null) ??
+    t("market_drawer_itinerary_teaser_placeholder");
 
   return (
-    <div
-      className="fixed inset-0 z-40 flex justify-end bg-black/30 backdrop-blur-sm"
-      role="dialog"
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
-      aria-modal="true"
+    <MarketDetailDrawerFrame
+      panelRef={trapRef}
+      panelVariant="stickyFooter"
+      onRequestClose={onClose}
       aria-labelledby={drawerTitleId}
       aria-describedby={drawerDescId}
+      aria-busy={loadingDetail ? true : undefined}
     >
-      <div
-        ref={trapRef}
-        className="w-full max-w-md bg-bg-console shadow-strong overflow-y-auto animate-in slide-in-from-right duration-200 flex flex-col"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* 顶部留白，避免被顶栏遮挡；sticky 标题栏贴顶栏下方（P56-004 企业级优化） */}
-        <div className="min-h-0 flex-1 flex flex-col" style={{ paddingTop: DRAWER_TOP_SAFE }}>
-          <div
-            className="sticky z-10 flex items-center justify-between border-b border-ink-200 bg-bg-console px-4 py-3 shrink-0"
-            style={{ top: DRAWER_TOP_SAFE }}
+      <div className={marketDetailDrawerInnerCol}>
+        <div className={marketDetailDrawerHeaderRow}>
+          <h2 id={drawerTitleId} className={marketDetailDrawerTitle}>
+            {dest !== dash ? dest : t("order_drawerTitle")}
+          </h2>
+          <form
+            className="inline shrink-0"
+            onSubmit={(e) => {
+              e.preventDefault();
+              onClose();
+            }}
           >
-            <h2 id={drawerTitleId} className="text-body font-semibold text-ink-900 truncate pr-2">
-              {dest !== dash ? dest : t("order_drawerTitle")}
-            </h2>
-            <form
-              className="inline shrink-0"
-              onSubmit={(e) => {
-                e.preventDefault();
-                onClose();
-              }}
-            >
-              <button
-                type="submit"
-                className={`inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-[var(--radius-sm)] text-ink-500 hover:bg-bg-soft hover:text-ink-800 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
-                aria-label={t("order_closeDrawer")}
-              >
-                ✕
-              </button>
-            </form>
-          </div>
-          <div id={drawerDescId} className="p-4 pb-6 space-y-5 flex-1 min-h-0">
-            {displayOrder.image && (
-            <div className="rounded-[var(--radius-sm)] overflow-hidden aspect-video bg-bg-soft -mx-4 -mt-0 relative">
+            <button type="submit" className={marketDetailDrawerCloseBtn} aria-label={t("order_closeDrawer")}>
+              ✕
+            </button>
+          </form>
+        </div>
+        <div className={marketDetailDrawerScrollRegion}>
+          <div id={drawerDescId} className={marketDetailDrawerScrollBody}>
+            <div className={marketDetailDrawerHeroMedia}>
               <Image
-                src={displayOrder.image}
+                src={orderHeroImageSrc}
                 alt={imageAlt}
                 fill
                 className="object-cover"
                 loading="lazy"
-                onError={(e) => { e.currentTarget.style.display = "none"; const next = e.currentTarget.nextElementSibling; if (next) next.classList.remove("hidden"); }}
-                unoptimized
+                unoptimized={communityMediaNextImageUnoptimized(orderHeroImageSrc)}
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                  const next = e.currentTarget.nextElementSibling;
+                  if (next) next.classList.remove("hidden");
+                }}
               />
-              <div className="hidden absolute inset-0 flex items-center justify-center text-meta text-ink-500" aria-hidden="true">{t("order_imageLoadFailed")}</div>
+              <div
+                className="hidden absolute inset-0 z-[1] flex items-center justify-center text-meta text-slate-400"
+                aria-hidden="true"
+              >
+                {t("order_imageLoadFailed")}
+              </div>
+              <div className={marketDetailDrawerHeroScrim} aria-hidden="true" />
+              <div className="pointer-events-none absolute bottom-3 left-4 z-[2] flex flex-wrap items-end gap-2">
+                <span className={marketDetailDrawerPricePill}>
+                  {amountDisplay} {orderCurrency}
+                </span>
+              </div>
             </div>
-            )}
-            <section className="space-y-1">
-            <p className="text-h4 font-semibold text-ink-900">{dest}</p>
-            <p className="text-small text-ink-500">
-              {statusText && <span className="mr-2">{statusText}</span>}
-              {displayOrder.days != null ? `${displayOrder.days}${t("order_dayUnit")}` : ""}
-              {displayOrder.headcount != null && displayOrder.headcount > 0 ? ` · ${displayOrder.headcount}${t("order_personUnit")}` : ""}
-              {" · "}{t("order_versionLabel").replace("{{n}}", String(displayOrder.version ?? 1))}
-            </p>
-            {(orderProjectionDivergesFromOrderState(displayOrder) || orderProjectionTerminalDegraded(displayOrder)) ? (
-              <p className="text-meta text-amber-800 mt-1 leading-snug" role="note">
-                {orderProjectionTerminalDegraded(displayOrder)
-                  ? t("orders_projection_ssot_degraded")
-                  : t("orders_projection_ssot_notice_divergent")}
+
+            <section className="space-y-2">
+              <p className={`text-small ${marketDetailDrawerSubtle}`}>
+                {statusText ? <span className="mr-2 text-slate-200">{statusText}</span> : null}
+                {displayOrder.days != null ? `${displayOrder.days}${t("order_dayUnit")}` : ""}
+                {displayOrder.headcount != null && displayOrder.headcount > 0
+                  ? ` · ${displayOrder.headcount}${t("order_personUnit")}`
+                  : ""}
+                {" · "}
+                {t("order_versionLabel").replace("{{n}}", String(displayOrder.version ?? 1))}
               </p>
-            ) : null}
+              {(orderProjectionDivergesFromOrderState(displayOrder) ||
+                orderProjectionTerminalDegraded(displayOrder)) && (
+                <p className="text-meta text-warning/95 leading-snug" role="note">
+                  {orderProjectionTerminalDegraded(displayOrder)
+                    ? t("orders_projection_ssot_degraded")
+                    : t("orders_projection_ssot_notice_divergent")}
+                </p>
+              )}
+              <SupportedTokensPill tone="dark" />
             </section>
-            <section>
-            <p className="text-body-l font-semibold text-ink-900">
-              {displayOrder.amount != null
-                ? formatAmount(parseFloat(String(displayOrder.amount).replace(/,/g, "")), dash)
-                : dash}{" "}
-              {orderCurrency}
-            </p>
+
+            {!itineraryDetailOpen ? (
+              <section className={marketDetailDrawerSummaryStrip} aria-label={t("order_detail_itineraryTitle")}>
+                <p className="text-small font-medium text-slate-100 line-clamp-1">
+                  {dest !== dash ? dest : t("order_drawerTitle")}
+                </p>
+                <p className={`${marketDetailDrawerHintText} mt-1 line-clamp-2`}>{itineraryTeaserCollapsed}</p>
+              </section>
+            ) : null}
+
+          <section className="space-y-3">
             {Array.isArray(displayOrder.cityTransports) && displayOrder.cityTransports.length > 0 && (
-              <p className="text-meta text-ink-600 mt-1">
-                {t("order_cityTransport")}：{displayOrder.cityTransports.map((ct, i) => `${t("order_dayN").replace("{{n}}", String(i + 1))} ${t(CITY_TRANSPORT_KEYS[ct] ?? "market_transportSedan")}`).join("、")}
+              <p className={marketDetailDrawerMeta}>
+                {t("order_cityTransport")}：
+                {displayOrder.cityTransports
+                  .map(
+                    (ct, i) =>
+                      `${t("order_dayN").replace("{{n}}", String(i + 1))} ${t(CITY_TRANSPORT_KEYS[ct] ?? "market_transportSedan")}`,
+                  )
+                  .join("、")}
               </p>
             )}
             {Array.isArray(displayOrder.transportLegs) && displayOrder.transportLegs.length > 0 && (
-              <ul className="text-meta text-ink-600 mt-1 space-y-0.5">
+              <ul className={marketDetailDrawerMetaList}>
                 {displayOrder.transportLegs.map((leg, i) => (
                   <li key={i}>
-                    {t("order_interCity")}：{leg.from} → {t(LEG_TYPE_KEYS[leg.type] ?? "market_transportVehicle")} → {leg.to}
+                    {t("order_interCity")}：{leg.from} → {t(LEG_TYPE_KEYS[leg.type] ?? "market_transportVehicle")} →{" "}
+                    {leg.to}
                   </li>
                 ))}
               </ul>
             )}
             {loadingDetail && !displayOrder.itinerary?.daily_itinerary?.length && (
               <div
-                className="mt-3 space-y-2"
+                className="space-y-2"
                 role="status"
                 aria-live="polite"
                 aria-busy={true}
                 aria-label={t("order_detail_loadingItinerary")}
               >
                 <p className="sr-only">{t("order_detail_loadingItinerary")}</p>
-                <div className="h-3 w-36 max-w-[50%] rounded-[var(--radius-sm)] bg-ink-200/90 animate-pulse" />
-                <div className="h-14 w-full rounded-[var(--radius-md)] bg-ink-200/70 animate-pulse" />
-                <div className="h-14 w-full rounded-[var(--radius-md)] bg-ink-200/60 animate-pulse" />
+                <div className={`h-3 w-36 max-w-[50%] ${marketDetailDrawerSkeletonLine}`} />
+                <div className={`h-14 w-full ${marketDetailDrawerSkeletonBlock}`} />
+                <div className={`h-14 w-full ${marketDetailDrawerSkeletonBlock}`} />
               </div>
             )}
             {showDetailFetchError && detailFetchError ? (
-              <div className="mt-2 space-y-2">
-                <ApiErrorAlert message={detailFetchError} />
+              <div className="space-y-2">
+                <ApiErrorAlert message={detailFetchError} tone="dark" />
                 <form
                   className="inline"
                   onSubmit={(e: FormEvent) => {
@@ -539,86 +647,149 @@ export default function OrderDetailDrawer({
                     disabled={loadingDetail}
                     aria-label={t("common_retry")}
                     aria-busy={loadingDetail ? true : undefined}
-                    className={`${touchTargetLink44Classes} rounded-[var(--radius-sm)] border border-ink-300 bg-white px-3 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 disabled:opacity-50 disabled:cursor-not-allowed ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+                    className={marketDetailDrawerSecondaryBtn}
                   >
                     {loadingDetail ? t("common_retrying") : t("common_retry")}
                   </button>
                 </form>
               </div>
             ) : null}
-            {!loadingDetail && displayOrder.itinerary?.daily_itinerary && displayOrder.itinerary.daily_itinerary.length > 0 && (
-              <div className="mt-3 rounded-[var(--radius-sm)] border border-ink-200 bg-bg-soft p-3">
-                <h3 className="text-small font-semibold text-ink-800 mb-2">{t("order_detail_itineraryTitle")}</h3>
-                <UnifiedItineraryList
-                  days={displayOrder.itinerary.daily_itinerary}
-                  amountBreakdown={amountBreakdownForList}
-                  currency={orderCurrency}
-                  collapsible={itineraryDayCount > 1}
-                  variant="trust"
-                  t={t}
-                />
-              </div>
-            )}
-            {!loadingDetail && !displayOrder.itinerary?.daily_itinerary?.length && displayOrder.breakdown && (displayOrder.breakdown.guideFee != null || displayOrder.breakdown.carFee != null || displayOrder.breakdown.hotel != null || displayOrder.breakdown.food != null || displayOrder.breakdown.tickets != null) && (
-              <ul className="text-meta text-ink-600 mt-2 space-y-1" role="list">
-                {displayOrder.breakdown.hotel != null && <li>{t("escrow_hotel")}{formatAmount(displayOrder.breakdown.hotel, dash)} {orderCurrency}</li>}
-                {(displayOrder.breakdown.food != null || displayOrder.breakdown.catering != null) && <li>{t("escrow_catering")}{formatAmount(displayOrder.breakdown.food ?? displayOrder.breakdown.catering, dash)} {orderCurrency}</li>}
-                {displayOrder.breakdown.tickets != null && <li>{t("escrow_tickets")}{formatAmount(displayOrder.breakdown.tickets, dash)} {orderCurrency}</li>}
-                {displayOrder.breakdown.guideFee != null && (
-                  <li>
-                    {displayOrder.guideLevel && GUIDE_LEVEL_KEYS[displayOrder.guideLevel] && (
-                      <>{t(GUIDE_LEVEL_KEYS[displayOrder.guideLevel])} · </>
-                    )}
-                    {t("escrow_guideFee")}{formatAmount(displayOrder.breakdown.guideFee, dash)} {orderCurrency}
-                  </li>
-                )}
-                {(displayOrder.breakdown.carFee != null || displayOrder.breakdown.vehicle != null) && <li>{t("escrow_vehicle")}{formatAmount(displayOrder.breakdown.carFee ?? displayOrder.breakdown.vehicle, dash)} {orderCurrency}</li>}
-                {(displayOrder.breakdown.platform_fee != null || displayOrder.breakdown.misc != null) && <li>{t("escrow_platformFee")}{formatAmount(displayOrder.breakdown.platform_fee ?? displayOrder.breakdown.misc, dash)} {orderCurrency}</li>}
-                {displayOrder.breakdown.total_budget != null && <li className="font-semibold text-ink-800 pt-1.5 border-t border-ink-200 mt-1">{t("escrow_totalBudget")}{formatAmount(displayOrder.breakdown.total_budget, dash)} {orderCurrency}</li>}
-              </ul>
+            {!loadingDetail && hasQuoteDetail && (
+              <section aria-labelledby={itineraryDetailHeadingId}>
+                <button
+                  type="button"
+                  onClick={() => setItineraryDetailOpen((o) => !o)}
+                  className={marketDetailDrawerAccordionToggle}
+                  aria-expanded={itineraryDetailOpen}
+                  aria-controls={itineraryDetailBodyId}
+                  id={itineraryDetailHeadingId}
+                  aria-label={
+                    itineraryDetailOpen
+                      ? t("market_drawer_itinerary_collapse")
+                      : t("market_drawer_itinerary_expand")
+                  }
+                >
+                  {t("order_detail_itineraryTitle")}
+                  <DrawerAccordionChevron open={itineraryDetailOpen} />
+                </button>
+                <div id={itineraryDetailBodyId} hidden={!itineraryDetailOpen} className="mt-2 space-y-3">
+                  {hasItineraryDays && displayOrder.itinerary?.daily_itinerary && (
+                    <div className={marketDetailDrawerCard}>
+                      <UnifiedItineraryList
+                        days={displayOrder.itinerary.daily_itinerary}
+                        amountBreakdown={amountBreakdownForList}
+                        currency={orderCurrency}
+                        collapsible={itineraryDayCount > 1}
+                        variant="marketDark"
+                        t={t}
+                      />
+                    </div>
+                  )}
+                  {hasLegacyBreakdown && displayOrder.breakdown && (
+                    <div className={marketDetailDrawerCard}>
+                      <ul className={`${marketDetailDrawerMetaList} space-y-1`} role="list">
+                        {displayOrder.breakdown.hotel != null && (
+                          <li>
+                            {t("escrow_hotel")}
+                            {formatAmount(displayOrder.breakdown.hotel, dash)} {orderCurrency}
+                          </li>
+                        )}
+                        {(displayOrder.breakdown.food != null || displayOrder.breakdown.catering != null) && (
+                          <li>
+                            {t("escrow_catering")}
+                            {formatAmount(displayOrder.breakdown.food ?? displayOrder.breakdown.catering, dash)}{" "}
+                            {orderCurrency}
+                          </li>
+                        )}
+                        {displayOrder.breakdown.tickets != null && (
+                          <li>
+                            {t("escrow_tickets")}
+                            {formatAmount(displayOrder.breakdown.tickets, dash)} {orderCurrency}
+                          </li>
+                        )}
+                        {displayOrder.breakdown.guideFee != null && (
+                          <li>
+                            {displayOrder.guideLevel && GUIDE_LEVEL_KEYS[displayOrder.guideLevel] && (
+                              <>{t(GUIDE_LEVEL_KEYS[displayOrder.guideLevel])} · </>
+                            )}
+                            {t("escrow_guideFee")}
+                            {formatAmount(displayOrder.breakdown.guideFee, dash)} {orderCurrency}
+                          </li>
+                        )}
+                        {(displayOrder.breakdown.carFee != null || displayOrder.breakdown.vehicle != null) && (
+                          <li>
+                            {t("escrow_vehicle")}
+                            {formatAmount(displayOrder.breakdown.carFee ?? displayOrder.breakdown.vehicle, dash)}{" "}
+                            {orderCurrency}
+                          </li>
+                        )}
+                        {(displayOrder.breakdown.platform_fee != null || displayOrder.breakdown.misc != null) && (
+                          <li>
+                            {t("escrow_platformFee")}
+                            {formatAmount(displayOrder.breakdown.platform_fee ?? displayOrder.breakdown.misc, dash)}{" "}
+                            {orderCurrency}
+                          </li>
+                        )}
+                        {displayOrder.breakdown.total_budget != null && (
+                          <li className="font-semibold text-slate-200 pt-1.5 border-t border-ref-sun/16 mt-1">
+                            {t("escrow_totalBudget")}
+                            {formatAmount(displayOrder.breakdown.total_budget, dash)} {orderCurrency}
+                          </li>
+                        )}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </section>
             )}
             {Array.isArray(displayOrder.highlights) && displayOrder.highlights.length > 0 && (
-              <ul className="text-small text-ink-600 mt-2 list-disc list-inside space-y-0.5">
+              <ul className="text-small text-slate-300 list-disc list-inside space-y-0.5">
                 {displayOrder.highlights.slice(0, 3).map((h, i) => (
                   <li key={i}>{h}</li>
                 ))}
               </ul>
             )}
-            <div className="flex items-center gap-2 mt-1">
-              <SupportedTokensPill />
-              <span className="text-meta text-ink-500">{t("order_onChain")}</span>
-            </div>
-            </section>
+          </section>
 
-            <section aria-labelledby={agreementHeadingId}>
+          <section aria-labelledby={agreementHeadingId}>
             <button
               type="button"
               onClick={() => setAgreementOpen((o) => !o)}
-              className={`w-full flex items-center justify-between rounded-[var(--radius-sm)] border border-ink-200 bg-bg-soft/50 px-3 py-2 text-left text-small font-medium text-ink-800 hover:bg-bg-soft ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+              className={marketDetailDrawerAccordionToggle}
               aria-expanded={agreementOpen}
               aria-controls={agreementBodyId}
               id={agreementHeadingId}
               aria-label={agreementOpen ? t("order_detail_agreementCollapse") : t("order_detail_agreementExpand")}
             >
               {t("order_detail_agreementTitle")}
-              <span className="text-ink-500" aria-hidden="true">{agreementOpen ? "▼" : "▶"}</span>
+              <DrawerAccordionChevron open={agreementOpen} />
             </button>
             {!agreementOpen && (
-              <p className="text-meta text-ink-500 mt-1" aria-hidden="true">{t("order_detail_agreementCollapsedHint")}</p>
+              <p className={`${marketDetailDrawerHintText} mt-1`} aria-hidden="true">
+                {t("order_detail_agreementCollapsedHint")}
+              </p>
             )}
-            <div id={agreementBodyId} hidden={!agreementOpen} className="mt-2 rounded-[var(--radius-sm)] border border-ink-100 bg-bg-soft/30 px-3 py-2 text-meta text-ink-600 space-y-1">
+            <div id={agreementBodyId} hidden={!agreementOpen} className={marketDetailDrawerAgreementBody}>
               <p>{t("order_detail_payToken").replace("{{currency}}", orderCurrency)}</p>
               <p>{t("order_detail_platformFee")}</p>
               <p>{t("order_detail_snapshotHash")}</p>
             </div>
-            </section>
+          </section>
 
-            <p className="text-small text-ink-600">{t("order_detail_guideCta")}</p>
-            {acceptError && (
-              <p className="text-small text-danger" role="alert">{acceptError}</p>
-            )}
-            <div className="flex flex-col gap-2 pt-2">
-            {onConfirmAccept && (displayOrder.status === "draft" || displayOrder.status === "created" || displayOrder.status === "open") && (
+          </div>
+        </div>
+        <div className={marketDetailDrawerFooterSticky}>
+          <p className={`${marketDetailDrawerHintText} pb-1`}>{t("order_detail_guideCta")}</p>
+          {acceptError && (
+            <p className="text-small text-danger" role="alert">
+              {acceptError}
+            </p>
+          )}
+          {onConfirmAccept &&
+            !isMarketDevVarietyOrderId(order.id) &&
+            (displayOrder.status === "draft" ||
+              displayOrder.status === "created" ||
+              displayOrder.status === "open") && (
               <form
                 className="w-full"
                 onSubmit={(e) => {
@@ -650,7 +821,7 @@ export default function OrderDetailDrawer({
                 <button
                   type="submit"
                   disabled={acceptLoading}
-                  className={`btn-console w-full rounded-[var(--radius-sm)] bg-travel-500 px-4 py-2 text-white text-small font-medium disabled:opacity-60 disabled:cursor-not-allowed ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+                    className={marketDetailDrawerPrimaryCtaMatte}
                   aria-label={t("order_detail_confirmAccept")}
                   aria-busy={acceptLoading ? true : undefined}
                 >
@@ -658,26 +829,24 @@ export default function OrderDetailDrawer({
                 </button>
               </form>
             )}
+          <Link
+            href={`/escrow/${encodeURIComponent(order.id)}`}
+            onClick={stashDrawerEscrowPayPrefetch}
+            className={marketDetailDrawerBlockLink}
+          >
+            {t("order_detail_cta")}
+          </Link>
+          {orderLikeMayOnchainDeposit(displayOrder) && (
             <Link
-              href={`/escrow/${encodeURIComponent(order.id)}`}
+              href={`/pay?orderId=${encodeURIComponent(displayOrder.id)}`}
               onClick={stashDrawerEscrowPayPrefetch}
-              className={`${touchTargetLink44Classes} btn-console rounded-[var(--radius-sm)] border border-ink-300 px-4 py-2 text-ink-800 text-small font-medium text-center ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+              className={`${touchTargetLink44Classes} text-small font-medium text-center ${TT_MARKETING_MARKET_DARK_PATH.inlineLinkUnderline} ${TT_MARKETING_MARKET_DARK_PATH.drawerControlFocus}`}
             >
-              {t("order_detail_cta")}
+              {t("orders_payHub")}
             </Link>
-            {orderLikeMayOnchainDeposit(displayOrder) && (
-              <Link
-                href={`/pay?orderId=${encodeURIComponent(displayOrder.id)}`}
-                onClick={stashDrawerEscrowPayPrefetch}
-                className={`${touchTargetLink44Classes} btn-console rounded-[var(--radius-sm)] border border-travel-500/50 bg-travel-500/5 px-4 py-2 text-travel-700 text-small font-medium text-center ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
-              >
-                {t("orders_payHub")}
-              </Link>
-            )}
-            </div>
-          </div>
+          )}
         </div>
       </div>
-    </div>
+    </MarketDetailDrawerFrame>
   );
 }

@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { adminHomeModulesFoldDefaultOpen, adminHomeInboxPendingTotal } from "./adminHomeInboxPendingTotal";
+import { adminHomeModulesFoldDefaultOpen, adminHomeInboxPendingTotal, resolveAdminHomeInboxPendingTotal } from "./adminHomeInboxPendingTotal";
+import {
+  readAdminHomeInboxPendingTotalCache,
+  writeAdminHomeInboxPendingTotalCache,
+} from "./adminHomeInboxPendingTotalCache";
 
 describe("adminHomeInboxPendingTotal", () => {
   const channels = {
@@ -20,6 +24,37 @@ describe("adminHomeInboxPendingTotal", () => {
       true,
     );
     expect(total).toBe(78);
+  });
+
+  it("returns partial sum while loading when counts are already resolved", () => {
+    const total = adminHomeInboxPendingTotal(
+      { provider: 0, steward: 0, approvals: null, reports: 78 },
+      channels,
+      true,
+      false,
+      () => true,
+      true,
+    );
+    expect(total).toBe(78);
+  });
+
+  it("returns null while loading before any channel count resolves", () => {
+    const total = adminHomeInboxPendingTotal(
+      { provider: null, steward: null, approvals: null, reports: null },
+      channels,
+      true,
+      false,
+      () => true,
+      true,
+    );
+    expect(total).toBeNull();
+  });
+
+  it("resolve uses session cache while inbox counts still loading", () => {
+    writeAdminHomeInboxPendingTotalCache(78);
+    expect(readAdminHomeInboxPendingTotalCache()).toBe(78);
+    const resolved = resolveAdminHomeInboxPendingTotal(null, true, true, false);
+    expect(resolved).toBe(78);
   });
 
   it("collapses module wall when pending > 0", () => {

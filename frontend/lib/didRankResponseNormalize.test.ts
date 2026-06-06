@@ -96,4 +96,9 @@ describe("normalizeDidRankItineraryRow", () => {
     );
     expect(row?.title).toBe("JP · Tokyo");
   });
+
+  it("parses rank_delta from API row", () => {
+    const row = normalizeDidRankItineraryRow({ id: "o1", rank: 2, rank_delta: 1 }, "—");
+    expect(row?.rank_delta).toBe(1);
+  });
 });

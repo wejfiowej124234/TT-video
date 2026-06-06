@@ -29,18 +29,51 @@ export type TrustGrowthMomentExperiment = {
 export const TRUST_GROWTH_EXPERIMENTS: Record<TrustGrowthMoment, TrustGrowthMomentExperiment> = {
   register: {
     enabled: true,
-    version: 1,
+    /** v2：注册 L5 UI — 信任条默认折叠摘要（与登录页呼吸感对齐） */
+    version: 2,
     variants: [
-      { id: "control", weight: 34, copyModule: "default", evidenceCount: 3, delayMs: 0, defaultExpanded: true },
+      { id: "control", weight: 34, copyModule: "default", evidenceCount: 2, delayMs: 0, defaultExpanded: false },
       {
         id: "minimal_delayed",
         weight: 33,
         copyModule: "default",
         evidenceCount: 1,
-        delayMs: 1200,
+        delayMs: 400,
         defaultExpanded: false,
       },
-      { id: "alt_copy", weight: 33, copyModule: "alt", evidenceCount: 3, delayMs: 0, defaultExpanded: true },
+      { id: "alt_copy", weight: 33, copyModule: "alt", evidenceCount: 2, delayMs: 0, defaultExpanded: false },
+    ],
+  },
+  guide_apply: {
+    enabled: true,
+    version: 1,
+    variants: [
+      { id: "control", weight: 34, copyModule: "default", evidenceCount: 2, delayMs: 0, defaultExpanded: false },
+      {
+        id: "minimal_delayed",
+        weight: 33,
+        copyModule: "default",
+        evidenceCount: 1,
+        delayMs: 400,
+        defaultExpanded: false,
+      },
+      { id: "alt_copy", weight: 33, copyModule: "alt", evidenceCount: 2, delayMs: 0, defaultExpanded: false },
+    ],
+  },
+  steward_apply: {
+    enabled: true,
+    version: 1,
+    variants: [
+      { id: "control", weight: 34, copyModule: "default", evidenceCount: 2, delayMs: 0, defaultExpanded: false },
+      {
+        id: "minimal_delayed",
+        weight: 33,
+        copyModule: "default",
+        evidenceCount: 1,
+        delayMs: 400,
+        defaultExpanded: false,
+      },
+      { id: "alt_copy", weight: 33, copyModule: "alt", evidenceCount: 2, delayMs: 0, defaultExpanded: false },
     ],
   },
   first_yield: {

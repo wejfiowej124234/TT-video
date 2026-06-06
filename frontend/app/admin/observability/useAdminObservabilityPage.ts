@@ -1,49 +1,50 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 
+import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
+import { routes } from "@/lib/api";
 import {
-  type AdminFetchErrorKind,
-  adminFetchErrorKind,
-  adminFetchJson,
-  logAdminFetch,
-} from "@/lib/adminFetchDisplay";
-import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders } from "@/lib/apiClient";
+  type AdminListFetchSnapshot,
+  type AdminStandardListBody,
+  useAdminStandardListFetch,
+} from "@/lib/admin/useAdminStandardListFetch";
 
-import type { OverviewBody } from "./observabilityPageModel";
+import { ADMIN_OBS_OVERVIEW_META_KEY, type OverviewBody } from "./observabilityPageModel";
+
+function obsOverviewToSnapshot(body: AdminStandardListBody<never> & OverviewBody): AdminListFetchSnapshot<never> {
+  const metaBase = isAdminMetaRecord(body.meta) ? body.meta : {};
+  return {
+    items: [],
+    appliedFilters: null,
+    meta: {
+      ...metaBase,
+      [ADMIN_OBS_OVERVIEW_META_KEY]: body,
+    },
+  };
+}
 
 export function useAdminObservabilityPage() {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [body, setBody] = useState<OverviewBody | null>(null);
+  const listUrl = routes.admin.observabilityOverview;
 
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
+  const { meta: rawMeta, loading, refreshing, error } = useAdminStandardListFetch<never>({
+    scope: "observability-overview",
+    context: "AdminObservabilityPage",
+    listUrl,
+    toSnapshot: obsOverviewToSnapshot,
+  });
 
-    const headers: Record<string, string> = { "x-request-id": `admin-obs-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403 handled below
+  const body = useMemo((): OverviewBody | null => {
+    const raw = rawMeta?.[ADMIN_OBS_OVERVIEW_META_KEY];
+    if (raw && typeof raw === "object" && !Array.isArray(raw)) {
+      return raw as OverviewBody;
     }
+    return null;
+  }, [rawMeta]);
 
-    adminFetchJson<OverviewBody>("AdminObservabilityPage", apiUrl(routes.admin.observabilityOverview), { headers })
-      .then(({ res, body: json }) => {
-        if (res.status === 403 || res.status === 401) {
-          throw new Error("forbidden");
-        }
-        if (!res.ok) {
-          throw new Error(json.error || `request_failed_${res.status}`);
-        }
-        return json;
-      })
-      .then(setBody)
-      .catch((e: unknown) => {
-        logAdminFetch("AdminObservabilityPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
-  }, []);
+  const meta = useMemo(() => {
+    if (!rawMeta) return null;
+    const { [ADMIN_OBS_OVERVIEW_META_KEY]: _drop, ...rest } = rawMeta;
+    return isAdminMetaRecord(rest) && Object.keys(rest).length > 0 ? rest : null;
+  }, [rawMeta]);
 
-  return { loading, error, body };
+  return { loading, refreshing, error, body, meta };
 }

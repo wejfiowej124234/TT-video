@@ -3,10 +3,14 @@
 import { type FormEvent } from "react";
 import { AdminAlertError } from "@/components/admin/AdminAlertError";
 import { AdminDialogFocusPanel } from "@/components/admin/AdminDialogFocusPanel";
+import { AdminModalWarmL5Panel } from "@/components/admin/AdminModalWarmL5Panel";
 import { AdminDialogScrim } from "@/components/admin/AdminDialogScrim";
 import { adminModalPortalRootSheetClass } from "@/components/market/marketStudioModalLayout";
 import type { AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
-import {ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS } from "@/lib/adminUi";
+import {ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  ADMIN_MODAL_CANCEL_BTN_CLASS,
+  ADMIN_FORM_CONTROL_SM_CLASS,
+  ADMIN_CONSOLE_INNER_PANEL_CLASS,} from "@/lib/adminUi";
 import {
   MOD_STATUS_OPTIONS,
   PENALTY_ACTIONS,
@@ -84,8 +88,9 @@ export function AdminCommunityReportsModerationModal({
       <AdminDialogFocusPanel
         onClose={closeMod}
         trapId="reports-moderation-legacy"
-        className="relative z-10 max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-[var(--radius-xl)] border border-ink-200 bg-white p-5 shadow-medium"
+        className="relative z-10 w-full flex justify-center px-4"
       >
+        <AdminModalWarmL5Panel className="max-w-lg w-full max-h-[90vh] overflow-y-auto">
         <h2 id={modDialogTitleId} className="text-body-l font-semibold text-ink-900">
           {t("admin_reports_modTitle")}
         </h2>
@@ -117,7 +122,7 @@ export function AdminCommunityReportsModerationModal({
               inputMode="numeric"
               value={modExpectedVer}
               onChange={(e) => setModExpectedVer(e.target.value)}
-              className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 font-mono ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 w-full min-h-[44px] ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1 font-mono ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             />
           </label>
           <label className="block text-ink-700">
@@ -126,7 +131,7 @@ export function AdminCommunityReportsModerationModal({
               name="status"
               value={modStatus}
               onChange={(e) => setModStatus(e.target.value as (typeof MOD_STATUS_OPTIONS)[number])}
-              className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             >
               {MOD_STATUS_OPTIONS.map((v) => (
                 <option key={v} value={v}>
@@ -142,7 +147,7 @@ export function AdminCommunityReportsModerationModal({
               value={modNotes}
               onChange={(e) => setModNotes(e.target.value)}
               rows={2}
-              className={`mt-1 w-full min-h-[80px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-2 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 w-full min-h-[80px] ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-2 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             />
           </label>
           <label className="block text-ink-700">
@@ -152,11 +157,11 @@ export function AdminCommunityReportsModerationModal({
               name="disposition"
               value={modDisposition}
               onChange={(e) => setModDisposition(e.target.value)}
-              className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 w-full min-h-[44px] ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             />
           </label>
 
-          <div className="rounded-[var(--radius-md)] border border-ink-100 bg-bg-console p-3 space-y-2">
+          <div className={`${ADMIN_CONSOLE_INNER_PANEL_CLASS} p-3 space-y-2`}>
             <label className="flex items-center gap-2 text-ink-800">
               <input
                 type="checkbox"
@@ -177,7 +182,7 @@ export function AdminCommunityReportsModerationModal({
                     onChange={(e) =>
                       setModPenaltyAction(e.target.value as (typeof PENALTY_ACTIONS)[number])
                     }
-                    className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 font-mono ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                    className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1 font-mono ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                   >
                     {PENALTY_ACTIONS.map((a) => (
                       <option key={a} value={a}>
@@ -193,7 +198,7 @@ export function AdminCommunityReportsModerationModal({
                     name="penalty_subject_user_id"
                     value={modPenaltySubject}
                     onChange={(e) => setModPenaltySubject(e.target.value)}
-                    className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 font-mono text-meta ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                    className={`mt-1 w-full min-h-[44px] ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1 font-mono text-meta ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                     placeholder={t("admin_reports_modPenaltySubjectPh")}
                     autoComplete="off"
                   />
@@ -205,7 +210,7 @@ export function AdminCommunityReportsModerationModal({
                     name="penalty_reason"
                     value={modPenaltyReason}
                     onChange={(e) => setModPenaltyReason(e.target.value)}
-                    className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                    className={`mt-1 w-full min-h-[44px] ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                   />
                 </label>
                 <label className="block text-ink-700">
@@ -215,7 +220,7 @@ export function AdminCommunityReportsModerationModal({
                     name="penalty_expires_at"
                     value={modPenaltyExpires}
                     onChange={(e) => setModPenaltyExpires(e.target.value)}
-                    className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 font-mono text-meta ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                    className={`mt-1 w-full min-h-[44px] ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1 font-mono text-meta ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                     placeholder={t("admin_reports_modPenaltyExpiresPh")}
                     autoComplete="off"
                   />
@@ -234,7 +239,7 @@ export function AdminCommunityReportsModerationModal({
               name="admin_modal_intent"
               value="cancel"
               formNoValidate
-              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-200 bg-white px-4 py-2 text-small font-medium text-ink-800 hover:bg-bg-console ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`inline-flex min-h-[44px] items-center justify-center ${ADMIN_MODAL_CANCEL_BTN_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             >
               {t("admin_reports_modCancel")}
             </button>
@@ -248,6 +253,7 @@ export function AdminCommunityReportsModerationModal({
             </button>
           </div>
         </form>
+            </AdminModalWarmL5Panel>
       </AdminDialogFocusPanel>
     </div>
   );

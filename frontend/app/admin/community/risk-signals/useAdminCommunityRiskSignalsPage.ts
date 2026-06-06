@@ -4,22 +4,15 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { type Dispatch, type FormEvent, type SetStateAction, useEffect, useId, useMemo, useState } from "react";
 
-import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
-import {
-  type AdminFetchErrorKind,
-  adminFetchErrorKind,
-  adminFetchJson,
-  logAdminFetch,
-} from "@/lib/adminFetchDisplay";
-import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders } from "@/lib/apiClient";
+import { routes } from "@/lib/api";
 import { isUuidString } from "@/lib/isUuidString";
+import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
+import type { AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
 import {
   ADMIN_RISK_SIGNALS_RID_MAX,
   ADMIN_RISK_SIGNALS_SEV_MAX,
   ADMIN_RISK_SIGNALS_ST_MAX,
   type AdminRiskSignalRow,
-  type AdminRiskSignalsResponse,
   buildRiskSignalsPath,
   parseRiskSignalsQuery,
 } from "./adminRiskSignalsPageModel";
@@ -30,6 +23,7 @@ export type AdminCommunityRiskSignalsPageViewModel = {
   adminListApplyResetHintId: string;
   listQ: ReturnType<typeof parseRiskSignalsQuery>;
   loading: boolean;
+  refreshing: boolean;
   error: AdminFetchErrorKind | null;
   items: AdminRiskSignalRow[];
   meta: Record<string, unknown> | null;
@@ -63,11 +57,25 @@ export function useAdminCommunityRiskSignalsPage(): AdminCommunityRiskSignalsPag
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<AdminRiskSignalRow[]>([]);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
+  const listUrl = useMemo(
+    () =>
+      routes.admin.communityRiskSignals({
+        limit: listQ.limit,
+        subject_user_id: listQ.subjectUserId || undefined,
+        signal_type: listQ.signalType || undefined,
+        rule_id: listQ.ruleId || undefined,
+        severity: listQ.severity || undefined,
+      }),
+    [listQ],
+  );
+
+  const { items, meta, appliedFilters, loading, refreshing, error } =
+    useAdminStandardListFetch<AdminRiskSignalRow>({
+      scope: "community-risk-signals",
+      context: "AdminCommunityRiskSignalsPage",
+      listUrl,
+    });
+
   const [draftLimit, setDraftLimit] = useState(String(listQ.limit));
   const [draftSubject, setDraftSubject] = useState(listQ.subjectUserId);
   const [draftSignalType, setDraftSignalType] = useState(listQ.signalType);
@@ -80,45 +88,6 @@ export function useAdminCommunityRiskSignalsPage(): AdminCommunityRiskSignalsPag
     setDraftSignalType(listQ.signalType);
     setDraftRuleId(listQ.ruleId);
     setDraftSeverity(listQ.severity);
-  }, [listQ]);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    setMeta(null);
-
-    const headers: Record<string, string> = { "x-request-id": `admin-risk-sig-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    const path = routes.admin.communityRiskSignals({
-      limit: listQ.limit,
-      subject_user_id: listQ.subjectUserId || undefined,
-      signal_type: listQ.signalType || undefined,
-      rule_id: listQ.ruleId || undefined,
-      severity: listQ.severity || undefined,
-    });
-
-    adminFetchJson<AdminRiskSignalsResponse>("AdminCommunityRiskSignalsPage", apiUrl(path), { headers })
-      .then(({ res, body }) => {
-        if (!res.ok) {
-          throw new Error(body.error || `request_failed_${res.status}`);
-        }
-        return body;
-      })
-      .then((body) => {
-        setItems(Array.isArray(body.items) ? body.items : []);
-        setMeta(isAdminMetaRecord(body.meta) ? body.meta : null);
-        setAppliedFilters(body.applied_filters ?? null);
-      })
-      .catch((e: unknown) => {
-        logAdminFetch("AdminCommunityRiskSignalsPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
   }, [listQ]);
 
   const apply = (e?: FormEvent) => {
@@ -164,6 +133,7 @@ export function useAdminCommunityRiskSignalsPage(): AdminCommunityRiskSignalsPag
     adminListApplyResetHintId,
     listQ,
     loading,
+    refreshing,
     error,
     items,
     meta,

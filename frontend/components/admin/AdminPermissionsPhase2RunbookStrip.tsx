@@ -3,15 +3,20 @@
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminClipboardCopyButton } from "@/components/admin/AdminClipboardCopyButton";
 import { ADMIN_PHASE2_RUNBOOK_QUICK_COMMANDS } from "@/lib/admin/adminPhase2LocalPrepCommands";
-import { ADMIN_NOTICE_INFO_CLASS } from "@/lib/adminUi";
+import {
+  ADMIN_NOTICE_INFO_CLASS,
+  ADMIN_PHASE2_RUNBOOK_ITEM_CLASS,
+} from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 
 /** CI-02 · ① 权限页 Phase ② 本地预备快捷命令（非 staging GO）。 */
 export function AdminPermissionsPhase2RunbookStrip() {
   const { t } = useTranslation();
 
   return (
-    <section
-      className="mt-4 rounded-[var(--radius-lg)] border border-ink-200 bg-ink-50/60 p-4"
+    <AdminWarmL5Surface
+      as="section"
+      className="mt-4"
       aria-label={t("admin_phase2_runbook_aria")}
       data-tt-admin-phase2-runbook-strip="1"
     >
@@ -21,7 +26,7 @@ export function AdminPermissionsPhase2RunbookStrip() {
         {ADMIN_PHASE2_RUNBOOK_QUICK_COMMANDS.map((row) => (
           <li
             key={row.id}
-            className="rounded-[var(--radius-md)] border border-ink-200 bg-white p-3"
+            className={ADMIN_PHASE2_RUNBOOK_ITEM_CLASS}
             data-tt-admin-phase2-runbook-item={row.id}
           >
             <p className="text-small font-medium text-ink-900">{t(row.titleKey)}</p>
@@ -37,6 +42,6 @@ export function AdminPermissionsPhase2RunbookStrip() {
           </li>
         ))}
       </ul>
-    </section>
+    </AdminWarmL5Surface>
   );
 }

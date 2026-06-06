@@ -53,6 +53,6 @@ describe("AdminDriftSummaryPage C-08 read-only contract", () => {
     expect(screen.getByTestId("admin-audit-read-only-scope").textContent).toContain(
       "admin_audit_tools_read_only_scope",
     );
-    expect(screen.getByText("admin_drift_summary_subtitle")).toBeTruthy();
+    expect(screen.getByText("admin_drift_summary_subtitle_l5")).toBeTruthy();
   });
 });

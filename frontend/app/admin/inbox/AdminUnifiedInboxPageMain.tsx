@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useId, useMemo, useRef, useState } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
+import { AdminInboxQueueBackLinks } from "@/components/admin/AdminInboxQueueBackLinks";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
 import { AdminNoticeBanner } from "@/components/admin/AdminNoticeBanner";
@@ -12,19 +13,21 @@ import { adminHomeInboxPendingTotal } from "@/lib/admin/adminHomeInboxPendingTot
 import { adminHomeKpiMetricDisplay } from "@/lib/admin/adminHomeKpiMetric";
 import { AdminUnifiedInboxTaskDetail } from "@/components/admin/AdminUnifiedInboxTaskDetail";
 import { buildAdminUnifiedInboxTasks } from "@/lib/admin/adminUnifiedInboxTasks";
+import { AdminInboxWorkflowQuickNav } from "@/components/admin/AdminInboxWorkflowQuickNav";
 import { ADMIN_EMPTY_NEXT_UNIFIED_INBOX_CLEAR } from "@/lib/admin/adminListEmptyStateNextLinks";
 import { useAdminUnifiedInboxDetailPanel } from "@/lib/admin/useAdminUnifiedInboxDetailPanel";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
 import { useAdminHomeInbox } from "@/lib/admin/useAdminHomeInbox";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import {
-  ADMIN_HOME_WIDGET_CARD_CLASS,
   ADMIN_INLINE_LINK_CLASS,
   ADMIN_INBOX_CHANNEL_ERROR_CLASS,
   ADMIN_INBOX_TASK_CTA_ACTIVE_CLASS,
   ADMIN_INBOX_TASK_CTA_IDLE_CLASS,
-  ADMIN_INBOX_TASK_PENDING_CARD_CLASS,
   ADMIN_LINK_FOCUS_CLASS,
   adminPageNavLinkClass,
+  ADMIN_INFO_BADGE_CLASS,
+  ADMIN_CONSOLE_MUTED_PANEL_CLASS,
 } from "@/lib/adminUi";
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
@@ -67,13 +70,9 @@ export function AdminUnifiedInboxPageMain() {
     <AdminListPageChrome
       titleId={titleId}
       title={t("admin_unified_inbox_title")}
-      subtitle={t("admin_unified_inbox_subtitle")}
+      subtitle={t("admin_unified_inbox_subtitle_l5")}
       mainDataAttrs={{ "data-tt-admin-unified-inbox": "1" }}
-      headerAside={
-        <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-          {t("admin_unified_inbox_back_workspace")}
-        </Link>
-      }
+      headerAside={<AdminInboxQueueBackLinks showWorkspace />}
     >
       {inbox.loading ? (
         <p className="text-small text-ink-600" role="status">
@@ -101,18 +100,22 @@ export function AdminUnifiedInboxPageMain() {
 
       {!inbox.loading && !inbox.error && totalPending === 0 ? (
         <div
-          className="mt-3 flex items-start gap-2 rounded-[var(--radius-md)] border border-ink-100 bg-ink-50/90 px-3 py-2.5"
+          className={`mt-3 flex items-start gap-2 ${ADMIN_CONSOLE_MUTED_PANEL_CLASS} px-3 py-2.5`}
           role="note"
           data-tt-admin-unified-inbox-scope-honesty="1"
         >
           <span
-            className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink-200 text-meta font-bold text-ink-700"
+            className={`mt-0.5 ${ADMIN_INFO_BADGE_CLASS}`}
             aria-hidden
           >
             i
           </span>
           <p className="text-small leading-snug text-ink-600">{t("admin_unified_inbox_scope_note")}</p>
         </div>
+      ) : null}
+
+      {!inbox.loading && totalPending !== null && totalPending > 0 ? (
+        <AdminInboxWorkflowQuickNav tasks={tasks} loading={inbox.loading} placement="unified" />
       ) : null}
 
       {showInboxFallback ? (
@@ -147,14 +150,14 @@ export function AdminUnifiedInboxPageMain() {
           );
 
           return (
-            <li
+            <AdminWarmL5Surface
+              as="li"
               key={task.id}
               className={
-                hasWork
-                  ? `rounded-[var(--radius-lg)] border p-4 ${ADMIN_INBOX_TASK_PENDING_CARD_CLASS}`
-                  : ADMIN_HOME_WIDGET_CARD_CLASS
+                hasWork ? "shadow-[0_0_20px_-10px_rgba(252,164,124,0.28)]" : undefined
               }
               data-tt-admin-unified-inbox-task={task.id}
+              data-tt-admin-unified-inbox-task-pending={hasWork ? "1" : undefined}
               {...(permissionDenied ? { "data-tt-admin-unified-inbox-perm-denied": task.id } : {})}
             >
               <div className="flex flex-wrap items-start justify-between gap-3">
@@ -225,7 +228,7 @@ export function AdminUnifiedInboxPageMain() {
                   task={task}
                 />
               ) : null}
-            </li>
+            </AdminWarmL5Surface>
           );
         })}
       </ul>

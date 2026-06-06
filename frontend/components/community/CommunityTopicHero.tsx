@@ -5,6 +5,7 @@ import {
   communityCyanPillFocus,
   communitySlatePillFocus,
 } from "@/lib/communityA11yFocus";
+import { TT_COMMUNITY_DRAWER_L5, TT_COMMUNITY_FEED_ACTION } from "@/lib/marketingUi";
 import { useId, type FormEvent } from "react";
 import { usePathname } from "next/navigation";
 
@@ -46,7 +47,7 @@ export default function CommunityTopicHero({
 
   return (
     <section
-      className="mb-4 rounded-[var(--radius-xl)] border border-fuchsia-500/35 bg-slate-900/70 px-4 py-3 backdrop-blur-md shadow-scifi-fuchsia-panel"
+      className="mb-4 rounded-[var(--radius-xl)] border border-ref-sun/28 bg-slate-900/70 px-4 py-3 backdrop-blur-md shadow-[0_0_24px_-10px_rgba(252,164,124,0.12)]"
       aria-labelledby={topicHeadingId}
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -54,7 +55,7 @@ export default function CommunityTopicHero({
           <p className="text-meta text-slate-400 mb-0.5">
             {onTopicPath ? t("community_topic_page_label") : t("community_topic_filter_label")}
           </p>
-          <h2 id={topicHeadingId} className="text-h3 font-bold bg-gradient-to-r from-fuchsia-300 to-cyan-300 bg-clip-text text-transparent truncate">
+          <h2 id={topicHeadingId} className={`text-h3 truncate ${TT_COMMUNITY_DRAWER_L5.topicHeroTitle}`}>
             #{tag}
           </h2>
           <p className="text-meta text-slate-300 mt-1">{countStr}</p>
@@ -72,7 +73,7 @@ export default function CommunityTopicHero({
                   <button
                     type="submit"
                     aria-label={t("common_retry")}
-                    className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-3 py-1 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
+                    className={`${TT_COMMUNITY_FEED_ACTION.retryPill} ${communityCyanPillFocus}`}
                   >
                     {t("common_retry")}
                   </button>
@@ -87,7 +88,7 @@ export default function CommunityTopicHero({
           {onTopicPath ? (
             <Link
               href="/community"
-              className={`rounded-full border border-cyan-400/50 bg-cyan-500/15 px-3 py-2 text-meta font-medium text-cyan-200 hover:text-cyan-100 hover:bg-cyan-500/25 motion-sub min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
+              className={`rounded-full border border-ref-sun/40 bg-ref-sun/10 px-3 py-2 text-meta font-medium text-ref-sun hover:text-ref-sun/95 hover:bg-ref-sun/14 motion-sub min-h-[44px] inline-flex items-center justify-center ${communityCyanPillFocus}`}
             >
               {t("community_topic_all_feed")}
             </Link>

@@ -14,7 +14,7 @@ import {
   buildHeroP3StartStepHref,
   resolveHeroP3NarrativeContext,
 } from "@/lib/traveltrustHeroP3Narrative";
-import { TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID } from "@/lib/traveltrustCinematicNonGlobeL5";
+import { TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID } from "@/lib/traveltrust/l5";
 
 export function TravelTrustHeroNetworkNarrative() {
   const { t } = useTranslation();

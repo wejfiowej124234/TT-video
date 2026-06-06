@@ -8,7 +8,7 @@ import {
   TT_HERO_LETTERBOX_BOTTOM_CLASS,
   TT_HERO_LETTERBOX_TOP_CLASS,
 } from "./traveltrustHeroFilmStyles";
-import { TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID } from "@/lib/traveltrustCinematicNonGlobeL5";
+import { TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID } from "@/lib/traveltrust/l5";
 import { UNIFIED_PAGE_3D } from "./traveltrustPageCinematicConfig";
 
 /** 首屏宽银幕遮幅 · legacy 非 unified 页用；unified 3D 已去掉顶/底横条（避免 `#030712` 冷色带） */

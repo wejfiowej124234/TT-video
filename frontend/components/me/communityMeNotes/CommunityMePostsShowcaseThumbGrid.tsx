@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
-import type { CommunityPost } from "@/lib/communityPostTypes";
+import type { CommunityPost, CommunityPostUserVisibility } from "@/lib/communityMockData";
 import type { FormEvent, ReactNode } from "react";
+import { CommunityMePostGridThumb } from "@/components/community/CommunityMePostGridThumb";
 import { CommunityMeNotesCardOverflowMenu } from "@/components/me/communityMeNotes/CommunityMeNotesCardOverflowMenu";
 import type { LocaleTranslateFn } from "@/lib/i18n";
 import {
@@ -21,7 +21,9 @@ export function CommunityMePostsShowcaseThumbGrid({
   onOpenPost,
   onRequestDelete,
   onPinToTop,
+  onVisibilityChange,
   deleteBusyId,
+  visibilityBusyId,
   listAriaLabel,
   footerSlot,
   /** 首行至少展示几个槽位（不足时用虚位卡补齐；弹层与完整页均默认 3，与「赞过」一行三格一致） */
@@ -34,7 +36,9 @@ export function CommunityMePostsShowcaseThumbGrid({
   onOpenPost: (post: CommunityPost) => void;
   onRequestDelete: (postId: string) => void;
   onPinToTop: (postId: string) => void;
+  onVisibilityChange?: (postId: string, next: CommunityPostUserVisibility) => void;
   deleteBusyId: string | null;
+  visibilityBusyId?: string | null;
   listAriaLabel: string;
   /** 完整页置于列表下方：经营入口、说明等 */
   footerSlot?: ReactNode;
@@ -64,21 +68,15 @@ export function CommunityMePostsShowcaseThumbGrid({
           return (
             <li key={post.id} className="min-w-0">
               <div className="relative flex h-full min-h-[168px] flex-col overflow-hidden rounded-[var(--radius-md)] border border-cyan-500/25 bg-ink-800/55 text-left shadow-scifi-panel ring-1 ring-white/5">
-                <div className="relative h-[4.25rem] w-full shrink-0 bg-ink-700/80">
-                  {cover ? (
-                    <Image src={cover} alt="" fill className="object-cover" sizes="120px" loading="lazy" />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-800 to-slate-950 px-2">
-                      <p className="line-clamp-3 text-center text-[0.62rem] leading-snug text-slate-300">{title}</p>
-                    </div>
-                  )}
+                <div className="relative h-[4.25rem] w-full shrink-0 overflow-hidden bg-ink-700/80">
+                  <CommunityMePostGridThumb post={post} t={t} sizes="120px" />
                   <span
                     className="absolute left-1 top-1 max-w-[calc(100%-2.75rem)] truncate rounded bg-black/55 px-1 py-0.5 text-[0.58rem] font-medium text-cyan-100 ring-1 ring-cyan-400/20"
                     title={kindFromApi ? undefined : t("community_me_posts_showcase_kind_inferred_hint")}
                   >
                     {kindFromApi ? kindLabel : `~${kindLabel}`}
                   </span>
-                  {post.is_video && cover ? (
+                  {post.is_video && (cover || post.type === "video") ? (
                     <span className="pointer-events-none absolute bottom-1 right-1 rounded-[var(--radius-sm)] bg-black/60 p-0.5" aria-hidden>
                       <svg className="h-3 w-3 text-white" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z" />
@@ -127,6 +125,10 @@ export function CommunityMePostsShowcaseThumbGrid({
                   deleteBusyId={deleteBusyId}
                   deleteDisabled={!allowDelete}
                   deleteDisabledTitle={!allowDelete ? t("community_me_posts_menu_delete_disabled_hint") : undefined}
+                  showVisibilityOptions={Boolean(onVisibilityChange)}
+                  currentVisibility={vis === "private" || vis === "archived" ? vis : "public"}
+                  onVisibilityChange={onVisibilityChange}
+                  visibilityBusyId={visibilityBusyId}
                 />
               </div>
             </li>

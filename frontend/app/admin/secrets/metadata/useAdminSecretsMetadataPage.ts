@@ -2,20 +2,12 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { type FormEvent, useEffect, useMemo, useState } from "react";
 
-import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
-import {
-  type AdminFetchErrorKind,
-  adminFetchErrorKind,
-  adminFetchJson,
-  logAdminFetch,
-} from "@/lib/adminFetchDisplay";
-import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders } from "@/lib/apiClient";
+import { routes } from "@/lib/api";
+import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
 
 import {
   ENV_SCOPE_RE,
   KEY_ALIAS_MAX_LEN,
-  type SecretsMetadataRes,
   type SecretsMetadataRow,
   buildListPath,
   parseListQuery,
@@ -30,11 +22,23 @@ export function useAdminSecretsMetadataPage() {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<SecretsMetadataRow[]>([]);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
+  const listUrl = useMemo(
+    () =>
+      routes.admin.secretsMetadata({
+        limit,
+        ...(keyAlias ? { key_alias: keyAlias } : {}),
+        ...(status ? { status } : {}),
+        ...(envScope ? { env_scope: envScope } : {}),
+      }),
+    [limit, keyAlias, status, envScope],
+  );
+
+  const { items, meta, appliedFilters, loading, refreshing, error } =
+    useAdminStandardListFetch<SecretsMetadataRow>({
+      scope: "secrets-metadata",
+      context: "AdminSecretsMetadataPage",
+      listUrl,
+    });
 
   const [draftLimit, setDraftLimit] = useState(String(limit));
   const [draftKeyAlias, setDraftKeyAlias] = useState(keyAlias);
@@ -46,49 +50,6 @@ export function useAdminSecretsMetadataPage() {
     setDraftKeyAlias(keyAlias);
     setDraftStatus(status);
     setDraftEnvScope(envScope);
-  }, [limit, keyAlias, status, envScope]);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    setMeta(null);
-    setAppliedFilters(null);
-
-    const headers: Record<string, string> = { "x-request-id": `admin-secrets-meta-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    adminFetchJson<SecretsMetadataRes>(
-      "AdminSecretsMetadataPage",
-      apiUrl(
-        routes.admin.secretsMetadata({
-          limit,
-          ...(keyAlias ? { key_alias: keyAlias } : {}),
-          ...(status ? { status } : {}),
-          ...(envScope ? { env_scope: envScope } : {}),
-        }),
-      ),
-      { headers },
-    )
-      .then(({ res, body }) => {
-        if (!res.ok) {
-          throw new Error(body.error || `request_failed_${res.status}`);
-        }
-        return body;
-      })
-      .then((body) => {
-        setItems(Array.isArray(body.items) ? body.items : []);
-        setMeta(isAdminMetaRecord(body.meta) ? body.meta : null);
-        setAppliedFilters(body.applied_filters ?? null);
-      })
-      .catch((e: unknown) => {
-        logAdminFetch("AdminSecretsMetadataPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
   }, [limit, keyAlias, status, envScope]);
 
   const apply = (e?: FormEvent) => {
@@ -123,6 +84,7 @@ export function useAdminSecretsMetadataPage() {
     status,
     envScope,
     loading,
+    refreshing,
     error,
     items,
     meta,

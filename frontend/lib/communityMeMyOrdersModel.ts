@@ -1,6 +1,7 @@
 import type { OrderListItem } from "@/lib/apiClient";
 import { getOrders } from "@/lib/apiClient";
 import { isDraftOrderListState } from "@/lib/isDraftOrderListState";
+import { COMMUNITY_ME_ORDERS_DRAWER_PAGE_SIZE } from "@/lib/communityMeListPageSize";
 
 /** 列表项主状态（与 `GET /orders` 列表 `state` / 兼容 `status` 对齐） */
 export function normalizedOrderListState(item: OrderListItem): string {
@@ -29,40 +30,24 @@ export function orderListItemMayRequestCancel(item: OrderListItem): boolean {
   return s === "draft" || s === "open" || s === "created" || s === "accepted";
 }
 
-export const MY_ORDERS_DRAWER_PAGE_SIZE = 80;
+export const MY_ORDERS_DRAWER_PAGE_SIZE = COMMUNITY_ME_ORDERS_DRAWER_PAGE_SIZE;
 export const MY_ORDERS_DRAWER_MAX_PAGES = 40;
 /** 个人中心抽屉单次会话最多拉取的原始列表条数（过滤 Draft/open 前）；用于「可能截断」提示。 */
 export const MY_ORDERS_DRAWER_RAW_FETCH_CAP = MY_ORDERS_DRAWER_PAGE_SIZE * MY_ORDERS_DRAWER_MAX_PAGES;
 
-export type FetchOrdersForCommunityMeMyOrdersDrawerResult = {
+export type FetchOrdersPageForCommunityMeDrawerResult = {
   items: OrderListItem[];
-  /** 在达到分页上限时 API 仍报告 `has_more` */
-  truncatedAtCap: boolean;
+  page: { has_more?: boolean; next_cursor?: string } | undefined;
 };
 
-/**
- * 拉取当前账号「我的订单」快览（分页拼接，上限防失控），再套用 `filterOrdersForCommunityMeMyOrdersSurface`。
- * 与全站 **`/orders`** 列表同源过滤规则（见 `filterOrdersForTransactionalMyOrdersSurface` 别名）。
- */
-export async function fetchOrdersForCommunityMeMyOrdersDrawer(): Promise<FetchOrdersForCommunityMeMyOrdersDrawerResult> {
-  const acc: OrderListItem[] = [];
-  let cursor: string | undefined;
-  for (let i = 0; i < MY_ORDERS_DRAWER_MAX_PAGES; i++) {
-    const r = await getOrders({ limit: MY_ORDERS_DRAWER_PAGE_SIZE, cursor });
-    const raw = r.items as OrderListItem[];
-    acc.push(...raw);
-    const p = r.page;
-    if (!p?.has_more || !p.next_cursor) {
-      return {
-        items: filterOrdersForCommunityMeMyOrdersSurface(acc),
-        truncatedAtCap: false,
-      };
-    }
-    cursor = p.next_cursor;
-  }
+/** 单页 `GET /orders`（Hub 抽屉 cursor 分页；过滤在 hook 层合并）。 */
+export async function fetchOrdersPageForCommunityMeDrawer(
+  cursor?: string,
+): Promise<FetchOrdersPageForCommunityMeDrawerResult> {
+  const r = await getOrders({ limit: MY_ORDERS_DRAWER_PAGE_SIZE, cursor });
   return {
-    items: filterOrdersForCommunityMeMyOrdersSurface(acc),
-    truncatedAtCap: true,
+    items: (r.items ?? []) as OrderListItem[],
+    page: r.page,
   };
 }
 

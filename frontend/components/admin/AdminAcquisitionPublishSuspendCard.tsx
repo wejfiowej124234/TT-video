@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import { useTranslation } from "@/components/LocaleProvider";
 import {
   patchAdminUserAcquisitionPublishSuspend,
@@ -12,7 +13,14 @@ import {
   localDatetimeToRfc3339,
 } from "@/lib/adminAcquisitionSuspendUtils";
 import { mapApiReadError } from "@/lib/mapApiReadError";
-import { ADMIN_FILTER_CARD_CLASS, ADMIN_FORM_FIELD_FOCUS_CLASS } from "@/lib/adminUi";
+import { AdminDetailContentPanel } from "@/components/admin/AdminDetailContentPanel";
+import { ADMIN_FORM_FIELD_FOCUS_CLASS,
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_FORM_CONTROL_SM_CLASS,
+  ADMIN_INNER_DIVIDER_CLASS,
+  ADMIN_SEMANTIC_REJECT_BTN_CLASS,
+  ADMIN_ACQUISITION_SUSPEND_ACTIVE_STATUS_CLASS,
+  ADMIN_ACQUISITION_SUSPEND_CLEAR_STATUS_CLASS,} from "@/lib/adminUi";
 import { travelFocusRingCoreOffset2WhiteClasses } from "@/lib/travelLinkFocus";
 
 export type AdminAcquisitionPublishSuspendSnapshot = {
@@ -28,6 +36,7 @@ export function AdminAcquisitionPublishSuspendCard({
   initialSnapshot?: AdminAcquisitionPublishSuspendSnapshot | null;
 }) {
   const { t } = useTranslation();
+  const requestConfirm = useAdminL5ConfirmRequest();
   const [suspendUntilLocal, setSuspendUntilLocal] = useState(defaultSuspendUntilLocal);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -72,15 +81,29 @@ export function AdminAcquisitionPublishSuspendCard({
       setError(t("admin_acquisition_suspend_invalidUntil"));
       return;
     }
-    void applyPatch({ suspended_until: iso });
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_danger",
+      descKey: "admin_l5_confirm_desc_acquisition_suspend",
+      danger: true,
+      onConfirm: () => void applyPatch({ suspended_until: iso }),
+    });
+  };
+
+  const handleLift = () => {
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_write",
+      descKey: "admin_l5_confirm_desc_acquisition_lift",
+      onConfirm: () => void applyPatch({ suspended_until: null }),
+    });
   };
 
   if (!userId) return null;
 
   return (
-    <section
+    <AdminDetailContentPanel
+      as="section"
       id="admin-acquisition-suspend"
-      className={`${ADMIN_FILTER_CARD_CLASS} shadow-soft`}
+     
       aria-label={t("admin_acquisition_suspend_sectionAria")}
       data-testid="admin-acquisition-publish-suspend"
     >
@@ -91,11 +114,11 @@ export function AdminAcquisitionPublishSuspendCard({
 
       {snapshot != null ? (
         <div
-          className={`mt-3 rounded-[var(--radius-md)] border px-3 py-2.5 text-meta ${
+          className={
             suspended
-              ? "border-danger/30 bg-danger/5 text-danger"
-              : "border-success/30 bg-success/10 text-success"
-          }`}
+              ? ADMIN_ACQUISITION_SUSPEND_ACTIVE_STATUS_CLASS
+              : ADMIN_ACQUISITION_SUSPEND_CLEAR_STATUS_CLASS
+          }
           role="status"
         >
           {suspended
@@ -108,12 +131,12 @@ export function AdminAcquisitionPublishSuspendCard({
         <p className="mt-3 text-meta text-ink-500">{t("admin_acquisition_suspend_statusUnknown")}</p>
       )}
 
-      <div className="mt-4 space-y-3 border-t border-ink-100 pt-4">
+      <div className={`mt-4 space-y-3 ${ADMIN_INNER_DIVIDER_CLASS} pt-4`}>
         <label className="block text-small text-ink-700">
           {t("admin_acquisition_suspend_untilLabel")}
           <input
             type="datetime-local"
-            className={`mt-1 w-full max-w-md rounded border border-ink-200 px-2 py-1.5 font-mono text-meta ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+            className={`mt-1 w-full max-w-md ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1.5 font-mono text-meta ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             value={suspendUntilLocal}
             onChange={(e) => setSuspendUntilLocal(e.target.value)}
             disabled={loading}
@@ -122,7 +145,7 @@ export function AdminAcquisitionPublishSuspendCard({
         <div className="flex flex-wrap gap-2">
           <button
             type="button"
-            className={`rounded-[var(--radius-sm)] bg-danger px-3 py-2 text-small font-medium text-white hover:opacity-90 disabled:opacity-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
+            className={`${ADMIN_SEMANTIC_REJECT_BTN_CLASS} ${travelFocusRingCoreOffset2WhiteClasses}`}
             disabled={loading}
             onClick={handleSuspend}
           >
@@ -130,9 +153,9 @@ export function AdminAcquisitionPublishSuspendCard({
           </button>
           <button
             type="button"
-            className={`rounded-[var(--radius-sm)] border border-ink-200 bg-white px-3 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 disabled:opacity-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
+            className={`${ADMIN_FILTER_RESET_BTN_CLASS} disabled:opacity-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
             disabled={loading}
-            onClick={() => void applyPatch({ suspended_until: null })}
+            onClick={handleLift}
           >
             {t("admin_acquisition_suspend_actionLift")}
           </button>
@@ -143,6 +166,6 @@ export function AdminAcquisitionPublishSuspendCard({
           </p>
         ) : null}
       </div>
-    </section>
+    </AdminDetailContentPanel>
   );
 }

@@ -8,11 +8,13 @@ import { COMMUNITY_BOOK_GUIDE_CTA_CLASS, DESTINATION_LABEL_KEYS } from "./commun
 import { marketHrefForCommunityUser } from "@/lib/communityMarketDeepLink";
 import {
   communityCardLinkFocus,
-  communityCyanPillFocus,
   communityShellTabFocus,
   communitySlatePillFocus,
 } from "@/lib/communityA11yFocus";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
+import { communityFollowPillClassName } from "@/components/community/communityFollowPillClassName";
+import { TT_COMMUNITY_DRAWER_L5 } from "@/lib/marketingUi";
+import { isShowcasePostId } from "@/lib/communityShowcase";
 
 export type CommunityFeedCardContentProps = {
   post: CommunityPost;
@@ -53,6 +55,7 @@ export default function CommunityFeedCardContent(props: CommunityFeedCardContent
   } = props;
   const dash = t("ui_em_dash");
   const { id, title, content, author } = post;
+  const isShowcasePost = isShowcasePostId(id);
   return (
     <div className="p-3 sm:p-4">
       <div id={id} className="mb-3">
@@ -69,7 +72,7 @@ export default function CommunityFeedCardContent(props: CommunityFeedCardContent
           >
             <button
               type="submit"
-              className={`${touchTargetLink44Classes} !justify-start text-meta text-cyan-300 hover:text-cyan-100 mt-1 motion-sub rounded-sm ${communityCardLinkFocus}`}
+              className={`${touchTargetLink44Classes} !justify-start text-meta text-ref-sun/90 hover:text-ref-sun/95 mt-1 motion-sub rounded-sm ${communityCardLinkFocus}`}
             >
               {t("community_view_full")} →
             </button>
@@ -78,7 +81,7 @@ export default function CommunityFeedCardContent(props: CommunityFeedCardContent
       </div>
       <div className="flex flex-wrap gap-1.5 mb-3">
         {destination && (
-          <span className="rounded-full border border-fuchsia-400/40 bg-fuchsia-500/10 px-2 py-0.5 text-meta text-fuchsia-300">{DESTINATION_LABEL_KEYS[destination] ? t(DESTINATION_LABEL_KEYS[destination]) : destination}</span>
+          <span className={TT_COMMUNITY_DRAWER_L5.destinationBadge}>{DESTINATION_LABEL_KEYS[destination] ? t(DESTINATION_LABEL_KEYS[destination]) : destination}</span>
         )}
         {tags.slice(0, 3).map((tag) =>
           onTagClick ? (
@@ -92,10 +95,7 @@ export default function CommunityFeedCardContent(props: CommunityFeedCardContent
             >
               <button
                 type="submit"
-                className={
-                  "inline-flex min-h-[44px] items-center justify-center rounded-full border px-2.5 py-1 text-meta motion-sub border-cyan-500/50 bg-slate-800/60 text-slate-300 hover:text-cyan-100 hover:border-cyan-400/60 " +
-                  communityShellTabFocus
-                }
+                className={`${TT_COMMUNITY_DRAWER_L5.tagChip} ${communityShellTabFocus}`}
                 aria-label={`${t("community_tag_filter_aria")} #${tag}`}
               >
                 #{tag}
@@ -104,7 +104,7 @@ export default function CommunityFeedCardContent(props: CommunityFeedCardContent
           ) : (
             <span
               key={tag}
-              className="rounded-full border px-2 py-0.5 text-meta motion-sub border-slate-500/50 bg-slate-800/60 text-slate-300"
+              className={TT_COMMUNITY_DRAWER_L5.tagChipStatic}
             >
               #{tag}
             </span>
@@ -121,7 +121,7 @@ export default function CommunityFeedCardContent(props: CommunityFeedCardContent
           </span>
         ) : null}
         {showVisibilityStatusBadge && post.visibilityStatus === "archived" ? (
-          <span className="rounded-full border border-slate-500/50 bg-slate-800/80 px-2 py-0.5 text-meta text-slate-300">
+          <span className={TT_COMMUNITY_DRAWER_L5.archivedBadge}>
             {t("community_me_posts_badge_archived")}
           </span>
         ) : null}
@@ -134,11 +134,11 @@ export default function CommunityFeedCardContent(props: CommunityFeedCardContent
               className={`flex min-h-[44px] items-center justify-start gap-2 min-w-0 group rounded-sm ${communityCardLinkFocus}`}
               aria-label={author.nickname ?? ""}
             >
-              <div className="relative h-11 w-11 min-h-[44px] min-w-[44px] rounded-full overflow-hidden ring-2 ring-cyan-400/30 flex-shrink-0">
-                {author.avatar_url ? <Image src={author.avatar_url} alt="" fill className="object-cover" sizes="44px" unoptimized /> : <div className="h-full w-full bg-slate-600" />}
+              <div className={`relative h-11 w-11 min-h-[44px] min-w-[44px] rounded-full overflow-hidden flex-shrink-0 ${TT_COMMUNITY_DRAWER_L5.avatarRing}`}>
+                {author.avatar_url ? <Image src={author.avatar_url} alt="" fill className="object-cover" sizes="44px" unoptimized /> : <div className={TT_COMMUNITY_DRAWER_L5.avatarFallback} />}
               </div>
               <span className="flex min-w-0 flex-col gap-0.5">
-                <span className="text-small font-medium text-slate-200 truncate group-hover:text-cyan-100 motion-sub">{author.nickname ?? dash}</span>
+                <span className="text-small font-medium text-slate-200 truncate group-hover:text-ref-sun/95 motion-sub">{author.nickname ?? dash}</span>
                 {author.wallet ? (
                   <span className="text-meta font-mono text-slate-400 truncate max-w-[11rem]" aria-hidden>
                     {author.wallet}
@@ -146,9 +146,20 @@ export default function CommunityFeedCardContent(props: CommunityFeedCardContent
                 ) : null}
               </span>
             </Link>
-            <span className={"rounded-full px-2 py-0.5 text-meta " + (author.role === "guide" ? "border border-fuchsia-400/50 bg-fuchsia-500/10 text-fuchsia-300" : "border border-cyan-400/50 bg-cyan-500/10 text-cyan-300")}>
+            <span
+              className={
+                isShowcasePost
+                  ? TT_COMMUNITY_DRAWER_L5.postDetailRoleBadge
+                  : author.role === "guide"
+                    ? TT_COMMUNITY_DRAWER_L5.roleGuide
+                    : TT_COMMUNITY_DRAWER_L5.roleTourist
+              }
+            >
               {t(roleKey)}
             </span>
+            {isShowcasePost ? (
+              <span className={TT_COMMUNITY_DRAWER_L5.postDetailShowcaseBadge}>{t("community_feed_showcase_badge")}</span>
+            ) : null}
             {author.isEscrowGuide && (
               <span className="rounded-full border border-warning/40 bg-warning/10 px-2 py-0.5 text-meta text-warning/90">{t("community_badge_escrow_guide")}</span>
             )}
@@ -172,13 +183,10 @@ export default function CommunityFeedCardContent(props: CommunityFeedCardContent
               type="submit"
               disabled={followDisabled}
               aria-busy={followDisabled ? true : undefined}
-              className={
-                "ml-auto rounded-full border px-2.5 py-1 text-meta motion-sub " +
-                (followed
-                  ? `border-slate-500 bg-slate-700/60 text-slate-300 ${communitySlatePillFocus}`
-                  : `border-cyan-400/50 bg-cyan-500/20 text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 ${communityCyanPillFocus}`) +
-                (followDisabled ? " opacity-60 cursor-wait" : "")
-              }
+              className={communityFollowPillClassName({
+                followed,
+                disabled: followDisabled,
+              })}
             >
               {followed ? t("community_following") : t("community_follow")}
             </button>

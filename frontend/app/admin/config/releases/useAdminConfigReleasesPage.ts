@@ -3,18 +3,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { type FormEvent, useEffect, useId, useMemo, useState } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
-import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
-import {
-  type AdminFetchErrorKind,
-  adminFetchErrorKind,
-  adminFetchJson,
-  logAdminFetch,
-} from "@/lib/adminFetchDisplay";
-import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders } from "@/lib/apiClient";
+import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
+import { routes } from "@/lib/api";
 import {
   type ConfigReleaseRow,
-  type ConfigReleasesListRes,
   RELEASE_KEY_MAX_LEN,
   buildConfigReleasesListPath,
   parseConfigReleasesListQuery,
@@ -47,11 +39,22 @@ export function useAdminConfigReleasesPage() {
     return sp.toString();
   }, [limit, releaseKey, status]);
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<ConfigReleaseRow[]>([]);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
+  const listUrl = useMemo(
+    () =>
+      routes.admin.configReleases({
+        limit,
+        ...(releaseKey ? { release_key: releaseKey } : {}),
+        ...(status ? { status } : {}),
+      }),
+    [limit, releaseKey, status],
+  );
+
+  const { items, appliedFilters, meta, loading, refreshing, error } =
+    useAdminStandardListFetch<ConfigReleaseRow>({
+      scope: "config-releases",
+      context: "AdminConfigReleasesPage",
+      listUrl,
+    });
 
   const [draftLimit, setDraftLimit] = useState(String(limit));
   const [draftReleaseKey, setDraftReleaseKey] = useState(releaseKey);
@@ -61,48 +64,6 @@ export function useAdminConfigReleasesPage() {
     setDraftLimit(String(limit));
     setDraftReleaseKey(releaseKey);
     setDraftStatus(status);
-  }, [limit, releaseKey, status]);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    setMeta(null);
-    setAppliedFilters(null);
-
-    const headers: Record<string, string> = { "x-request-id": `admin-config-rel-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    adminFetchJson<ConfigReleasesListRes>(
-      "AdminConfigReleasesPage",
-      apiUrl(
-        routes.admin.configReleases({
-          limit,
-          ...(releaseKey ? { release_key: releaseKey } : {}),
-          ...(status ? { status } : {}),
-        }),
-      ),
-      { headers },
-    )
-      .then(({ res, body }) => {
-        if (!res.ok) {
-          throw new Error(body.error || `request_failed_${res.status}`);
-        }
-        return body;
-      })
-      .then((body) => {
-        setItems(Array.isArray(body.items) ? body.items : []);
-        setMeta(isAdminMetaRecord(body.meta) ? body.meta : null);
-        setAppliedFilters(body.applied_filters ?? null);
-      })
-      .catch((e: unknown) => {
-        logAdminFetch("AdminConfigReleasesPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
   }, [limit, releaseKey, status]);
 
   const apply = (e?: FormEvent) => {
@@ -142,6 +103,7 @@ export function useAdminConfigReleasesPage() {
     status,
     listQueryString,
     loading,
+    refreshing,
     error,
     items: items ?? [],
     meta,

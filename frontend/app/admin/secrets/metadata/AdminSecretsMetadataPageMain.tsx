@@ -7,6 +7,7 @@ import { useTranslation } from "@/components/LocaleProvider";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminConfigPublishApprovalNotice } from "@/components/admin/AdminConfigPublishApprovalNotice";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
+import { AdminInboxQueueBackLinks } from "@/components/admin/AdminInboxQueueBackLinks";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminMetaBuildSection } from "@/components/admin/AdminMetaBuildPanel";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
@@ -40,6 +41,7 @@ export function AdminSecretsMetadataPageMain() {
     status,
     envScope,
     loading,
+    refreshing,
     error,
     items,
     meta,
@@ -61,19 +63,9 @@ export function AdminSecretsMetadataPageMain() {
     <AdminListPageChrome
       titleId={pageTitleId}
       title={t("admin_secrets_meta_title")}
-      subtitle={t("admin_secrets_meta_subtitle")}
+      subtitle={t("admin_secrets_meta_subtitle_l5")}
       headerAside={
-        <>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_secrets_meta_back")}
-          </Link>
-        </>
+        <AdminInboxQueueBackLinks />
       }
     >
       <AdminSecretsMetadataFiltersCard
@@ -118,14 +110,16 @@ export function AdminSecretsMetadataPageMain() {
 
       <AdminConfigPublishApprovalNotice />
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <AdminListLoadingStatus message={t("admin_secrets_meta_loading")} />
       ) : null}
       {error ? <AdminListFetchError errorKind={error} message={adminErrorUserText(error, t)} /> : null}
 
       <AdminMetaBuildSection meta={meta} loading={loading} error={error} />
 
-      {!loading && !error && <AdminSecretsMetadataTableSection items={items} />}
+      {!error && (!loading || items.length > 0) ? (
+        <AdminSecretsMetadataTableSection items={items} refreshing={refreshing} />
+      ) : null}
     </AdminListPageChrome>
   );
 }

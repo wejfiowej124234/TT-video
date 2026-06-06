@@ -9,6 +9,8 @@ import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
 import {
   ADMIN_INBOX_TASK_CTA_ACTIVE_CLASS,
   ADMIN_INLINE_LINK_CLASS,
+  ADMIN_SHELL_SECONDARY_BTN_CLASS,
+  ADMIN_CONSOLE_MUTED_PANEL_CLASS,
 } from "@/lib/adminUi";
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
@@ -29,7 +31,7 @@ export function AdminApprovalsPermissionHints() {
       />
       {denied ? (
         <div
-          className="mt-4 rounded-[var(--radius-lg)] border border-ink-200 bg-ink-50/80 p-4"
+          className={`mt-4 ${ADMIN_CONSOLE_MUTED_PANEL_CLASS} p-4`}
           data-tt-admin-approvals-ops-guide="1"
           role="status"
         >
@@ -44,7 +46,7 @@ export function AdminApprovalsPermissionHints() {
             </Link>
             <Link
               href="/admin/operator-guide"
-              className={`${touchTargetLink44Classes} inline-flex min-h-[44px] items-center rounded-[var(--radius-md)] border border-ink-200 bg-white px-4 text-small font-medium text-ink-700 hover:border-ink-300 ${travelFocusRingOffset2Classes}`}
+              className={`${touchTargetLink44Classes} ${ADMIN_SHELL_SECONDARY_BTN_CLASS} ${travelFocusRingOffset2Classes}`}
             >
               {t("admin_approvals_ops_denied_cta_guide")}
             </Link>

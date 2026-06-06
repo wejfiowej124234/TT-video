@@ -3,9 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useCallback, useId } from "react";
-import { useFocusTrap } from "@/hooks/useFocusTrap";
+import { DidRankModalMotion } from "@/components/did-rank/DidRankModalMotion";
 import { trackDidRankEvent } from "@/lib/analytics";
-import type { GuideRankItem } from "@/lib/didRankMockData";
+import type { GuideRankItem } from "@/lib/didRankTypes";
 import {
   buildDidRankGuideHighlightSearch,
   isDidRankCommunityProfileId,
@@ -13,10 +13,11 @@ import {
   type Period,
 } from "@/lib/didRankUtils";
 import { formatDidRankGuideReviewLine } from "@/lib/didRankGuideReviewDisplay";
+import { TT_MARKETING_DID_RANK_PATH, TT_MARKETING_DID_RANK_SURFACE } from "@/lib/marketingUi";
 
 type TFunc = (key: string) => string;
 
-/** 向导详情弹窗：赛博风，fuchsia 边框与光晕；45 useFocusTrap；本榜高亮链接与 63 清单一致 */
+/** 向导详情弹窗：暖金壳（与 `DidRankRecordModal` 同族）；45 useFocusTrap */
 export default function DidRankGuideModal({
   item,
   period,
@@ -26,14 +27,12 @@ export default function DidRankGuideModal({
 }: {
   item: GuideRankItem;
   period: Period;
-  /** 与页级 `guide_sort` / API `sort` 一致，分享高亮链接时保留 */
   guideSort?: GuideLeaderboardSort;
   onClose: () => void;
   t: TFunc;
 }) {
   const showAvatar = item.avatar_url;
   const initial = (item.nickname && item.nickname.charAt(0)) || "?";
-  const focusTrapRef = useFocusTrap(true, onClose);
   const titleId = useId();
   const descId = useId();
   const [copied, setCopied] = useState(false);
@@ -60,18 +59,18 @@ export default function DidRankGuideModal({
   useEffect(() => {
     trackDidRankEvent("did_rank_guide_modal_open", { guideId: item.id });
   }, [item.id]);
+
   return (
-    <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby={titleId}
-      aria-describedby={descId}
+    <DidRankModalMotion
+      onClose={onClose}
+      ariaLabelledBy={titleId}
+      ariaDescribedBy={descId}
+      shellClassName={TT_MARKETING_DID_RANK_PATH.modalShell}
     >
-      <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" aria-hidden onClick={onClose} />
-      <div ref={focusTrapRef} className="relative w-full max-w-md rounded-[var(--radius-md)] border border-fuchsia-500/40 bg-slate-900/95 backdrop-blur-md shadow-scifi-fuchsia-modal motion-sub">
-        <div className="flex items-center justify-between border-b border-fuchsia-500/20 px-4 py-3">
-          <h2 id={titleId} className="text-body font-semibold text-fuchsia-200">{t("didRank_guideModalTitle")}</h2>
+        <div className={`flex items-center justify-between px-4 py-3 ${TT_MARKETING_DID_RANK_PATH.modalHeaderBorder}`}>
+          <h2 id={titleId} className={TT_MARKETING_DID_RANK_PATH.modalTitle}>
+            {t("didRank_guideModalTitle")}
+          </h2>
           <form
             className="inline"
             onSubmit={(e) => {
@@ -79,36 +78,38 @@ export default function DidRankGuideModal({
               onClose();
             }}
           >
-            <button
-              type="submit"
-              className="inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-[var(--radius-sm)] text-slate-300 hover:bg-fuchsia-500/20 hover:text-fuchsia-300 motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
-              aria-label={t("didRank_close")}
-            >
+            <button type="submit" className={TT_MARKETING_DID_RANK_PATH.modalCloseBtn} aria-label={t("didRank_close")}>
               ×
             </button>
           </form>
         </div>
         <div id={descId} className="px-4 py-4 flex flex-col items-center text-center">
           {showAvatar ? (
-            <Image src={item.avatar_url!} alt={item.nickname} width={64} height={64} className="w-16 h-16 rounded-full object-cover ring-2 ring-fuchsia-400/30 mb-3" unoptimized />
+            <Image
+              src={item.avatar_url!}
+              alt={item.nickname}
+              width={64}
+              height={64}
+              className={`w-16 h-16 rounded-full object-cover mb-3 ${TT_MARKETING_DID_RANK_PATH.modalAvatarRing}`}
+              unoptimized
+            />
           ) : (
-            <div className="w-16 h-16 rounded-full bg-fuchsia-500/20 flex items-center justify-center text-h4 font-semibold text-fuchsia-300 ring-2 ring-fuchsia-400/30 mb-3">{initial}</div>
+            <div
+              className={`w-16 h-16 rounded-full flex items-center justify-center text-h4 font-semibold mb-3 ${TT_MARKETING_DID_RANK_PATH.modalAvatarRing} ${TT_MARKETING_DID_RANK_PATH.modalAvatarFallback}`}
+            >
+              {initial}
+            </div>
           )}
           <p className="text-body font-medium text-slate-200">{item.nickname}</p>
-          <p className="text-h4 font-bold font-mono text-fuchsia-300 mt-1 drop-shadow-scifi-fuchsia">
+          <p className={TT_MARKETING_DID_RANK_PATH.modalStatValue}>
             {item.totalAmountUsdt.toLocaleString()}
             {t("ui_currency_suffix_usdt")}
           </p>
-          <p className="text-meta text-slate-300 mt-0.5">{item.receptionCount} {t("didRank_receptions")}</p>
+          <p className="text-meta text-slate-300 mt-0.5">
+            {item.receptionCount} {t("didRank_receptions")}
+          </p>
           {guideReviewLine && <p className="text-meta text-slate-400">{guideReviewLine}</p>}
           {item.city && <p className="text-meta text-slate-400">{item.city}</p>}
-          <Link
-            href={`/guides/${item.id}`}
-            onClick={() => { trackDidRankEvent("did_rank_guide_click", { guideId: item.id }); onClose(); }}
-            className="mt-4 inline-flex min-h-[44px] w-full items-center justify-center rounded-[var(--radius-sm)] border border-fuchsia-400/50 bg-fuchsia-500/20 px-4 py-2 text-small font-medium text-fuchsia-300 hover:text-fuchsia-100 hover:bg-fuchsia-500/30 motion-sub"
-          >
-            {t("didRank_goToDetail")}
-          </Link>
           {isDidRankCommunityProfileId(item.id) ? (
             <Link
               href={`/community/user/${item.id}`}
@@ -116,7 +117,7 @@ export default function DidRankGuideModal({
                 trackDidRankEvent("did_rank_community_profile_open", { userId: item.id, role: "guide" });
                 onClose();
               }}
-              className="mt-2 inline-flex min-h-[44px] w-full items-center justify-center rounded-[var(--radius-sm)] border border-slate-500/40 bg-slate-800/50 px-4 py-2 text-small font-medium text-slate-200 hover:bg-slate-700/50 motion-sub"
+              className={TT_MARKETING_DID_RANK_PATH.modalPrimaryLink}
             >
               {t("didRank_viewCommunityProfile")}
             </Link>
@@ -128,7 +129,7 @@ export default function DidRankGuideModal({
                 trackDidRankEvent("did_rank_guide_highlight_open", { guideId: item.id, period });
                 onClose();
               }}
-              className="inline-flex min-h-[44px] w-full items-center justify-center rounded border border-fuchsia-500/35 bg-fuchsia-500/10 px-4 py-2 text-small font-medium text-fuchsia-200 hover:text-fuchsia-100 hover:bg-fuchsia-500/20 motion-sub text-center"
+              className={TT_MARKETING_DID_RANK_PATH.modalHighlightLink}
             >
               {t("didRank_openGuideHighlight")}
             </Link>
@@ -139,18 +140,12 @@ export default function DidRankGuideModal({
                 void copyHighlightUrl();
               }}
             >
-              <button
-                type="submit"
-                disabled={copyBusy}
-                aria-busy={copyBusy ? true : undefined}
-                className="inline-flex min-h-[44px] w-full items-center justify-center rounded border border-fuchsia-500/25 px-4 py-2 text-small text-fuchsia-300 hover:text-fuchsia-100 hover:bg-fuchsia-500/10 motion-sub disabled:opacity-60 disabled:cursor-wait"
-              >
+              <button type="submit" disabled={copyBusy} aria-busy={copyBusy ? true : undefined} className={TT_MARKETING_DID_RANK_PATH.modalGhostBtn}>
                 {copied ? t("didRank_copyHighlightDone") : t("didRank_copyHighlightLink")}
               </button>
             </form>
           </div>
         </div>
-      </div>
-    </div>
+    </DidRankModalMotion>
   );
 }

@@ -61,7 +61,9 @@ test.describe("93-enterprise P1 · A-ME-002 /me profile edit read-back @e2e-sepo
     const newNickname = `Tourist ${suffix}`;
 
     await uiLoginWithPassword(page, "/community/me", "tourist@test.com", "Test123!");
-    await expect(page.getByRole("heading", { name: /Profile|个人中心/i })).toBeVisible({ timeout: 25_000 });
+    await expect(page.getByRole("main", { name: /Community profile|社区资料/i })).toBeVisible({
+      timeout: 25_000,
+    });
 
     await page.getByRole("button", { name: /Edit profile|编辑资料/i }).click();
     const nickInput = page.getByLabel(/Nickname|昵称/i);

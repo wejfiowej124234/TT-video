@@ -1,0 +1,271 @@
+[traveltrust-ph1] tier-1 media
+
+> traveltrust-frontend@0.1.0 media:traveltrust-tier1
+> node ./scripts/copy-traveltrust-tier1-media.mjs
+
+TT-PH1-030b: copied tier-1 placeholder MP4 → public/media/traveltrust/ (+ merchant, acquisition)
+[traveltrust-ph1] vitest (contract + analytics + zh surface)
+
+> traveltrust-frontend@0.1.0 test
+> vitest run --run app/traveltrust/ app/(home)/homeMarketing.contract.test.ts lib/analytics.test.ts lib/traveltrustV6SurfaceCompliance.test.ts lib/traveltrustComplianceDisclosure.test.ts lib/traveltrustCinematicVisual.test.ts lib/traveltrustMediaFromBrief.test.ts lib/traveltrustPageBrief.server.test.ts lib/traveltrustSectionHash.test.ts lib/traveltrustFundraisingLinkPolicy.test.ts lib/traveltrustPh1LocalGate.contract.test.ts lib/traveltrustVisualRegressionManifest.test.ts
+
+
+ RUN  v2.1.9 D:/TravelTrust-V1/frontend
+
+ ✓ lib/traveltrustPh1LocalGate.contract.test.ts (6 tests) 5ms
+ ✓ app/(home)/homeMarketing.contract.test.ts (4 tests) 7ms
+ ✓ app/traveltrust/traveltrustNetworkPage.contract.test.ts (8 tests) 46ms
+ ✓ lib/analytics.test.ts (6 tests) 8ms
+ ✓ lib/traveltrustSectionHash.test.ts (4 tests) 16ms
+ ✓ app/traveltrust/traveltrustFundraisingLinks.contract.test.ts (2 tests) 13ms
+ ✓ app/traveltrust/traveltrustV6CrossLinks.contract.test.ts (1 test) 234ms
+ ✓ app/traveltrust/traveltrustSeo.contract.test.ts (2 tests) 4ms
+ ✓ lib/traveltrustFundraisingLinkPolicy.test.ts (3 tests) 4ms
+ ✓ lib/traveltrustVisualRegressionManifest.test.ts (3 tests) 5ms
+ ✓ app/traveltrust/traveltrustV6CopyBudget.test.ts (6 tests) 5ms
+ ✓ app/traveltrust/traveltrustV6ZhSurface.test.ts (3 tests) 11ms
+ ✓ app/traveltrust/traveltrustNetworkPage.sections.contract.test.ts (13 tests) 7ms
+ ✓ app/traveltrust/traveltrustRolesOrder.test.ts (2 tests) 5ms
+ ✓ lib/traveltrustPageBrief.server.test.ts (2 tests) 5ms
+ ✓ lib/traveltrustMediaFromBrief.test.ts (4 tests) 6ms
+ ✓ app/traveltrust/traveltrustV6EnSurface.test.ts (3 tests) 12ms
+ ✓ app/traveltrust/traveltrustFaqV6Copy.test.ts (4 tests) 5ms
+ ✓ lib/traveltrustCinematicVisual.test.ts (4 tests) 4ms
+ ✓ lib/traveltrustV6SurfaceCompliance.test.ts (2 tests) 9ms
+ ✓ app/traveltrust/traveltrustErrorTheme.contract.test.ts (1 test) 2ms
+ ✓ lib/traveltrustComplianceDisclosure.test.ts (2 tests) 3ms
+
+ Test Files  22 passed (22)
+      Tests  85 passed (85)
+   Start at  22:02:46
+   Duration  3.60s (transform 4.21s, setup 434ms, collect 7.48s, tests 418ms, environment 28.39s, prepare 4.00s)
+
+[traveltrust-ph1] e2e spec typecheck
+
+> traveltrust-frontend@0.1.0 check:e2e:tsc
+> tsc -p e2e/tsconfig.json --noEmit
+
+[traveltrust-ph1] cargo page_brief_doc_version
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.34s
+     Running unittests src\main.rs (target\debug\deps\traveltrust_api-c00abfd781e4c464.exe)
+
+running 1 test
+test routes::traveltrust_page::tests::page_brief_doc_version_matches_protocol_reference ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 918 filtered out; finished in 0.00s
+
+[traveltrust-ph1] playwright home + offline-api (full-stack via run-e2e-default)
+[e2e] local default → PLAYWRIGHT_FULL_STACK=1 (API + Next via playwright webServer)
+[e2e] REQUEST_TIMEOUT_SECS → 120 (GET /meta governance eth_call stack; avoid 408)
+[e2e] INTERNAL_API_SECRET aligned from root .env (internal/*)
+[e2e] DATABASE_URL loaded from repo root .env
+sync-frontend-env: wrote D:\TravelTrust-V1\frontend\.env.local (NEXT_PUBLIC aligned with root .env)
+[e2e] D:\TravelTrust-V1\frontend\.env.local → NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8080
+[e2e] cargo build -p traveltrust-api (Playwright webServer runs target/debug binary)
+warning: unused import: `migrate_embed::*`
+  --> crates\api\src\db\mod.rs:91:9
+   |
+91 | pub use migrate_embed::*;
+   |         ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `traveltrust-api` (bin "traveltrust-api") generated 1 warning (run `cargo fix --bin "traveltrust-api"` to apply 1 suggestion)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.27s
+[1A[2K[WebServer] warning: unused import: `migrate_embed::*`
+[WebServer]   --> crates\api\src\db\mod.rs:91:9
+[WebServer]    |
+[WebServer] 91 | pub use migrate_embed::*;
+[WebServer]    |         ^^^^^^^^^^^^^^^^
+[WebServer]    |
+[WebServer]    = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+[WebServer] 
+
+[1A[2K[WebServer] warning: `traveltrust-api` (bin "traveltrust-api") generated 1 warning (run `cargo fix --bin "traveltrust-api"` to apply 1 suggestion)
+[WebServer]     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.34s
+
+[1A[2K[WebServer]      Running `target\debug\traveltrust-api.exe`
+
+[1A[2K[WebServer] [req] x-request-id=64dc7f89-45e2-4646-bad2-927e33f2d986 path=/health status=200
+[WebServer] [req] x-message-id=a309cd72-c448-4c5e-b08e-49ddd3e12191 path=/health status=200
+
+[1A[2K[WebServer] [traveltrust] dev: Webpack on Windows (avoid Turbopack HMR manifest races). Use `npm run dev:turbopack` or TRAVELTRUST_DEV_TURBO=1 for Turbopack.
+
+
+Running 10 tests using 1 worker
+
+[1A[2K(node:11248) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:11248) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/10] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:41:66 › setup: GET /meta chain.contracts › API /meta satisfies chain guard
+[1A[2K[WebServer] [req] x-request-id=92117c91-a059-4cc6-9ec5-f54d0e76ba8d path=/meta status=200
+[WebServer] [req] x-message-id=bb307249-a42d-4338-80ae-27c924f172c7 path=/meta status=200
+
+[1A[2K[2/10] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:73:79 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only)
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779631438662 path=/meta status=200
+[WebServer] [req] x-message-id=9aaad8e1-41c4-4f36-8fbc-4115a4655941 path=/meta status=200
+
+[1A[2K(node:17024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:17024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[3/10] [chromium] › e2e\home-landing-itinerary-submit.spec.ts:17:7 › PI-1 · home landing itinerary submit (PH1-HOME-02) › creates itinerary results after authenticated submit
+[1A[2K[WebServer] [req] x-request-id=5df960c2-f2e0-47fe-8dae-76024856ee6c path=/health status=200
+[WebServer] [req] x-message-id=d8ed5c85-6b28-4094-b3a3-4a7dcb460a4a path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=1eb78888-2c56-4ecc-ac9c-d1d7ccb90a72 path=/auth/seed-test-accounts status=200
+[WebServer] [req] x-message-id=634c3e2d-c701-4267-9f12-f47a8f8f9af3 path=/auth/seed-test-accounts status=200
+
+[1A[2K[WebServer] [req] x-request-id=7306b44e-9ca2-4c66-be90-4315ad559262 path=/auth/login status=200
+[WebServer] [req] x-message-id=937e6ce8-82bc-47be-9a7e-13df0082d154 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=a8bb4809-03a4-4412-95d4-4ed9fe9a33a3 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=3d84c5fd-3481-4686-afb3-d1ebabda886a path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=c35d394d-7562-4435-8099-ac2883f4c143 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=922ee4a8-7923-4cbc-b7f6-d9b3b8d148f8 path=/api/v1/me status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=37c83438-d2eb-4c9a-a75d-9783734b337a path=/api/v1/itineraries status=200
+[WebServer] [req] x-message-id=37ad865a-fa89-4724-9a81-3eea0de43a87 path=/api/v1/itineraries status=200
+
+[1A[2K[WebServer] [req] x-request-id=9e635ce9-a0cc-4b21-8510-4368ff4dae3d path=/api/v1/itineraries status=200
+[WebServer] [req] x-message-id=eded75ca-aa66-4831-bc98-9f94c5b3ca11 path=/api/v1/itineraries status=200
+
+[1A[2K[4/10] [chromium] › e2e\home-landing-shell.spec.ts:11:7 › PI-1 · home landing shell › hero form, network CTA, and warm Action submit (§1.7)
+[1A[2K  1) [chromium] › e2e\home-landing-shell.spec.ts:11:7 › PI-1 · home landing shell › hero form, network CTA, and warm Action submit (§1.7) 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('#landing-hero-form').locator('a[href="/traveltrust"]')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('#landing-hero-form').locator('a[href="/traveltrust"]')[22m
+
+
+      19 |
+      20 |     const network = form.locator('a[href="/traveltrust"]');
+    > 21 |     await expect(network).toBeVisible();
+         |                           ^
+      22 |     const networkClass = (await network.getAttribute("class")) ?? "";
+      23 |     expect(networkClass).toMatch(/from-\[#e8c96a\]|ref-sun/);
+      24 |     expect(networkClass).not.toMatch(/bg-cta-gradient/);
+        at D:\TravelTrust-V1\frontend\e2e\home-landing-shell.spec.ts:21:27
+
+    Error Context: test-results\home-landing-shell-PI-1-·--3af55-nd-warm-Action-submit-§1-7--chromium\error-context.md
+
+
+[1A[2K(node:14084) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:14084) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[5/10] [chromium] › e2e\home-landing-shell.spec.ts:33:7 › PI-1 · home landing shell › submit FAB mostly in viewport on 375×812 after scroll
+[1A[2K[WebServer] [req] x-request-id=742234e7-3681-46c1-8bff-77c51c3915f7 path=/health status=200
+[WebServer] [req] x-message-id=3975a84f-a94f-43ad-a22b-0a6c439d33c6 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779631472022 path=/meta status=200
+[WebServer] [req] x-message-id=5d6fb1e8-a3de-432d-adf4-a4ee0798e21f path=/meta status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[6/10] [chromium] › e2e\pi1-traveltrust-offline-api.spec.ts:11:7 › PI-1 · /traveltrust offline API shell (PH1-FE-02) › GET /meta is not HTTP 500
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779631478996 path=/meta status=200
+[WebServer] [req] x-message-id=0d520000-daa7-4898-bef8-25e5f1854ce1 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779631480260 path=/meta status=200
+[WebServer] [req] x-message-id=8f1adadc-c9e3-4145-9d1e-c0ea42891699 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779631493139 path=/meta status=200
+[WebServer] [req] x-message-id=2eb42ece-a1bc-478a-80f4-e7a5d7198804 path=/meta status=200
+
+[1A[2K  2) [chromium] › e2e\pi1-traveltrust-offline-api.spec.ts:11:7 › PI-1 · /traveltrust offline API shell (PH1-FE-02) › GET /meta is not HTTP 500 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: apiRequestContext.get: Request context disposed.
+    Call log:
+    [2m  - → GET http://localhost:3012/meta[22m
+    [2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.7632.6 Safari/537.36[22m
+    [2m    - accept: */*[22m
+    [2m    - accept-encoding: gzip,deflate,br[22m
+
+
+      10 | test.describe("PI-1 · /traveltrust offline API shell (PH1-FE-02)", () => {
+      11 |   test("GET /meta is not HTTP 500", async ({ request }) => {
+    > 12 |     const res = await request.get("/meta");
+         |                               ^
+      13 |     expect(res.status()).not.toBe(500);
+      14 |     if (res.ok()) {
+      15 |       const body = (await res.json()) as { service?: string; api_version?: string };
+        at D:\TravelTrust-V1\frontend\e2e\pi1-traveltrust-offline-api.spec.ts:12:31
+
+
+[1A[2K(node:19924) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:19924) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[7/10] [chromium] › e2e\pi1-traveltrust-offline-api.spec.ts:20:7 › PI-1 · /traveltrust offline API shell (PH1-FE-02) › GET /api/v1/me without session is not HTTP 500
+[1A[2K[WebServer] [req] x-request-id=tt-meta-route-1779631508385 path=/meta status=200
+[WebServer] [req] x-message-id=be8c8f83-0f75-4a10-9935-0dc7402d0c79 path=/meta status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[8/10] [chromium] › e2e\pi1-traveltrust-offline-api.spec.ts:26:7 › PI-1 · /traveltrust offline API shell (PH1-FE-02) › /traveltrust shell loads with page-brief fallback when API down
+[1A[2K[WebServer] [req] x-request-id=3d228fe4-8421-41f8-bd22-698fb4261920 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=dec6d6cc-48f0-400f-9798-cafb15db517a path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[9/10] [chromium] › e2e\traveltrust-ph1-verify-screenshots.spec.ts:24:7 › PH1 verify screenshots (① machine旁证) › home 1280 + 375 (`app/(home)/page.tsx` SSOT)
+[1A[2K[WebServer] [req] x-request-id=7068fe10-8cba-44d1-b8ee-dd938a0992fe path=/health status=200
+[WebServer] [req] x-message-id=a4bdfbaa-7d48-43a8-b06b-238700ee1da5 path=/health status=200
+
+[1A[2K[10/10] [chromium] › e2e\traveltrust-ph1-verify-screenshots.spec.ts:36:7 › PH1 verify screenshots (① machine旁证) › traveltrust hero + roles + trust (TT-PH1-150～158/193)
+[1A[2K[WebServer] [req] x-request-id=e0b938f9-5ad1-4581-a1d2-b247c2d7425d path=/health status=200
+[WebServer] [req] x-message-id=687b2aab-9c6c-4f84-98c9-3cafe770c668 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=eb98ab89-4256-4986-8c85-7b42b2f2f4c8 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=af14906c-0dc0-4a90-bdf2-24a03a4e7241 path=/api/v1/traveltrust/page-brief
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=11bc1426-d044-4ff5-a066-4123d640166c path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-message-id=d6ec3aac-dbd5-4dfe-bafd-84ed1337d002 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=b4e81baf-c28a-4cbe-b8f7-5bbfa04e5fac path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=631853f0-38a0-4c30-8974-5b658a126a8e path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=21facd0f-c7a2-41b3-96ba-655b28840528 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=3a565d66-c010-44eb-8794-7e62022b3c24 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=6fae542e-8927-4777-8d54-0bff2925ba12 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=e3658a47-90ef-4996-92f6-8232bced974e path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K[WebServer] [req] x-request-id=66c82676-5ef4-486f-8501-aac6c5b82cb8 path=/api/v1/traveltrust/page-brief status=200
+[WebServer] [req] x-message-id=4ba47aa0-5b02-4cb8-adcd-e025affed557 path=/api/v1/traveltrust/page-brief status=200
+
+[1A[2K  2 failed
+    [chromium] › e2e\home-landing-shell.spec.ts:11:7 › PI-1 · home landing shell › hero form, network CTA, and warm Action submit (§1.7) 
+    [chromium] › e2e\pi1-traveltrust-offline-api.spec.ts:11:7 › PI-1 · /traveltrust offline API shell (PH1-FE-02) › GET /meta is not HTTP 500 
+  8 passed (3.2m)

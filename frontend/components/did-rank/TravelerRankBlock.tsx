@@ -4,9 +4,24 @@ import React, { useId } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { trackDidRankEvent } from "@/lib/analytics";
-import type { TravelerRankItem } from "@/lib/didRankMockData";
+import type { TravelerRankItem } from "@/lib/didRankTypes";
 import { isDidRankCommunityProfileId, type Period } from "@/lib/didRankUtils";
-import { refTopThreeTier } from "@/lib/refTopThreeStyles";
+import type { DidRankTop10CardVariant } from "@/lib/refTopTenCardTier";
+import {
+  DID_RANK_AVATAR_PODIUM_BOX,
+  DID_RANK_AVATAR_PODIUM_MEDIA,
+  DID_RANK_AVATAR_PODIUM_PLACEHOLDER,
+  DID_RANK_AVATAR_PODIUM_PX,
+  DID_RANK_AVATAR_TOP10_ROW_MEDIA,
+  DID_RANK_AVATAR_TOP10_ROW_PLACEHOLDER,
+} from "@/lib/didRankAvatarClasses";
+import { didRankColumnTheme } from "@/lib/didRankColumnTheme";
+import {
+  DID_RANK_METRIC_SCORE_PODIUM,
+  DID_RANK_METRIC_SCORE_ROW,
+  DID_RANK_PODIUM_CARD_MIN_H,
+} from "@/lib/didRankMetricClasses";
+import { refTopTenCardTier } from "@/lib/refTopTenCardTier";
 import { deepShellInlineLinkFocusClasses, touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import {
   didRankMainPanelClass,
@@ -14,6 +29,17 @@ import {
   didRankMainPanelHeaderClass,
   didRankMainPanelTitleClass,
 } from "@/components/did-rank/didRankPanelShell";
+import { DidRankFullListFold } from "@/components/did-rank/DidRankFullListFold";
+import { DidRankPeriodFade } from "@/components/did-rank/DidRankPeriodFade";
+import { useDidRankFullListFold } from "@/components/did-rank/useDidRankFullListFold";
+import { DidRankRankDeltaBadge } from "@/components/did-rank/DidRankRankDeltaBadge";
+import { DidRankPodiumCrown } from "@/components/did-rank/DidRankPodiumCrown";
+import { DidRankCopyRankLink } from "@/components/did-rank/DidRankCopyRankLink";
+import { DidRankFullListRowEnter } from "@/components/did-rank/DidRankFullListRowEnter";
+import { DidRankTop10Grid } from "@/components/did-rank/DidRankTop10Grid";
+import { useDidRankRefreshFlash } from "@/lib/useDidRankRefreshFlash";
+import { TravelerRankBlockRow } from "@/components/did-rank/TravelerRankBlockRow";
+import { TT_MARKETING_DID_RANK_PAGINATION_BTN, TT_MARKETING_DID_RANK_SURFACE } from "@/lib/marketingUi";
 
 type TFunc = (key: string) => string;
 
@@ -32,6 +58,8 @@ const TravelerTopCard = React.memo(function TravelerTopCard({
   onAvatarErrorId,
   t,
   className = "",
+  variant = "podium",
+  isHighlight = false,
 }: {
   item: TravelerRankItem;
   onOpenRecord: (item: TravelerRankItem) => void;
@@ -40,131 +68,154 @@ const TravelerTopCard = React.memo(function TravelerTopCard({
   onAvatarErrorId: string;
   t: TFunc;
   className?: string;
+  variant?: DidRankTop10CardVariant;
+  isHighlight?: boolean;
 }) {
+  const isPodium = variant === "podium";
   const isTop3 = item.rank <= 3;
-  const tier = refTopThreeTier(item.rank, "traveler");
+  const columnTheme = didRankColumnTheme("traveler");
+  const tier = refTopTenCardTier(item.rank, "traveler");
   const ordersDisplay = formatTravelerCompletedOrdersDisplay(item, t);
   const hasRecord = (item.countries?.length ?? 0) > 0 || (item.cities?.length ?? 0) > 0;
   const showAvatar = item.avatar_url && !avatarFailed;
   const initial = (item.nickname && item.nickname.charAt(0)) || "?";
-  return (
-    <div
-      className={`rounded-[var(--radius-md)] p-2 sm:p-3 text-center min-w-0 motion-sub transition-[transform,box-shadow,border-color] ${tier.shell} ${tier.hover} ${isTop3 ? "hover:-translate-y-1" : ""} ${className}`}
-    >
-      <div className="flex items-center justify-center gap-1 mb-1">
-        <span className={`text-h4 font-bold font-mono ${tier.rankText}`}>{item.rank}</span>
-      </div>
+  const shell = isPodium
+    ? TT_MARKETING_DID_RANK_SURFACE.rankTop10Card
+    : TT_MARKETING_DID_RANK_SURFACE.rankTop10RowCard;
+  const highlightRing = isHighlight
+    ? `${TT_MARKETING_DID_RANK_SURFACE.rankTop10Highlight} ${TT_MARKETING_DID_RANK_SURFACE.rankTop10HighlightOnce}`
+    : "";
+
+  const avatarNode = isPodium ? (
+    <span className={`${DID_RANK_AVATAR_PODIUM_BOX} ${tier.avatarRing}`}>
       {showAvatar ? (
-        <Image src={item.avatar_url!} alt={item.nickname} width={44} height={44} loading="lazy" onError={() => onAvatarError(onAvatarErrorId)} className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full mx-auto object-cover mb-1 ${tier.avatarRing}`} unoptimized />
+        <Image
+          src={item.avatar_url!}
+          alt={item.nickname}
+          width={DID_RANK_AVATAR_PODIUM_PX}
+          height={DID_RANK_AVATAR_PODIUM_PX}
+          loading="lazy"
+          onError={() => onAvatarError(onAvatarErrorId)}
+          className={DID_RANK_AVATAR_PODIUM_MEDIA}
+          unoptimized
+        />
       ) : (
-        <div role="img" aria-label={item.nickname} className={`w-11 h-11 sm:w-12 sm:h-12 min-w-[2.75rem] min-h-[2.75rem] sm:min-w-[3rem] sm:min-h-[3rem] rounded-full flex items-center justify-center text-body font-semibold mx-auto mb-1 ${tier.avatarPlaceholder} ${tier.avatarRing}`}>{initial}</div>
-      )}
-      {isDidRankCommunityProfileId(item.id) ? (
-        <Link
-          href={`/community/user/${item.id}`}
-          onClick={() =>
-            trackDidRankEvent("did_rank_community_profile_open", { userId: item.id, role: "traveler" })
-          }
-          className={`${touchTargetLink44Classes} min-w-0 w-full text-meta font-medium text-slate-200 truncate hover:text-cyan-100 motion-sub rounded-sm ${deepShellInlineLinkFocusClasses}`}
+        <div
+          role="img"
+          aria-label={item.nickname}
+          className={`${DID_RANK_AVATAR_PODIUM_PLACEHOLDER} ${tier.avatarPlaceholder}`}
         >
-          {item.nickname}
-        </Link>
-      ) : (
-        <p className="text-meta font-medium text-slate-200 truncate">{item.nickname}</p>
+          {initial}
+        </div>
       )}
-      <p className="text-body font-bold font-mono text-cyan-300 mt-0.5 drop-shadow-scifi-cyan">
-        {t("didRank_travelerCompositeLabel")}{" "}
-        <span className="tabular-nums">{ordersDisplay}</span>
-        {t("didRank_completedOrdersUnit")}
-      </p>
-      <p className="text-meta text-slate-400">{item.countriesCount} {t("didRank_countriesShort")} · {item.citiesCount} {t("didRank_citiesShort")}</p>
-      {hasRecord && (
-        <form
-          className="mt-1 inline-block w-full"
-          onSubmit={(e) => {
-            e.preventDefault();
-            onOpenRecord(item);
-          }}
-        >
-          <button
-            type="submit"
-            className={`${touchTargetLink44Classes} rounded-sm px-1 text-meta text-cyan-300 hover:text-cyan-100 ${deepShellInlineLinkFocusClasses}`}
-          >
-            {t("didRank_record")} ▶
-          </button>
-        </form>
-      )}
+    </span>
+  ) : showAvatar ? (
+    <Image
+      src={item.avatar_url!}
+      alt={item.nickname}
+      width={44}
+      height={44}
+      loading="lazy"
+      onError={() => onAvatarError(onAvatarErrorId)}
+      className={`${DID_RANK_AVATAR_TOP10_ROW_MEDIA} ${tier.avatarRing}`}
+      unoptimized
+    />
+  ) : (
+    <div
+      role="img"
+      aria-label={item.nickname}
+      className={`${DID_RANK_AVATAR_TOP10_ROW_PLACEHOLDER} ${tier.avatarPlaceholder} ${tier.avatarRing}`}
+    >
+      {initial}
     </div>
   );
-});
 
-const TravelerRow = React.memo(function TravelerRow({
-  item,
-  listSize,
-  isHighlight,
-  onOpenRecord,
-  avatarFailed,
-  onAvatarError,
-  onAvatarErrorId,
-  t,
-}: {
-  item: TravelerRankItem;
-  listSize: number;
-  isHighlight: boolean;
-  onOpenRecord: (item: TravelerRankItem) => void;
-  avatarFailed: boolean;
-  onAvatarError: (id: string) => void;
-  onAvatarErrorId: string;
-  t: TFunc;
-}) {
-  const hasRecord = (item.countries?.length ?? 0) > 0 || (item.cities?.length ?? 0) > 0;
-  const ordersDisplay = formatTravelerCompletedOrdersDisplay(item, t);
-  const showAvatar = item.avatar_url && !avatarFailed;
+  const nicknameNode = isDidRankCommunityProfileId(item.id) ? (
+    <Link
+      href={`/community/user/${item.id}`}
+      onClick={() =>
+        trackDidRankEvent("did_rank_community_profile_open", { userId: item.id, role: "traveler" })
+      }
+      className={`${touchTargetLink44Classes} min-w-0 w-full text-meta font-medium text-slate-200 truncate hover:text-ref-coral motion-sub rounded-sm ${deepShellInlineLinkFocusClasses} ${isPodium ? "" : "!justify-start"}`}
+    >
+      {item.nickname}
+    </Link>
+  ) : (
+    <p className="text-meta font-medium text-slate-200 truncate">{item.nickname}</p>
+  );
+
+  const scoreLine = (
+    <p
+      className={`${columnTheme.metric} ${isPodium ? `${DID_RANK_METRIC_SCORE_PODIUM} text-body mt-0.5` : `${DID_RANK_METRIC_SCORE_ROW}`}`}
+    >
+      {t("didRank_travelerCompositeLabel")}{" "}
+      <span className="tabular-nums">{ordersDisplay}</span>
+      {t("didRank_completedOrdersUnit")}
+    </p>
+  );
+
+  const rankRow = (
+    <div
+      className={`flex items-center gap-1 ${isPodium ? "justify-center gap-1.5 mb-1 min-h-[2rem] w-full relative" : "shrink-0 sm:mb-1 sm:w-full sm:justify-center"}`}
+    >
+      {isPodium && item.rank === 1 ? (
+        <span
+          className="pointer-events-none absolute inset-x-0 top-1 text-center text-[2.5rem] sm:text-[2.75rem] font-black font-mono leading-none text-ink-950/22 select-none"
+          aria-hidden
+        >
+          1
+        </span>
+      ) : null}
+      <span className={`relative z-[1] ${isPodium ? "text-h4" : "text-body"} font-bold font-mono leading-none ${tier.rankText}`}>
+        {item.rank}
+      </span>
+      <DidRankRankDeltaBadge delta={item.rank_delta} column="traveler" />
+    </div>
+  );
+
+  if (!isPodium) {
+    return (
+      <div
+        id={`traveler-top10-${item.id}`}
+        className={`${shell} transition-[background-color,box-shadow] ${tier.shell} ${tier.hover} ${highlightRing} ${className}`}
+      >
+        <div className="flex w-full items-center gap-2.5 sm:flex-col sm:items-center sm:gap-1 sm:text-center">
+          <div className="flex items-center gap-2 shrink-0 sm:flex-col sm:items-center">
+            {rankRow}
+            {avatarNode}
+          </div>
+          <div className="min-w-0 flex-1 sm:flex-none sm:w-full">
+            {nicknameNode}
+            {scoreLine}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
-      id={`traveler-row-${item.id}`}
-      role="listitem"
-      aria-posinset={item.rank}
-      aria-setsize={listSize}
-      className={`flex flex-wrap items-center gap-2 sm:gap-3 px-2 py-1.5 sm:px-3 sm:py-2 border-b border-white/[0.06] last:border-b-0 motion-sub backdrop-blur-[2px] hover:bg-white/[0.04] hover:shadow-[inset_0_0_24px_-8px_rgba(35,206,217,0.08)] ${isHighlight ? "ring-1 ring-ref-cyan/50 bg-ref-cyan/10" : ""}`}
+      id={`traveler-top10-${item.id}`}
+      className={`${shell} text-center transition-[border-color,background-color] ${tier.shell} ${tier.hover} ${highlightRing} ${isTop3 ? "hover:border-ref-sun/28" : ""} ${DID_RANK_PODIUM_CARD_MIN_H} ${className}`}
     >
-      <span className="w-5 sm:w-6 text-right text-meta font-mono font-medium text-slate-300 shrink-0">{item.rank}</span>
-      {showAvatar ? (
-        <Image src={item.avatar_url!} alt={item.nickname} width={44} height={44} loading="lazy" onError={() => onAvatarError(onAvatarErrorId)} className="w-11 h-11 rounded-full object-cover shrink-0 ring-1 ring-cyan-400/20" />
-      ) : (
-        <div role="img" aria-label={item.nickname} className="w-11 h-11 min-w-[2.75rem] min-h-[2.75rem] rounded-full bg-cyan-500/20 flex items-center justify-center text-meta font-semibold text-cyan-300 shrink-0">{(item.nickname && item.nickname.charAt(0)) || "?"}</div>
-      )}
-      {isDidRankCommunityProfileId(item.id) ? (
-        <Link
-          href={`/community/user/${item.id}`}
-          onClick={() =>
-            trackDidRankEvent("did_rank_community_profile_open", { userId: item.id, role: "traveler" })
-          }
-          className={`${touchTargetLink44Classes} !justify-start text-small font-medium text-slate-200 truncate min-w-0 flex-1 hover:text-cyan-100 motion-sub rounded-sm ${deepShellInlineLinkFocusClasses}`}
-        >
-          {item.nickname}
-        </Link>
-      ) : (
-        <span className="text-small font-medium text-slate-200 truncate min-w-0 flex-1">{item.nickname}</span>
-      )}
-      <span className="text-small font-bold font-mono text-cyan-300 shrink-0 tabular-nums">
-        {t("didRank_compositeScoreShort")} {ordersDisplay}
-      </span>
-      <span className="text-meta text-slate-400 shrink-0 hidden sm:inline">{item.countriesCount}{t("didRank_countriesShort")} / {item.citiesCount}{t("didRank_citiesShort")}</span>
+      {rankRow}
+      {item.rank === 1 ? <DidRankPodiumCrown className="mx-auto mb-0.5" /> : null}
+      {avatarNode}
+      {nicknameNode}
+      {scoreLine}
+      <p className="text-meta text-slate-400">
+        {item.countriesCount} {t("didRank_countriesShort")} · {item.citiesCount} {t("didRank_citiesShort")}
+      </p>
       {hasRecord && (
         <form
-          className="contents"
+          className="mt-auto pt-1.5 w-full border-t border-ref-sun/10"
           onSubmit={(e) => {
             e.preventDefault();
             onOpenRecord(item);
           }}
         >
-          <button
-            type="submit"
-            aria-label={t("didRank_record")}
-            className={`shrink-0 ${touchTargetLink44Classes} rounded-sm text-meta text-cyan-300 hover:text-cyan-100 ${deepShellInlineLinkFocusClasses}`}
-          >
-            ▶
+          <button type="submit" className={TT_MARKETING_DID_RANK_SURFACE.rankPodiumRecordBtn}>
+            {t("didRank_record")} <span aria-hidden>▶</span>
           </button>
         </form>
       )}
@@ -182,6 +233,7 @@ export interface TravelerRankBlockProps {
   pageTraveler: number;
   setPageTraveler: (fn: (p: number) => number) => void;
   highlightTravelerId: string | null;
+  shareRankPath: string | null;
   scrollToTravelerRank: () => void;
   onOpenRecord: (item: TravelerRankItem) => void;
   failedAvatarIds: Set<string>;
@@ -189,6 +241,7 @@ export interface TravelerRankBlockProps {
   t: TFunc;
   rankTopGridId: string;
   period: Period;
+  isRefreshing?: boolean;
 }
 
 export default function TravelerRankBlock({
@@ -201,6 +254,7 @@ export default function TravelerRankBlock({
   pageTraveler,
   setPageTraveler,
   highlightTravelerId,
+  shareRankPath,
   scrollToTravelerRank,
   onOpenRecord,
   failedAvatarIds,
@@ -208,8 +262,30 @@ export default function TravelerRankBlock({
   t,
   rankTopGridId,
   period,
+  isRefreshing = false,
 }: TravelerRankBlockProps) {
   const titleId = useId();
+  const restFold = useDidRankFullListFold(listTravelersFrom11, highlightTravelerId, period);
+  const refreshFlashKey = useDidRankRefreshFlash(isRefreshing);
+  const endRank = listTravelers.length > 0 ? listTravelers[listTravelers.length - 1]!.rank : 10;
+
+  const handleScrollToMyRank = () => {
+    const myRankInRest =
+      highlightTravelerId != null && listTravelersFrom11.some((x) => x.id === highlightTravelerId);
+    if (myRankInRest) {
+      restFold.expand();
+      window.setTimeout(() => scrollToTravelerRank(), 220);
+      return;
+    }
+    scrollToTravelerRank();
+  };
+
+  const handleRestFoldToggle = () => {
+    const next = !restFold.expanded;
+    restFold.setExpanded(next);
+    trackDidRankEvent("did_rank_full_list_fold", { list: "traveler", period, expanded: next });
+  };
+
   return (
     <section
       ref={listRef as React.RefObject<HTMLElement> | undefined}
@@ -222,125 +298,152 @@ export default function TravelerRankBlock({
             <h2 id={titleId} className={didRankMainPanelTitleClass}>{t("didRank_travelerRank")}</h2>
             <p className={didRankMainPanelDescClass}>{t("didRank_travelerRankDesc")}</p>
           </div>
-          {highlightTravelerId && (
-            <form
-              className="inline shrink-0"
-              onSubmit={(e) => {
-                e.preventDefault();
-                scrollToTravelerRank();
-              }}
-            >
-              <button
-                type="submit"
-                className="rounded-[var(--radius-sm)] border border-cyan-400/45 bg-cyan-500/15 px-2 py-1 text-meta text-cyan-200 hover:text-cyan-50 hover:bg-cyan-500/25 motion-sub"
+          {highlightTravelerId ? (
+            <div className="flex flex-wrap items-center gap-2 shrink-0">
+              <form
+                className="inline"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleScrollToMyRank();
+                }}
               >
-                {t("didRank_goToMyRank")}
-              </button>
-            </form>
-          )}
+                <button
+                  type="submit"
+                  className="rounded-[var(--radius-sm)] border border-ref-sun/35 bg-ref-sun/12 px-2 py-1 text-meta text-ref-sun/90 hover:text-ref-sun hover:bg-ref-sun/20 motion-sub"
+                >
+                  {t("didRank_goToMyRank")}
+                </button>
+              </form>
+              {shareRankPath ? (
+                <DidRankCopyRankLink sharePath={shareRankPath} board="traveler" t={t} />
+              ) : null}
+            </div>
+          ) : null}
         </div>
       </div>
       <div className="p-3 sm:p-4">
         {listTravelers.length === 0 ? (
-          <div className="rounded-[var(--radius-md)] border border-white/10 bg-slate-900/35 backdrop-blur-md py-12 px-4 text-center text-slate-300 ring-1 ring-ref-cyan/10" role="status">
+          <div className={TT_MARKETING_DID_RANK_SURFACE.emptyPanel} role="status">
             <p className="text-small">{t("didRank_emptyTraveler")}</p>
             <Link
               href="/market"
               onClick={() =>
                 trackDidRankEvent("did_rank_empty_market_cta", { list: "traveler", period })
               }
-              className={`mt-4 inline-flex ${touchTargetLink44Classes} font-medium text-small text-cyan-300 hover:text-cyan-100 motion-sub ${deepShellInlineLinkFocusClasses}`}
+              className={`mt-4 inline-flex ${touchTargetLink44Classes} font-medium text-small text-ref-sun hover:text-ref-coral motion-sub ${deepShellInlineLinkFocusClasses}`}
             >
               {t("didRank_emptyMarketCta")}
             </Link>
           </div>
         ) : (
-          <>
-            <p className="text-meta text-slate-300 mb-2 sm:mb-3 font-medium">🏆 {t("didRank_top10")}</p>
-            <div id={rankTopGridId} className="mb-4 sm:mb-6 space-y-2.5 sm:space-y-3">
-              <div className="grid grid-cols-5 gap-1.5 sm:gap-3">
-                {topTravelers.slice(0, 5).map((traveler) => (
-                  <TravelerTopCard
-                    key={traveler.id}
-                    className="min-w-0"
-                    item={traveler}
-                    onOpenRecord={onOpenRecord}
-                    avatarFailed={failedAvatarIds.has(traveler.id)}
-                    onAvatarError={addFailedAvatar}
-                    onAvatarErrorId={traveler.id}
-                    t={t}
-                  />
-                ))}
-              </div>
-              {topTravelers.length > 5 ? (
-                <div className="grid grid-cols-5 gap-1.5 sm:gap-3">
-                  {topTravelers.slice(5, 10).map((traveler) => (
-                    <TravelerTopCard
-                      key={traveler.id}
-                      className="min-w-0"
-                      item={traveler}
+          <DidRankPeriodFade period={period} isRefreshing={isRefreshing}>
+            <DidRankTop10Grid
+              items={topTravelers}
+              gridId={rankTopGridId}
+              layoutGroupId="did-rank-traveler-top10"
+              staggerKey={period}
+              refreshFlashKey={refreshFlashKey}
+              stageTintClass={didRankColumnTheme("traveler").top10StageTint}
+              podiumLabel={t("didRank_podiumBandLabel")}
+              rowBandLabel={t("didRank_ranks4to10BandLabel")}
+              renderCard={(traveler, cardVariant) => (
+                <TravelerTopCard
+                  className="min-w-0"
+                  variant={cardVariant}
+                  isHighlight={traveler.id === highlightTravelerId}
+                  item={traveler}
+                  onOpenRecord={onOpenRecord}
+                  avatarFailed={failedAvatarIds.has(traveler.id)}
+                  onAvatarError={addFailedAvatar}
+                  onAvatarErrorId={traveler.id}
+                  t={t}
+                />
+              )}
+            />
+            {listTravelers.length > 10 || listTravelersFrom11.length > 0 ? (
+              <DidRankFullListFold
+                restCount={listTravelersFrom11.length}
+                endRank={endRank}
+                expanded={restFold.expanded}
+                onToggle={handleRestFoldToggle}
+                t={t}
+                ariaLabel={t("didRank_fullList11_100")}
+                restEmptyI18nKey="didRank_noRank11_100"
+                foldHintI18nKey="didRank_fullListFoldHint"
+                listPanelRingClass={TT_MARKETING_DID_RANK_SURFACE.listPanelRingTraveler}
+                header={
+                  <>
+                    <span className="text-right tabular-nums">#</span>
+                    <span className="truncate">{t("me_nickname")}</span>
+                    <span className="text-right tabular-nums">{t("didRank_compositeScoreShort")}</span>
+                    <span className="hidden sm:block text-right truncate">
+                      {t("didRank_countriesShort")}/{t("didRank_citiesShort")}
+                    </span>
+                  </>
+                }
+                footer={
+                  totalPagesTraveler > 1 ? (
+                    <nav
+                      aria-label={`${t("didRank_travelerRank")} ${t("didRank_fullList11_100")}`}
+                      className={TT_MARKETING_DID_RANK_SURFACE.listNavFooter}
+                    >
+                      <form
+                        className="inline"
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          setPageTraveler((p) => Math.max(1, p - 1));
+                        }}
+                      >
+                        <button type="submit" disabled={pageTraveler <= 1} className={TT_MARKETING_DID_RANK_PAGINATION_BTN}>
+                          {t("didRank_prevPage")}
+                        </button>
+                      </form>
+                      <span aria-current="page">
+                        {pageTraveler} / {totalPagesTraveler}
+                      </span>
+                      <form
+                        className="inline"
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          setPageTraveler((p) => Math.min(totalPagesTraveler, p + 1));
+                        }}
+                      >
+                        <button
+                          type="submit"
+                          disabled={pageTraveler >= totalPagesTraveler}
+                          className={TT_MARKETING_DID_RANK_PAGINATION_BTN}
+                        >
+                          {t("didRank_nextPage")}
+                        </button>
+                      </form>
+                    </nav>
+                  ) : undefined
+                }
+              >
+                {paginatedTravelers.map((item, rowIndex) => (
+                  <DidRankFullListRowEnter
+                    key={item.id}
+                    rowIndex={rowIndex}
+                    enterKey={
+                      restFold.expanded ? `${restFold.enterGeneration}-${pageTraveler}` : ""
+                    }
+                  >
+                    <TravelerRankBlockRow
+                      item={item}
+                      listSize={listTravelersFrom11.length}
+                      rowIndex={rowIndex}
+                      isHighlight={item.id === highlightTravelerId}
                       onOpenRecord={onOpenRecord}
-                      avatarFailed={failedAvatarIds.has(traveler.id)}
+                      avatarFailed={failedAvatarIds.has(item.id)}
                       onAvatarError={addFailedAvatar}
-                      onAvatarErrorId={traveler.id}
+                      onAvatarErrorId={item.id}
                       t={t}
                     />
-                  ))}
-                </div>
-              ) : null}
-            </div>
-            <p className="text-meta text-slate-300 mb-2 font-medium">📋 {t("didRank_fullList11_100")}</p>
-            {listTravelersFrom11.length === 0 ? (
-              <p className="text-meta text-slate-400 py-4 text-center">{t("didRank_noRank11_100")}</p>
-            ) : (
-              <div className="flex flex-col rounded-[var(--radius-md)] border border-white/10 bg-slate-900/30 backdrop-blur-md ring-1 ring-white/5">
-                <div className="overflow-y-auto max-h-[400px] sm:max-h-[480px]" role="region" aria-label={t("didRank_fullList11_100")}>
-                  <div role="list">
-                    {paginatedTravelers.map((item) => (
-                      <TravelerRow
-                        key={item.id}
-                        item={item}
-                        listSize={listTravelersFrom11.length}
-                        isHighlight={item.id === highlightTravelerId}
-                        onOpenRecord={onOpenRecord}
-                        avatarFailed={failedAvatarIds.has(item.id)}
-                        onAvatarError={addFailedAvatar}
-                        onAvatarErrorId={item.id}
-                        t={t}
-                      />
-                    ))}
-                  </div>
-                </div>
-                {totalPagesTraveler > 1 && (
-                  <nav aria-label={t("didRank_travelerRank") + " " + t("didRank_fullList11_100")} className="shrink-0 flex items-center justify-between gap-2 px-2 py-2 border-t border-white/10 text-meta text-slate-300 bg-slate-950/50 backdrop-blur-sm">
-                    <form
-                      className="inline"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        setPageTraveler((p) => Math.max(1, p - 1));
-                      }}
-                    >
-                      <button type="submit" disabled={pageTraveler <= 1} className="rounded border border-cyan-500/30 px-2 py-1 text-cyan-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-cyan-500/10">
-                        {t("didRank_prevPage")}
-                      </button>
-                    </form>
-                    <span aria-current="page">{pageTraveler} / {totalPagesTraveler}</span>
-                    <form
-                      className="inline"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        setPageTraveler((p) => Math.min(totalPagesTraveler, p + 1));
-                      }}
-                    >
-                      <button type="submit" disabled={pageTraveler >= totalPagesTraveler} className="rounded border border-cyan-500/30 px-2 py-1 text-cyan-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-cyan-500/10">
-                        {t("didRank_nextPage")}
-                      </button>
-                    </form>
-                  </nav>
-                )}
-              </div>
-            )}
-          </>
+                  </DidRankFullListRowEnter>
+                ))}
+              </DidRankFullListFold>
+            ) : null}
+          </DidRankPeriodFade>
         )}
       </div>
     </section>

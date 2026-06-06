@@ -30,6 +30,9 @@ describe("admin operator guide page", () => {
     expect(src).toContain("data-tt-admin-operator-guide-role-prep");
     expect(src).toContain('id="admin-operator-guide-role-prep"');
     expect(src).toContain("ADMIN_INBOX_QUEUE_HREFS");
+    expect(src).toContain('href: "/admin/inbox"');
+    expect(src).toContain("admin_operator_flow_inbox");
+    expect(src).not.toContain("headerAside={<AdminInboxQueueBackLinks />}");
     expect(src).toContain("admin_operator_guide_title");
     expect(src).toContain('"data-tt-admin-operator-guide": "1"');
     expect(src).toContain("AdminListPageChrome");

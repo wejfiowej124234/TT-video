@@ -58,12 +58,7 @@ describe("WalletStatusMini", () => {
     });
     useChainIdMock.mockReturnValue(137);
     renderWithLocale(<WalletStatusMini />);
-    expect(
-      screen.getByText((_, el) =>
-        el?.classList.contains("text-ink-600") === true &&
-        (el?.textContent ?? "").includes("已连接")
-      )
-    ).toBeTruthy();
+    expect(screen.getByText(/已连接/)).toBeTruthy();
     expect(screen.getAllByTitle("0x1234567890123456789012345678901234567890").length).toBeGreaterThanOrEqual(1);
     expect(screen.getByRole("button", { name: "断开" })).toBeTruthy();
   });

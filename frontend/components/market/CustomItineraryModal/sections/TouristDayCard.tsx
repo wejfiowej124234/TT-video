@@ -1,5 +1,6 @@
 "use client";
 
+import { CIM, CIM_CHOICE, CIM_FOCUS, CIM_FOCUS_WITHIN } from '../customItineraryModalTheme';
 import Image from "next/image";
 import { getAttractionDetails, getFoodDetails, getHotelDetails, getHotels } from "@/lib/cityDetails";
 import type { AttractionDetail, FoodDetail, HotelDetail } from "@/lib/cityDetails";
@@ -50,7 +51,7 @@ export default function TouristDayCard({
     .filter((f): f is FoodDetail => f != null);
 
   return (
-    <div className="rounded-[var(--radius-md)] border border-white/25 bg-white/5 p-4 space-y-3">
+    <div className={CIM.customItineraryPanelDay}>
       <h3 className="text-small font-semibold text-white drop-shadow-market-pill">
         {t("market_dayN").replace("{n}", String(dayIndex + 1))}
       </h3>
@@ -153,7 +154,7 @@ export default function TouristDayCard({
                   >
                     <button
                       type="submit"
-                      className="shrink-0 w-36 rounded-[var(--radius-sm)] border border-white/20 bg-slate-900/60 overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-travel-400"
+                      className="shrink-0 w-36 rounded-[var(--radius-sm)] border border-ref-sun/16 bg-ink-950/60 overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]"
                     >
                       <div className="relative aspect-[4/3] bg-slate-800">
                         <Image src={a.image} alt={a.label} fill className="object-cover" sizes="144px" unoptimized />
@@ -201,7 +202,7 @@ export default function TouristDayCard({
                   >
                     <button
                       type="submit"
-                      className="shrink-0 w-36 rounded-[var(--radius-sm)] border border-white/20 bg-slate-900/60 overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-travel-400"
+                      className="shrink-0 w-36 rounded-[var(--radius-sm)] border border-ref-sun/16 bg-ink-950/60 overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]"
                     >
                       <div className="relative aspect-[4/3] bg-slate-800">
                         <Image src={f.image} alt={f.label} fill className="object-cover" sizes="144px" unoptimized />
@@ -246,7 +247,7 @@ export default function TouristDayCard({
                 >
                   <button
                     type="submit"
-                    className="shrink-0 w-36 rounded-[var(--radius-sm)] border border-white/20 bg-slate-900/60 overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-travel-400"
+                    className="shrink-0 w-36 rounded-[var(--radius-sm)] border border-ref-sun/16 bg-ink-950/60 overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]"
                   >
                     <div className="relative aspect-[4/3] bg-slate-800">
                       <Image
@@ -304,7 +305,7 @@ export default function TouristDayCard({
                 >
                   <button
                     type="submit"
-                    className="shrink-0 w-36 rounded-[var(--radius-sm)] border border-white/20 bg-slate-900/60 overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-travel-400"
+                    className="shrink-0 w-36 rounded-[var(--radius-sm)] border border-ref-sun/16 bg-ink-950/60 overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]"
                   >
                     <div className="relative aspect-[4/3] bg-slate-800">
                       <Image

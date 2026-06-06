@@ -64,6 +64,7 @@ export function CommunityMeNotesGlassDrawer({
       className="fixed inset-0 z-[400] flex items-center justify-center p-4 pt-20 pb-8 sm:pt-16 overflow-y-auto"
       role="dialog"
       aria-modal="true"
+      data-tt-community-me-notes-drawer="1"
       aria-labelledby={titleId}
       aria-describedby={hasDescRegion ? descId : undefined}
     >

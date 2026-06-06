@@ -10,6 +10,7 @@ import {
   gotoWithBearerSession,
   seedTestAccountsAndReleaseGuideSlot,
 } from "./helpers/apiSession";
+import { communityMeMainAccessibleNameRe } from "./helpers/communityMeLegacyRedirects";
 
 const communityMeNavTimeoutMs = process.env.PLAYWRIGHT_E2E_STABILITY === "1" ? 120_000 : 60_000;
 /** 访客闸须等 `getMeFull` 结束；冷编 + 稳定性门禁下 20s 易假红 */
@@ -98,8 +99,8 @@ test.describe("community/me · DataState audit (P1)", () => {
     }
     await page.route("**/api/v1/community/me/following**", (route) => route.abort());
     await gotoWithBearerSession(page, "/community/me", creds);
-    /** 已登录页 `h1` 为昵称/ID，非「个人中心」；`main` 与资料卡 surface 与 i18n 对齐 */
-    await expect(page.getByRole("main", { name: /Profile|个人中心/i })).toBeVisible({
+    /** 已登录页 `h1` 为昵称/ID；`main` aria-label=`me_title`（社区资料）与资料卡 surface 对齐 */
+    await expect(page.getByRole("main", { name: communityMeMainAccessibleNameRe })).toBeVisible({
       timeout: communityMeAuditVisibleMs,
     });
     await expect(page.locator('[data-tt-community-me-surface="community_me_profile"]')).toBeVisible({
@@ -130,7 +131,7 @@ test.describe("community/me · DataState audit (P1)", () => {
       });
     });
     await gotoWithBearerSession(page, "/community/me", creds);
-    await expect(page.getByRole("main", { name: /Profile|个人中心/i })).toBeVisible({
+    await expect(page.getByRole("main", { name: communityMeMainAccessibleNameRe })).toBeVisible({
       timeout: communityMeAuditVisibleMs,
     });
     await expect(page.locator('[data-tt-community-me-surface="community_me_profile"]')).toBeVisible({

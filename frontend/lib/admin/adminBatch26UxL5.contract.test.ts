@@ -18,6 +18,9 @@ describe("admin batch26 UX L5 (①)", () => {
     "admin_disputes_title",
     "admin_reviews_title",
     "admin_audit_list_title",
+    "admin_user_detail_title",
+    "admin_order_detail_title",
+    "admin_finance_title",
   ] as const;
 
   it("zh admin list titles avoid English Admin prefix", () => {
@@ -28,10 +31,22 @@ describe("admin batch26 UX L5 (①)", () => {
     }
   });
 
+  it("back links use workspace wording not Admin home", () => {
+    expect(zh).toContain('admin_schema_back: "返回工作台"');
+    expect(zh).not.toContain("返回 Admin 首页");
+    expect(en).toContain('admin_schema_back: "Back to workspace"');
+    expect(en).not.toMatch(/Back to Admin home/);
+  });
+
   it("capability strip uses product wording keys", () => {
     expect(capStrip).toContain("admin_capability_strip_no_approve_short");
+    expect(capStrip).toContain("admin_capability_strip_summary_preview");
+    expect(capStrip).toContain("useAdminEffectiveShellRole");
+    expect(capStrip).toContain("data-tt-admin-capability-strip-preview");
     expect(zh).toContain('admin_capability_strip_no_approve_short: "无审批权限"');
     expect(zh).toContain('admin_capability_strip_summary_role: "当前角色：{{role}}"');
+    expect(zh).toContain('admin_capability_strip_summary_preview: "预览视角：{{preview}} · 账号：{{account}}"');
     expect(en).toContain('admin_capability_strip_no_approve_short: "No approval permission"');
+    expect(en).toContain('admin_capability_strip_summary_preview: "Preview: {{preview}} · Account: {{account}}"');
   });
 });

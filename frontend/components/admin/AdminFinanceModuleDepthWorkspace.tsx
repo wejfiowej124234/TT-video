@@ -8,6 +8,11 @@ import { AdminFinanceCrossCheckDepthPanel } from "@/components/admin/AdminFinanc
 import { AdminFinanceDriftDepthPanel } from "@/components/admin/AdminFinanceDriftDepthPanel";
 import { AdminFinanceExportDepthPanel } from "@/components/admin/AdminFinanceExportDepthPanel";
 import { AdminFinanceFeeRouterDepthPanel } from "@/components/admin/AdminFinanceFeeRouterDepthPanel";
+import { AdminFinanceIndexerDepthPanel } from "@/components/admin/AdminFinanceIndexerDepthPanel";
+import { AdminFinanceAlertIncidentsDepthPanel } from "@/components/admin/AdminFinanceAlertIncidentsDepthPanel";
+import { AdminFinanceObservabilityDepthPanel } from "@/components/admin/AdminFinanceObservabilityDepthPanel";
+import { AdminFinanceTrustGrowthDepthPanel } from "@/components/admin/AdminFinanceTrustGrowthDepthPanel";
+import { AdminFinanceReconcileReportsDepthPanel } from "@/components/admin/AdminFinanceReconcileReportsDepthPanel";
 import { AdminFinanceRegionVaultDepthPanel } from "@/components/admin/AdminFinanceRegionVaultDepthPanel";
 import { AdminFinanceReconciliationDepthPanel } from "@/components/admin/AdminFinanceReconciliationDepthPanel";
 import { AdminFinanceRefundsDepthPanel } from "@/components/admin/AdminFinanceRefundsDepthPanel";
@@ -80,6 +85,50 @@ type RegionVaultProps = {
   error: boolean;
 };
 
+type IndexerProps = {
+  checkpointBlock: number | null;
+  checkpointLog: number | null;
+  lagBlocks: number | null;
+  reorgDetected: boolean | null;
+  replayRequired: boolean | null;
+  loading: boolean;
+  error: boolean;
+};
+
+type ReconcileReportsProps = {
+  total: number;
+  page: number;
+  limit: number;
+  reportType: string | null;
+  hasActiveFilters: boolean;
+  loading: boolean;
+  error: boolean;
+};
+
+type ObservabilityProps = {
+  chainId: string | null;
+  indexerLag: number | null;
+  status: string | null;
+  loading: boolean;
+  error: boolean;
+};
+
+type TrustGrowthProps = {
+  environment: string | null;
+  autopilotGeneration: number | null;
+  alertsCount: number;
+  weightsFrozen: boolean | null;
+  loading: boolean;
+  error: boolean;
+};
+
+type AlertIncidentsProps = {
+  syncedIncidentId: string | null;
+  hasSyncedIncident: boolean;
+  loading: boolean;
+  error: boolean;
+};
+
 /** FIN-02 · ① 七件套 partial 页内深度工作台（② 结算/PSP 闭环另闸）。 */
 export function AdminFinanceModuleDepthWorkspace(props: {
   settlement?: SettlementProps;
@@ -91,6 +140,11 @@ export function AdminFinanceModuleDepthWorkspace(props: {
   audit?: AuditProps;
   drift?: DriftProps;
   regionVault?: RegionVaultProps;
+  indexer?: IndexerProps;
+  reconcileReports?: ReconcileReportsProps;
+  observability?: ObservabilityProps;
+  trustGrowth?: TrustGrowthProps;
+  alertIncidents?: AlertIncidentsProps;
 }) {
   const moduleId = useSearchParams().get("fin_suite_module") ?? "";
   const depth = useSearchParams().get("fin_suite_depth");
@@ -111,7 +165,12 @@ export function AdminFinanceModuleDepthWorkspace(props: {
     (moduleId === "fee-router" && props.feeRouter) ||
     (moduleId === "audit" && props.audit) ||
     (moduleId === "drift" && props.drift) ||
-    (moduleId === "region-vault" && props.regionVault);
+    (moduleId === "region-vault" && props.regionVault) ||
+    (moduleId === "indexer" && props.indexer) ||
+    (moduleId === "reconcile-reports" && props.reconcileReports) ||
+    (moduleId === "observability" && props.observability) ||
+    (moduleId === "trust-growth" && props.trustGrowth) ||
+    (moduleId === "alert-incidents" && props.alertIncidents);
 
   if (moduleId && !hasModuleProps) {
     return wrap(moduleId, <AdminFinanceDepthModuleFallback />);
@@ -216,6 +275,70 @@ export function AdminFinanceModuleDepthWorkspace(props: {
         latestInserted={props.regionVault.latestInserted}
         loading={props.regionVault.loading}
         error={props.regionVault.error}
+      />,
+    );
+  }
+  if (moduleId === "indexer" && props.indexer) {
+    return wrap(
+      moduleId,
+      <AdminFinanceIndexerDepthPanel
+        checkpointBlock={props.indexer.checkpointBlock}
+        checkpointLog={props.indexer.checkpointLog}
+        lagBlocks={props.indexer.lagBlocks}
+        reorgDetected={props.indexer.reorgDetected}
+        replayRequired={props.indexer.replayRequired}
+        loading={props.indexer.loading}
+        error={props.indexer.error}
+      />,
+    );
+  }
+  if (moduleId === "reconcile-reports" && props.reconcileReports) {
+    return wrap(
+      moduleId,
+      <AdminFinanceReconcileReportsDepthPanel
+        total={props.reconcileReports.total}
+        page={props.reconcileReports.page}
+        limit={props.reconcileReports.limit}
+        reportType={props.reconcileReports.reportType}
+        hasActiveFilters={props.reconcileReports.hasActiveFilters}
+        loading={props.reconcileReports.loading}
+        error={props.reconcileReports.error}
+      />,
+    );
+  }
+  if (moduleId === "observability" && props.observability) {
+    return wrap(
+      moduleId,
+      <AdminFinanceObservabilityDepthPanel
+        chainId={props.observability.chainId}
+        indexerLag={props.observability.indexerLag}
+        status={props.observability.status}
+        loading={props.observability.loading}
+        error={props.observability.error}
+      />,
+    );
+  }
+  if (moduleId === "trust-growth" && props.trustGrowth) {
+    return wrap(
+      moduleId,
+      <AdminFinanceTrustGrowthDepthPanel
+        environment={props.trustGrowth.environment}
+        autopilotGeneration={props.trustGrowth.autopilotGeneration}
+        alertsCount={props.trustGrowth.alertsCount}
+        weightsFrozen={props.trustGrowth.weightsFrozen}
+        loading={props.trustGrowth.loading}
+        error={props.trustGrowth.error}
+      />,
+    );
+  }
+  if (moduleId === "alert-incidents" && props.alertIncidents) {
+    return wrap(
+      moduleId,
+      <AdminFinanceAlertIncidentsDepthPanel
+        syncedIncidentId={props.alertIncidents.syncedIncidentId}
+        hasSyncedIncident={props.alertIncidents.hasSyncedIncident}
+        loading={props.alertIncidents.loading}
+        error={props.alertIncidents.error}
       />,
     );
   }

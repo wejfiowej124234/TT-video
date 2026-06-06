@@ -1,38 +1,19 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { Suspense, useId } from "react";
+import { Suspense } from "react";
 
-import { useTranslation } from "@/components/LocaleProvider";
-import LoadingText from "@/components/LoadingText";
-import EscrowCancelPolicySection from "@/components/escrow/EscrowDetail/EscrowCancelPolicySection";
-import EscrowCopySummaryButton from "@/components/escrow/EscrowDetail/EscrowCopySummaryButton";
-import EscrowOrderPrintButton from "@/components/escrow/EscrowDetail/EscrowOrderPrintButton";
-import EscrowRiskNotice from "@/components/escrow/EscrowDetail/EscrowRiskNotice";
+import EscrowDetailSkeleton from "@/components/escrow/EscrowDetail/EscrowDetailSkeleton";
+import { TT_ESCROW_PROTOCOL_PAGE_SHELL } from "@/lib/escrowProtocolUi";
 
-/** 动态包未就绪或 Suspense 回退：与 EscrowDetail 内 main 同 escrow_detailAria，便于烟雾命中地标 */
+/** dynamic / Suspense 回退：与 `app/escrow/[id]/loading.tsx` 同 Experience 暖色骨架，避免协议青屏闪回 */
 function EscrowDetailRouteLoading() {
-  const { t } = useTranslation();
-  const cancelPolicyHeadingId = useId();
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-6 p-8" aria-label={t("escrow_detailAria")}>
-      <h1 className="sr-only">{t("escrow_detailAria")}</h1>
-      <LoadingText />
-      <div className="w-full max-w-2xl space-y-4">
-        <div className="rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md p-4 space-y-2 shadow-scifi-panel">
-          <h3 className="text-body-l font-semibold text-cyan-200">{t("escrow_itineraryBudget")}</h3>
-          <p className="text-meta text-slate-300 leading-relaxed" role="status">
-            {t("escrow_itineraryLockHint")}
-          </p>
-          <p className="text-small text-slate-300 flex flex-wrap items-center gap-4 pt-1">
-            <EscrowOrderPrintButton variant="protocolDid" />
-            <EscrowCopySummaryButton variant="protocolDid" onCopy={() => {}} disabled />
-          </p>
-        </div>
-        <EscrowRiskNotice />
-        <EscrowCancelPolicySection headingId={cancelPolicyHeadingId} />
+    <div className={TT_ESCROW_PROTOCOL_PAGE_SHELL}>
+      <div className="container py-8 md:py-12 max-w-5xl">
+        <EscrowDetailSkeleton />
       </div>
-    </main>
+    </div>
   );
 }
 

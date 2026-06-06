@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useId } from "react";
 
+import { AdminInboxQueueBackLinks } from "@/components/admin/AdminInboxQueueBackLinks";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { useAdminSchedulerJobsPage } from "./useAdminSchedulerJobsPage";
@@ -32,6 +33,7 @@ export function AdminSchedulerJobsPageMain() {
   const {
     jobCode,
     loading,
+    refreshing,
     error,
     items,
     meta,
@@ -59,22 +61,9 @@ export function AdminSchedulerJobsPageMain() {
     <AdminListPageChrome
       titleId={pageTitleId}
       title={t("admin_scheduler_jobs_title")}
-      subtitle={t("admin_scheduler_jobs_subtitle")}
+      subtitle={t("admin_scheduler_jobs_subtitle_l5")}
       headerAside={
-        <>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link
-            href="/admin"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_scheduler_jobs_back")}
-          </Link>
-        </>
+        <AdminInboxQueueBackLinks />
       }
     >
       <AdminSchedulerJobsFiltersCard
@@ -101,11 +90,13 @@ export function AdminSchedulerJobsPageMain() {
         <AdminSchedulerJobsAppliedFiltersBanner id={adminAppliedFiltersDescId} appliedFilters={appliedFilters} />
       ) : null}
 
-      <AdminSchedulerJobsStatusBlock loading={loading} error={error} />
+      <AdminSchedulerJobsStatusBlock loading={loading && items.length === 0} error={error} />
 
       <AdminSchedulerJobsMetaAndNoteSection meta={meta} loading={loading} error={error} />
 
-      {!loading && !error && <AdminSchedulerJobsTableSection items={items} openRerun={openRerun} />}
+      {!error && (!loading || items.length > 0) ? (
+        <AdminSchedulerJobsTableSection items={items} refreshing={refreshing} openRerun={openRerun} />
+      ) : null}
 
       {rerunCode ? (
         <AdminSchedulerJobsRerunModal

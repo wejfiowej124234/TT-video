@@ -2,11 +2,13 @@
 
 
 
-import Link from "next/link";
+import { AdminShellPrefetchLink } from "@/components/admin/AdminShellPrefetchLink";
 
 
 
-import { useId, useMemo } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
+
+import { usePathname, useRouter } from "next/navigation";
 
 
 
@@ -19,6 +21,7 @@ import { AdminHomeDevApiReference } from "@/components/admin/AdminHomeDevApiRefe
 
 
 import { AdminHomeCollapsibleSection } from "@/components/admin/AdminHomeCollapsibleSection";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 
 
 
@@ -30,12 +33,12 @@ import { AdminHomeKpiStrip } from "@/components/admin/AdminHomeKpiStrip";
 
 
 
-import { AdminHomeDomainHealthStrip } from "@/components/admin/AdminHomeDomainHealthStrip";
+import { AdminHomeFocusCompanion } from "@/components/admin/AdminHomeFocusCompanion";
 import { AdminHomeMaintainerFold } from "@/components/admin/AdminHomeMaintainerFold";
-
-import { AdminHomeRecentVisits } from "@/components/admin/AdminHomeRecentVisits";
+import { AdminHomeSystemOverviewSection } from "@/components/admin/AdminHomeSystemOverviewSection";
 import { AdminHomeShellPreviewBanner } from "@/components/admin/AdminHomeShellPreviewBanner";
 
+import AdminSubpageRouteLoading from "@/components/admin/AdminSubpageRouteLoading";
 import { AdminHomePrimaryCtas } from "@/components/admin/AdminHomePrimaryCtas";
 
 import { isSuperAdminActorRole } from "@/lib/admin/adminActorFromMe";
@@ -78,7 +81,18 @@ import {
 import {
   adminHomeInboxPendingTotal,
   adminHomeModulesFoldDefaultOpen,
+  resolveAdminHomeInboxPendingTotal,
 } from "@/lib/admin/adminHomeInboxPendingTotal";
+import { writeAdminHomeInboxPendingTotalCache } from "@/lib/admin/adminHomeInboxPendingTotalCache";
+import { filterAdminHomeCardsForFocusMode } from "@/lib/admin/adminHomeFocusModuleFilter";
+import {
+  adminHomeInboxFocusLayoutActive,
+  adminHomeKpiFoldDefaultOpen,
+  adminHomeMaintainerFoldVisible,
+  adminHomeModuleCardTierBadgeVisible,
+  adminWorkspaceBootActive,
+} from "@/lib/admin/adminShellUxPolicy";
+import { isAdminMaintainerUi } from "@/lib/admin/adminMaintainerUiMode";
 
 import {
 
@@ -91,6 +105,7 @@ import type { AdminHomeInboxChannels } from "@/lib/admin/useAdminHomeInbox";
 
 
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
+import { useAdminEffectiveShellRole } from "@/lib/admin/useAdminEffectiveShellRole";
 
 
 
@@ -112,6 +127,8 @@ import { useAdminHomeKpi } from "@/lib/admin/useAdminHomeKpi";
 
 
 
+import { scheduleAdminDeferredShellWork } from "@/lib/admin/adminDeferredShellWork";
+import { prefetchAdminRoutesBatched } from "@/lib/admin/adminNavPrefetchBatch";
 import { useAdminShellActor } from "@/lib/admin/useAdminShellActor";
 
 
@@ -123,12 +140,28 @@ import { useAdminMetaBuildFromPublicMeta } from "@/lib/useAdminMetaBuildFromPubl
 import {
   ADMIN_ATTENTION_CALLOUT_CLASS,
   ADMIN_HOME_CANVAS_CLASS,
+  ADMIN_HOME_FOCUS_HEADER_CLASS,
+  ADMIN_HOME_FOCUS_CANVAS_CLASS,
+  ADMIN_HOME_TECH_FOLD_CLASS,
   ADMIN_HOME_CARD_TIER_PLACEHOLDER_BADGE_CLASS,
   ADMIN_HOME_CARD_TIER_READ_BADGE_CLASS,
   ADMIN_HOME_CARD_TIER_SUPER_WRITE_BADGE_CLASS,
   ADMIN_HOME_CARD_TIER_WRITE_BADGE_CLASS,
-  ADMIN_HOME_WIDGET_CARD_CLASS,
+  ADMIN_KPI_CARD_IDLE_CLASS,
+  ADMIN_MOTION_CARD_HOVER_CLASS,
   ADMIN_PENDING_COUNT_BADGE_CLASS,
+  ADMIN_WARM_L5_FRAME_CLASS,
+  ADMIN_WARM_L5_INNER_CLASS,
+  ADMIN_WARM_L5_PAD_CLASS,
+  ADMIN_HOME_SECTION_COMPACT_FRAME_CLASS,
+  ADMIN_COLLAPSE_CHEVRON_CLASS,
+  ADMIN_INLINE_LINK_CLASS,
+  ADMIN_LINK_FOCUS_CLASS,
+  ADMIN_WORKSPACE_TITLE_CLASS,
+  ADMIN_WORKSPACE_TITLE_FOCUS_CLASS,
+  ADMIN_COMMAND_PALETTE_KBD_CLASS,
+  ADMIN_TEXT_BODY_CLASS,
+  ADMIN_TEXT_META_CLASS,
   TT_ADMIN_PAGE_INNER_LIST,
 } from "@/lib/adminUi";
 
@@ -199,12 +232,15 @@ function inboxBadgeForCard(
 export default function AdminHomeClient() {
 
   const { t } = useTranslation();
+  const pathname = usePathname() ?? "";
+  const router = useRouter();
 
   const pageTitleId = useId();
 
   const actor = useAdminShellActor();
 
   const caps = useAdminCapabilities();
+  const { previewRole } = useAdminEffectiveShellRole();
 
   const { meta: buildMeta, loading: buildLoading, error: buildError } =
 
@@ -241,7 +277,36 @@ export default function AdminHomeClient() {
     caps.permissionsLoaded,
   );
 
-  const modulesFoldDefaultOpen = adminHomeModulesFoldDefaultOpen(inboxPendingTotal);
+  const inboxPendingResolved = resolveAdminHomeInboxPendingTotal(
+    inboxPendingTotal,
+    inbox.loading,
+    caps.permissionsLoaded,
+    inbox.error,
+  );
+
+  const modulesFoldDefaultOpen = adminHomeModulesFoldDefaultOpen(
+    inboxPendingResolved ?? inboxPendingTotal,
+  );
+  const focusInbox = adminHomeInboxFocusLayoutActive({
+    pendingTotal: inboxPendingTotal,
+    inboxLoading: inbox.loading,
+    permissionsLoaded: caps.permissionsLoaded,
+    inboxError: inbox.error,
+  });
+  const maintainerUi = isAdminMaintainerUi(actor.role);
+  const showMaintainerFold = adminHomeMaintainerFoldVisible({ maintainerUi, focusInbox });
+  const kpiFoldDefaultOpen = adminHomeKpiFoldDefaultOpen({
+    pendingTotal: inboxPendingResolved ?? inboxPendingTotal,
+    disputesKpi: kpi.counts.disputes,
+    ordersKpi: kpi.counts.orders,
+  });
+  const [showAllModules, setShowAllModules] = useState(false);
+
+  useEffect(() => {
+    if (inboxPendingTotal !== null && !inbox.error) {
+      writeAdminHomeInboxPendingTotalCache(inboxPendingTotal);
+    }
+  }, [inboxPendingTotal, inbox.error]);
 
   const visibleModuleCount = useMemo(() => {
     let n = 0;
@@ -251,27 +316,145 @@ export default function AdminHomeClient() {
     return n;
   }, [cardsBySection]);
 
+  const modulesDisplayBySection = useMemo(() => {
+    if (!focusInbox || showAllModules) return cardsBySection;
+    const next = new Map<AdminHomeSectionId, AdminHomeCard[]>();
+    const focusInput = {
+      counts: inbox.counts,
+      channels: inbox.channels,
+      loading: inbox.loading,
+      consoleRole70: caps.consoleRole70,
+    };
+    for (const { id } of ADMIN_HOME_SECTION_ORDER) {
+      const cards = cardsBySection.get(id) ?? [];
+      const filtered = filterAdminHomeCardsForFocusMode(cards, focusInput);
+      if (filtered.length > 0) next.set(id, filtered);
+    }
+    return next;
+  }, [
+    cardsBySection,
+    caps.consoleRole70,
+    focusInbox,
+    inbox.channels,
+    inbox.counts,
+    inbox.loading,
+    showAllModules,
+  ]);
+
+  const focusModuleShownCount = useMemo(() => {
+    let n = 0;
+    for (const { id } of ADMIN_HOME_SECTION_ORDER) {
+      n += modulesDisplayBySection.get(id)?.length ?? 0;
+    }
+    return n;
+  }, [modulesDisplayBySection]);
+
+  const modulesFocusFilterActive =
+    focusInbox && !showAllModules && focusModuleShownCount < visibleModuleCount;
+
+  useEffect(() => {
+    if (pathname !== "/admin") return;
+    const hrefs: string[] = [];
+    for (const cards of modulesDisplayBySection.values()) {
+      for (const card of cards) hrefs.push(card.href);
+    }
+    if (hrefs.length === 0) return;
+    return scheduleAdminDeferredShellWork(() => {
+      prefetchAdminRoutesBatched(router, hrefs, { batchSize: 5, gapMs: 36 });
+    }, { timeoutMs: 640 });
+  }, [modulesDisplayBySection, pathname, router]);
+
+  useEffect(() => {
+    if (!focusInbox) setShowAllModules(false);
+  }, [focusInbox]);
+
+  if (
+    adminWorkspaceBootActive({
+      loading: caps.loading,
+      permissionsLoaded: caps.permissionsLoaded,
+      capabilitiesUnavailable: caps.capabilitiesUnavailable,
+    })
+  ) {
+    return <AdminSubpageRouteLoading variant="workspace" mainAriaLabelKey="admin_workspace_title" />;
+  }
+
 
 
   return (
 
-    <main className={TT_ADMIN_PAGE_INNER_LIST} aria-labelledby={pageTitleId} data-tt-admin-home="1">
+    <main className={TT_ADMIN_PAGE_INNER_LIST} aria-labelledby={pageTitleId} data-tt-admin-home="1" data-tt-admin-app-page="1">
 
-      <header className={`${ADMIN_HOME_WIDGET_CARD_CLASS} sm:p-6`}>
-
-        <h1 id={pageTitleId} className="text-h3 font-semibold text-ink-900">
-
-          {t("admin_workspace_title")}
-
+      {focusInbox ? (
+        <header
+          className={ADMIN_HOME_FOCUS_HEADER_CLASS}
+          data-tt-admin-home-workspace-header="1"
+          data-tt-admin-home-workspace-header-compact="1"
+          aria-labelledby={pageTitleId}
+        >
+          <h1
+            id={pageTitleId}
+            className={ADMIN_WORKSPACE_TITLE_FOCUS_CLASS}
+            data-tt-admin-home-workspace-heading="1"
+            data-tt-admin-home-workspace-heading-focus="1"
+          >
+            {t("admin_home_workspace_heading")}
+          </h1>
+          <p
+            className={`flex shrink-0 flex-wrap items-center gap-1 text-small ${ADMIN_TEXT_META_CLASS}`}
+            data-tt-admin-home-command-palette-hint="1"
+            aria-label={t("admin_home_command_palette_hint")}
+          >
+            <span className="sr-only">{t("admin_home_command_palette_hint")}</span>
+            <span aria-hidden>{t("admin_home_command_palette_hint_prefix")}</span>
+            <kbd className={ADMIN_COMMAND_PALETTE_KBD_CLASS} aria-hidden>
+              {t("admin_home_command_palette_hint_ctrl")}
+            </kbd>
+            <span aria-hidden>+</span>
+            <kbd className={ADMIN_COMMAND_PALETTE_KBD_CLASS} aria-hidden>
+              {t("admin_home_command_palette_hint_key")}
+            </kbd>
+            <span aria-hidden className="hidden sm:inline">
+              {t("admin_home_command_palette_hint_mac")}
+            </span>
+            <span aria-hidden>{t("admin_home_command_palette_hint_suffix")}</span>
+          </p>
+        </header>
+      ) : (
+      <AdminWarmL5Surface
+        as="header"
+        innerClassName="sm:p-6"
+        data-tt-admin-home-workspace-header="1"
+      >
+        <h1
+          id={pageTitleId}
+          className={ADMIN_WORKSPACE_TITLE_CLASS}
+          data-tt-admin-home-workspace-heading="1"
+        >
+          {t("admin_home_workspace_heading")}
         </h1>
 
-        <p className="mt-1 max-w-2xl text-body text-ink-600">{t("admin_workspace_subtitle_short")}</p>
-        <p
-          className="mt-2 text-meta text-ink-500"
-          data-tt-admin-home-command-palette-hint="1"
-        >
-          {t("admin_home_command_palette_hint")}
-        </p>
+        <div className="mt-1 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+          <p className={`max-w-2xl text-body ${ADMIN_TEXT_META_CLASS}`}>{t("admin_workspace_subtitle_short")}</p>
+          <p
+            className={`flex shrink-0 flex-wrap items-center gap-1 text-small ${ADMIN_TEXT_META_CLASS}`}
+            data-tt-admin-home-command-palette-hint="1"
+            aria-label={t("admin_home_command_palette_hint")}
+          >
+            <span className="sr-only">{t("admin_home_command_palette_hint")}</span>
+            <span aria-hidden>{t("admin_home_command_palette_hint_prefix")}</span>
+            <kbd className={ADMIN_COMMAND_PALETTE_KBD_CLASS} aria-hidden>
+              {t("admin_home_command_palette_hint_ctrl")}
+            </kbd>
+            <span aria-hidden>+</span>
+            <kbd className={ADMIN_COMMAND_PALETTE_KBD_CLASS} aria-hidden>
+              {t("admin_home_command_palette_hint_key")}
+            </kbd>
+            <span aria-hidden className="hidden sm:inline">
+              {t("admin_home_command_palette_hint_mac")}
+            </span>
+            <span aria-hidden>{t("admin_home_command_palette_hint_suffix")}</span>
+          </p>
+        </div>
 
         {!inbox.loading && inboxPendingTotal === 0 ? (
           <div className="mt-4" data-tt-admin-home-primary-cta-fallback="1">
@@ -284,9 +467,8 @@ export default function AdminHomeClient() {
           </div>
         ) : null}
 
-      </header>
-
-
+      </AdminWarmL5Surface>
+      )}
 
       {caps.capabilitiesUnavailable ? (
 
@@ -316,69 +498,188 @@ export default function AdminHomeClient() {
 
 
 
-      <div className={`mt-6 ${ADMIN_HOME_CANVAS_CLASS} space-y-4`}>
+      <div
+        className={`${focusInbox ? "mt-3" : "mt-6"} ${
+          focusInbox ? ADMIN_HOME_FOCUS_CANVAS_CLASS : ADMIN_HOME_CANVAS_CLASS
+        } space-y-3`}
+      >
 
-        <AdminHomeShellPreviewBanner />
+      {!focusInbox && previewRole ? <AdminHomeShellPreviewBanner /> : null}
 
-        <div className="grid gap-4 lg:grid-cols-2" data-tt-admin-home-widget-grid="1">
-          <AdminHomeInboxStrip
-            counts={inbox.counts}
-            channels={inbox.channels}
-            loading={inbox.loading}
-            error={inbox.error}
-            onRetry={inbox.reload}
-            hasPermission={caps.hasPermission}
-            permissionsLoaded={caps.permissionsLoaded}
-          />
-          <AdminHomeKpiStrip
-            counts={kpi.counts}
-            loading={kpi.loading}
-            kpiLoading={kpi.loading}
-            permissionsLoaded={caps.permissionsLoaded}
-            hasPermission={caps.hasPermission}
-            error={kpi.error || inbox.error}
-            onRetry={() => {
-              inbox.reload();
-              kpi.reload();
-            }}
-          />
+        <div
+          className={
+            focusInbox
+              ? "grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(13rem,19rem)]"
+              : "grid gap-4 lg:grid-cols-2"
+          }
+          data-tt-admin-home-widget-grid="1"
+          data-tt-admin-home-inbox-focus={focusInbox ? "1" : undefined}
+        >
+          {focusInbox ? (
+            <div
+              className="flex min-w-0 flex-col gap-4"
+              data-tt-admin-home-inbox-column="1"
+            >
+              <AdminHomeInboxStrip
+                counts={inbox.counts}
+                channels={inbox.channels}
+                loading={inbox.loading}
+                error={inbox.error}
+                onRetry={inbox.reload}
+                hasPermission={caps.hasPermission}
+                permissionsLoaded={caps.permissionsLoaded}
+                focusMode={focusInbox}
+              />
+              <AdminHomeSystemOverviewSection
+                counts={inbox.counts}
+                channels={inbox.channels}
+                inboxLoading={inbox.loading}
+                kpi={kpi.counts}
+                kpiLoading={kpi.loading}
+                inboxPendingTotal={inboxPendingResolved ?? inboxPendingTotal}
+                focusInbox={focusInbox}
+              />
+            </div>
+          ) : (
+            <AdminHomeInboxStrip
+              counts={inbox.counts}
+              channels={inbox.channels}
+              loading={inbox.loading}
+              error={inbox.error}
+              onRetry={inbox.reload}
+              hasPermission={caps.hasPermission}
+              permissionsLoaded={caps.permissionsLoaded}
+              focusMode={focusInbox}
+            />
+          )}
+          {focusInbox ? (
+            <AdminHomeFocusCompanion
+              counts={inbox.counts}
+              channels={inbox.channels}
+              kpi={kpi.counts}
+              inboxLoading={inbox.loading}
+              kpiLoading={kpi.loading}
+            />
+          ) : null}
+          {!focusInbox ? (
+            <AdminHomeKpiStrip
+              counts={kpi.counts}
+              loading={kpi.loading}
+              kpiLoading={kpi.loading}
+              permissionsLoaded={caps.permissionsLoaded}
+              hasPermission={caps.hasPermission}
+              error={kpi.error || inbox.error}
+              onRetry={() => {
+                inbox.reload();
+                kpi.reload();
+              }}
+            />
+          ) : null}
         </div>
 
-        <AdminHomeDomainHealthStrip
-          counts={inbox.counts}
-          channels={inbox.channels}
-          kpi={kpi.counts}
-          inboxLoading={inbox.loading}
-          kpiLoading={kpi.loading}
-        />
+        {focusInbox ? (
+            <AdminHomeCollapsibleSection
+              key={`home-kpi-focus-${inboxPendingTotal ?? "loading"}`}
+              sectionId="home-kpi-snapshot"
+              titleKey="admin_home_kpi_fold_title"
+              defaultOpen={kpiFoldDefaultOpen}
+              persistOpen={false}
+              summaryAccent
+              frame="compact"
+              collapsedSummaryKey="admin_home_kpi_collapsed_summary"
+              collapsedSummaryVars={{
+                orders: kpi.counts.orders ?? 0,
+                disputes: kpi.counts.disputes ?? 0,
+              }}
+            >
+              <AdminHomeKpiStrip
+                counts={kpi.counts}
+                loading={kpi.loading}
+                kpiLoading={kpi.loading}
+                permissionsLoaded={caps.permissionsLoaded}
+                hasPermission={caps.hasPermission}
+                error={kpi.error || inbox.error}
+                embedded
+                inboxFocusContext
+                onRetry={() => {
+                  inbox.reload();
+                  kpi.reload();
+                }}
+              />
+            </AdminHomeCollapsibleSection>
+        ) : null}
 
-        <AdminHomeRecentVisits />
+        {!focusInbox ? (
+          <AdminHomeSystemOverviewSection
+            counts={inbox.counts}
+            channels={inbox.channels}
+            inboxLoading={inbox.loading}
+            kpi={kpi.counts}
+            kpiLoading={kpi.loading}
+            inboxPendingTotal={inboxPendingResolved ?? inboxPendingTotal}
+            focusInbox={focusInbox}
+          />
+        ) : null}
 
       </div>
 
 
 
-      <div className="mt-6">
+      {!focusInbox && showMaintainerFold ? (
 
-        <AdminHomeMaintainerFold />
+        <div className="mt-6">
 
-      </div>
+          <AdminHomeMaintainerFold />
+
+        </div>
+
+      ) : null}
 
 
 
       <details
         key={modulesFoldDefaultOpen ? "admin-home-modules-open" : "admin-home-modules-fold"}
-        className="mt-8 rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 shadow-soft sm:p-5"
+        className={`group overflow-hidden ${
+          focusInbox ? `${ADMIN_HOME_SECTION_COMPACT_FRAME_CLASS} mt-4` : `${ADMIN_WARM_L5_FRAME_CLASS} mt-8`
+        }`}
         open={modulesFoldDefaultOpen}
         data-tt-admin-home-modules-fold="1"
+        data-tt-admin-home-section-frame={focusInbox ? "compact" : "warm"}
       >
-        <summary className="cursor-pointer text-body-l font-semibold text-ink-900 marker:content-none [&::-webkit-details-marker]:hidden">
-          {t("admin_home_modules_fold_summary", { count: visibleModuleCount })}
+        <summary
+          className={`flex cursor-pointer list-none items-center gap-2 marker:content-none [&::-webkit-details-marker]:hidden ${
+            focusInbox
+              ? "px-3 py-2.5"
+              : `${ADMIN_WARM_L5_INNER_CLASS} ${ADMIN_WARM_L5_PAD_CLASS}`
+          }`}
+          data-tt-admin-home-modules-summary="1"
+        >
+          <span
+            className={`${ADMIN_COLLAPSE_CHEVRON_CLASS} group-open:rotate-90 ${ADMIN_MOTION_CARD_HOVER_CLASS}`}
+            aria-hidden
+          >
+            ›
+          </span>
+          <span className={`text-body-l font-semibold ${ADMIN_TEXT_BODY_CLASS}`}>
+            {modulesFocusFilterActive
+              ? t("admin_home_modules_fold_summary_focus", {
+                  shown: focusModuleShownCount,
+                  total: visibleModuleCount,
+                })
+              : t("admin_home_modules_fold_summary", { count: visibleModuleCount })}
+          </span>
         </summary>
-        <div className="mt-4 space-y-3" aria-label={t("admin_home_modules_aria")}>
+        <div
+          className={`border-t ${
+            focusInbox ? "border-white/8 px-3 pb-3 pt-2" : `border-ref-sun/15 ${ADMIN_WARM_L5_INNER_CLASS} px-4 pb-4 pt-3`
+          }`}
+          aria-label={t("admin_home_modules_aria")}
+          data-tt-admin-home-modules-focus-filter={modulesFocusFilterActive ? "1" : undefined}
+        >
+        <div className="space-y-3">
         {ADMIN_HOME_SECTION_ORDER.map(({ id, titleKey }) => {
 
-          const cards = cardsBySection.get(id) ?? [];
+          const cards = modulesDisplayBySection.get(id) ?? [];
 
           if (cards.length === 0) return null;
 
@@ -402,7 +703,7 @@ export default function AdminHomeClient() {
 
           );
 
-          const defaultOpen = sectionDefaultOpenByPending(pending);
+          const defaultOpen = focusInbox ? false : sectionDefaultOpenByPending(pending);
 
           const badge =
 
@@ -419,6 +720,10 @@ export default function AdminHomeClient() {
               titleKey={titleKey}
 
               defaultOpen={defaultOpen}
+
+              persistOpen={!focusInbox}
+
+              frame={focusInbox ? "compact" : "warm"}
 
               badge={badge}
 
@@ -442,7 +747,7 @@ export default function AdminHomeClient() {
 
             >
 
-              <div className="grid gap-3 sm:grid-cols-2">
+              <div className="grid gap-2 sm:grid-cols-2">
 
                 {cards
 
@@ -482,7 +787,7 @@ export default function AdminHomeClient() {
 
                   return (
 
-                    <Link
+                    <AdminShellPrefetchLink
 
                       key={card.href}
 
@@ -490,7 +795,7 @@ export default function AdminHomeClient() {
 
                       data-tt-admin-card-tier={tier}
 
-                      className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-lg)] border border-ink-200 bg-ink-50/30 p-3 text-ink-800 transition motion-reduce:transition-none hover:border-ink-400 hover:bg-white hover:text-ink-900 ${travelFocusRingCoreOffset2WhiteClasses}`}
+                      className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-lg)] p-3 text-ink-800 ${ADMIN_MOTION_CARD_HOVER_CLASS} ${travelFocusRingCoreOffset2WhiteClasses} ${ADMIN_KPI_CARD_IDLE_CLASS}`}
 
                     >
 
@@ -500,7 +805,7 @@ export default function AdminHomeClient() {
 
                         <div className="flex shrink-0 flex-col items-end gap-1">
 
-                          {tier !== "placeholder" ? (
+                          {adminHomeModuleCardTierBadgeVisible() && tier !== "placeholder" ? (
                             <span
                               className={`rounded-full border px-2 py-0.5 text-meta font-medium ${homeCardTierBadgeClass(tier)}`}
                               title={t("admin_home_card_tier_hint")}
@@ -525,7 +830,7 @@ export default function AdminHomeClient() {
 
                       <p className="mt-1.5 text-small leading-relaxed text-ink-600">{t(card.descKey)}</p>
 
-                    </Link>
+                    </AdminShellPrefetchLink>
 
                   );
 
@@ -539,14 +844,37 @@ export default function AdminHomeClient() {
 
         })}
 
+        {modulesFocusFilterActive ? (
+          <button
+            type="button"
+            className={`${touchTargetLink44Classes} ${ADMIN_TEXT_BODY_CLASS} font-semibold text-ink-800 underline-offset-2 hover:text-ink-900 hover:underline ${ADMIN_LINK_FOCUS_CLASS}`}
+            data-tt-admin-home-modules-expand-all="1"
+            onClick={() => setShowAllModules(true)}
+          >
+            {t("admin_home_modules_expand_all", { total: visibleModuleCount })}
+          </button>
+        ) : null}
+
+        </div>
         </div>
       </details>
 
 
 
+      {focusInbox && showMaintainerFold ? (
+        <div className="mt-4">
+          <AdminHomeMaintainerFold
+            focusMode
+            shellPreview={<AdminHomeShellPreviewBanner />}
+          />
+        </div>
+      ) : null}
+
+
+
       {isSuperAdminActorRole(actor.role) ? (
 
-        <details className="mt-8 rounded-[var(--radius-xl)] border border-ink-200 bg-ink-50/50 p-4" data-tt-admin-home-tech-fold="1">
+        <details className={`mt-8 ${ADMIN_HOME_TECH_FOLD_CLASS}`} data-tt-admin-home-tech-fold="1">
 
           <summary className="cursor-pointer text-small font-medium text-ink-600">
 
@@ -556,7 +884,7 @@ export default function AdminHomeClient() {
 
           <div className="mt-3 space-y-4">
 
-            <AdminMetaBuildSection meta={buildMeta} loading={buildLoading} error={buildError} />
+            <AdminMetaBuildSection meta={buildMeta} loading={buildLoading} error={buildError} inline />
 
           </div>
 

@@ -1,0 +1,12 @@
+node_modules
+**/node_modules
+.next
+**/.next
+playwright-report
+test-results
+evidence
+.tmp-*
+*.log
+coverage
+.turbo
+# registry/ 由 sync-registry-for-build.mjs 写入，须进入镜像

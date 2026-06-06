@@ -29,24 +29,24 @@ describe("resolveItineraryCreateDaysAndCities (56-S3)", () => {
     });
   });
 
-  it("multi-city: prepends primary and sets days to route length", () => {
+  it("multi-city: prepends primary and keeps form days", () => {
     expect(resolveItineraryCreateDaysAndCities("北京", 9, "上海\n杭州")).toEqual({
       cities: ["北京", "上海", "杭州"],
-      days: 3,
+      days: 9,
     });
   });
 
   it("skips duplicate primary when it reappears in extras (same script)", () => {
     expect(resolveItineraryCreateDaysAndCities("北京", 4, "上海,北京")).toEqual({
       cities: ["北京", "上海"],
-      days: 2,
+      days: 4,
     });
   });
 
   it("dedupes Latin city names case-insensitively", () => {
     expect(resolveItineraryCreateDaysAndCities("Paris", 4, "London,PARIS,london")).toEqual({
       cities: ["Paris", "London"],
-      days: 2,
+      days: 4,
     });
   });
 

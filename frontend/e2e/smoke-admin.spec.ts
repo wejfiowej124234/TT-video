@@ -18,7 +18,7 @@ test.describe("管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie �
     await expect(page.locator("body")).toBeVisible();
     await expect(page.getByRole("main", { name: /Admin Workspace|管理后台/i })).toBeVisible();
     await expect(page.getByRole("heading", { level: 1, name: /Admin Workspace|管理后台/i })).toBeVisible();
-    await expect(page.getByRole("link", { name: /Admin orders|Admin 订单/i })).toBeVisible();
+    await expect(page.getByRole("link", { name: /Orders|订单/i })).toBeVisible();
   });
 
   test.describe("管理后台 FeeRouter、索引器、对账与财务（5.2A / 110 / 200 / 07 §5.7 可达性）", () => {
@@ -64,7 +64,7 @@ test.describe("管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie �
       await gotoSmoke(page, "/admin/orders");
       await expect(page.locator("body")).toBeVisible();
       await expect(
-        page.getByRole("heading", { level: 1, name: /Admin orders|Admin 订单/i }),
+        page.getByRole("heading", { level: 1, name: /Orders|订单/i }),
       ).toBeVisible({ timeout: 40_000 });
       await expect(page.getByRole("main")).toBeVisible();
     });
@@ -91,7 +91,7 @@ test.describe("管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie �
       await gotoSmoke(page, "/admin/users");
       await expect(page.locator("body")).toBeVisible();
       await expect(
-        page.getByRole("heading", { level: 1, name: /Admin users|Admin 用户/i }),
+        page.getByRole("heading", { level: 1, name: /User management|用户管理/i }),
       ).toBeVisible({ timeout: 40_000 });
       await expect(page.getByRole("main")).toBeVisible();
     });
@@ -396,7 +396,7 @@ test.describe("管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie �
       await gotoSmoke(page, `/admin/orders/${ADMIN_DETAIL_PLACEHOLDER_ID}`);
       await expect(page.locator("body")).toBeVisible();
       await expect(
-        page.getByRole("heading", { level: 1, name: /Admin order detail|Admin 订单详情/i }),
+        page.getByRole("heading", { level: 1, name: /Order detail|订单详情/i }),
       ).toBeVisible({ timeout: 40_000 });
       await expect(page.getByRole("main")).toBeVisible();
     });
@@ -414,7 +414,7 @@ test.describe("管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie �
       await gotoSmoke(page, `/admin/users/${ADMIN_DETAIL_PLACEHOLDER_ID}`);
       await expect(page.locator("body")).toBeVisible();
       await expect(
-        page.getByRole("heading", { level: 1, name: /Admin user detail|Admin 用户详情/i }),
+        page.getByRole("heading", { level: 1, name: /User detail|用户详情/i }),
       ).toBeVisible({ timeout: 40_000 });
       await expect(page.getByRole("main")).toBeVisible();
     });

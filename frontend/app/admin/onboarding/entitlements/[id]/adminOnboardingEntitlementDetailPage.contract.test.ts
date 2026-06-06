@@ -10,6 +10,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "page.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminOnboardingEntitlementDetailPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminOnboardingEntitlementDetailPage.ts"), "utf8"),
+    readFileSync(join(__dir, "../../../../../lib/admin/useAdminStandardDetailFetch.ts"), "utf8"),
   ].join("\n");
 }
 
@@ -18,6 +19,8 @@ describe("admin onboarding entitlement detail page", () => {
 
   it("keeps entitlement by id route + admin fetch + DOM anchor", () => {
     expect(src).toContain("routes.admin.entitlementById");
+    expect(src).toContain("useAdminStandardDetailFetch");
+    expect(src).toContain("onboarding-entitlement-detail");
     expect(src).toContain("routes.admin.entitlementRevoke");
     expect(src).toContain('"AdminOnboardingEntitlementDetail"');
     expect(src).toContain('"data-tt-admin-onboarding-entitlement-detail": "1"');

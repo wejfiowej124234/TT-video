@@ -3,6 +3,7 @@
  */
 
 import { fetchJsonWithApiStatusLog, logApiJsonStatusNotOk } from "./apiClient/core";
+import { maybeApplyAdminSessionExpiredFromAdminFetch } from "@/lib/admin/adminSessionExpiredClient";
 import { type RequestFailedHttpBucket, requestFailedHttpBucket } from "./requestFailedHttp";
 
 /** 管理端 JSON 解析后：HTTP 200 但根级 `status !== "ok"` 时控制台排障（07 / 13-1）。 */
@@ -18,7 +19,11 @@ export async function adminFetchJson<T>(
   input: string | URL,
   init?: RequestInit
 ): Promise<{ res: Response; body: T }> {
-  return fetchJsonWithApiStatusLog<T>(context, input, init);
+  const result = await fetchJsonWithApiStatusLog<T>(context, input, init);
+  if (typeof window !== "undefined" && String(input).includes("/api/v1/admin/")) {
+    maybeApplyAdminSessionExpiredFromAdminFetch(result.res, result.body);
+  }
+  return result;
 }
 
 /** 与 `crates/api/src/routes/admin.rs` require_admin_actor / admin_db_pool_required 等 JSON `error` 对齐（70 / 13-1）。 */
@@ -28,6 +33,7 @@ export type AdminFetchErrorKind =
   | "user_not_found"
   | "admin_required"
   | "super_admin_required"
+  | "admin_permission_denied"
   | "admin_db_required"
   | "not_found"
   | "conflict"
@@ -96,6 +102,7 @@ export function adminFetchErrorKind(e: unknown): AdminFetchErrorKind {
   if (msg === "user_not_found") return "user_not_found";
   if (msg === "admin_required") return "admin_required";
   if (msg === "super_admin_required") return "super_admin_required";
+  if (msg === "admin_permission_denied") return "admin_permission_denied";
   if (msg === "admin_db_required") return "admin_db_required";
   if (msg === "forbidden") return "forbidden";
   {
@@ -110,9 +117,19 @@ export function adminFetchErrorKind(e: unknown): AdminFetchErrorKind {
 }
 
 export function logAdminFetch(context: string, e: unknown): void {
-  if (typeof window !== "undefined") {
-    console.error(`[${context}]`, e);
+  if (typeof window === "undefined") return;
+  const msg = e instanceof Error ? e.message : String(e);
+  /** 会话过期：已由 adminFetchJson 统一清会话/跳转，勿刷 console.error。 */
+  if (msg === "login_required" || msg === "unauthorized") {
+    console.debug(`[${context}]`, e);
+    return;
   }
+  /** Staging ②：社区举报表未就绪时 API 500；UI 已降级，勿占 UAT console.error。 */
+  if (msg === "admin_community_reports_query_failed") {
+    console.debug(`[${context}]`, e);
+    return;
+  }
+  console.error(`[${context}]`, e);
 }
 
 export function adminErrorUserText(kind: AdminFetchErrorKind, t: (key: string) => string): string {
@@ -127,6 +144,8 @@ export function adminErrorUserText(kind: AdminFetchErrorKind, t: (key: string) =
       return t("admin_error_admin_required");
     case "super_admin_required":
       return t("admin_error_super_admin_required");
+    case "admin_permission_denied":
+      return t("admin_error_permission_denied");
     case "admin_db_required":
       return t("admin_error_admin_db_required");
     case "not_found":
@@ -153,4 +172,22 @@ export function adminApiErrorUserText(
     return t("admin_requestFailed");
   }
   return adminErrorUserText(adminFetchErrorKind(new Error(code)), t);
+}
+
+/** 写表单 / PATCH：统一 `{ kind, message }`（HON-03）。 */
+export function adminUserFacingError(
+  code: string | undefined,
+  t: (key: string) => string,
+  fallbackKind: AdminFetchErrorKind = "failed"
+): { kind: AdminFetchErrorKind; message: string } {
+  const kind = code ? adminFetchErrorKind(new Error(code)) : fallbackKind;
+  return { kind, message: code ? adminApiErrorUserText(code, t) : adminErrorUserText(fallbackKind, t) };
+}
+
+export function adminUserFacingErrorFromUnknown(
+  e: unknown,
+  t: (key: string) => string
+): { kind: AdminFetchErrorKind; message: string } {
+  const kind = adminFetchErrorKind(e);
+  return { kind, message: adminErrorUserText(kind, t) };
 }

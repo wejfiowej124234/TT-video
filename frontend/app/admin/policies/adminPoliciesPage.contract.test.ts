@@ -11,7 +11,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminPoliciesPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminPoliciesListSection.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminPoliciesPage.ts"), "utf8"),
-    readFileSync(join(__dir, "useAdminPoliciesPageListFetch.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminPoliciesPageQuery.ts"), "utf8"),
   ].join("\n");
 }
@@ -21,6 +21,7 @@ describe("admin policies page", () => {
 
   it("keeps thin shell + policies list routes", () => {
     expect(src).toContain("routes.admin.policies");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("AdminPoliciesPageMain");
     expect(src).toContain("AdminListPageChrome");
     expect(src).toContain("AdminListFetchError");

@@ -1,32 +1,38 @@
 "use client";
 
-import { useId, useState } from "react";
 import Link from "next/link";
+import { useId, useState } from "react";
+import { MeSettingsHubBackLink } from "@/components/me/MeSettingsHubBackLink";
+import { MeSettingsSubpageHeader } from "@/components/me/MeSettingsSubpageHeader";
 import { putMePassword } from "@/lib/apiClient";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { useTranslation } from "@/components/LocaleProvider";
-import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
+import AuthL5Card from "@/components/auth/AuthL5Card";
+import MeSettingsL5FlowPage from "@/components/me/MeSettingsL5FlowPage";
+import LoginPasswordVisibilityToggle from "@/app/auth/login/LoginPasswordVisibilityToggle";
 import { PASSWORD_MIN_LEN } from "@/app/auth/register/constants";
-import {
-  touchTargetLink44Classes,
-  travelFocusRingCoreOffset2Classes,
-  travelFocusRingOffset2Classes,
-} from "@/lib/travelLinkFocus";
+import { authL5FieldClass, TT_AUTH_L5_FORM } from "@/lib/auth/authL5Form";
+import { ME_SETTINGS_HUB_PATH } from "@/lib/me/meSettingsL5";
+import { authL5InlineLinkFocusClasses, touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 
-/** 修改密码页（`PUT /api/v1/me/password`）；04 §三 3.2；与注册同源最短密码长度（`PASSWORD_MIN_LEN`）。 */
+/** 修改密码（`PUT /api/v1/me/password`）· L5 子页；Hub → `/me/settings` */
 export default function MePasswordPage() {
   const { t } = useTranslation();
   const formErrorId = useId();
   const currentPasswordId = useId();
   const newPasswordId = useId();
   const confirmPasswordId = useId();
-  const footerLinkClass = `${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`;
+  const footerLinkClass = `${touchTargetLink44Classes} ${TT_AUTH_L5_FORM.footerLinks}`;
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [newVisible, setNewVisible] = useState(false);
+  const [confirmVisible, setConfirmVisible] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const fieldInvalid = !!error;
+  const inputClass = authL5FieldClass(fieldInvalid);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,9 +51,7 @@ export default function MePasswordPage() {
     }
     setSubmitting(true);
     putMePassword({ old_password: oldPassword || undefined, new_password: newPassword })
-      .then(() => {
-        setSuccess(true);
-      })
+      .then(() => setSuccess(true))
       .catch((err) => {
         if (typeof window !== "undefined") {
           console.error("MePassword:", err);
@@ -57,108 +61,130 @@ export default function MePasswordPage() {
       .finally(() => setSubmitting(false));
   };
 
-  const cardClass = "rounded-[var(--radius-sm)] border border-ink-200 bg-bg-console shadow-soft p-6";
-  if (success) {
-    return (
-      <main className="min-h-screen bg-bg-main flex items-center justify-center p-6" aria-label={t("mePassword_title")}>
-        <div className={`w-full max-w-md ${cardClass} space-y-4`}>
-          <h1 className="text-h4 font-semibold text-ink-900">{t("mePassword_title")}</h1>
-          <p className="text-success">{t("mePassword_successMessage")}</p>
-          <p className="text-meta text-ink-500"><Link href="/community/me" className={footerLinkClass}>{t("mePassword_backMe")}</Link></p>
-          <ProductCrossNav
-            ariaLabelKey="me_password_relatedNav_aria"
-            showGuides
-          />
-        </div>
-      </main>
-    );
-  }
   return (
-    <main className="min-h-screen bg-bg-main flex items-center justify-center p-6" aria-label={t("mePassword_title")}>
-      <div className={`w-full max-w-md ${cardClass} space-y-4`}>
-        <h1 className="text-h4 font-semibold text-ink-900">{t("mePassword_title")}</h1>
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <div>
-            <label htmlFor={currentPasswordId} className="mb-1 block text-small text-ink-600">
-              {t("mePassword_currentPassword")}
-            </label>
-            <input
-              id={currentPasswordId}
-              type="password"
-              value={oldPassword}
-              onChange={(e) => setOldPassword(e.target.value)}
-              placeholder={t("mePassword_currentPlaceholder")}
-              autoComplete="current-password"
-              aria-invalid={!!error}
-              aria-errormessage={error ? formErrorId : undefined}
-              className={`w-full min-h-[44px] border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 text-small bg-bg-console ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
-            />
-          </div>
-          <div>
-            <label htmlFor={newPasswordId} className="mb-1 block text-small text-ink-600">
-              {t("mePassword_newPassword")}
-            </label>
-            <input
-              id={newPasswordId}
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              placeholder={t("mePassword_requiredPlaceholder")}
-              autoComplete="new-password"
-              aria-invalid={!!error}
-              aria-errormessage={error ? formErrorId : undefined}
-              className={`w-full min-h-[44px] border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 text-small bg-bg-console ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
-            />
-          </div>
-          <div>
-            <label htmlFor={confirmPasswordId} className="mb-1 block text-small text-ink-600">
-              {t("mePassword_confirmPassword")}
-            </label>
-            <input
-              id={confirmPasswordId}
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder={t("mePassword_requiredPlaceholder")}
-              autoComplete="new-password"
-              aria-invalid={!!error}
-              aria-errormessage={error ? formErrorId : undefined}
-              className={`w-full min-h-[44px] border border-ink-200 rounded-[var(--radius-sm)] px-3 py-2 text-small bg-bg-console ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
-            />
-          </div>
-          {error ? (
-            <p id={formErrorId} className="text-small text-danger" role="alert">
-              {error}
+    <MeSettingsL5FlowPage
+      ariaLabel={t("mePassword_title")}
+      route="password"
+      dataAttrs={{ "data-tt-me-settings-route": "password" }}
+      showMinimalFooter={false}
+    >
+      <MeSettingsHubBackLink t={t} />
+
+      <AuthL5Card maxWidth="wide" surface="me_password_form">
+        {success ? (
+          <div className="flex flex-col gap-4">
+            <MeSettingsSubpageHeader t={t} eyebrowKey="me_settings_eyebrow" titleKey="mePassword_title" />
+            <p className={TT_AUTH_L5_FORM.callout} role="status">
+              {t("mePassword_successMessage")}
             </p>
-          ) : null}
-          <div className="flex flex-wrap gap-2">
-            <button
-              type="submit"
-              disabled={submitting}
-              aria-busy={submitting ? true : undefined}
-              className={`btn-console inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] bg-travel-500 px-4 py-2 text-small font-medium text-white transition-colors motion-reduce:transition-none disabled:opacity-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
-            >
-              {submitting ? t("common_submitting") : t("mePassword_submit")}
-            </button>
-            <Link
-              href="/community/me"
-              className={`${touchTargetLink44Classes} inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] border border-ink-300 px-4 py-2 text-small text-ink-700 transition-colors hover:bg-ink-50 motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
-            >
-              {t("mePassword_cancel")}
+            <Link href="/auth/login" className={TT_AUTH_L5_FORM.primaryCta}>
+              {t("mePassword_goLogin")}
             </Link>
+            <p className={TT_AUTH_L5_FORM.footerMetaCompact}>
+              <Link href={ME_SETTINGS_HUB_PATH} className={footerLinkClass}>
+                {t("mePassword_backSettings")}
+              </Link>
+            </p>
           </div>
-        </form>
-        <p className="mt-4 text-meta text-ink-500">
-          <Link href="/community/me" className={footerLinkClass}>{t("mePassword_me")}</Link>
-          {" · "}
-          <Link href="/" className={footerLinkClass}>{t("auth_forgot_home")}</Link>
-        </p>
-        <ProductCrossNav
-          ariaLabelKey="me_password_relatedNav_aria"
-          showGuides
-          className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-meta text-ink-500"
-        />
-      </div>
-    </main>
+        ) : (
+          <>
+            <MeSettingsSubpageHeader
+              t={t}
+              eyebrowKey="me_settings_eyebrow"
+              titleKey="mePassword_title"
+              subtitleKey="mePassword_subtitle"
+            />
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+              <div className={TT_AUTH_L5_FORM.fieldGroup}>
+                <label htmlFor={currentPasswordId} className={TT_AUTH_L5_FORM.label}>
+                  {t("mePassword_currentPassword")}
+                </label>
+                <input
+                  id={currentPasswordId}
+                  type="password"
+                  value={oldPassword}
+                  onChange={(e) => setOldPassword(e.target.value)}
+                  placeholder={t("mePassword_currentPlaceholder")}
+                  autoComplete="current-password"
+                  aria-invalid={fieldInvalid}
+                  aria-errormessage={error ? formErrorId : undefined}
+                  className={inputClass}
+                />
+                <p className={TT_AUTH_L5_FORM.passwordHintOk}>
+                  <Link href="/auth/forgot-password" className={authL5InlineLinkFocusClasses}>
+                    {t("mePassword_forgotLink")}
+                  </Link>
+                </p>
+              </div>
+              <div className={TT_AUTH_L5_FORM.fieldGroup}>
+                <label htmlFor={newPasswordId} className={TT_AUTH_L5_FORM.label}>
+                  {t("mePassword_newPassword")}
+                </label>
+                <div className="relative">
+                  <input
+                    id={newPasswordId}
+                    type={newVisible ? "text" : "password"}
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    placeholder={t("mePassword_newPlaceholder", { n: String(PASSWORD_MIN_LEN) })}
+                    autoComplete="new-password"
+                    aria-invalid={fieldInvalid}
+                    aria-errormessage={error ? formErrorId : undefined}
+                    className={`${inputClass} pr-12`}
+                  />
+                  <LoginPasswordVisibilityToggle
+                    visible={newVisible}
+                    onToggle={() => setNewVisible((v) => !v)}
+                    showLabel={t("auth_login_passwordShow")}
+                    hideLabel={t("auth_login_passwordHide")}
+                  />
+                </div>
+                <p className={TT_AUTH_L5_FORM.passwordHintOk}>{t("mePassword_hintMin", { n: PASSWORD_MIN_LEN })}</p>
+              </div>
+              <div className={TT_AUTH_L5_FORM.fieldGroup}>
+                <label htmlFor={confirmPasswordId} className={TT_AUTH_L5_FORM.label}>
+                  {t("mePassword_confirmPassword")}
+                </label>
+                <div className="relative">
+                  <input
+                    id={confirmPasswordId}
+                    type={confirmVisible ? "text" : "password"}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder={t("mePassword_confirmPlaceholder")}
+                    autoComplete="new-password"
+                    aria-invalid={fieldInvalid}
+                    aria-errormessage={error ? formErrorId : undefined}
+                    className={`${inputClass} pr-12`}
+                  />
+                  <LoginPasswordVisibilityToggle
+                    visible={confirmVisible}
+                    onToggle={() => setConfirmVisible((v) => !v)}
+                    showLabel={t("auth_login_passwordShow")}
+                    hideLabel={t("auth_login_passwordHide")}
+                  />
+                </div>
+              </div>
+              {error ? (
+                <p id={formErrorId} className={TT_AUTH_L5_FORM.error} role="alert">
+                  {error}
+                </p>
+              ) : null}
+              <button
+                type="submit"
+                disabled={submitting}
+                aria-busy={submitting ? true : undefined}
+                className={TT_AUTH_L5_FORM.primaryCta}
+              >
+                {submitting ? t("common_submitting") : t("mePassword_submit")}
+              </button>
+              <Link href={ME_SETTINGS_HUB_PATH} className={`${TT_AUTH_L5_FORM.secondaryButton} text-center`}>
+                {t("mePassword_cancel")}
+              </Link>
+            </form>
+          </>
+        )}
+      </AuthL5Card>
+    </MeSettingsL5FlowPage>
   );
 }

@@ -33,9 +33,10 @@ import {
 
   ADMIN_TABLE_TH_CELL_CLASS,
 
-  adminTableInlineLinkClass,
-
-} from "@/lib/adminUi";
+  adminTableRowPrimaryActionClass,
+  ADMIN_TABLE_SECTION_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,} from "@/lib/adminUi";
 
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 
@@ -45,11 +46,9 @@ type AuditSortKey = "action" | "created_at";
 
 
 
-type Props = Pick<AdminAuditPageViewModel, "listQ" | "items">;
+type Props = Pick<AdminAuditPageViewModel, "listQ" | "items"> & { refreshing?: boolean };
 
-
-
-export function AdminAuditTableSection({ listQ, items }: Props) {
+export function AdminAuditTableSection({ listQ, items, refreshing = false }: Props) {
 
   const { t } = useTranslation();
 
@@ -91,21 +90,19 @@ export function AdminAuditTableSection({ listQ, items }: Props) {
 
 
 
-  const filterLinkClass = `${touchTargetLink44Classes} font-mono text-meta ${ADMIN_INLINE_LINK_CLASS} ${ADMIN_LINK_FOCUS_CLASS}`;
+  const filterLinkClass = `${touchTargetLink44Classes} font-mono text-small text-ink-800 ${ADMIN_INLINE_LINK_CLASS} ${ADMIN_LINK_FOCUS_CLASS}`;
 
 
 
   return (
 
     <section
-
-      className="mt-6 overflow-hidden rounded-[var(--radius-xl)] border border-ink-200 bg-white"
-
+      className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
       aria-label={t("admin_audit_list_table_aria")}
-
+      data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
     >
 
-      <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+      <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
 
         <thead className={ADMIN_TABLE_THEAD_CLASS}>
 
@@ -165,13 +162,13 @@ export function AdminAuditTableSection({ listQ, items }: Props) {
 
         </thead>
 
-        <tbody className="divide-y divide-ink-100 text-ink-700">
+        <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
 
           {sortedItems.map((row, idx) => (
 
             <tr key={row.id ?? `${row.request_id ?? "req"}-${idx}`} className={ADMIN_TABLE_ROW_CLASS}>
 
-              <td className="px-4 py-3 font-mono text-meta">
+              <td className="px-4 py-3 font-mono text-small text-ink-800">
 
                 {row.action ? (
 
@@ -311,7 +308,7 @@ export function AdminAuditTableSection({ listQ, items }: Props) {
 
                     href={`/admin/audit/logs/${encodeURIComponent(row.id)}`}
 
-                    className={adminTableInlineLinkClass()}
+                    className={adminTableRowPrimaryActionClass()}
 
                     aria-label={t("admin_audit_log_detail_row_aria", { id: row.id })}
 

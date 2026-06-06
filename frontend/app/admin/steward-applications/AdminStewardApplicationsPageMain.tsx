@@ -6,146 +6,53 @@ import Link from "next/link";
 
 import { useRouter, useSearchParams } from "next/navigation";
 
-import { useCallback, useEffect, useId, useMemo, useState } from "react";
-
-
+import { useId, useMemo } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
-
-import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
-
-import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 
 import { AdminQueueListPageChrome } from "@/components/admin/AdminQueueListPageChrome";
 
 import {
-
   buildAdminQueueListPath,
-
   parseAdminQueueStatusQuery,
-
 } from "@/lib/admin/adminQueueListPageModel";
-
-import { fetchAdminQueueList } from "@/lib/admin/fetchAdminQueueList";
 import { ADMIN_EMPTY_NEXT_STEWARD_QUEUE_EMPTY } from "@/lib/admin/adminListEmptyStateNextLinks";
-
-import { type AdminFetchErrorKind, adminErrorUserText } from "@/lib/adminFetchDisplay";
-
-import { routes } from "@/lib/api/routes";
-
+import { adminErrorUserText } from "@/lib/adminFetchDisplay";
 import { formatRelativeAge } from "@/lib/admin/formatRelativeAge";
 import { sortOnboardingQueueItems, type OnboardingQueueSortKey } from "@/lib/admin/sortOnboardingQueueItems";
 import { useAdminTableSort } from "@/lib/admin/useAdminTableSort";
 
 import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
+import { AdminStandardListSection } from "@/components/admin/AdminStandardListSection";
 import { AdminOnboardingQueueSortToolbar } from "@/components/admin/AdminOnboardingQueueSortToolbar";
 
 import {
   ADMIN_FILTER_CARD_CLASS,
   ADMIN_FORM_FIELD_FOCUS_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
   ADMIN_QUEUE_LIST_ROW_CARD_CLASS,
-  adminTableInlineLinkClass,
+  adminTableRowPrimaryActionClass,
+  ADMIN_FILTER_INPUT_SM_CLASS,
+  ADMIN_FILTER_FIELD_LABEL_CLASS,
 } from "@/lib/adminUi";
 
-
+import { useAdminStewardApplicationsPage } from "./useAdminStewardApplicationsPage";
 
 const DEFAULT_STATUS = "stake_pending";
-
 const BASE_PATH = "/admin/steward-applications";
 
-
-
-type ListItem = {
-
-  user_id?: string;
-
-  email?: string | null;
-
-  application?: {
-
-    status?: string;
-
-    jurisdictions?: string[];
-
-    legal_name?: string;
-
-    submitted_at?: string;
-
-  };
-
-};
-
-
-
 export function AdminStewardApplicationsPageMain() {
-
   const { t } = useTranslation();
-
   const titleId = useId();
-
   const router = useRouter();
-
   const searchParams = useSearchParams();
-
   const statusFilter = useMemo(
-
     () => parseAdminQueueStatusQuery(new URLSearchParams(searchParams.toString()), DEFAULT_STATUS),
-
     [searchParams],
-
   );
 
-  const [loading, setLoading] = useState(true);
-
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-
-  const [items, setItems] = useState<ListItem[]>([]);
-
-
-
-  const load = useCallback(async () => {
-
-    setLoading(true);
-
-    setError(null);
-
-    const q = statusFilter.trim() ? `?status=${encodeURIComponent(statusFilter.trim())}` : "";
-
-    const { items: rows, errorKind } = await fetchAdminQueueList<{ items?: ListItem[] }>(
-
-      "AdminStewardApplicationsPage.load",
-
-      `${routes.adminStewardApplications}${q}`,
-
-    );
-
-    if (errorKind) {
-
-      setError(errorKind);
-
-      setItems([]);
-
-    } else {
-
-      setItems((rows as ListItem[]) ?? []);
-
-    }
-
-    setLoading(false);
-
-  }, [statusFilter]);
-
-
-
-  useEffect(() => {
-
-    void load();
-
-  }, [load]);
-
-
-
+  const { items, loading, refreshing, error, staleWhileError, bumpReload } = useAdminStewardApplicationsPage(statusFilter);
   const onStatusChange = (next: string) => {
 
     router.push(buildAdminQueueListPath(BASE_PATH, next));
@@ -168,19 +75,19 @@ export function AdminStewardApplicationsPageMain() {
 
       titleKey="admin_steward_list_title"
 
-      subtitleKey="admin_steward_list_subtitle"
+      subtitleKey="admin_steward_list_subtitle_l5"
 
     >
 
       <div className={`${ADMIN_FILTER_CARD_CLASS} flex flex-wrap items-end gap-3`} data-tt-admin-queue-list-filter="steward">
 
-        <label className="text-small text-ink-700">
+        <label className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
 
           {t("admin_steward_list_filterStatus")}
 
           <select
 
-            className={`mt-1 block rounded border border-ink-200 px-2 py-1.5 text-meta ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+            className={`mt-1 block ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 text-meta ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
 
             value={statusFilter}
 
@@ -212,7 +119,7 @@ export function AdminStewardApplicationsPageMain() {
 
           aria-label={t("admin_steward_list_refresh")}
 
-          onClick={() => void load()}
+          onClick={() => bumpReload()}
 
         >
 
@@ -224,26 +131,24 @@ export function AdminStewardApplicationsPageMain() {
 
 
 
-      <section aria-live="polite" data-tt-admin-onboarding-queue-list="steward">
-
-        {loading ? (
-          <AdminListLoadingStatus message={t("admin_users_loading")} className="text-body text-ink-600" />
-        ) : error ? (
-
-          <AdminListFetchError errorKind={error} message={adminErrorUserText(error, t)} />
-
-        ) : items.length === 0 ? (
-
+      <AdminStandardListSection
+        loading={loading}
+        refreshing={refreshing}
+        error={error}
+        staleWhileError={staleWhileError}
+        itemsLength={items.length}
+        loadingMessage={t("admin_users_loading")}
+        errorMessage={adminErrorUserText(error, t)}
+        className={refreshing ? ADMIN_LIST_REFRESHING_SURFACE_CLASS : undefined}
+        data-tt-admin-onboarding-queue-list="steward"
+        data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
+        empty={
           <AdminListPageEmptyState
-
             messageKey="admin_list_empty_steward"
-
             nextLinks={ADMIN_EMPTY_NEXT_STEWARD_QUEUE_EMPTY}
-
           />
-
-        ) : (
-
+        }
+      >
           <>
           <AdminOnboardingQueueSortToolbar
             sortKey={sort.key}
@@ -267,7 +172,7 @@ export function AdminStewardApplicationsPageMain() {
 
                     <div>
 
-                      <p className="font-mono text-meta text-ink-800 break-all">{row.email ?? uid}</p>
+                      <p className="font-mono text-small text-ink-800 text-ink-800 break-all">{row.email ?? uid}</p>
 
                       <p className="mt-1 text-small text-ink-600">
 
@@ -317,7 +222,7 @@ export function AdminStewardApplicationsPageMain() {
 
                       href={`/admin/users/${encodeURIComponent(uid)}`}
 
-                      className={`${adminTableInlineLinkClass()}`}
+                      className={adminTableRowPrimaryActionClass()}
 
                       aria-label={t("admin_steward_list_review_row_aria", { id: uid })}
 
@@ -337,10 +242,7 @@ export function AdminStewardApplicationsPageMain() {
 
           </ul>
           </>
-
-        )}
-
-      </section>
+      </AdminStandardListSection>
 
     </AdminQueueListPageChrome>
 

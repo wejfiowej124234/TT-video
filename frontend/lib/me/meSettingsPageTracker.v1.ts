@@ -1,0 +1,545 @@
+/**
+ * `/me/settings` 族 + 顶栏账户导航 · ① 本地逐页机读追踪（满分 SSOT）
+ *
+ * 改动任一页壳 / 分组 / 顶栏菜单须 `meSettingsPageTracker` contract + smoke 绿集 exit 0。
+ */
+export type MeSettingsPageTrackerEntry = {
+  /** 规范路径（不含 query） */
+  route: string;
+  /** `data-tt-me-settings-route` 或 security 页 marker */
+  routeMarker: string;
+  /** 相对 `frontend/` 的源文件 */
+  sourceFiles: readonly string[];
+  /** 源文件中必须出现的子串（L5 / IA 硬闸） */
+  mustContain: readonly string[];
+  /** 源文件中禁止出现的子串 */
+  mustNotContain?: readonly string[];
+};
+
+/** 设置 Hub 与子页 */
+export const ME_SETTINGS_PAGE_TRACKER_V1: readonly MeSettingsPageTrackerEntry[] = [
+  {
+    route: "/me/settings",
+    routeMarker: "hub",
+    sourceFiles: [
+      "app/me/settings/MeSettingsPageInner.tsx",
+      "components/me/MeSettingsProfileCard.tsx",
+      "components/me/MeSettingsHubFlashBanner.tsx",
+      "components/me/MeSettingsLogoutButton.tsx",
+      "components/me/MeLogoutL5Button.tsx",
+      "lib/me/useMeSettingsHubFlash.ts",
+      "lib/me/useMeSettingsHubStatus.ts",
+      "lib/me/meSettingsL5.ts",
+    ],
+    mustContain: [
+      "MeSettingsProfileCard",
+      "data-tt-me-settings-profile-card",
+      "MeSettingsLogoutButton",
+      "MeLogoutL5Button",
+      "data-tt-me-settings-logout",
+      "MeSettingsL5ConfirmDialog",
+      "useMeSettingsHubStatus",
+      "MeSettingsHubSection",
+      "meSettingsL5MainDataAttrs",
+      '"data-tt-me-settings-route": "hub"',
+      "data-tt-me-settings-ui-frozen",
+      "ME_SETTINGS_HUB_PATH",
+      "MeSettingsHubFlashBanner",
+      "useMeSettingsHubFlash",
+      "data-tt-me-settings-flash-banner",
+    ],
+    mustNotContain: ["/pay", "ProductCrossNav", "MeSettingsHubStatusStrip"],
+  },
+  {
+    route: "/me/settings/profile",
+    routeMarker: "settings-profile",
+    sourceFiles: [
+      "app/me/settings/profile/page.tsx",
+      "app/me/settings/profile/MeSettingsProfilePageInner.tsx",
+      "components/me/MeSettingsProfilePanel.tsx",
+      "components/me/MeSettingsProfileIdentityCard.tsx",
+      "components/me/MeSettingsProfileDetails.tsx",
+      "components/me/MeSettingsProfilePanelLoading.tsx",
+      "components/me/communityMePage/useCommunityMeAccountPanelAvatar.ts",
+      "lib/me/mapProfileAvatarUploadError.ts",
+      "lib/me/meSettingsProfileDisplay.ts",
+      "lib/me/meSettingsL5.ts",
+    ],
+    mustContain: [
+      "MeSettingsL5FlowPage",
+      "MeSettingsHubBackLink",
+      "useMeSettingsSummary",
+      "MeSettingsProfilePanel",
+      "MeSettingsProfileIdentityCard",
+      "MeSettingsProfileEditForm",
+      "MeSettingsProfileAccountDetails",
+      "MeSettingsProfileCompleteness",
+      "profileIdentityEditBtn",
+      "data-tt-me-settings-profile-avatar-load-failed",
+      "mapProfileAvatarUploadError",
+      "data-tt-me-settings-profile-edit-form",
+      "resolveProfileWalletDisplay",
+      'data-tt-me-settings-route": "settings-profile"',
+      "data-tt-me-settings-profile",
+      "data-tt-me-settings-profile-panel",
+    ],
+    mustNotContain: [
+      "CommunityMeQuickLinksDrawer",
+      "<CommunityMeAccountPanel",
+      "TT_COMMUNITY_ME_PANEL_L5",
+      "useCommunityAuth",
+      "MeSettingsProfileCommunityLinks",
+      "data-tt-me-settings-profile-content-links",
+    ],
+  },
+  {
+    route: "/me/settings/privacy",
+    routeMarker: "privacy",
+    sourceFiles: [
+      "app/me/settings/privacy/page.tsx",
+      "components/me/MeSettingsCommunityVisibilitySection.tsx",
+      "hooks/useMeSettingsUserPreferences.ts",
+    ],
+    mustContain: [
+      "MeSettingsL5FlowPage",
+      "MeSettingsHubBackLink",
+      'data-tt-me-settings-route": "privacy"',
+      "/me/settings/notifications-prefs",
+      "MeSettingsCommunityVisibilitySection",
+      "data-tt-me-settings-community-visibility",
+      "MeSettingsPrefsSyncBanner",
+      "useMeSettingsUserPreferences",
+    ],
+    mustNotContain: ["me_settings_privacy_p3_notice"],
+  },
+  {
+    route: "/me/settings/language",
+    routeMarker: "language",
+    sourceFiles: ["app/me/settings/language/page.tsx", "components/me/MeSettingsLanguagePicker.tsx"],
+    mustContain: [
+      "MeSettingsLanguagePicker",
+      'data-tt-me-settings-route": "language"',
+      'data-tt-me-settings-language-picker="1"',
+    ],
+  },
+  {
+    route: "/me/settings/data",
+    routeMarker: "data",
+    sourceFiles: [
+      "app/me/settings/data/page.tsx",
+      "components/me/MeSettingsL5ActionRow.tsx",
+      "lib/me/meSettingsDataExport.ts",
+    ],
+    mustContain: [
+      "MeSettingsHubBackLink",
+      'data-tt-me-settings-route": "data"',
+      "data-tt-me-settings-data-export",
+      "me_settings_data_notice",
+      "/me/settings/privacy",
+      "MeSettingsL5ActionRow",
+      "MeSettingsDataRequestDialog",
+      "data-tt-me-settings-action",
+      "buildMeSettingsDataExportPackage",
+      "downloadMeSettingsDataJson",
+      "data-tt-me-settings-data-export-done",
+      "me_settings_data_export_done",
+    ],
+    mustNotContain: ["/pay", "comingSoon: true"],
+  },
+  {
+    route: "/me/settings/notifications-prefs",
+    routeMarker: "notifications-prefs",
+    sourceFiles: [
+      "app/me/settings/notifications-prefs/page.tsx",
+      "components/me/MeSettingsL5ToggleRow.tsx",
+      "lib/me/meSettingsPreferencesStorage.ts",
+      "lib/me/meSettingsPreferencesApi.ts",
+    ],
+    mustContain: [
+      "MeSettingsHubBackLink",
+      'data-tt-me-settings-route": "notifications-prefs"',
+      'meSecurityHref("notifications")',
+      "MeSettingsL5ToggleRow",
+      "data-tt-me-settings-notif-prefs",
+      "MeSettingsPrefsSyncBanner",
+      "patchMeSettingsUserPreferences",
+      "useMeSettingsUserPreferences",
+      "putMeSettingsPreferencesToApi",
+    ],
+    mustNotContain: ["comingSoon: true", "me_settings_notif_prefs_p3_notice"],
+  },
+  {
+    route: "/me/settings/trust",
+    routeMarker: "settings-trust",
+    sourceFiles: ["app/me/settings/trust/page.tsx"],
+    mustContain: [
+      "MeSettingsL5FlowPage",
+      "MeSettingsHubBackLink",
+      'data-tt-me-settings-route": "settings-trust"',
+      "useMeSettingsSummary",
+      "data-tt-me-settings-trust",
+      "MeSettingsResendVerifyEmailPanel",
+      'meSettingsNavExtensionHref("/trust")',
+      "meSecurityHref",
+    ],
+    mustNotContain: [
+      "comingSoon: true",
+      "external: true",
+      "data-tt-me-settings-kyc-status",
+      "me_settings_item_kyc",
+    ],
+  },
+  {
+    route: "/trust",
+    routeMarker: "trust-center-from-settings",
+    sourceFiles: [
+      "app/trust/page.tsx",
+      "components/trust/TrustTransparencyHub.tsx",
+      "app/me/settings/trust/page.tsx",
+    ],
+    mustContain: [
+      "data-tt-trust-from-settings",
+      "data-tt-trust-hub-from-settings",
+      "MeSettingsExtensionIngressBlock",
+      "me_settings_trust_center_from_settings_notice",
+      'meSettingsNavExtensionHref("/trust")',
+    ],
+  },
+  {
+    route: "/me/password",
+    routeMarker: "password",
+    sourceFiles: ["app/me/password/page.tsx"],
+    mustContain: [
+      "AuthL5Card",
+      "MeSettingsHubBackLink",
+      'data-tt-me-settings-route": "password"',
+      "ME_SETTINGS_HUB_PATH",
+    ],
+    mustNotContain: ["ProductCrossNav", "chain_off"],
+  },
+  {
+    route: "/me/security",
+    routeMarker: "security",
+    sourceFiles: [
+      "app/me/security/MeSecurityPageMain.tsx",
+      "app/me/security/useMeSecurityPage.ts",
+      "app/me/security/MeSecuritySessionsSection.tsx",
+      "app/me/security/MeSecurityNotificationsSection.tsx",
+      "app/me/security/MeSecurityWalletVerifySection.tsx",
+      "components/me/MeSettingsL5ConfirmDialog.tsx",
+    ],
+    mustContain: [
+      "data-tt-me-security-page",
+      'data-tt-me-settings-route": "security"',
+      "/me/settings/notifications-prefs",
+      "MeSettingsHubBackLink",
+      "MeSettingsL5ConfirmDialog",
+      "data-tt-me-security-revoke-current",
+      "data-tt-me-security-revoke-suffix",
+      "data-tt-me-security-notif-row",
+      "data-tt-me-security-notif-expand",
+      "me-security-sessions",
+      "me-security-notifications",
+      "me-security-wallet",
+    ],
+    mustNotContain: ["window.confirm"],
+  },
+  {
+    route: "/privacy",
+    routeMarker: "privacy-from-settings",
+    sourceFiles: [
+      "app/privacy/page.tsx",
+      "components/me/MeSettingsExtensionDocumentShell.tsx",
+      "lib/me/meSettingsNavModel.ts",
+    ],
+    mustContain: [
+      "MeSettingsExtensionDocumentShell",
+      "data-tt-privacy-from-settings",
+      "MeSettingsL5FlowPage",
+      "me_settings_privacy_from_settings_notice",
+      "meSettingsNavExtensionHref(\"/privacy\")",
+    ],
+  },
+  {
+    route: "/terms",
+    routeMarker: "terms-from-settings",
+    sourceFiles: [
+      "app/terms/page.tsx",
+      "components/me/MeSettingsExtensionDocumentShell.tsx",
+      "lib/me/meSettingsNavModel.ts",
+    ],
+    mustContain: [
+      "MeSettingsExtensionDocumentShell",
+      "data-tt-terms-from-settings",
+      "me_settings_terms_from_settings_notice",
+      "meSettingsNavExtensionHref(\"/terms\")",
+    ],
+  },
+  {
+    route: "/terms/community-guidelines",
+    routeMarker: "guidelines-from-settings",
+    sourceFiles: [
+      "app/terms/community-guidelines/page.tsx",
+      "components/me/MeSettingsExtensionDocumentShell.tsx",
+      "lib/me/meSettingsNavModel.ts",
+    ],
+    mustContain: [
+      "data-tt-guidelines-from-settings",
+      "me_settings_guidelines_from_settings_notice",
+      "meSettingsNavExtensionHref(\"/terms/community-guidelines\")",
+    ],
+  },
+  {
+    route: "/help",
+    routeMarker: "help-from-settings",
+    sourceFiles: [
+      "app/help/page.tsx",
+      "components/me/MeSettingsExtensionDocumentShell.tsx",
+      "components/me/MeSettingsExtensionChrome.tsx",
+      "lib/me/meSettingsNavModel.ts",
+      "lib/me/meSettingsExtensionContext.ts",
+    ],
+    mustContain: [
+      "MeSettingsExtensionDocumentShell",
+      "MeSettingsL5FlowPage",
+      "data-tt-help-from-settings",
+      "me_settings_help_from_settings_notice",
+      "meSettingsNavExtensionHref(\"/help\")",
+    ],
+  },
+  {
+    route: "/disputes",
+    routeMarker: "disputes-list",
+    sourceFiles: [
+      "app/disputes/DisputesListPageMain.tsx",
+      "components/disputes/DisputesL5PageShell.tsx",
+      "lib/me/meSettingsNavModel.ts",
+    ],
+    mustContain: [
+      "DisputesL5PageShell",
+      "MeSettingsHubBackLink",
+      "DISPUTES_L5_ROUTE_MARKER_LIST",
+      "data-tt-disputes-l5",
+      "data-tt-disputes-from-settings",
+      'meSettingsNavExtensionHref("/disputes")',
+    ],
+    mustNotContain: ["ProductCrossNav"],
+  },
+  {
+    route: "/community/feedback",
+    routeMarker: "feedback-from-settings",
+    sourceFiles: [
+      "app/community/feedback/page.tsx",
+      "components/me/MeSettingsExtensionChrome.tsx",
+      "lib/me/meSettingsExtensionContext.ts",
+      "lib/me/meSettingsNavModel.ts",
+    ],
+    mustContain: [
+      "MeSettingsExtensionChrome",
+      "data-tt-community-feedback-from-settings",
+      "data-tt-me-settings-extension-chrome",
+      "feedback_category_account",
+      "me_settings_feedback_delete_account_prefill",
+      "isMeSettingsDeleteAccountFeedbackIntent",
+      "deleteAccountIntent",
+      "data-tt-community-feedback-delete-account-intent",
+      "data-tt-community-feedback-delete-account-modal",
+      "data-tt-community-feedback-post-modal",
+      "/community/feedback?from=settings",
+    ],
+    mustNotContain: ["window.confirm"],
+  },
+  {
+    route: "/auth/verify-email",
+    routeMarker: "verify-email",
+    sourceFiles: [
+      "app/auth/verify-email/page.tsx",
+      "components/me/MeSettingsResendVerifyEmailPanel.tsx",
+      "lib/me/meSettingsVerifyEmailApi.ts",
+    ],
+    mustContain: [
+      "MeSettingsL5FlowPage",
+      "MeSettingsHubBackLink",
+      'data-tt-me-settings-route": "verify-email"',
+      "data-tt-auth-verify-from-settings",
+      "MeSettingsResendVerifyEmailPanel",
+      "resendMeSettingsVerificationEmail",
+      "postVerifyEmail",
+    ],
+    mustNotContain: ["window.confirm"],
+  },
+  {
+    route: "/provider/register",
+    routeMarker: "provider-register-from-settings",
+    sourceFiles: [
+      "app/provider/register/ProviderRegisterPageMain.tsx",
+      "app/provider/register/useProviderRegisterPage.ts",
+    ],
+    mustContain: [
+      "data-tt-provider-register-from-settings",
+      "MeSettingsExtensionIngressBlock",
+      "resolveRegisterBackPath",
+      "fromSettings",
+    ],
+  },
+  {
+    route: "/steward/register",
+    routeMarker: "steward-register-from-settings",
+    sourceFiles: [
+      "app/steward/register/StewardRegisterPageMain.tsx",
+      "app/steward/register/useStewardRegisterPage.ts",
+    ],
+    mustContain: [
+      "data-tt-steward-register-from-settings",
+      "MeSettingsExtensionIngressBlock",
+      "fromSettings",
+    ],
+  },
+  {
+    route: "/guide",
+    routeMarker: "guide-from-settings",
+    sourceFiles: ["app/guide/page.tsx", "lib/me/meSettingsNavModel.ts"],
+    mustContain: [
+      "data-tt-guide-from-settings",
+      "MeSettingsExtensionIngressBlock",
+      "me_settings_guide_from_settings_notice",
+      'meSettingsNavExtensionHref("/guide")',
+    ],
+  },
+  {
+    route: "/me/onboarding",
+    routeMarker: "onboarding",
+    sourceFiles: ["app/me/onboarding/MeOnboardingPageMain.tsx"],
+    mustContain: [
+      "MeSettingsL5FlowPage",
+      'data-tt-me-settings-route": "onboarding"',
+      "data-tt-me-onboarding-from-settings",
+      "!fromSettings",
+    ],
+  },
+  {
+    route: "/disputes/[id]",
+    routeMarker: "disputes-detail",
+    sourceFiles: [
+      "app/disputes/[id]/DisputeDetailPageClient.tsx",
+      "app/disputes/[id]/DisputeDetailLoadedView.tsx",
+      "components/disputes/DisputesL5PageShell.tsx",
+    ],
+    mustContain: [
+      "DisputesL5PageShell",
+      "MeSettingsHubBackLink",
+      "DISPUTES_L5_ROUTE_MARKER_DETAIL",
+      "data-tt-disputes-l5",
+      "data-tt-disputes-from-settings",
+    ],
+    mustNotContain: ["ProductCrossNav"],
+  },
+  {
+    route: "/me/settings/error",
+    routeMarker: "error",
+    sourceFiles: ["app/me/settings/error.tsx"],
+    mustContain: [
+      "MeSettingsL5FlowPage",
+      "MeSettingsHubBackLink",
+      'data-tt-me-settings-route": "error"',
+      "ME_SETTINGS_HUB_PATH",
+      "TT_AUTH_L5_FORM",
+      "common_retry",
+    ],
+    mustNotContain: ['from "../error"'],
+  },
+] as const;
+
+/** 顶栏用户菜单直达页（与 Hub 去重分工） */
+export const ACCOUNT_NAV_HEADER_PAGE_TRACKER_V1: readonly MeSettingsPageTrackerEntry[] = [
+  {
+    route: "/me/identities",
+    routeMarker: "identities",
+    sourceFiles: ["components/header/headerUserMenuNavModel.ts"],
+    mustContain: ['href: "/me/identities"', "header_multiIdentity", "function accountNavItems"],
+  },
+  {
+    route: "/me/settings/profile",
+    routeMarker: "community-profile",
+    sourceFiles: [
+      "components/header/HeaderUserMenuNavLinks.tsx",
+      "components/header/headerUserMenuNavModel.ts",
+      "app/me/settings/profile/MeSettingsProfilePageInner.tsx",
+    ],
+    mustContain: [
+      "HEADER_USER_MENU_PROFILE_HREF",
+      "nav_community_profile",
+      "data-tt-header-user-menu-profile-strip",
+      "MeSettingsProfilePanel",
+      "data-tt-me-settings-profile",
+    ],
+    mustNotContain: [
+      "CommunityMeAccountSecurityRow",
+      'href: "/community/me"',
+      'labelKey: "nav_community_profile"',
+    ],
+  },
+  {
+    route: "/orders",
+    routeMarker: "orders",
+    sourceFiles: ["components/header/headerUserMenuNavModel.ts"],
+    mustContain: ['href: "/orders"', "header_myOrders", "function mineNavItems"],
+    mustNotContain: ['href: "/pay"'],
+  },
+  {
+    route: "/community/me/posts",
+    routeMarker: "posts",
+    sourceFiles: ["components/header/headerUserMenuNavModel.ts"],
+    mustContain: ['href: "/community/me/posts"', "header_userMenu_my_posts"],
+  },
+  {
+    route: "/community/me/collects",
+    routeMarker: "collects",
+    sourceFiles: ["components/header/headerUserMenuNavModel.ts"],
+    mustContain: ['href: "/community/me/collects"', "header_userMenu_my_collects"],
+  },
+  {
+    route: "/community/me/likes",
+    routeMarker: "likes",
+    sourceFiles: ["components/header/headerUserMenuNavModel.ts"],
+    mustContain: ['href: "/community/me/likes"', "header_userMenu_my_likes"],
+  },
+  {
+    route: "/community/me/reports",
+    routeMarker: "reports",
+    sourceFiles: ["components/header/headerUserMenuNavModel.ts"],
+    mustContain: ['href: "/community/me/reports"', "me_settings_item_reports", "function toolsNavItems"],
+  },
+  {
+    route: "/me/settings",
+    routeMarker: "settings-menu",
+    sourceFiles: ["components/header/headerUserMenuNavModel.ts"],
+    mustContain: ['href: "/me/settings"', "header_settings", "function toolsNavItems"],
+  },
+  {
+    route: "/header/logout",
+    routeMarker: "header-logout-l5",
+    sourceFiles: [
+      "components/header/HeaderUserMenu.tsx",
+      "components/header/HeaderUserMenuL5Logout.tsx",
+    ],
+    mustContain: [
+      "HeaderUserMenuL5Logout",
+      "data-tt-header-logout-l5",
+      "MeSettingsL5ConfirmDialog",
+      "me_settings_logout_confirm_title",
+    ],
+    mustNotContain: ["window.confirm"],
+  },
+  {
+    route: "/me/settings/*",
+    routeMarker: "settings-active",
+    sourceFiles: ["components/header/headerUserMenuNavActive.ts"],
+    mustContain: ['path.startsWith("/me/settings/")', "/me/password", "/me/security"],
+  },
+] as const;
+
+export const ME_SETTINGS_PAGE_TRACKER_ALL_V1 = [
+  ...ME_SETTINGS_PAGE_TRACKER_V1,
+  ...ACCOUNT_NAV_HEADER_PAGE_TRACKER_V1,
+] as const;

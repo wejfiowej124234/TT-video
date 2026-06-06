@@ -10,7 +10,7 @@ import {
   adminErrorRetryBtnClass,
   adminErrorSecondaryBtnClass,
   adminPageNavLinkClass,
-} from "@/lib/adminUi";
+  ADMIN_INNER_DIVIDER_CLASS,} from "@/lib/adminUi";
 import {
   touchTargetLink44Classes,
   travelFocusRingOffset2Classes,
@@ -101,7 +101,7 @@ export default function AdminError({
         <ProductCrossNav
           ariaLabelKey="app_error_relatedNav_aria"
           showGuides
-          className="mt-6 flex flex-wrap justify-center gap-x-2 gap-y-1 border-t border-ink-200 pt-5 text-meta text-ink-600"
+          className={`mt-6 flex flex-wrap justify-center gap-x-2 gap-y-1 ${ADMIN_INNER_DIVIDER_CLASS} pt-5 text-meta text-ink-600`}
         />
       </div>
     </main>

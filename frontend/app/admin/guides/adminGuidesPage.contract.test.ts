@@ -10,6 +10,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "page.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminGuidesPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminGuidesPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminGuidesPageModel.ts"), "utf8"),
   ].join("\n");
 }
@@ -22,6 +23,7 @@ describe("admin guides page", () => {
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("parseGuidesListQuery");
     expect(src).toContain("buildGuidesListPath");
+    expect(src).toContain("useAdminStandardListFetch");
   });
 
   it("keeps search-params suspense shell and admin DOM anchor", () => {
@@ -31,5 +33,7 @@ describe("admin guides page", () => {
     expect(src).toContain('ariaLabelKey="admin_guides_title"');
     expect(src).toContain("AdminListFetchError");
     expect(src).toContain("ADMIN_PRIMARY_ACTION_BTN_CLASS");
+    expect(src).toContain("GUIDES_LIST_RELATED_FOLD_LINKS");
+    expect(src).not.toContain("headerAside={<AdminOpsQueueBackLinks />}");
   });
 });

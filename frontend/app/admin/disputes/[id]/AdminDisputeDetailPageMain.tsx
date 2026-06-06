@@ -1,25 +1,34 @@
 "use client";
 
+import { AdminDetailContentPanel } from "@/components/admin/AdminDetailContentPanel";
 import Link from "next/link";
 import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { AdminFinanceSectionBackLinks } from "@/components/admin/AdminFinanceSectionBackLinks";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { AdminAlertError } from "@/components/admin/AdminAlertError";
 import { AdminMetaBuildSection } from "@/components/admin/AdminMetaBuildPanel";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
-import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { disputeStatusLabelKey } from "@/lib/admin/adminDisputesLabels";
 import { AdminDisputeDetailTimeline } from "../AdminDisputeDetailTimeline";
-import { ADMIN_DISPUTE_DETAIL_FIELD_DEFS, adminDisputeDetailFmt } from "./adminDisputeDetailPageModel";
+import { ADMIN_DISPUTE_DETAIL_FIELD_DEFS, adminDisputeDetailFmt, DISPUTE_DETAIL_RELATED_FOLD_LINKS } from "./adminDisputeDetailPageModel";
 import { useAdminDisputeDetailPage } from "./useAdminDisputeDetailPage";
-import { ADMIN_FILTER_CARD_CLASS, ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass, adminTableInlineLinkClass } from "@/lib/adminUi";
+import {
+  ADMIN_CONSOLE_MUTED_BLOCK_CLASS,
+  ADMIN_DETAIL_FIELD_ROW_CLASS,
+  adminPageNavLinkClass,
+  adminTableRowPrimaryActionClass,
+  adminTableRowSecondaryActionClass,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+} from "@/lib/adminUi";
 export function AdminDisputeDetailPageMain() {
   const { t } = useTranslation();
   const pageTitleId = useId();
-  const { disputeId, loading, error, dispute, meta, orderId } = useAdminDisputeDetailPage();
+  const { disputeId, loading, refreshing, error, dispute, meta, orderId } = useAdminDisputeDetailPage();
 
   return (
     <AdminDetailPageChrome
@@ -27,46 +36,44 @@ export function AdminDisputeDetailPageMain() {
       title={t("admin_dispute_detail_title")}
       subtitle={
         <>
-          <p className="font-mono text-meta break-all">{disputeId || t("admin_em_dash")}</p>
-          <p className="mt-1 text-small text-ink-500">{t("admin_dispute_detail_subtitle")}</p>
+          <p className="font-mono text-small text-ink-800 break-all">{disputeId || t("admin_em_dash")}</p>
+          <p className="mt-1 text-small text-ink-500">{t("admin_dispute_detail_subtitle_l5")}</p>
         </>
       }
       headerAside={
-        <>
+        <AdminFinanceSectionBackLinks>
           <Link
             href="/admin/disputes"
-            className={`${adminPageNavLinkClass()}`}
+            className={adminPageNavLinkClass()}
+            data-tt-admin-dispute-detail-back-list="1"
           >
             {t("admin_dispute_detail_back_list")}
           </Link>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link
-            href="/admin"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_schema_back")}
-          </Link>
-        </>
+        </AdminFinanceSectionBackLinks>
       }
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={DISPUTE_DETAIL_RELATED_FOLD_LINKS}
+        ariaLabelKey="admin_dispute_detail_related_aria"
+        foldSummaryKey="admin_dispute_detail_related_fold"
+        dataTtFold="dispute-detail"
+      />
       <AdminMetaBuildSection meta={meta} loading={loading} error={error} />
 
       <section className="mt-6 space-y-4" aria-label={t("admin_dispute_detail_panel_aria")}>
         {!disputeId ? (
           <AdminAlertError message={t("admin_dispute_detail_missingId")} />
-        ) : loading ? (
+        ) : loading && !dispute ? (
             <AdminListLoadingStatus message={t("admin_loading")} className="text-body text-ink-600" />
-          ) : error ? (
+          ) : error && !dispute ? (
           <AdminListFetchError errorKind={error} message={adminErrorUserText(error, t)} />
         ) : !dispute ? (
           <p className="text-body text-ink-600">{t("admin_em_dash")}</p>
         ) : (
-          <div className={`${ADMIN_FILTER_CARD_CLASS} shadow-soft`}>
+          <AdminDetailContentPanel
+            className={refreshing ? ADMIN_LIST_REFRESHING_SURFACE_CLASS : undefined}
+            data-tt-admin-detail-refreshing={refreshing ? "1" : undefined}
+          >
             <AdminDisputeDetailTimeline
               status={typeof dispute.status === "string" ? dispute.status : undefined}
               createdAt={
@@ -85,36 +92,38 @@ export function AdminDisputeDetailPageMain() {
                 const raw = dispute[key];
                 const display = adminDisputeDetailFmt(raw) || t("admin_em_dash");
                 return (
-                  <div key={key} className="border-b border-ink-100 pb-2 last:border-0 sm:border-0 sm:pb-0">
+                  <div key={key} className={`${ADMIN_DETAIL_FIELD_ROW_CLASS}`}>
                     <dt className="text-meta text-ink-500">{t(labelKey)}</dt>
-                    <dd className="mt-0.5 break-all font-mono text-meta text-ink-800">{display}</dd>
+                    <dd className="mt-0.5 break-all font-mono text-small text-ink-800 text-ink-800">{display}</dd>
                   </div>
                 );
               })}
             </dl>
             <div className="mt-3">
               <h3 className="text-meta font-medium text-ink-600">{t("admin_dispute_detail_evidenceHashes")}</h3>
-              <pre className="mt-1 max-h-40 overflow-auto whitespace-pre-wrap break-all rounded-[var(--radius-md)] bg-bg-console p-3 text-meta text-ink-700">
+              <pre className={`mt-1 max-h-40 overflow-auto whitespace-pre-wrap break-all ${ADMIN_CONSOLE_MUTED_BLOCK_CLASS} p-3 text-meta text-ink-700`}>
                 {adminDisputeDetailFmt(dispute.evidence_hashes) || t("admin_em_dash")}
               </pre>
             </div>
-            <div className="mt-4 flex flex-wrap gap-3 text-small">
+            <div className="mt-4 flex flex-wrap gap-3" data-tt-admin-dispute-detail-actions="1">
               {orderId ? (
                 <Link
                   href={`/admin/orders/${encodeURIComponent(orderId)}`}
-                  className={`${adminTableInlineLinkClass()}`}
+                  className={adminTableRowPrimaryActionClass()}
+                  data-tt-admin-dispute-detail-action-primary="order"
                 >
                   {t("admin_dispute_detail_linkOrderAdmin")}
                 </Link>
               ) : null}
               <Link
                 href={`/disputes/${encodeURIComponent(disputeId)}`}
-                className={`${adminTableInlineLinkClass()}`}
+                className={adminTableRowSecondaryActionClass()}
+                data-tt-admin-dispute-detail-action-secondary="ops"
               >
                 {t("admin_disputes_opsOpen")}
               </Link>
             </div>
-          </div>
+          </AdminDetailContentPanel>
         )}
       </section>
     </AdminDetailPageChrome>

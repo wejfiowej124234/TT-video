@@ -9,7 +9,7 @@ import { disputeStatusLabelKey } from "@/lib/admin/adminDisputesLabels";
 import { shortAdminId } from "@/lib/admin/shortAdminId";
 import { AdminFinanceDepthActionLinks } from "@/components/admin/AdminFinanceDepthActionLinks";
 import { adminFinancePartialDepthHref } from "@/lib/admin/adminFinancePartialDepthHref";
-import { adminPageNavLinkClass, ADMIN_FIN_DEPTH_PANEL_CLASS } from "@/lib/adminUi";
+import { adminPageNavLinkClass, ADMIN_FIN_DEPTH_PANEL_CLASS, ADMIN_LIST_ROW_MUTED_CLASS } from "@/lib/adminUi";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 
 type DisputeRow = { id: string; status: string; order_id?: string };
@@ -29,8 +29,10 @@ export function AdminFinanceRefundsDepthPanel({ items, loading, error }: Props) 
   const preview = items.slice(0, 5);
 
   return (
-    <section
-      className={ADMIN_FIN_DEPTH_PANEL_CLASS}
+    <AdminWarmL5Surface
+      as="section"
+      className="mb-4"
+      data-tt-admin-fin-depth-panel="1"
       aria-label={t("admin_fin_refunds_depth_aria")}
       data-tt-admin-fin-refunds-depth="1"
     >
@@ -51,7 +53,7 @@ export function AdminFinanceRefundsDepthPanel({ items, loading, error }: Props) 
               {preview.map((d) => (
                 <li
                   key={d.id}
-                  className="flex flex-wrap items-center justify-between gap-2 rounded border border-ink-100 px-3 py-2 text-small"
+                  className={ADMIN_LIST_ROW_MUTED_CLASS}
                 >
                   <span className="font-mono text-meta">{shortAdminId(d.id)}</span>
                   <span>{t(disputeStatusLabelKey(d.status))}</span>
@@ -75,6 +77,6 @@ export function AdminFinanceRefundsDepthPanel({ items, loading, error }: Props) 
           { href: "/admin/finance-suite", labelKey: "admin_fin_drift_depth_link_suite" },
         ]}
       />
-    </section>
+    </AdminWarmL5Surface>
   );
 }

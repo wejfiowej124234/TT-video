@@ -9,11 +9,8 @@ import { AdminCommunityAppealsPageMain } from "./AdminCommunityAppealsPageMain";
 
 export default function AdminCommunityAppealsPage() {
   return (
-    <AdminSearchParamsSuspense
-      ariaLabelKey="admin_appeals_title"
-      backLinkLabelKey="admin_community_reports_back"
-    >
-      <AdminCommunityPageShell currentLabelKey="admin_appeals_title">
+    <AdminSearchParamsSuspense ariaLabelKey="admin_appeals_title">
+      <AdminCommunityPageShell>
         <AdminPermissionDeniedBanner permission={ADMIN_PERM.COMMUNITY_READ} />
         <AdminCommunityAppealsPageMain />
       </AdminCommunityPageShell>

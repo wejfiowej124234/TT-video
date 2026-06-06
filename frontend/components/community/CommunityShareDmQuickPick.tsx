@@ -2,9 +2,14 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
+import { useQueries } from "@tanstack/react-query";
 import { getConversations } from "@/lib/apiClient/community";
 import { getMe } from "@/lib/apiClient/me";
+import {
+  COMMUNITY_CONVERSATIONS_LAYOUT_QUERY_KEY,
+  COMMUNITY_CONVERSATIONS_STALE_MS,
+} from "@/lib/communityConversationsQuery";
 
 type PickerRow = { conversationId: string; peerNickname: string; peerAvatarUrl: string | null };
 
@@ -21,8 +26,7 @@ function resolveMeId(meData: unknown): string | undefined {
 
 const MAX_ROWS = 8;
 
-async function fetchShareDmPickerRows(): Promise<PickerRow[]> {
-  const [convData, meData] = await Promise.all([getConversations(), getMe()]);
+function mapShareDmPickerRows(convData: Awaited<ReturnType<typeof getConversations>>, meData: unknown): PickerRow[] {
   const meId = resolveMeId(meData);
   const list = convData.conversations ?? [];
   if (list.length === 0) return [];
@@ -50,16 +54,31 @@ export function CommunityShareDmQuickPick({
   enabled: boolean;
   onNavigate?: () => void;
 }) {
-  const q = useQuery({
-    queryKey: ["community", "share-dm-quick-pick"],
-    queryFn: fetchShareDmPickerRows,
-    enabled,
-    staleTime: 15_000,
+  const [convQ, meQ] = useQueries({
+    queries: [
+      {
+        queryKey: COMMUNITY_CONVERSATIONS_LAYOUT_QUERY_KEY,
+        queryFn: getConversations,
+        enabled,
+        staleTime: COMMUNITY_CONVERSATIONS_STALE_MS,
+      },
+      {
+        queryKey: ["community", "messages", "me"],
+        queryFn: getMe,
+        enabled,
+        staleTime: 60_000,
+      },
+    ],
   });
+
+  const rows = useMemo(
+    () => (convQ.data != null ? mapShareDmPickerRows(convQ.data, meQ.data) : []),
+    [convQ.data, meQ.data],
+  );
 
   if (!enabled) return null;
 
-  if (q.isLoading) {
+  if (convQ.isLoading || meQ.isLoading) {
     return (
       <div className="flex min-h-[44px] items-center justify-start px-4 py-2 text-meta text-slate-400" role="status">
         {t("common_loading")}
@@ -67,24 +86,24 @@ export function CommunityShareDmQuickPick({
     );
   }
 
-  if (q.isError || !q.data?.length) return null;
+  if (convQ.isError || meQ.isError || rows.length === 0) return null;
 
   return (
     <ul className="max-h-44 overflow-y-auto py-1" role="list">
       <li className="flex min-h-[44px] items-center justify-start px-4 text-meta text-slate-400">{t("community_share_dm_recent")}</li>
-      {q.data.map((row) => (
+      {rows.map((row) => (
         <li key={row.conversationId}>
           <Link
             href={`/community/messages/${row.conversationId}?sharePostId=${encodeURIComponent(postId)}`}
             role="menuitem"
             onClick={() => onNavigate?.()}
-            className="flex min-h-[44px] items-center justify-start gap-2 px-4 py-2 text-left text-small text-slate-200 hover:bg-fuchsia-500/15 motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-cyan-400/55"
+            className="flex min-h-[44px] items-center justify-start gap-2 px-4 py-2 text-left text-small text-slate-200 hover:bg-ref-sun/12 motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ref-sun/55"
           >
-            <div className="relative h-11 w-11 min-h-[44px] min-w-[44px] shrink-0 overflow-hidden rounded-full bg-slate-700 ring-1 ring-cyan-400/25">
+            <div className="relative h-11 w-11 min-h-[44px] min-w-[44px] shrink-0 overflow-hidden rounded-full bg-slate-700 ring-1 ring-ref-sun/25">
               {row.peerAvatarUrl ? (
                 <Image src={row.peerAvatarUrl} alt="" fill className="object-cover" sizes="44px" unoptimized />
               ) : (
-                <span className="flex h-full w-full items-center justify-center text-meta font-medium text-cyan-300">
+                <span className="flex h-full w-full items-center justify-center text-meta font-medium text-ref-sun/90">
                   {row.peerNickname.slice(0, 1)}
                 </span>
               )}

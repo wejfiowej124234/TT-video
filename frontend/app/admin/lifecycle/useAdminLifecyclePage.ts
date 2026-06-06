@@ -2,15 +2,8 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { type FormEvent, useEffect, useMemo, useState } from "react";
 
-import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
-import {
-  type AdminFetchErrorKind,
-  adminFetchErrorKind,
-  adminFetchJson,
-  logAdminFetch,
-} from "@/lib/adminFetchDisplay";
-import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders } from "@/lib/apiClient";
+import { routes } from "@/lib/api";
+import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
 
 import {
   LIFECYCLE_DOMAIN_MAX,
@@ -18,7 +11,6 @@ import {
   LIFECYCLE_MACHINE_CODE_MAX,
   LIFECYCLE_SOT_MAX,
   LIFECYCLE_VERSION_MAX,
-  type LifecycleListRes,
   type LifecycleStateMachineRow,
   buildLifecycleListPath,
   normalizeLifecycleAnomalyUrl,
@@ -34,11 +26,26 @@ export function useAdminLifecyclePage() {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<LifecycleStateMachineRow[]>([]);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
+  const listUrl = useMemo(() => {
+    const n = Number.parseInt(String(limit), 10);
+    const effLimit = Number.isFinite(n) ? Math.min(200, Math.max(1, n)) : 50;
+    return routes.admin.lifecycleStateMachines({
+      limit: effLimit,
+      ...(machineCode ? { machine_code: machineCode } : {}),
+      ...(domain ? { domain } : {}),
+      ...(entityType ? { entity_type: entityType } : {}),
+      ...(version ? { version } : {}),
+      ...(sourceOfTruth ? { source_of_truth: sourceOfTruth } : {}),
+      ...(anomalyFlag ? { anomaly_flag: anomalyFlag } : {}),
+    });
+  }, [limit, machineCode, domain, entityType, version, sourceOfTruth, anomalyFlag]);
+
+  const { items, meta, appliedFilters, loading, refreshing, error } =
+    useAdminStandardListFetch<LifecycleStateMachineRow>({
+      scope: "lifecycle-state-machines",
+      context: "AdminLifecyclePage",
+      listUrl,
+    });
 
   const [draftLimit, setDraftLimit] = useState(String(limit));
   const [draftMachine, setDraftMachine] = useState(machineCode);
@@ -56,55 +63,6 @@ export function useAdminLifecyclePage() {
     setDraftVersion(version);
     setDraftSot(sourceOfTruth);
     setDraftAnomaly(anomalyFlag);
-  }, [limit, machineCode, domain, entityType, version, sourceOfTruth, anomalyFlag]);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    setMeta(null);
-    setAppliedFilters(null);
-
-    const n = Number.parseInt(String(limit), 10);
-    const effLimit = Number.isFinite(n) ? Math.min(200, Math.max(1, n)) : 50;
-
-    const headers: Record<string, string> = { "x-request-id": `admin-lifecycle-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    adminFetchJson<LifecycleListRes>(
-      "AdminLifecyclePage",
-      apiUrl(
-        routes.admin.lifecycleStateMachines({
-          limit: effLimit,
-          ...(machineCode ? { machine_code: machineCode } : {}),
-          ...(domain ? { domain } : {}),
-          ...(entityType ? { entity_type: entityType } : {}),
-          ...(version ? { version } : {}),
-          ...(sourceOfTruth ? { source_of_truth: sourceOfTruth } : {}),
-          ...(anomalyFlag ? { anomaly_flag: anomalyFlag } : {}),
-        }),
-      ),
-      { headers },
-    )
-      .then(({ res, body }) => {
-        if (!res.ok) {
-          throw new Error(body.error || `request_failed_${res.status}`);
-        }
-        return body;
-      })
-      .then((body) => {
-        setItems(Array.isArray(body.items) ? body.items : []);
-        setMeta(isAdminMetaRecord(body.meta) ? body.meta : null);
-        setAppliedFilters(body.applied_filters ?? null);
-      })
-      .catch((e: unknown) => {
-        logAdminFetch("AdminLifecyclePage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
   }, [limit, machineCode, domain, entityType, version, sourceOfTruth, anomalyFlag]);
 
   const apply = (e?: FormEvent) => {
@@ -151,6 +109,7 @@ export function useAdminLifecyclePage() {
 
   return {
     loading,
+    refreshing,
     error,
     items,
     meta,

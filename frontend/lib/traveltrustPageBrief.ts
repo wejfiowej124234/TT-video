@@ -114,7 +114,11 @@ function traveltrustPageBriefFallback(reason: string): TravelTrustPageBriefFetch
 }
 
 export async function fetchTravelTrustPageBrief(): Promise<TravelTrustPageBriefFetchResult> {
-  const url = apiUrl(routes.traveltrustPageBrief);
+  // 浏览器走 Next 同源 Route Handler，避免 3012→8080 跨域与 CORS；SSR/Node 仍直连 API
+  const url =
+    typeof window !== "undefined"
+      ? routes.traveltrustPageBrief
+      : apiUrl(routes.traveltrustPageBrief);
   try {
     const res = await fetch(url, {
       credentials: "same-origin",
@@ -124,6 +128,10 @@ export async function fetchTravelTrustPageBrief(): Promise<TravelTrustPageBriefF
       return traveltrustPageBriefFallback(String(res.status));
     }
     const brief = (await res.json()) as TravelTrustPageBrief;
+    const proxySource = res.headers.get("x-tt-page-brief-source");
+    if (proxySource === "dev-fallback" || proxySource === "fallback") {
+      return { brief, source: "fallback" };
+    }
     return { brief, source: "api" };
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);

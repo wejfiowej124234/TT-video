@@ -1,5 +1,7 @@
+import { TT_AUTH_L5_PAGE_SHELL, TT_AUTH_L5_PAGE_SHELL_GUIDE } from "@/lib/auth/authL5Shell";
+
 /**
- * 注册页底图：`public/register-bg/*.jpg`（Unsplash 下载，见同目录说明）+ 默认浅色渐变。
+ * 注册页视觉角色（保留类型；L5 暗壳底不再使用 `public/register-bg` 摄影图）。
  */
 export type RegisterVisualKind = "default" | "traveler" | "guide" | "provider" | "steward";
 
@@ -21,14 +23,10 @@ export const REGISTER_BG_FALLBACK_CLASS: Record<Exclude<RegisterVisualKind, "def
 
 export type RegisterPageLayout = "centered" | "guideForm";
 
-const BG_TRANSITION = "motion-safe:transition-opacity duration-500";
-
-/** 主容器：须与 `RegisterPageBackdrop` 同用；`relative isolate` + 底 `z-0`、正文 `z-10`（勿用负 z-index，易被 isolate 吃掉） */
+/** 主容器：与 `AuthL5PageBackdrop` 同用（登录 L5 同族暗壳） */
 export function registerPageShellClass(layout: RegisterPageLayout = "centered"): string {
-  /** `overflow-x-hidden`：底图全宽 + 底栏换行偶发 `100vw` 横向条时，避免注册卡内标签/输入纵向叠压可读性 */
-  const base = `relative isolate min-h-screen w-full max-w-[100vw] overflow-x-hidden flex flex-col ${BG_TRANSITION}`;
   if (layout === "guideForm") {
-    return `${base} items-center gap-6 py-8 px-4 pb-12`;
+    return `${TT_AUTH_L5_PAGE_SHELL_GUIDE} items-center`;
   }
-  return `${base} items-center justify-center gap-4 p-6 py-10`;
+  return TT_AUTH_L5_PAGE_SHELL;
 }

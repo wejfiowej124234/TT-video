@@ -5,7 +5,16 @@
 export type CommunityPostType = "photo" | "video" | "food" | "travel" | "text";
 
 /** 31 §2.3：与 API `visibility_status` 一致 */
-export type CommunityPostVisibility = "public" | "private" | "archived";
+export type CommunityPostVisibility = "public" | "private" | "archived" | "hidden";
+
+/** 作者可改可见性（不含 moderation `hidden`） */
+export type CommunityPostUserVisibility = "public" | "private" | "archived";
+
+export type CommunityCommerceShowcaseKind =
+  | "acquisition_led"
+  | "market_listing"
+  | "sponsored"
+  | string;
 
 export interface CommunityPostAuthor {
   id: string;
@@ -47,6 +56,20 @@ export interface CommunityPost {
   authorFollowedByMe?: boolean;
   /** 31 §2.3：缺省按 `public` 展示 */
   visibilityStatus?: CommunityPostVisibility;
+  /** S3 multipart 视频资产（04 · `primary_media_asset_id`） */
+  primaryMediaAssetId?: string;
+  /** 04 · `commerce_showcase_kind` */
+  commerceShowcaseKind?: CommunityCommerceShowcaseKind;
+  /** 04 · `commerce_market_listing_id`（市场 listing 弱关联） */
+  commerceMarketListingId?: string;
+  /** POI / 到店名（API `venue_name` · ② 真源） */
+  venueName?: string | null;
+  venueLat?: number | null;
+  venueLng?: number | null;
+  /** 与锚点距离（米）；有值时 UI 不再用占位 hash */
+  distanceM?: number | null;
+  /** 信息流赞助/广告帖（API `is_sponsored`） */
+  isSponsored?: boolean;
 }
 
 export interface CommunityComment {

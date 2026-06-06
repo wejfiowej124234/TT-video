@@ -46,20 +46,15 @@ describe("adminUnifiedInboxTasks", () => {
 
 
 
-  it("sorts by pending count descending", () => {
-
+  it("sorts pending channels by onboarding workflow order", () => {
     const tasks = buildAdminUnifiedInboxTasks({
-
       counts: { provider: 2, steward: 0, approvals: 1, reports: 3 },
-
       channels,
-
     });
-
-    expect(tasks[0]?.id).toBe("reports");
-
-    expect(tasks[1]?.id).toBe("provider");
-
+    expect(tasks[0]?.id).toBe("provider");
+    expect(tasks[1]?.id).toBe("approvals");
+    expect(tasks[2]?.id).toBe("reports");
+    expect(tasks[3]?.id).toBe("steward");
   });
 
 
@@ -84,8 +79,9 @@ describe("adminUnifiedInboxTasks", () => {
 
     });
 
-    expect(tasks[0]?.id).toBe("reports");
-
+    expect(tasks[0]?.id).toBe("approvals");
+    expect(tasks[1]?.id).toBe("reports");
+    expect(tasks[tasks.length - 1]?.id).toBe("provider");
     expect(tasks.find((t) => t.id === "provider")?.permissionDenied).toBe(true);
 
   });

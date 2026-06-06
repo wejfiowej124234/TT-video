@@ -82,8 +82,8 @@ export function projectGlobeSurfaceToHeroViewport(
     _ndc.z <= 1;
 
   const limbFade = smoothstep(facingMinDot, facingMinDot + 0.22, facingDot);
-  const edgeFadeX = 1 - smoothstep(0.62, 0.96, Math.abs(_ndc.x));
-  const edgeFadeY = 1 - smoothstep(0.55, 0.92, Math.abs(_ndc.y));
+  const edgeFadeX = 1 - smoothstep(0.68, 0.98, Math.abs(_ndc.x));
+  const edgeFadeY = 1 - smoothstep(0.58, 0.94, Math.abs(_ndc.y));
   const edgeFade = clamp(limbFade * edgeFadeX * edgeFadeY, 0, 1);
 
   const visible = inViewport && facingDot >= facingMinDot && edgeFade > 0.04;

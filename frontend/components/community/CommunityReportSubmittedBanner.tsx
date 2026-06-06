@@ -17,16 +17,16 @@ export function CommunityReportSubmittedBanner({
   return (
     <div className={className}>
       <p className="text-center font-medium">{t("community_report_submitted")}</p>
-      <div className="mt-2 flex flex-col items-center gap-2 border-t border-cyan-500/20 pt-2">
+      <div className="mt-2 flex flex-col items-center gap-2 border-t border-ref-sun/18 pt-2">
         <Link
           href={`/community/me/reports/${encodeURIComponent(reportId)}`}
-          className={`inline-flex min-h-[44px] items-center justify-center text-meta font-medium text-cyan-300 underline underline-offset-2 hover:text-cyan-100 motion-sub ${communityCardLinkFocus}`}
+          className={`inline-flex min-h-[44px] items-center justify-center text-meta font-medium text-ref-sun/90 underline underline-offset-2 hover:text-ref-sun/95 motion-sub ${communityCardLinkFocus}`}
         >
           {t("community_report_view_ticket")}
         </Link>
         <Link
           href="/community/me/reports"
-          className={`inline-flex min-h-[44px] items-center justify-center text-meta font-medium text-slate-300 underline underline-offset-2 hover:text-cyan-100 motion-sub ${communityCardLinkFocus}`}
+          className={`inline-flex min-h-[44px] items-center justify-center text-meta font-medium text-slate-300 underline underline-offset-2 hover:text-ref-sun/95 motion-sub ${communityCardLinkFocus}`}
         >
           {t("community_report_view_all_reports")}
         </Link>

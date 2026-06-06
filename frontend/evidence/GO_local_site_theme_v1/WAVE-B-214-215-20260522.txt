@@ -1,0 +1,32 @@
+# Wave B · TT-PH1-214 / 215（① 本地）
+# 2026-05-22
+
+## 结论（①）
+- TT-PH1-214 `/`：主题 DNA 基准；**无**主题 V1 代码改动；目视 POST 已采。
+- TT-PH1-215 `/traveltrust`：电影动画 L5 **另轨**；本批仅 `app/traveltrust/error.tsx` 深壳暖金（对齐 did-rank/community error）；主叙事/Canvas **未**改。
+- 桥接 `/auth`·`/guides`·`/help`：**defer**（88 浅色 + marketCyan*；runbook §2.2）。
+
+## 代码
+- app/traveltrust/error.tsx — ref-sun / deepShell* / TT_MARKETING_BTN_MARKET_PRIMARY；0 ref-cyan
+- app/traveltrust/traveltrustErrorTheme.contract.test.ts
+
+## §6.1 Vitest（exit 0）
+cd frontend && npm run test -- --run \
+  lib/uiSystem.test.ts lib/marketingUi.test.ts \
+  components/market/marketTheme.contract.test.ts \
+  components/did-rank/didRankTheme.contract.test.ts \
+  components/community/communityShellTheme.contract.test.ts \
+  components/community/communityPageTheme.contract.test.ts \
+  app/traveltrust/traveltrustErrorTheme.contract.test.ts
+
+Result: 7 files, 31 passed (31)
+
+## §6.2 机采（exit 0）
+cd frontend && PLAYWRIGHT_REUSE_FE_SERVER=1 npm run e2e:site-theme-v1-wave-b-capture
+
+PNG:
+- WAVE-B-screenshots/home/desktop-1280x800.png
+- WAVE-B-screenshots/traveltrust/desktop-1280x800.png
+- WAVE-B-screenshots/guides/desktop-1280x800.png（216 · 续采）
+
+详见 POST-V1-FINAL-20260522.txt（35/35 + 桥接收口）

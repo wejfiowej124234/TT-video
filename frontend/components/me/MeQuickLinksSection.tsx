@@ -2,6 +2,12 @@
 
 import Link from "next/link";
 import { useId } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import {
+  warmCommunityMeCollectsIds,
+  warmCommunityMeLikesIds,
+  warmCommunityMePosts,
+} from "@/lib/communityDrawerPrefetch";
 import { FOCUS_RING } from "./constants";
 import { communityCardLinkFocus } from "@/lib/communityA11yFocus";
 
@@ -16,6 +22,8 @@ export interface MeQuickLinksSectionProps {
   t: (k: string) => string;
   /** 向导账号显示「向导工作台」链至 `/guide`（07 §五 5.0 / 05） */
   showGuideHub?: boolean;
+  /** 社区「赞过」列表功能开启时在快捷链中展示 */
+  showLikesList?: boolean;
   /**
    * 社区「个人中心」内：与同页 Tab / 社区快捷格去重，隐藏信任中心 pill、我的帖子/收藏/举报。
    */
@@ -33,6 +41,7 @@ export interface MeQuickLinksSectionProps {
 export default function MeQuickLinksSection({
   t,
   showGuideHub,
+  showLikesList,
   compactForCommunityMe,
   embedded = false,
   hideHeading = false,
@@ -40,6 +49,7 @@ export default function MeQuickLinksSection({
   onLinkClick,
 }: MeQuickLinksSectionProps) {
   const titleId = useId();
+  const queryClient = useQueryClient();
   const shellClass =
     presentation === "asideList"
       ? embedded
@@ -74,14 +84,16 @@ export default function MeQuickLinksSection({
               {t("trust_nav_short")}
             </Link>
           </li>
+          {compactForCommunityMe ? null : (
+            <li>
+              <Link href="/orders" onClick={onLinkClick} className={ASIDE_LIST_ROW}>
+                {t("nav_orders")}
+              </Link>
+            </li>
+          )}
           <li>
-            <Link href="/orders" onClick={onLinkClick} className={ASIDE_LIST_ROW}>
-              {t("nav_orders")}
-            </Link>
-          </li>
-          <li>
-            <Link href="/pay" onClick={onLinkClick} className={ASIDE_LIST_ROW}>
-              {t("header_payHub")}
+            <Link href="/me/settings?from=community" onClick={onLinkClick} className={ASIDE_LIST_ROW}>
+              {t("community_me_settings")}
             </Link>
           </li>
           <li>
@@ -102,15 +114,37 @@ export default function MeQuickLinksSection({
           {compactForCommunityMe ? null : (
             <>
               <li>
-                <Link href="/community/me/posts" onClick={onLinkClick} className={ASIDE_LIST_ROW}>
+                <Link
+                  href="/community/me/posts"
+                  onClick={onLinkClick}
+                  onPointerEnter={() => warmCommunityMePosts(queryClient)}
+                  className={ASIDE_LIST_ROW}
+                >
                   {t("community_me_my_posts")}
                 </Link>
               </li>
               <li>
-                <Link href="/community/me/collects" onClick={onLinkClick} className={ASIDE_LIST_ROW}>
+                <Link
+                  href="/community/me/collects"
+                  onClick={onLinkClick}
+                  onPointerEnter={() => warmCommunityMeCollectsIds(queryClient)}
+                  className={ASIDE_LIST_ROW}
+                >
                   {t("community_me_my_collects")}
                 </Link>
               </li>
+              {showLikesList ? (
+                <li>
+                  <Link
+                    href="/community/me/likes"
+                    onClick={onLinkClick}
+                    onPointerEnter={() => warmCommunityMeLikesIds(queryClient)}
+                    className={ASIDE_LIST_ROW}
+                  >
+                    {t("community_me_tab_liked")}
+                  </Link>
+                </li>
+              ) : null}
               <li>
                 <Link href="/community/me/reports" onClick={onLinkClick} className={ASIDE_LIST_ROW}>
                   {t("community_me_my_reports")}
@@ -129,7 +163,9 @@ export default function MeQuickLinksSection({
             </Link>
           </li>
         </ul>
-        <p className="px-2.5 pt-2 text-[0.65rem] leading-snug text-slate-500">{t("me_communityHint")}</p>
+        <p className="px-2.5 pt-2 text-[0.65rem] leading-snug text-slate-500">
+          {t(compactForCommunityMe ? "me_communityHint_compact" : "me_communityHint")}
+        </p>
       </section>
     );
   }
@@ -162,19 +198,21 @@ export default function MeQuickLinksSection({
         >
           {t("trust_nav_short")}
         </Link>
+        {compactForCommunityMe ? null : (
+          <Link
+            href="/orders"
+            onClick={onLinkClick}
+            className={`rounded-full border border-cyan-400/50 bg-cyan-500/10 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/20 motion-sub ${FOCUS_RING}`}
+          >
+            {t("nav_orders")}
+          </Link>
+        )}
         <Link
-          href="/orders"
+          href="/me/settings?from=community"
           onClick={onLinkClick}
-          className={`rounded-full border border-cyan-400/50 bg-cyan-500/10 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/20 motion-sub ${FOCUS_RING}`}
+          className={`rounded-full border border-ref-sun/40 bg-ref-sun/10 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-ref-sun/95 hover:bg-ref-sun/20 motion-sub ${FOCUS_RING}`}
         >
-          {t("nav_orders")}
-        </Link>
-        <Link
-          href="/pay"
-          onClick={onLinkClick}
-          className={`rounded-full border border-success/45 bg-success/10 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-success/95 hover:bg-success/20 motion-sub ${FOCUS_RING}`}
-        >
-          {t("header_payHub")}
+          {t("community_me_settings")}
         </Link>
         <Link
           href="/market"
@@ -201,6 +239,7 @@ export default function MeQuickLinksSection({
           <Link
             href="/community/me/posts"
             onClick={onLinkClick}
+            onPointerEnter={() => warmCommunityMePosts(queryClient)}
             className={`rounded-full border border-fuchsia-400/50 bg-fuchsia-500/10 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-fuchsia-300 hover:text-fuchsia-100 hover:bg-fuchsia-500/20 motion-sub ${FOCUS_RING}`}
           >
             {t("community_me_my_posts")}
@@ -210,9 +249,20 @@ export default function MeQuickLinksSection({
           <Link
             href="/community/me/collects"
             onClick={onLinkClick}
+            onPointerEnter={() => warmCommunityMeCollectsIds(queryClient)}
             className={`rounded-full border border-fuchsia-400/50 bg-fuchsia-500/10 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-fuchsia-300 hover:text-fuchsia-100 hover:bg-fuchsia-500/20 motion-sub ${FOCUS_RING}`}
           >
             {t("community_me_my_collects")}
+          </Link>
+        )}
+        {compactForCommunityMe || !showLikesList ? null : (
+          <Link
+            href="/community/me/likes"
+            onClick={onLinkClick}
+            onPointerEnter={() => warmCommunityMeLikesIds(queryClient)}
+            className={`rounded-full border border-fuchsia-400/50 bg-fuchsia-500/10 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-fuchsia-300 hover:text-fuchsia-100 hover:bg-fuchsia-500/20 motion-sub ${FOCUS_RING}`}
+          >
+            {t("community_me_tab_liked")}
           </Link>
         )}
         {compactForCommunityMe ? null : (
@@ -239,7 +289,9 @@ export default function MeQuickLinksSection({
           {t("me_link_feedback")}
         </Link>
       </div>
-      <p className="text-meta text-slate-300/95 mt-2">{t("me_communityHint")}</p>
+      <p className="text-meta text-slate-300/95 mt-2">
+        {t(compactForCommunityMe ? "me_communityHint_compact" : "me_communityHint")}
+      </p>
     </section>
   );
 }

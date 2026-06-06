@@ -5,7 +5,7 @@ import {
   TT_BELOW_FOLD_ATMOSPHERE_L5,
   TT_BELOW_FOLD_ATMOSPHERE_UNIFIED_L5,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 import { useTravelTrustHeroScrollProgress } from "./TravelTrustHeroScrollContext";
 import { useTravelTrustPageScrollProgress } from "./TravelTrustPageScrollContext";
 

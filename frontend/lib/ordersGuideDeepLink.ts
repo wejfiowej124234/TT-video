@@ -1,3 +1,5 @@
+import { MARKET_BIND_GUIDE_ORDER_QUERY } from "@/lib/marketDeepLink";
+
 /**
  * 5.1 / 53：从市场或「预约向导」入口直达创建订单并预填 `guide_id`（与 `app/orders/new/page.tsx` 一致）。
  */
@@ -11,6 +13,14 @@ export function ordersNewHrefForGuide(guideId: string): string {
 export function marketHrefForGuideCustomItinerary(guideId: string): string {
   const q = new URLSearchParams();
   q.set("guide_id", guideId.trim());
+  return `/market?${q.toString()}`;
+}
+
+/** Escrow 草稿：双栏市场 + 为既有订单绑定向导（左栏可见本单 · 右栏选向导） */
+export function marketHrefForEscrowGuideBind(orderId: string): string {
+  const q = new URLSearchParams();
+  q.set("view", "split");
+  q.set(MARKET_BIND_GUIDE_ORDER_QUERY, orderId.trim());
   return `/market?${q.toString()}`;
 }
 

@@ -86,11 +86,34 @@ const feServer = {
   },
 };
 
+const apiServerTimeoutRaw = process.env.PLAYWRIGHT_API_SERVER_TIMEOUT_MS?.trim() ?? "";
+const apiServerTimeoutParsed = Number.parseInt(apiServerTimeoutRaw, 10);
+const apiServerTimeout =
+  apiServerTimeoutRaw !== "" && Number.isFinite(apiServerTimeoutParsed)
+    ? apiServerTimeoutParsed
+    : process.env.PLAYWRIGHT_E2E_STABILITY === "1"
+      ? 600_000
+      : 420_000;
+
 const apiServer = {
   command: startApiCmd,
   url: `http://127.0.0.1:${apiPort}/health`,
   reuseExistingServer: apiReuse,
-  timeout: 420_000,
+  timeout: Number.isFinite(apiServerTimeout) ? apiServerTimeout : 420_000,
+  env: {
+    ...process.env,
+    /** 全栈 E2E：`GET /meta` 治理 eth_call 叠压易超默认 30s → 408；Playwright 子进程默认 120s */
+    REQUEST_TIMEOUT_SECS:
+      process.env.REQUEST_TIMEOUT_SECS?.trim() || (fullStack ? "120" : "30"),
+    ...(fullStack
+      ? {
+          DATABASE_URL:
+            process.env.DATABASE_URL?.trim() ||
+            "postgres://traveltrust:traveltrust@127.0.0.1:5432/traveltrust",
+          DID_RANK_SEED_MARKET_DEMO: process.env.DID_RANK_SEED_MARKET_DEMO?.trim() || "1",
+        }
+      : {}),
+  },
 };
 
 export default defineConfig({

@@ -1,25 +1,91 @@
 "use client";
 
-import { useEffect, useState, useCallback, useRef, useMemo } from "react";
+import { useEffect, useState, useCallback, useRef, useMemo, startTransition, type SetStateAction } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { getDiscoverOrders, getGuides, orderAccept, getIdempotencyKey } from "@/lib/apiClient";
+import { getDiscoverOrders, getGuides, getOrder, orderAccept, getIdempotencyKey } from "@/lib/apiClient";
+import { orderGetResponseToMarketCard } from "@/lib/marketOrderCardFromGetOrder";
+import {
+  applyDiscoverGeoFiltersKeepingPin,
+  pinOrderInDiscoverList,
+  isOwnPublishedOpenListing,
+  normalizeMarketOrderCountry,
+} from "@/lib/marketBindOrderList";
+import {
+  buildMarketDiscoverOrderList,
+  filterDiscoverOrdersForViewer,
+  mergeDiscoverPageWithOwnPublished,
+  ownPublishedOpenListingIds,
+  invalidateOwnPublishedMarketCardsCache,
+} from "@/lib/marketDiscoverOrdersMerge";
+import { AUTH_USER_ID_KEY } from "@/lib/apiClient/core";
 import { useTranslation } from "@/components/LocaleProvider";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { trackMarketEvent } from "@/lib/analytics";
+import {
+  buildMarketGuideListApiParams,
+  guideMatchesMarketAdvancedFilters,
+  hasMarketGuideListFilters,
+  marketGuideListNeedsClientOnlyFilters,
+} from "@/lib/marketGuideFilterQuery";
 import { CITIES_BY_COUNTRY, LANGUAGES_BY_COUNTRY } from "@/lib/geoOptions";
 import type { MarketView } from "@/components/market/ViewSwitcher";
 import type { OrderCardItem } from "@/components/market/OrderCard";
 import type { GuideCardItem } from "@/components/market/GuideCard";
-import { FAV_ORDERS_KEY, FAV_GUIDES_KEY, loadFavSet, saveFavSet } from "./marketPageUtils";
+import { useMarketPageFavorites } from "./useMarketPageFavorites";
+import {
+  buildMarketGuidesListCacheKey,
+  invalidateMarketGuidesListCache,
+  readMarketGuidesListCache,
+  writeMarketGuidesListCache,
+} from "@/lib/marketGuidesListCache";
+import {
+  buildMarketDiscoverListCacheKey,
+  invalidateMarketDiscoverListCache,
+  readMarketDiscoverListCache,
+  writeMarketDiscoverListCache,
+} from "@/lib/marketDiscoverListCache";
 import { COMMUNITY_USER_MARKET_QUERY } from "@/lib/communityMarketDeepLink";
+import { MARKET_BIND_GUIDE_ORDER_QUERY } from "@/lib/marketDeepLink";
+import { isUuidString } from "@/lib/isUuidString";
 import { dedupeListById, mergeListsUniqueById } from "@/lib/dedupeListById";
 import { discoverOrderDedupeKey } from "@/lib/discoverOrderDedupeKey";
 import { stashEscrowOrderPrefetchFromMarketCard } from "@/lib/orderEscrowPrefetch";
+import { appendMarketDevVarietyOrders } from "@/lib/marketDevVarietyOrders";
+import { isPlaceholderGlobalGuideCity } from "@/lib/marketDisplayCopy";
+import {
+  applyMarketTripDaysFilterToOrders,
+  parseMarketTripDaysParam,
+} from "@/lib/marketTripDaysFilter";
+import {
+  MARKET_PAGE_FILTER_EXPANDED_QUERY,
+  MARKET_PAGE_SORT_QUERY,
+  parseMarketPageFilterExpandedParam,
+  parseMarketPageSortParam,
+  serializeMarketPageFilterExpandedParam,
+  serializeMarketPageSortParam,
+} from "@/lib/marketPageQuery";
+import type { MarketPageInitialSnapshot } from "@/lib/market/marketPageInitialData";
 
 /** 与后端 GET discover/orders ?limit 对齐（55 分页） */
 const DISCOVER_ORDERS_PAGE_SIZE = 30;
+const GUIDES_PAGE_SIZE = 30;
+/** 与 `useMarketStandaloneBusinessPage` 子站筛选防抖对齐 */
+const MARKET_LIST_REFETCH_DEBOUNCE_MS = 300;
 
-export function useMarketPage() {
+/** 筛选/视图 UI 用 transition 更新；URL 回填与深链 priming 用 sync  setter。 */
+function useFilterTransitionState<T>(initial: T): [T, (v: SetStateAction<T>) => void, (v: SetStateAction<T>) => void] {
+  const [value, setValue] = useState(initial);
+  const setValueTransition = useCallback((next: SetStateAction<T>) => {
+    startTransition(() => {
+      setValue(next);
+    });
+  }, []);
+  return [value, setValueTransition, setValue];
+}
+
+export function useMarketPage(options?: { initialSnapshot?: MarketPageInitialSnapshot | null }) {
+  const initialSnapshot = options?.initialSnapshot ?? null;
+  const deferInitialListFetchRef = useRef(Boolean(initialSnapshot));
   const { t } = useTranslation();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -30,46 +96,82 @@ export function useMarketPage() {
   const ordersListEpochRef = useRef(0);
   /** B-061：`getGuides` + 客户端筛同理 */
   const guidesListEpochRef = useRef(0);
+  /** 旅客绑定向导流：放宽 geo 客户端筛选，避免右栏空列表 */
+  const bindingFlowActiveRef = useRef(false);
+  const [view, setView, setViewSync] = useFilterTransitionState<MarketView>("split");
+  const [sortBy, setSortBy, setSortBySync] = useFilterTransitionState<"latest" | "priceDesc" | "priceAsc">("latest");
+  const [country, setCountry, setCountrySync] = useFilterTransitionState("");
+  const [city, setCity, setCitySync] = useFilterTransitionState("");
+  const [languages, setLanguages, setLanguagesSync] = useFilterTransitionState<string[]>([]);
+  const [serviceTypes, setServiceTypes, setServiceTypesSync] = useFilterTransitionState<string[]>([]);
+  /** 英雄区「快捷天数」：筛选可抢订单 `days` 字段（非打开自定义行程弹窗） */
+  const [tripDaysFilter, setTripDaysFilter, setTripDaysFilterSync] = useFilterTransitionState<number | null>(null);
+  const [filterExpanded, setFilterExpanded, setFilterExpandedSync] = useFilterTransitionState(false);
 
-  const [view, setView] = useState<MarketView>("split");
-  const [sortBy, setSortBy] = useState<"latest" | "priceDesc" | "priceAsc">("latest");
-  const [country, setCountry] = useState("");
-  const [city, setCity] = useState("");
-  const [languages, setLanguages] = useState<string[]>([]);
-  const [serviceTypes, setServiceTypes] = useState<string[]>([]);
-
-  const [orders, setOrders] = useState<OrderCardItem[]>([]);
-  const [guides, setGuides] = useState<GuideCardItem[]>([]);
-  const [loadingOrders, setLoadingOrders] = useState(true);
-  const [loadingGuides, setLoadingGuides] = useState(true);
+  const [orders, setOrders] = useState<OrderCardItem[]>(() => initialSnapshot?.orders ?? []);
+  const [guides, setGuides] = useState<GuideCardItem[]>(() => initialSnapshot?.guides ?? []);
+  const [loadingOrders, setLoadingOrders] = useState(() => !initialSnapshot);
+  const [loadingGuides, setLoadingGuides] = useState(() => !initialSnapshot);
   const [apiErrorOrders, setApiErrorOrders] = useState<string | null>(null);
   const [apiErrorGuides, setApiErrorGuides] = useState<string | null>(null);
   const [apiErrorDismissed, setApiErrorDismissed] = useState(false);
-  const [ordersHasMore, setOrdersHasMore] = useState(false);
-  const [ordersNextCursor, setOrdersNextCursor] = useState<string | null>(null);
+  const [ordersHasMore, setOrdersHasMore] = useState(() => initialSnapshot?.ordersHasMore ?? false);
+  const [ordersNextCursor, setOrdersNextCursor] = useState<string | null>(
+    () => initialSnapshot?.ordersNextCursor ?? null,
+  );
   const [loadingMoreOrders, setLoadingMoreOrders] = useState(false);
+  const [guidesHasMore, setGuidesHasMore] = useState(() => initialSnapshot?.guidesHasMore ?? false);
+  const [guidesNextCursor, setGuidesNextCursor] = useState<string | null>(
+    () => initialSnapshot?.guidesNextCursor ?? null,
+  );
+  const [loadingMoreGuides, setLoadingMoreGuides] = useState(false);
 
-  const [favoritedOrderIds, setFavoritedOrderIds] = useState<Set<string>>(new Set());
-  const [favoritedGuideIds, setFavoritedGuideIds] = useState<Set<string>>(new Set());
+  const {
+    favoritedOrderIds,
+    favoritedGuideIds,
+    toggleOrderFavorite,
+    toggleGuideFavorite,
+    favoritesSyncHint,
+    bookmarkSyncAlert,
+    onBookmarkSyncRetry,
+    favoriteToggleAlert,
+    onFavoriteToggleAlertDismiss,
+  } = useMarketPageFavorites();
 
   const [detailOrder, setDetailOrder] = useState<OrderCardItem | null>(null);
   const [detailGuide, setDetailGuide] = useState<GuideCardItem | null>(null);
   const [bookGuideId, setBookGuideId] = useState<string | null>(null);
   const [bookGuideName, setBookGuideName] = useState<string | null>(null);
   const [customItineraryOpen, setCustomItineraryOpen] = useState(false);
+  const [customItineraryInitialDays, setCustomItineraryInitialDays] = useState(5);
   const [customCreatedToast, setCustomCreatedToast] = useState(false);
   const [customCreatedOrderId, setCustomCreatedOrderId] = useState<string | null>(null);
   const [acceptSuccessToast, setAcceptSuccessToast] = useState(false);
   const [acceptSuccessOrderId, setAcceptSuccessOrderId] = useState<string | null>(null);
   const [communityGuideDeepLinkNotFound, setCommunityGuideDeepLinkNotFound] = useState(false);
+  const [bindOrderBackfillError, setBindOrderBackfillError] = useState<string | null>(null);
+  /** 多笔「我的订单」时，旅客在左栏点选要绑定向导的目标单 */
+  const [selectedOwnBindingOrderId, setSelectedOwnBindingOrderId] = useState("");
 
   const detailOrderRef = useRef<OrderCardItem | null>(null);
+  const ownViewerUserIdRef = useRef("");
   useEffect(() => {
     detailOrderRef.current = detailOrder;
   }, [detailOrder]);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    ownViewerUserIdRef.current = localStorage.getItem(AUTH_USER_ID_KEY)?.trim() ?? "";
+  }, []);
+
+  const bindGuideToOrderId = useMemo(() => {
+    const raw = searchParams.get(MARKET_BIND_GUIDE_ORDER_QUERY)?.trim() ?? "";
+    return isUuidString(raw) ? raw : "";
+  }, [searchParams]);
 
   /** 31 §2.4：社区「约向导」→ /market?communityUserId=…；仅匹配成功时清 query，避免静默无效 */
   const communityUserDeepLinkHandledRef = useRef(false);
+  /** 进入 bind 深链时清筛选并刷新 discover（每订单一次） */
+  const bindDeepLinkPrimedRef = useRef<string | null>(null);
   const dismissCommunityGuideDeepLinkMiss = useCallback(() => {
     setCommunityGuideDeepLinkNotFound(false);
     const uid = searchParams.get(COMMUNITY_USER_MARKET_QUERY)?.trim();
@@ -111,19 +213,14 @@ export function useMarketPage() {
   }, [searchParams, guides, loadingGuides, router, pathname]);
 
   useEffect(() => {
-    setFavoritedOrderIds(loadFavSet(FAV_ORDERS_KEY));
-    setFavoritedGuideIds(loadFavSet(FAV_GUIDES_KEY));
-  }, []);
-
-  useEffect(() => {
     const q = searchParams.toString();
     if (q === lastAppliedUrlRef.current) return;
     lastAppliedUrlRef.current = q;
     const v = searchParams.get("view");
-    if (v === "orders" || v === "guides") setView(v);
-    else if (v === "split") setView("split");
+    if (v === "orders" || v === "guides") setViewSync(v);
+    else if (v === "split") setViewSync("split");
     const c = searchParams.get("country");
-    if (c != null) setCountry(c);
+    if (c != null) setCountrySync(c);
     const ciParam = searchParams.get("city");
     if (ciParam != null) {
       let ci = ciParam;
@@ -131,7 +228,7 @@ export function useMarketPage() {
         const cities = CITIES_BY_COUNTRY[c];
         if (cities && !cities.some((x) => x.value === ci)) ci = "";
       }
-      setCity(ci);
+      setCitySync(ci);
     }
     const lParam = searchParams.get("language");
     if (lParam != null) {
@@ -140,45 +237,55 @@ export function useMarketPage() {
         const allowed = LANGUAGES_BY_COUNTRY[c]?.map((o) => o.value) ?? [];
         langList = langList.filter((l) => allowed.includes(l));
       }
-      setLanguages(langList);
+      setLanguagesSync(langList);
     }
     const s = searchParams.get("service");
-    if (s != null) setServiceTypes(s ? s.split(",").filter(Boolean) : []);
-  }, [searchParams]);
+    if (s != null) setServiceTypesSync(s ? s.split(",").filter(Boolean) : []);
+    setTripDaysFilterSync(parseMarketTripDaysParam(searchParams.get("days")));
+    setSortBySync(parseMarketPageSortParam(searchParams.get(MARKET_PAGE_SORT_QUERY)));
+    setFilterExpandedSync(parseMarketPageFilterExpandedParam(searchParams.get(MARKET_PAGE_FILTER_EXPANDED_QUERY)));
+    const bindRaw = searchParams.get(MARKET_BIND_GUIDE_ORDER_QUERY)?.trim() ?? "";
+    if (bindRaw && !isUuidString(bindRaw)) {
+      const next = new URLSearchParams(searchParams.toString());
+      next.delete(MARKET_BIND_GUIDE_ORDER_QUERY);
+      const qs = next.toString();
+      const base = pathname ?? "/market";
+      router.replace(qs ? `${base}?${qs}` : base, { scroll: false });
+    }
+  }, [searchParams, router, pathname]);
 
   useEffect(() => {
     if (fromUrlRef.current) {
       fromUrlRef.current = false;
       return;
     }
+    const preserveSource = new URLSearchParams(searchParams.toString());
     const p = new URLSearchParams();
     if (view !== "split") p.set("view", view);
     if (country) p.set("country", country);
     if (city) p.set("city", city);
     if (languages.length > 0) p.set("language", languages.join(","));
     if (serviceTypes.length > 0) p.set("service", serviceTypes.join(","));
+    if (tripDaysFilter != null) p.set("days", String(tripDaysFilter));
+    const sortSerialized = serializeMarketPageSortParam(sortBy);
+    if (sortSerialized) p.set(MARKET_PAGE_SORT_QUERY, sortSerialized);
+    const filtersSerialized = serializeMarketPageFilterExpandedParam(filterExpanded);
+    if (filtersSerialized) p.set(MARKET_PAGE_FILTER_EXPANDED_QUERY, filtersSerialized);
+    const bindRaw = preserveSource.get(MARKET_BIND_GUIDE_ORDER_QUERY)?.trim() ?? "";
+    if (bindRaw && isUuidString(bindRaw)) {
+      p.set(MARKET_BIND_GUIDE_ORDER_QUERY, bindRaw);
+    }
+    const guideIdRaw = preserveSource.get("guide_id")?.trim() ?? "";
+    if (guideIdRaw) p.set("guide_id", guideIdRaw);
     const q = p.toString();
-    router.replace(q ? `${pathname}?${q}` : pathname, { scroll: false });
-  }, [view, country, city, languages, serviceTypes, router, pathname]);
-
-  const toggleOrderFavorite = useCallback((id: string) => {
-    setFavoritedOrderIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      saveFavSet(FAV_ORDERS_KEY, next);
-      return next;
-    });
-  }, []);
-  const toggleGuideFavorite = useCallback((id: string) => {
-    setFavoritedGuideIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      saveFavSet(FAV_GUIDES_KEY, next);
-      return next;
-    });
-  }, []);
+    const nextHref = q ? `${pathname}?${q}` : pathname;
+    const curHref = searchParams.toString() ? `${pathname}?${searchParams.toString()}` : pathname;
+    if (nextHref !== curHref) {
+      startTransition(() => {
+        router.replace(nextHref, { scroll: false });
+      });
+    }
+  }, [view, country, city, languages, serviceTypes, tripDaysFilter, sortBy, filterExpanded, router, pathname, searchParams]);
 
   const loadOrders = useCallback(() => {
     const epoch = ++ordersListEpochRef.current;
@@ -189,19 +296,47 @@ export function useMarketPage() {
     setOrdersHasMore(false);
     const countryVal = country.trim() || undefined;
     const cityVal = city.trim() || undefined;
+    const cacheKey = buildMarketDiscoverListCacheKey({
+      country: countryVal,
+      city: cityVal,
+      days: tripDaysFilter ?? undefined,
+      bindGuideOrderId: bindGuideToOrderId,
+    });
+    const cachedDiscover = readMarketDiscoverListCache(cacheKey);
+    if (cachedDiscover) {
+      setOrders(cachedDiscover.orders);
+      setOrdersHasMore(cachedDiscover.hasMore);
+      setOrdersNextCursor(cachedDiscover.nextCursor);
+      setApiErrorOrders(null);
+      setLoadingOrders(false);
+      return;
+    }
     const base =
       countryVal || cityVal ? { country: countryVal, city: cityVal } : ({} as { country?: string; city?: string });
-    getDiscoverOrders({ ...base, limit: DISCOVER_ORDERS_PAGE_SIZE })
-      .then((res) => {
+    getDiscoverOrders({
+      ...base,
+      days: tripDaysFilter ?? undefined,
+      limit: DISCOVER_ORDERS_PAGE_SIZE,
+    })
+      .then(async (res) => {
         if (epoch !== ordersListEpochRef.current) return;
         const raw = (res.items as OrderCardItem[]) ?? [];
         const deduped = dedupeListById(raw, discoverOrderDedupeKey);
-        /* 与后端互通：只展示 API 返回的可抢订单（Draft）；返回空则展示空，不再用假数据填空 */
-        setOrders(deduped);
+        const filtered = await buildMarketDiscoverOrderList(deduped, { bindGuideOrderId: bindGuideToOrderId });
+        /* 与后端互通：展示 API 可抢订单 + 旅客本单已发布态；空则展示空 */
+        setOrders(filtered);
         const p = res.page;
-        setOrdersHasMore(!!p?.has_more);
-        setOrdersNextCursor(typeof p?.next_cursor === "string" && p.next_cursor ? p.next_cursor : null);
+        const hasMore = !!p?.has_more;
+        const nextCursor = typeof p?.next_cursor === "string" && p.next_cursor ? p.next_cursor : null;
+        setOrdersHasMore(hasMore);
+        setOrdersNextCursor(nextCursor);
         setApiErrorOrders(null);
+        writeMarketDiscoverListCache({
+          key: cacheKey,
+          orders: filtered,
+          hasMore,
+          nextCursor,
+        });
       })
       .catch((err) => {
         if (epoch !== ordersListEpochRef.current) return;
@@ -217,7 +352,7 @@ export function useMarketPage() {
         if (epoch !== ordersListEpochRef.current) return;
         setLoadingOrders(false);
       });
-  }, [country, city, t]);
+  }, [country, city, tripDaysFilter, t, bindGuideToOrderId]);
 
   const loadMoreOrders = useCallback(() => {
     if (!ordersNextCursor || !ordersHasMore || loadingMoreOrders || loadingOrders) return;
@@ -229,13 +364,23 @@ export function useMarketPage() {
       countryVal || cityVal ? { country: countryVal, city: cityVal } : ({} as { country?: string; city?: string });
     getDiscoverOrders({
       ...base,
+      days: tripDaysFilter ?? undefined,
       limit: DISCOVER_ORDERS_PAGE_SIZE,
       cursor: ordersNextCursor,
     })
-      .then((res) => {
+      .then(async (res) => {
         if (epochAtStart !== ordersListEpochRef.current) return;
         const raw = (res.items as OrderCardItem[]) ?? [];
-        setOrders((prev) => mergeListsUniqueById(prev, raw, discoverOrderDedupeKey));
+        let prevSnapshot: OrderCardItem[] = [];
+        setOrders((prev) => {
+          prevSnapshot = prev;
+          return prev;
+        });
+        const merged = await mergeDiscoverPageWithOwnPublished(prevSnapshot, raw, {
+          bindGuideOrderId: bindGuideToOrderId,
+        });
+        if (epochAtStart !== ordersListEpochRef.current) return;
+        setOrders(merged);
         const p = res.page;
         setOrdersHasMore(!!p?.has_more);
         setOrdersNextCursor(typeof p?.next_cursor === "string" && p.next_cursor ? p.next_cursor : null);
@@ -251,46 +396,49 @@ export function useMarketPage() {
         if (epochAtStart !== ordersListEpochRef.current) return;
         setLoadingMoreOrders(false);
       });
-  }, [country, city, ordersNextCursor, ordersHasMore, loadingMoreOrders, loadingOrders, t]);
+  }, [country, city, tripDaysFilter, ordersNextCursor, ordersHasMore, loadingMoreOrders, loadingOrders, t, bindGuideToOrderId]);
 
   const loadGuides = useCallback(() => {
     const epoch = ++guidesListEpochRef.current;
     setLoadingGuides(true);
     setApiErrorGuides(null);
     setApiErrorDismissed(false);
-    const countryVal = country.trim();
-    const cityVal = city.trim();
-    const languageVals = languages.filter(Boolean);
-    const serviceVals = serviceTypes.filter(Boolean);
-    const citiesInCountry = countryVal ? (CITIES_BY_COUNTRY[countryVal]?.map((c) => c.value) ?? []) : [];
-    const matchGuide = (g: GuideCardItem) => {
-      if (countryVal && citiesInCountry.length > 0) {
-        if (!g.city || !citiesInCountry.includes(g.city)) return false;
-      }
-      if (cityVal && g.city !== cityVal) return false;
-      if (languageVals.length > 0 && Array.isArray(g.languages)) {
-        const hasAny = languageVals.some((lv) => g.languages!.some((l) => l === lv || l.includes(lv) || lv.includes(l)));
-        if (!hasAny) return false;
-      }
-      if (serviceVals.length > 0 && Array.isArray(g.service_types)) {
-        const hasAny = serviceVals.some((sv) => g.service_types!.some((s) => s === sv || s.includes(sv) || sv.includes(s)));
-        if (!hasAny) return false;
-      }
-      return true;
-    };
-    getGuides({
-      city: cityVal || undefined,
-      language: languageVals[0] || undefined,
-      service_type: serviceVals[0] || undefined,
-    })
-      .then((items) => {
+    setGuidesNextCursor(null);
+    setGuidesHasMore(false);
+    const filterState = { country, city, languages, serviceTypes };
+    const apiParams = buildMarketGuideListApiParams(filterState);
+    if (!marketGuideListNeedsClientOnlyFilters(filterState)) {
+      apiParams.limit = GUIDES_PAGE_SIZE;
+    }
+    const cacheKey = buildMarketGuidesListCacheKey(filterState, apiParams);
+    const cached = readMarketGuidesListCache(cacheKey);
+    if (cached) {
+      setGuides(cached.guides);
+      setGuidesHasMore(cached.hasMore);
+      setGuidesNextCursor(cached.nextCursor);
+      setApiErrorGuides(null);
+      setLoadingGuides(false);
+      return;
+    }
+    getGuides(apiParams)
+      .then((res) => {
         if (epoch !== guidesListEpochRef.current) return;
-        let list = dedupeListById((items as GuideCardItem[]) ?? [], (g) => String(g.id ?? ""));
-        if (countryVal || cityVal || languageVals.length > 0 || serviceVals.length > 0) {
-          list = list.filter(matchGuide);
-        }
+        let list = dedupeListById((res.items as GuideCardItem[]) ?? [], (g) => String(g.id ?? ""));
+        list = list.filter((g) => !isPlaceholderGlobalGuideCity(g.city));
+        list = list.filter((g) => guideMatchesMarketAdvancedFilters(g, filterState));
         setGuides(list);
+        const p = res.page;
+        const hasMore = !!p?.has_more;
+        const nextCursor = typeof p?.next_cursor === "string" && p.next_cursor ? p.next_cursor : null;
+        setGuidesHasMore(hasMore);
+        setGuidesNextCursor(nextCursor);
         setApiErrorGuides(null);
+        writeMarketGuidesListCache({
+          key: cacheKey,
+          guides: list,
+          hasMore,
+          nextCursor,
+        });
       })
       .catch((err) => {
         if (epoch !== guidesListEpochRef.current) return;
@@ -298,6 +446,8 @@ export function useMarketPage() {
           console.error("useMarketPage getGuides:", err);
         }
         setGuides([]);
+        setGuidesHasMore(false);
+        setGuidesNextCursor(null);
         setApiErrorGuides(mapApiReadError(err, t, "market_apiError_guides"));
       })
       .finally(() => {
@@ -306,15 +456,82 @@ export function useMarketPage() {
       });
   }, [country, city, languages, serviceTypes, t]);
 
-  const filteredOrders = useMemo(() => {
+  const loadMoreGuides = useCallback(() => {
+    if (!guidesNextCursor || !guidesHasMore || loadingMoreGuides || loadingGuides) return;
+    const epochAtStart = guidesListEpochRef.current;
+    setLoadingMoreGuides(true);
+    const filterState = { country, city, languages, serviceTypes };
+    const apiParams = buildMarketGuideListApiParams(filterState);
+    apiParams.limit = GUIDES_PAGE_SIZE;
+    apiParams.cursor = guidesNextCursor;
+    getGuides(apiParams)
+      .then((res) => {
+        if (epochAtStart !== guidesListEpochRef.current) return;
+        let raw = dedupeListById((res.items as GuideCardItem[]) ?? [], (g) => String(g.id ?? ""));
+        raw = raw.filter((g) => !isPlaceholderGlobalGuideCity(g.city));
+        raw = raw.filter((g) => guideMatchesMarketAdvancedFilters(g, filterState));
+        setGuides((prev) => mergeListsUniqueById(prev, raw, (g) => String(g.id ?? "")));
+        const p = res.page;
+        setGuidesHasMore(!!p?.has_more);
+        setGuidesNextCursor(typeof p?.next_cursor === "string" && p.next_cursor ? p.next_cursor : null);
+      })
+      .catch((err) => {
+        if (epochAtStart !== guidesListEpochRef.current) return;
+        if (typeof window !== "undefined") {
+          console.error("useMarketPage getGuides loadMore:", err);
+        }
+        setApiErrorGuides(mapApiReadError(err, t, "market_apiError_guides"));
+      })
+      .finally(() => {
+        if (epochAtStart !== guidesListEpochRef.current) return;
+        setLoadingMoreGuides(false);
+      });
+  }, [
+    country,
+    city,
+    languages,
+    serviceTypes,
+    guidesNextCursor,
+    guidesHasMore,
+    loadingMoreGuides,
+    loadingGuides,
+    t,
+  ]);
+
+  const ownPublishedIds = useMemo(() => ownPublishedOpenListingIds(orders), [orders]);
+
+  const geoFilteredOrders = useMemo(() => {
+    const pin = bindGuideToOrderId.trim();
+    if (pin) {
+      return applyDiscoverGeoFiltersKeepingPin(
+        orders,
+        { country, city, tripDaysFilter },
+        pin,
+        ownPublishedIds,
+      );
+    }
     let list = orders;
-    if (country) list = list.filter((o) => (o.country ?? "") === country);
-    if (city) list = list.filter((o) => (o.city ?? "") === city);
-    return list;
-  }, [orders, country, city]);
+    if (country) {
+      const countryNeedle = country.trim();
+      list = list.filter(
+        (o) =>
+          ownPublishedIds.has(String(o.id)) || normalizeMarketOrderCountry(o) === countryNeedle,
+      );
+    }
+    if (city) {
+      const cityNeedle = city.trim();
+      list = list.filter((o) => {
+        if (ownPublishedIds.has(String(o.id))) return true;
+        if ((o.city ?? "").trim() === cityNeedle) return true;
+        const route = o.route_label ?? "";
+        return route.includes(cityNeedle);
+      });
+    }
+    return applyMarketTripDaysFilterToOrders(list, tripDaysFilter, bindGuideToOrderId, ownPublishedIds);
+  }, [orders, country, city, tripDaysFilter, bindGuideToOrderId, ownPublishedIds]);
 
   const sortedOrders = useMemo(() => {
-    const list = dedupeListById([...filteredOrders], discoverOrderDedupeKey);
+    const list = dedupeListById([...geoFilteredOrders], discoverOrderDedupeKey);
     if (sortBy === "latest") {
       /* discover 项常缺 created_at：缺任一则不重排，顺序与 GET discover/orders 一致；仅当全员可解析时间戳时才按时间倒序 */
       const allHaveUsableCreatedAt =
@@ -339,8 +556,64 @@ export function useMarketPage() {
         return sortBy === "priceDesc" ? nb - na : na - nb;
       });
     }
-    return list;
-  }, [filteredOrders, sortBy]);
+    const withDemo =
+      bindGuideToOrderId.trim() !== ""
+        ? list
+        : appendMarketDevVarietyOrders(list, { tripDaysFilter });
+    return pinOrderInDiscoverList(withDemo, orders, bindGuideToOrderId);
+  }, [geoFilteredOrders, sortBy, tripDaysFilter, bindGuideToOrderId, orders]);
+
+  /** 展示列表（含排序 + 天数筛选终态） */
+  const filteredOrders = sortedOrders;
+
+  const ownPublishedOpenOrders = useMemo(() => {
+    const ownId = ownViewerUserIdRef.current;
+    if (!ownId) return [] as OrderCardItem[];
+    return orders.filter((o) => isOwnPublishedOpenListing(o, ownId));
+  }, [orders]);
+
+  const hasOwnPublishedOpenOrders = ownPublishedOpenOrders.length > 0;
+  const multipleOwnPublishedOpenOrders = ownPublishedOpenOrders.length > 1;
+
+  useEffect(() => {
+    bindingFlowActiveRef.current =
+      hasOwnPublishedOpenOrders ||
+      !!bindGuideToOrderId.trim() ||
+      !!selectedOwnBindingOrderId.trim();
+  }, [hasOwnPublishedOpenOrders, bindGuideToOrderId, selectedOwnBindingOrderId]);
+
+  useEffect(() => {
+    if (!bindingFlowActiveRef.current || loadingOrders) return;
+    loadGuides();
+  }, [hasOwnPublishedOpenOrders, bindGuideToOrderId, selectedOwnBindingOrderId, loadingOrders, loadGuides]);
+
+  const guidesEmptyRetryRef = useRef(false);
+  useEffect(() => {
+    if (loadingGuides) return;
+    if (guides.length > 0) {
+      guidesEmptyRetryRef.current = false;
+      return;
+    }
+    if (!bindingFlowActiveRef.current) return;
+    if (guidesEmptyRetryRef.current) return;
+    guidesEmptyRetryRef.current = true;
+    loadGuides();
+  }, [loadingGuides, guides.length, loadGuides]);
+
+  const effectiveBindGuideToOrderId = useMemo(() => {
+    const deepLink = bindGuideToOrderId.trim();
+    if (deepLink) return deepLink;
+    const selected = selectedOwnBindingOrderId.trim();
+    if (selected) return selected;
+    if (ownPublishedOpenOrders.length === 1) return String(ownPublishedOpenOrders[0]!.id);
+    return "";
+  }, [bindGuideToOrderId, selectedOwnBindingOrderId, ownPublishedOpenOrders]);
+
+  useEffect(() => {
+    if (bindGuideToOrderId.trim()) {
+      setSelectedOwnBindingOrderId("");
+    }
+  }, [bindGuideToOrderId]);
 
   const sortedGuides = useMemo(() => {
     const list = [...guides];
@@ -360,12 +633,62 @@ export function useMarketPage() {
     return list;
   }, [guides, sortBy]);
 
+  const ordersFetchGeneration = useRef(0);
+  const guidesFetchGeneration = useRef(0);
+
   useEffect(() => {
-    loadOrders();
+    const generation = ++ordersFetchGeneration.current;
+    const isInitial = generation === 1;
+    if (isInitial && deferInitialListFetchRef.current) {
+      deferInitialListFetchRef.current = false;
+      const refresh = () => {
+        if (generation !== ordersFetchGeneration.current) return;
+        loadOrders();
+      };
+      if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+        const id = window.requestIdleCallback(refresh, { timeout: 2500 });
+        return () => window.cancelIdleCallback(id);
+      }
+      const timer = window.setTimeout(refresh, 800);
+      return () => window.clearTimeout(timer);
+    }
+    const delay = isInitial ? 0 : MARKET_LIST_REFETCH_DEBOUNCE_MS;
+    const timer = window.setTimeout(() => {
+      if (generation !== ordersFetchGeneration.current) return;
+      loadOrders();
+    }, delay);
+    return () => window.clearTimeout(timer);
   }, [loadOrders]);
+
   useEffect(() => {
-    loadGuides();
-  }, [loadGuides]);
+    const bindingActive =
+      !!bindGuideToOrderId.trim() ||
+      !!selectedOwnBindingOrderId.trim() ||
+      hasOwnPublishedOpenOrders;
+    if (view === "orders" && !bindingActive) {
+      return;
+    }
+    const generation = ++guidesFetchGeneration.current;
+    const isInitial = generation === 1;
+    if (isInitial && initialSnapshot) {
+      const refresh = () => {
+        if (generation !== guidesFetchGeneration.current) return;
+        loadGuides();
+      };
+      if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+        const id = window.requestIdleCallback(refresh, { timeout: 2500 });
+        return () => window.cancelIdleCallback(id);
+      }
+      const timer = window.setTimeout(refresh, 800);
+      return () => window.clearTimeout(timer);
+    }
+    const delay = isInitial ? 0 : MARKET_LIST_REFETCH_DEBOUNCE_MS;
+    const timer = window.setTimeout(() => {
+      if (generation !== guidesFetchGeneration.current) return;
+      loadGuides();
+    }, delay);
+    return () => window.clearTimeout(timer);
+  }, [loadGuides, view, bindGuideToOrderId, selectedOwnBindingOrderId, hasOwnPublishedOpenOrders, initialSnapshot]);
 
   useEffect(() => {
     if (!loadingOrders && !loadingGuides) {
@@ -381,24 +704,121 @@ export function useMarketPage() {
     setCity("");
     setLanguages([]);
     setServiceTypes([]);
+    setTripDaysFilter(null);
+    setFilterExpanded(false);
   }, []);
+
+  const ownPublishedGeoBypass = useMemo(
+    () =>
+      hasOwnPublishedOpenOrders &&
+      Boolean(country.trim() || city.trim() || tripDaysFilter != null),
+    [hasOwnPublishedOpenOrders, country, city, tripDaysFilter],
+  );
 
   const customItineraryPreselectedGuideId = useMemo(
     () => searchParams.get("guide_id")?.trim() ?? "",
     [searchParams]
   );
 
-  const hasFilters = !!(country || city || languages.length > 0 || serviceTypes.length > 0);
+  useEffect(() => {
+    if (bindGuideToOrderId) setViewSync("split");
+  }, [bindGuideToOrderId]);
+
+  useEffect(() => {
+    setBindOrderBackfillError(null);
+  }, [bindGuideToOrderId]);
+
+  useEffect(() => {
+    const pin = bindGuideToOrderId.trim();
+    if (!pin) {
+      bindDeepLinkPrimedRef.current = null;
+      return;
+    }
+    if (bindDeepLinkPrimedRef.current === pin) return;
+    bindDeepLinkPrimedRef.current = pin;
+    setCountrySync("");
+    setCitySync("");
+    setLanguagesSync([]);
+    setServiceTypesSync([]);
+    setTripDaysFilterSync(null);
+    loadOrders();
+  }, [bindGuideToOrderId, loadOrders]);
+
+  /** Escrow 深链：discover 未含本单（刚发布/筛选）时从 GET order 回填左栏 */
+  useEffect(() => {
+    const bindId = bindGuideToOrderId.trim();
+    if (!bindId || loadingOrders) return;
+    if (orders.some((o) => String(o.id) === bindId)) return;
+
+    let cancelled = false;
+    void getOrder(bindId)
+      .then((res) => {
+        if (cancelled) return;
+        const card = orderGetResponseToMarketCard(res);
+        if (!card) {
+          setBindOrderBackfillError(t("market_bindGuide_backfill_invalid"));
+          return;
+        }
+        setBindOrderBackfillError(null);
+        setOrders((prev) => {
+          if (prev.some((o) => String(o.id) === bindId)) return prev;
+          return [card, ...prev];
+        });
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        setBindOrderBackfillError(mapApiReadError(err, t, "market_bindGuide_backfill_failed"));
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [bindGuideToOrderId, loadingOrders, orders]);
+
+  const openCustomItinerary = useCallback(() => {
+    setCustomItineraryInitialDays(5);
+    setCustomItineraryOpen(true);
+  }, []);
+
+  const openCustomItineraryWithDays = useCallback((days: number) => {
+    setCustomItineraryInitialDays(days);
+    setCustomItineraryOpen(true);
+  }, []);
+
+  /** 英雄区 1/3/5/7 天：切换行程天数筛选；再次点击同一天数则清除筛选 */
+  const applyTripDaysFilter = useCallback((days: number) => {
+    setCustomItineraryOpen(false);
+    setTripDaysFilter((prev) => (prev === days ? null : days));
+    setView((v) => (v === "guides" ? "orders" : v));
+  }, []);
+
+  const clearTripDaysFilter = useCallback(() => {
+    setTripDaysFilter(null);
+  }, []);
+
+  const hasFilters = !!(
+    country ||
+    city ||
+    languages.length > 0 ||
+    serviceTypes.length > 0 ||
+    tripDaysFilter != null
+  );
+  const hasGuideFilters = useMemo(
+    () => hasMarketGuideListFilters({ country, city, languages, serviceTypes }),
+    [country, city, languages, serviceTypes],
+  );
   const showOrders = view === "split" || view === "orders";
   const showGuides = view === "split" || view === "guides";
 
   /** 49 A：自定义行程提交成功后，刷新列表并展示 Toast */
   const handleCustomItinerarySubmit = useCallback(
     (orderId: string) => {
+      invalidateOwnPublishedMarketCardsCache();
+      invalidateMarketGuidesListCache();
+      invalidateMarketDiscoverListCache();
       setCustomItineraryOpen(false);
       setCustomCreatedOrderId(orderId);
       setCustomCreatedToast(true);
-      setView("orders");
+      setViewSync("orders");
       loadOrders();
       setTimeout(() => {
         setCustomCreatedToast(false);
@@ -418,6 +838,9 @@ export function useMarketPage() {
       if (snap && String(snap.id) === String(orderId)) {
         stashEscrowOrderPrefetchFromMarketCard(snap);
       }
+      invalidateOwnPublishedMarketCardsCache();
+      invalidateMarketGuidesListCache();
+      invalidateMarketDiscoverListCache();
       setDetailOrder(null);
       setAcceptSuccessOrderId(orderId);
       setAcceptSuccessToast(true);
@@ -455,6 +878,11 @@ export function useMarketPage() {
     favoritedGuideIds,
     toggleOrderFavorite,
     toggleGuideFavorite,
+    favoritesSyncHint,
+    bookmarkSyncAlert,
+    onBookmarkSyncRetry,
+    favoriteToggleAlert,
+    onFavoriteToggleAlertDismiss,
     detailOrder,
     setDetailOrder,
     detailGuide,
@@ -465,6 +893,12 @@ export function useMarketPage() {
     setBookGuideName,
     customItineraryOpen,
     setCustomItineraryOpen,
+    customItineraryInitialDays,
+    openCustomItinerary,
+    openCustomItineraryWithDays,
+    tripDaysFilter,
+    applyTripDaysFilter,
+    clearTripDaysFilter,
     customItineraryPreselectedGuideId,
     customCreatedToast,
     customCreatedOrderId,
@@ -474,6 +908,7 @@ export function useMarketPage() {
     dismissCommunityGuideDeepLinkMiss,
     filteredOrders,
     hasFilters,
+    hasGuideFilters,
     showOrders,
     showGuides,
     loadOrders,
@@ -481,10 +916,25 @@ export function useMarketPage() {
     ordersHasMore,
     loadingMoreOrders,
     loadGuides,
+    loadMoreGuides,
+    guidesHasMore,
+    loadingMoreGuides,
     resetFilters,
     sortedOrders,
     sortedGuides,
+    filterExpanded,
+    setFilterExpanded,
+    ownPublishedGeoBypass,
     handleCustomItinerarySubmit,
     handleConfirmAccept,
+    bindGuideToOrderId,
+    effectiveBindGuideToOrderId,
+    selectedOwnBindingOrderId,
+    setSelectedOwnBindingOrderId,
+    hasOwnPublishedOpenOrders,
+    ownPublishedOpenCount: ownPublishedOpenOrders.length,
+    multipleOwnPublishedOpenOrders,
+    bindOrderBackfillError,
+    dismissBindOrderBackfillError: () => setBindOrderBackfillError(null),
   };
 }

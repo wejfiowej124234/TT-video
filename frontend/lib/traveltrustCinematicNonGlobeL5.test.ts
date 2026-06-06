@@ -84,7 +84,7 @@ import {
   TT_NETWORK_FOOTER_L5,
   TT_LEGACY_THEATER_3D_L5,
   resolveTheaterRoleWarm3dHex,
-} from "./traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 import {
   resolveCinematicCanvasCyanMul,
   resolveCinematicCorridorRingReveal,
@@ -337,6 +337,7 @@ describe("traveltrustCinematicNonGlobeL5", () => {
     expect(TT_START_ROUTE_PREVIEW_L5.cardBorderPulseRepeat).toBe(0);
     expect(TT_PULSE_TICKER_L5.marqueeDuration).toBe(48);
     expect(TT_PULSE_TICKER_L5.inlineUsesStaticScroll).toBe(false);
+    expect(TT_PULSE_TICKER_L5.inlineMarqueeTrackClass).toContain("tt-traveltrust-pulse-inline-marquee-track");
     expect(TT_PULSE_TICKER_L5.inlineMarqueeDuration).toBe(72);
     expect(TT_PULSE_TICKER_L5.itemClass).toContain("min-h-[1.875rem]");
     expect(TT_PAGE_LAYOUT_L5.heroContentOffsetClass).toContain("5.5rem");
@@ -399,8 +400,31 @@ describe("Hero airspace 3D tokens", () => {
 });
 
 describe("traveltrustCinematicNonGlobeL5 · no decimal z-index", () => {
-  it("source must not use decimal z-[n.m]", () => {
-    const src = readFileSync(join(__dirname, "traveltrustCinematicNonGlobeL5.ts"), "utf8");
-    expect(src.match(DECIMAL_Z_INDEX_CLASS)).toBeNull();
+  it("L5 domain sources must not use decimal z-[n.m]", () => {
+    const domains = [
+      "meta.ts",
+      "rhythm.ts",
+      "sections-layout.ts",
+      "atmosphere.ts",
+      "hero-ui.ts",
+      "theater.ts",
+      "landing-chrome.ts",
+      "start.ts",
+      "economy.ts",
+      "footer.ts",
+      "shell-legacy.ts",
+      "resolvers.ts",
+      "hero-canvas.ts",
+    ];
+    for (const file of domains) {
+      const src = readFileSync(join(__dirname, "traveltrust/l5", file), "utf8");
+      expect(src.match(DECIMAL_Z_INDEX_CLASS), file).toBeNull();
+    }
+  });
+
+  it("facade re-exports L5 domains", () => {
+    const facade = readFileSync(join(__dirname, "traveltrustCinematicNonGlobeL5.ts"), "utf8");
+    expect(facade).toContain('export * from "./traveltrust/l5/hero-ui"');
+    expect(facade).toContain('export * from "./traveltrust/l5/anchors"');
   });
 });

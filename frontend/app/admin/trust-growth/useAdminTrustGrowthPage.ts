@@ -1,23 +1,66 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import { useTranslation } from "@/components/LocaleProvider";
 import {
   adminErrorUserText,
   adminFetchErrorKind,
-  adminFetchJson,
-  logAdminFetch,
   type AdminFetchErrorKind,
 } from "@/lib/adminFetchDisplay";
 import { apiUrl, routes } from "@/lib/api";
 import { getAuthHeaders } from "@/lib/apiClient";
+import {
+  type AdminListFetchSnapshot,
+  type AdminStandardListBody,
+  useAdminStandardListFetch,
+} from "@/lib/admin/useAdminStandardListFetch";
 
-import { formatCapsJson, type ObsBody } from "./adminTrustGrowthPageModel";
+import {
+  ADMIN_TRUST_GROWTH_OBS_META_KEY,
+  formatCapsJson,
+  type ObsBody,
+} from "./adminTrustGrowthPageModel";
+
+function trustGrowthObsToSnapshot(body: AdminStandardListBody<never> & ObsBody): AdminListFetchSnapshot<never> {
+  return {
+    items: [],
+    appliedFilters: null,
+    meta: {
+      [ADMIN_TRUST_GROWTH_OBS_META_KEY]: body,
+    },
+  };
+}
+
+function syncTrustGrowthDraftsFromObs(data: ObsBody | null) {
+  const c = data?.control;
+  if (!c) return null;
+  return {
+    frozen: !!c.weights_frozen,
+    force: !!c.force_control_only,
+    capsText: formatCapsJson(c.variant_weight_caps as Record<string, number> | undefined),
+  };
+}
 
 export function useAdminTrustGrowthPage() {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [data, setData] = useState<ObsBody | null>(null);
+  const requestConfirm = useAdminL5ConfirmRequest();
+  const [reloadTick, setReloadTick] = useState(0);
+
+  const { meta: rawMeta, loading, refreshing, error } = useAdminStandardListFetch<never>({
+    scope: "trust-growth-obs",
+    context: "AdminTrustGrowthPage",
+    listUrl: routes.admin.trustGrowthObservability,
+    refreshToken: reloadTick,
+    toSnapshot: trustGrowthObsToSnapshot,
+  });
+
+  const data = useMemo((): ObsBody | null => {
+    const raw = rawMeta?.[ADMIN_TRUST_GROWTH_OBS_META_KEY];
+    if (raw && typeof raw === "object" && !Array.isArray(raw)) {
+      return raw as ObsBody;
+    }
+    return null;
+  }, [rawMeta]);
 
   const [draftFrozen, setDraftFrozen] = useState(false);
   const [draftForce, setDraftForce] = useState(false);
@@ -26,6 +69,14 @@ export function useAdminTrustGrowthPage() {
   const [rollbackBusy, setRollbackBusy] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
   const [actionErrorKind, setActionErrorKind] = useState<AdminFetchErrorKind | null>(null);
+
+  useEffect(() => {
+    const next = syncTrustGrowthDraftsFromObs(data);
+    if (!next) return;
+    setDraftFrozen(next.frozen);
+    setDraftForce(next.force);
+    setCapsText(next.capsText);
+  }, [data]);
 
   const setActionErr = (kind: AdminFetchErrorKind, message: string) => {
     setActionErrorKind(kind);
@@ -38,41 +89,10 @@ export function useAdminTrustGrowthPage() {
   };
 
   const load = useCallback(() => {
-    setLoading(true);
-    setError(null);
-    const headers: Record<string, string> = { "x-request-id": `admin-tg-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      /* 401 handled below */
-    }
-    adminFetchJson<ObsBody>("AdminTrustGrowthPage", apiUrl(routes.admin.trustGrowthObservability), { headers })
-      .then(({ res, body: json }) => {
-        if (res.status === 403 || res.status === 401) throw new Error("forbidden");
-        if (!res.ok) throw new Error((json as { error?: string }).error || `request_failed_${res.status}`);
-        return json;
-      })
-      .then((json) => {
-        setData(json);
-        const c = json.control;
-        if (c) {
-          setDraftFrozen(!!c.weights_frozen);
-          setDraftForce(!!c.force_control_only);
-          setCapsText(formatCapsJson(c.variant_weight_caps as Record<string, number> | undefined));
-        }
-      })
-      .catch((e: unknown) => {
-        logAdminFetch("AdminTrustGrowthPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
+    setReloadTick((x) => x + 1);
   }, []);
 
-  useEffect(() => {
-    load();
-  }, [load]);
-
-  async function applyControl() {
+  async function applyControlImpl() {
     clearActionErr();
     let capsJson: Record<string, number>;
     try {
@@ -119,7 +139,7 @@ export function useAdminTrustGrowthPage() {
         setActionErr(adminFetchErrorKind(new Error(code)), j.message || j.error || t("admin_requestFailed"));
         return;
       }
-      await load();
+      load();
     } catch (e: unknown) {
       const kind = adminFetchErrorKind(e);
       setActionErr(kind, adminErrorUserText(kind, t));
@@ -128,8 +148,7 @@ export function useAdminTrustGrowthPage() {
     }
   }
 
-  async function rollback() {
-    if (!window.confirm(t("admin_trust_growth_rollback_confirm"))) return;
+  async function rollbackImpl() {
     clearActionErr();
     setRollbackBusy(true);
     const headers: Record<string, string> = {
@@ -157,7 +176,7 @@ export function useAdminTrustGrowthPage() {
         setActionErr(adminFetchErrorKind(new Error(code)), j.message || j.error || t("admin_requestFailed"));
         return;
       }
-      await load();
+      load();
     } catch (e: unknown) {
       const kind = adminFetchErrorKind(e);
       setActionErr(kind, adminErrorUserText(kind, t));
@@ -166,8 +185,27 @@ export function useAdminTrustGrowthPage() {
     }
   }
 
+  const applyControl = useCallback(() => {
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_write",
+      descKey: "admin_l5_confirm_desc_apply_control",
+      onConfirm: () => applyControlImpl(),
+    });
+  }, [requestConfirm, draftFrozen, draftForce, capsText, t]);
+
+  const rollback = useCallback(() => {
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_danger",
+      descKey: "admin_trust_growth_rollback_confirm",
+      danger: true,
+      confirmLabelKey: "admin_trust_growth_rollback",
+      onConfirm: () => rollbackImpl(),
+    });
+  }, [requestConfirm, t]);
+
   return {
     loading,
+    refreshing,
     error,
     data,
     draftFrozen,

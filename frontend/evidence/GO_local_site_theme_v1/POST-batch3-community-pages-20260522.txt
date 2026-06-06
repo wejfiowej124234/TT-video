@@ -1,0 +1,23 @@
+# POST batch3 · community 子路由页身 chrome L5（① 本地）
+# 2026-05-22
+
+## 变更摘要
+- `marketingUi.ts` 新增 `TT_COMMUNITY_PAGE_L5`
+- `communityA11yFocus.ts` pill/卡片/会话 focus → ref-sun
+- `CommunityRouteShell` 环境叠层 + 顶栏进度条暖金
+- `frontend/app/community/**/*.tsx` **67 文件** 页身 chrome 暖金化；`rg cyan|ref-cyan` → **0**
+- Feed 区仍在 `frontend/components/community/*`（D2 霓虹保留）
+
+## §6.1 Vitest（exit 0）
+cd frontend && npm run test -- --run \
+  lib/uiSystem.test.ts lib/marketingUi.test.ts \
+  components/market/marketTheme.contract.test.ts \
+  components/did-rank/didRankTheme.contract.test.ts \
+  components/community/communityShellTheme.contract.test.ts \
+  components/community/communityPageTheme.contract.test.ts
+
+Result: 6 files, 30 passed (30)
+
+## 212 仍 open
+- §2.4 各行 **POST 目视**（§6.2）待维护者
+- TT-PH1-213 partial（截图）

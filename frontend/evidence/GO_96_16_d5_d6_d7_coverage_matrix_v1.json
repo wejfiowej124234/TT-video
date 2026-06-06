@@ -3,11 +3,11 @@
   "version": 2,
   "generated_by": "scripts/build-d5d6d7-coverage-matrix.mjs",
   "route_rules": "scripts/matrix-96-16-shared.mjs",
-  "methodology": "119 app routes = all app/**/page.tsx. N_A = exact set NA_EXACT (evaluated first; redirect/thin/legacy). COVERED = among COVERED_RULES that match, take those with maximum rule.path.length (longest prefix or exact), union their evidence file basenames; ties at max length are unioned. Unmatched = NEEDS_FIX. Matrix is rules-driven (not by re-reading evidence body text for gaps).",
+  "methodology": "All app/**/page.tsx routes (see total_routes). N_A = exact set NA_EXACT (evaluated first; redirect/thin/legacy). COVERED = among COVERED_RULES that match, take those with maximum rule.path.length (longest prefix or exact), union their evidence file basenames; ties at max length are unioned. Unmatched = NEEDS_FIX. Matrix is rules-driven (not by re-reading evidence body text for gaps).",
   "match_policy": "N_A first; then longest matching rule path wins; evidence_files = unique evidence from winning rule row(s) only.",
-  "total_routes": 124,
+  "total_routes": 126,
   "counts": {
-    "COVERED": 118,
+    "COVERED": 120,
     "N_A": 6,
     "NEEDS_FIX": 0
   },
@@ -156,6 +156,20 @@
     {
       "file": "frontend/app/admin/audit/operations/page.tsx",
       "route": "/admin/audit/operations",
+      "d5d6d7": "COVERED",
+      "evidence_files": [
+        "GO_96_16_d5_d6_d7_admin_subroutes_d5d6d7.json"
+      ],
+      "test_commands": [
+        "npm run lint",
+        "npm run test:i18n:ci",
+        "npm run build"
+      ],
+      "remaining_risks": "Evidence-based COVERED; still spot-check and extend Vitest as modules change. E2E 93 NOT_RUN."
+    },
+    {
+      "file": "frontend/app/admin/auth-audit-events/page.tsx",
+      "route": "/admin/auth-audit-events",
       "d5d6d7": "COVERED",
       "evidence_files": [
         "GO_96_16_d5_d6_d7_admin_subroutes_d5d6d7.json"
@@ -1734,6 +1748,23 @@
     {
       "file": "frontend/app/traveltrust/page.tsx",
       "route": "/traveltrust",
+      "d5d6d7": "COVERED",
+      "evidence_files": [
+        "GO_96_16_d5_d6_d7_routes_batch.json",
+        "GO_96_16_d5_d6_d7_me_community_itinerary_discover_traveltrust.json",
+        "GO_96_16_d5_d6_d7_community_traveltrust_governance_batch4.json",
+        "GO_96_16_d5_d6_d7_admin_community_observability_config_guides_staking_traveltrust.json"
+      ],
+      "test_commands": [
+        "npm run lint",
+        "npm run test:i18n:ci",
+        "npm run build"
+      ],
+      "remaining_risks": "Evidence-based COVERED; still spot-check and extend Vitest as modules change. E2E 93 NOT_RUN."
+    },
+    {
+      "file": "frontend/app/traveltrust/announcements/page.tsx",
+      "route": "/traveltrust/announcements",
       "d5d6d7": "COVERED",
       "evidence_files": [
         "GO_96_16_d5_d6_d7_routes_batch.json",

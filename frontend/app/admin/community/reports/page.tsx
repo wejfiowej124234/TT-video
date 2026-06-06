@@ -9,11 +9,8 @@ import { AdminCommunityReportsPageInner } from "./AdminCommunityReportsPageInner
 
 export default function AdminCommunityReportsPage() {
   return (
-    <AdminSearchParamsSuspense
-      ariaLabelKey="admin_community_reports_title"
-      backLinkLabelKey="admin_community_reports_back"
-    >
-      <AdminCommunityPageShell currentLabelKey="admin_community_reports_title">
+    <AdminSearchParamsSuspense ariaLabelKey="admin_community_reports_title">
+      <AdminCommunityPageShell>
         <AdminPermissionDeniedBanner permission={ADMIN_PERM.COMMUNITY_READ} />
         <AdminCommunityReportsPageInner />
       </AdminCommunityPageShell>

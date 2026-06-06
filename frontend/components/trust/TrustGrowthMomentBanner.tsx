@@ -9,23 +9,35 @@ import {
   useTrustGrowthAnalyticsExtras,
   useTrustGrowthExperiment,
 } from "@/lib/trustGrowthExperiment";
-import { deepShellPillControlFocusClasses, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
+import {
+  authL5InlineLinkFocusClasses,
+  authL5PillControlFocusClasses,
+  deepShellPillControlFocusClasses,
+  travelFocusRingOffset2Classes,
+} from "@/lib/travelLinkFocus";
 
 export const PGROW1_ESCROW_DISMISS_STORAGE = "tt_pgrow1_escrow_banner_dismissed_v1";
 
 export type TrustGrowthMomentBannerProps = {
   moment: TrustGrowthMoment;
-  surface: "auth" | "ink" | "slate";
+  surface: "auth" | "ink" | "slate" | "l5";
   /** 合并进埋点（如 claimable_gt_zero） */
   analyticsPayload?: Record<string, string | number | boolean | undefined>;
   /** 可关闭（仅托管订单等场景）；关闭时写 storageKey */
   dismissible?: boolean;
   storageKey?: string;
+  /** Auth 注册 L5：强制 `<details>` 摘要行（不展开三块要点） */
+  preferCollapsedSummary?: boolean;
+  /** 窄屏/折叠摘要仅显示标题（无「点按展开」后缀） */
+  titleOnlyCollapsedSummary?: boolean;
 };
 
 function shellClass(surface: TrustGrowthMomentBannerProps["surface"]): string {
   if (surface === "slate") {
     return "rounded-[var(--radius-md)] border border-emerald-500/30 bg-emerald-950/25 px-3 py-3 sm:px-4";
+  }
+  if (surface === "l5") {
+    return "auth-l5-callout-surface auth-l5-trust-growth-banner rounded-xl border border-ref-sun/28 bg-ref-sun/[0.06] px-3 py-3 sm:px-4 shadow-[inset_0_1px_0_rgba(252,164,124,0.1)]";
   }
   if (surface === "auth") {
     return "rounded-[var(--radius-md)] border border-travel-200 bg-travel-50/80 px-3 py-3 sm:px-4";
@@ -35,23 +47,29 @@ function shellClass(surface: TrustGrowthMomentBannerProps["surface"]): string {
 
 function textTitle(surface: TrustGrowthMomentBannerProps["surface"]): string {
   if (surface === "slate") return "text-small font-semibold text-emerald-200";
+  if (surface === "l5") return "text-small font-semibold text-slate-200";
   if (surface === "auth") return "text-small font-semibold text-travel-900";
   return "text-small font-semibold text-ink-900";
 }
 
 function textBody(surface: TrustGrowthMomentBannerProps["surface"]): string {
   if (surface === "slate") return "text-meta text-slate-300 leading-relaxed";
+  if (surface === "l5") return "text-meta text-slate-300/95 leading-relaxed";
   if (surface === "auth") return "text-meta text-ink-700 leading-relaxed";
   return "text-meta text-ink-700 leading-relaxed";
 }
 
 function textLi(surface: TrustGrowthMomentBannerProps["surface"]): string {
   if (surface === "slate") return "text-meta text-slate-300";
+  if (surface === "l5") return "text-meta text-slate-400";
   if (surface === "auth") return "text-meta text-ink-600";
   return "text-meta text-ink-600";
 }
 
 function linkClass(surface: TrustGrowthMomentBannerProps["surface"]): string {
+  if (surface === "l5") {
+    return `font-medium underline underline-offset-4 decoration-ref-sun/45 motion-sub text-ref-sun hover:text-[#fde9a8] hover:decoration-ref-sun/70 ${authL5InlineLinkFocusClasses}`;
+  }
   const base = `font-medium underline motion-sub ${travelFocusRingOffset2Classes}`;
   if (surface === "slate") return `${base} text-cyan-300 hover:text-cyan-100`;
   if (surface === "auth") return `${base} text-travel-700 hover:text-travel-900`;
@@ -61,12 +79,16 @@ function linkClass(surface: TrustGrowthMomentBannerProps["surface"]): string {
 function dismissClass(surface: TrustGrowthMomentBannerProps["surface"]): string {
   const base = `text-meta underline ${travelFocusRingOffset2Classes}`;
   if (surface === "slate") return `${base} text-slate-400 hover:text-slate-200`;
+  if (surface === "l5") return `${base} text-slate-400 hover:text-ref-sun/90`;
   return `${base} text-ink-500 hover:text-ink-800`;
 }
 
 function summaryClass(surface: TrustGrowthMomentBannerProps["surface"]): string {
   if (surface === "slate") {
     return `cursor-pointer list-none text-left text-small font-semibold text-emerald-200 [&::-webkit-details-marker]:hidden min-h-[44px] flex items-center rounded-sm -mx-1 px-1 ${deepShellPillControlFocusClasses}`;
+  }
+  if (surface === "l5") {
+    return `cursor-pointer list-none text-left text-small font-semibold text-slate-200 [&::-webkit-details-marker]:hidden min-h-[44px] flex items-center rounded-lg -mx-1 px-1 ${authL5PillControlFocusClasses}`;
   }
   if (surface === "auth") {
     return `cursor-pointer list-none text-left text-small font-semibold text-travel-900 [&::-webkit-details-marker]:hidden min-h-[44px] flex items-center ${travelFocusRingOffset2Classes}`;
@@ -83,6 +105,8 @@ export default function TrustGrowthMomentBanner({
   analyticsPayload,
   dismissible = false,
   storageKey = PGROW1_ESCROW_DISMISS_STORAGE,
+  preferCollapsedSummary = false,
+  titleOnlyCollapsedSummary = false,
 }: TrustGrowthMomentBannerProps) {
   const { t } = useTranslation();
   const labelId = useId();
@@ -129,6 +153,21 @@ export default function TrustGrowthMomentBanner({
     viewed.current = true;
     trackTrustGrowthEvent("trust_growth_moment_view", { moment, ...payloadRef.current });
   }, [moment, hidden, storageReady, exp.ready, delayDone]);
+
+  const showL5Placeholder =
+    surface === "l5" && storageReady && !hidden && (!exp.ready || !exp.variant || !delayDone);
+
+  if (showL5Placeholder) {
+    return (
+      <div
+        className="auth-l5-callout-surface auth-l5-trust-growth-banner rounded-xl border border-ref-sun/22 bg-ref-sun/[0.04] px-3 py-3 min-h-[52px] motion-safe:animate-pulse motion-reduce:animate-none"
+        aria-hidden
+        data-pgrow1-placeholder="1"
+      >
+        <div className="h-4 w-[min(100%,14rem)] rounded bg-ref-sun/10" />
+      </div>
+    );
+  }
 
   if (!exp.ready || !exp.variant || !storageReady || hidden || !delayDone) return null;
 
@@ -187,7 +226,7 @@ export default function TrustGrowthMomentBanner({
     </>
   );
 
-  const collapsed = !v.defaultExpanded;
+  const collapsed = preferCollapsedSummary || !v.defaultExpanded;
 
   return (
     <aside
@@ -206,17 +245,26 @@ export default function TrustGrowthMomentBanner({
         </>
       ) : (
         <details
-          className="group"
+          className={`group ${surface === "l5" ? "auth-l5-trust-growth-details" : ""}`}
           onToggle={(e) => onDetailsToggle((e.target as HTMLDetailsElement).open)}
         >
           <summary className={summaryClass(surface)}>
             <span id={labelId} className="min-w-0">
-              {t(k.title)} <span className="font-normal opacity-90">— {t("pgrow2_details_summary_hint")}</span>
+              {t(k.title)}
+              {!titleOnlyCollapsedSummary ? (
+                <span className="font-normal opacity-90"> — {t("pgrow2_details_summary_hint")}</span>
+              ) : null}
             </span>
           </summary>
           <div
             className={`mt-2 border-t pt-2 ${
-              surface === "slate" ? "border-slate-600/50" : surface === "auth" ? "border-travel-200/70" : "border-ink-200"
+              surface === "slate"
+                ? "border-slate-600/50"
+                : surface === "l5"
+                  ? "border-ref-sun/14"
+                  : surface === "auth"
+                    ? "border-travel-200/70"
+                    : "border-ink-200"
             }`}
           >
             {bodyBlock}

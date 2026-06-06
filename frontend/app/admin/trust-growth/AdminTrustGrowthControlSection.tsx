@@ -1,9 +1,13 @@
 "use client";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import { AdminAlertError } from "@/components/admin/AdminAlertError";
 import type { AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
-import { ADMIN_LINK_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS } from "@/lib/adminUi";
+import { ADMIN_LINK_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  ADMIN_FORM_CONTROL_MD_CLASS,
+  ADMIN_FORM_CHECKBOX_CLASS,
+  ADMIN_WARNING_SOFT_BTN_CLASS,} from "@/lib/adminUi";
 type AdminTrustGrowthControlSectionProps = {
   controlSectionId: string;
   draftFrozen: boolean;
@@ -38,8 +42,8 @@ export function AdminTrustGrowthControlSection({
   const { t } = useTranslation();
 
   return (
-    <section
-      className="rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-4"
+    <AdminWarmL5Surface
+      as="section"
       aria-labelledby={controlSectionId}
     >
       <h2 id={controlSectionId} className="text-small font-semibold uppercase tracking-wide text-ink-500">
@@ -51,7 +55,7 @@ export function AdminTrustGrowthControlSection({
         <label className="flex cursor-pointer items-center gap-2 text-body text-ink-800">
           <input
             type="checkbox"
-            className="h-4 w-4 rounded border-ink-300 text-ink-700 accent-ink-700"
+            className={ADMIN_FORM_CHECKBOX_CLASS}
             checked={draftFrozen}
             onChange={(e) => setDraftFrozen(e.target.checked)}
           />
@@ -60,7 +64,7 @@ export function AdminTrustGrowthControlSection({
         <label className="flex cursor-pointer items-center gap-2 text-body text-ink-800">
           <input
             type="checkbox"
-            className="h-4 w-4 rounded border-ink-300 text-ink-700 accent-ink-700"
+            className={ADMIN_FORM_CHECKBOX_CLASS}
             checked={draftForce}
             onChange={(e) => setDraftForce(e.target.checked)}
           />
@@ -76,7 +80,7 @@ export function AdminTrustGrowthControlSection({
         <textarea
           id="tg-caps"
           rows={5}
-          className="mt-1 w-full max-w-xl rounded-[var(--radius-md)] border border-ink-200 bg-white p-3 font-mono text-meta text-ink-900"
+          className={`mt-1 w-full max-w-xl ${ADMIN_FORM_CONTROL_MD_CLASS} p-3 font-mono text-meta text-ink-900`}
           value={capsText}
           onChange={(e) => setCapsText(e.target.value)}
           spellCheck={false}
@@ -98,13 +102,13 @@ export function AdminTrustGrowthControlSection({
         </button>
         <button
           type="button"
-          className={`rounded-[var(--radius-md)] border border-warning/40 bg-warning/10 px-4 py-2 text-small font-medium text-ink-900 hover:bg-warning/15 disabled:opacity-50 ${ADMIN_LINK_FOCUS_CLASS}`}
+          className={`${ADMIN_WARNING_SOFT_BTN_CLASS} disabled:opacity-50 ${ADMIN_LINK_FOCUS_CLASS}`}
           onClick={() => void rollback()}
           disabled={saving || rollbackBusy}
         >
           {rollbackBusy ? t("admin_trust_growth_rollbacking") : t("admin_trust_growth_rollback")}
         </button>
       </div>
-    </section>
+    </AdminWarmL5Surface>
   );
 }

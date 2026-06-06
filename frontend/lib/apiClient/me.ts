@@ -112,3 +112,57 @@ export async function putMePassword(body: { old_password?: string; new_password?
   throwUnlessApiOk(data);
   return data;
 }
+
+/** F-007 / 04：`POST …/me/profile-avatar`，body `{ content_base64 }`（data URL）；对象存储已配时后端返回 presign 提示。 */
+export async function postMeProfileAvatar(body: { content_base64: string }): Promise<unknown> {
+  const res = await fetch(apiUrl(routes.meProfileAvatar), {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...writeRequestHeaders() },
+    body: JSON.stringify(body),
+  });
+  const data = await parseResponse(res);
+  logApiJsonStatusNotOk("postMeProfileAvatar", data);
+  throwUnlessApiOk(data);
+  clearGetMeCache();
+  return data;
+}
+
+/** PD-009：① 本地 mock 锁定收购发布保证金（默认 50 USDC）。 */
+export async function postMeAcquisitionPublishBond(body?: { amount?: string }): Promise<unknown> {
+  const res = await fetch(apiUrl(routes.meAcquisitionPublishBond), {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...writeRequestHeaders() },
+    body: JSON.stringify(body ?? {}),
+  });
+  const data = await parseResponse(res);
+  logApiJsonStatusNotOk("postMeAcquisitionPublishBond", data);
+  throwUnlessApiOk(data);
+  clearGetMeCache();
+  return data;
+}
+
+/** PD-009：① 本地 mock 锁定收购履约保证金（默认 100 USDC）。 */
+export async function postMeAcquisitionFulfillmentBond(body?: { amount?: string }): Promise<unknown> {
+  const res = await fetch(apiUrl(routes.meAcquisitionFulfillmentBond), {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...writeRequestHeaders() },
+    body: JSON.stringify(body ?? {}),
+  });
+  const data = await parseResponse(res);
+  logApiJsonStatusNotOk("postMeAcquisitionFulfillmentBond", data);
+  throwUnlessApiOk(data);
+  clearGetMeCache();
+  return data;
+}
+
+export { getMeFull, isMeFullRequestError, isMeFullFetchSkippedByDevEnv } from "./me/meFetch";
+export type { GetMeFullOptions } from "./me/meFetch";
+export {
+  getWalletVerificationStatus,
+  postWalletVerifyChallenge,
+  postWalletVerifyConfirm,
+} from "./me/meWalletVerify";
+export type {
+  WalletVerificationStatus,
+  WalletVerifyChallengeResponse,
+} from "./me/meWalletVerify";

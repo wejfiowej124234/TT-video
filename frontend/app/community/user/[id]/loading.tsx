@@ -12,17 +12,17 @@ export default function CommunityUserLoading() {
       aria-label={t("community_user_main_aria")}
       aria-busy="true"
     >
-      <header className="rounded-[var(--radius-md)] border border-cyan-400/40 bg-slate-900/60 backdrop-blur-md px-4 py-6 mb-4" aria-hidden>
+      <header className="rounded-[var(--radius-md)] border border-ref-sun/28 bg-slate-900/60 backdrop-blur-md px-4 py-6 mb-4" aria-hidden>
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="h-20 w-20 rounded-full bg-slate-700/70 ring-2 ring-cyan-400/40 animate-pulse shrink-0" />
+            <div className="h-20 w-20 rounded-full bg-slate-700/70 ring-2 ring-ref-sun/25 animate-pulse shrink-0" />
             <div className="space-y-2 min-w-0">
               <div className="min-h-[44px] h-11 w-32 bg-slate-600/50 rounded-[var(--radius-sm)] animate-pulse" />
-              <div className="h-4 w-24 bg-cyan-500/15 rounded-[var(--radius-sm)] animate-pulse" />
+              <div className="h-4 w-24 bg-ref-sun/12 rounded-[var(--radius-sm)] animate-pulse" />
               <div className="h-3 w-48 max-w-full bg-slate-700/40 rounded-[var(--radius-sm)] animate-pulse" />
             </div>
           </div>
-          <div className="min-h-[44px] h-11 w-24 rounded-full bg-cyan-500/20 border border-cyan-400/40 animate-pulse shrink-0" />
+          <div className="min-h-[44px] h-11 w-24 rounded-full bg-ref-sun/12 border border-ref-sun/28 animate-pulse shrink-0" />
         </div>
       </header>
 
@@ -30,7 +30,7 @@ export default function CommunityUserLoading() {
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md overflow-hidden shadow-scifi-panel"
+            className="rounded-[var(--radius-md)] border border-ref-sun/25 bg-slate-900/70 backdrop-blur-md overflow-hidden shadow-scifi-panel"
           >
             <div className="flex items-center gap-3 px-4 py-3 border-b border-slate-600/40">
               <div className="h-11 w-11 min-h-[44px] min-w-[44px] rounded-full bg-slate-700/70 animate-pulse" />

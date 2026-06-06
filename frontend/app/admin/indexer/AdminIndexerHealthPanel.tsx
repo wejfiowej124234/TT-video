@@ -3,30 +3,39 @@
 import Link from "next/link";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { adminErrorUserText, type AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { AdminIndexerJsonBlock } from "./AdminIndexerJsonBlock";
 import { asRecord, type LastStoredReconciliation } from "./indexerPageModel";
-import { ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_LINK_FOCUS_CLASS } from "@/lib/adminUi";
+import { ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_LINK_FOCUS_CLASS,
+  ADMIN_HUB_DEPTH_LINK_CARD_CLASS,
+  ADMIN_MOTION_CARD_HOVER_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+} from "@/lib/adminUi";
 type AdminIndexerHealthPanelProps = {
   loading: boolean;
+  refreshing?: boolean;
   error: AdminFetchErrorKind | null;
   health: Record<string, unknown> | null;
 };
 
-export function AdminIndexerHealthPanel({ loading, error, health }: AdminIndexerHealthPanelProps) {
+export function AdminIndexerHealthPanel({ loading, refreshing = false, error, health }: AdminIndexerHealthPanelProps) {
   const { t } = useTranslation();
 
   return (
-    <section className="mt-6 rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-4" aria-label={t("admin_indexer_health_panel_aria")}>
+    <AdminWarmL5Surface as="section" className="mt-6" aria-label={t("admin_indexer_health_panel_aria")}>
       {loading ? (
         <AdminListLoadingStatus message={t("admin_indexer_loading")} className="text-body text-ink-600" />
       ) : error ? (
         <AdminListFetchError errorKind={error} message={adminErrorUserText(error, t)} />
       ) : health && Object.keys(health).length > 0 ? (
-        <div>
+        <div
+          className={refreshing ? ADMIN_LIST_REFRESHING_SURFACE_CLASS : undefined}
+          data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
+        >
           <h2 className="text-small font-semibold uppercase tracking-wide text-ink-500">{t("admin_indexer_healthBlock")}</h2>
           {(() => {
             const cp = asRecord(health.checkpoint);
@@ -46,7 +55,7 @@ export function AdminIndexerHealthPanel({ loading, error, health }: AdminIndexer
             return (
               <Link
                 href="#admin-indexer-reconcile"
-                className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start mb-4 space-y-2 rounded-[var(--radius-md)] border border-ink-200 bg-white/90 p-4 text-left transition hover:border-ink-400 hover:text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start mb-4 space-y-2 p-4 text-left ${ADMIN_HUB_DEPTH_LINK_CARD_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 aria-label={t("admin_indexer_reconcile_sectionTitle")}
               >
                 <h3 className="text-small font-semibold text-ink-800">{t("admin_indexer_health_summary_heading")}</h3>
@@ -115,7 +124,7 @@ export function AdminIndexerHealthPanel({ loading, error, health }: AdminIndexer
             return (
               <Link
                 href={`/admin/indexer/reconcile/${encodeURIComponent(id)}`}
-                className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start mb-4 rounded-[var(--radius-md)] border border-ink-200 bg-ink-50/50 p-4 text-left transition hover:border-ink-400 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start mb-4 ${ADMIN_HUB_DEPTH_LINK_CARD_CLASS} ${ADMIN_MOTION_CARD_HOVER_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 aria-label={t("admin_indexer_last_reconcile_open")}
               >
                 <h3 className="text-small font-semibold text-ink-800">{t("admin_indexer_last_reconcile_heading")}</h3>
@@ -134,7 +143,7 @@ export function AdminIndexerHealthPanel({ loading, error, health }: AdminIndexer
           })()}
           <Link
             href="#admin-indexer-reconcile"
-            className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200/70 p-1 text-left transition hover:border-ink-400 ${ADMIN_LINK_FOCUS_CLASS}`}
+            className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start ${ADMIN_HUB_DEPTH_LINK_CARD_CLASS} p-1 ${ADMIN_MOTION_CARD_HOVER_CLASS} ${ADMIN_LINK_FOCUS_CLASS}`}
             aria-label={t("admin_indexer_reconcile_sectionTitle")}
           >
             <AdminIndexerJsonBlock value={health} />
@@ -145,6 +154,6 @@ export function AdminIndexerHealthPanel({ loading, error, health }: AdminIndexer
           {t("admin_indexer_empty")}
         </p>
       )}
-    </section>
+    </AdminWarmL5Surface>
   );
 }

@@ -1,16 +1,10 @@
 import { useParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
 import type { AdminAcquisitionPublishSuspendSnapshot } from "@/components/admin/AdminAcquisitionPublishSuspendCard";
-import {
-  type AdminFetchErrorKind,
-  adminFetchErrorKind,
-  adminFetchJson,
-  logAdminFetch,
-} from "@/lib/adminFetchDisplay";
-import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders } from "@/lib/apiClient";
+import { useAdminStandardDetailFetch } from "@/lib/admin/useAdminStandardDetailFetch";
+import { routes } from "@/lib/api";
 
 import { type AdminUserDetailRes } from "./adminUserDetailPageModel";
 
@@ -21,40 +15,14 @@ export function useAdminUserDetailPage() {
     return decodeURIComponent(raw.trim());
   }, [params]);
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [body, setBody] = useState<AdminUserDetailRes | null>(null);
+  const detailUrl = useMemo(() => (userId ? routes.admin.userById(userId) : ""), [userId]);
 
-  useEffect(() => {
-    if (!userId) {
-      setLoading(false);
-      setBody(null);
-      return;
-    }
-    setLoading(true);
-    setError(null);
-
-    const headers: Record<string, string> = { "x-request-id": `admin-user-detail-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    adminFetchJson<AdminUserDetailRes>("AdminUserDetailPage", apiUrl(routes.admin.userById(userId)), { headers })
-      .then(({ res, body: json }) => {
-        if (!res.ok) {
-          throw new Error(json.error || `request_failed_${res.status}`);
-        }
-        return json;
-      })
-      .then(setBody)
-      .catch((e: unknown) => {
-        logAdminFetch("AdminUserDetailPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
-  }, [userId]);
+  const { body, loading, refreshing, error } = useAdminStandardDetailFetch<AdminUserDetailRes>({
+    scope: "user-detail",
+    context: "AdminUserDetailPage",
+    detailUrl,
+    resourceId: userId,
+  });
 
   const user = body?.user && typeof body.user === "object" ? body.user : null;
   const meta = body && isAdminMetaRecord(body.meta) ? body.meta : null;
@@ -70,5 +38,5 @@ export function useAdminUserDetailPage() {
     };
   }, [user]);
 
-  return { userId, loading, error, user, meta, acquisitionSuspendInitial };
+  return { userId, loading, refreshing, error, user, meta, acquisitionSuspendInitial };
 }

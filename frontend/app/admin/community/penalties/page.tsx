@@ -9,11 +9,8 @@ import { AdminCommunityPenaltiesPageMain } from "./AdminCommunityPenaltiesPageMa
 
 export default function AdminCommunityPenaltiesPage() {
   return (
-    <AdminSearchParamsSuspense
-      ariaLabelKey="admin_penalties_title"
-      backLinkLabelKey="admin_penalties_back"
-    >
-      <AdminCommunityPageShell currentLabelKey="admin_penalties_title">
+    <AdminSearchParamsSuspense ariaLabelKey="admin_penalties_title">
+      <AdminCommunityPageShell>
         <AdminPermissionDeniedBanner permission={ADMIN_PERM.COMMUNITY_MODERATE} />
         <AdminCommunityPenaltiesPageMain />
       </AdminCommunityPageShell>

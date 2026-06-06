@@ -1,6 +1,6 @@
 "use client";
 
-import { adminModalScrimClass } from "@/components/market/marketStudioModalLayout";
+import { ADMIN_MODAL_SCRIM_CLASS } from "@/lib/adminUi";
 
 type Props = {
   onClose: () => void;
@@ -10,7 +10,7 @@ type Props = {
 export function AdminDialogScrim(props: Props) {
   return (
     <div
-      className={adminModalScrimClass}
+      className={ADMIN_MODAL_SCRIM_CLASS}
       aria-hidden
       onClick={props.onClose}
       data-tt-admin-dialog-scrim="1"

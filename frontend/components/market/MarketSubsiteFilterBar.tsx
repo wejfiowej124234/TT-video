@@ -17,16 +17,15 @@ import {
 import { PRODUCT_COUNTRIES } from "@/lib/productCountries";
 import { buildPathnameSearchHref } from "@/lib/marketLoginReturnPath";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
+import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
 
 type Variant = "provider" | "acquisition";
 
-const pillBase =
-  `${touchTargetLink44Classes} shrink-0 rounded-[var(--radius-sm)] border px-3 py-2 text-small font-semibold text-slate-100 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-800 `;
+const D = TT_MARKETING_MARKET_DARK_PATH;
+const pillBase = `${touchTargetLink44Classes} ${D.subsiteFilterPillBase} `;
 
 function pillActive(active: boolean) {
-  return active
-    ? "border-white/35 bg-white text-slate-900 shadow-[0_1px_0_rgba(255,255,255,0.6)_inset] ring-1 ring-black/10"
-    : "border-white/30 bg-white/10 text-slate-50 hover:border-white/45 hover:bg-white/[0.14] hover:text-white " + travelFocusRingCoreOffset2Classes;
+  return active ? D.subsiteFilterPillActive : `${D.subsiteFilterPillIdle} ${travelFocusRingCoreOffset2Classes}`;
 }
 
 export type MarketSubsiteListSummaryMode = "postgres_catalog" | "demo_client" | "no_catalog";
@@ -37,9 +36,16 @@ type Props = {
   resultCount: number;
   /** 与 `MarketStandaloneBusinessPage` 目录 SSOT 对齐，避免 PG 目录仍显示「演示」摘要 */
   listSummaryMode: MarketSubsiteListSummaryMode;
+  /** API `meta.has_more`（① 诚实提示 cap=200；**非** cursor 分页 UI） */
+  catalogCapReached?: boolean;
 };
 
-export default function MarketSubsiteFilterBar({ variant, resultCount, listSummaryMode }: Props) {
+export default function MarketSubsiteFilterBar({
+  variant,
+  resultCount,
+  listSummaryMode,
+  catalogCapReached = false,
+}: Props) {
   const { t } = useTranslation();
   const router = useRouter();
   const pathname = usePathname() ?? "";
@@ -140,9 +146,12 @@ export default function MarketSubsiteFilterBar({ variant, resultCount, listSumma
   const sortLabel = t(sortLabelKey);
 
   return (
-    <div data-testid="market-subsite-filter-bar" className="space-y-3 px-4 py-3 supports-[backdrop-filter]:backdrop-blur-sm">
+    <div
+      data-testid="market-subsite-filter-bar"
+      className="list-none space-y-4 py-1 supports-[backdrop-filter]:backdrop-blur-sm"
+    >
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="text-small font-semibold uppercase tracking-wide text-cyan-200">
+          <span className={TT_MARKETING_MARKET_DARK_PATH.filterBandLabel}>
             {t("market_subsite_filter_band_title")}
           </span>
           <button
@@ -183,8 +192,8 @@ export default function MarketSubsiteFilterBar({ variant, resultCount, listSumma
           </div>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 md:items-start">
-          <div className="space-y-2">
+        <div className="grid gap-5 lg:grid-cols-[1fr_minmax(12rem,auto)] lg:items-end">
+          <div className="min-w-0 space-y-2">
             <p className="text-small font-semibold text-slate-200">{t("market_subsite_filter_category_label")}</p>
             <div className="flex flex-wrap gap-2" role="group" aria-label={t("market_subsite_filter_category_aria")}>
             <button
@@ -209,8 +218,8 @@ export default function MarketSubsiteFilterBar({ variant, resultCount, listSumma
             </div>
           </div>
 
-          <div className="space-y-2">
-            <p className="text-small font-semibold text-slate-200">{t("market_subsite_filter_sort_label")}</p>
+          <div className="min-w-0 space-y-2 lg:justify-self-end">
+            <p className="text-small font-semibold text-slate-200 lg:text-right">{t("market_subsite_filter_sort_label")}</p>
             <div className="flex flex-wrap gap-2" role="group" aria-label={t("market_subsite_filter_sort_aria")}>
             {isProvider ? (
               <>
@@ -263,10 +272,12 @@ export default function MarketSubsiteFilterBar({ variant, resultCount, listSumma
           </div>
         </div>
 
-        <p className="text-left text-small leading-relaxed text-slate-200" aria-live="polite">
+        <p className="text-left text-meta leading-relaxed text-slate-300/95" aria-live="polite">
           {t(
             listSummaryMode === "postgres_catalog"
-              ? "market_subsite_filter_summary_line_catalog"
+              ? catalogCapReached
+                ? "market_subsite_filter_summary_line_catalog_cap"
+                : "market_subsite_filter_summary_line_catalog"
               : listSummaryMode === "demo_client"
                 ? "market_subsite_filter_summary_line"
                 : "market_subsite_filter_summary_line_offline",

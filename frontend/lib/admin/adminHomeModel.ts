@@ -31,6 +31,12 @@ export const ADMIN_HOME_SECTION_ORDER: { id: AdminHomeSectionId; titleKey: strin
 
 export const ADMIN_HOME_CARDS: AdminHomeCard[] = [
   {
+    href: "/admin/inbox",
+    titleKey: "admin_unified_inbox_nav_short",
+    descKey: "admin_home_desc_unified_inbox",
+    section: "onboarding",
+  },
+  {
     href: ADMIN_INBOX_QUEUE_HREFS.provider,
     titleKey: "admin_provider_list_title",
     descKey: "admin_home_desc_provider_applications",
@@ -61,6 +67,24 @@ export const ADMIN_HOME_CARDS: AdminHomeCard[] = [
     href: "/admin/onboarding/entitlements",
     titleKey: "admin_onb_entitlements_title",
     descKey: "admin_onb_entitlements_home_desc",
+    section: "onboarding",
+  },
+  {
+    href: "/admin/onboarding/payment-events",
+    titleKey: "admin_onb_payment_events_title",
+    descKey: "admin_onb_payment_events_subtitle_l5",
+    section: "onboarding",
+  },
+  {
+    href: "/admin/onboarding/webhook-jobs",
+    titleKey: "admin_onboarding_hub_webhooks",
+    descKey: "admin_onboarding_hub_webhooks_desc",
+    section: "onboarding",
+  },
+  {
+    href: "/admin/onboarding/compliance-audit",
+    titleKey: "admin_onboarding_hub_compliance",
+    descKey: "admin_onboarding_hub_compliance_desc",
     section: "onboarding",
   },
   {

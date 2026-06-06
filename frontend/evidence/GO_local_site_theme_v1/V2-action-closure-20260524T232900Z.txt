@@ -1,0 +1,4 @@
+phase=local-1
+gate=site-theme-v1-v2-action-closure.sh
+status=exit_0
+note=Theme V2 §1.7 Action SSOT closed

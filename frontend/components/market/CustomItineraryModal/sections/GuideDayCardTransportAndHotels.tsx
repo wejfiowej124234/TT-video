@@ -1,5 +1,6 @@
 "use client";
 
+import { CIM, CIM_CHOICE, CIM_FOCUS, CIM_FOCUS_WITHIN } from '../customItineraryModalTheme';
 import Image from "next/image";
 import type { HotelDetail } from "@/lib/cityDetails";
 import type { CityTransportType, CustomItineraryForm, GuideDayPlan } from "../types";
@@ -68,7 +69,7 @@ export default function GuideDayCardTransportAndHotels({
             >
               <button
                 type="submit"
-                className="shrink-0 w-36 rounded-[var(--radius-sm)] border border-white/20 bg-slate-900/60 overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-travel-400"
+                className="shrink-0 w-36 rounded-[var(--radius-sm)] border border-ref-sun/16 bg-ink-950/60 overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]"
               >
               <div className="relative aspect-[4/3] bg-slate-800">
                 <Image
@@ -130,7 +131,7 @@ export default function GuideDayCardTransportAndHotels({
                 >
                   <button
                     type="submit"
-                    className="shrink-0 w-36 rounded-[var(--radius-sm)] border border-white/20 bg-slate-900/60 overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-travel-400"
+                    className="shrink-0 w-36 rounded-[var(--radius-sm)] border border-ref-sun/16 bg-ink-950/60 overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]"
                   >
                   <div className="relative aspect-[4/3] bg-slate-800">
                     <Image

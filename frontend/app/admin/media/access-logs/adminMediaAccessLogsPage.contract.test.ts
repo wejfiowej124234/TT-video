@@ -14,6 +14,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminMediaAccessLogsFiltersCard.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminMediaAccessLogsTableSection.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminMediaAccessLogsPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminMediaAccessLogsPageModel.ts"), "utf8"),
   ].join("\n");
 }
@@ -23,6 +24,7 @@ describe("admin media access logs page", () => {
 
   it("keeps media access logs route + admin fetch + list chrome anchor", () => {
     expect(src).toContain("routes.admin.mediaAccessLogs");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("AdminMediaAccessLogsPageMain");
     expect(src).toContain("AdminListPageChrome");

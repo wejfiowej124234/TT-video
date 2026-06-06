@@ -105,8 +105,17 @@ describe("formatPostsShowcaseCardTitle", () => {
 });
 
 describe("pickPostsShowcaseCoverUrl", () => {
-  it("reads media_urls first", () => {
+  it("reads still image from media_urls", () => {
     const post = { media_urls: [" https://x/a.png "] } as CommunityPost;
     expect(pickPostsShowcaseCoverUrl(post)).toBe("https://x/a.png");
+  });
+
+  it("returns null for mp4-only video posts (no Next Image on video URL)", () => {
+    const post = {
+      type: "video",
+      is_video: true,
+      media_urls: ["https://x/clip.mp4"],
+    } as CommunityPost;
+    expect(pickPostsShowcaseCoverUrl(post)).toBeNull();
   });
 });

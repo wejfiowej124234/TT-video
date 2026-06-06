@@ -3,7 +3,11 @@ import Link from "next/link";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import type { AdminFinanceDerived } from "./adminFinancePageDerived";
 import type { AdminFinanceTranslate, FinanceMeta } from "./adminFinancePageTypes";
-import { ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_HUB_DEPTH_LINK_CARD_CLASS, ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass,
+  ADMIN_CONSOLE_MUTED_PANEL_CLASS,
+  ADMIN_INNER_DIVIDER_CLASS,} from "@/lib/adminUi";
+
+const metaLedgerLinkClass = `${touchTargetLink44Classes} !flex-col !items-stretch !justify-start p-3 text-left text-ink-800 ${ADMIN_HUB_DEPTH_LINK_CARD_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`;
 export type AdminFinanceMetaLedgerSectionProps = {
   t: AdminFinanceTranslate;
   financeMetaDlHeadingId: string;
@@ -28,10 +32,10 @@ export function AdminFinanceMetaLedgerSection({
   } = derived;
 
   return (
-    <div className="rounded-[var(--radius-xl)] border border-ink-200 bg-ink-50/80 p-4">
+    <div className={`${ADMIN_CONSOLE_MUTED_PANEL_CLASS} p-4`}>
       <Link
         href="/admin/indexer/reconcile-reports"
-        className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start -mx-1 -mt-1 rounded-[var(--radius-md)] px-1 pt-1 text-left text-ink-800 transition motion-reduce:transition-none hover:border-ink-400 hover:text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+        className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start -mx-1 -mt-1 rounded-[var(--radius-md)] px-1 pt-1 text-left text-ink-800 transition motion-reduce:transition-none hover:text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
         aria-labelledby={financeMetaDlHeadingId}
       >
         <h2 id={financeMetaDlHeadingId} className="text-body font-medium text-ink-800">
@@ -109,12 +113,12 @@ export function AdminFinanceMetaLedgerSection({
         </dl>
       </Link>
 
-      <div className="mt-4 border-t border-ink-200/80 pt-4">
+      <div className={`mt-4 ${ADMIN_INNER_DIVIDER_CLASS} pt-4`}>
         <h3 className="text-small font-semibold text-ink-800">{t("admin_finance_ledger_db_title")}</h3>
         <div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           <Link
             href="/admin/fee-router#admin-fee-router-events"
-            className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200 bg-white/60 p-3 text-left text-ink-800 shadow-soft transition motion-reduce:transition-none hover:border-ink-400 hover:text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+            className={metaLedgerLinkClass}
           >
             <p className="text-meta font-medium text-ink-600">{t("admin_finance_meta_feeRouterHeading")}</p>
             <dl className="mt-2 text-small text-ink-700">
@@ -159,7 +163,7 @@ export function AdminFinanceMetaLedgerSection({
           </Link>
           <Link
             href="/admin/region-vault#admin-region-vault-events"
-            className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200 bg-white/60 p-3 text-left text-ink-800 shadow-soft transition motion-reduce:transition-none hover:border-ink-400 hover:text-ink-900 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+            className={metaLedgerLinkClass}
           >
             <p className="text-meta font-medium text-ink-600">{t("admin_finance_meta_regionVaultHeading")}</p>
             <dl className="mt-2 text-small text-ink-700">
@@ -208,7 +212,7 @@ export function AdminFinanceMetaLedgerSection({
                 ? `/admin/indexer/reconcile/${encodeURIComponent(lastReportId)}`
                 : "/admin/indexer/reconcile-reports"
             }
-            className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200 bg-white/60 p-3 text-left text-ink-800 shadow-soft transition motion-reduce:transition-none hover:border-ink-400 hover:text-ink-900 sm:col-span-2 xl:col-span-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+            className={`${metaLedgerLinkClass} sm:col-span-2 xl:col-span-1`}
           >
             <p className="text-meta font-medium text-ink-600">{t("admin_finance_meta_projectionReconcileHeading")}</p>
             {lastProjReconcile ? (

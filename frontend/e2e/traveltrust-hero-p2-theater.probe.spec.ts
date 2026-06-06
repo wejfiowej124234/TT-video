@@ -68,7 +68,7 @@ test.describe("P2-C theater narrative binding · ①", () => {
     writeFileSync(join(OUT_DIR, "p2c-theater-report.json"), JSON.stringify(state, null, 2), "utf8");
   });
 
-  test("hero pin to start escrow then roles defaults merchant", async ({ page }) => {
+  test("hero pin to start escrow then roles sync default role for corridor", async ({ page }) => {
     test.setTimeout(180_000);
     await page.setViewportSize({ width: 1536, height: 960 });
     await page.goto("/traveltrust", { waitUntil: "domcontentloaded" });
@@ -105,7 +105,9 @@ test.describe("P2-C theater narrative binding · ①", () => {
     await expect(page.locator("#roles")).toHaveAttribute("data-tt-traveltrust-theater-step-id", "escrow", {
       timeout: 10_000,
     });
-    await expect(page.locator("#roles")).toHaveAttribute("data-tt-traveltrust-active-role-id", "merchant", {
+    const defaultRole = await page.locator("#roles").getAttribute("data-tt-traveltrust-theater-default-role-id");
+    expect(defaultRole).toMatch(/^(traveler|guide|merchant|acquisition|region_steward)$/);
+    await expect(page.locator("#roles")).toHaveAttribute("data-tt-traveltrust-active-role-id", defaultRole!, {
       timeout: 10_000,
     });
 

@@ -1,7 +1,8 @@
 // search-params gate: parent route provides Suspense boundary.
 import { useParams, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useCallback, useState } from "react";
 
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import { useTranslation } from "@/components/LocaleProvider";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
@@ -21,6 +22,7 @@ export function useAdminComplianceRequestUpdatePage() {
   const { t } = useTranslation();
   const caps = useAdminCapabilities();
   const canUpdate = caps.hasPermission(ADMIN_PERM.APPROVE);
+  const requestConfirm = useAdminL5ConfirmRequest();
   const params = useParams();
   const searchParams = useSearchParams();
   const requestId = useMemo(() => {
@@ -57,7 +59,7 @@ export function useAdminComplianceRequestUpdatePage() {
     if (v != null && v.trim() !== "") setExpectedVersion(v.trim());
   }, [searchParams]);
 
-  const submit = () => {
+  const submitImpl = () => {
     if (!canUpdate) return;
     clearFormWriteError();
     setWriteOk(null);
@@ -139,6 +141,30 @@ export function useAdminComplianceRequestUpdatePage() {
       })
       .finally(() => setSubmitting(false));
   };
+
+  const submit = useCallback(() => {
+    if (!canUpdate) return;
+    clearFormWriteError();
+    setWriteOk(null);
+    if (!requestId.trim()) {
+      setFormWriteError("invalid_request", t("admin_compliance_update_missingId"));
+      return;
+    }
+    const ev = Number.parseInt(expectedVersion.trim(), 10);
+    if (!Number.isFinite(ev)) {
+      setFormWriteError("invalid_request", t("admin_compliance_update_badVersion"));
+      return;
+    }
+    if (!eventType.trim()) {
+      setFormWriteError("invalid_request", t("admin_compliance_update_eventRequired"));
+      return;
+    }
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_write",
+      descKey: "admin_l5_confirm_desc_compliance_update",
+      onConfirm: () => submitImpl(),
+    });
+  }, [canUpdate, eventType, expectedVersion, requestConfirm, requestId, t]);
 
   return {
     requestId,

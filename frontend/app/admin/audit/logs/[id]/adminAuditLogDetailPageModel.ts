@@ -32,3 +32,10 @@ export const AUDIT_LOG_DETAIL_ROWS: { key: string; labelKey: string }[] = [
 export function auditDetailLinkFieldForRowKey(key: string): AdminAuditDetailLinkField | null {
   return key === "action" || key === "actor_id" || key === "resource_type" ? key : null;
 }
+
+/** 审计日志详情 · 折叠交叉入口。 */
+export const AUDIT_LOG_DETAIL_RELATED_FOLD_LINKS: { href: string; labelKey: string }[] = [
+  { href: "/admin/audit/operations", labelKey: "admin_audit_detail_link_ops" },
+  { href: "/admin/audit", labelKey: "admin_audit_list_title" },
+];
+

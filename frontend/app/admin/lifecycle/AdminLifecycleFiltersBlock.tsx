@@ -3,7 +3,10 @@
 import type { FormEvent } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
-import {ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS } from "@/lib/adminUi";
+import {ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_FILTER_INPUT_SM_CLASS,
+  ADMIN_FILTER_HINT_CLASS} from "@/lib/adminUi";
 import {
   LIFECYCLE_DOMAIN_MAX,
   LIFECYCLE_ENTITY_MAX,
@@ -77,7 +80,7 @@ export function AdminLifecycleFiltersBlock({
 
   return (
     <>
-      <div className="mt-6 rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-4 space-y-3">
+      <div className={`mt-6 ${ADMIN_FILTER_CARD_CLASS} space-y-3`}>
         <form
           id="admin-lifecycle-filter-form"
           className="flex flex-col gap-3 lg:flex-row lg:flex-wrap lg:items-end"
@@ -89,7 +92,7 @@ export function AdminLifecycleFiltersBlock({
           }
           onSubmit={apply}
         >
-          <p id={adminListApplyResetHintId} className="w-full text-meta text-ink-600 leading-relaxed lg:basis-full">
+          <p id={adminListApplyResetHintId} className={`w-full ${ADMIN_FILTER_HINT_CLASS} lg:basis-full`}>
             {t("admin_list_filters_apply_reset_hint")}
           </p>
           <div className="min-w-[8rem]">
@@ -102,7 +105,7 @@ export function AdminLifecycleFiltersBlock({
               inputMode="numeric"
               value={draftLimit}
               onChange={(e) => setDraftLimit(e.target.value)}
-              className={`mt-1 min-h-[44px] w-20 rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 min-h-[44px] w-20 ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             />
           </div>
           <div className="min-w-[9rem] flex-1">
@@ -111,7 +114,7 @@ export function AdminLifecycleFiltersBlock({
             </label>
             <input
               id={machineInputId}
-              className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               maxLength={LIFECYCLE_MACHINE_CODE_MAX}
               value={draftMachine}
               onChange={(e) => setDraftMachine(e.target.value.slice(0, LIFECYCLE_MACHINE_CODE_MAX))}
@@ -125,7 +128,7 @@ export function AdminLifecycleFiltersBlock({
             </label>
             <input
               id={domainInputId}
-              className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               maxLength={LIFECYCLE_DOMAIN_MAX}
               value={draftDomain}
               onChange={(e) => setDraftDomain(e.target.value.slice(0, LIFECYCLE_DOMAIN_MAX))}
@@ -139,7 +142,7 @@ export function AdminLifecycleFiltersBlock({
             </label>
             <input
               id={entityInputId}
-              className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               maxLength={LIFECYCLE_ENTITY_MAX}
               value={draftEntity}
               onChange={(e) => setDraftEntity(e.target.value.slice(0, LIFECYCLE_ENTITY_MAX))}
@@ -153,7 +156,7 @@ export function AdminLifecycleFiltersBlock({
             </label>
             <input
               id={versionInputId}
-              className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               maxLength={LIFECYCLE_VERSION_MAX}
               value={draftVersion}
               onChange={(e) => setDraftVersion(e.target.value.slice(0, LIFECYCLE_VERSION_MAX))}
@@ -167,7 +170,7 @@ export function AdminLifecycleFiltersBlock({
             </label>
             <input
               id={sotInputId}
-              className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               maxLength={LIFECYCLE_SOT_MAX}
               value={draftSot}
               onChange={(e) => setDraftSot(e.target.value.slice(0, LIFECYCLE_SOT_MAX))}
@@ -181,7 +184,7 @@ export function AdminLifecycleFiltersBlock({
             </label>
             <select
               id={anomalyInputId}
-              className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               value={draftAnomaly}
               onChange={(e) => setDraftAnomaly(e.target.value)}
             >
@@ -210,7 +213,7 @@ export function AdminLifecycleFiltersBlock({
             >
               <button
                 type="submit"
-                className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 px-4 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`inline-flex min-h-[44px] items-center justify-center ${ADMIN_FILTER_RESET_BTN_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               >
                 {t("admin_lifecycle_filter_clear")}
               </button>

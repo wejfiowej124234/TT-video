@@ -4,7 +4,53 @@
  *
  *   node ./scripts/warm-dev-routes.mjs
  *   node ./scripts/warm-dev-routes.mjs http://127.0.0.1:3012
+ *
+ * Admin 路径与 `lib/admin/adminRoutePrefetchPaths.ts` · `collectAdminShellNavPrefetchHrefs()` 对拍。
  */
+const ADMIN_WARM_PATHS = [
+  "/admin",
+  "/admin/inbox",
+  "/admin/provider-applications?status=submitted",
+  "/admin/steward-applications?status=stake_pending",
+  "/admin/approvals?status=pending",
+  "/admin/community/reports?status=open",
+  "/admin/onboarding",
+  "/admin/onboarding/entitlements",
+  "/admin/onboarding/payment-events",
+  "/admin/onboarding/webhook-jobs",
+  "/admin/onboarding/compliance-audit",
+  "/admin/orders",
+  "/admin/disputes",
+  "/admin/users",
+  "/admin/guides",
+  "/admin/reviews",
+  "/admin/finance-suite",
+  "/admin/finance",
+  "/admin/fee-router",
+  "/admin/region-vault",
+  "/admin/indexer",
+  "/admin/indexer/reconcile-reports",
+  "/admin/alerts/incidents",
+  "/admin/cross-check",
+  "/admin/drift-summary",
+  "/admin/trust-growth",
+  "/admin/observability",
+  "/admin/audit",
+  "/admin/auth-audit-events",
+  "/admin/config",
+  "/admin/compliance",
+  "/admin/compliance/requests",
+  "/admin/permissions",
+  "/admin/community/penalties",
+  "/admin/community/appeals",
+  "/admin/community/moderation/cases",
+  "/admin/community/risk-signals",
+  "/admin/community/policy-change-logs",
+  "/admin/community/ranking/snapshots",
+  "/admin/community/comments/visibility",
+  "/admin/community/abuse-policy",
+];
+
 const base = (process.argv[2] || "http://127.0.0.1:3012").replace(/\/$/, "");
 const paths = [
   "/",
@@ -21,6 +67,7 @@ const paths = [
   "/guide",
   "/guide/register",
   "/auth/register",
+  ...ADMIN_WARM_PATHS,
 ];
 
 async function one(pathname) {

@@ -1,20 +1,23 @@
 "use client";
 
-import { adminPageNavLinkClass } from "@/lib/adminUi";
 import Link from "next/link";
 import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
 import { AdminOnboardingStripePhase2Notice } from "@/components/admin/AdminOnboardingStripePhase2Notice";
 import { AdminPermissionDeniedBanner } from "@/components/admin/AdminPermissionDeniedBanner";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import {
-  touchTargetLink44Classes,
   travelFocusRingCoreOffset2WhiteClasses,
   travelFocusRingOffset2Classes,
 } from "@/lib/travelLinkFocus";
-import { ONBOARDING_HUB_LINKS } from "./adminOnboardingHubPageModel";
+import {
+  ADMIN_HUB_LINK_CARD_INNER_CLASS,
+  adminHubEntryLinkClass,
+} from "@/lib/adminUi";
+import { ONBOARDING_HUB_LINKS, ONBOARDING_HUB_RELATED_FOLD_LINKS } from "./adminOnboardingHubPageModel";
 import { useAdminOnboardingPaymentEventsStripeEcho } from "@/lib/admin/useAdminOnboardingPaymentEventsStripeEcho";
 import { useAdminOnboardingWebhookJobsCount } from "@/lib/admin/useAdminOnboardingWebhookJobsCount";
 
@@ -29,9 +32,15 @@ export function AdminOnboardingHubPageMain() {
     <AdminDetailPageChrome
       titleId={pageTitleId}
       title={t("admin_onboarding_hub_title")}
-      subtitle={t("admin_onboarding_hub_subtitle")}
+      subtitle={t("admin_onboarding_hub_subtitle_l5")}
       mainDataAttrs={{ "data-tt-admin-onboarding-hub": "1" }}
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={ONBOARDING_HUB_RELATED_FOLD_LINKS}
+        ariaLabelKey="admin_onboarding_hub_related_aria"
+        foldSummaryKey="admin_onboarding_hub_related_fold"
+        dataTtFold="onboarding-hub"
+      />
       <AdminPermissionDeniedBanner
         permission={ADMIN_PERM.ONBOARDING_READ}
         messageKey="admin_perm_denied_onboarding_read"
@@ -58,19 +67,17 @@ export function AdminOnboardingHubPageMain() {
           <Link
             key={href}
             href={href}
-            className={`${touchTargetLink44Classes} !flex-col !items-stretch rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 shadow-soft hover:border-ink-400 ${travelFocusRingCoreOffset2WhiteClasses}`}
+            className={`${adminHubEntryLinkClass()} ${travelFocusRingCoreOffset2WhiteClasses}`}
+            data-tt-admin-hub-link-card="1"
           >
-            <h2 className="text-body-l font-medium text-ink-900">{t(titleKey)}</h2>
-            <p className="mt-1 text-small text-ink-600">{t(descKey)}</p>
+            <span className={ADMIN_HUB_LINK_CARD_INNER_CLASS}>
+              <h2 className="text-body-l font-medium text-ink-900">{t(titleKey)}</h2>
+              <p className="mt-1 text-small text-ink-600">{t(descKey)}</p>
+            </span>
           </Link>
         ))}
       </div>
 
-      <p className="mt-8 text-small text-ink-600">
-        <Link href="/admin" className={adminPageNavLinkClass()}>
-          {t("admin_schema_back")}
-        </Link>
-      </p>
     </AdminDetailPageChrome>
   );
 }

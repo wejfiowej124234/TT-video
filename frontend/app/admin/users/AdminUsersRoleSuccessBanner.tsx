@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { Dispatch, SetStateAction } from "react";
 
 import { AdminSuccessBanner } from "@/components/admin/AdminSuccessBanner";
-import { ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { ADMIN_LINK_FOCUS_CLASS, ADMIN_SUCCESS_DISMISS_LINK_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 
 export function AdminUsersRoleSuccessBanner({
@@ -41,7 +41,7 @@ export function AdminUsersRoleSuccessBanner({
           >
             <button
               type="submit"
-              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] px-3 text-small text-ink-700 hover:bg-success/15 hover:underline ${ADMIN_LINK_FOCUS_CLASS}`}
+              className={`${ADMIN_SUCCESS_DISMISS_LINK_CLASS} ${ADMIN_LINK_FOCUS_CLASS}`}
             >
               {t("admin_users_roleDismissSuccess")}
             </button>

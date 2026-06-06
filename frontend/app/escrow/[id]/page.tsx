@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import zh from "@/locales/zh";
 import { EscrowDetailSection } from "@/components/escrow/EscrowDetailSection";
+import { TT_ESCROW_PROTOCOL_PAGE_SHELL } from "@/lib/escrowProtocolUi";
 
 export async function generateMetadata({
   params,
@@ -44,8 +45,8 @@ export default async function EscrowPage({
 }) {
   const { id } = await params;
   return (
-    <div className="min-h-screen bg-bg-main text-ink-800">
-      <div className="container py-12">
+    <div className={TT_ESCROW_PROTOCOL_PAGE_SHELL}>
+      <div className="container py-8 md:py-12 max-w-5xl">
         <EscrowDetailSection escrowId={id} />
       </div>
     </div>

@@ -13,6 +13,8 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminComplianceRequestEventsPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminComplianceRequestEventsPage.ts"), "utf8"),
     readFileSync(join(__dir, "adminComplianceRequestEventsPageModel.ts"), "utf8"),
+    readFileSync(join(__dir, "../../adminComplianceRequestsPageModel.ts"), "utf8"),
+    readFileSync(join(__dir, "../../../../../lib/admin/useAdminStandardListFetch.ts"), "utf8"),
   ].join("\n");
 }
 
@@ -26,5 +28,8 @@ describe("admin compliance request events page", () => {
     expect(src).toContain("AdminListPageChrome");
     expect(src).toContain("AdminListFetchError");
     expect(src).toContain('data-tt-admin-list-page="1"');
+    expect(src).toContain("AdminOpsDetailRelatedFold");
+    expect(src).toContain("complianceDsarEventsRelatedFoldLinks");
+    expect(src).toContain("useAdminStandardListFetch");
   });
 });

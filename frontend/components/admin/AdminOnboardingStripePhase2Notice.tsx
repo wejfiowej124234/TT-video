@@ -3,7 +3,12 @@
 import Link from "next/link";
 
 import { useTranslation } from "@/components/LocaleProvider";
-import { ADMIN_INLINE_LINK_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
+import {
+  ADMIN_HUB_NESTED_KPI_CARD_CLASS,
+  ADMIN_INLINE_LINK_CLASS,
+  adminPageNavLinkClass,
+} from "@/lib/adminUi";
 import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
 /** ONB-04 · ① 入驻枢纽双台账卡（Webhook · Payment-events · ② 真 webhook 另闸）。 */
@@ -62,9 +67,11 @@ export function AdminOnboardingStripePhase2Notice(props: {
         : t("admin_onboarding_hub_ledger_empty");
 
   return (
-    <section
+    <AdminWarmL5Surface
+      as="section"
       id="admin-onboarding-hub-ledger"
-      className="mt-6 scroll-mt-24 rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 shadow-soft sm:p-5"
+      className="mt-6 scroll-mt-24"
+      innerClassName="sm:p-6"
       data-testid="admin-onboarding-stripe-phase2-notice"
       data-tt-admin-onboarding-hub-ledger-cards="1"
       aria-label={t("admin_onboarding_hub_ledger_cards_aria")}
@@ -74,14 +81,14 @@ export function AdminOnboardingStripePhase2Notice(props: {
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         <article
-          className="rounded-[var(--radius-lg)] border border-ink-100 bg-ink-50/50 p-4"
+          className={ADMIN_HUB_NESTED_KPI_CARD_CLASS}
           data-tt-admin-onboarding-hub-webhook-ledger={webhookStatus}
           data-tt-admin-onboarding-webhook-ledger={webhookStatus}
         >
-          <h3 className="text-small font-semibold text-ink-900">{t("admin_onboarding_hub_webhook_card_title")}</h3>
-          <p className="mt-2 text-small text-ink-700">{webhookBody}</p>
+          <h3 className="text-small font-semibold text-slate-100">{t("admin_onboarding_hub_webhook_card_title")}</h3>
+          <p className="mt-2 text-small text-slate-300">{webhookBody}</p>
           {!webhookJobsLoading && !webhookJobsError && webhookLatestId ? (
-            <p className="mt-2 text-meta text-ink-600" data-tt-admin-onboarding-webhook-latest="1">
+            <p className="mt-2 text-meta text-slate-400" data-tt-admin-onboarding-webhook-latest="1">
               {t("admin_onboarding_webhook_ledger_latest", {
                 id: webhookLatestId,
                 status: webhookLatestStatus ?? "—",
@@ -89,7 +96,7 @@ export function AdminOnboardingStripePhase2Notice(props: {
             </p>
           ) : null}
           {!webhookJobsLoading && !webhookJobsError && webhookStripeEventType ? (
-            <p className="mt-1 text-meta text-ink-600" data-tt-admin-onboarding-webhook-stripe-echo="1">
+            <p className="mt-1 text-meta text-slate-400" data-tt-admin-onboarding-webhook-stripe-echo="1">
               {t("admin_onboarding_webhook_stripe_echo", {
                 type: webhookStripeEventType,
                 id: webhookProviderEventId ?? "—",
@@ -115,11 +122,11 @@ export function AdminOnboardingStripePhase2Notice(props: {
         </article>
 
         <article
-          className="rounded-[var(--radius-lg)] border border-ink-100 bg-ink-50/50 p-4"
+          className={ADMIN_HUB_NESTED_KPI_CARD_CLASS}
           data-tt-admin-onboarding-hub-payment-ledger={paymentStatus}
         >
-          <h3 className="text-small font-semibold text-ink-900">{t("admin_onboarding_hub_payment_card_title")}</h3>
-          <p className="mt-2 text-small text-ink-700">{paymentBody}</p>
+          <h3 className="text-small font-semibold text-slate-100">{t("admin_onboarding_hub_payment_card_title")}</h3>
+          <p className="mt-2 text-small text-slate-300">{paymentBody}</p>
           {paymentEventsError && onPaymentReload ? (
             <button
               type="button"
@@ -142,6 +149,6 @@ export function AdminOnboardingStripePhase2Notice(props: {
       <p className="mt-4 text-meta text-ink-500" role="note">
         {t("admin_onboarding_hub_ledger_honesty")}
       </p>
-    </section>
+    </AdminWarmL5Surface>
   );
 }

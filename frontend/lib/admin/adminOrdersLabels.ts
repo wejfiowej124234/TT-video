@@ -3,22 +3,30 @@ import type { LocaleTranslateFn } from "@/lib/i18n";
 export const ORDER_STATE_FILTER_OPTIONS = [
   "",
   "draft",
+  "created",
+  "accepted",
   "escrowed",
+  "paid",
   "disputed",
   "completed",
+  "refunded",
+  "partially_refunded",
+  "slashed",
   "cancelled",
-  "paid",
-  "accepted",
 ] as const;
 
 const ORDER_STATE_KEYS: Record<string, string> = {
   draft: "admin_orders_state_draft",
+  created: "admin_orders_state_created",
+  accepted: "admin_orders_state_accepted",
   escrowed: "admin_orders_state_escrowed",
+  paid: "admin_orders_state_paid",
   disputed: "admin_orders_state_disputed",
   completed: "admin_orders_state_completed",
+  refunded: "admin_orders_state_refunded",
+  partially_refunded: "admin_orders_state_partially_refunded",
+  slashed: "admin_orders_state_slashed",
   cancelled: "admin_orders_state_cancelled",
-  paid: "admin_orders_state_paid",
-  accepted: "admin_orders_state_accepted",
 };
 
 export function orderStateLabelKey(state: string | undefined): string {

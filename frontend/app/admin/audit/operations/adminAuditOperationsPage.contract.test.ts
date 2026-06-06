@@ -12,6 +12,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "page.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminAuditOperationsPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminAuditOperationsPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminAuditOperationsPageModel.ts"), "utf8"),
   ].join("\n");
 }
@@ -21,10 +22,12 @@ describe("admin audit operations page", () => {
 
   it("keeps audit operations route + admin fetch + list chrome anchor", () => {
     expect(src).toContain("routes.admin.auditOperations");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("AdminAuditOperationsPageMain");
     expect(src).toContain("AdminListPageChrome");
     expect(src).toContain("AdminListFetchError");
     expect(src).toContain('data-tt-admin-list-page="1"');
+    expect(src).toContain("AdminAuditSectionBackLinks");
   });
 });

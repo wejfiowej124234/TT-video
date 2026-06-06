@@ -4,24 +4,25 @@ import { useMemo } from "react";
 import { AdminSortableTh } from "@/components/admin/AdminSortableTh";
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
-import type { AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
 import { sortRowsByKey, useAdminTableSort } from "@/lib/admin/useAdminTableSort";
 import {
   ADMIN_TABLE_ROW_CLASS,
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
+  ADMIN_TABLE_SECTION_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
 } from "@/lib/adminUi";
 import type { AdminApiVersionRow } from "./adminApiVersionsPageModel";
 
 type ApiVersionSortKey = "status" | "released_at" | "request_count_7d";
 
 type Props = {
-  loading: boolean;
-  error: AdminFetchErrorKind | null;
+  refreshing: boolean;
   items: AdminApiVersionRow[];
 };
 
-export function AdminApiVersionsTableSection({ loading, error, items }: Props) {
+export function AdminApiVersionsTableSection({ refreshing, items }: Props) {
   const { t } = useTranslation();
   const { sort, toggle, ariaSort } = useAdminTableSort<ApiVersionSortKey>("released_at", "desc");
   const sortedItems = useMemo(
@@ -33,8 +34,6 @@ export function AdminApiVersionsTableSection({ loading, error, items }: Props) {
       }),
     [items, sort.key, sort.dir],
   );
-
-  if (loading || error) return null;
 
   if (items.length === 0) {
     return (
@@ -50,10 +49,11 @@ export function AdminApiVersionsTableSection({ loading, error, items }: Props) {
 
   return (
     <section
-      className="mt-6 overflow-x-auto rounded-[var(--radius-xl)] border border-ink-200 bg-white"
+      className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
       aria-label={t("admin_api_versions_table_aria")}
+      data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
     >
-      <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+      <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
         <thead className={ADMIN_TABLE_THEAD_CLASS}>
           <tr>
             <th scope="col" className={`${ADMIN_TABLE_TH_CELL_CLASS} font-medium`}>
@@ -88,17 +88,17 @@ export function AdminApiVersionsTableSection({ loading, error, items }: Props) {
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-ink-100 text-ink-700">
+        <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
           {sortedItems.map((r: AdminApiVersionRow, i: number) => (
             <tr key={`${r.api_version ?? i}-${i}`} className={ADMIN_TABLE_ROW_CLASS}>
-              <td className="px-3 py-2 font-mono text-meta">{r.api_version ?? t("admin_em_dash")}</td>
-              <td className="px-3 py-2 font-mono text-meta">{r.status ?? t("admin_em_dash")}</td>
-              <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">{r.released_at ?? t("admin_em_dash")}</td>
-              <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">{r.deprecated_at ?? t("admin_em_dash")}</td>
-              <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">{r.sunset_at ?? t("admin_em_dash")}</td>
-              <td className="px-3 py-2 font-mono text-meta">{r.compat_window_days ?? t("admin_em_dash")}</td>
-              <td className="px-3 py-2 font-mono text-meta">{r.request_count_7d ?? t("admin_em_dash")}</td>
-              <td className="px-3 py-2 font-mono text-meta whitespace-nowrap max-w-[12rem] truncate" title={r.last_change_by}>
+              <td className="px-3 py-2 font-mono text-small text-ink-800">{r.api_version ?? t("admin_em_dash")}</td>
+              <td className="px-3 py-2 font-mono text-small text-ink-800">{r.status ?? t("admin_em_dash")}</td>
+              <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">{r.released_at ?? t("admin_em_dash")}</td>
+              <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">{r.deprecated_at ?? t("admin_em_dash")}</td>
+              <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">{r.sunset_at ?? t("admin_em_dash")}</td>
+              <td className="px-3 py-2 font-mono text-small text-ink-800">{r.compat_window_days ?? t("admin_em_dash")}</td>
+              <td className="px-3 py-2 font-mono text-small text-ink-800">{r.request_count_7d ?? t("admin_em_dash")}</td>
+              <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap max-w-[12rem] truncate" title={r.last_change_by}>
                 {r.last_change_at ?? t("admin_em_dash")}
               </td>
             </tr>

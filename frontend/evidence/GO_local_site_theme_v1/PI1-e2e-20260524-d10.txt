@@ -1,0 +1,49 @@
+# D10 � PI-1 e2e:pi1-traveltrust
+# Date: 2026-05-24
+# Result: exit 1 � 1 passed � 1 failed � 31 did not run
+# Failure: setup-meta-chain � chain.contracts.governor_address undefined
+
+> traveltrust-frontend@0.1.0 e2e:pi1-traveltrust
+> node ./scripts/run-e2e-default.mjs --project=chromium e2e/pi1-traveltrust-v6-browser-acceptance.spec.ts
+
+[e2e] local default → PLAYWRIGHT_FULL_STACK=1 (API + Next via playwright webServer)
+[e2e] INTERNAL_API_SECRET aligned from root .env (internal/*)
+[e2e] DATABASE_URL loaded from repo root .env
+sync-frontend-env: wrote D:\TravelTrust-V1\frontend\.env.local (NEXT_PUBLIC aligned with root .env)
+[e2e] D:\TravelTrust-V1\frontend\.env.local → NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8080
+[e2e] http://127.0.0.1:8080/health OK — skip cargo build
+
+Running 33 tests using 1 worker
+
+[1A[2K(node:20192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:20192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/33] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:19:7 › setup: GET /meta chain.contracts › API /meta satisfies chain guard
+[1A[2K[2/33] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:35:7 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only)
+[1A[2K  1) [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:35:7 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only) 
+
+    Error: chain.contracts.governor_address: expected 0x + 40 hex, got undefined
+
+       at helpers\metaChainGuard.ts:20
+
+      18 | export function assertEvmAddress(label: string, v: unknown): asserts v is string {
+      19 |   if (typeof v !== "string" || !ADDR_RE.test(v)) {
+    > 20 |     throw new Error(`${label}: expected 0x + 40 hex, got ${JSON.stringify(v)}`);
+         |           ^
+      21 |   }
+      22 | }
+      23 |
+        at assertEvmAddress (D:\TravelTrust-V1\frontend\e2e\helpers\metaChainGuard.ts:20:11)
+        at assertMetaChainContractsStrict (D:\TravelTrust-V1\frontend\e2e\helpers\metaChainGuard.ts:64:3)
+        at D:\TravelTrust-V1\frontend\e2e\setup\meta-chain-contracts.spec.ts:44:35
+
+
+[1A[2K  1 failed
+    [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:35:7 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only) 
+  31 did not run
+  1 passed (45.5s)

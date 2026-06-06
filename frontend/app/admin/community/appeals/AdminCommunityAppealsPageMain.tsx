@@ -6,6 +6,7 @@ import { AdminSortableTh } from "@/components/admin/AdminSortableTh";
 
 import { AdminAppliedFiltersBanner } from "@/components/admin/AdminAppliedFiltersBanner";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
+import { AdminCommunityListHeaderAside } from "@/components/admin/AdminCommunityListHeaderAside";
 import { AdminCommunityRelatedLinks } from "@/components/admin/AdminCommunityRelatedLinks";
 import { AdminMetaBuildSection, AdminMetaNoteLink } from "@/components/admin/AdminMetaBuildPanel";
 import { useTranslation } from "@/components/LocaleProvider";
@@ -20,14 +21,21 @@ import { APPEAL_STATUS, bodyPreview } from "./adminCommunityAppealsPageModel";
 import { useAdminCommunityAppealsPage } from "./useAdminCommunityAppealsPage";
 import { sortRowsByKey, useAdminTableSort } from "@/lib/admin/useAdminTableSort";
 import {
+  ADMIN_FILTER_CARD_CLASS,
+  ADMIN_FILTER_RESET_BTN_CLASS,
   ADMIN_FORM_FIELD_FOCUS_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
   ADMIN_TABLE_ROW_CLASS,
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
   adminPageNavLinkClass,
-  adminTableInlineLinkClass,
-} from "@/lib/adminUi";
+  adminTableRowPrimaryActionClass,
+  ADMIN_FILTER_INPUT_SM_CLASS,
+  ADMIN_TABLE_SECTION_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,
+  ADMIN_FILTER_FIELD_LABEL_CLASS,
+  ADMIN_FILTER_HINT_CLASS} from "@/lib/adminUi";
 
 type AppealSortKey = "status" | "created_at" | "reviewed_at";
 export function AdminCommunityAppealsPageMain() {
@@ -37,6 +45,7 @@ export function AdminCommunityAppealsPageMain() {
   const adminListApplyResetHintId = useId();
   const {
     loading,
+    refreshing,
     error,
     items,
     meta,
@@ -68,31 +77,21 @@ export function AdminCommunityAppealsPageMain() {
       title={t("admin_appeals_title")}
       subtitle={
         <>
-          <span>{t("admin_appeals_subtitle")}</span>
+          <span>{t("admin_appeals_subtitle_l5")}</span>
           <AdminCommunityRelatedLinks />
         </>
       }
       headerAside={
-        <>
+        <AdminCommunityListHeaderAside>
           <Link href="/admin/community/appeals/review" className={`${adminPageNavLinkClass()}`}>
             {t("admin_appeals_linkReview")}
           </Link>
           <Link href="/admin/community/reports" className={`${adminPageNavLinkClass()}`}>
             {t("admin_penalties_linkReports")}
-          </Link>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_community_reports_back")}
-          </Link>
-        </>
+          </Link></AdminCommunityListHeaderAside>
       }
     >
-      <div className="mt-6 rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-4 space-y-3">
+      <div className={`mt-6 ${ADMIN_FILTER_CARD_CLASS} space-y-3`}>
         <form
           id="admin-appeals-filter-form"
           aria-label={t("admin_appeals_filters")}
@@ -102,37 +101,37 @@ export function AdminCommunityAppealsPageMain() {
           onSubmit={apply}
         >
           <p className="text-small font-medium text-ink-800">{t("admin_appeals_filters")}</p>
-          <p id={adminListApplyResetHintId} className="mt-2 text-meta text-ink-600 leading-relaxed">
+          <p id={adminListApplyResetHintId} className={ADMIN_FILTER_HINT_CLASS}>
             {t("admin_list_filters_apply_reset_hint")}
           </p>
           <div className="mt-3 flex flex-wrap items-end gap-3">
-            <label className="text-small text-ink-700">
+            <label className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
               {t("admin_appeals_limit")}
               <input
                 type="text"
                 inputMode="numeric"
                 value={draftLimit}
                 onChange={(e) => setDraftLimit(e.target.value)}
-                className={`ml-2 min-h-[44px] w-20 rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`ml-2 min-h-[44px] w-20 ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               />
             </label>
-            <label className="text-small text-ink-700">
+            <label className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
               {t("admin_appeals_reportId")}
               <input
                 type="text"
                 value={draftReportId}
                 onChange={(e) => setDraftReportId(e.target.value)}
-                className={`ml-2 min-h-[44px] w-44 rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 font-mono text-meta ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`ml-2 min-h-[44px] w-44 ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1 font-mono text-small text-ink-800 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
                 placeholder={t("admin_appeals_reportId_ph")}
                 autoComplete="off"
               />
             </label>
-            <label className="text-small text-ink-700">
+            <label className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
               {t("admin_appeals_status")}
               <select
                 value={draftStatus}
                 onChange={(e) => setDraftStatus(e.target.value)}
-                className={`ml-2 inline-flex min-h-[44px] items-center justify-start rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+                className={`ml-2 inline-flex min-h-[44px] items-center justify-start ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               >
                 {APPEAL_STATUS.map((v) => (
                   <option key={v || "all"} value={v}>
@@ -168,7 +167,7 @@ export function AdminCommunityAppealsPageMain() {
           >
             <button
               type="submit"
-              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 px-4 py-2 text-small font-medium text-ink-700 hover:bg-ink-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`${ADMIN_FILTER_RESET_BTN_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             >
               {t("admin_appeals_reset")}
             </button>
@@ -182,7 +181,7 @@ export function AdminCommunityAppealsPageMain() {
         <AdminMetaNoteLink className="mt-3">{String(meta.note)}</AdminMetaNoteLink>
       ) : null}
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <AdminListLoadingStatus message={t("admin_appeals_loading")} />
       ) : null}
       {error ? (
@@ -197,9 +196,13 @@ export function AdminCommunityAppealsPageMain() {
         />
       ) : null}
 
-      {!loading && !error && items.length > 0 && (
-        <section className="mt-6 overflow-x-auto rounded-[var(--radius-xl)] border border-ink-200 bg-white" aria-label={t("admin_appeals_table_aria")}>
-          <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+      {!loading && items.length > 0 && (
+        <section
+          className={`${ADMIN_TABLE_SECTION_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
+          aria-label={t("admin_appeals_table_aria")}
+          data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
+        >
+          <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
             <thead className={ADMIN_TABLE_THEAD_CLASS}>
               <tr>
                 <AdminSortableTh
@@ -232,7 +235,7 @@ export function AdminCommunityAppealsPageMain() {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-ink-100 text-ink-700">
+            <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
               {sortedItems.map((r, idx) => {
                 const id = r.id?.trim();
                 const ver = r.version;
@@ -242,11 +245,11 @@ export function AdminCommunityAppealsPageMain() {
                     : null;
                 return (
                   <tr key={id ?? `ap-${idx}`} className={ADMIN_TABLE_ROW_CLASS}>
-                    <td className="px-3 py-2 font-mono text-meta">{r.status ?? t("admin_em_dash")}</td>
-                    <td className="px-3 py-2 font-mono text-meta max-w-[8rem] truncate" title={r.report_id}>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800">{r.status ?? t("admin_em_dash")}</td>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800 max-w-[8rem] truncate" title={r.report_id}>
                       {r.report_id ?? t("admin_em_dash")}
                     </td>
-                    <td className="px-3 py-2 font-mono text-meta max-w-[8rem] truncate" title={r.appellant_id}>
+                    <td className="px-3 py-2 font-mono text-small text-ink-800 max-w-[8rem] truncate" title={r.appellant_id}>
                       {r.appellant_id ?? t("admin_em_dash")}
                     </td>
                     <td className="px-3 py-2 max-w-xs">
@@ -254,18 +257,18 @@ export function AdminCommunityAppealsPageMain() {
                         {bodyPreview(r.body, t("admin_em_dash"))}
                       </span>
                     </td>
-                    <td className="px-3 py-2 font-mono text-meta">{r.version ?? t("admin_em_dash")}</td>
-                    <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">
+                    <td className="px-3 py-2 font-mono text-small text-ink-800">{r.version ?? t("admin_em_dash")}</td>
+                    <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">
                       {r.created_at ?? t("admin_em_dash")}
                     </td>
-                    <td className="px-3 py-2 font-mono text-meta whitespace-nowrap">
+                    <td className="px-3 py-2 font-mono text-meta text-ink-500 whitespace-nowrap">
                       {r.reviewed_at ?? t("admin_em_dash")}
                     </td>
                     <td className="px-3 py-2">
                       {reviewHref && r.status === "pending" ? (
                         <Link
                           href={reviewHref}
-                          className={`${adminTableInlineLinkClass()} font-mono text-meta`}
+                          className={adminTableRowPrimaryActionClass()}
                           aria-label={t("admin_appeals_review_row_aria", { id: String(id ?? "") })}
                         >
                           {t("admin_appeals_rowReview")}

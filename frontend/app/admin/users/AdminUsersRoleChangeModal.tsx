@@ -4,11 +4,14 @@ import { AdminAlertError } from "@/components/admin/AdminAlertError";
 import type { Dispatch, SetStateAction } from "react";
 import type { AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
 import { AdminDialogFocusPanel } from "@/components/admin/AdminDialogFocusPanel";
+import { AdminModalWarmL5Panel } from "@/components/admin/AdminModalWarmL5Panel";
 import { AdminDialogScrim } from "@/components/admin/AdminDialogScrim";
 import { escrowModalPortalRootClass } from "@/components/market/marketStudioModalLayout";
 import { TARGET_ROLES } from "./adminUsersPageModel";
 import type { AdminUser } from "./adminUsersPageTypes";
-import { ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS } from "@/lib/adminUi";
+import { ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_FORM_CONTROL_SM_CLASS,} from "@/lib/adminUi";
 export function AdminUsersRoleChangeModal({
   roleUser,
   roleChangeDialogTitleId,
@@ -52,8 +55,9 @@ export function AdminUsersRoleChangeModal({
       <AdminDialogFocusPanel
         onClose={closeRoleModal}
         trapId="users-role-change"
-        className="relative z-10 max-w-md w-full rounded-[var(--radius-xl)] border border-ink-200 bg-white p-5 shadow-medium"
+        className="relative z-10 w-full flex justify-center px-4"
       >
+        <AdminModalWarmL5Panel className="max-w-md w-full">
         <h2 id={roleChangeDialogTitleId} className="text-body-l font-semibold text-ink-900">
           {t("admin_users_roleModalTitle")}
         </h2>
@@ -87,7 +91,7 @@ export function AdminUsersRoleChangeModal({
               name="target_role"
               value={targetRole}
               onChange={(e) => setTargetRole(e.target.value)}
-              className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start rounded-[var(--radius-sm)] border border-ink-200 bg-white px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start ${ADMIN_FORM_CONTROL_SM_CLASS} px-3 py-2 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             >
               {TARGET_ROLES.map((r) => (
                 <option key={r} value={r}>
@@ -105,7 +109,7 @@ export function AdminUsersRoleChangeModal({
               onChange={(e) => setRoleReason(e.target.value)}
               placeholder={t("admin_users_roleReasonPh")}
               rows={3}
-              className={`mt-1 w-full min-h-[80px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-3 py-2 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 w-full min-h-[80px] ${ADMIN_FORM_CONTROL_SM_CLASS} px-3 py-2 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             />
           </label>
 
@@ -119,7 +123,7 @@ export function AdminUsersRoleChangeModal({
               name="admin_modal_intent"
               value="cancel"
               formNoValidate
-              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-200 px-4 py-2 text-small text-ink-800 hover:bg-bg-console ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`inline-flex min-h-[44px] items-center justify-center ${ADMIN_FILTER_RESET_BTN_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             >
               {t("admin_users_roleCancel")}
             </button>
@@ -133,6 +137,7 @@ export function AdminUsersRoleChangeModal({
             </button>
           </div>
         </form>
+            </AdminModalWarmL5Panel>
       </AdminDialogFocusPanel>
     </div>
   );

@@ -15,7 +15,13 @@ export function trustGrowthApiUrl(path: "ingest" | "config"): string {
   return path === "ingest" ? apiUrl(routes.trustGrowthIngest) : apiUrl(routes.trustGrowthConfig);
 }
 
-export type TrustGrowthMoment = "register" | "first_yield" | "first_order" | "governance_entry";
+export type TrustGrowthMoment =
+  | "register"
+  | "guide_apply"
+  | "steward_apply"
+  | "first_yield"
+  | "first_order"
+  | "governance_entry";
 
 export type TrustGrowthEventName =
   | "trust_growth_moment_view"

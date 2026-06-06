@@ -11,7 +11,7 @@ import {
   TT_STABLECOIN_GATEWAY_L5,
   TT_SECTION_CONTENT_L5,
   TT_THEATER_SECTION_L5,
-} from "./traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 import { TRAVELTRUST_HOME_LAYOUT_LOCK_L5 } from "./traveltrustHomeLayoutLockL5";
 import { TT_SPACING_DEBUG_GAP_TARGETS_PX } from "./traveltrustSpacingDebug";
 import { TT_PAGE_SPACING_AUDIT_L5 } from "./traveltrustPageSpacingAuditL5";
@@ -31,8 +31,20 @@ describe("traveltrustHomeLayoutLockL5", () => {
   const lock = TRAVELTRUST_HOME_LAYOUT_LOCK_L5;
 
   it("exports frozen lock metadata", () => {
-    expect(lock.lockId).toBe("TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-05-v2");
-    expect(lock.label).toBe("traveltrust-home-approved-seamless-v2");
+    expect(lock.lockId).toBe("TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-05-v10-absolute-modular");
+    expect(lock.label).toBe("traveltrust-home-approved-seamless-v10-absolute-modular");
+    expect(lock.modularity.composerShellPath).toContain("TravelTrustHomeComposerShell");
+    expect(lock.modularity.composerLifecycleHookPath).toContain("useTraveltrustComposerPage");
+    expect(lock.modularity.cinematicBridgePath).toContain("lib/traveltrust/home/cinematic-bridge");
+    expect(lock.modularity.cinematicBridgeImport).toBe("@/lib/traveltrust/home/cinematic-bridge");
+    expect(lock.modularity.belowFoldShellPath).toContain("BelowFoldSectionsShell");
+    expect(lock.modularity.visualQaEvidencePath).toContain("visualQaEvidence");
+    expect(lock.modularity.belowFoldNarrativeBeatsPath).toContain("belowFoldNarrativeBeats");
+    expect(lock.modularity.visualQaManifestPath).toContain("visualQaManifest");
+    expect(lock.modularity.sectionUiSlotPath).toContain("TravelTrustHomeSectionSlot");
+    expect(lock.modularity.sectionWrappers).toContain("TravelTrustHomeRolesSection");
+    expect(lock.modularity.l5Domains).toContain("resolvers");
+    expect(lock.modularity.composerDynamicsPath).toContain("TravelTrustHomeComposerDynamics");
     expect(lock.scrollSnapEnabled).toBe(false);
     expect(lock.filmDividerCount).toBe(2);
     expect(lock.belowFold.faqStartDivider).toBe(false);
@@ -70,18 +82,39 @@ describe("traveltrustHomeLayoutLockL5", () => {
   });
 
   it("locks below-fold narrative structure", () => {
-    const below = readCinematic("TravelTrustBelowFoldSections.tsx");
-    expect(below).toContain("data-tt-traveltrust-economy-cluster");
-    expect(below).toContain("TravelTrustStablecoinGateway");
-    expect(below).toContain("TravelTrustTrustFactsStrip");
-    expect(below).toContain("TravelTrustSettlementStrip");
-    expect(below).toContain('chapterId="theater"');
-    expect(below).toContain('chapterId="faq"');
-    expect(below).toContain('chapterId="close"');
+    const below = readFileSync(
+      join(REPO, "modules/traveltrust-home/sections/TravelTrustHomeBelowFoldSection.tsx"),
+      "utf8",
+    );
+    const economy = readFileSync(
+      join(REPO, "modules/traveltrust-home/sections/TravelTrustHomeEconomyClusterSection.tsx"),
+      "utf8",
+    );
+    expect(below).toContain("TravelTrustHomeRolesSection");
+    expect(below).toContain("TravelTrustHomeEconomyClusterSection");
+    expect(below).toContain("TravelTrustHomeFaqSection");
+    expect(below).toContain("TravelTrustHomeStartCloseSection");
+    expect(economy).toContain("TravelTrustHomeLiquiditySection");
+    expect(economy).toContain("TravelTrustHomeTrustSection");
+    const roles = readFileSync(
+      join(REPO, "modules/traveltrust-home/sections/TravelTrustHomeRolesSection.tsx"),
+      "utf8",
+    );
+    const faq = readFileSync(
+      join(REPO, "modules/traveltrust-home/sections/TravelTrustHomeFaqSection.tsx"),
+      "utf8",
+    );
+    const startClose = readFileSync(
+      join(REPO, "modules/traveltrust-home/sections/TravelTrustHomeStartCloseSection.tsx"),
+      "utf8",
+    );
+    expect(roles).toContain('chapterId="theater"');
+    expect(faq).toContain('chapterId="faq"');
+    expect(startClose).toContain('chapterId="close"');
     expect(below).not.toContain('chapterId="liquidity"');
     const dividers = below.match(/<TravelTrustSectionFilmDivider/g) ?? [];
     expect(dividers.length).toBe(lock.filmDividerCount);
-    const faqChapterIdx = below.indexOf('chapterId="faq"');
+    const faqChapterIdx = below.indexOf("<TravelTrustHomeFaqSection");
     const lastFilmDivider = below.lastIndexOf("<TravelTrustSectionFilmDivider");
     expect(lastFilmDivider).toBeGreaterThan(-1);
     expect(lastFilmDivider).toBeLessThan(faqChapterIdx);

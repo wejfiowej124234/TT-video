@@ -10,6 +10,7 @@ import { adminFetchJson, adminErrorUserText, adminFetchErrorKind } from "@/lib/a
 import { apiUrl, routes } from "@/lib/api";
 import { getMe, writeRequestHeaders } from "@/lib/apiClient";
 import { writeAdminShellPreviewRole } from "@/lib/admin/adminShellPreviewRole";
+import { invalidateAdminCachesAfterWrite } from "@/lib/admin/adminPostWriteCacheInvalidation";
 
 export function useAdminPermissionsPage() {
   const { t } = useTranslation();
@@ -74,6 +75,7 @@ export function useAdminPermissionsPage() {
       } else {
         setMsg(t("admin_permissions_assign_ok"));
         writeAdminShellPreviewRole(null);
+        invalidateAdminCachesAfterWrite(["users", "approvals"]);
         router.refresh();
       }
       caps.reload();

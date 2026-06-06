@@ -17,7 +17,7 @@ import {
 
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
 
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 
 
 

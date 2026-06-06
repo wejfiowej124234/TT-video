@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
-import { adminPageNavLinkClass, ADMIN_HOME_WIDGET_CARD_CLASS } from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
+import { adminPageNavLinkClass } from "@/lib/adminUi";
 
 /** 列表空态 + 「下一步」引导（HON-04）。 */
 export function AdminListPageEmptyState(props: {
@@ -16,8 +17,9 @@ export function AdminListPageEmptyState(props: {
   const { messageKey, nextLinks = [], className = "", filteredEmpty = false } = props;
 
   return (
-    <div
-      className={`mt-6 text-center ${ADMIN_HOME_WIDGET_CARD_CLASS} ${className}`.trim()}
+    <AdminWarmL5Surface
+      className={`mt-6 text-center ${className}`.trim()}
+      innerClassName="text-center"
       role="status"
       data-tt-admin-list-empty="1"
       data-tt-admin-list-empty-widget="1"
@@ -39,6 +41,6 @@ export function AdminListPageEmptyState(props: {
           </li>
         ))}
       </ul>
-    </div>
+    </AdminWarmL5Surface>
   );
 }

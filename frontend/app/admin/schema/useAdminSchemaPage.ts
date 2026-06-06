@@ -1,78 +1,95 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 
 import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
+import { routes } from "@/lib/api";
 import {
-  type AdminFetchErrorKind,
-  adminFetchErrorKind,
-  adminFetchJson,
-  logAdminFetch,
-} from "@/lib/adminFetchDisplay";
-import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders } from "@/lib/apiClient";
+  type AdminListFetchSnapshot,
+  type AdminStandardListBody,
+  useAdminStandardListFetch,
+} from "@/lib/admin/useAdminStandardListFetch";
 
-import { SCHEMA_MIGRATIONS_PAGE_LIMIT, type SchemaMigrationsRes } from "./adminSchemaPageModel";
+import {
+  ADMIN_SCHEMA_ITEMS_MALFORMED_META_KEY,
+  ADMIN_SCHEMA_ITEMS_META_KEY,
+  SCHEMA_MIGRATIONS_PAGE_LIMIT,
+  type SchemaMigrationsRes,
+} from "./adminSchemaPageModel";
+
+function schemaListToSnapshot(
+  body: AdminStandardListBody<never> & Pick<SchemaMigrationsRes, "items">,
+): AdminListFetchSnapshot<never> {
+  const raw = body.items;
+  const metaBase = isAdminMetaRecord(body.meta) ? body.meta : {};
+  const meta: Record<string, unknown> = { ...metaBase };
+
+  if (raw == null) {
+    return {
+      items: [],
+      appliedFilters: body.applied_filters ?? null,
+      meta: Object.keys(meta).length > 0 ? meta : null,
+    };
+  }
+  if (Array.isArray(raw) || typeof raw !== "object") {
+    if (typeof window !== "undefined") {
+      console.error("AdminSchemaPage: items is not a plain object", raw);
+    }
+    meta[ADMIN_SCHEMA_ITEMS_MALFORMED_META_KEY] = true;
+    return {
+      items: [],
+      appliedFilters: body.applied_filters ?? null,
+      meta,
+      itemsMalformed: true,
+    };
+  }
+  meta[ADMIN_SCHEMA_ITEMS_META_KEY] = raw;
+  return {
+    items: [],
+    appliedFilters: body.applied_filters ?? null,
+    meta,
+  };
+}
 
 export function useAdminSchemaPage() {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [itemsNotPlainObjectError, setItemsNotPlainObjectError] = useState(false);
-  const [items, setItems] = useState<Record<string, unknown> | null>(null);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
+  const listUrl = useMemo(
+    () => routes.admin.schemaMigrations({ limit: SCHEMA_MIGRATIONS_PAGE_LIMIT }),
+    [],
+  );
 
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    setItemsNotPlainObjectError(false);
-    setMeta(null);
-    setAppliedFilters(null);
+  const { appliedFilters, meta: rawMeta, loading, refreshing, error, itemsMalformed } =
+    useAdminStandardListFetch<never>({
+      scope: "schema-migrations",
+      context: "AdminSchemaPage",
+      listUrl,
+      toSnapshot: schemaListToSnapshot,
+    });
 
-    const headers: Record<string, string> = { "x-request-id": `admin-schema-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403 handled below
+  const items = useMemo((): Record<string, unknown> | null => {
+    const raw = rawMeta?.[ADMIN_SCHEMA_ITEMS_META_KEY];
+    if (raw && typeof raw === "object" && !Array.isArray(raw)) {
+      return raw as Record<string, unknown>;
     }
+    if (rawMeta && !(ADMIN_SCHEMA_ITEMS_META_KEY in rawMeta) && !itemsMalformed) {
+      return null;
+    }
+    return null;
+  }, [rawMeta, itemsMalformed]);
 
-    const path = routes.admin.schemaMigrations({ limit: SCHEMA_MIGRATIONS_PAGE_LIMIT });
+  const itemsNotPlainObjectError =
+    itemsMalformed || Boolean(rawMeta?.[ADMIN_SCHEMA_ITEMS_MALFORMED_META_KEY]);
 
-    adminFetchJson<SchemaMigrationsRes>("AdminSchemaPage", apiUrl(path), { headers })
-      .then(({ res, body: json }) => {
-        if (res.status === 403 || res.status === 401) {
-          throw new Error("forbidden");
-        }
-        if (!res.ok) {
-          throw new Error(json.error || `request_failed_${res.status}`);
-        }
-        return json;
-      })
-      .then((json) => {
-        const raw = json.items;
-        if (raw == null) {
-          setItems(null);
-          setItemsNotPlainObjectError(false);
-        } else if (Array.isArray(raw) || typeof raw !== "object") {
-          if (typeof window !== "undefined") {
-            console.error("AdminSchemaPage: items is not a plain object", raw);
-          }
-          setItems(null);
-          setItemsNotPlainObjectError(true);
-        } else {
-          setItems(raw as Record<string, unknown>);
-          setItemsNotPlainObjectError(false);
-        }
-        setMeta(isAdminMetaRecord(json.meta) ? json.meta : null);
-        setAppliedFilters(json.applied_filters ?? null);
-      })
-      .catch((e: unknown) => {
-        logAdminFetch("AdminSchemaPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
-  }, []);
+  const meta = useMemo(() => {
+    if (!rawMeta) return null;
+    const {
+      [ADMIN_SCHEMA_ITEMS_META_KEY]: _items,
+      [ADMIN_SCHEMA_ITEMS_MALFORMED_META_KEY]: _malformed,
+      ...rest
+    } = rawMeta;
+    return isAdminMetaRecord(rest) && Object.keys(rest).length > 0 ? rest : null;
+  }, [rawMeta]);
 
   return {
     loading,
+    refreshing,
     error,
     itemsNotPlainObjectError,
     items,

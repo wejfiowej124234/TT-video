@@ -16,7 +16,8 @@ describe("admin finance depth panels L5 (①)", () => {
     expect(DEPTH_PANELS.length).toBeGreaterThanOrEqual(7);
     for (const file of DEPTH_PANELS) {
       const src = readFileSync(join(depthDir, file), "utf8");
-      expect(src, `${file} depth panel token`).toContain("ADMIN_FIN_DEPTH_PANEL_CLASS");
+      expect(src, `${file} warm L5 depth surface`).toContain("AdminWarmL5Surface");
+      expect(src, `${file} depth panel marker`).toContain("data-tt-admin-fin-depth-panel");
       const hasFooter =
         src.includes("AdminFinanceDepthHonestyFooter") ||
         src.includes("AdminFinanceDepthActionLinks");
@@ -33,5 +34,11 @@ describe("admin finance depth panels L5 (①)", () => {
     const links = readFileSync(join(depthDir, "AdminFinanceDepthActionLinks.tsx"), "utf8");
     expect(links).toContain("data-tt-admin-fin-depth-actions");
     expect(links).toContain("AdminFinanceDepthHonestyFooter");
+  });
+
+  it("honesty footer imports ADMIN_INNER_DIVIDER_CLASS (runtime regression)", () => {
+    const footer = readFileSync(join(depthDir, "AdminFinanceDepthHonestyFooter.tsx"), "utf8");
+    expect(footer).toContain('from "@/lib/adminUi"');
+    expect(footer).toContain("ADMIN_INNER_DIVIDER_CLASS");
   });
 });

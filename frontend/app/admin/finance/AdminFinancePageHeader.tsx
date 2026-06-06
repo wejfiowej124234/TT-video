@@ -3,7 +3,7 @@ import { type FormEvent, useId } from "react";
 
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import type { AdminFinanceTranslate } from "./adminFinancePageTypes";
-import { ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_LINK_FOCUS_CLASS, ADMIN_SHELL_SECONDARY_BTN_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
 export type AdminFinancePageHeaderProps = {
   pageTitleId: string;
   t: AdminFinanceTranslate;
@@ -28,11 +28,11 @@ export function AdminFinancePageHeader({
         <h1 id={pageTitleId} className="text-h3 font-semibold text-ink-900">
           {t("admin_finance_title")}
         </h1>
-        <p className="mt-1 text-body text-ink-600">{t("admin_finance_subtitle")}</p>
+        <p className="mt-1 text-body text-ink-600">{t("admin_finance_subtitle_l5")}</p>
       </div>
       <div className="flex flex-wrap items-center gap-3">
         <Link
-          href="/admin/observability"
+          href="/admin/observability" data-tt-admin-back-observability-hub="1"
           className={`${adminPageNavLinkClass()}`}
         >
           {t("admin_observability_title")}
@@ -51,7 +51,7 @@ export function AdminFinancePageHeader({
           </p>
           <button
             type="submit"
-            className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 bg-white px-3 py-1.5 text-small font-medium text-ink-800 transition-colors motion-reduce:transition-none hover:bg-ink-50 disabled:opacity-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+            className={`${ADMIN_SHELL_SECONDARY_BTN_CLASS} disabled:opacity-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             disabled={loading || exporting}
             aria-label={t("admin_finance_export_csv_aria")}
           >
@@ -61,12 +61,7 @@ export function AdminFinancePageHeader({
             {t("admin_finance_export_csv_format_hint")}
           </p>
         </form>
-        <Link
-          href="/admin"
-          className={`${adminPageNavLinkClass()}`}
-        >
-          {t("admin_schema_back")}
-        </Link>
+        <AdminInboxQueueBackLinks />
       </div>
     </header>
   );

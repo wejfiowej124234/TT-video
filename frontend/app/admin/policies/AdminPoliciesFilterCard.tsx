@@ -3,7 +3,12 @@
 import type { FormEvent } from "react";
 
 import type { AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
-import {ADMIN_FILTER_CARD_CLASS, ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS } from "@/lib/adminUi";
+import {ADMIN_FILTER_CARD_CLASS, ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_FILTER_INPUT_SM_CLASS,
+  ADMIN_FILTER_ACTIONS_CLASS,
+  ADMIN_FILTER_HINT_CLASS,
+  ADMIN_FILTER_TITLE_CLASS} from "@/lib/adminUi";
 import {
   BINDING_ROLE_MAX,
   POLICY_CODE_MAX,
@@ -106,8 +111,8 @@ export function AdminPoliciesFilterCard(props: AdminPoliciesFilterCardProps) {
         }
         onSubmit={apply}
       >
-        <p className="text-small font-medium text-ink-800">{t("admin_policies_filters")}</p>
-        <p id={adminListApplyResetHintId} className="text-meta text-ink-600 leading-relaxed">
+        <p className={ADMIN_FILTER_TITLE_CLASS}>{t("admin_policies_filters")}</p>
+        <p id={adminListApplyResetHintId} className={ADMIN_FILTER_HINT_CLASS}>
           {t("admin_list_filters_apply_reset_hint")}
         </p>
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
@@ -121,7 +126,7 @@ export function AdminPoliciesFilterCard(props: AdminPoliciesFilterCardProps) {
               inputMode="numeric"
               value={draftLimit}
               onChange={(e) => setDraftLimit(e.target.value)}
-              className={`mt-1 min-h-[44px] w-20 rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 min-h-[44px] w-20 ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             />
           </div>
           <div className="min-w-[10rem] flex-1">
@@ -130,7 +135,7 @@ export function AdminPoliciesFilterCard(props: AdminPoliciesFilterCardProps) {
             </label>
             <input
               id={policyCodeInputId}
-              className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               maxLength={POLICY_CODE_MAX}
               value={draftPolicyCode}
               onChange={(e) => setDraftPolicyCode(e.target.value.slice(0, POLICY_CODE_MAX))}
@@ -144,7 +149,7 @@ export function AdminPoliciesFilterCard(props: AdminPoliciesFilterCardProps) {
             </label>
             <select
               id={statusSelectId}
-              className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 inline-flex w-full min-h-[44px] items-center justify-start ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               value={draftStatus}
               onChange={(e) => setDraftStatus(e.target.value)}
             >
@@ -160,7 +165,7 @@ export function AdminPoliciesFilterCard(props: AdminPoliciesFilterCardProps) {
             </label>
             <input
               id={scopeTypeInputId}
-              className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               maxLength={SCOPE_TYPE_MAX}
               value={draftScopeType}
               onChange={(e) => setDraftScopeType(e.target.value.slice(0, SCOPE_TYPE_MAX))}
@@ -174,7 +179,7 @@ export function AdminPoliciesFilterCard(props: AdminPoliciesFilterCardProps) {
             </label>
             <input
               id={bindingRoleInputId}
-              className={`mt-1 w-full min-h-[44px] rounded-[var(--radius-sm)] border border-ink-200 bg-white px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_SM_CLASS} px-2 py-1.5 font-mono text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
               maxLength={BINDING_ROLE_MAX}
               value={draftBindingRole}
               onChange={(e) => setDraftBindingRole(e.target.value.slice(0, BINDING_ROLE_MAX))}
@@ -184,7 +189,7 @@ export function AdminPoliciesFilterCard(props: AdminPoliciesFilterCardProps) {
           </div>
         </div>
       </form>
-      <div className="mt-3 flex flex-wrap gap-2">
+      <div className={ADMIN_FILTER_ACTIONS_CLASS}>
         <button
           form="admin-policies-filter-form"
           type="submit"
@@ -203,7 +208,7 @@ export function AdminPoliciesFilterCard(props: AdminPoliciesFilterCardProps) {
           >
             <button
               type="submit"
-              className={`inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-300 px-4 py-2 text-small font-medium text-ink-800 hover:bg-ink-50 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              className={`inline-flex min-h-[44px] items-center justify-center ${ADMIN_FILTER_RESET_BTN_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             >
               {t("admin_policies_filter_clear")}
             </button>

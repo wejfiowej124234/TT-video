@@ -1,7 +1,15 @@
 import type { CommunityPostType } from "@/lib/communityMockData";
 
-/** 发布类型：照片、视频、纯文字（31 §2.1 P3） */
-export const TYPES: CommunityPostType[] = ["photo", "video", "text"];
+export {
+  COMMUNITY_POST_MEDIA_MAX_DECODED_BYTES_DEFAULT,
+  getCommunityPostMediaMaxDecodedBytes,
+  communityPostMediaMaxSizeMbLabel,
+  getCommunityMediaAssetMaxBytesClient,
+  getCommunityPostMediaMaxVideoDurationSec,
+} from "@/lib/communityPostMediaLimits";
+
+/** 发布类型：照片、视频、美食、旅行、纯文字（31 §2.1 · 与 Feed `TYPE_OPTIONS` 对齐） */
+export const TYPES: CommunityPostType[] = ["photo", "video", "food", "travel", "text"];
 
 export const MAX_CHARS = 1000;
 export const MAX_IMAGES = 9;

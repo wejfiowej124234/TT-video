@@ -10,6 +10,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "page.tsx"), "utf8"),
     readFileSync(join(__dir, "AdminDriftSummaryPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminDriftSummaryPage.ts"), "utf8"),
+    readFileSync(join(__dir, "..", "..", "..", "lib/admin/useAdminStandardListFetch.ts"), "utf8"),
     readFileSync(join(__dir, "adminDriftSummaryPageModel.ts"), "utf8"),
   ].join("\n");
 }
@@ -18,7 +19,8 @@ describe("admin drift-summary page", () => {
   const src = readModuleSources();
 
   it("keeps drift-summary client fetch + normalize", () => {
-    expect(src).toContain("getAdminDriftSummary");
+    expect(src).toContain("routes.admin.driftSummary");
+    expect(src).toContain("useAdminStandardListFetch");
     expect(src).toContain("normalizeAdminDriftSummaryRead");
   });
 

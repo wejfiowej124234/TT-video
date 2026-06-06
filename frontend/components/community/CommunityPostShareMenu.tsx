@@ -5,8 +5,12 @@ import Link from "next/link";
 import type { CommunityPost } from "@/lib/communityMockData";
 import { useCommunityAuth } from "@/components/community/CommunityAuthContext";
 import { CommunityShareDmQuickPick } from "@/components/community/CommunityShareDmQuickPick";
-import { communityCardLinkFocus, communityShellTabFocus } from "@/lib/communityA11yFocus";
+import {
+  communityCardLinkFocus,
+  communityShellTabFocus,
+} from "@/lib/communityA11yFocus";
 import { buildCommunityPostShareUrl } from "@/lib/communityPostShareUrl";
+import { warmCommunityReportDrawer } from "@/lib/communityDrawerPrefetch";
 
 export type CommunityPostShareMenuProps = {
   post: CommunityPost;
@@ -127,7 +131,7 @@ export function CommunityPostShareMenu({
         <div
           role="menu"
           aria-label={t("community_share")}
-          className={`absolute ${menuPosition} rounded-[var(--radius-md)] border border-cyan-500/40 bg-slate-800/95 backdrop-blur py-1 shadow-medium z-10 min-w-[min(100vw-2rem,220px)] ${menuClassName}`}
+          className={`absolute ${menuPosition} rounded-[var(--radius-md)] border border-ref-sun/30 bg-ink-800/95 backdrop-blur py-1 shadow-medium z-10 min-w-[min(100vw-2rem,220px)] ${menuClassName}`}
         >
           <form
             className="w-full"
@@ -141,7 +145,7 @@ export function CommunityPostShareMenu({
               role="menuitem"
               disabled={copyLinkBusy}
               aria-busy={copyLinkBusy ? true : undefined}
-              className={`w-full px-4 py-2.5 text-left text-small text-slate-200 hover:bg-cyan-500/20 motion-sub flex items-center justify-start gap-2 min-h-[44px] disabled:opacity-60 disabled:cursor-wait focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-cyan-400/50`}
+              className={`w-full px-4 py-2.5 text-left text-small text-slate-200 hover:bg-ref-sun/12 motion-sub flex items-center justify-start gap-2 min-h-[44px] disabled:opacity-60 disabled:cursor-wait focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ref-sun/50`}
             >
               {copyDone ? t("community_share_copied") : t("community_copy_link")}
             </button>
@@ -153,7 +157,7 @@ export function CommunityPostShareMenu({
           ) : null}
           {nativeShareOk ? (
             <form
-              className="w-full border-t border-slate-600/50"
+              className={`w-full border-t ${TT_COMMUNITY_DRAWER_L5.divider}`}
               onSubmit={(e) => {
                 e.preventDefault();
                 handleNativeShare();
@@ -162,13 +166,13 @@ export function CommunityPostShareMenu({
               <button
                 type="submit"
                 role="menuitem"
-                className={`w-full px-4 py-2.5 text-left text-small text-slate-200 hover:bg-cyan-500/20 motion-sub flex items-center justify-start gap-2 min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-cyan-400/50`}
+                className={`w-full px-4 py-2.5 text-left text-small text-slate-200 hover:bg-ref-sun/12 motion-sub flex items-center justify-start gap-2 min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ref-sun/50`}
               >
                 {t("community_share_native")}
               </button>
             </form>
           ) : null}
-          <div className="border-t border-slate-600/50">
+          <div className={`border-t ${TT_COMMUNITY_DRAWER_L5.divider}`}>
             {authPending ? (
               <div className="px-4 py-2.5 text-meta text-slate-400 min-h-[44px] flex items-center justify-start" role="status">
                 {t("common_loading")}
@@ -178,7 +182,7 @@ export function CommunityPostShareMenu({
                 href={`/auth/login?returnUrl=${encodeURIComponent(`/community/messages?sharePostId=${encodeURIComponent(post.id)}`)}`}
                 role="menuitem"
                 onClick={() => setShareOpen(false)}
-                className={`flex w-full min-h-[44px] items-center justify-start px-4 py-2.5 text-left text-small text-slate-200 hover:bg-fuchsia-500/15 motion-sub ${communityCardLinkFocus}`}
+                className={`flex w-full min-h-[44px] items-center justify-start px-4 py-2.5 text-left text-small text-slate-200 hover:bg-ref-sun/12 motion-sub ${communityCardLinkFocus}`}
               >
                 {t("community_share_dm_login")}
               </Link>
@@ -194,7 +198,7 @@ export function CommunityPostShareMenu({
                   href={`/community/messages?sharePostId=${encodeURIComponent(post.id)}`}
                   role="menuitem"
                   onClick={() => setShareOpen(false)}
-                  className={`flex w-full min-h-[44px] items-center justify-start border-t border-slate-600/50 px-4 py-2.5 text-left text-small text-slate-200 hover:bg-fuchsia-500/15 motion-sub ${communityCardLinkFocus}`}
+                  className={`flex w-full min-h-[44px] items-center justify-start border-t border-ref-sun/16 px-4 py-2.5 text-left text-small text-slate-200 hover:bg-ref-sun/12 motion-sub ${communityCardLinkFocus}`}
                 >
                   {t("community_share_to_messages")}
                 </Link>
@@ -213,7 +217,8 @@ export function CommunityPostShareMenu({
               <button
                 type="submit"
                 role="menuitem"
-                className="w-full px-4 py-2.5 text-left text-small text-slate-300 hover:bg-slate-600/50 motion-sub min-h-[44px] flex items-center justify-start focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-400/50"
+                onPointerEnter={warmCommunityReportDrawer}
+                className={`w-full px-4 py-2.5 text-left text-small text-slate-300 motion-sub min-h-[44px] flex items-center justify-start focus:outline-none focus-visible:ring-2 focus-visible:ring-inset ${TT_COMMUNITY_DRAWER_L5.menuItemHover}`}
               >
                 {t("community_report")}
               </button>

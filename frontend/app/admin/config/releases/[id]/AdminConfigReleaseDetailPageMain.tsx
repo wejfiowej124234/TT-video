@@ -1,8 +1,9 @@
 "use client";
 
-import Link from "next/link";
+import { AdminDetailContentPanel } from "@/components/admin/AdminDetailContentPanel";
 import { useId } from "react";
 
+import { AdminConfigPlatformSubnav } from "@/components/admin/AdminConfigPlatformSubnav";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
 import { AdminAlertError } from "@/components/admin/AdminAlertError";
 import { useTranslation } from "@/components/LocaleProvider";
@@ -10,108 +11,95 @@ import { AdminMetaBuildSection } from "@/components/admin/AdminMetaBuildPanel";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
-import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { useAdminConfigReleaseDetailPage } from "./useAdminConfigReleaseDetailPage";
-import { ADMIN_FILTER_CARD_CLASS, ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import {
+  ADMIN_DETAIL_FIELD_LABEL_CLASS,
+  ADMIN_DETAIL_FIELD_ROW_CLASS,
+  ADMIN_DETAIL_FIELD_VALUE_CLASS,
+  ADMIN_DETAIL_FIELD_VALUE_MONO_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+} from "@/lib/adminUi";
 
 export function AdminConfigReleaseDetailPageMain() {
   const { t } = useTranslation();
   const pageTitleId = useId();
-  const { releaseId, releasesListHref, loading, error, release, meta } = useAdminConfigReleaseDetailPage();
+  const { releaseId, releasesListHref, loading, refreshing, error, release, meta } =
+    useAdminConfigReleaseDetailPage();
 
   return (
-    <AdminDetailPageChrome
-      titleId={pageTitleId}
-      title={t("admin_config_release_detail_title")}
-      subtitle={t("admin_config_release_detail_subtitle")}
-      headerAside={
-        <>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
+    <>
+      <AdminConfigPlatformSubnav
+        currentLabelKey="admin_config_release_detail_title"
+        parent={{ href: releasesListHref, labelKey: "admin_config_releases_title" }}
+      />
+      <AdminDetailPageChrome
+        titleId={pageTitleId}
+        title={t("admin_config_release_detail_title")}
+        subtitle={t("admin_config_release_detail_subtitle_l5")}
+      >
+        {!releaseId ? (
+          <AdminAlertError className="mt-6" message={t("admin_config_release_detail_missing_id")} />
+        ) : null}
+
+        {releaseId && loading && !release ? (
+          <AdminListLoadingStatus
+            message={t("admin_config_release_detail_loading")}
+            className="mt-6 text-body text-ink-500"
+          />
+        ) : null}
+
+        {releaseId && error && !release && (
+          <AdminListFetchError
+            className="mt-6"
+            errorKind={error}
+            message={adminErrorUserText(error, t)}
+          />
+        )}
+
+        <AdminMetaBuildSection meta={meta} loading={Boolean(releaseId) && loading && !release} error={releaseId ? error : null} />
+
+        {releaseId && release && (
+          <AdminDetailContentPanel
+            as="section"
+            className={`mt-6${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
+            aria-label={t("admin_config_release_detail_section_aria")}
+            data-tt-admin-config-release-detail-panel="1"
+            data-tt-admin-detail-refreshing={refreshing ? "1" : undefined}
           >
-            {t("admin_observability_title")}
-          </Link>
-          <Link
-            href={releasesListHref}
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_config_release_detail_back_list")}
-          </Link>
-          <Link
-            href="/admin"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_config_releases_back")}
-          </Link>
-        </>
-      }
-    >
-      {!releaseId ? (
-        <AdminAlertError className="mt-6" message={t("admin_config_release_detail_missing_id")} />
-      ) : null}
-
-      {releaseId && loading ? (
-        <AdminListLoadingStatus message={t("admin_config_release_detail_loading")} className="mt-6 text-body text-ink-500" />
-      ) : null}
-
-      {releaseId && error && (
-        <AdminListFetchError
-          className="mt-6"
-          errorKind={error}
-          message={adminErrorUserText(error, t)}
-        />
-      )}
-
-      <AdminMetaBuildSection meta={meta} loading={Boolean(releaseId) && loading} error={releaseId ? error : null} />
-
-      {releaseId && !loading && !error && release && (
-        <section
-          className={`mt-6 ${ADMIN_FILTER_CARD_CLASS} shadow-soft`}
-          aria-label={t("admin_config_release_detail_section_aria")}
-        >
-          <p className="text-meta text-ink-500">
-            {t("admin_config_release_detail_id_label")}:{" "}
-            <span className="font-mono text-ink-800">{release.id ?? releaseId}</span>
-          </p>
-          <dl className="mt-4 grid gap-3 text-body text-ink-800 sm:grid-cols-2">
-            <div>
-              <dt className="text-meta text-ink-500">{t("admin_config_releases_colKey")}</dt>
-              <dd className="font-mono text-small">{release.release_key ?? t("admin_em_dash")}</dd>
-            </div>
-            <div>
-              <dt className="text-meta text-ink-500">{t("admin_config_releases_colLabel")}</dt>
-              <dd className="font-mono text-small">{release.version_label ?? t("admin_em_dash")}</dd>
-            </div>
-            <div>
-              <dt className="text-meta text-ink-500">{t("admin_config_releases_colStatus")}</dt>
-              <dd className="font-mono text-small">{release.status ?? t("admin_em_dash")}</dd>
-            </div>
-            <div>
-              <dt className="text-meta text-ink-500">{t("admin_config_releases_colEffective")}</dt>
-              <dd className="font-mono text-small">{release.effective_from ?? t("admin_em_dash")}</dd>
-            </div>
-            <div>
-              <dt className="text-meta text-ink-500">{t("admin_config_releases_colRollback")}</dt>
-              <dd className="font-mono text-small">{release.rolled_back_at ?? t("admin_em_dash")}</dd>
-            </div>
-            <div>
-              <dt className="text-meta text-ink-500">{t("admin_config_release_detail_created")}</dt>
-              <dd className="font-mono text-small">{release.created_at ?? t("admin_em_dash")}</dd>
-            </div>
-            <div className="sm:col-span-2">
-              <dt className="text-meta text-ink-500">{t("admin_config_release_detail_updated")}</dt>
-              <dd className="font-mono text-small">{release.updated_at ?? t("admin_em_dash")}</dd>
-            </div>
-            <div className="sm:col-span-2">
-              <dt className="text-meta text-ink-500">{t("admin_config_release_detail_notes")}</dt>
-              <dd className="mt-1 whitespace-pre-wrap text-small text-ink-700">
-                {release.notes?.trim() ? release.notes : t("admin_em_dash")}
-              </dd>
-            </div>
-          </dl>
-        </section>
-      )}
-    </AdminDetailPageChrome>
+            <p className={ADMIN_DETAIL_FIELD_LABEL_CLASS}>
+              {t("admin_config_release_detail_id_label")}:{" "}
+              <span className={`${ADMIN_DETAIL_FIELD_VALUE_MONO_CLASS} break-all`}>{release.id ?? releaseId}</span>
+            </p>
+            <dl className="mt-4 grid gap-3 text-body sm:grid-cols-2">
+              {(
+                [
+                  ["admin_config_releases_colKey", release.release_key],
+                  ["admin_config_releases_colLabel", release.version_label],
+                  ["admin_config_releases_colStatus", release.status],
+                  ["admin_config_releases_colEffective", release.effective_from],
+                  ["admin_config_releases_colRollback", release.rolled_back_at],
+                  ["admin_config_release_detail_created", release.created_at],
+                ] as const
+              ).map(([labelKey, value]) => (
+                <div key={labelKey} className={ADMIN_DETAIL_FIELD_ROW_CLASS}>
+                  <dt className={ADMIN_DETAIL_FIELD_LABEL_CLASS}>{t(labelKey)}</dt>
+                  <dd className={ADMIN_DETAIL_FIELD_VALUE_MONO_CLASS}>{value ?? t("admin_em_dash")}</dd>
+                </div>
+              ))}
+              <div className={`sm:col-span-2 ${ADMIN_DETAIL_FIELD_ROW_CLASS}`}>
+                <dt className={ADMIN_DETAIL_FIELD_LABEL_CLASS}>{t("admin_config_release_detail_updated")}</dt>
+                <dd className={ADMIN_DETAIL_FIELD_VALUE_MONO_CLASS}>{release.updated_at ?? t("admin_em_dash")}</dd>
+              </div>
+              <div className={`sm:col-span-2 ${ADMIN_DETAIL_FIELD_ROW_CLASS}`}>
+                <dt className={ADMIN_DETAIL_FIELD_LABEL_CLASS}>{t("admin_config_release_detail_notes")}</dt>
+                <dd className={`${ADMIN_DETAIL_FIELD_VALUE_CLASS} mt-1 whitespace-pre-wrap`}>
+                  {release.notes?.trim() ? release.notes : t("admin_em_dash")}
+                </dd>
+              </div>
+            </dl>
+          </AdminDetailContentPanel>
+        )}
+      </AdminDetailPageChrome>
+    </>
   );
 }

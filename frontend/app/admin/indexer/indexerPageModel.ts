@@ -5,6 +5,9 @@ export type IndexerHealthRes = {
   meta?: unknown;
 };
 
+/** Indexer health object stashed in list-fetch meta by `useAdminIndexerPage`. */
+export const ADMIN_INDEXER_HEALTH_META_KEY = "__adminIndexerHealth";
+
 export type LastStoredReconciliation = {
   report_id?: string;
   report_type?: string;

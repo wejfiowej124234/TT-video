@@ -1,28 +1,36 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { memo, type MouseEvent } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import EscrowEnabledBadge from "@/components/trust/EscrowEnabledBadge";
-import SupportedTokensPill from "@/components/trust/SupportedTokensPill";
+import { MarketOrderCover } from "@/components/market/MarketOrderCover";
 import { useTranslation } from "@/components/LocaleProvider";
 import { orderLikeMayOnchainDeposit } from "@/components/escrow/EscrowDetail/escrowOnChainEligibility";
-import { shortEvmAddress } from "@/lib/formatEvmAddress";
 import type { OrderCardItem, OrderBreakdown, TransportLeg } from "@/lib/marketTypes";
+import { resolveMarketOrderCardTeaser } from "@/lib/marketDisplayCopy";
 import { stashEscrowOrderPrefetchFromMarketCard } from "@/lib/orderEscrowPrefetch";
 import { orderStateToBadgeVariant, orderStateToStatusLabelKey } from "@/lib/orderStatusI18n";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
+import { isMarketDevVarietyOrderId } from "@/lib/marketDevVarietyOrders";
+import { isOrderPublishedToDiscover } from "@/lib/isAssignedGuideId";
+import { AUTH_USER_ID_KEY } from "@/lib/apiClient/core";
+import { isOwnPublishedOpenListing, marketOrderHasAssignedGuide } from "@/lib/marketBindOrderList";
+import { formatEscrowStablecoinCurrency } from "@/lib/escrowOrderAmountSsot";
+import { TT_MARKETING_BTN_MARKET_PRIMARY, TT_MARKETING_MARKET_DARK_PATH, TT_MARKETING_MARKET_L5_LIST_CARD_FRAME, TT_MARKETING_MARKET_L5_LIST_CARD_INNER } from "@/lib/marketingUi";
 
 /** P29 订单卡片：行程照片 + 收藏 + 抢订单/查看行程；28 玻璃态 + Web3 徽章 */
 export type { OrderCardItem, OrderBreakdown, TransportLeg } from "@/lib/marketTypes";
 
-export default function OrderCard({
+export default memo(function OrderCard({
   item,
   onGrabOrder,
   onViewDetail,
   isFavorited,
   onToggleFavorite,
   glass,
+  bindingOrderId,
+  isSelectedBindingTarget = false,
+  coverEager = false,
 }: {
   item: OrderCardItem;
   onGrabOrder?: (id: string) => void;
@@ -30,12 +38,27 @@ export default function OrderCard({
   isFavorited?: boolean;
   onToggleFavorite?: (id: string) => void;
   glass?: boolean;
+  /** Escrow 深链：标记并保护旅客本单（不可抢自己的单） */
+  bindingOrderId?: string;
+  /** 多笔「我的订单」时左栏点选绑定向导目标 */
+  isSelectedBindingTarget?: boolean;
+  coverEager?: boolean;
 }) {
   const { t } = useTranslation();
   const dash = t("ui_em_dash");
-  /** 与主价行一致：拆分明细与 `item.currency` / 默认结算代币对齐，避免非 USDC 订单仍显示「USDC」后缀 */
-  const settledCurrency = (item.currency ?? t("order_defaultSettlementToken")).trim();
-  const dest = [item.destination, item.city].filter(Boolean).join(" · ") || dash;
+  const settledCurrency = formatEscrowStablecoinCurrency(
+    (item.currency ?? t("order_defaultSettlementToken")).trim(),
+  );
+  const routeLabel = item.route_label?.trim();
+  const dest =
+    (routeLabel
+      ? [item.destination, routeLabel].filter(Boolean).join(" · ")
+      : [item.destination, item.city].filter(Boolean).join(" · ")) || dash;
+  const cityOnly =
+    routeLabel ||
+    item.city?.trim() ||
+    item.destination?.split(/[·,，]/)[0]?.trim() ||
+    "";
   const days = item.days != null ? t("market_daysShort").replace("{{n}}", String(item.days)) : "";
   const statusSlice = item.status || item.state;
   const statusKey = statusSlice
@@ -46,6 +69,19 @@ export default function OrderCard({
       })
     : "order_status_draft";
   const statusLabel = statusSlice ? (t(statusKey) || statusSlice) : t("order_status_draft");
+  const statusRaw = (item.status ?? item.state ?? "").toLowerCase();
+  const isDraftLike = statusRaw === "draft";
+  /** 与 OrderDetailDrawer 接单 CTA 同源：created/open 可在市场抢单 */
+  const isOpenMarket = statusRaw === "created" || statusRaw === "open";
+  const isDevDemoOrder = isMarketDevVarietyOrderId(item.id);
+  const ownTouristId =
+    typeof window !== "undefined" ? localStorage.getItem(AUTH_USER_ID_KEY)?.trim() ?? "" : "";
+  const isOwnPublishedListing = isOwnPublishedOpenListing(item, ownTouristId);
+  const isOwnBindingOrder =
+    (Boolean(bindingOrderId?.trim()) && String(item.id) === String(bindingOrderId).trim()) ||
+    isOwnPublishedListing;
+  const guideAssignedOnBind = isOwnBindingOrder && marketOrderHasAssignedGuide(item);
+  const canGrabOrder = !isDevDemoOrder && !isOwnBindingOrder && isOpenMarket;
   const statusVariant = statusSlice
     ? orderStateToBadgeVariant({
         state: item.state,
@@ -54,6 +90,11 @@ export default function OrderCard({
       })
     : "neutral";
   const statusOverlayClass = (() => {
+    if (isOwnBindingOrder && isOrderPublishedToDiscover(statusRaw)) {
+      return glass
+        ? "bg-ref-sun/22 text-ref-sun border border-ref-sun/38 shadow-[0_2px_8px_-6px_rgba(0,0,0,0.55)]"
+        : "bg-ref-sun/15 text-ink-900 border border-ref-sun/35";
+    }
     switch (statusVariant) {
       case "success":
         return "bg-success/90 text-white";
@@ -62,134 +103,154 @@ export default function OrderCard({
       case "warning":
         return "bg-warning/90 text-white";
       default:
-        return glass ? "bg-black/75 text-white" : "bg-ink-800/90 text-white";
+        if (glass && isDraftLike) {
+          return "bg-ink-900/80 text-slate-300 border border-ref-sun/24 shadow-[0_2px_8px_-6px_rgba(0,0,0,0.55)]";
+        }
+        return glass
+          ? "bg-ink-900/70 text-slate-200 border border-ref-sun/20"
+          : "bg-ink-800/90 text-white";
     }
   })();
-  const imageUrl = item.image || null;
-  const [coverLoadFailed, setCoverLoadFailed] = useState(false);
-  useEffect(() => {
-    setCoverLoadFailed(false);
-  }, [imageUrl]);
-  const showCoverImage = Boolean(imageUrl) && !coverLoadFailed;
   const imageAlt = dest !== dash ? t("order_imageAlt").replace("{{dest}}", dest) : t("order_imageAltFallback");
+  const teaser = isOwnBindingOrder
+    ? guideAssignedOnBind
+      ? t("market_own_binding_guide_selected_teaser")
+      : isOrderPublishedToDiscover(statusRaw)
+        ? t("market_own_binding_order_teaser")
+        : t("market_own_binding_draft_teaser")
+    : resolveMarketOrderCardTeaser(item, t) ??
+      (isOpenMarket ? null : isDraftLike ? t("market_order_draft_teaser") : null);
+  const openDetail = onViewDetail ? () => onViewDetail(item.id) : undefined;
 
+  const p = TT_MARKETING_MARKET_DARK_PATH;
   const articleClass = glass
-    ? "group rounded-[var(--radius-md)] border border-white/20 bg-white/[0.06] backdrop-blur-md backdrop-saturate-150 shadow-[0_8px_32px_-10px_rgba(0,0,0,0.55),0_0_28px_-8px_rgba(35,206,217,0.1)] ring-1 ring-ref-cyan/15 overflow-hidden motion-sub transition-[transform,box-shadow,background-color] hover:-translate-y-1 hover:shadow-[0_12px_40px_-8px_rgba(0,0,0,0.5),0_0_32px_-6px_rgba(35,206,217,0.22)] hover:bg-white/10 hover:ring-ref-coral/25"
+    ? `${TT_MARKETING_MARKET_L5_LIST_CARD_FRAME} ${openDetail ? p.cardInteractive : ""} group${
+        isSelectedBindingTarget ? " ring-2 ring-ref-sun/55 ring-offset-2 ring-offset-ink-950" : ""
+      }`
     : "group rounded-[var(--radius-md)] border border-ink-200 bg-bg-console/95 backdrop-blur-sm shadow-soft overflow-hidden motion-sub transition-[transform,box-shadow] hover:-translate-y-1 hover:shadow-strong";
-  const contentClass = glass
-    ? "p-4 space-y-3 bg-transparent backdrop-blur-sm border-t border-white/15"
-    : "p-4 space-y-3 bg-bg-console/95 backdrop-blur-sm";
+  const contentClass = glass ? `${p.cardBodyPadding} ${p.cardContentDivider}` : "p-4 space-y-3 bg-bg-console/95 backdrop-blur-sm";
   const titleClass = glass ? "text-body font-semibold text-white line-clamp-2" : "text-body font-semibold text-ink-900 line-clamp-2";
-  const subClass = glass ? "text-meta text-white/80 mt-0.5" : "text-meta text-ink-500 mt-0.5";
+  const subClass = glass ? "text-meta text-white/75 mt-0.5 line-clamp-2" : "text-meta text-ink-500 mt-0.5";
   const priceClass = glass ? "text-h4 font-semibold text-white tracking-tight" : "text-h4 font-semibold text-ink-900 tracking-tight";
-  const metaClass = glass ? "text-meta text-white/75" : "text-meta text-ink-500";
+  const metaClass = glass ? "text-meta text-ref-sun/80" : "text-meta text-ink-500";
   const listClass = glass ? "text-small text-white/85 space-y-0.5" : "text-small text-ink-600 space-y-0.5";
-  const borderClass = glass ? "border-t border-white/15" : "border-t border-ink-100";
+  const borderClass = glass ? p.cardContentDivider : "border-t border-ink-100";
   const btnSecClass = glass
-    ? "btn-console rounded-[var(--radius-sm)] border border-white/40 px-3 py-1.5 text-white text-small focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+    ? p.cardViewItineraryLink
     : `btn-console rounded-[var(--radius-sm)] border border-ink-300 px-3 py-1.5 text-ink-700 text-small ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`;
+  const btnGrabClass = glass
+    ? `${touchTargetLink44Classes} ${TT_MARKETING_BTN_MARKET_PRIMARY}`
+    : `btn-console rounded-[var(--radius-sm)] bg-travel-500 px-3 py-1.5 text-white text-small font-medium ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`;
   const btnPayHubClass = glass
-    ? "btn-console rounded-[var(--radius-sm)] border border-white/35 bg-white/10 px-3 py-1.5 text-white text-small font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+    ? p.cardPayHubBtn
     : `btn-console rounded-[var(--radius-sm)] border border-travel-500/50 bg-travel-500/5 px-3 py-1.5 text-travel-600 text-small font-medium ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`;
-  const placeholderClass = glass ? "text-white/70 text-body" : "text-ink-400 text-body";
   const favBtnClass = glass
-    ? "inline-flex min-h-[44px] min-w-[44px] h-11 w-11 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm shadow-soft hover:bg-white/25 transition-colors border border-white/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+    ? p.cardFavBtn
     : `inline-flex min-h-[44px] min-w-[44px] h-11 w-11 items-center justify-center rounded-full bg-bg-console shadow-soft hover:bg-bg-soft transition-colors border border-ink-200 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`;
   const stashMarketCardEscrowPayPrefetch = () => stashEscrowOrderPrefetchFromMarketCard(item);
 
-  return (
-    <article className={articleClass} aria-labelledby={`order-title-${item.id}`}>
-      <div className="relative aspect-[4/3] bg-bg-soft overflow-hidden">
-        {showCoverImage && imageUrl ? (
-          <Image
-            src={imageUrl}
-            alt={imageAlt}
-            fill
-            className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.04]"
-            sizes="(max-width: 768px) 100vw, 400px"
-            unoptimized
-            onError={() => setCoverLoadFailed(true)}
-          />
-        ) : (
-          <div className={`w-full h-full flex items-center justify-center ${placeholderClass}`}>{item.city || t("order_itinerary")}</div>
-        )}
-        <div className="absolute top-2 right-2 flex items-center gap-1.5 z-10">
-          {onToggleFavorite && (
+  const stopCardBubble = (e: MouseEvent) => e.stopPropagation();
+
+  const cardBody = (
+    <>
+      <div className="relative">
+        <MarketOrderCover
+          item={item}
+          glass={glass}
+          coverEager={coverEager}
+          imageAlt={imageAlt}
+          destLabel={dest}
+          cityLabel={cityOnly}
+          daysLabel={days}
+          amountLabel=""
+          statusLabel={statusLabel}
+          statusOverlayClass={statusOverlayClass}
+          coverFooterExtra={
+            glass ? (
+              <div className="flex flex-wrap items-center gap-1.5">
+                {isOwnBindingOrder ? (
+                  <span className={p.cardCoverChip}>
+                    {guideAssignedOnBind
+                      ? t("market_own_binding_guide_selected_badge")
+                      : t("market_own_binding_order_badge")}
+                  </span>
+                ) : null}
+                <EscrowEnabledBadge variant="cover" />
+              </div>
+            ) : null
+          }
+        />
+        {onToggleFavorite ? (
+          <div className="absolute top-2 right-2 z-10" onClick={stopCardBubble}>
             <form
-              className="inline"
+              className="inline shrink-0"
               onSubmit={(e) => {
                 e.preventDefault();
                 onToggleFavorite(item.id);
               }}
             >
-            <button
-              type="submit"
-              className={favBtnClass}
-              aria-label={isFavorited ? t("empty_unfavoriteAria") : t("empty_favoriteAria")}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill={isFavorited ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" className={isFavorited ? "text-danger" : glass ? "text-white/80" : "text-ink-500"} aria-hidden>
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-              </svg>
-            </button>
+              <button
+                type="submit"
+                className={favBtnClass}
+                aria-label={isFavorited ? t("empty_unfavoriteAria") : t("empty_favoriteAria")}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill={isFavorited ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" className={isFavorited ? "text-danger" : glass ? "text-white/80" : "text-ink-500"} aria-hidden>
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                </svg>
+              </button>
             </form>
-          )}
-          <EscrowEnabledBadge />
-        </div>
-        <div className="absolute top-2 left-2">
-          <span
-            className={`rounded-[var(--radius-sm)] px-2 py-0.5 text-meta font-medium shadow-medium ${statusOverlayClass}`}
-          >
-            {statusLabel}
-          </span>
-        </div>
+          </div>
+        ) : null}
       </div>
 
-      <div className={contentClass}>
+      <div className={contentClass} onClick={stopCardBubble}>
         <div>
-          <h3 id={`order-title-${item.id}`} className={titleClass}>{dest} {days ? `· ${days}` : ""}</h3>
-          <p className={subClass}>{days ? t("order_daysItinerary").replace("{{n}}", String(item.days)) : t("order_itinerary")}{item.headcount != null && item.headcount > 0 ? t("order_headcountUnit").replace("{{n}}", String(item.headcount)) : ""}</p>
+          <h3 id={`order-title-${item.id}`} className={titleClass}>
+            {dest}
+            {!glass && days ? ` · ${days}` : ""}
+          </h3>
+          <p className={subClass}>
+            {isDevDemoOrder ? t("market_dev_demo_teaser") : null}
+            {!isDevDemoOrder &&
+              (teaser ??
+                (days ? t("order_daysItinerary").replace("{{n}}", String(item.days)) : t("order_itinerary")))}
+            {item.headcount != null && item.headcount > 0
+              ? t("order_headcountUnit").replace("{{n}}", String(item.headcount))
+              : ""}
+          </p>
         </div>
-        <div>
+        {glass ? (
           <p className={priceClass}>
             {item.amount ?? dash} {settledCurrency}
           </p>
-          <p className={metaClass}>{t("order_escrowPricing")}</p>
-        </div>
-        <div className="flex flex-wrap gap-1.5 items-center">
-          <SupportedTokensPill />
-          <span className={metaClass}>{t("order_onChainPill")}</span>
-        </div>
-        <ul className={listClass}>
-          <li>· {t("order_destLabel")}{dest}</li>
-          {item.days != null && <li>· {t("order_itineraryLabel")}{item.days}{t("order_dayUnit")}</li>}
-          {item.breakdown?.guideFee != null && (
-            <li>
-              · {t("order_guideFeeLabel")}
-              {item.breakdown.guideFee} {settledCurrency}
-            </li>
-          )}
-          {item.breakdown?.carFee != null && (
-            <li>
-              · {t("order_carFeeLabel")}
-              {item.breakdown.carFee} {settledCurrency}
-            </li>
-          )}
-          {item.escrow_address ? (
-            <li className="font-mono text-[0.85em]" title={item.escrow_address}>
-              · {t("escrow_contract")}
-              {shortEvmAddress(item.escrow_address)}
-            </li>
-          ) : null}
-          {Array.isArray(item.transportLegs) && item.transportLegs.length > 0 && (
-            <li>· {item.transportLegs.map((leg) => {
-              const typeStr = leg.type === "vehicle" ? t("market_transportVehicle") : leg.type === "rail" ? t("market_transportRail") : t("market_transportFlight");
-              return t("order_transportLeg").replace("{{from}}", leg.from).replace("{{type}}", typeStr).replace("{{to}}", leg.to);
-            }).join("；")}</li>
-          )}
-          <li>· {t("order_escrowReady")}</li>
-        </ul>
-        <div className={`flex flex-wrap gap-2 pt-1 ${borderClass}`}>
-          {onGrabOrder && (
+        ) : (
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <p className={priceClass}>
+              {item.amount ?? dash} {settledCurrency}
+            </p>
+          </div>
+        )}
+        {!glass ? (
+          <>
+            <p className={metaClass}>{t("order_escrowPricing")}</p>
+            <ul className={listClass}>
+              <li>
+                · {t("order_destLabel")}
+                {dest}
+              </li>
+              {item.days != null && (
+                <li>
+                  · {t("order_itineraryLabel")}
+                  {item.days}
+                  {t("order_dayUnit")}
+                </li>
+              )}
+              <li>· {t("order_escrowReady")}</li>
+            </ul>
+          </>
+        ) : null}
+        <div className={`flex flex-wrap items-center gap-2 sm:gap-3 ${glass ? `${p.cardActionRow} ${borderClass}` : `pt-1 ${borderClass}`}`}>
+          {onGrabOrder && canGrabOrder && (
             <form
               className="inline"
               onSubmit={(e) => {
@@ -199,25 +260,44 @@ export default function OrderCard({
             >
               <button
                 type="submit"
-                className={`btn-console rounded-[var(--radius-sm)] bg-travel-500 px-3 py-1.5 text-white text-small font-medium ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+                className={btnGrabClass}
                 aria-label={`${t("order_cta_grab")} — ${dest}`}
               >
                 {t("order_cta_grab")}
               </button>
             </form>
           )}
-          {onViewDetail ? (
-            <form
-              className="inline"
-              onSubmit={(e) => {
-                e.preventDefault();
+          {isOwnBindingOrder ? (
+            <>
+              <a
+                href="#market-guides-section"
+                onClick={stopCardBubble}
+                className={`${touchTargetLink44Classes} ${btnGrabClass}`}
+              >
+                {t("market_own_order_cta_pick_guide")}
+              </a>
+              <Link
+                href={`/escrow/${encodeURIComponent(item.id)}`}
+                onClick={(e) => {
+                  stopCardBubble(e);
+                  stashMarketCardEscrowPayPrefetch();
+                }}
+                className={`${touchTargetLink44Classes} ${btnSecClass}`}
+              >
+                {t("market_own_binding_back_escrow")}
+              </Link>
+            </>
+          ) : onViewDetail ? (
+            <button
+              type="button"
+              className={`${touchTargetLink44Classes} ${btnSecClass}`}
+              onClick={(e) => {
+                e.stopPropagation();
                 onViewDetail(item.id);
               }}
             >
-              <button type="submit" className={btnSecClass}>
-                {t("order_cta_viewItinerary")}
-              </button>
-            </form>
+              {t("order_cta_viewItinerary")}
+            </button>
           ) : (
             <Link
               href={`/escrow/${encodeURIComponent(item.id)}`}
@@ -238,6 +318,28 @@ export default function OrderCard({
           )}
         </div>
       </div>
+    </>
+  );
+
+  return (
+    <article
+      className={articleClass}
+      aria-labelledby={`order-title-${item.id}`}
+      onClick={openDetail}
+      onKeyDown={
+        openDetail
+          ? (e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                openDetail();
+              }
+            }
+          : undefined
+      }
+      role={openDetail ? "button" : undefined}
+      tabIndex={openDetail ? 0 : undefined}
+    >
+      {glass ? <div className={TT_MARKETING_MARKET_L5_LIST_CARD_INNER}>{cardBody}</div> : cardBody}
     </article>
   );
-}
+});

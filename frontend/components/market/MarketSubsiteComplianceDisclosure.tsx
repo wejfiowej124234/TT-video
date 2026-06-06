@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import { travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
+import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
 
 type Variant = "merchant" | "acquisition";
 
@@ -16,12 +17,9 @@ type Props = {
  * 必读合规折叠区：默认收起长文，降低首屏噪音；展开后保留完整提示。
  * 用于商家橱窗 / 旅行收购详情等深底页面。
  */
-export default function MarketSubsiteComplianceDisclosure({ variant, lead, extended }: Props) {
+export default function MarketSubsiteComplianceDisclosure({ variant: _variant, lead, extended }: Props) {
   const { t } = useTranslation();
-  const shell =
-    variant === "acquisition"
-      ? "border-warning/35 bg-ink-900/55 shadow-[0_0_20px_-8px_rgba(245,158,11,0.12)]"
-      : "border-white/15 bg-ink-900/50";
+  const shell = TT_MARKETING_MARKET_DARK_PATH.subsiteComplianceShellMerchant;
 
   return (
     <details className={`mt-4 rounded-[var(--radius-md)] border backdrop-blur-md ${shell}`}>
@@ -30,7 +28,7 @@ export default function MarketSubsiteComplianceDisclosure({ variant, lead, exten
       >
         <span>{t("market_subsite_compliance_details_title")}</span>
         <svg
-          className="h-4 w-4 shrink-0 text-slate-400 transition-transform open:rotate-180 open:text-slate-200"
+          className="h-4 w-4 shrink-0 text-ref-sun/70 transition-transform open:rotate-180 open:text-ref-sun motion-reduce:transition-none"
           viewBox="0 0 20 20"
           fill="currentColor"
           aria-hidden
@@ -42,7 +40,7 @@ export default function MarketSubsiteComplianceDisclosure({ variant, lead, exten
           />
         </svg>
       </summary>
-      <div className="space-y-3 border-t border-white/10 px-4 pb-4 pt-3 text-meta leading-relaxed text-slate-200">
+      <div className={`space-y-3 border-t ${TT_MARKETING_MARKET_DARK_PATH.filterBarGlassDivider} px-4 pb-4 pt-3 text-meta leading-relaxed text-slate-200`}>
         <div>{lead}</div>
         <div>{extended}</div>
       </div>

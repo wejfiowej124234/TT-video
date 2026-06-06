@@ -23,7 +23,7 @@ describe("getGuides", () => {
       mockTextResponse(true, { status: "ok", items: [{ id: "g1" }] })
     );
     const out = await getGuides({ city: "Tokyo", language: "ja", service_type: "walk" });
-    expect(out).toEqual([{ id: "g1" }]);
+    expect(out.items).toEqual([{ id: "g1" }]);
     expect(globalThis.fetch).toHaveBeenCalledWith(
       `${apiUrl(routes.guides)}?city=Tokyo&language=ja&service_type=walk`,
       expect.any(Object)

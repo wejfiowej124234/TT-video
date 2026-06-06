@@ -2,21 +2,13 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { type FormEvent, useEffect, useMemo, useState } from "react";
 
-import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
-import {
-  type AdminFetchErrorKind,
-  adminFetchErrorKind,
-  adminFetchJson,
-  logAdminFetch,
-} from "@/lib/adminFetchDisplay";
-import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders } from "@/lib/apiClient";
+import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
+import { routes } from "@/lib/api";
 
 import {
   COMPLIANCE_REQUESTS_JURIS_MAX,
   COMPLIANCE_REQUESTS_REF_MAX,
   COMPLIANCE_REQUESTS_SUBJECT_MAX,
-  type ComplianceRequestsListRes,
   type DsarRow,
   buildComplianceRequestsListPath,
   normalizeComplianceRequestTypeUrl,
@@ -33,11 +25,25 @@ export function useAdminComplianceRequestsPage() {
     [searchParams],
   );
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [items, setItems] = useState<DsarRow[]>([]);
-  const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
-  const [appliedFilters, setAppliedFilters] = useState<Record<string, unknown> | null>(null);
+  const listUrl = useMemo(() => {
+    const n = Number.parseInt(String(limit), 10);
+    const effLimit = Number.isFinite(n) ? Math.min(200, Math.max(1, n)) : 50;
+    return routes.admin.complianceDataRequests({
+      limit: effLimit,
+      ...(requestRef ? { request_ref: requestRef } : {}),
+      ...(subjectId ? { subject_id: subjectId } : {}),
+      ...(requestType ? { request_type: requestType } : {}),
+      ...(status ? { status } : {}),
+      ...(jurisdiction ? { jurisdiction } : {}),
+    });
+  }, [limit, requestRef, subjectId, requestType, status, jurisdiction]);
+
+  const { items, appliedFilters, meta, loading, refreshing, error } =
+    useAdminStandardListFetch<DsarRow>({
+      scope: "compliance-requests",
+      context: "AdminComplianceRequestsPage",
+      listUrl,
+    });
 
   const [draftLimit, setDraftLimit] = useState(String(limit));
   const [draftRequestRef, setDraftRequestRef] = useState(requestRef);
@@ -53,53 +59,6 @@ export function useAdminComplianceRequestsPage() {
     setDraftRequestType(requestType);
     setDraftStatus(status);
     setDraftJurisdiction(jurisdiction);
-  }, [limit, requestRef, subjectId, requestType, status, jurisdiction]);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    setMeta(null);
-
-    const n = Number.parseInt(String(limit), 10);
-    const effLimit = Number.isFinite(n) ? Math.min(200, Math.max(1, n)) : 50;
-
-    const headers: Record<string, string> = { "x-request-id": `admin-dsar-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    adminFetchJson<ComplianceRequestsListRes>(
-      "AdminComplianceRequestsPage",
-      apiUrl(
-        routes.admin.complianceDataRequests({
-          limit: effLimit,
-          ...(requestRef ? { request_ref: requestRef } : {}),
-          ...(subjectId ? { subject_id: subjectId } : {}),
-          ...(requestType ? { request_type: requestType } : {}),
-          ...(status ? { status } : {}),
-          ...(jurisdiction ? { jurisdiction } : {}),
-        }),
-      ),
-      { headers },
-    )
-      .then(({ res, body }) => {
-        if (!res.ok) {
-          throw new Error(body.error || `request_failed_${res.status}`);
-        }
-        return body;
-      })
-      .then((body) => {
-        setItems(Array.isArray(body.items) ? body.items : []);
-        setMeta(isAdminMetaRecord(body.meta) ? body.meta : null);
-        setAppliedFilters(body.applied_filters ?? null);
-      })
-      .catch((e: unknown) => {
-        logAdminFetch("AdminComplianceRequestsPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
   }, [limit, requestRef, subjectId, requestType, status, jurisdiction]);
 
   const apply = (e?: FormEvent) => {
@@ -135,7 +94,7 @@ export function useAdminComplianceRequestsPage() {
     );
   };
 
-  const hasActiveFilters =
+  const hasNonLimitFilters =
     Boolean(requestRef) ||
     Boolean(subjectId) ||
     Boolean(requestType) ||
@@ -143,17 +102,18 @@ export function useAdminComplianceRequestsPage() {
     Boolean(jurisdiction);
 
   return {
-    loading,
-    error,
-    items,
-    meta,
-    appliedFilters,
     limit,
     requestRef,
     subjectId,
     requestType,
     status,
     jurisdiction,
+    loading,
+    refreshing,
+    error,
+    items,
+    meta,
+    appliedFilters,
     draftLimit,
     setDraftLimit,
     draftRequestRef,
@@ -168,6 +128,6 @@ export function useAdminComplianceRequestsPage() {
     setDraftJurisdiction,
     apply,
     clearNonLimitFilters,
-    hasActiveFilters,
+    hasActiveFilters: hasNonLimitFilters,
   };
 }

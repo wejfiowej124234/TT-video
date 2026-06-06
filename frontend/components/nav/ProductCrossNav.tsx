@@ -14,6 +14,8 @@ export type ProductCrossNavCoreProps = {
   linkClassName?: string;
   separatorClassName?: string;
   showGuides?: boolean;
+  /** 首页页脚已在「技术」栏展示费路由时设为 true，避免底栏重复 */
+  hideFeeRouterLinks?: boolean;
 };
 
 export type ProductCrossNavProps = Omit<ProductCrossNavCoreProps, "navAriaLabel" | "t"> & {
@@ -37,6 +39,7 @@ export function ProductCrossNavCore({
   linkClassName = PRODUCT_CROSS_NAV_DEFAULT_LINK,
   separatorClassName = "text-ink-300",
   showGuides = false,
+  hideFeeRouterLinks = false,
 }: ProductCrossNavCoreProps) {
   return (
     <nav className={className} aria-label={navAriaLabel}>
@@ -71,14 +74,18 @@ export function ProductCrossNavCore({
       <Link href="/trust" className={linkClassName}>
         {t("trust_nav_short")}
       </Link>
-      <Sep className={separatorClassName} />
-      <Link href="/governance/fee-routes" className={linkClassName}>
-        {t("footer_link_governance_fee_routes")}
-      </Link>
-      <Sep className={separatorClassName} />
-      <Link href="/traveltrust#fee-router" className={linkClassName}>
-        {t("traveltrust_link_feeRouter")}
-      </Link>
+      {!hideFeeRouterLinks ? (
+        <>
+          <Sep className={separatorClassName} />
+          <Link href="/governance/fee-routes" className={linkClassName}>
+            {t("footer_link_governance_fee_routes")}
+          </Link>
+          <Sep className={separatorClassName} />
+          <Link href="/traveltrust#fee-router" className={linkClassName}>
+            {t("traveltrust_link_feeRouter")}
+          </Link>
+        </>
+      ) : null}
     </nav>
   );
 }

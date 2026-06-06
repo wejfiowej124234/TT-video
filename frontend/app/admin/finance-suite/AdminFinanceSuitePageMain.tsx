@@ -6,7 +6,7 @@ import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
-import { AdminNoticeBanner } from "@/components/admin/AdminNoticeBanner";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminPermissionDeniedBanner } from "@/components/admin/AdminPermissionDeniedBanner";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import { useAdminCanWrite } from "@/lib/admin/useAdminCanWrite";
@@ -18,6 +18,8 @@ import { AdminFinanceSuiteSupplementStrip } from "@/components/admin/AdminFinanc
 import { AdminFinancePspPhase2DepthNotice } from "@/components/admin/AdminFinancePspPhase2DepthNotice";
 import { AdminFinanceSuiteHubDepthSection } from "@/components/admin/AdminFinanceSuiteHubDepthSection";
 import { AdminFinanceSuiteModuleStatusBadge } from "./AdminFinanceSuiteModuleStatusBadge";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
+import { FINANCE_SUITE_HUB_RELATED_FOLD_LINKS } from "@/lib/admin/adminFinanceRelatedFoldLinks";
 
 export function AdminFinanceSuitePageMain() {
   const { t } = useTranslation();
@@ -29,37 +31,37 @@ export function AdminFinanceSuitePageMain() {
       titleId={titleId}
       title={t("admin_fin_suite_title")}
       subtitle={
-        <>
-          <p>{t("admin_fin_suite_subtitle")}</p>
-          <AdminNoticeBanner
-            tone="readonly"
-            size="md"
-            className="mt-2"
-            message={t("admin_fin_suite_phase2_note")}
-          />
-        </>
+        <p>{t("admin_fin_suite_subtitle_l5")}</p>
       }
       mainDataAttrs={{ "data-tt-admin-finance-suite": "1" }}
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={FINANCE_SUITE_HUB_RELATED_FOLD_LINKS}
+        ariaLabelKey="admin_finance_related_aria"
+        foldSummaryKey="admin_finance_related_fold"
+        dataTtFold="finance-suite-hub"
+      />
       <AdminPermissionDeniedBanner
         permission={ADMIN_PERM.FINANCE_READ}
         messageKey="admin_perm_denied_finance_read"
       />
       <AdminFinanceWorkflowStrip />
-      <AdminFinanceSuiteSupplementStrip />
       <AdminFinancePspPhase2DepthNotice />
-      <AdminFinanceSuiteHubDepthSection />
 
-      <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+      <ul
+        className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
+        data-tt-admin-fin-suite-module-grid="1"
+      >
         {FINANCE_SUITE_MODULES.map((m) => {
           const hasPerm = m.perm === ADMIN_PERM.READ || canFinance;
           const navOpen = hasPerm && (m.status === "active" || m.status === "partial");
           const href =
             m.status === "partial" ? adminFinancePartialDepthHref(m.href, m.id) : m.href;
           return (
-            <li
+            <AdminWarmL5Surface
+              as="li"
               key={m.id}
-              className="rounded-[var(--radius-lg)] border border-ink-200 bg-white p-4"
+              className="flex min-h-[12rem] flex-col"
               data-tt-admin-fin-suite-module={m.id}
               data-tt-admin-fin-suite-status={m.status}
               data-tt-admin-fin-suite-nav-blocked={navOpen ? undefined : "1"}
@@ -85,16 +87,12 @@ export function AdminFinanceSuitePageMain() {
               ) : (
                 <span className="mt-3 block text-small text-ink-400">{t("admin_permissions_no")}</span>
               )}
-            </li>
+            </AdminWarmL5Surface>
           );
         })}
       </ul>
-
-      <p className="mt-8 text-small">
-        <Link href="/admin" className={adminPageNavLinkClass()}>
-          {t("admin_schema_back")}
-        </Link>
-      </p>
+      <AdminFinanceSuiteHubDepthSection />
+      <AdminFinanceSuiteSupplementStrip />
     </AdminDetailPageChrome>
   );
 }

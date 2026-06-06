@@ -8,6 +8,7 @@ import ExternalVerificationPanel from "@/components/trust/ExternalVerificationPa
 import TrustStatusCallout from "@/components/trust/TrustStatusCallout";
 import TechnicalTransparencyDetails from "@/components/trust/TechnicalTransparencyDetails";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
+import { ME_SETTINGS_HUB_PATH } from "@/lib/me/meSettingsL5";
 import { useAutoTransparencyVerification } from "@/lib/trust/useAutoTransparencyVerification";
 import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
@@ -27,7 +28,7 @@ function formatCheckedAt(iso: string | null, t: (k: string) => string): string |
   }
 }
 
-export default function TrustTransparencyHub() {
+export default function TrustTransparencyHub({ fromSettings = false }: { fromSettings?: boolean }) {
   const { t } = useTranslation();
   const titleId = useId();
   const [copyHint, setCopyHint] = useState<string | null>(null);
@@ -86,9 +87,20 @@ export default function TrustTransparencyHub() {
     <main
       className="min-h-screen relative overflow-hidden bg-ink-900"
       aria-labelledby={titleId}
+      {...(fromSettings ? { "data-tt-trust-hub-from-settings": "1" } : {})}
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(34,211,238,0.08),_transparent_55%)]" />
       <div className="relative z-10 max-w-3xl mx-auto px-4 py-10 sm:py-14">
+        {fromSettings ? (
+          <p className="mb-4">
+            <Link
+              href={ME_SETTINGS_HUB_PATH}
+              className={`text-meta text-cyan-300 hover:text-cyan-100 underline ${travelFocusRingOffset2Classes}`}
+            >
+              {t("me_settings_back_hub")}
+            </Link>
+          </p>
+        ) : null}
         <header className="mb-8">
           <p className="text-meta text-cyan-300 mb-1">{t("pux2_hub_kicker")}</p>
           <h1 id={titleId} className="text-2xl sm:text-3xl font-semibold text-slate-50 tracking-tight">
@@ -227,13 +239,15 @@ export default function TrustTransparencyHub() {
           </ul>
         </section>
 
-        <ProductCrossNav
-          ariaLabelKey="trust_related_nav_aria"
-          className="flex flex-wrap items-center gap-x-2 gap-y-1 text-meta text-slate-400 max-w-prose"
-          linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 font-medium motion-sub motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
-          separatorClassName="text-slate-500"
-          showGuides
-        />
+        {!fromSettings ? (
+          <ProductCrossNav
+            ariaLabelKey="trust_related_nav_aria"
+            className="flex flex-wrap items-center gap-x-2 gap-y-1 text-meta text-slate-400 max-w-prose"
+            linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 font-medium motion-sub motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}
+            separatorClassName="text-slate-500"
+            showGuides
+          />
+        ) : null}
       </div>
     </main>
   );

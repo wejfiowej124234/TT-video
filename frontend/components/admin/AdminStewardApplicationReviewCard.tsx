@@ -9,7 +9,12 @@ import {
   type StewardApplicationReviewStatus,
 } from "@/lib/apiClient/adminStewardApplication";
 import { mapApiReadError } from "@/lib/mapApiReadError";
-import { ADMIN_FILTER_CARD_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS } from "@/lib/adminUi";
+import { AdminDetailContentPanel } from "@/components/admin/AdminDetailContentPanel";
+import { ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  ADMIN_FORM_CONTROL_SM_CLASS,
+  ADMIN_INNER_DIVIDER_CLASS,
+  ADMIN_SEMANTIC_APPROVE_BTN_CLASS,
+  ADMIN_SEMANTIC_REJECT_BTN_CLASS,} from "@/lib/adminUi";
 
 type StewardApplicationPayload = {
   id?: string;
@@ -82,13 +87,14 @@ export function AdminStewardApplicationReviewCard({ userId }: { userId: string }
     payload && typeof payload.legal_name === "string" ? payload.legal_name : undefined;
 
   return (
-    <section
-      className={`${ADMIN_FILTER_CARD_CLASS} shadow-soft`}
-      aria-label={t("admin_steward_app_sectionAria") ?? "Steward application review"}
+    <AdminDetailContentPanel
+      as="section"
+     
+      aria-label={t("admin_steward_app_sectionAria")}
       data-testid="admin-steward-application-review"
     >
       <h2 className="text-small font-semibold uppercase tracking-wide text-ink-500">
-        {t("admin_steward_app_title") ?? "区域主理人申请"}
+        {t("admin_steward_app_title")}
       </h2>
       {loading ? (
         <p className="mt-3 text-body text-ink-600" role="status">
@@ -99,22 +105,22 @@ export function AdminStewardApplicationReviewCard({ userId }: { userId: string }
           {error}
         </p>
       ) : !app?.status ? (
-        <p className="mt-3 text-body text-ink-600">{t("admin_steward_app_none") ?? "无申请记录"}</p>
+        <p className="mt-3 text-body text-ink-600">{t("admin_steward_app_none")}</p>
       ) : (
         <div className="mt-3 space-y-3 text-body">
           <p>
-            <span className="text-meta text-ink-500">{t("admin_steward_app_status") ?? "状态"}: </span>
+            <span className="text-meta text-ink-500">{t("admin_steward_app_status")}: </span>
             <span className="font-mono text-meta">{app.status}</span>
           </p>
           {app.jurisdictions?.length ? (
             <p>
-              <span className="text-meta text-ink-500">{t("admin_steward_app_jurisdictions") ?? "辖区"}: </span>
+              <span className="text-meta text-ink-500">{t("admin_steward_app_jurisdictions")}: </span>
               <span className="font-mono text-meta">{app.jurisdictions.join(", ")}</span>
             </p>
           ) : null}
           {app.stake_quote?.cumulative_ttg_units_required != null ? (
             <p>
-              <span className="text-meta text-ink-500">{t("admin_steward_app_ttg") ?? "TTG 质押"}: </span>
+              <span className="text-meta text-ink-500">{t("admin_steward_app_ttg")}: </span>
               <span className="font-mono text-meta">
                 {app.stake_quote.cumulative_ttg_units_required.toLocaleString()} TTG
               </span>
@@ -122,7 +128,7 @@ export function AdminStewardApplicationReviewCard({ userId }: { userId: string }
           ) : null}
           {legalName ? (
             <p>
-              <span className="text-meta text-ink-500">{t("admin_steward_app_legalName") ?? "主体"}: </span>
+              <span className="text-meta text-ink-500">{t("admin_steward_app_legalName")}: </span>
               <span className="font-mono text-meta">{legalName}</span>
             </p>
           ) : null}
@@ -131,35 +137,35 @@ export function AdminStewardApplicationReviewCard({ userId }: { userId: string }
           ) : null}
 
           {app.status !== "approved" && app.status !== "rejected" ? (
-            <div className="mt-4 flex flex-wrap gap-2 border-t border-ink-100 pt-4">
+            <div className={`mt-4 flex flex-wrap gap-2 ${ADMIN_INNER_DIVIDER_CLASS} pt-4`}>
               <button
                 type="button"
                 className={ADMIN_PRIMARY_ACTION_BTN_CLASS}
                 disabled={reviewLoading}
                 onClick={() => void submitReview("under_review")}
               >
-                {t("admin_steward_app_actionReview") ?? "标记审核中"}
+                {t("admin_steward_app_actionReview")}
               </button>
               <button
                 type="button"
-                className="rounded-[var(--radius-sm)] bg-success px-3 py-2 text-small font-medium text-white disabled:opacity-50"
+                className={ADMIN_SEMANTIC_APPROVE_BTN_CLASS}
                 disabled={reviewLoading}
                 onClick={() => void submitReview("approved")}
               >
-                {t("admin_steward_app_actionApprove") ?? "批准"}
+                {t("admin_steward_app_actionApprove")}
               </button>
               <button
                 type="button"
-                className="rounded-[var(--radius-sm)] bg-danger px-3 py-2 text-small font-medium text-white disabled:opacity-50"
+                className={ADMIN_SEMANTIC_REJECT_BTN_CLASS}
                 disabled={reviewLoading}
                 onClick={() => void submitReview("rejected")}
               >
-                {t("admin_steward_app_actionReject") ?? "驳回"}
+                {t("admin_steward_app_actionReject")}
               </button>
               <label className="block w-full text-small text-ink-700">
-                {t("admin_steward_app_rejectionMessage") ?? "驳回说明"}
+                {t("admin_steward_app_rejectionMessage")}
                 <textarea
-                  className="mt-1 w-full rounded border border-ink-200 px-2 py-1.5 text-meta"
+                  className={`mt-1 w-full ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1.5 text-meta`}
                   rows={2}
                   value={rejectionMessage}
                   onChange={(e) => setRejectionMessage(e.target.value)}
@@ -174,6 +180,6 @@ export function AdminStewardApplicationReviewCard({ userId }: { userId: string }
           ) : null}
         </div>
       )}
-    </section>
+    </AdminDetailContentPanel>
   );
 }

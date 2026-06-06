@@ -1,6 +1,17 @@
 /** @frozen TT-GLOBE-L5-FROZEN-2026-05 — see `traveltrustHeroGlobeFrozenManifest.ts` */
 import * as THREE from "three";
 import { TRAVELTRUST_GLOBE_EARTH_TEXTURE_PATH } from "@/lib/traveltrustGlobeEarthAsset";
+import {
+  TRAVELTRUST_HERO_GLOBE_EARTH_MAP_GRADE,
+  buildTraveltrustGlobeEarthMapEnhanceFilter,
+} from "@/lib/traveltrustHeroGlobeBrighten";
+import { resolveGlobeSunEquirectCentroid } from "@/lib/traveltrustGlobeSun";
+import {
+  TRAVELTRUST_HERO_GLOBE_NORTH_AFRICA_MULTIPLY_ALPHA,
+  TRAVELTRUST_HERO_GLOBE_NORTH_AFRICA_RADIUS_UX,
+  TRAVELTRUST_HERO_GLOBE_NORTH_AFRICA_RADIUS_VY,
+} from "@/lib/traveltrustHeroGlobeBrighten";
+import { TT_HERO_L5_DIRECTOR_NORTH_AFRICA_GRADE } from "@/lib/traveltrustHeroL5DirectorFinalPass";
 
 /** Equirectangular UV from lat/lon (degrees). */
 function uvFromLatLon(latDeg: number, lonDeg: number): { x: number; y: number } {
@@ -95,11 +106,12 @@ export function enhanceTraveltrustGlobeEarthMap(source: THREE.Texture): THREE.Ca
     return fallback;
   }
   /** 轻暖化：空域 `#0c0a09` 由 layout/Canvas 承担，球面保留海陆色阶（earth-realism pass） */
-  ctx.filter = "brightness(1.06) contrast(1.08) saturate(0.82) sepia(0.08) hue-rotate(10deg)";
+  ctx.filter = buildTraveltrustGlobeEarthMapEnhanceFilter();
   ctx.drawImage(image, 0, 0, w, h);
   ctx.filter = "none";
+  const grade = TRAVELTRUST_HERO_GLOBE_EARTH_MAP_GRADE;
   ctx.globalCompositeOperation = "multiply";
-  ctx.fillStyle = "rgba(52,36,22,0.18)";
+  ctx.fillStyle = `rgba(52,36,22,${grade.landWarmMultiplyAlpha})`;
   ctx.fillRect(0, 0, w, h);
   ctx.globalCompositeOperation = "source-over";
   const poleGain = 0.86;
@@ -116,11 +128,75 @@ export function enhanceTraveltrustGlobeEarthMap(source: THREE.Texture): THREE.Ca
   const eqHalf = Math.max(4, Math.floor(h * 0.055));
   const midY = Math.floor(h * 0.5);
   ctx.globalCompositeOperation = "multiply";
-  ctx.fillStyle = "rgba(44,36,28,0.22)";
+  ctx.fillStyle = `rgba(44,36,28,${grade.equatorCoolMultiplyAlpha})`;
   for (let y = midY - eqHalf; y <= midY + eqHalf; y++) {
     if (y >= 0 && y < h) ctx.fillRect(0, y, w, 1);
   }
-  ctx.globalCompositeOperation = "source-over";
+  const equatorPeak = grade.oceanHighlightPeakAlpha;
+  if (equatorPeak > 0.001) {
+    ctx.globalCompositeOperation = "soft-light";
+    const oceanHi = ctx.createLinearGradient(0, h * 0.18, 0, h * 0.82);
+    oceanHi.addColorStop(0, "rgba(48,88,130,0)");
+    oceanHi.addColorStop(0.32, `rgba(72,118,168,${equatorPeak * 0.55})`);
+    oceanHi.addColorStop(0.5, `rgba(92,142,198,${equatorPeak})`);
+    oceanHi.addColorStop(0.68, `rgba(72,118,168,${equatorPeak * 0.55})`);
+    oceanHi.addColorStop(1, "rgba(48,88,130,0)");
+    ctx.fillStyle = oceanHi;
+    ctx.fillRect(0, 0, w, h);
+    ctx.globalCompositeOperation = "source-over";
+  }
+  const sunGlint =
+    "oceanSunGlintPeakAlpha" in grade
+      ? (grade as { oceanSunGlintPeakAlpha?: number }).oceanSunGlintPeakAlpha ?? 0
+      : 0;
+  if (sunGlint > 0.001) {
+    const { u: su, v: sv } = resolveGlobeSunEquirectCentroid();
+    const cx = su * w;
+    const cy = sv * h;
+    const rScale =
+      "oceanSunGlintRadiusScale" in grade
+        ? (grade as { oceanSunGlintRadiusScale?: number }).oceanSunGlintRadiusScale ?? 0.38
+        : 0.38;
+    const r = Math.max(w, h) * rScale;
+    ctx.globalCompositeOperation = "soft-light";
+    const oceanSun = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+    oceanSun.addColorStop(0, `rgba(92,142,198,${sunGlint * 0.35})`);
+    oceanSun.addColorStop(0.42, `rgba(72,118,168,${sunGlint * 0.9})`);
+    oceanSun.addColorStop(0.68, `rgba(48,88,130,${sunGlint * 0.2})`);
+    oceanSun.addColorStop(1, "rgba(48,88,130,0)");
+    ctx.fillStyle = oceanSun;
+    ctx.fillRect(0, 0, w, h);
+    ctx.globalCompositeOperation = "source-over";
+  }
+  const southAlpha =
+    "southernHemisphereMultiplyAlpha" in grade
+      ? (grade as { southernHemisphereMultiplyAlpha?: number }).southernHemisphereMultiplyAlpha ?? 0
+      : 0;
+  if (southAlpha > 0.001) {
+    const southStart = Math.floor(h * 0.5);
+    ctx.globalCompositeOperation = "multiply";
+    ctx.fillStyle = `rgba(0,0,0,${southAlpha})`;
+    ctx.fillRect(0, southStart, w, h - southStart);
+    ctx.globalCompositeOperation = "source-over";
+  }
+  const na = TT_HERO_L5_DIRECTOR_NORTH_AFRICA_GRADE;
+  const naMul = TRAVELTRUST_HERO_GLOBE_NORTH_AFRICA_MULTIPLY_ALPHA;
+  if (naMul > 0.001) {
+    const cx = na.centerU * w;
+    const cy = na.centerV * h;
+    const rx = TRAVELTRUST_HERO_GLOBE_NORTH_AFRICA_RADIUS_UX * w;
+    const ry = TRAVELTRUST_HERO_GLOBE_NORTH_AFRICA_RADIUS_VY * h;
+    ctx.globalCompositeOperation = "multiply";
+    const naGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(rx, ry));
+    naGrad.addColorStop(0, `rgba(0,0,0,${naMul})`);
+    naGrad.addColorStop(0.55, `rgba(0,0,0,${naMul * 0.72})`);
+    naGrad.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = naGrad;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalCompositeOperation = "source-over";
+  }
   const tex = new THREE.CanvasTexture(canvas);
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.anisotropy = 8;

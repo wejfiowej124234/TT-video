@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useId } from "react";
 
+import { AdminFinanceSuiteBackLinks } from "@/components/admin/AdminFinanceSuiteBackLinks";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminFinanceSuiteDepthNotice } from "@/components/admin/AdminFinanceSuiteDepthNotice";
 import { AdminFinanceModuleDepthWorkspace } from "@/components/admin/AdminFinanceModuleDepthWorkspace";
 import { AdminFinanceSuitePartialChecklist } from "@/components/admin/AdminFinanceSuitePartialChecklist";
@@ -16,7 +18,9 @@ import { AdminFinanceReconciliationApiSection } from "./AdminFinanceReconciliati
 import { AdminFinanceReconciliationDriftSection } from "./AdminFinanceReconciliationDriftSection";
 import { AdminFinanceReconciliationNavSection } from "./AdminFinanceReconciliationNavSection";
 import type { AdminFinanceReconciliationPageViewModel } from "./useAdminFinanceReconciliationPage";
-import { ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { financeGovernanceRelatedFoldLinks } from "@/lib/admin/adminFinanceGovernanceRelatedFoldLinks";
+import { ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass,
+  ADMIN_CONSOLE_MUTED_PANEL_CLASS,} from "@/lib/adminUi";
 
 type Props = AdminFinanceReconciliationPageViewModel;
 
@@ -31,6 +35,7 @@ export function AdminFinanceReconciliationPageMain(props: Props) {
   const {
     na,
     loading,
+    refreshing,
     error,
     metaRows,
     summaryRows,
@@ -38,6 +43,7 @@ export function AdminFinanceReconciliationPageMain(props: Props) {
     hasReportId,
     reportIdRaw,
     driftStripLoading,
+    driftStripRefreshing,
     crossErr,
     driftSummaryErr,
     crossNorm,
@@ -62,7 +68,7 @@ export function AdminFinanceReconciliationPageMain(props: Props) {
         <>
           <div
             id={disclaimerId}
-            className="rounded-[var(--radius-lg)] border border-ink-200 bg-ink-50/90 p-4 text-body text-ink-800"
+            className={`${ADMIN_CONSOLE_MUTED_PANEL_CLASS} p-4 text-body text-ink-800`}
             role="note"
           >
             {t("admin_finance_reconciliation_disclaimer")}
@@ -70,15 +76,14 @@ export function AdminFinanceReconciliationPageMain(props: Props) {
           <p className="mt-3">{t("admin_finance_reconciliation_intro")}</p>
         </>
       }
-      headerAside={
-        <Link
-          href="/admin"
-          className={`${adminPageNavLinkClass()} shrink-0`}
-        >
-          {t("admin_schema_back")}
-        </Link>
-      }
+      headerAside={<AdminFinanceSuiteBackLinks />}
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={financeGovernanceRelatedFoldLinks("/admin/finance-reconciliation")}
+        ariaLabelKey="admin_finance_related_aria"
+        foldSummaryKey="admin_finance_related_fold"
+        dataTtFold="fin-governance-reconciliation"
+      />
       <AdminPermissionDeniedBanner
         permission={ADMIN_PERM.FINANCE_READ}
         messageKey="admin_perm_denied_finance_read"
@@ -98,6 +103,7 @@ export function AdminFinanceReconciliationPageMain(props: Props) {
       <AdminFinanceReconciliationApiSection
         apiSectionId={apiSectionId}
         loading={loading}
+        refreshing={refreshing}
         error={error}
         metaRows={metaRows}
         summaryRows={summaryRows}
@@ -110,6 +116,7 @@ export function AdminFinanceReconciliationPageMain(props: Props) {
         driftSemanticNoteId={driftSemanticNoteId}
         na={na}
         driftStripLoading={driftStripLoading}
+        driftStripRefreshing={driftStripRefreshing}
         crossErr={crossErr}
         driftSummaryErr={driftSummaryErr}
         crossNorm={crossNorm}

@@ -10,6 +10,7 @@ describe("formatMarketTravelFilterSummaryLine", () => {
     market_travel_summary_sep: " · ",
     market_travel_summary_orders_any: "ANY",
     market_travel_summary_guides_need_country: "NEED",
+    market_travel_summary_guides_any: "ALLG",
     market_travel_summary_guides_open: "OPEN",
     market_travel_summary_guides_picked: "PICK{{n}}",
     view_split: "SPLIT",
@@ -18,6 +19,8 @@ describe("formatMarketTravelFilterSummaryLine", () => {
     market_sort_latest: "LATEST",
     market_sort_priceDesc: "PD",
     market_sort_priceAsc: "PA",
+    market_sort_priceDesc_orders: "PD",
+    market_sort_priceAsc_guides: "PA",
     community_region_cn: "ChinaLabel",
   };
   const t = (k: string, vars?: LocaleInterpolationVars) => applyLocalePlaceholders(dict[k] ?? k, vars);
@@ -34,7 +37,8 @@ describe("formatMarketTravelFilterSummaryLine", () => {
       guideCount: 5,
     });
     expect(s).toContain("ANY");
-    expect(s).toContain("NEED");
+    expect(s).toContain("ALLG");
+    expect(s).not.toContain("NEED");
     expect(s).toContain("3");
     expect(s).toContain("5");
   });
@@ -54,6 +58,21 @@ describe("formatMarketTravelFilterSummaryLine", () => {
     expect(s).toContain("北京");
     expect(s).toContain("ORD");
     expect(s).toContain("PD");
+  });
+
+  it("shows guide facet labels without country", () => {
+    const s = formatMarketTravelFilterSummaryLine(t, {
+      country: "",
+      city: "",
+      languages: [],
+      serviceTypes: ["司机服务"],
+      view: "split",
+      sortBy: "latest",
+      orderCount: 3,
+      guideCount: 0,
+    });
+    expect(s).toContain("司机服务");
+    expect(s).not.toContain("NEED");
   });
 
   it("abbreviates many guide filters", () => {
@@ -78,6 +97,7 @@ describe("formatMarketTravelFilterSummaryBlocks", () => {
     market_travel_summary_sep: " · ",
     market_travel_summary_orders_any: "ANY",
     market_travel_summary_guides_need_country: "NEED",
+    market_travel_summary_guides_any: "ALLG",
     market_travel_summary_guides_open: "OPEN",
     view_split: "SPLIT",
     market_sort_latest: "LATEST",
@@ -96,7 +116,8 @@ describe("formatMarketTravelFilterSummaryBlocks", () => {
       guideCount: 2,
     });
     expect(filterLine).toContain("ANY");
-    expect(filterLine).toContain("NEED");
+    expect(filterLine).toContain("ALLG");
+    expect(filterLine).not.toContain("NEED");
     expect(listLine).toContain("SPLIT");
     expect(listLine).toContain("LATEST");
     expect(listLine).toContain("1");

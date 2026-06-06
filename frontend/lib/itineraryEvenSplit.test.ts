@@ -6,6 +6,7 @@ describe("itineraryEvenSplit", () => {
     expect(resolveEvenSplitPerDay(null, 2)).toBeNull();
     expect(resolveEvenSplitPerDay(undefined, 2)).toBeNull();
     expect(resolveEvenSplitPerDay(100, 0)).toBeNull();
+    expect(resolveEvenSplitPerDay(100, 1)).toBeNull();
     expect(resolveEvenSplitPerDay(-1, 2)).toBeNull();
     expect(resolveEvenSplitPerDay(NaN, 2)).toBeNull();
   });

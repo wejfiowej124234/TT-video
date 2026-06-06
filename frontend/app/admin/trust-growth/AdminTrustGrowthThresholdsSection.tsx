@@ -1,6 +1,9 @@
 "use client";
 
-import { useTranslation } from "@/components/LocaleProvider";
+import {
+  ADMIN_CONSOLE_JSON_BLOCK_CLASS,
+  useTranslation } from "@/components/LocaleProvider";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 
 import type { ObsBody } from "./adminTrustGrowthPageModel";
 
@@ -12,16 +15,16 @@ export function AdminTrustGrowthThresholdsSection({ thresholds }: AdminTrustGrow
   const { t } = useTranslation();
 
   return (
-    <section
-      className="rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-4"
+    <AdminWarmL5Surface
+      as="section"
       aria-label={t("admin_trust_growth_section_thresholds")}
     >
       <h2 className="text-small font-semibold uppercase tracking-wide text-ink-500">
         {t("admin_trust_growth_section_thresholds")}
       </h2>
-      <pre className="mt-2 max-h-48 overflow-auto rounded-[var(--radius-md)] bg-ink-900/90 p-3 text-left text-meta text-ink-100">
+      <pre className={`mt-2 max-h-48 overflow-auto ${ADMIN_CONSOLE_JSON_BLOCK_CLASS}`}>
         {JSON.stringify(thresholds ?? {}, null, 2)}
       </pre>
-    </section>
+    </AdminWarmL5Surface>
   );
 }

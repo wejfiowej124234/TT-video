@@ -3,91 +3,200 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useMemo } from "react";
+import AuthL5CrossNavFooter from "@/components/auth/AuthL5CrossNavFooter";
+import AuthL5PageBackdrop from "@/components/auth/AuthL5PageBackdrop";
+import { MeIdentitiesL5IdentityCard } from "@/components/me/MeIdentitiesL5IdentityCard";
+import MeIdentitiesRouteLoading from "@/components/me/MeIdentitiesRouteLoading";
+import { MeIdentitiesTravelerCallout } from "@/components/me/MeIdentitiesTravelerCallout";
 import { useTranslation } from "@/components/LocaleProvider";
-import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
-import { buildAuthRegisterRoleHref } from "@/lib/headerLoginHref";
+import { meTrustStateLabelKey } from "@/components/me/meTrustSectionLabels";
+import { buildHeaderLoginHref, buildHeaderRegisterHref, buildIdentitiesApplyChildHref } from "@/lib/headerLoginHref";
 import {
-  touchTargetLink44Classes,
-  travelFocusRingCoreOffset2Classes,
-  travelFocusRingOffset2Classes,
-} from "@/lib/travelLinkFocus";
+  deriveMeIdentitiesCoreCardView,
+  ME_IDENTITIES_PROVIDER_ACTIVE_HREF,
+  ME_IDENTITIES_STEWARD_ACTIVE_HREF,
+} from "@/lib/me/meIdentitiesCoreCardModel";
+import { meIdentitiesHubSlotState } from "@/lib/me/meIdentitiesHubSlots";
+import { meIdentitiesL5MainDataAttrs, TT_ME_IDENTITIES_L5 } from "@/lib/me/meIdentitiesL5";
+import { useMeIdentitiesCoreCardSignals } from "@/lib/me/useMeIdentitiesCoreCardSignals";
+import { useMeIdentitySlots } from "@/lib/me/useMeIdentitySlots";
 
-function MeIdentitiesHubFallback() {
-  const { t } = useTranslation();
-  return (
-    <main className="min-h-screen bg-bg-main px-4 py-8 sm:px-6" aria-busy="true">
-      <div className="mx-auto max-w-3xl">
-        <p className="text-meta text-ink-500">{t("me_onboarding_loading")}</p>
-      </div>
-    </main>
-  );
-}
-
-/** 顶栏「多重身份」汇总：向导 / 商家·provider / 主理人·steward；`returnUrl` 与顶栏原链同源（`buildAuthRegisterRoleHref`）。 */
+/** 顶栏「多重身份」汇总：旅行者 + Provider/Steward 核心轨 + 扩展申请（L5 暗壳 · 与 `/auth/*` 同族）。 */
 function MeIdentitiesHubInner() {
   const { t } = useTranslation();
+  const { ready: slotsReady, slotById } = useMeIdentitySlots();
+  const { bundle: coreSignals, ready: coreReady } = useMeIdentitiesCoreCardSignals(slotById, slotsReady);
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const providerHref = useMemo(
-    () => buildAuthRegisterRoleHref(pathname, "provider", searchParams),
+  const registerHref = useMemo(
+    () => buildHeaderRegisterHref(pathname, searchParams),
     [pathname, searchParams],
   );
-  const stewardHref = useMemo(
-    () => buildAuthRegisterRoleHref(pathname, "steward", searchParams),
+  const loginHref = useMemo(() => buildHeaderLoginHref(pathname, searchParams), [pathname, searchParams]);
+  const providerApplyHref = useMemo(
+    () => buildIdentitiesApplyChildHref("/provider/register", pathname, searchParams),
     [pathname, searchParams],
   );
+  const stewardApplyHref = useMemo(
+    () => buildIdentitiesApplyChildHref("/steward/register", pathname, searchParams),
+    [pathname, searchParams],
+  );
+  const providerOnboardingHref = "/me/onboarding?role=provider&from=identities_hub";
+  const stewardOnboardingHref = "/me/onboarding?role=region_steward&from=identities_hub";
 
-  const footerLinkClass = `${touchTargetLink44Classes} text-travel-500 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`;
-  const cardClass = `group block rounded-[var(--radius-md)] border border-ink-200 bg-white p-5 shadow-soft outline-none transition-colors hover:border-travel-400/45 hover:bg-ink-50/90 focus-visible:ring-2 focus-visible:ring-travel-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-main ${travelFocusRingCoreOffset2Classes}`;
-  const ctaClass = "mt-4 inline-flex text-small font-semibold text-travel-600 group-hover:text-travel-700";
+  const travelerState = slotsReady ? slotById("traveler")?.state ?? null : null;
+  const travelerStatusLabel =
+    travelerState && travelerState !== "inactive" ? t(meTrustStateLabelKey(travelerState)) : null;
+
+  const coreCards = [
+    {
+      surfaceId: "provider" as const,
+      titleKey: "header_identity_provider",
+      descKey: "me_identities_card_provider_desc",
+      applyHref: providerApplyHref,
+      onboardingHref: providerOnboardingHref,
+    },
+    {
+      surfaceId: "steward" as const,
+      titleKey: "header_identity_steward",
+      descKey: "me_identities_card_steward_desc",
+      applyHref: stewardApplyHref,
+      onboardingHref: stewardOnboardingHref,
+    },
+  ] as const;
+
+  const extendedCards = [
+    {
+      href: buildIdentitiesApplyChildHref("/guide/register", pathname, searchParams),
+      surfaceId: "guide",
+      titleKey: "header_identity_applyGuide",
+      descKey: "me_identities_card_guide_desc",
+      ctaKey: "me_identities_card_cta",
+    },
+    {
+      href: buildIdentitiesApplyChildHref("/market/acquisition", pathname, searchParams),
+      surfaceId: "acquisition",
+      titleKey: "header_identity_acquisition",
+      descKey: "me_identities_card_acquisition_desc",
+      ctaKey: "me_identities_card_cta_market",
+    },
+  ] as const;
 
   return (
     <main
-      className="min-h-screen bg-bg-main px-4 py-8 sm:px-6"
+      className={TT_ME_IDENTITIES_L5.pageShell}
       aria-labelledby="me-identities-hub-title"
+      data-tt-me-identities-surface="hub"
+      {...meIdentitiesL5MainDataAttrs(true)}
     >
-      <div className="mx-auto max-w-3xl">
-        <h1 id="me-identities-hub-title" className="text-h3 font-semibold text-ink-900">
-          {t("me_identities_hub_title")}
-        </h1>
-        <p className="mt-2 max-w-2xl text-kicker leading-relaxed text-ink-600">{t("me_identities_hub_subtitle")}</p>
+      <AuthL5PageBackdrop />
+      <div className={TT_ME_IDENTITIES_L5.inner}>
+        <header className={TT_ME_IDENTITIES_L5.headerBlock}>
+          <p className={TT_ME_IDENTITIES_L5.eyebrow}>{t("me_identities_hub_eyebrow")}</p>
+          <h1 id="me-identities-hub-title" className={TT_ME_IDENTITIES_L5.title}>
+            {t("me_identities_hub_title")}
+          </h1>
+          <p className={TT_ME_IDENTITIES_L5.subtitle}>{t("me_identities_hub_subtitle")}</p>
+        </header>
 
-        <ul className="mt-8 grid list-none gap-4 p-0 m-0 sm:grid-cols-1 md:grid-cols-3">
-          <li>
-            <Link href="/guide/register" className={cardClass}>
-              <span className="block text-h4 font-semibold text-ink-900">{t("header_identity_applyGuide")}</span>
-              <span className="mt-2 block text-meta leading-snug text-ink-600">{t("me_identities_card_guide_desc")}</span>
-              <span className={ctaClass}>{t("me_identities_card_cta")}</span>
-            </Link>
-          </li>
-          <li>
-            <Link href={providerHref} className={cardClass}>
-              <span className="block text-h4 font-semibold text-ink-900">{t("header_identity_provider")}</span>
-              <span className="mt-2 block text-meta leading-snug text-ink-600">{t("me_identities_card_provider_desc")}</span>
-              <span className={ctaClass}>{t("me_identities_card_cta")}</span>
-            </Link>
-          </li>
-          <li>
-            <Link href={stewardHref} className={cardClass}>
-              <span className="block text-h4 font-semibold text-ink-900">{t("header_identity_steward")}</span>
-              <span className="mt-2 block text-meta leading-snug text-ink-600">{t("me_identities_card_steward_desc")}</span>
-              <span className={ctaClass}>{t("me_identities_card_cta")}</span>
-            </Link>
-          </li>
-        </ul>
+        <section className="mt-6" aria-labelledby="me-identities-core-heading">
+          <h2 id="me-identities-core-heading" className={TT_ME_IDENTITIES_L5.applySectionTitle}>
+            {t("me_identities_core_section_title")}
+          </h2>
+          <MeIdentitiesTravelerCallout
+            registerHref={registerHref}
+            loginHref={loginHref}
+            statusLabel={travelerStatusLabel}
+            statusState={travelerState && travelerState !== "inactive" ? travelerState : null}
+          />
+          <ul
+            className={`${TT_ME_IDENTITIES_L5.grid} mt-4`}
+            aria-label={t("me_identities_core_grid_aria")}
+            data-tt-me-identities-core-grid="1"
+          >
+            {coreCards.map(({ surfaceId, titleKey, descKey, applyHref, onboardingHref }) => {
+              const signals =
+                coreReady && coreSignals
+                  ? surfaceId === "provider"
+                    ? coreSignals.provider
+                    : coreSignals.steward
+                  : null;
+              const activeHref =
+                surfaceId === "provider"
+                  ? ME_IDENTITIES_PROVIDER_ACTIVE_HREF
+                  : ME_IDENTITIES_STEWARD_ACTIVE_HREF;
+              const cardView = signals
+                ? deriveMeIdentitiesCoreCardView(signals, { applyHref, onboardingHref, activeHref })
+                : null;
+              const slotState = slotsReady ? meIdentitiesHubSlotState(surfaceId, slotById) : null;
+              const statusLabel = cardView ? t(cardView.statusLabelKey) : null;
+              const cta = cardView ? t(cardView.ctaLabelKey) : t("me_identities_card_cta");
+              const href = cardView?.href ?? applyHref;
+              return (
+                <li key={surfaceId} className={TT_ME_IDENTITIES_L5.gridItem}>
+                  <MeIdentitiesL5IdentityCard
+                    href={href}
+                    surfaceId={surfaceId}
+                    title={t(titleKey)}
+                    description={t(descKey)}
+                    ctaLabel={cta}
+                    statusLabel={statusLabel}
+                    statusState={cardView?.statusPillState ?? slotState}
+                    corePhase={cardView?.phase ?? null}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        </section>
 
-        <p className="mt-10 text-meta text-ink-600">
-          <Link href="/me/onboarding" className={`${footerLinkClass} mr-4 inline-block`}>
-            {t("me_identities_link_onboarding")}
+        <section className={TT_ME_IDENTITIES_L5.gridSection} aria-labelledby="me-identities-apply-heading">
+          <h2 id="me-identities-apply-heading" className={TT_ME_IDENTITIES_L5.applySectionTitle}>
+            {t("me_identities_apply_section_title")}
+          </h2>
+          <div className={TT_ME_IDENTITIES_L5.gridHalo} aria-hidden />
+          <ul
+            className={TT_ME_IDENTITIES_L5.grid}
+            aria-label={t("me_identities_apply_grid_aria")}
+            data-tt-me-identities-apply-grid="1"
+          >
+            {extendedCards.map(({ href, surfaceId, titleKey, descKey, ctaKey }) => {
+              const slotState = slotsReady ? meIdentitiesHubSlotState(surfaceId, slotById) : null;
+              const statusLabel =
+                slotState != null ? t(meTrustStateLabelKey(slotState)) : null;
+              return (
+                <li key={surfaceId} className={TT_ME_IDENTITIES_L5.gridItem}>
+                  <MeIdentitiesL5IdentityCard
+                    href={href}
+                    surfaceId={surfaceId}
+                    title={t(titleKey)}
+                    description={t(descKey)}
+                    ctaLabel={t(ctaKey)}
+                    statusLabel={statusLabel}
+                    statusState={slotState}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+
+        <p className={`${TT_ME_IDENTITIES_L5.footerLinks} text-meta leading-relaxed text-ink-500`} role="note">
+          {t("me_identities_onboarding_console_note")}
+        </p>
+        <nav className={TT_ME_IDENTITIES_L5.footerLinks} aria-label={t("me_identities_footer_nav_aria")}>
+          <Link href={providerOnboardingHref} className={TT_ME_IDENTITIES_L5.footerLink}>
+            {t("me_identities_link_onboarding_provider")}
           </Link>
-          <Link href="/community/me" className={footerLinkClass}>
+          <Link href={stewardOnboardingHref} className={TT_ME_IDENTITIES_L5.footerLink}>
+            {t("me_identities_link_onboarding_steward")}
+          </Link>
+          <Link href="/me/settings/profile" className={TT_ME_IDENTITIES_L5.footerLink}>
             {t("me_identities_back_community")}
           </Link>
-        </p>
+        </nav>
 
-        <div className="mt-8 border-t border-ink-200 pt-6">
-          <ProductCrossNav ariaLabelKey="me_identities_relatedNav_aria" showGuides />
-        </div>
+        <AuthL5CrossNavFooter hideFeeRouterLinks />
       </div>
     </main>
   );
@@ -95,7 +204,7 @@ function MeIdentitiesHubInner() {
 
 export default function MeIdentitiesHubPage() {
   return (
-    <Suspense fallback={<MeIdentitiesHubFallback />}>
+    <Suspense fallback={<MeIdentitiesRouteLoading />}>
       <MeIdentitiesHubInner />
     </Suspense>
   );

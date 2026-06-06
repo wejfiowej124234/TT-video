@@ -9,7 +9,9 @@ import { ADMIN_PHASE2_REMAINING_BACKLOG_ITEMS } from "@/lib/admin/adminPhase2Rem
 import { adminPhase2LocalPrepCommand } from "@/lib/admin/adminPhase2LocalPrepCommands";
 import type { AdminPhase2PrepFlags } from "@/lib/admin/adminRole70Matrix";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
-import { adminPageNavLinkClass } from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
+import { adminPageNavLinkClass,
+  ADMIN_INNER_DIVIDER_CLASS,} from "@/lib/adminUi";
 
 function prepDetailForItem(
   id: (typeof ADMIN_PHASE2_REMAINING_BACKLOG_ITEMS)[number]["id"],
@@ -39,9 +41,10 @@ export function AdminPhase2RemainingBacklogPanel() {
   const prep = caps.phase2Prep;
 
   return (
-    <section
+    <AdminWarmL5Surface
+      as="section"
       id="admin-phase2-remaining-backlog"
-      className="mt-6 scroll-mt-24 rounded-[var(--radius-lg)] border border-ink-200 bg-white p-4"
+      className="mt-6 scroll-mt-24"
       aria-label={t("admin_phase2_backlog_aria")}
       data-tt-admin-phase2-remaining-backlog="1"
     >
@@ -58,7 +61,7 @@ export function AdminPhase2RemainingBacklogPanel() {
 
       <div className="mt-4 overflow-x-auto">
         <table className="min-w-full text-left text-small" aria-label={t("admin_phase2_backlog_aria")}>
-          <thead className="bg-ink-50 text-meta font-medium text-ink-600">
+          <thead className="bg-ref-sun/5 text-meta font-medium text-ink-600">
             <tr>
               <th scope="col" className="px-3 py-2">
                 {t("admin_phase2_backlog_col_id")}
@@ -87,7 +90,7 @@ export function AdminPhase2RemainingBacklogPanel() {
             {ADMIN_PHASE2_REMAINING_BACKLOG_ITEMS.map((row) => (
               <tr
                 key={row.id}
-                className="border-t border-ink-100"
+                className={ADMIN_INNER_DIVIDER_CLASS}
                 data-tt-admin-phase2-remaining-row={row.id}
                 data-tt-admin-phase2-remaining-open="1"
               >
@@ -134,6 +137,6 @@ export function AdminPhase2RemainingBacklogPanel() {
           {t("admin_phase2_backlog_operator_guide")}
         </Link>
       </p>
-    </section>
+    </AdminWarmL5Surface>
   );
 }

@@ -17,6 +17,7 @@ import {
   ADMIN_CONSOLE_CALLOUT_PANEL_CLASS,
   ADMIN_LINK_FOCUS_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  ADMIN_SHELL_SECONDARY_BTN_CLASS,
   adminPageNavLinkClass,
 } from "@/lib/adminUi";
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
@@ -122,7 +123,7 @@ export function AdminConsoleRoleEffectiveStrip() {
         {effective && previewRole && effective !== previewRole ? (
           <button
             type="button"
-            className={`${touchTargetLink44Classes} rounded-[var(--radius-md)] border border-ink-200 bg-white px-3 py-1.5 text-small font-medium text-ink-800 hover:bg-ink-50 ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} ${ADMIN_SHELL_SECONDARY_BTN_CLASS} ${travelFocusRingOffset2Classes}`}
             onClick={() => mirrorPreviewToDb(effective)}
             data-tt-admin-console-role-align-preview-db="1"
           >

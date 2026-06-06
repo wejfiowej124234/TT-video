@@ -4,23 +4,23 @@ import zh from "@/locales/zh";
 const title = zh.community_me_likes_meta_title;
 const description = zh.community_me_likes_meta_description;
 
-/** 旧 `/community/me/likes` 仅重定向；canonical 指向个人中心。 */
+/** `/community/me/likes` 独立列表页 canonical。 */
 export const metadata: Metadata = {
   title,
   description,
   alternates: {
-    canonical: "/community/me",
+    canonical: "/community/me/likes",
     languages: {
-      "zh-CN": "/community/me",
-      en: "/community/me",
-      "x-default": "/community/me",
+      "zh-CN": "/community/me/likes",
+      en: "/community/me/likes",
+      "x-default": "/community/me/likes",
     },
   },
   openGraph: {
     title,
     description,
     type: "website",
-    url: "/community/me",
+    url: "/community/me/likes",
   },
   twitter: {
     card: "summary_large_image",

@@ -4,7 +4,7 @@
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 
-import Link from "next/link";
+import { AdminShellPrefetchLink } from "@/components/admin/AdminShellPrefetchLink";
 
 import { useTranslation } from "@/components/LocaleProvider";
 
@@ -18,7 +18,13 @@ import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
 
 import { useAdminShellActor } from "@/lib/admin/useAdminShellActor";
 
-import { ADMIN_CONSOLE_SEARCH_MARK_CLASS, ADMIN_FORM_FIELD_FOCUS_CLASS } from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
+import {
+  ADMIN_COMMAND_PALETTE_HIT_CLASS,
+  ADMIN_CONSOLE_SEARCH_MARK_CLASS,
+  ADMIN_FORM_FIELD_FOCUS_CLASS,
+  ADMIN_HOME_SEARCH_HIT_LINK_CLASS,
+  ADMIN_FORM_CONTROL_MD_CLASS,} from "@/lib/adminUi";
 
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2WhiteClasses } from "@/lib/travelLinkFocus";
 
@@ -141,16 +147,12 @@ export function AdminHomeCardSearch(props: { prominent?: boolean }) {
 
   return (
 
-    <section
-
-      className={`rounded-[var(--radius-xl)] border border-ink-200 bg-white p-4 ${prominent ? "shadow-soft sm:p-5" : ""}`}
-
+    <AdminWarmL5Surface
+      as="section"
+      innerClassName={prominent ? "sm:p-6" : undefined}
       aria-label={t("admin_home_search_aria")}
-
       data-tt-admin-home-search="1"
-
       data-tt-admin-home-search-prominent={prominent ? "1" : undefined}
-
     >
 
       <label className={`block font-medium text-ink-800 ${prominent ? "text-body-l" : "text-small"}`}>
@@ -169,7 +171,7 @@ export function AdminHomeCardSearch(props: { prominent?: boolean }) {
 
           placeholder={t("admin_home_search_ph")}
 
-          className={`mt-2 block w-full min-h-[44px] rounded-[var(--radius-md)] border border-ink-300 bg-white px-3 py-2 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+          className={`mt-2 block w-full min-h-[44px] ${ADMIN_FORM_CONTROL_MD_CLASS} px-3 py-2 text-small ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
 
         />
 
@@ -195,11 +197,11 @@ export function AdminHomeCardSearch(props: { prominent?: boolean }) {
 
               <li key={card.href}>
 
-                <Link
+                <AdminShellPrefetchLink
 
                   href={card.href}
 
-                  className={`${touchTargetLink44Classes} block rounded-[var(--radius-md)] border border-ink-100 bg-ink-50/50 p-3 hover:border-ink-400 hover:bg-white ${travelFocusRingCoreOffset2WhiteClasses}`}
+                  className={`${touchTargetLink44Classes} ${ADMIN_HOME_SEARCH_HIT_LINK_CLASS} ${travelFocusRingCoreOffset2WhiteClasses}`}
 
                 >
 
@@ -215,7 +217,7 @@ export function AdminHomeCardSearch(props: { prominent?: boolean }) {
 
                   ) : null}
 
-                </Link>
+                </AdminShellPrefetchLink>
 
               </li>
 
@@ -233,7 +235,7 @@ export function AdminHomeCardSearch(props: { prominent?: boolean }) {
 
       ) : null}
 
-    </section>
+    </AdminWarmL5Surface>
 
   );
 

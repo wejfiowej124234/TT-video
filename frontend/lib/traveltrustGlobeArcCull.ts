@@ -2,23 +2,53 @@
 import type { Camera } from "three";
 import * as THREE from "three";
 import { resolveTraveltrustHubLatLon } from "@/lib/traveltrustGlobePinDisplay";
+import { globeSurfaceLonToWgs84LonDeg } from "@/lib/traveltrustHubGeo";
 import { latLonToUnitVector, TRAVELTRUST_PHASE1_GLOBE_REGIONS } from "@/lib/traveltrustPhase1GlobeRegions";
 import { TT_CINEMATIC_GLOBE_VISUAL } from "@/lib/traveltrustCinematicVisual";
 
 /** Hero 面向美洲时优先大西洋走廊（避免北太平洋悬空弦） */
-export const HERO_GLOBE_ROUTE_SET_ATLANTIC = new Set(["us-fr", "us-es", "fr-es", "es-us"]);
+export const HERO_GLOBE_ROUTE_SET_ATLANTIC = new Set(["us-fr", "us-es", "fr-es", "es-us", "fr-ae"]);
 
-/** Hero 面向欧亚时优先亚太走廊（不含 cn-fr，避免欧陆光团） */
-export const HERO_GLOBE_ROUTE_SET_ASIA = new Set(["cn-th", "cn-jp", "jp-sg"]);
+/** Hero 面向欧亚时优先亚太走廊（不含 cn-fr，避免北俄悬空弦） */
+export const HERO_GLOBE_ROUTE_SET_ASIA = new Set([
+  "cn-th",
+  "cn-jp",
+  "cn-sg",
+  "jp-sg",
+  "jp-th",
+  "kr-cn",
+  "kr-jp",
+  "kr-sg",
+  "kr-th",
+  "th-sg",
+  "th-ae",
+  "sg-au",
+  "sg-ae",
+  "au-jp",
+]);
 
-/** 大西洋视角仅保留两条旗舰越洋线 */
-export const HERO_GLOBE_ATLANTIC_ROUTE_IDS = ["us-fr", "us-es"] as const;
+/** 大西洋视角 · 美欧西三角 + 欧—中东 */
+export const HERO_GLOBE_ATLANTIC_ROUTE_IDS = ["us-fr", "us-es", "fr-es", "es-us", "fr-ae"] as const;
 
-/** 中性视角下易形成北俄光团的走廊 */
-export const HERO_GLOBE_ROUTE_EXCLUDE_ANY = new Set(["cn-fr", "fr-es", "fr-ae", "es-us"]);
+/** 中性视角：仅排除易形成北俄光团的 cn-fr（P0 · 放开 fr-ae 等） */
+export const HERO_GLOBE_ROUTE_EXCLUDE_ANY = new Set(["cn-fr"]);
 
-/** 亚太视角优先走廊（≤3 条） */
-export const HERO_GLOBE_ASIA_ROUTE_IDS = ["cn-th", "cn-jp", "jp-sg"] as const;
+/** 亚太视角 · 东亚/东南亚/澳新/中东多点网状（非单枢纽） */
+export const HERO_GLOBE_ASIA_ROUTE_IDS = [
+  "cn-th",
+  "cn-jp",
+  "cn-sg",
+  "kr-cn",
+  "kr-jp",
+  "kr-th",
+  "jp-th",
+  "jp-sg",
+  "th-sg",
+  "th-ae",
+  "sg-ae",
+  "sg-au",
+  "au-jp",
+] as const;
 
 const REGION_BY_ID = Object.fromEntries(TRAVELTRUST_PHASE1_GLOBE_REGIONS.map((r) => [r.id, r])) as Record<
   string,
@@ -120,7 +150,7 @@ export function arcMidpointLatLon(points: THREE.Vector3[]): { lat: number; lon: 
   const mid = points[Math.floor(points.length / 2)] ?? points[0];
   const n = mid.clone().normalize();
   const lat = (Math.asin(THREE.MathUtils.clamp(n.y, -1, 1)) * 180) / Math.PI;
-  const lon = (Math.atan2(n.z, n.x) * 180) / Math.PI;
+  const lon = globeSurfaceLonToWgs84LonDeg((Math.atan2(n.z, n.x) * 180) / Math.PI);
   return { lat, lon };
 }
 
@@ -181,7 +211,7 @@ export function arcFlowPulseNearLandHub(lat: number, lon: number): boolean {
 export function globeVectorToLatLon(v: THREE.Vector3): { lat: number; lon: number } {
   const n = v.clone().normalize();
   const lat = (Math.asin(THREE.MathUtils.clamp(n.y, -1, 1)) * 180) / Math.PI;
-  const lon = (Math.atan2(n.z, n.x) * 180) / Math.PI;
+  const lon = globeSurfaceLonToWgs84LonDeg((Math.atan2(n.z, n.x) * 180) / Math.PI);
   return { lat, lon };
 }
 

@@ -3,7 +3,9 @@
 import { useId, useState } from "react";
 import LoadingText from "@/components/LoadingText";
 import { useTranslation } from "@/components/LocaleProvider";
-import WarmRouteFieldBackdrop from "@/components/shell/WarmRouteFieldBackdrop";
+import { DidRankRouteAmbientDecor } from "@/components/did-rank/DidRankRouteAmbientDecor";
+import { darkRoutePageShellClass, resolveDidRankBackdropSurface } from "@/lib/marketingDarkPremiumBg";
+import { TT_MARKETING_DID_RANK_BOARD_SHELL, TT_MARKETING_DID_RANK_TABLIST } from "@/lib/uiSystem";
 import DidRankPrizePoolSkeleton from "@/components/did-rank/DidRankPrizePoolSkeleton";
 import DidRankHeaderSkeleton from "@/components/did-rank/DidRankHeaderSkeleton";
 import DidRankSkeleton from "@/components/did-rank/DidRankSkeleton";
@@ -15,24 +17,16 @@ export default function DidRankLoading() {
   const rankTabPanelId = useId();
   const rankTabIdPrefix = useId();
   const [periodTab, setPeriodTab] = useState<Period>("week");
+  const didRankSurface = resolveDidRankBackdropSurface();
   return (
     <main
-      className="min-h-screen relative overflow-hidden bg-[#14100d]"
+      className={`${darkRoutePageShellClass(didRankSurface)} overflow-hidden`}
+      data-tt-did-rank-dark-surface={didRankSurface}
       role="status"
       aria-label={t("didRank_title")}
       aria-busy="true"
     >
-      <WarmRouteFieldBackdrop />
-      <div
-        className="fixed inset-0 z-0 bg-web3-podium-spotlight opacity-[0.42] pointer-events-none"
-        aria-hidden
-      />
-      <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden>
-        <div className="absolute inset-0 bg-scifi-gradient-static opacity-80" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-ref-cyan/8 to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_95%_55%_at_50%_-15%,rgba(249,215,121,0.12),transparent_52%),radial-gradient(circle_at_85%_12%,rgba(252,164,124,0.14),transparent_42%),radial-gradient(circle_at_10%_80%,rgba(35,206,217,0.07),transparent_40%)]" />
-        <div className="absolute inset-0 bg-ref-silhouette-vignette opacity-[0.55]" />
-      </div>
+      <DidRankRouteAmbientDecor />
 
       <div className="relative z-10 max-w-7xl mx-auto px-3 py-6 sm:px-4 sm:py-8 lg:py-12">
         <DidRankPrizePoolSkeleton t={t} />
@@ -49,14 +43,11 @@ export default function DidRankLoading() {
           id={rankTabPanelId}
           role="presentation"
           aria-labelledby={`${rankTabIdPrefix}-${periodTab}`}
-          className="rounded-[var(--radius-xl)] border border-white/18 bg-slate-950/55 backdrop-blur-md p-2 sm:p-3 shadow-[0_28px_80px_-32px_rgba(0,0,0,0.78),inset_0_1px_0_rgba(255,255,255,0.07)] flex flex-col lg:flex-row gap-3 lg:gap-0 lg:items-stretch"
+          className={TT_MARKETING_DID_RANK_BOARD_SHELL}
           aria-busy="true"
         >
-          <div
-            className="flex flex-col gap-2 p-3 rounded-[var(--radius-lg)] border border-white/12 bg-gradient-to-b from-slate-900/92 to-slate-950/95 lg:w-[11.5rem] shrink-0 lg:rounded-r-none lg:border-r-2 lg:border-r-cyan-500/25 lg:shadow-[inset_-8px_0_20px_-10px_rgba(0,0,0,0.5)]"
-            aria-hidden
-          >
-            <div className="h-12 w-full rounded-md bg-cyan-500/15 border border-cyan-400/30 animate-pulse" />
+          <div className={TT_MARKETING_DID_RANK_TABLIST} aria-hidden>
+            <div className="h-12 w-full rounded-md bg-ref-sun/12 border border-ref-sun/25 animate-pulse" />
             <div className="h-12 w-full rounded-md bg-slate-800/60 animate-pulse" />
             <div className="h-12 w-full rounded-md bg-slate-800/60 animate-pulse" />
           </div>

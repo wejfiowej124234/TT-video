@@ -11,6 +11,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminAlertIncidentDetailPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminAlertIncidentDetailPage.ts"), "utf8"),
     readFileSync(join(__dir, "adminAlertIncidentDetailPageModel.ts"), "utf8"),
+    readFileSync(join(__dir, "../../../../../lib/admin/useAdminStandardDetailFetch.ts"), "utf8"),
   ].join("\n");
 }
 
@@ -19,6 +20,8 @@ describe("admin alert incident detail page", () => {
 
   it("keeps alert incident route + admin fetch + DOM anchor", () => {
     expect(src).toContain("routes.admin.alertIncident");
+    expect(src).toContain("useAdminStandardDetailFetch");
+    expect(src).toContain("alert-incident-detail");
     expect(src).toContain("adminFetchJson");
     expect(src).toContain("AdminDetailPageChrome");
     expect(src).toContain('"AdminAlertIncidentDetailPage"');

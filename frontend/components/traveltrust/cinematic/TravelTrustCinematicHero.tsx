@@ -46,7 +46,7 @@ import {
   traveltrustChapterBeatDataAttrs,
   traveltrustChapterViewportDataAttrs,
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 import {
   TT_HERO_CONTENT_SHELL_CLASS,
   TT_HERO_COPY_CARD_CLASS,

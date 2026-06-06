@@ -20,6 +20,7 @@ import {
 } from "@/lib/travelLinkFocus";
 import { ordersNewHrefForGuide } from "@/lib/ordersGuideDeepLink";
 import { GuidesRouteSuspense } from "@/components/guides/GuidesRouteSuspense";
+import { GUIDE_DETAIL_RETRY_PILL_CLASS } from "./[id]/guideDetailPageConstants";
 
 /** 向导列表（56-S7：卡片网格与市场 29 信息层级一致，玻璃态风格） */
 function GuidesPageInner() {
@@ -40,7 +41,8 @@ function GuidesPageInner() {
     setError(null);
     setLoading(true);
     getGuides()
-      .then((v) => {
+      .then((res) => {
+        const v = res.items;
         if (!Array.isArray(v)) {
           if (typeof window !== "undefined") {
             console.error("GuidesPage: getGuides returned non-array", v);
@@ -130,7 +132,7 @@ function GuidesPageInner() {
             <button
               type="submit"
               aria-label={t("common_retry")}
-              className={`rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub motion-reduce:transition-none min-h-[44px] inline-flex items-center justify-center ${travelFocusRingOffset2Classes}`}
+              className={GUIDE_DETAIL_RETRY_PILL_CLASS}
             >
               {t("common_retry")}
             </button>

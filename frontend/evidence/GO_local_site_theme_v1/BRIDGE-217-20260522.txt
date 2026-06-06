@@ -1,0 +1,16 @@
+# TT-PH1-217 · /auth + /help 桥接审计（①）
+# 2026-05-22
+
+## 结论
+- `/auth/*`、`/help` 已为 88 浅色 console：`bg-bg-console` / `bg-travel-500` / `travelLinkFocus*`
+- 无 ref-cyan / marketDark 残留；**无需**暖金改码（与 `/guides*` 216 不同）
+
+## 机读（exit 0）
+components/auth/authHelpBridgeTheme.contract.test.ts — 4 passed
+
+## 目视
+WAVE-B-screenshots/auth-login/desktop-1280x800.png
+WAVE-B-screenshots/help/desktop-1280x800.png
+
+## 程序收口
+见 THEME-V1-PROGRAM-CLOSED-20260522.md（206～217）

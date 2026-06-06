@@ -9,6 +9,7 @@ import TxMachineStatus from "@/components/escrow/TxMachineStatus";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { useEscrowFactoryCreate } from "@/dapp/hooks/useEscrowFactoryCreate";
 import { getGuide, getIdempotencyKey, postOrderSetEscrowAddress } from "@/lib/apiClient";
+import { isAssignedGuideId } from "@/lib/isAssignedGuideId";
 import { buildEscrowCreateParams, type BuildEscrowParamsErrorCode } from "@/lib/buildEscrowCreateParams";
 import { getArbitratorAddress } from "@/lib/arbitratorEnv";
 import { getDisputeWindowSeconds } from "@/lib/disputeWindowEnv";
@@ -16,8 +17,18 @@ import { escrowAddressFromFactoryReceipt } from "@/lib/parseEscrowCreatedLog";
 import { getSettlementTokenAddress } from "@/lib/settlementTokenEnv";
 import { mapWalletWriteError } from "@/lib/mapWalletWriteError";
 import { mapApiReadError } from "@/lib/mapApiReadError";
+import { escrowExperiencePrimaryCtaClass } from "@/lib/escrowExperienceUi";
 import {
-  marketCyanPillControlFocusClasses,
+  escrowProtocolModalDescClass,
+  escrowProtocolModalTitleClass,
+  escrowProtocolPillFocusClass,
+  escrowProtocolPrimaryBtnClass,
+  escrowProtocolSecondaryBtnClass,
+  escrowProtocolSubheadingClass,
+  TT_ESCROW_PROTOCOL_MODAL_PANEL,
+  TT_ESCROW_PROTOCOL_SECTION,
+} from "@/lib/escrowProtocolUi";
+import {
   touchTargetLink44Classes,
   travelFocusRingCoreOffset2Classes,
 } from "@/lib/travelLinkFocus";
@@ -71,6 +82,8 @@ export interface CreateOnChainEscrowBlockProps {
   variantDid?: boolean;
   /** B-067 */
   protocolPaused?: boolean;
+  /** Experience 草稿高级区：暖色文案、隐藏 FeeRouter、生产环境不展示 env 清单 */
+  variantExperience?: boolean;
 }
 
 export default function CreateOnChainEscrowBlock({
@@ -85,9 +98,10 @@ export default function CreateOnChainEscrowBlock({
   expectedChainId,
   chainMismatch,
   refreshOrder,
-  panelClassName = "rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md p-6 space-y-3",
+  panelClassName = TT_ESCROW_PROTOCOL_SECTION,
   variantDid,
   protocolPaused = false,
+  variantExperience = false,
 }: CreateOnChainEscrowBlockProps) {
   const { t } = useTranslation();
   const factoryModalTitleId = useId();
@@ -118,8 +132,9 @@ export default function CreateOnChainEscrowBlock({
 
   useEffect(() => {
     const gid = order.guide_id;
-    if (!gid) {
+    if (!isAssignedGuideId(gid)) {
       setGuideWallet(null);
+      setGuideLoadErr(false);
       return;
     }
     let cancelled = false;
@@ -206,7 +221,9 @@ export default function CreateOnChainEscrowBlock({
           : walletMismatch
             ? t("escrow_factoryCreateWalletMismatch")
             : configBlocked
-              ? t("escrow_factoryCreateNeedConfig")
+              ? variantExperience
+                ? t("escrow_factoryCreateNeedConfig_experience")
+                : t("escrow_factoryCreateNeedConfig")
               : built && !built.ok
                 ? t(buildErrKey(built.code))
                 : null;
@@ -287,15 +304,16 @@ export default function CreateOnChainEscrowBlock({
   const showSuccess = isSuccess && syncOk && !syncErr;
   const factoryModalErrorMessage = syncErr ?? submitErr ?? hookErrDisplay;
 
-  const isDid = !!variantDid;
+  const isExperience = !!variantExperience;
+  const isDid = !!variantDid && !isExperience;
   const factoryModalCtaFocusClass = isDid
-    ? marketCyanPillControlFocusClasses
+    ? escrowProtocolPillFocusClass
     : `${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`;
   const modalPanelClass = isDid
-    ? "w-full max-w-md rounded-[var(--radius-xl)] border border-cyan-500/30 bg-slate-900/95 backdrop-blur-md p-6 shadow-scifi-modal-inner space-y-4"
+    ? TT_ESCROW_PROTOCOL_MODAL_PANEL
     : "w-full max-w-md rounded-[var(--radius-sm)] bg-bg-console p-6 shadow-strong space-y-4";
-  const modalTitleClass = isDid ? "text-body-l font-semibold text-cyan-200" : "text-body-l font-semibold text-ink-900";
-  const modalDescClass = isDid ? "text-small text-slate-300 leading-relaxed" : "text-small text-ink-600";
+  const modalTitleClass = isDid ? escrowProtocolModalTitleClass : "text-body-l font-semibold text-ink-900";
+  const modalDescClass = isDid ? escrowProtocolModalDescClass : "text-small text-ink-600";
   const modalUlClass = isDid
     ? "text-small space-y-1 font-mono bg-slate-800/70 border border-slate-600/40 p-3 rounded-[var(--radius-sm)] text-slate-200"
     : "text-small space-y-1 font-mono bg-bg-soft p-3 rounded-[var(--radius-sm)]";
@@ -307,16 +325,47 @@ export default function CreateOnChainEscrowBlock({
 
   return (
     <div className={panelClassName}>
-      <FeeRouterWiringNotice />
-      <h3 className="text-body font-semibold text-cyan-200">{t("escrow_factoryCreateTitle")}</h3>
-      <p className="text-small text-slate-300 leading-relaxed">{t("escrow_factoryCreateDesc")}</p>
+      {!variantExperience ? (
+        <FeeRouterWiringNotice />
+      ) : process.env.NODE_ENV !== "production" ? (
+        <FeeRouterWiringNotice variant="experience" />
+      ) : null}
+      <h3
+        className={
+          isExperience
+            ? "text-body font-semibold text-ref-sun/95"
+            : isDid
+              ? escrowProtocolSubheadingClass
+              : "text-body font-semibold text-ink-800"
+        }
+      >
+        {t(isExperience ? "escrow_factoryCreateTitle_experience" : "escrow_factoryCreateTitle")}
+      </h3>
+      <p
+        className={
+          isExperience
+            ? "text-small text-slate-300 leading-relaxed"
+            : "text-small text-slate-300 leading-relaxed"
+        }
+      >
+        {t(isExperience ? "escrow_factoryCreateDesc_experience" : "escrow_factoryCreateDesc")}
+      </p>
       {protocolPaused ? (
         <p className="text-small text-amber-200/95 leading-relaxed" role="status">
           {t("escrow_protocolPause_body")}
         </p>
       ) : null}
       {disabledReason && (
-        <p className={isDid ? "text-small text-warning/95" : "text-small text-warning"} role="status">
+        <p
+          className={
+            isExperience
+              ? "text-small text-ref-sun/90 leading-relaxed"
+              : isDid
+                ? "text-small text-warning/95"
+                : "text-small text-warning"
+          }
+          role="status"
+        >
           {disabledReason}
         </p>
       )}
@@ -341,7 +390,13 @@ export default function CreateOnChainEscrowBlock({
           type="submit"
           disabled={factoryCtaDisabled}
           aria-busy={isPending ? true : undefined}
-          className={`px-4 py-2 text-small font-medium rounded-[var(--radius-md)] bg-cyan-500/20 text-cyan-300 border border-cyan-400/50 hover:bg-cyan-500/30 disabled:opacity-50 disabled:cursor-not-allowed ${factoryModalCtaFocusClass}`}
+          className={`disabled:opacity-50 disabled:cursor-not-allowed ${factoryModalCtaFocusClass} ${
+            isExperience
+              ? `${escrowExperiencePrimaryCtaClass} w-auto`
+              : isDid
+                ? `${escrowProtocolPrimaryBtnClass} w-auto`
+                : "btn-console rounded-[var(--radius-sm)] bg-trust-600 px-4 py-2 text-white text-small"
+          }`}
         >
           {isPending ? t("escrow_confirming") : t("escrow_factoryCreateCta")}
         </button>

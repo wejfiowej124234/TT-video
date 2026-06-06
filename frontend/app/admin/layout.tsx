@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import zh from "@/locales/zh";
 import { AdminCapabilitiesShell } from "@/components/admin/AdminCapabilitiesShell";
+import { assertAdminConsoleServerGate } from "@/lib/admin/adminLayoutServerGate";
 
 /** 70：Admin 子树统一壳；metadata 惯例取 zh（与 governance 同构）。页身仍由客户端 i18n。 */
 const title = zh.admin_meta_title;
@@ -31,6 +32,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  await assertAdminConsoleServerGate();
   return <AdminCapabilitiesShell>{children}</AdminCapabilitiesShell>;
 }

@@ -44,11 +44,13 @@ function sortKeyFromUpdatedAt(updatedAt: string): number {
 const PLACEHOLDER_IMG =
   "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80";
 
-/** API 列表项：`{ id, payload, updated_at }` */
+/** API 列表项：`{ id, payload, updated_at }`；**`data_origin`** 标明 PG 真源（**L-008** · ①）。 */
 export type MarketCatalogListRow = {
   id: string;
   payload: Record<string, unknown>;
   updated_at: string;
+  /** 仅 **`postgres_catalog`** 列表填充；演示回退行无此字段。 */
+  data_origin?: "postgres_catalog";
 };
 
 export function catalogRowToDemoMerchantListing(row: MarketCatalogListRow): DemoMerchantListing {
@@ -116,7 +118,10 @@ export function catalogRowToDemoAcquisitionListing(row: MarketCatalogListRow): D
   };
 }
 
-export function parseMarketCatalogListRows(raw: unknown[]): MarketCatalogListRow[] {
+export function parseMarketCatalogListRows(
+  raw: unknown[],
+  dataOrigin?: MarketCatalogListRow["data_origin"],
+): MarketCatalogListRow[] {
   const out: MarketCatalogListRow[] = [];
   for (const x of raw) {
     if (x == null || typeof x !== "object") continue;
@@ -125,7 +130,12 @@ export function parseMarketCatalogListRows(raw: unknown[]): MarketCatalogListRow
     const updated_at = typeof o.updated_at === "string" ? o.updated_at : "";
     const payload = o.payload;
     if (!id || !updated_at || payload == null || typeof payload !== "object" || Array.isArray(payload)) continue;
-    out.push({ id, payload: payload as Record<string, unknown>, updated_at });
+    out.push({
+      id,
+      payload: payload as Record<string, unknown>,
+      updated_at,
+      ...(dataOrigin ? { data_origin: dataOrigin } : {}),
+    });
   }
   return out;
 }

@@ -1,11 +1,16 @@
 "use client";
 
+import { formatAdminAppliedFiltersHuman } from "@/lib/admin/formatAdminAppliedFiltersHuman";
+
 import Link from "next/link";
 import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import { AdminAppliedFiltersBanner } from "@/components/admin/AdminAppliedFiltersBanner";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
+import { AdminObservabilitySectionBackLinks } from "@/components/admin/AdminObservabilitySectionBackLinks";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
 import { AdminNoticeBanner } from "@/components/admin/AdminNoticeBanner";
@@ -14,10 +19,14 @@ import { AdminMetaBuildSection, AdminMetaNoteLink } from "@/components/admin/Adm
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { useAdminSchemaPage } from "./useAdminSchemaPage";
-import { ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
+import { observabilityPeerRelatedFoldLinks } from "@/lib/admin/adminObservabilityRelatedFoldLinks";
+import { ADMIN_HUB_DEPTH_LINK_CARD_CLASS, ADMIN_LINK_FOCUS_CLASS, ADMIN_MOTION_CARD_HOVER_CLASS,
+  ADMIN_CONSOLE_JSON_BLOCK_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+} from "@/lib/adminUi";
 function JsonBlock({ value }: { value: unknown }) {
   return (
-    <pre className="mt-1 max-h-72 overflow-auto rounded-[var(--radius-md)] bg-ink-900/90 p-3 text-left text-meta text-ink-100">
+    <pre className={`mt-1 max-h-72 overflow-auto ${ADMIN_CONSOLE_JSON_BLOCK_CLASS}`}>
       {JSON.stringify(value, null, 2)}
     </pre>
   );
@@ -29,7 +38,7 @@ export function AdminSchemaPageMain() {
   const pageTitleId = useId();
   const schemaBucketHeadingId = useId();
   const adminAppliedFiltersDescId = useId();
-  const { loading, error, itemsNotPlainObjectError, items, meta, appliedFilters } = useAdminSchemaPage();
+  const { loading, refreshing, error, itemsNotPlainObjectError, items, meta, appliedFilters } = useAdminSchemaPage();
 
   /** 仅当 items 已由成功响应确认为普通对象时才派生；null 表示响应未给出 items，不得当作「空桶」处理。 */
   const buckets: [string, unknown][] | null =
@@ -39,21 +48,15 @@ export function AdminSchemaPageMain() {
     <AdminListPageChrome
       titleId={pageTitleId}
       title={t("admin_schema_title")}
-      subtitle={t("admin_schema_subtitle")}
-      headerAside={
-        <>
-          <Link
-            href="/admin/observability"
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_observability_title")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_schema_back")}
-          </Link>
-        </>
-      }
+      subtitle={t("admin_schema_subtitle_l5")}
+      headerAside={<AdminObservabilitySectionBackLinks />}
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={observabilityPeerRelatedFoldLinks("/admin/schema")}
+        ariaLabelKey="admin_observability_hub_related_aria"
+        foldSummaryKey="admin_observability_hub_related_fold"
+        dataTtFold="obs-schema"
+      />
       <AdminMetaBuildSection meta={meta} loading={loading} error={error} />
 
       {!loading && !error && meta?.note ? (
@@ -66,15 +69,16 @@ export function AdminSchemaPageMain() {
         </AdminAppliedFiltersBanner>
       ) : null}
 
-      <section
-        className="mt-6 rounded-[var(--radius-xl)] border border-ink-200 bg-bg-console p-4"
+      <AdminWarmL5Surface
+        as="section"
+        className="mt-6"
         aria-label={t("admin_schema_migrations_panel_aria")}
         aria-describedby={
           [!loading && !error && appliedFilters ? adminAppliedFiltersDescId : ""].filter(Boolean).join(" ") ||
           undefined
         }
       >
-        {loading ? (
+        {loading && items === null && !itemsNotPlainObjectError ? (
           <AdminListLoadingStatus message={t("common_loading")} className="text-ink-600" />
         ) : error ? (
           <AdminListFetchError errorKind={error} message={adminErrorUserText(error, t)} />
@@ -91,14 +95,17 @@ export function AdminSchemaPageMain() {
             ]}
           />
         ) : (
-          <div className="space-y-8">
+          <div
+            className={`space-y-8${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
+            data-tt-admin-list-refreshing={refreshing ? "1" : undefined}
+          >
             {buckets.map(([key, value], i) => {
               const bucketHeadingId = `${schemaBucketHeadingId}-b${i}`;
               return (
                 <Link
                   key={key}
                   href="/admin/observability"
-                  className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start rounded-[var(--radius-md)] border border-ink-200/70 bg-bg-console/30 p-3 text-left text-ink-800 transition hover:border-ink-400 hover:text-ink-900 ${ADMIN_LINK_FOCUS_CLASS}`}
+                  className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start ${ADMIN_HUB_DEPTH_LINK_CARD_CLASS} ${ADMIN_MOTION_CARD_HOVER_CLASS} ${ADMIN_LINK_FOCUS_CLASS}`}
                   aria-labelledby={bucketHeadingId}
                 >
                   <h2 id={bucketHeadingId} className="text-small font-semibold uppercase tracking-wide text-ink-500 font-mono">
@@ -110,7 +117,7 @@ export function AdminSchemaPageMain() {
             })}
           </div>
         )}
-      </section>
+      </AdminWarmL5Surface>
     </AdminListPageChrome>
   );
 }

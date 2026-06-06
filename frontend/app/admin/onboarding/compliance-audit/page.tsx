@@ -7,7 +7,7 @@ export default function AdminOnboardingComplianceAuditPage() {
   return (
     <AdminOnboardingListPage
       titleKey="admin_onb_compliance_title"
-      subtitleKey="admin_onb_compliance_subtitle"
+      subtitleKey="admin_onb_compliance_subtitle_l5"
       listUrl={routes.admin.complianceAuditEvents({ limit: 100 })}
       fetchContext="AdminOnboardingComplianceAudit"
       columns={[

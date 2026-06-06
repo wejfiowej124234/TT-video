@@ -1,77 +1,51 @@
 import { useParams, useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 
 import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
 import {
-  type AdminFetchErrorKind,
   adminFetchErrorKind,
   adminFetchJson,
   logAdminFetch,
+  type AdminFetchErrorKind,
 } from "@/lib/adminFetchDisplay";
 import { ADMIN_INBOX_QUEUE_APPROVALS_LIST_HREF } from "@/lib/admin/adminInboxQueueHrefs";
+import { useAdminStandardDetailFetch } from "@/lib/admin/useAdminStandardDetailFetch";
 import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders, getIdempotencyKey, writeRequestHeaders } from "@/lib/apiClient";
+import { getIdempotencyKey, writeRequestHeaders } from "@/lib/apiClient";
 
 import { buildApprovalTimeline } from "../adminApprovalWorkflowModel";
 import { type AdminApprovalDetailRes } from "./adminApprovalDetailPageModel";
 
 export function useAdminApprovalDetailPage() {
   const router = useRouter();
+  const requestConfirm = useAdminL5ConfirmRequest();
   const params = useParams();
   const approvalId = useMemo(() => {
     const raw = typeof params?.id === "string" ? params.id : "";
     return decodeURIComponent(raw.trim());
   }, [params]);
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AdminFetchErrorKind | null>(null);
-  const [body, setBody] = useState<AdminApprovalDetailRes | null>(null);
   const [reloadTick, setReloadTick] = useState(0);
+  const detailUrl = useMemo(
+    () => (approvalId ? routes.admin.approvalById(approvalId) : ""),
+    [approvalId],
+  );
+
+  const { body, loading, refreshing, error } = useAdminStandardDetailFetch<AdminApprovalDetailRes>({
+    scope: "approval-detail",
+    context: "AdminApprovalDetailPage",
+    detailUrl,
+    resourceId: approvalId,
+    refreshToken: reloadTick,
+  });
 
   const [approveNote, setApproveNote] = useState("");
   const [rejectReason, setRejectReason] = useState("");
   const [actionBusy, setActionBusy] = useState<"approve" | "reject" | null>(null);
   const [actionError, setActionError] = useState<AdminFetchErrorKind | null>(null);
   const [lastIdempotencyKey, setLastIdempotencyKey] = useState<string | null>(null);
-
-  const load = useCallback(() => {
-    if (!approvalId) {
-      setLoading(false);
-      setBody(null);
-      return;
-    }
-    setLoading(true);
-    setError(null);
-
-    const headers: Record<string, string> = { "x-request-id": `admin-approval-detail-${Date.now()}` };
-    try {
-      Object.assign(headers, getAuthHeaders());
-    } catch {
-      // 401/403
-    }
-
-    adminFetchJson<AdminApprovalDetailRes>(
-      "AdminApprovalDetailPage",
-      apiUrl(routes.admin.approvalById(approvalId)),
-      { headers },
-    )
-      .then(({ res, body: json }) => {
-        if (!res.ok) {
-          throw new Error(json.error || `request_failed_${res.status}`);
-        }
-        return json;
-      })
-      .then(setBody)
-      .catch((e: unknown) => {
-        logAdminFetch("AdminApprovalDetailPage", e);
-        setError(adminFetchErrorKind(e));
-      })
-      .finally(() => setLoading(false));
-  }, [approvalId]);
-
-  useEffect(() => {
-    load();
-  }, [load, reloadTick]);
 
   const row =
     body?.approval_request && typeof body.approval_request === "object" ? body.approval_request : null;
@@ -80,7 +54,7 @@ export function useAdminApprovalDetailPage() {
   const status = String(row?.status ?? "").trim().toLowerCase();
   const isPending = status === "pending";
 
-  const runAction = async (kind: "approve" | "reject") => {
+  const runActionImpl = async (kind: "approve" | "reject") => {
     if (!approvalId) return;
     setActionBusy(kind);
     setActionError(null);
@@ -123,9 +97,29 @@ export function useAdminApprovalDetailPage() {
     }
   };
 
+  const runAction = useCallback(
+    (kind: "approve" | "reject") => {
+      if (kind === "reject" && !rejectReason.trim()) {
+        setActionError(adminFetchErrorKind(new Error("admin_approval_reject_reason_required")));
+        return;
+      }
+      requestConfirm({
+        titleKey: kind === "approve" ? "admin_l5_confirm_title_approve" : "admin_l5_confirm_title_reject",
+        descKey:
+          kind === "approve"
+            ? "admin_l5_confirm_desc_approval_approve"
+            : "admin_l5_confirm_desc_approval_reject",
+        danger: kind === "reject",
+        onConfirm: () => runActionImpl(kind),
+      });
+    },
+    [rejectReason, requestConfirm],
+  );
+
   return {
     approvalId,
     loading,
+    refreshing,
     error,
     row,
     meta,

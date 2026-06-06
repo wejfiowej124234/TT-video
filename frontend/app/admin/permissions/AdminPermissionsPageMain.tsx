@@ -6,6 +6,7 @@ import { AdminSortableTh } from "@/components/admin/AdminSortableTh";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { AdminNoticeBanner } from "@/components/admin/AdminNoticeBanner";
@@ -21,13 +22,18 @@ import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 import { sortRowsByKey, useAdminTableSort } from "@/lib/admin/useAdminTableSort";
 import {
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  ADMIN_TABLE_SURFACE_CLASS,
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TIER_SUPER_WRITE_BADGE_CLASS,
   ADMIN_ROLE_MATRIX_DIFF_ROW_CLASS,
   ADMIN_ROLE_MATRIX_DIFF_TEXT_CLASS,
-  ADMIN_HOME_WIDGET_CARD_CLASS,
   adminPageNavLinkClass,
-} from "@/lib/adminUi";
+  ADMIN_ROLE_MATRIX_CURRENT_ROW_CLASS,
+  ADMIN_FORM_CONTROL_SM_CLASS,
+  ADMIN_TABLE_DIVIDE_CLASS,
+  ADMIN_INNER_DIVIDER_CLASS,
+  ADMIN_PERMISSION_YES_TEXT_CLASS,} from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 
 import { AdminPermissions2faPolicyPanel } from "./AdminPermissions2faPolicyPanel";
 import { AdminPermissionsTotpPanel } from "./AdminPermissionsTotpPanel";
@@ -42,6 +48,7 @@ import { AdminPermissionsPhase2RunbookStrip } from "@/components/admin/AdminPerm
 import { AdminPhase2RemainingBacklogPanel } from "@/components/admin/AdminPhase2RemainingBacklogPanel";
 import { AdminPermissionsSelfConsoleRole } from "@/components/admin/AdminPermissionsSelfConsoleRole";
 import { isAdminMaintainerUi } from "@/lib/admin/adminMaintainerUiMode";
+import { PERMISSIONS_PAGE_RELATED_FOLD_LINKS } from "@/lib/admin/adminPermissionsRelatedFoldLinks";
 import { AdminConsoleRoleShellPreview } from "./AdminConsoleRoleShellPreview";
 import { useAdminPermissionsPage } from "./useAdminPermissionsPage";
 
@@ -108,16 +115,16 @@ export function AdminPermissionsPageMain() {
       title={t("admin_permissions_title")}
       subtitle={
         <>
-          <p>{t("admin_permissions_subtitle")}</p>
+          <p>{t("admin_permissions_subtitle_l5")}</p>
           {maintainer && caps.matrixVersion ? (
-            <p className="mt-1 font-mono text-meta text-ink-500">{caps.matrixVersion}</p>
+            <p className="mt-1 font-mono text-small text-ink-800 text-ink-500">{caps.matrixVersion}</p>
           ) : null}
           {!caps.loading && !caps.capabilitiesUnavailable && caps.consoleRole70 ? (
             <p className="mt-2 text-small text-ink-700" data-tt-admin-permissions-console-role-line="1">
               <span className="font-medium">{t("admin_permissions_console_role")}:</span>{" "}
               {t(CONSOLE_ROLE_70_LABEL_KEYS[caps.consoleRole70])}
               {maintainer ? (
-                <span className="ml-2 font-mono text-meta text-ink-500">
+                <span className="ml-2 font-mono text-small text-ink-800 text-ink-500">
                   ({caps.role ?? "—"} → {caps.consoleRole70})
                 </span>
               ) : null}
@@ -131,6 +138,12 @@ export function AdminPermissionsPageMain() {
         "data-tt-admin-permissions-phase2-prep": "1",
       }}
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={PERMISSIONS_PAGE_RELATED_FOLD_LINKS}
+        ariaLabelKey="admin_ops_list_related_aria"
+        foldSummaryKey="admin_ops_list_related_fold"
+        dataTtFold="permissions"
+      />
       <AdminPermissionsProductionSafetyPanel
         phase2Prep={caps.phase2Prep}
         consoleRoleDirectAllowed={consoleRoleDirectAllowed}
@@ -194,7 +207,7 @@ export function AdminPermissionsPageMain() {
                 <li>{t("admin_permissions_phase2_item_staging")}</li>
               </ul>
               {maintainer && caps.consoleRoleSource?.includes("OVERRIDE") ? (
-                <p className="mt-2 font-mono text-meta">{t("admin_permissions_override_hint")}</p>
+                <p className="mt-2 font-mono text-small text-ink-800">{t("admin_permissions_override_hint")}</p>
               ) : null}
             </>
           }
@@ -202,8 +215,9 @@ export function AdminPermissionsPageMain() {
       </AdminPermissionsMaintainerFold>
 
       {editPrep && canAssignRole ? (
-        <section
-          className="mt-6 rounded-[var(--radius-lg)] border border-ink-200 bg-white p-4"
+        <AdminWarmL5Surface
+          as="section"
+          className="mt-6"
           aria-label={t("admin_permissions_assign_aria")}
           data-tt-admin-console-role-assign="1"
         >
@@ -217,7 +231,7 @@ export function AdminPermissionsPageMain() {
             <label className="block text-small">
               <span className="font-medium text-ink-800">{t("admin_permissions_assign_user_id")}</span>
               <input
-                className="mt-1 block w-full min-w-[240px] rounded border border-ink-200 px-2 py-1.5 font-mono text-meta"
+                className={`mt-1 block w-full min-w-[240px] ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1.5 font-mono text-small text-ink-800`}
                 value={targetUserId}
                 onChange={(e) => setTargetUserId(e.target.value)}
               />
@@ -225,7 +239,7 @@ export function AdminPermissionsPageMain() {
             <label className="block text-small">
               <span className="font-medium text-ink-800">{t("admin_permissions_assign_role")}</span>
               <select
-                className="mt-1 block rounded border border-ink-200 px-2 py-1.5"
+                className={`mt-1 block ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1.5`}
                 value={targetRole}
                 onChange={(e) => setTargetRole(e.target.value as ConsoleRole70)}
               >
@@ -239,7 +253,7 @@ export function AdminPermissionsPageMain() {
             <label className="block flex-1 text-small">
               <span className="font-medium text-ink-800">{t("admin_permissions_assign_reason")}</span>
               <input
-                className="mt-1 block w-full rounded border border-ink-200 px-2 py-1.5"
+                className={`mt-1 block w-full ${ADMIN_FORM_CONTROL_SM_CLASS} px-2 py-1.5`}
                 value={assignReason}
                 onChange={(e) => setAssignReason(e.target.value)}
               />
@@ -254,7 +268,7 @@ export function AdminPermissionsPageMain() {
             </button>
           </div>
           {assignMsg ? <p className="mt-3 text-small text-ink-700">{assignMsg}</p> : null}
-        </section>
+        </AdminWarmL5Surface>
       ) : null}
 
       {totpWired ? <AdminPermissionsTotpPanel /> : null}
@@ -270,11 +284,11 @@ export function AdminPermissionsPageMain() {
         />
       ) : (
         <>
-          <section className="mt-6" aria-label={t("admin_permissions_my_grants_aria")}>
+          <AdminWarmL5Surface as="section" className="mt-6" aria-label={t("admin_permissions_my_grants_aria")}>
             <h2 className="text-body font-semibold text-ink-900">{t("admin_permissions_my_grants")}</h2>
-            <div className="mt-3 overflow-x-auto rounded-[var(--radius-lg)] border border-ink-200">
+            <div className={`mt-3 ${ADMIN_TABLE_SURFACE_CLASS}`}>
               <table className="min-w-full text-left text-small">
-                <thead className="bg-ink-50 text-meta font-medium text-ink-600">
+                <thead className={ADMIN_TABLE_THEAD_CLASS}>
                   <tr>
                     <th scope="col" className="px-3 py-2">{t("admin_permissions_col_perm")}</th>
                     <th scope="col" className="px-3 py-2">{t("admin_permissions_col_label")}</th>
@@ -287,10 +301,10 @@ export function AdminPermissionsPageMain() {
                     return (
                       <tr
                         key={row.id}
-                        className="border-t border-ink-100"
+                        className={ADMIN_INNER_DIVIDER_CLASS}
                         data-tt-admin-perm-row={row.id}
                       >
-                        <td className="px-3 py-2 font-mono text-meta">{row.id}</td>
+                        <td className="px-3 py-2 font-mono text-small text-ink-800">{row.id}</td>
                         <td className="px-3 py-2">
                           {t(row.labelKey)}
                           {row.superOnly ? (
@@ -301,7 +315,7 @@ export function AdminPermissionsPageMain() {
                         </td>
                         <td className="px-3 py-2">
                           {granted ? (
-                            <span className="text-emerald-700">{t("admin_permissions_yes")}</span>
+                            <span className={ADMIN_PERMISSION_YES_TEXT_CLASS}>{t("admin_permissions_yes")}</span>
                           ) : (
                             <span className="text-ink-400">{t("admin_permissions_no")}</span>
                           )}
@@ -312,11 +326,12 @@ export function AdminPermissionsPageMain() {
                 </tbody>
               </table>
             </div>
-          </section>
+          </AdminWarmL5Surface>
 
           {caps.roleMatrixPreview ? (
-            <section
-              className={`mt-10 ${ADMIN_HOME_WIDGET_CARD_CLASS}`}
+            <AdminWarmL5Surface
+              as="section"
+              className="mt-10"
               aria-label={t("admin_permissions_matrix_aria")}
               data-tt-admin-permissions-matrix-card="1"
             >
@@ -325,8 +340,8 @@ export function AdminPermissionsPageMain() {
               </h2>
               <p className="mt-1 text-small text-ink-600">{t("admin_permissions_matrix_hint")}</p>
               <AdminPermissionsMatrixLegend />
-              <div className="mt-3 overflow-x-auto rounded-[var(--radius-lg)] border border-ink-200">
-                <table className="min-w-full divide-y divide-ink-100 text-left text-small">
+              <div className={`mt-3 ${ADMIN_TABLE_SURFACE_CLASS}`}>
+                <table className={`min-w-full ${ADMIN_TABLE_DIVIDE_CLASS} text-left text-small`}>
                   <thead className={ADMIN_TABLE_THEAD_CLASS}>
                     <tr>
                       <AdminSortableTh
@@ -363,7 +378,7 @@ export function AdminPermissionsPageMain() {
                       return (
                         <tr
                           key={roleId}
-                          className={`border-t border-ink-100 ${active ? "bg-ink-50/80" : diff > 0 ? ADMIN_ROLE_MATRIX_DIFF_ROW_CLASS : ""}`}
+                          className={`${ADMIN_INNER_DIVIDER_CLASS} ${active ? ADMIN_ROLE_MATRIX_CURRENT_ROW_CLASS : diff > 0 ? ADMIN_ROLE_MATRIX_DIFF_ROW_CLASS : ""}`}
                           data-tt-admin-role70-row={roleId}
                           data-tt-admin-role70-current={active ? "1" : undefined}
                           data-tt-admin-role70-diff={diff > 0 && !active ? String(diff) : undefined}
@@ -376,8 +391,8 @@ export function AdminPermissionsPageMain() {
                               </span>
                             ) : null}
                           </td>
-                          <td className="px-3 py-2 font-mono text-meta">{perms.length}</td>
-                          <td className="px-3 py-2 font-mono text-meta">
+                          <td className="px-3 py-2 font-mono text-small text-ink-800">{perms.length}</td>
+                          <td className="px-3 py-2 font-mono text-small text-ink-800">
                             {active ? (
                               t("admin_permissions_diff_same")
                             ) : diff > 0 ? (
@@ -394,7 +409,7 @@ export function AdminPermissionsPageMain() {
                   </tbody>
                 </table>
               </div>
-            </section>
+            </AdminWarmL5Surface>
           ) : null}
 
           {caps.roleMatrixPreview ? (
@@ -403,14 +418,6 @@ export function AdminPermissionsPageMain() {
         </>
       )}
 
-      <p className="mt-8 text-small text-ink-600">
-        <Link
-          href="/admin"
-          className={adminPageNavLinkClass()}
-        >
-          {t("admin_schema_back")}
-        </Link>
-      </p>
     </AdminDetailPageChrome>
   );
 }

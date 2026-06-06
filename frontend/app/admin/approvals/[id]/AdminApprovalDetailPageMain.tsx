@@ -1,27 +1,30 @@
 "use client";
 
-import Link from "next/link";
+import { AdminDetailContentPanel } from "@/components/admin/AdminDetailContentPanel";
 import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
+import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { AdminAlertError } from "@/components/admin/AdminAlertError";
 import { AdminMetaBuildSection } from "@/components/admin/AdminMetaBuildPanel";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
-import { ADMIN_INBOX_QUEUE_APPROVALS_LIST_HREF } from "@/lib/admin/adminInboxQueueHrefs";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
-import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import {
-  ADMIN_FILTER_CARD_CLASS,
-  ADMIN_LINK_FOCUS_CLASS,
   ADMIN_QUEUE_STATUS_ATTENTION_BADGE_CLASS,
   ADMIN_QUEUE_STATUS_NEUTRAL_BADGE_CLASS,
-  adminPageNavLinkClass,
+  ADMIN_PAGE_CHROME_SUBTITLE_HINT_CLASS,
+  ADMIN_PAGE_CHROME_SUBTITLE_ID_CLASS,
+  ADMIN_DETAIL_FIELD_LABEL_CLASS,
+  ADMIN_DETAIL_FIELD_ROW_SIMPLE_CLASS,
+  ADMIN_DETAIL_FIELD_VALUE_MONO_CLASS,
+  ADMIN_DETAIL_SECTION_TITLE_CLASS,
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
 } from "@/lib/adminUi";
 
 import { approvalStatusLabelKey } from "../adminApprovalWorkflowModel";
-import { APPROVAL_DETAIL_ROW_DEFS, fmtApprovalDetailValue } from "./adminApprovalDetailPageModel";
+import { APPROVAL_DETAIL_RELATED_FOLD_LINKS, APPROVAL_DETAIL_ROW_DEFS, fmtApprovalDetailValue } from "./adminApprovalDetailPageModel";
 import { AdminApprovalDetailTimeline } from "./AdminApprovalDetailTimeline";
 import { AdminApprovalDetailWorkflowPanel } from "./AdminApprovalDetailWorkflowPanel";
 import { useAdminApprovalDetailPage } from "./useAdminApprovalDetailPage";
@@ -30,7 +33,7 @@ export function AdminApprovalDetailPageMain() {
   const { t } = useTranslation();
   const pageTitleId = useId();
   const vm = useAdminApprovalDetailPage();
-  const { approvalId, loading, error, row, meta, timeline, isPending } = vm;
+  const { approvalId, loading, refreshing, error, row, meta, timeline, isPending } = vm;
   const statusKey = approvalStatusLabelKey(typeof row?.status === "string" ? row.status : undefined);
 
   return (
@@ -39,7 +42,7 @@ export function AdminApprovalDetailPageMain() {
       title={t("admin_approval_detail_title")}
       subtitle={
         <>
-          <p className="font-mono text-meta break-all">{approvalId || t("admin_em_dash")}</p>
+          <p className={ADMIN_PAGE_CHROME_SUBTITLE_ID_CLASS}>{approvalId || t("admin_em_dash")}</p>
           {row ? (
             <span
               className={`mt-2 inline-flex rounded-full px-2 py-0.5 text-meta font-medium ${
@@ -49,47 +52,40 @@ export function AdminApprovalDetailPageMain() {
               {t(statusKey)}
             </span>
           ) : null}
-          <p className="mt-1 text-small text-ink-500">{t("admin_approval_detail_subtitle_l5")}</p>
-        </>
-      }
-      headerAside={
-        <>
-          <Link
-            href={ADMIN_INBOX_QUEUE_APPROVALS_LIST_HREF}
-            className={`${adminPageNavLinkClass()}`}
-          >
-            {t("admin_approval_detail_back_list")}
-          </Link>
-          <Link href="/admin/users" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_approvals_linkUsers")}
-          </Link>
-          <Link href="/admin" className={`${adminPageNavLinkClass()}`}>
-            {t("admin_schema_back")}
-          </Link>
+          <p className={ADMIN_PAGE_CHROME_SUBTITLE_HINT_CLASS}>{t("admin_approval_detail_subtitle_l5")}</p>
         </>
       }
     >
+      <AdminOpsDetailRelatedFold
+        relatedLinks={APPROVAL_DETAIL_RELATED_FOLD_LINKS}
+        ariaLabelKey="admin_approval_detail_related_aria"
+        foldSummaryKey="admin_approval_detail_related_fold"
+        dataTtFold="approval"
+      />
       <AdminMetaBuildSection meta={meta} loading={loading} error={error} />
 
       <section className="mt-6 grid gap-6 lg:grid-cols-2" aria-label={t("admin_approval_detail_panel_aria")}>
         <div className="space-y-4">
           {!approvalId ? (
             <AdminAlertError message={t("admin_approval_detail_missingId")} />
-          ) : loading ? (
+          ) : loading && !row ? (
             <AdminListLoadingStatus message={t("admin_loading")} className="text-body text-ink-600" />
-          ) : error ? (
+          ) : error && !row ? (
             <AdminListFetchError errorKind={error} message={adminErrorUserText(error, t)} />
           ) : !row ? (
             <p className="text-body text-ink-600">{t("admin_em_dash")}</p>
           ) : (
-            <>
-              <div className={`${ADMIN_FILTER_CARD_CLASS} shadow-soft`}>
-                <h2 className="text-small font-semibold uppercase tracking-wide text-ink-500">
+            <div
+              className={`space-y-4${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
+              data-tt-admin-detail-refreshing={refreshing ? "1" : undefined}
+            >
+              <AdminDetailContentPanel>
+                <h2 className={ADMIN_DETAIL_SECTION_TITLE_CLASS}>
                   {t("admin_approval_timeline_aria")}
                 </h2>
                 <AdminApprovalDetailTimeline steps={timeline} />
-              </div>
-              <details className={`${ADMIN_FILTER_CARD_CLASS}`}>
+              </AdminDetailContentPanel>
+              <AdminDetailContentPanel as="details">
                 <summary className="cursor-pointer text-small font-medium text-ink-800">
                   {t("admin_approval_detail_section")}
                 </summary>
@@ -106,17 +102,17 @@ export function AdminApprovalDetailPageMain() {
                       display = fmtApprovalDetailValue(raw) || t("admin_em_dash");
                     }
                     return (
-                      <div key={key} className="border-b border-ink-100 pb-2 last:border-0">
-                        <dt className="text-meta text-ink-500">{t(labelKey)}</dt>
-                        <dd className="mt-0.5 whitespace-pre-wrap break-all font-mono text-meta text-ink-800">
+                      <div key={key} className={`${ADMIN_DETAIL_FIELD_ROW_SIMPLE_CLASS}`}>
+                        <dt className={ADMIN_DETAIL_FIELD_LABEL_CLASS}>{t(labelKey)}</dt>
+                        <dd className={`${ADMIN_DETAIL_FIELD_VALUE_MONO_CLASS} whitespace-pre-wrap`}>
                           {display}
                         </dd>
                       </div>
                     );
                   })}
                 </dl>
-              </details>
-            </>
+              </AdminDetailContentPanel>
+            </div>
           )}
         </div>
         <div>

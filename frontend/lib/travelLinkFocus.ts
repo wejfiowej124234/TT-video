@@ -43,6 +43,10 @@ export const travelFocusRingOffset2Classes = `${travelLinkFocusClasses} focus-vi
 /** **13/37** 最小触摸高度 + **显式主轴**：拼在 **`text-travel-*`** 信息页 **`Link`**（`` `/help` `` FAQ、`` `/terms/community-guidelines` `` 回链、浅色分段 **`error.tsx`** 脚注三链等）上，与 **`travelFocusRingOffset2Classes`** 同串（**88** §3.5）。默认 **`justify-center`**；左对齐块级链请叠 **`!justify-start`**（如 **`/admin/users`** 表内 **`text-left`** 钮）。 */
 export const touchTargetLink44Classes = "inline-flex min-h-[44px] items-center justify-center";
 
+/** 分段 **`error.tsx`** / Admin·Governance 错误壳：尊重 **`prefers-reduced-motion`**（GO_96_16 D4/D6）。 */
+export const errorBoundaryMotionSafeClasses =
+  "motion-reduce:transition-none motion-reduce:animate-none";
+
 /**
  * **`bg-market-atmosphere`** + **玻璃/青链** 内联 **`text-cyan-300`/`text-slate-300`**：**`/guides`** 列表、**`/guides/[id]`** 全页内联链、**`GuideDetailRouteSuspense`** **`fallback`**、**`MeStatsSection`** **`/market`** 链（与 **`deepShellInlineLinkFocusClasses`** 的 **`slate-950`** offset 分层）。
  * **勿**在 **`ink-*`/`bg-bg-console`** 浅色控制台混用本常量。
@@ -61,3 +65,11 @@ export const deepShellInlineLinkFocusClasses =
 /** 深壳 **`bg-slate-950`** 段 **`error.tsx`** 主 **`button`** / 幽灵 **`Link`**（**重试**、**回首页**）：**`ring-cyan-400`** + **`ring-offset-slate-950`**（与 **`did-rank/error`** 主 CTA 对齐）。 */
 export const deepShellPillControlFocusClasses =
   "focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950";
+
+/** Auth L5 暗壳（`/auth/login` · `/auth/register`）块级控件：暖金 ring · 勿用 cyan / `ring-offset-bg-console` */
+export const authL5PillControlFocusClasses =
+  "focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09]";
+
+/** Auth L5 暗壳内联链 */
+export const authL5InlineLinkFocusClasses =
+  "rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09]";

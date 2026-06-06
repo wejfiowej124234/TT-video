@@ -30,7 +30,7 @@ describe("admin honesty L5 (①)", () => {
     expect(emptyState).toContain("admin_list_empty_next");
     expect(emptyState).toContain("data-tt-admin-list-empty");
     expect(emptyState).toContain("data-tt-admin-list-empty-widget");
-    expect(emptyState).toContain("ADMIN_HOME_WIDGET_CARD_CLASS");
+    expect(emptyState).toContain("AdminWarmL5Surface");
   });
 
   it("defines AdminNoticeBanner for warning/readonly notices", () => {
@@ -119,5 +119,16 @@ describe("admin honesty L5 (①)", () => {
       const src = readFileSync(join(adminAppRoot, rel), "utf8");
       expect(src, rel).toContain("formatAdminAppliedFiltersHuman");
     }
+  });
+
+  it("formatAdminAppliedFiltersHuman callers import SSOT (no ReferenceError)", () => {
+    const importNeedle = 'import { formatAdminAppliedFiltersHuman } from "@/lib/admin/formatAdminAppliedFiltersHuman"';
+    const offenders: string[] = [];
+    for (const file of walkTsx(adminAppRoot)) {
+      const src = readFileSync(file, "utf8");
+      if (!src.includes("formatAdminAppliedFiltersHuman(")) continue;
+      if (!src.includes(importNeedle)) offenders.push(file.replace(/\\/g, "/"));
+    }
+    expect(offenders).toEqual([]);
   });
 });

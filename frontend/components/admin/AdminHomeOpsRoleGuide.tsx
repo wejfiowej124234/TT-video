@@ -8,9 +8,8 @@ import { CONSOLE_ROLE_70_LABEL_KEYS } from "@/lib/admin/adminRole70Matrix";
 import { writeAdminShellPreviewRole } from "@/lib/admin/adminShellPreviewRole";
 import { CONSOLE_ROLES_70 } from "@/lib/admin/adminRole70Matrix";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
-import {
-  ADMIN_PRIMARY_ACTION_BTN_CLASS,
-} from "@/lib/adminUi";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
+import { ADMIN_PRIMARY_ACTION_BTN_CLASS, ADMIN_SECONDARY_PILL_BTN_CLASS } from "@/lib/adminUi";
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
 /** P6 · ① 运营角色能力说明（邮箱角色 vs 控制台角色 vs 审批权）。 */
@@ -28,8 +27,8 @@ export function AdminHomeOpsRoleGuide() {
     : t("admin_home_ops_role_unknown");
 
   return (
-    <section
-      className="rounded-[var(--radius-xl)] border border-ink-200 bg-ink-50/60 p-4 sm:p-5"
+    <AdminWarmL5Surface
+      as="section"
       aria-label={t("admin_home_ops_role_guide_aria")}
       data-tt-admin-home-ops-role-guide="1"
     >
@@ -51,13 +50,13 @@ export function AdminHomeOpsRoleGuide() {
         </Link>
         <Link
           href="/admin/operator-guide"
-          className={`${touchTargetLink44Classes} inline-flex min-h-[44px] items-center rounded-[var(--radius-md)] border border-ink-200 bg-white px-4 text-small font-medium text-ink-700 hover:border-ink-300 ${travelFocusRingOffset2Classes}`}
+          className={`${touchTargetLink44Classes} ${ADMIN_SECONDARY_PILL_BTN_CLASS} ${travelFocusRingOffset2Classes}`}
         >
           {t("admin_home_ops_role_guide_cta_guide")}
         </Link>
         <button
           type="button"
-          className={`${touchTargetLink44Classes} rounded-[var(--radius-md)] border border-ink-200 bg-white px-4 text-small font-medium text-ink-700 hover:border-ink-300 ${travelFocusRingOffset2Classes}`}
+          className={`${touchTargetLink44Classes} ${ADMIN_SECONDARY_PILL_BTN_CLASS} ${travelFocusRingOffset2Classes}`}
           data-tt-admin-home-ops-shell-preview="1"
           onClick={() => {
             const role = caps.consoleRole70 ?? "Ops";
@@ -72,6 +71,6 @@ export function AdminHomeOpsRoleGuide() {
           {t("admin_home_ops_role_guide_cta_preview")}
         </button>
       </div>
-    </section>
+    </AdminWarmL5Surface>
   );
 }

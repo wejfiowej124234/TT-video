@@ -1,24 +1,38 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useRef, useEffect, useLayoutEffect, useState, useCallback, Suspense } from "react";
+import { useRef, useEffect, useState, useCallback, Suspense } from "react";
 import WalletStatusMini from "@/components/trust/WalletStatusMini";
 import { useTranslation } from "@/components/LocaleProvider";
-import { LOCALE_LABELS, LOCALES, type Locale } from "@/lib/i18n";
+import { HeaderLanguageSwitcher } from "@/components/header/HeaderLanguageSwitcher";
+import { HeaderUserMenu } from "@/components/header/HeaderUserMenu";
+import { headerUserMenuVariantFromUtility } from "@/components/header/headerUserMenuNavModel";
+import { useHeaderSession } from "@/components/header/headerSession";
+import { buildHeaderLoginHref } from "@/lib/headerLoginHref";
 import {
-  getMe,
-  clearGetMeCache,
-  postLogout,
-  applyLocalLogoutAfterServerOk,
-  AUTH_USER_ID_KEY,
-} from "@/lib/apiClient";
+  headerBarClassForPathname,
+  headerBrandWordmarkClasses,
+  headerLoginLinkClasses,
+  headerMobileNavRailClassForPathname,
+  headerNavItemIsActive,
+  headerNavLinkClasses,
+  headerRegisterPillClasses,
+  headerSurfaceKindForPathname,
+  headerUtilityVariantForPathname,
+  isAdminHeaderPath,
+  isAuthL5DarkHeaderPath,
+  isCommunityPremiumHeaderPath,
+  shouldSuppressGlobalSiteNav,
+} from "@/lib/uiSystem";
+import { ADMIN_HEADER_RETURN_SITE_CLASS } from "@/lib/adminUi";
+import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 import {
-  travelFocusRingCoreClasses,
-  travelFocusRingCoreInsetMenuClasses,
-  travelFocusRingCoreOffset2WhiteClasses,
-} from "@/lib/travelLinkFocus";
+  TT_MARKETING_HEADER_FOCUS_RING_DARK,
+  TT_MARKETING_HEADER_FOCUS_RING_LIGHT,
+  TT_MARKETING_HEADER_INNER_FRAME,
+  TT_MARKETING_NAV_MOBILE_RAIL_INNER,
+} from "@/lib/marketingUi";
 
 /** 主导航：Link + prefetch 以达 52 §7.5 满分（路由与导航 5/5）；保留 prefetch: false 处用于登录/注册等 */
 const NAV_LINK_PROPS = { prefetch: false } as const;
@@ -30,14 +44,18 @@ function NavLink({
   className,
   children,
   onNavStart,
+  focusRingClass,
+  active,
 }: {
   href: string;
   className: string;
   children: React.ReactNode;
   onNavStart?: () => void;
+  focusRingClass: string;
+  active: boolean;
 }) {
   const router = useRouter();
-  const focusRing = `rounded-sm ${travelFocusRingCoreOffset2WhiteClasses}`;
+  const focusRing = focusRingClass;
   const warm = useCallback(() => {
     try {
       router.prefetch(href);
@@ -49,6 +67,7 @@ function NavLink({
     <Link
       href={href}
       className={`${className} ${focusRing}`}
+      aria-current={active ? "page" : undefined}
       prefetch={true}
       onPointerEnter={warm}
       onPointerDown={onNavStart}
@@ -56,28 +75,6 @@ function NavLink({
       {children}
     </Link>
   );
-}
-
-function useHasUser(pathname: string | null) {
-  /** 首帧必须与 SSR 一致（false），否则客户端若已登录会立刻 true，与占位 Suspense 树冲突导致 hydration 失败 */
-  const [hasUser, setHasUser] = useState(false);
-  const refresh = useCallback(() => {
-    try {
-      setHasUser(typeof window !== "undefined" && !!localStorage.getItem(AUTH_USER_ID_KEY));
-    } catch {
-      setHasUser(false);
-    }
-  }, []);
-  /** 路由切换时与首屏绘制前同步读 storage（在 hydration 后立刻对齐登录态） */
-  useLayoutEffect(() => {
-    refresh();
-  }, [pathname, refresh]);
-  useEffect(() => {
-    const onAuthChange = () => refresh();
-    window.addEventListener("traveltrust:auth-change", onAuthChange);
-    return () => window.removeEventListener("traveltrust:auth-change", onAuthChange);
-  }, [refresh]);
-  return hasUser;
 }
 
 const NAV_BAR_DURATION_MS = 400;
@@ -111,219 +108,22 @@ function useNavigatingBar(pathname: string | null) {
   return { show, onNavStart: showBar };
 }
 
-/** 54-S18：登录后顶栏右侧用户头像 + 下拉（个人中心、我的订单、设置、退出）；有头像则显示头像，无则首字或默认图标 */
-function UserMenu({ hasUser }: { hasUser: boolean }) {
-  const { t } = useTranslation();
-  const router = useRouter();
-  const [open, setOpen] = useState(false);
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-  const [avatarError, setAvatarError] = useState(false);
-  const [nickname, setNickname] = useState<string | null>(null);
-  const [logoutBusy, setLogoutBusy] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const userMenuMeGen = useRef(0);
-
-  const loadUser = useCallback(() => {
-    if (!hasUser) {
-      userMenuMeGen.current += 1;
-      setAvatarUrl(null);
-      setNickname(null);
-      setAvatarError(false);
-      return;
-    }
-    const gen = ++userMenuMeGen.current;
-    getMe()
-      .then((res) => {
-        if (gen !== userMenuMeGen.current) return;
-        const u = (res as { user?: { avatar_url?: string | null; nickname?: string | null } })?.user;
-        setAvatarUrl(u?.avatar_url?.trim() || null);
-        setNickname(u?.nickname?.trim() || null);
-        setAvatarError(false);
-      })
-      .catch((err) => {
-        if (gen !== userMenuMeGen.current) return;
-        if (typeof window !== "undefined") {
-          console.error("Header UserMenu getMe:", err);
-        }
-        setAvatarUrl(null);
-        setNickname(null);
-      });
-  }, [hasUser]);
-
-  useEffect(() => {
-    loadUser();
-  }, [loadUser]);
-  useEffect(() => {
-    const onAuthChange = () => loadUser();
-    window.addEventListener("traveltrust:auth-change", onAuthChange);
-    return () => window.removeEventListener("traveltrust:auth-change", onAuthChange);
-  }, [loadUser]);
-  useEffect(() => {
-    const onProfileUpdated = () => {
-      clearGetMeCache();
-      loadUser();
-    };
-    window.addEventListener("traveltrust:profile-updated", onProfileUpdated);
-    return () => window.removeEventListener("traveltrust:profile-updated", onProfileUpdated);
-  }, [loadUser]);
-
-  useEffect(() => {
-    if (!open) return;
-    const close = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    };
-    document.addEventListener("click", close);
-    return () => document.removeEventListener("click", close);
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [open]);
-
-  const handleLogout = async () => {
-    if (typeof window === "undefined" || logoutBusy) return;
-    setLogoutBusy(true);
-    try {
-      await postLogout();
-      applyLocalLogoutAfterServerOk();
-      setOpen(false);
-      router.push("/");
-    } catch (err) {
-      if (typeof window !== "undefined") {
-        console.error("Header postLogout:", err);
-      }
-    } finally {
-      setLogoutBusy(false);
-    }
-  };
-
-  if (!hasUser) return null;
-
-  const menuClass = "border-ink-200 bg-white text-ink-800 shadow-soft";
-
-  const showAvatar = avatarUrl && !avatarError;
-  const initial = nickname ? nickname.slice(0, 1).toUpperCase() : null;
-  const ringClass = "ring-2 ring-ink-200";
-  const displayName = nickname && nickname.length > 0 ? nickname : t("header_userDefaultName");
-
-  return (
-    <div className="relative" ref={ref}>
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        className={`flex items-center gap-2 rounded-full ${ringClass} pl-0.5 pr-2.5 py-1 min-h-[44px] min-w-0 max-w-[12rem] sm:max-w-[14rem] bg-white hover:bg-ink-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
-        aria-expanded={open}
-        aria-haspopup="menu"
-        aria-label={t("header_userMenu")}
-      >
-        <span className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-ink-200/80 text-ink-700">
-          {showAvatar ? (
-            <Image
-              src={avatarUrl}
-              alt={t("header_userAvatarAlt")}
-              fill
-              className="object-cover"
-              sizes="44px"
-              unoptimized
-              onError={() => setAvatarError(true)}
-            />
-          ) : initial ? (
-            <span className="text-small font-semibold text-ink-700">{initial}</span>
-          ) : (
-            <svg className="h-4 w-4 text-ink-500" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
-              <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-            </svg>
-          )}
-        </span>
-        <span className="text-small font-medium truncate text-ink-800">{displayName}</span>
-        <svg className={`w-3.5 h-3.5 shrink-0 transition-transform text-ink-600 ${open ? "rotate-180" : ""}`} aria-hidden viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 4.5L6 7.5L9 4.5" /></svg>
-      </button>
-      {open && (
-        <div role="menu" className={`absolute right-0 top-full mt-1 min-w-[10rem] rounded-[var(--radius-sm)] border py-1 shadow-strong z-50 ${menuClass}`}>
-          <Link href="/community/me" onClick={() => setOpen(false)} className={`block px-3 py-2 text-small text-ink-800 hover:bg-ink-100 w-full text-left ${travelFocusRingCoreInsetMenuClasses}`} role="menuitem">{t("nav_me")}</Link>
-          <div
-            className="border-t border-ink-200 pt-1 mt-1"
-            role="group"
-            aria-label={t("header_multiIdentity")}
-          >
-            <p className="px-3 py-1.5 text-meta font-medium text-ink-600">{t("header_multiIdentity")}</p>
-            <Link
-              href="/guide/register"
-              onClick={() => setOpen(false)}
-              className={`block px-3 py-2 text-small text-ink-800 hover:bg-ink-100 w-full text-left ${travelFocusRingCoreInsetMenuClasses}`}
-              role="menuitem"
-            >
-              {t("header_identity_applyGuide")}
-            </Link>
-            <Link
-              href="/auth/register?role=provider"
-              onClick={() => setOpen(false)}
-              className={`block px-3 py-2 text-small text-ink-800 hover:bg-ink-100 w-full text-left ${travelFocusRingCoreInsetMenuClasses}`}
-              role="menuitem"
-            >
-              {t("header_identity_provider")}
-            </Link>
-            <Link
-              href="/auth/register?role=steward"
-              onClick={() => setOpen(false)}
-              className={`block px-3 py-2 text-small text-ink-800 hover:bg-ink-100 w-full text-left ${travelFocusRingCoreInsetMenuClasses}`}
-              role="menuitem"
-            >
-              {t("header_identity_steward")}
-            </Link>
-          </div>
-          <Link href="/orders" onClick={() => setOpen(false)} className={`block px-3 py-2 text-small text-ink-800 hover:bg-ink-100 w-full text-left ${travelFocusRingCoreInsetMenuClasses}`} role="menuitem">{t("header_myOrders")}</Link>
-          <Link href="/community/feedback" onClick={() => setOpen(false)} className={`block px-3 py-2 text-small text-ink-800 hover:bg-ink-100 w-full text-left ${travelFocusRingCoreInsetMenuClasses}`} role="menuitem">{t("me_link_feedback")}</Link>
-          <Link href="/pay" onClick={() => setOpen(false)} className={`block px-3 py-2 text-small text-ink-800 hover:bg-ink-100 w-full text-left ${travelFocusRingCoreInsetMenuClasses}`} role="menuitem">{t("header_payHub")}</Link>
-          <Link href="/staking" onClick={() => setOpen(false)} className={`block px-3 py-2 text-small text-ink-800 hover:bg-ink-100 w-full text-left ${travelFocusRingCoreInsetMenuClasses}`} role="menuitem">{t("header_staking")}</Link>
-          <Link href="/me/password" onClick={() => setOpen(false)} className={`block px-3 py-2 text-small text-ink-800 hover:bg-ink-100 w-full text-left ${travelFocusRingCoreInsetMenuClasses}`} role="menuitem">{t("header_settings")}</Link>
-          <form
-            className="block w-full"
-            onSubmit={(e) => {
-              e.preventDefault();
-              void handleLogout();
-            }}
-          >
-            <button
-              type="submit"
-              disabled={logoutBusy}
-              aria-busy={logoutBusy ? true : undefined}
-              className={`block w-full text-left px-3 py-2 text-small text-ink-800 hover:bg-ink-100 disabled:opacity-50 disabled:cursor-not-allowed ${travelFocusRingCoreInsetMenuClasses}`}
-              role="menuitem"
-            >
-              {t("header_logout")}
-            </button>
-          </form>
-        </div>
-      )}
-    </div>
-  );
-}
-
 /** 顶栏登录：returnUrl=当前 pathname+search（站内）；/auth/* 不自指 */
 function HeaderLoginNavLink({
   pathname,
   loginClass,
+  focusRingClass,
   t,
   router,
 }: {
   pathname: string | null;
   loginClass: string;
+  focusRingClass: string;
   t: (k: string) => string;
   router: ReturnType<typeof useRouter>;
 }) {
   const searchParams = useSearchParams();
-  const q = searchParams.toString();
-  const base = pathname ?? "";
-  const returnPath = q ? `${base}?${q}` : base || "/";
-  const href = base.startsWith("/auth")
-    ? "/auth/login"
-    : `/auth/login?returnUrl=${encodeURIComponent(returnPath)}`;
+  const href = buildHeaderLoginHref(pathname, searchParams);
 
   return (
     <Link
@@ -336,127 +136,173 @@ function HeaderLoginNavLink({
           /* noop */
         }
       }}
-      className={`${loginClass} focus-visible:rounded-sm ${travelFocusRingCoreOffset2WhiteClasses}`}
+      className={`${loginClass} rounded-sm ${focusRingClass}`}
     >
       {t("header_login")}
     </Link>
   );
 }
 
-/** L1 全局壳：顶栏、品牌、全局导航、钱包、登录/注册；注册页默认仅旅行者，向导/商家/区域主理人入口在登录后用户菜单「多重身份」 */
+/** L1 全局壳：顶栏、品牌、全局导航、钱包、登录/注册；多重身份申请汇总在 `/me/identities` */
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
   const { show: showNavBar, onNavStart } = useNavigatingBar(pathname);
-  const hasUser = useHasUser(pathname);
-  const { t, locale, setLocale } = useTranslation();
-  const [langOpen, setLangOpen] = useState(false);
-  const langRef = useRef<HTMLDivElement>(null);
+  const { sessionUser, checking, mounted } = useHeaderSession();
+  const showSessionSkeleton = mounted && checking;
+  const showGuestAuthRail = !mounted || (!checking && !sessionUser);
+  const { t } = useTranslation();
 
-  useEffect(() => {
-    if (!langOpen) return;
-    const close = (e: MouseEvent) => {
-      if (langRef.current && !langRef.current.contains(e.target as Node)) setLangOpen(false);
-    };
-    document.addEventListener("click", close);
-    return () => document.removeEventListener("click", close);
-  }, [langOpen]);
-
-  useEffect(() => {
-    if (!langOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setLangOpen(false);
-    };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [langOpen]);
-
-  /** 全站顶栏与 TT 社区一致：白底、深色字（ink-900） */
-  const linkActive = "font-medium border-b-2 border-ink-900 pb-0.5 text-ink-900";
-  const linkInactive = "motion-sub text-ink-900 hover:opacity-80";
-
-  const isHome = pathname === "/";
   const isTraveltrust = pathname?.startsWith("/traveltrust");
-  const isMarket = pathname?.startsWith("/market");
-  const isDidRank = pathname?.startsWith("/did-rank");
-  const isCommunity = pathname?.startsWith("/community");
+  const isAuthL5 = isAuthL5DarkHeaderPath(pathname);
+  const isCommunityPremium = isCommunityPremiumHeaderPath(pathname);
+  const isDarkSurface = headerSurfaceKindForPathname(pathname) !== "light";
+  const headerUtilityVariant = headerUtilityVariantForPathname(pathname);
+  const userMenuVariant = headerUserMenuVariantFromUtility(headerUtilityVariant);
+  const sessionSkeletonClass = isAuthL5 ? "bg-ref-sun/15" : isDarkSurface ? "bg-white/10" : "bg-ink-100";
+  const navLinkClass = (href: string) =>
+    headerNavLinkClasses(pathname, headerNavItemIsActive(pathname, href));
+  const headerNavFocusRing = isDarkSurface
+    ? TT_MARKETING_HEADER_FOCUS_RING_DARK
+    : TT_MARKETING_HEADER_FOCUS_RING_LIGHT;
+  const isAdminMode = isAdminHeaderPath(pathname);
+  const showSiteNav = !shouldSuppressGlobalSiteNav(pathname);
 
   const nav = (
-    <nav className="flex items-center gap-4 flex-wrap">
-      <NavLink href="/" className={isHome ? linkActive : linkInactive} onNavStart={onNavStart}>{t("header_web3Travel")}</NavLink>
-      <NavLink href="/market" className={isMarket ? linkActive : linkInactive} onNavStart={onNavStart}>{t("header_market")}</NavLink>
-      <NavLink href="/did-rank" className={isDidRank ? linkActive : linkInactive} onNavStart={onNavStart}>{t("header_didRank")}</NavLink>
-      <NavLink href="/community" className={isCommunity ? linkActive : linkInactive} onNavStart={onNavStart}>{t("header_community")}</NavLink>
+    <nav className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+      <NavLink
+        href="/"
+        active={headerNavItemIsActive(pathname, "/")}
+        className={navLinkClass("/")}
+        onNavStart={onNavStart}
+        focusRingClass={headerNavFocusRing}
+      >
+        {t("header_web3Travel")}
+      </NavLink>
+      <NavLink
+        href="/market"
+        active={headerNavItemIsActive(pathname, "/market")}
+        className={navLinkClass("/market")}
+        onNavStart={onNavStart}
+        focusRingClass={headerNavFocusRing}
+      >
+        {t("header_market")}
+      </NavLink>
+      <NavLink
+        href="/did-rank"
+        active={headerNavItemIsActive(pathname, "/did-rank")}
+        className={navLinkClass("/did-rank")}
+        onNavStart={onNavStart}
+        focusRingClass={headerNavFocusRing}
+      >
+        {t("header_didRank")}
+      </NavLink>
+      <NavLink
+        href="/community"
+        active={headerNavItemIsActive(pathname, "/community")}
+        className={navLinkClass("/community")}
+        onNavStart={onNavStart}
+        focusRingClass={headerNavFocusRing}
+      >
+        {t("header_community")}
+      </NavLink>
     </nav>
   );
 
-  /* 始终高于所有全屏/半屏弹窗；pointer-events-auto 确保顶栏可点击（不被下层拦截） */
-  const headerBarClass =
-    "relative sticky top-0 z-[300] border-b border-ink-200 bg-white backdrop-blur-sm pointer-events-auto";
+  /* 始终高于全屏弹窗；/traveltrust 用暖墨实心条（marketingUi · 勿 backdrop-blur 混 WebGL） */
+  const headerBarClass = headerBarClassForPathname(pathname);
 
-  const brandWordmarkClass = isTraveltrust
-    ? `font-semibold tracking-tight ${linkActive}`
-    : `font-semibold tracking-tight ${linkInactive}`;
-
-  const loginClass = "text-small text-ink-800 hover:text-ink-900";
-  const registerPillClass =
-    "rounded-full px-4 py-1.5 text-small font-medium border border-ink-200 bg-white text-ink-900 hover:bg-ink-50 hover:border-ink-300 shadow-sm";
+  const brandWordmarkClass = headerBrandWordmarkClasses(pathname);
+  const loginClass = headerLoginLinkClasses(pathname);
+  const registerPillClass = headerRegisterPillClasses(pathname);
+  const mobileNavRailClass = headerMobileNavRailClassForPathname(pathname);
 
   return (
-    <header className={headerBarClass}>
+    <header
+      className={headerBarClass}
+      data-tt-marketing-header-surface={headerSurfaceKindForPathname(pathname)}
+      data-tt-marketing-header-site-nav={showSiteNav ? "1" : "0"}
+      {...(isAdminMode ? { "data-tt-admin-header-mode": "1" } : {})}
+      data-tt-traveltrust-header-merged-chrome-l5={isTraveltrust ? "0" : "1"}
+      {...(isAuthL5 ? { "data-tt-auth-header-l5": "1" } : {})}
+      {...(headerUtilityVariant === "authL5" ? { "data-tt-header-utility-l5": "1" } : {})}
+    >
       {showNavBar && (
-        <div className="absolute left-0 top-0 right-0 h-0.5 bg-travel-500" role="presentation" aria-hidden />
+        <div
+          className={`absolute left-0 top-0 right-0 h-0.5 ${isAuthL5 ? "bg-ref-sun/55" : "bg-travel-500"}`}
+          role="presentation"
+          aria-hidden
+        />
       )}
-      <div className="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3 pointer-events-auto">
+      <div
+        className={`${TT_MARKETING_HEADER_INNER_FRAME} flex flex-wrap items-center justify-between gap-3 py-3 pointer-events-auto ${
+          isCommunityPremium ? "min-h-[4.5rem]" : ""
+        }`}
+      >
         <div className="flex items-center gap-4">
-          <NavLink href="/traveltrust" className={brandWordmarkClass} onNavStart={onNavStart}>
-            TravelTrust
-          </NavLink>
-          <div className="hidden sm:block">{nav}</div>
-        </div>
-        <div className="flex items-center gap-3 flex-wrap">
-          <div className="relative" ref={langRef}>
-            <button
-              type="button"
-              onClick={() => setLangOpen((o) => !o)}
-              className={`flex items-center gap-1.5 rounded-[var(--radius-sm)] border border-ink-200 px-2.5 py-1.5 text-meta text-ink-900 hover:bg-ink-50 ${travelFocusRingCoreOffset2WhiteClasses}`}
-              aria-expanded={langOpen}
-              aria-haspopup="listbox"
-              aria-label={t("header_lang")}
-            >
-              <span>{LOCALE_LABELS[locale]}</span>
-              <svg className={`w-3.5 h-3.5 shrink-0 transition-transform ${langOpen ? "rotate-180" : ""}`} aria-hidden="true" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 4.5L6 7.5L9 4.5" /></svg>
-            </button>
-            {langOpen && (
-              <ul
-                role="listbox"
-                className="absolute right-0 top-full mt-1 min-w-[8rem] rounded-[var(--radius-sm)] border border-ink-200 bg-white py-1 shadow-soft z-50"
+          {isAdminMode ? (
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1" data-tt-admin-header-identity="1">
+              <NavLink
+                href="/admin"
+                active={pathname === "/admin"}
+                className={`${touchTargetLink44Classes} text-body font-semibold text-slate-100 hover:text-ref-sun/95 ${travelFocusRingOffset2Classes}`}
+                onNavStart={onNavStart}
+                focusRingClass={headerNavFocusRing}
               >
-                {LOCALES.map((loc) => (
-                  <li key={loc} role="option" aria-selected={locale === loc}>
-                    <form
-                      className="contents"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        setLocale(loc);
-                        setLangOpen(false);
-                      }}
-                    >
-                      <button
-                        type="submit"
-                        className={`w-full text-left px-3 py-2 text-meta text-ink-900 hover:bg-ink-100 ${travelFocusRingCoreClasses} focus-visible:ring-inset ${locale === loc ? "font-medium" : ""}`}
-                      >
-                        {LOCALE_LABELS[loc]}
-                      </button>
-                    </form>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-          <WalletStatusMini variant="dark" />
-          <UserMenu hasUser={hasUser} />
-          {!hasUser && (
+                {t("header_admin_mode_title")}
+              </NavLink>
+              <span className="hidden text-slate-500 sm:inline" aria-hidden>
+                ·
+              </span>
+              <NavLink
+                href="/"
+                active={false}
+                className={`${ADMIN_HEADER_RETURN_SITE_CLASS} ${travelFocusRingOffset2Classes}`}
+                onNavStart={onNavStart}
+                focusRingClass={headerNavFocusRing}
+                data-tt-admin-return-site-prominent="1"
+                title={t("header_admin_return_site_title")}
+              >
+                {t("header_admin_return_site")}
+              </NavLink>
+            </div>
+          ) : (
+            <>
+              <NavLink href="/traveltrust" className={brandWordmarkClass} onNavStart={onNavStart} focusRingClass={headerNavFocusRing}>
+                TravelTrust
+              </NavLink>
+              <div className="hidden sm:block">{nav}</div>
+            </>
+          )}
+        </div>
+        <div className="flex shrink-0 flex-wrap items-center gap-3 sm:flex-nowrap">
+          <HeaderLanguageSwitcher variant={headerUtilityVariant} />
+          {/* Admin 模式：权限来自邮箱会话；顶栏不展示钱包控件（O5 · ①）。 */}
+          {!isAdminMode ? (
+            <WalletStatusMini
+              variant={
+                headerUtilityVariant === "authL5"
+                  ? "authL5"
+                  : headerUtilityVariant === "community"
+                    ? "community"
+                    : isDarkSurface
+                      ? "light"
+                      : "dark"
+              }
+            />
+          ) : null}
+          {showSessionSkeleton ? (
+            <span
+              className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full motion-safe:animate-pulse ${sessionSkeletonClass}`}
+              aria-busy="true"
+              role="status"
+              aria-label={t("common_loading")}
+            />
+          ) : null}
+          {sessionUser ? (
+            <HeaderUserMenu initialUser={sessionUser} variant={userMenuVariant} />
+          ) : null}
+          {showGuestAuthRail ? (
             <>
               <Suspense
                 fallback={
@@ -470,33 +316,43 @@ export default function Header() {
                         /* noop */
                       }
                     }}
-                    className={`${loginClass} focus-visible:rounded-sm ${travelFocusRingCoreOffset2WhiteClasses}`}
+                    className={`${loginClass} focus-visible:rounded-sm ${headerNavFocusRing}`}
                   >
                     {t("header_login")}
                   </Link>
                 }
               >
-                <HeaderLoginNavLink pathname={pathname} loginClass={loginClass} t={t} router={router} />
+                <HeaderLoginNavLink
+                  pathname={pathname}
+                  loginClass={loginClass}
+                  focusRingClass={headerNavFocusRing}
+                  t={t}
+                  router={router}
+                />
               </Suspense>
-              <Link
-                href="/auth/register"
-                prefetch
-                onPointerEnter={() => {
-                  try {
-                    router.prefetch("/auth/register");
-                  } catch {
-                    /* noop */
-                  }
-                }}
-                className={`${registerPillClass} ${travelFocusRingCoreOffset2WhiteClasses}`}
-              >
-                {t("header_register")}
-              </Link>
+              {!isAdminMode ? (
+                <Link
+                  href="/auth/register"
+                  prefetch
+                  onPointerEnter={() => {
+                    try {
+                      router.prefetch("/auth/register");
+                    } catch {
+                      /* noop */
+                    }
+                  }}
+                  className={`${registerPillClass} ${headerNavFocusRing}`}
+                >
+                  {t("header_register")}
+                </Link>
+              ) : null}
             </>
-          )}
+          ) : null}
         </div>
       </div>
-      <div className="sm:hidden border-t border-ink-200 bg-white px-4 py-2">{nav}</div>
+      {showSiteNav ? (
+        <div className={`${mobileNavRailClass} ${TT_MARKETING_NAV_MOBILE_RAIL_INNER}`}>{nav}</div>
+      ) : null}
     </header>
   );
 }

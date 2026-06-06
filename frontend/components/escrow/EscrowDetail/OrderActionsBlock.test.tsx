@@ -107,6 +107,21 @@ describe("OrderActionsBlock", () => {
     expect(acceptBtn.getAttribute("aria-describedby")).toBeTruthy();
   });
 
+  it("hides accept when allowAccept is false (non-guide traveler)", () => {
+    render(
+      <OrderActionsBlock
+        orderId="order-uuid"
+        state="created"
+        hasEscrow={false}
+        onSuccess={() => {}}
+        expectedChainId={1}
+        allowAccept={false}
+      />,
+    );
+    expect(screen.queryByRole("button", { name: "escrow_accept" })).toBeNull();
+    expect(screen.getByRole("button", { name: "escrow_cancelOrder" })).toBeTruthy();
+  });
+
   it("P07: when chainOffRestConfirmCompletionEnabled and valid escrow, REST confirm-completion not intent-only", async () => {
     const onSuccess = vi.fn();
     orderConfirmCompletionMock.mockResolvedValue(undefined);
