@@ -5,6 +5,7 @@ ARG TRAVELTRUST_BUILD_GIT_SHA=
 ENV TRAVELTRUST_BUILD_GIT_SHA=${TRAVELTRUST_BUILD_GIT_SHA}
 COPY Cargo.toml ./
 COPY crates ./crates
+COPY docs/spec/artifacts ./docs/spec/artifacts
 RUN cargo build --release -p traveltrust-api
 
 FROM debian:bookworm-slim
@@ -13,6 +14,7 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends ca-certificates libssl3 \
   && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /app/target/release/traveltrust-api /usr/local/bin/traveltrust-api
+COPY --from=builder /app/crates/api/migrations /app/crates/api/migrations
 LABEL org.opencontainers.image.revision="${TRAVELTRUST_BUILD_GIT_SHA}"
 EXPOSE 8080
 ENTRYPOINT ["/usr/local/bin/traveltrust-api"]
