@@ -41,5 +41,8 @@ describe("admin disputes page", () => {
     expect(src).toContain("ADMIN_EMPTY_NEXT_DISPUTES_FILTERED_EMPTY");
     expect(src).toContain("AdminAppliedFiltersBanner");
     expect(src).toContain("AdminFinanceSectionBackLinks");
+    expect(readFileSync(join(__dir, "AdminDisputesPageMain.tsx"), "utf8")).toContain(
+      'from "./useAdminDisputesPage"',
+    );
   });
 });

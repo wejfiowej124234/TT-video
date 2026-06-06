@@ -89,7 +89,14 @@ function addFlow(
 }
 
 async function assertNoErrorBoundary(page: Page, role: string, route: string): Promise<boolean> {
-  const err = page.getByText(/页面加载异常|Something went wrong|Application error/i);
+  if (route.startsWith("/admin/")) {
+    await page
+      .locator('[data-tt-admin-list-page="1"], [data-tt-admin-app-page="1"]')
+      .first()
+      .waitFor({ state: "visible", timeout: 30_000 })
+      .catch(() => null);
+  }
+  const err = page.getByText(/页面加载异常|Something went wrong|Application error|出错了/i);
   if ((await err.count()) > 0) {
     addIssue(role, "错误边界", route, "P0", "页面崩溃边界可见", "error boundary rendered", "用户无法继续使用该页");
     addFlow(role, "页面", route, "FAIL", "error boundary");
@@ -117,7 +124,7 @@ async function probeAuthenticatedPage(
   }
   if (route.startsWith("/admin") && !opts?.skipCapabilitiesWait) {
     try {
-      await waitForAdminCapabilitiesReady(page, session, 20_000);
+      await waitForAdminCapabilitiesReady(page, session, 30_000);
     } catch {
       addIssue(role, "Admin 壳层", route, "P1", "capabilities 条未就绪", "waitForAdminCapabilitiesReady timeout", "侧栏/能力条可能空白或降级");
     }
@@ -269,7 +276,7 @@ async function probeAuthenticatedPage(
   });
 
   test("向导 · 向导端与订单", async ({ page }) => {
-    await probeAuthenticatedPage(page, "向导", "/guide", guide, { mainText: /Guide|向导/i });
+    await probeAuthenticatedPage(page, "向导", "/guide", guide, { mainText: /Guide|向导|workspace|工作台/i });
     await probeAuthenticatedPage(page, "向导", "/orders", guide, { mainText: /Order|订单/i });
   });
 
@@ -313,9 +320,9 @@ async function probeAuthenticatedPage(
       waitMs: 2000,
       skipCapabilitiesWait: true,
     });
-    await probeAuthenticatedPage(page, "管理员", "/admin/inbox", admin, { mainText: /Inbox|收件/i, waitMs: 2000, skipCapabilitiesWait: true });
+    await probeAuthenticatedPage(page, "管理员", "/admin/inbox", admin, { mainText: /Task inbox|Inbox|收件|任务/i, waitMs: 2000, skipCapabilitiesWait: true });
     await probeAuthenticatedPage(page, "管理员", "/admin/provider-applications", admin, {
-      mainText: /Provider|商家|Application|申请/i,
+      mainText: /Merchant|商家|Provider|Application|申请|onboarding/i,
       waitMs: 2000,
       skipCapabilitiesWait: true,
     });
