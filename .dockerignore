@@ -6,6 +6,9 @@ target
 **/.next
 contracts
 docs
+!docs/spec
+!docs/spec/artifacts
+!docs/spec/artifacts/onboarding-fee-schedule.v1.yaml
 evidence
 data
 *.md
