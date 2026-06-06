@@ -129,7 +129,7 @@ function useAdminCapabilitiesInternal(options?: { fetchEnabled?: boolean }): Adm
       ? (warm.phase2Prep as AdminPhase2PrepFlags)
       : null,
   );
-  const [loading, setLoading] = useState(fetchEnabled);
+  const [loading, setLoading] = useState(() => fetchEnabled && !warm);
   const [error, setError] = useState(false);
   const [errorCode, setErrorCode] = useState<string | null>(null);
 
@@ -145,8 +145,9 @@ function useAdminCapabilitiesInternal(options?: { fetchEnabled?: boolean }): Adm
         setRoleMatrixPreview,
         setPhase2Prep,
       });
+    } else {
+      setLoading(true);
     }
-    setLoading(true);
     setError(false);
     setErrorCode(null);
 

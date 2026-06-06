@@ -21,6 +21,7 @@ describe("useAdminCapabilities wiring", () => {
     expect(src).toContain("adminApiEnvelopeCode");
     expect(src).toContain("AdminCapabilitiesProvider");
     expect(src).toContain("AdminCapabilitiesContext");
+    expect(src).toContain("fetchEnabled && !warm");
     expect(ADMIN_PERM.APPROVE).toBe("admin.approve");
   });
 });

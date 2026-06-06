@@ -47,6 +47,7 @@ export function AdminActorCapabilityStrip() {
         className="sr-only"
         data-tt-admin-capability-strip="1"
         data-tt-admin-capability-strip-suppressed="1"
+        data-tt-admin-capabilities-loaded={caps.permissionsLoaded ? "1" : undefined}
         aria-hidden
       />
     );

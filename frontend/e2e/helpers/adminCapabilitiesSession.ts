@@ -42,11 +42,11 @@ export async function waitForAdminCapabilitiesReady(
         { timeout: slice },
       );
       if (res.status() === 200) {
-        await expect(page.locator('[data-tt-admin-capability-strip="1"]')).toHaveAttribute(
-          "data-tt-admin-capabilities-loaded",
-          "1",
-          { timeout: 15_000 },
-        );
+        await expect(
+          page.locator(
+            '[data-tt-admin-capability-strip="1"][data-tt-admin-capabilities-loaded="1"]',
+          ),
+        ).toHaveCount(1, { timeout: 15_000 });
         return;
       }
     } catch {
@@ -72,11 +72,11 @@ export async function waitForAdminCapabilitiesReady(
       await page.evaluate(() => {
         window.dispatchEvent(new CustomEvent("traveltrust:auth-change"));
       });
-      await expect(page.locator('[data-tt-admin-capability-strip="1"]')).toHaveAttribute(
-        "data-tt-admin-capabilities-loaded",
-        "1",
-        { timeout: 15_000 },
-      );
+      await expect(
+        page.locator(
+          '[data-tt-admin-capability-strip="1"][data-tt-admin-capabilities-loaded="1"]',
+        ),
+      ).toHaveCount(1, { timeout: 15_000 });
       return;
     }
 

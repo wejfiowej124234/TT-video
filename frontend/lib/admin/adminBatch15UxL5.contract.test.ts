@@ -26,6 +26,7 @@ describe("admin batch15 UX L5 (①)", () => {
   it("capability strip suppresses healthy approver chrome with sr-only marker", () => {
     expect(capStrip).toContain("shouldShowAdminCapabilityStrip");
     expect(capStrip).toContain("data-tt-admin-capability-strip-suppressed");
+    expect(capStrip).toContain("data-tt-admin-capabilities-loaded");
     expect(capStrip).toContain("admin_capability_strip_no_approve_short");
   });
 
