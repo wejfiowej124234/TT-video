@@ -27,6 +27,10 @@ fn chain_off_minimal() -> ChainOffState {
     }
 }
 
+fn bearer_for(uid: Uuid) -> String {
+    format!("Bearer bearer_{uid}")
+}
+
 /// **93 · B-ONB-QUOTE / F-034** ↔ **`matrix_93_b_onb_001a_f034_*`**（**`onboarding::router`**；**无** **`chain_off`** → **503** **`chain_off_unavailable`**）。
 #[tokio::test]
 async fn matrix_93_b_onb_001a_f034_get_onboarding_quote_chain_off_unavailable_503_subrouter() {
@@ -151,7 +155,7 @@ async fn matrix_93_b_onb_002d_f035_post_onboarding_payment_intents_user_write_rl
             Request::builder()
                 .method("POST")
                 .uri("/api/v1/onboarding/payment-intents")
-                .header("X-User-Id", uid.to_string())
+                .header(header::AUTHORIZATION, bearer_for(uid))
                 .header(header::CONTENT_TYPE, "application/json")
                 .body(Body::from(req_body))
                 .unwrap(),
@@ -164,7 +168,7 @@ async fn matrix_93_b_onb_002d_f035_post_onboarding_payment_intents_user_write_rl
             Request::builder()
                 .method("POST")
                 .uri("/api/v1/onboarding/payment-intents")
-                .header("X-User-Id", uid.to_string())
+                .header(header::AUTHORIZATION, bearer_for(uid))
                 .header(header::CONTENT_TYPE, "application/json")
                 .body(Body::from(req_body))
                 .unwrap(),
@@ -218,7 +222,7 @@ async fn matrix_93_b_onb_002b_f035_post_onboarding_payment_intents_stub_not_conf
             Request::builder()
                 .method("POST")
                 .uri("/api/v1/onboarding/payment-intents")
-                .header("X-User-Id", uid.to_string())
+                .header(header::AUTHORIZATION, bearer_for(uid))
                 .header(header::CONTENT_TYPE, "application/json")
                 .body(Body::from(r#"{"role":"provider"}"#))
                 .unwrap(),
@@ -256,7 +260,7 @@ async fn matrix_93_b_onb_003b_f037_get_onboarding_entitlements_me_empty_ok_200_s
         .oneshot(
             Request::builder()
                 .uri("/api/v1/onboarding/entitlements/me")
-                .header("X-User-Id", uid.to_string())
+                .header(header::AUTHORIZATION, bearer_for(uid))
                 .body(Body::empty())
                 .unwrap(),
         )
@@ -283,7 +287,7 @@ async fn matrix_93_b_onb_004a_f038_post_onboarding_role_confirm_entitlement_requ
             Request::builder()
                 .method("POST")
                 .uri("/api/v1/onboarding/role-confirm")
-                .header("X-User-Id", uid.to_string())
+                .header(header::AUTHORIZATION, bearer_for(uid))
                 .header(header::CONTENT_TYPE, "application/json")
                 .body(Body::from("{}"))
                 .unwrap(),

@@ -266,11 +266,11 @@ async fn admin_approval_detail_forbidden_for_non_admin() {
 
 #[tokio::test]
 async fn admin_approval_detail_invalid_id_returns_400() {
-    let admin = user_with_role("admin");
+    let sa = user_with_role("super_admin");
     let resp = get_admin_approval_by_id(
-        State(build_state(vec![admin.clone()])),
+        State(build_state(vec![sa.clone()])),
         Path("bad".to_string()),
-        auth_headers(admin.id),
+        auth_headers(sa.id),
     )
     .await
     .into_response();
@@ -281,12 +281,12 @@ async fn admin_approval_detail_invalid_id_returns_400() {
 
 #[tokio::test]
 async fn admin_approval_detail_requires_db() {
-    let admin = user_with_role("admin");
+    let sa = user_with_role("super_admin");
     let aid = Uuid::new_v4();
     let resp = get_admin_approval_by_id(
-        State(build_state(vec![admin.clone()])),
+        State(build_state(vec![sa.clone()])),
         Path(aid.to_string()),
-        auth_headers(admin.id),
+        auth_headers(sa.id),
     )
     .await
     .into_response();
@@ -1262,10 +1262,9 @@ async fn admin_require_admin_actor_not_impl_without_chain_off_with_bearer() {
     .await;
 }
 
-/// **`require_super_admin_uid`** 内部先调 **`require_admin_actor`**：无 **`chain_off`** 时同样 **501** **`GET /api/v1/admin/*`**（不写库、不校验 body 业务规则）。
+/// Admin **写**路径在无 **`chain_off`** 时须 **501** **`not_implemented`**（handler 首部或 **`require_admin_actor`**）。
 #[tokio::test]
 async fn admin_require_super_admin_uid_not_impl_without_chain_off_with_bearer() {
-    const STAR: &str = "GET /api/v1/admin/*";
     let sa = user_with_role("super_admin");
 
     let mut st = build_state(vec![sa.clone()]);
@@ -1281,7 +1280,7 @@ async fn admin_require_super_admin_uid_not_impl_without_chain_off_with_bearer() 
         )
         .await
         .into_response(),
-        STAR,
+        "POST /api/v1/admin/approvals/:id/approve",
     )
     .await;
 
@@ -1302,7 +1301,7 @@ async fn admin_require_super_admin_uid_not_impl_without_chain_off_with_bearer() 
         )
         .await
         .into_response(),
-        STAR,
+        "POST /api/v1/admin/flags/:id/publish",
     )
     .await;
 
@@ -1321,7 +1320,7 @@ async fn admin_require_super_admin_uid_not_impl_without_chain_off_with_bearer() 
         )
         .await
         .into_response(),
-        STAR,
+        "POST /api/v1/admin/policies/:id/publish",
     )
     .await;
 
@@ -1340,7 +1339,7 @@ async fn admin_require_super_admin_uid_not_impl_without_chain_off_with_bearer() 
         )
         .await
         .into_response(),
-        STAR,
+        "POST /api/v1/admin/tenants/scopes/:id/publish",
     )
     .await;
 
@@ -1360,7 +1359,7 @@ async fn admin_require_super_admin_uid_not_impl_without_chain_off_with_bearer() 
         )
         .await
         .into_response(),
-        STAR,
+        "POST /api/v1/admin/community/appeals/:id/review",
     )
     .await;
 
@@ -1378,7 +1377,7 @@ async fn admin_require_super_admin_uid_not_impl_without_chain_off_with_bearer() 
         )
         .await
         .into_response(),
-        STAR,
+        "PATCH /api/v1/admin/community/abuse-policy",
     )
     .await;
 
@@ -1402,7 +1401,7 @@ async fn admin_require_super_admin_uid_not_impl_without_chain_off_with_bearer() 
         )
         .await
         .into_response(),
-        STAR,
+        "GET /api/v1/admin/*",
     )
     .await;
 
@@ -1420,7 +1419,7 @@ async fn admin_require_super_admin_uid_not_impl_without_chain_off_with_bearer() 
         )
         .await
         .into_response(),
-        STAR,
+        "GET /api/v1/admin/*",
     )
     .await;
 }
@@ -1440,7 +1439,7 @@ async fn approval_requires_super_admin_role() {
     .into_response();
     assert_eq!(resp.status(), StatusCode::FORBIDDEN);
     let body = body_json(resp).await;
-    assert_eq!(body["error"], "super_admin_required");
+    assert_eq!(body["error"], "admin_permission_denied");
 }
 
 #[tokio::test]
@@ -3398,7 +3397,7 @@ async fn admin_flag_publish_requires_super_admin() {
     .into_response();
     assert_eq!(resp.status(), StatusCode::FORBIDDEN);
     let body = body_json(resp).await;
-    assert_eq!(body["error"], "super_admin_required");
+    assert_eq!(body["error"], "admin_permission_denied");
 }
 
 #[tokio::test]
@@ -3787,7 +3786,7 @@ async fn admin_tenant_scope_publish_requires_super_admin() {
     .into_response();
     assert_eq!(resp.status(), StatusCode::FORBIDDEN);
     let body = body_json(resp).await;
-    assert_eq!(body["error"], "super_admin_required");
+    assert_eq!(body["error"], "admin_permission_denied");
 }
 
 #[tokio::test]
@@ -4530,7 +4529,7 @@ async fn admin_policy_publish_requires_super_admin() {
     .into_response();
     assert_eq!(resp.status(), StatusCode::FORBIDDEN);
     let body = body_json(resp).await;
-    assert_eq!(body["error"], "super_admin_required");
+    assert_eq!(body["error"], "admin_permission_denied");
 }
 
 #[tokio::test]

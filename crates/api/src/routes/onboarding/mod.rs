@@ -1257,6 +1257,10 @@ mod tests {
         }
     }
 
+    fn bearer_for(uid: Uuid) -> String {
+        format!("Bearer bearer_{uid}")
+    }
+
     /// **93 · B-ONB-QUOTE / F-034** ↔ **`matrix_93_b_onb_001a_f034_*`**（**`onboarding::router`**；**无** **`chain_off`** → **503** **`chain_off_unavailable`**）。
     #[tokio::test]
     async fn matrix_93_b_onb_001a_f034_get_onboarding_quote_chain_off_unavailable_503_subrouter() {
@@ -1295,14 +1299,15 @@ mod tests {
         assert_eq!(v["error"], "invalid_onboarding_role");
     }
 
-    /// **93 · B-ONB-QUOTE / F-034** ↔ **`matrix_93_b_onb_001c_f034_*`**（**stub** **`implementation_status`**）。
+    /// **93 · B-ONB-QUOTE / F-034** ↔ **`fee_schedule_v1`** 默认计价。
     #[tokio::test]
-    async fn matrix_93_b_onb_001c_f034_get_onboarding_quote_provider_stub_200_subrouter() {
+    async fn matrix_93_b_onb_001c_f034_get_onboarding_quote_provider_fee_schedule_v1_200_subrouter() {
         let app = router().with_state(api_meta_state(Some(chain_off_minimal())));
         let res = app
             .oneshot(
                 Request::builder()
-                    .uri("/api/v1/onboarding/quote?role=provider")
+                    .uri("/api/v1/onboarding/quote?role=provider&jurisdictions=US")
+                    .header("x-forwarded-for", "203.0.113.12")
                     .body(Body::empty())
                     .unwrap(),
             )
@@ -1311,7 +1316,8 @@ mod tests {
         assert_eq!(res.status(), StatusCode::OK);
         let body = res.into_body().collect().await.unwrap().to_bytes();
         let v: serde_json::Value = serde_json::from_slice(&body).unwrap();
-        assert_eq!(v["meta"]["implementation_status"], "onboarding_quote_stub");
+        assert_eq!(v["fee_schedule_version"], "fee_schedule_v1");
+        assert_eq!(v["meta"]["implementation_status"], "onboarding_quote_fee_schedule_v1");
     }
 
     /// **93 · B-ONB-PAY / F-035** ↔ **`matrix_93_b_onb_002a_f035_*`**（**无** 鉴权头 → **401**）。
@@ -1332,7 +1338,7 @@ mod tests {
         assert_eq!(res.status(), StatusCode::UNAUTHORIZED);
     }
 
-    /// **93 · B-ONB-PAY / F-035** ↔ **`matrix_93_b_onb_002b_f035_*`**（**`X-User-Id`** **链下** → **503** **`onboarding_payment_not_configured`** **stub**）。
+    /// **93 · B-ONB-PAY / F-035** ↔ **`matrix_93_b_onb_002b_f035_*`**（**Bearer** **链下** → **503** **`onboarding_payment_not_configured`** **stub**）。
     #[tokio::test]
     async fn matrix_93_b_onb_002b_f035_post_onboarding_payment_intents_stub_not_configured_503_subrouter(
     ) {
@@ -1343,7 +1349,7 @@ mod tests {
                 Request::builder()
                     .method("POST")
                     .uri("/api/v1/onboarding/payment-intents")
-                    .header("X-User-Id", uid.to_string())
+                    .header(header::AUTHORIZATION, bearer_for(uid))
                     .header(header::CONTENT_TYPE, "application/json")
                     .body(Body::from(r#"{"role":"provider"}"#))
                     .unwrap(),
@@ -1381,7 +1387,7 @@ mod tests {
             .oneshot(
                 Request::builder()
                     .uri("/api/v1/onboarding/entitlements/me")
-                    .header("X-User-Id", uid.to_string())
+                    .header(header::AUTHORIZATION, bearer_for(uid))
                     .body(Body::empty())
                     .unwrap(),
             )
@@ -1405,7 +1411,7 @@ mod tests {
                 Request::builder()
                     .method("POST")
                     .uri("/api/v1/onboarding/role-confirm")
-                    .header("X-User-Id", uid.to_string())
+                    .header(header::AUTHORIZATION, bearer_for(uid))
                     .header(header::CONTENT_TYPE, "application/json")
                     .body(Body::from("{}"))
                     .unwrap(),

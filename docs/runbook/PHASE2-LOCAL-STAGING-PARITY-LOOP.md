@@ -6,6 +6,8 @@
 
 **阶段纪律：** ① 本地开发 · ② 测试网验收 · ③ 公网/生产 — **禁止跳阶**；**禁止**用 staging 窄切片或 ① 绿集冒充 **Phase ② GO**。
 
+> **当前状态（2026-06-06）：** **Phase ② staging 部署 / Phase ②.8 HAT 暂停**。须先完成 **① `ci-local-delivery-minimum` 0 FAIL**（已完成）→ **S3 本地烟测** → **证据归档** → 再 **S5 `--deploy`** → **S6 UAT/HAT**。见 [TT-LOCAL-CI-DELIVERY-GATE-001 §2](./TT-LOCAL-CI-DELIVERY-GATE-001.md)。
+
 ---
 
 ## 0 · 一句话流程

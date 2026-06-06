@@ -1,7 +1,12 @@
 # TT-LOCAL-CI-DELIVERY-GATE-001 · 本地 / VPS 交付门禁（绕开 GitHub-hosted 计费）
 
-**Version:** 1.0.3  
+**Version:** 1.0.4  
 **Status:** `Target`（与 **[TT-L4-PARALLEL-CI-001](./TT-L4-PARALLEL-CI-001.md) §5.0** 对读：**组织 gate 未解除** 时 **以本节为交付真门禁**；**不**宣称替代 **07** 或 **分支保护** 的长期策略）
+
+> **Phase ① 硬闸（2026-06-06 · Admin P1 / HAT 收口期）**  
+> **暂停** Phase ② staging 部署、Phase ②.8 HAT、Phase ③ 入口，直至 **① 本地 CI 三连 0 FAIL** + **证据归档**。  
+> **顺序：** `ci-local-delivery-minimum` →（动 admin 时）`run-admin-l5-green` → S3 烟测（须本地 API）→ `evidence/GO_local_ci_*` → **才允许** S5 `--deploy`。  
+> **机读：** `bash scripts/gates/ci-local-delivery-minimum.sh` 末行 **`OK: ci-local-delivery-minimum`**。
 
 **文档对齐勘误（2026-04-19）**：若你 **已按 §2 跑通** 本地 / VPS 交付门禁并留证，随后仓库仅合入 **spec/母表/27 索引/59 B1 行** 等 **纯文档勘误** 与 **`internal` 测试文件顶栏未使用 `use` 清理**，**不**构成 **§2 全量重跑** 的硬性理由；收口材料可 **一行** 指向 **[TT-L4-PARALLEL-CI-001](./TT-L4-PARALLEL-CI-001.md)** **§10**（**文档对齐勘误**）与 **[TT-ALIGN-DOCS-CODE-MOTHER-AUDIT-2026-04-19](./TT-ALIGN-DOCS-CODE-MOTHER-AUDIT-2026-04-19.md)** **§8**。**若 diff 触及 `frontend/` 路由、`crates/api` 契约路径或合约 ABI**，仍须按 **§2** 与 **CONTRIBUTING** 对本次变更范围重跑相关门禁。
 
@@ -27,6 +32,8 @@
 | 层级 | 建议命令 / 入口 | 说明 |
 |------|-----------------|------|
 | **最小三连（Rust + 路由 + 元数据）** | **`bash scripts/gates/ci-local-delivery-minimum.sh`**（薄封装）或手跑 **[scripts/README.md](../../scripts/README.md)「提交前自检三连」** | **`cargo test -p traveltrust-api`**、**`run-check-04-routes`**、**`check-pr-crates-needs-metadata`** |
+| **Admin 改动（① L5 绿集）** | **`node scripts/dev/run-admin-l5-green.mjs`**（Win）或 **`bash scripts/dev/run-admin-l5-green.sh`** | 动 **`frontend/app/admin/*`** / **`lib/admin/*`** 时 **须** 与三连同批跑 |
+| **完整本地 CI 编排（可选）** | **`bash scripts/ci/run_local_ci.sh`** | 产出 **`evidence/GO_local_ci_<UTC>/report.json`**；**ISS-007 窄切片 `PARTIAL_GO` 勿当 staging GO** |
 | **企业级预检（不启服务）** | **`bash scripts/enterprise-preflight.sh`**（或 Win **`enterprise-preflight.ps1`**） | 见 **scripts/README** 篇首 |
 | **Gate 子集（按需）** | **`scripts/gates/*.sh`** 中与本次 diff 相关的门禁 | 与 **[00-文档治理总册 §8.3](../spec/00-文档治理总册.md#doc-audit-gates-ssot)**、各 Runbook 引用一致 |
 | **前端构建 / 单测** | 在 **`frontend/`**：**`npm ci`**（或已装依赖）→ **`npm run build`** → **`npm test`**（若有） | 与 **05**、**36** 对读 |
@@ -49,6 +56,20 @@
 | **3** | **纯等 GitHub-hosted 恢复** | **不推荐** 作为 **唯一** 路径（被动） |
 
 ## 5. 相关链接
+
+### 5.1 · 企业级 CI/CD 缺口（当前 · ① 须补齐后再开 ②）
+
+| 层级 | 状态 | 入口 / 说明 |
+|------|------|-------------|
+| **L0 最小三连** | **已跑通** | `ci-local-delivery-minimum.sh` |
+| **L1 Admin L5 绿集** | **已跑通**（动 admin 时） | `run-admin-l5-green` |
+| **L2 S3 本地烟测** | **待跑**（须 `localhost:8080` + PG） | [PHASE2-LOCAL-STAGING-PARITY-LOOP §2](./PHASE2-LOCAL-STAGING-PARITY-LOOP.md) |
+| **L3 完整 local CI** | **可选** | `scripts/ci/run_local_ci.sh` |
+| **L4 enterprise-preflight** | **按需** | `scripts/enterprise-preflight.sh` |
+| **L5 S5/S6 staging** | **暂停** | HAT / UAT **不得** 在 L0–L2 未绿时启动 |
+| **L6 GitHub Actions** | **Billing 受限** | 见 [TT-L4 §5.0](./TT-L4-PARALLEL-CI-001.md) |
+
+**证据归档：** `evidence/GO_local_ci_manual/<UTC>/ci-minimum.log` 或 `evidence/GO_local_ci_<UTC>/`（`run_local_ci.sh`）。
 
 - **组织侧计费与机读注解**：[TT-L4-PARALLEL-CI-001 §5.0～§5.1](./TT-L4-PARALLEL-CI-001.md)  
 - **脚本总索引**：[scripts/README.md](../../scripts/README.md)  

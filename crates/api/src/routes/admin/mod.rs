@@ -1288,6 +1288,10 @@ async fn require_admin_actor(
     state: &ApiMetaState,
     headers: &HeaderMap,
 ) -> Result<(Uuid, String), Response> {
+    let Some(ref co) = state.chain_off else {
+        return Err(not_impl_json("GET /api/v1/admin/*").into_response());
+    };
+
     let uid = match extract_user_with_session_check(state, headers).await {
         Some(u) => u,
         None => {
@@ -1297,10 +1301,6 @@ async fn require_admin_actor(
             )
                 .into_response())
         }
-    };
-
-    let Some(ref co) = state.chain_off else {
-        return Err(not_impl_json("GET /api/v1/admin/*").into_response());
     };
 
     let store = co.store.read().await;
@@ -1330,11 +1330,20 @@ async fn require_super_admin_uid(
 ) -> Result<Uuid, Response> {
     match admin_rbac::require_super_admin_permission(state, headers).await {
         Ok(uid) => Ok(uid),
-        Err(_) => Err((
-            StatusCode::FORBIDDEN,
-            Json(crate::api_json::err_key("super_admin_required")),
-        )
-            .into_response()),
+        Err(resp) => {
+            let status = resp.status();
+            if status == StatusCode::NOT_IMPLEMENTED
+                || status == StatusCode::UNAUTHORIZED
+                || status == StatusCode::SERVICE_UNAVAILABLE
+            {
+                return Err(resp);
+            }
+            Err((
+                StatusCode::FORBIDDEN,
+                Json(crate::api_json::err_key("super_admin_required")),
+            )
+                .into_response())
+        }
     }
 }
 
@@ -5382,6 +5391,9 @@ pub async fn post_admin_approval_approve(
     headers: HeaderMap,
     Json(body): Json<AdminApprovalActionBody>,
 ) -> impl IntoResponse {
+    if state.chain_off.is_none() {
+        return not_impl_json("POST /api/v1/admin/approvals/:id/approve").into_response();
+    }
     let approver_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_APPROVE).await {
         Ok(v) => v,
         Err(resp) => return resp,
@@ -5910,6 +5922,9 @@ pub async fn post_admin_flag_publish(
     headers: HeaderMap,
     Json(body): Json<AdminFlagPublishBody>,
 ) -> impl IntoResponse {
+    if state.chain_off.is_none() {
+        return not_impl_json("POST /api/v1/admin/flags/:id/publish").into_response();
+    }
     let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_PLATFORM_PUBLISH).await
     {
         Ok(v) => v,
@@ -6766,6 +6781,9 @@ pub async fn post_admin_policy_publish(
     headers: HeaderMap,
     Json(body): Json<AdminPolicyPublishBody>,
 ) -> impl IntoResponse {
+    if state.chain_off.is_none() {
+        return not_impl_json("POST /api/v1/admin/policies/:id/publish").into_response();
+    }
     let actor_id = match require_platform_publish_uid(&state, &headers).await {
         Ok(v) => v,
         Err(resp) => return resp,
@@ -7038,6 +7056,9 @@ pub async fn post_admin_tenant_scope_publish(
     headers: HeaderMap,
     Json(body): Json<AdminTenantScopePublishBody>,
 ) -> impl IntoResponse {
+    if state.chain_off.is_none() {
+        return not_impl_json("POST /api/v1/admin/tenants/scopes/:id/publish").into_response();
+    }
     let actor_id = match require_platform_publish_uid(&state, &headers).await {
         Ok(v) => v,
         Err(resp) => return resp,
@@ -7844,6 +7865,9 @@ pub async fn post_admin_community_appeal_review(
     headers: HeaderMap,
     Json(body): Json<AdminCommunityAppealReviewBody>,
 ) -> impl IntoResponse {
+    if state.chain_off.is_none() {
+        return not_impl_json("POST /api/v1/admin/community/appeals/:id/review").into_response();
+    }
     let actor_id = match require_community_super_uid(&state, &headers).await {
         Ok(v) => v,
         Err(resp) => return resp,
@@ -8606,6 +8630,9 @@ pub async fn patch_admin_community_abuse_policy(
     headers: HeaderMap,
     Json(patch): Json<db::CommunityAbusePolicyPatch>,
 ) -> impl IntoResponse {
+    if state.chain_off.is_none() {
+        return not_impl_json("PATCH /api/v1/admin/community/abuse-policy").into_response();
+    }
     let actor_id = match require_super_admin_uid(&state, &headers).await {
         Ok(uid) => uid,
         Err(resp) => return resp,
