@@ -1,8 +1,8 @@
 # Phase ② Dual-Loop Completion Report
 
-**Stamp (UTC):** 20260606T131900Z  
-**Verdict:** **LOCAL ↔ STAGING DUAL-LOOP COMPLETE**  
-**Git SHA (local HEAD = staging `/meta` build):** `4a9ab0db8de399868f14e12b5eaf72b4b5f5ace1`  
+**Stamp (UTC):** 20260606T153500Z  
+**Verdict:** **LOCAL ↔ STAGING DUAL-LOOP COMPLETE · GIT BASELINE SYNC PASS**  
+**Git SHA (local HEAD = staging `/meta` build):** `96c739e104054fbc26efd6ec9abad25cba309c90`  
 **Hosts:** `tt-api-staging.fly.dev` · `tt-web-staging.fly.dev`  
 **Runbook SSOT:** [PHASE2-LOCAL-STAGING-PARITY-LOOP.md](./PHASE2-LOCAL-STAGING-PARITY-LOOP.md)
 
@@ -24,12 +24,12 @@ Phase ② **Local ↔ Staging 双闭环** 已于 **2026-06-06** 正式完成。F
 
 | # | Gate | Required | Result | Evidence |
 |---|------|----------|--------|----------|
-| ① | Local ↔ staging Git SHA 一致 | `git rev-parse HEAD` = `GET /meta` `build.git_sha` | **PASS** | SHA `4a9ab0db…ace1` both sides |
+| ① | Local ↔ staging Git SHA 一致 | `git rev-parse HEAD` = `GET /meta` `build.git_sha` | **PASS** | SHA `96c739e1…309c90` both sides · 20260606T153500Z |
 | ② | `TT_PHASE2_LOCAL_STAGING_PARITY` | `PASS` | **PASS** | S3 `20260606T123416Z` · S5+S6 `20260606T125147Z` |
-| ③ | 六大域 UAT | 0 FAIL | **PASS** | `staging-uat-six-domains/20260606T125854Z` · 8 passed / 1 skipped / 0 failed |
-| ④ | Phase 2.5 Coverage Hardening | 5/5 PASS | **PASS** | `phase25-coverage-hardening/20260606T130452Z` |
-| ⑤ | Closing Gap | `PHASE2_GO_READY` · gaps 7/7 | **PASS** | `closing-gap/STATUS.txt` · `last_refresh=20260606T130736Z` |
-| ⑥ | Admin L5 staging audit | `verdict=PASS` | **PASS** | `GO_staging_admin_l5_audit/20260606T131815Z` · browser 4/4 |
+| ③ | 六大域 UAT | 0 FAIL | **PASS** | `staging-uat-six-domains/20260606T144405Z` · baseline sync retest |
+| ④ | Phase 2.5 Coverage Hardening | 5/5 PASS | **PASS** | `phase25-coverage-hardening/20260606T153032Z` |
+| ⑤ | Closing Gap | `PHASE2_GO_READY` · gaps 7/7 | **PASS** | prior `closing-gap/STATUS.txt` |
+| ⑥ | Admin L5 staging audit | `verdict=PASS` | **PASS** | `GO_staging_admin_l5_audit/20260606T152813Z` · browser 4/4 |
 
 ---
 
@@ -44,7 +44,23 @@ Phase ② **Local ↔ Staging 双闭环** 已于 **2026-06-06** 正式完成。F
 | S6 | `run-phase2-local-staging-parity-gate.sh --deploy --staging-retest` | exit 0 |
 | Admin L5 | `run-admin-l5-staging-audit.sh` (post no-cache web) | `verdict=PASS` |
 
-**Note on SHA vs working tree:** 已于 **20260606** commit `20da98f` 将 **frontend/** 全树与 Phase ② 脚本/runbook 写入 git（见 [PHASE2-GIT-STAGING-BASELINE.md](./PHASE2-GIT-STAGING-BASELINE.md)）。**commit 后须重部署** staging 使 `/meta` `git_sha` 与新 HEAD 一致。
+**Note on Git baseline sync (20260606):** 自 `9747e1c` 起追加 deploy/API commits（Dockerfile、migrations、admin API 模块）至 **`96c739e1`**；API+Web 重部署后 SHA 对拍与 UAT/Admin L5/Phase 2.5 复验全绿。见 [PHASE2-GIT-STAGING-BASELINE.md](./PHASE2-GIT-STAGING-BASELINE.md)。
+
+---
+
+## Git ↔ Staging baseline sync (20260606T153500Z)
+
+| Step | Result |
+|------|--------|
+| Preflight HEAD + clean deploy paths | PASS |
+| API deploy (`phase2-staging-fly-deploy-and-sync.sh`) | PASS @ `96c739e1` |
+| Web deploy (`FLY_WEB_NO_CACHE=1`) | PASS |
+| SHA match | PASS |
+| UAT / Admin L5 / Phase 2.5 | PASS |
+
+```text
+GIT_STAGING_BASELINE_SYNC: PASS
+```
 
 ---
 
@@ -56,7 +72,8 @@ TT_PHASE2_GO_VERDICT: PHASE2_GO_READY
 TT_PHASE2_DUAL_LOOP: COMPLETE
 TT_PHASE25_COVERAGE_HARDENING: PASS
 TT_ADMIN_L5_STAGING_AUDIT: PASS
-GIT_SHA_LOCAL_STAGING_MATCH: YES (4a9ab0db8de399868f14e12b5eaf72b4b5f5ace1)
+GIT_SHA_LOCAL_STAGING_MATCH: YES (96c739e104054fbc26efd6ec9abad25cba309c90)
+GIT_STAGING_BASELINE_SYNC: PASS
 ```
 
 ---
