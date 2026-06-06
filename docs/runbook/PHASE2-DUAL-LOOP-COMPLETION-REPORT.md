@@ -44,7 +44,7 @@ Phase ② **Local ↔ Staging 双闭环** 已于 **2026-06-06** 正式完成。F
 | S6 | `run-phase2-local-staging-parity-gate.sh --deploy --staging-retest` | exit 0 |
 | Admin L5 | `run-admin-l5-staging-audit.sh` (post no-cache web) | `verdict=PASS` |
 
-**Note on SHA vs working tree:** 镜像 `git_sha` 标注 **HEAD commit**；本轮 Admin / smoke 修复含 **未提交** 本地改动，经 `FLY_WEB_NO_CACHE=1` 强制重建后已进入 staging 运行时。
+**Note on SHA vs working tree:** 已于 **20260606** commit `20da98f` 将 **frontend/** 全树与 Phase ② 脚本/runbook 写入 git（见 [PHASE2-GIT-STAGING-BASELINE.md](./PHASE2-GIT-STAGING-BASELINE.md)）。**commit 后须重部署** staging 使 `/meta` `git_sha` 与新 HEAD 一致。
 
 ---
 
