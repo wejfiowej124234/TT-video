@@ -178,7 +178,10 @@ export function AdminDisputesPageMain() {
       </div>
 
       {loading ? (
-        <AdminListLoadingStatus message={t("admin_loading")} />
+        <AdminListLoadingStatus
+          message={t("admin_disputes_loading")}
+          hint={t("admin_disputes_loading_hint")}
+        />
       ) : null}
 
       {error ? (
@@ -197,6 +200,7 @@ export function AdminDisputesPageMain() {
       {!loading && !error && items.length === 0 ? (
         <AdminListPageEmptyState
           messageKey="admin_list_empty_disputes"
+          hintKey="admin_list_empty_disputes_hint"
           nextLinks={ADMIN_EMPTY_NEXT_DISPUTES_FILTERED_EMPTY}
           filteredEmpty={Boolean(appliedHuman)}
         />

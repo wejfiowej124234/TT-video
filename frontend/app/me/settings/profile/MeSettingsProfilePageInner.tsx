@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
+import { MeCommunityHubRedirectNotice } from "@/components/me/MeCommunityHubRedirectNotice";
 import { MeSettingsProfilePanel } from "@/components/me/MeSettingsProfilePanel";
 import { MeSettingsProfilePanelLoading } from "@/components/me/MeSettingsProfilePanelLoading";
 import MeSettingsL5FlowPage from "@/components/me/MeSettingsL5FlowPage";
@@ -44,6 +45,8 @@ export function MeSettingsProfilePageInner() {
         titleKey="me_settings_profile_page_title"
         subtitleKey="me_settings_profile_page_subtitle"
       />
+
+      <MeCommunityHubRedirectNotice />
 
       {loading ? <MeSettingsProfilePanelLoading /> : null}
 

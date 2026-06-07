@@ -136,14 +136,15 @@ export default function CommunityFeedList({
   return (
     <div className={`${TT_COMMUNITY_FEED_ACTION.feedListAfterFilters} space-y-3 pb-24 safe-area-pb`}>
       {feedLoading ? (
-        <>
+        <div aria-live="polite" role="status" aria-label={t("community_feed_loading_hint")}>
+          <p className={`${TT_COMMUNITY_FEED_ACTION.emptyHint} mb-2 px-0.5`}>{t("community_feed_loading_hint")}</p>
           <div className="md:hidden">
             <FeedGridSkeleton t={t} />
           </div>
           <div className="hidden md:block">
             <FeedSkeleton count={3} t={t} />
           </div>
-        </>
+        </div>
       ) : isEmpty ? (
         <section
           className={TT_COMMUNITY_FEED_ACTION.emptyPanel}

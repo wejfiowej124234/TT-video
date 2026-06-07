@@ -842,6 +842,10 @@ export const ADMIN_NOTICE_WARNING_CLASS =
 export const ADMIN_ATTENTION_CALLOUT_CLASS =
   "rounded-[var(--radius-md)] border border-ref-sun/28 bg-ref-sun/8 p-3 text-small text-ink-800";
 
+/** RP-011 · meta.build git_sha unknown 诚实披露（Observability 链） */
+export const ADMIN_META_BUILD_GIT_UNKNOWN_CLASS =
+  "mt-2 rounded-[var(--radius-md)] border border-ref-sun/22 bg-ref-sun/6 px-3 py-2.5 text-small text-ink-700";
+
 /** 列表页 applied_filters 回显横幅（card / inline / panel · SSOT） */
 export const ADMIN_APPLIED_FILTERS_BANNER_CARD_CLASS =
   "rounded-[var(--radius-md)] border border-ref-sun/15 bg-ref-sun/5 p-3 text-small text-ink-700";

@@ -17,6 +17,7 @@ import {
   ADMIN_FORM_CONTROL_SM_CLASS,
   ADMIN_TABLE_DIVIDE_CLASS,
   ADMIN_SKELETON_CONTROL_BORDER_CLASS,} from "@/lib/adminUi";
+import { AdminSubpageRouteLoadingSlowHint } from "@/components/admin/AdminSubpageRouteLoadingSlowHint";
 
 export type AdminSubpageLoadingVariant =
   | "table-narrow"
@@ -184,6 +185,13 @@ export default function AdminSubpageRouteLoading({
           </table>
         </div>
       )}
+
+      {variant === "workspace" || variant === "table-wide" ? (
+        <>
+          <p className="sr-only">{t("admin_capabilities_boot_loading")}</p>
+          <AdminSubpageRouteLoadingSlowHint />
+        </>
+      ) : null}
     </main>
   );
 }

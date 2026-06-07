@@ -7,7 +7,7 @@ const SKELETON_ASPECTS = ["aspect-[4/5]", "aspect-[3/4]", "aspect-square", "aspe
 /** 三列瀑布骨架（L5 · promo 顶栏 + 瀑布） */
 export function FeedGridSkeleton({ t }: { t: (k: string) => string }) {
   return (
-    <div aria-label={t("common_loading")}>
+    <div aria-label={t("community_feed_loading_hint")}>
       <div className={`${TT_COMMUNITY_FEED_L5.promoLeadBand} hidden md:grid`} role="presentation">
         <div className={`${TT_COMMUNITY_FEED_L5.promoLeadCell} ${TT_COMMUNITY_FEED_L5.skeletonPromoActivity}`}>
           <div className="h-[4.75rem] w-[4.75rem] shrink-0 rounded-[var(--radius-sm)] bg-ink-800/70 animate-pulse" />
@@ -56,7 +56,7 @@ export function FeedGridSkeleton({ t }: { t: (k: string) => string }) {
 /** 31 §5.3：Feed 骨架卡（列表） */
 export function FeedSkeleton({ count, t }: { count: number; t: (k: string) => string }) {
   return (
-    <div className="space-y-4" aria-label={t("common_loading")}>
+    <div className="space-y-4" aria-label={t("community_feed_loading_hint")}>
       {Array.from({ length: count }).map((_, i) => (
         <div key={i} className={TT_COMMUNITY_FEED_ACTION.skeletonCard} role="presentation">
           <div className="aspect-[4/3] bg-slate-800/80 animate-pulse" />

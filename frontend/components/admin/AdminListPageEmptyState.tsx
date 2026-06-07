@@ -8,13 +8,14 @@ import { adminPageNavLinkClass } from "@/lib/adminUi";
 /** 列表空态 + 「下一步」引导（HON-04）。 */
 export function AdminListPageEmptyState(props: {
   messageKey: string;
+  hintKey?: string;
   nextLinks?: { href: string; labelKey: string }[];
   className?: string;
   /** 与 inbox strip `data-tt-admin-*-inbox-empty` 对拍 · 筛选后无结果 */
   filteredEmpty?: boolean;
 }) {
   const { t } = useTranslation();
-  const { messageKey, nextLinks = [], className = "", filteredEmpty = false } = props;
+  const { messageKey, hintKey, nextLinks = [], className = "", filteredEmpty = false } = props;
 
   return (
     <AdminWarmL5Surface
@@ -26,6 +27,7 @@ export function AdminListPageEmptyState(props: {
       data-tt-admin-list-empty-filtered={filteredEmpty ? "1" : undefined}
     >
       <p className="text-body text-ink-600">{t(messageKey)}</p>
+      {hintKey ? <p className="mt-2 text-small text-ink-500">{t(hintKey)}</p> : null}
       {nextLinks.length > 0 ? (
         <p className="mt-3 text-small text-ink-500">{t("admin_list_empty_next")}</p>
       ) : null}

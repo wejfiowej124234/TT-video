@@ -5,6 +5,7 @@ import { useId } from "react";
 import AuthL5Card from "@/components/auth/AuthL5Card";
 import AuthL5CrossNavFooter from "@/components/auth/AuthL5CrossNavFooter";
 import AuthL5PageBackdrop from "@/components/auth/AuthL5PageBackdrop";
+import AuthL5FormError from "@/components/auth/AuthL5FormError";
 import { TT_AUTH_L5_PAGE_COLUMN } from "@/lib/auth/authL5Shell";
 import { TT_AUTH_L5_FORM } from "@/lib/auth/authL5Form";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
@@ -417,9 +418,7 @@ export default function RegisterGuideForm({
           </section>
 
           {error ? (
-            <p id={formErrorId} className={TT_AUTH_L5_FORM.error} role="alert" data-tt-auth-surface="register_form_error">
-              {getErrorDisplay(error)}
-            </p>
+            <AuthL5FormError id={formErrorId} message={getErrorDisplay(error)} surface="register_form_error" />
           ) : null}
           <button
             type="submit"

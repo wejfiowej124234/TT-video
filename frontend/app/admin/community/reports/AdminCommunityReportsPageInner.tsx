@@ -117,7 +117,11 @@ export function AdminCommunityReportsPageInner() {
       <AdminMetaBuildSection meta={m.meta} loading={m.loading} error={m.error} />
 
       {m.loading && m.items.length === 0 ? (
-        <AdminListLoadingStatus message={m.t("admin_community_reports_loading")} className="mt-6 text-body text-ink-500" />
+        <AdminListLoadingStatus
+          message={m.t("admin_community_reports_loading")}
+          hint={m.t("admin_community_reports_loading_hint")}
+          className="mt-6"
+        />
       ) : null}
 
       {m.error && (
@@ -127,6 +131,7 @@ export function AdminCommunityReportsPageInner() {
       {!m.loading && !m.error && m.items.length === 0 ? (
         <AdminListPageEmptyState
           messageKey="admin_community_reports_empty"
+          hintKey="admin_community_reports_empty_hint"
           nextLinks={ADMIN_EMPTY_NEXT_COMMUNITY_REPORTS_EMPTY}
           filteredEmpty={Boolean(appliedHuman)}
         />

@@ -5,6 +5,7 @@
 #   bash scripts/dev/run-phase2-local-staging-parity-gate.sh --pull       # 仅 S1+S2
 #   bash scripts/dev/run-phase2-local-staging-parity-gate.sh --local-test # 仅 S3（须 API 已起）
 #   bash scripts/dev/run-phase2-local-staging-parity-gate.sh --deploy --staging-retest
+#   bash scripts/dev/run-phase2-local-staging-parity-gate.sh --deep-release-gate  # 仅多维 release gate
 #
 # 末行机读：TT_PHASE2_LOCAL_STAGING_PARITY: PASS|FAIL
 set -euo pipefail
@@ -20,6 +21,7 @@ DO_PULL=0
 DO_LOCAL_TEST=0
 DO_DEPLOY=0
 DO_STAGING_RETEST=0
+DO_DEEP_RELEASE_GATE=0
 EXPLICIT=0
 
 usage() {
@@ -34,6 +36,7 @@ while [[ $# -gt 0 ]]; do
     --local-test) DO_LOCAL_TEST=1; EXPLICIT=1; shift ;;
     --deploy) DO_DEPLOY=1; EXPLICIT=1; shift ;;
     --staging-retest) DO_STAGING_RETEST=1; EXPLICIT=1; shift ;;
+    --deep-release-gate) DO_DEEP_RELEASE_GATE=1; EXPLICIT=1; shift ;;
     *) echo "unknown arg: $1 (try --help)" >&2; exit 2 ;;
   esac
 done
@@ -121,8 +124,34 @@ if [[ "$DO_DEPLOY" -eq 1 ]]; then
     --web-base "$WEB" --api-base "$API_STAGING"
 fi
 
+# --- Deep multidimensional release gate (staging-only · blocks S6/HAT/Phase③ on FAIL) ---
+run_deep_release_gate() {
+  echo ""
+  echo "=== Deep release gate · staging multidimensional (G01–G08) ==="
+  export PHASE2_DEEP_GATE_OUT="$OUT/deep-release-gate"
+  export PHASE2_EXPECT_GIT_SHA="${PHASE2_EXPECT_GIT_SHA:-$(cat "$OUT/git-head.txt" 2>/dev/null || git -C "$ROOT" rev-parse HEAD 2>/dev/null || echo '')}"
+  mkdir -p "$OUT/deep-release-gate"
+  bash "$ROOT/scripts/dev/run-phase2-deep-release-gate.sh" \
+    --api-base "$API_STAGING" \
+    --web-base "$WEB" \
+    ${PHASE2_EXPECT_GIT_SHA:+--expect-git-sha "$PHASE2_EXPECT_GIT_SHA"} \
+    || fail "deep release gate — see $OUT/deep-release-gate/SUMMARY.md (blocks S6/HAT/Phase③)"
+  ok "deep release gate PASS"
+}
+
+if [[ "$DO_DEEP_RELEASE_GATE" -eq 1 && "$DO_STAGING_RETEST" -eq 0 && "$DO_DEPLOY" -eq 0 ]]; then
+  run_deep_release_gate
+  echo ""
+  echo "证据：$OUT"
+  echo "Runbook：docs/runbook/TT-PHASE2-DEEP-RELEASE-GATE.md"
+  echo "TT_PHASE2_LOCAL_STAGING_PARITY: PASS"
+  exit 0
+fi
+
 # --- S6: re-run Phase ② on staging ---
 if [[ "$DO_STAGING_RETEST" -eq 1 ]]; then
+  run_deep_release_gate
+
   echo ""
   echo "=== S6 · 复跑 Phase ② staging ==="
   bash "$ROOT/scripts/dev/check-staging-web-alignment.sh" \
@@ -147,5 +176,5 @@ fi
 
 echo ""
 echo "证据：$OUT"
-echo "Runbook：docs/runbook/PHASE2-LOCAL-STAGING-PARITY-LOOP.md"
+echo "Runbook：docs/runbook/PHASE2-LOCAL-STAGING-PARITY-LOOP.md · TT-PHASE2-DEEP-RELEASE-GATE.md"
 echo "TT_PHASE2_LOCAL_STAGING_PARITY: PASS"

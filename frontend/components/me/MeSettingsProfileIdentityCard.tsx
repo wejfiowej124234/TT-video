@@ -3,7 +3,8 @@
 import Image from "next/image";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import type { UserShape } from "@/components/me/constants";
-import { communityRoleLabelI18nKey, meProtocolRoleForDisplay } from "@/lib/meRoleDisplay";
+import { MeGuideRoleBadge } from "@/components/me/MeGuideRoleBadge";
+import { communityRoleLabelI18nKey, meProtocolRoleForDisplay, userIsGuide } from "@/lib/meRoleDisplay";
 import { communityMediaNextImageUnoptimized } from "@/lib/communityMediaClientUrl";
 import type { ProfileWalletDisplay } from "@/lib/me/meSettingsProfileDisplay";
 import { TT_ME_SETTINGS_L5 } from "@/lib/me/meSettingsL5";
@@ -138,9 +139,14 @@ export function MeSettingsProfileIdentityCard({
 
         <div className={TT_ME_SETTINGS_L5.profileIdentityBody}>
           <p className={TT_ME_SETTINGS_L5.profileIdentityName}>{displayName}</p>
-          <span className={TT_ME_SETTINGS_L5.profileRole}>
-            {t(communityRoleLabelI18nKey(meProtocolRoleForDisplay(user)))}
-          </span>
+          <div className="mt-1 flex flex-wrap items-center gap-2">
+            <MeGuideRoleBadge user={user} />
+            {!userIsGuide(user) ? (
+              <span className={TT_ME_SETTINGS_L5.profileRole}>
+                {t(communityRoleLabelI18nKey(meProtocolRoleForDisplay(user)))}
+              </span>
+            ) : null}
+          </div>
           <p className={`${TT_ME_SETTINGS_L5.profileMeta} mt-2 break-all`}>
             {t("community_did_wallet_label")}
             {t("community_did_colon")}

@@ -1,16 +1,22 @@
 "use client";
 
 /** 列表页统一 loading（HON-03 · role=status）。 */
-export function AdminListLoadingStatus(props: { message: string; className?: string }) {
-  const { message, className } = props;
+export function AdminListLoadingStatus(props: {
+  message: string;
+  hint?: string;
+  className?: string;
+}) {
+  const { message, hint, className } = props;
 
   return (
-    <p
-      className={className ?? "mt-6 text-body text-ink-500"}
+    <div
+      className={className ?? "mt-6 space-y-1.5"}
       role="status"
+      aria-live="polite"
       data-tt-admin-list-loading="1"
     >
-      {message}
-    </p>
+      <p className="text-body text-ink-500">{message}</p>
+      {hint ? <p className="text-small text-ink-500">{hint}</p> : null}
+    </div>
   );
 }

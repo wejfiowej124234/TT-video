@@ -77,6 +77,7 @@ export default function StickyFilterBar({
   const { t } = useTranslation();
   const advancedFilterPanelId = useId();
   const advancedCountId = useId();
+  const marketSearchHintId = useId();
   const cities = country ? (CITIES_BY_COUNTRY[country] ?? []) : [];
   const languageOptions = country ? (LANGUAGES_BY_COUNTRY[country] ?? []) : LANGUAGE_OPTIONS;
 
@@ -123,6 +124,22 @@ export default function StickyFilterBar({
   return (
     <div className={barClass} role="group" aria-label={t("filter_aria_market")}>
       <div className="flex flex-col gap-3">
+        <div role="search" aria-label={t("market_filter_search_label")} className={p.marketFilterSearchWrap}>
+          <input
+            type="search"
+            data-tt-market-filter-search="1"
+            placeholder={t("market_filter_search_placeholder")}
+            aria-label={t("market_filter_search_label")}
+            aria-describedby={marketSearchHintId}
+            aria-controls={advancedFilterPanelId}
+            onFocus={() => onFilterExpandedChange(true)}
+            className={p.marketFilterSearchInput}
+          />
+          <p id={marketSearchHintId} className={p.marketFilterSearchHint}>
+            {t("market_filter_search_hint")}
+          </p>
+        </div>
+
         <div className="flex flex-col gap-2.5" role="group" aria-label={t("filter_aria_orders")}>
           {tripDaysChipVisible ? (
             <div className="flex flex-wrap items-center gap-2" role="status" aria-live="polite">

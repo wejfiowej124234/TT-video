@@ -7,6 +7,10 @@ cd "$ROOT/frontend"
 npx vitest run \
   lib/admin/adminHomeKpiMetric.test.ts \
   lib/admin/adminHomeInboxPendingTotal.test.ts \
+  lib/admin/adminHomeFocusModuleFilter.test.ts \
+  lib/admin/adminSectionBackLinksL5.contract.test.ts \
+  lib/admin/adminPageHeaderBackLinksL5.contract.test.ts \
+  lib/admin/adminShellUxPolicy.test.ts \
   lib/admin/adminInboxChannelPermission.test.ts \
   lib/admin/adminShellContextForPath.test.ts \
   lib/admin/adminListPageWritePermission.test.ts \
@@ -27,6 +31,7 @@ npx vitest run \
   lib/admin/adminHomeVisibility.test.ts \
   lib/admin/adminHomeCardCapability.test.ts \
   lib/admin/useAdminCapabilities.test.ts \
+  lib/admin/useAdminHomeQueues.test.ts \
   lib/admin/adminRole70Matrix.test.ts \
   lib/admin/adminHomeCardPermission.test.ts \
   lib/admin/adminRoutePermission.test.ts \
@@ -36,9 +41,36 @@ npx vitest run \
   lib/admin/adminPhase1BacklogClosureL5.contract.test.ts \
   lib/admin/adminPhase2RemainingBacklogL5.contract.test.ts \
   lib/admin/adminFinancePartialDepthL5.contract.test.ts \
+  lib/admin/adminFinanceSuiteBackLinksL5.contract.test.ts \
   lib/admin/adminRemainingSixL5.contract.test.ts \
   lib/admin/adminPhase1DataHonesty.contract.test.ts \
+  lib/admin/adminL5ConfirmL5.contract.test.ts \
+  lib/admin/adminAuditLogWriteL5.contract.test.ts \
+  lib/admin/adminNavPerfL5.contract.test.ts \
+  lib/admin/adminBatchADataFreshnessL5.contract.test.ts \
+  lib/admin/adminAuthSessionReset.test.ts \
+  lib/admin/adminHomeInboxQueueListCache.test.ts \
+  lib/admin/adminPostWriteCacheInvalidation.test.ts \
+  lib/admin/adminListFetchCache.test.ts \
+  lib/admin/adminNavBootReady.test.ts \
+  lib/admin/adminSessionExpiredClient.test.ts \
+  lib/admin/adminRoutePrefetchSession.test.ts \
+  lib/admin/adminLocaleParityL5.contract.test.ts \
+  lib/admin/adminPhase1FullClosureL5.contract.test.ts \
+  lib/admin/adminListStaleWhileErrorL5.contract.test.ts \
+  lib/admin/adminHomeSectionPending.test.ts \
+  lib/admin/adminCapabilitiesFetchCache.test.ts \
+  lib/admin/adminShellPrefetchHref.test.ts \
+  lib/admin/adminFinanceReconciliationBundleFetch.test.ts \
+  lib/admin/adminHomeOverviewFetchCache.test.ts \
+  lib/admin/adminHomeSystemOverviewMetrics.test.ts \
+  lib/admin/adminShellNavGroupsL5.contract.test.ts \
+  lib/admin/adminRoutePrefetchL5.contract.test.ts \
+  lib/admin/adminShellOnboardingNavL5.contract.test.ts \
   lib/admin/adminUnifiedInboxTasks.test.ts \
+  lib/admin/adminInboxWorkflowOrder.test.ts \
+  lib/admin/adminInboxQueuePath.test.ts \
+  lib/admin/adminInboxQueueBackLinksL5.contract.test.ts \
   lib/admin/adminInboxQueueNavAlignment.contract.test.ts \
   lib/admin/adminShellSidebarL5.contract.test.ts \
   lib/admin/adminBatch2UxL5.contract.test.ts \
@@ -66,6 +98,43 @@ npx vitest run \
   lib/admin/adminBatch24UxL5.contract.test.ts \
   lib/admin/adminBatch25UxL5.contract.test.ts \
   lib/admin/adminBatch26UxL5.contract.test.ts \
+  lib/admin/adminBatch27UxL5.contract.test.ts \
+  lib/admin/adminBatch28UxL5.contract.test.ts \
+  lib/admin/adminBatch29UxL5.contract.test.ts \
+  lib/admin/adminBatch30UxL5.contract.test.ts \
+  lib/admin/adminBatch31UxL5.contract.test.ts \
+  lib/admin/adminBatch32UxL5.contract.test.ts \
+  lib/admin/adminBatch33UxL5.contract.test.ts \
+  lib/admin/adminBatch34UxL5.contract.test.ts \
+  lib/admin/adminBatch35UxL5.contract.test.ts \
+  lib/admin/adminBatch36UxL5.contract.test.ts \
+  lib/admin/adminPlatformHubL5.contract.test.ts \
+  lib/admin/adminBatch37UxL5.contract.test.ts \
+  lib/admin/adminBatch38UxL5.contract.test.ts \
+  lib/admin/adminBatch39UxL5.contract.test.ts \
+  lib/admin/adminBatch40UxL5.contract.test.ts \
+  lib/admin/adminBatch41UxL5.contract.test.ts \
+  lib/admin/adminBatch42UxL5.contract.test.ts \
+  lib/admin/adminBatch43UxL5.contract.test.ts \
+  lib/admin/adminBatch44UxL5.contract.test.ts \
+  lib/admin/adminBatch45UxL5.contract.test.ts \
+  lib/admin/adminBatch46UxL5.contract.test.ts \
+  lib/admin/adminBatch47UxL5.contract.test.ts \
+  lib/admin/adminBatch48UxL5.contract.test.ts \
+  lib/admin/adminBatch49UxL5.contract.test.ts \
+  lib/admin/adminBatch50UxL5.contract.test.ts \
+  lib/admin/adminBatch51UxL5.contract.test.ts \
+  lib/admin/adminBatch52UxL5.contract.test.ts \
+  lib/admin/adminBatch53UxL5.contract.test.ts \
+  lib/admin/adminBatch54UxL5.contract.test.ts \
+  lib/admin/adminBatch55UxL5.contract.test.ts \
+  lib/admin/adminBatch56UxL5.contract.test.ts \
+  lib/admin/adminBatch57UxL5.contract.test.ts \
+  lib/admin/adminBatch58UxL5.contract.test.ts \
+  lib/admin/adminBatch59UxL5.contract.test.ts \
+  lib/admin/adminBatch60UxL5.contract.test.ts \
+  lib/admin/adminPhase29W2.contract.test.ts \
+  lib/admin/adminP1UxFixes.contract.test.ts \
   lib/admin/adminConsoleRole70PickOrder.test.ts \
   lib/admin/adminCapabilityStripVisibility.test.ts \
   lib/admin/adminShellPendingBadgePolicy.test.ts \
@@ -78,11 +147,14 @@ npx vitest run \
   lib/admin/adminFinancePartialDepthHref.test.ts \
   lib/admin/adminShellInboxNavBadge.test.ts \
   lib/admin/adminShellNavParityL5.contract.test.ts \
+  lib/admin/adminShellMoreNavLinks.test.ts \
+  lib/admin/adminPlatformHubHeaderNav.test.ts \
   lib/admin/adminHomeInboxQueueCardsL5.contract.test.ts \
   lib/admin/adminRecentVisits.test.ts \
   lib/admin/adminRecentVisitsL5.contract.test.ts \
   lib/admin/adminCommandPaletteL5.contract.test.ts \
   lib/admin/adminStyleAlignmentL5.contract.test.ts \
+  lib/admin/adminWarmL5CoverageL5.contract.test.ts \
   lib/admin/adminListEmptyStateNextLinksL5.contract.test.ts \
   lib/admin/adminQueueStatusL5.contract.test.ts \
   lib/admin/adminAttentionL5.contract.test.ts \
@@ -163,6 +235,7 @@ npx vitest run \
   app/admin/trust-growth/adminTrustGrowthPage.contract.test.ts \
   app/admin/finance-reconciliation/adminFinanceReconciliationPage.contract.test.ts \
   app/admin/cross-check/adminCrossCheckPage.contract.test.ts \
+  app/admin/cross-check/page.test.tsx \
   app/admin/drift-summary/adminDriftSummaryPage.contract.test.ts \
   'app/admin/alerts/incidents/[id]/adminAlertIncidentDetailPage.contract.test.ts' \
   'app/admin/users/[id]/adminUserDetailPage.contract.test.ts' \

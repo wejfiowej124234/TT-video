@@ -13,6 +13,7 @@ import {
   ADMIN_INLINE_LINK_CLASS,
   ADMIN_META_NOTE_LINK_CLASS,
   ADMIN_META_BUILD_FOLD_CARD_CLASS,
+  ADMIN_META_BUILD_GIT_UNKNOWN_CLASS,
   ADMIN_META_NOTE_ACCENT_BORDER_CLASS,
   ADMIN_MOTION_CARD_HOVER_CLASS,
   ADMIN_TEXT_META_CLASS,
@@ -43,9 +44,10 @@ export function AdminMetaBuildPanel({ meta }: Props) {
   const shaKnown = !!sha && sha !== "unknown";
   if (!shaKnown) {
     return (
-      <p className="mt-2 text-small text-ink-500" data-tt-admin-build-git-unknown="1">
-        {t("admin_meta_build_git_unknown")}
-      </p>
+      <div className={ADMIN_META_BUILD_GIT_UNKNOWN_CLASS} data-tt-admin-build-git-unknown="1" role="status">
+        <p className="font-medium text-ink-700">{t("admin_meta_build_git_unknown")}</p>
+        <p className={`mt-1 ${ADMIN_TEXT_META_CLASS} text-ink-600`}>{t("admin_meta_build_git_unknown_hint")}</p>
+      </div>
     );
   }
   const dep =

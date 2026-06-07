@@ -27,6 +27,7 @@ import { resolvePostAuthReturnPath } from "@/lib/auth/postAuthReturnPath";
 import { AUTH_LOGIN_REMEMBER_EMAIL_KEY, TT_AUTH_LOGIN_L5 } from "@/lib/auth/loginL5";
 import { authL5FieldClass, TT_AUTH_L5_FORM } from "@/lib/auth/authL5Form";
 import AuthL5PageBackdrop from "@/components/auth/AuthL5PageBackdrop";
+import AuthL5FormError from "@/components/auth/AuthL5FormError";
 import LoginPasswordVisibilityToggle from "./LoginPasswordVisibilityToggle";
 
 function LoginForm() {
@@ -211,14 +212,7 @@ function LoginForm() {
             label={t("auth_login_rememberEmail")}
           />
           {error ? (
-            <p
-              id={formErrorId}
-              className={TT_AUTH_L5_FORM.error}
-              role="alert"
-              data-tt-auth-surface="login_form_error"
-            >
-              {error}
-            </p>
+            <AuthL5FormError id={formErrorId} message={error} surface="login_form_error" />
           ) : null}
           <button
             type="submit"

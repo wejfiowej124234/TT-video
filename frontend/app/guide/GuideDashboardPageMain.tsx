@@ -5,12 +5,14 @@ import ApiErrorAlert from "@/components/ApiErrorAlert";
 import GuideBillingPeriodCard from "@/components/guide/GuideBillingPeriodCard";
 import GuideDashboardStats from "@/components/guide/GuideDashboardStats";
 import MePageBackground from "@/components/me/MePageBackground";
+import { MeGuideRoleBadge } from "@/components/me/MeGuideRoleBadge";
 import MePageSkeleton from "@/components/me/MePageSkeleton";
 import GuideRegistrationStatusBanner from "@/components/guide/GuideRegistrationStatusBanner";
 import MeTrustSection from "@/components/me/MeTrustSection";
 import { FOCUS_RING } from "@/components/me/constants";
 import { parseIdentitySlotsFromMe } from "@/lib/meIdentitySlots";
 import { parseMeTrustFromMeResponse } from "@/lib/meTrust";
+import { TT_ME_GUIDE_ROLE_BADGE } from "@/lib/me/meGuideRoleBadgeL5";
 import { userIsGuide } from "@/lib/meRoleDisplay";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import { traveltrustExperienceL5ShellDataAttrs } from "@/lib/traveltrustHomepageFunnelL5";
@@ -112,6 +114,11 @@ export function GuideDashboardPageMain(props: GuideDashboardPageViewModel) {
             {t("guide_dashboard_title")}
           </h1>
           <p className="text-small text-slate-300 mt-0.5">{t("guide_dashboard_subtitle")}</p>
+          {user ? (
+            <div className="mt-2">
+              <MeGuideRoleBadge user={user} className={TT_ME_GUIDE_ROLE_BADGE.pillGuideWorkspace} />
+            </div>
+          ) : null}
         </header>
 
         {user && trustSummary != null ? (
