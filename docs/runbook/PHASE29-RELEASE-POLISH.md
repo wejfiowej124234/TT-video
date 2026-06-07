@@ -2,8 +2,8 @@
 
 **生效：** 2026-06-07  
 **前置：** Phase ②.8 HAT **PASS**（`7b86e58b` @ staging）· Deep release gate **GO**  
-**状态：** **UI_FROZEN · W3_DONE · post-29 gate chain NO_GO**  
-**Phase ③ 入口：** **⏸ HOLD** — R4–R7 未全绿（S5/G04 阻塞）
+**状态：** **UI_FROZEN · W3_DONE · freeze commit `ecb28116`**  
+**Phase ③ 入口：** **⏸ HOLD** — 本机跑 R4–R7 后签核
 
 > **纪律：** 本轮 **仅** 低风险 **UI/UX polish**。**全量盘点 SSOT：** [PHASE29-RELEASE-POLISH-BACKLOG](./PHASE29-RELEASE-POLISH-BACKLOG.md) — **§6 实施前清单 + `PHASE29_DEV_GATE: OPEN` 后** 方可开发。
 
@@ -36,6 +36,8 @@ PHASE29_RELEASE_POLISH: W3_DONE · UI_FROZEN
 PHASE29_DEV_GATE: CLOSED
 PHASE29_IN_SCOPE_UI: 8
 PHASE29_IN_SCOPE_DONE: 8
+PHASE29_FREEZE_COMMIT: ecb28116
+PHASE29_POST_FREEZE_GATE: bash scripts/dev/run-phase29-post-freeze-gate-chain.sh
 ```
 
 ---
