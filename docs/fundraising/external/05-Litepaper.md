@@ -4,6 +4,8 @@
 
 > 介于执行摘要与完整投资人白皮书之间的**中等厚度**读本；**不构成**发售要约或投资建议。代币边界、FeeRouter 百分数与风险全文见 [06-Whitepaper.md](06-Whitepaper.md)。**市场规模绝对值与财务预测**仅在 **NDA** 下提供。
 
+**产品 Demo / 录屏工程真源（对内 · ①）**：**`/`** Web3旅行 · **`/market`**（**`/discover`→`/market`**）— **[LANDING-MARKET-PAGES-CODE-SSOT](../../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **[PM 演示脚本](../../product-manager/24-产品经理核心产品路径与演示脚本.md)**。
+
 ---
 
 ## 摘要

@@ -17,6 +17,7 @@
 | **合并版检查报告** | **[14-附录](14-附录-API与ABI对齐检查报告.md)** |
 | **索引器运维合并 JSON（evidence · 非表内 HTTP）** | **`scripts/indexer-public-snapshot.sh`**（**`.ps1`**）；**`snapshot_provenance`** 与 **internal/admin 索引器** **对读** — **L2 形状 SSOT** **[04 §3.4](04-后端与API.md)**（读前摘要 + **`internal` API 总述** · **运维 JSON 快照**）；流程 **[110 §3.1.2](110-阶段开发链上索引器与事件同步器.md)**、**Runbook §2.55**、**evidence/README**、**`indexer-reconcile-gate`**；**本文 §2.1** 下段 **运维 JSON 快照** 索引 |
 | **顶栏 IA、`/traveltrust` 壳与合规边界** | **[04 §3.4](04-后端与API.md)**、**[13-1](13-1-UI产品级SSOT与页面规范.md)**、**[85 §二 2.6](85-TravelTrust网络落地页-融资级设计与开发规格.md)**（组件索引；**非** ICO 认购） |
+| **`/` + `/market` 四页 ① FE 数据链（非 ABI 表）** | **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **`GET …/discover/orders`** 消费方 **`useMarketPage`**（**300ms debounce**）· **`/`** **`landingItinerarySession` = `localStorage`** |
 | **Escrow 参与方 / 协议四类命名** | **[87 §8](87-TravelTrust-角色体系技术文档-融合架构版.md)**；**`Escrow.sol` 字段名 + ABI** 与本 **§1.1** 为真值 |
 | **工程执行顺序与 Phase/Wave** | **[07](07-开发流程与顺序.md) §零～§五**；**FeeRouter 之后**（RegionVault 等）与 indexer/对账全链路须按 **§1.1.1** 与 **83/84/110** 分批落地并附 **evidence**（CI、Runbook、**110** 章节、**`evidence/GO_YYYYMMDD/`**），**禁止**仅凭文档宣称 **Implemented** |
 | **上链部署顺序（本地 → 公链）** | **[Runbook §2.56](../../ops/RUNBOOK.md)**（运维 SSOT）；**§6** 与 **[contracts/README](../../contracts/README.md)** 为 ABI/本地联调侧；治理/TTG 扩展同读 **[governance-token/02 §1.3](governance-token/02-对内技术规格-草案.md)**、**[82 §三附](82-治理币-文档总览.md)**、**[07 §五 5.2A](07-开发流程与顺序.md)** |
@@ -135,7 +136,7 @@
 
 **运维 JSON 快照（evidence · 非 §2.1 表内 HTTP 路径）**：**`scripts/indexer-public-snapshot.sh`**（Windows 委托 **`indexer-public-snapshot.ps1`**）**stdout** 为 **`traveltrust.ops_artifact.v1`**（**`payload`** 内合并 **`GET /health`**、**`GET /meta`** 与可选 **`ADMIN_BEARER_TOKEN`** / **`INTERNAL_API_SECRET`** 段；admin/internal 索引器探针与 **04 §3.4** **`internal`/`admin`** 表一致）；**`payload.snapshot_provenance`**（**`script_semver` `1.4.0`** 等）须与 **`GET …/internal/indexer-status`** 等响应 **对读**。**L2 键与段落 SSOT** 见 **[04 §3.4](04-后端与API.md)** 读前摘要「索引器运维 JSON 快照」及 **`internal` API 总述**「运维 JSON 快照」；**流程、脚本矩阵与 CI 锚点** 见 **[110 §3.1.2](110-阶段开发链上索引器与事件同步器.md)**、**[Runbook §2.55](../../ops/RUNBOOK.md)**、**[evidence/README](../../evidence/README.md)**、**`indexer-reconcile-gate`**；**07 §六 6.4** 工程台账。**勿**将合并文件误当作 **§2.1** 表内独立 REST 资源；变更形状时 **04**/**110**/**gate**/**07** 同批。
 
-**前端顶栏与 `/traveltrust`（2026-03-30 起迭代）**：`Header.tsx` **全站白底深字顶栏**；**`<nav>`** 仅 **`/`**、**`/market`**、**`/did-rank`**、**`/community`**；**不**列 **`/pay`**（**支付与托管**在用户菜单）。**TravelTrust** 字标 → **`/traveltrust`**；**Web3旅行** → **`/`**。**`/discover`** 页重定向 **`/market`**，**非** `<nav>` 直链。**`GET /api/v1/discover/orders`** 为**自由市场列表**数据源（HTTP 路径名历史约定）；**主消费页**为 **`/market`**（**`useMarketPage`** / **`getDiscoverOrders`**），与 **04 §3.4** 同口径。融资向落地页为 **`app/traveltrust/`** **深色 Tropical 壳 + 环境/交互粒子 + `#overview`**（**85 §三 IA**、**85 §二 2.6**）；`TravelTrustSectionNav` / `TravelTrustLiveStats` 等为 **`glass`**；**无**真实代币认购/checkout 流程。
+**前端顶栏与五主路由（2026-05-25 · ① UI 壳冻结）**：**[FIVE-MAIN-ROUTES-PHASE1-FREEZE](../../frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md)** · **`Header.tsx`** L0 分层（**86 §6.0**）；**`<nav>`** **`/`** · **`/market`** · **`/did-rank`** · **`/community`**；**TravelTrust** 字标 → **`/traveltrust`**（**layout lock** `hero→roles→…`，**无** `#overview` 四卡）；**`/pay`** 仅用户菜单。**`GET /api/v1/discover/orders`** 列表主消费页 **`/market`**。
 
 **Admin 审批（360，基线）**：**`GET|GET :id|POST …/approve`** 成功响应含 **`meta.build`**（与 **`GET /meta.build`** 同源）；列表无 DB 时顶层 **`note`** 与 **`meta.note`**（`admin_approvals_no_db`）并存，契约见 **`04 §3.5`**。
 
@@ -188,7 +189,7 @@
 | POST | /api/v1/disputes/:id/resolve | 裁决 | lib/disputes（仲裁员） |
 | GET | /api/v1/did-rank/travelers | 30 DID 排行榜 旅行者榜（DB 优先 + chain_off 回退）；已鉴权时 `travelers[*].is_me` | lib/apiClient getDidRankTravelers（含 `getAuthHeaders`）；did-rank 页 |
 | GET | /api/v1/did-rank/guides | 30 DID 排行榜 向导榜（同上）；`guides[*].is_me` | lib/apiClient getDidRankGuides；did-rank 页 |
-| GET | /api/v1/did-rank/itineraries | 55 G1 行程榜（DB 优先 + chain_off）；`itineraries[*].is_me` 依订单 `tourist_id` | lib/apiClient **getDidRankItineraries**；**`/did-rank` 页当前不调用**（**30 §0.1**）；冒烟/check-55 仍验此端点 |
+| GET | /api/v1/did-rank/itineraries | 55 G1 行程榜（DB 优先 + chain_off）；`itineraries[*].is_me` 依订单 `tourist_id` | **getDidRankItineraries**；**`?board=itinerary`** Top10（**30 §0.1**）；冒烟/check-55 |
 | GET | /api/v1/governance/fee-routes | **FeeRouter** `PlatformFeeRouted` 索引只读列表；query **limit**、**cursor**（`block:log`）、**chain_id**；`page.next_cursor` / `has_more`；无 DB 时占位 | `routes.governanceFeeRoutes`；透明度页可选 |
 | GET | /api/v1/governance/protocol-reference | **[84](84-第一阶段10国Country-Pool发行参数总表.md) 文档镜像**：45/55、Global 65/20/15、Phase1 十国；**非**链上 FeeRouter；`X-Implementation-Status: doc-reference` | `routes.governanceProtocolReference`；`/governance/params` |
 
@@ -204,7 +205,7 @@
 |------|------|------|----------|
 | POST | /api/v1/itineraries | P15 行程生成（创建/更新 Draft 订单+行程）；**guide_id?** 预选向导（与 `POST /api/v1/orders` 同语义，见 04 §3.4） | lib/apiClient postItineraryCreate；`/itinerary/new` 等 |
 | POST | /api/v1/itineraries/custom | 49 A 自定义行程 Draft；**guide_id?** 与上条同语义（04 §3.4） | lib/apiClient postItineraryCustom；CustomItineraryModal；`/market?guide_id=` 深链可选带参 |
-| GET | /api/v1/discover/orders | **P16 可浏览订单（自由市场列表 API）**；路径名保留 **discover**；**主 UI** **`/market`**（Next **`/discover`** 仅重定向壳）。query: country?, city?, **limit?**, **cursor?**（**55-S12**；**page** / 排序 / 400 `invalid_cursor` 见 04 §3.4）；item：**image**、**escrow_address** | lib/apiClient **getDiscoverOrders**；**`/market`** 订单栏（**`useMarketPage`**） |
+| GET | /api/v1/discover/orders | **P16 可浏览订单（自由市场列表 API）**；路径名保留 **discover**；**主 UI** **`/market`**（Next **`/discover`** 仅重定向壳）。query: country?, city?, **limit?**, **cursor?**（**55-S12**；**page** / 排序 / 400 `invalid_cursor` 见 04 §3.4）；item：**image**、**escrow_address** | lib/apiClient **getDiscoverOrders**；**`/market`** 订单栏（**`useMarketPage`** · **300ms debounce** · 收藏 **`localStorage` + F-020 best-effort** → **②** SLA — **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §3） |
 | GET | /api/v1/orders/:id/messages | P16 订单聊天消息列表；**items[]** 必有字段、可选 **sender_name** / **sender_avatar_url**；**GET** 与 **POST** 均在 **chain_off** 未挂载时 **501** `not_implemented`（与 **`not_impl_json`** 一致）；详 **[04 §3.4](04-后端与API.md)** | frontend/lib/api.ts routes.orderMessages；EscrowDetail ChatBlock |
 | POST | /api/v1/orders/:id/messages | P16 发送消息 body: **content**（trim 非空）；**501** 同上 | 同上 |
 | POST | /api/v1/orders/:id/confirm-final-plan | P16 确认最终版本（生成 snapshotHash） | EscrowDetail QuoteSummaryCard Confirm Final Plan |

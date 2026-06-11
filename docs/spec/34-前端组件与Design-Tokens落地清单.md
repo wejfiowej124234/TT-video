@@ -16,6 +16,7 @@
 | **Token 数值 SSOT** | **[22](22-Design-Tokens-旅游Web3融合体系-v1.0.md)** |
 | **Experience 视觉与动效** | **[86](86-UI-双系统未来风-风格与动效技术规格.md)**（**§0.2～§0.4**） |
 | **Experience 组件清单与叙事** | **[28 §5、§8](28-Cinematic-Glassmorphism-Web3融合规范.md)** |
+| **五主路由 ① UI 壳（2026-05-25）** | **[FIVE-MAIN-ROUTES](../../frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md)** · **88 §一** · **`TT_MARKETING_*`**（**`lib/marketingUi.ts`**） |
 
 ---
 
@@ -47,7 +48,7 @@
 | **阴影** | `shadow-soft`、`shadow-medium`、`shadow-strong`（对应 CSS 变量） | 自定义裸 rgba 阴影；**发光边框** 仅 **Experience 非资金区**（**86**、**13**） |
 | **状态** | `success`、`warning`、`danger`、`info` 仅用于状态语义 | 用于装饰或非状态 |
 
-**例外（写死）**：**Landing（`/`）正文** 玻璃容器仍可用 `bg-white/15`、`backdrop-blur-xl` 等（**28**）；**全局顶栏** 已统一浅色条，**不**再对 Experience 路径单独套玻璃顶栏。Hero 主 CTA 可 `bg-white`；金额/地址用 `font-mono`、`letter-spacing` 按 22 §三。
+**例外（写死）**：**Landing（`/`）正文** 玻璃容器仍可用 `bg-white/15`、`backdrop-blur-xl` 等（**28**）；**L0 顶栏** 按路径 Home/Cinematic/Dark/Light（**86 §6.0** · **`uiSystem.ts`**），**不**再全路由白底或 Experience 玻璃顶栏。Hero 主 CTA 可 `bg-white`；金额/地址用 `font-mono`、`letter-spacing` 按 22 §三。
 
 ### 2.2 代码落点与文件映射
 
@@ -70,7 +71,7 @@
 | ✓ | 全站无 `rounded-md` 等未走变量的圆角 | 统一为 `rounded-[var(--radius-sm)]` 或 tailwind 扩展（已用 theme 扩展） |
 | ✓ | `globals.css` 的 `:root` 含 travel/trust/ink/状态/背景/radius/shadow/font | 与 22 §二～§六、§三 一致 |
 | ✓ | `tailwind.config.ts` 的 colors/radius/shadow/font 仅引用 CSS 变量或 22 规定值 | 无硬编码 hex（除 ink 若已写死） |
-| ✓ | Experience 区（Landing / **`/discover` 短停** / **`/market`** 卡片）可用 glass（backdrop-blur、bg-white/xx）；Escrow/Dispute 无玻璃 | 28 三层融合 |
+| ✓ | Experience 区（Landing / **`/discover`→`/market` 重定向壳** / **`/market`** 卡片）可用 glass（backdrop-blur、bg-white/xx）；Escrow/Dispute 无玻璃 | 28 三层融合 |
 
 **说明**：30/31（DID 排行榜、TT 社区）采用赛博风调色板（slate/amber/cyan/fuchsia），与 22 单源并行约定，该区 `bg-slate-*`/`bg-amber-*` 等为设计例外，不作为裸色违规。
 
@@ -91,6 +92,22 @@
 | **WalletStatusMini** | 28 §2.C、§8.1 | `components/trust/WalletStatusMini.tsx` | 顶栏右侧 Wallet（Connected / Wrong network） | ✓ | Header 集成 |
 | **AgreementSummaryAccordion** | 28 §2.B、§8.1 | `app/itinerary/new/page.tsx` 内联或可抽组件 | 预算区底部折叠：token、total、platformFee、snapshotHash、release conditions | ✓ | 默认折叠 |
 
+### 3.1a Landing `/`（Web3 旅行 · ① 代码 SSOT）
+
+| 组件名 | 规范来源 | 代码路径 | 用途 | 实现状态 □ | 备注 |
+|--------|----------|----------|------|------------|------|
+| **page.tsx 页壳** | 88 §一、25 | `app/(home)/page.tsx` | Ken Burns 叠层 + Hero→结果区分隔 + 页脚顶 fade | ✓ | **`TT_MARKETING_HOME_*`** · **`SECTION_BRIDGE`** · **`FOOTER_TOP_FADE`** |
+| **LandingHomeAmbientBackdrop** | 88、25 | `components/landing/LandingHomeAmbientBackdrop.tsx` | 十国摄影 Ken Burns 底 | ✓ | **`landingAmbientByCountry.ts`** |
+| **LandingHeroForm** | 28、25、86 §6.1 | `components/landing/LandingHeroForm.tsx` | 中央玻璃规划表单（`#landing-hero-form`） | ✓ | **`TT_MARKETING_HOME_SUBMIT_FAB`** |
+| **useLandingPage** | 04 P15、53 | `components/landing/useLandingPage.ts` | **1×** `postItineraryCreate`；解锁 **`getOrder`** | ✓ | contract 禁止循环 POST |
+| **ItineraryResultsSection** | 25、28 | `components/landing/ItineraryResultsSection.tsx` | **1** 预览卡（**`ITINERARY_CARD_COUNT=1`**） | ✓ | 链 **`/escrow/[id]`** |
+| **UnlockModal** | 25、13 资金边界 | `components/landing/UnlockModal.tsx` | 预览解锁确认（① 非真 USDC） | ✓ | |
+| **LandingFooter** | 28、86 | `components/landing/LandingFooter.tsx` | 冷灰页脚 + **TrustInfraWall** | ✓ | **`TT_MARKETING_HOME_FOOTER_*`** |
+| **landingItinerarySession** | — | `lib/landingItinerarySession.ts` | **`localStorage`** 恢复卡态（跨 tab · 旧 session 迁移） | ✓ | |
+| **marketFavoritesStorage** | 29 H-L5 · F-020 ② | `lib/marketFavoritesStorage.ts` | **`/` + `/market`** 订单/向导收藏 SSOT · 跨 tab | ✓ | **F-020 best-effort 已接线（①）** |
+
+互指 **[`(home)/README`](../../frontend/app/(home)/README.md)** · **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **[GO_local_web3_itinerary_l5](../../frontend/evidence/GO_local_web3_itinerary_l5/README.md)**。
+
 ### 3.2 自由市场（29 撮合控制台）
 
 | 组件名 | 规范来源 | 代码路径 | 用途 | 实现状态 □ | 备注 |
@@ -103,23 +120,28 @@
 | **GuideDetailDrawer** | 29 §4.2 | `components/market/GuideDetailDrawer.tsx` | 向导详情抽屉：套餐、评价、邀请接单 | ✓ | |
 | **EmptyState** | 29、13-1 | `components/market/EmptyState.tsx` | 空订单/空向导/无匹配 | ✓ | |
 | **MarketSkeleton** | 29 | `components/market/MarketSkeleton.tsx` | 订单/向导列表加载骨架 | ✓ | |
+| **useMarketPage** | 29 · 94 | `components/market/useMarketPage.ts` | URL 筛选 · **300ms debounce** · 收藏 **`localStorage`** | ✓ | **`marketPageQuery.ts`** |
+| **MarketHubSubNav** | 94 §9.0 L1 | `components/market/MarketHubSubNav.tsx` | **`/market` / provider / acquisition** 三签 | ✓ | |
+| **MarketStandaloneBusinessPage** | 94 | `components/market/MarketStandaloneBusinessPage.tsx` | 子站 provider/acquisition 共用壳 | ✓ | **`marketSubsiteFilters.ts`** |
+
+**四页代码 SSOT：** **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §3～§5
 
 ### 3.3 Console 专属（28 §5 银行级）
 
 | 组件名 | 规范来源 | 代码路径 | 用途 | 实现状态 □ | 备注 |
 |--------|----------|----------|------|------------|------|
-| **SignatureModal** | 28 §2.C、§8.1、13-1 | `components/escrow/EscrowDetail.tsx` 内签名弹窗 | 链上操作签名：chainId、contract、amount、token、snapshotHash、finalityN、platformFeeBps；**不用玻璃** | ✓ | 白底、字段完整 |
+| **SignatureModal** | 28 §2.C、§8.1、13-1 | `components/escrow/EscrowDetail/EscrowTxModal.tsx` | 链上操作签名：chainId、contract、amount、token、snapshotHash、finalityN、platformFeeBps；**不用玻璃** | ✓ | 白底、字段完整 |
 | **StatusBadge** | 28、13-1 | `components/escrow/StatusBadge.tsx` | 订单/托管状态徽章 | ✓ | |
 | **FinalityBadge** | 28 §8.3 | `components/escrow/FinalityBadge.tsx` | 终局状态标识（如「已终局 N 块」） | ✓ | |
 | **OnchainEventTimeline** | 28 §8.3 | `components/escrow/OnchainEventTimeline.tsx` | 链上事件时间线 | ✓ | |
 | **TxMachineStatus** | 28 §8.3、13-1 | `components/escrow/TxMachineStatus.tsx` | 交易状态机展示 | ✓ | |
-| **EscrowDetail** | 28 §8.1、23 §七 | `components/escrow/EscrowDetail.tsx` | 托管详情页：状态、金额、参与方、finality、操作区、风险提示、聊天/评价 | ✓ | 银行级、无玻璃 |
+| **EscrowDetail** | 28 §8.1、23 §七、80 | `components/escrow/EscrowDetail/`（`index.tsx`） | **双壳**：① **Experience** 草稿（`experienceDraft` · **UI 冻结** [`ESCROW-DRAFT-EXPERIENCE-FREEZE`](../frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-DRAFT-EXPERIENCE-FREEZE.md)）；② **协议 DID**（已上链 · deposit/争议） | ✓ | 路径为目录非单文件；见 [`EscrowDetail/README`](../frontend/components/escrow/EscrowDetail/README.md) |
 
 ### 3.4 通用与布局
 
 | 组件名 | 规范来源 | 代码路径 | 用途 | 实现状态 □ | 备注 |
 |--------|----------|----------|------|------------|------|
-| **Header** | 28、05、86 | `components/Header.tsx` | 顶栏：字标、导航、语言、WalletStatusMini、登录/注册 | ✓ | **全路由统一**白底深字顶栏（**86 §6.0**）；**WalletStatusMini** **`variant="dark"`** |
+| **Header** | 28、05、86 | `components/Header.tsx` | 顶栏：字标、导航、语言、WalletStatusMini、登录/注册 | ✓ | L0 **分层顶栏**（**`uiSystem.ts`** · **86 §6.0**）；**WalletStatusMini** **`variant="dark"`** |
 | **LoadingText** | 13-1、30-UX | `components/LoadingText.tsx` | 统一加载文案（i18n） | ✓ | |
 | **ApiErrorAlert** | 13-1 异常态 | `components/ApiErrorAlert.tsx` | API 错误提示与重试 | ✓ | |
 
@@ -127,9 +149,9 @@
 
 | 33 页面 | 依赖的 34 组件（主要） |
 |---------|------------------------|
-| Landing | TrustBadgesRow、TrustInfraWall、Header、WalletStatusMini |
+| Landing | **`LandingHomeAmbientBackdrop`**、**LandingHeroForm**、**`TT_MARKETING_HOME_SECTION_BRIDGE`**、**useLandingPage**、**ItineraryResultsSection**、**UnlockModal**、**`landingItinerarySession`**、**`marketFavoritesStorage`**、**`TT_MARKETING_HOME_FOOTER_TOP_FADE`**、**LandingFooter**、TrustInfraWall、Header、WalletStatusMini |
 | Discover（→/market） | 同 Market |
-| 自由市场 /market | ViewSwitcher、StickyFilterBar、OrderCard、GuideCard、OrderDetailDrawer、GuideDetailDrawer、EmptyState、EscrowEnabledBadge、SupportedTokensPill、TrustInfraWall |
+| 自由市场 /market | **useMarketPage**、ViewSwitcher、StickyFilterBar、OrderCard、GuideCard、OrderDetailDrawer、GuideDetailDrawer、EmptyState、**`marketFavoritesStorage`**、EscrowEnabledBadge、SupportedTokensPill、TrustInfraWall |
 | Itinerary | AgreementSummaryAccordion（费用明细下）、表单与结果区 |
 | OrderFlow | 步骤条/状态、金额、签名入口（EscrowDetail 内） |
 | Escrow Detail | EscrowDetail、StatusBadge、FinalityBadge、OnchainEventTimeline、TxMachineStatus、SignatureModal |
@@ -182,7 +204,7 @@
 | 维度 | 检查要点 | 参考 |
 |------|----------|------|
 | **Token 单源** | 全站仅 22 token；无裸色；CSS 变量与 tailwind 扩展一致 | §2、22、28 §8.2 |
-| **三层融合** | 情绪层（Landing / **`/discover` 短停** / **`/market`**）玻璃+微徽章；可信层折叠条款；资金层（Escrow/Dispute）银行级、无玻璃 | 28 §1、§2 |
+| **三层融合** | 情绪层（Landing / **`/discover`→`/market` 重定向壳** / **`/market`**）玻璃+微徽章；可信层折叠条款；资金层（Escrow/Dispute）银行级、无玻璃 | 28 §1、§2 |
 | **Zone Control** | 金融区信息层级：状态→金额→finality→操作→风险提示；交易交互仅 SignatureModal | 13-1 表 4 |
 | **组件复用** | 同功能仅一套组件（如 TrustBadgesRow、OrderCard）；无重复造轮子 | §3 |
 | **API/ABI** | 前端仅 `lib/api.ts`、`lib/apiClient.ts` 调 04；ABI 仅 `dapp/abis/*.json` | 14、32 §2.4 |
@@ -219,4 +241,4 @@
 
 ---
 
-*本文与 22、28、29、23、32、33、13-1、05、14 配套。文档版本与最后更新见 [00-文档索引](00-文档索引.md)。*
+*本文与 22、28、29、23、32、33、13-1、05、14 配套。**v1.0.2（2026-06-03）**：**§3.5** Landing/`/market` 组件映射补 **`marketFavoritesStorage`** · **`useMarketPage`**；与 **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §3.1a/§3.2 对拍。文档版本与最后更新见 [00-文档索引](00-文档索引.md)。*

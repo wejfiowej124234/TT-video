@@ -22,6 +22,7 @@ const READ_CONTRACT_GOVERNANCE_ADMIN_GET_PATHS: &[&str] = &[
     "/api/v1/admin/audit-logs",
     "/api/v1/admin/audit-logs/:id",
     "/api/v1/admin/audit/operations",
+    "/api/v1/admin/auth-audit-events",
     "/api/v1/admin/community/appeals",
     "/api/v1/admin/community/moderation/cases",
     "/api/v1/admin/community/penalties",

@@ -1,5 +1,6 @@
 import type { CityTransportType, GuideLevel, TransportType } from "./types";
 import { DEFAULT_COUNTRY, getPricingForCountry } from "@/lib/countries";
+import { ITINERARY_STOCK } from "@/lib/cityDetails/itineraryStockImages";
 
 export type { CityTransportType, GuideLevel, TransportType };
 
@@ -25,15 +26,15 @@ export const CITY_TRANSPORT_OPTIONS: { value: CityTransportType; labelKey: strin
 /** 城市交通类型对应的图片与描述 key（描述走 i18n：market_transportSedanDesc 等） */
 export const CITY_TRANSPORT_DETAILS: Record<CityTransportType, { image: string; descriptionKey: string }> = {
   sedan: {
-    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=400&q=80",
+    image: ITINERARY_STOCK.transportSedan,
     descriptionKey: "market_transportSedanDesc",
   },
   suv: {
-    image: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400&q=80",
+    image: ITINERARY_STOCK.transportSuv,
     descriptionKey: "market_transportSuvDesc",
   },
   van: {
-    image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=400&q=80",
+    image: ITINERARY_STOCK.transportMpv,
     descriptionKey: "market_transportVanDesc",
   },
 };

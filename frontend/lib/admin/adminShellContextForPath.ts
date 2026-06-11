@@ -4,6 +4,9 @@ export type AdminShellGroupId =
   | "workspace"
   | "onboarding"
   | "operations"
+  | "content"
+  | "official_ops"
+  | "growth"
   | "community"
   | "finance"
   | "governance"
@@ -17,6 +20,7 @@ export type AdminShellContext = {
 const PREFIX_GROUPS: { prefix: string; groupId: AdminShellGroupId; groupLabelKey: string }[] = [
   { prefix: "/admin/inbox", groupId: "onboarding", groupLabelKey: "admin_unified_inbox_title" },
   { prefix: "/admin/provider-applications", groupId: "onboarding", groupLabelKey: "admin_shell_nav_group_onboarding" },
+  { prefix: "/admin/guide-applications", groupId: "onboarding", groupLabelKey: "admin_shell_nav_group_onboarding" },
   { prefix: "/admin/steward-applications", groupId: "onboarding", groupLabelKey: "admin_shell_nav_group_onboarding" },
   { prefix: "/admin/approvals", groupId: "onboarding", groupLabelKey: "admin_shell_nav_group_onboarding" },
   { prefix: "/admin/onboarding", groupId: "onboarding", groupLabelKey: "admin_shell_nav_group_onboarding" },
@@ -26,6 +30,12 @@ const PREFIX_GROUPS: { prefix: string; groupId: AdminShellGroupId; groupLabelKey
   { prefix: "/admin/orders", groupId: "operations", groupLabelKey: "admin_shell_nav_group_operations" },
   { prefix: "/admin/disputes", groupId: "operations", groupLabelKey: "admin_shell_nav_group_operations" },
   { prefix: "/admin/reviews", groupId: "operations", groupLabelKey: "admin_shell_nav_group_operations" },
+  { prefix: "/admin/content", groupId: "content", groupLabelKey: "admin_shell_nav_group_content" },
+  { prefix: "/admin/official", groupId: "official_ops", groupLabelKey: "admin_shell_nav_group_official_ops" },
+  { prefix: "/admin/growth", groupId: "growth", groupLabelKey: "admin_shell_nav_group_growth" },
+  { prefix: "/admin/conversion-analytics", groupId: "more", groupLabelKey: "admin_shell_nav_conversion_analytics" },
+  { prefix: "/admin/region-share", groupId: "governance", groupLabelKey: "admin_shell_nav_group_governance" },
+  { prefix: "/admin/governance", groupId: "governance", groupLabelKey: "admin_shell_nav_group_governance" },
   { prefix: "/admin/community", groupId: "community", groupLabelKey: "admin_shell_nav_group_community" },
   { prefix: "/admin/finance-reconciliation", groupId: "finance", groupLabelKey: "admin_shell_nav_group_finance" },
   { prefix: "/admin/finance", groupId: "finance", groupLabelKey: "admin_shell_nav_group_finance" },
@@ -105,6 +115,7 @@ const NESTED_LEAF_RULES: { pattern: RegExp; labelKey: string }[] = [
 
 const LIST_LEAF_KEYS: { prefix: string; labelKey: string }[] = [
   { prefix: "/admin/provider-applications", labelKey: "admin_provider_list_title" },
+  { prefix: "/admin/guide-applications", labelKey: "admin_guide_list_title" },
   { prefix: "/admin/steward-applications", labelKey: "admin_steward_list_title" },
   { prefix: "/admin/approvals", labelKey: "admin_approvals_title" },
   { prefix: "/admin/onboarding", labelKey: "admin_onboarding_hub_title" },
@@ -115,8 +126,45 @@ const LIST_LEAF_KEYS: { prefix: string; labelKey: string }[] = [
   { prefix: "/admin/disputes", labelKey: "admin_disputes_title" },
   { prefix: "/admin/reviews", labelKey: "admin_reviews_title" },
   { prefix: "/admin/community/reports", labelKey: "admin_community_reports_title" },
-  { prefix: "/admin/community/penalties", labelKey: "admin_community_penalties_title" },
-  { prefix: "/admin/community/appeals", labelKey: "admin_community_appeals_title" },
+  { prefix: "/admin/community/penalties", labelKey: "admin_penalties_title" },
+  { prefix: "/admin/community/appeals", labelKey: "admin_appeals_title" },
+  { prefix: "/admin/content", labelKey: "admin_content_hub_title" },
+  { prefix: "/admin/content/countries", labelKey: "admin_content_countries_title" },
+  { prefix: "/admin/content/cities", labelKey: "admin_content_cities_title" },
+  { prefix: "/admin/content/pois", labelKey: "admin_content_pois_title" },
+  { prefix: "/admin/content/pricing", labelKey: "admin_content_pricing_title" },
+  { prefix: "/admin/content/hotel-tiers", labelKey: "admin_content_hotel_tiers_title" },
+  { prefix: "/admin/content/transport-region-rules", labelKey: "admin_content_transport_rules_title" },
+  { prefix: "/admin/content/intercity-routes", labelKey: "admin_content_routes_title" },
+  { prefix: "/admin/content/media-assets", labelKey: "admin_content_media_assets_title" },
+  { prefix: "/admin/content/landing-ambient", labelKey: "admin_content_landing_ambient_title" },
+  { prefix: "/admin/content/poi-images", labelKey: "admin_content_poi_images_title" },
+  { prefix: "/admin/content/publish-queue", labelKey: "admin_content_publish_queue_title" },
+  { prefix: "/admin/content/revisions", labelKey: "admin_content_revisions_title" },
+  { prefix: "/admin/content/import-operations", labelKey: "admin_content_import_ops_title" },
+  { prefix: "/admin/content/catalog-dashboard", labelKey: "admin_content_catalog_dashboard_title" },
+  { prefix: "/admin/content/geo-validation", labelKey: "admin_content_geo_validation_title" },
+  { prefix: "/admin/content/country-market", labelKey: "admin_country_market_title" },
+  { prefix: "/admin/official", labelKey: "admin_official_hub_title" },
+  { prefix: "/admin/official/accounts", labelKey: "admin_official_accounts_title" },
+  { prefix: "/admin/official/guides", labelKey: "admin_official_guides_title" },
+  { prefix: "/admin/official/itinerary-templates", labelKey: "admin_official_itinerary_templates_title" },
+  { prefix: "/admin/official/cold-start", labelKey: "admin_official_cold_start_title" },
+  { prefix: "/admin/growth", labelKey: "admin_growth_hub_title" },
+  { prefix: "/admin/growth/referral-codes", labelKey: "admin_growth_referral_codes_title" },
+  { prefix: "/admin/growth/early-bird", labelKey: "admin_growth_early_bird_title" },
+  { prefix: "/admin/growth/airdrop-campaigns", labelKey: "admin_growth_airdrop_campaigns_title" },
+  { prefix: "/admin/growth/kol-center", labelKey: "admin_growth_kol_title" },
+  { prefix: "/admin/growth/reward-ledger", labelKey: "admin_growth_reward_ledger_title" },
+  { prefix: "/admin/growth/anti-fraud", labelKey: "admin_growth_anti_fraud_title" },
+  { prefix: "/admin/growth/analytics", labelKey: "admin_growth_analytics_title" },
+  { prefix: "/admin/conversion-analytics", labelKey: "pes3_admin_page_title" },
+  { prefix: "/admin/community/moderation/cases", labelKey: "admin_mod_cases_title" },
+  { prefix: "/admin/community/risk-signals", labelKey: "admin_risk_signals_title" },
+  { prefix: "/admin/community/policy-change-logs", labelKey: "admin_policy_logs_title" },
+  { prefix: "/admin/community/ranking/snapshots", labelKey: "admin_rank_snapshots_title" },
+  { prefix: "/admin/governance/execution-uat", labelKey: "admin_governance_execution_uat_title" },
+  { prefix: "/admin/region-share/reconcile", labelKey: "admin_region_share_reconcile_title" },
   { prefix: "/admin/finance-suite", labelKey: "admin_finance_suite_title" },
   { prefix: "/admin/finance-reconciliation", labelKey: "admin_finance_reconciliation_title" },
   { prefix: "/admin/fee-router", labelKey: "admin_fee_router_title" },

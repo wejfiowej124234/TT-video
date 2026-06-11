@@ -20,6 +20,17 @@ export function validateAdminReportsWizardStep2(modNotes: string): AdminReportsW
   return {};
 }
 
+/** Step 1 · merged review (version + notes). */
+export function validateAdminReportsWizardReviewStep(
+  modExpectedVer: string,
+  modNotes: string,
+): AdminReportsWizardFieldErrors {
+  return {
+    ...validateAdminReportsWizardStep1(modExpectedVer),
+    ...validateAdminReportsWizardStep2(modNotes),
+  };
+}
+
 export function validateAdminReportsWizardStep3(opts: {
   modRecordPenalty: boolean;
   modPenaltySubject: string;

@@ -44,6 +44,8 @@ export type CommunityFeedListPostsSectionProps = Pick<
 
   | "onViewFull"
 
+  | "onCommentClick"
+
   | "onPlayVideo"
 
   | "onReport"
@@ -101,6 +103,8 @@ export function CommunityFeedListPostsSection({
   onLike,
 
   onViewFull,
+
+  onCommentClick,
 
   onPlayVideo,
 
@@ -212,6 +216,8 @@ export function CommunityFeedListPostsSection({
           onLike={onLike}
 
           onViewFull={onViewFull}
+
+          onCommentClick={onCommentClick}
 
           onPlayVideo={onPlayVideo}
 

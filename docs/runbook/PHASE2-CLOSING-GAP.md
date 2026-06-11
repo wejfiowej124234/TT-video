@@ -3,7 +3,7 @@
 **生效：** 2026-05-31  
 **前置：** Community **C1–C12 ALL PASS** · [`CLOSING-REVIEW.md`](../../evidence/GO_phase2_testnet_20260526/community/CLOSING-REVIEW.md) · **`TT_PHASE2_COMMUNITY_C1_C12_CLOSING: ALL_SLOTS_PASS`** · [TT-PHASE2-COMMUNITY-MATRIX-FINAL-ATTESTATION](./TT-PHASE2-COMMUNITY-MATRIX-FINAL-ATTESTATION.md) · **`TT_PHASE2_COMMUNITY_MATRIX_VERDICT: GO`**
 
-**当前机读判定：** **`TT_PHASE2_GO_VERDICT: PHASE2_GO_READY`**（2026-06-06T10:14Z 复跑）→ 进入 **Phase ③ Production Preparation**（**≠ Production GO**）
+**当前机读判定：** **`TT_PHASE2_GO_VERDICT: PHASE2_GO_READY`**（2026-06-06T10:14Z 复跑）→ **Phase ③ 入口 ⏸ HOLD** — 须先完成 **[Phase ②.9 Release Polish](./PHASE29-RELEASE-POLISH.md)**（**≠ Production GO**）
 
 **阶段纪律：** **① 本地 → ② 测试网 → ③ 公网/生产**；Closing Gap 项 **须** 在 **②** 可验证环境完成并留证；**禁止** 用 **①** 窄切片 / Community 槽 PASS / C7 社区 D 域 `report.json` 冒充 **全站 staging GO**。
 
@@ -44,7 +44,7 @@
 | **`TT_PHASE2_GO_VERDICT: NOT_MET`** | 默认；Community 或宽轨任一项未满足 |
 | **`TT_PHASE2_GO_VERDICT: PARTIAL`** | ≥1 Gap **PASS** · 未全绿 |
 | **`TT_PHASE2_GO_VERDICT: PHASE2_GO_READY`** | **G1–G7 全部 PASS**（G7 可为 **PREP_PASS** · 生产 CDN 本身属 ③）· Owner 书面确认 |
-| **Phase ③** | **`PHASE2_GO_READY` 之后** 另开 Production Preparation · **≠** ③ Production GO |
+| **Phase ③** | **`PHASE3_ENTRY_GATE: READY`** · **`PHASE3_PRODUCTION_PREP: ACTIVE`** | ②.9 完成 + R4–R7 + Owner 签核 2026-06-07 — 见 [PHASE3-PRODUCTION-PREPARATION](./PHASE3-PRODUCTION-PREPARATION.md) · **≠** ③ Production GO |
 
 汇总文件：[`closing-gap/STATUS.txt`](../../evidence/GO_phase2_testnet_20260526/closing-gap/STATUS.txt)（由 `record-phase2-closing-gap-status.sh` 刷新）
 

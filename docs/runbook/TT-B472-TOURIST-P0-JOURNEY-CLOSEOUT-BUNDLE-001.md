@@ -39,6 +39,7 @@
 ### 3.1 B-470（数据链）
 
 - **结论**：`/market` 与 `/guides/[id]` 经 **`BookGuideModal`** → **`ordersNewHrefForGuide`** → **`/orders/new?guide_id=`** → **`POST /api/v1/orders`** **提交体** **与** **入口** **无关** **（** **PASS** **）** **。**
+- **列表读面**：**`/market`** 订单栏 **`useMarketPage` → `getDiscoverOrders`**（**300ms debounce** · **`/discover` 重定向壳**）— **[LANDING-MARKET-PAGES-CODE-SSOT §3](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)**。
 - **弹层 `guideName`**：在 **B-471** **前** **曾** **存在** **展示** **分叉** **；** **B-471** **后** **已** **统一** **（** **PASS** **）** **。**
 
 ### 3.2 B-471（展示真值）

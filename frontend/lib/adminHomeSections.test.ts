@@ -6,6 +6,7 @@ import en from "@/locales/en";
 import zh from "@/locales/zh";
 
 const KEYS = [
+  "admin_home_section_ops_planes",
   "admin_home_section_core",
   "admin_home_section_audit_finance",
   "admin_home_section_community",

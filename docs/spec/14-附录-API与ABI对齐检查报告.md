@@ -36,7 +36,7 @@
 
 **逐项核对**：认证（/auth/*）、/health、/meta、/api/v1/me、/api/v1/me/stats、/api/v1/me/password、/api/v1/guides、/api/v1/guides/:id、/api/v1/guides/:id/stake、/api/v1/itineraries、/api/v1/discover/orders、/api/v1/orders（GET/POST）、/api/v1/orders/:id（GET）、accept/cancel/**mock-pay**/confirm-completion、messages（GET/POST）、confirm-final-plan、set-escrow-address、reviews（GET/POST）、dispute、evidence（GET/POST）、**confirm-completion-intent、open-dispute-intent**、disputes（GET）、disputes/:id（GET）、disputes/:id/resolve（POST）、**disputes/:id/execute-resolution-intent**、**did-rank/travelers、did-rank/guides、did-rank/itineraries**— 上述路径已在前端 routes 暴露并可调用。
 
-**注（页面 vs HTTP 路径名）**：**`GET /api/v1/discover/orders`** 为**自由市场**可浏览订单列表的数据源；Next 主列表页为 **`/market`**（**`getDiscoverOrders`** / **`useMarketPage`**）。**`/discover`** 仅为 **客户端重定向至 `/market`** 的兼容壳，**非**第二套列表页（与 **[04 §3.4](04-后端与API.md)**、**[14](14-合约-API-ABI-前后端对齐.md)** 顶栏段一致）。
+**注（页面 vs HTTP 路径名）**：**`GET /api/v1/discover/orders`** 为**自由市场**可浏览订单列表的数据源；Next 主列表页为 **`/market`**（**`getDiscoverOrders`** / **`useMarketPage`** · **300ms debounce** · 收藏 **`localStorage` only** · **F-020 best-effort 已接线（①）· ② SLA**）。**`/discover`** 仅为 **客户端重定向至 `/market`** 的兼容壳，**非**第二套列表页（与 **[04 §3.4](04-后端与API.md)**、**[14](14-合约-API-ABI-前后端对齐.md)** 顶栏段一致）。**`/`** 行程预览 **`landingItinerarySession` = `localStorage`** — **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §2/§3。
 
 **注（DID 行程榜）**：**`GET /api/v1/did-rank/itineraries`** 仍可在 **lib/api.ts** / **apiClient** 调用；**`/did-rank` 页面**当前**不拉取**行程列表（**[30 §0.1](30-DID排行榜-页面规范.md)**）；**check-55 / smoke** 仍验收该端点。
 
@@ -54,12 +54,29 @@
 
 | 来源 | 说明 |
 |------|------|
-| **04 §3.4** | 社区路由（feed、posts、post/:id、like、comments、collect、conversations、follow、friends、me/following、me/followers、me/collects、**me/posts**（51-31-19）等）已登记，与 crates/api routes/community 一致；**GET /api/v1/community/feed** 支持 query **mode**（51-31-B2）：recommend（默认全量）/ follow（仅关注，需鉴权）。 |
-| **frontend/lib/api.ts** | `routes.community` 块含 feed、posts、postById、postLike、postComments、conversations、conversationMessages、userFollow、meFollowing、meFollowers、friends*、postCollect、meCollects、**mePosts**，与 04 §3.4 社区路由逐项对应。 |
-| **frontend/lib/apiClient/community.ts** | getFeed(params) 支持 **mode: "recommend" \| "follow"**，与后端 query 一致；其余 getMyPosts、getPostById、createPost、postLike、deleteLike、getPostComments、postComment、getConversations、getConversationMessages、postConversationMessage、getMeFollowing、getMeFollowers、getFriendsList、getFriendsRequests、getMeCollects、postCollect、deleteCollect 路径均使用 routes.community，与 04 一致。 |
-| **crates/api** | routes/community.rs 已挂载 GET feed（query mode）、POST/GET posts、post/:id、like、comments、collect、conversations、follow、friends、me/following、me/followers、me/collects、**me/posts**（51-31-19）；有 DB 时从 community_posts、community_follows、community_likes、conversations 等读写。 |
+| **04 §3.4** | 社区路由（feed、posts、post/:id、like、comments、collect、conversations、**conversations/ensure**、follow、friends、me/*、**posts/upload-media**、**media/capabilities**、**media-assets/sessions***、**uploads/community-posts/:name** 等）与 **`me/profile-avatar*`**、**`uploads/profile-avatars/:name`** 已登记（**2026-05-31 · Phase①→② T3**）；**GET …/feed** 支持 **mode**（51-31-B2）。 |
+| **frontend/lib/api.ts** | `routes.community` 含 feed、posts、**postsUploadMedia**、**mediaCapabilities**、**mediaAssetsSessions***、conversations、conversationMessages、**meProfileAvatar**（`/api/v1/me/profile-avatar`）等，与 04 §3.4 逐项对应。 |
+| **frontend/lib/apiClient/community.ts** | getFeed(**mode**)、发帖/评论/会话/关注/好友/收藏；**presign/commit** 与 **media-assets** 会话链与后端一致。 |
+| **crates/api** | `routes/community/router.rs` + `me_profile_avatar.rs` 已挂载上列路径；机读闸 **`bash scripts/run-check-04-routes.sh`**（**STRICT_WARNINGS=1**）须 **exit 0**。 |
 
-**结论**：51 阶段社区 API（51-31-9、51-31-B1、51-31-B2）已实现；04 §3.4、lib/api.ts、apiClient、crates/api 四者对齐，发版前 51-D7 执行时社区部分可勾选。
+**2026-05-31 增补（社区媒体 + 头像 · T3）**：
+
+| 方法 | 路径 | 用途 |
+|------|------|------|
+| POST | /api/v1/community/conversations/ensure | 幂等创建 DM 会话 |
+| GET | /api/v1/community/media/capabilities | PublishDrawer 上传能力 |
+| POST | /api/v1/community/posts/upload-media | 发帖媒体本地上传 |
+| GET | /api/v1/uploads/community-posts/:name | 发帖媒体匿名读 |
+| POST | /api/v1/community/media-assets/sessions | 分片上传创建 |
+| POST | /api/v1/community/media-assets/sessions/:asset_id/parts | 分片预签 |
+| POST | /api/v1/community/media-assets/sessions/:asset_id/complete | 分片完成 |
+| GET | /api/v1/community/media-assets/:asset_id | 资产状态 |
+| POST | /api/v1/me/profile-avatar | 本机头像直传 |
+| POST | /api/v1/me/profile-avatar/presign | 头像预签 |
+| POST | /api/v1/me/profile-avatar/commit | 头像提交 |
+| GET | /api/v1/uploads/profile-avatars/:name | 头像匿名读 |
+
+**结论**：社区 + 头像 **12 路由** 已写入 **04 §3.4**；发版前须 **`run-check-04-routes.sh` exit 0**（见 [PHASE2-READY-REPORT](../runbook/PHASE2-READY-REPORT.md) **T3**）。
 
 ### 2.4 请求头与幂等
 
@@ -194,6 +211,7 @@ contracts/abi 与 frontend/dapp/abis 均已含 EscrowFactory.json（48 前后端
 | 取消 | 同上 | `POST /api/v1/orders/:id/cancel` | `created/accepted/draft` |
 | 确认行程完成（链下） | 同上 | `POST /api/v1/orders/:id/confirm-completion` | `accepted/escrowed`；**非**链上放款；`Escrow.release` 见下行与 [04](04-后端与API.md) §3.4、[14 正文](14-合约-API-ABI-前后端对齐.md) §2.1 |
 | 行程修改保存 | `frontend/components/escrow/EscrowDetail/index.tsx` | `PATCH /api/v1/orders/:id/itinerary` | Draft 且未锁 hash |
+| 草稿选向导 | `frontend/components/escrow/EscrowDetail/BookGuideModal.tsx` | `PATCH /api/v1/orders/:id/guide` | tourist、未 Escrowed、未分配 guide_id、未 confirm-final-plan |
 | Deposit/Release/Refund/OpenDispute | `frontend/components/escrow/EscrowDetail/EscrowOnChainActions.tsx` + `frontend/dapp/hooks/useEscrowActions.ts` | `Escrow.deposit/release/refund/openDispute` | 钱包连接、链匹配、地址可用 |
 | 评分提交 | `frontend/components/escrow/EscrowDetail/ReviewBlock.tsx` | `POST /api/v1/orders/:id/reviews` | 后端终态校验 |
 

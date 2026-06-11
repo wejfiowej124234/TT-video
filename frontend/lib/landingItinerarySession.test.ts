@@ -5,6 +5,7 @@ import {
   readLandingFavoriteOrderIds,
   readLandingResultOrderIds,
   readLandingUnlockedOrderIds,
+  removeLandingOrderIdFromSession,
   writeLandingFavoriteOrderIds,
   writeLandingResultOrderIds,
   writeLandingUnlockedOrderIds,
@@ -39,6 +40,16 @@ describe("landingItinerarySession", () => {
     writeLandingResultOrderIds([]);
     expect(readLandingResultOrderIds()).toEqual([]);
     expect(localStorage.getItem(LANDING_RESULT_ORDER_IDS_KEY)).toBeNull();
+  });
+
+  it("removeLandingOrderIdFromSession drops id from result unlock and favorites", () => {
+    writeLandingResultOrderIds(["a", "b"]);
+    writeLandingUnlockedOrderIds(new Set(["a", "b"]));
+    writeLandingFavoriteOrderIds(new Set(["a"]));
+    removeLandingOrderIdFromSession("a");
+    expect(readLandingResultOrderIds()).toEqual(["b"]);
+    expect(readLandingUnlockedOrderIds()).toEqual(new Set(["b"]));
+    expect(readLandingFavoriteOrderIds()).toEqual(new Set());
   });
 
   it("syncs favorites with market FAV_ORDERS_KEY SSOT", () => {

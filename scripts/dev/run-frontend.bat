@@ -38,8 +38,24 @@ if /i "%TRAVELTRUST_CLEAN_FRONTEND_NEXT%"=="1" (
         exit /b 1
     )
 )
-echo [前端] 启动 Next.js（端口 3012）...
-call npm run dev
+set "TT_FE_PORT=%TRAVELTRUST_FRONTEND_PORT%"
+if not defined TT_FE_PORT set "TT_FE_PORT=%FRONTEND_PORT%"
+if not defined TT_FE_PORT set "TT_FE_PORT=3012"
+echo [前端] 启动 Next.js（端口 %TT_FE_PORT%）...
+powershell -NoProfile -Command "try { $r=Invoke-WebRequest -UseBasicParsing -Uri ('http://127.0.0.1:' + $env:TT_FE_PORT + '/') -TimeoutSec 4; if ($r.StatusCode -ge 200 -and $r.StatusCode -lt 400) { exit 0 } else { exit 1 } } catch { exit 1 }" >nul 2>&1
+if not errorlevel 1 (
+    echo [前端] http://localhost:%TT_FE_PORT% 已在运行，跳过重复启动。
+    goto :fe_done
+)
+call npm run dev -- -p %TT_FE_PORT%
+if errorlevel 1 (
+    powershell -NoProfile -Command "try { $r=Invoke-WebRequest -UseBasicParsing -Uri ('http://127.0.0.1:' + $env:TT_FE_PORT + '/') -TimeoutSec 4; if ($r.StatusCode -ge 200 -and $r.StatusCode -lt 400) { exit 0 } else { exit 1 } } catch { exit 1 }" >nul 2>&1
+    if not errorlevel 1 (
+        echo [前端] 端口 %TT_FE_PORT% 已被占用，但 Next 可访问 — 使用 http://localhost:%TT_FE_PORT%
+        goto :fe_done
+    )
+)
+:fe_done
 echo.
 echo 若上方有报错，请检查 Node 版本与依赖。按任意键关闭此窗口。
 pause

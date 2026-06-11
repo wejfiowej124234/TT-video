@@ -15,6 +15,7 @@
 | **硬约束与资金规则** | **[01](01-总库总览.md)**、**[03](03-业务流程与风控.md)** |
 | **排期与「是否已有」** | **[00-最终版架构图对应模块清单总表](00-最终版架构图对应模块清单总表.md)** |
 | **AI Draft / snapshot / 路由对照** | **[80](80-阶段-TravelTrust-AI行程系统-可行性架构方案-v1.0.md)**（§0.1～§0.3） |
+| **`/` + `/market` 四页 ① 数据链** | **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **[`(home)/README`](../../frontend/app/(home)/README.md)** · **[`market/README`](../../frontend/app/market/README.md)** |
 
 ---
 
@@ -49,13 +50,15 @@
 
 **存储模块**：数据库表 `itineraries`、`orders (status = Draft)`。
 
+**前端入口（① · 代码 SSOT）**：**`/`** **`LandingHeroForm`** → **1×** **`POST /api/v1/itineraries`** → **`ITINERARY_CARD_COUNT=1`** 预览卡 → **`UnlockModal`→`GET /api/v1/orders/:id`**（**无**真 USDC）→ **`/escrow/[id]`**；持久化 **`landingItinerarySession`**（**`localStorage`** · 跨 tab）— **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §2 · **[`(home)/README`](../../frontend/app/(home)/README.md)**。
+
 ---
 
 ### ② Marketplace 撮合层（Off-chain）
 
 | 页面/模块 | 内容 |
 |-----------|------|
-| **自由市场（Discover 能力）** | **列表主 UI = `/market`**（**`GET /api/v1/discover/orders`** 为 HTTP 路径名）；**`/discover`** 仅 **重定向至 `/market`**（**04 §3.4**、**13-1**）。浏览订单；卡片：图片 + 目的地 + 预算 + 天数 |
+| **自由市场（Discover 能力）** | **列表主 UI = `/market`**（**`GET /api/v1/discover/orders`** + **`GET /api/v1/guides`**；**`useMarketPage`** **300ms debounce** · URL 筛选）；**`/discover`** 仅 **重定向至 `/market`**（**04 §3.4**、**13-1**）。浏览订单/向导；卡片：图片 + 目的地 + 预算 + 天数；收藏 **① FE `localStorage`**（**`marketFavoritesStorage.ts`** · **F-020 best-effort 已接线（①）· ② SLA**）。子站 **`/market/provider`** · **`/market/acquisition`**（**94** · PG catalog）— **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** |
 | **Order Detail 页面（未确认阶段）** | 行程展示、价格展示、版本号、聊天入口 |
 | **聊天模块** | Traveler ↔ Guide 双向聊天；修改价格、修改行程；每次修改 `version++`，记录历史版本。表：`order_versions`、`messages` |
 | **确认最终版本** | 双方点击 **Confirm Final Plan**；生成 `snapshotHash = keccak256(orderData)`；状态：`Confirmed` |
@@ -121,8 +124,8 @@
 
 | 分区 | 页面 | 说明 |
 |------|------|------|
-| **A. Experience 层** | Landing | 品牌、3D Hero、协议说明 |
-| | Discover | 订单卡片、滚动展示 |
+| **A. Experience 层** | **`/` Landing（Web3旅行）** | Ken Burns Hero + 玻璃表单 + **1** 预览卡（**非** 全屏 3D Hero）；**① 数据链** — **CODE SSOT** §2 |
+| | **`/market` 自由市场** | 双栏撮合 · **`useMarketPage`** debounce · 收藏 **localStorage**；**`/discover`→`/market`** 重定向壳 — **CODE SSOT** §3 |
 | **B. Protocol Console** | OrderFlow | 当前状态、价格、参与人、确认按钮 |
 | | EscrowDetail | 金融级 UI、无 3D、无动画 |
 | **C. Governance** | （后续阶段） | 暂不做 |
@@ -197,4 +200,4 @@
 
 ---
 
-*本文与 [01-总库总览](01-总库总览.md)、[07-开发流程与顺序](07-开发流程与顺序.md)、[13-1-UI产品级SSOT与页面规范](13-1-UI产品级SSOT与页面规范.md)、[18-TravelTrust-全系统架构图](18-TravelTrust-全系统架构图.md)、[18-补充-TravelTrust-全系统架构层级图-最终版](18-补充-TravelTrust-全系统架构层级图-最终版.md)、[53-阶段开发技术文档](53-阶段开发技术文档.md)、[00-最终版架构图对应模块清单总表](00-最终版架构图对应模块清单总表.md) 配套。文档版本与最后更新见 [00-文档索引](00-文档索引.md)。*
+*本文与 [01-总库总览](01-总库总览.md)、[07-开发流程与顺序](07-开发流程与顺序.md)、[13-1-UI产品级SSOT与页面规范](13-1-UI产品级SSOT与页面规范.md)、[18-TravelTrust-全系统架构图](18-TravelTrust-全系统架构图.md)、[18-补充-TravelTrust-全系统架构层级图-最终版](18-补充-TravelTrust-全系统架构层级图-最终版.md)、[53-阶段开发技术文档](53-阶段开发技术文档.md)、[00-最终版架构图对应模块清单总表](00-最终版架构图对应模块清单总表.md) 配套。**v1.0.6（2026-06-03）**：**§①** Landing FE 数据链 · **§三** Experience 分区对拍 **`/`/`/market`** — **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)**。文档版本与最后更新见 [00-文档索引](00-文档索引.md)。*

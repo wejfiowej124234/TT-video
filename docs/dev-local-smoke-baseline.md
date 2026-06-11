@@ -95,6 +95,9 @@ docker exec traveltrust-postgres psql -U traveltrust -d traveltrust -c \
 
 - **Runbook（staging 真跑，非本基线）**：[R-003-Staging首次完整回归-A-B域-执行Runbook.md](spec/R-003-Staging首次完整回归-A-B域-执行Runbook.md) · `#r003-ab-core-acceptance`
 - **脚本索引**：[scripts/README.md](../scripts/README.md) 表项 **smoke-ab-core-chain.sh**
+- **商家入驻全链（① · 相对 A+B 正交）**：**§8** · **[provider/register README](../frontend/app/provider/register/README.md)** · **[TT-9618 §2.1](runbook/TT-9618-onboarding-local-testnet.md)**
+- **旅行收购 PD-009（① · 相对 A+B 正交）**：**§9** · **[market/acquisition README](../frontend/app/market/acquisition/README.md)** · **[acquisition-publish-trust-rules §8.1](spec/artifacts/acquisition-publish-trust-rules.v1.md#81-第一阶段--本地--closed2026-05-27)**
+- **`/` Web3旅行 + `/market` 主入口（① · 相对 A+B 正交）**：**§10** · **[LANDING-MARKET-PAGES-CODE-SSOT](../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **[WEB3-LANDING-MARKET-LOCAL-REMAINING](../frontend/evidence/GO_local_web3_pages_closure/WEB3-LANDING-MARKET-LOCAL-REMAINING.md)**
 
 ---
 
@@ -136,3 +139,91 @@ echo "exit=$?"
 ```
 
 **期望**：`exit=0`；第 **10** 步为 **`psql` + DATABASE_URL** 或 **`docker exec … psql`** 之一；末行含 **`DB: orders + users + order_messages OK`**。若本机**未**安装 `psql`，应出现「**docker exec … psql，无本机 psql**」类提示且仍 **OK**。
+
+---
+
+## 8. 商家入驻全链（① · 相对 A+B 正交）
+
+**范围**：注册 → 钱包 → 资质 → 96-18 准入费 → **`PATCH …/admin/users/:id/provider-application-review`**（Admin 审核）→ 市场 listing。**不**替代 **§3～§4** A+B 烟测；**不**冒充 **②③**。
+
+**Admin UX（代码）**：列表 **`/admin/provider-applications`** → 审核 **`/admin/users/[id]`** · **`AdminProviderApplicationReviewCard`**（见 SSOT §2.4）。
+
+**权威脚本**：`bash scripts/dev/smoke-provider-onboarding-local.sh`（Windows：`scripts\smoke-provider-onboarding-local.bat`）。
+
+**代码 SSOT**：[`frontend/app/provider/register/README.md`](../frontend/app/provider/register/README.md) · [TT-9618 §2.1](runbook/TT-9618-onboarding-local-testnet.md) · [04 §3.4 · 商家入驻实现真源](spec/04-后端与API.md)。
+
+**前置（在 §1 基础上）**：`INTERNAL_API_SECRET` · `SEED_TEST_ACCOUNTS=1`（Admin `promote_admin_email`）。
+
+```bash
+export DATABASE_URL='postgres://traveltrust:traveltrust@127.0.0.1:5432/traveltrust'
+export INTERNAL_API_SECRET='…'   # 与 .env 同源
+export SEED_TEST_ACCOUNTS=1
+bash scripts/dev/smoke-provider-onboarding-local.sh
+echo "exit=$?"
+```
+
+**期望**：`exit=0`；覆盖 **`GET /me` role=provider**（内存同步）与 **`POST/GET …/market/provider/listings`**。
+
+---
+
+## 9. 旅行收购 PD-009（① · 相对 A+B 正交）
+
+**范围**：**`/me/identities`** **「进入子站」** → **`/market/acquisition`** 绑主钱包 → **`POST …/me/acquisition/publish-bond`**（或信用免押）→ **`POST …/market/acquisition/listings`**（**`acquisition_publish_gate.rs`** · **非** **`region_steward`** / **96-18 准入费**）→ 目录/草稿/创单。**不**替代 **§3～§4** A+B 烟测；**不**冒充 **②③**。
+
+**权威脚本**：`bash scripts/dev/smoke-acquisition-pd009-local.sh`。
+
+**代码 SSOT**：[`frontend/app/market/acquisition/README.md`](../frontend/app/market/acquisition/README.md) · [acquisition-publish-trust-rules v1 §8.1](spec/artifacts/acquisition-publish-trust-rules.v1.md#81-第一阶段--本地--closed2026-05-27) · [93 §2.1b](spec/93-全站功能验证矩阵-域别回归清单.md#93-21b-acquisition-pd009) · [96-17 §0.3.3](spec/96-17-多重身份与钱包真值.md)。
+
+**前置（在 §1 基础上）**：`SEED_TEST_ACCOUNTS=1`。
+
+```bash
+export DATABASE_URL='postgres://traveltrust:traveltrust@127.0.0.1:5432/traveltrust'
+export SEED_TEST_ACCOUNTS=1
+bash scripts/dev/smoke-acquisition-pd009-local.sh
+echo "exit=$?"
+```
+
+**期望**：`exit=0`；覆盖 **`GET /me.trust.acquisition_*`**、**`POST …/market/acquisition/listings*`** 门闸与可选 Admin suspend 子路径。
+
+---
+
+## 10. Web3 旅行首页 + 自由市场主入口（① · 相对 A+B 正交）
+
+**范围**：**`/`** 创新行程 **1×** `POST /itineraries` · **`ITINERARY_CARD_COUNT=1`** · **`landingItinerarySession`**（**`localStorage`** · 跨 tab）· 预览 **`UnlockModal`→`getOrder`** → **`/escrow/[id]`** 草稿链；**`/market`** **`useMarketPage`**（**300ms debounce** · 收藏 **`localStorage` + F-020 best-effort**（已登录）· **②** 跨设备 SLA）。**不**替代 **§3～§4** A+B 烟测；**不**冒充 **②③**。
+
+**权威脚本（①）**：
+
+```bash
+bash scripts/dev/run-web3-itinerary-l5-green.sh
+bash scripts/dev/smoke-web3-itinerary-full-chain-local.sh
+```
+
+**代码 SSOT**：[LANDING-MARKET-PAGES-CODE-SSOT](../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md) · [`app/(home)/README`](../frontend/app/(home)/README.md) · [`app/market/README`](../frontend/app/market/README.md) · [GO_local_web3_itinerary_l5](../frontend/evidence/GO_local_web3_itinerary_l5/README.md)
+
+**前置（在 §1 基础上）**：`traveltrust-api` + DB（走廊烟测 **`smoke-web3-itinerary-full-chain-local.sh`** 会创单/读单）；前端 Vitest 绿集 **`run-web3-itinerary-l5-green.sh`** 可 **无** 浏览器。
+
+**期望**：两脚本 **`exit 0`**；与 **CODE SSOT §7** 机读验收列表一致。
+
+---
+
+## 11. Admin 控制台（① · 相对 A+B 正交）
+
+**范围**：**`/admin`** 工作台（系统概况 · 待办 · KPI）· Shell/RBAC · 队列台账 · L5 危险写确认 · 列表/详情 SWR。**不**替代 **§3～§4** A+B 烟测；**不**冒充 **② staging 六角色矩阵 / ③ Production GO**。
+
+**代码 SSOT**：[`frontend/app/admin/README.md`](../frontend/app/admin/README.md) · [70 §3.0.2](spec/70-管理员系统开发文档.md) · [ADMIN-L5-HOME-SYSTEM-OVERVIEW-CODE-SSOT](../frontend/evidence/GO_local_admin_workspace_closure/ADMIN-L5-HOME-SYSTEM-OVERVIEW-CODE-SSOT.md)
+
+**前置（在 §1 基础上）**：API **:8080** · FE **:3012** · **`SEED_TEST_ACCOUNTS=1`**（RBAC/ADM-U02 烟测）· **`DATABASE_URL`**（docker **`traveltrust-postgres`** 或本机 psql）
+
+```bash
+# 推荐一键（capabilities 探针 + L5 绿集 + M-03 页面 HTTP）
+bash scripts/dev/verify-admin-audit-closure.sh
+
+# 或分项：
+bash scripts/dev/run-admin-l5-green.sh              # Vitest 绿集
+bash scripts/dev/smoke-admin-pages-local.sh         # M-03
+bash scripts/dev/smoke-admin-rbac-matrix-local.sh   # M-01 · promote + 重登
+bash scripts/dev/smoke-admin-adm-u02-local.sh       # M-02 · TT_ADM_U02_LOCAL: PASS
+echo "exit=$?"
+```
+
+**期望**：绿集 **`exit 0`**；M-02 末行 **`TT_ADM_U02_LOCAL: PASS`**；M-01/M-03 **`exit 0`**。

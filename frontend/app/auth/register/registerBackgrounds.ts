@@ -3,7 +3,7 @@ import { TT_AUTH_L5_PAGE_SHELL, TT_AUTH_L5_PAGE_SHELL_GUIDE } from "@/lib/auth/a
 /**
  * 注册页视觉角色（保留类型；L5 暗壳底不再使用 `public/register-bg` 摄影图）。
  */
-export type RegisterVisualKind = "default" | "traveler" | "guide" | "provider" | "steward";
+export type RegisterVisualKind = "default" | "traveler" | "guide" | "provider" | "steward" | "acquisition";
 
 /** 与选择项一一对应；由 `RegisterPageBackdrop` 全屏 cover + 暗遮罩 */
 export const REGISTER_BG_SRC: Record<Exclude<RegisterVisualKind, "default">, string> = {
@@ -11,6 +11,7 @@ export const REGISTER_BG_SRC: Record<Exclude<RegisterVisualKind, "default">, str
   guide: "/register-bg/guide.jpg",
   provider: "/register-bg/provider.jpg",
   steward: "/register-bg/steward.jpg",
+  acquisition: "/register-bg/provider.jpg",
 };
 
 /** 摄影图缺失或加载失败时的角色区分底（与 `REGISTER_BG_SRC` 一一对应） */
@@ -19,6 +20,7 @@ export const REGISTER_BG_FALLBACK_CLASS: Record<Exclude<RegisterVisualKind, "def
   guide: "bg-gradient-to-br from-amber-900/95 via-orange-950/90 to-slate-950",
   provider: "bg-gradient-to-br from-rose-900/95 via-fuchsia-950/90 to-slate-950",
   steward: "bg-gradient-to-br from-indigo-900/95 via-sky-950/90 to-slate-950",
+  acquisition: "bg-gradient-to-br from-violet-900/95 via-purple-950/90 to-slate-950",
 };
 
 export type RegisterPageLayout = "centered" | "guideForm";

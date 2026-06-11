@@ -48,9 +48,13 @@ def http_json(
     body: bytes | None = None,
 ) -> tuple[int, object]:
     req = urllib.request.Request(url, data=body, method=method)
-    if headers:
-        for k, v in headers.items():
-            req.add_header(k, v)
+    merged: dict[str, str] = dict(headers or {})
+    # localtunnel (*.loca.lt) may RST Python urllib without reminder header.
+    if ".loca.lt" in url:
+        merged.setdefault("Bypass-Tunnel-Reminder", "true")
+        merged.setdefault("User-Agent", "TravelTrust-R003/1")
+    for k, v in merged.items():
+        req.add_header(k, v)
     try:
         with urllib.request.urlopen(req, timeout=120) as r:
             raw = r.read().decode("utf-8", errors="replace")

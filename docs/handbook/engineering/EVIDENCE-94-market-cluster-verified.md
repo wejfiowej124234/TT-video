@@ -1,6 +1,6 @@
 # EVIDENCE · **94 自由市场托管（market）** 簇 · **09 §2b**（V-1 / V-2 / V-3）
 
-**Version:** 1.0.8 · **最后更新：** 2026-04-29  
+**Version:** 1.0.9 · **最后更新：** 2026-05-27  
 **受众**：审计 **94 簇**（**21-B**）与 **CI** 对齐的 Owner / Tech lead  
 **状态**：现行  
 **与 spec 关系**：**证据包**；**不替代** **[94](../../spec/94-自由市场-商家橱窗与旅行收购-链上托管技术规格.md)**、**[53](../../spec/53-阶段开发技术文档.md)**、**[04](../../spec/04-后端与API.md) §3.4**、**[93](../../spec/93-全站功能验证矩阵-域别回归清单.md)**。  
@@ -30,7 +30,7 @@ bash scripts/check-handbook-engineering-content.sh
 (exit 0；stderr 可出现 **HBOOK-ENG-TABLE-WARN** 提示行，**exit 仍 0**)
 ```
 
-**说明**：**`market_subsite_catalog_db_api_tests`** 在 **`DATABASE_URL` 未设**时运行体会 **skip** 具体用例；**V-1** 仍以 **同轮 `run-check-04-routes` exit 0** + **测试目标编译通过**为主证；**PG 已迁移**环境可再贴 **`test result: ok`** 全绿日志进 PR。
+**说明**：**`market_subsite_catalog_db_api_tests`** 在 **`DATABASE_URL` 未设**时运行体会 **skip** 具体用例；**V-1** 仍以 **同轮 `run-check-04-routes` exit 0** + **测试目标编译通过**为主证；**PG 已迁移**环境可再贴 **`test result: ok`** 全绿日志进 PR。**PD-009 收购（① · 2026-05-27）**：**`cargo test -p traveltrust-api market_subsite_catalog`** + **`matrix_pd009_trust_pg_memory_parity`** + **`bash scripts/dev/smoke-acquisition-pd009-local.sh`** — 互指 **[21-B §6](./21-B-市场与托管机制.md#b21-6-verify)**、**[acquisition-publish-trust-rules §8.1](../../spec/artifacts/acquisition-publish-trust-rules.v1.md#81-第一阶段--本地--closed2026-05-27)**。
 
 **台账对拍（文档 → 08 → 本证据）**：[08 §3](./08-文档与spec迁移台账.md#mig-2-matrix) **spec/94** 行 **覆盖度 full**；[09 §3](./09-文档迁移覆盖审计报告.md#audit-coverage) **94 自由市场托管** 簇 **verified**（**[09 §2b.4](./09-文档迁移覆盖审计报告.md#audit-verified-evidence-94market)**）；**[21-B §2b](./21-B-市场与托管机制.md#b21-6-verify)** 文内证据句与上列 **同 PR** 可读。
 
@@ -67,6 +67,7 @@ bash scripts/check-handbook-engineering-content.sh
 
 | Version | 日期 | 摘要 |
 |---------|------|------|
+| 1.0.9 | 2026-05-27 | **V-1**：补 **PD-009** 收购验证命令互指（**`matrix_pd009_*`** + **`smoke-acquisition-pd009-local.sh`**）。 |
 | 1.0.8 | 2026-04-29 | **V-1**：时效性抽检复跑；**engineering-content** stderr 口径与当前 checker 一致。 |
 | 1.0.7 | 2026-04-29 | **V-1**：补 **台账对拍**（**21-B §2b** ↔ **08 §3** **spec/94** ↔ **09 §2b.4**）。 |
 | 1.0.6 | 2026-04-29 | 文首 **SSOT（必读）** 与 **08/README** 对拍：补 **14** + **`contracts/`** + **`check-55-s13`** 等脚本句（无正文语义变更）。 |

@@ -54,4 +54,31 @@ describe("BilateralConfirmBlock", () => {
     );
     expect(screen.getByText("order_bilateralConfirmTitle")).toBeTruthy();
   });
+
+  it("shows waiting-other banner when tourist confirmed but guide has not", () => {
+    render(
+      <BilateralConfirmBlock
+        orderId="test-id"
+        isGuide={false}
+        touristConfirmed={true}
+        guideConfirmed={false}
+        onSuccess={() => {}}
+      />
+    );
+    expect(screen.getByText("order_bilateralStatusWaitingOther")).toBeTruthy();
+    expect(screen.queryByRole("button", { name: "order_bilateralConfirmCta" })).toBeNull();
+  });
+
+  it("shows both-confirmed banner when both have confirmed", () => {
+    render(
+      <BilateralConfirmBlock
+        orderId="test-id"
+        isGuide={true}
+        touristConfirmed={true}
+        guideConfirmed={true}
+        onSuccess={() => {}}
+      />
+    );
+    expect(screen.getByText("order_bilateralStatusBothConfirmed")).toBeTruthy();
+  });
 });

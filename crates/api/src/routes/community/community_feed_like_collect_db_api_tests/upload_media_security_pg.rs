@@ -243,6 +243,7 @@ async fn matrix_93_d_com_c2_test_origin_post_excluded_from_public_feed_pg() {
         eprintln!("skip: c2 feed isolation (DATABASE_URL unset)");
         return;
     };
+    let _env = crate::test_env_serial::lock();
     let _serial = db_it_lock().lock().await;
     let prev = std::env::var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE").ok();
     std::env::set_var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE", "1");

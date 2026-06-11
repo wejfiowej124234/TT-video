@@ -8,13 +8,56 @@ import type { OrderCardItem } from "@/lib/marketTypes";
 import type { CustomItineraryBody } from "@/lib/apiClient";
 import { DEFAULT_SETTLEMENT_CURRENCY_CODE } from "@/lib/defaultSettlementCurrency";
 import { DEFAULT_COUNTRY, getPricingForCountry } from "@/lib/countries";
-import { getAttractionDetails, getFoodDetails, getHotelDetails } from "@/lib/cityDetails";
+import { getAttractionDetails, getFoodDetails, getHotelDetails, resolveHotelSubmitLabel } from "@/lib/cityDetails";
 import type { CustomItineraryForm, DayPlan, GuideDayPlan } from "./types";
 import { MAX_AMOUNT } from "./constants";
+import { guideHasMinimumInterest, touristHasMinimumInterest } from "./itineraryInterestValidation";
+import { computeTouristQuote } from "./quoteCalculationTourist";
+import type { BudgetBreakdown } from "./quoteCalculationTypes";
 
 export type TFunction = (key: string) => string;
 
+/** 写入行程描述，便于向导识别代订需求（平台不直接售票） */
+export const GUIDE_ASSIST_TRANSPORT_TAG =
+  "【订票协助】希望向导协助代订城际机票/高铁，费用另行协商。";
+
+export function resolveItineraryDescription(form: CustomItineraryForm): string | undefined {
+  const base = form.description.trim();
+  if (!form.guideAssistTransport) return base || undefined;
+  if (base.includes("【订票协助】")) return base || undefined;
+  return base ? `${GUIDE_ASSIST_TRANSPORT_TAG}\n${base}` : GUIDE_ASSIST_TRANSPORT_TAG;
+}
+
 const clampAmount = (n: number) => Math.min(MAX_AMOUNT, Math.round(n * 100) / 100);
+
+export function resolveTouristBudgetBreakdown(form: CustomItineraryForm): BudgetBreakdown {
+  const pricing = getPricingForCountry(form.country || DEFAULT_COUNTRY);
+  return computeTouristQuote(form, pricing).budgetBreakdown;
+}
+
+export function buildCustomApiBreakdown(
+  form: CustomItineraryForm,
+  suggestedTransportFee: number,
+  budget: BudgetBreakdown
+): CustomItineraryBody["breakdown"] {
+  const guideFee =
+    (getPricingForCountry(form.country || DEFAULT_COUNTRY).guideLevelsSuggestedPerDay[form.needGuide] ?? 0) *
+    form.totalDays;
+  const hasAny =
+    guideFee > 0 ||
+    suggestedTransportFee >= 0 ||
+    budget.attractionsTotal > 0 ||
+    budget.foodTotal > 0 ||
+    budget.hotelTotal > 0;
+  if (!hasAny) return undefined;
+  return {
+    guide_fee: guideFee > 0 ? guideFee : undefined,
+    car_fee: suggestedTransportFee > 0 ? suggestedTransportFee : undefined,
+    attractions_fee: budget.attractionsTotal > 0 ? budget.attractionsTotal : undefined,
+    food_fee: budget.foodTotal > 0 ? budget.foodTotal : undefined,
+    hotel_fee: budget.hotelTotal > 0 ? budget.hotelTotal : undefined,
+  };
+}
 
 /** 向导创建：校验并构建订单项 */
 export function validateAndBuildGuide(
@@ -29,6 +72,7 @@ export function validateAndBuildGuide(
   const amountNum = parseFloat(amountStr.replace(/,/g, ""));
   if (isNaN(amountNum) || amountNum <= 0) return { error: t("market_budgetInvalid") };
   if (amountNum > MAX_AMOUNT) return { error: t("market_budgetTooLarge") };
+  if (!guideHasMinimumInterest(form)) return { error: t("market_itinerary_interest_required") };
 
   const plans = form.guideDayPlans ?? [];
   const dest = form.title.trim() || (plans[0] as GuideDayPlan | undefined)?.city?.trim() || form.country?.trim() || "";
@@ -40,7 +84,7 @@ export function validateAndBuildGuide(
       return parts.length ? `${t("market_dayN").replace("{n}", String(i + 1))}: ${parts.join(" · ")}`.slice(0, 120) : null;
     })
     .filter((s): s is string => !!s);
-  const descLine = form.description.trim().slice(0, 200);
+  const descLine = (resolveItineraryDescription(form) ?? "").slice(0, 200);
   const highlights = descLine ? [descLine, ...dayHighlights] : dayHighlights.length ? dayHighlights : undefined;
   const mainImage = form.image.trim() || accountAvatarUrl || undefined;
   const firstDayCity = (plans[0] as GuideDayPlan | undefined)?.city?.trim() ?? "";
@@ -90,6 +134,7 @@ export function validateAndBuildTourist(
   const transportFeeNum = suggestedTransportFee > 0 ? suggestedTransportFee : undefined;
   if (guideFeeNum < 0 || (transportFeeNum != null && transportFeeNum < 0)) return { error: t("market_budgetInvalid") };
   if (guideFeeNum > MAX_AMOUNT || (transportFeeNum != null && transportFeeNum > MAX_AMOUNT)) return { error: t("market_budgetTooLarge") };
+  if (!touristHasMinimumInterest(form)) return { error: t("market_itinerary_interest_required") };
 
   const title =
     form.title.trim() || t("market_defaultTitle").replace("{{city}}", firstCity).replace("{{days}}", String(form.totalDays));
@@ -103,7 +148,7 @@ export function validateAndBuildTourist(
     const parts = [d.city];
     if (d.attractions.length) parts.push(t("market_highlightAttractions") + d.attractions.join(sep));
     if (d.food.length) parts.push(t("market_highlightFood") + d.food.join(sep));
-    if (d.hotel) parts.push(t("market_highlightHotel") + d.hotel);
+    if (d.hotel) parts.push(t("market_highlightHotel") + resolveHotelSubmitLabel(d.hotel));
     return parts.join(" · ");
   });
   const transportLegs: { from: string; to: string; type: "vehicle" | "rail" | "flight" }[] = [];
@@ -118,13 +163,21 @@ export function validateAndBuildTourist(
       });
     }
   }
+  const budget = resolveTouristBudgetBreakdown(form);
   const hasGuideFee = guideFeeNum > 0;
   const hasTransportFee = transportFeeNum != null && !isNaN(transportFeeNum) && transportFeeNum >= 0;
   const breakdown =
-    hasGuideFee || hasTransportFee
+    hasGuideFee ||
+    hasTransportFee ||
+    budget.attractionsTotal > 0 ||
+    budget.foodTotal > 0 ||
+    budget.hotelTotal > 0
       ? {
           guideFee: hasGuideFee ? clampAmount(guideFeeNum) : undefined,
-          carFee: hasTransportFee ? clampAmount(transportFeeNum) : undefined,
+          carFee: hasTransportFee ? clampAmount(transportFeeNum!) : undefined,
+          tickets: budget.attractionsTotal > 0 ? budget.attractionsTotal : undefined,
+          food: budget.foodTotal > 0 ? budget.foodTotal : undefined,
+          hotel: budget.hotelTotal > 0 ? budget.hotelTotal : undefined,
         }
       : undefined;
   const cityTransports = form.dayPlans.map((d) => d.cityTransport).filter((x): x is NonNullable<typeof x> => x != null);
@@ -153,22 +206,15 @@ export function validateAndBuildTourist(
 /** 49 A.7：旅行者表单 → POST /itineraries/custom 请求体（调用前需已通过 validateAndBuildTourist） */
 export function buildTouristCustomBody(
   form: CustomItineraryForm,
-  suggestedTransportFee: number
+  suggestedTransportFee: number,
+  budgetBreakdown?: BudgetBreakdown
 ): CustomItineraryBody {
   const amountStr = form.amount.trim().replace(/,/g, "");
   const amountNum = parseFloat(amountStr) || 0;
   const daysNum = Math.max(1, Math.min(30, form.totalDays));
   const headcount = Math.min(20, Math.max(1, Number(form.headcount) || 1));
-  const suggestedGuideFee =
-    (getPricingForCountry(form.country || DEFAULT_COUNTRY).guideLevelsSuggestedPerDay[form.needGuide] ?? 0) * form.totalDays;
-  const transportFeeNum = suggestedTransportFee > 0 ? suggestedTransportFee : undefined;
-  const breakdown =
-    suggestedGuideFee > 0 || (transportFeeNum != null && transportFeeNum >= 0)
-      ? {
-          guide_fee: suggestedGuideFee > 0 ? suggestedGuideFee : undefined,
-          car_fee: transportFeeNum != null && transportFeeNum >= 0 ? transportFeeNum : undefined,
-        }
-      : undefined;
+  const budget = budgetBreakdown ?? resolveTouristBudgetBreakdown(form);
+  const breakdown = buildCustomApiBreakdown(form, suggestedTransportFee, budget);
   const transportLegs: { from: string; to: string; type?: string }[] = [];
   for (let i = 1; i < form.dayPlans.length; i++) {
     const fromCity = form.dayPlans[i - 1]?.city?.trim();
@@ -186,9 +232,9 @@ export function buildTouristCustomBody(
     country: form.country?.trim() ?? "",
     total_days: daysNum,
     amount: amountNum,
-    currency: "USD",
+    currency: DEFAULT_SETTLEMENT_CURRENCY_CODE,
     title: form.title.trim() || undefined,
-    description: form.description.trim() || undefined,
+    description: resolveItineraryDescription(form),
     image: form.image.trim() || undefined,
     headcount,
     day_plans: form.dayPlans.slice(0, daysNum).map((d) => {
@@ -206,7 +252,9 @@ export function buildTouristCustomBody(
       const hotel = d.hotel
         ? (() => {
             const detail = hotelDetails.find((h) => h.value === d.hotel);
-            return detail ? { name: detail.label, image: detail.image } : { name: d.hotel, image: undefined as string | undefined };
+            return detail
+              ? { name: resolveHotelSubmitLabel(detail.value), image: detail.image }
+              : { name: resolveHotelSubmitLabel(d.hotel), image: undefined as string | undefined };
           })()
         : undefined;
       return {
@@ -236,9 +284,9 @@ export function buildGuideCustomBody(form: CustomItineraryForm): CustomItinerary
     country: form.country?.trim() ?? "",
     total_days: daysNum,
     amount: amountNum,
-    currency: "USD",
+    currency: DEFAULT_SETTLEMENT_CURRENCY_CODE,
     title: form.title.trim() || undefined,
-    description: form.description.trim() || undefined,
+    description: resolveItineraryDescription(form),
     image: form.image.trim() || undefined,
     headcount,
     guide_day_plans: plans.slice(0, daysNum).map((p) => ({

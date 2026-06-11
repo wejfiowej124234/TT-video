@@ -10,6 +10,8 @@ export type CommunityPostVisibility = "public" | "private" | "archived" | "hidde
 /** 作者可改可见性（不含 moderation `hidden`） */
 export type CommunityPostUserVisibility = "public" | "private" | "archived";
 
+export type CommunityCommentVisibility = "visible" | "hidden" | "removed";
+
 export type CommunityCommerceShowcaseKind =
   | "acquisition_led"
   | "market_listing"
@@ -79,6 +81,10 @@ export interface CommunityComment {
   content: string;
   parent_id?: string;
   created_at: string;
+  /** 04 · `visibility_status`（moderation） */
+  visibilityStatus?: CommunityCommentVisibility;
+  /** 04 · `body_is_redacted` */
+  bodyIsRedacted?: boolean;
 }
 
 export interface CommunityConversation {

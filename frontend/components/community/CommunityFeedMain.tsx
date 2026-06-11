@@ -10,6 +10,10 @@ import CommunityFeedDesktopLead from "@/components/community/CommunityFeedDeskto
 import CommunityFeedHeader from "@/components/community/CommunityFeedHeader";
 import { CommunityFeedMediaCapabilitiesBanner } from "@/components/community/CommunityFeedMediaCapabilitiesBanner";
 import { CommunityFeedShowcaseNotice } from "@/components/community/CommunityFeedShowcaseNotice";
+import {
+  ColdStartCampaignSurfaceSection,
+  COLD_START_SURFACE_COMMUNITY_FEED,
+} from "@/components/coldStartCampaign/ColdStartCampaignSurfaceSection";
 import { useCommunityFeed } from "@/components/community/useCommunityFeed";
 import { suggestedAuthorsFromPosts } from "@/components/community/communitySuggestedAuthors";
 import CommunityFeedList from "@/components/community/CommunityFeedList";
@@ -365,6 +369,10 @@ export default function CommunityFeedMain({
 
             <CommunityFeedMediaCapabilitiesBanner t={t} />
             <CommunityFeedShowcaseNotice posts={postsToShow} t={t} />
+            <ColdStartCampaignSurfaceSection
+              surface={COLD_START_SURFACE_COMMUNITY_FEED}
+              className="mb-3 max-w-none px-0"
+            />
 
             {meCollectsLoadError != null && (
               <div className="mb-4 space-y-2" role="alert" aria-live="polite">

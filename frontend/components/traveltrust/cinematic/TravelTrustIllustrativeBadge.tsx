@@ -132,7 +132,7 @@ export function TravelTrustIllustrativeBadge({ variant = "illustrative", classNa
         <motion.span
           className={TT_ILLUSTRATIVE_BADGE_L5.ringClass}
           aria-hidden
-          animate={{ opacity: TT_ILLUSTRATIVE_BADGE_L5.ringPulse.opacity }}
+          animate={{ opacity: [...TT_ILLUSTRATIVE_BADGE_L5.ringPulse.opacity] }}
           transition={{
             duration: TT_ILLUSTRATIVE_BADGE_L5.ringPulse.duration,
             repeat: TT_ILLUSTRATIVE_BADGE_L5.ringPulse.repeat,

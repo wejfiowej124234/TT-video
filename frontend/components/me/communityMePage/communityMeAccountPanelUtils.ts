@@ -1,4 +1,6 @@
-export type CommunityMeAccountPanelTFunc = (key: string, vars?: Record<string, string | number>) => string;
+import type { LocaleTranslateFn } from "@/lib/i18n";
+
+export type CommunityMeAccountPanelTFunc = LocaleTranslateFn;
 
 /** Client-side guard before `postMeProfileAvatar` (aligned with API body limits). */
 export const COMMUNITY_ME_PROFILE_AVATAR_MAX_BYTES = 512 * 1024;

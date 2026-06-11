@@ -107,7 +107,7 @@ function TourismGlobeTexturedMesh({
   segments: number;
   lit: boolean;
 }) {
-  const sourceMap = useTexture(TRAVELTRUST_GLOBE_EARTH_TEXTURE_PATH, undefined, undefined, "anonymous");
+  const sourceMap = useTexture(TRAVELTRUST_GLOBE_EARTH_TEXTURE_PATH);
   const displayMap = useMemo(() => enhanceTraveltrustGlobeEarthMap(sourceMap), [sourceMap]);
 
   useEffect(() => {

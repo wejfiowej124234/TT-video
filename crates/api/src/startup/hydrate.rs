@@ -54,6 +54,8 @@ pub async fn hydrate_from_db(
                 language_cert_url: g.language_cert_url,
                 guide_license_url: g.guide_license_url,
                 stake_amount: g.stake_amount,
+                hourly_rate: g.hourly_rate,
+                avatar_url: g.avatar_url,
                 status: g.status,
                 rejection_codes: g.rejection_codes,
                 rejection_message: g.rejection_message,

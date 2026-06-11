@@ -14,11 +14,14 @@
 
 **易混澄清（企业级）**：**linkage 通过** 只保证上述文档间**交叉指针与关键词静态一致**，**不**等于 **§四 对外数字已定稿**。**定稿**仍以 **§三 3.6 纪要 + [82](82-治理币-文档总览.md) T7 + [LEGAL-SIGNOFF-CHECKLIST](governance-token/LEGAL-SIGNOFF-CHECKLIST.md)** 同批勾选为准（fail-closed）。
 
+**Protocol Convergence（P0 · 2026-05-27）**：**数值唯一写入口** = **[governance-token/protocol-ssot.v1.md](governance-token/protocol-ssot.v1.md)**。**本文件 §四「国家池额度」「首轮开放」列** = **`fee_route_bps` / `phase1_open_bps` 镜像**（**非** `steward_stake_bps`）。**主理人 TTG 质押比例** **不在此表定义** → **protocol-ssot §4**。**资金分轨** → **[fund-flow-ssot.v1.md](governance-token/fund-flow-ssot.v1.md)**。**禁止** 在 84 正文新增与 SSOT 冲突的 bps/锁仓天数。
+
 ### 读前摘要
 
 | 你要找什么 | 单源 |
 |------------|------|
-| **十国表、募资列、APP 认领** | **§四～§八** |
+| **辖区 bps / 锁仓 / TTG 供应（唯一写入口）** | **[governance-token/protocol-ssot.v1.md](governance-token/protocol-ssot.v1.md)** |
+| **十国表、募资列、APP 认领** | **§四～§八**（**fee 列镜像 SSOT §4**） |
 | **费用分母 vs 承销分母、§1.1.1 正交** | **§一、§三**；运维闭合 **[Runbook](../../ops/RUNBOOK.md) §7.1** |
 | **FeeRouter 与 Region 完整协议** | **[83](83-区域治理与收益分配-协议白皮书.md)** |
 | **对外披露上限** | **[08-4](08-4-对外口径包.md)** + 法务 |
@@ -190,7 +193,7 @@
 
 ### 3.4 「治理代币（TTG）总量固定」与募资目标：必须统一的估值锚（易混读说明）
 
-**先澄清**：主表 **「国家池额度（费用百分点）」** 描述的是 **可分配平台费用** 在 **§1.1 基数 100%** 下的 **路由/展示上限权重**（费用侧），**不是**「该国占 **TTG / RegionShare 固定总供应量** 的百分之几」。二者 **单位不同**，**不能**把「中国 4.0」口头说成「拿了 4% 治理代币（TTG）总量」——除非在 **代币 SSOT** 里 **另行定义** 费用权重与 token 分配的一一映射，并在对外稿中 **同一句话写清**。
+**先澄清**：主表 **「国家池额度（费用百分点）」** = **[protocol-ssot.v1 §4 `fee_route_bps`](governance-token/protocol-ssot.v1.md)**（费用侧）。**主理人 Seat 申请 TTG 质押** = **同文件 `steward_stake_bps`**（占 **TTG total_supply**；Phase 1 数值与 fee 列 **相等** 仅为 **已批准映射**，**语义仍分轨**）。**禁止** 口头混读；**禁止** 在 84 自造 `steward_stake` 数字。
 
 **你关心的自洽性（法币募资 ↔ 固定总量）**：若治理代币（或国家池可认购份额）**总量与轮次配售计划**已定，则 **各国「募资目标 / 硬顶」** 在数学上应对齐 **同一个锚**，例如（择一在 **代币 SSOT + 本文** 写死，避免投资人各按各的「市值」脑补）：
 
@@ -225,6 +228,8 @@
 | **同步文档清单** | □ **84** §四 □ **83**（若触及叙事）□ **08-4** □ **08-4 附录图** □ **governance-token/03** □ **82 §六 T7** 状态 |
 | **工程校验** | □ `bash scripts/check-governance-doc-linkage.sh` **通过** |
 | **LEGAL-SIGNOFF** | □ 已完成 / □ 待定（**待定则不得对外印刷**） |
+
+**已填工程纪要（2026-05-27 · ① · Option C 默认 · 法务待确认）：** [governance-token/84-valuation-anchor-P1-memo.md](governance-token/84-valuation-anchor-P1-memo.md) — **不**替代上表签字；**§四** 数值列仍为占位直至法务确认 FDV/总募资。
 
 ---
 

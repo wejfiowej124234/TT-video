@@ -60,7 +60,7 @@ git push origin main --force-with-lease
 |------|------|------|
 | 后端 API | Axum + Tower（Rust） | HTTP、中间件、与前端/链解耦 |
 | 数据 | SQLx + PostgreSQL | 默认接库路径见 `docs/spec/` |
-| 前端 | Next.js、React、TypeScript、wagmi、viem、WalletConnect；**R3F、drei、three.js**（部分 3D）、Framer Motion | Web 与钱包交互 |
+| 前端 | Next.js、React、TypeScript、wagmi、viem、WalletConnect；**R3F、drei、three.js**（部分 3D）、Framer Motion | Web 与钱包交互；**五主路由 ① UI 壳**见 [FIVE-MAIN-ROUTES](frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md)（**单一 `frontend/` 版本**） |
 | 共享逻辑 | `traveltrust-core`（Rust crate） | 领域类型与校验等 |
 | 区块链 | EVM（Solidity + 链下集成） | 见 `contracts/` 与规格 |
 
@@ -192,7 +192,7 @@ Git 托管页默认只突出**根目录 `README.md`**。各子目录另有**模�
 | 路径 | 用途 |
 |------|------|
 | [contracts/README.md](contracts/README.md) | 合约模块、部署与 ABI |
-| [frontend/README.md](frontend/README.md) | 前端开发与构建 |
+| [frontend/README.md](frontend/README.md) | 前端开发与构建；**五主路由 ① 代码真源（企业级）**见 [FIVE-PAGES-ENTERPRISE-CODE-AUDIT-20260603](frontend/evidence/GO_local_marketing_front_closure/FIVE-PAGES-ENTERPRISE-CODE-AUDIT-20260603.md) · **UI 冻结** [FIVE-MAIN-ROUTES](frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md)；**`/` + 三页市场 ① 数据链** [LANDING-MARKET-PAGES-CODE-SSOT](frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)；**创新行程 → `/escrow/[id]` 订单页 ① 收口**见 [ESCROW-ORDER-PAGE-PHASE1-CLOSURE](frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-ORDER-PAGE-PHASE1-CLOSURE.md)（走廊 [GO_local_web3_itinerary_l5](frontend/evidence/GO_local_web3_itinerary_l5/README.md)）；**商家入驻 ①**见 [provider/register README](frontend/app/provider/register/README.md)；**旅行收购 PD-009 ①** Hub [me/identities README](frontend/app/me/identities/README.md) → 子站 [market/acquisition README](frontend/app/market/acquisition/README.md) |
 | [docs/README.md](docs/README.md) | 文档体系入口 |
 | [docs/frontend/README.md](docs/frontend/README.md) | 前端文档子集 |
 | [docs/backend/README.md](docs/backend/README.md) | 后端文档子集 |

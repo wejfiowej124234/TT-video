@@ -20,8 +20,15 @@ export const ORDERS_LIST_IN_PROGRESS_FILTER_OPTION = {
   labelKey: "orders_list_state_in_progress" as const,
 } as const;
 
-/** 筛选轨 Tab 顺序：全部 → 进行中 → 终态 */
+/** 首页 AI 行程草稿（`OrderState::Draft` · 默认列表隐藏，此 Tab 专显） */
+export const ORDERS_LIST_DRAFT_FILTER_OPTION = {
+  value: "draft",
+  labelKey: "orders_list_state_draft" as const,
+} as const;
+
+/** 筛选轨 Tab 顺序：草稿 → 进行中 → 终态 */
 export const ORDERS_LIST_FILTER_TAB_OPTIONS = [
+  ORDERS_LIST_DRAFT_FILTER_OPTION,
   ORDERS_LIST_IN_PROGRESS_FILTER_OPTION,
   ...ORDERS_LIST_TERMINAL_FILTER_OPTIONS,
 ] as const;
@@ -31,6 +38,7 @@ export type OrdersListFilterTabValue =
   | "";
 
 const ALLOWED_STATE_VALUES = new Set<string>([
+  ORDERS_LIST_DRAFT_FILTER_OPTION.value,
   ORDERS_LIST_IN_PROGRESS_VALUE,
   ...ORDERS_LIST_TERMINAL_FILTER_OPTIONS.map((o) => o.value),
 ]);
@@ -58,5 +66,6 @@ export function ordersListStateLabelKey(
   const t = (state ?? "").trim().toLowerCase();
   if (!t) return "orders_list_state_all";
   if (t === ORDERS_LIST_IN_PROGRESS_VALUE) return ORDERS_LIST_IN_PROGRESS_FILTER_OPTION.labelKey;
+  if (t === ORDERS_LIST_DRAFT_FILTER_OPTION.value) return ORDERS_LIST_DRAFT_FILTER_OPTION.labelKey;
   return ORDERS_LIST_TERMINAL_FILTER_OPTIONS.find((o) => o.value === t)?.labelKey ?? "orders_list_state_all";
 }

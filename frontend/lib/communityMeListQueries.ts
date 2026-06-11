@@ -1,5 +1,5 @@
 import { getMeCollects, getMeLikes, getMyPosts } from "@/lib/apiClient/community";
-import { mapApiPostToCommunityPost } from "@/components/community/useCommunityFeed";
+import { mapApiPostToCommunityPost, type ApiPostInput } from "@/components/community/communityFeedMappers";
 import { COMMUNITY_ME_DRAWER_LIST_ID_CAP } from "@/lib/communityMeDrawerListCaps";
 import { parseMyPostsPageEnvelope, parseMeCollectsListEnvelope, parseMeLikesListEnvelope } from "@/lib/communityMeDrawerListContracts";
 import { COMMUNITY_ME_POSTS_LIST_PAGE_SIZE } from "@/lib/communityMeListPageSize";
@@ -40,7 +40,7 @@ export async function fetchCommunityMePostsPage(
     throw new Error("community_me_posts_list_contract_invalid");
   }
   return {
-    posts: parsed.value.posts.map((p) => mapApiPostToCommunityPost(p)),
+    posts: parsed.value.posts.map((p) => mapApiPostToCommunityPost(p as ApiPostInput)),
     next_cursor: parsed.value.next_cursor,
   };
 }

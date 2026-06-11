@@ -45,15 +45,18 @@ function NavLink({
   children,
   onNavStart,
   focusRingClass,
-  active,
+  active = false,
+  title,
+  ...rest
 }: {
   href: string;
   className: string;
   children: React.ReactNode;
   onNavStart?: () => void;
   focusRingClass: string;
-  active: boolean;
-}) {
+  active?: boolean;
+  title?: string;
+} & Omit<React.ComponentPropsWithoutRef<typeof Link>, "href" | "className" | "children" | "title" | "prefetch" | "onPointerEnter" | "onPointerDown">) {
   const router = useRouter();
   const focusRing = focusRingClass;
   const warm = useCallback(() => {
@@ -69,8 +72,10 @@ function NavLink({
       className={`${className} ${focusRing}`}
       aria-current={active ? "page" : undefined}
       prefetch={true}
+      title={title}
       onPointerEnter={warm}
       onPointerDown={onNavStart}
+      {...rest}
     >
       {children}
     </Link>

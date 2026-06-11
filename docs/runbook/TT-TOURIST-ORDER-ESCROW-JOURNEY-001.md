@@ -5,7 +5,7 @@
 **类型**：垂直切片 · 用户旅程（旅行者侧主链路）  
 **日期**：2026-04-17  
 **状态**：未封口  
-**权威契约**：[04 §3.4](../spec/04-后端与API.md) HTTP 路径；页面地图 [13-1 表 1](../spec/13-1-UI产品级SSOT与页面规范.md)；状态与步骤 [53](../spec/53-阶段开发技术文档.md) §三  
+**权威契约**：[04 §3.4](../spec/04-后端与API.md) HTTP 路径；页面地图 [13-1 表 1](../spec/13-1-UI产品级SSOT与页面规范.md)；状态与步骤 [53](../spec/53-阶段开发技术文档.md) §三；**`/market` 列表 FE** **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §3（**`useMarketPage`** · **300ms debounce** · **`GET …/discover/orders`**）
 
 **边界**：本卡描述 **旅行者（旅行者）视角** 从 **创建订单** 到 **托管链路达成可演示的「完成」态**（含 **Escrow 链上入金与协议区操作**；资金终态释放/评分细节以 **01/03/53** 为准）。**不包含**：治理/金库/FeeRouter 专项验收（见 [`TT-TESTNET-GOLDEN-BASELINE-REGRESSION.md`](TT-TESTNET-GOLDEN-BASELINE-REGRESSION.md)）；**不包含**向导侧完整独立旅程（可另开 TT）。**改合约 / API / indexer / 前端接线** 时须按黄金基线做五维回归并对照 **run_20260417**；**纯文档** 仅抽查 rollup §3。
 
@@ -24,7 +24,7 @@
 | 顺序 | 路由 | 说明 |
 |------|------|------|
 | 0 | `/auth/login`（或 `/auth/register`） | 旅行者登录；深链回跳见现有 auth 任务卡 |
-| 1 | `/market` | 自由市场；抽屉/列表进订单详情（与 `GET /api/v1/discover/orders` 同源） |
+| 1 | `/market` | 自由市场；**`useMarketPage`** → **`getDiscoverOrders`**（**300ms debounce**）；抽屉/列表进订单详情（**`/discover`** 重定向壳，**无**独立列表 UI） |
 | 2 | `/guides`、`/guides/[id]`（可选） | 从向导档案深链到下单 `?guide_id=` |
 | 3 | `/orders/new` | 创建订单（`postOrder` → `POST /api/v1/orders`） |
 | 4 | `/orders` | 我的订单列表（`GET /api/v1/orders`；含终态筛选 query 时与 B-071 一致） |

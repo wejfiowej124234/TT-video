@@ -24,6 +24,23 @@ export function writeLandingResultOrderIds(ids: string[]): void {
   writeJsonStringArrayLocal(LANDING_RESULT_ORDER_IDS_KEY, ids);
 }
 
+/** 订单取消 / 删除后：从 Landing 预览 localStorage 移除（跨 tab 通过 storage 事件同步）。 */
+export function removeLandingOrderIdFromSession(orderId: string): void {
+  const id = String(orderId ?? "").trim();
+  if (!id) return;
+  writeLandingResultOrderIds(readLandingResultOrderIds().filter((x) => x !== id));
+  const unlocked = readLandingUnlockedOrderIds();
+  if (unlocked.has(id)) {
+    unlocked.delete(id);
+    writeLandingUnlockedOrderIds(unlocked);
+  }
+  const favorites = readLandingFavoriteOrderIds();
+  if (favorites.has(id)) {
+    favorites.delete(id);
+    writeLandingFavoriteOrderIds(favorites);
+  }
+}
+
 export function readLandingUnlockedOrderIds(): Set<string> {
   return new Set(readJsonStringArrayLocalWithSessionMigration(LANDING_UNLOCKED_ORDER_IDS_KEY));
 }

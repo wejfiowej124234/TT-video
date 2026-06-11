@@ -3,7 +3,7 @@
 import type { FormEvent, ChangeEvent } from "react";
 import Link from "next/link";
 import type { ItineraryForm } from "@/components/itinerary/itineraryNewPage/itineraryNewTypes";
-import { COUNTRY_OPTIONS, CITIES_BY_COUNTRY } from "@/lib/geoOptions";
+import { useCatalogCityOptions, useCatalogCountryOptions } from "@/lib/catalogApi/useCatalogGeo";
 import type { LocaleInterpolationVars } from "@/lib/i18n";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { ITINERARY_NEW_ERROR_LOGIN_REQUIRED } from "./itineraryNewConstants";
@@ -45,6 +45,8 @@ export function ItineraryNewFormBlock({
   onCountryPill,
   onCityPill,
 }: ItineraryNewFormBlockProps) {
+  const countryOptions = useCatalogCountryOptions();
+  const cityOptions = useCatalogCityOptions(form.destination);
   const formFieldFocus = TT_MARKETING_FORM_FIELD_FOCUS_CONSOLE;
   const inputMinH = "min-h-[44px]";
   const inlineLinkClass = `${touchTargetLink44Classes} ${TT_MARKETING_CONSOLE_INLINE_LINK} ${TT_MARKETING_CONSOLE_LINK_FOCUS}`;
@@ -65,7 +67,7 @@ export function ItineraryNewFormBlock({
           {t("itin_label_destination")}
         </span>
         <div className="flex flex-wrap gap-2">
-          {COUNTRY_OPTIONS.map((c) => (
+          {countryOptions.map((c) => (
             <button
               key={c.value}
               type="button"
@@ -88,7 +90,7 @@ export function ItineraryNewFormBlock({
           </p>
         ) : (
           <div className="flex flex-wrap gap-2">
-            {(CITIES_BY_COUNTRY[form.destination] ?? []).map((c) => (
+            {cityOptions.map((c) => (
               <button
                 key={c.value}
                 type="button"

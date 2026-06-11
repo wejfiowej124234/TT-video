@@ -10,6 +10,7 @@ import type { CommunityCommentSort } from "@/lib/apiClient/community";
 export function useCommunityFeedModals() {
   const [commentPost, setCommentPost] = useState<CommunityPost | null>(null);
   const [detailPost, setDetailPost] = useState<CommunityPost | null>(null);
+  const [detailFocusComments, setDetailFocusComments] = useState(false);
   const [publishOpen, setPublishOpen] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
@@ -63,6 +64,8 @@ export function useCommunityFeedModals() {
     setCommentPost,
     detailPost,
     setDetailPost,
+    detailFocusComments,
+    setDetailFocusComments,
     publishOpen,
     setPublishOpen,
     showLoginModal,

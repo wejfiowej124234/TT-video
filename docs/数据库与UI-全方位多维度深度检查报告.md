@@ -1,6 +1,6 @@
 # 数据库与 UI：全方位多维度深度检查报告
 
-**用途**：开工前一次性完成「**每个页面 / 每个功能 → API → 数据库表**」对照，识别缺口、补齐资料、确认 UI 设计覆盖。与 [数据库表与UI功能对照检查](数据库表与UI功能对照检查.md)、[04-业务逻辑与数据库支持清单](spec/04-业务逻辑与数据库支持清单.md)、[数据库-缺口与需补充清单](数据库-缺口与需补充清单.md)、[41-后端数据库接库与落地清单](spec/41-后端数据库接库与落地清单.md) 配套。
+**用途**：开工前一次性完成「**每个页面 / 每个功能 → API → 数据库表**」对照，识别缺口、补齐资料、确认 UI 设计覆盖。与 [数据库表与UI功能对照检查](数据库表与UI功能对照检查.md)、[04-业务逻辑与数据库支持清单](spec/04-业务逻辑与数据库支持清单.md)、[数据库-缺口与需补充清单](数据库-缺口与需补充清单.md)、[41-后端数据库接库与落地清单](spec/41-后端数据库接库与落地清单.md) 配套。**`/` · `/market*` 四页 FE 数据链**（**1×** POST · **`localStorage`** · **`useMarketPage` debounce** · 收藏 **`localStorage` + F-020 best-effort** → **②** SLA）见 **[LANDING-MARKET-PAGES-CODE-SSOT](../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** — **本表 HTTP↔DB**，**不**含浏览器 **`localStorage`** 预览/收藏态。
 
 **检查维度**：① 按页面逐项（路由→功能→API→表）；② 按数据库表（已有/缺表/缺列/待实现）；③ 资料与文档补齐；④ UI 设计（13-1 页面地图 vs 实际实现）。
 
@@ -12,7 +12,7 @@
 
 | 路由 | 页面/功能 | 调用 API | 所需表/来源 | 是否满足 | 备注 |
 |------|------------|----------|-------------|----------|------|
-| `/` | Landing：品牌叙事、创建行程入口、getOrder | postItineraryCreate, getOrder | orders, itineraries | ✅ | 行程与订单均已双写+hydrate |
+| `/` | Landing：**1×** `postItineraryCreate` · **`ITINERARY_CARD_COUNT=1`** 预览卡 · **`landingItinerarySession` = `localStorage`** · `UnlockModal`→`getOrder`（**非**真 USDC） | postItineraryCreate, getOrder | orders, itineraries | ✅ | 行程与订单均已双写+hydrate；**CODE SSOT** §2 |
 | `/auth/login` | 登录 | auth.login | users, sessions | ✅ | |
 | `/auth/register` | 注册 | auth.register | users, sessions | ✅ | |
 | `/auth/verify-email` | 邮箱验证 | auth.verifyEmail | users, sessions | ✅ stub 也落 users | |
@@ -23,7 +23,9 @@
 | `/guides` | 向导列表 | getGuides | guides | ✅ | |
 | `/guides/[id]` | 向导详情 | getGuideById | guides | ✅ | |
 | `/guide/register` | 向导注册、证件上传、质押 | guideCreate, uploadGuideDoc, guideStake | guides + 文件系统 | ✅ | |
-| `/market` | 自由市场：订单流+向导库、筛选、收藏 | getDiscoverOrders, getGuides | orders, guides | ✅ | 失败/空时用 MOCK，接库后用真实数据 |
+| `/market` | 自由市场：订单流+向导库、筛选、收藏 | **`useMarketPage`** · **`getDiscoverOrders`**（**300ms debounce**）· **`getGuides`** | orders, guides | ✅ | 收藏 **`localStorage` + F-020 best-effort** → **②** SLA；失败/空时 demo/MOCK，接库后用真实数据；**CODE SSOT** §3 |
+| `/market/provider` | 商家橱窗子站 · Masonry 列表 · Studio 发布 | **`GET …/market/provider/listings`**（PG 时 **`meta.source=postgres_catalog`**） | market 相关 catalog 表（有 DB 时） | ✅ | API 失败 + demo gate → demo masonry；**非** MARKET-L5；**CODE SSOT** §4 |
+| `/market/acquisition` | 旅行收购子站 · bond 门闸 · listing | **`GET …/market/acquisition/listings`** · **`POST /me/acquisition/publish-bond`** 等 | acquisition 相关（**① mock bond**） | ✅ | Hub **`/me/identities`** 入口；**②** 真链 bond；**CODE SSOT** §5 |
 | `/discover` | **兼容重定向壳**：`router.replace("/market")`；**非**独立列表页（**04 §3.4**、**13-1**） | —（列表 API 仅在 **`/market`** 页：**getDiscoverOrders**） | — | ✅ | 旧链兼容；**勿**维护第二套 Discover UI |
 | `/orders` | 我的订单列表 | getOrders (tourist/guide) | orders | ✅ | |
 | `/orders/new` | 创建订单 | orderCreate, getOrder | orders | ✅ | |
@@ -42,7 +44,7 @@
 | `/help`, `/terms`, `/privacy` | 帮助、条款、隐私 | 静态或 CMS | 无需表 | ✅ | |
 
 **小结**：  
-- **已满足**：登录注册、个人中心、向导、**自由市场（`/market`；`/discover` 重定向）**、订单、托管详情（含聊天）、行程生成、争议、DID 排行、静态页。  
+- **已满足**：登录注册、个人中心、向导、**自由市场（`/market` · `/market/provider` · `/market/acquisition`；`/discover` 重定向）**、订单、托管详情（含聊天）、行程生成、争议、DID 排行、静态页。  
 - **部分满足**：**TT 社区** — 有 `DATABASE_URL` 时 API + 表已挂载（见 **04 §3.4**、`routes/community.rs`）；审核/举报全链路等见 **160**。  
 - **部分满足**：**Governance** — `GET /api/v1/governance/pool|rewards` + 表已具备；**治理页**完整提案/投票仍多为占位，按产品迭代。
 
@@ -114,7 +116,7 @@
 | 13-1 表1 页面/分组 | 设计任务 | 实际路由 | 数据来源 | 缺口 |
 |-------------------|----------|----------|----------|------|
 | Landing | 品牌叙事、引导进入协议 | `/` | 静态 + getOrder/postItineraryCreate | 无 |
-| Discover | 目的地/向导卡片、筛选 | `/discover`, `/market` | orders, guides | 无 |
+| Discover | 目的地/向导卡片、筛选 | **`/market`**（**`/discover` 仅重定向壳**） | orders, guides | 无 |
 | 自由市场 /market | 撮合、订单流+向导库 | `/market` | orders, guides | 无 |
 | TT社区 /community | UGC 动态/消息/好友/我 | `/community` 及子路由 | **apiClient/community** + 有 DB 时持久化 | 无 DB 时可能空/Mock；160 审核链待产品 |
 | OrderFlow | 步骤引导、状态机 | `/orders`, `/orders/new`, `/escrow/[id]` | orders, itineraries | 行程持久化待实现 |

@@ -10,6 +10,7 @@
 param(
     [int]$ApiPort = 8080,
     [switch]$AlsoFrontend,
+    [switch]$FrontendOnly,
     [int]$FrontendPort = 3012,
     [int]$SettleSeconds = 2
 )
@@ -33,17 +34,43 @@ function Stop-ListenersOnPort([int] $Port) {
     }
 }
 
-Write-Host "======== TravelTrust: stop API (thorough) ========"
-Write-Host "ApiPort=$ApiPort  AlsoFrontend=$AlsoFrontend  FrontendPort=$FrontendPort"
+function Stop-TravelTrustApiRunners {
+    Get-Process -Name "traveltrust-api" -ErrorAction SilentlyContinue | ForEach-Object {
+        Write-Host "stop-api-thorough: Stop-Process traveltrust-api PID $($_.Id)"
+        Stop-Process -Id $_.Id -Force -ErrorAction SilentlyContinue
+    }
+    & taskkill /F /IM traveltrust-api.exe 2>$null | Out-Null
 
-# 1) 按映像名（Rust 产物）
-Get-Process -Name "traveltrust-api" -ErrorAction SilentlyContinue | ForEach-Object {
-    Write-Host "stop-api-thorough: Stop-Process traveltrust-api PID $($_.Id)"
-    Stop-Process -Id $_.Id -Force -ErrorAction SilentlyContinue
+    # cargo run -p traveltrust-api parent/child can hold the port without traveltrust-api.exe name yet
+    Get-CimInstance Win32_Process -ErrorAction SilentlyContinue |
+        Where-Object {
+            $_.Name -in @('cargo.exe', 'rustc.exe', 'traveltrust-api.exe') -and
+            ($_.CommandLine -match 'traveltrust-api')
+        } |
+        ForEach-Object {
+            Write-Host "stop-api-thorough: Stop-Process $($_.Name) PID $($_.ProcessId) [traveltrust-api runner]"
+            Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue
+        }
 }
-& taskkill /F /IM traveltrust-api.exe 2>$null | Out-Null
 
-# 2) 按监听端口（含 cargo run 子进程仅标为 traveltrust-api 之外的情况）
+Write-Host "======== TravelTrust: stop API (thorough) ========"
+Write-Host "ApiPort=$ApiPort  AlsoFrontend=$AlsoFrontend  FrontendOnly=$FrontendOnly  FrontendPort=$FrontendPort"
+
+if ($FrontendOnly) {
+    Stop-ListenersOnPort $FrontendPort
+    Start-Sleep -Seconds $SettleSeconds
+    Stop-ListenersOnPort $FrontendPort
+    $fs = @(Get-NetTCPConnection -LocalPort $FrontendPort -State Listen -ErrorAction SilentlyContinue)
+    if ($fs.Count -gt 0) {
+        Write-Host "stop-api-thorough: WARN — port $FrontendPort still LISTENING:" -ForegroundColor Yellow
+        $fs | Format-Table -AutoSize
+        exit 1
+    }
+    Write-Host "stop-api-thorough: OK — frontend port $FrontendPort has no LISTENER." -ForegroundColor Green
+    exit 0
+}
+
+Stop-TravelTrustApiRunners
 Stop-ListenersOnPort $ApiPort
 if ($AlsoFrontend) {
     Stop-ListenersOnPort $FrontendPort
@@ -51,8 +78,7 @@ if ($AlsoFrontend) {
 
 Start-Sleep -Seconds $SettleSeconds
 
-# 3) 第二轮：顽固或刚退出的监听
-& taskkill /F /IM traveltrust-api.exe 2>$null | Out-Null
+Stop-TravelTrustApiRunners
 Stop-ListenersOnPort $ApiPort
 if ($AlsoFrontend) {
     Stop-ListenersOnPort $FrontendPort

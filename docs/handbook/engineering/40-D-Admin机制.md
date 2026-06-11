@@ -11,7 +11,13 @@
 
 > **SSOT 边界（防误用）**：本文为 **70 Admin 簇** 工程 Hub；**产品目标态、RBAC 宽表、90～550 映射**仍以 **[70](../../spec/70-管理员系统开发文档.md)** 为准。**`| METHOD | /path |`** 以 **[04 §3.4](../../spec/04-后端与API.md)** 为准；**矩阵**以 **[93](../../spec/93-全站功能验证矩阵-域别回归清单.md)** 为准。**禁止**以 Hub 承接度替代 **70 / 04 / 93** 或推进 **删 `docs`/`spec`**（程序见 **[08 §3](./08-文档与spec迁移台账.md#mig-2-matrix)** + **[09 §3](./09-文档迁移覆盖审计报告.md#audit-coverage)**（**同 PR** 对拍）+ **[08 §2](./08-文档与spec迁移台账.md#mig-delete-policy)**、**[SPEC-MIGRATION-STATUS](../corpus/SPEC-MIGRATION-STATUS.md)**、**[98 §2](../../spec/98-以代码为真源的文档体系与旧文档替代路线图.md)**）。
 
-**先读**：[00-系统全局地图](./00-系统全局地图.md) · [06-工程模块技术文档编制契约](./06-工程模块技术文档编制契约与验证闭环.md) · [04-HTTP与路由契约导读](./04-HTTP与路由契约导读.md)
+**先读**：[00-系统全局地图](./00-系统全局地图.md) · [06-工程模块技术文档编制契约](./06-工程模块技术文档编制契约与验证闭环.md) · [04-HTTP与路由契约导读](./04-HTTP与路由契约导读.md) · **[101-CMS与内容运营中心实施蓝图](./101-CMS与内容运营中心实施蓝图.md)**（**CMS/OPS 缺口审计 + P0 实施合订 · Phase 1 蓝图**）
+
+> **CMS 扩展（2026-06-07 · 规划态）**：既有 Admin **72 页 / ~94 API** 为 **OPS**（审核/财务/RBAC）；**Content Center**（`/admin/content/*`）与 **Official Ops**（`/admin/official/*`）**尚未实现** — 全量 Gap、表/API/RBAC/Backlog 见 **[101](./101-CMS与内容运营中心实施蓝图.md)**；**不**替代本文 **70 Admin Hub** 既有 OPS 叙述。
+
+> **Growth Center 扩展（2026-06-07 · 规划态）**：**Referral · Early Bird · Airdrop · KOL · 防刷** — 见 **[102-Referral与早鸟增长系统v1.0实施蓝图](./102-Referral与早鸟增长系统v1.0实施蓝图.md)**；与已有 **`/admin/trust-growth`**（Banner A/B）**分工并存**；**禁止**修改 Escrow/订单状态机/治理执行/支付链路。
+
+> **CMS+OPS+Growth 统一运营体系（2026-06-07 · v1.1.0）**：**[101-CMS与内容运营中心实施蓝图](./101-CMS与内容运营中心实施蓝图.md)** — M1–M10 + G1–G7 · 四平面 · S1 地基已启动。
 
 ---
 
@@ -89,7 +95,8 @@
 1. **鉴权**：Admin JSON API 使用 **`Authorization: Bearer …`**；具体路径、错误体与 **401/403** 机器键以 **[04](../../spec/04-后端与API.md)** 为准。  
 2. **路由挂载**：`api_router()` **`merge(admin::router())`**（见 **`crates/api/src/routes/mod.rs`**）；子模块在 **`crates/api/src/routes/admin/`**。  
 3. **与 87 的硬边界**：**87** 描述协议用户四类角色；**70 §二** 的 **SuperAdmin / Ops / CS / …** 仅描述**后台账号**，**不得**无映射地等同为 **87** 枚举（**70** 读前摘要已钉死）。  
-4. **抽检哲学**：**93 §4.5** 采用「角色 + 模块抽检 + API 对齐」——**不是** 40+ 子页全量 E2E 覆盖；**合规级**审计仍须 **70** + Runbook + 内审流程，**禁止**仅用 **D-ADM-002** 顶替 **70** 台账。
+4. **抽检哲学**：**93 §4.5** 采用「角色 + 模块抽检 + API 对齐」——**不是** 40+ 子页全量 E2E 覆盖；**合规级**审计仍须 **70** + Runbook + 内审流程，**禁止**仅用 **D-ADM-002** 顶替 **70** 台账。  
+5. **商家 KYB 审核队列（①）**：**列表** **`GET …/admin/provider-applications`**（**`frontend/app/admin/provider-applications`** · **chain_off 内存** SSOT）；**审核** **`PATCH …/admin/users/:id/provider-application-review`**（**`AdminProviderApplicationReviewCard`** on **`/admin/users/[id]`**）；PG **`role_identity`** 双写。**全链 SSOT** **[provider/register README](../../../frontend/app/provider/register/README.md)** · **70 §3 商家域** · **① 烟测** **`bash scripts/dev/smoke-provider-onboarding-local.sh`**。
 
 ---
 

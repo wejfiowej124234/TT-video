@@ -173,9 +173,11 @@ export async function clickBilateralConfirmCta(page: Page) {
   await page.waitForLoadState("load").catch(() => {});
   const zone = page.locator('[data-zone="order-protocol"]');
   await expect(zone).toBeVisible({ timeout: 90_000 });
-  const btn = zone.getByRole("button", {
-    name: /确认行程与金额|Confirm itinerary and amount/i,
-  });
+  const btn = zone
+    .getByRole("button", {
+      name: /确认行程与金额|Confirm itinerary and amount/i,
+    })
+    .first();
   await expect(btn).toBeVisible({ timeout: 45_000 });
   await btn.scrollIntoViewIfNeeded();
   await expect(btn).toBeEnabled({ timeout: 30_000 });

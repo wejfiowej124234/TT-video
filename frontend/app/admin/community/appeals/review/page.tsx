@@ -9,7 +9,7 @@ import { AdminCommunityAppealReviewPageMain } from "./AdminCommunityAppealReview
 
 export default function AdminCommunityAppealReviewPage() {
   return (
-    <AdminSearchParamsSuspense ariaLabelKey="admin_appeal_review_title" loadingVariant="detail">
+    <AdminSearchParamsSuspense ariaLabelKey="admin_appeal_review_title">
       <AdminCommunityPageShell>
         <AdminPermissionDeniedBanner permission={ADMIN_PERM.COMMUNITY_SUPER} />
         <AdminCommunityAppealReviewPageMain />

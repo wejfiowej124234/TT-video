@@ -126,6 +126,8 @@ describe("uiSystem L0 header", () => {
     expect(isHeaderUtilityL5Path("/traveltrust")).toBe(true);
     expect(isHeaderUtilityL5Path("/orders")).toBe(true);
     expect(isHeaderUtilityL5Path("/orders/new")).toBe(true);
+    expect(isHeaderUtilityL5Path("/escrow/abc")).toBe(true);
+    expect(headerUtilityVariantForPathname("/escrow/abc")).toBe("authL5");
   });
 
   it("headerBarClassForPathname uses premium bar on market and did-rank (V2)", () => {
@@ -136,6 +138,8 @@ describe("uiSystem L0 header", () => {
     expect(headerBarClassForPathname("/did-rank")).toBe(TT_MARKETING_HEADER_BAR_MARKET_DARK_PREMIUM);
     expect(headerBarClassForPathname("/orders")).toBe(TT_MARKETING_HEADER_BAR_TRAVELTRUST_CINEMATIC);
     expect(headerBarClassForPathname("/orders/new")).toBe(TT_MARKETING_HEADER_BAR_TRAVELTRUST_CINEMATIC);
+    expect(headerBarClassForPathname("/escrow/abc")).toBe(TT_MARKETING_HEADER_BAR_TRAVELTRUST_CINEMATIC);
+    expect(headerSurfaceKindForPathname("/escrow/abc")).toBe("home");
   });
 
   it("headerBarClassForPathname uses premium black bar on /community", () => {

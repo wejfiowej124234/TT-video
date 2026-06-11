@@ -45,13 +45,33 @@ export async function fetchOrdersPageForCommunityMeDrawer(
   cursor?: string,
 ): Promise<FetchOrdersPageForCommunityMeDrawerResult> {
   const r = await getOrders({ limit: MY_ORDERS_DRAWER_PAGE_SIZE, cursor });
+  const page = r.page;
   return {
     items: (r.items ?? []) as OrderListItem[],
-    page: r.page,
+    page: page
+      ? {
+          has_more: page.has_more,
+          next_cursor: page.next_cursor ?? undefined,
+        }
+      : undefined,
   };
 }
 
 /** 与 `GET /orders` 列表对齐：全站「我的订单」页与个人中心快览均不展示 Draft/open 市集草稿（`isDraftOrderListState`）。 */
 export function filterOrdersForTransactionalMyOrdersSurface(items: readonly OrderListItem[]): OrderListItem[] {
   return filterOrdersForCommunityMeMyOrdersSurface(items);
+}
+
+/** `/orders` 列表：默认隐藏 Draft；`?state=draft` 时仅展示可取消的行程草稿。 */
+export function filterOrdersForOrdersListPage(
+  items: readonly OrderListItem[],
+  stateParam: string | null | undefined,
+): OrderListItem[] {
+  const state = (stateParam ?? "").trim().toLowerCase();
+  if (state === "draft") {
+    return (items ?? []).filter(
+      (o) => o && String(o.id ?? "").length > 0 && isDraftOrderListState(normalizedOrderListState(o)),
+    );
+  }
+  return filterOrdersForTransactionalMyOrdersSurface(items);
 }

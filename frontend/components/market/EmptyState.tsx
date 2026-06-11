@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
+import { buildMarketCreateItineraryHref } from "@/lib/marketDeepLink";
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 import {
   TT_MARKETING_BTN_MARKET_PRIMARY,
@@ -138,7 +139,7 @@ export default function EmptyState({
               {t("empty_goCreateItinerary")}
             </Link>
           )}
-          <Link href="/itinerary/new" className={linkSecondaryClass}>
+          <Link href={buildMarketCreateItineraryHref()} className={linkSecondaryClass}>
             {t("empty_createDraft")}
           </Link>
         </div>

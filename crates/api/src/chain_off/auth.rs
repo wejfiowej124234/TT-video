@@ -63,6 +63,9 @@ pub struct AuthRegisterBody {
     /// 注册前邮箱 6 位验证码（`POST /auth/register/send-verification-code`）
     #[serde(default)]
     pub verification_code: Option<String>,
+    /// G-S1 · 可选推荐码（102 §4.2 · `?ref=` 同源）
+    #[serde(default)]
+    pub referral_code: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -93,6 +96,7 @@ pub struct PutMePasswordBody {
 
 pub async fn auth_register(
     state: ChainOffState,
+    headers: Option<&HeaderMap>,
     Json(body): Json<AuthRegisterBody>,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
     let email_trim = body.email.trim();
@@ -149,6 +153,22 @@ pub async fn auth_register(
             StatusCode::BAD_REQUEST,
             Json(crate::api_json::err_key(err_key)),
         ));
+    }
+    let referral_code_norm = body
+        .referral_code
+        .as_deref()
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+        .map(crate::db::normalize_referral_code);
+    if let Some(ref code) = referral_code_norm {
+        if let Some(ref pool) = state.db_pool {
+            if let Err(reason) = crate::db::precheck_referral_for_register(pool, code).await {
+                return Err((
+                    StatusCode::BAD_REQUEST,
+                    Json(crate::api_json::err_key(reason.as_key())),
+                ));
+            }
+        }
     }
     let id = Uuid::new_v4();
     let now = Utc::now();
@@ -330,6 +350,78 @@ pub async fn auth_register(
         }
     }
 
+    let mut early_bird_assign: Option<serde_json::Value> = None;
+    if let Some(ref pool) = state.db_pool {
+        match crate::db::assign_early_bird_on_register(pool, user_id_reg).await {
+            Ok(assign) if assign.registration_rank > 0 => {
+                early_bird_assign = Some(json!({
+                    "registration_rank": assign.registration_rank,
+                    "stage_number": assign.stage_number,
+                    "multiplier": assign.multiplier,
+                }));
+            }
+            Ok(_) => {}
+            Err(e) => {
+                eprintln!(
+                    "[audit] auth_register assign_early_bird user_id={user_id_reg} error={e}"
+                );
+            }
+        }
+    }
+
+    let mut referral_bound: Option<serde_json::Value> = None;
+    if let Some(ref pool) = state.db_pool {
+        if let Some(ref code) = referral_code_norm {
+            match crate::db::bind_referral_on_register(pool, user_id_reg, code).await {
+                Ok(bind) => {
+                    referral_bound = Some(json!({
+                        "referral_code": bind.referral_code,
+                        "referrer_user_id": bind.referrer_user_id.to_string(),
+                        "referral_event_id": bind.referral_event_id.to_string(),
+                    }));
+                }
+                Err(reason) => {
+                    eprintln!(
+                        "[audit] auth_register referral bind failed user_id={} code={} reason={:?}",
+                        user_id_reg, code, reason
+                    );
+                    if strict_auth_db_write_enabled() {
+                        let mut store = state.store.write().await;
+                        store.sessions.remove(&token_for_db);
+                        store.users.remove(&user_id_reg);
+                        return Err((
+                            StatusCode::BAD_REQUEST,
+                            Json(crate::api_json::err_key(reason.as_key())),
+                        ));
+                    }
+                }
+            }
+        }
+        if let Err(e) = crate::db::ensure_user_referral_code(pool, user_id_reg).await {
+            eprintln!(
+                "[audit] auth_register ensure_user_referral_code user_id={} error={e}",
+                user_id_reg
+            );
+        }
+        let scan_ctx = crate::db::GrowthFraudScanContext {
+            client_ip: headers.and_then(crate::db::client_ip_from_headers),
+            email: Some(email_trim.to_string()),
+            referral_code: referral_code_norm.clone(),
+            default_wallet_address: user.default_wallet_address.clone(),
+            user_agent: headers
+                .and_then(|h| h.get("user-agent"))
+                .and_then(|v| v.to_str().ok())
+                .map(String::from),
+        };
+        crate::db::run_growth_fraud_scan_best_effort(
+            pool,
+            user_id_reg,
+            "register",
+            scan_ctx,
+        )
+        .await;
+    }
+
     let mut reg_json = json!({
         "status": "ok",
         "user_id": user.id.to_string(),
@@ -339,6 +431,16 @@ pub async fn auth_register(
     if let Some(vt) = verify_dev_token {
         if let Some(obj) = reg_json.as_object_mut() {
             obj.insert("email_verification_dev_token".to_string(), json!(vt));
+        }
+    }
+    if let Some(bound) = referral_bound {
+        if let Some(obj) = reg_json.as_object_mut() {
+            obj.insert("referral_bound".to_string(), bound);
+        }
+    }
+    if let Some(eb) = early_bird_assign {
+        if let Some(obj) = reg_json.as_object_mut() {
+            obj.insert("early_bird".to_string(), eb);
         }
     }
     Ok(Json(reg_json))
@@ -812,6 +914,8 @@ pub async fn seed_test_accounts_if_empty(state: &ChainOffState) {
             language_cert_url: None,
             guide_license_url: None,
             stake_amount: "0".to_string(),
+            hourly_rate: None,
+            avatar_url: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -856,6 +960,8 @@ pub async fn seed_test_accounts_if_empty(state: &ChainOffState) {
                     guide_row.language_cert_url.as_deref(),
                     guide_row.guide_license_url.as_deref(),
                     &guide_row.stake_amount,
+                    guide_row.hourly_rate.as_deref(),
+                    guide_row.avatar_url.as_deref(),
                     &guide_row.status,
                     guide_row.created_at,
                     guide_row.updated_at,
@@ -910,6 +1016,8 @@ pub async fn seed_test_accounts_if_empty(state: &ChainOffState) {
                     guide_row.language_cert_url.as_deref(),
                     guide_row.guide_license_url.as_deref(),
                     &guide_row.stake_amount,
+                    guide_row.hourly_rate.as_deref(),
+                    guide_row.avatar_url.as_deref(),
                     &guide_row.status,
                     guide_row.created_at,
                     guide_row.updated_at,
@@ -1203,6 +1311,16 @@ pub async fn auth_verify_email_stub(
         user.updated_at = now;
     }
     store.user_email_verified_at.insert(user_id, now);
+    if let Some(ref pool) = state.db_pool {
+        let _ = sqlx::query(
+            r#"UPDATE users SET email_verified_at = $1, updated_at = now() WHERE id = $2 AND email_verified_at IS NULL"#,
+        )
+        .bind(now)
+        .bind(user_id)
+        .execute(pool)
+        .await;
+        crate::db::observe_email_verified(pool, user_id).await;
+    }
     Ok(Json(json!({
         "status": "ok",
         "message": "email_verified"

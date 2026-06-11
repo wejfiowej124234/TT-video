@@ -90,7 +90,10 @@ export function resolveEscrowDisplayAmount(
   };
 }
 
-/** Experience draft: align with landing / market stablecoin copy when API still says USD. */
+/** Consumer quote surfaces (landing, draft order, market cards) — must match locales. */
+export const CONSUMER_TRIP_CURRENCY_LOCALE_KEY = "traveler_quote_currency" as const;
+
+/** Protocol / post-escrow on-chain display when API still says USD. Consumer drafts use `traveler_quote_currency`. */
 export function formatEscrowStablecoinCurrency(currency: string | undefined | null): string {
   const c = (currency ?? "").trim().toUpperCase();
   if (c === "" || c === "USD" || c === "USDC" || c === "USDT") return "USDC";

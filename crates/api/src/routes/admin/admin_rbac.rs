@@ -19,7 +19,7 @@ use super::{
     write_admin_audit_log_best_effort,
 };
 
-pub const RBAC_MATRIX_VERSION: &str = "admin-rbac-v3-db-prep-2026-06-03";
+pub const RBAC_MATRIX_VERSION: &str = "admin-rbac-v4-cms-ops-growth-2026-06-07";
 
 pub const CONSOLE_ROLE_SUPER: &str = "SuperAdmin";
 pub const CONSOLE_ROLE_OPS: &str = "Ops";
@@ -55,6 +55,16 @@ pub const PERM_TRUST_GROWTH_WRITE: &str = "admin.trust_growth.write";
 pub const PERM_PLATFORM_READ: &str = "admin.platform.read";
 pub const PERM_PLATFORM_PUBLISH: &str = "admin.platform.publish";
 pub const PERM_ACQUISITION_SUSPEND: &str = "admin.acquisition.suspend";
+pub const PERM_CONTENT_READ: &str = "admin.content.read";
+pub const PERM_CONTENT_WRITE: &str = "admin.content.write";
+pub const PERM_CONTENT_PUBLISH: &str = "admin.content.publish";
+pub const PERM_OFFICIAL_READ: &str = "admin.official.read";
+pub const PERM_OFFICIAL_WRITE: &str = "admin.official.write";
+pub const PERM_OFFICIAL_PUBLISH: &str = "admin.official.publish";
+pub const PERM_GROWTH_READ: &str = "admin.growth.read";
+pub const PERM_GROWTH_WRITE: &str = "admin.growth.write";
+pub const PERM_GROWTH_PUBLISH: &str = "admin.growth.publish";
+pub const PERM_GROWTH_FRAUD: &str = "admin.growth.fraud";
 
 const SUPER_ADMIN_PERMS: &[&str] = &[
     PERM_READ,
@@ -75,6 +85,16 @@ const SUPER_ADMIN_PERMS: &[&str] = &[
     PERM_PLATFORM_READ,
     PERM_PLATFORM_PUBLISH,
     PERM_ACQUISITION_SUSPEND,
+    PERM_CONTENT_READ,
+    PERM_CONTENT_WRITE,
+    PERM_CONTENT_PUBLISH,
+    PERM_OFFICIAL_READ,
+    PERM_OFFICIAL_WRITE,
+    PERM_OFFICIAL_PUBLISH,
+    PERM_GROWTH_READ,
+    PERM_GROWTH_WRITE,
+    PERM_GROWTH_PUBLISH,
+    PERM_GROWTH_FRAUD,
 ];
 
 const OPS_PERMS: &[&str] = &[
@@ -93,6 +113,13 @@ const OPS_PERMS: &[&str] = &[
     PERM_TRUST_GROWTH_WRITE,
     PERM_PLATFORM_READ,
     PERM_ACQUISITION_SUSPEND,
+    PERM_CONTENT_READ,
+    PERM_CONTENT_WRITE,
+    PERM_OFFICIAL_READ,
+    PERM_OFFICIAL_WRITE,
+    PERM_GROWTH_READ,
+    PERM_GROWTH_WRITE,
+    PERM_GROWTH_FRAUD,
 ];
 
 const CS_PERMS: &[&str] = &[
@@ -101,6 +128,9 @@ const CS_PERMS: &[&str] = &[
     PERM_ORDERS_READ,
     PERM_COMMUNITY_READ,
     PERM_ONBOARDING_READ,
+    PERM_CONTENT_READ,
+    PERM_OFFICIAL_READ,
+    PERM_GROWTH_READ,
 ];
 
 const RISK_PERMS: &[&str] = &[
@@ -116,6 +146,10 @@ const RISK_PERMS: &[&str] = &[
     PERM_STEWARD_REVIEW,
     PERM_TRUST_GROWTH_WRITE,
     PERM_ACQUISITION_SUSPEND,
+    PERM_CONTENT_READ,
+    PERM_OFFICIAL_READ,
+    PERM_GROWTH_READ,
+    PERM_GROWTH_FRAUD,
 ];
 
 const FINANCE_PERMS: &[&str] = &[
@@ -124,6 +158,7 @@ const FINANCE_PERMS: &[&str] = &[
     PERM_ORDERS_READ,
     PERM_ONBOARDING_READ,
     PERM_PLATFORM_READ,
+    PERM_GROWTH_READ,
 ];
 
 const AUDITOR_PERMS: &[&str] = &[
@@ -134,6 +169,9 @@ const AUDITOR_PERMS: &[&str] = &[
     PERM_FINANCE_READ,
     PERM_ONBOARDING_READ,
     PERM_PLATFORM_READ,
+    PERM_CONTENT_READ,
+    PERM_OFFICIAL_READ,
+    PERM_GROWTH_READ,
 ];
 
 /// 机读路由 × 权限（与 `registry/admin-rbac-route-matrix.v1.yaml` 同源；烟测探针用）。
@@ -849,6 +887,9 @@ mod tests {
         assert!(
             !permissions_for_console_role_70(CONSOLE_ROLE_FINANCE).contains(&PERM_PLATFORM_PUBLISH)
         );
+        assert!(
+            !permissions_for_console_role_70(CONSOLE_ROLE_FINANCE).contains(&PERM_USERS_READ)
+        );
     }
 
     #[test]
@@ -872,8 +913,8 @@ mod tests {
                         }
                     }
                     CONSOLE_ROLE_FINANCE => {
-                        if *required == PERM_PLATFORM_PUBLISH {
-                            assert!(!allowed);
+                        if *required == PERM_PLATFORM_PUBLISH || *required == PERM_USERS_READ {
+                            assert!(!allowed, "Finance must not have {required}");
                         }
                     }
                     CONSOLE_ROLE_AUDITOR => {

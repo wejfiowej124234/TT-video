@@ -37,7 +37,7 @@ export function TravelTrustBelowFoldAtmosphere() {
         <motion.div
           className="absolute inset-0"
           aria-hidden
-          animate={{ opacity: TT_BELOW_FOLD_ATMOSPHERE_L5.warmPulseOpacity }}
+          animate={{ opacity: [...TT_BELOW_FOLD_ATMOSPHERE_L5.warmPulseOpacity] }}
           transition={{
             duration: TT_BELOW_FOLD_ATMOSPHERE_L5.warmPulseDuration,
             repeat: TT_BELOW_FOLD_ATMOSPHERE_L5.warmPulseRepeat,

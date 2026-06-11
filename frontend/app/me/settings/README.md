@@ -10,6 +10,17 @@
 | ② | [`ME-SETTINGS-PROFILE-L5-FREEZE.md`](../../evidence/GO_local_auth_l5/ME-SETTINGS-PROFILE-L5-FREEZE.md) |
 | ③ | [`HEADER-UTILITY-MENU-L5-FREEZE.md`](../../evidence/GO_local_auth_l5/HEADER-UTILITY-MENU-L5-FREEZE.md) |
 | ④ | [`/me/password` README](../password/README.md) · [`/me/security`](../security/) · [`/me/identities`](../identities/README.md) |
+| ⑤ | [identity-multi-slot-naming-l5.v1.md](../../../../docs/spec/artifacts/identity-multi-slot-naming-l5.v1.md) — **分场景名称 · settings 子页 TARGET** |
+
+## 职责边界（L5）
+
+| 本 Hub / 子页 | 只管 |
+|---------------|------|
+| **`/me/settings/profile`** | Account：nickname · avatar · bio（社区）· 语言/隐私链 |
+| **`/me/identities`** | 身份槽状态 · 申请 CTA · 链到各业务 settings（升级轨） |
+| **向导/商家挂牌** | **不在** profile 改；见 [identities README 名称分层](../identities/README.md#名称与资料分层l5--2026-06-10) |
+
+**TARGET 提示文案（P0 i18n）：**「这里修改的是账户资料…向导、商家等公开业务资料请到身份中心管理。」
 
 ## 代码 SSOT（改 Hub 先改此处）
 

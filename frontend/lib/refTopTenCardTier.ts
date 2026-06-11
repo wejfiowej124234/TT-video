@@ -1,4 +1,9 @@
 import { refTopThreeTier, type RefTopThreeTier } from "@/lib/refTopThreeStyles";
+import type { DidRankListColumn } from "@/lib/didRankColumnTheme";
+
+function topTenPaletteColumn(column: DidRankListColumn): "traveler" | "guide" {
+  return column === "guide" ? "guide" : "traveler";
+}
 
 /** 4～10：幽灵条，弱化「方框墙」 */
 const ROW_TRAVELER: RefTopThreeTier = {
@@ -22,11 +27,8 @@ const ROW_GUIDE: RefTopThreeTier = {
 
 export type DidRankTop10CardVariant = "podium" | "row";
 
-export function refTopTenCardTier(
-  rank: number,
-  column: "traveler" | "guide" | "provider" | "acquisition" = "traveler",
-): RefTopThreeTier {
-  const col = column === "guide" ? "guide" : "traveler";
+export function refTopTenCardTier(rank: number, column: DidRankListColumn = "traveler"): RefTopThreeTier {
+  const col = topTenPaletteColumn(column);
   if (rank <= 3) return refTopThreeTier(rank, col);
   return col === "guide" ? ROW_GUIDE : ROW_TRAVELER;
 }

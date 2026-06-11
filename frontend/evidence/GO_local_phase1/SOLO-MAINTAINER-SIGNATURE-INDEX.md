@@ -24,7 +24,8 @@
 | [identity-unified-model.v1.md §7.2](../../docs/spec/artifacts/identity-unified-model.v1.md#72-签字栏合规工程) | ①.5 PD 工程签字 |
 | [PHASE2-G1-ENV-ISOLATION-DECISION.md](../../docs/runbook/PHASE2-G1-ENV-ISOLATION-DECISION.md) | G-1 环境隔离 |
 | [08-4-对外口径包.md 文末](../../docs/spec/08-4-对外口径包.md) | 法务/运营（Owner 自证） |
-| [LEGAL-SIGNOFF-CHECKLIST.md](../../docs/spec/governance-token/LEGAL-SIGNOFF-CHECKLIST.md) | 治理币对外法务签核 |
+| [PHASE3-OWNER-SIGNOFF-SEBASTIAN-WARD-20260607.md](../../evidence/GO_phase2_testnet_20260526/phase3-production-prep/PHASE3-OWNER-SIGNOFF-SEBASTIAN-WARD-20260607.md) | **③ 入口闸 READY** · Production Preparation 授权 |
+| [PHASE3-PRODUCTION-PREPARATION.md](../../docs/runbook/PHASE3-PRODUCTION-PREPARATION.md) | Phase ③ 准备轨 SSOT |
 | [GO_10DAY_PUBLISH-phase-signoff.md](../../docs/runbook/evidence-templates/GO_10DAY_PUBLISH-phase-signoff.md) | PH-1 / PH-2 模板 |
 
 ## UI / 视觉 maintainer 签字

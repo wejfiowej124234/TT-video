@@ -31,6 +31,23 @@ mod admin_acquisition_suspend_http;
 mod admin_metrics_home_http;
 mod admin_steward_application_http;
 mod admin_provider_application_http;
+mod admin_guide_application_http;
+mod admin_growth_referral_http;
+mod admin_growth_ledger_http;
+mod admin_growth_early_bird_http;
+mod admin_growth_fraud_http;
+mod admin_country_market_http;
+mod admin_region_share_reconcile_http;
+mod admin_growth_airdrop_http;
+mod admin_growth_analytics_http;
+mod admin_content_http;
+mod admin_poi_media_http;
+mod admin_catalog_ops_http;
+mod admin_catalog_revision_http;
+mod admin_official_accounts_http;
+mod admin_official_guides_http;
+mod admin_official_itinerary_templates_http;
+mod admin_cold_start_http;
 mod admin_onboarding;
 pub(crate) mod admin_rbac;
 pub(crate) mod admin_security_totp;
@@ -587,6 +604,10 @@ pub fn router() -> Router<ApiMetaState> {
             get(get_admin_audit_log_by_id),
         )
         .route("/api/v1/admin/audit-logs", get(get_admin_audit_logs))
+        .route(
+            "/api/v1/admin/auth-audit-events",
+            get(get_admin_auth_audit_events),
+        )
         .route("/api/v1/admin/approvals", get(get_admin_approvals))
         .route("/api/v1/admin/approvals/:id", get(get_admin_approval_by_id))
         .route(
@@ -719,6 +740,23 @@ pub fn router() -> Router<ApiMetaState> {
         .merge(admin_metrics_home_http::router())
         .merge(admin_steward_application_http::router())
         .merge(admin_provider_application_http::router())
+        .merge(admin_guide_application_http::router())
+        .merge(admin_growth_referral_http::router())
+        .merge(admin_growth_ledger_http::router())
+        .merge(admin_growth_early_bird_http::router())
+        .merge(admin_growth_fraud_http::router())
+        .merge(admin_country_market_http::router())
+        .merge(admin_region_share_reconcile_http::router())
+        .merge(admin_growth_airdrop_http::router())
+        .merge(admin_growth_analytics_http::router())
+        .merge(admin_content_http::router())
+        .merge(admin_poi_media_http::router())
+        .merge(admin_catalog_ops_http::router())
+        .merge(admin_catalog_revision_http::router())
+        .merge(admin_official_accounts_http::router())
+        .merge(admin_official_guides_http::router())
+        .merge(admin_official_itinerary_templates_http::router())
+        .merge(admin_cold_start_http::router())
         .merge(admin_onboarding::router())
         .merge(admin_rbac::router())
         .merge(admin_security_totp::router())
@@ -730,6 +768,15 @@ pub struct AdminAuditQuery {
     pub actor_id: Option<String>,
     pub action: Option<String>,
     pub resource_type: Option<String>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct AdminAuthAuditEventsQuery {
+    pub limit: Option<i64>,
+    pub event_type: Option<String>,
+    pub reason: Option<String>,
+    pub user_id: Option<String>,
+    pub client_ip: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -1468,8 +1515,8 @@ pub async fn get_admin_users(
         return not_impl_json("GET /api/v1/admin/users").into_response();
     };
 
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_users_read_uid(&state, &headers).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
 
@@ -1602,8 +1649,8 @@ pub async fn get_admin_user_by_id(
     let Some(ref co) = state.chain_off else {
         return not_impl_json("GET /api/v1/admin/users/:id").into_response();
     };
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_users_read_uid(&state, &headers).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
 
@@ -4873,6 +4920,130 @@ const ADMIN_AUDIT_ACTION_CODES: &[&str] = &[
     "admin.users.read",
 ];
 
+pub async fn get_admin_auth_audit_events(
+    State(state): State<ApiMetaState>,
+    Query(query): Query<AdminAuthAuditEventsQuery>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    let actor_id = match require_admin_actor(&state, &headers).await {
+        Ok((uid, _)) => uid,
+        Err(resp) => return resp,
+    };
+
+    let request_id = request_id_from_headers(&headers);
+    let pool = match admin_db_pool_required(&state) {
+        Ok(p) => p,
+        Err(resp) => return resp,
+    };
+
+    let limit = query.limit.unwrap_or(50).clamp(1, 200);
+    let event_type_filter = query
+        .event_type
+        .as_deref()
+        .map(str::trim)
+        .filter(|v: &&str| !v.is_empty());
+    let reason_filter = query
+        .reason
+        .as_deref()
+        .map(str::trim)
+        .filter(|v: &&str| !v.is_empty());
+    let user_id_filter = match query
+        .user_id
+        .as_deref()
+        .map(str::trim)
+        .filter(|v: &&str| !v.is_empty())
+    {
+        Some(s) => match Uuid::parse_str(s) {
+            Ok(v) => Some(v),
+            Err(_) => {
+                return (
+                    StatusCode::BAD_REQUEST,
+                    Json(crate::api_json::err_key("invalid_user_id")),
+                )
+                    .into_response()
+            }
+        },
+        None => None,
+    };
+    let client_ip_filter = query
+        .client_ip
+        .as_deref()
+        .map(str::trim)
+        .filter(|v: &&str| !v.is_empty());
+
+    let rows = match db::list_auth_audit_events_with_reason_filter(
+        pool,
+        event_type_filter,
+        reason_filter,
+        user_id_filter,
+        client_ip_filter,
+        None,
+        None,
+        limit,
+    )
+    .await
+    {
+        Ok(v) => v,
+        Err(_) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(crate::api_json::err_key("auth_audit_query_failed")),
+            )
+                .into_response()
+        }
+    };
+    let items: Vec<Value> = rows
+        .into_iter()
+        .map(|r| {
+            json!({
+                "id": r.id,
+                "event_type": r.event_type,
+                "user_id": r.user_id,
+                "request_id": r.request_id,
+                "client_ip": r.client_ip,
+                "user_agent": r.user_agent,
+                "reason": r.reason,
+                "payload": r.payload,
+                "created_at": r.created_at,
+            })
+        })
+        .collect();
+
+    write_admin_audit_log_best_effort(
+        &state,
+        actor_id,
+        request_id.as_deref(),
+        "admin.auth_audit_events.read",
+        Some("auth_audit_events"),
+        None,
+        json!({
+            "filters": {
+                "event_type": event_type_filter,
+                "reason": reason_filter,
+                "user_id": user_id_filter,
+                "client_ip": client_ip_filter,
+                "limit": limit,
+            },
+            "result_count": items.len()
+        }),
+    )
+    .await;
+
+    let mut body = json!({
+        "status": "ok",
+        "items": items,
+        "applied_filters": {
+            "event_type": event_type_filter,
+            "reason": reason_filter,
+            "user_id": user_id_filter,
+            "client_ip": client_ip_filter,
+            "limit": limit
+        }
+    });
+    admin_attach_meta_build(&mut body);
+    Json(body).into_response()
+}
+
 pub async fn get_admin_audit_operations(
     State(state): State<ApiMetaState>,
     Query(q): Query<AdminAuditOperationsQuery>,
@@ -5529,6 +5700,268 @@ pub async fn post_admin_approval_approve(
                 "target_user_id": result.target_user_id,
                 "from_console_role_70": result.from_console_role,
                 "to_console_role_70": result.to_console_role,
+                "approved_by": approver_id,
+            });
+            admin_attach_meta_build(&mut body);
+            return Json(body).into_response();
+        }
+        "catalog.entity.publish" => {
+            let result = match db::approve_catalog_publish_request_with_audit(
+                pool,
+                approval_uuid,
+                approver_id,
+                body.reason.as_deref(),
+                request_id.as_deref(),
+            )
+            .await
+            {
+                Ok(v) => v,
+                Err(_) => {
+                    return (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        Json(crate::api_json::err_key("admin_approval_apply_failed")),
+                    )
+                        .into_response();
+                }
+            };
+            let Some((approval_id, entity_type, entity_id, version)) = result else {
+                return (
+                    StatusCode::CONFLICT,
+                    Json(crate::api_json::err_key("approval_request_apply_conflict")),
+                )
+                    .into_response();
+            };
+            let mut body = json!({
+                "status": "ok",
+                "approval_request_id": approval_id,
+                "entity_type": entity_type,
+                "entity_id": entity_id,
+                "version": version,
+                "approved_by": approver_id,
+            });
+            admin_attach_meta_build(&mut body);
+            return Json(body).into_response();
+        }
+        "catalog.poi_image.publish" => {
+            let result = match db::approve_poi_image_publish_request_with_audit(
+                pool,
+                approval_uuid,
+                approver_id,
+                body.reason.as_deref(),
+                request_id.as_deref(),
+            )
+            .await
+            {
+                Ok(v) => v,
+                Err(_) => {
+                    return (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        Json(crate::api_json::err_key("admin_approval_apply_failed")),
+                    )
+                        .into_response();
+                }
+            };
+            let Some((approval_id, batch_id, version)) = result else {
+                return (
+                    StatusCode::CONFLICT,
+                    Json(crate::api_json::err_key("approval_request_apply_conflict")),
+                )
+                    .into_response();
+            };
+            let mut body = json!({
+                "status": "ok",
+                "approval_request_id": approval_id,
+                "batch_id": batch_id,
+                "version": version,
+                "approved_by": approver_id,
+            });
+            admin_attach_meta_build(&mut body);
+            return Json(body).into_response();
+        }
+        "catalog.import.trigger" => {
+            let mut tx = match pool.begin().await {
+                Ok(v) => v,
+                Err(_) => {
+                    return (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        Json(crate::api_json::err_key("admin_approval_apply_failed")),
+                    )
+                        .into_response();
+                }
+            };
+            let updated = sqlx::query(
+                r#"UPDATE admin_approval_requests SET status = 'approved', approved_by = $2, approve_reason = $3, approved_at = $4
+                   WHERE id = $1 AND status = 'pending' AND action = 'catalog.import.trigger'"#,
+            )
+            .bind(approval_uuid)
+            .bind(approver_id)
+            .bind(body.reason.as_deref())
+            .bind(Utc::now())
+            .execute(&mut *tx)
+            .await;
+            if updated.is_err() || updated.as_ref().map(|r| r.rows_affected()).unwrap_or(0) == 0 {
+                let _ = tx.rollback().await;
+                return (
+                    StatusCode::CONFLICT,
+                    Json(crate::api_json::err_key("approval_request_apply_conflict")),
+                )
+                    .into_response();
+            }
+            let _ = sqlx::query(
+                r#"INSERT INTO admin_audit_logs (action, resource_type, resource_id, actor_id, request_id, payload, created_at)
+                   VALUES ('catalog.import.trigger.approved', 'catalog_import', 'trigger', $1, $2, $3, $4)"#,
+            )
+            .bind(approver_id)
+            .bind(request_id.as_deref())
+            .bind(json!({ "approval_request_id": approval_uuid }))
+            .bind(Utc::now())
+            .execute(&mut *tx)
+            .await;
+            let _ = tx.commit().await;
+            let mut body = json!({
+                "status": "ok",
+                "approval_request_id": approval_uuid,
+                "approved_by": approver_id,
+                "note": "Run catalog-import CLI on approved host",
+            });
+            admin_attach_meta_build(&mut body);
+            return Json(body).into_response();
+        }
+        "ops.official.account.publish" => {
+            let result = match db::approve_official_account_publish_with_audit(
+                pool,
+                approval_uuid,
+                approver_id,
+                body.reason.as_deref(),
+                request_id.as_deref(),
+            )
+            .await
+            {
+                Ok(v) => v,
+                Err(_) => {
+                    return (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        Json(crate::api_json::err_key("admin_approval_apply_failed")),
+                    )
+                        .into_response();
+                }
+            };
+            let Some((approval_id, account_id)) = result else {
+                return (
+                    StatusCode::CONFLICT,
+                    Json(crate::api_json::err_key("approval_request_apply_conflict")),
+                )
+                    .into_response();
+            };
+            let mut body = json!({
+                "status": "ok",
+                "approval_request_id": approval_id,
+                "account_id": account_id,
+                "approved_by": approver_id,
+            });
+            admin_attach_meta_build(&mut body);
+            return Json(body).into_response();
+        }
+        "ops.official.guide.publish" => {
+            let result = match db::approve_official_guide_publish_with_audit(
+                pool,
+                approval_uuid,
+                approver_id,
+                body.reason.as_deref(),
+                request_id.as_deref(),
+            )
+            .await
+            {
+                Ok(v) => v,
+                Err(_) => {
+                    return (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        Json(crate::api_json::err_key("admin_approval_apply_failed")),
+                    )
+                        .into_response();
+                }
+            };
+            let Some((approval_id, guide_id)) = result else {
+                return (
+                    StatusCode::CONFLICT,
+                    Json(crate::api_json::err_key("approval_request_apply_conflict")),
+                )
+                    .into_response();
+            };
+            let mut body = json!({
+                "status": "ok",
+                "approval_request_id": approval_id,
+                "guide_id": guide_id,
+                "approved_by": approver_id,
+            });
+            admin_attach_meta_build(&mut body);
+            return Json(body).into_response();
+        }
+        "ops.itinerary_template.publish" => {
+            let result = match db::approve_official_itinerary_template_publish_with_audit(
+                pool,
+                approval_uuid,
+                approver_id,
+                body.reason.as_deref(),
+                request_id.as_deref(),
+            )
+            .await
+            {
+                Ok(v) => v,
+                Err(_) => {
+                    return (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        Json(crate::api_json::err_key("admin_approval_apply_failed")),
+                    )
+                        .into_response();
+                }
+            };
+            let Some((approval_id, template_id)) = result else {
+                return (
+                    StatusCode::CONFLICT,
+                    Json(crate::api_json::err_key("approval_request_apply_conflict")),
+                )
+                    .into_response();
+            };
+            let mut body = json!({
+                "status": "ok",
+                "approval_request_id": approval_id,
+                "template_id": template_id,
+                "approved_by": approver_id,
+            });
+            admin_attach_meta_build(&mut body);
+            return Json(body).into_response();
+        }
+        "ops.cold_start.deploy" => {
+            let result = match db::approve_cold_start_deploy_with_audit(
+                pool,
+                approval_uuid,
+                approver_id,
+                body.reason.as_deref(),
+                request_id.as_deref(),
+            )
+            .await
+            {
+                Ok(v) => v,
+                Err(_) => {
+                    return (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        Json(crate::api_json::err_key("admin_approval_apply_failed")),
+                    )
+                        .into_response();
+                }
+            };
+            let Some((approval_id, campaign_id)) = result else {
+                return (
+                    StatusCode::CONFLICT,
+                    Json(crate::api_json::err_key("approval_request_apply_conflict")),
+                )
+                    .into_response();
+            };
+            let mut body = json!({
+                "status": "ok",
+                "approval_request_id": approval_id,
+                "campaign_id": campaign_id,
                 "approved_by": approver_id,
             });
             admin_attach_meta_build(&mut body);

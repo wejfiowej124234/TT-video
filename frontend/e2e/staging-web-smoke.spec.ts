@@ -21,7 +21,7 @@ function stagingGate(): boolean {
     await expect(page.locator("body")).toBeVisible();
     await expect(page.getByText(/页面加载异常/)).toHaveCount(0);
     await expect(
-      page.getByRole("main", { name: /Start your dream|梦想之旅|dream trip/i }),
+      page.getByRole("main", { name: /定制旅行|Custom travel|选目的地|Pick a destination|Web3旅行|Web3 Travel/i }),
     ).toBeVisible({ timeout: 60_000 });
   });
 
@@ -40,6 +40,8 @@ function stagingGate(): boolean {
   });
 
   test("浏览器可跨域 GET staging API /meta（CORS）", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.locator("body")).toBeVisible();
     const apiBase = defaultApiBase();
     const chainId = await page.evaluate(async (base) => {
       const res = await fetch(`${base}/meta`, { credentials: "include" });

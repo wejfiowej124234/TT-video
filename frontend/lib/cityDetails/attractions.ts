@@ -1,31 +1,33 @@
 import type { Option, AttractionDetail } from "./types";
+import { resolveAttractionImage } from "./attractionImageOverrides";
+import { PRODUCT_COUNTRY_POI_ATTRACTIONS } from "./productCountryPoi";
 
 export const ATTRACTIONS_DETAILS_BY_CITY: Record<string, AttractionDetail[]> = {
   北京: [
-    { value: "故宫", label: "故宫", image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=400&q=80", description: "明清两代皇家宫殿，世界文化遗产，世界上现存规模最大的木质结构古建筑群。" },
-    { value: "长城", label: "长城", image: "https://images.unsplash.com/photo-1508807525871-f67542332185?w=400&q=80", description: "中国古代军事防御工程，世界新七大奇迹之一，万里长城举世闻名。" },
-    { value: "颐和园", label: "颐和园", image: "https://images.unsplash.com/photo-1590559899731-a382839e5549?w=400&q=80", description: "中国古典园林之首，以昆明湖、万寿山为基址，皇家园林博物馆。" },
-    { value: "天坛", label: "天坛", image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=400&q=80", description: "明清皇帝祭天祈谷的坛庙建筑群，祈年殿为标志性建筑。" },
-    { value: "圆明园", label: "圆明园", image: "https://images.unsplash.com/photo-1590559899731-a382839e5549?w=400&q=80", description: "清代皇家园林，有「万园之园」之称，遗址公园可参观。" },
+    { value: "故宫", label: "故宫", image: "https://images.unsplash.com/photo-1656171600501-456e5fd9614f?w=400&q=80", description: "明清两代皇家宫殿，世界文化遗产，世界上现存规模最大的木质结构古建筑群。" },
+    { value: "长城", label: "长城", image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80", description: "中国古代军事防御工程，世界新七大奇迹之一，万里长城举世闻名。" },
+    { value: "颐和园", label: "颐和园", image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80", description: "中国古典园林之首，以昆明湖、万寿山为基址，皇家园林博物馆。" },
+    { value: "天坛", label: "天坛", image: "https://images.unsplash.com/photo-1474181487882-5abf3f0ba6c2?w=400&q=80", description: "明清皇帝祭天祈谷的坛庙建筑群，祈年殿为标志性建筑。" },
+    { value: "圆明园", label: "圆明园", image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&q=80", description: "清代皇家园林，有「万园之园」之称，遗址公园可参观。" },
     { value: "南锣鼓巷", label: "南锣鼓巷", image: "https://images.unsplash.com/photo-1516528387618-afa90b13e000?w=400&q=80", description: "北京著名胡同与商业街区，汇聚老北京风情与文创小店。" },
   ],
   上海: [
     { value: "外滩", label: "外滩", image: "https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=400&q=80", description: "黄浦江畔万国建筑博览群，夜景璀璨，上海地标。" },
     { value: "东方明珠", label: "东方明珠", image: "https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=400&q=80", description: "浦东陆家嘴电视塔，登顶可俯瞰浦江两岸。" },
-    { value: "豫园", label: "豫园", image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=400&q=80", description: "江南古典园林，城隍庙商圈，传统建筑与小吃。" },
+    { value: "豫园", label: "豫园", image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80", description: "江南古典园林，城隍庙商圈，传统建筑与小吃。" },
     { value: "田子坊", label: "田子坊", image: "https://images.unsplash.com/photo-1516528387618-afa90b13e000?w=400&q=80", description: "石库门里弄改造的创意园区，文艺小店与咖啡馆。" },
     { value: "迪士尼", label: "上海迪士尼", image: "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=400&q=80", description: "中国大陆首座迪士尼乐园，六大主题园区。" },
   ],
   杭州: [
     { value: "西湖", label: "西湖", image: "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=400&q=80", description: "世界文化遗产，西湖十景闻名天下，湖光山色与人文古迹交融。" },
-    { value: "灵隐寺", label: "灵隐寺", image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=400&q=80", description: "千年古刹，飞来峰造像与寺庙建筑，香火鼎盛。" },
+    { value: "灵隐寺", label: "灵隐寺", image: "https://images.unsplash.com/photo-1558981363-fa8a2a0fc088?w=400&q=80", description: "千年古刹，飞来峰造像与寺庙建筑，香火鼎盛。" },
     { value: "雷峰塔", label: "雷峰塔", image: "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=400&q=80", description: "西湖标志性建筑，白娘子传说所在地，可登塔观湖。" },
     { value: "西溪湿地", label: "西溪湿地", image: "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=400&q=80", description: "城市湿地公园，自然生态与《非诚勿扰》取景地。" },
     { value: "宋城", label: "宋城", image: "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=400&q=80", description: "以宋代文化为主题的大型景区，演出与体验项目丰富。" },
   ],
   西安: [
     { value: "兵马俑", label: "兵马俑", image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=400&q=80", description: "世界第八大奇迹，秦始皇陵陪葬坑，陶俑阵容震撼。" },
-    { value: "大雁塔", label: "大雁塔", image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=400&q=80", description: "唐代佛塔，玄奘译经之地，大雁塔北广场音乐喷泉。" },
+    { value: "大雁塔", label: "大雁塔", image: "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=400&q=80", description: "唐代佛塔，玄奘译经之地，大雁塔北广场音乐喷泉。" },
     { value: "城墙", label: "西安城墙", image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=400&q=80", description: "中国现存最完整的古代城垣，可骑行或步行环城。" },
     { value: "回民街", label: "回民街", image: "https://images.unsplash.com/photo-1516528387618-afa90b13e000?w=400&q=80", description: "西安著名美食街，肉夹馍、泡馍、凉皮等小吃云集。" },
     { value: "华清池", label: "华清池", image: "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=400&q=80", description: "唐代皇家温泉宫，骊山脚下，长恨歌演出所在地。" },
@@ -35,7 +37,7 @@ export const ATTRACTIONS_DETAILS_BY_CITY: Record<string, AttractionDetail[]> = {
     { value: "大熊猫基地", label: "大熊猫基地", image: "https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=400&q=80", description: "成都大熊猫繁育研究基地，可近距离观看国宝大熊猫。" },
     { value: "锦里", label: "锦里", image: "https://images.unsplash.com/photo-1516528387618-afa90b13e000?w=400&q=80", description: "武侯祠旁仿古街，川味小吃与民俗体验。" },
     { value: "都江堰", label: "都江堰", image: "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=400&q=80", description: "世界文化遗产，古代水利工程，李冰父子治水杰作。" },
-    { value: "武侯祠", label: "武侯祠", image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=400&q=80", description: "纪念诸葛亮的祠庙，三国文化主题，与锦里相邻。" },
+    { value: "武侯祠", label: "武侯祠", image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&q=80", description: "纪念诸葛亮的祠庙，三国文化主题，与锦里相邻。" },
   ],
   东京: [
     { value: "浅草寺", label: "浅草寺", image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=400&q=80", description: "东京最古老寺庙，雷门与仲见世通商店街，和风浓郁。" },
@@ -65,22 +67,22 @@ export const ATTRACTIONS_DETAILS_BY_CITY: Record<string, AttractionDetail[]> = {
   // 中国：广州、厦门、大理、青岛
   广州: [
     { value: "广州塔", label: "广州塔", image: "https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=400&q=80", description: "广州地标小蛮腰，可登塔观景，珠江夜景璀璨。" },
-    { value: "陈家祠", label: "陈家祠", image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=400&q=80", description: "岭南建筑艺术明珠，广东民间工艺博物馆。" },
+    { value: "陈家祠", label: "陈家祠", image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&q=80", description: "岭南建筑艺术明珠，广东民间工艺博物馆。" },
     { value: "沙面", label: "沙面岛", image: "https://images.unsplash.com/photo-1516528387618-afa90b13e000?w=400&q=80", description: "欧陆风情建筑群，文艺街区与咖啡馆。" },
     { value: "长隆", label: "长隆度假区", image: "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=400&q=80", description: "野生动物世界、欢乐世界、水上乐园一站式度假。" },
     { value: "白云山", label: "白云山", image: "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=400&q=80", description: "羊城第一秀，登高览城、摩星岭观景。" },
   ],
   厦门: [
     { value: "鼓浪屿", label: "鼓浪屿", image: "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=400&q=80", description: "海上花园，世界文化遗产，钢琴之岛与万国建筑。" },
-    { value: "南普陀", label: "南普陀寺", image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=400&q=80", description: "闽南名刹，背靠五老峰，与厦大相邻。" },
+    { value: "南普陀", label: "南普陀寺", image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=400&q=80", description: "闽南名刹，背靠五老峰，与厦大相邻。" },
     { value: "曾厝垵", label: "曾厝垵", image: "https://images.unsplash.com/photo-1516528387618-afa90b13e000?w=400&q=80", description: "文艺渔村，民宿、小吃与创意小店。" },
     { value: "环岛路", label: "环岛路", image: "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=400&q=80", description: "海滨步道与骑行绿道，椰风海韵。" },
-    { value: "土楼", label: "福建土楼", image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=400&q=80", description: "世界文化遗产，可一日游永定或南靖土楼。" },
+    { value: "土楼", label: "福建土楼", image: "https://images.unsplash.com/photo-1555894738-28c0c17feeac?w=400&q=80", description: "世界文化遗产，可一日游永定或南靖土楼。" },
   ],
   大理: [
     { value: "洱海", label: "洱海", image: "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=400&q=80", description: "高原明珠，环湖骑行、游船，苍山洱海相映。" },
     { value: "古城", label: "大理古城", image: "https://images.unsplash.com/photo-1516528387618-afa90b13e000?w=400&q=80", description: "文献名邦，古城漫步、洋人街与白族风情。" },
-    { value: "崇圣寺", label: "崇圣寺三塔", image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=400&q=80", description: "大理地标，千年佛塔与苍山远景。" },
+    { value: "崇圣寺", label: "崇圣寺三塔", image: "https://images.unsplash.com/photo-1474181487882-5abf3f0ba6c2?w=400&q=80", description: "大理地标，千年佛塔与苍山远景。" },
     { value: "双廊", label: "双廊", image: "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=400&q=80", description: "洱海边古镇，海景民宿与日落。" },
     { value: "喜洲", label: "喜洲古镇", image: "https://images.unsplash.com/photo-1516528387618-afa90b13e000?w=400&q=80", description: "白族民居与喜洲粑粑，田园与扎染体验。" },
   ],
@@ -151,7 +153,7 @@ export const ATTRACTIONS_DETAILS_BY_CITY: Record<string, AttractionDetail[]> = {
   // 意大利：罗马、米兰、威尼斯、佛罗伦萨
   罗马: [
     { value: "斗兽场", label: "罗马斗兽场", image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=400&q=80", description: "古罗马象征，角斗士与帝国遗迹。" },
-    { value: "梵蒂冈", label: "梵蒂冈", image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=400&q=80", description: "圣彼得大教堂与梵蒂冈博物馆、西斯廷。" },
+    { value: "梵蒂冈", label: "梵蒂冈", image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=400&q=80", description: "圣彼得大教堂与梵蒂冈博物馆、西斯廷。" },
     { value: "许愿池", label: "特莱维喷泉", image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=400&q=80", description: "许愿池投币，巴洛克杰作。" },
     { value: "万神殿", label: "万神殿", image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=400&q=80", description: "古罗马保存最完好的建筑，穹顶与拉斐尔墓。" },
     { value: "西班牙广场", label: "西班牙广场", image: "https://images.unsplash.com/photo-1516528387618-afa90b13e000?w=400&q=80", description: "台阶与破船喷泉，罗马假日取景。" },
@@ -160,7 +162,7 @@ export const ATTRACTIONS_DETAILS_BY_CITY: Record<string, AttractionDetail[]> = {
     { value: "大教堂", label: "米兰大教堂", image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=400&q=80", description: "哥特式主座教堂，登顶俯瞰米兰。" },
     { value: "斯卡拉", label: "斯卡拉歌剧院", image: "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?w=400&q=80", description: "世界顶级歌剧院，歌剧与芭蕾。" },
     { value: "埃马努埃莱二世长廊", label: "埃马努埃莱二世长廊", image: "https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=400&q=80", description: "奢侈品拱廊与马赛克地画。" },
-    { value: "斯福尔扎城堡", label: "斯福尔扎城堡", image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=400&q=80", description: "文艺复兴城堡与博物馆。" },
+    { value: "斯福尔扎城堡", label: "斯福尔扎城堡", image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=400&q=80", description: "文艺复兴城堡与博物馆。" },
   ],
   威尼斯: [
     { value: "圣马可", label: "圣马可广场", image: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=400&q=80", description: "欧洲客厅，大教堂、钟楼与总督宫。" },
@@ -189,7 +191,7 @@ export const ATTRACTIONS_DETAILS_BY_CITY: Record<string, AttractionDetail[]> = {
   ],
   塞维利亚: [
     { value: "王宫", label: "塞维利亚王宫", image: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=400&q=80", description: "摩尔与基督教风格融合，权游多恩取景。" },
-    { value: "大教堂", label: "塞维利亚大教堂", image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=400&q=80", description: "世界最大哥特式教堂，哥伦布墓与吉拉达塔。" },
+    { value: "大教堂", label: "塞维利亚大教堂", image: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=400&q=80", description: "世界最大哥特式教堂，哥伦布墓与吉拉达塔。" },
     { value: "西班牙广场", label: "西班牙广场", image: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=400&q=80", description: "半圆形广场与瓷砖省徽，运河与马车。" },
     { value: "弗拉明戈", label: "弗拉明戈", image: "https://images.unsplash.com/photo-1516528387618-afa90b13e000?w=400&q=80", description: "发源地，剧场与 tablao 欣赏正宗表演。" },
   ],
@@ -257,6 +259,7 @@ export const ATTRACTIONS_DETAILS_BY_CITY: Record<string, AttractionDetail[]> = {
     { value: "可伦宾", label: "可伦宾动物园", image: "https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=400&q=80", description: "抱考拉、喂袋鼠与野生动物。" },
     { value: "Q1", label: "Q1 观景台", image: "https://images.unsplash.com/photo-1523059623039-a9ed027e7fad?w=400&q=80", description: "南半球最高住宅楼观景，海岸全景。" },
   ],
+  ...PRODUCT_COUNTRY_POI_ATTRACTIONS,
 };
 
 /** @deprecated 使用 ATTRACTIONS_DETAILS_BY_CITY + getAttractionDetails */
@@ -271,5 +274,8 @@ export function getAttractions(city: string): Option[] {
 
 /** 某城市景区详情（含图片、介绍），供选中后展示 */
 export function getAttractionDetails(city: string): AttractionDetail[] {
-  return ATTRACTIONS_DETAILS_BY_CITY[city] ?? [];
+  return (ATTRACTIONS_DETAILS_BY_CITY[city] ?? []).map((a) => ({
+    ...a,
+    image: resolveAttractionImage(city, a.value, a.image),
+  }));
 }

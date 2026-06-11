@@ -19,11 +19,23 @@ import {
   type MeRoleApplicationRow,
 } from "@/lib/me/roleApplications";
 
-/** 商家已开通 · Hub 核心卡 CTA 落点 */
+/** 商家资料 settings（Hub 已开通 / 待审槽 CTA） */
+export const ME_IDENTITIES_MERCHANT_SETTINGS_HREF = "/me/identities/merchant/settings";
+
+/** 主理人资料 settings（Hub 已开通 CTA） */
+export const ME_IDENTITIES_STEWARD_SETTINGS_HREF = "/me/identities/region-steward/settings";
+
+/** 收购资料 settings（Hub 非 inactive 槽 CTA） */
+export const ME_IDENTITIES_ACQUISITION_SETTINGS_HREF = "/me/identities/acquisition/settings";
+
+/** @deprecated 使用 `ME_IDENTITIES_MERCHANT_SETTINGS_HREF`；保留工作台深链 */
 export const ME_IDENTITIES_PROVIDER_ACTIVE_HREF = "/market/provider";
 
-/** 主理人已开通 · 区域治理 Hub（非 `/steward/register` 回链） */
-export const ME_IDENTITIES_STEWARD_ACTIVE_HREF = "/governance?view=region";
+/** 主理人区域治理工作台（settings 页内链；Hub active 改走 settings） */
+export const ME_IDENTITIES_STEWARD_WORKSPACE_HREF = "/governance?view=region";
+
+/** @deprecated 使用 `ME_IDENTITIES_STEWARD_SETTINGS_HREF` */
+export const ME_IDENTITIES_STEWARD_ACTIVE_HREF = ME_IDENTITIES_STEWARD_SETTINGS_HREF;
 
 /** Hub 核心轨（商家 / 主理人）细粒度阶段 */
 export type MeIdentitiesCorePhase =
@@ -216,8 +228,18 @@ export function deriveMeIdentitiesCoreCardView(
 
   switch (phase) {
     case "active":
-      href = hrefs.activeHref;
-      ctaLabelKey = "me_identities_card_cta_active";
+      href =
+        surface === "provider"
+          ? ME_IDENTITIES_MERCHANT_SETTINGS_HREF
+          : surface === "steward"
+            ? ME_IDENTITIES_STEWARD_SETTINGS_HREF
+            : hrefs.activeHref;
+      ctaLabelKey =
+        surface === "provider"
+          ? "me_identities_card_merchant_settings_cta"
+          : surface === "steward"
+            ? "me_identities_card_steward_settings_cta"
+            : "me_identities_card_cta_active";
       break;
     case "restricted":
       ctaLabelKey = "me_identities_card_cta_reapply";

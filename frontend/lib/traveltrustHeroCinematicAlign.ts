@@ -55,7 +55,7 @@ export const TT_HERO_GLOBE_FADE_END = TT_HERO_GLOBE_OPACITY_EXIT_END;
 /** 0→1：首屏入场（打开/刷新页 · 与滚动退出独立） */
 export function resolveHeroGlobeEntranceProgress(
   elapsedSec: number,
-  durationSec = TRAVELTRUST_HERO_GLOBE_ENTRANCE_DURATION_SEC,
+  durationSec: number = TRAVELTRUST_HERO_GLOBE_ENTRANCE_DURATION_SEC,
 ): number {
   if (durationSec <= 0) return 1;
   const t = Math.min(1, Math.max(0, elapsedSec / durationSec));

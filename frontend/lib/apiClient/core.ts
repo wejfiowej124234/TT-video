@@ -16,6 +16,7 @@ export {
 } from "./core/rateLimitAndFetch";
 
 import { fetchGetWithTransitRetry } from "./core/rateLimitAndFetch";
+import { attachOrderParticipantHint, parseOrderParticipantHint } from "../orderParticipantHint";
 
 import {
   clearAdmin2faSession,
@@ -114,6 +115,11 @@ function parseSuccessJsonBody(text: string): unknown {
   }
 }
 
+function throwWithParticipantHint(code: string, j: Record<string, unknown>): never {
+  const err = new Error(code);
+  throw attachOrderParticipantHint(err, parseOrderParticipantHint(j));
+}
+
 /** 统一处理响应：403 时解析 body 识别 OFAC/风控并抛出友好文案（13-1 §四、27-P22 生产级） */
 export async function parseResponse(res: Response): Promise<unknown> {
   const text = await res.text();
@@ -142,6 +148,18 @@ export async function parseResponse(res: Response): Promise<unknown> {
       if (res.status === 409 && j.error === "already_guide") throw new Error("already_guide");
       if (res.status === 409 && j.error === "email_already_registered") throw new Error("email_already_registered");
       if (res.status === 409 && j.error === "already_voted") throw new Error("already_voted");
+      if (res.status === 409 && j.error === "draft_cap_exceeded") {
+        const err = new Error("draft_cap_exceeded") as Error & { draftCount?: number; draftCap?: number };
+        if (typeof j.current_count === "number") err.draftCount = j.current_count;
+        if (typeof j.cap === "number") err.draftCap = j.cap;
+        throw err;
+      }
+      if (res.status === 409 && j.error === "in_progress_cap_exceeded") {
+        const err = new Error("in_progress_cap_exceeded") as Error & { inProgressCount?: number; inProgressCap?: number };
+        if (typeof j.current_count === "number") err.inProgressCount = j.current_count;
+        if (typeof j.cap === "number") err.inProgressCap = j.cap;
+        throw err;
+      }
       if (res.status === 404 && j.error === "proposal_not_found") throw new Error("proposal_not_found");
       if (res.status === 400 && j.error === "invalid_proposal_id") throw new Error("invalid_proposal_id");
       if (res.status === 400 && j.error === "invalid_vote") throw new Error("invalid_vote");
@@ -207,7 +225,9 @@ export async function parseResponse(res: Response): Promise<unknown> {
       if (res.status === 403 && j.error === "trust_risk_too_high") throw new Error("trust_risk_too_high");
       if (res.status === 403 && j.error === "delegation_active_cannot_vote")
         throw new Error("delegation_active_cannot_vote");
-      if (res.status === 403 && j.error === "forbidden") throw new Error("forbidden");
+      if (res.status === 403 && j.error === "forbidden") throwWithParticipantHint("forbidden", j);
+      if (res.status === 403 && j.error === "not_assigned_guide")
+        throwWithParticipantHint("not_assigned_guide", j);
       if (res.status === 403 && j.error === "internal_api_forbidden")
         throw new Error("internal_api_forbidden");
       if (res.status === 400 && j.error === "invalid_limit") throw new Error("invalid_limit");
@@ -222,7 +242,7 @@ export async function parseResponse(res: Response): Promise<unknown> {
       else if (typeof j.error === "string") msg = j.error;
     } catch (e) {
       if (e instanceof Error) {
-        const rethrow = ["invalid_credentials", "invalid_old_password", "login_required", "rate_limit_exceeded", "critical_write_rate_limit_exceeded", "evidence_rate_limit_exceeded", "review_rate_limit_exceeded", "already_reviewed", "order_not_final_financial_state", "order_has_no_completed_at", "already_guide", "email_already_registered", "already_voted", "proposal_not_found", "invalid_proposal_id", "invalid_vote", "cannot_delegate_to_self", "invalid_delegate_to", "no_active_delegation", "delegation_active_cannot_vote", "evidence_db_persist_failed", "message_db_persist_failed", "review_db_persist_failed", "dispute_open_db_persist_failed", "dispute_resolve_db_persist_failed", "itinerary_db_persist_failed", "order_db_persist_failed", "auth_db_persist_failed", "guide_db_persist_failed", "chain_off_unavailable", "database_required", "degraded_mode", "api_paused", "token_expired", "fee_router_stats_failed", "fee_router_list_failed", "outbox_persist_failed", "score_must_be_1_to_5", "review_comment_required_for_low_score", "review_window_expired", "seed_test_accounts_disabled", "trust_guide_pending_review", "trust_verification_pending", "trust_identity_restricted", "trust_risk_too_high", "forbidden", "internal_api_forbidden", "invalid_limit", "invalid_cursor", "not_implemented", "invalid_wallet_address", "city_required", "city_too_long", "file_too_large", "invalid_file_type", "invalid_email", "password_too_short", "password_too_long", "id_photo_required", "guide_license_url_invalid", "invalid_uuid", "invalid_base64", "invalid_filename", "invalid_registration_role"];
+        const rethrow = ["invalid_credentials", "invalid_old_password", "login_required", "rate_limit_exceeded", "critical_write_rate_limit_exceeded", "evidence_rate_limit_exceeded", "review_rate_limit_exceeded", "already_reviewed", "order_not_final_financial_state", "order_has_no_completed_at", "already_guide", "email_already_registered", "already_voted", "draft_cap_exceeded", "in_progress_cap_exceeded", "proposal_not_found", "invalid_proposal_id", "invalid_vote", "cannot_delegate_to_self", "invalid_delegate_to", "no_active_delegation", "delegation_active_cannot_vote", "evidence_db_persist_failed", "message_db_persist_failed", "review_db_persist_failed", "dispute_open_db_persist_failed", "dispute_resolve_db_persist_failed", "itinerary_db_persist_failed", "order_db_persist_failed", "auth_db_persist_failed", "guide_db_persist_failed", "chain_off_unavailable", "database_required", "degraded_mode", "api_paused", "token_expired", "fee_router_stats_failed", "fee_router_list_failed", "outbox_persist_failed", "score_must_be_1_to_5", "review_comment_required_for_low_score", "review_window_expired", "seed_test_accounts_disabled", "trust_guide_pending_review", "trust_verification_pending", "trust_identity_restricted", "trust_risk_too_high", "forbidden", "not_assigned_guide", "internal_api_forbidden", "invalid_limit", "invalid_cursor", "not_implemented", "invalid_wallet_address", "city_required", "city_too_long", "file_too_large", "invalid_file_type", "invalid_email", "password_too_short", "password_too_long", "id_photo_required", "guide_license_url_invalid", "invalid_uuid", "invalid_base64", "invalid_filename", "invalid_registration_role"];
         if (rethrow.includes(e.message)) throw e;
       }
     }

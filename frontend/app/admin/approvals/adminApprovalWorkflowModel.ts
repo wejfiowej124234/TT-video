@@ -12,6 +12,13 @@ export function approvalActionLabelKey(action: string | undefined): string {
   const a = (action ?? "").trim();
   if (a === "admin.user.role.change") return "admin_approvals_action_user_role";
   if (a === "admin.console_role.change") return "admin_approvals_action_console_role";
+  if (a === "catalog.entity.publish") return "admin_approvals_action_catalog_publish";
+  if (a === "catalog.poi_image.publish") return "admin_approvals_action_catalog_poi_image_publish";
+  if (a === "catalog.import.trigger") return "admin_approvals_action_catalog_import_trigger";
+  if (a === "ops.official.account.publish") return "admin_approvals_action_official_account_publish";
+  if (a === "ops.official.guide.publish") return "admin_approvals_action_official_guide_publish";
+  if (a === "ops.itinerary_template.publish") return "admin_approvals_action_official_itinerary_template_publish";
+  if (a === "ops.cold_start.deploy") return "admin_approvals_action_cold_start_deploy";
   return "admin_approvals_action_other";
 }
 

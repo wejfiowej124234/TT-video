@@ -24,6 +24,12 @@ export function orderListItemIsInProgress(item: OrderListItem): boolean {
   return isOrdersListInProgressState(normalizedOrderListItemState(item));
 }
 
+/** 「全部」Tab 默认隐藏已取消行（仍可通过 `?state=cancelled` 查看；取消为终态，刷新会从 API 再拉回） */
+export function isOrdersListHiddenOnDefaultAllTab(item: OrderListItem): boolean {
+  const s = normalizedOrderListItemState(item);
+  return s === "cancelled";
+}
+
 /**
  * URL `?state=` 二次筛选：`in_progress` 为客户端桶；其余由 API 已筛时直接透传。
  */
@@ -32,8 +38,10 @@ export function filterOrdersListByUrlStateParam(
   stateParam: string | null | undefined,
 ): OrderListItem[] {
   const t = (stateParam ?? "").trim().toLowerCase();
-  if (!t || t === ORDERS_LIST_IN_PROGRESS_VALUE) {
-    if (t !== ORDERS_LIST_IN_PROGRESS_VALUE) return [...list];
+  if (!t) {
+    return list.filter((item) => !isOrdersListHiddenOnDefaultAllTab(item));
+  }
+  if (t === ORDERS_LIST_IN_PROGRESS_VALUE) {
     return list.filter((item) => orderListItemIsInProgress(item));
   }
   return [...list];

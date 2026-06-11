@@ -1,9 +1,12 @@
 /**
- * B-468：市场发现 → 预订 CTA → 建单页 — 将 B-467 起点从直达 `/orders/new?guide_id=` 前移为
- * `/market` 选向导 → `BookGuideModal` →「选择行程并预约」链入 `orders/new`，后续履约与 B-467 同源
- *（接单 → 模拟入金 → 确认完成 → 评价 → 向导可见）。
+ * B-468：市场发现 → 预订 CTA → Escrow bind — GD-L5-P3 itinerary-first：
+ * `/market` 选向导 → `BookGuideModal` 选行程绑定向导 → `/escrow/:id`，后续履约与 B-467 同源。
  */
 import { test, expect, type Page, type APIRequestContext } from "@playwright/test";
+import {
+  bindGuideFromBookGuideModal,
+  seedPublishedOpenItineraryOrder,
+} from "./helpers/bookGuideItineraryFirst";
 import { guideRowIdForSeedGuideAccount } from "./helpers/guideSeedGuideRowId";
 import { releaseSeedGuideSlotIfBlocked } from "./helpers/releaseSeedGuideSlot";
 import { skipUnlessOrderMockPayAvailable } from "./helpers/skipUnlessOrderMockPayAvailable";
@@ -57,20 +60,8 @@ const completedOrRatingRe =
 const mockPayButtonRe = /Simulate deposit \(chain-off\)|模拟入金（链下）/;
 const confirmOffChainRe = /Confirm completion \(off-chain\)|确认完成（链下）/;
 
-function isPostCreateOrder(res: import("@playwright/test").Response): boolean {
-  const u = res.url();
-  if (res.request().method() !== "POST") return false;
-  if (!u.includes("/api/v1/orders")) return false;
-  if (u.includes("/reviews") || u.includes("/mock-pay") || u.includes("/accept")) return false;
-  if (u.includes("/confirm-completion")) return false;
-  return /\/api\/v1\/orders(?:\?|$)/.test(u) || u.endsWith("/orders");
-}
-
-/** `/market` 卡片上预约 → 弹层内「选择行程并预约」→ `/orders/new?guide_id=` */
-async function openOrdersNewFromMarketBooking(
-  page: Page,
-  guideId: string
-): Promise<void> {
+/** `/market` 卡片上预约 → 弹层 itinerary-first bind → `/escrow/:id` */
+async function openEscrowBindFromMarketBooking(page: Page, guideId: string): Promise<string> {
   await page.getByRole("tab", { name: /^Guides$|^向导$/ }).click();
   const guideCard = page.getByRole("article").filter({
     has: page.locator(`h3#guide-title-${guideId}`),
@@ -81,19 +72,10 @@ async function openOrdersNewFromMarketBooking(
     .getByRole("button", { name: /Book guide|预约向导/i })
     .click({ timeout: 20_000 });
 
-  await expect(page.getByRole("dialog", { name: /Book guide|预约向导/i })).toBeVisible({
-    timeout: 15_000,
-  });
-
-  await Promise.all([
-    page.waitForURL(
-      (url) =>
-        url.pathname === "/orders/new" &&
-        url.searchParams.get("guide_id") === guideId,
-      { timeout: 45_000 }
-    ),
-    page.getByRole("link", { name: /Select itinerary|选择行程并预约/i }).click(),
-  ]);
+  await bindGuideFromBookGuideModal(page);
+  const m = page.url().match(/\/escrow\/([^/?#]+)/);
+  expect(m?.[1]).toBeTruthy();
+  return m![1] as string;
 }
 
 test.describe.configure({ mode: "serial" });
@@ -120,6 +102,7 @@ test.describe("B-468 · market discovery → book modal → full UI journey (ext
     await releaseSeedGuideSlotIfBlocked(request, API_BASE);
 
     const touristToken = await apiLogin(request, "tourist@test.com", "Test123!");
+    await seedPublishedOpenItineraryOrder(request, API_BASE, touristToken);
     const guideId = await guideRowIdForSeedGuideAccount(request, API_BASE);
     expect(guideId, "guide@test guide.id").toBeTruthy();
 
@@ -132,29 +115,8 @@ test.describe("B-468 · market discovery → book modal → full UI journey (ext
     });
     await page.waitForURL(/\/market/, { timeout: 30_000 });
 
-    await openOrdersNewFromMarketBooking(page, guideId);
-
-    const guideSelect = page.getByRole("combobox", { name: /Guides|向导列表/i });
-    await expect(guideSelect).toBeVisible({ timeout: 25_000 });
-    await expect
-      .poll(async () => guideSelect.locator("option").count(), { timeout: 40_000 })
-      .toBeGreaterThan(1);
-    await guideSelect.selectOption({ value: guideId });
-
-    const amount = `50.${Date.now().toString().slice(-4)}`;
-    await page.getByLabel(/Amount|金额/i).fill(amount);
-
-    const [createResponse] = await Promise.all([
-      page.waitForResponse((res) => isPostCreateOrder(res) && res.ok(), { timeout: 60_000 }),
-      page.getByRole("button", { name: /Create order|创建订单/i }).click(),
-    ]);
-    const createdJson = (await createResponse.json()) as { order?: { id?: string } };
-    const orderId = (createdJson.order?.id ?? "").trim();
+    const orderId = await openEscrowBindFromMarketBooking(page, guideId);
     expect(orderId.length).toBeGreaterThan(10);
-
-    await expect(page.getByText(/Order created|订单已创建/i).first()).toBeVisible({
-      timeout: 25_000,
-    });
 
     const escrowUrl = `/escrow/${encodeURIComponent(orderId)}`;
     await uiLogout(page);

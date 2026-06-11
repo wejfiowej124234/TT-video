@@ -1,12 +1,13 @@
 "use client";
 
 import { useId } from "react";
-import { COUNTRY_OPTIONS } from "@/lib/geoOptions";
+import { useCatalogCountryOptions } from "@/lib/catalogApi/useCatalogGeo";
 import GlassSelect from "@/components/market/GlassSelect";
 import CustomItineraryTotalDaysPills from "../CustomItineraryTotalDaysPills";
 import type { GuideFormProps } from "../types";
-import { TOTAL_DAYS_OPTIONS, TITLE_MAX_LENGTH } from "../constants";
+import { TITLE_MAX_LENGTH } from "../constants";
 import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
+import CustomItineraryFormProgress from "../CustomItineraryFormProgress";
 import GuideDayCard from "./GuideDayCard";
 import GuideFeeAndTransportSection from "./GuideFeeAndTransportSection";
 import GuideFormQuoteAndCoverSection from "./GuideFormQuoteAndCoverSection";
@@ -46,6 +47,7 @@ export default function GuideForm({
   const totalDaysFieldId = useId();
   const countryFieldId = useId();
   const titleFieldId = useId();
+  const countryOptions = useCatalogCountryOptions();
   return (
     <>
       <p className="text-meta text-white/80 mb-4">{t("market_guideFormDesc")}</p>
@@ -64,14 +66,13 @@ export default function GuideForm({
           dayLabel={(n) => t("market_dayUnit").replace("{{n}}", String(n))}
         />
         <p className="text-meta text-slate-400">{t("market_totalDays_select_hint")}</p>
-        <GlassSelect
-          id={totalDaysFieldId}
-          value={form.totalDays}
-          onChange={(v) => setTotalDays(Number(v))}
-          options={TOTAL_DAYS_OPTIONS.map((d) => ({ value: d, label: t("market_dayUnit").replace("{{n}}", String(d)) }))}
-          aria-label={t("market_totalDays")}
-        />
       </div>
+
+      {form.country ? <CustomItineraryFormProgress form={form} t={t} /> : null}
+
+      <p className="rounded-[var(--radius-sm)] border border-ref-sun/16 bg-ink-900/45 px-3 py-2 text-meta text-white/85">
+        {t("market_itinerary_guide_mode_hint")}
+      </p>
       <div>
         <label htmlFor={countryFieldId} className={labelClass}>
           {t("market_country")} *
@@ -86,7 +87,7 @@ export default function GuideForm({
               guideDayPlans: (f.guideDayPlans ?? []).map((d) => ({ ...d, city: "", transport: undefined, hotel: "" })),
             }))
           }
-          options={COUNTRY_OPTIONS.map((c) => ({ value: c.value, label: c.label }))}
+          options={countryOptions.map((c) => ({ value: c.value, label: c.label }))}
           placeholder={t("market_selectCountryFirst")}
           aria-label={t("market_country")}
         />

@@ -24,9 +24,9 @@ import {
 
   writeAdminListFetchCache,
 
-  type AdminListFetchSnapshot,
-
 } from "@/lib/admin/adminListFetchCache";
+
+import type { AdminListFetchSnapshot } from "@/lib/admin/useAdminStandardListFetch";
 
 import {
 

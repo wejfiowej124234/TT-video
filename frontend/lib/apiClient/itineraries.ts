@@ -39,7 +39,13 @@ export interface CustomItineraryBody {
     food_image?: string;
   }>;
   need_guide?: string;
-  breakdown?: { guide_fee?: number; car_fee?: number };
+  breakdown?: {
+    guide_fee?: number;
+    car_fee?: number;
+    attractions_fee?: number;
+    food_fee?: number;
+    hotel_fee?: number;
+  };
   transport_legs?: Array<{ from: string; to: string; type?: string }>;
   /** 与 `POST /api/v1/itineraries`、`POST /api/v1/orders` 同一语义：预选向导（guides 表 UUID） */
   guide_id?: string;
@@ -129,3 +135,12 @@ export async function postItineraryCreate(
   throwUnlessApiOk(data);
   return data;
 }
+
+export {
+  postItineraryCustomDraft,
+  getItineraryCustomDraft,
+} from "./itineraries/customAndDrafts";
+export type {
+  ItineraryCustomDraftPostResult,
+  ItineraryCustomDraftGetResult,
+} from "./itineraries/types";

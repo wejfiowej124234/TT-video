@@ -1264,6 +1264,11 @@ html.tt-traveltrust-scroll-snap-y [data-tt-traveltrust-snap-align="start"] {
   color: #f9d779 !important;
 }
 
+/** 首页/市场/社区 · 冷启动 Campaign 眉题（压过 body text-ink-900 + ref-sun 透明度修饰失效） */
+[data-tt-cold-start-campaign-panel="1"] [data-tt-cold-start-kicker="1"] {
+  color: var(--ref-sun);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .tt-traveltrust-pulse-inline-marquee-track {
     animation: none;

@@ -199,7 +199,7 @@ function GuidesPageInner() {
                   <GuideCard
                     guide={guide}
                     glass
-                    coverImagePriority={guideIdx === 0}
+                    coverEager={guideIdx === 0}
                     onView={(id) => router.push(`/guides/${id}`)}
                     onBookGuide={(gid) => router.push(ordersNewHrefForGuide(gid))}
                   />

@@ -36,6 +36,11 @@ export function adminShellNavIconIdForGroup(groupId: string): AdminShellNavIconI
       return "onboarding";
     case "operations":
       return "operations";
+    case "content":
+    case "official_ops":
+      return "operations";
+    case "growth":
+      return "governance";
     case "community":
       return "community";
     case "finance":

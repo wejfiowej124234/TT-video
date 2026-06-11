@@ -375,6 +375,8 @@ pub async fn ensure_acquisition_fulfillment_guide_id(
         None,
         None,
         "0",
+        None,
+        None,
         "active",
         now,
         now,

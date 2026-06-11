@@ -24,6 +24,7 @@ import {
   guideRegPrimaryCta,
   guideRegSecondaryBtn,
 } from "@/app/guide/register/guideRegisterUiClasses";
+import { ConversionFunnelRail } from "@/components/product-enhancement/ConversionFunnelRail";
 
 function ProviderRegisterDonePanel({ t }: { t: (k: string) => string }) {
   return (
@@ -115,6 +116,7 @@ export function ProviderRegisterPageMain() {
             <h1 className={TT_PROVIDER_REGISTER_L5.title}>{t("providerRegister_title")}</h1>
             <p className={TT_PROVIDER_REGISTER_L5.intro}>{t("providerRegister_intro")}</p>
           </header>
+          <ConversionFunnelRail touchpoint="merchant" t={t} variant="light" className="mb-4" />
           {!isAlreadyProvider && !done ? (
             <ProviderOnboardingProgress
               currentStep={isLoggedIn === true && meCheckReady ? 2 : 1}
@@ -143,7 +145,7 @@ export function ProviderRegisterPageMain() {
             </p>
           )}
 
-          <AuthL5CrossNavFooter hideFeeRouterLinks className={TT_PROVIDER_REGISTER_L5.footerLinks} linkClassName={TT_PROVIDER_REGISTER_L5.footerLink} />
+          <AuthL5CrossNavFooter hideFeeRouterLinks className={TT_PROVIDER_REGISTER_L5.footerLinks} />
         </AuthL5Card>
       </div>
     </main>

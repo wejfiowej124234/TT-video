@@ -44,4 +44,24 @@ test.describe("PI-1 · home landing shell", () => {
       expect(box.y + box.height).toBeLessThanOrEqual(812 + 120);
     }
   });
+
+  test("ambient backdrop stable TS src on first paint (W1 · flag=0 default)", async ({ page }) => {
+    await gotoSmoke(page, "/");
+    const backdrop = page.locator('[data-tt-home-ambient-phase="A"]');
+    await expect(backdrop).toBeVisible({ timeout: 20_000 });
+    const src = await backdrop.getAttribute("data-tt-home-ambient-src");
+    expect(src).toMatch(/^https:\/\//);
+    await expect(page.locator("#landing-hero-form")).toBeVisible();
+  });
+
+  test("hero country pills visible from TS geo (W2 · flag=0 default)", async ({ page }) => {
+    await gotoSmoke(page, "/");
+    const form = page.locator("#landing-hero-form");
+    await expect(form).toBeVisible({ timeout: 20_000 });
+    const chinaPill = form.getByRole("button", { name: "中国" });
+    await expect(chinaPill).toBeVisible();
+    await chinaPill.click();
+    await expect(page.getByTestId("landing-cities-input")).toBeEnabled();
+    await expect(form.getByRole("button", { name: "北京" })).toBeVisible({ timeout: 10_000 });
+  });
 });

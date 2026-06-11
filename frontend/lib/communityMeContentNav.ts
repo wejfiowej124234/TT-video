@@ -33,7 +33,7 @@ export function communityMeDedicatedPathForTab(
 /** 合并 query：剔除 `tab`，保留其它投放 / 筛选参数。 */
 export function communityMeDedicatedHrefFromHubQuery(
   dedicatedPath: string,
-  searchParams: TabSearch | null | undefined,
+  searchParams: { toString(): string } | null | undefined,
 ): string {
   const sp = new URLSearchParams(searchParams?.toString() ?? "");
   sp.delete("tab");
@@ -43,10 +43,10 @@ export function communityMeDedicatedHrefFromHubQuery(
 
 export function parseCommunityMeTabQuery(
   pathname: string,
-  searchParams: TabSearch | null | undefined,
+  searchParams: TabSearch | { toString(): string } | null | undefined,
 ): CommunityMeUrlTab | null {
   if (pathname !== "/community/me" || !searchParams) return null;
-  const raw = (searchParams.get("tab") ?? "").trim().toLowerCase();
+  const raw = (new URLSearchParams(searchParams.toString()).get("tab") ?? "").trim().toLowerCase();
   if (raw === "community_posts") return "posts";
   if (raw === "likes" || raw === "collects" || raw === "posts" || raw === "orders") {
     return raw;

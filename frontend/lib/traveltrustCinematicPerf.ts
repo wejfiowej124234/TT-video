@@ -84,7 +84,7 @@ export function scheduleTraveltrustWebGLMount(onReady: () => void, delayMs = 140
     return () => undefined;
   }
   const run = () => onReady();
-  if ("requestIdleCallback" in window) {
+  if (typeof window.requestIdleCallback === "function") {
     const id = window.requestIdleCallback(run, { timeout: delayMs + 500 });
     return () => window.cancelIdleCallback(id);
   }

@@ -20,6 +20,7 @@ import {
   guideRegSecondaryBtn,
 } from "@/app/guide/register/guideRegisterUiClasses";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
+import { TouchpointConversionStrip } from "@/components/product-enhancement/TouchpointConversionStrip";
 
 export default function ProviderRegisterPendingPanel({
   successFocusRef,
@@ -65,6 +66,15 @@ export default function ProviderRegisterPendingPanel({
               </div>
               <p className="text-small leading-relaxed text-slate-300/95">{t("providerRegister_pendingDesc")}</p>
             </div>
+            <TouchpointConversionStrip
+              touchpoint="merchant"
+              kicker={t("pes_merchant_conversion_kicker")}
+              body={t("pes_merchant_conversion_body")}
+              badge={t("pes_merchant_conversion_badge")}
+              ctaHref="/help"
+              ctaLabel={t("pes_merchant_conversion_cta")}
+              className="mb-4"
+            />
             <div className={TT_AUTH_REGISTER_FLOW_L5.pendingHintStack}>
               <p>{t("providerRegister_pendingNotify")}</p>
               <p>{t("providerRegister_pendingOnboardingHint")}</p>

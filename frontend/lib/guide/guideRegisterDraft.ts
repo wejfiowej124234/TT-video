@@ -35,7 +35,7 @@ export function readGuideRegisterDraft(): GuideRegisterDraft | null {
 export function writeGuideRegisterDraft(draft: GuideRegisterDraft): void {
   if (typeof window === "undefined") return;
   try {
-    window.sessionStorage.setItem(GUIDE_REGISTER_DRAFT_KEY, JSON.stringify({ v: 1, ...draft }));
+    window.sessionStorage.setItem(GUIDE_REGISTER_DRAFT_KEY, JSON.stringify({ ...draft, v: 1 }));
   } catch {
     /* quota */
   }

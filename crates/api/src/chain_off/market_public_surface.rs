@@ -6,8 +6,14 @@
 //! - 未设且 **`SEED_TEST_ACCOUNTS=1`**（或开发态空 `CORS_ORIGINS`）→ `main` 启动时默认 `=1`
 //! - `=0` → 关闭（烟测 / Admin 直查 DB 不受影响）
 //!
+//! **本地手测例外**：`TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=1`（一键脚本默认）或
+//! `TRAVELTRUST_MANUAL_ACCEPTANCE=1` → **`guide@test.com`** 仍可在 **`GET /guides`**
+//! / 自由市场「向导」列表出现，供 `tourist@test.com` 走正常选向导 UI；其它 dev/smoke 仍过滤。
+//!
 //! 消费方：`GET /discover/orders` · `GET /guides` · `GET /guides/:id` ·
 //! `GET /market/{provider|acquisition}/listings` · DID 副榜 providers/acquisitions 等。
+
+const SEED_GUIDE_PUBLIC_MARKET_EMAIL: &str = "guide@test.com";
 
 use serde_json::Value;
 
@@ -39,6 +45,23 @@ pub fn public_catalog_surface_filter_enabled() -> bool {
 /// 与 [`public_catalog_surface_filter_enabled`] 同源（历史别名）。
 pub fn market_public_surface_filter_enabled() -> bool {
     public_catalog_surface_filter_enabled()
+}
+
+/// 本地手测：`guide@test.com` 出现在自由市场向导列表（正常客户选向导 UI）。
+pub fn seed_guide_public_market_enabled() -> bool {
+    env_flag_on("TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET").unwrap_or(false)
+        || env_flag_on("TRAVELTRUST_MANUAL_ACCEPTANCE").unwrap_or(false)
+}
+
+fn is_seed_guide_public_market_walkthrough(g: &GuideRow, store: &ChainOffStore) -> bool {
+    if !seed_guide_public_market_enabled() {
+        return false;
+    }
+    store.users.get(&g.user_id).is_some_and(|u| {
+        u.email
+            .trim()
+            .eq_ignore_ascii_case(SEED_GUIDE_PUBLIC_MARKET_EMAIL)
+    })
 }
 
 /// 烟测 / 演示 / 种子账号邮箱（仍留 DB，不进入公众 catalog）。
@@ -202,6 +225,9 @@ pub fn is_internal_guide_for_travel_booking(g: &GuideRow) -> bool {
 
 /// 向导是否应从公众 catalog（列表 + 详情）隐藏。
 pub fn should_hide_guide_from_public_catalog(g: &GuideRow, store: &ChainOffStore) -> bool {
+    if is_seed_guide_public_market_walkthrough(g, store) {
+        return false;
+    }
     if is_placeholder_global_guide(g) {
         return true;
     }
@@ -313,6 +339,8 @@ mod tests {
             language_cert_url: None,
             guide_license_url: None,
             stake_amount: "0".into(),
+            hourly_rate: None,
+            avatar_url: None,
             status: "active".into(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -406,28 +434,79 @@ mod tests {
         assert_eq!(deduped[0].id, newer.id);
     }
 
+    fn with_seed_guide_public_market_env<F: FnOnce()>(flag: Option<&str>, f: F) {
+        let _env = crate::test_env_serial::lock();
+        let saved_market = std::env::var("TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET").ok();
+        let saved_acceptance = std::env::var("TRAVELTRUST_MANUAL_ACCEPTANCE").ok();
+        match flag {
+            Some(v) => std::env::set_var("TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET", v),
+            None => std::env::remove_var("TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET"),
+        }
+        std::env::remove_var("TRAVELTRUST_MANUAL_ACCEPTANCE");
+        f();
+        match saved_market {
+            Some(v) => std::env::set_var("TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET", v),
+            None => std::env::remove_var("TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET"),
+        }
+        match saved_acceptance {
+            Some(v) => std::env::set_var("TRAVELTRUST_MANUAL_ACCEPTANCE", v),
+            None => std::env::remove_var("TRAVELTRUST_MANUAL_ACCEPTANCE"),
+        }
+    }
+
     #[test]
     fn should_hide_guide_dev_email() {
-        let mut store = ChainOffStore::default();
-        let uid = Uuid::new_v4();
-        store.users.insert(
-            uid,
-            UserRow {
-                id: uid,
-                email: "guide@test.com".into(),
-                password_hash: None,
-                role: "guide".into(),
-                kyc_status: "none".into(),
-                nickname: None,
-                avatar_url: None,
-                default_wallet_address: None,
-                created_at: Utc::now(),
-                updated_at: Utc::now(),
-            },
-        );
-        let mut g = guide_with_types(&["walking"]);
-        g.user_id = uid;
-        assert!(should_hide_guide_from_public_catalog(&g, &store));
+        with_seed_guide_public_market_env(Some("0"), || {
+            let mut store = ChainOffStore::default();
+            let uid = Uuid::new_v4();
+            store.users.insert(
+                uid,
+                UserRow {
+                    id: uid,
+                    email: "guide@test.com".into(),
+                    password_hash: None,
+                    role: "guide".into(),
+                    kyc_status: "none".into(),
+                    nickname: None,
+                    avatar_url: None,
+                    default_wallet_address: None,
+                    created_at: Utc::now(),
+                    updated_at: Utc::now(),
+                },
+            );
+            let mut g = guide_with_types(&["walking"]);
+            g.user_id = uid;
+            assert!(should_hide_guide_from_public_catalog(&g, &store));
+        });
+    }
+
+    #[test]
+    fn should_show_seed_guide_when_public_market_flag() {
+        with_seed_guide_public_market_env(Some("1"), || {
+            let mut store = ChainOffStore::default();
+            let uid = Uuid::new_v4();
+            store.users.insert(
+                uid,
+                UserRow {
+                    id: uid,
+                    email: "guide@test.com".into(),
+                    password_hash: None,
+                    role: "guide".into(),
+                    kyc_status: "none".into(),
+                    nickname: None,
+                    avatar_url: None,
+                    default_wallet_address: None,
+                    created_at: Utc::now(),
+                    updated_at: Utc::now(),
+                },
+            );
+            let mut g = guide_with_types(&["walking", "culture"]);
+            g.user_id = uid;
+            g.city = "杭州".into();
+            g.data_origin = "test".into();
+            g.bio = Some("测试向导账号，用于联调".into());
+            assert!(!should_hide_guide_from_public_catalog(&g, &store));
+        });
     }
 
     #[test]

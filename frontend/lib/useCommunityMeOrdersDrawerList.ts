@@ -37,6 +37,13 @@ export function useCommunityMeOrdersDrawerList(args: {
   const [ordersLoadMoreBusy, setOrdersLoadMoreBusy] = useState(false);
   const loadMoreInFlightRef = useRef(false);
 
+  const normalizeOrdersListPage = (
+    page: { has_more?: boolean; next_cursor?: string | null } | undefined,
+  ): { has_more?: boolean; next_cursor?: string } | undefined => {
+    if (!page) return undefined;
+    return { has_more: page.has_more, next_cursor: page.next_cursor ?? undefined };
+  };
+
   const applyOrdersPage = useCallback(
     (raw: OrderListItem[], page: { has_more?: boolean; next_cursor?: string } | undefined, pageCount: number) => {
       const filtered = filterOrdersForCommunityMeMyOrdersSurface(raw);
@@ -88,7 +95,7 @@ export function useCommunityMeOrdersDrawerList(args: {
     getOrders({ limit: COMMUNITY_ME_ORDERS_DRAWER_PAGE_SIZE })
       .then((r) => {
         if (cancelled) return;
-        applyOrdersPage((r.items ?? []) as OrderListItem[], r.page, 1);
+        applyOrdersPage((r.items ?? []) as OrderListItem[], normalizeOrdersListPage(r.page), 1);
       })
       .catch((e) => {
         if (cancelled) return;
@@ -118,7 +125,7 @@ export function useCommunityMeOrdersDrawerList(args: {
     const cursor = nextCursor;
     getOrders({ limit: COMMUNITY_ME_ORDERS_DRAWER_PAGE_SIZE, cursor })
       .then((r) => {
-        applyOrdersPage((r.items ?? []) as OrderListItem[], r.page, pagesFetched + 1);
+        applyOrdersPage((r.items ?? []) as OrderListItem[], normalizeOrdersListPage(r.page), pagesFetched + 1);
       })
       .catch((e) => {
         if (e instanceof Error && e.message === "login_required") {

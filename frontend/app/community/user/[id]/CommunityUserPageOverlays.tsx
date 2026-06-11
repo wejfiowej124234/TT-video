@@ -115,17 +115,8 @@ export function CommunityUserPageOverlays({ core }: { core: CommunityUserPageCor
           authPending={authLoading}
           liked={likedIds.has(detailPost.id)}
           collected={collectedIds.has(detailPost.id)}
-          onLike={() =>
-            void handlePostLike(detailPost.id, {
-              serverLiked: typeof detailPost.likedByMe === "boolean" ? detailPost.likedByMe : undefined,
-            })
-          }
-          onCollect={() =>
-            void handlePostCollect(detailPost.id, {
-              serverCollected:
-                typeof detailPost.collectedByMe === "boolean" ? detailPost.collectedByMe : undefined,
-            })
-          }
+          onLike={() => void handlePostLike(detailPost.id)}
+          onCollect={() => void handlePostCollect(detailPost.id)}
           onReport={handleReport}
           meUserId={meUser?.id ?? null}
           onReportComment={(c) => handleReportComment(detailPost, c)}

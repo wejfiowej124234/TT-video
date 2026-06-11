@@ -148,7 +148,6 @@ export default function MeSettingsDataPage() {
                   labelKey: row.labelKey,
                   descKey: row.descKey,
                   href: row.href,
-                  external: "external" in row ? row.external : undefined,
                 }}
                 label={t(row.labelKey)}
                 desc={row.descKey ? t(row.descKey) : undefined}

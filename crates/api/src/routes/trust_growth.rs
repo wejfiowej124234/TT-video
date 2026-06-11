@@ -113,6 +113,7 @@ async fn get_config(State(state): State<ApiMetaState>) -> impl IntoResponse {
         Ok((gen, moments_json, updated_at)) => (
             StatusCode::OK,
             Json(json!({
+                "status": "ok",
                 "ok": true,
                 "moments": moments_json,
                 "autopilot_generation": gen,

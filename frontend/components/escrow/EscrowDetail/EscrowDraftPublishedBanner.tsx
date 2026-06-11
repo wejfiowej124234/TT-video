@@ -34,7 +34,7 @@ export default function EscrowDraftPublishedBanner({
       aria-live="polite"
     >
       <p className="text-small font-semibold text-ref-sun/95 m-0">
-        {saveFlash ? t("escrow_publishedBanner_saveFlashTitle") : t("escrow_publishedBanner_title")}
+        {saveFlash ? t("escrow_publishedBanner_saveFlashTitle") : t("orders_selectGuide")}
       </p>
       <p className="text-small text-slate-200/95 m-0 leading-relaxed">
         {destinationLabel
@@ -45,7 +45,7 @@ export default function EscrowDraftPublishedBanner({
         href={marketHref}
         className={`${escrowExperiencePrimaryCtaClass} inline-flex min-h-[44px] items-center justify-center px-4 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-ink-950`}
       >
-        {t("escrow_goMarketSelectGuide")} →
+        {t("orders_selectGuide")} →
       </Link>
     </div>
   );

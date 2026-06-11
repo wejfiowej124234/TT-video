@@ -7,7 +7,7 @@ use super::prefix::is_trust_gate_seeded_order_id;
 pub(super) async fn best_effort_double_write(state: &ChainOffState) {
     let Some(ref pool) = state.db_pool else {
         return;
-    }
+    };
     let store = state.store.read().await;
     for u in store.users.values() {
         if !u.email.contains("trustgate-e2e.local") {
@@ -38,7 +38,6 @@ pub(super) async fn best_effort_double_write(state: &ChainOffState) {
             u.nickname.as_deref(),
             u.avatar_url.as_deref(),
             u.default_wallet_address.as_deref(),
-            u.email_verified_at,
             u.created_at,
             u.updated_at,
         )
@@ -68,6 +67,8 @@ pub(super) async fn best_effort_double_write(state: &ChainOffState) {
             g.language_cert_url.as_deref(),
             g.guide_license_url.as_deref(),
             &g.stake_amount,
+            g.hourly_rate.as_deref(),
+            g.avatar_url.as_deref(),
             &g.status,
             g.created_at,
             g.updated_at,

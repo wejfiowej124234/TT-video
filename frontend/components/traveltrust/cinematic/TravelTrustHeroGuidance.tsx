@@ -96,7 +96,7 @@ export function TravelTrustHeroGuidance() {
         <motion.div
           className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-ref-sun/20"
           aria-hidden
-          animate={{ opacity: TT_HERO_GUIDANCE_L5.panelBorderPulse.opacity }}
+          animate={{ opacity: [...TT_HERO_GUIDANCE_L5.panelBorderPulse.opacity] }}
           transition={{
             duration: TT_HERO_GUIDANCE_L5.panelBorderPulse.duration,
             repeat: TT_HERO_GUIDANCE_L5.panelBorderPulse.repeat,

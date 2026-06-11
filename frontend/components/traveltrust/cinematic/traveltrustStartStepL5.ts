@@ -24,7 +24,7 @@ export function useTraveltrustStartStepController(
   const [activeStep, setActiveStep] = useState(0);
   const [cyclePaused, setCyclePaused] = useState(false);
   const pauseFromHoverRef = useRef(false);
-  const manualHoldTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const manualHoldTimerRef = useRef<number | null>(null);
 
   const clearManualHold = useCallback(() => {
     if (manualHoldTimerRef.current) {

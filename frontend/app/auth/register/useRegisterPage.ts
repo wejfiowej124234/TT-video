@@ -6,7 +6,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTranslation } from "@/components/LocaleProvider";
-import { postRegister, postRegisterSendVerificationCode, applyClientSessionAfterAuth, postGuideUploadDoc } from "@/lib/apiClient";
+import { postRegister, postRegisterSendVerificationCode, applyClientSessionAfterAuth, postGuideUploadDoc, getReferralValidate } from "@/lib/apiClient";
 import { PENDING_GUIDE_KEY } from "@/lib/constants";
 import { PASSWORD_MIN_LEN, MAX_FILE_SIZE } from "./constants";
 import { registerPageShellClass } from "./registerBackgrounds";
@@ -29,6 +29,7 @@ export function useRegisterPage() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const roleParam = searchParams.get("role");
+  const refParam = searchParams.get("ref");
   const loginHref = useMemo(() => {
     const regReturn = searchParams.get("returnUrl")?.trim();
     if (regReturn) {
@@ -64,10 +65,36 @@ export function useRegisterPage() {
 
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [referralPrefill, setReferralPrefill] = useState<string | null>(null);
+  const [referralValidateState, setReferralValidateState] = useState<"idle" | "validating" | "valid" | "invalid">("idle");
 
   useEffect(() => {
     setRegisterType(registerTypeFromRoleParam(roleParam));
   }, [roleParam]);
+
+  useEffect(() => {
+    const raw = refParam?.trim();
+    if (!raw) {
+      setReferralPrefill(null);
+      setReferralValidateState("idle");
+      return;
+    }
+    setReferralPrefill(raw);
+    let cancelled = false;
+    setReferralValidateState("validating");
+    void getReferralValidate(raw)
+      .then((res) => {
+        if (cancelled) return;
+        if (res.valid) setReferralValidateState("valid");
+        else setReferralValidateState("invalid");
+      })
+      .catch(() => {
+        if (!cancelled) setReferralValidateState("invalid");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [refParam]);
 
   useEffect(() => {
     return () => {
@@ -161,6 +188,7 @@ export function useRegisterPage() {
         verification_code: verificationCode.trim(),
         nickname: nickname || undefined,
         default_wallet_address: walletTrim && isValidWalletAddress(walletTrim) ? walletTrim : undefined,
+        referral_code: referralPrefill?.trim() || undefined,
       });
       const uid = applyClientSessionAfterAuth(res);
       if (!uid) {
@@ -254,6 +282,7 @@ export function useRegisterPage() {
         password,
         verification_code: verificationCode.trim(),
         nickname: nickname || undefined,
+        referral_code: referralPrefill?.trim() || undefined,
       });
       const uid = applyClientSessionAfterAuth(res);
       if (!uid) {
@@ -377,5 +406,7 @@ export function useRegisterPage() {
     labelClass,
     goBackFromStep,
     registerPageShellClass,
+    referralPrefill,
+    referralValidateState,
   };
 }

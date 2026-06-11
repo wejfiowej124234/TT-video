@@ -5,7 +5,7 @@ import { adminHomeCardTierForHref } from "./adminHomeCardCapability";
 
 export type AdminHomeCardTier = "read" | "write" | "super_write" | "placeholder";
 
-export type AdminHomeSectionId = "onboarding" | "core" | "audit_finance" | "community" | "platform";
+export type AdminHomeSectionId = "onboarding" | "ops_planes" | "core" | "audit_finance" | "community" | "platform";
 
 export type AdminHomeInboxKey = "provider" | "steward" | "approvals" | "reports";
 
@@ -23,6 +23,7 @@ export type AdminHomeCard = {
 
 export const ADMIN_HOME_SECTION_ORDER: { id: AdminHomeSectionId; titleKey: string }[] = [
   { id: "onboarding", titleKey: "admin_home_section_onboarding" },
+  { id: "ops_planes", titleKey: "admin_home_section_ops_planes" },
   { id: "core", titleKey: "admin_home_section_core" },
   { id: "audit_finance", titleKey: "admin_home_section_audit_finance" },
   { id: "community", titleKey: "admin_home_section_community" },
@@ -86,6 +87,42 @@ export const ADMIN_HOME_CARDS: AdminHomeCard[] = [
     titleKey: "admin_onboarding_hub_compliance",
     descKey: "admin_onboarding_hub_compliance_desc",
     section: "onboarding",
+  },
+  {
+    href: "/admin/operator-guide",
+    titleKey: "admin_operator_guide_title",
+    descKey: "admin_home_desc_operator_guide",
+    section: "ops_planes",
+  },
+  {
+    href: "/admin/content",
+    titleKey: "admin_content_hub_title",
+    descKey: "admin_home_desc_content_hub",
+    section: "ops_planes",
+  },
+  {
+    href: "/admin/content/countries",
+    titleKey: "admin_content_countries_title",
+    descKey: "admin_home_desc_content_countries_publish",
+    section: "ops_planes",
+  },
+  {
+    href: "/admin/official",
+    titleKey: "admin_official_hub_title",
+    descKey: "admin_home_desc_official_hub",
+    section: "ops_planes",
+  },
+  {
+    href: "/admin/growth",
+    titleKey: "admin_growth_hub_title",
+    descKey: "admin_home_desc_growth_hub",
+    section: "ops_planes",
+  },
+  {
+    href: "/admin/growth/analytics",
+    titleKey: "admin_growth_analytics_title",
+    descKey: "admin_home_desc_growth_analytics",
+    section: "ops_planes",
   },
   {
     href: "/admin/permissions",

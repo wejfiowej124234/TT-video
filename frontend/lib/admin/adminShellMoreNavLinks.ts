@@ -13,6 +13,12 @@ export type AdminShellMoreNavLink = AdminShellNavLinkDef;
 
 const MORE_CORE: AdminShellNavLinkDef[] = [
   {
+    href: "/admin/conversion-analytics",
+    labelKey: "pes3_admin_page_title",
+    permission: ADMIN_PERM.READ,
+    matchPrefix: "/admin/conversion-analytics",
+  },
+  {
     href: "/admin/observability",
     labelKey: "admin_observability_title",
     permission: ADMIN_PERM.READ,

@@ -30,6 +30,9 @@ CONTRACTS = (
     "ReserveVault",
     "SlashRouter",
     "TravelTrustGovernor",
+    "RegionStewardStakePool",
+    "CountryPoolSubVaultsV0",
+    "CountryPoolRedemptionEpochV0",
 )
 
 FORGE_INSPECT_NAME = {}

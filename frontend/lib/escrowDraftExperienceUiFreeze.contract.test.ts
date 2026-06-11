@@ -58,11 +58,12 @@ describe("/escrow/[id] draft Experience UI freeze (① · ESCROW-DRAFT-EXPERIENC
     expect(src).toContain("escrow_orderActions_touristDevFoldHint");
   });
 
-  it("experience draft path does not embed ChatBlock or EscrowRiskNotice by default", () => {
+  it("experience draft path does not embed ChatBlock; protocol path uses consumer fund safety strip", () => {
     const src = readFileSync(INDEX, "utf8");
     const experienceBlocks = src.slice(src.indexOf("const experienceDraft"), src.indexOf("return ("));
     expect(experienceBlocks).not.toContain("ChatBlock");
-    expect(src).toMatch(/\{!experienceDraft \? \([\s\S]*EscrowRiskNotice/);
+    expect(src).toMatch(/\{!experienceDraft \? \([\s\S]*EscrowConsumerFundSafetyStrip/);
+    expect(src).not.toContain("EscrowRiskNotice");
   });
 
   it("EscrowDraftAdvancedProtocolFold shows developer badge i18n", () => {
@@ -70,10 +71,11 @@ describe("/escrow/[id] draft Experience UI freeze (① · ESCROW-DRAFT-EXPERIENC
     expect(fold).toContain("escrow_draftProtocolFold_devBadge");
   });
 
-  it("footer exposes cancel in more without dev tools", () => {
+  it("footer exposes cancel inline in help row without dev tools", () => {
     const footer = readFileSync(join(ESCROW_DETAIL, "EscrowDraftExperienceFooter.tsx"), "utf8");
     expect(footer).toContain("showCancelOrder");
     expect(footer).toContain("escrow_cancelOrder");
+    expect(footer).not.toContain("<details");
     expect(footer).toContain("TT_ESCROW_EXPERIENCE_FOOTER_PANEL");
     expect(footer).toContain("escrow_experienceFooter_toolsLabel");
     expect(footer).toContain("escrow_experienceFooter_helpLabel");

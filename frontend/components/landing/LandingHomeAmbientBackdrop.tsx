@@ -1,7 +1,7 @@
 "use client";
 
-import { memo, useEffect, useMemo, useRef, useState } from "react";
-import { landingAmbientImageUrl } from "@/lib/landingAmbientByCountry";
+import { memo, useEffect, useRef, useState } from "react";
+import { useLandingAmbientUrl } from "@/lib/catalogApi/useLandingAmbientUrl";
 
 type Props = {
   /** 产品期国家中文名；空则 `AMBIENT_BG_HOME` 默认图 */
@@ -82,7 +82,7 @@ function preloadAmbientImage(url: string): Promise<void> {
 function LandingHomeAmbientBackdropInner({ country }: Props) {
   const reducedMotion = usePrefersReducedMotion();
   const pageVisible = usePageVisible();
-  const targetSrc = useMemo(() => landingAmbientImageUrl(country), [country]);
+  const targetSrc = useLandingAmbientUrl(country);
   const [shownSrc, setShownSrc] = useState(targetSrc);
   const [outgoingSrc, setOutgoingSrc] = useState<string | null>(null);
   const shownRef = useRef(shownSrc);

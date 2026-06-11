@@ -27,11 +27,21 @@ describe("guide register page (contract)", () => {
     const main = readFileSync(join(__dir, "GuideRegisterPageMain.tsx"), "utf8");
     expect(src).toContain("postGuide");
     expect(src).toContain("postGuideUploadDoc");
+    expect(readFileSync(join(__dir, "guideRegisterSubmitFlow.ts"), "utf8")).toContain(
+      'from "@/lib/constants"',
+    );
+    expect(readFileSync(join(__dir, "guideRegisterSubmitFlow.ts"), "utf8")).toContain("PENDING_GUIDE_KEY");
     expect(src).toContain("GuideRegisterPageMain");
     expect(page).toContain("GuideRegisterPageMain");
     expect(src).toContain("PENDING_GUIDE_KEY");
     expect(main).toContain("guideRegisterBackHref");
     expect(main).toContain("data-tt-guide-register-back");
+    expect(readFileSync(join(__dir, "GuideRegisterMainForm.tsx"), "utf8")).toContain(
+      "data-tt-guide-register-step3-debug",
+    );
+    expect(readFileSync(join(__dir, "GuideRegisterConfirmSection.tsx"), "utf8")).toContain(
+      "data-tt-guide-register-agree-wrap",
+    );
     expect(src).toContain("resolveRegisterBackPath");
   });
 });

@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useState } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
-import { CITIES_BY_COUNTRY } from "./constants";
+import { useCatalogCityOptions } from "@/lib/catalogApi/useCatalogGeo";
 import { TT_MARKETING_HOME_GLASS_FIELD_FOCUS, ttMarketingHomeFilterPillClasses } from "@/lib/marketingUi";
 
 export interface LandingHeroCityFieldProps {
@@ -10,6 +10,8 @@ export interface LandingHeroCityFieldProps {
   cities: string[];
   setCities: (v: string[] | ((prev: string[]) => string[])) => void;
   citiesInvalid?: boolean;
+  /** 未选国家时强化 placeholder 可读性 */
+  countryMissing?: boolean;
   /** 校验错误文案区域 id（`aria-describedby`） */
   errorDescribedById?: string;
 }
@@ -26,10 +28,12 @@ export default function LandingHeroCityField({
   cities,
   setCities,
   citiesInvalid,
+  countryMissing = false,
   errorDescribedById,
 }: LandingHeroCityFieldProps) {
   const { t } = useTranslation();
   const labelId = useId();
+  const cityOptions = useCatalogCityOptions(country);
   const [cityDraft, setCityDraft] = useState(() => cities.join("、"));
 
   useEffect(() => {
@@ -57,15 +61,21 @@ export default function LandingHeroCityField({
         onBlur={() => applyCityDraft(cityDraft)}
         disabled={!country}
         placeholder={country ? t("landing_cities_placeholder") : t("market_selectCountryFirst")}
-        className={`w-full min-h-[44px] rounded-[var(--radius-xl)] border bg-white/20 backdrop-blur-sm px-3 py-2.5 text-small text-white placeholder:text-white/50 ${TT_MARKETING_HOME_GLASS_FIELD_FOCUS} ${citiesInvalid ? "border-danger/60 ring-1 ring-danger/40" : "border-white/30"}`}
+        className={`w-full min-h-[44px] rounded-[var(--radius-xl)] border bg-white/20 backdrop-blur-sm px-3 py-2.5 text-small text-white ${TT_MARKETING_HOME_GLASS_FIELD_FOCUS} ${
+          citiesInvalid
+            ? "border-danger/60 ring-1 ring-danger/40"
+            : countryMissing
+              ? "border-ref-sun/35 placeholder:text-ref-sun placeholder:opacity-95 [placeholder-color:var(--ref-sun)]"
+              : "border-white/30 placeholder:text-white/55"
+        }`}
         aria-required="true"
         aria-invalid={citiesInvalid || undefined}
         aria-describedby={errorDescribedById}
         data-testid="landing-cities-input"
       />
-      {country && (CITIES_BY_COUNTRY[country] ?? []).length > 0 && (
+      {country && cityOptions.length > 0 && (
         <div className="flex flex-wrap gap-2" aria-label={t("landing_cities_quick_pick_aria")}>
-          {(CITIES_BY_COUNTRY[country] ?? []).map((c) => {
+          {cityOptions.map((c) => {
             const selected = cities.includes(c.value);
             return (
               <button

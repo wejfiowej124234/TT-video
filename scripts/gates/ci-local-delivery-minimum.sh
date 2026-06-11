@@ -21,8 +21,8 @@
 set -euo pipefail
 _root="$(cd "$(dirname "$0")/../.." && pwd)"
 cd "$_root"
-echo "==> cargo test -p traveltrust-api"
-cargo test -p traveltrust-api
+echo "==> cargo test -p traveltrust-api (--test-threads=1 · env-guarded onboarding matrix)"
+cargo test -p traveltrust-api -- --test-threads=1
 echo "==> run-check-04-routes"
 bash scripts/run-check-04-routes.sh
 echo "==> check-pr-crates-needs-metadata (main..HEAD)"

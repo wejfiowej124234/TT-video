@@ -1,6 +1,9 @@
 //! 按领域聚合路由：各子模块提供 `router()`，于此处 `merge` 后由 `router::app` 统一 `.with_state`。
 //! **域清单与 `merge` 次数 SSOT**：`docs/spec/07` §零 0.6、`docs/spec/14` §2.1、`docs/spec/04` §3.4、`crates/api/src/routes/mod.rs`（与历史阶段文 **48** §三 / §11.6 对读，**不**以阶段文替代上述 SSOT）。
 
+mod catalog;
+mod growth;
+mod official;
 mod admin;
 mod admin_cross_check;
 mod auth;
@@ -30,6 +33,7 @@ mod me;
 mod me_security;
 mod me_subroutes;
 mod me_profile_avatar;
+mod me_referrals;
 mod me_market_bookmarks;
 mod media;
 mod messages;
@@ -103,10 +107,14 @@ pub fn api_router() -> Router<ApiMetaState> {
     Router::new()
         .merge(health_meta::router())
         .merge(auth::router())
+        .merge(catalog::router())
+        .merge(growth::router())
+        .merge(official::router())
         .merge(admin::router())
         .merge(me::router())
         .merge(me_security::router())
         .merge(me_subroutes::router())
+        .merge(me_referrals::router())
         .merge(me_market_bookmarks::router())
         .merge(guides::router())
         .merge(orders::router())

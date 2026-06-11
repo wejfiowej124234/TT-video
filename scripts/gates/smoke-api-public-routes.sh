@@ -608,7 +608,7 @@ if command -v jq >/dev/null 2>&1; then
   [[ "$sb747dr" == *"chain_off_mounted"* ]] || fail "/meta JSON did_rank_top_keys_contract_747 must embed chain_off_mounted (747), got \"$sb747dr\""
   [[ "$sb747dr" == *"chain_off_db_pool"* ]] || fail "/meta JSON did_rank_top_keys_contract_747 must embed chain_off_db_pool (747), got \"$sb747dr\""
   [[ "$sb747dr" == *"guides_community_penalty_exclusion"* ]] || fail "/meta JSON did_rank_top_keys_contract_747 must embed guides_community_penalty_exclusion (747), got \"$sb747dr\""
-  m728_exp='["service","api_version","build","chain","rate_limits","database_connected","database","dual_write","strict_mode","ssot_version","ssot","admin_exports","chargeback_policy","finality_n","indexer","authority","pause","evidence","order_messages","reviews","dispute_open","dispute_resolve","itineraries","orders","discover","product_countries","did_rank","product_roles","auth","seed_test_accounts","guides","idempotency_cache","defaults","outbox","meta_top_keys","meta_top_keys_contract_728"]'
+  m728_exp='["service","api_version","build","chain","rate_limits","database_connected","database","dual_write","strict_mode","ssot_version","ssot","admin_exports","chargeback_policy","finality_n","indexer","authority","pause","evidence","order_messages","reviews","dispute_open","dispute_resolve","itineraries","orders","discover","product_countries","did_rank","product_roles","auth","seed_test_accounts","guides","governance","idempotency_cache","defaults","outbox","meta_top_keys","meta_top_keys_contract_728"]'
   m728_got=$(echo "$mb" | jq -c '.meta_top_keys // empty')
   [[ "$m728_got" == "$m728_exp" ]] || fail "/meta JSON meta_top_keys must equal SSOT (728), got \"$m728_got\""
   sb728=$(echo "$mb" | jq -r '.meta_top_keys_contract_728 // empty')
@@ -659,6 +659,12 @@ rg="$(code "$BASE/api/v1/did-rank/guides")"
 [[ "$rg" == "200" ]] || fail "/api/v1/did-rank/guides expected 200 got $rg"
 rt="$(code "$BASE/api/v1/did-rank/travelers")"
 [[ "$rt" == "200" ]] || fail "/api/v1/did-rank/travelers expected 200 got $rt"
+rp="$(code "$BASE/api/v1/did-rank/prize-pool")"
+[[ "$rp" == "200" ]] || fail "/api/v1/did-rank/prize-pool expected 200 got $rp"
+rprov="$(code "$BASE/api/v1/did-rank/providers")"
+[[ "$rprov" == "200" ]] || fail "/api/v1/did-rank/providers expected 200 got $rprov"
+racq="$(code "$BASE/api/v1/did-rank/acquisitions")"
+[[ "$racq" == "200" ]] || fail "/api/v1/did-rank/acquisitions expected 200 got $racq"
 if command -v jq >/dev/null 2>&1; then
   ib=$(curl -sS --connect-timeout 5 "$BASE/api/v1/did-rank/itineraries?period=week" || true)
   irb=$(echo "$ib" | jq -r '.rank_basis // empty')
@@ -677,6 +683,23 @@ if command -v jq >/dev/null 2>&1; then
   tb=$(curl -sS --connect-timeout 5 "$BASE/api/v1/did-rank/travelers?period=week" || true)
   trb=$(echo "$tb" | jq -r '.rank_basis // empty')
   [[ "$trb" == "tourist_completed_orders_in_window" ]] || fail "did-rank travelers JSON .rank_basis expected tourist_completed_orders_in_window, got \"$trb\""
+  pool=$(curl -sS --connect-timeout 5 "$BASE/api/v1/did-rank/prize-pool" || true)
+  pam=$(echo "$pool" | jq -r '.monthly_amount | type')
+  [[ "$pam" == "number" ]] || fail "did-rank prize-pool JSON .monthly_amount must be number, got $pam"
+  pb=$(curl -sS --connect-timeout 5 "$BASE/api/v1/did-rank/providers?period=week" || true)
+  ptype=$(echo "$pb" | jq -r '.providers | type')
+  [[ "$ptype" == "array" ]] || fail "did-rank providers JSON .providers must be array, got $ptype"
+  ab=$(curl -sS --connect-timeout 5 "$BASE/api/v1/did-rank/acquisitions?period=week" || true)
+  atype=$(echo "$ab" | jq -r '.acquisitions | type')
+  [[ "$atype" == "array" ]] || fail "did-rank acquisitions JSON .acquisitions must be array, got $atype"
+  pbrb=$(echo "$pb" | jq -r '.rank_basis // empty')
+  [[ "$pbrb" == "provider_fulfillment_orders_then_gross_then_published_listings_in_window" ]] || fail "did-rank providers .rank_basis expected provider_fulfillment_orders_then_gross_then_published_listings_in_window, got \"$pbrb\""
+  porf=$(echo "$pb" | jq -r '.owner_role_filter // empty')
+  [[ "$porf" == "provider" ]] || fail "did-rank providers .owner_role_filter expected provider, got \"$porf\""
+  abrb=$(echo "$ab" | jq -r '.rank_basis // empty')
+  [[ "$abrb" == "acquisition_fulfillment_orders_then_gross_then_published_listings_in_window" ]] || fail "did-rank acquisitions .rank_basis expected acquisition_fulfillment_orders_then_gross_then_published_listings_in_window, got \"$abrb\""
+  aorf=$(echo "$ab" | jq -r '.owner_role_filter // empty')
+  [[ "$aorf" == "region_steward" ]] || fail "did-rank acquisitions .owner_role_filter expected region_steward, got \"$aorf\""
 fi
 
 # 31 / 04 §3.4：话题统计（与 Feed tag 精确匹配同源）

@@ -1,7 +1,7 @@
 "use client";
 
 import { createPortal } from "react-dom";
-import { PRODUCT_COUNTRIES } from "@/lib/productCountries";
+import { useCatalogProductCountries } from "@/lib/catalogApi/useCatalogGeo";
 import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
 import { MerchantShowcaseStudioModalFooter } from "@/components/market/MerchantShowcaseStudioModalFooter";
@@ -53,6 +53,7 @@ export default function MerchantShowcaseStudioModal({ open, onClose, onDraftSave
     t,
     locale,
   } = useMerchantShowcaseStudioModal({ open, onClose, onDraftSaved });
+  const productCountries = useCatalogProductCountries();
 
   if (!open || typeof document === "undefined") return null;
 
@@ -188,7 +189,7 @@ export default function MerchantShowcaseStudioModal({ open, onClose, onDraftSave
                     onChange={(e) => setForm((f) => ({ ...f, countryIso: e.target.value }))}
                   >
                     <option value="">{t("market_merchantStudio_country_optional")}</option>
-                    {PRODUCT_COUNTRIES.map((c) => (
+                    {productCountries.map((c) => (
                       <option key={c.iso} value={c.iso}>
                         {locale === "zh" ? c.nameZh : c.iso}
                       </option>

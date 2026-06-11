@@ -20,6 +20,16 @@ export const ADMIN_PERM_DENIED_MESSAGE_KEY: Record<AdminPermissionId, string> = 
   [ADMIN_PERM.PLATFORM_READ]: "admin_perm_denied_read",
   [ADMIN_PERM.PLATFORM_PUBLISH]: "admin_perm_denied_platform_publish",
   [ADMIN_PERM.ACQUISITION_SUSPEND]: "admin_perm_denied_users_write",
+  [ADMIN_PERM.CONTENT_READ]: "admin_perm_denied_read",
+  [ADMIN_PERM.CONTENT_WRITE]: "admin_perm_denied_read",
+  [ADMIN_PERM.CONTENT_PUBLISH]: "admin_perm_denied_platform_publish",
+  [ADMIN_PERM.OFFICIAL_READ]: "admin_perm_denied_read",
+  [ADMIN_PERM.OFFICIAL_WRITE]: "admin_perm_denied_read",
+  [ADMIN_PERM.OFFICIAL_PUBLISH]: "admin_perm_denied_platform_publish",
+  [ADMIN_PERM.GROWTH_READ]: "admin_perm_denied_read",
+  [ADMIN_PERM.GROWTH_WRITE]: "admin_perm_denied_trust_growth_write",
+  [ADMIN_PERM.GROWTH_PUBLISH]: "admin_perm_denied_platform_publish",
+  [ADMIN_PERM.GROWTH_FRAUD]: "admin_perm_denied_trust_growth_write",
 };
 
 export function adminPermDeniedMessageKey(permission: AdminPermissionId): string {

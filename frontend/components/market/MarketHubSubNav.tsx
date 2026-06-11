@@ -11,8 +11,14 @@ import {
   TT_MARKETING_MARKET_HUB_NAV_SHELL,
 } from "@/lib/marketingUi";
 
+type MarketHubSubNavProps = {
+  /** Hero 工具条内略收紧字号与内边距 */
+  compact?: boolean;
+  className?: string;
+};
+
 /** 旅行预约 / 商家 / 旅行收购：`/market` · `/market/provider` · `/market/acquisition`。 */
-function MarketHubSubNav() {
+function MarketHubSubNav({ compact = false, className }: MarketHubSubNavProps) {
   const { t } = useTranslation();
   const pathname = usePathname() ?? "";
   const travelActive = pathname === "/market" || pathname === "/market/";
@@ -27,7 +33,7 @@ function MarketHubSubNav() {
 
   return (
     <nav
-      className={TT_MARKETING_MARKET_HUB_NAV_SHELL}
+      className={[TT_MARKETING_MARKET_HUB_NAV_SHELL, className].filter(Boolean).join(" ")}
       aria-label={t("market_hub_nav_aria")}
     >
       {items.map((item) => (
@@ -35,7 +41,7 @@ function MarketHubSubNav() {
           key={item.href}
           href={item.href}
           className={
-            `${touchTargetLink44Classes} px-3.5 py-2 text-small transition-colors ` +
+            `${touchTargetLink44Classes} ${compact ? "px-2.5 py-1.5 text-caption" : "px-3.5 py-2 text-small"} transition-colors ` +
             (item.active ? TT_MARKETING_MARKET_HUB_NAV_LINK_ACTIVE : TT_MARKETING_MARKET_HUB_NAV_LINK_IDLE)
           }
           aria-current={item.active ? "page" : undefined}

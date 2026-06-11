@@ -4,7 +4,10 @@
 
 | 你要找什么 | 单源 |
 |------------|------|
-| **总览与联动** | **[82-治理币-文档总览](../82-治理币-文档总览.md)**、**[83](../83-区域治理与收益分配-协议白皮书.md)**、**[84](../84-第一阶段10国Country-Pool发行参数总表.md)** |
+| **协议数值 / 辖区 bps / 锁仓层级（P0 · 唯一写入口）** | **[protocol-ssot.v1.md](protocol-ssot.v1.md)** — **84/89/96/合约/API/前端禁止自写数字** |
+| **四类资金分轨 / Vault / 可退不可退** | **[fund-flow-ssot.v1.md](fund-flow-ssot.v1.md)** |
+| **Steward / Country / Redemption 状态枚举** | **[state-machine.v1.md](state-machine.v1.md)** |
+| **总览与联动** | **[82-治理币-文档总览](../82-治理币-文档总览.md)**、**[83](../83-区域治理与收益分配-协议白皮书.md)**、**[84](../84-第一阶段10国Country-Pool发行参数总表.md)**（**§四 fee 列镜像 protocol-ssot §4**） |
 | **对外口径** | **[08-4](../08-4-对外口径包.md)** |
 | **本目录文件表** | **下文「文件清单」** |
 
@@ -14,10 +17,24 @@
 
 ## 文件清单
 
+### Protocol Convergence（P0 · 2026-05-27）
+
+| 文件 | 说明 |
+|------|------|
+| **[protocol-ssot.v1.md](protocol-ssot.v1.md)** | **唯一数值真源**：TTG 供应、FeeRouter bps、十国 `fee_route_bps` / `steward_stake_bps`、锁仓层级 |
+| **[fund-flow-ssot.v1.md](fund-flow-ssot.v1.md)** | TTG / CountryPool / Escrow / Fee 四轨 + 子 Vault + NAV 赎回 |
+| **[state-machine.v1.md](state-machine.v1.md)** | `steward_application` / `steward_seat` / `country_jurisdiction` / `redemption` / `region_share_eligibility` |
+| **[protocol-convergence-P1-memo.md](protocol-convergence-P1-memo.md)** | P1 决议 + P2 ① 交付状态 |
+| **[84-valuation-anchor-P1-memo.md](84-valuation-anchor-P1-memo.md)** | **84 §3.6** 估值锚 **Option C** 工程默认（法务待确认） |
+
+**团队规则：** 见 **protocol-ssot.v1 §0** — 新增字段、状态、百分比、锁仓 **须先登记 SSOT**，再改业务文档或代码。
+
+### 专题草案
+
 | 文件 | 说明 |
 |------|------|
 | [01-对外白皮书-草案](01-对外白皮书-草案.md) | 对外叙事与风险披露（草案，中文） |
-| [02-对内技术规格-草案](02-对内技术规格-草案.md) | 实现、数据模型、API/合约与门禁（草案，中文）；**§1.3** **本地链→测试网→主网** 工程硬约束（读前摘要 / **§2** 已互链 **82 §三附**、**07 §五 5.2A**、**14 §6**）；**§2** 映射表含 **84 §1.1.1** / **Runbook §7.1**；**§2.5** = **TTG 供应 100% 分解**（对内 SSOT，与 **[84 §1.5](../84-第一阶段10国Country-Pool发行参数总表.md)** 互链） |
+| [02-对内技术规格-草案](02-对内技术规格-草案.md) | 实现、数据模型、API/合约与门禁（草案，中文）；**§1.3** **本地链→测试网→主网** 工程硬约束；**§2.5** **镜像** **[protocol-ssot.v1 §1](protocol-ssot.v1.md)**（**改数只改 SSOT**） |
 | [03-对外材料-PPT与白皮书数据页摘抄索引](03-对外材料-PPT与白皮书数据页摘抄索引.md) | PPT/PDF/官网数据块 → **83/84/08-4 附录图** 的摘抄索引与禁止项 |
 | [LEGAL-SIGNOFF-CHECKLIST.md](LEGAL-SIGNOFF-CHECKLIST.md) | 对外定稿前法务签核清单（模板；含 **83/84/TTG** 专项） |
 | [en/README.md](en/README.md) | 英文分册索引（Litepaper / 对内规格草案） |

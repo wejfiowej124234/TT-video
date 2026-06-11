@@ -18,6 +18,7 @@ pub(crate) struct ObservabilityReconcileSnapshots {
     pub fee_router_fee_routes_vs_routed_events_drift_observability: Value,
     pub vault_forwards_vs_forwarded_events_drift_observability: Value,
     pub stake_lock_projection_block_lag_observability: Value,
+    pub region_share_projection_closure_observability: Value,
 }
 
 pub(crate) async fn load_reconcile_snapshots(
@@ -319,6 +320,35 @@ pub(crate) async fn load_reconcile_snapshots(
         }),
     };
 
+    let region_share_projection_closure_observability = match state
+        .chain_off
+        .as_ref()
+        .and_then(|c| c.db_pool.as_ref())
+    {
+        Some(pool) => {
+            match db::admin_last_region_share_projection_closure_observability(pool).await {
+                Ok(Some(v)) => v,
+                Ok(None) => json!({
+                    "anchor": db::REGION_SHARE_PROJECTION_CLOSURE_ANCHOR,
+                    "schema_version": 1,
+                    "observation_note": "no_stored_snapshot",
+                    "getter_note": "From latest region_share_projection_closure_v1 report; run POST …/internal/region-share-reconcile with persist:true.",
+                }),
+                Err(e) => json!({
+                    "anchor": db::REGION_SHARE_PROJECTION_CLOSURE_ANCHOR,
+                    "schema_version": 1,
+                    "observation_note": "query_failed",
+                    "error": e.to_string(),
+                }),
+            }
+        }
+        None => json!({
+            "anchor": db::REGION_SHARE_PROJECTION_CLOSURE_ANCHOR,
+            "schema_version": 1,
+            "observation_note": "database_pool_unavailable",
+        }),
+    };
+
     ObservabilityReconcileSnapshots {
         governance_proposals_projection_null_fields_observability,
         orders_chain_health_observability,
@@ -332,5 +362,6 @@ pub(crate) async fn load_reconcile_snapshots(
         fee_router_fee_routes_vs_routed_events_drift_observability,
         vault_forwards_vs_forwarded_events_drift_observability,
         stake_lock_projection_block_lag_observability,
+        region_share_projection_closure_observability,
     }
 }

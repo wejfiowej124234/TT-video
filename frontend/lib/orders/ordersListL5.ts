@@ -121,6 +121,8 @@ export const ORDERS_LIST_L5_VISUAL_DATA_ATTR = "l5" as const;
 
 export const ORDERS_LIST_L5_SSOT_ID = "TT-ORDERS-LIST-L5-2026-05" as const;
 
+export const ORDERS_LIST_L5_DELETE_CONFIRM_DATA_ATTR = "delete" as const;
+
 const FILTER_TAB_BASE =
   "inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-3.5 py-1.5 text-small font-medium transition motion-reduce:transition-none motion-sub motion-safe:active:scale-[0.98] motion-reduce:active:scale-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09]";
 
@@ -191,6 +193,7 @@ export const TT_ORDERS_LIST_L5 = {
   searchEmptyIcon: TT_MARKETING_ORDERS_SEARCH_EMPTY_ICON,
   searchHighlightMark: TT_MARKETING_ORDERS_SEARCH_HIGHLIGHT_MARK,
   searchScopeHint: TT_MARKETING_ORDERS_SEARCH_SCOPE_HINT,
+  searchScopeHintInline: `text-meta ${TT_MARKETING_ORDERS_TEXT_META} leading-snug border-l-2 border-ref-sun/22 pl-2.5`,
   activeFiltersBar: TT_MARKETING_ORDERS_ACTIVE_FILTERS_BAR,
   activeFiltersLabel: TT_MARKETING_ORDERS_ACTIVE_FILTERS_LABEL,
   clearAllFiltersBtn: TT_MARKETING_ORDERS_CLEAR_ALL_FILTERS_BTN,
@@ -268,6 +271,15 @@ export const TT_ORDERS_LIST_L5 = {
   cardActionsPanelMobile: `${TT_MARKETING_ORDERS_CARD_ACTIONS_PANEL} w-full sm:w-auto`,
   emptySecondaryBtn: `${touchTargetLink44Classes} ${TT_MARKETING_ORDERS_CARD_PREVIEW_BTN}`,
   errorShell: `${TT_MARKETING_ORDERS_PAGE_SHELL} relative isolate flex min-h-[50vh] items-center justify-center overflow-x-clip p-8`,
+  deleteConfirmOverlay:
+    "fixed inset-0 z-[120] flex items-center justify-center bg-black/70 px-4 py-8 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in duration-200",
+  deleteConfirmPanel:
+    "relative w-full max-w-md rounded-[var(--radius-lg)] border border-ref-sun/35 bg-[#0c0a09]/95 p-5 shadow-[0_0_40px_rgba(251,191,36,0.08)] ring-1 ring-ref-sun/20 sm:p-6",
+  deleteConfirmTitle: "text-body font-semibold text-slate-100",
+  deleteConfirmDesc: "mt-2 text-meta leading-snug text-slate-300/95",
+  deleteConfirmActions: "mt-5 flex flex-wrap gap-3",
+  deleteConfirmBtnCancel: `${touchTargetLink44Classes} inline-flex min-h-[44px] flex-1 items-center justify-center rounded-[var(--radius-md)] border border-white/14 bg-slate-950/60 px-4 py-2 text-small font-medium text-slate-200 hover:border-ref-sun/35 hover:bg-slate-900/80 motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09] disabled:cursor-not-allowed disabled:opacity-50`,
+  deleteConfirmBtnDanger: `${touchTargetLink44Classes} inline-flex min-h-[44px] flex-1 items-center justify-center rounded-[var(--radius-md)] border border-danger/55 bg-danger/10 px-4 py-2 text-small font-semibold text-red-300 hover:border-danger/70 hover:bg-danger/16 hover:text-red-200 motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-danger/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09] disabled:cursor-not-allowed disabled:opacity-50`,
 } as const;
 
 /** 列表卡片入场 stagger（ms · 上限 420） */

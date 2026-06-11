@@ -3,7 +3,7 @@
 **仓库路径（从根目录找本文件）：** `docs/runbook/TT-9625-golden-path-system-spine.md`  
 **还能从哪进：** **[本目录说明 · README](README.md)**（`docs/runbook` 分层：日常 vs 专项）；根 **[README.md](../../README.md) · 文档索引**、**[CONTRIBUTING.md](../../CONTRIBUTING.md) · 必读入口**、**[96-索引](../spec/96-索引-全链路外生产验收分册.md) · Runbook 导航**。
 
-**Version:** 0.1.20  
+**Version:** 0.1.22  
 **Status:** Runbook — **「把整个项目连起来」的单文件入口**（阅读顺序 + **一条用户脊**上的 **Next → `apiUrl` → Axum → 数据/链**）；**不**替代 **[04](../spec/04-后端与API.md) / [14](../spec/14-合约-API-ABI-前后端对齐.md)** 契约正文、**不**替代 **[18](../spec/18-TravelTrust-全系统架构图.md)** 大图、**不**抄写 **96-18** 台账。**不**声称 **§2 五段表 = 全站每一页**（见 **§2.1**）。
 
 **仍按执行顺序落地时：** 以 **[TT-9621](TT-9621-master-order-96-backend-db-chain-frontend.md)** Phase **A→D** 为准；本页解决 **「心智地图从哪一页开始读」**。
@@ -47,7 +47,7 @@ TT-9625（本页 · 一条 user spine）
 |---|--------|------------------|---------------------------|------------------------|----------------|-------------------|
 | **1** | 注册 / 登录 | `/auth/register`、`/auth/login` | `frontend/app/auth/register/page.tsx`、`frontend/app/auth/login/page.tsx` | `routes.register`、`routes.login`（`/auth/*`） | `crates/api/src/routes/auth.rs` | 会话与用户行；**POST `/auth/*` 须直连 API `BASE`**（见 **`apiUrl` 文内注释**） |
 | **2** | 机读环境 | （首屏或业务前）`GET /meta` | 各 feature 内 `apiUrl(routes.meta)`（如市场、guides） | `routes.meta` → `/meta` | `crates/api/src/routes/health_meta.rs` | **`order_messages.chain_off_mounted`** 等；契约 **04 §3.4 · GET /meta** |
-| **3** | 市场发现 | `/market` | `frontend/app/market/page.tsx` → `useMarketPage` | `routes.discoverOrders` → `/api/v1/discover/orders`（URL **仍为 discover**；页面主入口 **`/market`**，见 **04**） | `crates/api/src/routes/discover.rs` | 列表投影 / DB；空列表与 **chain_off** 语义须一致 |
+| **3** | 市场发现 | `/market` | `frontend/app/market/page.tsx` → **`useMarketPage`**（**300ms debounce** · 收藏 **`localStorage`** · **F-020 best-effort 已接线（①）· ② SLA**） | `routes.discoverOrders` → `/api/v1/discover/orders`（URL **仍为 discover**；页面主入口 **`/market`**，见 **04**） | `crates/api/src/routes/discover.rs` | 列表投影 / DB；**`getDiscoverOrders({ country?, city?, limit, cursor? })`**；空列表与 **chain_off** 语义须一致 |
 | **4** | 新建订单 | `/orders/new` 或市场内下单 | `frontend/app/orders/new/page.tsx`；市场内 `BookGuideModal` 等 | `routes.orders` → **`/api/v1/orders`**（**POST** 创单见 **04**） | `crates/api/src/routes/orders.rs` | 订单行 + 状态初值；里程碑内或含链意图 |
 | **5** | 托管详情 | `/escrow/:id` | `frontend/app/escrow/[id]/page.tsx` → `components/escrow/EscrowDetailSection` | `routes.orderById(id)`、`routes.orderChainSyncStatus(id)` 等 | **`orders`**（同域） | **`GET /api/v1/orders/:id`** 与 Escrow UI **同形**；链同步键与 **GET /meta** 机读表同源（见 **`api.ts` 长注释** / **04**） |
 
@@ -59,7 +59,8 @@ TT-9625（本页 · 一条 user spine）
 
 | 你关心的面 | 典型 URL / 域 | 全站收口去哪 |
 |------------|----------------|--------------|
-| **自由市场** | **`/market`**（主入口）、**`/market/provider`**、**`/market/acquisition`** 等子站 | **[96-20 §5](../spec/96-20-前后端页面对齐与UI生产级审计报告.md)** 按 **URL 行** 对 API；主表 **#3** 的 **`discoverOrders`** 多从 **`/market`** 消费 |
+| **自由市场** | **`/`**（Web3 旅行 · **1×** 创单 · **`localStorage`** 预览链）· **`/market`**（主入口）、**`/market/provider`**、**`/market/acquisition`** 等子站 | **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **[96-20 §5](../spec/96-20-前后端页面对齐与UI生产级审计报告.md)** 按 **URL 行** 对 API；主表 **#3** 的 **`discoverOrders`** 多从 **`/market`** 消费 |
+| **多重身份 · 商家入驻（Shop · ①）** | **`/auth/register?role=provider`** → **`/provider/register`** → **`/me/onboarding`** → **`/admin/provider-applications`** → **`/admin/users/[id]`**（审核）→ **`/market/provider`** | **[provider/register README](../../frontend/app/provider/register/README.md)** · **04 §3.4** · **① API 烟测** **`bash scripts/dev/smoke-provider-onboarding-local.sh`**（**TT-9618 §2.1**） |
 | **社区**（动态、会话、帖子等） | `frontend/app/community/**` 等 | **同上 96-20** + **93 矩阵** 域行 + **[TT-9622](TT-9622-bounded-contexts-layering-and-integration-map.md)** **Community** 行 |
 | **治理 / Admin / 钱包页** | 各 `app/governance/*`、`app/admin/*`、`app/me/*` … | **96-20** + **96-17** + **93**；发版前 **须** 进 **[TT-9626](TT-9626-zero-to-production-go-single-path.md)** **阶段 4～5** |
 
@@ -81,6 +82,7 @@ TT-9625（本页 · 一条 user spine）
 | **段 4 · 母表文件在位** | **`scripts/gates/vertical-slice-tt9627-segment4-spec-presence.sh`** | **①**；见 **[TT-9627 段 4.0](TT-9627-delivery-order-spine-then-full-site.md)** |
 | **段 5 · 闭环/规则真源在位** | **`scripts/gates/vertical-slice-tt9627-segment5-spec-presence.sh`** | **①**；见 **[TT-9627 段 5.0](TT-9627-delivery-order-spine-then-full-site.md)** |
 | **段 6 · 发版 GO 真源在位** | **`scripts/gates/vertical-slice-tt9627-segment6-spec-presence.sh`** | **①**；见 **[TT-9627 段 6.0](TT-9627-delivery-order-spine-then-full-site.md)** |
+| **商家入驻全链 API 烟测（Identity · ①）** | **`scripts/dev/smoke-provider-onboarding-local.sh`** | **①** 注册→钱包→KYB→准入费→Admin→**POST/GET market listings**；**非** §2 主脊 Escrow 路径；**SSOT** **[provider/register README](../../frontend/app/provider/register/README.md)** · **[TT-9618 §2.1](TT-9618-onboarding-local-testnet.md)** |
 | **段 4～6 编排** | **`scripts/gates/vertical-slice-tt9627-segments-456-spec-presence.sh`** | **①** 串 **4+5+6**；见 **[TT-9627 · 段 4～6 编排](TT-9627-delivery-order-spine-then-full-site.md#tt-9627-segments-456-orchestration)** |
 | **本条脊全长**：注册 → 市场 → 创单 → 托管 | **会话→创单→托管** 仍须 **E2E/手点** 或专 Runbook 收口 | **§2 表** 即 **验收提纲**；公开半脊见上 **竖切 02**；在 **96-18** 勾 **一条 P0** 后可另开 **全长竖切 Runbook**（编号与 **TT-9626** 发版总路线 **区分**） |
 
@@ -118,6 +120,7 @@ TT-9625（本页 · 一条 user spine）
 | 0.1.18 | 2026-05-01 | **§3**：增 **段 4～6 编排** **`vertical-slice-tt9627-segments-456-spec-presence.sh`**。 |
 | 0.1.19 | 2026-05-01 | **§3**：**段 4～6 编排** 外链锚 **`#tt-9627-segments-456-orchestration`**（与 **TT-9627** 对拍）。 |
 | 0.1.20 | 2026-05-01 | **§3**：表后互指 **TT-9628 §0.0.2a** 机读闸总表 **`#tt-9628-tt9627-gates-index`**（与竖切 **01** / 段 **1** 编排 **并集**）。 |
+| 0.1.22 | 2026-06-03 | **§2 #3** · **§2.1 自由市场**：**`useMarketPage` debounce** · 收藏 **localStorage** · 互指 **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)**（**`/` + 三页市场** ① 代码/UI/数据链）。 |
 
 ---
 

@@ -31,18 +31,24 @@ export default function EscrowDraftGuideEmptyCard({
   const { t } = useTranslation();
   const marketHref = orderId?.trim()
     ? marketHrefForEscrowGuideBind(orderId.trim())
-    : "/market?view=split";
+    : "/market?view=guides";
+
+  const titleKey = publishedToMarket ? "orders_selectGuide" : "escrow_draftGuideEmptyTitle";
+  const ctaKey = publishedToMarket ? "orders_selectGuide" : "escrow_draftGuideMarketLink";
+  const ctaClass = publishedToMarket
+    ? `${escrowExperiencePrimaryCtaClass} shrink-0 font-semibold whitespace-nowrap inline-flex min-h-[44px] items-center justify-center px-4`
+    : `${escrowExperienceLinkClass} shrink-0 font-semibold whitespace-nowrap`;
 
   if (compact) {
     return (
       <div
         className={`${TT_ESCROW_EXPERIENCE_PANEL} flex flex-wrap items-center justify-between gap-2 px-3 py-2.5`}
         role="status"
-        aria-label={t("escrow_draftGuideEmptyTitle")}
+        aria-label={t(titleKey)}
       >
         <div className={`${escrowExperienceMetaClass} m-0 min-w-0 flex-1 space-y-1`}>
           <p className="m-0">
-            <span className="font-medium text-ref-sun/95">{t("escrow_draftGuideEmptyTitle")}</span>
+            <span className="font-medium text-ref-sun/95">{t(titleKey)}</span>
             <span className="text-white/60 mx-1.5" aria-hidden>
               ·
             </span>
@@ -58,11 +64,8 @@ export default function EscrowDraftGuideEmptyCard({
               : t("escrow_draftGuideTrust_saveFirst")}
           </p>
         </div>
-        <Link
-          href={marketHref}
-          className={`${escrowExperienceLinkClass} shrink-0 font-semibold whitespace-nowrap`}
-        >
-          {t("escrow_draftGuideMarketLink")}
+        <Link href={marketHref} className={ctaClass}>
+          {t(ctaKey)}
         </Link>
       </div>
     );
@@ -74,11 +77,13 @@ export default function EscrowDraftGuideEmptyCard({
       aria-labelledby="escrow-draft-guide-empty-heading"
     >
       <h2 id="escrow-draft-guide-empty-heading" className="text-small font-semibold text-ref-sun/95">
-        {t("escrow_draftGuideEmptyTitle")}
+        {t(titleKey)}
       </h2>
-      <p className={escrowExperienceMetaClass}>{t("escrow_draftGuideEmptyDesc")}</p>
+      <p className={escrowExperienceMetaClass}>
+        {publishedToMarket ? t("escrow_draftGuideEmptyDesc_published") : t("escrow_draftGuideEmptyDesc")}
+      </p>
       <Link href={marketHref} className={`${escrowExperiencePrimaryCtaClass} inline-flex justify-center text-center`}>
-        {t("escrow_draftGuideMarketLink")}
+        {t(ctaKey)}
       </Link>
     </section>
   );

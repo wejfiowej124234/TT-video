@@ -149,7 +149,7 @@ pub async fn guides_list_impl(
         };
         let list: Vec<serde_json::Value> = page_guides
             .iter()
-            .map(|g| guide_list_card_json(g))
+            .map(|g| guide_list_card_json(&store, g))
             .collect();
         return Ok(Json(json!({
             "status": "ok",
@@ -163,12 +163,54 @@ pub async fn guides_list_impl(
     }
 
     guides.sort_by(|a, b| b.created_at.cmp(&a.created_at));
-    let list: Vec<serde_json::Value> = guides.iter().map(|g| guide_list_card_json(g)).collect();
+    let list: Vec<serde_json::Value> = guides
+        .iter()
+        .map(|g| guide_list_card_json(&store, g))
+        .collect();
     Ok(Json(json!({ "status": "ok", "items": list })))
 }
 
-fn guide_list_card_json(g: &GuideRow) -> serde_json::Value {
+/// 游客决策信号：完成单数 · 加权评分 · 响应 SLA（与 `/me` reputation 同源 reviews）。
+fn guide_consumer_decision_fields(store: &super::ChainOffStore, g: &GuideRow) -> serde_json::Value {
+    use traveltrust_core::OrderState;
+    let completed_count = store
+        .orders
+        .values()
+        .filter(|o| o.guide_id == g.id && o.state == OrderState::Completed)
+        .count();
+    let guide_reviews: Vec<_> = store
+        .reviews
+        .iter()
+        .filter(|r| r.reviewee_id == g.user_id)
+        .collect();
+    let rating = if guide_reviews.is_empty() {
+        None
+    } else {
+        let sum_w: f64 = guide_reviews.iter().map(|r| r.weight).sum();
+        Some(
+            guide_reviews
+                .iter()
+                .map(|r| r.score as f64 * r.weight)
+                .sum::<f64>()
+                / sum_w.max(1e-9),
+        )
+    };
+    let response_sla = if completed_count > 0 || guide_reviews.len() > 0 {
+        Some("24h")
+    } else {
+        None
+    };
     json!({
+        "completed_count": completed_count,
+        "completedCount": completed_count,
+        "rating": rating,
+        "response_sla": response_sla,
+        "responseSLA": response_sla,
+    })
+}
+
+fn guide_list_card_json(store: &super::ChainOffStore, g: &GuideRow) -> serde_json::Value {
+    let mut card = json!({
         "id": g.id.to_string(),
         "user_id": g.user_id.to_string(),
         "city": g.city,
@@ -177,9 +219,19 @@ fn guide_list_card_json(g: &GuideRow) -> serde_json::Value {
         "service_types": g.service_types,
         "bio": g.bio,
         "stake_amount": g.stake_amount,
+        "hourly_rate": g.hourly_rate,
+        "avatar_url": g.avatar_url,
         "status": g.status,
         "created_at": g.created_at.to_rfc3339()
-    })
+    });
+    if let Some(obj) = card.as_object_mut() {
+        if let Some(dec) = guide_consumer_decision_fields(store, g).as_object() {
+            for (k, v) in dec {
+                obj.insert(k.clone(), v.clone());
+            }
+        }
+    }
+    card
 }
 
 /// Admin 列表/详情共用：与 `GET /api/v1/admin/guides` 行同形；不含 `passport_number` / `passport_number_hash`。
@@ -195,6 +247,8 @@ pub fn guide_admin_row_json(g: &GuideRow) -> serde_json::Value {
         "wallet_address": g.wallet_address,
         "real_name": g.real_name,
         "stake_amount": g.stake_amount,
+        "hourly_rate": g.hourly_rate,
+        "avatar_url": g.avatar_url,
         "status": g.status,
         "id_photo_url": g.id_photo_url,
         "language_cert_url": g.language_cert_url,
@@ -236,25 +290,33 @@ pub async fn guide_get_impl(
             Json(crate::api_json::err_key("guide_not_found")),
         ));
     }
+    let mut guide_obj = json!({
+        "id": g.id.to_string(),
+        "user_id": g.user_id.to_string(),
+        "city": g.city,
+        "country_code": g.country_code,
+        "languages": g.languages,
+        "service_types": g.service_types,
+        "bio": g.bio,
+        "wallet_address": g.wallet_address,
+        "real_name": g.real_name,
+        "id_photo_url": g.id_photo_url,
+        "language_cert_url": g.language_cert_url,
+        "guide_license_url": g.guide_license_url,
+        "stake_amount": g.stake_amount,
+        "status": g.status,
+        "created_at": g.created_at.to_rfc3339()
+    });
+    if let Some(obj) = guide_obj.as_object_mut() {
+        if let Some(dec) = guide_consumer_decision_fields(&store, g).as_object() {
+            for (k, v) in dec {
+                obj.insert(k.clone(), v.clone());
+            }
+        }
+    }
     Ok(Json(json!({
         "status": "ok",
-        "guide": {
-            "id": g.id.to_string(),
-            "user_id": g.user_id.to_string(),
-            "city": g.city,
-            "country_code": g.country_code,
-            "languages": g.languages,
-            "service_types": g.service_types,
-            "bio": g.bio,
-            "wallet_address": g.wallet_address,
-            "real_name": g.real_name,
-            "id_photo_url": g.id_photo_url,
-            "language_cert_url": g.language_cert_url,
-            "guide_license_url": g.guide_license_url,
-            "stake_amount": g.stake_amount,
-            "status": g.status,
-            "created_at": g.created_at.to_rfc3339()
-        }
+        "guide": guide_obj
     })))
 }
 
@@ -466,6 +528,8 @@ pub async fn guide_create_impl(
         language_cert_url: body.language_cert_url.clone(),
         guide_license_url: body.guide_license_url.clone(),
         stake_amount: "0".to_string(),
+        hourly_rate: None,
+        avatar_url: None,
         status: "pending".to_string(),
         rejection_codes: vec![],
         rejection_message: None,
@@ -493,6 +557,8 @@ pub async fn guide_create_impl(
             guide.language_cert_url.as_deref(),
             guide.guide_license_url.as_deref(),
             &guide.stake_amount,
+            guide.hourly_rate.as_deref(),
+            guide.avatar_url.as_deref(),
             &guide.status,
             guide.created_at,
             guide.updated_at,

@@ -1,6 +1,7 @@
 import { DEFAULT_COUNTRY, getPricingForCountry } from "@/lib/countries";
 import { MAX_AMOUNT } from "./constants";
 import type { CustomItineraryForm } from "./types";
+import { guideHasMinimumInterest, touristHasMinimumInterest } from "./itineraryInterestValidation";
 
 function uniqueKeys(keys: string[]): string[] {
   return [...new Set(keys)];
@@ -21,6 +22,7 @@ export function customItineraryGuideBlockedKeys(
     if (Number.isNaN(amountNum) || amountNum <= 0) keys.push("action_gate_itin_amount_invalid");
     else if (amountNum > MAX_AMOUNT) keys.push("action_gate_itin_amount_too_large");
   }
+  if (!guideHasMinimumInterest(form)) keys.push("action_gate_itin_interest_required");
   return uniqueKeys(keys);
 }
 
@@ -65,6 +67,8 @@ export function customItineraryTouristBlockedKeys(
       keys.push("action_gate_itin_fee_too_large");
     }
   }
+
+  if (!touristHasMinimumInterest(form)) keys.push("action_gate_itin_interest_required");
 
   return uniqueKeys(keys);
 }

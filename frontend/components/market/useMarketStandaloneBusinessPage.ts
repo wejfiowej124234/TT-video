@@ -49,11 +49,15 @@ export function useMarketStandaloneBusinessPage(variant: MarketStandaloneBusines
     [searchParams, variant],
   );
 
-  const applyCatalogResult = useCallback((rows: MarketCatalogListRow[], sourced: boolean) => {
-    setCatalogRows(rows);
-    setCatalogSourced(sourced);
-    if (sourced) setCatalogDegraded(false);
-  }, []);
+  const applyCatalogResult = useCallback(
+    (rows: MarketCatalogListRow[], sourced: boolean, hasMore = false) => {
+      setCatalogRows(rows);
+      setCatalogSourced(sourced);
+      setCatalogHasMore(hasMore);
+      if (sourced) setCatalogDegraded(false);
+    },
+    [],
+  );
 
   const handleCatalogError = useCallback(
     (e: unknown) => {

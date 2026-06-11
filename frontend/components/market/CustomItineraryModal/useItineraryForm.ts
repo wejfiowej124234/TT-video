@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
-import { CITIES_BY_COUNTRY } from "@/lib/geoOptions";
+import { useCatalogCityOptions } from "@/lib/catalogApi/useCatalogGeo";
 import { getMe } from "@/lib/apiClient";
 import type { AttractionDetail, FoodDetail, HotelDetail } from "@/lib/cityDetails";
 import type { CityTransportType, CustomItineraryForm, DayPlan, GuideDayPlan } from "./types";
@@ -13,6 +13,7 @@ import { postItineraryCustom } from "@/lib/apiClient";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { validateAndBuildGuide, validateAndBuildTourist, buildTouristCustomBody, buildGuideCustomBody } from "./itinerarySubmitLogic";
 import { isUuidString } from "@/lib/isUuidString";
+import { customItineraryFormFingerprint } from "./customItineraryFormFingerprint";
 
 export interface UseItineraryFormProps {
   open: boolean;
@@ -152,10 +153,28 @@ export function useItineraryForm({
     }
   }, [open, resetForm]);
 
+  const baselineFingerprint = useMemo(
+    () => customItineraryFormFingerprint(defaultForm(clampedInitialDays)),
+    [clampedInitialDays],
+  );
+  const isDirty = useMemo(
+    () => customItineraryFormFingerprint(form) !== baselineFingerprint,
+    [form, baselineFingerprint],
+  );
+
+  const confirmDiscard = useCallback(() => {
+    if (typeof window === "undefined" || !isDirty) return true;
+    return window.confirm(t("market_studio_unsaved_confirm"));
+  }, [isDirty, t]);
+
   const requestClose = useCallback(() => {
-    if (viewingAttractionRef.current) setViewingAttraction(null);
-    else onClose();
-  }, [onClose]);
+    if (viewingAttractionRef.current) {
+      setViewingAttraction(null);
+      return;
+    }
+    if (!confirmDiscard()) return;
+    onClose();
+  }, [confirmDiscard, onClose]);
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
@@ -196,7 +215,10 @@ export function useItineraryForm({
       }
       setSubmitting(true);
       try {
-        const body = withGuideId(buildTouristCustomBody(form, suggestedTransportFee), preselectedGuideId);
+        const body = withGuideId(
+          buildTouristCustomBody(form, suggestedTransportFee, budgetBreakdown),
+          preselectedGuideId
+        );
         const res = await postItineraryCustom(body);
         onSuccess(res.order_id);
         onClose();
@@ -217,13 +239,14 @@ export function useItineraryForm({
       scrollToSubmitError,
       accountAvatarUrl,
       suggestedTransportFee,
+      budgetBreakdown,
       onClose,
       onSuccess,
       preselectedGuideId,
     ]
   );
 
-  const cities = form.country ? (CITIES_BY_COUNTRY[form.country] ?? []) : [];
+  const cities = useCatalogCityOptions(form.country);
 
   return {
     form,
@@ -256,7 +279,11 @@ export function useItineraryForm({
     resetForm,
     handleSubmit,
     requestClose,
+    confirmDiscard,
+    isDirty,
     cities,
     quote,
   };
 }
+
+export type ItineraryFormBag = ReturnType<typeof useItineraryForm>;

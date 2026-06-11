@@ -6,7 +6,7 @@
 # 可选：TRAVELTRUST_CLEAN_FRONTEND_NEXT=1 ./scripts/start_dev.sh 在启动前端前执行 npm run clean（删 frontend/.next）
 # 可选：SKIP_ABI_GATE=1 跳过 check-55-s13；TRAVELTRUST_ABI_FORGE_VERIFY=1 额外跑 run-verify-abi-forge.sh（须 forge）
 # 可选：SKIP_FRONTEND_ENV_SYNC=1 跳过 frontend/.env.local 与根 .env 同步
-# ABI：合约或 contracts/abi 变更后先 forge build + scripts/sync-abi-from-forge.sh，再同步 55-S13 子集到 frontend/dapp/abis；勿长期 SKIP_ABI_GATE=1（与 start-api-with-seed.bat Step 1b 同源）。
+# ABI：合约或 contracts/abi 变更后 `forge build` + `scripts/sync-abi-from-forge.sh`（已含 frontend/dapp/abis 复制）；`start-api-with-seed` Step 1b0 默认仅复制六件套。勿长期 `SKIP_ABI_GATE=1`。
 # Windows：.\scripts\start_dev.ps1（委托本脚本）；一键含 Docker 见 **start-api-with-seed.bat**
 set -e
 REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
@@ -48,8 +48,21 @@ sleep 1
 bash "$REPO_ROOT/scripts/check-sqlx-migration-prefixes.sh" || exit 1
 
 if [ "${SKIP_ABI_GATE:-0}" != "1" ]; then
+  if [ "${TRAVELTRUST_ABI_AUTO_ALIGN:-1}" != "0" ]; then
+    echo ">>> ABI align: contracts/abi -> frontend/dapp/abis (55-S13 subset)..."
+    bash "$REPO_ROOT/scripts/dev/sync-55-s13-frontend-abis.sh" || exit 1
+  fi
   echo ">>> ABI gate (55-S13: contracts/abi vs frontend/dapp/abis)..."
-  bash "$REPO_ROOT/scripts/check-55-s13.sh" || exit 1
+  if ! bash "$REPO_ROOT/scripts/check-55-s13.sh"; then
+    if [ "${TRAVELTRUST_ABI_SYNC_FROM_FORGE:-0}" = "1" ]; then
+      echo ">>> 55-S13 failed; retry with sync-abi-from-forge..."
+      bash "$REPO_ROOT/scripts/sync-abi-from-forge.sh" || exit 1
+      bash "$REPO_ROOT/scripts/check-55-s13.sh" || exit 1
+    else
+      echo ">>> hint: TRAVELTRUST_ABI_SYNC_FROM_FORGE=1 or run scripts/sync-abi-from-forge.sh" >&2
+      exit 1
+    fi
+  fi
 fi
 if [ "${TRAVELTRUST_ABI_FORGE_VERIFY:-0}" = "1" ]; then
   echo ">>> forge ABI multiset (TRAVELTRUST_ABI_FORGE_VERIFY=1)..."

@@ -13,8 +13,9 @@ import { meTrustStateLabelKey } from "@/components/me/meTrustSectionLabels";
 import { buildHeaderLoginHref, buildHeaderRegisterHref, buildIdentitiesApplyChildHref } from "@/lib/headerLoginHref";
 import {
   deriveMeIdentitiesCoreCardView,
-  ME_IDENTITIES_PROVIDER_ACTIVE_HREF,
-  ME_IDENTITIES_STEWARD_ACTIVE_HREF,
+  ME_IDENTITIES_ACQUISITION_SETTINGS_HREF,
+  ME_IDENTITIES_MERCHANT_SETTINGS_HREF,
+  ME_IDENTITIES_STEWARD_SETTINGS_HREF,
 } from "@/lib/me/meIdentitiesCoreCardModel";
 import { meIdentitiesHubSlotState } from "@/lib/me/meIdentitiesHubSlots";
 import { meIdentitiesL5MainDataAttrs, TT_ME_IDENTITIES_L5 } from "@/lib/me/meIdentitiesL5";
@@ -65,22 +66,48 @@ function MeIdentitiesHubInner() {
     },
   ] as const;
 
-  const extendedCards = [
-    {
-      href: buildIdentitiesApplyChildHref("/guide/register", pathname, searchParams),
-      surfaceId: "guide",
-      titleKey: "header_identity_applyGuide",
-      descKey: "me_identities_card_guide_desc",
-      ctaKey: "me_identities_card_cta",
-    },
-    {
-      href: buildIdentitiesApplyChildHref("/market/acquisition", pathname, searchParams),
-      surfaceId: "acquisition",
-      titleKey: "header_identity_acquisition",
-      descKey: "me_identities_card_acquisition_desc",
-      ctaKey: "me_identities_card_cta_market",
-    },
-  ] as const;
+  const guideApplyHref = useMemo(() => {
+    const guideState = slotsReady ? slotById("guide")?.state ?? null : null;
+    if (guideState && guideState !== "inactive") {
+      return "/me/identities/guide/settings";
+    }
+    return buildIdentitiesApplyChildHref("/guide/register", pathname, searchParams);
+  }, [slotsReady, slotById, pathname, searchParams]);
+
+  const acquisitionApplyHref = useMemo(() => {
+    const acquisitionState = slotsReady ? slotById("acquisition")?.state ?? null : null;
+    if (acquisitionState && acquisitionState !== "inactive") {
+      return ME_IDENTITIES_ACQUISITION_SETTINGS_HREF;
+    }
+    return buildIdentitiesApplyChildHref("/market/acquisition", pathname, searchParams);
+  }, [slotsReady, slotById, pathname, searchParams]);
+
+  const extendedCards = useMemo(
+    () =>
+      [
+        {
+          href: guideApplyHref,
+          surfaceId: "guide" as const,
+          titleKey: "header_identity_applyGuide" as const,
+          descKey: "me_identities_card_guide_desc" as const,
+          ctaKey:
+            guideApplyHref.includes("/guide/settings")
+              ? ("me_identities_card_guide_settings_cta" as const)
+              : ("me_identities_card_cta" as const),
+        },
+        {
+          href: acquisitionApplyHref,
+          surfaceId: "acquisition" as const,
+          titleKey: "header_identity_acquisition" as const,
+          descKey: "me_identities_card_acquisition_desc" as const,
+          ctaKey:
+            acquisitionApplyHref.includes("/acquisition/settings")
+              ? ("me_identities_card_acquisition_settings_cta" as const)
+              : ("me_identities_card_cta_market" as const),
+        },
+      ] as const,
+    [guideApplyHref, acquisitionApplyHref],
+  );
 
   return (
     <main
@@ -121,17 +148,28 @@ function MeIdentitiesHubInner() {
                     ? coreSignals.provider
                     : coreSignals.steward
                   : null;
-              const activeHref =
-                surfaceId === "provider"
-                  ? ME_IDENTITIES_PROVIDER_ACTIVE_HREF
-                  : ME_IDENTITIES_STEWARD_ACTIVE_HREF;
               const cardView = signals
-                ? deriveMeIdentitiesCoreCardView(signals, { applyHref, onboardingHref, activeHref })
+                ? deriveMeIdentitiesCoreCardView(signals, {
+                    applyHref,
+                    onboardingHref,
+                    activeHref:
+                      surfaceId === "provider"
+                        ? ME_IDENTITIES_MERCHANT_SETTINGS_HREF
+                        : ME_IDENTITIES_STEWARD_SETTINGS_HREF,
+                  })
                 : null;
               const slotState = slotsReady ? meIdentitiesHubSlotState(surfaceId, slotById) : null;
               const statusLabel = cardView ? t(cardView.statusLabelKey) : null;
-              const cta = cardView ? t(cardView.ctaLabelKey) : t("me_identities_card_cta");
-              const href = cardView?.href ?? applyHref;
+              let cta = cardView ? t(cardView.ctaLabelKey) : t("me_identities_card_cta");
+              let href = cardView?.href ?? applyHref;
+              if (
+                surfaceId === "provider" &&
+                slotState &&
+                slotState !== "inactive"
+              ) {
+                href = ME_IDENTITIES_MERCHANT_SETTINGS_HREF;
+                cta = t("me_identities_card_merchant_settings_cta");
+              }
               return (
                 <li key={surfaceId} className={TT_ME_IDENTITIES_L5.gridItem}>
                   <MeIdentitiesL5IdentityCard

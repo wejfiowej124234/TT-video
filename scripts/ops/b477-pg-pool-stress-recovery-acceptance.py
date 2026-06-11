@@ -165,10 +165,66 @@ class Snap:
     meta_pool: dict[str, Any] | None = None
 
 
-def take_snap(base: str) -> Snap:
-    m = fetch_metrics(base)
-    mp = fetch_meta_pool(base)
+def _http_timeout_sec() -> float:
+    return _env_float("B477_HTTP_TIMEOUT_SEC", 30.0)
+
+
+def take_snap(base: str, timeout: float | None = None) -> Snap:
+    t = timeout if timeout is not None else _http_timeout_sec()
+    code_m, body_m = http_get(f"{base.rstrip('/')}/metrics", timeout=t)
+    if code_m != 200:
+        raise RuntimeError(f"GET /metrics -> {code_m}")
+    m = parse_prometheus_pg_pool(body_m.decode("utf-8", errors="replace"))
+    mp: dict[str, Any] | None = None
+    if not _bool_env("B477_SKIP_META_SNAP"):
+        try:
+            code_meta, body_meta = http_get(f"{base.rstrip('/')}/meta", timeout=t)
+            if code_meta != 200:
+                raise RuntimeError(f"GET /meta -> {code_meta}")
+            data = json.loads(body_meta.decode("utf-8", errors="replace"))
+            db = data.get("database")
+            if isinstance(db, dict):
+                pool = db.get("pool")
+                if pool is not None and pool is not False and isinstance(pool, dict):
+                    mp = pool
+        except Exception:
+            if not _bool_env("B477_ALLOW_META_POOL_MISSING"):
+                raise
     return Snap(t_unix=time.time(), metrics=m, meta_pool=mp)
+
+
+def take_snap_resilient(base: str) -> Snap:
+    retries = _env_int("B477_SNAP_RETRIES", 5)
+    last_err: Exception | None = None
+    for attempt in range(max(1, retries)):
+        try:
+            return take_snap(base)
+        except Exception as e:
+            last_err = e
+            if attempt + 1 < retries:
+                time.sleep(min(2.0 * (attempt + 1), 10.0))
+    raise last_err or RuntimeError("take_snap_resilient failed")
+
+
+def take_snap_recovery_poll(base: str) -> Snap:
+    """Fast poll during recovery_wait — metrics-only when PRA skips /meta."""
+    retries = _env_int("B477_RECOVERY_SNAP_RETRIES", 2)
+    timeout = _env_float("B477_RECOVERY_HTTP_TIMEOUT_SEC", 25.0)
+    last_err: Exception | None = None
+    for attempt in range(max(1, retries)):
+        try:
+            if _bool_env("B477_SKIP_META_SNAP"):
+                code_m, body_m = http_get(f"{base.rstrip('/')}/metrics", timeout=timeout)
+                if code_m != 200:
+                    raise RuntimeError(f"GET /metrics -> {code_m}")
+                m = parse_prometheus_pg_pool(body_m.decode("utf-8", errors="replace"))
+                return Snap(t_unix=time.time(), metrics=m, meta_pool=None)
+            return take_snap(base, timeout=timeout)
+        except Exception as e:
+            last_err = e
+            if attempt + 1 < retries:
+                time.sleep(1.0)
+    raise last_err or RuntimeError("take_snap_recovery_poll failed")
 
 
 def _one_req(base: str, path: str, headers: dict[str, str] | None, counters: dict[str, int], lock: threading.Lock) -> None:
@@ -203,6 +259,8 @@ def worker_loop(
             _one_req(base, "/api/v1/me", headers_me, counters, lock)
         elif mode == "meta_metrics":
             _one_req(base, "/meta", None, counters, lock)
+            _one_req(base, "/metrics", None, counters, lock)
+        elif mode == "metrics_only":
             _one_req(base, "/metrics", None, counters, lock)
         else:  # mixed
             if bearer:
@@ -242,7 +300,11 @@ def recovery_wait(
     # Idle baseline → require util <= target_util; warm baseline → allow slightly above baseline.
     thr = max(target_util, min(baseline_util + 0.08, 0.95))
     while time.time() < deadline:
-        snap = take_snap(base)
+        try:
+            snap = take_snap_recovery_poll(base)
+        except Exception:
+            time.sleep(poll_ms / 1000.0)
+            continue
         last = snap
         u = snap.metrics.get("utilization_ratio")
         if u is not None and u <= thr:
@@ -288,7 +350,7 @@ def main() -> int:
     ap.add_argument("--duration-sec", type=float, default=_env_float("B477_DURATION_SEC", 20.0))
     ap.add_argument(
         "--stress-mode",
-        choices=("meta_metrics", "me", "mixed"),
+        choices=("meta_metrics", "me", "mixed", "metrics_only"),
         default=_env_str("B477_STRESS_MODE", "mixed"),
     )
     ap.add_argument("--auth-bearer", default=os.environ.get("B477_AUTH_BEARER") or None)
@@ -346,7 +408,7 @@ def main() -> int:
     threshold_hits: list[str] = []
 
     try:
-        pre = take_snap(base)
+        pre = take_snap_resilient(base)
     except Exception as e:
         report = {
             "schema": SCHEMA,
@@ -358,7 +420,7 @@ def main() -> int:
         print(json.dumps(report, ensure_ascii=False), file=sys.stderr)
         return 1
 
-    meta_missing = pre.meta_pool is None
+    meta_missing = pre.meta_pool is None and not _bool_env("B477_ALLOW_META_POOL_MISSING")
     base_util = float(pre.metrics.get("utilization_ratio", 0.0))
     base_ato = int(pre.metrics.get("acquire_timeout_total", 0.0))
     base_slow = int(pre.metrics.get("slow_acquire_total", 0.0))
@@ -373,7 +435,28 @@ def main() -> int:
     )
     t_load1 = time.time()
 
-    post = take_snap(base)
+    try:
+        post = take_snap_resilient(base)
+    except Exception as e:
+        report = {
+            "schema": SCHEMA,
+            "verdict": "FAIL",
+            "error": f"post-load snapshot failed: {e}",
+            "phases": {
+                "baseline": {"metrics": pre.metrics, "meta_pool": pre.meta_pool},
+                "load": {
+                    "started_unix": t_load0,
+                    "ended_unix": t_load1,
+                    "duration_wall_sec": round(t_load1 - t_load0, 3),
+                    "requests_ok": ctr["ok"],
+                    "requests_err": ctr["err"],
+                },
+            },
+            "fix_suggestions": suggest_fixes(False, False, False, True, False, meta_missing, None),
+        }
+        (run_dir / "report.v1.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        print(json.dumps(report, ensure_ascii=False), file=sys.stderr)
+        return 1
 
     d_ato = int(post.metrics.get("acquire_timeout_total", 0.0)) - base_ato
     d_slow = int(post.metrics.get("slow_acquire_total", 0.0)) - base_slow

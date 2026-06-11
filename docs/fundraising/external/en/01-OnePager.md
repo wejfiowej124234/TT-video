@@ -10,6 +10,8 @@
 
 Protocol-focused summary: [02-Investor-Executive-Summary.md](02-Investor-Executive-Summary.md) · Index: [00-README.md](00-README.md)
 
+**Product demo / screen-recording engineering SSOT (internal · Phase ①)**: **`/`** Web3 travel home · **`/market`** (**`/discover`→`/market`**) — **[LANDING-MARKET-PAGES-CODE-SSOT](../../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **[PM demo script](../../product-manager/24-产品经理核心产品路径与演示脚本.md)**.
+
 ---
 
 ## Fundraising snapshot (aligned with Deck & FAQ)

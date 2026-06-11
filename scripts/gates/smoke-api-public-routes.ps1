@@ -739,11 +739,11 @@ $m728Exp = @(
     "service", "api_version", "build", "chain", "rate_limits", "database_connected", "database", "dual_write", "strict_mode",
     "ssot_version", "ssot", "admin_exports", "chargeback_policy", "finality_n", "indexer", "authority", "pause",
     "evidence", "order_messages", "reviews", "dispute_open", "dispute_resolve", "itineraries", "orders", "discover",
-    "product_countries", "did_rank", "product_roles", "auth", "seed_test_accounts", "guides", "idempotency_cache",
-    "defaults", "outbox", "meta_top_keys", "meta_top_keys_contract_728"
+    "product_countries", "did_rank", "product_roles", "auth", "seed_test_accounts", "guides", "governance",
+    "idempotency_cache", "defaults", "outbox", "meta_top_keys", "meta_top_keys_contract_728"
 )
-if ($null -eq $m728 -or @($m728).Count -ne 36) { fail "/meta JSON meta_top_keys must be length 36 (728/760)" }
-for ($i = 0; $i -lt 36; $i++) {
+if ($null -eq $m728 -or @($m728).Count -ne 37) { fail "/meta JSON meta_top_keys must be length 37 (728/807 governance)" }
+for ($i = 0; $i -lt 37; $i++) {
     if ([string]$m728[$i] -ne $m728Exp[$i]) { fail "/meta JSON meta_top_keys[$i] expected $($m728Exp[$i]) (728), got $($m728[$i])" }
 }
 $sb728 = [string]$jm.meta_top_keys_contract_728
@@ -900,6 +900,50 @@ if ($jtw.rank_basis -ne "tourist_completed_orders_in_window") {
     fail "did-rank travelers JSON .rank_basis expected tourist_completed_orders_in_window, got $($jtw.rank_basis)"
 }
 ok "did-rank/travelers JSON .rank_basis (period=week)"
+
+$drp = Get-StatusCode "$Base/api/v1/did-rank/prize-pool"
+if ($drp -ne 200) { fail "/api/v1/did-rank/prize-pool expected 200 got $drp" }
+ok "/api/v1/did-rank/prize-pool 200"
+try {
+    $pool = Invoke-WebRequest -Uri "$Base/api/v1/did-rank/prize-pool" -UseBasicParsing -TimeoutSec 5
+    $jp = $pool.Content | ConvertFrom-Json
+} catch { fail "did-rank prize-pool JSON parse failed: $_" }
+if ($jp.monthly_amount -isnot [int] -and $jp.monthly_amount -isnot [long] -and $jp.monthly_amount -isnot [double]) {
+    fail "did-rank prize-pool JSON .monthly_amount must be number"
+}
+ok "did-rank/prize-pool JSON .monthly_amount"
+
+$drprov = Get-StatusCode "$Base/api/v1/did-rank/providers"
+if ($drprov -ne 200) { fail "/api/v1/did-rank/providers expected 200 got $drprov" }
+ok "/api/v1/did-rank/providers 200"
+$dracq = Get-StatusCode "$Base/api/v1/did-rank/acquisitions"
+if ($dracq -ne 200) { fail "/api/v1/did-rank/acquisitions expected 200 got $dracq" }
+ok "/api/v1/did-rank/acquisitions 200"
+try {
+    $prov = Invoke-WebRequest -Uri "$Base/api/v1/did-rank/providers?period=week" -UseBasicParsing -TimeoutSec 5
+    $jprov = $prov.Content | ConvertFrom-Json
+    if ($jprov.providers -isnot [System.Array]) { fail "did-rank providers JSON .providers must be array" }
+} catch { fail "did-rank providers week JSON parse failed: $_" }
+ok "did-rank/providers JSON .providers (period=week)"
+try {
+    $acq = Invoke-WebRequest -Uri "$Base/api/v1/did-rank/acquisitions?period=week" -UseBasicParsing -TimeoutSec 5
+    $jacq = $acq.Content | ConvertFrom-Json
+    if ($jacq.acquisitions -isnot [System.Array]) { fail "did-rank acquisitions JSON .acquisitions must be array" }
+} catch { fail "did-rank acquisitions week JSON parse failed: $_" }
+ok "did-rank/acquisitions JSON .acquisitions (period=week)"
+if ($jprov.rank_basis -ne "provider_published_listings_in_window") {
+    fail "did-rank providers .rank_basis expected provider_published_listings_in_window, got $($jprov.rank_basis)"
+}
+if ($jprov.owner_role_filter -ne "provider") {
+    fail "did-rank providers .owner_role_filter expected provider, got $($jprov.owner_role_filter)"
+}
+if ($jacq.rank_basis -ne "acquisition_published_listings_in_window") {
+    fail "did-rank acquisitions .rank_basis expected acquisition_published_listings_in_window, got $($jacq.rank_basis)"
+}
+if ($jacq.owner_role_filter -ne "region_steward") {
+    fail "did-rank acquisitions .owner_role_filter expected region_steward, got $($jacq.owner_role_filter)"
+}
+ok "did-rank providers/acquisitions JSON .rank_basis + .owner_role_filter (period=week)"
 
 try {
     $rts = Invoke-WebRequest -Uri "$Base/api/v1/community/stats/posts-by-tag?tag=smoke" -UseBasicParsing -TimeoutSec 5

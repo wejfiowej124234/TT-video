@@ -1,9 +1,8 @@
 "use client";
 
-import {
-  ADMIN_CONSOLE_JSON_BLOCK_CLASS,
-  useTranslation } from "@/components/LocaleProvider";
+import { useTranslation } from "@/components/LocaleProvider";
 import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
+import { ADMIN_CONSOLE_JSON_BLOCK_CLASS } from "@/lib/adminUi";
 
 import type { ObsBody } from "./adminTrustGrowthPageModel";
 

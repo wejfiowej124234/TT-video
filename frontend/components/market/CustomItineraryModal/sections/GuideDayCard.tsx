@@ -8,6 +8,8 @@ import GuideDayCardAttractions from "./GuideDayCardAttractions";
 import GuideDayCardCrossCityAndCity from "./GuideDayCardCrossCityAndCity";
 import GuideDayCardFood from "./GuideDayCardFood";
 import GuideDayCardTransportAndHotels from "./GuideDayCardTransportAndHotels";
+import CustomItineraryCollapsibleDayShell from "../CustomItineraryCollapsibleDayShell";
+import { isDayConfigured, touristDayCardSummary } from "../dayCardSummary";
 
 export interface GuideDayCardProps {
   day: GuideDayPlan;
@@ -45,12 +47,29 @@ export default function GuideDayCard({
   const guideHotelDetails = getHotelDetails(day.city ?? "");
   const guideHotels = getHotels(day.city ?? "");
   const selectedGuideHotelDetail = (day.hotel ?? "") ? (guideHotelDetails.find((h) => h.value === day.hotel) ?? null) : null;
+  const collapsible = form.totalDays > 2;
+  const stepLabel = t("market_itinerary_day_step")
+    .replace("{{current}}", String(dayIndex + 1))
+    .replace("{{total}}", String(form.totalDays));
+  const guideDayAsTourist: import("../types").DayPlan = {
+    city: day.city ?? "",
+    attractions: day.attractions ? [day.attractions] : [],
+    food: day.food ? [day.food] : [],
+    hotel: day.hotel ?? "",
+    cityTransport: day.cityTransport,
+    transport: day.transport,
+  };
+  const guidePlans = form.guideDayPlans ?? [];
+  const firstOpenIndex = guidePlans.findIndex((d) => !(d?.city ?? "").trim());
+  const defaultOpen = dayIndex === 0 || dayIndex === firstOpenIndex || Boolean(day.city?.trim());
 
   return (
-    <div className={CIM.customItineraryPanelDay}>
-      <h3 className="text-small font-semibold text-white drop-shadow-market-pill">
-        {t("market_dayN").replace("{n}", String(dayIndex + 1))}
-      </h3>
+    <CustomItineraryCollapsibleDayShell
+      collapsible={collapsible}
+      defaultOpen={defaultOpen}
+      summary={touristDayCardSummary(guideDayAsTourist, dayIndex, t)}
+      stepLabel={stepLabel}
+    >
       <GuideDayCardCrossCityAndCity
         day={day}
         dayIndex={dayIndex}
@@ -94,6 +113,6 @@ export default function GuideDayCard({
         pillUnselected={pillUnselected}
         t={t}
       />
-    </div>
+    </CustomItineraryCollapsibleDayShell>
   );
 }

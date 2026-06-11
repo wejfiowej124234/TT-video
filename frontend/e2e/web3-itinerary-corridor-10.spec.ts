@@ -48,7 +48,7 @@ test.describe("Web3 itinerary corridor 10 (① local browser)", () => {
     await page.reload({ waitUntil: "domcontentloaded", timeout: 90_000 });
     await injectBearerSessionInPage(page, creds);
 
-    const unlockBtn = page.getByRole("button", { name: /预览解锁|Preview unlock/i }).first();
+    const unlockBtn = page.getByRole("button", { name: /查看完整行程|View full itinerary/i }).first();
     const orderDetailLink = page.getByRole("link", { name: /查看订单详情|View order detail/i }).first();
     await expect(unlockBtn.or(orderDetailLink)).toBeVisible({ timeout: 60_000 });
     if (await unlockBtn.isVisible().catch(() => false)) {
@@ -79,7 +79,7 @@ test.describe("Web3 itinerary corridor 10 (① local browser)", () => {
     await page.getByRole("link", { name: /前往自由市场选向导|Go to.*market.*guide/i }).first().click();
 
     await expect(page).toHaveURL(/bindGuideToOrder=/, { timeout: 60_000 });
-    await expect(page).toHaveURL(/view=split/, { timeout: 10_000 });
+    await expect(page).toHaveURL(/view=guides/, { timeout: 10_000 });
     await expect(
       page.getByText(/正在为当前草稿订单选择向导|Selecting a guide for this draft order/i).first(),
     ).toBeVisible({ timeout: 60_000 });

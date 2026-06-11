@@ -6,6 +6,7 @@ import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
 import { routes } from "@/lib/api";
 import {
   defaultAdminListFetchSnapshot,
+  type AdminListFetchSnapshot,
   type AdminStandardListBody,
   useAdminStandardListFetch,
 } from "@/lib/admin/useAdminStandardListFetch";
@@ -18,8 +19,10 @@ import {
   parseJobsListQuery,
 } from "./adminJobsPageModel";
 
-function jobsListToSnapshot(body: AdminStandardListBody<AdminJobRow> & Pick<AdminJobsRes, "summary">) {
-  const base = defaultAdminListFetchSnapshot(body);
+function jobsListToSnapshot(
+  body: AdminStandardListBody<AdminJobRow> & Pick<AdminJobsRes, "summary">,
+): AdminListFetchSnapshot<AdminJobRow> {
+  const base = defaultAdminListFetchSnapshot<AdminJobRow>(body);
   if (body.summary && typeof body.summary === "object") {
     return {
       ...base,

@@ -1,4 +1,5 @@
-import { apiUrl, routes } from "../../api";
+import { apiUrl } from "../../api";
+import { routes } from "@/lib/api/routes";
 import {
   parseResponse,
   writeRequestHeaders,

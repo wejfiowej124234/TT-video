@@ -8,6 +8,11 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+FREEZE="$ROOT/evidence/TESTNET_STAGING_FREEZE/ACTIVE.json"
+if [[ -f "$FREEZE" && "${TESTNET_FREEZE_OVERRIDE:-}" != "1" ]]; then
+  echo "phase2-staging-fly-deploy-and-sync: BLOCKED — testnet staging freeze active ($FREEZE)" >&2
+  exit 2
+fi
 APP="${FLY_STAGING_API_APP:-tt-api-staging}"
 FLY_CONFIG="${FLY_STAGING_API_CONFIG:-$ROOT/deploy/fly/tt-api-staging/fly.toml}"
 ONBOARDING="${STAGING_ENV_FILE:-$ROOT/scripts/dev/.env.staging-onboarding.local}"

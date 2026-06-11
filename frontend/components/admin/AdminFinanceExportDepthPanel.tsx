@@ -2,6 +2,7 @@
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminFinanceDepthHonestyFooter } from "@/components/admin/AdminFinanceDepthHonestyFooter";
+import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import { isAdminMaintainerUi } from "@/lib/admin/adminMaintainerUiMode";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
 import { ADMIN_PRIMARY_ACTION_BTN_CLASS, ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_FIN_DEPTH_PANEL_CLASS } from "@/lib/adminUi";

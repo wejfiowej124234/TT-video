@@ -48,7 +48,7 @@ import { communityMeLikesReceivedQueryKey } from "@/lib/communityMeLikesReceived
 import { getMeLikesReceived } from "@/lib/apiClient/community";
 
 export interface CommunityFeedDiscoveryChromeProps {
-  t: (key: string) => string;
+  t: (key: string, vars?: Record<string, string | number>) => string;
   feedTab: FeedTab;
   setFeedTab: (v: FeedTab) => void;
   sortBy: SortBy;
@@ -88,7 +88,7 @@ const STREAM_TAB_I18N: Record<FeedStreamTab, string> = {
   hot: "community_feed_stream_hot",
 };
 
-function destinationLabel(t: (key: string) => string, dest: string): string {
+function destinationLabel(t: (key: string, vars?: Record<string, string | number>) => string, dest: string): string {
   const key = DESTINATION_LABEL_KEYS[dest];
   return key ? t(key) : dest;
 }

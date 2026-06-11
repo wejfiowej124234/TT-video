@@ -184,6 +184,8 @@ async fn phase15_identity_s2_guide_dual_write_pg() {
         Some("https://cdn.example/cert.jpg"),
         None,
         "0",
+        None,
+        None,
         "pending",
         now,
         now,

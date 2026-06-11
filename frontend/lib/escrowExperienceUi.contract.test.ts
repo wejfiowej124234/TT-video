@@ -42,6 +42,9 @@ describe("escrow draft Experience L5 (①)", () => {
     expect(src).toContain("draftJourneyStep");
     expect(src).toContain("EscrowDraftGuideEmptyCard");
     expect(src).toContain("EscrowDraftPublishedBanner");
+    expect(src).toMatch(
+      /showPublishedPickGuideBanner[\s\S]{0,400}!showPublishedPickGuideBanner[\s\S]{0,120}EscrowDraftGuideEmptyCard/,
+    );
     expect(src).toContain("escrow_draftCanonicalTotalLabel");
     expect(src).toContain("EscrowDraftGuideAssignedCard");
     expect(src).toContain("EscrowDraftPayStepCard");
@@ -50,12 +53,13 @@ describe("escrow draft Experience L5 (①)", () => {
       "utf8",
     );
     expect(emptyGuideCard).toContain("marketHrefForEscrowGuideBind");
+    expect(emptyGuideCard).toContain("orders_selectGuide");
     expect(emptyGuideCard).toContain("orderId");
     expect(src).toContain("escrowGuideMarketHref");
     expect(src).toContain("escrow_confirmBlocked_amountSync");
     const bookModal = readFileSync(join(__dirname, "../components/market/BookGuideModal.tsx"), "utf8");
     expect(bookModal).toContain("patchOrderGuide");
-    expect(bookModal).toMatch(/\{!isBindMode \? \([\s\S]*href="\/pay"/);
+    expect(src).toContain("orders_selectGuide");
     expect(src).toContain("confirmBlockedReasonKey");
     expect(src).toContain("breakdownForList");
     expect(src).toContain("hideAmountBreakdown");
@@ -78,8 +82,11 @@ describe("escrow draft Experience L5 (①)", () => {
     );
     expect(quietSyncBlock).not.toContain("refreshOrder({ force: true })");
     expect(src).toContain("hasGuideAssigned");
-    expect(src).toContain("escrow_confirmBlocked_pickGuide");
-    expect(src).toContain("guideRequiredForConfirm");
+    expect(src).toContain("experienceConfirmBlockedReasonKey");
+    const p03p04 = readFileSync(join(__dirname, "../lib/escrowExperienceP03P04.ts"), "utf8");
+    expect(p03p04).toContain("escrow_confirmBlocked_pickGuide");
+    expect(p03p04).toContain("escrow_confirmBlocked_waitGuideAccept");
+    expect(p03p04).toContain("escrow_confirmBlocked_waitBilateral");
     expect(quoteCard).toContain("escrow_guideFee_pending");
     expect(quoteCard).toContain("guideAssigned");
     expect(src).toContain("EscrowOrderGetRateLimitBanner");
@@ -104,7 +111,8 @@ describe("escrow draft Experience L5 (①)", () => {
     expect(src).toContain("quoteQuietSyncError");
     const orderFlow = readFileSync(join(__dirname, "../components/escrow/OrderFlowSteps.tsx"), "utf8");
     expect(orderFlow).toContain("DraftJourneyStepper");
-    expect(orderFlow).toContain("order_flow_journey_save");
+    expect(orderFlow).toContain("order_flow_journey_create");
+    expect(orderFlow).toContain("order_flow_journey_selectGuide");
     const useEscrowDetail = readFileSync(
       join(__dirname, "../components/escrow/EscrowDetail/useEscrowDetail.ts"),
       "utf8",
@@ -114,7 +122,12 @@ describe("escrow draft Experience L5 (①)", () => {
     expect(useEscrowDetail).toContain("ORDER_GET_RATE_LIMIT_BACKOFF_MS");
     expect(useEscrowDetail).toContain("ORDER_GET_PREFETCH_DEFER_MS");
     expect(useEscrowDetail).toContain("orderAllowsConfirmFinalPlan");
-    expect(useEscrowDetail).toContain("created");
+    expect(src).toContain("escrowExperienceP03P04");
+    expect(src).toContain("guideAcceptPending");
+    expect(src).toContain("bilateralPending");
+    expect(src).toContain("showExperienceOrderActions");
+    expect(src).toContain("waitingGuideAccept");
+    expect(assignedCard).toContain("waitingGuideAccept");
     const createOnChain = readFileSync(
       join(__dirname, "../components/escrow/EscrowDetail/CreateOnChainEscrowBlock.tsx"),
       "utf8",

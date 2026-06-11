@@ -96,7 +96,10 @@ export function readMeSettingsUserPreferences(userId: string | null): MeSettings
 
 export function patchMeSettingsUserPreferences(
   userId: string,
-  patch: Partial<Pick<MeSettingsUserPreferences, "notification" | "communityVisibility">>,
+  patch: {
+    notification?: Partial<MeSettingsNotificationPrefs>;
+    communityVisibility?: MeSettingsCommunityVisibility;
+  },
 ): MeSettingsUserPreferences {
   const current = readMeSettingsUserPreferences(userId);
   const next: MeSettingsUserPreferences = {

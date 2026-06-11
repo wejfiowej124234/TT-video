@@ -3,7 +3,8 @@
 import type { ReactNode } from "react";
 import { useId, useMemo } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
-import { COUNTRY_OPTIONS, CITIES_BY_COUNTRY, LANGUAGES_BY_COUNTRY, LANGUAGE_OPTIONS, SERVICE_TYPE_OPTIONS } from "@/lib/geoOptions";
+import { LANGUAGES_BY_COUNTRY, LANGUAGE_OPTIONS, SERVICE_TYPE_OPTIONS } from "@/lib/geoOptions";
+import { useCatalogCityOptions, useCatalogCountryOptions } from "@/lib/catalogApi/useCatalogGeo";
 import { countMarketAdvancedFilterSelections } from "@/lib/marketPageQuery";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
@@ -77,8 +78,8 @@ export default function StickyFilterBar({
   const { t } = useTranslation();
   const advancedFilterPanelId = useId();
   const advancedCountId = useId();
-  const marketSearchHintId = useId();
-  const cities = country ? (CITIES_BY_COUNTRY[country] ?? []) : [];
+  const countryOptions = useCatalogCountryOptions();
+  const cities = useCatalogCityOptions(country);
   const languageOptions = country ? (LANGUAGES_BY_COUNTRY[country] ?? []) : LANGUAGE_OPTIONS;
 
   const tripDaysChipVisible = tripDaysFilter != null && onTripDaysFilterClear;
@@ -124,22 +125,6 @@ export default function StickyFilterBar({
   return (
     <div className={barClass} role="group" aria-label={t("filter_aria_market")}>
       <div className="flex flex-col gap-3">
-        <div role="search" aria-label={t("market_filter_search_label")} className={p.marketFilterSearchWrap}>
-          <input
-            type="search"
-            data-tt-market-filter-search="1"
-            placeholder={t("market_filter_search_placeholder")}
-            aria-label={t("market_filter_search_label")}
-            aria-describedby={marketSearchHintId}
-            aria-controls={advancedFilterPanelId}
-            onFocus={() => onFilterExpandedChange(true)}
-            className={p.marketFilterSearchInput}
-          />
-          <p id={marketSearchHintId} className={p.marketFilterSearchHint}>
-            {t("market_filter_search_hint")}
-          </p>
-        </div>
-
         <div className="flex flex-col gap-2.5" role="group" aria-label={t("filter_aria_orders")}>
           {tripDaysChipVisible ? (
             <div className="flex flex-wrap items-center gap-2" role="status" aria-live="polite">
@@ -190,7 +175,7 @@ export default function StickyFilterBar({
               >
                 {t("filter_country_all")}
               </button>
-              {COUNTRY_OPTIONS.map((c) => (
+              {countryOptions.map((c) => (
                 <button
                   key={c.value}
                   type="button"

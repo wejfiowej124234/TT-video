@@ -63,6 +63,7 @@
 | **`vertical-slice-03-market-hub-public-smoke.sh`** | 段 **2**（竖切 03） | （经 **segment2-hub** 或手跑） | 公开 **`GET /api/v1/guides`** 等 |
 | **`vertical-slice-04-community-explore-public-smoke.sh`** | 段 **2**（竖切 04） | （经 **segment2-hub** 或手跑） | **`/community/feed`** + **`posts-by-tag`** |
 | **`vertical-slice-tt9627-segment2-hub-public-smoke.sh`** | 段 **2** 编排 | **`TT9627_SEGMENT2_API_SMOKE=1`** | **03** + **04** |
+| **`scripts/dev/run-web3-itinerary-l5-green.sh`**（**非** `scripts/gates/`） | 段 **2.2-a**（**TT-9627** · **① FE 数据链**） | 手跑 | **`/` + `/market*` 四页** · **`localStorage`** · **debounce** · 收藏 **`localStorage` + F-020 best-effort**；**[LANDING-MARKET-PAGES-CODE-SSOT](../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **不**替代上列 **03** 公开 GET 竖切 |
 | **`vertical-slice-tt9627-segment3-r002-validate.sh`** | 段 **3** | **`TT9627_SEGMENT3_R002_VALIDATE=1`** + **`REPORT_JSON=…`** | 校验既有 **`report.json`**；**不**生成报告；**路径优先级**见 **§0.0.3** 锚 **`#tt-9628-report-json-path-convention`** |
 | **`vertical-slice-tt9627-segment3-r002-prereport-chain.sh`** | 段 **3** 预链 | （手跑；**`exec`** 委托 **`local-verify-r002-prereport-chain.sh`**） | 与 **TT-9627 段 3.1** 对拍；**ISS-007** **`gen-r002`** 窄切片 **`release_gate` 常为 `PARTIAL_GO`**（**勿** **`--require-go`** 单机读当 staging **`GO`**）；**`evidence/GO_local_r002_verify/README.md`** |
 | **`vertical-slice-tt9627-segment4-spec-presence.sh`** | 段 **4** | **`TT9627_SEGMENT4_SPEC_PRESENCE=1`** | 母表路径在位；**`SEGMENT456=1`** 时 **`ci-local`** 跳过 |

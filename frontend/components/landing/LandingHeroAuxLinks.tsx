@@ -6,11 +6,11 @@ import { TT_MARKETING_HOME_HERO_AUX_LINK } from "@/lib/marketingUi";
 
 const AUX_LINKS = [
   { href: "/community", labelKey: "landing_aux_companion" },
-  { href: "/guides", labelKey: "landing_aux_join" },
-  { href: "/traveltrust", labelKey: "landing_aux_protocol" },
+  { href: "/market", labelKey: "landing_aux_join" },
+  { href: "/traveltrust", labelKey: "landing_aux_why_us" },
 ] as const;
 
-/** `/` Hero 下三链：寻找旅伴 · 线上加盟 · 协议支持（88 §一 · L5 截图 SSOT） */
+/** `/` Hero 辅助入口：旅伴 · 向导 · 品牌说明 */
 export default function LandingHeroAuxLinks() {
   const { t } = useTranslation();
   return (

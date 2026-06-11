@@ -6,7 +6,9 @@ describe("traveltrustSectionMotion", () => {
     const theater = traveltrustSectionMotionProps("theater", false);
     const liquidity = traveltrustSectionMotionProps("liquidity", false);
     expect(theater.initial).not.toEqual(liquidity.initial);
-    expect(theater.transition.duration).not.toBe(liquidity.transition.duration);
+    const theaterDur = (theater.transition as { duration?: number }).duration;
+    const liquidityDur = (liquidity.transition as { duration?: number }).duration;
+    expect(theaterDur).not.toBe(liquidityDur);
   });
 
   it("disables motion when reduced", () => {

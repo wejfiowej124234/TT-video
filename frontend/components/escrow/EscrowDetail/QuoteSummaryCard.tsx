@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
 import { marketHrefForEscrowGuideBind } from "@/lib/ordersGuideDeepLink";
 import {
-  formatEscrowStablecoinCurrency,
+  CONSUMER_TRIP_CURRENCY_LOCALE_KEY,
   resolveEscrowDisplayAmount,
 } from "@/lib/escrowOrderAmountSsot";
 import {
@@ -123,7 +123,7 @@ export default function QuoteSummaryCard({
   const hasSnapshot = !!snapshotHash;
   const isExperience = !!variantExperience;
   const resolved = resolveEscrowDisplayAmount(amount, amountBreakdown ?? null);
-  const displayCurrency = isExperience ? formatEscrowStablecoinCurrency(currency) : currency;
+  const displayCurrency = isExperience ? t(CONSUMER_TRIP_CURRENCY_LOCALE_KEY) : currency;
   const headlineTotal = resolved.canonicalTotal;
   const overBudget = headlineTotal != null && budgetLimit != null && headlineTotal > budgetLimit;
   const sumForBars = headlineTotal != null && headlineTotal > 0 ? headlineTotal : null;

@@ -19,6 +19,9 @@ describe("home `/` SSOT (marketing closure)", () => {
     expect(decor).toContain("TT_MARKETING_HOME_AMBIENT_GLOW");
     expect(decor).toContain("TT_MARKETING_HOME_DOT_GRID");
     expect(src).toContain("LandingHeroForm");
+    expect(src).toContain("showConsumerValue");
+    expect(src).toContain("ColdStartHomeHeroHighlights");
+    expect(src).not.toContain("PersistentRoleEntryBar");
     expect(src).toContain("ItineraryResultsSection");
     expect(src).toContain("UnlockModal");
     expect(src).toContain("LandingFooter");
@@ -35,7 +38,9 @@ describe("home `/` SSOT (marketing closure)", () => {
     expect(hero).toContain('id="landing-hero-form"');
     expect(hero).toContain("LandingHeroAuxLinks");
     expect(hero).toContain("LandingHeroNavTabs");
-    expect(hero).not.toContain("landing_payment_note");
+    expect(hero).toContain("HomeConsumerValueSection");
+    expect(hero).toContain("landing_hero_action_note");
+    expect(hero).not.toContain("landing_hero_escrow_note");
     expect(hero).toContain("LandingHeroCityField");
     expect(hero).toContain("TT_MARKETING_HOME_SUBMIT_FAB");
     expect(hero).toContain("ttMarketingHomeFilterPillClasses");
@@ -54,10 +59,11 @@ describe("home `/` SSOT (marketing closure)", () => {
     expect(hero).not.toContain("data-tt-ui-generation");
   });
 
-  it("backdrop resolves country image via landingAmbientByCountry", () => {
+  it("backdrop resolves country image via catalog ambient hook (W1)", () => {
     const backdrop = join(__dirname, "../../components/landing/LandingHomeAmbientBackdrop.tsx");
     const src = readFileSync(backdrop, "utf8");
-    expect(src).toContain("landingAmbientImageUrl");
+    expect(src).toContain("useLandingAmbientUrl");
+    expect(src).not.toContain("landingAmbientImageUrl");
     expect(src).toContain("preloadAmbientImage");
     expect(src).toContain("tt-home-ambient-ken-burns");
     expect(src).toContain('data-tt-home-ambient-src');

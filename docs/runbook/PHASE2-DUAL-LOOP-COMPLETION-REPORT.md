@@ -80,7 +80,25 @@ GIT_STAGING_BASELINE_SYNC: PASS
 
 ## Next phase entry
 
-Phase ③ 公网/生产入口：**仅**在本双闭环维持 + Owner 书面确认后开启。日常迭代遵循 **本地改 → 本地测 → 部署 staging → S6 复跑** 循环。
+**Phase ③ 入口 ⏸ HOLD（2026-06-07）** — ②.8 HAT **PASS** 后进入 **[Phase ②.9 Release Polish](./PHASE29-RELEASE-POLISH.md)**；②.9 完成须 **R1–R7 全量复跑** + Owner **重新签核**。
+
+| Gate | Status |
+|------|--------|
+| Phase ② 双闭环 | **COMPLETE** |
+| Phase ②.8 HAT | **PASS** @ `7b86e58b` |
+| Phase ②.9 Release Polish | **COMPLETE · UI_FROZEN** @ `bc5a939c` |
+| Phase ③ Production Prep | **ACTIVE** |
+
+```text
+PHASE28_HUMAN_ACCEPTANCE: PASS
+PHASE3_ENTRY_GATE: READY
+PHASE3_PRODUCTION_PREP: ACTIVE
+PHASE29_RELEASE_POLISH: COMPLETE
+```
+
+Phase ③ 公网/生产入口：**仅**在 HAT **P0=0 且 P1≤3** + Owner 书面确认后开启。日常迭代遵循 **本地改 → 本地测 → 部署 staging → HAT/S6 复跑** 循环。
+
+**Re-run HAT:** `bash scripts/dev/run-phase28-human-acceptance-test.sh`
 
 ---
 

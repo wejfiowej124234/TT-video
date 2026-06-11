@@ -6,10 +6,7 @@ import { useRouter } from "next/navigation";
 import { useTranslation } from "@/components/LocaleProvider";
 import { patchOrderItinerary, orderCancel, getIdempotencyKey } from "@/lib/apiClient";
 import EscrowDetailLoadErrorView from "./EscrowDetailLoadErrorView";
-import FinalityBadge from "../FinalityBadge";
-import ChainSyncStatusPanel from "./ChainSyncStatusPanel";
-import OnchainEventTimeline from "../OnchainEventTimeline";
-import { normalizeChainSyncReadStatus, type ItineraryBlock, type OrderRow } from "./types";
+import { type ItineraryBlock, type OrderRow } from "./types";
 import { useEscrowDetail } from "./useEscrowDetail";
 import EscrowDetailHeader from "./EscrowDetailHeader";
 import OrderFlowSteps, { orderStateToStep, type DraftJourneyStep } from "../OrderFlowSteps";
@@ -23,19 +20,18 @@ import SetEscrowAddressBlock from "./SetEscrowAddressBlock";
 import CreateOnChainEscrowBlock from "./CreateOnChainEscrowBlock";
 import { getEscrowFactoryAddress } from "@/lib/escrowFactoryEnv";
 import EscrowTxModal from "./EscrowTxModal";
-import EscrowOnChainActions from "./EscrowOnChainActions";
-import ReorgBanner from "./ReorgBanner";
-import EscrowRiskNotice from "./EscrowRiskNotice";
 import EscrowCancelPolicySection from "./EscrowCancelPolicySection";
 import EscrowCopySummaryButton from "./EscrowCopySummaryButton";
 import EscrowOrderPrintButton from "./EscrowOrderPrintButton";
 import BilateralConfirmBlock from "./BilateralConfirmBlock";
 import OrderMessageLink from "./OrderMessageLink";
 import EscrowDetailSkeleton from "./EscrowDetailSkeleton";
-import EscrowChainReadDegradedBanner from "./EscrowChainReadDegradedBanner";
 import EscrowChainMismatchActions from "./EscrowChainMismatchActions";
 import OrderEvidenceSection from "@/components/order/OrderEvidenceSection";
-import DisputeResolutionFundBlock from "./DisputeResolutionFundBlock";
+import EscrowConsumerNextStepStrip from "./EscrowConsumerNextStepStrip";
+import EscrowConsumerSummaryCard from "./EscrowConsumerSummaryCard";
+import EscrowConsumerFundSafetyStrip from "./EscrowConsumerFundSafetyStrip";
+import EscrowConsumerProofNavLinks from "./EscrowConsumerProofNavLinks";
 import UnifiedItineraryList from "@/components/itinerary/UnifiedItineraryList";
 import {
   getDayDescription,
@@ -45,7 +41,14 @@ import {
 import EscrowDraftGuideEmptyCard from "./EscrowDraftGuideEmptyCard";
 import { marketHrefForEscrowGuideBind } from "@/lib/ordersGuideDeepLink";
 import { isAssignedGuideId, isOrderPublishedToDiscover } from "@/lib/isAssignedGuideId";
-import { canViewerAcceptOrder } from "@/lib/canViewerAcceptOrder";
+import { AUTH_USER_ID_KEY } from "@/lib/apiClient/core";
+import { canViewerAcceptOrder, viewerIsGuideForBilateralOrder } from "@/lib/canViewerAcceptOrder";
+import {
+  experienceConfirmBlockedReasonKey,
+  isBilateralConfirmed,
+  isBilateralPending,
+  isGuideAcceptPending,
+} from "@/lib/escrowExperienceP03P04";
 import EscrowDraftGuideAssignedCard from "./EscrowDraftGuideAssignedCard";
 import EscrowDraftPayStepCard from "./EscrowDraftPayStepCard";
 import EscrowDraftMobileActionBar from "./EscrowDraftMobileActionBar";
@@ -65,14 +68,12 @@ import {
 } from "@/lib/itineraryNarrativeUniform";
 import { isEscrowExperienceDevToolsEnabled } from "@/lib/escrowExperienceDevTools";
 import { formatEvenSplitAmount, resolveEvenSplitPerDay } from "@/lib/itineraryEvenSplit";
-import { CITIES_BY_COUNTRY } from "@/lib/geoOptions";
+import { useCatalogCityOptions } from "@/lib/catalogApi/useCatalogGeo";
 import { isAllowedProductZhCountryName } from "@/lib/productCountries";
 import { resolveDestinationZhForPresetCities } from "@/lib/resolveDestinationZhForPresetCities";
 import { patchDraftDayCity } from "@/lib/itineraryDayContentSync";
 import { stashEscrowOrderPrefetchFromOrderAndItinerary } from "@/lib/orderEscrowPrefetch";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
-import InlineTransparencyVerification from "@/components/trust/InlineTransparencyVerification";
-import TrustGrowthMomentBanner from "@/components/trust/TrustGrowthMomentBanner";
 import { useMeta } from "@/components/MetaProvider";
 import { readOrderMockPayEnabledFromMeta } from "@/lib/readOrderMockPayFromMeta";
 import { readProtocolPauseFromMeta } from "@/lib/readProtocolPauseFromMeta";
@@ -99,7 +100,6 @@ import {
   TT_ESCROW_PROTOCOL_ZONE,
   TT_ESCROW_PROTOCOL_PANEL,
   TT_ESCROW_PROTOCOL_PANEL_INNER,
-  escrowProtocolDidTitleClass,
   escrowProtocolFooterActionClass,
   escrowProtocolHeadingClass,
   escrowProtocolInlineLinkClass,
@@ -110,6 +110,7 @@ import {
   escrowProtocolSubheadingClass,
 } from "@/lib/escrowProtocolUi";
 import {
+  CONSUMER_TRIP_CURRENCY_LOCALE_KEY,
   formatEscrowStablecoinCurrency,
   normalizeBreakdownTotals,
   resolveEscrowDisplayAmount,
@@ -168,10 +169,11 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
     [orderForDest, rowsFromApi],
   );
   const destinationEditable = Boolean(destinationZh && isAllowedProductZhCountryName(destinationZh));
+  const cityOptions = useCatalogCityOptions(destinationZh);
   /** 可 PATCH 且已有按日行程时维护本地草稿（城市 + 每日文案） */
   const showDraftDayEditor = canPatchItinerary && rowsFromApi.length > 0;
   const showCityEditor =
-    showDraftDayEditor && destinationEditable && (CITIES_BY_COUNTRY[destinationZh] ?? []).length > 0;
+    showDraftDayEditor && destinationEditable && cityOptions.length > 0;
   const showNarrativeTabAvailable = showDraftDayEditor && !itineraryHasStructuredBlocks(rowsFromApi);
   const [itineraryTab, setItineraryTab] = useState<EscrowDraftItineraryTab>("preview");
   const orderCityTrim = String(orderForDest?.city ?? "").trim();
@@ -340,7 +342,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
         data.isPreEscrowProtocol && data.itinerary && !data.hasEscrow,
       );
       const cur = draftExperience
-        ? formatEscrowStablecoinCurrency(String(order.currency ?? ""))
+        ? t(CONSUMER_TRIP_CURRENCY_LOCALE_KEY)
         : String(order.currency ?? "");
       lines.push(
         t("order_copySummary_total")
@@ -496,7 +498,6 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
   const order = data.order as OrderRow;
   const itinerary = data.itinerary;
   const onConfirmedRefresh = () => data.refreshOrder();
-  const cityOptions = CITIES_BY_COUNTRY[destinationZh] ?? [];
   const itineraryListDays: UnifiedDayRow[] = rowsForCityUi;
   const handleSaveItinerary = async () => {
     if (!itinerary || !order?.id || savingItinerary) return;
@@ -537,10 +538,6 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
       setSavingItinerary(false);
     }
   };
-  const handleReorgRefresh = () => {
-    data.refreshOrder();
-    data.setDismissReorgBanner(true);
-  };
   const handleTxConfirm = () => {
     if (protocolPaused) return;
     if (data.confirmAction === "deposit") {
@@ -576,6 +573,17 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
     orderTouristId: order.tourist_id ?? order.traveler_id,
     orderGuideId: order.guide_id,
   });
+  const viewerUserId =
+    String(data.meData?.user?.id ?? "").trim() ||
+    (typeof window !== "undefined"
+      ? localStorage.getItem(AUTH_USER_ID_KEY)?.trim() ?? ""
+      : "");
+  const viewerIsGuideForBilateral = viewerIsGuideForBilateralOrder({
+    meUserId: viewerUserId,
+    meGuideRowId: data.meData?.guide?.id,
+    orderTouristId: order.tourist_id ?? order.traveler_id,
+    orderGuideId: order.guide_id,
+  });
   const orderStateNorm = String(data.state ?? order.state ?? order.status ?? "").toLowerCase();
   const publishedToDiscover =
     savePublishedToMarket || isOrderPublishedToDiscover(orderStateNorm);
@@ -586,7 +594,9 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
     amountResolved.canonicalTotal,
     Math.max(1, itineraryListDays.length || rowsFromApi.length || 1),
   );
-  const listCurrency = formatEscrowStablecoinCurrency(data.currency);
+  const listCurrency = experienceDraft
+    ? t(CONSUMER_TRIP_CURRENCY_LOCALE_KEY)
+    : formatEscrowStablecoinCurrency(data.currency);
   const breakdownForList = itinerary?.amount_breakdown
     ? {
         ...itinerary.amount_breakdown,
@@ -596,38 +606,47 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
     : null;
   const structuredItinerary = itineraryHasStructuredBlocks(rowsForCityUi);
   const showNarrativeEditor = showDraftDayEditor && !structuredItinerary;
-  const subNorm = String(order.sub_status ?? "")
-    .toLowerCase()
-    .replace(/-/g, "_");
-  const planLocked = Boolean(data.snapshotHash) || subNorm === "confirmed";
+  /** 仅协议快照存在时锁定（P04 双边 sub_status=confirmed 仍须确认终版） */
+  const planLocked = Boolean(data.snapshotHash);
+  const guideAcceptPendingFlag = isGuideAcceptPending(order, hasGuideAssigned);
+  const bilateralPendingFlag = isBilateralPending(order);
+  const guideAcceptPending = experienceDraft && guideAcceptPendingFlag;
+  const bilateralPending = experienceDraft && bilateralPendingFlag;
+  const bilateralConfirmed = experienceDraft && isBilateralConfirmed(order);
   const draftJourneyStep: DraftJourneyStep = planLocked
     ? 3
     : itineraryDraftDirty || !publishedToDiscover
       ? 1
-      : 2;
+      : !hasGuideAssigned || guideAcceptPending || bilateralPending
+        ? 2
+        : 3;
   const draftStep2Phase =
     experienceDraft && publishedToDiscover && !hasGuideAssigned && !planLocked
       ? "pickGuide"
       : "confirm";
-  const guideRequiredForConfirm = experienceDraft && !hasGuideAssigned;
   const escrowGuideMarketHref =
     experienceDraft && !hasGuideAssigned && order?.id
       ? marketHrefForEscrowGuideBind(String(order.id))
-      : "/market?view=split";
+      : "/market?view=guides";
   const amountOutOfSync = Boolean(
     amountResolved.amountMismatch || amountResolved.lineItemsMismatch,
   );
-  const confirmBlocked =
-    itineraryDraftDirty ||
-    guideRequiredForConfirm ||
-    (amountOutOfSync && !quoteAmountPersisted && !quoteQuietSyncing);
-  const confirmBlockedReasonKey = itineraryDraftDirty
-    ? "escrow_confirmBlocked_saveFirst"
-    : guideRequiredForConfirm
-      ? "escrow_confirmBlocked_pickGuide"
+  const confirmBlockedReasonKey = experienceDraft
+    ? experienceConfirmBlockedReasonKey({
+        itineraryDraftDirty,
+        hasGuideAssigned,
+        guideAcceptPending,
+        bilateralPending,
+        amountOutOfSync,
+        quoteAmountPersisted,
+        quoteQuietSyncing,
+      })
+    : itineraryDraftDirty
+      ? "escrow_confirmBlocked_saveFirst"
       : amountOutOfSync && !quoteAmountPersisted && !quoteQuietSyncing
         ? "escrow_confirmBlocked_amountSync"
         : null;
+  const confirmBlocked = confirmBlockedReasonKey != null;
   const hideListDayDescription = experienceDraft && showNarrativeEditor;
   const showExperienceItineraryList = itineraryListDays.length > 0 && !(experienceDraft && showNarrativeEditor);
   const showPreviewTab = itineraryListDays.length > 0;
@@ -670,7 +689,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
     !quoteQuietSyncing;
   const showConfirmReadyHint =
     experienceDraft &&
-    hasGuideAssigned &&
+    bilateralConfirmed &&
     canPatchItinerary &&
     !confirmBlocked &&
     data.allowConfirmFinalPlan &&
@@ -678,6 +697,8 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
     (quoteAmountPersisted || !amountOutOfSync) &&
     !quoteQuietSyncing &&
     !patchItinerarySuccess;
+  const showExperienceOrderActions =
+    experienceDraft && !data.isDraft && (allowOrderAccept || data.state === "accepted");
 
   return (
     <main
@@ -709,6 +730,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
         data-zone="order-protocol"
         data-tt-escrow-draft-experience-ui-frozen={experienceDraft ? "1" : undefined}
         data-tt-escrow-protocol-l5={experienceDraft ? undefined : "1"}
+        data-tt-escrow-consumer-l5={experienceDraft ? undefined : "1"}
         className={protocolZoneClass}
         role="region"
         aria-label={t("order_protocolZoneAria")}
@@ -738,31 +760,68 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
           hasGuideAssigned={hasGuideAssigned}
           experiencePreEscrow={experienceDraft}
           publishedToDiscover={publishedToDiscover}
+          guideAcceptPending={guideAcceptPending}
+          bilateralPending={bilateralPending}
         />
-
-        {!experienceDraft ? (
-          <>
-            <TrustGrowthMomentBanner moment="first_order" surface="slate" dismissible />
-            <InlineTransparencyVerification context="order" surface="slate" verificationKey={escrowId} />
-          </>
-        ) : null}
 
         <div id="escrow-after-final-plan" className="scroll-mt-24 outline-none" tabIndex={-1}>
           <OrderFlowSteps
             currentStep={orderStateToStep(order)}
             statusLabel={
               experienceDraft && draftJourneyStep
-                ? draftStep2Phase === "pickGuide"
-                  ? t("order_flow_draft_journey_sr_pickGuide")
-                  : t("order_flow_draft_journey_sr").replace("{{step}}", String(draftJourneyStep))
+                ? draftJourneyStep === 2 && bilateralPending
+                  ? t("order_status_bilateral_pending")
+                  : draftJourneyStep === 2 && guideAcceptPending
+                    ? t("order_flow_journey_waitGuideAccept")
+                    : draftJourneyStep === 2 && !hasGuideAssigned
+                      ? t("orders_selectGuide")
+                      : t("order_flow_draft_journey_sr").replace("{{step}}", String(draftJourneyStep))
                 : t(orderStateToStatusLabelKey(order))
             }
             variant={experienceDraft ? "experience" : "did"}
             compact={experienceDraft}
             draftJourneyStep={experienceDraft ? draftJourneyStep : undefined}
             draftStep2Phase={experienceDraft ? draftStep2Phase : undefined}
+            draftStep3Pay={experienceDraft && planLocked ? true : undefined}
           />
         </div>
+
+        {!experienceDraft ? (
+          <>
+            <EscrowConsumerNextStepStrip
+              order={order}
+              hasEscrow={data.hasEscrow}
+              bilateralPending={bilateralPendingFlag}
+              guideAcceptPending={guideAcceptPendingFlag}
+            />
+            <EscrowConsumerSummaryCard
+              order={order}
+              amount={data.amount}
+              currency={data.currency}
+              amountBreakdown={itinerary?.amount_breakdown ?? null}
+            />
+            <EscrowConsumerFundSafetyStrip />
+            {!data.isDraft ? (
+              <div data-tt-escrow-consumer-primary-cta="1">
+                <OrderActionsBlock
+                  orderId={String(order.id)}
+                  state={data.state}
+                  hasEscrow={data.hasEscrow}
+                  onSuccess={data.refreshOrder}
+                  guideWalletAddress={data.meData?.guide?.wallet_address ?? null}
+                  connectedAddress={data.connectedAddress ?? null}
+                  escrowAddress={order.escrow_address ?? null}
+                  expectedChainId={data.expectedChainId}
+                  disputeWindowExpired={data.disputeWindowExpired}
+                  variantDid
+                  protocolPaused={protocolPaused}
+                  chainOffRestConfirmCompletionEnabled={chainOffRestConfirmCompletionEnabled}
+                  allowAccept={allowOrderAccept}
+                />
+              </div>
+            ) : null}
+          </>
+        ) : null}
 
         {experienceDraft ? (
           <EscrowDraftNextStepStrip
@@ -771,6 +830,8 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
             publishedToDiscover={publishedToDiscover}
             itineraryDraftDirty={itineraryDraftDirty}
             planLocked={planLocked}
+            guideAcceptPending={guideAcceptPending}
+            bilateralPending={bilateralPending}
             hideWhenPublishedBanner
           />
         ) : null}
@@ -783,20 +844,54 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
           />
         ) : null}
 
-        {experienceDraft ? (
-          hasGuideAssigned ? (
-            <EscrowDraftGuideAssignedCard
-              guideId={String(order.guide_id)}
-              orderId={String(order.id)}
-            />
-          ) : publishedToDiscover ? null : (
-            <EscrowDraftGuideEmptyCard
-              compact
-              orderId={String(order.id)}
-              destinationLabel={String(order.destination ?? "").trim() || undefined}
-              publishedToMarket={false}
-            />
-          )
+        {experienceDraft && !hasGuideAssigned && !showPublishedPickGuideBanner ? (
+          <EscrowDraftGuideEmptyCard
+            compact={!publishedToDiscover}
+            orderId={String(order.id)}
+            destinationLabel={String(order.destination ?? "").trim() || undefined}
+            publishedToMarket={publishedToDiscover}
+          />
+        ) : null}
+        {experienceDraft && hasGuideAssigned ? (
+          <EscrowDraftGuideAssignedCard
+            guideId={String(order.guide_id)}
+            orderId={String(order.id)}
+            waitingGuideAccept={guideAcceptPending}
+          />
+        ) : null}
+
+        {showExperienceOrderActions ? (
+          <OrderActionsBlock
+            orderId={String(order.id)}
+            state={data.state}
+            hasEscrow={data.hasEscrow}
+            onSuccess={data.refreshOrder}
+            guideWalletAddress={data.meData?.guide?.wallet_address ?? null}
+            connectedAddress={data.connectedAddress ?? null}
+            escrowAddress={order.escrow_address ?? null}
+            expectedChainId={data.expectedChainId}
+            disputeWindowExpired={data.disputeWindowExpired}
+            variantExperience
+            protocolPaused={protocolPaused}
+            chainOffRestConfirmCompletionEnabled={chainOffRestConfirmCompletionEnabled}
+            allowAccept={allowOrderAccept}
+          />
+        ) : null}
+
+        {experienceDraft && (bilateralPending || bilateralConfirmed) ? (
+          <BilateralConfirmBlock
+            orderId={String(order.id)}
+            isGuide={viewerIsGuideForBilateral}
+            touristConfirmed={
+              (order as OrderRow & { tourist_confirmed?: boolean }).tourist_confirmed === true
+            }
+            guideConfirmed={
+              (order as OrderRow & { guide_confirmed?: boolean }).guide_confirmed === true
+            }
+            onSuccess={() => data.refreshOrder({ force: true })}
+            variantExperience
+            protocolPaused={protocolPaused}
+          />
         ) : null}
 
         {experienceDraft && planLocked ? (
@@ -1080,88 +1175,42 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
         />
       ) : null}
 
-      {!experienceDraft && !(data.showItineraryBudgetZone && itinerary) ? (
-      <div className={`${panelClass} p-6 md:p-8 space-y-6`}>
-        <div>
-          <p className={zoneMetaClass}>{t("escrow_amountCurrency")}</p>
-          <h2 className={escrowProtocolDidTitleClass}>
-            {data.amount} {data.currency}
-          </h2>
-        </div>
-        <div>
-          <p className="text-small text-slate-300">{t("escrow_participants")}</p>
-          <ul className="text-small text-slate-300 space-y-1">
-            <li>
-              {t("escrow_tourist")}
-              {order.tourist_id ? `${String(order.tourist_id).slice(0, 8)}…` : t("ui_em_dash")}
-            </li>
-            <li>{t("escrow_guide")}{isAssignedGuideId(order.guide_id) ? `${String(order.guide_id).slice(0, 8)}…` : t("escrow_guideUnassigned")}</li>
-            <li>{t("escrow_arbitrator")}{(order as OrderRow & { arbitrator_id?: string }).arbitrator_id ? `${String((order as OrderRow & { arbitrator_id?: string }).arbitrator_id).slice(0, 8)}…` : t("escrow_arbitratorUnassigned")}</li>
-          </ul>
-        </div>
-        {data.hasEscrow && !data.chainMismatch && data.chainContractReadDegraded ? (
-          <EscrowChainReadDegradedBanner lastChainContractReadOkAt={data.lastChainContractReadOkAt} t={t} />
-        ) : null}
-        <FinalityBadge
-          finalityBlock={data.hasEscrow ? (order as OrderRow & { finality_block?: number | null }).finality_block : undefined}
-          escrowBlockNumber={data.hasEscrow ? (order as OrderRow & { escrow_block_number?: number | null }).escrow_block_number : undefined}
-          confirmBlocks={data.chainSync?.finalityN ?? 12}
-          createdAt={order.created_at}
-          variant="dark"
-          readModelSyncStatus={
-            data.chainSync ? normalizeChainSyncReadStatus(data.chainSync.syncStatus) : null
-          }
-        />
-        {data.chainSync ? (
-          <ChainSyncStatusPanel chainSync={data.chainSync} t={t} variant="dark" />
-        ) : null}
-        {data.hasEscrow && data.snapshotHash && (
-          <div>
-            <p className="text-small text-slate-300">{t("agree_label_snapshot_hash")}</p>
-            <p className="text-meta font-mono text-slate-300 break-all">{data.snapshotHash}</p>
-          </div>
-        )}
-        {data.hasEscrow && !data.snapshotHash && (
-          <p className="text-meta text-slate-400 leading-relaxed" role="status">
-            {t("escrow_snapshotHashMissingNeutral")}
-          </p>
-        )}
-        {data.hasEscrow && (
-          <OnchainEventTimeline
-            events={(order as OrderRow & { onchain_events?: { type: string; block?: number; txHash?: string; at?: string }[] }).onchain_events}
-            title={t("escrow_txHistory")}
-            variantDid
-            readModelSyncStatusRaw={data.chainSync?.syncStatus ?? null}
-          />
-        )}
-        {order.chat_confirm_deadline && [2, 3].includes(orderStateToStep(order)) && (
-          <p className="text-meta text-slate-300" role="status">
-            {t("order_chatConfirmDeadlineHint").replace("{{date}}", new Date(order.chat_confirm_deadline).toLocaleString(undefined, { dateStyle: "short", timeStyle: "short" }))}
-          </p>
-        )}
-        {order.payment_deadline && [4, 5].includes(orderStateToStep(order)) && (
-          <p className="text-meta text-slate-300" role="status">
-            {t("order_paymentDeadlineHint").replace("{{date}}", new Date(order.payment_deadline).toLocaleString(undefined, { dateStyle: "short", timeStyle: "short" }))}
-          </p>
-        )}
-        {order.rating_deadline && orderStateToStep(order) === 7 && (
-          <p className="text-meta text-slate-300" role="status">
-            {t("order_ratingDeadlineHint").replace(
-              "{{date}}",
-              new Date(order.rating_deadline).toLocaleString(undefined, { dateStyle: "short", timeStyle: "short" }),
-            )}
-          </p>
-        )}
-      </div>
+      {!experienceDraft && order.chat_confirm_deadline && [2, 3].includes(orderStateToStep(order)) ? (
+        <p className={`${zoneMetaClass} px-1`} role="status">
+          {t("order_chatConfirmDeadlineHint").replace(
+            "{{date}}",
+            new Date(order.chat_confirm_deadline).toLocaleString(undefined, { dateStyle: "short", timeStyle: "short" }),
+          )}
+        </p>
+      ) : null}
+      {!experienceDraft && order.payment_deadline && [4, 5].includes(orderStateToStep(order)) ? (
+        <p className={`${zoneMetaClass} px-1`} role="status">
+          {t("order_paymentDeadlineHint").replace(
+            "{{date}}",
+            new Date(order.payment_deadline).toLocaleString(undefined, { dateStyle: "short", timeStyle: "short" }),
+          )}
+        </p>
+      ) : null}
+      {!experienceDraft && order.rating_deadline && orderStateToStep(order) === 7 ? (
+        <p className={`${zoneMetaClass} px-1`} role="status">
+          {t("order_ratingDeadlineHint").replace(
+            "{{date}}",
+            new Date(order.rating_deadline).toLocaleString(undefined, { dateStyle: "short", timeStyle: "short" }),
+          )}
+        </p>
       ) : null}
 
-      {orderStateToStep(order) === 3 && !data.hasEscrow && (
+      {!experienceDraft && orderStateToStep(order) === 3 && !data.hasEscrow && (
         <BilateralConfirmBlock
           orderId={String(order.id)}
-          isGuide={!!data.meData?.guide}
-          touristConfirmed={(order as OrderRow & { tourist_confirmed?: boolean }).tourist_confirmed}
-          guideConfirmed={(order as OrderRow & { guide_confirmed?: boolean }).guide_confirmed}
-          onSuccess={data.refreshOrder}
+          isGuide={viewerIsGuideForBilateral}
+          touristConfirmed={
+            (order as OrderRow & { tourist_confirmed?: boolean }).tourist_confirmed === true
+          }
+          guideConfirmed={
+            (order as OrderRow & { guide_confirmed?: boolean }).guide_confirmed === true
+          }
+          onSuccess={() => data.refreshOrder({ force: true })}
           variantDid
           protocolPaused={protocolPaused}
         />
@@ -1222,7 +1271,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
                 protocolPaused={protocolPaused}
               />
             ))}
-          {data.meData?.guide ? (
+          {data.meData?.guide && !showExperienceOrderActions ? (
             <OrderActionsBlock
               orderId={String(order.id)}
               state={data.state}
@@ -1249,63 +1298,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
             variantExperience
           />
         </EscrowDraftAdvancedProtocolFold>
-      ) : (
-        <>
-          {!data.hasEscrow && !data.isDraft &&
-            (getEscrowFactoryAddress() ? (
-              <CreateOnChainEscrowBlock
-                order={order}
-                itinerary={itinerary}
-                snapshotHash={data.snapshotHash}
-                meUserId={data.meData?.user?.id}
-                meDefaultWallet={data.meData?.user?.default_wallet_address ?? undefined}
-                connectedAddress={data.connectedAddress}
-                isConnected={data.isConnected}
-                chainId={data.chainId}
-                expectedChainId={data.expectedChainId}
-                chainMismatch={data.chainMismatch}
-                refreshOrder={data.refreshOrder}
-                panelClassName={panelClass + " p-6 space-y-3"}
-                variantDid
-                protocolPaused={protocolPaused}
-              />
-            ) : (
-              <SetEscrowAddressBlock
-                orderId={String(order.id)}
-                onSuccess={data.refreshOrder}
-                variantDid
-                protocolPaused={protocolPaused}
-              />
-            ))}
-          {!data.isDraft ? (
-            <>
-              <OrderActionsBlock
-                orderId={String(order.id)}
-                state={data.state}
-                hasEscrow={data.hasEscrow}
-                onSuccess={data.refreshOrder}
-                guideWalletAddress={data.meData?.guide?.wallet_address ?? null}
-                connectedAddress={data.connectedAddress ?? null}
-                escrowAddress={order.escrow_address ?? null}
-                expectedChainId={data.expectedChainId}
-                disputeWindowExpired={data.disputeWindowExpired}
-                variantDid
-                protocolPaused={protocolPaused}
-                chainOffRestConfirmCompletionEnabled={chainOffRestConfirmCompletionEnabled}
-                allowAccept={allowOrderAccept}
-              />
-              <OrderEvidenceSection orderId={String(order.id)} panelClassName={panelClass} variantDid />
-              <DisputeResolutionFundBlock
-                orderId={String(order.id)}
-                orderAmountStr={String(data.amount)}
-                currency={String(data.currency ?? "")}
-                orderState={data.state}
-                variantDid
-              />
-            </>
-          ) : null}
-        </>
-      )}
+      ) : null}
 
       {data.state === "completed" && (
         <>
@@ -1327,56 +1320,15 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
         </>
       )}
 
-      {data.hasEscrow && orderStateToStep(order) === 8 && (
-        <p className="text-small text-slate-300 leading-relaxed" role="status">
+      {data.hasEscrow && orderStateToStep(order) === 8 && !experienceDraft ? (
+        <p className={`${zoneMetaClass} leading-relaxed`} role="status">
           {t("escrow_releaseAfterRatingHint")}
         </p>
-      )}
-      {data.hasEscrow && (
-        <EscrowOnChainActions
-          isConnected={data.isConnected}
-          chainMismatch={data.chainMismatch}
-          expectedChainId={data.expectedChainId}
-          chainId={data.chainId}
-          confirmAction={data.confirmAction}
-          pending={data.txSectionPending}
-          success={data.txSectionSuccess}
-          failed={data.txSectionFailed}
-          depositAmount={data.depositAmount}
-          depositPending={data.depositPending}
-          releasePending={data.releasePending}
-          refundPending={data.refundPending}
-          disputePending={data.disputePending}
-          disputeDisabled={data.disputeWindowExpired}
-          canOpenDisputeOnChain={data.canOpenDisputeOnChain}
-          disputeOnChainUnavailableReasonKey={data.disputeOnChainUnavailableReasonKey}
-          canDepositOnChain={data.canDepositOnChain}
-          canReleaseOnChain={data.canReleaseOnChain}
-          canRefundOnChain={data.canRefundOnChain}
-          needsDepositApproval={data.needsDepositApproval}
-          onApproveForDeposit={data.approveForDeposit}
-          approveDepositPending={data.approveDepositPending}
-          onSetConfirmAction={(a) => {
-            if (protocolPaused) return;
-            data.setConfirmAction(a);
-          }}
-          onDeposit={data.deposit}
-          onRelease={data.release}
-          onRefund={data.refund}
-          txErrorMessage={data.txErrorMessage}
-          onDismissTxError={data.resetChainWriteError}
-          variantDid
-          protocolPaused={protocolPaused}
-        />
-      )}
-
-      {data.showReorgBanner && (
-        <ReorgBanner onRefresh={handleReorgRefresh} onDismiss={() => data.setDismissReorgBanner(true)} variantDid />
-      )}
+      ) : null}
 
       {!experienceDraft ? (
         <>
-          <EscrowRiskNotice disputeDeadlineAt={data.disputeDeadlineAt} disputeWindowExpired={data.disputeWindowExpired} />
+          <EscrowConsumerProofNavLinks orderId={String(order.id)} />
           <EscrowCancelPolicySection headingId={cancelPolicyHeadingId} />
         </>
       ) : null}
@@ -1477,6 +1429,7 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
         <ProductCrossNav
           ariaLabelKey="escrow_detail_relatedNav_aria"
           showGuides
+          hideFeeRouterLinks
           className={`mt-6 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta ${experienceDraft ? "text-white/65" : "text-slate-300"}`}
           linkClassName={
             experienceDraft

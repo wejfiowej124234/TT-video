@@ -8,7 +8,6 @@ import { useAccount, useConnect } from "wagmi";
 import { useTranslation } from "@/components/LocaleProvider";
 import { trackTravelTrustEvent } from "@/lib/analytics";
 import { TravelTrustIllustrativeBadge } from "./TravelTrustIllustrativeBadge";
-import { traveltrustSectionMotionProps } from "./traveltrustSectionMotion";
 import {
   TT_LIQUIDITY_PAIR_L5,
   TT_L5_MOTION_EASE,
@@ -16,7 +15,7 @@ import {
   TT_SECTION_KICKER_L5,
   TT_STABLECOIN_GATEWAY_L5,
   traveltrustSectionL5DataAttrs,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 import { getTtgExchangeQuote } from "@/lib/apiClient/governance/ttgExchange";
 import {
   TRAVELTRUST_DEFAULT_SETTLEMENT_STABLECOIN,
@@ -32,7 +31,6 @@ export function TravelTrustStablecoinGateway() {
   const { t } = useTranslation();
   const reduceMotion = useReducedMotion();
   const titleId = TT_TRAVELTRUST_SECTION_A11Y.liquidity.title;
-  const sectionMotion = traveltrustSectionMotionProps("liquidity", reduceMotion);
   const { brief } = useTravelTrustPageBriefContext();
   const liquidityContract = useMemo(() => traveltrustLiquidityContractFromBrief(brief), [brief]);
   const [payStable, setPayStable] = useState<TraveltrustEscrowSettlementStablecoin>(
@@ -61,7 +59,7 @@ export function TravelTrustStablecoinGateway() {
   };
 
   return (
-    <motion.section
+    <section
       id="liquidity"
       className={TT_STABLECOIN_GATEWAY_L5.sectionSurfaceClass}
       aria-labelledby={titleId}
@@ -69,10 +67,6 @@ export function TravelTrustStablecoinGateway() {
       data-tt-traveltrust-ttg-gateway-preview="1"
       data-tt-traveltrust-liquidity-l5-defer="illustrative-only"
       {...traveltrustSectionL5DataAttrs("liquidity")}
-      initial={sectionMotion.initial}
-      whileInView={sectionMotion.whileInView}
-      viewport={sectionMotion.viewport}
-      transition={sectionMotion.transition}
     >
       <motion.div
         className="pointer-events-none absolute inset-x-0 h-px opacity-0"
@@ -128,8 +122,8 @@ export function TravelTrustStablecoinGateway() {
           className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-ref-sun/12 blur-3xl motion-reduce:hidden"
           aria-hidden
           animate={{
-            opacity: TT_STABLECOIN_GATEWAY_L5.blobPrimary.opacity,
-            scale: TT_STABLECOIN_GATEWAY_L5.blobPrimary.scale,
+            opacity: [...TT_STABLECOIN_GATEWAY_L5.blobPrimary.opacity],
+            scale: [...TT_STABLECOIN_GATEWAY_L5.blobPrimary.scale],
           }}
           transition={{
             duration: TT_STABLECOIN_GATEWAY_L5.blobPrimary.duration,
@@ -140,7 +134,7 @@ export function TravelTrustStablecoinGateway() {
         <motion.div
           className="pointer-events-none absolute -bottom-12 -left-8 h-40 w-40 rounded-full bg-ref-coral/10 blur-3xl motion-reduce:hidden"
           aria-hidden
-          animate={{ opacity: TT_STABLECOIN_GATEWAY_L5.blobSecondary.opacity }}
+          animate={{ opacity: [...TT_STABLECOIN_GATEWAY_L5.blobSecondary.opacity] }}
           transition={{
             duration: TT_STABLECOIN_GATEWAY_L5.blobSecondary.duration,
             repeat: TT_STABLECOIN_GATEWAY_L5.blobSecondary.repeat,
@@ -313,6 +307,6 @@ export function TravelTrustStablecoinGateway() {
       </motion.div>
       </motion.div>
       </div>
-    </motion.section>
+    </section>
   );
 }

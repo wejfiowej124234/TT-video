@@ -393,6 +393,22 @@ pub fn order_chain_mismatch_for_public_read(o: &OrderRow, chain: &ChainConfig) -
 
 /// 55-S12：订单列表含 destination、city、travel_date、days，且按 order_id 唯一（store.orders 即按 id 唯一）。
 /// 不传 `limit` 时保持全量返回（兼容旧客户端）；传 `limit` 时按 `updated_at DESC, id DESC` 分页，`cursor` 为上一页最后一条的 `id`。
+/// B-102 链范围；**`state_filter == Draft`** 时不施加链过滤，以便用户清理全部草稿（与 `itinerary_create` cap 计数一致）。
+#[must_use]
+pub fn order_visible_in_orders_list(
+    store: &ChainOffStore,
+    o: &OrderRow,
+    user_id: Uuid,
+    state_filter: Option<OrderState>,
+    business_chain_id: Option<i64>,
+    orders_list_chain_id: Option<i64>,
+) -> bool {
+    super::order_is_participant(store, o, user_id)
+        && state_filter.map_or(true, |s| o.state == s)
+        && (state_filter == Some(OrderState::Draft)
+            || order_matches_orders_list_chain_scope(o, business_chain_id, orders_list_chain_id))
+}
+
 /// **`state_filter`**：`GET /api/v1/orders?state=` 与 `order.state` 精确匹配（B-071）；`None` 表示不过滤。
 /// **`orders_list_chain_id`**：`GET /api/v1/orders?orders_chain_id=`（**B-102**）；**`None`** = 默认业务链范围。
 pub async fn orders_list_impl(
@@ -413,9 +429,14 @@ pub async fn orders_list_impl(
         .orders
         .values()
         .filter(|o| {
-            crate::chain_off::order_is_participant(&store, o, user_id)
-                && state_filter.map_or(true, |s| o.state == s)
-                && order_matches_orders_list_chain_scope(o, business, orders_list_chain_id)
+            order_visible_in_orders_list(
+                &store,
+                o,
+                user_id,
+                state_filter,
+                business,
+                orders_list_chain_id,
+            )
         })
         .collect();
 
@@ -1107,7 +1128,9 @@ pub async fn order_get_impl(
         if !crate::chain_off::order_is_participant(&store, o, user_id) {
             return Err((
                 StatusCode::FORBIDDEN,
-                Json(json!({"error": "forbidden", "message": "forbidden"})),
+                Json(crate::chain_off::order_participant_hints::order_forbidden_json(
+                    &store, o,
+                )),
             ));
         }
         if let Some(cfg) = chain_config {
@@ -1190,6 +1213,30 @@ pub async fn order_create_impl(
     }
     let (start_date, end_date) =
         parse_optional_date_range(body.start_date.as_deref(), body.end_date.as_deref());
+    if let (Some(s), Some(e)) = (start_date, end_date) {
+        match super::schedule_booking::guide_trip_range_conflicts(
+            &store,
+            body.guide_id,
+            s,
+            e,
+            None,
+        )
+        .await
+        {
+            Ok(true) => {
+                return Err((
+                    StatusCode::CONFLICT,
+                    Json(json!({
+                        "error": "schedule_conflict",
+                        "message": "schedule_conflict",
+                        "hint": "所选出行日期与向导已占用档期冲突"
+                    })),
+                ));
+            }
+            Ok(false) => {}
+            Err(_) => {}
+        }
+    }
     let id = Uuid::new_v4();
     let now = Utc::now();
     let tourist_email = store
@@ -1600,7 +1647,96 @@ pub struct PatchOrderGuideBody {
     pub guide_id: String,
 }
 
-/// PATCH /api/v1/orders/:id/guide — 草稿订单选定向导（04 §3.4；仅 tourist、未 Escrowed、guide 仍为 nil、未 confirm-final-plan）
+#[derive(Debug, Deserialize)]
+pub struct PatchOrderTripDatesBody {
+    pub start_date: String,
+    pub end_date: String,
+}
+
+/// PATCH /api/v1/orders/:id/trip-dates — 改期（Created/Accepted · 未 Escrowed；04 §3.4 改期=同单更新档期，Escrow 后须新单）
+pub async fn patch_order_trip_dates_impl(
+    state: ChainOffState,
+    request_id: Option<&str>,
+    order_id: Uuid,
+    user_id: Uuid,
+    Json(body): Json<PatchOrderTripDatesBody>,
+) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    let (start_date, end_date) =
+        parse_optional_date_range(Some(&body.start_date), Some(&body.end_date));
+    let (Some(s), Some(e)) = (start_date, end_date) else {
+        return Err((
+            StatusCode::BAD_REQUEST,
+            Json(json!({
+                "error": "invalid_date_range",
+                "message": "invalid_date_range"
+            })),
+        ));
+    };
+
+    let mut store = state.store.write().await;
+    let order_before = store
+        .orders
+        .get(&order_id)
+        .ok_or((
+            StatusCode::NOT_FOUND,
+            Json(json!({"error": "order_not_found", "message": "order_not_found"})),
+        ))?
+        .clone();
+
+    if !super::order_is_participant(&store, &order_before, user_id) {
+        return Err((
+            StatusCode::FORBIDDEN,
+            Json(json!({"error": "forbidden", "message": "forbidden"})),
+        ));
+    }
+    if order_before.state != OrderState::Created && order_before.state != OrderState::Accepted {
+        return Err((
+            StatusCode::BAD_REQUEST,
+            Json(json!({
+                "error": "order_not_editable",
+                "message": "order_not_editable",
+                "hint": "仅 Created/Accepted 可改期；Escrow 后请取消并新建订单"
+            })),
+        ));
+    }
+
+    let guide_id = order_before.guide_id;
+    if super::schedule_booking::guide_trip_range_conflicts(&store, guide_id, s, e, Some(order_id))
+        .await
+        .unwrap_or(false)
+    {
+        return Err((
+            StatusCode::CONFLICT,
+            Json(json!({
+                "error": "schedule_conflict",
+                "message": "schedule_conflict"
+            })),
+        ));
+    }
+
+    let order = store.orders.get_mut(&order_id).expect("order exists");
+    order.start_date = Some(s);
+    order.end_date = Some(e);
+    order.updated_at = Utc::now();
+    let order_clone = order.clone();
+    drop(store);
+
+    if state.db_pool.is_some() {
+        persist_order_if_db(&state, &order_clone).await;
+    }
+    audit_key_write_stderr("patch_order_trip_dates", request_id, user_id, order_id);
+    Ok(Json(json!({
+        "status": "ok",
+        "order": {
+            "id": order_id.to_string(),
+            "start_date": s.format("%Y-%m-%d").to_string(),
+            "end_date": e.format("%Y-%m-%d").to_string()
+        }
+    })))
+}
+
+/// PATCH /api/v1/orders/:id/guide — 草稿/已发布订单选定向导或更换向导（04 §3.4；
+/// tourist · 未 Escrowed/终态 · 未 confirm-final-plan · 同向导幂等 OK）
 pub async fn patch_order_guide_impl(
     state: ChainOffState,
     request_id: Option<&str>,
@@ -1637,12 +1773,6 @@ pub async fn patch_order_guide_impl(
             Json(crate::api_json::err_key(err_key)),
         ));
     }
-    if !order.guide_id.is_nil() {
-        return Err((
-            StatusCode::CONFLICT,
-            Json(json!({"error": "guide_already_assigned", "message": "guide_already_assigned"})),
-        ));
-    }
     if order.state == OrderState::Escrowed
         || order.state == OrderState::Completed
         || order.state == OrderState::Cancelled
@@ -1664,6 +1794,14 @@ pub async fn patch_order_guide_impl(
             ));
         }
     }
+    if !order.guide_id.is_nil() && order.guide_id == guide_id {
+        drop(store);
+        return Ok(Json(json!({
+            "status": "ok",
+            "order_id": order_id.to_string(),
+            "guide_id": guide_id.to_string()
+        })));
+    }
     let guide = store.guides.get(&guide_id).ok_or((
         StatusCode::NOT_FOUND,
         Json(crate::api_json::err_key("guide_not_found")),
@@ -1674,13 +1812,22 @@ pub async fn patch_order_guide_impl(
             Json(crate::api_json::err_key("guide_not_active")),
         ));
     }
-    if store.guide_slot.get(&guide_id).is_some() {
-        return Err((
-            StatusCode::CONFLICT,
-            Json(json!({"error": "guide_has_active_order", "message": "guide_has_active_order"})),
-        ));
+    if let Some(occupied_order) = store.guide_slot.get(&guide_id) {
+        if *occupied_order != order_id {
+            return Err((
+                StatusCode::CONFLICT,
+                Json(json!({"error": "guide_has_active_order", "message": "guide_has_active_order"})),
+            ));
+        }
     }
 
+    let previous_guide = order.guide_id;
+    if !previous_guide.is_nil()
+        && previous_guide != guide_id
+        && store.guide_slot.get(&previous_guide) == Some(&order_id)
+    {
+        store.guide_slot.remove(&previous_guide);
+    }
     let order = store.orders.get_mut(&order_id).expect("order exists");
     order.guide_id = guide_id;
     order.updated_at = Utc::now();
@@ -1696,6 +1843,139 @@ pub async fn patch_order_guide_impl(
         "order_id": order_id.to_string(),
         "guide_id": guide_id.to_string()
     })))
+}
+
+#[cfg(test)]
+mod patch_order_guide_tests {
+    use super::*;
+    use crate::chain_off::{ChainOffConfig, ChainOffState, ChainOffStore, GuideRow};
+    use axum::Json;
+    use chrono::Utc;
+    use std::sync::Arc;
+    use tokio::sync::RwLock;
+    use traveltrust_core::OrderState;
+    use uuid::Uuid;
+
+    fn sample_guide_row(id: Uuid) -> GuideRow {
+        let now = Utc::now();
+        GuideRow {
+            id,
+            user_id: Uuid::new_v4(),
+            city: "杭州市".to_string(),
+            country_code: "CN".to_string(),
+            languages: vec!["zh".to_string()],
+            service_types: vec!["walking".to_string()],
+            bio: None,
+            wallet_address: None,
+            real_name: None,
+            passport_number_hash: None,
+            id_photo_url: None,
+            language_cert_url: None,
+            guide_license_url: None,
+            stake_amount: "0".to_string(),
+            hourly_rate: None,
+            avatar_url: None,
+            status: "active".to_string(),
+            rejection_codes: vec![],
+            rejection_message: None,
+            created_at: now,
+            updated_at: now,
+            data_origin: "production".into(),
+        }
+    }
+
+    fn sample_created_order(order_id: Uuid, tourist_id: Uuid, guide_id: Uuid) -> OrderRow {
+        let now = Utc::now();
+        OrderRow {
+            id: order_id,
+            tourist_id,
+            guide_id,
+            amount: "100".to_string(),
+            currency: "USD".to_string(),
+            escrow_address: None,
+            state: OrderState::Created,
+            created_at: now,
+            accepted_at: None,
+            escrowed_at: None,
+            completed_at: None,
+            dispute_deadline_at: None,
+            auto_complete_at: None,
+            updated_at: now,
+            start_date: None,
+            end_date: None,
+            sub_status: None,
+            tourist_confirmed: None,
+            guide_confirmed: None,
+            rating_tourist_confirmed: None,
+            rating_guide_confirmed: None,
+            chain_id: None,
+            data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
+        }
+    }
+
+    #[tokio::test]
+    async fn patch_order_guide_reassigns_when_order_already_has_guide() {
+        let tourist_id = Uuid::new_v4();
+        let order_id = Uuid::new_v4();
+        let guide_a = Uuid::new_v4();
+        let guide_b = Uuid::new_v4();
+        let mut store = ChainOffStore::default();
+        store.guides.insert(guide_a, sample_guide_row(guide_a));
+        store.guides.insert(guide_b, sample_guide_row(guide_b));
+        store.orders.insert(
+            order_id,
+            sample_created_order(order_id, tourist_id, guide_a),
+        );
+        let state = ChainOffState {
+            store: Arc::new(RwLock::new(store)),
+            config: ChainOffConfig::default(),
+            db_pool: None,
+        };
+        let res = patch_order_guide_impl(
+            state.clone(),
+            None,
+            order_id,
+            tourist_id,
+            Json(PatchOrderGuideBody {
+                guide_id: guide_b.to_string(),
+            }),
+        )
+        .await;
+        assert!(res.is_ok(), "reassign should succeed");
+        let store = state.store.read().await;
+        assert_eq!(store.orders.get(&order_id).unwrap().guide_id, guide_b);
+    }
+
+    #[tokio::test]
+    async fn patch_order_guide_idempotent_same_guide() {
+        let tourist_id = Uuid::new_v4();
+        let order_id = Uuid::new_v4();
+        let guide_id = Uuid::new_v4();
+        let mut store = ChainOffStore::default();
+        store.guides.insert(guide_id, sample_guide_row(guide_id));
+        store.orders.insert(
+            order_id,
+            sample_created_order(order_id, tourist_id, guide_id),
+        );
+        let state = ChainOffState {
+            store: Arc::new(RwLock::new(store)),
+            config: ChainOffConfig::default(),
+            db_pool: None,
+        };
+        let res = patch_order_guide_impl(
+            state.clone(),
+            None,
+            order_id,
+            tourist_id,
+            Json(PatchOrderGuideBody {
+                guide_id: guide_id.to_string(),
+            }),
+        )
+        .await;
+        assert!(res.is_ok(), "same guide should be idempotent");
+    }
 }
 
 #[cfg(test)]
@@ -2243,6 +2523,8 @@ mod traveler_id_alias_tests {
                 language_cert_url: None,
                 guide_license_url: None,
                 stake_amount: "0".to_string(),
+                hourly_rate: None,
+                avatar_url: None,
                 status: "active".to_string(),
                 rejection_codes: vec![],
                 rejection_message: None,
@@ -2295,6 +2577,34 @@ mod traveler_id_alias_tests {
         let r = super::resolve_rating_review_window_for_deadlines(14, false, None);
         let env = order_detail_envelope(&store, &o, &r, Some(&chain), now);
         assert_eq!(env["order"]["split_addresses_ssot"], split);
+    }
+
+    #[test]
+    fn draft_orders_list_includes_off_scope_drafts_for_cleanup() {
+        let uid = Uuid::new_v4();
+        let mut o = sample_order(uid);
+        o.tourist_id = uid;
+        o.state = OrderState::Draft;
+        o.chain_id = Some(999);
+        let mut store = ChainOffStore::default();
+        store.orders.insert(o.id, o.clone());
+        assert!(!order_matches_orders_list_chain_scope(&o, Some(137), None));
+        assert!(order_visible_in_orders_list(
+            &store,
+            &o,
+            uid,
+            Some(OrderState::Draft),
+            Some(137),
+            None,
+        ));
+        assert!(!order_visible_in_orders_list(
+            &store,
+            &o,
+            uid,
+            None,
+            Some(137),
+            None,
+        ));
     }
 
     #[test]

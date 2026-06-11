@@ -1,8 +1,12 @@
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import LoadingText from "@/components/LoadingText";
-import { MarketPageAmbientLayers } from "@/components/market";
-import { marketCyanInlineLinkFocusClasses } from "@/lib/travelLinkFocus";
+import { MarketAmbientBackdrop } from "@/components/market";
+import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { useTranslation } from "@/components/LocaleProvider";
+import {
+  GUIDE_DETAIL_CROSS_NAV_LINK_CLASS,
+  GUIDE_DETAIL_CROSS_NAV_SEP_CLASS,
+} from "./guideDetailPageConstants";
 
 export function GuideDetailPageLoadingView() {
   const { t } = useTranslation();
@@ -12,16 +16,17 @@ export function GuideDetailPageLoadingView() {
       aria-label={t("guideDetail_title")}
       data-tt-guides-detail-page="1"
       data-tt-ui-generation="v2"
+      data-tt-market-l5="1"
     >
-      <MarketPageAmbientLayers />
+      <MarketAmbientBackdrop />
       <div className="relative z-10 flex flex-col items-center gap-6">
         <LoadingText />
         <ProductCrossNav
           ariaLabelKey="guide_detail_relatedNav_aria"
           showGuides
-          className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-300"
-          linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 underline underline-offset-2 transition-colors motion-reduce:transition-none ${marketCyanInlineLinkFocusClasses}`}
-          separatorClassName="text-slate-500"
+          className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-400/90"
+          linkClassName={`${touchTargetLink44Classes} ${GUIDE_DETAIL_CROSS_NAV_LINK_CLASS}`}
+          separatorClassName={GUIDE_DETAIL_CROSS_NAV_SEP_CLASS}
         />
       </div>
     </main>

@@ -31,10 +31,10 @@ staging 已修 ──► ① 拉齐代码+env ──► ② 本地全功能测 �
 | **S2** | **本地对齐 env** | 合并 Sepolia 地址、同步 `frontend/.env.local`、本地 PG + API | `phase2-staging-merge-sepolia-env.sh` + `sync-frontend-env-local-from-root`；`curl localhost:8080/health` **200** |
 | **S3** | **本地全功能测** | 走廊烟测 + 域绿集 +（可选）R-003 本地链 | 见 §2 命令块 · 全部 **exit 0** |
 | **S4** | **本地修 + 再测** | 只修 FAIL 项；**禁止** 扩 scope / 改五主路由 UI | S3 **复跑全绿** |
-| **S5** | **推 staging** | API → Web 顺序部署；部署后 alignment | `phase2-staging-fly-deploy-and-sync.sh` + `deploy-tt-web-staging.sh`；alignment **FAIL=0** |
-| **S6** | **复跑 Phase ②** | Closing Gap + UAT 六大域 + Phase 2.5 写路径 | 见 §3 · 机读 **`TT_PHASE2_GO_VERDICT`** 仍 **PHASE2_GO_READY** 且 UAT **0 FAIL** |
+| **S5** | **推 staging** | API → Web 顺序部署；部署后 alignment + **deep release gate** | `phase2-staging-fly-deploy-and-sync.sh` + `deploy-tt-web-staging.sh`；alignment **FAIL=0**；[TT-PHASE2-DEEP-RELEASE-GATE](./TT-PHASE2-DEEP-RELEASE-GATE.md) **PASS** |
+| **S6** | **复跑 Phase ②** | **Deep release gate (G01–G08)** → Closing Gap + UAT 六大域 + Phase 2.5 | 见 §3 · **`TT_PHASE2_DEEP_RELEASE_GATE: PASS`** 且 UAT **0 FAIL** |
 
-**Phase ③ 入口：** 仅当 **S6 全绿** + Owner 书面确认。**≠ Production GO**。
+**Phase ③ 入口：** **✅ READY** · **Production Preparation ACTIVE** — 见 [PHASE3-PRODUCTION-PREPARATION](./PHASE3-PRODUCTION-PREPARATION.md)。**≠ Production GO**。
 
 ---
 
@@ -66,7 +66,12 @@ bash scripts/dev/run-admin-l5-green.sh                   # 若有 admin 改动
 
 ## 3 · S6 复跑 Phase ②（staging · 真实数据链）
 
+**前置（硬闸）：** [TT-PHASE2-DEEP-RELEASE-GATE](./TT-PHASE2-DEEP-RELEASE-GATE.md) **G01–G08 PASS** — `--staging-retest` 编排内自动跑；FAIL 阻断 S6 / HAT / Phase ③。
+
 ```bash
+# 0) Deep multidimensional release gate（S6 编排内自动；可单独跑）
+bash scripts/dev/run-phase2-deep-release-gate.sh
+
 # 1) 环境 + 宽矩阵
 bash scripts/dev/check-staging-web-alignment.sh
 python scripts/dev/check_r003_staging_env_ready.py --env-file scripts/dev/.env.r003.local
@@ -91,6 +96,7 @@ python scripts/validate-regression-report.py \
 
 | 键 | 含义 |
 |----|------|
+| `TT_PHASE2_DEEP_RELEASE_GATE: PASS` | 八维 staging release gate（G01–G08） |
 | `TT_PHASE2_LOCAL_STAGING_PARITY: PASS` | S1–S4 本地闭环通过（脚本末行） |
 | `TT_PHASE2_GO_VERDICT: PHASE2_GO_READY` | Closing Gap G1–G7（见 [PHASE2-CLOSING-GAP](./PHASE2-CLOSING-GAP.md)） |
 | Staging UAT 六大域 | [PHASE2-STAGING-UAT-PRODUCTION-READINESS-MATRIX](./PHASE2-STAGING-UAT-PRODUCTION-READINESS-MATRIX.md) **0 FAIL** |
@@ -122,6 +128,8 @@ Windows Fly CLI 需代理时：`export HTTPS_PROXY=http://127.0.0.1:15715`（见
 | [PHASE2-TESTNET-ACCEPTANCE](./PHASE2-TESTNET-ACCEPTANCE.md) | 宽轨验收清单 |
 | [PHASE2-STAGING-FRONTEND-HOSTING](./PHASE2-STAGING-FRONTEND-HOSTING.md) | tt-web-staging env/CORS |
 | [PHASE2.5-COVERAGE-HARDENING](./PHASE2.5-COVERAGE-HARDENING.md) | S6 写路径补证 |
+| [PHASE29-RELEASE-POLISH](./PHASE29-RELEASE-POLISH.md) | **Phase ③ 入口暂停** · ②.9 UI/UX polish SSOT |
+| [TT-PHASE2-DEEP-RELEASE-GATE](./TT-PHASE2-DEEP-RELEASE-GATE.md) | **S6/HAT/Phase③ 前** 八维 staging gate |
 | [solo-dev-rhythm §6.5](../solo-dev-rhythm.md) | ① 日常本地子集 |
 | [dev-local-smoke-baseline](../dev-local-smoke-baseline.md) | S3 走廊真源 |
 
@@ -133,7 +141,8 @@ Windows Fly CLI 需代理时：`export HTTPS_PROXY=http://127.0.0.1:15715`（见
 2. **禁止** 只跑 ① 绿集就宣称 ② GO。  
 3. **禁止** staging 修完不回灌本地 env（Sepolia 地址、Stripe test、CORS 清单）。  
 4. **禁止** S6 未复跑就进入 Phase ③ Production Preparation 实施。  
-5. **禁止** 五主路由 UI 结构变更（见 FIVE-MAIN-PHASE1-FREEZE）。
+5. **禁止** deep release gate FAIL 仍跑 S6 / HAT / Phase ③。  
+6. **禁止** 五主路由 UI 结构变更（见 FIVE-MAIN-PHASE1-FREEZE）。
 
 ---
 
@@ -146,8 +155,11 @@ bash scripts/dev/run-phase2-local-staging-parity-gate.sh
 # 仅拉齐 + 本地测
 bash scripts/dev/run-phase2-local-staging-parity-gate.sh --pull --local-test
 
-# 本地已绿，推 staging 并复跑 ②
+# 本地已绿，推 staging 并复跑 ②（含 deep gate + S6）
 bash scripts/dev/run-phase2-local-staging-parity-gate.sh --deploy --staging-retest
+
+# 仅 deep release gate（deploy 后、HAT 前）
+bash scripts/dev/run-phase2-local-staging-parity-gate.sh --deep-release-gate
 ```
 
 证据建议目录：`evidence/GO_phase2_testnet_20260526/local-staging-parity/<UTC-stamp>/`

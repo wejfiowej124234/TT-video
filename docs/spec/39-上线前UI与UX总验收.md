@@ -1,6 +1,6 @@
 # 39 - 上线前 UI/UX 总验收
 
-**Version:** 1.0.4  
+**Version:** 1.0.6  
 
 **用途**：在 [33 页面验收](33-前端页面实现顺序与验收清单.md)、[34 组件与 Tokens](34-前端组件与Design-Tokens落地清单.md)、[36 测试](36-前端测试与质量门禁.md)、[37 i18n/a11y](37-国际化与可访问性落地清单.md)、[38 性能与可观测](38-前端性能与可观测.md) 基础上，将**上线前 UI/UX** 整理为与 **[86 Experience 视觉](86-UI-双系统未来风-风格与动效技术规格.md)**、**[22 §一点五](22-Design-Tokens-旅游Web3融合体系-v1.0.md)**（Token 落地）、[25 顶级 UI 标准](25-顶级UI标准-Landing-Discover-Itinerary.md)、[28 Cinematic 叙事结构](28-Cinematic-Glassmorphism-Web3融合规范.md)、[29 自由市场](29-自由市场-撮合控制台规范.md)、[13-1 页面规范](13-1-UI产品级SSOT与页面规范.md)、**[13](13-协议级UI设计宪法.md)** 逐项对照的**勾选总表**；与 [15 附录〇 发版前勾选总表](15-多维度文档与技术检查报告.md#发版前勾选总表)（含第 19 项「25 顶级 UI 标准」）一致，支撑 P14/P22～P25 发版前门禁。
 
@@ -16,6 +16,7 @@
 | **与 15 附录〇、40 衔接** | **§五** |
 | **输入清单（33～38）** | **§一** |
 | **五主路由页身 + 顶栏真值 + 已知 UX 缺口** | **[88](88-五主路由页身实现快照与UX缺口审计-20260330.md)**（**§一～§三**；与 **86 §6.0.1**、**07 §二 2.3 #9** 同批） |
+| **五主路由 ① UI 壳冻结（2026-05-25）** | **[FIVE-MAIN-ROUTES](../../frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md)**（**单一前端版本真源** · 以 `frontend/` 现码为准） |
 | **F/X/G 分区与表 A** | **[92](92-P0-全站UI分区控制表-金融体验灰区与动效裁决.md)** **§四** **；** **与** **07** **§五** **5.3** **入口** **强制** **一致** |
 
 ---
@@ -58,9 +59,10 @@
 
 | □ | 验收项 | 依据 |
 |---|--------|------|
-| ✓ | Landing：第一屏为情绪入口（一句主张 + 次级解释 + 单 CTA），无功能/技术词堆砌 | **`app/(home)/page.tsx`**（**`/`**）：Hero + TrustBadgesRow + 行程表单 + CTA；25 §三、§九；**88 §一** |
+| ✓ | Landing：**Hero + 表单**（`#landing-hero-form`）+ **`ITINERARY_CARD_COUNT=1`** 预览卡 + **`UnlockModal`→`getOrder`** + 冷灰页脚；**① 数据链**（**1×** `postItineraryCreate` · **`landingItinerarySession`** **`localStorage`** · 跨 tab · 收藏 **`marketFavoritesStorage.ts`**）；**① UI 壳冻结**（2026-05-25） | **`app/(home)/README`** · **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **[GO_local_web3_itinerary_l5](../../frontend/evidence/GO_local_web3_itinerary_l5/README.md)** · **FIVE-MAIN-ROUTES** · **25 §3.4** · **88 §一** |
+| ✓ | **五主路由**（`/market` · `/did-rank` · `/community/*` · `/traveltrust`）壳与 theme contract **① 冻结** | **FIVE-MAIN-ROUTES** · `app/market|did-rank|community/README.md` · **TT-PH1 D10** |
 | ✓ | Landing：存在滚动叙事或高端视觉分段（全宽、留白、左右交替等，按产品实现范围） | TrustInfraWall 等分段已存在；25 §九 增强项可按迭代补齐 |
-| ✓ | Discover：**`/discover`→`/market`** 后目的地/向导发现符合 **28** 信息分层 + **86 Business 降级**；非纯卡片堆叠时有叙事分块（按产品范围） | **`/market`** 已用玻璃态、TrustInfraWall；**25** §九、**28**、**86**、**22** |
+| ✓ | Discover：**`/discover`→`/market`** 后目的地/向导发现符合 **28** 信息分层 + **86 Business 降级**；**`/market`** **`useMarketPage`** **300ms debounce** · 收藏 **`localStorage`**（**F-020 best-effort 已接线（①）· ② SLA**）；子站 **`/market/provider|acquisition`** PG catalog | **`/market`** 已用玻璃态、TrustInfraWall；**[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §3～§5；**25** §九、**28**、**86**、**22** |
 | ✓ | Itinerary：杂志级排版或分段清晰、动效统一（按产品范围） | itinerary/new 分段与 **28** 可信层；**Console** 动效与 **86 §0.3** / **25** 一致；25 §九 增强项可按迭代补齐 |
 | ✓ | 全站动效：主 600ms / 次级 200–300ms，统一缓动；Escrow 区 ≤200ms 仅 opacity/collapse | globals.css motion-main/motion-sub；与 **86 §0.3 规则 3** 一致；Escrow 无重动效（34、30 已注明） |
 | ✓ | Escrow 保持银行级：无渐变/3D/粒子/图像背景；单色主按钮、明确边界；符合 28 资金层、23 §七 | EscrowDetail 无 R3F/玻璃；btn-console、状态/金额/操作区；25 §二十、28、13 |
@@ -69,14 +71,15 @@
 
 | □ | 验收项 | 依据 |
 |---|--------|------|
-| ✓ | Landing：**Hero、可信承诺行、TrustBadgesRow、TrustInfraWall、CTA** 符合 **86 Experience** + **28** 组件清单；**`/market`** 卡片区符合 **86 Business 降级** + **29** | **`app/(home)/page.tsx`**、**`/market`** 已用 TrustBadgesRow、TrustInfraWall；**86**、**22**、**28**、**33**、**88** |
-| ✓ | 自由市场 /market：双栏、ViewSwitcher、StickyFilterBar、OrderCard/GuideCard、Drawer、EmptyStates 符合 29 | market/page 已接入上述组件；29、13-1 |
+| ✓ | Landing：**`ItineraryResultsSection`（1 预览卡）**、**`UnlockModal`**、**`TrustInfraWall`** 符合 **86 §6.1** + **28**；**① 数据链** **`landingItinerarySession`**（**`localStorage`** · 跨 tab · **`marketFavoritesStorage.ts`**）；**`/market`** 卡片区符合 **86 Business 降级** + **29** | **`app/(home)/page.tsx`** · **`components/landing/*`** · **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **86**、**22**、**28**、**33**、**88** |
+| ✓ | 自由市场 /market：双栏、ViewSwitcher、StickyFilterBar、OrderCard/GuideCard、Drawer、EmptyStates 符合 29；**`useMarketPage`** debounce · 收藏 **localStorage** | **`app/market/page.tsx`** · **`useMarketPage.ts`** · **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §3；29、13-1 |
 | ✓ | Escrow Detail：状态、金额与币种、finality、操作区、风险提示、SignatureModal；无霓虹/强动效/3D | EscrowDetail 含 finality、风险提示、链上反馈（escrow_txSubmittedWaitConfirm）；28、13-1、23 §七 |
 | ✓ | 各页「唯一任务」「不做什么」「关键组件」与 33 每页验收表一致 | 33 验收表与当前路由/组件对应；13-1 表 1 |
 | ✓ | Design Tokens：无裸 gray-*/blue-*；全站 ink/travel/success/warning/danger、radius、bg-bg-console 等 | 34 执行记录：Landing/Market/Escrow/Trust 无禁止类名；**22**（**86→22** 映射）、**28** |
-| ✓ | **顶栏结构**：**`Header.tsx`** 全站白底深字；**TravelTrust** 字标 → **`/traveltrust`**（**不**写入 **`<nav>`** 重复）；**`<nav>`** 仅 **`/`、`/market`、`/did-rank`、`/community`**；文案键 **`header_web3Travel` / `header_market` / `header_didRank` / `header_community`** 与 **zh/en** 产品用语一致 | **07 §二 2.3 #9**、**86** 读前摘要、**`frontend/locales/*`** |
-| ✓ | **五主路由页身**：**`/`** 摄影 + vignette + 点阵（**非** **`WarmRouteFieldBackdrop`**）；**`/traveltrust`** **85** 深色壳 + 粒子；**`/market`** 仅 **`WarmRouteFieldBackdrop`** 暖场（**无** podium / **`bg-scifi-gradient-static`** / silhouette vignette）；**`/did-rank`**、**`/community/*`** 暖场 + podium + 静态赛博 + vignette，**透明度** **88 §1.1**；壳层**无** **`Web3SciFiBackground`** | **[88 §一～§1.1](88-五主路由页身实现快照与UX缺口审计-20260330.md)**、**86 §6.0.1** |
-| □ | **已知缺口走查**（若仍未闭合须记工单）：**`/community/me`** 与 **`MePageBackground`** 叠加 vs 社区壳（**88 §二**）；发现页空态、好友页 **api_error_backendHint** 生产门控（**88 §3.2～§3.3**）等 | **88 §三**；产品与 QA 勾选 |
+| ✓ | **顶栏结构**：**`Header.tsx`** L0 分层（**86 §6.0**）；**TravelTrust** 字标 → **`/traveltrust`**；**`<nav>`** 四链；**`/`** 才点亮 Web3旅行；深条暖金 / 浅条暖棕与 **`uiSystem.test.ts`** 一致 | **07 §二 2.3 #9**、**88 §一**、**GO_local_marketing_front_closure** |
+| ✓ | **五主路由页身（① 冻结）**：**`/`** Ken Burns + **1 预览卡数据链** + **冷灰** **`LandingFooter`**（**非** **`WarmRouteFieldBackdrop`**）；**`/traveltrust`** **layout lock** + **L1 portal**；**`/market`** 暖场；**`/did-rank`**/**`/community/*`** 暖场 + 静态赛博（**88 §1.1**） | **FIVE-MAIN-ROUTES** · **88 §一～§1.1** · **86 §6.0.1** |
+| ✓ | **`/community/me` 与 `MePageBackground`**（**① 已对齐 · 2026-03-30 代码**）：**不**叠加 **`MePageBackground`**；页身靠 **`community/layout`** 暖场壳 + 内容玻璃卡 — **88 §二** | **[FIVE-MAIN-ROUTES](../../frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md)** · **88 §二** |
+| □ | **已知缺口走查**（若仍未闭合须记工单）：发现页空态、好友页 **api_error_backendHint** 生产门控（**88 §3.2～§3.3**）等 | **88 §三**；产品与 QA 勾选 |
 
 ### 3.2.1 与 spec/92 分区（F/X/G · P2 推荐勾选）
 
@@ -129,10 +132,13 @@
 
 | 日期 | 内容 |
 |------|------|
+| 2026-05-30 | **v1.0.7**：§3.1/§3.2 Landing — **`ITINERARY_CARD_COUNT=1`** · **1×** `postItineraryCreate` · **`getOrder`** 预览解锁；互指 **`(home)/README`** · **GO_local_web3_itinerary_l5**。 |
+| 2026-05-27 | **v1.0.6**：§3.1 — **`/community/me`** **无** **`MePageBackground`** 改 **✓ 已对齐**（**十二轮** · **88 §二**）；剩余缺口行保留发现/好友生产门控。**未改前端**。 |
+| 2026-05-25 | **v1.0.5**：§3.1 五主路由页身 **① 冻结** — Ken Burns · **layout lock** · 冷灰 **`LandingFooter`**；互指 **FIVE-MAIN-ROUTES**。 |
 | 2026-03-30 | **v1.0.4**：§3.1/§3.2 Landing 依据由「根 page」改为显式 **`app/(home)/page.tsx`**（**88 §一**）；与 **05/09/86 1.1.25**、**88 v1.0.9**、**07 1.0.250** 同批。 |
 | 2026-03-30 | **v1.0.3**：§3.2 增补 **顶栏结构（`<nav>` vs 字标、`header_*`）**、**五主路由页身（88 §一～§1.1）**、**88 已知缺口** 勾选行；读前摘要、文末配套链 **88**。 |
 | 2025-03-01 | **39 执行**：按 §3.1～§3.5 逐项核对。§3.1：Landing 有 Hero+TrustBadgesRow+TrustInfraWall+CTA；滚动/Discover/Itinerary 按产品范围已实现或注明迭代补齐；动效与 Escrow 银行级符合 25/28。§3.2：Landing/market 组件齐全；EscrowDetail 含 finality、风险提示、链上反馈；Design Tokens 无禁止类名（34 执行记录）。§3.3：错误/加载/空态与重试/返回首页已落实；链上反馈已 i18n。§3.4、§3.5：37、38 已闭环，引用其勾选结果。全表已勾选，39 闭环，可作为 15 附录〇 第 19 项及 P22～P25 门禁输入。 |
 
 ---
 
-*本文与 [13-协议级UI设计宪法](13-协议级UI设计宪法.md)、[86-UI-双系统未来风-风格与动效技术规格](86-UI-双系统未来风-风格与动效技术规格.md)、[88-五主路由页身实现快照与UX缺口审计-20260330](88-五主路由页身实现快照与UX缺口审计-20260330.md)、[22-Design-Tokens-旅游Web3融合体系-v1.0.md](22-Design-Tokens-旅游Web3融合体系-v1.0.md)、[25-顶级UI标准-Landing-Discover-Itinerary](25-顶级UI标准-Landing-Discover-Itinerary.md)、[28-Cinematic-Glassmorphism-Web3融合规范](28-Cinematic-Glassmorphism-Web3融合规范.md)、[29-自由市场-撮合控制台规范](29-自由市场-撮合控制台规范.md)、[13-1-UI产品级SSOT与页面规范](13-1-UI产品级SSOT与页面规范.md)、[15-多维度文档与技术检查报告](15-多维度文档与技术检查报告.md) 配套。**v1.0.4**：Landing 验收显式 **`app/(home)/page.tsx`**。**v1.0.3**：§3.2 增 **顶栏 / 五主路由页身 / 88 缺口**。文档版本与最后更新见 [00-文档索引](00-文档索引.md)。*
+*本文与 [13-协议级UI设计宪法](13-协议级UI设计宪法.md)、[86-UI-双系统未来风-风格与动效技术规格](86-UI-双系统未来风-风格与动效技术规格.md)、[88-五主路由页身实现快照与UX缺口审计-20260330](88-五主路由页身实现快照与UX缺口审计-20260330.md)、[22-Design-Tokens-旅游Web3融合体系-v1.0.md](22-Design-Tokens-旅游Web3融合体系-v1.0.md)、[25-顶级UI标准-Landing-Discover-Itinerary](25-顶级UI标准-Landing-Discover-Itinerary.md)、[28-Cinematic-Glassmorphism-Web3融合规范](28-Cinematic-Glassmorphism-Web3融合规范.md)、[29-自由市场-撮合控制台规范](29-自由市场-撮合控制台规范.md)、[13-1-UI产品级SSOT与页面规范](13-1-UI产品级SSOT与页面规范.md)、[15-多维度文档与技术检查报告](15-多维度文档与技术检查报告.md) 配套。**v1.0.7（2026-06-03）**：§3.1 Discover→**`/market`** 数据链 · §3.2 Landing/**`/market`** 组件验收 — **`localStorage`** · debounce · **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)**。**v1.0.6**：§3.1 **`/community/me`** **MePageBackground** **① 已对齐**。**v1.0.5**：§3.1 **FIVE-MAIN-ROUTES** 五主路由 **① 冻结**。**v1.0.4**：Landing 验收显式 **`app/(home)/page.tsx`**。**v1.0.3**：§3.2 增 **顶栏 / 五主路由页身 / 88 缺口**。文档版本与最后更新见 [00-文档索引](00-文档索引.md)。*

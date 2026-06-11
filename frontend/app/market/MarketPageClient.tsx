@@ -11,10 +11,18 @@ import MarketAmbientBackdrop from "@/components/market/MarketAmbientBackdrop";
 import MarketHubSubNav from "@/components/market/MarketHubSubNav";
 import MarketMainFilterBand from "@/components/market/MarketMainFilterBand";
 import MarketPageHero from "@/components/market/MarketPageHero";
+import {
+  ColdStartCampaignSurfaceSection,
+  COLD_START_SURFACE_MARKET_FEED,
+} from "@/components/coldStartCampaign/ColdStartCampaignSurfaceSection";
 import MarketFlowContextBanner from "@/components/market/MarketFlowContextBanner";
 import MarketContent from "@/components/market/MarketContent";
+import { ConversionFunnelRail } from "@/components/product-enhancement/ConversionFunnelRail";
+import { EscrowTrustMicro } from "@/components/product-enhancement/EscrowTrustMicro";
+import { MarketOrderClosureStrip } from "@/components/product-enhancement/MarketOrderClosureStrip";
 import MarketPageFooter from "@/components/market/MarketPageFooter";
 import { stashEscrowOrderPrefetchForOrderIdNav } from "@/lib/orderEscrowPrefetch";
+import { formatTripRangeLabel } from "@/lib/guideBookingDates";
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 import { resolveMarketBackdropSurface } from "@/lib/marketingDarkPremiumBg";
 import {
@@ -56,7 +64,7 @@ const MARKET_BASE = "/market";
 
 /** P29 自由市场主入口（旅行预约）；`/market/provider`、`/market/acquisition` 为独立子页。 */
 function MarketPageInner({ initialSnapshot }: { initialSnapshot?: MarketPageInitialSnapshot | null }) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const orderDrawerLoginReturnPath = useMemo(
@@ -83,6 +91,7 @@ function MarketPageInner({ initialSnapshot }: { initialSnapshot?: MarketPageInit
       className="relative min-h-screen"
       aria-label={t("market_hero_title")}
       data-testid="market-page"
+      data-tt-market-page="1"
       data-tt-market-l5="1"
       data-tt-market-ui-thaw="closed"
       data-tt-market-filter-sort-frozen="1"
@@ -101,12 +110,23 @@ function MarketPageInner({ initialSnapshot }: { initialSnapshot?: MarketPageInit
           selectedTripDays={data.tripDaysFilter}
           customItineraryLabel={t("market_customItinerary")}
         />
+        <ColdStartCampaignSurfaceSection
+          surface={COLD_START_SURFACE_MARKET_FEED}
+          className={`${TT_MARKETING_MARKET_L5_PAGE_MAX} relative z-10 mt-2`}
+        />
         <div className={TT_MARKETING_HOME_SECTION_BRIDGE} aria-hidden>
           <div className={TT_MARKETING_HOME_SECTION_BRIDGE_LINE} />
         </div>
         <div className={TT_MARKETING_MARKET_HUB_GAP}>
           <div className={TT_MARKETING_MARKET_L5_PAGE_MAX}>
             <MarketHubSubNav />
+          </div>
+        </div>
+        <div className={`${TT_MARKETING_MARKET_HUB_GAP} relative z-10`}>
+          <div className={`${TT_MARKETING_MARKET_L5_PAGE_MAX} space-y-3`}>
+            <ConversionFunnelRail touchpoint="market" t={t} />
+            <MarketOrderClosureStrip t={t} />
+            <EscrowTrustMicro t={t} touchpoint="market" variant="inline" />
           </div>
         </div>
         {!data.bindGuideToOrderId ? (
@@ -141,6 +161,18 @@ function MarketPageInner({ initialSnapshot }: { initialSnapshot?: MarketPageInit
               <p className={TT_MARKETING_MARKET_DARK_PATH.bindGuideBannerSub}>
                 {t("market_bindGuide_bannerSub")}
               </p>
+              {data.bindOrderTripDates ? (
+                <p className="text-small text-ref-sun/90 mt-2">
+                  {t("market_bindGuide_tripLabel").replace(
+                    "{{range}}",
+                    formatTripRangeLabel(
+                      data.bindOrderTripDates.start,
+                      data.bindOrderTripDates.end,
+                      locale,
+                    ),
+                  )}
+                </p>
+              ) : null}
               <div className="mt-3 flex flex-wrap gap-2">
                 <Link
                   href={`/escrow/${encodeURIComponent(data.bindGuideToOrderId)}`}
@@ -258,6 +290,7 @@ function MarketPageInner({ initialSnapshot }: { initialSnapshot?: MarketPageInit
       {data.detailGuide ? (
         <GuideDetailDrawer
           guide={data.detailGuide}
+          bindGuideToOrderId={data.effectiveBindGuideToOrderId || undefined}
           onClose={() => data.setDetailGuide(null)}
           onInvite={() => {
             data.setBookGuideId(data.detailGuide!.id);
@@ -272,13 +305,15 @@ function MarketPageInner({ initialSnapshot }: { initialSnapshot?: MarketPageInit
           guideId={data.bookGuideId}
           guideName={data.bookGuideName ?? undefined}
           bindOrderId={data.effectiveBindGuideToOrderId || undefined}
+          tripStart={data.bindOrderTripDates?.start}
+          tripEnd={data.bindOrderTripDates?.end}
           onClose={() => { data.setBookGuideId(null); data.setBookGuideName(null); }}
         />
       )}
 
       <CustomItineraryModal
         open={data.customItineraryOpen}
-        onClose={() => data.setCustomItineraryOpen(false)}
+        onClose={data.closeCustomItinerary}
         onSuccess={data.handleCustomItinerarySubmit}
         preselectedGuideId={data.customItineraryPreselectedGuideId || undefined}
         initialTotalDays={data.customItineraryInitialDays}
@@ -318,31 +353,12 @@ function MarketPageInner({ initialSnapshot }: { initialSnapshot?: MarketPageInit
         })()}
         {(() => {
           if (!data.customCreatedToast) return null;
-          const customOid = data.customCreatedOrderId;
           return (
             <div
               className="rounded-[var(--radius-md)] border border-travel-500/50 bg-bg-console px-4 py-3 text-small font-medium text-ink-900 shadow-strong animate-in fade-in duration-200 pointer-events-auto"
               role="status"
             >
               <p>{t("market_customCreated")}</p>
-              {customOid != null && customOid !== "" ? (
-                <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-meta font-normal">
-                  <Link
-                    href={`/escrow/${encodeURIComponent(customOid)}`}
-                    onClick={() => stashEscrowOrderPrefetchForOrderIdNav(customOid, "escrow")}
-                    className={`text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
-                  >
-                    {t("orders_viewDetail")}
-                  </Link>
-                  <Link
-                    href={`/pay?orderId=${encodeURIComponent(customOid)}`}
-                    onClick={() => stashEscrowOrderPrefetchForOrderIdNav(customOid, "pay")}
-                    className={`text-travel-600 hover:underline ${travelFocusRingOffset2Classes}`}
-                  >
-                    {t("orders_payHub")}
-                  </Link>
-                </div>
-              ) : null}
             </div>
           );
         })()}

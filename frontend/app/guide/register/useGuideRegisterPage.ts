@@ -13,6 +13,7 @@ import {
   parseGuideRegisterStepParam,
   readGuideRegisterDraft,
   writeGuideRegisterDraft,
+  type GuideRegisterDraft,
 } from "@/lib/guide/guideRegisterDraft";
 import { parseMeTrustFromMeResponse, userFromGetMePayload } from "@/lib/meTrust";
 import {
@@ -306,7 +307,7 @@ export function useGuideRegisterPage() {
   useEffect(() => {
     if (done || isAlreadyGuide || isPendingGuide || guideSuspended) return;
     const timer = window.setTimeout(() => {
-      const payload = {
+      const payload: GuideRegisterDraft = {
         v: 1,
         step,
         walletAddress,

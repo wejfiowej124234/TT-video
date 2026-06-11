@@ -71,6 +71,7 @@
 - **API**：[04 §3.4](../spec/04-后端与API.md) · **`bash scripts/run-check-04-routes.sh`**
 - **矩阵**：[93](../spec/93-全站功能验证矩阵-域别回归清单.md) · [95](../spec/95-全链路生产就绪检查清单与完成度矩阵.md) · [96-索引](../spec/96-索引-全链路外生产验收分册.md) · [97](../spec/97-登录找回密码钱包态企业级审计清单.md)
 - **GO**：[go-live · GO Decision](../go-live-checklist.md#go-decision-entry-point)
+- **`/` + `/market` 四页数据链（①）**：[LANDING-MARKET-PAGES-CODE-SSOT](../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md) · **`run-web3-itinerary-l5-green.sh`**（**FIVE-MAIN** 仍管五主路由 **UI freeze**）
 - **整理母册**：[98 §2](../spec/98-以代码为真源的文档体系与旧文档替代路线图.md)
 
 ---

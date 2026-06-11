@@ -756,11 +756,11 @@ $m728Exp = @(
     "service", "api_version", "build", "chain", "rate_limits", "database_connected", "database", "dual_write", "strict_mode",
     "ssot_version", "ssot", "admin_exports", "chargeback_policy", "finality_n", "indexer", "authority", "pause",
     "evidence", "order_messages", "reviews", "dispute_open", "dispute_resolve", "itineraries", "orders", "discover",
-    "product_countries", "did_rank", "product_roles", "auth", "seed_test_accounts", "guides", "idempotency_cache",
-    "defaults", "outbox", "meta_top_keys", "meta_top_keys_contract_728"
+    "product_countries", "did_rank", "product_roles", "auth", "seed_test_accounts", "guides", "governance",
+    "idempotency_cache", "defaults", "outbox", "meta_top_keys", "meta_top_keys_contract_728"
 )
-if ($null -eq $m728 -or @($m728).Count -ne 36) { fail "/meta JSON meta_top_keys must be length 36 (728/760)" }
-for ($i = 0; $i -lt 36; $i++) {
+if ($null -eq $m728 -or @($m728).Count -ne 37) { fail "/meta JSON meta_top_keys must be length 37 (728/807 governance)" }
+for ($i = 0; $i -lt 37; $i++) {
     if ([string]$m728[$i] -ne $m728Exp[$i]) { fail "/meta JSON meta_top_keys[$i] expected $($m728Exp[$i]) (728), got $($m728[$i])" }
 }
 $sb728 = [string]$jm.meta_top_keys_contract_728
@@ -860,6 +860,27 @@ try {
 $code3t = if ($r3t) { $r3t.StatusCode } else { 0 }
 if ($code3t -notin 200, 503) { fail "/api/v1/did-rank/travelers returned $code3t" }
 ok "/api/v1/did-rank/travelers $code3t"
+
+try {
+    $r3pool = Invoke-WebRequest -Uri "$BaseUrl/api/v1/did-rank/prize-pool" -UseBasicParsing -TimeoutSec 3
+} catch { $r3pool = $null }
+$code3pool = if ($r3pool) { $r3pool.StatusCode } else { 0 }
+if ($code3pool -notin 200, 503) { fail "/api/v1/did-rank/prize-pool returned $code3pool" }
+ok "/api/v1/did-rank/prize-pool $code3pool"
+
+try {
+    $r3prov = Invoke-WebRequest -Uri "$BaseUrl/api/v1/did-rank/providers" -UseBasicParsing -TimeoutSec 3
+} catch { $r3prov = $null }
+$code3prov = if ($r3prov) { $r3prov.StatusCode } else { 0 }
+if ($code3prov -notin 200, 503) { fail "/api/v1/did-rank/providers returned $code3prov" }
+ok "/api/v1/did-rank/providers $code3prov"
+
+try {
+    $r3acq = Invoke-WebRequest -Uri "$BaseUrl/api/v1/did-rank/acquisitions" -UseBasicParsing -TimeoutSec 3
+} catch { $r3acq = $null }
+$code3acq = if ($r3acq) { $r3acq.StatusCode } else { 0 }
+if ($code3acq -notin 200, 503) { fail "/api/v1/did-rank/acquisitions returned $code3acq" }
+ok "/api/v1/did-rank/acquisitions $code3acq"
 
 try {
     $rts = Invoke-WebRequest -Uri "$BaseUrl/api/v1/community/stats/posts-by-tag?tag=smoke" -UseBasicParsing -TimeoutSec 3
@@ -989,6 +1010,65 @@ if ($r3t -and $r3t.StatusCode -eq 200) {
     if ($null -eq $jt.travelers) { fail "did-rank travelers JSON .travelers missing" }
     if ($jt.travelers -isnot [System.Array]) { fail "did-rank travelers JSON .travelers must be array" }
     ok "did-rank travelers JSON shape (period=week, rank_basis, travelers[])"
+}
+try {
+    $rpp = Invoke-WebRequest -Uri "$BaseUrl/api/v1/did-rank/prize-pool" -UseBasicParsing -TimeoutSec 3
+} catch { $rpp = $null }
+if ($rpp -and $rpp.StatusCode -eq 200) {
+    try {
+        $jp = $rpp.Content | ConvertFrom-Json
+    } catch { fail "did-rank prize-pool JSON parse failed: $_" }
+    if ($jp.source -notin @("env", "governance_pool_db", "default")) {
+        fail "did-rank prize-pool JSON .source expected env|governance_pool_db|default, got $($jp.source)"
+    }
+    if ($jp.monthly_amount -isnot [double] -and $jp.monthly_amount -isnot [int]) {
+        fail "did-rank prize-pool JSON .monthly_amount must be number"
+    }
+    if ($jp.illustrative -isnot [bool]) { fail "did-rank prize-pool JSON .illustrative must be boolean" }
+    ok "did-rank prize-pool JSON (.source, .monthly_amount, .illustrative)"
+}
+try {
+    $rprov = Invoke-WebRequest -Uri "$BaseUrl/api/v1/did-rank/providers?period=week" -UseBasicParsing -TimeoutSec 3
+} catch { $rprov = $null }
+if ($rprov -and $rprov.StatusCode -eq 200) {
+    try {
+        $jprov = $rprov.Content | ConvertFrom-Json
+    } catch { fail "did-rank providers week JSON parse failed: $_" }
+    if ($jprov.rank_basis -ne "provider_published_listings_in_window") {
+        fail "did-rank providers .rank_basis expected provider_published_listings_in_window, got $($jprov.rank_basis)"
+    }
+    if ($jprov.owner_role_filter -ne "provider") {
+        fail "did-rank providers .owner_role_filter expected provider, got $($jprov.owner_role_filter)"
+    }
+    if ($jprov.providers -isnot [System.Array]) { fail "did-rank providers JSON .providers must be array" }
+    ok "did-rank providers JSON shape (period=week, rank_basis, providers[])"
+    try {
+        $jprov2 = (Invoke-WebRequest -Uri "$BaseUrl/api/v1/did-rank/providers?period=week" -UseBasicParsing -TimeoutSec 5).Content | ConvertFrom-Json
+    } catch { $jprov2 = $null }
+    if ($jprov2 -and $jprov2.providers -is [System.Array] -and $jprov2.providers.Count -ge 1) {
+        foreach ($row in $jprov2.providers) {
+            if ($null -ne $row.rank_delta -and $row.rank_delta -isnot [int] -and $row.rank_delta -isnot [long] -and $row.rank_delta -isnot [double]) {
+                fail "did-rank providers 2nd fetch .rank_delta must be number or absent"
+            }
+        }
+        ok "did-rank providers 2nd fetch rank_delta field shape"
+    }
+}
+try {
+    $racq = Invoke-WebRequest -Uri "$BaseUrl/api/v1/did-rank/acquisitions?period=week" -UseBasicParsing -TimeoutSec 3
+} catch { $racq = $null }
+if ($racq -and $racq.StatusCode -eq 200) {
+    try {
+        $jacq = $racq.Content | ConvertFrom-Json
+    } catch { fail "did-rank acquisitions week JSON parse failed: $_" }
+    if ($jacq.rank_basis -ne "acquisition_published_listings_in_window") {
+        fail "did-rank acquisitions .rank_basis expected acquisition_published_listings_in_window, got $($jacq.rank_basis)"
+    }
+    if ($jacq.owner_role_filter -ne "region_steward") {
+        fail "did-rank acquisitions .owner_role_filter expected region_steward, got $($jacq.owner_role_filter)"
+    }
+    if ($jacq.acquisitions -isnot [System.Array]) { fail "did-rank acquisitions JSON .acquisitions must be array" }
+    ok "did-rank acquisitions JSON shape (period=week, rank_basis, acquisitions[])"
 }
 
 Write-Host ""

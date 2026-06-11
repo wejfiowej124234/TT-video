@@ -8,6 +8,7 @@ import { useFocusTrap } from "@/hooks/useFocusTrap";
 import type { GuideCardItem } from "./GuideCard";
 import {
   filterGuidePublicServiceTypes,
+  formatGuideLanguages,
   formatGuidePublicBio,
   formatGuideServiceTypeLabel,
 } from "@/lib/marketDisplayCopy";
@@ -35,6 +36,7 @@ import { mapApiReadError } from "@/lib/mapApiReadError";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import { formatGuideDisplayName } from "@/lib/guideDisplayName";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
+import { guideDetailHrefForBind } from "@/lib/ordersGuideDeepLink";
 
 function mergeGuideFromApi(base: GuideCardItem, api: unknown): GuideCardItem {
   if (api == null || typeof api !== "object") return base;
@@ -47,10 +49,13 @@ export default function GuideDetailDrawer({
   guide,
   onClose,
   onInvite,
+  bindGuideToOrderId,
 }: {
   guide: GuideCardItem | null;
   onClose: () => void;
   onInvite?: (guideId: string) => void;
+  /** Escrow / 行程绑定向导：查看完整页时保留订单上下文 */
+  bindGuideToOrderId?: string;
 }) {
   const { t } = useTranslation();
   const dash = t("ui_em_dash");
@@ -130,8 +135,8 @@ export default function GuideDetailDrawer({
   const invalidId = !String(guide.id ?? "").trim();
   const shellGuide = displayGuide ?? guide;
   const name = formatGuideDisplayName(t, shellGuide);
-  const langs = Array.isArray(shellGuide.languages) ? shellGuide.languages.join("、") : dash;
-  const tags = Array.isArray(shellGuide.service_types) ? shellGuide.service_types : [];
+  const langs = formatGuideLanguages(shellGuide.languages, t, "、");
+  const tags = filterGuidePublicServiceTypes(shellGuide.service_types);
   const avatarAlt = t("guide_card_avatarAlt").replace("{{name}}", name);
   const avatarSrc = resolveGuideAvatarUrl(shellGuide);
 
@@ -339,7 +344,10 @@ export default function GuideDetailDrawer({
                     </button>
                   </form>
                 )}
-                <Link href={`/guides/${encodeURIComponent(shellGuide.id)}`} className={marketDetailDrawerBlockLink}>
+                <Link
+                  href={guideDetailHrefForBind(shellGuide.id, bindGuideToOrderId)}
+                  className={marketDetailDrawerBlockLink}
+                >
                   {t("guide_detail_viewPage")}
                 </Link>
               </div>

@@ -10,10 +10,10 @@ export function shouldEagerFetchCommunityConversations(pathname: string | null):
 }
 
 export function scheduleCommunityIdleWork(run: () => void, timeoutMs = 2500): () => void {
-  if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+  if (typeof window !== "undefined" && typeof window.requestIdleCallback === "function") {
     const id = window.requestIdleCallback(run, { timeout: timeoutMs });
     return () => window.cancelIdleCallback(id);
   }
-  const timer = window.setTimeout(run, 100);
-  return () => window.clearTimeout(timer);
+  const timer = globalThis.setTimeout(run, 100);
+  return () => globalThis.clearTimeout(timer);
 }

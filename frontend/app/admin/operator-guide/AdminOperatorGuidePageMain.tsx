@@ -11,7 +11,7 @@ import { ADMIN_STEP_MARKER_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { AdminAdmU01LocalPrepPanel } from "@/components/admin/AdminAdmU01LocalPrepPanel";
 import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
-import { OPERATOR_GUIDE_FLOW_LINKS, OPERATOR_GUIDE_PHASE2_PREP_COMMANDS, OPERATOR_GUIDE_ROLE_PREP_LINKS } from "./adminOperatorGuidePageModel";
+import { OPERATOR_GUIDE_DAILY_OPS_LINKS, OPERATOR_GUIDE_FLOW_LINKS, OPERATOR_GUIDE_PHASE2_PREP_COMMANDS, OPERATOR_GUIDE_ROLE_PREP_LINKS } from "./adminOperatorGuidePageModel";
 import { OPERATOR_GUIDE_RELATED_FOLD_LINKS } from "@/lib/admin/adminOperatorGuideRelatedFoldLinks";
 
 export function AdminOperatorGuidePageMain() {
@@ -31,6 +31,25 @@ export function AdminOperatorGuidePageMain() {
         foldSummaryKey="admin_ops_list_related_fold"
         dataTtFold="operator-guide"
       />
+      <AdminWarmL5Surface as="section" className="mt-6" data-tt-admin-operator-guide-daily-ops="1">
+        <h2 className="text-body-l font-semibold text-ink-900">{t("admin_operator_guide_daily_ops_title")}</h2>
+        <p className="mt-1 text-small text-ink-600">{t("admin_operator_guide_daily_ops_lead")}</p>
+        <ol className="mt-4 space-y-4">
+          {OPERATOR_GUIDE_DAILY_OPS_LINKS.map((item, i) => (
+            <li key={item.href} className="flex gap-3">
+              <span className={ADMIN_STEP_MARKER_CLASS} aria-hidden>
+                {i + 1}
+              </span>
+              <div>
+                <Link href={item.href} className={adminPageNavLinkClass()}>
+                  {t(item.key)}
+                </Link>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </AdminWarmL5Surface>
+
       <AdminWarmL5Surface as="section" className="mt-6" data-tt-admin-operator-guide-flow="1">
         <h2 className="text-body-l font-semibold text-ink-900">{t("admin_operator_guide_flow_title")}</h2>
         <ol className="mt-4 space-y-4">

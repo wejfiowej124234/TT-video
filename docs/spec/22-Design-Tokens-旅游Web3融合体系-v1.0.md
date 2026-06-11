@@ -14,6 +14,7 @@
 | **3D 与页面分区等级** | **§九、§十** |
 | **工程落点（tailwind/globals）** | **[23 §一](23-UI交付物-Figma-Landing-Escrow模板.md)**、**[34](34-前端组件与Design-Tokens落地清单.md)** |
 | **86 色谱 → 本文变量映射** | **§一点五** |
+| **`/` + `/market` 四页 ① 数据链（代码/UI）** | **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §2～§3（**Travel 轴** 用于 Landing/**`/market`** 情绪区；**非** Token 与 **`useMarketPage`** 行为 SSOT 替代） |
 
 ---
 
@@ -44,7 +45,7 @@
 
 ### 1️⃣ Travel Axis（情绪轴）
 
-**用于**：Landing、**`/market`**（含原 Discover 列表心智）、**`/discover` 短停**、Itinerary、图片叠层、轻视觉区域。
+**用于**：Landing、**`/market`**（含原 Discover 列表心智）、**`/discover`→`/market` 重定向壳**、Itinerary、图片叠层、轻视觉区域。
 
 **主色（Travel Primary）**：
 ```css

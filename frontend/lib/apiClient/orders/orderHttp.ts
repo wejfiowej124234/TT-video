@@ -56,6 +56,8 @@ export async function postOrder(
     amount: string;
     currency?: string;
     escrow_address?: string | null;
+    start_date?: string;
+    end_date?: string;
   },
   idempotencyKey?: string
 ): Promise<unknown> {

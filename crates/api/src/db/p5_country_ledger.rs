@@ -1,7 +1,64 @@
 //! P5-1-B：`CountryLedgerCredited` → **`p5_country_ledger_lines`**（与 **fee_router** / **region_vault** 投影 **无 JOIN、无派生**）
 
+use chrono::{DateTime, Utc};
 use sqlx::postgres::PgPool;
 use uuid::Uuid;
+
+#[derive(Debug, Clone)]
+pub struct P5CountryLedgerLinesStats {
+    pub total: i64,
+    pub max_block_number: Option<i64>,
+    pub min_block_number: Option<i64>,
+    pub latest_inserted_at: Option<DateTime<Utc>>,
+}
+
+pub async fn p5_country_ledger_lines_stats(
+    pool: &PgPool,
+    chain_id: Option<i64>,
+) -> Result<P5CountryLedgerLinesStats, sqlx::Error> {
+    let row = sqlx::query_as::<_, (i64, Option<i64>, Option<i64>, Option<DateTime<Utc>>)>(
+        r#"
+        SELECT
+            COUNT(*)::bigint,
+            MAX(block_number),
+            MIN(block_number),
+            MAX(inserted_at)
+        FROM p5_country_ledger_lines
+        WHERE ($1::bigint IS NULL OR chain_id = $1)
+        "#,
+    )
+    .bind(chain_id)
+    .fetch_one(pool)
+    .await?;
+    Ok(P5CountryLedgerLinesStats {
+        total: row.0,
+        max_block_number: row.1,
+        min_block_number: row.2,
+        latest_inserted_at: row.3,
+    })
+}
+
+pub async fn p5_country_ledger_lines_count_in_block_range(
+    pool: &PgPool,
+    chain_id: i64,
+    min_block: i64,
+    max_block: i64,
+) -> Result<i64, sqlx::Error> {
+    sqlx::query_scalar(
+        r#"
+        SELECT COUNT(*)::bigint
+        FROM p5_country_ledger_lines
+        WHERE chain_id = $1
+          AND block_number >= $2
+          AND block_number <= $3
+        "#,
+    )
+    .bind(chain_id)
+    .bind(min_block)
+    .bind(max_block)
+    .fetch_one(pool)
+    .await
+}
 
 /// 插入一条 **P5** 账本行；`(chain_id, block_number, log_index)` 冲突时忽略（幂等）。
 pub async fn insert_p5_country_ledger_line(

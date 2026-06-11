@@ -2,12 +2,13 @@
  * 49 A · 自定义行程双角色 UI：`POST /api/v1/itineraries/custom`（游客 / 向导）闭环。
  * 可选切片（**TT-LOCAL §2.1**、**`npm run e2e:market-community`** → **`run-e2e-default.mjs`**）；与 **F-033** API 集（**`f027-f028-f033-request.spec.ts`**）互补。
  */
-import type { Response } from "@playwright/test";
+import type { Locator, Page, Response } from "@playwright/test";
 import { test, expect } from "@playwright/test";
 import {
   apiLoginReturnCredentials,
   defaultApiBase,
   gotoWithBearerSession,
+  refreshBearerSessionInPage,
   seedAndLoginGuideTestCredentials,
   seedTestAccountsAndReleaseGuideSlot,
 } from "./helpers/apiSession";
@@ -35,6 +36,56 @@ function isPostItinerariesCustom(res: Response): boolean {
   return u.includes("itineraries/custom") && !u.includes("drafts");
 }
 
+/** 日程卡：2 天模式下为 `h3` 外两层 `div`（`CustomItineraryCollapsibleDayShell` 非折叠分支）。 */
+function dayPanel(dlg: Locator, dayNum: number): Locator {
+  const heading = dlg.getByRole("heading", {
+    level: 3,
+    name: new RegExp(`第\\s*${dayNum}\\s*天|Day\\s*${dayNum}`, "i"),
+  });
+  return heading.locator("..").locator("..");
+}
+
+async function selectCountryChina(dlg: Locator) {
+  await dlg.getByRole("button", { name: COUNTRY_TRIGGER }).click();
+  await dlg.getByRole("option", { name: "中国" }).click();
+  await expect(dlg.getByRole("heading", { level: 3, name: /第\s*1\s*天|Day\s*1/i })).toBeVisible({
+    timeout: 60_000,
+  });
+}
+
+async function selectCityInDay(dlg: Locator, dayNum: number, city: string) {
+  const panel = dayPanel(dlg, dayNum);
+  await expect(panel).toBeVisible({ timeout: 60_000 });
+  await panel.getByRole("button", { name: city, exact: true }).click();
+}
+
+async function selectFirstAttractionInDay(dlg: Locator, dayNum: number) {
+  const panel = dayPanel(dlg, dayNum);
+  await panel
+    .getByRole("group", { name: /Attractions|景区/i })
+    .getByRole("button")
+    .first()
+    .click();
+}
+
+/** `STRICT_SESSION_GATE=1` + Next rewrite 下偶发丢 Bearer；E2E 层代理 POST custom 并强制 Bearer。 */
+async function pinBearerOnItineraryCustomPost(page: Page, token: string) {
+  await page.route("**/itineraries/custom**", async (route) => {
+    const req = route.request();
+    if (req.method() !== "POST" || req.url().includes("/drafts")) {
+      await route.continue();
+      return;
+    }
+    const response = await route.fetch({
+      headers: {
+        ...req.headers(),
+        authorization: `Bearer ${token}`,
+      },
+    });
+    await route.fulfill({ response });
+  });
+}
+
 test.describe("49 A · custom itinerary modal · tourist + guide", () => {
   test("tourist path: fill form → POST …/itineraries/custom 200", async ({ page, request }) => {
     test.setTimeout(240_000);
@@ -48,6 +99,7 @@ test.describe("49 A · custom itinerary modal · tourist + guide", () => {
     const headUid = await chainOffSessionUserId(request, API_BASE, cred.token);
     await ensureTouristItineraryHeadroom(request, API_BASE, cred.token, headUid);
 
+    await pinBearerOnItineraryCustomPost(page, cred.token);
     await gotoWithBearerSession(page, "/market", cred);
 
     const marketShell = marketPageShell(page);
@@ -62,17 +114,16 @@ test.describe("49 A · custom itinerary modal · tourist + guide", () => {
     const dlg = modal.getByTestId("custom-itinerary-panel");
     await expect(dlg).toBeVisible({ timeout: 90_000 });
 
-    await dlg.getByRole("button", { name: TOTAL_DAYS_TRIGGER }).click();
-    await dlg.getByRole("option", { name: /2 days|2\s*天/ }).click();
+    await dlg
+      .getByRole("group", { name: TOTAL_DAYS_TRIGGER })
+      .getByRole("button", { name: /^2 days$|^2\s*天$/ })
+      .click();
     await expect(dlg.getByRole("heading", { level: 3, name: /Day 3|第\s*3\s*天/ })).toHaveCount(0);
 
-    await dlg.getByRole("button", { name: COUNTRY_TRIGGER }).click();
-    await dlg.getByRole("option", { name: "中国" }).click();
-
-    const d1 = dlg.getByTestId("custom-itinerary-tourist-day-0");
-    await d1.getByRole("button", { name: "北京" }).first().click();
-    const d2 = dlg.getByTestId("custom-itinerary-tourist-day-1");
-    await d2.getByRole("button", { name: "上海" }).first().click();
+    await selectCountryChina(dlg);
+    await selectCityInDay(dlg, 1, "北京");
+    await selectFirstAttractionInDay(dlg, 1);
+    await selectCityInDay(dlg, 2, "上海");
 
     /** 游客侧预算依赖报价回填，E2E 环境偶发轮询超时；手工金额满足校验（仍走同一 POST 契约）。 */
     const budgetInput = dlg.getByLabel(BUDGET_OR_QUOTE_RX);
@@ -86,6 +137,7 @@ test.describe("49 A · custom itinerary modal · tourist + guide", () => {
     await submitBtn.scrollIntoViewIfNeeded();
 
     await ensureTouristItineraryHeadroom(request, API_BASE, cred.token, headUid);
+    await refreshBearerSessionInPage(page, cred);
 
     const resPromise = page.waitForResponse((r) => isPostItinerariesCustom(r), { timeout: 180_000 });
     await submitBtn.click({ force: true });
@@ -120,6 +172,7 @@ test.describe("49 A · custom itinerary modal · tourist + guide", () => {
     const headUidG = await chainOffSessionUserId(request, API_BASE, cred.token);
     await ensureTouristItineraryHeadroom(request, API_BASE, cred.token, headUidG);
 
+    await pinBearerOnItineraryCustomPost(page, cred.token);
     await gotoWithBearerSession(page, "/market", cred);
 
     const marketShellG = marketPageShell(page);
@@ -145,17 +198,16 @@ test.describe("49 A · custom itinerary modal · tourist + guide", () => {
 
     await dlg.locator('input[name="creatorType"]').nth(1).click();
 
-    await dlg.getByRole("button", { name: TOTAL_DAYS_TRIGGER }).click();
-    await dlg.getByRole("option", { name: /2 days|2\s*天/ }).click();
+    await dlg
+      .getByRole("group", { name: TOTAL_DAYS_TRIGGER })
+      .getByRole("button", { name: /^2 days$|^2\s*天$/ })
+      .click();
     await expect(dlg.getByRole("heading", { level: 3, name: /Day 3|第\s*3\s*天/ })).toHaveCount(0);
 
-    await dlg.getByRole("button", { name: COUNTRY_TRIGGER }).click();
-    await dlg.getByRole("option", { name: "中国" }).click();
-
-    const d1g = dlg.getByTestId("custom-itinerary-guide-day-0");
-    await d1g.getByRole("button", { name: "北京" }).first().click();
-    const d2g = dlg.getByTestId("custom-itinerary-guide-day-1");
-    await d2g.getByRole("button", { name: "上海" }).first().click();
+    await selectCountryChina(dlg);
+    await selectCityInDay(dlg, 1, "北京");
+    await dayPanel(dlg, 1).locator("#guide-attractions-desc-0").fill("故宫一日游导览");
+    await selectCityInDay(dlg, 2, "上海");
 
     /** 向导侧报价偶发未在 45s 内写入预算框；手工金额确保可提交（仍走同一 POST 契约）。 */
     const budgetGuide = dlg.getByLabel(BUDGET_OR_QUOTE_RX);
@@ -168,6 +220,7 @@ test.describe("49 A · custom itinerary modal · tourist + guide", () => {
     await submitBtn.scrollIntoViewIfNeeded();
 
     await ensureTouristItineraryHeadroom(request, API_BASE, cred.token, headUidG);
+    await refreshBearerSessionInPage(page, cred);
 
     const resGPromise = page.waitForResponse((r) => isPostItinerariesCustom(r), { timeout: 180_000 });
     await submitBtn.click({ force: true });

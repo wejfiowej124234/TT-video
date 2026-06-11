@@ -93,7 +93,7 @@ function BelowFoldPlaceholder({ tall = false }: { tall?: boolean }) {
             className={TT_BELOW_FOLD_PLACEHOLDER_L5.warmCoreClass}
             aria-hidden
             data-tt-traveltrust-below-fold-placeholder-warm-core-l5="1"
-            animate={{ opacity: TT_BELOW_FOLD_PLACEHOLDER_L5.warmCorePulse.opacity }}
+            animate={{ opacity: [...TT_BELOW_FOLD_PLACEHOLDER_L5.warmCorePulse.opacity] }}
             transition={{
               duration: TT_BELOW_FOLD_PLACEHOLDER_L5.warmCorePulse.duration,
               repeat: TT_BELOW_FOLD_PLACEHOLDER_L5.warmCorePulseRepeat,

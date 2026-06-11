@@ -436,6 +436,10 @@ export const TT_COMMUNITY_FEED_L5 = {
   promoMasonryInflow: "break-inside-avoid mb-2 md:hidden",
   masonryAdBadge:
     "pointer-events-none absolute left-1.5 top-1.5 z-[5] rounded-[var(--radius-sm)] bg-black/55 px-1.5 py-0.5 text-[0.55rem] font-medium text-white/90 backdrop-blur-sm",
+  masonryShowcaseBadge:
+    "pointer-events-none absolute left-1.5 top-1.5 z-[5] rounded-full border border-ref-sun/28 bg-ref-sun/12 px-1.5 py-0.5 text-[0.55rem] font-medium text-slate-100 backdrop-blur-sm",
+  masonryCardPlayCenter:
+    "pointer-events-none absolute left-1/2 top-1/2 z-[4] flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/70 bg-black/35 text-white shadow-[0_4px_24px_-4px_rgba(0,0,0,0.65)] backdrop-blur-sm",
   discoveryScanBtn:
     `inline-flex h-9 w-9 shrink-0 self-center items-center justify-center rounded-full border border-ref-sun/28 bg-ink-900/70 text-ref-sun/90 motion-sub hover:border-ref-sun/40 hover:bg-ref-sun/12 focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/55 ${TT_COMMUNITY_FOCUS_RING_OFFSET}`,
   discoveryActivityLink:
@@ -1244,6 +1248,10 @@ export const TT_MARKETING_MARKET_DARK_PATH = {
     "mx-auto w-full max-w-5xl border-b border-ref-sun/14 px-0 pb-0 sm:pb-0",
   marketFilterResetLink:
     "inline-flex min-h-[36px] items-center rounded-full border border-ref-sun/22 bg-transparent px-3 py-1 text-small font-medium text-ref-sun/90 transition-[background-color,border-color] motion-reduce:transition-none hover:border-ref-sun/34 hover:bg-ref-sun/8 hover:text-ref-sun focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a] [color:var(--ref-sun)]",
+  marketFilterSearchWrap: "mb-1",
+  marketFilterSearchInput:
+    "w-full min-h-[44px] rounded-[var(--radius-lg)] border border-ref-sun/28 bg-ink-900/72 px-4 py-2.5 text-small text-slate-100 placeholder:text-slate-400 caret-ref-sun shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] focus:outline-none focus-visible:border-ref-sun/45 focus-visible:ring-2 focus-visible:ring-ref-sun/45 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900",
+  marketFilterSearchHint: "mt-1.5 text-meta leading-snug text-slate-400/92 [color:#94a3b8]",
   marketLoadingShell:
     "w-full max-w-xl rounded-[var(--radius-md)] border border-ref-sun/22 bg-ink-900/55 backdrop-blur-md p-8 shadow-[0_0_32px_-12px_rgba(252,164,124,0.12)] space-y-4",
   marketLoadingSkeleton: "bg-ink-700/45 rounded-[var(--radius-sm)] animate-pulse motion-reduce:animate-none",
@@ -2119,7 +2127,7 @@ export const TT_MARKETING_ORDERS_FILTER_BAR_SCROLL =
   "min-w-0 flex-1 overflow-x-auto pb-0.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden";
 
 /** 我的订单 · 筛选条滑动指示 pill */
-export const TT_MARKETING_ORDERS_FILTER_TAB_INDICATOR = `pointer-events-none absolute top-0 bottom-0 rounded-[var(--radius-md)] ${TT_MARKETING_ACTION_GRADIENT_FILL} ${TT_MARKETING_ACTION_GRADIENT_SHADOW} ring-1 ring-ref-sun/30 shadow-[0_0_18px_-8px_rgba(252,164,124,0.55)] motion-safe:transition-[left,width] motion-safe:duration-200 motion-reduce:transition-none`;
+export const TT_MARKETING_ORDERS_FILTER_TAB_INDICATOR = `pointer-events-none absolute inset-y-1.5 rounded-[var(--radius-md)] ${TT_MARKETING_ACTION_GRADIENT_FILL} ${TT_MARKETING_ACTION_GRADIENT_SHADOW} ring-1 ring-ref-sun/30 shadow-[0_0_18px_-8px_rgba(252,164,124,0.55)] motion-safe:transition-[left,width] motion-safe:duration-200 motion-reduce:transition-none`;
 
 /** 我的订单 · 筛选条选中 tab 文案（叠在指示 pill 上） */
 export const TT_MARKETING_ORDERS_FILTER_TAB_ON_INDICATOR = "relative z-10 text-white font-semibold";

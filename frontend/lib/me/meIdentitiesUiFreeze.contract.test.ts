@@ -1,20 +1,29 @@
-import { readdirSync, readFileSync } from "node:fs";
+import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const ROOT = process.cwd();
 const IDENTITIES_DIR = join(ROOT, "app", "me", "identities");
 const FREEZE_DOC = join(ROOT, "evidence", "GO_local_auth_l5", "ME-IDENTITIES-UI-FREEZE.md");
+const P2_FREEZE_DOC = join(ROOT, "evidence", "GO_local_auth_l5", "IDENTITY-CENTER-PHASE2-FREEZE.md");
 const P3_NAMING_DOC = join(ROOT, "evidence", "GO_local_auth_l5", "ACCOUNT-NAV-NAMING-P3.md");
 
-/** 与 ME-IDENTITIES-UI-FREEZE.md §文件边界 同步 */
-const ME_IDENTITIES_UI_FROZEN_FILES = [
+/** Hub 根目录冻结文件 — 与 ME-IDENTITIES-UI-FREEZE.md §Hub 根目录 同步 */
+const ME_IDENTITIES_HUB_FROZEN_FILES = [
   "error.tsx",
   "layout.tsx",
   "loading.tsx",
   "meIdentitiesPage.contract.test.ts",
   "page.tsx",
   "README.md",
+] as const;
+
+/** P2 settings 子路由 — layout 数据链 only · 见 IDENTITY-CENTER-PHASE2-FREEZE */
+const ME_IDENTITIES_ALLOWED_SUBDIRS = ["acquisition", "guide", "merchant", "region-steward"] as const;
+
+const ME_IDENTITIES_ALLOWED_ROOT_FILES = [
+  ...ME_IDENTITIES_HUB_FROZEN_FILES,
+  "meIdentityP2Settings.contract.test.ts",
 ] as const;
 
 const FORBIDDEN_UI_PATTERNS: Array<{ pattern: RegExp; reason: string }> = [
@@ -52,11 +61,26 @@ describe("/me/identities UI freeze (① · ME-IDENTITIES-UI-FREEZE)", () => {
     expect(p3).toContain("/community/me");
   });
 
-  it("route directory matches frozen file allowlist", () => {
-    const onDisk = readdirSync(IDENTITIES_DIR)
-      .filter((name) => !name.startsWith("."))
+  it("P2 Identity Center freeze doc exists and bans new identity IA", () => {
+    const doc = readFileSync(P2_FREEZE_DOC, "utf8");
+    expect(doc).toContain("IDENTITY-P2-SPRINT");
+    expect(doc).toContain("guide/settings");
+    expect(doc).toContain("merchant/settings");
+    expect(doc).toContain("region-steward/settings");
+    expect(doc).toContain("acquisition/settings");
+    expect(doc).toContain("禁止");
+  });
+
+  it("route directory matches hub frozen files + P2 settings subdirs allowlist", () => {
+    const onDisk = readdirSync(IDENTITIES_DIR).filter((name) => !name.startsWith("."));
+    const files = onDisk
+      .filter((name) => !statSync(join(IDENTITIES_DIR, name)).isDirectory())
       .sort();
-    expect(onDisk).toEqual([...ME_IDENTITIES_UI_FROZEN_FILES].sort());
+    const dirs = onDisk
+      .filter((name) => statSync(join(IDENTITIES_DIR, name)).isDirectory())
+      .sort();
+    expect(files).toEqual([...ME_IDENTITIES_ALLOWED_ROOT_FILES].sort());
+    expect(dirs).toEqual([...ME_IDENTITIES_ALLOWED_SUBDIRS].sort());
   });
 
   it("hub shell declares frozen + L5 anchors and forbids console regressions", () => {

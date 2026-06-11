@@ -10,7 +10,7 @@ import type { AdminMediaAccessLogsPageViewModel } from "./useAdminMediaAccessLog
 import {ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS,
   ADMIN_FILTER_RESET_BTN_CLASS,
   ADMIN_FILTER_INPUT_SM_CLASS,
-  ADMIN_FILTER_HINT_CLASS} from "@/lib/adminUi";
+  ADMIN_FILTER_HINT_CLASS, ADMIN_FILTER_CARD_CLASS} from "@/lib/adminUi";
 type Props = {
   vm: AdminMediaAccessLogsPageViewModel;
   limitInputId: string;

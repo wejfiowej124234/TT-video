@@ -94,7 +94,7 @@ export function writeProviderRegisterDraft(draft: ProviderRegisterDraft): void {
 
   try {
 
-    window.sessionStorage.setItem(PROVIDER_REGISTER_DRAFT_KEY, JSON.stringify({ v: 1, ...draft }));
+    window.sessionStorage.setItem(PROVIDER_REGISTER_DRAFT_KEY, JSON.stringify({ ...draft, v: 1 }));
 
   } catch {
 

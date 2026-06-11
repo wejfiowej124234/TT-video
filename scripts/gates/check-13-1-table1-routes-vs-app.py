@@ -51,6 +51,9 @@ def path_segments_ok(path: str) -> bool:
     # 表 1 正文中会引用 REST 路径（如 GET `/api/v1/discover/orders`）；非 App Router 页面
     if path.startswith("/api"):
         return False
+    # 文档互链 ../../frontend/evidence/*.md — 非 App Router 页面
+    if path.startswith("/frontend/"):
+        return False
     rest = path[1:]
     if not rest:
         return True
@@ -60,7 +63,7 @@ def path_segments_ok(path: str) -> bool:
         if seg in (":id", "[id]"):
             continue
         ls = seg.lower()
-        if ls in SKIP_SEGMENTS:
+        if ls in SKIP_SEGMENTS or ls == "evidence":
             return False
         if not re.match(r"^[a-zA-Z][a-zA-Z0-9_\-]*$", seg):
             return False

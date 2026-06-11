@@ -38,7 +38,7 @@ import {
   TT_THEATER_SECTION_L5,
   TT_THEATER_TAB_L5,
   traveltrustSectionL5DataAttrs,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 
 type Props = {
   onViewportChange?: (anchor: TheaterViewportAnchor | null) => void;

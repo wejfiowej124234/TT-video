@@ -1,6 +1,6 @@
 # `docs/runbook` 目录说明（分层 · 排序 · 维护）
 
-**Version:** 0.2.31  
+**Version:** 0.2.32  
 **本页职责：** 把 **`docs/runbook`** 里 **约 200+** 份 Markdown **按用途分层、按阅读顺序排序**；**不**替代 **`docs/spec/04`**、**`14`** 契约正文。
 
 **维护纪律（清理边界）：**
@@ -17,6 +17,7 @@
 | 步 | 打开 | 目的 |
 |----|------|------|
 | **1** | **[TT-9625](TT-9625-golden-path-system-spine.md)** | **一条用户脊**：注册 → `/meta` → `/market` → 创单 → `/escrow/:id`（Next → `apiUrl` → Axum → 数据/链） |
+| **1a** | **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** | **`/` + `/market` 三子页** 前端 **数据链** 真源（**localStorage** · **`getDiscoverOrders` debounce** · 收藏 **F-020 UI 未接**）；与 **TT-9625** 脊 **互补**（**UI** 仍 **FIVE-MAIN**） |
 | **2** | **[TT-9621](TT-9621-master-order-96-backend-db-chain-frontend.md)** | **每天执行顺序**：后端 → DB → 链 → 前端（Phase **A→D**） |
 | **3** | **[TT-9622](TT-9622-bounded-contexts-layering-and-integration-map.md)** | **领域 × 分层**：谁拥有哪条数据链、前后端在哪握手 |
 | **4** | **[TT-9624](TT-9624-closed-loop-checklist.md)** | **八类闭环**「闭没闭」速查 |
@@ -92,6 +93,9 @@
 | [TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md](TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md) | spec→handbook 全量替代清单（减负口径） |
 | [TT-SPEC-89-GOV-UI-VOTING-B434-ALIGN-001.md](TT-SPEC-89-GOV-UI-VOTING-B434-ALIGN-001.md) | 治理 UI 对齐专项 |
 | [TT-DOC-ENTERPRISE-AUDIT-CHECKLIST-001.md](TT-DOC-ENTERPRISE-AUDIT-CHECKLIST-001.md) | 企业审计清单 |
+| [ENTERPRISE-SITE-10-L5-MATRIX.md](ENTERPRISE-SITE-10-L5-MATRIX.md) | **① 全站 10 分** L5 矩阵 · **②③ 测试网/生产/公网** 需求 · `run-enterprise-site-10-local.sh` |
+| [PHASE1-ENTERPRISE-CLOSURE-AUDIT.md](PHASE1-ENTERPRISE-CLOSURE-AUDIT.md) | ① onboarding 垂直收口 vs 全仓边界 |
+| [PHASE2-START-CHECKLIST.md](PHASE2-START-CHECKLIST.md) | **② 测试网** G-0～G-4 · Stripe · webhook · staging |
 | [../go-live-checklist.md](../go-live-checklist.md) | **发版 / GO Decision** 主入口（**CONTRIBUTING** 篇首链此路径） |
 | [go-live-checklist.md](go-live-checklist.md) | 本目录副本（若与上一文件漂移，以 **`docs/go-live-checklist.md`** + **母表** 为准） |
 | [ai-template-read-only-api.md](ai-template-read-only-api.md) | **只读 GET** 开发单一模板 |
@@ -185,6 +189,7 @@
 | 0.2.28 | 2026-05-01 | **§2** **TT-9628** 版本指针 **v0.1.25**（**§0.0.3** **ISS-007** **`PARTIAL_GO`** / **`--require-go`** 分轨、**§0.0.2a** **段** **3** **预链** **注**、**`evidence/GO_local_r002_verify/README.md`**）；与 **CONTRIBUTING** **`#no-false-completion`** 对拍。 |
 | 0.2.29 | 2026-05-01 | **§1** **步 10e-c** 增 **`docs/README`**；**§2** **TT-9628** 一句摘要增 **`docs/README`**；**TT-9628** 版本指针 **v0.1.26**（**`docs/README`/`spec/00`** **伴侣行** + **`rg` `docs/README.md`**）。 |
 | 0.2.30 | 2026-05-01 | **§2** **TT-9628** 版本指针 **v0.1.27**（**§0.0.4** **触发句** 显式 **`AI协作话术` §0.2**；**AI话术** **极简版** **§0.0.4** **锚**）。 |
+| 0.2.32 | 2026-06-03 | **§1** 步 **1a**（**[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **`/` + `/market` 四页 FE 数据链**）；与 **TT-9625** 脊互补。 |
 | 0.2.31 | 2026-05-01 | **§1** **步 10e-c** 增 **`from-stash`/`母表`**；**§2** **TT-9628** 一句摘要同上；**TT-9628** **v0.1.28**（**§0.0.4 `rg`** **路径** **+** **触发句**；**CONTRIBUTING** / **`docs/README`** **对拍**）。 |
 
 ---

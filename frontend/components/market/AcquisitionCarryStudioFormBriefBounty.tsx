@@ -1,7 +1,7 @@
 "use client";
 
 import type { Dispatch, SetStateAction } from "react";
-import { PRODUCT_COUNTRIES } from "@/lib/productCountries";
+import { useCatalogProductCountries } from "@/lib/catalogApi/useCatalogGeo";
 import { marketStudioModalSectionHeadingLight } from "./marketStudioModalLayout";
 import type { AcquisitionStudioDraft } from "./acquisitionCarryStudioModel";
 import {
@@ -24,6 +24,7 @@ export function AcquisitionCarryStudioFormBriefBounty({ t, locale, form, setForm
   const labelClass = acquisitionStudioLabelClass;
   const inputClass = acquisitionStudioInputClass;
   const descClass = acquisitionStudioDescClass;
+  const productCountries = useCatalogProductCountries();
 
   return (
     <>
@@ -132,7 +133,7 @@ export function AcquisitionCarryStudioFormBriefBounty({ t, locale, form, setForm
             <option value="" disabled>
               {t("market_acquisitionStudio_dest_country_placeholder")}
             </option>
-            {PRODUCT_COUNTRIES.map((c) => (
+            {productCountries.map((c) => (
               <option key={c.iso} value={c.iso}>
                 {locale === "zh" ? c.nameZh : c.iso}
               </option>

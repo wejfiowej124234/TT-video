@@ -22,7 +22,7 @@ export function scheduleTraveltrustHomeDeferredPrefetch(onSectionsReady?: () => 
       .then(() => onSectionsReady?.())
       .catch(() => undefined);
   };
-  if ("requestIdleCallback" in window) {
+  if (typeof window.requestIdleCallback === "function") {
     const id = window.requestIdleCallback(run, {
       timeout: TRAVELTRUST_HOME_PREFETCH_L5.idleTimeoutMs,
     });

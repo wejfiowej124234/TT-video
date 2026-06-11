@@ -12,11 +12,24 @@ export type MarketEvent =
   | "market_list_view"
   | "market_order_click"
   | "market_guide_click"
+  | "market_guide_detail_book_click"
+  | "market_guide_drawer_book_click"
   | "market_book_guide_open"
   | "market_book_guide_click"
+  | "market_book_guide_create_itinerary"
   | "market_book_guide_market_custom"
+  | "market_escrow_guide_bound"
   | "market_subsite_listing_order_click"
-  | "market_subsite_listing_order_created";
+  | "market_subsite_listing_order_created"
+  | "market_subsite_detail_view"
+  | "market_order_drawer_escrow_click"
+  | "market_order_drawer_pay_click"
+  | "market_acquisition_studio_open"
+  | "market_acquisition_studio_community_sync"
+  | "market_acquisition_studio_draft_save"
+  | "market_merchant_studio_open"
+  | "market_merchant_studio_community_sync"
+  | "market_merchant_studio_draft_save";
 
 /** B-453：`meta.review_json_contract` 降级（非 `none`）— 计数侧见 `reviewJsonContractObservability`；B-454：导出/回放须与此五键一致（`replay-b454-*`）。 */
 export type ReviewJsonContractDegradeObservabilityPayload = {
@@ -42,7 +55,10 @@ export type DidRankEvent =
   | "did_rank_community_profile_open"
   | "did_rank_empty_state"
   | "did_rank_empty_market_cta"
-  | "did_rank_full_list_fold";
+  | "did_rank_full_list_fold"
+  | "did_rank_share_link_copy"
+  | "did_rank_share_link_copy_failed"
+  | "did_rank_deeplink_auto_scroll";
 
 export type TravelTrustAnalyticsPayload = Record<string, string | number | boolean | undefined>;
 

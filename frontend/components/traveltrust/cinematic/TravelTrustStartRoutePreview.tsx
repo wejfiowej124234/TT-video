@@ -148,7 +148,7 @@ export function TravelTrustStartRoutePreview({ activeStep, prefillRegionId = nul
 
             aria-hidden
 
-            animate={{ opacity: TT_START_ROUTE_PREVIEW_L5.cardBorderPulse.opacity }}
+            animate={{ opacity: [...TT_START_ROUTE_PREVIEW_L5.cardBorderPulse.opacity] }}
 
             transition={{
 

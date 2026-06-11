@@ -43,7 +43,7 @@ write_abi() {
 
 # 主合约（须成功）
 # **GovernanceVotesToken** / **TravelTrustGovernor**：canonical 入 **`contracts/abi/`**；**`check-55-s13`** **不**要求复制到 **`frontend/dapp/abis`**（治理 UI 以 **GET /meta** + API **eth_call** 为主；Explorer/cast 工具可直接读 canonical JSON）。
-for c in Escrow EscrowFactory GuideIdentityStakingPool ProviderIdentityStakingPool Registry FeeRouter RegionVault ReserveVault SlashRouter InvestorDistributionClaim GovernanceTimelock GovernanceTreasury GovernanceVotesToken TravelTrustGovernor; do
+for c in Escrow EscrowFactory GuideIdentityStakingPool ProviderIdentityStakingPool Registry FeeRouter RegionVault ReserveVault SlashRouter InvestorDistributionClaim GovernanceTimelock GovernanceTreasury GovernanceVotesToken TravelTrustGovernor RegionStewardStakePool CountryPoolSubVaultsV0 CountryPoolRedemptionEpochV0; do
   write_abi "$c"
 done
 
@@ -55,10 +55,8 @@ done
 cd "$root_dir"
 bash scripts/run-verify-abi-forge.sh
 
+bash "$root_dir/scripts/dev/sync-55-s13-frontend-abis.sh"
+
 echo ""
-echo "Next:"
-echo "  cp contracts/abi/GuideIdentityStakingPool.json contracts/abi/ProviderIdentityStakingPool.json contracts/abi/Registry.json contracts/abi/FeeRouter.json contracts/abi/RegionVault.json frontend/dapp/abis/"
-echo "  # SlashRouter.json / ReserveVault.json：canonical 仅 contracts/abi/（verify-abi-forge 校验）；DApp 未直连前勿复制到 dapp/abis，以免 55-S13 扩展子集"
-echo "  # GovernanceVotesToken.json / TravelTrustGovernor.json：保留于 contracts/abi/（前端 55-S13 不要求双目录）"
-echo "  # Escrow：若需与 canonical 完全一致可复制全量 ABI；否则保留前端精简版但须含 openDispute"
+echo "sync-abi-from-forge: contracts/abi + frontend/dapp/abis (55-S13 subset) aligned"
 echo "  ./scripts/check-55-s13.sh"

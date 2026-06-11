@@ -156,7 +156,9 @@ export function StewardRegisterMainForm(page: Page) {
       !fieldInlineError("legalName") &&
       !fieldInlineError("contactEmail") &&
       !fieldInlineError("wallet") ? (
-        <ApiErrorAlert message={error} className="mb-4" />
+        <div className="mb-4">
+          <ApiErrorAlert message={error} tone="dark" />
+        </div>
       ) : null}
 
       {step === 1 ? (

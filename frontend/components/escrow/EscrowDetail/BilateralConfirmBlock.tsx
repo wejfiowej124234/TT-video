@@ -1,9 +1,13 @@
 "use client";
 
-import { useState, useRef, useId } from "react";
+import { useState, useRef, useId, useEffect } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import { orderConfirmBilateral, getIdempotencyKey } from "@/lib/apiClient";
 import { mapApiReadError } from "@/lib/mapApiReadError";
+import {
+  bilateralExperienceStatusI18nKey,
+  resolveBilateralExperienceStatus,
+} from "@/lib/escrow/bilateralExperienceL5Model";
 import {
   marketCyanPillControlFocusClasses,
   travelFocusRingCoreOffset2Classes,
@@ -26,6 +30,8 @@ export interface BilateralConfirmBlockProps {
   variantDid?: boolean;
   /** B-067 */
   protocolPaused?: boolean;
+  /** Experience 草稿壳 */
+  variantExperience?: boolean;
 }
 
 export default function BilateralConfirmBlock({
@@ -36,14 +42,30 @@ export default function BilateralConfirmBlock({
   onSuccess,
   variantDid,
   protocolPaused = false,
+  variantExperience = false,
 }: BilateralConfirmBlockProps) {
   const { t } = useTranslation();
   const headingId = useId();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [optimisticSelfConfirmed, setOptimisticSelfConfirmed] = useState(false);
   const idempotencyKeyRef = useRef<string | null>(null);
 
-  const canConfirm = isGuide ? !guideConfirmed : !touristConfirmed;
+  useEffect(() => {
+    setOptimisticSelfConfirmed(false);
+  }, [orderId, touristConfirmed, guideConfirmed]);
+
+  const touristConfirmedEffective =
+    touristConfirmed || (!isGuide && optimisticSelfConfirmed);
+  const guideConfirmedEffective = guideConfirmed || (isGuide && optimisticSelfConfirmed);
+
+  const canConfirm = isGuide ? !guideConfirmedEffective : !touristConfirmedEffective;
+  const aggregateStatus = resolveBilateralExperienceStatus({
+    isGuide,
+    touristConfirmed: touristConfirmedEffective,
+    guideConfirmed: guideConfirmedEffective,
+  });
+  const aggregateStatusKey = bilateralExperienceStatusI18nKey(aggregateStatus);
 
   const handleConfirm = async () => {
     if (protocolPaused || !canConfirm) return;
@@ -52,6 +74,7 @@ export default function BilateralConfirmBlock({
     const key = idempotencyKeyRef.current ?? (idempotencyKeyRef.current = getIdempotencyKey());
     try {
       await orderConfirmBilateral(orderId, key);
+      setOptimisticSelfConfirmed(true);
       onSuccess();
     } catch (e) {
       if (typeof window !== "undefined") {
@@ -63,25 +86,50 @@ export default function BilateralConfirmBlock({
     }
   };
 
-  const panelClass = variantDid
-    ? "rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md p-4 space-y-4"
-    : "rounded-[var(--radius-sm)] border border-ink-200 bg-bg-console/60 p-4 space-y-4";
-  const labelClass = variantDid ? "text-small font-medium text-cyan-200" : "text-small font-medium text-ink-800";
-  const rowClass = variantDid ? "text-small text-slate-300" : "text-small text-ink-700";
-  const checkClass = variantDid ? "text-cyan-300" : "text-success";
-  const btnClass = variantDid
-    ? "btn-console rounded-[var(--radius-sm)] bg-cyan-500/80 hover:bg-cyan-500 px-3 py-1.5 text-white text-small font-medium disabled:opacity-60"
-    : "btn-console rounded-[var(--radius-sm)] bg-travel-500 px-3 py-1.5 text-white text-small font-medium disabled:opacity-60";
-  const ctaFocusClass = variantDid
-    ? marketCyanPillControlFocusClasses
-    : `${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`;
+  const panelClass = variantExperience
+    ? "rounded-[var(--radius-md)] border border-ref-sun/35 bg-ref-sun/10 p-4 space-y-4"
+    : variantDid
+      ? "rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md p-4 space-y-4"
+      : "rounded-[var(--radius-sm)] border border-ink-200 bg-bg-console/60 p-4 space-y-4";
+  const labelClass = variantExperience
+    ? "text-small font-medium text-ref-sun/95"
+    : variantDid
+      ? "text-small font-medium text-cyan-200"
+      : "text-small font-medium text-ink-800";
+  const rowClass = variantExperience
+    ? "text-small text-white/85"
+    : variantDid
+      ? "text-small text-slate-300"
+      : "text-small text-ink-700";
+  const checkClass = variantExperience ? "text-ref-sun" : variantDid ? "text-cyan-300" : "text-success";
+  const btnClass = variantExperience
+    ? "btn-console rounded-[var(--radius-sm)] bg-ref-sun text-ink-950 px-3 py-1.5 text-small font-semibold disabled:opacity-60 hover:bg-ref-sun/95"
+    : variantDid
+      ? "btn-console rounded-[var(--radius-sm)] bg-cyan-500/80 hover:bg-cyan-500 px-3 py-1.5 text-white text-small font-medium disabled:opacity-60"
+      : "btn-console rounded-[var(--radius-sm)] bg-travel-500 px-3 py-1.5 text-white text-small font-medium disabled:opacity-60";
+  const ctaFocusClass = variantExperience
+    ? `${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-ink-950`
+    : variantDid
+      ? marketCyanPillControlFocusClasses
+      : `${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`;
 
   return (
-    <section className={panelClass} aria-labelledby={headingId}>
+    <section
+      className={panelClass}
+      aria-labelledby={headingId}
+      data-tt-bilateral-experience-l5="1"
+      data-tt-bilateral-status={aggregateStatus}
+    >
       <h3 id={headingId} className={labelClass}>
         {t("order_bilateralConfirmTitle")}
       </h3>
-      <p className={`text-meta mb-3 leading-relaxed ${variantDid ? "text-slate-300" : "text-ink-600"}`}>{t("order_bilateralHint")}</p>
+      <p
+        className={`text-meta mb-3 leading-relaxed ${
+          variantExperience ? "text-white/75" : variantDid ? "text-slate-300" : "text-ink-600"
+        }`}
+      >
+        {t("order_bilateralHint")}
+      </p>
       {protocolPaused ? (
         <p
           className={`text-small mb-3 leading-relaxed ${variantDid ? "text-amber-200/95" : "text-warning"}`}
@@ -93,7 +141,7 @@ export default function BilateralConfirmBlock({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className={rowClass}>
           <span className="font-medium">{t("escrow_tourist").replace(": ", "")}</span>
-          {touristConfirmed ? (
+          {touristConfirmedEffective ? (
             <span className={`ml-2 ${checkClass}`} aria-hidden>✓ {t("order_bilateralConfirmed")}</span>
           ) : (
             <span className={`ml-2 ${variantDid ? "text-slate-300" : "text-ink-500"}`}>{t("order_bilateralNotConfirmed")}</span>
@@ -101,13 +149,34 @@ export default function BilateralConfirmBlock({
         </div>
         <div className={rowClass}>
           <span className="font-medium">{t("escrow_guide").replace(": ", "")}</span>
-          {guideConfirmed ? (
+          {guideConfirmedEffective ? (
             <span className={`ml-2 ${checkClass}`} aria-hidden>✓ {t("order_bilateralConfirmed")}</span>
           ) : (
             <span className={`ml-2 ${variantDid ? "text-slate-300" : "text-ink-500"}`}>{t("order_bilateralNotConfirmed")}</span>
           )}
         </div>
       </div>
+      {aggregateStatusKey ? (
+        <p
+          className={`text-small font-medium leading-relaxed ${
+            aggregateStatus === "both_confirmed"
+              ? variantExperience
+                ? "text-ref-sun/95"
+                : variantDid
+                  ? "text-cyan-200"
+                  : "text-success"
+              : variantExperience
+                ? "text-white/85"
+                : variantDid
+                  ? "text-slate-200"
+                  : "text-ink-700"
+          }`}
+          role="status"
+          data-tt-bilateral-status-banner="1"
+        >
+          {t(aggregateStatusKey)}
+        </p>
+      ) : null}
       {error && (
         <p className="text-small text-danger" role="alert">{error}</p>
       )}

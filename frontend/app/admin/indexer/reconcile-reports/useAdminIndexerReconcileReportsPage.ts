@@ -8,6 +8,7 @@ import { type AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
 import { routes } from "@/lib/api";
 import {
   defaultAdminListFetchSnapshot,
+  type AdminListFetchSnapshot,
   type AdminStandardListBody,
   useAdminStandardListFetch,
 } from "@/lib/admin/useAdminStandardListFetch";
@@ -29,8 +30,8 @@ import { downloadReconcileReportsExport } from "./reconcileReportsPageExportDown
 
 function reconcileListToSnapshot(
   body: AdminStandardListBody<ReconcileReportRow> & Pick<ListRes, "page">,
-) {
-  const base = defaultAdminListFetchSnapshot(body);
+): AdminListFetchSnapshot<ReconcileReportRow> {
+  const base = defaultAdminListFetchSnapshot<ReconcileReportRow>(body);
   if (body.page && typeof body.page === "object") {
     return {
       ...base,

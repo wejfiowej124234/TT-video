@@ -12,18 +12,22 @@ import {
 } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
-import { getGuide, getGuides, getIdempotencyKey, postOrder } from "@/lib/apiClient";
-import { authLoginHrefForGuideDetailReturn } from "@/lib/ordersGuideDeepLink";
+import { getGuide, getGuideAvailability, getIdempotencyKey, postOrder } from "@/lib/apiClient";
+import { normalizeTripRange, tripRangeOverlapsOccupied } from "@/lib/guideBookingDates";
+import { authLoginHrefForOrdersNewReturn } from "@/lib/ordersGuideDeepLink";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { stashEscrowOrderPrefetchFromPostOrderSuccess } from "@/lib/orderEscrowPrefetch";
 import {
-  dedupeGuidesById,
-  sortPreferredGuideFirst,
-  type OrdersNewGuideRow,
-} from "./ordersNewPageModel";
+  clearOrdersNewDraft,
+  readOrdersNewDraft,
+  stashOrdersNewDraft,
+} from "@/lib/ordersNewDraftStorage";
+import type { OrdersNewGuideRow } from "./ordersNewPageModel";
 
 export type UseOrdersNewPageResult = {
   guideIdFromQuery: string;
+  tripStartFromQuery: string;
+  tripEndFromQuery: string;
   guideId: string;
   setGuideId: Dispatch<SetStateAction<string>>;
   amount: string;
@@ -31,55 +35,65 @@ export type UseOrdersNewPageResult = {
   currency: string;
   setCurrency: (v: string) => void;
   guides: OrdersNewGuideRow[];
-  guidesLoadError: string | null;
-  bumpGuidesRetry: () => void;
-  guidePickerOpen: boolean;
-  setGuidePickerOpen: (v: boolean) => void;
+  scheduleBlocked: boolean;
+  scheduleBlockMessage: string | null;
   loading: boolean;
   error: string | null;
   createdId: string | null;
   handleSubmit: (e: FormEvent) => void;
   stashCreatedOrderEscrowPayPrefetch: () => void;
-  keepLinkGuide: () => void;
 };
+
+function guideRowFromApi(api: unknown, fallbackId: string): OrdersNewGuideRow {
+  if (api == null || typeof api !== "object") return { id: fallbackId };
+  const o = api as Record<string, unknown>;
+  const ratingRaw = o.rating;
+  return {
+    id: typeof o.id === "string" ? o.id : fallbackId,
+    city: typeof o.city === "string" ? o.city.trim() : undefined,
+    avatar_url: typeof o.avatar_url === "string" ? o.avatar_url : null,
+    rating: typeof ratingRaw === "number" ? ratingRaw : null,
+    languages: Array.isArray(o.languages) ? (o.languages as string[]) : null,
+    service_types: Array.isArray(o.service_types) ? (o.service_types as string[]) : null,
+    bio: typeof o.bio === "string" ? o.bio : null,
+  };
+}
 
 export function useOrdersNewPage(): UseOrdersNewPageResult {
   const { t } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
   const guideIdFromQuery = searchParams?.get("guide_id") ?? "";
-  /** `getGuides` Promise 解析时须读最新 query（Suspense/hydration 后 `guide_id` 才就绪），避免闭包仍为 "" 导致不注入向导。 */
-  const guideIdFromQueryRef = useRef(guideIdFromQuery);
-  guideIdFromQueryRef.current = guideIdFromQuery;
+  const tripStartFromQuery = searchParams?.get("start_date") ?? "";
+  const tripEndFromQuery = searchParams?.get("end_date") ?? "";
   const [guideId, setGuideId] = useState(guideIdFromQuery);
   const [amount, setAmount] = useState("");
   const defaultFiat = t("orders_defaultFiatCurrency");
   const [currency, setCurrency] = useState(defaultFiat);
   const [guides, setGuides] = useState<OrdersNewGuideRow[]>([]);
-  const [guidesLoadError, setGuidesLoadError] = useState<string | null>(null);
-  const [guidesRetryKey, setGuidesRetryKey] = useState(0);
-  /** 从市场带 `guide_id` 时默认收起下拉，减少重复选择；可点「更换向导」展开。 */
-  const [guidePickerOpen, setGuidePickerOpen] = useState(false);
+  const [scheduleBlocked, setScheduleBlocked] = useState(false);
+  const [scheduleBlockMessage, setScheduleBlockMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  /** B-034：连点或慢网络下禁止并发 POST（state 更新前第二下仍可能进 handler） */
   const submitInFlightRef = useRef(false);
   const [error, setError] = useState<string | null>(null);
   const [createdId, setCreatedId] = useState<string | null>(null);
+
+  const trip = normalizeTripRange(tripStartFromQuery, tripEndFromQuery);
 
   useEffect(() => {
     setGuideId((prev) => guideIdFromQuery || prev);
   }, [guideIdFromQuery]);
 
   useEffect(() => {
-    if (!guideIdFromQuery.trim()) setGuidePickerOpen(true);
-    else setGuidePickerOpen(false);
-  }, [guideIdFromQuery]);
-
-  /** URL 带 `guide_id` 时立即注入下拉（不依赖 `getGuides` 时序）；与下方 merge / ref 同源。 */
-  useEffect(() => {
     const q = guideIdFromQuery.trim();
-    if (!q) return;
-    setGuides((prev) => dedupeGuidesById([{ id: q, city: t("orders_fromLink") }, ...prev]));
+    if (!q) {
+      setGuides([]);
+      return;
+    }
+    const draft = readOrdersNewDraft(q);
+    if (draft?.amount) setAmount(draft.amount);
+    if (draft?.currency) setCurrency(draft.currency);
+    setGuides([{ id: q, city: t("orders_fromLink") }]);
   }, [guideIdFromQuery, t]);
 
   useEffect(() => {
@@ -88,11 +102,8 @@ export function useOrdersNewPage(): UseOrdersNewPageResult {
     let cancelled = false;
     getGuide(q)
       .then((api) => {
-        if (cancelled || api == null || typeof api !== "object") return;
-        const o = api as Record<string, unknown>;
-        const city = typeof o.city === "string" ? o.city.trim() : "";
-        if (!city) return;
-        setGuides((prev) => dedupeGuidesById(prev.map((g) => (g.id === q ? { ...g, city } : g))));
+        if (cancelled) return;
+        setGuides([guideRowFromApi(api, q)]);
       })
       .catch(() => {});
     return () => {
@@ -101,41 +112,65 @@ export function useOrdersNewPage(): UseOrdersNewPageResult {
   }, [guideIdFromQuery]);
 
   useEffect(() => {
-    setGuidesLoadError(null);
-    getGuides()
-      .then((res) => (Array.isArray(res.items) ? res.items : []) as OrdersNewGuideRow[])
-      .then((list) => {
-        const deduped = dedupeGuidesById(list);
-        const q = (guideIdFromQueryRef.current ?? "").trim();
-        const hasQueryGuide = !!q && !deduped.some((g) => g.id === q);
-        const merged = hasQueryGuide ? dedupeGuidesById([{ id: q, city: t("orders_fromLink") }, ...deduped]) : deduped;
-        return sortPreferredGuideFirst(merged, q);
-      })
-      .then(setGuides)
-      .catch((err) => {
-        if (typeof window !== "undefined") {
-          console.error("OrdersNew getGuides:", err);
-        }
-        if (err instanceof Error && err.message === "login_required") {
-          const loginHref = authLoginHrefForGuideDetailReturn(guideIdFromQuery);
-          if (loginHref) {
-            router.replace(loginHref);
-            return;
+    const q = guideIdFromQuery.trim();
+    if (!q) {
+      setScheduleBlocked(false);
+      setScheduleBlockMessage(null);
+      return;
+    }
+    let cancelled = false;
+    void getGuideAvailability(q)
+      .then((data) => {
+        if (cancelled) return;
+        const raw = data.occupied_ranges;
+        const occupied: { start_date: string; end_date: string }[] = [];
+        if (Array.isArray(raw)) {
+          for (const item of raw) {
+            if (!item || typeof item !== "object") continue;
+            const o = item as Record<string, unknown>;
+            const start_date = typeof o.start_date === "string" ? o.start_date : "";
+            const end_date = typeof o.end_date === "string" ? o.end_date : "";
+            if (start_date && end_date) occupied.push({ start_date, end_date });
           }
         }
-        const q = (guideIdFromQueryRef.current ?? "").trim();
-        if (q) {
-          setGuides(dedupeGuidesById([{ id: q, city: t("orders_fromLink") }]));
-        } else {
-          setGuides([]);
+        if (trip && tripRangeOverlapsOccupied(trip.start, trip.end, occupied)) {
+          setScheduleBlocked(true);
+          setScheduleBlockMessage(t("orders_trip_conflict"));
+          return;
         }
-        setGuidesLoadError(mapApiReadError(err, t, "orders_guides_loadFailed"));
+        if (!trip && occupied.length > 0) {
+          setScheduleBlockMessage(t("orders_guide_busy_hint"));
+        } else {
+          setScheduleBlockMessage(null);
+        }
+        setScheduleBlocked(false);
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setScheduleBlocked(false);
+          setScheduleBlockMessage(null);
+        }
       });
-  }, [guideIdFromQuery, t, guidesRetryKey, router]);
+    return () => {
+      cancelled = true;
+    };
+  }, [guideIdFromQuery, trip?.start, trip?.end, t]);
+
+  useEffect(() => {
+    const q = guideId.trim();
+    if (!q) return;
+    stashOrdersNewDraft({
+      guide_id: q,
+      amount,
+      currency,
+      start_date: trip?.start,
+      end_date: trip?.end,
+    });
+  }, [guideId, amount, currency, trip?.start, trip?.end]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!guideId.trim() || !amount.trim()) return;
+    if (!guideId.trim() || !amount.trim() || scheduleBlocked) return;
     if (loading || submitInFlightRef.current) return;
     submitInFlightRef.current = true;
     setLoading(true);
@@ -145,6 +180,8 @@ export function useOrdersNewPage(): UseOrdersNewPageResult {
         guide_id: guideId.trim(),
         amount: amount.trim(),
         currency: currency.trim() || t("orders_defaultFiatCurrency"),
+        start_date: trip?.start,
+        end_date: trip?.end,
       },
       getIdempotencyKey(),
     )
@@ -154,6 +191,7 @@ export function useOrdersNewPage(): UseOrdersNewPageResult {
         if (typeof id === "string" && id.trim()) {
           setError(null);
           setCreatedId(id.trim());
+          clearOrdersNewDraft();
         } else {
           if (typeof window !== "undefined") {
             console.error("OrdersNew postOrder: missing order id in response", res);
@@ -166,7 +204,17 @@ export function useOrdersNewPage(): UseOrdersNewPageResult {
           console.error("OrdersNew postOrder:", e);
         }
         if (e instanceof Error && e.message === "login_required") {
-          const loginHref = authLoginHrefForGuideDetailReturn(guideId.trim());
+          stashOrdersNewDraft({
+            guide_id: guideId.trim(),
+            amount: amount.trim(),
+            currency: currency.trim() || defaultFiat,
+            start_date: trip?.start,
+            end_date: trip?.end,
+          });
+          const loginHref = authLoginHrefForOrdersNewReturn(guideId.trim(), {
+            startDate: trip?.start,
+            endDate: trip?.end,
+          });
           if (loginHref) {
             router.replace(loginHref);
             return;
@@ -190,17 +238,10 @@ export function useOrdersNewPage(): UseOrdersNewPageResult {
     });
   }, [createdId, amount, currency, guideId, defaultFiat]);
 
-  const bumpGuidesRetry = useCallback(() => {
-    setGuidesRetryKey((k) => k + 1);
-  }, []);
-
-  const keepLinkGuide = useCallback(() => {
-    setGuideId(guideIdFromQuery.trim());
-    setGuidePickerOpen(false);
-  }, [guideIdFromQuery]);
-
   return {
     guideIdFromQuery,
+    tripStartFromQuery,
+    tripEndFromQuery,
     guideId,
     setGuideId,
     amount,
@@ -208,15 +249,12 @@ export function useOrdersNewPage(): UseOrdersNewPageResult {
     currency,
     setCurrency,
     guides,
-    guidesLoadError,
-    bumpGuidesRetry,
-    guidePickerOpen,
-    setGuidePickerOpen,
+    scheduleBlocked,
+    scheduleBlockMessage,
     loading,
     error,
     createdId,
     handleSubmit,
     stashCreatedOrderEscrowPayPrefetch,
-    keepLinkGuide,
   };
 }

@@ -127,10 +127,10 @@ export async function loadFriendsPageTabFragment(tab: FriendsTab): Promise<Parti
 }
 
 export function scheduleFriendsBackgroundPrefetch(run: () => void): () => void {
-  if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+  if (typeof window !== "undefined" && typeof window.requestIdleCallback === "function") {
     const id = window.requestIdleCallback(run, { timeout: 3000 });
     return () => window.cancelIdleCallback(id);
   }
-  const timer = window.setTimeout(run, 200);
-  return () => window.clearTimeout(timer);
+  const timer = globalThis.setTimeout(run, 200);
+  return () => globalThis.clearTimeout(timer);
 }

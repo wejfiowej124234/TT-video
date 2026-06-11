@@ -1,13 +1,14 @@
 "use client";
 
-import { memo, useMemo } from "react";
+import { memo } from "react";
 import Link from "next/link";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { TouchpointLoadingBand } from "@/components/product-enhancement/TouchpointLoadingBand";
 
 import { touchTargetLink44Classes, travelFocusRingCoreClasses } from "@/lib/travelLinkFocus";
 
-import { landingAmbientImageUrl } from "@/lib/landingAmbientByCountry";
+import { useLandingAmbientUrl } from "@/lib/catalogApi/useLandingAmbientUrl";
 
 import {
 
@@ -40,10 +41,7 @@ import { orderLikeMayOnchainDeposit } from "@/components/escrow/EscrowDetail/esc
 import type { OrderResponse } from "@/components/escrow/EscrowDetail/types";
 
 import { stashEscrowOrderPrefetchFromOrderResponse } from "@/lib/orderEscrowPrefetch";
-
-
-
-/** 52 §3.2 金额分项（与 API 响应一致） */
+import { resolveEscrowDisplayAmount } from "@/lib/escrowOrderAmountSsot";
 
 type AmountBreakdown52 = {
 
@@ -139,18 +137,18 @@ function ItineraryResultsSection({
 
   const dash = t("ui_em_dash");
 
-  const stablecoinPair = t("didRank_badge_stablecoins");
+  const quoteCurrency = t("traveler_quote_currency");
 
   const countNote = t("landing_results_count_note");
 
   const unlockNote = t("landing_results_unlock_note");
 
   const showGenerating = submitting && resultOrderIds.length === 0;
+  const destinationCover = useLandingAmbientUrl(country, CARD_SCENIC_IMAGES[0]!);
 
-  const destinationCover = useMemo(
-    () => (country ? landingAmbientImageUrl(country) : CARD_SCENIC_IMAGES[0]!),
-    [country],
-  );
+  if (resultOrderIds.length === 0 && !showGenerating) {
+    return null;
+  }
 
 
 
@@ -260,6 +258,8 @@ function ItineraryResultsSection({
 
       ref={resultsSectionRef as React.RefObject<HTMLElement> | undefined}
 
+      data-tt-traveler-l5-journey="preview"
+
       data-tt-home-itinerary-honesty="phase1-mock-ai-not-production"
 
       className={`${TT_MARKETING_HOME_RESULTS_SECTION} ${TT_MARKETING_HOME_RESULTS_PANEL} [content-visibility:auto]`}
@@ -290,7 +290,8 @@ function ItineraryResultsSection({
 
           <p className="text-small text-white/90 mb-3">{countNote}</p>
 
-          <p className="text-small text-white/80 mb-6">{unlockNote}</p>
+          <p className="text-small text-white/80 mb-2">{unlockNote}</p>
+          <p className="text-small text-ref-sun/90 mb-6">{t("landing_results_next_step")}</p>
 
           <ul className="mx-auto max-w-md">
 
@@ -308,17 +309,25 @@ function ItineraryResultsSection({
 
               const orderRow = apiRes?.order ?? null;
 
+              const itineraryBlock =
+                apiRes?.itinerary ??
+                (detail && typeof detail === "object" && "itinerary" in detail
+                  ? (detail as OrderResponse).itinerary
+                  : undefined);
+
+              const amountResolved = resolveEscrowDisplayAmount(
+                orderRow?.amount,
+                itineraryBlock?.amount_breakdown ?? undefined,
+              );
+
+              const priceDisplay =
+                amountResolved.displayAmount !== "—" ? amountResolved.displayAmount : null;
+
               const showPayHub = unlocked && orderLikeMayOnchainDeposit(orderRow);
 
               const dayCount = detail?.itinerary?.daily_itinerary?.length ?? 0;
 
-              const ab = detail?.itinerary && typeof detail.itinerary === "object" && "amount_breakdown" in detail.itinerary
-
-                ? (detail.itinerary as { amount_breakdown: AmountBreakdown52 }).amount_breakdown
-
-                : undefined;
-
-              const totalBudget = ab?.total_budget;
+              const totalBudget = amountResolved.canonicalTotal;
 
               const title = country || cities.length > 0 ? `${t("landing_ai_itinerary")} · ${[country, cities.join(" ")].filter(Boolean).join(" ")}` : t("landing_ai_itinerary_card");
 
@@ -498,11 +507,12 @@ function ItineraryResultsSection({
 
                           )}
 
-                          {totalBudget != null && (
+                          {(totalBudget != null || priceDisplay != null) && (
 
                             <span className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] bg-white/20 px-2.5 py-1 text-meta text-white/95">
 
-                              <span aria-hidden>💰</span> {t("landing_quote_mid_label")} {totalBudget} {stablecoinPair}
+                              <span aria-hidden>💰</span> {t("landing_quote_mid_label")}{" "}
+                              {priceDisplay ?? totalBudget} {quoteCurrency}
 
                             </span>
 
@@ -510,13 +520,7 @@ function ItineraryResultsSection({
 
                           <span className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] bg-white/20 px-2.5 py-1 text-meta text-white/95">
 
-                            <span aria-hidden>◇</span> {stablecoinPair}
-
-                          </span>
-
-                          <span className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] bg-white/20 px-2.5 py-1 text-meta text-white/95">
-
-                            {t("market_hero_pill_escrow")}
+                            {t("home_consumer_funds_protected")}
 
                           </span>
 
@@ -534,7 +538,7 @@ function ItineraryResultsSection({
 
                             <span className="text-h4 font-bold text-white">
 
-                              {totalBudget != null ? `${totalBudget} ${stablecoinPair}` : dash}
+                              {priceDisplay != null ? `${priceDisplay} ${quoteCurrency}` : dash}
 
                             </span>
 
@@ -602,23 +606,15 @@ function ItineraryResultsSection({
 
         </>
 
-      ) : showGenerating ? (
-
-        <>
-
-          <p className="text-small text-white/90 mb-3">{t("landing_generating_hint")}</p>
-
-          {renderPreviewSlotCards("generating")}
-
-        </>
-
       ) : (
 
         <>
 
-          <p className="text-small text-white/90 mb-3">{t("landing_placeholder_hint")}</p>
+          <TouchpointLoadingBand message={t("pes_home_loading")} skeletonRows={2} className="mb-4" />
 
-          {renderPreviewSlotCards("empty")}
+          <p className="text-small text-white/90 mb-3">{t("landing_generating_hint")}</p>
+
+          {renderPreviewSlotCards("generating")}
 
         </>
 

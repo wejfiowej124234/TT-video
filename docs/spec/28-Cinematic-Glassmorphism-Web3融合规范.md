@@ -18,6 +18,7 @@
 | **全站 Tokens / 清除清单 / 验收** | **§8**；Token 体系 **[22](22-Design-Tokens-旅游Web3融合体系-v1.0.md)**（**86 色谱映射**见 **22 §一点五**） |
 | **自由市场（撮合控制台）** | **[29](29-自由市场-撮合控制台规范.md)**（**信息架构与组件** 以 **29+本文**；**Business 外观** **86 降级** + **22** 赋值） |
 | **v1 API** | **[04 §3.4](04-后端与API.md)**；ABI **[14](14-合约-API-ABI-前后端对齐.md)** |
+| **五主路由 ① UI 壳冻结（2026-05-25）** | **[FIVE-MAIN-ROUTES-PHASE1-FREEZE](../../frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md)** · **[88 §一 冻结段](88-五主路由页身实现快照与UX缺口审计-20260330.md)** |
 
 ---
 
@@ -31,7 +32,7 @@
 | 维度 | 要求 |
 |------|------|
 | **UI** | **仍** 全站仅用 **22 Design Tokens 键名 / 语义**（`text-ink-*`、`text-travel-*`、`bg-bg-main`/`bg-bg-console`/`bg-bg-soft`、`rounded-[var(--radius-sm)]`、`success`/`warning`/`danger` 等）；**具体 Hex** 在 Experience 按 **[86](86-UI-双系统未来风-风格与动效技术规格.md) → [22 §一点五](22-Design-Tokens-旅游Web3融合体系-v1.0.md)** 映射，**禁止** `text-gray-*`、`text-blue-*`、随意裸色与旧类名（**例外**：Experience 区玻璃 `bg-white/xx`、Hero 主 CTA 按 86/22）。 |
-| **UX** | 顶栏仅 WalletStatusMini；链上操作强制走 SignatureModal（银行级、无玻璃）；Landing 与含 **`/discover` 短停** 的路径**页身**无大钱包 CTA；Console 内容区无玻璃。**`Header.tsx` 外观**（白底深字、全路由一致）以 **86 §6.0** 为准，**不**再随 Experience 切换玻璃浅字顶栏。 |
+| **UX** | 顶栏仅 WalletStatusMini；链上操作强制走 SignatureModal（银行级、无玻璃）；Landing 与含 **`/discover`→`/market` 重定向壳** 的路径**页身**无大钱包 CTA；Console 内容区无玻璃。**`Header.tsx` L0**（Home / Cinematic / Dark / Light 分层；暖金·暖棕四链）以 **86 §6.0** / **`uiSystem.ts`** 为准，**不**再使用全路由白底或玻璃浅字顶栏。 |
 | **API** | 以 [04](04-后端与API.md) §三 为准；前端仅经 `lib/api.ts` + `lib/apiClient.ts` 调用，禁止手写 URL。 |
 | **ABI** | 以 [14](14-合约-API-ABI-前后端对齐.md) 与 `contracts/abi` 为准；前端仅用 `dapp/abis/*.json`（自合约编译同步），禁止手写 ABI。 |
 | **清除** | 与上述不一致的旧样式/交互/接口/ABI 须清除；状态见 §8。 |
@@ -117,11 +118,16 @@
 - 再加 3 个微徽章（灰白小 pill）：**Non-custodial** · **On-chain escrow** · **Dispute support**
 - **与参考截图对齐**：徽章下方增加 **3 个玻璃 pill 快捷入口**（**自由市场** → **`/market`**，文案与顶栏 **`header_market`** 一致 / 创建行程 / 向导列表），样式与三徽章一致（`rounded-full bg-white/20 backdrop-blur-sm`），不抢主 CTA。
 
-### 首页中央规划表单与盲盒行程
+### 首页中央规划表单与行程预览（① 代码 SSOT）
 
-- **表单**（Hero 下方玻璃容器）：目的地国家、出行天数、景区/餐饮/酒店标准、预算（USD）；**支付统一美元 + USDT/USDC**，表单与弹窗均明确展示「USDT / USDC」。提交后 `POST /api/v1/itineraries`，可多次得到 3～5 份方案。
-- **盲盒行程卡**：3～5 个方案卡片，虚化玻璃（`backdrop-blur`）；未解锁时仅显示「盲盒行程」「支付 x.xx USD（USDT/USDC）可解锁」+ 解锁按钮。
-- **解锁流程**：点击 → 弹窗确认支付（稳定币 USDT/USDC）→ 确认后解锁，展示行程摘要并可跳转 `/escrow/[id]`（当前支付可前端模拟，实际接稳定币）。
+**现行实现（2026-05-29 · 以代码为准）：** [`frontend/app/(home)/README.md`](../../frontend/app/(home)/README.md) · **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §2 · **[GO_local_web3_itinerary_l5](../../frontend/evidence/GO_local_web3_itinerary_l5/README.md)** · **80 §0.2**。
+
+- **表单**（Hero 下方玻璃容器）：国家/城市/日期区间、景区/餐饮/酒店、预算、`party_size`/`num_rooms`；提交后 **单次** `POST /api/v1/itineraries`（**禁止**循环多次创单）。
+- **预览卡**：**`ITINERARY_CARD_COUNT=1`**（`components/landing/constants.ts`）— **1 张**玻璃预览卡绑定同一 `order_id`；配图 **`landingAmbientImageUrl(country)`**。
+- **解锁**：**`UnlockModal`** → **`getOrder`** 预览加载（**① 非** 链上 USDC 真扣款）；**`landingItinerarySession`** **`localStorage`** 恢复状态。
+- **下游**：解锁后链 **`/escrow/[id]`** → 保存发布 → **`/market?view=split&bindGuideToOrder=`**。
+
+**愿景 backlog（非当前验收）：** 历史方案曾述 3～5 张「盲盒」同单展示位，已收敛为 **1 预览卡**；多方案并排属产品决策，**不得**与现码混读为已实现。
 
 ### 卡片区（自由市场订单/行程卡）
 
@@ -203,7 +209,7 @@
 
 ## 8. 实现状态与验收（定稿对照）
 
-实现落点：前端 **`app/(home)/page.tsx`**（**`/`** Landing）、`app/discover/page.tsx`（重定向至 /market）、`app/market/page.tsx`（自由市场撮合控制台）、`components/trust/*`、`components/market/*`、`components/Header.tsx`；Escrow 见 `components/escrow/EscrowDetail.tsx`（银行级、无玻璃）。
+实现落点：前端 **`app/(home)/page.tsx`**（**`/`** Landing）、`app/discover/page.tsx`（重定向至 /market）、`app/market/page.tsx`（自由市场撮合控制台）、`components/trust/*`、`components/market/*`、`components/Header.tsx`；Escrow 见 **`components/escrow/EscrowDetail/`**（**双壳**：预链上草稿 **Experience 暖壳** [**① 已收口**](../../frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-ORDER-PAGE-PHASE1-CLOSURE.md)；已上链 **协议 DID** · 银行级签名区、无玻璃）。
 
 ### 8.1 功能落点
 
@@ -228,13 +234,13 @@
 - 裸色/旧类名：`text-gray-*`、`text-red-*`、`text-blue-*`、`text-green-*`、`bg-gray-*`、`bg-emerald-*`/`bg-slate-*`/`bg-amber-*` 已移除或改为 22 token。
 - `bg-white` → `bg-bg-console`（**例外**：Experience 区玻璃 `bg-white/xx`、Hero 主 CTA 可 `bg-white`）。
 - `rounded-md` → `rounded-[var(--radius-sm)]`。
-- 2025-02：`app/guide/register` 已由 amber 改为 ink；字级/分隔线/表单控件已统一为 `text-small`/`text-meta`、`border-ink-200`、`bg-bg-console`；主/区块标题已统一为 `text-h3`/`text-h4`/`text-body`/`text-body-l`；Landing、**`/market`**、**`/discover` 短停** 与第三屏文案已与 22 及中文入口一致。
+- 2025-02：`app/guide/register` 已由 amber 改为 ink；字级/分隔线/表单控件已统一为 `text-small`/`text-meta`、`border-ink-200`、`bg-bg-console`；主/区块标题已统一为 `text-h3`/`text-h4`/`text-body`/`text-body-l`；Landing、**`/market`**、**`/discover`→`/market` 重定向壳** 与第三屏文案已与 22 及中文入口一致。
 
 **涉及范围**：`app/auth|me|orders|guide|guides|disputes|itinerary|escrow|page|discover|market|loading|error|governance|layout`、`components/Header|ApiErrorAlert|escrow/EscrowDetail|trust/*|market/*`。
 
 **单源**：UX 顶栏仅 WalletStatusMini，链上仅 EscrowDetail 内 SignatureModal。API 仅 `lib/api.ts` + `lib/apiClient.ts`，路径同 04 §三。ABI 仅 `dapp/abis/Escrow.json`（自 contracts/abi 同步），见 14 §1.2。
 
-**验收**：Landing、**`/discover` 短停**、**`/market`** 无大钱包 CTA、Console 无玻璃；全站与 **本文（叙事/IA）**、**04**、**14**、**22**（键名/语义色）、**86**（Experience 色与动效）一致。
+**验收**：Landing、**`/discover`→`/market` 重定向壳**、**`/market`** 无大钱包 CTA、Console 无玻璃；全站与 **本文（叙事/IA）**、**04**、**14**、**22**（键名/语义色）、**86**（Experience 色与动效）一致。
 
 **配套与延伸**：本文为 **28 主规范（定稿）**。端到端 API/ABI 落点见 [14-附录-API与ABI对齐检查报告](14-附录-API与ABI对齐检查报告.md)。28 审计/对照（可选参考）：[28-P28与截图对照-Web3融入与缺口清单](snapshots/28-P28与截图对照-Web3融入与缺口清单.md)、[28-截图风格对照与UI深度检查](snapshots/28-截图风格对照与UI深度检查.md)、[28-企业级UI设计审计报告](snapshots/28-企业级UI设计审计报告.md)。
 

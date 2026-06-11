@@ -106,12 +106,7 @@ test.describe("B-467 · full UI journey (create on /orders/new → pay → compl
       await page.goto(newOrderUrl);
     }
 
-    const guideSelect = page.getByRole("combobox", { name: /Guides|向导列表/i });
-    await expect(guideSelect).toBeVisible({ timeout: 25_000 });
-    await expect
-      .poll(async () => guideSelect.locator("option").count(), { timeout: 40_000 })
-      .toBeGreaterThan(1);
-    await guideSelect.selectOption({ value: guideId });
+    await expect(page.locator('[data-tt-orders-new-guide-summary="1"]')).toBeVisible({ timeout: 25_000 });
 
     const amount = `49.${Date.now().toString().slice(-4)}`;
     await page.getByLabel(/Amount|金额/i).fill(amount);

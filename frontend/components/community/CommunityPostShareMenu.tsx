@@ -11,6 +11,7 @@ import {
 } from "@/lib/communityA11yFocus";
 import { buildCommunityPostShareUrl } from "@/lib/communityPostShareUrl";
 import { warmCommunityReportDrawer } from "@/lib/communityDrawerPrefetch";
+import { TT_COMMUNITY_DRAWER_L5 } from "@/lib/marketingUi";
 
 export type CommunityPostShareMenuProps = {
   post: CommunityPost;

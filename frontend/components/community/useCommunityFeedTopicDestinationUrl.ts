@@ -27,7 +27,7 @@ export function useCommunityFeedTopicDestinationUrl(options: {
   setTagFilterState: Dispatch<SetStateAction<string | null>>;
   setDestinationFilterFromUrl: (value: string) => void;
   searchQuery: string;
-  setSearchQuery: Dispatch<SetStateAction<string>>;
+  setSearchQuery: (q: string) => void;
   clearFiltersFromHook: () => void;
   t: CommunityFeedTFunc;
   setToastHint: Dispatch<SetStateAction<string | null>>;

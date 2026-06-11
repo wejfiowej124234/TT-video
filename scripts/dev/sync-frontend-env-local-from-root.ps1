@@ -79,6 +79,8 @@ $map = @{
     "REGISTRY_ADDRESS"         = "NEXT_PUBLIC_REGISTRY_ADDRESS"
     "GUIDE_STAKING_ADDRESS"    = "NEXT_PUBLIC_GUIDE_STAKING_ADDRESS"
     "STAKING_PROVIDER_ADDRESS" = "NEXT_PUBLIC_STAKING_PROVIDER_ADDRESS"
+    "REGION_STEWARD_STAKE_POOL_ADDRESS" = "NEXT_PUBLIC_REGION_STEWARD_STAKE_POOL_ADDRESS"
+    "COUNTRY_POOL_REDEMPTION_EPOCH_CN_ADDRESS" = "NEXT_PUBLIC_COUNTRY_POOL_REDEMPTION_EPOCH_CN_ADDRESS"
 }
 foreach ($e in $map.GetEnumerator()) {
     $val = Get-Var $e.Key
@@ -96,6 +98,28 @@ if (-not [string]::IsNullOrWhiteSpace($settle)) { $syncLines.Add("NEXT_PUBLIC_SE
 $claim = Get-Var "INVESTOR_DISTRIBUTION_CLAIM_ADDRESS"
 if (-not [string]::IsNullOrWhiteSpace($claim)) { $syncLines.Add("NEXT_PUBLIC_INVESTOR_DISTRIBUTION_CLAIM_ADDRESS=$claim") }
 
+$communityMediaBase = Get-Var "COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL"
+if (-not [string]::IsNullOrWhiteSpace($communityMediaBase)) {
+    $syncLines.Add("NEXT_PUBLIC_COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL=$communityMediaBase")
+}
+
+$communityMediaMax = Get-Var "TRAVELTRUST_COMMUNITY_MEDIA_ASSET_MAX_BYTES"
+if (-not [string]::IsNullOrWhiteSpace($communityMediaMax)) {
+    $syncLines.Add("NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_MEDIA_ASSET_MAX_BYTES=$communityMediaMax")
+}
+
+$communityPostPrefixes = Get-Var "NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_POST_MEDIA_URL_PREFIXES"
+if ([string]::IsNullOrWhiteSpace($communityPostPrefixes)) {
+    $communityPostPrefixes = Get-Var "TRAVELTRUST_COMMUNITY_POST_MEDIA_URL_PREFIXES"
+}
+if (-not [string]::IsNullOrWhiteSpace($communityPostPrefixes)) {
+    $syncLines.Add("NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_POST_MEDIA_URL_PREFIXES=$communityPostPrefixes")
+}
+
+if ($chainId -eq "31337") {
+    $syncLines.Add("NEXT_PUBLIC_ONBOARDING_LOCAL_DEV_TOOLS=1")
+}
+
 $syncLines.Add($MarkerEnd)
 
 $prefixesManaged = @(
@@ -109,7 +133,12 @@ $prefixesManaged = @(
     "NEXT_PUBLIC_STAKING_PROVIDER_ADDRESS=",
     "NEXT_PUBLIC_GOVERNANCE_TOKEN_ADDRESS=",
     "NEXT_PUBLIC_SETTLEMENT_TOKEN_ADDRESS=",
-    "NEXT_PUBLIC_INVESTOR_DISTRIBUTION_CLAIM_ADDRESS="
+    "NEXT_PUBLIC_INVESTOR_DISTRIBUTION_CLAIM_ADDRESS=",
+    "NEXT_PUBLIC_REGION_STEWARD_STAKE_POOL_ADDRESS=",
+    "NEXT_PUBLIC_ONBOARDING_LOCAL_DEV_TOOLS=",
+    "NEXT_PUBLIC_COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL=",
+    "NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_MEDIA_ASSET_MAX_BYTES=",
+    "NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_POST_MEDIA_URL_PREFIXES="
 )
 
 $kept = New-Object System.Collections.Generic.List[string]

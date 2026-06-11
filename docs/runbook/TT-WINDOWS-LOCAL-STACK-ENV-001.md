@@ -20,7 +20,7 @@
 | 现象 | 对策 |
 |------|------|
 | **`'xxx' is not recognized…`** 且 `xxx` 像中文碎片 | **勿**在 **`cmd`** 里执行从文档复制的多行说明；用 **PowerShell / Bash** 跑脚本，或只运行**单行** **`scripts\start-api-with-seed.bat`**。 |
-| **`preflight: ERROR Docker not available`** | 先启动 **Docker Desktop**（或等价引擎），待 **`docker info`** 正常后再跑预检。 |
+| **`preflight: ERROR Docker not available`** | 先启动 **Docker Desktop**（或等价引擎），待 **`docker info`** 正常后再跑预检。Step 0 会**尝试自动启动** Docker Desktop 并等待最多 **120s**；禁用：`set TRAVELTRUST_SKIP_DOCKER_AUTOSTART=1`。 |
 | **`The system cannot find the path specified`** | 确认当前目录为**仓库根**；路径中**勿**混用全角括号 **`）`** 与半角 **`)`**。 |
 | **Rust / Node 版本** | 以 **`preflight-local-stack.ps1`** 输出为准；与 **CONTRIBUTING** 推荐版本冲突时**以仓库脚本与 CI 矩阵为真**。 |
 

@@ -6,7 +6,7 @@
  */
 import { useEffect, useRef } from "react";
 import { useAccount, useChainId } from "wagmi";
-import { clearGetMeFullCache } from "@/lib/apiClient";
+import { clearGetMeCache } from "@/lib/apiClient";
 
 export function WalletSessionRevalidate() {
   const { address } = useAccount();
@@ -24,7 +24,7 @@ export function WalletSessionRevalidate() {
       return;
     }
     prev.current = next;
-    clearGetMeFullCache();
+    clearGetMeCache();
     window.dispatchEvent(new CustomEvent("traveltrust:wallet-context-changed"));
     window.dispatchEvent(new CustomEvent("traveltrust:auth-change"));
   }, [address, chainId]);

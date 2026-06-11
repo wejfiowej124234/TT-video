@@ -42,8 +42,32 @@ pub async fn order_accept_impl(
     if !order_before.guide_id.is_nil() && order_before.guide_id != guide_row_id {
         return Err((
             StatusCode::FORBIDDEN,
-            Json(crate::api_json::err_key("not_guide")),
+            Json(crate::chain_off::order_participant_hints::order_not_assigned_guide_json(
+                &store,
+                &order_before,
+            )),
         ));
+    }
+    if let (Some(s), Some(e)) = (order_before.start_date, order_before.end_date) {
+        let conflicts = crate::chain_off::schedule_booking::guide_trip_range_conflicts(
+            &store,
+            guide_row_id,
+            s,
+            e,
+            Some(order_id),
+        )
+        .await
+        .unwrap_or(false);
+        if conflicts {
+            return Err((
+                StatusCode::CONFLICT,
+                Json(json!({
+                    "error": "schedule_conflict",
+                    "message": "schedule_conflict",
+                    "hint": "该向导在此档期已有锁定订单，无法接单"
+                })),
+            ));
+        }
     }
     let order = store.orders.get_mut(&order_id).ok_or((
         StatusCode::NOT_FOUND,
@@ -76,19 +100,6 @@ pub async fn order_accept_impl(
                 json!({"error": "invalid_state", "message": "invalid_state", "current": order_state_to_str(order.state)}),
             ),
         ));
-    }
-    // 80 §4.15.11：档期重叠时拒绝接单
-    if let (Some(s), Some(e)) = (order.start_date, order.end_date) {
-        if let Ok(true) = schedule_engine::has_overlapping_lock(guide_row_id, s, e).await {
-            return Err((
-                StatusCode::CONFLICT,
-                Json(json!({
-                    "error": "schedule_conflict",
-                    "message": "schedule_conflict",
-                    "hint": "该向导在此档期已有锁定订单，无法接单"
-                })),
-            ));
-        }
     }
     order.state = OrderState::Accepted;
     order.accepted_at = Some(now);
@@ -422,6 +433,16 @@ pub async fn order_confirm_completion_impl(
         }
     }
     let _ = schedule_engine::release_slot(guide_id, order_id_val).await;
+    if let Some(ref pool) = state.db_pool {
+        let had_escrow = order_before.escrowed_at.is_some()
+            || order_before
+                .escrow_address
+                .as_deref()
+                .map(str::trim)
+                .is_some_and(|s| !s.is_empty());
+        crate::db::observe_order_completed(pool, order_before.tourist_id, order_id_val, had_escrow)
+            .await;
+    }
     Ok(Json(json!({
         "status": "ok",
         "order": { "id": order_id_val.to_string(), "status": "completed", "completed_at": completed_at.map(|t| t.to_rfc3339()) }

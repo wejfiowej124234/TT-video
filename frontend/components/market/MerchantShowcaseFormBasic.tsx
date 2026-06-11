@@ -1,7 +1,7 @@
 "use client";
 
 import type { Dispatch, SetStateAction } from "react";
-import { PRODUCT_COUNTRIES } from "@/lib/productCountries";
+import { useCatalogProductCountries } from "@/lib/catalogApi/useCatalogGeo";
 import { marketStudioModalSectionHeadingCyan } from "./marketStudioModalLayout";
 import type { MerchantStudioDraft } from "./merchantShowcaseStudioModel";
 import { merchantStudioInputClass, merchantStudioLabelClass } from "./merchantShowcaseStudioModel";
@@ -22,6 +22,7 @@ type Props = {
 export function MerchantShowcaseFormBasic({ t, locale, form, setForm, categoryOptions }: Props) {
   const labelClass = merchantStudioLabelClass;
   const inputClass = merchantStudioInputClass;
+  const productCountries = useCatalogProductCountries();
 
   return (
     <section className="space-y-4" aria-labelledby="m-studio-basic">
@@ -103,7 +104,7 @@ export function MerchantShowcaseFormBasic({ t, locale, form, setForm, categoryOp
             onChange={(e) => setForm((f) => ({ ...f, countryIso: e.target.value }))}
           >
             <option value="">{t("market_merchantStudio_country_optional")}</option>
-            {PRODUCT_COUNTRIES.map((c) => (
+            {productCountries.map((c) => (
               <option key={c.iso} value={c.iso}>
                 {locale === "zh" ? c.nameZh : c.iso}
               </option>

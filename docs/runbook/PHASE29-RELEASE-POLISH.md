@@ -2,8 +2,8 @@
 
 **生效：** 2026-06-07  
 **前置：** Phase ②.8 HAT **PASS**（`7b86e58b` @ staging）· Deep release gate **GO**  
-**状态：** **UI_FROZEN · W3_DONE · freeze commit `ecb28116`**  
-**Phase ③ 入口：** **⏸ HOLD** — 本机跑 R4–R7 后签核
+**状态：** **COMPLETE · UI_FROZEN · W3_DONE · freeze commit `bc5a939c`**  
+**Phase ③ 入口：** **✅ READY**（Owner 签核 2026-06-07 · 见 §6）
 
 > **纪律：** 本轮 **仅** 低风险 **UI/UX polish**。**全量盘点 SSOT：** [PHASE29-RELEASE-POLISH-BACKLOG](./PHASE29-RELEASE-POLISH-BACKLOG.md) — **§6 实施前清单 + `PHASE29_DEV_GATE: OPEN` 后** 方可开发。
 
@@ -23,20 +23,21 @@ Phase ②.8 HAT PASS ──► Phase ②.9 Release Polish（本轮）
 
 | 闸 | 当前态 | 说明 |
 |----|--------|------|
-| **Phase ③ Production Preparation** | **⏸ HOLD** | HAT 曾报 `PHASE3_ENTRY_GATE: READY` — **自 2026-06-07 起作废**，须 **②.9 收口 + 全量复跑** 后 **重新签核** |
-| **Phase ②.9 Release Polish** | **▶ ACTIVE** | 仅 in-scope polish（§3） |
+| **Phase ③ Production Preparation** | **▶ ACTIVE** | Owner 签核 2026-06-07 · [PHASE3-PRODUCTION-PREPARATION](./PHASE3-PRODUCTION-PREPARATION.md) |
+| **Phase ②.9 Release Polish** | **✅ COMPLETE** | UI polish 8/8 · freeze `bc5a939c` |
 | **Production GO（③ 公网）** | **未启动** | 与 Phase ③ 准备 **独立** |
 
 **机读键（Owner 签核前不得宣称 READY）：**
 
 ```text
-PHASE3_ENTRY_GATE: HOLD
-PHASE3_ENTRY_REVIEW: NO_GO
-PHASE29_RELEASE_POLISH: W3_DONE · UI_FROZEN
+PHASE3_ENTRY_GATE: READY
+PHASE3_ENTRY_REVIEW: READY
+PHASE3_PRODUCTION_PREP: ACTIVE
+PHASE29_RELEASE_POLISH: COMPLETE · UI_FROZEN
 PHASE29_DEV_GATE: CLOSED
 PHASE29_IN_SCOPE_UI: 8
 PHASE29_IN_SCOPE_DONE: 8
-PHASE29_FREEZE_COMMIT: ecb28116
+PHASE29_FREEZE_COMMIT: bc5a939c
 PHASE29_POST_FREEZE_GATE: bash scripts/dev/run-phase29-post-freeze-gate-chain.sh
 ```
 
@@ -167,21 +168,22 @@ PHASE29_POST_FREEZE_GATE: bash scripts/dev/run-phase29-post-freeze-gate-chain.sh
 
 ## 6 · Owner 签核 checklist（②.9 → Phase ③ 重新入口）
 
-- [ ] §3 In-scope **全部** RP-* 已 **CLOSED** 或 **DEFER** 至 §4 并记录理由  
-- [ ] **R1–R7** 证据已归档至 `evidence/.../phase29-release-polish/<stamp>/`  
-- [ ] Staging SHA 对拍 · Deep gate · HAT **PASS** 报告日期 **≥** ②.9 最后一笔 merge  
-- [ ] `PHASE3_ENTRY_GATE: HOLD` → **`READY`** 书面签核（本文件 + HAT 报告同步）  
-- [ ] **仍 ≠ Production GO**
+- [x] §3 In-scope **全部** RP-* 已 **CLOSED** 或 **DEFER** 至 §4 并记录理由  
+- [x] **R1–R7** 证据已归档至 `evidence/.../phase29-release-polish/<stamp>/`  
+- [x] Staging SHA 对拍 · Deep gate · HAT **PASS** 报告日期 **≥** ②.9 最后一笔 merge  
+- [x] `PHASE3_ENTRY_GATE: HOLD` → **`READY`** 书面签核（本文件 + HAT 报告同步）  
+- [x] **仍 ≠ Production GO**
 
-**签核块（复制粘贴）：**
+**签核块（生效）：**
 
 ```text
 PHASE29_RELEASE_POLISH: COMPLETE
-PHASE29_SIGNOFF_AT: <UTC>
-PHASE29_SIGNOFF_BY: <Owner>
+PHASE29_SIGNOFF_AT: 20260607T040000Z
+PHASE29_SIGNOFF_BY: Sebastian Ward (github3344@hotmail.com)
 PHASE3_ENTRY_GATE: READY   # 重新生效 · 仍 ≠ Production GO
-GIT_SHA: <staging /meta build.git_sha>
-EVIDENCE: evidence/GO_phase2_testnet_20260526/phase29-release-polish/<stamp>/
+PHASE3_PRODUCTION_PREP: ACTIVE
+GIT_SHA: bc5a939cd89c624be7c128b551306da177bf6016
+EVIDENCE: evidence/GO_phase2_testnet_20260526/phase3-production-prep/PHASE3-OWNER-SIGNOFF-SEBASTIAN-WARD-20260607.md
 ```
 
 ---
@@ -198,4 +200,4 @@ EVIDENCE: evidence/GO_phase2_testnet_20260526/phase29-release-polish/<stamp>/
 
 ---
 
-*Phase ②.9 激活 · Phase ③ 入口暂停 · 2026-06-07*
+*Phase ②.9 COMPLETE · Phase ③ Production Preparation ACTIVE · 2026-06-07*

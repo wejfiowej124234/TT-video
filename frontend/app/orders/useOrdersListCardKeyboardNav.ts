@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 export function useOrdersListCardKeyboardNav(listIds: string[]) {
   const [focusedCardId, setFocusedCardId] = useState<string | null>(null);
-  const listFocusRef = useRef<HTMLUListElement | HTMLDivElement>(null);
+  const listFocusRef = useRef<HTMLElement | null>(null);
 
   const focusCardById = useCallback((cardId: string) => {
     setFocusedCardId(cardId);
@@ -34,7 +34,7 @@ export function useOrdersListCardKeyboardNav(listIds: string[]) {
   }, [focusCardById, focusedCardId, listIds]);
 
   const onListKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLUListElement>) => {
+    (e: React.KeyboardEvent<HTMLElement>) => {
       if (listIds.length === 0) return;
       if (e.key === "ArrowDown") {
         e.preventDefault();

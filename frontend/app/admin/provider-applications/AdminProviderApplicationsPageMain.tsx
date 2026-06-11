@@ -136,7 +136,7 @@ export function AdminProviderApplicationsPageMain() {
         staleWhileError={staleWhileError}
         itemsLength={items.length}
         loadingMessage={t("admin_users_loading")}
-        errorMessage={adminErrorUserText(error, t)}
+        errorMessage={error ? adminErrorUserText(error, t) : ""}
         className={refreshing ? ADMIN_LIST_REFRESHING_SURFACE_CLASS : undefined}
         data-tt-admin-onboarding-queue-list="provider"
         data-tt-admin-list-refreshing={refreshing ? "1" : undefined}

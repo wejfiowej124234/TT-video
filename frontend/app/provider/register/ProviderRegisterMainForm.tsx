@@ -1,12 +1,12 @@
 "use client";
 
-import { useMemo, useId, type FormEvent } from "react";
+import { useMemo, type FormEvent } from "react";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import AuthL5Checkbox from "@/components/auth/AuthL5Checkbox";
 import GuideRegisterFileField from "@/app/guide/register/GuideRegisterFileField";
 import GuideRegisterWalletStepFlow from "@/app/guide/register/GuideRegisterWalletStepFlow";
 import GuideRegisterInlineFieldError from "@/app/guide/register/GuideRegisterInlineFieldError";
-import { COUNTRY_OPTIONS } from "@/app/guide/register/constants";
+import { useGuideRegisterCountryOptions } from "@/lib/catalogApi/useCatalogGeo";
 import { cityOptionsForCountryIso } from "@/lib/guide/guideRegisterGeo";
 import { guideRegFieldClass, guideRegFocusRing, guideRegLabel, guideRegPrimaryCta, guideRegSecondaryBtn } from "@/app/guide/register/guideRegisterUiClasses";
 import { kybRuleForCountry, PROVIDER_ENTITY_COMPANY, PROVIDER_ENTITY_INDIVIDUAL } from "@/lib/provider/providerKybRules";
@@ -99,7 +99,7 @@ export function ProviderRegisterMainForm(props: Props) {
     handleSubmit,
   } = props;
 
-  const formErrorId = useId();
+  const countryOptions = useGuideRegisterCountryOptions();
   const cityOptions = useMemo(() => cityOptionsForCountryIso(countryCode), [countryCode]);
   const requiresTravelPermit = useMemo(
     () => (countryCode ? kybRuleForCountry(countryCode).requiresTravelAgencyPermit : false),
@@ -124,7 +124,11 @@ export function ProviderRegisterMainForm(props: Props) {
       <p className="text-meta text-ink-400" aria-live="polite">
         {t("providerRegister_stepIndicator").replace("{step}", String(step))}
       </p>
-      {error ? <ApiErrorAlert id={formErrorId} message={error} className="mb-4" /> : null}
+      {error ? (
+        <div className="mb-4">
+          <ApiErrorAlert message={error} tone="dark" />
+        </div>
+      ) : null}
 
       {step === 1 ? (
         <div className="space-y-4">
@@ -230,11 +234,13 @@ export function ProviderRegisterMainForm(props: Props) {
               }}
             >
               <option value="">{t("providerRegister_selectCountry")}</option>
-              {COUNTRY_OPTIONS.map((c) => (
-                <option key={c.iso} value={c.iso}>
-                  {c.label}
-                </option>
-              ))}
+              {countryOptions
+                .filter((c) => c.value !== "")
+                .map((c) => (
+                  <option key={c.value} value={c.value}>
+                    {t(c.labelKey)}
+                  </option>
+                ))}
             </select>
             <GuideRegisterInlineFieldError message={fieldInlineError("country")} />
           </div>
@@ -325,6 +331,7 @@ export function ProviderRegisterMainForm(props: Props) {
             />
           ) : null}
           <AuthL5Checkbox
+            id="provider-operating-same-as-registered"
             checked={operatingSameAsRegistered}
             onChange={setOperatingSameAsRegistered}
             label={t("providerRegister_operatingSameAsRegistered")}
@@ -543,7 +550,12 @@ export function ProviderRegisterMainForm(props: Props) {
             />
           ) : null}
           <p className="text-meta text-ink-500">{t("providerRegister_stakeNote")}</p>
-          <AuthL5Checkbox checked={agreePrivacy} onChange={setAgreePrivacy} label={t("providerRegister_agreePrivacy")} />
+          <AuthL5Checkbox
+            id="provider-agree-privacy"
+            checked={agreePrivacy}
+            onChange={setAgreePrivacy}
+            label={t("providerRegister_agreePrivacy")}
+          />
           <GuideRegisterInlineFieldError message={fieldInlineError("agree")} />
           <button type="button" className={guideRegSecondaryBtn} onClick={() => goToStep(2)}>
             {t("providerRegister_back")}

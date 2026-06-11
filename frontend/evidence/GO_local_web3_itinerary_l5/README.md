@@ -14,6 +14,7 @@
 | [`FIVE-MAIN-ROUTES-PHASE1-FREEZE`](../GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md) | `/` UI 冻结 |
 | **[`ESCROW-ORDER-PAGE-PHASE1-CLOSURE`](./ESCROW-ORDER-PAGE-PHASE1-CLOSURE.md)** | **订单页 Phase ① 收口声明（多维对齐 · ACTIVE）** |
 | **[`ESCROW-DRAFT-EXPERIENCE-FREEZE`](./ESCROW-DRAFT-EXPERIENCE-FREEZE.md)** | **`/escrow/[id]` 草稿 Experience UI 冻结（2026-05-28）** |
+| **[`ITINERARY-DATE-AS-SOURCE-PHASE1-FREEZE`](./ITINERARY-DATE-AS-SOURCE-PHASE1-FREEZE.md)** | **行程日期 = 预约档期真源 · 市场/向导详情同源（2026-06-09）** |
 | [`app/escrow/[id]/README.md`](../../app/escrow/[id]/README.md) | 路由读序 |
 | [`components/escrow/EscrowDetail/README.md`](../../components/escrow/EscrowDetail/README.md) | Escrow 组件 |
 | [`GO_local_phase1/site10.acceptance.latest.log`](../GO_local_phase1/site10.acceptance.latest.log) | 全站 10 G-0 留痕 |
@@ -57,7 +58,10 @@ EscrowDetail (Experience 暖色壳)
 ```bash
 bash scripts/dev/run-web3-itinerary-l5-green.sh
 bash scripts/dev/smoke-web3-itinerary-full-chain-local.sh
+bash scripts/dev/record-itinerary-date-as-source-evidence.sh
 ```
+
+**itinerary-date-as-source 冻结（① · 2026-06-09）：** [`ITINERARY-DATE-AS-SOURCE-PHASE1-FREEZE.md`](./ITINERARY-DATE-AS-SOURCE-PHASE1-FREEZE.md) — 末行 `TT_ITINERARY_DATE_AS_SOURCE_EVIDENCE: OK` + 忙档 `TT_ITINERARY_DATE_AS_SOURCE_BUSY_GUIDE_SMOKE: OK`
 
 末行：`TT_WEB3_ITINERARY_L5_GREEN: OK` · `TT_WEB3_ITINERARY_FULL_CHAIN_SMOKE: OK`
 

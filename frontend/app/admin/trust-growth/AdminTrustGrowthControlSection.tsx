@@ -20,8 +20,8 @@ type AdminTrustGrowthControlSectionProps = {
   rollbackBusy: boolean;
   actionError: string | null;
   actionErrorKind: AdminFetchErrorKind | null;
-  applyControl: () => Promise<void>;
-  rollback: () => Promise<void>;
+  applyControl: () => void;
+  rollback: () => void;
 };
 
 export function AdminTrustGrowthControlSection({

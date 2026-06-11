@@ -40,6 +40,8 @@ fn chain_off_state_accepted_order(
             language_cert_url: None,
             guide_license_url: None,
             stake_amount: "0".to_string(),
+            hourly_rate: None,
+            avatar_url: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,

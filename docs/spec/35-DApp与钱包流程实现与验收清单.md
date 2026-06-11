@@ -49,7 +49,7 @@
 | 验收项 | 06/13-1 依据 | 前端落点 | 说明 |
 |--------|----------------|----------|------|
 | EIP-712 结构化签名 | 06 §三、§五；01 §7 P0 | Domain Separator 写死；支付/**release**/openDispute 等须经 EIP-712 或合约调用前明确展示参数；链下 `confirm-completion` 见 API（04 §3.4） | 不引导无限授权 |
-| Signature / Tx Modal | 13-1 §三 交易交互规范 | `components/escrow/EscrowDetail.tsx` 内签名弹窗或独立 Modal | 所有链上动作必须经 Modal，不得普通表单提交 |
+| Signature / Tx Modal | 13-1 §三 交易交互规范 | `components/escrow/EscrowDetail/EscrowTxModal.tsx`（**已上链**协议壳；草稿 Experience 见 [订单页 ① 收口](../../frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-ORDER-PAGE-PHASE1-CLOSURE.md)） | 所有链上动作必须经 Modal，不得普通表单提交 |
 | Modal 内必现字段 | 13-1 §三 | chainId、contract、function、amount、token、gas estimate、finalityN（或等价文案） | 用户可取消/拒绝（05 §九 9.0.5） |
 | tx 状态机可见 | 13-1 §三、09 txMachine | idle → signing → pending → confirmed → final / failed（及 replaced 若支持） | `TxMachineStatus` 或等价组件在 Escrow Detail/OrderFlow 可见 |
 

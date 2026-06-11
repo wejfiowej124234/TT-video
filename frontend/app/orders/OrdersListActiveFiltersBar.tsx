@@ -10,6 +10,7 @@ export function OrdersListActiveFiltersBar({
   onClearStateFilter,
   onClearSearch,
   onClearAll,
+  searchResultsPaginated = false,
   embedded = false,
 }: {
   t: (key: string, vars?: Record<string, string | number>) => string;
@@ -18,6 +19,8 @@ export function OrdersListActiveFiltersBar({
   onClearStateFilter: () => void;
   onClearSearch: () => void;
   onClearAll: () => void;
+  /** 搜索仍可能有未加载分页时的旁证提示（仅在有搜索词时展示） */
+  searchResultsPaginated?: boolean;
   embedded?: boolean;
 }) {
   const stateActive = Boolean(ordersListStateParam);
@@ -28,13 +31,16 @@ export function OrdersListActiveFiltersBar({
   const stateLabel = t(ordersListStateLabelKey(ordersListStateParam));
   const showClearAll = stateActive && searchActive;
 
+  const showSearchScopeHint = searchActive && searchResultsPaginated;
+
   return (
     <div
-      className={embedded ? "flex flex-wrap items-center gap-2" : TT_ORDERS_LIST_L5.activeFiltersBar}
+      className={embedded ? "flex w-full min-w-0 flex-col gap-2" : TT_ORDERS_LIST_L5.activeFiltersBar}
       role="status"
       aria-label={t("orders_list_active_filters_aria")}
       data-tt-orders-active-filters="1"
     >
+      <div className="flex min-w-0 flex-wrap items-center gap-2">
       <span className={TT_ORDERS_LIST_L5.activeFiltersLabel}>{t("orders_list_active_filters_label")}</span>
       {stateActive ? (
         <span className={TT_ORDERS_LIST_L5.activeFilterChip}>
@@ -70,6 +76,12 @@ export function OrdersListActiveFiltersBar({
         <button type="button" className={TT_ORDERS_LIST_L5.clearAllFiltersBtn} onClick={onClearAll}>
           {t("orders_list_clear_all_filters")}
         </button>
+      ) : null}
+      </div>
+      {showSearchScopeHint ? (
+        <p className={TT_ORDERS_LIST_L5.searchScopeHintInline} role="note" data-tt-orders-search-scope-hint="1">
+          {t("orders_list_search_scope_hint")}
+        </p>
       ) : null}
     </div>
   );

@@ -2,8 +2,8 @@
 
 **Target:** [https://tt-web-staging.fly.dev](https://tt-web-staging.fly.dev)  
 **API:** [https://tt-api-staging.fly.dev](https://tt-api-staging.fly.dev)  
-**Recorded:** 2026-06-06T13:04:52.320Z  
-**UAT artifact:** `D:/TravelTrust-V1.1/evidence/staging-uat-six-domains/20260606T125854Z/uat-findings.json`  
+**Recorded:** 2026-06-07T14:46:55.233Z  
+**UAT artifact:** `D:/TravelTrust-V1.1/evidence/staging-uat-six-domains/20260607T144259Z/uat-findings.json`  
 
 > 本矩阵仅登记 **Staging UAT 真实浏览器缺陷**；Remediation 只允许 **bugfix**（含 staging 部署/Env/CORS/构建），**禁止新增产品需求**。 **≠ Production GO** · **≠ Phase ③ 公网 GO**。
 
@@ -13,8 +13,8 @@
 
 | Gate | Verdict |
 |------|---------|
-| **Staging browsable** | **PARTIAL** |
-| **Staging UAT (六大域)** | **FAIL** (22 PASS / 1 WARN / 2 FAIL) |
+| **Staging browsable** | **YES** |
+| **Staging UAT (六大域)** | **PASS** (25 PASS / 0 WARN / 0 FAIL) |
 | **P0 cluster (CORS/meta/fetch)** | **CLEAR** |
 | **Production GO** | **NO-GO** |
 | **Phase ③ Public GO** | **NO-GO** |
@@ -36,11 +36,11 @@
 | ID | 域 | Scope | Staging UAT | Evidence |
 |----|-----|-------|-------------|----------|
 | D1 | 首页 | Marketing / Home / Trust hub | PASS | Staging UAT browser |
-| D2 | 身份 | Auth / me / identities | FAIL | Staging UAT browser |
+| D2 | 身份 | Auth / me / identities | PASS | Staging UAT browser |
 | D3 | 市场 | Market / acquisition / guides | PASS | Staging UAT browser |
 | D4 | 社区 | Community feed / explore / messages | PASS | Staging UAT browser |
 | D5 | 治理 | Governance / staking / Sepolia | PASS | Staging UAT browser |
-| D6 | 管理员 | Admin workspace / ops | FAIL | Staging UAT browser |
+| D6 | 管理员 | Admin workspace / ops | PASS | Staging UAT browser |
 | DX | 跨域 | CORS / meta / env alignment | PASS | Staging UAT browser |
 
 ---
@@ -49,9 +49,7 @@
 
 | ID | 域 | Route | Prio | Sev | Observation | Fix class | Status |
 |----|-----|-------|------|-----|-------------|-----------|--------|
-| **DEF-001** | 身份 | `/me` | P1 | FAIL | navigation/assert: page.evaluate: Execution context was destroyed, most likely because of a navigation | bugfix | OPEN |
-| **DEF-002** | 管理员 | `/admin/orders` | P1 | WARN | main shell not matched: /Orders|订单/i | bugfix | OPEN |
-| **DEF-003** | 管理员 | `/admin/users` | P1 | FAIL | navigation/assert: page.evaluate: Execution context was destroyed, most likely because of a navigation. | bugfix | OPEN |
+| — | — | — | — | 无 FAIL/WARN 级缺陷记录 | — | — |
 
 ---
 
@@ -65,7 +63,7 @@
 | P4 | Stripe test vs live isolation | API secrets | **sk_live forbidden** on staging | PREP |
 | P5 | Production CDN / HLS (G7) | staging MP4 only | CDN + HLS GO | **PREP_PASS** |
 | P6 | Build quality (TS/ESLint in CI) | standalone build skips lint/tsc | Full green `npm run build` + lint | **OPEN** |
-| P7 | Zero error-boundary on core routes | UAT §3 | All six domains PASS | **FAIL** |
+| P7 | Zero error-boundary on core routes | UAT §3 | All six domains PASS | **PASS** |
 | P8 | Admin auth (real RBAC) | Bearer + promote_admin (②) | SSO/RBAC + audit | OPEN |
 
 ---
@@ -140,10 +138,10 @@
   {
     "domain": "身份",
     "route": "/me",
-    "status": "FAIL",
+    "status": "PASS",
     "auth_mode": "bearer_tourist",
     "notes": [
-      "navigation/assert: page.evaluate: Execution context was destroyed, most likely because of a navigation"
+      "shell reachable"
     ]
   },
   {
@@ -224,7 +222,7 @@
     "status": "PASS",
     "auth_mode": "public",
     "notes": [
-      "api auth-only (401/403 ignored for public probe): 401 /api/v1/governance/pool; 401 /api/v1/governance/rewards"
+      "api auth-only (401/403 ignored for public probe): 401 /api/v1/governance/pool"
     ]
   },
   {
@@ -266,19 +264,19 @@
   {
     "domain": "管理员",
     "route": "/admin/orders",
-    "status": "WARN",
+    "status": "PASS",
     "auth_mode": "bearer_admin",
     "notes": [
-      "main shell not matched: /Orders|订单/i"
+      "shell reachable"
     ]
   },
   {
     "domain": "管理员",
     "route": "/admin/users",
-    "status": "FAIL",
+    "status": "PASS",
     "auth_mode": "bearer_admin",
     "notes": [
-      "navigation/assert: page.evaluate: Execution context was destroyed, most likely because of a navigation."
+      "shell reachable"
     ]
   },
   {

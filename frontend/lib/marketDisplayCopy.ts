@@ -15,6 +15,8 @@ const INTERNAL_MARKET_COPY = [
   /联调(?:账号|账户|向导)/i,
   /hangzhou test guide/i,
   /^test guide account/i,
+  /trust[-_\s]?gate/i,
+  /\be2e\b/i,
 ] as const;
 
 /** 向导 service_types 中不向公众展示的系统/烟测/收购履约标签 */
@@ -70,6 +72,28 @@ export function formatGuideServiceTypeLabel(
   const localized = t(key);
   if (localized !== key) return localized;
   return humanizeGuideServiceSlug(slug);
+}
+
+const GUIDE_LANGUAGE_I18N_PREFIX = "market_guide_lang_" as const;
+
+/** 向导语言：zh/en → 消费者可读标签；未知 code 保留大写 */
+export function formatGuideLanguages(
+  languages: string[] | null | undefined,
+  t: (key: string) => string,
+  sep = " · ",
+): string {
+  if (!Array.isArray(languages) || languages.length === 0) return t("ui_em_dash");
+  return languages
+    .map((raw) => {
+      const code = raw.trim().toLowerCase();
+      if (!code) return "";
+      const key = `${GUIDE_LANGUAGE_I18N_PREFIX}${code}`;
+      const localized = t(key);
+      if (localized !== key) return localized;
+      return code.toUpperCase();
+    })
+    .filter(Boolean)
+    .join(sep);
 }
 
 export function isInternalMarketSeedCopy(raw: string | null | undefined): boolean {

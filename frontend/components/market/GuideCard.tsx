@@ -7,6 +7,7 @@ import type { GuideCardItem } from "@/lib/marketTypes";
 import { formatGuideDisplayName } from "@/lib/guideDisplayName";
 import {
   filterGuidePublicServiceTypes,
+  formatGuideLanguages,
   formatGuidePublicBio,
   formatGuideServiceTypeLabel,
 } from "@/lib/marketDisplayCopy";
@@ -39,7 +40,7 @@ function GuideCard({
   const { t } = useTranslation();
   const dash = t("ui_em_dash");
   const name = formatGuideDisplayName(t, guide);
-  const langs = Array.isArray(guide.languages) ? guide.languages.slice(0, 3).join(" / ") : dash;
+  const langs = formatGuideLanguages(guide.languages, t, " / ");
   const tags = filterGuidePublicServiceTypes(guide.service_types);
   const avatarAlt = t("guide_card_avatarAlt").replace("{{name}}", name);
   const cityLabel = guide.city ?? dash;

@@ -1,4 +1,5 @@
 import { requestFailedHttpUserText } from "./requestFailedHttp";
+import { formatOrderParticipantMismatchMessage } from "./orderParticipantHint";
 
 /**
  * 订单写接口（取消、双边确认、评分确认等）典型错误码 → 用户可见 i18n 文案（53 附录 C / 37 §2.4）
@@ -10,6 +11,11 @@ export function mapOrderWriteError(
 ): string {
   const code = e instanceof Error ? e.message : "";
   const fb = opts?.fallbackKey ?? "order_error_write_generic";
+
+  {
+    const acceptHint = formatOrderParticipantMismatchMessage(e, t, "accept");
+    if (acceptHint) return acceptHint;
+  }
 
   {
     const httpText = requestFailedHttpUserText(code, t);
@@ -51,6 +57,7 @@ export function mapOrderWriteError(
   if (code === "no_active_delegation") return t("governance_delegate_error_no_active_delegation");
   if (code === "order_not_found") return t("order_error_order_not_found");
   if (code === "forbidden") return t("order_error_forbidden");
+  if (code === "not_assigned_guide") return t("order_error_not_assigned_guide");
   if (code === "not_guide") return t("order_error_not_guide");
   if (code === "trust_guide_pending_review") return t("order_error_trust_guide_pending_review");
   if (code === "trust_verification_pending") return t("order_error_trust_verification_pending");

@@ -11,39 +11,9 @@ import { meProtocolRoleForDisplay, meRoleLabelI18nKey } from "@/lib/meRoleDispla
 import { TT_COMMUNITY_DRAWER_L5 } from "@/lib/marketingUi";
 import { TT_AUTH_L5_FORM, authL5FieldClass } from "@/lib/auth/authL5Form";
 import { communityPublishFabFocus } from "@/lib/communityA11yFocus";
+import type { MeProfileSectionProps } from "./meProfileSectionTypes";
 
-export interface MeProfileSectionProps {
-  t: (k: string) => string;
-  user: UserShape;
-  editing: boolean;
-  setEditing: (v: boolean) => void;
-  editForm: { nickname: string; avatar_url: string; default_wallet_address: string };
-  setEditForm: React.Dispatch<React.SetStateAction<{ nickname: string; avatar_url: string; default_wallet_address: string }>>;
-  submitError: string | null;
-  submitting: boolean;
-  avatarError: boolean;
-  setAvatarError: (v: boolean) => void;
-  copiedField: "id" | "wallet" | null;
-  copyClipboardBusy: "id" | "wallet" | null;
-  copyToClipboard: (text: string, field: "id" | "wallet") => void;
-  connectedAddress: string | undefined;
-  syncingWallet: boolean;
-  editButtonRef: React.RefObject<HTMLButtonElement | null>;
-  handleSubmit: (e: React.FormEvent) => void;
-  handleSyncWallet: () => void;
-  /**
-   * 社区 `/community/me`：顶卡已展示头像/昵称/角色，此处仅保留账户标识与编辑，避免整块重复。
-   */
-  compactCommunityLayout?: boolean;
-  /** 与顶栏社区资料合并为一张青卡时：去掉外层紫框与标题条，仅保留可锚定区块。 */
-  unifiedInCommunityCard?: boolean;
-  /** 父级 `<details>` 已提供 `#me-platform-profile` 锚点时不再写重复 id */
-  omitAnchorId?: boolean;
-  /** 置于折叠区内且与上方统计相邻：去掉顶部分隔与多余外边距 */
-  insetInCollapsible?: boolean;
-  /** `/me/settings/profile`：暖金 L5 表单/按钮 token */
-  settingsL5Layout?: boolean;
-}
+export type { MeProfileSectionProps };
 
 export default function MeProfileSection({
   t,

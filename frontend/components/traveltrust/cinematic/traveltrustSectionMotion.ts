@@ -1,7 +1,7 @@
 /** v6 章节入场分轨（波次 2.1 · 与 traveltrustCinematicMotion 同源） */
 import type { Transition, TargetAndTransition } from "framer-motion";
 import { TT_CINEMATIC_EASE } from "./traveltrustCinematicMotion";
-import { TT_FOOTER_L5_SEQUENTIAL, TT_SECTION_MOTION_L5 } from "@/lib/traveltrustCinematicNonGlobeL5";
+import { TT_FOOTER_L5_SEQUENTIAL, TT_SECTION_MOTION_L5 } from "@/lib/traveltrust/l5";
 
 export type TraveltrustSectionMotionId =
   | "theater"
@@ -19,8 +19,8 @@ type SectionMotionPreset = {
 
 const PRESETS: Record<TraveltrustSectionMotionId, SectionMotionPreset> = {
   theater: {
-    initial: { opacity: 0, y: 24, scale: 0.995, filter: "blur(3px)" },
-    whileInView: { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" },
+    initial: { opacity: 0, y: 24, scale: 0.995 },
+    whileInView: { opacity: 1, y: 0, scale: 1 },
     transition: { duration: TT_SECTION_MOTION_L5.theater.duration, ease: TT_CINEMATIC_EASE },
   },
   liquidity: {
@@ -29,18 +29,18 @@ const PRESETS: Record<TraveltrustSectionMotionId, SectionMotionPreset> = {
     transition: { duration: TT_SECTION_MOTION_L5.liquidity.duration, ease: TT_CINEMATIC_EASE },
   },
   trust: {
-    initial: { opacity: 0, y: 14, filter: "blur(2px)" },
-    whileInView: { opacity: 1, y: 0, filter: "blur(0px)" },
+    initial: { opacity: 0, y: 14 },
+    whileInView: { opacity: 1, y: 0 },
     transition: { duration: TT_SECTION_MOTION_L5.trust.duration, ease: TT_CINEMATIC_EASE },
   },
   settlement: {
-    initial: { opacity: 0, y: 10, filter: "blur(2px)" },
-    whileInView: { opacity: 1, y: 0, filter: "blur(0px)" },
+    initial: { opacity: 0, y: 10 },
+    whileInView: { opacity: 1, y: 0 },
     transition: { duration: TT_SECTION_MOTION_L5.settlement.duration, ease: TT_CINEMATIC_EASE },
   },
   faq: {
-    initial: { opacity: 0, y: 12, filter: "blur(2px)" },
-    whileInView: { opacity: 1, y: 0, filter: "blur(0px)" },
+    initial: { opacity: 0, y: 12 },
+    whileInView: { opacity: 1, y: 0 },
     transition: { duration: TT_SECTION_MOTION_L5.faq.duration, ease: TT_CINEMATIC_EASE },
   },
   start: {

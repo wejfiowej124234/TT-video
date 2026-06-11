@@ -62,13 +62,7 @@ test.describe("P02 create order + list", () => {
       await page.goto(`/orders/new?guide_id=${encodeURIComponent(guideId)}`);
     }
 
-    const guideSelect = page.getByRole("combobox", { name: /向导列表|guides/i });
-    await expect(guideSelect).toBeVisible({ timeout: 20_000 });
-    await expect
-      .poll(async () => guideSelect.locator("option").count(), { timeout: 30_000 })
-      .toBeGreaterThan(1);
-
-    await guideSelect.selectOption({ value: guideId });
+    await expect(page.locator('[data-tt-orders-new-guide-summary="1"]')).toBeVisible({ timeout: 20_000 });
 
     const amount = `42.${Date.now().toString().slice(-4)}`;
     await page.getByLabel(/金额|amount/i).fill(amount);

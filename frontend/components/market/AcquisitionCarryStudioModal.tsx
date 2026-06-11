@@ -24,7 +24,7 @@ import {
   hasCommunityPublishAuth,
   publishAcquisitionCarryCommunityPost,
 } from "@/lib/marketProductCommunityPublish";
-import { PRODUCT_COUNTRIES } from "@/lib/productCountries";
+import { useCatalogProductCountries } from "@/lib/catalogApi/useCatalogGeo";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
 import { trackMarketEvent } from "@/lib/analytics";
 import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
@@ -383,6 +383,8 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
     await runPersistAndSync();
   };
 
+  const productCountries = useCatalogProductCountries();
+
   if (!open || typeof document === "undefined") return null;
 
   return createPortal(
@@ -544,7 +546,7 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
                   <option value="" disabled>
                     {t("market_acquisitionStudio_dest_country_placeholder")}
                   </option>
-                  {PRODUCT_COUNTRIES.map((c) => (
+                  {productCountries.map((c) => (
                     <option key={c.iso} value={c.iso}>
                       {locale === "zh" ? c.nameZh : c.iso}
                     </option>

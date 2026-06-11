@@ -1,5 +1,8 @@
 # TravelTrust local stack preflight: Docker, toolchain, root .env hints.
 # Exit 1 if Docker unusable; warnings only for soft issues.
+# -FrontendOnly: Node/npm + frontend lockfile only (TRAVELTRUST_FRONTEND_ONLY=1).
+
+param([switch]$FrontendOnly)
 
 $ErrorActionPreference = "Continue"
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
@@ -11,25 +14,38 @@ function Write-Warn([string]$m) { Write-Host "preflight: WARN $m" -ForegroundCol
 function Write-Info([string]$m) { Write-Host "preflight: $m" }
 
 Write-Host "======== TravelTrust preflight (repo: $repoRoot) ========"
-
-docker info 2>$null | Out-Null
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "preflight: ERROR Docker not available. Start Docker Desktop before start-api-with-seed." -ForegroundColor Red
-    $failed = $true
-}
-else {
-    Write-Info "Docker: OK"
+if ($FrontendOnly) {
+    Write-Info "mode: FrontendOnly (skip Docker / Rust)"
 }
 
-foreach ($exe in @("rustc", "cargo")) {
-    $p = Get-Command $exe -ErrorAction SilentlyContinue
-    if (-not $p) {
-        Write-Host "preflight: ERROR missing $exe (install Rust toolchain)." -ForegroundColor Red
-        $failed = $true
+if (-not $FrontendOnly) {
+    $ensureDocker = Join-Path $PSScriptRoot "ensure-docker-daemon.ps1"
+    if (Test-Path -LiteralPath $ensureDocker) {
+        & powershell -NoProfile -ExecutionPolicy Bypass -File $ensureDocker
+        if ($LASTEXITCODE -ne 0) { $failed = $true }
+        else { Write-Info "Docker: OK" }
     }
     else {
-        $ver = (& $exe --version 2>&1 | Out-String).Trim()
-        Write-Info "${exe}: $ver"
+        docker info 2>$null | Out-Null
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "preflight: ERROR Docker not available. Start Docker Desktop before start-api-with-seed." -ForegroundColor Red
+            $failed = $true
+        }
+        else {
+            Write-Info "Docker: OK"
+        }
+    }
+
+    foreach ($exe in @("rustc", "cargo")) {
+        $p = Get-Command $exe -ErrorAction SilentlyContinue
+        if (-not $p) {
+            Write-Host "preflight: ERROR missing $exe (install Rust toolchain)." -ForegroundColor Red
+            $failed = $true
+        }
+        else {
+            $ver = (& $exe --version 2>&1 | Out-String).Trim()
+            Write-Info "${exe}: $ver"
+        }
     }
 }
 

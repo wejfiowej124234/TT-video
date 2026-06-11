@@ -1,5 +1,7 @@
 # 30 · UI/UX 全方位检查报告
 
+> **现行 SSOT（2026-06-03）**：五主路由 **① UI 壳冻结** — **[FIVE-MAIN-ROUTES](../../frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md)** · **[88 §一](88-五主路由页身实现快照与UX缺口审计-20260330.md)**。**`/` + `/market*` 四页 ① 数据链** — **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)**（**1×** POST · **`localStorage`** · **debounce** · 收藏 **`localStorage` + F-020 best-effort**（**`marketTravelBookmarksSync`**）→ **②** SLA）。下文部分段落为历史检查快照；**`/did-rank`** 以 **竖脊五签**（含 **行程**）为准 — **[DID-RANK-PHASE1-FREEZE](../../frontend/evidence/GO_local_marketing_front_closure/DID-RANK-PHASE1-FREEZE.md)**。
+
 ### 读前摘要
 
 | 你要找什么 | 单源 |
@@ -7,6 +9,7 @@
 | **维度总览（Tokens/a11y/i18n…）** | **§1** |
 | **§8 已完成优化清单** | **§8** |
 | **规范依据** | **[28](28-Cinematic-Glassmorphism-Web3融合规范.md)**、**[29](29-自由市场-撮合控制台规范.md)**、**[30-DID](30-DID排行榜-页面规范.md)**、**[13-1](13-1-UI产品级SSOT与页面规范.md)** |
+| **`/` + `/market` 四页 ① 数据链** | **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §2～§3 |
 
 **目的**：从 UI、UX、无障碍、一致性、i18n 等维度对前端做一次检查，并列出可优化项与优先级。  
 **范围**：`frontend/app`、`frontend/components`；规范依据 28、29、30、13-1。
@@ -32,10 +35,10 @@
 
 ### 2.1 规范符合度（28 / 30）
 
-- **Landing/Discover/市场**：Hero 可信承诺、TrustBadgesRow、可信基建墙、玻璃 pill、WalletStatusMini 已按 28 实现。
-- **DID 排行榜**：赛博风、**书壳 + 竖脊（旅行者/向导/商家）+ 内页翻页动效**、奖金池、时间范围、示例数据 pill、`?board=`、`?me=` 高亮、错误/示例数据横幅已优化。
+- **Landing/Discover/市场**：Hero 可信承诺、TrustBadgesRow、可信基建墙、玻璃 pill、WalletStatusMini 已按 28 实现；**`/`** **1×** 创单 · **`ITINERARY_CARD_COUNT=1`** · **`landingItinerarySession` = `localStorage`**（**CODE SSOT** §2）；**`/discover`→`/market`** · **`useMarketPage`** **300ms debounce** · 收藏 **`localStorage` only**（**CODE SSOT** §3）。
+- **DID 排行榜**：赛博风、**书壳 + 竖脊五签** + 内页翻页、五端点 HTTP、奖金池 **illustrative 披露**、`?board=` / `?period=`、档案链 **`/community/user/[id]`**（**①** **[DID-RANK-PHASE1-FREEZE](../../frontend/evidence/GO_local_marketing_front_closure/DID-RANK-PHASE1-FREEZE.md)**）。
 - **Escrow**：银行级、无玻璃；FinalityBadge、OnchainEventTimeline、TxMachineStatus 已接入。
-- **自由市场**：撮合控制台、订单/向导卡、Escrow-enabled/SupportedTokens、无支付 CTA 符合 29。
+- **自由市场**：撮合控制台、订单/向导卡、Escrow-enabled/SupportedTokens、无支付 CTA 符合 29；**`getDiscoverOrders` debounce** · **F-020 best-effort 已接线（①）→ ② SLA** — **CODE SSOT** §3。
 
 ### 2.2 可优化点
 
@@ -52,7 +55,7 @@
 
 ### 3.1 导航与反馈
 
-- 顶栏：Web3旅行、自由市场、DID排行榜、TT社区 高亮正确；Wallet / 登录 / 注册 清晰。
+- 顶栏：四链激活色与路径一致（**`/`** 仅亮 Web3旅行；深条暖金 / 浅条暖棕，**86 §6.0** · **`uiSystem.test.ts`**）；Wallet / 登录 / 注册 清晰。
 - 错误反馈：DID 页「请求失败，当前为示例数据」+ 重试 已成型；市场页有示例数据提示与重试；Escrow 有 ApiErrorAlert。
 - 加载反馈：多数列表/详情页为「加载中…」+ 骨架或占位，缺少统一「加载中」文案 key。
 

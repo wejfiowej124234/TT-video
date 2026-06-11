@@ -44,13 +44,28 @@ def main() -> int:
         if I18N_KEY not in text:
             errors.append(f"{p.relative_to(ROOT)} must contain key {I18N_KEY!r}")
 
-    gov_page = ROOT / "frontend/app/governance/page.tsx"
-    if gov_page.is_file():
-        g = gov_page.read_text(encoding="utf-8")
-        if "GovernanceTargetNotice" not in g:
-            errors.append("frontend/app/governance/page.tsx must import/render GovernanceTargetNotice")
-        if I18N_KEY not in g:
-            errors.append(f"frontend/app/governance/page.tsx must reference i18n key {I18N_KEY!r}")
+    # Hub may re-export GovernanceHubPageMain from a thin page.tsx shell.
+    gov_hub_sources = [
+        ROOT / "frontend/app/governance/page.tsx",
+        ROOT / "frontend/app/governance/GovernanceHubPageMain.tsx",
+    ]
+    hub_text = ""
+    for p in gov_hub_sources:
+        if p.is_file():
+            hub_text += p.read_text(encoding="utf-8") + "\n"
+    if hub_text:
+        if "GovernanceTargetNotice" not in hub_text:
+            errors.append(
+                "governance hub must import/render GovernanceTargetNotice "
+                "(frontend/app/governance/page.tsx or GovernanceHubPageMain.tsx)"
+            )
+        if I18N_KEY not in hub_text:
+            errors.append(
+                f"governance hub must reference i18n key {I18N_KEY!r} "
+                "(frontend/app/governance/page.tsx or GovernanceHubPageMain.tsx)"
+            )
+    else:
+        errors.append("missing governance hub: frontend/app/governance/page.tsx")
 
     if errors:
         print("check-b432-governance-ui-ssot-surface FAIL:", file=sys.stderr)

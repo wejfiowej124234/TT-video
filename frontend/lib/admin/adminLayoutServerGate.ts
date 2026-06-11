@@ -19,7 +19,8 @@ export async function assertAdminConsoleServerGate(): Promise<void> {
   }
 
   if (res.status === 401) {
-    redirect("/auth/login?returnUrl=%2Fadmin");
+    // PG/严格会话下 X-User-Id 预检常为 401；浏览器 Bearer 会话由客户端 gate 裁定，勿 SSR 抢跳登录。
+    return;
   }
   if (res.status === 403) {
     redirect("/market?admin_access=denied");

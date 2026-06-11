@@ -4,6 +4,8 @@
 
 > Mid-depth reader between the executive summary and the full investor whitepaper. **Not** an offer or investment advice. Token boundaries, FeeRouter math, and risks: [06-Whitepaper.md](06-Whitepaper.md). **Market absolutes and forecasts**: **NDA** only.
 
+**Product demo / screen-recording engineering SSOT (internal · Phase ①)**: **`/`** Web3 travel home · **`/market`** (**`/discover`→`/market`**) — **[LANDING-MARKET-PAGES-CODE-SSOT](../../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **[PM demo script](../../product-manager/24-产品经理核心产品路径与演示脚本.md)**.
+
 ---
 
 ## Abstract

@@ -9,6 +9,7 @@ import type { GuideQuoteBreakdown } from "../useQuoteCalculation";
 import { DESCRIPTION_MAX_LENGTH, MAX_COVER_FILE_SIZE } from "../constants";
 import { sanitizeDecimalInput } from "../utils";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
+import { headcountPricingNoteKey } from "../itineraryFormCountryCopy";
 
 export interface GuideFormQuoteAndCoverSectionProps {
   form: CustomItineraryForm;
@@ -201,7 +202,7 @@ export default function GuideFormQuoteAndCoverSection({
             className={inputClass}
             placeholder={t("market_headcountPlaceholder")}
           />
-          <p className="text-meta text-white/70 mt-1">{t("market_headcountPricingNote")}</p>
+          <p className="text-meta text-white/70 mt-1">{t(headcountPricingNoteKey(form.country))}</p>
         </div>
       </div>
       {form.amount.trim() && form.headcount >= 1 &&

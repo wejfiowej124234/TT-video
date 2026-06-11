@@ -11,6 +11,7 @@ import { apiUrl, routes } from "@/lib/api";
 import { getAuthHeaders } from "@/lib/apiClient";
 import {
   defaultAdminListFetchSnapshot,
+  type AdminListFetchSnapshot,
   type AdminStandardListBody,
   useAdminStandardListFetch,
 } from "@/lib/admin/useAdminStandardListFetch";
@@ -26,8 +27,8 @@ import {
 
 function feeRouterFirstPageToSnapshot(
   body: AdminStandardListBody<FeeRouteItem> & Pick<AdminFeeRouterRes, "summary" | "page">,
-) {
-  const base = defaultAdminListFetchSnapshot(body);
+): AdminListFetchSnapshot<FeeRouteItem> {
+  const base = defaultAdminListFetchSnapshot<FeeRouteItem>(body);
   const meta: Record<string, unknown> = { ...(base.meta ?? {}) };
   if (body.summary && typeof body.summary === "object") {
     meta[ADMIN_FEE_ROUTER_SUMMARY_META_KEY] = body.summary;

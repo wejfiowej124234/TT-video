@@ -28,7 +28,7 @@ export function AdminInboxWorkflowQuickNav(props: {
 
   const byId = new Map(tasks.map((task) => [task.id, task]));
   const ordered = ADMIN_INBOX_WORKFLOW_IDS.map((id) => byId.get(id)).filter(
-    (task): task is AdminUnifiedInboxTask => Boolean(task) && !task.permissionDenied,
+    (task): task is AdminUnifiedInboxTask => task != null && !task.permissionDenied,
   );
 
   if (ordered.length === 0) return null;

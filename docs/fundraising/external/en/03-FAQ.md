@@ -64,7 +64,7 @@ Brand and project landing for positioning; **not** a subscription or solicitatio
 
 ### 6. What is `/market`?
 
-The marketplace entry for supply and demand.
+The marketplace entry for supply and demand. **Engineering (internal / diligence · Phase ①)**: list UI at **`/market`**; legacy **`/discover`** redirects here; **`/`** Web3 travel home is a separate entry — **[LANDING-MARKET-PAGES-CODE-SSOT](../../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** (not a change to external product promises).
 
 ### 7. Why orders & escrow matter?
 

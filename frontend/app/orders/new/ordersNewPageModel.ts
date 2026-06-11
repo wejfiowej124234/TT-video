@@ -1,4 +1,12 @@
-export type OrdersNewGuideRow = { id: string; city?: string };
+export type OrdersNewGuideRow = {
+  id: string;
+  city?: string;
+  avatar_url?: string | null;
+  rating?: number | null;
+  languages?: string[] | null;
+  service_types?: string[] | null;
+  bio?: string | null;
+};
 
 export function dedupeGuidesById(rows: OrdersNewGuideRow[]): OrdersNewGuideRow[] {
   const m = new Map<string, OrdersNewGuideRow>();

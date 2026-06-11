@@ -1,4 +1,9 @@
-import { ADMIN_PHASE2_REMAINING_BACKLOG_PREP_HREF } from "@/lib/admin/adminPhase2RemainingBacklogPrepHref";
+import {
+  ADMIN_PHASE2_REMAINING_BACKLOG_PREP_HREF,
+  type AdminPhase2RemainingBacklogId,
+} from "@/lib/admin/adminPhase2RemainingBacklogPrepHref";
+
+export type { AdminPhase2RemainingBacklogId } from "@/lib/admin/adminPhase2RemainingBacklogPrepHref";
 
 /** 六项 Phase ②/③ 剩余 backlog · ① 机读 SSOT（非 staging GO）。 */
 export const ADMIN_PHASE2_REMAINING_BACKLOG_ITEMS = [
@@ -52,5 +57,3 @@ export const ADMIN_PHASE2_REMAINING_BACKLOG_ITEMS = [
   },
 ] as const;
 
-export type AdminPhase2RemainingBacklogId =
-  (typeof ADMIN_PHASE2_REMAINING_BACKLOG_ITEMS)[number]["id"];

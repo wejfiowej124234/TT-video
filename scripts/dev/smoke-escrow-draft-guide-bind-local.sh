@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# ① 本地 · Escrow 草稿：PATCH 绑定向导 + confirm 门闸（guide_required）
+# ① 本地 · Escrow 草稿：创建无向导 → 保存发布 → PATCH 绑定向导 → 更换向导（reassign）
 #
 # 用法（仓库根，API 已起且 P3_CHAIN_OFF=1 或 chain_off 可用）：
 #   bash scripts/dev/smoke-escrow-draft-guide-bind-local.sh
@@ -11,6 +11,8 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
 # shellcheck source=scripts/dev/lib/tt-patch-order-assignable-guide.sh
 source "$ROOT/scripts/dev/lib/tt-patch-order-assignable-guide.sh"
+# shellcheck source=scripts/dev/lib/tt-order-guide-id.sh
+source "$ROOT/scripts/dev/lib/tt-order-guide-id.sh"
 
 API_BASE="${API_BASE:-http://127.0.0.1:8080}"
 API_BASE="${API_BASE%/}"
@@ -79,6 +81,12 @@ itin_body="${itin#*|}"
 ORDER_ID="$(json_field "$itin_body" order_id)"
 [[ -n "$ORDER_ID" ]] || fail "order_id missing"
 
+get_after_create="$(curl_json GET "$API_BASE/api/v1/orders/${ORDER_ID}" "" "$TOKEN")"
+gac_code="${get_after_create%%|*}"
+gac_body="${get_after_create#*|}"
+[[ "$gac_code" == "200" ]] || fail "GET order after create HTTP $gac_code"
+tt_assert_order_has_no_guide "$gac_body" "after POST /itineraries" || fail "create must not assign guide_id"
+
 save_patch="$(curl_json PATCH "$API_BASE/api/v1/orders/${ORDER_ID}/itinerary" "{\"daily_itinerary\":[{\"day_index\":1,\"city\":\"\u4e0a\u6d77\",\"description\":\"Kyoto cultural walking tour day\"}]}" "$TOKEN")"
 sp_code="${save_patch%%|*}"
 sp_body="${save_patch#*|}"
@@ -89,6 +97,7 @@ get_after_save="$(curl_json GET "$API_BASE/api/v1/orders/${ORDER_ID}" "" "$TOKEN
 gas_code="${get_after_save%%|*}"
 gas_body="${get_after_save#*|}"
 [[ "$gas_code" == "200" ]] || fail "GET order after save HTTP $gas_code"
+tt_assert_order_has_no_guide "$gas_body" "after PATCH save/publish" || fail "save/publish must not assign guide_id"
 order_state="$(node -e "const o=JSON.parse(process.argv[1]); process.stdout.write(String(o.order?.state||o.order?.status||''));" "$gas_body")"
 [[ "$order_state" == "created" ]] || fail "order state after save=$order_state expected created"
 
@@ -122,9 +131,38 @@ get="$(curl_json GET "$API_BASE/api/v1/orders/${ORDER_ID}" "" "$TOKEN")"
 get_code="${get%%|*}"
 get_body="${get#*|}"
 [[ "$get_code" == "200" ]] || fail "GET order HTTP $get_code"
-got_guide="$(node -e "const o=JSON.parse(process.argv[1]); process.stdout.write(String(o.order?.guide_id||''));" "$get_body")"
-[[ "$got_guide" == "$GUIDE_ID" ]] || fail "order.guide_id mismatch got=$got_guide want=$GUIDE_ID"
+tt_assert_order_has_guide "$get_body" "$GUIDE_ID" "after first PATCH guide" || fail "first bind guide_id mismatch"
 
-ok "order=$ORDER_ID guide=$GUIDE_ID (save→created + discover + bind)"
-echo "  UI: /escrow/$ORDER_ID"
-echo "  UI: /market?view=split&bindGuideToOrder=$ORDER_ID"
+guide_reg2="$(curl_json POST "$API_BASE/auth/register" "{\"email\":\"escrow-bind-guide2-${STAMP}@example.com\",\"password\":\"$PASSWORD\",\"nickname\":\"Escrow Bind Guide 2\"}")"
+gr2_code="${guide_reg2%%|*}"
+gr2_body="${guide_reg2#*|}"
+[[ "$gr2_code" == "200" || "$gr2_code" == "201" ]] || fail "guide2 register HTTP $gr2_code"
+GUIDE2_TOKEN="$(json_field "$gr2_body" token)"
+[[ -n "$GUIDE2_TOKEN" ]] || fail "guide2 token missing"
+
+create_g2="$(curl_json POST "$API_BASE/api/v1/guides" "{\"display_name\":\"Escrow Reassign Guide $STAMP\",\"city\":\"Shanghai\",\"country_code\":\"CN\"}" "$GUIDE2_TOKEN")"
+cg2_code="${create_g2%%|*}"
+cg2_body="${create_g2#*|}"
+[[ "$cg2_code" == "200" || "$cg2_code" == "201" ]] || fail "POST guides guide2 HTTP $cg2_code body=$cg2_body"
+GUIDE2_ID="$(node -e "const o=JSON.parse(process.argv[1]); process.stdout.write(String(o.guide?.id||o.id||''));" "$cg2_body")"
+[[ -n "$GUIDE2_ID" ]] || fail "guide2 id missing"
+
+stake_g2="$(curl_json POST "$API_BASE/api/v1/guides/${GUIDE2_ID}/stake" '{"amount":"100"}' "$GUIDE2_TOKEN")"
+sg2_code="${stake_g2%%|*}"
+[[ "$sg2_code" == "200" ]] || fail "POST stake guide2 HTTP $sg2_code body=${stake_g2#*|}"
+
+reassign="$(curl_json PATCH "$API_BASE/api/v1/orders/${ORDER_ID}/guide" "{\"guide_id\":\"$GUIDE2_ID\"}" "$TOKEN")"
+ra_code="${reassign%%|*}"
+ra_body="${reassign#*|}"
+[[ "$ra_code" == "200" ]] || fail "PATCH reassign guide HTTP $ra_code body=$ra_body"
+
+get2="$(curl_json GET "$API_BASE/api/v1/orders/${ORDER_ID}" "" "$TOKEN")"
+g2_code="${get2%%|*}"
+g2_body="${get2#*|}"
+[[ "$g2_code" == "200" ]] || fail "GET order after reassign HTTP $g2_code"
+tt_assert_order_has_guide "$g2_body" "$GUIDE2_ID" "after reassign PATCH guide" || fail "reassign guide_id mismatch"
+
+ok "order=$ORDER_ID guide1=$GUIDE_ID guide2=$GUIDE2_ID (no guide on create · bind · reassign)"
+echo "  UI step2: /escrow/$ORDER_ID — 请选择向导"
+echo "  UI step2: /market?view=split&bindGuideToOrder=$ORDER_ID"
+echo "smoke-escrow-draft-guide-bind: PASS (phase ① · itinerary-first · guide reassign)"

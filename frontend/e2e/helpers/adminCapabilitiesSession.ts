@@ -1,6 +1,8 @@
 import { expect, type Page } from "@playwright/test";
 
 import {
+  ensureCommunityBrowserSessionAccepted,
+  gotoWithBearerSession,
   injectBearerSessionInPage,
   type BearerSessionCredentials,
 } from "./apiSession";
@@ -72,16 +74,46 @@ export async function waitForAdminCapabilitiesReady(
       await page.evaluate(() => {
         window.dispatchEvent(new CustomEvent("traveltrust:auth-change"));
       });
-      await expect(
-        page.locator(
-          '[data-tt-admin-capability-strip="1"][data-tt-admin-capabilities-loaded="1"]',
-        ),
-      ).toHaveCount(1, { timeout: 15_000 });
-      return;
+      // 裸 fetch 200 时 React capabilities hook 可能尚未提交；刷新对齐 session + provider。
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await injectBearerSessionInPage(page, session);
+      await page.evaluate(() => {
+        window.dispatchEvent(new CustomEvent("traveltrust:auth-change"));
+      });
+      continue;
     }
 
     await page.waitForTimeout(400);
   }
 
   throw new Error("admin_capabilities_not_ready");
+}
+
+/**
+ * Admin Shell 浏览器审计同源入口：Bearer 预注入 → `/me` 200 → capabilities 就绪 → Shell Bar 可见。
+ * 须本机 FE `rewrites` 指向 staging API（`API_REWRITE_TARGET`）或 staging FE 同源部署。
+ */
+export async function gotoWithAdminShellSessionReady(
+  page: Page,
+  path: string,
+  session: BearerSessionCredentials,
+  timeoutMs = 120_000,
+): Promise<void> {
+  const token = session.token.trim();
+  if (!token) throw new Error("admin_shell_session_missing_token");
+
+  await gotoWithBearerSession(page, path, session);
+  await ensureCommunityBrowserSessionAccepted(page, session, timeoutMs);
+  // 能力条可被 SuperAdmin 健康路径抑制；ADM-U01 Shell 审计以 shell-bar + db-role 为就绪 SSOT。
+  try {
+    await waitForAdminCapabilitiesReady(page, session, Math.min(timeoutMs, 45_000));
+  } catch {
+    await injectBearerSessionInPage(page, session);
+    await page.evaluate(() => {
+      window.dispatchEvent(new CustomEvent("traveltrust:auth-change"));
+    });
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await injectBearerSessionInPage(page, session);
+  }
+  await expect(page.locator('[data-tt-admin-shell-bar="1"]')).toBeVisible({ timeout: timeoutMs });
 }

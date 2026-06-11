@@ -40,6 +40,10 @@ export interface EscrowDetailHeaderProps {
   experiencePreEscrow?: boolean;
   /** 已保存并发布到 discover（Created） */
   publishedToDiscover?: boolean;
+  /** P03：已绑向导待接单 */
+  guideAcceptPending?: boolean;
+  /** P04：已接单待双边确认 */
+  bilateralPending?: boolean;
 }
 
 export default function EscrowDetailHeader({
@@ -54,6 +58,8 @@ export default function EscrowDetailHeader({
   hasGuideAssigned = false,
   experiencePreEscrow = false,
   publishedToDiscover = false,
+  guideAcceptPending = false,
+  bilateralPending = false,
 }: EscrowDetailHeaderProps) {
   const { t } = useTranslation();
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
@@ -106,6 +112,8 @@ export default function EscrowDetailHeader({
                   experienceDraftHeaderMetaKey({
                     publishedToDiscover,
                     hasGuideAssigned,
+                    guideAcceptPending,
+                    bilateralPending,
                   }),
                 )
               : isDraft

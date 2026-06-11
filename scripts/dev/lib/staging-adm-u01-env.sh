@@ -67,9 +67,11 @@ print(d.get('access_token',''))
   echo "staging-adm-u01-env: fly proxy ${STAGING_PG_PROXY_PORT}:5432 -a ${FLY_STAGING_PG_APP} …"
   fly proxy "${STAGING_PG_PROXY_PORT}:5432" -a "$FLY_STAGING_PG_APP" >/tmp/tt-staging-pg-proxy-deep-gate.log 2>&1 &
   STAGING_PG_PROXY_PID=$!
-  sleep 5
 
-  if ! python -c "
+  local ready=0
+  local i
+  for i in $(seq 1 20); do
+    if python -c "
 import socket, sys
 s = socket.socket()
 s.settimeout(2)
@@ -80,8 +82,16 @@ except OSError:
 finally:
     s.close()
 " "$STAGING_PG_PROXY_PORT" 2>/dev/null; then
+      ready=1
+      break
+    fi
+    sleep 2
+  done
+
+  if [[ "$ready" != "1" ]]; then
     echo "staging-adm-u01-env: FAIL — fly proxy not listening on 127.0.0.1:${STAGING_PG_PROXY_PORT} (see /tmp/tt-staging-pg-proxy-deep-gate.log)" >&2
-    tail -3 /tmp/tt-staging-pg-proxy-deep-gate.log >&2 || true
+    tail -5 /tmp/tt-staging-pg-proxy-deep-gate.log >&2 || true
+    unset STAGING_DATABASE_URL
     return 1
   fi
 

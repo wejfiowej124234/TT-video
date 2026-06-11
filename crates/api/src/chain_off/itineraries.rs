@@ -96,6 +96,12 @@ fn default_headcount() -> u32 {
 pub struct CustomBreakdown {
     pub guide_fee: Option<f64>,
     pub car_fee: Option<f64>,
+    #[serde(default)]
+    pub attractions_fee: Option<f64>,
+    #[serde(default)]
+    pub food_fee: Option<f64>,
+    #[serde(default)]
+    pub hotel_fee: Option<f64>,
 }
 
 #[derive(Clone, Debug, Deserialize)]
@@ -417,12 +423,15 @@ fn is_in_progress(state: OrderState) -> bool {
     )
 }
 
-/// `POST /api/v1/itineraries`：`destination` 须为产品期中文国家名；`city` 与 `cities[]` 须为该国预设城市（`traveltrust_core::preset_cities`，与前端 geoOptions 一致）。
-fn validate_create_itinerary_geo(
+/// `POST /api/v1/itineraries`：`destination` 须为产品期中文国家名；`city` 与 `cities[]` 须为该国预设城市。
+/// 默认 **`traveltrust_core::preset_cities`**；`CATALOG_SERVER_GEO_VALIDATION=1` 且 **`db_pool`** 时改读 published catalog（S4）。
+async fn validate_create_itinerary_geo(
+    pool: Option<&sqlx::PgPool>,
     body: &CreateItineraryBody,
 ) -> Result<(), (StatusCode, Json<serde_json::Value>)> {
     let dest = body.destination.trim();
-    if !traveltrust_core::is_allowed_zh_destination_country(dest) {
+    if !crate::catalog_geo_validation::is_allowed_zh_destination_country_resolved(pool, dest).await
+    {
         return Err((
             StatusCode::BAD_REQUEST,
             Json(json!({
@@ -432,7 +441,9 @@ fn validate_create_itinerary_geo(
             })),
         ));
     }
-    if !traveltrust_core::is_preset_city_for_zh_country(dest, &body.city) {
+    if !crate::catalog_geo_validation::is_preset_city_for_zh_country_resolved(pool, dest, &body.city)
+        .await
+    {
         return Err((
             StatusCode::BAD_REQUEST,
             Json(json!({
@@ -448,7 +459,9 @@ fn validate_create_itinerary_geo(
             if t.is_empty() {
                 continue;
             }
-            if !traveltrust_core::is_preset_city_for_zh_country(dest, t) {
+            if !crate::catalog_geo_validation::is_preset_city_for_zh_country_resolved(pool, dest, t)
+                .await
+            {
                 return Err((
                     StatusCode::BAD_REQUEST,
                     Json(json!({
@@ -586,7 +599,7 @@ pub async fn itinerary_create_impl(
             Json(crate::api_json::err_key("destination_and_city_required")),
         ));
     }
-    validate_create_itinerary_geo(&body)?;
+    validate_create_itinerary_geo(state.db_pool.as_ref(), &body).await?;
     let guide_uuid = resolve_preselected_guide_id(&state, body.guide_id.as_ref()).await?;
     let (days_vec, amount_breakdown) = generate_itinerary_mock(&body);
     let (start_date, end_date) = parse_itinerary_date_range(&body.travel_date, body.days);
@@ -757,25 +770,41 @@ fn custom_body_to_days_and_amount(
     let total = parse_amount_from_value(&body.amount)
         .unwrap_or(0.0)
         .max(0.0);
-    let guide_fee = body
-        .breakdown
-        .as_ref()
-        .and_then(|b| b.guide_fee)
-        .unwrap_or(0.0);
-    let vehicle = body
-        .breakdown
-        .as_ref()
-        .and_then(|b| b.car_fee)
-        .unwrap_or(0.0);
-    let rest = (total - guide_fee - vehicle).max(0.0);
-    let amount_breakdown = AmountBreakdown {
-        hotel: rest * 0.35,
-        catering: rest * 0.25,
-        tickets: rest * 0.15,
-        guide_fee,
-        vehicle,
-        platform_fee: rest * 0.05,
-        total_budget: total,
+    let bd = body.breakdown.as_ref();
+    let guide_fee = bd.and_then(|b| b.guide_fee).unwrap_or(0.0);
+    let vehicle = bd.and_then(|b| b.car_fee).unwrap_or(0.0);
+    let tickets_explicit = bd.and_then(|b| b.attractions_fee);
+    let catering_explicit = bd.and_then(|b| b.food_fee);
+    let hotel_explicit = bd.and_then(|b| b.hotel_fee);
+    let amount_breakdown = if tickets_explicit.is_some()
+        || catering_explicit.is_some()
+        || hotel_explicit.is_some()
+    {
+        let tickets = tickets_explicit.unwrap_or(0.0).max(0.0);
+        let catering = catering_explicit.unwrap_or(0.0).max(0.0);
+        let hotel = hotel_explicit.unwrap_or(0.0).max(0.0);
+        let known = tickets + catering + hotel + guide_fee + vehicle;
+        let platform_fee = (total - known).max(0.0);
+        AmountBreakdown {
+            hotel,
+            catering,
+            tickets,
+            guide_fee,
+            vehicle,
+            platform_fee,
+            total_budget: total,
+        }
+    } else {
+        let rest = (total - guide_fee - vehicle).max(0.0);
+        AmountBreakdown {
+            hotel: rest * 0.35,
+            catering: rest * 0.25,
+            tickets: rest * 0.15,
+            guide_fee,
+            vehicle,
+            platform_fee: rest * 0.05,
+            total_budget: total,
+        }
     };
     let days_vec: Vec<ItineraryDayRow> = if body.creator_type == "guide" {
         let plans = body.guide_day_plans.as_deref().unwrap_or(&[]);
@@ -1094,7 +1123,12 @@ pub async fn itinerary_custom_create_impl(
             Json(crate::api_json::err_key("destination_and_city_required")),
         ));
     }
-    if !traveltrust_core::is_allowed_zh_destination_country(&body.country) {
+    if !crate::catalog_geo_validation::is_allowed_zh_destination_country_resolved(
+        state.db_pool.as_ref(),
+        &body.country,
+    )
+    .await
+    {
         return Err((
             StatusCode::BAD_REQUEST,
             Json(crate::api_json::err_key_detail(

@@ -132,6 +132,7 @@ const nextConfig = {
       { source: "/api/v1/:path*", destination: `${dest}/api/v1/:path*` },
       { source: "/health", destination: `${dest}/health` },
       { source: "/meta", destination: `${dest}/meta` },
+      { source: "/meta/build", destination: `${dest}/meta/build` },
       { source: "/auth/:path*", destination: `${dest}/auth/:path*` },
     ];
     if (

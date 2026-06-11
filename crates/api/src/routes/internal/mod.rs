@@ -14,6 +14,8 @@ mod observability_shell;
 mod reconcile;
 mod public_catalog_surface;
 mod reconcile_gates;
+mod growth;
+mod region_share_reconcile;
 
 #[cfg(test)]
 mod tests;
@@ -106,4 +108,6 @@ pub fn router() -> axum::Router<ApiMetaState> {
             "/api/v1/internal/onboarding/payments/webhook",
             post(onboarding::post_internal_onboarding_payments_webhook),
         )
+        .merge(growth::router())
+        .merge(region_share_reconcile::router())
 }

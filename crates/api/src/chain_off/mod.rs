@@ -256,6 +256,12 @@ pub struct GuideRow {
     #[serde(default)]
     pub guide_license_url: Option<String>,
     pub stake_amount: String,
+    /// 市场卡片时薪（字符串金额；与 `GET /guides` `hourly_rate` 同源）
+    #[serde(default)]
+    pub hourly_rate: Option<String>,
+    /// 市场卡片头像 URL（与账户 `users.avatar_url` 分轨）
+    #[serde(default)]
+    pub avatar_url: Option<String>,
     pub status: String,
     /// Admin 拒绝资质时的机器可读原因码（`guides.rejection_codes`）
     #[serde(default)]
@@ -421,6 +427,8 @@ pub struct ChainOffStore {
     pub user_email_verified_at: HashMap<Uuid, DateTime<Utc>>,
     /// `POST /auth/register/send-verification-code` → 注册前 6 位验证码（key = 小写邮箱）
     pub register_verification_codes: HashMap<String, RegisterVerificationCodeEntry>,
+    /// **`GET/PATCH /api/v1/me/acquisition-profile`** 公开展示字段（① chain_off 内存）
+    pub acquisition_profiles_by_user: HashMap<Uuid, AcquisitionProfileRow>,
 }
 
 /// 注册验证码条目（① chain_off 内存 · 10 分钟有效）
@@ -429,6 +437,18 @@ pub struct RegisterVerificationCodeEntry {
     pub code: String,
     pub expires_at: DateTime<Utc>,
     pub sent_at: DateTime<Utc>,
+}
+
+/// **`PATCH /api/v1/me/acquisition-profile`** 可写字段（① chain_off 内存真源）
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct AcquisitionProfileRow {
+    #[serde(default)]
+    pub public_bio: Option<String>,
+    #[serde(default)]
+    pub tagline: Option<String>,
+    #[serde(default)]
+    pub avatar_url: Option<String>,
+    pub updated_at: DateTime<Utc>,
 }
 
 impl Default for ChainOffStore {
@@ -452,6 +472,7 @@ impl Default for ChainOffStore {
             email_verify_tokens: HashMap::new(),
             user_email_verified_at: HashMap::new(),
             register_verification_codes: HashMap::new(),
+            acquisition_profiles_by_user: HashMap::new(),
         }
     }
 }
@@ -557,6 +578,8 @@ mod market_listing_orders;
 pub use market_listing_orders::*;
 mod trust_gate_context;
 pub use trust_gate_context::trust_gate_context_for_user;
+pub(crate) mod trust_gate_e2e_seed;
+pub(crate) use trust_gate_e2e_seed::seed_trust_gate_e2e_fixtures;
 mod persistence_gate;
 pub(crate) use persistence_gate::ensure_durable_writes_available;
 mod messages;
@@ -570,7 +593,13 @@ pub use evidence::*;
 mod itineraries;
 pub use itineraries::*;
 mod guides;
+mod guide_profile;
+mod identity_slot_profiles;
+mod schedule_booking;
 pub use guides::*;
+pub use guide_profile::*;
+pub use identity_slot_profiles::*;
+mod order_participant_hints;
 mod orders;
 pub use orders::*;
 mod orders_flow;

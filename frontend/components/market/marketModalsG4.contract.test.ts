@@ -20,14 +20,14 @@ describe("market modals G4 (site theme V1 · D7)", () => {
     expect(src).not.toContain("ref-cyan");
   });
 
-  it("CustomItineraryModal uses right drawer above header", () => {
+  it("CustomItineraryModal uses centered glass modal like acquisition studio", () => {
     const src = read("CustomItineraryModal/index.tsx");
-    expect(src).toContain("MarketDetailDrawerFrame");
+    expect(src).toContain("MarketGlassModalFrame");
     expect(src).toContain("data-tt-custom-itinerary-modal");
     expect(src).toContain("customItineraryPillSelected");
-    expect(src).not.toMatch(/border-white\/25/);
+    expect(src).toContain("studioModalHeader");
+    expect(src).not.toContain("MarketDetailDrawerFrame");
     expect(src).not.toContain("bg-cta-gradient");
-    expect(src).not.toContain("z-50 flex items-center justify-center");
   });
 
   it("InviteGuideModal uses MarketGlassModalFrame and warm studio tokens", () => {

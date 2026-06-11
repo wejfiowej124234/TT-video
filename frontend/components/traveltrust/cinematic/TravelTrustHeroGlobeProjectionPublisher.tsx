@@ -33,8 +33,9 @@ function resolveGlobeSurfaceMatrixWorld(root: Group): boolean {
     }
   });
   if (!surfaceGroup) return false;
-  surfaceGroup.updateWorldMatrix(true, false);
-  _globeSurfaceMatrix.copy(surfaceGroup.matrixWorld);
+  const surface = surfaceGroup as THREE.Object3D;
+  surface.updateWorldMatrix(true, false);
+  _globeSurfaceMatrix.copy(surface.matrixWorld);
   return true;
 }
 

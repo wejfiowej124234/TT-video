@@ -752,6 +752,39 @@ fn indexer_checkpoint_meta_top_keys_order_and_literals_758() {
 }
 
 #[tokio::test]
+async fn meta_product_countries_default_core_arrays_and_read_source_hint() {
+    let _lock = crate::catalog_geo_validation::lock_catalog_geo_env_tests();
+    let prev = std::env::var("CATALOG_SERVER_GEO_VALIDATION").ok();
+    std::env::set_var("CATALOG_SERVER_GEO_VALIDATION", "0");
+    let app = router().with_state(api_meta_state(None));
+    let res = app
+        .oneshot(Request::builder().uri("/meta").body(Body::empty()).unwrap())
+        .await
+        .unwrap();
+    if let Some(v) = prev {
+        std::env::set_var("CATALOG_SERVER_GEO_VALIDATION", v);
+    } else {
+        std::env::remove_var("CATALOG_SERVER_GEO_VALIDATION");
+    }
+    assert_eq!(res.status(), StatusCode::OK);
+    let bytes = res.into_body().collect().await.unwrap().to_bytes();
+    let v: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
+    let pc = &v["product_countries"];
+    let iso = pc["iso3166_alpha2"].as_array().expect("iso3166_alpha2 array");
+    let names = pc["name_zh"].as_array().expect("name_zh array");
+    assert_eq!(iso.len(), traveltrust_core::PRODUCT_COUNTRY_CODES.len());
+    for (i, code) in traveltrust_core::PRODUCT_COUNTRY_CODES.iter().enumerate() {
+        assert_eq!(iso[i].as_str(), Some(*code));
+        assert_eq!(names[i].as_str(), Some(traveltrust_core::PRODUCT_COUNTRY_NAMES_ZH[i]));
+    }
+    let dwo = pc["dual_write_order"].as_str().unwrap_or("");
+    assert!(
+        dwo.starts_with("read_source=core;"),
+        "default flag off should use core read_source hint: {dwo}"
+    );
+}
+
+#[tokio::test]
 async fn meta_order_messages_chain_off_mounted_false_when_absent() {
     let app = router().with_state(api_meta_state(None));
     let res = app

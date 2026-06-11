@@ -35,8 +35,9 @@ describe("me identities hub page (role links · no API list fabrication)", () =>
     expect(src).toContain("data-tt-me-identities-core-grid");
     expect(src).toContain("useMeIdentitiesCoreCardSignals");
     expect(src).toContain("deriveMeIdentitiesCoreCardView");
-    expect(src).toContain("ME_IDENTITIES_STEWARD_ACTIVE_HREF");
-    expect(src).toContain("ME_IDENTITIES_PROVIDER_ACTIVE_HREF");
+    expect(src).toContain("ME_IDENTITIES_MERCHANT_SETTINGS_HREF");
+    expect(src).toContain("ME_IDENTITIES_STEWARD_SETTINGS_HREF");
+    expect(src).toContain("ME_IDENTITIES_ACQUISITION_SETTINGS_HREF");
   });
 
   it("links onboarding and community without inventing identity records", () => {

@@ -246,7 +246,10 @@ export default function GuideRegisterConfirmSection({
 
 
 
-      <div className={fieldError === "agree" ? "rounded-lg ring-1 ring-ref-coral/40 p-1" : undefined}>
+      <div
+        className={fieldError === "agree" ? "rounded-lg ring-1 ring-ref-coral/40 p-1" : undefined}
+        data-tt-guide-register-agree-wrap="1"
+      >
 
         <AuthL5Checkbox
 

@@ -3,7 +3,8 @@
  * **①** 合同面：`implementation_status=ttg_exchange_quote_contract_only`；**②** 再接真链 Router/Treasury。
  */
 
-import { apiUrl, routes } from "../../api";
+import { apiUrl } from "../../api";
+import { routes } from "@/lib/api/routes";
 import { apiFetch, logApiJsonStatusNotOk, parseResponse, requestId, throwUnlessApiOk } from "../core";
 import type { TtgExchangePayStable, TtgExchangeQuoteResponse } from "./ttgExchange.types";
 

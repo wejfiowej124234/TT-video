@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useCallback } from "react";
+import { useEffect, useMemo, useCallback, type RefObject } from "react";
 import { useRouter } from "next/navigation";
 import type { OrderListItem } from "@/lib/apiClient";
 import type { OrderDetailItem } from "@/components/market/OrderDetailDrawer";
@@ -37,7 +37,7 @@ export function OrdersListCards({
   openSwipeCardId: string | null;
   setOpenSwipeCardId: (id: string | null) => void;
   setPreviewOrder: (o: OrderDetailItem | null) => void;
-  handleDeleteOrder: (orderId: string, stateOrStatus: string, tConfirm: (k: string) => string) => Promise<void>;
+  handleDeleteOrder: (orderId: string, stateOrStatus: string) => void;
 }) {
   const loadedTotal = totalCount ?? list.length;
   const highlightQuery = searchActive ? searchHighlightQuery : "";
@@ -69,7 +69,7 @@ export function OrdersListCards({
   }, [focusedCardId, list, router, setPreviewOrder]);
 
   const onListKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLUListElement | HTMLDivElement>) => {
+    (e: React.KeyboardEvent<HTMLElement>) => {
       onListKeyDownBase(e);
       if (e.defaultPrevented) return;
       if (e.key === "Enter" && focusedCardId) {
@@ -148,7 +148,7 @@ export function OrdersListCards({
         />
       ) : (
         <ul
-          ref={listFocusRef}
+          ref={listFocusRef as RefObject<HTMLUListElement | null>}
           className="space-y-4 outline-none"
           role="list"
           tabIndex={list.length > 0 ? 0 : undefined}

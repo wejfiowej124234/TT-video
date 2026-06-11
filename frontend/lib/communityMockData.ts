@@ -5,6 +5,8 @@ export type {
   CommunityPostType,
   CommunityPostVisibility,
   CommunityPostUserVisibility,
+  CommunityCommentVisibility,
+  CommunityCommerceShowcaseKind,
   CommunityPostAuthor,
   CommunityPost,
   CommunityComment,

@@ -10,11 +10,17 @@ describe("adminShellContextForPath", () => {
     expect(adminShellContextForPath("/admin/community/reports")?.groupId).toBe("community");
     expect(adminShellContextForPath("/admin/finance-reconciliation")?.groupId).toBe("finance");
     expect(adminShellContextForPath("/admin/cross-check")?.groupId).toBe("governance");
+    expect(adminShellContextForPath("/admin/content/countries")?.groupId).toBe("content");
+    expect(adminShellContextForPath("/admin/official/cold-start")?.groupId).toBe("official_ops");
+    expect(adminShellContextForPath("/admin/growth/analytics")?.groupId).toBe("growth");
     expect(adminShellContextForPath("/admin/config/releases")?.groupId).toBe("more");
   });
 
   it("maps pathname to breadcrumb leaf label keys", () => {
     expect(adminBreadcrumbLeafForPath("/admin/approvals")).toBe("admin_approvals_title");
+    expect(adminBreadcrumbLeafForPath("/admin/content/publish-queue")).toBe("admin_content_publish_queue_title");
+    expect(adminBreadcrumbLeafForPath("/admin/growth/analytics")).toBe("admin_growth_analytics_title");
+    expect(adminBreadcrumbLeafForPath("/admin/community/penalties")).toBe("admin_penalties_title");
     expect(adminBreadcrumbLeafForPath("/admin/provider-applications")).toBe("admin_provider_list_title");
     expect(adminBreadcrumbLeafForPath("/admin/users/abc")).toBe("admin_user_detail_title");
     expect(adminBreadcrumbLeafForPath("/admin/community/reports")).toBe("admin_community_reports_title");

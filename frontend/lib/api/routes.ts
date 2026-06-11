@@ -46,6 +46,10 @@ export const routes = {
   meWalletVerifyConfirm: "/api/v1/me/wallet/verify/confirm",
   meWalletVerificationStatus: "/api/v1/me/wallet/verification-status",
   meGuideRegistrationDraft: "/api/v1/me/guide-registration-draft",
+  meGuideProfile: "/api/v1/me/guide-profile",
+  meMerchantProfile: "/api/v1/me/merchant-profile",
+  meRegionStewardProfile: "/api/v1/me/region-steward-profile",
+  meAcquisitionProfile: "/api/v1/me/acquisition-profile",
   meProviderRegistrationDraft: "/api/v1/me/provider-registration-draft",
   meProviderApplication: "/api/v1/me/provider-application",
   meStewardApplication: "/api/v1/me/steward-application",
@@ -55,6 +59,7 @@ export const routes = {
   stewardStakeStatus: "/api/v1/steward/stake-status",
   redemptionQuote: "/api/v1/redemption/quote",
   adminProviderApplications: "/api/v1/admin/provider-applications",
+  adminGuideApplications: "/api/v1/admin/guide-applications",
   adminStewardApplications: "/api/v1/admin/steward-applications",
   adminStewardApplication: (userId: string) =>
     `/api/v1/admin/users/${encodeURIComponent(userId)}/steward-application`,
@@ -64,6 +69,10 @@ export const routes = {
     `/api/v1/admin/users/${encodeURIComponent(userId)}/provider-application`,
   adminProviderApplicationReview: (userId: string) =>
     `/api/v1/admin/users/${encodeURIComponent(userId)}/provider-application-review`,
+  adminGuideApplication: (userId: string) =>
+    `/api/v1/admin/users/${encodeURIComponent(userId)}/guide-application`,
+  adminGuideApplicationReview: (userId: string) =>
+    `/api/v1/admin/users/${encodeURIComponent(userId)}/guide-application-review`,
   adminUserAcquisitionPublishSuspend: (userId: string) =>
     `/api/v1/admin/users/${encodeURIComponent(userId)}/acquisition-publish-suspend`,
   /** F-007：本机/允许路径下 **`content_base64`** 头像；对象存储环境须 presign（见 `me.rs`） */
@@ -147,6 +156,8 @@ export const routes = {
   orderPatchItinerary: (id: string) => `/api/v1/orders/${id}/itinerary`,
   /** 草稿订单选定向导（PATCH；仅 tourist、未分配 guide_id） */
   orderPatchGuide: (id: string) => `/api/v1/orders/${id}/guide`,
+  /** GD-L5-P2：改期（PATCH；Created/Accepted · 未 Escrowed） */
+  orderPatchTripDates: (id: string) => `/api/v1/orders/${id}/trip-dates`,
   orderConfirmFinalPlan: (id: string) =>
     `/api/v1/orders/${id}/confirm-final-plan`,
   /** 53 双边确认：游客/向导各自确认行程与金额 */
@@ -211,6 +222,127 @@ export const routes = {
   /** P-SCALE1：信任增长外部化（traveltrust-api + Postgres；多实例一致） */
   trustGrowthIngest: "/api/v1/trust-growth/ingest",
   trustGrowthConfig: "/api/v1/trust-growth/config",
+  /** G-S1 · 102 Referral validate（公开） */
+  growthReferralsValidate: "/api/v1/growth/referrals/validate",
+  /** G-S1 · Admin Referral Code CRUD */
+  adminGrowthReferralCodes: "/api/v1/admin/growth/referral-codes",
+  adminGrowthRewardLedger: "/api/v1/admin/growth/reward-ledger",
+  adminGrowthRewardLedgerReconcile: "/api/v1/admin/growth/reward-ledger/reconcile",
+  adminGrowthRewardLedgerReconcileFix: "/api/v1/admin/growth/reward-ledger/reconcile/fix",
+  adminGrowthAntiFraudRules: "/api/v1/admin/growth/anti-fraud/rules",
+  adminGrowthAntiFraudSignals: "/api/v1/admin/growth/anti-fraud/signals",
+  adminGrowthAntiFraudUsers: "/api/v1/admin/growth/anti-fraud/users",
+  adminGrowthAntiFraudScanRuns: "/api/v1/admin/growth/anti-fraud/scan-runs",
+  adminGrowthAntiFraudScanTrigger: "/api/v1/admin/growth/anti-fraud/scan-runs/trigger",
+  adminCountryMarketLaunches: "/api/v1/admin/country-market/launches",
+  adminCountryMarketLaunch: (id: string) => `/api/v1/admin/country-market/launches/${encodeURIComponent(id)}`,
+  adminCountryMarketLaunchChecklist: (id: string) =>
+    `/api/v1/admin/country-market/launches/${encodeURIComponent(id)}/checklist`,
+  adminCountryMarketLaunchAdvance: (id: string) =>
+    `/api/v1/admin/country-market/launches/${encodeURIComponent(id)}/advance`,
+  adminCountryMarketLaunchActivate: (id: string) =>
+    `/api/v1/admin/country-market/launches/${encodeURIComponent(id)}/activate`,
+  adminRegionShareReconcileLatest: "/api/v1/admin/region-share/reconcile/latest",
+  adminRegionShareReconcileReports: "/api/v1/admin/region-share/reconcile/reports",
+  adminRegionShareReconcileReport: (id: string) =>
+    `/api/v1/admin/region-share/reconcile/reports/${encodeURIComponent(id)}`,
+  adminGrowthAirdropCampaigns: "/api/v1/admin/growth/airdrop-campaigns",
+  adminGrowthEarlyBirdStages: "/api/v1/admin/growth/early-bird/stages",
+  adminGrowthEarlyBirdReconcile: "/api/v1/admin/growth/early-bird/reconcile",
+  /** G-S7 · Growth analytics read-only */
+  adminGrowthAnalyticsOverview: "/api/v1/admin/growth/analytics/overview",
+  adminGrowthAnalyticsFunnel: "/api/v1/admin/growth/analytics/funnel",
+  adminGrowthAnalyticsTopReferrers: "/api/v1/admin/growth/analytics/top-referrers",
+  adminGrowthKolCenter: "/api/v1/admin/growth/kol-center",
+  /** C-S1 · Admin Content Center CRUD */
+  adminContentCountries: "/api/v1/admin/content/countries",
+  adminContentCities: "/api/v1/admin/content/cities",
+  adminContentPois: "/api/v1/admin/content/pois",
+  adminContentPricingTemplates: "/api/v1/admin/content/pricing-templates",
+  adminContentIntercityRoutes: "/api/v1/admin/content/intercity-routes",
+  adminContentPublishQueue: "/api/v1/admin/content/publish-queue",
+  adminContentRevisions: "/api/v1/admin/content/revisions",
+  adminContentPoiImageBatches: "/api/v1/admin/content/poi-image-batches",
+  adminContentPoiImageBatch: (id: string) =>
+    `/api/v1/admin/content/poi-image-batches/${encodeURIComponent(id)}`,
+  adminContentPoiImageCandidates: (batchId: string) =>
+    `/api/v1/admin/content/poi-image-batches/${encodeURIComponent(batchId)}/candidates`,
+  /** C-S3 · Catalog Operations Admin */
+  adminContentHotelTiers: "/api/v1/admin/content/hotel-tiers",
+  adminContentTransportRegionRules: "/api/v1/admin/content/transport-region-rules",
+  adminContentMediaAssets: "/api/v1/admin/content/media-assets",
+  adminContentLandingAmbient: (countryId: string) =>
+    `/api/v1/admin/content/countries/${encodeURIComponent(countryId)}/landing-ambient`,
+  adminContentRevisionsDetail: "/api/v1/admin/content/revisions/detail",
+  adminContentRevisionsCompare: "/api/v1/admin/content/revisions/compare",
+  adminContentRevisionsRollback: "/api/v1/admin/content/revisions/rollback",
+  adminContentRevisionsRollbackHistory: "/api/v1/admin/content/revisions/rollback-history",
+  adminContentImportHistory: "/api/v1/admin/content/import/history",
+  adminContentImportTrigger: "/api/v1/admin/content/import/trigger",
+  adminContentCatalogParity: "/api/v1/admin/content/catalog/parity",
+  adminContentCatalogObservability: "/api/v1/admin/content/catalog/observability",
+  adminContentCatalogGeoValidation: "/api/v1/admin/content/catalog/geo-validation",
+  adminContentCatalogGeoValidationHistory: "/api/v1/admin/content/catalog/geo-validation/history",
+  adminContentCatalogGeoMetaParity: "/api/v1/admin/content/catalog/geo-validation/meta-parity",
+  /** O-S1 · Official Accounts M7 */
+  adminOfficialAccounts: "/api/v1/admin/official/accounts",
+  adminOfficialAccount: (id: string) =>
+    `/api/v1/admin/official/accounts/${encodeURIComponent(id)}`,
+  adminOfficialAccountSubmitReview: (id: string) =>
+    `/api/v1/admin/official/accounts/${encodeURIComponent(id)}/submit-review`,
+  adminOfficialAccountRequestPublish: (id: string) =>
+    `/api/v1/admin/official/accounts/${encodeURIComponent(id)}/request-publish`,
+  adminOfficialAccountPublish: (id: string) =>
+    `/api/v1/admin/official/accounts/${encodeURIComponent(id)}/publish`,
+  adminOfficialAccountBindReferral: (id: string) =>
+    `/api/v1/admin/official/accounts/${encodeURIComponent(id)}/bind-referral-code`,
+  /** O-S2 · Official Guides M8 */
+  adminOfficialGuides: "/api/v1/admin/official/guides",
+  adminOfficialGuide: (id: string) =>
+    `/api/v1/admin/official/guides/${encodeURIComponent(id)}`,
+  adminOfficialGuideSubmitReview: (id: string) =>
+    `/api/v1/admin/official/guides/${encodeURIComponent(id)}/submit-review`,
+  adminOfficialGuideRequestPublish: (id: string) =>
+    `/api/v1/admin/official/guides/${encodeURIComponent(id)}/request-publish`,
+  adminOfficialGuidePublish: (id: string) =>
+    `/api/v1/admin/official/guides/${encodeURIComponent(id)}/publish`,
+  adminOfficialGuideArchive: (id: string) =>
+    `/api/v1/admin/official/guides/${encodeURIComponent(id)}/archive`,
+  /** O-S3 · Official Itinerary Templates M9 */
+  adminOfficialItineraryTemplates: "/api/v1/admin/official/itinerary-templates",
+  adminOfficialItineraryTemplate: (id: string) =>
+    `/api/v1/admin/official/itinerary-templates/${encodeURIComponent(id)}`,
+  adminOfficialItineraryTemplateSubmitReview: (id: string) =>
+    `/api/v1/admin/official/itinerary-templates/${encodeURIComponent(id)}/submit-review`,
+  adminOfficialItineraryTemplateRequestPublish: (id: string) =>
+    `/api/v1/admin/official/itinerary-templates/${encodeURIComponent(id)}/request-publish`,
+  adminOfficialItineraryTemplatePublish: (id: string) =>
+    `/api/v1/admin/official/itinerary-templates/${encodeURIComponent(id)}/publish`,
+  adminOfficialItineraryTemplateArchive: (id: string) =>
+    `/api/v1/admin/official/itinerary-templates/${encodeURIComponent(id)}/archive`,
+  /** O-S4 · Cold Start Campaigns M10 */
+  adminOfficialColdStartCampaigns: "/api/v1/admin/official/cold-start/campaigns",
+  adminOfficialColdStartCampaign: (id: string) =>
+    `/api/v1/admin/official/cold-start/campaigns/${encodeURIComponent(id)}`,
+  adminOfficialColdStartCampaignSubmitReview: (id: string) =>
+    `/api/v1/admin/official/cold-start/campaigns/${encodeURIComponent(id)}/submit-review`,
+  adminOfficialColdStartCampaignRequestDeploy: (id: string) =>
+    `/api/v1/admin/official/cold-start/campaigns/${encodeURIComponent(id)}/request-deploy`,
+  adminOfficialColdStartCampaignDeploy: (id: string) =>
+    `/api/v1/admin/official/cold-start/campaigns/${encodeURIComponent(id)}/deploy`,
+  adminOfficialColdStartCampaignRollback: (id: string) =>
+    `/api/v1/admin/official/cold-start/campaigns/${encodeURIComponent(id)}/rollback`,
+  adminOfficialColdStartCampaignArchive: (id: string) =>
+    `/api/v1/admin/official/cold-start/campaigns/${encodeURIComponent(id)}/archive`,
+  adminOfficialColdStartCampaignItems: (id: string) =>
+    `/api/v1/admin/official/cold-start/campaigns/${encodeURIComponent(id)}/items`,
+  adminOfficialColdStartCampaignItem: (campaignId: string, itemId: string) =>
+    `/api/v1/admin/official/cold-start/campaigns/${encodeURIComponent(campaignId)}/items/${encodeURIComponent(itemId)}`,
+  /** E2E-A-01 · Cold Start Campaign consumer RO */
+  officialColdStartSurface: (surface: string) =>
+    `/api/v1/official/cold-start/surfaces/${encodeURIComponent(surface)}`,
+  /** G-S4 · 用户推荐中心（须登录 · 只读） */
+  meReferrals: "/api/v1/me/referrals",
 
   /** 96-18：稳定币→TTG 报价机读（① 合同面；与 page-brief `liquidity_contract.quote_path` 同源） */
   governanceTtgExchangeQuote: "/api/v1/governance/ttg-exchange/quote",

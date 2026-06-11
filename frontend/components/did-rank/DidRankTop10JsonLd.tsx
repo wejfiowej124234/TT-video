@@ -26,12 +26,13 @@ export default function DidRankTop10JsonLd({
       return;
     }
     const run = () => setDeferSeo(true);
-    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+    if (typeof window === "undefined") return;
+    if (typeof window.requestIdleCallback === "function") {
       const id = window.requestIdleCallback(run, { timeout: 3000 });
       return () => window.cancelIdleCallback(id);
     }
-    const timer = window.setTimeout(run, 120);
-    return () => window.clearTimeout(timer);
+    const timer = globalThis.setTimeout(run, 120);
+    return () => globalThis.clearTimeout(timer);
   }, [isLoading]);
 
   if (!deferSeo) return null;

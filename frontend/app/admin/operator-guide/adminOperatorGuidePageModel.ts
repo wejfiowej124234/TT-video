@@ -5,8 +5,15 @@ export const OPERATOR_GUIDE_FLOW_LINKS = [
   { href: ADMIN_INBOX_QUEUE_HREFS.provider, key: "admin_operator_flow_provider" },
   { href: ADMIN_INBOX_QUEUE_HREFS.steward, key: "admin_operator_flow_steward" },
   { href: ADMIN_INBOX_QUEUE_HREFS.approvals, key: "admin_operator_flow_approvals" },
-  { href: ADMIN_INBOX_QUEUE_HREFS.reports, key: "admin_operator_flow_reports" },
   { href: "/admin/permissions", key: "admin_operator_flow_permissions" },
+] as const;
+
+/** 日常四平面 · CMS / Growth / Moderation / Official（5 分钟内可完成路径）。 */
+export const OPERATOR_GUIDE_DAILY_OPS_LINKS = [
+  { href: "/admin/content/countries", key: "admin_operator_flow_content_publish" },
+  { href: "/admin/growth/analytics", key: "admin_operator_flow_growth_analytics" },
+  { href: ADMIN_INBOX_QUEUE_HREFS.reports, key: "admin_operator_flow_reports_daily" },
+  { href: "/admin/official", key: "admin_operator_flow_official_ops" },
 ] as const;
 
 export { OPERATOR_GUIDE_PHASE2_PREP_COMMANDS } from "@/lib/admin/adminPhase2LocalPrepCommands";

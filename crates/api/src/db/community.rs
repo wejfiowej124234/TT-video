@@ -773,14 +773,14 @@ pub async fn user_liked_post(
     user_id: Uuid,
     post_id: Uuid,
 ) -> Result<bool, sqlx::Error> {
-    let row = sqlx::query_scalar::<_, i64>(
-        "SELECT 1 FROM community_likes WHERE user_id = $1 AND post_id = $2 LIMIT 1",
+    let liked = sqlx::query_scalar::<_, bool>(
+        "SELECT EXISTS(SELECT 1 FROM community_likes WHERE user_id = $1 AND post_id = $2)",
     )
     .bind(user_id)
     .bind(post_id)
-    .fetch_optional(pool)
+    .fetch_one(pool)
     .await?;
-    Ok(row.is_some())
+    Ok(liked)
 }
 
 /// 在给定帖子 id 集合中，返回当前用户已点赞的帖子 id（Feed 批量 `liked_by_me`）
@@ -802,15 +802,30 @@ pub async fn user_liked_posts_in_set(
     Ok(rows.into_iter().collect())
 }
 
-pub async fn insert_like(pool: &PgPool, user_id: Uuid, post_id: Uuid) -> Result<(), sqlx::Error> {
-    sqlx::query(
+pub async fn list_likes_post_ids(
+    pool: &PgPool,
+    user_id: Uuid,
+    limit: i64,
+) -> Result<Vec<Uuid>, sqlx::Error> {
+    let rows = sqlx::query_scalar::<_, Uuid>(
+        "SELECT post_id FROM community_likes WHERE user_id = $1 ORDER BY created_at DESC LIMIT $2",
+    )
+    .bind(user_id)
+    .bind(limit)
+    .fetch_all(pool)
+    .await?;
+    Ok(rows)
+}
+
+pub async fn insert_like(pool: &PgPool, user_id: Uuid, post_id: Uuid) -> Result<bool, sqlx::Error> {
+    let r = sqlx::query(
         "INSERT INTO community_likes (user_id, post_id) VALUES ($1, $2) ON CONFLICT (user_id, post_id) DO NOTHING",
     )
     .bind(user_id)
     .bind(post_id)
     .execute(pool)
     .await?;
-    Ok(())
+    Ok(r.rows_affected() > 0)
 }
 
 pub async fn delete_like(pool: &PgPool, user_id: Uuid, post_id: Uuid) -> Result<(), sqlx::Error> {
@@ -1205,15 +1220,15 @@ pub async fn insert_collect(
     pool: &PgPool,
     user_id: Uuid,
     post_id: Uuid,
-) -> Result<(), sqlx::Error> {
-    sqlx::query(
+) -> Result<bool, sqlx::Error> {
+    let r = sqlx::query(
         "INSERT INTO community_collects (user_id, post_id) VALUES ($1, $2) ON CONFLICT (user_id, post_id) DO NOTHING",
     )
     .bind(user_id)
     .bind(post_id)
     .execute(pool)
     .await?;
-    Ok(())
+    Ok(r.rows_affected() > 0)
 }
 
 pub async fn delete_collect(
@@ -1261,14 +1276,14 @@ pub async fn user_collected_post(
     user_id: Uuid,
     post_id: Uuid,
 ) -> Result<bool, sqlx::Error> {
-    let row = sqlx::query_scalar::<_, i64>(
-        "SELECT 1 FROM community_collects WHERE user_id = $1 AND post_id = $2 LIMIT 1",
+    let collected = sqlx::query_scalar::<_, bool>(
+        "SELECT EXISTS(SELECT 1 FROM community_collects WHERE user_id = $1 AND post_id = $2)",
     )
     .bind(user_id)
     .bind(post_id)
-    .fetch_optional(pool)
+    .fetch_one(pool)
     .await?;
-    Ok(row.is_some())
+    Ok(collected)
 }
 
 /// 在给定帖子 id 集合中，返回当前用户已收藏的帖子 id（Feed 批量 `collected_by_me`）

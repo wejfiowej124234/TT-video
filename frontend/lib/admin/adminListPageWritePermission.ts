@@ -25,6 +25,7 @@ const WRITE_PERM_BY_BASE: Record<string, AdminPermissionId> = {
   "/admin/steward-applications": ADMIN_PERM.ONBOARDING_STEWARD_REVIEW,
   "/admin/users": ADMIN_PERM.USERS_WRITE,
   "/admin/guides": ADMIN_PERM.USERS_WRITE,
+  "/admin/guide-applications": ADMIN_PERM.USERS_WRITE,
   "/admin/disputes": ADMIN_PERM.DISPUTES_WRITE,
   "/admin/trust-growth": ADMIN_PERM.TRUST_GROWTH_WRITE,
   "/admin/community/reports": ADMIN_PERM.COMMUNITY_MODERATE,

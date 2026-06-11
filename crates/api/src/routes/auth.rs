@@ -1,7 +1,7 @@
 //! /auth/*（48 §2.2 routes/auth）
 
 use axum::extract::State;
-use axum::http::StatusCode;
+use axum::http::{HeaderMap, StatusCode};
 use axum::response::IntoResponse;
 use axum::routing::post;
 use axum::Json;
@@ -15,10 +15,11 @@ use super::not_impl_json;
 
 pub async fn auth_register(
     State(state): State<ApiMetaState>,
+    headers: HeaderMap,
     Json(body): Json<chain_off::AuthRegisterBody>,
 ) -> impl IntoResponse {
     if let Some(ref co) = state.chain_off {
-        return match chain_off::auth_register(co.clone(), Json(body)).await {
+        return match chain_off::auth_register(co.clone(), Some(&headers), Json(body)).await {
             Ok(j) => j.into_response(),
             Err((code, j)) => (code, j).into_response(),
         };
@@ -107,6 +108,33 @@ pub async fn auth_seed_governance_e2e(State(state): State<ApiMetaState>) -> impl
         Ok(j) => (StatusCode::OK, Json(j)).into_response(),
         Err((code, j)) => (code, Json(j)).into_response(),
     }
+}
+
+/// POST /auth/seed-trust-gate-e2e：Playwright trust-gate 夹具（**`SEED_TEST_ACCOUNTS=1`**）；内存 + PG best-effort 双写。
+pub async fn auth_seed_trust_gate_e2e(State(state): State<ApiMetaState>) -> impl IntoResponse {
+    if std::env::var("SEED_TEST_ACCOUNTS").as_deref() != Ok("1") {
+        return (
+            StatusCode::FORBIDDEN,
+            Json(serde_json::json!({
+                "error": "seed_test_accounts_disabled",
+                "message": "seed_test_accounts_disabled",
+                "hint": "set SEED_TEST_ACCOUNTS=1 to enable POST /auth/seed-trust-gate-e2e"
+            })),
+        )
+            .into_response();
+    }
+    let Some(ref co) = state.chain_off else {
+        return (
+            StatusCode::SERVICE_UNAVAILABLE,
+            Json(serde_json::json!({"error": "chain_off_unavailable", "message": "chain_off_unavailable"})),
+        )
+            .into_response();
+    };
+    let j = chain_off::seed_trust_gate_e2e_fixtures(co).await;
+    if j.get("status").and_then(|v| v.as_str()) == Some("error") {
+        return (StatusCode::INTERNAL_SERVER_ERROR, Json(j)).into_response();
+    }
+    (StatusCode::OK, Json(j)).into_response()
 }
 
 pub async fn auth_login(
@@ -223,6 +251,7 @@ pub fn router() -> Router<ApiMetaState> {
         )
         .route("/auth/seed-test-accounts", post(auth_seed_test_accounts))
         .route("/auth/seed-governance-e2e", post(auth_seed_governance_e2e))
+        .route("/auth/seed-trust-gate-e2e", post(auth_seed_trust_gate_e2e))
         .route("/auth/login", post(auth_login))
         .route("/auth/logout", post(auth_logout))
         .route("/auth/refresh", post(auth_refresh))

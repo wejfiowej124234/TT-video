@@ -26,12 +26,15 @@ export function GuideDetailPageMain() {
       setStakeAmount={vm.setStakeAmount}
       stakeLoading={vm.stakeLoading}
       stakeError={vm.stakeError}
-      copiedDid={vm.copiedDid}
-      copyDidBusy={vm.copyDidBusy}
-      copyDid={vm.copyDid}
       bookGuideOpen={vm.bookGuideOpen}
       setBookGuideOpen={vm.setBookGuideOpen}
+      selectedTrip={vm.selectedTrip}
+      setSelectedTrip={vm.setSelectedTrip}
       handleStake={vm.handleStake}
+      effectiveBindOrderId={vm.effectiveBindOrderId}
+      itineraryBindActive={vm.itineraryBindActive}
+      bindOrderTripLoading={vm.bindOrderTripLoading}
+      hasBindableItineraries={vm.hasBindableItineraries}
     />
   );
 }

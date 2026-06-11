@@ -179,7 +179,7 @@ export function useDidRankData(
     if (deferInitialFetchRef.current && initialSnapshot?.period === timeRange) {
       deferInitialFetchRef.current = false;
       const run = () => fetchRankData(timeRange, true, controller.signal);
-      if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      if (typeof window.requestIdleCallback === "function") {
         const id = window.requestIdleCallback(run, { timeout: 2500 });
         return () => {
           window.cancelIdleCallback(id);
@@ -187,9 +187,9 @@ export function useDidRankData(
           if (abortRef.current === controller) abortRef.current = null;
         };
       }
-      const timer = window.setTimeout(run, 800);
+      const timer = globalThis.setTimeout(run, 800);
       return () => {
-        window.clearTimeout(timer);
+        globalThis.clearTimeout(timer);
         controller.abort();
         if (abortRef.current === controller) abortRef.current = null;
       };

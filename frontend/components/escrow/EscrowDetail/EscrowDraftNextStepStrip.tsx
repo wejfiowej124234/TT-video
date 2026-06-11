@@ -10,6 +10,8 @@ export interface EscrowDraftNextStepStripProps {
   publishedToDiscover: boolean;
   itineraryDraftDirty: boolean;
   planLocked: boolean;
+  guideAcceptPending?: boolean;
+  bilateralPending?: boolean;
   /** 已有发布横幅主 CTA 时不重复提示 */
   hideWhenPublishedBanner?: boolean;
 }
@@ -20,6 +22,8 @@ export default function EscrowDraftNextStepStrip({
   publishedToDiscover,
   itineraryDraftDirty,
   planLocked,
+  guideAcceptPending = false,
+  bilateralPending = false,
   hideWhenPublishedBanner = false,
 }: EscrowDraftNextStepStripProps) {
   const { t } = useTranslation();
@@ -29,15 +33,19 @@ export default function EscrowDraftNextStepStrip({
   }
 
   let messageKey = "escrow_draftNextStep_save";
-  if (planLocked || draftJourneyStep === 3) {
+  if (planLocked) {
     messageKey = "escrow_draftNextStep_pay";
   } else if (itineraryDraftDirty) {
     messageKey = "escrow_draftNextStep_saveDirty";
+  } else if (bilateralPending) {
+    messageKey = "escrow_draftNextStep_bilateral";
+  } else if (guideAcceptPending) {
+    messageKey = "escrow_draftNextStep_waitGuideAccept";
   } else if (!hasGuideAssigned && publishedToDiscover) {
     messageKey = "escrow_draftNextStep_pickGuide";
   } else if (!hasGuideAssigned) {
     messageKey = "escrow_draftNextStep_publish";
-  } else if (draftJourneyStep === 2) {
+  } else if (draftJourneyStep === 3) {
     messageKey = "escrow_draftNextStep_confirm";
   }
 

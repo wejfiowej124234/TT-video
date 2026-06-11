@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useMemo } from "react";
+import { type Dispatch, type SetStateAction, useId, useMemo } from "react";
 
 import { AdminFinanceModuleDepthWorkspace } from "@/components/admin/AdminFinanceModuleDepthWorkspace";
 import { AdminFinanceSuiteDepthNotice } from "@/components/admin/AdminFinanceSuiteDepthNotice";
@@ -34,18 +34,18 @@ export type AdminTrustGrowthPageMainProps = {
   error: AdminFetchErrorKind | null;
   data: ObsBody | null;
   draftFrozen: boolean;
-  setDraftFrozen: (v: boolean) => void;
+  setDraftFrozen: Dispatch<SetStateAction<boolean>>;
   draftForce: boolean;
-  setDraftForce: (v: boolean) => void;
+  setDraftForce: Dispatch<SetStateAction<boolean>>;
   capsText: string;
-  setCapsText: (v: string) => void;
+  setCapsText: Dispatch<SetStateAction<string>>;
   saving: boolean;
   rollbackBusy: boolean;
   actionError: string | null;
   actionErrorKind: AdminFetchErrorKind | null;
   load: () => void;
-  applyControl: () => Promise<void>;
-  rollback: () => Promise<void>;
+  applyControl: () => void;
+  rollback: () => void;
 };
 
 export default function AdminTrustGrowthPageMain({

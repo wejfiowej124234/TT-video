@@ -31,7 +31,7 @@ export function TravelTrustAnnouncementsPageAtmosphere() {
           <motion.div
             className="absolute inset-0"
             aria-hidden
-            animate={{ opacity: TT_ANNOUNCEMENTS_PAGE_ATMOSPHERE_L5.warmPulseOpacity }}
+            animate={{ opacity: [...TT_ANNOUNCEMENTS_PAGE_ATMOSPHERE_L5.warmPulseOpacity] }}
             transition={{
               duration: TT_ANNOUNCEMENTS_PAGE_ATMOSPHERE_L5.warmPulseDuration,
               repeat: 0,

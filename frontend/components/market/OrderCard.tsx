@@ -13,9 +13,9 @@ import { orderStateToBadgeVariant, orderStateToStatusLabelKey } from "@/lib/orde
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
 import { isMarketDevVarietyOrderId } from "@/lib/marketDevVarietyOrders";
 import { isOrderPublishedToDiscover } from "@/lib/isAssignedGuideId";
-import { AUTH_USER_ID_KEY } from "@/lib/apiClient/core";
 import { isOwnPublishedOpenListing, marketOrderHasAssignedGuide } from "@/lib/marketBindOrderList";
-import { formatEscrowStablecoinCurrency } from "@/lib/escrowOrderAmountSsot";
+import { useViewerUserId } from "@/lib/useViewerUserId";
+import { CONSUMER_TRIP_CURRENCY_LOCALE_KEY } from "@/lib/escrowOrderAmountSsot";
 import { TT_MARKETING_BTN_MARKET_PRIMARY, TT_MARKETING_MARKET_DARK_PATH, TT_MARKETING_MARKET_L5_LIST_CARD_FRAME, TT_MARKETING_MARKET_L5_LIST_CARD_INNER } from "@/lib/marketingUi";
 
 /** P29 订单卡片：行程照片 + 收藏 + 抢订单/查看行程；28 玻璃态 + Web3 徽章 */
@@ -46,9 +46,7 @@ export default memo(function OrderCard({
 }) {
   const { t } = useTranslation();
   const dash = t("ui_em_dash");
-  const settledCurrency = formatEscrowStablecoinCurrency(
-    (item.currency ?? t("order_defaultSettlementToken")).trim(),
-  );
+  const settledCurrency = t(CONSUMER_TRIP_CURRENCY_LOCALE_KEY);
   const routeLabel = item.route_label?.trim();
   const dest =
     (routeLabel
@@ -74,8 +72,7 @@ export default memo(function OrderCard({
   /** 与 OrderDetailDrawer 接单 CTA 同源：created/open 可在市场抢单 */
   const isOpenMarket = statusRaw === "created" || statusRaw === "open";
   const isDevDemoOrder = isMarketDevVarietyOrderId(item.id);
-  const ownTouristId =
-    typeof window !== "undefined" ? localStorage.getItem(AUTH_USER_ID_KEY)?.trim() ?? "" : "";
+  const ownTouristId = useViewerUserId();
   const isOwnPublishedListing = isOwnPublishedOpenListing(item, ownTouristId);
   const isOwnBindingOrder =
     (Boolean(bindingOrderId?.trim()) && String(item.id) === String(bindingOrderId).trim()) ||

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { COUNTRY_OPTIONS } from "./constants";
+import { useGuideRegisterCountryOptions } from "@/lib/catalogApi/useCatalogGeo";
 import {
   cityOptionsForCountryIso,
   languageOptionsForCountryIso,
@@ -46,6 +46,7 @@ export default function GuideRegisterServiceFields({
   setBio: (v: string) => void;
   clearSubmitError: () => void;
 }) {
+  const countryOptions = useGuideRegisterCountryOptions();
   const cityOptions = useMemo(() => cityOptionsForCountryIso(countryCode), [countryCode]);
   const langOptions = useMemo(() => languageOptionsForCountryIso(countryCode), [countryCode]);
   const langSelected = useMemo(() => new Set(parseCommaList(languages)), [languages]);
@@ -75,7 +76,7 @@ export default function GuideRegisterServiceFields({
           className={guideRegFieldClass(fieldError === "country")}
           aria-invalid={fieldError === "country" || undefined}
         >
-          {COUNTRY_OPTIONS.map((c) => (
+          {countryOptions.map((c) => (
             <option key={c.value || "empty"} value={c.value}>
               {t(c.labelKey)}
             </option>

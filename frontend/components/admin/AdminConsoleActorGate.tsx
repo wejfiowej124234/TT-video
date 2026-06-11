@@ -45,7 +45,7 @@ export function AdminConsoleActorGate({ children }: { children: React.ReactNode 
               {t("admin_console_gate_login_cta")}
             </Link>
           ) : (
-            <Link href="/market" className={ADMIN_BTN_GHOST_DARK_CLASS}>
+            <Link href="/" className={ADMIN_BTN_GHOST_DARK_CLASS}>
               {t("admin_console_gate_forbidden_cta")}
             </Link>
           )}

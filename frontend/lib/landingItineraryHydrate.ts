@@ -1,8 +1,21 @@
-/** 刷新后回填已解锁订单详情；无法读取的 id 从 session 剔除。 */
+/** 刷新后回填 Landing 预览卡；404 / 已取消的 id 从 localStorage 剔除。 */
 
 export function landingOrderHydrateShouldDrop(err: unknown): boolean {
   const msg = err instanceof Error ? err.message : String(err);
   return msg === "order_not_found" || msg === "invalid_uuid";
+}
+
+export function landingOrderResponseShouldDrop(order: unknown): boolean {
+  if (!order || typeof order !== "object") return false;
+  const row = order as {
+    order?: { status?: string; state?: string };
+    status?: string;
+    state?: string;
+  };
+  const st = String(row.order?.status ?? row.order?.state ?? row.status ?? row.state ?? "")
+    .trim()
+    .toLowerCase();
+  return st === "cancelled" || st === "canceled";
 }
 
 export async function hydrateLandingUnlockedOrderDetails(
@@ -13,7 +26,12 @@ export async function hydrateLandingUnlockedOrderDetails(
   const staleIds: string[] = [];
   for (const orderId of orderIds) {
     try {
-      details[orderId] = await fetchOrder(orderId);
+      const detail = await fetchOrder(orderId);
+      if (landingOrderResponseShouldDrop(detail)) {
+        staleIds.push(orderId);
+      } else {
+        details[orderId] = detail;
+      }
     } catch (err) {
       if (landingOrderHydrateShouldDrop(err)) staleIds.push(orderId);
     }

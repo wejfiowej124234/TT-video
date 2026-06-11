@@ -176,7 +176,7 @@
 - [x] **B3** §2 全部标记 **post-beta**，**不得**混入 ②.9 PR  
 - [x] **B4** §3 冻结项已传达 — **PR 不得** 触 FIVE-MAIN / Escrow / Auth / Provider 结构  
 - [x] **B5** 每项 §1 ID 已映射 **回归代码**（§0.3）  
-- [x] **B6** `PHASE3_ENTRY_GATE: HOLD` 仍有效 — **禁止** 并行 Phase ③ 工作  
+- [x] **B6** `PHASE3_ENTRY_GATE: READY` — Phase ③ Production Preparation **ACTIVE**（2026-06-07 Owner 签核）  
 - [x] **B7** ②.9 分支策略：`phase29/release-polish` 或等效 · **一 ID 一 PR**（推荐）  
 - [x] **B8** Owner 书面：**`PHASE29_DEV_GATE: OPEN`**
 
@@ -203,9 +203,11 @@
 ## 8 · 机读键
 
 ```text
-PHASE3_ENTRY_GATE: HOLD
-PHASE29_RELEASE_POLISH: W3_DONE
-PHASE29_DEV_GATE: OPEN
+PHASE3_ENTRY_GATE: READY
+PHASE3_ENTRY_REVIEW: READY
+PHASE3_PRODUCTION_PREP: ACTIVE
+PHASE29_RELEASE_POLISH: COMPLETE · UI_FROZEN
+PHASE29_FREEZE_COMMIT: bc5a939c
 PHASE29_BACKLOG_ITEMS: 36
 PHASE29_IN_SCOPE_UI: 8
 PHASE29_IN_SCOPE_DONE: 8

@@ -27,6 +27,7 @@ import {
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 import type { AdminUser } from "./adminUsersPageTypes";
 import { formatAdminAppliedFiltersHuman } from "@/lib/admin/formatAdminAppliedFiltersHuman";
+import type { LocaleTranslateFn } from "@/lib/i18n";
 
 type UserSortKey = "email" | "role" | "created_at";
 
@@ -61,7 +62,7 @@ export function AdminUsersDataSection({
   suspendInlineUserId: string | null;
   suspendInlineError: string | null;
   suspendInlineErrorKind: AdminFetchErrorKind | null;
-  t: (key: string, params?: Record<string, string>) => string;
+  t: LocaleTranslateFn;
 }) {
   const { sort, toggle, ariaSort } = useAdminTableSort<UserSortKey>("created_at", "desc");
   const sortedItems = useMemo(

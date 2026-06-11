@@ -44,7 +44,7 @@ export function TravelTrustNetworkFooter({ grouped = false }: Props) {
           className={TT_NETWORK_FOOTER_L5.ambienceClass}
           aria-hidden
           data-tt-traveltrust-network-footer-ambience-l5="1"
-          animate={reduceMotion ? undefined : { opacity: TT_NETWORK_FOOTER_L5.ambiencePulse.opacity }}
+          animate={reduceMotion ? undefined : { opacity: [...TT_NETWORK_FOOTER_L5.ambiencePulse.opacity] }}
           transition={
             reduceMotion
               ? undefined
@@ -60,7 +60,7 @@ export function TravelTrustNetworkFooter({ grouped = false }: Props) {
         <motion.div
           className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ref-sun/50 to-transparent"
           aria-hidden
-          animate={reduceMotion ? undefined : { opacity: TT_NETWORK_FOOTER_L5.topBorderPulse.opacity }}
+          animate={reduceMotion ? undefined : { opacity: [...TT_NETWORK_FOOTER_L5.topBorderPulse.opacity] }}
           transition={
             reduceMotion
               ? undefined

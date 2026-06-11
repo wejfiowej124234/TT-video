@@ -1,6 +1,6 @@
 # TT-9627 · 交付顺序清单：先主脊 → 再全站 → 再生产 GO
 
-**Version:** 0.1.26  
+**Version:** 0.1.27  
 **Status:** Runbook — **「先跑哪条、再跑哪条、最后才算全项目收口」** 的 **唯一顺序表**；与 **[TT-9625](TT-9625-golden-path-system-spine.md)**（**主脊**）、**[TT-9626](TT-9626-zero-to-production-go-single-path.md)**（**到 GO**）**串读**。**不**替代 **96-20 / 93 / go-live / 96-15** 正文。
 
 **仓库路径：** `docs/runbook/TT-9627-delivery-order-spine-then-full-site.md`
@@ -129,6 +129,7 @@
 |---|-----|----------------|
 | ☐ | **2.1** 打开矩阵与本轮范围 | **[96-20 §5–§8](../spec/96-20-前后端页面对齐与UI生产级审计报告.md)** |
 | ☐ | **2.2** 按域分批 `rg` / E2E / 手点（与 **TT-9621 Phase D** 一致） | **96-20 §8**；**`/market` 公开读面①机读**：**`bash scripts/gates/vertical-slice-03-market-hub-public-smoke.sh`**（**`discover/orders` + `guides`**；**不**替代抽屉/下单/登录矩阵） |
+| ☐ | **2.2-a** **`/` + `/market` 四页数据链（① · FE）** | **`bash scripts/dev/run-web3-itinerary-l5-green.sh`** + 可选 **`bash scripts/dev/smoke-web3-itinerary-full-chain-local.sh`** — **`localStorage`** · **300ms debounce** · 收藏 **`localStorage` + F-020 best-effort**（**→ ②** SLA）；**[LANDING-MARKET-PAGES-CODE-SSOT](../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **[dev-local-smoke §10](../dev-local-smoke-baseline.md)**；**不**替代 **2.2** API 竖切 |
 | ☐ | **2.2-b** **`/community/explore` 公开读面（①）** | **`bash scripts/gates/vertical-slice-04-community-explore-public-smoke.sh`** — **`GET /api/v1/community/feed`**（与 **`getFeed`** 同源）+ **`GET /api/v1/community/stats/posts-by-tag`**（话题统计；**不**含 **登录态 / mode=follow**） |
 | ☐ | **2.2-c** **段 2 公开读编排（①）** | **`bash scripts/gates/vertical-slice-tt9627-segment2-hub-public-smoke.sh`** — 串 **竖切 03** + **竖切 04**；**`TT9627_SEGMENT2_API_SMOKE=1`** 时 **`ci-local-delivery-minimum.sh`** 尾段可选串跑 |
 | ☐ | **2.3** 与 **04 / `api.ts`** 契约无互斥 | **04**、**`frontend/lib/api.ts`** |
@@ -233,6 +234,7 @@
 | 0.1.23 | 2026-05-01 | **段 4～6 编排**：锚 **`#tt-9627-segments-456-orchestration`**；**`ci-local`** **`SEGMENT456=1`** 时跳过 **`SEGMENT4/5/6`** 个体尾段（误同开 stderr **note**）；**TT-LOCAL** / **scripts/README** / **TT-9625 §3** 外链对拍。 |
 | 0.1.24 | 2026-05-01 | **§0**：互指 **TT-9628 §0.0.2a** 机读闸脚本索引表 **`#tt-9628-tt9627-gates-index`**。 |
 | 0.1.25 | 2026-05-01 | **段 3.3**：互指 **TT-9628 §0.0.3** **`report.json`** 路径约定 **`#tt-9628-report-json-path-convention`**。 |
+| 0.1.27 | 2026-06-03 | **段 2.2-a**：**`/` + `/market` 四页 FE 数据链** — **`run-web3-itinerary-l5-green.sh`** · **`smoke-web3-itinerary-full-chain-local.sh`**；互指 **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **dev-local-smoke §10** · **scripts/README**。**承** **0.1.26**。 |
 | 0.1.26 | 2026-05-01 | **段 3.3 / 段 3 完成判据**：**ISS-007** 窄切片 **`PARTIAL_GO`** 与 **staging 全矩阵** **`release_gate`** 分轨；互指 **`evidence/GO_local_r002_verify/README.md`**、**95 §1.1**、**`scripts/README`**。 |
 
 ---

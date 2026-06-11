@@ -345,6 +345,8 @@ async fn itinerary_create_impl_with_guide_id_persists_guide_on_order() {
             language_cert_url: None,
             guide_license_url: None,
             stake_amount: "0".to_string(),
+            hourly_rate: None,
+            avatar_url: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -815,6 +817,52 @@ async fn itinerary_custom_create_impl_tourist_stores_draft_and_bundle() {
 }
 
 #[tokio::test]
+async fn itinerary_custom_create_impl_explicit_breakdown_fees() {
+    let store = ChainOffStore::default();
+    let state = ChainOffState {
+        store: Arc::new(RwLock::new(store)),
+        config: ChainOffConfig::default(),
+        db_pool: None,
+    };
+    let user_id = Uuid::new_v4();
+    let body: CustomItineraryBody = serde_json::from_value(serde_json::json!({
+        "creator_type": "tourist",
+        "country": "中国",
+        "total_days": 1,
+        "amount": 1000,
+        "breakdown": {
+            "guide_fee": 150,
+            "car_fee": 80,
+            "attractions_fee": 36,
+            "food_fee": 20,
+            "hotel_fee": 83
+        },
+        "day_plans": [
+            { "city": "Beijing", "attractions": ["故宫"], "food": ["烤鸭"], "hotel": "tier_comfort" }
+        ]
+    }))
+    .unwrap();
+    let res = itinerary_custom_create_impl(state.clone(), user_id, Json(body)).await;
+    let Ok(Json(json)) = res else {
+        panic!("itinerary_custom_create_impl should succeed");
+    };
+    assert_eq!(json["status"], "ok");
+    let order_id = Uuid::parse_str(json["order_id"].as_str().unwrap()).unwrap();
+    let store = state.store.read().await;
+    let bundle = store
+        .itineraries
+        .get(&order_id)
+        .expect("itinerary bundle should exist");
+    let bd = &bundle.amount_breakdown;
+    assert_eq!(bd.tickets, 36.0);
+    assert_eq!(bd.catering, 20.0);
+    assert_eq!(bd.hotel, 83.0);
+    assert_eq!(bd.guide_fee, 150.0);
+    assert_eq!(bd.vehicle, 80.0);
+    assert_eq!(bd.total_budget, 1000.0);
+}
+
+#[tokio::test]
 async fn itinerary_custom_create_impl_with_guide_id_persists_guide_on_order() {
     let mut store = ChainOffStore::default();
     let now = Utc::now();
@@ -837,6 +885,8 @@ async fn itinerary_custom_create_impl_with_guide_id_persists_guide_on_order() {
             language_cert_url: None,
             guide_license_url: None,
             stake_amount: "0".to_string(),
+            hourly_rate: None,
+            avatar_url: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -1400,6 +1450,9 @@ async fn discover_orders_list_includes_created_without_guide() {
 
 #[tokio::test]
 async fn discover_orders_list_pagination_limit_and_cursor() {
+    let _env = crate::test_env_serial::lock();
+    let prev_pcs = std::env::var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE").ok();
+    std::env::set_var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE", "0");
     let store = ChainOffStore::default();
     let state = ChainOffState {
         store: Arc::new(RwLock::new(store)),
@@ -1463,6 +1516,10 @@ async fn discover_orders_list_pagination_limit_and_cursor() {
     };
     assert_eq!(p2["items"].as_array().unwrap().len(), 1);
     assert_eq!(p2["page"]["has_more"], false);
+    match prev_pcs {
+        Some(v) => std::env::set_var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE", v),
+        None => std::env::remove_var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE"),
+    }
 }
 
 /// 55-S12：`GET /api/v1/orders` 与 `GET /api/v1/discover/orders` 同源分页（limit/cursor/page）

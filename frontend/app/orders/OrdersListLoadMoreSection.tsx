@@ -14,7 +14,6 @@ export function OrdersListLoadMoreSection({
   loadMoreOrders,
   ordersHasMore,
   listCount,
-  searchActive = false,
 }: {
   t: (key: string, vars?: Record<string, string | number>) => string;
   loadMoreError: string | null;
@@ -22,7 +21,6 @@ export function OrdersListLoadMoreSection({
   loadMoreOrders: () => void;
   ordersHasMore: boolean;
   listCount: number;
-  searchActive?: boolean;
 }) {
   const showEndReached = listCount > 0 && !ordersHasMore && loadMoreError == null && !loadingMore;
 
@@ -92,12 +90,6 @@ export function OrdersListLoadMoreSection({
             </button>
           </form>
         </div>
-      ) : null}
-
-      {searchActive && (ordersHasMore || showEndReached) ? (
-        <p className={`mt-4 ${TT_ORDERS_LIST_L5.searchScopeHint}`} role="note">
-          {t("orders_list_search_scope_hint")}
-        </p>
       ) : null}
 
       {showEndReached ? (

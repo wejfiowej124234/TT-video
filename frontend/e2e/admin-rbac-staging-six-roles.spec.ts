@@ -12,8 +12,8 @@ import { join } from "node:path";
 
 import { test, expect } from "@playwright/test";
 
-import { waitForAdminCapabilitiesReady } from "./helpers/adminCapabilitiesSession";
-import { defaultApiBase, gotoWithBearerSession } from "./helpers/apiSession";
+import { gotoWithAdminShellSessionReady } from "./helpers/adminCapabilitiesSession";
+import { defaultApiBase } from "./helpers/apiSession";
 import {
   ADM_U01_ROLES,
   ADM_U01_SHELL_GROUP_VISIBILITY,
@@ -115,12 +115,7 @@ test.describe("ADM-U01 staging · six-role shell visibility @adm-u01-staging", (
       await page.context().addCookies([
         { name: "traveltrust_user_id", value: userId, url: origin },
       ]);
-      await gotoWithBearerSession(page, `${origin}/admin`, { token, userId });
-      await expect(page.locator('[data-tt-admin-shell-bar="1"]')).toBeVisible({
-        timeout: 90_000,
-      });
-
-      await waitForAdminCapabilitiesReady(page, { token, userId });
+      await gotoWithAdminShellSessionReady(page, `${origin}/admin`, { token, userId });
 
       for (const [groupId, expectations] of Object.entries(ADM_U01_SHELL_GROUP_VISIBILITY)) {
         const expected = expectations[role];

@@ -318,7 +318,7 @@ async function ensureStagingSessions(request: APIRequestContext): Promise<Stagin
 
   test("D1 · 首页域", async ({ page, request }) => {
     await ensureStagingSessions(request);
-    await probeRoute(page, "首页", "/", { authMode: "public", mainPattern: /Start your dream|梦想之旅|dream trip/i });
+    await probeRoute(page, "首页", "/", { authMode: "public", mainPattern: /定制旅行|Custom travel|选目的地|Pick a destination/i });
     await probeRoute(page, "首页", "/traveltrust", {
       authMode: "public",
       mainPattern: /TravelTrust|融资|网络/i,

@@ -1,8 +1,8 @@
 # 数据库表与 UI 功能对照检查
 
-**目的**：检查：① 现有迁移表是否齐全；② 接上 PostgreSQL/分布式 DB（`DATABASE_URL`）后是否满足当前 UI 页面的功能。**业务逻辑与所需数据库**的逐条对应见 [04-业务逻辑与数据库支持清单](spec/04-业务逻辑与数据库支持清单.md)。**TT 社区**：有 DB 时走 `/api/v1/community/*`（见 **04 §3.4**）；无 DB 时部分能力降级。
+**目的**：检查：① 现有迁移表是否齐全；② 接上 PostgreSQL/分布式 DB（`DATABASE_URL`）后是否满足当前 UI 页面的功能。**业务逻辑与所需数据库**的逐条对应见 [04-业务逻辑与数据库支持清单](spec/04-业务逻辑与数据库支持清单.md)。**TT 社区**：有 DB 时走 `/api/v1/community/*`（见 **04 §3.4**）；无 DB 时部分能力降级。**`/` · `/market` 四页 FE 数据链**（**`useMarketPage` debounce** · **`landingItinerarySession` = `localStorage`** · 收藏 **`localStorage` + F-020 best-effort** → **②** SLA）见 **[LANDING-MARKET-PAGES-CODE-SSOT](../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** — **本表仅列 HTTP↔DB**，**不**含浏览器 **`localStorage`** 收藏/预览态。
 
-**依据**：`crates/api/migrations/*.sql`、`crates/api/src/db.rs`、[04-后端与API](spec/04-后端与API.md)、[04-附录-DDL草案](spec/04-附录-DDL草案.md)、[04-业务逻辑与数据库支持清单](spec/04-业务逻辑与数据库支持清单.md)。
+**依据**：`crates/api/migrations/*.sql`、`crates/api/src/db.rs`、[04-后端与API](spec/04-后端与API.md)、[04-附录-DDL草案](spec/04-附录-DDL草案.md)、[04-业务逻辑与数据库支持清单](spec/04-业务逻辑与数据库支持清单.md)、[数据库与UI-全方位多维度深度检查报告](../数据库与UI-全方位多维度深度检查报告.md)（按路由逐项）。
 
 ---
 
@@ -45,7 +45,7 @@
 | 创建订单 | POST /api/v1/orders | orders | orders | ✅ 满足 |
 | 我的订单列表 | GET /api/v1/orders | orders | orders | ✅ 满足 |
 | 接单 / 取消 / 确认完成 | POST accept, cancel, confirm-completion | orders | orders | ✅ 满足 |
-| 自由市场可浏览订单列表 | GET /api/v1/discover/orders（主 UI **`/market`**；**`/discover`** 重定向） | orders | orders | ✅ 满足 |
+| 自由市场可浏览订单列表 | GET /api/v1/discover/orders（主 UI **`/market`** · **`useMarketPage`** **300ms debounce**；**`/discover`** 重定向） | orders | orders | ✅ 满足 |
 | 订单评价列表 / 提交评价 | GET/POST /api/v1/orders/:id/reviews | reviews | reviews | ✅ 满足 |
 | 发起争议 / 争议列表 / 裁决 | POST dispute; GET disputes, GET/POST resolve | disputes | disputes | ✅ 满足 |
 | 订单证据 | GET/POST /api/v1/orders/:id/evidence | chain_off 内存 + disputes.evidence_hashes | disputes 存 hash；文件/链下 receipt 另存 | ✅ 满足（当前实现） |
@@ -74,7 +74,7 @@
 | 7 | 向导详情 | /guides/[id] | GET /api/v1/guides/:id | 是 | guides | ✅ 已有 |
 | 8 | 向导注册 / 证件上传 / 质押 | /guide/register | POST guides, upload-doc, stake | 是 | guides + 文件系统 | ✅ 已有 |
 | 9 | 行程生成 | /itinerary/new | POST /api/v1/itineraries | 是 | itineraries | ✅ 已有表与双写 + hydrate |
-| 10 | 自由市场可浏览订单列表 | **`/market`**（**`/discover`** 仅重定向，列表请求在此页） | GET /api/v1/discover/orders | 是 | orders | ✅ 已有 |
+| 10 | 自由市场可浏览订单列表 | **`/market`**（**`/discover`** 仅重定向；**`useMarketPage`** · **debounce**） | GET /api/v1/discover/orders | 是 | orders | ✅ 已有 |
 | 11 | 创建订单 / 我的订单 | /orders, /orders/new | GET/POST /api/v1/orders, orderById | 是 | orders | ✅ 已有 |
 | 12 | 接单 / 取消 / 确认完成 | EscrowDetail、订单流 | accept, cancel, confirm-completion | 是 | orders | ✅ 已有 |
 | 13 | 确认最终方案 / 设置托管地址 | EscrowDetail | confirm-final-plan, set-escrow-address | 是 | orders | ✅ 已有 |

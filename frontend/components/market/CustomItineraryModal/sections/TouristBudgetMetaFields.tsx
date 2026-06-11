@@ -6,6 +6,8 @@ import type { BudgetBreakdown } from "../useQuoteCalculation";
 import type { MutableRefObject, Dispatch, SetStateAction } from "react";
 import { TITLE_MAX_LENGTH, DESCRIPTION_MAX_LENGTH } from "../constants";
 import { sanitizeDecimalInput } from "../utils";
+import { DEFAULT_SETTLEMENT_CURRENCY_CODE } from "@/lib/defaultSettlementCurrency";
+import { headcountPricingNoteKey } from "../itineraryFormCountryCopy";
 
 export interface TouristBudgetMetaFieldsProps {
   form: CustomItineraryForm;
@@ -54,7 +56,7 @@ export default function TouristBudgetMetaFields({
         </div>
         <div>
           <label htmlFor={amountFieldId} className={labelClass}>
-            {t("market_budget")} *
+            {t("market_budget")} ({DEFAULT_SETTLEMENT_CURRENCY_CODE}) *
           </label>
           <input
             id={amountFieldId}
@@ -112,7 +114,7 @@ export default function TouristBudgetMetaFields({
             className={inputClass}
             placeholder={t("market_headcountPlaceholder")}
           />
-          <p className="text-meta text-white/70 mt-1">{t("market_headcountPricingNote")}</p>
+          <p className="text-meta text-white/70 mt-1">{t(headcountPricingNoteKey(form.country))}</p>
         </div>
       </div>
       {form.amount.trim() && form.headcount >= 1 &&

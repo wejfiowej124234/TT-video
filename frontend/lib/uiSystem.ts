@@ -60,6 +60,24 @@ export function isOrdersDarkL5HeaderPath(pathname: string | null | undefined): b
   return isOrdersListDarkL5HeaderPath(pathname) || isOrdersNewDarkL5HeaderPath(pathname);
 }
 
+/** `/orders*` · `/escrow*` · `/pay*` · `/itinerary*` — 订单主链页身暖金暗壳 + 顶栏 cinematic 同族 */
+export function isOrderChainDarkL5HeaderPath(pathname: string | null | undefined): boolean {
+  return isOrdersDarkL5HeaderPath(pathname) || isProductConsoleL5UtilityPath(pathname);
+}
+
+/** `/escrow` · `/pay` · `/itinerary` · 深色页身 + 顶栏 utility 须 authL5 玻璃下拉（非 Console 白菜单） */
+export function isProductConsoleL5UtilityPath(pathname: string | null | undefined): boolean {
+  const p = pathname ?? "";
+  return (
+    p === "/escrow" ||
+    p.startsWith("/escrow/") ||
+    p === "/pay" ||
+    p.startsWith("/pay/") ||
+    p === "/itinerary" ||
+    p.startsWith("/itinerary/")
+  );
+}
+
 const MARKET_DARK_PREFIXES = ["/market", "/community", "/did-rank"] as const;
 const ADMIN_PREFIX = "/admin";
 
@@ -107,6 +125,7 @@ export function isHeaderUtilityL5Path(pathname: string | null | undefined): bool
   if (isMarketDarkPremiumHeaderPath(p)) return true;
   if (p === "/" || p.startsWith("/traveltrust")) return true;
   if (isOrdersDarkL5HeaderPath(p)) return true;
+  if (isProductConsoleL5UtilityPath(p)) return true;
   const kind = headerSurfaceKindForPathname(p);
   return kind === "home" || kind === "dark";
 }
@@ -165,7 +184,7 @@ export function headerSurfaceKindForPathname(pathname: string | null | undefined
   const p = pathname ?? "";
   if (isAdminHeaderPath(p)) return "dark";
   if (p === "/") return "home";
-  if (isOrdersDarkL5HeaderPath(p)) return "home";
+  if (isOrderChainDarkL5HeaderPath(p)) return "home";
   if (isAuthL5DarkHeaderPath(p)) return "dark";
   const zone = resolveUiZone(p);
   if (zone === "experience" || zone === "marketDark") return "dark";
@@ -177,7 +196,7 @@ export function headerBarClassForPathname(pathname: string | null | undefined): 
   if (isAdminHeaderPath(p)) {
     return TT_MARKETING_HEADER_BAR_TRAVELTRUST_CINEMATIC;
   }
-  if (isOrdersDarkL5HeaderPath(p)) {
+  if (isOrderChainDarkL5HeaderPath(p)) {
     return TT_MARKETING_HEADER_BAR_TRAVELTRUST_CINEMATIC;
   }
   if (p.startsWith("/traveltrust")) {
@@ -199,7 +218,7 @@ export function headerBarClassForPathname(pathname: string | null | undefined): 
 }
 
 export function headerMobileNavRailClassForPathname(pathname: string | null | undefined): string {
-  if (isOrdersDarkL5HeaderPath(pathname)) {
+  if (isOrderChainDarkL5HeaderPath(pathname)) {
     return TT_MARKETING_NAV_MOBILE_RAIL_HOME;
   }
   if (isAuthL5DarkHeaderPath(pathname)) {
@@ -256,7 +275,7 @@ export function headerLoginLinkClasses(pathname: string | null | undefined): str
   if (isCommunityPremiumHeaderPath(pathname) || isMarketDarkPremiumHeaderPath(pathname)) {
     return TT_MARKETING_HEADER_LOGIN_HOME;
   }
-  if (isOrdersDarkL5HeaderPath(pathname)) {
+  if (isOrderChainDarkL5HeaderPath(pathname)) {
     return TT_MARKETING_HEADER_LOGIN_HOME;
   }
   const kind = headerSurfaceKindForPathname(pathname);
@@ -279,7 +298,7 @@ export function headerRegisterPillClasses(pathname: string | null | undefined): 
   if (isMarketDarkPremiumHeaderPath(pathname)) {
     return TT_MARKETING_REGISTER_PILL_WARM;
   }
-  if (isOrdersDarkL5HeaderPath(pathname)) {
+  if (isOrderChainDarkL5HeaderPath(pathname)) {
     return TT_MARKETING_REGISTER_PILL_WARM;
   }
   return headerSurfaceKindForPathname(pathname) === "light"

@@ -249,5 +249,25 @@ npx vitest run \
   'app/admin/reviews/[id]/adminReviewDetailPage.contract.test.ts' \
   'app/admin/compliance/requests/[requestId]/events/adminComplianceRequestEventsPage.contract.test.ts' \
   components/admin/adminRoutePermissionBanner.contract.test.ts \
+  lib/admin/adminOpsPlaneUxL5.contract.test.ts \
+  app/admin/content/adminContentCs1.contract.test.ts \
+  app/admin/content/adminContentCs2.contract.test.ts \
+  app/admin/content/adminContentCs3.contract.test.ts \
+  app/admin/content/adminContentCs4.contract.test.ts \
+  app/admin/content/adminContentCs5.contract.test.ts \
+  app/admin/content/adminContentCs6.contract.test.ts \
+  app/admin/official/adminOfficialOs1.contract.test.ts \
+  app/admin/official/adminOfficialOs2.contract.test.ts \
+  app/admin/official/adminOfficialOs3.contract.test.ts \
+  app/admin/official/adminOfficialOs4.contract.test.ts \
+  app/admin/growth/referral-codes/adminGrowthReferralCodes.contract.test.ts \
+  app/admin/growth/early-bird/adminGrowthEarlyBird.contract.test.ts \
+  app/admin/growth/reward-ledger/adminGrowthRewardLedger.contract.test.ts \
+  app/admin/growth/anti-fraud/adminGrowthAntiFraud.contract.test.ts \
+  app/admin/growth/airdrop-campaigns/adminGrowthAirdrop.contract.test.ts \
+  app/admin/growth/analytics/adminGrowthAnalytics.contract.test.ts \
+  app/admin/growth/kol-center/adminGrowthKolCenter.contract.test.ts \
+  app/me/referrals/meReferralsPage.contract.test.ts \
+  lib/coldStartCampaign/coldStartCampaignE2eA01.contract.test.ts \
   --run
 echo "admin-l5-green: exit 0"

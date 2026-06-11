@@ -14,7 +14,8 @@ import UnifiedItineraryList from "@/components/itinerary/UnifiedItineraryList";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import type { UnifiedDayRow } from "@/lib/itineraryUnified";
 import { isUuidString } from "@/lib/isUuidString";
-import { COUNTRY_OPTIONS, CITIES_BY_COUNTRY, productCountryZhForCityName } from "@/lib/geoOptions";
+import { CITIES_BY_COUNTRY, productCountryZhForCityName } from "@/lib/geoOptions";
+import { useCatalogCityOptions, useCatalogCountryOptions } from "@/lib/catalogApi/useCatalogGeo";
 import { isAllowedProductZhCountryName } from "@/lib/productCountries";
 import type { OrderResponse } from "@/components/escrow/EscrowDetail/types";
 import { apiOrderSliceMatchesRoute } from "@/lib/orderGetEnvelopeGuard";
@@ -117,6 +118,8 @@ function ItineraryNewPageInner() {
   const guideQueryInvalid = guideIdFromQuery !== "" && !isUuidString(guideIdFromQuery);
 
   const [form, setForm] = useState<ItineraryForm>(defaultForm);
+  const countryOptions = useCatalogCountryOptions();
+  const cityOptions = useCatalogCityOptions(form.destination);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<ItineraryResponse | null>(null);
@@ -343,7 +346,7 @@ function ItineraryNewPageInner() {
             {t("itin_label_destination")}
           </span>
           <div className="flex flex-wrap gap-2">
-            {COUNTRY_OPTIONS.map((c) => (
+            {countryOptions.map((c) => (
               <button
                 key={c.value}
                 type="button"
@@ -365,7 +368,7 @@ function ItineraryNewPageInner() {
             </p>
           ) : (
             <div className="flex flex-wrap gap-2">
-              {(CITIES_BY_COUNTRY[form.destination] ?? []).map((c) => (
+              {cityOptions.map((c) => (
                 <button
                   key={c.value}
                   type="button"

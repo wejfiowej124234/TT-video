@@ -6,7 +6,7 @@ import { useOrdersNewPage } from "./useOrdersNewPage";
 
 function NewOrderPageInner() {
   const vm = useOrdersNewPage();
-  return <OrdersNewPageMain vm={vm} />;
+  return <OrdersNewPageMain {...vm} />;
 }
 
 export default function NewOrderPage() {

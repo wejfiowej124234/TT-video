@@ -76,9 +76,8 @@ describe("orders list L5 contract (① · product console)", () => {
     expect(src).toContain("TT_ORDERS_LIST_L5.ambient");
     expect(src).toContain("TT_ORDERS_LIST_L5.dotGrid");
     expect(src).toContain("OrdersListToolbar");
-    expect(src).toContain("OrdersListSearchBar");
-    expect(src).toContain("useOrdersListClientSearch");
-    expect(src).not.toContain("filterOrdersListByClientSearch(list");
+    expect(src).not.toContain("OrdersListSearchBar");
+    expect(src).not.toContain("useOrdersListClientSearch");
     expect(src).toContain("OrdersListActiveFiltersBar");
     expect(src).toContain("clearAllFilters");
     expect(src).not.toContain("OrdersListStickyFilterDock");
@@ -164,7 +163,7 @@ describe("orders list L5 contract (① · product console)", () => {
     expect(itemSrc).not.toContain("stickyHintBar");
     expect(itemSrc).toContain("TT_ORDERS_LIST_L5.statusBadgeWarm");
     expect(itemSrc).toContain("staggerEnter");
-    expect(itemSrc).toContain('loading={coverEager ? undefined : "lazy"}');
+    expect(itemSrc).toContain('loading={coverEager ? "eager" : "lazy"}');
     expect(itemSrc).toContain("coverEager");
     expect(itemSrc).not.toContain("TT_MARKETING_DRAFT_CARD_HIGHLIGHT");
     expect(itemSrc).not.toContain("cardDraftRibbon");
@@ -173,8 +172,24 @@ describe("orders list L5 contract (① · product console)", () => {
     expect(itemSrc).toContain("OrdersListSearchHighlight");
     expect(itemSrc).toContain("orders_list_destination_detail");
     expect(itemSrc).toContain("TT_ORDERS_LIST_L5.coverImage");
+    expect(itemSrc).toContain("resolveOrderListCoverUrl");
+    expect(itemSrc).toContain("<img");
+    expect(itemSrc).not.toContain('from "next/image"');
     expect(TT_ORDERS_LIST_L5.cardEscrowBtn).toContain("text-[#0c0a09]");
     expect(itemSrc).not.toContain("TT_MARKETING_BTN_SECONDARY_CONSOLE");
+  });
+
+  it("delete confirm uses L5 dialog instead of window.confirm", () => {
+    const core = readFileSync(join(root, "app/orders/useOrdersListPageCore.ts"), "utf8");
+    const main = readFileSync(join(root, "app/orders/OrdersListPageMain.tsx"), "utf8");
+    const dialog = readFileSync(join(root, "components/orders/OrdersListDeleteConfirmDialog.tsx"), "utf8");
+    expect(core).not.toContain("window.confirm");
+    expect(core).toContain("pendingDeleteOrder");
+    expect(main).toContain("OrdersListDeleteConfirmDialog");
+    expect(dialog).toContain("data-tt-orders-list-delete-confirm");
+    expect(dialog).toContain("TT_ORDERS_LIST_L5.deleteConfirmPanel");
+    expect(TT_ORDERS_LIST_L5.deleteConfirmPanel).toContain("border-ref-sun/35");
+    expect(TT_ORDERS_LIST_L5.deleteConfirmBtnDanger).toContain("text-red-300");
   });
 
   it("toolbar uses flat sticky shell (no nested warm frame)", () => {
@@ -191,10 +206,14 @@ describe("orders list L5 contract (① · product console)", () => {
     const searchSrc = readFileSync(searchBar, "utf8");
     expect(bar).toContain("data-tt-orders-active-filters");
     expect(bar).toContain("orders_list_clear_all_filters");
+    expect(bar).toContain("searchResultsPaginated");
+    expect(bar).toContain("searchScopeHintInline");
+    expect(bar).toContain("orders_list_search_scope_hint");
     expect(bar).toContain("TT_ORDERS_LIST_L5.clearAllFiltersBtn");
     expect(searchSrc).not.toContain("activeFilterChip");
-    expect(searchSrc).toContain("searchScopeLoadedOnly");
-    expect(searchSrc).toContain("orders_list_search_scope_hint");
+    expect(searchSrc).toContain("orders_list_search_shortcut_hint");
+    expect(searchSrc).not.toContain("orders_list_search_scope_hint");
+    expect(searchSrc).not.toContain("searchScopeLoadedOnly");
   });
 
   it("search bar supports / focus and Esc clear", () => {
@@ -228,6 +247,11 @@ describe("orders list L5 contract (① · product console)", () => {
     expect(mainSrc).toContain("countsLoadedOnly={ordersHasMore}");
     expect(emptySrc).toContain("orders_list_filter_empty");
     expect(emptySrc).toContain("orders_list_clear_filter");
+    expect(emptySrc).toContain("empty_goCreateItinerary");
+    expect(emptySrc).toContain("buildMarketCreateItineraryHref");
+    expect(emptySrc).toContain("data-tt-orders-list-create-draft-cta");
+    expect(emptySrc).not.toContain('href="/itinerary/new"');
+    expect(emptySrc).not.toMatch(/filtered\s*\?\s*["']\/orders\/new["']/);
     expect(emptySrc).toContain("TT_ORDERS_LIST_L5.filterEmptyIcon");
   });
 
@@ -254,8 +278,7 @@ describe("orders list L5 contract (① · product console)", () => {
     expect(loadMore).toContain("TT_ORDERS_LIST_L5.listEndPanel");
     expect(loadMore).toContain("OrdersListLoadMoreRowSkeleton");
     expect(loadMore).toContain("TT_ORDERS_LIST_L5.listEndIcon");
-    expect(loadMore).toContain("orders_list_search_scope_hint");
-    expect(loadMore).toContain("searchActive");
+    expect(loadMore).not.toContain("orders_list_search_scope_hint");
     expect(skeleton).toContain("OrdersListLoadMoreRowSkeleton");
     expect(loadMore).not.toContain("TT_MARKETING_BTN_SECONDARY_CONSOLE");
     expect(footerSrc).toContain("TT_ORDERS_LIST_L5.footerTopFade");
@@ -346,11 +369,21 @@ describe("orders list L5 contract (① · product console)", () => {
       { id: "6", state: "escrowed" },
     ];
     const counts = countOrdersListByTerminalState(sample);
-    expect(counts.__all__).toBe(6);
+    expect(counts.__all__).toBe(5);
     expect(counts.completed).toBe(1);
     expect(counts.cancelled).toBe(1);
     expect(counts.disputed).toBe(1);
     expect(counts.in_progress).toBe(2);
+  });
+
+  it("default all tab hides cancelled rows", () => {
+    const sample = [
+      { id: "1", state: "completed" },
+      { id: "2", state: "cancelled" },
+      { id: "3", state: "created" },
+    ];
+    const filtered = filterOrdersListByUrlStateParam(sample, "");
+    expect(filtered.map((o) => o.id)).toEqual(["1", "3"]);
   });
 
   it("in_progress filter matches created/accepted/escrowed on loaded list", () => {
@@ -381,6 +414,8 @@ describe("orders list L5 contract (① · product console)", () => {
     const core = readFileSync(join(root, "app/orders/useOrdersListPageCore.ts"), "utf8");
     expect(core).toContain("buildOrdersListGetParams");
     expect(core).toContain("ordersListSearchParam");
+    expect(core).toContain("filterOrdersForOrdersListPage(deduped, ordersListStateParam)");
+    expect(core).not.toContain("filterOrdersForTransactionalMyOrdersSurface");
   });
 
   it("primary action prefers pay then escrow", () => {

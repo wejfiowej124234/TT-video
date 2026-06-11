@@ -6,11 +6,15 @@ export interface TransportLine {
   dayTo: number;
   vehicle: CityTransportType;
   fee: number;
+  /** 按人数折算的所需车辆数 */
+  vehicleCount?: number;
 }
 
 export interface InterCityLine {
   dayFrom: number;
   dayTo: number;
+  fromCity: string;
+  toCity: string;
   mode: TransportType;
   pricePerPerson: number;
   headcount: number;

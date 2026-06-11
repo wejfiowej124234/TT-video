@@ -23,7 +23,7 @@ export function EscrowDetailProtocolTailBilateralAndMessage({
           isGuide={!!data.meData?.guide}
           touristConfirmed={(order as OrderRow & { tourist_confirmed?: boolean }).tourist_confirmed}
           guideConfirmed={(order as OrderRow & { guide_confirmed?: boolean }).guide_confirmed}
-          onSuccess={data.refreshOrder}
+          onSuccess={() => data.refreshOrder({ force: true })}
           variantDid
           protocolPaused={protocolPaused}
         />

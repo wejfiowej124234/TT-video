@@ -771,7 +771,7 @@ pub(super) async fn post_collect(
         return resp;
     }
     match db::insert_collect(pool, uid, post_id).await {
-        Ok(()) => Json(json!({"status": "ok"})).into_response(),
+        Ok(created) => Json(json!({"status": "ok", "created": created})).into_response(),
         Err(_) => Json(json!({
             "status": "error",
             "error": "collect_create_failed",
@@ -797,6 +797,26 @@ pub(super) async fn delete_collect(
         }
     }
     Json(json!({"status": "ok"})).into_response()
+}
+
+pub(super) async fn get_me_likes(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    let pool = state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref());
+    if let (Some(pool), Some(uid)) = (
+        pool,
+        extract_user_with_session_check(&state, &headers).await,
+    ) {
+        if let Ok(post_ids) = db::list_likes_post_ids(pool, uid, LIST_LIMIT).await {
+            let list: Vec<_> = post_ids
+                .into_iter()
+                .map(|id| json!({ "post_id": id.to_string() }))
+                .collect();
+            return Json(json!({ "status": "ok", "likes": list })).into_response();
+        }
+    }
+    placeholder_ok("likes", json!([]))
 }
 
 pub(super) async fn get_me_collects(

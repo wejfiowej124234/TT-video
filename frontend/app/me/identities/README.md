@@ -4,7 +4,23 @@
 
 **阶段：① 本地** — 与 [`/auth/login`](../../auth/login/README.md) / [`/auth/register`](../../auth/register/README.md) **同族暖金暗玻璃**。
 
-**冻结 SSOT：** [`evidence/GO_local_auth_l5/ME-IDENTITIES-UI-FREEZE.md`](../../evidence/GO_local_auth_l5/ME-IDENTITIES-UI-FREEZE.md) · **命名 P3：** [`ACCOUNT-NAV-NAMING-P3.md`](../../evidence/GO_local_auth_l5/ACCOUNT-NAV-NAMING-P3.md) · **① 总验收：** [`GO_local_phase1`](../../evidence/GO_local_phase1/README.md) · 社区资料 [`/community/me`](../../community/me/README.md)
+**冻结 SSOT：** [`ME-IDENTITIES-UI-FREEZE.md`](../../evidence/GO_local_auth_l5/ME-IDENTITIES-UI-FREEZE.md) · **P2 Identity Center：** [`IDENTITY-CENTER-PHASE2-FREEZE.md`](../../evidence/GO_local_auth_l5/IDENTITY-CENTER-PHASE2-FREEZE.md) · **命名 P3：** [`ACCOUNT-NAV-NAMING-P3.md`](../../evidence/GO_local_auth_l5/ACCOUNT-NAV-NAMING-P3.md) · **L5 命名与升级轨：** [`docs/spec/artifacts/identity-multi-slot-naming-l5.v1.md`](../../../docs/spec/artifacts/identity-multi-slot-naming-l5.v1.md) · [`IDENTITY-MULTI-SLOT-NAMING-L5-UPGRADE-PLAN.md`](../../evidence/GO_local_auth_l5/IDENTITY-MULTI-SLOT-NAMING-L5-UPGRADE-PLAN.md)
+
+## 名称与资料分层（L5 · 2026-06-10 · P2 已闭）
+
+**Normative：** [identity-multi-slot-naming-l5.v1.md](../../../docs/spec/artifacts/identity-multi-slot-naming-l5.v1.md)
+
+| 用户想改… | ① 入口 |
+|-----------|--------|
+| 社区昵称 / 头像 | **`/me/settings/profile`** |
+| 向导市场挂牌（城市/bio/类型） | **`/me/identities/guide/settings`**（active）· 否则 **`/guide/register`** |
+| 商家店铺资料 | **`/me/identities/merchant/settings`**（active）· 否则 **`/provider/register`** |
+| 主理人区域资料 | **`/me/identities/region-steward/settings`**（active）· 否则 **`/steward/register`** |
+| 收购简介 / trust 只读 | **`/me/identities/acquisition/settings`** · 能力链 **`/market/acquisition`** |
+
+**市场列表大标题：** **`{city} 向导`**（`formatGuideDisplayName`）— **不是** nickname。
+
+**Admin 审批：** 商家 [`/admin/provider-applications`](../../admin/provider-applications/README.md) · 主理人 [`/admin/steward-applications`](../../admin/steward-applications/README.md) · 向导 [`/admin/guide-applications`](../../admin/guide-applications/README.md)
 
 ## 核心身份卡状态（P1 · 2026-05-27 · ①）
 
@@ -57,7 +73,9 @@
 ## 机读绿集
 
 ```bash
-cd frontend && npm run test:i18n:ci && npm run test -- accountNavNamingP3 meIdentitiesUiFreeze meIdentitiesL5FullScore meIdentitiesL5 meIdentitiesPage uiSystem --run
+cd frontend && npm run test:i18n:ci && npm run test -- accountNavNamingP3 meIdentitiesUiFreeze meIdentityP2Settings meGuideProfileSettings meIdentitiesL5FullScore meIdentitiesL5 meIdentitiesPage uiSystem --run
+bash scripts/dev/smoke-guide-profile-settings-local.sh
+bash scripts/dev/smoke-identity-p2-settings-local.sh
 ```
 
 ## Token SSOT

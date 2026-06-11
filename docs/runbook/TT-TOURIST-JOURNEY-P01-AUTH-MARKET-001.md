@@ -58,7 +58,9 @@
 ### 3. 状态与边界
 
 - **会话**：cookie / 与 **`getMe`** 一致；登出 **`postLogout`** 后 **`traveltrust:auth-change`** 触发顶栏刷新。  
-- **列表**：`useMarketPage` 内 **`discoverEpoch`** / **`inFlightDiscoverEpoch`** 防止慢请求覆盖新筛选（勿删）。  
+- **列表**：`useMarketPage` 内 **`discoverEpoch`** / **`inFlightDiscoverEpoch`** 防止慢请求覆盖新筛选（勿删）；筛选变更 **`getDiscoverOrders({ country?, city?, limit, cursor? })`** **300ms debounce** 重拉。  
+- **收藏（① FE）**：**`marketFavoritesStorage.ts`** → **`localStorage`**；**F-020** **`me/market-bookmarks`** **① FE best-effort 已接线**（**`marketTravelBookmarksSync`**）→ **②** SLA。  
+- **代码 SSOT**：**[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §3/§6 · **[`app/market/README`](../../frontend/app/market/README.md)**  
 - **错误**：`error.tsx` 或列表区 **`ApiErrorAlert`** 同类：**可读文案 + 重试**；**不**白屏静默失败。  
 - **非目标（P01）**：不验收 **`/orders/new`** 建单全路径（归 **P02**）；若 CTA 可达仅作 smoke。
 
@@ -80,4 +82,4 @@
 
 ---
 
-**文档版本**：1.2 · 2026-04-17（**§4** **四** **验收** **点** **+** **最短** **执行** **序**）
+**文档版本**：1.3 · 2026-06-03（**§3** **`useMarketPage` debounce · 收藏 localStorage · CODE SSOT** · **§4** **四** **验收** **点** **+** **最短** **执行** **序**）

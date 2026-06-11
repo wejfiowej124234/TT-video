@@ -13,6 +13,8 @@ describe("OrderCard L5 market guards (contract)", () => {
     expect(src).toContain("market_own_binding_order_badge");
     expect(src).toContain("market_own_binding_guide_selected_badge");
     expect(src).toContain("market_own_binding_back_escrow");
-    expect(src).toContain("formatEscrowStablecoinCurrency");
+    expect(src).toContain("CONSUMER_TRIP_CURRENCY_LOCALE_KEY");
+    expect(src).toContain("useViewerUserId");
+    expect(src).not.toMatch(/typeof window !== "undefined"\s*\?\s*localStorage/);
   });
 });

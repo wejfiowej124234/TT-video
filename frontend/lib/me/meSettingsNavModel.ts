@@ -61,6 +61,13 @@ const BASE_SECTIONS: readonly MeSettingsNavSection[] = [
     hintKey: "me_settings_section_travel_hint",
     items: [
       {
+        id: "referrals",
+        iconId: "feedback",
+        labelKey: "me_referrals_nav",
+        descKey: "me_referrals_nav_desc",
+        href: "/me/referrals",
+      },
+      {
         id: "disputes",
         iconId: "reports",
         labelKey: "me_settings_item_disputes",

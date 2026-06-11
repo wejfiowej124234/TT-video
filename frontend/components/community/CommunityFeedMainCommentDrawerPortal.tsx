@@ -86,9 +86,6 @@ export function CommunityFeedMainCommentDrawerPortal(props: CommentSlice) {
       onRetryCommentsLoad={retryCommentsLoad}
       commentSort={commentSort}
       onCommentSortChange={setCommentSort}
-      commentsHasMore={commentsHasMore}
-      onLoadMoreComments={loadMoreComments}
-      commentsLoadMoreBusy={commentsLoadMoreBusy}
     />
   );
 }

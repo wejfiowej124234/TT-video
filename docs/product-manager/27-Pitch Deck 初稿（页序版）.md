@@ -8,7 +8,7 @@
 
 ## 与技术文档对齐（会前 / 外发前必对）
 
-页序与口播定稿前须回链：**[08-4 对外口径包](../spec/08-4-对外口径包.md)**、**[01-总库总览](../spec/01-总库总览.md)**；按页涉及治理/分配时另对 **[82-治理币文档总览](../spec/82-治理币-文档总览.md)**、**[83-区域治理与收益分配白皮书](../spec/83-区域治理与收益分配-协议白皮书.md)**、**[84-第一阶段10国Country-Pool发行参数总表](../spec/84-第一阶段10国Country-Pool发行参数总表.md)**。若 Deck 含**技术架构 / 栈 / 数据库**页，须与 **[09-技术架构总览 v1.0](../spec/09-技术架构总览-v1.0.md)** 一致。链上与产品命名边界见 **[README 快照](README.md)**、**[07-产品经理术语表](07-产品经理术语表.md)**、**[14](../spec/14-合约-API-ABI-前后端对齐.md)**。对外演示 **[33 脱敏](33-上线验收与发布门禁清单.md)**。
+页序与口播定稿前须回链：**[08-4 对外口径包](../spec/08-4-对外口径包.md)**、**[01-总库总览](../spec/01-总库总览.md)**；按页涉及治理/分配时另对 **[82-治理币文档总览](../spec/82-治理币-文档总览.md)**、**[83-区域治理与收益分配白皮书](../spec/83-区域治理与收益分配-协议白皮书.md)**、**[84-第一阶段10国Country-Pool发行参数总表](../spec/84-第一阶段10国Country-Pool发行参数总表.md)**。若 Deck 含**技术架构 / 栈 / 数据库**页，须与 **[09-技术架构总览 v1.0](../spec/09-技术架构总览-v1.0.md)** 一致。链上与产品命名边界见 **[README 快照](README.md)**、**[07-产品经理术语表](07-产品经理术语表.md)**、**[14](../spec/14-合约-API-ABI-前后端对齐.md)**。对外演示 **[33 脱敏](33-上线验收与发布门禁清单.md)**；**录屏/尽调工程真源（①）**：**`/`** · **`/market`** — **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **[24-演示脚本](24-产品经理核心产品路径与演示脚本.md)**。
 
 ## 第 1 页：封面
 
@@ -47,13 +47,16 @@ TravelTrust 正在构建一套面向旅游交易的信任网络，把市场撮�
 
 这一页建议围绕以下已确认入口展开：
 
-1. `/traveltrust`
-2. `/market`
-3. `/orders`、`/orders/new`
-4. `/escrow/[id]`
-5. `/did-rank`
-6. `/community`
-7. `/help`
+1. **`/`** Web3旅行（创新行程 · Hero 创单预览）
+2. `/traveltrust`
+3. `/market`（**`/discover` 重定向至此** · 撮合主 UI）
+4. `/orders`、`/orders/new`
+5. `/escrow/[id]`
+6. `/did-rank`
+7. `/community`
+8. `/help`
+
+**工程真源（① · 对内）**：**[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §0～§3
 
 ## 第 6 页：和普通旅游平台的不同
 

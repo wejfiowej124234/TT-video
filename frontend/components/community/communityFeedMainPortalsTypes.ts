@@ -38,7 +38,6 @@ export interface CommunityFeedMainPortalsProps {
   clearReportSendError: () => void;
   detailPost: CommunityPost | null;
   commentsForDetail: CommunityComment[];
-  apiCommentsByPostId?: Record<string, CommunityComment[]>;
   closeDetailDrawer: () => void;
   /** Feed 卡片评论入口：打开详情并滚至评论区 */
   detailFocusComments?: boolean;

@@ -97,8 +97,8 @@
 
 | NN | 文档 | 状态 | 一句话 |
 |----|------|------|--------|
-| 00 | [00-系统全局地图.md](./00-系统全局地图.md) | 现行 | **A/B/C/D** 与主链入口；降查找成本 |
-| 01 | [01-技术真值栈-93-95-96-97与代码对照.md](./01-技术真值栈-93-95-96-97与代码对照.md) | 现行 | 四册 + 硬真源；**[§4b](./01-技术真值栈-93-95-96-97与代码对照.md#hb-full-run-93959697)** 全量跑通一键表 |
+| 00 | [00-系统全局地图.md](./00-系统全局地图.md) | 现行 | **A/B/C/D** 与主链入口；**`/` + `/market*` 四页 ① 数据链** 见 **[§3 · map-when-read](./00-系统全局地图.md#map-when-read)** + **[CODE SSOT](../../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** |
+| 01 | [01-技术真值栈-93-95-96-97与代码对照.md](./01-技术真值栈-93-95-96-97与代码对照.md) | 现行 | 四册 + 硬真源；**[§4b](./01-技术真值栈-93-95-96-97与代码对照.md#hb-full-run-93959697)** 全量跑通一键表；**`/` + 三页市场** **[CODE SSOT](../../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §1/§3/§4 |
 | 02 | [02-生产级文档约束与合入门禁.md](./02-生产级文档约束与合入门禁.md) | 现行 | PR / 发版一票否决 |
 | 03 | [03-系统架构与仓库骨架.md](./03-系统架构与仓库骨架.md) | 现行 | 分层与顶层目录 |
 | 04 | [04-HTTP与路由契约导读.md](./04-HTTP与路由契约导读.md) | 现行 | 对拍 **04 §3.4** 与 `api_router()`；**REG-04** 叙事同簇（**verified** **§2b.3**） |
@@ -109,7 +109,7 @@
 | 09 | [09-文档迁移覆盖审计报告.md](./09-文档迁移覆盖审计报告.md) | 现行 | **§10a 任务清单**、**§2a 量化**、**§2b verified**；**不**替代 04/93 |
 | 10 | [10-A-认证机制.md](./10-A-认证机制.md) | 现行 | **A 域**样板；**09 §3 · 97 Auth** **migrated**；**§2b.8** **EVIDENCE-10-A-auth**；**[spec/97](../../spec/97-登录找回密码钱包态企业级审计清单.md)** 全文仍 SSOT；**§9** **T-020** |
 | 20 | [20-B-订单机制.md](./20-B-订单机制.md) | 现行 | **B 域重状态**样板 + **盲测**四问；**verified** **§2b.10**（**[EVIDENCE-20-B-orders](./EVIDENCE-20-B-orders-cluster-verified.md)**） |
-| 21 | [21-B-市场与托管机制.md](./21-B-市场与托管机制.md) | 现行 | **94 子站** + **53 扩展**；**market_subsite**；**verified** **§2b.4** |
+| 21 | [21-B-市场与托管机制.md](./21-B-市场与托管机制.md) | 现行 | **94 子站** + **53 扩展**；**market_subsite**；**商家 listing 三门闸** → **[provider/register README](../../../frontend/app/provider/register/README.md)**；**verified** **§2b.4** |
 | 22 | [22-横切-簇级verified证据模板.md](./22-横切-簇级verified证据模板.md) | 现行 | **簇级 verified** 母版（**V-1～V-3**、**09/08**；**不**替代 **04/93**） |
 | 23 | [23-横切-07开发流程导读.md](./23-横切-07开发流程导读.md) | 现行 | **spec/07** 流程与三线门禁导读（**verified**；与 **07-ADR** 分工） |
 | 24 | [24-横切-前端与UI宪法导读.md](./24-横切-前端与UI宪法导读.md) | 现行 | **05/06/13/13-1** 横切导读（**永久 partial**；**不**参与 **§2b verified**） |
@@ -117,7 +117,7 @@
 | 30 | [30-C-执行器调度机制.md](./30-C-执行器调度机制.md) | 现行 | **强异步**样板（**250/260**、outbox、`async_jobs`；**93 D-ONB-\***、**04** SSOT）；**verified** **§2b.11**（**[EVIDENCE-30-C-async](./EVIDENCE-30-C-async-cluster-verified.md)**） |
 | 31 | [31-C-治理与质押只读导读.md](./31-C-治理与质押只读导读.md) | 现行 | **93·C 域**（**§3**）**`governance/*`**；**09 §2b.9** **[EVIDENCE-93-c-gov](./EVIDENCE-93-c-gov-cluster-verified.md)**；**`-C-` vs 30-C** 见 **[手册 00 §5.1](../00-手册总览与编制规范.md#hb-00-number-blocks)** |
 | 32 | [32-横切-Wave与阶段体系导读.md](./32-横切-Wave与阶段体系导读.md) | 现行 | **Wave / 阶段用语**以 **[32 · §0](./32-横切-Wave与阶段体系导读.md#x32-0-terminology)** 为 **engineering** 唯一定义来源 |
-| 40 | [40-D-Admin机制.md](./40-D-Admin机制.md) | 现行 | **D 域 Admin** Hub（**70**、**04 §3.5**、**93 §4.5**） |
+| 40 | [40-D-Admin机制.md](./40-D-Admin机制.md) | 现行 | **D 域 Admin** Hub（**70**、**04 §3.5**、**93 §4.5**）；**商家 KYB 队列** **`/admin/provider-applications`** → **`/admin/users/[id]`** 审核 → **[provider/register README](../../../frontend/app/provider/register/README.md)** |
 | 41 | [41-D-索引与对账导读.md](./41-D-索引与对账导读.md) | 现行 | **110 / 96-08** 索引与对账；**verified** **§2b.6**（**EVIDENCE-110-reconcile**）+ **70 §2b.1** |
 | 42 | [42-D-Admin审计合规与审批.md](./42-D-Admin审计合规与审批.md) | 现行 | **审计 / 审批 / Vault**（**70**、**360**） |
 | 50 | [50-链上与ABI导读.md](./50-链上与ABI导读.md) | 现行 | **14 + contracts**；**55-S13** / **`run-check-04`**；**verified** **§2b.5** |
@@ -146,6 +146,93 @@
 
 <a id="eng-read-number-blocks"></a>
 
+**100+ 专题规划（非主序 `00～50` · 不参与 spec/00 版本母表逐行）**
+
+| NN | 文档 | 状态 | 一句话 |
+|----|------|------|--------|
+| 101 | [101-CMS与内容运营中心实施蓝图.md](./101-CMS与内容运营中心实施蓝图.md) | 现行 | **CMS + Official OPS v2.0.0** · C-S1～C-S6 · O-S1～O-S4 · Catalog/Growth **FREEZE** |
+| 102 | [102-Referral与早鸟增长系统v1.0实施蓝图.md](./102-Referral与早鸟增长系统v1.0实施蓝图.md) | 归档索引 | P3 Growth **历史分册** · 运行时 **133** · 已吸收入 **101 v2.0.0** |
+| 103 | [103-CMS-OPS-Growth统一架构补充.md](./103-CMS-OPS-Growth统一架构补充.md) | 归档 | Architecture Review Addendum · 已吸收入 **101 v1.1.0** |
+| 104 | [104-Admin-Coverage-Gap-Report.md](./104-Admin-Coverage-Gap-Report.md) | 现行 | **Operations Coverage Audit v1.1.0**：Post-S5/G-S8 覆盖矩阵 · CMS Admin HOLD · Growth **GO** |
+| 105 | [105-S2-Catalog-CMS深度设计评审.md](./105-S2-Catalog-CMS深度设计评审.md) | 现行 | **S2 Deep Design Review**：Catalog ER · Admin CRUD · 审核/版本/回滚 · 媒体库 · 迁移路径 · **不含 Growth** |
+| 106 | [106-Catalog-CMS-Implementation-Readiness-Report.md](./106-Catalog-CMS-Implementation-Readiness-Report.md) | 现行 | **S2 Implementation Review**：S2-DB-004 逐表审计 · 导入/回滚就绪度 · **CONDITIONAL GO** |
+| 107 | [107-Catalog-Schema-v1.0.md](./107-Catalog-Schema-v1.0.md) | **FROZEN** | **Catalog DDL Finalization**：Schema v1.0 · ER · 约束 · FK 顺序 · Import Batch · Media Lifecycle · **无 SQL** |
+| 108 | [108-S2-004-Migration-Audit-Report.md](./108-S2-004-Migration-Audit-Report.md) | 现行 | **S2-004 Migration Audit**：正向/回滚 · 107 对拍 · **PASS** → Import GO |
+| 109 | [109-Catalog-Import-v1.0.md](./109-Catalog-Import-v1.0.md) | **FROZEN v1.0.1** | **Catalog Import** · §11 实现契约 · preflight · Runner |
+| 110 | [110-Catalog-Import-Readiness-Report.md](./110-Catalog-Import-Readiness-Report.md) | 现行 | **Import Readiness Audit**：109 逐项审计 · **CONDITIONAL GO** · Runner Checklist |
+| 111 | [111-Catalog-Reimport-Rollback-Audit-Report.md](./111-Catalog-Reimport-Rollback-Audit-Report.md) | 现行 | **Re-import & Rollback Audit**：二/三次导入 · 幂等 · rollback CLI · **GO** |
+| 112 | [112-S2-API-RO-Audit-Report.md](./112-S2-API-RO-Audit-Report.md) | 现行 | **S2-API-RO**：`GET /api/v1/catalog/*` 只读六端点 · API↔TS 双读对拍 · **GO** · FE flag=0 |
+| 113 | [113-S2b-Catalog-Consumer-Audit-Report.md](./113-S2b-Catalog-Consumer-Audit-Report.md) | 现行 | **S2b Consumer Audit**：Consumer Matrix · Phases 1–8 · **CLOSURE GO** |
+| 114 | [114-S2b-Catalog-Consumer-Closure-Report.md](./114-S2b-Catalog-Consumer-Closure-Report.md) | 现行 | **S2b Closure**：W1–W4 门禁矩阵 · flag/回退/hydration · Consumer Matrix 终态 |
+| 115 | [115-S2c-Catalog-Live-Gate-Report.md](./115-S2c-Catalog-Live-Gate-Report.md) | 现行 | **S2c Live Gate**：真实 API + import · live skip 清零 · **LIVE FULL GO** |
+| 116 | [116-S3-W5-POI-Media-Catalog-Report.md](./116-S3-W5-POI-Media-Catalog-Report.md) | 现行 | **S3/W5 POI Media**：poi-images RO · adapter merge · C-12 **GO** |
+| 117 | [117-S4-Catalog-Server-Validation-Alignment-Report.md](./117-S4-Catalog-Server-Validation-Alignment-Report.md) | 现行 | **S4 Server Validation**：core ↔ catalog parity · POST opt-in catalog 校验 |
+| 118 | [118-S4b-Meta-Product-Countries-Catalog-Alignment-Report.md](./118-S4b-Meta-Product-Countries-Catalog-Alignment-Report.md) | 现行 | **S4b B-S4-01**：`GET /meta.product_countries` catalog PG opt-in · 746 契约保持 |
+| 119 | [119-S4c-Catalog-Geo-Server-Final-Revalidation-Report.md](./119-S4c-Catalog-Geo-Server-Final-Revalidation-Report.md) | 现行 | **S4c FINAL GO**：双 flag live 复验 · S4/S4b/S2c 门禁 · 旧二进制 WARN 清零 |
+| 120 | [120-S5-Catalog-Release-Freeze-Report.md](./120-S5-Catalog-Release-Freeze-Report.md) | **FROZEN** | **S5 Release Freeze**：113–119 证据包 · 一键 gate · **CATALOG_RELEASE_FREEZE_GO** |
+| 121 | [121-PI3-002-Production-Domain-CDN-CORS-Readiness-Report.md](./121-PI3-002-Production-Domain-CDN-CORS-Readiness-Report.md) | 现行 | **PI3-002 Audit**：域名/DNS/TLS/CORS/CDN/回调 · staging PASS · prod **PI3-002 HOLD** |
+| 122 | [122-PI3-001-Production-Database-Backup-Readiness-Report.md](./122-PI3-001-Production-Database-Backup-Readiness-Report.md) | 现行 | **PI3-001 Audit**：Fly PG 备份/B-475/恢复演练/RPO/RTO · staging PARTIAL · **PI3-001 HOLD** |
+| 151 | [151-PI3-002-Production-Domain-TLS-CDN-CORS-Execution-Report.md](./151-PI3-002-Production-Domain-TLS-CDN-CORS-Execution-Report.md) | 现行 | **PI3-002 Execution**：域名/TLS/CORS/env 对拍 · **`PI3-002 HOLD`** |
+| 152 | [152-PI3-001-FlyPG-Backup-Disaster-Recovery-Report.md](./152-PI3-001-FlyPG-Backup-Disaster-Recovery-Report.md) | 现行 | **PI3-001 Execution**：Fly backup · B-475 drill · RPO/RTO · **`PI3-001 HOLD`** |
+| 153 | [153-PI3-003-Stripe-Live-Production-Webhook-Report.md](./153-PI3-003-Stripe-Live-Production-Webhook-Report.md) | 现行 | **PI3-003 Execution**：Stripe Live · prod webhook · **`PI3-003 HOLD`** |
+| 154 | [154-PI3-004-Production-Readiness-Verification-Report.md](./154-PI3-004-Production-Readiness-Verification-Report.md) | 现行 | **PI3-004 Execution**：R-003 prod · 六域/全矩阵 · **`PI3-004 HOLD`** |
+| 155 | [155-PI3-006-GoLive-Checklist-Production-Cutover-Report.md](./155-PI3-006-GoLive-Checklist-Production-Cutover-Report.md) | 现行 | **PI3-006 Execution**：go-live §0–§11 · P0 十二项 · Cutover · M-00 · **`PI3-006 HOLD`** |
+| 123 | [123-101-CMS-Audit-Report.md](./123-101-CMS-Audit-Report.md) | 现行 | **101 Blueprint Audit**：CMS M1–M10 · Catalog RO vs Admin · **运营 HOLD · 非 PI3 阻塞** |
+| 124 | [124-102-Referral-Audit-Report.md](./124-102-Referral-Audit-Report.md) | 现行 | **102 Blueprint Audit**：G1–G7 Growth · DDL stub only · **HOLD** |
+| 125 | [125-Production-Feature-Gap-Matrix.md](./125-Production-Feature-Gap-Matrix.md) | 现行 | **101/102 汇总矩阵**：GO/HOLD/REWRITE · PI3 vs 运营就绪 · 工作量/测试 |
+| 126 | [126-G-S1-Referral-Minimum-Loop-Report.md](./126-G-S1-Referral-Minimum-Loop-Report.md) | 现行 | **G-S1 Sprint**：Referral 最小闭环 · validate/register/Admin CRUD · smoke/Playwright |
+| 127 | [127-G-S2-Growth-Ledger-Observer-Report.md](./127-G-S2-Growth-Ledger-Observer-Report.md) | 现行 | **G-S2 Sprint**：Ledger 幂等 · Observer · 对账 · Admin reward-ledger |
+| 128 | [128-G-S3-EarlyBird-Multiplier-Report.md](./128-G-S3-EarlyBird-Multiplier-Report.md) | 现行 | **G-S3 Sprint**：注册序号 · Stage 倍率 · Observer 接入 · Admin early-bird |
+| 129 | [129-G-S4-User-Referral-Center-Report.md](./129-G-S4-User-Referral-Center-Report.md) | 现行 | **G-S4 Sprint**：`/me/referrals` · GET me/referrals · 复制分享 · 隐私边界 |
+| 130 | [130-G-S5-Admin-Growth-AntiFraud-RewardOps-Report.md](./130-G-S5-Admin-Growth-AntiFraud-RewardOps-Report.md) | 现行 | **G-S5 Sprint**：Admin 风控 · 冻结/解冻 · ledger 审计/漂移修复 |
+| 131 | [131-G-S6-Airdrop-Snapshot-Reward-Calculation-Report.md](./131-G-S6-Airdrop-Snapshot-Reward-Calculation-Report.md) | 现行 | **G-S6 Sprint**：链下 Airdrop 快照 · 奖励计算 · 导出 · 对账 |
+| 132 | [132-G-S7-Growth-Analytics-KOL-ReadOnly-Report.md](./132-G-S7-Growth-Analytics-KOL-ReadOnly-Report.md) | 现行 | **G-S7 Sprint**：只读增长分析 · KOL 贡献看板 · 时间窗口筛选 |
+| 133 | [133-G-S8-Growth-Release-Freeze-Report.md](./133-G-S8-Growth-Release-Freeze-Report.md) | **FROZEN** | **G-S8 Release Freeze**：126–132 证据包 · **GROWTH_RELEASE_FREEZE_GO** |
+| 134 | [134-101-CMS-Official-OPS-Post-Growth-Recheck-Report.md](./134-101-CMS-Official-OPS-Post-Growth-Recheck-Report.md) | 现行 | **Post-Growth CMS/Official 复评** · **CMS_OFFICIAL_OPS_POST_GROWTH_RECHECK_GO** |
+| 135 | [135-DOC-101-RW-CMS-Official-OPS-Blueprint-Rewrite-Report.md](./135-DOC-101-RW-CMS-Official-OPS-Blueprint-Rewrite-Report.md) | 现行 | **DOC-101-RW** · **DOC_101_RW_GO** |
+| 136 | [136-C-S1-Admin-Content-CRUD-PublishQueue-Report.md](./136-C-S1-Admin-Content-CRUD-PublishQueue-Report.md) | 现行 | **C-S1 Admin Content CRUD** · **C_S1_GO** · 破 120 Admin API |
+| 137 | [137-C-S2-POI-Media-Review-Workflow-Report.md](./137-C-S2-POI-Media-Review-Workflow-Report.md) | 现行 | **C-S2 M6 POI Media Review** · **C_S2_GO** · 审核闭环 |
+| 138 | [138-C-S3-Catalog-Operations-Admin-Report.md](./138-C-S3-Catalog-Operations-Admin-Report.md) | 现行 | **C-S3 Catalog Operations Admin** · **C_S3_GO** · 定价/交通/媒体 |
+| 139 | [139-C-S4-Catalog-Revision-Import-Operations-Report.md](./139-C-S4-Catalog-Revision-Import-Operations-Report.md) | 现行 | **C-S4 Catalog Revision & Import Ops** · **C_S4_GO** · 审计/导入/对拍 |
+| 140 | [140-C-S5-Catalog-Server-Geo-Validation-Operations-Report.md](./140-C-S5-Catalog-Server-Geo-Validation-Operations-Report.md) | 现行 | **C-S5 Server Geo Validation Ops** · **C_S5_GO** · meta 对拍/drift/flag 观测 |
+| 141 | [141-O-S1-Official-Accounts-Management-Report.md](./141-O-S1-Official-Accounts-Management-Report.md) | 现行 | **O-S1 Official Accounts M7** · **O_S1_GO** · CRUD/审核/KOL 绑码 |
+| 142 | [142-O-S2-Official-Guides-Community-Publishing-Report.md](./142-O-S2-Official-Guides-Community-Publishing-Report.md) | 现行 | **O-S2 Official Guides M8** · **O_S2_GO** · community_posts official publish |
+| 143 | [143-O-S3-Official-Itinerary-Templates-Report.md](./143-O-S3-Official-Itinerary-Templates-Report.md) | 现行 | **O-S3 Official Itinerary Templates M9** · **O_S3_GO** · Catalog 关联/审核发布 |
+| 144 | [144-O-S4-Cold-Start-Campaigns-Deployment-Operations-Report.md](./144-O-S4-Cold-Start-Campaigns-Deployment-Operations-Report.md) | 现行 | **O-S4 Cold Start M10** · **O_S4_GO** · deploy/rollback/surfaces/items |
+| 145 | [145-Operations-Platform-Release-Freeze-Report.md](./145-Operations-Platform-Release-Freeze-Report.md) | 现行 | **Ops Platform Final Audit** · **OPERATIONS_PLATFORM_GO** · CMS/Official/Growth 三平面冻结 |
+| 146 | [146-C-S6-Catalog-Consumer-OptIn-Cutover-Report.md](./146-C-S6-Catalog-Consumer-OptIn-Cutover-Report.md) | 现行 | **C-S6 Consumer opt-in** · **CATALOG_CONSUMER_OPT_IN_GO** · staging `ENABLED=1` · prod **ENABLED=0** |
+| 147 | [147-PI3-Closure-Program-Audit-Report.md](./147-PI3-Closure-Program-Audit-Report.md) | 现行 | **PI3 Closure Program Audit** · **PI3_CLOSURE_PROGRAM_AUDIT_GO** · **`PRODUCTION_GO_DECISION: NO_GO`** |
+| 148 | [148-PI3-005-Production-Scope-Decision-Report.md](./148-PI3-005-Production-Scope-Decision-Report.md) | 现行 | **PI3-005 Scope Decision** · **`PRODUCTION_SCOPE_SEPOLIA`** · Mainnet **NOT_SELECTED** |
+| 154 | [154-PI3-004-Production-Readiness-Verification-Report.md](./154-PI3-004-Production-Readiness-Verification-Report.md) | 现行 | **PI3-004 Execution**：R-003 prod · **`PI3-004 HOLD`** |
+| 155 | [155-PI3-006-GoLive-Checklist-Production-Cutover-Report.md](./155-PI3-006-GoLive-Checklist-Production-Cutover-Report.md) | 现行 | **PI3-006 Execution**：go-live · **`PI3-006 HOLD`** |
+| 156 | [156-L5-Operations-Deep-Audit-Report.md](./156-L5-Operations-Deep-Audit-Report.md) | **FROZEN** | L5 Deep Audit · **`OPERATIONS_L5_AUDIT_HOLD`** → 157 已升格 |
+| 157 | [157-L5-P0-Closure-Report.md](./157-L5-P0-Closure-Report.md) | **FROZEN** | **`OPERATIONS_L5_AUDIT_GO` 85/100** · ROV 基线 |
+| 158 | [158-Production-Readiness-Deep-Audit-Report.md](./158-Production-Readiness-Deep-Audit-Report.md) | **HOLD** | **`PRODUCTION_READINESS_DEEP_AUDIT_HOLD`** · ROV **不**重启 |
+| 159 | [159-L5-UI-UX-Enterprise-Acceptance-Report.md](./159-L5-UI-UX-Enterprise-Acceptance-Report.md) | **FROZEN** | → 160 已升格 |
+| 160 | [160-UX-P0-Closure-Report.md](./160-UX-P0-Closure-Report.md) | **FROZEN** | **`UI_UX_L5_GO`** · ROV 基线 |
+| 161 | [161-L5-Enterprise-Acceptance-Report.md](./161-L5-Enterprise-Acceptance-Report.md) | **FROZEN** | **`L5_ENTERPRISE_ACCEPTANCE_GO`** · ROV 基线 |
+| 162 | [162-L5-Product-Excellence-Report.md](./162-L5-Product-Excellence-Report.md) | **FROZEN** | **`L5_PRODUCT_EXCELLENCE_GO`** · ROV 基线 |
+| 163 | [163-L5-Enterprise-Reliability-Report.md](./163-L5-Enterprise-Reliability-Report.md) | **FROZEN** | **`L5_ENTERPRISE_RELIABILITY_GO`** · ROV 基线 |
+| 164 | [164-L5-Enterprise-Live-Evidence-Report.md](./164-L5-Enterprise-Live-Evidence-Report.md) | **FROZEN** | **`L5_ENTERPRISE_LIVE_EVIDENCE_GO`** · ROV 基线 |
+| 165 | [165-L5-Enterprise-Business-Governance-Report.md](./165-L5-Enterprise-Business-Governance-Report.md) | **FROZEN** | **`L5_ENTERPRISE_BUSINESS_GOVERNANCE_GO`** · ROV 基线 |
+| 166 | [166-Business-Expansion-Audit-Report.md](./166-Business-Expansion-Audit-Report.md) | **HOLD** | BE 审计 · ROV **STOP** 新 Sprint |
+| 167 | [167-Business-Expansion-Enterprise-Gap-Audit-Report.md](./167-Business-Expansion-Enterprise-Gap-Audit-Report.md) | **HOLD** | BE 差距 · ROV **STOP** |
+| 168 | [168-Business-Expansion-Sprint168-BE-FRD01-BE-GCM01-Blueprint.md](./168-Business-Expansion-Sprint168-BE-FRD01-BE-GCM01-Blueprint.md) | **FROZEN** | 168-B 蓝图 · 169 已实施 |
+| 169 | [169-Sprint168B-Business-Expansion-Implementation-Report.md](./169-Sprint168B-Business-Expansion-Implementation-Report.md) | **FROZEN** | **`BE_FRD_01_GO` · `BE_GCM_01_GO`** · ROV 基线 |
+| 170 | [170-Business-Expansion-Sprint169-RS-DAO-Enterprise-Audit-Report.md](./170-Business-Expansion-Sprint169-RS-DAO-Enterprise-Audit-Report.md) | **FROZEN** | → 171/172 已实施 |
+| 171 | [171-BE-RS-01-RegionShare-Reconcile-Implementation-Report.md](./171-BE-RS-01-RegionShare-Reconcile-Implementation-Report.md) | **FROZEN** | **`BE_RS_01_GO`** · ROV-T6 |
+| 172 | [172-BE-DAO-01-Governance-UAT-Implementation-Report.md](./172-BE-DAO-01-Governance-UAT-Implementation-Report.md) | **FROZEN** | **`BE_DAO_01_GO`** · ROV-T7 演示 |
+| 173 | [173-ROV-01-Real-Operations-Validation-Program-Blueprint.md](./173-ROV-01-Real-Operations-Validation-Program-Blueprint.md) | **ACTIVE** | **ROV-01 程序** · **STOP** L5/BE/PI3 新 Sprint · **`ROV_01_ACTIVE`** |
+| 174 | [174-Real-Operations-Validation-Report.md](./174-Real-Operations-Validation-Report.md) | **ACTIVE** | **Wave-1/2 GO（T1–T5）** · **`ROV_01_IN_PROGRESS`** · ② 度量 SSOT |
+| 175 | [175-Production-Readiness-Audit-Program-Blueprint.md](./175-Production-Readiness-Audit-Program-Blueprint.md) | **ACTIVE** | **PRA-01 程序** · 六阶段 harness · **功能冻结** |
+| 176 | [176-Production-Readiness-Audit-Report.md](./176-Production-Readiness-Audit-Report.md) | **COMPLETE** | **统一证据包 GO** · **`PRODUCTION_GO: NO`** · ② PRA 收口 |
+| 177 | [177-Production-Governance-Gap-Closure-Report.md](./177-Production-Governance-Gap-Closure-Report.md) | **COMPLETE** | **Phase ② 治理 Gap GO** · **147/158 未解除** |
+| 178 | [178-Phase2-Full-Coverage-Validation-Blueprint.md](./178-Phase2-Full-Coverage-Validation-Blueprint.md) | **ACTIVE** | **P2FC 程序** · 33 项 strict GO 策略 |
+| 179 | [179-Phase2-Full-Coverage-Validation-Report.md](./179-Phase2-Full-Coverage-Validation-Report.md) | **IN FLIGHT** | **32/33 GO** · S01 staging-soak **72h** |
+| 180 | [180-Parallel-UAT-During-Soak-Sprint.md](./180-Parallel-UAT-During-Soak-Sprint.md) | **ACTIVE** | soak 窗口并行 UAT · token 只记录 · local/staging-dev |
+
+**Phase ③ Entry（runbook）**：[PHASE3-ENTRY-RECHECK-REPORT.md](../../runbook/PHASE3-ENTRY-RECHECK-REPORT.md) · [PHASE3-ENTRY-PRODUCTION-READINESS-MATRIX.md](../../runbook/PHASE3-ENTRY-PRODUCTION-READINESS-MATRIX.md) · `bash scripts/check-phase3-entry-recheck.sh`
+
 **号段预留（与 [手册 00 §5](../00-手册总览与编制规范.md#hb-00-number-blocks) 同口径）**：**60～69**、**70～79**、**80～89**、**90～99** 在磁盘上**尚无**对应 **`engineering/NN-*.md`** 时为 **预留**，**不**表示「无主题」。**70** 类深叙事仍以 **spec** 为主、**40-D / 41-D / 42-D** 为 handbook 导读承接。新篇合入须先按 **00 §5～§7** 选号并同步 **00 §3** 与**本文主表**；**禁止**未立项即批量建空壳 `.md`。
 
 | 号段 | 预留含义（**示意、非排他**；立项前**勿**臆造主题批量建文） |
@@ -168,4 +255,5 @@
 - **ADR（唯一目录）**：[docs/adr/README.md](../../adr/README.md)（**Why**；**不**替代 **04/93/14/代码与脚本** 契约表体；格式 **[07](./07-架构决策记录ADR规范.md)**）· [engineering/adr/README（入口说明）](./adr/README.md)  
 - **产品栏**：[product-manager](../product-manager/README.md) · **学习栏**：[learn](../learn/README.md)  
 - **全库文档母索引**：[spec/00-文档索引](../../spec/00-文档索引.md)  
+- **`/` + `/market` 四页 ① 数据链（代码 SSOT）**：[LANDING-MARKET-PAGES-CODE-SSOT](../../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md) · **`bash scripts/dev/run-web3-itinerary-l5-green.sh`**（**[05 §2/§3](./05-本地环境与常用门禁速查.md)**；**UI freeze** 仍 **FIVE-MAIN** / **MARKET-L5**）
 - **93/95/96/97 全量跑通（一键表）**：[01 · §4b](./01-技术真值栈-93-95-96-97与代码对照.md#hb-full-run-93959697)（**`spec/run` 壳**：[../../spec/run-93-95-96-97/README.md](../../spec/run-93-95-96-97/README.md)）

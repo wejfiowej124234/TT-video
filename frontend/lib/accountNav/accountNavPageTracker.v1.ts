@@ -30,7 +30,7 @@ export const ACCOUNT_NAV_UNIFIED_ROUTES_V1: readonly AccountNavUnifiedRouteV1[] 
   ...COMMUNITY_ME_PAGE_TRACKER_V1.map((e) => ({
     route: e.route,
     domain: "community-me" as const,
-    marker: e.routeMarker,
+    marker: e.route === "/community/me" ? "hub" : e.route.replace(/^\/community\/me\//, ""),
     childTracker: "communityMePageTracker.v1" as const,
   })),
 ] as const;

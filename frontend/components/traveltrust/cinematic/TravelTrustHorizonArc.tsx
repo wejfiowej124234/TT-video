@@ -176,7 +176,7 @@ export function TravelTrustHorizonArc() {
           className={h.groundGlowClass}
           aria-hidden
           data-tt-traveltrust-horizon-ground-glow-l5="1"
-          animate={{ opacity: h.groundGlowPulse.opacity }}
+          animate={{ opacity: [...h.groundGlowPulse.opacity] }}
           transition={{
             duration: h.groundGlowPulse.duration,
             repeat: h.groundGlowRepeat,

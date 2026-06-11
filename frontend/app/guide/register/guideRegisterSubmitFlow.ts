@@ -1,5 +1,9 @@
 import { clearGetMeCache, postGuide, postGuideUploadDoc } from "@/lib/apiClient";
 import { clearGuideRegisterDraft } from "@/lib/guide/guideRegisterDraft";
+import {
+  clearGuideRegisterLastSubmitError,
+  writeGuideRegisterLastSubmitError,
+} from "@/lib/constants/guideRegisterKeys";
 import type { GuideRegisterUploadPhase } from "./useGuideRegisterPage";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import {
@@ -11,6 +15,7 @@ import {
   normalizeGuideServiceTypesForWrite,
 } from "@/lib/marketGuideFilterQuery";
 import { MAX_FILE_SIZE } from "./constants";
+import { PENDING_GUIDE_KEY } from "@/lib/constants";
 import { fileToBase64 } from "./utils";
 import type { PendingGuide } from "./types";
 
@@ -78,6 +83,7 @@ export async function runGuideRegisterSubmitFlow(input: GuideRegisterSubmitFlowI
   } = input;
 
   try {
+    clearGuideRegisterLastSubmitError();
     let idPhotoUrl: string | undefined;
     let languageCertUrl: string | undefined;
     if (typeof window !== "undefined") {
@@ -193,6 +199,7 @@ export async function runGuideRegisterSubmitFlow(input: GuideRegisterSubmitFlowI
     if (typeof window !== "undefined") window.sessionStorage.removeItem(PENDING_GUIDE_KEY);
     clearGuideRegisterDraft();
     clearGetMeCache();
+    clearGuideRegisterLastSubmitError();
     setError(null);
     setDone(true);
     setRealName("");
@@ -203,6 +210,7 @@ export async function runGuideRegisterSubmitFlow(input: GuideRegisterSubmitFlowI
     setLanguageCertFile(null);
   } catch (err) {
     const msg = err instanceof Error ? err.message : t("guideRegister_errorSubmit");
+    writeGuideRegisterLastSubmitError(msg);
     if (msg === "already_guide") {
       setIsAlreadyGuide(true);
       setError(null);

@@ -58,7 +58,7 @@ export function TravelTrustHeroChainHud() {
         data-tt-traveltrust-hero-chain-id={String(chainId)}
         animate={
           wrongNetwork
-            ? { opacity: TT_HERO_CHAIN_HUD_L5.wrongChipPulse.opacity }
+            ? { opacity: [...TT_HERO_CHAIN_HUD_L5.wrongChipPulse.opacity] }
             : undefined
         }
         transition={

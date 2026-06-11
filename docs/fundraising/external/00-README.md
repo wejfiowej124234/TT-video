@@ -4,6 +4,8 @@
 
 **读者对象**：机构投资人、基金侧、路演听众；法务/技术深度尽调相关方。**对外交付**以打 zip 后的 **`export-ready/`（包内多为 `signed-pdfs/`）** 为准——**仅 PDF/PPTX 等材料包**，**不含**代码工程仓库、内部工作区或未授权法档。
 
+**产品 Demo / 录屏工程真源（对内 · ①）**：**`/`** Web3旅行 · **`/market`**（**`/discover`→`/market`**）— **[LANDING-MARKET-PAGES-CODE-SSOT](../../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **[PM 演示脚本](../../product-manager/24-产品经理核心产品路径与演示脚本.md)** · **[internal/10-资料室索引](../internal/10-资料室索引.md)**。对外 FAQ **第 5–6 条** 叙事不变；尽调须与代码一致，**勿**把演示/测试网说成生产已闭。
+
 ## 一套编号：改稿一处、外发一处
 
 | 层次 | 放在哪里 | 哪份算「最好」 |

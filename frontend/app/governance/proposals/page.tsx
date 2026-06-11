@@ -7,7 +7,12 @@ import { apiUrl, routes } from "@/lib/api";
 import { fetchJsonWithApiStatusLog, getGovernanceProposalStatus } from "@/lib/apiClient";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
-import LoadingText from "@/components/LoadingText";
+import {
+  TouchpointLoadingBandLight,
+} from "@/components/product-enhancement/TouchpointLoadingBand";
+import { TouchpointEmptyPanel } from "@/components/product-enhancement/TouchpointEmptyPanel";
+import { TouchpointConversionStrip } from "@/components/product-enhancement/TouchpointConversionStrip";
+import { ConversionFunnelRail } from "@/components/product-enhancement/ConversionFunnelRail";
 import GovernanceTargetNotice from "@/components/governance/GovernanceTargetNotice";
 import GovernanceB090OnChainProposalNotice from "@/components/governance/GovernanceB090OnChainProposalNotice";
 import GovernanceProposalExecStatusBadge, {
@@ -181,6 +186,7 @@ export default function GovernanceProposalsPage() {
         {t("governance_proposals_title")}
       </h1>
       <p className="mt-2 text-body text-ink-600">{t("governance_proposals_intro")}</p>
+      <ConversionFunnelRail touchpoint="governance" t={t} variant="light" className="mt-4" />
       <GovernanceTargetNotice className="mt-4" />
 
       {showOnChainPanel ? (
@@ -195,7 +201,7 @@ export default function GovernanceProposalsPage() {
 
       {loading ? (
         <div className="mt-6">
-          <LoadingText />
+          <TouchpointLoadingBandLight message={t("pes_governance_loading")} skeletonRows={4} />
         </div>
       ) : null}
 
@@ -224,17 +230,32 @@ export default function GovernanceProposalsPage() {
       ) : null}
 
       {!loading && !error && emptySuccess ? (
-        <section className="mt-6 rounded-[var(--radius-md)] border border-ink-200/80 bg-ink-50/60 p-4 dark:border-ink-600/40 dark:bg-ink-900/30">
-          <h2 className="text-small font-semibold text-ink-800 dark:text-ink-100">
-            {t("governance_proposals_empty_title")}
-          </h2>
-          <p className="mt-2 text-body text-ink-700 dark:text-ink-200">{t("governance_proposals_empty_body")}</p>
-          {note ? (
-            <p className="mt-2 text-meta text-ink-600 dark:text-ink-400" role="note">
-              {note}
-            </p>
-          ) : null}
-        </section>
+        <div className="mt-6 space-y-4">
+          <TouchpointConversionStrip
+            touchpoint="governance"
+            kicker={t("pes_governance_conversion_kicker")}
+            body={t("pes_governance_conversion_body")}
+            badge={t("pes_governance_conversion_badge")}
+            ctaHref="/governance"
+            ctaLabel={t("pes_governance_conversion_cta")}
+          />
+          <TouchpointEmptyPanel
+            variant="light"
+            title={t("governance_proposals_empty_title")}
+            body={t("governance_proposals_empty_body")}
+            actions={[
+              { href: "/governance/delegate", label: t("pes_governance_empty_cta_delegate"), primary: true },
+              { href: "/governance", label: t("pes_governance_conversion_cta") },
+            ]}
+            footer={
+              note ? (
+                <p className="text-meta text-ink-600 dark:text-ink-400" role="note">
+                  {note}
+                </p>
+              ) : null
+            }
+          />
+        </div>
       ) : null}
 
       {!loading && !error && items !== null && items.length > 0 ? (

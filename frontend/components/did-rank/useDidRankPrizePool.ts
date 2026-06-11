@@ -47,12 +47,12 @@ export function useDidRankPrizePool(options?: {
       const run = () => {
         void refresh();
       };
-      if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      if (typeof window.requestIdleCallback === "function") {
         const id = window.requestIdleCallback(run, { timeout: 2500 });
         return () => window.cancelIdleCallback(id);
       }
-      const timer = window.setTimeout(run, 800);
-      return () => window.clearTimeout(timer);
+      const timer = globalThis.setTimeout(run, 800);
+      return () => globalThis.clearTimeout(timer);
     }
     void refresh();
   }, [refresh]);

@@ -1,4 +1,5 @@
-import { apiUrl, routes } from "@/lib/api";
+import { apiUrl } from "@/lib/api";
+import { routes } from "@/lib/api/routes";
 import { getAuthHeaders, parseResponse, throwUnlessApiOk } from "@/lib/apiClient/core";
 
 export type GuideRegistrationServerDraft = Record<string, unknown>;

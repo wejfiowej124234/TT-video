@@ -175,9 +175,10 @@ def login_user(base: str, email: str) -> tuple[str, str]:
 def psql_exec(dsn: str, sql: str) -> None:
     import shutil
     import subprocess
+    from urllib.parse import unquote, urlparse
 
-    def run_psql(argv: list[str]) -> subprocess.CompletedProcess[str]:
-        return subprocess.run(argv, capture_output=True, text=True)
+    def run_psql(argv: list[str], *, env: dict[str, str] | None = None) -> subprocess.CompletedProcess[str]:
+        return subprocess.run(argv, capture_output=True, text=True, env=env)
 
     if shutil.which("psql"):
         r = run_psql(["psql", dsn, "-v", "ON_ERROR_STOP=1", "-q", "-c", sql])
@@ -185,33 +186,40 @@ def psql_exec(dsn: str, sql: str) -> None:
             return
         raise RuntimeError(f"psql failed: {r.stderr or r.stdout}")
 
-    container = os.environ.get("PSQL_DOCKER_CONTAINER", "traveltrust-postgres").strip()
-    # postgresql://user:pass@host:port/db → docker exec psql -U user -d db
-    m = re.match(
-        r"postgres(?:ql)?://([^:]+):([^@]*)@[^/]+/\s*(\S+)",
-        dsn.strip(),
-    )
-    if not m:
-        raise RuntimeError("psql not in PATH and DATABASE_URL not parseable for docker exec")
-    user, _pw, db = m.group(1), m.group(2), m.group(3)
-    db = db.split("?")[0]
+    if not shutil.which("docker"):
+        raise RuntimeError("psql not in PATH and docker unavailable for staging PG")
+
+    parsed = urlparse(dsn.strip())
+    if parsed.scheme not in ("postgres", "postgresql") or not parsed.hostname:
+        raise RuntimeError("psql not in PATH and DATABASE_URL not parseable for docker run")
+
+    user = unquote(parsed.username or "")
+    password = unquote(parsed.password or "")
+    host = parsed.hostname or "127.0.0.1"
+    port = str(parsed.port or 5432)
+    db = (parsed.path or "/").lstrip("/").split("?")[0] or "postgres"
+    if host in ("127.0.0.1", "localhost"):
+        host = "host.docker.internal"
+
+    conn = f"postgres://{user}@{host}:{port}/{db}"
+    env = {**os.environ, "PGPASSWORD": password}
     r = run_psql(
         [
             "docker",
-            "exec",
-            "-i",
-            container,
+            "run",
+            "--rm",
+            "-e",
+            f"PGPASSWORD={password}",
+            "postgres:16-alpine",
             "psql",
+            conn,
             "-v",
             "ON_ERROR_STOP=1",
             "-q",
-            "-U",
-            user,
-            "-d",
-            db,
             "-c",
             sql,
-        ]
+        ],
+        env=env,
     )
     if r.returncode != 0:
         raise RuntimeError(f"docker psql failed: {r.stderr or r.stdout}")

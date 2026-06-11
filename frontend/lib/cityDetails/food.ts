@@ -1,5 +1,7 @@
 import type { Option, FoodDetail } from "./types";
 import { CITY_TO_REGION } from "./constants";
+import { resolveFoodDescription, resolveFoodImage } from "./foodImageOverrides";
+import { PRODUCT_COUNTRY_POI_FOOD } from "./productCountryPoi";
 
 /** 按城市维度的美食详情（图片+介绍），供点选后展示；无配置时由 FOOD_BY_CITY 生成默认图与简介 */
 const FOOD_IMAGE_BY_REGION: Record<string, string> = {
@@ -14,6 +16,8 @@ const FOOD_IMAGE_BY_REGION: Record<string, string> = {
   美国: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80",
   英国: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&q=80",
   澳大利亚: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&q=80",
+  韩国: "https://images.unsplash.com/photo-1590301157894-8610ed02359b?w=400&q=80",
+  阿联酋: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400&q=80",
 };
 
 export const FOOD_BY_CITY: Record<string, Option[]> = {
@@ -255,25 +259,22 @@ export const FOOD_BY_CITY: Record<string, Option[]> = {
     { value: "brunch", label: "Brunch" },
     { value: "咖啡", label: "咖啡" },
   ],
+  ...PRODUCT_COUNTRY_POI_FOOD,
 };
-
-/** 美食详情（含图片、介绍），由 FOOD_BY_CITY 派生，供点选后展示 */
-export const FOOD_DETAILS_BY_CITY: Record<string, FoodDetail[]> = (() => {
-  const out: Record<string, FoodDetail[]> = {};
-  for (const [city, opts] of Object.entries(FOOD_BY_CITY)) {
-    const img = FOOD_IMAGE_BY_REGION[CITY_TO_REGION[city] ?? "default"] ?? FOOD_IMAGE_BY_REGION.default;
-    out[city] = opts.map((o) => ({
-      ...o,
-      image: img,
-      description: `${o.label}，当地特色美食，推荐品尝。`,
-    }));
-  }
-  return out;
-})();
 
 /** 某城市美食详情（含图片、介绍），供点选后展示 */
 export function getFoodDetails(city: string): FoodDetail[] {
-  return FOOD_DETAILS_BY_CITY[city] ?? [];
+  const opts = FOOD_BY_CITY[city] ?? [];
+  const regionFallback =
+    FOOD_IMAGE_BY_REGION[CITY_TO_REGION[city] ?? "default"] ?? FOOD_IMAGE_BY_REGION.default;
+  return opts.map((o) => {
+    const genericDesc = `${o.label}，当地特色美食，推荐品尝。`;
+    return {
+      ...o,
+      image: resolveFoodImage(city, o.value, regionFallback),
+      description: resolveFoodDescription(city, o.value, o.label, genericDesc),
+    };
+  });
 }
 
 export function getFood(city: string): Option[] {

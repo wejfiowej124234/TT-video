@@ -8,6 +8,8 @@
 
 协议向一页摘要：[02-Investor-Executive-Summary.md](02-Investor-Executive-Summary.md) · 材料索引：[00-README.md](00-README.md)
 
+**产品 Demo / 录屏工程真源（对内 · ①）**：**`/`** Web3旅行 · **`/market`**（**`/discover`→`/market`**）— **[LANDING-MARKET-PAGES-CODE-SSOT](../../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **[PM 演示脚本](../../product-manager/24-产品经理核心产品路径与演示脚本.md)**。
+
 ---
 
 ## 融资沟通快照（与 Deck / FAQ 一致）

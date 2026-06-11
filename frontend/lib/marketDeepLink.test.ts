@@ -1,9 +1,26 @@
 import { describe, expect, it } from "vitest";
 import {
+  MARKET_CREATE_ITINERARY_QUERY,
   MARKET_ITINERARY_DRAFT_QUERY,
+  buildMarketCreateItineraryHref,
   buildPathStrippingItineraryDraftQuery,
+  isMarketCreateItineraryDeepLink,
   ITINERARY_NEW_FALLBACK_PATH,
 } from "./marketDeepLink";
+
+describe("buildMarketCreateItineraryHref", () => {
+  it("opens CustomItineraryModal via create_itinerary query", () => {
+    expect(buildMarketCreateItineraryHref()).toBe(`/market?${MARKET_CREATE_ITINERARY_QUERY}=1`);
+  });
+});
+
+describe("isMarketCreateItineraryDeepLink", () => {
+  it("accepts 1/true/yes", () => {
+    expect(isMarketCreateItineraryDeepLink("1")).toBe(true);
+    expect(isMarketCreateItineraryDeepLink("true")).toBe(true);
+    expect(isMarketCreateItineraryDeepLink("")).toBe(false);
+  });
+});
 
 describe("buildPathStrippingItineraryDraftQuery", () => {
   it("removes itinerary_draft_id and keeps other params", () => {

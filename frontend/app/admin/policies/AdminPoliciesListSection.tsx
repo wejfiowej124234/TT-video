@@ -9,6 +9,7 @@ import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
 import { AdminMetaBuildSection, AdminMetaNoteLink } from "@/components/admin/AdminMetaBuildPanel";
 import { adminErrorUserText, type AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
+import type { LocaleTranslateFn } from "@/lib/i18n";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { adminPolicyResourcesPreview } from "./adminPoliciesPageHelpers";
 import type { AdminPolicyRow } from "./adminPoliciesPageTypes";
@@ -24,10 +25,8 @@ import {
 
 type PolicySortKey = "code" | "pstatus" | "updated_at";
 
-type TFn = (key: string, params?: Record<string, string>) => string;
-
 export type AdminPoliciesListSectionProps = {
-  t: TFn;
+  t: LocaleTranslateFn;
   loading: boolean;
   refreshing?: boolean;
   error: AdminFetchErrorKind | null;

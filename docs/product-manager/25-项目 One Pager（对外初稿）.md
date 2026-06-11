@@ -8,7 +8,7 @@
 
 ## 与技术文档对齐（签核 / 外发前必对）
 
-定稿与对外发送前须回链：**[08-4 对外口径包](../spec/08-4-对外口径包.md)**、**[01-总库总览](../spec/01-总库总览.md)**；凡出现 **托管、费用、治理、质押、已上线** 等措辞，再对 **[81](../spec/81-经济模型-向导质押与订单押金.md)**（**身份质押**）、**[89](../spec/89-治理UI-全球旅游市场治理控制台设计规格.md)**（**`/governance`**）、**[02 §十](../spec/02-架构设计.md)**（**FeeRouter/RegionVault · Partial/MVP**）、**[07 §零 0.6](../spec/07-开发流程与顺序.md)**。人话边界速查 **[README 快照](README.md)**；演示素材 **[33 脱敏](33-上线验收与发布门禁清单.md)**。
+定稿与对外发送前须回链：**[08-4 对外口径包](../spec/08-4-对外口径包.md)**、**[01-总库总览](../spec/01-总库总览.md)**；凡出现 **托管、费用、治理、质押、已上线** 等措辞，再对 **[81](../spec/81-经济模型-向导质押与订单押金.md)**（**身份质押**）、**[89](../spec/89-治理UI-全球旅游市场治理控制台设计规格.md)**（**`/governance`**）、**[02 §十](../spec/02-架构设计.md)**（**FeeRouter/RegionVault · Partial/MVP**）、**[07 §零 0.6](../spec/07-开发流程与顺序.md)**。人话边界速查 **[README 快照](README.md)**；演示素材 **[33 脱敏](33-上线验收与发布门禁清单.md)**。**录屏/尽调工程真源（①）**：**`/`** · **`/market`** — **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **[24-演示脚本](24-产品经理核心产品路径与演示脚本.md)**。
 
 ## TravelTrust 是什么
 
@@ -61,12 +61,15 @@ TravelTrust 的重点不只是支付，而是把托管、确认、评分和争�
 
 以下入口是当前仓库里已经确认存在的本地开发版入口：
 
-1. `http://localhost:3012/traveltrust`
-2. `http://localhost:3012/market`
-3. `http://localhost:3012/did-rank`
-4. `http://localhost:3012/community`
-5. `http://localhost:3012/help`
-6. `/orders`、`/orders/new`、`/escrow/[id]`
+1. `http://localhost:3012/`（Web3旅行 · 顶栏 **Web3旅行**）
+2. `http://localhost:3012/traveltrust`
+3. `http://localhost:3012/market`（**`/discover` 重定向** · 撮合主 UI）
+4. `http://localhost:3012/did-rank`
+5. `http://localhost:3012/community`
+6. `http://localhost:3012/help`
+7. `/orders`、`/orders/new`、`/escrow/[id]`
+
+**① 数据链真源**：[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md) · [24-演示脚本](24-产品经理核心产品路径与演示脚本.md)
 
 ## 当前阶段判断
 

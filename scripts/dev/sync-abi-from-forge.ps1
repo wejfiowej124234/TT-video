@@ -39,7 +39,14 @@ function Write-Abi($name) {
     return $true
 }
 
-foreach ($c in @("Escrow", "EscrowFactory", "GuideIdentityStakingPool", "ProviderIdentityStakingPool", "Registry", "FeeRouter", "RegionVault", "ReserveVault", "SlashRouter", "InvestorDistributionClaim", "GovernanceTimelock", "GovernanceTreasury", "GovernanceVotesToken", "TravelTrustGovernor")) {
+# Must match scripts/dev/sync-abi-from-forge.sh (incl. protocol convergence steward + redemption epoch)
+$required = @(
+    "Escrow", "EscrowFactory", "GuideIdentityStakingPool", "ProviderIdentityStakingPool", "Registry",
+    "FeeRouter", "RegionVault", "ReserveVault", "SlashRouter", "InvestorDistributionClaim",
+    "GovernanceTimelock", "GovernanceTreasury", "GovernanceVotesToken", "TravelTrustGovernor",
+    "RegionStewardStakePool", "CountryPoolSubVaultsV0", "CountryPoolRedemptionEpochV0"
+)
+foreach ($c in $required) {
     if (-not (Write-Abi $c)) { Fail "forge inspect $c abi failed" }
 }
 foreach ($c in @("IERC20", "MockERC20")) {
@@ -55,7 +62,9 @@ if ($pyExe) {
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 }
 
+& (Join-Path $PSScriptRoot "sync-55-s13-frontend-abis.ps1")
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
 Write-Host ""
-Write-Host "Next:"
-Write-Host "  cp contracts/abi/GuideIdentityStakingPool.json contracts/abi/ProviderIdentityStakingPool.json ... frontend/dapp/abis/   # or copy on Windows"
+Write-Host "sync-abi-from-forge: contracts/abi + frontend/dapp/abis (55-S13 subset) aligned"
 Write-Host "  .\scripts\check-55-s13.ps1"

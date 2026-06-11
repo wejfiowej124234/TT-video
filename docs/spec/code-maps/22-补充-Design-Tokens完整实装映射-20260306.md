@@ -7,6 +7,7 @@
 | **22 主规范** | **[22-Design-Tokens-旅游Web3融合体系-v1.0](../22-Design-Tokens-旅游Web3融合体系-v1.0.md)** |
 | **globals.css / tailwind 对照** | **§一** 起各 Token 节 |
 | **与 Experience/Business/资金区** | **[86](../86-UI-双系统未来风-风格与动效技术规格.md)**（分区；**风格-only** 边界见篇首 **定稿口径**）、**[28](../28-Cinematic-Glassmorphism-Web3融合规范.md)**（叙事/组件）、**[29](../29-自由市场-撮合控制台规范.md)**、**[13](../13-协议级UI设计宪法.md)**、**[13-1](../13-1-UI产品级SSOT与页面规范.md)** |
+| **`/` + `/market` 四页 ① 数据链** | **[LANDING-MARKET-PAGES-CODE-SSOT](../../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §2～§3（**非** Token 键名与 **`useMarketPage`** 行为 SSOT 替代） |
 
 **目的**：对齐 22-Design-Tokens-旅游Web3融合体系 v1.0 与前端代码实装（frontend/），确保所有Token的定义、映射、应用均100%准确。
 

@@ -7,9 +7,11 @@ import type { MarketView } from "@/components/market/ViewSwitcher";
 import type { OrderCardItem } from "@/components/market/OrderCard";
 import type { GuideCardItem } from "@/components/market/GuideCard";
 import {
+  MARKET_CREATE_ITINERARY_QUERY,
   MARKET_GUIDE_DETAIL_QUERY,
   MARKET_ITINERARY_DRAFT_QUERY,
   MARKET_ORDER_DETAIL_QUERY,
+  isMarketCreateItineraryDeepLink,
 } from "@/lib/marketDeepLink";
 import { isUuidString } from "@/lib/isUuidString";
 import { stashEscrowOrderPrefetchFromMarketCard } from "@/lib/orderEscrowPrefetch";
@@ -93,6 +95,22 @@ export function useMarketPageAcceptAndItineraryDeepLinks(opts: {
     setCustomItineraryOpen(true);
   }, [customItineraryHydrateDraftId, setCustomItineraryOpen]);
 
+  useEffect(() => {
+    const raw = searchParams.get(MARKET_CREATE_ITINERARY_QUERY);
+    if (!isMarketCreateItineraryDeepLink(raw)) return;
+    setCustomItineraryOpen(true);
+  }, [searchParams, setCustomItineraryOpen]);
+
+  const clearCreateItineraryDeepLink = useCallback(() => {
+    const raw = searchParams.get(MARKET_CREATE_ITINERARY_QUERY)?.trim() ?? "";
+    if (!raw) return;
+    const next = new URLSearchParams(searchParams.toString());
+    next.delete(MARKET_CREATE_ITINERARY_QUERY);
+    const qs = next.toString();
+    const base = pathname ?? "/market";
+    router.replace(qs ? `${base}?${qs}` : base, { scroll: false });
+  }, [searchParams, router, pathname]);
+
   const clearItineraryDraftDeepLink = useCallback(() => {
     const raw = searchParams.get(MARKET_ITINERARY_DRAFT_QUERY)?.trim() ?? "";
     if (!raw) return;
@@ -106,6 +124,7 @@ export function useMarketPageAcceptAndItineraryDeepLinks(opts: {
   const handleCustomItinerarySubmit = useCallback(
     (orderId: string) => {
       clearItineraryDraftDeepLink();
+      clearCreateItineraryDeepLink();
       setCustomItineraryOpen(false);
       setCustomCreatedOrderId(orderId);
       setCustomCreatedToast(true);
@@ -116,7 +135,7 @@ export function useMarketPageAcceptAndItineraryDeepLinks(opts: {
         setCustomCreatedOrderId(null);
       }, 4000);
     },
-    [loadOrders, clearItineraryDraftDeepLink, setCustomItineraryOpen, setCustomCreatedOrderId, setCustomCreatedToast, setView]
+    [loadOrders, clearItineraryDraftDeepLink, clearCreateItineraryDeepLink, setCustomItineraryOpen, setCustomCreatedOrderId, setCustomCreatedToast, setView]
   );
 
   const acceptIdempotencyKeyRef = useRef<Record<string, string>>({});
@@ -146,6 +165,7 @@ export function useMarketPageAcceptAndItineraryDeepLinks(opts: {
     customItineraryPreselectedGuideId,
     customItineraryHydrateDraftId,
     clearItineraryDraftDeepLink,
+    clearCreateItineraryDeepLink,
     handleCustomItinerarySubmit,
     handleConfirmAccept,
   };

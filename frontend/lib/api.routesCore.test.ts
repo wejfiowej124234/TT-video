@@ -4,6 +4,7 @@
 // @vitest-environment node
 import { describe, it, expect } from "vitest";
 import { apiBase, apiUrl, routes } from "./api";
+import { routes as routesCanon } from "./api/routes";
 
 describe("lib/api routes (core + public)", () => {
   it("apiBase is a string URL", () => {
@@ -49,7 +50,7 @@ describe("lib/api routes (core + public)", () => {
   it("routes include traveltrust page-brief (04 B-191)", () => {
     expect(routes.traveltrustPageBrief).toBe("/api/v1/traveltrust/page-brief");
     expect(apiUrl(routes.traveltrustPageBrief)).toBe(`${apiBase}/api/v1/traveltrust/page-brief`);
-    expect(routes.governanceTtgExchangeQuote).toBe("/api/v1/governance/ttg-exchange/quote");
+    expect(routesCanon.governanceTtgExchangeQuote).toBe("/api/v1/governance/ttg-exchange/quote");
   });
 
   it("routes include trust growth P-SCALE1", () => {

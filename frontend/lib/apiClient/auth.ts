@@ -108,6 +108,8 @@ export async function postRegister(body: {
   verification_code?: string;
   /** 693/697：`tourist` \| **`traveler`**（87 协议名，697 起后端存 `traveler`）\| `provider` \| `region_steward`；缺省为旅行者（后端 `tourist`） */
   role?: string;
+  /** G-S1 · 可选推荐码（与 `?ref=` 同源） */
+  referral_code?: string;
 }): Promise<unknown> {
   const res = await fetch(apiUrl(routes.auth.register), {
     method: "POST",

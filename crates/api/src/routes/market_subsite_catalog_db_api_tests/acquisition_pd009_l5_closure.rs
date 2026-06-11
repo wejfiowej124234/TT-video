@@ -490,6 +490,8 @@ async fn matrix_pd009_l5_trust_waive_publish_without_bond_pg() {
         None,
         None,
         "0",
+        None,
+        None,
         "active",
         now,
         now,

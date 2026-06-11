@@ -23,7 +23,7 @@ export type UseCommunityFeedTopicReportCommentChainOptions = {
   setTagFilterState: Dispatch<SetStateAction<string | null>>;
   setDestinationFilterFromUrl: (value: string) => void;
   searchQuery: string;
-  setSearchQuery: Dispatch<SetStateAction<string>>;
+  setSearchQuery: (q: string) => void;
   clearFiltersFromHook: () => void;
   setToastHint: Dispatch<SetStateAction<string | null>>;
   setToastBodyOverride: Dispatch<SetStateAction<string | null>>;

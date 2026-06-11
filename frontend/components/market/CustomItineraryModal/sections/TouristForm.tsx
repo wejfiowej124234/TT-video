@@ -1,12 +1,12 @@
 "use client";
 
 import { useId } from "react";
-import { COUNTRY_OPTIONS } from "@/lib/geoOptions";
+import { useCatalogCountryOptions } from "@/lib/catalogApi/useCatalogGeo";
 import GlassSelect from "@/components/market/GlassSelect";
 import CustomItineraryTotalDaysPills from "../CustomItineraryTotalDaysPills";
 import type { TouristFormProps } from "../types";
-import { TOTAL_DAYS_OPTIONS } from "../constants";
 import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
+import CustomItineraryFormProgress from "../CustomItineraryFormProgress";
 import TouristDayCard from "./TouristDayCard";
 import TouristGuideAndTransportSection from "./TouristGuideAndTransportSection";
 import TouristQuoteSummaryBlock from "./TouristQuoteSummaryBlock";
@@ -46,6 +46,7 @@ export default function TouristForm({
 }: TouristFormProps) {
   const totalDaysFieldId = useId();
   const countryFieldId = useId();
+  const countryOptions = useCatalogCountryOptions();
   return (
     <>
       <div className="space-y-2">
@@ -62,14 +63,13 @@ export default function TouristForm({
           dayLabel={(n) => t("market_dayUnit").replace("{{n}}", String(n))}
         />
         <p className="text-meta text-slate-400">{t("market_totalDays_select_hint")}</p>
-        <GlassSelect
-          id={totalDaysFieldId}
-          value={form.totalDays}
-          onChange={(v) => setTotalDays(Number(v))}
-          options={TOTAL_DAYS_OPTIONS.map((d) => ({ value: d, label: t("market_dayUnit").replace("{{n}}", String(d)) }))}
-          aria-label={t("market_totalDays")}
-        />
       </div>
+
+      {form.country ? <CustomItineraryFormProgress form={form} t={t} /> : null}
+
+      <p className="rounded-[var(--radius-sm)] border border-ref-sun/16 bg-ink-900/45 px-3 py-2 text-meta text-white/85">
+        {t("market_itinerary_tourist_mode_hint")}
+      </p>
 
       <div>
         <label htmlFor={countryFieldId} className={labelClass}>
@@ -93,7 +93,7 @@ export default function TouristForm({
               })),
             }))
           }
-          options={COUNTRY_OPTIONS.map((c) => ({ value: c.value, label: c.label }))}
+          options={countryOptions.map((c) => ({ value: c.value, label: c.label }))}
           placeholder={t("market_selectCountryFirst")}
           aria-label={t("market_country")}
         />
@@ -119,18 +119,20 @@ export default function TouristForm({
           />
         ))}
 
-      <TouristGuideAndTransportSection
-        guideLevelsWithPricing={guideLevelsWithPricing}
-        form={form}
-        setForm={setForm}
-        budgetBreakdown={budgetBreakdown}
-        touristCityTransportLines={touristCityTransportLines}
-        hasTouristInterCity={hasTouristInterCity}
-        touristInterCityTransportLines={touristInterCityTransportLines}
-        suggestedTransportFee={suggestedTransportFee}
-        labelClass={labelClass}
-        t={t}
-      />
+      {form.country ? (
+        <TouristGuideAndTransportSection
+          guideLevelsWithPricing={guideLevelsWithPricing}
+          form={form}
+          setForm={setForm}
+          budgetBreakdown={budgetBreakdown}
+          touristCityTransportLines={touristCityTransportLines}
+          hasTouristInterCity={hasTouristInterCity}
+          touristInterCityTransportLines={touristInterCityTransportLines}
+          suggestedTransportFee={suggestedTransportFee}
+          labelClass={labelClass}
+          t={t}
+        />
+      ) : null}
 
       {form.country && (
         <TouristQuoteSummaryBlock
@@ -162,11 +164,16 @@ export default function TouristForm({
         t={t}
       />
 
-      {submitError && (
-        <p id={submitErrorNoticeId} ref={submitErrorRef as React.RefObject<HTMLParagraphElement> | undefined} className="text-small text-warning" role="alert">
+      {submitError ? (
+        <p
+          id={submitErrorNoticeId}
+          ref={submitErrorRef as React.RefObject<HTMLParagraphElement> | undefined}
+          className="sr-only"
+          role="alert"
+        >
           {submitError}
         </p>
-      )}
+      ) : null}
     </>
   );
 }

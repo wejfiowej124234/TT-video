@@ -30,7 +30,7 @@ export default function MeSettingsNotificationsPrefsPage() {
       dataAttrs={{
         "data-tt-me-settings-route": "notifications-prefs",
         "data-tt-me-settings-notif-prefs": "1",
-        "data-tt-me-settings-prefs-ready": ready ? "1" : undefined,
+        "data-tt-me-settings-prefs-ready": ready ? "1" : "0",
       }}
       showMinimalFooter={false}
     >

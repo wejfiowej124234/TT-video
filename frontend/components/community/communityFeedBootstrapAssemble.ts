@@ -31,6 +31,7 @@ export function assembleCommunityFeedTopicChainArgs(parts: {
     CommunityFeedTopicChainArgsBundle,
     | "postDeepLinkLastId"
     | "setDetailPost"
+    | "setDetailFocusComments"
     | "setPostDeepLinkBusy"
     | "setPostDeepLinkAlert"
     | "setPostDeepLinkLastId"

@@ -9,6 +9,7 @@ import {
   type ProfileCompletenessItem,
 } from "@/lib/me/meSettingsProfileDisplay";
 import { TT_ME_SETTINGS_L5 } from "@/lib/me/meSettingsL5";
+import type { LocaleTranslateFn } from "@/lib/i18n";
 
 const ITEM_KEYS: Record<ProfileCompletenessItem, string> = {
   avatar: "me_settings_profile_complete_avatar",
@@ -17,7 +18,7 @@ const ITEM_KEYS: Record<ProfileCompletenessItem, string> = {
   wallet: "me_settings_profile_complete_wallet",
 };
 
-export function MeSettingsProfileCompleteness({ user, t }: { user: UserShape; t: (key: string) => string }) {
+export function MeSettingsProfileCompleteness({ user, t }: { user: UserShape; t: LocaleTranslateFn }) {
   const bioEnabled = isCommunityMeBioEnabled();
   const done = profileCompletenessItems(user, bioEnabled);
   const total = profileCompletenessTotal(bioEnabled);

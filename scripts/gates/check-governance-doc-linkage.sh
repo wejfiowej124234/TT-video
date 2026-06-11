@@ -47,6 +47,16 @@ test -f docs/spec/governance-token/en/01-external-litepaper-draft.md || fail "mi
 test -f docs/spec/governance-token/en/02-internal-tech-spec-draft.md || fail "missing en/02-internal-tech-spec-draft.md"
 test -f docs/spec/governance-token/LEGAL-SIGNOFF-CHECKLIST.md || fail "missing governance-token/LEGAL-SIGNOFF-CHECKLIST.md"
 test -f docs/spec/governance-token/03-对外材料-PPT与白皮书数据页摘抄索引.md || fail "missing governance-token/03-对外材料-PPT与白皮书数据页摘抄索引.md"
+test -f docs/spec/governance-token/protocol-ssot.v1.md || fail "missing governance-token/protocol-ssot.v1.md (Protocol Convergence P0)"
+test -f docs/spec/governance-token/fund-flow-ssot.v1.md || fail "missing governance-token/fund-flow-ssot.v1.md"
+test -f docs/spec/governance-token/state-machine.v1.md || fail "missing governance-token/state-machine.v1.md"
+test -f docs/spec/governance-token/84-valuation-anchor-P1-memo.md || fail "missing 84-valuation-anchor-P1-memo.md (84 §3.6 engineering fill)"
+grep -qF 'Option C' docs/spec/governance-token/84-valuation-anchor-P1-memo.md \
+  || fail "84-valuation-anchor-P1-memo must document Option C engineering default"
+grep -q 'protocol-ssot.v1' docs/spec/governance-token/README.md \
+  || fail "governance-token/README.md must reference protocol-ssot.v1"
+grep -q 'protocol-ssot.v1' docs/spec/84-第一阶段10国Country-Pool发行参数总表.md \
+  || fail "84 must reference protocol-ssot.v1 (Protocol Convergence)"
 test -f docs/spec/08-4-附录-收益流闭环图-FeeRouter-Target.md || fail "missing docs/spec/08-4-附录-收益流闭环图-FeeRouter-Target.md"
 
 grep -q '08-4-附录-收益流闭环图-FeeRouter-Target' docs/spec/00-文档索引.md \
@@ -82,5 +92,13 @@ grep -qF '"reserve": 20,' "$REF_RS" \
   || fail "$REF_RS: expected global_pool_split_percent.reserve 20"
 grep -qF '"operations": 15' "$REF_RS" \
   || fail "$REF_RS: expected global_pool_split_percent.operations 15"
+
+PDP08="docs/spec/08-4-对外口径包.md"
+grep -qF 'NAV 窗口赎回' "$PDP08" \
+  || fail "$PDP08: missing Protocol Convergence R4 NAV redemption public wording"
+grep -qF 'OperationsVault 已按预算释放并花费的运营费用不可退还' "$PDP08" \
+  || fail "$PDP08: missing Protocol Convergence R5 OperationsVault non-refundable wording"
+
+bash scripts/gates/check-protocol-ssot-convergence.sh
 
 echo "OK: governance doc linkage checks passed."

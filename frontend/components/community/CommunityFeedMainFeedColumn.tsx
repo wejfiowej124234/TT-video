@@ -7,6 +7,8 @@ import CommunityFeedList from "@/components/community/CommunityFeedList";
 import CommunityFeedMainPreHeroAlerts from "@/components/community/CommunityFeedMainPreHeroAlerts";
 import CommunityFeedMainPostFilterAlerts from "@/components/community/CommunityFeedMainPostFilterAlerts";
 import type { CommunityFeedMainFeedColumnProps } from "@/components/community/communityFeedMainFeedColumnTypes";
+import { ConversionFunnelRail } from "@/components/product-enhancement/ConversionFunnelRail";
+import { IdentityPostClosureStrip } from "@/components/product-enhancement/IdentityPostClosureStrip";
 import { TT_COMMUNITY_FEED_LAYOUT } from "@/lib/marketingUi";
 
 export function CommunityFeedMainFeedColumn(props: CommunityFeedMainFeedColumnProps) {
@@ -74,6 +76,9 @@ export function CommunityFeedMainFeedColumn(props: CommunityFeedMainFeedColumnPr
   return (
     <div className={TT_COMMUNITY_FEED_LAYOUT.feedColumn}>
       <CommunityFeedHeader t={t} onRefresh={refreshFeed} />
+
+      <ConversionFunnelRail touchpoint="community" t={t} variant="light" className="mb-3" />
+      <IdentityPostClosureStrip t={t} className="mb-3" />
 
       <CommunityFeedMainPreHeroAlerts
         t={t}

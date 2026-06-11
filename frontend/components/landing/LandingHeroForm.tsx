@@ -6,15 +6,17 @@ import { useTranslation } from "@/components/LocaleProvider";
 import LandingHeroCityField from "@/components/landing/LandingHeroCityField";
 import LandingHeroAuxLinks from "@/components/landing/LandingHeroAuxLinks";
 import LandingHeroNavTabs from "@/components/landing/LandingHeroNavTabs";
+import { HomeConsumerValueSection } from "@/components/landing/HomeConsumerValueSection";
 import {
-  COUNTRY_OPTIONS,
   dateToString,
   ATTRACTION_TYPE_OPTIONS,
   STANDARD_OPTIONS,
   HOTEL_OPTIONS,
 } from "./constants";
+import { useCatalogCountryOptions } from "@/lib/catalogApi/useCatalogGeo";
 import { applyLandingDatePick } from "@/lib/landingDateRangePick";
 import { landingHeroFormAlertText } from "@/lib/landingHeroFormAlert";
+import type { LandingDraftQuota } from "@/lib/landingDraftQuota";
 import {
   TT_MARKETING_HOME_CALENDAR_DAY_SELECTED,
   TT_MARKETING_HOME_CALENDAR_POPOVER,
@@ -162,6 +164,10 @@ export interface LandingHeroFormProps {
   handleSubmit: (e: React.FormEvent) => void;
   /** Hero「自由市场」Tab：带当前目的地/天数 query */
   marketHref?: string;
+  /** 首屏价值预览（无结果且未提交时） */
+  showConsumerValue?: boolean;
+  /** 登录用户 Draft 配额（生成前预检） */
+  draftQuota?: LandingDraftQuota;
 }
 
 function LandingHeroForm({
@@ -192,13 +198,19 @@ function LandingHeroForm({
   loginRequired,
   handleSubmit,
   marketHref,
+  showConsumerValue = false,
+  draftQuota = { count: 0, cap: 20, blocked: false },
 }: LandingHeroFormProps) {
   const { t } = useTranslation();
+  const countryOptions = useCatalogCountryOptions();
   const heroTitleId = useId();
   const formAlertId = useId();
   const countryFieldId = useId();
   const calendarDialogTitleId = useId();
   const calendarDialogDescId = useId();
+  const formAlertRef = useRef<HTMLDivElement>(null);
+  const draftCapBannerRef = useRef<HTMLDivElement>(null);
+  const countryFieldRef = useRef<HTMLFieldSetElement>(null);
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [calendarMonth, setCalendarMonth] = useState(() => new Date());
   const [prefsOpenMobile, setPrefsOpenMobile] = useState(false);
@@ -283,6 +295,37 @@ function LandingHeroForm({
     loginRequired ? null : submitError,
     t
   );
+  const draftCapAlertText =
+    validationErrorKey === "landing_error_draft_cap"
+      ? t("landing_error_draft_cap")
+          .replace(/\{\{count\}\}/g, String(draftQuota.count))
+          .replace(/\{\{cap\}\}/g, String(draftQuota.cap))
+      : null;
+  const countryInvalid = validationErrorKey === "landing_error_country";
+  const draftCapActive = draftQuota.blocked || validationErrorKey === "landing_error_draft_cap";
+  const bottomAlertText = loginRequired ? null : draftCapAlertText ?? formAlertText;
+  const showDraftCapBottomCta = validationErrorKey === "landing_error_draft_cap" || draftQuota.blocked;
+  const draftCapHiddenHint =
+    draftCapActive &&
+    typeof draftQuota.visibleCount === "number" &&
+    draftQuota.visibleCount < draftQuota.count
+      ? t("landing_error_draft_cap_hidden_hint")
+          .replace(/\{\{visible\}\}/g, String(draftQuota.visibleCount))
+          .replace(/\{\{count\}\}/g, String(draftQuota.count))
+      : null;
+  const draftCapBannerText = t("landing_draft_cap_preflight")
+    .replace(/\{\{count\}\}/g, String(draftQuota.count))
+    .replace(/\{\{cap\}\}/g, String(draftQuota.cap));
+
+  useEffect(() => {
+    if (bottomAlertText) {
+      formAlertRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+    if (draftCapActive && draftQuota.blocked) {
+      draftCapBannerRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [bottomAlertText, draftCapActive, draftQuota.blocked]);
   const loginReturnUrl = encodeURIComponent("/");
   const budgetNum = budget ? parseFloat(budget) : NaN;
   const budgetQuoteHint =
@@ -316,8 +359,11 @@ function LandingHeroForm({
             {t("landing_hero_subtitle")}
           </p>
           <p className="mt-2 max-w-xl mx-auto break-keep text-meta text-white/75 text-center text-pretty">
-            {t("landing_hero_escrow_note")}
+            {t("landing_hero_action_note")}
           </p>
+          {showConsumerValue ? (
+            <HomeConsumerValueSection t={t} className="mt-5 mb-1" />
+          ) : null}
           <div className={TT_MARKETING_HOME_HERO_ACTIONS_STACK}>
             <LandingHeroAuxLinks />
             <div className={TT_MARKETING_HOME_HERO_ACTIONS_DIVIDER}>
@@ -331,12 +377,37 @@ function LandingHeroForm({
             className="mt-8 space-y-7"
             aria-labelledby={heroTitleId}
           >
-            <fieldset className="space-y-3 border-0 p-0 m-0 min-w-0">
+            {draftCapActive ? (
+              <div
+                ref={draftCapBannerRef}
+                className="rounded-[var(--radius-lg)] border border-ref-sun/55 bg-ref-sun/16 px-4 py-3 backdrop-blur-sm"
+                role="alert"
+                aria-live="assertive"
+                data-tt-landing-draft-cap-banner="1"
+              >
+                <p className="text-small font-semibold text-white leading-relaxed">{draftCapBannerText}</p>
+                {draftCapHiddenHint ? (
+                  <p className="mt-1.5 text-meta text-white/75 leading-snug">{draftCapHiddenHint}</p>
+                ) : null}
+                <Link
+                  href="/orders?state=draft"
+                  className="mt-2 inline-flex min-h-9 items-center rounded-[var(--radius-md)] bg-white/15 px-3 text-small font-semibold text-ref-sun hover:bg-white/25"
+                >
+                  {t("landing_error_draft_cap_cta")}
+                </Link>
+              </div>
+            ) : null}
+            <fieldset
+              ref={countryFieldRef}
+              className={`space-y-3 border-0 p-0 m-0 min-w-0 ${countryInvalid ? "rounded-[var(--radius-md)] ring-2 ring-ref-sun/55 ring-offset-2 ring-offset-transparent" : ""}`}
+              aria-invalid={countryInvalid || undefined}
+              aria-describedby={countryInvalid && bottomAlertText ? formAlertId : undefined}
+            >
               <legend id={countryFieldId} className="block w-full text-meta font-medium text-white/80 mb-0">
                 {t("landing_label_country_single")}
               </legend>
               <div className="flex flex-wrap gap-2" role="group" aria-labelledby={countryFieldId}>
-                {COUNTRY_OPTIONS.map((c) => {
+                {countryOptions.map((c) => {
                   const selected = country === c.value;
                   return (
                     <button
@@ -359,6 +430,7 @@ function LandingHeroForm({
               cities={cities}
               setCities={setCities}
               citiesInvalid={validationErrorKey === "landing_error_cities"}
+              countryMissing={!country}
               errorDescribedById={
                 validationErrorKey === "landing_error_cities" && formAlertText ? formAlertId : undefined
               }
@@ -510,6 +582,29 @@ function LandingHeroForm({
                   </button>
                 </div>
               </div>
+              {bottomAlertText ? (
+                <div
+                  ref={formAlertRef}
+                  id={formAlertId}
+                  className="rounded-[var(--radius-lg)] border border-ref-sun/55 bg-ref-sun/16 px-4 py-3 backdrop-blur-sm shadow-[0_0_0_1px_rgba(255,183,77,0.15)]"
+                  role="alert"
+                  aria-live="assertive"
+                  data-tt-landing-form-alert="1"
+                >
+                  <p className="text-small font-semibold text-white leading-relaxed">{bottomAlertText}</p>
+                  {draftCapHiddenHint && showDraftCapBottomCta ? (
+                    <p className="mt-1.5 text-meta text-white/75 leading-snug">{draftCapHiddenHint}</p>
+                  ) : null}
+                  {showDraftCapBottomCta ? (
+                    <Link
+                      href="/orders?state=draft"
+                      className="mt-2 inline-flex min-h-9 items-center rounded-[var(--radius-md)] bg-white/15 px-3 text-small font-semibold text-ref-sun hover:bg-white/25"
+                    >
+                      {t("landing_error_draft_cap_cta")}
+                    </Link>
+                  ) : null}
+                </div>
+              ) : null}
               {budgetQuoteHint ? (
                 <p className="max-w-2xl text-meta leading-snug text-white/85 text-ref-sun/90 break-words">{budgetQuoteHint}</p>
               ) : null}
@@ -519,6 +614,21 @@ function LandingHeroForm({
               >
                 {t("landing_hero_itinerary_disclaimer")}
               </p>
+              {loginRequired ? (
+                <div
+                  className="rounded-[var(--radius-lg)] border border-danger/40 bg-danger/10 px-4 py-3"
+                  role="alert"
+                  data-testid="landing-login-cta"
+                >
+                  <p className="text-small text-white font-medium">{t("landing_error_login")}</p>
+                  <Link
+                    href={`/auth/login?returnUrl=${loginReturnUrl}`}
+                    className="mt-2 inline-flex min-h-[44px] items-center rounded-[var(--radius-md)] bg-white/20 px-4 text-small font-semibold text-white hover:bg-white/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                  >
+                    {t("landing_error_login_cta")}
+                  </Link>
+                </div>
+              ) : null}
             </div>
             <details
               className={TT_MARKETING_HOME_PREFERENCES_DETAILS}
@@ -608,31 +718,6 @@ function LandingHeroForm({
               </div>
               </div>
             </details>
-            {loginRequired && (
-              <div
-                className="mt-3 rounded-[var(--radius-lg)] border border-danger/40 bg-danger/10 px-4 py-3"
-                role="alert"
-                data-testid="landing-login-cta"
-              >
-                <p className="text-small text-white font-medium">{t("landing_error_login")}</p>
-                <Link
-                  href={`/auth/login?returnUrl=${loginReturnUrl}`}
-                  className="mt-2 inline-flex min-h-[44px] items-center rounded-[var(--radius-md)] bg-white/20 px-4 text-small font-semibold text-white hover:bg-white/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
-                >
-                  {t("landing_error_login_cta")}
-                </Link>
-              </div>
-            )}
-            {formAlertText && (
-              <p
-                id={formAlertId}
-                className="mt-3 text-small text-danger font-medium"
-                role="alert"
-                aria-live="polite"
-              >
-                {formAlertText}
-              </p>
-            )}
           </form>
         </div>
           </div>

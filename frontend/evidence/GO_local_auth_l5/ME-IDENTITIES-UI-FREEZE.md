@@ -43,9 +43,19 @@
 | `loading.tsx` | L5 骨架 |
 | `error.tsx` | L5 错误壳 |
 | `README.md` | 路由读序 |
-| `meIdentitiesPage.contract.test.ts` | 链路契约 |
+| `meIdentitiesPage.contract.test.ts` | Hub 链路契约 |
+| `meIdentityP2Settings.contract.test.ts` | P2 四轨 settings 契约 |
 
-**共享组件 / token：** `lib/me/meIdentitiesL5.ts` · `components/me/MeIdentitiesL5IdentityCard.tsx` · `MeIdentitiesRouteLoading.tsx` · `MeIdentitiesRouteError.tsx` · `AuthL5CrossNavFooter` · `globals.css` `[data-tt-auth-visual="l5"]` 块。
+**P2 settings 子路由（2026-06-10 · 数据链 only · 非 Hub layout）：** 见 [IDENTITY-CENTER-PHASE2-FREEZE](./IDENTITY-CENTER-PHASE2-FREEZE.md)
+
+| 子目录 | 路由 |
+|--------|------|
+| `guide/settings/` | `/me/identities/guide/settings` |
+| `merchant/settings/` | `/me/identities/merchant/settings` |
+| `region-steward/settings/` | `/me/identities/region-steward/settings` |
+| `acquisition/settings/` | `/me/identities/acquisition/settings` |
+
+**共享组件 / token：** `lib/me/meIdentitiesL5.ts` · `components/me/MeIdentitiesL5IdentityCard.tsx` · `components/me/identitySettings/*` · `MeIdentitiesRouteLoading.tsx` · `MeIdentitiesRouteError.tsx` · `AuthL5CrossNavFooter` · `globals.css` `[data-tt-auth-visual="l5"]` 块。
 
 ---
 
@@ -54,7 +64,7 @@
 ```bash
 cd frontend
 npm run test:i18n:ci
-npm run test -- accountNavNamingP3 meIdentitiesUiFreeze meIdentitiesL5 meIdentitiesPage uiSystem --run
+npm run test -- accountNavNamingP3 meIdentitiesUiFreeze meIdentityP2Settings meIdentitiesL5 meIdentitiesPage uiSystem --run
 ```
 
 **P3 命名（2026-05-27）：** Hub 标题 `me_identities_hub_title`；底栏回链 `nav_community_profile` → `/community/me`（社区资料）；见 [ACCOUNT-NAV-NAMING-P3](./ACCOUNT-NAV-NAMING-P3.md)。
@@ -68,6 +78,7 @@ npm run test -- accountNavNamingP3 meIdentitiesUiFreeze meIdentitiesL5 meIdentit
 | 各身份 **href / returnUrl** 链路、i18n 文案 | 删旅行者 callout 或改回 3 卡 Console 布局 |
 | 卡片 **描述**诚实化（非改壳） | `titleCompact` 顶替 `titleLogin` |
 | **`GET /me` `identity_slots` 状态徽章**（非伪造列表） | 去掉 `gridHalo` / `auth-l5-callout-surface` |
+| **P2 settings 子页** 字段/API/i18n（见 [IDENTITY-CENTER-PHASE2-FREEZE](./IDENTITY-CENTER-PHASE2-FREEZE.md)） | **新增身份体系产品功能**（P3 switcher 单独立项） |
 | 契约对齐真值 | 未跑绿集的视觉 diff |
 
 **未纳入本冻结：** `/auth/register?role=*` 见 [AUTH-REGISTER-UI-FREEZE](./AUTH-REGISTER-UI-FREEZE.md)；**`/guide/register`** 见 [GUIDE-REGISTER-UI-FREEZE](./GUIDE-REGISTER-UI-FREEZE.md)（2026-05-26 三步 L5 收口）；**`/market/acquisition`** **数据链 / 门闸 / 烟测** 见 **[`app/market/acquisition/README.md`](../../app/market/acquisition/README.md)**（**PD-009 · ①** · **[acquisition-publish-trust-rules §8.1](../../../docs/spec/artifacts/acquisition-publish-trust-rules.v1.md#81-第一阶段--本地--closed2026-05-27)**）；Hub 收购卡片 **「进入子站」** CTA 与 **`/me/identities`** 回链 **仅允许** 数据链路变更（**非** layout lock 回流）。

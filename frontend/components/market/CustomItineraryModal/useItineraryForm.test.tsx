@@ -2,7 +2,7 @@
  * 43 §5.3 第 9 项：useItineraryForm 单测（表单状态与返回值形状）
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { renderHook } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
 import { useItineraryForm } from "./useItineraryForm";
 
 vi.mock("@/components/LocaleProvider", () => ({
@@ -11,6 +11,10 @@ vi.mock("@/components/LocaleProvider", () => ({
 
 vi.mock("@/lib/apiClient", () => ({
   getMe: vi.fn(() => Promise.resolve({})),
+}));
+
+vi.mock("@/lib/catalogApi/client", () => ({
+  isCatalogApiEnabled: vi.fn(() => false),
 }));
 
 describe("useItineraryForm", () => {
@@ -49,5 +53,15 @@ describe("useItineraryForm", () => {
       useItineraryForm({ open: false, onClose, onSuccess })
     );
     expect(result.current.cities).toEqual([]);
+  });
+
+  it("cities includes 北京 when country is 中国 (W3 catalog geo · flag=0)", () => {
+    const { result } = renderHook(() =>
+      useItineraryForm({ open: true, onClose, onSuccess, initialTotalDays: 1 }),
+    );
+    act(() => {
+      result.current.setForm((f) => ({ ...f, country: "中国" }));
+    });
+    expect(result.current.cities.some((c) => c.value === "北京")).toBe(true);
   });
 });

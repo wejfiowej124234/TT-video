@@ -11,14 +11,17 @@ import { useTranslation } from "@/components/LocaleProvider";
 import { AdminShellNavGroup, type AdminShellNavLink } from "@/components/admin/AdminShellNavGroup";
 
 import { ADMIN_SHELL_COMMUNITY_NAV_LINKS } from "@/lib/admin/adminShellCommunityNavLinks";
+import { ADMIN_SHELL_CONTENT_NAV_LINKS } from "@/lib/admin/adminShellContentNavLinks";
 import { ADMIN_SHELL_FINANCE_NAV_LINKS } from "@/lib/admin/adminShellFinanceNavLinks";
 import { ADMIN_SHELL_GOVERNANCE_NAV_LINKS } from "@/lib/admin/adminShellGovernanceNavLinks";
+import { ADMIN_SHELL_GROWTH_NAV_LINKS } from "@/lib/admin/adminShellGrowthNavLinks";
 import { ADMIN_SHELL_MORE_NAV_LINKS } from "@/lib/admin/adminShellMoreNavLinks";
 import {
   ADMIN_SHELL_ONBOARDING_NAV_LINKS,
   adminShellOnboardingNavLinkMatch,
 } from "@/lib/admin/adminShellOnboardingNavLinks";
 import { ADMIN_SHELL_OPERATIONS_NAV_LINKS } from "@/lib/admin/adminShellOperationsNavLinks";
+import { ADMIN_SHELL_OFFICIAL_OPS_NAV_LINKS } from "@/lib/admin/adminShellOfficialOpsNavLinks";
 import { adminShellNavLinkMatch } from "@/lib/admin/adminShellNavLinkTypes";
 import { admU01ShellGroupVisible } from "@/lib/admin/admU01ShellGroupVisibility";
 import { adminHomeCardRequiredPermission } from "@/lib/admin/adminHomeCardPermission";
@@ -50,13 +53,15 @@ function shellNav(
   href: string,
   labelKey: string,
   match?: AdminShellNavLink["match"],
+  permission?: AdminShellNavLink["permission"],
 ): AdminShellNavLink {
   const base = href.split("?")[0] ?? href;
   return {
     href,
     labelKey,
     match,
-    permission: base.startsWith("/admin") ? adminHomeCardRequiredPermission(base) : undefined,
+    permission:
+      permission ?? (base.startsWith("/admin") ? adminHomeCardRequiredPermission(base) : undefined),
   };
 }
 
@@ -241,7 +246,7 @@ export default function AdminShellBar() {
             pathname={pathname}
 
             links={ADMIN_SHELL_ONBOARDING_NAV_LINKS.map((link) =>
-              shellNav(link.href, link.labelKey, adminShellOnboardingNavLinkMatch(link)),
+              shellNav(link.href, link.labelKey, adminShellOnboardingNavLinkMatch(link), link.permission),
             )}
 
           />
@@ -257,12 +262,37 @@ export default function AdminShellBar() {
             pathname={pathname}
 
             links={ADMIN_SHELL_OPERATIONS_NAV_LINKS.map((link) =>
-              shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link)),
+              shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link), link.permission),
             )}
 
           />
 
+          <AdminShellNavGroup
+            groupId="content"
+            summaryKey="admin_shell_nav_group_content"
+            pathname={pathname}
+            links={ADMIN_SHELL_CONTENT_NAV_LINKS.map((link) =>
+              shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link), link.permission),
+            )}
+          />
 
+          <AdminShellNavGroup
+            groupId="official_ops"
+            summaryKey="admin_shell_nav_group_official_ops"
+            pathname={pathname}
+            links={ADMIN_SHELL_OFFICIAL_OPS_NAV_LINKS.map((link) =>
+              shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link), link.permission),
+            )}
+          />
+
+          <AdminShellNavGroup
+            groupId="growth"
+            summaryKey="admin_shell_nav_group_growth"
+            pathname={pathname}
+            links={ADMIN_SHELL_GROWTH_NAV_LINKS.map((link) =>
+              shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link), link.permission),
+            )}
+          />
 
           <AdminShellNavGroup
 
@@ -273,7 +303,7 @@ export default function AdminShellBar() {
             pathname={pathname}
 
             links={ADMIN_SHELL_COMMUNITY_NAV_LINKS.map((link) =>
-              shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link)),
+              shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link), link.permission),
             )}
 
           />
@@ -286,7 +316,7 @@ export default function AdminShellBar() {
               summaryKey="admin_shell_nav_group_finance"
               pathname={pathname}
               links={ADMIN_SHELL_FINANCE_NAV_LINKS.map((link) =>
-                shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link)),
+                shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link), link.permission),
               )}
             />
           </AdminFinanceShellNavGroupGate>
@@ -302,7 +332,7 @@ export default function AdminShellBar() {
             pathname={pathname}
 
             links={ADMIN_SHELL_GOVERNANCE_NAV_LINKS.map((link) =>
-              shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link)),
+              shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link), link.permission),
             )}
 
           />
@@ -319,7 +349,7 @@ export default function AdminShellBar() {
 
             links={[
               ...ADMIN_SHELL_MORE_NAV_LINKS.map((link) =>
-                shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link)),
+                shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link), link.permission),
               ),
               shellNav("/", "admin_shell_nav_site"),
             ]}

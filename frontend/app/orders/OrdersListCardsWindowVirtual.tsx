@@ -18,9 +18,9 @@ export function OrdersListCardsWindowVirtual({
   renderItem,
 }: {
   list: OrderListItem[];
-  listFocusRef: RefObject<HTMLDivElement | null>;
+  listFocusRef: RefObject<HTMLElement | null>;
   onListFocus: () => void;
-  onListKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => void;
+  onListKeyDown: (e: React.KeyboardEvent<HTMLElement>) => void;
   ariaLabel: string;
   renderItem: (item: OrderListItem, index: number) => ReactNode;
 }) {
@@ -36,7 +36,7 @@ export function OrdersListCardsWindowVirtual({
 
   return (
     <div
-      ref={listFocusRef}
+      ref={listFocusRef as RefObject<HTMLDivElement | null>}
       className="relative w-full outline-none"
       role="list"
       tabIndex={list.length > 0 ? 0 : undefined}

@@ -6,7 +6,8 @@ use crate::state::ApiMetaState;
 use super::dm_social::{
     delete_collect, delete_follow, get_conversation_messages, get_conversations,
     get_friends_list, get_friends_requests, get_friends_requests_sent, get_me_collects,
-    get_me_activity, get_me_followers, get_me_following, get_me_likes_received, get_me_notifications,
+    get_me_activity, get_me_followers, get_me_following, get_me_likes, get_me_likes_received,
+    get_me_notifications,
     post_collect,
     post_conversation_message, post_ensure_conversation, post_follow, post_friends_accept,
     post_friends_reject, post_friends_request,
@@ -70,6 +71,7 @@ pub fn router() -> Router<ApiMetaState> {
         )
         .route("/api/v1/community/me/following", get(get_me_following))
         .route("/api/v1/community/me/followers", get(get_me_followers))
+        .route("/api/v1/community/me/likes", get(get_me_likes))
         .route(
             "/api/v1/community/me/likes-received",
             get(get_me_likes_received),

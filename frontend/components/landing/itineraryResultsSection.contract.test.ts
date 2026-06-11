@@ -26,9 +26,9 @@ describe("ItineraryResultsSection L5 polish", () => {
 
     expect(src).not.toContain("border-dashed");
 
-    expect(src).toContain("landingAmbientImageUrl");
+    expect(src).toContain("useLandingAmbientUrl");
 
-    expect(src).not.toContain("xl:max-w-6xl");
+    expect(src).not.toContain("landingAmbientImageUrl");
 
     expect(src).toContain("landing_results_section_lead");
 

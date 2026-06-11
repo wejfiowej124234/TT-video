@@ -66,6 +66,29 @@ const LS_USER_KEY = "traveltrust_user_id";
  * 在**任意页面脚本运行前**写入会话再 `goto`，避免首屏 `getMe` 与 `localStorage` 竞态（L4 workers=2 下曾误判未登录）。
  * 传入 `userId` 时同时写 cookie，与 `applyClientSessionAfterAuth` 对齐。
  */
+/** `STRICT_SESSION_GATE=1` 下提交前再写一次 token，避免首屏竞态或中间态清空 localStorage。 */
+export async function refreshBearerSessionInPage(
+  page: Page,
+  session: string | { token: string; userId?: string },
+): Promise<void> {
+  const token = typeof session === "string" ? session : session.token;
+  const userId = (typeof session === "string" ? "" : session.userId?.trim()) ?? "";
+  await page.evaluate(
+    ([tok, uid]) => {
+      try {
+        localStorage.setItem(LS_TOKEN_KEY, tok);
+        if (uid) {
+          localStorage.setItem(LS_USER_KEY, uid);
+          document.cookie = `traveltrust_user_id=${encodeURIComponent(uid)}; Path=/; SameSite=Lax`;
+        }
+      } catch {
+        /* ignore */
+      }
+    },
+    [token, userId] as [string, string],
+  );
+}
+
 export async function gotoWithBearerSession(
   page: Page,
   path: string,

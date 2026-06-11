@@ -15,7 +15,7 @@ export async function registerFreshTouristForCorridor(
   const body = (await res.json()) as { token?: string; user_id?: string };
   const token = body.token?.trim() ?? "";
   expect(token).not.toBe("");
-  return { token, userId: body.user_id?.trim() ?? "" };
+  return { token, userId: body.user_id?.trim() ?? "", email };
 }
 
 export async function seedLandingPreviewOrderViaApi(

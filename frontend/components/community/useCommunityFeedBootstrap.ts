@@ -31,6 +31,8 @@ export function useCommunityFeedBootstrap() {
     setCommentPost,
     detailPost,
     setDetailPost,
+    detailFocusComments,
+    setDetailFocusComments,
     publishOpen,
     setPublishOpen,
     showLoginModal,
@@ -133,6 +135,7 @@ export function useCommunityFeedBootstrap() {
     deepLink: {
       postDeepLinkLastId,
       setDetailPost,
+      setDetailFocusComments,
       setPostDeepLinkBusy,
       setPostDeepLinkAlert,
       setPostDeepLinkLastId,

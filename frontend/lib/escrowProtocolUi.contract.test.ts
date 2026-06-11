@@ -20,6 +20,8 @@ describe("/escrow/[id] protocol shell L5 (① · on-chain / non-draft)", () => {
     const src = readFileSync(INDEX, "utf8");
     expect(src).toContain("TT_ESCROW_PROTOCOL_ZONE");
     expect(src).toContain("data-tt-escrow-protocol-l5");
+    expect(src).toContain("data-tt-escrow-consumer-l5");
+    expect(src).toContain("EscrowConsumerNextStepStrip");
     expect(src).toContain("EscrowDetailOrdersBreadcrumb");
     expect(src).toContain("!experienceDraft ? <EscrowDetailOrdersBreadcrumb />");
     expect(src).toContain("escrowProtocolFooterActionClass");

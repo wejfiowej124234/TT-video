@@ -2,7 +2,7 @@
 
 **生效：** 2026-06-06（Closing Gap 宽轨复跑 · **`TT_PHASE2_GO_VERDICT: PHASE2_GO_READY`**）
 
-**一句话：** **① 已闭环并 Freeze**；**② Closing Gap 宽轨 GO Ready** — G1–G6 + G7 PREP_PASS 证据已复跑；**Phase ③ Production Preparation 未启动**。
+**一句话：** **① 已闭环并 Freeze**；**② Closing Gap 宽轨 GO Ready** — G1–G6 + G7 PREP_PASS 证据已复跑；**Phase ③ 入口 ⏸ HOLD**（[Phase ②.9 Release Polish](./PHASE29-RELEASE-POLISH.md) ACTIVE）。
 
 **阶段治理跃迁（2026-05-28）：** 仓库主轨已从 **「功能开发」** 转为 **「阶段治理」**。**① 封版机读留痕已齐**（见下）；系统长期停留在 **Freeze 维护期**，直至真实 staging 与基础设施成熟（**G-1/G-2**）。
 

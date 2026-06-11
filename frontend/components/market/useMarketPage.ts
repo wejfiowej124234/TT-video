@@ -45,9 +45,15 @@ import {
   writeMarketDiscoverListCache,
 } from "@/lib/marketDiscoverListCache";
 import { COMMUNITY_USER_MARKET_QUERY } from "@/lib/communityMarketDeepLink";
-import { MARKET_BIND_GUIDE_ORDER_QUERY } from "@/lib/marketDeepLink";
+import {
+  MARKET_BIND_GUIDE_ORDER_QUERY,
+  MARKET_CREATE_ITINERARY_QUERY,
+  isMarketCreateItineraryDeepLink,
+} from "@/lib/marketDeepLink";
 import { isUuidString } from "@/lib/isUuidString";
 import { dedupeListById, mergeListsUniqueById } from "@/lib/dedupeListById";
+import { useBindOrderTripDates } from "@/hooks/useBindOrderTripDates";
+import { filterGuidesAvailableForTrip } from "@/lib/guidesAvailableForTrip";
 import { discoverOrderDedupeKey } from "@/lib/discoverOrderDedupeKey";
 import { stashEscrowOrderPrefetchFromMarketCard } from "@/lib/orderEscrowPrefetch";
 import { appendMarketDevVarietyOrders } from "@/lib/marketDevVarietyOrders";
@@ -615,8 +621,40 @@ export function useMarketPage(options?: { initialSnapshot?: MarketPageInitialSna
     }
   }, [bindGuideToOrderId]);
 
+  const { tripDates: bindOrderTripDates, loading: bindOrderTripLoading } =
+    useBindOrderTripDates(effectiveBindGuideToOrderId);
+
+  const [tripFilteredGuides, setTripFilteredGuides] = useState<GuideCardItem[] | null>(null);
+  const [guidesTripFilterLoading, setGuidesTripFilterLoading] = useState(false);
+
+  useEffect(() => {
+    const binding = effectiveBindGuideToOrderId.trim();
+    const trip = bindOrderTripDates;
+    if (!binding || !trip || guides.length === 0) {
+      setTripFilteredGuides(null);
+      setGuidesTripFilterLoading(false);
+      return;
+    }
+    let cancelled = false;
+    setGuidesTripFilterLoading(true);
+    const debounceMs = 350;
+    const timer = setTimeout(() => {
+      void filterGuidesAvailableForTrip(guides, trip)
+        .then((filtered) => {
+          if (!cancelled) setTripFilteredGuides(filtered);
+        })
+        .finally(() => {
+          if (!cancelled) setGuidesTripFilterLoading(false);
+        });
+    }, debounceMs);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [guides, bindOrderTripDates, effectiveBindGuideToOrderId]);
+
   const sortedGuides = useMemo(() => {
-    const list = [...guides];
+    const list = [...(tripFilteredGuides ?? guides)];
     if (sortBy === "latest") {
       list.sort((a, b) => {
         const ta = a.created_at ? new Date(a.created_at).getTime() : 0;
@@ -631,7 +669,7 @@ export function useMarketPage(options?: { initialSnapshot?: MarketPageInitialSna
       });
     }
     return list;
-  }, [guides, sortBy]);
+  }, [guides, tripFilteredGuides, sortBy]);
 
   const ordersFetchGeneration = useRef(0);
   const guidesFetchGeneration = useRef(0);
@@ -645,19 +683,19 @@ export function useMarketPage(options?: { initialSnapshot?: MarketPageInitialSna
         if (generation !== ordersFetchGeneration.current) return;
         loadOrders();
       };
-      if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      if (typeof window.requestIdleCallback === "function") {
         const id = window.requestIdleCallback(refresh, { timeout: 2500 });
         return () => window.cancelIdleCallback(id);
       }
-      const timer = window.setTimeout(refresh, 800);
-      return () => window.clearTimeout(timer);
+      const timer = globalThis.setTimeout(refresh, 800);
+      return () => globalThis.clearTimeout(timer);
     }
     const delay = isInitial ? 0 : MARKET_LIST_REFETCH_DEBOUNCE_MS;
-    const timer = window.setTimeout(() => {
+    const timer = globalThis.setTimeout(() => {
       if (generation !== ordersFetchGeneration.current) return;
       loadOrders();
     }, delay);
-    return () => window.clearTimeout(timer);
+    return () => globalThis.clearTimeout(timer);
   }, [loadOrders]);
 
   useEffect(() => {
@@ -675,19 +713,19 @@ export function useMarketPage(options?: { initialSnapshot?: MarketPageInitialSna
         if (generation !== guidesFetchGeneration.current) return;
         loadGuides();
       };
-      if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      if (typeof window.requestIdleCallback === "function") {
         const id = window.requestIdleCallback(refresh, { timeout: 2500 });
         return () => window.cancelIdleCallback(id);
       }
-      const timer = window.setTimeout(refresh, 800);
-      return () => window.clearTimeout(timer);
+      const timer = globalThis.setTimeout(refresh, 800);
+      return () => globalThis.clearTimeout(timer);
     }
     const delay = isInitial ? 0 : MARKET_LIST_REFETCH_DEBOUNCE_MS;
-    const timer = window.setTimeout(() => {
+    const timer = globalThis.setTimeout(() => {
       if (generation !== guidesFetchGeneration.current) return;
       loadGuides();
     }, delay);
-    return () => window.clearTimeout(timer);
+    return () => globalThis.clearTimeout(timer);
   }, [loadGuides, view, bindGuideToOrderId, selectedOwnBindingOrderId, hasOwnPublishedOpenOrders, initialSnapshot]);
 
   useEffect(() => {
@@ -721,7 +759,7 @@ export function useMarketPage(options?: { initialSnapshot?: MarketPageInitialSna
   );
 
   useEffect(() => {
-    if (bindGuideToOrderId) setViewSync("split");
+    if (bindGuideToOrderId) setViewSync("guides");
   }, [bindGuideToOrderId]);
 
   useEffect(() => {
@@ -774,6 +812,26 @@ export function useMarketPage(options?: { initialSnapshot?: MarketPageInitialSna
     };
   }, [bindGuideToOrderId, loadingOrders, orders]);
 
+  const clearCreateItineraryDeepLink = useCallback(() => {
+    const raw = searchParams.get(MARKET_CREATE_ITINERARY_QUERY)?.trim() ?? "";
+    if (!raw) return;
+    const next = new URLSearchParams(searchParams.toString());
+    next.delete(MARKET_CREATE_ITINERARY_QUERY);
+    const qs = next.toString();
+    const base = pathname ?? "/market";
+    router.replace(qs ? `${base}?${qs}` : base, { scroll: false });
+  }, [searchParams, router, pathname]);
+
+  useEffect(() => {
+    if (!isMarketCreateItineraryDeepLink(searchParams.get(MARKET_CREATE_ITINERARY_QUERY))) return;
+    setCustomItineraryOpen(true);
+  }, [searchParams]);
+
+  const closeCustomItinerary = useCallback(() => {
+    setCustomItineraryOpen(false);
+    clearCreateItineraryDeepLink();
+  }, [clearCreateItineraryDeepLink]);
+
   const openCustomItinerary = useCallback(() => {
     setCustomItineraryInitialDays(5);
     setCustomItineraryOpen(true);
@@ -815,6 +873,7 @@ export function useMarketPage(options?: { initialSnapshot?: MarketPageInitialSna
       invalidateOwnPublishedMarketCardsCache();
       invalidateMarketGuidesListCache();
       invalidateMarketDiscoverListCache();
+      clearCreateItineraryDeepLink();
       setCustomItineraryOpen(false);
       setCustomCreatedOrderId(orderId);
       setCustomCreatedToast(true);
@@ -825,7 +884,7 @@ export function useMarketPage(options?: { initialSnapshot?: MarketPageInitialSna
         setCustomCreatedOrderId(null);
       }, 4000);
     },
-    [loadOrders]
+    [loadOrders, clearCreateItineraryDeepLink]
   );
 
   const acceptIdempotencyKeyRef = useRef<Record<string, string>>({});
@@ -893,6 +952,7 @@ export function useMarketPage(options?: { initialSnapshot?: MarketPageInitialSna
     setBookGuideName,
     customItineraryOpen,
     setCustomItineraryOpen,
+    closeCustomItinerary,
     customItineraryInitialDays,
     openCustomItinerary,
     openCustomItineraryWithDays,
@@ -936,5 +996,9 @@ export function useMarketPage(options?: { initialSnapshot?: MarketPageInitialSna
     multipleOwnPublishedOpenOrders,
     bindOrderBackfillError,
     dismissBindOrderBackfillError: () => setBindOrderBackfillError(null),
+    bindOrderTripDates,
+    bindOrderTripLoading,
+    guidesTripFilterLoading,
+    guidesFilteredByTrip: tripFilteredGuides != null,
   };
 }

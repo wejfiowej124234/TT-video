@@ -22,7 +22,7 @@ import {
   communityMediaNextImageUnoptimized,
 } from "@/lib/communityMediaClientUrl";
 import { communityShowcaseEngagementCountClassName } from "@/lib/communityShowcaseEngagementUi";
-import {TT_COMMUNITY_DRAWER_L5} from "@/lib/marketingUi";
+import { TT_COMMUNITY_DRAWER_L5, TT_COMMUNITY_FEED_ACTION } from "@/lib/marketingUi";
 import {
   CommunityCommentAuthorAvatar,
   CommunityCommentAuthorName,

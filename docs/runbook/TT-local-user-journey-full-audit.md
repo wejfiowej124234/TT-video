@@ -14,7 +14,7 @@
 | **`DATABASE_URL`（可选但强烈建议）** | 用户/会话持久化、社区/消息/部分统计 | 无 DB：重启 API 后仅内存用户丢失；**社区 Feed/发帖等多数直接依赖 PG** |
 | **`SEED_TEST_ACCOUNTS=1`（可选）** | 注入 `tourist@test.com` / `guide@test.com` 等 | 未开时无预置测试账号（开发 `main.rs` 在空 `CORS_ORIGINS` 时会默认设 `1`，勿依赖生产） |
 
-**一键 E2E（注册 → 登录 → `/market`，Network JSON 断言）**：在 `frontend` 执行 `npm run e2e:auth-chain`（并行起 `traveltrust-api` + Next；默认 Next 端口 **3050** 以免复用陈旧 dev）。`frontend/lib/api.ts` 中 **`/auth/*` 在浏览器侧直连 `NEXT_PUBLIC_API_BASE_URL`**（与 App Router 同路径页面并存；POST 不能仅靠 Next `rewrites` 代理）。
+**一键 E2E（注册 → 登录 → `/market`，Network JSON 断言）**：在 `frontend` 执行 `npm run e2e:auth-chain`（并行起 `traveltrust-api` + Next；默认 Next 端口 **3050** 以免复用陈旧 dev）。`frontend/lib/api.ts` 中 **`/auth/*` 在浏览器侧直连 `NEXT_PUBLIC_API_BASE_URL`**（与 App Router 同路径页面并存；POST 不能仅靠 Next `rewrites` 代理）。**`/market` 列表** 走 **`useMarketPage` → `getDiscoverOrders`**（**300ms debounce** · 收藏 **FE `localStorage` only**）— **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §3。
 
 **登出与会话失效（须本机 API :8080 已启动）**：`npm run e2e:auth-logout-me` — 登录 → `GET /api/v1/me` → `POST /auth/logout` → 旧 token 再 `GET /me` 期望 **401**（`login_required`）。
 

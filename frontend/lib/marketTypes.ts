@@ -52,6 +52,8 @@ export interface OrderCardItem {
   route_label?: string;
   city?: string;
   days?: number;
+  /** 出行日（列表与 GET order 同源） */
+  travel_date?: string | null;
   headcount?: number;
   version?: number;
   image?: string | null;

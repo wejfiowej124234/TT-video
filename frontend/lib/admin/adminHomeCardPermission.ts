@@ -62,6 +62,13 @@ export const ADMIN_HOME_CARD_REQUIRED_PERM: Record<string, AdminPermissionId> = 
   "/admin/community/appeals/review": ADMIN_PERM.COMMUNITY_SUPER,
   "/admin/inbox": ADMIN_PERM.READ,
   "/admin/operator-guide": ADMIN_PERM.READ,
+  "/admin/content": ADMIN_PERM.CONTENT_READ,
+  "/admin/content/countries": ADMIN_PERM.CONTENT_READ,
+  "/admin/content/publish-queue": ADMIN_PERM.CONTENT_READ,
+  "/admin/official": ADMIN_PERM.OFFICIAL_READ,
+  "/admin/growth": ADMIN_PERM.GROWTH_READ,
+  "/admin/growth/analytics": ADMIN_PERM.GROWTH_READ,
+  "/admin/conversion-analytics": ADMIN_PERM.READ,
 };
 
 export function adminHomeCardRequiredPermission(href: string): AdminPermissionId {

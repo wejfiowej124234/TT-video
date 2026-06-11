@@ -17,12 +17,15 @@ import {
 export interface EscrowDraftGuideAssignedCardProps {
   guideId: string;
   orderId: string;
+  /** P03：已绑向导，待向导接单 */
+  waitingGuideAccept?: boolean;
 }
 
 /** 已选向导：展示市场卡片级摘要（① 真 API，非假数据） */
 export default function EscrowDraftGuideAssignedCard({
   guideId,
   orderId,
+  waitingGuideAccept = false,
 }: EscrowDraftGuideAssignedCardProps) {
   const { t } = useTranslation();
   const [guide, setGuide] = useState<GuideCardItem | null>(null);
@@ -55,7 +58,11 @@ export default function EscrowDraftGuideAssignedCard({
       className={`${TT_ESCROW_EXPERIENCE_PANEL} p-3 space-y-2`}
       aria-label={t("escrow_draftGuideAssigned_cardAria")}
     >
-      <p className={`${escrowExperienceMetaClass} m-0`}>{t("escrow_draftGuideAssigned_line")}</p>
+      <p className={`${escrowExperienceMetaClass} m-0`}>
+        {waitingGuideAccept
+          ? t("escrow_draftGuideAssigned_waitAccept")
+          : t("escrow_draftGuideAssigned_line")}
+      </p>
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div className="min-w-0">
           <p className="m-0 text-small font-semibold text-white/95">{name}</p>

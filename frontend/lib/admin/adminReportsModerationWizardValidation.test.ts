@@ -4,6 +4,7 @@ import {
   adminReportsModerationSubmitBlocked,
   adminReportsWizardFieldErrorKeys,
   validateAdminReportsModerationSubmit,
+  validateAdminReportsWizardReviewStep,
   validateAdminReportsWizardStep1,
   validateAdminReportsWizardStep2,
   validateAdminReportsWizardStep3,
@@ -40,6 +41,11 @@ describe("adminReportsModerationWizardValidation", () => {
         modPenaltyReason: "",
       }),
     ).toEqual({});
+  });
+
+  it("review step requires trimmed notes and valid version", () => {
+    expect(validateAdminReportsWizardReviewStep("2", "   ")).toEqual({ notes: "required" });
+    expect(validateAdminReportsWizardReviewStep("2", "ok")).toEqual({});
   });
 
   it("step3 requires penalty fields when recording penalty", () => {

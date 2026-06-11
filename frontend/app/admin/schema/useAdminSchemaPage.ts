@@ -16,7 +16,7 @@ import {
 } from "./adminSchemaPageModel";
 
 function schemaListToSnapshot(
-  body: AdminStandardListBody<never> & Pick<SchemaMigrationsRes, "items">,
+  body: AdminStandardListBody<never>,
 ): AdminListFetchSnapshot<never> {
   const raw = body.items;
   const metaBase = isAdminMetaRecord(body.meta) ? body.meta : {};

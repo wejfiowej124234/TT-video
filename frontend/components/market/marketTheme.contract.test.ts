@@ -155,11 +155,11 @@ describe("market theme V1 (contract)", () => {
     expect(src).not.toMatch(/border-white\/25/);
   });
 
-  it("CustomItineraryModal uses warm drawer shell and day pills", () => {
+  it("CustomItineraryModal uses warm glass modal shell and day pills", () => {
     const src = read("CustomItineraryModal/index.tsx");
-    expect(src).toContain("MarketDetailDrawerFrame");
+    expect(src).toContain("MarketGlassModalFrame");
     expect(src).toContain("customItineraryPillSelected");
-    expect(src).toContain("marketDetailDrawerScrollRegion");
+    expect(src).toContain("studioModalHeader");
     expect(src).not.toMatch(/border-white\/25/);
     expect(src).not.toContain("ring-travel-400");
   });

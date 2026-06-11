@@ -68,8 +68,10 @@
 ## 与本仓库代码的对应关系
 
 - 预签名实现：`crates/api/src/storage/profile_avatar_presign.rs`
-- 路由：`crates/api/src/routes/me.rs`（`POST …/presign` 与本机 POST）
-- 前端：`postMeProfileAvatarPresign` + `useMePage` 先预签名 PUT，503 `avatar_object_storage_not_configured` 时回退 Base64 POST
+- 路由：`crates/api/src/routes/me_profile_avatar.rs`（经 `me::router()` merge · `POST …/profile-avatar` / presign / commit · `GET …/uploads/profile-avatars/:name`）
+- 前端：`postMeProfileAvatar`（`lib/apiClient/me.ts`）· `useCommunityMeAccountPanelAvatar` · `/community/me` **`CommunityMeAccountPanel`**
+- **① PI-1 浏览器：** `PH1-FE-05` · `npm run e2e:pi1-community-all`（见 `frontend/evidence/GO_local_marketing_front_closure/COMMUNITY-L5-CLOSURE.md`）
+- 预签名 PUT 路径：`postMeProfileAvatarPresign` + `useMePage` 先预签名 PUT，503 `avatar_object_storage_not_configured` 时回退 Base64 POST
 
 ## MinIO IT（F-007 · A-AVA-002 · opt-in）
 

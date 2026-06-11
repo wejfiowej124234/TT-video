@@ -25,7 +25,7 @@ export async function fetchMerchantPublishEligibility(): Promise<MerchantPublish
   try {
     const me = await getMeFull({ force: true });
     const user = userFromGetMePayload(me);
-    const trust = parseMeTrustFromMeResponse(me);
+    const trust = parseMeTrustFromMeResponse(me, user);
     const role = user?.role?.toLowerCase() ?? null;
     const roleOk = isProviderAlreadyActive(role);
     const appStatus = trust?.provider_registration_status?.toLowerCase() ?? null;

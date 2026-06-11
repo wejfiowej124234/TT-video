@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import type { OrderListItem } from "@/lib/apiClient";
 import type { OrderDetailItem } from "@/components/market/OrderDetailDrawer";
 import { shortEvmAddress } from "@/lib/formatEvmAddress";
@@ -13,16 +12,17 @@ import {
   orderProjectionTerminalDegraded,
   orderStatusLabelKeyFromApiOrder,
 } from "@/lib/orderProjectionDisplayStatus";
-import { orderListItemMayRequestCancel } from "@/lib/communityMeMyOrdersModel";
+import { orderListItemMayRequestCancel, normalizedOrderListState } from "@/lib/communityMeMyOrdersModel";
+import { isDraftOrderListState } from "@/lib/isDraftOrderListState";
 import { stashEscrowOrderPrefetchFromListItem } from "@/lib/orderEscrowPrefetch";
 import { TT_ORDERS_LIST_L5, ordersListL5ListItemStaggerMs } from "@/lib/orders/ordersListL5";
-import {
-  communityMediaAbsoluteUrlForRender,
-  communityMediaNextImageUnoptimized,
-} from "@/lib/communityMediaClientUrl";
 import { OrdersListSearchHighlight } from "@/components/orders/OrdersListSearchHighlight";
 import { OrdersListCalendarIcon, OrdersListPinIcon } from "@/components/orders/OrdersListMetaIcons";
-import { ORDER_PLACEHOLDER_IMAGE, orderListItemToDetailDrawer } from "./ordersListPageModel";
+import {
+  ORDER_PLACEHOLDER_IMAGE,
+  orderListItemToDetailDrawer,
+  resolveOrderListCoverUrl,
+} from "./ordersListPageModel";
 import { useOrdersListCardSwipe } from "./useOrdersListCardSwipe";
 
 export function OrdersListCardItem({
@@ -52,11 +52,12 @@ export function OrdersListCardItem({
   openSwipeCardId: string | null;
   setOpenSwipeCardId: (id: string | null) => void;
   setPreviewOrder: (o: OrderDetailItem | null) => void;
-  handleDeleteOrder: (orderId: string, stateOrStatus: string, tConfirm: (k: string) => string) => Promise<void>;
+  handleDeleteOrder: (orderId: string, stateOrStatus: string) => void;
   onKeyboardActivate?: () => void;
 }) {
   const id = item?.id ?? String(index);
   const state = (item?.state ?? item?.status ?? "").toLowerCase();
+  const isDraft = isDraftOrderListState(normalizedOrderListState(item));
   const statusKey = orderStatusLabelKeyFromApiOrder(item);
   const statusLabel = t(statusKey) || state || t("ui_em_dash");
   const variant = orderBadgeVariantFromApiOrder(item);
@@ -75,7 +76,11 @@ export function OrdersListCardItem({
       ? `${item.travel_date} · ${item.days} ${t("orders_days")}`
       : item?.travel_date ?? (item?.days != null ? `${item.days} ${t("orders_days")}` : null) ?? t("ui_em_dash");
   const orderCoverRaw = typeof item?.image === "string" ? item.image.trim() : "";
-  const imageUrl = orderCoverRaw ? communityMediaAbsoluteUrlForRender(orderCoverRaw) : ORDER_PLACEHOLDER_IMAGE;
+  const imageUrl = resolveOrderListCoverUrl(orderCoverRaw || null);
+  const [coverSrc, setCoverSrc] = useState(imageUrl);
+  useEffect(() => {
+    setCoverSrc(imageUrl);
+  }, [imageUrl]);
 
   const badgeClass =
     variant === "success"
@@ -182,7 +187,7 @@ export function OrdersListCardItem({
                   disabled={deletingId === item.id}
                   onClick={() => {
                     closeSwipe();
-                    void handleDeleteOrder(id, state, t);
+                    void handleDeleteOrder(id, state);
                   }}
                 >
                   <span aria-hidden>✕</span>
@@ -237,16 +242,16 @@ export function OrdersListCardItem({
                 <div
                   className={`relative aspect-[16/10] sm:aspect-auto sm:h-[168px] w-full overflow-hidden rounded-[var(--radius-lg)] ${TT_ORDERS_LIST_L5.coverPlaceholder} ${TT_ORDERS_LIST_L5.coverRing}`}
                 >
-                  <Image
-                    src={imageUrl}
+                  <img
+                    src={coverSrc}
                     alt={coverAlt}
-                    fill
-                    className={TT_ORDERS_LIST_L5.coverImage}
-                    sizes="(max-width: 640px) 100vw, 192px"
-                    unoptimized={communityMediaNextImageUnoptimized(imageUrl)}
-                    priority={coverEager}
-                    loading={coverEager ? undefined : "lazy"}
+                    decoding="async"
+                    loading={coverEager ? "eager" : "lazy"}
                     fetchPriority={coverEager ? "high" : "low"}
+                    className={`absolute inset-0 h-full w-full ${TT_ORDERS_LIST_L5.coverImage}`}
+                    onError={() => {
+                      if (coverSrc !== ORDER_PLACEHOLDER_IMAGE) setCoverSrc(ORDER_PLACEHOLDER_IMAGE);
+                    }}
                   />
                   <div
                     className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ref-sun/20 via-transparent to-transparent opacity-0 motion-safe:transition-opacity motion-safe:duration-300 group-hover:opacity-100 motion-reduce:transition-none"
@@ -297,7 +302,7 @@ export function OrdersListCardItem({
                       <OrdersListSearchHighlight text={String(item.id)} query={highlightQuery} />
                     </p>
                   ) : null}
-                  {item.escrow_address ? (
+                  {item.escrow_address && !isDraft ? (
                     <p
                       className={`${TT_ORDERS_LIST_L5.metaText} mt-1.5 font-mono truncate max-w-full`}
                       title={item.escrow_address}
@@ -349,7 +354,7 @@ export function OrdersListCardItem({
                         className="min-w-0 flex-1"
                         onSubmit={(e: FormEvent) => {
                           e.preventDefault();
-                          void handleDeleteOrder(id, state, t);
+                          void handleDeleteOrder(id, state);
                         }}
                       >
                         <button

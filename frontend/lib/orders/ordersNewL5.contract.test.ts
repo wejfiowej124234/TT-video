@@ -41,6 +41,9 @@ describe("orders new L5 contract (① · dark cinematic)", () => {
     expect(src).toContain("TT_ORDERS_NEW_L5.ambient");
     expect(src).toContain("TT_ORDERS_NEW_L5.dotGrid");
     expect(src).toContain('variant="experience"');
+    expect(src).toContain("compact");
+    expect(src).toContain("draftJourneyStep={1}");
+    expect(src).not.toMatch(/variant="experience"\s*\/>/);
     expect(src).toContain('tone="dark"');
     expect(src).toContain("OrdersNewPageFooter");
     expect((src.match(/<OrdersNewCrossNav/g) ?? []).length).toBe(1);
@@ -49,12 +52,21 @@ describe("orders new L5 contract (① · dark cinematic)", () => {
     expect(src).not.toContain("bg-bg-console");
     expect(src).not.toContain("TT_MARKETING_PRODUCT_PAGE_SHELL");
     expect(src).not.toContain("TT_MARKETING_CONSOLE_INLINE_LINK");
+    expect(src).toContain("marketHrefForPickGuide");
+    expect(src).toContain("orders_change_guide");
+    expect(src).toContain("orders_pick_guide_at_market");
+    expect(src).not.toContain("<select");
+    expect(src).not.toContain("guidePickerOpen");
+    expect(src).toContain("OrdersNewGuideSummary");
+    expect(src).toContain("scheduleBlocked");
   });
 
   it("page.tsx delegates to hook + OrdersNewPageMain", () => {
     const src = readFileSync(page, "utf8");
     expect(src).toContain("useOrdersNewPage");
     expect(src).toContain("OrdersNewPageMain");
+    expect(src).toContain("<OrdersNewPageMain {...vm} />");
+    expect(src).not.toContain("<OrdersNewPageMain vm={vm} />");
     expect(src).not.toContain("postOrder");
     expect(src).not.toContain("text-travel-500");
   });

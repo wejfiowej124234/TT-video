@@ -16,7 +16,7 @@ test("首页可访问", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("body")).toBeVisible();
   await expect(
-    page.getByRole("main", { name: /Start your dream|梦想之旅|dream trip/i }),
+    page.getByRole("main", { name: /定制旅行|Custom travel|选目的地|Pick a destination/i }),
   ).toBeVisible();
   await expect(page.getByRole("link", { name: /发现|Discover|市场/i }).first()).toBeVisible();
 });

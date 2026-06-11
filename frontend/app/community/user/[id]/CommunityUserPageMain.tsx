@@ -79,9 +79,9 @@ export function CommunityUserPageMain({ core }: { core: CommunityUserPageCore })
         isLoggedIn={isLoggedIn}
         isSelf={isSelf}
         followingLoadError={followingLoadError}
-        onFollowingRetry={() => setFollowingRetryKey((k) => k + 1)}
+        onFollowingRetry={() => setFollowingRetryKey()}
         conversationsLoadError={conversationsLoadError}
-        onConversationsRetry={() => setConversationsRetryKey((k) => k + 1)}
+        onConversationsRetry={() => setConversationsRetryKey()}
         postsLoadError={postsLoadError}
         onPostsRetry={() => setPostsRetryKey((k) => k + 1)}
       />

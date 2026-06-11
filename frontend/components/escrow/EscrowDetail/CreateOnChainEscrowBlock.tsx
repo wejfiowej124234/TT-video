@@ -325,11 +325,7 @@ export default function CreateOnChainEscrowBlock({
 
   return (
     <div className={panelClassName}>
-      {!variantExperience ? (
-        <FeeRouterWiringNotice />
-      ) : process.env.NODE_ENV !== "production" ? (
-        <FeeRouterWiringNotice variant="experience" />
-      ) : null}
+      {!variantExperience ? <FeeRouterWiringNotice /> : null}
       <h3
         className={
           isExperience

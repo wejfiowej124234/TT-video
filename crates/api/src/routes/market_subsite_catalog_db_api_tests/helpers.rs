@@ -325,6 +325,8 @@ pub(super) async fn seed_public_catalog_guide(
         None,
         None,
         "0",
+        None,
+        None,
         "active",
         now,
         now,

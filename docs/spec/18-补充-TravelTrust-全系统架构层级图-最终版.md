@@ -29,6 +29,7 @@
 | **部署符号 vs 产线真源** | **[18 §六点五](18-TravelTrust-全系统架构图.md)**（与本文「技术栈与当前仓库」段同旨） |
 | **社区 / internal / 实时（宏观 ASCII 未展开）** | **[18](18-TravelTrust-全系统架构图.md) §一「并列能力」**、**[00 总表 §三 表注](00-最终版架构图对应模块清单总表.md) 24/22**、**[67](snapshots/67-架构与阶段文档对齐纪要-20260326.md)** |
 | **订单步骤 / API** | **[53](53-阶段开发技术文档.md)**、**[04 §3.4](04-后端与API.md)** — **18+本文** 为鸟瞰，**不**替代 |
+| **`/` + `/market*` 四页 ① FE 数据链** | **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · debounce · **`localStorage`** · **F-020 best-effort → ② SLA** |
 
 ---
 
@@ -93,7 +94,7 @@
 
 **文档锚点**：[05-前端总览](05-前端总览.md)、[06-DApp架构总览](06-DApp架构总览.md)、[13-1](13-1-UI产品级SSOT与页面规范.md)、[09 §2.7](09-技术架构总览-v1.0.md)。
 
-**实现注**：**自由市场 / 撮合**主入口以 **`/market`** 等为 SSOT（常与 Discover 联动）；页面地图与路由以 **13-1**、[29-自由市场-撮合控制台规范](29-自由市场-撮合控制台规范.md) 为准，勿仅按上图「Discover」字面理解为唯一入口。
+**实现注**：**自由市场 / 撮合**主入口以 **`/market`** 等为 SSOT（HTTP **`GET …/discover/orders`** 由 **`useMarketPage`** 消费 · **300ms debounce**；**`/discover`** 重定向壳）。页面地图与路由以 **13-1**、[29-自由市场-撮合控制台规范](29-自由市场-撮合控制台规范.md)、**[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** 为准，勿仅按上图「Discover」字面理解为独立列表页。
 
 **并列注（与 18 §一「并列能力」一致）**：**社区 Feed / 帖文 / 评论 / 好友 / 私信** 等 — **[160-阶段开发内容与社区系统](160-阶段开发内容与社区系统.md)**；HTTP 契约 **`community`** 见 **[04 §3.4](04-后端与API.md)**。三态上仍可能为「有方案未落地」= **160 级治理/证据未全勾选**，**不等于**无 API（**[00 总表 §三 表注 24](00-最终版架构图对应模块清单总表.md)**）。
 

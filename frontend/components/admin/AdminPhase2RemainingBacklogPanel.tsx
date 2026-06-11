@@ -6,6 +6,7 @@ import { useTranslation } from "@/components/LocaleProvider";
 import { AdminNoticeBanner } from "@/components/admin/AdminNoticeBanner";
 import { AdminClipboardCopyButton } from "@/components/admin/AdminClipboardCopyButton";
 import { ADMIN_PHASE2_REMAINING_BACKLOG_ITEMS } from "@/lib/admin/adminPhase2RemainingBacklog";
+import type { AdminPhase2RemainingBacklogId } from "@/lib/admin/adminPhase2RemainingBacklog";
 import { adminPhase2LocalPrepCommand } from "@/lib/admin/adminPhase2LocalPrepCommands";
 import type { AdminPhase2PrepFlags } from "@/lib/admin/adminRole70Matrix";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
@@ -14,7 +15,7 @@ import { adminPageNavLinkClass,
   ADMIN_INNER_DIVIDER_CLASS,} from "@/lib/adminUi";
 
 function prepDetailForItem(
-  id: (typeof ADMIN_PHASE2_REMAINING_BACKLOG_ITEMS)[number]["id"],
+  id: AdminPhase2RemainingBacklogId,
   prep: AdminPhase2PrepFlags | null,
   t: (key: string, vars?: Record<string, string | number>) => string,
 ): string {

@@ -7,7 +7,16 @@ import { mapApiReadError } from "@/lib/mapApiReadError";
 import { useTranslation } from "@/components/LocaleProvider";
 import { buildLoginReturnPathWithQuery } from "@/lib/marketLoginReturnPath";
 import { parseGuideDetailForRoute } from "@/lib/guideDetailRoutePayload";
+import type { GuideTripDateSelection } from "@/components/guides/GuideOccupiedScheduleBlock";
 import type { GuideDetailShape } from "./guideDetailPageTypes";
+import { MARKET_BIND_GUIDE_ORDER_QUERY } from "@/lib/marketDeepLink";
+import { isUuidString } from "@/lib/isUuidString";
+import {
+  fetchBindableOwnItineraryOrders,
+  pickDefaultBindOrderId,
+} from "@/lib/bookGuideItineraryPicker";
+import { readLandingResultOrderIds } from "@/lib/landingItinerarySession";
+import { useBindOrderTripDates } from "@/hooks/useBindOrderTripDates";
 
 export function useGuideDetailPage() {
   const { t } = useTranslation();
@@ -30,6 +39,55 @@ export function useGuideDetailPage() {
   const [copyDidBusy, setCopyDidBusy] = useState(false);
   const [guideLoadRetryKey, setGuideLoadRetryKey] = useState(0);
   const [bookGuideOpen, setBookGuideOpen] = useState(false);
+  const [selectedTrip, setSelectedTrip] = useState<GuideTripDateSelection | null>(null);
+  const [bindableItineraryCount, setBindableItineraryCount] = useState(0);
+
+  const bindGuideToOrderFromQuery = useMemo(() => {
+    const raw = searchParams.get(MARKET_BIND_GUIDE_ORDER_QUERY)?.trim() ?? "";
+    return isUuidString(raw) ? raw : "";
+  }, [searchParams]);
+
+  const [autoBindOrderId, setAutoBindOrderId] = useState("");
+
+  useEffect(() => {
+    if (bindGuideToOrderFromQuery) {
+      setAutoBindOrderId("");
+      setBindableItineraryCount(0);
+      return;
+    }
+    let cancelled = false;
+    void fetchBindableOwnItineraryOrders()
+      .then((items) => {
+        if (cancelled) return;
+        setBindableItineraryCount(items.length);
+        if (items.length >= 1) {
+          const landingPreferred = [...readLandingResultOrderIds()].reverse();
+          setAutoBindOrderId(pickDefaultBindOrderId(items, landingPreferred));
+        } else setAutoBindOrderId("");
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setBindableItineraryCount(0);
+          setAutoBindOrderId("");
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [bindGuideToOrderFromQuery]);
+
+  const effectiveBindOrderId = bindGuideToOrderFromQuery || autoBindOrderId;
+
+  const itineraryBindActive = effectiveBindOrderId.length > 0;
+
+  const { tripDates: bindOrderTripDates, loading: bindOrderTripLoading } =
+    useBindOrderTripDates(effectiveBindOrderId);
+
+  useEffect(() => {
+    if (bindOrderTripDates) {
+      setSelectedTrip({ start: bindOrderTripDates.start, end: bindOrderTripDates.end });
+    }
+  }, [bindOrderTripDates]);
 
   useEffect(() => {
     if (!id) {
@@ -148,6 +206,13 @@ export function useGuideDetailPage() {
     bumpGuideLoadRetry: () => setGuideLoadRetryKey((k) => k + 1),
     bookGuideOpen,
     setBookGuideOpen,
+    selectedTrip,
+    setSelectedTrip,
     handleStake,
+    effectiveBindOrderId,
+    itineraryBindActive,
+    bindOrderTripLoading,
+    bindableItineraryCount,
+    hasBindableItineraries: bindableItineraryCount > 0,
   };
 }

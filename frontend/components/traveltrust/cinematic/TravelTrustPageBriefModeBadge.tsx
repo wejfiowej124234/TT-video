@@ -47,7 +47,7 @@ export function TravelTrustPageBriefModeBadge({ compact = false }: Props) {
     return (
       <motion.span
         className={`${shellClass} ${TT_BRIEF_BADGE_L5.demoClass}`}
-        animate={{ opacity: TT_BRIEF_BADGE_L5.demoOpacityRange }}
+        animate={{ opacity: [...TT_BRIEF_BADGE_L5.demoOpacityRange] }}
         transition={{
           duration: TT_BRIEF_BADGE_L5.demoPulseDuration,
           repeat: TT_BRIEF_BADGE_L5.demoPulseRepeat,
@@ -68,7 +68,7 @@ export function TravelTrustPageBriefModeBadge({ compact = false }: Props) {
   return (
     <motion.span
       className={`${shellClass} ${TT_BRIEF_BADGE_LIVE_L5_CLASS}`}
-      animate={{ opacity: TT_BRIEF_BADGE_L5.liveOpacityRange }}
+      animate={{ opacity: [...TT_BRIEF_BADGE_L5.liveOpacityRange] }}
       transition={{
         duration: TT_BRIEF_BADGE_L5.livePulseDuration,
         repeat: TT_BRIEF_BADGE_L5.livePulseRepeat,

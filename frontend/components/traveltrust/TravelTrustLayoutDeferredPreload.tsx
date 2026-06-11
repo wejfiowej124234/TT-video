@@ -36,7 +36,7 @@ export function TravelTrustLayoutDeferredPreload() {
       }
     };
 
-    if ("requestIdleCallback" in window) {
+    if (typeof window.requestIdleCallback === "function") {
       const id = window.requestIdleCallback(() => void run(), { timeout: 4000 });
       return () => {
         cancelled = true;
@@ -44,10 +44,10 @@ export function TravelTrustLayoutDeferredPreload() {
       };
     }
 
-    const t = window.setTimeout(() => void run(), 1200);
+    const t = globalThis.setTimeout(() => void run(), 1200);
     return () => {
       cancelled = true;
-      window.clearTimeout(t);
+      globalThis.clearTimeout(t);
     };
   }, []);
 

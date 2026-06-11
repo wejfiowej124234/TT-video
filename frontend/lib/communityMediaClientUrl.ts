@@ -84,7 +84,12 @@ export function outboundUrlFromPersisted(raw: string | null | undefined): string
 export function communityMediaNextImageUnoptimized(resolvedSrc: string): boolean {
   const s = resolvedSrc;
   if (!s) return false;
-  return s.startsWith("blob:") || s.startsWith("data:") || s.includes("/api/v1/uploads/");
+  return (
+    s.startsWith("blob:") ||
+    s.startsWith("data:") ||
+    s.includes("/api/v1/uploads/") ||
+    s.includes("images.unsplash.com")
+  );
 }
 
 /** 与后端 **`COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL`** / MinIO 证据链同源；Next rewrite 须与此一致。 */

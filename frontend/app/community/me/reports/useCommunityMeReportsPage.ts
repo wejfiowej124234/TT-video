@@ -3,6 +3,7 @@
 import { usePathname, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
+import type { LocaleTranslateFn } from "@/lib/i18n";
 import { useCommunityAuth } from "@/components/community/CommunityAuthContext";
 import { communityMeLoginReturnUrl } from "@/lib/communityMeContentNav";
 import { deriveListDataState, type DataState } from "@/lib/dataState";
@@ -14,7 +15,7 @@ import {
 export type { CommunityMeReportListItem };
 
 export type CommunityMeReportsPageViewModel = {
-  t: (k: string) => string;
+  t: LocaleTranslateFn;
   isLoggedIn: boolean;
   authPending: boolean;
   loginReturnPath: string;

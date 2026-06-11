@@ -78,53 +78,42 @@ export default function EscrowDraftExperienceFooter({
         <p className={escrowExperienceFooterSectionLabelClass}>{t("escrow_experienceFooter_helpLabel")}</p>
         <div className={escrowExperienceFooterRowClass}>
           <EscrowDraftTravelNotice compact />
-          {showCancelOrder || showDeleteOrder ? (
-            <details className="text-small text-slate-200">
-              <summary
-                className={`${touchTargetLink44Classes} ${escrowExperienceFooterLinkClass} cursor-pointer list-none [&::-webkit-details-marker]:hidden`}
+          {showCancelOrder ? (
+            <form
+              className="inline"
+              onSubmit={(e) => {
+                e.preventDefault();
+                onCancelOrder();
+              }}
+            >
+              <button
+                type="submit"
+                disabled={orderActionPending}
+                className={`${touchTargetLink44Classes} ${escrowExperienceFooterLinkClass} disabled:opacity-50`}
+                aria-busy={orderActionPending ? true : undefined}
               >
-                {t("escrow_draftFooter_more")}
-              </summary>
-              <div className="mt-2.5 flex flex-col items-start gap-2.5 pl-0.5">
-                {showCancelOrder ? (
-                  <form
-                    className="contents"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      onCancelOrder();
-                    }}
-                  >
-                    <button
-                      type="submit"
-                      disabled={orderActionPending}
-                      className={`${touchTargetLink44Classes} ${escrowExperienceFooterLinkClass} disabled:opacity-50`}
-                      aria-busy={orderActionPending ? true : undefined}
-                    >
-                      {orderActionPending ? t("common_submitting") : t("escrow_cancelOrder")}
-                    </button>
-                  </form>
-                ) : null}
-                {showDeleteOrder ? (
-                  <form
-                    className="contents"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      onDeleteOrder();
-                    }}
-                  >
-                    <button
-                      type="submit"
-                      disabled={orderActionPending}
-                      className={`${touchTargetLink44Classes} ${escrowExperienceDangerLinkClass} disabled:opacity-50`}
-                      aria-label={t("escrow_deleteOrder")}
-                      aria-busy={orderActionPending ? true : undefined}
-                    >
-                      {orderActionPending ? t("common_submitting") : t("escrow_deleteOrder")}
-                    </button>
-                  </form>
-                ) : null}
-              </div>
-            </details>
+                {orderActionPending ? t("common_submitting") : t("escrow_cancelOrder")}
+              </button>
+            </form>
+          ) : null}
+          {showDeleteOrder ? (
+            <form
+              className="inline"
+              onSubmit={(e) => {
+                e.preventDefault();
+                onDeleteOrder();
+              }}
+            >
+              <button
+                type="submit"
+                disabled={orderActionPending}
+                className={`${touchTargetLink44Classes} ${escrowExperienceDangerLinkClass} disabled:opacity-50`}
+                aria-label={t("escrow_deleteOrder")}
+                aria-busy={orderActionPending ? true : undefined}
+              >
+                {orderActionPending ? t("common_submitting") : t("escrow_deleteOrder")}
+              </button>
+            </form>
           ) : null}
         </div>
       </div>

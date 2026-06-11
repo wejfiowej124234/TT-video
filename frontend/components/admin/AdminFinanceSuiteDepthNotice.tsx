@@ -46,7 +46,7 @@ export function AdminFinanceSuiteDepthNotice() {
       className="mb-4"
       dataAttrs={{
         "data-tt-admin-fin-suite-depth-notice": "1",
-        "data-tt-admin-fin-suite-module": moduleId || undefined,
+        ...(moduleId ? { "data-tt-admin-fin-suite-module": moduleId } : {}),
       }}
       message={
         <div>

@@ -32,6 +32,11 @@ describe("admin operator guide page", () => {
     expect(src).toContain("ADMIN_INBOX_QUEUE_HREFS");
     expect(src).toContain('href: "/admin/inbox"');
     expect(src).toContain("admin_operator_flow_inbox");
+    expect(src).toContain("OPERATOR_GUIDE_DAILY_OPS_LINKS");
+    expect(src).toContain('href: "/admin/content/countries"');
+    expect(src).toContain('href: "/admin/official"');
+    expect(src).not.toContain('href: "/admin/content/publish-queue"');
+    expect(src).not.toContain('key: "admin_operator_flow_reports"');
     expect(src).not.toContain("headerAside={<AdminInboxQueueBackLinks />}");
     expect(src).toContain("admin_operator_guide_title");
     expect(src).toContain('"data-tt-admin-operator-guide": "1"');

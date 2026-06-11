@@ -42,8 +42,8 @@ export function rolePrimaryCtaFallback(consoleRole: ConsoleRole70 | null): Prima
     case "Ops":
     default:
       return [
-        { href: ADMIN_INBOX_QUEUE_HREFS.provider, labelKey: "admin_home_primary_cta_provider" },
-        { href: ADMIN_INBOX_QUEUE_HREFS.steward, labelKey: "admin_home_primary_cta_steward" },
+        { href: "/admin/content/countries", labelKey: "admin_home_primary_cta_content_publish" },
+        { href: "/admin/growth/analytics", labelKey: "admin_home_primary_cta_growth_analytics" },
         { href: ADMIN_INBOX_QUEUE_HREFS.reports, labelKey: "admin_home_primary_cta_reports" },
       ];
   }

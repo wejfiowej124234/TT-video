@@ -1,15 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useId } from "react";
 
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import { useTranslation } from "@/components/LocaleProvider";
 import OrderFlowSteps from "@/components/escrow/OrderFlowSteps";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
+import { marketHrefForPickGuide } from "@/lib/ordersGuideDeepLink";
 import { ordersListHrefAfterCreate } from "@/lib/ordersExpectOrderParam";
 import { ordersNewL5MainDataAttrs, TT_ORDERS_NEW_L5 } from "@/lib/orders/ordersNewL5";
-import { ordersNewGuideOptionLabel } from "./ordersNewPageModel";
+import { OrdersNewGuideSummary } from "./OrdersNewGuideSummary";
 import { OrdersNewPageFooter } from "./OrdersNewPageFooter";
 import type { UseOrdersNewPageResult } from "./useOrdersNewPage";
 
@@ -27,31 +27,30 @@ function OrdersNewCrossNav({ className }: { className?: string }) {
 
 export function OrdersNewPageMain(vm: UseOrdersNewPageResult) {
   const { t } = useTranslation();
-  const formBaseId = useId();
-  const guideFieldId = `${formBaseId}-guide`;
-  const amountFieldId = `${formBaseId}-amount`;
-  const currencyFieldId = `${formBaseId}-currency`;
+  const marketPickHref = marketHrefForPickGuide();
 
   const {
     guideIdFromQuery,
+    tripStartFromQuery,
+    tripEndFromQuery,
     guideId,
-    setGuideId,
     amount,
     setAmount,
     currency,
     setCurrency,
     guides,
-    guidesLoadError,
-    bumpGuidesRetry,
-    guidePickerOpen,
-    setGuidePickerOpen,
+    scheduleBlocked,
+    scheduleBlockMessage,
     loading,
     error,
     createdId,
     handleSubmit,
     stashCreatedOrderEscrowPayPrefetch,
-    keepLinkGuide,
   } = vm;
+
+  const hasSelectedGuide = guideId.trim().length > 0;
+  const guideRow = guides.find((g) => g.id === guideId) ?? { id: guideId };
+  const canSubmit = hasSelectedGuide && !scheduleBlocked;
 
   if (createdId) {
     return (
@@ -102,127 +101,84 @@ export function OrdersNewPageMain(vm: UseOrdersNewPageResult) {
         <div className={TT_ORDERS_NEW_L5.formFrame}>
           <div className={`relative ${TT_ORDERS_NEW_L5.formInner}`}>
             <div className={TT_ORDERS_NEW_L5.formInnerGlow} aria-hidden />
-            <OrderFlowSteps currentStep={1} variant="experience" />
+            <OrderFlowSteps currentStep={1} variant="experience" compact draftJourneyStep={1} />
             <h1 className={TT_ORDERS_NEW_L5.title}>{t("orders_createTitle")}</h1>
-            {guidesLoadError ? (
-              <div className="mb-4 space-y-2">
-                <ApiErrorAlert message={guidesLoadError} tone="dark" />
-                <form
-                  className="inline"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    bumpGuidesRetry();
-                  }}
-                >
-                  <button type="submit" className={TT_ORDERS_NEW_L5.retryBtn}>
-                    {t("common_retry")}
-                  </button>
-                </form>
-              </div>
-            ) : null}
             <form onSubmit={handleSubmit} className="space-y-3" aria-busy={loading ? true : undefined}>
               <div>
-                {guideIdFromQuery.trim() ? (
+                {hasSelectedGuide ? (
                   <section className={`mb-4 ${TT_ORDERS_NEW_L5.guideBanner}`} aria-label={t("orders_selected_guide_region")}>
-                    <p className={TT_ORDERS_NEW_L5.metaText}>{t("orders_preselected_guide_banner")}</p>
-                    <p className={TT_ORDERS_NEW_L5.guideBannerTitle}>
-                      {ordersNewGuideOptionLabel(guides.find((g) => g.id === guideId) ?? { id: guideId })}
-                    </p>
-                    {!guidePickerOpen ? (
-                      <button type="button" onClick={() => setGuidePickerOpen(true)} className={TT_ORDERS_NEW_L5.inlineLink}>
+                    {guideIdFromQuery.trim() ? (
+                      <p className={TT_ORDERS_NEW_L5.metaText}>{t("orders_preselected_guide_banner")}</p>
+                    ) : null}
+                    <OrdersNewGuideSummary
+                      guide={guideRow}
+                      tripStart={tripStartFromQuery}
+                      tripEnd={tripEndFromQuery}
+                    />
+                    <p className={`${TT_ORDERS_NEW_L5.mutedText} mt-2`}>{t("orders_change_guide_market_hint")}</p>
+                    <p className="mt-2">
+                      <Link href={marketPickHref} className={TT_ORDERS_NEW_L5.inlineLink}>
                         {t("orders_change_guide")}
-                      </button>
-                    ) : (
-                      <div className={TT_ORDERS_NEW_L5.guidePickerDivider}>
-                        <label htmlFor={guideFieldId} className={TT_ORDERS_NEW_L5.labelText}>
-                          {t("orders_guides")} *
-                        </label>
-                        <select
-                          id={guideFieldId}
-                          value={guideId}
-                          onChange={(e) => setGuideId(e.target.value)}
-                          required
-                          disabled={loading}
-                          className={TT_ORDERS_NEW_L5.formSelect}
-                        >
-                          <option value="">{t("orders_selectGuide")}</option>
-                          {guides.map((g) => (
-                            <option key={g.id} value={g.id}>
-                              {ordersNewGuideOptionLabel(g)}
-                            </option>
-                          ))}
-                        </select>
-                        <button type="button" onClick={keepLinkGuide} className={TT_ORDERS_NEW_L5.keepLinkGuideBtn}>
-                          {t("orders_keep_link_guide")}
-                        </button>
-                      </div>
-                    )}
-                  </section>
-                ) : (
-                  <>
-                    <label htmlFor={guideFieldId} className={TT_ORDERS_NEW_L5.labelText}>
-                      {t("orders_guides")} *
-                    </label>
-                    <select
-                      id={guideFieldId}
-                      value={guideId}
-                      onChange={(e) => setGuideId(e.target.value)}
-                      required
-                      disabled={loading}
-                      className={TT_ORDERS_NEW_L5.formSelect}
-                    >
-                      <option value="">{t("orders_selectGuide")}</option>
-                      {guides.map((g) => (
-                        <option key={g.id} value={g.id}>
-                          {ordersNewGuideOptionLabel(g)}
-                        </option>
-                      ))}
-                    </select>
-                    {guidesLoadError == null && guides.length === 0 ? (
-                      <p className={`${TT_ORDERS_NEW_L5.mutedText} mt-0.5`}>
-                        {t("orders_noGuidesBefore")}
-                        <Link href="/guide/register" className={TT_ORDERS_NEW_L5.inlineLink}>
-                          {t("orders_noGuidesLink")}
-                        </Link>
-                        {t("orders_noGuidesAfter")}
+                      </Link>
+                    </p>
+                    {scheduleBlockMessage ? (
+                      <p
+                        className={`mt-2 text-small ${scheduleBlocked ? "text-rose-200/95" : "text-slate-400"}`}
+                        role={scheduleBlocked ? "alert" : "status"}
+                      >
+                        {scheduleBlockMessage}
                       </p>
                     ) : null}
-                  </>
+                  </section>
+                ) : (
+                  <section className={`mb-4 ${TT_ORDERS_NEW_L5.guideBanner}`} aria-label={t("orders_guides")}>
+                    <p className={TT_ORDERS_NEW_L5.metaText}>{t("orders_pick_guide_at_market_body")}</p>
+                    <p className="mt-3">
+                      <Link href={marketPickHref} className={TT_ORDERS_NEW_L5.marketPickGuideBtn}>
+                        {t("orders_pick_guide_at_market")}
+                      </Link>
+                    </p>
+                  </section>
                 )}
               </div>
               <div>
-                <label htmlFor={amountFieldId} className={TT_ORDERS_NEW_L5.labelText}>
+                <label htmlFor="orders-new-amount" className={TT_ORDERS_NEW_L5.labelText}>
                   {t("orders_amount")}
                 </label>
                 <input
-                  id={amountFieldId}
+                  id="orders-new-amount"
                   type="text"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   required
-                  disabled={loading}
+                  disabled={loading || !canSubmit}
                   className={TT_ORDERS_NEW_L5.formField}
                   placeholder={t("orders_amountPlaceholder")}
                   autoComplete="off"
                 />
               </div>
               <div>
-                <label htmlFor={currencyFieldId} className={TT_ORDERS_NEW_L5.labelText}>
+                <label htmlFor="orders-new-currency" className={TT_ORDERS_NEW_L5.labelText}>
                   {t("orders_currency")}
                 </label>
                 <input
-                  id={currencyFieldId}
+                  id="orders-new-currency"
                   type="text"
                   value={currency}
                   onChange={(e) => setCurrency(e.target.value)}
-                  disabled={loading}
+                  disabled={loading || !canSubmit}
                   className={TT_ORDERS_NEW_L5.formField}
                   placeholder={t("orders_currencyPlaceholder")}
                   autoComplete="off"
                 />
               </div>
               {error ? <ApiErrorAlert message={error} tone="dark" /> : null}
-              <button type="submit" disabled={loading} aria-busy={loading} className={TT_ORDERS_NEW_L5.submitBtn}>
+              <button
+                type="submit"
+                disabled={loading || !canSubmit}
+                aria-busy={loading}
+                className={TT_ORDERS_NEW_L5.submitBtn}
+              >
                 {loading ? t("orders_creating") : t("orders_create")}
               </button>
             </form>

@@ -75,11 +75,11 @@ export function OrdersListFilterRail({
       <p id={ordersStateFilterId} className={TT_ORDERS_LIST_L5.filterRailLabel}>
         {t("orders_list_stateFilter_label")}
       </p>
-      <div className={`mx-auto flex w-full max-w-4xl flex-col gap-2 ${embedded ? "" : "pt-2"} sm:flex-row sm:items-center`}>
+      <div className={`mx-auto flex w-full max-w-4xl flex-col gap-2 ${embedded ? "" : "pt-2"}`}>
         <div ref={scrollRef} className={TT_ORDERS_LIST_L5.filterBarScroll}>
           <div
             ref={barRef}
-            className={`${TT_ORDERS_LIST_L5.filterBar} relative w-max min-w-full flex-nowrap sm:w-auto sm:flex-wrap`}
+            className={`${TT_ORDERS_LIST_L5.filterBar} relative inline-flex w-max max-w-full flex-nowrap items-center`}
             role="group"
             aria-labelledby={ordersStateFilterId}
           >
@@ -139,7 +139,11 @@ export function OrdersListFilterRail({
           </div>
         </div>
         {countsLoadedOnly ? (
-          <p className={TT_ORDERS_LIST_L5.searchScopeHint} role="note" data-tt-orders-filter-count-hint="1">
+          <p
+            className={`${TT_ORDERS_LIST_L5.searchScopeHintInline} max-w-4xl`}
+            role="note"
+            data-tt-orders-filter-count-hint="1"
+          >
             {activeState === ORDERS_LIST_IN_PROGRESS_VALUE
               ? t("orders_list_in_progress_scope_hint")
               : t("orders_list_filter_count_loaded_only_hint")}

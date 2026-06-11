@@ -4,6 +4,7 @@ import {
   ORDERS_LIST_TERMINAL_FILTER_OPTIONS,
 } from "@/lib/ordersListStateQuery";
 import {
+  isOrdersListHiddenOnDefaultAllTab,
   normalizedOrderListItemState,
   orderListItemIsInProgress,
 } from "@/lib/orders/ordersListStateFilter";
@@ -16,7 +17,7 @@ export type OrdersListStateCounts = {
 /** 已加载列表内各筛选 Tab 数量（① · 客户端旁证，非 API 全量） */
 export function countOrdersListByTerminalState(list: OrderListItem[]): OrdersListStateCounts {
   const counts: OrdersListStateCounts = {
-    __all__: list.length,
+    __all__: list.filter((item) => !isOrdersListHiddenOnDefaultAllTab(item)).length,
     [ORDERS_LIST_IN_PROGRESS_VALUE]: 0,
     completed: 0,
     cancelled: 0,

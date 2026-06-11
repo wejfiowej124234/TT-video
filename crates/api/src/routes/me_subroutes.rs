@@ -3,7 +3,7 @@
 use axum::extract::State;
 use axum::http::{HeaderMap, StatusCode};
 use axum::response::IntoResponse;
-use axum::routing::{get, post};
+use axum::routing::{get, patch, post, put};
 use axum::Json;
 use axum::Router;
 use serde::Deserialize;
@@ -170,11 +170,14 @@ pub async fn post_me_wallet_verify_confirm(
             })),
         )
             .into_response(),
-        Ok(_) => Json(json!({
-            "status": "ok",
-            "verified": true
-        }))
-        .into_response(),
+        Ok(_) => {
+            db::observe_did_wallet_verified(pool, _uid).await;
+            Json(json!({
+                "status": "ok",
+                "verified": true
+            }))
+            .into_response()
+        }
         Err(_) => (
             StatusCode::INTERNAL_SERVER_ERROR,
             Json(json!({"error": "db_error", "message": "db_error"})),
@@ -267,6 +270,146 @@ pub async fn put_me_guide_registration_draft(
         return Json(json!({"status": "ok", "draft": body.draft})).into_response();
     }
     not_impl_json("PUT /api/v1/me/guide-registration-draft").into_response()
+}
+
+pub async fn get_me_guide_profile(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    let uid = match require_uid(&state, &headers).await {
+        Ok(u) => u,
+        Err(r) => return r.into_response(),
+    };
+    let Some(co) = state.chain_off.clone() else {
+        return not_impl_json("GET /api/v1/me/guide-profile").into_response();
+    };
+    match chain_off::get_me_guide_profile_impl(co, uid).await {
+        Ok(j) => j.into_response(),
+        Err((code, j)) => (code, j).into_response(),
+    }
+}
+
+pub async fn patch_me_guide_profile(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+    Json(body): Json<chain_off::PatchMeGuideProfileBody>,
+) -> impl IntoResponse {
+    let uid = match require_uid(&state, &headers).await {
+        Ok(u) => u,
+        Err(r) => return r.into_response(),
+    };
+    let Some(co) = state.chain_off.clone() else {
+        return not_impl_json("PATCH /api/v1/me/guide-profile").into_response();
+    };
+    match chain_off::patch_me_guide_profile_impl(co, uid, Json(body)).await {
+        Ok(j) => j.into_response(),
+        Err((code, j)) => (code, j).into_response(),
+    }
+}
+
+pub async fn get_me_merchant_profile(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    let uid = match require_uid(&state, &headers).await {
+        Ok(u) => u,
+        Err(r) => return r.into_response(),
+    };
+    let Some(co) = state.chain_off.clone() else {
+        return not_impl_json("GET /api/v1/me/merchant-profile").into_response();
+    };
+    match chain_off::get_me_merchant_profile_impl(co, uid).await {
+        Ok(j) => j.into_response(),
+        Err((code, j)) => (code, j).into_response(),
+    }
+}
+
+pub async fn patch_me_merchant_profile(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+    Json(body): Json<chain_off::PatchMeMerchantProfileBody>,
+) -> impl IntoResponse {
+    let uid = match require_uid(&state, &headers).await {
+        Ok(u) => u,
+        Err(r) => return r.into_response(),
+    };
+    let Some(co) = state.chain_off.clone() else {
+        return not_impl_json("PATCH /api/v1/me/merchant-profile").into_response();
+    };
+    match chain_off::patch_me_merchant_profile_impl(co, uid, Json(body)).await {
+        Ok(j) => j.into_response(),
+        Err((code, j)) => (code, j).into_response(),
+    }
+}
+
+pub async fn get_me_region_steward_profile(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    let uid = match require_uid(&state, &headers).await {
+        Ok(u) => u,
+        Err(r) => return r.into_response(),
+    };
+    let Some(co) = state.chain_off.clone() else {
+        return not_impl_json("GET /api/v1/me/region-steward-profile").into_response();
+    };
+    match chain_off::get_me_region_steward_profile_impl(co, uid).await {
+        Ok(j) => j.into_response(),
+        Err((code, j)) => (code, j).into_response(),
+    }
+}
+
+pub async fn patch_me_region_steward_profile(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+    Json(body): Json<chain_off::PatchMeRegionStewardProfileBody>,
+) -> impl IntoResponse {
+    let uid = match require_uid(&state, &headers).await {
+        Ok(u) => u,
+        Err(r) => return r.into_response(),
+    };
+    let Some(co) = state.chain_off.clone() else {
+        return not_impl_json("PATCH /api/v1/me/region-steward-profile").into_response();
+    };
+    match chain_off::patch_me_region_steward_profile_impl(co, uid, Json(body)).await {
+        Ok(j) => j.into_response(),
+        Err((code, j)) => (code, j).into_response(),
+    }
+}
+
+pub async fn get_me_acquisition_profile(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    let uid = match require_uid(&state, &headers).await {
+        Ok(u) => u,
+        Err(r) => return r.into_response(),
+    };
+    let Some(co) = state.chain_off.clone() else {
+        return not_impl_json("GET /api/v1/me/acquisition-profile").into_response();
+    };
+    match chain_off::get_me_acquisition_profile_impl(co, uid).await {
+        Ok(j) => j.into_response(),
+        Err((code, j)) => (code, j).into_response(),
+    }
+}
+
+pub async fn patch_me_acquisition_profile(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+    Json(body): Json<chain_off::PatchMeAcquisitionProfileBody>,
+) -> impl IntoResponse {
+    let uid = match require_uid(&state, &headers).await {
+        Ok(u) => u,
+        Err(r) => return r.into_response(),
+    };
+    let Some(co) = state.chain_off.clone() else {
+        return not_impl_json("PATCH /api/v1/me/acquisition-profile").into_response();
+    };
+    match chain_off::patch_me_acquisition_profile_impl(co, uid, Json(body)).await {
+        Ok(j) => j.into_response(),
+        Err((code, j)) => (code, j).into_response(),
+    }
 }
 
 pub async fn get_me_provider_registration_draft(
@@ -443,6 +586,22 @@ pub fn router() -> Router<ApiMetaState> {
         .route(
             "/api/v1/me/guide-registration-draft",
             get(get_me_guide_registration_draft).put(put_me_guide_registration_draft),
+        )
+        .route(
+            "/api/v1/me/guide-profile",
+            get(get_me_guide_profile).patch(patch_me_guide_profile),
+        )
+        .route(
+            "/api/v1/me/merchant-profile",
+            get(get_me_merchant_profile).patch(patch_me_merchant_profile),
+        )
+        .route(
+            "/api/v1/me/region-steward-profile",
+            get(get_me_region_steward_profile).patch(patch_me_region_steward_profile),
+        )
+        .route(
+            "/api/v1/me/acquisition-profile",
+            get(get_me_acquisition_profile).patch(patch_me_acquisition_profile),
         )
         .route(
             "/api/v1/me/provider-registration-draft",

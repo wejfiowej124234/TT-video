@@ -323,7 +323,6 @@ export function useDidRankPage(options?: { initialSnapshot?: DidRankPageInitialS
     urlAcquisitionHighlight,
     shareTravelerPath,
     shareGuidePath,
-    meParam,
     scrollToTravelerRank,
     scrollToGuideRank,
     failedAvatarIds,

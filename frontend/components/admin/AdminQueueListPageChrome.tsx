@@ -48,7 +48,7 @@ import {
 
 
 
-export type AdminQueueListKind = "provider" | "steward";
+export type AdminQueueListKind = "provider" | "steward" | "guide";
 
 
 
@@ -127,31 +127,43 @@ export function AdminQueueListPageChrome(props: {
       <AdminOpsDetailRelatedFold
 
         relatedLinks={
-
-          queue === "provider" ? PROVIDER_QUEUE_RELATED_FOLD_LINKS : STEWARD_QUEUE_RELATED_FOLD_LINKS
-
+          queue === "provider"
+            ? PROVIDER_QUEUE_RELATED_FOLD_LINKS
+            : queue === "steward"
+              ? STEWARD_QUEUE_RELATED_FOLD_LINKS
+              : [{ href: "/admin/guides", labelKey: "admin_guides_title" }]
         }
 
         ariaLabelKey="admin_ops_list_related_aria"
 
         foldSummaryKey="admin_ops_list_related_fold"
 
-        dataTtFold={queue === "provider" ? "provider-queue-list" : "steward-queue-list"}
+        dataTtFold={
+          queue === "provider"
+            ? "provider-queue-list"
+            : queue === "steward"
+              ? "steward-queue-list"
+              : "guide-queue-list"
+        }
 
       />
 
       <AdminPermissionDeniedBanner
 
         permission={
-
-          queue === "provider" ? ADMIN_PERM.ONBOARDING_PROVIDER_REVIEW : ADMIN_PERM.ONBOARDING_STEWARD_REVIEW
-
+          queue === "provider"
+            ? ADMIN_PERM.ONBOARDING_PROVIDER_REVIEW
+            : queue === "steward"
+              ? ADMIN_PERM.ONBOARDING_STEWARD_REVIEW
+              : ADMIN_PERM.USERS_WRITE
         }
 
         messageKey={
-
-          queue === "provider" ? "admin_perm_denied_provider_review" : "admin_perm_denied_steward_review"
-
+          queue === "provider"
+            ? "admin_perm_denied_provider_review"
+            : queue === "steward"
+              ? "admin_perm_denied_steward_review"
+              : "admin_perm_denied_users_write"
         }
 
         className={`mt-4 ${ADMIN_ATTENTION_CALLOUT_CLASS}`}

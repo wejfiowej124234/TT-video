@@ -1,10 +1,10 @@
 # 顶级 UI 标准：Landing / Discover / Itinerary（Awwwards / Stripe / Apple / 高端旅行）
 
-**Version:** 1.2.5  
+**Version:** 1.2.6  
 **定稿落点**：**Cinematic 叙事结构、页面级组件清单** 以 **[28-Cinematic-Glassmorphism-Web3融合规范](28-Cinematic-Glassmorphism-Web3融合规范.md)** 为准；**Experience（`/`、`/traveltrust`）视觉与粒子/Hero/桥接渐变** 以 **[86-UI-双系统未来风-风格与动效技术规格](86-UI-双系统未来风-风格与动效技术规格.md)** 为准。**动效分层**：**页面级叙事 ~600ms**、**组件级 &lt;300ms** 见 **86 §0.3 规则 3**（与本文 §六、**`globals.css` `.motion-main`** 一致）。本文 25 保留**叙事与动效哲学、高端感目标**。  
 **用途**：在 [13-协议级UI设计宪法](13-协议级UI设计宪法.md)、[21-UI-3D-旅游Web3融合规范](21-UI-3D-旅游Web3融合规范-v1.0.md)、[22-Design-Tokens](22-Design-Tokens-旅游Web3融合体系-v1.0.md)、[23-UI交付物](23-UI交付物-Figma-Landing-Escrow模板.md) 基础上，将 **Landing / Discover / Itinerary** 提升至 Awwwards / Stripe / Apple / 顶级旅行品牌级别的高级感；**Escrow 保持银行级克制，不按本规范加花哨**。本文含 **§十～§二十一**：导演级方案（叙事脚本、滚动分镜、3D、动效时间轴、焦点图）、**§十六 Moodboard 三方向**、**§十七 五幕动画原型**、**§十八 Figma 层级**、**§十九 情绪色彩**、**§二十 Escrow 银行级基准**、**§二十一 仍缺的关键**。文档版本与最后更新见 [00-文档索引](00-文档索引.md)。
 
-**路由与命名（与 [04 §3.4](04-后端与API.md)、[13-1](13-1-UI产品级SSOT与页面规范.md) 一致）**：文中 **Discover** 表示**「浏览可撮合行程/向导」**的版式与叙事标准；**实现主路径**为 **`/market` 自由市场**（双栏撮合、订单/向导卡、28 角标与基建墙；列表数据源 **`GET /api/v1/discover/orders`**，HTTP 段名 discover）。**`/discover`** 仅为 **客户端重定向至 `/market`** 的兼容入口，**不得**在 `app/discover` 维护第二套列表页。顶栏 **`<nav>`** 仅 **`/`、`/market`、`/did-rank`、`/community`**，**不含** **`/discover`**、**不含** **`/pay`**（**支付与托管**在用户菜单，见 **04** 表前总述、**`Header.tsx`**）。
+**路由与命名（与 [04 §3.4](04-后端与API.md)、[13-1](13-1-UI产品级SSOT与页面规范.md) 一致）**：**`/` Landing** **`LandingHomeAmbientBackdrop`** + **`landingAmbientByCountry.ts`**（Ken Burns）+ **`bg-experience-landing-vignette`**（**88 §一**、**[FIVE-MAIN-ROUTES](../../frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md)**）。文中 **Discover** 表示**「浏览可撮合行程/向导」**的版式与叙事标准；**实现主路径**为 **`/market` 自由市场**（双栏撮合、订单/向导卡、28 角标与基建墙；列表数据源 **`GET /api/v1/discover/orders`**，HTTP 段名 discover）。**`/discover`** 仅为 **客户端重定向至 `/market`** 的兼容入口，**不得**在 `app/discover` 维护第二套列表页。顶栏 **`<nav>`** 仅 **`/`、`/market`、`/did-rank`、`/community`**，**不含** **`/discover`**、**不含** **`/pay`**（**支付与托管**在用户菜单，见 **04** 表前总述、**`Header.tsx`**）。
 
 ### 读前摘要
 
@@ -109,9 +109,15 @@
 - 「How it works」等可保留，但视觉权重低于第一、二屏的叙事。
 - 信任表达：极简徽章或一句「On-chain secured」/「Funds locked on Polygon.»，不喧宾夺主。
 
-### 3.4 Landing 当前缺失模块（须补齐）
+### 3.4 愿景模块 vs 现行 `/` 实现（2026-05-30 · ① 冻结 + 数据链）
 
-- 沉浸式叙事段（第一屏按 §3.1 重做）
+**现行代码 SSOT**（**① UI 壳冻结**）：[`frontend/app/(home)/README.md`](../../frontend/app/(home)/README.md) · **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §2 · **[88 §一 冻结段](88-五主路由页身实现快照与UX缺口审计-20260330.md)** · **[FIVE-MAIN-ROUTES-PHASE1-FREEZE](../../frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md)** — **Ken Burns**（Phase A）+ **`TT_MARKETING_HOME_*`** 叠层 + **单文件** `LandingHeroForm`（`#landing-hero-form`）+ **`TT_MARKETING_HOME_SECTION_BRIDGE`** + `ItineraryResultsSection`（**`ITINERARY_CARD_COUNT=1`**）+ `UnlockModal`（**`getOrder` 预览解锁**）+ **`TT_MARKETING_HOME_FOOTER_TOP_FADE`** + `LandingFooter`（冷灰 · `TrustInfraWall`）；**`useLandingPage`** + **`landingItinerarySession`**（**`localStorage`** · 跨 tab · 收藏 **`marketFavoritesStorage.ts`**）；**无** 全屏 R3F（Phase B 视频 → **②**）。走廊 L5：**[GO_local_web3_itinerary_l5](../../frontend/evidence/GO_local_web3_itinerary_l5/README.md)**。
+
+**五主路由同批冻结**：`/market` · `/did-rank` · `/community/*` · `/traveltrust` — 见 **FIVE-MAIN-ROUTES**；**②③** 另闸。
+
+**下列为产品/导演级 backlog（非「文档未对齐」）**，发版不以之为阻塞：
+
+- 沉浸式叙事段（§3.1 纯情绪单 CTA 版式 — 与现行「中央规划表单」并存时需产品决策）
 - 滚动故事段（scroll-based storytelling）
 - 高端视觉分段（全宽、大图、左右交替）
 - 页面转场动画（进入/离开统一淡入、stagger）
@@ -119,6 +125,8 @@
 ---
 
 ## 四、Discover 顶级标准（实现落点：`/market`）
+
+**① 现行实现（数据链 · 以代码为准）**：**`useMarketPage`** — URL 筛选 · **`getDiscoverOrders({ country?, city?, limit, cursor? })`** **300ms debounce** · **`loadMoreOrders`** cursor 分页 · 收藏 **`localStorage`**（**F-020 best-effort 已接线（①）· ② SLA**）；**`/discover`→`/market`** 重定向壳。SSOT **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §3 · **[MARKET-L5-CLOSURE](../../frontend/evidence/GO_local_marketing_front_closure/MARKET-L5-CLOSURE.md)**（**仅 `/market` 主**）。下表 **「目的地故事化 / 非卡片化」** 为 **产品愿景 backlog**，**非** ① 文档与代码不一致。
 
 | 要求 | 避免 |
 |------|------|
@@ -565,8 +573,8 @@ Escrow 必须达到以下比例与规则，**无例外**；参考风格：Stripe
 |------|------|
 | **情绪节奏控制** | 全站从「探索 → 沉浸 → 可信」须有清晰情绪曲线；Landing 到 Escrow 的视觉与动效须**收放有度**（见 §十九、§十一 C、§十七） |
 | **视觉层级收放** | 旅行段可「放」（大图、留白、叙事）；Escrow 须「收」（比例固定、无装饰、单焦点）；层级切换处不得突兀（见 §十四、§二十） |
-| **3D 与真实摄影融合** | **产品愿景**：Hero 可用 3D（Travel Network Visualization）与**真实摄影**叙事段融合，过渡须自然（色温、饱和度、节奏一致）。**当前 `/` 真值**：**摄影全屏底 + 轻点阵**（**[86 §6.1](86-UI-双系统未来风-风格与动效技术规格.md)**、**[88 §一](88-五主路由页身实现快照与UX缺口审计-20260330.md)**），**非**「必须先上全屏地球」验收项。 |
+| **3D 与真实摄影融合** | **产品愿景**：Hero 可用 3D（Travel Network Visualization）与**真实摄影**叙事段融合，过渡须自然（色温、饱和度、节奏一致）。**当前 `/` 真值**：**Ken Burns 静图底 + 轻点阵 + 冷灰页脚**（**[86 §6.1](86-UI-双系统未来风-风格与动效技术规格.md)**、**[88 §一](88-五主路由页身实现快照与UX缺口审计-20260330.md)**、**[FIVE-MAIN-ROUTES](../../frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md)**），**非**「必须先上全屏地球」验收项。 |
 
 ---
 
-*本文与 [13-协议级UI设计宪法](13-协议级UI设计宪法.md)、[21-UI-3D-旅游Web3融合规范-v1.0](21-UI-3D-旅游Web3融合规范-v1.0.md)、[22-Design-Tokens-旅游Web3融合体系-v1.0](22-Design-Tokens-旅游Web3融合体系-v1.0.md)、[23-UI交付物-Figma-Landing-Escrow模板](23-UI交付物-Figma-Landing-Escrow模板.md) 配套；Escrow 不适用本顶级叙事与动效标准。**v1.2.5（2026-03-30）**：篇首 **当前实现 vs 愿景**、读前摘要 **88**、**§二十一** 与 **`/`** 真值对齐。文档版本与最后更新见 [00-文档索引](00-文档索引.md)。*
+*本文与 [13-协议级UI设计宪法](13-协议级UI设计宪法.md)、[21-UI-3D-旅游Web3融合规范-v1.0](21-UI-3D-旅游Web3融合规范-v1.0.md)、[22-Design-Tokens-旅游Web3融合体系-v1.0](22-Design-Tokens-旅游Web3融合体系-v1.0.md)、[23-UI交付物-Figma-Landing-Escrow模板](23-UI交付物-Figma-Landing-Escrow模板.md) 配套；Escrow 不适用本顶级叙事与动效标准。**v1.2.8（2026-06-03）**：**§四** 增 **`/market` ① 数据链** 对拍（**debounce** · **localStorage** · **F-020 ②**）；愿景「故事化/非卡片化」标为 backlog。**v1.2.7（2026-05-30）**：**§3.4** — **`/`** 数据链对拍（**1×** 创单 · **`ITINERARY_CARD_COUNT=1`** · **`getOrder`** 预览解锁 · **`SECTION_BRIDGE`/`FOOTER_TOP_FADE`**）；互指 **`(home)/README`**。**v1.2.6（2026-05-21）**：**§3.4** 拆分为「现行 **`/`** 实现」vs「愿景 backlog」。**v1.2.5（2026-03-30）**：篇首 **当前实现 vs 愿景**、读前摘要 **88**、**§二十一** 与 **`/`** 真值对齐。文档版本与最后更新见 [00-文档索引](00-文档索引.md)。*

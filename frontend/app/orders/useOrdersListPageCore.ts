@@ -8,8 +8,10 @@ import type { OrderDetailItem } from "@/components/market/OrderDetailDrawer";
 import { useTranslation } from "@/components/LocaleProvider";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { dedupeListById, mergeListsUniqueById } from "@/lib/dedupeListById";
-import { filterOrdersForTransactionalMyOrdersSurface } from "@/lib/communityMeMyOrdersModel";
+import { filterOrdersForOrdersListPage } from "@/lib/communityMeMyOrdersModel";
 import { patchOrderListAfterCancelSuccess, patchPreviewOrderAfterCancelSuccess } from "@/lib/ordersListAfterCancel";
+import { clearCachedLandingDraftCap } from "@/lib/landingDraftQuota";
+import { removeLandingOrderIdFromSession } from "@/lib/landingItinerarySession";
 import { ORDERS_EXPECT_ORDER_QUERY } from "@/lib/ordersExpectOrderParam";
 import {
   ORDERS_ESCROW_AUTO_SYNC_POLL_MS,
@@ -67,6 +69,7 @@ export function useOrdersListPageCore() {
   const [ordersHasMore, setOrdersHasMore] = useState(false);
   const [ordersNextCursor, setOrdersNextCursor] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [pendingDeleteOrder, setPendingDeleteOrder] = useState<{ id: string; state: string } | null>(null);
   const [previewOrder, setPreviewOrder] = useState<OrderDetailItem | null>(null);
   /** B-048：静默重拉首屏时不挡整页（`refreshOrders({ silent: true })`） */
   const [listSyncing, setListSyncing] = useState(false);
@@ -108,7 +111,7 @@ export function useOrdersListPageCore() {
         .then((r) => {
           const raw = (r.items as OrderListItem[]) ?? [];
           const deduped = dedupeListById(raw, (o) => String(o.id ?? ""));
-          setList(filterOrdersForTransactionalMyOrdersSurface(deduped));
+          setList(filterOrdersForOrdersListPage(deduped, ordersListStateParam));
           const p = r.page;
           setOrdersHasMore(!!p?.has_more);
           setOrdersNextCursor(typeof p?.next_cursor === "string" && p.next_cursor ? p.next_cursor : null);
@@ -151,7 +154,7 @@ export function useOrdersListPageCore() {
       .then((r) => {
         setList((prev) => {
           const merged = mergeListsUniqueById(prev, (r.items as OrderListItem[]) ?? [], (o) => String(o.id ?? ""));
-          return filterOrdersForTransactionalMyOrdersSurface(merged);
+          return filterOrdersForOrdersListPage(merged, ordersListStateParam);
         });
         const p = r.page;
         setOrdersHasMore(!!p?.has_more);
@@ -240,20 +243,17 @@ export function useOrdersListPageCore() {
     setList((prev) => prev.filter((o) => String(o.id) !== orderId));
   }, []);
 
-  const handleDeleteOrder = useCallback(
-    async (
-      orderId: string,
-      stateOrStatus: string,
-      tConfirm: (k: string) => string
-    ) => {
+  const executeDeleteOrder = useCallback(
+    async (orderId: string, stateOrStatus: string) => {
       if (deletingId) return;
-      if (!window.confirm(tConfirm("escrow_deleteConfirm"))) return;
       setOrderActionError(null);
       setDeletingId(orderId);
       const state = (stateOrStatus ?? "").toLowerCase();
       /** 已是终态取消：仅本地从列表移除（与 GET 列表仍可能含 cancelled 行的「清理视图」一致） */
       if (state === "cancelled" || state === "canceled") {
         removeFromList(orderId);
+        removeLandingOrderIdFromSession(orderId);
+        clearCachedLandingDraftCap();
         setPreviewOrder((po) => (po && String(po.id) === orderId ? null : po));
         setDeletingId(null);
         return;
@@ -263,6 +263,8 @@ export function useOrdersListPageCore() {
         const data = raw as { order?: { id?: string; status?: string; state?: string } };
         setList((prev) => patchOrderListAfterCancelSuccess(prev, orderId, data.order));
         setPreviewOrder((po) => patchPreviewOrderAfterCancelSuccess(po, orderId, data.order));
+        removeLandingOrderIdFromSession(orderId);
+        clearCachedLandingDraftCap();
       } catch (err) {
         if (typeof window !== "undefined") {
           console.error("OrdersPage orderCancel:", err);
@@ -272,8 +274,28 @@ export function useOrdersListPageCore() {
         setDeletingId(null);
       }
     },
-    [deletingId, removeFromList, t]
+    [deletingId, removeFromList, t],
   );
+
+  const handleDeleteOrder = useCallback(
+    (orderId: string, stateOrStatus: string) => {
+      if (deletingId) return;
+      setPendingDeleteOrder({ id: orderId, state: stateOrStatus });
+    },
+    [deletingId],
+  );
+
+  const cancelDeleteOrder = useCallback(() => {
+    if (deletingId) return;
+    setPendingDeleteOrder(null);
+  }, [deletingId]);
+
+  const confirmDeleteOrder = useCallback(async () => {
+    if (!pendingDeleteOrder || deletingId) return;
+    const { id, state } = pendingDeleteOrder;
+    setPendingDeleteOrder(null);
+    await executeDeleteOrder(id, state);
+  }, [pendingDeleteOrder, deletingId, executeDeleteOrder]);
 
 
   return {
@@ -294,8 +316,11 @@ export function useOrdersListPageCore() {
     bookGuideResolve,
     list,
     deletingId,
+    pendingDeleteOrder,
     setPreviewOrder,
     handleDeleteOrder,
+    cancelDeleteOrder,
+    confirmDeleteOrder,
     loadMoreError,
     loadingMore,
     loadMoreOrders,

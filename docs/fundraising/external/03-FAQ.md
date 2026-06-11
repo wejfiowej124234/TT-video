@@ -64,7 +64,7 @@
 
 ### 6. `/market` 是什么？
 
-供需匹配的产品体验入口。
+供需匹配的产品体验入口（自由市场撮合主 UI）。**工程实现（对内/尽调 · ①）**：列表页 **`/market`**；历史路径 **`/discover`** 重定向至此；**`/`** Web3旅行首页为独立入口 — **[LANDING-MARKET-PAGES-CODE-SSOT](../../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)**（**非**对外功能承诺变更）。
 
 ### 7. 为何订单与托管重要？
 

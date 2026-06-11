@@ -11,6 +11,7 @@ import TrustGrowthMomentBanner from "@/components/trust/TrustGrowthMomentBanner"
 import { GovernanceHubPoolSection } from "./GovernanceHubPoolSection";
 import { GovernanceHubRewardsSection } from "./GovernanceHubRewardsSection";
 import { useGovernanceHubPage } from "./useGovernanceHubPage";
+import { ConversionFunnelRail } from "@/components/product-enhancement/ConversionFunnelRail";
 import {
   TT_MARKETING_CONSOLE_INLINE_LINK,
   TT_MARKETING_CONSOLE_LINK_FOCUS,
@@ -35,6 +36,7 @@ export function GovernanceHubPageMain() {
         {t("governance_title")}
       </h1>
       <p className="mt-2 text-body text-ink-600">{t("governance_desc")}</p>
+      <ConversionFunnelRail touchpoint="governance" t={t} variant="light" className="mt-4" />
       <div className="mt-4">
         <TrustGrowthMomentBanner moment="governance_entry" surface="ink" />
       </div>

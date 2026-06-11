@@ -1,10 +1,10 @@
 "use client";
 
-import { CIM, CIM_CHOICE, CIM_FOCUS, CIM_FOCUS_WITHIN } from '../customItineraryModalTheme';
-import Image from "next/image";
 import type { HotelDetail } from "@/lib/cityDetails";
 import type { CityTransportType, CustomItineraryForm, GuideDayPlan } from "../types";
-import { CITY_TRANSPORT_OPTIONS, CITY_TRANSPORT_DETAILS, SEDAN_CAPACITY } from "../constants";
+import { CITY_TRANSPORT_OPTIONS, CITY_TRANSPORT_DETAILS } from "../constants";
+import { cityTransportCapacityWarningKey } from "../cityTransportQuote";
+import { ItineraryMediaPreviewCard, ItineraryMediaPreviewRow } from "../ItineraryMediaPreviewCard";
 
 export interface GuideDayCardTransportAndHotelsProps {
   day: GuideDayPlan;
@@ -35,11 +35,15 @@ export default function GuideDayCardTransportAndHotels({
   t,
   form,
 }: GuideDayCardTransportAndHotelsProps) {
+  const transportOpt = day.cityTransport
+    ? CITY_TRANSPORT_OPTIONS.find((o) => o.value === day.cityTransport)
+    : null;
+
   return (
     <>
       <div>
         <span className={labelClass}>{t("market_transportInCity")}</span>
-        <div className="flex flex-wrap gap-2 mt-1">
+        <div className="mt-1 flex flex-wrap gap-2" role="group" aria-label={t("market_transportInCity")}>
           {CITY_TRANSPORT_OPTIONS.map((opt) => {
             const selected = day.cityTransport === opt.value;
             return (
@@ -51,57 +55,40 @@ export default function GuideDayCardTransportAndHotels({
                   setGuideDayPlan(dayIndex, { cityTransport: opt.value });
                 }}
               >
-                <button type="submit" className={selected ? pillSelected : pillUnselected}>
+                <button type="submit" aria-pressed={selected} className={selected ? pillSelected : pillUnselected}>
                   {t(opt.labelKey)}
                 </button>
               </form>
             );
           })}
         </div>
-        {day.cityTransport && (
-          <div className="mt-3 flex gap-3 items-start">
-            <form
-              className="inline shrink-0"
-              onSubmit={(e) => {
-                e.preventDefault();
-                setViewingVehicle(day.cityTransport!);
-              }}
-            >
-              <button
-                type="submit"
-                className="shrink-0 w-36 rounded-[var(--radius-sm)] border border-ref-sun/16 bg-ink-950/60 overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]"
-              >
-              <div className="relative aspect-[4/3] bg-slate-800">
-                <Image
-                  src={CITY_TRANSPORT_DETAILS[day.cityTransport!].image}
-                  alt={t(CITY_TRANSPORT_OPTIONS.find((o) => o.value === day.cityTransport)!.labelKey)}
-                  fill
-                  className="object-cover"
-                  sizes="144px"
-                  unoptimized
-                />
-              </div>
-              <p className="p-2 text-smallall font-medium text-white">
-                {t(CITY_TRANSPORT_OPTIONS.find((o) => o.value === day.cityTransport)!.labelKey)}
-              </p>
-                  <p className="px-2 pb-2 text-meta text-white/80 line-clamp-2">
-                    {t(CITY_TRANSPORT_DETAILS[day.cityTransport!].descriptionKey)}
-                  </p>
-                </button>
-            </form>
-          </div>
-        )}
-        {form.headcount > SEDAN_CAPACITY && day.cityTransport === "sedan" && (
-          <p className="text-meta text-warning/90 mt-1">{t("market_sedanCapacityHint")}</p>
-        )}
+        {day.cityTransport && transportOpt ? (
+          <ItineraryMediaPreviewRow>
+            <ItineraryMediaPreviewCard
+              imageSrc={CITY_TRANSPORT_DETAILS[day.cityTransport].image}
+              title={t(transportOpt.labelKey)}
+              description={t(CITY_TRANSPORT_DETAILS[day.cityTransport].descriptionKey)}
+              previewAriaLabel={t("market_itinerary_media_preview_aria").replace("{{name}}", t(transportOpt.labelKey))}
+              onPreview={() => setViewingVehicle(day.cityTransport!)}
+            />
+          </ItineraryMediaPreviewRow>
+        ) : null}
+        {(() => {
+          const warnKey = cityTransportCapacityWarningKey(form.headcount, day.cityTransport);
+          return warnKey ? (
+            <p className="mt-1 text-meta text-warning/90">{t(warnKey)}</p>
+          ) : null;
+        })()}
       </div>
       <div>
         <span className={labelClass}>{t("market_hotels")}</span>
         {!day.city ? (
-          <p className="text-meta text-white/60 mt-1">{t("market_selectCityFirst")}</p>
+          <p className="mt-1 text-meta text-white/60">{t("market_selectCityFirst")}</p>
+        ) : guideHotels.length === 0 ? (
+          <p className="mt-1 text-meta text-white/60">{t("market_hotels_empty_for_city")}</p>
         ) : (
           <>
-            <div className="flex flex-wrap gap-2 mt-1">
+            <div className="mt-1 flex flex-wrap gap-2" role="group" aria-label={t("market_hotels")}>
               {guideHotels.map((o) => {
                 const selected = (day.hotel ?? "") === o.value;
                 return (
@@ -113,42 +100,27 @@ export default function GuideDayCardTransportAndHotels({
                       setGuideDayPlan(dayIndex, { hotel: o.value });
                     }}
                   >
-                    <button type="submit" className={selected ? pillSelected : pillUnselected}>
-                      {o.label}
+                    <button type="submit" aria-pressed={selected} className={selected ? pillSelected : pillUnselected}>
+                      {t(o.label)}
                     </button>
                   </form>
                 );
               })}
             </div>
-            {selectedGuideHotelDetail && (
-              <div className="mt-3 flex gap-3 items-start">
-                <form
-                  className="inline shrink-0"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    setViewingHotel(selectedGuideHotelDetail);
-                  }}
-                >
-                  <button
-                    type="submit"
-                    className="shrink-0 w-36 rounded-[var(--radius-sm)] border border-ref-sun/16 bg-ink-950/60 overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]"
-                  >
-                  <div className="relative aspect-[4/3] bg-slate-800">
-                    <Image
-                      src={selectedGuideHotelDetail.image}
-                      alt={selectedGuideHotelDetail.label}
-                      fill
-                      className="object-cover"
-                      sizes="144px"
-                      unoptimized
-                    />
-                  </div>
-                  <p className="p-2 text-smallall font-medium text-white truncate">{selectedGuideHotelDetail.label}</p>
-                  <p className="px-2 pb-2 text-meta text-white/80 line-clamp-2">{selectedGuideHotelDetail.description}</p>
-                </button>
-                </form>
-              </div>
-            )}
+            {selectedGuideHotelDetail ? (
+              <ItineraryMediaPreviewRow>
+                <ItineraryMediaPreviewCard
+                  imageSrc={selectedGuideHotelDetail.image}
+                  title={t(selectedGuideHotelDetail.label)}
+                  description={t(selectedGuideHotelDetail.description)}
+                  previewAriaLabel={t("market_itinerary_media_preview_aria").replace(
+                    "{{name}}",
+                    t(selectedGuideHotelDetail.label),
+                  )}
+                  onPreview={() => setViewingHotel(selectedGuideHotelDetail)}
+                />
+              </ItineraryMediaPreviewRow>
+            ) : null}
           </>
         )}
       </div>

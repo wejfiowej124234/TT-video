@@ -192,3 +192,5 @@ export function useCommunityFeedFilters({
     clearFilters,
   };
 }
+
+export type UseCommunityFeedFiltersReturn = ReturnType<typeof useCommunityFeedFilters>;

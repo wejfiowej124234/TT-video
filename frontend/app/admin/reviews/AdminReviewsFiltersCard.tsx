@@ -13,7 +13,7 @@ import {
   ADMIN_FILTER_INPUT_SM_CLASS,
   ADMIN_FILTER_FIELD_LABEL_CLASS,
   ADMIN_FILTER_HINT_CLASS,
-  ADMIN_FILTER_TITLE_CLASS} from "@/lib/adminUi";
+  ADMIN_FILTER_TITLE_CLASS, ADMIN_FILTER_CARD_CLASS} from "@/lib/adminUi";
 type Props = {
   vm: AdminReviewsPageViewModel;
   adminAppliedFiltersDescId: string;

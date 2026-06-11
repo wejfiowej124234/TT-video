@@ -41,7 +41,7 @@ export function AdminHomePhase2PrepNotice(props: { variant?: Variant }) {
     return (
       <AdminNoticeBanner
         tone="readonly"
-        size="sm"
+        size="md"
         dataAttrs={{ "data-tt-admin-home-phase2-prep": "1" }}
         message={
           <div className="space-y-2">

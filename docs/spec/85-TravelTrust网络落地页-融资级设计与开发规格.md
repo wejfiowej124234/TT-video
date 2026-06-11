@@ -1,9 +1,9 @@
 # 85 — TravelTrust 网络落地页（融资级）设计与开发规格
 
 **文档编号**：85  
-**版本**：1.0.19  
-**最后更新**：2026-04-19  
-**状态**：`Target`（产品 + 前端实现规格；对外文案须法务与 [08-4](08-4-对外口径包.md) 定稿）  
+**版本**：1.0.26  
+**最后更新**：2026-05-26  
+**状态**：`Target`（融资级产品与对外叙事 **Target**；**① 本地 UI 壳** **`/traveltrust`** **layout lock** 已实现 — **[FIVE-MAIN-ROUTES](../../frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md)** · **≠** 本文 **`Target`** 全表 **Implemented**；对外文案须法务与 [08-4](08-4-对外口径包.md) 定稿）  
 **页面入口（与当前实现一致）**：顶栏**不设**独立 **「网络」** 导航项；左侧**深色字标「TravelTrust」**（`Header.tsx`）→ **`/traveltrust`**（本页 SSOT 路由）。**行程/协议主 Landing（`/`）** 仍由主导航 **「Web3旅行」** 进入。**`/network`** 为 **`/traveltrust`** 的 **永久重定向别名**（`frontend/app/network/page.tsx`，与 [04 §3.4](04-后端与API.md)、[13-1](13-1-UI产品级SSOT与页面规范.md) 表 1 同批登记）。Landing **页脚「产品」列**首条已链 **`/traveltrust`**（i18n `footer_link_traveltrust_network`，与 **04 §3.4 / 13-1** 同路径）。首页 Hero 若增加「了解 TravelTrust 网络」等 CTA，应显式链到 **`/traveltrust`**。
 
 **受众**：前端、UI、增长与融资材料、外包、Cursor/AI 生成页面时的**单源结构**；**非** ICO 专页、**非** 完整 DApp 控制台。
@@ -16,7 +16,8 @@
 |------------|------|
 | **IA、模块规格、验收** | **§三～§廿三**（按模块名下钻） |
 | **路由 `/traveltrust`** | **[04 §3.4](04-后端与API.md)**、**[13-1](13-1-UI产品级SSOT与页面规范.md) 表 1**（与文首「页面入口」一致） |
-| **本页视觉层级与代码文件索引** | **§二 2.6**（深色 Tropical 全页壳 + **环境粒子** + Hero 旅游柔光；**非** ICO 认购交互）；动效与 Token 映射仍对齐 **[86](86-UI-双系统未来风-风格与动效技术规格.md)**、**[22 §一点五](22-Design-Tokens-旅游Web3融合体系-v1.0.md)**；读序 **[07 §五 5.3](07-开发流程与顺序.md)**、**[07 §五 5.3A](07-开发流程与顺序.md)** |
+| **① 实现真值 vs 本文 §三 IA 愿景** | **layout lock** **`hero→roles→…`** — **[FIVE-MAIN-ROUTES](../../frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md)** · **[`modules/traveltrust-home/README`](../../frontend/modules/traveltrust-home/README.md)**；**不**渲染角色上独立 **`#overview` 四卡**（85 §三 愿景项保留 backlog） |
+| **本页视觉层级与代码文件索引** | **§二 2.6**（深色 Tropical 全页壳 + **`layout.tsx`** **`TravelTrustAmbientCanvas`** 环境层 + Hero **cinematic 3D** 柔光；**页内树未**挂载 legacy **`TravelTrustNetworkParticles`** — **contract**；**非** ICO 认购交互）；动效与 Token 映射仍对齐 **[86](86-UI-双系统未来风-风格与动效技术规格.md)**、**[22 §一点五](22-Design-Tokens-旅游Web3融合体系-v1.0.md)**；读序 **[07 §五 5.3](07-开发流程与顺序.md)**、**[07 §五 5.3A](07-开发流程与顺序.md)** |
 | **融资数字、Allocation** | **[84](84-第一阶段10国Country-Pool发行参数总表.md)**、**[governance-token/02 §2.5](governance-token/02-对内技术规格-草案.md)** |
 | **订单主链 / Escrow** | **[53](53-阶段开发技术文档.md)**、**[01](01-总库总览.md)** — 本文**不**替代 |
 | **法务与 A-B（B-106）** | **文内指针/勾选落点**：对外叙事 **fail-closed** 互证 **[08-4](08-4-对外口径包.md)**、**[governance-token/LEGAL-SIGNOFF-CHECKLIST](governance-token/LEGAL-SIGNOFF-CHECKLIST.md)**（**不**替代 **08-4** 签字定稿） |
@@ -105,14 +106,13 @@
 
 | 项 | 实现说明 |
 |----|----------|
-| **页面壳** | `frontend/app/traveltrust/layout.tsx`：深色底 `#030712` + `bg-market-atmosphere` + `bg-web3-dot-grid`（Tropical jade / Web3 场域，与自由市场底同系） |
-| **全页环境动效** | `TravelTrustAmbientCanvas`：`fixed` 全视口 Canvas 粒子层（`z-[1]`，无交互，尊重 `prefers-reduced-motion`），与 §五语义一致、粒子数受 §廿一约束 |
-| **主 IA 与 Hero** | `frontend/app/traveltrust/page.tsx`：`TravelTrustHeroBackdrop`（22 palette 柔光 blob + `globals.css` `.traveltrust-hero-aurora-*` 慢漂）+ **内嵌** `TravelTrustNetworkParticles` **`tone="hero"`**（更高对比连线）；双栏文案 + 预览卡 + CTA + `details` 规格折叠 |
-| **概览区 `#overview`** | 同页内：**核心能力**四卡（Escrow / 撮合 / 治理分层 / 争议与演示声明）+ **叙事与痛点对照**双栏（`#problem` / `#solution` 锚点保留，便于外链） |
-| **章节锚点** | `TravelTrustSectionNav`（`variant="glass"`）；IA 含 **`#overview`**，**不再**单独列出顶部「痛点 / 方案」导航项（内容并入概览） |
-| **演示统计** | `TravelTrustLiveStats`（`variant="glass"`） |
-| **可交互粒子区** | `TravelTrustNetworkParticles`（默认 `tone="card"`，区块内 hover/click 演示）；与全页环境层分工：**环境 = 氛围**，**区块 = 可玩演示** |
-| **图例 / Demo / 常驻条** | `TravelTrustParticleLegend`、`TravelTrustDemoPreview`、`TravelTrustStickyCta` |
+| **页面壳** | `frontend/app/traveltrust/layout.tsx`：深色 Tropical 壳 + **`TravelTrustAmbientCanvas`** + **`TravelTrustRouteFixedAmbientLayers`** |
+| **全页环境动效** | `TravelTrustAmbientCanvas`：`fixed` 全视口 Canvas 粒子层（`z-[1]`，无交互，尊重 `prefers-reduced-motion`） |
+| **主 IA 与 Hero** | **`modules/traveltrust-home`** + **`TravelTrustNetworkPageMain`**：**layout lock** `hero→roles→…`；Hero 为 **`TravelTrustCinematicHero`** + **`TravelTrustHeroBackdrop`** + **unified cinematic 3D**（**`UNIFIED_PAGE_3D`**）；**无** legacy **`TravelTrustNetworkParticles`** 页内树（contract 机读） |
+| **概览区 `#overview`** | **（愿景 backlog · ① 未实现）** 同页内四卡 + 痛点/方案双栏 — **现码**以 **layout lock** 为准，**无** 此独立节（见读前 **FIVE-MAIN-ROUTES**） |
+| **L1 chrome（页内，非 L0）** | **`TravelTrustHomeLandingNavSlot`**（**portal → `document.body`** · **`TT_Z.LANDING_CHROME` 280**）承载 **`TravelTrustLandingChrome`**：**双行常驻** — 章节 nav + **`TravelTrustPulseTicker` inline**（公告 **CSS** 跑马灯 **`globals.css`** **`.tt-traveltrust-pulse-inline-marquee-track`**）；**`loading.tsx`** 仅顶栏细线 |
+| **稳定币网关（L5 示意）** | **`TravelTrustStablecoinGateway`** + **`TT_STABLECOIN_GATEWAY_L5`**（暖金字段；三 CTA 同款幽灵胶囊，含「行程订金」） |
+| **Legacy 折叠组件（① 未挂载）** | **`TravelTrustSectionNav`** · **`TravelTrustLiveStats`** · **`TravelTrustDemoPreview`** · **`TravelTrustStickyCta`** — **愿景/backlog**；**L1** 由 **`TravelTrustHomeLandingNavSlot`** + **`TravelTrustLandingChrome`** 承担；**`traveltrustNetworkPage.contract.test.ts`** 禁止上述 legacy 符号 |
 | **错误 / 加载** | `app/traveltrust/error.tsx`、`loading.tsx` 与壳色一致 |
 | **全局顶栏** | `frontend/components/Header.tsx`：字标 **TravelTrust** → **`/traveltrust`**；主导航**无**「网络」、**无** **`/pay`**（与 **13-1** 一致） |
 
@@ -122,26 +122,29 @@
 
 ## 三、页面信息架构（IA，最终版）
 
+**① 实现真值（2026-05-25）：** 现码顺序 **`hero → roles → liquidity → trust → settlement → faq → start`**（**`traveltrustHomeLayoutLockL5`**）— **无** 下述独立 **Overview / `#overview` 四卡** 节。下列为 **85 愿景 / 融资材料** 参考顺序；与代码冲突时以 **[FIVE-MAIN-ROUTES](../../frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md)**、**[`modules/traveltrust-home/README`](../../frontend/modules/traveltrust-home/README.md)** 为准。
+
 自上而下建议顺序（可随 A/B 微调，但须保留 **合规块** 与 **Trust**）：
 
-1. **Hero**（柔光 + 内嵌粒子 + 双栏 CTA）  
-2. **Overview / 概览**（`#overview`：核心能力四卡 + `#problem` / `#solution` 双栏对照；对应专业落地页「卖点 + 摘要」区）  
-3. **章节锚点导航**（横向 `TravelTrustSectionNav`）  
-4. **Live Network**（宽幅**可交互**粒子 + 图例；与全页环境粒子分工见 §二 2.6）  
-5. **Live Stats**  
-6. **Quick Explain**（三步；带「产品路径」眉题以贴近「How it works」扫读）  
-7. **Video**  
-8. **Flow**  
-9. **Demo**（纯 UI，不执行链上成交）  
-10. **Token System**（三币叙事，须符合 §十四合规框）  
-11. **Allocation**（融资档位，数字与 **84** 一致）  
-12. **Settlement**（常驻 T2 披露）  
-13. **FeeRouter**（5.2A 自检块）  
-14. **Trust**（事实列表）  
-15. **Global Map**  
-16. **FAQ**  
-17. **CTA**  
-18. **Footer**（站点级，非本文件独占）
+1. **Hero**（**cinematic 3D** + 柔光 + 双栏 CTA — **① 见 §2.6**；**非** legacy 页内 **`TravelTrustNetworkParticles`**）  
+2. **L1** **`TravelTrustHomeLandingNavSlot`** + **`TravelTrustLandingChrome`**（章节 nav + 公告跑马灯，**双行常驻**）  
+3. **Overview / 概览**（`#overview`：核心能力四卡 + `#problem` / `#solution` 双栏对照）— **愿景 backlog · ① 未实现**  
+4. **章节锚点导航**（区块内横向 `TravelTrustSectionNav`）— **愿景 backlog · ① 未挂载**（L1 = **`TravelTrustHomeLandingNavSlot`** + **`TravelTrustLandingChrome`**）  
+5. **Live Network**（宽幅**可交互**粒子 + 图例）— **愿景 backlog · ① 未挂载**  
+6. **Live Stats** — **愿景 backlog · ① 未挂载**  
+7. **Quick Explain**（三步）— **愿景 backlog · ① 未挂载**  
+8. **Video** — **愿景 backlog · ① 未挂载**  
+9. **Flow** — **愿景 backlog · ① 未挂载**  
+10. **Demo**（纯 UI，不执行链上成交）— **愿景 backlog · ① 未挂载**  
+11. **Token System**（三币叙事，须符合 §十四合规框）  
+12. **Allocation**（融资档位，数字与 **84** 一致）  
+13. **Settlement**（常驻 T2 披露）  
+14. **FeeRouter**（5.2A 自检块）  
+15. **Trust**（事实列表）  
+16. **Global Map**  
+17. **FAQ**  
+18. **CTA**  
+19. **Footer**（站点级，非本文件独占）
 
 ---
 
@@ -149,7 +152,7 @@
 
 | 维度 | 规格 |
 |------|------|
-| 功能 | 主标语、**全页环境粒子**（layout）+ Hero 内 **旅游柔光 blob**（CSS）+ **内嵌高对比粒子画布**、主副 **CTA**、**连接钱包**（仅连接与网络展示，不隐含认购完成）；**禁止**融资倒计时组件（除非法务单列且非证券暗示） |
+| 功能 | **① 现码（见 §二 2.6）**：**`TravelTrustCinematicHero`** + **`TravelTrustHeroBackdrop`** + **unified cinematic 3D**；**`layout.tsx`** **`TravelTrustAmbientCanvas`** 全视口环境层；Hero 内 **旅游柔光 blob**（CSS）；主副 **CTA**；**连接钱包**（仅连接与网络展示，不隐含认购完成）。**非** legacy 页内 **`TravelTrustNetworkParticles`** / **「内嵌高对比粒子画布」** 独立节（**contract** 禁止）。**下列 CTA 文案**仍为 **Target/示例**。**禁止**融资倒计时组件（除非法务单列且非证券暗示） |
 | 主文案（示例） | `Travel Anywhere With One Token` — **「One Token」须脚注**：品牌/效用叙事 vs 实际结算币（USDC 等）见 §十四 |
 | 主 CTA | `Join Early Access` |
 | 次 CTA | `Explore Demo`（锚点至 Demo 区） |
@@ -157,7 +160,9 @@
 
 ---
 
-## 五、粒子系统（最终规范）
+## 五、粒子系统（Target · 愿景规范）
+
+> **① 实现真值（2026-05-25）：** **`layout.tsx`** **`TravelTrustAmbientCanvas`** + Hero **cinematic 3D**（**`UNIFIED_PAGE_3D`**）；**未**挂载 legacy **`TravelTrustNetworkParticles`** 页内树 — **§二 2.6** · **FIVE-MAIN-ROUTES** · **contract**。本节 **§5.1～5.3** 与下文 **§六 Live Network**、**§七 Live Stats** 为 **Target/backlog**（**① 未挂载**），供融资材料与后续迭代；**勿**与现码混读。
 
 **定位**：全球旅游网络可视化（非游戏化炫技，服务于「网络效应」叙事）。
 
@@ -173,7 +178,7 @@
 ### 5.2 动画能力
 
 - 呼吸、连线、光流、路径、热点、残影（择要实现，**优先 FPS**，见 §廿二）。
-- **双层实现**：① **环境层**（`TravelTrustAmbientCanvas`）：全视口、无交互、略高连线不透明度，保证首屏可见「网络感」；② **模块层**（`TravelTrustNetworkParticles`）：区块内交互与图例说明。减少「粒子仅出现在页面中段小框」导致的感知缺失。
+- **双层实现（历史 · 2026-03）**：① **环境层**（`TravelTrustAmbientCanvas`）+ ② **模块层**（`TravelTrustNetworkParticles`）。**① 现行（2026-05-25）**：页内叙事为 **cinematic 3D + layout lock 节**；**未**在 **`TravelTrustNetworkPageMain`** 树挂载 **`TravelTrustNetworkParticles`**（组件文件仍可能在仓库，供 archive/复用；**contract** 机读）— 见 **§二 2.6**、**FIVE-MAIN-ROUTES**。
 
 ### 5.3 交互
 
@@ -184,12 +189,16 @@
 
 ## 六、Live Network 模块
 
+> **① 未挂载（2026-05-25）** — **愿景 backlog**；现码 **layout lock** 见 **§二 2.6**、**§三 IA** 第 5 项。
+
 - 全屏或宽幅粒子层；**自动生成路线**动效。  
 - **资金流光点**、**成交爆发**、**DAO 闪烁**等为**视觉隐喻**，须在页脚或 FAQ 说明「演示动画不等同链上实时成交」。
 
 ---
 
 ## 七、Live Stats 模块
+
+> **① 未挂载（2026-05-25）** — **愿景 backlog**；**§三 IA** 第 6 项。页内 **illustrative** 统计若展示须标注 **Demo**（与 **page-brief** 一致）。
 
 - **动态数字**：Users / Trips / Cities / Guides。  
 - **数字滚动**动画；**每约 3 秒**可刷新一次（mock 允许）。  
@@ -353,6 +362,13 @@
 
 | 版本 | 日期 | 说明 |
 |------|------|------|
+| 1.0.26 | 2026-05-26 | **§五～§七** — **Target/backlog** 与 **§2.6 ① 现码** 分轨（**AmbientCanvas** + cinematic 3D；Live Network/Stats **未挂载**）。**十一轮**。**未改前端**。 |
+| 1.0.25 | 2026-05-26 | **§四 Hero**、**§三 IA Hero 行** — 与 **§2.6** 分轨（**AmbientCanvas** + cinematic 3D；**非** legacy 页内 **`TravelTrustNetworkParticles`**）。**十轮**企业审计。**未改前端**。 |
+| 1.0.24 | 2026-05-26 | 读前 **§二 2.6** 勘误：**`TravelTrustAmbientCanvas`**（layout）vs legacy **`TravelTrustNetworkParticles`** 页内树分轨 — **九轮**企业审计。**未改前端**。 |
+| 1.0.23 | 2026-05-26 | 文首 **状态**：融资级 **`Target`** 与 **① UI 壳 layout lock**（**FIVE-MAIN**）分轨 — **八轮**索引卫生。**未改前端**。 |
+| 1.0.22 | 2026-05-26 | **§2.6 L1**：**`TravelTrustHomeLandingNavSlot`** portal + **CSS** 公告跑马灯（文档对代码；**未改前端**）。 |
+| 1.0.21 | 2026-05-25 | **§三 4～10**、**§5.2**：愿景 IA backlog 标；**NetworkParticles** 双层实现标为历史 — **①** 页内 **cinematic 3D + layout lock**（**FIVE-MAIN-ROUTES**）。 |
+| 1.0.20 | 2026-05-25 | **§2.6 / §三**：**① 实现真值** — **layout lock**（**无** 独立 **`#overview` 四卡**）；**L1** **`TravelTrustLandingChrome`**；**未挂载** legacy **`TravelTrustSectionNav` / `TravelTrustNetworkParticles` / `TravelTrustLiveStats`**（contract）；互指 **FIVE-MAIN-ROUTES**、**modules/traveltrust-home/README**。 |
 | 1.0.19 | 2026-04-19 | **§十四 叙事表**：向导罚没与 **84 §1.1.1** 正交句 — **`Staking.slash`** → **`IdentityStakingPool` 系 `slash`**（**81/14**）。 |
 | 1.0.18 | 2026-03-30 | **§二 2.6 / §三 / §四 / §五.2**：与当前 `layout.tsx` 深色壳一致；新增 **全页环境粒子**、**Hero 旅游柔光**、**`#overview` 概览区**（四卡 + 痛点/方案双栏）；锚点导航增 **`overview`**、移除独立痛点/方案项；**ICO 式分段**以外链 [Nefe Coin ICO](https://ico.nefecoin.com/?utm_source=CryptoTotem) 为**排版节奏参考**（非功能背书）；`TravelTrustNetworkParticles` 支持 **`tone="hero"`**。 |
 | 1.0.17 | 2026-03-30 | **§2.1 样式**、**§廿 风格**：显式 **86/22/28** 分工与 **07 §五 5.3**，避免「样式唯 28」误读。 |

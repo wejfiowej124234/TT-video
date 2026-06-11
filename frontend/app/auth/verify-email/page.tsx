@@ -245,7 +245,7 @@ function VerifyEmailInner() {
 
 export default function VerifyEmailPage() {
   return (
-    <AuthFullBleedSearchParamsSuspense mainAriaLabelKey="auth_verify_title" authAuditRoute="verify-email">
+    <AuthFullBleedSearchParamsSuspense mainAriaLabelKey="auth_verify_title">
       <VerifyEmailInner />
     </AuthFullBleedSearchParamsSuspense>
   );

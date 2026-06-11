@@ -52,6 +52,8 @@ export type OrderListItem = {
   display_status?: string | null;
   /** B-097：链上投影终端；**`null`** 表示无投影行；**`read_status: degraded`** 表示读库失败 */
   projection_terminal?: Record<string, unknown> | null;
+  /** 业务线（列表与 chain_off 同源；`communityMeOrdersDrawerModel` / 04 对读） */
+  business_line?: string;
 };
 
 export async function getOrders(params?: {
@@ -87,6 +89,8 @@ export async function postOrder(
     amount: string;
     currency?: string;
     escrow_address?: string | null;
+    start_date?: string;
+    end_date?: string;
   },
   idempotencyKey?: string
 ): Promise<unknown> {
@@ -199,6 +203,23 @@ export async function orderCancel(orderId: string, idempotencyKey?: string): Pro
   });
   const data = await parseResponse(res);
   logApiJsonStatusNotOk("orderCancel", data);
+  throwUnlessApiOk(data);
+  return data;
+}
+
+/** GD-L5-P2：改期（Created/Accepted · 未 Escrowed；409 schedule_conflict 时 body.error=schedule_conflict） */
+export async function patchOrderTripDates(
+  orderId: string,
+  body: { start_date: string; end_date: string },
+  idempotencyKey?: string
+): Promise<unknown> {
+  const res = await fetch(apiUrl(routes.orderPatchTripDates(orderId)), {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json", ...writeRequestHeaders(idempotencyKey) },
+    body: JSON.stringify(body),
+  });
+  const data = await parseResponse(res);
+  logApiJsonStatusNotOk("patchOrderTripDates", data);
   throwUnlessApiOk(data);
   return data;
 }

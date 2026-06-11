@@ -5,8 +5,16 @@ import { postItineraryCreate, getOrder } from "@/lib/apiClient";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import {
   hydrateLandingUnlockedOrderDetails,
+  pruneLandingSessionOrderIds,
 } from "@/lib/landingItineraryHydrate";
 import { buildLandingToMarketHref } from "@/lib/landingMarketDeepLink";
+import {
+  clearCachedLandingDraftCap,
+  draftQuotaFromCapError,
+  fetchLandingDraftQuota,
+  LANDING_DRAFT_CAP,
+  type LandingDraftQuota,
+} from "@/lib/landingDraftQuota";
 import {
   LANDING_RESULT_ORDER_IDS_KEY,
   LANDING_UNLOCKED_ORDER_IDS_KEY,
@@ -56,6 +64,11 @@ export function useLandingPage(t: (key: string) => string) {
   const [submitError, setSubmitError] = useState<string | null>(null);
   /** 未登录提交：Hero 区展示登录 CTA（returnUrl=/） */
   const [loginRequired, setLoginRequired] = useState(false);
+  const [draftQuota, setDraftQuota] = useState<LandingDraftQuota>({
+    count: 0,
+    cap: LANDING_DRAFT_CAP,
+    blocked: false,
+  });
   const [resultOrderIds, setResultOrderIds] = useState<string[]>([]);
   /** 按订单 ID 记录解锁（一单一卡，整单解锁） */
   const [unlockedOrderIds, setUnlockedOrderIds] = useState<Set<string>>(new Set());
@@ -82,6 +95,58 @@ export function useLandingPage(t: (key: string) => string) {
     }
   }, []);
 
+  const refreshDraftQuota = useCallback(() => {
+    if (!hasMarketAuthSession()) {
+      setDraftQuota({ count: 0, cap: LANDING_DRAFT_CAP, blocked: false });
+      return;
+    }
+    void fetchLandingDraftQuota().then(setDraftQuota);
+  }, []);
+
+  useEffect(() => {
+    refreshDraftQuota();
+  }, [refreshDraftQuota]);
+
+  useEffect(() => {
+    const onFocus = () => refreshDraftQuota();
+    window.addEventListener("focus", onFocus);
+    document.addEventListener("visibilitychange", onFocus);
+    return () => {
+      window.removeEventListener("focus", onFocus);
+      document.removeEventListener("visibilitychange", onFocus);
+    };
+  }, [refreshDraftQuota]);
+
+  useEffect(() => {
+    if (!validationErrorKey) return;
+    if (validationErrorKey === "landing_error_country" && country) {
+      setValidationErrorKey(null);
+      return;
+    }
+    if (validationErrorKey === "landing_error_cities" && cities.length > 0) {
+      setValidationErrorKey(null);
+      return;
+    }
+    if (validationErrorKey === "landing_error_dates" && startDate && endDate) {
+      setValidationErrorKey(null);
+      return;
+    }
+    if (validationErrorKey === "landing_error_datesOrder" && startDate && endDate && new Date(endDate) >= new Date(startDate)) {
+      setValidationErrorKey(null);
+      return;
+    }
+    if (validationErrorKey === "landing_error_days" && days >= 1 && days <= 30) {
+      setValidationErrorKey(null);
+      return;
+    }
+    if (validationErrorKey === "landing_error_budget") {
+      const budgetNum = budget ? parseFloat(budget) : undefined;
+      if (budgetNum === undefined || (!Number.isNaN(budgetNum) && budgetNum > 0)) {
+        setValidationErrorKey(null);
+      }
+    }
+  }, [validationErrorKey, country, cities, startDate, endDate, days, budget]);
+
   const toggleFavorite = useCallback((orderId: string) => {
     const prev = loadFavSet(FAV_ORDERS_KEY);
     const next = new Set(prev);
@@ -107,19 +172,20 @@ export function useLandingPage(t: (key: string) => string) {
     if (storedUnlocked.size > 0) setUnlockedOrderIds(storedUnlocked);
     if (storedFavorites.size > 0) setFavoritedIds(storedFavorites);
 
-    if (storedUnlocked.size === 0) return;
+    const idsToVerify = [...new Set([...storedResults, ...storedUnlocked])];
+    if (idsToVerify.length === 0 || !hasMarketAuthSession()) return;
 
     let cancelled = false;
-    void hydrateLandingUnlockedOrderDetails([...storedUnlocked], getOrder).then(({ details, staleIds }) => {
+    void hydrateLandingUnlockedOrderDetails(idsToVerify, getOrder).then(({ details, staleIds }) => {
       if (cancelled) return;
       if (Object.keys(details).length > 0) {
         setOrderDetails((prev) => ({ ...prev, ...details }));
       }
       if (staleIds.length === 0) return;
-      const stale = new Set(staleIds);
-      setResultOrderIds((prev) => prev.filter((id) => !stale.has(id)));
-      setUnlockedOrderIds((prev) => new Set([...prev].filter((id) => !stale.has(id))));
-      setFavoritedIds((prev) => new Set([...prev].filter((id) => !stale.has(id))));
+      const pruned = pruneLandingSessionOrderIds(storedResults, storedUnlocked, storedFavorites, staleIds);
+      setResultOrderIds(pruned.resultOrderIds);
+      setUnlockedOrderIds(pruned.unlockedOrderIds);
+      setFavoritedIds(pruned.favoritedIds);
     });
     return () => {
       cancelled = true;
@@ -146,17 +212,20 @@ export function useLandingPage(t: (key: string) => string) {
       }
       if (key === LANDING_UNLOCKED_ORDER_IDS_KEY) {
         const storedUnlocked = readLandingUnlockedOrderIds();
+        const storedResults = readLandingResultOrderIds();
+        const storedFavorites = readLandingFavoriteOrderIds();
         setUnlockedOrderIds(storedUnlocked);
-        if (storedUnlocked.size === 0) return;
-        void hydrateLandingUnlockedOrderDetails([...storedUnlocked], getOrder).then(({ details, staleIds }) => {
+        const idsToVerify = [...new Set([...storedResults, ...storedUnlocked])];
+        if (idsToVerify.length === 0 || !hasMarketAuthSession()) return;
+        void hydrateLandingUnlockedOrderDetails(idsToVerify, getOrder).then(({ details, staleIds }) => {
           if (Object.keys(details).length > 0) {
             setOrderDetails((prev) => ({ ...prev, ...details }));
           }
           if (staleIds.length === 0) return;
-          const stale = new Set(staleIds);
-          setResultOrderIds((prev) => prev.filter((id) => !stale.has(id)));
-          setUnlockedOrderIds((prev) => new Set([...prev].filter((id) => !stale.has(id))));
-          setFavoritedIds((prev) => new Set([...prev].filter((id) => !stale.has(id))));
+          const pruned = pruneLandingSessionOrderIds(storedResults, storedUnlocked, storedFavorites, staleIds);
+          setResultOrderIds(pruned.resultOrderIds);
+          setUnlockedOrderIds(pruned.unlockedOrderIds);
+          setFavoritedIds(pruned.favoritedIds);
         });
         return;
       }
@@ -211,6 +280,10 @@ export function useLandingPage(t: (key: string) => string) {
       setValidationErrorKey("landing_error_days");
       return;
     }
+    if (draftQuota.blocked) {
+      setValidationErrorKey("landing_error_draft_cap");
+      return;
+    }
     setSubmitting(true);
     try {
       const body = {
@@ -238,11 +311,24 @@ export function useLandingPage(t: (key: string) => string) {
         return;
       }
       setResultOrderIds([orderIdRaw]);
+      clearCachedLandingDraftCap();
+      refreshDraftQuota();
     } catch (err) {
       const msg = err instanceof Error ? err.message : "";
       if (msg === "login_required" || msg === "unauthorized") {
         setLoginRequired(true);
         setSubmitError(t("landing_error_login"));
+      } else if (msg === "draft_cap_exceeded") {
+        setValidationErrorKey("landing_error_draft_cap");
+        setDraftQuota((prev) => {
+          const next = draftQuotaFromCapError(err);
+          return {
+            ...next,
+            visibleCount: prev.visibleCount,
+          };
+        });
+      } else if (msg === "in_progress_cap_exceeded") {
+        setValidationErrorKey("landing_error_in_progress_cap");
       } else {
         setSubmitError(mapApiReadError(err, t, "landing_error_request"));
       }
@@ -262,6 +348,8 @@ export function useLandingPage(t: (key: string) => string) {
     partySize,
     numRooms,
     t,
+    draftQuota.blocked,
+    refreshDraftQuota,
   ]);
 
   const handleUnlockClick = useCallback((orderId: string, index: number) => {
@@ -327,6 +415,8 @@ export function useLandingPage(t: (key: string) => string) {
     validationErrorKey,
     submitError,
     loginRequired,
+    draftQuota,
+    refreshDraftQuota,
     resultOrderIds,
     unlockedOrderIds,
     selectedForUnlock,

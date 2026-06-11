@@ -1,7 +1,7 @@
 # UI + 3D 融合规范（旅游 + Web3 可信协议）v1.0
 
 **Version:** 1.0.4  
-**UI 风格定稿**：**Experience 页身**（**`/`**、**`/traveltrust`**、**`/discover`→`/market` 短停** 等路径的**主画布**，不含顶栏）的**视觉表现**以 **[86-UI-双系统未来风-风格与动效技术规格](86-UI-双系统未来风-风格与动效技术规格.md)** 为 **SSOT**。**全局顶栏**以 **86 §6.0** / **`Header.tsx`** 为准（**全路由**白底深字，**不**再按「Experience 路径」切换玻璃浅字）。**叙事结构、三层分区与页面级组件骨架** 仍以 **[28-Cinematic-Glassmorphism-Web3融合规范](28-Cinematic-Glassmorphism-Web3融合规范.md)** 为参考（见 28 篇首分工）。**自由市场**落点 **`/market`**；**Business** 动效为 **86 降级版**。**本文 21** 与 **22、25** 为 **P2 实现层**（Token、动效节奏、Console/玻璃规则）。  
+**UI 风格定稿**：**Experience 页身**（**`/`**、**`/traveltrust`**、**`/discover`→`/market` 重定向壳** 等路径的**主画布**，不含顶栏）的**视觉表现**以 **[86-UI-双系统未来风-风格与动效技术规格](86-UI-双系统未来风-风格与动效技术规格.md)** 为 **SSOT**。**全局顶栏**以 **86 §6.0** / **`uiSystem.ts`** 为准（L0 **分层**深/浅条，**不**再全路由白底或玻璃浅字）。**叙事结构、三层分区与页面级组件骨架** 仍以 **[28-Cinematic-Glassmorphism-Web3融合规范](28-Cinematic-Glassmorphism-Web3融合规范.md)** 为参考（见 28 篇首分工）。**自由市场**落点 **`/market`**；**Business** 动效为 **86 降级版**。**本文 21** 与 **22、25** 为 **P2 实现层**（Token、动效节奏、Console/玻璃规则）。  
 **与 [13-协议级UI设计宪法](13-协议级UI设计宪法.md) 关系**：本文在 13 锁死的「资金区像银行、3D 只情绪层」基础上，细化**视觉语言、颜色、字体、圆角/阴影/玻璃、动效、3D 风格与性能、页面级结构、组件清单与验收门禁**，使旅行动效质感（接近 dribbble）与资金区可信度并存。**可落地的 Token 与数值**（Hex、px、阴影、动效时长等）见 [22-Design-Tokens-旅游Web3融合体系](22-Design-Tokens-旅游Web3融合体系-v1.0.md)。**Landing / 自由市场（Discover 叙事）/ Itinerary** 高端感目标（Awwwards/Stripe/Apple/顶级旅行品牌级）见 [25-顶级UI标准-Landing-Discover-Itinerary](25-顶级UI标准-Landing-Discover-Itinerary.md)。05 §九、13-1 页面分区以 13 为准；实现细节以本文为准。文档版本与最后更新见 [00-文档索引](00-文档索引.md)。
 
 ### 读前摘要
@@ -13,7 +13,8 @@
 | **动效预算** | **§5**；数值 **[22 §八](22-Design-Tokens-旅游Web3融合体系-v1.0.md)** |
 | **3D 仅情绪层** | **§6** |
 | **页面结构、组件清单、验收** | **§7～§9** |
-| **Experience 视觉 + 动效矩阵** | **[86](86-UI-双系统未来风-风格与动效技术规格.md)**；**Cinematic 结构** **[28](28-Cinematic-Glassmorphism-Web3融合规范.md)**（**`/discover`** 仅重定向壳） |
+| **Experience 视觉 + 动效矩阵** | **[86](86-UI-双系统未来风-风格与动效技术规格.md)**；**Cinematic 结构** **[28](28-Cinematic-Glassmorphism-Web3融合规范.md)**（**`/discover`→`/market` 重定向壳**） |
+| **`/` + `/market` 四页 ① 数据链** | **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)**（**非** 本文 3D/动效 SSOT 替代） |
 
 ---
 

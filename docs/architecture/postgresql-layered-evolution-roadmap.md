@@ -89,4 +89,15 @@
 
 ---
 
-**文档版本**：1.0 · 2026-04-18  
+## 七、Phase ③ 公网首发闸（2026-06-03）
+
+| 项 | 口径 |
+|----|------|
+| **Production GO 数据库** | **单一托管 PostgreSQL**（`DATABASE_URL`）；完成 **§五 L0**（备份/PITR、连接池治理、恢复演练）+ **[go-live-checklist §2](../go-live-checklist.md)** |
+| **不要求 / 不应做** | 首发上 **CockroachDB / Yugabyte / 多区域分布式 SQL**；**09 §3**、**41 §1.0** 中的 Cockroach 为 **Target 拓扑**，非 **③** 阻塞项 |
+| **何时升级** | 用户与订单规模达 **产品 ADR 阈值** 后，按 **§四** 顺序：**只读副本（L2）→ 模块拆库（L3）→ 最后才 L4 分布式 SQL**；**[TT-9627 §0.a](../runbook/TT-9627-delivery-order-spine-then-full-site.md)** 记为 **规划债 / 显式里程碑**，**禁止** 临近 **③** 突击分布式 |
+| **任务清单互指** | [DID-RANK-COMMUNITY-L5-AUDIT-TASKS · P3-INFRA-01～06](../../frontend/evidence/GO_local_marketing_front_closure/DID-RANK-COMMUNITY-L5-AUDIT-TASKS.md) |
+
+---
+
+**文档版本**：1.1 · 2026-06-03（§七 Phase ③ 闸）  

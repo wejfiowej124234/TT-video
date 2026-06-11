@@ -23,6 +23,7 @@ import {
 import { resolveMarketOrderForDetail } from "@/components/market/marketContentModel";
 import { bindingOrderVisibleInList, isOwnPublishedOpenListing } from "@/lib/marketBindOrderList";
 import { AUTH_USER_ID_KEY } from "@/lib/apiClient/core";
+import { TouchpointConversionStrip } from "@/components/product-enhancement/TouchpointConversionStrip";
 
 export type MarketSortBy = "latest" | "priceDesc" | "priceAsc";
 
@@ -147,7 +148,7 @@ function MarketContent({
       trackMarketEvent("market_order_click", { orderId: id });
       const pool = filteredOrders.length > 0 ? filteredOrders : orders;
       const row = resolveMarketOrderForDetail(pool, id);
-      handleOwnOrderSelect(row);
+      if (row) handleOwnOrderSelect(row);
       setDetailOrder(row);
     },
     [filteredOrders, orders, setDetailOrder, handleOwnOrderSelect],
@@ -346,11 +347,27 @@ function MarketContent({
                   />
                 </div>
               ) : hasFilters ? (
-                <div className={D.marketGlassInsetPanel}>
+                <div className={`${D.marketGlassInsetPanel} space-y-4`}>
+                  <TouchpointConversionStrip
+                    touchpoint="market"
+                    kicker={t("pes_market_conversion_kicker")}
+                    body={t("pes_market_conversion_body")}
+                    badge={t("pes_market_conversion_badge")}
+                    ctaHref="/"
+                    ctaLabel={t("pes_market_conversion_cta")}
+                  />
                   <EmptyState kind="no-matches" onResetFilters={resetFilters} darkBg compactColumn={compactColumnEmpty} />
                 </div>
               ) : (
-                <div className={D.marketGlassInsetPanel}>
+                <div className={`${D.marketGlassInsetPanel} space-y-4`}>
+                  <TouchpointConversionStrip
+                    touchpoint="market"
+                    kicker={t("pes_market_conversion_kicker")}
+                    body={t("pes_market_conversion_body")}
+                    badge={t("pes_market_conversion_badge")}
+                    ctaHref="/"
+                    ctaLabel={t("pes_market_conversion_cta")}
+                  />
                   <EmptyState kind="no-orders" darkBg onCustomItineraryClick={onCustomItineraryClick} compactColumn={compactColumnEmpty} />
                 </div>
               )

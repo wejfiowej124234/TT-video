@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   filterGuidePublicServiceTypes,
+  formatGuideLanguages,
   formatGuidePublicBio,
   formatGuideServiceTypeLabel,
   isInternalGuideServiceType,
@@ -27,6 +28,14 @@ describe("marketDisplayCopy", () => {
     expect(formatGuidePublicBio("PD-009 acquisition fulfillment (auto-provisioned)")).toBeNull();
     expect(formatGuidePublicBio("十年本地向导 · 博物馆讲解")).toBe("十年本地向导 · 博物馆讲解");
     expect(formatGuidePublicBio("测试向导账号, 用于联调")).toBeNull();
+    expect(formatGuidePublicBio("trust-gate e2e")).toBeNull();
+  });
+
+  it("formatGuideLanguages maps locale codes", () => {
+    const t2 = (key: string) =>
+      ({ market_guide_lang_zh: "中文", market_guide_lang_en: "English" })[key] ?? key;
+    expect(formatGuideLanguages(["zh", "en"], t2)).toBe("中文 · English");
+    expect(formatGuideLanguages(["fr"], t2)).toBe("FR");
   });
 
   it("filterGuidePublicServiceTypes drops internal slugs and dedupes", () => {

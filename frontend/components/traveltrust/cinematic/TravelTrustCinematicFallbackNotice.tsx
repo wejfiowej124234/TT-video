@@ -100,7 +100,7 @@ export function TravelTrustCinematicFallbackNotice({ reason }: Props) {
             className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-ref-sun/22"
             aria-hidden
             data-tt-traveltrust-webgl-fallback-border-pulse-l5="1"
-            animate={{ opacity: TT_WEBGL_FALLBACK_L5.cardBorderPulse.opacity }}
+            animate={{ opacity: [...TT_WEBGL_FALLBACK_L5.cardBorderPulse.opacity] }}
             transition={{
               duration: TT_WEBGL_FALLBACK_L5.cardBorderPulse.duration,
               repeat: TT_WEBGL_FALLBACK_L5.cardBorderPulseRepeat,

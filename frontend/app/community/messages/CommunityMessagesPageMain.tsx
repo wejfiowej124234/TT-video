@@ -27,6 +27,7 @@ import { useCommunityMessagesPage } from "./useCommunityMessagesPage";
 /** 31 附录 / 51-31-6：潮流社区 · 消息（会话列表）；53-S7 支持 ?orderId= 来自订单详情「前往订单聊天」 */
 export function CommunityMessagesPageMain() {
   const vm = useCommunityMessagesPage();
+  const queryClient = useQueryClient();
   const relationalShowcaseAttr = communityRelationalShowcaseDataAttr();
 
   return (

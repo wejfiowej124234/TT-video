@@ -7,6 +7,10 @@ import { useId, type FormEvent } from "react";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 
 import type { GuideRegisterFieldKey, GuideRegisterStep } from "@/lib/guide/guideRegisterValidation";
+import {
+  validateGuideRegisterStep1,
+  validateGuideRegisterStep2,
+} from "@/lib/guide/guideRegisterValidation";
 
 import type { GuideRegisterUploadPhase } from "./useGuideRegisterPage";
 
@@ -27,6 +31,7 @@ import {
 } from "./guideRegisterUiClasses";
 
 import { TT_GUIDE_REGISTER_L5 } from "@/lib/guide/guideRegisterL5";
+import { readGuideRegisterLastSubmitError } from "@/lib/constants/guideRegisterKeys";
 
 
 
@@ -273,6 +278,66 @@ export default function GuideRegisterMainForm(p: GuideRegisterMainFormProps) {
     kycBlocksSubmit ||
     step !== 3;
 
+  const step1Validation =
+    step >= 1
+      ? validateGuideRegisterStep1({
+          walletAddress,
+          realName,
+          idNumber,
+          idPhotoFile,
+          pendingIdPhoto,
+          walletVerified,
+        })
+      : null;
+  const step2Validation =
+    step >= 2
+      ? validateGuideRegisterStep2({ city, countryCode, languages, serviceTypes })
+      : null;
+
+  const step3Debug =
+    step === 3
+      ? {
+          submitDisabled,
+          submitDisabledReasons: {
+            loading,
+            isLoggedInFalse: isLoggedIn === false,
+            agreePrivacyMissing: !agreePrivacy,
+            walletAddressEmpty: !walletAddress.trim(),
+            walletNotVerified: !walletVerified,
+            kycBlocksSubmit,
+            stepNotThree: step !== 3,
+          },
+          validation: {
+            step1Field: step1Validation?.field ?? null,
+            step1MessageKey: step1Validation?.messageKey ?? null,
+            step2Field: step2Validation?.field ?? null,
+            step2MessageKey: step2Validation?.messageKey ?? null,
+          },
+          upload: {
+            phase: uploadPhase,
+            idPhotoFileName: idPhotoFile?.name ?? null,
+            idPhotoFileSize: idPhotoFile?.size ?? null,
+            pendingIdPhoto,
+            languageCertFileName: languageCertFile?.name ?? null,
+          },
+          postGuideWillFire:
+            !submitDisabled &&
+            !step1Validation &&
+            !step2Validation &&
+            agreePrivacy &&
+            isLoggedIn === true &&
+            !kycBlocksSubmit,
+          postGuidePipeline:
+            "handleSubmit → runGuideRegisterSubmitFlow → postGuideUploadDoc (if idPhotoFile) → postGuide",
+          isLoggedIn,
+          agreePrivacy,
+          walletVerified,
+          error: error ?? null,
+          fieldError,
+          lastSubmitErrorRaw: readGuideRegisterLastSubmitError(),
+        }
+      : null;
+
 
 
   const submitLabel =
@@ -291,7 +356,14 @@ export default function GuideRegisterMainForm(p: GuideRegisterMainFormProps) {
 
   return (
 
-    <form onSubmit={onSubmit} className={TT_GUIDE_REGISTER_L5.formSection} data-tt-guide-register-form="1">
+    <form
+      onSubmit={onSubmit}
+      className={TT_GUIDE_REGISTER_L5.formSection}
+      data-tt-guide-register-form="1"
+      {...(step3Debug
+        ? { "data-tt-guide-register-step3-debug": JSON.stringify(step3Debug) }
+        : {})}
+    >
 
       <nav className="flex flex-wrap items-center gap-2 text-meta" aria-label={t("guideRegister_stepNavAria")}>
 

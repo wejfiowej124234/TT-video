@@ -25,6 +25,10 @@ import { isMeSettingsExtensionFromQuery } from "@/lib/me/meSettingsExtensionCont
 import { ME_SETTINGS_PROFILE_PATH } from "@/lib/me/meSettingsL5";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import { GuideDashboardRouteSuspense } from "@/components/guide/GuideDashboardRouteSuspense";
+import { TouchpointConversionStrip } from "@/components/product-enhancement/TouchpointConversionStrip";
+import { ConversionFunnelRail } from "@/components/product-enhancement/ConversionFunnelRail";
+import GuideWorkbenchInboxCard from "@/components/guide/GuideWorkbenchInboxCard";
+import { useGuideWorkbenchInbox } from "./useGuideWorkbenchInbox";
 
 /** 07 §五 5.0 / 05：向导工作台首屏；user + stats 同源 `getMeFull`（GET /api/v1/me） */
 function GuideDashboardPageInner() {
@@ -118,6 +122,15 @@ function GuideDashboardPageInner() {
     void loadMe({ silent: true, force: true });
   }, [loadMe]);
 
+  const isGuideRole = user?.role === "guide";
+  const {
+    inbox: workbenchInbox,
+    nextOrderItem,
+    ordersLoading: inboxOrdersLoading,
+    ordersError: inboxOrdersError,
+    retryInbox,
+  } = useGuideWorkbenchInbox(isGuideRole, t);
+
   if (loading) return <MePageSkeleton t={t} ariaLabelKey="guide_dashboard_title" />;
 
   if (error) {
@@ -176,7 +189,6 @@ function GuideDashboardPageInner() {
     );
   }
 
-  const isGuide = user?.role === "guide";
   const trustSummary = user != null ? parseMeTrustFromMeResponse(mePayload, user) : null;
   const ordersGuided = typeof stats?.orders_guided === "number" ? stats.orders_guided : 0;
   const completedCount = typeof stats?.completed_count === "number" ? stats.completed_count : 0;
@@ -202,7 +214,7 @@ function GuideDashboardPageInner() {
           noticeKey="me_settings_guide_from_settings_notice"
           t={t}
         />
-        {isGuide && trustSummary != null ? (
+        {isGuideRole && trustSummary != null ? (
           <GuideRegistrationStatusBanner trust={trustSummary} t={t} onRefresh={() => void loadMe({ force: true })} />
         ) : null}
         <header className="rounded-[var(--radius-md)] border border-cyan-400/40 bg-ink-800/60 backdrop-blur-md px-4 py-4 sm:px-6 sm:py-5 mb-4 sm:mb-6 shadow-scifi-banner-strong">
@@ -212,23 +224,41 @@ function GuideDashboardPageInner() {
           <p className="text-small text-slate-300 mt-0.5">{t("guide_dashboard_subtitle")}</p>
         </header>
 
+        {isGuideRole ? (
+          <GuideWorkbenchInboxCard
+            t={t}
+            inbox={workbenchInbox}
+            ordersLoading={inboxOrdersLoading}
+            ordersError={inboxOrdersError}
+            onRetry={retryInbox}
+            nextOrderListItem={nextOrderItem}
+          />
+        ) : null}
+
         {user && trustSummary != null ? (
           <MeTrustSection
             t={t}
             trust={trustSummary}
             showGuideRegisterLink={!userIsGuide(user)}
-            hideGuideRegistrationRow={isGuide}
+            hideGuideRegistrationRow={isGuideRole}
             identitySlots={mePayload ? parseIdentitySlotsFromMe(mePayload) : undefined}
             onTrustRefresh={() => void loadMe({ force: true })}
           />
         ) : null}
 
-        {!isGuide ? (
-          <div
-            className="rounded-[var(--radius-md)] border border-warning/35 bg-warning/10 px-4 py-5 sm:px-6 sm:py-6 mb-6"
-            role="region"
-            aria-label={t("guide_dashboard_not_guide_aria")}
-          >
+        {!isGuideRole ? (
+          <>
+            <ConversionFunnelRail
+              touchpoint="guide"
+              t={t}
+              currentStageId="register"
+              className="mb-4"
+            />
+            <div
+              className="rounded-[var(--radius-md)] border border-warning/35 bg-warning/10 px-4 py-5 sm:px-6 sm:py-6 mb-6"
+              role="region"
+              aria-label={t("guide_dashboard_not_guide_aria")}
+            >
             <p className="text-small text-warning/95 mb-4">{t("guide_dashboard_not_guide")}</p>
             <div className="flex flex-wrap gap-3">
               <Link
@@ -245,6 +275,7 @@ function GuideDashboardPageInner() {
               </Link>
             </div>
           </div>
+          </>
         ) : (
           <>
             <GuideBillingPeriodCard
@@ -256,6 +287,18 @@ function GuideDashboardPageInner() {
               periodExpectedEarnings={periodExpectedEarnings}
               periodSettledOrdersCount={periodSettledOrdersCount}
             />
+            {!statsLoading && !statsError && ordersGuided === 0 && completedCount === 0 ? (
+              <div className="mb-4">
+                <TouchpointConversionStrip
+                  touchpoint="guide"
+                  kicker={t("pes_guide_conversion_kicker")}
+                  body={t("pes_guide_empty_stats")}
+                  badge={t("pes_guide_conversion_badge")}
+                  ctaHref="/market"
+                  ctaLabel={t("pes_guide_conversion_cta")}
+                />
+              </div>
+            ) : null}
             <GuideDashboardStats
               t={t}
               statsLoading={statsLoading}

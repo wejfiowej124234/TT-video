@@ -57,6 +57,12 @@ evidence/93-batch-admin-deep-audit/run_*/
 # 社区发帖媒体本地上传（API 进程 CWD 通常为仓库根 `data/`；勿入仓）
 data/community_post_media/
 
+# ② Anvil 本地链持久化状态（`anvil --state`；勿入仓）
+data/anvil_local/
+
+# 本地测试钱包列表（Anvil 自动补 ETH/TTG；勿入仓）
+scripts/dev/ttg-anvil-fund-wallets.local
+
 # Python 字节码（勿提交）
 **/__pycache__/
 *.py[cod]

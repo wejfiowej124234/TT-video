@@ -418,7 +418,7 @@ export default function RegisterGuideForm({
           </section>
 
           {error ? (
-            <AuthL5FormError id={formErrorId} message={getErrorDisplay(error)} surface="register_form_error" />
+            <AuthL5FormError id={formErrorId} message={getErrorDisplay(error) ?? error} surface="register_form_error" />
           ) : null}
           <button
             type="submit"

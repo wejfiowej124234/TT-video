@@ -1,7 +1,7 @@
 "use client";
 
 import { communityCyanPillFocus } from "@/lib/communityA11yFocus";
-import { TT_COMMUNITY_PAGE_L5 } from "@/lib/marketingUi";
+import { TT_COMMUNITY_FEED_L5 } from "@/lib/marketingUi";
 
 type Props = {
   t: (k: string) => string;
@@ -24,7 +24,7 @@ export function CommunityMeListLoadMoreButton({ t, busy, onClick, surface = "pag
         className={
           isDrawer
             ? `inline-flex min-h-[44px] items-center justify-center rounded-full border border-cyan-400/45 bg-cyan-500/15 px-6 text-meta font-medium text-cyan-100 hover:bg-cyan-500/25 disabled:cursor-wait disabled:opacity-70 motion-sub ${communityCyanPillFocus}`
-            : `${TT_COMMUNITY_PAGE_L5.loadMoreBtn} ${communityCyanPillFocus}`
+            : `${TT_COMMUNITY_FEED_L5.loadMoreBtn} ${communityCyanPillFocus}`
         }
       >
         {busy ? t("common_loading") : t("common_loadMore")}

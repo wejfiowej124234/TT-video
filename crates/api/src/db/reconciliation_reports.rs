@@ -17,6 +17,9 @@ const ORDERS_CHAIN_HEALTH_TREND_MAX_DAY: usize = 90;
 /// internal **indexer-reconcile** 持久化摘要所用 `report_type`
 pub const REPORT_TYPE_ORDERS_PROJECTION_VS_ORDERS: &str = "orders_projection_vs_orders";
 
+/// **BE-RS-01** **`POST …/internal/region-share-reconcile`** **`persist:true`** 所用 `report_type`
+pub const REPORT_TYPE_REGION_SHARE_PROJECTION_CLOSURE: &str = "region_share_projection_closure_v1";
+
 pub async fn insert_reconciliation_report(
     pool: &PgPool,
     report_type: &str,
@@ -418,6 +421,24 @@ pub async fn admin_last_indexer_head_vs_db_latest_block_drift_observability(
         "indexer_head_vs_db_latest_block_drift_observability",
     )
     .await
+}
+
+pub async fn admin_last_region_share_projection_closure_observability(
+    pool: &PgPool,
+) -> Result<Option<Value>, sqlx::Error> {
+    let Some(row) = get_latest_reconciliation_report_by_type(
+        pool,
+        REPORT_TYPE_REGION_SHARE_PROJECTION_CLOSURE,
+    )
+    .await?
+    else {
+        return Ok(None);
+    };
+    Ok(row
+        .summary
+        .0
+        .get("region_share_projection_closure_observability")
+        .cloned())
 }
 
 /// Admin 列表用（不含整份 **`summary`**；从 **`summary.stats`** 抽取门禁字段与分项计数，**不含** **`samples`**）

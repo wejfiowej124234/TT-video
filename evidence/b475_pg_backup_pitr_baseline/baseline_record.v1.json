@@ -2,8 +2,8 @@
   "schema": "traveltrust_pg_backup_pitr_baseline.v1",
   "status": "PLANNED",
   "milestone": "单库生产级基线收口 · L0",
-  "wal_archive_destination_desc": "",
-  "logical_backup_schedule_desc": "",
-  "last_restore_drill_utc": null,
-  "notes": "Owner：完成 WAL 归档、逻辑备份节奏与恢复演练后，将 status 升为 PASS 并补全三字段；不可用环境可书面 WAIVED 并写明原因（见 TT-B475 Runbook §1）。"
+  "wal_archive_destination_desc": "Fly Managed Postgres WAL (staging: tt-traveltrust-staging; prod: tt-traveltrust-prod TBD)",
+  "logical_backup_schedule_desc": "Staging drill: fly postgres backup + pg_dump schema head; Prod target: daily pg_dump + Fly backup retention 7d (Owner confirm)",
+  "last_restore_drill_utc": "2026-06-10T11:03:44Z",
+  "notes": "Phase3 staging drill 2026-06-07: backup list + pg_dump + psql read-only. Fly managed backups NOT enabled on staging plan — prod must enable before PASS. See TT-B475 + PRODUCTION-OPS-RUNBOOK §2. Phase3 staging drill 2026-06-10T04:49:11Z. Phase3 staging drill 2026-06-10T05:57:25Z. Phase3 staging drill 2026-06-10T07:05:08Z. Phase3 staging drill 2026-06-10T11:03:44Z."
 }

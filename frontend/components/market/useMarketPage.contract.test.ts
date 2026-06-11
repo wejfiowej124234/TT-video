@@ -36,7 +36,7 @@ describe("useMarketPage cluster (contract)", () => {
     expect(src).toContain("filterDiscoverOrdersForViewer");
     expect(src).toContain("buildMarketDiscoverOrderList");
     expect(src).toContain("ownPublishedOpenListingIds");
-    expect(src).toMatch(/bindGuideToOrderId[\s\S]{0,200}setView(?:Sync)?\("split"\)/);
+    expect(src).toMatch(/bindGuideToOrderId[\s\S]{0,200}setView(?:Sync)?\("guides"\)/);
     expect(src).toContain("orderGetResponseToMarketCard");
     expect(src).toMatch(/bindGuideToOrderId[\s\S]{0,400}appendMarketDevVarietyOrders/);
     expect(src).toContain("bindOrderBackfillError");
@@ -48,5 +48,10 @@ describe("useMarketPage cluster (contract)", () => {
     expect(src).toContain("MARKET_LIST_REFETCH_DEBOUNCE_MS");
     expect(src).toContain("pullMarketTravelBookmarksIntoLocal");
     expect(src).toContain("pushMarketOrderBookmarkToggle");
+    expect(src).toContain("refreshFavoritesSyncHint");
+    expect(src).toContain('useState(() => t("market_favorites_sync_note_local"))');
+    expect(src).toContain("filterGuidesAvailableForTrip");
+    expect(src).toContain("useBindOrderTripDates");
+    expect(src).toContain("bindOrderTripDates");
   });
 });

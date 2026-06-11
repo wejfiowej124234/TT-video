@@ -18,4 +18,7 @@ export type GuideDetailShape = {
   guide_license_url?: string | null;
   hourly_rate?: string | number | null;
   hourly_currency?: string | null;
+  rating?: number | null;
+  completedCount?: number | null;
+  responseSLA?: string | null;
 };

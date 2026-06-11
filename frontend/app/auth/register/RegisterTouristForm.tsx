@@ -20,6 +20,8 @@ export type RegisterTouristFormProps = {
   backdropKind?: Exclude<RegisterVisualKind, "default">;
   headingKey?: string;
   bannerKey?: string;
+  submitLabelKey?: string;
+  providerProgressStep?: 1 | 2 | 3 | 4 | 5;
   loginHref: string;
   autoFocusEmail?: boolean;
   email: string;
@@ -46,6 +48,8 @@ export type RegisterTouristFormProps = {
   t: (key: string) => string;
   inputClass: string;
   labelClass: string;
+  referralPrefill?: string | null;
+  referralValidateState?: "idle" | "validating" | "valid" | "invalid";
 };
 
 export default function RegisterTouristForm({
@@ -81,6 +85,8 @@ export default function RegisterTouristForm({
   t,
   inputClass,
   labelClass,
+  referralPrefill,
+  referralValidateState = "idle",
 }: RegisterTouristFormProps) {
   const formErrorId = useId();
   const fid = useId();
@@ -125,6 +131,21 @@ export default function RegisterTouristForm({
             <h1 className={TT_AUTH_L5_FORM.titleLogin}>{t(headingKey)}</h1>
           </header>
           <TrustGrowthMomentBanner moment="register" surface="l5" preferCollapsedSummary />
+          {referralPrefill ? (
+            <p
+              className="text-body-s text-ink-500"
+              data-tt-register-referral-prefill="1"
+              data-tt-register-referral-state={referralValidateState}
+            >
+              {referralValidateState === "validating"
+                ? t("auth_register_referralValidating")
+                : referralValidateState === "valid"
+                  ? t("auth_register_referralValid").replace("{{code}}", referralPrefill)
+                  : referralValidateState === "invalid"
+                    ? t("auth_register_referralInvalid").replace("{{code}}", referralPrefill)
+                    : t("auth_register_referralPrefill").replace("{{code}}", referralPrefill)}
+            </p>
+          ) : null}
           <form
             noValidate
             onSubmit={onSubmit}
@@ -229,7 +250,7 @@ export default function RegisterTouristForm({
               <p className={TT_AUTH_L5_FORM.metaText}>{t("auth_register_walletHint")}</p>
             </div>
             {error ? (
-              <AuthL5FormError id={formErrorId} message={getErrorDisplay(error)} surface="register_form_error" />
+              <AuthL5FormError id={formErrorId} message={getErrorDisplay(error) ?? error} surface="register_form_error" />
             ) : null}
             <button
               type="submit"

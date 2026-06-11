@@ -281,7 +281,7 @@ export default function GuideRegisterFileField({
 
       ) : null}
 
-      <GuideRegisterInlineFieldError message={inlineError} />
+      <GuideRegisterInlineFieldError message={inlineError ?? null} />
 
       {hint ? <p className={guideRegFileMeta}>{hint}</p> : null}
 

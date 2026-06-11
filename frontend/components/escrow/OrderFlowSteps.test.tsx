@@ -112,18 +112,17 @@ describe("OrderFlowSteps component", () => {
     expect(document.activeElement).toBe(items[0]);
   });
 
-  it("experience draft step 2 shows pick-guide label when draftStep2Phase is pickGuide", () => {
+  it("experience draft step 2 always shows select-guide label (itinerary-first step 2)", () => {
     render(
       <OrderFlowSteps
         currentStep={1}
         variant="experience"
         compact
         draftJourneyStep={2}
-        draftStep2Phase="pickGuide"
       />,
     );
     const nav = screen.getByRole("navigation", { name: "order_flow_journey_aria" });
-    expect(nav.textContent).toContain("order_flow_journey_pickGuide");
-    expect(nav.textContent).not.toContain("order_flow_journey_confirm");
+    expect(nav.textContent).toContain("order_flow_journey_selectGuide");
+    expect(nav.textContent).toContain("order_flow_journey_create");
   });
 });

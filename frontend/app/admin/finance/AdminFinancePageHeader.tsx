@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { type FormEvent, useId } from "react";
 
+import { AdminInboxQueueBackLinks } from "@/components/admin/AdminInboxQueueBackLinks";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import type { AdminFinanceTranslate } from "./adminFinancePageTypes";
 import { ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_LINK_FOCUS_CLASS, ADMIN_SHELL_SECONDARY_BTN_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";

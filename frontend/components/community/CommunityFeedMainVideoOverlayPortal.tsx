@@ -76,7 +76,6 @@ export function CommunityFeedMainVideoOverlayPortal({
       backButtonRef={videoBackButtonRef}
       items={communityVideoFeedItems}
       activeKey={activeKey}
-      onActivePostChange={onActivePostChange}
       isLoggedIn={isLoggedIn}
       authPending={authPending}
       likedPostIds={likedPostIds}

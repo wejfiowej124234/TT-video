@@ -649,12 +649,17 @@ pub(super) async fn meta(State(state): State<ApiMetaState>) -> impl IntoResponse
         );
     }
 
+    let db_pool = state
+        .chain_off
+        .as_ref()
+        .and_then(|co| co.db_pool.as_ref());
+    let pc_resolved = crate::catalog_geo_validation::resolve_meta_product_countries(db_pool).await;
     let mut product_countries_section = json!({
         "strict_db_write": false,
-        "dual_write_order": "GET /meta product_countries is a compile-time snapshot: traveltrust_core::PRODUCT_COUNTRY_CODES and PRODUCT_COUNTRY_NAMES_ZH (same-length parallel arrays); meta handler does not persist this block; POST /guides country_code and POST /itineraries* validators read the same core product_countries lists",
-        "rule": "产品期十国锁死：POST /api/v1/guides `country_code` 须为 iso3166_alpha2；POST /api/v1/itineraries/custom 的 `country` 须为 name_zh（中文国家名）。POST /api/v1/itineraries 的 `destination` 须为允许的中文国家名（`is_allowed_zh_destination_country`，与 `name_zh` 一致；非法 → `invalid_destination_country`）；`city`/`cities[]` 须为该国预设城市（`preset_cities`）。与 `traveltrust_core::product_countries`、`frontend/lib/productCountries.ts`、44/54 一致；746 GET /meta product_countries 对象 product_countries_top_keys / product_countries_top_keys_contract_746 与 PRODUCT_COUNTRIES_META_TOP_KEYS 七键顺序同源",
-        "iso3166_alpha2": traveltrust_core::PRODUCT_COUNTRY_CODES,
-        "name_zh": traveltrust_core::PRODUCT_COUNTRY_NAMES_ZH,
+        "dual_write_order": crate::catalog_geo_validation::meta_product_countries_dual_write_order(pc_resolved.read_source),
+        "rule": "产品期十国锁死：POST /api/v1/guides `country_code` 须为 iso3166_alpha2；POST /api/v1/itineraries/custom 的 `country` 须为 name_zh（中文国家名）。POST /api/v1/itineraries 的 `destination` 须为允许的中文国家名（`is_allowed_zh_destination_country`，与 `name_zh` 一致；非法 → `invalid_destination_country`）；`city`/`cities[]` 须为该国预设城市（`preset_cities`）。与 `traveltrust_core::product_countries`、`frontend/lib/productCountries.ts`、44/54 一致；746 GET /meta product_countries 对象 product_countries_top_keys / product_countries_top_keys_contract_746 与 PRODUCT_COUNTRIES_META_TOP_KEYS 七键顺序同源；S4b：`CATALOG_SERVER_GEO_VALIDATION=1` 且 DATABASE_URL 时 iso3166_alpha2/name_zh 优先读 published catalog_countries，失败回退 core",
+        "iso3166_alpha2": pc_resolved.iso3166_alpha2,
+        "name_zh": pc_resolved.name_zh,
     });
     if let Some(pc) = product_countries_section.as_object_mut() {
         let keys746: serde_json::Value = serde_json::to_value(PRODUCT_COUNTRIES_META_TOP_KEYS)

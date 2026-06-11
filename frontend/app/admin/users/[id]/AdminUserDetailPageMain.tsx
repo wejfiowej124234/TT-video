@@ -13,6 +13,7 @@ import { AdminAlertError } from "@/components/admin/AdminAlertError";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminMetaBuildSection } from "@/components/admin/AdminMetaBuildPanel";
 import { AdminProviderApplicationReviewCard } from "@/components/admin/AdminProviderApplicationReviewCard";
+import { AdminGuideApplicationReviewCard } from "@/components/admin/AdminGuideApplicationReviewCard";
 import { AdminStewardApplicationReviewCard } from "@/components/admin/AdminStewardApplicationReviewCard";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
 import { outboundUrlFromPersisted } from "@/lib/communityMediaClientUrl";
@@ -124,6 +125,7 @@ export function AdminUserDetailPageMain() {
               {t("admin_user_detail_onboarding_section")}
             </h2>
             <AdminProviderApplicationReviewCard userId={userId} />
+            <AdminGuideApplicationReviewCard userId={userId} />
             <AdminStewardApplicationReviewCard userId={userId} />
             <div id="admin-acquisition-suspend" data-tt-admin-user-acquisition="1">
               <h2 className={`mb-3 ${ADMIN_DETAIL_SECTION_TITLE_CLASS}`}>

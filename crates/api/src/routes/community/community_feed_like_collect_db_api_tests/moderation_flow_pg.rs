@@ -247,6 +247,7 @@ async fn matrix_93_d_com_c3_content_remove_hides_from_public_surfaces_pg() {
         eprintln!("skip: c3 content_remove (DATABASE_URL unset)");
         return;
     };
+    let _env = crate::test_env_serial::lock();
     let _serial = db_it_lock().lock().await;
     let prev = std::env::var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE").ok();
     std::env::set_var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE", "1");

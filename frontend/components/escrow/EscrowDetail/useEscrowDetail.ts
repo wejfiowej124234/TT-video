@@ -7,6 +7,7 @@ import { useEscrowChainSync } from "./useEscrowChainSync";
 import { getOrder, getOrderChainSyncStatus, getMe, isComplianceError } from "@/lib/apiClient";
 import { consumeEscrowOrderPrefetch } from "@/lib/orderEscrowPrefetch";
 import { mapApiReadError } from "@/lib/mapApiReadError";
+import { mapEscrowForbiddenError } from "@/lib/orderParticipantHint";
 import { useEscrowRelease, useEscrowDeposit, useEscrowRefund, useEscrowOpenDispute } from "@/dapp/hooks/useEscrowActions";
 import escrowAbiJson from "@/dapp/abis/Escrow.json";
 import { erc20TokenAbi } from "@/lib/stakingAbi";
@@ -554,10 +555,21 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
         : undefined;
       setItinerary((prev) => {
         if (!prev) return prev;
+        const amount_breakdown: ItineraryBlock["amount_breakdown"] | undefined = normalized
+          ? {
+              total_budget: normalized.total_budget ?? undefined,
+              hotel: normalized.hotel ?? undefined,
+              catering: normalized.catering ?? undefined,
+              tickets: normalized.tickets ?? undefined,
+              guide_fee: normalized.guide_fee ?? undefined,
+              vehicle: normalized.vehicle ?? undefined,
+              platform_fee: normalized.platform_fee ?? undefined,
+            }
+          : undefined;
         return {
           ...prev,
           ...(patch.dailyItinerary ? { daily_itinerary: patch.dailyItinerary } : {}),
-          ...(normalized ? { amount_breakdown: normalized } : {}),
+          ...(amount_breakdown ? { amount_breakdown } : {}),
           version: patch.version ?? (prev.version ?? 1) + 1,
         };
       });
@@ -601,7 +613,7 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
           }
           const msg = err instanceof Error ? err.message : "";
           if (isComplianceError(err)) setError(msg || t("escrow_loadFailed"));
-          else if (/403|forbidden|权限|暂无权限/i.test(msg)) setError(t("escrow_403_message"));
+          else if (/403|forbidden|权限|暂无权限/i.test(msg)) setError(mapEscrowForbiddenError(err, t));
           else setError(mapApiReadError(err, t, "escrow_loadFailed"));
         });
     };
@@ -656,7 +668,7 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
           if (isOrderGetRateLimited(err)) return;
           const msg = err instanceof Error ? err.message : "";
           if (isComplianceError(err)) setError(msg || t("escrow_loadFailed"));
-          else if (/403|forbidden|权限|暂无权限/i.test(msg)) setError(t("escrow_403_message"));
+          else if (/403|forbidden|权限|暂无权限/i.test(msg)) setError(mapEscrowForbiddenError(err, t));
           else setError(mapApiReadError(err, t, "escrow_loadFailed"));
           });
       };

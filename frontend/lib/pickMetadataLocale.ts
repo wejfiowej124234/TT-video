@@ -8,6 +8,23 @@ export type LocaleMessages = typeof zh | typeof en;
  * Pick zh/en message bundle for static route metadata (OG/Twitter/title).
  * Honors `Accept-Language` order and q-values; defaults to zh (root `html lang="zh-CN"`).
  */
+/** zh/en tag for OG `locale` / `alternateLocale` (pairs with [`localeMessagesFromAcceptLanguage`]). */
+export function localeFromAcceptLanguage(
+  acceptLanguage: string | null | undefined,
+): "zh" | "en" {
+  if (acceptLanguage == null) return "zh";
+  const raw = acceptLanguage.trim();
+  if (raw === "") return "zh";
+
+  for (const part of raw.split(",")) {
+    const tag = part.split(";")[0]?.trim().toLowerCase() ?? "";
+    if (tag === "") continue;
+    if (tag.startsWith("en")) return "en";
+    if (tag.startsWith("zh")) return "zh";
+  }
+  return "zh";
+}
+
 export function localeMessagesFromAcceptLanguage(acceptLanguage: string | null | undefined): LocaleMessages {
   if (acceptLanguage == null) return zh;
   const raw = acceptLanguage.trim();

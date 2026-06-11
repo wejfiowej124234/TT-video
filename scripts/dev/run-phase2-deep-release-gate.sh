@@ -39,6 +39,9 @@ source "$ROOT/scripts/dev/lib/staging-adm-u01-env.sh"
 trap staging_adm_u01_cleanup_proxy EXIT
 if ! staging_adm_u01_prepare_dsn; then
   echo "WARN: staging-adm-u01-env prepare failed — G04 may FAIL (fly proxy / STAGING_DATABASE_URL)" >&2
+  if [[ "${STAGING_DATABASE_URL:-}" == *flycast* ]]; then
+    unset STAGING_DATABASE_URL
+  fi
 fi
 
 {

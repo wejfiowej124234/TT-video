@@ -21,7 +21,6 @@ import { TravelTrustPageComplianceBlock } from "./TravelTrustPageComplianceBlock
 import {
   traveltrustL5SequentialChildProps,
   traveltrustSectionChildStagger,
-  traveltrustSectionMotionProps,
 } from "./traveltrustSectionMotion";
 import { TravelTrustStartRoutePreview } from "./TravelTrustStartRoutePreview";
 import {
@@ -33,7 +32,7 @@ import {
   TT_START_STEP_L5,
   TT_TRAVELTRUST_MARKETING_WARM_L5,
   traveltrustSectionL5DataAttrs,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 import { TRAVELTRUST_START_L5_STEPS, useTraveltrustStartStepController } from "./traveltrustStartStepL5";
 
 export type StartP2ProbeBridge = {
@@ -64,7 +63,6 @@ export function TravelTrustStartSection() {
   const feePanelRef = useRef<HTMLDivElement>(null);
   const planHref = resolveTraveltrustPlanTripHref(brief?.cta_contract.primary_target);
   const governanceHref = brief?.cta_contract.secondary_target ?? "/governance";
-  const sectionMotion = traveltrustSectionMotionProps("start", reduceMotion);
   const { activeStep: activeStartStep, selectStep, pauseCycle, resumeCycle } =
     useTraveltrustStartStepController(reduceMotion);
   const { startPrefillRegionId, startPrefillStepId } = useHeroGlobeP1Link();
@@ -143,14 +141,10 @@ export function TravelTrustStartSection() {
   }, []);
 
   return (
-    <motion.section
+    <section
       id="start"
       className={TT_START_SECTION_L5.sectionClass}
       aria-labelledby={titleId}
-      initial={sectionMotion.initial}
-      whileInView={sectionMotion.whileInView}
-      viewport={sectionMotion.viewport}
-      transition={sectionMotion.transition}
       {...traveltrustSectionL5DataAttrs("start")}
       data-tt-traveltrust-start-prefill-region={startPrefillRegionId ?? ""}
       data-tt-traveltrust-start-corridor={corridorBinding.corridorId}
@@ -242,7 +236,7 @@ export function TravelTrustStartSection() {
               reduceMotion
                 ? undefined
                 : active
-                  ? { boxShadow: TT_START_STEP_L5.activeGlow }
+                  ? { boxShadow: [...TT_START_STEP_L5.activeGlow] }
                   : { boxShadow: "0 0 0 0 rgba(252,164,124,0)" }
             }
             transition={
@@ -312,7 +306,7 @@ export function TravelTrustStartSection() {
             <motion.span
               className={TT_START_SECTION_L5.ctaPrimaryPulseClass}
               aria-hidden
-              animate={{ opacity: TT_START_SECTION_L5.ctaPrimaryPulse.opacity }}
+              animate={{ opacity: [...TT_START_SECTION_L5.ctaPrimaryPulse.opacity] }}
               transition={{
                 duration: TT_START_SECTION_L5.ctaPrimaryPulse.duration,
                 repeat: TT_START_SECTION_L5.ctaPrimaryPulse.repeat,
@@ -434,6 +428,6 @@ export function TravelTrustStartSection() {
       </div>
       </motion.div>
       <TravelTrustPageComplianceBlock />
-    </motion.section>
+    </section>
   );
 }

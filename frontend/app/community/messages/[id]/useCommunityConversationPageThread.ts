@@ -15,6 +15,12 @@ import {
   shouldUseCommunityShowcaseForRelationalUi,
 } from "@/lib/communityShowcase";
 
+type ConversationMessagesPayload = Awaited<ReturnType<typeof getConversationMessages>>;
+
+function messagesFromPayload(payload: ConversationMessagesPayload | undefined): CommunityDmMessageRow[] | undefined {
+  return Array.isArray(payload?.messages) ? payload.messages : undefined;
+}
+
 export function useCommunityConversationPageThread(opts: {
   id: string;
   t: ReturnType<typeof useTranslation>["t"];
@@ -28,22 +34,25 @@ export function useCommunityConversationPageThread(opts: {
 
   const [localMessages, setLocalMessages] = useState<CommunityDmMessageRow[] | null>(null);
 
-  const threadQ = useQuery({
+  const threadQ = useQuery<ConversationMessagesPayload>({
     queryKey: ["community", "conversationMessages", id],
     queryFn: () => getConversationMessages(id),
     enabled: Boolean(id) && !showcaseReadonly,
     staleTime: 10_000,
   });
 
+  const threadPayload = threadQ.data;
+  const threadMessages = messagesFromPayload(threadPayload);
+
   useEffect(() => {
     setLocalMessages(null);
   }, [id]);
 
   useEffect(() => {
-    if (!threadQ.isSuccess || !Array.isArray(threadQ.data?.messages)) return;
-    setLocalMessages(threadQ.data.messages);
+    if (!threadQ.isSuccess || !threadMessages) return;
+    setLocalMessages(threadMessages);
     void queryClient.invalidateQueries({ queryKey: COMMUNITY_CONVERSATIONS_LAYOUT_QUERY_KEY });
-  }, [threadQ.isSuccess, threadQ.data, queryClient]);
+  }, [threadQ.isSuccess, threadMessages, queryClient]);
 
   const showcaseMessages = useMemo(() => {
     if (!showcaseReadonly || !id) return [];
@@ -53,16 +62,16 @@ export function useCommunityConversationPageThread(opts: {
 
   const messages = showcaseReadonly
     ? showcaseMessages
-    : (localMessages ?? (Array.isArray(threadQ.data?.messages) ? threadQ.data.messages : []));
+    : (localMessages ?? threadMessages ?? []);
 
   const setMessages: Dispatch<SetStateAction<CommunityDmMessageRow[]>> = useCallback(
     (action) => {
       setLocalMessages((prev) => {
-        const base = prev ?? (Array.isArray(threadQ.data?.messages) ? threadQ.data.messages : []);
+        const base = prev ?? threadMessages ?? [];
         return typeof action === "function" ? action(base) : action;
       });
     },
-    [threadQ.data],
+    [threadMessages],
   );
 
   const threadLoadError = useMemo(() => {
@@ -73,15 +82,15 @@ export function useCommunityConversationPageThread(opts: {
     if (threadQ.isError && threadQ.error != null) {
       return mapApiReadError(threadQ.error, t, "community_messages_threadLoadFailed");
     }
-    if (threadQ.isSuccess && threadQ.data != null && !Array.isArray(threadQ.data.messages)) {
+    if (threadQ.isSuccess && threadPayload != null && !threadMessages) {
       return t("community_messages_threadLoadFailed");
     }
     return null;
-  }, [showcaseReadonly, myId, threadQ.isError, threadQ.error, threadQ.isSuccess, threadQ.data, t]);
+  }, [showcaseReadonly, myId, threadQ.isError, threadQ.error, threadQ.isSuccess, threadPayload, threadMessages, t]);
 
   const loading = showcaseReadonly
     ? false
-    : threadQ.isLoading && localMessages == null && !Array.isArray(threadQ.data?.messages);
+    : threadQ.isLoading && localMessages == null && !threadMessages;
 
   const retryThread = useCallback(() => {
     void threadQ.refetch();

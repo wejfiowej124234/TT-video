@@ -258,7 +258,10 @@ pub(super) async fn create_post(
     )
     .await
     {
-        Ok(id) => Json(json!({ "status": "ok", "id": id.to_string() })).into_response(),
+        Ok(id) => {
+            db::observe_first_post(pool, uid, id).await;
+            Json(json!({ "status": "ok", "id": id.to_string() })).into_response()
+        }
         Err(_) => Json(json!({"status": "error", "error": "create_post_failed", "message": "create_post_failed"})).into_response(),
     }
 }
@@ -803,7 +806,7 @@ pub(super) async fn post_like(
         return resp;
     }
     match db::insert_like(pool, uid, post_id).await {
-        Ok(()) => Json(json!({"status": "ok"})).into_response(),
+        Ok(created) => Json(json!({"status": "ok", "created": created})).into_response(),
         Err(_) => Json(json!({
             "status": "error",
             "error": "like_create_failed",

@@ -91,10 +91,8 @@ const STRIPE_RETURN_QUERY_KEYS = [
 ] as const;
 
 /** Stripe Checkout / Elements 回跳常见 query；用于触发资格自动同步。 */
-export function isOnboardingStripeReturnQuery(
-  params: Pick<URLSearchParams, "has"> | { get: (key: string) => string | null },
-): boolean {
-  return STRIPE_RETURN_QUERY_KEYS.some((k) => params.has(k));
+export function isOnboardingStripeReturnQuery(params: Pick<URLSearchParams, "get">): boolean {
+  return STRIPE_RETURN_QUERY_KEYS.some((k) => params.get(k) != null);
 }
 
 export function stripOnboardingStripeReturnQueryFromUrl(): boolean {

@@ -8,8 +8,8 @@ import {
   TRAVELTRUST_GLOBE_EARTH_TEXTURE_PATH,
 } from "@/lib/traveltrustGlobeEarthAsset";
 
-void useTexture.preload(TRAVELTRUST_GLOBE_EARTH_TEXTURE_PATH, undefined, undefined, "anonymous");
-void useTexture.preload(TRAVELTRUST_GLOBE_CLOUD_TEXTURE_PATH, undefined, undefined, "anonymous");
+void useTexture.preload(TRAVELTRUST_GLOBE_EARTH_TEXTURE_PATH);
+void useTexture.preload(TRAVELTRUST_GLOBE_CLOUD_TEXTURE_PATH);
 import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -91,7 +91,7 @@ function CinematicStaticFallback() {
       <motion.div
         className="absolute inset-0"
         aria-hidden
-        animate={{ opacity: TT_CANVAS_STATIC_FALLBACK_L5.warmOpacityRange }}
+        animate={{ opacity: [...TT_CANVAS_STATIC_FALLBACK_L5.warmOpacityRange] }}
         transition={{
           duration: TT_CANVAS_STATIC_FALLBACK_L5.warmPulseDuration,
           repeat: TT_CANVAS_STATIC_FALLBACK_L5.warmPulseRepeat,

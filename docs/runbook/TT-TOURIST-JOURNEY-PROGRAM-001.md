@@ -39,7 +39,7 @@
 
 | 顺序 | 优先级 | 任务卡 | 一句话 |
 |------|--------|--------|--------|
-| 1 | **P0** | [`TT-TOURIST-JOURNEY-P01-AUTH-MARKET-001`](TT-TOURIST-JOURNEY-P01-AUTH-MARKET-001.md) | 旅行者登录 + `/market` 只读（`discover/orders`） |
+| 1 | **P0** | [`TT-TOURIST-JOURNEY-P01-AUTH-MARKET-001`](TT-TOURIST-JOURNEY-P01-AUTH-MARKET-001.md) | 旅行者登录 + `/market` 只读（**`useMarketPage`** · **`getDiscoverOrders`** · **debounce** — **[LANDING-MARKET-PAGES-CODE-SSOT](../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §3） |
 | 2 | **P0** | [`TT-TOURIST-JOURNEY-P02-CREATE-ORDER-LIST-001`](TT-TOURIST-JOURNEY-P02-CREATE-ORDER-LIST-001.md) | `/orders/new` 建单 + `/orders` 列表 + `GET :id` |
 | 3 | **P1** | [`TT-TOURIST-JOURNEY-P03-GUIDE-ACCEPT-001`](TT-TOURIST-JOURNEY-P03-GUIDE-ACCEPT-001.md) | 向导账号 `POST …/accept`，旅行者侧一致 |
 | 4 | **P1** | [`TT-TOURIST-JOURNEY-P04-BILATERAL-001`](TT-TOURIST-JOURNEY-P04-BILATERAL-001.md) | 双方 `confirm-bilateral` |

@@ -18,6 +18,16 @@ export const ADMIN_PERM = {
   PLATFORM_READ: "admin.platform.read",
   PLATFORM_PUBLISH: "admin.platform.publish",
   ACQUISITION_SUSPEND: "admin.acquisition.suspend",
+  CONTENT_READ: "admin.content.read",
+  CONTENT_WRITE: "admin.content.write",
+  CONTENT_PUBLISH: "admin.content.publish",
+  OFFICIAL_READ: "admin.official.read",
+  OFFICIAL_WRITE: "admin.official.write",
+  OFFICIAL_PUBLISH: "admin.official.publish",
+  GROWTH_READ: "admin.growth.read",
+  GROWTH_WRITE: "admin.growth.write",
+  GROWTH_PUBLISH: "admin.growth.publish",
+  GROWTH_FRAUD: "admin.growth.fraud",
 } as const;
 
 export type AdminPermissionId = (typeof ADMIN_PERM)[keyof typeof ADMIN_PERM];
@@ -45,4 +55,14 @@ export const ADMIN_PERMISSION_MATRIX_ROWS: {
   { id: ADMIN_PERM.PLATFORM_READ, labelKey: "admin_perm_platform_read" },
   { id: ADMIN_PERM.PLATFORM_PUBLISH, labelKey: "admin_perm_platform_publish", superOnly: true },
   { id: ADMIN_PERM.ACQUISITION_SUSPEND, labelKey: "admin_perm_acquisition_suspend" },
+  { id: ADMIN_PERM.CONTENT_READ, labelKey: "admin_perm_content_read" },
+  { id: ADMIN_PERM.CONTENT_WRITE, labelKey: "admin_perm_content_write" },
+  { id: ADMIN_PERM.CONTENT_PUBLISH, labelKey: "admin_perm_content_publish", superOnly: true },
+  { id: ADMIN_PERM.OFFICIAL_READ, labelKey: "admin_perm_official_read" },
+  { id: ADMIN_PERM.OFFICIAL_WRITE, labelKey: "admin_perm_official_write" },
+  { id: ADMIN_PERM.OFFICIAL_PUBLISH, labelKey: "admin_perm_official_publish", superOnly: true },
+  { id: ADMIN_PERM.GROWTH_READ, labelKey: "admin_perm_growth_read" },
+  { id: ADMIN_PERM.GROWTH_WRITE, labelKey: "admin_perm_growth_write" },
+  { id: ADMIN_PERM.GROWTH_PUBLISH, labelKey: "admin_perm_growth_publish", superOnly: true },
+  { id: ADMIN_PERM.GROWTH_FRAUD, labelKey: "admin_perm_growth_fraud" },
 ];

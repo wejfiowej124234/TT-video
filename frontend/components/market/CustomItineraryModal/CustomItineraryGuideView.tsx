@@ -24,6 +24,7 @@ export default function CustomItineraryGuideView({
   const {
     form,
     setForm,
+    setTotalDays,
     setGuideDayPlan,
     cities,
     quote,
@@ -55,6 +56,7 @@ export default function CustomItineraryGuideView({
       guideLevelsWithPricing={guideLevelsWithPricing}
       form={form}
       setForm={setForm}
+      setTotalDays={setTotalDays}
       setGuideDayPlan={setGuideDayPlan}
       cities={cities}
       guideDayPlansNormalized={guideDayPlansNormalized}

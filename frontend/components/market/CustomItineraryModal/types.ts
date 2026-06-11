@@ -65,6 +65,8 @@ export interface CustomItineraryForm {
   guideAttractionFee: string;
   guideFoodFee: string;
   guideInterCityFee: string;
+  /** 希望向导协助代订城际机票/高铁（平台仅记录需求，不含实际订票） */
+  guideAssistTransport: boolean;
 }
 
 export function defaultDayPlan(): DayPlan {
@@ -111,6 +113,7 @@ export function defaultForm(totalDays: number = 5): CustomItineraryForm {
     guideAttractionFee: "",
     guideFoodFee: "",
     guideInterCityFee: "",
+    guideAssistTransport: false,
   };
 }
 

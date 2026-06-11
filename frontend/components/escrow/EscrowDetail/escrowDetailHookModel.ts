@@ -25,7 +25,7 @@ export interface UseEscrowDetailResult {
   order: OrderRow | null;
   itinerary: ItineraryBlock | null;
   error: string | null;
-  refreshOrder: () => void;
+  refreshOrder: (options?: { force?: boolean }) => void;
   confirmAction: ConfirmAction;
   setConfirmAction: (a: ConfirmAction) => void;
   dismissReorgBanner: boolean;

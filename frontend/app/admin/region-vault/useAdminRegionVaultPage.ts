@@ -11,6 +11,7 @@ import { apiUrl, routes } from "@/lib/api";
 import { getAuthHeaders } from "@/lib/apiClient";
 import {
   defaultAdminListFetchSnapshot,
+  type AdminListFetchSnapshot,
   type AdminStandardListBody,
   useAdminStandardListFetch,
 } from "@/lib/admin/useAdminStandardListFetch";
@@ -26,8 +27,8 @@ import {
 
 function regionVaultFirstPageToSnapshot(
   body: AdminStandardListBody<RegionVaultItem> & Pick<AdminRegionVaultRes, "summary" | "page">,
-) {
-  const base = defaultAdminListFetchSnapshot(body);
+): AdminListFetchSnapshot<RegionVaultItem> {
+  const base = defaultAdminListFetchSnapshot<RegionVaultItem>(body);
   const meta: Record<string, unknown> = { ...(base.meta ?? {}) };
   if (body.summary && typeof body.summary === "object") {
     meta[ADMIN_REGION_VAULT_SUMMARY_META_KEY] = body.summary;

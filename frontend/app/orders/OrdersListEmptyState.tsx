@@ -4,6 +4,7 @@ import type { FormEvent } from "react";
 import Link from "next/link";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { ordersListStateLabelKey } from "@/lib/ordersListStateQuery";
+import { buildMarketCreateItineraryHref } from "@/lib/marketDeepLink";
 import { TT_ORDERS_LIST_L5 } from "@/lib/orders/ordersListL5";
 
 export function OrdersListSyncingBanner({ t, listSyncing }: { t: (key: string) => string; listSyncing: boolean }) {
@@ -73,10 +74,11 @@ export function OrdersListEmptyState({
           </Link>
         )}
         <Link
-          href={filtered ? "/orders/new" : "/itinerary/new"}
+          href={filtered ? "/" : buildMarketCreateItineraryHref()}
+          data-tt-orders-list-create-draft-cta="1"
           className={TT_ORDERS_LIST_L5.emptySecondaryBtn}
         >
-          {filtered ? t("orders_list_bookGuideCta") : t("empty_createDraft")}
+          {filtered ? t("empty_goCreateItinerary") : t("empty_createDraft")}
         </Link>
         {!filtered ? (
           <Link href="/" className={TT_ORDERS_LIST_L5.emptySecondaryBtn}>

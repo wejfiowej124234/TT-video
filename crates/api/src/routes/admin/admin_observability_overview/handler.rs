@@ -88,7 +88,8 @@ pub async fn get_admin_observability_overview(
             "escrow_status_chain_vs_orders_drift_observability": snaps.escrow_status_chain_vs_orders_drift_observability,
             "fee_router_fee_routes_vs_routed_events_drift_observability": snaps.fee_router_fee_routes_vs_routed_events_drift_observability,
             "vault_forwards_vs_forwarded_events_drift_observability": snaps.vault_forwards_vs_forwarded_events_drift_observability,
-            "stake_lock_projection_block_lag_observability": snaps.stake_lock_projection_block_lag_observability
+            "stake_lock_projection_block_lag_observability": snaps.stake_lock_projection_block_lag_observability,
+            "region_share_projection_closure_observability": snaps.region_share_projection_closure_observability
         },
         "actor": {
             "id": actor_id,

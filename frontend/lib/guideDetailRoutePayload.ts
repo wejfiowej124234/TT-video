@@ -8,5 +8,18 @@ export function parseGuideDetailForRoute(raw: unknown, expectedId: string): Reco
   const o = raw as Record<string, unknown>;
   const rid = String(o.id ?? "").trim();
   if (!rid || rid !== idTrim) return null;
-  return o;
+  const rating = typeof o.rating === "number" ? o.rating : null;
+  const completedCount =
+    typeof o.completedCount === "number"
+      ? o.completedCount
+      : typeof o.completed_count === "number"
+        ? o.completed_count
+        : null;
+  const responseSLA =
+    typeof o.responseSLA === "string"
+      ? o.responseSLA
+      : typeof o.response_sla === "string"
+        ? o.response_sla
+        : null;
+  return { ...o, rating, completedCount, responseSLA };
 }

@@ -1,12 +1,10 @@
 # Phase ②.8 · Human Acceptance Test Report
 
-> **⚠ Supersession (2026-06-07 post-②.9):** ②.9 UI 8/8 完成后的 **R4–R7 复跑未全绿** — `PHASE3_ENTRY_GATE: HOLD` · Entry Review **NO_GO**。下方 ②.8 PASS 保留为历史证据；**不得以本报告 READY 宣称 Phase ③**。见 `evidence/GO_phase2_testnet_20260526/phase29-release-polish/post29-gate-chain-*/PHASE3-ENTRY-REVIEW.md`。
-
-**Recorded:** 2026-06-07T00:42:04.679Z  
+**Recorded:** 2026-06-07T14:53:45.067Z  
 **Web:** [https://tt-web-staging.fly.dev](https://tt-web-staging.fly.dev)  
 **API:** [https://tt-api-staging.fly.dev](https://tt-api-staging.fly.dev)  
-**Staging git_sha:** `7b86e58b04eb45b18e9528f63dfefb3efeabba70`  
-**Evidence:** `D:/TravelTrust-V1.1/evidence/phase28-human-acceptance/20260607T003521Z/hat-findings.json`  
+**Staging git_sha:** `bc5a939cd89c624be7c128b551306da177bf6016`  
+**Evidence:** `D:/TravelTrust-V1.1/evidence/phase28-human-acceptance/20260607T144655Z/hat-findings.json`  
 
 > Phase ②.8 真人用户视角验收 · **不**引用六大域 UAT 自动化结论作为 PASS 依据 · **≠ Phase ③ Production GO**
 
@@ -18,16 +16,15 @@
 |------|--------|
 | **HAT overall** | **PASS** |
 | **P0 (不可用)** | **0** |
-| **P1 (影响使用)** | **1** |
-| **P2 (优化项)** | **3** |
+| **P1 (影响使用)** | **0** |
+| **P2 (优化项)** | **2** |
 | **Flow steps PASS** | 87 |
 | **Flow steps FAIL/PARTIAL/BLOCKED** | 0 / 0 / 2 |
-| **Phase ③ entry recommendation** | **~~READY~~ → HOLD (post-②.9 re-run pending)** |
+| **Phase ③ entry recommendation** | **READY** |
 
 ```text
-PHASE28_HUMAN_ACCEPTANCE: PASS   # ②.8 historical · pre-②.9 deploy
-PHASE3_ENTRY_GATE: HOLD           # 2026-06-07 post-29 gate chain NO_GO
-PHASE3_ENTRY_REVIEW: NO_GO
+PHASE28_HUMAN_ACCEPTANCE: PASS
+PHASE3_ENTRY_GATE: READY
 ```
 
 ---
@@ -47,7 +44,6 @@ PHASE3_ENTRY_REVIEW: NO_GO
 ## Issues by role
 
 - **商家**: 2 issue(s)
-- **旅行者**: 2 issue(s)
 
 ---
 
@@ -57,31 +53,18 @@ _None recorded._
 
 ---
 
-## P1 defects (1)
+## P1 defects (0)
 
-| ID | 角色 | 区域 | 路由 | 标题 | 真人影响 |
-|----|------|------|------|------|----------|
-| HAT-B-002 | 旅行者 | 社区会话 | `/orders` | community session 未接受 | 社区页可能反复跳转登录 |
-
-### Detail
-
-#### HAT-B-002 · community session 未接受 (P1)
-
-- **角色:** 旅行者
-- **路由:** `/orders`
-- **观察:** ensureCommunityBrowserSessionAccepted failed
-- **真人影响:** 社区页可能反复跳转登录
-
+_None recorded._
 
 ---
 
-## P2 defects (3)
+## P2 defects (2)
 
 | ID | 角色 | 区域 | 路由 | 标题 | 真人影响 |
 |----|------|------|------|------|----------|
 | HAT-P2-001 | 商家 | 测试账号 | `/provider/register` | Staging 无预置商家测试账号 | QA 无法一键切换商家角色，延长验收周期 |
-| HAT-B-001 | 旅行者 | 市场 | `/market` | 搜索框不明显 | 筛选/搜索体验弱 |
-| HAT-B-003 | 商家 | 测试账号 | `/provider/register` | 无预置商家一键账号 | 完整商家闭环需注册+Admin 审核，手测成本高 |
+| HAT-B-001 | 商家 | 测试账号 | `/provider/register` | 无预置商家一键账号 | 完整商家闭环需注册+Admin 审核，手测成本高 |
 
 ### Detail
 
@@ -93,14 +76,7 @@ _None recorded._
 - **真人影响:** QA 无法一键切换商家角色，延长验收周期
 - **复现:** `docs/测试账号与本地联调.md 仅列 tourist/guide`
 
-#### HAT-B-001 · 搜索框不明显 (P2)
-
-- **角色:** 旅行者
-- **路由:** `/market`
-- **观察:** no searchbox role
-- **真人影响:** 筛选/搜索体验弱
-
-#### HAT-B-003 · 无预置商家一键账号 (P2)
+#### HAT-B-001 · 无预置商家一键账号 (P2)
 
 - **角色:** 商家
 - **路由:** `/provider/register`
@@ -216,7 +192,7 @@ _None recorded._
 | Criterion | Required | Current |
 |-----------|----------|---------|
 | P0 = 0 | Yes | ✅ (0) |
-| P1 ≤ 3 or all have workaround | Yes | ✅ (1) |
+| P1 ≤ 3 or all have workaround | Yes | ✅ (0) |
 | 五角色核心闭环可手操 | Yes | 见上表 Flow |
 | 不依赖 API 200  alone | Yes | HTML shell + 业务 API 双探 |
 

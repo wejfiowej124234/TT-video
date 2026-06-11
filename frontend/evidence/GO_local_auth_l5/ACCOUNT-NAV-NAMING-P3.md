@@ -20,6 +20,8 @@
 
 **`/me` 与 `/me/settings/profile`：** 资料编辑在设置 profile 子页；入驻申请与槽位矩阵在 **`/me/identities`**。顶栏 **profile strip** 与 Hub **顶卡** 同链 `/me/settings/profile`（**非**账户组菜单行）。
 
+**分场景名称（L5 · 2026-06-10）：** 账户 nickname **≠** 市场 `{city} 向导` 标题 — 见 [identity-multi-slot-naming-l5.v1.md](../../../docs/spec/artifacts/identity-multi-slot-naming-l5.v1.md)。**顶栏身份切换** 为 **P3 升级轨**，① 未实现。
+
 ---
 
 ## 统一逐页追踪（ME-P1-9）

@@ -72,13 +72,13 @@ describe("communityMeLoginReturnUrl", () => {
 
   it("preserves full query on /community/me without tab", () => {
     const sp = new URLSearchParams("utm=x");
-    expect(communityMeLoginReturnUrl("/community/me", sp, "likes")).toBe("/community/me?utm=x");
+    expect(communityMeLoginReturnUrl("/community/me", sp, "likes")).toBe("/me/settings/profile?utm=x");
   });
 
-  it("uses dedicated fallback when /community/me has no query", () => {
-    expect(communityMeLoginReturnUrl("/community/me", new URLSearchParams(""), "orders")).toBe("/orders");
-    expect(communityMeLoginReturnUrl("/community/me", null, "posts")).toBe("/community/me/posts");
-    expect(communityMeLoginReturnUrl("/community/me", null, "likes")).toBe("/community/me/likes");
+  it("uses profile hub when /community/me has no tab query", () => {
+    expect(communityMeLoginReturnUrl("/community/me", new URLSearchParams(""), "orders")).toBe("/me/settings/profile");
+    expect(communityMeLoginReturnUrl("/community/me", null, "posts")).toBe("/me/settings/profile");
+    expect(communityMeLoginReturnUrl("/community/me", null, "likes")).toBe("/me/settings/profile");
   });
 
   it("maps /community/me/posts to dedicated page for login return", () => {

@@ -6,6 +6,8 @@
 
 当前版本可以先用于对外沟通准备、社区固定帖底稿和投资人会前问答整理，但仍需要法务与口径签核后才能作为正式外发版。
 
+**工程实现（对内/演示 · ①）**：**`/`** Web3旅行首页 · **`/market`** 撮合主 UI（**`/discover` 重定向**）— **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)**（**非**对外 FAQ 措辞变更）。
+
 ## FAQ
 
 ### 1. TravelTrust 是什么？

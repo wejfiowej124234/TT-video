@@ -9,7 +9,7 @@ import { communityCardLinkFocus } from "@/lib/communityA11yFocus";
 import type { MeTrustSummary } from "@/lib/meTrust";
 import { TT_COMMUNITY_PAGE_L5 } from "@/lib/marketingUi";
 
-type TFunc = (k: string) => string;
+type TFunc = (k: string, vars?: Record<string, string | number>) => string;
 
 export default function CommunityMeAcquisitionTrustStrip({
   t,

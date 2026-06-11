@@ -204,7 +204,7 @@ function ResetPasswordInner() {
 
 export default function ResetPasswordPage() {
   return (
-    <AuthFullBleedSearchParamsSuspense mainAriaLabelKey="auth_reset_title" authAuditRoute="reset-password">
+    <AuthFullBleedSearchParamsSuspense mainAriaLabelKey="auth_reset_title">
       <ResetPasswordInner />
     </AuthFullBleedSearchParamsSuspense>
   );

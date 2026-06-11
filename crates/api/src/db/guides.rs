@@ -22,6 +22,8 @@ pub async fn insert_guide(
     language_cert_url: Option<&str>,
     guide_license_url: Option<&str>,
     stake_amount: &str,
+    hourly_rate: Option<&str>,
+    avatar_url: Option<&str>,
     status: &str,
     created_at: DateTime<Utc>,
     updated_at: DateTime<Utc>,
@@ -42,6 +44,8 @@ pub async fn insert_guide(
         language_cert_url,
         guide_license_url,
         stake_amount,
+        hourly_rate,
+        avatar_url,
         status,
         created_at,
         updated_at,
@@ -66,6 +70,8 @@ pub async fn insert_guide_with_data_origin(
     language_cert_url: Option<&str>,
     guide_license_url: Option<&str>,
     stake_amount: &str,
+    hourly_rate: Option<&str>,
+    avatar_url: Option<&str>,
     status: &str,
     created_at: DateTime<Utc>,
     updated_at: DateTime<Utc>,
@@ -81,8 +87,8 @@ pub async fn insert_guide_with_data_origin(
         serde_json::to_value(&service_types_norm).unwrap_or_else(|_| JsonValue::Array(vec![]));
     sqlx::query(
         r#"
-        INSERT INTO guides (id, user_id, city, country_code, languages, service_types, bio, wallet_address, real_name, passport_number_hash, id_photo_url, language_cert_url, guide_license_url, stake_amount, status, created_at, updated_at, data_origin)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
+        INSERT INTO guides (id, user_id, city, country_code, languages, service_types, bio, wallet_address, real_name, passport_number_hash, id_photo_url, language_cert_url, guide_license_url, stake_amount, hourly_rate, avatar_url, status, created_at, updated_at, data_origin)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)
         ON CONFLICT (id) DO NOTHING
         "#,
     )
@@ -100,6 +106,8 @@ pub async fn insert_guide_with_data_origin(
     .bind(language_cert_url)
     .bind(guide_license_url)
     .bind(stake_amount)
+    .bind(hourly_rate)
+    .bind(avatar_url)
     .bind(status)
     .bind(created_at)
     .bind(updated_at)
@@ -136,6 +144,43 @@ pub async fn update_guide_registration_review(
     Ok(r.rows_affected())
 }
 
+/// 向导公开展示字段（`PATCH /api/v1/me/guide-profile`；有 DB 时双写）
+pub async fn update_guide_public_profile(
+    pool: &PgPool,
+    id: Uuid,
+    city: &str,
+    country_code: &str,
+    languages: &[String],
+    service_types: &[String],
+    bio: Option<&str>,
+    hourly_rate: Option<&str>,
+    avatar_url: Option<&str>,
+    updated_at: DateTime<Utc>,
+) -> Result<u64, sqlx::Error> {
+    let lang_json = serde_json::to_value(languages).unwrap_or_else(|_| JsonValue::Array(vec![]));
+    let svc_json = serde_json::to_value(service_types).unwrap_or_else(|_| JsonValue::Array(vec![]));
+    let r = sqlx::query(
+        r#"
+        UPDATE guides
+        SET city = $1, country_code = $2, languages = $3, service_types = $4, bio = $5,
+            hourly_rate = $6, avatar_url = $7, updated_at = $8
+        WHERE id = $9
+        "#,
+    )
+    .bind(city)
+    .bind(country_code)
+    .bind(&lang_json)
+    .bind(&svc_json)
+    .bind(bio)
+    .bind(hourly_rate)
+    .bind(avatar_url)
+    .bind(updated_at)
+    .bind(id)
+    .execute(pool)
+    .await?;
+    Ok(r.rows_affected())
+}
+
 /// 向导行（与 chain_off::GuideRow 对齐，用于 hydrate）
 #[derive(Debug)]
 pub struct GuideRow {
@@ -153,6 +198,8 @@ pub struct GuideRow {
     pub language_cert_url: Option<String>,
     pub guide_license_url: Option<String>,
     pub stake_amount: String,
+    pub hourly_rate: Option<String>,
+    pub avatar_url: Option<String>,
     pub status: String,
     pub rejection_codes: Vec<String>,
     pub rejection_message: Option<String>,
@@ -179,6 +226,8 @@ pub async fn list_guides(pool: &PgPool) -> Result<Vec<GuideRow>, sqlx::Error> {
         language_cert_url: Option<String>,
         guide_license_url: Option<String>,
         stake_amount: String,
+        hourly_rate: Option<String>,
+        avatar_url: Option<String>,
         status: String,
         rejection_codes: JsonValue,
         rejection_message: Option<String>,
@@ -187,7 +236,7 @@ pub async fn list_guides(pool: &PgPool) -> Result<Vec<GuideRow>, sqlx::Error> {
         updated_at: DateTime<Utc>,
     }
     let rows = sqlx::query_as::<_, Row>(
-        "SELECT id, user_id, city, country_code, languages, service_types, bio, wallet_address, real_name, passport_number_hash, id_photo_url, language_cert_url, guide_license_url, stake_amount, status, rejection_codes, rejection_message, data_origin, created_at, updated_at FROM guides",
+        "SELECT id, user_id, city, country_code, languages, service_types, bio, wallet_address, real_name, passport_number_hash, id_photo_url, language_cert_url, guide_license_url, stake_amount, hourly_rate, avatar_url, status, rejection_codes, rejection_message, data_origin, created_at, updated_at FROM guides",
     )
     .fetch_all(pool)
     .await?;
@@ -212,6 +261,8 @@ pub async fn list_guides(pool: &PgPool) -> Result<Vec<GuideRow>, sqlx::Error> {
                 language_cert_url: r.language_cert_url,
                 guide_license_url: r.guide_license_url,
                 stake_amount: r.stake_amount,
+                hourly_rate: r.hourly_rate,
+                avatar_url: r.avatar_url,
                 status: r.status,
                 rejection_codes,
                 rejection_message: r.rejection_message,

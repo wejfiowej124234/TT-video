@@ -57,7 +57,14 @@ export function RegisterPageMain() {
     labelClass,
     goBackFromStep,
     registerPageShellClass,
+    referralPrefill,
+    referralValidateState,
   } = useRegisterPage();
+
+  const referralProps = {
+    referralPrefill,
+    referralValidateState,
+  };
 
   if (registerType === "traveler") {
     return (
@@ -89,6 +96,7 @@ export function RegisterPageMain() {
         t={t}
         inputClass={inputClass}
         labelClass={labelClass}
+        {...referralProps}
       />
     );
   }
@@ -127,6 +135,7 @@ export function RegisterPageMain() {
         t={t}
         inputClass={inputClass}
         labelClass={labelClass}
+        {...referralProps}
       />
     );
   }
@@ -163,6 +172,7 @@ export function RegisterPageMain() {
         t={t}
         inputClass={inputClass}
         labelClass={labelClass}
+        {...referralProps}
       />
     );
   }
@@ -199,6 +209,7 @@ export function RegisterPageMain() {
         t={t}
         inputClass={inputClass}
         labelClass={labelClass}
+        {...referralProps}
       />
     );
   }

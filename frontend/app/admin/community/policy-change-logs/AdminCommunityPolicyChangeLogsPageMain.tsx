@@ -32,7 +32,7 @@ import {
   ADMIN_LIST_REFRESHING_SURFACE_CLASS,
   ADMIN_TABLE_DIVIDE_CLASS,
   ADMIN_FILTER_FIELD_LABEL_CLASS,
-  ADMIN_FILTER_HINT_CLASS} from "@/lib/adminUi";
+  ADMIN_FILTER_HINT_CLASS, ADMIN_FILTER_CARD_CLASS} from "@/lib/adminUi";
 
 type PolicyLogSortKey = "created_at" | "scope" | "source";
 /** 160 §5：社区策略变更审计只读（须 admin + DB）。 */

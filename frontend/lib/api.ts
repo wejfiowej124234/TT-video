@@ -164,6 +164,8 @@ export const routes = {
   orderPatchItinerary: (id: string) => `/api/v1/orders/${id}/itinerary`,
   /** 草稿订单选定向导（PATCH；仅 tourist、未分配 guide_id） */
   orderPatchGuide: (id: string) => `/api/v1/orders/${id}/guide`,
+  /** GD-L5-P2：改期（PATCH；Created/Accepted · 未 Escrowed） */
+  orderPatchTripDates: (id: string) => `/api/v1/orders/${id}/trip-dates`,
   orderConfirmFinalPlan: (id: string) =>
     `/api/v1/orders/${id}/confirm-final-plan`,
   /** 53 双边确认：旅行者/向导各自确认行程与金额 */
@@ -231,6 +233,36 @@ export const routes = {
   /** P-SCALE1：信任增长外部化（traveltrust-api + Postgres；多实例一致） */
   trustGrowthIngest: "/api/v1/trust-growth/ingest",
   trustGrowthConfig: "/api/v1/trust-growth/config",
+  growthReferralsValidate: "/api/v1/growth/referrals/validate",
+  adminGrowthReferralCodes: "/api/v1/admin/growth/referral-codes",
+  adminGrowthRewardLedger: "/api/v1/admin/growth/reward-ledger",
+  adminGrowthRewardLedgerReconcile: "/api/v1/admin/growth/reward-ledger/reconcile",
+  adminGrowthRewardLedgerReconcileFix: "/api/v1/admin/growth/reward-ledger/reconcile/fix",
+  adminGrowthAntiFraudRules: "/api/v1/admin/growth/anti-fraud/rules",
+  adminGrowthAntiFraudSignals: "/api/v1/admin/growth/anti-fraud/signals",
+  adminGrowthAntiFraudUsers: "/api/v1/admin/growth/anti-fraud/users",
+  adminGrowthAntiFraudScanRuns: "/api/v1/admin/growth/anti-fraud/scan-runs",
+  adminGrowthAntiFraudScanTrigger: "/api/v1/admin/growth/anti-fraud/scan-runs/trigger",
+  adminCountryMarketLaunches: "/api/v1/admin/country-market/launches",
+  adminCountryMarketLaunch: (id: string) => `/api/v1/admin/country-market/launches/${encodeURIComponent(id)}`,
+  adminCountryMarketLaunchChecklist: (id: string) =>
+    `/api/v1/admin/country-market/launches/${encodeURIComponent(id)}/checklist`,
+  adminCountryMarketLaunchAdvance: (id: string) =>
+    `/api/v1/admin/country-market/launches/${encodeURIComponent(id)}/advance`,
+  adminCountryMarketLaunchActivate: (id: string) =>
+    `/api/v1/admin/country-market/launches/${encodeURIComponent(id)}/activate`,
+  adminRegionShareReconcileLatest: "/api/v1/admin/region-share/reconcile/latest",
+  adminRegionShareReconcileReports: "/api/v1/admin/region-share/reconcile/reports",
+  adminRegionShareReconcileReport: (id: string) =>
+    `/api/v1/admin/region-share/reconcile/reports/${encodeURIComponent(id)}`,
+  adminGrowthAirdropCampaigns: "/api/v1/admin/growth/airdrop-campaigns",
+  adminGrowthEarlyBirdStages: "/api/v1/admin/growth/early-bird/stages",
+  adminGrowthEarlyBirdReconcile: "/api/v1/admin/growth/early-bird/reconcile",
+  adminGrowthAnalyticsOverview: "/api/v1/admin/growth/analytics/overview",
+  adminGrowthAnalyticsFunnel: "/api/v1/admin/growth/analytics/funnel",
+  adminGrowthAnalyticsTopReferrers: "/api/v1/admin/growth/analytics/top-referrers",
+  adminGrowthKolCenter: "/api/v1/admin/growth/kol-center",
+  meReferrals: "/api/v1/me/referrals",
 
   /** 84 文档镜像（非链上 FeeRouter）；响应头 X-Implementation-Status: doc-reference */
   governanceProtocolReference: "/api/v1/governance/protocol-reference",
@@ -245,6 +277,7 @@ export const routes = {
   stewardStakeQuote: "/api/v1/steward/stake-quote",
   stewardStakeStatus: "/api/v1/steward/stake-status",
   adminProviderApplications: "/api/v1/admin/provider-applications",
+  adminGuideApplications: "/api/v1/admin/guide-applications",
   adminStewardApplications: "/api/v1/admin/steward-applications",
   adminStewardApplication: (userId: string) =>
     `/api/v1/admin/users/${encodeURIComponent(userId)}/steward-application`,
@@ -254,6 +287,10 @@ export const routes = {
     `/api/v1/admin/users/${encodeURIComponent(userId)}/provider-application`,
   adminProviderApplicationReview: (userId: string) =>
     `/api/v1/admin/users/${encodeURIComponent(userId)}/provider-application-review`,
+  adminGuideApplication: (userId: string) =>
+    `/api/v1/admin/users/${encodeURIComponent(userId)}/guide-application`,
+  adminGuideApplicationReview: (userId: string) =>
+    `/api/v1/admin/users/${encodeURIComponent(userId)}/guide-application-review`,
   adminUserAcquisitionPublishSuspend: (userId: string) =>
     `/api/v1/admin/users/${encodeURIComponent(userId)}/acquisition-publish-suspend`,
 
@@ -949,6 +986,23 @@ export const routes = {
     /** 500：DSAR 更新 + 事件；super_admin + 乐观锁 + Idempotency-Key */
     complianceDataRequestUpdate: (requestId: string) =>
       `/api/v1/admin/compliance/data-requests/${encodeURIComponent(requestId)}/update`,
+    /** 认证审计事件只读（与 `lib/api/routesAdminCore.ts` 同源） */
+    authAuditEvents: (params?: {
+      limit?: number;
+      event_type?: string;
+      reason?: string;
+      user_id?: string;
+      client_ip?: string;
+    }) => {
+      const sp = new URLSearchParams();
+      if (params?.limit != null) sp.set("limit", String(params.limit));
+      if (params?.event_type?.trim()) sp.set("event_type", params.event_type.trim());
+      if (params?.reason?.trim()) sp.set("reason", params.reason.trim());
+      if (params?.user_id?.trim()) sp.set("user_id", params.user_id.trim());
+      if (params?.client_ip?.trim()) sp.set("client_ip", params.client_ip.trim());
+      const q = sp.toString();
+      return `/api/v1/admin/auth-audit-events${q ? `?${q}` : ""}`;
+    },
     ...routesAdminOnboarding,
   },
 
@@ -1007,8 +1061,8 @@ export const routes = {
 } as const;
 
 /** 完整 URL（base + path）。浏览器 + loopback 基址时通常返回「当前页 origin + path」（经 `next.config.js` rewrites 代理）。
- * `/auth/*` 例外：App Router 在同路径有页面时 **afterFiles** rewrite 不覆盖，**POST** 会落到 Next 返回 HTML；开发态须直连 `BASE`（依赖 API `CORS_ORIGINS` 含前端 origin）。
- * `/api/*` 在浏览器 loopback 下走同源 + rewrites，避免 `localhost:3012` → `127.0.0.1:8080` 跨域与 CORS 误配导致 **Failed to fetch**。
+ * `/auth/*` 例外：须直连 `BASE`（依赖 API `CORS_ORIGINS` 含前端 origin；与 auth 注册/登录同源）。
+ * 其它 `/api/*` 在浏览器 loopback 下走同源 + rewrites，避免 `localhost:3012` → `127.0.0.1:8080` 跨域与 CORS 误配导致 **Failed to fetch**。
  * SSR/Node（无 `window`）仍用 `${BASE}${p}`，由 Next 服务端直连 API。
  */
 export function apiUrl(path: string): string {

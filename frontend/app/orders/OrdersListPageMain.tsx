@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { OrdersListSyncingBanner } from "./OrdersListEmptyState";
 import { OrdersListAlertsSection } from "./OrdersListAlertsSection";
 import { OrdersBookGuideBannerSection } from "./OrdersBookGuideBannerSection";
@@ -11,17 +11,15 @@ import { OrdersListPageFooter } from "./OrdersListPageFooter";
 import { OrdersListPageHeader } from "./OrdersListPageHeader";
 import { OrdersListToolbar } from "./OrdersListToolbar";
 import { OrdersListFilterRail } from "./OrdersListFilterRail";
-import { OrdersListSearchBar } from "./OrdersListSearchBar";
 import { OrdersListActiveFiltersBar } from "./OrdersListActiveFiltersBar";
-import { OrdersListSearchEmptyState } from "./OrdersListSearchEmptyState";
 import { OrdersListMobileActionBar } from "./OrdersListMobileActionBar";
 import { OrdersPageErrorView, OrdersPageLoadingView } from "./OrdersPageLoadingView";
 import { useOrdersListPageCore } from "./useOrdersListPageCore";
-import { useOrdersListClientSearch } from "./useOrdersListClientSearch";
 import { countOrdersListByTerminalState } from "@/lib/orders/ordersListStateCounts";
 import { filterOrdersListByUrlStateParam } from "@/lib/orders/ordersListStateFilter";
 import { ordersListL5MainDataAttrs, TT_ORDERS_LIST_L5 } from "@/lib/orders/ordersListL5";
 import OrderDetailDrawer from "@/components/market/OrderDetailDrawer";
+import { OrdersListDeleteConfirmDialog } from "@/components/orders/OrdersListDeleteConfirmDialog";
 
 export default function OrdersListPageMain() {
   const {
@@ -42,8 +40,11 @@ export default function OrdersListPageMain() {
     bookGuideResolve,
     list,
     deletingId,
+    pendingDeleteOrder,
     setPreviewOrder,
     handleDeleteOrder,
+    cancelDeleteOrder,
+    confirmDeleteOrder,
     loadMoreError,
     loadingMore,
     loadMoreOrders,
@@ -56,23 +57,11 @@ export default function OrdersListPageMain() {
     [list, ordersListStateParam],
   );
 
-  const searchInputId = useId();
-  const {
-    searchInput,
-    setSearchInput,
-    debouncedSearch,
-    searchPending,
-    searchActive,
-    displayedList,
-    clearSearch,
-  } = useOrdersListClientSearch(stateFilteredList);
-
   const [openSwipeCardId, setOpenSwipeCardId] = useState<string | null>(null);
   const clearAllFilters = useCallback(() => {
-    clearSearch();
     setOrdersListStateInUrl("");
     setOpenSwipeCardId(null);
-  }, [clearSearch, setOrdersListStateInUrl]);
+  }, [setOrdersListStateInUrl]);
 
   const filterStateCounts = useMemo(() => countOrdersListByTerminalState(list), [list]);
 
@@ -113,23 +102,12 @@ export default function OrdersListPageMain() {
             countsLoadedOnly={ordersHasMore}
             embedded
           />
-          {list.length > 0 ? (
-            <OrdersListSearchBar
-              t={t}
-              searchQuery={searchInput}
-              onSearchQueryChange={setSearchInput}
-              searchInputId={searchInputId}
-              searchPending={searchPending}
-              searchScopeLoadedOnly={ordersHasMore}
-              embedded
-            />
-          ) : null}
           <OrdersListActiveFiltersBar
             t={t}
             ordersListStateParam={ordersListStateParam}
-            searchQuery={debouncedSearch}
+            searchQuery=""
             onClearStateFilter={() => setOrdersListStateInUrl("")}
-            onClearSearch={clearSearch}
+            onClearSearch={() => {}}
             onClearAll={clearAllFilters}
             embedded
           />
@@ -160,27 +138,21 @@ export default function OrdersListPageMain() {
             ordersListStateParam={ordersListStateParam}
             setOrdersListStateInUrl={setOrdersListStateInUrl}
           />
-        ) : stateFilteredList.length === 0 && !searchActive ? (
+        ) : stateFilteredList.length === 0 ? (
           <OrdersListEmptyState
             t={t}
             ordersListStateParam={ordersListStateParam}
             setOrdersListStateInUrl={setOrdersListStateInUrl}
           />
-        ) : searchActive && displayedList.length === 0 ? (
-          <OrdersListSearchEmptyState
-            t={t}
-            searchQuery={debouncedSearch}
-            onClearSearch={clearSearch}
-          />
         ) : (
-          <div key={`${ordersListStateParam ?? "__all__"}:${debouncedSearch.trim().toLowerCase()}`}>
+          <div key={ordersListStateParam ?? "__all__"}>
             <OrdersListCards
               t={t}
-              list={displayedList}
+              list={stateFilteredList}
               totalCount={stateFilteredList.length}
-              searchActive={searchActive}
-              searchHighlightQuery={debouncedSearch}
-              searchInput={searchInput}
+              searchActive={false}
+              searchHighlightQuery=""
+              searchInput=""
               deletingId={deletingId}
               openSwipeCardId={openSwipeCardId}
               setOpenSwipeCardId={setOpenSwipeCardId}
@@ -194,7 +166,6 @@ export default function OrdersListPageMain() {
               loadMoreOrders={loadMoreOrders}
               ordersHasMore={ordersHasMore}
               listCount={list.length}
-              searchActive={searchActive}
             />
           </div>
         )}
@@ -203,6 +174,14 @@ export default function OrdersListPageMain() {
           order={previewOrder}
           onClose={() => setPreviewOrder(null)}
           loginReturnPath={ordersLoginReturnPath}
+        />
+
+        <OrdersListDeleteConfirmDialog
+          open={pendingDeleteOrder != null}
+          busy={deletingId != null}
+          t={t}
+          onCancel={cancelDeleteOrder}
+          onConfirm={confirmDeleteOrder}
         />
 
         <OrdersListPageFooter />

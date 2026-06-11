@@ -14,7 +14,7 @@ import {
   parseMerchantSortParam,
   type MarketSubsiteCountryParam,
 } from "@/lib/marketSubsiteFilters";
-import { PRODUCT_COUNTRIES } from "@/lib/productCountries";
+import { useCatalogProductCountries } from "@/lib/catalogApi/useCatalogGeo";
 import { buildPathnameSearchHref } from "@/lib/marketLoginReturnPath";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
 import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
@@ -125,7 +125,8 @@ export default function MarketSubsiteFilterBar({
   const category = isProvider ? categoryMerchant : categoryAcquisition;
   const sort = isProvider ? sortMerchant : sortAcquisition;
 
-  const countryRow = PRODUCT_COUNTRIES.find((c) => c.iso === country);
+  const productCountries = useCatalogProductCountries();
+  const countryRow = productCountries.find((c) => c.iso === country);
   const countryLabel =
     country === "all" || !countryRow ? t("market_subsite_filter_country_all") : t(countryRow.guideRegisterLabelKey);
 
@@ -178,7 +179,7 @@ export default function MarketSubsiteFilterBar({
             >
               {t("market_subsite_filter_country_all")}
             </button>
-            {PRODUCT_COUNTRIES.map((c) => (
+            {productCountries.map((c) => (
               <button
                 key={c.iso}
                 type="button"

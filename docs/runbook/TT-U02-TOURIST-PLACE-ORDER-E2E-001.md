@@ -43,7 +43,8 @@ cd frontend && npm run e2e:p02-orders
 
 | 柱 | 真值来源 |
 |----|----------|
-| **页面** | **`/market`** **、** **`/discover`** **、** **`/orders/new`** **、** **`/orders`** |
+| **页面** | **`/market`**（**`/discover`→`/market` 重定向壳** · **`useMarketPage` / `getDiscoverOrders` · 300ms debounce**）**、** **`/orders/new`** **、** **`/orders`** |
+| **FE 数据链 SSOT** | **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §3 |
 | **API** | **`POST /api/v1/orders`** **、** **`GET /api/v1/orders`** **、** **`GET /api/v1/discover/orders`** |
 | **DB** | **`orders`** **及** **行程** **/** **itinerary** **关联** |
 | **文档** | **[04](../spec/04-后端与API.md)** **§3.4** **订单** **详表** |

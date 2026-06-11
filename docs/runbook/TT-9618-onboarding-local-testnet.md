@@ -62,6 +62,19 @@ bash scripts/dev/onboarding-webhook-local.sh "<idempotency_key>"
 
 4. 页面 **刷新资格** → **申请角色解锁**（须 **paid**）。
 
+### 2.1 商家入驻全链（① · API 烟测 · 非仅准入费）
+
+**范围：** **① 本地** — 注册 → 钱包 → **`POST …/provider-applications`** → quote → payment-intent → 内网 webhook → **`role-confirm`** → **`PATCH …/admin/users/:id/provider-application-review`**（列表页 **`GET …/admin/provider-applications`**）→ **`POST …/market/provider/listings`**。**不**替代 **②** Stripe 测试网 / **③** 生产 PSP。
+
+**前置（在 §1 基础上）：** **`SEED_TEST_ACCOUNTS=1`**（Admin **`promote_admin_email`**）；API 已重建含 seed promote + **role 内存同步**。
+
+```bash
+bash scripts/dev/smoke-provider-onboarding-local.sh
+# Windows: scripts\smoke-provider-onboarding-local.bat
+```
+
+**代码 SSOT：** **[`frontend/app/provider/register/README.md`](../../frontend/app/provider/register/README.md)** · **04 §3.4**「商家入驻 · ① 实现真源」段 · **[identity-unified-model §3.3](../spec/artifacts/identity-unified-model.v1.md)**。
+
 ---
 
 ## 3. 闭环 B：Stripe（测试密钥 / 测试网 URL）

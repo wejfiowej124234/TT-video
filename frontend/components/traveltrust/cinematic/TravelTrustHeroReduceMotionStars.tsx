@@ -23,7 +23,7 @@ export function TravelTrustHeroReduceMotionStars() {
         backgroundSize:
           "auto, auto, auto, auto, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, auto",
       }}
-      animate={reduceMotion ? undefined : { opacity: TT_HERO_REDUCE_MOTION_STARS_L5.warmOpacityRange }}
+      animate={reduceMotion ? undefined : { opacity: [...TT_HERO_REDUCE_MOTION_STARS_L5.warmOpacityRange] }}
       transition={
         reduceMotion
           ? undefined

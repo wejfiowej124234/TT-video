@@ -393,7 +393,7 @@ export function TravelTrustCinematicHero({ heroRef: heroRefProp }: Props = {}) {
                     <motion.span
                       className={TT_HERO_CTA_L5.primaryPulseClass}
                       aria-hidden
-                      animate={{ opacity: TT_HERO_CTA_L5.primaryPulse.opacity }}
+                      animate={{ opacity: [...TT_HERO_CTA_L5.primaryPulse.opacity] }}
                       transition={{
                         duration: TT_HERO_CTA_L5.primaryPulse.duration,
                         repeat: TT_HERO_CTA_L5.primaryPulse.repeat,
@@ -457,7 +457,7 @@ export function TravelTrustCinematicHero({ heroRef: heroRefProp }: Props = {}) {
               <motion.span
                 className={TT_SCROLL_HINT_L5.mobileBorderPulseClass}
                 aria-hidden
-                animate={{ opacity: TT_SCROLL_HINT_L5.mobileBorderPulse.opacity }}
+                animate={{ opacity: [...TT_SCROLL_HINT_L5.mobileBorderPulse.opacity] }}
                 transition={{
                   duration: TT_SCROLL_HINT_L5.mobileBorderPulse.duration,
                   repeat: TT_SCROLL_HINT_L5.mobileBorderPulseRepeat,
@@ -469,7 +469,10 @@ export function TravelTrustCinematicHero({ heroRef: heroRefProp }: Props = {}) {
             {!reduceMotion ? (
               <motion.span
                 aria-hidden
-                animate={TT_SCROLL_HINT_ARROW_L5.animate}
+                animate={{
+                  y: [...TT_SCROLL_HINT_ARROW_L5.animate.y],
+                  opacity: [...TT_SCROLL_HINT_ARROW_L5.animate.opacity],
+                }}
                 transition={TT_SCROLL_HINT_ARROW_L5.transition}
               >
                 ↓

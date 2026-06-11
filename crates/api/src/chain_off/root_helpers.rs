@@ -153,6 +153,8 @@ pub(crate) fn guide_row_from_db_guides_table(g: &crate::db::GuideRow) -> GuideRo
         language_cert_url: g.language_cert_url.clone(),
         guide_license_url: g.guide_license_url.clone(),
         stake_amount: g.stake_amount.clone(),
+        hourly_rate: g.hourly_rate.clone(),
+        avatar_url: g.avatar_url.clone(),
         status: g.status.clone(),
         rejection_codes: g.rejection_codes.clone(),
         rejection_message: g.rejection_message.clone(),

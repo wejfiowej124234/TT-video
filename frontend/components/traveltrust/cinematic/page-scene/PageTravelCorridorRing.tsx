@@ -92,7 +92,7 @@ export function PageTravelCorridorRing({ isMobile }: { isMobile: boolean }) {
   const { roleId } = useTravelTrustTheaterRole();
   const ring = TT_CINEMATIC_PAGE_L5.theaterCorridorRing;
   const group = useRef<Group>(null);
-  const colors = useRef({
+  const colors = useRef<{ primary: string; secondary: string; pulse: string }>({
     primary: ring.primary,
     secondary: ring.secondary,
     pulse: ring.pulse,

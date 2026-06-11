@@ -4,6 +4,8 @@
 
 **Audience**: institutional investors, ICs, legal/technical diligence teams. **Ship** the zip built from **`export-ready/`** (often as `signed-pdfs/`)—**PDF/PPTX materials only**; **do not** share source-code repositories, internal workspaces, or unaudited legal schedules by default.
 
+**Product demo / screen-recording engineering SSOT (internal · Phase ①)**: **`/`** Web3 travel home · **`/market`** (**`/discover`→`/market`**) — **[LANDING-MARKET-PAGES-CODE-SSOT](../../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **[PM demo script](../../product-manager/24-产品经理核心产品路径与演示脚本.md)** · **[internal/10 index](../internal/10-资料室索引.md)**. External FAQ items 5–6 narrative unchanged; diligence must match code—**do not** describe demo/testnet as production-closed.
+
 ## Single numbering: edit once, ship once
 
 | Layer | Location | “Best” copy |

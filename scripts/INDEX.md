@@ -29,6 +29,7 @@
 | **L4 parallel CI（GitHub · `gh`）** | `dev/gh-l4-run-inspect.sh`（根 **`gh-l4-run-inspect.sh`** / **`gh-l4-run-inspect.ps1`**）；与 **TT-L4-PARALLEL-CI-001** 对读 |
 | **TT-DOC 企业审计机读** | `doc-enterprise-audit-machine-phases.sh`（**`DOC_AUDIT_FULL`**、**`DOC_AUDIT_SKIP_*`**、**`DOC_AUDIT_LINKS_ENFORCE`**）；与 **TT-DOC-ENTERPRISE-AUDIT-CHECKLIST-001** 对读 |
 | TT-MAINNET **G0～G6+SL** | `check-mainnet-launch-precheck-gate.sh` → `gates/…`（**`${MAINNET_EVIDENCE_RUN_DIR}/shadow_go_no_go.json`** **机读** **）；** **`broadcast-batch-blockers.yml`** **job** **`TT-MAINNET G0–G6+SL`** **；** **§0** **SL** **包** **`evidence/mainnet_shadow_launch/run_<UTC>/`** |
+| **`/` + `/market` 四页数据链（①）** | **`dev/run-web3-itinerary-l5-green.sh`** · **`dev/smoke-web3-itinerary-full-chain-local.sh`**；真源 **[LANDING-MARKET-PAGES-CODE-SSOT](../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)**；详 **[README §快速使用 · Web3 走廊](./README.md)** |
 
 ## 与工程台账的关系
 

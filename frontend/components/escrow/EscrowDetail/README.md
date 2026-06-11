@@ -38,7 +38,7 @@
 5. `EscrowDraftPayStepCard`（`planLocked`）
 6. 行程区：`EscrowDraftItineraryTabBar` → 城市 / 每日说明 / 预览 · `UnifiedItineraryList`（`richCollapsedPreview` · `expandDayLabelMode="experience"`）
 7. `QuoteSummaryCard` + `ConfirmFinalPlanBlock`
-8. `EscrowDraftExperienceFooter`（取消/删除在 **更多**）
+8. `EscrowDraftExperienceFooter`（帮助区平铺：合规说明 · 取消/删除文字链）
 9. **仅** `NEXT_PUBLIC_ESCROW_DEV_TOOLS=1` → `EscrowDraftAdvancedProtocolFold`（链上创建、接单、证据）
 
 **Experience 默认不出现：** `ChatBlock`、`EscrowRiskNotice`、`TrustGrowthMomentBanner`（协议壳才有）。
@@ -59,7 +59,7 @@
 | `EscrowDraftTrustPayStrip.tsx` | 确认/付款信任说明条 |
 | `EscrowDraftMobileActionBar.tsx` | 窄屏保存/发布 |
 | `EscrowDraftTravelNotice.tsx` | 合规短提示（替代全协议风险栈） |
-| `EscrowDraftExperienceFooter.tsx` | 打印 · 复制 · 返回 · 更多（取消/删除） |
+| `EscrowDraftExperienceFooter.tsx` | 打印 · 复制 · 返回 · 帮助区（合规 · 取消/删除） |
 | `EscrowDraftAdvancedProtocolFold.tsx` | 开发者调试折叠区 |
 
 ---

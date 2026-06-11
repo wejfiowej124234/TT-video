@@ -4,6 +4,8 @@ import { useId, type Dispatch, type MutableRefObject, type SetStateAction } from
 import type { CustomItineraryForm } from "../types";
 import { DESCRIPTION_MAX_LENGTH } from "../constants";
 import { sanitizeDecimalInput } from "../utils";
+import { DEFAULT_SETTLEMENT_CURRENCY_CODE } from "@/lib/defaultSettlementCurrency";
+import { headcountPricingNoteKey } from "../itineraryFormCountryCopy";
 
 export function GuideFormDescriptionAmountHeadcountBlock({
   form,
@@ -47,7 +49,7 @@ export function GuideFormDescriptionAmountHeadcountBlock({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label htmlFor={amountId} className={labelClass}>
-            {t("market_guideQuoteAmount")} *
+            {t("market_guideQuoteAmount")} ({DEFAULT_SETTLEMENT_CURRENCY_CODE}) *
           </label>
           <input
             id={amountId}
@@ -80,7 +82,7 @@ export function GuideFormDescriptionAmountHeadcountBlock({
             className={inputClass}
             placeholder={t("market_headcountPlaceholder")}
           />
-          <p className="text-meta text-white/70 mt-1">{t("market_headcountPricingNote")}</p>
+          <p className="text-meta text-white/70 mt-1">{t(headcountPricingNoteKey(form.country))}</p>
         </div>
       </div>
       {form.amount.trim() && form.headcount >= 1 &&

@@ -17,6 +17,7 @@
 | **模块优先级、是否已有、1～48 顺序** | **[00-最终版架构图对应模块清单总表](00-最终版架构图对应模块清单总表.md)** |
 | **经济·治理（FeeRouter Target，非订单主链剖面）** | **[82](82-治理币-文档总览.md)**、**[83](83-区域治理与收益分配-协议白皮书.md)**、**[84](84-第一阶段10国Country-Pool发行参数总表.md)**、**[85](85-TravelTrust网络落地页-融资级设计与开发规格.md)** |
 | **读图①～⑥ 可执行串联（B-119）** | 与篇首 **「读图串联（防只读 18）」** 六条一致；互证 **[53](53-阶段开发技术文档.md)**、**[04 §3.4](04-后端与API.md)**、**[110](110-阶段开发链上索引器与事件同步器.md)**、**[56](56-阶段-问题与优化项开发文档.md)**、**[80](80-阶段-TravelTrust-AI行程系统-可行性架构方案-v1.0.md)**、**[00](00-最终版架构图对应模块清单总表.md)**、**[07](07-开发流程与顺序.md)** |
+| **`/` + `/market*` 四页 ① FE 数据链** | **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **`/`** **`landingItinerarySession` = `localStorage`** · **`/market`** **`useMarketPage` debounce** · **F-020 best-effort → ② SLA** |
 
 **冲突**：实现边界以 **01/09/17/02 §十四** 为准；图内 **CockroachDB / Redis** 等为**目标或示例名**，产线 DB 以 **[41](41-后端数据库接库与落地清单.md)** 与 `migrations` 为准。
 

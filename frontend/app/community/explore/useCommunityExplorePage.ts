@@ -78,12 +78,12 @@ export function useCommunityExplorePage(): CommunityExplorePageViewModel {
 
   useEffect(() => {
     const run = () => setDeferSocialQueries(true);
-    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+    if (typeof window.requestIdleCallback === "function") {
       const id = window.requestIdleCallback(run, { timeout: 2000 });
       return () => window.cancelIdleCallback(id);
     }
-    const timer = window.setTimeout(run, 80);
-    return () => window.clearTimeout(timer);
+    const timer = globalThis.setTimeout(run, 80);
+    return () => globalThis.clearTimeout(timer);
   }, []);
 
   const feedInfinite = useInfiniteQuery({

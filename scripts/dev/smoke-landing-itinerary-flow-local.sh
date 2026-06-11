@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # ① 本地 · Landing Hero 行程生成全链路 API 烟测
 #
-# 覆盖：注册 → POST /itineraries（days=5 · cities[] 单城）→ GET order
-#       → daily_itinerary.length == len(cities[]) · order.days == days · start_date/end_date 存在
-#       → PATCH 保存发布 → GET discover 含该订单（Created · route/city 同步）
+# 覆盖：注册 → POST /itineraries（days=5 · cities[] 单城 · **无 guide_id**）→ GET order
+#       → guide_id 为空 · daily_itinerary.length == len(cities[]) · order.days == days
+#       → PATCH 保存发布 → 仍无 guide_id → GET discover 含该订单（Created · route/city 同步）
 #
 # 用法（仓库根，API 已起）：
 #   bash scripts/dev/smoke-landing-itinerary-flow-local.sh
@@ -13,6 +13,8 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
+# shellcheck source=scripts/dev/lib/tt-order-guide-id.sh
+source "$ROOT/scripts/dev/lib/tt-order-guide-id.sh"
 
 API_BASE="${API_BASE:-http://127.0.0.1:8080}"
 API_BASE="${API_BASE%/}"
@@ -128,6 +130,7 @@ get="$(curl_json GET "$API_BASE/api/v1/orders/$ORDER_ID" "" "$TOKEN")"
 get_code="${get%%|*}"
 get_body="${get#*|}"
 [[ "$get_code" == "200" ]] || fail "GET order HTTP $get_code body=$get_body"
+tt_assert_order_has_no_guide "$get_body" "after POST /itineraries" || fail "create must not assign guide_id"
 
 daily_len="$(json_len "$get_body" "itinerary.daily_itinerary")"
 order_days="$(json_nested "$get_body" "order.days")"
@@ -165,6 +168,12 @@ order_state="$(json_nested "$patch_body" "order_state")"
 [[ "$published" == "true" ]] || fail "published_to_market=$published expected true"
 [[ "$order_state" == "created" ]] || fail "order_state=$order_state expected created"
 
+get_pub="$(curl_json GET "$API_BASE/api/v1/orders/$ORDER_ID" "" "$TOKEN")"
+gp_code="${get_pub%%|*}"
+gp_body="${get_pub#*|}"
+[[ "$gp_code" == "200" ]] || fail "GET order after publish HTTP $gp_code"
+tt_assert_order_has_no_guide "$gp_body" "after PATCH save/publish" || fail "publish must not assign guide_id"
+
 discover="$(curl_json GET "$API_BASE/api/v1/discover/orders" "" "$TOKEN")"
 disc_code="${discover%%|*}"
 disc_body="${discover#*|}"
@@ -188,6 +197,7 @@ disc_match="$(ORDER_ID="$ORDER_ID" node -e "
 rm -f "$disc_tmp"
 [[ "$disc_match" == "ok" ]] || fail "discover after save: $disc_match body=$disc_body"
 
-ok "order=$ORDER_ID days=$order_days daily=$daily_len budget=$total_budget published=$order_state discover=$disc_match"
+ok "order=$ORDER_ID days=$order_days daily=$daily_len budget=$total_budget published=$order_state no_guide discover=$disc_match"
 
-echo "smoke-landing-itinerary-flow: PASS (phase ① local only · publish · discover)"
+echo "smoke-landing-itinerary-flow: PASS (phase ① · step1 create · no guide · publish · discover)"
+echo "  next: /escrow/$ORDER_ID → 请选择向导 → /market?view=split&bindGuideToOrder=$ORDER_ID"

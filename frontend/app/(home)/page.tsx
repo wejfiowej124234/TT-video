@@ -13,6 +13,7 @@ import {
   TT_MARKETING_HOME_SECTION_BRIDGE,
   TT_MARKETING_HOME_SECTION_BRIDGE_LINE,
 } from "@/lib/marketingUi";
+import { ColdStartHomeHeroHighlights } from "@/components/coldStartCampaign/ColdStartHomeHeroHighlights";
 
 const UnlockModal = dynamic(
   () => import("@/components/landing/UnlockModal"),
@@ -27,7 +28,7 @@ export default function Home() {
   return (
     <main
       className="relative min-h-screen"
-      aria-label={t("landing_hero_kicker")}
+      aria-label={t("landing_hero_title")}
       data-tt-home-favorites-mode="localstorage-f020-sync-v1"
     >
       <LandingHomeAmbientBackdrop country={data.country} />
@@ -61,7 +62,10 @@ export default function Home() {
           loginRequired={data.loginRequired}
           handleSubmit={data.handleSubmit}
           marketHref={data.marketHref}
+          showConsumerValue={data.resultOrderIds.length === 0 && !data.submitting}
+          draftQuota={data.draftQuota}
         />
+        <ColdStartHomeHeroHighlights className="relative z-10 mt-3 mb-1" />
         <div className={TT_MARKETING_HOME_SECTION_BRIDGE} aria-hidden>
           <div className={TT_MARKETING_HOME_SECTION_BRIDGE_LINE} />
         </div>

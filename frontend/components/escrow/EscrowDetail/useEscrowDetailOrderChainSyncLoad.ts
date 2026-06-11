@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { getOrder, getOrderChainSyncStatus, isComplianceError } from "@/lib/apiClient";
 import { consumeEscrowOrderPrefetch } from "@/lib/orderEscrowPrefetch";
 import { mapApiReadError } from "@/lib/mapApiReadError";
+import { mapEscrowForbiddenError } from "@/lib/orderParticipantHint";
 import type { OrderRow, OrderResponse, ItineraryBlock, OrderChainSyncState } from "./types";
 import { parseOrderChainSyncResponse } from "./types";
 import { itineraryOrPlaceholderForPreEscrow } from "./escrowDetailHookModel";
@@ -64,7 +65,7 @@ export function useEscrowDetailOrderChainSyncLoad(
         }
         const msg = err instanceof Error ? err.message : "";
         if (isComplianceError(err)) setError(msg || t("escrow_loadFailed"));
-        else if (/403|forbidden|权限|暂无权限/i.test(msg)) setError(t("escrow_403_message"));
+        else if (/403|forbidden|权限|暂无权限/i.test(msg)) setError(mapEscrowForbiddenError(err, t));
         else setError(mapApiReadError(err, t, "escrow_loadFailed"));
       });
     return () => {
@@ -88,7 +89,7 @@ export function useEscrowDetailOrderChainSyncLoad(
         }
         const msg = err instanceof Error ? err.message : "";
         if (isComplianceError(err)) setError(msg || t("escrow_loadFailed"));
-        else if (/403|forbidden|权限|暂无权限/i.test(msg)) setError(t("escrow_403_message"));
+        else if (/403|forbidden|权限|暂无权限/i.test(msg)) setError(mapEscrowForbiddenError(err, t));
         else setError(mapApiReadError(err, t, "escrow_loadFailed"));
       });
   }, [escrowId, t, fetchChainSync]);

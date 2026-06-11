@@ -7,6 +7,7 @@
 | **API path 对照** | **§一** |
 | **ABI / 端口** | **后文各节** |
 | **契约 SSOT** | **[04 §3.4](04-后端与API.md)**、**[14](14-合约-API-ABI-前后端对齐.md)**、**[53-阶段开发技术文档](53-阶段开发技术文档.md)** §3.8.5 |
+| **`/` + `/market` 四页 ① FE 数据链** | **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · **`GET …/discover/orders`** 消费方 **`useMarketPage`**（**300ms debounce**） |
 
 与 [53-阶段开发技术文档](53-阶段开发技术文档.md) §3.8.5、[04-后端与API](04-后端与API.md) §3.4、[14-合约-API-ABI-前后端对齐](14-合约-API-ABI-前后端对齐.md) 配套。参照 53 开发文档继续开发时，用于**接口、端口、契约**的逐项核对。
 
@@ -27,7 +28,7 @@
 | POST /api/v1/orders/:id/confirm-final-plan | routes.orderConfirmFinalPlan(id) | POST confirm_final_plan（`crates/api/src/routes/orders/mutations.rs`） | 双边确认时生成 snapshotHash |
 | PATCH /api/v1/orders/:id/itinerary | routes.orderPatchItinerary(id)；apiClient.patchOrderItinerary | **已实现**（crates/api chain_off patch_order_itinerary_impl + routes 注册） | 53 行程修改写回；仅参与方、未 Escrowed 前可改；前端已预留 path 与封装 |
 | GET/POST /api/v1/orders/:id/messages | routes.orderMessages(id) | GET/POST（crates/api routes/messages.rs） | 订单聊天 |
-| GET /api/v1/discover/orders | routes.discoverOrders | GET /api/v1/discover/orders | 可抢单订单列表 |
+| GET /api/v1/discover/orders | routes.discoverOrders | GET /api/v1/discover/orders | 可抢单订单列表；**主 UI** **`/market`**（**`useMarketPage`** · **300ms debounce** · 收藏 **`localStorage` + F-020 best-effort** → **②** SLA — **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §3） |
 
 **结论**：53 主流程用到的 **accept、confirm-bilateral、confirm-rating、getOrder（含 deadline 字段）、PATCH itinerary** 已与 04、crates/api、frontend 三者对齐。**GET/POST orders/:id/messages** 若前端有调用点，需确认 path/method/body 与 04 一致。
 

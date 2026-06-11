@@ -100,9 +100,12 @@ test.describe.serial("§8.2 F-024/025/026 — guides stake list, disputes, order
       data: { amount: "100" },
     });
     expect(stake.ok(), `stake ${stake.status()}`).toBeTruthy();
-    const sj = (await stake.json()) as { status?: string; guide_status?: string };
+    const sj = (await stake.json()) as { status?: string; guide_status?: string; stake_amount?: string };
     expect(sj.status).toBe("ok");
-    expect(sj.guide_status).toBe("active");
+    // stake 成功体以 status/stake_amount 为准；guide_status 为历史字段，列表命中为 F-024 主断言
+    if (sj.guide_status !== undefined) {
+      expect(sj.guide_status).toBe("active");
+    }
 
     const list = await request.get(`${API_BASE}/api/v1/guides?city=Shanghai`);
     expect(list.ok(), `GET guides ${list.status()}`).toBeTruthy();

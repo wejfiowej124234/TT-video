@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { patchOrderItinerary, orderCancel, getIdempotencyKey } from "@/lib/apiClient";
 import { mapApiReadError } from "@/lib/mapApiReadError";
-import { CITIES_BY_COUNTRY } from "@/lib/geoOptions";
+import { useCatalogCityOptions } from "@/lib/catalogApi/useCatalogGeo";
 import { isAllowedProductZhCountryName } from "@/lib/productCountries";
 import { resolveDestinationZhForPresetCities } from "@/lib/resolveDestinationZhForPresetCities";
 import { stashEscrowOrderPrefetchFromOrderAndItinerary } from "@/lib/orderEscrowPrefetch";
@@ -59,9 +59,10 @@ export function useEscrowDetailPageOrchestration({
     [orderForDest, rowsFromApi],
   );
   const destinationEditable = Boolean(destinationZh && isAllowedProductZhCountryName(destinationZh));
+  const cityOptions = useCatalogCityOptions(destinationZh);
   const showDraftDayEditor = canPatchItinerary && rowsFromApi.length > 0;
   const showCityEditor =
-    showDraftDayEditor && destinationEditable && (CITIES_BY_COUNTRY[destinationZh] ?? []).length > 0;
+    showDraftDayEditor && destinationEditable && cityOptions.length > 0;
   const dailyFingerprint = useMemo(
     () =>
       rowsFromApi
@@ -180,7 +181,6 @@ export function useEscrowDetailPageOrchestration({
     }
   }, [data, escrowId, router]);
 
-  const cityOptions = CITIES_BY_COUNTRY[destinationZh] ?? [];
   const draftRowsAligned = showDraftDayEditor && draftDailyItinerary.length === rowsFromApi.length;
   const itineraryListDays: UnifiedDayRow[] = draftRowsAligned ? draftDailyItinerary : rowsFromApi;
 

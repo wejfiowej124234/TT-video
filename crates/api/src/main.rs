@@ -11,6 +11,7 @@
 use std::env;
 
 mod api_json;
+mod catalog_geo_validation;
 mod chain;
 mod chain_off;
 mod db;
@@ -36,6 +37,9 @@ mod jsonrpc_mock_server;
 
 #[cfg(test)]
 mod it_db_pool;
+
+#[cfg(test)]
+mod test_env_serial;
 
 fn main() {
     // 加载 .env：先当前目录，再项目根（crates/api 的上级两级 = 仓库根），使 SEED_TEST_ACCOUNTS、DATABASE_URL 等生效

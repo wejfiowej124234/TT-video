@@ -6,7 +6,6 @@ import { useState } from "react";
 import { TT_TRAVELTRUST_SECTION_A11Y } from "./traveltrustSectionA11yIds";
 import { useTranslation } from "@/components/LocaleProvider";
 import { trackTravelTrustEvent } from "@/lib/analytics";
-import { traveltrustSectionMotionProps } from "./traveltrustSectionMotion";
 import {
   TT_SECTION_CONTENT_L5,
   TT_SECTION_KICKER_L5,
@@ -14,27 +13,22 @@ import {
   TT_SECTION_SURFACE_L5,
   TT_SETTLEMENT_L5,
   traveltrustSectionL5DataAttrs,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 /** 轻量 Settlement 叙事（非 17 段恢复；链到 help / pay） */
 export function TravelTrustSettlementStrip() {
   const { t } = useTranslation();
   const reduceMotion = useReducedMotion();
   const titleId = TT_TRAVELTRUST_SECTION_A11Y.settlement.title;
   const [protocolOpen, setProtocolOpen] = useState(false);
-  const sectionMotion = traveltrustSectionMotionProps("settlement", reduceMotion);
 
   return (
-    <motion.section
+    <section
       id="settlement"
       className={TT_SECTION_SURFACE_L5.settlement}
       aria-labelledby={titleId}
       data-tt-traveltrust-settlement-strip="1"
       data-tt-traveltrust-settlement-l5="1"
       {...traveltrustSectionL5DataAttrs("settlement")}
-      initial={sectionMotion.initial}
-      whileInView={sectionMotion.whileInView}
-      viewport={sectionMotion.viewport}
-      transition={sectionMotion.transition}
     >
       <div
         className={TT_SECTION_CONTENT_L5.bodyClass}
@@ -60,7 +54,7 @@ export function TravelTrustSettlementStrip() {
             protocolOpen ? TT_SETTLEMENT_L5.protocolToggleOpenClass : TT_SETTLEMENT_L5.protocolToggleIdleClass
           }`}
           whileHover={reduceMotion ? undefined : { x: 2 }}
-          whileTap={reduceMotion ? undefined : TT_SETTLEMENT_L5.protocolToggleTap}
+          whileTap={reduceMotion ? undefined : { scale: 0.98 }}
           data-tt-traveltrust-settlement-protocol-tap-l5="1"
           aria-expanded={protocolOpen}
           aria-controls="traveltrust-settlement-protocol-panel"
@@ -90,7 +84,7 @@ export function TravelTrustSettlementStrip() {
               exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
               transition={{
                 duration: reduceMotion ? 0 : TT_SETTLEMENT_L5.protocolPanelMotion.duration,
-                ease: TT_SETTLEMENT_L5.protocolPanelMotion.ease,
+                ease: [...TT_SETTLEMENT_L5.protocolPanelMotion.ease],
               }}
               className={TT_SETTLEMENT_L5.protocolPanelClass}
               data-tt-traveltrust-settlement-disclaimer="1"
@@ -145,6 +139,6 @@ export function TravelTrustSettlementStrip() {
         </motion.div>
       </motion.div>
       </div>
-    </motion.section>
+    </section>
   );
 }

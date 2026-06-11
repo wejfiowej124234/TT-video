@@ -58,6 +58,7 @@ export const TT_ORDERS_NEW_L5 = {
   formSelect: TT_MARKETING_ORDERS_FORM_SELECT,
   inlineLink: `${touchTargetLink44Classes} ${TT_MARKETING_ORDERS_NEW_INLINE_LINK}`,
   keepLinkGuideBtn: `${touchTargetLink44Classes} text-meta ${TT_MARKETING_ORDERS_TEXT_META} hover:text-slate-100 hover:underline ${TT_MARKETING_FOCUS_RING_CONSOLE} focus-visible:ring-offset-[#0c0a09]`,
+  marketPickGuideBtn: `${touchTargetLink44Classes} inline-flex min-h-[44px] w-full items-center justify-center rounded-[var(--radius-sm)] border border-ref-sun/35 bg-white/5 px-4 py-2 text-small font-medium text-slate-100 transition hover:border-ref-sun/55 hover:bg-white/8 focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09]`,
   submitBtn: TT_MARKETING_ORDERS_FORM_SUBMIT_BTN,
   retryBtn: `${touchTargetLink44Classes} ${TT_MARKETING_BTN_WARM_OUTLINE_COMPACT} text-meta focus-visible:ring-offset-[#0c0a09]`,
   successPanel: TT_MARKETING_ORDERS_NEW_SUCCESS_PANEL,

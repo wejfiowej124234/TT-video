@@ -36,7 +36,7 @@ import {
   ADMIN_LIST_REFRESHING_SURFACE_CLASS,
   ADMIN_TABLE_DIVIDE_CLASS,
   ADMIN_FILTER_FIELD_LABEL_CLASS,
-  ADMIN_FILTER_HINT_CLASS} from "@/lib/adminUi";
+  ADMIN_FILTER_HINT_CLASS, ADMIN_FILTER_CARD_CLASS} from "@/lib/adminUi";
 
 type RiskSignalSortKey = "created_at" | "severity" | "signal_type";
 export function AdminCommunityRiskSignalsPageMain(vm: AdminCommunityRiskSignalsPageViewModel) {

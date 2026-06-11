@@ -9,3 +9,5 @@ export { default as MarketPageFooter } from "./MarketPageFooter";
 export { default as OrderDetailDrawer } from "./OrderDetailDrawer";
 export { default as GuideDetailDrawer } from "./GuideDetailDrawer";
 export { default as BookGuideModal } from "./BookGuideModal";
+export { default as MarketAmbientBackdrop } from "./MarketAmbientBackdrop";
+export { MarketPageAmbientLayers } from "./MarketPageAmbientLayers";

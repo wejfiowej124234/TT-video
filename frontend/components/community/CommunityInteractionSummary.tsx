@@ -37,6 +37,11 @@ export type CommunityInteractionSummaryProps = {
   loginReturnPath: string;
   /** `messages`：紧凑；`activity`：独立页稍宽松 */
   variant?: "messages" | "activity";
+  activityItems?: CommunityActivityEventItem[];
+  activityLoading?: boolean;
+  activityError?: boolean;
+  activityErrorMessage?: string | null;
+  onRetryActivity?: () => void;
 };
 
 /**

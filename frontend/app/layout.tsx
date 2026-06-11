@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 import Header from "@/components/Header";
@@ -41,8 +42,8 @@ export default function RootLayout({
   return (
     <html lang="zh-CN" suppressHydrationWarning>
       <head>
-        <script src="/tt-session-cookie-bootstrap.js" />
-        <script src="/tt-dev-chunk-recovery.js" />
+        <Script src="/tt-session-cookie-bootstrap.js" strategy="beforeInteractive" />
+        <Script src="/tt-dev-chunk-recovery.js" strategy="beforeInteractive" />
       </head>
       <body className="min-h-screen bg-bg-main text-ink-900 antialiased" suppressHydrationWarning>
         <Providers>

@@ -14,6 +14,7 @@
 | **Escrow 银行级模板（结构+层级）** | **§四、§七** |
 | **Awwwards 级排版、Before/After** | **§五、§六** |
 | **叙事与动效哲学（导演级）** | **[25](25-顶级UI标准-Landing-Discover-Itinerary.md)**；Experience 组件 **[28](28-Cinematic-Glassmorphism-Web3融合规范.md)** |
+| **`/` + `/market` 四页 ① 代码/UI/数据链** | **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** §2～§3（线框 **≠** 行为 SSOT） |
 
 ---
 
@@ -40,8 +41,8 @@ Design Tokens 已固化为工程约束：
 |------|------|
 | **00 – Foundations** | Color Styles（Travel/Trust/State）、Typography Styles（H1/H2/H3/H4/Body/Meta）、Effects（shadow-soft/medium/strong）、Radius（sm/md/lg/xl）、Spacing（8px grid） |
 | **01 – Components** | Buttons（TravelPrimary / TrustPrimary / Danger / Ghost）、Badges（StatusBadge：Open/Confirmed/Funded/Completed/Disputed）、Cards（DestinationCard / OrderCard）、Panels（ConsolePanel / AmountPanel / RiskNoticeBar）、Modals（AuthModal / SignatureModal / ConfirmFinalPlanModal）、Timeline（OnchainEventTimeline / DisputeTimeline）、Forms（FilterBar / ItineraryInputForm） |
-| **02 – Templates** | Landing Template、Discover Template、Itinerary Template、OrderFlow Template、**EscrowDetail Template（银行级）** |
-| **03 – Screens** | Landing（Desktop/Mobile）、Discover（Desktop/Mobile）、Itinerary（Desktop/Mobile）、Chat + QuoteSummary（Desktop）、EscrowDetail（Desktop/Mobile）、DisputeCenter（Desktop） |
+| **02 – Templates** | Landing Template、**Discover→`/market` 重定向壳**（**无**独立列表 UI；列表见 Market Template）、Itinerary Template、OrderFlow Template、**EscrowDetail Template（银行级）** |
+| **03 – Screens** | Landing（Desktop/Mobile）、**Discover 过渡壳**（Desktop/Mobile · 列表在 **`/market`**）、Itinerary（Desktop/Mobile）、Chat + QuoteSummary（Desktop）、EscrowDetail（Desktop/Mobile）、DisputeCenter（Desktop） |
 | **99 – Archive** | 旧版本与实验稿（只读） |
 
 ### Components 命名规则

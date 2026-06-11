@@ -44,6 +44,7 @@ export {
   getOrderChainSyncStatus,
   patchOrderItinerary,
   patchOrderGuide,
+  patchOrderTripDates,
   orderAccept,
   orderCancel,
   orderMockPay,
@@ -122,6 +123,184 @@ export {
   postForgotPassword,
   postResetPassword,
 } from "./auth";
+export {
+  getReferralValidate,
+  getAdminReferralCodes,
+  postAdminReferralCode,
+  patchAdminReferralCode,
+} from "./growth/http";
+export type { ReferralValidateResponse, AdminReferralCodeRow } from "./growth/http";
+export {
+  getAdminContentCountries,
+  postAdminContentCountry,
+  patchAdminContentCountry,
+  postAdminContentCountryWorkflow,
+  getAdminContentCities,
+  postAdminContentCity,
+  patchAdminContentCity,
+  postAdminContentCityWorkflow,
+  getAdminContentPois,
+  postAdminContentPoi,
+  patchAdminContentPoi,
+  postAdminContentPoiWorkflow,
+  getAdminContentPricing,
+  getAdminContentIntercityRoutes,
+  getAdminContentPublishQueue,
+  getAdminContentPoiImageBatches,
+  getAdminContentPoiImageBatch,
+  getAdminContentPoiImageCandidates,
+  patchAdminContentPoiImageCandidate,
+  postAdminContentPoiImageSelect,
+  postAdminContentPoiImageWorkflow,
+  getAdminContentHotelTiers,
+  getAdminContentTransportRegionRules,
+  getAdminContentMediaAssets,
+  getAdminContentLandingAmbient,
+  patchAdminContentLandingAmbient,
+  getAdminContentRevisionDetails,
+  getAdminContentRevisionCompare,
+  getAdminContentRollbackHistory,
+  getAdminContentImportHistory,
+  postAdminContentImportTrigger,
+  getAdminContentCatalogParity,
+  getAdminContentCatalogObservability,
+  getAdminContentCatalogGeoValidation,
+  getAdminContentCatalogGeoValidationHistory,
+  getAdminContentCatalogGeoMetaParity,
+} from "./content/http";
+export {
+  getAdminOfficialAccounts,
+  postAdminOfficialAccount,
+  patchAdminOfficialAccount,
+  postAdminOfficialAccountSubmitReview,
+  postAdminOfficialAccountRequestPublish,
+  postAdminOfficialAccountPublish,
+  postAdminOfficialAccountBindReferral,
+  getAdminOfficialGuides,
+  postAdminOfficialGuide,
+  patchAdminOfficialGuide,
+  postAdminOfficialGuideSubmitReview,
+  postAdminOfficialGuideRequestPublish,
+  postAdminOfficialGuidePublish,
+  postAdminOfficialGuideArchive,
+  getAdminOfficialItineraryTemplates,
+  postAdminOfficialItineraryTemplate,
+  postAdminOfficialItineraryTemplateSubmitReview,
+  postAdminOfficialItineraryTemplateRequestPublish,
+  postAdminOfficialItineraryTemplatePublish,
+  getAdminOfficialColdStartCampaigns,
+  postAdminOfficialColdStartCampaign,
+  postAdminOfficialColdStartCampaignItem,
+  postAdminOfficialColdStartCampaignSubmitReview,
+  postAdminOfficialColdStartCampaignRequestDeploy,
+  postAdminOfficialColdStartCampaignDeploy,
+  postAdminOfficialColdStartCampaignRollback,
+} from "./official/http";
+export type {
+  AdminCatalogCountryRow,
+  AdminCatalogCityRow,
+  AdminCatalogPoiRow,
+  AdminCatalogPricingRow,
+  AdminCatalogRouteRow,
+  AdminCatalogPublishQueueRow,
+  AdminPoiImageBatchRow,
+  AdminPoiImageCandidateRow,
+  AdminPoiImageBatchStatus,
+  AdminPoiImageCandidateReviewStatus,
+  AdminCatalogHotelTierRow,
+  AdminCatalogTransportRuleRow,
+  AdminCatalogMediaAssetRow,
+  AdminCountryLandingAmbientRow,
+  AdminCatalogRevisionDetailRow,
+  AdminCatalogImportBatchRow,
+  AdminCatalogParityCheckRow,
+  AdminCatalogObservabilityRow,
+  AdminCatalogGeoFlagStatus,
+  AdminCatalogGeoReadSourceStatus,
+  AdminCatalogMetaProductCountriesParityRow,
+  AdminCatalogGeoDriftRow,
+  AdminCatalogGeoValidationSummary,
+  AdminCatalogGeoValidationHistoryRow,
+} from "./content/http";
+export type {
+  AdminOfficialAccountRow,
+  AdminOfficialGuideRow,
+  AdminOfficialItineraryTemplateRow,
+  AdminColdStartCampaignRow,
+  AdminColdStartItemRow,
+} from "./official/http";
+export {
+  getAdminRewardLedger,
+  getAdminRewardLedgerReconcile,
+  postAdminRewardLedgerReconcileFix,
+  patchAdminRewardLedgerFraud,
+} from "./growth/ledgerHttp";
+export type { AdminGrowthLedgerRow, GrowthReconcileRow } from "./growth/ledgerHttp";
+export {
+  getAdminGrowthFraudRules,
+  getAdminGrowthFraudSignals,
+  getAdminGrowthFraudUsers,
+  getAdminGrowthFraudScanRuns,
+  patchAdminGrowthFraudUser,
+} from "./growth/fraudHttp";
+export type {
+  GrowthFraudRuleRow,
+  GrowthFraudSignalRow,
+  GrowthFraudUserRow,
+  GrowthFraudScanRunRow,
+} from "./growth/fraudHttp";
+export {
+  getAdminCountryMarketLaunches,
+  postAdminCountryMarketLaunch,
+} from "./content/countryMarketHttp";
+export type { CountryMarketLaunchRow } from "./content/countryMarketHttp";
+export {
+  getAdminAirdropCampaigns,
+  postAdminAirdropCampaign,
+  postAdminAirdropSnapshot,
+  postAdminAirdropCalculate,
+  postAdminAirdropRecalculate,
+  getAdminAirdropReconcile,
+  getAdminAirdropExport,
+  downloadAirdropExportCsv,
+} from "./growth/airdropHttp";
+export type {
+  AirdropCampaignRow,
+  AirdropReconcileSummary,
+  AirdropExportRow,
+} from "./growth/airdropHttp";
+export {
+  getAdminEarlyBirdStages,
+  patchAdminEarlyBirdStage,
+  getAdminEarlyBirdReconcile,
+} from "./growth/earlyBirdHttp";
+export type {
+  EarlyBirdStageRow,
+  EarlyBirdStageStats,
+  EarlyBirdReconcileSummary,
+} from "./growth/earlyBirdHttp";
+export { getMeReferrals } from "./growth/meReferralsHttp";
+export type {
+  MeReferralsSummary,
+  MeReferralStats,
+  MeEarlyBirdSummary,
+  MeReferralEventSummary,
+  MeGrowthLedgerSummaryRow,
+} from "./growth/meReferralsHttp";
+export {
+  getAdminGrowthAnalyticsOverview,
+  getAdminGrowthAnalyticsFunnel,
+  getAdminGrowthAnalyticsTopReferrers,
+  getAdminGrowthKolCenter,
+  getAdminGrowthKolCenterDetail,
+} from "./growth/analyticsHttp";
+export type {
+  GrowthAnalyticsOverview,
+  GrowthAnalyticsFunnel,
+  TopReferrerRow,
+  KolContributionRow,
+  KolContributionDetail,
+} from "./growth/analyticsHttp";
 export {
   getGovernanceProposal,
   getGovernanceProposalStatus,

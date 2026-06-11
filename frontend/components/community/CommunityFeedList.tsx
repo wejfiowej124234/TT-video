@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type FormEvent } from "react";
 import Link from "next/link";
-import type { CommunityComment } from "@/lib/communityMockData";
+import type { CommunityComment, CommunityPost } from "@/lib/communityMockData";
 import { FeedSkeleton, FeedGridSkeleton } from "./FeedSkeleton";
 import {
   communityCardLinkFocus,
@@ -10,49 +10,11 @@ import {
 } from "@/lib/communityA11yFocus";
 import { CommunityFeedMasonryGrid } from "@/components/community/CommunityFeedMasonryGrid";
 import { CommunityFeedEmptyFooter } from "@/components/community/CommunityFeedEmptyFooter";
+import { TouchpointConversionStrip } from "@/components/product-enhancement/TouchpointConversionStrip";
 import { TT_COMMUNITY_FEED_ACTION, TT_COMMUNITY_PAGE_L5, TT_COMMUNITY_FEED_L5 } from "@/lib/marketingUi";
+import type { CommunityFeedListProps } from "./communityFeedListTypes";
 
-export interface CommunityFeedListProps {
-  t: (key: string) => string;
-  feedLoading: boolean;
-  isEmpty: boolean;
-  isEmptySearch: boolean;
-  feedTab: "recommend" | "following";
-  isLoggedIn: boolean;
-  postsToShow: CommunityPost[];
-  localCommentsByPostId: Record<string, CommunityComment[]>;
-  hasMore: boolean;
-  feedLoadingMore: boolean;
-  tagFilter: string | null;
-  setTagFilter: (v: string | null) => void;
-  setFeedTab: (v: "recommend" | "following") => void;
-  setSearchQuery: (v: string) => void;
-  likedPostIds?: Set<string>;
-  collectedPostIds?: Set<string>;
-  onLike?: (postId: string) => void;
-  onCollect?: (postId: string) => void;
-  onLoadMore: () => void;
-  onViewFull: (post: CommunityPost, trigger?: HTMLElement | null) => void;
-  onCommentClick: (post: CommunityPost, trigger?: HTMLElement | null) => void;
-  onPlayVideo: ((post: CommunityPost, trigger?: HTMLElement | null) => void) | undefined;
-  onReport: (post: CommunityPost) => void;
-  /** 空列表「发帖」：传入 `SubmitEvent.submitter` 以恢复焦点 */
-  onPublishClick: (trigger?: HTMLElement | null) => void;
-  /** 大屏单列卡：与 `getMeFollowing` + follow API 对齐（04 §3.4） */
-  meUserId?: string | null;
-  followingAuthorIds?: ReadonlySet<string>;
-  followBusyAuthorId?: string | null;
-  onAuthorFollowToggle?: (authorId: string) => void;
-  /** 31 §2.1：话题筛选时展示当前列表匹配总数（与 searchFilteredPosts 一致） */
-  tagTopicMatchCount?: number;
-  /** B-077：紧凑卡话题链与 Feed `sort=` 一致 */
-  topicTagHref?: (tag: string) => string;
-  /** 推荐流排序（瀑布 promo 插槽显隐） */
-  sortBy?: "latest" | "hot";
-  hotDestinations?: readonly string[];
-  proximityFilter?: "none" | "nearby" | "nearby_1km";
-  setProximityFilter?: (v: "none" | "nearby" | "nearby_1km") => void;
-}
+export type { CommunityFeedListProps } from "./communityFeedListTypes";
 
 /** 信息流：骨架 / 空态 / 瀑布 masonry（推荐+关注）/ 加载更多 */
 export default function CommunityFeedList({
@@ -64,6 +26,7 @@ export default function CommunityFeedList({
   isLoggedIn: _isLoggedIn,
   postsToShow,
   localCommentsByPostId,
+  apiCommentsByPostId = {},
   hasMore,
   feedLoadingMore,
   tagFilter,
@@ -150,6 +113,17 @@ export default function CommunityFeedList({
           className={TT_COMMUNITY_FEED_ACTION.emptyPanel}
           aria-label={emptyAria}
         >
+          {!isEmptySearch && feedTab === "recommend" ? (
+            <TouchpointConversionStrip
+              touchpoint="community"
+              kicker={t("pes_community_conversion_kicker")}
+              body={t("pes_community_conversion_body")}
+              badge={t("pes_community_conversion_badge")}
+              ctaHref="/community/explore"
+              ctaLabel={t("pes_community_conversion_cta")}
+              className="mb-4"
+            />
+          ) : null}
           <p className={TT_COMMUNITY_FEED_ACTION.emptyTitle}>{emptyTitle}</p>
           {!isEmptySearch && !isEmptyProximity && feedTab !== "following" ? (
             <p className={TT_COMMUNITY_FEED_ACTION.emptyHint}>{t("community_empty_hint")}</p>
@@ -303,6 +277,7 @@ export default function CommunityFeedList({
             t={t}
             postsToShow={postsToShow}
             localCommentsByPostId={localCommentsByPostId}
+            apiCommentsByPostId={apiCommentsByPostId}
             likedPostIds={likedPostIds}
             collectedPostIds={collectedPostIds}
             onLike={onLike}

@@ -22,4 +22,17 @@ describe("customItineraryBlockedKeys", () => {
     });
     expect(keys).toContain("action_gate_itin_tourist_cities");
   });
+
+  it("tourist: requires minimum interest", () => {
+    const form = defaultForm(1);
+    form.country = "CN";
+    form.dayPlans[0].city = "北京";
+    form.amount = "100";
+    const keys = customItineraryTouristBlockedKeys(form, {
+      sessionOk: true,
+      coverFileTooBig: false,
+      suggestedTransportFee: 0,
+    });
+    expect(keys).toContain("action_gate_itin_interest_required");
+  });
 });

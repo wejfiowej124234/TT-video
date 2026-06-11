@@ -61,6 +61,10 @@ pub async fn auth_placeholder_layer(req: Request<Body>, next: axum::middleware::
         || (read && path == "/api/v1/steward/stake-quote")
         || (read && path == "/api/v1/steward/stake-status")
         || (read && path == "/api/v1/redemption/quote")
+        // S2-API-RO：Catalog CMS 只读公众面（105 §3.2 · published only）
+        || (read && path.starts_with("/api/v1/catalog/"))
+        // E2E-A-01：Official OPS Cold Start deployed campaign 公众只读
+        || (read && path.starts_with("/api/v1/official/cold-start/surfaces/"))
         || path.starts_with("/api/v1/internal/")
         || community_read;
     if public {

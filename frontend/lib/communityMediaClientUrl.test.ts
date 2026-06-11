@@ -125,5 +125,10 @@ describe("communityMediaNextImageUnoptimized", () => {
     expect(communityMediaNextImageUnoptimized("https://x.example/api/v1/uploads/y.jpg")).toBe(true);
     expect(communityMediaNextImageUnoptimized("https://x.example/api/v1/uploads/other-kind/z.webp")).toBe(true);
     expect(communityMediaNextImageUnoptimized("https://cdn.example/a.jpg")).toBe(false);
+    expect(
+      communityMediaNextImageUnoptimized(
+        "https://images.unsplash.com/photo-1547150492-da7ff1742941?auto=format&fit=crop&w=640&q=75",
+      ),
+    ).toBe(true);
   });
 });

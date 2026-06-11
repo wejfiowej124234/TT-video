@@ -11,12 +11,13 @@ import type { LocaleInterpolationVars } from "@/lib/i18n";
 type CommunityFeedTFunc = (key: string, vars?: LocaleInterpolationVars) => string;
 
 function scheduleCommunityMeSocialFetch(run: () => void): () => void {
-  if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+  if (typeof window === "undefined") return () => {};
+  if (typeof window.requestIdleCallback === "function") {
     const id = window.requestIdleCallback(run, { timeout: 2500 });
     return () => window.cancelIdleCallback(id);
   }
-  const timer = window.setTimeout(run, 100);
-  return () => window.clearTimeout(timer);
+  const timer = globalThis.setTimeout(run, 100);
+  return () => globalThis.clearTimeout(timer);
 }
 
 /** `GET …/me/collects` + `GET …/me/following`：登录时拉取；登出时清空（从 `useCommunityFeed` 拆出，行为同源）。 */

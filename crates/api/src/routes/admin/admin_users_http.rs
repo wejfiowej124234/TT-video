@@ -14,8 +14,9 @@ use crate::state::ApiMetaState;
 
 use super::admin_handler_common::{
     admin_attach_meta_build, admin_db_pool_required, is_supported_target_role,
-    request_id_from_headers, require_admin_actor, write_admin_audit_log_best_effort,
+    request_id_from_headers, write_admin_audit_log_best_effort,
 };
+use super::admin_rbac;
 use super::{AdminRoleChangeRequestBody, AdminUsersListQuery};
 
 pub async fn get_admin_users(
@@ -26,7 +27,13 @@ pub async fn get_admin_users(
     let Some(ref co) = state.chain_off else {
         return chain_off_unavailable_json("GET /api/v1/admin/users").into_response();
     }
-    let actor_id = match require_admin_actor(&state, &headers).await {
+    let actor_id = match admin_rbac::require_admin_permission(
+        &state,
+        &headers,
+        admin_rbac::PERM_USERS_READ,
+    )
+    .await
+    {
         Ok((uid, _)) => uid,
         Err(resp) => return resp,
     };
@@ -112,7 +119,14 @@ pub async fn get_admin_user_by_id(
 ) -> impl IntoResponse {
     let Some(ref co) = state.chain_off else {
         return chain_off_unavailable_json("GET /api/v1/admin/users/:id").into_response();
-    };    let actor_id = match require_admin_actor(&state, &headers).await {
+    };
+    let actor_id = match admin_rbac::require_admin_permission(
+        &state,
+        &headers,
+        admin_rbac::PERM_USERS_READ,
+    )
+    .await
+    {
         Ok((uid, _)) => uid,
         Err(resp) => return resp,
     };

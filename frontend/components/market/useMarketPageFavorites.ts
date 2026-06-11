@@ -17,7 +17,17 @@ export function useMarketPageFavorites() {
   const [favoritedGuideIds, setFavoritedGuideIds] = useState<Set<string>>(new Set());
   const [bookmarkSyncAlert, setBookmarkSyncAlert] = useState<string | null>(null);
   const [favoriteToggleAlert, setFavoriteToggleAlert] = useState<string | null>(null);
+  /** SSR 与首屏 hydration 须一致；登录态文案在 mount 后再读 localStorage */
+  const [favoritesSyncHint, setFavoritesSyncHint] = useState(() => t("market_favorites_sync_note_local"));
   const syncInFlightRef = useRef(false);
+
+  const refreshFavoritesSyncHint = useCallback(() => {
+    setFavoritesSyncHint(
+      hasMarketAuthSession()
+        ? t("market_favorites_sync_note_logged_in")
+        : t("market_favorites_sync_note_local"),
+    );
+  }, [t]);
 
   const refreshFromLocalStorage = useCallback(() => {
     setFavoritedOrderIds(loadFavSet(FAV_ORDERS_KEY));
@@ -41,6 +51,10 @@ export function useMarketPageFavorites() {
   }, [refreshFromLocalStorage, t]);
 
   useEffect(() => {
+    refreshFavoritesSyncHint();
+  }, [refreshFavoritesSyncHint]);
+
+  useEffect(() => {
     refreshFromLocalStorage();
     if (hasMarketAuthSession()) {
       void syncFromServer();
@@ -57,6 +71,7 @@ export function useMarketPageFavorites() {
   useEffect(() => {
     const onStorage = (e: StorageEvent) => {
       if (e.key === "traveltrust_session_token" || e.key === "traveltrust_user_id") {
+        refreshFavoritesSyncHint();
         refreshFromLocalStorage();
         if (hasMarketAuthSession()) void syncFromServer();
         else setBookmarkSyncAlert(null);
@@ -64,9 +79,7 @@ export function useMarketPageFavorites() {
     };
     window.addEventListener("storage", onStorage);
     return () => window.removeEventListener("storage", onStorage);
-  }, [refreshFromLocalStorage, syncFromServer]);
-
-  const favoritesSyncHint = hasMarketAuthSession() ? t("market_favorites_sync_note_logged_in") : t("market_favorites_sync_note_local");
+  }, [refreshFromLocalStorage, syncFromServer, refreshFavoritesSyncHint]);
 
   const toggleOrderFavorite = useCallback(
     (id: string) => {

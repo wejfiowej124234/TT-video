@@ -3,7 +3,8 @@
 import { CIM, CIM_CHOICE, CIM_FOCUS, CIM_FOCUS_WITHIN } from '../customItineraryModalTheme';
 import type { CustomItineraryForm, GuideLevelOptionWithPricing } from "../types";
 import type { BudgetBreakdown, TransportLine, InterCityLine } from "../useQuoteCalculation";
-import { TRANSPORT_OPTIONS, CITY_TRANSPORT_OPTIONS } from "../constants";
+import { CITY_TRANSPORT_OPTIONS, TRANSPORT_OPTIONS } from "../constants";
+import { interCityTransportFeeHintKey } from "../itineraryFormCountryCopy";
 import type { Dispatch, SetStateAction } from "react";
 
 export interface TouristGuideAndTransportSectionProps {
@@ -70,6 +71,7 @@ export default function TouristGuideAndTransportSection({
       <div>
         <span className={labelClass}>{t("market_transportFeeTotal")}</span>
         <p className="text-meta text-white/70 mt-0.5">{t("market_transportFeeFromSelection")}</p>
+        <p className="text-meta text-white/55 mt-1">{t("market_transport_budget_disclaimer")}</p>
         <div className={CIM.customItineraryInsetRow}>
           {touristCityTransportLines.length > 0 ? (
             touristCityTransportLines.map((line, idx) => (
@@ -77,7 +79,11 @@ export default function TouristGuideAndTransportSection({
                 {line.dayFrom === line.dayTo
                   ? t("market_dayN").replace(/\{n\}/g, String(line.dayFrom))
                   : t("market_dayRange").replace("{{from}}", String(line.dayFrom)).replace("{{to}}", String(line.dayTo))}
-                ：{t(CITY_TRANSPORT_OPTIONS.find((o) => o.value === line.vehicle)!.labelKey)}，{line.fee}
+                ：{t(CITY_TRANSPORT_OPTIONS.find((o) => o.value === line.vehicle)!.labelKey)}
+                {line.vehicleCount && line.vehicleCount > 1
+                  ? t("market_cityTransportVehicleCount").replace("{{n}}", String(line.vehicleCount))
+                  : ""}
+                ，{line.fee}
                 {t("ui_currency_suffix_usdc")}
               </p>
             ))
@@ -101,7 +107,23 @@ export default function TouristGuideAndTransportSection({
             {t("ui_currency_suffix_usdc")}
           </p>
         </div>
-        <p className="text-meta text-white/60 mt-1">{t("market_transportFeeFixed")}</p>
+        <p className="text-meta text-white/60 mt-1">
+          {t("market_transportFeeFixed")} {t(interCityTransportFeeHintKey(form.country))}
+        </p>
+        {hasTouristInterCity ? (
+          <label className="mt-3 flex min-h-[44px] cursor-pointer items-start gap-2 text-small text-white">
+            <input
+              type="checkbox"
+              checked={form.guideAssistTransport}
+              onChange={(e) => setForm((f) => ({ ...f, guideAssistTransport: e.target.checked }))}
+              className={`${CIM_CHOICE} mt-1`}
+            />
+            <span>
+              <span className="font-medium">{t("market_guideAssistTransport")}</span>
+              <span className="mt-0.5 block text-meta text-white/65">{t("market_guideAssistTransportHint")}</span>
+            </span>
+          </label>
+        ) : null}
       </div>
     </div>
   );

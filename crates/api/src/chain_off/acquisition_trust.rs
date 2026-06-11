@@ -216,6 +216,8 @@ mod tests {
                 language_cert_url: None,
                 guide_license_url: None,
                 stake_amount: "0".into(),
+                hourly_rate: None,
+                avatar_url: None,
                 status: "active".into(),
                 rejection_codes: vec![],
                 rejection_message: None,

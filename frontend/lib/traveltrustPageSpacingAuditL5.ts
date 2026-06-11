@@ -38,7 +38,7 @@ export function tailwindSpacingToPx(classFragment: string): number | null {
 
 export function isOnL5SpacingGrid(px: number, tolerance = 0): boolean {
   const u = TT_PAGE_SPACING_AUDIT_L5.gridUnitPx;
-  return Math.abs(px % u) <= tolerance || TT_PAGE_SPACING_AUDIT_L5.rhythmStepsPx.includes(px);
+  return Math.abs(px % u) <= tolerance || (TT_PAGE_SPACING_AUDIT_L5.rhythmStepsPx as readonly number[]).includes(px);
 }
 
 export function auditTraveltrustSectionGapPx(

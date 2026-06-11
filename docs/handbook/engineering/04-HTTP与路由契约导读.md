@@ -1,6 +1,6 @@
 # 04 · HTTP 与路由契约导读
 
-**Version:** 1.1.25 · **最后更新：** 2026-04-29  
+**Version:** 1.1.26 · **最后更新：** 2026-06-03  
 **受众**：工程师  
 **状态**：现行  
 **与 spec 关系**：教「**怎么对拍**」**04** 与 **`api_router()`**；**不替代** **[04 §3.4](../../spec/04-后端与API.md)** 表体、**不**在本文件维护路径全表。**API 契约唯一 SSOT**：**v1 HTTP** 以 **04 §3.4** + **`crates/api`** 实现 + **`bash scripts/run-check-04-routes.sh`** 闭包为准；**域回归**以 **93** 为准。  
@@ -69,8 +69,7 @@
 - 公共路径与 **04** 对齐的客户端入口见 **CONTRIBUTING**「路由与契约」节；**不**在本文重复文件名清单。  
 - **A 域** 会话、**`/auth/*`**、**`/api/v1/me*`** 的工程导读（守卫、**`merge` 序**、**A 域** 测试过滤串）见 **[10-A](./10-A-认证机制.md)**；**路径/方法/字段**仍以 **04 §3.4** 与 **`routes/mod.rs`** 为准。  
 - **前端路径表、Next 路由、05/06/13/13-1 读法**见 **[24](./24-横切-前端与UI宪法导读.md)**；**机读 HTTP/前端路径**仍以 **04 §3.4**、**13-1** 与 **`frontend/`** 为准。
-
----
+- **`/` · `/market` 四页 FE 数据链（① · 非 HTTP 表体）**：**`POST /api/v1/itineraries`**（**1×**）· **`GET …/discover/orders`**（**300ms debounce** · **`useMarketPage`**）· **`GET …/orders/:id`**（预览解锁）· 收藏 **① FE `localStorage` + F-020 best-effort**（**②** 跨设备 SLA）；**`/discover`→`/market`** 重定向壳。真源 **[LANDING-MARKET-PAGES-CODE-SSOT](../../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · 绿集 **`bash scripts/dev/run-web3-itinerary-l5-green.sh`**（**[05 §2/§3](./05-本地环境与常用门禁速查.md)**）；**UI freeze** 仍 **FIVE-MAIN** / **MARKET-L5**（仅 **`/market` 主**）。
 
 <a id="hb-eng-04-troubleshoot"></a>
 
@@ -112,6 +111,7 @@ bash scripts/check-handbook-engineering-content.sh
 
 | Version | 日期 | 摘要 |
 |---------|------|------|
+| 1.1.26 | 2026-06-03 | **§3** 增 **`/` + `/market` 四页 FE 数据链** 互指（**LANDING-MARKET-PAGES-CODE-SSOT** · **`run-web3-itinerary-l5-green.sh`** · **F-020 ②**）；**HTTP** 仍以 **04 §3.4** 为准。 |
 | 1.1.25 | 2026-04-29 | **§2b**：补 **08 §3**（**spec/04 §3.4**）与 **09 §3** **04 verified** 三向对拍句（与 **EVIDENCE-04** **V-1** 台账段互指）。 |
 | 1.1.24 | 2026-04-29 | **SSOT 边界**：删 **spec** 程序句与 **08 §3**/**09 §3**（**同 PR**）/**08 §2**/**STATUS**/**98 §2** 全文对齐（与 **engineering/README**/**spec/00 读前** 同源）。 |
 | 1.1.23 | 2026-04-29 | 文首 **SSOT（必读）** 与 **08/README** 对拍：补 **14** + **`contracts/`** + **`check-55-s13`** 等脚本句（无正文语义变更）。 |

@@ -16,6 +16,7 @@ import {
 import type { CommunityUserItem } from "@/lib/communityMockData";
 import { CommunityFriendsListSkeleton } from "@/components/community/CommunityFriendsListSkeleton";
 import { communityStoredRolePillClassName } from "@/components/community/communityFeedMappers";
+import { mapApiUserRoleToCommunity } from "@/components/community/communityFeedMappersRoleAndMedia";
 import { marketHrefForCommunityUser } from "@/lib/communityMarketDeepLink";
 import { COMMUNITY_BOOK_GUIDE_CTA_CLASS } from "@/components/community/communityFeedConstants";
 import { formatWalletOrDidShort } from "@/lib/formatWalletOrDidShort";

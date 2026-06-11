@@ -33,6 +33,36 @@
 
 **读链**：[TT-9628 · §0.0.4](runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-0-0-4-doc-hygiene) · [runbook/README · 步 10e-c](runbook/README.md)
 
+<a id="ai-collab-five-main-routes-doc-only"></a>
+
+## 0.3 五主路由 · `/` + `/market` 文档对齐代码（仅文档 · 不改前端）
+
+```
+【五主路由 · 文档对齐】本轮只改文档，禁止改 frontend/ 源码。UI 壳 SSOT：FIVE-MAIN-ROUTES-PHASE1-FREEZE → 88 §一 → 86 §6.0。四页数据链 SSOT：LANDING-MARKET-PAGES-CODE-SSOT（`/` 1×POST · ITINERARY_CARD_COUNT=1 · landingItinerarySession = localStorage 跨 tab · getOrder 预览解锁；/market useMarketPage 300ms debounce · 收藏 localStorage + F-020 best-effort（marketTravelBookmarksSync）→ ② SLA；MARKET-L5 仅 /market 主）。全仓仅 frontend/ 现行树；非 archive/ui-v1、非根 app/page.tsx。五路由：/、/traveltrust、/market、/did-rank、/community/*。完成度仅标 ①；勿冒充 ②③ GO。07/00 勿动，除非「台账同批」。
+```
+
+**读链**：[FIVE-MAIN-ROUTES](../frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md) · **[LANDING-MARKET-PAGES-CODE-SSOT](../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** · [88 §一](../spec/88-五主路由页身实现快照与UX缺口审计-20260330.md) · [frontend/README](../frontend/README.md)
+
+<a id="ai-collab-provider-onboarding-doc-only"></a>
+
+## 0.3a 多重身份 · 商家入驻 · 文档对齐代码（仅文档 · 不改前端）
+
+```
+【商家入驻 · 文档对齐】本轮只改文档，禁止改 frontend/ 与 crates/ 源码。SSOT 链：frontend/app/provider/register/README.md → app/provider/README.md → PROVIDER-REGISTER-UI-FREEZE → 88 §1.2 → 04 §3.4「商家入驻 · ① 实现真源」→ 96-17 §0.3.3 → 13-1 表 1 Identity 行 → 93 §2.1a B-MKT-004/005。五步：/auth/register?role=provider → /provider/register?step=1..3 → /me/onboarding → /admin/provider-applications（列表）→ /admin/users/[id]（AdminProviderApplicationReviewCard 审核）→ /market/provider。① 烟测 bash scripts/dev/smoke-provider-onboarding-local.sh（dev-local-smoke-baseline §8 · TT-9618 §2.1）；Vitest providerRegisterValidation + providerRegisterL5.contract。完成度仅标 ① 本地；勿用烟测 exit 0 或文档勾选冒充 ②③ GO。07/00 版本三线勿动，除非我说「台账同批」。93 B-MKT-005（入驻全链）≠ 95 历史 B-MKT-005（F-021 listing 目录 PG IT）。
+```
+
+**读链**：[provider/register README](../frontend/app/provider/register/README.md) · [PROVIDER-REGISTER-UI-FREEZE](../frontend/evidence/GO_local_provider_register_closure/PROVIDER-REGISTER-UI-FREEZE.md) · [88 §1.2](../spec/88-五主路由页身实现快照与UX缺口审计-20260330.md) · [TT-9618 §2.1](runbook/TT-9618-onboarding-local-testnet.md)
+
+<a id="ai-collab-acquisition-pd009-doc-only"></a>
+
+## 0.3b 多重身份 · 旅行收购 PD-009 · 文档对齐代码（仅文档 · 不改代码）
+
+```
+【旅行收购 · 文档对齐】本轮只改文档，禁止改 frontend/ 与 crates/ 源码。SSOT 链：frontend/app/me/identities/README.md → frontend/app/market/acquisition/README.md → app/market/README.md → 88 §1.3 → 04 §读前 + 正文「旅行收购 · ① 实现真源」→ acquisition-publish-trust-rules v1 §8.1 → identity-unified-model §3.5 → 96-17 §0.3.3 → 93 §2.1b B-MKT-006～012。路径：/me/identities「进入子站」→ /market/acquisition 绑主钱包 → POST …/me/acquisition/publish-bond（或信用免押）→ POST …/market/acquisition/listings（agree_escrow_copy）→ 目录/草稿/创单（order_kind=acquisition_listing）。门闸 acquisition_publish_gate.rs（非 region_steward / 非 96-18 准入费 / 非 onboarding_entitlements）。① 烟测 bash scripts/dev/smoke-acquisition-pd009-local.sh（dev-local-smoke-baseline §9）；cargo test -p traveltrust-api market_subsite_catalog matrix_pd009_*；frontend vitest acquisitionL5/meTrust。完成度仅标 ① 本地 PD-009 竖切 CLOSED；勿用烟测 exit 0 或文档勾选冒充 ②③ GO。07/00 版本三线勿动，除非我说「台账同批」。
+```
+
+**读链**：[me/identities README](../frontend/app/me/identities/README.md) · [market/acquisition README](../frontend/app/market/acquisition/README.md) · [acquisition-publish-trust-rules §8.1](../spec/artifacts/acquisition-publish-trust-rules.v1.md#81-第一阶段--本地--closed2026-05-27) · [88 §1.3](../spec/88-五主路由页身实现快照与UX缺口审计-20260330.md) · [dev-local-smoke-baseline §9](dev-local-smoke-baseline.md)
+
 ---
 
 ## 1. 限定范围
@@ -247,6 +277,12 @@ bash scripts/check-07-version-triple.sh && bash scripts/run-check-04-routes.sh &
 | **权威一句** | **[TT — spec→handbook 全量替代清单 · §0](runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md)**（与根 **AGENTS**、**CONTRIBUTING** 文首 **开发期** blockquote 同源）。 |
 
 三层门禁与话术变体仍可与 **§7.x（CI 新红链）** 联用；区别是：**§7** 排障，**§12** 定「本轮要不要扛发版级全量」的预期。
+
+### 12.1 全站主题 V1（marketDark 三页 · 可贴一句）
+
+```
+【全站主题 V1】按 docs/runbook/TT-PH1-SITE-THEME-V1-UPGRADE-001.md：① only；不 PR；213 closed 后改代码。每页须 §1.6 页面 UI L5 + §2.4 逐路由勾选（≠ /traveltrust 电影 L5）。/ + L0 锁死；scope=market/did-rank/community/*；marketingUi+壳；D2/D3 defer 书面登记；§6.1+§6.2 各路由 POST 截图；212 前 §2.4 全行 L5 closed。≠ archive/ui-v1。
+```
 
 ---
 

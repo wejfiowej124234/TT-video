@@ -30,17 +30,19 @@ export interface OrderFlowStepsProps {
   compact?: boolean;
   /** Experience 草稿：三步可视化进度（与 compact + experience 同用） */
   draftJourneyStep?: DraftJourneyStep;
-  /** 第 2 步子状态：已发布但尚未选向导时显示「待选向导」而非「确认终版」 */
+  /** @deprecated 保留兼容；步 2 标签固定为「选择向导」，进度由 `draftJourneyStep` 驱动 */
   draftStep2Phase?: "pickGuide" | "confirm";
+  /** 第 3 步已锁定（终版确认后）时显示「付款」 */
+  draftStep3Pay?: boolean;
 }
 
 const STEPS: OrderFlowStep[] = [1, 2, 3, 4, 5, 6, 7, 8];
 
-/** 53 §4.6.1 / 37 §2.4：八步与附录 B index 一一对应 */
+/** Experience 草稿三步：创建行程 → 选择向导 → 确认/付款（① itinerary-first 主链） */
 const DRAFT_JOURNEY_LABEL_KEYS = [
-  "order_flow_journey_save",
+  "order_flow_journey_create",
+  "order_flow_journey_selectGuide",
   "order_flow_journey_confirm",
-  "order_flow_journey_pay",
 ] as const;
 
 const STEP_LABEL_KEYS = [
@@ -141,12 +143,12 @@ function useStepListKeyboardNav() {
 
 function DraftJourneyStepper({
   activeStep,
-  draftStep2Phase = "confirm",
+  draftStep3Pay = false,
   t,
   statusLabel,
 }: {
   activeStep: DraftJourneyStep;
-  draftStep2Phase?: "pickGuide" | "confirm";
+  draftStep3Pay?: boolean;
   t: (key: string) => string;
   statusLabel?: string;
 }) {
@@ -164,27 +166,22 @@ function DraftJourneyStepper({
       ) : null}
       <ol className="flex items-center gap-1 sm:gap-2 list-none m-0 p-0 min-w-0">
         {([1, 2, 3] as const).map((step, index) => {
-          const step2PickGuide = step === 2 && draftStep2Phase === "pickGuide";
-          const isCurrent = step === activeStep || step2PickGuide;
-          const isPast = step < activeStep && !step2PickGuide;
+          const isCurrent = step === activeStep;
+          const isPast = step < activeStep;
           const label =
-            step2PickGuide
-              ? t("order_flow_journey_pickGuide")
+            step === 3 && draftStep3Pay
+              ? t("order_flow_journey_pay")
               : t(DRAFT_JOURNEY_LABEL_KEYS[step - 1]);
-          const circleClass = step2PickGuide
-            ? "bg-ref-sun/20 text-ref-sun ring-2 ring-ref-sun/45"
-            : isCurrent
-              ? "bg-ref-sun/35 text-ink-950 ring-2 ring-ref-sun/70 shadow-[0_0_14px_-2px_rgba(255,200,100,0.55)]"
-              : isPast
-                ? "bg-ref-sun/15 text-ref-sun/95"
-                : "bg-white/10 text-white/50";
-          const textClass = step2PickGuide
-            ? "text-ref-sun/95 font-medium"
-            : isCurrent
-              ? "text-ref-sun font-medium"
-              : isPast
-                ? "text-ref-sun/90"
-                : "text-white/50";
+          const circleClass = isCurrent
+            ? "bg-ref-sun/35 text-ref-sun ring-2 ring-ref-sun/70 shadow-[0_0_14px_-2px_rgba(255,200,100,0.55)]"
+            : isPast
+              ? "bg-ref-sun/15 text-ref-sun/95"
+              : "bg-white/10 text-white/50";
+          const textClass = isCurrent
+            ? "text-ref-sun font-medium"
+            : isPast
+              ? "text-ref-sun/90"
+              : "text-white/50";
           return (
             <li key={step} className="flex flex-1 items-center min-w-0">
               <div className="flex flex-col items-center flex-1 min-w-[4.5rem] gap-1">
@@ -228,7 +225,8 @@ export default function OrderFlowSteps({
   variant = "default",
   compact = false,
   draftJourneyStep,
-  draftStep2Phase,
+  draftStep2Phase: _draftStep2Phase,
+  draftStep3Pay,
 }: OrderFlowStepsProps) {
   const { t } = useTranslation();
   const { setItemRef, onStepKeyDown } = useStepListKeyboardNav();
@@ -242,7 +240,7 @@ export default function OrderFlowSteps({
       return (
         <DraftJourneyStepper
           activeStep={draftJourneyStep}
-          draftStep2Phase={draftStep2Phase}
+          draftStep3Pay={draftStep3Pay}
           t={t}
           statusLabel={statusLabel}
         />
@@ -274,14 +272,13 @@ export default function OrderFlowSteps({
   }
 
   const navClass = isExperience
-    ? "flex items-center gap-2 py-3 px-2 rounded-[var(--radius-md)] border border-ref-sun/22 bg-ref-sun/8 overflow-x-auto min-w-0"
+    ? "flex items-stretch gap-1 sm:gap-2 py-3 px-2 rounded-[var(--radius-md)] border border-ref-sun/22 bg-ref-sun/8 overflow-x-hidden min-w-0 w-full"
     : isDid
-    ? "flex items-center gap-2 py-3 px-2 rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md overflow-x-auto min-w-0 shadow-scifi-panel-md"
-    : "flex items-center gap-2 py-3 px-2 rounded-[var(--radius-sm)] border border-ink-200 bg-bg-console/60 overflow-x-auto min-w-0";
+    ? "flex items-stretch gap-1 sm:gap-2 py-3 px-2 rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md overflow-x-hidden min-w-0 w-full shadow-scifi-panel-md"
+    : "flex items-stretch gap-1 sm:gap-2 py-3 px-2 rounded-[var(--radius-sm)] border border-ink-200 bg-bg-console/60 overflow-x-hidden min-w-0 w-full";
   return (
     <nav
-      className="min-w-0"
-      style={{ scrollbarGutter: "stable" }}
+      className="min-w-0 w-full"
       aria-label={t("orderFlow_aria")}
       aria-describedby={statusLabel ? statusRegionId : undefined}
     >
@@ -323,14 +320,14 @@ export default function OrderFlowSteps({
             <li
               key={step}
               ref={(el) => setItemRef(index, el)}
-              className={`flex flex-1 items-center min-w-0 shrink-0 basis-0 outline-none rounded-[var(--radius-sm)] ${stepFocusRing}`}
+              className={`flex flex-1 items-center min-w-0 basis-0 outline-none rounded-[var(--radius-sm)] ${stepFocusRing}`}
               tabIndex={0}
               aria-current={isCurrent ? "step" : undefined}
               aria-label={stepAriaLabel}
               onKeyDown={(e) => onStepKeyDown(index, e)}
             >
-              <div className="flex flex-col items-center flex-1 min-w-[3.5rem]">
-                <span className={`inline-flex items-center justify-center min-h-[44px] min-w-[44px] h-11 w-11 rounded-full text-small font-medium shrink-0 ${stepCircleClass}`}>
+              <div className="flex flex-col items-center flex-1 min-w-0 px-0.5">
+                <span className={`inline-flex items-center justify-center min-h-[40px] min-w-[40px] h-10 w-10 sm:min-h-[44px] sm:min-w-[44px] sm:h-11 sm:w-11 rounded-full text-meta sm:text-small font-medium shrink-0 ${stepCircleClass}`}>
                   {isPast ? (
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
                       <path
@@ -344,7 +341,7 @@ export default function OrderFlowSteps({
                   )}
                 </span>
                 <span
-                  className={`mt-1 text-meta truncate max-w-full ${
+                  className={`mt-1 text-[0.65rem] sm:text-meta text-center leading-tight line-clamp-2 max-w-full ${
                     isExperience
                       ? isCurrent
                         ? "text-ref-sun font-medium"

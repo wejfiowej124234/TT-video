@@ -15,6 +15,9 @@ code_discover=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 3 "$BAS
 code_didrank=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 3 "$BASE_URL/api/v1/did-rank/itineraries" || echo "000")
 code_didrank_guides=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 3 "$BASE_URL/api/v1/did-rank/guides" || echo "000")
 code_didrank_travelers=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 3 "$BASE_URL/api/v1/did-rank/travelers" || echo "000")
+code_didrank_prize_pool=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 3 "$BASE_URL/api/v1/did-rank/prize-pool" || echo "000")
+code_didrank_providers=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 3 "$BASE_URL/api/v1/did-rank/providers" || echo "000")
+code_didrank_acquisitions=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 3 "$BASE_URL/api/v1/did-rank/acquisitions" || echo "000")
 
 [[ "$code_health" == "200" ]]    || fail "/health returned $code_health (expected 200)"
 ok "/health $code_health"
@@ -601,7 +604,7 @@ if command -v jq >/dev/null 2>&1; then
   [[ "$sb747dr" == *"chain_off_mounted"* ]] || fail "/meta JSON did_rank_top_keys_contract_747 must embed chain_off_mounted (747), got \"$sb747dr\""
   [[ "$sb747dr" == *"chain_off_db_pool"* ]] || fail "/meta JSON did_rank_top_keys_contract_747 must embed chain_off_db_pool (747), got \"$sb747dr\""
   [[ "$sb747dr" == *"guides_community_penalty_exclusion"* ]] || fail "/meta JSON did_rank_top_keys_contract_747 must embed guides_community_penalty_exclusion (747), got \"$sb747dr\""
-  m728_exp='["service","api_version","build","chain","rate_limits","database_connected","database","dual_write","strict_mode","ssot_version","ssot","admin_exports","chargeback_policy","finality_n","indexer","authority","pause","evidence","order_messages","reviews","dispute_open","dispute_resolve","itineraries","orders","discover","product_countries","did_rank","product_roles","auth","seed_test_accounts","guides","idempotency_cache","defaults","outbox","meta_top_keys","meta_top_keys_contract_728"]'
+  m728_exp='["service","api_version","build","chain","rate_limits","database_connected","database","dual_write","strict_mode","ssot_version","ssot","admin_exports","chargeback_policy","finality_n","indexer","authority","pause","evidence","order_messages","reviews","dispute_open","dispute_resolve","itineraries","orders","discover","product_countries","did_rank","product_roles","auth","seed_test_accounts","guides","governance","idempotency_cache","defaults","outbox","meta_top_keys","meta_top_keys_contract_728"]'
   m728_got=$(echo "$mb" | jq -c '.meta_top_keys // empty')
   [[ "$m728_got" == "$m728_exp" ]] || fail "/meta JSON meta_top_keys must equal SSOT (728), got \"$m728_got\""
   sb728=$(echo "$mb" | jq -r '.meta_top_keys_contract_728 // empty')
@@ -668,6 +671,12 @@ ok "/api/v1/did-rank/itineraries $code_didrank"
 ok "/api/v1/did-rank/guides $code_didrank_guides"
 [[ "$code_didrank_travelers" =~ ^(200|503)$ ]] || fail "/api/v1/did-rank/travelers returned $code_didrank_travelers"
 ok "/api/v1/did-rank/travelers $code_didrank_travelers"
+[[ "$code_didrank_prize_pool" =~ ^(200|503)$ ]] || fail "/api/v1/did-rank/prize-pool returned $code_didrank_prize_pool"
+ok "/api/v1/did-rank/prize-pool $code_didrank_prize_pool"
+[[ "$code_didrank_providers" =~ ^(200|503)$ ]] || fail "/api/v1/did-rank/providers returned $code_didrank_providers"
+ok "/api/v1/did-rank/providers $code_didrank_providers"
+[[ "$code_didrank_acquisitions" =~ ^(200|503)$ ]] || fail "/api/v1/did-rank/acquisitions returned $code_didrank_acquisitions"
+ok "/api/v1/did-rank/acquisitions $code_didrank_acquisitions"
 
 # 31 / 04 §3.4：社区话题帖子数（公开只读，无 DB 时亦 200 + post_count）
 code_tagstats=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 3 "$BASE_URL/api/v1/community/stats/posts-by-tag?tag=smoke" || echo "000")
@@ -690,7 +699,7 @@ if [[ "$code_didrank" == "200" ]]; then
     lim=$(echo "$body" | jq -r '.limit | tostring // empty')
     per=$(echo "$body" | jq -r '.period // empty')
     [[ "$st" == "ok" ]] || fail "did-rank itineraries JSON .status expected ok, got \"$st\""
-    [[ "$lim" == "30" ]] || fail "did-rank itineraries JSON .limit expected 30, got \"$lim\""
+    [[ "$lim" == "30" ]] || fail "did-rank itineraries JSON .limit expected 100, got \"$lim\""
     [[ "$per" == "week" ]] || fail "did-rank itineraries JSON .period expected week, got \"$per\""
     since_type=$(echo "$body" | jq -r '.since | type')
     [[ "$since_type" == "string" ]] || fail "did-rank itineraries JSON .since for period=week must be string, got $since_type"
@@ -712,7 +721,7 @@ if [[ "$code_didrank_guides" == "200" ]]; then
     glim=$(echo "$gbody" | jq -r '.limit | tostring // empty')
     gper=$(echo "$gbody" | jq -r '.period // empty')
     [[ "$gst" == "ok" ]] || fail "did-rank guides JSON .status expected ok, got \"$gst\""
-    [[ "$glim" == "30" ]] || fail "did-rank guides JSON .limit expected 30, got \"$glim\""
+    [[ "$glim" == "30" ]] || fail "did-rank guides JSON .limit expected 100, got \"$glim\""
     [[ "$gper" == "week" ]] || fail "did-rank guides JSON .period expected week, got \"$gper\""
     grb=$(echo "$gbody" | jq -r '.rank_basis // empty')
     [[ "$grb" == "guide_reception_gross_total_then_completed_count" ]] || fail "did-rank guides JSON .rank_basis expected guide_reception_gross_total_then_completed_count, got \"$grb\""
@@ -736,7 +745,7 @@ if [[ "$code_didrank_travelers" == "200" ]]; then
     tlim=$(echo "$tbody" | jq -r '.limit | tostring // empty')
     tper=$(echo "$tbody" | jq -r '.period // empty')
     [[ "$tst" == "ok" ]] || fail "did-rank travelers JSON .status expected ok, got \"$tst\""
-    [[ "$tlim" == "30" ]] || fail "did-rank travelers JSON .limit expected 30, got \"$tlim\""
+    [[ "$tlim" == "30" ]] || fail "did-rank travelers JSON .limit expected 100, got \"$tlim\""
     [[ "$tper" == "week" ]] || fail "did-rank travelers JSON .period expected week, got \"$tper\""
     trb=$(echo "$tbody" | jq -r '.rank_basis // empty')
     [[ "$trb" == "tourist_completed_orders_in_window" ]] || fail "did-rank travelers JSON .rank_basis expected tourist_completed_orders_in_window, got \"$trb\""
@@ -744,6 +753,43 @@ if [[ "$code_didrank_travelers" == "200" ]]; then
     [[ "$ttype" == "array" ]] || fail "did-rank travelers JSON .travelers must be array, got $ttype"
     ok "did-rank travelers JSON shape (period=week, rank_basis, travelers[])"
   fi
+fi
+if [[ "$code_didrank_prize_pool" == "200" ]] && command -v jq >/dev/null 2>&1; then
+  poolbody=$(curl -sS --connect-timeout 3 "$BASE_URL/api/v1/did-rank/prize-pool" || true)
+  psrc=$(echo "$poolbody" | jq -r '.source // empty')
+  [[ "$psrc" =~ ^(env|governance_pool_db|default)$ ]] || fail "did-rank prize-pool JSON .source expected env|governance_pool_db|default, got \"$psrc\""
+  ptype=$(echo "$poolbody" | jq -r '.monthly_amount | type')
+  [[ "$ptype" == "number" ]] || fail "did-rank prize-pool JSON .monthly_amount must be number, got $ptype"
+  pill=$(echo "$poolbody" | jq -r '.illustrative | type')
+  [[ "$pill" == "boolean" ]] || fail "did-rank prize-pool JSON .illustrative must be boolean, got $pill"
+  ok "did-rank prize-pool JSON (.source, .monthly_amount, .illustrative)"
+fi
+if [[ "$code_didrank_providers" == "200" ]] && command -v jq >/dev/null 2>&1; then
+  provbody=$(curl -sS --connect-timeout 3 "$BASE_URL/api/v1/did-rank/providers?period=week" || true)
+  prb=$(echo "$provbody" | jq -r '.rank_basis // empty')
+  [[ "$prb" == "provider_fulfillment_orders_then_gross_then_published_listings_in_window" ]] || fail "did-rank providers .rank_basis expected provider_fulfillment_orders_then_gross_then_published_listings_in_window, got \"$prb\""
+  porf=$(echo "$provbody" | jq -r '.owner_role_filter // empty')
+  [[ "$porf" == "provider" ]] || fail "did-rank providers .owner_role_filter expected provider, got \"$porf\""
+  ptype=$(echo "$provbody" | jq -r '.providers | type')
+  [[ "$ptype" == "array" ]] || fail "did-rank providers JSON .providers must be array, got $ptype"
+  ok "did-rank providers JSON shape (period=week, rank_basis, providers[])"
+  provbody2=$(curl -sS --connect-timeout 3 "$BASE_URL/api/v1/did-rank/providers?period=week" || true)
+  plen=$(echo "$provbody2" | jq -r '.providers | length')
+  if [[ "$plen" =~ ^[1-9][0-9]*$ ]]; then
+    pdelta_ok=$(echo "$provbody2" | jq -r 'if (.providers | length) > 0 then (.providers | all(.rank_delta == null or (.rank_delta | type) == "number")) else true end')
+    [[ "$pdelta_ok" == "true" ]] || fail "did-rank providers 2nd fetch .rank_delta must be number or absent"
+    ok "did-rank providers 2nd fetch rank_delta field shape"
+  fi
+fi
+if [[ "$code_didrank_acquisitions" == "200" ]] && command -v jq >/dev/null 2>&1; then
+  acqbody=$(curl -sS --connect-timeout 3 "$BASE_URL/api/v1/did-rank/acquisitions?period=week" || true)
+  arb=$(echo "$acqbody" | jq -r '.rank_basis // empty')
+  [[ "$arb" == "acquisition_fulfillment_orders_then_gross_then_published_listings_in_window" ]] || fail "did-rank acquisitions .rank_basis expected acquisition_fulfillment_orders_then_gross_then_published_listings_in_window, got \"$arb\""
+  aorf=$(echo "$acqbody" | jq -r '.owner_role_filter // empty')
+  [[ "$aorf" == "region_steward" ]] || fail "did-rank acquisitions .owner_role_filter expected region_steward, got \"$aorf\""
+  atype=$(echo "$acqbody" | jq -r '.acquisitions | type')
+  [[ "$atype" == "array" ]] || fail "did-rank acquisitions JSON .acquisitions must be array, got $atype"
+  ok "did-rank acquisitions JSON shape (period=week, rank_basis, acquisitions[])"
 fi
 
 echo ""

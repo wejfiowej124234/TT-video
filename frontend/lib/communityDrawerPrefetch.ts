@@ -86,7 +86,7 @@ export function warmCommunityExploreFeed(queryClient: QueryClient): void {
         mode: "recommend",
         ...(pageParam ? { cursor: pageParam } : {}),
       }),
-    getNextPageParam: (last) => {
+    getNextPageParam: (last: Awaited<ReturnType<typeof getFeed>>) => {
       const parsed = parseCommunityFeedPageEnvelope(last);
       if (parsed.kind !== "ok") return undefined;
       const c = parsed.nextCursor;
@@ -127,7 +127,7 @@ export function warmCommunityMePosts(
     staleTime: COMMUNITY_ME_LIST_STALE_MS,
     initialPageParam: undefined as string | undefined,
     queryFn: async ({ pageParam }) => fetchCommunityMePostsPage(visibility, pageParam),
-    getNextPageParam: (last) => {
+    getNextPageParam: (last: Awaited<ReturnType<typeof fetchCommunityMePostsPage>>) => {
       const c = last.next_cursor?.trim();
       return c && c.length > 0 ? c : undefined;
     },

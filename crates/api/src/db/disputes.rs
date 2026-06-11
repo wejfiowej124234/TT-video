@@ -54,6 +54,56 @@ pub async fn insert_dispute(
     Ok(())
 }
 
+/// trust-gate E2E 夹具：ON CONFLICT DO UPDATE，re-seed 可覆盖 stale **resolved** 行回 **open**。
+pub async fn upsert_dispute_chain_off_fixture(
+    pool: &PgPool,
+    id: Uuid,
+    order_id: Uuid,
+    status: &str,
+    evidence_hashes: &JsonValue,
+    arbitrator_id: Option<Uuid>,
+    refund_ratio: Option<f64>,
+    slash_guide: Option<bool>,
+    resolved_at: Option<DateTime<Utc>>,
+    created_at: DateTime<Utc>,
+    updated_at: DateTime<Utc>,
+    arb_fee_paid: Option<&str>,
+    dispute_sequence: i32,
+) -> Result<(), sqlx::Error> {
+    sqlx::query(
+        r#"
+        INSERT INTO disputes (id, order_id, status, evidence_hashes, arbitrator_id, refund_ratio, slash_guide, resolved_at, created_at, updated_at, arb_fee_paid, dispute_sequence)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+        ON CONFLICT (id) DO UPDATE SET
+            order_id = EXCLUDED.order_id,
+            status = EXCLUDED.status,
+            evidence_hashes = EXCLUDED.evidence_hashes,
+            arbitrator_id = EXCLUDED.arbitrator_id,
+            refund_ratio = EXCLUDED.refund_ratio,
+            slash_guide = EXCLUDED.slash_guide,
+            resolved_at = EXCLUDED.resolved_at,
+            updated_at = EXCLUDED.updated_at,
+            arb_fee_paid = EXCLUDED.arb_fee_paid,
+            dispute_sequence = EXCLUDED.dispute_sequence
+        "#,
+    )
+    .bind(id)
+    .bind(order_id)
+    .bind(status)
+    .bind(evidence_hashes)
+    .bind(arbitrator_id)
+    .bind(refund_ratio)
+    .bind(slash_guide)
+    .bind(resolved_at)
+    .bind(created_at)
+    .bind(updated_at)
+    .bind(arb_fee_paid)
+    .bind(dispute_sequence)
+    .execute(pool)
+    .await?;
+    Ok(())
+}
+
 /// 更新争议（resolve 时）
 pub async fn update_dispute_resolved(
     pool: &PgPool,
@@ -340,7 +390,7 @@ pub async fn get_dispute_public_detail(
                    THEN d.evidence_hashes::jsonb
                  ELSE COALESCE(to_jsonb(d.evidence_hashes), '[]'::jsonb)
                END AS evidence_hashes,
-               d.arbitrator_id, d.refund_ratio, d.slash_guide,
+               d.arbitrator_id, CAST(d.refund_ratio AS double precision) AS refund_ratio, d.slash_guide,
                d.resolved_at, d.created_at, d.updated_at, d.arb_fee_paid, d.dispute_sequence,
                o.tourist_id AS order_tourist_id
         FROM disputes d

@@ -194,7 +194,7 @@ export function TourismGlobeCloudLayer({
   opacityScale?: number;
 }) {
   const cloudRef = useRef<Mesh>(null);
-  const map = useTexture(TRAVELTRUST_GLOBE_CLOUD_TEXTURE_PATH, undefined, undefined, "anonymous");
+  const map = useTexture(TRAVELTRUST_GLOBE_CLOUD_TEXTURE_PATH);
 
   useEffect(() => {
     map.colorSpace = THREE.SRGBColorSpace;

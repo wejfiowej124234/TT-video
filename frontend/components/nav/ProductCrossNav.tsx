@@ -16,6 +16,8 @@ export type ProductCrossNavCoreProps = {
   showGuides?: boolean;
   /** 首页页脚已在「技术」栏展示费路由时设为 true，避免底栏重复 */
   hideFeeRouterLinks?: boolean;
+  /** segment error 边界壳挂载 ProductCrossNav（机读锚点） */
+  errorBoundaryCrossNavMarker?: boolean;
 };
 
 export type ProductCrossNavProps = Omit<ProductCrossNavCoreProps, "navAriaLabel" | "t"> & {
@@ -40,9 +42,14 @@ export function ProductCrossNavCore({
   separatorClassName = "text-ink-300",
   showGuides = false,
   hideFeeRouterLinks = false,
+  errorBoundaryCrossNavMarker = false,
 }: ProductCrossNavCoreProps) {
   return (
-    <nav className={className} aria-label={navAriaLabel}>
+    <nav
+      className={className}
+      aria-label={navAriaLabel}
+      {...(errorBoundaryCrossNavMarker ? { "data-tt-error-boundary-cross-nav": "1" } : {})}
+    >
       <Link href="/" className={linkClassName}>
         {t("itin_nav_home")}
       </Link>

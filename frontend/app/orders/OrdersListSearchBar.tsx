@@ -10,7 +10,6 @@ export function OrdersListSearchBar({
   onSearchQueryChange,
   searchInputId,
   searchPending = false,
-  searchScopeLoadedOnly = false,
   embedded = false,
 }: {
   t: (key: string, vars?: Record<string, string | number>) => string;
@@ -18,8 +17,6 @@ export function OrdersListSearchBar({
   onSearchQueryChange: (next: string) => void;
   searchInputId: string;
   searchPending?: boolean;
-  /** 仍有分页时提示搜索仅覆盖已加载订单 */
-  searchScopeLoadedOnly?: boolean;
   embedded?: boolean;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -103,11 +100,6 @@ export function OrdersListSearchBar({
           </button>
         ) : null}
       </div>
-      {searchScopeLoadedOnly ? (
-        <p className={TT_ORDERS_LIST_L5.searchScopeHint} role="note" data-tt-orders-search-scope-hint="1">
-          {t("orders_list_search_scope_hint")}
-        </p>
-      ) : null}
       <p className="sr-only">{t("orders_list_search_shortcut_hint")}</p>
     </div>
   );

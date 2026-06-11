@@ -18,6 +18,9 @@ use uuid::Uuid;
 // ---------- P21 chain_off 单测补全：向导、me、订单生命周期 ----------
 #[tokio::test]
 async fn p21_guides_create_list_get_stake() {
+    let _env = crate::test_env_serial::lock();
+    let prev_pcs = std::env::var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE").ok();
+    std::env::set_var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE", "0");
     let mut store = ChainOffStore::default();
     let now = Utc::now();
     let user_id = Uuid::new_v4();
@@ -104,6 +107,10 @@ async fn p21_guides_create_list_get_stake() {
     };
     assert_eq!(get_json["guide"]["city"], "Hangzhou");
     assert_eq!(get_json["guide"]["stake_amount"], "100");
+    match prev_pcs {
+        Some(v) => std::env::set_var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE", v),
+        None => std::env::remove_var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE"),
+    }
 }
 
 #[tokio::test]
@@ -395,6 +402,8 @@ async fn p21_order_create_accept_mock_pay_confirm() {
             language_cert_url: None,
             guide_license_url: None,
             stake_amount: "100".to_string(),
+            hourly_rate: None,
+            avatar_url: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -515,6 +524,8 @@ async fn order_accept_forbidden_when_guide_pending_review() {
             language_cert_url: None,
             guide_license_url: None,
             stake_amount: "100".to_string(),
+            hourly_rate: None,
+            avatar_url: None,
             status: "pending".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -607,6 +618,8 @@ async fn order_accept_forbidden_when_trust_risk_high() {
             language_cert_url: None,
             guide_license_url: None,
             stake_amount: "100".to_string(),
+            hourly_rate: None,
+            avatar_url: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -785,6 +798,8 @@ async fn order_create_forbidden_when_tourist_kyc_pending() {
             language_cert_url: None,
             guide_license_url: None,
             stake_amount: "100".to_string(),
+            hourly_rate: None,
+            avatar_url: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -874,6 +889,8 @@ async fn order_create_forbidden_when_tourist_risk_high() {
             language_cert_url: None,
             guide_license_url: None,
             stake_amount: "100".to_string(),
+            hourly_rate: None,
+            avatar_url: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -1015,6 +1032,8 @@ async fn order_mock_pay_forbidden_when_tourist_becomes_restricted() {
             language_cert_url: None,
             guide_license_url: None,
             stake_amount: "100".to_string(),
+            hourly_rate: None,
+            avatar_url: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -1115,6 +1134,8 @@ async fn p21_order_cancel_created() {
             language_cert_url: None,
             guide_license_url: None,
             stake_amount: "100".to_string(),
+            hourly_rate: None,
+            avatar_url: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -1206,6 +1227,8 @@ async fn p21_get_me_trust_identity_and_risk_from_store() {
             language_cert_url: None,
             guide_license_url: None,
             stake_amount: "0".to_string(),
+            hourly_rate: None,
+            avatar_url: None,
             status: "pending".to_string(),
             rejection_codes: vec![],
             rejection_message: None,

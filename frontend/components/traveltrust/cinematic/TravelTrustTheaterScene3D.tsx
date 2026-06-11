@@ -132,7 +132,7 @@ export function TravelTrustTheaterScene3D() {
       data-tt-traveltrust-cinematic-non-globe-l5={TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID}
       animate={
         active >= 0.95 && !reduceMotion
-          ? { opacity: wrapOpacity, scale: TT_LEGACY_THEATER_3D_L5.activeScalePulse.scale }
+          ? { opacity: wrapOpacity, scale: [...TT_LEGACY_THEATER_3D_L5.activeScalePulse.scale] }
           : { opacity: wrapOpacity }
       }
       transition={

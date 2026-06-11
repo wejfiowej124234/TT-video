@@ -6,14 +6,14 @@ import { TT_TRAVELTRUST_SECTION_A11Y } from "./traveltrustSectionA11yIds";
 import { useTranslation } from "@/components/LocaleProvider";
 import { trackTravelTrustEvent } from "@/lib/analytics";
 import { TrustChipIcon } from "./TrustChipIcon";
-import { traveltrustSectionChildStagger, traveltrustSectionMotionProps } from "./traveltrustSectionMotion";
+import { traveltrustSectionChildStagger } from "./traveltrustSectionMotion";
 import {
   TT_SECTION_CONTENT_L5,
   TT_SECTION_KICKER_L5,
   TT_SECTION_SURFACE_L5,
   TT_TRUST_FACTS_L5,
   traveltrustSectionL5DataAttrs,
-} from "@/lib/traveltrustCinematicNonGlobeL5";
+} from "@/lib/traveltrust/l5";
 
 const FACTS = [
   {
@@ -50,20 +50,14 @@ export function TravelTrustTrustFactsStrip() {
   const { t } = useTranslation();
   const reduceMotion = useReducedMotion();
   const titleId = TT_TRAVELTRUST_SECTION_A11Y.trust.title;
-  const sectionMotion = traveltrustSectionMotionProps("trust", reduceMotion);
-
   return (
-    <motion.section
+    <section
       id="trust"
       className={TT_SECTION_SURFACE_L5.trust}
       aria-labelledby={titleId}
       data-tt-traveltrust-trust-facts="1"
       data-tt-traveltrust-trust-facts-l5="1"
       {...traveltrustSectionL5DataAttrs("trust")}
-      initial={sectionMotion.initial}
-      whileInView={sectionMotion.whileInView}
-      viewport={sectionMotion.viewport}
-      transition={sectionMotion.transition}
     >
       <div
         className={TT_SECTION_CONTENT_L5.bodyClass}
@@ -102,7 +96,7 @@ export function TravelTrustTrustFactsStrip() {
                 <motion.span
                   className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-ref-sun/20"
                   aria-hidden
-                  animate={{ opacity: TT_TRUST_FACTS_L5.cardBorderPulse.opacity }}
+                  animate={{ opacity: [...TT_TRUST_FACTS_L5.cardBorderPulse.opacity] }}
                   transition={{
                     duration: TT_TRUST_FACTS_L5.cardBorderPulse.duration,
                     repeat: TT_TRUST_FACTS_L5.cardBorderPulse.repeat,
@@ -117,7 +111,7 @@ export function TravelTrustTrustFactsStrip() {
                   animate={
                     reduceMotion
                       ? undefined
-                      : { boxShadow: TT_TRUST_FACTS_L5.iconGlowShadow }
+                      : { boxShadow: [...TT_TRUST_FACTS_L5.iconGlowShadow] }
                   }
                   transition={
                     reduceMotion
@@ -153,6 +147,6 @@ export function TravelTrustTrustFactsStrip() {
         {t("traveltrust_trust_facts_disclaimer")}
       </p>
       </div>
-    </motion.section>
+    </section>
   );
 }

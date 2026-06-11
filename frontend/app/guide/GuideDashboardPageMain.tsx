@@ -16,7 +16,9 @@ import { TT_ME_GUIDE_ROLE_BADGE } from "@/lib/me/meGuideRoleBadgeL5";
 import { userIsGuide } from "@/lib/meRoleDisplay";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import { traveltrustExperienceL5ShellDataAttrs } from "@/lib/traveltrustHomepageFunnelL5";
+import GuideWorkbenchInboxCard from "@/components/guide/GuideWorkbenchInboxCard";
 import type { GuideDashboardPageViewModel } from "./useGuideDashboardPage";
+import { useGuideWorkbenchInbox } from "./useGuideWorkbenchInbox";
 
 export function GuideDashboardPageMain(props: GuideDashboardPageViewModel) {
   const {
@@ -31,6 +33,15 @@ export function GuideDashboardPageMain(props: GuideDashboardPageViewModel) {
     loadMe,
     retryStatsCards,
   } = props;
+
+  const isGuideRole = user?.role === "guide";
+  const {
+    inbox: workbenchInbox,
+    nextOrderItem,
+    ordersLoading: inboxOrdersLoading,
+    ordersError: inboxOrdersError,
+    retryInbox,
+  } = useGuideWorkbenchInbox(isGuideRole, t);
 
   if (loading) return <MePageSkeleton t={t} ariaLabelKey="guide_dashboard_title" />;
 
@@ -120,6 +131,17 @@ export function GuideDashboardPageMain(props: GuideDashboardPageViewModel) {
             </div>
           ) : null}
         </header>
+
+        {isGuide ? (
+          <GuideWorkbenchInboxCard
+            t={t}
+            inbox={workbenchInbox}
+            ordersLoading={inboxOrdersLoading}
+            ordersError={inboxOrdersError}
+            onRetry={retryInbox}
+            nextOrderListItem={nextOrderItem}
+          />
+        ) : null}
 
         {user && trustSummary != null ? (
           <MeTrustSection
