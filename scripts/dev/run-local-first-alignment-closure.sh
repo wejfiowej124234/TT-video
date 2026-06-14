@@ -124,7 +124,12 @@ if [[ "$SKIP_EVIDENCE" == "0" ]]; then
   echo ""
   echo "== Phase 6: ADM-U01 formal archive =="
   REPO_ROOT="$ROOT" ADM_U01_RUN_ID="run_local_first_${STAMP}" \
+    ADM_U01_REQUIRE_PERSISTENT_HOST=1 \
+    ADM_U01_PROVISION_API_BASE="$API" \
+    ADM_U01_PROBE_API_BASE="$API" \
+    ADM_U01_NO_LOCAL_FE_FALLBACK=1 \
     bash "$ROOT/scripts/dev/record-adm-u01-staging-evidence.sh" 2>&1 | tee "$EVID/adm-u01.log"
+  grep -q 'TT_ADM_U01_EVIDENCE: PASS' "$EVID/adm-u01.log" || exit 2
 
   echo ""
   echo "== Phase 7: Deep Release Gate (G04 inline) =="
