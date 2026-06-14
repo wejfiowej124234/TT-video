@@ -142,11 +142,11 @@ pub enum EscrowChainStatus {
     Slashed,
 }
 
-/// escrowOf(bytes32) selector; status() selector（Solidity 4 字节）
+/// escrowOf(bytes32) · status() selectors（与 Sepolia EscrowFactory / Escrow 0.8.19 编译 ABI 对拍）
 #[allow(dead_code)]
-const SELECTOR_ESCROW_OF: &[u8] = &[0x87, 0x90, 0x6b, 0x1e];
+const SELECTOR_ESCROW_OF: &[u8] = &[0x83, 0xa2, 0x65, 0xa7];
 #[allow(dead_code)]
-const SELECTOR_STATUS: &[u8] = &[0x66, 0x01, 0xcb, 0x31];
+const SELECTOR_STATUS: &[u8] = &[0x20, 0x0d, 0x2e, 0xd2];
 
 /// 读链：eth_call factory.escrowOf(orderId) → escrow.status()，映射到 EscrowChainStatus
 #[allow(dead_code)]

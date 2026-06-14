@@ -124,10 +124,35 @@ fn push_eth_log_entry(log: &serde_json::Value, out: &mut Vec<EscrowLogEntry>) {
     ));
 }
 
-/// 从链上拉取一段区块的 Escrow 相关日志（eth_getLogs），与 09/01 §9 一致。
-/// address: factory 或 escrow；topics[0] 为事件签名 hash。
-/// 返回 `(block_number, log_index, block_hash, tx_hash, kind, data, topics, log_address)` 列表，调用方按序应用并更新 checkpoint。
-pub async fn fetch_escrow_logs(
+/// 单次 `eth_getLogs` 允许的最大 **inclusive** 区块跨度（默认 9999；freetier RPC 常见 10k 硬闸）。
+#[must_use]
+pub fn indexer_eth_get_logs_max_block_span() -> u64 {
+    const DEFAULT: u64 = 9_999;
+    std::env::var("INDEXER_ETH_GET_LOGS_MAX_BLOCK_SPAN")
+        .ok()
+        .and_then(|s| s.trim().parse::<u64>().ok())
+        .filter(|&n| n >= 1)
+        .unwrap_or(DEFAULT)
+}
+
+/// 将 inclusive `[from_block, to_block]` 切分为若干子区间，每段跨度 ≤ `max_span`。
+#[must_use]
+pub fn chunk_inclusive_block_ranges(from_block: u64, to_block: u64, max_span: u64) -> Vec<(u64, u64)> {
+    if from_block > to_block {
+        return Vec::new();
+    }
+    let max_span = max_span.max(1);
+    let mut out = Vec::new();
+    let mut start = from_block;
+    while start <= to_block {
+        let end = start.saturating_add(max_span - 1).min(to_block);
+        out.push((start, end));
+        start = end.saturating_add(1);
+    }
+    out
+}
+
+async fn fetch_escrow_logs_single_range(
     rpc_url: &str,
     factory_address: &str,
     from_block: u64,
@@ -172,8 +197,28 @@ pub async fn fetch_escrow_logs(
     Ok(out)
 }
 
-/// 从指定合约地址列表拉取日志（用于 Escrow 实例的 Released/Refunded/ResolutionExecuted）
-pub async fn fetch_logs_from_addresses(
+/// 从链上拉取一段区块的 Escrow 相关日志（eth_getLogs），与 09/01 §9 一致。
+/// address: factory 或 escrow；topics[0] 为事件签名 hash。
+/// 返回 `(block_number, log_index, block_hash, tx_hash, kind, data, topics, log_address)` 列表，调用方按序应用并更新 checkpoint。
+pub async fn fetch_escrow_logs(
+    rpc_url: &str,
+    factory_address: &str,
+    from_block: u64,
+    to_block: u64,
+) -> Result<Vec<EscrowLogEntry>, String> {
+    validate_inclusive_block_range_for_eth_get_logs(from_block, to_block)?;
+    let max_span = indexer_eth_get_logs_max_block_span();
+    let mut out = Vec::new();
+    for (fb, tb) in chunk_inclusive_block_ranges(from_block, to_block, max_span) {
+        let chunk =
+            fetch_escrow_logs_single_range(rpc_url, factory_address, fb, tb).await?;
+        out.extend(chunk);
+    }
+    out.sort_by_key(|t| (t.0, t.1));
+    Ok(out)
+}
+
+async fn fetch_logs_from_addresses_single_range(
     rpc_url: &str,
     addresses: &[String],
     from_block: u64,
@@ -225,6 +270,27 @@ pub async fn fetch_logs_from_addresses(
     Ok(out)
 }
 
+/// 从指定合约地址列表拉取日志（用于 Escrow 实例的 Released/Refunded/ResolutionExecuted）
+pub async fn fetch_logs_from_addresses(
+    rpc_url: &str,
+    addresses: &[String],
+    from_block: u64,
+    to_block: u64,
+) -> Result<Vec<EscrowLogEntry>, String> {
+    validate_inclusive_block_range_for_eth_get_logs(from_block, to_block)?;
+    if addresses.is_empty() {
+        return Ok(Vec::new());
+    }
+    let max_span = indexer_eth_get_logs_max_block_span();
+    let mut out = Vec::new();
+    for (fb, tb) in chunk_inclusive_block_ranges(from_block, to_block, max_span) {
+        let chunk = fetch_logs_from_addresses_single_range(rpc_url, addresses, fb, tb).await?;
+        out.extend(chunk);
+    }
+    out.sort_by_key(|t| (t.0, t.1));
+    Ok(out)
+}
+
 /// 将拉取到的一条 log 转为 IndexedChainEvent 并追加到 state，更新 checkpoint。
 /// 同一 `(chain_id, block_number, log_index)` 已存在时不重复 push（at-least-once 重扫 / 合并日志时幂等），仍推进 checkpoint。
 /// 返回 **`true`** 表示本条为新事件；**`false`** 表示重复，调用方应跳过重复投影/DB 双写（见 `internal::indexer_tick`）。
@@ -257,6 +323,29 @@ pub async fn append_event_and_advance_checkpoint(
     g.last_log_index = log_index;
     g.last_block_hash = block_hash.to_string();
     !dup
+}
+
+/// 成功拉取 `[from_block, to_block]` 后，若 checkpoint 仍落后于 `to_block`（空窗无 log），推进扫描水位以便下一轮 incremental tick。
+pub async fn advance_indexer_scan_watermark(
+    state: &IndexerStateHandle,
+    rpc_url: &str,
+    to_block: u64,
+) -> Result<(), String> {
+    let needs = {
+        let g = state.read().await;
+        to_block > g.last_block
+    };
+    if !needs {
+        return Ok(());
+    }
+    let hash = get_block_hash_at(rpc_url, to_block).await?;
+    let mut g = state.write().await;
+    if to_block > g.last_block {
+        g.last_block = to_block;
+        g.last_log_index = 0;
+        g.last_block_hash = hash;
+    }
+    Ok(())
 }
 
 /// Reorg 检测：若当前链上同一 block 的 hash 与已存 `last_block_hash` 不一致，说明可能发生 reorg，应暂停 tick 并人工处理（01 §9、110）。
@@ -294,11 +383,48 @@ pub async fn rewind_indexer_memory_state_after_reorg(
     }
 }
 
+/// 冷启动 **`last_block==0`** 时起扫下界（可选 **`INDEXER_BOOTSTRAP_FROM_BLOCK`**；② staging 避免从 genesis 单次 tick 扫全链）。
+#[must_use]
+pub fn indexer_bootstrap_from_block_floor() -> Option<u64> {
+    std::env::var("INDEXER_BOOTSTRAP_FROM_BLOCK")
+        .ok()
+        .and_then(|s| s.trim().parse::<u64>().ok())
+}
+
+/// 单次 **`indexer-tick`** HTTP 请求内最多扫描的 inclusive 区块跨度（可选 **`INDEXER_TICK_MAX_BLOCKS_PER_SCAN`**）。
+#[must_use]
+pub fn indexer_tick_max_blocks_per_scan() -> Option<u64> {
+    std::env::var("INDEXER_TICK_MAX_BLOCKS_PER_SCAN")
+        .ok()
+        .and_then(|s| s.trim().parse::<u64>().ok())
+        .filter(|&n| n >= 1)
+}
+
+/// 将 **`to_block`** 截断为 **`from_block + max_blocks - 1`**（不超过 **`finalized_to`**）。
+#[must_use]
+pub fn cap_tick_scan_to_block(from_block: u64, finalized_to: u64, max_blocks: Option<u64>) -> u64 {
+    let Some(max) = max_blocks else {
+        return finalized_to;
+    };
+    if from_block > finalized_to {
+        return finalized_to;
+    }
+    from_block
+        .saturating_add(max.saturating_sub(1))
+        .min(finalized_to)
+}
+
 /// **`indexer_tick`** 每轮（含 **`reorg_detected` → `perform_indexer_reorg_rewind_execute` → `continue`** 后）用于 **`eth_getLogs`** 的 **`fromBlock`**：**`last_block + 1`**（**B-114-5 / TT-B114-5**）。
 /// 与 **`internal::indexer_tick`** 读锁内计算 **同源**，reorg 内存/DB 删尾后首轮回合起扫与 checkpoint **对齐**（不断档、不重扫已确认尾块）。
 #[must_use]
 pub fn indexer_tick_scan_from_block_lower_bound(state: &IndexerState) -> u64 {
-    state.last_block + 1
+    let from = state.last_block.saturating_add(1);
+    if state.last_block == 0 {
+        if let Some(floor) = indexer_bootstrap_from_block_floor() {
+            return from.max(floor);
+        }
+    }
+    from
 }
 
 /// 索引器每轮 `eth_getLogs` 的区块上界：`chain_tip - max(1, finality_n)`（**110 §3.3**，与 `FINALITY_N` 环境变量一致）。
@@ -1030,7 +1156,8 @@ fn parse_erc20_transfer_topics_data(
 #[cfg(test)]
 mod tests {
     use super::{
-        append_event_and_advance_checkpoint, filter_escrow_log_entries_to_inclusive_block_range,
+        append_event_and_advance_checkpoint, cap_tick_scan_to_block, chunk_inclusive_block_ranges,
+        filter_escrow_log_entries_to_inclusive_block_range,
         get_eth_chain_id, indexer_finalized_upper_bound, new_indexer_state,
         parse_region_share_snapshot_line, reorg_detected, region_share_snapshot_line_topic0_hex,
         rewind_indexer_memory_state_after_reorg, validate_inclusive_block_range_for_eth_get_logs,
@@ -1107,6 +1234,33 @@ mod tests {
     #[test]
     fn reorg_detected_case_insensitive_match() {
         assert!(!reorg_detected("0xAbC", "0xabc"));
+    }
+
+    #[test]
+    fn cap_tick_scan_to_block_limits_span() {
+        assert_eq!(
+            cap_tick_scan_to_block(100, 500_000, Some(9_999)),
+            10_098
+        );
+        assert_eq!(cap_tick_scan_to_block(100, 200, Some(9_999)), 200);
+        assert_eq!(cap_tick_scan_to_block(100, 500_000, None), 500_000);
+    }
+
+    #[test]
+    fn chunk_inclusive_block_ranges_splits_over_max_span() {
+        let chunks = chunk_inclusive_block_ranges(1, 25_000, 9_999);
+        assert!(!chunks.is_empty());
+        assert_eq!(chunks.first().copied(), Some((1, 9_999)));
+        assert_eq!(chunks.last().copied(), Some((19_999, 25_000)));
+        for w in &chunks {
+            assert!(w.1 >= w.0);
+            assert!(w.1 - w.0 + 1 <= 9_999);
+        }
+    }
+
+    #[test]
+    fn chunk_inclusive_block_ranges_empty_when_from_gt_to() {
+        assert!(chunk_inclusive_block_ranges(10, 9, 100).is_empty());
     }
 
     /// **B-114-2**：`from_block > to_block` 拒收，避免无效 `eth_getLogs` 与空结果混淆。
