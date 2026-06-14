@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useId } from "react";
 
 import { AdminCommunityListHeaderAside } from "@/components/admin/AdminCommunityListHeaderAside";
+import { AdminCommunityRelatedLinks } from "@/components/admin/AdminCommunityRelatedLinks";
 import { AdminSuccessBanner } from "@/components/admin/AdminSuccessBanner";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
 import { AdminAlertError } from "@/components/admin/AdminAlertError";
