@@ -179,6 +179,10 @@ const reconStatus = [
 ];
 
 const metaConfigOk = !!mc.governance_votes_token_address && !!mc.staking_address;
+const allDimsAligned = dimensions.every((d) => d.aligned);
+const allReconClosed = reconStatus.every((r) => r.status === 'CLOSED');
+const reconciled = ssotClean && allDimsAligned && allReconClosed && headSha === stagingSha;
+
 const flbDone = {
   'FLB-001': selectorAligned && ssotClean,
   'FLB-002': migrationsUntracked.length === 0,
@@ -188,7 +192,7 @@ const flbDone = {
   'FLB-006': headSha === stagingSha,
   'FLB-007': headSha === stagingSha,
   'FLB-008': ssotClean,
-  'FLB-009': false,
+  'FLB-009': reconciled,
   'FLB-010': headSha === stagingSha && selectorAligned,
 };
 const flbStatus = Object.entries(flbDone).map(([id, done]) => ({
@@ -205,10 +209,6 @@ if (!selectorAligned) blockers.push({ id: 'BLK-IDX', severity: 'P0', note: 'TN-P
 if (migrationsUntracked.length > 0)
   blockers.push({ id: 'BLK-MIG', severity: 'P0', note: `${migrationsUntracked.length} migrations not in git (FLB-002)` });
 if (headSha !== stagingSha) blockers.push({ id: 'BLK-DEPLOY', severity: 'P1', note: 'HEAD≠Staging SHA' });
-
-const allDimsAligned = dimensions.every((d) => d.aligned);
-const allReconClosed = reconStatus.every((r) => r.status === 'CLOSED');
-const reconciled = ssotClean && allDimsAligned && allReconClosed && headSha === stagingSha;
 
 const verdict = reconciled ? 'RECONCILED' : 'NOT_RECONCILED';
 const phase3Gate = reconciled
