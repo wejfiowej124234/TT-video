@@ -28,7 +28,7 @@ function sh(cmd, a) {
 
 const headSha = sh('git', ['rev-parse', 'HEAD']).stdout.trim();
 const porcelain = sh('git', ['status', '--porcelain']).stdout.split('\n').filter(Boolean);
-const ssotPath = (l) => l.slice(3).trim().split(' -> ').pop();
+const ssotPath = (l) => l.slice(3).trim().replace(/^"|"$/g, '').split(' -> ').pop();
 
 const CLOSURE_PATHS = [
   'scripts/dev/run-phase2-final-single-ssot-reconciliation.sh',
@@ -41,7 +41,7 @@ const CLOSURE_PATHS = [
 ];
 
 const DEPLOY_SSOT = ['crates/', 'frontend/', 'contracts/', 'registry/', 'deploy/'];
-const EXEMPT_PREFIXES = ['docs/', 'evidence/', '.cursor/'];
+const EXEMPT_PREFIXES = ['docs/', 'evidence/', '.cursor/', 'frontend/evidence/'];
 
 const closureDirty = CLOSURE_PATHS.filter((p) =>
   porcelain.some((l) => {
