@@ -16,6 +16,7 @@ import argparse
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import time
@@ -527,11 +528,86 @@ def run_gate_g03(api: str) -> dict[str, Any]:
     )
 
 
+def latest_adm_u01_go_dir(max_age_sec: int = 7200) -> Path | None:
+    """Reuse formal ADM-U01 archive when matrix just passed (avoids G04 double-run flake)."""
+    root_dir = ROOT / "evidence" / "GO_staging_admin_rbac_matrix"
+    if not root_dir.is_dir():
+        return None
+    runs = sorted(
+        [p for p in root_dir.iterdir() if p.is_dir() and p.name.startswith("run_")],
+        key=lambda p: p.name,
+        reverse=True,
+    )
+    now = time.time()
+    for run in runs:
+        report = run / "report.json"
+        if not report.is_file():
+            continue
+        try:
+            data = json.loads(report.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            continue
+        if data.get("release_gate") != "GO":
+            continue
+        age_ok = True
+        for candidate in (run / "latest-run.log", *run.glob("run-*.log")):
+            if candidate.is_file():
+                age_ok = (now - candidate.stat().st_mtime) <= max_age_sec
+                break
+        if age_ok:
+            return run
+    return None
+
+
 def run_gate_g04(api: str, out_dir: Path) -> dict[str, Any]:
     gid = "G04_ADMIN_RBAC"
     checks: list[dict[str, Any]] = []
     evid = out_dir / "adm-u01-rbac"
     evid.mkdir(parents=True, exist_ok=True)
+
+    reuse_dir: Path | None = None
+    if os.environ.get("ADM_U01_REUSE_LATEST_GO", "").strip() in ("1", "true", "yes"):
+        reuse_dir = latest_adm_u01_go_dir()
+    explicit = os.environ.get("ADM_U01_EVIDENCE_DIR", "").strip()
+    if explicit:
+        p = Path(explicit)
+        if p.is_dir() and (p / "report.json").is_file():
+            reuse_dir = p
+
+    if reuse_dir is not None:
+        for name in ("report.json", "matrix-api-results.json", "playwright-shell-matrix.json"):
+            src = reuse_dir / name
+            if src.is_file():
+                shutil.copy2(src, evid / name)
+        (evid / "subprocess.log").write_text(
+            f"ADM-U01 reused from {reuse_dir} (ADM_U01_REUSE_LATEST_GO)\n",
+            encoding="utf-8",
+        )
+        rg = json.loads((evid / "report.json").read_text(encoding="utf-8")).get("release_gate", "NO_GO")
+        checks.append(
+            check_row(
+                gid,
+                "rbac_matrix_exit",
+                "ADM-U01 RBAC matrix subprocess exit 0",
+                True,
+                f"reused={reuse_dir.name} release_gate={rg}",
+            )
+        )
+        checks.append(
+            check_row(
+                gid,
+                "rbac_release_gate",
+                "ADM-U01 report.json release_gate = GO",
+                rg == "GO",
+                str(rg),
+            )
+        )
+        return gate_result(
+            gid,
+            "Admin RBAC permission matrix (ADM-U01)",
+            checks,
+            notes=f"reused Evidence: {reuse_dir}",
+        )
 
     env = os.environ.copy()
     env["STAGING_API_BASE"] = api

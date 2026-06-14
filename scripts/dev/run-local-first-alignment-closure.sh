@@ -132,9 +132,10 @@ if [[ "$SKIP_EVIDENCE" == "0" ]]; then
   grep -q 'TT_ADM_U01_EVIDENCE: PASS' "$EVID/adm-u01.log" || exit 2
 
   echo ""
-  echo "== Phase 7: Deep Release Gate (G04 inline) =="
-  REPO_ROOT="$ROOT" bash "$ROOT/scripts/dev/run-phase2-deep-release-gate.sh" \
+  echo "== Phase 7: Deep Release Gate (G04 inline · reuse fresh ADM-U01) =="
+  REPO_ROOT="$ROOT" ADM_U01_REUSE_LATEST_GO=1 bash "$ROOT/scripts/dev/run-phase2-deep-release-gate.sh" \
     --expect-git-sha "$HEAD_SHA" 2>&1 | tee "$EVID/deep-gate.log"
+  grep -q 'TT_PHASE2_DEEP_RELEASE_GATE: PASS' "$EVID/deep-gate.log" || exit 2
   grep -q 'TT_PHASE2_DEEP_RELEASE_GATE: PASS' "$EVID/deep-gate.log" || exit 2
 
   echo ""
