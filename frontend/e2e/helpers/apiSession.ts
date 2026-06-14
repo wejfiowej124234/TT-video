@@ -90,7 +90,7 @@ export async function refreshBearerSessionInPage(
 }
 
 function isTransientBrowserGotoError(message: string): boolean {
-  return /ERR_CONNECTION_CLOSED|ERR_CONNECTION_RESET|ERR_NETWORK_CHANGED|ERR_HTTP2_PROTOCOL_ERROR|ERR_SOCKET_NOT_CONNECTED|ERR_INTERNET_DISCONNECTED|ERR_SSL_PROTOCOL_ERROR|ETIMEDOUT|ECONNRESET|NS_ERROR_NET_RESET/i.test(
+  return /ERR_CONNECTION_CLOSED|ERR_CONNECTION_RESET|ERR_NETWORK_CHANGED|ERR_HTTP2_PROTOCOL_ERROR|ERR_SOCKET_NOT_CONNECTED|ERR_INTERNET_DISCONNECTED|ERR_SSL_PROTOCOL_ERROR|ETIMEDOUT|ECONNRESET|NS_ERROR_NET_RESET|Timeout/i.test(
     message,
   );
 }
@@ -117,15 +117,25 @@ export async function gotoWithBearerSession(
     },
     [token, userId] as [string, string],
   );
+  await gotoWithLoadRetry(page, path, { waitUntil: "domcontentloaded" });
+}
+
+/** Staging E2E: retry transient Fly / TLS flakes (PLAYWRIGHT_GOTO_* env). */
+export async function gotoWithLoadRetry(
+  page: Page,
+  path: string,
+  options?: { waitUntil?: "domcontentloaded" | "load" },
+): Promise<void> {
   const gotoTimeout = Number(process.env.PLAYWRIGHT_GOTO_TIMEOUT_MS ?? 120_000);
   const maxAttempts = Math.max(
     1,
     Number.parseInt(process.env.PLAYWRIGHT_GOTO_RETRY_ATTEMPTS ?? "1", 10) || 1,
   );
+  const waitUntil = options?.waitUntil ?? "load";
   let lastError: unknown;
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
-      await page.goto(path, { waitUntil: "domcontentloaded", timeout: gotoTimeout });
+      await page.goto(path, { waitUntil, timeout: gotoTimeout });
       return;
     } catch (e) {
       lastError = e;

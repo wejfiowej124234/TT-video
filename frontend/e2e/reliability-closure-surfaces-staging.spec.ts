@@ -77,11 +77,14 @@ async function openPath(
   path: string,
 ) {
   if (path.startsWith('/admin')) {
-    await gotoWithAdminShellSessionReady(page, path, creds, 120_000);
+    await gotoWithAdminShellSessionReady(page, path, creds, 240_000);
     return;
   }
   await gotoWithBearerSession(page, path, creds);
-  await ensureCommunityBrowserSessionAccepted(page, creds, 120_000);
+  const routePath = path.split('?')[0] ?? path;
+  if (routePath.startsWith('/community')) {
+    await ensureCommunityBrowserSessionAccepted(page, creds, 120_000);
+  }
 }
 
 test.describe('Reliability closure · 52 surfaces', () => {

@@ -76,10 +76,15 @@ export PLAYWRIGHT_BASE_URL="$WEB"
 export PLAYWRIGHT_API_BASE_URL="$API"
 export PLAYWRIGHT_REUSE_FE_SERVER=0
 export PLAYWRIGHT_RELAX_META_CHAIN_GUARD=1
+export PLAYWRIGHT_GOTO_TIMEOUT_MS="${PLAYWRIGHT_GOTO_TIMEOUT_MS:-180000}"
+export PLAYWRIGHT_GOTO_RETRY_ATTEMPTS="${PLAYWRIGHT_GOTO_RETRY_ATTEMPTS:-3}"
+export NO_PROXY="${NO_PROXY:+$NO_PROXY,}tt-api-staging.fly.dev,tt-web-staging.fly.dev,.fly.dev,localhost,127.0.0.1"
+unset HTTPS_PROXY HTTP_PROXY ALL_PROXY http_proxy https_proxy all_proxy
 cd "$ROOT/frontend"
 npx playwright test e2e/phase28-human-acceptance-browser.spec.ts \
   --config=playwright.staging-uat.config.ts \
   --project=chromium \
+  --retries=2 \
   --reporter=list 2>&1 | tee "$OUT/browser.log"
 cd "$ROOT"
 

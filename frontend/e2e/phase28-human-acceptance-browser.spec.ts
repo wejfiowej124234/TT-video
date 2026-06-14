@@ -17,6 +17,7 @@ import {
   defaultApiBase,
   ensureCommunityBrowserSessionAccepted,
   gotoWithBearerSession,
+  gotoWithLoadRetry,
 } from "./helpers/apiSession";
 import {
   adminAppPageShell,
@@ -263,21 +264,21 @@ async function probeAuthenticatedPage(
   });
 
   test("旅行者 · 注册登录与市场发现", async ({ page }) => {
-    await page.goto("/auth/login");
+    await gotoWithLoadRetry(page, "/auth/login");
     await expect(page.getByRole("textbox", { name: /email|邮箱/i })).toBeVisible();
     await expect(page.getByRole("textbox", { name: /password|密码/i })).toBeVisible();
     await expect(page.getByRole("button", { name: /sign in|登录|log in/i })).toBeVisible();
     addFlow("旅行者", "登录表单", "/auth/login", "PASS", "email+password+submit visible");
 
-    await page.goto("/auth/register");
+    await gotoWithLoadRetry(page, "/auth/register");
     await expect(page.getByRole("main")).toBeVisible();
     addFlow("旅行者", "注册", "/auth/register", "PASS");
 
-    await page.goto("/");
+    await gotoWithLoadRetry(page, "/");
     await assertNoErrorBoundary(page, "旅行者", "/");
     addFlow("旅行者", "首页", "/", "PASS");
 
-    await page.goto("/market");
+    await gotoWithLoadRetry(page, "/market");
     await assertNoErrorBoundary(page, "旅行者", "/market");
     const search = page.getByRole("searchbox").or(page.getByPlaceholder(/search|搜索/i));
     if ((await search.count()) === 0) {
@@ -310,15 +311,15 @@ async function probeAuthenticatedPage(
   });
 
   test("商家 · 入驻链入口", async ({ page }) => {
-    await page.goto("/auth/register?role=provider");
+    await gotoWithLoadRetry(page, "/auth/register?role=provider");
     await assertNoErrorBoundary(page, "商家", "/auth/register?role=provider");
     addFlow("商家", "注册入口", "provider register step0", "PASS");
 
-    await page.goto("/provider/register");
+    await gotoWithLoadRetry(page, "/provider/register");
     await assertNoErrorBoundary(page, "商家", "/provider/register");
     addFlow("商家", "入驻表单", "/provider/register", "PASS");
 
-    await page.goto("/market/provider");
+    await gotoWithLoadRetry(page, "/market/provider");
     await assertNoErrorBoundary(page, "商家", "/market/provider");
     addFlow("商家", "橱窗", "/market/provider", "PASS");
 
@@ -357,7 +358,7 @@ async function probeAuthenticatedPage(
   });
 
   test("治理 · 提案与委托", async ({ page }) => {
-    await page.goto("/governance");
+    await gotoWithLoadRetry(page, "/governance");
     await assertNoErrorBoundary(page, "治理", "/governance");
     addFlow("治理", "治理首页", "/governance", "PASS");
 
@@ -380,7 +381,7 @@ async function probeAuthenticatedPage(
         apiFailures.push(`${res.status()} ${u.split("/api/v1/")[1] ?? u}`);
       }
     });
-    await page.goto("/community");
+    await gotoWithLoadRetry(page, "/community");
     await page.waitForTimeout(3000);
     const hard404 = apiFailures.filter((x) => x.startsWith("404"));
     if (hard404.length > 0) {

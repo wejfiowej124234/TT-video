@@ -91,12 +91,61 @@ def http_json(
     except urllib.error.HTTPError as e:
         code = e.code
         raw = e.read().decode("utf-8", errors="replace")
-    except urllib.error.URLError as e:
-        return 0, str(e.reason)
+    except Exception:
+        return _http_json_curl_fallback(method, url, token=token, body=body, timeout=timeout)
     try:
         return code, json.loads(raw) if raw else {}
     except json.JSONDecodeError:
         return code, raw
+
+
+def _http_json_curl_fallback(
+    method: str,
+    url: str,
+    *,
+    token: str | None = None,
+    body: dict | None = None,
+    timeout: int = 45,
+) -> tuple[int, dict | list | str]:
+    curl_code, curl_raw = _http_json_via_curl(method, url, token=token, body=body, timeout=timeout)
+    if curl_code:
+        try:
+            return curl_code, json.loads(curl_raw) if curl_raw else {}
+        except json.JSONDecodeError:
+            return curl_code, curl_raw
+    return 0, "urllib+curl failed"
+
+
+def _http_json_via_curl(
+    method: str,
+    url: str,
+    *,
+    token: str | None = None,
+    body: dict | None = None,
+    timeout: int = 45,
+) -> tuple[int, str]:
+    cmd = ["curl", "--noproxy", "*", "-sS", "--max-time", str(timeout), "-w", "\n%{http_code}", "-X", method.upper()]
+    if token:
+        cmd += ["-H", f"Authorization: Bearer {token}"]
+    cmd += ["-H", "Accept: application/json"]
+    if body is not None:
+        cmd += ["-H", "Content-Type: application/json", "-d", json.dumps(body)]
+    cmd.append(url)
+    try:
+        proc = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=timeout + 10,
+        )
+        out = (proc.stdout or "").rsplit("\n", 1)
+        if len(out) == 2 and out[1].strip().isdigit():
+            return int(out[1].strip()), out[0]
+    except (subprocess.SubprocessError, OSError, ValueError):
+        pass
+    return 0, ""
 
 
 def http_code(method: str, url: str, **kwargs: Any) -> int:
@@ -597,6 +646,8 @@ def run_gate_g05(env: dict[str, str], out_dir: Path) -> dict[str, Any]:
             env={**os.environ, "DATABASE_URL": db_url},
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             timeout=120,
         )
         (out_dir / "sqlx-migrate-info.log").write_text(proc.stdout + proc.stderr, encoding="utf-8")
@@ -700,6 +751,8 @@ def run_gate_g07(api: str, web: str, env: dict[str, str], build_env: Path) -> di
             [sys.executable, str(ROOT / "scripts" / "dev" / "check_r003_staging_env_ready.py"), "--env-file", str(r003_env)],
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             timeout=60,
         )
         checks.append(
@@ -727,14 +780,52 @@ def run_gate_g07(api: str, web: str, env: dict[str, str], build_env: Path) -> di
             "Access-Control-Request-Method": "GET",
         },
     )
+    cors_ok = False
+    cors_detail = ""
     try:
         with urllib.request.urlopen(cors_req, timeout=30) as resp:
             allow = resp.headers.get("Access-Control-Allow-Origin", "")
-        checks.append(
-            check_row(gid, "cors_meta", f"CORS allows {web} on /meta", web in allow or allow == "*", allow or "(missing)")
-        )
+            cors_ok = web in allow or allow == "*"
+            cors_detail = allow or "(missing)"
     except Exception as e:
-        checks.append(check_row(gid, "cors_meta", "CORS preflight /meta", False, str(e)))
+        try:
+            null_out = os.devnull
+            proc = subprocess.run(
+                [
+                    "curl",
+                    "--noproxy",
+                    "*",
+                    "-sS",
+                    "-D",
+                    "-",
+                    "-o",
+                    null_out,
+                    "--max-time",
+                    "30",
+                    "-X",
+                    "OPTIONS",
+                    "-H",
+                    f"Origin: {web}",
+                    "-H",
+                    "Access-Control-Request-Method: GET",
+                    f"{api}/meta",
+                ],
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=40,
+            )
+            hdr = proc.stdout or ""
+            allow = ""
+            for line in hdr.splitlines():
+                if line.lower().startswith("access-control-allow-origin:"):
+                    allow = line.split(":", 1)[1].strip()
+            cors_ok = web in allow or allow == "*"
+            cors_detail = allow or str(e)
+        except Exception as e2:
+            cors_detail = f"{e}; curl: {e2}"
+    checks.append(check_row(gid, "cors_meta", f"CORS allows {web} on /meta", cors_ok, cors_detail))
 
     be_api = be_chain = ""
     if build_env.is_file():
