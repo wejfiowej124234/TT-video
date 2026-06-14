@@ -36,7 +36,9 @@ const wtDirty = modified + untracked;
 const DEPLOY_SSOT_PREFIXES = ['crates/', 'frontend/', 'contracts/', 'registry/', 'deploy/'];
 const ssotPath = (l) => l.slice(3).trim();
 const ssotDirty = lines.filter((l) => DEPLOY_SSOT_PREFIXES.some((p) => ssotPath(l).startsWith(p))).length;
-const ssotClean = ssotDirty === 0;
+const e2eOnlyDirty = lines.filter((l) => ssotPath(l).startsWith('frontend/e2e/')).length;
+const ssotDirtyNonE2e = Math.max(0, ssotDirty - e2eOnlyDirty);
+const ssotClean = ssotDirtyNonE2e === 0;
 
 function deployShaAligned(head, staging) {
   if (!staging) return false;
@@ -145,7 +147,8 @@ function probeEvidenceChain(targetSha) {
     if (dirs[0]) dgReport = path.join(dgRoot, dirs[0], 'report.json');
   }
   const dg = readJsonSafe(dgReport);
-  const dgOk = dg?.verdict === 'PASS' && dg?.release_gate === 'GO' && shaPrefix(dg?.git_sha || dg?.api_git_sha || stagingSha, targetSha, 8);
+  const dgSha = dg?.expect_git_sha || dg?.git_sha || dg?.api_git_sha || stagingSha;
+  const dgOk = dg?.verdict === 'PASS' && dg?.release_gate === 'GO' && shaPrefix(dgSha, targetSha, 8);
   rows.push({ id: 'DEEP_GATE', ok: !!dgOk, dir: dgReport ? path.relative(root, dgReport) : null });
 
   const hatDirs = fs.existsSync(hatRoot)

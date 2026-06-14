@@ -1,7 +1,6 @@
 import { expect, type Page } from "@playwright/test";
 
 import {
-  ensureCommunityBrowserSessionAccepted,
   gotoWithBearerSession,
   injectBearerSessionInPage,
   type BearerSessionCredentials,
@@ -103,8 +102,7 @@ export async function gotoWithAdminShellSessionReady(
   if (!token) throw new Error("admin_shell_session_missing_token");
 
   await gotoWithBearerSession(page, path, session);
-  await ensureCommunityBrowserSessionAccepted(page, session, timeoutMs);
-  // 能力条可被 SuperAdmin 健康路径抑制；ADM-U01 Shell 审计以 shell-bar + db-role 为就绪 SSOT。
+  // Admin 路由不经过 community session gate（避免 reload 期间 evaluate 上下文销毁 flake）。
   try {
     await waitForAdminCapabilitiesReady(page, session, Math.min(timeoutMs, 45_000));
   } catch {

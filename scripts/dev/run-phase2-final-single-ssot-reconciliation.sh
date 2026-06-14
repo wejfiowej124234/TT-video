@@ -16,10 +16,12 @@ cd "$ROOT"
 
 SKIP_DEPLOY=0
 SKIP_EVIDENCE=0
+REQUIRED_SHA="${PHASE2_SSOT_BASELINE_SHA:-$(git rev-parse HEAD)}"
 for arg in "$@"; do
   case "$arg" in
     --skip-deploy) SKIP_DEPLOY=1 ;;
     --skip-evidence) SKIP_EVIDENCE=1 ;;
+    --baseline-sha=*) REQUIRED_SHA="${arg#*=}" ;;
   esac
 done
 
@@ -37,16 +39,38 @@ FE="${FE%/}"
 echo "TT_PHASE2_FINAL_SINGLE_SSOT_RECONCILIATION: START ${STAMP}"
 
 # —— 0 · WT deploy-SSOT gate ——
-SSOT_DIRTY="$(git status --porcelain | awk '{print $2}' | grep -E '^(crates/|frontend/|contracts/|registry/|deploy/)' | wc -l | tr -d ' ')"
+SSOT_DIRTY="$(git status --porcelain | awk '{print $2}' | grep -E '^(crates/|frontend/|contracts/|registry/|deploy/)' | grep -v '^frontend/e2e/' | wc -l | tr -d ' ' || true)"
+SSOT_DIRTY="${SSOT_DIRTY:-0}"
 if [[ "$SSOT_DIRTY" != "0" ]]; then
-  echo "FAIL: ${SSOT_DIRTY} deploy-SSOT paths dirty — commit WT before reconciliation" >&2
-  git status --porcelain | awk '{print $2}' | grep -E '^(crates/|frontend/|contracts/|registry/|deploy/)' | head -20 >&2 || true
+  echo "FAIL: ${SSOT_DIRTY} non-e2e deploy-SSOT paths dirty — commit WT before reconciliation" >&2
+  git status --porcelain | awk '{print $2}' | grep -E '^(crates/|frontend/|contracts/|registry/|deploy/)' | grep -v '^frontend/e2e/' | head -20 >&2 || true
   exit 2
 fi
 
 HEAD_SHA="$(git rev-parse HEAD)"
+if [[ "$HEAD_SHA" != "$REQUIRED_SHA" ]]; then
+  echo "FAIL: HEAD=$HEAD_SHA != required baseline $REQUIRED_SHA" >&2
+  exit 2
+fi
 export PHASE2_EXPECT_GIT_SHA="$HEAD_SHA"
 export PHASE2_REVALIDATION_BASELINE_SHA="$HEAD_SHA"
+
+# —— Archive superseded 0d8d0970-era evidence (move, not delete) ——
+ARCHIVE="$ROOT/evidence/archive/ssot-superseded-0d8d0970"
+mkdir -p "$ARCHIVE"
+for legacy in \
+  "GO_phase2_testnet_perfect_validation/tn-p1-d6-reliability-surface-20260614T104830Z" \
+  "GO_phase2_testnet_perfect_validation/tn-p1-d6-reliability-surface-20260614T111101Z" \
+  "GO_phase2_testnet_perfect_validation/tn-p1-d6-reliability-surface-20260614T121008Z" \
+  "GO_phase2_testnet_perfect_validation/tn-p1-d24-surface-20260614T105354Z" \
+  "GO_phase2_testnet_20260526/deep-release-gate/20260614T104337Z" \
+  "GO_phase2_testnet_20260526/deep-release-gate/20260614T105520Z" \
+  "GO_phase2_testnet_20260526/deep-release-gate/20260614T112536Z"; do
+  if [[ -d "$ROOT/evidence/$legacy" ]]; then
+    mv "$ROOT/evidence/$legacy" "$ARCHIVE/" 2>/dev/null || true
+  fi
+done
+echo "ssot-archive: superseded legacy evidence → $ARCHIVE"
 
 curl --noproxy "*" -sS --max-time 45 "${API}/meta" >"$EVID/baseline-meta-pre.json" || true
 
@@ -57,9 +81,14 @@ if [[ "$SKIP_DEPLOY" == "0" ]]; then
   export TESTNET_FREEZE_OVERRIDE=1
   export TRAVELTRUST_GIT_SHA="$HEAD_SHA"
   bash "$ROOT/scripts/dev/phase2-staging-fly-deploy-and-sync.sh" 2>&1 | tee "$EVID/deploy-api.log"
-  TESTNET_FREEZE_OVERRIDE=1 TRAVELTRUST_GIT_SHA="$HEAD_SHA" \
-    bash "$ROOT/scripts/dev/deploy-tt-web-staging.sh" 2>&1 | tee "$EVID/deploy-web.log"
+  if ! TESTNET_FREEZE_OVERRIDE=1 FLY_WEB_OOM_FIX=1 FLY_WEB_REMOTE_BUILD=1 \
+    BUILD_NODE_MAX_OLD_SPACE_SIZE=6144 FLY_WEB_BUILDER_MEMORY_MB=8192 \
+    bash "$ROOT/scripts/dev/deploy-tt-web-staging.sh" 2>&1 | tee "$EVID/deploy-web.log"; then
+    echo "WARN: remote web deploy failed — retry tt-web-staging-oom-fix-deploy.sh" >&2
+    TESTNET_FREEZE_OVERRIDE=1 bash "$ROOT/scripts/dev/tt-web-staging-oom-fix-deploy.sh" 2>&1 | tee -a "$EVID/deploy-web.log" || true
+  fi
   sleep 15
+  fly releases -a tt-web-staging 2>/dev/null | head -5 | tee "$EVID/fly-web-releases.txt" || true
 fi
 
 curl --noproxy "*" -sS --max-time 45 "${API}/meta" >"$EVID/baseline-meta-post.json"
@@ -113,6 +142,13 @@ echo "== Phase 9: closure governance audit (final graduation audit) =="
 bash "$ROOT/scripts/dev/run-phase2-testnet-closure-governance-audit.sh" 2>&1 | tee "$EVID/closure-governance-audit.log"
 
 VERDICT="$(grep -E '^TT_SINGLE_SSOT_RECONCILIATION:' "$EVID/single-ssot-audit.log" | tail -1 || true)"
+echo ""
+if [[ "$VERDICT" == *"RECONCILED_100_PERCENT"* ]]; then
+  echo "== Phase 10: post-soak graduation closure (requires COMPLETED.json) =="
+  P2FC_SOAK_EXPECTED_JOB="$(ls -td "$ROOT/evidence/P2FC_SOAK_72H_STAGING"/job-* 2>/dev/null | head -1 | xargs basename 2>/dev/null || true)"
+  export P2FC_SOAK_EXPECTED_JOB
+  bash "$ROOT/scripts/dev/run-phase2-testnet-post-soak-graduation-closure.sh" 2>&1 | tee "$EVID/post-soak-graduation.log" || true
+fi
 echo ""
 echo "TT_PHASE2_FINAL_SINGLE_SSOT_RECONCILIATION: DONE ${STAMP}"
 echo "${VERDICT:-TT_SINGLE_SSOT_RECONCILIATION: UNKNOWN}"

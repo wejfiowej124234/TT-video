@@ -39,6 +39,54 @@ staging_adm_u01_cleanup_proxy() {
   STAGING_PG_PROXY_PID=""
 }
 
+staging_adm_u01_kill_port_listener() {
+  local port="$1"
+  local pid=""
+  if command -v netstat >/dev/null 2>&1; then
+    pid="$(netstat -ano 2>/dev/null | grep "127.0.0.1:${port}" | grep LISTENING | awk '{print $NF}' | head -1 || true)"
+  elif command -v ss >/dev/null 2>&1; then
+    pid="$(ss -tlnp 2>/dev/null | grep ":${port} " | sed -n 's/.*pid=\([0-9]*\).*/\1/p' | head -1 || true)"
+  fi
+  [[ -n "$pid" && "$pid" != "0" ]] || return 0
+  if command -v taskkill >/dev/null 2>&1; then
+    taskkill //PID "$pid" //F >/dev/null 2>&1 || true
+  else
+    kill "$pid" 2>/dev/null || true
+  fi
+  sleep 1
+}
+
+staging_adm_u01_proxy_dsn() {
+  node -e "
+    const u = new URL(process.argv[1]);
+    u.hostname = '127.0.0.1';
+    u.port = String(process.argv[2]);
+    u.searchParams.delete('sslmode');
+    process.stdout.write(u.toString());
+  " "$STAGING_DATABASE_URL" "$STAGING_PG_PROXY_PORT"
+}
+
+staging_adm_u01_pg_probe() {
+  local dsn="$1"
+  if command -v psql >/dev/null 2>&1; then
+    if psql "$dsn" -v ON_ERROR_STOP=1 -tAc "SELECT 1" >/dev/null 2>&1; then
+      return 0
+    fi
+  fi
+  if ! command -v docker >/dev/null 2>&1; then
+    return 1
+  fi
+  local pass user host port db
+  pass="$(node -e "const u=new URL(process.argv[1]); process.stdout.write(decodeURIComponent(u.password||''));" "$dsn")"
+  user="$(node -e "const u=new URL(process.argv[1]); process.stdout.write(decodeURIComponent(u.username||''));" "$dsn")"
+  host="$(node -e "const u=new URL(process.argv[1]); process.stdout.write(u.hostname||'127.0.0.1');" "$dsn")"
+  port="$(node -e "const u=new URL(process.argv[1]); process.stdout.write(u.port||'5432');" "$dsn")"
+  db="$(node -e "const u=new URL(process.argv[1]); process.stdout.write((u.pathname||'/').replace(/^\//,'')||'postgres');" "$dsn")"
+  [[ "$host" == "localhost" || "$host" == "127.0.0.1" ]] && host="host.docker.internal"
+  docker run --rm -e "PGPASSWORD=${pass}" postgres:16-alpine \
+    psql "postgres://${user}@${host}:${port}/${db}" -v ON_ERROR_STOP=1 -tAc "SELECT 1" >/dev/null 2>&1
+}
+
 staging_adm_u01_prepare_dsn() {
   [[ -n "${STAGING_DATABASE_URL:-}" ]] || {
     echo "staging-adm-u01-env: WARN — STAGING_DATABASE_URL unset (G04 ADM-U01 will FAIL)" >&2
@@ -64,24 +112,30 @@ print(d.get('access_token',''))
     export FLY_ACCESS_TOKEN
   fi
 
+  local proxied_dsn
+  proxied_dsn="$(staging_adm_u01_proxy_dsn)"
+  if staging_adm_u01_pg_probe "$proxied_dsn"; then
+    echo "staging-adm-u01-env: reuse existing fly proxy on 127.0.0.1:${STAGING_PG_PROXY_PORT}"
+    STAGING_DATABASE_URL="$proxied_dsn"
+    export STAGING_DATABASE_URL
+    return 0
+  fi
+
+  staging_adm_u01_kill_port_listener "$STAGING_PG_PROXY_PORT"
+  if command -v taskkill >/dev/null 2>&1; then
+    taskkill //IM flyctl.exe //F >/dev/null 2>&1 || true
+    sleep 2
+  fi
+
   echo "staging-adm-u01-env: fly proxy ${STAGING_PG_PROXY_PORT}:5432 -a ${FLY_STAGING_PG_APP} …"
   fly proxy "${STAGING_PG_PROXY_PORT}:5432" -a "$FLY_STAGING_PG_APP" >/tmp/tt-staging-pg-proxy-deep-gate.log 2>&1 &
   STAGING_PG_PROXY_PID=$!
+  sleep 3
 
   local ready=0
   local i
-  for i in $(seq 1 20); do
-    if python -c "
-import socket, sys
-s = socket.socket()
-s.settimeout(2)
-try:
-    s.connect(('127.0.0.1', int(sys.argv[1])))
-except OSError:
-    sys.exit(1)
-finally:
-    s.close()
-" "$STAGING_PG_PROXY_PORT" 2>/dev/null; then
+  for i in $(seq 1 40); do
+    if staging_adm_u01_pg_probe "$proxied_dsn"; then
       ready=1
       break
     fi
@@ -89,18 +143,12 @@ finally:
   done
 
   if [[ "$ready" != "1" ]]; then
-    echo "staging-adm-u01-env: FAIL — fly proxy not listening on 127.0.0.1:${STAGING_PG_PROXY_PORT} (see /tmp/tt-staging-pg-proxy-deep-gate.log)" >&2
-    tail -5 /tmp/tt-staging-pg-proxy-deep-gate.log >&2 || true
+    echo "staging-adm-u01-env: FAIL — fly proxy postgres probe failed on 127.0.0.1:${STAGING_PG_PROXY_PORT} (see /tmp/tt-staging-pg-proxy-deep-gate.log)" >&2
+    tail -10 /tmp/tt-staging-pg-proxy-deep-gate.log >&2 || true
     unset STAGING_DATABASE_URL
     return 1
   fi
 
-  STAGING_DATABASE_URL="$(node -e "
-    const u = new URL(process.argv[1]);
-    u.hostname = '127.0.0.1';
-    u.port = String(process.argv[2]);
-    u.searchParams.delete('sslmode');
-    process.stdout.write(u.toString());
-  " "$STAGING_DATABASE_URL" "$STAGING_PG_PROXY_PORT")"
+  STAGING_DATABASE_URL="$proxied_dsn"
   export STAGING_DATABASE_URL
 }

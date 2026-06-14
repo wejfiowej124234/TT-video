@@ -18,6 +18,8 @@ from __future__ import annotations
 import json
 import os
 import re
+import shutil
+import subprocess
 import sys
 import time
 import urllib.error
@@ -84,12 +86,76 @@ def provision_api_base(staging_base: str) -> str:
     return staging_base
 
 
+def http_json_curl(
+    method: str,
+    url: str,
+    token: str | None = None,
+    body: dict | None = None,
+) -> tuple[int, dict | list | str]:
+    timeout_s = int(os.environ.get("ADM_U01_HTTP_TIMEOUT", "45"))
+    cmd = [
+        "curl",
+        "--noproxy",
+        "*",
+        "-sS",
+        "-w",
+        "\n%{http_code}",
+        "--max-time",
+        str(timeout_s),
+        "-X",
+        method,
+        "-H",
+        "Accept: application/json",
+    ]
+    if ".loca.lt" in url:
+        cmd += ["-H", "Bypass-Tunnel-Reminder: true"]
+    if token:
+        cmd += ["-H", f"Authorization: Bearer {token}"]
+    if body is not None:
+        cmd += ["-H", "Content-Type: application/json", "-d", json.dumps(body)]
+    cmd.append(url)
+    try:
+        proc = subprocess.run(cmd, capture_output=True, check=False)
+    except OSError as e:
+        return 0, str(e)
+    stdout = proc.stdout.decode("utf-8", errors="replace") if proc.stdout else ""
+    stderr = proc.stderr.decode("utf-8", errors="replace") if proc.stderr else ""
+    if proc.returncode != 0 and not stdout.strip():
+        return 0, stderr.strip() or f"curl exit {proc.returncode}"
+    out = stdout
+    if "\n" not in out:
+        return 0, out or stderr
+    raw, code_str = out.rsplit("\n", 1)
+    try:
+        code = int(code_str.strip())
+    except ValueError:
+        return 0, out
+    try:
+        parsed: dict | list | str = json.loads(raw) if raw.strip() else {}
+    except json.JSONDecodeError:
+        parsed = raw
+    return code, parsed
+
+
 def http_json(
     method: str,
     url: str,
     token: str | None = None,
     body: dict | None = None,
 ) -> tuple[int, dict | list | str]:
+    backend = os.environ.get("ADM_U01_HTTP_BACKEND", "curl").strip().lower()
+    if backend == "curl" and shutil.which("curl"):
+        retries = int(os.environ.get("ADM_U01_HTTP_RETRIES", "4"))
+        delay = float(os.environ.get("ADM_U01_429_SLEEP", "1.5"))
+        last_code = 0
+        last_body: dict | list | str = {}
+        for attempt in range(retries):
+            last_code, last_body = http_json_curl(method, url, token, body)
+            if last_code not in (0, 429):
+                return last_code, last_body
+            time.sleep(delay * (attempt + 1))
+        return last_code, last_body
+
     data = None
     headers = {"Accept": "application/json"}
     if ".loca.lt" in url:
@@ -114,6 +180,8 @@ def http_json(
             last_code = e.code
             raw = e.read().decode("utf-8", errors="replace")
         except urllib.error.URLError as e:
+            if shutil.which("curl"):
+                return http_json_curl(method, url, token, body)
             return 0, str(e.reason)
         try:
             last_body = json.loads(raw) if raw else {}
@@ -170,6 +238,20 @@ def login_user(base: str, email: str) -> tuple[str, str]:
     if not token:
         raise RuntimeError(f"login {email} missing token")
     return token, uid
+
+
+def login_user_with_retry(base: str, email: str) -> tuple[str, str]:
+    attempts = int(os.environ.get("ADM_U01_LOGIN_RETRIES", "8"))
+    last_err = ""
+    for attempt in range(attempts):
+        try:
+            return login_user(base, email)
+        except RuntimeError as err:
+            last_err = str(err)
+            if "HTTP 0" not in last_err and "401" not in last_err:
+                raise
+            time.sleep(min(2.0 * (attempt + 1), 10.0))
+    raise RuntimeError(last_err or f"login {email} failed after {attempts} attempts")
 
 
 def psql_exec(dsn: str, sql: str) -> None:
@@ -235,8 +317,101 @@ def seed_promote_admin(base: str, email: str) -> None:
         raise RuntimeError(f"seed promote {email} HTTP {code}: {body}")
 
 
+def psql_query_scalar(dsn: str, sql: str) -> str:
+    import shutil
+    import subprocess
+    from urllib.parse import unquote, urlparse
+
+    if shutil.which("psql"):
+        r = subprocess.run(
+            ["psql", dsn, "-v", "ON_ERROR_STOP=1", "-q", "-t", "-A", "-c", sql],
+            capture_output=True,
+            text=True,
+        )
+        if r.returncode != 0:
+            raise RuntimeError(f"psql query failed: {r.stderr or r.stdout}")
+        return (r.stdout or "").strip()
+
+    if not shutil.which("docker"):
+        raise RuntimeError("psql not in PATH and docker unavailable for staging PG")
+
+    parsed = urlparse(dsn.strip())
+    user = unquote(parsed.username or "")
+    password = unquote(parsed.password or "")
+    host = parsed.hostname or "127.0.0.1"
+    port = str(parsed.port or 5432)
+    db = (parsed.path or "/").lstrip("/").split("?")[0] or "postgres"
+    if host in ("127.0.0.1", "localhost"):
+        host = "host.docker.internal"
+    conn = f"postgres://{user}@{host}:{port}/{db}"
+    r = subprocess.run(
+        [
+            "docker",
+            "run",
+            "--rm",
+            "-e",
+            f"PGPASSWORD={password}",
+            "postgres:16-alpine",
+            "psql",
+            conn,
+            "-v",
+            "ON_ERROR_STOP=1",
+            "-q",
+            "-t",
+            "-A",
+            "-c",
+            sql,
+        ],
+        capture_output=True,
+        text=True,
+    )
+    if r.returncode != 0:
+        raise RuntimeError(f"docker psql query failed: {r.stderr or r.stdout}")
+    return (r.stdout or "").strip()
+
+
+def pg_user_exists(dsn: str, uid: str) -> bool:
+    try:
+        val = psql_query_scalar(dsn, f"SELECT count(*) FROM users WHERE id = '{uid}'::uuid;")
+        return val == "1"
+    except RuntimeError:
+        return False
+
+
+def register_user_persisted(base: str, email: str, nickname: str, dsn: str) -> tuple[str, str]:
+    attempts = int(os.environ.get("ADM_U01_REGISTER_PG_RETRIES", "6"))
+    for attempt in range(attempts):
+        try:
+            tok, uid = register_user(base, email, nickname)
+        except RuntimeError as err:
+            msg = str(err)
+            if "409" in msg or "email_already" in msg:
+                return login_user_with_retry(base, email)
+            if attempt + 1 >= attempts:
+                raise
+            time.sleep(1.5 * (attempt + 1))
+            continue
+        if pg_user_exists(dsn, uid):
+            return tok, uid
+        time.sleep(1.5 * (attempt + 1))
+    raise RuntimeError(f"register {email} not persisted to staging PG after {attempts} attempts")
+
+
+def promote_admin_via_pg(dsn: str, uid: str, console_role: str) -> None:
+    user_role = "super_admin" if console_role == "SuperAdmin" else "admin"
+    psql_exec(
+        dsn,
+        f"UPDATE users SET role = '{user_role}', updated_at = now() WHERE id = '{uid}'::uuid;",
+    )
+    psql_exec(
+        dsn,
+        f"INSERT INTO admin_console_roles (user_id, console_role) VALUES ('{uid}'::uuid, '{console_role}') "
+        f"ON CONFLICT (user_id) DO UPDATE SET console_role = '{console_role}', updated_at = now();",
+    )
+
+
 def provision_tokens(base: str, dsn: str) -> dict[str, str]:
-    """Register + seed promote (memory+PG admin) + DB console_role_70（capabilities 真源）。"""
+    """Register via staging API + PG console_role（持久 Fly 多实例安全；不依赖 seed_promote 内存）。"""
     stamp = int(time.time())
     emails = {
         "SuperAdmin": f"adm-u01-super-{stamp}@traveltrust.staging",
@@ -249,23 +424,12 @@ def provision_tokens(base: str, dsn: str) -> dict[str, str]:
     ids: dict[str, str] = {}
     tokens: dict[str, str] = {}
     for role, email in emails.items():
-        try:
-            register_user(base, email, f"ADM-U01 {role}")
-        except RuntimeError:
-            pass
-        seed_promote_admin(base, email)
-        tok, uid = login_user(base, email)
+        eprint(f"ADM-U01: provision {role} via PG …")
+        reg_tok, uid = register_user_persisted(base, email, f"ADM-U01 {role}", dsn)
+        promote_admin_via_pg(dsn, uid, role)
+        tokens[role] = reg_tok
         ids[role] = uid
-        tokens[role] = tok
-
-    for role in ROLES:
-        psql_exec(
-            dsn,
-            f"INSERT INTO admin_console_roles (user_id, console_role) VALUES ('{ids[role]}'::uuid, '{role}') "
-            f"ON CONFLICT (user_id) DO UPDATE SET console_role = '{role}', updated_at = now();",
-        )
-    for role, email in emails.items():
-        tokens[role], ids[role] = login_user(base, email)
+        eprint(f"ADM-U01: provision {role} OK user_id={uid[:8]}…")
     return tokens
 
 
@@ -305,6 +469,24 @@ def is_localhost_base(base: str) -> bool:
     return bool(re.search(r"127\.0\.0\.1|localhost", base, re.I))
 
 
+def probe_http_with_retry(
+    method: str,
+    url: str,
+    token: str,
+    body: dict | None = None,
+) -> int:
+    retries = int(os.environ.get("ADM_U01_PROBE_HTTP_RETRIES", "5"))
+    for attempt in range(retries):
+        if body is not None:
+            code, _ = http_json(method, url, token, body)
+        else:
+            code, _ = http_json(method, url, token)
+        if code != 0:
+            return code
+        time.sleep(min(1.5 * (attempt + 1), 6.0))
+    return 0
+
+
 def run_probes(base: str, reg: dict, tokens: dict[str, str]) -> list[dict]:
     placeholders = reg.get("placeholders") or {}
     user_ids = {}
@@ -319,6 +501,8 @@ def run_probes(base: str, reg: dict, tokens: dict[str, str]) -> list[dict]:
                 user_ids[role] = str(u.get("id", "")).strip()
 
     results: list[dict] = []
+    probe_total = len(reg.get("probes") or []) * len(ROLES)
+    probe_i = 0
     for probe in reg.get("probes") or []:
         pid = probe["id"]
         method = probe["method"]
@@ -334,10 +518,10 @@ def run_probes(base: str, reg: dict, tokens: dict[str, str]) -> list[dict]:
 
         for role in ROLES:
             tok = tokens[role]
-            if body_obj is not None:
-                code, _ = http_json(method, url, tok, body_obj)
-            else:
-                code, _ = http_json(method, url, tok)
+            code = probe_http_with_retry(method, url, tok, body_obj)
+            probe_i += 1
+            if probe_i % 12 == 0 or probe_i == probe_total:
+                eprint(f"ADM-U01: probes {probe_i}/{probe_total} …")
             time.sleep(float(os.environ.get("ADM_U01_PROBE_DELAY", "0.15")))
             expected = set(probe["expect"][role])
             ok = code in expected
@@ -440,7 +624,13 @@ def main() -> int:
         print("TT_ADMIN_RBAC_STAGING_MATRIX: FAIL")
         return 1
 
-    code, _ = http_json("GET", f"{base}/health")
+    health_attempts = int(os.environ.get("ADM_U01_HEALTH_RETRIES", "10"))
+    code = 0
+    for attempt in range(health_attempts):
+        code, _ = http_json("GET", f"{base}/health")
+        if code == 200:
+            break
+        time.sleep(min(2.0 * (attempt + 1), 8.0))
     if code != 200:
         eprint(f"staging health failed HTTP {code}")
         print("TT_ADMIN_RBAC_STAGING_MATRIX: FAIL")
