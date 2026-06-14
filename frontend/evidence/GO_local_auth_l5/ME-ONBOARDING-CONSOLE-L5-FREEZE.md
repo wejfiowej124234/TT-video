@@ -19,7 +19,7 @@
 
 **默认禁止：** Auth L5 暗壳（`AuthL5PageBackdrop` / `AuthL5Card`）、主视图裸露 `<pre>` JSON、深色入驻进度条回流本页。
 
-**① 抛光（行业标准 91→96，仍属本页 L5）：** 报价/金额/有效期 **SSR 稳定**（`formatOnboardingAmountMinor` · `formatOnboardingQuoteExpiresAtUtc`）；裸链 **`blockedGuest`** 仅 loading + `data-tt-me-onboarding-gate-redirect`；访客 **`guestQuotePreview`** 进度高亮准入费步 + 文案「预览 · 登录继续」；演示价 **`amountHeroDemo`**；Hub **`me_identities_onboarding_console_note`**。
+**① 抛光（行业标准 91→96，仍属本页 L5）：** 报价/金额/有效期 **SSR 稳定**（`formatOnboardingAmountMinor` · `formatOnboardingQuoteExpiresAtUtc`）；裸链 **`blockedGuest`** 仅 loading + `data-tt-me-onboarding-gate-redirect`；访客 **`guestQuotePreview`** 进度高亮准入费步 + 文案「预览 · 登录继续」；演示价 **`amountHeroDemo`**；Hub 说明见 **`me_identities_hub_footer_note`**（非本页 Console 说明键）。
 
 ---
 

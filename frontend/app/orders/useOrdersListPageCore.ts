@@ -4,6 +4,18 @@
 import { useEffect, useState, useCallback, useMemo, useId } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { getOrders, getGuide, orderCancel, getIdempotencyKey, type OrderListItem } from "@/lib/apiClient";
+import { getMeGuideProfile } from "@/lib/apiClient/meGuideProfile";
+import {
+  filterOrdersForGuideReception,
+  isGuideOrdersListHat,
+} from "@/lib/guide/guideOrderCorridorModel";
+import { filterOrdersForMerchantSellerService } from "@/lib/provider/merchantOrderCorridorModel";
+import {
+  ORDERS_LIST_HAT_QUERY,
+  ordersListHatForApi,
+  parseOrdersListHatQuery,
+  type OrdersListHatQuery,
+} from "@/lib/orders/ordersListHatQuery";
 import type { OrderDetailItem } from "@/components/market/OrderDetailDrawer";
 import { useTranslation } from "@/components/LocaleProvider";
 import { mapApiReadError } from "@/lib/mapApiReadError";
@@ -53,13 +65,19 @@ export function useOrdersListPageCore() {
     () => (searchParams.get(ORDERS_LIST_SEARCH_QUERY) ?? "").trim(),
     [searchParams],
   );
+  const ordersListHat = useMemo(
+    () => parseOrdersListHatQuery(searchParams.get(ORDERS_LIST_HAT_QUERY)),
+    [searchParams],
+  );
   const ordersStateFilterId = useId();
   const ordersLoginReturnPath = useMemo(() => {
     const base = pathname && pathname !== "/" ? pathname : "/orders";
     const q = searchParams?.toString() ?? "";
     return q ? `${base}?${q}` : base;
   }, [pathname, searchParams]);
-  const [list, setList] = useState<OrderListItem[]>([]);
+  const [rawList, setRawList] = useState<OrderListItem[]>([]);
+  const [guideRowId, setGuideRowId] = useState<string | null>(null);
+  const [guideHatResolved, setGuideHatResolved] = useState(true);
   const [pageError, setPageError] = useState<string | null>(null);
   /** 列表已展示时取消订单等操作失败：内联提示，勿用 pageError 挡掉整页列表 */
   const [orderActionError, setOrderActionError] = useState<string | null>(null);
@@ -73,6 +91,40 @@ export function useOrdersListPageCore() {
   const [previewOrder, setPreviewOrder] = useState<OrderDetailItem | null>(null);
   /** B-048：静默重拉首屏时不挡整页（`refreshOrders({ silent: true })`） */
   const [listSyncing, setListSyncing] = useState(false);
+
+  useEffect(() => {
+    if (!isGuideOrdersListHat(ordersListHat)) {
+      setGuideRowId(null);
+      setGuideHatResolved(true);
+      return;
+    }
+    let cancelled = false;
+    setGuideHatResolved(false);
+    void getMeGuideProfile()
+      .then((body) => {
+        if (cancelled) return;
+        setGuideRowId(body.profile?.guide_id?.trim() ?? null);
+        setGuideHatResolved(true);
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setGuideRowId(null);
+        setGuideHatResolved(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [ordersListHat]);
+
+  const list = useMemo(() => {
+    if (isGuideOrdersListHat(ordersListHat)) {
+      return filterOrdersForGuideReception(rawList, guideRowId);
+    }
+    if (ordersListHat === "merchant") {
+      return filterOrdersForMerchantSellerService(rawList);
+    }
+    return rawList;
+  }, [rawList, ordersListHat, guideRowId]);
 
   /** B-071：非法 `state=` 从 URL 剔除，避免仅前端假筛选 */
   useEffect(() => {
@@ -107,11 +159,17 @@ export function useOrdersListPageCore() {
       } else {
         setListSyncing(true);
       }
-      getOrders(buildOrdersListGetParams({ stateParam: ordersListStateParam, searchQ: ordersListSearchParam }))
+      getOrders(
+        buildOrdersListGetParams({
+          stateParam: ordersListStateParam,
+          searchQ: ordersListSearchParam,
+          hat: ordersListHatForApi(ordersListHat),
+        }),
+      )
         .then((r) => {
           const raw = (r.items as OrderListItem[]) ?? [];
           const deduped = dedupeListById(raw, (o) => String(o.id ?? ""));
-          setList(filterOrdersForOrdersListPage(deduped, ordersListStateParam));
+          setRawList(filterOrdersForOrdersListPage(deduped, ordersListStateParam));
           const p = r.page;
           setOrdersHasMore(!!p?.has_more);
           setOrdersNextCursor(typeof p?.next_cursor === "string" && p.next_cursor ? p.next_cursor : null);
@@ -137,7 +195,7 @@ export function useOrdersListPageCore() {
           else setListSyncing(false);
         });
     },
-    [router, ordersLoginReturnPath, t, ordersListStateParam, ordersListSearchParam],
+    [router, ordersLoginReturnPath, t, ordersListStateParam, ordersListSearchParam, ordersListHat],
   );
 
   const loadMoreOrders = useCallback(() => {
@@ -149,10 +207,11 @@ export function useOrdersListPageCore() {
         cursor: ordersNextCursor,
         stateParam: ordersListStateParam,
         searchQ: ordersListSearchParam,
+        hat: ordersListHatForApi(ordersListHat),
       }),
     )
       .then((r) => {
-        setList((prev) => {
+        setRawList((prev) => {
           const merged = mergeListsUniqueById(prev, (r.items as OrderListItem[]) ?? [], (o) => String(o.id ?? ""));
           return filterOrdersForOrdersListPage(merged, ordersListStateParam);
         });
@@ -172,7 +231,17 @@ export function useOrdersListPageCore() {
         setLoadMoreError(mapApiReadError(err, t, "orders_loadMore_map_fallback"));
       })
       .finally(() => setLoadingMore(false));
-  }, [ordersNextCursor, ordersHasMore, loadingMore, router, ordersLoginReturnPath, t, ordersListStateParam, ordersListSearchParam]);
+  }, [
+    ordersNextCursor,
+    ordersHasMore,
+    loadingMore,
+    router,
+    ordersLoginReturnPath,
+    t,
+    ordersListStateParam,
+    ordersListSearchParam,
+    ordersListHat,
+  ]);
 
   useEffect(() => {
     refreshOrders();
@@ -240,7 +309,7 @@ export function useOrdersListPageCore() {
   });
 
   const removeFromList = useCallback((orderId: string) => {
-    setList((prev) => prev.filter((o) => String(o.id) !== orderId));
+    setRawList((prev) => prev.filter((o) => String(o.id) !== orderId));
   }, []);
 
   const executeDeleteOrder = useCallback(
@@ -261,7 +330,7 @@ export function useOrdersListPageCore() {
       try {
         const raw = await orderCancel(orderId, getIdempotencyKey());
         const data = raw as { order?: { id?: string; status?: string; state?: string } };
-        setList((prev) => patchOrderListAfterCancelSuccess(prev, orderId, data.order));
+        setRawList((prev) => patchOrderListAfterCancelSuccess(prev, orderId, data.order));
         setPreviewOrder((po) => patchPreviewOrderAfterCancelSuccess(po, orderId, data.order));
         removeLandingOrderIdFromSession(orderId);
         clearCachedLandingDraftCap();
@@ -298,9 +367,13 @@ export function useOrdersListPageCore() {
   }, [pendingDeleteOrder, deletingId, executeDeleteOrder]);
 
 
+  const effectiveLoading = loading || (isGuideOrdersListHat(ordersListHat) && !guideHatResolved);
+
   return {
     t,
-    loading,
+    loading: effectiveLoading,
+    ordersListHat,
+    guideRowId,
     pageError,
     refreshOrders,
     ordersLoginReturnPath,

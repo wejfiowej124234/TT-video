@@ -255,6 +255,26 @@ export function parseMeTrustFromMeResponse(data: unknown, user: UserShape | null
   };
 }
 
+/** KYC 人读标签（与 settings hub 状态 pill 同源键） */
+export function formatKycStatusLabel(kyc: string, t: (k: string) => string): string {
+  const s = kyc.trim().toLowerCase();
+  if (s === "verified" || s === "approved") return t("me_settings_hub_status_kyc_verified");
+  if (s === "pending" || s === "in_review" || s === "submitted") return t("me_settings_hub_status_kyc_pending");
+  if (s === "rejected" || s === "failed" || s === "declined") return t("me_settings_desc_kyc_rejected");
+  if (s === "none" || s === "") return t("me_settings_hub_status_kyc_not_started");
+  return kyc;
+}
+
+/** 工作台摘要卡：短标签（不含「点此了解」等 CTA 尾缀） */
+export function formatKycStatusLabelCompact(kyc: string, t: (k: string) => string): string {
+  const s = kyc.trim().toLowerCase();
+  if (s === "verified" || s === "approved") return t("guide_workbench_trust_kyc_verified");
+  if (s === "pending" || s === "in_review" || s === "submitted") return t("guide_workbench_trust_kyc_pending");
+  if (s === "rejected" || s === "failed" || s === "declined") return t("guide_workbench_trust_kyc_rejected");
+  if (s === "none" || s === "") return t("guide_workbench_trust_kyc_not_started");
+  return kyc;
+}
+
 export function formatGuideRegistrationStatus(status: string | null, t: (k: string) => string): string {
   if (status == null || status === "") return t("me_trust_guide_none");
   const s = status.toLowerCase();

@@ -72,6 +72,8 @@ export function AdminCommunityAbusePolicyPageMain() {
       subtitle={t("admin_abuse_subtitle_l5")}
       headerAside={
         <AdminCommunityListHeaderAside>
+      <AdminCommunityRelatedLinks />
+
           <Link href="/admin/community/policy-change-logs" className={`${adminPageNavLinkClass()}`}>
             {t("admin_abuse_linkLogs")}
           </Link></AdminCommunityListHeaderAside>

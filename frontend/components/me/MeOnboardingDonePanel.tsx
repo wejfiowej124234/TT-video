@@ -19,6 +19,8 @@ export function MeOnboardingDonePanel({
       ? "me_onboarding_donePanelSecondarySteward"
       : "me_onboarding_donePanelSecondaryProvider";
 
+  const showWorkbenchCta = quoteRole === "provider";
+
   return (
     <section
       className={TT_ME_ONBOARDING_L5.donePanel}
@@ -30,7 +32,16 @@ export function MeOnboardingDonePanel({
       </p>
       <p className="mt-1 text-meta leading-relaxed text-ink-700">{t("me_onboarding_donePanelBody")}</p>
       <div className="mt-4 flex flex-wrap gap-3">
-        <Link href="/me/identities" className={TT_ME_ONBOARDING_L5.donePanelPrimaryCta}>
+        {showWorkbenchCta ? (
+          <Link href="/provider" className={TT_ME_ONBOARDING_L5.donePanelPrimaryCta}>
+            {t("me_onboarding_donePanelWorkbenchCta")}
+          </Link>
+        ) : (
+          <Link href="/me/identities" className={TT_ME_ONBOARDING_L5.donePanelPrimaryCta}>
+            {t("me_onboarding_donePanelPrimaryCta")}
+          </Link>
+        )}
+        <Link href="/me/identities" className={`${TT_ME_ONBOARDING_L5.donePanelSecondaryCta} no-underline`}>
           {t("me_onboarding_donePanelPrimaryCta")}
         </Link>
         <Link href={secondaryHref} className={`${TT_ME_ONBOARDING_L5.donePanelSecondaryCta} no-underline`}>

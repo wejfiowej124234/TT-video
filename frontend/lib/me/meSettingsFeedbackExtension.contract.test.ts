@@ -47,8 +47,10 @@ describe("me settings feedback extension (①)", () => {
 
   it("trust subpage offers email verify resend for unverified users", () => {
     const trust = readFileSync(join(ROOT, "app/me/settings/trust/page.tsx"), "utf8");
-    expect(trust).toContain("MeSettingsResendVerifyEmailPanel");
-    expect(trust).toContain("isMeEmailVerified");
+    const progress = readFileSync(join(ROOT, "components/me/MeSettingsTrustProgressPanel.tsx"), "utf8");
+    expect(trust).toContain("MeSettingsTrustProgressPanel");
+    expect(progress).toContain("MeSettingsResendVerifyEmailPanel");
+    expect(trust).toContain("emailOk");
     const inner = readFileSync(join(ROOT, "app/me/settings/MeSettingsPageInner.tsx"), "utf8");
     expect(inner).not.toContain("MeSettingsHubStatusStrip");
   });

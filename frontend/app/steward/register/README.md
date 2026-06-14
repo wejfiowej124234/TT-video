@@ -13,7 +13,7 @@
 | Hub | **`/me/identities`** | 区域主理人卡片 → **`/steward/register?returnUrl=…`** |
 | 1（可选） | `/auth/register?role=steward` | 未登录时 Login Gate → 注册后自动跳转本页 |
 | 2 | **`/steward/register`** | **3 步 wizard**：辖区多选 → 主体资料 + wagmi 钱包 → 确认提交；TTG quote · stake-status |
-| 3 | `/me/onboarding?role=region_steward` | 平台准入费 → role-confirm |
+| 3 | **`/governance?view=region#steward-b-track-admission`** | **A 轨 USDC 准入费**（官方地址 · **不退**）→ 身份确认 · [`stewardAdmissionNav.ts`](../../../lib/steward/stewardAdmissionNav.ts) |
 | 4 | Admin | **`/admin/steward-applications`** |
 
 ## API

@@ -19,6 +19,7 @@ describe("me settings L5 (①)", () => {
     expect(flat.some((i) => i.href === "/me/identities")).toBe(false);
     expect(flat.some((i) => i.href === "/community/me")).toBe(false);
     expect(flat.some((i) => i.href === "/me/settings/language")).toBe(true);
+    expect(flat.some((i) => i.href === "/me/publish")).toBe(true);
     expect(flat.some((i) => i.href === "/pay")).toBe(false);
   });
 

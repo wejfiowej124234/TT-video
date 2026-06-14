@@ -1,5 +1,6 @@
 /**
- * TT-ORDERS-LIST-UI-001：`/orders` 筛选 · 搜索 · 直订 CTA（① · 本地 API）
+ * TT-ORDERS-LIST-UI-001：`/orders` 筛选 · 直订 CTA（① · 本地 API）
+ * 搜索栏组件保留于 `OrdersListSearchBar.tsx`，主列表页 Phase① 未接线（见 ordersListL5.contract）。
  */
 import { test, expect } from "@playwright/test";
 import { ordersPageShell } from "./helpers/pageShells";
@@ -9,8 +10,8 @@ const API_HEALTH =
   process.env.PLAYWRIGHT_API_HEALTH_URL ?? `http://127.0.0.1:${apiPort}/health`;
 const API_BASE = process.env.PLAYWRIGHT_API_BASE_URL ?? `http://127.0.0.1:${apiPort}`;
 
-test.describe("orders list filters + search + CTA", () => {
-  test("登录后筛选进行中、客户端搜索与直订入口", async ({ page, request }) => {
+test.describe("orders list filters + CTA", () => {
+  test("登录后筛选进行中与直订入口", async ({ page, request }) => {
     test.setTimeout(90_000);
 
     const health = await request.get(API_HEALTH).catch(() => null);
@@ -33,8 +34,10 @@ test.describe("orders list filters + search + CTA", () => {
 
     await expect(ordersPageShell(page)).toBeVisible({ timeout: 15_000 });
     await expect(page.locator('[data-tt-orders-list-book-cta="primary"]').first()).toBeVisible();
+    const filterRail = page.locator('[data-tt-orders-filter-rail="1"]');
+    await expect(filterRail).toBeVisible();
 
-    const inProgressTab = page.getByRole("button", { name: /进行中|In progress/i });
+    const inProgressTab = filterRail.getByRole("button", { name: /进行中|In progress/i });
     await expect(inProgressTab).toBeVisible();
     await inProgressTab.click();
     await expect(page).toHaveURL(/[?&]state=in_progress/);
@@ -45,19 +48,7 @@ test.describe("orders list filters + search + CTA", () => {
       await expect(page).toHaveURL(/[?&]state=in_progress/);
     }
 
-    const searchInput = page.locator('[data-tt-orders-search="1"] input[type="search"]');
-    await expect(searchInput).toBeVisible();
-    await searchInput.fill("zzz-no-match-e2e");
-    await expect(page).toHaveURL(/[?&]q=/);
-    await expect(page.locator('[data-tt-orders-search-empty="1"]')).toBeVisible({ timeout: 10_000 });
-
-    await page
-      .locator('[data-tt-orders-search-empty="1"]')
-      .getByRole("button", { name: /清除搜索|Clear search/i })
-      .click();
-    await expect(page).not.toHaveURL(/[?&]q=/);
-
-    const allTab = page.getByRole("button", { name: /全部订单|All orders/i });
+    const allTab = filterRail.getByRole("button", { name: /全部订单|All orders/i }).first();
     await allTab.click();
     await expect(page).not.toHaveURL(/[?&]state=/);
   });

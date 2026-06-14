@@ -249,7 +249,11 @@ export default function GuideOccupiedScheduleBlock({
   const itineraryTripLocked = !selectable && !!selectedTrip;
 
   return (
-    <section className={`${GUIDE_DETAIL_PANEL_FRAME_CLASS} overflow-hidden`} aria-labelledby={headingId}>
+    <section
+      id="guide-availability"
+      className={`${GUIDE_DETAIL_PANEL_FRAME_CLASS} overflow-hidden`}
+      aria-labelledby={headingId}
+    >
       <div className={GUIDE_DETAIL_PANEL_INNER_CLASS}>
         <h2 id={headingId} className={GUIDE_DETAIL_SECTION_HEADING_CLASS}>
           {t("guide_availability_title")}

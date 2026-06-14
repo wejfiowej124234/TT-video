@@ -139,15 +139,19 @@ describe("meOnboarding UI freeze (① · ME-ONBOARDING-CONSOLE-L5-FREEZE)", () =
     expect(readFileSync(L5, "utf8")).toContain("sessionProbeBanner");
   });
 
-  it("P1: entitlements syncing, confirm lock, and steward pending bridge", () => {
+  it("P1: entitlements syncing, confirm lock, and steward pending bridge (IA closure · Sprint-A)", () => {
     const main = readFileSync(MAIN, "utf8");
     const ent = readFileSync(ENT, "utf8");
     const writes = readFileSync(WRITES, "utf8");
     const l5 = readFileSync(L5, "utf8");
-    expect(main).toContain("MeOnboardingStewardJourneyBridge");
+    const guest = readFileSync(join(ROOT, "app/me/onboarding/meOnboardingGuestAccess.ts"), "utf8");
+    const bridge = readFileSync(join(ROOT, "app/me/onboarding/MeOnboardingStewardJourneyBridge.tsx"), "utf8");
+    expect(main).not.toContain("MeOnboardingStewardJourneyBridge");
+    expect(bridge).toContain("steward_pending");
     expect(main).toContain("entitlementsSyncing");
-    expect(main).toContain("steward_register");
-    expect(main).toContain("steward_pending");
+    expect(main).toContain("data-tt-me-onboarding-steward-redirect");
+    expect(guest).toContain("steward_register");
+    expect(guest).toContain("steward_pending");
     expect(ent).toContain("entitlementsSyncingShell");
     expect(ent).toContain("me_onboarding_entitlementsAwaitingPaymentTitle");
     expect(writes).toContain("actionPrimaryLocked");

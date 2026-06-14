@@ -1,17 +1,17 @@
 /**
- * 网络页「兑换网关」预览币对 SSOT（① 本地示意，非链上真兑换）。
+ * 网络页「兑换网关」与行程 Escrow 结算稳定币 SSOT（① 本地示意，非链上真兑换）。
  *
- * - **行程 Escrow**：白名单稳定币 **USDC / USDT** 均可（94）；API 默认结算符号常为 **USDC**（`SETTLEMENT_TOKEN`）。
- * - **本段 UI**：示意 **稳定币 → TTG（治理代币）**；**不是** USDC↔USDT 互换。
+ * - **行程 Escrow / 池子收款 / 治理兑换支付币**：**USDC**（与 **01**「结算代币定稿」、**`SETTLEMENT_TOKEN`** 一致）。
+ * - **本段 UI**：示意 **USDC → TTG（治理代币）**；**不是** 稳定币互换。
  * - 真链路径见 96-18、governance-token/02、治理中心路由 /governance。
  */
 
-export const TRAVELTRUST_ESCROW_SETTLEMENT_STABLECOINS = ["USDC", "USDT"] as const;
+export const TRAVELTRUST_ESCROW_SETTLEMENT_STABLECOINS = ["USDC"] as const;
 
 export type TraveltrustEscrowSettlementStablecoin =
   (typeof TRAVELTRUST_ESCROW_SETTLEMENT_STABLECOINS)[number];
 
-/** 后端 / 环境默认结算符号（Escrow）；用户仍可在订单侧选 USDT。 */
+/** 后端 / 环境 / 订单 Escrow 默认结算符号（**01 P0：仅 USDC**）。 */
 export const TRAVELTRUST_DEFAULT_SETTLEMENT_STABLECOIN: TraveltrustEscrowSettlementStablecoin =
   "USDC";
 
@@ -23,10 +23,9 @@ export function traveltrustTtgAcquirePreviewPair(
   return { from: payStable, to: TRAVELTRUST_GOVERNANCE_TOKEN_SYMBOL };
 }
 
+/** 单币 SSOT 下恒等；保留 API 形状供网关组件复用。 */
 export function traveltrustCyclePayStablecoin(
   current: TraveltrustEscrowSettlementStablecoin,
 ): TraveltrustEscrowSettlementStablecoin {
-  const idx = TRAVELTRUST_ESCROW_SETTLEMENT_STABLECOINS.indexOf(current);
-  const next = (idx + 1) % TRAVELTRUST_ESCROW_SETTLEMENT_STABLECOINS.length;
-  return TRAVELTRUST_ESCROW_SETTLEMENT_STABLECOINS[next]!;
+  return current;
 }

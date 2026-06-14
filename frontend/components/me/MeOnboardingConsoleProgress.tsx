@@ -22,6 +22,8 @@ export type MeOnboardingConsoleProgressProps = {
   sessionChecking?: boolean;
   /** 未登录合法来源：进度文案为「预览报价 · 登录后继续」 */
   guestQuotePreview?: boolean;
+  /** 准入费已付、待确认身份等：覆盖折叠态步骤文案 */
+  compactLabelOverride?: string;
 };
 
 function consoleStepTextClass(state: OnboardingStepBadgeState): string {
@@ -38,6 +40,7 @@ export function MeOnboardingConsoleProgress({
   allComplete = false,
   sessionChecking = false,
   guestQuotePreview = false,
+  compactLabelOverride,
 }: MeOnboardingConsoleProgressProps) {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(defaultExpanded);
@@ -49,14 +52,16 @@ export function MeOnboardingConsoleProgress({
     role === "region_steward" ? t("stewardProgress_journeyHeading") : t("providerProgress_journeyHeading");
   const compact = sessionChecking
     ? t("me_onboarding_progressSessionChecking")
-    : guestQuotePreview
-      ? t("me_onboarding_progressGuestPreview")
-      : allComplete
-      ? t("me_onboarding_progressPhaseComplete")
-      : t("me_onboarding_progressCompact")
-          .replace("{current}", String(clamped))
-          .replace("{total}", String(total))
-          .replace("{label}", t(currentKey));
+    : compactLabelOverride?.trim()
+      ? compactLabelOverride.trim()
+      : guestQuotePreview
+        ? t("me_onboarding_progressGuestPreview")
+        : allComplete
+          ? t("me_onboarding_progressPhaseComplete")
+          : t("me_onboarding_progressCompact")
+              .replace("{current}", String(clamped))
+              .replace("{total}", String(total))
+              .replace("{label}", t(currentKey));
 
   const stepItems = Array.from({ length: total }, (_, i) => {
     const n = i + 1;

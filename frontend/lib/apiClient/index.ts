@@ -21,7 +21,7 @@ export { getMeta, getMetaBuild, readMetaBuild, readMetaBuildRoot } from "./meta"
 export type { MetaBuildInfo } from "./meta";
 export { getGuides, getGuide, getGuideAvailability, postGuideUploadDoc, postGuide, postGuideStake } from "./guides";
 export { getMeProviderApplication, postProviderApplication } from "./providerApplications";
-export { getMeStewardApplication, postStewardApplication, getStewardStakeQuote, getStewardStakeStatus } from "./stewardApplications";
+export { getMeStewardApplication, postStewardApplication, getStewardStakeQuote, getStewardStakeStatus, getMeStewardSeat, postStewardResignNotice, postStewardFinalizeResign } from "./stewardApplications";
 export type { StewardStakeStatusResponse } from "./stewardApplications";
 export type {
   OrdersListResult,

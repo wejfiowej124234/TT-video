@@ -9,29 +9,61 @@ import { mapApiReadError } from "@/lib/mapApiReadError";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import GuideBillingPeriodCard from "@/components/guide/GuideBillingPeriodCard";
 import GuideDashboardStats from "@/components/guide/GuideDashboardStats";
-import MePageBackground from "@/components/me/MePageBackground";
-import MePageSkeleton from "@/components/me/MePageSkeleton";
-import GuideRegistrationStatusBanner from "@/components/guide/GuideRegistrationStatusBanner";
-import MeTrustSection from "@/components/me/MeTrustSection";
+import { MeGuideRoleBadge } from "@/components/me/MeGuideRoleBadge";
+import GuideWorkbenchMarketExposureCard from "@/components/guide/GuideWorkbenchMarketExposureCard";
 import { FOCUS_RING, type UserShape } from "@/components/me/constants";
-import { parseIdentitySlotsFromMe } from "@/lib/meIdentitySlots";
-import { parseMeTrustFromMeResponse } from "@/lib/meTrust";
-import { userIsGuide } from "@/lib/meRoleDisplay";
-import {
-  MeSettingsExtensionIngressBlock,
-  meSettingsExtensionIngressDataAttrs,
-} from "@/components/me/MeSettingsExtensionIngressBlock";
+import { TT_ME_GUIDE_ROLE_BADGE } from "@/lib/me/meGuideRoleBadgeL5";
+import WorkspaceL5PageShell from "@/components/workspace/WorkspaceL5PageShell";
+import { WorkspaceL5Header } from "@/components/workspace/WorkspaceL5Header";
+import { WorkspaceL5SettingsIngress } from "@/components/workspace/WorkspaceL5SettingsIngress";
+import { WorkspaceL5PageSkeleton } from "@/components/workspace/WorkspaceL5PageSkeleton";
+import { TT_WORKSPACE_L5 } from "@/lib/workspace/workspaceWorkbenchL5";
+import { meSettingsExtensionIngressDataAttrs } from "@/components/me/MeSettingsExtensionIngressBlock";
 import { isMeSettingsExtensionFromQuery } from "@/lib/me/meSettingsExtensionContext";
 import { ME_SETTINGS_PROFILE_PATH } from "@/lib/me/meSettingsL5";
-import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
+import { meGuideWorkspaceUnlocked } from "@/lib/me/meIdentitySlotVisibility";
+import { useMeIdentitySlots } from "@/lib/me/useMeIdentitySlots";
+import { WorkspaceOperatorLockedPanel } from "@/components/workspace/WorkspaceOperatorLockedPanel";
 import { GuideDashboardRouteSuspense } from "@/components/guide/GuideDashboardRouteSuspense";
 import { TouchpointConversionStrip } from "@/components/product-enhancement/TouchpointConversionStrip";
-import { ConversionFunnelRail } from "@/components/product-enhancement/ConversionFunnelRail";
+import { GuideWorkbenchL5CrossNav } from "@/components/guide/GuideWorkbenchL5CrossNav";
+import GuideWorkbenchStakingGateCard from "@/components/guide/GuideWorkbenchStakingGateCard";
+import GuideWorkbenchExitRequestCard from "@/components/guide/GuideWorkbenchExitRequestCard";
+import { useGuideIdentityMinStake } from "@/lib/staking/useGuideIdentityMinStake";
 import GuideWorkbenchInboxCard from "@/components/guide/GuideWorkbenchInboxCard";
 import { useGuideWorkbenchInbox } from "./useGuideWorkbenchInbox";
+import { useGuideWorkbenchProfile } from "./useGuideWorkbenchProfile";
+import GuideWorkbenchStatsTeaser from "@/components/guide/GuideWorkbenchStatsTeaser";
+import {
+  GUIDE_WORKBENCH_PAGE_L5_CLOSURE_PROBE,
+  GUIDE_WORKBENCH_PAGE_L5_FROZEN_MARKER,
+} from "@/lib/guide/guideWorkbenchL5ClosureSprintModel";
+import {
+  parseGuideStakeAmountFromMe,
+  shouldShowGuideIdentityStakingBanner,
+  shouldShowGuideIdentityStakingBelowMinWarning,
+  shouldShowGuideWorkbenchStakingManageLink,
+  guideIdentityStakingHasAnyAmount,
+} from "@/lib/guide/guideIdentityStakingNav";
+import { shouldShowGuideWorkbenchExitRequestCard } from "@/lib/guide/guideExitRequest";
+import {
+  guideHasReceptionHistory,
+  GUIDE_WORKSPACE_OPS_SCOPE_MARKER,
+  resolveGuideWorkbenchHeaderSubtitleKey,
+  resolveGuideInboxEmptyGuidance,
+  resolveGuideStakingGateMode,
+  shouldShowGuideInboxEmptyState,
+  shouldShowGuideWorkbenchPesConversion,
+  shouldShowGuideWorkbenchMarketExposureSection,
+  shouldShowGuideWorkbenchStatsSections,
+  shouldShowGuideWorkbenchStatsTeaser,
+} from "@/lib/guide/guideWorkbenchWorkspaceL5";
+import { parseMeTrustFromMeResponse } from "@/lib/meTrust";
+import { useWorkspaceContextWorkbenchGuard } from "@/lib/header/useWorkspaceContextWorkbenchGuard";
 
 /** 07 §五 5.0 / 05：向导工作台首屏；user + stats 同源 `getMeFull`（GET /api/v1/me） */
 function GuideDashboardPageInner() {
+  useWorkspaceContextWorkbenchGuard();
   const { t } = useTranslation();
   const router = useRouter();
   const pathname = usePathname();
@@ -85,9 +117,9 @@ function GuideDashboardPageInner() {
             }
             return;
           }
-          setMePayload(res);
           const u = (res as { user?: UserShape })?.user;
           setUser(u ?? null);
+          setMePayload(res);
           applyStatsFromPayload(res);
         })
         .catch((err) => {
@@ -122,74 +154,72 @@ function GuideDashboardPageInner() {
     void loadMe({ silent: true, force: true });
   }, [loadMe]);
 
-  const isGuideRole = user?.role === "guide";
+  const { ready: slotsReady, slotById } = useMeIdentitySlots();
+  const guideWorkspaceUnlocked = meGuideWorkspaceUnlocked({
+    userRole: user?.role ?? null,
+    guideSlotState: slotsReady ? slotById("guide")?.state ?? null : null,
+  });
+  const awaitingSlots = !!user && !slotsReady;
+  const {
+    profile: workbenchProfile,
+    loading: profileLoading,
+    error: profileError,
+    retry: retryProfile,
+  } = useGuideWorkbenchProfile(guideWorkspaceUnlocked && slotsReady, t);
+
+  const guideRowId = workbenchProfile?.guide_id ?? null;
   const {
     inbox: workbenchInbox,
     nextOrderItem,
     ordersLoading: inboxOrdersLoading,
     ordersError: inboxOrdersError,
     retryInbox,
-  } = useGuideWorkbenchInbox(isGuideRole, t);
+  } = useGuideWorkbenchInbox(guideWorkspaceUnlocked && slotsReady, guideRowId, t);
+  const { minStakeFormatted } = useGuideIdentityMinStake();
 
-  if (loading) return <MePageSkeleton t={t} ariaLabelKey="guide_dashboard_title" />;
+  if (loading) return <WorkspaceL5PageSkeleton t={t} kind="guide" ariaLabelKey="guide_dashboard_title" />;
 
   if (error) {
     return (
-      <main
-        className="min-h-screen relative overflow-hidden bg-ink-900"
-        aria-label={t("guide_dashboard_title")}
-        {...meSettingsExtensionIngressDataAttrs(fromSettings, "data-tt-guide-from-settings")}
+      <WorkspaceL5PageShell
+        kind="guide"
+        ariaLabel={t("guide_dashboard_title")}
+        footerTarget={fromSettings ? "settings" : "none"}
+        dataAttrs={meSettingsExtensionIngressDataAttrs(fromSettings, "data-tt-guide-from-settings")}
       >
-        <MePageBackground />
-        <div className="relative z-10 max-w-2xl mx-auto px-4 py-12">
-          <MeSettingsExtensionIngressBlock
-            fromSettings={fromSettings}
-            noticeKey="me_settings_guide_from_settings_notice"
-            t={t}
-          />
-          <div className="rounded-[var(--radius-md)] border border-slate-600/60 bg-ink-700/50 px-4 py-4 space-y-4">
-            <h1 className="text-h2 font-bold bg-gradient-to-r from-cyan-300 via-cyan-400 to-fuchsia-400 bg-clip-text text-transparent">
-              {t("guide_dashboard_title")}
-            </h1>
-            <ApiErrorAlert message={error} />
-            <div className="flex flex-wrap gap-3">
-              <form
-                className="inline"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  void loadMe();
-                }}
-              >
-                <button
-                  type="submit"
-                  className={`inline-flex items-center justify-center rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2.5 min-h-[44px] text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
-                >
-                  {t("common_retry")}
-                </button>
-              </form>
-              <Link
-                href={communityMeHref}
-                className={`inline-flex items-center justify-center rounded-full border border-slate-500/60 bg-ink-700/60 px-4 py-2.5 min-h-[44px] text-meta text-slate-300 hover:bg-ink-600/60 motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
-              >
-                {t("guide_dashboard_link_me")}
-              </Link>
-            </div>
-            {!fromSettings ? (
-              <ProductCrossNav
-                ariaLabelKey="guide_dashboard_relatedNav_aria"
-                showGuides
-                className="pt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-meta text-slate-300"
-                linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 font-medium motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
-                separatorClassName="text-slate-500"
-              />
-            ) : null}
+        <WorkspaceL5SettingsIngress
+          fromSettings={fromSettings}
+          noticeKey="me_settings_guide_from_settings_notice"
+          t={t}
+        />
+        <WorkspaceL5Header
+          eyebrow={t("guide_workbench_eyebrow")}
+          title={t("guide_dashboard_title")}
+          subtitle={t("guide_dashboard_subtitle")}
+        />
+        <div className={TT_WORKSPACE_L5.errorPanel}>
+          <ApiErrorAlert message={error} />
+          <div className="flex flex-wrap gap-3 pt-2">
+            <form
+              className="inline"
+              onSubmit={(e) => {
+                e.preventDefault();
+                void loadMe();
+              }}
+            >
+              <button type="submit" className={`${TT_WORKSPACE_L5.primaryBtn} ${FOCUS_RING}`}>
+                {t("common_retry")}
+              </button>
+            </form>
+            <Link href={communityMeHref} className={`${TT_WORKSPACE_L5.secondaryBtn} ${FOCUS_RING}`}>
+              {t("guide_dashboard_link_me")}
+            </Link>
           </div>
         </div>
-      </main>
+      </WorkspaceL5PageShell>
     );
   }
 
-  const trustSummary = user != null ? parseMeTrustFromMeResponse(mePayload, user) : null;
   const ordersGuided = typeof stats?.orders_guided === "number" ? stats.orders_guided : 0;
   const completedCount = typeof stats?.completed_count === "number" ? stats.completed_count : 0;
   const totalEarned = typeof stats?.total_earned === "number" ? stats.total_earned : 0;
@@ -200,31 +230,112 @@ function GuideDashboardPageInner() {
     typeof stats?.period_expected_earnings === "number" ? stats.period_expected_earnings : 0;
   const periodSettledOrdersCount =
     typeof stats?.period_settled_orders_count === "number" ? stats.period_settled_orders_count : 0;
+  const hasReceptionHistory = guideHasReceptionHistory({ ordersGuided, completedCount });
+  const showInboxEmpty = shouldShowGuideInboxEmptyState(workbenchInbox, {
+    ordersLoading: inboxOrdersLoading,
+    ordersError: inboxOrdersError,
+    guideHasReceptionHistory: hasReceptionHistory,
+  });
+  const trustSummary = user != null ? parseMeTrustFromMeResponse(mePayload, user) : null;
+  const guideStakeAmount = parseGuideStakeAmountFromMe(mePayload);
+  const stakingGateInput = {
+    guideWorkspaceUnlocked,
+    guideRegistrationStatus: trustSummary?.guide_registration_status ?? null,
+    stakeAmount: guideStakeAmount,
+    minStakeAmount: minStakeFormatted,
+  };
+  const showStakingBanner =
+    slotsReady && shouldShowGuideIdentityStakingBanner(stakingGateInput);
+  const showStakingBelowMinWarning =
+    slotsReady && shouldShowGuideIdentityStakingBelowMinWarning(stakingGateInput);
+  const showStakingManageLink =
+    slotsReady && shouldShowGuideWorkbenchStakingManageLink(stakingGateInput);
+  const orderTakingBlocked = showStakingBanner || showStakingBelowMinWarning;
+  const stakingGateMode = resolveGuideStakingGateMode({
+    showStakingBanner,
+    showStakingBelowMinWarning,
+    showStakingManageLink,
+  });
+  const headerSubtitleKey = resolveGuideWorkbenchHeaderSubtitleKey({
+    pendingAcceptCount: workbenchInbox.pendingAcceptCount,
+    orderTakingBlocked,
+  });
+  const showStatsSections = shouldShowGuideWorkbenchStatsSections({
+    ordersGuided,
+    completedCount,
+    periodExpectedEarnings,
+    periodSettledOrdersCount,
+    billingPeriodUtc,
+    guideHasReceptionHistory: hasReceptionHistory,
+  });
+  const showStatsTeaser = shouldShowGuideWorkbenchStatsTeaser({
+    showStatsSections,
+    guideHasReceptionHistory: hasReceptionHistory,
+  });
+  const showPesConversion = shouldShowGuideWorkbenchPesConversion({
+    showStatsTeaser,
+    showStatsSections,
+    ordersGuided,
+    completedCount,
+  });
+  const inboxEmptyGuidance = resolveGuideInboxEmptyGuidance({ orderTakingBlocked });
+  const showMarketExposure = shouldShowGuideWorkbenchMarketExposureSection({ orderTakingBlocked });
+  const showExitRequestCard =
+    slotsReady &&
+    shouldShowGuideWorkbenchExitRequestCard({
+      guideWorkspaceUnlocked,
+      guideRegistrationStatus: trustSummary?.guide_registration_status ?? null,
+      hasStakingActivity: guideIdentityStakingHasAnyAmount(guideStakeAmount),
+    });
 
   return (
-    <main
-      className="min-h-screen relative overflow-hidden bg-ink-900"
-      aria-label={t("guide_dashboard_title")}
-      {...meSettingsExtensionIngressDataAttrs(fromSettings, "data-tt-guide-from-settings")}
+    <WorkspaceL5PageShell
+      kind="guide"
+      ariaLabel={t("guide_dashboard_title")}
+      footerTarget={fromSettings ? "settings" : "none"}
+      dataAttrs={{
+        ...meSettingsExtensionIngressDataAttrs(fromSettings, "data-tt-guide-from-settings"),
+        "data-tt-guide-workspace-ops": GUIDE_WORKSPACE_OPS_SCOPE_MARKER,
+        "data-tt-guide-workspace-page": "1",
+        "data-tt-guide-workbench-l5-closure": GUIDE_WORKBENCH_PAGE_L5_CLOSURE_PROBE,
+        "data-tt-ui-frozen": GUIDE_WORKBENCH_PAGE_L5_FROZEN_MARKER,
+      }}
     >
-      <MePageBackground />
-      <div className="relative z-10 max-w-3xl mx-auto px-3 py-6 sm:px-4 sm:py-8">
-        <MeSettingsExtensionIngressBlock
-          fromSettings={fromSettings}
-          noticeKey="me_settings_guide_from_settings_notice"
-          t={t}
-        />
-        {isGuideRole && trustSummary != null ? (
-          <GuideRegistrationStatusBanner trust={trustSummary} t={t} onRefresh={() => void loadMe({ force: true })} />
-        ) : null}
-        <header className="rounded-[var(--radius-md)] border border-cyan-400/40 bg-ink-800/60 backdrop-blur-md px-4 py-4 sm:px-6 sm:py-5 mb-4 sm:mb-6 shadow-scifi-banner-strong">
-          <h1 className="text-h2 font-bold bg-gradient-to-r from-cyan-300 via-cyan-400 to-fuchsia-400 bg-clip-text text-transparent">
-            {t("guide_dashboard_title")}
-          </h1>
-          <p className="text-small text-slate-300 mt-0.5">{t("guide_dashboard_subtitle")}</p>
-        </header>
+      <WorkspaceL5SettingsIngress
+        fromSettings={fromSettings}
+        noticeKey="me_settings_guide_from_settings_notice"
+        t={t}
+      />
+      <WorkspaceL5Header
+        eyebrow={t("guide_workbench_eyebrow")}
+        title={t("guide_dashboard_title")}
+        subtitle={
+          headerSubtitleKey === "guide_dashboard_subtitle_pending"
+            ? t(headerSubtitleKey, { count: workbenchInbox.pendingAcceptCount })
+            : t(headerSubtitleKey)
+        }
+        badge={
+          user ? (
+            <MeGuideRoleBadge user={user} className={TT_ME_GUIDE_ROLE_BADGE.pillGuideWorkspace} />
+          ) : null
+        }
+      />
 
-        {isGuideRole ? (
+      {stakingGateMode !== "none" && guideWorkspaceUnlocked ? (
+        <GuideWorkbenchStakingGateCard
+          t={t}
+          mode={stakingGateMode}
+          apiStakeAmount={guideStakeAmount}
+          minStakeAmount={minStakeFormatted}
+        />
+      ) : null}
+      {awaitingSlots ? (
+        <div className={`${TT_WORKSPACE_L5.sectionCard} animate-pulse motion-reduce:animate-none`} aria-busy="true">
+          <div className="h-5 w-40 rounded bg-ref-sun/10" />
+          <div className="mt-3 h-16 rounded-xl bg-ref-sun/[0.06]" />
+        </div>
+      ) : guideWorkspaceUnlocked ? (
+        <>
           <GuideWorkbenchInboxCard
             t={t}
             inbox={workbenchInbox}
@@ -232,52 +343,34 @@ function GuideDashboardPageInner() {
             ordersError={inboxOrdersError}
             onRetry={retryInbox}
             nextOrderListItem={nextOrderItem}
+            showInboxEmpty={showInboxEmpty}
+            inboxEmptyGuidance={inboxEmptyGuidance}
           />
-        ) : null}
+        </>
+      ) : null}
 
-        {user && trustSummary != null ? (
-          <MeTrustSection
-            t={t}
-            trust={trustSummary}
-            showGuideRegisterLink={!userIsGuide(user)}
-            hideGuideRegistrationRow={isGuideRole}
-            identitySlots={mePayload ? parseIdentitySlotsFromMe(mePayload) : undefined}
-            onTrustRefresh={() => void loadMe({ force: true })}
-          />
-        ) : null}
+      {guideWorkspaceUnlocked && showMarketExposure ? (
+        <GuideWorkbenchMarketExposureCard
+          t={t}
+          profile={workbenchProfile}
+          profileLoading={profileLoading}
+          profileError={profileError}
+          onRetryProfile={retryProfile}
+          stakeAmountForPreview={guideStakeAmount}
+        />
+      ) : null}
 
-        {!isGuideRole ? (
-          <>
-            <ConversionFunnelRail
-              touchpoint="guide"
-              t={t}
-              currentStageId="register"
-              className="mb-4"
-            />
-            <div
-              className="rounded-[var(--radius-md)] border border-warning/35 bg-warning/10 px-4 py-5 sm:px-6 sm:py-6 mb-6"
-              role="region"
-              aria-label={t("guide_dashboard_not_guide_aria")}
-            >
-            <p className="text-small text-warning/95 mb-4">{t("guide_dashboard_not_guide")}</p>
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href="/guide/register"
-                className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-cyan-400/50 bg-cyan-500/20 px-4 py-2 text-meta font-medium text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
-              >
-                {t("guide_dashboard_cta_register")}
-              </Link>
-              <Link
-                href={communityMeHref}
-                className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-slate-500/60 bg-ink-700/60 px-4 py-2 text-meta text-slate-300 hover:bg-ink-600/60 motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
-              >
-                {t("guide_dashboard_link_me")}
-              </Link>
-            </div>
-          </div>
-          </>
-        ) : (
-          <>
+      {!awaitingSlots && !guideWorkspaceUnlocked ? (
+        <WorkspaceOperatorLockedPanel
+          t={t}
+          messageKey="guide_workbench_slot_locked"
+          ariaLabelKey="guide_dashboard_not_guide_aria"
+        />
+      ) : null}
+
+      {guideWorkspaceUnlocked ? (
+        <>
+          {showStatsSections ? (
             <GuideBillingPeriodCard
               t={t}
               statsLoading={statsLoading}
@@ -287,18 +380,21 @@ function GuideDashboardPageInner() {
               periodExpectedEarnings={periodExpectedEarnings}
               periodSettledOrdersCount={periodSettledOrdersCount}
             />
-            {!statsLoading && !statsError && ordersGuided === 0 && completedCount === 0 ? (
-              <div className="mb-4">
-                <TouchpointConversionStrip
-                  touchpoint="guide"
-                  kicker={t("pes_guide_conversion_kicker")}
-                  body={t("pes_guide_empty_stats")}
-                  badge={t("pes_guide_conversion_badge")}
-                  ctaHref="/market"
-                  ctaLabel={t("pes_guide_conversion_cta")}
-                />
-              </div>
-            ) : null}
+          ) : null}
+          {showStatsTeaser ? <GuideWorkbenchStatsTeaser t={t} /> : null}
+          {showPesConversion && !orderTakingBlocked && !statsLoading && !statsError ? (
+            <div className="mb-1">
+              <TouchpointConversionStrip
+                touchpoint="guide"
+                kicker={t("pes_guide_conversion_kicker")}
+                body={t("pes_guide_empty_stats")}
+                badge={t("pes_guide_conversion_badge")}
+                ctaHref="/market?view=guides"
+                ctaLabel={t("pes_guide_conversion_cta")}
+              />
+            </div>
+          ) : null}
+          {showStatsSections ? (
             <GuideDashboardStats
               t={t}
               statsLoading={statsLoading}
@@ -310,51 +406,21 @@ function GuideDashboardPageInner() {
               avgScore={avgScore}
               reviewsWritten={reviewsWritten}
             />
-            <section className="rounded-[var(--radius-md)] border border-slate-600/60 bg-ink-800/50 backdrop-blur-md px-4 py-4 sm:px-5 sm:py-4 mb-6">
-              <h2 className="text-meta text-slate-300 mb-3">{t("guide_dashboard_quick_links")}</h2>
-              <div className="flex flex-wrap gap-2">
-                <Link
-                  href="/market"
-                  className={`rounded-full border border-cyan-400/50 bg-cyan-500/10 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/20 motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
-                >
-                  {t("header_market")}
-                </Link>
-                <Link
-                  href="/orders"
-                  className={`rounded-full border border-cyan-400/50 bg-cyan-500/10 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/20 motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
-                >
-                  {t("nav_orders")}
-                </Link>
-                <Link
-                  href="/community"
-                  className={`rounded-full border border-fuchsia-400/50 bg-fuchsia-500/10 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-fuchsia-300 hover:text-fuchsia-100 hover:bg-fuchsia-500/20 motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
-                >
-                  {t("header_community")}
-                </Link>
-                <Link
-                  href={communityMeHref}
-                  className={`rounded-full border border-slate-500/60 bg-ink-700/60 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-slate-300 hover:bg-ink-600/60 motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
-                >
-                  {t("me_title")}
-                </Link>
-              </div>
-            </section>
-          </>
-        )}
+          ) : null}
+        </>
+      ) : null}
 
-        {!fromSettings ? (
-          <footer className="mt-8 pt-6 border-t border-slate-700/50">
-            <ProductCrossNav
-              ariaLabelKey="guide_dashboard_relatedNav_aria"
-              showGuides
-              className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-300"
-              linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 font-medium motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
-              separatorClassName="text-slate-500"
-            />
-          </footer>
-        ) : null}
-      </div>
-    </main>
+      {guideWorkspaceUnlocked && showExitRequestCard ? (
+        <GuideWorkbenchExitRequestCard
+          t={t}
+          guideRegistrationStatus={trustSummary?.guide_registration_status ?? null}
+        />
+      ) : null}
+
+      {guideWorkspaceUnlocked ? (
+        <GuideWorkbenchL5CrossNav showTrustLink={!orderTakingBlocked} />
+      ) : null}
+    </WorkspaceL5PageShell>
   );
 }
 

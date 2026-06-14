@@ -1,0 +1,5 @@
+step: S05-real-deposit
+status: PASS
+api: https://tt-api-staging.fly.dev
+at: 2026-06-14T03:13:59Z
+note: traveler approve + deposit (Funded)

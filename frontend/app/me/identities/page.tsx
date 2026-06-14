@@ -6,26 +6,33 @@ import { Suspense, useMemo } from "react";
 import AuthL5CrossNavFooter from "@/components/auth/AuthL5CrossNavFooter";
 import AuthL5PageBackdrop from "@/components/auth/AuthL5PageBackdrop";
 import { MeIdentitiesL5IdentityCard } from "@/components/me/MeIdentitiesL5IdentityCard";
+import { MeIdentitiesProfileLinksNav } from "@/components/me/MeIdentitiesProfileLinksNav";
 import MeIdentitiesRouteLoading from "@/components/me/MeIdentitiesRouteLoading";
 import { MeIdentitiesTravelerCallout } from "@/components/me/MeIdentitiesTravelerCallout";
 import { useTranslation } from "@/components/LocaleProvider";
 import { meTrustStateLabelKey } from "@/components/me/meTrustSectionLabels";
 import { buildHeaderLoginHref, buildHeaderRegisterHref, buildIdentitiesApplyChildHref } from "@/lib/headerLoginHref";
+import { deriveMeIdentitiesAcquisitionCardView } from "@/lib/me/meIdentitiesAcquisitionHubModel";
 import {
   deriveMeIdentitiesCoreCardView,
-  ME_IDENTITIES_ACQUISITION_SETTINGS_HREF,
   ME_IDENTITIES_MERCHANT_SETTINGS_HREF,
   ME_IDENTITIES_STEWARD_SETTINGS_HREF,
 } from "@/lib/me/meIdentitiesCoreCardModel";
 import { meIdentitiesHubSlotState } from "@/lib/me/meIdentitiesHubSlots";
 import { meIdentitiesL5MainDataAttrs, TT_ME_IDENTITIES_L5 } from "@/lib/me/meIdentitiesL5";
+import { meIdentitiesProfileLinks } from "@/lib/me/meIdentitiesProfileLinksModel";
+import { meIdentitiesHubOperatorSectionDefaultOpen } from "@/lib/me/meIdentitiesIaClosureSprintModel";
+import { useMeIdentitiesProfileLinkThumbs } from "@/lib/me/useMeIdentitiesProfileLinkThumbs";
 import { useMeIdentitiesCoreCardSignals } from "@/lib/me/useMeIdentitiesCoreCardSignals";
+import { useMeIdentityHubBlockedReasons } from "@/lib/me/useMeIdentityHubBlockedReasons";
 import { useMeIdentitySlots } from "@/lib/me/useMeIdentitySlots";
+import { stewardAdmissionWorkbenchHref } from "@/lib/steward/stewardAdmissionNav";
 
-/** 顶栏「多重身份」汇总：旅行者 + Provider/Steward 核心轨 + 扩展申请（L5 暗壳 · 与 `/auth/*` 同族）。 */
+/** 顶栏「多重身份」Hub：基础能力（旅行者+收购）+ 经营身份申请/工作台（L5 暗壳）。 */
 function MeIdentitiesHubInner() {
   const { t } = useTranslation();
-  const { ready: slotsReady, slotById } = useMeIdentitySlots();
+  const { ready: slotsReady, slotById, slots } = useMeIdentitySlots();
+  const { blockedReasonBySurface } = useMeIdentityHubBlockedReasons(slotsReady, slotById);
   const { bundle: coreSignals, ready: coreReady } = useMeIdentitiesCoreCardSignals(slotById, slotsReady);
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -43,13 +50,45 @@ function MeIdentitiesHubInner() {
     [pathname, searchParams],
   );
   const providerOnboardingHref = "/me/onboarding?role=provider&from=identities_hub";
-  const stewardOnboardingHref = "/me/onboarding?role=region_steward&from=identities_hub";
+  const stewardOnboardingHref = stewardAdmissionWorkbenchHref("identities_hub");
+
+  const loggedIn = slotsReady && slots != null;
+  const userRole = coreSignals?.provider.userRole ?? coreSignals?.steward.userRole ?? null;
 
   const travelerState = slotsReady ? slotById("traveler")?.state ?? null : null;
   const travelerStatusLabel =
     travelerState && travelerState !== "inactive" ? t(meTrustStateLabelKey(travelerState)) : null;
 
-  const coreCards = [
+  const acquisitionCard = useMemo(() => {
+    const rawState = slotsReady ? slotById("acquisition")?.state ?? null : null;
+    return deriveMeIdentitiesAcquisitionCardView(rawState);
+  }, [slotsReady, slotById]);
+
+  const profileLinks = useMemo(
+    () =>
+      meIdentitiesProfileLinks({
+        loggedIn,
+        userRole,
+        guideSlotState: slotsReady ? slotById("guide")?.state ?? null : null,
+        merchantSlotState: slotsReady ? slotById("merchant")?.state ?? null : null,
+        stewardSlotState: slotsReady ? slotById("region_steward")?.state ?? null : null,
+      }),
+    [loggedIn, userRole, slotsReady, slotById],
+  );
+
+  const operatorSectionDefaultOpen = useMemo(() => {
+    if (!slotsReady) return true;
+    return meIdentitiesHubOperatorSectionDefaultOpen({
+      guide: slotById("guide")?.state ?? null,
+      merchant: slotById("merchant")?.state ?? null,
+      region_steward: slotById("region_steward")?.state ?? null,
+    });
+  }, [slotsReady, slotById]);
+
+  const profileLinkIds = useMemo(() => profileLinks.map((link) => link.id), [profileLinks]);
+  const profileLinkThumbs = useMeIdentitiesProfileLinkThumbs(profileLinkIds, loggedIn);
+
+  const operatorCards = [
     {
       surfaceId: "provider" as const,
       titleKey: "header_identity_provider",
@@ -69,44 +108,26 @@ function MeIdentitiesHubInner() {
   const guideApplyHref = useMemo(() => {
     const guideState = slotsReady ? slotById("guide")?.state ?? null : null;
     if (guideState && guideState !== "inactive") {
-      return "/me/identities/guide/settings";
+      return "/guide";
     }
     return buildIdentitiesApplyChildHref("/guide/register", pathname, searchParams);
   }, [slotsReady, slotById, pathname, searchParams]);
 
-  const acquisitionApplyHref = useMemo(() => {
-    const acquisitionState = slotsReady ? slotById("acquisition")?.state ?? null : null;
-    if (acquisitionState && acquisitionState !== "inactive") {
-      return ME_IDENTITIES_ACQUISITION_SETTINGS_HREF;
-    }
-    return buildIdentitiesApplyChildHref("/market/acquisition", pathname, searchParams);
-  }, [slotsReady, slotById, pathname, searchParams]);
-
-  const extendedCards = useMemo(
+  const guideCard = useMemo(
     () =>
-      [
-        {
-          href: guideApplyHref,
-          surfaceId: "guide" as const,
-          titleKey: "header_identity_applyGuide" as const,
-          descKey: "me_identities_card_guide_desc" as const,
-          ctaKey:
-            guideApplyHref.includes("/guide/settings")
+      ({
+        href: guideApplyHref,
+        surfaceId: "guide" as const,
+        titleKey: "header_identity_applyGuide" as const,
+        descKey: "me_identities_card_guide_desc" as const,
+        ctaKey:
+          guideApplyHref === "/guide"
+            ? ("me_identities_card_guide_workspace_cta" as const)
+            : guideApplyHref.includes("/guide/settings")
               ? ("me_identities_card_guide_settings_cta" as const)
               : ("me_identities_card_cta" as const),
-        },
-        {
-          href: acquisitionApplyHref,
-          surfaceId: "acquisition" as const,
-          titleKey: "header_identity_acquisition" as const,
-          descKey: "me_identities_card_acquisition_desc" as const,
-          ctaKey:
-            acquisitionApplyHref.includes("/acquisition/settings")
-              ? ("me_identities_card_acquisition_settings_cta" as const)
-              : ("me_identities_card_cta_market" as const),
-        },
-      ] as const,
-    [guideApplyHref, acquisitionApplyHref],
+      }) as const,
+    [guideApplyHref],
   );
 
   return (
@@ -126,9 +147,9 @@ function MeIdentitiesHubInner() {
           <p className={TT_ME_IDENTITIES_L5.subtitle}>{t("me_identities_hub_subtitle")}</p>
         </header>
 
-        <section className="mt-6" aria-labelledby="me-identities-core-heading">
-          <h2 id="me-identities-core-heading" className={TT_ME_IDENTITIES_L5.applySectionTitle}>
-            {t("me_identities_core_section_title")}
+        <section className="mt-6" aria-labelledby="me-identities-capabilities-heading">
+          <h2 id="me-identities-capabilities-heading" className={TT_ME_IDENTITIES_L5.applySectionTitle}>
+            {t("me_identities_capabilities_section_title")}
           </h2>
           <MeIdentitiesTravelerCallout
             registerHref={registerHref}
@@ -138,10 +159,46 @@ function MeIdentitiesHubInner() {
           />
           <ul
             className={`${TT_ME_IDENTITIES_L5.grid} mt-4`}
-            aria-label={t("me_identities_core_grid_aria")}
-            data-tt-me-identities-core-grid="1"
+            aria-label={t("me_identities_capabilities_grid_aria")}
+            data-tt-me-identities-capabilities-grid="1"
           >
-            {coreCards.map(({ surfaceId, titleKey, descKey, applyHref, onboardingHref }) => {
+            <li className={TT_ME_IDENTITIES_L5.gridItem}>
+              <MeIdentitiesL5IdentityCard
+                href={acquisitionCard.href}
+                surfaceId="acquisition"
+                title={t("header_identity_acquisition")}
+                description={t("me_identities_card_acquisition_capability_desc")}
+                ctaLabel={t(acquisitionCard.ctaLabelKey)}
+                statusLabel={acquisitionCard.showStatus ? t(acquisitionCard.statusLabelKey) : null}
+                statusState={acquisitionCard.showStatus ? acquisitionCard.statusPillState : null}
+                blockedReasonLines={blockedReasonBySurface.acquisition}
+              />
+            </li>
+          </ul>
+        </section>
+
+        <section className={TT_ME_IDENTITIES_L5.gridSection} aria-labelledby="me-identities-operator-heading">
+          <h2 id="me-identities-operator-heading" className={TT_ME_IDENTITIES_L5.applySectionTitle}>
+            {t("me_identities_operator_section_title")}
+          </h2>
+          <details open={operatorSectionDefaultOpen} className="group">
+            <summary
+              className={`mb-4 max-w-2xl cursor-pointer list-none text-meta leading-relaxed text-slate-400/95 marker:content-none [&::-webkit-details-marker]:hidden ${!operatorSectionDefaultOpen ? "text-ref-sun/90 underline-offset-2 hover:underline" : ""}`}
+            >
+              {operatorSectionDefaultOpen
+                ? t("me_identities_operator_section_hint")
+                : t("me_identities_operator_section_expand")}
+            </summary>
+            {!operatorSectionDefaultOpen ? (
+              <p className="sr-only">{t("me_identities_operator_section_hint")}</p>
+            ) : null}
+            <div className={TT_ME_IDENTITIES_L5.gridHalo} aria-hidden />
+            <ul
+              className={TT_ME_IDENTITIES_L5.grid}
+              aria-label={t("me_identities_operator_grid_aria")}
+              data-tt-me-identities-operator-grid="1"
+            >
+            {operatorCards.map(({ surfaceId, titleKey, descKey, applyHref, onboardingHref }) => {
               const signals =
                 coreReady && coreSignals
                   ? surfaceId === "provider"
@@ -160,16 +217,8 @@ function MeIdentitiesHubInner() {
                 : null;
               const slotState = slotsReady ? meIdentitiesHubSlotState(surfaceId, slotById) : null;
               const statusLabel = cardView ? t(cardView.statusLabelKey) : null;
-              let cta = cardView ? t(cardView.ctaLabelKey) : t("me_identities_card_cta");
-              let href = cardView?.href ?? applyHref;
-              if (
-                surfaceId === "provider" &&
-                slotState &&
-                slotState !== "inactive"
-              ) {
-                href = ME_IDENTITIES_MERCHANT_SETTINGS_HREF;
-                cta = t("me_identities_card_merchant_settings_cta");
-              }
+              const cta = cardView ? t(cardView.ctaLabelKey) : t("me_identities_card_cta");
+              const href = cardView?.href ?? applyHref;
               return (
                 <li key={surfaceId} className={TT_ME_IDENTITIES_L5.gridItem}>
                   <MeIdentitiesL5IdentityCard
@@ -181,53 +230,41 @@ function MeIdentitiesHubInner() {
                     statusLabel={statusLabel}
                     statusState={cardView?.statusPillState ?? slotState}
                     corePhase={cardView?.phase ?? null}
+                    blockedReasonLines={blockedReasonBySurface[surfaceId]}
                   />
                 </li>
               );
             })}
-          </ul>
-        </section>
-
-        <section className={TT_ME_IDENTITIES_L5.gridSection} aria-labelledby="me-identities-apply-heading">
-          <h2 id="me-identities-apply-heading" className={TT_ME_IDENTITIES_L5.applySectionTitle}>
-            {t("me_identities_apply_section_title")}
-          </h2>
-          <div className={TT_ME_IDENTITIES_L5.gridHalo} aria-hidden />
-          <ul
-            className={TT_ME_IDENTITIES_L5.grid}
-            aria-label={t("me_identities_apply_grid_aria")}
-            data-tt-me-identities-apply-grid="1"
-          >
-            {extendedCards.map(({ href, surfaceId, titleKey, descKey, ctaKey }) => {
-              const slotState = slotsReady ? meIdentitiesHubSlotState(surfaceId, slotById) : null;
-              const statusLabel =
-                slotState != null ? t(meTrustStateLabelKey(slotState)) : null;
+            {(() => {
+              const slotState = slotsReady ? meIdentitiesHubSlotState(guideCard.surfaceId, slotById) : null;
+              const statusLabel = slotState != null ? t(meTrustStateLabelKey(slotState)) : null;
               return (
-                <li key={surfaceId} className={TT_ME_IDENTITIES_L5.gridItem}>
+                <li key={guideCard.surfaceId} className={TT_ME_IDENTITIES_L5.gridItem}>
                   <MeIdentitiesL5IdentityCard
-                    href={href}
-                    surfaceId={surfaceId}
-                    title={t(titleKey)}
-                    description={t(descKey)}
-                    ctaLabel={t(ctaKey)}
+                    href={guideCard.href}
+                    surfaceId={guideCard.surfaceId}
+                    title={t(guideCard.titleKey)}
+                    description={t(guideCard.descKey)}
+                    ctaLabel={t(guideCard.ctaKey)}
                     statusLabel={statusLabel}
                     statusState={slotState}
+                    blockedReasonLines={blockedReasonBySurface.guide}
                   />
                 </li>
               );
-            })}
-          </ul>
+            })()}
+            </ul>
+          </details>
         </section>
 
+        <MeIdentitiesProfileLinksNav t={t} links={profileLinks} thumbs={profileLinkThumbs} />
+
         <p className={`${TT_ME_IDENTITIES_L5.footerLinks} text-meta leading-relaxed text-ink-500`} role="note">
-          {t("me_identities_onboarding_console_note")}
+          {t("me_identities_hub_footer_note")}
         </p>
         <nav className={TT_ME_IDENTITIES_L5.footerLinks} aria-label={t("me_identities_footer_nav_aria")}>
-          <Link href={providerOnboardingHref} className={TT_ME_IDENTITIES_L5.footerLink}>
-            {t("me_identities_link_onboarding_provider")}
-          </Link>
-          <Link href={stewardOnboardingHref} className={TT_ME_IDENTITIES_L5.footerLink}>
-            {t("me_identities_link_onboarding_steward")}
+          <Link href="/me/publish" className={TT_ME_IDENTITIES_L5.footerLink}>
+            {t("me_identities_publish_hub_link")}
           </Link>
           <Link href="/me/settings/profile" className={TT_ME_IDENTITIES_L5.footerLink}>
             {t("me_identities_back_community")}

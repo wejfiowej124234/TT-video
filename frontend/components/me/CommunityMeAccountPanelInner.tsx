@@ -12,6 +12,13 @@ import CommunityMeAccountPanelError from "@/components/me/communityMePage/Commun
 import CommunityMeAccountPanelProfileCard from "@/components/me/communityMePage/CommunityMeAccountPanelProfileCard";
 import { useCommunityMeAccountPanelAvatar } from "@/components/me/communityMePage/useCommunityMeAccountPanelAvatar";
 import type { CommunityMeAccountPanelProps } from "@/components/me/communityMePage/communityMeAccountPanelTypes";
+import {
+  meSettingsShowAcquisitionHub,
+  meSettingsShowGuideHub,
+  meSettingsShowMerchantHub,
+  meSettingsShowStewardHub,
+} from "@/lib/me/meIdentitySlotVisibility";
+import { useMeIdentitySlots } from "@/lib/me/useMeIdentitySlots";
 import type { MeProfileSectionProps } from "@/components/me/meProfileSectionTypes";
 
 type InnerProps = Omit<CommunityMeAccountPanelProps, "enabled">;
@@ -26,6 +33,7 @@ export function CommunityMeAccountPanelInner({
   hideQuickLinks = false,
 }: InnerProps) {
   const hook = useMePage(t, { skipAvatarUrlOnProfileSave: true });
+  const { ready: slotsReady, slotById } = useMeIdentitySlots();
   const likesListEnabled = isCommunityMeLikesListEnabled();
   const bioFeatureOn = isCommunityMeBioEnabled();
 
@@ -132,7 +140,25 @@ export function CommunityMeAccountPanelInner({
       />
 
       {hideQuickLinks ? null : (
-        <CommunityMeQuickLinksDrawer t={t} showGuideHub={user.role === "guide"} likesListEnabled={likesListEnabled} />
+        <CommunityMeQuickLinksDrawer
+          t={t}
+          showGuideHub={meSettingsShowGuideHub({
+            userRole: user.role,
+            guideSlotState: slotsReady ? slotById("guide")?.state ?? null : null,
+          })}
+          showMerchantHub={meSettingsShowMerchantHub({
+            userRole: user.role,
+            merchantSlotState: slotsReady ? slotById("merchant")?.state ?? null : null,
+          })}
+          showStewardHub={meSettingsShowStewardHub({
+            userRole: user.role,
+            stewardSlotState: slotsReady ? slotById("region_steward")?.state ?? null : null,
+          })}
+          showAcquisitionHub={meSettingsShowAcquisitionHub({
+            acquisitionSlotState: slotsReady ? slotById("acquisition")?.state ?? null : null,
+          })}
+          likesListEnabled={likesListEnabled}
+        />
       )}
     </div>
   );

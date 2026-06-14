@@ -67,14 +67,21 @@
     {
       "id": "C-GOV-011",
       "title": "协议引用机读",
-      "vitest": ["lib/governanceParams84Readonly.test.ts"]
+      "vitest": [
+        "lib/governanceParams84Readonly.test.ts",
+        "lib/governance/governanceParamsCountryDisplay.test.ts",
+        "lib/governance/governanceParamsPageL5Ui.test.tsx",
+        "lib/governance/governanceParamsPageL5FullClosure.contract.test.ts",
+        "app/governance/params/governanceParamsPage.contract.test.ts",
+        "app/governance/params/governanceParamsParticipatePanel.contract.test.ts"
+      ]
     }
   ],
   "epic_a_companion": [
     "lib/apiClient/governance.proposal-status.test.ts",
     "components/governance/GovernancePreExecutionHint.contract.test.ts",
     "components/governance/GovernanceProposalExecStatusBadge.contract.test.ts",
-    "components/governance/GovernanceProposalExecutionActionsSkeleton.contract.test.ts",
+    "components/governance/GovernanceProposalExecutionActionsPanel.contract.test.ts",
     "lib/governanceExecutionReadiness.test.ts",
     "lib/governanceExecReadOnlyNarrative.test.ts"
   ]

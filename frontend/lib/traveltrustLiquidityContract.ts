@@ -45,17 +45,13 @@ export function traveltrustLiquidityContractFromBrief(
   if (!raw || raw.pair_type !== "stablecoin_to_governance_token") {
     return TRAVELTRUST_LIQUIDITY_CONTRACT_DEV_FALLBACK;
   }
-  const pay = raw.pay_stablecoins?.filter((s): s is TraveltrustEscrowSettlementStablecoin =>
-    s === "USDC" || s === "USDT",
-  );
+  const pay = raw.pay_stablecoins?.filter((s): s is TraveltrustEscrowSettlementStablecoin => s === "USDC");
   return {
     ...TRAVELTRUST_LIQUIDITY_CONTRACT_DEV_FALLBACK,
     ...raw,
     pay_stablecoins: pay?.length ? pay : TRAVELTRUST_LIQUIDITY_CONTRACT_DEV_FALLBACK.pay_stablecoins,
     default_pay_stable:
-      raw.default_pay_stable === "USDT" || raw.default_pay_stable === "USDC"
-        ? raw.default_pay_stable
-        : TRAVELTRUST_DEFAULT_SETTLEMENT_STABLECOIN,
+      raw.default_pay_stable === "USDC" ? raw.default_pay_stable : TRAVELTRUST_DEFAULT_SETTLEMENT_STABLECOIN,
     receive_symbol: TRAVELTRUST_GOVERNANCE_TOKEN_SYMBOL,
   };
 }

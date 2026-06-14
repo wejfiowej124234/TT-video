@@ -1,0 +1,8 @@
+{
+  "order_id": "bd83b97f-77f4-4391-b71f-dc236cc4c9c0",
+  "order_id_bytes32": "0x00000000000000000000000000000000bd83b97f77f44391b71fdc236cc4c9c0",
+  "escrow_address": "0x105Ff943F52bCf149459A1e1b644C07Ea52B7253",
+  "amount_wei": "100000000",
+  "traveler": "0xFA62bb5F7B21C160eFe115297dc5338982E24649",
+  "guide": "0x96A7C3DB87a738ec3bDb1B0C1147A5c1dE8FE4E5"
+}

@@ -78,13 +78,16 @@ describe("me settings family · 100% L5 score gates (①)", () => {
     expect(page).not.toContain("partialSoon: true");
   });
 
-  it("trust subpage links wallet verify and trust center without KYC", () => {
+  it("trust subpage shows progress checklist and advanced transparency section", () => {
     const page = readFileSync(join(ROOT, "app/me/settings/trust/page.tsx"), "utf8");
-    expect(page).not.toContain("meKycStatusRaw");
-    expect(page).not.toContain("data-tt-me-settings-kyc-status");
-    expect(page).toContain("meSecurityHref");
-    expect(page).toContain("MeSettingsResendVerifyEmailPanel");
-    expect(page).toContain('meSettingsNavExtensionHref("/trust")');
+    const panel = readFileSync(join(ROOT, "components/me/MeSettingsTrustProgressPanel.tsx"), "utf8");
+    const model = readFileSync(join(ROOT, "lib/me/meSettingsTrustProgressModel.ts"), "utf8");
+    expect(page).toContain("MeSettingsTrustProgressPanel");
+    expect(panel).toContain("data-tt-me-settings-kyc-status");
+    expect(model).toContain("resolveMeSettingsTrustProgress");
+    expect(model).toContain("formatKycStatusLabelCompact");
+    expect(page).toContain("useMeSettingsTrustPage");
+    expect(page).not.toContain("me_settings_trust_actions_section");
   });
 
   it("onboarding from settings uses settings L5 flow without ProductCrossNav branch", () => {

@@ -1,239 +1,613 @@
 "use client";
 
-import { type FormEvent, useId } from "react";
+
+
+import { type FormEvent, useEffect, useId, useMemo, useState } from "react";
+
 import Link from "next/link";
+
 import ApiErrorAlert from "@/components/ApiErrorAlert";
-import LoadingText from "@/components/LoadingText";
-import GovernanceTargetNotice from "@/components/governance/GovernanceTargetNotice";
-import GovernanceB090OnChainProposalNotice from "@/components/governance/GovernanceB090OnChainProposalNotice";
-import GovernanceProposalExecStatusBadge from "@/components/governance/GovernanceProposalExecStatusBadge";
-import { GOV_EXEC_LIST_BRIDGE_DOM_ID, GovExecReadOnlyI18n } from "@/lib/governanceExecReadOnlyNarrative";
-import { GovernanceOpsAdminLinks } from "@/components/governance/GovernanceOpsAdminLinks";
-import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
-import {TT_MARKETING_GOVERNANCE_INNER_3XL, TT_MARKETING_GOVERNANCE_INNER_4XL, TT_MARKETING_GOVERNANCE_INNER_5XL, TT_MARKETING_GOVERNANCE_INNER_6XL, TT_MARKETING_GOVERNANCE_PAGE_SHELL , TT_MARKETING_CONSOLE_INLINE_LINK, TT_MARKETING_BTN_SECONDARY_CONSOLE, TT_MARKETING_CONSOLE_LINK_FOCUS} from "@/lib/marketingUi";
+
+import { TouchpointEmptyPanel } from "@/components/product-enhancement/TouchpointEmptyPanel";
+
+import { TouchpointConversionStrip } from "@/components/product-enhancement/TouchpointConversionStrip";
+
+import { ConversionFunnelRail } from "@/components/product-enhancement/ConversionFunnelRail";
+
+import { GovernanceProposalListCard } from "@/components/governance/GovernanceProposalListCard";
+
 import {
-  touchTargetLink44Classes,
-} from "@/lib/travelLinkFocus";
+
+  GovernanceProposalsPageGuide,
+
+  GovernanceProposalsTechDisclosure,
+
+} from "@/components/governance/GovernanceProposalsPageGuide";
+
+import { GovernanceProposalsToolbar } from "@/components/governance/GovernanceProposalsToolbar";
+
+import { GovernanceProposalsL5Shell } from "@/components/governance/GovernanceProposalsL5Shell";
+
+import { GovernanceProposalsPageHeader } from "@/components/governance/GovernanceProposalsPageHeader";
+
+import { Suspense } from "react";
+import { StewardWorkbenchSubpageBackLinkFromQuery } from "@/components/governance/StewardWorkbenchSubpageBackLinkFromQuery";
+
+import { GOV_EXEC_LIST_BRIDGE_DOM_ID, GovExecReadOnlyI18n } from "@/lib/governanceExecReadOnlyNarrative";
+
+import { GovernanceOpsAdminLinks } from "@/components/governance/GovernanceOpsAdminLinks";
+
+import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
+
+import {
+
+  filterGovernanceProposals,
+
+  readGovernancePersonaView,
+
+  writeGovernancePersonaView,
+
+  type GovernancePersonaView,
+
+  type GovernanceProposalStatusFilter,
+
+} from "@/lib/governance/governanceProposalsListModel";
+
+import {
+
+  GOV_PROPOSALS_L5,
+
+  GovernanceProposalsL5Panel,
+
+} from "@/lib/governance/governanceProposalsL5Ui";
+
 import { useGovernanceProposalsPage } from "./useGovernanceProposalsPage";
 
+
+
 export function GovernanceProposalsPageMain() {
+
   const pageTitleId = useId();
+
   const listSectionId = useId();
+
+  const [statusFilter, setStatusFilter] = useState<GovernanceProposalStatusFilter>("all");
+
+  const [personaView, setPersonaView] = useState<GovernancePersonaView>("all");
+
+
+
+  useEffect(() => {
+
+    setPersonaView(readGovernancePersonaView());
+
+  }, []);
+
+
+
   const {
+
     t,
+
     items,
+
     note,
+
     loading,
+
     error,
+
     setRetryTick,
+
     chainId,
+
     metaGovernor,
+
     chainExecById,
+
     chainExecLoading,
+
+    summaryById,
+
+    summaryLoading,
+
     emptySuccess,
+
     showOnChainPanel,
+
   } = useGovernanceProposalsPage();
 
-  return (
-    <main
-      className={`${TT_MARKETING_GOVERNANCE_PAGE_SHELL} ${TT_MARKETING_GOVERNANCE_INNER_3XL}`} data-tt-marketing-product-shell="1"
-      aria-labelledby={pageTitleId}
-      data-tt-governance-proposals-page="1"
-    >
-      <h1 id={pageTitleId} className="text-h3 font-semibold text-ink-900">
-        {t("governance_proposals_title")}
-      </h1>
-      <p className="mt-2 text-body text-ink-600">{t("governance_proposals_intro")}</p>
-      <GovernanceTargetNotice className="mt-4" />
 
-      {showOnChainPanel ? (
-        <div className="mt-6">
-          <GovernanceB090OnChainProposalNotice
-            variant="list"
-            chainId={chainId}
-            governorAddress={metaGovernor}
-          />
+
+  const filteredItems = useMemo(() => {
+
+    if (!items) return null;
+
+    return filterGovernanceProposals(items, statusFilter, chainExecById);
+
+  }, [items, statusFilter, chainExecById]);
+
+
+
+  const onPersonaChange = (next: GovernancePersonaView) => {
+
+    setPersonaView(next);
+
+    writeGovernancePersonaView(next);
+
+  };
+
+
+
+  return (
+
+    <GovernanceProposalsL5Shell ariaLabelledBy={pageTitleId}>
+
+      <Suspense fallback={null}>
+        <StewardWorkbenchSubpageBackLinkFromQuery t={t} />
+      </Suspense>
+
+      <GovernanceProposalsPageHeader
+
+        pageTitleId={pageTitleId}
+
+        kicker={t("governance_proposals_l5_kicker")}
+
+        title={t("governance_proposals_title")}
+
+        lead={t("governance_proposals_intro_l5")}
+
+        createCtaLabel={t("governance_proposals_create_cta")}
+
+        secondaryCtaLabel={t("governance_delegate_nav")}
+
+      />
+
+
+
+      <GovernanceProposalsPageGuide />
+
+
+
+      <details className={`${GOV_PROPOSALS_L5.accordion} mt-4`}>
+
+        <summary className={GOV_PROPOSALS_L5.accordionSummary}>{t("governance_proposals_l5_journey_toggle")}</summary>
+
+        <div className="border-t border-white/10 px-3 pb-3 pt-2">
+
+          <ConversionFunnelRail touchpoint="governance" t={t} variant="dark" className="mt-0 border-0 bg-transparent p-0 shadow-none" />
+
         </div>
+
+      </details>
+
+
+
+      <p className={`${GOV_PROPOSALS_L5.noticeSoft} mt-4`} role="note">
+
+        {t("governance_proposals_l5_disclaimer")}
+
+      </p>
+
+
+
+      {!loading && !error ? (
+
+        <GovernanceProposalsToolbar
+
+          statusFilter={statusFilter}
+
+          onStatusFilterChange={setStatusFilter}
+
+          personaView={personaView}
+
+          onPersonaViewChange={onPersonaChange}
+
+          proposalCount={filteredItems?.length ?? items?.length}
+
+        />
+
       ) : null}
+
+      {!loading && !error ? (
+
+        <p className={`mt-2 px-1 ${GOV_PROPOSALS_L5.metaNote}`} role="note">
+
+          {t("governance_proposals_persona_help")}
+
+        </p>
+
+      ) : null}
+
+
+
+      <GovernanceProposalsTechDisclosure
+
+        showOnChainPanel={showOnChainPanel}
+
+        chainId={chainId}
+
+        metaGovernor={metaGovernor}
+
+        listBridgeId={GOV_EXEC_LIST_BRIDGE_DOM_ID}
+
+        listBridgeText={t(GovExecReadOnlyI18n.listEntryBridge)}
+
+      />
+
+
 
       {loading ? (
-        <div className="mt-6">
-          <LoadingText />
+
+        <div className={`mt-6 ${GOV_PROPOSALS_L5.loadingPanel}`} role="status" aria-live="polite" aria-busy="true">
+
+          <p className={GOV_PROPOSALS_L5.metaNote}>{t("pes_governance_loading")}</p>
+
+          <div className="space-y-2" aria-hidden>
+
+            {Array.from({ length: 4 }).map((_, i) => (
+
+              <div
+
+                key={i}
+
+                className={`h-16 rounded-[var(--radius-md)] border border-white/10 bg-slate-950/40 animate-pulse motion-reduce:animate-none ${i === 3 ? "w-2/3" : "w-full"}`}
+
+              />
+
+            ))}
+
+          </div>
+
         </div>
+
       ) : null}
+
+
 
       {error ? (
-        <div className="mt-6 space-y-2">
+
+        <GovernanceProposalsL5Panel className="mt-6">
+
           <ApiErrorAlert message={error} />
+
           <form
-            className="inline"
+
+            className="mt-3 inline"
+
             onSubmit={(e: FormEvent) => {
+
               e.preventDefault();
+
               if (loading) return;
+
               setRetryTick((n) => n + 1);
+
             }}
+
           >
+
             <button
+
               type="submit"
+
               disabled={loading}
+
               aria-busy={loading ? true : undefined}
+
               aria-label={t("common_retry")}
-              className={`${touchTargetLink44Classes} ${TT_MARKETING_BTN_SECONDARY_CONSOLE} rounded-[var(--radius-sm)] px-3 py-2 focus-visible:ring-offset-white`}
+
+              className={GOV_PROPOSALS_L5.retryBtn}
+
             >
+
               {loading ? t("common_retrying") : t("common_retry")}
+
             </button>
+
           </form>
-        </div>
+
+        </GovernanceProposalsL5Panel>
+
       ) : null}
+
+
 
       {!loading && !error && emptySuccess ? (
-        <section className="mt-6 rounded-[var(--radius-md)] border border-ink-200/80 bg-ink-50/60 p-4 dark:border-ink-600/40 dark:bg-ink-900/30">
-          <h2 className="text-small font-semibold text-ink-800 dark:text-ink-100">
-            {t("governance_proposals_empty_title")}
-          </h2>
-          <p className="mt-2 text-body text-ink-700 dark:text-ink-200">{t("governance_proposals_empty_body")}</p>
-          {note ? (
-            <p className="mt-2 text-meta text-ink-600 dark:text-ink-400" role="note">
-              {note}
-            </p>
-          ) : null}
-        </section>
+
+        <div className="mt-6 space-y-4">
+
+          <TouchpointConversionStrip
+
+            touchpoint="governance"
+
+            kicker={t("pes_governance_conversion_kicker")}
+
+            body={t("pes_governance_conversion_body")}
+
+            badge={t("pes_governance_conversion_badge")}
+
+            ctaHref="/governance/proposals/new"
+
+            ctaLabel={t("governance_proposals_create_cta")}
+
+          />
+
+          <GovernanceProposalsL5Panel>
+
+            <TouchpointEmptyPanel
+
+              variant="dark"
+
+              title={t("governance_proposals_empty_title")}
+
+              body={t("governance_proposals_empty_body_l5")}
+
+              actions={[
+
+                { href: "/governance/proposals/new", label: t("governance_proposals_create_cta"), primary: true },
+
+                { href: "/governance/delegate", label: t("pes_governance_empty_cta_delegate") },
+
+                { href: "/governance", label: t("pes_governance_conversion_cta") },
+
+              ]}
+
+              footer={
+
+                note ? (
+
+                  <p className={GOV_PROPOSALS_L5.metaNote} role="note">
+
+                    {note}
+
+                  </p>
+
+                ) : null
+
+              }
+
+            />
+
+          </GovernanceProposalsL5Panel>
+
+        </div>
+
       ) : null}
 
-      {!loading && !error && items !== null && items.length > 0 ? (
-        <section className="mt-6" aria-labelledby={listSectionId}>
-          <h2 id={listSectionId} className="sr-only">
-            {t("governance_proposals_list_heading")}
-          </h2>
-          {note ? <p className="mb-3 text-meta text-ink-600">{note}</p> : null}
-          {showOnChainPanel ? (
-            <p
-              id={GOV_EXEC_LIST_BRIDGE_DOM_ID}
-              className="mb-3 rounded-[var(--radius-sm)] border border-ink-200/90 bg-ink-50/80 p-3 text-meta leading-snug text-ink-700 dark:border-ink-600/45 dark:bg-ink-900/30 dark:text-ink-200"
-              role="note"
-            >
-              {t(GovExecReadOnlyI18n.listEntryBridge)}
+
+
+      {!loading && !error && filteredItems !== null && filteredItems.length > 0 ? (
+
+        <section className="mt-6 space-y-3" aria-labelledby={listSectionId}>
+
+          <div className="flex flex-wrap items-center justify-between gap-2 px-1">
+
+            <h2 id={listSectionId} className={GOV_PROPOSALS_L5.listSectionTitle}>
+
+              {t("governance_proposals_list_heading")}
+
+            </h2>
+
+            <span className={GOV_PROPOSALS_L5.listCountBadge}>{filteredItems.length}</span>
+
+          </div>
+
+
+
+          {personaView !== "all" ? (
+
+            <p className={`px-1 ${GOV_PROPOSALS_L5.metaNote}`} role="note">
+
+              {t("governance_proposals_persona_hint").replace(
+
+                "{{persona}}",
+
+                t(`governance_proposals_persona_${personaView}`),
+
+              )}
+
             </p>
+
           ) : null}
+
+
+
           {showOnChainPanel && chainExecLoading ? (
-            <p className="mb-2 text-meta text-ink-600" aria-live="polite">
+
+            <p className={`px-1 ${GOV_PROPOSALS_L5.mutedNote}`} aria-live="polite">
+
               {t("governance_proposals_status_loading")}
+
             </p>
+
           ) : null}
-          <ul className="divide-y divide-ink-200 rounded-[var(--radius-md)] border border-ink-200">
-            {items.map((proposal, i) => {
+
+
+
+          <ul className="space-y-3">
+
+            {filteredItems.map((proposal, i) => {
+
               const key =
+
                 typeof proposal.id === "string" && proposal.id.trim() ? proposal.id : `proposal-${i}`;
+
               const title =
+
                 typeof proposal.title === "string" && proposal.title.trim()
+
                   ? proposal.title
+
                   : t("governance_proposals_item_untitled");
-              const statusText =
-                typeof proposal.status === "string" && proposal.status.trim()
-                  ? proposal.status.trim()
-                  : null;
-              const href = `/governance/proposals/${encodeURIComponent(String(proposal.id))}`;
+
               const pid =
+
                 typeof proposal.id === "string" && proposal.id.trim() ? proposal.id.trim() : "";
-              const exec =
-                showOnChainPanel && pid && chainExecById ? chainExecById[pid] : undefined;
+
+              if (!pid) {
+
+                return (
+
+                  <li key={key}>
+
+                    <span className={GOV_PROPOSALS_L5.proposalTitle}>{title}</span>
+
+                  </li>
+
+                );
+
+              }
+
               return (
-                <li key={key} className="px-4 py-3 text-body text-ink-800">
-                  <div className="flex flex-wrap items-baseline justify-between gap-2">
-                    <div className="min-w-0">
-                      {typeof proposal.id === "string" && proposal.id.trim() ? (
-                        <Link
-                          href={href}
-                          className={`font-medium ${TT_MARKETING_CONSOLE_INLINE_LINK} ${TT_MARKETING_CONSOLE_LINK_FOCUS}`}
-                          {...(showOnChainPanel
-                            ? {
-                                "aria-describedby": GOV_EXEC_LIST_BRIDGE_DOM_ID,
-                                title: t(GovExecReadOnlyI18n.proposalLinkContinueTitle),
-                              }
-                            : {})}
-                        >
-                          {title}
-                        </Link>
-                      ) : (
-                        title
-                      )}
-                      {statusText ? (
-                        <p className="mt-1 text-meta text-ink-600 dark:text-ink-400">
-                          {t("governance_proposal_detail_status")}: {statusText}
-                        </p>
-                      ) : null}
-                    </div>
-                    {showOnChainPanel && pid ? (
-                      <GovernanceProposalExecStatusBadge
-                        loading={chainExecLoading}
-                        fetchSettled={chainExecById !== undefined}
-                        entry={exec}
-                      />
-                    ) : null}
-                  </div>
+
+                <li key={key}>
+
+                  <GovernanceProposalListCard
+
+                    proposalId={pid}
+
+                    title={title}
+
+                    href={`/governance/proposals/${encodeURIComponent(pid)}`}
+
+                    showOnChainPanel={showOnChainPanel}
+
+                    chainExecLoading={chainExecLoading}
+
+                    chainExecById={chainExecById}
+
+                    summary={summaryById?.[pid]}
+
+                    summaryLoading={summaryLoading && !summaryById?.[pid]}
+
+                  />
+
                 </li>
+
               );
+
             })}
+
           </ul>
+
         </section>
+
       ) : null}
 
-      <nav className="mt-8 flex flex-wrap gap-4" aria-label={t("governance_nav_label")}>
-        <Link
-          href="/governance"
-          className={`inline-flex min-h-[44px] items-center justify-start ${TT_MARKETING_CONSOLE_INLINE_LINK} ${TT_MARKETING_CONSOLE_LINK_FOCUS}`}
-        >
-          {t("governance_title")}
-        </Link>
-        <Link
-          href="/governance/delegate"
-          className={`inline-flex min-h-[44px] items-center justify-start ${TT_MARKETING_CONSOLE_INLINE_LINK} ${TT_MARKETING_CONSOLE_LINK_FOCUS}`}
-        >
-          {t("governance_delegate_nav")}
-        </Link>
-        <Link
-          href="/governance/fee-routes"
-          className={`inline-flex min-h-[44px] items-center justify-start ${TT_MARKETING_CONSOLE_INLINE_LINK} ${TT_MARKETING_CONSOLE_LINK_FOCUS}`}
-        >
-          {t("governance_fee_routes_title")}
-        </Link>
-        <Link
-          href="/governance/vault-forwards"
-          className={`inline-flex min-h-[44px] items-center justify-start ${TT_MARKETING_CONSOLE_INLINE_LINK} ${TT_MARKETING_CONSOLE_LINK_FOCUS}`}
-        >
-          {t("governance_vault_forwards_title")}
-        </Link>
-        <Link
-          href="/governance/distribution-accruals"
-          className={`inline-flex min-h-[44px] items-center justify-start ${TT_MARKETING_CONSOLE_INLINE_LINK} ${TT_MARKETING_CONSOLE_LINK_FOCUS}`}
-        >
-          {t("governance_distribution_accruals_title")}
-        </Link>
-        <Link
-          href="/governance/params"
-          className={`inline-flex min-h-[44px] items-center justify-start ${TT_MARKETING_CONSOLE_INLINE_LINK} ${TT_MARKETING_CONSOLE_LINK_FOCUS}`}
-        >
-          {t("governance_params_title")}
-        </Link>
-        <Link
-          href="/traveltrust#fee-router"
-          className={`inline-flex min-h-[44px] items-center justify-start ${TT_MARKETING_CONSOLE_INLINE_LINK} ${TT_MARKETING_CONSOLE_LINK_FOCUS}`}
-        >
-          {t("traveltrust_link_feeRouter")}
-        </Link>
-        <GovernanceOpsAdminLinks />
-        <Link
-          href="/help"
-          className={`inline-flex min-h-[44px] items-center justify-start ${TT_MARKETING_CONSOLE_INLINE_LINK} ${TT_MARKETING_CONSOLE_LINK_FOCUS}`}
-        >
-          {t("help_title")}
-        </Link>
-      </nav>
+
+
+      {!loading && !error && items !== null && items.length > 0 && filteredItems !== null && filteredItems.length === 0 ? (
+
+        <p className={GOV_PROPOSALS_L5.filterEmptyPanel} role="status">
+
+          {t("governance_proposals_filter_empty")}
+
+        </p>
+
+      ) : null}
+
+
+
+      <GovernanceProposalsL5Panel className="mt-8">
+
+        <nav className={GOV_PROPOSALS_L5.footerNav} aria-label={t("governance_nav_label")}>
+
+          <Link href="/governance" className={GOV_PROPOSALS_L5.footerLink}>
+
+            {t("governance_title")}
+
+          </Link>
+
+          <Link href="/governance/proposals/new" className={GOV_PROPOSALS_L5.footerLink}>
+
+            {t("governance_proposals_create_cta")}
+
+          </Link>
+
+          <Link href="/governance/delegate" className={GOV_PROPOSALS_L5.footerLink}>
+
+            {t("governance_delegate_nav")}
+
+          </Link>
+
+        </nav>
+
+
+
+        <details className="mt-4">
+
+          <summary className={`${GOV_PROPOSALS_L5.accordionSummary} rounded-[var(--radius-md)] hover:bg-ref-sun/[0.06]`}>
+
+            {t("governance_proposals_more_links_toggle")}
+
+          </summary>
+
+          <nav className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-small" aria-label={t("governance_subpage_relatedNav_aria")}>
+
+            <Link href="/governance/fee-routes" className={GOV_PROPOSALS_L5.inlineLink}>
+
+              {t("governance_fee_routes_title")}
+
+            </Link>
+
+            <Link href="/governance/vault-forwards" className={GOV_PROPOSALS_L5.inlineLink}>
+
+              {t("governance_vault_forwards_title")}
+
+            </Link>
+
+            <Link href="/governance/distribution-accruals" className={GOV_PROPOSALS_L5.inlineLink}>
+
+              {t("governance_distribution_accruals_title")}
+
+            </Link>
+
+            <Link href="/governance/params" className={GOV_PROPOSALS_L5.inlineLink}>
+
+              {t("governance_params_title")}
+
+            </Link>
+
+            <Link href="/traveltrust#fee-router" className={GOV_PROPOSALS_L5.inlineLink}>
+
+              {t("traveltrust_link_feeRouter")}
+
+            </Link>
+
+            <GovernanceOpsAdminLinks />
+
+            <Link href="/help" className={GOV_PROPOSALS_L5.inlineLink}>
+
+              {t("help_title")}
+
+            </Link>
+
+          </nav>
+
+        </details>
+
+      </GovernanceProposalsL5Panel>
+
+
+
       <ProductCrossNav
+
         ariaLabelKey="governance_subpage_relatedNav_aria"
+
         showGuides
-        className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-meta text-ink-500"
+
+        className={GOV_PROPOSALS_L5.crossNavWrap}
+
+        linkClassName={GOV_PROPOSALS_L5.crossNavLink}
+
+        separatorClassName={GOV_PROPOSALS_L5.crossNavSep}
+
       />
-    </main>
+
+    </GovernanceProposalsL5Shell>
+
   );
+
 }
+

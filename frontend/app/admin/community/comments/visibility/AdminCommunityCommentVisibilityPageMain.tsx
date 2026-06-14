@@ -49,6 +49,8 @@ export function AdminCommunityCommentVisibilityPageMain() {
       subtitle={t("admin_comment_vis_subtitle_l5")}
       headerAside={
         <AdminCommunityListHeaderAside>
+      <AdminCommunityRelatedLinks />
+
           <Link href="/admin/community/reports" className={`${adminPageNavLinkClass()}`}>
             {t("admin_penalties_linkReports")}
           </Link></AdminCommunityListHeaderAside>

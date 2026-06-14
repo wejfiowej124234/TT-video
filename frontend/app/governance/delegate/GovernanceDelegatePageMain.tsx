@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useId } from "react";
+import { Suspense, type FormEvent, useId } from "react";
 import Link from "next/link";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import LoadingText from "@/components/LoadingText";
@@ -8,7 +8,7 @@ import GovernanceTargetNotice from "@/components/governance/GovernanceTargetNoti
 import { GovernanceOpsAdminLinks } from "@/components/governance/GovernanceOpsAdminLinks";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
-import { GovernanceSearchParamsRouteSuspense } from "@/components/governance/GovernanceSearchParamsRouteSuspense";
+import { StewardWorkbenchSubpageBackLinkFromQuery } from "@/components/governance/StewardWorkbenchSubpageBackLinkFromQuery";
 import {
   TT_MARKETING_BTN_SECONDARY_CONSOLE,
   TT_MARKETING_CONSOLE_INLINE_LINK,
@@ -55,6 +55,9 @@ function GovernanceDelegatePageContent() {
       aria-labelledby={pageTitleId}
       data-tt-governance-delegate-page="1"
     >
+      <Suspense fallback={null}>
+        <StewardWorkbenchSubpageBackLinkFromQuery t={t} />
+      </Suspense>
       <h1 id={pageTitleId} className="text-h3 font-semibold text-ink-900">
         {t("governance_delegate_title")}
       </h1>

@@ -35,7 +35,27 @@ export function useMarketStandaloneBusinessPage(variant: MarketStandaloneBusines
   const [listError, setListError] = useState<string | null>(null);
   const [catalogDegraded, setCatalogDegraded] = useState(false);
   const [catalogHasMore, setCatalogHasMore] = useState(false);
+  const studioAutoOpen = useMemo(() => {
+    const v = searchParams.get("studio")?.trim().toLowerCase() ?? "";
+    return v === "1" || v === "true" || v === "open";
+  }, [searchParams]);
+
   const [studioOpen, setStudioOpen] = useState(false);
+
+  useEffect(() => {
+    if (studioAutoOpen) setStudioOpen(true);
+  }, [studioAutoOpen]);
+
+  const openStudio = useCallback(() => setStudioOpen(true), []);
+
+  const closeStudio = useCallback(() => {
+    setStudioOpen(false);
+    if (!searchParams.has("studio")) return;
+    const sp = new URLSearchParams(searchParams.toString());
+    sp.delete("studio");
+    const q = sp.toString();
+    router.replace(q ? `${pathname}?${q}` : pathname, { scroll: false });
+  }, [pathname, router, searchParams]);
 
   const demoAllowed = marketSubsiteDemoStudioFallbackEnabled();
 
@@ -152,6 +172,9 @@ export function useMarketStandaloneBusinessPage(variant: MarketStandaloneBusines
     catalogDegraded,
     studioOpen,
     setStudioOpen,
+    openStudio,
+    closeStudio,
+    studioAutoOpen,
     masonryItems,
     listSummaryMode,
     catalogHasMore,

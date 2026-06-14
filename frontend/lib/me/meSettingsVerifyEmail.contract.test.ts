@@ -22,7 +22,9 @@ describe("me settings verify-email extension (①)", () => {
 
   it("trust page shows resend panel when email unverified", () => {
     const trust = readFileSync(join(ROOT, "app/me/settings/trust/page.tsx"), "utf8");
-    expect(trust).toContain("MeSettingsResendVerifyEmailPanel");
-    expect(trust).toContain("!emailOk");
+    const progress = readFileSync(join(ROOT, "components/me/MeSettingsTrustProgressPanel.tsx"), "utf8");
+    expect(trust).toContain("MeSettingsTrustProgressPanel");
+    expect(progress).toContain("MeSettingsResendVerifyEmailPanel");
+    expect(trust).toContain("emailOk");
   });
 });

@@ -12,9 +12,9 @@ export type GovernanceOnChainProposalMeta = {
 
 type Props = {
   variant: "list" | "detail";
-  /** From GET /governance/proposals when `data_source=governance_proposals_projection`, or null while loading */
+  /** L5：列表页默认折叠技术细节，详情页保持完整 */
+  compact?: boolean;
   chainId?: number | null;
-  /** From GET /meta `chain.contracts.governor_address` when available */
   governorAddress?: string | null;
   proposal?: GovernanceOnChainProposalMeta | null;
 };
@@ -28,27 +28,10 @@ function AddrLine({ label, value }: { label: string; value: string }) {
   );
 }
 
-/**
- * B-090 Completion · TT-COMP-B090-ONCHAIN-PROPOSAL-UI-001：链上提案（含国库 Treasury 支出类）Governor / Timelock 路径说明；
- * 地址与元数据仅展示 API/meta 真值，无占位伪造。
- */
-export default function GovernanceB090OnChainProposalNotice({
-  variant,
-  chainId,
-  governorAddress,
-  proposal,
-}: Props) {
+function GovernanceB090TechnicalBody({ variant, chainId, governorAddress, proposal }: Omit<Props, "compact">) {
   const { t } = useTranslation();
-
   return (
-    <section
-      className="rounded-[var(--radius-md)] border border-travel-500/25 bg-travel-500/5 p-4 dark:border-travel-400/20 dark:bg-travel-950/30"
-      aria-label={t("governance_b090_onchain_notice_aria")}
-    >
-      <h2 className="text-small font-semibold text-ink-900 dark:text-ink-50">
-        {variant === "list" ? t("governance_b090_onchain_list_title") : t("governance_b090_onchain_detail_title")}
-      </h2>
-      <p className="mt-2 text-body text-ink-700 dark:text-ink-200">{t("governance_b090_onchain_intro")}</p>
+    <>
       <p className="mt-2 text-body text-ink-700 dark:text-ink-200">{t("governance_b090_onchain_treasury_body")}</p>
       {typeof chainId === "number" && Number.isFinite(chainId) ? (
         <p className="mt-2 text-meta text-ink-600 dark:text-ink-300">
@@ -93,6 +76,58 @@ export default function GovernanceB090OnChainProposalNotice({
           </div>
         </div>
       ) : null}
+    </>
+  );
+}
+
+/**
+ * B-090 · 链上提案 Governor / Timelock 路径说明；compact 模式供 L5 列表页折叠技术块。
+ */
+export default function GovernanceB090OnChainProposalNotice({
+  variant,
+  compact = false,
+  chainId,
+  governorAddress,
+  proposal,
+}: Props) {
+  const { t } = useTranslation();
+  const titleKey = variant === "list" ? "governance_b090_onchain_list_title" : "governance_b090_onchain_detail_title";
+
+  if (compact && variant === "list") {
+    return (
+      <details
+        className="rounded-[var(--radius-md)] border border-travel-500/20 bg-travel-500/5 p-4 dark:border-travel-400/15 dark:bg-travel-950/25"
+        aria-label={t("governance_b090_onchain_notice_aria")}
+      >
+        <summary className="cursor-pointer text-small font-semibold text-ink-900 dark:text-ink-50">
+          {t("governance_b090_onchain_compact_summary")}
+        </summary>
+        <div className="mt-3">
+          <p className="text-body text-ink-700 dark:text-ink-200">{t("governance_b090_onchain_intro")}</p>
+          <GovernanceB090TechnicalBody
+            variant={variant}
+            chainId={chainId}
+            governorAddress={governorAddress}
+            proposal={proposal}
+          />
+        </div>
+      </details>
+    );
+  }
+
+  return (
+    <section
+      className="rounded-[var(--radius-md)] border border-travel-500/25 bg-travel-500/5 p-4 dark:border-travel-400/20 dark:bg-travel-950/30"
+      aria-label={t("governance_b090_onchain_notice_aria")}
+    >
+      <h2 className="text-small font-semibold text-ink-900 dark:text-ink-50">{t(titleKey)}</h2>
+      <p className="mt-2 text-body text-ink-700 dark:text-ink-200">{t("governance_b090_onchain_intro")}</p>
+      <GovernanceB090TechnicalBody
+        variant={variant}
+        chainId={chainId}
+        governorAddress={governorAddress}
+        proposal={proposal}
+      />
     </section>
   );
 }

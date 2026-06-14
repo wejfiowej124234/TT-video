@@ -125,8 +125,8 @@ describe("meIdentitiesCoreCardModel", () => {
 
     const active = deriveMeIdentitiesCoreCardView(signals({ userRole: "provider" }), HREFS);
     expect(active.phase).toBe("active");
-    expect(active.href).toBe("/me/identities/merchant/settings");
-    expect(active.ctaLabelKey).toBe("me_identities_card_merchant_settings_cta");
+    expect(active.href).toBe("/provider");
+    expect(active.ctaLabelKey).toBe("me_identities_card_merchant_workspace_cta");
 
     const stewardActive = deriveMeIdentitiesCoreCardView(
       signals({ surface: "steward", userRole: "region_steward" }),
@@ -137,8 +137,8 @@ describe("meIdentitiesCoreCardModel", () => {
       },
     );
     expect(stewardActive.phase).toBe("active");
-    expect(stewardActive.href).toBe("/me/identities/region-steward/settings");
-    expect(stewardActive.ctaLabelKey).toBe("me_identities_card_steward_settings_cta");
+    expect(stewardActive.href).toBe("/governance?view=region");
+    expect(stewardActive.ctaLabelKey).toBe("me_identities_card_steward_workspace_cta");
   });
 
   it("parses entitlements by role_target", () => {

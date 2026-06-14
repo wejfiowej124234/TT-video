@@ -30,6 +30,8 @@ describe("me settings family L5 (①)", () => {
     const inner = readFileSync(join(ROOT, "app/me/settings/MeSettingsPageInner.tsx"), "utf8");
     expect(inner).toContain("useMeSettingsHubPathnameReload");
     expect(inner).toContain("hubStatus.reload");
+    expect(inner).toContain("meSettingsShowAcquisitionHub");
+    expect(inner).toMatch(/import[\s\S]*meSettingsShowAcquisitionHub[\s\S]*from "@\/lib\/me\/meIdentitySlotVisibility"/);
   });
 
   it("hub flash banner and wallet success link to settings", () => {

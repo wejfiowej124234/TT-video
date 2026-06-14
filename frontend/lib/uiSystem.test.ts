@@ -4,6 +4,7 @@ import {
   headerBarClassForPathname,
   isAuthL5DarkHeaderPath,
   isAuthLoginL5HeaderPath,
+  isGovernanceDarkL5HeaderPath,
   isHeaderUtilityL5Path,
   headerUtilityVariantForPathname,
   isCommunityPremiumHeaderPath,
@@ -103,13 +104,26 @@ describe("uiSystem L0 header", () => {
     expect(isAuthL5DarkHeaderPath("/auth/register")).toBe(true);
     expect(isAuthL5DarkHeaderPath("/auth/forgot-password")).toBe(true);
     expect(isAuthL5DarkHeaderPath("/me/identities")).toBe(true);
+    expect(isAuthL5DarkHeaderPath("/me/publish")).toBe(true);
+    expect(isAuthL5DarkHeaderPath("/guide")).toBe(true);
     expect(isAuthL5DarkHeaderPath("/guide/register")).toBe(true);
+    expect(isAuthL5DarkHeaderPath("/staking")).toBe(true);
+    expect(isAuthL5DarkHeaderPath("/provider")).toBe(true);
     expect(isAuthL5DarkHeaderPath("/provider/register")).toBe(true);
+    expect(isAuthL5DarkHeaderPath("/trust")).toBe(true);
     expect(isAuthL5DarkHeaderPath("/steward/register")).toBe(true);
     expect(isAuthLoginL5HeaderPath("/auth/login")).toBe(true);
     expect(headerBarClassForPathname("/auth/login")).toBe(TT_MARKETING_HEADER_BAR_DARK_ROUTE_PREMIUM);
     expect(headerBarClassForPathname("/me/identities")).toBe(TT_MARKETING_HEADER_BAR_DARK_ROUTE_PREMIUM);
+    expect(headerBarClassForPathname("/guide")).toBe(TT_MARKETING_HEADER_BAR_DARK_ROUTE_PREMIUM);
+    expect(headerBarClassForPathname("/provider")).toBe(TT_MARKETING_HEADER_BAR_DARK_ROUTE_PREMIUM);
+    expect(headerBarClassForPathname("/trust")).toBe(TT_MARKETING_HEADER_BAR_DARK_ROUTE_PREMIUM);
     expect(headerBarClassForPathname("/auth/register")).toBe(TT_MARKETING_HEADER_BAR_DARK_ROUTE_PREMIUM);
+    expect(headerUtilityVariantForPathname("/guide")).toBe("authL5");
+    expect(headerBarClassForPathname("/staking")).toBe(TT_MARKETING_HEADER_BAR_DARK_ROUTE_PREMIUM);
+    expect(headerUtilityVariantForPathname("/staking")).toBe("authL5");
+    expect(headerUtilityVariantForPathname("/provider")).toBe("authL5");
+    expect(headerUtilityVariantForPathname("/trust")).toBe("authL5");
     expect(headerLoginLinkClasses("/auth/register")).toContain("text-slate-100");
     expect(headerLoginLinkClasses("/auth/login")).toContain("text-ref-sun");
     expect(headerRegisterPillClasses("/auth/register")).toContain("ring-ref-sun");
@@ -127,19 +141,34 @@ describe("uiSystem L0 header", () => {
     expect(isHeaderUtilityL5Path("/orders")).toBe(true);
     expect(isHeaderUtilityL5Path("/orders/new")).toBe(true);
     expect(isHeaderUtilityL5Path("/escrow/abc")).toBe(true);
+    expect(isHeaderUtilityL5Path("/governance/proposals")).toBe(true);
     expect(headerUtilityVariantForPathname("/escrow/abc")).toBe("authL5");
   });
 
-  it("headerBarClassForPathname uses premium bar on market and did-rank (V2)", () => {
+  it("headerBarClassForPathname uses premium bar on market, did-rank, and guides (V2)", () => {
     expect(isMarketDarkPremiumHeaderPath("/market")).toBe(true);
     expect(isMarketDarkPremiumHeaderPath("/did-rank")).toBe(true);
+    expect(isMarketDarkPremiumHeaderPath("/guides")).toBe(true);
+    expect(isMarketDarkPremiumHeaderPath("/guides/abc")).toBe(true);
     expect(isMarketDarkPremiumHeaderPath("/community")).toBe(false);
     expect(headerBarClassForPathname("/market")).toBe(TT_MARKETING_HEADER_BAR_MARKET_DARK_PREMIUM);
     expect(headerBarClassForPathname("/did-rank")).toBe(TT_MARKETING_HEADER_BAR_MARKET_DARK_PREMIUM);
+    expect(headerBarClassForPathname("/guides/abc")).toBe(TT_MARKETING_HEADER_BAR_MARKET_DARK_PREMIUM);
+    expect(headerUtilityVariantForPathname("/guides/abc")).toBe("authL5");
     expect(headerBarClassForPathname("/orders")).toBe(TT_MARKETING_HEADER_BAR_TRAVELTRUST_CINEMATIC);
     expect(headerBarClassForPathname("/orders/new")).toBe(TT_MARKETING_HEADER_BAR_TRAVELTRUST_CINEMATIC);
     expect(headerBarClassForPathname("/escrow/abc")).toBe(TT_MARKETING_HEADER_BAR_TRAVELTRUST_CINEMATIC);
+    expect(headerBarClassForPathname("/governance/proposals")).toBe(TT_MARKETING_HEADER_BAR_TRAVELTRUST_CINEMATIC);
     expect(headerSurfaceKindForPathname("/escrow/abc")).toBe("home");
+    expect(headerSurfaceKindForPathname("/governance/proposals")).toBe("home");
+  });
+
+  it("isGovernanceDarkL5HeaderPath covers governance portal and subroutes", () => {
+    expect(isGovernanceDarkL5HeaderPath("/governance")).toBe(true);
+    expect(isGovernanceDarkL5HeaderPath("/governance/proposals")).toBe(true);
+    expect(isGovernanceDarkL5HeaderPath("/governance/proposals/new")).toBe(true);
+    expect(isGovernanceDarkL5HeaderPath("/governance/delegate")).toBe(true);
+    expect(headerUtilityVariantForPathname("/governance/proposals")).toBe("authL5");
   });
 
   it("headerBarClassForPathname uses premium black bar on /community", () => {
@@ -161,7 +190,8 @@ describe("uiSystem L0 header", () => {
     expect(headerNavLinkClasses("/did-rank", true)).toContain("!text-ref-sun");
     expect(headerNavLinkClasses("/orders", true)).toContain("!text-ref-sun");
     expect(headerNavLinkClasses("/orders/new", false)).toContain("!text-[#d4cec6]");
-    expect(headerNavLinkClasses("/governance", true)).toContain("!text-[#9a5f18]");
+    expect(headerNavLinkClasses("/governance/proposals", true)).toContain("!text-ref-sun");
+    expect(headerNavLinkClasses("/governance/proposals", false)).toContain("!text-[#d4cec6]");
     expect(headerNavLinkClasses("/traveltrust", true)).toContain("!text-ref-sun");
     expect(headerNavLinkClasses("/traveltrust", false)).toContain("!text-[#d4cec6]");
     expect(headerNavLinkClasses("/", true)).toContain("!text-ref-sun");

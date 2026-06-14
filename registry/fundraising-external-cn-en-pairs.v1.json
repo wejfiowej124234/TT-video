@@ -1,0 +1,12 @@
+{
+  "description": "CN/EN pairs under docs/fundraising for IR consistency gate (Version must match). Paths are relative to docs/fundraising/.",
+  "pairs": [
+    { "cn": "external/00-README.md", "en": "external/en/00-README.md" },
+    { "cn": "external/01-OnePager.md", "en": "external/en/01-OnePager.md" },
+    { "cn": "external/02-Investor-Executive-Summary.md", "en": "external/en/02-Investor-Executive-Summary.md" },
+    { "cn": "external/03-FAQ.md", "en": "external/en/03-FAQ.md" },
+    { "cn": "external/04-PitchDeck-Storyboard.md", "en": "external/en/04-PitchDeck-Storyboard.md" },
+    { "cn": "external/05-Litepaper.md", "en": "external/en/05-Litepaper.md" },
+    { "cn": "external/06-Whitepaper.md", "en": "external/en/06-Whitepaper.md" }
+  ]
+}

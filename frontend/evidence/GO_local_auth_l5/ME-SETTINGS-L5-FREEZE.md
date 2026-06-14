@@ -141,3 +141,18 @@ bash scripts/dev/smoke-account-nav-full-local.sh
 | i18n · href · 分组项增删 · ① 偏好 / 安全数据链 | 回 Console 白底孤立改密卡 |
 | 与 `meSettingsL5` token 对齐 · L5 `alertdialog` | `window.confirm` · `MeSettingsHubStatusStrip` 回 Hub |
 | bugfix · a11y（含确认框对比度） | 未跑绿集的 L5 视觉回流 · Hub 重复顶栏「我的」项 |
+
+---
+
+## Batch closure registry（机读 · ① Sprint-B · 不扩 UI）
+
+| Batch | 状态 | Playwright 旁证 |
+|-------|------|-----------------|
+| **15** | ✅ 已闭 | `PLAYWRIGHT_ME_SETTINGS_BATCH15.log` |
+| **16** | ✅ 已闭 | `PLAYWRIGHT_ME_SETTINGS_BATCH16.log` |
+| **17** | ✅ 已闭 · `app/api/v1/me/sessions` | `PLAYWRIGHT_ME_SETTINGS_BATCH17.log` |
+| **18** | ✅ 已闭 · `login_alert` | `PLAYWRIGHT_ME_SETTINGS_BATCH18.log` |
+| **19** | ✅ 已闭 · `me_settings_e2e_sent` | `PLAYWRIGHT_ME_SETTINGS_BATCH19.log` |
+| **20** | ✅ 已闭 · **hub-status-wallet 已退役**（`MeSettingsHubStatusStrip` 禁止回 Hub） | `PLAYWRIGHT_ME_SETTINGS_BATCH20.log` · `data-tt-me-settings-hub-status-wallet` **历史锚** |
+
+**grep:** `TT_ME_SETTINGS_BATCH_REGISTRY: OK`

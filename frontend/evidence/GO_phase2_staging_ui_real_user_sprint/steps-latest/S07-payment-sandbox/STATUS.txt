@@ -1,0 +1,6 @@
+step: S07-payment-sandbox
+status: PASS
+web: https://tt-web-staging.fly.dev
+api: https://tt-api-staging.fly.dev
+at: 2026-06-10T04:04:24.718Z
+note: chain_off mock-pay → escrowed (② sandbox)

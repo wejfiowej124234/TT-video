@@ -10,6 +10,7 @@ import type { OnboardingFlowPhase, OnboardingRoleConfirmView } from "@/lib/me/me
 import {
   onboardingRoleTargetLabel,
   parseOnboardingPaymentIntentView,
+  parseOnboardingQuoteView,
   parseOnboardingRoleConfirmView,
 } from "@/lib/me/meOnboardingViewModel";
 import { MeOnboardingWritesStageRail, type MeOnboardingWriteStageBlock } from "@/components/me/MeOnboardingWritesStageRail";
@@ -25,6 +26,8 @@ import {
   onboardingWriteRateLimited,
   onboardingWriteRetryable,
 } from "./meOnboardingPageHelpers";
+import { MeOnboardingUsdcFeePayment } from "@/components/me/onboarding/MeOnboardingUsdcFeePayment";
+import { onboardingFeeUsdcPaymentConfigured } from "@/lib/onboarding/onboardingFeeEnv";
 import { MeOnboardingLocalDevTools } from "./MeOnboardingLocalDevTools";
 import { StripeOnboardingPayment } from "./StripeOnboardingPayment";
 import type { OnboardingQuoteRole } from "@/lib/apiClient";
@@ -55,6 +58,7 @@ export type MeOnboardingWritesSectionProps = {
   | "payRetrySecsLeft"
   | "roleRetrySecsLeft"
   | "loadEntitlements"
+  | "quoteJson"
 >;
 
 export function MeOnboardingWritesSection({
@@ -77,8 +81,11 @@ export function MeOnboardingWritesSection({
   payRetrySecsLeft,
   roleRetrySecsLeft,
   loadEntitlements,
+  quoteJson,
 }: MeOnboardingWritesSectionProps) {
   const payment = parseOnboardingPaymentIntentView(payJson);
+  const quoteView = parseOnboardingQuoteView(quoteJson, quoteRole);
+  const usdcFeePrimary = onboardingFeeUsdcPaymentConfigured();
   const roleConfirm = roleConfirmProp ?? parseOnboardingRoleConfirmView(roleJson);
   const canConfirmRole = hasActivePaid && flowPhase !== "done";
   const showDevLoop = meOnboardingDevUiEnabled();
@@ -127,7 +134,16 @@ export function MeOnboardingWritesSection({
                 <p className="mt-2 text-ink-600">{t("me_onboarding_stewardFeeLocalDevHint")}</p>
               ) : null}
             </div>
-          ) : null}
+          ) : (
+            <div
+              className="mb-3 rounded-[var(--radius-sm)] border border-ref-sun/25 bg-ref-sun/5 p-3 text-meta leading-relaxed text-ink-700"
+              role="note"
+              data-tt-me-onboarding-provider-fee-clarify="1"
+            >
+              <p className="font-semibold text-ink-900">{t("me_onboarding_providerFeeClarifyTitle")}</p>
+              <p className="mt-1">{t("me_onboarding_providerFeeClarifyBody")}</p>
+            </div>
+          )}
           {showCreatePaymentButton ? (
             <div className={TT_ME_ONBOARDING_L5.actionStack}>
               <ol
@@ -199,12 +215,22 @@ export function MeOnboardingWritesSection({
                   }
                 />
               </MeOnboardingSummaryGrid>
-              <MeOnboardingTechnicalDetails label={t("me_onboarding_technicalDetails")} json={payJson} />
+              {showDevLoop ? (
+                <MeOnboardingTechnicalDetails label={t("me_onboarding_technicalDetails")} json={payJson} />
+              ) : null}
             </>
-          ) : payJson != null ? (
+          ) : showDevLoop && payJson != null ? (
             <MeOnboardingTechnicalDetails label={t("me_onboarding_technicalDetails")} json={payJson} />
           ) : null}
-          {checkoutUrl ? (
+          {usdcFeePrimary && quoteView ? (
+            <MeOnboardingUsdcFeePayment
+              t={t}
+              amountMinor={quoteView.amountMinor}
+              amountLabel={quoteView.amountLabel}
+              onAfterSubmit={() => void loadEntitlements()}
+            />
+          ) : null}
+          {!usdcFeePrimary && checkoutUrl ? (
             <div className={TT_ME_ONBOARDING_L5.stripePanel}>
               <h4 className="text-small font-semibold text-ink-900">{t("me_onboarding_stripeCheckoutTitle")}</h4>
               <p className="mt-1 text-meta text-ink-600">{t("me_onboarding_stripeCheckoutHint")}</p>
@@ -219,7 +245,7 @@ export function MeOnboardingWritesSection({
               </a>
             </div>
           ) : null}
-          {clientSecret ? (
+          {!usdcFeePrimary && clientSecret ? (
             <div className={TT_ME_ONBOARDING_L5.stripePanel}>
               <h4 className="text-small font-semibold text-ink-900">{t("me_onboarding_stripePayTitle")}</h4>
               <p className="mt-1 text-meta text-ink-600">{t("me_onboarding_stripePayHint")}</p>
@@ -243,7 +269,11 @@ export function MeOnboardingWritesSection({
       step: 2,
       state: confirmStageState,
       title: t("me_onboarding_writesConfirmStage"),
-      hint: t("me_onboarding_roleConfirmHint"),
+      hint: t(
+        quoteRole === "region_steward"
+          ? "me_onboarding_roleConfirmHintSteward"
+          : "me_onboarding_roleConfirmHintProvider",
+      ),
       shellClass: writeStageShell(confirmStageState),
       dataStage: "confirm",
       children: (
@@ -370,9 +400,11 @@ export function MeOnboardingWritesSection({
               />
             ) : null}
           </MeOnboardingSummaryGrid>
-          <MeOnboardingTechnicalDetails label={t("me_onboarding_technicalDetails")} json={roleJson} />
+          {showDevLoop ? (
+            <MeOnboardingTechnicalDetails label={t("me_onboarding_technicalDetails")} json={roleJson} />
+          ) : null}
         </>
-      ) : roleJson != null ? (
+      ) : showDevLoop && roleJson != null ? (
         <MeOnboardingTechnicalDetails label={t("me_onboarding_technicalDetails")} json={roleJson} />
       ) : null}
     </section>

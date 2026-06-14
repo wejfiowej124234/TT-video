@@ -6,11 +6,18 @@ import { resendMeSettingsVerificationEmail } from "@/lib/me/meSettingsVerifyEmai
 import { TT_AUTH_L5_FORM } from "@/lib/auth/authL5Form";
 import { TT_ME_SETTINGS_L5 } from "@/lib/me/meSettingsL5";
 
+function showVerifyEmailDevHints(): boolean {
+  return process.env.NODE_ENV === "development";
+}
+
 /** 未验证邮箱 · 重发验证信（设置族 / 信任页 / verify-email 子页共用） */
 export function MeSettingsResendVerifyEmailPanel({
   onDevToken,
+  embedded = false,
 }: {
   onDevToken?: (token: string) => void;
+  /** 信任页主 CTA 内嵌：无额外边框壳，避免 overflow 裁切按钮 */
+  embedded?: boolean;
 }) {
   const { t } = useTranslation();
   const [busy, setBusy] = useState(false);
@@ -47,15 +54,19 @@ export function MeSettingsResendVerifyEmailPanel({
     );
   }
 
+  const shellClass = embedded
+    ? "space-y-4"
+    : "rounded-xl border border-ref-sun/28 bg-ref-sun/[0.06] px-4 py-4 space-y-4";
+
   return (
-    <div
-      className="rounded-xl border border-ref-sun/28 bg-ref-sun/[0.06] px-4 py-3 space-y-3"
-      data-tt-me-settings-resend-verify="1"
-    >
+    <div className={shellClass} data-tt-me-settings-resend-verify="1">
       <p className="text-meta leading-relaxed text-slate-400/95">{t("me_settings_verify_resend_hint")}</p>
+      {showVerifyEmailDevHints() ? (
+        <p className="text-meta leading-relaxed text-slate-500/90">{t("me_settings_verify_resend_hint_dev")}</p>
+      ) : null}
       <button
         type="button"
-        className={TT_AUTH_L5_FORM.primaryCta}
+        className={embedded ? TT_ME_SETTINGS_L5.btnPrimary : TT_AUTH_L5_FORM.primaryCta}
         disabled={busy}
         aria-busy={busy ? true : undefined}
         data-tt-me-settings-resend-verify-btn="1"
@@ -68,7 +79,7 @@ export function MeSettingsResendVerifyEmailPanel({
           {error}
         </p>
       ) : null}
-      {devToken ? (
+      {devToken && showVerifyEmailDevHints() ? (
         <p className="text-meta text-slate-400/95 break-all" data-tt-me-settings-verify-dev-token="1">
           {t("me_settings_verify_dev_token_label")}{" "}
           <code className="rounded bg-black/30 px-1.5 py-0.5 text-ref-sun/90">{devToken}</code>

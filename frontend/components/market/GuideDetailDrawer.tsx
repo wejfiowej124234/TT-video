@@ -36,6 +36,7 @@ import { mapApiReadError } from "@/lib/mapApiReadError";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import { formatGuideDisplayName } from "@/lib/guideDisplayName";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
+import { GuideIdentityStakeTrustBadge } from "@/components/guide/GuideIdentityStakeTrustBadge";
 import { guideDetailHrefForBind } from "@/lib/ordersGuideDeepLink";
 
 function mergeGuideFromApi(base: GuideCardItem, api: unknown): GuideCardItem {
@@ -264,12 +265,17 @@ export default function GuideDetailDrawer({
                 <div>
                   <p className="text-body font-semibold text-white">{name}</p>
                   <p className={marketDetailDrawerSubtle}>{shellGuide.city ?? dash}</p>
-                  <span className={`inline-block mt-1 ${TT_MARKETING_MARKET_DARK_PATH.trustDidVerified}`}>
-                    <span aria-hidden="true" className="text-ref-sun/85">
-                      ✓
-                    </span>{" "}
-                    {t("guide_detail_didVerified")}
-                  </span>
+                  <div className="mt-1 flex flex-wrap items-center gap-2">
+                    <span className={TT_MARKETING_MARKET_DARK_PATH.trustDidVerified}>
+                      <span aria-hidden="true" className="text-ref-sun/85">
+                        ✓
+                      </span>{" "}
+                      {t("guide_detail_didVerified")}
+                    </span>
+                    {shellGuide.stake_amount?.trim() ? (
+                      <GuideIdentityStakeTrustBadge stakeAmount={shellGuide.stake_amount.trim()} size="sm" />
+                    ) : null}
+                  </div>
                 </div>
               </div>
               {(shellGuide.rating != null || shellGuide.completedCount != null || shellGuide.responseSLA) && (

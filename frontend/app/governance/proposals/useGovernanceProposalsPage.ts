@@ -1,12 +1,37 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import { apiUrl, routes } from "@/lib/api";
-import { fetchJsonWithApiStatusLog, getGovernanceProposalStatus } from "@/lib/apiClient";
+import { fetchJsonWithApiStatusLog, getAuthHeaders, getGovernanceProposal, getGovernanceProposalStatus } from "@/lib/apiClient";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import type { GovernanceProposalExecStatusEntry } from "@/components/governance/GovernanceProposalExecStatusBadge";
 import { getMeta } from "@/lib/apiClient";
 import { governorAddressFromMeta } from "@/lib/governanceChainMeta";
+import {
+  parseGovernanceVoteCount,
+  type GovernanceProposalListSummary,
+} from "@/lib/governance/governanceProposalsListModel";
 import type { GovernanceProposalsPageItem, GovernanceProposalsPageRes } from "./governanceProposalsPageModel";
+
+async function fetchGovernanceProposalListSummary(proposalId: string): Promise<GovernanceProposalListSummary | null> {
+  try {
+    const data = await getGovernanceProposal(proposalId);
+    const vc = data.vote_counts;
+    const proposal = data.proposal;
+    return {
+      yes: parseGovernanceVoteCount(vc?.yes),
+      no: parseGovernanceVoteCount(vc?.no),
+      abstain: parseGovernanceVoteCount(vc?.abstain),
+      proposer:
+        typeof proposal?.proposer === "string" && proposal.proposer.trim() ? proposal.proposer.trim() : null,
+      voteEndBlock:
+        typeof proposal?.vote_end_block === "number" && Number.isFinite(proposal.vote_end_block)
+          ? proposal.vote_end_block
+          : null,
+    };
+  } catch {
+    return null;
+  }
+}
 
 export function useGovernanceProposalsPage() {
   const { t } = useTranslation();
@@ -22,6 +47,10 @@ export function useGovernanceProposalsPage() {
     Record<string, GovernanceProposalExecStatusEntry> | undefined
   >(undefined);
   const [chainExecLoading, setChainExecLoading] = useState(false);
+  const [summaryById, setSummaryById] = useState<Record<string, GovernanceProposalListSummary> | undefined>(
+    undefined,
+  );
+  const [summaryLoading, setSummaryLoading] = useState(false);
 
   const projectionItemsKey = useMemo(() => {
     if (!items || items.length === 0) return "";
@@ -35,6 +64,7 @@ export function useGovernanceProposalsPage() {
     setLoading(true);
     setError(null);
     const headers: Record<string, string> = { "x-request-id": `gov-proposals-${Date.now()}` };
+    Object.assign(headers, getAuthHeaders());
     fetchJsonWithApiStatusLog<GovernanceProposalsPageRes>("governanceProposals", apiUrl(routes.governanceProposals), {
       headers,
     })
@@ -143,6 +173,40 @@ export function useGovernanceProposalsPage() {
     };
   }, [dataSource, items, projectionItemsKey, retryTick]);
 
+  useEffect(() => {
+    if (items === null || items.length === 0) {
+      setSummaryById(undefined);
+      setSummaryLoading(false);
+      return undefined;
+    }
+    const ids = items
+      .map((p) => p.id)
+      .filter((id): id is string => typeof id === "string" && id.trim().length > 0)
+      .slice(0, 40);
+    if (ids.length === 0) {
+      setSummaryById(undefined);
+      setSummaryLoading(false);
+      return undefined;
+    }
+    let cancelled = false;
+    setSummaryLoading(true);
+    void (async () => {
+      const entries = await Promise.all(
+        ids.map(async (id) => [id, await fetchGovernanceProposalListSummary(id)] as const),
+      );
+      if (cancelled) return;
+      const next: Record<string, GovernanceProposalListSummary> = {};
+      for (const [id, row] of entries) {
+        if (row) next[id] = row;
+      }
+      setSummaryById(next);
+      setSummaryLoading(false);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [items, projectionItemsKey, retryTick]);
+
   const emptySuccess = !loading && !error && items !== null && items.length === 0;
   const showOnChainPanel = !loading && !error && dataSource === "governance_proposals_projection";
 
@@ -158,6 +222,8 @@ export function useGovernanceProposalsPage() {
     metaGovernor,
     chainExecById,
     chainExecLoading,
+    summaryById,
+    summaryLoading,
     emptySuccess,
     showOnChainPanel,
   };

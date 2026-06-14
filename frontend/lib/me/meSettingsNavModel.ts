@@ -1,6 +1,10 @@
+import { PUBLISH_HUB_PATH } from "@/lib/me/publishHubL5";
 import { ME_SETTINGS_PRIVACY_PATH } from "@/lib/me/meSettingsL5";
 import { meSecurityHref } from "@/lib/me/meSecurityL5";
 import { meSettingsNavExtensionHref } from "@/lib/me/meSettingsExtensionContext";
+import type { ActiveWorkspaceContextId } from "@/lib/header/activeWorkspaceContext";
+import { reorderNavItemsForWorkspaceContext } from "@/lib/header/workspaceContextWorkbenchNav";
+export { ME_SETTINGS_WORKBENCH_SHORTCUT_ITEM_IDS } from "@/lib/me/accountOperatingModelUxWave0Model";
 
 export type MeSettingsSectionId = "account" | "travel" | "support" | "privacy" | "general";
 
@@ -60,6 +64,13 @@ const BASE_SECTIONS: readonly MeSettingsNavSection[] = [
     labelKey: "me_settings_section_travel",
     hintKey: "me_settings_section_travel_hint",
     items: [
+      {
+        id: "publish_hub",
+        iconId: "feedback",
+        labelKey: "me_settings_item_publish_hub",
+        descKey: "me_settings_desc_publish_hub",
+        href: PUBLISH_HUB_PATH,
+      },
       {
         id: "referrals",
         iconId: "feedback",
@@ -197,18 +208,57 @@ const GUIDE_HUB_ITEM: MeSettingsNavItem = {
   href: meSettingsNavExtensionHref("/guide"),
 };
 
+const MERCHANT_HUB_ITEM: MeSettingsNavItem = {
+  id: "merchant_hub",
+  iconId: "provider",
+  labelKey: "provider_workbench_title",
+  descKey: "me_settings_desc_merchant",
+  href: meSettingsNavExtensionHref("/provider"),
+};
+
+const STEWARD_HUB_ITEM: MeSettingsNavItem = {
+  id: "steward_hub",
+  iconId: "steward",
+  labelKey: "steward_workbench_title",
+  descKey: "me_settings_desc_steward",
+  href: meSettingsNavExtensionHref("/governance?view=region"),
+};
+
+const ACQUISITION_HUB_ITEM: MeSettingsNavItem = {
+  id: "acquisition_hub",
+  iconId: "acquisition",
+  labelKey: "acquisition_workbench_title",
+  descKey: "me_settings_desc_acquisition",
+  href: meSettingsNavExtensionHref("/market/acquisition"),
+};
+
 export function meSettingsNavSections(opts?: {
   showGuideHub?: boolean;
+  showMerchantHub?: boolean;
+  showStewardHub?: boolean;
+  /** 收购槽 active/pending 时在设置 Hub 展示工作台捷径（Hub 卡片仍对全员开放）。 */
+  showAcquisitionHub?: boolean;
+  /** W1-B3 · 当前 workspace context 对应工作台捷径置顶 */
+  workspaceContext?: ActiveWorkspaceContextId;
 }): readonly MeSettingsNavSection[] {
   const showGuide = opts?.showGuideHub === true;
+  const showMerchant = opts?.showMerchantHub === true;
+  const showSteward = opts?.showStewardHub === true;
+  const showAcquisition = opts?.showAcquisitionHub === true;
 
   return BASE_SECTIONS.map((section) => {
-    if (section.id === "travel" && showGuide) {
-      const items = [...section.items];
-      items.unshift(GUIDE_HUB_ITEM);
-      return { ...section, items };
-    }
-    return section;
+    if (section.id !== "travel") return section;
+    const items = [...section.items];
+    if (showAcquisition) items.unshift(ACQUISITION_HUB_ITEM);
+    if (showSteward) items.unshift(STEWARD_HUB_ITEM);
+    if (showMerchant) items.unshift(MERCHANT_HUB_ITEM);
+    if (showGuide) items.unshift(GUIDE_HUB_ITEM);
+    if (!showGuide && !showMerchant && !showSteward && !showAcquisition) return section;
+    const ordered =
+      opts?.workspaceContext != null
+        ? reorderNavItemsForWorkspaceContext(items, opts.workspaceContext)
+        : items;
+    return { ...section, items: ordered };
   });
 }
 

@@ -88,6 +88,7 @@ export interface GuideCardItem {
   hourly_rate?: string;
   hourly_currency?: string;
   avatar_url?: string | null;
+  public_title?: string | null;
   status?: string;
   created_at?: string;
   priceRange?: GuidePriceRange | null;

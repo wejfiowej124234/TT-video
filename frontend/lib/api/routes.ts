@@ -47,16 +47,24 @@ export const routes = {
   meWalletVerificationStatus: "/api/v1/me/wallet/verification-status",
   meGuideRegistrationDraft: "/api/v1/me/guide-registration-draft",
   meGuideProfile: "/api/v1/me/guide-profile",
+  meGuideExitStatus: "/api/v1/me/guide-exit-status",
+  meGuideExitRequest: "/api/v1/me/guide-exit-request",
   meMerchantProfile: "/api/v1/me/merchant-profile",
+  meMerchantListingsSummary: "/api/v1/me/merchant-listings-summary",
+  meMerchantListings: "/api/v1/me/merchant-listings",
+  meAcquisitionListings: "/api/v1/me/acquisition-listings",
   meRegionStewardProfile: "/api/v1/me/region-steward-profile",
   meAcquisitionProfile: "/api/v1/me/acquisition-profile",
   meProviderRegistrationDraft: "/api/v1/me/provider-registration-draft",
   meProviderApplication: "/api/v1/me/provider-application",
   meStewardApplication: "/api/v1/me/steward-application",
+  meStewardSeat: "/api/v1/me/steward-seat",
   providerApplications: "/api/v1/provider-applications",
   stewardApplications: "/api/v1/steward/applications",
   stewardStakeQuote: "/api/v1/steward/stake-quote",
   stewardStakeStatus: "/api/v1/steward/stake-status",
+  stewardResignNotice: "/api/v1/steward/resign-notice",
+  stewardFinalizeResign: "/api/v1/steward/finalize-resign",
   redemptionQuote: "/api/v1/redemption/quote",
   adminProviderApplications: "/api/v1/admin/provider-applications",
   adminGuideApplications: "/api/v1/admin/guide-applications",
@@ -133,6 +141,10 @@ export const routes = {
   marketAcquisitionListingDrafts: "/api/v1/market/acquisition/listings/drafts",
   marketProviderListingDraftById: (draftId: string) =>
     `/api/v1/market/provider/listings/drafts/${encodeURIComponent(draftId)}`,
+  marketProviderListingArchive: (listingId: string) =>
+    `/api/v1/market/provider/listings/${encodeURIComponent(listingId)}/archive`,
+  marketAcquisitionListingArchive: (listingId: string) =>
+    `/api/v1/market/acquisition/listings/${encodeURIComponent(listingId)}/archive`,
   marketAcquisitionListingDraftById: (draftId: string) =>
     `/api/v1/market/acquisition/listings/drafts/${encodeURIComponent(draftId)}`,
   marketProviderListingOrderById: (id: string) =>

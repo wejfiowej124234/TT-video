@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Fragment } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { HeaderUserMenuItemIcon } from "@/components/header/HeaderUserMenuItemIcon";
+import { HeaderWorkspaceContextSwitcher } from "@/components/header/HeaderWorkspaceContextSwitcher";
 import { headerUserMenuNavItemIsActive } from "@/components/header/headerUserMenuNavActive";
 import {
   type HeaderUserMenuNavItem,
@@ -249,6 +250,7 @@ export function HeaderUserMenuNavLinks(props: {
         spineSlots,
         variant,
       })}
+      <HeaderWorkspaceContextSwitcher t={t} mePayload={mePayload} onNavigate={onNavigate} />
       <nav className={TT_HEADER_USER_MENU_L5.navRoot} aria-label={t("header_userMenu")}>
         {sections.map((section) => (
           <div key={section.id} className={TT_HEADER_USER_MENU_L5.navSection}>

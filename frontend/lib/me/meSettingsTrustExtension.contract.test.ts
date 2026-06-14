@@ -18,11 +18,11 @@ describe("me settings trust extension (①)", () => {
     expect(hub).toContain("data-tt-trust-hub-from-settings");
   });
 
-  it("settings trust subpage links trust center same-tab", () => {
+  it("settings trust subpage uses progress checklist", () => {
     const trust = readFileSync(join(ROOT, "app/me/settings/trust/page.tsx"), "utf8");
-    expect(trust).toContain('meSettingsNavExtensionHref("/trust")');
-    expect(trust).not.toMatch(/trust_center[\s\S]*external: true/);
-    expect(trust).toContain("MeSettingsResendVerifyEmailPanel");
+    expect(trust).toContain("MeSettingsTrustProgressPanel");
+    expect(trust).toContain("me_settings_trust_subtitle_email_pending");
+    expect(trust).not.toContain('href="/me/settings"');
   });
 
   it("community profile from settings uses profile subpage (not legacy hub)", () => {

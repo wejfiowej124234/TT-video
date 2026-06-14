@@ -16,6 +16,7 @@
     "settings_href": "/me/settings",
     "hub_must_not_duplicate": [
       "/orders",
+      "/me/settings/profile",
       "/community/me",
       "/community/me/posts",
       "/community/me/collects",
@@ -31,6 +32,20 @@
       "role": "hub",
       "markers": ["data-tt-me-settings-route=\"hub\"", "data-tt-me-settings-ui-frozen=\"1\""],
       "vitest": ["lib/me/meSettingsPageTracker.contract.test.ts", "lib/accountNav/accountNavPageTracker.contract.test.ts"]
+    },
+    {
+      "path": "/me/settings/profile",
+      "domain": "settings",
+      "role": "subpage",
+      "markers": [
+        "data-tt-me-settings-route=\"settings-profile\"",
+        "data-tt-me-settings-profile",
+        "MeSettingsProfilePanel"
+      ],
+      "vitest": [
+        "lib/me/meSettingsPageTracker.contract.test.ts",
+        "lib/accountNav/accountNavPageTracker.contract.test.ts"
+      ]
     },
     {
       "path": "/me/settings/privacy",
@@ -67,7 +82,7 @@
       "markers": [
         "data-tt-me-settings-route=\"settings-trust\"",
         "data-tt-me-settings-trust",
-        "data-tt-me-settings-kyc-status"
+        "MeSettingsTrustProgressPanel"
       ],
       "vitest": [
         "lib/me/meSettingsPageTracker.contract.test.ts",

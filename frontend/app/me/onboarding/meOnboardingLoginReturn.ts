@@ -1,4 +1,5 @@
 import type { OnboardingQuoteRole } from "@/lib/apiClient";
+import { stewardAdmissionWorkbenchHref } from "@/lib/steward/stewardAdmissionNav";
 
 import type { MeOnboardingFromContext } from "./meOnboardingGuestAccess";
 import { isMeOnboardingFromContext } from "./meOnboardingGuestAccess";
@@ -13,14 +14,16 @@ export function meOnboardingLoginReturnUrl(
   return meOnboardingHref(role, { from: opts?.from ?? "identities_hub" });
 }
 
-/** 准入页直链（须带 `from=` 才允许未登录只读；见 `meOnboardingGuestAccess`） */
+/** 准入页直链（商家 Console）；主理人 USDC 统一进工作台 A 轨 */
 export function meOnboardingHref(
   role: OnboardingQuoteRole,
   opts: { from: MeOnboardingFromContext },
 ): string {
+  if (role === "region_steward") {
+    return stewardAdmissionWorkbenchHref(opts.from);
+  }
   const q = new URLSearchParams();
-  if (role === "region_steward") q.set("role", "region_steward");
-  else q.set("role", "provider");
+  q.set("role", "provider");
   q.set("from", opts.from);
   return `/me/onboarding?${q.toString()}`;
 }
@@ -31,8 +34,18 @@ export function buildMeOnboardingAuthReturnPath(
   quoteRole: OnboardingQuoteRole,
 ): string {
   const q = new URLSearchParams(searchParams.toString());
+  if (quoteRole === "region_steward") {
+    const fromRaw = q.get("from");
+    const from: MeOnboardingFromContext =
+      fromRaw === "settings"
+        ? "identities_hub"
+        : isMeOnboardingFromContext(fromRaw)
+          ? fromRaw
+          : "identities_hub";
+    return stewardAdmissionWorkbenchHref(from);
+  }
   if (!q.has("role")) {
-    q.set("role", quoteRole === "region_steward" ? "region_steward" : "provider");
+    q.set("role", "provider");
   }
   const fromRaw = q.get("from");
   if (fromRaw !== "settings" && !isMeOnboardingFromContext(fromRaw)) {

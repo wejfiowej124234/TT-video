@@ -55,6 +55,11 @@ export const TT_ME_SETTINGS_L5 = {
   subsectionTitle: "px-1 pt-2 text-meta font-medium text-ref-sun/55",
   sectionCard:
     "auth-l5-glass-surface overflow-hidden rounded-xl border border-ref-sun/38 bg-[#0c0a09]/62 backdrop-blur-2xl supports-[backdrop-filter]:bg-[#0c0a09]/55",
+  /** 信任页主 CTA 等含全高按钮的卡片 — 禁止裁切 gradient CTA */
+  sectionCardInteractive:
+    "auth-l5-glass-surface overflow-visible rounded-xl border border-ref-sun/38 bg-[#0c0a09]/62 backdrop-blur-2xl supports-[backdrop-filter]:bg-[#0c0a09]/55",
+  btnPrimary:
+    "inline-flex min-h-[48px] w-full items-center justify-center rounded-xl border border-ref-sun/45 bg-ref-sun/15 px-4 py-3 text-small font-semibold text-[#fde9a8] transition-colors hover:border-ref-sun/60 hover:bg-ref-sun/22 disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]",
   row: "group flex min-h-[48px] w-full items-center gap-3 border-b border-ref-sun/10 px-4 py-2.5 text-left transition-colors motion-reduce:transition-none last:border-b-0 hover:bg-ref-sun/[0.05] focus:outline-none focus-visible:bg-ref-sun/[0.07] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ref-sun/40",
   rowStatic:
     "flex min-h-[48px] w-full items-center gap-3 border-b border-ref-sun/10 px-4 py-2.5 text-left last:border-b-0 bg-ref-sun/[0.02]",

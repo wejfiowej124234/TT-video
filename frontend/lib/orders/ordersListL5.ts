@@ -116,6 +116,7 @@ import {
 } from "@/lib/marketingUi";
 import { traveltrustProductL5ShellDataAttrs } from "@/lib/traveltrustHomepageFunnelL5";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
+import { ordersIaBoundaryPageDataAttrs } from "@/lib/me/publishHubIaBoundaryFreezeModel";
 
 export const ORDERS_LIST_L5_VISUAL_DATA_ATTR = "l5" as const;
 
@@ -292,5 +293,6 @@ export function ordersListL5MainDataAttrs(): Record<string, string> {
     ...traveltrustProductL5ShellDataAttrs("orders"),
     "data-tt-orders-list-l5": ORDERS_LIST_L5_VISUAL_DATA_ATTR,
     "data-tt-orders-list-l5-ssot": ORDERS_LIST_L5_SSOT_ID,
+    ...ordersIaBoundaryPageDataAttrs(),
   };
 }

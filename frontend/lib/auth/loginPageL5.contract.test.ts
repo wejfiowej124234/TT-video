@@ -15,6 +15,7 @@ function readLoginSources(): string {
     "AuthL5CrossNavFooter.tsx",
     "AuthL5Card.tsx",
     "AuthL5Checkbox.tsx",
+    "AuthL5FormError.tsx",
   ].map((f) => readFileSync(join(process.cwd(), "components", "auth", f), "utf8"));
   return [...loginDir, ...shared].join("\n");
 }

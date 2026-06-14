@@ -44,6 +44,8 @@ export type OrderListItem = {
   tourist_id?: string;
   /** 87：与 `tourist_id` 同 UUID（chain_off 镜像） */
   traveler_id?: string;
+  /** GET /orders 列表：游客昵称（chain_off 从 users 表填充；可缺省） */
+  traveler_nickname?: string;
   guide_id?: string;
   created_at?: string;
   breakdown?: OrderBreakdown | null;
@@ -61,12 +63,20 @@ export async function getOrders(params?: {
   cursor?: string;
   /** B-071：与后端 `OrderState` 字符串一致，如 completed / cancelled / disputed */
   state?: string;
+  /** W4 Workspace：trip · merchant_service · acquisition */
+  business_line?: "trip" | "merchant_service" | "acquisition";
+  /** Guide Order Corridor：`guide` · `traveler` */
+  hat?: "guide" | "merchant" | "traveler";
 }): Promise<OrdersListResult> {
   const q = new URLSearchParams();
   if (params?.limit != null) q.set("limit", String(params.limit));
   if (params?.cursor) q.set("cursor", params.cursor);
   const st = params?.state?.trim();
   if (st) q.set("state", st.toLowerCase());
+  const bl = params?.business_line?.trim();
+  if (bl) q.set("business_line", bl);
+  const hat = params?.hat?.trim();
+  if (hat) q.set("hat", hat.toLowerCase());
   const suffix = q.toString() ? `?${q.toString()}` : "";
   const res = await fetch(apiUrl(routes.orders) + suffix, {
     headers: { "x-request-id": requestId(), ...getAuthHeaders() },

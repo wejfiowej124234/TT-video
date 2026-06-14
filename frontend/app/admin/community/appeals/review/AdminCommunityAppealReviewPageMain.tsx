@@ -49,6 +49,8 @@ export function AdminCommunityAppealReviewPageMain() {
       subtitle={t("admin_appeal_review_subtitle_l5")}
       headerAside={
         <AdminCommunityListHeaderAside>
+      <AdminCommunityRelatedLinks />
+
           <Link href="/admin/community/appeals" className={`${adminPageNavLinkClass()}`}>
             {t("admin_appeals_linkLedger")}
           </Link>

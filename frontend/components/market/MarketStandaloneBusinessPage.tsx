@@ -11,6 +11,8 @@ import MarketHubSubNav from "@/components/market/MarketHubSubNav";
 import MarketPageFooter from "@/components/market/MarketPageFooter";
 import MarketSubsiteFilterBar from "@/components/market/MarketSubsiteFilterBar";
 import MarketSubsiteListFooterStrip from "@/components/market/MarketSubsiteListFooterStrip";
+import AcquisitionPublishReadinessPanel from "@/components/market/AcquisitionPublishReadinessPanel";
+import AcquisitionSubsiteStatsPanel from "@/components/market/AcquisitionSubsiteStatsPanel";
 import MarketSubsiteMasonry from "@/components/market/MarketSubsiteMasonry";
 import { MarketSubsiteListingDetailDrawer } from "@/components/market/MarketSubsiteListingDetailDrawer";
 import LoadingText from "@/components/LoadingText";
@@ -78,6 +80,8 @@ export default function MarketStandaloneBusinessPage({ variant }: { variant: "pr
             <MarketHubSubNav />
           </div>
         </div>
+        {!isProvider ? <AcquisitionPublishReadinessPanel t={t} /> : null}
+        {!isProvider ? <AcquisitionSubsiteStatsPanel t={t} /> : null}
 
         <section className="mx-auto max-w-5xl px-4 py-4" aria-labelledby="market-standalone-intro">
           <div className={`${TT_MARKETING_MARKET_DARK_PATH.subsiteHighlightPanel} text-center`}>
@@ -105,7 +109,7 @@ export default function MarketStandaloneBusinessPage({ variant }: { variant: "pr
               ) : null}
               <button
                 type="button"
-                onClick={() => page.setStudioOpen(true)}
+                onClick={() => page.openStudio()}
                 className={`${touchTargetLink44Classes} ${TT_MARKETING_BTN_MARKET_PRIMARY} px-5 py-2.5 text-small ${travelFocusRingOffset2Classes}`}
               >
                 {studioLabel}
@@ -185,13 +189,13 @@ export default function MarketStandaloneBusinessPage({ variant }: { variant: "pr
       {isProvider ? (
         <MerchantShowcaseStudioModal
           open={page.studioOpen}
-          onClose={() => page.setStudioOpen(false)}
+          onClose={() => page.closeStudio()}
           onDraftSaved={() => page.refetchCatalog()}
         />
       ) : (
         <AcquisitionCarryStudioModal
           open={page.studioOpen}
-          onClose={() => page.setStudioOpen(false)}
+          onClose={() => page.closeStudio()}
           onDraftSaved={() => page.refetchCatalog()}
         />
       )}

@@ -1,0 +1,151 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "跳过主内容" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - link "TravelTrust" [ref=e6] [cursor=pointer]:
+          - /url: /traveltrust
+        - navigation [ref=e8]:
+          - link "定制旅行" [ref=e9] [cursor=pointer]:
+            - /url: /
+          - link "自由市场" [ref=e10] [cursor=pointer]:
+            - /url: /market
+          - link "排行榜" [ref=e11] [cursor=pointer]:
+            - /url: /did-rank
+          - link "TT社区" [ref=e12] [cursor=pointer]:
+            - /url: /community
+      - generic [ref=e13]:
+        - button "语言" [ref=e15] [cursor=pointer]:
+          - generic [ref=e16]: 中文
+          - img [ref=e17]
+        - button "连接钱包" [ref=e20] [cursor=pointer]:
+          - generic [ref=e21]: Wallet
+          - img [ref=e22]
+        - button "用户菜单，已开通身份：旅行者" [ref=e25] [cursor=pointer]:
+          - img [ref=e27]
+          - generic [ref=e29]: 用户
+          - img [ref=e30]
+  - main "订单详情" [ref=e35]:
+    - region "订单与托管协议信息" [ref=e36]:
+      - generic [ref=e37]:
+        - generic [ref=e38]:
+          - 'heading "订单 #147883d8" [level=1] [ref=e39]'
+          - paragraph [ref=e40]: 向导已接单 · 待双边确认
+        - generic [ref=e43]: 待双边确认
+      - navigation "草稿订单进度" [ref=e45]:
+        - generic [ref=e46]: 草稿进度：第 1 步，共 3 步
+        - list [ref=e47]:
+          - listitem [ref=e48]:
+            - generic [ref=e49]:
+              - generic [ref=e50]: "1"
+              - generic [ref=e51]: 创建行程
+          - listitem [ref=e53]:
+            - generic [ref=e54]:
+              - generic [ref=e55]: "2"
+              - generic [ref=e56]: 选择向导
+          - listitem [ref=e58]:
+            - generic [ref=e59]:
+              - generic [ref=e60]: "3"
+              - generic [ref=e61]: 确认终版
+      - status [ref=e62]:
+        - paragraph [ref=e63]: 当前： 请双方完成双边确认
+      - region "已选向导" [ref=e64]:
+        - paragraph [ref=e65]: 已关联向导 · 可就本单行程在社区协商
+        - generic [ref=e66]:
+          - generic [ref=e67]:
+            - paragraph [ref=e68]: 北京 向导
+            - paragraph [ref=e69]: 北京 · zh
+          - link "查看向导" [ref=e70] [cursor=pointer]:
+            - /url: /guides/6a6480ba-edc8-4f8d-acf3-19fbdf60770b
+        - generic [ref=e71]:
+          - link "更换向导" [ref=e72] [cursor=pointer]:
+            - /url: /market?view=guides&bindGuideToOrder=147883d8-a3dc-4c57-a1e3-d396c1116589
+          - link "打开社区消息" [ref=e73] [cursor=pointer]:
+            - /url: /community/messages?orderId=147883d8-a3dc-4c57-a1e3-d396c1116589
+      - generic [ref=e74]:
+        - heading "订单操作" [level=3] [ref=e75]
+        - region "订单操作" [ref=e76]:
+          - button "取消订单" [ref=e78] [cursor=pointer]
+          - button "确认完成（链下）" [ref=e80] [cursor=pointer]
+          - button "发起争议（链下）" [ref=e82] [cursor=pointer]
+      - region "双边确认" [ref=e83]:
+        - heading "双边确认" [level=3] [ref=e84]
+        - paragraph [ref=e85]: 双方确认后即可付款。
+        - generic [ref=e86]:
+          - generic [ref=e87]:
+            - text: 游客：
+            - generic [ref=e88]: ✓ 已确认
+          - generic [ref=e89]: 向导：未确认
+        - status [ref=e90]: 你已确认，等待对方确认行程与金额。
+      - generic [ref=e92]:
+        - generic [ref=e93]:
+          - generic [ref=e95]:
+            - heading "行程与报价" [level=3] [ref=e96]
+            - status [ref=e97]: 左侧为行程预览；报价、保存与确认在右侧。
+          - tablist "行程编辑视图" [ref=e98]:
+            - tab "城市" [ref=e99] [cursor=pointer]
+            - tab "每日说明" [ref=e100] [cursor=pointer]
+            - tab "预览" [selected] [ref=e101] [cursor=pointer]
+          - status [ref=e102]: 中国 · 北京 · 1 天
+          - status [ref=e103]: "行程总价（与右侧报价一致）: 3333.00 美元估算"
+          - list "每日行程" [ref=e105]:
+            - listitem [ref=e106]:
+              - generic [ref=e108]:
+                - generic [ref=e111]: 北京 · 第1天
+                - 'img "北京 · 第1天: 中国 第1天：北京；酒店标准，交通当地交通，餐饮当地特色。" [ref=e114]'
+                - status [ref=e115]: 当日费用：确认行程后在此展示
+        - generic "报价摘要" [ref=e117]:
+          - heading "报价摘要" [level=4] [ref=e118]
+          - paragraph [ref=e119]: 3333.00 美元估算
+          - list [ref=e120]:
+            - listitem [ref=e121]:
+              - generic [ref=e122]: 住宿：
+              - generic [ref=e123]: 1166.00 美元估算
+            - listitem [ref=e124]:
+              - generic [ref=e125]: 餐饮：
+              - generic [ref=e126]: 833.00 美元估算
+            - listitem [ref=e127]:
+              - generic [ref=e128]: 景区（门票）：
+              - generic [ref=e129]: 500.00 美元估算
+            - listitem [ref=e130]:
+              - generic [ref=e131]: 向导费：
+              - generic [ref=e132]: 500.00 美元估算
+            - listitem [ref=e133]:
+              - generic [ref=e134]: 交通费：
+              - generic [ref=e135]: 167.00 美元估算
+            - listitem [ref=e136]:
+              - generic [ref=e137]: 平台费：
+              - generic [ref=e138]: 167.00 美元估算
+          - button "保存行程" [ref=e148] [cursor=pointer]
+          - note "确认后付款说明" [ref=e149]:
+            - list [ref=e150]:
+              - listitem [ref=e151]:
+                - generic [ref=e152]: ✓
+                - generic [ref=e153]: 确认后生成报价快照，行程与金额锁定。
+              - listitem [ref=e154]:
+                - generic [ref=e155]: ✓
+                - generic [ref=e156]: 下一步：向导接单后在订单页完成付款；费用锁定至行程结束。
+              - listitem [ref=e157]:
+                - generic [ref=e158]: ✓
+                - generic [ref=e159]: 付款完成后进入履约与订单跟踪。
+      - generic "订单页工具与帮助" [ref=e160]:
+        - paragraph [ref=e161]: 页面工具
+        - generic [ref=e162]:
+          - button "打印本页" [ref=e164] [cursor=pointer]
+          - button "复制摘要" [ref=e166] [cursor=pointer]
+          - link "返回订单列表" [ref=e167] [cursor=pointer]:
+            - /url: /orders
+        - generic [ref=e168]:
+          - paragraph [ref=e169]: 帮助与合规
+          - generic [ref=e170]:
+            - group [ref=e171]:
+              - generic "查看取消与合规说明" [ref=e172] [cursor=pointer]
+            - button "取消订单" [ref=e174] [cursor=pointer]
+  - button "Open Next.js Dev Tools" [ref=e180] [cursor=pointer]:
+    - img [ref=e181]
+  - alert [ref=e184]: 订单详情 | TravelTrust
+```

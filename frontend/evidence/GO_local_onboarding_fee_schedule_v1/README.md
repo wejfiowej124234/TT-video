@@ -2,16 +2,17 @@
 
 **总验收包：** [`GO_local_phase1`](../GO_local_phase1/README.md)（Identity 波 1 · ① 本地总闸）
 
-**阶段：① 本地** — quote / payment-intent / entitlement **对拍** + **全链路**（无 PSP / 无链上）；**② Stripe/测试网 PSP 暂停** — 见 [onboarding-fee-schedule.v1 §8.2](../../../docs/spec/artifacts/onboarding-fee-schedule.v1.md#82-第二阶段--②-测试网--待验backlog--暂停实施)
+**阶段：① 本地** — quote / payment-intent / entitlement **对拍** + **全链路**（**USDC 产品叙事** · 资格仍靠 webhook / local-dev；**无** ② indexer）；**②** `OnboardingFeePaid` / 可选 Stripe **暂停** — 见 [onboarding-fee-schedule.v1 §8.2](../../../docs/spec/artifacts/onboarding-fee-schedule.v1.md#82-第二阶段--②-测试网--待验backlog--暂停实施) · [`ONBOARDING-B-TRACK-USDC-SSOT`](../../lib/onboarding/ONBOARDING-B-TRACK-USDC-SSOT.md)
 
 **SSOT：** [onboarding-fee-schedule.v1.md](../../../docs/spec/artifacts/onboarding-fee-schedule.v1.md) · [onboarding-fee-schedule.v1.yaml](../../../docs/spec/artifacts/onboarding-fee-schedule.v1.yaml) · `crates/api/src/routes/onboarding/fee_schedule_v1.rs`
 
 ---
 
-## ① 全链路（无真实 PSP）
+## ① 全链路（USDC 叙事 · 资格闭环无 ② 真链）
 
 ```
-quote → payment-intent → entitlements(pending)
+quote (currency=USDC) → payment-intent → entitlements(pending)
+  → [可选] MeOnboardingUsdcFeePayment transfer（须 env）
   → webhook 或 local-dev/mark-paid → entitlements(paid)
   → role-confirm → GET /me(role) → Hub active
 ```

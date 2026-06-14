@@ -79,8 +79,8 @@ export const DEMO_MERCHANT_LISTINGS: DemoMerchantListing[] = [
         en: "Ocean-facing suites for couples and families, minutes to the beach. Pace is curated with a local host; add-ons are spelled out in the order agreement.",
       },
       {
-        zh: "支付使用 USDC/USDT 进入托管合约；服务完成并按里程碑确认后释放。",
-        en: "Pay with USDC/USDT into escrow; funds release after milestone confirmations.",
+        zh: "支付使用 USDC 进入托管合约；服务完成并按里程碑确认后释放。",
+        en: "Pay with USDC into escrow; funds release after milestone confirmations.",
       },
     ],
     highlights: [

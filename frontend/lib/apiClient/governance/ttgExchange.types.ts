@@ -1,6 +1,6 @@
 /** `GET /api/v1/governance/ttg-exchange/quote` — 与 `crates/api/routes/governance/ttg_exchange_quote.rs` 同源 */
 
-export type TtgExchangePayStable = "USDC" | "USDT";
+export type TtgExchangePayStable = "USDC";
 
 export type TtgExchangeQuoteResponse = {
   status: "ok";

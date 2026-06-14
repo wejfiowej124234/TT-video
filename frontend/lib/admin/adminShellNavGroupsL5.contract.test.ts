@@ -31,7 +31,7 @@ describe("admin shell nav groups SSOT (①)", () => {
 
   it("governance sidebar includes trust-growth", () => {
     expect(sidebarHrefs("governance")).toContain("/admin/trust-growth");
-    expect(ADMIN_SHELL_GOVERNANCE_NAV_LINKS).toHaveLength(3);
+    expect(ADMIN_SHELL_GOVERNANCE_NAV_LINKS).toHaveLength(4);
   });
 
   it("community sidebar includes abuse-policy", () => {

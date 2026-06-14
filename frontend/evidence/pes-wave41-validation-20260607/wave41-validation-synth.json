@@ -1,0 +1,109 @@
+{
+  "validation": {
+    "wave41Id": "pes-wave4-1-validation-20260607",
+    "wave4Id": "product-enhancement-wave4-closure-20260607",
+    "rujrBaselineId": "pes-real-user-journey-review-20260607",
+    "generatedAt": 1781324392205,
+    "totalRuns": 50,
+    "totalEvents": 292,
+    "uniqueSessions": 50,
+    "actualFunnelMatrix": [
+      {
+        "pair": "find_guide_order",
+        "fromStage": "find_guide",
+        "toStage": "order",
+        "baselineDropoffPct": 90.9090909090909,
+        "wave4TargetDropoffPct": 70,
+        "actualDropoffPct": 0,
+        "actualDeltaVsBaselinePp": 90.9090909090909,
+        "targetDeltaPp": 20.90909090909091,
+        "metTarget": true,
+        "improvedVsBaseline": true,
+        "closureId": "CC-P0-01"
+      },
+      {
+        "pair": "identity_post",
+        "fromStage": "identity",
+        "toStage": "post",
+        "baselineDropoffPct": 59.375,
+        "wave4TargetDropoffPct": 35,
+        "actualDropoffPct": 30.76923076923077,
+        "actualDeltaVsBaselinePp": 28.60576923076923,
+        "targetDeltaPp": 24.375000000000004,
+        "metTarget": true,
+        "improvedVsBaseline": true,
+        "closureId": "CC-P0-02"
+      },
+      {
+        "pair": "visit_register",
+        "fromStage": "visit",
+        "toStage": "register",
+        "baselineDropoffPct": 18.75,
+        "wave4TargetDropoffPct": 10,
+        "actualDropoffPct": 0,
+        "actualDeltaVsBaselinePp": 18.75,
+        "targetDeltaPp": 8.75,
+        "metTarget": true,
+        "improvedVsBaseline": true,
+        "closureId": "CC-P0-03"
+      }
+    ],
+    "dropoffDelta": [
+      {
+        "pair": "find_guide_order",
+        "baselinePct": 90.9090909090909,
+        "actualPct": 0,
+        "targetPct": 70,
+        "actualImprovementPp": 90.9090909090909,
+        "targetImprovementPp": 20.909090909090907,
+        "pctOfTargetAchieved": 434.78260869565224,
+        "verdict": "MET"
+      },
+      {
+        "pair": "identity_post",
+        "baselinePct": 59.375,
+        "actualPct": 30.76923076923077,
+        "targetPct": 35,
+        "actualImprovementPp": 28.60576923076923,
+        "targetImprovementPp": 24.375,
+        "pctOfTargetAchieved": 117.35700197238658,
+        "verdict": "MET"
+      },
+      {
+        "pair": "visit_register",
+        "baselinePct": 18.75,
+        "actualPct": 0,
+        "targetPct": 10,
+        "actualImprovementPp": 18.75,
+        "targetImprovementPp": 8.75,
+        "pctOfTargetAchieved": 214.28571428571428,
+        "verdict": "MET"
+      }
+    ],
+    "closuresMet": 3,
+    "closuresPartial": 0,
+    "closuresMiss": 0
+  },
+  "wave5": {
+    "wave41Id": "pes-wave4-1-validation-20260607",
+    "decision": "NO_GO",
+    "wave5Blocked": true,
+    "rationaleKey": "pes41_wave5_rationale_await_browser",
+    "validationSummary": {
+      "totalRuns": 50,
+      "pairsMet": 3,
+      "pairsPartial": 0,
+      "pairsMiss": 0
+    },
+    "recommendedWave5Themes": [],
+    "machineKeys": {
+      "PES_WAVE5": "BLOCKED",
+      "PES_WAVE5_DECISION": "NO_GO"
+    }
+  },
+  "baseline": {
+    "visit_register": 0.1875,
+    "identity_post": 0.59375,
+    "find_guide_order": 0.9090909090909091
+  }
+}

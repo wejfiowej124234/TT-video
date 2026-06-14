@@ -15,6 +15,8 @@ export type MeIdentitiesL5IdentityCardProps = {
   statusState?: MeIdentitySlotState | null;
   /** 核心轨细粒度阶段（机读 · ① Hub P1） */
   corePhase?: string | null;
+  /** Hub P2-3 · 最多三行 blocked_reason 运营摘要 */
+  blockedReasonLines?: string[] | null;
 };
 
 function statusPillClass(state: MeIdentitySlotState): string {
@@ -41,13 +43,16 @@ export function MeIdentitiesL5IdentityCard({
   statusLabel = null,
   statusState = null,
   corePhase = null,
+  blockedReasonLines = null,
 }: MeIdentitiesL5IdentityCardProps) {
+  const blockedLines = (blockedReasonLines ?? []).filter(Boolean).slice(0, 3);
   return (
     <Link
       href={href}
       className={`${TT_ME_IDENTITIES_L5.identityCard} ${className}`.trim()}
       data-tt-me-identities-card={surfaceId}
       {...(corePhase ? { "data-tt-me-identities-core-phase": corePhase } : {})}
+      {...(blockedLines.length > 0 ? { "data-tt-me-identities-card-blocked": "1" } : {})}
       aria-label={`${title} — ${ctaLabel}`}
     >
       <span className={TT_ME_IDENTITIES_L5.cardAmbient} aria-hidden />
@@ -62,6 +67,15 @@ export function MeIdentitiesL5IdentityCard({
         ) : null}
         <span className={TT_ME_IDENTITIES_L5.cardTitle}>{title}</span>
         <span className={TT_ME_IDENTITIES_L5.cardDesc}>{description}</span>
+        {blockedLines.length > 0 ? (
+          <span className={TT_ME_IDENTITIES_L5.cardBlockedReasonList} data-tt-me-identities-blocked-lines="1">
+            {blockedLines.map((line) => (
+              <span key={line} className={TT_ME_IDENTITIES_L5.cardBlockedReasonLine}>
+                {line}
+              </span>
+            ))}
+          </span>
+        ) : null}
         <span className={TT_ME_IDENTITIES_L5.cardCta}>
           {ctaLabel}
           <span className={TT_ME_IDENTITIES_L5.cardCtaIcon} aria-hidden>

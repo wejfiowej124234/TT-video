@@ -56,15 +56,6 @@ export const FINANCE_SUITE_MODULES: {
     status: "partial",
   },
   {
-    id: "export",
-    href: "/admin/finance",
-    titleKey: "admin_fin_suite_export",
-    descKey: "admin_fin_suite_export_desc",
-    openCtaKey: "admin_fin_suite_hub_depth_open_export",
-    perm: ADMIN_PERM.FINANCE_READ,
-    status: "partial",
-  },
-  {
     id: "audit",
     href: "/admin/audit",
     titleKey: "admin_fin_suite_audit_export",

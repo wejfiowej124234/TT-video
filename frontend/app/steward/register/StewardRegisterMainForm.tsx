@@ -88,6 +88,7 @@ export function StewardRegisterMainForm(page: Page) {
       ids.map(async (id) => {
         try {
           const s = await getStewardStakeStatus(id, walletTrimmed);
+          if (!s) return [id, "error"] as const;
           return [id, s.has_jurisdiction_stake] as const;
         } catch {
           return [id, "error"] as const;

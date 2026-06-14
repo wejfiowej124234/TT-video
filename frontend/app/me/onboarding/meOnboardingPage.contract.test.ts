@@ -32,19 +32,32 @@ describe("meOnboardingPage.contract (Auth/Identity phase ① · Console L5)", ()
       "utf8",
     );
     const writes = fs.readFileSync(path.join(process.cwd(), "app/me/onboarding/MeOnboardingWritesSection.tsx"), "utf8");
+    const usdcPay = fs.readFileSync(
+      path.join(process.cwd(), "components/me/onboarding/MeOnboardingUsdcFeePayment.tsx"),
+      "utf8",
+    );
     expect(main).toContain("TT_ME_ONBOARDING_L5.pageAttrs");
     expect(main).toContain("MeOnboardingConsoleProgress");
     expect(main).toContain("MeOnboardingNextStep");
     expect(main).toContain("MeOnboardingDonePanel");
     expect(main).toContain("deriveOnboardingFlowPhase");
     expect(main).toContain("deriveOnboardingConsoleProgressStep");
+    expect(main).toContain("onboardingEntitlementPaidForRole");
+    expect(main).toContain("hideConfirmNextStep");
+    expect(main).toContain("compactLabelOverride");
+    expect(main).toContain("roleLocked");
+    expect(quote).toContain("data-tt-me-onboarding-role-locked");
     expect(main).not.toContain("ProviderOnboardingProgress");
     expect(main).not.toContain("StewardOnboardingProgress");
     expect(main).toContain("MeOnboardingWritesSection");
-    expect(main).toContain("MeOnboardingStewardJourneyBridge");
-    expect(main).toContain("MeOnboardingStewardStakeSection");
-    expect(main).toContain("steward_register");
+    expect(main).not.toContain("MeOnboardingStewardJourneyBridge");
+    expect(main).not.toContain("MeOnboardingStewardStakeSection");
+    expect(main).not.toContain("steward_register");
     expect(writes).toContain("data-tt-me-onboarding-steward-fee-clarify");
+    expect(writes).toContain("data-tt-me-onboarding-provider-fee-clarify");
+    expect(quote).toContain("data-tt-me-onboarding-b-track-disclosure");
+    expect(ent).toContain("data-tt-me-onboarding-entitlements-note");
+    expect(ent).toContain("data-tt-me-onboarding-entitlement-current");
     expect(main).toContain("accountFooterLinkClass");
     expect(fs.readFileSync(path.join(process.cwd(), "app/me/onboarding/error.tsx"), "utf8")).toContain(
       "MeOnboardingRouteError",
@@ -57,6 +70,8 @@ describe("meOnboardingPage.contract (Auth/Identity phase ① · Console L5)", ()
     expect(writes).not.toMatch(/<pre[\s\S]*payJson/);
     expect(writes).toContain("MeOnboardingLocalDevTools");
     expect(writes).toContain("data-tt-me-onboarding-pay-flow-steps");
+    expect(writes).toContain("MeOnboardingUsdcFeePayment");
+    expect(usdcPay).toContain("data-tt-me-onboarding-usdc-fee-payment");
   });
 
   it("hook syncs URL role and checkout return_url", () => {
@@ -66,6 +81,8 @@ describe("meOnboardingPage.contract (Auth/Identity phase ① · Console L5)", ()
     expect(hook).toContain("parseOnboardingQuoteRoleParam");
     expect(hook).toContain("onboardingReturnUrlForCheckout(quoteRole)");
     expect(hook).toContain("history.replaceState");
+    expect(hook).toContain("resolveOnboardingRoleLock");
+    expect(hook).toContain("roleLocked");
     expect(hook).toContain("isOnboardingStripeReturnQuery");
     expect(hook).toContain("entAutoSyncing");
     expect(hook).toContain("onboardingRoleConfirmedForQuote");
@@ -81,9 +98,13 @@ describe("meOnboardingPage.contract (Auth/Identity phase ① · Console L5)", ()
     expect(main).toContain("integrateWalletSessionInNextStep");
     expect(main).toContain("authReturnPath");
     expect(main).toContain("buildMeOnboardingAuthReturnPath");
+    expect(main).toContain("data-tt-me-onboarding-steward-redirect");
+    expect(main).toContain('quoteRole === "region_steward"');
     expect(main).toContain("isMeOnboardingGuestEntryAllowed");
     expect(main).toContain("needsLoginGate");
     expect(main).toContain("MeOnboardingGuestEntryNotice");
+    expect(main).toContain("MeOnboardingWorkspaceReturnLink");
+    expect(main).toContain("provider_pending");
     expect(main).toContain("guestQuotePreview");
     expect(fs.readFileSync(path.join(process.cwd(), "app/me/onboarding/meOnboardingGuestAccess.ts"), "utf8")).toContain(
       "ME_ONBOARDING_GUEST_FROM_VALUES",

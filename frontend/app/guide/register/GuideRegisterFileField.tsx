@@ -47,6 +47,8 @@ export default function GuideRegisterFileField({
 
   inlineError,
 
+  dropHintKey = "guideRegister_fileDropHint",
+
   t,
 
 }: {
@@ -56,6 +58,8 @@ export default function GuideRegisterFileField({
   label: string;
 
   hint?: string;
+
+  dropHintKey?: string;
 
   accept: string;
 
@@ -209,7 +213,7 @@ export default function GuideRegisterFileField({
 
         <p id={dropHintId} className="text-meta text-slate-300/95">
 
-          {t("guideRegister_fileDropHint")}
+          {t(dropHintKey)}
 
         </p>
 

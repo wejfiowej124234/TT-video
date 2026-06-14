@@ -2,7 +2,7 @@
 
 **阶段：① 本地** — 向导申请页为 **UI SSOT**；**不**表示 ② 测试网、③ 生产 GO。
 
-**互指：** [ME-IDENTITIES-UI-FREEZE](./ME-IDENTITIES-UI-FREEZE.md) · [AUTH-REGISTER-UI-FREEZE](./AUTH-REGISTER-UI-FREEZE.md) · [HEADER-UTILITY-MENU-L5-FREEZE](./HEADER-UTILITY-MENU-L5-FREEZE.md)
+**互指：** [ME-IDENTITIES-UI-FREEZE](./ME-IDENTITIES-UI-FREEZE.md) · [AUTH-REGISTER-UI-FREEZE](./AUTH-REGISTER-UI-FREEZE.md) · [HEADER-UTILITY-MENU-L5-FREEZE](./HEADER-UTILITY-MENU-L5-FREEZE.md) · [GUIDE-ONBOARDING-STAKING-FLOW](../../lib/guide/GUIDE-ONBOARDING-STAKING-FLOW.md)
 
 ---
 
@@ -53,4 +53,4 @@ npm run test -- guideRegisterUiFreeze guideRegisterL5 guideRegisterL5Complete gu
 |------|------|
 | `postGuide` / upload / i18n / `GET /me` 预检态 | 删三步导航或改回单页长表单 |
 | 十国城市/语言 chip 数据对齐 `geoOptions` | 国家下拉出现非 `PRODUCT_COUNTRIES` 项 |
-| 诚实化审核/质押文案 | 护照标「选填」实必填 |
+| 诚实化审核/质押文案（**申请不质押**；审核后工作台质押） | 护照标「选填」实必填 |

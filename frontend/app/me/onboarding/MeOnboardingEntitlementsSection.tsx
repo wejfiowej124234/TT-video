@@ -13,6 +13,7 @@ import {
   onboardingRoleTargetLabel,
   parseOnboardingEntitlementsView,
 } from "@/lib/me/meOnboardingViewModel";
+import { meOnboardingDevUiEnabled } from "@/lib/me/meOnboardingDevGate";
 import { MeOnboardingSectionLockedState } from "@/components/me/MeOnboardingSectionLockedState";
 import { MeOnboardingSectionSkeleton } from "@/components/me/MeOnboardingSectionSkeleton";
 import { TT_ME_ONBOARDING_L5 } from "@/lib/me/meOnboardingL5";
@@ -65,6 +66,11 @@ export function MeOnboardingEntitlementsSection({
       <h2 id={entSectionId} className="text-h4 font-semibold text-ink-900">
         {t("me_onboarding_entitlementsSection")}
       </h2>
+      {loggedIn ? (
+        <p className="mt-2 text-meta leading-relaxed text-ink-600" data-tt-me-onboarding-entitlements-note="1">
+          {t("me_onboarding_entitlementsMultiRoleNote")}
+        </p>
+      ) : null}
       {loggedIn && (entAutoSyncing || entitlementsSyncing) ? (
         <p className="mt-2 text-meta text-ink-600" aria-live="polite">
           {t("me_onboarding_entAutoSyncing")}
@@ -95,10 +101,19 @@ export function MeOnboardingEntitlementsSection({
       ) : entitlements && entitlements.items.length > 0 ? (
         <>
           <ul className="mt-4 space-y-3" aria-label={t("me_onboarding_entitlementsListAria")}>
-            {entitlements.items.map((item) => (
+            {entitlements.items.map((item) => {
+              const isCurrentFlow =
+                (quoteRole === "provider" && item.roleTarget === "provider") ||
+                (quoteRole === "region_steward" && item.roleTarget === "region_steward");
+              return (
               <li
                 key={item.id}
-                className="rounded-[var(--radius-sm)] border border-ink-100 bg-ink-50/70 p-3"
+                className={`rounded-[var(--radius-sm)] border p-3 ${
+                  isCurrentFlow
+                    ? "border-ref-sun/35 bg-ref-sun/[0.06]"
+                    : "border-ink-100 bg-ink-50/70"
+                }`}
+                data-tt-me-onboarding-entitlement-current={isCurrentFlow ? "1" : undefined}
               >
                 <MeOnboardingSummaryGrid>
                   <MeOnboardingSummaryItem
@@ -119,10 +134,16 @@ export function MeOnboardingEntitlementsSection({
                     value={t(onboardingQuotePackageKey(item.roleTarget === "region_steward" ? "region_steward" : "provider"))}
                   />
                 </MeOnboardingSummaryGrid>
+                {isCurrentFlow ? (
+                  <p className="mt-2 text-meta font-medium text-travel-900">{t("me_onboarding_entitlementCurrentFlow")}</p>
+                ) : null}
               </li>
-            ))}
+            );
+            })}
           </ul>
-          <MeOnboardingTechnicalDetails label={t("me_onboarding_technicalDetails")} json={entJson} />
+          {meOnboardingDevUiEnabled() ? (
+            <MeOnboardingTechnicalDetails label={t("me_onboarding_technicalDetails")} json={entJson} />
+          ) : null}
         </>
       ) : entitlementsAwaitingPayment ? (
         <div
@@ -149,7 +170,9 @@ export function MeOnboardingEntitlementsSection({
           >
             {t("me_onboarding_refreshEntitlements")}
           </button>
-          <MeOnboardingTechnicalDetails label={t("me_onboarding_technicalDetails")} json={entJson} />
+          {meOnboardingDevUiEnabled() ? (
+            <MeOnboardingTechnicalDetails label={t("me_onboarding_technicalDetails")} json={entJson} />
+          ) : null}
         </div>
       ) : (
         <div className={TT_ME_ONBOARDING_L5.emptyState}>
@@ -175,7 +198,9 @@ export function MeOnboardingEntitlementsSection({
               {t("me_onboarding_refreshEntitlements")}
             </button>
           </div>
-          <MeOnboardingTechnicalDetails label={t("me_onboarding_technicalDetails")} json={entJson} />
+          {meOnboardingDevUiEnabled() ? (
+            <MeOnboardingTechnicalDetails label={t("me_onboarding_technicalDetails")} json={entJson} />
+          ) : null}
         </div>
       )}
       {loggedIn && !entLoading && entitlements && entitlements.items.length > 0 ? (

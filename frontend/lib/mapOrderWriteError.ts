@@ -62,6 +62,7 @@ export function mapOrderWriteError(
   if (code === "trust_guide_pending_review") return t("order_error_trust_guide_pending_review");
   if (code === "trust_verification_pending") return t("order_error_trust_verification_pending");
   if (code === "trust_identity_restricted") return t("order_error_trust_identity_restricted");
+  if (code === "identity_slot_profile_patch_forbidden") return t("me_identities_settings_patch_read_only");
   if (code === "trust_risk_too_high") return t("order_error_trust_risk_too_high");
   if (code === "not_tourist") return t("order_error_not_tourist");
   if (code === "guide_not_found") return t("order_error_guide_not_found");

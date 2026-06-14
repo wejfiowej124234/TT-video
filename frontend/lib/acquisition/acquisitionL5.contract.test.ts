@@ -24,6 +24,14 @@ const COMMUNITY_STRIP = readFileSync(
   join(process.cwd(), "components", "me", "CommunityMeAcquisitionTrustStrip.tsx"),
   "utf8",
 );
+const READINESS = readFileSync(
+  join(process.cwd(), "components", "market", "AcquisitionPublishReadinessPanel.tsx"),
+  "utf8",
+);
+const MARKET_PAGE = readFileSync(
+  join(process.cwd(), "components", "market", "MarketStandaloneBusinessPage.tsx"),
+  "utf8",
+);
 const ADMIN_DETAIL = readFileSync(join(process.cwd(), "app", "admin", "users", "[id]", "page.tsx"), "utf8");
 const ADMIN_LIST = readFileSync(join(process.cwd(), "app", "admin", "users", "page.tsx"), "utf8");
 
@@ -71,5 +79,11 @@ describe("acquisition L5 contract (PD-009 · ①)", () => {
     expect(COMMUNITY_STRIP).toContain("CommunityMeAcquisitionTrustStrip");
     expect(COMMUNITY_STRIP).toContain("TT_COMMUNITY_PAGE_L5");
     expect(COMMUNITY_STRIP).toContain("MeAcquisitionPublishBondAction");
+  });
+
+  it("subsite mounts publish readiness checklist (PD-009 L1 visibility)", () => {
+    expect(READINESS).toContain("fetchAcquisitionPublishEligibility");
+    expect(READINESS).toContain("data-tt-acquisition-publish-readiness");
+    expect(MARKET_PAGE).toContain("AcquisitionPublishReadinessPanel");
   });
 });

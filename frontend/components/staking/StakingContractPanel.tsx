@@ -1,13 +1,27 @@
 "use client";
 
-import { useEffect, useId, useMemo } from "react";
+import { useId, useMemo } from "react";
 import { formatUnits, isAddress } from "viem";
 import { useAccount, useChainId, useReadContract } from "wagmi";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { getExpectedChainId } from "@/lib/chainEnv";
 import { erc20DecimalsAbi, identityStakingPoolAbi } from "@/lib/stakingAbi";
+import {
+  isViemNoContractDataError,
+  stakingReadsEnabled,
+  useStakingContractDeployment,
+} from "@/lib/staking/stakingContractDeployment";
+import { TT_STAKING_PAGE_L5 } from "@/lib/staking/stakingPageL5";
 import { getGuideStakingAddress, getProviderStakingAddress } from "@/lib/stakingEnv";
+import { GUIDE_IDENTITY_STAKE_SECTION_ID } from "@/lib/guide/guideIdentityStakingNav";
+
+import { StakingApiStakeSummary } from "./StakingApiStakeSummary";
+import { StakingContractAddressRow } from "./StakingContractAddressRow";
+import { StakingL5Panel } from "./StakingL5Panel";
+import { StakingNotDeployedCallout } from "./StakingNotDeployedCallout";
+import { StakingPanelDisconnectedState } from "./StakingPanelDisconnectedState";
+import { useStakingStakePrefill } from "./StakingStakePrefillContext";
 
 function formatAmount(raw: bigint, decimals: number | undefined, t: (k: string) => string): string {
   if (decimals === undefined) return `${raw.toString()} (${t("staking_contract_rawUnits")})`;
@@ -20,12 +34,21 @@ function formatAmount(raw: bigint, decimals: number | undefined, t: (k: string) 
 
 export type StakingPoolKind = "guide" | "provider";
 
+export type StakingPanelVariant = "warm" | "legacy";
+
 /** Phase 3/4：身份质押池链上只读（token、slasher、MIN_STAKE、stakeOf、slashedOf）。 */
-export function StakingContractPanel({ pool }: { pool: StakingPoolKind }) {
+export function StakingContractPanel({
+  pool,
+  panelVariant = "legacy",
+}: {
+  pool: StakingPoolKind;
+  panelVariant?: StakingPanelVariant;
+}) {
   const { t } = useTranslation();
   const dash = t("ui_em_dash");
   const { address, isConnected } = useAccount();
   const chainId = useChainId();
+  const { requestPrefill } = useStakingStakePrefill();
   const stakingAddress = useMemo(
     () => (pool === "guide" ? getGuideStakingAddress() : getProviderStakingAddress()),
     [pool],
@@ -36,14 +59,17 @@ export function StakingContractPanel({ pool }: { pool: StakingPoolKind }) {
   const expectedChainId = getExpectedChainId();
   const chainOk = chainId === expectedChainId;
   const baseEnabled = Boolean(stakingAddress && chainOk);
-  const userEnabled = Boolean(baseEnabled && address && isConnected);
+  const { status: deploymentStatus } = useStakingContractDeployment(stakingAddress, chainOk);
+  const readsEnabled = stakingReadsEnabled(baseEnabled, deploymentStatus);
+  const userEnabled = Boolean(readsEnabled && address && isConnected);
   const titleId = useId();
+  const shell = panelVariant === "warm" ? TT_STAKING_PAGE_L5.panelCard : TT_STAKING_PAGE_L5.legacyPanel;
 
   const tokenRead = useReadContract({
     address: stakingAddress ?? undefined,
     abi: identityStakingPoolAbi,
     functionName: "token",
-    query: { enabled: baseEnabled },
+    query: { enabled: readsEnabled },
   });
 
   const tokenAddr = tokenRead.data;
@@ -54,21 +80,21 @@ export function StakingContractPanel({ pool }: { pool: StakingPoolKind }) {
     address: tokenForDecimals,
     abi: erc20DecimalsAbi,
     functionName: "decimals",
-    query: { enabled: Boolean(baseEnabled && tokenForDecimals) },
+    query: { enabled: Boolean(readsEnabled && tokenForDecimals) },
   });
 
   const slasherRead = useReadContract({
     address: stakingAddress ?? undefined,
     abi: identityStakingPoolAbi,
     functionName: "slasher",
-    query: { enabled: baseEnabled },
+    query: { enabled: readsEnabled },
   });
 
   const minStakeRead = useReadContract({
     address: stakingAddress ?? undefined,
     abi: identityStakingPoolAbi,
     functionName: "MIN_STAKE",
-    query: { enabled: baseEnabled },
+    query: { enabled: readsEnabled },
   });
 
   const stakeOfRead = useReadContract({
@@ -90,36 +116,55 @@ export function StakingContractPanel({ pool }: { pool: StakingPoolKind }) {
   const decimals =
     decimalsRead.data !== undefined ? Number(decimalsRead.data) : undefined;
 
-  const globalLoading = tokenRead.isLoading || slasherRead.isLoading || minStakeRead.isLoading;
-  const globalErr =
+  const minStakeFormatted =
+    minStakeRead.data !== undefined && decimals !== undefined
+      ? formatAmount(minStakeRead.data, decimals, t)
+      : null;
+
+  const globalLoading =
+    deploymentStatus === "loading" ||
+    (readsEnabled && (tokenRead.isLoading || slasherRead.isLoading || minStakeRead.isLoading));
+  const globalErrRaw =
     (tokenRead.error as Error | undefined)?.message ??
     (slasherRead.error as Error | undefined)?.message ??
     (minStakeRead.error as Error | undefined)?.message ??
     null;
+  const globalErr =
+    globalErrRaw && !isViemNoContractDataError(globalErrRaw) ? globalErrRaw : null;
   const userLoading = userEnabled && (stakeOfRead.isLoading || slashedRead.isLoading);
-  const userErr =
+  const userErrRaw =
     (stakeOfRead.error as Error | undefined)?.message ??
     (slashedRead.error as Error | undefined)?.message ??
     null;
+  const userErr = userErrRaw && !isViemNoContractDataError(userErrRaw) ? userErrRaw : null;
 
-  useEffect(() => {
-    if (globalErr && typeof window !== "undefined") {
-      console.error("StakingContractPanel global read error:", globalErr);
+  const belowMinOnChain =
+    pool === "guide" &&
+    userEnabled &&
+    minStakeRead.data !== undefined &&
+    stakeOfRead.data !== undefined &&
+    stakeOfRead.data < minStakeRead.data;
+
+  const shortfallFormatted = useMemo(() => {
+    if (!belowMinOnChain || minStakeRead.data === undefined || stakeOfRead.data === undefined) {
+      return null;
     }
-  }, [globalErr]);
-  useEffect(() => {
-    if (userErr && typeof window !== "undefined") {
-      console.error("StakingContractPanel user read error:", userErr);
-    }
-  }, [userErr]);
+    const shortfall = minStakeRead.data - stakeOfRead.data;
+    if (shortfall <= BigInt(0) || decimals === undefined) return null;
+    return formatAmount(shortfall, decimals, t);
+  }, [belowMinOnChain, minStakeRead.data, stakeOfRead.data, decimals, t]);
+
+  const onTopUpToMin = () => {
+    if (!shortfallFormatted) return;
+    requestPrefill(shortfallFormatted);
+    const el = document.getElementById(GUIDE_IDENTITY_STAKE_SECTION_ID);
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   if (!stakingAddress) {
     return (
-      <section
-        className="mt-8 rounded-[var(--radius-md)] border border-dashed border-ink-300 bg-bg-console/80 p-5"
-        aria-labelledby={titleId}
-      >
-        <h2 id={titleId} className="text-body-l font-semibold text-ink-900">
+      <section className={`${shell} border-dashed border-ink-300 bg-bg-console/80`} aria-labelledby={titleId}>
+        <h2 id={titleId} className={TT_STAKING_PAGE_L5.panelTitle}>
           {t(titleKey)}
         </h2>
         <p className="mt-2 text-body text-ink-600 leading-relaxed">{t(notConfiguredKey)}</p>
@@ -130,10 +175,10 @@ export function StakingContractPanel({ pool }: { pool: StakingPoolKind }) {
   if (!chainOk) {
     return (
       <section
-        className="mt-8 rounded-[var(--radius-md)] border border-warning/25 bg-warning/10 p-5"
+        className={`${shell} border-warning/25 bg-warning/10`}
         aria-labelledby={titleId}
       >
-        <h2 id={titleId} className="text-body-l font-semibold text-ink-900">
+        <h2 id={titleId} className={TT_STAKING_PAGE_L5.panelTitle}>
           {t(titleKey)}
         </h2>
         <p className="mt-2 text-body text-ink-700 leading-relaxed">
@@ -145,73 +190,119 @@ export function StakingContractPanel({ pool }: { pool: StakingPoolKind }) {
     );
   }
 
-  return (
-    <section
-      className="mt-8 rounded-[var(--radius-md)] border border-ink-200 bg-bg-console p-5 shadow-soft"
-      aria-labelledby={titleId}
-    >
-      <h2 id={titleId} className="text-body-l font-semibold text-ink-900">
-        {t(titleKey)}
-      </h2>
-      <p className="mt-1 text-meta text-ink-500 font-mono break-all">{stakingAddress}</p>
+  if (deploymentStatus === "missing") {
+    return (
+      <StakingL5Panel
+        title={t(titleKey)}
+        titleId={titleId}
+        address={stakingAddress}
+        variant={panelVariant}
+      >
+        <StakingNotDeployedCallout
+          chainId={chainId}
+          expectedChainId={expectedChainId}
+          contractAddress={stakingAddress}
+          variant={panelVariant}
+        />
+        {pool === "guide" ? <StakingApiStakeSummary enabled minStakeDisplay={null} /> : null}
+      </StakingL5Panel>
+    );
+  }
 
+  const body = (
+    <>
       {globalLoading ? (
-        <p className="mt-4 text-body text-ink-600">{t("staking_contract_loading")}</p>
+        <p className={TT_STAKING_PAGE_L5.metaProse}>{t("staking_contract_loading")}</p>
       ) : globalErr ? (
-        <p className="mt-4 text-body text-danger" role="alert">
+        <p className={TT_STAKING_PAGE_L5.calloutDanger} role="alert">
           {t("staking_contract_error")} {t("staking_readErrorRetryHint")}
         </p>
       ) : (
-        <dl className="mt-4 space-y-3 text-body text-ink-800">
-          <div>
-            <dt className="text-small font-medium text-ink-600">{t("staking_contract_stakeToken")}</dt>
-            <dd className="mt-0.5 font-mono text-small break-all">{tokenAddr ?? dash}</dd>
-          </div>
-          <div>
-            <dt className="text-small font-medium text-ink-600">{t("staking_contract_minStake")}</dt>
-            <dd className="mt-0.5">
+        <dl className={TT_STAKING_PAGE_L5.statGrid}>
+          <StakingContractAddressRow label={t("staking_contract_stakeToken")} address={tokenAddr ?? null} />
+          <div className={TT_STAKING_PAGE_L5.statRow}>
+            <dt className={TT_STAKING_PAGE_L5.statLabel}>{t("staking_contract_minStake")}</dt>
+            <dd className={TT_STAKING_PAGE_L5.statValue}>
               {minStakeRead.data !== undefined
                 ? formatAmount(minStakeRead.data, decimals, t)
                 : dash}
             </dd>
           </div>
-          <div>
-            <dt className="text-small font-medium text-ink-600">{t("staking_contract_slasher")}</dt>
-            <dd className="mt-0.5 font-mono text-small break-all">{slasherRead.data ?? dash}</dd>
-          </div>
+          <StakingContractAddressRow label={t("staking_contract_slasher")} address={slasherRead.data ?? null} />
         </dl>
       )}
+      {pool === "guide" && !isConnected ? (
+        <StakingApiStakeSummary enabled minStakeDisplay={minStakeFormatted} />
+      ) : null}
+    </>
+  );
 
-      <div className="mt-6 border-t border-ink-200 pt-4">
-        {!isConnected || !address ? (
-          <p className="text-body text-ink-600">{t("staking_contract_connectForBalance")}</p>
-        ) : userLoading ? (
-          <p className="text-body text-ink-600">{t("staking_contract_loading")}</p>
-        ) : userErr ? (
-          <p className="text-body text-danger" role="alert">
-            {t("staking_contract_error")} {t("staking_readErrorRetryHint")}
-          </p>
-        ) : (
-          <dl className="space-y-3 text-body text-ink-800">
-            <div>
-              <dt className="text-small font-medium text-ink-600">{t("staking_contract_yourStake")}</dt>
-              <dd className="mt-0.5">
+  const userFooter = (
+    <>
+      {!isConnected || !address ? (
+        <StakingPanelDisconnectedState />
+      ) : userLoading ? (
+        <p className={TT_STAKING_PAGE_L5.metaProse}>{t("staking_contract_loading")}</p>
+      ) : userErr ? (
+        <p className={TT_STAKING_PAGE_L5.calloutDanger} role="alert">
+          {t("staking_contract_error")} {t("staking_readErrorRetryHint")}
+        </p>
+      ) : (
+        <>
+          <dl className={TT_STAKING_PAGE_L5.statGrid}>
+            <div className={TT_STAKING_PAGE_L5.statRow}>
+              <dt className={TT_STAKING_PAGE_L5.statLabel}>{t("staking_contract_yourStake")}</dt>
+              <dd className={TT_STAKING_PAGE_L5.statValue}>
                 {stakeOfRead.data !== undefined
                   ? formatAmount(stakeOfRead.data, decimals, t)
                   : dash}
               </dd>
             </div>
-            <div>
-              <dt className="text-small font-medium text-ink-600">{t("staking_contract_yourSlashed")}</dt>
-              <dd className="mt-0.5">
+            <div className={TT_STAKING_PAGE_L5.statRow}>
+              <dt className={TT_STAKING_PAGE_L5.statLabel}>{t("staking_contract_yourSlashed")}</dt>
+              <dd className={TT_STAKING_PAGE_L5.statValue}>
                 {slashedRead.data !== undefined
                   ? formatAmount(slashedRead.data, decimals, t)
                   : dash}
               </dd>
             </div>
           </dl>
-        )}
-      </div>
-    </section>
+          {belowMinOnChain && shortfallFormatted ? (
+            <div className={`mt-4 ${TT_STAKING_PAGE_L5.calloutWarn}`} role="alert">
+              <p className="text-body text-amber-100">
+                {t("staking_contract_belowMin_onchain", {
+                  current:
+                    stakeOfRead.data !== undefined && decimals !== undefined
+                      ? formatAmount(stakeOfRead.data, decimals, t)
+                      : dash,
+                  min: minStakeFormatted ?? dash,
+                  shortfall: shortfallFormatted,
+                })}
+              </p>
+              <button
+                type="button"
+                onClick={onTopUpToMin}
+                className={`mt-3 ${TT_STAKING_PAGE_L5.trustSubmitBtn}`}
+                data-tt-staking-top-up-to-min="1"
+              >
+                {t("staking_contract_topUpToMin")}
+              </button>
+            </div>
+          ) : null}
+        </>
+      )}
+    </>
+  );
+
+  return (
+    <StakingL5Panel
+      title={t(titleKey)}
+      titleId={titleId}
+      address={stakingAddress}
+      variant={panelVariant}
+      footer={userFooter}
+    >
+      {body}
+    </StakingL5Panel>
   );
 }

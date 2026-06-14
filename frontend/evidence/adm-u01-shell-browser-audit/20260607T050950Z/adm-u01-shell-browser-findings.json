@@ -1,0 +1,1344 @@
+{
+  "artifact": "adm-u01-shell-browser-audit",
+  "phase": "②",
+  "generated_at": "2026-06-07T05:21:02.996Z",
+  "fe_base": "http://127.0.0.1:3012",
+  "api_matrix_path": "evidence/adm-u01-shell-browser-audit/20260607T050950Z/matrix-api-results.json",
+  "verdict": "CONDITIONAL",
+  "summary": {
+    "p0": 0,
+    "p1": 20,
+    "p2": 0,
+    "issues": 20
+  },
+  "shell_matrix": [
+    {
+      "role": "SuperAdmin",
+      "group_id": "onboarding",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "group_id": "operations",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "group_id": "community",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "group_id": "finance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "group_id": "governance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "group_id": "more",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "group_id": "onboarding",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "group_id": "operations",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "group_id": "community",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "group_id": "finance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "group_id": "governance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "group_id": "more",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "group_id": "onboarding",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "group_id": "operations",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "group_id": "community",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "group_id": "finance",
+      "expected_visible": false,
+      "actual_visible": false,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "group_id": "governance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "group_id": "more",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "group_id": "onboarding",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "group_id": "operations",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "group_id": "community",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "group_id": "finance",
+      "expected_visible": false,
+      "actual_visible": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "group_id": "governance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "group_id": "more",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "group_id": "onboarding",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "group_id": "operations",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "group_id": "community",
+      "expected_visible": false,
+      "actual_visible": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "group_id": "finance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "group_id": "governance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "group_id": "more",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "group_id": "onboarding",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "group_id": "operations",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "group_id": "community",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "group_id": "finance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "group_id": "governance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "group_id": "more",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    }
+  ],
+  "menu_matrix": [
+    {
+      "role": "SuperAdmin",
+      "href": "/admin/finance",
+      "permission": "admin.finance.read",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    },
+    {
+      "role": "SuperAdmin",
+      "href": "/admin/community/penalties",
+      "permission": "admin.community.moderate",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    },
+    {
+      "role": "SuperAdmin",
+      "href": "/admin/trust-growth",
+      "permission": "admin.trust_growth.write",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    },
+    {
+      "role": "SuperAdmin",
+      "href": "/admin/flags",
+      "permission": "admin.platform.read",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    },
+    {
+      "role": "SuperAdmin",
+      "href": "/admin/disputes",
+      "permission": "admin.orders.read",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    },
+    {
+      "role": "Ops",
+      "href": "/admin/finance",
+      "permission": "admin.finance.read",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    },
+    {
+      "role": "Ops",
+      "href": "/admin/community/penalties",
+      "permission": "admin.community.moderate",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    },
+    {
+      "role": "Ops",
+      "href": "/admin/trust-growth",
+      "permission": "admin.trust_growth.write",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    },
+    {
+      "role": "Ops",
+      "href": "/admin/flags",
+      "permission": "admin.platform.read",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    },
+    {
+      "role": "Ops",
+      "href": "/admin/disputes",
+      "permission": "admin.orders.read",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    },
+    {
+      "role": "CS",
+      "href": "/admin/finance",
+      "permission": "admin.finance.read",
+      "expected_visible": false,
+      "actual_visible": false,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "href": "/admin/community/penalties",
+      "permission": "admin.community.moderate",
+      "expected_visible": false,
+      "actual_visible": false,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "href": "/admin/trust-growth",
+      "permission": "admin.trust_growth.write",
+      "expected_visible": false,
+      "actual_visible": false,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "href": "/admin/flags",
+      "permission": "admin.platform.read",
+      "expected_visible": false,
+      "actual_visible": false,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "href": "/admin/disputes",
+      "permission": "admin.orders.read",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    },
+    {
+      "role": "Risk",
+      "href": "/admin/finance",
+      "permission": "admin.finance.read",
+      "expected_visible": false,
+      "actual_visible": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "href": "/admin/community/penalties",
+      "permission": "admin.community.moderate",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    },
+    {
+      "role": "Risk",
+      "href": "/admin/trust-growth",
+      "permission": "admin.trust_growth.write",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    },
+    {
+      "role": "Risk",
+      "href": "/admin/flags",
+      "permission": "admin.platform.read",
+      "expected_visible": false,
+      "actual_visible": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "href": "/admin/disputes",
+      "permission": "admin.orders.read",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    },
+    {
+      "role": "Finance",
+      "href": "/admin/finance",
+      "permission": "admin.finance.read",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    },
+    {
+      "role": "Finance",
+      "href": "/admin/community/penalties",
+      "permission": "admin.community.moderate",
+      "expected_visible": false,
+      "actual_visible": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "href": "/admin/trust-growth",
+      "permission": "admin.trust_growth.write",
+      "expected_visible": false,
+      "actual_visible": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "href": "/admin/flags",
+      "permission": "admin.platform.read",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    },
+    {
+      "role": "Finance",
+      "href": "/admin/disputes",
+      "permission": "admin.orders.read",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    },
+    {
+      "role": "Auditor",
+      "href": "/admin/finance",
+      "permission": "admin.finance.read",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    },
+    {
+      "role": "Auditor",
+      "href": "/admin/community/penalties",
+      "permission": "admin.community.moderate",
+      "expected_visible": false,
+      "actual_visible": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "href": "/admin/trust-growth",
+      "permission": "admin.trust_growth.write",
+      "expected_visible": false,
+      "actual_visible": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "href": "/admin/flags",
+      "permission": "admin.platform.read",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    },
+    {
+      "role": "Auditor",
+      "href": "/admin/disputes",
+      "permission": "admin.orders.read",
+      "expected_visible": true,
+      "actual_visible": false,
+      "status": "FAIL"
+    }
+  ],
+  "route_matrix": [
+    {
+      "role": "SuperAdmin",
+      "route": "/admin/finance",
+      "api_probe": "finance.summary",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "route": "/admin/community/reports",
+      "api_probe": "community.reports_list",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "route": "/admin/trust-growth",
+      "api_probe": "governance.trust_growth_patch",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "route": "/admin/flags",
+      "api_probe": "config.flags_list",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "route": "/admin/approvals",
+      "api_probe": "governance.approve_post",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "route": "/admin/users",
+      "api_probe": "ops.users_list",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "route": "/admin/finance",
+      "api_probe": "finance.summary",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "route": "/admin/community/reports",
+      "api_probe": "community.reports_list",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "route": "/admin/trust-growth",
+      "api_probe": "governance.trust_growth_patch",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "route": "/admin/flags",
+      "api_probe": "config.flags_list",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "route": "/admin/approvals",
+      "api_probe": "governance.approve_post",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": true,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "route": "/admin/users",
+      "api_probe": "ops.users_list",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "route": "/admin/finance",
+      "api_probe": "finance.summary",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": true,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "route": "/admin/community/reports",
+      "api_probe": "community.reports_list",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "route": "/admin/trust-growth",
+      "api_probe": "governance.trust_growth_patch",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": true,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "route": "/admin/flags",
+      "api_probe": "config.flags_list",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "route": "/admin/approvals",
+      "api_probe": "governance.approve_post",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": true,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "route": "/admin/users",
+      "api_probe": "ops.users_list",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "route": "/admin/finance",
+      "api_probe": "finance.summary",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": true,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "route": "/admin/community/reports",
+      "api_probe": "community.reports_list",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "route": "/admin/trust-growth",
+      "api_probe": "governance.trust_growth_patch",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "route": "/admin/flags",
+      "api_probe": "config.flags_list",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "route": "/admin/approvals",
+      "api_probe": "governance.approve_post",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": true,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "route": "/admin/users",
+      "api_probe": "ops.users_list",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "route": "/admin/finance",
+      "api_probe": "finance.summary",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "route": "/admin/community/reports",
+      "api_probe": "community.reports_list",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": true,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "route": "/admin/trust-growth",
+      "api_probe": "governance.trust_growth_patch",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": true,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "route": "/admin/flags",
+      "api_probe": "config.flags_list",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "route": "/admin/approvals",
+      "api_probe": "governance.approve_post",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": true,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "route": "/admin/users",
+      "api_probe": "ops.users_list",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": true,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "route": "/admin/finance",
+      "api_probe": "finance.summary",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "route": "/admin/community/reports",
+      "api_probe": "community.reports_list",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "route": "/admin/trust-growth",
+      "api_probe": "governance.trust_growth_patch",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": true,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "route": "/admin/flags",
+      "api_probe": "config.flags_list",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "route": "/admin/approvals",
+      "api_probe": "governance.approve_post",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": true,
+      "main_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "route": "/admin/users",
+      "api_probe": "ops.users_list",
+      "ui_reach": "PASS",
+      "login_redirect": false,
+      "perm_denied": false,
+      "main_visible": true,
+      "status": "PASS"
+    }
+  ],
+  "visibility_matrix": [
+    {
+      "role": "SuperAdmin",
+      "route": "/admin/finance",
+      "permission": "admin.finance.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "route": "/admin/community/reports",
+      "permission": "admin.community.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "route": "/admin/trust-growth",
+      "permission": "admin.trust_growth.write",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "route": "/admin/flags",
+      "permission": "admin.platform.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "route": "/admin/approvals",
+      "permission": "admin.approve",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "route": "/admin/users",
+      "permission": "admin.users.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "route": "/admin/finance",
+      "permission": "admin.finance.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "route": "/admin/community/reports",
+      "permission": "admin.community.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "route": "/admin/trust-growth",
+      "permission": "admin.trust_growth.write",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "route": "/admin/flags",
+      "permission": "admin.platform.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "route": "/admin/approvals",
+      "permission": "admin.approve",
+      "ui_has_perm": false,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "route": "/admin/users",
+      "permission": "admin.users.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "route": "/admin/finance",
+      "permission": "admin.finance.read",
+      "ui_has_perm": false,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "route": "/admin/community/reports",
+      "permission": "admin.community.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "route": "/admin/trust-growth",
+      "permission": "admin.trust_growth.write",
+      "ui_has_perm": false,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "route": "/admin/flags",
+      "permission": "admin.platform.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "route": "/admin/approvals",
+      "permission": "admin.approve",
+      "ui_has_perm": false,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "route": "/admin/users",
+      "permission": "admin.users.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "route": "/admin/finance",
+      "permission": "admin.finance.read",
+      "ui_has_perm": false,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "route": "/admin/community/reports",
+      "permission": "admin.community.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "route": "/admin/trust-growth",
+      "permission": "admin.trust_growth.write",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "route": "/admin/flags",
+      "permission": "admin.platform.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "route": "/admin/approvals",
+      "permission": "admin.approve",
+      "ui_has_perm": false,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "route": "/admin/users",
+      "permission": "admin.users.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "route": "/admin/finance",
+      "permission": "admin.finance.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "route": "/admin/community/reports",
+      "permission": "admin.community.read",
+      "ui_has_perm": false,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "route": "/admin/trust-growth",
+      "permission": "admin.trust_growth.write",
+      "ui_has_perm": false,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "route": "/admin/flags",
+      "permission": "admin.platform.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "route": "/admin/approvals",
+      "permission": "admin.approve",
+      "ui_has_perm": false,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "route": "/admin/users",
+      "permission": "admin.users.read",
+      "ui_has_perm": false,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "route": "/admin/finance",
+      "permission": "admin.finance.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "route": "/admin/community/reports",
+      "permission": "admin.community.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "route": "/admin/trust-growth",
+      "permission": "admin.trust_growth.write",
+      "ui_has_perm": false,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "route": "/admin/flags",
+      "permission": "admin.platform.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "route": "/admin/approvals",
+      "permission": "admin.approve",
+      "ui_has_perm": false,
+      "api_allows": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "route": "/admin/users",
+      "permission": "admin.users.read",
+      "ui_has_perm": true,
+      "api_allows": false,
+      "status": "PASS"
+    }
+  ],
+  "issues": [
+    {
+      "id": "ADM-SHELL-1-001",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "SuperAdmin",
+      "target": "/admin/finance",
+      "title": "Super Admin 菜单链 /admin/finance 不一致",
+      "observation": "expected=true actual=false perm=admin.finance.read"
+    },
+    {
+      "id": "ADM-SHELL-1-002",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "SuperAdmin",
+      "target": "/admin/community/penalties",
+      "title": "Super Admin 菜单链 /admin/community/penalties 不一致",
+      "observation": "expected=true actual=false perm=admin.community.moderate"
+    },
+    {
+      "id": "ADM-SHELL-1-003",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "SuperAdmin",
+      "target": "/admin/trust-growth",
+      "title": "Super Admin 菜单链 /admin/trust-growth 不一致",
+      "observation": "expected=true actual=false perm=admin.trust_growth.write"
+    },
+    {
+      "id": "ADM-SHELL-1-004",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "SuperAdmin",
+      "target": "/admin/flags",
+      "title": "Super Admin 菜单链 /admin/flags 不一致",
+      "observation": "expected=true actual=false perm=admin.platform.read"
+    },
+    {
+      "id": "ADM-SHELL-1-005",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "SuperAdmin",
+      "target": "/admin/disputes",
+      "title": "Super Admin 菜单链 /admin/disputes 不一致",
+      "observation": "expected=true actual=false perm=admin.orders.read"
+    },
+    {
+      "id": "ADM-SHELL-1-006",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "Ops",
+      "target": "/admin/finance",
+      "title": "Admin 菜单链 /admin/finance 不一致",
+      "observation": "expected=true actual=false perm=admin.finance.read"
+    },
+    {
+      "id": "ADM-SHELL-1-007",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "Ops",
+      "target": "/admin/community/penalties",
+      "title": "Admin 菜单链 /admin/community/penalties 不一致",
+      "observation": "expected=true actual=false perm=admin.community.moderate"
+    },
+    {
+      "id": "ADM-SHELL-1-008",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "Ops",
+      "target": "/admin/trust-growth",
+      "title": "Admin 菜单链 /admin/trust-growth 不一致",
+      "observation": "expected=true actual=false perm=admin.trust_growth.write"
+    },
+    {
+      "id": "ADM-SHELL-1-009",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "Ops",
+      "target": "/admin/flags",
+      "title": "Admin 菜单链 /admin/flags 不一致",
+      "observation": "expected=true actual=false perm=admin.platform.read"
+    },
+    {
+      "id": "ADM-SHELL-1-010",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "Ops",
+      "target": "/admin/disputes",
+      "title": "Admin 菜单链 /admin/disputes 不一致",
+      "observation": "expected=true actual=false perm=admin.orders.read"
+    },
+    {
+      "id": "ADM-SHELL-1-011",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "CS",
+      "target": "/admin/disputes",
+      "title": "CS 菜单链 /admin/disputes 不一致",
+      "observation": "expected=true actual=false perm=admin.orders.read"
+    },
+    {
+      "id": "ADM-SHELL-1-012",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "Risk",
+      "target": "/admin/community/penalties",
+      "title": "Risk 菜单链 /admin/community/penalties 不一致",
+      "observation": "expected=true actual=false perm=admin.community.moderate"
+    },
+    {
+      "id": "ADM-SHELL-1-013",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "Risk",
+      "target": "/admin/trust-growth",
+      "title": "Risk 菜单链 /admin/trust-growth 不一致",
+      "observation": "expected=true actual=false perm=admin.trust_growth.write"
+    },
+    {
+      "id": "ADM-SHELL-1-014",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "Risk",
+      "target": "/admin/disputes",
+      "title": "Risk 菜单链 /admin/disputes 不一致",
+      "observation": "expected=true actual=false perm=admin.orders.read"
+    },
+    {
+      "id": "ADM-SHELL-1-015",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "Finance",
+      "target": "/admin/finance",
+      "title": "Finance 菜单链 /admin/finance 不一致",
+      "observation": "expected=true actual=false perm=admin.finance.read"
+    },
+    {
+      "id": "ADM-SHELL-1-016",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "Finance",
+      "target": "/admin/flags",
+      "title": "Finance 菜单链 /admin/flags 不一致",
+      "observation": "expected=true actual=false perm=admin.platform.read"
+    },
+    {
+      "id": "ADM-SHELL-1-017",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "Finance",
+      "target": "/admin/disputes",
+      "title": "Finance 菜单链 /admin/disputes 不一致",
+      "observation": "expected=true actual=false perm=admin.orders.read"
+    },
+    {
+      "id": "ADM-SHELL-1-018",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "Auditor",
+      "target": "/admin/finance",
+      "title": "Compliance 菜单链 /admin/finance 不一致",
+      "observation": "expected=true actual=false perm=admin.finance.read"
+    },
+    {
+      "id": "ADM-SHELL-1-019",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "Auditor",
+      "target": "/admin/flags",
+      "title": "Compliance 菜单链 /admin/flags 不一致",
+      "observation": "expected=true actual=false perm=admin.platform.read"
+    },
+    {
+      "id": "ADM-SHELL-1-020",
+      "priority": "P1",
+      "category": "菜单可见性",
+      "role": "Auditor",
+      "target": "/admin/disputes",
+      "title": "Compliance 菜单链 /admin/disputes 不一致",
+      "observation": "expected=true actual=false perm=admin.orders.read"
+    }
+  ]
+}

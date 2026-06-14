@@ -1,0 +1,318 @@
+# ADM-U01 · Phase ② staging 六角色 API deny/pass 探针（与 admin_rbac.rs 权限包对拍）
+# 消费方：scripts/gates/run-admin-rbac-staging-matrix.py
+# ① 本地对照：scripts/dev/smoke-admin-rbac-matrix-local.sh（非本文件验收出口）
+
+version: adm-u01-staging-2026-06-03
+matrix_version: admin-rbac-v4-cms-ops-growth-2026-06-07
+
+roles:
+  - SuperAdmin
+  - Ops
+  - CS
+  - Risk
+  - Finance
+  - Auditor
+
+# 写探针使用占位 UUID；403=deny PASS，200/404/422=allow PASS（非 403 即权限放行）
+placeholders:
+  flag_id: "00000000-0000-0000-0000-000000000099"
+  approval_id: "00000000-0000-0000-0000-000000000001"
+  report_id: "00000000-0000-0000-0000-000000000002"
+  dsar_id: "00000000-0000-0000-0000-000000000003"
+  scheduler_job: "smoke_probe_job"
+
+probes:
+  - id: core.capabilities
+    domain: workbench
+    method: GET
+    path: /api/v1/admin/capabilities
+    expect:
+      SuperAdmin: [200]
+      Ops: [200]
+      CS: [200]
+      Risk: [200]
+      Finance: [200]
+      Auditor: [200]
+
+  - id: core.route_matrix
+    domain: workbench
+    method: GET
+    path: /api/v1/admin/rbac/route-matrix
+    expect:
+      SuperAdmin: [200]
+      Ops: [200]
+      CS: [200]
+      Risk: [200]
+      Finance: [200]
+      Auditor: [200]
+
+  - id: onboarding.provider_applications_list
+    domain: onboarding
+    method: GET
+    path: /api/v1/admin/provider-applications?limit=1
+    expect:
+      SuperAdmin: [200]
+      Ops: [200]
+      CS: [200]
+      Risk: [200]
+      Finance: [200]
+      Auditor: [200]
+
+  - id: onboarding.entitlements_list
+    domain: onboarding
+    method: GET
+    path: /api/v1/admin/onboarding/entitlements?limit=1
+    expect:
+      SuperAdmin: [200]
+      Ops: [200]
+      CS: [200]
+      Risk: [200]
+      Finance: [200]
+      Auditor: [200]
+
+  - id: ops.users_list
+    domain: operations
+    method: GET
+    path: /api/v1/admin/users?limit=1
+    expect:
+      SuperAdmin: [200]
+      Ops: [200]
+      CS: [200]
+      Risk: [200]
+      Finance: [403]
+      Auditor: [200]
+
+  - id: ops.orders_list
+    domain: operations
+    method: GET
+    path: /api/v1/admin/orders?limit=1
+    expect:
+      SuperAdmin: [200]
+      Ops: [200]
+      CS: [200]
+      Risk: [200]
+      Finance: [200]
+      Auditor: [200]
+
+  - id: ops.disputes_list
+    domain: operations
+    method: GET
+    path: /api/v1/admin/disputes?limit=1
+    expect:
+      SuperAdmin: [200]
+      Ops: [200]
+      CS: [200]
+      Risk: [200]
+      Finance: [200]
+      Auditor: [200]
+
+  - id: community.reports_list
+    domain: community
+    method: GET
+    path: /api/v1/admin/community/reports?limit=1
+    expect:
+      SuperAdmin: [200]
+      Ops: [200]
+      CS: [200]
+      Risk: [200]
+      Finance: [403]
+      Auditor: [200]
+
+  - id: community.penalties_post
+    domain: community
+    method: POST
+    path: /api/v1/admin/community/penalties
+    body: '{"user_id":"00000000-0000-0000-0000-000000000010","reason":"adm-u01-probe","severity":"warning"}'
+    expect:
+      SuperAdmin: [200, 201, 400, 404, 422]
+      Ops: [200, 201, 400, 404, 422]
+      CS: [403, 400]
+      Risk: [200, 201, 400, 404, 422]
+      Finance: [403, 400]
+      Auditor: [403, 400]
+
+  - id: finance.summary
+    domain: finance
+    method: GET
+    path: /api/v1/admin/finance/summary
+    expect:
+      SuperAdmin: [200]
+      Ops: [200]
+      CS: [403]
+      Risk: [403]
+      Finance: [200]
+      Auditor: [200]
+
+  - id: finance.fee_router
+    domain: finance
+    method: GET
+    path: /api/v1/admin/fee-router/routed-events?limit=1
+    expect:
+      SuperAdmin: [200]
+      Ops: [200]
+      CS: [200]
+      Risk: [200]
+      Finance: [200]
+      Auditor: [200]
+
+  - id: governance.trust_growth_patch
+    domain: governance
+    method: PATCH
+    path: /api/v1/admin/trust-growth/control
+    body: '{"freeze_weights":false}'
+    expect:
+      SuperAdmin: [200, 400, 404, 422]
+      Ops: [200, 400, 404, 422]
+      CS: [403]
+      Risk: [200, 400, 404, 422]
+      Finance: [403]
+      Auditor: [403]
+
+  - id: governance.approve_post
+    domain: governance
+    method: POST
+    path: /api/v1/admin/approvals/:approval_id/approve
+    body: '{"comment":"adm-u01-probe"}'
+    expect:
+      SuperAdmin: [200, 400, 404, 422]
+      Ops: [403, 400]
+      CS: [403, 400]
+      Risk: [403, 400]
+      Finance: [403, 400]
+      Auditor: [403, 400]
+
+  - id: config.flags_list
+    domain: more
+    method: GET
+    path: /api/v1/admin/flags?limit=1
+    expect:
+      SuperAdmin: [200]
+      Ops: [200]
+      CS: [200]
+      Risk: [200]
+      Finance: [200]
+      Auditor: [200]
+
+  - id: config.flags_publish
+    domain: more
+    method: POST
+    path: /api/v1/admin/flags/:flag_id/publish
+    body: '{"enabled":true,"expected_version":1}'
+    expect:
+      SuperAdmin: [200, 400, 404, 422]
+      Ops: [403, 400]
+      CS: [403, 400]
+      Risk: [403, 400]
+      Finance: [403, 400]
+      Auditor: [403, 400]
+
+  - id: config.scheduler_rerun
+    domain: more
+    method: POST
+    path: /api/v1/admin/scheduler/jobs/:scheduler_job/rerun
+    body: '{"reason":"adm-u01-probe"}'
+    expect:
+      SuperAdmin: [200, 400, 404, 422]
+      Ops: [403, 400]
+      CS: [403, 400]
+      Risk: [403, 400]
+      Finance: [403, 400]
+      Auditor: [403, 400]
+
+  - id: rbac.console_role_put
+    domain: more
+    method: PUT
+    path: /api/v1/admin/users/:target_user_id/console-role
+    body: '{"console_role_70":"CS","reason":"adm-u01-probe"}'
+    target_user_role: CS
+    expect:
+      SuperAdmin: [200, 400, 404, 422]
+      Ops: [200, 400, 404, 422]
+      CS: [403]
+      Risk: [200, 400, 404, 422]
+      Finance: [403]
+      Auditor: [403]
+
+# Playwright Shell 可见性（capabilities 加载后 data-tt-admin-shell-nav-group）
+shell_groups:
+  - id: onboarding
+    domain: onboarding
+    visible:
+      SuperAdmin: true
+      Ops: true
+      CS: true
+      Risk: true
+      Finance: true
+      Auditor: true
+  - id: operations
+    domain: operations
+    visible:
+      SuperAdmin: true
+      Ops: true
+      CS: true
+      Risk: true
+      Finance: true
+      Auditor: true
+  - id: content
+    domain: content
+    visible:
+      SuperAdmin: true
+      Ops: true
+      CS: true
+      Risk: true
+      Finance: false
+      Auditor: true
+  - id: official_ops
+    domain: official_ops
+    visible:
+      SuperAdmin: true
+      Ops: true
+      CS: true
+      Risk: true
+      Finance: false
+      Auditor: true
+  - id: growth
+    domain: growth
+    visible:
+      SuperAdmin: true
+      Ops: true
+      CS: true
+      Risk: true
+      Finance: true
+      Auditor: true
+  - id: community
+    domain: community
+    visible:
+      SuperAdmin: true
+      Ops: true
+      CS: true
+      Risk: true
+      Finance: false
+      Auditor: true
+  - id: finance
+    domain: finance
+    visible:
+      SuperAdmin: true
+      Ops: true
+      CS: false
+      Risk: false
+      Finance: true
+      Auditor: true
+  - id: governance
+    domain: governance
+    visible:
+      SuperAdmin: true
+      Ops: true
+      CS: true
+      Risk: true
+      Finance: true
+      Auditor: true
+  - id: more
+    domain: more
+    visible:
+      SuperAdmin: true
+      Ops: true
+      CS: true
+      Risk: true
+      Finance: true
+      Auditor: true

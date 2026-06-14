@@ -18,7 +18,14 @@ function walkTsx(dir: string): string[] {
 /** ① L5：Admin 页身须用 List/Detail/Queue Chrome，禁止裸 `main` + inner token。 */
 describe("admin page chrome L5 (①)", () => {
   const adminAppRoot = join(__dir, "..", "..", "app", "admin");
-  const CHROME_MARKERS = ["AdminListPageChrome", "AdminDetailPageChrome", "AdminQueueListPageChrome"] as const;
+  const CHROME_MARKERS = [
+    "AdminListPageChrome",
+    "AdminDetailPageChrome",
+    "AdminQueueListPageChrome",
+    /** CMS catalog · Official/Growth ops plane stack (→ AdminDetailPageChrome) */
+    "AdminContentPageShell",
+    "OpsPlanePageShell",
+  ] as const;
 
   it("PageMain/PageInner use AdminListPageChrome or AdminDetailPageChrome", () => {
     const offenders: string[] = [];

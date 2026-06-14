@@ -98,6 +98,9 @@ describe("orders list L5 contract (① · product console)", () => {
     const railSrc = readFileSync(filterRail, "utf8");
     expect(src).toContain("TT_ORDERS_LIST_L5.heroCta");
     expect(src).toContain("heroInnerGlow");
+    expect(src).toContain("orders_list_publish_hub_boundary");
+    expect(src).toContain("data-tt-orders-list-publish-hub-link");
+    expect(src).toContain("PUBLISH_HUB_PATH");
     expect(src).toContain("pageHeaderWrap");
     expect(src).toContain("heroScopeNote");
     expect(src).toContain("orders_list_drafts_scope_note");

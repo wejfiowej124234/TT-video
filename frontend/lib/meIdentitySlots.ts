@@ -21,16 +21,16 @@ export type MeIdentitySlot = {
   stake_display: string | null;
 };
 
-function isTravelerSideRole(role: string): boolean {
-  const r = role.trim().toLowerCase();
-  return r === "tourist" || r === "traveler";
+/** 任意已登录账号：旅行者槽 active（与后端 `build_identity_slots` 同源）。 */
+function travelerSlotActive(hasUser: boolean): boolean {
+  return hasUser;
 }
 
 /** 旧后端无 `identity_slots` 时的最小推导（仅单角色 + 向导行质押）。 */
 function identitySlotsFromUserOnly(data: unknown): MeIdentitySlot[] {
   const user = userFromGetMePayload(data);
   const roleLc = (user?.role ?? "").trim().toLowerCase();
-  const traveler_active = isTravelerSideRole(roleLc);
+  const traveler_active = travelerSlotActive(user != null);
   const guideObj = (data as { guide?: { stake_amount?: string; status?: string } | null })?.guide;
   const gStatus = typeof guideObj?.status === "string" ? guideObj.status.toLowerCase() : "";
   const gStake = typeof guideObj?.stake_amount === "string" ? guideObj.stake_amount.trim() : "";
@@ -43,7 +43,7 @@ function identitySlotsFromUserOnly(data: unknown): MeIdentitySlot[] {
   }
   const stake =
     gStake !== ""
-      ? `${gStake} USDT`
+      ? `${gStake} USDC`
       : null;
   return [
     { id: "traveler", state: traveler_active ? "active" : "inactive", stake_display: null },

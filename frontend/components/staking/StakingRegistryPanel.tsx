@@ -1,13 +1,22 @@
 "use client";
 
-import { useEffect, useId, useMemo } from "react";
+import { useId, useMemo } from "react";
 import { useAccount, useChainId, useReadContract } from "wagmi";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { getExpectedChainId } from "@/lib/chainEnv";
 import { registryAbi } from "@/lib/registryAbi";
 import { getRegistryAddress } from "@/lib/registryEnv";
+import {
+  isViemNoContractDataError,
+  stakingReadsEnabled,
+  useStakingContractDeployment,
+} from "@/lib/staking/stakingContractDeployment";
+import { TT_STAKING_PAGE_L5 } from "@/lib/staking/stakingPageL5";
 
+import type { StakingPanelVariant } from "./StakingContractPanel";
+import { StakingL5Panel } from "./StakingL5Panel";
+import { StakingPanelDisconnectedState } from "./StakingPanelDisconnectedState";
 function formatExpiryUnix(sec: bigint): string {
   if (sec === BigInt(0)) return "";
   const ms = Number(sec) * 1000;
@@ -20,15 +29,20 @@ function formatExpiryUnix(sec: bigint): string {
 }
 
 /** Phase 3/4：Registry 链上资格只读（需 NEXT_PUBLIC_REGISTRY_ADDRESS + 正确网络 + 已连接钱包）。 */
-export function StakingRegistryPanel() {
+export function StakingRegistryPanel({ panelVariant = "legacy" }: { panelVariant?: StakingPanelVariant }) {
   const { t } = useTranslation();
   const { address, isConnected } = useAccount();
   const chainId = useChainId();
   const registryAddress = useMemo(() => getRegistryAddress(), []);
   const expectedChainId = getExpectedChainId();
   const chainOk = chainId === expectedChainId;
-  const canRead = Boolean(registryAddress && address && isConnected && chainOk);
+  const baseEnabled = Boolean(registryAddress && chainOk);
+  const { status: deploymentStatus } = useStakingContractDeployment(registryAddress, chainOk);
+  const readsEnabled = stakingReadsEnabled(baseEnabled, deploymentStatus);
+  const canRead = Boolean(readsEnabled && address && isConnected);
   const titleId = useId();
+  const shell = panelVariant === "warm" ? TT_STAKING_PAGE_L5.panelCard : TT_STAKING_PAGE_L5.legacyPanel;
+  const warm = panelVariant === "warm";
 
   const isApprovedRead = useReadContract({
     address: registryAddress ?? undefined,
@@ -46,19 +60,23 @@ export function StakingRegistryPanel() {
     query: { enabled: canRead },
   });
 
-  const loading = isApprovedRead.isLoading || guideApprovalRead.isLoading;
-  const err =
+  const loading =
+    deploymentStatus === "loading" ||
+    (canRead && (isApprovedRead.isLoading || guideApprovalRead.isLoading));
+  const errRaw =
     (isApprovedRead.error as Error | undefined)?.message ??
     (guideApprovalRead.error as Error | undefined)?.message ??
     null;
-
-  useEffect(() => {
-    if (err && typeof window !== "undefined") {
-      console.error("StakingRegistryPanel read error:", err);
-    }
-  }, [err]);
+  const err = errRaw && !isViemNoContractDataError(errRaw) ? errRaw : null;
 
   if (!registryAddress) {
+    if (warm) {
+      return (
+        <p className={TT_STAKING_PAGE_L5.metaProse} role="status" data-tt-staking-registry-not-configured="1">
+          {t("staking_registry_notConfigured")}
+        </p>
+      );
+    }
     return (
       <section
         className="mt-8 rounded-[var(--radius-md)] border border-dashed border-ink-300 bg-bg-console/80 p-5"
@@ -72,21 +90,43 @@ export function StakingRegistryPanel() {
     );
   }
 
-  if (!isConnected || !address) {
+  if (deploymentStatus === "missing" && registryAddress) {
     return (
-      <section
-        className="mt-8 rounded-[var(--radius-md)] border border-ink-200 bg-bg-console p-5 shadow-soft"
-        aria-labelledby={titleId}
-      >
-        <h2 id={titleId} className="text-body-l font-semibold text-ink-900">
+      <p className={TT_STAKING_PAGE_L5.metaProse} role="status" data-tt-staking-registry-unavailable="1">
+        {t("staking_registry_unavailableCompact")}
+      </p>
+    );
+  }
+
+  if (!isConnected || !address) {
+    if (warm) {
+      return (
+        <div data-tt-staking-registry-connect-hint="1">
+          <StakingPanelDisconnectedState />
+        </div>
+      );
+    }
+    return (
+      <section className={shell} aria-labelledby={titleId}>
+        <h2 id={titleId} className={TT_STAKING_PAGE_L5.panelTitle}>
           {t("staking_registry_title")}
         </h2>
-        <p className="mt-2 text-body text-ink-600 leading-relaxed">{t("staking_registry_connectWallet")}</p>
+        <p className={`mt-2 ${TT_STAKING_PAGE_L5.metaProse}`}>{t("staking_registry_connectWallet")}</p>
       </section>
     );
   }
 
   if (!chainOk) {
+    const wrongChain = t("escrow_wrongChainDesc")
+      .replace("{expectedChainId}", String(expectedChainId))
+      .replace("{chainId}", String(chainId));
+    if (warm) {
+      return (
+        <p className={TT_STAKING_PAGE_L5.calloutWarn} role="status" data-tt-staking-registry-wrong-chain="1">
+          {wrongChain}
+        </p>
+      );
+    }
     return (
       <section
         className="mt-8 rounded-[var(--radius-md)] border border-warning/25 bg-warning/10 p-5"
@@ -95,11 +135,7 @@ export function StakingRegistryPanel() {
         <h2 id={titleId} className="text-body-l font-semibold text-ink-900">
           {t("staking_registry_title")}
         </h2>
-        <p className="mt-2 text-body text-ink-700 leading-relaxed">
-          {t("escrow_wrongChainDesc")
-            .replace("{expectedChainId}", String(expectedChainId))
-            .replace("{chainId}", String(chainId))}
-        </p>
+        <p className="mt-2 text-body text-ink-700 leading-relaxed">{wrongChain}</p>
       </section>
     );
   }
@@ -108,25 +144,22 @@ export function StakingRegistryPanel() {
   const raw = guideApprovalRead.data;
 
   return (
-    <section
-      className="mt-8 rounded-[var(--radius-md)] border border-ink-200 bg-bg-console p-5 shadow-soft"
-      aria-labelledby={titleId}
+    <StakingL5Panel
+      title={t("staking_registry_title")}
+      titleId={titleId}
+      address={registryAddress ?? undefined}
+      variant={panelVariant}
     >
-      <h2 id={titleId} className="text-body-l font-semibold text-ink-900">
-        {t("staking_registry_title")}
-      </h2>
-      <p className="mt-1 text-meta text-ink-500 font-mono break-all">{registryAddress}</p>
-
       {loading ? (
-        <p className="mt-4 text-body text-ink-600">{t("staking_registry_loading")}</p>
+        <p className={TT_STAKING_PAGE_L5.metaProse}>{t("staking_registry_loading")}</p>
       ) : err ? (
-        <p className="mt-4 text-body text-danger" role="alert">
+        <p className={TT_STAKING_PAGE_L5.calloutDanger} role="alert">
           {t("staking_registry_error")} {t("staking_readErrorRetryHint")}
         </p>
       ) : (
-        <dl className="mt-4 space-y-3 text-body text-ink-800">
+        <dl className={`space-y-3 ${TT_STAKING_PAGE_L5.bodyProse}`}>
           <div>
-            <dt className="text-small font-medium text-ink-600">{t("staking_registry_effectiveEligible")}</dt>
+            <dt className={TT_STAKING_PAGE_L5.statLabel}>{t("staking_registry_effectiveEligible")}</dt>
             <dd className="mt-0.5">
               {effective === true
                 ? t("staking_registry_effectiveYes")
@@ -138,7 +171,7 @@ export function StakingRegistryPanel() {
           {raw != null ? (
             <>
               <div>
-                <dt className="text-small font-medium text-ink-600">{t("staking_registry_rawRecord")}</dt>
+                <dt className={TT_STAKING_PAGE_L5.statLabel}>{t("staking_registry_rawRecord")}</dt>
                 <dd className="mt-2 grid gap-2 sm:grid-cols-2">
                   <span>
                     <span className="text-meta text-ink-500">{t("staking_registry_approved")}: </span>
@@ -160,6 +193,6 @@ export function StakingRegistryPanel() {
           ) : null}
         </dl>
       )}
-    </section>
+    </StakingL5Panel>
   );
 }

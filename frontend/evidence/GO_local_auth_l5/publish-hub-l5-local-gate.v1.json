@@ -1,0 +1,158 @@
+{
+
+  "schema": "traveltrust.publish-hub-l5-local-gate.v1",
+
+  "phase": "local-1",
+
+  "freeze_doc": "frontend/evidence/GO_local_auth_l5/PUBLISH-HUB-L5-DESIGN.md",
+
+  "ia_boundary_doc": "frontend/evidence/GO_local_auth_l5/PUBLISH-HUB-IA-BOUNDARY-SCORE.md",
+  "ux_wave0_doc": "frontend/evidence/GO_local_auth_l5/ACCOUNT-OPERATING-MODEL-UX-WAVE0-SCORE.md",
+  "ux_wave0_score": 100,
+  "ux_wave0_marker": "account-operating-model-ux-wave0-20260613",
+  "ux_wave1_sprint_doc": "frontend/evidence/GO_local_auth_l5/ACCOUNT-OPERATING-MODEL-UX-WAVE1-SPRINT.md",
+  "ux_wave1_adr": "../docs/adr/ADR-20260613-active-workspace-context-switcher.md",
+  "staging_smoke_script": "../scripts/dev/smoke-publish-hub-staging.sh",
+
+  "closure_doc": "frontend/evidence/GO_local_auth_l5/PUBLISH-HUB-PHASE1-CLOSURE.md",
+
+  "task_list_doc": "frontend/evidence/GO_local_auth_l5/PUBLISH-HUB-PHASE-TASK-LIST.md",
+
+  "frozen_at": "2026-06-12",
+
+  "ia_boundary_frozen_at": "2026-06-13",
+
+  "ia_boundary_marker": "publish-hub-ia-boundary-20260613",
+
+  "ia_boundary_score": 100,
+
+  "phase1_feature_freeze": true,
+
+  "task_id": "PUBLISH-HUB-L5-GATE",
+
+  "routes": [
+
+    {
+
+      "path": "/me/publish",
+
+      "role": "hub",
+
+      "markers": [
+
+        "data-tt-publish-hub=\"1\"",
+
+        "data-tt-publish-hub-ui-frozen=\"1\"",
+
+        "data-tt-publish-hub-l5-closure-probe=\"publish-hub-full-v1\"",
+
+        "data-tt-ui-frozen=\"publish-hub-l5-20260612\"",
+
+        "data-tt-publish-hub-ia-boundary-frozen=\"1\"",
+
+        "data-tt-ui-frozen-ia-boundary=\"publish-hub-ia-boundary-20260613\""
+
+      ],
+
+      "vitest": [
+
+        "lib/me/publishHubL5FullClosure.contract.test.ts",
+
+        "lib/me/publishHubUiFreeze.contract.test.ts",
+
+        "lib/me/publishHubIaBoundaryFreeze.contract.test.ts",
+
+        "lib/me/accountOperatingModelUxWave0.contract.test.ts",
+    "lib/me/accountOperatingModelUxWave1.contract.test.ts",
+
+        "app/me/publish/publishHubPage.contract.test.ts",
+
+        "lib/me/publishHubItemModel.test.ts",
+
+        "lib/me/publishHubVisibleRailsModel.test.ts",
+
+        "lib/me/publishHubPhaseTaskList.contract.test.ts"
+
+      ]
+
+    },
+
+    {
+
+      "path": "/orders",
+
+      "role": "orders_boundary",
+
+      "markers": [
+
+        "data-tt-orders-ia-boundary-frozen=\"1\"",
+
+        "data-tt-ui-frozen-ia-boundary=\"publish-hub-ia-boundary-20260613\"",
+
+        "data-tt-orders-list-publish-hub-link=\"1\""
+
+      ],
+
+      "vitest": [
+
+        "lib/orders/ordersListL5.contract.test.ts",
+
+        "lib/me/publishHubIaBoundaryFreeze.contract.test.ts"
+
+      ]
+
+    }
+
+  ],
+
+  "rails": ["trip", "guide", "merchant", "acquisition", "governance"],
+
+  "vitest_union": [
+
+    "lib/me/publishHubL5FullClosure.contract.test.ts",
+
+    "lib/me/publishHubUiFreeze.contract.test.ts",
+
+    "lib/me/publishHubIaBoundaryFreeze.contract.test.ts",
+
+    "lib/me/accountOperatingModelUxWave0.contract.test.ts",
+    "lib/me/accountOperatingModelUxWave1.contract.test.ts",
+
+    "lib/me/meSettingsPageI18nKeys.test.ts",
+
+    "app/me/publish/publishHubPage.contract.test.ts",
+
+    "lib/me/publishHubGuideModel.test.ts",
+
+    "lib/me/publishHubItemModel.test.ts",
+
+    "lib/me/publishHubVisibleRailsModel.test.ts",
+
+    "lib/me/publishHubIdentityDefaultFilter.test.ts",
+
+    "lib/me/publishHubServerSummaryModel.test.ts",
+
+    "lib/me/publishHubPhaseTaskList.contract.test.ts",
+
+    "lib/i18n/accountNavNamingP3.contract.test.ts",
+
+    "components/header/headerUserMenuNavModel.test.ts",
+
+    "lib/me/meSettingsL5.contract.test.ts",
+
+    "app/me/identities/meIdentitiesPage.contract.test.ts",
+
+    "lib/orders/ordersListL5.contract.test.ts"
+
+  ],
+
+  "playwright_optional": ["e2e/publish-hub-l5.spec.ts"],
+
+  "playwright_env": "PLAYWRIGHT_PUBLISH_HUB=1",
+
+  "green_script": "scripts/dev/smoke-publish-hub-local.sh",
+
+  "green_summary_line": "TT_PUBLISH_HUB_SMOKE: OK"
+
+}
+

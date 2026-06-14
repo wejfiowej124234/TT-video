@@ -13,9 +13,17 @@ import {
 import { useTranslation } from "@/components/LocaleProvider";
 import { getExpectedChainId } from "@/lib/chainEnv";
 import { mapWalletWriteError } from "@/lib/mapWalletWriteError";
-import { jurisdictionIdToBytes2 } from "@/lib/steward/jurisdictionBytes2";
-import { regionStewardStakePoolAbi } from "@/lib/steward/regionStewardStakeAbi";
+import {
+  stakeJurisdictionCountryCode,
+  tryJurisdictionIdToBytes2,
+} from "@/lib/steward/jurisdictionBytes2";
+import {
+  formatProtocolStewardStakeTtgUnits,
+  formatStewardWalletDisplay,
+  formatTtgAmount,
+} from "@/lib/steward/stewardStakeUiModel";
 import { getRegionStewardStakePoolAddress } from "@/lib/steward/stewardStakeEnv";
+import { regionStewardStakePoolAbi } from "@/lib/steward/regionStewardStakeAbi";
 import { erc20TokenAbi } from "@/lib/stakingAbi";
 import { ME_ONBOARDING_BTN_SECONDARY_CLASS } from "@/app/me/onboarding/meOnboardingPageChrome";
 
@@ -35,6 +43,8 @@ export type StewardStakeJurisdictionRowProps = {
   applicationId: string;
   expectedWallet: string;
   onStaked?: () => void;
+  /** Stable ref recommended — row passes `jurisdictionId` as first arg (see `updateRowStake`). */
+  onStakeStatus?: (jurisdictionId: string, hasStake: boolean | null, loadError: boolean) => void;
 };
 
 export function StewardStakeJurisdictionRow({
@@ -42,6 +52,7 @@ export function StewardStakeJurisdictionRow({
   applicationId,
   expectedWallet,
   onStaked,
+  onStakeStatus,
 }: StewardStakeJurisdictionRowProps) {
   const { t } = useTranslation();
   const { address, isConnected } = useAccount();
@@ -49,7 +60,11 @@ export function StewardStakeJurisdictionRow({
   const pool = getRegionStewardStakePoolAddress();
   const expectedChainId = getExpectedChainId();
   const chainOk = chainId === expectedChainId;
-  const jurisdictionBytes = useMemo(() => jurisdictionIdToBytes2(jurisdictionId), [jurisdictionId]);
+  const stakeCountryCode = useMemo(() => stakeJurisdictionCountryCode(jurisdictionId), [jurisdictionId]);
+  const jurisdictionBytes = useMemo(
+    () => (stakeCountryCode ? tryJurisdictionIdToBytes2(jurisdictionId) : null),
+    [jurisdictionId, stakeCountryCode],
+  );
   const applicationBytes32 = useMemo(
     () => keccak256(toBytes(applicationId)),
     [applicationId],
@@ -58,7 +73,7 @@ export function StewardStakeJurisdictionRow({
   const connected = address?.toLowerCase() ?? "";
   const walletMatch = Boolean(connected && connected === expected);
 
-  const baseEnabled = Boolean(pool && chainOk);
+  const baseEnabled = Boolean(pool && chainOk && jurisdictionBytes);
   const userEnabled = Boolean(baseEnabled && isConnected && walletMatch && isAddress(expectedWallet));
 
   const hasStakeRead = useReadContract({
@@ -93,7 +108,7 @@ export function StewardStakeJurisdictionRow({
   });
   const decimals = decimalsRead.data !== undefined ? Number(decimalsRead.data) : 18;
 
-  const minAmount = minStakeRead.data;
+  const minAmount = typeof minStakeRead.data === "bigint" ? minStakeRead.data : undefined;
   const alreadyStaked = hasStakeRead.data === true;
 
   const balanceRead = useReadContract({
@@ -151,7 +166,7 @@ export function StewardStakeJurisdictionRow({
   }, [minAmount, pool, token, writeApprove]);
 
   const onStake = useCallback(() => {
-    if (!pool || minAmount === undefined || minAmount === BigInt(0)) return;
+    if (!pool || minAmount === undefined || minAmount === BigInt(0) || !jurisdictionBytes) return;
     writeStake({
       address: pool,
       abi: regionStewardStakePoolAbi,
@@ -172,13 +187,27 @@ export function StewardStakeJurisdictionRow({
     onStaked?.();
   }, [stakeSuccess, hasStakeRead, onStaked]);
 
+  useEffect(() => {
+    if (hasStakeRead.isLoading) return;
+    if (hasStakeRead.isError) {
+      onStakeStatus?.(jurisdictionId, null, true);
+      return;
+    }
+    if (hasStakeRead.data === true || hasStakeRead.data === false) {
+      onStakeStatus?.(jurisdictionId, hasStakeRead.data, false);
+    }
+  }, [hasStakeRead.data, hasStakeRead.isError, hasStakeRead.isLoading, jurisdictionId, onStakeStatus]);
+
   const canStake =
     minAmount !== undefined &&
     minAmount > BigInt(0) &&
     (!needsApproval || (allowanceRead.data !== undefined && allowanceRead.data >= minAmount));
 
+  const formattedMin =
+    formatTtgAmount(minAmount, decimalsRead.data !== undefined ? Number(decimalsRead.data) : undefined) ??
+    formatProtocolStewardStakeTtgUnits(jurisdictionId);
   const minLabel =
-    minAmount !== undefined ? `${formatUnits(minAmount, decimals)} TTG` : t("ui_em_dash");
+    formattedMin != null ? `${formattedMin} TTG` : t("stewardStake_minAmount_unavailable");
 
   let statusLabel = t("steward_register_chain_stake_pending_short");
   if (alreadyStaked) statusLabel = t("steward_register_chain_stake_confirmed_short");
@@ -190,14 +219,23 @@ export function StewardStakeJurisdictionRow({
       data-tt-steward-onboarding-stake-row={jurisdictionId}
     >
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <span className="font-mono text-small font-semibold text-ink-900">{jurisdictionId}</span>
+        <span className="font-mono text-small font-semibold text-ink-900">
+          {jurisdictionId}
+          {stakeCountryCode && stakeCountryCode !== jurisdictionId.trim().toUpperCase()
+            ? ` → ${stakeCountryCode}`
+            : ""}
+        </span>
         <span className="text-meta text-ink-600">{statusLabel}</span>
       </div>
       <p className="mt-1 text-meta text-ink-600">
         {t("stewardStake_minAmount")}: {minLabel}
       </p>
 
-      {!pool ? (
+      {!stakeCountryCode || !jurisdictionBytes ? (
+        <p className="mt-2 text-small text-danger" role="alert">
+          {t("stewardStake_invalidJurisdiction")}
+        </p>
+      ) : !pool ? (
         <p className="mt-2 text-small text-danger" role="alert">
           {t("stewardStake_poolMissing")}
         </p>
@@ -210,6 +248,9 @@ export function StewardStakeJurisdictionRow({
       ) : !walletMatch ? (
         <p className="mt-2 text-small text-amber-900" role="alert">
           {t("stewardStake_walletMismatch")}
+          <span className="mt-1 block font-mono text-meta break-all" title={expectedWallet}>
+            {formatStewardWalletDisplay(expectedWallet)}
+          </span>
         </p>
       ) : alreadyStaked ? (
         <p className="mt-2 text-meta text-emerald-800">{t("stewardStake_done")}</p>

@@ -1,0 +1,21 @@
+{
+  "wave41Id": "pes-wave4-1-validation-20260607",
+  "decision": "NO_GO",
+  "wave5Blocked": true,
+  "rationaleKey": "pes41_wave5_rationale_await_browser",
+  "validationSummary": {
+    "totalRuns": 0,
+    "pairsMet": 0,
+    "pairsPartial": 0,
+    "pairsMiss": 0
+  },
+  "recommendedWave5Themes": [],
+  "machineKeys": {
+    "PES_WAVE5": "BLOCKED",
+    "PES_WAVE5_DECISION": "NO_GO"
+  },
+  "matrixGate": {
+    "qualified": false,
+    "reasons": ["pending_browser_aggregate"]
+  }
+}

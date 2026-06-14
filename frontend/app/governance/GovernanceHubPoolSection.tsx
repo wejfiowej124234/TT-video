@@ -3,6 +3,10 @@
 import { useTranslation } from "@/components/LocaleProvider";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import {
+  governanceHubSectionTokens,
+  type GovernanceHubSectionVariant,
+} from "@/lib/governance/governanceHubSectionTokens";
+import {
   balanceLineShortLabel,
   governanceCountryPoolRootChainSsot,
   governancePoolIsChainReadRow,
@@ -15,10 +19,18 @@ import {
 type Props = {
   pool: PoolRes | null;
   poolHttpError: string | null;
+  variant?: GovernanceHubSectionVariant;
+  showTitle?: boolean;
 };
 
-export function GovernanceHubPoolSection({ pool, poolHttpError }: Props) {
+export function GovernanceHubPoolSection({
+  pool,
+  poolHttpError,
+  variant = "hub",
+  showTitle = true,
+}: Props) {
   const { t } = useTranslation();
+  const tok = governanceHubSectionTokens(variant);
 
   const poolCurrencyTrim =
     pool != null && typeof pool.currency === "string" ? pool.currency.trim() : "";
@@ -31,38 +43,33 @@ export function GovernanceHubPoolSection({ pool, poolHttpError }: Props) {
 
   return (
     <div>
-      <h2 className="text-h4 font-medium text-ink-800">{t("governance_pool_label")}</h2>
+      {showTitle ? <h2 className={tok.title}>{t("governance_pool_label")}</h2> : null}
       {poolHttpError ? (
         <div className="mt-1">
           <ApiErrorAlert message={poolHttpError} />
         </div>
       ) : (
-        <div className="mt-2 space-y-4">
+        <div className={`${showTitle ? "mt-2" : ""} space-y-4`}>
           {Array.isArray(pool?.balance_lines_v1) && pool.balance_lines_v1.length > 0 ? (
-            <div className="space-y-2 rounded-[var(--radius-sm)] border border-ink-200/80 bg-ink-50/60 p-3 dark:border-ink-700/60 dark:bg-ink-900/20">
-              <p className="text-meta font-medium text-ink-700 dark:text-ink-200">
+            <div className={tok.panel}>
+              <p className={`text-meta font-medium ${variant === "workspaceL5" ? "text-slate-300" : "text-ink-700 dark:text-ink-200"}`}>
                 Track-labeled balances (P0)
               </p>
-              <p className="text-meta text-ink-500">
+              <p className={tok.metaMuted}>
                 No “total balance” is shown here; each line is explicit about its track and source.
               </p>
               <div className="grid gap-2">
                 {pool.balance_lines_v1.map((line, i) => (
-                  <div
-                    key={`${line.track_type}-${line.source}-${i}`}
-                    className="rounded-[var(--radius-sm)] border border-ink-200/70 bg-white/60 px-3 py-2 dark:border-ink-700/60 dark:bg-ink-950/20"
-                  >
+                  <div key={`${line.track_type}-${line.source}-${i}`} className={tok.innerPanel}>
                     <div className="flex items-center justify-between gap-3">
-                      <p className="text-small font-medium text-ink-800 dark:text-ink-100">
+                      <p className={`text-small font-medium ${variant === "workspaceL5" ? "text-slate-100" : "text-ink-800 dark:text-ink-100"}`}>
                         {balanceLineShortLabel(line)}
                       </p>
                       {typeof line.currency === "string" && line.currency.trim() ? (
-                        <p className="text-meta text-ink-500 dark:text-ink-400">
-                          {line.currency.trim()}
-                        </p>
+                        <p className={tok.metaMuted}>{line.currency.trim()}</p>
                       ) : null}
                     </div>
-                    <p className="mt-1 break-all font-mono text-small text-ink-800 dark:text-ink-100">
+                    <p className={`mt-1 ${tok.mono}`}>
                       {line.balance == null ? "—" : String(line.balance)}
                     </p>
                   </div>
@@ -73,121 +80,96 @@ export function GovernanceHubPoolSection({ pool, poolHttpError }: Props) {
 
           {governancePoolIsChainReadRow(pool) ? (
             <div className="space-y-3">
-              {showPoolChainSsotBadge ? (
-                <p className="inline-flex rounded-[var(--radius-sm)] border border-ref-sun/30 bg-ref-sun/10 px-2 py-1 text-small font-medium text-ink-800 dark:border-ref-sun/35 dark:bg-ref-sun/10 dark:text-ink-100">
-                  {t("governance_chain_read_ssot_badge")}
-                </p>
-              ) : null}
+              {showPoolChainSsotBadge ? <p className={tok.badge}>{t("governance_chain_read_ssot_badge")}</p> : null}
               <div>
-                <p className="text-meta text-ink-600">{t("governance_chain_read_raw_balance_caption")}</p>
-                <p className="mt-1 break-all font-mono text-small text-ink-800">
+                <p className={tok.meta}>{t("governance_chain_read_raw_balance_caption")}</p>
+                <p className={tok.mono}>
                   {pool.pool_balance != null ? String(pool.pool_balance) : "—"}
                 </p>
               </div>
               {poolCurrencyTrim ? (
                 <div>
-                  <p className="text-meta text-ink-600">
+                  <p className={tok.meta}>
                     {looksLikeEvmAddress(poolCurrencyTrim)
                       ? t("governance_chain_read_token_contract_caption")
                       : t("governance_chain_read_currency_field_caption")}
                   </p>
-                  <p
-                    className={
-                      looksLikeEvmAddress(poolCurrencyTrim)
-                        ? "mt-1 break-all font-mono text-small text-ink-800"
-                        : "mt-1 text-body text-ink-700"
-                    }
-                  >
+                  <p className={looksLikeEvmAddress(poolCurrencyTrim) ? tok.mono : tok.body}>
                     {poolCurrencyTrim}
                   </p>
                 </div>
               ) : null}
               {pool.updated_at == null ? (
-                <p className="text-meta text-ink-500">{t("governance_chain_read_no_table_updated_at")}</p>
+                <p className={tok.metaMuted}>{t("governance_chain_read_no_table_updated_at")}</p>
               ) : null}
             </div>
           ) : poolHasBalance && poolCurrencyTrim ? (
-            <p className="text-body text-ink-700">
+            <p className={variant === "workspaceL5" ? tok.monoStrong : tok.body}>
               {pool?.pool_balance} {poolCurrencyTrim}
             </p>
           ) : poolHasBalance && !poolCurrencyTrim ? (
-            <p className="text-body text-ink-700">
+            <p className={tok.body}>
               {t("governance_pool_balance_currency_unspecified", {
                 amount: String(pool?.pool_balance),
               })}
             </p>
           ) : pool?.data_source === "database" || pool?.data_source === "database_empty" ? (
-            <p className="text-body text-ink-500">{t("governance_pool_db_empty")}</p>
+            <p className={tok.metaMuted}>{t("governance_pool_db_empty")}</p>
           ) : (
-            <p className="text-body text-ink-500">{t("governance_pool_placeholder")}</p>
+            <p className={tok.metaMuted}>{t("governance_pool_placeholder")}</p>
           )}
 
           {showCountryPoolRootSsot ? (
-            <div
-              className="space-y-3 border-t border-ink-200/80 pt-4 dark:border-ink-700/80"
-              aria-label={t("governance_country_pool_root_section_label")}
-            >
-              <p className="text-meta font-medium text-ink-700 dark:text-ink-300">
+            <div className={tok.divider} aria-label={t("governance_country_pool_root_section_label")}>
+              <p className={`text-meta font-medium ${variant === "workspaceL5" ? "text-slate-300" : "text-ink-700 dark:text-ink-300"}`}>
                 {t("governance_country_pool_root_section_label")}
               </p>
-              <p className="inline-flex rounded-[var(--radius-sm)] border border-ref-sun/30 bg-ref-sun/10 px-2 py-1 text-small font-medium text-ink-800 dark:border-ref-sun/35 dark:bg-ref-sun/10 dark:text-ink-100">
-                {t("governance_chain_read_ssot_badge")}
-              </p>
+              <p className={tok.badge}>{t("governance_chain_read_ssot_badge")}</p>
               <div>
-                <p className="text-meta text-ink-600">{t("governance_country_pool_root_raw_value_caption")}</p>
-                <p className="mt-1 break-all font-mono text-small text-ink-800">{pool.country_pool}</p>
+                <p className={tok.meta}>{t("governance_country_pool_root_raw_value_caption")}</p>
+                <p className={tok.mono}>{pool.country_pool}</p>
               </div>
               {poolCurrencyTrim && looksLikeEvmAddress(poolCurrencyTrim) ? (
                 <div>
-                  <p className="text-meta text-ink-600">{t("governance_country_pool_root_token_address_caption")}</p>
-                  <p className="mt-1 break-all font-mono text-small text-ink-800">{poolCurrencyTrim}</p>
+                  <p className={tok.meta}>{t("governance_country_pool_root_token_address_caption")}</p>
+                  <p className={tok.mono}>{poolCurrencyTrim}</p>
                 </div>
               ) : null}
-              <p className="text-meta text-ink-500">{t("governance_country_pool_root_observation_hint")}</p>
+              <p className={tok.metaMuted}>{t("governance_country_pool_root_observation_hint")}</p>
             </div>
           ) : null}
 
           {showTreasuryPoolRootSsot ? (
-            <div
-              className="space-y-3 border-t border-ink-200/80 pt-4 dark:border-ink-700/80"
-              aria-label={t("governance_treasury_native_root_section_label")}
-            >
-              <p className="text-meta font-medium text-ink-700 dark:text-ink-300">
+            <div className={tok.divider} aria-label={t("governance_treasury_native_root_section_label")}>
+              <p className={`text-meta font-medium ${variant === "workspaceL5" ? "text-slate-300" : "text-ink-700 dark:text-ink-300"}`}>
                 {t("governance_treasury_native_root_section_label")}
               </p>
-              <p className="inline-flex rounded-[var(--radius-sm)] border border-ref-sun/30 bg-ref-sun/10 px-2 py-1 text-small font-medium text-ink-800 dark:border-ref-sun/35 dark:bg-ref-sun/10 dark:text-ink-100">
-                {t("governance_chain_read_ssot_badge")}
-              </p>
+              <p className={tok.badge}>{t("governance_chain_read_ssot_badge")}</p>
               <div>
-                <p className="text-meta text-ink-600">{t("governance_treasury_native_root_raw_wei_caption")}</p>
-                <p className="mt-1 break-all font-mono text-small text-ink-800">{pool.treasury_pool}</p>
+                <p className={tok.meta}>{t("governance_treasury_native_root_raw_wei_caption")}</p>
+                <p className={tok.mono}>{pool.treasury_pool}</p>
               </div>
-              <p className="text-meta text-ink-500">{t("governance_treasury_native_root_observation_hint")}</p>
+              <p className={tok.metaMuted}>{t("governance_treasury_native_root_observation_hint")}</p>
             </div>
           ) : null}
 
           {showTreasuryErc20PoolRootSsot ? (
-            <div
-              className="space-y-3 border-t border-ink-200/80 pt-4 dark:border-ink-700/80"
-              aria-label={t("governance_treasury_erc20_root_section_label")}
-            >
-              <p className="text-meta font-medium text-ink-700 dark:text-ink-300">
+            <div className={tok.divider} aria-label={t("governance_treasury_erc20_root_section_label")}>
+              <p className={`text-meta font-medium ${variant === "workspaceL5" ? "text-slate-300" : "text-ink-700 dark:text-ink-300"}`}>
                 {t("governance_treasury_erc20_root_section_label")}
               </p>
-              <p className="inline-flex rounded-[var(--radius-sm)] border border-ref-sun/30 bg-ref-sun/10 px-2 py-1 text-small font-medium text-ink-800 dark:border-ref-sun/35 dark:bg-ref-sun/10 dark:text-ink-100">
-                {t("governance_chain_read_ssot_badge")}
-              </p>
+              <p className={tok.badge}>{t("governance_chain_read_ssot_badge")}</p>
               <div>
-                <p className="text-meta text-ink-600">{t("governance_treasury_erc20_root_raw_value_caption")}</p>
-                <p className="mt-1 break-all font-mono text-small text-ink-800">{pool.treasury_erc20_pool}</p>
+                <p className={tok.meta}>{t("governance_treasury_erc20_root_raw_value_caption")}</p>
+                <p className={tok.mono}>{pool.treasury_erc20_pool}</p>
               </div>
               {poolCurrencyTrim && looksLikeEvmAddress(poolCurrencyTrim) ? (
                 <div>
-                  <p className="text-meta text-ink-600">{t("governance_treasury_erc20_root_token_address_caption")}</p>
-                  <p className="mt-1 break-all font-mono text-small text-ink-800">{poolCurrencyTrim}</p>
+                  <p className={tok.meta}>{t("governance_treasury_erc20_root_token_address_caption")}</p>
+                  <p className={tok.mono}>{poolCurrencyTrim}</p>
                 </div>
               ) : null}
-              <p className="text-meta text-ink-500">{t("governance_treasury_erc20_root_observation_hint")}</p>
+              <p className={tok.metaMuted}>{t("governance_treasury_erc20_root_observation_hint")}</p>
             </div>
           ) : null}
         </div>

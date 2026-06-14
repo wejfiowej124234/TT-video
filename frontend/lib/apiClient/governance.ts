@@ -62,6 +62,34 @@ export type GovernanceProposalDetailResponse = {
   cast_vote_calldata?: GovernanceCastVoteCalldata;
 };
 
+export type GovernanceProposalListItem = {
+  id?: string;
+  title?: string;
+  status?: string;
+};
+
+export type GovernanceProposalsListResponse = {
+  status?: string;
+  items?: GovernanceProposalListItem[];
+  data_source?: string;
+  mine?: boolean;
+  note?: string;
+};
+
+/** `GET /api/v1/governance/proposals?mine=1` — 当前会话用户发起的提案（须登录）。 */
+export async function getMyGovernanceProposalsList(
+  limit = 10,
+): Promise<GovernanceProposalsListResponse> {
+  const q = new URLSearchParams({ mine: "1" });
+  const res = await fetch(`${apiUrl(routes.governanceProposals)}?${q.toString()}`, {
+    headers: { "x-request-id": requestId(), ...getAuthHeaders() },
+  });
+  const data = (await parseResponse(res)) as GovernanceProposalsListResponse;
+  logApiJsonStatusNotOk("getMyGovernanceProposalsList", data);
+  throwUnlessApiOk(data);
+  return data;
+}
+
 export async function getGovernanceProposal(proposalId: string): Promise<GovernanceProposalDetailResponse> {
   const id = proposalId.trim();
   const res = await fetch(apiUrl(routes.governanceProposal(id)), {
@@ -90,7 +118,7 @@ export async function getGovernanceProposalStatus(proposalId: string): Promise<G
   if (!id) return null;
   try {
     const res = await fetch(apiUrl(routes.governanceProposalStatus(id)), {
-      headers: { "x-request-id": requestId() },
+      headers: { "x-request-id": requestId(), ...getAuthHeaders() },
     });
     let j: Record<string, unknown>;
     try {

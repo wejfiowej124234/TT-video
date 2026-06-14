@@ -24,18 +24,21 @@
 
 ---
 
-## 1 · 全链路（无 PSP / 无链上扣款）
+## 1 · 全链路（B 轨 USDC · ① 资格闭环）
 
 ```
-GET  quote
+GET  quote (USDC · amount_minor)
   → POST payment-intents          (Idempotency-Key · jurisdictions)
   → GET  entitlements/me          (pending)
+  → [产品] MeOnboardingUsdcFeePayment → 官方地址（须 env；① 可跳过）
   → POST internal/webhook           或  POST local-dev/mark-paid
   → GET  entitlements/me          (paid)
   → POST role-confirm
   → GET  /me                      (role = provider | region_steward)
   → Hub core card                 (payment_pending → confirm_pending → active)
 ```
+
+**收款 SSOT：** [`ONBOARDING-B-TRACK-USDC-SSOT`](../../lib/onboarding/ONBOARDING-B-TRACK-USDC-SSOT.md) · **≠** ② `OnboardingFeePaid` 已验 · **≠** Stripe 默认路径。
 
 | Hub 阶段（商家轨） | 条件 |
 |--------------------|------|

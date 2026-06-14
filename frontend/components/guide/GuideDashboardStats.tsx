@@ -2,6 +2,7 @@
 
 import { type FormEvent, useId } from "react";
 import { FOCUS_RING } from "@/components/me/constants";
+import { TT_WORKSPACE_L5 } from "@/lib/workspace/workspaceWorkbenchL5";
 
 export type GuideDashboardStatsProps = {
   t: (k: string) => string;
@@ -18,16 +19,16 @@ export type GuideDashboardStatsProps = {
 function StatTile({
   value,
   label,
-  valueClass,
+  accent = false,
 }: {
   value: string;
   label: string;
-  valueClass: string;
+  accent?: boolean;
 }) {
   return (
-    <div className="rounded-[var(--radius-md)] border border-cyan-500/20 bg-slate-800/60 px-3 py-3 sm:px-4 sm:py-3 text-center">
-      <p className={`text-h4 font-bold font-mono tabular-nums ${valueClass}`}>{value}</p>
-      <p className="text-meta text-slate-300 mt-0.5">{label}</p>
+    <div className={`${TT_WORKSPACE_L5.statTile} text-center`}>
+      <p className={accent ? TT_WORKSPACE_L5.statValueAccent : TT_WORKSPACE_L5.statValue}>{value}</p>
+      <p className={TT_WORKSPACE_L5.statLabel}>{label}</p>
     </div>
   );
 }
@@ -51,27 +52,24 @@ export default function GuideDashboardStats({
 
   return (
     <section
-      className="rounded-[var(--radius-md)] border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md px-4 py-4 sm:px-6 sm:py-5 mb-4 sm:mb-6 shadow-scifi-panel-md"
+      className={`${TT_WORKSPACE_L5.sectionCard} mb-1`}
       aria-labelledby={titleId}
       aria-busy={statsLoading ? true : undefined}
     >
-      <h2 id={titleId} className="text-body font-semibold text-cyan-200 mb-3">
+      <h2 id={titleId} className={TT_WORKSPACE_L5.sectionTitle}>
         {t("guide_dashboard_stats_title")}
       </h2>
       {statsLoading ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
           {[1, 2, 3, 4, 5].map((i) => (
-            <div
-              key={i}
-              className="rounded-[var(--radius-md)] border border-cyan-500/20 bg-slate-800/60 px-3 py-3 text-center"
-            >
-              <div className="min-h-[44px] h-11 min-w-[44px] w-12 mx-auto bg-slate-600/50 rounded-[var(--radius-sm)] animate-pulse motion-reduce:animate-none" />
-              <div className="h-3 w-16 mx-auto mt-2 bg-slate-700/50 rounded-[var(--radius-sm)] animate-pulse motion-reduce:animate-none" />
+            <div key={i} className={`${TT_WORKSPACE_L5.statTile} animate-pulse motion-reduce:animate-none`}>
+              <div className="mx-auto h-11 w-12 rounded-[var(--radius-sm)] bg-ref-sun/10" />
+              <div className="mx-auto mt-2 h-3 w-16 rounded-[var(--radius-sm)] bg-ref-sun/[0.06]" />
             </div>
           ))}
         </div>
       ) : statsError ? (
-        <div className="rounded-[var(--radius-md)] border border-slate-600/60 bg-slate-800/40 px-4 py-3 flex flex-wrap items-center justify-between gap-2">
+        <div className="rounded-xl border border-ref-sun/20 bg-ref-sun/[0.04] px-4 py-3 flex flex-wrap items-center justify-between gap-2">
           <p className="text-meta text-slate-300">{t("guide_dashboard_stats_load_fail")}</p>
           <form
             className="inline"
@@ -80,42 +78,22 @@ export default function GuideDashboardStats({
               onRetry();
             }}
           >
-            <button
-              type="submit"
-              aria-label={t("common_retry")}
-              className={`inline-flex min-h-[44px] items-center justify-center rounded-full border border-cyan-400/50 bg-cyan-500/20 px-3 py-1.5 text-meta text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/30 motion-sub ${FOCUS_RING}`}
-            >
+            <button type="submit" aria-label={t("common_retry")} className={`${TT_WORKSPACE_L5.secondaryBtn} ${FOCUS_RING}`}>
               {t("common_retry")}
             </button>
           </form>
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
-          <StatTile
-            value={String(ordersGuided)}
-            label={t("guide_dashboard_stat_orders_guided")}
-            valueClass="text-cyan-300 drop-shadow-scifi-cyan-muted"
-          />
-          <StatTile
-            value={String(completedCount)}
-            label={t("guide_dashboard_stat_completed")}
-            valueClass="text-success/95 drop-shadow-stat-success"
-          />
+          <StatTile value={String(ordersGuided)} label={t("guide_dashboard_stat_orders_guided")} accent />
+          <StatTile value={String(completedCount)} label={t("guide_dashboard_stat_completed")} />
           <StatTile
             value={earnedDisplay}
             label={`${t("guide_dashboard_stat_earned")}${t("ui_currency_suffix_usdt")}`}
-            valueClass="text-fuchsia-300 drop-shadow-scifi-fuchsia-soft"
+            accent
           />
-          <StatTile
-            value={avgDisplay}
-            label={t("guide_dashboard_stat_avg_rating")}
-            valueClass="text-warning/95 drop-shadow-stat-warning"
-          />
-          <StatTile
-            value={String(reviewsWritten)}
-            label={t("guide_dashboard_stat_reviews_written")}
-            valueClass="text-slate-200 drop-shadow-stat-slate"
-          />
+          <StatTile value={avgDisplay} label={t("guide_dashboard_stat_avg_rating")} />
+          <StatTile value={String(reviewsWritten)} label={t("guide_dashboard_stat_reviews_written")} />
         </div>
       )}
     </section>

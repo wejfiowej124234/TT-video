@@ -1,0 +1,28 @@
+# tt-api-prod · Fly.io（阶段三 ③ · Production Infrastructure）
+# 部署（仓库根 · 须 fly auth + PROD secrets 已设）:
+#   bash scripts/dev/phase3-production-fly-deploy-and-sync.sh
+#
+# secrets 清单：scripts/dev/.env.production.example
+# CORS：bash scripts/dev/patch-tt-api-prod-cors.sh
+
+app = 'tt-api-prod'
+primary_region = 'sin'
+
+[build]
+  dockerfile = '../../../Dockerfile'
+  context = '../../..'
+
+[env]
+  PORT = '8080'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ['app']
+
+[[vm]]
+  size = 'shared-cpu-1x'
+  memory = '1gb'

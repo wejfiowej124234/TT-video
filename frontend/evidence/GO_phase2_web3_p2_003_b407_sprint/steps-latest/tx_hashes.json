@@ -1,0 +1,6 @@
+{
+  "create_escrow": "forge:CreateEscrowB407.s.sol",
+  "approve": "0x5048e33765ce9368da505f85541dbc0ed5a4837bbee46e36fa367bc44b3928a0",
+  "deposit": "0x090c6b99c4f2ab4da0bf3ef6dec1179497389074bb198e623b6aef63d7582c4e",
+  "first_payment": "0x090c6b99c4f2ab4da0bf3ef6dec1179497389074bb198e623b6aef63d7582c4e"
+}

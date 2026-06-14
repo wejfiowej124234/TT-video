@@ -176,11 +176,10 @@ export const ME_SETTINGS_PAGE_TRACKER_V1: readonly MeSettingsPageTrackerEntry[] 
       "MeSettingsL5FlowPage",
       "MeSettingsHubBackLink",
       'data-tt-me-settings-route": "settings-trust"',
-      "useMeSettingsSummary",
+      "useMeSettingsTrustPage",
+      "MeSettingsTrustProgressPanel",
       "data-tt-me-settings-trust",
-      "MeSettingsResendVerifyEmailPanel",
-      'meSettingsNavExtensionHref("/trust")',
-      "meSecurityHref",
+      "me_settings_trust_page_title",
     ],
     mustNotContain: [
       "comingSoon: true",
@@ -195,14 +194,12 @@ export const ME_SETTINGS_PAGE_TRACKER_V1: readonly MeSettingsPageTrackerEntry[] 
     sourceFiles: [
       "app/trust/page.tsx",
       "components/trust/TrustTransparencyHub.tsx",
-      "app/me/settings/trust/page.tsx",
     ],
     mustContain: [
       "data-tt-trust-from-settings",
       "data-tt-trust-hub-from-settings",
       "MeSettingsExtensionIngressBlock",
       "me_settings_trust_center_from_settings_notice",
-      'meSettingsNavExtensionHref("/trust")',
     ],
   },
   {

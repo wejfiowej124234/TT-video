@@ -216,10 +216,10 @@ describe("market theme V1 (contract)", () => {
     expect(src).not.toMatch(/apiError[\s\S]{0,900}btn-console/);
   });
 
-  it("BookGuideModal pay hub uses market success ghost not btn-console", () => {
+  it("BookGuideModal secondary CTAs use market glass not btn-console", () => {
     const src = read("BookGuideModal.tsx");
-    expect(src).toContain("TT_MARKETING_BTN_MARKET_SUCCESS_GHOST");
-    expect(src).not.toMatch(/header_payHub[\s\S]{0,200}btn-console/);
+    expect(src).toContain("TT_MARKETING_BTN_MARKET_GLASS");
+    expect(src).not.toMatch(/btn-console/);
   });
 
   it("MarketContentGuidesSection uses warm market tokens not ref-cyan", () => {
@@ -416,6 +416,8 @@ describe("market theme V1 (contract)", () => {
     expect(read("GuideCard.tsx")).toContain("MarketGuideCover");
     expect(read("GuideCard.tsx")).toContain("compact={glass}");
     expect(read("GuideCard.tsx")).toContain("market_guide_hourly_on_request");
+    expect(read("GuideCard.tsx")).toContain("previewOnly");
+    expect(read("GuideCard.tsx")).toContain("data-tt-guide-card-preview");
     expect(read("MarketGuideCover.tsx")).toContain("object-[center_28%]");
     expect(readFileSync(join(root, "../../lib/marketMediaFallback.ts"), "utf8")).toContain(
       "resolveMarketOrderCoverUrl",

@@ -57,9 +57,13 @@ function num(v: unknown): number | null {
   return typeof v === "number" && Number.isFinite(v) ? v : null;
 }
 
-/** SSR/CSR 同源：USD 固定 en-US，避免 `Intl` 默认 locale 水合分叉 */
+/** SSR/CSR 同源：B 轨默认 USDC（2 位 minor）；遗留 USD 仍可读。 */
 export function formatOnboardingAmountMinor(amountMinor: number, currency: string): string {
   const c = currency.toUpperCase();
+  if (c === "USDC") {
+    const n = amountMinor / 100;
+    return `${n.toFixed(2)} USDC`;
+  }
   if (c === "USD") {
     return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(amountMinor / 100);
   }
@@ -71,7 +75,7 @@ export function parseOnboardingQuoteView(raw: unknown, fallbackRole: OnboardingQ
   if (!o || o.status !== "ok") return null;
   const roleRaw = str(o.role) ?? fallbackRole;
   const role: OnboardingQuoteRole = roleRaw === "region_steward" ? "region_steward" : "provider";
-  const currency = str(o.currency) ?? "USD";
+  const currency = str(o.currency) ?? "USDC";
   const amountMinor = num(o.amount_minor) ?? 0;
   const meta = asRecord(o.meta);
   const impl = str(meta?.implementation_status);
@@ -115,6 +119,19 @@ export function parseOnboardingEntitlementsView(raw: unknown): OnboardingEntitle
     implementationStatus: str(meta?.implementation_status),
     hasActivePaid,
   };
+}
+
+/** 当前报价角色是否已有有效准入资格（避免另一轨已付导致步进/阶段误判） */
+export function onboardingEntitlementPaidForRole(
+  entitlements: OnboardingEntitlementsView | null | undefined,
+  role: OnboardingQuoteRole,
+): boolean {
+  if (!entitlements) return false;
+  const target = role === "region_steward" ? "region_steward" : "provider";
+  return entitlements.items.some(
+    (i) =>
+      i.roleTarget === target && (i.status === "paid" || i.status === "active"),
+  );
 }
 
 export function parseOnboardingPaymentIntentView(raw: unknown): OnboardingPaymentIntentView | null {
@@ -209,8 +226,9 @@ export function deriveOnboardingConsoleProgressStep(
       return Math.min(2, total);
     case "pay":
     case "pay_pending":
-    case "confirm":
       return Math.min(feeStep, total);
+    case "confirm":
+      return role === "region_steward" ? Math.min(feeStep, total) : Math.min(feeStep + 1, total);
     case "done":
       return total;
     default:

@@ -1,0 +1,158 @@
+# CDA · Community Deep Audit 探针注册表
+# 消费方：scripts/dev/community-deep-audit.py
+
+version: cda-audit-2026-06-07
+matrix_version: community-deep-v1
+
+roles:
+  - author
+  - engager
+  - reporter
+  - admin
+
+# 社区关键路径：发帖 → Feed/详情 → 评论/回复 → 点赞/收藏 → 举报 → 作者删除
+community_critical_path:
+  - id: ccp.create_post
+    step: 发帖
+    method: POST
+    path: /api/v1/community/posts
+    actor: author
+    expect_status: [200, 201]
+  - id: ccp.get_post_detail
+    step: 帖子详情
+    method: GET
+    path: /api/v1/community/posts/:id
+    actor: public
+    expect_status: [200]
+  - id: ccp.get_feed
+    step: Feed 聚合
+    method: GET
+    path: /api/v1/community/feed
+    actor: author
+    expect_status: [200]
+  - id: ccp.post_comment
+    step: 评论
+    method: POST
+    path: /api/v1/community/posts/:id/comments
+    actor: engager
+    expect_status: [200]
+  - id: ccp.post_reply
+    step: 回复
+    method: POST
+    path: /api/v1/community/posts/:id/comments
+    actor: author
+    expect_status: [200]
+  - id: ccp.delete_post
+    step: 作者删除
+    method: DELETE
+    path: /api/v1/community/posts/:id
+    actor: author
+    expect_status: [200]
+
+moderation_matrix:
+  - id: mod.report_create
+    step: 举报
+    method: POST
+    path: /api/v1/community/reports
+    actor: reporter
+    expect_status: [200]
+    report_status_after: open
+  - id: mod.admin_queue
+    step: 审核队列
+    method: GET
+    path: /api/v1/admin/community/reports
+    actor: admin
+    expect_status: [200]
+    perm: admin.community.read
+  - id: mod.content_remove
+    step: 下架处置
+    method: PATCH
+    path: /api/v1/admin/community/moderation/:id
+    actor: admin
+    expect_status: [200]
+    perm: admin.community.moderate
+    disposition: content_removed
+  - id: mod.feed_hidden
+    step: Feed 隐藏
+    method: GET
+    path: /api/v1/community/feed
+    actor: public
+    expect: post_absent
+  - id: mod.penalty_ban
+    step: 封禁处罚
+    method: POST
+    path: /api/v1/admin/community/penalties
+    actor: admin
+    expect_status: [200]
+    action: ban
+  - id: mod.write_blocked
+    step: 封禁拦截写
+    method: POST
+    path: /api/v1/community/posts
+    actor: banned_user
+    expect_error: community_penalty_active
+  - id: mod.comment_visibility
+    step: 评论审核
+    method: PATCH
+    path: /api/v1/admin/community/comments/:id
+    actor: admin
+    expect_status: [200]
+    visibility: hidden
+
+engagement_matrix:
+  - id: eng.like
+    step: 点赞
+    method: POST
+    path: /api/v1/community/posts/:id/like
+    actor: engager
+    expect_status: [200]
+  - id: eng.unlike_relike
+    step: 取消再赞
+    method: DELETE|POST
+    path: /api/v1/community/posts/:id/like
+    actor: engager
+    expect_status: [200]
+  - id: eng.collect
+    step: 收藏
+    method: POST
+    path: /api/v1/community/posts/:id/collect
+    actor: engager
+    expect_status: [200]
+  - id: eng.like_count
+    step: 点赞计数一致
+    check: api_vs_pg
+    table: community_likes
+  - id: eng.me_posts
+    step: 我的帖子
+    method: GET
+    path: /api/v1/community/me/posts
+    actor: author
+    expect_status: [200]
+  - id: eng.me_likes
+    step: 我的点赞
+    method: GET
+    path: /api/v1/community/me/likes
+    actor: engager
+    expect_status: [200]
+  - id: eng.me_collects
+    step: 我的收藏
+    method: GET
+    path: /api/v1/community/me/collects
+    actor: engager
+    expect_status: [200]
+  - id: eng.idempotent_like
+    step: 点赞幂等
+    method: POST
+    path: /api/v1/community/posts/:id/like
+    actor: engager
+    expect: single_row_pg
+
+coverage_layers:
+  - frontend_playwright
+  - api_matrix
+  - postgres_direct
+  - audit_log_table
+  - rbac_registry
+  - state_machine_ssot
+  - cache_consistency
+  - count_consistency

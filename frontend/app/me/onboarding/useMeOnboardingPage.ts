@@ -29,6 +29,8 @@ import {
 } from "./meOnboardingPageHelpers";
 import { parseOnboardingEntitlementsView, onboardingRoleConfirmedForQuote } from "@/lib/me/meOnboardingViewModel";
 
+import { resolveOnboardingRoleLock } from "./meOnboardingRoleContext";
+
 export type UseMeOnboardingPageResult = {
   t: ReturnType<typeof useTranslation>["t"];
   quoteRole: OnboardingQuoteRole;
@@ -61,6 +63,7 @@ export type UseMeOnboardingPageResult = {
   entAutoSyncing: boolean;
   mePayload: unknown | null;
   roleConfirmedPersisted: boolean;
+  roleLocked: OnboardingQuoteRole | null;
 };
 
 export function useMeOnboardingPage(): UseMeOnboardingPageResult {
@@ -72,24 +75,30 @@ export function useMeOnboardingPage(): UseMeOnboardingPageResult {
 
   const searchParams = useSearchParams();
   const roleFromUrl = parseOnboardingQuoteRoleParam(searchParams.get("role"));
+  const roleLocked = resolveOnboardingRoleLock(searchParams.get("from"));
+  const resolvedRole = roleLocked ?? roleFromUrl;
 
-  const [quoteRole, setQuoteRoleState] = useState<OnboardingQuoteRole>(roleFromUrl);
+  const [quoteRole, setQuoteRoleState] = useState<OnboardingQuoteRole>(resolvedRole);
 
-  const setQuoteRole = useCallback((role: OnboardingQuoteRole) => {
-    setQuoteRoleState(role);
-    if (typeof window === "undefined") return;
-    const url = new URL(window.location.href);
-    if (role === "region_steward") {
-      url.searchParams.set("role", "region_steward");
-    } else {
-      url.searchParams.delete("role");
-    }
-    window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
-  }, []);
+  const setQuoteRole = useCallback(
+    (role: OnboardingQuoteRole) => {
+      if (roleLocked != null && role !== roleLocked) return;
+      setQuoteRoleState(role);
+      if (typeof window === "undefined") return;
+      const url = new URL(window.location.href);
+      if (role === "region_steward") {
+        url.searchParams.set("role", "region_steward");
+      } else {
+        url.searchParams.delete("role");
+      }
+      window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+    },
+    [roleLocked],
+  );
 
   useEffect(() => {
-    setQuoteRoleState(roleFromUrl);
-  }, [roleFromUrl]);
+    setQuoteRoleState(resolvedRole);
+  }, [resolvedRole]);
   const [quoteJson, setQuoteJson] = useState<unknown | null>(null);
   const [quoteErr, setQuoteErr] = useState<string | null>(null);
   const [quoteErrCode, setQuoteErrCode] = useState<string | null>(null);
@@ -394,5 +403,6 @@ export function useMeOnboardingPage(): UseMeOnboardingPageResult {
     entAutoSyncing,
     mePayload,
     roleConfirmedPersisted,
+    roleLocked,
   };
 }

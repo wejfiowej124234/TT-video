@@ -141,6 +141,8 @@ export const routes = {
   marketAcquisitionListingDrafts: "/api/v1/market/acquisition/listings/drafts",
   marketProviderListingDraftById: (draftId: string) =>
     `/api/v1/market/provider/listings/drafts/${encodeURIComponent(draftId)}`,
+  marketProviderListingArchive: (listingId: string) =>
+    `/api/v1/market/provider/listings/${encodeURIComponent(listingId)}/archive`,
   marketAcquisitionListingDraftById: (draftId: string) =>
     `/api/v1/market/acquisition/listings/drafts/${encodeURIComponent(draftId)}`,
   marketProviderListingOrderById: (id: string) =>

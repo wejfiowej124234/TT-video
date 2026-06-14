@@ -7,6 +7,7 @@ export type OrdersListFetchParamsInput = {
   cursor?: string;
   stateParam: string | null | undefined;
   searchQ?: string | null;
+  hat?: string | null;
 };
 
 /** `GET /api/v1/orders` 查询参数（列表首屏 / load-more / 静默轮询同源） */
@@ -18,6 +19,7 @@ export function buildOrdersListGetParams(input: OrdersListFetchParamsInput) {
     state: ordersListStateForApiQuery(input.stateParam),
     orders_chain_id: resolveOrdersListOrdersChainId(),
     q: search || undefined,
+    hat: (input.hat ?? "").trim() || undefined,
   };
 }
 

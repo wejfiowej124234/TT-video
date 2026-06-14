@@ -1,0 +1,131 @@
+# ITG · Identity–Trust–Governance Deep Audit 探针注册表
+# 消费方：scripts/dev/identity-trust-governance-deep-audit.py
+
+version: itg-audit-2026-06-07
+matrix_version: identity-trust-governance-v1
+
+roles:
+  - traveler
+  - delegatee
+  - admin
+  - public
+
+identity_matrix:
+  - id: id.register
+    step: 注册
+    method: POST
+    path: /auth/register
+    expect_status: [200, 201]
+  - id: id.login
+    step: 登录
+    method: POST
+    path: /auth/login
+    expect_status: [200]
+  - id: id.me
+    step: 身份读
+    method: GET
+    path: /api/v1/me
+    expect_status: [200]
+  - id: id.logout
+    step: 退出
+    method: POST
+    path: /auth/logout
+    expect_status: [200]
+  - id: id.me_denied
+    step: 未登录拒绝
+    method: GET
+    path: /api/v1/me
+    expect_status: [401]
+
+trust_matrix:
+  - id: tr.did_rank_travelers
+    step: DID 旅行者榜
+    method: GET
+    path: /api/v1/did-rank/travelers
+    expect_status: [200]
+  - id: tr.did_rank_guides
+    step: DID 向导榜
+    method: GET
+    path: /api/v1/did-rank/guides
+    expect_status: [200]
+  - id: tr.did_rank_prize_pool
+    step: 奖池读
+    method: GET
+    path: /api/v1/did-rank/prize-pool
+    expect_status: [200]
+  - id: tr.trust_growth_ingest
+    step: 信任增长摄入
+    method: POST
+    path: /api/v1/trust-growth/ingest
+    expect_status: [200]
+  - id: tr.trust_growth_config
+    step: 计分配置
+    method: GET
+    path: /api/v1/trust-growth/config
+    expect_status: [200]
+  - id: tr.admin_observability
+    step: Admin 观测
+    method: GET
+    path: /api/v1/admin/trust-growth/observability
+    perm: admin.read
+
+governance_matrix:
+  - id: gov.seed
+    step: 治理种子
+    method: POST
+    path: /auth/seed-governance-e2e
+    requires: SEED_TEST_ACCOUNTS=1
+  - id: gov.proposals_list
+    step: 提案列表
+    method: GET
+    path: /api/v1/governance/proposals
+    expect_status: [200]
+  - id: gov.proposal_detail
+    step: 提案详情
+    method: GET
+    path: /api/v1/governance/proposals/:id
+    expect_status: [200]
+  - id: gov.voting_power
+    step: 投票权
+    method: GET
+    path: /api/v1/governance/voting-power
+    expect_status: [200]
+  - id: gov.delegate_set
+    step: 委托
+    method: POST
+    path: /api/v1/governance/delegate
+    expect_status: [200]
+  - id: gov.vote_yes
+    step: 投票
+    method: POST
+    path: /api/v1/governance/proposals/:id/vote
+    expect_status: [200]
+  - id: gov.delegate_blocks_vote
+    step: 委托禁投
+    method: POST
+    path: /api/v1/governance/proposals/:id/vote
+    expect_status: [403]
+  - id: gov.state_machines
+    step: 状态机镜像
+    method: GET
+    path: /api/v1/governance/state-machines
+    expect_status: [200]
+  - id: gov.pool_rewards
+    step: 池与奖励
+    method: GET
+    path: /api/v1/governance/pool
+  - id: gov.accruals
+    step: 分配应计
+    method: GET
+    path: /api/v1/governance/investor-distribution-accruals
+
+coverage_layers:
+  - frontend_playwright
+  - api_matrix
+  - postgres_direct
+  - audit_log_table
+  - rbac_registry
+  - state_machine_ssot
+  - scoring_rules
+  - permission_inheritance
+  - count_consistency

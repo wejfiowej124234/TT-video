@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import { apiUrl, routes } from "@/lib/api";
 import { fetchJsonWithApiStatusLog } from "@/lib/apiClient";
@@ -10,7 +10,7 @@ import {
 } from "@/lib/governanceParams84Readonly";
 
 export function useGovernanceParamsPage() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const dash = t("ui_em_dash");
   const [data, setData] = useState<ProtocolRef84Mirror | null>(null);
   /** `undefined` = 加载中；`null` = 失败；否则为成功体 */
@@ -18,7 +18,11 @@ export function useGovernanceParamsPage() {
   const [pendingErr, setPendingErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [retryTick, setRetryTick] = useState(0);
   const cancelledRef = useRef(false);
+
+  const retryAll = useCallback(() => setRetryTick((n) => n + 1), []);
+  const retryPending = useCallback(() => setRetryTick((n) => n + 1), []);
 
   useEffect(() => {
     cancelledRef.current = false;
@@ -75,7 +79,7 @@ export function useGovernanceParamsPage() {
     return () => {
       cancelledRef.current = true;
     };
-  }, [t]);
+  }, [t, retryTick]);
 
   const l1 = data?.fee_router?.layer1_percent_of_allocatable_platform_fee;
   const gsplit = data?.fee_router?.global_pool_split_percent;
@@ -92,6 +96,7 @@ export function useGovernanceParamsPage() {
 
   return {
     t,
+    locale,
     dash,
     loading,
     error,
@@ -103,5 +108,7 @@ export function useGovernanceParamsPage() {
     diffRows,
     allMatch,
     pendingSource,
+    retryAll,
+    retryPending,
   };
 }

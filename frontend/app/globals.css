@@ -211,6 +211,22 @@
   );
 }
 
+/* `/governance/proposals*` · Console 暖奶油全页底（与 L0 顶栏 `#faf8f6` 衔接） */
+.bg-gov-proposals-warm-canvas,
+[data-tt-governance-proposals-warm-canvas="1"] {
+  background-color: #faf8f6;
+  background-image: linear-gradient(
+    to bottom,
+    #fff8f2 0%,
+    #faf8f6 40%,
+    #f5efe8 100%
+  );
+}
+
+body:has([data-tt-governance-proposals-warm-canvas="1"]) {
+  background-color: #faf8f6;
+}
+
 /* `/orders` 等暖金 Console 浅底叠层 — 顶右暖光 · 非首页深色 vignette */
 .bg-orders-console-vignette {
   background: linear-gradient(

@@ -12,6 +12,14 @@ import { useMeSettingsHubStatus } from "@/lib/me/useMeSettingsHubStatus";
 import { useMeSettingsSummary } from "@/lib/me/useMeSettingsSummary";
 import { meSettingsL5MainDataAttrs, TT_ME_SETTINGS_L5 } from "@/lib/me/meSettingsL5";
 import { meSettingsNavSections } from "@/lib/me/meSettingsNavModel";
+import {
+  meSettingsShowAcquisitionHub,
+  meSettingsShowGuideHub,
+  meSettingsShowMerchantHub,
+  meSettingsShowStewardHub,
+} from "@/lib/me/meIdentitySlotVisibility";
+import { useMeIdentitySlots } from "@/lib/me/useMeIdentitySlots";
+import { useActiveWorkspaceContext } from "@/lib/header/useActiveWorkspaceContext";
 import { useMeSettingsHubPathnameReload } from "@/lib/me/useMeSettingsHubPathnameReload";
 import { authL5InlineLinkFocusClasses, touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 
@@ -25,8 +33,25 @@ export function MeSettingsPageInner() {
     void hubStatus.reload();
     reload();
   }, hubReady);
+  const { ready: slotsReady, slotById, slots } = useMeIdentitySlots();
+  const { context: workspaceContext } = useActiveWorkspaceContext(slotsReady ? slots : null);
   const sections = meSettingsNavSections({
-    showGuideHub: user?.role === "guide",
+    showGuideHub: meSettingsShowGuideHub({
+      userRole: user?.role ?? null,
+      guideSlotState: slotsReady ? slotById("guide")?.state ?? null : null,
+    }),
+    showMerchantHub: meSettingsShowMerchantHub({
+      userRole: user?.role ?? null,
+      merchantSlotState: slotsReady ? slotById("merchant")?.state ?? null : null,
+    }),
+    showStewardHub: meSettingsShowStewardHub({
+      userRole: user?.role ?? null,
+      stewardSlotState: slotsReady ? slotById("region_steward")?.state ?? null : null,
+    }),
+    showAcquisitionHub: meSettingsShowAcquisitionHub({
+      acquisitionSlotState: slotsReady ? slotById("acquisition")?.state ?? null : null,
+    }),
+    workspaceContext,
   });
   const soonLabel = t("me_settings_badge_soon");
 

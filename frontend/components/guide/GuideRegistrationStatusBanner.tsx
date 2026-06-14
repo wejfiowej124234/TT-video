@@ -19,10 +19,11 @@ export default function GuideRegistrationStatusBanner({ trust, t, onRefresh }: G
   const s = raw.toLowerCase();
 
   const isPending = s === "pending" || s === "pending_review";
-  const isApproved = s === "active";
   const isRejected = s === "rejected";
   const isSuspended = s === "suspended";
-  const isKnown = isPending || isApproved || isRejected || isSuspended;
+  const isKnown = isPending || isRejected || isSuspended;
+
+  if (s === "active") return null;
 
   if (!isKnown) {
     return (
@@ -44,10 +45,6 @@ export default function GuideRegistrationStatusBanner({ trust, t, onRefresh }: G
     shell = "border-warning/40 bg-warning/10";
     titleKey = "guide_registration_banner_title_pending";
     bodyKey = "guide_registration_banner_body_pending";
-  } else if (isApproved) {
-    shell = "border-success/40 bg-success/10";
-    titleKey = "guide_registration_banner_title_approved";
-    bodyKey = "guide_registration_banner_body_approved";
   } else if (isRejected) {
     shell = "border-danger/45 bg-danger/10";
     titleKey = "guide_registration_banner_title_rejected";

@@ -1,0 +1,137 @@
+# OED · Order–Escrow–Dispute Deep Audit 探针注册表
+# 消费方：scripts/dev/order-escrow-dispute-deep-audit.py
+
+version: oed-audit-2026-06-07
+matrix_version: order-escrow-dispute-v1
+
+roles:
+  - traveler
+  - guide
+  - merchant
+  - admin
+  - arbitrator
+
+# 业务关键路径（下单→支付→托管→完成→评分 / 争议→裁决）
+business_critical_path:
+  - id: bcp.create_order
+    step: 下单
+    method: POST
+    path: /api/v1/orders
+    actor: traveler
+    expect_status: [200, 201]
+    order_status_after: created
+  - id: bcp.accept
+    step: 接单
+    method: POST
+    path: /api/v1/orders/:order_id/accept
+    actor: guide
+    expect_status: [200]
+    order_status_after: accepted
+  - id: bcp.mock_pay
+    step: 支付进托管
+    method: POST
+    path: /api/v1/orders/:order_id/mock-pay
+    actor: traveler
+    expect_status: [200]
+    order_status_after: escrowed
+    requires: P3_CHAIN_OFF=1
+  - id: bcp.confirm_completion
+    step: 确认完成
+    method: POST
+    path: /api/v1/orders/:order_id/confirm-completion
+    actor: guide
+    expect_status: [200]
+    order_status_after: completed
+  - id: bcp.review_traveler
+    step: 旅行者评分
+    method: POST
+    path: /api/v1/orders/:order_id/reviews
+    actor: traveler
+    expect_status: [200]
+  - id: bcp.review_guide
+    step: 向导评分
+    method: POST
+    path: /api/v1/orders/:order_id/reviews
+    actor: guide
+    expect_status: [200]
+  - id: bcp.open_dispute
+    step: 开争议
+    method: POST
+    path: /api/v1/orders/:order_id/dispute
+    actor: traveler
+    expect_status: [200, 201]
+    order_status_after: disputed
+  - id: bcp.resolve_dispute
+    step: 裁决
+    method: POST
+    path: /api/v1/disputes/:dispute_id/resolve
+    actor: arbitrator
+    expect_status: [200]
+    dispute_status_after: resolved
+
+escrow_matrix:
+  - id: esc.state.created_to_accepted
+    from: created
+    to: accepted
+    via: accept
+    allowed_roles: [guide]
+  - id: esc.state.accepted_to_escrowed
+    from: accepted
+    to: escrowed
+    via: mock_pay
+    allowed_roles: [traveler]
+  - id: esc.state.escrowed_to_completed
+    from: escrowed
+    to: completed
+    via: confirm_completion
+    allowed_roles: [guide]
+  - id: esc.state.escrowed_to_disputed
+    from: escrowed
+    to: disputed
+    via: open_dispute
+    allowed_roles: [traveler, guide]
+  - id: esc.rbac.traveler_cannot_accept
+    action: accept
+    denied_roles: [traveler]
+    expect_status: [403, 409]
+  - id: esc.rbac.guide_cannot_mock_pay
+    action: mock_pay
+    denied_roles: [guide]
+    expect_status: [403]
+  - id: esc.idempotent.double_dispute
+    action: open_dispute
+    second_expect: [409]
+    error_key: dispute_already_open
+  - id: esc.idempotent.double_review
+    action: post_review
+    second_expect: [409]
+    error_key: already_reviewed
+
+dispute_matrix:
+  - id: dsp.open_participant
+    method: POST
+    path: /api/v1/orders/:order_id/dispute
+    allowed: [traveler, guide]
+    denied: [merchant, admin]
+  - id: dsp.list_read
+    method: GET
+    path: /api/v1/disputes
+    allowed: [traveler, guide, arbitrator]
+  - id: dsp.resolve_arbitrator_only
+    method: POST
+    path: /api/v1/disputes/:dispute_id/resolve
+    allowed: [arbitrator]
+    denied: [traveler, guide, admin]
+  - id: dsp.admin_read_only
+    method: GET
+    path: /api/v1/admin/disputes
+    allowed: [admin]
+    write_resolve_via_admin: false
+  - id: dsp.resolve_full_refund
+    refund_ratio: 1.0
+    slash_guide: false
+    order_terminal: refunded
+  - id: dsp.resolve_partial
+    refund_ratio: 0.5
+    slash_guide: false
+    order_terminal: partially_refunded

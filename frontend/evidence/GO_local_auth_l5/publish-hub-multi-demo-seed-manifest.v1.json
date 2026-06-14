@@ -1,0 +1,55 @@
+{
+  "schema": "traveltrust.publish-hub-multi-demo-seed.v1",
+  "phase": "①",
+  "account": {
+    "email": "multi-demo@test.com",
+    "password_hint": "Test123!",
+    "wallet": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+    "note": "① 本地 seed 账号；② 测试网须 G-1/G-2 清闸后按同 manifest 复灌，禁止跳阶"
+  },
+  "seed_script": "scripts/dev/seed-publish-hub-multi-demo-local.sh",
+  "rails": {
+    "trip": {
+      "title": "京都・奈良 · 秋季慢行草稿",
+      "destination": "日本",
+      "city": "京都",
+      "travel_date": "2026-11-08",
+      "days": 6
+    },
+    "guide": {
+      "source": "auth seed · ensure_multi_identity_demo_chain_off_slots",
+      "city": "杭州",
+      "hourly_rate_usdc": "45"
+    },
+    "merchant": {
+      "listing_title": "西溪印象城 · 旅拍写真套餐",
+      "city": "杭州",
+      "category": "travel",
+      "cover_url": "http://127.0.0.1:19000/traveltrust-community-media/dev/publish-hub-merchant-cover.jpg"
+    },
+    "acquisition": {
+      "listing_title": "京都限量版手办代购 · 悬赏任务",
+      "bounty_min_usdc": 180,
+      "bounty_max_usdc": 520,
+      "cover_url": "http://127.0.0.1:19000/traveltrust-community-media/dev/publish-hub-acquisition-cover.jpg"
+    },
+    "governance": {
+      "proposals": [
+        "TT-华东 · 区域手续费参数校准",
+        "社区内容治理 · 投票委托说明更新"
+      ],
+      "create_route": "/governance/proposals/new",
+      "workbench_route": "/governance?view=region"
+    },
+    "community": {
+      "posts": [
+        "多重身份演示 · 京都手办收购经验分享",
+        "杭州旅拍工作室 · 橱窗上新说明"
+      ]
+    }
+  },
+  "phase2_sync": {
+    "status": "prepared_not_started",
+    "note": "② 测试网复用本 manifest 字段 + 同邮箱/wallet；须 staging DB + Sepolia 治理栈，非 ① 绿集 GO"
+  }
+}

@@ -1,0 +1,5 @@
+step: S05-bilateral
+status: PASS
+api: https://tt-api-staging.fly.dev
+at: 2026-06-13T12:10:13Z
+note: 双边确认

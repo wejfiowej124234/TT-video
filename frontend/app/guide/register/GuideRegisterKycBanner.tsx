@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
+import { ME_TRUST_KYC_STATUS_HREF } from "@/lib/me/meTrustKycL5";
 import { guideRegBanner, guideRegFocusRing, guideRegLink } from "./guideRegisterUiClasses";
 
 export default function GuideRegisterKycBanner({
@@ -28,7 +29,7 @@ export default function GuideRegisterKycBanner({
     <div className={`${softMode ? "" : "mb-4"} ${guideRegBanner}`} role="note">
       <p className="text-meta text-slate-200">{t(copyKey)}</p>
       <p className="mt-2">
-        <Link href="/me/security" className={`${touchTargetLink44Classes} ${guideRegLink} ${guideRegFocusRing}`}>
+        <Link href={ME_TRUST_KYC_STATUS_HREF} className={`${touchTargetLink44Classes} ${guideRegLink} ${guideRegFocusRing}`}>
           {t("guideRegister_kycCta")}
         </Link>
       </p>

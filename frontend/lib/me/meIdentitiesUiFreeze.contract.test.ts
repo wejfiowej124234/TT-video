@@ -90,6 +90,12 @@ describe("/me/identities UI freeze (① · ME-IDENTITIES-UI-FREEZE)", () => {
     expect(shell).toContain("MeIdentitiesTravelerCallout");
     expect(shell).toContain("applySectionTitle");
     expect(readFileSync(join(IDENTITIES_DIR, "page.tsx"), "utf8")).toContain("AuthL5CrossNavFooter");
+    expect(readFileSync(join(ROOT, "components/me/MeIdentitiesProfileLinksNav.tsx"), "utf8")).toContain(
+      "MeIdentitiesProfileLinkThumb",
+    );
+    expect(readFileSync(join(ROOT, "components/me/MeIdentitiesProfileLinksNav.tsx"), "utf8")).toContain(
+      "profileLinkCard",
+    );
     for (const { pattern, reason } of FORBIDDEN_UI_PATTERNS) {
       expect(shell, reason).not.toMatch(pattern);
     }

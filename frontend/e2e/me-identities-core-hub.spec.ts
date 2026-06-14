@@ -1,7 +1,7 @@
 /**
  * `/me/identities` 核心身份 Hub · provider/steward 细粒度阶段回归（① 本地 · route mock）。
  *
- * 覆盖：待支付 · 待确认 · 已开通（provider）；主理人已开通 → `/governance?view=region`。
+ * 覆盖：待支付 · 待确认 · 已开通（provider）；主理人待付费 → 工作台 A 轨 · 已开通 → governance。
  *
  * 本地：`PLAYWRIGHT_FULL_STACK=1 npx playwright test e2e/me-identities-core-hub.spec.ts --project=chromium`
  */
@@ -100,9 +100,30 @@ test.describe("/me/identities · core identity hub phases", () => {
 
     const card = providerCoreCard(page);
     await expect(card).toHaveAttribute("data-tt-me-identities-core-phase", "active", { timeout: 30_000 });
-    await expect(card).toHaveAttribute("href", "/market/provider");
+    await expect(card).toHaveAttribute("href", "/provider");
     await expect(card.getByText(/进入工作台|Open workspace/i)).toBeVisible();
     await expect(card.getByText(/已开通|Active/i)).toBeVisible();
+  });
+
+  test("steward card: payment_pending → workbench Track A admission", async ({ page, request }) => {
+    const apiBase = defaultApiBase();
+    const creds = await apiLoginReturnCredentials(request, apiBase, "tourist@test.com", "Test123!");
+    test.skip(!creds, "API login unavailable");
+
+    await gotoIdentitiesHubLoggedIn(page, creds, "steward_payment_pending");
+    await waitForCoreCardPhase(page, "steward", "payment_pending");
+
+    await expect(page.getByRole("heading", { level: 1, name: /多重身份|Multiple roles/i })).toBeVisible({
+      timeout: 90_000,
+    });
+
+    const card = stewardCoreCard(page);
+    await expect(card).toHaveAttribute("data-tt-me-identities-core-phase", "payment_pending", {
+      timeout: 30_000,
+    });
+    await expect(card).toHaveAttribute("href", /\/governance\?view=region.*steward-b-track-admission/);
+    await expect(card.getByText(/完成准入费|Complete admission fee/i)).toBeVisible();
+    await expect(card.getByText(/待支付|Awaiting payment/i)).toBeVisible();
   });
 
   test("steward card: active → governance region view (not /steward/register)", async ({ page, request }) => {

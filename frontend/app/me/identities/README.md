@@ -4,7 +4,7 @@
 
 **阶段：① 本地** — 与 [`/auth/login`](../../auth/login/README.md) / [`/auth/register`](../../auth/register/README.md) **同族暖金暗玻璃**。
 
-**冻结 SSOT：** [`ME-IDENTITIES-UI-FREEZE.md`](../../evidence/GO_local_auth_l5/ME-IDENTITIES-UI-FREEZE.md) · **P2 Identity Center：** [`IDENTITY-CENTER-PHASE2-FREEZE.md`](../../evidence/GO_local_auth_l5/IDENTITY-CENTER-PHASE2-FREEZE.md) · **命名 P3：** [`ACCOUNT-NAV-NAMING-P3.md`](../../evidence/GO_local_auth_l5/ACCOUNT-NAV-NAMING-P3.md) · **L5 命名与升级轨：** [`docs/spec/artifacts/identity-multi-slot-naming-l5.v1.md`](../../../docs/spec/artifacts/identity-multi-slot-naming-l5.v1.md) · [`IDENTITY-MULTI-SLOT-NAMING-L5-UPGRADE-PLAN.md`](../../evidence/GO_local_auth_l5/IDENTITY-MULTI-SLOT-NAMING-L5-UPGRADE-PLAN.md)
+**冻结 SSOT：** [`ME-IDENTITIES-UI-FREEZE.md`](../../evidence/GO_local_auth_l5/ME-IDENTITIES-UI-FREEZE.md) · **[IA 收口任务清单（① ACTIVE · ②③ backlog）](../../evidence/GO_local_auth_l5/MULTI-IDENTITY-IA-CLOSURE-TASK-LIST.md)** · **[企业级审计 100/100 ①](../../evidence/GO_local_auth_l5/MULTI-IDENTITY-IA-ENTERPRISE-AUDIT.md)** · **P2 Identity Center：** [`IDENTITY-CENTER-PHASE2-FREEZE.md`](../../evidence/GO_local_auth_l5/IDENTITY-CENTER-PHASE2-FREEZE.md) · **命名 P3：** [`ACCOUNT-NAV-NAMING-P3.md`](../../evidence/GO_local_auth_l5/ACCOUNT-NAV-NAMING-P3.md) · **L5 命名与升级轨：** [`docs/spec/artifacts/identity-multi-slot-naming-l5.v1.md`](../../../docs/spec/artifacts/identity-multi-slot-naming-l5.v1.md) · [`IDENTITY-MULTI-SLOT-NAMING-L5-UPGRADE-PLAN.md`](../../evidence/GO_local_auth_l5/IDENTITY-MULTI-SLOT-NAMING-L5-UPGRADE-PLAN.md)
 
 ## 名称与资料分层（L5 · 2026-06-10 · P2 已闭）
 
@@ -38,7 +38,7 @@
 
 - 模型：`lib/me/meIdentitiesCoreCardModel.ts` · 数据 hook：`lib/me/useMeIdentitiesCoreCardSignals.ts`
 - 烟测：`lib/me/meIdentitiesCoreCardModel.test.ts`
-- **已开通 CTA**：商家 → `/market/provider`；主理人 → **`/governance?view=region`**（`ME_IDENTITIES_STEWARD_ACTIVE_HREF`）
+- **已开通 CTA**：向导 → **`/guide`**；商家 → **`/provider`**；主理人 → **`/governance?view=region`**；收购 → **`/market/acquisition`**
 - **不**改写 login `returnUrl` 语义
 - E2E：`e2e/me-identities-core-hub.spec.ts`
 
@@ -66,7 +66,7 @@
 ## 数据链（允许 · 非 layout lock）
 
 - **收购槽 / 信任分**：**`GET /api/v1/me`** → **`identity_slots.acquisition`** + **`trust.acquisition_*`**（**[identity-unified-model §3.5](../../../docs/spec/artifacts/identity-unified-model.v1.md)**）
-- **Hub 卡片 CTA**：**「进入子站」** → **`/market/acquisition`**（**非** provider 入驻链）
+- **Hub 卡片 CTA**：收购 **active** → **`/market/acquisition`**（子站即工作台）
 - **子站 SSOT**：**[`/market/acquisition` README](../../market/acquisition/README.md)** · **规则** **[acquisition-publish-trust-rules §8.1](../../../docs/spec/artifacts/acquisition-publish-trust-rules.v1.md#81-第一阶段--本地--closed2026-05-27)** · **① 烟测** **`bash scripts/dev/smoke-acquisition-pd009-local.sh`**
 - **社区资料页**：**`CommunityMeAcquisitionTrustStrip`**（押金 / suspend CTA）
 

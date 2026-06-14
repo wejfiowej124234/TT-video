@@ -1,0 +1,10 @@
+{
+  "order_id": "5f33d4d3-4bbb-43c7-939a-684dc443b2a4",
+  "guide_row_id": "eafa541d-3031-4cda-8a8f-41b97a8f5808",
+  "tourist_email": "p2ui-tourist-1781063497779-ux0yhe@traveltrust.testnet",
+  "guide_email": "p2ui-guide-1781063497779-ux0yhe@traveltrust.testnet",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "phase": "② staging UI real user sprint",
+  "review_comment": "real-user-6bdcd346"
+}

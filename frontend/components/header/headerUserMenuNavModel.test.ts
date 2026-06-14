@@ -19,35 +19,34 @@ describe("headerUserMenuNavModel", () => {
     expect(headerUserMenuVariantFromUtility("community")).toBe("dark");
   });
 
-  it("authL5 menu: account + mine + tools sections", () => {
+  it("authL5 menu: account + mine + tools sections (profile via strip only)", () => {
     const sections = headerUserMenuNavSections("authL5", { showLikesList: true });
     expect(sections).toHaveLength(3);
     expect(sections[0]?.id).toBe("account");
-    expect(sections[0]?.items.map((i) => i.iconId)).toEqual(["identities", "profile"]);
+    expect(sections[0]?.items.map((i) => i.iconId)).toEqual(["identities"]);
     expect(sections[1]?.id).toBe("mine");
-    expect(sections[1]?.items.map((i) => i.iconId)).toEqual(["orders", "posts", "collects", "likes"]);
+    expect(sections[1]?.items.map((i) => i.iconId)).toEqual(["publish", "orders", "posts", "collects", "likes"]);
     expect(sections[2]?.items.map((i) => i.iconId)).toEqual(["reports", "settings"]);
     expect(sections[2]?.id).toBe("tools");
     expect(sections[2]?.items.find((i) => i.iconId === "settings")?.href).toBe("/me/settings");
     const flat = headerUserMenuNavItems("authL5", { showLikesList: true });
     expect(flat.some((i) => i.href === "/community/me/posts")).toBe(true);
-    expect(flat.some((i) => i.href === "/community/me/collects")).toBe(true);
-    expect(flat.some((i) => i.href === "/community/me/likes")).toBe(true);
+    expect(flat.some((i) => i.href === "/me/settings/profile")).toBe(false);
     expect(flat.some((i) => i.href === "/pay")).toBe(false);
     expect(flat.some((i) => i.href === "/staking")).toBe(false);
   });
 
   it("omits likes when showLikesList is false", () => {
     const sections = headerUserMenuNavSections("authL5", { showLikesList: false });
-    expect(sections[1]?.items.map((i) => i.iconId)).toEqual(["orders", "posts", "collects"]);
+    expect(sections[1]?.items.map((i) => i.iconId)).toEqual(["publish", "orders", "posts", "collects"]);
     expect(sections[2]?.items.map((i) => i.iconId)).toEqual(["reports", "settings"]);
   });
 
-  it("flat light menu includes orders posts collects and settings", () => {
+  it("flat light menu includes publish hub orders posts collects reports and settings", () => {
     const items = headerUserMenuNavItems("light", { showLikesList: true });
     expect(items.map((i) => i.href)).toEqual([
       "/me/identities",
-      "/me/settings/profile",
+      "/me/publish",
       "/orders",
       "/community/me/posts",
       "/community/me/collects",
@@ -55,5 +54,13 @@ describe("headerUserMenuNavModel", () => {
       "/community/me/reports",
       "/me/settings",
     ]);
+  });
+
+  it("mine section leads with publish hub featured on authL5", () => {
+    const items = headerUserMenuNavItems("authL5", { showLikesList: true });
+    const mine = items.filter((i) => i.section === "mine");
+    expect(mine[0]?.href).toBe("/me/publish");
+    expect(mine[0]?.labelKey).toBe("header_userMenu_publish_hub");
+    expect(mine[0]?.featured).toBe(true);
   });
 });

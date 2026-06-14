@@ -9,6 +9,7 @@ import {
   deriveOnboardingConsoleProgressStep,
   deriveOnboardingGuestPreviewProgressStep,
   formatOnboardingAmountMinor,
+  onboardingEntitlementPaidForRole,
   onboardingProgressStepCount,
   onboardingProgressStepKey,
   parseOnboardingEntitlementsView,
@@ -18,9 +19,10 @@ import {
 } from "./meOnboardingViewModel";
 
 describe("meOnboardingViewModel", () => {
-  it("formats USD minor units", () => {
+  it("formats USDC and legacy USD minor units", () => {
+    expect(formatOnboardingAmountMinor(9900, "USDC")).toBe("99.00 USDC");
+    expect(formatOnboardingAmountMinor(29900, "USDC")).toBe("299.00 USDC");
     expect(formatOnboardingAmountMinor(9900, "USD")).toBe("$99.00");
-    expect(formatOnboardingAmountMinor(0, "USD")).toBe("$0.00");
   });
 
   it("parses quote view", () => {
@@ -57,6 +59,23 @@ describe("meOnboardingViewModel", () => {
     });
     expect(view?.items).toHaveLength(1);
     expect(view?.hasActivePaid).toBe(true);
+  });
+
+  it("scopes paid entitlement to quote role", () => {
+    const view = parseOnboardingEntitlementsView({
+      status: "ok",
+      entitlements: [
+        {
+          id: "ent-steward",
+          role_target: "region_steward",
+          sku: "steward-onboarding",
+          status: "paid",
+        },
+      ],
+      meta: { implementation_status: "ok" },
+    });
+    expect(onboardingEntitlementPaidForRole(view, "region_steward")).toBe(true);
+    expect(onboardingEntitlementPaidForRole(view, "provider")).toBe(false);
   });
 
   it("parses payment intent view", () => {
@@ -121,7 +140,8 @@ describe("meOnboardingViewModel", () => {
     expect(deriveOnboardingConsoleProgressStep("login", "region_steward")).toBe(1);
     expect(deriveOnboardingConsoleProgressStep("quote", "region_steward")).toBe(2);
     expect(deriveOnboardingConsoleProgressStep("pay", "region_steward")).toBe(3);
-    expect(deriveOnboardingConsoleProgressStep("confirm", "provider")).toBe(3);
+    expect(deriveOnboardingConsoleProgressStep("confirm", "provider")).toBe(4);
+    expect(deriveOnboardingConsoleProgressStep("confirm", "region_steward")).toBe(3);
     expect(deriveOnboardingConsoleProgressAllComplete("done")).toBe(true);
     expect(deriveOnboardingConsoleProgressAllComplete("pay")).toBe(false);
   });

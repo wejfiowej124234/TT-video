@@ -185,6 +185,15 @@ const nextConfig = {
     }
     return [{ source: "/:path*", headers: base }];
   },
+  async redirects() {
+    return [
+      {
+        source: "/me/identities/region-steward/stake",
+        destination: "/governance?view=region#steward-ttg-stake",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

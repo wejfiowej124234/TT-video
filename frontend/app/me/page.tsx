@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 
-import { POST_AUTH_DEFAULT_RETURN_PATH } from "@/lib/auth/postAuthReturnPath";
+import { ME_IDENTITIES_HUB_PATH } from "@/lib/me/meIdentitiesL5";
 
-/** `/me` 默认入口 → 多重身份 Hub（社区资料见 `/community/me`）。 */
+/** `/me` 直链 → 多重身份 Hub（社区 Feed 为登录默认；见 `postAuthReturnPath`）。 */
 export default function MeIndexPage() {
-  redirect(POST_AUTH_DEFAULT_RETURN_PATH);
+  redirect(ME_IDENTITIES_HUB_PATH);
 }

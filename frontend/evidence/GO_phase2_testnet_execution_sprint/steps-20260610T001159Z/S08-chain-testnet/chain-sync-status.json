@@ -1,0 +1,19 @@
+{
+  "status": "ok",
+  "order_id": "8e15a1b0-7441-401e-b78d-dc73535845dd",
+  "chain_sync": {
+    "status": "pending",
+    "finality_n": 12,
+    "checkpoint": {
+      "block_number": 0,
+      "log_index": 0,
+      "source": "runtime"
+    },
+    "last_event": {
+      "state": "escrowed",
+      "updated_at": "2026-06-10T00:12:33.391496822+00:00",
+      "escrow_address": null
+    },
+    "event_log_snapshot_absent_reason": "no_row"
+  }
+}

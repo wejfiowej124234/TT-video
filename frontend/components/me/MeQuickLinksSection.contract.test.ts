@@ -19,7 +19,13 @@ describe("MeQuickLinksSection IA (① · settings hub)", () => {
     expect(SRC).toContain("me_communityHint_compact");
     expect(SRC).toContain('compactForCommunityMe ? "me_communityHint_compact"');
     expect(SRC).toContain("{compactForCommunityMe ? null : (");
+    expect(SRC).toContain('t("header_myOrders")');
     expect(SRC).toContain('href="/orders"');
     expect(SRC).toContain('href="/community/me/posts"');
+  });
+
+  it("marks active workspace context workbench link (W1-B3)", () => {
+    expect(SRC).toContain("data-tt-workspace-context-workbench");
+    expect(SRC).toContain("workbenchHrefForWorkspaceContext");
   });
 });

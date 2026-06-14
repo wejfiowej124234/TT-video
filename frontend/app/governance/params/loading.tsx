@@ -1,55 +1,42 @@
 "use client";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { GovernanceParamsL5Shell } from "@/components/governance/GovernanceParamsL5Shell";
+import { GOV_PARAMS_L5, GovernanceParamsL5Panel } from "@/lib/governance/governanceParamsPageL5";
 
-/** 与 params 页：标题 + 费率拆分区 + 国家表骨架 */
+/** 与 GovernanceParamsPageMain 壳一致的路由级 loading。 */
 export default function GovernanceParamsLoading() {
   const { t } = useTranslation();
   return (
-    <main className="mx-auto max-w-4xl p-8" role="status" aria-label={t("governance_params_title")} aria-busy="true">
-      <div className="min-h-[44px] h-11 w-64 max-w-full bg-ink-200 rounded-[var(--radius-sm)] animate-pulse" aria-hidden />
-      <div className="mt-2 h-4 w-full max-w-2xl bg-ink-100 rounded-[var(--radius-sm)] animate-pulse" aria-hidden />
-      <div className="mt-2 h-3 w-48 bg-ink-100 rounded-[var(--radius-sm)] animate-pulse" aria-hidden />
+    <GovernanceParamsL5Shell ariaLabelledBy="governance-params-loading-title">
+      <div
+        id="governance-params-loading-title"
+        className="min-h-[44px] h-11 w-64 max-w-full rounded-[var(--radius-sm)] bg-slate-800/80 animate-pulse"
+        aria-hidden
+      />
+      <div className="mt-4 h-4 w-full max-w-2xl rounded-[var(--radius-sm)] bg-slate-900/70 animate-pulse" aria-hidden />
+      <div className="mt-2 h-3 w-48 rounded-[var(--radius-sm)] bg-slate-900/60 animate-pulse" aria-hidden />
 
-      <section className="mt-8 space-y-3">
-        <h2 className="text-h4 font-medium text-ink-800">{t("governance_params_diff_section")}</h2>
-        <div className="min-h-[44px] h-11 w-48 max-w-full bg-ink-200 rounded-[var(--radius-sm)] animate-pulse" aria-hidden />
-        <div className="space-y-2 pl-2">
-          <div className="h-4 w-3/4 max-w-md bg-ink-100 rounded-[var(--radius-sm)] animate-pulse" />
-          <div className="h-4 w-2/3 max-w-sm bg-ink-100 rounded-[var(--radius-sm)] animate-pulse" />
+      <GovernanceParamsL5Panel className="mt-6">
+        <div className={GOV_PARAMS_L5.sectionHeading}>{t("governance_params_diff_section")}</div>
+        <div className="mt-4 space-y-2">
+          <div className="h-4 w-3/4 max-w-md rounded-[var(--radius-sm)] bg-slate-900/70 animate-pulse" aria-hidden />
+          <div className="h-4 w-2/3 max-w-sm rounded-[var(--radius-sm)] bg-slate-900/60 animate-pulse" aria-hidden />
         </div>
-      </section>
+      </GovernanceParamsL5Panel>
 
-      <section className="mt-10 overflow-x-auto" aria-hidden>
-        <div className="min-h-[44px] h-11 w-56 bg-ink-200 rounded-[var(--radius-sm)] animate-pulse mb-3" />
-        <table className="mt-3 w-full min-w-[640px] border-collapse text-left text-small">
-          <thead>
-            <tr className="border-b border-ink-200">
-              {Array.from({ length: 7 }).map((_, i) => (
-                <th key={i} className="py-2 pr-3">
-                  <div className="h-3 w-16 bg-ink-200 rounded-[var(--radius-sm)] animate-pulse" />
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {Array.from({ length: 5 }).map((_, r) => (
-              <tr key={r} className="border-b border-ink-100">
-                {Array.from({ length: 7 }).map((_, c) => (
-                  <td key={c} className="py-2 pr-3">
-                    <div className="h-3 w-20 bg-ink-100 rounded-[var(--radius-sm)] animate-pulse" />
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
+      <GovernanceParamsL5Panel className="mt-6" aria-hidden>
+        <div className="mb-3 min-h-[44px] h-11 w-56 rounded-[var(--radius-sm)] bg-slate-800/80 animate-pulse" />
+        <div className="mt-3 space-y-3">
+          {Array.from({ length: 5 }).map((_, r) => (
+            <div key={r} className="h-3 w-full max-w-xl rounded-[var(--radius-sm)] bg-slate-900/60 animate-pulse" />
+          ))}
+        </div>
+      </GovernanceParamsL5Panel>
 
-      <div className="mt-10 flex gap-4" aria-hidden>
-        <div className="h-4 w-24 bg-ink-100 rounded-[var(--radius-sm)] animate-pulse" />
-        <div className="h-4 w-28 bg-ink-100 rounded-[var(--radius-sm)] animate-pulse" />
-      </div>
-    </main>
+      <p className="sr-only" role="status" aria-live="polite" aria-busy="true">
+        {t("governance_params_title")}
+      </p>
+    </GovernanceParamsL5Shell>
   );
 }

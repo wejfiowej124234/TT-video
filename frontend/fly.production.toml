@@ -1,0 +1,27 @@
+# tt-web-prod · Fly.io（build context = frontend/ · ③ Production）
+# 部署：bash scripts/dev/deploy-tt-web-production.sh
+# 部署前：deploy/fly/tt-web-prod/build.env.local 填实 PROD 域名与链地址
+
+app = 'tt-web-prod'
+primary_region = 'sin'
+
+[build]
+  dockerfile = 'Dockerfile.fly-staging'
+  context = '.'
+
+[env]
+  PORT = '8080'
+  # 构建时由 deploy-tt-web-production.sh 注入；此处为占位
+  TRAVELTRUST_API_BASE_URL = 'https://api.example.com'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ['app']
+
+[[vm]]
+  size = 'shared-cpu-1x'
+  memory = '1gb'

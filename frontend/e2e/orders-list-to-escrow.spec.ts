@@ -33,14 +33,26 @@ test.describe("orders list → escrow detail link", () => {
 
     await expect(ordersPageShell(page)).toBeVisible({ timeout: 15_000 });
 
-    const detailLink = page.getByRole("link", { name: /托管详情|Escrow details/i }).first();
-    const overlayLink = page.locator('[data-tt-orders-list-card-escrow-link="1"]').first();
-    if ((await detailLink.count()) === 0 && (await overlayLink.count()) === 0) {
+    const escrowLinks = page.locator('[data-tt-orders-list-card-escrow-link="1"]');
+    if ((await escrowLinks.count()) === 0) {
       test.skip(true, "当前账号无可见订单卡片");
     }
 
-    const target = (await detailLink.isVisible().catch(() => false)) ? detailLink : overlayLink;
-    await Promise.all([page.waitForURL(/\/escrow\/[^/]+/, { timeout: 25_000 }), target.click()]);
+    let escrowLink = escrowLinks.first();
+    const linkCount = await escrowLinks.count();
+    for (let i = 0; i < linkCount; i += 1) {
+      const candidate = escrowLinks.nth(i);
+      if (await candidate.isVisible().catch(() => false)) {
+        escrowLink = candidate;
+        break;
+      }
+    }
+    if (!(await escrowLink.isVisible().catch(() => false))) {
+      test.skip(true, "当前账号无可见 escrow 深链");
+    }
+
+    await escrowLink.click();
+    await page.waitForURL(/\/escrow\/[^/]+/, { timeout: 25_000 });
 
     await expect(page.locator('[data-tt-escrow-detail-page="1"]')).toBeVisible({ timeout: 20_000 });
 

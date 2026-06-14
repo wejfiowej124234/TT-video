@@ -1,0 +1,6 @@
+step: S02-guide-onboard
+status: PASS
+web: https://tt-web-staging.fly.dev
+api: https://tt-api-staging.fly.dev
+at: 2026-06-10T02:09:05.087Z
+note: UI form + API assist POST /guides + stake UI

@@ -1,0 +1,29 @@
+{"order_id":"28660c79-bc8d-4792-9f5a-3bfa225b256c","order_id_bytes32":"0x0000000000000000000000000000000028660c79bc8d47929f5a3bfa225b256c","escrow_address":"Compiling 1 files with Solc 0.8.19
+Solc 0.8.19 finished in 622.34ms
+Compiler run successful!
+Script ran successfully.
+
+## Setting up 1 EVM.
+
+==========================
+
+Chain 11155111
+
+Estimated gas price: 32.645266849 gwei
+
+Estimated total gas used for script: 2936354
+
+Estimated amount required: 0.095858059893128546 ETH
+
+==========================
+
+
+==========================
+
+ONCHAIN EXECUTION COMPLETE & SUCCESSFUL.
+
+Transactions saved to: D:/TravelTrust-V1.1/contracts/broadcast\CreateEscrowB407.s.sol\11155111\run-latest.json
+
+Sensitive values saved to: D:/TravelTrust-V1.1/contracts/cache\CreateEscrowB407.s.sol\11155111\run-latest.json
+
+0x271C001942D9d49B7FAaeFE9cfd710993e29a8B2","amount_wei":"100000000","traveler":"0xFA62bb5F7B21C160eFe115297dc5338982E24649","guide":"0x96A7C3DB87a738ec3bDb1B0C1147A5c1dE8FE4E5"}

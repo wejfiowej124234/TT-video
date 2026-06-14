@@ -8,12 +8,14 @@ export default function GuideRegisterChipGroup({
   selected,
   onToggle,
   t,
+  disabled = false,
 }: {
   label: string;
   options: { value: string; label: string }[];
   selected: Set<string>;
   onToggle: (value: string) => void;
   t: (key: string) => string;
+  disabled?: boolean;
 }) {
   return (
     <fieldset className="flex flex-col gap-2 border-0 p-0 m-0">
@@ -26,12 +28,13 @@ export default function GuideRegisterChipGroup({
               key={opt.value}
               type="button"
               aria-pressed={on}
+              disabled={disabled}
               onClick={() => onToggle(opt.value)}
               className={`min-h-[44px] rounded-full border px-3 py-1.5 text-meta font-medium motion-sub ${guideRegFocusRing} ${
                 on
                   ? "border-ref-sun/55 bg-ref-sun/20 text-ref-sun"
                   : "border-ref-sun/22 bg-ref-sun/[0.04] text-slate-200 hover:border-ref-sun/35"
-              }`}
+              } ${disabled ? "pointer-events-none opacity-50" : ""}`}
             >
               {opt.label}
             </button>

@@ -8,6 +8,7 @@ const EN = readFileSync(join(ROOT, "locales/en.ts"), "utf8");
 const NAV_MODEL = readFileSync(join(ROOT, "components/header/headerUserMenuNavModel.ts"), "utf8");
 const E2E_HELPER = readFileSync(join(ROOT, "e2e/helpers/communityMeLegacyRedirects.ts"), "utf8");
 const P3_DOC = readFileSync(join(ROOT, "evidence/GO_local_auth_l5/ACCOUNT-NAV-NAMING-P3.md"), "utf8");
+const PUBLISH_HUB_DESIGN = readFileSync(join(ROOT, "evidence/GO_local_auth_l5/PUBLISH-HUB-L5-DESIGN.md"), "utf8");
 const HEADER_FREEZE = readFileSync(join(ROOT, "evidence/GO_local_auth_l5/HEADER-UTILITY-MENU-L5-FREEZE.md"), "utf8");
 const IDENTITIES_FREEZE = readFileSync(join(ROOT, "evidence/GO_local_auth_l5/ME-IDENTITIES-UI-FREEZE.md"), "utf8");
 
@@ -63,11 +64,13 @@ describe("account nav naming P3 (① · ACCOUNT-NAV-NAMING-P3)", () => {
     expect(EN).toContain('me_title: "Community profile"');
   });
 
-  it("header nav model wires profile strip href, identities hub, and mine shortcuts", () => {
+  it("header nav model wires profile strip href, identities hub, publish hub, and mine shortcuts", () => {
     expect(NAV_MODEL).toContain('labelKey: "header_multiIdentity"');
     expect(NAV_MODEL).toContain('href: "/me/identities"');
     expect(NAV_MODEL).toContain("HEADER_USER_MENU_PROFILE_HREF");
     expect(NAV_MODEL).not.toContain('labelKey: "nav_community_profile"');
+    expect(NAV_MODEL).toContain("PUBLISH_HUB_PATH");
+    expect(NAV_MODEL).toContain('labelKey: "header_userMenu_publish_hub"');
     expect(NAV_MODEL).toContain('href: "/community/me/posts"');
     expect(NAV_MODEL).toContain('href: "/community/me/collects"');
     expect(NAV_MODEL).toContain('href: "/community/me/likes"');
@@ -82,5 +85,18 @@ describe("account nav naming P3 (① · ACCOUNT-NAV-NAMING-P3)", () => {
     const e2e = e2eSources();
     expect(e2e).not.toMatch(/getByRole\("main",\s*\{\s*name:\s*\/Me\|我\//);
     expect(e2e).not.toMatch(/Profile\|个人中心/);
+  });
+
+  it("zh posts menu uses 我的帖子 not 我的发布 (PUBLISH-HUB-L5-DESIGN)", () => {
+    expect(ZH).toContain('header_userMenu_my_posts: "我的帖子"');
+    expect(ZH).not.toContain('header_userMenu_my_posts: "我的发布"');
+    expect(ZH).toContain('header_userMenu_publish_hub: "发布中心"');
+    expect(PUBLISH_HUB_DESIGN).toContain("FROZEN");
+  });
+
+  it("/me index redirects to identities hub (P3 · not community feed)", () => {
+    const meIndex = readFileSync(join(ROOT, "app/me/page.tsx"), "utf8");
+    expect(meIndex).toContain("ME_IDENTITIES_HUB_PATH");
+    expect(meIndex).not.toContain("POST_AUTH_DEFAULT_RETURN_PATH");
   });
 });

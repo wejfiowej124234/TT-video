@@ -4,7 +4,7 @@
 
 **文档从代码同步：** 本节 IA / 路由 / `data-tt` **以代码为 SSOT**；改菜单须先改 `headerUserMenuNavModel.ts`，再回写本文 + 绿集。
 
-**互指：** [Auth L5 族 README](./README.md) · [ME-SETTINGS-L5-FREEZE](./ME-SETTINGS-L5-FREEZE.md) · [ME-SETTINGS-PROFILE-L5-FREEZE](./ME-SETTINGS-PROFILE-L5-FREEZE.md) · [ME-IDENTITIES-UI-FREEZE](./ME-IDENTITIES-UI-FREEZE.md) · [ACCOUNT-NAV-NAMING-P3](./ACCOUNT-NAV-NAMING-P3.md)
+**互指：** [Auth L5 族 README](./README.md) · [ME-SETTINGS-L5-FREEZE](./ME-SETTINGS-L5-FREEZE.md) · [ME-SETTINGS-PROFILE-L5-FREEZE](./ME-SETTINGS-PROFILE-L5-FREEZE.md) · [ME-IDENTITIES-UI-FREEZE](./ME-IDENTITIES-UI-FREEZE.md) · [ACCOUNT-NAV-NAMING-P3](./ACCOUNT-NAV-NAMING-P3.md) · [PUBLISH-HUB-IA-BOUNDARY-SCORE.md](./PUBLISH-HUB-IA-BOUNDARY-SCORE.md)（**发布中心 / 我的帖子 / 我的订单** 三分 · 2026-06-13 冻结）
 
 ---
 
@@ -120,7 +120,8 @@ npm run test -- accountNavNamingP3 headerUtilityMenuUiFreeze headerUtilityMenuL5
 | 允许 | 禁止 |
 |------|------|
 | i18n · href · `identity_slots` spine 真值 · 数据链路 | 删 profile strip 或改回 Console 白盒列表 |
-| 契约对齐 `headerUserMenuNavModel` | 账户组恢复 `labelKey: "nav_community_profile"` 菜单行 |
+| **Workspace Context 下拉**（[ADR-20260613](../../../docs/adr/ADR-20260613-active-workspace-context-switcher.md) · W1-B1）· 工作台深链 CTA | 未跑绿集的 L5 视觉/layout 回流 |
+| 契约对齐 `headerUserMenuNavModel` · `headerWorkspaceContextNavModel` | 账户组恢复 `labelKey: "nav_community_profile"` 菜单行 |
 | 语言·钱包与用户菜单 **token 对齐** | 用户菜单再出现 `/guide/register` 或 `?role=` 直链 |
 | 登出确认 a11y / 对比度 bugfix | 未跑绿集的 L5 视觉 diff |
 

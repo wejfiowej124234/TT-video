@@ -24,10 +24,16 @@ const ASIDE_SLATE_ROW =
 export default function CommunityMeQuickLinksDrawer({
   t,
   showGuideHub,
+  showMerchantHub,
+  showStewardHub,
+  showAcquisitionHub,
   likesListEnabled,
 }: {
   t: TFunc;
   showGuideHub: boolean;
+  showMerchantHub?: boolean;
+  showStewardHub?: boolean;
+  showAcquisitionHub?: boolean;
   likesListEnabled: boolean;
 }) {
   const [open, setOpen] = useState(false);
@@ -130,6 +136,9 @@ export default function CommunityMeQuickLinksDrawer({
                   <MeQuickLinksSection
                     t={t}
                     showGuideHub={showGuideHub}
+                    showMerchantHub={showMerchantHub}
+                    showStewardHub={showStewardHub}
+                    showAcquisitionHub={showAcquisitionHub}
                     showLikesList={likesListEnabled}
                     compactForCommunityMe
                     embedded

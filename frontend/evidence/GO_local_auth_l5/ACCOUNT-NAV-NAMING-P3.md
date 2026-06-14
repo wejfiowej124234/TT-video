@@ -2,7 +2,7 @@
 
 **阶段：① 本地** — 产品入口 **i18n + 文档 + E2E** 与顶栏 / Hub 路由对齐；**不**表示 ② 测试网、③ 生产 GO。
 
-**互指：** [HEADER-UTILITY-MENU-L5-FREEZE](./HEADER-UTILITY-MENU-L5-FREEZE.md) · [ME-IDENTITIES-UI-FREEZE](./ME-IDENTITIES-UI-FREEZE.md) · [`app/me/identities/README.md`](../../app/me/identities/README.md) · [`app/community/me/README.md`](../../app/community/me/README.md)
+**互指：** [HEADER-UTILITY-MENU-L5-FREEZE](./HEADER-UTILITY-MENU-L5-FREEZE.md) · [ME-IDENTITIES-UI-FREEZE](./ME-IDENTITIES-UI-FREEZE.md) · [PUBLISH-HUB-IA-BOUNDARY-SCORE.md](./PUBLISH-HUB-IA-BOUNDARY-SCORE.md) · [`app/me/identities/README.md`](../../app/me/identities/README.md) · [`app/community/me/README.md`](../../app/community/me/README.md)
 
 ---
 
@@ -82,7 +82,7 @@ PLAYWRIGHT_FULL_STACK=1 npx playwright test e2e/account-nav-header-ia.spec.ts e2
 
 | 域 | 通过条件 |
 |----|----------|
-| **顶栏** | profile strip → `/me/settings/profile` · 账户 → `/me/identities` · **我的** → 订单/发布/收藏/赞过 · **工具** → 举报 · 设置 |
+| **顶栏** | profile strip → `/me/settings/profile` · 账户 → `/me/identities` · **我的** → 订单/发布/收藏/赞过 · **工具** → [`/community/me/reports`](../../app/community/me/reports/README.md) 举报 · 设置 |
 | **独立页** | posts/collects/likes/reports → 各 [`app/community/me/*/README.md`](../../app/community/me/posts/README.md) · [FREEZE](../../evidence/GO_local_community_me_l5/COMMUNITY-ME-L5-FREEZE.md) |
 | **Hub** | `/me/identities` `h1` 为 `me_identities_hub_title`；`/me/settings` 顶卡 + 底栏回 Feed |
 | **个人资料** | `/me/settings/profile` · `data-tt-me-settings-profile`；**禁止** Hub/本页重复顶栏「我的」链 |

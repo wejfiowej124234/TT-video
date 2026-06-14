@@ -16,7 +16,9 @@
 | 4 | Admin 审核 | **`/admin/provider-applications`**（列表 · **`status` 筛选**）→ **`/admin/users/[id]`**（**`AdminProviderApplicationReviewCard`** · **`data-testid="admin-provider-application-review"`**） | **`GET …/admin/provider-applications`** · **`GET …/admin/users/:id/provider-application`** · **`PATCH …/provider-application-review`** |
 | 5 | 发橱窗 | `/market/provider` | `POST /api/v1/market/provider/listings`（三门闸，见 §5） |
 
-**推荐顺序（① 烟测同源）：** 2 提交资质 → 3 准入费 → 4 审核 → 5 发布。步骤 3 与 4 **可并行**；**发橱窗**须 **paid + approved + role=provider** 齐备。
+**推荐顺序（① 烟测同源）：** 2 提交资质 → 3 准入费 → 4 审核 → **身份质押**（`/staking` 服务方池）→ 5 发布。步骤 3 与 4 **可并行**；**发橱窗**须 **paid + approved + role=provider** 齐备。
+
+**资金分工（防混）：** 步骤 3 = **B 轨准入费**（**USDC** · 官方地址 · **不退** · [`/me/onboarding` README](../../me/onboarding/README.md)）；身份质押 = **USDC** → `ProviderIdentityStakingPool`（**可赎回** · [`/staking` README](../../staking/README.md)）。向导无步骤 3 → [`GUIDE-ONBOARDING-STAKING-FLOW`](../../lib/guide/GUIDE-ONBOARDING-STAKING-FLOW.md)。
 
 ---
 

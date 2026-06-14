@@ -338,6 +338,22 @@ export function useCommunityMePostsPage(): CommunityMePostsPageViewModel {
     [focusReturnTargetRef],
   );
 
+  useEffect(() => {
+    const postId = searchParams.get("post")?.trim();
+    if (!postId || loading || authPending || !isLoggedIn) return;
+    if (detailPost?.id === postId) return;
+    const match = apiPosts.find((p) => p.id === postId);
+    if (match) openPostDetail(match);
+  }, [
+    searchParams,
+    apiPosts,
+    loading,
+    authPending,
+    isLoggedIn,
+    detailPost?.id,
+    openPostDetail,
+  ]);
+
   return {
     t,
     isLoggedIn,

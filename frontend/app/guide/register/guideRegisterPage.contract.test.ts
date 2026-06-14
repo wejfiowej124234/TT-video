@@ -44,4 +44,11 @@ describe("guide register page (contract)", () => {
     );
     expect(src).toContain("resolveRegisterBackPath");
   });
+
+  it("done panel defers staking to workbench after admin approval (no /staking link)", () => {
+    const done = readFileSync(join(__dir, "GuideRegisterDonePanel.tsx"), "utf8");
+    expect(done).not.toContain('href="/staking"');
+    expect(done).toContain("guideRegister_doneStakingNote");
+    expect(done).toContain('href="/guide"');
+  });
 });

@@ -22,20 +22,32 @@ import {
 /** 商家资料 settings（Hub 已开通 / 待审槽 CTA） */
 export const ME_IDENTITIES_MERCHANT_SETTINGS_HREF = "/me/identities/merchant/settings";
 
+/** 商家经营工作台（Multi-Identity Workspace Sprint · ①） */
+export const ME_IDENTITIES_MERCHANT_WORKSPACE_HREF = "/provider";
+
 /** 主理人资料 settings（Hub 已开通 CTA） */
 export const ME_IDENTITIES_STEWARD_SETTINGS_HREF = "/me/identities/region-steward/settings";
 
-/** 收购资料 settings（Hub 非 inactive 槽 CTA） */
-export const ME_IDENTITIES_ACQUISITION_SETTINGS_HREF = "/me/identities/acquisition/settings";
-
-/** @deprecated 使用 `ME_IDENTITIES_MERCHANT_SETTINGS_HREF`；保留工作台深链 */
-export const ME_IDENTITIES_PROVIDER_ACTIVE_HREF = "/market/provider";
-
-/** 主理人区域治理工作台（settings 页内链；Hub active 改走 settings） */
+/** 主理人区域治理工作台（SSOT CONFIRMED · Hub CTA 优先） */
 export const ME_IDENTITIES_STEWARD_WORKSPACE_HREF = "/governance?view=region";
 
-/** @deprecated 使用 `ME_IDENTITIES_STEWARD_SETTINGS_HREF` */
-export const ME_IDENTITIES_STEWARD_ACTIVE_HREF = ME_IDENTITIES_STEWARD_SETTINGS_HREF;
+/** 工作台内 TTG Seat 质押锚点（唯一操作面） */
+export const STEWARD_WORKBENCH_STAKE_ANCHOR = "steward-ttg-stake";
+
+/** 深链至工作台 TTG 质押区；旧 `/me/identities/region-steward/stake` 路由仅重定向 */
+export const ME_IDENTITIES_STEWARD_STAKE_HREF = `${ME_IDENTITIES_STEWARD_WORKSPACE_HREF}#${STEWARD_WORKBENCH_STAKE_ANCHOR}`;
+
+/** @deprecated 使用 `ME_IDENTITIES_STEWARD_WORKSPACE_HREF` */
+export const ME_IDENTITIES_STEWARD_ACTIVE_HREF = ME_IDENTITIES_STEWARD_WORKSPACE_HREF;
+
+/** 收购资料 settings */
+export const ME_IDENTITIES_ACQUISITION_SETTINGS_HREF = "/me/identities/acquisition/settings";
+
+/** 收购经营工作台（子站即工作台 · SSOT CONFIRMED） */
+export const ME_IDENTITIES_ACQUISITION_WORKSPACE_HREF = "/market/acquisition";
+
+/** @deprecated 使用 `ME_IDENTITIES_MERCHANT_SETTINGS_HREF`；保留子站深链 */
+export const ME_IDENTITIES_PROVIDER_ACTIVE_HREF = "/market/provider";
 
 /** Hub 核心轨（商家 / 主理人）细粒度阶段 */
 export type MeIdentitiesCorePhase =
@@ -230,15 +242,15 @@ export function deriveMeIdentitiesCoreCardView(
     case "active":
       href =
         surface === "provider"
-          ? ME_IDENTITIES_MERCHANT_SETTINGS_HREF
+          ? ME_IDENTITIES_MERCHANT_WORKSPACE_HREF
           : surface === "steward"
-            ? ME_IDENTITIES_STEWARD_SETTINGS_HREF
+            ? ME_IDENTITIES_STEWARD_WORKSPACE_HREF
             : hrefs.activeHref;
       ctaLabelKey =
         surface === "provider"
-          ? "me_identities_card_merchant_settings_cta"
+          ? "me_identities_card_merchant_workspace_cta"
           : surface === "steward"
-            ? "me_identities_card_steward_settings_cta"
+            ? "me_identities_card_steward_workspace_cta"
             : "me_identities_card_cta_active";
       break;
     case "restricted":

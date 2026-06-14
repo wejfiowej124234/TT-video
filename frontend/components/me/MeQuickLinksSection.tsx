@@ -3,6 +3,9 @@
 import Link from "next/link";
 import { useId } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useActiveWorkspaceContext } from "@/lib/header/useActiveWorkspaceContext";
+import { workbenchHrefForWorkspaceContext } from "@/lib/header/workspaceContextWorkbenchNav";
+import { useMeIdentitySlots } from "@/lib/me/useMeIdentitySlots";
 import {
   warmCommunityMeCollectsIds,
   warmCommunityMeLikesIds,
@@ -10,6 +13,10 @@ import {
 } from "@/lib/communityDrawerPrefetch";
 import { FOCUS_RING } from "./constants";
 import { communityCardLinkFocus } from "@/lib/communityA11yFocus";
+import {
+  ME_IDENTITIES_ACQUISITION_WORKSPACE_HREF,
+  ME_IDENTITIES_STEWARD_WORKSPACE_HREF,
+} from "@/lib/me/meIdentitiesCoreCardModel";
 
 /** 与动态页右侧「热门目的地」列表行视觉一致（CommunityFeedDesktopAside） */
 const ASIDE_LIST_ROW =
@@ -18,10 +25,21 @@ const ASIDE_LIST_ROW =
 const ASIDE_LIST_ROW_GUIDE =
   `block w-full rounded-[var(--radius-md)] px-2.5 py-2 text-left text-meta text-success/95 border border-transparent hover:bg-success/10 hover:border-success/35 motion-sub ${communityCardLinkFocus}`;
 
+function isContextWorkbenchLink(linkHref: string, contextWorkbenchHref: string | null): boolean {
+  if (!contextWorkbenchHref) return false;
+  return linkHref.split("?")[0] === contextWorkbenchHref.split("?")[0];
+}
+
 export interface MeQuickLinksSectionProps {
   t: (k: string) => string;
   /** 向导账号显示「向导工作台」链至 `/guide`（07 §五 5.0 / 05） */
   showGuideHub?: boolean;
+  /** 商家账号显示「商家工作台」链至 `/provider` */
+  showMerchantHub?: boolean;
+  /** 主理人账号显示「主理人工作台」链至治理区域视角 */
+  showStewardHub?: boolean;
+  /** 收购槽 active 时显示「收购工作台」链至 `/market/acquisition` */
+  showAcquisitionHub?: boolean;
   /** 社区「赞过」列表功能开启时在快捷链中展示 */
   showLikesList?: boolean;
   /**
@@ -41,6 +59,9 @@ export interface MeQuickLinksSectionProps {
 export default function MeQuickLinksSection({
   t,
   showGuideHub,
+  showMerchantHub,
+  showStewardHub,
+  showAcquisitionHub,
   showLikesList,
   compactForCommunityMe,
   embedded = false,
@@ -50,6 +71,13 @@ export default function MeQuickLinksSection({
 }: MeQuickLinksSectionProps) {
   const titleId = useId();
   const queryClient = useQueryClient();
+  const { slots, ready: slotsReady } = useMeIdentitySlots();
+  const { context } = useActiveWorkspaceContext(slotsReady ? slots : null);
+  const contextWorkbenchHref = workbenchHrefForWorkspaceContext(context);
+  const workbenchLinkAttrs = (href: string) =>
+    isContextWorkbenchLink(href, contextWorkbenchHref)
+      ? ({ "data-tt-workspace-context-workbench": "1" } as const)
+      : {};
   const shellClass =
     presentation === "asideList"
       ? embedded
@@ -72,9 +100,30 @@ export default function MeQuickLinksSection({
           </h2>
         )}
         <ul className="space-y-0.5" aria-label={t("me_quickLinks")}>
+          {showAcquisitionHub ? (
+            <li>
+              <Link href={ME_IDENTITIES_ACQUISITION_WORKSPACE_HREF} onClick={onLinkClick} className={ASIDE_LIST_ROW_GUIDE} {...workbenchLinkAttrs(ME_IDENTITIES_ACQUISITION_WORKSPACE_HREF)}>
+                {t("acquisition_workbench_title")}
+              </Link>
+            </li>
+          ) : null}
+          {showStewardHub ? (
+            <li>
+              <Link href={ME_IDENTITIES_STEWARD_WORKSPACE_HREF} onClick={onLinkClick} className={ASIDE_LIST_ROW_GUIDE} {...workbenchLinkAttrs(ME_IDENTITIES_STEWARD_WORKSPACE_HREF)}>
+                {t("steward_workbench_title")}
+              </Link>
+            </li>
+          ) : null}
+          {showMerchantHub ? (
+            <li>
+              <Link href="/provider" onClick={onLinkClick} className={ASIDE_LIST_ROW_GUIDE} {...workbenchLinkAttrs("/provider")}>
+                {t("provider_workbench_title")}
+              </Link>
+            </li>
+          ) : null}
           {showGuideHub ? (
             <li>
-              <Link href="/guide" onClick={onLinkClick} className={ASIDE_LIST_ROW_GUIDE}>
+              <Link href="/guide" onClick={onLinkClick} className={ASIDE_LIST_ROW_GUIDE} {...workbenchLinkAttrs("/guide")}>
                 {t("guide_dashboard_title")}
               </Link>
             </li>
@@ -87,7 +136,7 @@ export default function MeQuickLinksSection({
           {compactForCommunityMe ? null : (
             <li>
               <Link href="/orders" onClick={onLinkClick} className={ASIDE_LIST_ROW}>
-                {t("nav_orders")}
+                {t("header_myOrders")}
               </Link>
             </li>
           )}
@@ -182,11 +231,42 @@ export default function MeQuickLinksSection({
         </h2>
       )}
       <div className="flex flex-wrap gap-2">
+        {showAcquisitionHub ? (
+          <Link
+            href={ME_IDENTITIES_ACQUISITION_WORKSPACE_HREF}
+            onClick={onLinkClick}
+            className={`rounded-full border border-success/50 bg-success/15 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-success/95 hover:bg-success/25 motion-sub ${FOCUS_RING}`}
+            {...workbenchLinkAttrs(ME_IDENTITIES_ACQUISITION_WORKSPACE_HREF)}
+          >
+            {t("acquisition_workbench_title")}
+          </Link>
+        ) : null}
+        {showStewardHub ? (
+          <Link
+            href={ME_IDENTITIES_STEWARD_WORKSPACE_HREF}
+            onClick={onLinkClick}
+            className={`rounded-full border border-success/50 bg-success/15 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-success/95 hover:bg-success/25 motion-sub ${FOCUS_RING}`}
+            {...workbenchLinkAttrs(ME_IDENTITIES_STEWARD_WORKSPACE_HREF)}
+          >
+            {t("steward_workbench_title")}
+          </Link>
+        ) : null}
+        {showMerchantHub ? (
+          <Link
+            href="/provider"
+            onClick={onLinkClick}
+            className={`rounded-full border border-success/50 bg-success/15 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-success/95 hover:bg-success/25 motion-sub ${FOCUS_RING}`}
+            {...workbenchLinkAttrs("/provider")}
+          >
+            {t("provider_workbench_title")}
+          </Link>
+        ) : null}
         {showGuideHub ? (
           <Link
             href="/guide"
             onClick={onLinkClick}
             className={`rounded-full border border-success/50 bg-success/15 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-success/95 hover:bg-success/25 motion-sub ${FOCUS_RING}`}
+            {...workbenchLinkAttrs("/guide")}
           >
             {t("guide_dashboard_title")}
           </Link>
@@ -204,7 +284,7 @@ export default function MeQuickLinksSection({
             onClick={onLinkClick}
             className={`rounded-full border border-cyan-400/50 bg-cyan-500/10 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/20 motion-sub ${FOCUS_RING}`}
           >
-            {t("nav_orders")}
+            {t("header_myOrders")}
           </Link>
         )}
         <Link

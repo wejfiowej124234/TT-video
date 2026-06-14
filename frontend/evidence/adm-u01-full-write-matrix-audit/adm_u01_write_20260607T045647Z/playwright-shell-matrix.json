@@ -1,0 +1,13 @@
+{
+  "artifact": "adm-u01-playwright-shell",
+  "phase": "②",
+  "staging_fe_probe": "https://tt-web-staging.fly.dev",
+  "playwright_fe_base": "http://127.0.0.1:3012",
+  "generated_at": "2026-06-07T05:05:35.894Z",
+  "summary": {
+    "total": 0,
+    "pass": 0,
+    "fail": 0
+  },
+  "rows": []
+}

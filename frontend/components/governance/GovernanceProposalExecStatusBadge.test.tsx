@@ -129,6 +129,25 @@ describe("GovernanceProposalExecStatusBadge", () => {
     expect(chip.textContent).toContain("governance_proposals_projection");
   });
 
+  it("list variant hides projection chips and audit captions", () => {
+    render(
+      <GovernanceProposalExecStatusBadge
+        variant="list"
+        loading={false}
+        fetchSettled
+        entry={{
+          state: "ok",
+          status: "active",
+          is_chain_ssot: false,
+          data_source: "governance_proposals_projection",
+        }}
+      />,
+    );
+    expect(screen.getByText("governance_proposal_exec_status_active")).toBeTruthy();
+    expect(screen.queryByText("governance_proposals_projection")).toBeNull();
+    expect(screen.queryByText("governance_exec_shared_readonly_caption")).toBeNull();
+  });
+
   it("renders error line when settled and entry is error", () => {
     render(
       <GovernanceProposalExecStatusBadge loading={false} fetchSettled entry={{ state: "error" }} />,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useId } from "react";
+import { Suspense, useId } from "react";
 import Link from "next/link";
 import GovernanceTargetNotice from "@/components/governance/GovernanceTargetNotice";
 import { GovernanceOpsAdminLinks } from "@/components/governance/GovernanceOpsAdminLinks";
@@ -9,6 +9,7 @@ import WalletStatusMini from "@/components/trust/WalletStatusMini";
 import InlineTransparencyVerification from "@/components/trust/InlineTransparencyVerification";
 import TrustGrowthMomentBanner from "@/components/trust/TrustGrowthMomentBanner";
 import { useGovernanceDistributionClaimPage } from "./useGovernanceDistributionClaimPage";
+import { StewardWorkbenchSubpageBackLinkFromQuery } from "@/components/governance/StewardWorkbenchSubpageBackLinkFromQuery";
 import {
   TT_MARKETING_BTN_PRIMARY_WARM_SUBMIT,
   TT_MARKETING_BTN_SECONDARY_CONSOLE,
@@ -69,6 +70,9 @@ export function GovernanceDistributionClaimPageMain() {
       data-tt-governance-distribution-claim-page="1"
       data-tt-marketing-product-shell="1"
     >
+      <Suspense fallback={null}>
+        <StewardWorkbenchSubpageBackLinkFromQuery t={t} />
+      </Suspense>
       <GovernanceTargetNotice className="mb-6" />
       <h1 id={titleId} className="text-h3 font-semibold text-ink-900">
         {t("governance_claim_title")}

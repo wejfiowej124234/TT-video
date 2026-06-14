@@ -9,16 +9,18 @@ export function meSettingsExtensionIngressDataAttrs(
   return fromSettings ? { [marker]: "1" } : {};
 }
 
-/** 入驻 / 工作台等 L5 页顶：设置族回 Hub + 说明 */
+/** 入驻 / 工作台等 L5 页顶栏：设置族回 Hub + 可选说明 */
 export function MeSettingsExtensionIngressBlock({
   fromSettings,
   noticeKey,
+  showNotice = true,
   t,
 }: {
   fromSettings: boolean;
   noticeKey: string;
+  showNotice?: boolean;
   t: (key: string) => string;
 }) {
   if (!fromSettings) return null;
-  return <MeSettingsExtensionChrome t={t} noticeKey={noticeKey} />;
+  return <MeSettingsExtensionChrome t={t} noticeKey={showNotice ? noticeKey : undefined} />;
 }

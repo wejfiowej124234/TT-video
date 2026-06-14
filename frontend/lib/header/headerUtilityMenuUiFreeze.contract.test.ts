@@ -16,6 +16,7 @@ const GLOBALS = readFileSync(join(ROOT, "app/globals.css"), "utf8");
 const ZH = readFileSync(join(ROOT, "locales/zh.ts"), "utf8");
 const REGISTER_TOURIST = readFileSync(join(ROOT, "app/auth/register/RegisterTouristForm.tsx"), "utf8");
 const REGISTER_GUIDE = readFileSync(join(ROOT, "app/auth/register/RegisterGuideForm.tsx"), "utf8");
+const SWITCHER = readFileSync(join(ROOT, "components/header/HeaderWorkspaceContextSwitcher.tsx"), "utf8");
 
 describe("header utility menu UI freeze (① · HEADER-UTILITY-MENU-L5-FREEZE)", () => {
   it("freeze SSOT doc exists and declares utility L5 chrome", () => {
@@ -48,6 +49,9 @@ describe("header utility menu UI freeze (① · HEADER-UTILITY-MENU-L5-FREEZE)",
     expect(NAV_MODEL).toContain("headerUserMenuNavSections");
     expect(NAV_MODEL).toContain("header_userMenu_section_account");
     expect(USER_NAV).toContain("headerUserMenuNavSections");
+    expect(USER_NAV).toContain("HeaderWorkspaceContextSwitcher");
+    expect(SWITCHER).toContain("data-tt-header-workspace-context");
+    expect(SWITCHER).toContain("data-tt-header-workspace-context-workbench");
     expect(USER_NAV).toContain("TT_HEADER_USER_MENU_L5.itemIcon");
     expect(UTILITY_TOKENS).toContain("itemWithIcon");
     expect(GLOBALS).toContain("header-utility-dropdown-panel");

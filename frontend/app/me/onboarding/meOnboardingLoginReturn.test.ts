@@ -11,7 +11,7 @@ import {
 describe("meOnboardingLoginReturn", () => {
   it("builds return path and login href with role + from", () => {
     expect(meOnboardingLoginReturnUrl("region_steward", { from: "steward_pending" })).toBe(
-      "/me/onboarding?role=region_steward&from=steward_pending",
+      "/governance?view=region&from=steward_pending#steward-b-track-admission",
     );
     expect(meOnboardingHref("provider", { from: "provider_register" })).toBe(
       "/me/onboarding?role=provider&from=provider_register",
@@ -20,9 +20,9 @@ describe("meOnboardingLoginReturn", () => {
       new URLSearchParams("role=region_steward&from=steward_pending"),
       "region_steward",
     );
-    expect(returnPath).toBe("/me/onboarding?role=region_steward&from=steward_pending");
+    expect(returnPath).toBe("/governance?view=region&from=steward_pending#steward-b-track-admission");
     expect(meOnboardingLoginHref("region_steward", returnPath)).toBe(
-      "/auth/login?returnUrl=%2Fme%2Fonboarding%3Frole%3Dregion_steward%26from%3Dsteward_pending",
+      "/auth/login?returnUrl=%2Fgovernance%3Fview%3Dregion%26from%3Dsteward_pending%23steward-b-track-admission",
     );
   });
 
@@ -42,6 +42,8 @@ describe("meOnboardingLoginReturn", () => {
       "region_steward",
     );
     expect(meOnboardingRegisterHref("provider", providerReturn)).toContain("from%3Didentities_hub");
-    expect(meOnboardingRegisterHref("region_steward", stewardReturn)).toContain("role%3Dregion_steward");
+    expect(meOnboardingRegisterHref("region_steward", stewardReturn)).toContain(
+      "steward-b-track-admission",
+    );
   });
 });

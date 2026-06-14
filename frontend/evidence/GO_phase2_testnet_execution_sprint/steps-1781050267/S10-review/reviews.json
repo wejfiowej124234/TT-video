@@ -1,0 +1,25 @@
+{
+  "status": "ok",
+  "items": [
+    {
+      "id": "6956a181-d6d2-434d-86d4-b6903b4d234b",
+      "order_id": "d34f9607-b5c8-4596-89c7-59feff053a72",
+      "tourist_id": "15b467e6-d0b4-4dbd-a8ed-4aafc4b2f732",
+      "traveler_id": "15b467e6-d0b4-4dbd-a8ed-4aafc4b2f732",
+      "reviewer_id": "15b467e6-d0b4-4dbd-a8ed-4aafc4b2f732",
+      "reviewee_id": "072cf0d0-4872-4783-bb6f-fe6197e7a64e",
+      "score": 5,
+      "weight": 0.9,
+      "comment": "p2exec-1781050267-12497",
+      "created_at": "2026-06-10T00:11:52.906061276+00:00"
+    }
+  ],
+  "meta": {
+    "review_weight_rule_version": "review_weight_v1",
+    "review_weight_rule": "weight = clamp(order_amount/1000,0.1,10) * clamp(reviewer_account_age_days/365,0.5,3); see traveltrust_core::ReviewWeight",
+    "review_json_contract": {
+      "schema_version": 1,
+      "anchor": "REVIEW-SUBMIT-JSON-CONTRACT-V1"
+    }
+  }
+}

@@ -4,6 +4,7 @@ export type MeIdentitiesHubMockScenario =
   | "provider_payment_pending"
   | "provider_confirm_pending"
   | "provider_active"
+  | "steward_payment_pending"
   | "steward_active";
 
 type MePayload = {
@@ -140,6 +141,32 @@ function scenarioPayload(scenario: MeIdentitiesHubMockScenario): HubMockPayload 
               expires_at: null,
             },
           ],
+          meta: { implementation_status: "onboarding_entitlements_stub" },
+        },
+      };
+    case "steward_payment_pending":
+      return {
+        me: {
+          ...baseMe("tourist", "inactive", "pending"),
+          trust: {
+            kyc_status: "none",
+            wallet_linked: false,
+            provider_registration_status: null,
+          },
+        },
+        providerApplication: { status: "ok", application: null },
+        stewardApplication: {
+          status: "ok",
+          application: {
+            id: "sa1",
+            status: "approved",
+            payload: {},
+            submitted_at: "2026-01-01T00:00:00Z",
+          },
+        },
+        entitlements: {
+          status: "ok",
+          entitlements: [],
           meta: { implementation_status: "onboarding_entitlements_stub" },
         },
       };

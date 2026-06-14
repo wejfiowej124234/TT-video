@@ -20,12 +20,12 @@ export function communityMeOrderDrawerKindI18nKey(kind: CommunityMeOrderDrawerKi
 const VALID: ReadonlySet<string> = new Set(["trip", "merchant_service", "acquisition"]);
 
 /**
- * 读取列表项 **`business_line`**；缺省或非法值时 **fail-closed** 为 `merchant_service`（与后端占位/未知订单一致）。
+ * 读取列表项 **`business_line`**；缺省或非法值时 **fail-closed** 为 `trip`（与后端 `order_business_line_for_chain_off` 默认一致）。
  */
 export function orderBusinessLineFromApi(item: OrderListItem): CommunityMeOrderDrawerKind {
   const raw = (item.business_line ?? "").trim().toLowerCase();
   if (VALID.has(raw)) return raw as CommunityMeOrderDrawerKind;
-  return "merchant_service";
+  return "trip";
 }
 
 export function formatOrderListTitle(item: OrderListItem): string {

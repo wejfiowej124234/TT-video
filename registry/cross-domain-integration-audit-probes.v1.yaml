@@ -1,0 +1,109 @@
+# CDIA · Cross-Domain Integration Audit 探针注册表
+# 消费方：scripts/dev/cross-domain-integration-audit.py
+
+version: cdia-audit-2026-06-07
+matrix_version: cross-domain-integration-v1
+
+domains:
+  - identity
+  - trust
+  - community
+  - order
+  - escrow
+  - dispute
+  - governance
+  - admin
+
+cross_domain_matrix:
+  - id: xd.id_trust
+    from: identity
+    to: trust
+    step: GET /me.trust 投影
+  - id: xd.id_order
+    from: identity
+    to: order
+    step: KYC/身份闸阻断下单
+  - id: xd.trust_order
+    from: trust
+    to: order
+    step: 风险分闸阻断 mock-pay
+  - id: xd.order_escrow
+    from: order
+    to: escrow
+    step: mock-pay → escrowed
+  - id: xd.escrow_dispute
+    from: escrow
+    to: dispute
+    step: 开争议 → disputed
+  - id: xd.dispute_order
+    from: dispute
+    to: order
+    step: 裁决 → 订单终态
+  - id: xd.community_admin
+    from: admin
+    to: community
+    step: 处罚写入 community_penalties
+  - id: xd.community_write
+    from: community
+    to: trust
+    step: 处罚拦截 UGC（DID 榜侧效应）
+  - id: xd.governance_isolated
+    from: governance
+    to: order
+    step: 治理投票不改变订单态
+  - id: xd.admin_audit
+    from: admin
+    to: identity
+    step: 审计日志可读
+
+state_propagation_matrix:
+  - id: prop.a_seed
+    chain: A
+    step: trust-gate 种子
+  - id: prop.a_risk_reflect
+    chain: A
+    step: 开放争议 → me.trust risk_high
+  - id: prop.a_risk_block
+    chain: A
+    step: risk 用户 mock-pay 403
+  - id: prop.b_create
+    chain: B
+    step: 下单 created
+  - id: prop.b_escrow
+    chain: B
+    step: accept→mock-pay escrowed
+  - id: prop.b_complete
+    chain: B
+    step: confirm-completion completed
+  - id: prop.b_reviews
+    chain: B
+    step: 双方评分
+  - id: prop.c_open
+    chain: C
+    step: 开争议 disputed
+  - id: prop.c_resolve
+    chain: C
+    step: 裁决 refunded+resolved
+  - id: prop.f_penalty
+    chain: F
+    step: admin mute 处罚
+  - id: prop.f_block
+    chain: F
+    step: 处罚后发帖 403
+  - id: prop.h_audit
+    chain: H
+    step: admin 操作后 audit-logs
+
+event_consistency_matrix:
+  - id: evt.order_pg_api
+    check: orders.status API↔PG
+  - id: evt.dispute_pg_api
+    check: disputes.status API↔PG
+  - id: evt.trust_risk_basis
+    check: open_disputes 计数与 trust.risk_basis
+  - id: evt.penalty_pg_active
+    check: community_penalties active
+  - id: evt.auth_audit
+    check: auth_audit_events 可读
+  - id: evt.admin_audit
+    check: admin_audit_logs 含 moderation

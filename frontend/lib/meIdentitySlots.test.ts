@@ -31,7 +31,7 @@ describe("meIdentitySlots (96-17 traveler/guide spine)", () => {
       user: { id: "u1", role: "tourist" },
       identity_slots: [
         { id: "traveler", state: "active", stake_display: null },
-        { id: "guide", state: "active", stake_display: "1 USDT" },
+        { id: "guide", state: "active", stake_display: "1 USDC" },
         { id: "acquisition", state: "inactive", stake_display: null },
         { id: "merchant", state: "inactive", stake_display: null },
         { id: "region_steward", state: "inactive", stake_display: null },

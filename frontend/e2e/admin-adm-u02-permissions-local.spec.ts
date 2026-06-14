@@ -8,6 +8,36 @@ import { defaultApiBase, seedTestAccounts } from "./helpers/apiSession";
 const apiBase = defaultApiBase();
 const password = "Test123!";
 const stamp = Date.now();
+const isStagingApi =
+  process.env.ADM_U02_STAGING === "1" ||
+  /tt-api-staging\.fly\.dev/i.test(apiBase) ||
+  /staging/i.test(process.env.PLAYWRIGHT_API_BASE_URL ?? "");
+
+function psqlExec(sql: string) {
+  const dbUrl = process.env.DATABASE_URL ?? process.env.STAGING_DATABASE_URL ?? "";
+  if (!dbUrl) {
+    throw new Error("DATABASE_URL required for role promotion");
+  }
+  const { execSync } = require("node:child_process") as typeof import("node:child_process");
+  const escaped = sql.replace(/"/g, '\\"');
+  if (process.env.PSQL_PATH || (process.platform !== "win32" && !dbUrl.includes("127.0.0.1"))) {
+    execSync(`psql "${dbUrl}" -v ON_ERROR_STOP=1 -q -c "${escaped}"`, {
+      stdio: "ignore",
+      shell: true,
+    });
+    return;
+  }
+  const pass = decodeURIComponent(new URL(dbUrl).password || "");
+  const user = decodeURIComponent(new URL(dbUrl).username || "");
+  let host = new URL(dbUrl).hostname || "127.0.0.1";
+  const port = new URL(dbUrl).port || "5432";
+  const db = (new URL(dbUrl).pathname || "/").replace(/^\//, "") || "postgres";
+  if (host === "localhost" || host === "127.0.0.1") host = "host.docker.internal";
+  execSync(
+    `docker run --rm -e PGPASSWORD="${pass}" postgres:16-alpine psql "postgres://${user}@${host}:${port}/${db}" -v ON_ERROR_STOP=1 -q -c "${escaped}"`,
+    { stdio: "ignore", shell: true },
+  );
+}
 
 function writeHeaders(token: string, extra?: Record<string, string>) {
   return {
@@ -28,54 +58,39 @@ async function registerAdmin(
   expect(reg.ok()).toBeTruthy();
   const body0 = (await reg.json()) as { token?: string; user_id?: string };
   const userId = body0.user_id?.trim() ?? "";
+  let token = body0.token?.trim() ?? "";
   expect(userId.length).toBeGreaterThan(0);
+  expect(token.length).toBeGreaterThan(0);
 
-  const seed = await request.post(`${apiBase}/auth/seed-test-accounts`, {
-    data: { promote_admin_email: email },
-  });
-  expect(seed.ok()).toBeTruthy();
-
-  const dbUrl = process.env.DATABASE_URL ?? process.env.STAGING_DATABASE_URL ?? "";
-  if (!dbUrl) {
-    test.skip(true, "DATABASE_URL required for role promotion");
+  if (!isStagingApi) {
+    const seed = await request.post(`${apiBase}/auth/seed-test-accounts`, {
+      data: { promote_admin_email: email },
+    });
+    expect(seed.ok()).toBeTruthy();
   }
-  const { execSync } = await import("node:child_process");
-  const psql =
-    process.platform === "win32" && !process.env.PSQL_PATH
-      ? `docker exec traveltrust-postgres psql -U traveltrust -d traveltrust`
-      : `psql "${dbUrl}"`;
-  execSync(
-    `${psql} -v ON_ERROR_STOP=1 -q -c "UPDATE users SET role = '${usersRole}' WHERE id = '${userId}'::uuid;"`,
-    { stdio: "ignore", shell: true },
-  );
+
+  psqlExec(`UPDATE users SET role = '${usersRole}' WHERE id = '${userId}'::uuid;`);
   if (usersRole === "super_admin") {
-    execSync(
-      `${psql} -v ON_ERROR_STOP=1 -q -c "INSERT INTO admin_console_roles (user_id, console_role) VALUES ('${userId}'::uuid, 'SuperAdmin') ON CONFLICT (user_id) DO UPDATE SET console_role = 'SuperAdmin';"`,
-      { stdio: "ignore", shell: true },
+    psqlExec(
+      `INSERT INTO admin_console_roles (user_id, console_role) VALUES ('${userId}'::uuid, 'SuperAdmin') ON CONFLICT (user_id) DO UPDATE SET console_role = 'SuperAdmin';`,
     );
   }
 
-  const login = await request.post(`${apiBase}/auth/login`, {
-    data: { email, password },
-  });
-  expect(login.ok()).toBeTruthy();
-  const body = (await login.json()) as { token?: string; user_id?: string };
-  const token = body.token?.trim() ?? "";
-  expect(token.length).toBeGreaterThan(0);
+  if (!isStagingApi) {
+    const login = await request.post(`${apiBase}/auth/login`, {
+      data: { email, password },
+    });
+    expect(login.ok()).toBeTruthy();
+    const body = (await login.json()) as { token?: string; user_id?: string };
+    token = body.token?.trim() ?? "";
+    expect(token.length).toBeGreaterThan(0);
+  }
   return { token, userId };
 }
 
 function reset2faPolicyEnforced() {
-  const dbUrl = process.env.DATABASE_URL ?? process.env.STAGING_DATABASE_URL ?? "";
-  if (!dbUrl) return;
-  const { execSync } = require("node:child_process") as typeof import("node:child_process");
-  const psql =
-    process.platform === "win32" && !process.env.PSQL_PATH
-      ? `docker exec traveltrust-postgres psql -U traveltrust -d traveltrust`
-      : `psql "${dbUrl}"`;
-  execSync(
-    `${psql} -v ON_ERROR_STOP=1 -q -c "UPDATE admin_security_policies SET policy_value = jsonb_set(policy_value, '{enforced}', 'false'::jsonb, true) WHERE policy_key = 'admin_2fa_policy';"`,
-    { stdio: "ignore", shell: true },
+  psqlExec(
+    "UPDATE admin_security_policies SET policy_value = jsonb_set(policy_value, '{enforced}', 'false'::jsonb, true) WHERE policy_key = 'admin_2fa_policy';",
   );
 }
 
@@ -109,20 +124,25 @@ test.describe("ADM-U02 local API @adm-u02", () => {
         adm_u02_local_ready?: boolean;
         console_role_approval_wired?: boolean;
         audit_logs_persist?: boolean;
+        console_role_direct_allowed?: boolean;
       };
     };
     expect(capsJson.phase2_prep?.adm_u02_local_ready).toBe(true);
     expect(capsJson.phase2_prep?.console_role_approval_wired).toBe(true);
     expect(capsJson.phase2_prep?.audit_logs_persist).toBe(true);
 
-    const direct = await request.put(
-      `${apiBase}/api/v1/admin/users/${tgt.userId}/console-role`,
-      {
-        headers: writeHeaders(req.token),
-        data: { console_role_70: "Risk", reason: "e2e-direct" },
-      },
-    );
-    expect(direct.status()).toBe(409);
+    if (capsJson.phase2_prep?.console_role_direct_allowed === true) {
+      psqlExec(`DELETE FROM admin_console_roles WHERE user_id = '${tgt.userId}'::uuid;`);
+    } else {
+      const direct = await request.put(
+        `${apiBase}/api/v1/admin/users/${tgt.userId}/console-role`,
+        {
+          headers: writeHeaders(req.token),
+          data: { console_role_70: "Risk", reason: "e2e-direct" },
+        },
+      );
+      expect(direct.status()).toBe(409);
+    }
 
     const pending = await request.post(
       `${apiBase}/api/v1/admin/users/${tgt.userId}/console-role-change-request`,

@@ -2,6 +2,7 @@
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { GovExecReadOnlyI18n, isGovernorStateLabelQueued } from "@/lib/governanceExecReadOnlyNarrative";
+import { GOV_PROPOSALS_L5 } from "@/lib/governance/governanceProposalsL5Ui";
 
 export type GovernanceProposalExecStatusEntry =
   | {
@@ -46,15 +47,20 @@ export function governanceProposalExecStatusI18nKey(status: string):
 }
 
 /** 主标签（药丸）按执行态区分色相，便于列表扫读 */
-function execStatusPillClasses(status: string): string {
+function execStatusPillClasses(status: string, listCompact: boolean): string {
   const s = status.trim().toLowerCase();
   const base =
-    "rounded-full border px-2 py-0.5 font-medium dark:border-opacity-50";
+    "rounded-full border px-2.5 py-0.5 text-meta font-semibold dark:border-opacity-50";
+  if (s === "active") {
+    return listCompact
+      ? GOV_PROPOSALS_L5.statusPillActive
+      : `${base} border-travel-500/45 bg-travel-500/10 text-travel-900 dark:border-travel-400/35 dark:bg-travel-950/35 dark:text-travel-100`;
+  }
   switch (s) {
     case "pending":
-      return `${base} border-ink-200 bg-ink-50 text-ink-800 dark:border-ink-600/50 dark:bg-ink-900/40 dark:text-ink-100`;
-    case "active":
-      return `${base} border-travel-500/45 bg-travel-500/10 text-travel-900 dark:border-travel-400/35 dark:bg-travel-950/35 dark:text-travel-100`;
+      return listCompact
+        ? GOV_PROPOSALS_L5.statusPillPending
+        : `${base} border-ink-200 bg-ink-50 text-ink-800 dark:border-ink-600/50 dark:bg-ink-900/40 dark:text-ink-100`;
     case "succeeded":
       return `${base} border-emerald-500/40 bg-emerald-500/10 text-emerald-950 dark:border-emerald-400/35 dark:bg-emerald-950/25 dark:text-emerald-100`;
     case "executed":
@@ -72,6 +78,8 @@ function execStatusPillClasses(status: string): string {
 
 export type GovernanceProposalExecStatusBadgeProps = {
   className?: string;
+  /** L5 列表页仅展示状态药丸；详情/审计视图展示 SSOT 与投影 chip */
+  variant?: "list" | "detail";
   /** `proposal-status` 批量请求进行中：不占位，避免闪烁假状态 */
   loading?: boolean;
   /** 已完成至少一轮批量请求（用于区分「未请求」与「单条失败」） */
@@ -84,18 +92,20 @@ export type GovernanceProposalExecStatusBadgeProps = {
  */
 export default function GovernanceProposalExecStatusBadge({
   className,
+  variant = "detail",
   loading,
   fetchSettled,
   entry,
 }: GovernanceProposalExecStatusBadgeProps) {
   const { t } = useTranslation();
   const root = className?.trim() ? className : "";
+  const listCompact = variant === "list";
 
   if (loading) return null;
 
   if (entry?.state === "ok") {
     const labelKey = governanceProposalExecStatusI18nKey(entry.status);
-    const pillClass = execStatusPillClasses(entry.status);
+    const pillClass = execStatusPillClasses(entry.status, listCompact);
     const groupTitle =
       entry.note?.trim() ||
       (entry.is_chain_ssot
@@ -105,23 +115,24 @@ export default function GovernanceProposalExecStatusBadge({
           : t(GovExecReadOnlyI18n.sourceProjectionGroupAria));
     return (
       <div
-        className={`shrink-0 text-meta text-ink-600 ${root}`}
+        className={`shrink-0 text-meta text-[#7a6248] ${root}`}
         role="group"
-        aria-label={groupTitle}
+        aria-label={listCompact ? t(labelKey) : groupTitle}
       >
         <div className="flex flex-col items-end gap-0.5">
           <div className="flex flex-wrap items-center justify-end gap-x-1 gap-y-0.5">
             <span className={pillClass} translate="no">
               {t(labelKey)}
             </span>
-            {entry.is_chain_ssot ? (
+            {!listCompact && entry.is_chain_ssot ? (
               <span
                 className="rounded border border-emerald-500/35 bg-emerald-500/[0.07] px-1.5 py-0.5 text-[10px] font-medium text-emerald-900 dark:border-emerald-400/25 dark:bg-emerald-950/30 dark:text-emerald-100"
                 translate="no"
               >
                 {t(GovExecReadOnlyI18n.sourceSsotBadge)}
               </span>
-            ) : (
+            ) : null}
+            {!listCompact && !entry.is_chain_ssot ? (
               <>
                 <span
                   className="rounded border border-violet-500/30 bg-violet-500/[0.07] px-1.5 py-0.5 text-[10px] font-medium text-violet-950 dark:border-violet-400/25 dark:bg-violet-950/35 dark:text-violet-100"
@@ -139,12 +150,14 @@ export default function GovernanceProposalExecStatusBadge({
                   </span>
                 ) : null}
               </>
-            )}
+            ) : null}
           </div>
-          <p className="max-w-[16rem] text-right text-[11px] leading-snug text-ink-500 dark:text-ink-400">
-            {t(GovExecReadOnlyI18n.readonlyCaption)}
-          </p>
-          {isGovernorStateLabelQueued(entry.status) ? (
+          {!listCompact ? (
+            <p className="max-w-[16rem] text-right text-[11px] leading-snug text-ink-500 dark:text-ink-400">
+              {t(GovExecReadOnlyI18n.readonlyCaption)}
+            </p>
+          ) : null}
+          {!listCompact && isGovernorStateLabelQueued(entry.status) ? (
             <p className="max-w-[18rem] text-right text-[10px] leading-snug text-ink-500 dark:text-ink-400">
               {t(GovExecReadOnlyI18n.sharedListQueuedHint)}
             </p>

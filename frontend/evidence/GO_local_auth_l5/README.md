@@ -29,12 +29,13 @@ cd frontend && npm run test -- authLoginUiFreeze authRegisterUiFreeze loginPageL
 | **Loading** | `AuthRouteLoading` 暗底暖金骨架（无浅灰闪屏） |
 | **Error** | `AuthRouteErrorShell` / `app/auth/error.tsx` L5 卡 |
 | **顶栏** | auth 路由暖金 utility 胶囊 + 导航条 `ref-sun`（非 travel-500） |
-| **`/me/identities`** | 多重身份 Hub · **UI 已锁** → [ME-IDENTITIES-UI-FREEZE](./ME-IDENTITIES-UI-FREEZE.md)；收购 **「进入子站」** → **`/market/acquisition`**（**PD-009 · ① 数据链 SSOT** → [`app/market/acquisition/README.md`](../../app/market/acquisition/README.md) · [`app/me/identities/README.md`](../../app/me/identities/README.md)） |
+| **`/me/identities`** | 多重身份 Hub · **UI 已锁** · **① IA 收口 ACTIVE · 审计 100/100** → [ME-IDENTITIES-UI-FREEZE](./ME-IDENTITIES-UI-FREEZE.md) · **[任务清单](./MULTI-IDENTITY-IA-CLOSURE-TASK-LIST.md)** · **[企业审计](./MULTI-IDENTITY-IA-ENTERPRISE-AUDIT.md)**；收购 **「进入子站」** → **`/market/acquisition`**（**PD-009 · ① 数据链 SSOT** → [`app/market/acquisition/README.md`](../../app/market/acquisition/README.md) · [`app/me/identities/README.md`](../../app/me/identities/README.md)） |
 | **`/community/me`** | **社区资料**（TT 社区「我」）· **L5 独立冻结** → [COMMUNITY-ME-L5-FREEZE](../GO_local_community_me_l5/COMMUNITY-ME-L5-FREEZE.md) · P3 命名 → [`app/community/me/README.md`](../../app/community/me/README.md) · [ACCOUNT-NAV-NAMING-P3](./ACCOUNT-NAV-NAMING-P3.md) |
 | **`/me/onboarding`** | 准入费 Console · **UI 已锁** → [ME-ONBOARDING-CONSOLE-L5-FREEZE](./ME-ONBOARDING-CONSOLE-L5-FREEZE.md) |
 | **顶栏 utility 下拉** | 用户 / 语言 / 钱包 Auth L5 → [HEADER-UTILITY-MENU-L5-FREEZE](./HEADER-UTILITY-MENU-L5-FREEZE.md)（**2026-06-02 收口** · 代码 SSOT `headerUserMenuNavModel.ts`） |
 | **账户导航命名 P3** | 个人资料 / 多重身份 Hub i18n + E2E 断言 SSOT → [ACCOUNT-NAV-NAMING-P3](./ACCOUNT-NAV-NAMING-P3.md) |
 | **`/me/settings` L5 Hub** | 分组设置 · 逐页 tracker → [ME-SETTINGS-L5-FREEZE](./ME-SETTINGS-L5-FREEZE.md)（**2026-06-02 收口** · 代码 SSOT `meSettingsNavModel.ts`） |
+| **`/me/publish` 发布中心** | 五轨 MVP + **IA 边界 100**（2026-06-13）→ [IA-SCORE](./PUBLISH-HUB-IA-BOUNDARY-SCORE.md) · [PHASE1-CLOSURE](./PUBLISH-HUB-PHASE1-CLOSURE.md) · `bash scripts/dev/smoke-publish-hub-local.sh` |
 
 ## 推送前建议命令
 

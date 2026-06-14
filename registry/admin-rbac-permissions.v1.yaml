@@ -1,0 +1,168 @@
+# Admin RBAC matrix v2 prep — SSOT mirror of crates/api/src/routes/admin/admin_rbac.rs
+
+version: admin-rbac-v4-cms-ops-growth-2026-06-07
+
+roles_implemented_users_table:
+
+  - admin
+
+  - super_admin
+
+roles_target_70:
+
+  - SuperAdmin
+
+  - Ops
+
+  - CS
+
+  - Risk
+
+  - Finance
+
+  - Auditor
+
+users_role_mapping:
+
+  super_admin: SuperAdmin
+
+  admin: Ops
+
+local_override_env: TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE
+
+role_bundles_70:
+
+  SuperAdmin: all_write_and_approve
+
+  Ops: legacy_admin_bundle
+
+  CS: read_assist
+
+  Risk: moderate_and_disputes_no_publish
+
+  Finance: finance_and_orders_read
+
+  Auditor: read_only_audit
+
+phase2_prep_local_ready:
+
+  - admin_console_roles_table
+
+  - put_user_console_role
+
+  - rbac_route_matrix_get
+
+  - admin_2fa_policy_storage
+
+phase2_not_started:
+
+  - enforce_2fa_totp_wiring
+
+  - staging_admin_matrix_go
+
+  - production_admin_go
+
+permissions:
+
+  - id: admin.read
+
+    label_zh: 后台只读基线
+
+  - id: admin.approve
+
+    label_zh: 高危审批批准
+
+    super_admin_only: true
+
+  - id: admin.onboarding.read
+
+    label_zh: 准入费台账读
+
+  - id: admin.onboarding.write
+
+    label_zh: 准入费受控写
+
+  - id: admin.onboarding.provider_review
+
+    label_zh: 商家入驻审核
+
+  - id: admin.onboarding.steward_review
+
+    label_zh: 主理人入驻审核
+
+  - id: admin.users.read
+
+  - id: admin.users.write
+
+  - id: admin.orders.read
+
+  - id: admin.disputes.write
+
+  - id: admin.community.read
+
+  - id: admin.community.moderate
+
+  - id: admin.community.super
+
+    super_admin_only: true
+
+  - id: admin.finance.read
+
+  - id: admin.trust_growth.write
+
+  - id: admin.platform.read
+
+  - id: admin.platform.publish
+
+    super_admin_only: true
+
+  - id: admin.acquisition.suspend
+
+    label_zh: 收购发布暂停
+
+  - id: admin.content.read
+
+    label_zh: 内容中心读
+
+  - id: admin.content.write
+
+    label_zh: 内容中心写
+
+  - id: admin.content.publish
+
+    label_zh: 内容中心发布
+
+    super_admin_only: true
+
+  - id: admin.official.read
+
+    label_zh: 官方运营读
+
+  - id: admin.official.write
+
+    label_zh: 官方运营写
+
+  - id: admin.official.publish
+
+    label_zh: 官方运营发布
+
+    super_admin_only: true
+
+  - id: admin.growth.read
+
+    label_zh: 增长中心读
+
+  - id: admin.growth.write
+
+    label_zh: 增长中心写
+
+  - id: admin.growth.publish
+
+    label_zh: 增长中心发布
+
+    super_admin_only: true
+
+  - id: admin.growth.fraud
+
+    label_zh: 增长防刷
+

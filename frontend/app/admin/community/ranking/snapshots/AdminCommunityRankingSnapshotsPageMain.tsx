@@ -84,6 +84,8 @@ export function AdminCommunityRankingSnapshotsPageMain() {
       subtitle={t("admin_rank_snapshots_subtitle_l5")}
       headerAside={
         <AdminCommunityListHeaderAside>
+      <AdminCommunityRelatedLinks />
+
           <Link href="/admin/community/reports" className={`${adminPageNavLinkClass()}`}>
             {t("admin_rank_snapshots_linkReports")}
           </Link></AdminCommunityListHeaderAside>

@@ -2688,8 +2688,42 @@ export const TT_MARKETING_LANDING_CHROME_CLASS =
 export const TT_MARKETING_PRODUCT_PAGE_SHELL =
   "min-h-screen bg-bg-main text-ink-900 antialiased";
 
+/**
+ * Console 浅底暖奶油页壳（治理提案等 · 与 L0 顶栏 `#faf8f6` 同族 · 非冷灰 `bg-main`）
+ * 使用显式 hex（避免 Tailwind 对 `var()` 渐变偶发不生效）。
+ */
+export const TT_MARKETING_CONSOLE_WARM_PAGE_SHELL =
+  "min-h-screen bg-[#faf8f6] bg-gradient-to-b from-[#fff8f2] via-[#faf8f6] to-[#f5efe8] text-[#5c4528] antialiased";
+
+/** `/governance/proposals*` 全宽暖底 canvas（layout 包裹 · 压住根 `body.bg-bg-main` 冷白缝） */
+export const TT_MARKETING_GOVERNANCE_PROPOSALS_WARM_CANVAS =
+  "relative min-h-[calc(100dvh-3.5rem)] min-h-[calc(100vh-3.5rem)] bg-[#faf8f6] bg-gradient-to-b from-[#fff8f2] via-[#faf8f6] to-[#f5efe8]";
+
+/** 治理提案页内 `<main>`：透明叠在 canvas 上，不再重复铺冷底 */
+export const TT_MARKETING_GOVERNANCE_CONSOLE_WARM_MAIN =
+  "relative min-h-full bg-transparent text-[#5c4528] antialiased";
+
+/** 治理提案暖底氛围光（与 L0 顶栏 / 订单 L5 暖金同族） */
+export const TT_MARKETING_GOVERNANCE_PROPOSALS_WARM_AMBIENT =
+  "pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(ellipse_80%_55%_at_50%_-8%,rgba(252,164,124,0.11),transparent_52%),radial-gradient(circle_at_96%_12%,rgba(249,215,121,0.08),transparent_42%)]";
+
+/** Console 浅底暖金棕字阶（与 L0 顶栏 `#5c4528` 同族 · 替代默认冷灰 `text-ink-*`） */
+export const TT_MARKETING_CONSOLE_WARM_TEXT_TITLE = "text-[#3d2f1e]";
+export const TT_MARKETING_CONSOLE_WARM_TEXT_BODY = "text-[#5c4528]";
+export const TT_MARKETING_CONSOLE_WARM_TEXT_LEAD = "text-[#6b5340]";
+export const TT_MARKETING_CONSOLE_WARM_TEXT_META = "text-[#7a6248]";
+export const TT_MARKETING_CONSOLE_WARM_TEXT_MUTED = "text-[#9a8568]";
+
+/** 暖底 Console 内链（替代 `text-ink-800` + travel 蓝底栏链色） */
+export const TT_MARKETING_CONSOLE_WARM_INLINE_LINK =
+  "font-medium text-[#5c4528] underline underline-offset-2 transition-colors motion-reduce:transition-none hover:text-[#9a5f18]";
+
 /** 治理 Hub 子页内区（与历史 `max-w-* p-8` 对齐） */
 export const TT_MARKETING_GOVERNANCE_PAGE_SHELL = `${TT_MARKETING_PRODUCT_PAGE_SHELL} text-ink-800`;
+
+/** 治理提案 Console 暖底子页（列表 / 详情 / 新建 · 与订单 L5 奶油底同族） */
+export const TT_MARKETING_GOVERNANCE_CONSOLE_WARM_PAGE_SHELL =
+  TT_MARKETING_CONSOLE_WARM_PAGE_SHELL;
 
 export const TT_MARKETING_GOVERNANCE_INNER_3XL = "mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-10";
 

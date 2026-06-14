@@ -21,6 +21,7 @@ export async function getOrders(params?: {
   orders_chain_id?: number;
   /** 文本搜索：目的地/城市/国家/订单号/状态（服务端分页前过滤） */
   q?: string;
+  hat?: "guide" | "traveler";
 }): Promise<OrdersListResult> {
   const query = new URLSearchParams();
   if (params?.limit != null) query.set("limit", String(params.limit));
@@ -31,6 +32,8 @@ export async function getOrders(params?: {
   if (chainId != null && chainId > 0) query.set("orders_chain_id", String(chainId));
   const search = params?.q?.trim();
   if (search) query.set("q", search);
+  const hat = params?.hat?.trim();
+  if (hat) query.set("hat", hat.toLowerCase());
   const suffix = query.toString() ? `?${query.toString()}` : "";
   const res = await fetch(apiUrl(routes.orders) + suffix, {
     headers: { "x-request-id": requestId(), ...getAuthHeaders() },

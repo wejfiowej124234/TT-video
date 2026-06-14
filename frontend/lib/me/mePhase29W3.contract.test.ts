@@ -12,7 +12,7 @@ describe("phase29 W3 release polish (RP-003/015)", () => {
   it("RP-003 wires MeGuideRoleBadge on /me profile and /guide dashboard", () => {
     const badge = read("components/me/MeGuideRoleBadge.tsx");
     const profile = read("components/me/MeSettingsProfileIdentityCard.tsx");
-    const guide = read("app/guide/GuideDashboardPageMain.tsx");
+    const guide = read("app/guide/page.tsx");
     expect(badge).toContain('data-tt-me-guide-role-badge="1"');
     expect(badge).toContain("userIsGuide");
     expect(profile).toContain("MeGuideRoleBadge");

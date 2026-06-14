@@ -19,6 +19,6 @@ describe("traveltrustLiquidityContract", () => {
     const c = traveltrustLiquidityContractFromBrief(TRAVELTRUST_PAGE_BRIEF_DEV_FALLBACK);
     expect(c.pair_type).toBe("stablecoin_to_governance_token");
     expect(c.receive_symbol).toBe("TTG");
-    expect(c.pay_stablecoins).toEqual(["USDC", "USDT"]);
+    expect(c.pay_stablecoins).toEqual(["USDC"]);
   });
 });

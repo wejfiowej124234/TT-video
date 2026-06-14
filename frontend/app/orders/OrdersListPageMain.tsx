@@ -17,6 +17,8 @@ import { OrdersPageErrorView, OrdersPageLoadingView } from "./OrdersPageLoadingV
 import { useOrdersListPageCore } from "./useOrdersListPageCore";
 import { countOrdersListByTerminalState } from "@/lib/orders/ordersListStateCounts";
 import { filterOrdersListByUrlStateParam } from "@/lib/orders/ordersListStateFilter";
+import { isGuideOrdersListHat } from "@/lib/guide/guideOrderCorridorModel";
+import { isMerchantOrdersListHat } from "@/lib/provider/merchantOrderCorridorModel";
 import { ordersListL5MainDataAttrs, TT_ORDERS_LIST_L5 } from "@/lib/orders/ordersListL5";
 import OrderDetailDrawer from "@/components/market/OrderDetailDrawer";
 import { OrdersListDeleteConfirmDialog } from "@/components/orders/OrdersListDeleteConfirmDialog";
@@ -50,7 +52,12 @@ export default function OrdersListPageMain() {
     loadMoreOrders,
     ordersHasMore,
     previewOrder,
+    ordersListHat,
   } = useOrdersListPageCore();
+
+  const guideOrdersHat = isGuideOrdersListHat(ordersListHat);
+  const merchantOrdersHat = isMerchantOrdersListHat(ordersListHat);
+  const workspaceOrdersHat = guideOrdersHat || merchantOrdersHat;
 
   const stateFilteredList = useMemo(
     () => filterOrdersListByUrlStateParam(list, ordersListStateParam),
@@ -83,14 +90,22 @@ export default function OrdersListPageMain() {
   return (
     <main
       className={TT_ORDERS_LIST_L5.pageShell}
-      aria-label={t("orders_myOrders")}
+      aria-label={
+        guideOrdersHat
+          ? t("guide_orders_list_title")
+          : merchantOrdersHat
+            ? t("merchant_orders_list_title")
+            : t("orders_myOrders")
+      }
       {...ordersListL5MainDataAttrs()}
+      {...(guideOrdersHat ? { "data-tt-orders-list-hat": "guide" } : {})}
+      {...(merchantOrdersHat ? { "data-tt-orders-list-hat": "merchant" } : {})}
     >
       <div className={TT_ORDERS_LIST_L5.pageVignette} aria-hidden />
       <div className={TT_ORDERS_LIST_L5.ambient} aria-hidden />
       <div className={TT_ORDERS_LIST_L5.dotGrid} aria-hidden />
       <section className={TT_ORDERS_LIST_L5.pageInner}>
-        <OrdersListPageHeader t={t} />
+        <OrdersListPageHeader t={t} ordersListHat={ordersListHat} />
 
         <OrdersListToolbar>
           <OrdersListFilterRail
@@ -126,23 +141,27 @@ export default function OrdersListPageMain() {
           refreshOrders={refreshOrders}
         />
 
-        <OrdersBookGuideBannerSection
-          t={t}
-          bookGuideParam={bookGuideParam}
-          bookGuideResolve={bookGuideResolve}
-        />
+        {!workspaceOrdersHat ? (
+          <OrdersBookGuideBannerSection
+            t={t}
+            bookGuideParam={bookGuideParam}
+            bookGuideResolve={bookGuideResolve}
+          />
+        ) : null}
 
         {list.length === 0 ? (
           <OrdersListEmptyState
             t={t}
             ordersListStateParam={ordersListStateParam}
             setOrdersListStateInUrl={setOrdersListStateInUrl}
+            ordersListHat={ordersListHat}
           />
         ) : stateFilteredList.length === 0 ? (
           <OrdersListEmptyState
             t={t}
             ordersListStateParam={ordersListStateParam}
             setOrdersListStateInUrl={setOrdersListStateInUrl}
+            ordersListHat={ordersListHat}
           />
         ) : (
           <div key={ordersListStateParam ?? "__all__"}>
@@ -186,7 +205,7 @@ export default function OrdersListPageMain() {
 
         <OrdersListPageFooter />
       </section>
-      <OrdersListMobileActionBar t={t} />
+      <OrdersListMobileActionBar t={t} ordersListHat={ordersListHat} />
     </main>
   );
 }

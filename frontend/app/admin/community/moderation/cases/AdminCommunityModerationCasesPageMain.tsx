@@ -88,6 +88,8 @@ export function AdminCommunityModerationCasesPageMain(props: Props) {
       subtitle={t("admin_mod_cases_subtitle_l5")}
       headerAside={
         <AdminCommunityListHeaderAside>
+      <AdminCommunityRelatedLinks />
+
           <Link href="/admin/community/reports" className={`${adminPageNavLinkClass()}`}>
             {t("admin_mod_cases_backReports")}
           </Link></AdminCommunityListHeaderAside>

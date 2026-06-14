@@ -3,14 +3,13 @@
 import { type FormEvent, useEffect, useId } from "react";
 import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
-import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
-import {
-  touchTargetLink44Classes,
-  travelFocusRingCoreOffset2Classes,
-  travelFocusRingOffset2Classes,
-} from "@/lib/travelLinkFocus";
+import WorkspaceL5PageShell from "@/components/workspace/WorkspaceL5PageShell";
+import { StakingL5CrossNav } from "@/components/staking/StakingL5CrossNav";
+import { FOCUS_RING } from "@/components/me/constants";
+import { TT_STAKING_PAGE_L5 } from "@/lib/staking/stakingPageL5";
+import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 
-/** /staking 路由 · 页面级错误边界；资金/信任区 Console 风格；与 35 质押入口一致 */
+/** `/staking` 路由 · 页面级错误边界（体验深壳 · 与主面 L5 同族） */
 export default function StakingError({
   error,
   reset,
@@ -27,18 +26,22 @@ export default function StakingError({
   }, [error]);
 
   return (
-    <main
-      className="mx-auto flex min-h-[50vh] max-w-lg flex-col items-center justify-center px-6 py-12 bg-bg-main"
-      role="alert"
-      data-tt-error-boundary-root="staking"
+    <WorkspaceL5PageShell
+      kind="guide"
+      ariaLabel={t("staking_pageTitle")}
+      dataAttrs={TT_STAKING_PAGE_L5.guideScopePageAttrs}
+      footerTarget="guide"
     >
-      <div className="rounded-[var(--radius-md)] border border-ink-200 bg-bg-console p-6 shadow-soft">
-        <p className="text-meta font-medium text-ink-500 mb-1">{t("staking_pageTitle")}</p>
-        <h1 className="text-h4 font-semibold text-ink-900">{t("common_errorTitle")}</h1>
-        <p className="mt-2 text-body text-ink-600">
-          {t("common_errorMessage")}
-        </p>
-        <p id={appErrorRetryHintId} className="mt-3 text-meta text-ink-600 leading-relaxed text-center">
+      <section
+        className={`${TT_STAKING_PAGE_L5.panelCard} text-center`}
+        role="alert"
+        data-tt-error-boundary-root="staking"
+        data-tt-staking-error-l5="1"
+      >
+        <p className={TT_STAKING_PAGE_L5.panelMeta}>{t("staking_pageTitle")}</p>
+        <h1 className={`mt-2 ${TT_STAKING_PAGE_L5.panelTitle}`}>{t("common_errorTitle")}</h1>
+        <p className={`mt-2 ${TT_STAKING_PAGE_L5.bodyProse}`}>{t("common_errorMessage")}</p>
+        <p id={appErrorRetryHintId} className={`mt-3 ${TT_STAKING_PAGE_L5.metaProse}`}>
           {t("app_error_boundary_retry_hint")}
         </p>
         <div className="mt-4 flex flex-wrap justify-center gap-3">
@@ -50,42 +53,31 @@ export default function StakingError({
               reset();
             }}
           >
-            <button
-              type="submit"
-              aria-label={t("common_retry")}
-              className="inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] bg-trust-600 px-4 py-2 text-small font-medium text-white hover:bg-trust-500 outline-none focus-visible:ring-2 focus-visible:ring-trust-600 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-console"
-            >
+            <button type="submit" aria-label={t("common_retry")} className={TT_STAKING_PAGE_L5.primaryBtn}>
               {t("common_retry")}
             </button>
           </form>
           <Link
-            href="/"
-            aria-label={t("common_backToHome")}
-            className={`rounded-[var(--radius-sm)] border border-ink-300 px-4 py-2 text-small font-medium text-ink-700 hover:bg-ink-50 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`}
+            href="/guide"
+            aria-label={t("staking_guide_scope_backWorkbench")}
+            className={`${touchTargetLink44Classes} ${TT_STAKING_PAGE_L5.secondaryBtn} inline-flex no-underline ${FOCUS_RING}`}
           >
-            {t("common_backToHome")}
+            {t("staking_guide_scope_backWorkbench")}
           </Link>
         </div>
-        <p className="mt-5 text-meta text-ink-600 text-center flex flex-wrap justify-center gap-x-2 gap-y-1">
-          <Link href="/staking" className={`${touchTargetLink44Classes} text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
-            {t("staking_pageTitle")}
+        <p className={`mt-5 flex flex-wrap justify-center gap-x-2 gap-y-1 ${TT_STAKING_PAGE_L5.metaProse}`}>
+          <Link href="/staking?scope=guide" className={`${touchTargetLink44Classes} ${TT_STAKING_PAGE_L5.backLink}`}>
+            {t("staking_guide_scope_pageTitle")}
           </Link>
-          <span aria-hidden>·</span>
-          <Link href="/pay" className={`${touchTargetLink44Classes} text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
-            {t("header_payHub")}
-          </Link>
-          <span aria-hidden>·</span>
-          <Link href="/guide/register" className={`${touchTargetLink44Classes} text-travel-600 hover:underline underline-offset-2 transition-colors motion-reduce:transition-none ${travelFocusRingOffset2Classes}`}>
+          <span className="text-ref-sun/25" aria-hidden>
+            ·
+          </span>
+          <Link href="/guide/register" className={`${touchTargetLink44Classes} ${TT_STAKING_PAGE_L5.backLink}`}>
             {t("staking_ctaApply")}
           </Link>
         </p>
-        <ProductCrossNav
-          ariaLabelKey="app_error_relatedNav_aria"
-          showGuides
-          errorBoundaryCrossNavMarker
-          className="mt-6 flex flex-wrap justify-center gap-x-2 gap-y-1 border-t border-ink-200 pt-5 text-meta text-ink-600"
-        />
-      </div>
-    </main>
+      </section>
+      <StakingL5CrossNav />
+    </WorkspaceL5PageShell>
   );
 }

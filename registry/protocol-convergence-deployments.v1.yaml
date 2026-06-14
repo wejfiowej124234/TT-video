@@ -1,0 +1,113 @@
+# Protocol Convergence · ② 测试网部署登记（ABI + SSOT hash + 地址 · R-03 对拍）
+# 真源：docs/spec/governance-token/protocol-ssot.v1.yaml
+# 机读闸：bash scripts/gates/check-protocol-convergence-pregate.sh
+#         bash scripts/gates/check-phase2-chain-deployment-gate.sh
+# 对拍：bash scripts/gates/check-protocol-quote-parity.sh
+
+schema_version: "1"
+updated: "2026-06-05T10:15Z"
+
+protocol_ssot:
+  version: "1.0.1"
+  md_ref: docs/spec/governance-token/protocol-ssot.v1.md
+  yaml_ref: docs/spec/governance-token/protocol-ssot.v1.yaml
+  content_sha256: "cd114ba2bb1f25de83e879db5babeb100b7235da9472239a09d86072533bc4fc"
+
+# 控制面 env（R-02 · 与 contracts/script/Phase2ControlPlane.sol 同源）
+control_plane_env:
+  timelock_admin: TIMELOCK_ADMIN_ADDRESS
+  chain_owner: PHASE2_CHAIN_OWNER_ADDRESS
+  chain_owner_fallback: TIMELOCK_ADDRESS
+  escrow_factory_guardian: ESCROW_FACTORY_GUARDIAN_ADDRESS
+  escrow_factory_guardian_fallback: TIMELOCK_ADDRESS
+
+contracts:
+  GovernanceVotesToken:
+    source: contracts/src/GovernanceVotesToken.sol
+    deploy_script: contracts/script/DeployGovernanceStack.s.sol
+    env_address_key: GOVERNANCE_TOKEN_ADDRESS
+  GovernanceTimelock:
+    source: contracts/src/GovernanceTimelock.sol
+    deploy_script: contracts/script/DeployGovernanceStack.s.sol
+    env_address_key: TIMELOCK_ADDRESS
+  TravelTrustGovernor:
+    source: contracts/src/TravelTrustGovernor.sol
+    deploy_script: contracts/script/DeployGovernanceStack.s.sol
+    env_address_key: GOVERNOR_ADDRESS
+  EscrowFactory:
+    source: contracts/src/EscrowFactory.sol
+    deploy_script: contracts/script/DeployFundStackUnderTimelock.s.sol
+    env_address_key: ESCROW_FACTORY_ADDRESS
+  FeeRouter:
+    source: contracts/src/FeeRouter.sol
+    deploy_script: contracts/script/DeployFundStackUnderTimelock.s.sol
+    env_address_key: FEE_ROUTER_ADDRESS
+  RegionStewardStakePool:
+    source: contracts/src/RegionStewardStakePool.sol
+    abi: contracts/abi/RegionStewardStakePool.json
+    deploy_script: contracts/script/DeployRegionStewardStakePool.s.sol
+    env_address_key: REGION_STEWARD_STAKE_POOL_ADDRESS
+  CountryPoolRedemptionEpochV0:
+    source: contracts/src/CountryPoolRedemptionEpochV0.sol
+    abi: contracts/abi/CountryPoolRedemptionEpochV0.json
+    deploy_script: contracts/script/DeployCountryPoolRedemptionEpochV0.s.sol
+    env_address_key: COUNTRY_POOL_REDEMPTION_EPOCH_CN_ADDRESS
+  CountryPoolLedgerV0:
+    source: contracts/src/CountryPoolLedgerV0.sol
+    deploy_script: contracts/script/DeployP51CountryLedger.s.sol
+    env_address_key: COUNTRY_POOL_LEDGER_PILOT_ADDRESS
+
+api_quote_routes:
+  steward_stake_quote: GET /api/v1/steward/stake-quote
+  steward_stake_status: GET /api/v1/steward/stake-status
+  redemption_quote: GET /api/v1/redemption/quote
+  country_ledger: GET /api/v1/governance/country-ledger/:jurisdiction
+  protocol_reference: GET /api/v1/governance/protocol-reference
+
+environments:
+  local_anvil:
+    chain_id: 31337
+    notes: "bash scripts/dev/smoke-steward-stake-anvil.sh · deployer EOA fallback allowed"
+
+  sepolia:
+    chain_id: 11155111
+    rpc_env: CHAIN_RPC_URL
+    deploy_order:
+      - DeployGovernanceStack.s.sol
+      - DeployFundStackUnderTimelock.s.sol
+      - DeployRegionStewardStakePool.s.sol
+      - DeployCountryPoolRedemptionEpochV0.s.sol
+      - DeployP51CountryLedger.s.sol
+    required_env_before_broadcast:
+      - TIMELOCK_ADMIN_ADDRESS
+      - TIMELOCK_ADDRESS
+      - PRIVATE_KEY
+      - CHAIN_RPC_URL
+      - CHAIN_ID
+    addresses:
+      governance_token_address: "0xaC2E29AC7089e4863C21dAF232cF8bbb025d91ca"
+      governor_address: "0xa79c8df5C225825f6d04a497043dB0F1995B55ae"
+      timelock_address: "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f"
+      escrow_factory_address: "0xbf746B6a330e61416c6D87aB9b0758f7107C8006"
+      fee_router_address: "0x81A8009210c5215100564c6E4123F672c4459306"
+      region_steward_stake_pool_address: "0x16F914f3D50f7Aa02665589e715F94CA3b7Ab47c"
+      country_pool_redemption_epoch_cn_address: "0x712050e4b1517C3f3ab39B32Cabb70CC0E1C0829"
+      country_pool_ledger_pilot_address: "0x63bd7d5ee5c5dde707e5e65303f3876267c78e97"
+    env_to_registry:
+      GOVERNANCE_TOKEN_ADDRESS: governance_token_address
+      GOVERNOR_ADDRESS: governor_address
+      TIMELOCK_ADDRESS: timelock_address
+      ESCROW_FACTORY_ADDRESS: escrow_factory_address
+      FEE_ROUTER_ADDRESS: fee_router_address
+      REGION_STEWARD_STAKE_POOL_ADDRESS: region_steward_stake_pool_address
+      COUNTRY_POOL_REDEMPTION_EPOCH_CN_ADDRESS: country_pool_redemption_epoch_cn_address
+      COUNTRY_POOL_LEDGER_PILOT_ADDRESS: country_pool_ledger_pilot_address
+    notes: |
+      部署后填 addresses.* 并同步根 .env · 禁止在 R-01/R-02/R-03 未清零前 broadcast。
+      见 docs/runbook/TT-PHASE2-CHAIN-DEPLOYMENT-GATE.md
+
+  testnet_template:
+    chain_id: null
+    region_steward_stake_pool_address: null
+    country_pool_redemption_epoch_cn_address: null
+    notes: "deprecated alias — use environments.sepolia"

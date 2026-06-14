@@ -8,17 +8,22 @@ import MePageBackground from "@/components/me/MePageBackground";
 import { MeGuideRoleBadge } from "@/components/me/MeGuideRoleBadge";
 import MePageSkeleton from "@/components/me/MePageSkeleton";
 import GuideRegistrationStatusBanner from "@/components/guide/GuideRegistrationStatusBanner";
-import MeTrustSection from "@/components/me/MeTrustSection";
+import GuideWorkbenchTrustSummaryCard from "@/components/guide/GuideWorkbenchTrustSummaryCard";
 import { FOCUS_RING } from "@/components/me/constants";
-import { parseIdentitySlotsFromMe } from "@/lib/meIdentitySlots";
 import { parseMeTrustFromMeResponse } from "@/lib/meTrust";
 import { TT_ME_GUIDE_ROLE_BADGE } from "@/lib/me/meGuideRoleBadgeL5";
-import { userIsGuide } from "@/lib/meRoleDisplay";
-import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import { traveltrustExperienceL5ShellDataAttrs } from "@/lib/traveltrustHomepageFunnelL5";
 import GuideWorkbenchInboxCard from "@/components/guide/GuideWorkbenchInboxCard";
 import type { GuideDashboardPageViewModel } from "./useGuideDashboardPage";
 import { useGuideWorkbenchInbox } from "./useGuideWorkbenchInbox";
+import {
+  guideHasReceptionHistory,
+  GUIDE_WORKSPACE_OPS_SCOPE_MARKER,
+  resolveGuideInboxEmptyGuidance,
+  shouldShowGuideInboxEmptyState,
+  shouldShowGuideRegistrationBanner,
+  shouldShowGuideWorkbenchTrustAnomaly,
+} from "@/lib/guide/guideWorkbenchWorkspaceL5";
 
 export function GuideDashboardPageMain(props: GuideDashboardPageViewModel) {
   const {
@@ -82,13 +87,6 @@ export function GuideDashboardPageMain(props: GuideDashboardPageViewModel) {
                 {t("guide_dashboard_link_me")}
               </Link>
             </div>
-            <ProductCrossNav
-              ariaLabelKey="guide_dashboard_relatedNav_aria"
-              showGuides
-              className="pt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-meta text-slate-300"
-              linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 font-medium motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
-              separatorClassName="text-slate-500"
-            />
           </div>
         </div>
       </main>
@@ -107,18 +105,29 @@ export function GuideDashboardPageMain(props: GuideDashboardPageViewModel) {
     typeof stats?.period_expected_earnings === "number" ? stats.period_expected_earnings : 0;
   const periodSettledOrdersCount =
     typeof stats?.period_settled_orders_count === "number" ? stats.period_settled_orders_count : 0;
-
+  const hasReceptionHistory = guideHasReceptionHistory({ ordersGuided, completedCount });
+  const showInboxEmpty = shouldShowGuideInboxEmptyState(workbenchInbox, {
+    ordersLoading: inboxOrdersLoading,
+    ordersError: inboxOrdersError,
+    guideHasReceptionHistory: hasReceptionHistory,
+  });
+  const showTrustAnomaly =
+    trustSummary != null && shouldShowGuideWorkbenchTrustAnomaly(trustSummary);
+  const showRegBanner =
+    isGuide && trustSummary != null && shouldShowGuideRegistrationBanner(trustSummary);
+  const inboxEmptyGuidance = resolveGuideInboxEmptyGuidance({ orderTakingBlocked: false });
   return (
     <main
       className="min-h-screen relative overflow-hidden bg-ink-900"
       aria-label={t("guide_dashboard_title")}
+      data-tt-guide-workspace-ops={GUIDE_WORKSPACE_OPS_SCOPE_MARKER}
       {...traveltrustExperienceL5ShellDataAttrs("guide")}
       data-tt-guide-workspace-page="1"
     >
       <MePageBackground />
       <div className="relative z-10 max-w-3xl mx-auto px-3 py-6 sm:px-4 sm:py-8">
-        {isGuide && trustSummary != null ? (
-          <GuideRegistrationStatusBanner trust={trustSummary} t={t} onRefresh={() => void loadMe({ force: true })} />
+        {showRegBanner ? (
+          <GuideRegistrationStatusBanner trust={trustSummary!} t={t} onRefresh={() => void loadMe({ force: true })} />
         ) : null}
         <header className="rounded-[var(--radius-md)] border border-cyan-400/40 bg-ink-800/60 backdrop-blur-md px-4 py-4 sm:px-6 sm:py-5 mb-4 sm:mb-6 shadow-scifi-banner-strong">
           <h1 className="text-h2 font-bold bg-gradient-to-r from-ref-cyan via-ref-sun to-ref-coral bg-clip-text text-transparent">
@@ -140,18 +149,13 @@ export function GuideDashboardPageMain(props: GuideDashboardPageViewModel) {
             ordersError={inboxOrdersError}
             onRetry={retryInbox}
             nextOrderListItem={nextOrderItem}
+            showInboxEmpty={showInboxEmpty}
+            inboxEmptyGuidance={inboxEmptyGuidance}
           />
         ) : null}
 
-        {user && trustSummary != null ? (
-          <MeTrustSection
-            t={t}
-            trust={trustSummary}
-            showGuideRegisterLink={!userIsGuide(user)}
-            hideGuideRegistrationRow={isGuide}
-            identitySlots={mePayload ? parseIdentitySlotsFromMe(mePayload) : undefined}
-            onTrustRefresh={() => void loadMe({ force: true })}
-          />
+        {showTrustAnomaly ? (
+          <GuideWorkbenchTrustSummaryCard t={t} trust={trustSummary!} />
         ) : null}
 
         {!isGuide ? (
@@ -198,47 +202,8 @@ export function GuideDashboardPageMain(props: GuideDashboardPageViewModel) {
               avgScore={avgScore}
               reviewsWritten={reviewsWritten}
             />
-            <section className="rounded-[var(--radius-md)] border border-slate-600/60 bg-ink-800/50 backdrop-blur-md px-4 py-4 sm:px-5 sm:py-4 mb-6">
-              <h2 className="text-meta text-slate-300 mb-3">{t("guide_dashboard_quick_links")}</h2>
-              <div className="flex flex-wrap gap-2">
-                <Link
-                  href="/market"
-                  className={`rounded-full border border-cyan-400/50 bg-cyan-500/10 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/20 motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
-                >
-                  {t("header_market")}
-                </Link>
-                <Link
-                  href="/orders"
-                  className={`rounded-full border border-cyan-400/50 bg-cyan-500/10 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-cyan-300 hover:text-cyan-100 hover:bg-cyan-500/20 motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
-                >
-                  {t("nav_orders")}
-                </Link>
-                <Link
-                  href="/community"
-                  className={`rounded-full border border-fuchsia-400/50 bg-fuchsia-500/10 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-fuchsia-300 hover:text-fuchsia-100 hover:bg-fuchsia-500/20 motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
-                >
-                  {t("header_community")}
-                </Link>
-                <Link
-                  href="/me/settings/profile"
-                  className={`rounded-full border border-slate-500/60 bg-ink-700/60 px-3 py-2 min-h-[44px] inline-flex items-center justify-center text-meta text-slate-300 hover:bg-ink-600/60 motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
-                >
-                  {t("me_title")}
-                </Link>
-              </div>
-            </section>
           </>
         )}
-
-        <footer className="mt-8 pt-6 border-t border-slate-700/50">
-          <ProductCrossNav
-            ariaLabelKey="guide_dashboard_relatedNav_aria"
-            showGuides
-            className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-meta text-slate-300"
-            linkClassName={`inline-flex min-h-[44px] items-center justify-center text-cyan-300 hover:text-cyan-100 font-medium motion-sub motion-reduce:transition-none ${FOCUS_RING}`}
-            separatorClassName="text-slate-500"
-          />
-        </footer>
       </div>
     </main>
   );

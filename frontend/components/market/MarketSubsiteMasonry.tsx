@@ -38,6 +38,8 @@ type Props = {
   onListingOpen?: (listingId: string) => void;
   /** 列表角标 i18n key：`demo` vs **`postgres_catalog`** 目录 */
   badgeKey?: string;
+  /** 工作台/设置预览：只展示卡片，不可点击跳转 */
+  previewOnly?: boolean;
 };
 
 const D = TT_MARKETING_MARKET_DARK_PATH;
@@ -61,6 +63,7 @@ function MarketSubsiteMasonry({
   extraQuery,
   onListingOpen,
   badgeKey = "market_subsite_masonry_demo_badge",
+  previewOnly = false,
 }: Props) {
   const { t } = useTranslation();
   const label = t(listLabelKey);
@@ -124,18 +127,24 @@ function MarketSubsiteMasonry({
                   <span className="truncate text-meta font-medium text-slate-200/95">{item.footer}</span>
                   {item.meta ? <span className={`shrink-0 tabular-nums ${D.trustTokenPill}`}>{item.meta}</span> : null}
                 </div>
-                <span
-                  className={`${touchTargetLink44Classes} ${TT_MARKETING_MARKET_DARK_PATH.masonryCtaLink} ${travelFocusRingOffset2Classes}`}
-                >
-                  {t("market_subsite_card_view_detail")}
-                </span>
+                {!previewOnly ? (
+                  <span
+                    className={`${touchTargetLink44Classes} ${TT_MARKETING_MARKET_DARK_PATH.masonryCtaLink} ${travelFocusRingOffset2Classes}`}
+                  >
+                    {t("market_subsite_card_view_detail")}
+                  </span>
+                ) : null}
               </div>
             </>
           );
 
           return (
             <li key={item.listingId} className="mb-4 break-inside-avoid">
-              {externalHref ? (
+              {previewOnly ? (
+                <div className={cardFrame} data-tt-market-masonry-preview-only="1">
+                  {cardInner}
+                </div>
+              ) : externalHref ? (
                 <Link href={externalHref} className={`${cardFrame} ${linkRing}`}>
                   {cardInner}
                 </Link>

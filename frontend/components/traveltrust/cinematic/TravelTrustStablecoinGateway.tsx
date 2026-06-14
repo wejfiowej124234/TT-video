@@ -177,21 +177,32 @@ export function TravelTrustStablecoinGateway() {
             </motion.div>
           </label>
 
-          <motion.button
-            type="button"
-            onClick={() =>
-              setPayStable((s) => {
-                const next = traveltrustCyclePayStablecoin(s);
-                return liquidityContract.pay_stablecoins.includes(next) ? next : s;
-              })
-            }
-            className="mx-auto flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-ref-sun/32 bg-ref-sun/10 text-ref-sun transition hover:bg-ref-sun/20 motion-sub motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50"
-            aria-label={t("traveltrust_liquidity_flip")}
-            animate={reduceMotion ? undefined : { rotate: payStable === "USDC" ? 0 : TT_STABLECOIN_GATEWAY_L5.flipButtonRotate }}
-            transition={{ duration: TT_STABLECOIN_GATEWAY_L5.flipButtonDuration, ease: TT_L5_MOTION_EASE }}
-          >
-            ⇄
-          </motion.button>
+          {liquidityContract.pay_stablecoins.length > 1 ? (
+            <motion.button
+              type="button"
+              onClick={() =>
+                setPayStable((s) => {
+                  const next = traveltrustCyclePayStablecoin(s);
+                  return liquidityContract.pay_stablecoins.includes(next) ? next : s;
+                })
+              }
+              className="mx-auto flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-ref-sun/32 bg-ref-sun/10 text-ref-sun transition hover:bg-ref-sun/20 motion-sub motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50"
+              aria-label={t("traveltrust_liquidity_flip")}
+              animate={
+                reduceMotion ? undefined : { rotate: payStable === "USDC" ? 0 : TT_STABLECOIN_GATEWAY_L5.flipButtonRotate }
+              }
+              transition={{ duration: TT_STABLECOIN_GATEWAY_L5.flipButtonDuration, ease: TT_L5_MOTION_EASE }}
+            >
+              ⇄
+            </motion.button>
+          ) : (
+            <div
+              className="mx-auto flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-ink-200/40 bg-ink-900/20 text-meta text-slate-500"
+              aria-hidden
+            >
+              →
+            </div>
+          )}
 
           <label className="block w-full">
             <span className={TT_STABLECOIN_GATEWAY_L5.fieldLabelClass}>{t("traveltrust_liquidity_to")}</span>

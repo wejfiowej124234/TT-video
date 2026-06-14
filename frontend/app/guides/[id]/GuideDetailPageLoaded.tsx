@@ -86,6 +86,8 @@ import {
 
 } from "./guideDetailPageConstants";
 
+import { GuideIdentityStakeTrustBadge } from "@/components/guide/GuideIdentityStakeTrustBadge";
+
 import type { GuideDetailShape } from "./guideDetailPageTypes";
 
 
@@ -351,6 +353,10 @@ export function GuideDetailPageLoaded({
                         {t("guide_detail_didVerified")}
 
                       </span>
+
+                      {guide.stake_amount?.trim() ? (
+                        <GuideIdentityStakeTrustBadge stakeAmount={guide.stake_amount.trim()} />
+                      ) : null}
 
                     </div>
 

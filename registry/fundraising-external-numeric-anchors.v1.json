@@ -1,0 +1,22 @@
+{
+  "release": "1.3",
+  "description": "Maintainer-only traceability: every percentage in listed investor files must appear in that file's allowlist; required_snippets must be present. spec_ssot is not shown to investors.",
+  "spec_ssot_index": {
+    "fee-router-layer1": "docs/spec/08-4-附录-收益流闭环图-FeeRouter-Target.md",
+    "fee-router-json": "crates/api/src/routes/governance_doc_reference.rs"
+  },
+  "percentage_allowlists": {
+    "docs/fundraising/external/06-Whitepaper.md": ["45%", "55%", "100%"],
+    "docs/fundraising/external/en/06-Whitepaper.md": ["45%", "55%", "100%"]
+  },
+  "required_snippets": [
+    {
+      "note": "National bucket vs global pool illustration; must stay aligned to protocol economics SSOT.",
+      "each_path_must_contain_all": ["45%", "55%"],
+      "paths": [
+        "docs/fundraising/external/06-Whitepaper.md",
+        "docs/fundraising/external/en/06-Whitepaper.md"
+      ]
+    }
+  ]
+}

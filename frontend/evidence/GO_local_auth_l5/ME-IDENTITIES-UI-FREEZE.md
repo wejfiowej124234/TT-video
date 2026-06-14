@@ -2,7 +2,7 @@
 
 **阶段：① 本地** — 多重身份 Hub 为 **UI SSOT**；**不**表示 ② 测试网、③ 生产 GO；**非**五主路由冻结范围。
 
-**互指：** [本目录 README](../../app/me/identities/README.md) · [社区资料 `/community/me`](../../app/community/me/README.md) · [账户导航命名 P3](./ACCOUNT-NAV-NAMING-P3.md) · [Auth L5 族](../GO_local_auth_l5/README.md) · [顶栏 utility 下拉 L5](../GO_local_auth_l5/HEADER-UTILITY-MENU-L5-FREEZE.md) · [登录 UI 冻结](../GO_local_auth_l5/AUTH-LOGIN-UI-FREEZE.md) · [注册 UI 冻结](../GO_local_auth_l5/AUTH-REGISTER-UI-FREEZE.md)
+**互指：** [本目录 README](../../app/me/identities/README.md) · [IA 收口任务清单](./MULTI-IDENTITY-IA-CLOSURE-TASK-LIST.md) · [企业级审计 100/100 ①](./MULTI-IDENTITY-IA-ENTERPRISE-AUDIT.md) · [社区资料 `/me/settings/profile`](../../app/me/settings/profile/README.md) · [账户导航命名 P3](./ACCOUNT-NAV-NAMING-P3.md) · [Auth L5 族](../GO_local_auth_l5/README.md) · [顶栏 utility 下拉 L5](../GO_local_auth_l5/HEADER-UTILITY-MENU-L5-FREEZE.md)
 
 ---
 
@@ -12,25 +12,33 @@
 |----|------|
 | **路由** | `/me/identities` |
 | **视觉族** | Auth L5 同族 · `data-tt-auth-visual="l5"` · `data-tt-me-identities-l5="1"` |
-| **冻结日** | **2026-05-26** |
+| **冻结日** | **2026-05-26**（IA 数据链收口 **2026-06-12** · 见任务清单） |
 | **顶栏** | `isAuthL5DarkHeaderPath` → authL5 utility 胶囊 + premium 深顶栏 |
 | **机读** | `data-tt-me-identities-ui-frozen="1"` · `meIdentitiesUiFreeze` **绿集必过** |
 
-**默认禁止：** Console 浅壳（`bg-bg-main` / 白卡）、`ProductCrossNav` 蓝链、cyan/market  chrome、删 `AuthL5PageBackdrop` / 玻璃卡层次。
+**默认禁止：** Console 浅壳（`bg-bg-main` / 白卡）、`ProductCrossNav` 蓝链、cyan/market chrome、删 `AuthL5PageBackdrop` / 玻璃卡层次。
 
 ---
 
-## 页面结构锁（不得重排）
+## 页面结构锁（不得重排 · 2026-06-12 对拍）
 
 1. `<main>` · `TT_ME_IDENTITIES_L5.pageShell` · `meIdentitiesL5MainDataAttrs(true)`
 2. `AuthL5PageBackdrop`
-3. **Header**：eyebrow · **`titleLogin` 同级渐变 `h1`** · 副标题
-4. **旅行者 callout**（`auth-l5-callout-surface` · 注册/登录链）
-5. **申请网格区**（`gridHalo` + 2×2 `MeIdentitiesL5IdentityCard`）
-6. 底栏入驻/社区资料链（`nav_community_profile` → `/community/me`）
-7. **`AuthL5CrossNavFooter`**
+3. **Header**：eyebrow · **`titleLogin` 渐变 `h1`** · 副标题
+4. **能力区** `me_identities_capabilities_section_title`：旅行者 callout + 收购能力卡
+5. **经营身份区** `me_identities_operator_section_title` · **`me_identities_operator_section_hint`** · **纯旅行者 `<details>` 折叠**（`meIdentitiesHubOperatorSectionDefaultOpen`）· `gridHalo` + 商家/主理人/向导 `MeIdentitiesL5IdentityCard`（CTA **仅** `deriveMeIdentitiesCoreCardView` · 禁止 slot 覆盖）
+6. **身份资料区** `MeIdentitiesProfileLinksNav`（**仅** active/role · **L5 横向媒体行** 左通高 cover · 右文案 · 非纵卡小 icon）
+7. **页脚说明** `me_identities_hub_footer_note` + 链 `/me/settings/profile`（社区资料）
+8. **`AuthL5CrossNavFooter`**
 
 **段级态：** `loading.tsx` → `MeIdentitiesRouteLoading` · `error.tsx` → `MeIdentitiesRouteError`（均 L5 暗壳）。
+
+**准入深链（数据链 · 非 layout）：**
+
+| 身份 | 待付费/确认 | SSOT |
+|------|-------------|------|
+| 商家 | `/me/onboarding?role=provider&from=identities_hub` | Console 浅色 |
+| 主理人 | `/governance?view=region&from=identities_hub#steward-b-track-admission` | 工作台 A 轨 · [`stewardAdmissionNav.ts`](../../lib/steward/stewardAdmissionNav.ts) |
 
 ---
 
@@ -40,22 +48,12 @@
 |------|------|
 | `page.tsx` | 页身 SSOT |
 | `layout.tsx` | metadata |
-| `loading.tsx` | L5 骨架 |
-| `error.tsx` | L5 错误壳 |
+| `loading.tsx` / `error.tsx` | L5 段态 |
 | `README.md` | 路由读序 |
 | `meIdentitiesPage.contract.test.ts` | Hub 链路契约 |
-| `meIdentityP2Settings.contract.test.ts` | P2 四轨 settings 契约 |
+| `meIdentityP2Settings.contract.test.ts` | P2 四轨 settings |
 
-**P2 settings 子路由（2026-06-10 · 数据链 only · 非 Hub layout）：** 见 [IDENTITY-CENTER-PHASE2-FREEZE](./IDENTITY-CENTER-PHASE2-FREEZE.md)
-
-| 子目录 | 路由 |
-|--------|------|
-| `guide/settings/` | `/me/identities/guide/settings` |
-| `merchant/settings/` | `/me/identities/merchant/settings` |
-| `region-steward/settings/` | `/me/identities/region-steward/settings` |
-| `acquisition/settings/` | `/me/identities/acquisition/settings` |
-
-**共享组件 / token：** `lib/me/meIdentitiesL5.ts` · `components/me/MeIdentitiesL5IdentityCard.tsx` · `components/me/identitySettings/*` · `MeIdentitiesRouteLoading.tsx` · `MeIdentitiesRouteError.tsx` · `AuthL5CrossNavFooter` · `globals.css` `[data-tt-auth-visual="l5"]` 块。
+**P2 settings 子路由：** 见 [IDENTITY-CENTER-PHASE2-FREEZE](./IDENTITY-CENTER-PHASE2-FREEZE.md)
 
 ---
 
@@ -64,10 +62,12 @@
 ```bash
 cd frontend
 npm run test:i18n:ci
-npm run test -- accountNavNamingP3 meIdentitiesUiFreeze meIdentityP2Settings meIdentitiesL5 meIdentitiesPage uiSystem --run
+npm run test -- meIdentitiesIaClosure accountNavNamingP3 meIdentitiesUiFreeze meIdentityP2Settings meIdentitiesL5 meIdentitiesPage uiSystem --run
+bash scripts/dev/smoke-multi-identity-ia-closure-local.sh   # 仓库根
+PLAYWRIGHT_MULTI_IDENTITY_IA=1 bash scripts/dev/smoke-multi-identity-ia-closure-local.sh  # 可选 E2E
 ```
 
-**P3 命名（2026-05-27）：** Hub 标题 `me_identities_hub_title`；底栏回链 `nav_community_profile` → `/community/me`（社区资料）；见 [ACCOUNT-NAV-NAMING-P3](./ACCOUNT-NAV-NAMING-P3.md)。
+**P3 命名：** Hub `me_identities_hub_title` · 顶栏 profile strip / 页脚 → **`/me/settings/profile`**（`nav_community_profile`）· 见 [ACCOUNT-NAV-NAMING-P3](./ACCOUNT-NAV-NAMING-P3.md)。
 
 ---
 
@@ -75,10 +75,8 @@ npm run test -- accountNavNamingP3 meIdentitiesUiFreeze meIdentityP2Settings meI
 
 | 允许 | 禁止 |
 |------|------|
-| 各身份 **href / returnUrl** 链路、i18n 文案 | 删旅行者 callout 或改回 3 卡 Console 布局 |
-| 卡片 **描述**诚实化（非改壳） | `titleCompact` 顶替 `titleLogin` |
-| **`GET /me` `identity_slots` 状态徽章**（非伪造列表） | 去掉 `gridHalo` / `auth-l5-callout-surface` |
-| **P2 settings 子页** 字段/API/i18n（见 [IDENTITY-CENTER-PHASE2-FREEZE](./IDENTITY-CENTER-PHASE2-FREEZE.md)） | **新增身份体系产品功能**（P3 switcher 单独立项） |
-| 契约对齐真值 | 未跑绿集的视觉 diff |
+| href / returnUrl / i18n / 状态徽章（`GET /me`） | 删能力区/经营区分区或改回单一 2×2 网格 |
+| P2 settings 子页数据链 | 顶栏身份 switcher（**②** 单独立项） |
+| 契约对拍 | 未跑绿集的 layout/token 回流 |
 
-**未纳入本冻结：** `/auth/register?role=*` 见 [AUTH-REGISTER-UI-FREEZE](./AUTH-REGISTER-UI-FREEZE.md)；**`/guide/register`** 见 [GUIDE-REGISTER-UI-FREEZE](./GUIDE-REGISTER-UI-FREEZE.md)（2026-05-26 三步 L5 收口）；**`/market/acquisition`** **数据链 / 门闸 / 烟测** 见 **[`app/market/acquisition/README.md`](../../app/market/acquisition/README.md)**（**PD-009 · ①** · **[acquisition-publish-trust-rules §8.1](../../../docs/spec/artifacts/acquisition-publish-trust-rules.v1.md#81-第一阶段--本地--closed2026-05-27)**）；Hub 收购卡片 **「进入子站」** CTA 与 **`/me/identities`** 回链 **仅允许** 数据链路变更（**非** layout lock 回流）。
+**未纳入本冻结：** `/auth/register?role=*` · `/guide/register` · `/market/acquisition` — 各 README + 对应 FREEZE。

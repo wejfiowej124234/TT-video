@@ -89,6 +89,12 @@ export async function refreshBearerSessionInPage(
   );
 }
 
+function isTransientBrowserGotoError(message: string): boolean {
+  return /ERR_CONNECTION_CLOSED|ERR_CONNECTION_RESET|ERR_NETWORK_CHANGED|ERR_HTTP2_PROTOCOL_ERROR|ERR_SOCKET_NOT_CONNECTED|ERR_INTERNET_DISCONNECTED|ERR_SSL_PROTOCOL_ERROR|ETIMEDOUT|ECONNRESET|NS_ERROR_NET_RESET/i.test(
+    message,
+  );
+}
+
 export async function gotoWithBearerSession(
   page: Page,
   path: string,
@@ -111,10 +117,24 @@ export async function gotoWithBearerSession(
     },
     [token, userId] as [string, string],
   );
-  await page.goto(path, {
-    waitUntil: "domcontentloaded",
-    timeout: Number(process.env.PLAYWRIGHT_GOTO_TIMEOUT_MS ?? 120_000),
-  });
+  const gotoTimeout = Number(process.env.PLAYWRIGHT_GOTO_TIMEOUT_MS ?? 120_000);
+  const maxAttempts = Math.max(
+    1,
+    Number.parseInt(process.env.PLAYWRIGHT_GOTO_RETRY_ATTEMPTS ?? "1", 10) || 1,
+  );
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      await page.goto(path, { waitUntil: "domcontentloaded", timeout: gotoTimeout });
+      return;
+    } catch (e) {
+      lastError = e;
+      const msg = e instanceof Error ? e.message : String(e);
+      if (attempt >= maxAttempts || !isTransientBrowserGotoError(msg)) throw e;
+      await page.waitForTimeout(Math.min(2500 * attempt, 12_000));
+    }
+  }
+  throw lastError;
 }
 
 export type BearerSessionCredentials = { token: string; userId?: string };

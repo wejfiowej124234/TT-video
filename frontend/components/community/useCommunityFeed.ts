@@ -440,11 +440,19 @@ export function useCommunityFeed(options?: { initialSnapshot?: CommunityFeedInit
     if (!isLoggedIn || !feedFromApi) return;
     setLikedPostIds((prev) => {
       const next = new Set(prev);
+      let changed = false;
       for (const p of apiPosts) {
-        if (p.likedByMe === true) next.add(p.id);
-        else if (p.likedByMe === false) next.delete(p.id);
+        if (p.likedByMe === true) {
+          if (!next.has(p.id)) {
+            next.add(p.id);
+            changed = true;
+          }
+        } else if (p.likedByMe === false && next.has(p.id)) {
+          next.delete(p.id);
+          changed = true;
+        }
       }
-      return next;
+      return changed ? next : prev;
     });
   }, [apiPosts, isLoggedIn, feedFromApi]);
 
@@ -454,6 +462,9 @@ export function useCommunityFeed(options?: { initialSnapshot?: CommunityFeedInit
     const lm = detailPost.likedByMe;
     if (lm !== true && lm !== false) return;
     setLikedPostIds((prev) => {
+      const has = prev.has(detailPost.id);
+      if (lm && has) return prev;
+      if (!lm && !has) return prev;
       const next = new Set(prev);
       if (lm) next.add(detailPost.id);
       else next.delete(detailPost.id);
@@ -466,11 +477,19 @@ export function useCommunityFeed(options?: { initialSnapshot?: CommunityFeedInit
     if (!isLoggedIn || !feedFromApi) return;
     setCollectedPostIds((prev) => {
       const next = new Set(prev);
+      let changed = false;
       for (const p of apiPosts) {
-        if (p.collectedByMe === true) next.add(p.id);
-        else if (p.collectedByMe === false) next.delete(p.id);
+        if (p.collectedByMe === true) {
+          if (!next.has(p.id)) {
+            next.add(p.id);
+            changed = true;
+          }
+        } else if (p.collectedByMe === false && next.has(p.id)) {
+          next.delete(p.id);
+          changed = true;
+        }
       }
-      return next;
+      return changed ? next : prev;
     });
   }, [apiPosts, isLoggedIn, feedFromApi]);
 
@@ -479,6 +498,9 @@ export function useCommunityFeed(options?: { initialSnapshot?: CommunityFeedInit
     const cm = detailPost.collectedByMe;
     if (cm !== true && cm !== false) return;
     setCollectedPostIds((prev) => {
+      const has = prev.has(detailPost.id);
+      if (cm && has) return prev;
+      if (!cm && !has) return prev;
       const next = new Set(prev);
       if (cm) next.add(detailPost.id);
       else next.delete(detailPost.id);

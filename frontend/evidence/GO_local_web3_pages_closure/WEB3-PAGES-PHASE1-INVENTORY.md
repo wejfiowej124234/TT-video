@@ -22,7 +22,7 @@
 | 8 | `/escrow/[id]/rate` | 行程评分 | **未收口** | 53-S8 维护 | 无独立 freeze 绿集 | ⚠️ 同上 |
 | 9 | `/orders` · `/orders/new` | 订单列表 / 新建 | L5 维护（非五主） | [`GO_local_orders_l5`](../GO_local_orders_l5/README.md) | `run-orders-l5-green.sh` | ✅ 2026-06-03 |
 | 10 | `/pay` | 支付 Hub · mock-pay / 钱包 | **Phase ① 收口** [`PAY-HUB-PHASE1-CLOSURE`](./PAY-HUB-PHASE1-CLOSURE.md) | 同左 | orders 绿集 · `payHubL5` | ✅ 2026-06-03 |
-| 11 | `/staking` | 向导/商家质押 · Registry | **Phase ① 收口** [`STAKING-PHASE1-CLOSURE`](./STAKING-PHASE1-CLOSURE.md) | 同左 | 结构对拍 · 无独立 vitest 闸 | ✅ 文档收口 |
+| 11 | `/staking` | 向导/商家质押 · Registry | **Phase ① 收口** [`STAKING-PHASE1-CLOSURE`](./STAKING-PHASE1-CLOSURE.md) | 同左 | `stakingPageL5.contract` · Anvil smoke | ✅ 2026-06-12 |
 | 12 | `/governance` | Hub | **数据链维护**（非五主禁改表外） | [`GOVERNANCE-PAGES-PHASE1-CLOSURE`](./GOVERNANCE-PAGES-PHASE1-CLOSURE.md) | `governance-matrix-local-gate.sh` | ✅ 2026-06-03 |
 | 13 | `/governance/proposals` · `[id]` | 提案列表/详情 | 同上 | 同上 | C-GOV-002/003 | ✅ |
 | 14 | `/governance/delegate` | 委托 | 同上 | 同上 | C-GOV-005 | ✅ |

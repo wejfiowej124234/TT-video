@@ -249,6 +249,7 @@ function toGuideCardItem(g: unknown): GuideCardItem {
     stake_amount: row?.stake_amount != null ? String(row.stake_amount) : undefined,
     hourly_rate: row?.hourly_rate != null ? String(row.hourly_rate) : undefined,
     hourly_currency: row?.hourly_currency as string | undefined,
+    public_title: (row?.public_title as string | null) ?? null,
     avatar_url: (row?.avatar_url as string | null) ?? null,
     status: row?.status as string | undefined,
     created_at: row?.created_at as string | undefined,

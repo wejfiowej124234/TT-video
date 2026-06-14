@@ -10,7 +10,7 @@ describe("admin permissions DB prep (①)", () => {
     expect(routes).toContain("userConsoleRole");
     expect(routes).toContain("rbacRouteMatrix");
     const rbac = readFileSync(join(REPO, "crates/api/src/routes/admin/admin_rbac.rs"), "utf8");
-    expect(rbac).toContain("admin-rbac-v3-db-prep");
+    expect(rbac).toContain("admin-rbac-v4-cms-ops-growth-2026-06-07");
     expect(rbac).toContain("put_admin_user_console_role");
     expect(rbac).toContain("post_admin_user_console_role_change_request");
     expect(rbac).toContain("console_role_use_approval_flow");

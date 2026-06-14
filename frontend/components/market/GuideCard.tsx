@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, type MouseEvent } from "react";
+import { memo, type KeyboardEvent, type MouseEvent } from "react";
 import { MarketGuideCover } from "@/components/market/MarketGuideCover";
 import { useTranslation } from "@/components/LocaleProvider";
 import type { GuideCardItem } from "@/lib/marketTypes";
@@ -12,6 +12,7 @@ import {
   formatGuideServiceTypeLabel,
 } from "@/lib/marketDisplayCopy";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
+import { GuideIdentityStakeTrustBadge } from "@/components/guide/GuideIdentityStakeTrustBadge";
 import { TT_MARKETING_BTN_MARKET_PRIMARY, TT_MARKETING_MARKET_DARK_PATH, TT_MARKETING_MARKET_L5_LIST_CARD_FRAME, TT_MARKETING_MARKET_L5_LIST_CARD_INNER } from "@/lib/marketingUi";
 
 /** P29 向导卡片：向导照片 + 收藏 + 预约向导/查看向导；28 玻璃态 + DID/时薪 */
@@ -26,9 +27,10 @@ function GuideCard({
   onToggleFavorite,
   glass,
   coverEager = false,
+  previewOnly = false,
 }: {
   guide: GuideCardItem;
-  onView: (id: string) => void;
+  onView?: (id: string) => void;
   onBookGuide?: (id: string) => void;
   /** Escrow 绑定向导模式：主按钮文案 */
   bookGuideLabelKey?: string;
@@ -36,6 +38,8 @@ function GuideCard({
   onToggleFavorite?: (id: string) => void;
   glass?: boolean;
   coverEager?: boolean;
+  /** 工作台/设置只读预览：无假按钮、不可点击 */
+  previewOnly?: boolean;
 }) {
   const { t } = useTranslation();
   const dash = t("ui_em_dash");
@@ -55,11 +59,15 @@ function GuideCard({
           .replace("{{currency}}", hourlyCurrencyLabel)
       : null;
   const hourlyDisplayGlass = hourlyLabel ?? (glass ? t("market_guide_hourly_on_request") : null);
-  const openDetail = () => onView(guide.id);
+  const stakeDisplay = guide.stake_amount?.trim() ? guide.stake_amount.trim() : null;
+  const openDetail = () => {
+    if (previewOnly || !onView) return;
+    onView(guide.id);
+  };
 
   const p = TT_MARKETING_MARKET_DARK_PATH;
   const articleClass = glass
-    ? `${TT_MARKETING_MARKET_L5_LIST_CARD_FRAME} ${p.cardInteractive} group`
+    ? `${TT_MARKETING_MARKET_L5_LIST_CARD_FRAME} ${previewOnly ? "" : p.cardInteractive} group`
     : "group rounded-[var(--radius-md)] border border-ink-200 bg-bg-console/95 backdrop-blur-sm shadow-soft overflow-hidden motion-sub transition-[transform,box-shadow] hover:-translate-y-1 hover:shadow-strong";
   const contentClass = glass ? `${p.cardBodyPadding} ${p.cardContentDivider}` : "p-4 space-y-3 bg-bg-console/95 backdrop-blur-sm";
   const titleClass = glass ? "text-body font-semibold text-slate-100" : "text-body font-semibold text-ink-900";
@@ -135,6 +143,7 @@ function GuideCard({
             </span>
             {t("guide_detail_didVerified")}
           </span>
+          {stakeDisplay ? <GuideIdentityStakeTrustBadge stakeAmount={stakeDisplay} size="sm" /> : null}
         </div>
         {glass && hourlyDisplayGlass ? (
           <p
@@ -162,6 +171,7 @@ function GuideCard({
             ))}
           </div>
         )}
+        {!previewOnly ? (
         <div className={`flex flex-wrap items-center gap-2 sm:gap-3 ${glass ? `${p.cardActionRow} ${borderClass}` : `pt-1 ${borderClass}`}`}>
           {onBookGuide && (
             <form
@@ -176,6 +186,7 @@ function GuideCard({
               </button>
             </form>
           )}
+          {onView ? (
           <form
             className="inline"
             onSubmit={(e) => {
@@ -187,7 +198,9 @@ function GuideCard({
               {t("guide_card_view")}
             </button>
           </form>
+          ) : null}
         </div>
+        ) : null}
       </div>
     </>
   );
@@ -196,15 +209,19 @@ function GuideCard({
     <article
       className={articleClass}
       aria-labelledby={`guide-title-${guide.id}`}
-      onClick={openDetail}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          openDetail();
-        }
-      }}
-      role="button"
-      tabIndex={0}
+      {...(previewOnly
+        ? { "data-tt-guide-card-preview": "1" }
+        : {
+            role: "button",
+            tabIndex: 0,
+            onClick: openDetail,
+            onKeyDown: (e: KeyboardEvent) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                openDetail();
+              }
+            },
+          })}
     >
       {glass ? <div className={TT_MARKETING_MARKET_L5_LIST_CARD_INNER}>{cardBody}</div> : cardBody}
     </article>

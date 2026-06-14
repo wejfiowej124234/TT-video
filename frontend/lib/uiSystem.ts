@@ -60,9 +60,19 @@ export function isOrdersDarkL5HeaderPath(pathname: string | null | undefined): b
   return isOrdersListDarkL5HeaderPath(pathname) || isOrdersNewDarkL5HeaderPath(pathname);
 }
 
-/** `/orders*` · `/escrow*` · `/pay*` · `/itinerary*` — 订单主链页身暖金暗壳 + 顶栏 cinematic 同族 */
+/** `/governance*` · Phase① 深色 L5 治理链（顶栏 + 四链 + utility 同源 `/orders` cinematic） */
+export function isGovernanceDarkL5HeaderPath(pathname: string | null | undefined): boolean {
+  const p = pathname ?? "";
+  return p === "/governance" || p.startsWith("/governance/");
+}
+
+/** `/orders*` · `/escrow*` · `/pay*` · `/itinerary*` · `/governance*` — 订单/治理主链 + 顶栏 cinematic 同族 */
 export function isOrderChainDarkL5HeaderPath(pathname: string | null | undefined): boolean {
-  return isOrdersDarkL5HeaderPath(pathname) || isProductConsoleL5UtilityPath(pathname);
+  return (
+    isOrdersDarkL5HeaderPath(pathname) ||
+    isProductConsoleL5UtilityPath(pathname) ||
+    isGovernanceDarkL5HeaderPath(pathname)
+  );
 }
 
 /** `/escrow` · `/pay` · `/itinerary` · 深色页身 + 顶栏 utility 须 authL5 玻璃下拉（非 Console 白菜单） */
@@ -97,12 +107,17 @@ const AUTH_L5_DARK_HEADER_PREFIXES = [
   "/me/settings",
   "/me/password",
   "/me/security",
-  "/guide/register",
-  "/provider/register",
+  "/me/onboarding",
+  "/me/publish",
+  /** 向导/商家工作台 + 入驻链 + 身份质押 · L0 四链 + authL5 utility 同源五主/Hub */
+  "/guide",
+  "/staking",
+  "/provider",
   "/steward/register",
+  "/trust",
 ] as const;
 
-/** `/auth/*` L5 暗壳：顶栏与 community/market premium 同族（勿落 Console 白条） */
+/** `/auth/*` · workspace operator · Hub/settings：L0 premium 深顶栏（勿落 Console 白条） */
 export function isAuthL5DarkHeaderPath(pathname: string | null | undefined): boolean {
   const p = pathname ?? "";
   return AUTH_L5_DARK_HEADER_PREFIXES.some((pre) => p === pre || p.startsWith(`${pre}/`));
@@ -124,8 +139,7 @@ export function isHeaderUtilityL5Path(pathname: string | null | undefined): bool
   if (isCommunityPremiumHeaderPath(p)) return true;
   if (isMarketDarkPremiumHeaderPath(p)) return true;
   if (p === "/" || p.startsWith("/traveltrust")) return true;
-  if (isOrdersDarkL5HeaderPath(p)) return true;
-  if (isProductConsoleL5UtilityPath(p)) return true;
+  if (isOrderChainDarkL5HeaderPath(p)) return true;
   const kind = headerSurfaceKindForPathname(p);
   return kind === "home" || kind === "dark";
 }
@@ -135,20 +149,22 @@ export function headerUtilityVariantForPathname(pathname: string | null | undefi
   return "light";
 }
 
-/** `/market*` · `/did-rank` · L0 premium 顶栏（V2 · 与 TT 社区目视同族；不含 `/community`） */
+/** `/market*` · `/did-rank` · `/guides*` · L0 premium 顶栏（V2 · 与 TT 社区目视同族；不含 `/community`） */
 export function isMarketDarkPremiumHeaderPath(pathname: string | null | undefined): boolean {
   const p = pathname ?? "";
   return (
     p === "/market" ||
     p.startsWith("/market/") ||
     p === "/did-rank" ||
-    p.startsWith("/did-rank/")
+    p.startsWith("/did-rank/") ||
+    p === "/guides" ||
+    p.startsWith("/guides/")
   );
 }
 
 /**
  * 由 pathname 解析 UI 分区（用于壳层、Storybook、审计脚本）。
- * `/orders`、`/pay`、`/escrow`、`/disputes`、`/governance` 等 → `console`。
+ * `/orders`、`/pay`、`/escrow`、`/governance` 等 → `console`（页身分区；L0 顶栏见 `isGovernanceDarkL5HeaderPath`）。
  */
 export function resolveUiZone(pathname: string | null | undefined): UiZone {
   const p = pathname ?? "";

@@ -1,0 +1,265 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "跳过主内容" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - link "TravelTrust" [ref=e6] [cursor=pointer]:
+          - /url: /traveltrust
+        - navigation [ref=e8]:
+          - link "定制旅行" [ref=e9] [cursor=pointer]:
+            - /url: /
+          - link "自由市场" [ref=e10] [cursor=pointer]:
+            - /url: /market
+          - link "排行榜" [ref=e11] [cursor=pointer]:
+            - /url: /did-rank
+          - link "TT社区" [ref=e12] [cursor=pointer]:
+            - /url: /community
+      - generic [ref=e13]:
+        - button "语言" [ref=e15] [cursor=pointer]:
+          - generic [ref=e16]: 中文
+          - img [ref=e17]
+        - button "连接钱包" [ref=e20] [cursor=pointer]:
+          - generic [ref=e21]: Wallet
+          - img [ref=e22]
+        - button "用户菜单，已开通身份：旅行者" [ref=e25] [cursor=pointer]:
+          - img [ref=e27]
+          - generic [ref=e29]: 用户
+          - img [ref=e30]
+  - main "选目的地，几分钟生成专属行程" [ref=e34]:
+    - generic [ref=e35]:
+      - generic [ref=e40]:
+        - paragraph [ref=e41]: 定制旅行·AI 规划 · 认证向导 · 社区灵感
+        - heading "选目的地，几分钟生成专属行程" [level=1] [ref=e42]
+        - paragraph [ref=e43]: 告别千篇一律的攻略：按你的偏好生成可预览的每日安排，并在自由市场对接认证向导——比传统平台更透明、可协商。
+        - paragraph [ref=e44]: 填写下方表单，点击「AI 生成行程」，预览将出现在本页下方；选好向导后再付款，费用锁定至行程结束。
+        - region "TravelTrust 能为你做什么" [ref=e45]:
+          - generic [ref=e46]:
+            - paragraph [ref=e47]: 你可以这样开始
+            - heading "定制旅行，从规划到出发" [level=2] [ref=e48]
+            - paragraph [ref=e49]: 三种方式开始你的下一次旅行——也可直接填写下方表单。
+          - list [ref=e50]:
+            - listitem [ref=e51]:
+              - article [ref=e52]:
+                - generic [ref=e55]:
+                  - heading "AI 行程规划" [level=3] [ref=e56]
+                  - paragraph [ref=e57]: 选目的地与偏好，一键生成可预览的行程草案。
+                  - link "开始规划" [ref=e58] [cursor=pointer]:
+                    - /url: "#form"
+            - listitem [ref=e59]:
+              - article [ref=e60]:
+                - generic [ref=e63]:
+                  - heading "认证向导" [level=3] [ref=e64]
+                  - paragraph [ref=e65]: 在自由市场挑选向导，沟通细节后下单。
+                  - link "浏览向导" [ref=e66] [cursor=pointer]:
+                    - /url: /market
+            - listitem [ref=e67]:
+              - article [ref=e68]:
+                - generic [ref=e71]:
+                  - heading "旅行灵感" [level=3] [ref=e72]
+                  - paragraph [ref=e73]: 看真实游记与官方精选，找到下一站灵感。
+                  - link "逛社区" [ref=e74] [cursor=pointer]:
+                    - /url: /community
+          - navigation "其他参与方式" [ref=e75]:
+            - paragraph [ref=e76]: 向导、商家或治理参与者？
+            - list [ref=e77]:
+              - listitem [ref=e78]:
+                - link "成为向导" [ref=e79] [cursor=pointer]:
+                  - /url: /auth/login?returnUrl=%2Fguide%2Fregister&pes_intent=guide_recruit
+              - listitem [ref=e80]:
+                - link "商家入驻" [ref=e81] [cursor=pointer]:
+                  - /url: /auth/register?returnUrl=%2Fprovider%2Fregister&pes_intent=merchant_onboard
+              - listitem [ref=e82]:
+                - link "参与治理" [ref=e83] [cursor=pointer]:
+                  - /url: /governance
+        - generic [ref=e84]:
+          - navigation "首页 Hero 辅助入口" [ref=e85]:
+            - link "寻找旅伴" [ref=e86] [cursor=pointer]:
+              - /url: /community
+            - link "浏览向导" [ref=e87] [cursor=pointer]:
+              - /url: /market
+            - link "为什么选择我们" [ref=e88] [cursor=pointer]:
+              - /url: /traveltrust
+          - navigation "首页 Hero 主链导航" [ref=e90]:
+            - link "自由市场" [ref=e91] [cursor=pointer]:
+              - /url: /market?days=5
+            - link "规划行程 (当前页)" [ref=e92] [cursor=pointer]:
+              - /url: "#form"
+              - text: 规划行程
+              - generic [ref=e93]: (当前页)
+            - link "认证向导" [ref=e94] [cursor=pointer]:
+              - /url: /guides
+            - link "了解 TravelTrust" [ref=e95] [cursor=pointer]:
+              - /url: /traveltrust
+        - form "选目的地，几分钟生成专属行程" [ref=e96]:
+          - group "国家（单选）" [ref=e97]:
+            - generic [ref=e98]: 国家（单选）
+            - group "国家（单选）" [ref=e99]:
+              - button "中国" [ref=e100] [cursor=pointer]
+              - button "日本" [ref=e101] [cursor=pointer]
+              - button "韩国" [ref=e102] [cursor=pointer]
+              - button "新加坡" [ref=e103] [cursor=pointer]
+              - button "泰国" [ref=e104] [cursor=pointer]
+              - button "阿联酋" [ref=e105] [cursor=pointer]
+              - button "美国" [ref=e106] [cursor=pointer]
+              - button "澳大利亚" [ref=e107] [cursor=pointer]
+              - button "法国" [ref=e108] [cursor=pointer]
+              - button "西班牙" [ref=e109] [cursor=pointer]
+          - generic [ref=e110]:
+            - generic [ref=e111]: 城市（必选 · 可多选）
+            - textbox "城市（必选 · 可多选）" [disabled] [ref=e112]:
+              - /placeholder: 请先选择国家
+          - generic [ref=e113]:
+            - generic [ref=e114]:
+              - generic [ref=e115]: 出行日期区间
+              - generic [ref=e116]:
+                - button "2026/06/16 － 2026/06/20" [ref=e117] [cursor=pointer]:
+                  - img [ref=e118]
+                  - generic [ref=e120]: 2026/06/16 － 2026/06/20
+                - generic [ref=e121]: 共 5 天
+            - generic [ref=e122]:
+              - generic [ref=e123]:
+                - generic [ref=e124]: 人数
+                - textbox "人数" [ref=e125]: "1"
+              - generic [ref=e126]:
+                - generic [ref=e127]: 房间数
+                - textbox "房间数" [ref=e128]: "1"
+              - generic [ref=e129]:
+                - generic [ref=e130]: 预算（美元）
+                - generic [ref=e131]:
+                  - generic [ref=e132]: $
+                  - textbox "预算（美元）" [ref=e133]:
+                    - /placeholder: "500"
+              - generic [ref=e134]:
+                - generic [ref=e135]: AI 生成行程
+                - button "AI 生成行程" [ref=e136] [cursor=pointer]:
+                  - img [ref=e137]
+            - paragraph [ref=e139]: 生成后可在下方预览每日安排；选向导与付款在订单页完成。
+          - group [ref=e140]:
+            - heading "行程偏好" [level=3] [ref=e141]
+            - generic [ref=e142]:
+              - generic [ref=e143]:
+                - generic [ref=e144]: 景点类型（可多选）
+                - generic [ref=e145]:
+                  - button "自然风光" [ref=e146] [cursor=pointer]
+                  - button "世界遗产" [ref=e147] [cursor=pointer]
+                  - button "主题乐园" [ref=e148] [cursor=pointer]
+                  - button "网红打卡" [ref=e149] [cursor=pointer]
+              - generic [ref=e150]:
+                - generic [ref=e151]:
+                  - generic [ref=e152]: 餐饮偏好（可多选）
+                  - generic [ref=e153]:
+                    - button "当地特色" [ref=e154] [cursor=pointer]
+                    - button "老字号" [ref=e155] [cursor=pointer]
+                    - button "人气餐厅" [ref=e156] [cursor=pointer]
+                    - button "高档餐饮" [ref=e157] [cursor=pointer]
+                - generic [ref=e158]:
+                  - generic [ref=e159]: 住宿档次（可多选）
+                  - generic [ref=e160]:
+                    - button "标准" [ref=e161] [cursor=pointer]
+                    - button "轻奢" [ref=e162] [cursor=pointer]
+                    - button "高端" [ref=e163] [cursor=pointer]
+      - contentinfo [ref=e165]:
+        - generic [ref=e166]:
+          - generic [ref=e167]:
+            - generic [ref=e168]:
+              - heading "关于" [level=3] [ref=e169]
+              - paragraph [ref=e170]: TravelTrust 帮助全球旅行者定制行程、选择认证向导；行程费用锁定至结束，平台不经手。
+              - link "了解更多" [ref=e171] [cursor=pointer]:
+                - /url: /traveltrust
+            - generic [ref=e172]:
+              - heading "产品" [level=3] [ref=e173]
+              - list [ref=e174]:
+                - listitem [ref=e175]:
+                  - link "TravelTrust 网络" [ref=e176] [cursor=pointer]:
+                    - /url: /traveltrust
+                - listitem [ref=e177]:
+                  - link "自由市场" [ref=e178] [cursor=pointer]:
+                    - /url: /market
+                - listitem [ref=e179]:
+                  - link "创建行程" [ref=e180] [cursor=pointer]:
+                    - /url: /itinerary/new
+                - listitem [ref=e181]:
+                  - link "我的订单" [ref=e182] [cursor=pointer]:
+                    - /url: /orders
+                - listitem [ref=e183]:
+                  - link "向导" [ref=e184] [cursor=pointer]:
+                    - /url: /guides
+                - listitem [ref=e185]:
+                  - link "TT 社区" [ref=e186] [cursor=pointer]:
+                    - /url: /community
+            - generic [ref=e187]:
+              - heading "账户" [level=3] [ref=e188]
+              - list [ref=e189]:
+                - listitem [ref=e190]:
+                  - link "登录" [ref=e191] [cursor=pointer]:
+                    - /url: /auth/login
+                - listitem [ref=e192]:
+                  - link "注册" [ref=e193] [cursor=pointer]:
+                    - /url: /auth/register
+                - listitem [ref=e194]:
+                  - link "社区资料" [ref=e195] [cursor=pointer]:
+                    - /url: /me/settings/profile
+            - generic [ref=e196]:
+              - heading "法律" [level=3] [ref=e197]
+              - list [ref=e198]:
+                - listitem [ref=e199]:
+                  - link "服务条款" [ref=e200] [cursor=pointer]:
+                    - /url: /terms
+                - listitem [ref=e201]:
+                  - link "隐私政策" [ref=e202] [cursor=pointer]:
+                    - /url: /privacy
+                - listitem [ref=e203]:
+                  - link "社区规范" [ref=e204] [cursor=pointer]:
+                    - /url: /terms/community-guidelines
+                - listitem [ref=e205]:
+                  - link "帮助" [ref=e206] [cursor=pointer]:
+                    - /url: /help
+                - listitem [ref=e207]:
+                  - link "建议与反馈" [ref=e208] [cursor=pointer]:
+                    - /url: /community/feedback
+            - generic [ref=e209]:
+              - heading "技术" [level=3] [ref=e210]
+              - generic "可信基建" [ref=e211]:
+                - generic "Polygon 链" [ref=e212]: Polygon
+                - generic "USDC 结算" [ref=e213]: USDC
+                - generic "WalletConnect" [ref=e214]
+                - generic "审计（规划中）" [ref=e215]: 审计
+              - list [ref=e216]:
+                - listitem [ref=e217]:
+                  - link "费路由（治理）" [ref=e218] [cursor=pointer]:
+                    - /url: /governance/fee-routes
+                - listitem [ref=e219]:
+                  - link "费路由自检" [ref=e220] [cursor=pointer]:
+                    - /url: /traveltrust#fee-router
+          - generic [ref=e221]:
+            - navigation "首页页脚主链相关入口" [ref=e222]:
+              - link "首页" [ref=e223] [cursor=pointer]:
+                - /url: /
+              - generic [ref=e224]: ·
+              - link "自由市场" [ref=e225] [cursor=pointer]:
+                - /url: /market
+              - generic [ref=e226]: ·
+              - link "我的订单" [ref=e227] [cursor=pointer]:
+                - /url: /orders
+              - generic [ref=e228]: ·
+              - link "行程付款" [ref=e229] [cursor=pointer]:
+                - /url: /pay
+              - generic [ref=e230]: ·
+              - link "向导" [ref=e231] [cursor=pointer]:
+                - /url: /guides
+              - generic [ref=e232]: ·
+              - link "帮助中心" [ref=e233] [cursor=pointer]:
+                - /url: /help
+              - generic [ref=e234]: ·
+              - link "信任中心" [ref=e235] [cursor=pointer]:
+                - /url: /trust
+            - paragraph [ref=e236]: © 2026 TravelTrust
+            - paragraph [ref=e237]: TravelTrust · 认证向导 · 行程有保障
+  - button "Open Next.js Dev Tools" [ref=e243] [cursor=pointer]:
+    - img [ref=e244]
+  - alert [ref=e247]
+```

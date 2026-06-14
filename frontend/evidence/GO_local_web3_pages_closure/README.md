@@ -16,7 +16,8 @@
 | [`WEB3-PAGES-PHASE1-INVENTORY.md`](./WEB3-PAGES-PHASE1-INVENTORY.md) | **全表** · 冻结态 · 绿集 · 诚实边界 |
 | **[`LANDING-MARKET-PAGES-CODE-SSOT.md`](./LANDING-MARKET-PAGES-CODE-SSOT.md)** | **`/` + 三页市场** 代码/UI/功能/设计 **真源** |
 | [`PAY-HUB-PHASE1-CLOSURE.md`](./PAY-HUB-PHASE1-CLOSURE.md) | `/pay` |
-| [`STAKING-PHASE1-CLOSURE.md`](./STAKING-PHASE1-CLOSURE.md) | `/staking` |
+| [`STAKING-PHASE1-CLOSURE.md`](./STAKING-PHASE1-CLOSURE.md) | `/staking` **①** |
+| [`STAKING-PHASE2-BACKLOG.md`](./STAKING-PHASE2-BACKLOG.md) | `/staking` **②** **STK-P2-001～010** · **③** **STK-P3-001～004** |
 | [`GOVERNANCE-PAGES-PHASE1-CLOSURE.md`](./GOVERNANCE-PAGES-PHASE1-CLOSURE.md) | `/governance/*` |
 | [`ESCROW-ONCHAIN-RATE-STATUS.md`](./ESCROW-ONCHAIN-RATE-STATUS.md) | 已上链 Escrow 壳 · `/escrow/[id]/rate`（**未 UI 冻结**） |
 | **[`WEB3-LANDING-MARKET-LOCAL-REMAINING.md`](./WEB3-LANDING-MARKET-LOCAL-REMAINING.md)** | **`/` + 三页市场** ① 剩余诚实清单 · ②/③ 索引 |

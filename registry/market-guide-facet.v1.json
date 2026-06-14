@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "schema": "market-guide-facet",
+  "description": "UI pill labels ↔ canonical API tokens for /market guide filters and POST /guides write path. TS: marketGuideFilterQuery.ts · Rust: chain_off/market_guide_filter.rs",
+  "languages": {
+    "中文": { "canonical": "zh", "match": ["中文", "zh", "chinese", "mandarin"] },
+    "英语": { "canonical": "en", "match": ["英语", "en", "english"] },
+    "日语": { "canonical": "ja", "match": ["日语", "ja", "japanese"] },
+    "韩语": { "canonical": "ko", "match": ["韩语", "ko", "korean"] },
+    "泰语": { "canonical": "th", "match": ["泰语", "th", "thai"] },
+    "阿拉伯语": { "canonical": "ar", "match": ["阿拉伯语", "ar", "arabic"] },
+    "法语": { "canonical": "fr", "match": ["法语", "fr", "french"] },
+    "西班牙语": { "canonical": "es", "match": ["西班牙语", "es", "spanish"] },
+    "闽南语": { "canonical": "minnan", "match": ["闽南语", "minnan", "nan"] }
+  },
+  "services": {
+    "向导服务": { "canonical": "walking", "match": ["向导服务", "walking", "culture", "history", "guide"] },
+    "陪玩服务": { "canonical": "playmate", "match": ["陪玩服务", "playmate", "food", "hiking"] },
+    "摄影服务": { "canonical": "photography", "match": ["摄影服务", "photography", "photo"] },
+    "司机服务": { "canonical": "driving", "match": ["司机服务", "driving", "driver", "transport"] }
+  }
+}

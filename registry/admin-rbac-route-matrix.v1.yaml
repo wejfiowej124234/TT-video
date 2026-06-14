@@ -1,0 +1,53 @@
+# Admin route × permission probe matrix (① local smoke; ② staging 93 deep batch separate)
+
+version: admin-rbac-v3-db-prep-2026-06-03
+
+routes:
+  - method: GET
+    path: /api/v1/admin/users
+    permission: admin.users.read
+  - method: GET
+    path: /api/v1/admin/orders
+    permission: admin.orders.read
+  - method: GET
+    path: /api/v1/admin/finance/summary
+    permission: admin.finance.read
+  - method: GET
+    path: /api/v1/admin/flags
+    permission: admin.platform.read
+  - method: POST
+    path: /api/v1/admin/flags/:id/publish
+    permission: admin.platform.publish
+  - method: POST
+    path: /api/v1/admin/policies/publish
+    permission: admin.platform.publish
+  - method: POST
+    path: /api/v1/admin/tenant-scopes/:id/publish
+    permission: admin.platform.publish
+  - method: POST
+    path: /api/v1/admin/scheduler/jobs/:job_code/rerun
+    permission: admin.approve
+  - method: GET
+    path: /api/v1/admin/approvals
+    permission: admin.approve
+  - method: GET
+    path: /api/v1/admin/approvals/:id
+    permission: admin.approve
+  - method: POST
+    path: /api/v1/admin/approvals/:id/approve
+    permission: admin.approve
+  - method: PATCH
+    path: /api/v1/admin/community/reports/:id
+    permission: admin.community.moderate
+  - method: POST
+    path: /api/v1/admin/community/penalties
+    permission: admin.community.moderate
+  - method: PATCH
+    path: /api/v1/admin/trust-growth/control
+    permission: admin.trust_growth.write
+  - method: POST
+    path: /api/v1/admin/compliance/data-requests/:id/update
+    permission: admin.approve
+  - method: PUT
+    path: /api/v1/admin/users/:id/console-role
+    permission: admin.users.write

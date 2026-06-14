@@ -20,6 +20,7 @@ import {
   deriveOnboardingConsoleProgressAllComplete,
   deriveOnboardingConsoleProgressStep,
   deriveOnboardingGuestPreviewProgressStep,
+  onboardingEntitlementPaidForRole,
   onboardingRoleConfirmViewFromMe,
   parseOnboardingEntitlementsView,
   parseOnboardingQuoteView,
@@ -27,14 +28,14 @@ import {
 } from "@/lib/me/meOnboardingViewModel";
 
 import { MeOnboardingEntitlementsSection } from "./MeOnboardingEntitlementsSection";
-import { MeOnboardingStewardJourneyBridge } from "./MeOnboardingStewardJourneyBridge";
 import { MeOnboardingSessionContextBanner } from "./MeOnboardingSessionContextBanner";
 import { MeOnboardingQuoteSection } from "./MeOnboardingQuoteSection";
 import { MeOnboardingWritesLoginGate } from "./MeOnboardingWritesLoginGate";
 import { MeOnboardingWritesProbeShell } from "./MeOnboardingWritesProbeShell";
-import { MeOnboardingStewardStakeSection } from "./MeOnboardingStewardStakeSection";
 import { MeOnboardingWritesSection } from "./MeOnboardingWritesSection";
 import { MeOnboardingGuestEntryNotice } from "./MeOnboardingGuestEntryNotice";
+import { MeOnboardingWorkspaceReturnLink } from "@/components/me/onboarding/MeOnboardingWorkspaceReturnLink";
+import { MERCHANT_WORKSPACE_HREF } from "@/lib/workspace/workspaceIdentityModel";
 import {
   isMeOnboardingFromContext,
   isMeOnboardingGuestEntryAllowed,
@@ -44,7 +45,7 @@ import { useMeOnboardingClientWalletConnected } from "./useMeOnboardingClientWal
 import { useMeOnboardingPage } from "./useMeOnboardingPage";
 import MeOnboardingLoading from "./loading";
 
-/** 96-18 准入页：报价 / 资格只读；登录后真实调用写接口（与 04 §3.4、无 PSP 真收单一致）。 */
+/** 96-18 准入页（商家 Console · ①）：报价 / 资格 / USDC 支付。主理人 USDC → `stewardAdmissionNav` 工作台 A 轨（本页 `role=region_steward` 仅 redirect）。 */
 export default function MeOnboardingPageMain() {
   const mainTitleId = useId();
   const quoteSectionId = useId();
@@ -91,6 +92,7 @@ export default function MeOnboardingPageMain() {
     entAutoSyncing,
     mePayload,
     roleConfirmedPersisted,
+    roleLocked,
   } = vm;
 
   const authReturnPath = useMemo(
@@ -98,31 +100,34 @@ export default function MeOnboardingPageMain() {
     [searchParams, quoteRole],
   );
 
+  useEffect(() => {
+    if (quoteRole !== "region_steward") return;
+    router.replace(authReturnPath);
+  }, [authReturnPath, quoteRole, router]);
+
+  if (quoteRole === "region_steward") {
+    return <MeOnboardingLoading data-tt-me-onboarding-steward-redirect="1" />;
+  }
+
   const quote = parseOnboardingQuoteView(quoteJson, quoteRole);
   const entitlements = parseOnboardingEntitlementsView(entJson);
   const roleConfirm =
     parseOnboardingRoleConfirmView(roleJson) ??
     onboardingRoleConfirmViewFromMe(mePayload, quoteRole);
   const roleConfirmed = roleConfirm?.userRole != null || roleConfirmedPersisted;
-  const hasActivePaid = entitlements?.hasActivePaid ?? false;
+  const hasActivePaidForRole = onboardingEntitlementPaidForRole(entitlements, quoteRole);
   const flowPhase = deriveOnboardingFlowPhase({
     loggedIn,
     quoteReady: quote != null && !quoteErr,
-    hasActivePaid,
+    hasActivePaid: hasActivePaidForRole,
     hasPaymentDraft: payJson != null,
     roleConfirmed,
   });
-  const showStewardJourneyBridge =
-    quoteRole === "region_steward" &&
-    sessionChecked &&
-    loggedIn &&
-    fromContext != null &&
-    (fromContext === "steward_register" || fromContext === "steward_pending");
   const entitlementsSyncing =
     loggedIn && (entAutoSyncing || payLoading || flowPhase === "pay_pending");
   const entitlementsAwaitingPayment =
     loggedIn &&
-    !hasActivePaid &&
+    !hasActivePaidForRole &&
     (flowPhase === "pay" || flowPhase === "pay_pending") &&
     !entitlementsSyncing;
   const loginPhaseGuest = !sessionChecking && flowPhase === "login" && !loggedIn;
@@ -140,6 +145,9 @@ export default function MeOnboardingPageMain() {
   const consoleProgressStep = guestQuotePreview
     ? deriveOnboardingGuestPreviewProgressStep(quoteRole)
     : deriveOnboardingConsoleProgressStep(flowPhase, quoteRole);
+  const progressCompactLabelOverride =
+    flowPhase === "confirm" ? t("me_onboarding_progressConfirmProvider") : undefined;
+  const hideConfirmNextStep = loggedIn && flowPhase === "confirm";
 
   useEffect(() => {
     if (!needsLoginGate) return;
@@ -195,6 +203,13 @@ export default function MeOnboardingPageMain() {
           !guestQuotePreview ? (
             <MeOnboardingGuestEntryNotice t={t} from={fromContext} />
           ) : null}
+          {fromContext === "provider_pending" && quoteRole === "provider" ? (
+            <MeOnboardingWorkspaceReturnLink
+              t={t}
+              href={MERCHANT_WORKSPACE_HREF}
+              labelKey="me_onboarding_return_provider_workbench"
+            />
+          ) : null}
           <MeOnboardingConsoleProgress
             role={quoteRole}
             currentStep={consoleProgressStep}
@@ -203,24 +218,24 @@ export default function MeOnboardingPageMain() {
             defaultExpanded={false}
             sessionChecking={sessionChecking}
             guestQuotePreview={guestQuotePreview}
+            compactLabelOverride={progressCompactLabelOverride}
           />
-          {showStewardJourneyBridge && fromContext ? (
-            <MeOnboardingStewardJourneyBridge t={t} from={fromContext} className="mt-4" />
+          {!hideConfirmNextStep ? (
+            <div className="mt-4">
+              <MeOnboardingNextStep
+                t={t}
+                phase={flowPhase}
+                quoteRole={quoteRole}
+                loggedIn={loggedIn}
+                sessionChecking={sessionChecking}
+                showWalletSessionHint={showWalletSessionHintInNextStep}
+                integrateWalletSession={integrateWalletSessionInNextStep}
+                guestQuotePreview={guestQuotePreview}
+                authReturnPath={authReturnPath}
+                writesSectionId={writesSectionId}
+              />
+            </div>
           ) : null}
-          <div className="mt-4">
-            <MeOnboardingNextStep
-              t={t}
-              phase={flowPhase}
-              quoteRole={quoteRole}
-              loggedIn={loggedIn}
-              sessionChecking={sessionChecking}
-              showWalletSessionHint={showWalletSessionHintInNextStep}
-              integrateWalletSession={integrateWalletSessionInNextStep}
-              guestQuotePreview={guestQuotePreview}
-              authReturnPath={authReturnPath}
-              writesSectionId={writesSectionId}
-            />
-          </div>
           {flowPhase === "done" ? <MeOnboardingDonePanel t={t} quoteRole={quoteRole} /> : null}
         </div>
 
@@ -230,6 +245,7 @@ export default function MeOnboardingPageMain() {
             quoteSectionId={quoteSectionId}
             quoteRole={quoteRole}
             setQuoteRole={setQuoteRole}
+            roleLocked={roleLocked}
             quoteJson={quoteJson}
             quoteErr={quoteErr}
             quoteErrCode={quoteErrCode}
@@ -268,7 +284,7 @@ export default function MeOnboardingPageMain() {
             writesSectionId={writesSectionId}
             quoteRole={quoteRole}
             flowPhase={flowPhase}
-            hasActivePaid={hasActivePaid}
+            hasActivePaid={hasActivePaidForRole}
             payLoading={payLoading}
             payErr={payErr}
             payErrCode={payErrCode}
@@ -283,12 +299,11 @@ export default function MeOnboardingPageMain() {
             payRetrySecsLeft={payRetrySecsLeft}
             roleRetrySecsLeft={roleRetrySecsLeft}
             loadEntitlements={loadEntitlements}
+            quoteJson={quoteJson}
           />
         ) : (
           <MeOnboardingWritesLoginGate t={t} quoteRole={quoteRole} />
         )}
-
-        {loggedIn && quoteRole === "region_steward" ? <MeOnboardingStewardStakeSection t={t} /> : null}
 
         <p className="flex flex-wrap gap-4">
           {fromSettings ? (

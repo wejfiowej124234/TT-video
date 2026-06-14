@@ -55,6 +55,9 @@ export const TT_ME_IDENTITIES_L5 = {
     "inline-flex items-center rounded-md border border-warning/45 bg-warning/12 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-warning/95",
   cardStatusPillRestricted:
     "inline-flex items-center rounded-md border border-danger/40 bg-danger/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-ref-coral/95",
+  /** Hub P2-3 · 最多三行 blocked_reason 摘要 */
+  cardBlockedReasonList: "mt-2 space-y-1",
+  cardBlockedReasonLine: "block text-[11px] leading-snug text-ref-coral/90",
   footerLinks: "mt-10 flex flex-wrap gap-x-6 gap-y-1",
   footerLink:
     "inline-flex min-h-[44px] items-center text-meta font-semibold text-ref-sun/85 underline underline-offset-4 decoration-ref-sun/35 transition-colors motion-reduce:transition-none hover:text-[#fde9a8] hover:decoration-ref-sun/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/42 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a] rounded-lg",
@@ -66,6 +69,20 @@ export const TT_ME_IDENTITIES_L5 = {
   loadingHeaderTitle: `h-9 w-56 max-w-full ${TT_AUTH_L5_FORM.loadingPulse}`,
   loadingHeaderSub: `mt-3 h-4 w-full max-w-md ${TT_AUTH_L5_FORM.loadingPulse}`,
   loadingCallout: `mt-6 min-h-[88px] ${TT_AUTH_L5_FORM.loadingSkeletonCard} p-4`,
+  /** Hub「身份资料」· 横向媒体行（左图右文 · 非 identityCard 纵卡） */
+  profileLinkCard:
+    "auth-l5-glass-surface auth-l5-glass-vignette group relative flex min-h-[108px] w-full flex-row items-stretch overflow-hidden rounded-xl border border-ref-sun/38 bg-[#0c0a09]/62 outline-none backdrop-blur-2xl transition-[border-color,background-color,box-shadow,transform] duration-200 motion-reduce:transition-none hover:border-ref-sun/52 hover:bg-ref-sun/[0.06] hover:shadow-[0_12px_40px_-20px_rgba(252,164,124,0.32)] focus-visible:ring-2 focus-visible:ring-ref-sun/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a] active:scale-[0.995] motion-reduce:active:scale-100",
+  profileLinkMediaCol:
+    "relative w-[7.25rem] shrink-0 self-stretch sm:w-32 md:w-36",
+  profileLinkMediaImg: "absolute inset-0 h-full w-full object-cover",
+  profileLinkMediaScrim:
+    "pointer-events-none absolute inset-y-0 right-0 z-[1] w-8 bg-gradient-to-l from-[#0c0a09]/95 via-[#0c0a09]/55 to-transparent sm:w-10",
+  profileLinkMediaRing:
+    "pointer-events-none absolute inset-0 z-[2] ring-1 ring-inset ring-white/10",
+  profileLinkBody: "relative z-[1] flex min-w-0 flex-1 flex-col justify-center gap-1 px-4 py-3.5 sm:px-5",
+  profileLinkFooter: "mt-2 flex min-h-[44px] items-center justify-between gap-3",
+  profileLinkArrow:
+    "shrink-0 text-lg font-semibold leading-none text-ref-sun/75 transition-colors motion-reduce:transition-none group-hover:text-ref-sun",
 } as const;
 
 export function meIdentitiesL5MainDataAttrs(frozen = false): Record<string, string> {

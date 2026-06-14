@@ -12,6 +12,10 @@ primary_region = 'sin'
 
 [env]
   PORT = '8080'
+  # TN-P1-010 · staging indexer backfill（freetier RPC + Fly HTTP 窗）
+  INDEXER_ETH_GET_LOGS_MAX_BLOCK_SPAN = '9999'
+  INDEXER_TICK_MAX_BLOCKS_PER_SCAN = '9999'
+  INDEXER_BOOTSTRAP_FROM_BLOCK = '11045000'
 
 [http_service]
   internal_port = 8080

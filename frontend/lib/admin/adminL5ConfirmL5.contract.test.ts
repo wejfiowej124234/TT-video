@@ -22,6 +22,7 @@ const DANGEROUS_WRITE_HOOKS = [
   "app/admin/flags/useAdminFlagsPage.ts",
   "app/admin/policies/useAdminPoliciesPage.ts",
   "app/admin/tenants/scopes/useAdminTenantScopesPage.ts",
+  "app/admin/content/poi-images/batches/[id]/useAdminContentPoiImageBatchPage.ts",
 ];
 
 const DANGEROUS_WRITE_COMPONENTS = [

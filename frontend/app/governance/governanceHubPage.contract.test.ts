@@ -6,9 +6,10 @@ import { describe, expect, it } from "vitest";
 const __dir = dirname(fileURLToPath(import.meta.url));
 
 describe("governance hub page (C-GOV-001 · data_source / is_chain_ssot truth)", () => {
-  it("route page delegates to GovernanceHubPageMain SSOT shell", () => {
+  it("route page delegates to governance hub SSOT shell", () => {
     const src = readFileSync(join(__dir, "page.tsx"), "utf8");
     expect(src).toContain("GovernanceHubPageMain");
+    expect(src).not.toContain("GovernanceHubPageWithRedirect");
     expect(src).not.toContain("51-H2：治理池/奖励为占位数据");
     expect(src).not.toContain("useState<PoolRes");
   });

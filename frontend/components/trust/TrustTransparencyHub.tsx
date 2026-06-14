@@ -106,10 +106,7 @@ export default function TrustTransparencyHub({ fromSettings = false }: { fromSet
           <h1 id={titleId} className="text-2xl sm:text-3xl font-semibold text-slate-50 tracking-tight">
             {t("trust_page_title")}
           </h1>
-          <p className="text-body text-slate-300 mt-3 max-w-prose">{t("trust_page_subtitle")}</p>
-          <p className="text-body text-slate-300 mt-4 max-w-prose leading-relaxed border-l-2 border-cyan-500/40 pl-4">
-            {t("pux1_hub_hero")}
-          </p>
+          <p className="text-body text-slate-300 mt-3 max-w-prose leading-relaxed">{t("trust_page_subtitle")}</p>
         </header>
 
         <section
@@ -195,15 +192,15 @@ export default function TrustTransparencyHub({ fromSettings = false }: { fromSet
           <p className="text-meta text-slate-400 mb-4 leading-relaxed max-w-prose">{t("pux1_three_pillars_intro")}</p>
           <div className="grid gap-4 sm:grid-cols-3">
             <div className={`${CARD} border-success/20`}>
-              <h3 className="text-meta font-semibold text-success mb-2">{t("trust_section_proof_b482_title")}</h3>
+              <h3 className="text-meta font-semibold text-success mb-2">{t("pux1_pillar_finance_title")}</h3>
               <p className="text-meta text-slate-300 leading-relaxed">{t("pux1_pillar_finance_body")}</p>
             </div>
             <div className={`${CARD} border-violet-500/20`}>
-              <h3 className="text-meta font-semibold text-violet-300 mb-2">{t("trust_section_proof_b483_title")}</h3>
+              <h3 className="text-meta font-semibold text-violet-300 mb-2">{t("pux1_pillar_audit_title")}</h3>
               <p className="text-meta text-slate-300 leading-relaxed">{t("pux1_pillar_audit_body")}</p>
             </div>
             <div className={`${CARD} border-warning/20`}>
-              <h3 className="text-meta font-semibold text-white mb-2">{t("trust_section_proof_b484_title")}</h3>
+              <h3 className="text-meta font-semibold text-white mb-2">{t("pux1_pillar_gov_title")}</h3>
               <p className="text-meta text-slate-300 leading-relaxed">{t("pux1_pillar_gov_body")}</p>
             </div>
           </div>

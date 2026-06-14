@@ -4,6 +4,7 @@ import {
   TT_MARKETING_HEADER_USER_MENU_ITEM_DARK,
 } from "@/lib/marketingUi";
 import { isCommunityMeLikesListEnabled } from "@/lib/communityMeFeatureFlags";
+import { PUBLISH_HUB_PATH } from "@/lib/me/publishHubL5";
 import type { HeaderUtilityVariant } from "@/lib/uiSystem";
 
 /** 顶栏 profile strip 唯一 href（账户组不再单列「个人资料」菜单项 · 方案 A） */
@@ -61,6 +62,14 @@ function mineNavItems(variant: HeaderUserMenuVariant, showLikesList: boolean): H
   const isAuthL5 = variant === "authL5";
   const section: HeaderUserMenuNavSectionId = "mine";
   const items: HeaderUserMenuNavItem[] = [
+    {
+      href: PUBLISH_HUB_PATH,
+      labelKey: "header_userMenu_publish_hub",
+      className: itemClass(variant),
+      iconId: "publish",
+      featured: isAuthL5,
+      section: isAuthL5 ? section : undefined,
+    },
     {
       href: "/orders",
       labelKey: "header_myOrders",

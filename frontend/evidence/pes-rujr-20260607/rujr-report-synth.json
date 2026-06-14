@@ -1,0 +1,577 @@
+{
+  "rujrId": "pes-real-user-journey-review-20260607",
+  "generatedAt": 1781324405560,
+  "totalRuns": 48,
+  "totalEvents": 150,
+  "uniqueSessions": 48,
+  "snapshot": {
+    "wave3Id": "product-enhancement-wave3-analytics-20260607",
+    "generatedAt": 1781324405559,
+    "totalEvents": 150,
+    "uniqueSessions": 48,
+    "funnelStages": [
+      {
+        "stageId": "visit",
+        "labelKey": "pes2_funnel_stage_visit",
+        "sessions": 48,
+        "events": 48
+      },
+      {
+        "stageId": "register",
+        "labelKey": "pes2_funnel_stage_register",
+        "sessions": 39,
+        "events": 43
+      },
+      {
+        "stageId": "identity",
+        "labelKey": "pes2_funnel_stage_identity",
+        "sessions": 32,
+        "events": 26
+      },
+      {
+        "stageId": "post",
+        "labelKey": "pes2_funnel_stage_post",
+        "sessions": 13,
+        "events": 13
+      },
+      {
+        "stageId": "find_guide",
+        "labelKey": "pes2_funnel_stage_find_guide",
+        "sessions": 22,
+        "events": 12
+      },
+      {
+        "stageId": "order",
+        "labelKey": "pes2_funnel_stage_order",
+        "sessions": 2,
+        "events": 2
+      },
+      {
+        "stageId": "govern",
+        "labelKey": "pes2_funnel_stage_govern",
+        "sessions": 12,
+        "events": 6
+      }
+    ],
+    "dropoffMatrix": [
+      {
+        "fromStageId": "visit",
+        "toStageId": "register",
+        "fromSessions": 48,
+        "toSessions": 39,
+        "dropoffRate": 0.1875,
+        "retentionRate": 0.8125
+      },
+      {
+        "fromStageId": "register",
+        "toStageId": "identity",
+        "fromSessions": 39,
+        "toSessions": 32,
+        "dropoffRate": 0.17948717948717952,
+        "retentionRate": 0.8205128205128205
+      },
+      {
+        "fromStageId": "identity",
+        "toStageId": "post",
+        "fromSessions": 32,
+        "toSessions": 13,
+        "dropoffRate": 0.59375,
+        "retentionRate": 0.40625
+      },
+      {
+        "fromStageId": "post",
+        "toStageId": "find_guide",
+        "fromSessions": 13,
+        "toSessions": 22,
+        "dropoffRate": -0.6923076923076923,
+        "retentionRate": 1.6923076923076923
+      },
+      {
+        "fromStageId": "find_guide",
+        "toStageId": "order",
+        "fromSessions": 22,
+        "toSessions": 2,
+        "dropoffRate": 0.9090909090909091,
+        "retentionRate": 0.09090909090909091
+      },
+      {
+        "fromStageId": "order",
+        "toStageId": "govern",
+        "fromSessions": 2,
+        "toSessions": 12,
+        "dropoffRate": -5,
+        "retentionRate": 6
+      }
+    ],
+    "touchpointViews": [
+      {
+        "touchpoint": "home",
+        "count": 12
+      },
+      {
+        "touchpoint": "community",
+        "count": 13
+      },
+      {
+        "touchpoint": "market",
+        "count": 4
+      },
+      {
+        "touchpoint": "guide",
+        "count": 12
+      },
+      {
+        "touchpoint": "merchant",
+        "count": 12
+      },
+      {
+        "touchpoint": "governance",
+        "count": 12
+      }
+    ],
+    "ctaClicks": [
+      {
+        "touchpoint": "market",
+        "count": 2
+      }
+    ],
+    "roleEntryClicks": [],
+    "registrationIntents": 37,
+    "identityIntents": 26,
+    "guideRecruitClicks": 6,
+    "governanceParticipation": 6,
+    "escrowTrustClicks": 8,
+    "abTests": [
+      {
+        "testId": "ab-home-role-grid-v1",
+        "variant": "control",
+        "exposures": 0,
+        "conversions": 0,
+        "conversionRate": 0
+      },
+      {
+        "testId": "ab-home-role-grid-v1",
+        "variant": "role_grid_prominent",
+        "exposures": 0,
+        "conversions": 0,
+        "conversionRate": 0
+      },
+      {
+        "testId": "ab-market-escrow-inline-v1",
+        "variant": "control",
+        "exposures": 0,
+        "conversions": 0,
+        "conversionRate": 0
+      },
+      {
+        "testId": "ab-market-escrow-inline-v1",
+        "variant": "escrow_card",
+        "exposures": 0,
+        "conversions": 0,
+        "conversionRate": 0
+      },
+      {
+        "testId": "ab-governance-funnel-compact-v1",
+        "variant": "control",
+        "exposures": 0,
+        "conversions": 0,
+        "conversionRate": 0
+      },
+      {
+        "testId": "ab-governance-funnel-compact-v1",
+        "variant": "funnel_compact",
+        "exposures": 0,
+        "conversions": 0,
+        "conversionRate": 0
+      }
+    ]
+  },
+  "top10Dropoffs": [
+    {
+      "fromStageId": "find_guide",
+      "toStageId": "order",
+      "fromSessions": 22,
+      "toSessions": 2,
+      "dropoffRate": 0.9090909090909091,
+      "retentionRate": 0.09090909090909091,
+      "rank": 1,
+      "dropoffPct": 90.9090909090909,
+      "evidence": "pes_rujr_drop_market_order"
+    },
+    {
+      "fromStageId": "identity",
+      "toStageId": "post",
+      "fromSessions": 32,
+      "toSessions": 13,
+      "dropoffRate": 0.59375,
+      "retentionRate": 0.40625,
+      "rank": 2,
+      "dropoffPct": 59.375,
+      "evidence": "pes_rujr_drop_identity_post"
+    },
+    {
+      "fromStageId": "visit",
+      "toStageId": "register",
+      "fromSessions": 48,
+      "toSessions": 39,
+      "dropoffRate": 0.1875,
+      "retentionRate": 0.8125,
+      "rank": 3,
+      "dropoffPct": 18.75,
+      "evidence": "pes_rujr_drop_visit_register"
+    },
+    {
+      "fromStageId": "register",
+      "toStageId": "identity",
+      "fromSessions": 39,
+      "toSessions": 32,
+      "dropoffRate": 0.17948717948717952,
+      "retentionRate": 0.8205128205128205,
+      "rank": 4,
+      "dropoffPct": 17.948717948717952,
+      "evidence": "pes_rujr_drop_register_identity"
+    },
+    {
+      "fromStageId": "post",
+      "toStageId": "find_guide",
+      "fromSessions": 13,
+      "toSessions": 22,
+      "dropoffRate": 0,
+      "retentionRate": 1,
+      "rank": 5,
+      "dropoffPct": 0,
+      "evidence": "pes_rujr_drop_post_market"
+    },
+    {
+      "fromStageId": "order",
+      "toStageId": "govern",
+      "fromSessions": 2,
+      "toSessions": 12,
+      "dropoffRate": 0,
+      "retentionRate": 1,
+      "rank": 6,
+      "dropoffPct": 0,
+      "evidence": "pes_rujr_drop_order_govern"
+    }
+  ],
+  "top10Frictions": [
+    {
+      "id": "FR-01",
+      "severity": "P0",
+      "personas": [
+        "traveler"
+      ],
+      "touchpoints": [
+        "home"
+      ],
+      "issueKey": "pes_rujr_fr01_issue",
+      "wave4CandidateKey": "pes_rujr_fr01_wave4",
+      "breakpointIds": [
+        "BP-01"
+      ],
+      "rank": 1,
+      "observedRuns": 10,
+      "observedRate": 0.20833333333333334
+    },
+    {
+      "id": "FR-04",
+      "severity": "P0",
+      "personas": [
+        "traveler",
+        "guide",
+        "merchant"
+      ],
+      "touchpoints": [
+        "community",
+        "guide",
+        "merchant"
+      ],
+      "issueKey": "pes_rujr_fr04_issue",
+      "wave4CandidateKey": "pes_rujr_fr04_wave4",
+      "breakpointIds": [
+        "BP-05"
+      ],
+      "rank": 2,
+      "observedRuns": 9,
+      "observedRate": 0.1875
+    },
+    {
+      "id": "FR-05",
+      "severity": "P1",
+      "personas": [
+        "guide"
+      ],
+      "touchpoints": [
+        "guide",
+        "market"
+      ],
+      "issueKey": "pes_rujr_fr05_issue",
+      "wave4CandidateKey": "pes_rujr_fr05_wave4",
+      "breakpointIds": [
+        "BP-03"
+      ],
+      "rank": 3,
+      "observedRuns": 3,
+      "observedRate": 0.0625
+    },
+    {
+      "id": "FR-09",
+      "severity": "P2",
+      "personas": [
+        "traveler"
+      ],
+      "touchpoints": [
+        "home",
+        "market"
+      ],
+      "issueKey": "pes_rujr_fr09_issue",
+      "wave4CandidateKey": "pes_rujr_fr09_wave4",
+      "breakpointIds": [
+        "BP-07"
+      ],
+      "rank": 4,
+      "observedRuns": 3,
+      "observedRate": 0.0625
+    },
+    {
+      "id": "FR-02",
+      "severity": "P0",
+      "personas": [
+        "traveler"
+      ],
+      "touchpoints": [
+        "home",
+        "market"
+      ],
+      "issueKey": "pes_rujr_fr02_issue",
+      "wave4CandidateKey": "pes_rujr_fr02_wave4",
+      "breakpointIds": [
+        "BP-02"
+      ],
+      "rank": 5,
+      "observedRuns": 0,
+      "observedRate": 0
+    },
+    {
+      "id": "FR-03",
+      "severity": "P0",
+      "personas": [
+        "traveler",
+        "guide"
+      ],
+      "touchpoints": [
+        "market"
+      ],
+      "issueKey": "pes_rujr_fr03_issue",
+      "wave4CandidateKey": "pes_rujr_fr03_wave4",
+      "rank": 6,
+      "observedRuns": 0,
+      "observedRate": 0
+    },
+    {
+      "id": "FR-06",
+      "severity": "P1",
+      "personas": [
+        "merchant"
+      ],
+      "touchpoints": [
+        "merchant"
+      ],
+      "issueKey": "pes_rujr_fr06_issue",
+      "wave4CandidateKey": "pes_rujr_fr06_wave4",
+      "breakpointIds": [
+        "BP-04"
+      ],
+      "rank": 7,
+      "observedRuns": 0,
+      "observedRate": 0
+    },
+    {
+      "id": "FR-07",
+      "severity": "P1",
+      "personas": [
+        "govern"
+      ],
+      "touchpoints": [
+        "governance"
+      ],
+      "issueKey": "pes_rujr_fr07_issue",
+      "wave4CandidateKey": "pes_rujr_fr07_wave4",
+      "breakpointIds": [
+        "BP-06"
+      ],
+      "rank": 8,
+      "observedRuns": 0,
+      "observedRate": 0
+    },
+    {
+      "id": "FR-08",
+      "severity": "P1",
+      "personas": [
+        "traveler",
+        "guide"
+      ],
+      "touchpoints": [
+        "market",
+        "community"
+      ],
+      "issueKey": "pes_rujr_fr08_issue",
+      "wave4CandidateKey": "pes_rujr_fr08_wave4",
+      "breakpointIds": [
+        "BP-08"
+      ],
+      "rank": 9,
+      "observedRuns": 0,
+      "observedRate": 0
+    },
+    {
+      "id": "FR-10",
+      "severity": "P2",
+      "personas": [
+        "traveler"
+      ],
+      "touchpoints": [
+        "home",
+        "market"
+      ],
+      "issueKey": "pes_rujr_fr10_issue",
+      "wave4CandidateKey": "pes_rujr_fr10_wave4",
+      "rank": 10,
+      "observedRuns": 0,
+      "observedRate": 0
+    }
+  ],
+  "uxBacklog": [
+    {
+      "id": "UX-01",
+      "priority": "P0",
+      "titleKey": "pes_rujr_fr01_wave4",
+      "wave4ThemeKey": "pes_rujr_fr01_wave4",
+      "personas": [
+        "traveler"
+      ],
+      "sourceFrictionIds": [
+        "FR-01"
+      ]
+    },
+    {
+      "id": "UX-02",
+      "priority": "P0",
+      "titleKey": "pes_rujr_fr04_wave4",
+      "wave4ThemeKey": "pes_rujr_fr04_wave4",
+      "personas": [
+        "traveler",
+        "guide",
+        "merchant"
+      ],
+      "sourceFrictionIds": [
+        "FR-04"
+      ]
+    },
+    {
+      "id": "UX-03",
+      "priority": "P1",
+      "titleKey": "pes_rujr_fr05_wave4",
+      "wave4ThemeKey": "pes_rujr_fr05_wave4",
+      "personas": [
+        "guide"
+      ],
+      "sourceFrictionIds": [
+        "FR-05"
+      ]
+    },
+    {
+      "id": "UX-04",
+      "priority": "P2",
+      "titleKey": "pes_rujr_fr09_wave4",
+      "wave4ThemeKey": "pes_rujr_fr09_wave4",
+      "personas": [
+        "traveler"
+      ],
+      "sourceFrictionIds": [
+        "FR-09"
+      ]
+    },
+    {
+      "id": "UX-05",
+      "priority": "P0",
+      "titleKey": "pes_rujr_fr02_wave4",
+      "wave4ThemeKey": "pes_rujr_fr02_wave4",
+      "personas": [
+        "traveler"
+      ],
+      "sourceFrictionIds": [
+        "FR-02"
+      ]
+    },
+    {
+      "id": "UX-06",
+      "priority": "P0",
+      "titleKey": "pes_rujr_fr03_wave4",
+      "wave4ThemeKey": "pes_rujr_fr03_wave4",
+      "personas": [
+        "traveler",
+        "guide"
+      ],
+      "sourceFrictionIds": [
+        "FR-03"
+      ]
+    },
+    {
+      "id": "UX-07",
+      "priority": "P1",
+      "titleKey": "pes_rujr_fr06_wave4",
+      "wave4ThemeKey": "pes_rujr_fr06_wave4",
+      "personas": [
+        "merchant"
+      ],
+      "sourceFrictionIds": [
+        "FR-06"
+      ]
+    },
+    {
+      "id": "UX-08",
+      "priority": "P1",
+      "titleKey": "pes_rujr_fr07_wave4",
+      "wave4ThemeKey": "pes_rujr_fr07_wave4",
+      "personas": [
+        "govern"
+      ],
+      "sourceFrictionIds": [
+        "FR-07"
+      ]
+    },
+    {
+      "id": "UX-09",
+      "priority": "P1",
+      "titleKey": "pes_rujr_fr08_wave4",
+      "wave4ThemeKey": "pes_rujr_fr08_wave4",
+      "personas": [
+        "traveler",
+        "guide"
+      ],
+      "sourceFrictionIds": [
+        "FR-08"
+      ]
+    },
+    {
+      "id": "UX-10",
+      "priority": "P2",
+      "titleKey": "pes_rujr_fr10_wave4",
+      "wave4ThemeKey": "pes_rujr_fr10_wave4",
+      "personas": [
+        "traveler"
+      ],
+      "sourceFrictionIds": [
+        "FR-10"
+      ]
+    }
+  ],
+  "wave4RecommendationKeys": [
+    "pes_rujr_fr01_wave4",
+    "pes_rujr_fr04_wave4",
+    "pes_rujr_fr05_wave4",
+    "pes_rujr_fr09_wave4",
+    "pes_rujr_fr02_wave4"
+  ]
+}

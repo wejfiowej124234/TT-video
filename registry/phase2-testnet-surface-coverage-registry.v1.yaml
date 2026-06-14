@@ -1,0 +1,100 @@
+# Phase ② Testnet · Full Surface Coverage Registry (D24 SSOT)
+# 六角色 × 可交互表面 · 须逐项登记 + 异常路径 + 真人验收后 surface_coverage_pct=100
+schema: traveltrust.phase2_testnet_surface_coverage_registry.v1
+phase_scope: "② testnet"
+roles:
+  - traveler
+  - guide
+  - merchant
+  - steward
+  - moderator
+  - admin
+
+# kind: page | button | form | modal | drawer | search_filter | permission_entry |
+#       wallet | governance | escrow | order | community | cms | growth | settings
+surfaces:
+  # —— Traveler ——
+  - { id: T-P01, role: traveler, kind: page, route: /, action: landing_view, domain: home }
+  - { id: T-P02, role: traveler, kind: page, route: /orders, action: order_list, domain: orders }
+  - { id: T-P03, role: traveler, kind: form, route: /orders, action: order_filter_search, domain: orders }
+  - { id: T-P04, role: traveler, kind: page, route: /market, action: market_discover, domain: market }
+  - { id: T-P05, role: traveler, kind: search_filter, route: /market, action: market_filter, domain: market }
+  - { id: T-P06, role: traveler, kind: page, route: /escrow, action: escrow_detail, domain: escrow }
+  - { id: T-P07, role: traveler, kind: modal, route: /, action: unlock_modal, domain: escrow }
+  - { id: T-P08, role: traveler, kind: wallet, route: /me/settings, action: wallet_connect, domain: settings }
+  - { id: T-P09, role: traveler, kind: wallet, route: /me/settings, action: wallet_disconnect, domain: settings }
+  - { id: T-P10, role: traveler, kind: page, route: /me/identities, action: identity_hub, domain: settings }
+  - { id: T-P11, role: traveler, kind: page, route: /community, action: community_feed, domain: community }
+  - { id: T-P12, role: traveler, kind: settings, route: /me/settings, action: settings_nav, domain: settings }
+
+  # —— Guide ——
+  - { id: G-P01, role: guide, kind: page, route: /guide, action: workbench_view, domain: guide }
+  - { id: G-P02, role: guide, kind: page, route: /orders, action: guide_hat_orders, domain: orders }
+  - { id: G-P03, role: guide, kind: button, route: /orders, action: accept_order, domain: orders }
+  - { id: G-P04, role: guide, kind: form, route: /guide, action: itinerary_submit, domain: guide }
+  - { id: G-P05, role: guide, kind: wallet, route: /me/settings, action: wallet_connect, domain: settings }
+  - { id: G-P06, role: guide, kind: page, route: /me/publish, action: publish_hub, domain: settings }
+  - { id: G-P07, role: guide, kind: page, route: /escrow, action: escrow_guide_view, domain: escrow }
+  - { id: G-P08, role: guide, kind: permission_entry, route: /guide, action: hat_switch_guide, domain: settings }
+
+  # —— Merchant ——
+  - { id: M-P01, role: merchant, kind: page, route: /provider, action: merchant_workbench, domain: merchant }
+  - { id: M-P02, role: merchant, kind: page, route: /provider/register, action: onboarding_form, domain: merchant }
+  - { id: M-P03, role: merchant, kind: form, route: /provider/register, action: listing_publish, domain: merchant }
+  - { id: M-P04, role: merchant, kind: page, route: /orders, action: merchant_hat_orders, domain: orders }
+  - { id: M-P05, role: merchant, kind: drawer, route: /provider, action: market_exposure_drawer, domain: merchant }
+  - { id: M-P06, role: merchant, kind: page, route: /market/acquisition, action: acquisition_subsite, domain: market }
+  - { id: M-P07, role: merchant, kind: wallet, route: /me/settings, action: wallet_connect, domain: settings }
+  - { id: M-P08, role: merchant, kind: permission_entry, route: /provider, action: hat_switch_merchant, domain: settings }
+
+  # —— Steward ——
+  - { id: S-P01, role: steward, kind: page, route: /governance, action: steward_workbench, domain: governance }
+  - { id: S-P02, role: steward, kind: page, route: /governance/params, action: params_readonly, domain: governance }
+  - { id: S-P03, role: steward, kind: governance, route: /governance, action: ttg_stake, domain: governance }
+  - { id: S-P04, role: steward, kind: governance, route: /governance/proposals, action: proposal_list, domain: governance }
+  - { id: S-P05, role: steward, kind: governance, route: /governance/proposals, action: proposal_vote, domain: governance }
+  - { id: S-P06, role: steward, kind: governance, route: /governance/proposals, action: vote_delegate, domain: governance }
+  - { id: S-P07, role: steward, kind: governance, route: /governance, action: reward_pool_observe, domain: governance }
+  - { id: S-P08, role: steward, kind: wallet, route: /governance, action: wallet_connect_switch_chain, domain: wallet }
+
+  # —— Moderator ——
+  - { id: O-P01, role: moderator, kind: page, route: /admin, action: moderation_console, domain: admin }
+  - { id: O-P02, role: moderator, kind: page, route: /admin/community, action: community_moderation, domain: community }
+  - { id: O-P03, role: moderator, kind: button, route: /admin/community, action: suspend_action, domain: community }
+  - { id: O-P04, role: moderator, kind: permission_entry, route: /admin, action: rbac_deny_probe, domain: admin }
+  - { id: O-P05, role: moderator, kind: drawer, route: /admin, action: case_detail_drawer, domain: admin }
+  - { id: O-P06, role: moderator, kind: search_filter, route: /admin/community, action: moderation_filter, domain: community }
+
+  # —— Admin ——
+  - { id: A-P01, role: admin, kind: page, route: /admin, action: superadmin_shell, domain: admin }
+  - { id: A-P02, role: admin, kind: cms, route: /admin/content, action: cms_countries_queue, domain: cms }
+  - { id: A-P03, role: admin, kind: growth, route: /admin/growth, action: growth_analytics, domain: growth }
+  - { id: A-P04, role: admin, kind: page, route: /admin/observability, action: observability_overview, domain: admin }
+  - { id: A-P05, role: admin, kind: page, route: /admin/indexer, action: indexer_health, domain: admin }
+  - { id: A-P06, role: admin, kind: permission_entry, route: /admin, action: six_console_rbac, domain: admin }
+  - { id: A-P07, role: admin, kind: form, route: /admin/provider-applications, action: approve_reject, domain: admin }
+  - { id: A-P08, role: admin, kind: modal, route: /admin, action: adm_u02_approval_modal, domain: admin }
+  - { id: A-P09, role: admin, kind: governance, route: /admin/governance, action: admin_governance_read, domain: governance }
+  - { id: A-P10, role: admin, kind: search_filter, route: /admin/users, action: user_search, domain: admin }
+
+ui_element_kinds:
+  - button
+  - form
+  - modal
+  - drawer
+  - search_filter
+  - permission_entry
+  - wallet
+  - page
+
+user_action_kinds:
+  - view
+  - submit
+  - connect
+  - disconnect
+  - switch_chain
+  - vote
+  - delegate
+  - filter
+  - approve
+  - deny

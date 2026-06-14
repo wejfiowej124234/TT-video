@@ -84,7 +84,7 @@ describe("admin phase ① data honesty anchors", () => {
     expect(adminMod).toContain("require_admin_perm_uid");
     expect(adminMod).toContain("PERM_COMMUNITY_MODERATE");
     expect(adminRbac).toContain("console_role_70");
-    expect(adminRbac).toContain("admin-rbac-v3-db-prep");
+    expect(adminRbac).toContain("admin-rbac-v4-cms-ops-growth-2026-06-07");
     expect(adminRbac).toContain("role_matrix_preview");
     expect(
       readFileSync(join(FE, "..", "scripts", "dev", "smoke-admin-rbac-matrix-local.sh"), "utf8"),
