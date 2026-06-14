@@ -79,7 +79,7 @@ pub fn traveltrust_page_brief_json() -> Value {
         "liquidity_contract": {
             "schema_version": 1,
             "pair_type": "stablecoin_to_governance_token",
-            "pay_stablecoins": ["USDC", "USDT"],
+            "pay_stablecoins": ["USDC"],
             "default_pay_stable": "USDC",
             "receive_symbol": "TTG",
             "receive_token_role": "governance",

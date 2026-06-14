@@ -126,7 +126,9 @@ pub async fn discover_orders_list_impl(
                 return None;
             }
             if country_trim.map_or(true, |c| bundle.destination.eq_ignore_ascii_case(c))
-                && city_trim.map_or(true, |c| bundle.city.eq_ignore_ascii_case(c))
+                && city_trim.map_or(true, |c| {
+                    super::market_guide_filter::guide_matches_city_filter(&bundle.city, c)
+                })
                 && days_filter.map_or(true, |d| bundle.days.len() as u32 == d)
             {
                 Some((o.clone(), bundle.clone()))

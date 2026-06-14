@@ -218,6 +218,7 @@ mod tests {
                 stake_amount: "0".into(),
                 hourly_rate: None,
                 avatar_url: None,
+            public_title: None,
                 status: "active".into(),
                 rejection_codes: vec![],
                 rejection_message: None,

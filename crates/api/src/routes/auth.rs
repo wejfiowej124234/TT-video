@@ -42,7 +42,7 @@ pub async fn auth_register_send_verification_code(
 }
 
 #[derive(Debug, serde::Deserialize, Default)]
-struct SeedTestAccountsBody {
+pub(crate) struct SeedTestAccountsBody {
     #[serde(default)]
     promote_admin_email: Option<String>,
 }

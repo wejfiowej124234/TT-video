@@ -131,6 +131,7 @@ async fn ensure_guide_in_store(state: &ChainOffState, guide_id: Uuid) -> Result<
         stake_amount: row.stake_amount.clone(),
         hourly_rate: row.hourly_rate.clone(),
         avatar_url: row.avatar_url.clone(),
+        public_title: row.public_title.clone(),
         status: row.status.clone(),
         rejection_codes: row.rejection_codes.clone(),
         rejection_message: row.rejection_message.clone(),

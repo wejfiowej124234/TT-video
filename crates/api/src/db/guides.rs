@@ -117,6 +117,30 @@ pub async fn insert_guide_with_data_origin(
     Ok(())
 }
 
+/// 更新向导质押额与状态（`POST /guides/:id/stake`；有 DB 时双写）
+pub async fn update_guide_stake(
+    pool: &PgPool,
+    id: Uuid,
+    stake_amount: &str,
+    status: &str,
+    updated_at: DateTime<Utc>,
+) -> Result<u64, sqlx::Error> {
+    let r = sqlx::query(
+        r#"
+        UPDATE guides
+        SET stake_amount = $1, status = $2, updated_at = $3
+        WHERE id = $4
+        "#,
+    )
+    .bind(stake_amount)
+    .bind(status)
+    .bind(updated_at)
+    .bind(id)
+    .execute(pool)
+    .await?;
+    Ok(r.rows_affected())
+}
+
 /// 更新向导资质审核状态与拒绝信息（Admin PATCH；有 DB 时双写）
 pub async fn update_guide_registration_review(
     pool: &PgPool,
@@ -155,6 +179,7 @@ pub async fn update_guide_public_profile(
     bio: Option<&str>,
     hourly_rate: Option<&str>,
     avatar_url: Option<&str>,
+    public_title: Option<&str>,
     updated_at: DateTime<Utc>,
 ) -> Result<u64, sqlx::Error> {
     let lang_json = serde_json::to_value(languages).unwrap_or_else(|_| JsonValue::Array(vec![]));
@@ -163,8 +188,8 @@ pub async fn update_guide_public_profile(
         r#"
         UPDATE guides
         SET city = $1, country_code = $2, languages = $3, service_types = $4, bio = $5,
-            hourly_rate = $6, avatar_url = $7, updated_at = $8
-        WHERE id = $9
+            hourly_rate = $6, avatar_url = $7, public_title = $8, updated_at = $9
+        WHERE id = $10
         "#,
     )
     .bind(city)
@@ -174,6 +199,7 @@ pub async fn update_guide_public_profile(
     .bind(bio)
     .bind(hourly_rate)
     .bind(avatar_url)
+    .bind(public_title)
     .bind(updated_at)
     .bind(id)
     .execute(pool)
@@ -200,6 +226,7 @@ pub struct GuideRow {
     pub stake_amount: String,
     pub hourly_rate: Option<String>,
     pub avatar_url: Option<String>,
+    pub public_title: Option<String>,
     pub status: String,
     pub rejection_codes: Vec<String>,
     pub rejection_message: Option<String>,
@@ -228,6 +255,7 @@ pub async fn list_guides(pool: &PgPool) -> Result<Vec<GuideRow>, sqlx::Error> {
         stake_amount: String,
         hourly_rate: Option<String>,
         avatar_url: Option<String>,
+        public_title: Option<String>,
         status: String,
         rejection_codes: JsonValue,
         rejection_message: Option<String>,
@@ -236,7 +264,7 @@ pub async fn list_guides(pool: &PgPool) -> Result<Vec<GuideRow>, sqlx::Error> {
         updated_at: DateTime<Utc>,
     }
     let rows = sqlx::query_as::<_, Row>(
-        "SELECT id, user_id, city, country_code, languages, service_types, bio, wallet_address, real_name, passport_number_hash, id_photo_url, language_cert_url, guide_license_url, stake_amount, hourly_rate, avatar_url, status, rejection_codes, rejection_message, data_origin, created_at, updated_at FROM guides",
+        "SELECT id, user_id, city, country_code, languages, service_types, bio, wallet_address, real_name, passport_number_hash, id_photo_url, language_cert_url, guide_license_url, stake_amount, hourly_rate, avatar_url, public_title, status, rejection_codes, rejection_message, data_origin, created_at, updated_at FROM guides",
     )
     .fetch_all(pool)
     .await?;
@@ -263,6 +291,7 @@ pub async fn list_guides(pool: &PgPool) -> Result<Vec<GuideRow>, sqlx::Error> {
                 stake_amount: r.stake_amount,
                 hourly_rate: r.hourly_rate,
                 avatar_url: r.avatar_url,
+                public_title: r.public_title,
                 status: r.status,
                 rejection_codes,
                 rejection_message: r.rejection_message,

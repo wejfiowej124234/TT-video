@@ -84,6 +84,7 @@ async fn dispute_list_get_resolve_flow() {
             stake_amount: "0".to_string(),
             hourly_rate: None,
             avatar_url: None,
+            public_title: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,

@@ -230,9 +230,13 @@ async fn governance_proposals_response_parts(
     axum::http::HeaderMap,
     serde_json::Value,
 ) {
-    let res = get_governance_proposals_list(State(state))
-        .await
-        .into_response();
+    let res = get_governance_proposals_list(
+        State(state),
+        axum::http::HeaderMap::new(),
+        Query(crate::routes::governance_proposals::GovernanceProposalsListQuery::default()),
+    )
+    .await
+    .into_response();
     let status = res.status();
     let headers = res.headers().clone();
     let body = res.into_body().collect().await.unwrap().to_bytes();

@@ -628,6 +628,51 @@ pub struct PostConsoleRoleChangeRequestBody {
     pub reason: Option<String>,
 }
 
+/// ② staging 多实例：目标 `users.role` 以 PG 为准（与 `require_admin_actor` 同源 · TN-P0-001/U02）。
+async fn resolve_target_users_role(
+    state: &ApiMetaState,
+    pool: &sqlx::PgPool,
+    target: Uuid,
+) -> Result<String, Response> {
+    match db::get_user_by_id(pool, target).await {
+        Ok(Some(u)) => {
+            if let Some(ref co) = state.chain_off {
+                let mut store = co.store.write().await;
+                if let Some(row) = store.users.get_mut(&target) {
+                    row.role = u.role.clone();
+                }
+            }
+            Ok(u.role)
+        }
+        Ok(None) => {
+            let Some(co) = state.chain_off.as_ref() else {
+                return Err((
+                    StatusCode::NOT_FOUND,
+                    Json(crate::api_json::err_key("user_not_found")),
+                )
+                    .into_response());
+            };
+            let store = co.store.read().await;
+            store
+                .users
+                .get(&target)
+                .map(|u| u.role.clone())
+                .ok_or_else(|| {
+                    (
+                        StatusCode::NOT_FOUND,
+                        Json(crate::api_json::err_key("user_not_found")),
+                    )
+                        .into_response()
+                })
+        }
+        Err(_) => Err((
+            StatusCode::SERVICE_UNAVAILABLE,
+            Json(crate::api_json::err_key("admin_db_required")),
+        )
+            .into_response()),
+    }
+}
+
 pub async fn post_admin_user_console_role_change_request(
     State(state): State<ApiMetaState>,
     Path(user_id): Path<String>,
@@ -669,23 +714,16 @@ pub async fn post_admin_user_console_role_change_request(
         )
             .into_response();
     }
-    let Some(co) = state.chain_off.as_ref() else {
+    let Some(_co) = state.chain_off.as_ref() else {
         return (
             StatusCode::SERVICE_UNAVAILABLE,
             Json(crate::api_json::err_key("chain_off_unavailable")),
         )
             .into_response();
     };
-    let target_role = {
-        let store = co.store.read().await;
-        store.users.get(&target).map(|u| u.role.clone())
-    };
-    let Some(target_role) = target_role else {
-        return (
-            StatusCode::NOT_FOUND,
-            Json(crate::api_json::err_key("user_not_found")),
-        )
-            .into_response();
+    let target_role = match resolve_target_users_role(&state, pool, target).await {
+        Ok(r) => r,
+        Err(r) => return r,
     };
     if target_role != "admin" && target_role != "super_admin" {
         return (
@@ -788,23 +826,16 @@ pub async fn put_admin_user_console_role(
         )
             .into_response();
     }
-    let Some(co) = state.chain_off.as_ref() else {
+    let Some(_co) = state.chain_off.as_ref() else {
         return (
             StatusCode::SERVICE_UNAVAILABLE,
             Json(crate::api_json::err_key("chain_off_unavailable")),
         )
             .into_response();
     };
-    let target_role = {
-        let store = co.store.read().await;
-        store.users.get(&target).map(|u| u.role.clone())
-    };
-    let Some(target_role) = target_role else {
-        return (
-            StatusCode::NOT_FOUND,
-            Json(crate::api_json::err_key("user_not_found")),
-        )
-            .into_response();
+    let target_role = match resolve_target_users_role(&state, pool, target).await {
+        Ok(r) => r,
+        Err(r) => return r,
     };
     if target_role != "admin" && target_role != "super_admin" {
         return (

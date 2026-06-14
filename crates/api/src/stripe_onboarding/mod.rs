@@ -20,9 +20,7 @@ mod webhook;
 mod tests;
 
 pub use admin_refund::try_admin_psp_refund_after_financial_reversal;
-pub use config::{
-    onboarding_stripe_amount_minor, stripe_checkout_enabled, stripe_onboarding_enabled,
-};
+pub use config::{stripe_checkout_enabled, stripe_onboarding_enabled};
 pub use ensure::{ensure_checkout_session_for_entitlement, ensure_payment_intent_for_entitlement};
 #[cfg(test)]
 pub(crate) use signature::build_stripe_webhook_signature_header;

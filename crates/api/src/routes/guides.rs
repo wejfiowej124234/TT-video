@@ -142,10 +142,21 @@ pub async fn guide_create(
 
 pub async fn guide_stake(
     State(state): State<ApiMetaState>,
+    headers: HeaderMap,
     Path(id): Path<String>,
     Json(body): Json<chain_off::StakeBody>,
 ) -> impl IntoResponse {
     if let Some(ref co) = state.chain_off {
+        let uid = match extract_user_with_session_check(&state, &headers).await {
+            Some(u) => u,
+            None => {
+                return (
+                    StatusCode::UNAUTHORIZED,
+                    Json(json!({"error": "login_required", "message": "login_required"})),
+                )
+                    .into_response();
+            }
+        };
         let Ok(gid) = Uuid::parse_str(&id) else {
             return (
                 StatusCode::BAD_REQUEST,
@@ -153,7 +164,7 @@ pub async fn guide_stake(
             )
                 .into_response();
         };
-        return match chain_off::guide_stake_impl(co.clone(), gid, Json(body)).await {
+        return match chain_off::guide_stake_impl(co.clone(), uid, gid, Json(body)).await {
             Ok(j) => j.into_response(),
             Err((code, j)) => (code, j).into_response(),
         };

@@ -1,4 +1,4 @@
-//! 自由市场商家/收购写路径门闸：**`role` + 准入费 paid +（商家）资质申请 approved**。
+//! 自由市场商家/收购写路径门闸：**merchant 槽 active** + 准入费 paid + 资质申请 approved（L3 · ① 本地）。
 
 use axum::http::StatusCode;
 use axum::response::IntoResponse;
@@ -83,10 +83,36 @@ async fn provider_application_approved_pg(
 }
 
 async fn provider_application_approved_chain_off(
-    _state: &ApiMetaState,
-    _user_id: Uuid,
+    state: &ApiMetaState,
+    user_id: Uuid,
 ) -> bool {
-    false
+    let Some(co) = state.chain_off.as_ref() else {
+        return false;
+    };
+    let store = co.store.read().await;
+    crate::chain_off::provider_application_approved_in_store(&store, user_id)
+}
+
+async fn merchant_slot_active_for_user(
+    state: &ApiMetaState,
+    pool: &sqlx::PgPool,
+    user_id: Uuid,
+) -> Result<bool, axum::response::Response> {
+    if let Some(co) = state.chain_off.as_ref() {
+        let store = co.store.read().await;
+        if crate::chain_off::merchant_slot_active_in_store(&store, user_id) {
+            return Ok(true);
+        }
+    }
+    let user = match get_user_by_id(pool, user_id).await {
+        Ok(Some(u)) => u,
+        Ok(None) => return Ok(false),
+        Err(e) => {
+            eprintln!("WARN: get_user_by_id market gate slot: {e}");
+            return Err(onboarding_entitlement_lookup_failed_response());
+        }
+    };
+    Ok(user.role == "provider")
 }
 
 async fn ensure_paid_entitlement(
@@ -106,21 +132,13 @@ async fn ensure_paid_entitlement(
 
 use super::acquisition_publish_gate::ensure_acquisition_market_write_allowed;
 
-/// **`POST …/market/provider/*`** 写路径：须 **`users.role=provider`**、**`onboarding_entitlements` paid**、**`provider_onboarding` approved**。
+/// **`POST …/market/provider/*`** 写路径：须 **merchant 槽 active**、**paid entitlement**、**provider_onboarding approved**。
 pub(crate) async fn ensure_provider_market_write_allowed(
     state: &ApiMetaState,
     pool: &sqlx::PgPool,
     user_id: Uuid,
 ) -> Result<(), axum::response::Response> {
-    let user = match get_user_by_id(pool, user_id).await {
-        Ok(Some(u)) => u,
-        Ok(None) => return Err(merchant_role_required_response("provider")),
-        Err(e) => {
-            eprintln!("WARN: get_user_by_id market gate: {e}");
-            return Err(onboarding_entitlement_lookup_failed_response());
-        }
-    };
-    if user.role != "provider" {
+    if !merchant_slot_active_for_user(state, pool, user_id).await? {
         return Err(merchant_role_required_response("provider"));
     }
 

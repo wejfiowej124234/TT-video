@@ -51,6 +51,7 @@ mod tests {
     use crate::state::test_support::api_meta_state;
     use crate::state::ApiMetaState;
     use axum::extract::Query;
+    use axum::http::HeaderMap;
 
     /// **B110-SSOT-07 / TT-SSOT-SWITCH-APPLY-001**：`fee-pool-aggregates`（含 **`build_fee_pool_aggregate_body`** Σ 体）**不得**带 **`GET …/governance/pool`** 根级 **`country_pool*`** 链上主读键，以免与 **RegionVault `balanceOf`** SSOT 混淆。
     fn assert_fee_pool_aggregates_has_no_root_country_pool_ssot_keys(v: &serde_json::Value) {
@@ -323,7 +324,13 @@ mod tests {
     async fn governance_proposals_response_parts(
         state: ApiMetaState,
     ) -> (axum::http::StatusCode, axum::http::HeaderMap, serde_json::Value) {
-        let res = get_governance_proposals_list(State(state)).await.into_response();
+        let res = get_governance_proposals_list(
+            State(state),
+            HeaderMap::new(),
+            Query(crate::routes::governance_proposals::GovernanceProposalsListQuery::default()),
+        )
+        .await
+        .into_response();
         let status = res.status();
         let headers = res.headers().clone();
         let body = res.into_body().collect().await.unwrap().to_bytes();

@@ -365,6 +365,12 @@ pub struct OrdersListQuery {
     /// **B-102 / TT-122**：可选 **`orders_chain_id`**（与 **`CHAIN_ID`/`ChainConfig.chain_id`** 同源 **u64**）；**`0` 或未传** 表示用 **默认业务链范围**（见响应 **`orders_chain_scope`**）。
     #[serde(default)]
     pub orders_chain_id: Option<u64>,
+    /// W4 Workspace：按 **`business_line`** 过滤（`trip` · `merchant_service` · `acquisition`）。
+    #[serde(default)]
+    pub business_line: Option<String>,
+    /// Guide Order Corridor：`guide` = 仅接待单（`order.guide_id` = 当前用户向导行 id）；`traveler` = 仅游客侧。
+    #[serde(default)]
+    pub hat: Option<String>,
 }
 
 pub fn router() -> Router<ApiMetaState> {
@@ -448,6 +454,42 @@ pub async fn get_orders(
                     .orders_chain_id
                     .filter(|&u| u > 0)
                     .map(|u| (u.min(i64::MAX as u64)) as i64);
+                let business_line_filter = match q
+                    .business_line
+                    .as_deref()
+                    .map(str::trim)
+                    .filter(|s| !s.is_empty())
+                {
+                    None => None,
+                    Some(raw) => match chain_off::parse_orders_business_line_filter(Some(raw)) {
+                        Some(line) => Some(line),
+                        None => {
+                            return (
+                                StatusCode::BAD_REQUEST,
+                                Json(json!({
+                                    "error": "invalid_business_line",
+                                    "message": "invalid_business_line",
+                                    "hint": "business_line must be trip, merchant_service, or acquisition"
+                                })),
+                            )
+                                .into_response();
+                        }
+                    },
+                };
+                let list_hat = match chain_off::parse_orders_list_hat(q.hat.as_deref()) {
+                    Ok(h) => h,
+                    Err(e) => {
+                        return (
+                            StatusCode::BAD_REQUEST,
+                            Json(json!({
+                                "error": e,
+                                "message": e,
+                                    "hint": "hat must be guide, merchant, or traveler"
+                            })),
+                        )
+                            .into_response();
+                    }
+                };
                 match chain_off::orders_list_impl(
                     co.clone(),
                     state.order_deadline_clock.as_ref(),
@@ -455,7 +497,9 @@ pub async fn get_orders(
                     uid,
                     page,
                     state_filter,
+                    business_line_filter,
                     orders_list_chain_id,
+                    list_hat,
                 )
                 .await
                 {

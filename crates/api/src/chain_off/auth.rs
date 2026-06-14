@@ -4,7 +4,7 @@ use axum::{
     http::{HeaderMap, StatusCode},
     Json,
 };
-use chrono::{Duration, Utc};
+use chrono::{DateTime, Duration, Utc};
 use serde::Deserialize;
 use serde_json::json;
 use uuid::Uuid;
@@ -12,6 +12,8 @@ use uuid::Uuid;
 use super::{
     strict_auth_db_write_enabled, strict_seed_db_write_enabled, ChainOffState, GuideRow, UserRow,
 };
+use super::provider_application::ProviderApplicationRow;
+use super::steward_application::StewardApplicationRow;
 
 const PASSWORD_MIN_LEN: usize = 8;
 const PASSWORD_MAX_LEN: usize = 72; // bcrypt 字节上限
@@ -422,6 +424,9 @@ pub async fn auth_register(
         .await;
     }
 
+    // 注册 OTP（或 dev 免 OTP）成功后即写入 email_verified_at，与信任页 checklist 同源，避免二次验证。
+    mark_user_email_verified(&state, user_id_reg, now).await;
+
     let mut reg_json = json!({
         "status": "ok",
         "user_id": user.id.to_string(),
@@ -444,6 +449,59 @@ pub async fn auth_register(
         }
     }
     Ok(Json(reg_json))
+}
+
+/// ① 注册 / seed：写入 chain_off + PG `email_verified_at`（幂等）；PG 侧触发 growth `email_verified` 积分。
+pub(crate) async fn mark_user_email_verified(
+    state: &ChainOffState,
+    user_id: Uuid,
+    verified_at: DateTime<Utc>,
+) {
+    {
+        let mut store = state.store.write().await;
+        store.user_email_verified_at.insert(user_id, verified_at);
+    }
+    if let Some(ref pool) = state.db_pool {
+        if let Err(e) = sqlx::query(
+            r#"UPDATE users SET email_verified_at = $1, updated_at = now() WHERE id = $2 AND email_verified_at IS NULL"#,
+        )
+        .bind(verified_at)
+        .bind(user_id)
+        .execute(pool)
+        .await
+        {
+            eprintln!("[audit] mark_user_email_verified user_id={user_id} error={e}");
+        }
+        crate::db::observe_email_verified(pool, user_id).await;
+    }
+}
+
+async fn seed_canonical_test_email_verified(state: &ChainOffState) {
+    const CANONICAL_VERIFIED_EMAILS: &[&str] =
+        &[
+            "tourist@test.com",
+            "guide@test.com",
+            "multi-demo@test.com",
+            "merchant@test.com",
+            "provider-did-rank-demo@test.com",
+        ];
+    let now = Utc::now();
+    let user_ids: Vec<Uuid> = {
+        let store = state.store.read().await;
+        CANONICAL_VERIFIED_EMAILS
+            .iter()
+            .filter_map(|email| {
+                store
+                    .users
+                    .values()
+                    .find(|u| u.email == *email)
+                    .map(|u| u.id)
+            })
+            .collect()
+    };
+    for uid in user_ids {
+        mark_user_email_verified(state, uid, now).await;
+    }
 }
 
 fn register_verification_required() -> bool {
@@ -809,6 +867,9 @@ pub async fn seed_test_accounts_if_empty(state: &ChainOffState) {
     if has_tourist && has_guide {
         drop(store);
         seed_me_settings_security_notification_fixture(state).await;
+        seed_multi_identity_demo_account(state).await;
+        seed_merchant_workbench_demo_accounts(state).await;
+        seed_canonical_test_email_verified(state).await;
         return;
     }
     let password_hash = match bcrypt::hash(SEED_PASSWORD, bcrypt::DEFAULT_COST) {
@@ -916,6 +977,7 @@ pub async fn seed_test_accounts_if_empty(state: &ChainOffState) {
             stake_amount: "0".to_string(),
             hourly_rate: None,
             avatar_url: None,
+            public_title: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -1044,6 +1106,499 @@ pub async fn seed_test_accounts_if_empty(state: &ChainOffState) {
     }
     drop(store);
     seed_me_settings_security_notification_fixture(state).await;
+    seed_multi_identity_demo_account(state).await;
+    seed_merchant_workbench_demo_accounts(state).await;
+    seed_canonical_test_email_verified(state).await;
+}
+
+const MERCHANT_WORKBENCH_DEMO_EMAIL: &str = "merchant@test.com";
+const PROVIDER_DID_RANK_WORKBENCH_EMAIL: &str = "provider-did-rank-demo@test.com";
+
+fn merchant_workbench_demo_payload(shop_name: &str, bio: &str) -> serde_json::Value {
+    serde_json::json!({
+        "shop_name": shop_name,
+        "city": "杭州",
+        "country_code": "CN",
+        "categories": "travel,experience",
+        "bio": bio
+    })
+}
+
+fn ensure_provider_application_chain_off(
+    store: &mut super::ChainOffStore,
+    user_id: Uuid,
+    payload: serde_json::Value,
+    now: chrono::DateTime<Utc>,
+) {
+    store
+        .provider_applications_by_user
+        .entry(user_id)
+        .and_modify(|app| {
+            app.status = "approved".to_string();
+            app.updated_at = now;
+            if app.payload.is_null()
+                || app
+                    .payload
+                    .as_object()
+                    .map(|o| o.is_empty())
+                    .unwrap_or(true)
+            {
+                app.payload = payload.clone();
+            }
+        })
+        .or_insert_with(|| ProviderApplicationRow {
+            id: Uuid::new_v4(),
+            user_id,
+            status: "approved".to_string(),
+            payload,
+            submitted_at: now,
+            updated_at: now,
+            rejection_codes: vec![],
+            rejection_message: None,
+        });
+}
+
+/// ① 本地 · 商家工作台烟测：`merchant@test.com` + 补齐 DID 榜演示商家的 chain_off 申请单（hydrate 不加载申请单）。
+pub async fn seed_merchant_workbench_demo_accounts(state: &ChainOffState) {
+    const SEED_PASSWORD: &str = "Test123!";
+    let password_hash = match bcrypt::hash(SEED_PASSWORD, bcrypt::DEFAULT_COST) {
+        Ok(h) => h,
+        Err(_) => return,
+    };
+    let now = Utc::now();
+    let strict_seed = strict_seed_db_write_enabled();
+
+    let merchant_exists = {
+        let store = state.store.read().await;
+        store
+            .users
+            .values()
+            .any(|u| u.email == MERCHANT_WORKBENCH_DEMO_EMAIL)
+    };
+
+    if !merchant_exists {
+        let user_id = Uuid::from_u128(0x0000_0000_0000_4000_8000_0000_0000_0103);
+        let user = UserRow {
+            id: user_id,
+            email: MERCHANT_WORKBENCH_DEMO_EMAIL.to_string(),
+            password_hash: Some(password_hash.clone()),
+            role: "provider".to_string(),
+            kyc_status: "none".to_string(),
+            nickname: Some("商家工作台演示".to_string()),
+            avatar_url: None,
+            default_wallet_address: None,
+            created_at: now,
+            updated_at: now,
+        };
+        let payload = merchant_workbench_demo_payload(
+            "商家工作台演示店",
+            "① 本地商家工作台 L5 烟测 · merchant@test.com",
+        );
+        {
+            let mut store = state.store.write().await;
+            store.users.insert(user_id, user.clone());
+            ensure_provider_application_chain_off(&mut store, user_id, payload, now);
+        }
+        if let Some(ref pool) = state.db_pool {
+            let insert = crate::db::insert_user(
+                pool,
+                user.id,
+                &user.email,
+                user.password_hash.as_deref(),
+                &user.role,
+                &user.kyc_status,
+                user.nickname.as_deref(),
+                user.avatar_url.as_deref(),
+                user.default_wallet_address.as_deref(),
+                user.created_at,
+                user.updated_at,
+            )
+            .await;
+            if strict_seed {
+                if let Err(e) = insert {
+                    eprintln!(
+                        "[seed] merchant@test strict insert_user failed — memory only: {e}"
+                    );
+                }
+            } else if let Err(e) = insert {
+                eprintln!("[seed] merchant@test insert_user failed: {e}");
+            }
+        }
+        println!(
+            "seed: merchant workbench demo — {} (password: {})",
+            MERCHANT_WORKBENCH_DEMO_EMAIL, SEED_PASSWORD
+        );
+    }
+
+    let sync_emails = [
+        (
+            MERCHANT_WORKBENCH_DEMO_EMAIL,
+            merchant_workbench_demo_payload(
+                "商家工作台演示店",
+                "① 本地商家工作台 L5 烟测 · merchant@test.com",
+            ),
+        ),
+        (
+            PROVIDER_DID_RANK_WORKBENCH_EMAIL,
+            merchant_workbench_demo_payload(
+                "DID榜演示商家",
+                "DID 榜副榜演示 · provider-did-rank-demo",
+            ),
+        ),
+    ];
+
+    for (email, payload) in sync_emails {
+        let user_id = {
+            let store = state.store.read().await;
+            store
+                .users
+                .values()
+                .find(|u| u.email == email)
+                .map(|u| u.id)
+        };
+        let Some(user_id) = user_id else {
+            continue;
+        };
+        let mut store = state.store.write().await;
+        if let Some(u) = store.users.get_mut(&user_id) {
+            if email == MERCHANT_WORKBENCH_DEMO_EMAIL {
+                u.role = "provider".to_string();
+                u.password_hash = Some(password_hash.clone());
+                u.updated_at = now;
+            }
+        }
+        ensure_provider_application_chain_off(&mut store, user_id, payload, now);
+    }
+}
+
+const MULTI_DEMO_EMAIL: &str = "multi-demo@test.com";
+/// ① 本地 · 对齐 Anvil deployer / `mint-ttg-anvil-local.sh` 默认 funding 钱包（可 MetaMask 导入 `TTG_ANVIL_DEPLOYER_PK`）
+const MULTI_DEMO_WALLET: &str = "0x104FCb93B5e097F92c93Ee4621C487C6C953D212";
+const LEGACY_MULTI_DEMO_WALLET: &str = "0xmulti0000000000000000000000000000000001";
+/// 旧 synthetic 演示地址（无对应私钥 · 2026-06 前 seed）
+const LEGACY_MULTI_DEMO_SYNTHETIC_WALLET: &str = "0x4d554c5449000000000000000000000000000001";
+
+fn multi_demo_wallet_needs_migration(addr: &str) -> bool {
+    let s = addr.trim();
+    s.is_empty()
+        || s.eq_ignore_ascii_case(LEGACY_MULTI_DEMO_WALLET)
+        || s.eq_ignore_ascii_case(LEGACY_MULTI_DEMO_SYNTHETIC_WALLET)
+        || !s.eq_ignore_ascii_case(MULTI_DEMO_WALLET)
+}
+
+/// 幂等写入 chain_off 四轨槽位（hydrate **不**加载申请单 · 须每次 seed 补齐）。
+fn ensure_multi_identity_demo_chain_off_slots(
+    store: &mut super::ChainOffStore,
+    user_id: Uuid,
+    now: chrono::DateTime<Utc>,
+) {
+    let wallet = MULTI_DEMO_WALLET.to_string();
+
+    if !store.guides_by_user.contains_key(&user_id) {
+        let guide_id = Uuid::new_v4();
+        store.guides.insert(
+            guide_id,
+            GuideRow {
+                id: guide_id,
+                user_id,
+                city: "杭州".to_string(),
+                country_code: "CN".to_string(),
+                languages: vec!["zh".to_string(), "en".to_string()],
+                service_types: vec!["walking".to_string(), "culture".to_string()],
+                bio: Some("多重身份演示 · 向导轨".to_string()),
+                wallet_address: Some(wallet.clone()),
+                real_name: None,
+                passport_number_hash: None,
+                id_photo_url: None,
+                language_cert_url: None,
+                guide_license_url: None,
+                stake_amount: "100".to_string(),
+                hourly_rate: Some("45".to_string()),
+                avatar_url: None,
+                public_title: None,
+                status: "active".to_string(),
+                rejection_codes: vec![],
+                rejection_message: None,
+                data_origin: "test".into(),
+                created_at: now,
+                updated_at: now,
+            },
+        );
+        store.guides_by_user.insert(user_id, guide_id);
+    } else if let Some(guide_id) = store.guides_by_user.get(&user_id).copied() {
+        if let Some(g) = store.guides.get_mut(&guide_id) {
+            g.status = "active".to_string();
+            if g
+                .wallet_address
+                .as_ref()
+                .map(|w| multi_demo_wallet_needs_migration(w))
+                .unwrap_or(true)
+            {
+                g.wallet_address = Some(wallet.clone());
+            }
+            g.updated_at = now;
+        }
+    }
+
+    store
+        .provider_applications_by_user
+        .entry(user_id)
+        .and_modify(|app| {
+            app.status = "approved".to_string();
+            app.updated_at = now;
+        })
+        .or_insert_with(|| ProviderApplicationRow {
+            id: Uuid::new_v4(),
+            user_id,
+            status: "approved".to_string(),
+            payload: json!({
+                "shop_name": "演示商家店",
+                "city": "杭州",
+                "categories": "travel",
+                "bio": "多重身份演示 · 商家轨（申请 approved · role 仍为 guide）"
+            }),
+            submitted_at: now,
+            updated_at: now,
+            rejection_codes: vec![],
+            rejection_message: None,
+        });
+
+    store
+        .steward_applications_by_user
+        .entry(user_id)
+        .and_modify(|app| {
+            app.status = "approved".to_string();
+            app.updated_at = now;
+            if multi_demo_wallet_needs_migration(&app.wallet_address) {
+                app.wallet_address = wallet.clone();
+            }
+        })
+        .or_insert_with(|| StewardApplicationRow {
+            id: Uuid::new_v4(),
+            user_id,
+            status: "approved".to_string(),
+            jurisdictions: vec!["CN".to_string()],
+            wallet_address: wallet.clone(),
+            payload: json!({
+                "motivation": "多重身份演示 · 主理人轨",
+                "tagline": "区域治理演示"
+            }),
+            submitted_at: now,
+            updated_at: now,
+            rejection_codes: vec![],
+            rejection_message: None,
+        });
+
+    store
+        .acquisition_profiles_by_user
+        .entry(user_id)
+        .and_modify(|p| p.updated_at = now)
+        .or_insert_with(|| super::AcquisitionProfileRow {
+            public_bio: Some("多重身份演示 · 收购轨".to_string()),
+            tagline: Some("Travel acquisition demo".to_string()),
+            avatar_url: None,
+            updated_at: now,
+        });
+}
+
+/// ① 本地 · 多重身份手测账号（**不**覆盖 `users.role` 为单一经营轨；槽位由申请单 + guides 独立派生）。
+pub async fn seed_multi_identity_demo_account(state: &ChainOffState) {
+    const SEED_PASSWORD: &str = "Test123!";
+
+    let password_hash = match bcrypt::hash(SEED_PASSWORD, bcrypt::DEFAULT_COST) {
+        Ok(h) => h,
+        Err(_) => return,
+    };
+    let now = Utc::now();
+
+    if let Some(uid) = {
+        let store = state.store.read().await;
+        store
+            .users
+            .values()
+            .find(|u| u.email == MULTI_DEMO_EMAIL)
+            .map(|u| u.id)
+    } {
+        {
+            let mut store = state.store.write().await;
+            if let Some(u) = store.users.get_mut(&uid) {
+                u.password_hash = Some(password_hash.clone());
+                u.role = "guide".to_string();
+                if u.default_wallet_address
+                    .as_ref()
+                    .map(|w| multi_demo_wallet_needs_migration(w))
+                    .unwrap_or(true)
+                {
+                    u.default_wallet_address = Some(MULTI_DEMO_WALLET.to_string());
+                }
+                u.updated_at = now;
+            }
+            ensure_multi_identity_demo_chain_off_slots(&mut store, uid, now);
+        }
+        if let Some(ref pool) = state.db_pool {
+            if let Err(e) = crate::db::update_user_password(pool, uid, &password_hash).await {
+                eprintln!("[seed] multi-demo update_user_password failed: {e}");
+            }
+        }
+        seed_multi_identity_demo_pg_prereqs(state, uid).await;
+        return;
+    }
+
+    let user_id = Uuid::new_v4();
+    let wallet = MULTI_DEMO_WALLET.to_string();
+
+    let user = UserRow {
+        id: user_id,
+        email: MULTI_DEMO_EMAIL.to_string(),
+        password_hash: Some(password_hash),
+        role: "guide".to_string(),
+        kyc_status: "none".to_string(),
+        nickname: Some("多重身份演示".to_string()),
+        avatar_url: None,
+        default_wallet_address: Some(wallet.clone()),
+        created_at: now,
+        updated_at: now,
+    };
+
+    let mut store = state.store.write().await;
+    store.users.insert(user_id, user.clone());
+    ensure_multi_identity_demo_chain_off_slots(&mut store, user_id, now);
+    drop(store);
+
+    if let Some(ref pool) = state.db_pool {
+        let strict_seed = strict_seed_db_write_enabled();
+        if strict_seed {
+            if let Err(e) = crate::db::insert_user(
+                pool,
+                user.id,
+                &user.email,
+                user.password_hash.as_deref(),
+                &user.role,
+                &user.kyc_status,
+                user.nickname.as_deref(),
+                user.avatar_url.as_deref(),
+                user.default_wallet_address.as_deref(),
+                user.created_at,
+                user.updated_at,
+            )
+            .await
+            {
+                eprintln!("[seed] multi-demo insert_user failed: {e}");
+            }
+        } else if let Err(e) = crate::db::insert_user(
+            pool,
+            user.id,
+            &user.email,
+            user.password_hash.as_deref(),
+            &user.role,
+            &user.kyc_status,
+            user.nickname.as_deref(),
+            user.avatar_url.as_deref(),
+            user.default_wallet_address.as_deref(),
+            user.created_at,
+            user.updated_at,
+        )
+        .await
+        {
+            eprintln!("[seed] multi-demo insert_user failed: {e}");
+        }
+    }
+
+    seed_multi_identity_demo_pg_prereqs(state, user_id).await;
+
+    println!(
+        "seed: multi-identity demo — {} (password: {}) · guide + merchant + steward + acquisition",
+        MULTI_DEMO_EMAIL, SEED_PASSWORD
+    );
+}
+
+/// PG 侧：paid entitlement · approved role_applications · acquisition bond（**不**改 `users.role`）。
+async fn seed_multi_identity_demo_pg_prereqs(state: &ChainOffState, user_id: Uuid) {
+    let Some(ref pool) = state.db_pool else {
+        return;
+    };
+    let wallet = MULTI_DEMO_WALLET;
+
+    let _ = sqlx::query(
+        "UPDATE users SET default_wallet_address = $2, updated_at = now() WHERE id = $1 AND email = $3",
+    )
+    .bind(user_id)
+    .bind(wallet)
+    .bind(MULTI_DEMO_EMAIL)
+    .execute(pool)
+    .await;
+
+    for (role_target, kind) in [
+        ("provider", "provider_onboarding"),
+        ("region_steward", "region_steward_onboarding"),
+    ] {
+        let ent_id = Uuid::new_v4();
+        let idem = format!("multi-demo-ent-{role_target}");
+        let _ = sqlx::query(
+            "DELETE FROM onboarding_entitlements WHERE user_id = $1 AND role_target = $2",
+        )
+        .bind(user_id)
+        .bind(role_target)
+        .execute(pool)
+        .await;
+        if let Err(e) = sqlx::query(
+            r#"INSERT INTO onboarding_entitlements (
+                id, user_id, role_target, sku, fee_schedule_version, status, idempotency_key, paid_at, created_at, updated_at
+            ) VALUES ($1, $2, $3, 'multi_demo_l3', 'v0', 'paid', $4, now(), now(), now())"#,
+        )
+        .bind(ent_id)
+        .bind(user_id)
+        .bind(role_target)
+        .bind(&idem)
+        .execute(pool)
+        .await
+        {
+            eprintln!("[seed] multi-demo entitlement {role_target}: {e}");
+        }
+
+        let app_id = Uuid::new_v4();
+        let _ = sqlx::query(
+            "DELETE FROM role_applications WHERE user_id = $1 AND kind = $2",
+        )
+        .bind(user_id)
+        .bind(kind)
+        .execute(pool)
+        .await;
+        if let Err(e) = sqlx::query(
+            r#"INSERT INTO role_applications (
+                id, user_id, kind, status, legacy_ref, rejection_codes, metadata, submitted_at, decided_at, created_at, updated_at
+            ) VALUES ($1, $2, $3, 'approved', '{}'::jsonb, '[]'::jsonb, '{"seed":"multi-demo"}'::jsonb, now(), now(), now(), now())"#,
+        )
+        .bind(app_id)
+        .bind(user_id)
+        .bind(kind)
+        .execute(pool)
+        .await
+        {
+            eprintln!("[seed] multi-demo role_application {kind}: {e}");
+        }
+    }
+
+    let bond_id = Uuid::new_v4();
+    let _ = sqlx::query(
+        "DELETE FROM staking_positions WHERE user_id = $1 AND kind = 'acquisition_publish_bond'",
+    )
+    .bind(user_id)
+    .execute(pool)
+    .await;
+    if let Err(e) = sqlx::query(
+        r#"INSERT INTO staking_positions (
+            id, application_id, user_id, kind, amount, currency, status, created_at, updated_at
+        ) VALUES ($1, NULL, $2, 'acquisition_publish_bond', $3, 'USDC', 'locked', now(), now())"#,
+    )
+    .bind(bond_id)
+    .bind(user_id)
+    .bind("50")
+    .execute(pool)
+    .await
+    {
+        eprintln!("[seed] multi-demo acquisition bond: {e}");
+    }
 }
 
 /// ① E2E：`GET /me/security-notifications` 至少 2 条（pending + sent · 幂等）
@@ -1063,24 +1618,6 @@ pub async fn seed_me_settings_security_notification_fixture(state: &ChainOffStat
     let Some(uid) = uid else {
         return;
     };
-
-    let now = Utc::now();
-    {
-        let mut store = state.store.write().await;
-        if !store.user_email_verified_at.contains_key(&uid) {
-            store.user_email_verified_at.insert(uid, now);
-        }
-    }
-    if let Err(e) = sqlx::query(
-        r#"UPDATE users SET email_verified_at = $1, updated_at = now() WHERE id = $2 AND email_verified_at IS NULL"#,
-    )
-    .bind(now)
-    .bind(uid)
-    .execute(pool)
-    .await
-    {
-        eprintln!("[seed] me_settings tourist email_verified_at err={e}");
-    }
 
     async fn ensure(
         pool: &sqlx::postgres::PgPool,
@@ -1310,17 +1847,8 @@ pub async fn auth_verify_email_stub(
         ))?;
         user.updated_at = now;
     }
-    store.user_email_verified_at.insert(user_id, now);
-    if let Some(ref pool) = state.db_pool {
-        let _ = sqlx::query(
-            r#"UPDATE users SET email_verified_at = $1, updated_at = now() WHERE id = $2 AND email_verified_at IS NULL"#,
-        )
-        .bind(now)
-        .bind(user_id)
-        .execute(pool)
-        .await;
-        crate::db::observe_email_verified(pool, user_id).await;
-    }
+    drop(store);
+    mark_user_email_verified(&state, user_id, now).await;
     Ok(Json(json!({
         "status": "ok",
         "message": "email_verified"

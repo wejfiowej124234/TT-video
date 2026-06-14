@@ -43,16 +43,56 @@ pub fn onboarding_stripe_amount_minor() -> i64 {
 pub fn onboarding_stripe_currency() -> String {
     let raw =
         std::env::var("TRAVELTRUST_ONBOARDING_STRIPE_CURRENCY").unwrap_or_else(|_| "usd".into());
+    normalize_stripe_iso4217_currency(&raw)
+}
+
+/// B 轨 **`fee_schedule.currency`** 常为 **`USDC`**（产品标价）；Stripe PI 须 **ISO4217 三字母**（② test → **`usd`**）。
+pub fn stripe_currency_for_fee_schedule(raw: &str) -> String {
+    let normalized: String = raw
+        .trim()
+        .to_ascii_lowercase()
+        .chars()
+        .filter(|c| c.is_ascii_alphabetic())
+        .collect();
+    match normalized.as_str() {
+        "" => onboarding_stripe_currency(),
+        "usdc" => "usd".into(),
+        s if s.len() == 3 => s.to_string(),
+        _ => onboarding_stripe_currency(),
+    }
+}
+
+fn normalize_stripe_iso4217_currency(raw: &str) -> String {
     let s: String = raw
         .trim()
         .to_ascii_lowercase()
         .chars()
-        .filter(|c| c.is_ascii_lowercase())
-        .take(3)
+        .filter(|c| c.is_ascii_alphabetic())
         .collect();
-    if s.len() == 3 {
-        s
-    } else {
-        "usd".into()
+    match s.as_str() {
+        "usdc" => "usd".into(),
+        s if s.len() == 3 => s.to_string(),
+        _ => "usd".into(),
+    }
+}
+
+#[cfg(test)]
+mod currency_tests {
+    use super::{normalize_stripe_iso4217_currency, stripe_currency_for_fee_schedule};
+
+    #[test]
+    fn fee_schedule_usdc_maps_to_stripe_usd() {
+        assert_eq!(stripe_currency_for_fee_schedule("USDC"), "usd");
+        assert_eq!(stripe_currency_for_fee_schedule("usdc"), "usd");
+    }
+
+    #[test]
+    fn fee_schedule_three_letter_passthrough() {
+        assert_eq!(stripe_currency_for_fee_schedule("eur"), "eur");
+    }
+
+    #[test]
+    fn env_currency_normalizes_usdc() {
+        assert_eq!(normalize_stripe_iso4217_currency("USDC"), "usd");
     }
 }

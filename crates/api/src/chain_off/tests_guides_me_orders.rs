@@ -78,6 +78,7 @@ async fn p21_guides_create_list_get_stake() {
 
     let stake_res = guide_stake_impl(
         state.clone(),
+        user_id,
         guide_id,
         Json(StakeBody {
             amount: "100".to_string(),
@@ -404,6 +405,7 @@ async fn p21_order_create_accept_mock_pay_confirm() {
             stake_amount: "100".to_string(),
             hourly_rate: None,
             avatar_url: None,
+            public_title: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -526,6 +528,7 @@ async fn order_accept_forbidden_when_guide_pending_review() {
             stake_amount: "100".to_string(),
             hourly_rate: None,
             avatar_url: None,
+            public_title: None,
             status: "pending".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -620,6 +623,7 @@ async fn order_accept_forbidden_when_trust_risk_high() {
             stake_amount: "100".to_string(),
             hourly_rate: None,
             avatar_url: None,
+            public_title: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -800,6 +804,7 @@ async fn order_create_forbidden_when_tourist_kyc_pending() {
             stake_amount: "100".to_string(),
             hourly_rate: None,
             avatar_url: None,
+            public_title: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -891,6 +896,7 @@ async fn order_create_forbidden_when_tourist_risk_high() {
             stake_amount: "100".to_string(),
             hourly_rate: None,
             avatar_url: None,
+            public_title: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -1034,6 +1040,7 @@ async fn order_mock_pay_forbidden_when_tourist_becomes_restricted() {
             stake_amount: "100".to_string(),
             hourly_rate: None,
             avatar_url: None,
+            public_title: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -1136,6 +1143,7 @@ async fn p21_order_cancel_created() {
             stake_amount: "100".to_string(),
             hourly_rate: None,
             avatar_url: None,
+            public_title: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -1229,6 +1237,7 @@ async fn p21_get_me_trust_identity_and_risk_from_store() {
             stake_amount: "0".to_string(),
             hourly_rate: None,
             avatar_url: None,
+            public_title: None,
             status: "pending".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -1476,4 +1485,100 @@ async fn get_me_reputation_as_reviewer_v2() {
         me["trust"]["reputation"]["as_reviewer"]["sum_review_weights"],
         0.42
     );
+}
+
+/// 向导 `exiting` → 接单 **403** `guide_exit_pending`
+#[tokio::test]
+async fn order_accept_forbidden_when_guide_exiting() {
+    let mut store = ChainOffStore::default();
+    let now = Utc::now();
+    let tourist_id = Uuid::new_v4();
+    let guide_user_id = Uuid::new_v4();
+    store.users.insert(
+        guide_user_id,
+        UserRow {
+            id: guide_user_id,
+            email: "g_exit@test.com".to_string(),
+            password_hash: None,
+            role: "guide".to_string(),
+            kyc_status: "none".to_string(),
+            nickname: None,
+            avatar_url: None,
+            default_wallet_address: None,
+            created_at: now,
+            updated_at: now,
+        },
+    );
+    let guide_row_id = Uuid::new_v4();
+    store.guides.insert(
+        guide_row_id,
+        GuideRow {
+            id: guide_row_id,
+            user_id: guide_user_id,
+            city: "HZ".to_string(),
+            country_code: "CN".to_string(),
+            languages: vec!["zh".to_string()],
+            service_types: vec!["walking".to_string()],
+            bio: None,
+            wallet_address: None,
+            real_name: None,
+            passport_number_hash: None,
+            id_photo_url: None,
+            language_cert_url: None,
+            guide_license_url: None,
+            stake_amount: "1000".to_string(),
+            hourly_rate: None,
+            avatar_url: None,
+            public_title: None,
+            status: "exiting".to_string(),
+            rejection_codes: vec![],
+            rejection_message: None,
+            created_at: now,
+            updated_at: now,
+            data_origin: "production".into(),
+        },
+    );
+    store.guides_by_user.insert(guide_user_id, guide_row_id);
+    let order_id = Uuid::new_v4();
+    store.orders.insert(
+        order_id,
+        OrderRow {
+            id: order_id,
+            tourist_id,
+            guide_id: guide_row_id,
+            amount: "100".to_string(),
+            currency: "USD".to_string(),
+            escrow_address: None,
+            state: OrderState::Created,
+            created_at: now,
+            accepted_at: None,
+            escrowed_at: None,
+            completed_at: None,
+            dispute_deadline_at: None,
+            auto_complete_at: None,
+            updated_at: now,
+            start_date: None,
+            end_date: None,
+            sub_status: None,
+            tourist_confirmed: None,
+            guide_confirmed: None,
+            rating_tourist_confirmed: None,
+            rating_guide_confirmed: None,
+            chain_id: None,
+            data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
+        },
+    );
+    let state = ChainOffState {
+        store: Arc::new(RwLock::new(store)),
+        config: ChainOffConfig::default(),
+        db_pool: None,
+    };
+    let Err((status, Json(err))) = order_accept_impl(state, None, order_id, guide_user_id).await
+    else {
+        panic!("expected accept forbidden");
+    };
+    assert_eq!(status, StatusCode::FORBIDDEN);
+    assert_eq!(err["error"], "guide_exit_pending");
 }

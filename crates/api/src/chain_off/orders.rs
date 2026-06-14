@@ -333,6 +333,8 @@ fn order_list_item_json(
         "amount": o.amount,
         "currency": o.currency,
         "status": order_state_to_str(o.state),
+        "state": order_state_to_str(o.state),
+        "sub_status": o.sub_status,
         "destination": destination,
         "city": city,
         "days": days,
@@ -361,6 +363,15 @@ fn order_list_item_json(
                 io.insert("itinerary".to_string(), v.clone());
             }
         }
+    }
+    if let Some(u) = store.users.get(&o.tourist_id) {
+        if let Some(nick) = u.nickname.as_deref().map(str::trim).filter(|s| !s.is_empty()) {
+            item["traveler_nickname"] = json!(nick);
+        }
+    }
+    item["business_line"] = json!(super::order_business_line_for_chain_off(o));
+    if let Some(ref kind) = o.order_kind {
+        item["order_kind"] = json!(kind);
     }
     item
 }
@@ -391,6 +402,54 @@ pub fn order_chain_mismatch_for_public_read(o: &OrderRow, chain: &ChainConfig) -
     }
 }
 
+/// W4 / Guide Order Corridor：`GET /api/v1/orders?hat=guide` 仅返回当前用户 **`guides_by_user`** 行 id 与 **`order.guide_id`** 匹配的接待单。
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum OrdersListHat {
+    Guide,
+    Merchant,
+    Traveler,
+}
+
+pub fn parse_orders_list_hat(raw: Option<&str>) -> Result<Option<OrdersListHat>, &'static str> {
+    match raw.map(str::trim).filter(|s| !s.is_empty()) {
+        None => Ok(None),
+        Some("guide") => Ok(Some(OrdersListHat::Guide)),
+        Some("merchant") => Ok(Some(OrdersListHat::Merchant)),
+        Some("traveler") => Ok(Some(OrdersListHat::Traveler)),
+        Some(_) => Err("invalid_hat"),
+    }
+}
+
+#[must_use]
+pub fn order_matches_orders_list_hat(
+    store: &ChainOffStore,
+    o: &OrderRow,
+    user_id: Uuid,
+    hat: Option<OrdersListHat>,
+) -> bool {
+    match hat {
+        None => true,
+        Some(OrdersListHat::Guide) => store
+            .guides_by_user
+            .get(&user_id)
+            .is_some_and(|guide_row_id| o.guide_id == *guide_row_id),
+        Some(OrdersListHat::Merchant) => {
+            super::order_business_line_for_chain_off(o) == "merchant_service"
+                && super::order_guide_user_id(store, o) == Some(user_id)
+        }
+        Some(OrdersListHat::Traveler) => o.tourist_id == user_id,
+    }
+}
+
+fn orders_list_hat_json(hat: Option<OrdersListHat>) -> Option<&'static str> {
+    match hat {
+        None => None,
+        Some(OrdersListHat::Guide) => Some("guide"),
+        Some(OrdersListHat::Merchant) => Some("merchant"),
+        Some(OrdersListHat::Traveler) => Some("traveler"),
+    }
+}
+
 /// 55-S12：订单列表含 destination、city、travel_date、days，且按 order_id 唯一（store.orders 即按 id 唯一）。
 /// 不传 `limit` 时保持全量返回（兼容旧客户端）；传 `limit` 时按 `updated_at DESC, id DESC` 分页，`cursor` 为上一页最后一条的 `id`。
 /// B-102 链范围；**`state_filter == Draft`** 时不施加链过滤，以便用户清理全部草稿（与 `itinerary_create` cap 计数一致）。
@@ -400,11 +459,15 @@ pub fn order_visible_in_orders_list(
     o: &OrderRow,
     user_id: Uuid,
     state_filter: Option<OrderState>,
+    business_line_filter: Option<&str>,
     business_chain_id: Option<i64>,
     orders_list_chain_id: Option<i64>,
 ) -> bool {
     super::order_is_participant(store, o, user_id)
         && state_filter.map_or(true, |s| o.state == s)
+        && business_line_filter.map_or(true, |line| {
+            super::order_matches_business_line_filter(o, line)
+        })
         && (state_filter == Some(OrderState::Draft)
             || order_matches_orders_list_chain_scope(o, business_chain_id, orders_list_chain_id))
 }
@@ -418,7 +481,9 @@ pub async fn orders_list_impl(
     user_id: Uuid,
     page: OrderListPage,
     state_filter: Option<OrderState>,
+    business_line_filter: Option<&str>,
     orders_list_chain_id: Option<i64>,
+    list_hat: Option<OrdersListHat>,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
     let deadline_as_of_utc = order_deadline_clock.now_utc();
     let rating_resolution =
@@ -434,9 +499,10 @@ pub async fn orders_list_impl(
                 o,
                 user_id,
                 state_filter,
+                business_line_filter,
                 business,
                 orders_list_chain_id,
-            )
+            ) && order_matches_orders_list_hat(&store, o, user_id, list_hat)
         })
         .collect();
 
@@ -492,6 +558,7 @@ pub async fn orders_list_impl(
             })
             .collect();
         let scope = crate::db::orders_list_chain_scope_json(business, orders_list_chain_id);
+        let hat_json = orders_list_hat_json(list_hat);
         return Ok(Json(json!({
             "status": "ok",
             "items": items,
@@ -500,7 +567,8 @@ pub async fn orders_list_impl(
                 "next_cursor": next_cursor,
                 "has_more": has_more
             },
-            "orders_chain_scope": scope
+            "orders_chain_scope": scope,
+            "list_hat": hat_json
         })));
     }
 
@@ -530,7 +598,13 @@ pub async fn orders_list_impl(
         })
         .collect();
     let scope = crate::db::orders_list_chain_scope_json(business, orders_list_chain_id);
-    Ok(Json(json!({ "status": "ok", "items": items, "orders_chain_scope": scope })))
+    let hat_json = orders_list_hat_json(list_hat);
+    Ok(Json(json!({
+        "status": "ok",
+        "items": items,
+        "orders_chain_scope": scope,
+        "list_hat": hat_json
+    })))
 }
 
 /// B-095：**向导收款 / 平台费入路由 / 国池（RegionVault）** 与 **`ChainConfig` + `guides.wallet_address`** 同源；**禁止**由客户端请求体覆写本对象。
@@ -1197,10 +1271,12 @@ pub async fn order_create_impl(
         ));
     }
     let guide = store.guides.get(&body.guide_id).unwrap();
-    if guide.status != "active" {
+    if !super::guides::guide_can_accept_orders(&guide.status) {
         return Err((
             StatusCode::BAD_REQUEST,
-            Json(crate::api_json::err_key("guide_not_active")),
+            Json(crate::api_json::err_key(super::guides::guide_order_gate_err_key(
+                &guide.status,
+            ))),
         ));
     }
     if store.guide_slot.get(&body.guide_id).is_some() {
@@ -1806,10 +1882,12 @@ pub async fn patch_order_guide_impl(
         StatusCode::NOT_FOUND,
         Json(crate::api_json::err_key("guide_not_found")),
     ))?;
-    if guide.status != "active" {
+    if !super::guides::guide_can_accept_orders(&guide.status) {
         return Err((
             StatusCode::BAD_REQUEST,
-            Json(crate::api_json::err_key("guide_not_active")),
+            Json(crate::api_json::err_key(super::guides::guide_order_gate_err_key(
+                &guide.status,
+            ))),
         ));
     }
     if let Some(occupied_order) = store.guide_slot.get(&guide_id) {
@@ -1846,6 +1924,162 @@ pub async fn patch_order_guide_impl(
 }
 
 #[cfg(test)]
+mod orders_list_hat_tests {
+    use super::*;
+    use chrono::Utc;
+    use traveltrust_core::OrderState;
+
+    fn sample_order(tourist_id: Uuid, guide_id: Uuid) -> OrderRow {
+        let now = Utc::now();
+        OrderRow {
+            id: Uuid::new_v4(),
+            tourist_id,
+            guide_id,
+            amount: "1".into(),
+            currency: "USD".into(),
+            escrow_address: None,
+            state: OrderState::Created,
+            created_at: now,
+            accepted_at: None,
+            escrowed_at: None,
+            completed_at: None,
+            dispute_deadline_at: None,
+            auto_complete_at: None,
+            updated_at: now,
+            start_date: None,
+            end_date: None,
+            sub_status: None,
+            tourist_confirmed: None,
+            guide_confirmed: None,
+            rating_tourist_confirmed: None,
+            rating_guide_confirmed: None,
+            chain_id: None,
+            data_origin: "production".into(),
+            order_kind: None,
+            market_listing_id: None,
+        }
+    }
+
+    #[test]
+    fn order_matches_orders_list_hat_guide_uses_guides_by_user_row_id() {
+        let user_id = Uuid::new_v4();
+        let guide_row_id = Uuid::new_v4();
+        let other_guide = Uuid::new_v4();
+        let mut store = ChainOffStore::default();
+        store.guides_by_user.insert(user_id, guide_row_id);
+        let reception = sample_order(Uuid::new_v4(), guide_row_id);
+        let tourist_side = sample_order(user_id, other_guide);
+        assert!(order_matches_orders_list_hat(
+            &store,
+            &reception,
+            user_id,
+            Some(OrdersListHat::Guide),
+        ));
+        assert!(!order_matches_orders_list_hat(
+            &store,
+            &tourist_side,
+            user_id,
+            Some(OrdersListHat::Guide),
+        ));
+    }
+
+    #[test]
+    fn parse_orders_list_hat_rejects_unknown() {
+        assert_eq!(parse_orders_list_hat(None).unwrap(), None);
+        assert_eq!(
+            parse_orders_list_hat(Some("guide")).unwrap(),
+            Some(OrdersListHat::Guide)
+        );
+        assert_eq!(
+            parse_orders_list_hat(Some("merchant")).unwrap(),
+            Some(OrdersListHat::Merchant)
+        );
+        assert!(parse_orders_list_hat(Some("invalid")).is_err());
+    }
+
+    #[test]
+    fn order_matches_orders_list_hat_merchant_uses_seller_user_id() {
+        let merchant_user_id = Uuid::new_v4();
+        let buyer_id = Uuid::new_v4();
+        let guide_row_id = Uuid::new_v4();
+        let other_merchant = Uuid::new_v4();
+        let mut store = ChainOffStore::default();
+        store.guides.insert(
+            guide_row_id,
+            super::super::GuideRow {
+                id: guide_row_id,
+                user_id: merchant_user_id,
+                city: "杭州".into(),
+                country_code: "CN".into(),
+                languages: vec![],
+                service_types: vec![],
+                bio: None,
+                wallet_address: None,
+                real_name: None,
+                passport_number_hash: None,
+                id_photo_url: None,
+                language_cert_url: None,
+                guide_license_url: None,
+                stake_amount: "0".into(),
+                hourly_rate: None,
+                avatar_url: None,
+                public_title: None,
+                status: "active".into(),
+                rejection_codes: vec![],
+                rejection_message: None,
+                created_at: Utc::now(),
+                updated_at: Utc::now(),
+                data_origin: "production".into(),
+            },
+        );
+        let mut seller_order = sample_order(buyer_id, guide_row_id);
+        seller_order.order_kind = Some("merchant_listing".into());
+        let mut other_order = sample_order(buyer_id, Uuid::new_v4());
+        other_order.order_kind = Some("merchant_listing".into());
+        store.guides.insert(
+            other_order.guide_id,
+            super::super::GuideRow {
+                id: other_order.guide_id,
+                user_id: other_merchant,
+                city: "上海".into(),
+                country_code: "CN".into(),
+                languages: vec![],
+                service_types: vec![],
+                bio: None,
+                wallet_address: None,
+                real_name: None,
+                passport_number_hash: None,
+                id_photo_url: None,
+                language_cert_url: None,
+                guide_license_url: None,
+                stake_amount: "0".into(),
+                hourly_rate: None,
+                avatar_url: None,
+                public_title: None,
+                status: "active".into(),
+                rejection_codes: vec![],
+                rejection_message: None,
+                created_at: Utc::now(),
+                updated_at: Utc::now(),
+                data_origin: "production".into(),
+            },
+        );
+        assert!(order_matches_orders_list_hat(
+            &store,
+            &seller_order,
+            merchant_user_id,
+            Some(OrdersListHat::Merchant),
+        ));
+        assert!(!order_matches_orders_list_hat(
+            &store,
+            &other_order,
+            merchant_user_id,
+            Some(OrdersListHat::Merchant),
+        ));
+    }
+}
+
+#[cfg(test)]
 mod patch_order_guide_tests {
     use super::*;
     use crate::chain_off::{ChainOffConfig, ChainOffState, ChainOffStore, GuideRow};
@@ -1875,6 +2109,7 @@ mod patch_order_guide_tests {
             stake_amount: "0".to_string(),
             hourly_rate: None,
             avatar_url: None,
+            public_title: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -1981,7 +2216,7 @@ mod patch_order_guide_tests {
 #[cfg(test)]
 mod traveler_id_alias_tests {
     use super::*;
-    use crate::chain_off::{ChainOffStore, GuideRow};
+    use crate::chain_off::{ChainOffStore, GuideRow, UserRow};
     use chrono::{Duration, TimeZone, Utc};
     use serde_json::json;
     use traveltrust_core::OrderState;
@@ -2028,6 +2263,34 @@ mod traveler_id_alias_tests {
         let j = order_list_item_json(&store, &o, &r, as_of);
         assert_eq!(j["tourist_id"].as_str().unwrap(), tid.to_string());
         assert_eq!(j["traveler_id"].as_str().unwrap(), tid.to_string());
+    }
+
+    #[test]
+    fn order_list_item_includes_traveler_nickname_and_sub_status() {
+        let tid = Uuid::new_v4();
+        let mut o = sample_order(tid);
+        o.sub_status = Some("pending_bilateral".into());
+        let mut store = ChainOffStore::default();
+        store.users.insert(
+            tid,
+            UserRow {
+                id: tid,
+                email: "tourist@test.com".into(),
+                password_hash: None,
+                role: "tourist".into(),
+                kyc_status: "none".into(),
+                nickname: Some("测试游客".into()),
+                avatar_url: None,
+                default_wallet_address: None,
+                created_at: Utc::now(),
+                updated_at: Utc::now(),
+            },
+        );
+        let as_of = Utc::now();
+        let r = super::resolve_rating_review_window_for_deadlines(14, false, None);
+        let j = order_list_item_json(&store, &o, &r, as_of);
+        assert_eq!(j["sub_status"].as_str().unwrap(), "pending_bilateral");
+        assert_eq!(j["traveler_nickname"].as_str().unwrap(), "测试游客");
     }
 
     #[test]
@@ -2525,6 +2788,7 @@ mod traveler_id_alias_tests {
                 stake_amount: "0".to_string(),
                 hourly_rate: None,
                 avatar_url: None,
+            public_title: None,
                 status: "active".to_string(),
                 rejection_codes: vec![],
                 rejection_message: None,
@@ -2594,6 +2858,7 @@ mod traveler_id_alias_tests {
             &o,
             uid,
             Some(OrderState::Draft),
+            None,
             Some(137),
             None,
         ));
@@ -2601,6 +2866,7 @@ mod traveler_id_alias_tests {
             &store,
             &o,
             uid,
+            None,
             None,
             Some(137),
             None,

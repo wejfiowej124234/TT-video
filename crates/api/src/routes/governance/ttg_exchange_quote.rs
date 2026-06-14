@@ -18,7 +18,6 @@ pub struct TtgExchangeQuoteQuery {
 fn normalize_pay_stable(raw: Option<&str>) -> Result<&'static str, ()> {
     match raw.unwrap_or("USDC").trim().to_ascii_uppercase().as_str() {
         "USDC" => Ok("USDC"),
-        "USDT" => Ok("USDT"),
         _ => Err(()),
     }
 }
@@ -33,7 +32,7 @@ pub async fn get_ttg_exchange_quote(Query(q): Query<TtgExchangeQuoteQuery>) -> i
                     "status": "error",
                     "error": "invalid_pay_stable",
                     "message": "invalid_pay_stable",
-                    "allowed_pay_stablecoins": ["USDC", "USDT"],
+                    "allowed_pay_stablecoins": ["USDC"],
                 })),
             )
                 .into_response();
@@ -51,9 +50,9 @@ pub async fn get_ttg_exchange_quote(Query(q): Query<TtgExchangeQuoteQuery>) -> i
         "rate": null,
         "expires_at": expires_at.to_rfc3339(),
         "escrow_settlement": {
-            "allowed_pay_stablecoins": ["USDC", "USDT"],
+            "allowed_pay_stablecoins": ["USDC"],
             "default_pay_stable": "USDC",
-            "rule": "Trip Escrow allowlists USDC and USDT; default settlement symbol is often USDC (SETTLEMENT_TOKEN). Not a USDC↔USDT swap path."
+            "rule": "Trip Escrow and pool settlement use USDC (SETTLEMENT_TOKEN per 01). TTG exchange preview is USDC→TTG only; not a stablecoin swap path."
         },
         "meta": {
             "implementation_status": "ttg_exchange_quote_contract_only",

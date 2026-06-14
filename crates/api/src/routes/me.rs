@@ -127,100 +127,13 @@ pub async fn get_me_stats(
 ) -> impl IntoResponse {
     if let Some(ref co) = state.chain_off {
         match extract_user_with_session_check(&state, &headers).await {
-            Some(uid) => {
-                let store = co.store.read().await;
-                let user = match store.users.get(&uid) {
-                    Some(u) => u,
-                    None => {
-                        return (
-                            StatusCode::NOT_FOUND,
-                            Json(crate::api_json::err_key("user_not_found")),
-                        )
-                            .into_response()
-                    }
-                };
-                let my_orders: Vec<_> = store
-                    .orders
-                    .values()
-                    .filter(|o| o.tourist_id == uid || o.guide_id == uid)
-                    .collect();
-                let orders_total = my_orders.len();
-                let total_spent: f64 = my_orders
-                    .iter()
-                    .filter(|o| o.tourist_id == uid && o.state.is_final_financial_state())
-                    .filter_map(|o| o.amount.parse::<f64>().ok())
-                    .sum();
-                let reviews_count = store
-                    .reviews
-                    .iter()
-                    .filter(|r| r.reviewer_id == uid)
-                    .count();
-                let orders_guided = my_orders.iter().filter(|o| o.guide_id == uid).count();
-                let completed_as_guide = my_orders
-                    .iter()
-                    .filter(|o| {
-                        o.guide_id == uid && o.state == traveltrust_core::OrderState::Completed
-                    })
-                    .count();
-                let total_earned: f64 = my_orders
-                    .iter()
-                    .filter(|o| o.guide_id == uid && o.state.is_final_financial_state())
-                    .filter_map(|o| o.amount.parse::<f64>().ok())
-                    .sum();
-                let guide_reviews: Vec<_> = store
-                    .reviews
-                    .iter()
-                    .filter(|r| r.reviewee_id == uid)
-                    .collect();
-                let avg_score = if guide_reviews.is_empty() {
-                    None
-                } else {
-                    Some(
-                        guide_reviews
-                            .iter()
-                            .map(|r| r.score as f64 * r.weight)
-                            .sum::<f64>()
-                            / guide_reviews
-                                .iter()
-                                .map(|r| r.weight)
-                                .sum::<f64>()
-                                .max(1e-9),
-                    )
-                };
-                let disputes_resolved = store
-                    .disputes
-                    .values()
-                    .filter(|d| d.arbitrator_id == Some(uid))
-                    .count();
-                let stats = match user.role.as_str() {
-                    r if chain_off::users_role_is_traveler_side(r) => {
-                        json!({ "orders_total": orders_total, "total_spent": total_spent, "reviews_count": reviews_count })
-                    }
-                    "guide" => {
-                        let mut base = json!({
-                            "orders_total": orders_total,
-                            "orders_guided": orders_guided,
-                            "completed_count": completed_as_guide,
-                            "total_earned": total_earned,
-                            "avg_score": avg_score,
-                            "reviews_count": reviews_count
-                        });
-                        let period =
-                            chain_off::guide_period_dashboard_stats(&store, uid, chrono::Utc::now());
-                        if let (Some(bo), Some(po)) = (base.as_object_mut(), period.as_object()) {
-                            for (k, v) in po {
-                                bo.insert(k.clone(), v.clone());
-                            }
-                        }
-                        base
-                    }
-                    "arbitrator" => {
-                        json!({ "orders_total": orders_total, "disputes_resolved": disputes_resolved })
-                    }
-                    _ => json!({ "orders_total": orders_total }),
-                };
-                return Json(json!({ "status": "ok", "stats": stats })).into_response();
-            }
+            Some(uid) => match chain_off::get_me_impl(co.clone(), uid).await {
+                Ok(Json(me)) => {
+                    let stats = me.get("stats").cloned().unwrap_or_else(|| json!({}));
+                    return Json(json!({ "status": "ok", "stats": stats })).into_response();
+                }
+                Err((code, j)) => return (code, j).into_response(),
+            },
             None => {
                 return (
                     StatusCode::UNAUTHORIZED,

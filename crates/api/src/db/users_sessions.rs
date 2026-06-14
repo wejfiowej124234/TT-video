@@ -133,6 +133,17 @@ pub async fn get_user_by_id(pool: &PgPool, id: Uuid) -> Result<Option<UserRow>, 
     ))
 }
 
+/// 已验证邮箱用户（启动 hydrate → `chain_off.user_email_verified_at`）
+pub async fn list_user_email_verified_at(
+    pool: &PgPool,
+) -> Result<Vec<(Uuid, DateTime<Utc>)>, sqlx::Error> {
+    sqlx::query_as::<_, (Uuid, DateTime<Utc>)>(
+        "SELECT id, email_verified_at FROM users WHERE email_verified_at IS NOT NULL",
+    )
+    .fetch_all(pool)
+    .await
+}
+
 /// 加载所有用户（启动 hydrate）
 pub async fn list_users(pool: &PgPool) -> Result<Vec<UserRow>, sqlx::Error> {
     let rows = sqlx::query_as::<_, (Uuid, String, Option<String>, String, String, Option<String>, Option<String>, Option<String>, DateTime<Utc>, DateTime<Utc>)>(

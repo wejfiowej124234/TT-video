@@ -5,7 +5,7 @@
 //! **B-089 Completion**：**`GOVERNOR_ADDRESS` + `DATABASE_URL`** 时列表/详情走 **`governance_proposals_projection`** + **`eth_call`** **`state` / `getPastVotes`**；**`POST …/vote`** 返回 **`vote_on_chain_required`**（**禁止**链下假票）。
 //! **B-098 / TT-B098-PROPOSAL-VOTING-POWER-SNAPSHOT-001**：详情 **`voting_power_at_snapshot.votes`** 与 **`GET …/governance/voting-power?snapshot_block=`** **`on_chain_vote_weight.votes_u256_dec`** 同源（**`chain::governor::eth_call_get_past_votes`**；**`snapshot_block`** **=** 投影行 **`snapshot_block`**）；与 **`governance_vote.weight_ssot`**（链上 Governor）及链下 MVP 信号票 **字段分离**。
 
-use axum::extract::{Path, State};
+use axum::extract::{Path, Query, State};
 use axum::http::header::{HeaderName, HeaderValue};
 use axum::http::{HeaderMap, StatusCode};
 use axum::response::IntoResponse;
@@ -137,10 +137,116 @@ fn store() -> Arc<RwLock<ProposalsMvpStore>> {
         .clone()
 }
 
+fn wallet_hex_to_bytes(wallet: &str) -> Option<Vec<u8>> {
+    let h = wallet.trim().trim_start_matches("0x");
+    hex::decode(h).ok().filter(|b| b.len() == 20)
+}
+
+#[derive(Debug, Deserialize)]
+pub struct GovernanceProposalsListQuery {
+    /// `1` / `true`：仅返回当前会话用户主钱包发起的提案（须登录 · 投影模式）。
+    #[serde(default)]
+    pub mine: Option<String>,
+}
+
+fn query_mine_enabled(q: &GovernanceProposalsListQuery) -> bool {
+    match q.mine.as_deref().map(str::trim).map(str::to_lowercase) {
+        Some(v) if v == "1" || v == "true" || v == "yes" => true,
+        _ => false,
+    }
+}
+
+impl Default for GovernanceProposalsListQuery {
+    fn default() -> Self {
+        Self { mine: None }
+    }
+}
+
 /// GET /api/v1/governance/proposals
-pub async fn get_governance_proposals_list(State(state): State<ApiMetaState>) -> impl IntoResponse {
+pub async fn get_governance_proposals_list(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+    Query(query): Query<GovernanceProposalsListQuery>,
+) -> impl IntoResponse {
+    let mine = query_mine_enabled(&query);
     if let Some((cfg, pool)) = governor_indexed_mode(&state) {
         let chain_id_i64 = (cfg.chain_id.min(i64::MAX as u64)) as i64;
+        if mine {
+            let uid = match extract_user_with_session_check(&state, &headers).await {
+                Some(u) => u,
+                None => {
+                    return (
+                        StatusCode::UNAUTHORIZED,
+                        Json(json!({"error": "unauthorized", "message": "login_required"})),
+                    )
+                        .into_response();
+                }
+            };
+            let wallet = match get_user_default_wallet_by_id(pool, uid).await {
+                Ok(Some(w)) if !w.trim().is_empty() => w,
+                _ => {
+                    return governor_headered(
+                        Json(json!({
+                            "status": "ok",
+                            "items": [],
+                            "data_source": "governance_proposals_projection",
+                            "chain_id": cfg.chain_id,
+                            "mine": true,
+                            "note": "default_wallet_required_for_mine_filter"
+                        }))
+                        .into_response(),
+                    );
+                }
+            };
+            let Some(proposer_bytes) = wallet_hex_to_bytes(&wallet) else {
+                return (
+                    StatusCode::BAD_REQUEST,
+                    Json(json!({"error": "invalid_wallet", "message": "invalid_default_wallet"})),
+                )
+                    .into_response();
+            };
+            let rows = match db::list_governance_proposals_for_proposer(
+                pool,
+                chain_id_i64,
+                &proposer_bytes,
+                50,
+            )
+            .await
+            {
+                Ok(r) => r,
+                Err(e) => {
+                    return (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        Json(json!({"error": "governance_list_failed", "message": e.to_string()})),
+                    )
+                        .into_response();
+                }
+            };
+            let items: Vec<_> = rows
+                .into_iter()
+                .map(|r| {
+                    let st = r
+                        .chain_state
+                        .unwrap_or_else(|| "pending".to_string());
+                    json!({
+                        "id": r.proposal_id,
+                        "title": r.title.unwrap_or_default(),
+                        "status": st,
+                    })
+                })
+                .collect();
+            return governor_headered(
+                Json(json!({
+                    "status": "ok",
+                    "items": items,
+                    "data_source": "governance_proposals_projection",
+                    "chain_id": cfg.chain_id,
+                    "mine": true,
+                    "note": "Filtered by session user default_wallet_address (proposer)"
+                }))
+                .into_response(),
+            );
+        }
         let rows = match db::list_governance_proposals_for_chain(pool, chain_id_i64, 200).await {
             Ok(r) => r,
             Err(e) => {
@@ -171,6 +277,19 @@ pub async fn get_governance_proposals_list(State(state): State<ApiMetaState>) ->
                 "data_source": "governance_proposals_projection",
                 "chain_id": cfg.chain_id,
                 "note": "B-089 Governor events via indexer-tick → DB; status from projection (see GET detail for eth_call state)"
+            }))
+            .into_response(),
+        );
+    }
+
+    if mine {
+        return mvp_headered(
+            Json(json!({
+                "status": "ok",
+                "items": [],
+                "data_source": "chain_off_mvp",
+                "mine": true,
+                "note": "mine filter requires governance_proposals_projection (GOVERNOR_ADDRESS + DATABASE_URL)"
             }))
             .into_response(),
         );
@@ -751,7 +870,11 @@ mod tests {
     async fn proposals_list_returns_seeded_items_and_mvp_header() {
         let _g = proposals_tests_lock().await;
         reset_mvp_and_delegation().await;
-        let res = get_governance_proposals_list(State(api_meta_state(None)))
+        let res = get_governance_proposals_list(
+            State(api_meta_state(None)),
+            HeaderMap::new(),
+            Query(GovernanceProposalsListQuery::default()),
+        )
             .await
             .into_response();
         assert_eq!(res.status(), StatusCode::OK);

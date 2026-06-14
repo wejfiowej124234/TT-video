@@ -6,7 +6,7 @@ use axum::response::IntoResponse;
 use axum::routing::{get, post};
 use axum::{Json, Router};
 use serde::Deserialize;
-use serde_json::json;
+use serde_json::{json, Value};
 
 use crate::chain::steward_stake_pool;
 use crate::chain_off;
@@ -14,6 +14,75 @@ use crate::routes::governance_doc_reference::steward_stake_quote_for_jurisdictio
 use crate::state::{extract_user_with_session_check, ApiMetaState};
 
 use super::not_impl_json;
+
+pub async fn get_me_steward_seat(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    let Some(ref co) = state.chain_off else {
+        return not_impl_json("GET /api/v1/me/steward-seat").into_response();
+    };
+    let uid = match extract_user_with_session_check(&state, &headers).await {
+        Some(u) => u,
+        None => {
+            return (
+                StatusCode::UNAUTHORIZED,
+                Json(json!({"error": "login_required", "message": "login_required"})),
+            )
+                .into_response();
+        }
+    };
+    match chain_off::get_me_steward_seat_impl(co.clone(), uid).await {
+        Ok(j) => j.into_response(),
+        Err((code, j)) => (code, j).into_response(),
+    }
+}
+
+pub async fn post_steward_resign_notice(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    let Some(ref co) = state.chain_off else {
+        return not_impl_json("POST /api/v1/steward/resign-notice").into_response();
+    };
+    let uid = match extract_user_with_session_check(&state, &headers).await {
+        Some(u) => u,
+        None => {
+            return (
+                StatusCode::UNAUTHORIZED,
+                Json(json!({"error": "login_required", "message": "login_required"})),
+            )
+                .into_response();
+        }
+    };
+    match chain_off::post_steward_resign_notice_impl(co.clone(), uid).await {
+        Ok(j) => j.into_response(),
+        Err((code, j)) => (code, j).into_response(),
+    }
+}
+
+pub async fn post_steward_finalize_resign(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    let Some(ref co) = state.chain_off else {
+        return not_impl_json("POST /api/v1/steward/finalize-resign").into_response();
+    };
+    let uid = match extract_user_with_session_check(&state, &headers).await {
+        Some(u) => u,
+        None => {
+            return (
+                StatusCode::UNAUTHORIZED,
+                Json(json!({"error": "login_required", "message": "login_required"})),
+            )
+                .into_response();
+        }
+    };
+    match chain_off::post_steward_finalize_resign_impl(co.clone(), uid).await {
+        Ok(j) => j.into_response(),
+        Err((code, j)) => (code, j).into_response(),
+    }
+}
 
 #[derive(Debug, Deserialize)]
 pub struct StewardStakeQuoteQuery {
@@ -151,6 +220,34 @@ async fn stake_status_impl(
                 .into_response();
         }
     };
+
+    let mut position_json = Value::Null;
+    let mut releasable = Value::Null;
+    if has_stake {
+        if let Ok(pos) = steward_stake_pool::eth_call_stake_position(cfg, &pool, wallet, jurisdiction).await
+        {
+            position_json = json!({
+                "amount": pos.amount,
+                "staked_at": pos.staked_at,
+                "release_requested_at": pos.release_requested_at,
+                "released_amount": pos.released_amount,
+                "active": pos.active,
+            });
+        }
+        if let Ok(r) =
+            steward_stake_pool::eth_call_releasable_amount(cfg, &pool, wallet, jurisdiction).await
+        {
+            releasable = json!(r);
+        }
+    }
+
+    let release_delay = steward_stake_pool::eth_call_release_delay_seconds(cfg, &pool)
+        .await
+        .ok();
+    let release_vest = steward_stake_pool::eth_call_release_vest_seconds(cfg, &pool)
+        .await
+        .ok();
+
     let mut body = json!({
         "jurisdiction": jurisdiction.trim().to_uppercase(),
         "wallet": wallet,
@@ -158,6 +255,10 @@ async fn stake_status_impl(
         "min_stake_amount": min_stake,
         "pool_address": pool,
         "chain_id": cfg.chain_id,
+        "position": position_json,
+        "releasable_amount": releasable,
+        "release_delay_seconds": release_delay,
+        "release_vest_seconds": release_vest,
         "meta": {
             "implementation_status": "steward_stake_status_eth_call",
             "phase": "②_anvil_or_testnet"
@@ -200,5 +301,11 @@ pub fn router() -> Router<ApiMetaState> {
         .route(
             "/api/v1/steward/applications",
             post(post_steward_applications),
+        )
+        .route("/api/v1/me/steward-seat", get(get_me_steward_seat))
+        .route("/api/v1/steward/resign-notice", post(post_steward_resign_notice))
+        .route(
+            "/api/v1/steward/finalize-resign",
+            post(post_steward_finalize_resign),
         )
 }

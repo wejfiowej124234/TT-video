@@ -347,6 +347,7 @@ async fn itinerary_create_impl_with_guide_id_persists_guide_on_order() {
             stake_amount: "0".to_string(),
             hourly_rate: None,
             avatar_url: None,
+            public_title: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -887,6 +888,7 @@ async fn itinerary_custom_create_impl_with_guide_id_persists_guide_on_order() {
             stake_amount: "0".to_string(),
             hourly_rate: None,
             avatar_url: None,
+            public_title: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -1003,6 +1005,8 @@ async fn s55_custom_create_then_orders_and_discover_contain_draft() {
         None,
         user_id,
         OrderListPage::default(),
+        None,
+        None,
         None,
         None,
     )
@@ -1169,6 +1173,8 @@ async fn discover_card_itinerary_matches_order_get() {
         None,
         user_id,
         OrderListPage::default(),
+        None,
+        None,
         None,
         None,
     )
@@ -1561,6 +1567,8 @@ async fn orders_list_pagination_limit_and_cursor() {
         },
         None,
         None,
+        None,
+        None,
     )
     .await
     else {
@@ -1583,6 +1591,8 @@ async fn orders_list_pagination_limit_and_cursor() {
             limit: Some(2),
             cursor: Some(cid),
         },
+        None,
+        None,
         None,
         None,
     )

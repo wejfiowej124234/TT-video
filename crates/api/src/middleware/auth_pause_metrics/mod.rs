@@ -57,6 +57,7 @@ pub async fn auth_placeholder_layer(req: Request<Body>, next: axum::middleware::
         // B-191 / PH-1：TravelTrust 落地页只读机读锚 + 84 协议镜像 + 主理人 stake 公开读
         || (read && path == "/api/v1/traveltrust/page-brief")
         || (read && path == "/api/v1/governance/protocol-reference")
+        || (read && path == "/api/v1/governance/protocol-reference/pending")
         || (read && path == "/api/v1/governance/state-machines")
         || (read && path == "/api/v1/steward/stake-quote")
         || (read && path == "/api/v1/steward/stake-status")

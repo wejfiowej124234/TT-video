@@ -262,6 +262,9 @@ pub struct GuideRow {
     /// 市场卡片头像 URL（与账户 `users.avatar_url` 分轨）
     #[serde(default)]
     pub avatar_url: Option<String>,
+    /// 市场挂牌展示名（与 account nickname 分轨；空则 `{city} 向导`）
+    #[serde(default)]
+    pub public_title: Option<String>,
     pub status: String,
     /// Admin 拒绝资质时的机器可读原因码（`guides.rejection_codes`）
     #[serde(default)]
@@ -394,6 +397,8 @@ impl Default for OrderRow {
 
 mod steward_application;
 pub use steward_application::*;
+mod steward_seat;
+pub use steward_seat::*;
 mod provider_kyb;
 mod provider_application;
 pub use provider_application::*;
@@ -429,6 +434,8 @@ pub struct ChainOffStore {
     pub register_verification_codes: HashMap<String, RegisterVerificationCodeEntry>,
     /// **`GET/PATCH /api/v1/me/acquisition-profile`** 公开展示字段（① chain_off 内存）
     pub acquisition_profiles_by_user: HashMap<Uuid, AcquisitionProfileRow>,
+    /// **`POST/GET /api/v1/me/guide-exit-*`** 最新退出申请（guide_id → 行；① 内存真源）
+    pub guide_exit_requests_by_guide: HashMap<Uuid, guide_exit::GuideExitRequestRow>,
 }
 
 /// 注册验证码条目（① chain_off 内存 · 10 分钟有效）
@@ -473,6 +480,7 @@ impl Default for ChainOffStore {
             user_email_verified_at: HashMap::new(),
             register_verification_codes: HashMap::new(),
             acquisition_profiles_by_user: HashMap::new(),
+            guide_exit_requests_by_guide: HashMap::new(),
         }
     }
 }
@@ -516,6 +524,9 @@ pub(crate) fn guide_period_dashboard_stats(
         if order_guide_user_id(store, o) != Some(guide_user_id) {
             continue;
         }
+        if order_business_line_for_chain_off(o) != "trip" {
+            continue;
+        }
         if o.state.is_final_financial_state() {
             if o.updated_at >= period_start && o.updated_at < period_end {
                 period_settled_orders_count += 1;
@@ -553,6 +564,12 @@ pub(crate) fn audit_key_write_stderr(
     );
 }
 
+mod workspace_stats;
+pub use workspace_stats::{
+    merge_acquisition_listings_24h_into, merge_acquisition_stats_into,
+    merchant_workspace_stats, order_business_line_for_chain_off,
+    order_matches_business_line_filter, parse_orders_business_line_filter, steward_workspace_stats,
+};
 mod json_response;
 pub(crate) use json_response::status_json_response_with_429_retry_header;
 
@@ -562,6 +579,10 @@ mod auth;
 pub use auth::*;
 mod me;
 pub use me::*;
+mod identity_slots;
+pub use identity_slots::*;
+mod slot_rbac;
+pub use slot_rbac::*;
 mod pagination;
 pub use pagination::{parse_order_list_page, OrderListPage};
 mod discover;
@@ -594,11 +615,15 @@ mod itineraries;
 pub use itineraries::*;
 mod guides;
 mod guide_profile;
+mod guide_exit;
 mod identity_slot_profiles;
 mod schedule_booking;
 pub use guides::*;
 pub use guide_profile::*;
+pub use guide_exit::*;
 pub use identity_slot_profiles::*;
+mod publish_summary;
+pub use publish_summary::*;
 mod order_participant_hints;
 mod orders;
 pub use orders::*;

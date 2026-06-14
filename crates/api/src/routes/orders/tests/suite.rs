@@ -284,6 +284,8 @@ async fn orders_list_placeholder_has_no_escrow_chain_ssot_root_keys_tt_escrow_ag
             cursor: None,
             state: None,
             orders_chain_id: None,
+            business_line: None,
+            hat: None,
         }),
     )
     .await
@@ -328,6 +330,7 @@ async fn b102_get_orders_chain_scope_matches_db_ssot_and_filters_rows() {
             stake_amount: "0".to_string(),
             hourly_rate: None,
             avatar_url: None,
+            public_title: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -396,6 +399,8 @@ async fn b102_get_orders_chain_scope_matches_db_ssot_and_filters_rows() {
             cursor: None,
             state: None,
             orders_chain_id: Some(137),
+            business_line: None,
+            hat: None,
         }),
     )
     .await
@@ -466,6 +471,7 @@ async fn tt_b122_get_orders_strict_chain_scope_matches_backfill_dry_run_embed() 
             stake_amount: "0".to_string(),
             hourly_rate: None,
             avatar_url: None,
+            public_title: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -534,6 +540,8 @@ async fn tt_b122_get_orders_strict_chain_scope_matches_backfill_dry_run_embed() 
             cursor: None,
             state: None,
             orders_chain_id: Some(1),
+            business_line: None,
+            hat: None,
         }),
     )
     .await
@@ -682,6 +690,7 @@ async fn b095_get_order_by_id_split_addresses_ssot_matches_get_meta_chain_contra
             stake_amount: "0".to_string(),
             hourly_rate: None,
             avatar_url: None,
+            public_title: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
@@ -857,6 +866,7 @@ async fn b083_get_order_fee_route_country_aligns_meta_orders_ssot_mapped_and_rej
             stake_amount: "0".to_string(),
             hourly_rate: None,
             avatar_url: None,
+            public_title: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,

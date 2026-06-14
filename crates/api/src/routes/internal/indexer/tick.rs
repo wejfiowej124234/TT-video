@@ -180,7 +180,12 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
                 .into_response();
         }
     };
-    let to_block = chain::indexer::indexer_finalized_upper_bound(latest, state.finality_n);
+    let finalized_to = chain::indexer::indexer_finalized_upper_bound(latest, state.finality_n);
+    let to_block = chain::indexer::cap_tick_scan_to_block(
+        from_block,
+        finalized_to,
+        chain::indexer::indexer_tick_max_blocks_per_scan(),
+    );
     if from_block > latest {
         let mut body = json!({
             "status": "ok",
@@ -1000,6 +1005,24 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
             }
         }
     }
+    if from_block <= to_block {
+        if let Err(e) = chain::indexer::advance_indexer_scan_watermark(
+            &indexer_handle,
+            &config.rpc_url,
+            to_block,
+        )
+        .await
+        {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(crate::api_json::err_key_detail(
+                    "advance_indexer_scan_watermark_failed",
+                    e,
+                )),
+            )
+                .into_response();
+        }
+    }
     if let Some(pool) = state.chain_off.as_ref().and_then(|co| co.db_pool.as_ref()) {
         let g = indexer_handle.read().await;
         let chain_id_i64 = (config.chain_id.min(i64::MAX as u64)) as i64;
@@ -1050,7 +1073,7 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
         "chain_tip": latest,
         "finality_n": state.finality_n,
         "finality_n_used": state.finality_n,
-        "indexer_finalized_upper_bound": to_block
+        "indexer_finalized_upper_bound": finalized_to
     });
     if let Some(rew) = reorg_auto_rewind {
         body["reorg_auto_rewind"] = rew;

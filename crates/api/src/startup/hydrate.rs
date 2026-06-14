@@ -32,6 +32,27 @@ pub async fn hydrate_from_db(
     for s in sessions {
         store.sessions.insert(s.token, s.user_id);
     }
+    if let Ok(verified) = db::list_user_email_verified_at(pool).await {
+        for (user_id, verified_at) in verified {
+            store.user_email_verified_at.insert(user_id, verified_at);
+        }
+    }
+    if let Ok(exit_rows) = db::list_guide_exit_requests(pool).await {
+        for row in exit_rows {
+            store.guide_exit_requests_by_guide.insert(
+                row.guide_id,
+                chain_off::GuideExitRequestRow {
+                    id: row.id,
+                    guide_id: row.guide_id,
+                    user_id: row.user_id,
+                    status: row.status,
+                    reason: row.reason,
+                    requested_at: row.requested_at,
+                    updated_at: row.updated_at,
+                },
+            );
+        }
+    }
     if let Ok(guides) = db::list_guides(pool).await {
         for g in guides {
             let guide_row = chain_off::GuideRow {
@@ -56,6 +77,7 @@ pub async fn hydrate_from_db(
                 stake_amount: g.stake_amount,
                 hourly_rate: g.hourly_rate,
                 avatar_url: g.avatar_url,
+                public_title: g.public_title,
                 status: g.status,
                 rejection_codes: g.rejection_codes,
                 rejection_message: g.rejection_message,

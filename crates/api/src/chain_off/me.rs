@@ -55,7 +55,7 @@ fn identity_status_for_trust(
     if let Some(g) = guide {
         match g.status.as_str() {
             "pending" => return "pending_review",
-            "rejected" | "suspended" => return "restricted",
+            "rejected" | "suspended" | "exiting" | "exited" => return "restricted",
             _ => {}
         }
     }
@@ -123,6 +123,9 @@ pub(crate) fn order_accept_trust_gate(
     guide_user_id: Uuid,
     guide: &super::GuideRow,
 ) -> Option<&'static str> {
+    if !super::guides::guide_can_accept_orders(&guide.status) {
+        return Some(super::guides::guide_order_gate_err_key(&guide.status));
+    }
     let Some(user) = store.users.get(&guide_user_id) else {
         return None;
     };
@@ -186,88 +189,6 @@ pub(crate) fn order_participant_trust_gate(
         return None;
     }
     order_accept_trust_gate(store, user_id, guide)
-}
-
-/// 个人中心「五类身份」矩阵：旅行者 / 向导 / 旅行收购 / 商家 / 区域主理人；质押字段随角色逐步接入链上。
-fn identity_slots_json(user: &super::UserRow, guide: Option<&super::GuideRow>) -> serde_json::Value {
-    use super::users_role_is_traveler_side;
-    let role_lc = user.role.to_ascii_lowercase();
-    let traveler_active = users_role_is_traveler_side(&role_lc);
-
-    let guide_slot = match guide {
-        None => {
-            if role_lc == "guide" {
-                json!({
-                    "id": "guide",
-                    "state": "active",
-                    "stake_display": JsonValue::Null
-                })
-            } else {
-                json!({
-                    "id": "guide",
-                    "state": "inactive",
-                    "stake_display": JsonValue::Null
-                })
-            }
-        }
-        Some(g) => {
-            let st = g.status.to_ascii_lowercase();
-            let stake = g.stake_amount.trim();
-            let stake_json = if stake.is_empty() {
-                JsonValue::Null
-            } else {
-                json!(format!("{stake} USDT"))
-            };
-            let state = match st.as_str() {
-                "pending" => "pending",
-                "rejected" | "suspended" => "restricted",
-                "active" => "active",
-                _ => {
-                    if role_lc == "guide" {
-                        "active"
-                    } else {
-                        "inactive"
-                    }
-                }
-            };
-            json!({
-                "id": "guide",
-                "state": state,
-                "stake_display": stake_json
-            })
-        }
-    };
-
-    let traveler_slot = json!({
-        "id": "traveler",
-        "state": if traveler_active { "active" } else { "inactive" },
-        "stake_display": JsonValue::Null
-    });
-    let acquisition_slot = json!({
-        "id": "acquisition",
-        "state": "inactive",
-        "stake_display": JsonValue::Null
-    });
-    let merchant_active = role_lc == "provider";
-    let merchant_slot = json!({
-        "id": "merchant",
-        "state": if merchant_active { "active" } else { "inactive" },
-        "stake_display": JsonValue::Null
-    });
-    let steward_active = role_lc == "region_steward";
-    let steward_slot = json!({
-        "id": "region_steward",
-        "state": if steward_active { "active" } else { "inactive" },
-        "stake_display": JsonValue::Null
-    });
-
-    json!([
-        traveler_slot,
-        guide_slot,
-        acquisition_slot,
-        merchant_slot,
-        steward_slot
-    ])
 }
 
 /// 90 / 07 §5.0：身份与验证最小摘要（与 `user.kyc_status` 同源；便于前端只读 `trust` 块）
@@ -539,7 +460,18 @@ pub async fn get_me_impl(
         .values()
         .filter(|d| d.arbitrator_id == Some(user_id))
         .count();
-    let stats = match user.role.as_str() {
+    let guide_ref = store
+        .guides_by_user
+        .get(&user_id)
+        .and_then(|guide_id| store.guides.get(guide_id));
+    let provider_app_ref = store.provider_applications_by_user.get(&user_id);
+    let steward_app_ref = store.steward_applications_by_user.get(&user_id);
+    let guide_role_for_reputation = if super::guide_slot_active(user, guide_ref) {
+        "guide"
+    } else {
+        user.role.as_str()
+    };
+    let mut stats = match user.role.as_str() {
         r if super::users_role_is_traveler_side(r) => json!({
             "orders_total": orders_total,
             "total_spent": total_spent,
@@ -566,12 +498,41 @@ pub async fn get_me_impl(
             "orders_total": orders_total,
             "disputes_resolved": disputes_resolved
         }),
+        "provider" => {
+            let mut base = super::merchant_workspace_stats(&store, user_id, Utc::now());
+            if let Some(bo) = base.as_object_mut() {
+                bo.insert("orders_total".to_string(), json!(orders_total));
+            }
+            base
+        }
+        "region_steward" => {
+            let mut base = super::steward_workspace_stats(&store, user_id);
+            if let Some(bo) = base.as_object_mut() {
+                bo.insert("orders_total".to_string(), json!(orders_total));
+            }
+            base
+        }
         _ => json!({ "orders_total": orders_total }),
     };
-    let guide_ref = store
-        .guides_by_user
-        .get(&user_id)
-        .and_then(|guide_id| store.guides.get(guide_id));
+    if super::merchant_slot_active(user, provider_app_ref) && user.role.as_str() != "provider" {
+        let merchant = super::merchant_workspace_stats(&store, user_id, Utc::now());
+        if let (Some(bo), Some(mo)) = (stats.as_object_mut(), merchant.as_object()) {
+            for (k, v) in mo {
+                bo.insert(k.clone(), v.clone());
+            }
+        }
+    }
+    if super::steward_slot_active(user, steward_app_ref) && user.role.as_str() != "region_steward" {
+        let steward = super::steward_workspace_stats(&store, user_id);
+        if let (Some(bo), Some(so)) = (stats.as_object_mut(), steward.as_object()) {
+            for (k, v) in so {
+                bo.insert(k.clone(), v.clone());
+            }
+        }
+    }
+    if user.role.as_str() != "provider" {
+        super::merge_acquisition_stats_into(&mut stats, &store, user_id);
+    }
     let guide_json = guide_ref.map(|g| {
         json!({
             "id": g.id.to_string(),
@@ -580,10 +541,17 @@ pub async fn get_me_impl(
             "status": g.status
         })
     });
-    let identity_slots = identity_slots_json(user, guide_ref);
+    let mut identity_slots = super::build_identity_slots(
+        user,
+        guide_ref,
+        store.provider_applications_by_user.get(&user_id),
+        store.steward_applications_by_user.get(&user_id),
+        None,
+        None,
+    );
     let open_d = open_disputes_as_party_count(&store, user_id);
     let reputation = me_reputation_json(
-        user.role.as_str(),
+        guide_role_for_reputation,
         &guide_reviews,
         avg_score,
         &reviewer_reviews,
@@ -594,6 +562,15 @@ pub async fn get_me_impl(
     }
     if let Some(ref pool) = state.db_pool {
         merge_acquisition_trust_from_pg(pool, user_id, user, guide_ref, open_d, &mut trust).await;
+        if let JsonValue::Object(ref trust_m) = trust {
+            if let Some(n) = trust_m
+                .get("acquisition_listings_published_24h")
+                .and_then(|v| v.as_i64())
+            {
+                super::merge_acquisition_listings_24h_into(&mut stats, n);
+            }
+        }
+        super::patch_acquisition_slot_from_trust(&mut identity_slots, &trust);
     }
     Ok(Json(json!({
         "status": "ok",

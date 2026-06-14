@@ -83,6 +83,64 @@ pub async fn select_market_listing_by_id(
     .await
 }
 
+pub async fn count_published_market_listings_by_owner(
+    pool: &PgPool,
+    variant: &str,
+    owner_user_id: Uuid,
+) -> Result<i64, sqlx::Error> {
+    sqlx::query_scalar(
+        r#"SELECT COUNT(*)::bigint FROM market_listings
+           WHERE variant = $1 AND owner_user_id = $2 AND status = 'published'"#,
+    )
+    .bind(variant)
+    .bind(owner_user_id)
+    .fetch_one(pool)
+    .await
+}
+
+pub async fn list_published_market_listings_by_owner(
+    pool: &PgPool,
+    variant: &str,
+    owner_user_id: Uuid,
+    limit: i64,
+) -> Result<Vec<MarketListingRow>, sqlx::Error> {
+    sqlx::query_as::<_, MarketListingRow>(
+        r#"SELECT id, variant, owner_user_id, payload, status, data_origin, created_at, updated_at
+           FROM market_listings
+           WHERE variant = $1 AND owner_user_id = $2 AND status = 'published'
+           ORDER BY updated_at DESC
+           LIMIT $3"#,
+    )
+    .bind(variant)
+    .bind(owner_user_id)
+    .bind(limit)
+    .fetch_all(pool)
+    .await
+}
+
+/// 商家下架：仅 **`published`** 且 **owner** 匹配时 **`status → archived`**。
+pub async fn archive_market_listing_by_owner(
+    pool: &PgPool,
+    listing_id: Uuid,
+    variant: &str,
+    owner_user_id: Uuid,
+    now: DateTime<Utc>,
+) -> Result<u64, sqlx::Error> {
+    let n = sqlx::query(
+        r#"UPDATE market_listings
+           SET status = 'archived', updated_at = $4
+           WHERE id = $1 AND variant = $2 AND owner_user_id = $3 AND status = 'published'"#,
+    )
+    .bind(listing_id)
+    .bind(variant)
+    .bind(owner_user_id)
+    .bind(now)
+    .execute(pool)
+    .await?
+    .rows_affected();
+    Ok(n)
+}
+
 pub async fn insert_market_listing(
     pool: &PgPool,
     id: Uuid,

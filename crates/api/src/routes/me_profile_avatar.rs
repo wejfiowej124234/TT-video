@@ -29,18 +29,18 @@ use super::not_impl_json;
 const MAX_AVATAR_BYTES: usize = 512 * 1024;
 
 #[derive(Debug, Deserialize)]
-struct ProfileAvatarBody {
+pub(crate) struct ProfileAvatarBody {
     content_base64: String,
 }
 
 #[derive(Debug, Deserialize)]
-struct ProfileAvatarPresignBody {
+pub(crate) struct ProfileAvatarPresignBody {
     content_type: String,
     content_length: u64,
 }
 
 #[derive(Debug, Deserialize)]
-struct ProfileAvatarCommitBody {
+pub(crate) struct ProfileAvatarCommitBody {
     avatar_url: String,
 }
 

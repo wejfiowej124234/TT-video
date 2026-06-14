@@ -25,6 +25,8 @@ pub use fee_router_events::*;
 pub use governance::*;
 pub use governance_proposals_projection::*;
 pub use guides::*;
+mod guide_exit;
+pub use guide_exit::*;
 pub use idempotency::*;
 pub use investor_share::*;
 pub use investor_stake::*;

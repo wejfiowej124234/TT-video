@@ -66,7 +66,7 @@ pub(super) async fn get_onboarding_quote(
         "role": role,
         "sku": sku,
         "fee_schedule_version": fee_schedule_version,
-        "currency": "USD",
+        "currency": "USDC",
         "amount_minor": amount_minor,
         "expires_at": expires_at.to_rfc3339(),
         "refund_policy_version": "stub-v0",

@@ -76,6 +76,37 @@ pub fn guide_matches_language_filter(guide_langs: &[String], filter: &str) -> bo
         .any(|part| guide_langs.iter().any(|l| language_tokens_match(l, part)))
 }
 
+fn city_bucket(token: &str) -> Option<&'static str> {
+    let t = token.trim();
+    if t.is_empty() {
+        return None;
+    }
+    let n = norm_token(t);
+    let bucket = match n.as_str() {
+        "hangzhou" | "杭州" | "hz" | "hangzhou_city" => "hangzhou",
+        "beijing" | "北京" | "bj" => "beijing",
+        "shanghai" | "上海" | "sh" => "shanghai",
+        _ => return None,
+    };
+    Some(bucket)
+}
+
+/// 城市筛选：精确匹配 + 常见中英别名（如 杭州 / Hangzhou / HZ）。
+pub fn guide_matches_city_filter(guide_city: &str, filter: &str) -> bool {
+    let guide = guide_city.trim();
+    let want = filter.trim();
+    if want.is_empty() {
+        return true;
+    }
+    if guide.eq_ignore_ascii_case(want) || guide == want {
+        return true;
+    }
+    match (city_bucket(guide), city_bucket(want)) {
+        (Some(a), Some(b)) => a == b,
+        _ => false,
+    }
+}
+
 pub fn normalize_language_for_storage(raw: &str) -> String {
     let trimmed = raw.trim();
     if trimmed.is_empty() {
@@ -152,6 +183,14 @@ mod tests {
             normalize_service_types_for_storage(&["司机服务".into(), "driving".into()]),
             vec!["driving".to_string()]
         );
+    }
+
+    #[test]
+    fn city_alias_hangzhou_zh_en() {
+        assert!(guide_matches_city_filter("Hangzhou", "杭州"));
+        assert!(guide_matches_city_filter("杭州", "Hangzhou"));
+        assert!(guide_matches_city_filter("HZ", "hangzhou"));
+        assert!(!guide_matches_city_filter("Beijing", "杭州"));
     }
 
     #[test]

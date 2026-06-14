@@ -1350,6 +1350,52 @@ async fn require_admin_actor(
         }
     };
 
+    // ② staging 多实例：Bearer 会话来自 PG；有 db_pool 时以 PG users.role 为准（bugfix TN-P0-001）
+    if let Some(ref pool) = co.db_pool {
+        match db::get_user_by_id(pool, uid).await {
+            Ok(Some(u)) => {
+                if u.role != "admin" && u.role != "super_admin" {
+                    return Err((
+                        StatusCode::FORBIDDEN,
+                        Json(crate::api_json::err_key("admin_required")),
+                    )
+                        .into_response());
+                }
+                let mut store = co.store.write().await;
+                store.users.insert(
+                    uid,
+                    chain_off::UserRow {
+                        id: u.id,
+                        email: u.email,
+                        password_hash: u.password_hash,
+                        role: u.role.clone(),
+                        kyc_status: u.kyc_status,
+                        nickname: u.nickname,
+                        avatar_url: u.avatar_url,
+                        default_wallet_address: u.default_wallet_address,
+                        created_at: u.created_at,
+                        updated_at: u.updated_at,
+                    },
+                );
+                return Ok((uid, u.role));
+            }
+            Ok(None) => {
+                return Err((
+                    StatusCode::UNAUTHORIZED,
+                    Json(crate::api_json::err_key("user_not_found")),
+                )
+                    .into_response());
+            }
+            Err(_) => {
+                return Err((
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(crate::api_json::err_key("admin_db_required")),
+                )
+                    .into_response());
+            }
+        }
+    }
+
     let store = co.store.read().await;
     let Some(caller) = store.users.get(&uid) else {
         return Err((
@@ -1359,7 +1405,6 @@ async fn require_admin_actor(
             .into_response());
     };
 
-    // 70 当前阶段最小收口：仅 admin/super_admin 可访问。
     if caller.role != "admin" && caller.role != "super_admin" {
         return Err((
             StatusCode::FORBIDDEN,

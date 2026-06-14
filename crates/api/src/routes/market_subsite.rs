@@ -790,6 +790,172 @@ async fn post_provider_listing_order(
     post_market_listing_order(&state, &headers, listing_id, "provider").await
 }
 
+async fn archive_listing_for_variant(
+    state: &ApiMetaState,
+    headers: &HeaderMap,
+    listing_id: String,
+    variant: &'static str,
+) -> axum::response::Response {
+    let uid = match require_session_user(extract_user_with_session_check(state, headers).await) {
+        Ok(u) => u,
+        Err(e) => return e.into_response(),
+    };
+    let listing_uuid = match Uuid::parse_str(listing_id.trim()) {
+        Ok(u) => u,
+        Err(_) => {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(json!({
+                    "error": "invalid_listing_id",
+                    "message": "invalid_listing_id",
+                })),
+            )
+                .into_response()
+        }
+    };
+    let Some(co) = state.chain_off.as_ref() else {
+        return not_impl_json(&format!(
+            "POST /api/v1/market/{variant}/listings/:id/archive"
+        ))
+        .into_response();
+    };
+    if let Err((code, j)) = crate::chain_off::ensure_durable_writes_available(co) {
+        return (code, j).into_response();
+    }
+    let Some(pool) = co.db_pool.as_ref() else {
+        return market_listing_draft_requires_db().into_response();
+    };
+    if let Err(resp) = ensure_market_merchant_write_allowed(state, pool, uid, variant).await {
+        return resp;
+    }
+    let now = Utc::now();
+    match db::archive_market_listing_by_owner(pool, listing_uuid, variant, uid, now).await {
+        Ok(1) => (
+            StatusCode::OK,
+            Json(json!({
+                "status": "ok",
+                "listing_id": listing_uuid.to_string(),
+                "archived_at": now.to_rfc3339(),
+            })),
+        )
+            .into_response(),
+        Ok(0) => (
+            StatusCode::NOT_FOUND,
+            Json(json!({
+                "error": "listing_not_found",
+                "message": "listing_not_found",
+            })),
+        )
+            .into_response(),
+        Ok(n) => {
+            eprintln!("WARN: market_listing_archive_unexpected_rows_affected: {n}");
+            market_listing_catalog_db_persist_failed("market_listing_archive_unexpected_rows")
+                .into_response()
+        }
+        Err(e) => {
+            eprintln!("WARN: market_listing_archive_failed: {e}");
+            market_listing_catalog_db_persist_failed("market_listing_archive_failed").into_response()
+        }
+    }
+}
+
+async fn post_provider_listing_archive(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+    Path(listing_id): Path<String>,
+) -> impl IntoResponse {
+    archive_listing_for_variant(&state, &headers, listing_id, "provider").await
+}
+
+async fn post_acquisition_listing_archive(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+    Path(listing_id): Path<String>,
+) -> impl IntoResponse {
+    archive_listing_for_variant(&state, &headers, listing_id, "acquisition").await
+}
+
+async fn delete_listing_draft_for_variant(
+    state: &ApiMetaState,
+    headers: &HeaderMap,
+    draft_id: String,
+    variant: &'static str,
+) -> axum::response::Response {
+    let uid = match require_session_user(extract_user_with_session_check(state, headers).await) {
+        Ok(u) => u,
+        Err(e) => return e.into_response(),
+    };
+    let draft_uuid = match Uuid::parse_str(draft_id.trim()) {
+        Ok(u) => u,
+        Err(_) => {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(json!({
+                    "error": "invalid_draft_id",
+                    "message": "invalid_draft_id",
+                })),
+            )
+                .into_response()
+        }
+    };
+    let Some(co) = state.chain_off.as_ref() else {
+        return not_impl_json(&format!(
+            "DELETE /api/v1/market/{variant}/listings/drafts/:draft_id"
+        ))
+        .into_response();
+    };
+    if let Err((code, j)) = crate::chain_off::ensure_durable_writes_available(co) {
+        return (code, j).into_response();
+    }
+    let Some(pool) = co.db_pool.as_ref() else {
+        return market_listing_draft_requires_db().into_response();
+    };
+    match db::delete_market_listing_draft_by_owner(pool, draft_uuid, variant, uid).await {
+        Ok(1) => (
+            StatusCode::OK,
+            Json(json!({
+                "status": "ok",
+                "draft_id": draft_uuid.to_string(),
+            })),
+        )
+            .into_response(),
+        Ok(0) => (
+            StatusCode::NOT_FOUND,
+            Json(json!({
+                "error": "listing_draft_not_found",
+                "message": "listing_draft_not_found",
+            })),
+        )
+            .into_response(),
+        Ok(n) => {
+            eprintln!("WARN: market_listing_draft_delete_unexpected_rows_affected: {n}");
+            market_listing_draft_db_persist_failed("market_listing_draft_delete_unexpected_rows")
+                .into_response()
+        }
+        Err(e) => {
+            eprintln!("WARN: market_listing_draft_delete_failed: {e}");
+            market_listing_draft_db_persist_failed("market_listing_draft_delete_failed")
+                .into_response()
+        }
+    }
+}
+
+async fn delete_provider_listing_draft(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+    Path(draft_id): Path<String>,
+) -> impl IntoResponse {
+    delete_listing_draft_for_variant(&state, &headers, draft_id, "provider").await
+}
+
+async fn delete_acquisition_listing_draft(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+    Path(draft_id): Path<String>,
+) -> impl IntoResponse {
+    delete_listing_draft_for_variant(&state, &headers, draft_id, "acquisition").await
+}
+
 async fn post_acquisition_listing_order(
     State(state): State<ApiMetaState>,
     headers: HeaderMap,
@@ -802,7 +968,7 @@ pub fn router() -> Router<ApiMetaState> {
     Router::new()
         .route(
             "/api/v1/market/provider/listings/drafts/:draft_id",
-            get(get_provider_listing_draft),
+            get(get_provider_listing_draft).delete(delete_provider_listing_draft),
         )
         .route(
             "/api/v1/market/provider/listings/drafts",
@@ -821,8 +987,12 @@ pub fn router() -> Router<ApiMetaState> {
             post(post_provider_listing_order),
         )
         .route(
+            "/api/v1/market/provider/listings/:id/archive",
+            post(post_provider_listing_archive),
+        )
+        .route(
             "/api/v1/market/acquisition/listings/drafts/:draft_id",
-            get(get_acquisition_listing_draft),
+            get(get_acquisition_listing_draft).delete(delete_acquisition_listing_draft),
         )
         .route(
             "/api/v1/market/acquisition/listings/drafts",
@@ -839,6 +1009,10 @@ pub fn router() -> Router<ApiMetaState> {
         .route(
             "/api/v1/market/acquisition/listings/:id/orders",
             post(post_acquisition_listing_order),
+        )
+        .route(
+            "/api/v1/market/acquisition/listings/:id/archive",
+            post(post_acquisition_listing_archive),
         )
 }
 

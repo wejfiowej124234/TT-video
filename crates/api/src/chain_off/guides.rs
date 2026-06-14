@@ -11,6 +11,26 @@ use super::{strict_guide_db_write_enabled, ChainOffState, GuideRow};
 use traveltrust_core::product_countries::normalize_iso_country_code;
 use traveltrust_core::OrderState;
 
+/// 向导可接单 / 可被下单：`guides.status` 须为 **`active`** 或 legacy **`approved`**。
+pub fn guide_can_accept_orders(status: &str) -> bool {
+    matches!(
+        status.trim().to_ascii_lowercase().as_str(),
+        "active" | "approved"
+    )
+}
+
+/// 接单门禁机器键（`order_accept_trust_gate` · `POST /orders` 同源口径）。
+pub fn guide_order_gate_err_key(status: &str) -> &'static str {
+    match status.trim().to_ascii_lowercase().as_str() {
+        "exiting" => "guide_exit_pending",
+        "exited" => "guide_exited",
+        "suspended" => "guide_suspended",
+        "rejected" => "guide_rejected",
+        "pending" | "pending_review" => "trust_guide_pending_review",
+        _ => "guide_not_active",
+    }
+}
+
 #[derive(Deserialize)]
 pub struct CreateGuideBody {
     pub city: String,
@@ -108,8 +128,9 @@ pub async fn guides_list_impl(
         })
         .filter(|g| {
             country_trim.map_or(true, |cc| g.country_code.eq_ignore_ascii_case(cc))
-                && city.as_ref()
-                    .map_or(true, |c| g.city.eq_ignore_ascii_case(c))
+                && city.as_ref().map_or(true, |c| {
+                    super::market_guide_filter::guide_matches_city_filter(&g.city, c)
+                })
                 && language.as_ref().map_or(true, |l| {
                     super::market_guide_filter::guide_matches_language_filter(&g.languages, l)
                 })
@@ -221,6 +242,7 @@ fn guide_list_card_json(store: &super::ChainOffStore, g: &GuideRow) -> serde_jso
         "stake_amount": g.stake_amount,
         "hourly_rate": g.hourly_rate,
         "avatar_url": g.avatar_url,
+        "public_title": g.public_title,
         "status": g.status,
         "created_at": g.created_at.to_rfc3339()
     });
@@ -249,6 +271,7 @@ pub fn guide_admin_row_json(g: &GuideRow) -> serde_json::Value {
         "stake_amount": g.stake_amount,
         "hourly_rate": g.hourly_rate,
         "avatar_url": g.avatar_url,
+        "public_title": g.public_title,
         "status": g.status,
         "id_photo_url": g.id_photo_url,
         "language_cert_url": g.language_cert_url,
@@ -530,6 +553,7 @@ pub async fn guide_create_impl(
         stake_amount: "0".to_string(),
         hourly_rate: None,
         avatar_url: None,
+        public_title: None,
         status: "pending".to_string(),
         rejection_codes: vec![],
         rejection_message: None,
@@ -597,24 +621,165 @@ pub async fn guide_create_impl(
     })))
 }
 
+fn normalize_stake_amount(raw: &str) -> Result<String, &'static str> {
+    let t = raw.trim();
+    if t.is_empty() {
+        return Err("stake_amount_required");
+    }
+    if t.starts_with('-') {
+        return Err("invalid_stake_amount");
+    }
+    let parts: Vec<&str> = t.split('.').collect();
+    if parts.len() > 2 {
+        return Err("invalid_stake_amount");
+    }
+    for part in &parts {
+        if part.is_empty() || !part.chars().all(|c| c.is_ascii_digit()) {
+            return Err("invalid_stake_amount");
+        }
+    }
+    let whole = parts[0];
+    let frac = if parts.len() == 2 { parts[1] } else { "" };
+    let frac_trim = frac.trim_end_matches('0');
+    if frac_trim.is_empty() {
+        Ok(whole.to_string())
+    } else {
+        Ok(format!("{whole}.{frac_trim}"))
+    }
+}
+
+fn stake_amount_is_positive(normalized: &str) -> bool {
+    if normalized == "0" {
+        return false;
+    }
+    normalized.parse::<f64>().map(|n| n > 0.0).unwrap_or(false)
+}
+
+fn guide_stake_status_blocked(status: &str) -> bool {
+    matches!(
+        status.trim().to_ascii_lowercase().as_str(),
+        "rejected" | "suspended" | "exiting" | "exited"
+    )
+}
+
+fn guide_status_after_stake(current: &str, normalized_amount: &str) -> String {
+    let s = current.trim().to_ascii_lowercase();
+    if stake_amount_is_positive(normalized_amount)
+        && matches!(s.as_str(), "pending" | "pending_review" | "reviewing" | "approved")
+    {
+        return "active".to_string();
+    }
+    current.to_string()
+}
+
 pub async fn guide_stake_impl(
     state: ChainOffState,
+    caller_user_id: Uuid,
     guide_id: Uuid,
     Json(body): Json<StakeBody>,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    let normalized = normalize_stake_amount(&body.amount).map_err(|key| {
+        (
+            StatusCode::BAD_REQUEST,
+            Json(crate::api_json::err_key(key)),
+        )
+    })?;
+
     let mut store = state.store.write().await;
     let guide = store.guides.get_mut(&guide_id).ok_or((
         StatusCode::NOT_FOUND,
         Json(crate::api_json::err_key("guide_not_found")),
     ))?;
-    guide.stake_amount = body.amount;
-    guide.updated_at = Utc::now();
-    if guide.stake_amount != "0" && guide.status == "pending" {
-        guide.status = "active".to_string();
+    if guide.user_id != caller_user_id {
+        return Err((
+            StatusCode::FORBIDDEN,
+            Json(crate::api_json::err_key("guide_stake_forbidden")),
+        ));
     }
-    Ok(Json(
-        json!({ "status": "ok", "stake_amount": guide.stake_amount }),
-    ))
+    if guide_stake_status_blocked(&guide.status) {
+        return Err((
+            StatusCode::FORBIDDEN,
+            Json(crate::api_json::err_key("guide_stake_status_blocked")),
+        ));
+    }
+
+    let prev_stake = guide.stake_amount.clone();
+    let prev_status = guide.status.clone();
+    let guide_user_id = guide.user_id;
+    let new_status = guide_status_after_stake(&guide.status, &normalized);
+    let updated_at = Utc::now();
+
+    guide.stake_amount = normalized.clone();
+    guide.status = new_status.clone();
+    guide.updated_at = updated_at;
+
+    if let Some(ref pool) = state.db_pool {
+        match crate::db::update_guide_stake(
+            pool,
+            guide_id,
+            &guide.stake_amount,
+            &guide.status,
+            updated_at,
+        )
+        .await
+        {
+            Ok(rows) if rows > 0 => {
+                crate::db::dual_write_after_guide_stake(
+                    pool,
+                    guide_id,
+                    guide_user_id,
+                    &normalized,
+                    &new_status,
+                    updated_at,
+                )
+                .await;
+            }
+            Ok(_) => {
+                eprintln!(
+                    "[audit] db update_guide_stake no row guide_id={} user_id={}",
+                    guide_id, guide.user_id
+                );
+                if strict_guide_db_write_enabled() {
+                    guide.stake_amount = prev_stake;
+                    guide.status = prev_status;
+                    guide.updated_at = updated_at;
+                    return Err((
+                        StatusCode::SERVICE_UNAVAILABLE,
+                        Json(json!({
+                            "error": "guide_db_persist_failed",
+                            "message": "guide_db_persist_failed",
+                            "rule": "TRAVELTRUST_STRICT_GUIDE_DB_WRITE=1; stake reverted in memory",
+                        })),
+                    ));
+                }
+            }
+            Err(e) => {
+                eprintln!(
+                    "[audit] db update_guide_stake failed guide_id={} user_id={} error={}",
+                    guide_id, guide.user_id, e
+                );
+                guide.stake_amount = prev_stake;
+                guide.status = prev_status;
+                guide.updated_at = updated_at;
+                if strict_guide_db_write_enabled() {
+                    return Err((
+                        StatusCode::SERVICE_UNAVAILABLE,
+                        Json(json!({
+                            "error": "guide_db_persist_failed",
+                            "message": "guide_db_persist_failed",
+                            "rule": "TRAVELTRUST_STRICT_GUIDE_DB_WRITE=1; stake reverted in memory",
+                        })),
+                    ));
+                }
+            }
+        }
+    }
+
+    Ok(Json(json!({
+        "status": "ok",
+        "stake_amount": guide.stake_amount,
+        "guide_status": guide.status,
+    })))
 }
 
 /// B-079：`GET …/guides/:id/availability` — 与接单 **`has_overlapping_lock`**（锁定表）及 **Accepted / Escrowed / Disputed** 且含 **`start_date`/`end_date`** 的订单同源；`source`=`lock` 优先于同 **`order_id`** 的 `order` 行。
@@ -668,4 +833,36 @@ pub async fn guide_availability_impl(
         "guide_id": guide_id.to_string(),
         "occupied_ranges": occupied,
     })))
+}
+
+#[cfg(test)]
+mod guide_stake_normalize_tests {
+    use super::*;
+
+    #[test]
+    fn normalize_stake_amount_trims_fractional_zeros() {
+        assert_eq!(normalize_stake_amount("100.00").unwrap(), "100");
+        assert_eq!(normalize_stake_amount("1000").unwrap(), "1000");
+    }
+
+    #[test]
+    fn normalize_stake_amount_rejects_invalid() {
+        assert_eq!(normalize_stake_amount(""), Err("stake_amount_required"));
+        assert_eq!(normalize_stake_amount("-1"), Err("invalid_stake_amount"));
+        assert_eq!(normalize_stake_amount("abc"), Err("invalid_stake_amount"));
+    }
+
+    #[test]
+    fn guide_status_after_stake_activates_pending() {
+        assert_eq!(guide_status_after_stake("pending", "100"), "active");
+        assert_eq!(guide_status_after_stake("active", "100"), "active");
+        assert_eq!(guide_status_after_stake("active", "0"), "active");
+    }
+
+    #[test]
+    fn guide_stake_status_blocked_flags() {
+        assert!(guide_stake_status_blocked("exiting"));
+        assert!(guide_stake_status_blocked("rejected"));
+        assert!(!guide_stake_status_blocked("pending"));
+    }
 }

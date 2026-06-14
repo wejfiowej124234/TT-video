@@ -10,7 +10,8 @@ use crate::db::{
 };
 
 use super::config::{
-    onboarding_stripe_amount_minor, onboarding_stripe_currency, stripe_secret_key,
+    onboarding_stripe_amount_minor, onboarding_stripe_currency, stripe_currency_for_fee_schedule,
+    stripe_secret_key,
 };
 use super::http_client::{stripe_get_json, stripe_http_client, stripe_post_form};
 
@@ -26,7 +27,9 @@ fn entitlement_stripe_amount(row: &OnboardingEntitlementRow) -> i64 {
 }
 
 fn entitlement_stripe_currency(row: &OnboardingEntitlementRow) -> String {
-    entitlement_currency_from_metadata(row).unwrap_or_else(onboarding_stripe_currency)
+    entitlement_currency_from_metadata(row)
+        .map(|c| stripe_currency_for_fee_schedule(&c))
+        .unwrap_or_else(onboarding_stripe_currency)
 }
 
 pub(crate) fn payment_intent_id_from_metadata(row: &OnboardingEntitlementRow) -> Option<String> {

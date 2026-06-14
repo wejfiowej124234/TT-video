@@ -31,6 +31,59 @@ pub async fn select_market_listing_draft_by_id_for_owner(
     .await
 }
 
+pub async fn count_market_listing_drafts_by_owner(
+    pool: &PgPool,
+    variant: &str,
+    owner_user_id: Uuid,
+) -> Result<i64, sqlx::Error> {
+    sqlx::query_scalar(
+        r#"SELECT COUNT(*)::bigint FROM market_listing_drafts
+           WHERE variant = $1 AND owner_user_id = $2"#,
+    )
+    .bind(variant)
+    .bind(owner_user_id)
+    .fetch_one(pool)
+    .await
+}
+
+pub async fn list_market_listing_drafts_by_owner(
+    pool: &PgPool,
+    variant: &str,
+    owner_user_id: Uuid,
+    limit: i64,
+) -> Result<Vec<MarketListingDraftRow>, sqlx::Error> {
+    sqlx::query_as::<_, MarketListingDraftRow>(
+        r#"SELECT id, variant, payload, saved_at, owner_user_id
+           FROM market_listing_drafts
+           WHERE variant = $1 AND owner_user_id = $2
+           ORDER BY saved_at DESC
+           LIMIT $3"#,
+    )
+    .bind(variant)
+    .bind(owner_user_id)
+    .bind(limit)
+    .fetch_all(pool)
+    .await
+}
+
+pub async fn delete_market_listing_draft_by_owner(
+    pool: &PgPool,
+    draft_id: Uuid,
+    variant: &str,
+    owner_user_id: Uuid,
+) -> Result<u64, sqlx::Error> {
+    let n = sqlx::query(
+        "DELETE FROM market_listing_drafts WHERE id = $1 AND variant = $2 AND owner_user_id = $3",
+    )
+    .bind(draft_id)
+    .bind(variant)
+    .bind(owner_user_id)
+    .execute(pool)
+    .await?
+    .rows_affected();
+    Ok(n)
+}
+
 pub async fn insert_market_listing_draft(
     pool: &PgPool,
     id: Uuid,

@@ -3,7 +3,7 @@
 use axum::extract::State;
 use axum::http::{HeaderMap, StatusCode};
 use axum::response::IntoResponse;
-use axum::routing::{get, patch, post, put};
+use axum::routing::{get, post};
 use axum::Json;
 use axum::Router;
 use serde::Deserialize;
@@ -307,6 +307,109 @@ pub async fn patch_me_guide_profile(
     }
 }
 
+pub async fn get_me_guide_exit_status(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    let uid = match require_uid(&state, &headers).await {
+        Ok(u) => u,
+        Err(r) => return r.into_response(),
+    };
+    let Some(co) = state.chain_off.clone() else {
+        return not_impl_json("GET /api/v1/me/guide-exit-status").into_response();
+    };
+    match chain_off::get_me_guide_exit_status_impl(co, uid).await {
+        Ok(j) => j.into_response(),
+        Err((code, j)) => (code, j).into_response(),
+    }
+}
+
+pub async fn post_me_guide_exit_request(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+    Json(body): Json<chain_off::GuideExitRequestBody>,
+) -> impl IntoResponse {
+    let uid = match require_uid(&state, &headers).await {
+        Ok(u) => u,
+        Err(r) => return r.into_response(),
+    };
+    let Some(co) = state.chain_off.clone() else {
+        return not_impl_json("POST /api/v1/me/guide-exit-request").into_response();
+    };
+    match chain_off::post_me_guide_exit_request_impl(co, uid, Json(body)).await {
+        Ok(j) => j.into_response(),
+        Err((code, j)) => (code, j).into_response(),
+    }
+}
+
+pub async fn get_me_publish_summary(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    let uid = match require_uid(&state, &headers).await {
+        Ok(u) => u,
+        Err(r) => return r.into_response(),
+    };
+    let Some(co) = state.chain_off.clone() else {
+        return not_impl_json("GET /api/v1/me/publish-summary").into_response();
+    };
+    match chain_off::get_me_publish_summary_impl(co, state.chain_config.as_ref(), uid).await {
+        Ok(j) => j.into_response(),
+        Err((code, j)) => (code, j).into_response(),
+    }
+}
+
+pub async fn get_me_merchant_listings_summary(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    let uid = match require_uid(&state, &headers).await {
+        Ok(u) => u,
+        Err(r) => return r.into_response(),
+    };
+    let Some(co) = state.chain_off.clone() else {
+        return not_impl_json("GET /api/v1/me/merchant-listings-summary").into_response();
+    };
+    match chain_off::get_me_merchant_listings_summary_impl(co, uid).await {
+        Ok(j) => j.into_response(),
+        Err((code, j)) => (code, j).into_response(),
+    }
+}
+
+pub async fn get_me_merchant_listings(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    let uid = match require_uid(&state, &headers).await {
+        Ok(u) => u,
+        Err(r) => return r.into_response(),
+    };
+    let Some(co) = state.chain_off.clone() else {
+        return not_impl_json("GET /api/v1/me/merchant-listings").into_response();
+    };
+    match chain_off::get_me_merchant_listings_impl(co, uid).await {
+        Ok(j) => j.into_response(),
+        Err((code, j)) => (code, j).into_response(),
+    }
+}
+
+pub async fn get_me_acquisition_listings(
+    State(state): State<ApiMetaState>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    let uid = match require_uid(&state, &headers).await {
+        Ok(u) => u,
+        Err(r) => return r.into_response(),
+    };
+    let Some(co) = state.chain_off.clone() else {
+        return not_impl_json("GET /api/v1/me/acquisition-listings").into_response();
+    };
+    match chain_off::get_me_acquisition_listings_impl(co, uid).await {
+        Ok(j) => j.into_response(),
+        Err((code, j)) => (code, j).into_response(),
+    }
+}
+
 pub async fn get_me_merchant_profile(
     State(state): State<ApiMetaState>,
     headers: HeaderMap,
@@ -592,8 +695,28 @@ pub fn router() -> Router<ApiMetaState> {
             get(get_me_guide_profile).patch(patch_me_guide_profile),
         )
         .route(
+            "/api/v1/me/guide-exit-status",
+            get(get_me_guide_exit_status),
+        )
+        .route(
+            "/api/v1/me/guide-exit-request",
+            post(post_me_guide_exit_request),
+        )
+        .route(
             "/api/v1/me/merchant-profile",
             get(get_me_merchant_profile).patch(patch_me_merchant_profile),
+        )
+        .route(
+            "/api/v1/me/publish-summary",
+            get(get_me_publish_summary),
+        )
+        .route(
+            "/api/v1/me/merchant-listings-summary",
+            get(get_me_merchant_listings_summary),
+        )
+        .route(
+            "/api/v1/me/merchant-listings",
+            get(get_me_merchant_listings),
         )
         .route(
             "/api/v1/me/region-steward-profile",
@@ -602,6 +725,10 @@ pub fn router() -> Router<ApiMetaState> {
         .route(
             "/api/v1/me/acquisition-profile",
             get(get_me_acquisition_profile).patch(patch_me_acquisition_profile),
+        )
+        .route(
+            "/api/v1/me/acquisition-listings",
+            get(get_me_acquisition_listings),
         )
         .route(
             "/api/v1/me/provider-registration-draft",

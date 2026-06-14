@@ -92,28 +92,24 @@ async fn assert_wallet_verified_for_address(
 }
 
 fn steward_application_json(user_role: &str, app: Option<StewardApplicationRow>) -> Value {
-    if user_role == "region_steward" {
-        return json!({
-            "status": "ok",
-            "application": {
-                "status": "approved",
-                "lifecycle_state": "approved",
-                "user_role": "region_steward"
-            },
-            "meta": { "implementation_status": "steward_application_role_active" }
-        });
-    };    let Some(a) = app else {
+    let Some(a) = app else {
         return json!({
             "status": "ok",
             "application": null,
             "meta": { "implementation_status": "steward_application_none" }
         });
-    };    let quote = steward_stake_quote_for_jurisdictions(&a.jurisdictions).ok();
+    };
+    let quote = steward_stake_quote_for_jurisdictions(&a.jurisdictions).ok();
+    let lifecycle = if user_role == "region_steward" && a.status == "approved" {
+        "approved"
+    } else {
+        a.status.as_str()
+    };
     json!({
         "status": "ok",
         "application": {
             "id": a.id.to_string(),
-            "status": a.status,
+            "status": lifecycle,
             "lifecycle_state": a.status,
             "machine_code": "steward_application",
             "jurisdictions": a.jurisdictions,
@@ -123,7 +119,8 @@ fn steward_application_json(user_role: &str, app: Option<StewardApplicationRow>)
             "updated_at": a.updated_at.to_rfc3339(),
             "rejection_codes": a.rejection_codes,
             "rejection_message": a.rejection_message,
-            "stake_quote": quote
+            "stake_quote": quote,
+            "user_role": user_role
         },
         "meta": { "implementation_status": "steward_application_read" }
     })
@@ -395,7 +392,7 @@ pub async fn admin_review_steward_application_impl(
         .map(|s| s.to_string());
 
     let next_status = if status == "rejected" {
-        "rejected".to_string()
+        "stake_release_pending".to_string()
     } else {
         status.clone()
     };
@@ -403,12 +400,12 @@ pub async fn admin_review_steward_application_impl(
     let updated = StewardApplicationRow {
         status: next_status.clone(),
         updated_at: now,
-        rejection_codes: if next_status == "rejected" {
+        rejection_codes: if status == "rejected" {
             codes.clone()
         } else {
             vec![]
         },
-        rejection_message: if next_status == "rejected" {
+        rejection_message: if status == "rejected" {
             rejection_message.clone()
         } else {
             None
@@ -424,7 +421,22 @@ pub async fn admin_review_steward_application_impl(
             u.role = "region_steward".to_string();
             u.updated_at = now;
         }
-    };    let app_id = updated.id;
+        if let Some(app_mut) = store.steward_applications_by_user.get_mut(&target_user_id) {
+            if app_mut.payload.get("seat_activated_at").is_none() {
+                app_mut.payload["seat_activated_at"] = json!(now.to_rfc3339());
+            }
+            app_mut.updated_at = now;
+        }
+    }
+
+    if status == "rejected" {
+        if let Some(u) = store.users.get_mut(&target_user_id) {
+            if u.role == "region_steward" {
+                u.role = "traveler".to_string();
+                u.updated_at = now;
+            }
+        }
+    }    let app_id = updated.id;
     drop(store);
 
     if let Some(ref pool) = co.db_pool {
@@ -628,6 +640,74 @@ mod tests {
                 .get(&uid)
                 .map(|a| a.status.as_str()),
             Some("approved")
+        );
+    }
+
+    #[tokio::test]
+    async fn admin_steward_reject_enters_stake_release_pending() {
+        use std::sync::Arc;
+        use tokio::sync::RwLock;
+
+        use crate::chain_off::{ChainOffConfig, ChainOffState, ChainOffStore, UserRow};
+
+        let uid = Uuid::new_v4();
+        let now = Utc::now();
+        let mut store = ChainOffStore::default();
+        store.users.insert(
+            uid,
+            UserRow {
+                id: uid,
+                email: "steward-reject@test.com".to_string(),
+                password_hash: None,
+                role: "traveler".to_string(),
+                kyc_status: "none".to_string(),
+                nickname: None,
+                avatar_url: None,
+                default_wallet_address: None,
+                created_at: now,
+                updated_at: now,
+            },
+        );
+        store.steward_applications_by_user.insert(
+            uid,
+            StewardApplicationRow {
+                id: Uuid::new_v4(),
+                user_id: uid,
+                status: "under_review".to_string(),
+                jurisdictions: vec!["CN".to_string()],
+                wallet_address: "0x4a62316623ad457F02cDC5D997deD67a383EC569".to_string(),
+                payload: json!({"legal_name": "Reject Test"}),
+                submitted_at: now,
+                updated_at: now,
+                rejection_codes: vec![],
+                rejection_message: None,
+            },
+        );
+        let co = ChainOffState {
+            store: Arc::new(RwLock::new(store)),
+            config: ChainOffConfig::default(),
+            db_pool: None,
+        };
+
+        let _ = admin_review_steward_application_impl(
+            co.clone(),
+            uid,
+            Json(PatchStewardApplicationReviewBody {
+                status: "rejected".to_string(),
+                rejection_codes: vec!["test".to_string()],
+                rejection_message: Some("no".to_string()),
+            }),
+        )
+        .await
+        .expect("reject");
+
+        let store = co.store.read().await;
+        assert_eq!(
+            store
+                .steward_applications_by_user
+                .get(&uid)
+                .map(|a| a.status.as_str()),
+            Some("stake_release_pending")
         );
     }
 }

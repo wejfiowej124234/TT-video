@@ -154,6 +154,7 @@ pub async fn seed_market_public_showcase_if_sparse(pool: &PgPool, store: &mut Ch
             stake_amount: def.stake_amount.to_string(),
             hourly_rate: None,
             avatar_url: None,
+            public_title: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,

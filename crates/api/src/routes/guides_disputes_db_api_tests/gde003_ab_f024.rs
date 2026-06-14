@@ -91,6 +91,7 @@ async fn matrix_93_b_gde_003_f024_stake_post_persists_guide_row_active() {
             Request::builder()
                 .method(Method::POST)
                 .uri(format!("/api/v1/guides/{guide_id_str}/stake"))
+                .header(header::AUTHORIZATION, auth_bearer(&token))
                 .header(header::CONTENT_TYPE, "application/json")
                 .body(Body::from(stake_body.to_string()))
                 .unwrap(),

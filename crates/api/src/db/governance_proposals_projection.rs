@@ -286,6 +286,55 @@ pub async fn list_governance_proposals_for_chain(
         .collect())
 }
 
+pub async fn list_governance_proposals_for_proposer(
+    pool: &PgPool,
+    chain_id: i64,
+    proposer: &[u8],
+    limit: i64,
+) -> Result<Vec<GovernanceProposalProjectionRow>, sqlx::Error> {
+    let rows = sqlx::query_as::<_, (i64, String, Option<Vec<u8>>, i64, i64, i64, Option<String>, String, String, String, Option<String>, Option<Vec<u8>>)>(
+        r#"
+        SELECT chain_id, proposal_id::text, proposer, snapshot_block, vote_start_block, vote_end_block,
+               title, for_votes::text, against_votes::text, abstain_votes::text,
+               chain_state, operation_id
+        FROM governance_proposals_projection
+        WHERE chain_id = $1 AND proposer = $2
+        ORDER BY proposal_id DESC
+        LIMIT $3
+        "#,
+    )
+    .bind(chain_id)
+    .bind(proposer)
+    .bind(limit)
+    .fetch_all(pool)
+    .await?;
+    Ok(rows
+        .into_iter()
+        .map(
+            |(chain_id, proposal_id, proposer, snapshot_block, vote_start_block, vote_end_block, title, fv, av, ab, chain_state, op)| {
+                GovernanceProposalProjectionRow {
+                    chain_id,
+                    proposal_id,
+                    proposer_hex: proposer
+                        .as_ref()
+                        .map(|b| format!("0x{}", hex::encode(b))),
+                    snapshot_block,
+                    vote_start_block,
+                    vote_end_block,
+                    title,
+                    for_votes: fv,
+                    against_votes: av,
+                    abstain_votes: ab,
+                    chain_state,
+                    operation_id_hex: op
+                        .as_ref()
+                        .map(|b| format!("0x{}", hex::encode(b))),
+                }
+            },
+        )
+        .collect())
+}
+
 pub async fn get_governance_proposal_projection(
     pool: &PgPool,
     chain_id: i64,
