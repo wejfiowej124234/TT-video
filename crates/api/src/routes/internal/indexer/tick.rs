@@ -863,14 +863,31 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
             }
         }
     }
-    let staking_trimmed = config
-        .staking_address
-        .as_ref()
-        .map(|s| s.trim().to_string())
-        .filter(|s| !s.is_empty());
-    if let Some(staking_raw) = staking_trimmed.as_ref() {
+    let mut staking_pool_addrs: Vec<(String, &'static str)> = Vec::new();
+    for (scope, opt) in [
+        (
+            "guide_staking_contract",
+            config
+                .guide_staking_address
+                .as_ref()
+                .or(config.staking_address.as_ref()),
+        ),
+        (
+            "staking_provider_contract",
+            config.staking_provider_address.as_ref(),
+        ),
+    ] {
+        let Some(raw) = opt.map(|s| s.trim().to_string()).filter(|s| !s.is_empty()) else {
+            continue;
+        };
+        let norm = common::normalize_hex_addr(&raw);
+        if staking_pool_addrs.iter().any(|(_, a)| *a == norm) {
+            continue;
+        }
+        staking_pool_addrs.push((norm, scope));
+    }
+    for (staking_n, scope) in staking_pool_addrs {
         if let Some(pool) = state.chain_off.as_ref().and_then(|co| co.db_pool.as_ref()) {
-            let staking_n = common::normalize_hex_addr(staking_raw);
             match chain::indexer::fetch_staking_state_logs(
                 &config.rpc_url,
                 &staking_n,
@@ -919,13 +936,13 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
                             StatusCode::INTERNAL_SERVER_ERROR,
                             Json(crate::api_json::err_key_detail(
                                 "fetch_supplemental_logs_failed",
-                                format!("staking_contract: {}", e),
+                                format!("{scope}: {e}"),
                             )),
                         )
                             .into_response();
                     }
                     logs_fetch_skipped.push(json!({
-                        "scope": "staking_contract",
+                        "scope": scope,
                         "error": e
                     }));
                 }

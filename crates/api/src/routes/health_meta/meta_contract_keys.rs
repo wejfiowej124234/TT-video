@@ -218,17 +218,15 @@ pub fn format_chain_meta_top_keys_contract_729() -> String {
     s
 }
 
-/// **759**：`GET /meta` **`chain.contracts`** 对象顶层键顺序（仅 **`ChainConfig`** 挂载、**`contracts`** **非 **null** 时存在；机读锁 **`chain_contracts_top_keys`** / **`chain_contracts_top_keys_contract_759`**；与同名列 JSON 数组同源；**共 12 键**）。
+/// **759**：`GET /meta` **`chain.contracts`** 对象顶层键顺序（仅 **`ChainConfig`** 挂载、**`contracts`** **非 **null** 时存在；机读锁 **`chain_contracts_top_keys`** / **`chain_contracts_top_keys_contract_759`**；与同名列 JSON 数组同源；**共 10 键**；与 **`frontend/lib/apiClient/meta` `CHAIN_CONTRACTS_META_TOP_KEYS`** 对读）。
 pub const CHAIN_CONTRACTS_META_TOP_KEYS: &[&str] = &[
-    "escrow_factory_address",
-    "fee_router_address",
-    "region_vault_address",
-    "escrow_platform_fee_recipient",
-    "staking_address",
-    "registry_address",
+    "guide_staking_address",
+    "staking_provider_address",
     "governor_address",
-    "governance_votes_token_address",
-    "chain_id_configured",
+    "timelock_address",
+    "governance_token_address",
+    "fee_router_address",
+    "treasury_address",
     "rule",
     "chain_contracts_top_keys",
     "chain_contracts_top_keys_contract_759",

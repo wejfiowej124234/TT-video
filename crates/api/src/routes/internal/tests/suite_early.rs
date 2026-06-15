@@ -195,8 +195,12 @@ async fn indexer_status_ok_omits_last_stored_without_db() {
 #[tokio::test]
 async fn indexer_status_ok_when_chain_and_memory_mounted_includes_runtime_state_and_meta_build()
 {
+    let mut api_state = build_state_chain_ready_no_db_pool();
+    if let Some(ref mut cfg) = api_state.chain_config {
+        cfg.rpc_url = "http://127.0.0.1:9".to_string();
+    }
     let resp = indexer_status(
-        State(build_state_chain_ready_no_db_pool()),
+        State(api_state),
         Query(IndexerStatusQuery::default()),
     )
     .await
@@ -507,10 +511,13 @@ async fn indexer_tick_persists_fee_router_and_region_vault_events_when_db_config
         country_pool_ledger_address: None,
         investor_share_token_addresses: vec![],
         staking_address: None,
+        guide_staking_address: None,
+        staking_provider_address: None,
         investor_lock_contract_addresses: vec![],
         governor_address: None,
         governance_timelock_address: None,
         governance_votes_token_address: None,
+        treasury_address: None,
         registry_address: None,
         executor_max_amount_per_tx: None,
         executor_max_amount_per_day: None,
@@ -789,10 +796,13 @@ async fn indexer_tick_persists_region_share_snapshot_line_when_db_configured() {
         country_pool_ledger_address: None,
         investor_share_token_addresses: vec![],
         staking_address: None,
+        guide_staking_address: None,
+        staking_provider_address: None,
         investor_lock_contract_addresses: vec![],
         governor_address: None,
         governance_timelock_address: None,
         governance_votes_token_address: None,
+        treasury_address: None,
         registry_address: None,
         executor_max_amount_per_tx: None,
         executor_max_amount_per_day: None,
@@ -839,10 +849,13 @@ async fn indexer_tick_persists_region_share_snapshot_line_when_db_configured() {
         country_pool_ledger_address: None,
         investor_share_token_addresses: vec![],
         staking_address: None,
+        guide_staking_address: None,
+        staking_provider_address: None,
         investor_lock_contract_addresses: vec![],
         governor_address: None,
         governance_timelock_address: None,
         governance_votes_token_address: None,
+        treasury_address: None,
         registry_address: None,
         executor_max_amount_per_tx: None,
         executor_max_amount_per_day: None,
@@ -1005,10 +1018,13 @@ async fn indexer_tick_persists_country_ledger_credited_when_db_configured() {
         country_pool_ledger_address: Some(LEDGER.to_string()),
         investor_share_token_addresses: vec![],
         staking_address: None,
+        guide_staking_address: None,
+        staking_provider_address: None,
         investor_lock_contract_addresses: vec![],
         governor_address: None,
         governance_timelock_address: None,
         governance_votes_token_address: None,
+        treasury_address: None,
         registry_address: None,
         executor_max_amount_per_tx: None,
         executor_max_amount_per_day: None,

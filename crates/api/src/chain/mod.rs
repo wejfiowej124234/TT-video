@@ -34,8 +34,12 @@ pub struct ChainConfig {
     /// 份额代币（TTG / Country Pool 等）ERC20 地址列表；`indexer-tick` 写入 `investor_share_transfer_events`（B-085）
     #[serde(default)]
     pub investor_share_token_addresses: Vec<String>,
-    /// **身份质押池**部署地址（**`GuideIdentityStakingPool` / `ProviderIdentityStakingPool`**，`IdentityStakingPool`；与旧 **`Staking`** **读接口/事件 topic 兼容**）；设后 **`indexer-tick`** 写入 **`investor_stake_state_events`**（**B-088 Completion**）；**`investor-distribution-accrual`** 与 **`Transfer`** 重放合并
+    /// **身份质押池**（Guide）；**`indexer-tick`** 写入 **`investor_stake_state_events`**；与 **`staking_address`** / **`guide_staking_address`** 同源
     pub staking_address: Option<String>,
+    /// **`GuideIdentityStakingPool`**；与 **`GUIDE_STAKING_ADDRESS`** / **`STAKING_ADDRESS`** / **`GET /meta` `guide_staking_address`**
+    pub guide_staking_address: Option<String>,
+    /// **`ProviderIdentityStakingPool`**；与 **`STAKING_PROVIDER_ADDRESS`** / **`GET /meta` `staking_provider_address`**
+    pub staking_provider_address: Option<String>,
     /// **`InvestorShareLockLedger`** 等锁仓合约地址列表；**`indexer-tick`** 写入 **`investor_lock_state_events`**（**B-088 · 112**）
     #[serde(default)]
     pub investor_lock_contract_addresses: Vec<String>,
@@ -45,6 +49,8 @@ pub struct ChainConfig {
     pub governance_timelock_address: Option<String>,
     /// 与 Governor 绑定的 **`GovernanceVotesToken`**；**`GET …/governance/proposals/:id`** 可选 **`getPastVotes`** 对拍
     pub governance_votes_token_address: Option<String>,
+    /// **`TREASURY_ADDRESS`** 或 **`REGION_VAULT_ADDRESS`**；**`GET /meta` `treasury_address`**
+    pub treasury_address: Option<String>,
     pub registry_address: Option<String>,
     /// 执行器单笔最大金额（guide_amount + traveler_refund + platform_fee），0 或不设表示不限制
     pub executor_max_amount_per_tx: Option<u128>,
@@ -55,9 +61,16 @@ pub struct ChainConfig {
 }
 
 impl ChainConfig {
+    fn env_nonempty(key: &str) -> Option<String> {
+        std::env::var(key)
+            .ok()
+            .map(|s| s.trim().to_string())
+            .filter(|s| !s.is_empty())
+    }
+
     /// 从环境变量加载；未配置时返回 None（链下模式或未上链）
     pub fn from_env() -> Option<Self> {
-        let rpc_url = std::env::var("CHAIN_RPC_URL").ok()?;
+        let rpc_url = Self::env_nonempty("CHAIN_RPC_URL")?;
         let chain_id = std::env::var("CHAIN_ID")
             .ok()
             .and_then(|s| s.parse().ok())
@@ -92,20 +105,32 @@ impl ChainConfig {
                     .collect::<Vec<_>>()
             })
             .unwrap_or_default();
+        let guide_staking_address = Self::env_nonempty("STAKING_ADDRESS")
+            .or_else(|| Self::env_nonempty("GUIDE_STAKING_ADDRESS"));
+        let staking_provider_address = Self::env_nonempty("STAKING_PROVIDER_ADDRESS")
+            .or_else(|| Self::env_nonempty("PROVIDER_STAKING_POOL_ADDRESS"));
+        let treasury_address = Self::env_nonempty("TREASURY_ADDRESS")
+            .or_else(|| Self::env_nonempty("REGION_VAULT_ADDRESS"));
+        let governance_votes_token_address = Self::env_nonempty("GOVERNANCE_VOTES_TOKEN_ADDRESS")
+            .or_else(|| Self::env_nonempty("GOVERNANCE_TOKEN_ADDRESS"));
         Some(Self {
             rpc_url,
             chain_id,
-            escrow_factory_address: std::env::var("ESCROW_FACTORY_ADDRESS").ok(),
-            fee_router_address: std::env::var("FEE_ROUTER_ADDRESS").ok(),
-            region_vault_address: std::env::var("REGION_VAULT_ADDRESS").ok(),
-            country_pool_ledger_address: std::env::var("COUNTRY_POOL_LEDGER_ADDRESS").ok(),
+            escrow_factory_address: Self::env_nonempty("ESCROW_FACTORY_ADDRESS"),
+            fee_router_address: Self::env_nonempty("FEE_ROUTER_ADDRESS"),
+            region_vault_address: Self::env_nonempty("REGION_VAULT_ADDRESS"),
+            country_pool_ledger_address: Self::env_nonempty("COUNTRY_POOL_LEDGER_ADDRESS"),
             investor_share_token_addresses,
-            staking_address: std::env::var("STAKING_ADDRESS").ok(),
+            staking_address: guide_staking_address.clone(),
+            guide_staking_address,
+            staking_provider_address,
             investor_lock_contract_addresses,
-            governor_address: std::env::var("GOVERNOR_ADDRESS").ok(),
-            governance_timelock_address: std::env::var("GOVERNANCE_TIMELOCK_ADDRESS").ok(),
-            governance_votes_token_address: std::env::var("GOVERNANCE_VOTES_TOKEN_ADDRESS").ok(),
-            registry_address: std::env::var("REGISTRY_ADDRESS").ok(),
+            governor_address: Self::env_nonempty("GOVERNOR_ADDRESS"),
+            governance_timelock_address: Self::env_nonempty("GOVERNANCE_TIMELOCK_ADDRESS")
+                .or_else(|| Self::env_nonempty("TIMELOCK_ADDRESS")),
+            governance_votes_token_address,
+            treasury_address,
+            registry_address: Self::env_nonempty("REGISTRY_ADDRESS"),
             executor_max_amount_per_tx,
             executor_max_amount_per_day,
             executor_retry_count,
@@ -116,7 +141,7 @@ impl ChainConfig {
         !self.rpc_url.is_empty()
     }
 
-    /// 与 `GET /meta` **`chain.contracts.escrow_platform_fee_recipient`** 同源（B-095 / Runbook §7.1）。
+    /// 与 `GET /meta` **`chain.contracts.fee_router_address`** 同源（B-095 / Runbook §7.1；759 十键）。
     #[must_use]
     pub fn escrow_platform_fee_recipient(&self) -> Option<String> {
         self.fee_router_address

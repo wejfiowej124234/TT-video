@@ -100,10 +100,10 @@ fn chain_meta_top_keys_order_and_literals_729() {
 
 #[test]
 fn chain_contracts_meta_top_keys_order_and_literals_759() {
-    assert_eq!(CHAIN_CONTRACTS_META_TOP_KEYS[9], "rule");
-    assert_eq!(CHAIN_CONTRACTS_META_TOP_KEYS[10], "chain_contracts_top_keys");
+    assert_eq!(CHAIN_CONTRACTS_META_TOP_KEYS[7], "rule");
+    assert_eq!(CHAIN_CONTRACTS_META_TOP_KEYS[8], "chain_contracts_top_keys");
     assert_eq!(
-        CHAIN_CONTRACTS_META_TOP_KEYS[11],
+        CHAIN_CONTRACTS_META_TOP_KEYS[9],
         "chain_contracts_top_keys_contract_759"
     );
     let c = format_chain_contracts_meta_top_keys_contract_759();
@@ -3407,9 +3407,13 @@ async fn meta_chain_contracts_759_when_chain_config_present() {
             .map(|a| a.len()),
         Some(CHAIN_CONTRACTS_META_TOP_KEYS.len())
     );
-    assert_eq!(
-        v["chain"]["contracts"]["chain_id_configured"],
-        serde_json::json!(31337)
+    assert!(
+        v["chain"]["contracts"]["guide_staking_address"].is_null(),
+        "guide_staking_address key present when unset"
+    );
+    assert!(
+        v["chain"]["contracts"]["staking_provider_address"].is_null(),
+        "staking_provider_address key present when unset"
     );
     assert_eq!(
         v["pause"]["chain_pause_read"]["status"],
@@ -3421,6 +3425,44 @@ async fn meta_chain_contracts_759_when_chain_config_present() {
         governance_object_keys_match_contract_807(&v["governance"]),
         "GET /meta governance root key order must match GOVERNANCE_META_TOP_KEYS (807 / B-177)"
     );
+}
+
+#[tokio::test]
+async fn meta_chain_contracts_759_staking_pools_exposed_from_chain_config() {
+    const GUIDE: &str = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0";
+    const PROVIDER: &str = "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9";
+    let mut s = api_meta_state(None);
+    s.chain_config = Some(crate::chain::ChainConfig {
+        rpc_url: "http://127.0.0.1:8545".into(),
+        chain_id: 31337,
+        staking_address: Some(GUIDE.into()),
+        guide_staking_address: Some(GUIDE.into()),
+        staking_provider_address: Some(PROVIDER.into()),
+        ..Default::default()
+    });
+    let app = router().with_state(s);
+    let res = app
+        .oneshot(Request::builder().uri("/meta").body(Body::empty()).unwrap())
+        .await
+        .unwrap();
+    assert_eq!(res.status(), StatusCode::OK);
+    let v: serde_json::Value =
+        serde_json::from_slice(&res.into_body().collect().await.unwrap().to_bytes()).unwrap();
+    assert_eq!(
+        v["chain"]["contracts"]["guide_staking_address"],
+        serde_json::json!(GUIDE)
+    );
+    assert_eq!(
+        v["chain"]["contracts"]["staking_provider_address"],
+        serde_json::json!(PROVIDER)
+    );
+    let top_keys = v["chain"]["contracts"]["chain_contracts_top_keys"]
+        .as_array()
+        .expect("chain_contracts_top_keys");
+    assert_eq!(top_keys.len(), CHAIN_CONTRACTS_META_TOP_KEYS.len());
+    for (i, exp) in CHAIN_CONTRACTS_META_TOP_KEYS.iter().enumerate() {
+        assert_eq!(top_keys[i].as_str(), Some(*exp));
+    }
 }
 
 #[tokio::test]

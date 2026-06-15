@@ -739,10 +739,13 @@ async fn b095_get_order_by_id_split_addresses_ssot_matches_get_meta_chain_contra
         country_pool_ledger_address: None,
         investor_share_token_addresses: vec![],
         staking_address: None,
+        guide_staking_address: None,
+        staking_provider_address: None,
         investor_lock_contract_addresses: vec![],
         governor_address: None,
         governance_timelock_address: None,
         governance_votes_token_address: None,
+        treasury_address: None,
         registry_address: Some("0x4444444444444444444444444444444444444444".to_string()),
         executor_max_amount_per_tx: None,
         executor_max_amount_per_day: None,
@@ -772,7 +775,7 @@ async fn b095_get_order_by_id_split_addresses_ssot_matches_get_meta_chain_contra
     assert_eq!(meta_res.status(), StatusCode::OK);
     let meta_body = meta_res.into_body().collect().await.unwrap().to_bytes();
     let meta_v: serde_json::Value = serde_json::from_slice(&meta_body).unwrap();
-    let meta_recipient = &meta_v["chain"]["contracts"]["escrow_platform_fee_recipient"];
+    let meta_recipient = &meta_v["chain"]["contracts"]["fee_router_address"];
 
     let order_res = app
         .oneshot(
