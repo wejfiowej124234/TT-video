@@ -1,0 +1,536 @@
+{
+  "manifest_id": "country-pool-net-profit-v1",
+  "version": "v1-g23-04-freeze-20260615",
+  "status": "GATE2.4_FROZEN",
+  "phase": "① local · ≠ ② Sepolia GO",
+  "contracts": {
+    "CountryPoolNetProfitLedger": {
+      "abi_path": "contracts/abi/CountryPoolNetProfitLedger.json"
+    },
+    "StewardPathVault": {
+      "abi_path": "contracts/abi/StewardPathVault.json"
+    },
+    "UnallocatedStewardPathVault": {
+      "abi_path": "contracts/abi/UnallocatedStewardPathVault.json"
+    },
+    "CountryPoolNetProfitGovernancePayload": {
+      "note": "library · selectors in governance_payload · no forge ABI surface"
+    }
+  },
+  "events": [
+    {
+      "contract": "CountryPoolNetProfitLedger",
+      "name": "NetProfitAccrued",
+      "signature": "NetProfitAccrued(bytes2,uint256,address,bytes32,int256,bytes32,uint64)",
+      "topic0": "0xe4a9a6793bc7bc6162d5ed748463ba3e20fd4238d14a54581887be94b48bbb35",
+      "indexed_fields": [
+        "jurisdiction",
+        "epochId",
+        "token"
+      ],
+      "inputs": [
+        {
+          "name": "jurisdiction",
+          "type": "bytes2",
+          "indexed": true,
+          "internalType": "bytes2"
+        },
+        {
+          "name": "epochId",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        },
+        {
+          "name": "token",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "accountCode",
+          "type": "bytes32",
+          "indexed": false,
+          "internalType": "bytes32"
+        },
+        {
+          "name": "amountSigned",
+          "type": "int256",
+          "indexed": false,
+          "internalType": "int256"
+        },
+        {
+          "name": "ref",
+          "type": "bytes32",
+          "indexed": false,
+          "internalType": "bytes32"
+        },
+        {
+          "name": "recordedAt",
+          "type": "uint64",
+          "indexed": false,
+          "internalType": "uint64"
+        }
+      ]
+    },
+    {
+      "contract": "CountryPoolNetProfitLedger",
+      "name": "EpochOpened",
+      "signature": "EpochOpened(bytes2,uint256,uint64,uint64)",
+      "topic0": "0x08e96b9afbb9e663fe91a850d318a39831b93b08dcd53dcbd78c3495f59d9b7c",
+      "indexed_fields": [
+        "jurisdiction",
+        "epochId"
+      ],
+      "inputs": [
+        {
+          "name": "jurisdiction",
+          "type": "bytes2",
+          "indexed": true,
+          "internalType": "bytes2"
+        },
+        {
+          "name": "epochId",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        },
+        {
+          "name": "epochStart",
+          "type": "uint64",
+          "indexed": false,
+          "internalType": "uint64"
+        },
+        {
+          "name": "epochEnd",
+          "type": "uint64",
+          "indexed": false,
+          "internalType": "uint64"
+        }
+      ]
+    },
+    {
+      "contract": "CountryPoolNetProfitLedger",
+      "name": "EpochClosed",
+      "signature": "EpochClosed(bytes2,uint256,address,int256,int256,int256,uint256,uint256,int256,uint256,uint8)",
+      "topic0": "0xfd9380a9491aa802d880cd3889e38302aeda837d7a965aa9495a9ef1329597f6",
+      "indexed_fields": [
+        "jurisdiction",
+        "epochId",
+        "token"
+      ],
+      "inputs": [
+        {
+          "name": "jurisdiction",
+          "type": "bytes2",
+          "indexed": true,
+          "internalType": "bytes2"
+        },
+        {
+          "name": "epochId",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        },
+        {
+          "name": "token",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "grossRevenue",
+          "type": "int256",
+          "indexed": false,
+          "internalType": "int256"
+        },
+        {
+          "name": "allowableExpense",
+          "type": "int256",
+          "indexed": false,
+          "internalType": "int256"
+        },
+        {
+          "name": "netProfit",
+          "type": "int256",
+          "indexed": false,
+          "internalType": "int256"
+        },
+        {
+          "name": "carriedLossBefore",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "carriedLossApplied",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "netProfitPrime",
+          "type": "int256",
+          "indexed": false,
+          "internalType": "int256"
+        },
+        {
+          "name": "carriedLossAfter",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "epochStatus",
+          "type": "uint8",
+          "indexed": false,
+          "internalType": "enum CountryPoolNetProfitLedger.EpochStatus"
+        }
+      ]
+    },
+    {
+      "contract": "CountryPoolNetProfitLedger",
+      "name": "LedgerFundedForSplit",
+      "signature": "LedgerFundedForSplit(bytes2,uint256,address,uint256,address)",
+      "topic0": "0xe81c30d7f5d751f7f59a67e9f5fdb15f5eabda96d78fbd9a7fe2f2fe5829cd7e",
+      "indexed_fields": [
+        "jurisdiction",
+        "epochId",
+        "token"
+      ],
+      "inputs": [
+        {
+          "name": "jurisdiction",
+          "type": "bytes2",
+          "indexed": true,
+          "internalType": "bytes2"
+        },
+        {
+          "name": "epochId",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        },
+        {
+          "name": "token",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "amount",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "fundingSource",
+          "type": "address",
+          "indexed": false,
+          "internalType": "address"
+        }
+      ]
+    },
+    {
+      "contract": "CountryPoolNetProfitLedger",
+      "name": "NetProfitSplit",
+      "signature": "NetProfitSplit(bytes2,uint256,address,uint256,uint256,uint256,uint256,bool,uint64,address)",
+      "topic0": "0xf4f5eaf93eedea46ff19a08aa2aa34f4c250ebb92ae464b60b3d87338f423f58",
+      "indexed_fields": [
+        "jurisdiction",
+        "epochId",
+        "token"
+      ],
+      "inputs": [
+        {
+          "name": "jurisdiction",
+          "type": "bytes2",
+          "indexed": true,
+          "internalType": "bytes2"
+        },
+        {
+          "name": "epochId",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        },
+        {
+          "name": "token",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "netProfitPrime",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "stewardAmount",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "unallocatedAmount",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "globalAmount",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "stewardPathEligible",
+          "type": "bool",
+          "indexed": false,
+          "internalType": "bool"
+        },
+        {
+          "name": "qualificationSnapshotBlock",
+          "type": "uint64",
+          "indexed": false,
+          "internalType": "uint64"
+        },
+        {
+          "name": "qualifiedSteward",
+          "type": "address",
+          "indexed": false,
+          "internalType": "address"
+        }
+      ]
+    },
+    {
+      "contract": "CountryPoolNetProfitLedger",
+      "name": "ActiveStewardConfigSet",
+      "signature": "ActiveStewardConfigSet(bytes2,address,bool,bool,bool,bytes32)",
+      "topic0": "0x8252bd37f0e9c9d64593b80bd8ed2f39acd7df2bcc9621bb272429ae2847bd42",
+      "indexed_fields": [
+        "jurisdiction",
+        "steward"
+      ],
+      "inputs": [
+        {
+          "name": "jurisdiction",
+          "type": "bytes2",
+          "indexed": true,
+          "internalType": "bytes2"
+        },
+        {
+          "name": "steward",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "suspended",
+          "type": "bool",
+          "indexed": false,
+          "internalType": "bool"
+        },
+        {
+          "name": "tenureSatisfied",
+          "type": "bool",
+          "indexed": false,
+          "internalType": "bool"
+        },
+        {
+          "name": "tenureWaived",
+          "type": "bool",
+          "indexed": false,
+          "internalType": "bool"
+        },
+        {
+          "name": "proposalRef",
+          "type": "bytes32",
+          "indexed": false,
+          "internalType": "bytes32"
+        }
+      ]
+    },
+    {
+      "contract": "StewardPathVault",
+      "name": "StewardPathDeposit",
+      "signature": "StewardPathDeposit(bytes2,address,uint256,uint256)",
+      "topic0": "0x61f16bbb55b2478dc20d579db02c916c19141d18b94585d9b430272cf31ababd",
+      "indexed_fields": [
+        "jurisdiction",
+        "token"
+      ],
+      "inputs": [
+        {
+          "name": "jurisdiction",
+          "type": "bytes2",
+          "indexed": true,
+          "internalType": "bytes2"
+        },
+        {
+          "name": "token",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "amount",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "epochId",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "contract": "UnallocatedStewardPathVault",
+      "name": "UnallocatedStewardDeposit",
+      "signature": "UnallocatedStewardDeposit(bytes2,address,uint256,uint256)",
+      "topic0": "0x29bbe5a5ab12ed324e4bcfb0fce9660525ccb9e237620b798b8602f9124a7289",
+      "indexed_fields": [
+        "jurisdiction",
+        "token"
+      ],
+      "inputs": [
+        {
+          "name": "jurisdiction",
+          "type": "bytes2",
+          "indexed": true,
+          "internalType": "bytes2"
+        },
+        {
+          "name": "token",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "amount",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "epochId",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "contract": "UnallocatedStewardPathVault",
+      "name": "UnallocatedStewardReleased",
+      "signature": "UnallocatedStewardReleased(bytes2,address,uint256,bytes32)",
+      "topic0": "0xefc3acdc5f8e067db4aeff3a5c12447b2da1845c81e64a52cd5aa8f8f99d7aff",
+      "indexed_fields": [
+        "jurisdiction",
+        "token"
+      ],
+      "inputs": [
+        {
+          "name": "jurisdiction",
+          "type": "bytes2",
+          "indexed": true,
+          "internalType": "bytes2"
+        },
+        {
+          "name": "token",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "amount",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "proposalRef",
+          "type": "bytes32",
+          "indexed": false,
+          "internalType": "bytes32"
+        }
+      ]
+    }
+  ],
+  "selectors": {
+    "openEpoch": {
+      "signature": "openEpoch(uint256,uint64,uint64)",
+      "selector": "0xd47859c9"
+    },
+    "recordAccrual": {
+      "signature": "recordAccrual(uint256,bytes32,int256,bytes32)",
+      "selector": "0xa53eabbe"
+    },
+    "recordAccrualBatch": {
+      "signature": "recordAccrualBatch(uint256,(bytes32,int256,bytes32)[])",
+      "selector": "0x017dd292"
+    },
+    "closeEpoch": {
+      "signature": "closeEpoch(uint256)",
+      "selector": "0xd16d9057"
+    },
+    "fundLedgerForSplit": {
+      "signature": "fundLedgerForSplit(uint256)",
+      "selector": "0xa5ccc568"
+    },
+    "splitNetProfit": {
+      "signature": "splitNetProfit(uint256)",
+      "selector": "0xc90d5363"
+    },
+    "setActiveStewardConfig": {
+      "signature": "setActiveStewardConfig(address,bool,bool,bool,bytes32)",
+      "selector": "0x4c6043ec"
+    },
+    "depositFromLedger": {
+      "signature": "depositFromLedger(uint256,uint256)",
+      "selector": "0x4fe38819"
+    },
+    "releaseToStewardPath": {
+      "signature": "releaseToStewardPath(uint256,bytes32)",
+      "selector": "0x7fc399a2"
+    }
+  },
+  "governance_payload": {
+    "CPNP_OPEN_EPOCH": {
+      "target_signature": "openEpoch(uint256,uint64,uint64)",
+      "selector": "0xd47859c9"
+    },
+    "CPNP_RECORD_ACCRUAL": {
+      "target_signature": "recordAccrual(uint256,bytes32,int256,bytes32)",
+      "selector": "0xa53eabbe"
+    },
+    "CPNP_RECORD_ACCRUAL_BATCH": {
+      "target_signature": "recordAccrualBatch(uint256,(bytes32,int256,bytes32)[])",
+      "selector": "0x017dd292"
+    },
+    "CPNP_CLOSE_EPOCH": {
+      "target_signature": "closeEpoch(uint256)",
+      "selector": "0xd16d9057"
+    },
+    "CPNP_FUND_LEDGER_FOR_SPLIT": {
+      "target_signature": "fundLedgerForSplit(uint256)",
+      "selector": "0xa5ccc568"
+    },
+    "CPNP_SPLIT_NET_PROFIT": {
+      "target_signature": "splitNetProfit(uint256)",
+      "selector": "0xc90d5363"
+    },
+    "CPNP_SET_ACTIVE_STEWARD": {
+      "target_signature": "setActiveStewardConfig(address,bool,bool,bool,bytes32)",
+      "selector": "0x4c6043ec"
+    },
+    "CPNP_RELEASE_UNALLOCATED": {
+      "target_signature": "releaseToStewardPath(uint256,bytes32)",
+      "selector": "0x7fc399a2"
+    }
+  }
+}

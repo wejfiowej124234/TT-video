@@ -45,6 +45,12 @@ ok "env.example present (manual: PORT and NEXT_PUBLIC_API_BASE_URL consistent ac
 grep -rq "discover/orders\|/orders\|community/feedback\|did-rank" "$routes_mod" --include="*.rs" || fail "expected 55 routes not found in routes/"
 ok "55 key routes registered"
 
+# --- 5) D-4555-B Country Pool net profit ABI manifest (G23-04 · Gate-2.4 input)
+if [[ -f "contracts/abi/manifests/country-pool-net-profit-v1.json" ]]; then
+  bash "$root_dir/scripts/dev/check-country-pool-net-profit-abi-freeze.sh"
+  ok "Country Pool net profit ABI manifest freeze (G23-04)"
+fi
+
 echo ""
 echo "55-S13 自动检查通过。发版前请人工执行："
 echo "  - 04 §3.4 表与 crates/api 注册路径逐项对照（机器预检：./scripts/run-check-04-routes.sh，Build CI 已跑）；"

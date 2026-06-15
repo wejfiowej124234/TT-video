@@ -43,7 +43,7 @@ write_abi() {
 
 # 主合约（须成功）
 # **GovernanceVotesToken** / **TravelTrustGovernor**：canonical 入 **`contracts/abi/`**；**`check-55-s13`** **不**要求复制到 **`frontend/dapp/abis`**（治理 UI 以 **GET /meta** + API **eth_call** 为主；Explorer/cast 工具可直接读 canonical JSON）。
-for c in Escrow EscrowFactory GuideIdentityStakingPool ProviderIdentityStakingPool Registry FeeRouter RegionVault ReserveVault SlashRouter InvestorDistributionClaim GovernanceTimelock GovernanceTreasury GovernanceVotesToken TravelTrustGovernor RegionStewardStakePool CountryPoolSubVaultsV0 CountryPoolRedemptionEpochV0; do
+for c in Escrow EscrowFactory GuideIdentityStakingPool ProviderIdentityStakingPool Registry FeeRouter RegionVault ReserveVault SlashRouter InvestorDistributionClaim GovernanceTimelock GovernanceTreasury GovernanceVotesToken TravelTrustGovernor RegionStewardStakePool CountryPoolSubVaultsV0 CountryPoolRedemptionEpochV0 CountryPoolNetProfitLedger StewardPathVault UnallocatedStewardPathVault; do
   write_abi "$c"
 done
 

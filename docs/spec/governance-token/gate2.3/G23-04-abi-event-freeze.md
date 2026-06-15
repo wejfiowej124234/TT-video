@@ -72,12 +72,12 @@ cd contracts && forge test --match-contract FeeRouterTest
 
 | # | 检查项 | 状态 |
 |---|--------|------|
-| D1 | ABI JSON 与 `forge build` artifact **一致** | ☐ |
-| D2 | Manifest 含 **全部** P0 事件 topic0 + 核心 selector | ☐ |
-| D3 | **无** 事件名 / 参数顺序变更 vs G23-03 合入后 head | ☐ |
-| D4 | check-55-s13 **exit 0** | ☐ |
-| D5 | 全 Foundry 绿（含 fuzz 若存在） | ☐ |
-| D6 | Architecture / Projection Package 链到 manifest 路径 | ☐ |
+| D1 | ABI JSON 与 `forge build` artifact **一致** | ✅ |
+| D2 | Manifest 含 **全部** P0 事件 topic0 + 核心 selector | ✅ |
+| D3 | **无** 事件名 / 参数顺序变更 vs G23-03 合入后 head | ✅ |
+| D4 | check-55-s13 **exit 0** | ✅ |
+| D5 | 全 Foundry 绿（含 fuzz 若存在） | ✅ |
+| D6 | Architecture / Projection Package 链到 manifest 路径 | ✅ |
 
 ---
 
@@ -95,7 +95,9 @@ Manifest 须足够让 Gate-2.4 执行：
 
 | 方 | 确认 | 签字 | 日期 |
 |----|------|------|------|
-| 工程 | DoD D1～D6 · ABI Manifest | ☐ | |
-| 财务 | 事件字段 ↔ mapping-matrix 对拍 | ☐ | |
+| 工程 | DoD D1～D6 · ABI Manifest | ✅ **Sebastian Ward** | **2026-06-15** |
+| 财务 | 事件字段 ↔ mapping-matrix 对拍 | ✅ **Sebastian Ward** | **2026-06-15** |
+
+**证据：** [G23-04-ABI-EVENT-FREEZE-LOCAL-ACCEPTANCE.md](../../../evidence/GO_local_country_pool_net_profit_gate2.3/G23-04-ABI-EVENT-FREEZE-LOCAL-ACCEPTANCE.md) · [Gate-2.4 前置清单](../country-pool-settlement-gate2.4-prerequisites-checklist.md)
 
 **四卡全部 ☑ 后：** 方可启动 **Gate-2.4 Sepolia 前置**（仍 **禁止** 无 Owner 授权 broadcast）。

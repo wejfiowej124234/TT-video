@@ -1,0 +1,52 @@
+# Country Pool Net Profit · Event Topic Registry v1 (G23-04 freeze)
+# Gate-2.4 input · decoder implementation deferred to Gate-2.4 / Gate-3
+# Phase: ① local · ≠ ② Sepolia GO
+registry_id: country-pool-net-profit-v1
+version: v1-g23-04-freeze-20260615
+manifest: contracts/abi/manifests/country-pool-net-profit-v1.json
+events:
+- name: NetProfitAccrued
+  contract: CountryPoolNetProfitLedger
+  topic0: 0xe4a9a6793bc7bc6162d5ed748463ba3e20fd4238d14a54581887be94b48bbb35
+  signature: NetProfitAccrued(bytes2,uint256,address,bytes32,int256,bytes32,uint64)
+
+- name: EpochOpened
+  contract: CountryPoolNetProfitLedger
+  topic0: 0x08e96b9afbb9e663fe91a850d318a39831b93b08dcd53dcbd78c3495f59d9b7c
+  signature: EpochOpened(bytes2,uint256,uint64,uint64)
+
+- name: EpochClosed
+  contract: CountryPoolNetProfitLedger
+  topic0: 0xfd9380a9491aa802d880cd3889e38302aeda837d7a965aa9495a9ef1329597f6
+  signature: EpochClosed(bytes2,uint256,address,int256,int256,int256,uint256,uint256,int256,uint256,uint8)
+
+- name: LedgerFundedForSplit
+  contract: CountryPoolNetProfitLedger
+  topic0: 0xe81c30d7f5d751f7f59a67e9f5fdb15f5eabda96d78fbd9a7fe2f2fe5829cd7e
+  signature: LedgerFundedForSplit(bytes2,uint256,address,uint256,address)
+
+- name: NetProfitSplit
+  contract: CountryPoolNetProfitLedger
+  topic0: 0xf4f5eaf93eedea46ff19a08aa2aa34f4c250ebb92ae464b60b3d87338f423f58
+  signature: NetProfitSplit(bytes2,uint256,address,uint256,uint256,uint256,uint256,bool,uint64,address)
+
+- name: ActiveStewardConfigSet
+  contract: CountryPoolNetProfitLedger
+  topic0: 0x8252bd37f0e9c9d64593b80bd8ed2f39acd7df2bcc9621bb272429ae2847bd42
+  signature: ActiveStewardConfigSet(bytes2,address,bool,bool,bool,bytes32)
+
+- name: StewardPathDeposit
+  contract: StewardPathVault
+  topic0: 0x61f16bbb55b2478dc20d579db02c916c19141d18b94585d9b430272cf31ababd
+  signature: StewardPathDeposit(bytes2,address,uint256,uint256)
+
+- name: UnallocatedStewardDeposit
+  contract: UnallocatedStewardPathVault
+  topic0: 0x29bbe5a5ab12ed324e4bcfb0fce9660525ccb9e237620b798b8602f9124a7289
+  signature: UnallocatedStewardDeposit(bytes2,address,uint256,uint256)
+
+- name: UnallocatedStewardReleased
+  contract: UnallocatedStewardPathVault
+  topic0: 0xefc3acdc5f8e067db4aeff3a5c12447b2da1845c81e64a52cd5aa8f8f99d7aff
+  signature: UnallocatedStewardReleased(bytes2,address,uint256,bytes32)
+

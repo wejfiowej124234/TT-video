@@ -33,6 +33,9 @@ CONTRACTS = (
     "RegionStewardStakePool",
     "CountryPoolSubVaultsV0",
     "CountryPoolRedemptionEpochV0",
+    "CountryPoolNetProfitLedger",
+    "StewardPathVault",
+    "UnallocatedStewardPathVault",
 )
 
 FORGE_INSPECT_NAME = {}

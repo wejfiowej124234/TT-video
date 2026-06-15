@@ -67,4 +67,4 @@ Gate-2.4 Sepolia（Owner 授权 · 单独闸）
 
 ## Gate-2.3 出口 → Gate-2.4 入口
 
-四卡 **全部 DoD ☑** 后，方可启动 [Gate-2.4 Sepolia 前置](../country-pool-settlement-gate2.3-projection-package-v1.md#12-gate-24-sepolia-前置条件仅清单--禁止本包执行-broadcast)（G24-P-01～11）。
+四卡 **全部 DoD ☑** 后，方可启动 [Gate-2.4 Sepolia 前置](../country-pool-settlement-gate2.4-prerequisites-checklist.md)（G24-P-01～11）。

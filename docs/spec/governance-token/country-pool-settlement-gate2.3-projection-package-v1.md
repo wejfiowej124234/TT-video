@@ -313,8 +313,8 @@ CountryPoolNetProfitLedger logs
 |----|------|
 | **G24-P-01** | Gate-2.3 Projection Package v1 四方 Pre-Review 签字 |
 | **G24-P-02** | Gate-2.3 Solidity delta merged（若适用） |
-| **G24-P-03** | ABI export + `14` 登记 + check-55-s13 |
-| **G24-P-04** | registry event-decoders Topic0 登记 |
+| **G24-P-03** | ABI export + manifest + check-55-s13 | ✅ ① · [manifest](../../contracts/abi/manifests/country-pool-net-profit-v1.json) · [Gate-2.4 checklist](country-pool-settlement-gate2.4-prerequisites-checklist.md) |
+| **G24-P-04** | registry event-decoders Topic0 登记 | ✅ ① · [country-pool-net-profit-v1.yaml](../../registry/event-decoders/country-pool-net-profit-v1.yaml) |
 | **G24-P-05** | G-1/G-2 + PHASE2-START-CHECKLIST |
 | **G24-P-06** | Timelock setAllowedExecutionTarget ×3 Safe 预案 |
 | **G24-P-07** | pilot DE registry JSON 填实地址 |
