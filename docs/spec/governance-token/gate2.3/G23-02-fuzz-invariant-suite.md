@@ -64,12 +64,12 @@ cd contracts && forge test --match-contract FeeRouterTest
 
 | # | 检查项 | 状态 |
 |---|--------|------|
-| D1 | **T-FUZ-01** fuzz 默认 runs 绿 | ☐ |
-| D2 | **T-FUZ-02** carriedLoss 单调 / 非负 | ☐ |
-| D3 | **T-INV-01** invariant 绿（若实现） | ☐ |
-| D4 | CountryPoolNetProfit 单元矩阵 **仍全绿** | ☐ |
-| D5 | FeeRouterTest **10 passed** | ☐ |
-| D6 | **无新增** protocol storage / 事件字段 | ☐ |
+| D1 | **T-FUZ-01** fuzz 默认 runs 绿 | ✅ |
+| D2 | **T-FUZ-02** carriedLoss 单调 / 非负 | ✅ |
+| D3 | **T-INV-01** invariant 绿（若实现） | ✅ |
+| D4 | CountryPoolNetProfit 单元矩阵 **仍全绿** | ✅ |
+| D5 | FeeRouterTest **10 passed** | ✅ |
+| D6 | **无新增** protocol storage / 事件字段 | ✅ |
 
 ---
 
@@ -84,6 +84,8 @@ cd contracts && forge test --match-contract FeeRouterTest
 
 | 方 | 确认 | 签字 | 日期 |
 |----|------|------|------|
-| 工程 | DoD D1～D6 | ☐ | |
+| 工程 | DoD D1～D6 · fuzz 绿集 · 无合约/storage 变更 | ✅ **Sebastian Ward** | **2026-06-15** |
+
+**证据：** [G23-02-FUZZ-INVARIANT-LOCAL-ACCEPTANCE.md](../../../evidence/GO_local_country_pool_net_profit_gate2.3/G23-02-FUZZ-INVARIANT-LOCAL-ACCEPTANCE.md)
 
 **合并后：** 解锁 **G23-04**。
