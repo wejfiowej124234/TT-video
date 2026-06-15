@@ -438,12 +438,10 @@ pub async fn run() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         resolution_outbox: chain_config_opt
             .as_ref()
             .map(|_| chain::outbox::new_resolution_outbox()),
-        indexer_state: chain_config_opt.as_ref().map(|_| {
+        indexer_state: chain_config_opt.as_ref().map(|cfg| {
             let runtime_path =
                 PathBuf::from(&indexer_state_path_display).with_extension("json.runtime");
-            chain::indexer::load_indexer_state(&runtime_path)
-                .map(|s| Arc::new(RwLock::new(s)))
-                .unwrap_or_else(chain::indexer::new_indexer_state)
+            chain::indexer::mount_runtime_indexer_state(&runtime_path, cfg.chain_id)
         }),
         indexer_tick_fail_skip_bucket_obs_last: Arc::new(RwLock::new(None)),
         guide_upload_rate: Arc::new(RwLock::new(HashMap::new())),

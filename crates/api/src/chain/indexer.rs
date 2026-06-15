@@ -46,6 +46,40 @@ pub fn load_indexer_state(path: &Path) -> Option<IndexerState> {
     serde_json::from_slice(&bytes).ok()
 }
 
+/// 持久化 runtime 与当前 **`CHAIN_ID`** 不一致（典型：① Anvil 切回后仍残留 ② Sepolia 事件）。
+pub fn runtime_indexer_chain_mismatch(state: &IndexerState, configured_chain_id: u64) -> bool {
+    if configured_chain_id == 0 {
+        return false;
+    }
+    if state
+        .events
+        .iter()
+        .any(|e| e.chain_id != configured_chain_id)
+    {
+        return true;
+    }
+    // 空事件但水位异常高：本地 Anvil（31337）不应保留百万级 last_block。
+    configured_chain_id == 31337 && state.events.is_empty() && state.last_block > 100_000
+}
+
+/// 挂载进程内 indexer：链 ID 漂移时丢弃 `.runtime` 并冷启动（① 本地对齐；②③ 仍靠运维 rewind）。
+pub fn mount_runtime_indexer_state(runtime_path: &Path, configured_chain_id: u64) -> IndexerStateHandle {
+    let state = match load_indexer_state(runtime_path) {
+        Some(s) if runtime_indexer_chain_mismatch(&s, configured_chain_id) => {
+            eprintln!(
+                "indexer_runtime: stale persisted state at {} — resetting for CHAIN_ID={}",
+                runtime_path.display(),
+                configured_chain_id
+            );
+            let _ = std::fs::remove_file(runtime_path);
+            IndexerState::default()
+        }
+        Some(s) => s,
+        None => IndexerState::default(),
+    };
+    Arc::new(RwLock::new(state))
+}
+
 /// 持久化运行时索引器状态（48 §12.3；indexer_tick 后落盘）
 pub fn persist_indexer_state(
     path: &Path,
@@ -1160,15 +1194,44 @@ mod tests {
         filter_escrow_log_entries_to_inclusive_block_range,
         get_eth_chain_id, indexer_finalized_upper_bound, new_indexer_state,
         parse_region_share_snapshot_line, reorg_detected, region_share_snapshot_line_topic0_hex,
-        rewind_indexer_memory_state_after_reorg, validate_inclusive_block_range_for_eth_get_logs,
-        EscrowLogEntry, LOCKED_TOPIC0, REGION_SHARE_SNAPSHOT_LINE_EVENT_SIGNATURE, SLASHED_TOPIC0,
+        rewind_indexer_memory_state_after_reorg, runtime_indexer_chain_mismatch,
+        validate_inclusive_block_range_for_eth_get_logs, EscrowLogEntry, IndexedChainEvent,
+        IndexerState, LOCKED_TOPIC0, REGION_SHARE_SNAPSHOT_LINE_EVENT_SIGNATURE, SLASHED_TOPIC0,
         STAKED_TOPIC0, UNLOCKED_TOPIC0, WITHDRAWN_TOPIC0,
     };
     use serde_json::json;
     use tokio::io::AsyncWriteExt;
     use tokio::net::TcpListener;
 
-    /// **TT-B175**：**`eth_chainId`** 十六进制 **`result`** 解析为 **`u64`**。
+    #[test]
+    fn runtime_indexer_chain_mismatch_detects_sepolia_events_on_anvil() {
+        let state = IndexerState {
+            last_block: 10_676_552,
+            events: vec![IndexedChainEvent {
+                chain_id: 11_155_111,
+                block_number: 10_671_957,
+                log_index: 0,
+                block_hash: "0x1".into(),
+                tx_hash: "0x2".into(),
+                kind: "test".into(),
+                data: serde_json::Value::Null,
+            }],
+            ..Default::default()
+        };
+        assert!(runtime_indexer_chain_mismatch(&state, 31_337));
+        assert!(!runtime_indexer_chain_mismatch(&state, 11_155_111));
+    }
+
+    #[test]
+    fn runtime_indexer_chain_mismatch_detects_high_watermark_without_events_on_anvil() {
+        let state = IndexerState {
+            last_block: 10_676_552,
+            ..Default::default()
+        };
+        assert!(runtime_indexer_chain_mismatch(&state, 31_337));
+        assert!(!runtime_indexer_chain_mismatch(&state, 11_155_111));
+    }
+
     #[tokio::test]
     async fn b175_get_eth_chain_id_parses_hex_result() {
         let listener = TcpListener::bind("127.0.0.1:0").await.expect("bind mock rpc");

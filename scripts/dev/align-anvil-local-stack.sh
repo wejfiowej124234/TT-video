@@ -43,6 +43,9 @@ bash "$ROOT/scripts/dev/mint-fundstack-anvil-usdc.sh" || true
 echo "align-anvil-local-stack: align guide DB stake to chain ..."
 bash "$ROOT/scripts/dev/align-guide-stake-db-to-chain-local.sh" || true
 
+echo "align-anvil-local-stack: reset indexer runtime (① Anvil · drop Sepolia stale) ..."
+bash "$ROOT/scripts/dev/reset-indexer-runtime-local-anvil.sh"
+
 if [[ "${SKIP_ANVIL_STAKE_SMOKES:-0}" != "1" ]]; then
   echo "align-anvil-local-stack: guide + provider stake smokes (FUNDSTACK_SKIP_DEPLOY=1) ..."
   FUNDSTACK_SKIP_DEPLOY=1 bash "$ROOT/scripts/dev/smoke-guide-identity-stake-anvil.sh"
