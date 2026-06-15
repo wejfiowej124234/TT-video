@@ -68,8 +68,10 @@ cd contracts && forge test --match-contract FeeRouterTest
 |---|--------|------|
 | D1 | **T-FND-05** 选定路径 happy path | ✅ |
 | D2 | **T-FND-06** 负向（allowance 不足 / 未 fund 不能 split） | ✅ |
-| D5 | Architecture §7.4.1 标记 **Funding Path FINAL**（Path A） | ✅ |
+| D4 | mapping-matrix **`LedgerFundedForSplit.amount`** · **§4.3.1 FIN-FND-01 FINAL** | ✅ |
+| D5 | Architecture **§7.4 / §7.4.1** 标记 **Funding Path FINAL**（Path A） | ✅ |
 | D6 | CountryPoolNetProfit **41 passed** · FeeRouterTest **10 passed** | ✅ |
+| D7 | 产品 + 财务 **书面确认** · 证据 `evidence/GO_local_country_pool_net_profit_gate2.3/G23-03-FUNDING-PATH-LOCAL-ACCEPTANCE.md` | ✅ |
 
 ---
 
@@ -86,8 +88,10 @@ cd contracts && forge test --match-contract FeeRouterTest
 
 | 方 | 确认 | 签字 | 日期 |
 |----|------|------|------|
-| 产品 | Pilot 默认路径 | ☐ | |
-| 财务 | 映射 + amount 语义 | ☐ | |
-| 工程 | DoD D1～D7 | ☐ | |
+| 产品 | Pilot 默认 **路径 A · Allowance**（Phase② pilot 同默认） | ✅ **Sebastian Ward** | **2026-06-15** |
+| 财务 | **§4.3.1 FIN-FND-01** · `LedgerFundedForSplit.amount` = 实际 pull（0 = 已足额） | ✅ **Sebastian Ward** | **2026-06-15** |
+| 工程 | DoD D1～D7 · forge 绿集 | ✅ **Sebastian Ward** | **2026-06-15** |
+
+**证据：** [G23-03-FUNDING-PATH-LOCAL-ACCEPTANCE.md](../../../evidence/GO_local_country_pool_net_profit_gate2.3/G23-03-FUNDING-PATH-LOCAL-ACCEPTANCE.md)
 
 **合并后：** 解锁 **G23-01** 开 PR。

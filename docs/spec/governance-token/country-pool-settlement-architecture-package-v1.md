@@ -431,7 +431,7 @@ setAllowedExecutionTarget(UnallocatedStewardPathVault, true)
 
 **G-03 提案前缀（Runbook · Gate-2.3）：** `[D-4555-B]` · **禁止** 与 `[D-4555-A]` / `[FUNDRAISE]` 同批。
 
-### 7.4 资金位置（**DR-02 定案**）
+### 7.4 资金位置（**DR-02 定案 · Funding Path FINAL · G23-03**）
 
 | 阶段 | USDC 所在 | 链上动作 |
 |------|-----------|----------|
