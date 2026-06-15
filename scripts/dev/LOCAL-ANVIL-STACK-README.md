@@ -6,7 +6,7 @@
 
 ## 修复顺序（本分支）
 
-1. **Anvil 地址语义校验** — `ttg_anvil_try_reuse_deploy` 校验 `pool.ttg()`；`fundstack_anvil_try_reuse_deploy` 要求 provider/factory 有 bytecode；`verify-anvil-local-bytecode.sh` 拒绝池=USDC、TTG=Factory 碰撞。
+1. **Anvil 地址语义校验** — `ttg_anvil_try_reuse_deploy` 校验 `pool.ttg()`；`fundstack_anvil_try_reuse_deploy` 要求 provider/factory/fee_router 有 bytecode；`verify-anvil-local-bytecode.sh` 校验 Guide/Provider/Pool/TTG/USDC/Registry/Factory/**FeeRouter** 并拒绝池=USDC、TTG=Factory 碰撞。
 2. **管家/治理合约错指** — 部署顺序 **FundStack → TTG**（`TTG_ANVIL_FORCE_DEPLOY` 在 FundStack 后）；`DeployRegionStewardStakePool` 在 Anvil 31337 允许 deployer 作 pool owner。
 3. **`.env` Sepolia 残留** — `anvil-local-env-lib.sh` 注释托管块外 ② 键（dotenv first-read 安全）；`sync-frontend-env-local` last-wins。
 4. **`P3_CHAIN_OFF` 覆盖** — `start-api-with-seed.bat` 有 TT FUNDSTACK/TT ANVIL 块时自动 `TRAVELTRUST_CHAIN_ON=1`，API 不再默认 `P3_CHAIN_OFF=1` 盖掉块内 `P3_CHAIN_OFF=0`。
@@ -14,8 +14,10 @@
 ## 一键对齐（仓库根）
 
 ```bash
-ANVIL_ALREADY_RUNNING=1 bash scripts/dev/align-anvil-local-stack.sh
+bash scripts/dev/align-anvil-local-stack.sh
 ```
+
+（脚本自动检测 Anvil 是否已在 :8545 监听；未启动时会拉起 Anvil。）
 
 或 Windows：
 
@@ -35,7 +37,7 @@ bash scripts/dev/verify-anvil-local-bytecode.sh
 scripts\start-api-with-seed.bat
 ```
 
-显式链上模式：`set TRAVELTRUST_CHAIN_ON=1`（有 Anvil 块时会自动开启）。
+Step **3b4** 在检测到 `BEGIN TT FUNDSTACK ANVIL LOCAL` / `BEGIN TT ANVIL LOCAL` 时自动跑 `align-anvil-local-stack`（含 bytecode 校验）；跳过 3b5/3c/3b6 重复步骤。显式链上模式：`set TRAVELTRUST_CHAIN_ON=1`（有 Anvil 块时会自动开启）。
 
 ## 不同步测试网
 

@@ -9,6 +9,18 @@ OUT="$ROOT/frontend/.env.local"
 MARK_BEGIN="# --- BEGIN TT NEXT_PUBLIC sync ---"
 MARK_END="# --- END TT NEXT_PUBLIC sync ---"
 
+# Strip all historical TT NEXT_PUBLIC sync blocks before rebuild (fixes empty/duplicate orphans).
+if [[ -f "$OUT" ]]; then
+  PRE="$(mktemp)"
+  awk '
+    /^# --- BEGIN TT NEXT_PUBLIC sync/ { skip=1; next }
+    skip && /^# --- END TT NEXT_PUBLIC sync/ { skip=0; next }
+    skip { next }
+    { print }
+  ' "$OUT" >"$PRE"
+  mv "$PRE" "$OUT"
+fi
+
 if [[ ! -f "$ENV_FILE" ]]; then
   echo "sync-frontend-env: skip (no root .env)"
   exit 0
@@ -83,6 +95,11 @@ if [[ -f "$OUT" ]]; then
     if [[ "$line" == "$MARK_END" ]]; then inside=0; continue; fi
     [[ "$inside" -eq 1 ]] && continue
     if [[ "$line" =~ $MANAGED ]]; then continue; fi
+    # Drop stale boilerplate from prior sync runs (keep real manual overrides only).
+    if [[ "$line" == "# frontend/.env.local"* ]]; then continue; fi
+    if [[ "$line" == "# --- 以下为手动配置"* ]] || [[ "$line" == "# --- Manual lines"* ]]; then continue; fi
+    if [[ "$line" == "# Same source as root .env"* ]] || [[ "$line" == "# 与仓库根 .env 同源"* ]]; then continue; fi
+    [[ -z "${line// }" ]] && continue
     printf '%s\n' "$line" >> "$KEPT"
   done < "$OUT"
 fi

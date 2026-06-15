@@ -17,6 +17,21 @@ $OutFile = Join-Path $Root "frontend\.env.local"
 $MarkerBegin = "# --- BEGIN TT NEXT_PUBLIC sync ---"
 $MarkerEnd = "# --- END TT NEXT_PUBLIC sync ---"
 
+# Strip all historical TT NEXT_PUBLIC sync blocks before rebuild.
+if (Test-Path -LiteralPath $OutFile) {
+    $stripped = New-Object System.Collections.Generic.List[string]
+    $skip = $false
+    Get-Content -LiteralPath $OutFile -Encoding UTF8 | ForEach-Object {
+        $line = $_
+        if ($line -eq $MarkerBegin -or $line -match '^\# --- BEGIN TT NEXT_PUBLIC sync') { $skip = $true; return }
+        if ($skip -and ($line -eq $MarkerEnd -or $line -match '^\# --- END TT NEXT_PUBLIC sync')) { $skip = $false; return }
+        if ($skip) { return }
+        $stripped.Add($line)
+    }
+    $utf8NoBomPrep = New-Object System.Text.UTF8Encoding $false
+    [System.IO.File]::WriteAllLines($OutFile, $stripped.ToArray(), $utf8NoBomPrep)
+}
+
 if (-not (Test-Path $EnvFile)) {
     Write-Host "sync-frontend-env: skip (no root .env). Copy .env.example to .env and set CHAIN_* / contract addresses."
     exit 0
@@ -159,7 +174,10 @@ if (Test-Path -LiteralPath $OutFile) {
             if ($line.StartsWith("#") -and (
                     $line.Contains("frontend/.env.local") -or
                     $line.Contains("Manual lines") -or
-                    $line.Contains("BEGIN TT NEXT_PUBLIC sync (") -or
+                    $line.Contains("以下为手动配置") -or
+                    $line.Contains("Same source as root .env") -or
+                    $line.Contains("与仓库根 .env 同源") -or
+                    $line.Contains("BEGIN TT NEXT_PUBLIC sync") -or
                     $line.Contains("Sepolia") -or
                     $line.Contains([char]0x4EE5 + [char]0x4E0B + [char]0x4E3A) -or
                     $line.Contains([char]0x7531 + [char]0x5DE5 + [char]0x5177)

@@ -17,7 +17,6 @@ if (-not $bashExe) {
     Write-Error "Git Bash bash.exe not found — install Git for Windows or set GIT_BASH"
 }
 
-$env:ANVIL_ALREADY_RUNNING = "1"
 $env:SKIP_ANVIL_STOP = "1"
 if ($ForceTtgRedeploy) {
     $env:TTG_ANVIL_FORCE_DEPLOY = "1"

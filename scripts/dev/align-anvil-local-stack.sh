@@ -12,13 +12,16 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 export ANVIL_ENV_ROOT="$ROOT"
 
 echo "align-anvil-local-stack: FundStack deploy + apply ..."
-ANVIL_ALREADY_RUNNING="${ANVIL_ALREADY_RUNNING:-1}" \
-  SKIP_ANVIL_STOP=1 \
+if cast chain-id --rpc-url "${ANVIL_RPC:-http://127.0.0.1:8545}" >/dev/null 2>&1; then
+  export ANVIL_ALREADY_RUNNING=1
+else
+  export ANVIL_ALREADY_RUNNING=0
+fi
+SKIP_ANVIL_STOP=1 \
   bash "$ROOT/scripts/dev/deploy-fundstack-anvil-local.sh" --apply
 
 echo "align-anvil-local-stack: TTG deploy + apply ..."
-ANVIL_ALREADY_RUNNING="${ANVIL_ALREADY_RUNNING:-1}" \
-  SKIP_ANVIL_STOP=1 \
+SKIP_ANVIL_STOP=1 \
   TTG_ANVIL_FORCE_DEPLOY="${TTG_ANVIL_FORCE_DEPLOY:-1}" \
   bash "$ROOT/scripts/dev/deploy-ttg-anvil-local.sh" --apply
 
@@ -26,6 +29,7 @@ ANVIL_ALREADY_RUNNING="${ANVIL_ALREADY_RUNNING:-1}" \
 source "$ROOT/scripts/dev/lib/anvil-local-env-lib.sh"
 anvil_env_supersede_sepolia_top_level
 anvil_env_dedupe_managed_blocks
+anvil_env_prune_superseded_comments
 
 API_LISTEN_PORT="${API_LISTEN_PORT:-8080}" bash "$ROOT/scripts/dev/sync-frontend-env-local-from-root.sh"
 

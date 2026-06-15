@@ -43,6 +43,7 @@ ANVIL_SUPERSEDE_KEYS=(
   STAKING_PROVIDER_ADDRESS
   SETTLEMENT_TOKEN
   P3_CHAIN_OFF
+  TTG_ANVIL_MOCK_ERC20
 )
 
 anvil_env_supersede_sepolia_top_level() {
@@ -115,12 +116,12 @@ anvil_env_dedupe_managed_blocks() {
     printf '%s\n' "$line" >>"$kept"
   done <"$root_env"
 
-  # Second pass: keep only last TT FUNDSTACK + last TT ANVIL blocks
+  # Second pass: keep only last TT FUNDSTACK + last TT ANVIL blocks (include BEGIN markers).
   awk '
-    /^# --- BEGIN TT FUNDSTACK ANVIL LOCAL/ { fs=1; fund=""; next }
+    /^# --- BEGIN TT FUNDSTACK ANVIL LOCAL/ { fs=1; fund=$0 "\n"; next }
     fs && /^# --- END TT FUNDSTACK ANVIL LOCAL/ { fs=0; fundblock=fund $0 "\n"; next }
     fs { fund=fund $0 "\n"; next }
-    /^# --- BEGIN TT ANVIL LOCAL/ { as=1; anv=""; next }
+    /^# --- BEGIN TT ANVIL LOCAL/ { as=1; anv=$0 "\n"; next }
     as && /^# --- END TT ANVIL LOCAL/ { as=0; anvblock=anv $0 "\n"; next }
     as { anv=anv $0 "\n"; next }
     { body=body $0 "\n" }
@@ -165,4 +166,20 @@ anvil_env_append_api_aliases() {
       || true
   fi
   rm -f "${root_env}.bak" 2>/dev/null || true
+}
+
+# Remove commented-out superseded keys (garbage after align).
+anvil_env_prune_superseded_comments() {
+  local root root_env tmp
+  root="$(anvil_env_root)"
+  root_env="$root/.env"
+  [[ -f "$root_env" ]] || return 0
+  tmp="$(mktemp)"
+  grep -v '^# \[superseded by ① Anvil local stack\]' "$root_env" >"$tmp" || true
+  if [[ -s "$tmp" ]]; then
+    mv "$tmp" "$root_env"
+    echo "anvil-env: pruned superseded comment lines in $root_env"
+  else
+    rm -f "$tmp"
+  fi
 }

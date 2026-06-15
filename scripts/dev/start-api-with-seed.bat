@@ -433,7 +433,58 @@ if /i "%SKIP_ENSURE_COMMUNITY_MINIO%"=="1" (
     )
 )
 
+echo Step 3b4 - Unified Anvil align [FundStack + TTG + env supersede + bytecode verify + frontend sync]
+set "ANVIL_ALIGN_RAN=0"
+set "ANVIL_ALIGN_AUTO=0"
+if /i not "%SKIP_ANVIL_ALIGN%"=="1" (
+    if /i "%TRAVELTRUST_ANVIL_ALIGN%"=="1" set "ANVIL_ALIGN_AUTO=1"
+    if /i not "%ANVIL_ALIGN_AUTO%"=="1" (
+        findstr /C:"BEGIN TT FUNDSTACK ANVIL LOCAL" "%ROOT%\.env" >nul 2>&1
+        if not errorlevel 1 set "ANVIL_ALIGN_AUTO=1"
+    )
+    if /i not "%ANVIL_ALIGN_AUTO%"=="1" (
+        findstr /C:"BEGIN TT ANVIL LOCAL" "%ROOT%\.env" >nul 2>&1
+        if not errorlevel 1 set "ANVIL_ALIGN_AUTO=1"
+    )
+    if /i "%TRAVELTRUST_FUNDSTACK_ANVIL%"=="1" set "ANVIL_ALIGN_AUTO=1"
+    if /i "%TRAVELTRUST_TTG_ANVIL%"=="1" set "ANVIL_ALIGN_AUTO=1"
+)
+if /i "%SKIP_ANVIL_ALIGN%"=="1" (
+    echo     SKIP SKIP_ANVIL_ALIGN=1
+) else if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
+    echo     SKIP FE-only TRAVELTRUST_FRONTEND_ONLY=1
+) else if /i not "%ANVIL_ALIGN_AUTO%"=="1" (
+    echo     SKIP no Anvil align profile [run: bash scripts/dev/align-anvil-local-stack.sh or set TRAVELTRUST_ANVIL_ALIGN=1]
+) else (
+    set "GIT_BASH_OK=0"
+    if defined GIT_BASH if exist "%GIT_BASH%" set "GIT_BASH_OK=1"
+    if exist "%ProgramFiles%\Git\bin\bash.exe" set "GIT_BASH_OK=1"
+    if exist "%ProgramFiles(x86)%\Git\bin\bash.exe" set "GIT_BASH_OK=1"
+    if "%GIT_BASH_OK%"=="0" (
+        echo     WARN: Git Bash not found - skip Step 3b4 align; falling back to Step 3b5/3c
+    ) else (
+        where forge >nul 2>&1
+        if errorlevel 1 (
+            echo     WARN: forge not on PATH - skip Step 3b4 align; falling back to Step 3b5/3c
+        ) else (
+            powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\align-anvil-local-stack.ps1"
+            if errorlevel 1 (
+                echo     WARN: align-anvil-local-stack failed - falling back to Step 3b5/3c
+            ) else (
+                set "ANVIL_ALIGN_RAN=1"
+                set "TRAVELTRUST_FUNDSTACK_ANVIL=1"
+                set "TRAVELTRUST_TTG_ANVIL=1"
+                echo     OK Step 3b4 align-anvil-local-stack [3b5/3b6 partial skip]
+            )
+        )
+    )
+)
+
 echo Step 3b5 - Local FundStack Anvil deploy [GuideIdentityStaking + Registry + USDC]
+if /i "%ANVIL_ALIGN_RAN%"=="1" (
+    echo     SKIP done by Step 3b4 align-anvil-local-stack
+    goto :tt_after_fundstack_anvil
+)
 set "FUNDSTACK_ANVIL_AUTO=0"
 if /i not "%SKIP_FUNDSTACK_ANVIL%"=="1" (
     if /i not "%TRAVELTRUST_FUNDSTACK_ANVIL%"=="1" (
@@ -490,6 +541,10 @@ if /i not "%TRAVELTRUST_FUNDSTACK_ANVIL%"=="1" (
 :tt_after_fundstack_anvil
 
 echo Step 3c - Local TTG Anvil deploy TRAVELTRUST_TTG_ANVIL
+if /i "%ANVIL_ALIGN_RAN%"=="1" (
+    echo     SKIP done by Step 3b4 align-anvil-local-stack
+    goto :tt_after_ttg_anvil
+)
 set "TTG_ANVIL_AUTO=0"
 if /i not "%SKIP_TTG_ANVIL%"=="1" (
     if /i not "%TRAVELTRUST_TTG_ANVIL%"=="1" (
@@ -569,6 +624,10 @@ if /i not "%TRAVELTRUST_CHAIN_ON%"=="0" (
 )
 
 echo Step 3b6 - FundStack USDC mint + guide DB stake align [Anvil local chain-on]
+if /i "%ANVIL_ALIGN_RAN%"=="1" (
+    echo     SKIP done by Step 3b4 align-anvil-local-stack
+    goto :tt_after_fundstack_mint_align
+)
 if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
     echo     SKIP FE-only TRAVELTRUST_FRONTEND_ONLY=1
 ) else if /i "%SKIP_FUNDSTACK_ANVIL%"=="1" (
@@ -587,6 +646,7 @@ if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
         echo     WARN: Git Bash missing - skip Step 3b6 USDC mint / guide stake DB align
     )
 )
+:tt_after_fundstack_mint_align
 
 echo Step 3g - Prune seed tourist cancelled orders from PG before API hydrate [tourist@test.com]
 if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (

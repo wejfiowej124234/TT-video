@@ -52,6 +52,7 @@ TTG="$(get_val GOVERNANCE_TOKEN_ADDRESS)"
 SETTLE="$(get_val SETTLEMENT_TOKEN)"
 REG="$(get_val REGISTRY_ADDRESS)"
 FACTORY="$(get_val ESCROW_FACTORY_ADDRESS)"
+FEE="$(get_val FEE_ROUTER_ADDRESS)"
 
 check_addr "GUIDE_STAKING_ADDRESS" "$GUIDE"
 check_addr "STAKING_PROVIDER_ADDRESS" "$PROVIDER"
@@ -60,6 +61,7 @@ check_addr "GOVERNANCE_TOKEN_ADDRESS" "$TTG"
 check_addr "SETTLEMENT_TOKEN" "$SETTLE"
 check_addr "REGISTRY_ADDRESS" "$REG"
 check_addr "ESCROW_FACTORY_ADDRESS" "$FACTORY"
+check_addr "FEE_ROUTER_ADDRESS" "$FEE"
 
 # Semantic: pool must not equal settlement token; TTG must not equal escrow factory
 if [[ -n "$POOL" && -n "$SETTLE" && "${POOL,,}" == "${SETTLE,,}" ]]; then
