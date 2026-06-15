@@ -30,6 +30,7 @@ source "$ROOT/scripts/dev/lib/anvil-local-env-lib.sh"
 anvil_env_supersede_sepolia_top_level
 anvil_env_dedupe_managed_blocks
 anvil_env_prune_superseded_comments
+anvil_env_prune_duplicate_top_level_keys
 
 API_LISTEN_PORT="${API_LISTEN_PORT:-8080}" bash "$ROOT/scripts/dev/sync-frontend-env-local-from-root.sh"
 

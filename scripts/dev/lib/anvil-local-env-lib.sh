@@ -175,10 +175,93 @@ anvil_env_prune_superseded_comments() {
   root_env="$root/.env"
   [[ -f "$root_env" ]] || return 0
   tmp="$(mktemp)"
-  grep -v '^# \[superseded by ① Anvil local stack\]' "$root_env" >"$tmp" || true
+  grep -vE '^# \[superseded by (① Anvil local stack|TT FUNDSTACK ANVIL LOCAL|TT ANVIL LOCAL)\]' "$root_env" >"$tmp" || true
   if [[ -s "$tmp" ]]; then
     mv "$tmp" "$root_env"
     echo "anvil-env: pruned superseded comment lines in $root_env"
+  else
+    rm -f "$tmp"
+  fi
+}
+
+# Collapse repeated stray keys outside managed blocks (dotenv first-read: keep first active assignment).
+anvil_env_prune_duplicate_top_level_keys() {
+  local root root_env tmp
+  root="$(anvil_env_root)"
+  root_env="$root/.env"
+  [[ -f "$root_env" ]] || return 0
+  tmp="$(mktemp)"
+  PYTHONIOENCODING=utf-8 python - "$root_env" "$tmp" <<'PY'
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+out_path = Path(sys.argv[2])
+lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+managed_markers = (
+    "# --- BEGIN TT FUNDSTACK ANVIL LOCAL",
+    "# --- BEGIN TT ANVIL LOCAL",
+)
+managed_end = (
+    "# --- END TT FUNDSTACK ANVIL LOCAL",
+    "# --- END TT ANVIL LOCAL",
+)
+DEDUPE_KEYS = {
+    "B407_TRAVELER_PK", "B407_GUIDE_PK", "B407_FACTORY_DEPLOYER_PK",
+    "ESCROW_MINT_TEST_TOKENS", "B407_ORDER_AMOUNT",
+}
+GLOBAL_DEDUPE_KEYS = {"P3_CHAIN_OFF"}
+
+seen_outside: set[str] = set()
+inside_managed = 0
+parsed: list[tuple] = []
+
+for line in lines:
+    stripped = line.strip()
+    if any(stripped.startswith(m) for m in managed_markers):
+        inside_managed += 1
+        parsed.append(("raw", line))
+        continue
+    if inside_managed > 0 and any(stripped.startswith(m) for m in managed_end):
+        inside_managed -= 1
+        parsed.append(("raw", line))
+        continue
+    if stripped and not stripped.startswith("#") and "=" in stripped:
+        key = stripped.split("=", 1)[0].strip()
+        if inside_managed > 0:
+            parsed.append(("kv", key, line))
+            continue
+        if key in DEDUPE_KEYS:
+            if key in seen_outside:
+                continue
+            seen_outside.add(key)
+        parsed.append(("raw", line))
+        continue
+    parsed.append(("raw", line))
+
+last_global: dict[str, int] = {}
+for i, item in enumerate(parsed):
+    if item[0] == "kv" and item[1] in GLOBAL_DEDUPE_KEYS:
+        last_global[item[1]] = i
+
+out: list[str] = []
+for i, item in enumerate(parsed):
+    if item[0] == "kv":
+        key = item[1]
+        if key in GLOBAL_DEDUPE_KEYS and last_global.get(key) != i:
+            continue
+        out.append(item[2])
+    else:
+        out.append(item[1])
+
+text = "\n".join(out)
+if lines and lines[-1] != "":
+    text += "\n"
+out_path.write_text(text, encoding="utf-8")
+PY
+  if [[ -s "$tmp" ]]; then
+    mv "$tmp" "$root_env"
+    echo "anvil-env: pruned duplicate top-level keys (B407/ESCROW_MINT/P3_CHAIN_OFF) in $root_env"
   else
     rm -f "$tmp"
   fi
