@@ -3,7 +3,7 @@ chcp 65001 >nul
 REM TravelTrust one-click local stack: stop old processes, Docker PG, ABI gates, API, frontend.
 REM Run from repo root: scripts\start-api-with-seed.bat  - full env var list: scripts\dev\start-api-with-seed-README.md
 REM Key env: RESET_DOCKER_DB=1  SKIP_ABI_GATE=1  TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=1  TRAVELTRUST_MANUAL_ACCEPTANCE=1  TRAVELTRUST_CHAIN_ON=1  TRAVELTRUST_MARKET_CLEAN=1
-REM DB: default keeps Postgres volume; API auto-migrates; Step 3d probes through 20260609120000 [legacy admin RBAC + CMS + Official OPS + Growth + country_market + guides P2 cols]
+REM DB: default keeps Postgres volume; API auto-migrates; Step 3d probes through 20260613120000 [CMS+Official OPS+Growth+Sprint168+guides P2+guide_exit_requests]
 REM Storage: Step 3e MinIO :19000 persistent volume + merges COMMUNITY_MEDIA_S3_* into root .env when missing
 
 for %%I in ("%~dp0..\..") do set "ROOT=%%~fI"
@@ -62,7 +62,9 @@ if not defined TRAVELTRUST_ADMIN_LOGIN_RETURN_URL set "TRAVELTRUST_ADMIN_LOGIN_R
 if not defined TRAVELTRUST_VERIFY_SEED_ACCOUNTS set "TRAVELTRUST_VERIFY_SEED_ACCOUNTS=1"
 if not defined TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET set "TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=1"
 if not defined TRAVELTRUST_POST_START_IDENTITY_P2_SMOKE set "TRAVELTRUST_POST_START_IDENTITY_P2_SMOKE=1"
-echo     TRAVELTRUST_MANUAL_ACCEPTANCE=1 Phase2 role manual QA: API+ABI+DB+Admin+Identity P2 smoke + seed login verify + guide@test market list
+if not defined TRAVELTRUST_POST_START_SEED_TRANSACTION_SMOKE set "TRAVELTRUST_POST_START_SEED_TRANSACTION_SMOKE=1"
+if not defined TRAVELTRUST_POST_START_PUBLISH_HUB_VITEST set "TRAVELTRUST_POST_START_PUBLISH_HUB_VITEST=1"
+echo     TRAVELTRUST_MANUAL_ACCEPTANCE=1 human review: API+ABI+DB+Admin+Identity P2+6o seed tx+6s publish vitest+6b5 seed verify
 exit /b 0
 
 :tt_cfg_manual_qa
@@ -77,6 +79,8 @@ if not defined SKIP_POST_START_ACQUISITION_PD009_SMOKE set "SKIP_POST_START_ACQU
 if not defined SKIP_POST_START_GUIDE_DETAIL_BOOKING_SMOKE set "SKIP_POST_START_GUIDE_DETAIL_BOOKING_SMOKE=1"
 if not defined SKIP_POST_START_ITINERARY_DATE_AS_SOURCE_SMOKE set "SKIP_POST_START_ITINERARY_DATE_AS_SOURCE_SMOKE=1"
 if not defined SKIP_POST_START_IDENTITY_P2_SMOKE set "SKIP_POST_START_IDENTITY_P2_SMOKE=1"
+if not defined SKIP_POST_START_L3_MULTI_IDENTITY_SMOKE set "SKIP_POST_START_L3_MULTI_IDENTITY_SMOKE=1"
+if not defined SKIP_POST_START_GUIDE_WORKBENCH_L5_SMOKE set "SKIP_POST_START_GUIDE_WORKBENCH_L5_SMOKE=1"
 if not defined TRAVELTRUST_MARKET_PUBLIC_SURFACE set "TRAVELTRUST_MARKET_PUBLIC_SURFACE=1"
 if not defined TRAVELTRUST_PUBLIC_CATALOG_SURFACE set "TRAVELTRUST_PUBLIC_CATALOG_SURFACE=1"
 if not defined TRAVELTRUST_MARKET_PUBLIC_SHOWCASE set "TRAVELTRUST_MARKET_PUBLIC_SHOWCASE=1"
@@ -88,6 +92,12 @@ exit /b 0
 :tt_cfg_profiles_done
 
 if not defined TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET set "TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=1"
+if /i not "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
+    if not defined TRAVELTRUST_POST_START_L3_MULTI_IDENTITY_SMOKE set "TRAVELTRUST_POST_START_L3_MULTI_IDENTITY_SMOKE=1"
+    if not defined TRAVELTRUST_POST_START_GUIDE_WORKBENCH_L5_SMOKE set "TRAVELTRUST_POST_START_GUIDE_WORKBENCH_L5_SMOKE=1"
+    if not defined TRAVELTRUST_POST_START_PROVIDER_WORKBENCH_L5_SMOKE set "TRAVELTRUST_POST_START_PROVIDER_WORKBENCH_L5_SMOKE=1"
+    if not defined TRAVELTRUST_POST_START_PUBLISH_HUB_L5_SMOKE set "TRAVELTRUST_POST_START_PUBLISH_HUB_L5_SMOKE=1"
+)
 
 if /i not "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
     if not defined TRAVELTRUST_POST_START_ABI_CHECK set "TRAVELTRUST_POST_START_ABI_CHECK=1"
@@ -392,7 +402,7 @@ if /i "%SKIP_WAIT_POSTGRES%"=="1" (
     )
 )
 
-echo Step 3d - Ensure API SQLx migrations align DATABASE_URL schema [through 20260609120000 CMS Official OPS Growth Sprint168 country_market guides P2 cols]
+echo Step 3d - Ensure API SQLx migrations align DATABASE_URL schema [through 20260613120000 CMS Official OPS Growth Sprint168 guides P2 guide_exit_requests]
 if /i "%SKIP_ENSURE_DB_MIGRATIONS%"=="1" (
     echo     SKIP SKIP_ENSURE_DB_MIGRATIONS=1
 ) else if /i "%TRAVELTRUST_ENSURE_DB_MIGRATIONS_WARN%"=="1" (
@@ -423,6 +433,62 @@ if /i "%SKIP_ENSURE_COMMUNITY_MINIO%"=="1" (
     )
 )
 
+echo Step 3b5 - Local FundStack Anvil deploy [GuideIdentityStaking + Registry + USDC]
+set "FUNDSTACK_ANVIL_AUTO=0"
+if /i not "%SKIP_FUNDSTACK_ANVIL%"=="1" (
+    if /i not "%TRAVELTRUST_FUNDSTACK_ANVIL%"=="1" (
+        findstr /C:"BEGIN TT FUNDSTACK ANVIL LOCAL" "%ROOT%\.env" >nul 2>&1
+        if not errorlevel 1 (
+            echo     AUTO: root .env has TT FUNDSTACK block - enabling Step 3b5 Guide staking contracts
+            set "TRAVELTRUST_FUNDSTACK_ANVIL=1"
+            set "FUNDSTACK_ANVIL_AUTO=1"
+        )
+    )
+)
+if /i not "%TRAVELTRUST_FUNDSTACK_ANVIL%"=="1" (
+    echo     SKIP TRAVELTRUST_FUNDSTACK_ANVIL not 1 and no TT FUNDSTACK block - Guide /staking may show no contract
+) else if /i "%SKIP_FUNDSTACK_ANVIL%"=="1" (
+    echo     SKIP SKIP_FUNDSTACK_ANVIL=1
+) else if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
+    echo     SKIP TRAVELTRUST_FRONTEND_ONLY=1
+) else (
+    set "GIT_BASH_OK=0"
+    if defined GIT_BASH if exist "%GIT_BASH%" set "GIT_BASH_OK=1"
+    if exist "%ProgramFiles%\Git\bin\bash.exe" set "GIT_BASH_OK=1"
+    if exist "%ProgramFiles(x86)%\Git\bin\bash.exe" set "GIT_BASH_OK=1"
+    if "%GIT_BASH_OK%"=="0" (
+        if /i "%FUNDSTACK_ANVIL_AUTO%"=="1" (
+            echo     WARN: Git Bash not found - skip auto Step 3b5; Guide staking may 503 until FundStack deploy
+            goto :tt_after_fundstack_anvil
+        )
+        echo ERROR: TRAVELTRUST_FUNDSTACK_ANVIL=1 needs Git for Windows bash.exe or set SKIP_FUNDSTACK_ANVIL=1
+        pause
+        exit /b 1
+    )
+    where forge >nul 2>&1
+    if errorlevel 1 (
+        if /i "%FUNDSTACK_ANVIL_AUTO%"=="1" (
+            echo     WARN: forge not on PATH - skip auto Step 3b5
+            goto :tt_after_fundstack_anvil
+        )
+        echo ERROR: TRAVELTRUST_FUNDSTACK_ANVIL=1 needs Foundry forge on PATH
+        pause
+        exit /b 1
+    )
+    set "SKIP_ANVIL_STOP=1"
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\deploy-fundstack-anvil-local.ps1" -Apply
+    if errorlevel 1 (
+        if /i "%FUNDSTACK_ANVIL_AUTO%"=="1" (
+            echo     WARN: auto Step 3b5 FundStack deploy failed - continuing
+            goto :tt_after_fundstack_anvil
+        )
+        echo FAIL: deploy-fundstack-anvil-local - see scripts\dev\deploy-fundstack-anvil-local.sh
+        pause
+        exit /b 1
+    )
+)
+:tt_after_fundstack_anvil
+
 echo Step 3c - Local TTG Anvil deploy TRAVELTRUST_TTG_ANVIL
 set "TTG_ANVIL_AUTO=0"
 if /i not "%SKIP_TTG_ANVIL%"=="1" (
@@ -432,6 +498,13 @@ if /i not "%SKIP_TTG_ANVIL%"=="1" (
             echo     AUTO: root .env has TT ANVIL block - enabling Step 3c ensure Anvil :8545 + stake pool for post-start stake-status ABI
             set "TRAVELTRUST_TTG_ANVIL=1"
             set "TTG_ANVIL_AUTO=1"
+        ) else (
+            findstr /C:"BEGIN TT FUNDSTACK ANVIL LOCAL" "%ROOT%\.env" >nul 2>&1
+            if not errorlevel 1 (
+                echo     AUTO: root .env has TT FUNDSTACK block - enabling Step 3c TTG + RegionSteward pool
+                set "TRAVELTRUST_TTG_ANVIL=1"
+                set "TTG_ANVIL_AUTO=1"
+            )
         )
     )
 )
@@ -466,6 +539,7 @@ if /i not "%TRAVELTRUST_TTG_ANVIL%"=="1" (
         exit /b 1
     )
     set "SKIP_ANVIL_STOP=1"
+    if /i "%TRAVELTRUST_FUNDSTACK_ANVIL%"=="1" set "TTG_ANVIL_FORCE_DEPLOY=1"
     powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\deploy-ttg-anvil-local.ps1" -Apply
     if errorlevel 1 (
         if /i "%TTG_ANVIL_AUTO%"=="1" (
@@ -478,6 +552,41 @@ if /i not "%TRAVELTRUST_TTG_ANVIL%"=="1" (
     )
 )
 :tt_after_ttg_anvil
+
+REM Auto chain-on when ① Anvil managed blocks present (unless user explicitly set TRAVELTRUST_CHAIN_ON=0)
+if /i not "%TRAVELTRUST_CHAIN_ON%"=="0" (
+    if /i not "%TRAVELTRUST_CHAIN_ON%"=="1" (
+        findstr /C:"BEGIN TT FUNDSTACK ANVIL LOCAL" "%ROOT%\.env" >nul 2>&1
+        if not errorlevel 1 set "TRAVELTRUST_CHAIN_ON=1"
+        if /i not "%TRAVELTRUST_CHAIN_ON%"=="1" (
+            findstr /C:"BEGIN TT ANVIL LOCAL" "%ROOT%\.env" >nul 2>&1
+            if not errorlevel 1 set "TRAVELTRUST_CHAIN_ON=1"
+        )
+        if /i "%TRAVELTRUST_CHAIN_ON%"=="1" (
+            echo     AUTO: TRAVELTRUST_CHAIN_ON=1 [Anvil managed blocks in .env; API uses P3_CHAIN_OFF from block]
+        )
+    )
+)
+
+echo Step 3b6 - FundStack USDC mint + guide DB stake align [Anvil local chain-on]
+if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
+    echo     SKIP FE-only TRAVELTRUST_FRONTEND_ONLY=1
+) else if /i "%SKIP_FUNDSTACK_ANVIL%"=="1" (
+    echo     SKIP SKIP_FUNDSTACK_ANVIL=1
+) else if /i not "%TRAVELTRUST_FUNDSTACK_ANVIL%"=="1" if /i not "%TRAVELTRUST_TTG_ANVIL%"=="1" if /i not "%TRAVELTRUST_CHAIN_ON%"=="1" (
+    echo     SKIP no Anvil/FundStack auto profile
+) else (
+    set "GIT_BASH_OK=0"
+    if defined GIT_BASH if exist "%GIT_BASH%" set "GIT_BASH_OK=1"
+    if exist "%ProgramFiles%\Git\bin\bash.exe" set "GIT_BASH_OK=1"
+    if exist "%ProgramFiles(x86)%\Git\bin\bash.exe" set "GIT_BASH_OK=1"
+    if "%GIT_BASH_OK%"=="1" (
+        powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\mint-fundstack-anvil-usdc.ps1"
+        powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-align-guide-stake-db-to-chain-local.ps1"
+    ) else (
+        echo     WARN: Git Bash missing - skip Step 3b6 USDC mint / guide stake DB align
+    )
+)
 
 echo Step 3g - Prune seed tourist cancelled orders from PG before API hydrate [tourist@test.com]
 if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
@@ -660,7 +769,7 @@ if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
     )
 )
 
-echo Step 6c - Post-start API ABI smoke meta728 page-brief-v6 steward/redemption admin/capabilities totp rbac admin-home-queue-lists CMS-Growth-Official-x16 public-catalog guides wallet-verify me/sessions TRAVELTRUST_POST_START_ABI_CHECK default 1
+echo Step 6c - Post-start API ABI smoke meta728+807 chain.contracts12 page-brief-v6 steward/redemption guide-exit merchant-listings publish-summary admin CMS-Growth-Official
 if /i "%SKIP_POST_START_ABI_CHECK%"=="1" (
     echo     SKIP SKIP_POST_START_ABI_CHECK=1
 ) else if /i not "%TRAVELTRUST_POST_START_ABI_CHECK%"=="1" (
@@ -783,6 +892,131 @@ if /i "%TRAVELTRUST_POST_START_IDENTITY_P2_WARN%"=="1" (
     )
 )
 :tt_after_identity_p2_smoke
+
+echo Step 6o - Chain B seed tourist+guide full transaction smoke [TRAVELTRUST_POST_START_SEED_TRANSACTION_SMOKE=1 or MANUAL_ACCEPTANCE]
+if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
+    echo     SKIP FE-only TRAVELTRUST_FRONTEND_ONLY=1
+    goto :tt_after_seed_transaction_smoke
+)
+if /i "%SKIP_POST_START_SEED_TRANSACTION_SMOKE%"=="1" (
+    echo     SKIP SKIP_POST_START_SEED_TRANSACTION_SMOKE=1
+    goto :tt_after_seed_transaction_smoke
+)
+if /i not "%TRAVELTRUST_POST_START_SEED_TRANSACTION_SMOKE%"=="1" if /i not "%TRAVELTRUST_MANUAL_ACCEPTANCE%"=="1" (
+    echo     SKIP set TRAVELTRUST_MANUAL_ACCEPTANCE=1 or TRAVELTRUST_POST_START_SEED_TRANSACTION_SMOKE=1
+    goto :tt_after_seed_transaction_smoke
+)
+if /i "%TRAVELTRUST_POST_START_SEED_TRANSACTION_SMOKE_WARN%"=="1" (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-post-start-seed-transaction-smoke.ps1" -Port !BACKEND_PORT! -FrontendPort !FRONTEND_PORT! -WarnOnly
+) else (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-post-start-seed-transaction-smoke.ps1" -Port !BACKEND_PORT! -FrontendPort !FRONTEND_PORT!
+    if errorlevel 1 (
+        echo FAIL: smoke-seed-tourist-guide-transaction-local - see scripts/dev/smoke-seed-tourist-guide-transaction-local.sh
+        pause
+        exit /b 1
+    )
+)
+:tt_after_seed_transaction_smoke
+
+echo Step 6p - L3 multi-identity closure smoke multi-demo four-track [TRAVELTRUST_POST_START_L3_MULTI_IDENTITY_SMOKE=1 default]
+if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
+    echo     SKIP FE-only TRAVELTRUST_FRONTEND_ONLY=1
+    goto :tt_after_l3_multi_identity_smoke
+)
+if /i "%SKIP_POST_START_L3_MULTI_IDENTITY_SMOKE%"=="1" (
+    echo     SKIP SKIP_POST_START_L3_MULTI_IDENTITY_SMOKE=1
+    goto :tt_after_l3_multi_identity_smoke
+)
+if /i not "%TRAVELTRUST_POST_START_L3_MULTI_IDENTITY_SMOKE%"=="1" (
+    echo     SKIP TRAVELTRUST_POST_START_L3_MULTI_IDENTITY_SMOKE=0
+    goto :tt_after_l3_multi_identity_smoke
+)
+if /i "%TRAVELTRUST_POST_START_L3_MULTI_IDENTITY_WARN%"=="1" (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-post-start-l3-multi-identity-smoke.ps1" -Port !BACKEND_PORT! -WarnOnly
+) else (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-post-start-l3-multi-identity-smoke.ps1" -Port !BACKEND_PORT!
+    if errorlevel 1 (
+        echo FAIL: smoke-multi-identity-closure-local - see scripts/dev/smoke-multi-identity-closure-local.sh
+        pause
+        exit /b 1
+    )
+)
+:tt_after_l3_multi_identity_smoke
+
+echo Step 6q - GWB-L5 guide workbench vitest+API guide-exit-status [TRAVELTRUST_POST_START_GUIDE_WORKBENCH_L5_SMOKE=1 default]
+if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
+    echo     SKIP FE-only TRAVELTRUST_FRONTEND_ONLY=1
+    goto :tt_after_guide_workbench_smoke
+)
+if /i "%SKIP_POST_START_GUIDE_WORKBENCH_L5_SMOKE%"=="1" (
+    echo     SKIP SKIP_POST_START_GUIDE_WORKBENCH_L5_SMOKE=1
+    goto :tt_after_guide_workbench_smoke
+)
+if /i not "%TRAVELTRUST_POST_START_GUIDE_WORKBENCH_L5_SMOKE%"=="1" (
+    echo     SKIP TRAVELTRUST_POST_START_GUIDE_WORKBENCH_L5_SMOKE=0
+    goto :tt_after_guide_workbench_smoke
+)
+if /i "%TRAVELTRUST_POST_START_GUIDE_WORKBENCH_L5_SMOKE_WARN%"=="1" (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-post-start-guide-workbench-l5-smoke.ps1" -Port !BACKEND_PORT! -WarnOnly
+) else (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-post-start-guide-workbench-l5-smoke.ps1" -Port !BACKEND_PORT!
+    if errorlevel 1 (
+        echo FAIL: smoke-guide-workbench-l5-local - see scripts/dev/smoke-guide-workbench-l5-local.sh
+        pause
+        exit /b 1
+    )
+)
+:tt_after_guide_workbench_smoke
+
+echo Step 6r - PWB-L5 provider workbench vitest+API merchant-listings [TRAVELTRUST_POST_START_PROVIDER_WORKBENCH_L5_SMOKE=1 default]
+if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
+    echo     SKIP FE-only TRAVELTRUST_FRONTEND_ONLY=1
+    goto :tt_after_provider_workbench_smoke
+)
+if /i "%SKIP_POST_START_PROVIDER_WORKBENCH_L5_SMOKE%"=="1" (
+    echo     SKIP SKIP_POST_START_PROVIDER_WORKBENCH_L5_SMOKE=1
+    goto :tt_after_provider_workbench_smoke
+)
+if /i not "%TRAVELTRUST_POST_START_PROVIDER_WORKBENCH_L5_SMOKE%"=="1" (
+    echo     SKIP TRAVELTRUST_POST_START_PROVIDER_WORKBENCH_L5_SMOKE=0
+    goto :tt_after_provider_workbench_smoke
+)
+if /i "%TRAVELTRUST_POST_START_PROVIDER_WORKBENCH_L5_SMOKE_WARN%"=="1" (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-post-start-provider-workbench-l5-smoke.ps1" -Port !BACKEND_PORT! -WarnOnly
+) else (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-post-start-provider-workbench-l5-smoke.ps1" -Port !BACKEND_PORT!
+    if errorlevel 1 (
+        echo FAIL: smoke-provider-workbench-l5-local - see scripts/dev/smoke-provider-workbench-l5-local.sh
+        pause
+        exit /b 1
+    )
+)
+:tt_after_provider_workbench_smoke
+
+echo Step 6s - Publish Hub L5 seed+API+vitest multi-demo [TRAVELTRUST_POST_START_PUBLISH_HUB_L5_SMOKE=1 default]
+if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
+    echo     SKIP FE-only TRAVELTRUST_FRONTEND_ONLY=1
+    goto :tt_after_publish_hub_smoke
+)
+if /i "%SKIP_POST_START_PUBLISH_HUB_L5_SMOKE%"=="1" (
+    echo     SKIP SKIP_POST_START_PUBLISH_HUB_L5_SMOKE=1
+    goto :tt_after_publish_hub_smoke
+)
+if /i not "%TRAVELTRUST_POST_START_PUBLISH_HUB_L5_SMOKE%"=="1" (
+    echo     SKIP TRAVELTRUST_POST_START_PUBLISH_HUB_L5_SMOKE=0
+    goto :tt_after_publish_hub_smoke
+)
+if /i "%TRAVELTRUST_POST_START_PUBLISH_HUB_L5_SMOKE_WARN%"=="1" (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-post-start-publish-hub-l5-smoke.ps1" -Port !BACKEND_PORT! -WarnOnly
+) else (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-post-start-publish-hub-l5-smoke.ps1" -Port !BACKEND_PORT!
+    if errorlevel 1 (
+        echo FAIL: smoke-publish-hub-post-start-local - see scripts/dev/smoke-publish-hub-post-start-local.sh
+        pause
+        exit /b 1
+    )
+)
+:tt_after_publish_hub_smoke
 
 echo Step 6l - GD-L5 guide detail booking smoke tourist@test.com [TRAVELTRUST_POST_START_GUIDE_DETAIL_BOOKING_SMOKE=1 to enable]
 if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (

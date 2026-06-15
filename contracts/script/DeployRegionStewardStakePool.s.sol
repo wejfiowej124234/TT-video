@@ -107,8 +107,9 @@ contract DeployRegionStewardStakePool is Phase2ControlPlane {
     ) internal view {
         require(pool.owner() == poolOwner, "Steward: owner!=poolOwner");
         require(address(pool.ttg()) == ttgAddr, "Steward: ttg mismatch");
-        require(poolOwner != deployer, "Steward: owner must not be deployer EOA");
+        // ① Anvil (31337): allow deployer EOA owner for local smoke; ②+ forbids deployer EOA (R-02).
         if (!_isLocalAnvil()) {
+            require(poolOwner != deployer, "Steward: owner must not be deployer EOA");
             require(timelockAddr != address(0), "Steward: TIMELOCK_ADDRESS required");
             require(poolOwner == timelockAddr, "Steward: poolOwner!=Timelock");
         }

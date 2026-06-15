@@ -19,21 +19,35 @@ try {
 finally { Pop-Location }
 
 function Write-Abi($name) {
+    $dest = Join-Path $rootDir "contracts/abi/$name.json"
+    $artifact = Join-Path $rootDir "contracts/out/$name.sol/$name.json"
+    $utf8NoBom = New-Object System.Text.UTF8Encoding $false
+
+    # Prefer forge build artifact (.abi array) — matches sync-abi-from-forge.sh; avoids Windows table output from `forge inspect`.
+    if (Test-Path -LiteralPath $artifact) {
+        $full = Get-Content -LiteralPath $artifact -Raw -Encoding UTF8 | ConvertFrom-Json
+        if (-not $full.abi) { return $false }
+        $pretty = $full.abi | ConvertTo-Json -Depth 100
+        [System.IO.File]::WriteAllText($dest, $pretty, $utf8NoBom)
+        Write-Host "sync-abi-from-forge: wrote $dest"
+        return $true
+    }
+
     Push-Location (Join-Path $rootDir "contracts")
     try {
-        $raw = & forge inspect $name abi 2>$null
-        if ($LASTEXITCODE -ne 0) { return $false }
+        $raw = (& forge inspect $name abi 2>$null | Out-String).Trim()
+        if ($LASTEXITCODE -ne 0 -or -not $raw) { return $false }
     }
     finally { Pop-Location }
-    $dest = Join-Path $rootDir "contracts/abi/$name.json"
-    $utf8NoBom = New-Object System.Text.UTF8Encoding $false
+
     try {
         $obj = $raw | ConvertFrom-Json
         $pretty = $obj | ConvertTo-Json -Depth 100
         [System.IO.File]::WriteAllText($dest, $pretty, $utf8NoBom)
     }
     catch {
-        [System.IO.File]::WriteAllText($dest, $raw, $utf8NoBom)
+        Write-Host "sync-abi-from-forge: forge inspect $name returned non-JSON; run forge build first" -ForegroundColor Red
+        return $false
     }
     Write-Host "sync-abi-from-forge: wrote $dest"
     return $true
@@ -55,10 +69,13 @@ foreach ($c in @("IERC20", "MockERC20")) {
 
 Set-Location $rootDir
 $pyExe = $null
-if (Get-Command python3 -ErrorAction SilentlyContinue) { $pyExe = "python3" }
-elseif (Get-Command python -ErrorAction SilentlyContinue) { $pyExe = "python" }
+$pyArgs = $null
+if (Get-Command python -ErrorAction SilentlyContinue) { $pyExe = "python" }
+elseif (Get-Command py -ErrorAction SilentlyContinue) { $pyExe = "py" ; $pyArgs = @("-3") }
+elseif (Get-Command python3 -ErrorAction SilentlyContinue) { $pyExe = "python3" }
 if ($pyExe) {
-    & $pyExe (Join-Path $PSScriptRoot "verify-abi-forge.py")
+    $verifyScript = Join-Path $PSScriptRoot "verify-abi-forge.py"
+    if ($pyArgs) { & $pyExe @pyArgs $verifyScript } else { & $pyExe $verifyScript }
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 }
 
