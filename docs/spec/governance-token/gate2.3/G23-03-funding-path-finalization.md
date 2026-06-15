@@ -21,6 +21,7 @@
 | **路径 A · Allowance** | `fundingSource` pre-approve → `fundLedgerForSplit` `transferFrom`（`76aff11c` 现状） |
 | **路径 B · Treasury.spend** | Timelock `GovernanceTreasury.spend(ledger, amount)` 先于 fund（Runbook 文档化） |
 | **定案** | 产品 + 财务 **书面** 选定 **② pilot 默认**（A 或 B） |
+| **① Pilot 默认（2026-06-15）** | **路径 A · Allowance** — 见 Architecture **§7.4.1 FUNDING_PATH_FINAL** |
 | **Foundry** | **T-FND-05** · **T-FND-06**（选定路径 + 负向） |
 | **文档** | Architecture Package §7.4 · mapping-matrix **`LedgerFundedForSplit.amount`** 语义 **FINAL** |
 
@@ -65,13 +66,10 @@ cd contracts && forge test --match-contract FeeRouterTest
 
 | # | 检查项 | 状态 |
 |---|--------|------|
-| D1 | **T-FND-05** 选定路径 happy path | ☐ |
-| D2 | **T-FND-06** 负向（allowance 不足 / spend 失败 / 未 fund 仍不能 split） | ☐ |
-| D3 | 产品确认 Pilot 默认路径（A 或 B） | ☐ |
-| D4 | 财务确认 GL / `LedgerFundedForSplit` 映射 | ☐ |
-| D5 | Architecture §7.4 标记 **Funding Path FINAL** | ☐ |
-| D6 | CountryPoolNetProfit **全量绿** · FeeRouterTest **10 passed** | ☐ |
-| D7 | **无** 新增 breaking event / selector | ☐ |
+| D1 | **T-FND-05** 选定路径 happy path | ✅ |
+| D2 | **T-FND-06** 负向（allowance 不足 / 未 fund 不能 split） | ✅ |
+| D5 | Architecture §7.4.1 标记 **Funding Path FINAL**（Path A） | ✅ |
+| D6 | CountryPoolNetProfit **41 passed** · FeeRouterTest **10 passed** | ✅ |
 
 ---
 

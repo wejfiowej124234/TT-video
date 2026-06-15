@@ -2,7 +2,7 @@
 
 **Package ID:** `country-pool-settlement-gate2.3-projection-v1`  
 **Version:** v1-20260615  
-**Status:** **PRE-REVIEW（Projection & Reconciliation · 零 ② 实施）**  
+**Status:** **PRE-REVIEW（① 本地纠偏 · 合约稳定性补强 · 零 ② 实施）**  
 **Baseline commit:** `76aff11c` · branch `feature/country-pool-net-profit-ledger`  
 **Gate-2.2 evidence:** `evidence/GO_local_country_pool_net_profit_gate2.2/GATE2.2-LOCAL-ACCEPTANCE-REPORT.md`
 
@@ -16,9 +16,11 @@
 
 | 本包允许 | 本包 **禁止** |
 |----------|----------------|
-| Gate-2.3 设计 delta · 投影/对账规格 · backlog 定案 | **Sepolia broadcast** |
-| Gate-2.4 **前置条件** 清单（文档） | **staging 部署** · **② GO 宣称** |
-| Gate-3 **设计**（indexer/API/DB 规格 · 无 migration 合入） | **`recordAccrualBatch` 未经 Gate-2.3 签字即合入** |
+| Gate-2.3 **① 合约稳定性补强** · 本地前置审查 · backlog 定案 | **Sepolia broadcast** |
+| Gate-2.4 **前置条件** 清单（文档 only） | **staging 部署** · **② GO 宣称** |
+| Gate-3 **设计规格**（文档 · **不合入** 代码） | **`recordAccrualBatch` 未经 G23-01 合入** |
+
+**暂缓至 ① 本地主线收口后：** indexer · API · DB migration · Dashboard · ② 测试网全链路接入。
 
 **Gate-2.2 机读基线（`76aff11c`）：**
 

@@ -186,6 +186,71 @@ contract CountryPoolNetProfitLedgerTest is Test {
         assertEq(usdc.balanceOf(address(ledger)), profit);
     }
 
+    // T-FND-05 · G23-03 · Path A Allowance — partial prefund + zero-pull when fully prefunded
+    function test_T_FND_05_AllowancePathPartialAndZeroPull() public {
+        (, uint64 end) = _openEpoch1();
+        uint256 profit = 300_000;
+        _accrueProfit(1, int256(profit), 0, "f5a");
+        _closeAfterDelay(1, end);
+
+        uint256 prefund = 100_000;
+        usdc.mint(address(ledger), prefund);
+        uint256 pull = profit - prefund;
+        usdc.mint(funding, pull);
+        vm.startPrank(funding);
+        usdc.approve(address(ledger), pull);
+        vm.stopPrank();
+
+        vm.prank(owner);
+        ledger.fundLedgerForSplit(1);
+
+        assertTrue(ledger.epochFunded(1));
+        assertEq(usdc.balanceOf(address(ledger)), profit);
+
+        vm.prank(owner);
+        ledger.setActiveStewardConfig(steward, false, true, false, bytes32("f5"));
+        vm.prank(owner);
+        ledger.splitNetProfit(1);
+        assertEq(uint256(_epochStatus(1)), uint256(CountryPoolNetProfitLedger.EpochStatus.SPLIT_COMPLETED));
+    }
+
+    function test_T_FND_05b_ZeroPullWhenLedgerFullyPrefunded() public {
+        (, uint64 end) = _openEpoch1();
+        uint256 profit = 150_000;
+        _accrueProfit(1, int256(profit), 0, "f5z");
+        _closeAfterDelay(1, end);
+        usdc.mint(address(ledger), profit);
+
+        vm.prank(owner);
+        ledger.fundLedgerForSplit(1);
+
+        assertTrue(ledger.epochFunded(1));
+        assertEq(usdc.balanceOf(address(ledger)), profit);
+        assertEq(usdc.balanceOf(funding), 0);
+    }
+
+    // T-FND-06 · G23-03 · insufficient allowance reverts fund; epochFunded stays false
+    function test_T_FND_06_FundRevertsWhenAllowanceInsufficient() public {
+        (, uint64 end) = _openEpoch1();
+        uint256 profit = 200_000;
+        _accrueProfit(1, int256(profit), 0, "f6");
+        _closeAfterDelay(1, end);
+
+        usdc.mint(funding, profit);
+        vm.startPrank(funding);
+        usdc.approve(address(ledger), profit - 1);
+        vm.stopPrank();
+
+        vm.prank(owner);
+        vm.expectRevert(CountryPoolNetProfitLedger.TransferFailed.selector);
+        ledger.fundLedgerForSplit(1);
+        assertFalse(ledger.epochFunded(1));
+
+        vm.prank(owner);
+        vm.expectRevert(CountryPoolNetProfitLedger.SplitNotFunded.selector);
+        ledger.splitNetProfit(1);
+    }
+
     // T-FND-03
     function test_T_FND_03_SplitWithInsufficientBalanceReverts() public {
         (, uint64 end) = _openEpoch1();
