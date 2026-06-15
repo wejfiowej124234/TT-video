@@ -39,6 +39,7 @@ pub(super) async fn meta(State(state): State<ApiMetaState>) -> impl IntoResponse
     let chain_id = env::var("CHAIN_ID").unwrap_or_else(|_| "137".to_string());
     let build = meta_build_value();
     let chain_contracts = state.chain_config.as_ref().map(|c| {
+        let steward_pool = crate::chain::steward_stake_pool::region_steward_stake_pool_address();
         json!({
             "guide_staking_address": c.guide_staking_address.as_ref().or(c.staking_address.as_ref()),
             "staking_provider_address": &c.staking_provider_address,
@@ -47,7 +48,10 @@ pub(super) async fn meta(State(state): State<ApiMetaState>) -> impl IntoResponse
             "governance_token_address": &c.governance_votes_token_address,
             "fee_router_address": c.escrow_platform_fee_recipient(),
             "treasury_address": c.treasury_address.as_ref().or(c.region_vault_address.as_ref()),
-            "rule": "仅当 CHAIN_RPC_URL 等已加载 ChainConfig 时有值；guide_staking_address 与 STAKING_ADDRESS/GUIDE_STAKING_ADDRESS 同源；staking_provider_address 与 STAKING_PROVIDER_ADDRESS 同源；governance_token_address 与 GOVERNANCE_VOTES_TOKEN_ADDRESS/GOVERNANCE_TOKEN_ADDRESS 同源；FEE_ROUTER_ADDRESS 设后 indexer-tick 拉取 PlatformFeeRouted；GOVERNOR_ADDRESS 设后拉取 Governor 事件（B-089）；前端 NEXT_PUBLIC_GUIDE_STAKING_ADDRESS / NEXT_PUBLIC_STAKING_PROVIDER_ADDRESS 须与部署一致"
+            "registry_address": &c.registry_address,
+            "escrow_factory_address": &c.escrow_factory_address,
+            "region_steward_stake_pool_address": steward_pool.as_ref(),
+            "rule": "仅当 CHAIN_RPC_URL 等已加载 ChainConfig 时有值；guide_staking_address 与 STAKING_ADDRESS/GUIDE_STAKING_ADDRESS 同源；staking_provider_address 与 STAKING_PROVIDER_ADDRESS 同源；governance_token_address 与 GOVERNANCE_VOTES_TOKEN_ADDRESS/GOVERNANCE_TOKEN_ADDRESS 同源；registry_address/escrow_factory_address 与 REGISTRY_ADDRESS/ESCROW_FACTORY_ADDRESS 同源；region_steward_stake_pool_address 与 REGION_STEWARD_STAKE_POOL_ADDRESS 同源；FEE_ROUTER_ADDRESS 设后 indexer-tick 拉取 PlatformFeeRouted；GOVERNOR_ADDRESS 设后拉取 Governor 事件（B-089）；前端 NEXT_PUBLIC_* 须与部署一致"
         })
     });
 
@@ -345,7 +349,7 @@ pub(super) async fn meta(State(state): State<ApiMetaState>) -> impl IntoResponse
                     if let Some(rs) = rule_v.as_str() {
                         let mut extended = rs.to_string();
                         extended.push_str(
-                            "；759 GET /meta chain.contracts 对象 chain_contracts_top_keys / chain_contracts_top_keys_contract_759 与 CHAIN_CONTRACTS_META_TOP_KEYS 十键顺序同源",
+                            "；759 GET /meta chain.contracts 对象 chain_contracts_top_keys / chain_contracts_top_keys_contract_759 与 CHAIN_CONTRACTS_META_TOP_KEYS 十三键顺序同源",
                         );
                         *rule_v = serde_json::Value::String(extended);
                     }

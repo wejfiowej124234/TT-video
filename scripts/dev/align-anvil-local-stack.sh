@@ -43,4 +43,17 @@ bash "$ROOT/scripts/dev/mint-fundstack-anvil-usdc.sh" || true
 echo "align-anvil-local-stack: align guide DB stake to chain ..."
 bash "$ROOT/scripts/dev/align-guide-stake-db-to-chain-local.sh" || true
 
+if [[ "${SKIP_ANVIL_STAKE_SMOKES:-0}" != "1" ]]; then
+  echo "align-anvil-local-stack: guide + provider stake smokes (FUNDSTACK_SKIP_DEPLOY=1) ..."
+  FUNDSTACK_SKIP_DEPLOY=1 bash "$ROOT/scripts/dev/smoke-guide-identity-stake-anvil.sh"
+  FUNDSTACK_SKIP_DEPLOY=1 bash "$ROOT/scripts/dev/smoke-provider-identity-stake-anvil.sh"
+fi
+
+echo "align-anvil-local-stack: env ↔ meta check (API must be running on :8080) ..."
+if curl -sS -o /dev/null -w "%{http_code}" --connect-timeout 2 "${API_BASE_URL:-http://127.0.0.1:8080}/health" 2>/dev/null | grep -q 200; then
+  API_BASE_URL="${API_BASE_URL:-http://127.0.0.1:8080}" bash "$ROOT/scripts/dev/verify-root-env-vs-meta-chain-contracts.sh" || true
+else
+  echo "align-anvil-local-stack: SKIP verify-root-env-vs-meta (API not on :8080 — restart API then run script)"
+fi
+
 echo "TT_ANVIL_LOCAL_ALIGN: OK — restart traveltrust-api (TRAVELTRUST_CHAIN_ON=1) + Next.js dev server"

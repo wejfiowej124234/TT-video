@@ -1,7 +1,7 @@
 /**
  * Playwright：GET /meta 链契约门禁（防「链关 / 无 ChainConfig 却误以为全链路通过」）。
  *
- * - 默认（未设 `PLAYWRIGHT_RELAX_META_CHAIN_GUARD=1`）：759 十键 + ① 核心协议地址
+ * - 默认（未设 `PLAYWRIGHT_RELAX_META_CHAIN_GUARD=1`）：759 十三键 + ① 核心协议地址
  *   （`guide_staking_address` / `staking_provider_address` / `fee_router_address` / `governance_token_address`）。
  * - `PLAYWRIGHT_REQUIRE_GOVERNANCE_STACK=1`：额外要求 `governor_address` + `timelock_address`（② 治理栈）。
  * - CI 链关烟测：`PLAYWRIGHT_RELAX_META_CHAIN_GUARD=1`，仅校验 `/meta` 200 + JSON。
@@ -53,7 +53,7 @@ export async function fetchMetaJson(apiBase: string): Promise<MetaJson> {
   return body;
 }
 
-/** 严格：链配置挂载且 759 十键 + ① 核心协议地址齐全。 */
+/** 严格：链配置挂载且 759 十三键 + ① 核心协议地址齐全。 */
 export function assertMetaChainContractsStrict(meta: MetaJson): void {
   const chain = meta.chain;
   if (!isRecord(chain)) {

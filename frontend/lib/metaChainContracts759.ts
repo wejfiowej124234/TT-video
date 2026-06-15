@@ -1,6 +1,4 @@
-/**
- * GET /meta `chain.contracts` · 759 十键 SSOT（与 API `CHAIN_CONTRACTS_META_TOP_KEYS` / Vitest / Playwright 同源）。
- */
+/** 759：`GET /meta` `chain.contracts` · 759 十三键 SSOT（与 API `CHAIN_CONTRACTS_META_TOP_KEYS` / Vitest / Playwright 同源）。 */
 import { CHAIN_CONTRACTS_META_TOP_KEYS } from "@/lib/apiClient/meta/topKeysChainAndDomains";
 
 const ADDR_RE = /^0x[a-fA-F0-9]{40}$/;
@@ -11,6 +9,9 @@ export const CHAIN_CONTRACTS_759_STRICT_ANVIL_ADDR_KEYS = [
   "staking_provider_address",
   "fee_router_address",
   "governance_token_address",
+  "registry_address",
+  "escrow_factory_address",
+  "region_steward_stake_pool_address",
 ] as const;
 
 export function assertEvmAddress759(label: string, v: unknown): asserts v is string {
@@ -35,7 +36,7 @@ export function assertChainContractsTopKeys759(contracts: Record<string, unknown
   }
 }
 
-/** 759 严格：ChainConfig 挂载 + 十键机读 + ① 本地核心协议地址。 */
+/** 759 严格：ChainConfig 挂载 + 十三键机读 + ① 本地核心协议地址。 */
 export function assertMetaChainContracts759Strict(contracts: Record<string, unknown>): void {
   assertChainContractsTopKeys759(contracts);
   for (const key of CHAIN_CONTRACTS_759_STRICT_ANVIL_ADDR_KEYS) {

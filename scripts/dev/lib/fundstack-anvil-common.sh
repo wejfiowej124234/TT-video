@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # FundStack · Anvil 本地（GuideIdentityStakingPool + Registry + MockERC20 USDC）
-# Sourced by deploy-fundstack-anvil-local.sh · smoke-guide-identity-stake-anvil.sh
+# Sourced by deploy-fundstack-anvil-local.sh · smoke-guide-identity-stake-anvil.sh · smoke-provider-identity-stake-anvil.sh
 
 fundstack_anvil_root() {
   cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd
