@@ -17,6 +17,21 @@ contract CountryPoolNetProfitGovernancePayloadTest is Test {
             CountryPoolNetProfitLedger.recordAccrual.selector
         );
         assertEq(
+            CountryPoolNetProfitGovernancePayload.CPNP_RECORD_ACCRUAL_BATCH,
+            CountryPoolNetProfitLedger.recordAccrualBatch.selector
+        );
+        CountryPoolNetProfitLedger.AccrualLine[] memory lines = new CountryPoolNetProfitLedger.AccrualLine[](1);
+        lines[0] = CountryPoolNetProfitLedger.AccrualLine({
+            accountCode: bytes32("R-100"),
+            amountSigned: 100,
+            ref: bytes32("gov-batch")
+        });
+        bytes memory encoded =
+            CountryPoolNetProfitGovernancePayload.encodeRecordAccrualBatch(1, lines);
+        bytes memory expected =
+            abi.encodeWithSelector(CountryPoolNetProfitLedger.recordAccrualBatch.selector, 1, lines);
+        assertEq(encoded, expected);
+        assertEq(
             CountryPoolNetProfitGovernancePayload.CPNP_CLOSE_EPOCH,
             CountryPoolNetProfitLedger.closeEpoch.selector
         );

@@ -11,6 +11,7 @@ import "./UnallocatedStewardPathVault.sol";
 library CountryPoolNetProfitGovernancePayload {
     bytes4 internal constant CPNP_OPEN_EPOCH = CountryPoolNetProfitLedger.openEpoch.selector;
     bytes4 internal constant CPNP_RECORD_ACCRUAL = CountryPoolNetProfitLedger.recordAccrual.selector;
+    bytes4 internal constant CPNP_RECORD_ACCRUAL_BATCH = CountryPoolNetProfitLedger.recordAccrualBatch.selector;
     bytes4 internal constant CPNP_CLOSE_EPOCH = CountryPoolNetProfitLedger.closeEpoch.selector;
     bytes4 internal constant CPNP_FUND_LEDGER_FOR_SPLIT = CountryPoolNetProfitLedger.fundLedgerForSplit.selector;
     bytes4 internal constant CPNP_SPLIT_NET_PROFIT = CountryPoolNetProfitLedger.splitNetProfit.selector;
@@ -35,6 +36,14 @@ library CountryPoolNetProfitGovernancePayload {
         return abi.encodeWithSelector(
             CountryPoolNetProfitLedger.recordAccrual.selector, epochId, accountCode, amountSigned, ref
         );
+    }
+
+    function encodeRecordAccrualBatch(uint256 epochId, CountryPoolNetProfitLedger.AccrualLine[] memory lines)
+        internal
+        pure
+        returns (bytes memory)
+    {
+        return abi.encodeWithSelector(CountryPoolNetProfitLedger.recordAccrualBatch.selector, epochId, lines);
     }
 
     function encodeCloseEpoch(uint256 epochId) internal pure returns (bytes memory) {

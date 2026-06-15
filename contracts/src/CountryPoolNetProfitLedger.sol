@@ -67,6 +67,14 @@ contract CountryPoolNetProfitLedger {
         uint64 splitAt;
     }
 
+    struct AccrualLine {
+        bytes32 accountCode;
+        int256 amountSigned;
+        bytes32 ref;
+    }
+
+    uint256 internal constant MAX_ACCRUAL_BATCH_LINES = 32;
+
     bytes32 internal constant ACCT_R100 = bytes32("R-100");
     bytes32 internal constant ACCT_R110 = bytes32("R-110");
     bytes32 internal constant ACCT_R120 = bytes32("R-120");
@@ -177,6 +185,7 @@ contract CountryPoolNetProfitLedger {
     error SettlementPausedErr();
     error InvalidBps();
     error StewardConfigStale();
+    error InvalidBatchSize();
 
     modifier onlyOwner() {
         if (msg.sender != owner) revert OnlyOwner();
@@ -295,9 +304,49 @@ contract CountryPoolNetProfitLedger {
     {
         EpochRecord storage e = epochs[epochId];
         if (e.status != EpochStatus.OPEN) revert EpochNotOpen();
+        _validateAccrualLine(accountCode, amountSigned, ref);
+        _applyAccrualLine(e, epochId, accountCode, amountSigned, ref);
+    }
+
+    function recordAccrualBatch(uint256 epochId, AccrualLine[] calldata lines)
+        external
+        onlyOwner
+        whenNotPaused
+    {
+        uint256 len = lines.length;
+        if (len == 0 || len > MAX_ACCRUAL_BATCH_LINES) revert InvalidBatchSize();
+
+        EpochRecord storage e = epochs[epochId];
+        if (e.status != EpochStatus.OPEN) revert EpochNotOpen();
+
+        for (uint256 i = 0; i < len; ++i) {
+            for (uint256 j = i + 1; j < len; ++j) {
+                if (lines[i].ref == lines[j].ref) revert DuplicateAccrualRef();
+            }
+        }
+        for (uint256 i = 0; i < len; ++i) {
+            AccrualLine calldata line = lines[i];
+            _validateAccrualLine(line.accountCode, line.amountSigned, line.ref);
+        }
+        for (uint256 i = 0; i < len; ++i) {
+            AccrualLine calldata line = lines[i];
+            _applyAccrualLine(e, epochId, line.accountCode, line.amountSigned, line.ref);
+        }
+    }
+
+    function _validateAccrualLine(bytes32 accountCode, int256 amountSigned, bytes32 ref) internal view {
         if (!_isAllowedAccountCode(accountCode)) revert InvalidAccountCode();
         if (amountSigned == 0) revert InvalidAmount();
         if (accrualRefs[ref]) revert DuplicateAccrualRef();
+    }
+
+    function _applyAccrualLine(
+        EpochRecord storage e,
+        uint256 epochId,
+        bytes32 accountCode,
+        int256 amountSigned,
+        bytes32 ref
+    ) internal {
         accrualRefs[ref] = true;
 
         if (amountSigned > 0) {

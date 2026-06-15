@@ -69,15 +69,15 @@ cd contracts && forge test --match-contract FeeRouterTest
 
 | # | 检查项 | 状态 |
 |---|--------|------|
-| D1 | **T-BATCH-01** 多行 R/E gross/expense 正确 | ☐ |
-| D2 | **T-BATCH-02** 批内重复 ref revert | ☐ |
-| D3 | **T-BATCH-03** 超 32 行 revert | ☐ |
-| D4 | **T-BATCH-04** 空批 revert | ☐ |
-| D5 | **T-BATCH-05** 混合合法行 + 一行非法 → 整批 revert · 状态不变 | ☐ |
-| D6 | **T-BATCH-06** batch 不移动 token balance | ☐ |
-| D7 | Payload selector parity | ☐ |
-| D8 | CountryPoolNetProfit **全量绿** · FeeRouterTest **10 passed** | ☐ |
-| D9 | **ABI 无 breaking change**（仅 **新增** 函数 · 事件不变） | ☐ |
+| D1 | **T-BATCH-01** 多行 R/E gross/expense 正确 | ✅ |
+| D2 | **T-BATCH-02** 批内重复 ref revert | ✅ |
+| D3 | **T-BATCH-03** 超 32 行 revert | ✅ |
+| D4 | **T-BATCH-04** 空批 revert | ✅ |
+| D5 | **T-BATCH-05** 混合合法行 + 一行非法 → 整批 revert · 状态不变 | ✅ |
+| D6 | **T-BATCH-06** batch 不移动 token balance | ✅ |
+| D7 | Payload selector + `encodeRecordAccrualBatch` parity | ✅ |
+| D8 | CountryPoolNetProfit **47 passed** · FeeRouterTest **10 passed** | ✅ |
+| D9 | **ABI 无 breaking change**（仅 **新增** 函数 · 事件不变） | ✅ |
 
 ---
 
@@ -92,8 +92,10 @@ cd contracts && forge test --match-contract FeeRouterTest
 
 | 方 | 确认 | 签字 | 日期 |
 |----|------|------|------|
-| 产品 | 32 行/tx SLA | ☐ | |
-| 财务 | 一行一 ref ↔ GL | ☐ | |
-| 工程 | DoD D1～D9 | ☐ | |
+| 产品 | 32 行/tx SLA · 一行一 `NetProfitAccrued` | ✅ **Sebastian Ward** | **2026-06-15** |
+| 财务 | 批内行仍 **一行 ↔ 一 ref ↔ GL** | ✅ **Sebastian Ward** | **2026-06-15** |
+| 工程 | DoD D1～D9 · forge 绿集 | ✅ **Sebastian Ward** | **2026-06-15** |
+
+**证据：** [G23-01-RECORD-ACCRUAL-BATCH-LOCAL-ACCEPTANCE.md](../../../evidence/GO_local_country_pool_net_profit_gate2.3/G23-01-RECORD-ACCRUAL-BATCH-LOCAL-ACCEPTANCE.md)
 
 **合并后：** 解锁 **G23-02**。

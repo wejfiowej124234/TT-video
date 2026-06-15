@@ -18,7 +18,9 @@ contract CountryPoolNetProfitLedgerTest is Test {
     using stdStorage for StdStorage;
 
     bytes32 internal constant ACCT_R100 = bytes32("R-100");
+    bytes32 internal constant ACCT_R110 = bytes32("R-110");
     bytes32 internal constant ACCT_E100 = bytes32("E-100");
+    bytes32 internal constant ACCT_E110 = bytes32("E-110");
 
     bytes2 internal constant J_DE = bytes2("DE");
 
@@ -165,6 +167,113 @@ contract CountryPoolNetProfitLedgerTest is Test {
         vm.prank(owner);
         vm.expectRevert(CountryPoolNetProfitLedger.EpochNotOpen.selector);
         ledger.recordAccrual(1, ACCT_R100, 1, bytes32("late"));
+    }
+
+    function _batchLine(bytes32 accountCode, int256 amountSigned, bytes32 ref)
+        internal
+        pure
+        returns (CountryPoolNetProfitLedger.AccrualLine memory)
+    {
+        return CountryPoolNetProfitLedger.AccrualLine({accountCode: accountCode, amountSigned: amountSigned, ref: ref});
+    }
+
+    // T-BATCH-01 · G23-01 · multi-line R/E gross/expense + one NetProfitAccrued per line
+    function test_T_BATCH_01_MultiLineAccrualUpdatesGrossAndExpense() public {
+        _openEpoch1();
+        CountryPoolNetProfitLedger.AccrualLine[] memory lines = new CountryPoolNetProfitLedger.AccrualLine[](4);
+        lines[0] = _batchLine(ACCT_R100, 600_000, bytes32("b01-r1"));
+        lines[1] = _batchLine(ACCT_R110, 150_000, bytes32("b01-r2"));
+        lines[2] = _batchLine(ACCT_E100, -120_000, bytes32("b01-e1"));
+        lines[3] = _batchLine(ACCT_E110, -30_000, bytes32("b01-e2"));
+
+        vm.recordLogs();
+        vm.prank(owner);
+        ledger.recordAccrualBatch(1, lines);
+
+        assertEq(ledger.epochGrossRevenue(1), 750_000);
+        assertEq(ledger.epochAllowableExpense(1), 150_000);
+        Vm.Log[] memory entries = vm.getRecordedLogs();
+        uint256 accruedEvents;
+        for (uint256 i = 0; i < entries.length; ++i) {
+            if (entries[i].topics[0] == keccak256(
+                    "NetProfitAccrued(bytes2,uint256,address,bytes32,int256,bytes32,uint64)"
+                )) {
+                accruedEvents++;
+            }
+        }
+        assertEq(accruedEvents, 4);
+    }
+
+    // T-BATCH-02 · duplicate ref within batch
+    function test_T_BATCH_02_DuplicateRefInBatchReverts() public {
+        _openEpoch1();
+        CountryPoolNetProfitLedger.AccrualLine[] memory lines = new CountryPoolNetProfitLedger.AccrualLine[](2);
+        lines[0] = _batchLine(ACCT_R100, 100, bytes32("dup-batch"));
+        lines[1] = _batchLine(ACCT_E100, -50, bytes32("dup-batch"));
+
+        vm.prank(owner);
+        vm.expectRevert(CountryPoolNetProfitLedger.DuplicateAccrualRef.selector);
+        ledger.recordAccrualBatch(1, lines);
+        assertEq(ledger.epochGrossRevenue(1), 0);
+    }
+
+    // T-BATCH-03 · >32 lines
+    function test_T_BATCH_03_OverMaxLinesReverts() public {
+        _openEpoch1();
+        CountryPoolNetProfitLedger.AccrualLine[] memory lines =
+            new CountryPoolNetProfitLedger.AccrualLine[](33);
+        for (uint256 i = 0; i < 33; ++i) {
+            lines[i] = _batchLine(ACCT_R100, 1, bytes32(uint256(i + 1)));
+        }
+        vm.prank(owner);
+        vm.expectRevert(CountryPoolNetProfitLedger.InvalidBatchSize.selector);
+        ledger.recordAccrualBatch(1, lines);
+    }
+
+    // T-BATCH-04 · empty batch
+    function test_T_BATCH_04_EmptyBatchReverts() public {
+        _openEpoch1();
+        CountryPoolNetProfitLedger.AccrualLine[] memory lines =
+            new CountryPoolNetProfitLedger.AccrualLine[](0);
+        vm.prank(owner);
+        vm.expectRevert(CountryPoolNetProfitLedger.InvalidBatchSize.selector);
+        ledger.recordAccrualBatch(1, lines);
+    }
+
+    // T-BATCH-05 · atomic revert leaves epoch totals unchanged
+    function test_T_BATCH_05_InvalidLineRevertsWholeBatch() public {
+        _openEpoch1();
+        CountryPoolNetProfitLedger.AccrualLine[] memory lines = new CountryPoolNetProfitLedger.AccrualLine[](3);
+        lines[0] = _batchLine(ACCT_R100, 500, bytes32("b05-r"));
+        lines[1] = _batchLine(ACCT_E100, -100, bytes32("b05-e"));
+        lines[2] = _batchLine(bytes32("X-999"), 1, bytes32("b05-bad"));
+
+        vm.prank(owner);
+        vm.expectRevert(CountryPoolNetProfitLedger.InvalidAccountCode.selector);
+        ledger.recordAccrualBatch(1, lines);
+        assertEq(ledger.epochGrossRevenue(1), 0);
+        assertEq(ledger.epochAllowableExpense(1), 0);
+        assertFalse(ledger.accrualRefs(bytes32("b05-r")));
+    }
+
+    // T-BATCH-06 · batch is book-only · no token movement
+    function test_T_BATCH_06_NoTokenMovement() public {
+        _openEpoch1();
+        usdc.mint(address(ledger), 1_000_000);
+        usdc.mint(funding, 500_000);
+
+        uint256 ledgerBefore = usdc.balanceOf(address(ledger));
+        uint256 fundingBefore = usdc.balanceOf(funding);
+
+        CountryPoolNetProfitLedger.AccrualLine[] memory lines = new CountryPoolNetProfitLedger.AccrualLine[](2);
+        lines[0] = _batchLine(ACCT_R100, 200_000, bytes32("b06-r"));
+        lines[1] = _batchLine(ACCT_E100, -50_000, bytes32("b06-e"));
+
+        vm.prank(owner);
+        ledger.recordAccrualBatch(1, lines);
+
+        assertEq(usdc.balanceOf(address(ledger)), ledgerBefore);
+        assertEq(usdc.balanceOf(funding), fundingBefore);
     }
 
     // T-FND-01
