@@ -338,14 +338,30 @@ CountryPoolNetProfitLedger logs
 
 ---
 
-## 14. 实施顺序
+## 14. 实施顺序（四卡拆分 · 一卡一 PR）
+
+**索引：** [gate2.3/README.md](gate2.3/README.md)
 
 ```text
-Gate-2.3 Pre-Review 签字
-  → Gate-2.3 PR（batch + fuzz + 资金路径 · ① forge 绿）
-  → Gate-2.4（ABI + decoder + Sepolia checklist · Owner 授权）
-  → Gate-3（migration + indexer + API + R-01～R-06 · ② 读面）
+G23-03 Funding Path Finalization     ← 须最先（路径变则 batch/ABI 跟着变）
+  ↓
+G23-01 recordAccrualBatch
+  ↓
+G23-02 Fuzz & Invariant
+  ↓
+G23-04 ABI & Event Freeze
+  ↓
+Gate-2.4 Sepolia（Owner 授权 · 单独闸 · 禁止跳阶）
+  ↓
+Gate-3（indexer + API + R-01～R-06 · ② 读面）
 ```
+
+| 卡 | 文档 |
+|----|------|
+| G23-03 | [G23-03-funding-path-finalization.md](gate2.3/G23-03-funding-path-finalization.md) |
+| G23-01 | [G23-01-record-accrual-batch.md](gate2.3/G23-01-record-accrual-batch.md) |
+| G23-02 | [G23-02-fuzz-invariant-suite.md](gate2.3/G23-02-fuzz-invariant-suite.md) |
+| G23-04 | [G23-04-abi-event-freeze.md](gate2.3/G23-04-abi-event-freeze.md) |
 
 **① 本地合约绿 ≠ ② Sepolia GO ≠ ③ Production GO。**
 
@@ -356,3 +372,4 @@ Gate-2.3 Pre-Review 签字
 | Version | Date | Note |
 |---------|------|------|
 | v1-20260615 | 2026-06-15 | Gate-2.2 收口后首版 · baseline 76aff11c · Pre-Review OPEN |
+| v1.0.1-20260615 | 2026-06-15 | §14 四卡拆分 · 链至 [gate2.3/](gate2.3/README.md) 实施任务卡 |

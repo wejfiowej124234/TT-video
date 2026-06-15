@@ -19,3 +19,7 @@
 **机读基线：** `forge test --match-contract CountryPoolNetProfit` = **38 passed** · `FeeRouterTest` = **10 passed**
 
 **下一合法动作：** 完成 Projection Package v1 §13 四方签字 → Gate-2.3 实施 PR（① only）
+
+**实施任务卡（一卡一 PR）：** [gate2.3/README.md](../../docs/spec/governance-token/gate2.3/README.md)
+
+**推荐顺序：** G23-03 → G23-01 → G23-02 → G23-04 → Gate-2.4

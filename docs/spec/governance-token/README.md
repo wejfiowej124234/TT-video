@@ -25,7 +25,22 @@
 | **[fund-flow-ssot.v1.md](fund-flow-ssot.v1.md)** | TTG / CountryPool / Escrow / Fee 四轨 + 子 Vault + NAV 赎回 |
 | **[state-machine.v1.md](state-machine.v1.md)** | `steward_application` / `steward_seat` / `country_jurisdiction` / `redemption` / `region_share_eligibility` |
 | **[protocol-convergence-P1-memo.md](protocol-convergence-P1-memo.md)** | P1 决议 + P2 ① 交付状态 |
-| **[84-valuation-anchor-P1-memo.md](84-valuation-anchor-P1-memo.md)** | **84 §3.6** 估值锚 **Option C** 工程默认（法务待确认） |
+| **[84-valuation-anchor-P1-memo.md](84-valuation-anchor-P1-memo.md)** | **84 §3.6** 三轨独立 · 募资 SSOT 互链（取代 Option C 占位） |
+| **[country-revenue-model-v1-draft.md](country-revenue-model-v1-draft.md)** | **① 国家收益模型** · Fee Points · 净利润 45/55 叙事 |
+| **[country-pool-fundraise-governance-v1.md](country-pool-fundraise-governance-v1.md)** | **治理委员会独立募资表（万元 · 无硬顶 · 唯一写入口）** |
+| **[country-pool-net-profit-settlement-v1-design.md](country-pool-net-profit-settlement-v1-design.md)** | **② Country Pool 净利润 45/55 结算 · DESIGN ONLY** |
+| **[country-pool-net-profit-accounting-spec-v1.md](country-pool-net-profit-accounting-spec-v1.md)** | **Gate-0 Exit · v1.0.3 · 产品+财务+法务已签 · Gate-2 设计评审开放** |
+| **[country-pool-accounting-mapping-matrix-v1.md](country-pool-accounting-mapping-matrix-v1.md)** | **Gate-0 · COA 映射矩阵 v1 · R/E 科目 · NetProfit · 亏损结转 · QUARTER 日历 · 2150 Unallocated（财务已签）** |
+| **[country-pool-legal-freeze-matrix-v1.md](country-pool-legal-freeze-matrix-v1.md)** | **Gate-0 · Legal Freeze Matrix v1 · L-01～L-07 · LEG-XJ（法务已签）** |
+| **[country-pool-settlement-architecture-package-v1.md](country-pool-settlement-architecture-package-v1.md)** | **Gate-2.1 Final · DR-01～07 已闭 · 四方已签 · v1-final-closeout** |
+| **[country-pool-settlement-gate2.2-implementation-readiness-checklist.md](country-pool-settlement-gate2.2-implementation-readiness-checklist.md)** | **Gate-2.2 · Readiness 全绿 · 允许 Solidity 分支** |
+| **[country-pool-settlement-gate2.3-projection-package-v1.md](country-pool-settlement-gate2.3-projection-package-v1.md)** | **Gate-2.3 · Projection & Reconciliation Pre-Review（① · 零 ② 实施）** |
+| **[gate2.3/README.md](gate2.3/README.md)** | **Gate-2.3 实施任务卡索引 · G23-03→01→02→04 · 一卡一 PR** |
+| **[PHASE2-COUNTRY-POOL-ONCHAIN-ALIGNMENT-AUDIT-20260615.md](PHASE2-COUNTRY-POOL-ONCHAIN-ALIGNMENT-AUDIT-20260615.md)** | **② 链上对齐审计 · 缺口 + 实施顺序（登记）** |
+| **[THREE-TRACK-INDEPENDENT-PARAMS-CONSISTENCY-AUDIT-20260615.md](THREE-TRACK-INDEPENDENT-PARAMS-CONSISTENCY-AUDIT-20260615.md)** | **三轨独立参数 · 全链路一致性审计（① · 工程）** |
+| **[GOVERNANCE-TO-BUSINESS-CONSISTENCY-AUDIT-20260615.md](GOVERNANCE-TO-BUSINESS-CONSISTENCY-AUDIT-20260615.md)** | **治理 → 融资/IR/产品/运营 · 叙事一致性审计（①）** |
+| **[ttg-reference-price-v1-draft.md](ttg-reference-price-v1-draft.md)** | **200 CNY/TTG** · Mock Swap · FDV（三轨独立 · 不推导募资） |
+| **[archive/README.md](archive/README.md)** | **历史工程公式归档**（勿引用） |
 
 **团队规则：** 见 **protocol-ssot.v1 §0** — 新增字段、状态、百分比、锁仓 **须先登记 SSOT**，再改业务文档或代码。
 
