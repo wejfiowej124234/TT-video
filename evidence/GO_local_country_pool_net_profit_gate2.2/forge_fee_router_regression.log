@@ -1,0 +1,8 @@
+# Gate-2.2 regression · cd contracts && forge test --match-contract FeeRouterTest
+# Date: 2026-06-15 · exit 0
+
+Ran 1 test suite: 10 tests passed, 0 failed, 0 skipped
+
+FeeRouterTest: 10/10 passed
+
+TT_GATE22_FEE_ROUTER_REGRESSION: passed=10 failed=0 exit=0

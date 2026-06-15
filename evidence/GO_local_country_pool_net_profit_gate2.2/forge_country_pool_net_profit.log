@@ -1,0 +1,10 @@
+# Gate-2.2 · cd contracts && forge test --match-contract CountryPoolNetProfit
+# Date: 2026-06-15 · exit 0
+
+Ran 3 test suites: 38 tests passed, 0 failed, 0 skipped
+
+CountryPoolNetProfitGovernancePayloadTest: 1 passed (test_T_GOV_03_CPNP_selector_parity)
+CountryPoolNetProfitRegressionTest: 4 passed (test_T_REG_01 .. test_T_REG_04)
+CountryPoolNetProfitLedgerTest: 33 passed (T-ACC/T-CLS/T-FND/T-SPL/T-UNA/T-QLF/T-GOV matrix)
+
+TT_GATE22_COUNTRY_POOL_NET_PROFIT: passed=38 failed=0 exit=0
