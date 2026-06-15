@@ -1,0 +1,102 @@
+GATE2.3-EXIT forge run 20260615T144748Z
+No files changed, compilation skipped
+
+Ran 3 tests for test/CountryPoolNetProfitAbiFreeze.t.sol:CountryPoolNetProfitAbiFreezeTest
+[PASS] test_T_ABI_01_CoreSelectorsMatchManifest() (gas: 366)
+[PASS] test_T_ABI_02_GovernancePayloadSelectorParity() (gas: 344)
+[PASS] test_T_ABI_03_P0EventTopic0Frozen() (gas: 278)
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 608.20µs (422.40µs CPU time)
+
+Ran 1 test for test/CountryPoolNetProfitGovernancePayload.t.sol:CountryPoolNetProfitGovernancePayloadTest
+[PASS] test_T_GOV_03_CPNP_selector_parity() (gas: 6203)
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 276.20µs (98.50µs CPU time)
+
+Ran 4 tests for test/CountryPoolNetProfitRegression.t.sol:CountryPoolNetProfitRegressionTest
+[PASS] test_T_REG_01_FeeRouterDistributeUnchanged() (gas: 1046622)
+[PASS] test_T_REG_02_FeeRouterCountryDistinctFromStewardVault() (gas: 3509780)
+[PASS] test_T_REG_03_P5LedgerCreditOrthogonalToNetProfit() (gas: 3214949)
+[PASS] test_T_REG_04_RedemptionEpochOrthogonalToNetProfit() (gas: 3793162)
+Suite result: ok. 4 passed; 0 failed; 0 skipped; finished in 1.30ms (2.60ms CPU time)
+
+Ran 42 tests for test/CountryPoolNetProfitLedger.t.sol:CountryPoolNetProfitLedgerTest
+[PASS] test_T_ACC_01_02_AccrualUpdatesGrossAndExpense() (gas: 189012)
+[PASS] test_T_ACC_03_DuplicateRefReverts() (gas: 138374)
+[PASS] test_T_ACC_04_InvalidAccountCodeReverts() (gas: 87912)
+[PASS] test_T_ACC_05_AccrualAfterCloseReverts() (gas: 201379)
+[PASS] test_T_BATCH_01_MultiLineAccrualUpdatesGrossAndExpense() (gas: 255826)
+[PASS] test_T_BATCH_02_DuplicateRefInBatchReverts() (gas: 92862)
+[PASS] test_T_BATCH_03_OverMaxLinesReverts() (gas: 120752)
+[PASS] test_T_BATCH_04_EmptyBatchReverts() (gas: 87315)
+[PASS] test_T_BATCH_05_InvalidLineRevertsWholeBatch() (gas: 107856)
+[PASS] test_T_BATCH_06_NoTokenMovement() (gas: 242942)
+[PASS] test_T_CLS_01_T_SPL_01_EligibleSplitConservation() (gas: 515729)
+[PASS] test_T_CLS_02_LossIncreasesCarriedLossNoSplit() (gas: 290247)
+[PASS] test_T_CLS_03_ZeroProfitNoSplit() (gas: 208786)
+[PASS] test_T_CLS_04_CloseTooEarlyReverts() (gas: 87923)
+[PASS] test_T_CLS_05_CarriedLossAppliedBeforeSplit() (gas: 473644)
+[PASS] test_T_CLS_06_DoubleCloseReverts() (gas: 113727)
+[PASS] test_T_FND_01_FundLedgerForSplitPullsAndMarksFunded() (gas: 269834)
+[PASS] test_T_FND_02_SplitWithoutFundReverts() (gas: 254747)
+[PASS] test_T_FND_03_SplitWithInsufficientBalanceReverts() (gas: 423604)
+[PASS] test_T_FND_04_RecordAccrualDoesNotMoveTokens() (gas: 143108)
+[PASS] test_T_FND_05_AllowancePathPartialAndZeroPull() (gas: 507222)
+[PASS] test_T_FND_05b_ZeroPullWhenLedgerFullyPrefunded() (gas: 263658)
+[PASS] test_T_FND_06_FundRevertsWhenAllowanceInsufficient() (gas: 268138)
+[PASS] test_T_GOV_01_TimelockDisallowedTargetReverts() (gas: 18272)
+[PASS] test_T_GOV_02_TimelockExecuteCloseEpoch() (gas: 661150)
+[PASS] test_T_GOV_04_SettlementParamsViaTimelock() (gas: 259964)
+[PASS] test_T_QLF_01_EligibleStewardReceivesStewardPath() (gas: 507482)
+[PASS] test_T_QLF_03_NoEoaReceivePathOnSplit() (gas: 509593)
+[PASS] test_T_QLF_04_WrongJurisdictionStakeNotEligible() (gas: 734112)
+[PASS] test_T_QLF_05_SuspendedStewardGoesUnallocated() (gas: 481549)
+[PASS] test_T_QLF_06_NoStakeGoesUnallocated() (gas: 489429)
+[PASS] test_T_SPL_02_UnallocatedWhenNotEligible() (gas: 418465)
+[PASS] test_T_SPL_04_RemainderToGlobal() (gas: 197)
+[PASS] test_T_SPL_05_SplitAfterNoSplitReverts() (gas: 290468)
+[PASS] test_T_SPL_06_DoubleSplitReverts() (gas: 504393)
+[PASS] test_T_SPL_07_08_IneligibleGlobalNotAbsorbingStewardLeg() (gas: 414588)
+[PASS] test_T_UNA_01_DepositAccumulatesTotalReceived() (gas: 416450)
+[PASS] test_T_UNA_02_ReleaseToStewardPath() (gas: 451648)
+[PASS] test_T_UNA_03_ReleaseOverBalanceReverts() (gas: 18821)
+[PASS] test_T_UNA_04_NonOwnerReleaseReverts() (gas: 12873)
+[PASS] test_T_UNA_05_NoGlobalReleasePath() (gas: 7977)
+[PASS] test_VersionStrings() (gas: 25741)
+Suite result: ok. 42 passed; 0 failed; 0 skipped; finished in 3.80ms (22.12ms CPU time)
+
+Ran 4 tests for test/CountryPoolNetProfitFuzz.t.sol:CountryPoolNetProfitFuzzTest
+[PASS] testFuzz_T_FUZ_01_AccrualCloseFundSplitConservation(uint256,uint8,bool,bool,uint256) (runs: 257, μ: 5231262, ~: 5230420)
+[PASS] testFuzz_T_FUZ_01_BatchSingleAccrualEquivalence(uint256,uint8) (runs: 256, μ: 10298378, ~: 10241826)
+[PASS] testFuzz_T_FUZ_02_CarriedLossAccounting(uint256,uint256,uint256,uint256,uint256,uint256) (runs: 257, μ: 5507387, ~: 5518564)
+[PASS] testFuzz_T_INV_01_PostFundPreSplitBalance(uint256,uint256,uint256) (runs: 256, μ: 5061412, ~: 5063410)
+Suite result: ok. 4 passed; 0 failed; 0 skipped; finished in 238.80ms (643.32ms CPU time)
+
+Ran 5 test suites in 240.64ms (244.79ms CPU time): 54 tests passed, 0 failed, 0 skipped (54 total tests)
+EXIT_CODE_CPNP=0
+No files changed, compilation skipped
+
+Ran 4 tests for test/CountryPoolNetProfitFuzz.t.sol:CountryPoolNetProfitFuzzTest
+[PASS] testFuzz_T_FUZ_01_AccrualCloseFundSplitConservation(uint256,uint8,bool,bool,uint256) (runs: 257, μ: 5252816, ~: 5243044)
+[PASS] testFuzz_T_FUZ_01_BatchSingleAccrualEquivalence(uint256,uint8) (runs: 256, μ: 10301390, ~: 10252827)
+[PASS] testFuzz_T_FUZ_02_CarriedLossAccounting(uint256,uint256,uint256,uint256,uint256,uint256) (runs: 257, μ: 5508190, ~: 5518564)
+[PASS] testFuzz_T_INV_01_PostFundPreSplitBalance(uint256,uint256,uint256) (runs: 256, μ: 5058522, ~: 5063384)
+Suite result: ok. 4 passed; 0 failed; 0 skipped; finished in 234.15ms (609.76ms CPU time)
+
+Ran 1 test suite in 234.92ms (234.15ms CPU time): 4 tests passed, 0 failed, 0 skipped (4 total tests)
+EXIT_CODE_FUZZ=0
+No files changed, compilation skipped
+
+Ran 10 tests for test/FeeRouter.t.sol:FeeRouterTest
+[PASS] test_B091_distributePaused_revertsThenResumes() (gas: 143533)
+[PASS] test_BpsConstantsMatch84() (gas: 16407)
+[PASS] test_COMP_B089_setRoutingConfig_then_distribute_matches() (gas: 180593)
+[PASS] test_Distribute_10kUnits() (gas: 147312)
+[PASS] test_Distribute_Event() (gas: 136826)
+[PASS] test_RevertInsufficientBalance() (gas: 21045)
+[PASS] test_RevertNotOwner() (gas: 38881)
+[PASS] test_TransferOwnership() (gas: 142671)
+[PASS] test_setRoutingConfig_revert_invalid_bps_sum() (gas: 22592)
+[PASS] test_setRoutingConfig_revert_zero_address() (gas: 20265)
+Suite result: ok. 10 passed; 0 failed; 0 skipped; finished in 1.28ms (2.89ms CPU time)
+
+Ran 1 test suite in 6.79ms (1.28ms CPU time): 10 tests passed, 0 failed, 0 skipped (10 total tests)
+EXIT_CODE_FEE=0

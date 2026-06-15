@@ -34,7 +34,8 @@
 | **[country-pool-legal-freeze-matrix-v1.md](country-pool-legal-freeze-matrix-v1.md)** | **Gate-0 · Legal Freeze Matrix v1 · L-01～L-07 · LEG-XJ（法务已签）** |
 | **[country-pool-settlement-architecture-package-v1.md](country-pool-settlement-architecture-package-v1.md)** | **Gate-2.1 Final · DR-01～07 已闭 · 四方已签 · v1-final-closeout** |
 | **[country-pool-settlement-gate2.2-implementation-readiness-checklist.md](country-pool-settlement-gate2.2-implementation-readiness-checklist.md)** | **Gate-2.2 · Readiness 全绿 · 允许 Solidity 分支** |
-| **[country-pool-settlement-gate2.3-projection-package-v1.md](country-pool-settlement-gate2.3-projection-package-v1.md)** | **Gate-2.3 · Projection & Reconciliation Pre-Review（① · 零 ② 实施）** |
+| **[country-pool-settlement-gate2.3-projection-package-v1.md](country-pool-settlement-gate2.3-projection-package-v1.md)** | **Gate-2.3 EXIT（①）** · **D-4555-B → Gate-2.4 Ready Candidate** |
+| **[country-pool-settlement-gate2.4-prerequisites-checklist.md](country-pool-settlement-gate2.4-prerequisites-checklist.md)** | **Gate-2.4 Sepolia 前置（② · NOT STARTED）** |
 | **[gate2.3/README.md](gate2.3/README.md)** | **Gate-2.3 实施任务卡索引 · G23-03→01→02→04 · 一卡一 PR** |
 | **[PHASE2-COUNTRY-POOL-ONCHAIN-ALIGNMENT-AUDIT-20260615.md](PHASE2-COUNTRY-POOL-ONCHAIN-ALIGNMENT-AUDIT-20260615.md)** | **② 链上对齐审计 · 缺口 + 实施顺序（登记）** |
 | **[THREE-TRACK-INDEPENDENT-PARAMS-CONSISTENCY-AUDIT-20260615.md](THREE-TRACK-INDEPENDENT-PARAMS-CONSISTENCY-AUDIT-20260615.md)** | **三轨独立参数 · 全链路一致性审计（① · 工程）** |

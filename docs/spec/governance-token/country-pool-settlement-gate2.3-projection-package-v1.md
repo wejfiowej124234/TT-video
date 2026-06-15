@@ -2,8 +2,9 @@
 
 **Package ID:** `country-pool-settlement-gate2.3-projection-v1`  
 **Version:** v1-20260615  
-**Status:** **PRE-REVIEW（① 本地纠偏 · 合约稳定性补强 · 零 ② 实施）**  
-**Baseline commit:** `76aff11c` · branch `feature/country-pool-net-profit-ledger`  
+**Status:** **GATE-2.3 EXIT（① · 2026-06-15）** · **D-4555-B → Gate-2.4 Ready Candidate** · **零 ② 实施**  
+**Exit evidence:** `evidence/GO_local_country_pool_net_profit_gate2.3/GATE2.3-EXIT-REVIEW-REPORT.md`  
+**Baseline commit:** `76aff11c` → Gate-2.3 HEAD `cf453bd9`  
 **Gate-2.2 evidence:** `evidence/GO_local_country_pool_net_profit_gate2.2/GATE2.2-LOCAL-ACCEPTANCE-REPORT.md`
 
 **上位 SSOT：** [country-pool-settlement-architecture-package-v1.md](country-pool-settlement-architecture-package-v1.md) · [country-pool-accounting-mapping-matrix-v1.md](country-pool-accounting-mapping-matrix-v1.md) · [country-pool-net-profit-accounting-spec-v1.md](country-pool-net-profit-accounting-spec-v1.md)
@@ -12,21 +13,22 @@
 
 ## 0. 阶段边界（写死）
 
-> **① 本地合约绿（Gate-2.2 · 38+10 passed），不等于 ② Sepolia GO。**
+> **① Gate-2.3 Exit（54+4+10 forge 绿）≠ ② Sepolia GO。**
 
 | 本包允许 | 本包 **禁止** |
 |----------|----------------|
-| Gate-2.3 **① 合约稳定性补强** · 本地前置审查 · backlog 定案 | **Sepolia broadcast** |
+| Gate-2.3 **① EXIT** · Gate-2.4 **Ready Candidate** 评审 | **Sepolia broadcast** |
 | Gate-2.4 **前置条件** 清单（文档 only） | **staging 部署** · **② GO 宣称** |
-| Gate-3 **设计规格**（文档 · **不合入** 代码） | **`recordAccrualBatch` 未经 G23-01 合入** |
+| Gate-3 **设计规格**（文档 · **不合入** 代码） | indexer migration / API 合入（Gate-3） |
 
-**暂缓至 ① 本地主线收口后：** indexer · API · DB migration · Dashboard · ② 测试网全链路接入。
-
-**Gate-2.2 机读基线（`76aff11c`）：**
+**Gate-2.3 机读出口（`cf453bd9` · Exit Review 复跑）：**
 
 ```bash
-cd contracts && forge test --match-contract CountryPoolNetProfit   # 38 passed
+cd contracts && forge test --match-contract CountryPoolNetProfit   # 54 passed
+cd contracts && forge test --match-contract CountryPoolNetProfitFuzz # 4 passed
 cd contracts && forge test --match-contract FeeRouterTest          # 10 passed
+bash scripts/dev/check-country-pool-net-profit-abi-freeze.sh
+bash scripts/check-55-s13.sh
 ```
 
 ---
@@ -331,12 +333,14 @@ CountryPoolNetProfitLedger logs
 
 | 方 | 审查范围 | Pre-Review |
 |----|----------|------------|
-| **产品** | §3 batch · §8 API · G-03 | ☐ |
-| **财务** | §5 资金路径 · §10 对账 | ☐ |
-| **法务** | LEG-XJ · Q-F01/Q-F02 披露 | ☐ |
-| **工程** | §6 ABI · §7 Indexer · §9 DB · §12 G24 | ☐ |
+| **产品** | §3 batch · §8 API · G-03 | ✅ |
+| **财务** | §5 资金路径 · §10 对账 | ✅ |
+| **法务** | LEG-XJ · Q-F01/Q-F02 披露 | ✅ |
+| **工程** | §6 ABI · §7 Indexer · §9 DB · §12 G24 | ✅ |
 
-**结论：** ☐ ACCEPT · ☐ REVISE
+**结论：** **✅ ACCEPT → GATE-2.3 EXIT（① · 2026-06-15）**
+
+**Exit Report：** `evidence/GO_local_country_pool_net_profit_gate2.3/GATE2.3-EXIT-REVIEW-REPORT.md` · **D-4555-B → Gate-2.4 Ready Candidate**
 
 ---
 

@@ -2,10 +2,11 @@
 
 **Checklist ID:** `country-pool-settlement-gate2.4-prerequisites`  
 **Version:** v1-20260615  
+**Status:** **Gate-2.4 Ready Candidate（① · D-4555-B）** · **② 实施 NOT STARTED**  
 **Phase:** **② 测试网前置** · **禁止** 无 Owner 授权 broadcast · **≠** ③ Production GO  
-**Upstream:** Gate-2.3 四卡 merged · [G23-04 ABI Manifest](../../contracts/abi/manifests/country-pool-net-profit-v1.json)
+**Upstream:** Gate-2.3 **EXIT** · [GATE2.3-EXIT-REVIEW-REPORT.md](../../evidence/GO_local_country_pool_net_profit_gate2.3/GATE2.3-EXIT-REVIEW-REPORT.md) · [ABI Manifest](../../contracts/abi/manifests/country-pool-net-profit-v1.json)
 
-> **① 本地 manifest 冻结 ≠ ② Sepolia GO。**
+> **Gate-2.4 Ready Candidate（①）≠ ② Sepolia GO ≠ staging 部署。**
 
 ---
 
@@ -14,7 +15,7 @@
 | ID | 项 | ①/② | 状态 | 证据 / 路径 |
 |----|-----|-----|------|-------------|
 | **G24-P-01** | Gate-2.3 Projection Package v1 四方 Pre-Review | ① | ✅ | [projection-package-v1.md](country-pool-settlement-gate2.3-projection-package-v1.md) |
-| **G24-P-02** | Gate-2.3 Solidity delta merged（G23-01～03） | ① | ✅ | `feature/g23-01` · `g23-02` · `g23-03` |
+| **G24-P-02** | Gate-2.3 Solidity delta merged（G23-01～03） | ① | ✅ | Gate-2.3 **EXIT** · `cf453bd9` |
 | **G24-P-03** | ABI export + manifest + check-55-s13 | ① | ✅ | [country-pool-net-profit-v1.json](../../contracts/abi/manifests/country-pool-net-profit-v1.json) · `bash scripts/check-55-s13.sh` |
 | **G24-P-04** | Event Topic Registry（decoder 规格） | ① | ✅ | [country-pool-net-profit-v1.yaml](../../registry/event-decoders/country-pool-net-profit-v1.yaml) · **decoder 实现留 Gate-2.4/3** |
 | **G24-P-05** | G-1/G-2 + PHASE2-START-CHECKLIST | ② | ☐ | [PHASE2-START-CHECKLIST](../../runbook/PHASE2-START-CHECKLIST.md) |

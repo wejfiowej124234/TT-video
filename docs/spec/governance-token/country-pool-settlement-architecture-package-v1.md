@@ -642,7 +642,7 @@ setAllowedExecutionTarget(UnallocatedStewardPathVault, true)
 |----|------|-------------------|------|
 | **DR-01** | Q-01/Q-03/Q-04 registry vs attestation | **`ActiveStewardConfig`** on Ledger · Timelock-only **`setActiveStewardConfig`** · Q-02 链上 StakePool view · **`qualificationSnapshotBlock = block.number`** · split 与 config/fund **同一 Timelock batch** | ☑ |
 | **DR-02** | Split 前 USDC 归集 | **`recordAccrual` 仅记账** · 独立 **`fundLedgerForSplit(epochId)`** · **`epochFunded` 硬闸** · **`splitNetProfit` 要求 `balance >= netProfitPrime`** · 事件 **`LedgerFundedForSplit`** | ☑ |
-| **DR-03** | batch accrual | **v1 仅单笔 `recordAccrual`** · **`recordAccrualBatch`（≤32 行/tx）= Gate-2.3 backlog** · 多笔 accrual 用 **多提案或同批 multi-call** | ☑ |
+| **DR-03** | batch accrual | **`recordAccrualBatch`（≤32 行/tx）** · Gate-2.3 G23-01 ☑ · 单笔 `recordAccrual` 仍可用 | ☑ |
 | **DR-04** | 合约命名 | **`CountryPoolNetProfitLedger`** + **`StewardPathVault`** + **`UnallocatedStewardPathVault`**（与 PHASE2 审计一致） | ☑ |
 | **DR-05** | 环境键 / registry | 见 **§11.1** · **`JURISDICTION_COUNTRY_POOL_NET_PROFIT_CONFIG_PATH`** · pilot 双键 alias | ☑ |
 | **DR-06** | Vault 部署模式 | **§11.2 Triplet Bundle** · 单脚本 wired deploy · post-deploy allowlist ×3 | ☑ |

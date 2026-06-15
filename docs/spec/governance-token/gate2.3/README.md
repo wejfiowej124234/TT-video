@@ -1,11 +1,12 @@
 # Gate-2.3 实施任务卡索引
 
-**阶段：** **① 本地纠偏 / 合约稳定性补强** · Gate-2.3 **仅** 本地前置审查 + Solidity 绿集
+**阶段：** **① 本地 · GATE-2.3 EXIT（2026-06-15）** · **D-4555-B → Gate-2.4 Ready Candidate**
 
-> **① 本地合约绿，不等于 ② Sepolia GO。**
+> **① Gate-2.3 Exit ≠ ② Sepolia GO。**
 
+**Exit Report：** [evidence/GO_local_country_pool_net_profit_gate2.3/GATE2.3-EXIT-REVIEW-REPORT.md](../../../evidence/GO_local_country_pool_net_profit_gate2.3/GATE2.3-EXIT-REVIEW-REPORT.md)  
 **上位 SSOT：** [country-pool-settlement-gate2.3-projection-package-v1.md](../country-pool-settlement-gate2.3-projection-package-v1.md)  
-**基线：** Gate-2.2 `76aff11c` · `evidence/GO_local_country_pool_net_profit_gate2.2/`
+**基线：** Gate-2.2 `76aff11c` · Gate-2.3 HEAD `cf453bd9`
 
 ---
 
@@ -46,12 +47,12 @@ G23-04 ABI & Event Freeze
 Gate-2.4 Sepolia（Owner 授权 · 单独闸）
 ```
 
-| 序 | 卡 ID | 分支建议 | 文档 |
-|----|-------|----------|------|
-| **1** | **G23-03** | `feature/g23-03-funding-path` | [G23-03-funding-path-finalization.md](G23-03-funding-path-finalization.md) |
-| **2** | **G23-01** | `feature/g23-01-accrual-batch` | [G23-01-record-accrual-batch.md](G23-01-record-accrual-batch.md) |
-| **3** | **G23-02** | `feature/g23-02-fuzz-invariant` | [G23-02-fuzz-invariant-suite.md](G23-02-fuzz-invariant-suite.md) |
-| **4** | **G23-04** | `feature/g23-04-abi-event-freeze` | [G23-04-abi-event-freeze.md](G23-04-abi-event-freeze.md) |
+| 序 | 卡 ID | 分支建议 | 状态 | 文档 |
+|----|-------|----------|------|------|
+| **1** | **G23-03** | `feature/g23-03-funding-path` | ✅ EXIT | [G23-03-funding-path-finalization.md](G23-03-funding-path-finalization.md) |
+| **2** | **G23-01** | `feature/g23-01-accrual-batch` | ✅ EXIT | [G23-01-record-accrual-batch.md](G23-01-record-accrual-batch.md) |
+| **3** | **G23-02** | `feature/g23-02-fuzz-invariant` | ✅ EXIT | [G23-02-fuzz-invariant-suite.md](G23-02-fuzz-invariant-suite.md) |
+| **4** | **G23-04** | `feature/g23-04-abi-event-freeze` | ✅ EXIT | [G23-04-abi-event-freeze.md](G23-04-abi-event-freeze.md) |
 
 ---
 
@@ -67,4 +68,6 @@ Gate-2.4 Sepolia（Owner 授权 · 单独闸）
 
 ## Gate-2.3 出口 → Gate-2.4 入口
 
-四卡 **全部 DoD ☑** 后，方可启动 [Gate-2.4 Sepolia 前置](../country-pool-settlement-gate2.4-prerequisites-checklist.md)（G24-P-01～11）。
+**状态：** **✅ GATE-2.3 EXIT（①）** · 四卡 DoD 全 ☑ · 机读闸复跑 exit 0
+
+四卡 merged 后，启动 [Gate-2.4 Sepolia 前置](../country-pool-settlement-gate2.4-prerequisites-checklist.md)（G24-P-05+ 仍 ② · **禁止** 无 Owner 授权 broadcast）。

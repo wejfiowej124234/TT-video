@@ -1,6 +1,6 @@
 # Gate-2.3 Pre-Review · D-4555-B Settlement
 
-**Status:** **PRE-REVIEW OPEN（Projection Package v1 已生成 · 零 ② 实施）**  
+**Status:** **GATE-2.3 EXIT · superseded by evidence/GO_local_country_pool_net_profit_gate2.3/GATE2.3-EXIT-REVIEW-REPORT.md（Projection Package v1 已生成 · 零 ② 实施）**  
 **Date:** 2026-06-15  
 **Baseline:** commit `76aff11c` · [GATE2.2-LOCAL-ACCEPTANCE-REPORT.md](GATE2.2-LOCAL-ACCEPTANCE-REPORT.md)
 
