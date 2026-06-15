@@ -1,4 +1,5 @@
 /** 04 §3.4 GET /api/v1/governance/fee-routes；110 / FeeRouter PlatformFeeRouted 投影 */
+import { chainIdFromMeta } from "@/lib/governanceChainMeta";
 export type FeeRouteItem = {
   id: string;
   chain_id: number;
@@ -23,7 +24,7 @@ export type FeeRoutesRes = {
 
 export type GovernanceFeeRoutesMetaJson = {
   chain?: {
-    chain_id?: string;
+    chain_id?: string | number;
     contracts?: {
       chain_id_configured?: number;
       fee_router_address?: string | null;
@@ -35,13 +36,8 @@ export type GovernanceFeeRoutesMetaJson = {
 export const FEE_ROUTES_PAGE_LIMIT = 20;
 
 export function resolveConfiguredChainId(meta: GovernanceFeeRoutesMetaJson | null): number | null {
-  if (!meta?.chain) return null;
-  const c = meta.chain.contracts?.chain_id_configured;
-  if (typeof c === "number" && Number.isFinite(c)) return c;
-  const raw = meta.chain.chain_id;
-  if (raw == null) return null;
-  const n = parseInt(String(raw), 10);
-  return Number.isFinite(n) ? n : null;
+  if (!meta) return null;
+  return chainIdFromMeta(meta as Record<string, unknown>);
 }
 
 function governanceMetaHttpErrorDetail(body: unknown): string | null {

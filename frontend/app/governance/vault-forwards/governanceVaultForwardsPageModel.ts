@@ -1,4 +1,5 @@
 /** 04 §3.4 GET /api/v1/governance/vault-forwards；RegionVault RegionVaultForwarded 投影 */
+import { chainIdFromMeta } from "@/lib/governanceChainMeta";
 export type VaultForwardItem = {
   id: string;
   chain_id: number;
@@ -21,9 +22,10 @@ export type VaultForwardsRes = {
 
 export type GovernanceVaultForwardsMetaJson = {
   chain?: {
-    chain_id?: string;
+    chain_id?: string | number;
     contracts?: {
       chain_id_configured?: number;
+      treasury_address?: string | null;
       region_vault_address?: string | null;
     } | null;
   };
@@ -32,13 +34,8 @@ export type GovernanceVaultForwardsMetaJson = {
 export const VAULT_FORWARDS_PAGE_LIMIT = 20;
 
 export function resolveConfiguredChainId(meta: GovernanceVaultForwardsMetaJson | null): number | null {
-  if (!meta?.chain) return null;
-  const c = meta.chain.contracts?.chain_id_configured;
-  if (typeof c === "number" && Number.isFinite(c)) return c;
-  const raw = meta.chain.chain_id;
-  if (raw == null) return null;
-  const n = parseInt(String(raw), 10);
-  return Number.isFinite(n) ? n : null;
+  if (!meta) return null;
+  return chainIdFromMeta(meta as Record<string, unknown>);
 }
 
 function governanceMetaHttpErrorDetail(body: unknown): string | null {

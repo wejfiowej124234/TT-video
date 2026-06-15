@@ -1,12 +1,13 @@
 /**
  * TT-TOURIST-JOURNEY-P02-CREATE-ORDER-LIST-001：登录 → 建单 → /orders 可见新单。
  * 向导 ID 由 API 预取：`/orders/new` 在 `getGuides` 空列表时仍可用 `?guide_id=` 注入选项（见 app/orders/new/page.tsx）。
- * 链参与：建单后若 `GET /meta` 含 **`escrow_platform_fee_recipient`**，则断言 **B-095**
+ * 链参与：建单后若 `GET /meta` 含 **`fee_router_address`**（或 legacy `escrow_platform_fee_recipient`），则断言 **B-095**
  * `GET /api/v1/orders/:id` → `order.split_addresses_ssot.platform_fee_recipient` 与之同源。
  */
 import { test, expect } from "@playwright/test";
 import { guideRowIdForSeedGuideAccount } from "./helpers/guideSeedGuideRowId";
 import { releaseSeedGuideSlotIfBlocked } from "./helpers/releaseSeedGuideSlot";
+import { platformFeeRecipientFromMetaContracts } from "../../lib/metaChainContracts759";
 
 const apiPort = process.env.PLAYWRIGHT_API_PORT ?? "8080";
 const API_HEALTH =
@@ -88,10 +89,12 @@ test.describe("P02 create order + list", () => {
       const metaRes = await request.get(`${API_BASE}/meta`);
       expect(metaRes.ok()).toBeTruthy();
       const meta = (await metaRes.json()) as {
-        chain?: { contracts?: { escrow_platform_fee_recipient?: unknown } };
+        chain?: { contracts?: Record<string, unknown> };
       };
-      const platformRecipient = meta.chain?.contracts?.escrow_platform_fee_recipient;
-      if (typeof platformRecipient === "string" && /^0x[a-fA-F0-9]{40}$/.test(platformRecipient)) {
+      const platformRecipient = platformFeeRecipientFromMetaContracts(
+        meta.chain?.contracts,
+      );
+      if (platformRecipient) {
         const ordRes = await request.get(`${API_BASE}/api/v1/orders/${orderId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });

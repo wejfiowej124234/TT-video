@@ -1,11 +1,15 @@
 /**
  * Playwright：GET /meta 链契约门禁（防「链关 / 无 ChainConfig 却误以为全链路通过」）。
  *
- * - 默认（未设 `PLAYWRIGHT_RELAX_META_CHAIN_GUARD=1`）：要求 `chain.contracts` 非空且
- *   `governor_address` / `registry_address` / `staking_address` 为 40 位 hex 地址。
- * - CI 链关烟测：在 workflow 中设 `PLAYWRIGHT_RELAX_META_CHAIN_GUARD=1`，仅校验 `/meta` 200 + JSON。
- * - 可选：`PLAYWRIGHT_EXPECT_CHAIN_ID` 与 `meta.chain.chain_id` 字符串对拍（如 `11155111`）。
+ * - 默认（未设 `PLAYWRIGHT_RELAX_META_CHAIN_GUARD=1`）：759 十键 + ① 核心协议地址
+ *   （`guide_staking_address` / `staking_provider_address` / `fee_router_address` / `governance_token_address`）。
+ * - `PLAYWRIGHT_REQUIRE_GOVERNANCE_STACK=1`：额外要求 `governor_address` + `timelock_address`（② 治理栈）。
+ * - CI 链关烟测：`PLAYWRIGHT_RELAX_META_CHAIN_GUARD=1`，仅校验 `/meta` 200 + JSON。
+ * - 可选：`PLAYWRIGHT_EXPECT_CHAIN_ID` 与 `meta.chain.chain_id` 字符串对拍（如 `31337` / `11155111`）。
  */
+
+import { chainIdFromMeta, parseChainIdFromMetaValue } from "../../lib/governanceChainMeta";
+import { assertMetaChainContracts759Strict } from "../../lib/metaChainContracts759";
 
 export type MetaJson = Record<string, unknown>;
 
@@ -49,7 +53,7 @@ export async function fetchMetaJson(apiBase: string): Promise<MetaJson> {
   return body;
 }
 
-/** 严格：链配置挂载且关键合约地址齐全（测试网 / chain-on 回归）。 */
+/** 严格：链配置挂载且 759 十键 + ① 核心协议地址齐全。 */
 export function assertMetaChainContractsStrict(meta: MetaJson): void {
   const chain = meta.chain;
   if (!isRecord(chain)) {
@@ -61,15 +65,13 @@ export function assertMetaChainContractsStrict(meta: MetaJson): void {
       "GET /meta: chain.contracts missing or null — ChainConfig 未挂载（假全链路 / 链下烟测）；根 .env 需 CHAIN_RPC_URL + 合约地址，或 CI 设 PLAYWRIGHT_RELAX_META_CHAIN_GUARD=1",
     );
   }
-  assertEvmAddress("chain.contracts.governor_address", contracts.governor_address);
-  assertEvmAddress("chain.contracts.registry_address", contracts.registry_address);
-  assertEvmAddress("chain.contracts.staking_address", contracts.staking_address);
+  assertMetaChainContracts759Strict(contracts);
 
   const expectId = process.env.PLAYWRIGHT_EXPECT_CHAIN_ID?.trim();
   if (expectId) {
-    const got = chain.chain_id;
-    if (String(got) !== expectId) {
-      throw new Error(`chain.chain_id: expected ${expectId}, got ${JSON.stringify(got)}`);
+    const got = chainIdFromMeta(meta) ?? parseChainIdFromMetaValue(chain.chain_id);
+    if (got == null || String(got) !== expectId) {
+      throw new Error(`chain.chain_id: expected ${expectId}, got ${JSON.stringify(chain.chain_id)}`);
     }
   }
 }

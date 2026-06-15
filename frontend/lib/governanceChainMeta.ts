@@ -37,9 +37,26 @@ export function governorAddressFromMeta(m: Record<string, unknown>): string | nu
   return chainContractsFromMeta(m)?.governor_address ?? null;
 }
 
+/** 解析 `chain.chain_id` 或 legacy `contracts.chain_id_configured`（API 常为字符串）。 */
+export function parseChainIdFromMetaValue(id: unknown): number | null {
+  if (typeof id === "number" && Number.isFinite(id)) return id;
+  if (typeof id === "string" && id.trim()) {
+    const n = parseInt(id.trim(), 10);
+    return Number.isFinite(n) ? n : null;
+  }
+  return null;
+}
+
 export function chainIdFromMeta(m: Record<string, unknown>): number | null {
   const ch = m.chain;
   if (!ch || typeof ch !== "object") return null;
-  const id = (ch as Record<string, unknown>).chain_id;
-  return typeof id === "number" && Number.isFinite(id) ? id : null;
+  const chain = ch as Record<string, unknown>;
+  const contracts = chain.contracts;
+  if (contracts && typeof contracts === "object") {
+    const legacy = parseChainIdFromMetaValue(
+      (contracts as Record<string, unknown>).chain_id_configured,
+    );
+    if (legacy != null) return legacy;
+  }
+  return parseChainIdFromMetaValue(chain.chain_id);
 }
