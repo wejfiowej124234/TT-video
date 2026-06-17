@@ -20,6 +20,8 @@ load_database_url_from_root_env "$ROOT" || exit $?
 echo "== enterprise site 10 local (① · full-chain · L5 · not ②③) =="
 
 bash "$ROOT/scripts/dev/run-go-local-phase1-acceptance.sh"
+# Phase1 已跑 cargo 子集；同编排内跳过 linkage 全量 cargo（API 常驻时 PG 烟测会互斥）
+export CI_LOCAL_SKIP_PHASE1_BACKEND_TRIPLE="${CI_LOCAL_SKIP_PHASE1_BACKEND_TRIPLE:-1}"
 bash "$ROOT/scripts/gates/local-phase1-linkage-quality-gates.sh"
 bash "$ROOT/scripts/smoke-ab-core-chain.sh"
 bash "$ROOT/scripts/dev/smoke-provider-onboarding-local.sh"

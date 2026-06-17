@@ -21,7 +21,8 @@ describe("enterprise local 10 gate (①)", () => {
     const fullChain = readFileSync(join(repoRoot, "scripts/dev/smoke-web3-itinerary-full-chain-local.sh"), "utf8");
     expect(fullChain).toContain("smoke-landing-itinerary-flow-local.sh");
     const landingSrc = readFileSync(join(repoRoot, "scripts/dev/smoke-landing-itinerary-flow-local.sh"), "utf8");
-    expect(landingSrc).toContain("tt-patch-order-assignable-guide");
+    expect(landingSrc).toContain("tt-order-guide-id.sh");
+    expect(landingSrc).toContain("tt_assert_order_has_no_guide");
     const readmeSrc = readFileSync(readme, "utf8");
     expect(readmeSrc).toContain("① 本地");
     expect(readmeSrc).toContain("不等于");

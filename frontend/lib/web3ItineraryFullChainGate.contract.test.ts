@@ -21,8 +21,8 @@ describe("web3 itinerary full chain smoke gate (①)", () => {
     expect(helperSrc).toContain("/stake");
 
     const landingSrc = readFileSync(landing, "utf8");
-    expect(landingSrc).toContain("tt-patch-order-assignable-guide.sh");
-    expect(landingSrc).toContain("tt_patch_order_assignable_guide");
+    expect(landingSrc).toContain("tt-order-guide-id.sh");
+    expect(landingSrc).toContain("tt_assert_order_has_no_guide");
     expect(landingSrc).not.toContain("items[0].id");
 
     const escrowSrc = readFileSync(escrowBind, "utf8");

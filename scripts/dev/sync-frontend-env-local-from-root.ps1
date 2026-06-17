@@ -171,17 +171,7 @@ if (Test-Path -LiteralPath $OutFile) {
         }
         if (-not $isManaged) {
             if ([string]::IsNullOrWhiteSpace($line)) { return }
-            if ($line.StartsWith("#") -and (
-                    $line.Contains("frontend/.env.local") -or
-                    $line.Contains("Manual lines") -or
-                    $line.Contains("以下为手动配置") -or
-                    $line.Contains("Same source as root .env") -or
-                    $line.Contains("与仓库根 .env 同源") -or
-                    $line.Contains("BEGIN TT NEXT_PUBLIC sync") -or
-                    $line.Contains("Sepolia") -or
-                    $line.Contains([char]0x4EE5 + [char]0x4E0B + [char]0x4E3A) -or
-                    $line.Contains([char]0x7531 + [char]0x5DE5 + [char]0x5177)
-                )) { return }
+            if ($line.StartsWith('#') -and $line -match 'frontend/\.env\.local|Manual lines|Same source as root|BEGIN TT NEXT_PUBLIC sync|Sepolia') { return }
             $kept.Add($line)
         }
     }

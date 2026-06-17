@@ -91,7 +91,13 @@ mark_entitlement_paid() {
 
 assert_hub_phase() {
   local surface="$1" me_body="$2" ent_body="$3" expected="$4"
-  node "$ROOT/scripts/dev/assert-onboarding-hub-phase.mjs" "$surface" "$expected" "$me_body" "$ent_body"
+  local me_file ent_file
+  me_file="$(mktemp)"
+  ent_file="$(mktemp)"
+  printf '%s' "$me_body" >"$me_file"
+  printf '%s' "$ent_body" >"$ent_file"
+  node "$ROOT/scripts/dev/assert-onboarding-hub-phase.mjs" "$surface" "$expected" "@$me_file" "@$ent_file"
+  rm -f "$me_file" "$ent_file"
   ok "hub phase $surface=$expected"
 }
 

@@ -7,7 +7,7 @@
 import { test, expect } from "@playwright/test";
 import { guideRowIdForSeedGuideAccount } from "./helpers/guideSeedGuideRowId";
 import { releaseSeedGuideSlotIfBlocked } from "./helpers/releaseSeedGuideSlot";
-import { platformFeeRecipientFromMetaContracts } from "../../lib/metaChainContracts759";
+import { platformFeeRecipientFromMetaContracts } from "@/lib/metaChainContracts759";
 
 const apiPort = process.env.PLAYWRIGHT_API_PORT ?? "8080";
 const API_HEALTH =

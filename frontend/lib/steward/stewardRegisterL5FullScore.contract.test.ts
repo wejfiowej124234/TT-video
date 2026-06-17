@@ -101,6 +101,9 @@ describe("steward register L5 full-score polish (①)", () => {
     expect(zh).toContain("stewardProgress_journeyLoginDoneNote");
     expect(zh).toContain("stewardRegister_ctaBlockedStep1");
     expect(zh).not.toMatch(/steward_register_jurisdictions:.*bps/);
-    expect(zh).not.toMatch(/stewardRegister_jurisdictionEmptyHint:[\s\S]*bps/);
+    const jurisdictionEmptyHint = zh.match(
+      /stewardRegister_jurisdictionEmptyHint:\s*\n\s*"([^"]*)"/,
+    )?.[1];
+    expect(jurisdictionEmptyHint ?? "").not.toMatch(/bps/);
   });
 });
