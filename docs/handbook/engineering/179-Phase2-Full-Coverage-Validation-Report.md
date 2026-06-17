@@ -23,7 +23,7 @@
 TT_PHASE2_FULL_COVERAGE: FAIL dir=evidence/PHASE2_FULL_COVERAGE/full-closure-20260608T092200Z failures=1 checks=33
 ```
 
-> **说明**：orchestrator 曾在 **TRACK-G** 内联跑满 259200s 导致会话阻塞；已修复为 **仅 attestation COMPLETED.json** 或登记 in-flight FAIL（`p2fc-soak-attest.sh`）。**33/33 GO** 须在 soak job 完成后复跑 orchestrator。
+> **说明**：orchestrator 曾在 **TRACK-G** 内联跑满 259200s 导致会话阻塞；已修复为 **仅 attestation COMPLETED.json**（`p2fc-soak-attest.sh`）。**S01 GO** 须 `evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json` + 毕业 TN-P1-010 gate；复验入口 `bash scripts/ops/phase2-full-coverage-validation.sh`（**非** legacy orchestrator）。
 
 ---
 
@@ -59,12 +59,15 @@ TT_PHASE2_FULL_COVERAGE: FAIL dir=evidence/PHASE2_FULL_COVERAGE/full-closure-202
 ```bash
 export DATABASE_URL=postgres://traveltrust:traveltrust@localhost:5432/traveltrust
 export SEED_TEST_ACCOUNTS=1
-# 独立 72h soak（后台）
+# ② staging 72h soak（后台 · SSOT）
+bash scripts/ops/p2fc-launch-staging-soak-72h.sh
+# 或历史别名（转发 staging）
 bash scripts/ops/p2fc-launch-soak-72h.sh
-# 全量（soak 未完成时 honest FAIL 32/33）
+# P2FC 入口（soak attestation + graduation status · soak 未完成时 honest FAIL）
 bash scripts/ops/phase2-full-coverage-validation.sh
-# soak 完成后（须存在 evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json）
+# soak 完成后（须 evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json + post-soak TN-P1-010）
 bash scripts/ops/phase2-full-coverage-validation.sh
+bash scripts/dev/run-phase2-graduation-closure-program.sh --status
 ```
 
 ---

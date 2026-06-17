@@ -309,6 +309,8 @@ bash scripts/dev/record-tn-p1-007-008-hat-staging-evidence.sh
 # 末行 TT_TN_P1_007_008_HAT_EVIDENCE: PASS
 
 # 7 · TN-P1-009 P2FC 72h soak / 监控恢复
+bash scripts/ops/p2fc-launch-staging-soak-72h.sh   # Wave1 后 · P2FC_SOAK_SUPERSEDE=1
+P2FC_SOAK_DIR=evidence/P2FC_SOAK_72H_STAGING bash scripts/ops/p2fc-soak-attest.sh
 bash scripts/ops/phase2-full-coverage-validation.sh
 
 # 8 · TN-P1-010 索引器深度对账

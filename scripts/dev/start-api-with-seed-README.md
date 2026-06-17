@@ -88,7 +88,7 @@ Runbook：`docs/runbook/TT-PH1-SITE-THEME-V1-UPGRADE-001.md` §6.1。
 | 区域主理人申请 | http://localhost:3012/steward/register |
 | API 健康 | http://127.0.0.1:8080/health |
 
-种子账号：`tourist@test.com` / `guide@test.com` / `multi-demo@test.com`，密码 `Test123!`（`SEED_TEST_ACCOUNTS=1`）。**Step 6b5** 探针除登录外还验 **`GET /api/v1/me` → `user.email_verified_at`**（注册 OTP 与信任页同源；种子启动时写入 canonical 三账号）。
+种子账号：`tourist@test.com` / `guide@test.com` / `merchant@test.com` / `provider-did-rank-demo@test.com` / `multi-demo@test.com`，密码 `Test123!`（`SEED_TEST_ACCOUNTS=1`）。**Step 6b5** 探针除登录外还验 **`GET /api/v1/me` → `user.email_verified_at`**（注册 OTP 与信任页同源；种子启动时写入 canonical 账号）。**全栈默认** `TRAVELTRUST_VERIFY_SEED_ACCOUNTS=1`（五账号登录 + 杭州向导列表）。
 
 **人工验收（推荐一键）**：
 
@@ -101,7 +101,8 @@ scripts\start-api-with-seed.bat
 |------|------|------|------|
 | **游客** | `tourist@test.com` | `Test123!` | 下单、支付、评价；同一账号 Step 6b2 可进 `/admin`（SuperAdmin） |
 | **向导** | `guide@test.com` | `Test123!` | 杭州向导（walking+culture）；**Chain B** — 游客在 **`/market?view=guides`** 正常点选（默认 **`TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=1`**） |
-| **商家** | `merchant@test.com` | `Test123!` | 商家工作台烟测种子（`seed_merchant_workbench_demo_accounts`）；**PWB-L5** Step **6r** |
+| **商家** | `merchant@test.com` | `Test123!` | 商家工作台 **`/provider`**（`seed_merchant_workbench_demo_accounts`）；**PWB-L5** Step **6r** |
+| **DID 榜商家演示** | `provider-did-rank-demo@test.com` | `Test123!` | 五角色 merchant 登录 · DID 副榜 demo listing；与 `merchant@test.com` 同源种子函数 |
 | **多重身份** | `multi-demo@test.com` | `Test123!` | 四 operator 槽 + steward 钱包；**PH-L5** Step **6s** 灌五轨演示 + **`/me/publish`** Workspace Context |
 
 登录页：http://localhost:3012/auth/login — 测完一种角色先退出再换账号。
@@ -114,7 +115,7 @@ scripts\start-api-with-seed.bat
 |------|------|
 | **Step 1ba** | `check-frontend-api-routes-admin.ps1` — `api.ts` ↔ `routesAdminCore` / `routesAdminOnboarding` / `routesAdminCommunityPolicies` · `app/api/v1/admin/capabilities/route.ts` · **`AdminHomeQueuesProvider`** · **`AdminSessionCookieSync`** · 根 `layout` 加载 **`public/tt-session-cookie-bootstrap.js`** + **`tt-dev-chunk-recovery.js`**（`SKIP_ADMIN_ROUTES_GATE=1` 跳过） |
 | **Step 1bb** | `check-frontend-api-routes-identity-p2.ps1` — `meGuideProfile` · `meMerchantProfile` · `meRegionStewardProfile` · `meAcquisitionProfile` · **`meGuideExitStatus` / `meGuideExitRequest`**（`SKIP_IDENTITY_P2_ROUTES_GATE=1` 跳过） |
-| **Step 3d** | SQLx migrate 含 **`20260607120000`～`20260613120000`**（CMS catalog · Official OPS · Growth · Sprint168 `country_market_launches` · **`guides.hourly_rate` / `guides.avatar_url`** · **`guide_exit_requests`**）；PG 探针同上 + Identity P2 向导列 + GWB 退出申请表 |
+| **Step 3d** | SQLx migrate 含 **`20260607120000`～`20260613120000`**（CMS catalog · Official OPS · Growth · Sprint168 `country_market_launches` · **`guides.hourly_rate` / `guides.avatar_url` / `guides.public_title`** · **`guide_exit_requests`**）；PG 探针同上 + Identity P2 向导列 + GWB 退出申请表 |
 | **Step 6b** | `POST /auth/seed-test-accounts` `{}` 后 **`{"promote_admin_email":"tourist@test.com"}`** |
 | **Step 6b2** | `bootstrap-local-admin-console.ps1`：`users.role=super_admin` · `admin_console_roles=SuperAdmin` · `admin_2fa_policy.enforced=false` · 探针 login + `GET /admin/capabilities`（**`console_role_70=SuperAdmin`**） |
 | **Step 5 API** | 未设时默认 `TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT=1` · **`CORS_ORIGINS=http://127.0.0.1:3012,http://localhost:3012`**（随 `FRONTEND_PORT`）· **`TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE=1`**（与 `main.rs` seed 栈同源）；本地默认 **`API_RATE_LIMIT_PER_MINUTE=0`**（避免 `/admin` 工作台多队列 **429**）；生产级限流：`TRAVELTRUST_STRICT_API_RATE_LIMIT=1` |
@@ -194,7 +195,7 @@ scripts\start-api-with-seed.bat
 |------|------|
 | **Step 3f** | `run-clear-hangzhou-seed-guide-slots-db.ps1` — API 启动前清 **`f0e0b101-*`** accepted/escrowed 占位（`SKIP_CLEAR_HANGZHOU_GUIDE_SLOTS=1` 跳过） |
 | **Step 6b4** | `bootstrap-gd-p06-public-catalog-local.sh` — **`POST /auth/seed-trust-gate-e2e`** + **`tourist@test.com` Bearer** 探针 **`GET /guides/f0e0b101-…`** · **`GET …/availability` 有 Bearer 200 / 无 Bearer 401**（`STRICT_SESSION_GATE=1` 时 **`:id` 非公开读**；`SKIP_BOOTSTRAP_GD_P06_PUBLIC_CATALOG=1` 跳过） |
-| **Step 6b5** | `verify-seed-test-accounts-login.ps1` — **`tourist@test.com` / `guide@test.com` 登录**；**`TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=1`** 时 **`GET /guides?city=杭州`** 须含 seed 向导（正常市场 UI） |
+| **Step 6b5** | `verify-seed-test-accounts-login.ps1` — **`tourist@test.com` / `guide@test.com` / `merchant@test.com` / `provider-did-rank-demo@test.com` / `multi-demo@test.com` 登录**；**`TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=1`** 时 **`GET /guides?city=杭州`** 须含 seed 向导（**全栈默认 `TRAVELTRUST_VERIFY_SEED_ACCOUNTS=1`**） |
 | **Step 6c** | `post-start-api-abi-smoke.ps1` 增验公众 catalog 杭州向导详情 + 档期鉴权门闸 + seed 向导列表（`SEED_GUIDE_PUBLIC_MARKET=1`） |
 | **冻结 SSOT** | `frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-P03-P06-GD-MAIN-CHAIN-FREEZE.md` |
 | **异常流证据** | `bash scripts/dev/record-escrow-p03-p06-exception-flows-evidence.sh`（启动脚本**不**默认跑） |
@@ -437,7 +438,7 @@ Python 门禁列出的行首 **`?`** 表示：该路由已在代码里挂载，�
 | `TRAVELTRUST_POST_START_SEED_TRANSACTION_SMOKE=1` | 显式开 Step **6o**（`MANUAL_ACCEPTANCE` 默认已设） |
 | `SKIP_POST_START_SEED_TRANSACTION_SMOKE=1` | 跳过 Step **6o** |
 | `TRAVELTRUST_POST_START_SEED_TRANSACTION_SMOKE_WARN=1` | Step 6o 失败仅 WARN |
-| `TRAVELTRUST_VERIFY_SEED_ACCOUNTS=1` | 启用 Step **6b5** `verify-seed-test-accounts-login.ps1`（`MANUAL_ACCEPTANCE` 默认开）；**`tourist@test.com` + `guide@test.com` + `multi-demo@test.com`**；**`SEED_GUIDE_PUBLIC_MARKET=1`** 时追加 **`GET /guides?city=杭州`** 含 `guide@test.com` |
+| **TRAVELTRUST_VERIFY_SEED_ACCOUNTS=1** | 启用 Step **6b5** `verify-seed-test-accounts-login.ps1`（**全栈默认开** · 五种子账号 + 杭州向导列表）；**`MANUAL_ACCEPTANCE` 默认已设** |
 | `SKIP_VERIFY_SEED_ACCOUNTS=1` | 跳过 Step **6b5** |
 | `TRAVELTRUST_VERIFY_SEED_ACCOUNTS_STRICT=1` | Step 6b5 失败即中断栈 |
 | `SKIP_POST_START_ADMIN_OPS_SMOKE=1` | 跳过 Step **6k** |

@@ -3,7 +3,7 @@ chcp 65001 >nul
 REM TravelTrust one-click local stack: stop old processes, Docker PG, ABI gates, API, frontend.
 REM Run from repo root: scripts\start-api-with-seed.bat  - full env var list: scripts\dev\start-api-with-seed-README.md
 REM Key env: RESET_DOCKER_DB=1  SKIP_ABI_GATE=1  TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=1  TRAVELTRUST_MANUAL_ACCEPTANCE=1  TRAVELTRUST_CHAIN_ON=1  TRAVELTRUST_MARKET_CLEAN=1
-REM DB: default keeps Postgres volume; API auto-migrates; Step 3d probes through 20260613120000 [CMS+Official OPS+Growth+Sprint168+guides P2+guide_exit_requests]
+REM DB: default keeps Postgres volume; API auto-migrates; Step 3d probes through 20260613120000 [CMS+Official OPS+Growth+Sprint168+guides P2+public_title+guide_exit_requests]
 REM Storage: Step 3e MinIO :19000 persistent volume + merges COMMUNITY_MEDIA_S3_* into root .env when missing
 
 for %%I in ("%~dp0..\..") do set "ROOT=%%~fI"
@@ -97,6 +97,7 @@ if /i not "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
     if not defined TRAVELTRUST_POST_START_GUIDE_WORKBENCH_L5_SMOKE set "TRAVELTRUST_POST_START_GUIDE_WORKBENCH_L5_SMOKE=1"
     if not defined TRAVELTRUST_POST_START_PROVIDER_WORKBENCH_L5_SMOKE set "TRAVELTRUST_POST_START_PROVIDER_WORKBENCH_L5_SMOKE=1"
     if not defined TRAVELTRUST_POST_START_PUBLISH_HUB_L5_SMOKE set "TRAVELTRUST_POST_START_PUBLISH_HUB_L5_SMOKE=1"
+    if not defined TRAVELTRUST_VERIFY_SEED_ACCOUNTS set "TRAVELTRUST_VERIFY_SEED_ACCOUNTS=1"
 )
 
 if /i not "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
@@ -608,7 +609,7 @@ if /i not "%TRAVELTRUST_TTG_ANVIL%"=="1" (
 )
 :tt_after_ttg_anvil
 
-REM Auto chain-on when â‘  Anvil managed blocks present (unless user explicitly set TRAVELTRUST_CHAIN_ON=0)
+REM Auto chain-on when ¢Ù Anvil managed blocks present (unless user explicitly set TRAVELTRUST_CHAIN_ON=0)
 if /i not "%TRAVELTRUST_CHAIN_ON%"=="0" (
     if /i not "%TRAVELTRUST_CHAIN_ON%"=="1" (
         findstr /C:"BEGIN TT FUNDSTACK ANVIL LOCAL" "%ROOT%\.env" >nul 2>&1
@@ -776,7 +777,7 @@ if /i "%SKIP_POST_SEED_TEST_ACCOUNTS%"=="1" (
     )
 )
 
-echo Step 6b5 - Verify seed login + guide@test.com in GET /guides city=Hangzhou [VERIFY_SEED_ACCOUNTS or MANUAL_ACCEPTANCE; needs TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=1]
+echo Step 6b5 - Verify seed login tourist+guide+merchant+provider-did-rank-demo+multi-demo + Hangzhou guides [VERIFY_SEED_ACCOUNTS default on full stack]
 if /i "%SKIP_VERIFY_SEED_ACCOUNTS%"=="1" (
     echo     SKIP SKIP_VERIFY_SEED_ACCOUNTS=1
 ) else if /i not "%TRAVELTRUST_VERIFY_SEED_ACCOUNTS%"=="1" if /i not "%TRAVELTRUST_MANUAL_ACCEPTANCE%"=="1" (
@@ -1359,9 +1360,12 @@ echo.
 echo Login: http://localhost:!FRONTEND_PORT!/auth/login
 echo.
 echo --- Manual acceptance test accounts [SEED_TEST_ACCOUNTS=1] ---
-echo   Tourist  email: tourist@test.com   password: Test123!   role: tourist
-echo   Guide    email: guide@test.com     password: Test123!   role: guide [Hangzhou walking+culture]
-echo   Admin    same tourist@test.com    SuperAdmin after Step 6b2 [optional /admin]
+echo   Tourist  email: tourist@test.com              password: Test123!   role: tourist
+echo   Guide    email: guide@test.com                password: Test123!   role: guide [Hangzhou walking+culture]
+echo   Merchant email: merchant@test.com             password: Test123!   role: merchant [/provider workbench]
+echo   DID rank email: provider-did-rank-demo@test.com password: Test123!   role: merchant [DID rank demo listing]
+echo   Multi    email: multi-demo@test.com           password: Test123!   role: multi [identities + publish hub]
+echo   Admin    same tourist@test.com               SuperAdmin after Step 6b2 [/admin]
 echo   Preset:  set TRAVELTRUST_MANUAL_ACCEPTANCE=1  then scripts\start-api-with-seed.bat
 echo   Chain B: tourist@test.com picks guide@test.com in /market guides UI [default TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=1]
 echo   Chain A public catalog: tg_guide_main@trustgate-e2e.local [Step 6b4 GD/P06; do not mix with Chain B orders]
@@ -1380,6 +1384,8 @@ echo   Community profile: http://localhost:!FRONTEND_PORT!/community/me  social 
 echo   Onboarding:  http://localhost:!FRONTEND_PORT!/me/onboarding
 echo   Settings hub: http://localhost:!FRONTEND_PORT!/me/settings  privacy/likes hide toggle
 echo   Security:    http://localhost:!FRONTEND_PORT!/me/security  sessions: ^?focus=sessions
+echo   Guide workbench: http://localhost:!FRONTEND_PORT!/guide  orders: /orders?hat=guide
+echo   Provider workbench: http://localhost:!FRONTEND_PORT!/provider  orders: /orders?hat=merchant
 echo   Guide reg:   http://localhost:!FRONTEND_PORT!/guide/register
 echo   Steward:     http://localhost:!FRONTEND_PORT!/steward/register  step2 wallet verify
 if /i "%TRAVELTRUST_TTG_ANVIL%"=="1" (

@@ -14,6 +14,7 @@ import {
 } from './lib/eval-tn-p010-graduation-gate-cli.mjs';
 
 const root = process.cwd();
+const stagingApi = (process.env.STAGING_API_BASE || 'https://tt-api-staging.fly.dev').replace(/\/$/, '');
 const args = process.argv.slice(2);
 function arg(name, def = '') {
   const i = args.indexOf(name);
@@ -70,7 +71,7 @@ let meta = readJson(metaPath);
 if (!meta) {
   spawnSync(
     'curl',
-    ['--noproxy', '*', '-sS', '--max-time', '30', 'https://tt-api-staging.fly.dev/meta', '-o', metaPath],
+    ['--noproxy', '*', '-sS', '--max-time', '30', `${stagingApi}/meta`, '-o', metaPath],
     { cwd: root },
   );
   meta = readJson(metaPath) || {};

@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
-# Phase ② · 本地 ↔ staging 对齐闭环（S1–S6 编排）
+# Phase ② · 本地 ↔ staging 对齐闭环（S1–S6 编排 · 非毕业 SSOT）
+#
+# 纪律：TESTNET_STAGING_FREEZE ACTIVE 时 --deploy 须 Owner TESTNET_FREEZE_OVERRIDE=1
+# TL#1 前默认 S1–S3（本地 smoke）；勿 --deploy
 #
 #   bash scripts/dev/run-phase2-local-staging-parity-gate.sh              # S1+S2+S3（默认）
 #   bash scripts/dev/run-phase2-local-staging-parity-gate.sh --pull       # 仅 S1+S2

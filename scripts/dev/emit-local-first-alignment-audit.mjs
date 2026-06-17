@@ -16,6 +16,8 @@ import {
 } from './lib/eval-tn-p010-graduation-gate-cli.mjs';
 
 const root = process.cwd();
+const stagingApi = (process.env.STAGING_API_BASE || 'https://tt-api-staging.fly.dev').replace(/\/$/, '');
+const stagingWeb = (process.env.STAGING_WEB_BASE || 'https://tt-web-staging.fly.dev').replace(/\/$/, '');
 const args = process.argv.slice(2);
 function cliArg(name, def = '') {
   const i = args.indexOf(name);
@@ -70,7 +72,7 @@ let meta = {};
 try {
   meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
 } catch {
-  sh('curl', ['--noproxy', '*', '-sS', '--max-time', '30', 'https://tt-api-staging.fly.dev/meta', '-o', metaPath]);
+  sh('curl', ['--noproxy', '*', '-sS', '--max-time', '30', `${stagingApi}/meta`, '-o', metaPath]);
   meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
 }
 const webMetaPath = path.join(root, 'evidence/.tmp-ssot-web-meta.json');
@@ -78,7 +80,7 @@ let webMeta = {};
 try {
   webMeta = JSON.parse(fs.readFileSync(webMetaPath, 'utf8'));
 } catch {
-  sh('curl', ['--noproxy', '*', '-sS', '--max-time', '30', 'https://tt-web-staging.fly.dev/meta', '-o', webMetaPath]);
+  sh('curl', ['--noproxy', '*', '-sS', '--max-time', '30', `${stagingWeb}/meta`, '-o', webMetaPath]);
   webMeta = JSON.parse(fs.readFileSync(webMetaPath, 'utf8'));
 }
 const stagingSha = meta.build?.git_sha || '';
