@@ -62,6 +62,12 @@ describe("/auth/login UI freeze (① · AUTH-LOGIN-UI-FREEZE)", () => {
     expect(page).toContain("AuthL5PageBackdrop");
     expect(page).toContain("AuthL5CrossNavFooter");
     expect(page).toContain("resolvePostAuthReturnPath");
+    expect(page).toContain("AuthLoginGovernanceRemediationProgress");
+    const progress = readFileSync(
+      join(ROOT, "components", "auth", "AuthLoginGovernanceRemediationProgress.tsx"),
+      "utf8",
+    );
+    expect(progress).toContain('data-tt-auth-surface="login_governance_remediation"');
   });
 
   it("login route tsx sources forbid UI regressions", () => {

@@ -10,8 +10,8 @@
 
 **用途**：制作 **融资 PPT、白皮书 PDF、官网数据块** 时，从仓库 **SSOT** 快速定位**可复制段落与表格**，减少口径漂移。  
 **状态**：`Target`（摘抄前须 **[LEGAL-SIGNOFF-CHECKLIST](LEGAL-SIGNOFF-CHECKLIST.md)** 与 **[08-4-对外口径包](../08-4-对外口径包.md)** 闭合或等价审阅）  
-**版本**：1.0.2  
-**最后更新**：2026-03-26  
+**Version:** 1.0.4  
+**最后更新**：2026-06-16  
 
 ---
 
@@ -23,11 +23,13 @@
 | FeeRouter 一页图 | [08-4-附录-收益流闭环图-FeeRouter-Target](../08-4-附录-收益流闭环图-FeeRouter-Target.md) **§2～§4** | Mermaid / ASCII / 合成分解表；**摘抄前**须已理解 **84 §1.1.1**（分母）与 **Runbook §7.1**（正交路径） |
 | 可分配费用 100% 分母 · 正交路径 | [84 §1.1.1](../84-第一阶段10国Country-Pool发行参数总表.md)、[Runbook](../../../ops/RUNBOOK.md) **§7.1**、[08-4 第 2 章](../08-4-对外口径包.md) 扩展条 | PPT **勿**把仲裁费/slash 画进 45/55 同一分子；对外脚注模板见 **85 §十四 / §廿二** |
 | 区域治理机制（定义/状态机/DAO 边界） | [83-区域治理与收益分配-协议白皮书](../83-区域治理与收益分配-协议白皮书.md) 正文 **§1～§7** 节选 | 对外须压缩；风险见 **83** 风险披露节 |
-| Phase 1 十国表 + 募资合计 | [84-第一阶段10国Country-Pool发行参数总表](../84-第一阶段10国Country-Pool发行参数总表.md) **§四、§五** | 法币目标以表内为准 |
+| Phase 1 十国表 + 募资合计 | [country-pool-fundraise-governance-v1.md](country-pool-fundraise-governance-v1.md) **全文** · [84](../84-第一阶段10国Country-Pool发行参数总表.md) **§四、§五**（镜像） | 法币目标以 **治理表** 为准 · 合计 **5.35 亿** · **无硬顶** |
+| 国家池净利润 45/55（② 设计） | [country-pool-net-profit-settlement-v1-design.md](country-pool-net-profit-settlement-v1-design.md) | **设计 only** · 与 FeeRouter 第一层 **分轨** · 禁止 ① 冒充已链上 GO |
 | **TTG 供应 100% 分解（对内占位）** | [02-对内技术规格-草案](02-对内技术规格-草案.md) **§2.5** | 对外 PPT 须**法务定稿**后转写；**禁止**与 **84** 费用**百分点**同页误加总 |
 | 费用分母 vs 承销分母 | **84** **§1.3、§三** | 避免「28.5 vs 25」误读 |
 | 与 83 合并结论（旧数废止） | **84** **附录 A** | 对外若曾用 35/65 须改版 |
 | 治理币叙事（草案） | [01-对外白皮书-草案](01-对外白皮书-草案.md) | **非法务定稿不得募资印刷** |
+| **TTG Tokenomics V1 + GOV-01～04（冻结）** | [TTG-TOKENOMICS-FREEZE-V1.md](TTG-TOKENOMICS-FREEZE-V1.md) · [Final Audit Report](TTG-TOKENOMICS-FREEZE-V1-FINAL-AUDIT-REPORT.md) · [01 §4](01-对外白皮书-草案.md) | **Gate-2.4 / Sepolia 经济读口** · Pitch **禁止** 按持仓分现句 |
 
 ---
 
@@ -43,6 +45,8 @@
 
 | 版本 | 日期 | 说明 |
 |------|------|------|
+| 1.0.4 | 2026-06-16 | 增 **TTG-TOKENOMICS-FREEZE-V1** + GOV-01～04 Pitch 摘抄行 · Gate-2.4 经济读口。 |
+| 1.0.3 | 2026-06-15 | 募资摘抄改 **country-pool-fundraise-governance-v1** SSOT · 增 **country-pool-net-profit-settlement-v1-design**（②）行 · 废止 **84 硬顶/3.85 亿** 口径。 |
 | 1.0.2 | 2026-03-26 | §1 增 **84 §1.1.1** / **Runbook §7.1** / 08-4 摘抄行；FeeRouter 图行补分母与正交前置阅读。 |
 | 1.0.1 | 2026-03-26 | §1 增 **02 §2.5** 摘抄行（**100%** 分解 vs 费用% 防呆）。 |
 | 1.0.0 | 2026-03-26 | 初版：PPT/白皮书摘抄索引 + 08-4 附录图引用。 |

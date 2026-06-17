@@ -12,6 +12,9 @@ export type TtgExchangeQuoteResponse = {
   pay_amount?: string | null;
   receive_amount: string | null;
   rate: string | null;
+  rate_unit?: "USDC_per_TTG";
+  reference_price_cny_per_ttg?: number;
+  fdv_cny?: number;
   expires_at: string;
   escrow_settlement: {
     allowed_pay_stablecoins: TtgExchangePayStable[];
@@ -21,6 +24,8 @@ export type TtgExchangeQuoteResponse = {
   meta: {
     implementation_status: string;
     execute_path: string | null;
+    valuation_anchor_id?: string;
     doc?: string;
+    phase?: string;
   };
 };

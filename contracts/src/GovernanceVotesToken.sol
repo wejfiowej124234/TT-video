@@ -28,8 +28,9 @@ contract GovernanceVotesToken {
     error FutureLookup();
     error InsufficientAllowance();
 
-    constructor(uint256 initialSupply) {
-        _mint(msg.sender, initialSupply);
+    constructor(uint256 initialSupply, address initialHolder) {
+        address to = initialHolder == address(0) ? msg.sender : initialHolder;
+        _mint(to, initialSupply);
     }
 
     function transfer(address to, uint256 amount) external returns (bool) {

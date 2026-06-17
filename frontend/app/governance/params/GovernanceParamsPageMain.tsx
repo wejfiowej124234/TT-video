@@ -1,12 +1,24 @@
 "use client";
 
-import Link from "next/link";
-import { Suspense, useId } from "react";
+import { Suspense, useMemo, useId } from "react";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import LoadingText from "@/components/LoadingText";
 import { GovernanceParamsL5Shell } from "@/components/governance/GovernanceParamsL5Shell";
 import { GovernanceProposalsPageHeader } from "@/components/governance/GovernanceProposalsPageHeader";
-import { resolvePhase1CountryDisplay } from "@/lib/governance/governanceParamsCountryDisplay";
+import { formatCnyFdvBillions } from "@/lib/governance/ttgReferencePriceV1";
+import { countryPoolFundraiseTargetTotalCnyWan } from "@/lib/governance/countryPoolFundraiseGovernanceV1";
+import { applyGovernanceFundraiseTargetToRows } from "@/lib/governance/governanceParamsPhase1IndependentParamsModel";
+import { GovernanceParamsFeeRouterTechnicalSection } from "./GovernanceParamsFeeRouterTechnicalSection";
+import { GovernanceParamsGlobalTreasuryUsageSection } from "./GovernanceParamsGlobalTreasuryUsageSection";
+import { GovernanceParamsTtgSupplyStructureSection } from "./GovernanceParamsTtgSupplyStructureSection";
+import { GovernanceParamsOverviewSection } from "./GovernanceParamsOverviewSection";
+import { GovernanceParamsPhase1CountriesTables } from "./GovernanceParamsPhase1CountriesTables";
+import { GovernanceParamsPhase1IndependentParamsDetails } from "./GovernanceParamsPhase1IndependentParamsDetails";
+import { GovernanceParamsStewardContextPanel } from "./GovernanceParamsStewardContextPanel";
+import { GovernanceParamsGovFreezeRulesSection } from "./GovernanceParamsGovFreezeRulesSection";
+import { GovernanceParamsTreasuryPolicySection } from "./GovernanceParamsTreasuryPolicySection";
+import { GovernanceParamsTechnicalAppendixSection } from "./GovernanceParamsTechnicalAppendixSection";
+import { GovernanceParamsTtgBeyondCountriesSection } from "./GovernanceParamsTtgBeyondCountriesSection";
 import { PROTOCOL_REF_CHECKSUM_DISPLAY_KEYS, protocolReferenceHasSubstance } from "@/lib/governanceParams84Readonly";
 import {
   GOV_PARAMS_L5,
@@ -15,7 +27,6 @@ import {
 } from "@/lib/governance/governanceParamsPageL5";
 import {
   GovernanceParamsChecksumDetails,
-  GovernanceParamsPercentBar,
   GovernanceParamsRetryButton,
   GovernanceParamsSectionNav,
   GovernanceParamsTechnicalDetails,
@@ -27,7 +38,7 @@ import { GovernanceParamsStewardBackLink } from "./GovernanceParamsStewardBackLi
 import { CHECKSUM_I18N_KEY } from "./governanceParamsPageModel";
 import { useGovernanceParamsPage } from "./useGovernanceParamsPage";
 
-/** 13-1 表 1：/governance/params；C-GOV-011 · 84 文档镜像只读 · L5 冻结。 */
+/** 13-1 · /governance/params · C-GOV-011 文档镜像只读 · L5 冻结 */
 export function GovernanceParamsPageMain() {
   return (
     <Suspense fallback={null}>
@@ -43,8 +54,11 @@ function GovernanceParamsPageMainBody() {
   const diffSectionId = useId();
   const feeSplitSectionId = useId();
   const countriesSectionId = useId();
+  const globalPoolSectionId = useId();
+  const ttgGlobalUsageSectionId = useId();
   const diffTableCaptionId = useId();
-  const countriesTableCaptionId = useId();
+  const protocolTableCaptionId = useId();
+  const fundraiseTableCaptionId = useId();
   const {
     t,
     locale,
@@ -55,7 +69,6 @@ function GovernanceParamsPageMainBody() {
     pending,
     pendingErr,
     l1,
-    gsplit,
     diffRows,
     allMatch,
     pendingSource,
@@ -63,6 +76,12 @@ function GovernanceParamsPageMainBody() {
     retryPending,
   } = useGovernanceParamsPage();
 
+  const phase1Rows = useMemo(
+    () => applyGovernanceFundraiseTargetToRows(data?.phase1_countries ?? []),
+    [data?.phase1_countries],
+  );
+
+  const phase1FundraiseTotalWan = countryPoolFundraiseTargetTotalCnyWan();
   const showSectionNav = !loading && !error && data && protocolReferenceHasSubstance(data);
 
   return (
@@ -76,27 +95,156 @@ function GovernanceParamsPageMainBody() {
         lead={t("governance_params_lead")}
       />
 
-      <GovernanceParamsParticipatePanel t={t} className="mt-4" />
+      <GovernanceParamsStewardContextPanel t={t} className="mt-4" />
 
-      <GovernanceParamsL5Panel className="mt-4">
-        <p className={GOV_PARAMS_L5.sectionHeading}>{t("governance_params_data_scope_title")}</p>
-        <ul className={`mt-3 list-disc space-y-2 pl-5 ${GOV_PARAMS_L5.cardHint}`} role="list">
-          <li>{t("governance_params_data_scope_bullet_customer")}</li>
-          <li>{t("governance_params_data_scope_bullet_not_wallet")}</li>
-        </ul>
-        <div
-          role="note"
-          data-testid="governance-params-p553-data-scope"
-          aria-label={t("governance_params_data_scope_title")}
-          className="sr-only"
-        >
-          {t("governance_params_data_scope_bullet_customer")}
+      <GovernanceParamsOverviewSection t={t} className="mt-4" />
+
+      {showSectionNav ? <GovernanceParamsSectionNav t={t} className="mt-6" /> : null}
+
+      {!loading && !error && data && protocolReferenceHasSubstance(data) ? (
+        <div id="gov-params-allocation-detail" className="scroll-mt-24">
+        <GovernanceParamsL5Panel className="mt-6" data-tt-governance-params-allocation-detail="1">
+          <h2 className={GOV_PARAMS_L5.sectionHeading}>{t("governance_params_allocation_detail_title")}</h2>
+          <p className={`mt-2 max-w-3xl ${GOV_PARAMS_L5.metaNote}`}>{t("governance_params_allocation_detail_lead")}</p>
+
+          <h3 id={globalPoolSectionId} className={`mt-5 text-body font-semibold text-slate-100`}>
+            {t("governance_params_treasury_section_title")}
+          </h3>
+          <GovernanceParamsGlobalTreasuryUsageSection t={t} className="mt-2" />
+
+          <GovernanceParamsTreasuryPolicySection t={t} locale={locale} className="mt-6 border-t border-white/10 pt-5" />
+
+          <h3 className="mt-6 border-t border-white/10 pt-5 text-body font-semibold text-slate-100">
+            {t("governance_params_tokenomics_freeze_section_title")}
+          </h3>
+          <GovernanceParamsGovFreezeRulesSection t={t} locale={locale} className="mt-2" />
+
+          <h3
+            id={ttgGlobalUsageSectionId}
+            className="mt-6 border-t border-white/10 pt-5 text-body font-semibold text-slate-100"
+          >
+            {t("governance_params_ttg_supply_section_title")}
+          </h3>
+          <GovernanceParamsTtgSupplyStructureSection t={t} locale={locale} className="mt-2" />
+
+          <h3 className="mt-6 border-t border-white/10 pt-5 text-body font-semibold text-slate-100">
+            {t("governance_params_ttg_global_usage_section_title")}
+          </h3>
+          <GovernanceParamsTtgBeyondCountriesSection t={t} className="mt-2" />
+        </GovernanceParamsL5Panel>
         </div>
-      </GovernanceParamsL5Panel>
+      ) : null}
 
-      <p className={`mt-4 ${GOV_PARAMS_L5.noticeSoft}`} role="note" data-tt-governance-params-page-notice="1">
-        {t("governance_params_page_notice")}
-      </p>
+      {loading ? (
+        <GovernanceParamsL5Panel className="mt-6">
+          <h2 id={countriesSectionId} className={GOV_PARAMS_L5.sectionHeading}>
+            {t("governance_params_phase1_countries")}
+          </h2>
+          <div className={`mt-4 ${GOV_PARAMS_L5.loadingPanel}`}>
+            <LoadingText />
+          </div>
+        </GovernanceParamsL5Panel>
+      ) : null}
+
+      {error ? (
+        <GovernanceParamsL5Panel className="mt-6">
+          <h2 id={countriesSectionId} className={GOV_PARAMS_L5.sectionHeading}>
+            {t("governance_params_phase1_countries")}
+          </h2>
+          <div className="mt-4 space-y-3">
+            <ApiErrorAlert message={error} />
+            <GovernanceParamsRetryButton label={t("governance_params_retry_load")} onClick={retryAll} />
+          </div>
+        </GovernanceParamsL5Panel>
+      ) : null}
+
+      {!loading && !error && data && !protocolReferenceHasSubstance(data) && (
+        <GovernanceParamsL5Panel className="mt-6">
+          <h2 id={countriesSectionId} className={GOV_PARAMS_L5.sectionHeading}>
+            {t("governance_params_phase1_countries")}
+          </h2>
+          <p className={`mt-3 ${GOV_PARAMS_L5.filterEmptyPanel}`} role="alert">
+            {t("governance_params_body_incomplete")}
+          </p>
+          <GovernanceParamsRetryButton label={t("governance_params_retry_load")} onClick={retryAll} className="mt-3" />
+        </GovernanceParamsL5Panel>
+      )}
+
+      {!loading && !error && data && protocolReferenceHasSubstance(data) && (
+        <>
+          <div id="gov-params-countries" className="scroll-mt-24">
+            <GovernanceParamsL5Panel className="mt-6">
+              <h2 id={countriesSectionId} className={GOV_PARAMS_L5.sectionHeading}>
+                {t("governance_params_phase1_countries")}
+              </h2>
+              <p className={`mt-2 max-w-3xl ${GOV_PARAMS_L5.metaNote}`}>{t("governance_params_phase1_lead")}</p>
+              <GovernanceParamsPhase1CountriesTables
+                t={t}
+                locale={locale}
+                dash={dash}
+                rows={phase1Rows}
+                fundraiseTotalWan={phase1FundraiseTotalWan}
+                protocolTableCaptionId={protocolTableCaptionId}
+                fundraiseTableCaptionId={fundraiseTableCaptionId}
+              />
+              {data.valuation_anchor?.reference_price_cny_per_ttg ? (
+                <p
+                  className={`mt-4 ${GOV_PARAMS_L5.mutedNote}`}
+                  role="note"
+                  data-tt-governance-params-valuation-anchor="1"
+                >
+                  {t("governance_params_valuation_anchor_note", {
+                    cny: data.valuation_anchor.reference_price_cny_per_ttg,
+                    fdv: formatCnyFdvBillions(data.valuation_anchor.fdv_cny ?? 2_000_000_000, locale),
+                    id: data.valuation_anchor.id ?? "—",
+                  })}
+                </p>
+              ) : null}
+              <GovernanceParamsPhase1IndependentParamsDetails t={t} locale={locale} />
+            </GovernanceParamsL5Panel>
+          </div>
+
+          <GovernanceParamsTechnicalAppendixSection t={t} className="mt-6">
+            <GovernanceParamsFeeRouterTechnicalSection
+              t={t}
+              diffSectionId={diffSectionId}
+              feeSplitSectionId={feeSplitSectionId}
+              diffTableCaptionId={diffTableCaptionId}
+              l1={l1}
+              diffRows={diffRows}
+              allMatch={allMatch}
+              pending={pending}
+              pendingErr={pendingErr}
+              retryAll={retryAll}
+              retryPending={retryPending}
+            />
+            {data.checksums ? (
+              <div className="mt-6 border-t border-white/10 pt-4">
+                <GovernanceParamsChecksumDetails t={t}>
+                  <p className={`mb-3 ${GOV_PARAMS_L5.cardHint}`}>{t("governance_params_phase1_checksum_lead")}</p>
+                  <dl className="space-y-2 text-small">
+                    {PROTOCOL_REF_CHECKSUM_DISPLAY_KEYS.map((key) => {
+                      const raw = data.checksums![key];
+                      if (raw === undefined) return null;
+                      return (
+                        <div
+                          key={key}
+                          className="grid gap-1 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-baseline"
+                        >
+                          <dt className={GOV_PARAMS_L5.metaNote}>{t(CHECKSUM_I18N_KEY[key])}</dt>
+                          <dd className={`${GOV_PARAMS_TABLE.mono} text-right sm:text-left`}>{String(raw)}</dd>
+                        </div>
+                      );
+                    })}
+                  </dl>
+                </GovernanceParamsChecksumDetails>
+              </div>
+            ) : null}
+          </GovernanceParamsTechnicalAppendixSection>
+        </>
+      )}
+
+      <GovernanceParamsParticipatePanel t={t} className="mt-8" />
 
       <GovernanceParamsTechnicalDetails t={t} className="mt-4">
         <p className={`${GOV_PARAMS_L5.mutedNote} mb-3`}>{t("governance_params_doc_notice")}</p>
@@ -121,254 +269,6 @@ function GovernanceParamsPageMainBody() {
           </p>
         ) : null}
       </GovernanceParamsTechnicalDetails>
-
-      {showSectionNav ? <GovernanceParamsSectionNav t={t} className="mt-6" /> : null}
-
-      {loading ? (
-        <GovernanceParamsL5Panel className="mt-6">
-          <h2 id={diffSectionId} className={GOV_PARAMS_L5.sectionHeading}>
-            {t("governance_params_diff_section")}
-          </h2>
-          <div className={`mt-4 ${GOV_PARAMS_L5.loadingPanel}`}>
-            <LoadingText />
-          </div>
-        </GovernanceParamsL5Panel>
-      ) : null}
-
-      {error ? (
-        <GovernanceParamsL5Panel className="mt-6">
-          <h2 id={diffSectionId} className={GOV_PARAMS_L5.sectionHeading}>
-            {t("governance_params_diff_section")}
-          </h2>
-          <div className="mt-4 space-y-3">
-            <ApiErrorAlert message={error} />
-            <GovernanceParamsRetryButton label={t("governance_params_retry_load")} onClick={retryAll} />
-          </div>
-        </GovernanceParamsL5Panel>
-      ) : null}
-
-      {!loading && !error && data && !protocolReferenceHasSubstance(data) && (
-        <GovernanceParamsL5Panel className="mt-6">
-          <h2 id={diffSectionId} className={GOV_PARAMS_L5.sectionHeading}>
-            {t("governance_params_diff_section")}
-          </h2>
-          <p className={`mt-3 ${GOV_PARAMS_L5.filterEmptyPanel}`} role="alert">
-            {t("governance_params_body_incomplete")}
-          </p>
-          <GovernanceParamsRetryButton label={t("governance_params_retry_load")} onClick={retryAll} className="mt-3" />
-        </GovernanceParamsL5Panel>
-      )}
-
-      {!loading && !error && data && protocolReferenceHasSubstance(data) && (
-        <>
-          <div id="gov-params-diff">
-            <GovernanceParamsL5Panel className="mt-6">
-              <h2 id={diffSectionId} className={GOV_PARAMS_L5.sectionHeading}>
-                {t("governance_params_diff_section")}
-              </h2>
-              <p className={`mt-2 ${GOV_PARAMS_L5.metaNote}`}>{t("governance_params_diff_section_lead")}</p>
-              {pendingErr ? (
-                <div className="mt-4 space-y-3" role="alert">
-                  <ApiErrorAlert message={pendingErr} />
-                  <GovernanceParamsRetryButton label={t("governance_params_retry_pending")} onClick={retryPending} />
-                </div>
-              ) : pending === undefined ? (
-                <p
-                  className={`mt-4 ${GOV_PARAMS_L5.metaNote} animate-pulse motion-reduce:animate-none`}
-                  role="status"
-                  aria-live="polite"
-                >
-                  {t("governance_params_diff_pending_loading")}
-                </p>
-              ) : diffRows == null ? (
-                <div className="mt-4 space-y-3" role="alert">
-                  <p className={GOV_PARAMS_L5.filterEmptyPanel}>{t("governance_params_body_incomplete")}</p>
-                  <GovernanceParamsRetryButton label={t("governance_params_retry_load")} onClick={retryAll} />
-                </div>
-              ) : (
-                <>
-                  <p
-                    className={`mt-3 text-small font-medium ${
-                      allMatch ? GOV_PARAMS_L5.cardHint : "text-ref-sun/95"
-                    }`}
-                    role="status"
-                  >
-                    {allMatch ? t("governance_params_diff_all_match") : t("governance_params_diff_some_mismatch")}
-                  </p>
-                  {allMatch ? (
-                    <p className={`mt-3 ${GOV_PARAMS_L5.noticeSoft}`} role="status">
-                      {t("governance_params_match_customer_ok")}
-                    </p>
-                  ) : (
-                    <p className="mt-3">
-                      <Link href="/governance/proposals" className={GOV_PARAMS_L5.cardCta}>
-                        {t("governance_params_mismatch_cta_proposals")}
-                      </Link>
-                    </p>
-                  )}
-                  <div className="mt-4 overflow-x-auto">
-                    <table
-                      className="w-full min-w-[520px] border-collapse text-left text-small"
-                      aria-labelledby={diffTableCaptionId}
-                    >
-                      <caption id={diffTableCaptionId} className="sr-only">
-                        {t("governance_params_diff_section")}
-                      </caption>
-                      <thead>
-                        <tr className={GOV_PARAMS_TABLE.headRow}>
-                          <th scope="col" className="py-2 pr-3 font-medium">
-                            {t("governance_params_diff_col_metric")}
-                          </th>
-                          <th scope="col" className="py-2 pr-3 font-medium">
-                            {t("governance_params_diff_col_current")}
-                          </th>
-                          <th scope="col" className="py-2 pr-3 font-medium">
-                            {t("governance_params_diff_col_pending")}
-                          </th>
-                          <th scope="col" className="py-2 font-medium">
-                            {t("governance_params_diff_col_match")}
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {diffRows.map((row) => {
-                          const match = row.cur === row.pen;
-                          const bump = !match ? GOV_PARAMS_TABLE.bumpCell : "";
-                          return (
-                            <tr key={row.id} className={GOV_PARAMS_TABLE.bodyRow}>
-                              <th scope="row" className={`py-2 pr-3 text-left font-normal ${bump}`}>
-                                {t(row.labelKey)}
-                              </th>
-                              <td className={`py-2 pr-3 ${GOV_PARAMS_TABLE.mono} ${bump}`}>{row.cur}%</td>
-                              <td className={`py-2 pr-3 ${GOV_PARAMS_TABLE.mono} ${bump}`}>{row.pen}%</td>
-                              <td className={`py-2 ${bump}`}>
-                                {match ? t("governance_params_diff_match_yes") : t("governance_params_diff_match_no")}
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
-                </>
-              )}
-            </GovernanceParamsL5Panel>
-          </div>
-
-          <div id="gov-params-fee-split">
-            <GovernanceParamsL5Panel className="mt-6">
-              <h2 id={feeSplitSectionId} className={GOV_PARAMS_L5.sectionHeading}>
-                {t("governance_params_fee_split")}
-              </h2>
-              <p className={`mt-2 ${GOV_PARAMS_L5.metaNote}`}>{t("governance_params_fee_split_lead")}</p>
-              {l1 ? (
-                <div className="mt-5 space-y-4">
-                  <GovernanceParamsPercentBar
-                    label={t("governance_params_layer1_country")}
-                    value={l1.country_bucket}
-                  />
-                  <GovernanceParamsPercentBar label={t("governance_params_layer1_global")} value={l1.global_pool} />
-                </div>
-              ) : null}
-              {gsplit ? (
-                <div className="mt-5 space-y-4 border-t border-white/10 pt-5">
-                  <p className={GOV_PARAMS_L5.mutedNote}>{t("governance_params_fee_split_global_lead")}</p>
-                  <GovernanceParamsPercentBar
-                    label={`TTG ${t("governance_params_stakers")}`}
-                    value={gsplit.ttg_stakers}
-                  />
-                  <GovernanceParamsPercentBar label={t("governance_params_reserve")} value={gsplit.reserve} />
-                  <GovernanceParamsPercentBar label={t("governance_params_operations")} value={gsplit.operations} />
-                </div>
-              ) : null}
-            </GovernanceParamsL5Panel>
-          </div>
-
-          <div id="gov-params-countries">
-            <GovernanceParamsL5Panel className="mt-6">
-              <h2 id={countriesSectionId} className={GOV_PARAMS_L5.sectionHeading}>
-                {t("governance_params_phase1_countries")}
-              </h2>
-              <p className={`mt-2 ${GOV_PARAMS_L5.metaNote}`}>{t("governance_params_phase1_lead")}</p>
-              <div className="mt-4 overflow-x-auto">
-                <table
-                  className="w-full min-w-[640px] border-collapse text-left text-small"
-                  aria-labelledby={countriesTableCaptionId}
-                >
-                  <caption id={countriesTableCaptionId} className="sr-only">
-                    {t("governance_params_phase1_countries")}
-                  </caption>
-                  <thead>
-                    <tr className={GOV_PARAMS_TABLE.headRow}>
-                      <th scope="col" className="py-2 pr-3 font-medium">
-                        {t("governance_params_col_country")}
-                      </th>
-                      <th scope="col" className="py-2 pr-3 font-medium">
-                        {t("governance_params_col_tier")}
-                      </th>
-                      <th scope="col" className="py-2 pr-3 font-medium">
-                        {t("governance_params_col_cap_pts")}
-                      </th>
-                      <th scope="col" className="py-2 pr-3 font-medium">
-                        {t("governance_params_col_open_pts")}
-                      </th>
-                      <th scope="col" className="py-2 pr-3 font-medium">
-                        {t("governance_params_col_target_wan")}
-                      </th>
-                      <th scope="col" className="py-2 pr-3 font-medium">
-                        {t("governance_params_col_cap_wan")}
-                      </th>
-                      <th scope="col" className="py-2 font-medium">
-                        {t("governance_params_col_notes")}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {(data.phase1_countries ?? []).map((row) => {
-                      const display = resolvePhase1CountryDisplay(row, locale);
-                      return (
-                        <tr key={row.name_zh} className={GOV_PARAMS_TABLE.bodyRow}>
-                          <th scope="row" className="py-2 pr-3 text-left font-normal">
-                            {display.name}
-                          </th>
-                          <td className="py-2 pr-3">{row.tier}</td>
-                          <td className={`py-2 pr-3 ${GOV_PARAMS_TABLE.mono}`}>{row.national_pool_cap_fee_points}</td>
-                          <td className={`py-2 pr-3 ${GOV_PARAMS_TABLE.mono}`}>{row.phase1_open_fee_points}</td>
-                          <td className={`py-2 pr-3 ${GOV_PARAMS_TABLE.mono}`}>{row.fundraise_target_cny_wan}</td>
-                          <td className={`py-2 pr-3 ${GOV_PARAMS_TABLE.mono}`}>{row.fundraise_cap_cny_wan}</td>
-                          <td className={`py-2 ${GOV_PARAMS_L5.metaNote}`}>{display.notes ?? dash}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-              {data.checksums ? (
-                <div className="mt-5 border-t border-white/10 pt-4">
-                  <p className={GOV_PARAMS_L5.cardHint}>{t("governance_params_phase1_checksum_lead")}</p>
-                  <GovernanceParamsChecksumDetails t={t} className="mt-3">
-                    <dl className="space-y-2 text-small">
-                      {PROTOCOL_REF_CHECKSUM_DISPLAY_KEYS.map((key) => {
-                        const raw = data.checksums![key];
-                        if (raw === undefined) return null;
-                        return (
-                          <div
-                            key={key}
-                            className="grid gap-1 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-baseline"
-                          >
-                            <dt className={GOV_PARAMS_L5.metaNote}>{t(CHECKSUM_I18N_KEY[key])}</dt>
-                            <dd className={`${GOV_PARAMS_TABLE.mono} text-right sm:text-left`}>{String(raw)}</dd>
-                          </div>
-                        );
-                      })}
-                    </dl>
-                  </GovernanceParamsChecksumDetails>
-                </div>
-              ) : null}
-            </GovernanceParamsL5Panel>
-          </div>
-        </>
-      )}
 
       <GovernanceParamsPageFooterNav t={t} />
     </GovernanceParamsL5Shell>

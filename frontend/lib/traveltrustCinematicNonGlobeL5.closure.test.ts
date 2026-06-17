@@ -166,6 +166,7 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
     );
     expect(stable).toContain("traveltrustLiquidityGatewayModel");
     expect(stable).toContain("data-tt-traveltrust-ttg-gateway-preview");
+    expect(stable).toContain("data-tt-traveltrust-ttg-mock-swap-v1");
     expect(stable).not.toContain('to: "USDC"');
     expect(stable).not.toContain('from: "USDT", to: "USDC"');
     const settlement = readFileSync(join(CINEMATIC, "TravelTrustSettlementStrip.tsx"), "utf8");

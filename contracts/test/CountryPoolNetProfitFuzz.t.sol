@@ -37,7 +37,7 @@ contract CountryPoolNetProfitFuzzTest is Test {
         s.steward = makeAddr("fuzzSteward");
 
         s.usdc = new MockERC20();
-        s.ttg = new GovernanceVotesToken(1_000_000_000e18);
+        s.ttg = new GovernanceVotesToken(1_000_000_000e18, address(0));
         s.stakePool = new RegionStewardStakePool(s.owner, address(s.ttg), 1_000_000_000e18, 7 days, 14 days);
         vm.prank(s.owner);
         s.stakePool.configureJurisdiction(J_DE, 400);

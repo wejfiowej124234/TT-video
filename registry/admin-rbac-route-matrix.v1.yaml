@@ -1,6 +1,6 @@
-# Admin route × permission probe matrix (① local smoke; ② staging 93 deep batch separate)
+# Admin route × permission probe matrix (① local smoke · SSOT = admin_rbac.rs ROUTE_DENY_MATRIX)
 
-version: admin-rbac-v3-db-prep-2026-06-03
+version: admin-rbac-v4-cms-ops-growth-2026-06-07
 
 routes:
   - method: GET
@@ -11,6 +11,18 @@ routes:
     permission: admin.orders.read
   - method: GET
     path: /api/v1/admin/finance/summary
+    permission: admin.finance.read
+  - method: GET
+    path: /api/v1/admin/finance/summary/export
+    permission: admin.finance.read
+  - method: GET
+    path: /api/v1/admin/fee-router/routed-events
+    permission: admin.finance.read
+  - method: GET
+    path: /api/v1/admin/region-vault/forwarded-events
+    permission: admin.finance.read
+  - method: GET
+    path: /api/v1/admin/region-vault/forwarded-events/export
     permission: admin.finance.read
   - method: GET
     path: /api/v1/admin/flags
@@ -36,12 +48,60 @@ routes:
   - method: POST
     path: /api/v1/admin/approvals/:id/approve
     permission: admin.approve
+  - method: POST
+    path: /api/v1/admin/approvals/:id/reject
+    permission: admin.approve
+  - method: GET
+    path: /api/v1/admin/audit/operations
+    permission: admin.read
+  - method: GET
+    path: /api/v1/admin/audit-logs
+    permission: admin.read
+  - method: GET
+    path: /api/v1/admin/audit-logs/:id
+    permission: admin.read
+  - method: GET
+    path: /api/v1/admin/auth-audit-events
+    permission: admin.read
+  - method: GET
+    path: /api/v1/admin/community/reports
+    permission: admin.community.read
+  - method: GET
+    path: /api/v1/admin/community/appeals
+    permission: admin.community.read
+  - method: GET
+    path: /api/v1/admin/community/moderation/cases
+    permission: admin.community.read
+  - method: GET
+    path: /api/v1/admin/community/penalties
+    permission: admin.community.read
+  - method: GET
+    path: /api/v1/admin/community/ranking/snapshots
+    permission: admin.community.read
+  - method: GET
+    path: /api/v1/admin/community/risk-signals
+    permission: admin.community.read
+  - method: GET
+    path: /api/v1/admin/community/policy-change-logs
+    permission: admin.community.read
   - method: PATCH
     path: /api/v1/admin/community/reports/:id
+    permission: admin.community.moderate
+  - method: PATCH
+    path: /api/v1/admin/community/moderation/:id
+    permission: admin.community.moderate
+  - method: PATCH
+    path: /api/v1/admin/community/comments/:id
     permission: admin.community.moderate
   - method: POST
     path: /api/v1/admin/community/penalties
     permission: admin.community.moderate
+  - method: POST
+    path: /api/v1/admin/community/appeals/:id/review
+    permission: admin.community.super
+  - method: PATCH
+    path: /api/v1/admin/community/abuse-policy
+    permission: admin.community.super
   - method: PATCH
     path: /api/v1/admin/trust-growth/control
     permission: admin.trust_growth.write

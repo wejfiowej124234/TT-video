@@ -3,6 +3,14 @@ pragma solidity 0.8.19;
 
 import "./IERC20.sol";
 
+interface ITtgSeatConcentrationRegistry {
+    function assertStakeAllowed(address staker, bytes2 jurisdiction, uint256 amount) external view;
+
+    function onStake(address staker, bytes2 jurisdiction, uint256 amount) external;
+
+    function onReleaseComplete(address staker, bytes2 jurisdiction, uint256 amount) external;
+}
+
 /**
  * @title RegionStewardStakePool
  * @notice Protocol Convergence P2 — TTG 主理人 Seat 质押池（R1 · fund-flow-ssot §3）。
@@ -16,6 +24,7 @@ contract RegionStewardStakePool {
     uint256 public immutable releaseVestSeconds;
 
     address public owner;
+    ITtgSeatConcentrationRegistry public seatConcentrationRegistry;
 
     struct StakePosition {
         uint256 amount;
@@ -33,6 +42,7 @@ contract RegionStewardStakePool {
     mapping(address => mapping(bytes2 => bool)) public hasJurisdictionStake;
 
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+    event SeatConcentrationRegistryUpdated(address indexed previousRegistry, address indexed registry);
     event JurisdictionConfigured(bytes2 indexed jurisdiction, uint256 stewardStakeBps);
     event StewardStaked(
         address indexed user, bytes2 indexed jurisdiction, uint256 amount, bytes32 applicationId
@@ -51,6 +61,11 @@ contract RegionStewardStakePool {
     error ReleaseNotRequested();
     error ReleaseDelayPending();
     error NothingToRelease();
+    error ProxyStorageAlreadyInitialized();
+    error JurisdictionsAlreadyBootstrapped();
+
+    event ProxyStorageInitialized(address owner);
+    event ProtocolSsotJurisdictionsBootstrapped();
 
     modifier onlyOwner() {
         if (msg.sender != owner) revert OnlyOwner();
@@ -94,6 +109,11 @@ contract RegionStewardStakePool {
         owner = newOwner;
     }
 
+    function setSeatConcentrationRegistry(address registry) external onlyOwner {
+        emit SeatConcentrationRegistryUpdated(address(seatConcentrationRegistry), registry);
+        seatConcentrationRegistry = ITtgSeatConcentrationRegistry(registry);
+    }
+
     function configureJurisdiction(bytes2 jurisdiction, uint256 stakeBps) external onlyOwner {
         if (uint16(jurisdiction) == 0 || stakeBps == 0) revert InvalidJurisdiction();
         stewardStakeBps[jurisdiction] = stakeBps;
@@ -106,12 +126,27 @@ contract RegionStewardStakePool {
         return (ttgTotalSupplyUnits * bps) / 10_000;
     }
 
+    /// @notice Phase 1 · 10 国是否已从 protocol-ssot 写入 storage（Proxy 路径须显式 bootstrap）
+    function jurisdictionsBootstrapped() public view returns (bool) {
+        return stewardStakeBps[bytes2("CN")] != 0;
+    }
+
+    /// @notice Owner（GovFreeze = Timelock）一次性写入 10 国 steward_stake_bps · 已写入则 revert
+    function bootstrapProtocolSsotJurisdictionsOnce() external onlyOwner {
+        if (jurisdictionsBootstrapped()) revert JurisdictionsAlreadyBootstrapped();
+        _bootstrapProtocolSsotJurisdictions();
+        emit ProtocolSsotJurisdictionsBootstrapped();
+    }
+
     function stake(bytes2 jurisdiction, uint256 amount, bytes32 applicationId) external {
         if (uint16(jurisdiction) == 0) revert InvalidJurisdiction();
         if (amount == 0) revert InvalidAmount();
         if (hasJurisdictionStake[msg.sender][jurisdiction]) revert JurisdictionAlreadyStaked();
         uint256 minAmt = minStakeAmount(jurisdiction);
         if (minAmt == 0 || amount < minAmt) revert BelowMinStake();
+        if (address(seatConcentrationRegistry) != address(0)) {
+            seatConcentrationRegistry.assertStakeAllowed(msg.sender, jurisdiction, amount);
+        }
         if (!ttg.transferFrom(msg.sender, address(this), amount)) revert TransferFailed();
 
         stakes[msg.sender][jurisdiction] = StakePosition({
@@ -123,6 +158,9 @@ contract RegionStewardStakePool {
             active: true
         });
         hasJurisdictionStake[msg.sender][jurisdiction] = true;
+        if (address(seatConcentrationRegistry) != address(0)) {
+            seatConcentrationRegistry.onStake(msg.sender, jurisdiction, amount);
+        }
         emit StewardStaked(msg.sender, jurisdiction, amount, applicationId);
     }
 
@@ -145,6 +183,9 @@ contract RegionStewardStakePool {
         if (p.releasedAmount >= p.amount) {
             p.active = false;
             hasJurisdictionStake[msg.sender][jurisdiction] = false;
+            if (address(seatConcentrationRegistry) != address(0)) {
+                seatConcentrationRegistry.onReleaseComplete(msg.sender, jurisdiction, p.amount);
+            }
         }
         if (!ttg.transfer(msg.sender, releasable)) revert TransferFailed();
         emit StewardReleased(msg.sender, jurisdiction, releasable);
@@ -181,5 +222,15 @@ contract RegionStewardStakePool {
 
     function version() external pure returns (string memory) {
         return "region_steward_stake_pool_v1";
+    }
+
+    /// @notice G24-P-UPGRADE-01 · Proxy storage bootstrap（immutable ttg/supply 来自 Implementation constructor）
+    function initializeProxyStorage(address owner_) external {
+        if (owner != address(0)) revert ProxyStorageAlreadyInitialized();
+        if (owner_ == address(0)) revert InvalidAddress();
+        owner = owner_;
+        _bootstrapProtocolSsotJurisdictions();
+        emit ProxyStorageInitialized(owner_);
+        emit ProtocolSsotJurisdictionsBootstrapped();
     }
 }

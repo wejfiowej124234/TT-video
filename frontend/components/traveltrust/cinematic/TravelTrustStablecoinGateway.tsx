@@ -26,7 +26,16 @@ import {
 import { traveltrustLiquidityContractFromBrief } from "@/lib/traveltrustLiquidityContract";
 import { useTravelTrustPageBriefContext } from "@/app/traveltrust/TravelTrustPageBriefContext";
 
-/** 治理币（TTG）兑换入口 — ① 预览 UI；真链路径见 96-18 / 治理中心（非 USDC↔USDT） */
+import {
+  quoteTtgMockSwapFromUsdc,
+  TTG_MOCK_USDC_PER_TTG,
+  TTG_REFERENCE_PRICE_V1,
+  formatUsdcRate,
+} from "@/lib/governance/ttgReferencePriceV1";
+
+const MOCK_SWAP_STORAGE_KEY = "traveltrust_mock_ttg_swap_v1_last";
+
+/** 治理币（TTG）兑换入口 — ① 固定价 Mock Swap；真链路径见 96-18 / 治理中心（非 USDC↔USDT） */
 export function TravelTrustStablecoinGateway() {
   const { t } = useTranslation();
   const reduceMotion = useReducedMotion();
@@ -36,25 +45,75 @@ export function TravelTrustStablecoinGateway() {
   const [payStable, setPayStable] = useState<TraveltrustEscrowSettlementStablecoin>(
     liquidityContract.default_pay_stable ?? TRAVELTRUST_DEFAULT_SETTLEMENT_STABLECOIN,
   );
+  const [payAmount, setPayAmount] = useState("100");
   const [previewNote, setPreviewNote] = useState<string | null>(null);
   const [quoteLoading, setQuoteLoading] = useState(false);
+  const [mockSwapping, setMockSwapping] = useState(false);
+  const localQuote = useMemo(() => quoteTtgMockSwapFromUsdc(payAmount), [payAmount]);
   const { isConnected } = useAccount();
   const { connect, connectors, isPending } = useConnect();
   const pair = traveltrustTtgAcquirePreviewPair(payStable);
 
-  const onSwapPreview = async () => {
+  const onRefreshQuote = async () => {
+    if (!localQuote) {
+      setPreviewNote(t("traveltrust_liquidity_amount_invalid"));
+      return;
+    }
     setQuoteLoading(true);
     trackTravelTrustEvent("traveltrust_secondary_cta_click", {
-      source: "liquidity_ttg_preview",
+      source: "liquidity_ttg_quote",
       target: `${pair.from}->${pair.to}`,
     });
     try {
-      await getTtgExchangeQuote(payStable);
-      setPreviewNote(t("traveltrust_liquidity_preview_toast"));
+      const apiQuote = await getTtgExchangeQuote(payStable, payAmount);
+      setPreviewNote(
+        t("traveltrust_liquidity_quote_line", {
+          pay: apiQuote.pay_amount ?? payAmount,
+          receive: apiQuote.receive_amount ?? localQuote.receiveTtg,
+          rate: apiQuote.rate ?? formatUsdcRate(TTG_MOCK_USDC_PER_TTG),
+          cny: TTG_REFERENCE_PRICE_V1.referencePriceCnyPerTtg,
+        }),
+      );
     } catch {
       setPreviewNote(t("traveltrust_liquidity_quote_unavailable"));
     } finally {
       setQuoteLoading(false);
+    }
+  };
+
+  const onMockSwap = async () => {
+    if (!localQuote) {
+      setPreviewNote(t("traveltrust_liquidity_amount_invalid"));
+      return;
+    }
+    setMockSwapping(true);
+    trackTravelTrustEvent("traveltrust_secondary_cta_click", {
+      source: "liquidity_ttg_mock_swap",
+      target: `${pair.from}->${pair.to}`,
+    });
+    try {
+      const apiQuote = await getTtgExchangeQuote(payStable, payAmount);
+      const payload = {
+        at: new Date().toISOString(),
+        payStable: apiQuote.pay_stable,
+        payAmount: apiQuote.pay_amount ?? payAmount,
+        receiveTtg: apiQuote.receive_amount ?? localQuote.receiveTtg,
+        rate: apiQuote.rate,
+        valuationAnchorId: apiQuote.meta.valuation_anchor_id ?? TTG_REFERENCE_PRICE_V1.id,
+      };
+      if (typeof window !== "undefined") {
+        window.sessionStorage.setItem(MOCK_SWAP_STORAGE_KEY, JSON.stringify(payload));
+      }
+      setPreviewNote(
+        t("traveltrust_liquidity_mock_swap_success", {
+          pay: payload.payAmount,
+          receive: payload.receiveTtg,
+        }),
+      );
+    } catch {
+      setPreviewNote(t("traveltrust_liquidity_quote_unavailable"));
+    } finally {
+      setMockSwapping(false);
     }
   };
 
@@ -65,6 +124,7 @@ export function TravelTrustStablecoinGateway() {
       aria-labelledby={titleId}
       data-tt-traveltrust-stable-gateway="1"
       data-tt-traveltrust-ttg-gateway-preview="1"
+      data-tt-traveltrust-ttg-mock-swap-v1="1"
       data-tt-traveltrust-liquidity-l5-defer="illustrative-only"
       {...traveltrustSectionL5DataAttrs("liquidity")}
     >
@@ -223,36 +283,42 @@ export function TravelTrustStablecoinGateway() {
 
         <label className={TT_STABLECOIN_GATEWAY_L5.amountFieldWrapClass}>
           <span className={TT_STABLECOIN_GATEWAY_L5.fieldLabelClass}>{t("traveltrust_liquidity_amount")}</span>
-          <motion.input
+          <input
             type="text"
             inputMode="decimal"
-            readOnly
-            value="—"
-            aria-describedby="traveltrust-liquidity-amount-locked-hint traveltrust-liquidity-preview-note"
-            className={TT_STABLECOIN_GATEWAY_L5.amountLockedClass}
-            data-tt-traveltrust-liquidity-amount-preview="1"
-            data-tt-traveltrust-stablecoin-amount-locked-warm-l5="1"
-            animate={reduceMotion ? undefined : { opacity: [...TT_STABLECOIN_GATEWAY_L5.amountLockedPulse.opacity] }}
-            transition={
-              reduceMotion
-                ? undefined
-                : {
-                    duration: TT_STABLECOIN_GATEWAY_L5.amountLockedPulse.duration,
-                    repeat: TT_STABLECOIN_GATEWAY_L5.amountLockedPulse.repeat,
-                    ease: "easeInOut",
-                  }
-            }
+            value={payAmount}
+            onChange={(e) => {
+              setPayAmount(e.target.value);
+              setPreviewNote(null);
+            }}
+            aria-describedby="traveltrust-liquidity-amount-hint traveltrust-liquidity-preview-note"
+            className={`${TT_STABLECOIN_GATEWAY_L5.fieldIdleClass} font-mono text-small text-slate-100`}
+            data-tt-traveltrust-liquidity-amount-input="1"
           />
         </label>
 
         <p
-          id="traveltrust-liquidity-amount-locked-hint"
+          id="traveltrust-liquidity-amount-hint"
+          className={TT_STABLECOIN_GATEWAY_L5.amountLockedHintClass}
+          data-tt-traveltrust-liquidity-rate-hint="1"
+        >
+          {localQuote
+            ? t("traveltrust_liquidity_rate_line", {
+                pay: payAmount,
+                receive: localQuote.receiveTtg,
+                rate: localQuote.rateUsdcPerTtg,
+                cny: localQuote.referencePriceCnyPerTtg,
+              })
+            : t("traveltrust_liquidity_amount_invalid")}
+        </p>
+
+        <p
+          id="traveltrust-liquidity-preview-note"
           className={TT_STABLECOIN_GATEWAY_L5.amountLockedHintClass}
           role="status"
           data-tt-traveltrust-liquidity-preview-toast="1"
-          data-tt-traveltrust-liquidity-amount-locked-hint="1"
         >
-          {previewNote ?? t("traveltrust_liquidity_amount_preview_hint")}
+          {previewNote ?? t("traveltrust_liquidity_mock_swap_hint")}
         </p>
 
         <motion.div
@@ -299,18 +365,31 @@ export function TravelTrustStablecoinGateway() {
               {t("traveltrust_liquidity_connect")}
             </motion.button>
           ) : (
-            <motion.button
-              type="button"
-              disabled={quoteLoading}
-              whileHover={reduceMotion ? undefined : { y: -2 }}
-              whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-              onClick={() => void onSwapPreview()}
-              aria-describedby="traveltrust-liquidity-preview-note"
-              className={TT_STABLECOIN_GATEWAY_L5.ctaConnectClass}
-              data-tt-traveltrust-ttg-quote-preview="1"
-            >
-              {quoteLoading ? t("traveltrust_liquidity_quote_loading") : t("traveltrust_liquidity_swap_preview")}
-            </motion.button>
+            <>
+              <motion.button
+                type="button"
+                disabled={quoteLoading || !localQuote}
+                whileHover={reduceMotion ? undefined : { y: -2 }}
+                whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+                onClick={() => void onRefreshQuote()}
+                className={TT_STABLECOIN_GATEWAY_L5.ctaConnectClass}
+                data-tt-traveltrust-ttg-quote-refresh="1"
+              >
+                {quoteLoading ? t("traveltrust_liquidity_quote_loading") : t("traveltrust_liquidity_quote_refresh")}
+              </motion.button>
+              <motion.button
+                type="button"
+                disabled={mockSwapping || !localQuote}
+                whileHover={reduceMotion ? undefined : { y: -2 }}
+                whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+                onClick={() => void onMockSwap()}
+                aria-describedby="traveltrust-liquidity-preview-note"
+                className={TT_STABLECOIN_GATEWAY_L5.ctaSwapClass}
+                data-tt-traveltrust-ttg-mock-swap="1"
+              >
+                {mockSwapping ? t("traveltrust_liquidity_quote_loading") : t("traveltrust_liquidity_mock_swap")}
+              </motion.button>
+            </>
           )}
         </motion.div>
 

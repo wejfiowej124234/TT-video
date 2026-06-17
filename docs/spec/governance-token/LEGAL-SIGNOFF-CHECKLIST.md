@@ -31,6 +31,32 @@
 | ☐ | **OperationsVault 不可退（R5 · P1 纪要）** | 对外材料说明 **已花运营费不退给退出者**；赎回仅 **NAV 比例**；与 **fund-flow-ssot §2** · **08-4 §2** 一致 |
 | ☐ | **收益流图示** | 若 PPT/PDF 含手续费分配图，须与 [08-4-附录-收益流闭环图-FeeRouter-Target](../08-4-附录-收益流闭环图-FeeRouter-Target.md) 或经法务批准的等价图一致；图示旁须与 **84 §1.1.1** 一致标注 **gas/仲裁/slash 不在本图 100% 分母内**（或等价法务批准脚注） |
 | ☐ | **13-1 表 2-续 与对外稿一致** | 产品内 **`/governance`**（只读池/激励展示 vs 链上 DAO）与 [13-1-UI产品级SSOT与页面规范](../13-1-UI产品级SSOT与页面规范.md) **表 2-续**、[83](../83-区域治理与收益分配-协议白皮书.md) **附录 I.0** 边界一致；**对外稿 / 落地页 / APP** 不得暗示「页面数字即链上真值」或越权承诺，除非已与法务定稿的披露句一致 |
+| ☐ | **路径 B · P4 治理 + 回购/销毁（08-4 §9-b）** | [ttg-primary-market-and-exit-policy-v1](ttg-primary-market-and-exit-policy-v1-draft.md) · [country-revenue-model §2.1](country-revenue-model-v1-draft.md) 与 **08-4 §9-b** 同读；**禁止**对外「自动按 TTG 分 55% 现金」；**③** Howey 书面结论 |
+| ☐ | **公众三轮 + KYC/AML（§3.3）** | Early 500k TTG · Round 2/3 治理开启 · **③** KYC/AML/辖区清单定稿前 **不得** 真收 USDC |
+| ☐ | **Seat 退出（不退 USDC）** | 与 [fund-flow-ssot §3](fund-flow-ssot.v1.md) · [state-machine §2.1](state-machine.v1.md) 一致；**禁止** 刚性 USDC 兑付措辞 |
+| ☐ | **TTG Tokenomics V1 · GOV-01～04（FROZEN）** | [TTG-TOKENOMICS-FREEZE-V1](TTG-TOKENOMICS-FREEZE-V1.md) · [Final Audit Report](TTG-TOKENOMICS-FREEZE-V1-FINAL-AUDIT-REPORT.md) · 08-4 **§9-c** · `/governance/params#gov-params-tokenomics-freeze` |
+| ☐ | **GOV-01 Treasury 30% cap** | `treasury_p4_deploy_cap_bps=3000` · 非按持仓分现 |
+| ☐ | **GOV-02 Quorum 4%** | `governance_quorum_bps=400` · approval 50% · timelock 48h |
+| ☐ | **GOV-03 Seat 集中度** | max 1 Seat/entity · max 4% vote · max 4% aggregate stake |
+| ☐ | **GOV-04 单钱包 25,000 TTG** | 公众三轮 · min 100 USDC · ③ KYC |
+
+---
+
+## D-4555-B · Country Pool 净利润结算（Gate-0 切片 · 2026-06-15）
+
+**SSOT：** [country-pool-legal-freeze-matrix-v1.md](country-pool-legal-freeze-matrix-v1.md) · [country-pool-net-profit-accounting-spec-v1.md](country-pool-net-profit-accounting-spec-v1.md) **§9**
+
+| ☐ | 项 | 状态 |
+|---|-----|------|
+| ☑ | **D-4555-B 分轨披露（L-01）** | **2026-06-15** |
+| ☑ | **科目与亏损 · 无保底分配（L-02 · L-05）** | **2026-06-15** |
+| ☑ | **StewardPath · 非证券型收益承诺（L-03）** | **2026-06-15** |
+| ☑ | **Unallocated 托管 · 08-4 证券隔离（L-07）** | **2026-06-15** |
+| ☑ | **08-4 §2 Howey / 收益证券隔离覆盖 D-4555-B（L-04）** | **2026-06-15** |
+| ☑ | **Global vs Steward 分轨（L-06）** | **2026-06-15** |
+| ☑ | **跨辖区 LEG-XJ-01～05** | **2026-06-15** |
+
+**② 链上读数前提：** 上表 **全部 ☑**（**≠** ③ 对外印刷 GO · Owner 自证见 accounting-spec **§10**）。
 
 ---
 

@@ -11,7 +11,7 @@ export type CountryRow84 = {
   national_pool_cap_fee_points: number;
   phase1_open_fee_points: number;
   fundraise_target_cny_wan: number;
-  fundraise_cap_cny_wan: number;
+  fundraise_target_source?: "governance_board_per_country";
   notes?: string;
 };
 
@@ -26,6 +26,21 @@ export type ProtocolRef84Mirror = {
     layer1_percent_of_allocatable_platform_fee?: FeeLayer;
     global_pool_split_percent?: GlobalSplit;
     orthogonality_ref?: string;
+  };
+  valuation_anchor?: {
+    id?: string;
+    reference_price_cny_per_ttg?: number;
+    fdv_cny?: number;
+    mock_usdc_per_ttg?: number;
+    status?: string;
+    fundraise_model?: string;
+    fundraise_governance_ref?: string;
+    independent_parameter_systems?: {
+      fundraise_target?: string;
+      seat_stake_ttg?: string;
+      fee_points?: string;
+      auto_conversion_between_systems?: boolean;
+    };
   };
   phase1_countries?: CountryRow84[];
   checksums?: Record<string, string | number>;

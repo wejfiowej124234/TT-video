@@ -8,6 +8,7 @@ use crate::state::ApiMetaState;
 use super::doc_params::{
     get_governance_params, get_protocol_reference, get_protocol_reference_pending,
 };
+use super::ttg_exchange_quote::get_ttg_exchange_quote;
 use super::fee_pool_aggregate::get_governance_fee_pool_aggregates;
 use super::governance_pool::get_governance_pool;
 use super::governance_reads::{
@@ -45,5 +46,9 @@ pub fn router() -> Router<ApiMetaState> {
             get(get_protocol_reference_pending),
         )
         .route("/api/v1/governance/params", get(get_governance_params))
+        .route(
+            "/api/v1/governance/ttg-exchange/quote",
+            get(get_ttg_exchange_quote),
+        )
         .merge(super::state_machines::state_machines_route())
 }

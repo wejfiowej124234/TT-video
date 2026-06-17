@@ -1,4 +1,6 @@
-# 仓库阶段状态 · Phase ① Freeze + Phase ② Prepared / Not Started
+# 仓库阶段状态 · Phase ① Freeze + Phase ② Closing Gap GO Ready
+
+> **Open 项收口 SSOT（② · 2026-06-17）：** [PHASE2-OPEN-ITEMS-BURN-DOWN.md](./PHASE2-OPEN-ITEMS-BURN-DOWN.md) — 非 Timelock/钱包/72h Soak 项已提前关闭；**剩余仅时间闸 + 人工闸**。
 
 **生效：** 2026-06-06（Closing Gap 宽轨复跑 · **`TT_PHASE2_GO_VERDICT: PHASE2_GO_READY`**）
 
@@ -80,6 +82,7 @@
 | 类 | 路径 |
 |----|------|
 | ① 收口审计 | [PHASE1-ENTERPRISE-CLOSURE-AUDIT](./PHASE1-ENTERPRISE-CLOSURE-AUDIT.md) |
+| ② Open burn-down | [PHASE2-OPEN-ITEMS-BURN-DOWN](./PHASE2-OPEN-ITEMS-BURN-DOWN.md) · 仅留 TIME+HUMAN+SOAK+WALLET |
 | ② 缺口审计 | [PHASE2-ENTERPRISE-GAP-AUDIT](./PHASE2-ENTERPRISE-GAP-AUDIT.md) |
 | ② 启动清单 | [PHASE2-START-CHECKLIST](./PHASE2-START-CHECKLIST.md) |
 | 宽 ② 验收 | [PHASE2-TESTNET-ACCEPTANCE](./PHASE2-TESTNET-ACCEPTANCE.md) |

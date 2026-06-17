@@ -43,6 +43,8 @@ contract TravelTrustGovernor {
     uint256 public immutable proposalThresholdVotes;
     /// @notice **quorum**：**`(for+abstain) >= supply@snapshot * quorumNumeratorBps / 10000`**
     uint256 public immutable quorumNumeratorBps;
+    /// @notice **GOV-03** · 单地址投票权重上限（bps of supply@snapshot）· **0** = 不封顶（遗留测试）
+    uint256 public immutable maxVotingPowerPerAddressBps;
 
     /// @notice **TT-B110**：订单 **`rating_deadline`** 评价窗口天数链上 SSOT（**`eth_call` `orderRatingReviewWindowDays()`**）；与后端 **`GOVERNANCE_ORDER_DEADLINE_CHAIN_SSOT`** 联用；治理可通过 Timelock 执行对 Governor 的 **`setOrderRatingReviewWindowDays`** 更新。
     uint256 public orderRatingReviewWindowDays;
@@ -97,6 +99,7 @@ contract TravelTrustGovernor {
         uint256 votingPeriodBlocks_,
         uint256 proposalThresholdVotes_,
         uint256 quorumNumeratorBps_,
+        uint256 maxVotingPowerPerAddressBps_,
         uint256 orderRatingReviewWindowDays_
     ) {
         token = token_;
@@ -105,6 +108,7 @@ contract TravelTrustGovernor {
         votingPeriodBlocks = votingPeriodBlocks_;
         proposalThresholdVotes = proposalThresholdVotes_;
         quorumNumeratorBps = quorumNumeratorBps_;
+        maxVotingPowerPerAddressBps = maxVotingPowerPerAddressBps_;
         if (orderRatingReviewWindowDays_ == 0 || orderRatingReviewWindowDays_ > 3660) revert GovInvalidReviewWindowDays();
         orderRatingReviewWindowDays = orderRatingReviewWindowDays_;
     }
@@ -159,6 +163,11 @@ contract TravelTrustGovernor {
 
         weight = token.getPastVotes(voter, p.snapshot);
         if (weight == 0) revert GovBadState();
+        if (maxVotingPowerPerAddressBps > 0) {
+            uint256 supply = token.getPastTotalSupply(p.snapshot);
+            uint256 maxWeight = (supply * maxVotingPowerPerAddressBps) / 10_000;
+            if (weight > maxWeight) weight = maxWeight;
+        }
 
         if (support == 1) p.forVotes += weight;
         else if (support == 0) p.againstVotes += weight;

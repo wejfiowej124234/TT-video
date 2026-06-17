@@ -119,15 +119,18 @@ impl ChainConfig {
             escrow_factory_address: Self::env_nonempty("ESCROW_FACTORY_ADDRESS"),
             fee_router_address: Self::env_nonempty("FEE_ROUTER_ADDRESS"),
             region_vault_address: Self::env_nonempty("REGION_VAULT_ADDRESS"),
-            country_pool_ledger_address: Self::env_nonempty("COUNTRY_POOL_LEDGER_ADDRESS"),
+            country_pool_ledger_address: Self::env_nonempty("COUNTRY_POOL_NET_PROFIT_LEDGER_ADDRESS")
+                .or_else(|| Self::env_nonempty("COUNTRY_POOL_LEDGER_ADDRESS")),
             investor_share_token_addresses,
             staking_address: guide_staking_address.clone(),
             guide_staking_address,
             staking_provider_address,
             investor_lock_contract_addresses,
-            governor_address: Self::env_nonempty("GOVERNOR_ADDRESS"),
+            governor_address: Self::env_nonempty("GOVERNOR_ADDRESS")
+                .or_else(|| Self::env_nonempty("GOV_FREEZE_V1_GOVERNOR_ADDRESS")),
             governance_timelock_address: Self::env_nonempty("GOVERNANCE_TIMELOCK_ADDRESS")
-                .or_else(|| Self::env_nonempty("TIMELOCK_ADDRESS")),
+                .or_else(|| Self::env_nonempty("TIMELOCK_ADDRESS"))
+                .or_else(|| Self::env_nonempty("GOV_FREEZE_V1_TIMELOCK_ADDRESS")),
             governance_votes_token_address,
             treasury_address,
             registry_address: Self::env_nonempty("REGISTRY_ADDRESS"),

@@ -13,6 +13,7 @@ import "../src/GovernanceVotesToken.sol";
 import "../src/GovernanceTimelock.sol";
 
 import "../src/TravelTrustGovernor.sol";
+import "../src/TtgGovFreezeConstants.sol";
 
 
 
@@ -80,11 +81,14 @@ contract DeployGovernanceStack is Phase2ControlPlane, Phase2SafeExec {
 
         uint256 initialSupply = vm.envOr("GOVERNANCE_VOTES_INITIAL_SUPPLY_WEI", uint256(10_000_000 ether));
 
-        token = new GovernanceVotesToken(initialSupply);
+        token = new GovernanceVotesToken(initialSupply, deployer);
 
 
 
-        uint256 timelockDelay = vm.envOr("GOVERNANCE_TIMELOCK_DELAY_SECONDS", uint256(120));
+        uint256 timelockDelay = vm.envOr(
+            "GOVERNANCE_TIMELOCK_DELAY_SECONDS",
+            TtgGovFreezeConstants.GOVERNANCE_TIMELOCK_DELAY_SECONDS
+        );
 
         timelock = new GovernanceTimelock(timelockAdmin, timelockDelay);
 
@@ -96,7 +100,14 @@ contract DeployGovernanceStack is Phase2ControlPlane, Phase2SafeExec {
 
         uint256 thresh = vm.envOr("GOVERNOR_PROPOSAL_THRESHOLD_WEI", uint256(1 ether));
 
-        uint256 quorumBps = vm.envOr("GOVERNOR_QUORUM_NUMERATOR_BPS", uint256(1000));
+        uint256 quorumBps = vm.envOr(
+            "GOVERNOR_QUORUM_NUMERATOR_BPS",
+            TtgGovFreezeConstants.GOVERNANCE_QUORUM_BPS
+        );
+        uint256 maxVoteBps = vm.envOr(
+            "GOVERNOR_MAX_VOTING_POWER_PER_ADDRESS_BPS",
+            TtgGovFreezeConstants.MAX_VOTING_POWER_PER_ADDRESS_BPS
+        );
 
         uint256 reviewDays = vm.envOr("GOVERNOR_ORDER_RATING_REVIEW_WINDOW_DAYS", uint256(14));
 
@@ -115,6 +126,8 @@ contract DeployGovernanceStack is Phase2ControlPlane, Phase2SafeExec {
             thresh,
 
             quorumBps,
+
+            maxVoteBps,
 
             reviewDays
 

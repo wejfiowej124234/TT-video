@@ -21,6 +21,7 @@ export const STEWARD_WORKBENCH_L5_LOCALE_KEYS: readonly string[] = [
   "steward_workbench_staking_gate_title_need_stake",
   "steward_workbench_staking_gate_body_need_stake",
   "steward_workbench_staking_gate_cta_stake_section",
+  "steward_workbench_staking_view_section_cta",
   "steward_workbench_staking_satisfied_summary",
   "steward_workbench_governance_locked_suffix",
   "steward_workbench_todo_title",

@@ -7,6 +7,7 @@ import {
   isMultiDemoStewardWallet,
   MULTI_DEMO_STEWARD_WALLET,
   isValidEvmWalletAddress,
+  isStewardChainStakeComplete,
   stewardChainStakeSummaryKey,
   stewardShowsOnboardingCta,
   stewardStakeSectionTitleKey,
@@ -53,6 +54,8 @@ describe("stewardStakeUiModel (① · workbench UX)", () => {
     expect(
       stewardChainStakeSummaryKey([{ hasStake: true }], { isConnected: true, walletMatch: true }),
     ).toBe("steward_workbench_stake_chain_summary_staked");
+    expect(isStewardChainStakeComplete("steward_workbench_stake_chain_summary_staked")).toBe(true);
+    expect(isStewardChainStakeComplete("steward_workbench_stake_chain_summary_pending")).toBe(false);
   });
 
   it("detects multi-demo steward wallet (Anvil deployer + legacy synthetic)", () => {

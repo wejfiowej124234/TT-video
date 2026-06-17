@@ -27,6 +27,7 @@ import { resolvePostAuthReturnPath } from "@/lib/auth/postAuthReturnPath";
 import { AUTH_LOGIN_REMEMBER_EMAIL_KEY, TT_AUTH_LOGIN_L5 } from "@/lib/auth/loginL5";
 import { authL5FieldClass, TT_AUTH_L5_FORM } from "@/lib/auth/authL5Form";
 import AuthL5PageBackdrop from "@/components/auth/AuthL5PageBackdrop";
+import AuthLoginGovernanceRemediationProgress from "@/components/auth/AuthLoginGovernanceRemediationProgress";
 import AuthL5FormError from "@/components/auth/AuthL5FormError";
 import LoginPasswordVisibilityToggle from "./LoginPasswordVisibilityToggle";
 
@@ -266,6 +267,7 @@ export default function LoginPage() {
         <AuthLoginSearchParamsSuspense>
           <LoginForm />
         </AuthLoginSearchParamsSuspense>
+        <AuthLoginGovernanceRemediationProgress />
         <AuthL5CrossNavFooter />
       </div>
     </main>

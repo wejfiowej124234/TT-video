@@ -14,3 +14,5 @@
 **Logs:** forge_gate2.3_exit.log · gate2.3_exit_checks.log
 
 **① Exit ≠ ② Sepolia GO**
+
+**HAT（Gate-2.4 前置）：** [D-4555-B-HAT-LOCAL-REPORT.md](D-4555-B-HAT-LOCAL-REPORT.md) · `bash scripts/dev/run-d4555b-hat-local.sh`

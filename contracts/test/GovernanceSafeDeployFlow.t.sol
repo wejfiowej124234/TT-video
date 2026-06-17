@@ -71,7 +71,7 @@ contract GovernanceSafeDeployFlowTest is Test {
         vm.prank(deployer);
         address safe = IFactory(factory).createProxyWithNonce(singleton, init, uint256(keccak256("tt-safe-flow-test")));
 
-        GovernanceVotesToken token = new GovernanceVotesToken(1_000_000 ether);
+        GovernanceVotesToken token = new GovernanceVotesToken(1_000_000 ether, address(0));
         GovernanceTimelock timelock = new GovernanceTimelock(safe, 120);
         TravelTrustGovernor gov = new TravelTrustGovernor(
             IGovernanceVotes(address(token)),
@@ -80,6 +80,7 @@ contract GovernanceSafeDeployFlowTest is Test {
             5,
             1 ether,
             1000,
+            0,
             14
         );
 

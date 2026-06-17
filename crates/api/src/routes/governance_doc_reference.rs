@@ -6,9 +6,83 @@
 use serde_json::{json, Value};
 
 pub const DOC_REF: &str = "docs/spec/84-第一阶段10国Country-Pool发行参数总表.md";
-pub const DOC_VERSION: &str = "1.0.21";
+pub const DOC_VERSION: &str = "1.0.22";
 /// 与 **protocol-ssot.v1** 同源；pregate / registry 对拍。
 pub const PROTOCOL_SSOT_REF: &str = "docs/spec/governance-token/protocol-ssot.v1.yaml";
+pub const TTG_REFERENCE_PRICE_V1_REF: &str = "docs/spec/governance-token/ttg-reference-price-v1-draft.md";
+pub const COUNTRY_REVENUE_MODEL_V1_REF: &str =
+    "docs/spec/governance-token/country-revenue-model-v1-draft.md";
+pub const COUNTRY_POOL_FUNDRAISE_GOVERNANCE_V1_REF: &str =
+    "docs/spec/governance-token/country-pool-fundraise-governance-v1.md";
+pub const TTG_REFERENCE_PRICE_V1_ID: &str = "ttg-reference-price-v1-draft-20260615";
+
+pub const TTG_REF_PRICE_CNY: f64 = 200.0;
+pub const TTG_FDV_CNY: f64 = 2_000_000_000.0;
+pub const TTG_MOCK_USDC_CNY_FX: f64 = 7.2;
+const TTG_TOTAL_SUPPLY: f64 = 10_000_000.0;
+
+fn phase1_country_row(
+    name_zh: &str,
+    tier: &str,
+    cap_pts: f64,
+    open_pts: f64,
+    fundraise_target_wan: i64,
+    notes: &str,
+) -> Value {
+    json!({
+        "name_zh": name_zh,
+        "tier": tier,
+        "national_pool_cap_fee_points": cap_pts,
+        "phase1_open_fee_points": open_pts,
+        "fundraise_target_cny_wan": fundraise_target_wan,
+        "fundraise_target_source": "governance_board_per_country",
+        "notes": notes
+    })
+}
+
+fn governance_fundraise_targets_json() -> Value {
+    json!({
+        "CN": 8000,
+        "US": 8000,
+        "FR": 9000,
+        "ES": 9000,
+        "JP": 5000,
+        "TH": 3500,
+        "SG": 3000,
+        "KR": 4000,
+        "AU": 2000,
+        "AE": 2000
+    })
+}
+
+fn valuation_anchor_v1_json() -> Value {
+    json!({
+        "id": TTG_REFERENCE_PRICE_V1_ID,
+        "doc_ref": TTG_REFERENCE_PRICE_V1_REF,
+        "status": "engineering_default_phase1",
+        "reference_price_cny_per_ttg": TTG_REF_PRICE_CNY,
+        "fdv_cny": TTG_FDV_CNY,
+        "total_supply_ttg": TTG_TOTAL_SUPPLY as i64,
+        "mock_usdc_cny_fx": TTG_MOCK_USDC_CNY_FX,
+        "mock_usdc_per_ttg": TTG_REF_PRICE_CNY / TTG_MOCK_USDC_CNY_FX,
+        "fundraise_model": "governance_board_per_country_independent",
+        "fundraise_governance_ref": COUNTRY_POOL_FUNDRAISE_GOVERNANCE_V1_REF,
+        "fundraise_targets_cny_wan": governance_fundraise_targets_json(),
+        "independent_parameter_systems": {
+            "fundraise_target": "governance_board_market_size_per_country",
+            "seat_stake_ttg": "seat_tier_protocol_ssot_liability_lock",
+            "fee_points": "country_revenue_grade_and_seat_tier",
+            "auto_conversion_between_systems": false
+        },
+        "stake_requirement": {
+            "source": "seat_tier_protocol_ssot",
+            "lock_months": 24
+        },
+        "country_revenue_model_ref": COUNTRY_REVENUE_MODEL_V1_REF,
+        "fee_points_semantics": "country_revenue_grade_and_seat_tier_not_global_pool_weight",
+        "legal_signoff_pending": true
+    })
+}
 
 /// 与 84 §四 主表行顺序一致。
 pub fn protocol_reference_json() -> Value {
@@ -17,7 +91,8 @@ pub fn protocol_reference_json() -> Value {
         "doc_ref": DOC_REF,
         "doc_version": DOC_VERSION,
         "protocol_ssot": protocol_ssot_json(),
-        "note": "Target 叙事参数；非链上 FeeRouter/RegionVault 读数。募资列为拟定展示值（84 §三 3.4、3.5）；对外定稿前勿当作募资承诺。",
+        "valuation_anchor": valuation_anchor_v1_json(),
+        "note": "Target 叙事参数；非链上读数。三轨独立：募资目标=治理委员会逐国参数；Seat质押=责任锁仓；Fee Points=收益分配等级。无自动换算。TTG参考价仅用于Mock/FDV。",
         "fee_router": {
             "layer1_percent_of_allocatable_platform_fee": {
                 "country_bucket": 45,
@@ -31,22 +106,23 @@ pub fn protocol_reference_json() -> Value {
             "orthogonality_ref": "84 §1.1.1：仲裁费、Staking.slash 等与 45/55 正交；Runbook §7.1"
         },
         "phase1_countries": [
-            { "name_zh": "中国", "tier": "S", "national_pool_cap_fee_points": 4.0, "phase1_open_fee_points": 3.0, "fundraise_target_cny_wan": 6000, "fundraise_cap_cny_wan": 8000, "notes": "入境旅游大国" },
-            { "name_zh": "美国", "tier": "S", "national_pool_cap_fee_points": 4.0, "phase1_open_fee_points": 3.0, "fundraise_target_cny_wan": 6000, "fundraise_cap_cny_wan": 8000, "notes": "高消费市场" },
-            { "name_zh": "法国", "tier": "S", "national_pool_cap_fee_points": 4.5, "phase1_open_fee_points": 3.5, "fundraise_target_cny_wan": 7000, "fundraise_cap_cny_wan": 9000, "notes": "全球领先目的地" },
-            { "name_zh": "西班牙", "tier": "S", "national_pool_cap_fee_points": 4.5, "phase1_open_fee_points": 3.5, "fundraise_target_cny_wan": 7000, "fundraise_cap_cny_wan": 9000, "notes": "高消费" },
-            { "name_zh": "日本", "tier": "A", "national_pool_cap_fee_points": 2.5, "phase1_open_fee_points": 2.0, "fundraise_target_cny_wan": 3000, "fundraise_cap_cny_wan": 4000, "notes": "高端旅游" },
-            { "name_zh": "泰国", "tier": "A", "national_pool_cap_fee_points": 2.5, "phase1_open_fee_points": 2.0, "fundraise_target_cny_wan": 2500, "fundraise_cap_cny_wan": 3500, "notes": "亚洲热门" },
-            { "name_zh": "新加坡", "tier": "A", "national_pool_cap_fee_points": 2.0, "phase1_open_fee_points": 1.5, "fundraise_target_cny_wan": 2000, "fundraise_cap_cny_wan": 3000, "notes": "高端" },
-            { "name_zh": "韩国", "tier": "A", "national_pool_cap_fee_points": 2.0, "phase1_open_fee_points": 1.5, "fundraise_target_cny_wan": 2000, "fundraise_cap_cny_wan": 3000, "notes": "亚洲" },
-            { "name_zh": "澳大利亚", "tier": "B", "national_pool_cap_fee_points": 1.5, "phase1_open_fee_points": 1.0, "fundraise_target_cny_wan": 1500, "fundraise_cap_cny_wan": 2000, "notes": "高消费" },
-            { "name_zh": "阿联酋", "tier": "B", "national_pool_cap_fee_points": 1.5, "phase1_open_fee_points": 1.0, "fundraise_target_cny_wan": 1500, "fundraise_cap_cny_wan": 2000, "notes": "中东" }
+            phase1_country_row("中国", "S", 4.0, 3.0, 8000, "入境旅游大国"),
+            phase1_country_row("美国", "S", 4.0, 3.0, 8000, "高消费市场"),
+            phase1_country_row("法国", "S", 4.5, 3.5, 9000, "全球领先目的地"),
+            phase1_country_row("西班牙", "S", 4.5, 3.5, 9000, "高消费"),
+            phase1_country_row("日本", "A", 2.5, 2.0, 5000, "高端旅游"),
+            phase1_country_row("泰国", "A", 2.5, 2.0, 3500, "亚洲热门"),
+            phase1_country_row("新加坡", "A", 2.0, 1.5, 3000, "高端"),
+            phase1_country_row("韩国", "A", 2.0, 1.5, 4000, "亚洲"),
+            phase1_country_row("澳大利亚", "B", 1.5, 1.0, 2000, "高消费"),
+            phase1_country_row("阿联酋", "B", 1.5, 1.0, 2000, "中东")
         ],
         "checksums": {
             "phase1_open_fee_points_sum": 22,
             "national_pool_cap_fee_points_sum": 29,
             "country_bucket_percent": 45,
-            "phase1_open_over_country_bucket": "22/45≈48.9%"
+            "phase1_open_over_country_bucket": "22/45≈48.9%",
+            "valuation_anchor_id": TTG_REFERENCE_PRICE_V1_ID
         }
     })
 }
@@ -246,6 +322,32 @@ mod tests {
             "national_pool_cap_fee_points sum {cap_sum} expected 29 (84 §四 主表行加总；与 §3.2 文案 28.5 不一致处以主表行为准)"
         );
         assert_eq!(v["checksums"]["national_pool_cap_fee_points_sum"], 29);
+        let cn = countries
+            .iter()
+            .find(|r| r["name_zh"] == "中国")
+            .expect("CN row");
+        assert_eq!(cn["fundraise_target_cny_wan"], 8000);
+        assert_eq!(cn["fundraise_target_source"], "governance_board_per_country");
+        let jp = countries.iter().find(|r| r["name_zh"] == "日本").expect("JP row");
+        assert_eq!(jp["fundraise_target_cny_wan"], 5000);
+        let kr = countries.iter().find(|r| r["name_zh"] == "韩国").expect("KR row");
+        assert_eq!(kr["fundraise_target_cny_wan"], 4000);
+        let th = countries.iter().find(|r| r["name_zh"] == "泰国").expect("TH row");
+        assert_eq!(th["fundraise_target_cny_wan"], 3500);
+        let fundraise_sum: i64 = countries
+            .iter()
+            .map(|row| row["fundraise_target_cny_wan"].as_i64().expect("fundraise_target_cny_wan"))
+            .sum();
+        assert_eq!(fundraise_sum, 53_500, "governance board per-country fundraise total (wan CNY)");
+        assert!(cn.get("fundraise_cap_cny_wan").is_none());
+        assert_eq!(
+            v["valuation_anchor"]["fundraise_model"].as_str(),
+            Some("governance_board_per_country_independent")
+        );
+        assert_eq!(
+            v["valuation_anchor"]["reference_price_cny_per_ttg"].as_f64(),
+            Some(200.0)
+        );
     }
 
     #[test]

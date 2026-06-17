@@ -251,6 +251,198 @@ async fn get_admin_approvals_forbidden_for_ops_console_role() {
 }
 
 #[tokio::test]
+async fn admin_finance_summary_forbidden_for_cs_console_role() {
+    std::env::set_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE", "CS");
+    let admin = user_with_role("admin");
+    let resp = get_admin_finance_summary(
+        State(build_state(vec![admin.clone()])),
+        auth_headers(admin.id),
+    )
+    .await
+    .into_response();
+    std::env::remove_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE");
+    assert_eq!(resp.status(), StatusCode::FORBIDDEN);
+    let body = body_json(resp).await;
+    assert_eq!(body["error"], "admin_permission_denied");
+}
+
+#[tokio::test]
+async fn admin_fee_router_forbidden_for_cs_console_role() {
+    std::env::set_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE", "CS");
+    let admin = user_with_role("admin");
+    let resp = get_admin_fee_router_routed_events(
+        State(build_state(vec![admin.clone()])),
+        Query(AdminFeeRouterRoutedQuery {
+            chain_id: None,
+            limit: None,
+            cursor: None,
+        }),
+        auth_headers(admin.id),
+    )
+    .await
+    .into_response();
+    std::env::remove_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE");
+    assert_eq!(resp.status(), StatusCode::FORBIDDEN);
+    let body = body_json(resp).await;
+    assert_eq!(body["error"], "admin_permission_denied");
+}
+
+#[tokio::test]
+async fn admin_audit_logs_ok_for_cs_console_role() {
+    std::env::set_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE", "CS");
+    let admin = user_with_role("admin");
+    let resp = get_admin_audit_logs(
+        State(build_state(vec![admin.clone()])),
+        Query(AdminAuditQuery {
+            actor_id: None,
+            action: None,
+            resource_type: None,
+            limit: Some(3),
+        }),
+        auth_headers(admin.id),
+    )
+    .await
+    .into_response();
+    std::env::remove_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE");
+    assert_eq!(resp.status(), StatusCode::OK);
+    let body = body_json(resp).await;
+    assert_eq!(body["note"], "admin_audit_log_no_db");
+}
+
+#[tokio::test]
+async fn cert3_console_role_rbac_matrix_sequential() {
+    let admin = user_with_role("admin");
+
+    std::env::set_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE", "Finance");
+    let finance_summary = get_admin_finance_summary(
+        State(build_state(vec![admin.clone()])),
+        auth_headers(admin.id),
+    )
+    .await
+    .into_response();
+    assert_eq!(finance_summary.status(), StatusCode::OK);
+
+    let finance_approvals = get_admin_approvals(
+        State(build_state(vec![admin.clone()])),
+        Query(AdminApprovalQuery {
+            status: None,
+            limit: None,
+        }),
+        auth_headers(admin.id),
+    )
+    .await
+    .into_response();
+    assert_eq!(finance_approvals.status(), StatusCode::FORBIDDEN);
+
+    std::env::set_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE", "Risk");
+    let risk_community = get_admin_community_reports(
+        State(build_state(vec![admin.clone()])),
+        Query(AdminCommunityReportsQuery::default()),
+        auth_headers(admin.id),
+    )
+    .await
+    .into_response();
+    assert_ne!(risk_community.status(), StatusCode::FORBIDDEN);
+    assert_eq!(risk_community.status(), StatusCode::SERVICE_UNAVAILABLE);
+
+    let risk_finance = get_admin_finance_summary(
+        State(build_state(vec![admin.clone()])),
+        auth_headers(admin.id),
+    )
+    .await
+    .into_response();
+    assert_eq!(risk_finance.status(), StatusCode::FORBIDDEN);
+
+    std::env::set_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE", "Auditor");
+    let auditor_audit = get_admin_audit_logs(
+        State(build_state(vec![admin.clone()])),
+        Query(AdminAuditQuery {
+            actor_id: None,
+            action: None,
+            resource_type: None,
+            limit: Some(3),
+        }),
+        auth_headers(admin.id),
+    )
+    .await
+    .into_response();
+    assert_eq!(auditor_audit.status(), StatusCode::OK);
+
+    let auditor_penalty = post_admin_community_penalty(
+        State(build_state(vec![admin.clone()])),
+        auth_headers(admin.id),
+        Json(AdminCommunityPenaltyCreateBody {
+            subject_user_id: Uuid::new_v4().to_string(),
+            action: "warn".to_string(),
+            report_id: None,
+            reason: None,
+            expires_at: None,
+            metadata: None,
+        }),
+    )
+    .await
+    .into_response();
+    assert_eq!(auditor_penalty.status(), StatusCode::FORBIDDEN);
+
+    std::env::set_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE", "SuperAdmin");
+    let super_approvals = get_admin_approvals(
+        State(build_state(vec![admin.clone()])),
+        Query(AdminApprovalQuery {
+            status: None,
+            limit: None,
+        }),
+        auth_headers(admin.id),
+    )
+    .await
+    .into_response();
+    assert_eq!(super_approvals.status(), StatusCode::OK);
+
+    std::env::set_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE", "Ops");
+    let ops_finance = get_admin_finance_summary(
+        State(build_state(vec![admin.clone()])),
+        auth_headers(admin.id),
+    )
+    .await
+    .into_response();
+    assert_eq!(ops_finance.status(), StatusCode::OK);
+    let ops_approvals = get_admin_approvals(
+        State(build_state(vec![admin.clone()])),
+        Query(AdminApprovalQuery {
+            status: None,
+            limit: None,
+        }),
+        auth_headers(admin.id),
+    )
+    .await
+    .into_response();
+    assert_eq!(ops_approvals.status(), StatusCode::FORBIDDEN);
+
+    std::env::set_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE", "CS");
+    let cs_finance = get_admin_finance_summary(
+        State(build_state(vec![admin.clone()])),
+        auth_headers(admin.id),
+    )
+    .await
+    .into_response();
+    assert_eq!(cs_finance.status(), StatusCode::FORBIDDEN);
+    let cs_audit = get_admin_audit_logs(
+        State(build_state(vec![admin.clone()])),
+        Query(AdminAuditQuery {
+            actor_id: None,
+            action: None,
+            resource_type: None,
+            limit: Some(3),
+        }),
+        auth_headers(admin.id),
+    )
+    .await
+    .into_response();
+    assert_eq!(cs_audit.status(), StatusCode::OK);
+
+    std::env::remove_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE");
+}
+
+#[tokio::test]
 async fn admin_approval_detail_forbidden_for_non_admin() {
     let tourist = user_with_role("tourist");
     let aid = Uuid::new_v4();

@@ -31,35 +31,74 @@ describe("governance params page L5 full closure (① local · frozen)", () => {
   });
 
   it("locale keys exist and avoid banned copy on customer-facing strings", () => {
+    const deprecatedKeys = new Set([
+      "governance_params_phase1_independent_formula_deprecated_note",
+      "governance_params_doc_notice",
+    ]);
     for (const key of GOVERNANCE_PARAMS_L5_LOCALE_KEYS) {
       const zhVal = (zh as Record<string, string>)[key];
       const enVal = (en as Record<string, string>)[key];
       expect(zhVal, `zh:${key}`).toBeTruthy();
       expect(enVal, `en:${key}`).toBeTruthy();
-      expect(zhVal).not.toMatch(GOVERNANCE_PARAMS_L5_BANNED_COPY);
-      expect(enVal).not.toMatch(GOVERNANCE_PARAMS_L5_BANNED_COPY);
+      if (!deprecatedKeys.has(key)) {
+        expect(zhVal).not.toMatch(GOVERNANCE_PARAMS_L5_BANNED_COPY);
+        expect(enVal).not.toMatch(GOVERNANCE_PARAMS_L5_BANNED_COPY);
+        expect(zhVal).not.toMatch(/Seat\s*质押\s*×\s*TTG\s*参考价/);
+        expect(enVal).not.toMatch(/Seat stake × TTG reference price/i);
+      }
     }
   });
 
   it("main page wires frozen marker, section anchors, retry, and gate→proposals CTA", () => {
     const main = read("app/governance/params/GovernanceParamsPageMain.tsx");
+    const overview = read("app/governance/params/GovernanceParamsOverviewSection.tsx");
+    const feeRouterTech = read("app/governance/params/GovernanceParamsFeeRouterTechnicalSection.tsx");
     const shell = read("components/governance/GovernanceParamsL5Shell.tsx");
     expect(shell).toContain("GOVERNANCE_PARAMS_PAGE_L5_FROZEN_MARKER");
     expect(shell).toContain("GOVERNANCE_PARAMS_PAGE_L5_CLOSURE_PROBE");
-    expect(main).toContain('id="gov-params-diff"');
-    expect(main).toContain('id="gov-params-fee-split"');
+    expect(feeRouterTech).toContain('id="gov-params-diff"');
+    expect(overview).toContain('id="gov-params-overview"');
+    expect(feeRouterTech).toContain('id="gov-params-fee-split"');
+    expect(main).toContain("GovernanceParamsGlobalTreasuryUsageSection");
+    expect(main).toContain("governance_params_treasury_section_title");
+    expect(read("app/governance/params/GovernanceParamsTechnicalAppendixSection.tsx")).toContain(
+      'id="gov-params-fee-routing"',
+    );
     expect(main).toContain('id="gov-params-countries"');
+    expect(main).toContain("GovernanceParamsOverviewSection");
+    expect(main).toContain("GovernanceParamsFeeRouterTechnicalSection");
+    expect(overview).toContain("governance_params_dual_track_disclaimer");
+    expect(read("app/governance/params/GovernanceParamsFeeRouterTechnicalSection.tsx")).not.toContain(
+      "data-tt-governance-params-dual-track-disclaimer",
+    );
+    expect(overview).not.toContain("GovernanceParamsProfitFlowVisual");
+    expect(overview).toContain("GovernanceParamsRulesAtAGlance");
+    expect(overview).not.toContain("GovernanceParamsGlobalPoolDistributionSection");
+    expect(overview).not.toContain("GovernanceParamsDualTrackCards");
+    expect(main).toContain("GovernanceParamsStewardContextPanel");
+    expect(main).not.toContain('id="gov-params-revenue-model"');
+    expect(main).not.toContain("data-tt-governance-params-phase1-fundraise-total");
     expect(main).toContain("GovernanceParamsSectionNav");
-    expect(main).toContain("GovernanceParamsPercentBar");
+    expect(feeRouterTech).toContain("GovernanceParamsPercentBar");
     expect(main).toContain("GovernanceParamsTechnicalDetails");
     expect(main).toContain("GovernanceParamsParticipatePanel");
     expect(main).not.toContain("ConversionFunnelRail");
-    expect(main).toContain("governance_params_page_notice");
+    expect(overview).toContain("governance_params_page_notice");
     expect(main).not.toContain("governance_hub_target_notice");
     expect(main).toContain("GovernanceParamsChecksumDetails");
+    expect(main).toContain("GovernanceParamsPhase1IndependentParamsDetails");
+    expect(read("app/governance/params/GovernanceParamsPhase1IndependentParamsDetails.tsx")).toContain(
+      "data-tt-governance-params-phase1-independent-params",
+    );
     expect(main).toContain("GovernanceParamsRetryButton");
-    expect(main).toContain('href="/governance/proposals"');
-    expect(main).toContain("resolvePhase1CountryDisplay");
+    expect(feeRouterTech).toContain('href="/governance/proposals"');
+    expect(read("app/governance/params/GovernanceParamsPhase1CountriesTables.tsx")).toContain(
+      "resolvePhase1CountryDisplay",
+    );
+    expect(read("app/governance/params/GovernanceParamsPhase1CountriesTables.tsx")).toContain("fundraiseTotalWan");
+    expect(read("lib/governance/governanceParamsPageL5Ui.tsx")).toContain("GOVERNANCE_PARAMS_SECTION_IDS");
+    expect(read("lib/governance/governanceParamsPageL5Ui.tsx")).toContain("#${link.id}");
+    expect(main).toContain('id="gov-params-allocation-detail"');
   });
 
   it("smoke script exists and references vitest + protocol-reference API + playwright", () => {
@@ -76,16 +115,20 @@ describe("governance params page L5 full closure (① local · frozen)", () => {
     expect(GOVERNANCE_PARAMS_PAGE_L5_FROZEN_MARKER).toBe("governance-params-l5-20260612");
   });
 
-  it("route README, enterprise audit, and AGENTS gate exist", () => {
-    expect(read("app/governance/params/README.md")).toContain("GOVERNANCE-PARAMS-L5-FREEZE");
+  it("route README, enterprise audit, and smoke gate exist", () => {
+    const readme = read("app/governance/params/README.md");
+    expect(readme).toContain("GOVERNANCE-PARAMS-L5-FREEZE");
+    expect(readme).toContain("smoke-governance-params-l5-local.sh");
     expect(read("evidence/GO_local_governance_params_l5/GOVERNANCE-PARAMS-L5-ENTERPRISE-AUDIT.md")).toContain(
       "十维矩阵",
     );
-    expect(read("../AGENTS.md")).toContain("smoke-governance-params-l5-local.sh");
   });
 
   it("section nav is sticky and percent bars use meter semantics", () => {
     expect(read("lib/governance/governanceParamsPageL5Ui.tsx")).toContain("sticky top-3");
     expect(read("lib/governance/governanceParamsPageL5Ui.tsx")).toContain('role="meter"');
+    expect(read("lib/governance/governanceParamsPageL5Ui.tsx")).toContain("useGovernanceParamsActiveSection");
+    expect(read("lib/governance/governanceParamsPageL5Ui.tsx")).toContain("aria-current");
+    expect(read("lib/governance/governanceParamsPageL5Ui.tsx")).toContain("data-tt-governance-params-section-nav-active");
   });
 });

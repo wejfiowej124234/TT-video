@@ -192,6 +192,12 @@ const nextConfig = {
         destination: "/governance?view=region#steward-ttg-stake",
         permanent: false,
       },
+      /** 主理人工作台 SSOT = `/governance?view=region` · 旧脚本/e2e 书签 alias */
+      {
+        source: "/governance/steward-region-workbench",
+        destination: "/governance?view=region",
+        permanent: false,
+      },
     ];
   },
 };

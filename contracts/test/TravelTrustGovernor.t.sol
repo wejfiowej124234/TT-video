@@ -17,7 +17,7 @@ contract TravelTrustGovernorTest is Test {
     FeeRouter internal router;
 
     function setUp() public {
-        token = new GovernanceVotesToken(10_000_000e18);
+        token = new GovernanceVotesToken(10_000_000e18, address(0));
         tl = new GovernanceTimelock(deployer, 100);
         gov = new TravelTrustGovernor(
             IGovernanceVotes(address(token)),
@@ -26,6 +26,7 @@ contract TravelTrustGovernorTest is Test {
             5, // votingPeriodBlocks
             1e18, // proposalThresholdVotes
             1000, // quorum 10%
+            0, // maxVotingPowerPerAddressBps · 0 = legacy tests uncapped
             14 // orderRatingReviewWindowDays (TT-B110)
         );
         tl.setGovernor(address(gov));

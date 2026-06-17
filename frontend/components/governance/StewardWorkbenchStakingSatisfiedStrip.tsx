@@ -35,7 +35,7 @@ export default function StewardWorkbenchStakingSatisfiedStrip({
           className={`${TT_WORKSPACE_L5.navLink} ${FOCUS_RING}`}
           data-tt-steward-workbench-staking-manage-cta="1"
         >
-          {t("steward_workbench_staking_gate_cta_stake_section")}
+          {t("steward_workbench_staking_view_section_cta")}
         </Link>
       </p>
     </div>

@@ -89,6 +89,17 @@ describe("stewardWorkbench (① · region operator UX)", () => {
     expect(gate).toContain("data-tt-steward-workbench-staking-gate-stake-anchor");
   });
 
+  it("satisfied strip and A-track complete strip use view copy when B track is staked", () => {
+    const satisfied = read("components/governance/StewardWorkbenchStakingSatisfiedStrip.tsx");
+    expect(satisfied).toContain("steward_workbench_staking_view_section_cta");
+    expect(satisfied).not.toContain("steward_workbench_staking_gate_cta_stake_section");
+    const bStrip = read("components/governance/StewardWorkbenchBTrackCompleteStrip.tsx");
+    expect(bStrip).toContain("bTrackStaked");
+    expect(bStrip).toContain("steward_workbench_b_track_complete_strip_b_staked");
+    expect(bStrip).toContain("steward_workbench_b_track_complete_strip_view_cta");
+    expect(read("app/governance/StewardRegionWorkbenchMain.tsx")).toContain("isStewardChainStakeComplete");
+  });
+
   it("todo section supports dual-track lock overlay", () => {
     const todo = read("components/governance/StewardWorkbenchTodoSection.tsx");
     expect(todo).toContain("data-tt-steward-workbench-todo-locked");

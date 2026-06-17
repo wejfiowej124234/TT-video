@@ -41,7 +41,7 @@ contract CountryPoolNetProfitLedgerTest is Test {
 
     function setUp() public {
         usdc = new MockERC20();
-        ttg = new GovernanceVotesToken(1_000_000_000e18);
+        ttg = new GovernanceVotesToken(1_000_000_000e18, address(0));
         stakePool = new RegionStewardStakePool(owner, address(ttg), 1_000_000_000e18, 7 days, 14 days);
         vm.prank(owner);
         stakePool.configureJurisdiction(J_DE, 400);

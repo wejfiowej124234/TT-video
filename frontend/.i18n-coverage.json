@@ -9,14 +9,21 @@
     "en"
   ],
   "rule_id": "i18n-key-parity-critical-prefix-and-key-routes",
-  "severity": "none",
+  "severity": "critical",
   "owner": "frontend-team",
-  "generated_at": "2026-06-14T04:09:27.238Z",
+  "generated_at": "2026-06-16T13:45:41.907Z",
   "totals": {
-    "zh_keys": 10461,
-    "en_keys": 10461
+    "zh_keys": 10711,
+    "en_keys": 10705
   },
-  "missing_in_en": [],
+  "missing_in_en": [
+    "governance_params_country_revenue_model_bullet_fee_points",
+    "governance_params_country_revenue_model_bullet_net_profit_split",
+    "governance_params_country_revenue_model_bullet_pool",
+    "governance_params_country_revenue_model_bullet_stake",
+    "governance_params_country_revenue_model_title",
+    "governance_params_fee_split_kicker"
+  ],
   "missing_in_zh": [],
   "critical_prefix_coverage": [
     {
@@ -92,5 +99,5 @@
       "hardcoded_samples": []
     }
   ],
-  "passed": true
+  "passed": false
 }

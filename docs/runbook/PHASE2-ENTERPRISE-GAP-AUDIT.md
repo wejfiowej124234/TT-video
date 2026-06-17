@@ -1,6 +1,6 @@
 # Phase ② 测试网 · 企业级缺口审计
 
-**Status:** **② Prepared · NOT STARTED** — 仓库总态 **[PHASE2-REPOSITORY-STATUS](./PHASE2-REPOSITORY-STATUS.md)** · **Phase ① Freeze ACTIVE**  
+**Status:** **② Closing Gap GO Ready** — SSOT [PHASE2-REPOSITORY-STATUS](./PHASE2-REPOSITORY-STATUS.md) · Open 项 [PHASE2-OPEN-ITEMS-BURN-DOWN](./PHASE2-OPEN-ITEMS-BURN-DOWN.md) · **Phase ① Freeze ACTIVE**  
 **阶段：** **② 测试网** — **只读审计落盘**；**不** 授权写代码、部署、Stripe 出网或合约 broadcast。  
 **审计日期：** 2026-05-28  
 **类型：** 企业级阶段边界冻结（证据补充 · Phase ① Freeze 允许）

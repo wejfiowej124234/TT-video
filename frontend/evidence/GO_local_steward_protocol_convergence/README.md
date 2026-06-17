@@ -51,6 +51,6 @@ cd frontend && npm run test -- protocolSsot.v1 stewardRegisterL5 adminSteward ad
 | 项 | 阶段 |
 |----|------|
 | LEGAL-SIGNOFF R4/R5 | 法务签字 |
-| 84 §四 募资列定稿 | [84-valuation-anchor-P1-memo](../../../docs/spec/governance-token/84-valuation-anchor-P1-memo.md) Option C 工程默认 · 法务待确认 |
+| 84 §四 募资列 | [84-valuation-anchor-P1-memo](../../../docs/spec/governance-token/84-valuation-anchor-P1-memo.md) · [country-pool-fundraise-governance-v1](../../../docs/spec/governance-token/country-pool-fundraise-governance-v1.md) · 法务待确认 |
 | 链上 stake 真值 | **② Anvil**（[`TTG-ANVIL-LOCAL-README`](../../../scripts/dev/TTG-ANVIL-LOCAL-README.md)）· **② 测试网** |
 | Production GO | **③** |

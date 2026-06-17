@@ -70,4 +70,6 @@ Gate-2.4 Sepolia（Owner 授权 · 单独闸）
 
 **状态：** **✅ GATE-2.3 EXIT（①）** · 四卡 DoD 全 ☑ · 机读闸复跑 exit 0
 
-四卡 merged 后，启动 [Gate-2.4 Sepolia 前置](../country-pool-settlement-gate2.4-prerequisites-checklist.md)（G24-P-05+ 仍 ② · **禁止** 无 Owner 授权 broadcast）。
+**HAT：** **✅ D-4555-B Local HAT PASS（①）** · [D-4555-B-HAT-LOCAL-REPORT.md](../../../evidence/GO_local_country_pool_net_profit_gate2.3/D-4555-B-HAT-LOCAL-REPORT.md) · `bash scripts/dev/run-d4555b-hat-local.sh`
+
+四卡 merged + HAT 全过后，进入 [Gate-2.4 Sepolia 前置](../country-pool-settlement-gate2.4-prerequisites-checklist.md) **前置评审**（G24-P-05+ 仍 ② ☐ · **禁止** 无 Owner 授权 broadcast）。

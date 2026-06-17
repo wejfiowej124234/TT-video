@@ -110,6 +110,45 @@ abstract contract Phase2SafeExec is Script {
         );
     }
 
+    /// @notice GovFreeze V2 Clean Baseline · Safe → Timelock · 五类 Shell + TTG allow（一次批次）
+    function configureGovFreezeV2CleanBaselineViaSafe(
+        address safe,
+        address timelock,
+        address governor,
+        address governanceToken,
+        address treasuryP4,
+        address primaryMarket,
+        address seatRegistry,
+        address stakePool,
+        uint256 safeOwnerPrivateKey
+    ) internal {
+        configureGovernanceTimelockViaSafe(safe, timelock, governor, governanceToken, safeOwnerPrivateKey);
+        safeExecCall(
+            safe,
+            timelock,
+            abi.encodeCall(GovernanceTimelock.setAllowedExecutionTarget, (treasuryP4, true)),
+            safeOwnerPrivateKey
+        );
+        safeExecCall(
+            safe,
+            timelock,
+            abi.encodeCall(GovernanceTimelock.setAllowedExecutionTarget, (primaryMarket, true)),
+            safeOwnerPrivateKey
+        );
+        safeExecCall(
+            safe,
+            timelock,
+            abi.encodeCall(GovernanceTimelock.setAllowedExecutionTarget, (seatRegistry, true)),
+            safeOwnerPrivateKey
+        );
+        safeExecCall(
+            safe,
+            timelock,
+            abi.encodeCall(GovernanceTimelock.setAllowedExecutionTarget, (stakePool, true)),
+            safeOwnerPrivateKey
+        );
+    }
+
     function safeExecCall(address safe, address to, bytes memory data, uint256 ownerPrivateKey) internal {
         IGnosisSafe safeContract = IGnosisSafe(safe);
         uint256 nonce = safeContract.nonce();

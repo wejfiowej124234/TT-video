@@ -224,6 +224,7 @@ export default function TrustTransparencyHub({ fromSettings = false }: { fromSet
               >
                 {t("trust_gov_params")}
               </Link>
+              <p className="mt-1 text-meta text-slate-400 leading-relaxed">{t("trust_gov_params_hint")}</p>
             </li>
             <li>
               <Link

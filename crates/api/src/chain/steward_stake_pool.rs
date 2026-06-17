@@ -112,6 +112,7 @@ pub fn classify_eth_call_err(msg: &str) -> &'static str {
 pub fn region_steward_stake_pool_address() -> Option<String> {
     std::env::var("REGION_STEWARD_STAKE_POOL_ADDRESS")
         .ok()
+        .or_else(|| std::env::var("REGION_STEWARD_STAKE_POOL_PROXY_ADDRESS").ok())
         .map(|s| s.trim().to_string())
         .filter(|s| !s.is_empty())
 }

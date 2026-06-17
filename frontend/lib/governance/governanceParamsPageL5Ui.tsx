@@ -3,6 +3,10 @@
 import Link from "next/link";
 import { useId, type ReactNode } from "react";
 import { GOV_PARAMS_L5 } from "@/lib/governance/governanceParamsPageL5";
+import {
+  GOVERNANCE_PARAMS_SECTION_IDS,
+  useGovernanceParamsActiveSection,
+} from "@/app/governance/params/useGovernanceParamsActiveSection";
 
 export function GovernanceParamsPercentBar({
   label,
@@ -46,10 +50,11 @@ export function GovernanceParamsSectionNav({
   t: (key: string) => string;
   className?: string;
 }) {
+  const activeSection = useGovernanceParamsActiveSection();
   const links = [
-    { href: "#gov-params-diff", label: t("governance_params_section_nav_diff") },
-    { href: "#gov-params-fee-split", label: t("governance_params_section_nav_fee") },
-    { href: "#gov-params-countries", label: t("governance_params_section_nav_countries") },
+    { id: GOVERNANCE_PARAMS_SECTION_IDS[0], label: t("governance_params_section_nav_overview") },
+    { id: GOVERNANCE_PARAMS_SECTION_IDS[1], label: t("governance_params_section_nav_allocation") },
+    { id: GOVERNANCE_PARAMS_SECTION_IDS[2], label: t("governance_params_section_nav_countries") },
   ] as const;
 
   return (
@@ -58,15 +63,25 @@ export function GovernanceParamsSectionNav({
       aria-label={t("governance_params_section_nav_aria")}
       data-tt-governance-params-section-nav="1"
     >
-      {links.map((link) => (
-        <a
-          key={link.href}
-          href={link.href}
-          className={`inline-flex min-h-[40px] items-center rounded-full border border-white/12 bg-slate-950/55 px-3.5 py-1.5 text-small font-medium text-slate-200 hover:border-ref-sun/35 hover:bg-ref-sun/[0.08] hover:text-ref-sun/95 ${GOV_PARAMS_L5.linkFocus}`}
-        >
-          {link.label}
-        </a>
-      ))}
+      {links.map((link) => {
+        const isActive = activeSection === link.id;
+        return (
+          <a
+            key={link.id}
+            href={`#${link.id}`}
+            aria-current={isActive ? "location" : undefined}
+            data-tt-governance-params-section-nav-link={link.id}
+            data-tt-governance-params-section-nav-active={isActive ? "1" : "0"}
+            className={`inline-flex min-h-[40px] items-center rounded-full border px-3.5 py-1.5 text-small font-medium transition ${GOV_PARAMS_L5.linkFocus} ${
+              isActive
+                ? "border-ref-sun/45 bg-ref-sun/[0.14] text-ref-sun/95 shadow-[0_0_0_1px_rgba(251,191,36,0.12)]"
+                : "border-white/12 bg-slate-950/55 text-slate-200 hover:border-ref-sun/35 hover:bg-ref-sun/[0.08] hover:text-ref-sun/95"
+            }`}
+          >
+            {link.label}
+          </a>
+        );
+      })}
     </nav>
   );
 }

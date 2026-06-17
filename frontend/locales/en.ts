@@ -219,7 +219,7 @@ export default {
     "InvestorDistributionClaim wallet flow: read-only precheck and claim/withdraw; no in-browser accrual registration or internal APIs.",
   governance_params_meta_title: "Governance · Protocol parameters | TravelTrust",
   governance_params_meta_description:
-    "Read-only fee-allocation design targets; compare current and pending packages—not wallet or live on-chain state.",
+    "Read-only disclosure of FeeRouter layer 1 vs country net-profit 45/55, Phase-1 three-track parameters, and fundraising totals. Reconcile current vs pending—not wallet or live on-chain state.",
   governance_proposals_meta_title: "Governance · Proposals | TravelTrust",
   governance_proposals_meta_description: "Governance proposals list and voting entry summary.",
   governance_proposal_detail_meta_title: "Governance · Proposal detail | TravelTrust",
@@ -6987,7 +6987,18 @@ export default {
   traveltrust_liquidity_governance_link: "Governance hub · TTG & params",
   traveltrust_liquidity_escrow_link: "Trip deposit · Order Escrow (USDC)",
   traveltrust_liquidity_disclaimer:
-    "Phase ① preview only — not a securities offer; not a USDC↔USDT swap and no real on-chain swap is sent. TTG follows 96-18 / governance contracts; trip escrow uses Order pay.",
+    "Phase ① fixed-price Mock Swap (200 CNY/TTG · FDV ¥2B draft); not a securities offer; not USDC↔USDT. No on-chain tx; Phase ② testnet adds Router/Treasury. Trip Escrow still uses USDC Order pay.",
+  traveltrust_liquidity_rate_line:
+    "Estimate: {{pay}} USDC → ~{{receive}} TTG · 1 TTG ≈ {{rate}} USDC ({{cny}} CNY/TTG · v1 draft)",
+  traveltrust_liquidity_mock_swap_hint:
+    "Connect wallet to run Mock swap (stored in session; Phase ① local only, not Phase ② on-chain Router).",
+  traveltrust_liquidity_mock_swap: "Mock swap TTG",
+  traveltrust_liquidity_quote_refresh: "Refresh quote",
+  traveltrust_liquidity_quote_line:
+    "API quote: {{pay}} USDC → {{receive}} TTG · 1 TTG ≈ {{rate}} USDC ({{cny}} CNY/TTG)",
+  traveltrust_liquidity_mock_swap_success:
+    "Mock swap recorded: {{pay}} USDC → {{receive}} TTG (Phase ① local · not Phase ② on-chain)",
+  traveltrust_liquidity_amount_invalid: "Enter a valid USDC amount (positive number).",
   traveltrust_page_brief_degraded:
     "Page config is using local anchors (API unavailable); CTAs still work. For full brief, run start-api-with-seed at repo root.",
   traveltrust_page_brief_mismatch: "Page config version mismatch — refresh or contact support.",
@@ -7181,7 +7192,7 @@ export default {
   traveltrust_cinematic_quality_toggle_help: "Reduces WebGL and entrance motion; honors system reduced-motion",
   traveltrust_cinematic_motion_footer_hint: "Use the header Reduce motion toggle for WebGL and entrances; system preference applies.",
   traveltrust_footer_motion_help_link: "Help & accessibility",
-  traveltrust_liquidity_preview_banner: "Preview · stablecoin→TTG · not USDC↔USDT · no real swap",
+  traveltrust_liquidity_preview_banner: "Phase ① fixed Mock · USDC→TTG · 200 CNY/TTG · not Phase ② Router",
   traveltrust_liquidity_l5_scope_note:
     "Phase ① illustrative slice: TTG acquisition preview; trip Escrow via Order pay; no production mint or PSP.",
   traveltrust_start_eyebrow: "Start your trip",
@@ -7197,7 +7208,7 @@ export default {
   traveltrust_trust_fact_governance_title: "Clear rules",
   traveltrust_trust_fact_governance_summary: "Fees and governance params you can verify — Governance hub",
   traveltrust_trust_fact_protocol_title: "Regions & fees",
-  traveltrust_trust_fact_protocol_summary: "Phase 1 regions and fee points — verify in Governance params",
+  traveltrust_trust_fact_protocol_summary: "Phase 1 ten countries · three independent tracks — verify on Governance params",
   traveltrust_trust_fact_disclosure_title: "Disclosures",
   traveltrust_trust_fact_disclosure_summary: "Brand and illustrative motion — not a token sale or securities offer",
   traveltrust_faq_q5: "Is this about trading or a token sale?",
@@ -7220,7 +7231,7 @@ export default {
   traveltrust_trust_strip_heading: "Facts you can verify",
   traveltrust_trust_fact_escrow: "Order Escrow uses allowlisted stablecoins — see Help for settlement flow",
   traveltrust_trust_fact_governance: "Governance params and Timelock — open Governance hub",
-  traveltrust_trust_fact_protocol: "Phase 1 countries & fee points — protocol reference (84 mirror)",
+  traveltrust_trust_fact_protocol: "Phase 1 ten countries · three independent tracks — protocol params (doc mirror)",
   traveltrust_trust_fact_disclosure: "Brand narrative only — not an ICO or securities offer",
   traveltrust_trust_facts_disclaimer:
     "Links open Help or Governance for verifiable parameters — narrative here is not a securities or ICO offer.",
@@ -8656,9 +8667,11 @@ export default {
     "Suggested path: connect your wallet → review regional pools below → open Delegate vote or Governance proposals to participate.",
   governance_title: "Governance",
   governance_desc:
-    "Read-only snapshots of regional incentive pools and protocol parameters. To participate, use Delegate vote or Governance proposals below.",
+    "Read-only regional pool snapshots, plus protocol parameters for FeeRouter layer 1, country revenue model, and ten-country three-track params. To participate, use Delegate vote or Governance proposals below.",
   governance_hub_target_notice:
     "Numbers below are read-only platform snapshots for regional incentives. To vote, open Governance proposals.",
+  governance_hub_params_pointer:
+    "Design-target fees and ten-country parameters (two 45/55 tracks, three independent fundraise/stake/Fee Points tracks) live on Protocol parameters—not the same reads as pool snapshots below.",
   governance_nav_label: "Governance navigation",
   governance_error_adminOpsNav_aria: "Admin finance and on-chain projection ledgers (requires admin access)",
   governance_ops_admin_finance: "Admin: Finance & ledger (ops)",
@@ -9008,39 +9021,312 @@ export default {
   governance_params_title: "Protocol parameters",
   governance_params_placeholder: "Governance parameters (51-F7; to follow).",
   governance_params_lead:
-    "See how platform fees are designed to split across country pools, the global pool, and TTG stakers. This is a read-only disclosure to check design targets—not your wallet balance or live on-chain state.",
+    "Three rules: country net profit · Global Treasury use · TTG supply structure. ① Read-only disclosure.",
   governance_params_l5_kicker: "Governance · protocol disclosure",
   governance_params_doc_notice:
-    "Target protocol economics (document mirror only). Not on-chain FeeRouter state; see SSOT doc for sign-off.",
+    "Technical note: data comes from the protocol-reference doc mirror. Platform fee split = FeeRouter layer 1; fundraising = country-pool-fundraise-governance-v1; stake & Fee Points = protocol-ssot.",
+  governance_params_overview_foundation_title: "Allocation rules",
+  governance_params_overview_foundation_lead:
+    "Ten countries, one Seat each. Net profit = platform service fee profit from completed orders (not order GMV, not Seat application fee).",
+  governance_params_overview_reading_title: "What this page is",
+  governance_params_overview_reading_1:
+    "Net profit means platform service fees from completed orders, after books close—not the tourist’s full order amount, and not the fee paid when applying to become a steward.",
+  governance_params_overview_reading_2: "Each country pool accounts for that net profit separately over a period (quarter or year).",
+  governance_params_overview_reading_3:
+    "Step 1: 45% of that country’s net profit goes to the regional steward; 55% goes to the TravelTrust global project pool (Global Treasury).",
+  governance_params_overview_reading_4:
+    "Global Treasury pays platform ops, security reserve, and ecosystem incentives first; only the remainder is re-allocated by governance—not pro-rata to all TTG holders.",
+  governance_params_overview_tracks_title: "How it splits",
+  governance_params_overview_tracks_lead:
+    "First country net profit 45/55, then Global Treasury usage order and full TTG supply structure.",
+  governance_params_dual_track_summary:
+    "Country net profit: 45% regional steward / 55% Global Treasury; Treasury pays ops and security first, remainder by governance.",
+  governance_params_dual_track_disclaimer:
+    "Net profit = platform service fee profit from completed orders; Seat collateral TTG is separate. ① Read-only; ② On-chain settlement not started.",
+  governance_params_page_notice: "Parameter changes go through governance proposals.",
+  governance_params_dimension_formula_label: "Split ratio",
+  governance_params_dimension_a_title: "How order fees are split",
+  governance_params_dimension_a_tag: "Technical appendix",
+  governance_params_dimension_a_body:
+    "Platform fees from orders are first split 45% / 55% between “all countries combined” and “global shared”—this is not your country-pool net profit.",
+  governance_params_dimension_a_formula: "45% to countries · 55% global",
+  governance_params_dimension_b_title: "Step 1 · How each country’s order net profit splits",
+  governance_params_dimension_b_tag: "Core rule",
+  governance_params_dimension_b_body:
+    "After books close on platform service fee net profit: 45% to that country’s regional steward, 55% to Global Treasury.",
+  governance_params_dimension_b_formula: "45% regional steward · 55% Global Treasury",
+  governance_params_dimension_c_title: "Global Treasury · 55% usage order",
+  governance_params_dimension_c_tag: "Core rule",
+  governance_params_dimension_c_body:
+    "The 55% entering Global Treasury must cover HQ ops, security, and ecosystem costs first; only the remainder may be re-allocated by governance proposal.",
+  governance_params_dimension_c_formula: "Ops / security / reserve first · remainder by governance",
+  governance_params_dimension_jump: "Jump to section →",
+  governance_params_dimension_jump_data: "See order-fee split section →",
+  governance_params_dimension_jump_global_pool: "See Global Treasury section →",
+  governance_params_profit_flow_aria: "Two-step order net profit allocation flow",
+  governance_params_profit_flow_step0_label: "Source",
+  governance_params_profit_flow_step0_title: "Country order platform net profit",
+  governance_params_profit_flow_step0_body: "Accounted separately per country.",
+  governance_params_glance_step1_label: "Step 1",
+  governance_params_glance_step2_label: "Step 2",
+  governance_params_glance_step2_value: "Ops / security / reserve first · remainder by governance",
+  governance_params_glance_step3_label: "TTG holders",
+  governance_params_glance_step3_value: "Holding TTG ≠ automatic 45% steward share",
+  governance_params_glance_step1_kicker: "Country net profit",
+  governance_params_glance_step2_kicker: "Global Treasury",
+  governance_params_glance_step3_kicker: "Supply & misconceptions",
+  governance_params_global_pool_example_heading: "Example · when net profit is 100, step 1 split",
+  governance_params_global_pool_table_heading: "Treasury governance & public sale (replaces legacy pro-rata table)",
+  governance_params_treasury_policy_lead:
+    "After P1–P3 are fully met, P4 surplus stays in reserve by default; deployment requires GlobalDAO / Timelock vote. Preferred path: TTG buyback → burn—not automatic cash by holdings.",
+  governance_params_treasury_policy_cap_heading: "Per-period deployment cap",
+  governance_params_treasury_policy_cap_body:
+    "Deployable ≤ min(P4 surplus, TreasuryReserve balance × {{cap}}%). Example: 1M USDC reserve → at most 300k this period; the rest stays.",
+  governance_params_treasury_policy_options_heading: "Governance options (A–E)",
+  governance_params_treasury_policy_option_buyback: "Buy back TTG",
+  governance_params_treasury_policy_option_buyback_hint: "Treasury USDC on market/DEX; use TWAP + per-tx cap.",
+  governance_params_treasury_policy_option_burn: "Burn TTG",
+  governance_params_treasury_policy_option_burn_hint: "Burn after buyback to reduce circulating supply.",
+  governance_params_treasury_policy_option_holder_rewards: "Holder rewards",
+  governance_params_treasury_policy_option_holder_rewards_hint: "Governance-approved TTG/incentives—not default fixed USDC dividends.",
+  governance_params_treasury_policy_option_ecosystem: "Ecosystem grants",
+  governance_params_treasury_policy_option_ecosystem_hint: "Top up P3 or standalone grant budgets.",
+  governance_params_treasury_policy_option_country_pool: "Country pool subsidy",
+  governance_params_treasury_policy_option_country_pool_hint: "Buffer for a Country Pool—not a substitute for the 45% steward path.",
+  governance_params_treasury_policy_public_rounds_heading: "Public sale · three rounds (public_global 20%)",
+  governance_params_treasury_policy_public_rounds_lead:
+    "Not sold at once. Round 1 Early = 500k TTG (5% of supply). Rounds 2–3 require separate governance proposals.",
+  governance_params_treasury_policy_public_rounds_caption: "Public sale round caps",
+  governance_params_treasury_policy_col_round: "Round",
+  governance_params_treasury_policy_col_ttg: "TTG cap",
+  governance_params_treasury_policy_col_of_supply: "Of supply",
+  governance_params_treasury_policy_col_of_public: "Of public 20%",
+  governance_params_treasury_policy_round_round_1_early: "Round 1 · Early",
+  governance_params_treasury_policy_round_round_2: "Round 2",
+  governance_params_treasury_policy_round_round_3: "Round 3",
+  governance_params_treasury_policy_public_total_row: "Total",
+  governance_params_treasury_policy_seat_exit_note:
+    "Seat exit: apply → 180-day cooling → KPI review → unlock TTG to wallet; no USDC refund; TTG price is market-driven.",
+  governance_params_treasury_policy_scope_note:
+    "① Product disclosure · SSOT ttg-primary-market-and-exit-policy-v1 · ② on-chain Primary Market / Buyback NOT STARTED · ③ legal/KYC separate gate.",
+  governance_params_tokenomics_freeze_section_title: "TTG Tokenomics V1 · governance hard gates (GOV-01–04)",
+  governance_params_tokenomics_freeze_lead:
+    "Single economic read model for Gate-2.4 / Sepolia. P4 requires governance vote—no automatic cash by TTG holdings.",
+  governance_params_tokenomics_freeze_id_note: "Frozen doc {{id}} · {{date}} · see Final Audit Report in same folder",
+  governance_params_tokenomics_freeze_table_caption: "GOV-01–04 frozen parameters",
+  governance_params_tokenomics_freeze_col_rule: "Rule",
+  governance_params_tokenomics_freeze_col_title: "Name",
+  governance_params_tokenomics_freeze_col_value: "Frozen value",
+  governance_params_tokenomics_freeze_GOV_01_title: "Treasury 30% cap",
+  governance_params_tokenomics_freeze_GOV_01_value:
+    "Per-period deploy ≤ min(P4 surplus, TreasuryReserve×{{cap}}%). Reserve excludes P1–P3 earmarked/spent budgets.",
+  governance_params_tokenomics_freeze_GOV_02_title: "Governance quorum",
+  governance_params_tokenomics_freeze_GOV_02_value:
+    "Quorum ≥ {{quorum}}% of supply; yes ≥ {{approval}}% of votes cast; Timelock {{timelock}}h.",
+  governance_params_tokenomics_freeze_GOV_03_title: "Seat concentration",
+  governance_params_tokenomics_freeze_GOV_03_value:
+    "Max {{seats}} active Seat per controlling entity; max vote weight {{voteBps}}%; max aggregate Seat stake {{stakeBps}}%.",
+  governance_params_tokenomics_freeze_GOV_04_title: "Per-wallet subscription cap",
+  governance_params_tokenomics_freeze_GOV_04_value:
+    "Default max {{walletTtg}} TTG per wallet (0.25%) across public rounds; min {{minUsdc}} USDC.",
+  governance_params_tokenomics_freeze_scope_note:
+    "① FROZEN · ② on-chain Governor/PrimaryMarket enforce NOT STARTED · ③ legal/KYC separate gate · TTG-TOKENOMICS-FREEZE-V1-FINAL-AUDIT-REPORT.",
+  governance_params_phase1_table_bridge:
+    "Table below lists Seat collateral stake and market tier only; Global Treasury cash use and TTG supply structure are above.",
+  governance_params_ttg_global_usage_layer_note: "Unrelated to order net profit 45/55 · HQ TTG budget only",
+  governance_params_allocation_detail_title: "Allocation detail",
+  governance_params_allocation_detail_lead:
+    "Global Treasury usage policy, full TTG supply structure, and HQ TTG budget. Tap the cards above to jump.",
+  governance_params_treasury_section_title: "Global Treasury · 55% usage policy",
+  governance_params_treasury_lead:
+    "55% of a country pool’s net profit enters Global Treasury. HQ running costs are paid first; only the remainder is re-allocated by governance—not pro-rata to all TTG holders.",
+  governance_params_treasury_example_heading: "Example · when net profit is 100, step 1 split",
+  governance_params_treasury_example_net: "Example · country-pool net profit",
+  governance_params_treasury_example_steward: "Step 1 · to regional steward (45%)",
+  governance_params_treasury_example_treasury: "Step 1 · to Global Treasury (55%)",
+  governance_params_treasury_flow_kicker: "55%",
+  governance_params_treasury_flow_title: "How Global Treasury is used",
+  governance_params_treasury_flow_body:
+    "Ops · security · legal · accounting · CS · marketing · R&D → security & risk reserve → ecosystem incentives → remainder by governance",
+  governance_params_treasury_priorities_heading: "Usage priorities (country-revenue-model §2.1)",
+  governance_params_treasury_priority_label: "Priority {{n}}",
+  governance_params_treasury_priority_ops: "Platform operations",
+  governance_params_treasury_priority_ops_hint:
+    "HQ running costs—ops, security, legal, accounting, CS, marketing, R&D—before any holder distribution.",
+  governance_params_treasury_priority_security: "Security & risk reserve",
+  governance_params_treasury_priority_security_hint: "Audit, insurance, compliance, and tail-risk buffer; not mixed with ops.",
+  governance_params_treasury_priority_ecosystem: "Ecosystem incentives",
+  governance_params_treasury_priority_ecosystem_hint:
+    "Governance-approved ecosystem/community/growth incentives—not automatic pro-rata by TTG holdings.",
+  governance_params_treasury_priority_remainder: "Treasury reserve (P4)",
+  governance_params_treasury_priority_remainder_hint:
+    "After P1–P3 budgets are fully met, surplus stays in reserve by default. Governance vote required to deploy; cap ≤30% of Treasury balance per period. Options: buyback/burn/ecosystem/country pool—not automatic cash by TTG holdings.",
+  governance_params_treasury_scope_note:
+    "① Product disclosure; ② on-chain GovernanceTreasury budget alignment after Gate-2.4 in a separate track.",
+  governance_params_ttg_holder_disclaimer:
+    "Holding TTG does not automatically entitle you to the 45% regional steward net-profit share—that 45% belongs to the Active Seat / regional steward path only.",
+  governance_params_ttg_supply_section_title: "Full TTG supply structure",
+  governance_params_ttg_supply_lead:
+    "TTG is not only ten-country Seat stakes. Table mirrors protocol-ssot token allocation (separate layer from Global Treasury cash use).",
+  governance_params_ttg_supply_col_category: "Category",
+  governance_params_ttg_supply_col_share: "Of supply",
+  governance_params_ttg_supply_country_pool: "Country shelf pool",
+  governance_params_ttg_supply_public: "Public distribution",
+  governance_params_ttg_supply_ecosystem: "Ecosystem incentives",
+  governance_params_ttg_supply_team: "Founding team",
+  governance_params_ttg_supply_advisors: "Advisors",
+  governance_params_ttg_supply_treasury_dao: "DAO Treasury",
+  governance_params_ttg_supply_total_row: "Total",
+  governance_params_ttg_supply_table_caption: "Full TTG supply structure",
+  governance_params_ttg_supply_notice:
+    "Seat lock TTG comes from country shelf and related paths; holding TTG alone does not grant the 45% country-pool net-profit share.",
+  governance_params_global_pool_formula_toggle: "How is my share calculated? (expand formula)",
+  governance_params_global_pool_col_example_slice_short: "Example slice",
+  governance_params_col_steward_stake_ttg_short: "Locked TTG",
+  governance_params_section_nav_allocation: "Allocation detail",
+  governance_params_phase1_legend_compact:
+    "Stake ratio = locked TTG as % of total supply; locked TTG = on-chain lock; tier S/A/B = market size.",
+  governance_params_ttg_global_usage_details_toggle: "Item notes (expand)",
+  governance_params_profit_flow_step1_label: "Step 1",
+  governance_params_profit_flow_step1_title: "How that country’s net profit splits",
+  governance_params_profit_flow_step2_label: "Step 2",
+  governance_params_profit_flow_step2_title: "How Global Treasury’s 55% is used",
+  governance_params_col_global_pool_weight_short: "Pool weight",
+  governance_params_technical_appendix_toggle: "Technical appendix (FeeRouter / checksums · collapsed by default)",
+  governance_params_technical_appendix_lead:
+    "For engineering and doc cross-check only—not the product allocation story investors should read first. See allocation rules and Global Treasury usage policy above.",
+  governance_params_fee_routing_not_product_model:
+    "Fee routing, 4% weights, and legacy 65/20/15 in this appendix are not the same as the product rules above (net profit 45/55, Global Treasury usage order, TTG supply structure). Do not mix them.",
+  governance_params_global_pool_section_title: "Step 2 · Global pool re-allocation",
+  governance_params_global_pool_title: "Global pool re-allocation (by country staked TTG weight)",
+  governance_params_global_pool_lead:
+    "[Deprecated] Legacy “pro-rata pool 55 by TTG supply” narrative removed. Use Global Treasury usage policy and Treasury governance / public sale below.",
+  governance_params_global_pool_formula:
+    "[Deprecated] Legacy pro-rata formula removed; use GOV-01–04 and Treasury governance blocks.",
+  governance_params_global_pool_example_net: "Example · order platform net profit",
+  governance_params_global_pool_example_steward: "Step 1 · to steward (45%)",
+  governance_params_global_pool_example_pool: "Step 1 · to global pool (55%)",
+  governance_params_global_pool_holder_note:
+    "[Deprecated] No automatic Global Treasury cash by TTG supply; P4 requires governance vote under GOV-01 30% cap.",
+  governance_params_global_pool_table_caption: "Ten-country staked TTG weights and global pool example slices",
+  governance_params_global_pool_col_weight: "Share of total TTG supply · pool weight",
+  governance_params_global_pool_col_example_slice: "Example · that country’s share of pool 55",
+  governance_params_global_pool_ten_country_total_row: "Ten-country Seat total",
+  governance_params_global_pool_other_holders_note:
+    "Example: of illustrative pool 55, ten-country Seat stake weights sum to {{ten}}; the remaining {{rest}} illustrates non-Seat supply (HQ reserve, public float, etc.)—not automatic cash dividends. P4 deploy requires governance vote · GOV-01 30% cap. Denominator = total supply {{supply}}.",
+  governance_params_global_pool_scope_note:
+    "Table shows ten Seats locking {{seat}} TTG combined; total supply {{supply}}. ① Read-only; ② on-chain settlement not started.",
+  governance_params_ttg_global_usage_section_title: "Beyond ten countries · HQ TTG use",
+  governance_params_ttg_global_usage_lead:
+    "Ten-country Seat stakes and per-country order net-profit splits are above. This section explains how TravelTrust HQ/global-side TTG is budgeted—separate from Seat lock collateral.",
+  governance_params_ttg_global_usage_scope:
+    "HQ/global TTG: 15% operations · 5% airdrop · 80% reserve.",
+  governance_params_ttg_global_usage_operations: "Operations team",
+  governance_params_ttg_global_usage_operations_hint:
+    "Day-to-day ops, marketing, and product execution budget (multisig/governance release—not steward personal profit share).",
+  governance_params_ttg_global_usage_airdrop: "Community airdrop",
+  governance_params_ttg_global_usage_airdrop_hint:
+    "Early-bird, campaigns, and community growth incentives; distributed by campaign rules—not the 45% order net-profit share.",
+  governance_params_ttg_global_usage_reserve: "Protocol reserve",
+  governance_params_ttg_global_usage_reserve_hint:
+    "All TTG beyond operations and airdrop goes to reserve (liquidity, risk buffer, treasury, and long-term incentives).",
+  governance_params_ttg_global_usage_table_caption: "HQ TTG use beyond ten countries",
+  governance_params_ttg_global_usage_col_purpose: "Purpose",
+  governance_params_ttg_global_usage_col_share: "Share",
+  governance_params_ttg_global_usage_col_note: "Notes",
+  governance_params_ttg_global_usage_total_row: "Total",
+  governance_params_ttg_global_usage_total_hint: "15% + 5% + 80% = 100%",
+  governance_params_ttg_global_usage_notice:
+    "① Product disclosure; ② on-chain treasury splits and airdrop campaigns not started. Do not mix with Seat stake TTG or order net profit 45%.",
+  governance_params_section_nav_ttg_global_usage: "HQ TTG use",
+  governance_params_steward_context_jump_ttg_global_usage: "HQ TTG use",
+  governance_params_steward_context_title: "Steward review guide",
+  governance_params_steward_context_lead:
+    "Start with the three rules and allocation detail, then check Seat locks and fundraising.",
+  governance_params_steward_context_jump_overview: "Allocation overview",
+  governance_params_steward_context_jump_global_pool: "Treasury governance & sale",
+  governance_params_steward_context_jump_countries: "Country tables",
+  governance_params_steward_context_jump_revenue: "Country revenue model",
   governance_params_diff_section_lead:
-    "Compare five fee-split metrics. If pending differs from current, changes typically require a governance proposal.",
-  governance_params_fee_split_lead:
-    "Layer 1 splits between country and global pools; percentages are design targets from the doc mirror.",
-  governance_params_fee_split_global_lead: "Within the global pool:",
+    "Check five order-fee split percentages against the pending package. This is not the same as country-pool net profit 45/55.",
+  governance_params_fee_split_global_lead:
+    "Inside the global 55% share: TTG staking incentive 65% · protocol reserve 20% · day-to-day operations 15%.",
   governance_params_phase1_lead:
-    "Opening fee points and fundraise placeholders for regional rollout context—not live fundraise progress.",
+    "Ten countries, one Seat each · TTG collateral lock by tier (separate layer from Global Treasury 55% cash use).",
+  governance_params_phase1_table_scope:
+    "This table lists Seat stake and market tier only—order fee routing percentages (4%, etc.) are unrelated to net profit 45% and appear in the technical appendix.",
+  governance_params_phase1_protocol_table_lead:
+    "TTG the Seat must lock (collateral · 24-month lock).",
+  governance_params_phase1_legend_title: "How to read this table",
+  governance_params_phase1_legend_stake_ratio:
+    "Stake ratio: locked TTG as a percent of total TTG supply (e.g. 4% = 400,000 TTG).",
+  governance_params_phase1_legend_stake_amount:
+    "TTG to lock: actual TTG coins locked on-chain (collateral + governance eligibility, 24-month lock).",
+  governance_params_phase1_legend_global_pool_weight:
+    "Holding TTG does not automatically grant the 45% country-pool net-profit share—that belongs to the regional steward path.",
+  governance_params_phase1_legend_tier: "Market tier S / A / B: country market size band (S = largest).",
+  governance_params_phase1_independent_toggle: "Why don’t stake weight and fundraising convert into each other?",
+  governance_params_phase1_independent_fundraise:
+    "Fundraising target: board-set raise size per market (10k CNY)—not auto-converted from stake or fee weight.",
+  governance_params_phase1_independent_stake:
+    "Steward stake: TTG the Seat must lock; unlocks gradually after 24 months—for governance and collateral.",
+  governance_params_phase1_independent_fee_points:
+    "Fee weight: that country’s share of platform order fees—not global pool mixing, not net profit 45%.",
+  governance_params_phase1_dual_track_note:
+    "Fundraising, TTG lock, and fee weight are set separately—no Seat×reference-price auto conversion.",
+  governance_params_phase1_fundraise_total:
+    "Ten-country fundraising total {{total}} (CNY 10k) — governance-board parameters · no hard cap.",
+  governance_params_phase1_fundraise_total_row_label: "Total",
+  governance_params_phase1_fundraise_total_row_hint: "Governance table mirror · not an on-chain cap",
+  governance_params_valuation_anchor_note:
+    "TTG reference price (①): {{cny}} CNY/TTG · FDV ~{{fdv}}B · Mock Swap · {{id}}",
+  governance_params_phase1_independent_lead:
+    "Fundraising, steward stake, and fee weight are set through separate governance tracks.",
+  governance_params_phase1_independent_formula_heading: "Parameter formulas (current · read-only mirror)",
+  governance_params_phase1_independent_formula_fee_router:
+    "Platform fee layer 1 (D-4555-A): allocatable platform fee × 45% → country bucket; × 55% → global pool.",
+  governance_params_phase1_independent_formula_net_profit:
+    "Country-pool net profit (D-4555-B · draft): period net profit × 45% → steward path; × 55% → Global Treasury.",
+  governance_params_phase1_independent_formula_three_track:
+    "Three independent tracks: fundraising (10k CNY), Seat stake TTG, and Fee Points are set separately—no automatic conversion.",
+  governance_params_phase1_independent_formula_deprecated_note:
+    "Deprecated—do not cite: Seat stake × TTG reference price → fundraising target (historical engineering formula; archive only since 2026-06-15).",
   governance_params_match_customer_ok:
     "Current and pending match—no pending parameter difference to vote on.",
   governance_params_mismatch_cta_proposals: "View governance proposals →",
   governance_params_data_scope_bullet_customer:
-    "This page explains fee-allocation design targets so you can compare them with published rules.",
+    "This page explains FeeRouter layer 1 vs country net-profit 45/55 and three-track independent parameters so you can compare them with published rules.",
   governance_params_data_scope_bullet_not_wallet:
     "Not wallet balances, live on-chain reads, or indexed aggregate Σ.",
   governance_params_load_error: "Parameters could not be loaded. Please try again.",
   governance_params_body_incomplete: "Parameter data is not ready yet. Please try again.",
-  governance_params_fee_split: "Fee allocation split",
-  governance_params_layer1_country: "Country allocatable bucket",
-  governance_params_layer1_global: "Global pool",
-  governance_params_stakers: "staker share",
-  governance_params_reserve: "Reserve",
-  governance_params_operations: "Operations",
-  governance_params_phase1_countries: "Phase 1 — ten countries/regions",
+  governance_params_fee_routing_technical_kicker: "Appendix",
+  governance_params_fee_routing_technical_title: "How platform order fees are split (not net-profit share)",
+  governance_params_fee_routing_technical_lead:
+    "This section only explains how order fees are routed in the system. Figures are doc-mirror targets—not your live wallet balance.",
+  governance_params_fee_split: "First layer of order-fee split",
+  governance_params_fee_split_lead: "Design-target ratios (read-only—not live balances).",
+  governance_params_layer1_country: "Share for all countries combined (~45%)",
+  governance_params_layer1_global: "Globally shared share (~55%)",
+  governance_params_stakers: "Staking incentive",
+  governance_params_reserve: "Protocol reserve",
+  governance_params_operations: "Day-to-day operations",
+  governance_params_phase1_countries: "Ten countries / regions",
   governance_params_col_country: "Country / region",
-  governance_params_col_tier: "Tier",
-  governance_params_col_cap_pts: "National cap (fee pts)",
-  governance_params_col_open_pts: "Phase-1 open (fee pts)",
+  governance_params_col_tier: "Market tier",
+  governance_params_col_cap_pts: "Country fee share",
+  governance_params_col_cap_pts_hint:
+    "Percent of all allocatable platform order fees—not the 45% steward net-profit split.",
+  governance_params_col_open_pts: "Phase-1 open strength",
+  governance_params_col_open_pts_hint: "Phase 1 routing display strength—not net profit share.",
+  governance_params_col_steward_stake_bps: "Steward stake ratio",
+  governance_params_col_steward_stake_bps_short: "Stake ratio",
+  governance_params_col_steward_stake_bps_hint: "Locked TTG as percent of total TTG supply.",
+  governance_params_col_steward_stake_ttg: "TTG to lock (units)",
+  governance_params_col_steward_stake_ttg_hint: "TTG the Seat steward must lock on-chain.",
+  governance_params_phase1_protocol_table_title: "Seat collateral stake",
+  governance_params_phase1_fundraise_table_title: "Fundraising target per country (10k CNY · independent)",
   governance_params_col_target_wan: "Target (CNY 10k)",
-  governance_params_col_cap_wan: "Hard cap (CNY 10k)",
   governance_params_col_notes: "Notes",
   governance_params_diff_section: "Reconcile (current · pending)",
   governance_params_diff_col_metric: "Metric",
@@ -9055,8 +9341,6 @@ export default {
   governance_params_diff_pending_loading: "Loading pending package…",
   governance_params_retry_load: "Reload",
   governance_params_retry_pending: "Retry pending package",
-  governance_params_page_notice:
-    "This page shows design-target parameters for comparison with published rules. If pending differs from current, open Governance proposals to vote.",
   governance_params_participate_title: "Participate in governance",
   governance_params_participate_lead: "After reviewing parameters, continue through the entries below.",
   governance_params_participate_proposals: "Proposals",
@@ -9066,28 +9350,32 @@ export default {
   governance_params_participate_hub: "Governance hub",
   governance_params_participate_hub_hint: "Regional pools and governance entry points",
   governance_params_phase1_checksum_lead:
-    "Opening fee points and caps are in the table above; expand below to review totals.",
-  governance_params_checksum_toggle: "Fee-point totals check (optional)",
+    "FeeRouter doc checksum totals (technical appendix)—unrelated to net profit 45/55 and global pool stake weights above.",
+  governance_params_checksum_toggle: "FeeRouter checksums (optional)",
   governance_params_footer_title: "More governance",
-  governance_params_footer_lead: "From parameter disclosure to proposals, delegation, or the hub.",
+  governance_params_footer_lead: "From allocation rules to proposals, delegation, or the hub.",
   governance_params_technical_toggle: "Document & data sources (optional)",
   governance_params_section_nav_aria: "On this page",
+  governance_params_section_nav_overview: "Two-step overview",
+  governance_params_section_nav_global_pool: "Global Treasury",
+  governance_params_section_nav_revenue: "Country revenue",
   governance_params_section_nav_diff: "Reconcile",
-  governance_params_section_nav_fee: "Fee split",
+  governance_params_section_nav_fee: "FeeRouter L1",
+  governance_params_section_nav_fee_routing: "Technical appendix",
   governance_params_section_nav_countries: "Countries",
   governance_params_diff_source_hint: "Pending source: {{source}} (local overlay via env for dev only).",
   governance_params_data_scope_title: "How to read this page",
   governance_params_data_scope_bullet_api:
-    "Tables and percentages here come only from GET /api/v1/governance/protocol-reference and GET /api/v1/governance/protocol-reference/pending (headers X-Implementation-Status: doc-reference / doc-reference-pending). They mirror spec 84 — not on-chain contract reads.",
+    "Tables and percentages come from published governance doc mirrors (read-only)—not live on-chain contract reads.",
   governance_params_data_scope_bullet_not_sigma:
-    "This is not GET /api/v1/governance/fee-pool-aggregates projection Σ. Do not treat indexed aggregates as the same truth or SSOT.",
+    "Not indexed fee-pool aggregate projections or running totals—do not treat as the same truth as on-chain Σ.",
   governance_params_data_scope_bullet_not_pool:
-    "This is not GET /api/v1/governance/pool chain SSOT or balances. Do not mix with pool root chain reads as one truth.",
+    "Not live pool balances or chain root reads—do not mix with wallet or pool account balances as one truth.",
   governance_params_checksums_section: "Open fee-point checksums (doc mirror only)",
-  governance_params_checksum_key_phase1_open_fee_points_sum: "Phase-1 open fee points sum",
-  governance_params_checksum_key_national_pool_cap_fee_points_sum: "National pool cap (fee points) sum",
-  governance_params_checksum_key_country_bucket_percent: "Country bucket share (layer 1)",
-  governance_params_checksum_key_phase1_open_over_country_bucket: "Phase-1 open vs country-bucket (narrative check)",
+  governance_params_checksum_key_phase1_open_fee_points_sum: "Ten-country phase-1 open strength total",
+  governance_params_checksum_key_national_pool_cap_fee_points_sum: "Ten-country fee-weight total",
+  governance_params_checksum_key_country_bucket_percent: "Share of order fees routed to all countries",
+  governance_params_checksum_key_phase1_open_over_country_bucket: "Phase-1 open as share of country-routed portion",
 
   governance_fee_routes_title: "Fee routes (on-chain index)",
   governance_fee_routes_desc:
@@ -9417,6 +9705,28 @@ export default {
   auth_login_passwordPlaceholder: "Enter your password",
   auth_login_submit: "Login",
   auth_login_submitting: "Logging in…",
+  auth_login_governance_remediation_title: "TTG SSOT remediation progress (① local)",
+  auth_login_governance_remediation_lead:
+    "Enterprise audit fix tracker. Updates with SSOT / disclosure UI; ② on-chain and ③ legal are separate gates.",
+  auth_login_governance_remediation_progress_label: "① Docs + UI completion",
+  auth_login_governance_remediation_progress_value: "{{done}}/{{total}} · {{percent}}%",
+  auth_login_governance_remediation_status_done: "Done",
+  auth_login_governance_remediation_status_in_progress: "In progress",
+  auth_login_governance_remediation_status_pending: "Pending",
+  auth_login_governance_remediation_phase_note: "① local ≠ ② testnet on-chain ≠ ③ external legal sign-off.",
+  auth_login_governance_remediation_params_link: "Open /governance/params GOV-01–04 freeze →",
+  auth_login_governance_remediation_item_ui_pro_rata_copy: "Remove pro-rata misleading copy",
+  auth_login_governance_remediation_item_params_treasury_policy_section: "Params · Treasury governance / sale block",
+  auth_login_governance_remediation_item_p4_governance_options: "P4 options A–E + 30% cap",
+  auth_login_governance_remediation_item_public_sale_rounds: "Three-round public sale table",
+  auth_login_governance_remediation_item_seat_exit_ssot: "Seat exit SSOT (unlock TTG only)",
+  auth_login_governance_remediation_item_legal_08_4_crossref: "08-4 product path B cross-ref",
+  auth_login_governance_remediation_item_tokenomics_freeze_gov: "TTG Tokenomics V1 · GOV-01–04 freeze + Final Audit",
+  auth_login_governance_remediation_item_legal_signoff_items: "LEGAL sign-off checklist add-ons",
+  auth_login_governance_remediation_item_accruals_wording: "Governance accruals de-dividend wording",
+  auth_login_governance_remediation_item_onchain_treasury_buyback: "On-chain Treasury buyback/burn",
+  auth_login_governance_remediation_item_onchain_primary_market: "On-chain Primary Market rounds",
+  auth_login_governance_remediation_item_kyc_aml_public_sale: "Public sale KYC/AML · ③ legal",
   auth_login_register: "Register",
   auth_login_forgotPassword: "Forgot password",
   auth_login_footerNav_aria: "Account links",
@@ -10493,7 +10803,7 @@ export default {
   trust_fingerprint_label: "Content fingerprint (SHA-256)",
   trust_build_git_sha: "Build git SHA",
   trust_chain_id_label: "Chain ID",
-  trust_doc_version_label: "Protocol doc version (84 mirror)",
+  trust_doc_version_label: "Protocol doc mirror version",
   trust_download_json: "Download audit snapshot JSON",
   trust_section_proof_title: "Three proof pillars",
   trust_section_proof_b482_title: "Financial correctness (B-482)",
@@ -10507,7 +10817,9 @@ export default {
     "Shows the mirrored governance document version; full fee-routing tables live in the governance portal.",
   trust_section_gov_title: "Governance execution & public routes",
   trust_gov_proposals: "Proposals & execution status",
-  trust_gov_params: "Protocol parameters (84 mirror)",
+  trust_gov_params: "Protocol parameters (doc mirror)",
+  trust_gov_params_hint:
+    "FeeRouter layer 1 · country net profit · Phase-1 three-track params (fundraise / stake / Fee Points)",
   trust_gov_fee_routes: "Fee routes & vaults",
   trust_hub_link: "Trust hub",
   trust_hub_hint: "Plain-language alignment checks and optional downloads for your records.",
@@ -10588,7 +10900,8 @@ export default {
   pux1_pillar_gov_title: "Rules match governance",
   pux1_pillar_finance_body: "Balances and order states must match the books—no missing or double payments.",
   pux1_pillar_audit_body: "Important actions leave a trail you can replay later—not just someone’s word.",
-  pux1_pillar_gov_body: "Fees and splits match what governance registered—no “one story on the page, another in the back office.”",
+  pux1_pillar_gov_body:
+    "Fees and allocation parameters are disclosed on Protocol parameters with separate D-4555-A/B and three-track tracks—no “one story on the page, another in the back office.”",
   /** P-UX2: Trust hub header line — product language, not internal program IDs */
   pux2_hub_kicker: "Public rules · auto-check · optional records",
   /** P-GROW1: key decision moments — trust reinforcement + analytics (see trustGrowthAnalytics) */
@@ -11226,6 +11539,7 @@ export default {
     "Track A admission fee is complete. Connect your application wallet and complete TTG stake (Track B).",
   steward_workbench_staking_gate_cta_b_track: "Go to USDC admission fee (Track A)",
   steward_workbench_staking_gate_cta_stake_section: "Go to TTG stake (Track B)",
+  steward_workbench_staking_view_section_cta: "View Track B stake details",
   steward_workbench_dual_track_status_aria: "Dual-track completion status",
   steward_workbench_dual_track_a_label: "Track A",
   steward_workbench_dual_track_b_label: "Track B",
@@ -11254,6 +11568,8 @@ export default {
     "Amount {{amount}} · ① local may be zero. Continue with A2 identity confirm below.",
   steward_workbench_b_track_complete_strip_inline: "Track A complete ({{amount}}) ·",
   steward_workbench_b_track_complete_strip_cta: "Go to Track B TTG stake",
+  steward_workbench_b_track_complete_strip_b_staked: "Track B TTG staked",
+  steward_workbench_b_track_complete_strip_view_cta: "View details",
   steward_workbench_todo_locked_title: "Governance to-dos unlock after dual-track admission",
   steward_workbench_todo_locked_body:
     "Complete Track A USDC fee and Track B TTG stake before proposals, delegation, and reward claims.",
@@ -11380,7 +11696,7 @@ export default {
   steward_workbench_stake_wallet_invalid_hint:
     "Application wallet format is invalid; re-verify wallet on steward register and resubmit.",
   steward_workbench_stake_cta_onboarding: "Continue stake / onboarding",
-  steward_workbench_stake_cta_protocol: "Protocol parameters",
+  steward_workbench_stake_cta_protocol: "Review protocol params (dual · three-track)",
   steward_workbench_link_stake: "TTG stake & release",
   me_settings_item_steward_stake: "Steward TTG stake",
   me_settings_desc_steward_stake: "Apply stake, resignation notice, on-chain release (R1 · L2)",

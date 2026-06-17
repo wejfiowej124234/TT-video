@@ -102,6 +102,8 @@ import {
 
 import {
 
+  isStewardChainStakeComplete,
+
   stewardChainStakeSummaryKey,
 
   stewardOffchainSeatLabelKey,
@@ -467,7 +469,11 @@ function StewardRegionWorkbenchInner() {
 
 
           {bTrack.bTrackComplete ? (
-            <StewardWorkbenchBTrackCompleteStrip t={t} amountLabel={bTrack.quote?.amountLabel ?? null} />
+            <StewardWorkbenchBTrackCompleteStrip
+              t={t}
+              amountLabel={bTrack.quote?.amountLabel ?? null}
+              bTrackStaked={isStewardChainStakeComplete(chainStakeSummaryKey)}
+            />
           ) : (
             <StewardWorkbenchBTrackAdmissionSection
               bTrack={bTrack}

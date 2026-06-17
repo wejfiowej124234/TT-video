@@ -44,6 +44,13 @@ export function GovernanceHubPageMain() {
       <p
         className="mt-4 rounded-[var(--radius-sm)] border border-ink-200/80 bg-ink-50/60 px-3 py-2 text-meta text-ink-700 dark:border-ink-600/40 dark:bg-ink-900/25 dark:text-ink-200"
         role="note"
+        data-tt-governance-hub-params-pointer="1"
+      >
+        {t("governance_hub_params_pointer")}
+      </p>
+      <p
+        className="mt-4 rounded-[var(--radius-sm)] border border-ink-200/80 bg-ink-50/60 px-3 py-2 text-meta text-ink-700 dark:border-ink-600/40 dark:bg-ink-900/25 dark:text-ink-200"
+        role="note"
       >
         {t("governance_b428_closeloop_doc_pointer")}
       </p>

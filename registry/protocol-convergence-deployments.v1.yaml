@@ -1,11 +1,13 @@
 # Protocol Convergence · ② 测试网部署登记（ABI + SSOT hash + 地址 · R-03 对拍）
+# LEGACY · READ-ONLY: `environments.sepolia.addresses` = pre-convergence 快照 · 非现行 runtime 读口
+# ACTIVE ② SSOT: `environments.gov_freeze_v2_clean_baseline` + `scripts/dev/.env.phase2-chain-deploy.local`
 # 真源：docs/spec/governance-token/protocol-ssot.v1.yaml
 # 机读闸：bash scripts/gates/check-protocol-convergence-pregate.sh
 #         bash scripts/gates/check-phase2-chain-deployment-gate.sh
 # 对拍：bash scripts/gates/check-protocol-quote-parity.sh
 
 schema_version: "1"
-updated: "2026-06-05T10:15Z"
+updated: "2026-06-16T05:45:55Z"
 
 protocol_ssot:
   version: "1.0.1"
@@ -84,13 +86,14 @@ environments:
       - PRIVATE_KEY
       - CHAIN_RPC_URL
       - CHAIN_ID
+    # LEGACY · READ-ONLY — pre-GovFreeze-V2-convergence · 见 gov_freeze_v2_clean_baseline
     addresses:
-      governance_token_address: "0xaC2E29AC7089e4863C21dAF232cF8bbb025d91ca"
-      governor_address: "0xa79c8df5C225825f6d04a497043dB0F1995B55ae"
-      timelock_address: "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f"
+      governance_token_address: "0x2837ea0c50e27d59b88af617abbb231a040062c5"
+      governor_address: "0xd5225bA81Af40600c9802d20888898193861f161"  # LEGACY · READ-ONLY · Pre-V2 Governor
+      timelock_address: "0x462c2351971707A8CEEb3ce789F268B8326C76a0"  # LEGACY · READ-ONLY · Pre-V2 Timelock
       escrow_factory_address: "0xbf746B6a330e61416c6D87aB9b0758f7107C8006"
       fee_router_address: "0x81A8009210c5215100564c6E4123F672c4459306"
-      region_steward_stake_pool_address: "0x16F914f3D50f7Aa02665589e715F94CA3b7Ab47c"
+      region_steward_stake_pool_address: "0xBf1F5B8c5b8A1cFC8E4458Eb43C1a0ab24012806"  # LEGACY · READ-ONLY · Pre-V2 StakePool
       country_pool_redemption_epoch_cn_address: "0x712050e4b1517C3f3ab39B32Cabb70CC0E1C0829"
       country_pool_ledger_pilot_address: "0x63bd7d5ee5c5dde707e5e65303f3876267c78e97"
     env_to_registry:
@@ -106,6 +109,35 @@ environments:
       部署后填 addresses.* 并同步根 .env · 禁止在 R-01/R-02/R-03 未清零前 broadcast。
       见 docs/runbook/TT-PHASE2-CHAIN-DEPLOYMENT-GATE.md
 
+
+  gov_freeze_v1_baseline:
+    stamp: "20260616T030117Z"
+    evidence: evidence/GO_phase2_gov_freeze_v1_sepolia/latest/
+    addresses:
+      timelock_address: "0x462c2351971707A8CEEb3ce789F268B8326C76a0"
+      governor_address: "0xd5225bA81Af40600c9802d20888898193861f161"
+      treasury_p4_cap_address: "0xc0FbFc9A50f551273F5748EB2e45B49719dDc796"
+      primary_market_address: "0x2216A416462366b65d4F6Cc96bE50Db1f6e9fbAc"
+      seat_registry_address: "0x75bF993402eb9aCc6145CBdac0EBd322548317d3"
+      region_steward_stake_pool_proxy_address: "0xBf1F5B8c5b8A1cFC8E4458Eb43C1a0ab24012806"
+      country_pool_net_profit_ledger_address: "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+    notes: |
+      治理唯一链上基线 · GOV-01～04 Proxy · admin=Timelock · ② Sepolia only
+
+  gov_freeze_v2_clean_baseline:
+    stamp: "20260616T042502Z"
+    evidence: evidence/GO_phase2_gov_freeze_v2_clean_baseline/latest/
+    supersedes: gov_freeze_v1_baseline
+    addresses:
+      timelock_address: "0x462c2351971707A8CEEb3ce789F268B8326C76a0"
+      governor_address: "0xd5225bA81Af40600c9802d20888898193861f161"
+      treasury_p4_cap_address: "0xFA0796236aa350342Ee71853c1d5593F48e55090"
+      primary_market_address: "0xC77F717C1C98d460e006266ecb20D870D05CB5C1"
+      seat_registry_address: "0x87c77986C7de47131D02A6407308b974324cc6Dc"
+      region_steward_stake_pool_proxy_address: "0xBf1F5B8c5b8A1cFC8E4458Eb43C1a0ab24012806"
+      country_pool_net_profit_ledger_address: "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+    notes: |
+      G24-CLEAN-BASELINE-01 · 全新 Timelock+Proxy · 10国 Stake init · allow×5 · ② Sepolia only
   testnet_template:
     chain_id: null
     region_steward_stake_pool_address: null

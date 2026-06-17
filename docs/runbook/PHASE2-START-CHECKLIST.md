@@ -1,16 +1,8 @@
 # Phase ② Start Checklist · 启动条件与阻塞项
 
-**Status:** **Community C1–C12 ALL PASS · Closing Gap ACTIVE · `TT_PHASE2_GO_VERDICT: NOT_MET`** · **Community 矩阵 GO** · [TT-PHASE2-COMMUNITY-MATRIX-FINAL-ATTESTATION](./TT-PHASE2-COMMUNITY-MATRIX-FINAL-ATTESTATION.md) — 全站收口 **[PHASE2-CLOSING-GAP](./PHASE2-CLOSING-GAP.md)** · Community 证据 **[CLOSING-REVIEW.md](../../evidence/GO_phase2_testnet_20260526/community/CLOSING-REVIEW.md)** · 总态 **[PHASE2-REPOSITORY-STATUS](./PHASE2-REPOSITORY-STATUS.md)**。
+**Status:** **Closing Gap GO Ready · Community C1–C12 PASS** · Open 收口 [PHASE2-OPEN-ITEMS-BURN-DOWN](./PHASE2-OPEN-ITEMS-BURN-DOWN.md) · 总态 [PHASE2-REPOSITORY-STATUS](./PHASE2-REPOSITORY-STATUS.md)
 
-**② 开工纪律：** **须** 先满足本节 **G-0～G-4** **全部** 行，**再** 按 §6 建议顺序开 Phase ② 工作流；**禁止** 在 Freeze 期内以「预研 / 半实现」绕过本清单。
-
-**阶段口径：** **① 本地 → ② 测试网 → ③ 公网/生产**（与根 [README](../../README.md)「工程规划方向」、[AGENTS.md](../../AGENTS.md) 同源；**禁止跳阶**）。
-
-**Phase ① 收口 SSOT：** [GO_local_phase1](../../frontend/evidence/GO_local_phase1/README.md) · [onboarding-fee-schedule.v1 §8.1](../spec/artifacts/onboarding-fee-schedule.v1.md#81-第一阶段--①-本地--全链路2026-05-28)  
-**① 企业收口审计：** [PHASE1-ENTERPRISE-CLOSURE-AUDIT](./PHASE1-ENTERPRISE-CLOSURE-AUDIT.md)（垂直已闭 · 全仓 ① ≠ 100%）  
-**② 缺口审计：** [PHASE2-ENTERPRISE-GAP-AUDIT](./PHASE2-ENTERPRISE-GAP-AUDIT.md)
-
-> **合法宣称：** Phase ② **严格 Prepared / Not Started**。staging · Stripe · 测试网 · 链上 **实施/GO** 表述 — **须 G-1/G-2 清闸后** 方成立（见 [PHASE2-REPOSITORY-STATUS · 合法宣称闸](./PHASE2-REPOSITORY-STATUS.md#合法宣称闸强制--防假完成)）。
+> **合法宣称：** G-1/G-2/G-4 **机读绿**（2026-06-06）· Perfect Validation **NO-GO**（soak/indexer）· 见 [PHASE2-OPEN-ITEMS-BURN-DOWN §2](./PHASE2-OPEN-ITEMS-BURN-DOWN.md)。
 
 ---
 
@@ -32,10 +24,10 @@
 | **C11** | 04 路由闸 · staging 对拍 | **PASS** · `20260606T001039Z` · `record-community-c11-evidence.sh` · [`route-gate-report.json`](../../evidence/GO_phase2_testnet_20260526/community/C11/route-gate-report.json) · 24 API + 18 browser routes · [`TT-PHASE2-C11-STAGING-EVIDENCE`](./TT-PHASE2-C11-STAGING-EVIDENCE.md) · [`community/C11/`](../../evidence/GO_phase2_testnet_20260526/community/C11/) | **可宣称 ② C11 槽 PASS** · **≠** Phase ② GO |
 | **C12** | DID / Trust / Reputation 互链 · Feed/Profile/Rank | **PASS** · `20260606T001931Z` · `record-community-c12-evidence.sh` · [`did-interlink-summary.md`](../../evidence/GO_phase2_testnet_20260526/community/C12/did-interlink-summary.md) · 8 screenshots · API/IT + browser E2E exit 0 · [`TT-PHASE2-C12-STAGING-EVIDENCE`](./TT-PHASE2-C12-STAGING-EVIDENCE.md) · [`community/C12/`](../../evidence/GO_phase2_testnet_20260526/community/C12/) | **可宣称 ② C12 槽 PASS** · **≠** Phase ② GO |
 | **G-0** | **Phase ① 总验收** `bash scripts/dev/run-go-local-phase1-acceptance.sh` **exit 0**；建议 `bash scripts/dev/record-go-local-phase1-acceptance-log.sh` 留痕 | **① 已闭环** | **不得** 开 Stripe 出网 / staging 真收单 |
-| **G-1** | **测试环境隔离决策**：staging **`DATABASE_URL`**、Stripe **test** 账户、**`whsec_*`** 与 **生产密钥零混用**（[96-03 §轮换](../spec/96-03-安全密钥与供应链.md)） | **待 Owner 确认** | 密钥混用 → **禁止** 开 webhook |
-| **G-2** | **staging 主机可达**：HTTPS **`API_BASE_URL`**、测试 PG 已 **`sqlx migrate`**、**`chain_off.db_pool`** 与 **①** 同版本镜像 | **待部署** | 无 staging API → 无法做 **②** 烟测 |
+| **G-1** | **测试环境隔离决策**：staging **`DATABASE_URL`**、Stripe **test** 账户、**`whsec_*`** 与 **生产密钥零混用**（[96-03 §轮换](../spec/96-03-安全密钥与供应链.md)） | **✅ 机读绿** · [PHASE2-G1-ENV-ISOLATION-DECISION](./PHASE2-G1-ENV-ISOLATION-DECISION.md) **2026-05-31** | 密钥混用 → **禁止** 开 webhook |
+| **G-2** | **staging 主机可达**：HTTPS **`API_BASE_URL`**、测试 PG 已 **`sqlx migrate`**、**`chain_off.db_pool`** 与 **①** 同版本镜像 | **✅ Fly HTTPS** · `tt-api-staging` · `tt-web-staging` · 六域 UAT **25/0/0** | 无 staging API → 无法做 **②** 烟测 |
 | **G-3** | **书面范围**：本轮仅 **② 测试网**；结论句 **不** 与 **③ Production GO** 合并 | **本文即范围闸** | 假完成风险见 [CONTRIBUTING · 禁止假完成](../../CONTRIBUTING.md#no-false-completion) |
-| **G-4** | **B 轨价目冻结**：`fee_schedule_v1` 在 **①** 三方对拍稳定；**②** 须 **非零** `amount_minor`（**关闭** staging 上 `TRAVELTRUST_ONBOARDING_LOCAL_DEV=1`） | **① 已验** · **② 未验** | local-dev 零金额覆盖 **禁止** 出现在 staging |
+| **G-4** | **B 轨价目冻结**：`fee_schedule_v1` 在 **①** 三方对拍稳定；**②** 须 **非零** `amount_minor`（**关闭** staging 上 `TRAVELTRUST_ONBOARDING_LOCAL_DEV=1`） | **✅ ② PASS** · 20260606T095305Z · [`closing-gap/G4-stripe-g4/`](../../evidence/GO_phase2_testnet_20260526/closing-gap/G4-stripe-g4/) | local-dev 零金额覆盖 **禁止** 出现在 staging |
 
 > **未清 G-0～G-4 前：** 各域 backlog **保持暂停**（[onboarding-fee-schedule.v1 §8.2](../spec/artifacts/onboarding-fee-schedule.v1.md#82-第二阶段--②-测试网--待验backlog--暂停实施)）。
 

@@ -50,9 +50,43 @@ test -f docs/spec/governance-token/03-对外材料-PPT与白皮书数据页摘�
 test -f docs/spec/governance-token/protocol-ssot.v1.md || fail "missing governance-token/protocol-ssot.v1.md (Protocol Convergence P0)"
 test -f docs/spec/governance-token/fund-flow-ssot.v1.md || fail "missing governance-token/fund-flow-ssot.v1.md"
 test -f docs/spec/governance-token/state-machine.v1.md || fail "missing governance-token/state-machine.v1.md"
+test -f docs/spec/governance-token/ttg-allocation-permissions-flows-ssot-v1.md \
+  || fail "missing governance-token/ttg-allocation-permissions-flows-ssot-v1.md (diagram SSOT)"
+grep -q 'ttg-allocation-permissions-flows-ssot-v1' docs/spec/governance-token/README.md \
+  || fail "governance-token/README.md must reference ttg-allocation-permissions-flows-ssot-v1"
+grep -q 'ttg-allocation-permissions-flows-ssot-v1' docs/spec/governance-token/protocol-ssot.v1.md \
+  || fail "protocol-ssot.v1.md must reference ttg-allocation-permissions-flows-ssot-v1"
+grep -q 'ttg-allocation-permissions-flows-ssot-v1' docs/spec/governance-token/country-revenue-model-v1-draft.md \
+  || fail "country-revenue-model-v1-draft must reference ttg-allocation-permissions-flows-ssot-v1"
+grep -q 'ttg-allocation-permissions-flows-ssot-v1' frontend/app/governance/params/README.md \
+  || fail "frontend governance/params README must reference ttg-allocation-permissions-flows-ssot-v1"
+test -f docs/spec/governance-token/ttg-primary-market-and-exit-policy-v1-draft.md \
+  || fail "missing governance-token/ttg-primary-market-and-exit-policy-v1-draft.md (Owner P4/exit/primary market)"
+grep -q 'ttg-primary-market-and-exit-policy-v1' docs/spec/governance-token/README.md \
+  || fail "governance-token/README.md must reference ttg-primary-market-and-exit-policy-v1"
+grep -q 'ttg-primary-market-and-exit-policy-v1' docs/spec/governance-token/country-revenue-model-v1-draft.md \
+  || fail "country-revenue-model-v1-draft must reference ttg-primary-market-and-exit-policy-v1"
+grep -q 'TTG-TOKENOMICS-FREEZE-V1' docs/spec/governance-token/README.md \
+  || fail "governance-token/README.md must reference TTG-TOKENOMICS-FREEZE-V1"
+test -f docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md \
+  || fail "missing TTG-TOKENOMICS-FREEZE-V1.md (Gate-2.4 economic SSOT)"
+test -f docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1-FINAL-AUDIT-REPORT.md \
+  || fail "missing TTG-TOKENOMICS-FREEZE-V1-FINAL-AUDIT-REPORT.md"
+grep -q 'TTG-TOKENOMICS-FREEZE-V1' docs/spec/governance-token/country-pool-settlement-gate2.4-prerequisites-checklist.md \
+  || fail "gate2.4 checklist must reference TTG-TOKENOMICS-FREEZE-V1 (G24-P-12)"
+grep -q 'governance_freeze_v1' docs/spec/governance-token/protocol-ssot.v1.yaml \
+  || fail "protocol-ssot.v1.yaml must contain governance_freeze_v1"
+grep -q 'GOV-01' docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md \
+  || fail "TTG-TOKENOMICS-FREEZE-V1 must define GOV-01"
+grep -q 'gov-params-tokenomics-freeze' frontend/app/governance/params/README.md \
+  || fail "frontend governance/params README must reference gov-params-tokenomics-freeze"
 test -f docs/spec/governance-token/84-valuation-anchor-P1-memo.md || fail "missing 84-valuation-anchor-P1-memo.md (84 §3.6 engineering fill)"
-grep -qF 'Option C' docs/spec/governance-token/84-valuation-anchor-P1-memo.md \
-  || fail "84-valuation-anchor-P1-memo must document Option C engineering default"
+grep -qF 'country-pool-fundraise-governance-v1' docs/spec/governance-token/84-valuation-anchor-P1-memo.md \
+  || fail "84-valuation-anchor-P1-memo must reference country-pool-fundraise-governance-v1 SSOT"
+grep -qE '53,?500' docs/spec/governance-token/country-pool-fundraise-governance-v1.md \
+  || fail "country-pool-fundraise-governance-v1 must document 53500 wan total"
+grep -qF 'country-pool-fundraise-governance-v1' docs/spec/84-第一阶段10国Country-Pool发行参数总表.md \
+  || fail "84 must reference country-pool-fundraise-governance-v1 (fundraise SSOT)"
 grep -q 'protocol-ssot.v1' docs/spec/governance-token/README.md \
   || fail "governance-token/README.md must reference protocol-ssot.v1"
 grep -q 'protocol-ssot.v1' docs/spec/84-第一阶段10国Country-Pool发行参数总表.md \
@@ -98,6 +132,23 @@ grep -qF 'NAV 窗口赎回' "$PDP08" \
   || fail "$PDP08: missing Protocol Convergence R4 NAV redemption public wording"
 grep -qF 'OperationsVault 已按预算释放并花费的运营费用不可退还' "$PDP08" \
   || fail "$PDP08: missing Protocol Convergence R5 OperationsVault non-refundable wording"
+
+# Governance → Business narrative (2026-06-15): active PM/fundraising docs must not revive legacy fundraise wording
+for biz in \
+  docs/fundraising/internal/02-融资方案产品经理工作包.md \
+  docs/fundraising/internal/06-融资域决策总表.md \
+  docs/product-manager/01-融资方案资料包.md \
+  docs/product-manager/05-产品经理企业级决策总表.md
+do
+  test -f "$biz" || fail "missing business narrative doc: $biz"
+  grep -qF 'country-pool-fundraise-governance-v1' "$biz" \
+    || fail "$biz must reference country-pool-fundraise-governance-v1 (fundraise SSOT)"
+  grep -qE '53,?500' "$biz" \
+    || fail "$biz must mention 53500 wan fundraise total"
+done
+if rg -q '38500|3\.85亿|募资目标和硬顶' docs/fundraising/internal docs/product-manager --glob '*.md' 2>/dev/null; then
+  fail "legacy fundraise wording (38500/3.85亿/募资目标和硬顶) in business docs — see GOVERNANCE-TO-BUSINESS-CONSISTENCY-AUDIT-20260615.md"
+fi
 
 bash scripts/gates/check-protocol-ssot-convergence.sh
 

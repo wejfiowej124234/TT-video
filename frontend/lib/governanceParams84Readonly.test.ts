@@ -13,7 +13,7 @@ const baseMirror = (): ProtocolRef84Mirror => ({
     layer1_percent_of_allocatable_platform_fee: { country_bucket: 45, global_pool: 55 },
     global_pool_split_percent: { ttg_stakers: 65, reserve: 20, operations: 15 },
   },
-  phase1_countries: [{ name_zh: "X", tier: "S", national_pool_cap_fee_points: 1, phase1_open_fee_points: 1, fundraise_target_cny_wan: 1, fundraise_cap_cny_wan: 1 }],
+  phase1_countries: [{ name_zh: "X", tier: "S", national_pool_cap_fee_points: 1, phase1_open_fee_points: 1, fundraise_target_cny_wan: 8000, fundraise_target_source: "governance_board_per_country" }],
 });
 
 describe("governanceParams84Readonly (P5-5-3)", () => {

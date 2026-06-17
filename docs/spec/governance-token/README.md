@@ -7,6 +7,9 @@
 | **协议数值 / 辖区 bps / 锁仓层级（P0 · 唯一写入口）** | **[protocol-ssot.v1.md](protocol-ssot.v1.md)** — **84/89/96/合约/API/前端禁止自写数字** |
 | **四类资金分轨 / Vault / 可退不可退** | **[fund-flow-ssot.v1.md](fund-flow-ssot.v1.md)** |
 | **Steward / Country / Redemption 状态枚举** | **[state-machine.v1.md](state-machine.v1.md)** |
+| **TTG 分配 · 权限 · 申请流程（图解 SSOT · 改逻辑必改图）** | **[ttg-allocation-permissions-flows-ssot-v1.md](ttg-allocation-permissions-flows-ssot-v1.md)** |
+| **TTG Tokenomics V1 · GOV-01～04（FROZEN · Gate-2.4 读口）** | **[TTG-TOKENOMICS-FREEZE-V1.md](TTG-TOKENOMICS-FREEZE-V1.md)** · **[Final Audit Report](TTG-TOKENOMICS-FREEZE-V1-FINAL-AUDIT-REPORT.md)** |
+| **公众三轮 · P4 治理 · Seat 解锁退出（Owner 拍板）** | **[ttg-primary-market-and-exit-policy-v1-draft.md](ttg-primary-market-and-exit-policy-v1-draft.md)** |
 | **总览与联动** | **[82-治理币-文档总览](../82-治理币-文档总览.md)**、**[83](../83-区域治理与收益分配-协议白皮书.md)**、**[84](../84-第一阶段10国Country-Pool发行参数总表.md)**（**§四 fee 列镜像 protocol-ssot §4**） |
 | **对外口径** | **[08-4](../08-4-对外口径包.md)** |
 | **本目录文件表** | **下文「文件清单」** |
@@ -22,11 +25,14 @@
 | 文件 | 说明 |
 |------|------|
 | **[protocol-ssot.v1.md](protocol-ssot.v1.md)** | **唯一数值真源**：TTG 供应、FeeRouter bps、十国 `fee_route_bps` / `steward_stake_bps`、锁仓层级 |
+| **[ttg-allocation-permissions-flows-ssot-v1.md](ttg-allocation-permissions-flows-ssot-v1.md)** | **图解 SSOT**：供应/四轨/两轨收益/申请/权限 · **§0 维护规则**（改逻辑必改图） |
 | **[fund-flow-ssot.v1.md](fund-flow-ssot.v1.md)** | TTG / CountryPool / Escrow / Fee 四轨 + 子 Vault + NAV 赎回 |
 | **[state-machine.v1.md](state-machine.v1.md)** | `steward_application` / `steward_seat` / `country_jurisdiction` / `redemption` / `region_share_eligibility` |
 | **[protocol-convergence-P1-memo.md](protocol-convergence-P1-memo.md)** | P1 决议 + P2 ① 交付状态 |
 | **[84-valuation-anchor-P1-memo.md](84-valuation-anchor-P1-memo.md)** | **84 §3.6** 三轨独立 · 募资 SSOT 互链（取代 Option C 占位） |
-| **[country-revenue-model-v1-draft.md](country-revenue-model-v1-draft.md)** | **① 国家收益模型** · Fee Points · 净利润 45/55 叙事 |
+| **[country-revenue-model-v1-draft.md](country-revenue-model-v1-draft.md)** | **① 国家收益模型** · Fee Points · 净利润 45/55 · Treasury P1～P4 |
+| **[TTG-TOKENOMICS-FREEZE-V1.md](TTG-TOKENOMICS-FREEZE-V1.md)** | **FROZEN · GOV-01～04 · Gate-2.4 / Sepolia 唯一经济读口** |
+| **[TTG-TOKENOMICS-FREEZE-V1-FINAL-AUDIT-REPORT.md](TTG-TOKENOMICS-FREEZE-V1-FINAL-AUDIT-REPORT.md)** | **Tokenomics V1 终审计报告（①）** |
 | **[country-pool-fundraise-governance-v1.md](country-pool-fundraise-governance-v1.md)** | **治理委员会独立募资表（万元 · 无硬顶 · 唯一写入口）** |
 | **[country-pool-net-profit-settlement-v1-design.md](country-pool-net-profit-settlement-v1-design.md)** | **② Country Pool 净利润 45/55 结算 · DESIGN ONLY** |
 | **[country-pool-net-profit-accounting-spec-v1.md](country-pool-net-profit-accounting-spec-v1.md)** | **Gate-0 Exit · v1.0.3 · 产品+财务+法务已签 · Gate-2 设计评审开放** |
@@ -43,7 +49,7 @@
 | **[ttg-reference-price-v1-draft.md](ttg-reference-price-v1-draft.md)** | **200 CNY/TTG** · Mock Swap · FDV（三轨独立 · 不推导募资） |
 | **[archive/README.md](archive/README.md)** | **历史工程公式归档**（勿引用） |
 
-**团队规则：** 见 **protocol-ssot.v1 §0** — 新增字段、状态、百分比、锁仓 **须先登记 SSOT**，再改业务文档或代码。
+**团队规则：** 见 **protocol-ssot.v1 §0** — 新增字段、状态、百分比、锁仓 **须先登记 SSOT**，再改业务文档或代码。**分配/权限/申请流程叙事或 Mermaid 变更** 须同步 **[ttg-allocation-permissions-flows-ssot-v1.md §0](ttg-allocation-permissions-flows-ssot-v1.md)**。
 
 ### 专题草案
 

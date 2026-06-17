@@ -2498,7 +2498,7 @@ pub async fn get_admin_finance_summary(
     let Some(ref co) = state.chain_off else {
         return not_impl_json("GET /api/v1/admin/finance/summary").into_response();
     };
-    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_FINANCE_READ).await {
+    let actor_id = match require_finance_read_uid(&state, &headers).await {
         Ok(uid) => uid,
         Err(resp) => return resp,
     };
@@ -2537,7 +2537,7 @@ pub async fn get_admin_finance_summary_export(
     let Some(ref co) = state.chain_off else {
         return not_impl_json("GET /api/v1/admin/finance/summary/export").into_response();
     };
-    let actor_id = match require_admin_perm_uid(&state, &headers, admin_rbac::PERM_FINANCE_READ).await {
+    let actor_id = match require_finance_read_uid(&state, &headers).await {
         Ok(uid) => uid,
         Err(resp) => return resp,
     };
@@ -2600,8 +2600,8 @@ pub async fn get_admin_fee_router_routed_events(
     let Some(ref _co) = state.chain_off else {
         return not_impl_json("GET /api/v1/admin/fee-router/routed-events").into_response();
     };
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_finance_read_uid(&state, &headers).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
     let request_id = request_id_from_headers(&headers);
@@ -2755,8 +2755,8 @@ pub async fn get_admin_region_vault_forwarded_events(
     let Some(ref _co) = state.chain_off else {
         return not_impl_json("GET /api/v1/admin/region-vault/forwarded-events").into_response();
     };
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_finance_read_uid(&state, &headers).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
     let request_id = request_id_from_headers(&headers);
@@ -2916,8 +2916,8 @@ pub async fn get_admin_region_vault_forwarded_events_export(
         return not_impl_json("GET /api/v1/admin/region-vault/forwarded-events/export")
             .into_response();
     };
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_finance_read_uid(&state, &headers).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
     let request_id = request_id_from_headers(&headers);
@@ -4970,8 +4970,8 @@ pub async fn get_admin_auth_audit_events(
     Query(query): Query<AdminAuthAuditEventsQuery>,
     headers: HeaderMap,
 ) -> impl IntoResponse {
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_read_uid(&state, &headers).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
 
@@ -5094,8 +5094,8 @@ pub async fn get_admin_audit_operations(
     Query(q): Query<AdminAuditOperationsQuery>,
     headers: HeaderMap,
 ) -> impl IntoResponse {
-    let (actor_id, _) = match require_admin_actor(&state, &headers).await {
-        Ok(v) => v,
+    let actor_id = match require_read_uid(&state, &headers).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
     let request_id = request_id_from_headers(&headers);
@@ -5143,8 +5143,8 @@ pub async fn get_admin_audit_logs(
     Query(query): Query<AdminAuditQuery>,
     headers: HeaderMap,
 ) -> impl IntoResponse {
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_read_uid(&state, &headers).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
 
@@ -5267,8 +5267,8 @@ pub async fn get_admin_audit_log_by_id(
     Path(id): Path<String>,
     headers: HeaderMap,
 ) -> impl IntoResponse {
-    let actor_id = match require_admin_actor(&state, &headers).await {
-        Ok((uid, _)) => uid,
+    let actor_id = match require_read_uid(&state, &headers).await {
+        Ok(uid) => uid,
         Err(resp) => return resp,
     };
 
@@ -9111,7 +9111,7 @@ pub async fn patch_admin_community_abuse_policy(
     if state.chain_off.is_none() {
         return not_impl_json("PATCH /api/v1/admin/community/abuse-policy").into_response();
     }
-    let actor_id = match require_super_admin_uid(&state, &headers).await {
+    let actor_id = match require_community_super_uid(&state, &headers).await {
         Ok(uid) => uid,
         Err(resp) => return resp,
     };

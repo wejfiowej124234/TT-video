@@ -193,6 +193,68 @@ pub const ROUTE_DENY_MATRIX: &[(&str, &str, &str)] = &[
     ("PATCH", "/api/v1/admin/trust-growth/control", PERM_TRUST_GROWTH_WRITE),
     ("POST", "/api/v1/admin/compliance/data-requests/:id/update", PERM_APPROVE),
     ("PUT", "/api/v1/admin/users/:id/console-role", PERM_USERS_WRITE),
+    // Finance cluster
+    ("GET", "/api/v1/admin/finance/summary/export", PERM_FINANCE_READ),
+    ("GET", "/api/v1/admin/fee-router/routed-events", PERM_FINANCE_READ),
+    (
+        "GET",
+        "/api/v1/admin/region-vault/forwarded-events",
+        PERM_FINANCE_READ,
+    ),
+    (
+        "GET",
+        "/api/v1/admin/region-vault/forwarded-events/export",
+        PERM_FINANCE_READ,
+    ),
+    // Audit cluster
+    ("GET", "/api/v1/admin/audit/operations", PERM_READ),
+    ("GET", "/api/v1/admin/audit-logs", PERM_READ),
+    ("GET", "/api/v1/admin/audit-logs/:id", PERM_READ),
+    ("GET", "/api/v1/admin/auth-audit-events", PERM_READ),
+    // Community cluster (read)
+    ("GET", "/api/v1/admin/community/reports", PERM_COMMUNITY_READ),
+    ("GET", "/api/v1/admin/community/appeals", PERM_COMMUNITY_READ),
+    (
+        "GET",
+        "/api/v1/admin/community/moderation/cases",
+        PERM_COMMUNITY_READ,
+    ),
+    ("GET", "/api/v1/admin/community/penalties", PERM_COMMUNITY_READ),
+    (
+        "GET",
+        "/api/v1/admin/community/ranking/snapshots",
+        PERM_COMMUNITY_READ,
+    ),
+    (
+        "GET",
+        "/api/v1/admin/community/risk-signals",
+        PERM_COMMUNITY_READ,
+    ),
+    (
+        "GET",
+        "/api/v1/admin/community/policy-change-logs",
+        PERM_COMMUNITY_READ,
+    ),
+    (
+        "PATCH",
+        "/api/v1/admin/community/moderation/:id",
+        PERM_COMMUNITY_MODERATE,
+    ),
+    (
+        "PATCH",
+        "/api/v1/admin/community/comments/:id",
+        PERM_COMMUNITY_MODERATE,
+    ),
+    (
+        "POST",
+        "/api/v1/admin/community/appeals/:id/review",
+        PERM_COMMUNITY_SUPER,
+    ),
+    (
+        "PATCH",
+        "/api/v1/admin/community/abuse-policy",
+        PERM_COMMUNITY_SUPER,
+    ),
 ];
 
 pub fn is_valid_console_role_70(role: &str) -> bool {

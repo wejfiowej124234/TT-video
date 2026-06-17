@@ -92,6 +92,13 @@ export function isMultiDemoStewardWallet(raw: string | null | undefined): boolea
   return s.startsWith("0xmulti");
 }
 
+export const STEWARD_CHAIN_STAKE_SUMMARY_STAKED_KEY =
+  "steward_workbench_stake_chain_summary_staked" as const;
+
+export function isStewardChainStakeComplete(chainStakeSummaryKey: string): boolean {
+  return chainStakeSummaryKey === STEWARD_CHAIN_STAKE_SUMMARY_STAKED_KEY;
+}
+
 export function stewardChainStakeSummaryKey(
   rows: Array<{ hasStake: boolean | null }>,
   opts: { isConnected: boolean; walletMatch: boolean },
@@ -99,7 +106,7 @@ export function stewardChainStakeSummaryKey(
   if (rows.length === 0) return "steward_workbench_stake_chain_summary_none";
   if (!opts.isConnected) return "steward_workbench_stake_chain_summary_connect";
   if (!opts.walletMatch) return "steward_workbench_stake_chain_summary_wallet_mismatch";
-  if (rows.every((r) => r.hasStake === true)) return "steward_workbench_stake_chain_summary_staked";
+  if (rows.every((r) => r.hasStake === true)) return STEWARD_CHAIN_STAKE_SUMMARY_STAKED_KEY;
   if (rows.some((r) => r.hasStake === true)) return "steward_workbench_stake_chain_summary_partial";
   if (rows.every((r) => r.hasStake === null)) return "steward_workbench_stake_chain_summary_reading";
   return "steward_workbench_stake_chain_summary_pending";

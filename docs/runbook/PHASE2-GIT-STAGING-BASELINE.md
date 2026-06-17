@@ -1,7 +1,16 @@
 # Phase ② · Git ↔ Staging 基线纪律
 
 **生效：** 2026-06-06  
-**最新同步：** 20260606T153500Z · **`GIT_STAGING_BASELINE_SYNC: PASS`**
+**最新同步：** 20260617 · preflight — local `d32b4813…` · staging `877a1e77…` **MISMATCH** · 须 `--full` 部署后 PASS
+
+**编排：**
+
+```bash
+export HTTPS_PROXY=http://127.0.0.1:15715
+export NO_PROXY=localhost,127.0.0.1,tt-api-staging.fly.dev,tt-web-staging.fly.dev,.fly.dev
+bash scripts/dev/run-phase2-testnet-full-sync-deploy.sh --preflight
+bash scripts/dev/run-phase2-testnet-full-sync-deploy.sh --full   # commit deploy paths 后
+```
 
 ---
 
