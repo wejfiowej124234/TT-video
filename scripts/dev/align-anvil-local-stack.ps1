@@ -14,12 +14,14 @@ if (-not (Test-Path -LiteralPath $bashSh)) {
 . (Join-Path $PSScriptRoot "lib/Resolve-GitBash.ps1")
 $bashExe = Get-GitBashExe
 if (-not $bashExe) {
-    Write-Error "Git Bash bash.exe not found — install Git for Windows or set GIT_BASH"
+    Write-Error "Git Bash bash.exe not found - install Git for Windows or set GIT_BASH"
 }
 
 $env:SKIP_ANVIL_STOP = "1"
-if ($ForceTtgRedeploy) {
+if ($ForceTtgRedeploy -or $env:TTG_ANVIL_FORCE_DEPLOY -eq "1") {
     $env:TTG_ANVIL_FORCE_DEPLOY = "1"
+} elseif (-not $env:TTG_ANVIL_FORCE_DEPLOY) {
+    $env:TTG_ANVIL_FORCE_DEPLOY = "0"
 }
 
 Push-Location $Root

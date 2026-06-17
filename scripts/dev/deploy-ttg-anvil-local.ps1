@@ -21,6 +21,9 @@ if (-not $bashExe) {
 Write-Host "deploy-ttg-anvil-local.ps1: using Git Bash $bashExe"
 
 $env:SKIP_ANVIL_STOP = "1"
+if (-not $env:TTG_ANVIL_FORCE_DEPLOY) {
+    $env:TTG_ANVIL_FORCE_DEPLOY = "0"
+}
 $args = @($bashSh)
 if ($Apply) { $args += "--apply" }
 

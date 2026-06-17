@@ -62,6 +62,18 @@ grep -q 'TT-STEWARD-ADMISSION-CHAIN-STATE-SSOT' "$START_README" \
   || fail "start-api-with-seed-README must link SSOT runbook"
 ok "start-api-with-seed-README links SSOT"
 
+START_BAT="$ROOT/scripts/dev/start-api-with-seed.bat"
+[[ -f "$START_BAT" ]] || fail "missing $START_BAT"
+grep -q 'TRAVELTRUST_STEWARD_PERSIST' "$START_BAT" \
+  || fail "start-api-with-seed.bat must define TRAVELTRUST_STEWARD_PERSIST profile"
+grep -q 'Step 6t' "$START_BAT" \
+  || fail "start-api-with-seed.bat must run Step 6t steward workbench smoke"
+grep -q 'check-steward-admission-chain-state-ssot.sh' "$START_BAT" \
+  || fail "start-api-with-seed.bat must wire Step 6t1 SSOT gate"
+grep -q 'if /i not defined TTG_ANVIL_FORCE_DEPLOY set "TTG_ANVIL_FORCE_DEPLOY=0"' "$START_BAT" \
+  || fail "start-api-with-seed.bat Step 3c must default TTG_ANVIL_FORCE_DEPLOY=0"
+ok "start-api-with-seed.bat STEWARD_PERSIST + 6t/6t1 + TTG reuse default"
+
 GATE_SELF="$ROOT/scripts/gates/check-steward-admission-chain-state-ssot.sh"
 grep -q 'check-steward-admission-chain-state-ssot.sh' "$SSOT" \
   || fail "SSOT must reference this gate script"

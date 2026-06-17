@@ -46,9 +46,45 @@ Runbook：`docs/runbook/TT-PH1-SITE-THEME-V1-UPGRADE-001.md` §6.1。
 | **6b / 6b2** | seed + `bootstrap-local-admin-console`（SuperAdmin） |
 | **6c** | `post-start-api-abi-smoke` — `/meta` 728+807 · admin RBAC · CMS/Growth/Official |
 | **6c1** | `verify-root-env-vs-meta-chain-contracts` — 根 `.env` 链地址 vs `GET /meta`（默认 WARN；`TRAVELTRUST_POST_START_CHAIN_ENV_VERIFY_STRICT=1` 失败即停） |
+| **6t** | `smoke-steward-workbench-l5-local` — multi-demo steward-application / steward-seat（`TRAVELTRUST_STEWARD_PERSIST=1` 默认开） |
+| **6t1** | `check-steward-admission-chain-state-ssot.sh` — SSOT 文档/脚本/钱包锚点机读闸（`TRAVELTRUST_STEWARD_PERSIST=1` 默认开） |
 | **7** | `sync-frontend-env-local-from-root.ps1` — `NEXT_PUBLIC_*` |
 
 跳过：`SKIP_ANVIL_ALIGN=1` · `SKIP_POST_START_CHAIN_ENV_VERIFY=1` · `TRAVELTRUST_CHAIN_ON=0` 强制 mock-pay。
+
+## ① 本地栈 vs ② 测试网 Graduation（边界）
+
+| 阶段 | 入口 | 说明 |
+|------|------|------|
+| **① 本地** | `scripts\start-api-with-seed.bat` | Anvil **31337** · multi-demo 双轨准入 · **≠** staging GO |
+| **② PRE_TL1** | `bash scripts/dev/run-phase-b-daily-maintenance.sh` | Sepolia 冻结 @ `8dcd304a` · **勿**用一键栈冒充 ② 维护 |
+| **② TL#1 后** | `run-phase2-graduation-closure-program.sh --step wave1` | Owner Sepolia 钱包 · **非**本脚本 |
+
+**诚实边界：** ① `TRAVELTRUST_STEWARD_PERSIST=1` + Step **6t/6t1** exit 0 **≠** ② Soak / TN-P1-010 / HAT-R1 / Graduation GO。② SSOT：[PHASE2-GRADUATION-CLOSURE-PROGRAM.md](../../docs/runbook/PHASE2-GRADUATION-CLOSURE-PROGRAM.md) · `run-phase2-graduation-closure-program.sh --status`。
+
+**钱包命名：** Anvil multi-demo 与 ② HAT-R1 Sepolia Owner 常用同一 deployer 地址 `0x104FCb93…`（**链/状态分离** — 本地 stake **不**迁移 staging）。
+
+## 主理人日常验收（① · 不重质押）
+
+**推荐 preset（SSOT 对齐）：**
+
+```bat
+set TRAVELTRUST_STEWARD_PERSIST=1
+scripts\start-api-with-seed.bat
+```
+
+| 变量 | 行为 |
+|------|------|
+| **`TRAVELTRUST_STEWARD_PERSIST=1`** | `SKIP_ANVIL_ALIGN=1` · `TTG_ANVIL_FORCE_DEPLOY=0` · `TRAVELTRUST_CHAIN_ON=1` · `TRAVELTRUST_ABI_FORGE_VERIFY=1` · Step **6c** + **6c1** + **6t** + **6t1** |
+| **`TRAVELTRUST_POST_START_STEWARD_WORKBENCH_SMOKE=1`** | 单独开 Step **6t**（`smoke-steward-workbench-l5-local.sh`） |
+| **`TRAVELTRUST_POST_START_STEWARD_SSOT_GATE=1`** | 单独开 Step **6t1**（`check-steward-admission-chain-state-ssot.sh`） |
+| **`SKIP_POST_START_STEWARD_WORKBENCH_SMOKE=1`** | 跳过 Step **6t** |
+| **`SKIP_POST_START_STEWARD_SSOT_GATE=1`** | 跳过 Step **6t1** |
+| **`TRAVELTRUST_POST_START_STEWARD_WORKBENCH_WARN=1`** | Step **6t** 失败仅 WARN |
+| **`SKIP_ANVIL_ALIGN=1`** | 跳过 Step **3b4**（保留链上 TTG stake · 与 STEWARD_PERSIST 同源） |
+| **`TTG_ANVIL_FORCE_DEPLOY=1`** | Step **3b4/3c** 强制 redeploy 池 → **B 轨须重质押**（仅地址碰撞/Anvil reset） |
+
+**首次 / 池地址碰撞 / Anvil reset：** 勿设 `STEWARD_PERSIST`；需要时 `TTG_ANVIL_FORCE_DEPLOY=1` + `align-anvil-local-stack` → B 轨重质押一次。详见 SSOT §7。
 
 ## Hero `/traveltrust` 模块化走查（layout lock v10）
 
@@ -503,6 +539,9 @@ Python 门禁列出的行首 **`?`** 表示：该路由已在代码里挂载，�
 | `TRAVELTRUST_POST_START_META_CHECK=1` | 别名 → 强制 `TRAVELTRUST_POST_START_ABI_CHECK=1` |
 | `TRAVELTRUST_POST_START_DEEP_VERIFY=1` | Step 6c 烟测通过后追加 **`check-55-quick-verify.ps1`**（完整 55 运行时验收，较慢） |
 | `P3_CHAIN_OFF` | 本地一键默认 **强制 `1`**（mock-pay）；链上 E2E 用 **`TRAVELTRUST_CHAIN_ON=1`** |
+| `TRAVELTRUST_STEWARD_PERSIST=1` | **主理人日常（推荐）**：跳过 Anvil align · 保留 TTG stake · 开 Step 6c/6c1/6t/6t1 |
+| `TRAVELTRUST_POST_START_STEWARD_SSOT_GATE=1` | Step **6t1** SSOT 机读闸（`STEWARD_PERSIST` 默认开） |
+| `SKIP_POST_START_STEWARD_SSOT_GATE=1` | 跳过 Step **6t1** |
 | `TRAVELTRUST_CHAIN_ON=1` | 保留根 `.env` 的 `P3_CHAIN_OFF`（如 Anvil 块 `0`） |
 | `SKIP_POST_START_ACQUISITION_PD009_SMOKE=1` | 跳过 Step **6h** `smoke-acquisition-pd009-local.sh`（发布保证金 → listing → mock-pay → `/me` trust） |
 | `TRAVELTRUST_POST_START_ACQUISITION_PD009_WARN=1` | Step 6h 失败不阻断启动（仅 WARN） |

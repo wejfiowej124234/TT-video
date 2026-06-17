@@ -1,6 +1,6 @@
 # TT-STEWARD-ADMISSION-CHAIN-STATE-SSOT
 
-**Version:** 1.0.0 · **2026-06-17**
+**Version:** 1.0.1 · **2026-06-17**
 **阶段口径：** ① 本地 → ② 测试网 → ③ 公网/生产（须顺序；本文 **①② 边界** 写死，**③ 另闸**）
 
 **唯一 SSOT：** 主理人双轨准入 · TTG SEAT 质押 · Anvil 对齐 · MetaMask 钱包 · 治理池地址 · 身份确认 · 与 Soak / TN-P1-010 / HAT-R1 的依赖关系。
@@ -116,6 +116,13 @@
 **日常链上验收（不重质押）：**
 
 ```bat
+set TRAVELTRUST_STEWARD_PERSIST=1
+scripts\start-api-with-seed.bat
+```
+
+或手动：
+
+```bat
 set SKIP_ANVIL_ALIGN=1
 scripts\start-api-with-seed.bat
 ```
@@ -137,6 +144,7 @@ bash scripts/dev/align-anvil-local-stack.sh
 |------|------|----------|
 | 全栈对齐 | `scripts/dev/align-anvil-local-stack.sh` | FundStack reuse → TTG **reuse**（`TTG_ANVIL_FORCE_DEPLOY=0`） |
 | 一键栈 | `start-api-with-seed.bat` Step **3b4** | 同上；`ANVIL_ALIGN_RAN=1` 时跳过 3b5/3c/3b6 重复 |
+| 日常 preset | `TRAVELTRUST_STEWARD_PERSIST=1` | Step **6c/6c1/6t/6t1** · `SKIP_ANVIL_ALIGN=1` · 不重质押 |
 | 跳过对齐 | `SKIP_ANVIL_ALIGN=1` | 保留 `.env` 池地址与链上 stake |
 | 前端 env | `sync-frontend-env-local-from-root.ps1` | Step **7** · 不删链上状态 |
 | Indexer | `reset-indexer-runtime-local-anvil.sh` | 仅删 `data/indexer_state.json.runtime`（31337）· **不**动 stake |
@@ -201,4 +209,4 @@ Graduation 总入口：`bash scripts/dev/run-phase2-graduation-closure-program.s
 
 | 日期 | 变更 |
 |------|------|
-| 2026-06-17 | v1.0.0：首版 SSOT + gate；`TTG_ANVIL_FORCE_DEPLOY` 默认 0；multi-demo 保留 `region_steward` |
+| 2026-06-17 | v1.0.1：`start-api-with-seed` · `TRAVELTRUST_STEWARD_PERSIST=1` · Step 6t · Step 3c 不再默认 force redeploy |

@@ -2,7 +2,8 @@
 chcp 65001 >nul
 REM TravelTrust one-click local stack: stop old processes, Docker PG, ABI gates, API, frontend.
 REM Run from repo root: scripts\start-api-with-seed.bat  - full env var list: scripts\dev\start-api-with-seed-README.md
-REM Key env: RESET_DOCKER_DB=1  SKIP_ABI_GATE=1  TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=1  TRAVELTRUST_MANUAL_ACCEPTANCE=1  TRAVELTRUST_CHAIN_ON=1  TRAVELTRUST_MARKET_CLEAN=1
+REM Key env: RESET_DOCKER_DB=1  TRAVELTRUST_STEWARD_PERSIST=1  TRAVELTRUST_CHAIN_ON=1  SKIP_ANVIL_ALIGN=1
+REM Steward/TTG persistence SSOT: docs/runbook/TT-STEWARD-ADMISSION-CHAIN-STATE-SSOT.md
 REM DB: default keeps Postgres volume; API auto-migrates; Step 3d probes through 20260613120000 [CMS+Official OPS+Growth+Sprint168+guides P2+public_title+guide_exit_requests]
 REM Storage: Step 3e MinIO :19000 persistent volume + merges COMMUNITY_MEDIA_S3_* into root .env when missing
 
@@ -13,6 +14,7 @@ setlocal EnableDelayedExpansion
 if /i "%TRAVELTRUST_UI_HANDOFF%"=="1" call :tt_cfg_ui_handoff
 if /i "%TRAVELTRUST_SITE_THEME_V1%"=="1" call :tt_cfg_site_theme_v1
 if /i "%TRAVELTRUST_MARKET_CLEAN%"=="1" call :tt_cfg_market_clean
+if /i "%TRAVELTRUST_STEWARD_PERSIST%"=="1" call :tt_cfg_steward_persist
 if /i "%TRAVELTRUST_CHAIN_ON%"=="1" call :tt_cfg_chain_on
 if /i "%TRAVELTRUST_MANUAL_ACCEPTANCE%"=="1" call :tt_cfg_manual_acceptance
 if /i "%TRAVELTRUST_MANUAL_QA%"=="1" if /i not "%TRAVELTRUST_MANUAL_ACCEPTANCE%"=="1" set "TRAVELTRUST_OPEN_ADMIN=1"
@@ -96,6 +98,17 @@ if not defined TTG_ANVIL_FORCE_DEPLOY set "TTG_ANVIL_FORCE_DEPLOY=0"
 if not defined TRAVELTRUST_ABI_FORGE_VERIFY set "TRAVELTRUST_ABI_FORGE_VERIFY=1"
 if not defined TRAVELTRUST_POST_START_ABI_CHECK set "TRAVELTRUST_POST_START_ABI_CHECK=1"
 echo     TRAVELTRUST_CHAIN_ON=1 full stack: Anvil align + forge ABI verify + post-start chain env/meta check
+exit /b 0
+
+:tt_cfg_steward_persist
+if not defined SKIP_ANVIL_ALIGN set "SKIP_ANVIL_ALIGN=1"
+if not defined TTG_ANVIL_FORCE_DEPLOY set "TTG_ANVIL_FORCE_DEPLOY=0"
+if not defined TRAVELTRUST_CHAIN_ON set "TRAVELTRUST_CHAIN_ON=1"
+if not defined TRAVELTRUST_ABI_FORGE_VERIFY set "TRAVELTRUST_ABI_FORGE_VERIFY=1"
+if not defined TRAVELTRUST_POST_START_ABI_CHECK set "TRAVELTRUST_POST_START_ABI_CHECK=1"
+if not defined TRAVELTRUST_POST_START_STEWARD_WORKBENCH_SMOKE set "TRAVELTRUST_POST_START_STEWARD_WORKBENCH_SMOKE=1"
+if not defined TRAVELTRUST_POST_START_STEWARD_SSOT_GATE set "TRAVELTRUST_POST_START_STEWARD_SSOT_GATE=1"
+echo     TRAVELTRUST_STEWARD_PERSIST=1 daily steward: SKIP_ANVIL_ALIGN + reuse TTG pool + Step 6c/6c1/6t/6t1
 exit /b 0
 
 :tt_probe_chain_on_env
@@ -497,7 +510,11 @@ if /i "%SKIP_ANVIL_ALIGN%"=="1" (
         if errorlevel 1 (
             echo     WARN: forge not on PATH - skip Step 3b4 align; falling back to Step 3b5/3c
         ) else (
-            powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\align-anvil-local-stack.ps1"
+            if /i "%TTG_ANVIL_FORCE_DEPLOY%"=="1" (
+                powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\align-anvil-local-stack.ps1" -ForceTtgRedeploy
+            ) else (
+                powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\align-anvil-local-stack.ps1"
+            )
             if errorlevel 1 (
                 echo     WARN: align-anvil-local-stack failed - falling back to Step 3b5/3c
             ) else (
@@ -624,7 +641,12 @@ if /i not "%TRAVELTRUST_TTG_ANVIL%"=="1" (
         exit /b 1
     )
     set "SKIP_ANVIL_STOP=1"
-    if /i "%TRAVELTRUST_FUNDSTACK_ANVIL%"=="1" set "TTG_ANVIL_FORCE_DEPLOY=1"
+    if /i not defined TTG_ANVIL_FORCE_DEPLOY set "TTG_ANVIL_FORCE_DEPLOY=0"
+    if /i "%TTG_ANVIL_FORCE_DEPLOY%"=="1" (
+        echo     TTG_ANVIL_FORCE_DEPLOY=1: Step 3c redeploy pool [re-stake required per SSOT]
+    ) else (
+        echo     TTG_ANVIL_FORCE_DEPLOY=0: Step 3c reuse existing RegionStewardStakePool when on chain
+    )
     powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\deploy-ttg-anvil-local.ps1" -Apply
     if errorlevel 1 (
         if /i "%TTG_ANVIL_AUTO%"=="1" (
@@ -877,6 +899,48 @@ if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
     )
 ) else (
     powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-verify-root-env-vs-meta-chain-contracts.ps1" -Port !BACKEND_PORT! -WarnOnly
+)
+
+echo Step 6t - SWB-L5 steward workbench vitest+API multi-demo [TRAVELTRUST_POST_START_STEWARD_WORKBENCH_SMOKE=1 or TRAVELTRUST_STEWARD_PERSIST=1]
+if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
+    echo     SKIP FE-only TRAVELTRUST_FRONTEND_ONLY=1
+) else if /i "%SKIP_POST_START_STEWARD_WORKBENCH_SMOKE%"=="1" (
+    echo     SKIP SKIP_POST_START_STEWARD_WORKBENCH_SMOKE=1
+) else if /i not "%TRAVELTRUST_POST_START_STEWARD_WORKBENCH_SMOKE%"=="1" (
+    echo     SKIP set TRAVELTRUST_STEWARD_PERSIST=1 or TRAVELTRUST_POST_START_STEWARD_WORKBENCH_SMOKE=1 for Step 6t
+) else if /i "%TRAVELTRUST_POST_START_STEWARD_WORKBENCH_WARN%"=="1" (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-post-start-steward-workbench-l5-smoke.ps1" -Port !BACKEND_PORT! -WarnOnly
+) else (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-post-start-steward-workbench-l5-smoke.ps1" -Port !BACKEND_PORT!
+    if errorlevel 1 (
+        echo FAIL: smoke-steward-workbench-l5-local - see docs/runbook/TT-STEWARD-ADMISSION-CHAIN-STATE-SSOT.md
+        pause
+        exit /b 1
+    )
+)
+
+echo Step 6t1 - Steward admission SSOT machine gate [TRAVELTRUST_POST_START_STEWARD_SSOT_GATE=1 or TRAVELTRUST_STEWARD_PERSIST=1]
+if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
+    echo     SKIP FE-only TRAVELTRUST_FRONTEND_ONLY=1
+) else if /i "%SKIP_POST_START_STEWARD_SSOT_GATE%"=="1" (
+    echo     SKIP SKIP_POST_START_STEWARD_SSOT_GATE=1
+) else if /i not "%TRAVELTRUST_POST_START_STEWARD_SSOT_GATE%"=="1" (
+    echo     SKIP set TRAVELTRUST_STEWARD_PERSIST=1 or TRAVELTRUST_POST_START_STEWARD_SSOT_GATE=1 for Step 6t1
+) else (
+    set "GIT_BASH_OK=0"
+    if defined GIT_BASH if exist "%GIT_BASH%" set "GIT_BASH_OK=1"
+    if exist "%ProgramFiles%\Git\bin\bash.exe" set "GIT_BASH_OK=1"
+    if exist "%ProgramFiles(x86)%\Git\bin\bash.exe" set "GIT_BASH_OK=1"
+    if "%GIT_BASH_OK%"=="0" (
+        echo     WARN: Git Bash missing - skip Step 6t1; run bash scripts/gates/check-steward-admission-chain-state-ssot.sh
+    ) else (
+        bash "%ROOT%/scripts/gates/check-steward-admission-chain-state-ssot.sh"
+        if errorlevel 1 (
+            echo FAIL: check-steward-admission-chain-state-ssot - see docs/runbook/TT-STEWARD-ADMISSION-CHAIN-STATE-SSOT.md
+            pause
+            exit /b 1
+        )
+    )
 )
 
 echo Step 6k - Admin CMS Growth Official OPS smoke [TRAVELTRUST_POST_START_ADMIN_OPS_SMOKE=1 or TRAVELTRUST_OPEN_ADMIN=1 or TRAVELTRUST_MANUAL_QA=1]
@@ -1425,6 +1489,15 @@ echo   Steward:     http://localhost:!FRONTEND_PORT!/steward/register  step2 wal
 if /i "%TRAVELTRUST_TTG_ANVIL%"=="1" (
     echo   TTG Anvil 31337: Step 3c deployed MockERC20 + stake pool - mint: bash scripts/dev/mint-ttg-anvil-local.sh 0xWallet
     echo   Doc: scripts\dev\TTG-ANVIL-LOCAL-README.md
+)
+if /i "%TRAVELTRUST_STEWARD_PERSIST%"=="1" if /i not "%TRAVELTRUST_TTG_ANVIL%"=="1" (
+    echo   Steward daily persist: SKIP_ANVIL_ALIGN=1 TTG_ANVIL_FORCE_DEPLOY=0 - no re-stake on restart
+)
+if /i "%TRAVELTRUST_STEWARD_PERSIST%"=="1" (
+    echo   Steward workbench: http://localhost:!FRONTEND_PORT!/governance?view=region#steward-ttg-stake
+    echo   multi-demo@test.com / Test123! wallet 0x104FCb93B5e097F92c93Ee4621C487C6C953D212
+    echo   SSOT: docs\runbook\TT-STEWARD-ADMISSION-CHAIN-STATE-SSOT.md
+    echo   Phase ? graduation: bash scripts/dev/run-phase-b-daily-maintenance.sh [PRE_TL1 - not this local stack]
 )
 echo.
 echo More routes:
