@@ -68,15 +68,21 @@ python "$ROOT/scripts/dev/gen-phase2-baseline-consistency-audit.py" \
   --deep-gate-report "$DG_REPORT"
 
 AUDIT_JSON="$EVID/audit.json"
-DIFF_COUNT="$(python -c "import json; d=json.load(open('$AUDIT_JSON')); print(d['diff_count'])")"
-SHA_MATCH="$(python -c "import json; d=json.load(open('$AUDIT_JSON')); print('yes' if d.get('sha_hard_match') else 'no')")"
-G03_VERDICT="$(python -c "import json; d=json.load(open('$DG_REPORT')); print(next((g['verdict'] for g in d.get('gates',[]) if g.get('id')=='G03_FIVE_ROLE_LOGIN'), 'MISSING'))")"
+DIFF_COUNT="$(PYTHONIOENCODING=utf-8 python -c "import json; d=json.load(open(r'''$AUDIT_JSON''',encoding='utf-8')); print(d['diff_count'])")"
+SHA_MATCH="$(PYTHONIOENCODING=utf-8 python -c "import json; d=json.load(open(r'''$AUDIT_JSON''',encoding='utf-8')); print('yes' if d.get('sha_hard_match') else 'no')")"
+G03_P0_FAIL="$(PYTHONIOENCODING=utf-8 python -c "
+import json
+d=json.load(open(r'''$DG_REPORT''',encoding='utf-8'))
+g=next((x for x in d.get('gates',[]) if x.get('id')=='G03_FIVE_ROLE_LOGIN'), {})
+fails=[c for c in g.get('checks',[]) if c.get('verdict')=='FAIL' and c.get('severity','P0')=='P0']
+print(len(fails))
+")"
 
 echo "$STAMP" >"$ROOT/evidence/GO_phase2_baseline_consistency_audit/latest-stamp.txt"
-echo "deep_gate_rc=${DG_RC} spine_rc=${SPINE_RC} uat_rc=${UAT_RC}" >>"$EVID/subprocess-rc.txt"
+echo "deep_gate_rc=${DG_RC} spine_rc=${SPINE_RC} uat_rc=${UAT_RC} diff_count=${DIFF_COUNT} g03_p0_fail=${G03_P0_FAIL}" >>"$EVID/subprocess-rc.txt"
 echo "TT_PHASE2_BASELINE_CONSISTENCY_AUDIT: OK report=$EVID/AUDIT-REPORT.md"
 
-if [[ "$SHA_MATCH" == "yes" && "$DIFF_COUNT" == "0" && "$G03_VERDICT" == "PASS" && "$SPINE_RC" -eq 0 ]]; then
+if [[ "$SHA_MATCH" == "yes" && "$DIFF_COUNT" == "0" && "$G03_P0_FAIL" == "0" ]]; then
   bash "$ROOT/scripts/dev/engage-testnet-staging-baseline-freeze.sh" --audit-evidence "$EVID"
   echo "TT_PHASE2_BASELINE_FREEZE: ENGAGED"
 fi

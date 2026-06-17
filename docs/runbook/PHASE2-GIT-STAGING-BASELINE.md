@@ -1,32 +1,25 @@
 # Phase ② · Git ↔ Staging 基线纪律
 
 **生效：** 2026-06-06  
-**最新同步：** 20260617 · preflight — local `d32b4813…` · staging `877a1e77…` **MISMATCH** · 须 `--full` 部署后 PASS
-
-**编排：**
-
-```bash
-export HTTPS_PROXY=http://127.0.0.1:15715
-export NO_PROXY=localhost,127.0.0.1,tt-api-staging.fly.dev,tt-web-staging.fly.dev,.fly.dev
-bash scripts/dev/run-phase2-testnet-full-sync-deploy.sh --preflight
-bash scripts/dev/run-phase2-testnet-full-sync-deploy.sh --full   # commit deploy paths 后
-```
-
----
-
-## 1 · 当前真源状态（PASS）
+**最新同步：** 20260617T015222Z · **`GIT_STAGING_BASELINE_SYNC: PASS`**  
+**基线冻结：** 20260617T021847Z · **`TESTNET_STAGING_FREEZE: ACTIVE`** · TL#1 Wave 1 wait
 
 | 端 | SHA / 状态 |
 |----|------------|
-| **git HEAD** | `96c739e104054fbc26efd6ec9abad25cba309c90` |
-| **tt-api-staging `/meta`** | `96c739e104054fbc26efd6ec9abad25cba309c90` ✅ |
-| **tt-web-staging** | 自 `frontend/` @ `96c739e1` · `FLY_WEB_NO_CACHE=1` 构建 ✅ |
+| **git HEAD** | `8dcd304afae1bafe5a4de738175e171256a9501e` |
+| **tt-api-staging `/meta`** | `8dcd304afae1bafe5a4de738175e171256a9501e` ✅ |
+| **tt-web-staging** | `FLY_WEB_NO_CACHE=1` @ `8dcd304` ✅ |
+| **TESTNET_STAGING_FREEZE** | **ACTIVE** · `evidence/TESTNET_STAGING_FREEZE/ACTIVE.json` |
+| **Baseline consistency audit** | `evidence/GO_phase2_baseline_consistency_audit/20260617T020824Z` · **0 DIFF** |
 
 **机读键：**
 
 ```text
 GIT_STAGING_BASELINE_SYNC: PASS
-GIT_SHA_LOCAL_STAGING_MATCH: YES (96c739e104054fbc26efd6ec9abad25cba309c90)
+GIT_SHA_LOCAL_STAGING_MATCH: YES (8dcd304afae1bafe5a4de738175e171256a9501e)
+TT_PHASE2_DEEP_RELEASE_GATE: PASS
+TT_PHASE2_BASELINE_CONSISTENCY_AUDIT: OK (diffs=0)
+TT_TESTNET_STAGING_FREEZE: ACTIVE
 ```
 
 ---
