@@ -159,6 +159,16 @@ node -e "
 const fs=require('fs');
 const recon=JSON.parse(fs.readFileSync(process.argv[1],'utf8'));
 const freezeSha=process.argv[7]||null;
+const soakCompletedPath=process.argv[8]||'';
+const allowPreSoak=process.argv[9]==='1';
+let soakCompletedAfter=null;
+if(soakCompletedPath&&fs.existsSync(soakCompletedPath)){
+  try{soakCompletedAfter=JSON.parse(fs.readFileSync(soakCompletedPath,'utf8')).completed_at||null;}catch{}
+}
+if(!soakCompletedAfter&&!allowPreSoak){
+  console.error('FAIL: TN-P1-010 GO report requires post-soak COMPLETED.json (set TN_P1_010_ALLOW_PRE_SOAK=1 for dev-only)');
+  process.exit(4);
+}
 const summary={
   schema:'tn_p1_010_indexer_reconcile_staging.v1',
   stamp:process.argv[2],
@@ -170,14 +180,15 @@ const summary={
   missing_projection:recon.orders_projection_reconcile_gate?.breakdown?.missing_projection??null,
   projection_reconcile_clean:recon.projection_reconcile_clean,
   freeze_git_sha:freezeSha,
-  soak_completed_after:process.argv[8]||null,
+  soak_completed_after:soakCompletedAfter,
   release_gate:'GO',
   honest_boundary:'Sepolia staging indexer tick/replay/reconcile compound clean · post-soak @ freeze SHA · FeeRouter.distribute only when router balance>0 · ≠ ③ mainnet'
 };
 fs.writeFileSync(process.argv[6], JSON.stringify(summary,null,2)+'\n');
 " "$EVID/indexer-reconcile.json" "$STAMP" "$STAGING_API" "$RPC" "$DISTRIBUTE_SKIPPED" "$EVID/report.json" \
   "${TN_P1_010_EXPECT_FREEZE_GIT_SHA:-$(node -e "try{const f=process.argv[1];console.log(JSON.parse(require('fs').readFileSync(f,'utf8')).git_sha)}catch{}" "$ROOT/evidence/TESTNET_STAGING_FREEZE/ACTIVE.json" 2>/dev/null || echo "")}" \
-  "$(node -e "try{console.log(JSON.parse(require('fs').readFileSync(process.argv[1],'utf8')).completed_at||'')}catch{}" "${P2FC_SOAK_DIR:-$ROOT/evidence/P2FC_SOAK_72H_STAGING}/COMPLETED.json" 2>/dev/null || echo "")"
+  "${P2FC_SOAK_DIR:-$ROOT/evidence/P2FC_SOAK_72H_STAGING}/COMPLETED.json" \
+  "${TN_P1_010_ALLOW_PRE_SOAK:-0}"
 
 cat >"$EVID/STATUS.txt" <<EOF
 status: PASS

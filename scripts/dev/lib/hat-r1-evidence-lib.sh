@@ -2,6 +2,32 @@
 # HAT-R1 evidence helpers — tx / receipt / events / API / DB snapshots
 set -euo pipefail
 
+# Resolve HAT-R1 evidence dir: HAT_R1_EVID_DIR > latest stamp dir > default session
+hat_r1_resolve_evid_dir() {
+  local root="${1:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+  if [[ -n "${HAT_R1_EVID_DIR:-}" ]]; then
+    echo "$HAT_R1_EVID_DIR"
+    return 0
+  fi
+  local base="$root/evidence/GO_hat_r1_sepolia"
+  local latest
+  latest="$(ls -dt "$base"/*/ 2>/dev/null | head -1 || true)"
+  latest="${latest%/}"
+  if [[ -n "$latest" && -f "$latest/EXECUTE_EARLIEST_UNIX.txt" ]]; then
+    echo "$latest"
+    return 0
+  fi
+  if [[ -f "$base/latest-stamp.txt" ]]; then
+    local stamp
+    stamp="$(tr -d '\r\n' <"$base/latest-stamp.txt")"
+    if [[ -n "$stamp" && -d "$base/$stamp" ]]; then
+      echo "$base/$stamp"
+      return 0
+    fi
+  fi
+  echo "$base/20260616T063612Z"
+}
+
 hat_r1_step_dir() {
   local step="$1"
   mkdir -p "${HAT_R1_EVID}/${step}"

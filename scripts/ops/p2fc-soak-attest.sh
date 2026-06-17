@@ -2,7 +2,7 @@
 # P2FC · 72h soak attestation (COMPLETED.json only · never inline 72h in orchestrator)
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-SOAK_ROOT="${P2FC_SOAK_DIR:-$ROOT/evidence/P2FC_SOAK_72H}"
+SOAK_ROOT="${P2FC_SOAK_DIR:-$ROOT/evidence/P2FC_SOAK_72H_STAGING}"
 COMPLETED="$SOAK_ROOT/COMPLETED.json"
 REQUIRED="${P2FC_SOAK_REQUIRED_SEC:-259200}"
 

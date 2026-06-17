@@ -11,6 +11,9 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
 
+# shellcheck source=scripts/dev/lib/phase2-freeze-sha-lib.sh
+source "$ROOT/scripts/dev/lib/phase2-freeze-sha-lib.sh"
+
 SKIP_DEPLOY=0
 SKIP_EVIDENCE=0
 for arg in "$@"; do
@@ -85,8 +88,14 @@ echo "soak-supersede: → $ARCHIVE_SOAK"
 
 # —— 2 · deploy API + Web @ HEAD ——
 if [[ "$SKIP_DEPLOY" == "0" ]]; then
+  if ! phase2_require_staging_deploy_allowed "$ROOT"; then
+    echo "SKIP deploy: TESTNET_STAGING_FREEZE ACTIVE — use --skip-deploy or TESTNET_FREEZE_OVERRIDE=1 (Owner only)"
+    SKIP_DEPLOY=1
+  fi
+fi
+if [[ "$SKIP_DEPLOY" == "0" ]]; then
   echo ""
-  echo "== Phase 2: deploy tt-api-staging + tt-web-staging @ HEAD =="
+  echo "== Phase 2: deploy tt-api-staging + tt-web-staging @ HEAD (TESTNET_FREEZE_OVERRIDE=1) =="
   export TESTNET_FREEZE_OVERRIDE=1
   export TRAVELTRUST_GIT_SHA="$HEAD_SHA"
   bash "$ROOT/scripts/dev/phase2-staging-fly-deploy-and-sync.sh" 2>&1 | tee "$EVID/deploy-api.log"

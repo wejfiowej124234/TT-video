@@ -13,6 +13,9 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
 
+# shellcheck source=scripts/dev/lib/hat-r1-evidence-lib.sh
+source "$ROOT/scripts/dev/lib/hat-r1-evidence-lib.sh"
+
 SIGNER="${TTG_CERT_SIGNER:-}"
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -34,7 +37,7 @@ done
   exit 2
 }
 
-HAT="$ROOT/evidence/GO_hat_r1_sepolia/20260616T063612Z"
+HAT="$(hat_r1_resolve_evid_dir "$ROOT")"
 STAMP="$(cat "$ROOT/evidence/GO_ttg_cert/latest-stamp.txt" 2>/dev/null | tr -d '\r\n' || true)"
 ETA="$(cat "$HAT/EXECUTE_EARLIEST_UNIX.txt" | tr -d '\r\n')"
 NOW="$(date +%s)"

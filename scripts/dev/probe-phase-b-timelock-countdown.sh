@@ -10,7 +10,10 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
 
-HAT="${HAT_R1_EVID_DIR:-$ROOT/evidence/GO_hat_r1_sepolia/20260616T063612Z}"
+# shellcheck source=scripts/dev/lib/hat-r1-evidence-lib.sh
+source "$ROOT/scripts/dev/lib/hat-r1-evidence-lib.sh"
+
+HAT="$(hat_r1_resolve_evid_dir "$ROOT")"
 STAMP="$(cat "$ROOT/evidence/GO_ttg_cert/latest-stamp.txt" 2>/dev/null | tr -d '\r\n' || true)"
 NOW="$(date +%s)"
 

@@ -10,7 +10,9 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
 
-SSOT="${PHASE2_BASELINE_SSOT_SHA:-6c22eb56d34fdf68336afbaf55994daba0d84d5a}"
+# shellcheck source=scripts/dev/lib/phase2-freeze-sha-lib.sh
+source "$ROOT/scripts/dev/lib/phase2-freeze-sha-lib.sh"
+SSOT="$(phase2_resolve_baseline_ssot_sha "$ROOT")"
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 EVID="$ROOT/evidence/GO_phase2_baseline_consistency_audit/${STAMP}"
 API="${STAGING_API_BASE:-https://tt-api-staging.fly.dev}"

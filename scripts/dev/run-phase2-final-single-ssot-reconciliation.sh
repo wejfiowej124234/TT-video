@@ -14,6 +14,9 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
 
+# shellcheck source=scripts/dev/lib/phase2-freeze-sha-lib.sh
+source "$ROOT/scripts/dev/lib/phase2-freeze-sha-lib.sh"
+
 SKIP_DEPLOY=0
 SKIP_EVIDENCE=0
 REQUIRED_SHA="${PHASE2_SSOT_BASELINE_SHA:-$(git rev-parse HEAD)}"
@@ -75,6 +78,12 @@ echo "ssot-archive: superseded legacy evidence → $ARCHIVE"
 curl --noproxy "*" -sS --max-time 45 "${API}/meta" >"$EVID/baseline-meta-pre.json" || true
 
 # —— 1 · Deploy API + Web (same commit) ——
+if [[ "$SKIP_DEPLOY" == "0" ]]; then
+  if ! phase2_require_staging_deploy_allowed "$ROOT"; then
+    echo "SKIP deploy: TESTNET_STAGING_FREEZE ACTIVE — use --skip-deploy or TESTNET_FREEZE_OVERRIDE=1 (Owner only)"
+    SKIP_DEPLOY=1
+  fi
+fi
 if [[ "$SKIP_DEPLOY" == "0" ]]; then
   echo ""
   echo "== Phase 1: deploy tt-api-staging + tt-web-staging (TESTNET_FREEZE_OVERRIDE=1) =="

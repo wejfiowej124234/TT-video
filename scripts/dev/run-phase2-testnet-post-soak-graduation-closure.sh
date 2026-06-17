@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Phase ② · Post-soak graduation closure（Reliability Closure Mode）
 #
-# 前置：evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json（72h wall-clock · job-20260614T070154Z）
+# 前置：evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json（72h wall-clock · job from COMPLETED.json）
 # 顺序：COMPLETED → governance audit + matrix → G-01～G-08 AND → G-09 OWNER-SIGNOFF → TT_TESTNET_GRADUATION:CLOSED
 #
 #   bash scripts/dev/run-phase2-testnet-post-soak-graduation-closure.sh
@@ -13,6 +13,10 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
+
+# shellcheck source=scripts/dev/lib/phase2-freeze-sha-lib.sh
+source "$ROOT/scripts/dev/lib/phase2-freeze-sha-lib.sh"
+FREEZE_SHA="$(phase2_resolve_baseline_ssot_sha "$ROOT")"
 
 WAIT_SOAK=0
 AUDIT_ONLY=0
@@ -57,6 +61,13 @@ if [[ -f "$COMPLETED" ]]; then
   fi
 fi
 
+echo ""
+echo "== TN-P1-010 graduation gate (post-soak @ freeze SHA) =="
+tn010_json="$(node "$ROOT/scripts/dev/lib/tn-p1-010-graduation-gate.mjs" \
+  --root "$ROOT" --freeze-sha "$FREEZE_SHA" --soak-dir "$SOAK_DIR" --status-only 2>/dev/null || true)"
+node -e "const o=JSON.parse(process.argv[1]); if(!o.pass){console.error('FAIL: TN-P1-010 graduation gate — '+o.note); process.exit(3)}" "$tn010_json"
+echo "TN-P1-010 graduation gate: PASS ($(node -e "console.log(JSON.parse(process.argv[1]).note)" "$tn010_json"))"
+
 export OPEN_TESTNET_P0_COUNT="${OPEN_TESTNET_P0_COUNT:-0}"
 export OPEN_TESTNET_P1_COUNT="${OPEN_TESTNET_P1_COUNT:-0}"
 export TT_PHASE2_READINESS="${TT_PHASE2_READINESS:-100}"
@@ -83,7 +94,7 @@ const checks={
   G04_perfect_validation: g.perfect_validation_go===true,
   G05_blocking_open: (m.summary?.blocking_open??1)===0,
   G06_soak: g.p2fc_soak_completed===true,
-  G07_indexer: g.indexer_compound_pass===true && g.missing_projection===0,
+  G07_indexer: g.indexer_compound_pass===true && g.missing_projection===0 && g.tn_p1_010_graduation_pass===true,
   G08_deep_surface:
     g.deep_closure_missing_coverage===0 &&
     g.deep_closure_evidence_gap===0 &&

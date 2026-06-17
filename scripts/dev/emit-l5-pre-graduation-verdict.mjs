@@ -16,6 +16,21 @@ const root = process.cwd();
 const evidDir = path.resolve(arg('--evid-dir', ''));
 const stamp = arg('--stamp', path.basename(evidDir));
 const soakDir = path.join(root, 'evidence/P2FC_SOAK_72H_STAGING');
+const soakCompletedPath = path.join(soakDir, 'COMPLETED.json');
+let soakJobNote = 'P2FC 72h soak · INFLIGHT or not started';
+if (fs.existsSync(soakCompletedPath)) {
+  try {
+    const c = JSON.parse(fs.readFileSync(soakCompletedPath, 'utf8'));
+    const job = c.job_dir ? path.basename(c.job_dir) : 'unknown';
+    soakJobNote = `P2FC 72h soak COMPLETED · ${job}`;
+  } catch {
+    soakJobNote = 'P2FC 72h soak · COMPLETED.json unreadable';
+  }
+} else if (fs.existsSync(soakDir)) {
+  const jobs = fs.readdirSync(soakDir).filter((d) => d.startsWith('job-'));
+  jobs.sort().reverse();
+  if (jobs[0]) soakJobNote = `P2FC 72h soak · ${jobs[0]} · INFLIGHT`;
+}
 
 const m = JSON.parse(fs.readFileSync(path.join(evidDir, 'graduation-matrix.v1.json'), 'utf8'));
 const d = JSON.parse(fs.readFileSync(path.join(evidDir, 'probe-deep-closure.json'), 'utf8'));
@@ -73,7 +88,7 @@ const registry = {
       dimension: 'A6',
       severity: 'P1',
       status: 'INFLIGHT',
-      note: 'P2FC 72h soak · job-20260614T070154Z · ETA ~2026-06-17T07:01Z',
+      note: soakJobNote,
       close_when: 'evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json',
       blocks_graduation: true,
     },

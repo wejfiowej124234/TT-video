@@ -4,6 +4,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 
 const args = process.argv.slice(2);
 function arg(name, def = '') {
@@ -62,6 +63,24 @@ function evidenceGlob(prefix) {
     .sort()
     .reverse();
   return hits[0] ? path.join(base, hits[0]) : null;
+}
+
+function evalTnP010GraduationGate() {
+  const r = spawnSync(
+    'node',
+    [
+      path.join(process.cwd(), 'scripts/dev/lib/tn-p1-010-graduation-gate.mjs'),
+      '--root',
+      process.cwd(),
+      '--status-only',
+    ],
+    { encoding: 'utf8' },
+  );
+  try {
+    return JSON.parse((r.stdout || '').trim() || '{}');
+  } catch {
+    return { pass: false, state: 'no', note: 'tn-p1-010 graduation gate eval failed' };
+  }
 }
 
 function cellStatus(domainId, dimId) {
@@ -139,9 +158,11 @@ function cellStatus(domainId, dimId) {
 }
 
 const recon = readJson(path.join(evidDir, 'probe-indexer-reconcile.json'));
+const tn010Graduation = evalTnP010GraduationGate();
 const deepProbe = readJson(path.join(evidDir, 'probe-deep-closure.json'));
 const compound = recon?.reconcile_compound_pass === true;
 const missing = recon?.orders_projection_reconcile_gate?.breakdown?.missing_projection ?? null;
+const tnP010GraduationPass = tn010Graduation.pass === true;
 
 const missingCoverage = deepProbe?.summary?.missing_coverage ?? null;
 const evidenceGap = deepProbe?.summary?.evidence_gap ?? null;
@@ -200,6 +221,7 @@ const gates = {
   tt_phase2_readiness: readiness,
   p2fc_soak_completed: soakDone,
   indexer_compound_pass: compound,
+  tn_p1_010_graduation_pass: tnP010GraduationPass,
   missing_projection: missing,
   perfect_validation_go: perfectValidationGo,
   deep_closure_missing_coverage: missingCoverage,
@@ -232,6 +254,7 @@ if (
   soakDone &&
   compound &&
   missing === 0 &&
+  tnP010GraduationPass &&
   deepClosureReady
 ) {
   graduationVerdict = 'CLOSED';
@@ -263,6 +286,7 @@ if (surfaceCoveragePct !== 100) l5ForbiddenReasons.push('surface_coverage_pct<10
 if (untestedUi !== 0) l5ForbiddenReasons.push('untested_ui_element>0');
 if (untestedActions !== 0) l5ForbiddenReasons.push('untested_user_action>0');
 if (!compound) l5ForbiddenReasons.push('reconcile_compound_pass=false');
+if (!tnP010GraduationPass) l5ForbiddenReasons.push('tn_p1_010_post_soak_graduation_gate');
 if (missing !== 0) l5ForbiddenReasons.push('missing_projection>0');
 if (!soakDone) l5ForbiddenReasons.push('p2fc_soak_72h_staging_not_completed');
 if (!perfectValidationGo) l5ForbiddenReasons.push('tt_testnet_perfect_validation_go_not_go');
@@ -366,7 +390,9 @@ const matrix = {
   },
   evidence_anchors: {
     burn_down_report: 'docs/runbook/TESTNET-PERFECT-VALIDATION-REPORT.md',
-    tn_p1_010: evidenceGlob('tn-p1-010') || 'OPEN',
+    tn_p1_010: tnP010GraduationPass
+      ? tn010Graduation.report_dir || evidenceGlob('tn-p1-010')
+      : 'OPEN (post-soak @ freeze SHA required)',
     tn_p1_009_soak: 'evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json',
   },
 };

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Phase ② · Baseline consistency audit (read-only · no fixes).
 
-SSOT: frozen local git SHA (default 6c22eb56…).
+SSOT: frozen local git SHA (default from TESTNET_STAGING_FREEZE ACTIVE @ 8dcd304a…).
 
   python scripts/dev/gen-phase2-baseline-consistency-audit.py \\
     --expect-sha 6c22eb56d34fdf68336afbaf55994daba0d84d5a \\
@@ -22,7 +22,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
-SSOT_DEFAULT = "6c22eb56d34fdf68336afbaf55994daba0d84d5a"
+SSOT_DEFAULT = "8dcd304afae1bafe5a4de738175e171256a9501e"
 API_DEFAULT = "https://tt-api-staging.fly.dev"
 WEB_DEFAULT = "https://tt-web-staging.fly.dev"
 CHAIN_ENV = ROOT / "scripts/dev/.env.phase2-chain-deploy.local"

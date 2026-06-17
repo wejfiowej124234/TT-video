@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Phase ② · Testnet Graduation Full Re-Validation @ pinned baseline SHA
 #
-# 唯一真源：PHASE2_REVALIDATION_BASELINE_SHA（默认 877a1e77…）
+# 唯一真源：PHASE2_REVALIDATION_BASELINE_SHA 或 TESTNET_STAGING_FREEZE ACTIVE.json（默认 8dcd304a…）
 # 禁止继承旧 SHA 验收结论 · 全量重验 TN-P1-001～010 · D1–D24 · ADM-U01 · Deep Gate · HAT · 72h soak
 #
-#   export PHASE2_REVALIDATION_BASELINE_SHA=877a1e77bf05cf1d4d5141aedac404a23d219e5f
+#   export PHASE2_REVALIDATION_BASELINE_SHA=8dcd304afae1bafe5a4de738175e171256a9501e
 #   bash scripts/dev/run-phase2-testnet-graduation-full-revalidation-at-baseline.sh
 #   bash scripts/dev/run-phase2-testnet-graduation-full-revalidation-at-baseline.sh --skip-deploy
 #   bash scripts/dev/run-phase2-testnet-graduation-full-revalidation-at-baseline.sh --skip-deploy --resume-from tn004
@@ -15,6 +15,9 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
+
+# shellcheck source=scripts/dev/lib/phase2-freeze-sha-lib.sh
+source "$ROOT/scripts/dev/lib/phase2-freeze-sha-lib.sh"
 
 SKIP_DEPLOY=0
 SKIP_PW=0
@@ -45,7 +48,7 @@ should_run() {
   [[ "$step_idx" -ge "$resume_idx" ]]
 }
 
-DEFAULT_BASELINE="877a1e77bf05cf1d4d5141aedac404a23d219e5f"
+DEFAULT_BASELINE="$(phase2_resolve_baseline_ssot_sha "$ROOT")"
 BASELINE_SHA="${PHASE2_REVALIDATION_BASELINE_SHA:-$DEFAULT_BASELINE}"
 HEAD_SHA="$(git rev-parse HEAD)"
 
@@ -137,10 +140,16 @@ else
 fi
 SOAK_ROOT="$ROOT/evidence/P2FC_SOAK_72H_STAGING"
 
-# —— Phase 2: deploy @ baseline（optional）——
+# —— Phase 2: deploy @ baseline（optional · freeze blocks unless Owner override）——
+if [[ "$SKIP_DEPLOY" == "0" ]]; then
+  if ! phase2_require_staging_deploy_allowed "$ROOT"; then
+    echo "SKIP deploy: TESTNET_STAGING_FREEZE ACTIVE — use --skip-deploy or TESTNET_FREEZE_OVERRIDE=1 (Owner only)"
+    SKIP_DEPLOY=1
+  fi
+fi
 if [[ "$SKIP_DEPLOY" == "0" ]]; then
   echo ""
-  echo "== Phase 2: deploy tt-api-staging + tt-web-staging @ baseline =="
+  echo "== Phase 2: deploy tt-api-staging + tt-web-staging @ baseline (TESTNET_FREEZE_OVERRIDE=1) =="
   export TESTNET_FREEZE_OVERRIDE=1
   export TRAVELTRUST_GIT_SHA="$BASELINE_SHA"
   bash "$ROOT/scripts/dev/phase2-staging-fly-deploy-and-sync.sh" 2>&1 | tee "$EVID/deploy-api.log"

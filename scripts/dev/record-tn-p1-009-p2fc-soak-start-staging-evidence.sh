@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # TN-P1-009 · P2FC 72h soak START 证据（② · 仅记录 · 不关闭 TN-P1-009）
 #
-# 前置：TN-P1-010 等 staging 配置稳定后执行 testnet-staging-freeze-for-soak.sh
+# 前置：TESTNET_STAGING_FREEZE ACTIVE（scripts/ops/testnet-staging-freeze-for-soak.sh）后启动 soak
 # 完成判据：evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json + p2fc-soak-attest.sh
 #
 #   bash scripts/dev/record-tn-p1-009-p2fc-soak-start-staging-evidence.sh

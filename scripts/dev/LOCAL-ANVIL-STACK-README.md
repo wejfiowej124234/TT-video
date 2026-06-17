@@ -2,7 +2,7 @@
 
 **阶段：** 仅 **① 本地** · **不**同步 **② 测试网** · **不**触碰 **③ 生产**
 
-**基线纪律：** `main` @ `877a1e77` 上 **Phase ② soak**（`job-20260615T015345Z`）保持冻结；本分支工作 **不得** 合并进 soak 监控路径或 staging 部署脚本。
+**基线纪律：** Phase ② staging 冻结 @ `8dcd304a`（`evidence/TESTNET_STAGING_FREEZE/ACTIVE.json`）；本分支 **① 本地 Anvil** 工作 **不得** 合并进 soak 监控路径或 staging 部署脚本。
 
 ## 修复顺序（本分支）
 

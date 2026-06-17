@@ -13,8 +13,13 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
 
-FREEZE_SHA="8dcd304afae1bafe5a4de738175e171256a9501e"
-HAT="$ROOT/evidence/GO_hat_r1_sepolia/20260616T063612Z"
+# shellcheck source=scripts/dev/lib/phase2-freeze-sha-lib.sh
+source "$ROOT/scripts/dev/lib/phase2-freeze-sha-lib.sh"
+# shellcheck source=scripts/dev/lib/hat-r1-evidence-lib.sh
+source "$ROOT/scripts/dev/lib/hat-r1-evidence-lib.sh"
+
+FREEZE_SHA="$(phase2_resolve_baseline_ssot_sha "$ROOT")"
+HAT="$(hat_r1_resolve_evid_dir "$ROOT")"
 SOAK_DIR="${P2FC_SOAK_DIR:-$ROOT/evidence/P2FC_SOAK_72H_STAGING}"
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 EVID="$ROOT/evidence/GO_phase2_graduation_closure_program/${STAMP}"
@@ -54,56 +59,8 @@ gate_line() {
 
 # TN-P1-010 毕业闸：须 freeze SHA 对齐 + Soak COMPLETED 后复跑 report（历史报告 alone ≠ PASS）
 eval_tn_p1_010_graduation_gate() {
-  node -e "
-const fs=require('fs');
-const path=require('path');
-const root=process.argv[1];
-const freezeSha=(process.argv[2]||'').toLowerCase();
-const soakDir=process.argv[3];
-const out={pass:false,state:'no',note:'no post-soak reconcile at freeze SHA'};
-const soakCompleted=path.join(soakDir,'COMPLETED.json');
-if(!fs.existsSync(soakCompleted)){
-  out.note='soak COMPLETED.json missing';
-  console.log(JSON.stringify(out));
-  process.exit(0);
-}
-const soak=JSON.parse(fs.readFileSync(soakCompleted,'utf8'));
-const soakMs=Date.parse(soak.completed_at||'')||0;
-if(!soakMs){
-  out.note='soak COMPLETED.json missing completed_at';
-  console.log(JSON.stringify(out));
-  process.exit(0);
-}
-const base=path.join(root,'evidence/GO_phase2_testnet_perfect_validation');
-let best=null;
-if(fs.existsSync(base)){
-  for(const ent of fs.readdirSync(base,{withFileTypes:true})){
-    if(!ent.isDirectory()||!ent.name.startsWith('tn-p1-010-indexer-reconcile-')) continue;
-    const report=path.join(base,ent.name,'report.json');
-    if(!fs.existsSync(report)) continue;
-    let r; try{r=JSON.parse(fs.readFileSync(report,'utf8'));}catch{continue;}
-    if(r.release_gate!=='GO') continue;
-    const stamp=r.stamp||ent.name.replace(/^tn-p1-010-indexer-reconcile-/,'');
-    const stampMs=Date.parse(
-      stamp.length===16 && stamp.endsWith('Z')
-        ? stamp.slice(0,4)+'-'+stamp.slice(4,6)+'-'+stamp.slice(6,8)+'T'+stamp.slice(9,11)+':'+stamp.slice(11,13)+':'+stamp.slice(13,15)+'Z'
-        : stamp
-    )||0;
-    if(!stampMs||stampMs<soakMs) continue;
-    const sha=(r.freeze_git_sha||r.git_sha||'').toLowerCase();
-    if(!sha||sha!==freezeSha) continue;
-    if(!best||stampMs>best.stampMs) best={dir:ent.name,stampMs,stamp,sha};
-  }
-}
-if(best){
-  out.pass=true; out.state='yes';
-  out.note=best.dir+' stamp='+best.stamp+' after_soak=1 freeze_sha='+best.sha;
-}else{
-  out.state='no';
-  out.note='need post-soak TN-P1-010 @ freeze '+freezeSha.slice(0,8)+' (historical-only reports excluded)';
-}
-console.log(JSON.stringify(out));
-" "$ROOT" "$FREEZE_SHA" "$SOAK_DIR"
+  node "$ROOT/scripts/dev/lib/tn-p1-010-graduation-gate.mjs" \
+    --root "$ROOT" --freeze-sha "$FREEZE_SHA" --soak-dir "$SOAK_DIR" --status-only 2>/dev/null || true
 }
 
 print_status() {

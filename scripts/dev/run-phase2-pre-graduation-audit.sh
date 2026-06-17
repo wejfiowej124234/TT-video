@@ -49,7 +49,7 @@ console.log(JSON.stringify({
   missing_coverage:g.deep_closure_missing_coverage,
   evidence_gap:g.deep_closure_evidence_gap,
   soak_completed:g.p2fc_soak_completed,
-  indexer_ok:g.indexer_compound_pass&&g.missing_projection===0,
+  indexer_ok:g.indexer_compound_pass&&g.missing_projection===0&&(!g.p2fc_soak_completed||g.tn_p1_010_graduation_pass===true),
   surface_ok:g.surface_coverage_pct===100&&g.untested_ui_element===0&&g.untested_user_action===0,
 },null,2));
 if(nonSoak.length>0||nonSoakTracks.length>0){process.exit(5);}
@@ -71,8 +71,19 @@ fi
 SOAK_COMPLETED_TXT="等待中"
 [[ -f "$SOAK_DIR/COMPLETED.json" ]] && SOAK_COMPLETED_TXT="已有"
 
-SOAK_JOB="${P2FC_SOAK_EXPECTED_JOB:-job-20260614T070154Z}"
-SOAK_PID="$(cat "$SOAK_DIR/$SOAK_JOB/pid.txt" 2>/dev/null || echo n/a)"
+SOAK_JOB="n/a"
+SOAK_PID="n/a"
+if [[ -f "$SOAK_DIR/COMPLETED.json" ]]; then
+  SOAK_JOB="$(node -e "try{const j=JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'));console.log(j.job_dir?require('path').basename(j.job_dir):'unknown')}catch{console.log('unknown')}" "$SOAK_DIR/COMPLETED.json" 2>/dev/null || echo unknown)"
+  job_dir="$(node -e "try{console.log(JSON.parse(require('fs').readFileSync(process.argv[1],'utf8')).job_dir||'')}catch{}" "$SOAK_DIR/COMPLETED.json" 2>/dev/null || true)"
+  [[ -n "$job_dir" && -f "$job_dir/pid.txt" ]] && SOAK_PID="$(cat "$job_dir/pid.txt" 2>/dev/null || echo n/a)"
+elif [[ -d "$SOAK_DIR" ]]; then
+  latest_job="$(ls -dt "$SOAK_DIR"/job-* 2>/dev/null | head -1 || true)"
+  if [[ -n "$latest_job" ]]; then
+    SOAK_JOB="$(basename "$latest_job")"
+    SOAK_PID="$(cat "$latest_job/pid.txt" 2>/dev/null || echo n/a)"
+  fi
+fi
 SOAK_ALIVE="no"
 [[ -n "$SOAK_PID" && "$SOAK_PID" != "n/a" ]] && kill -0 "$SOAK_PID" 2>/dev/null && SOAK_ALIVE="yes"
 
