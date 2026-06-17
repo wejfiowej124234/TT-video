@@ -11,6 +11,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
+import {
+  evalTnP010GraduationGateCli,
+  tnP010GraduationNote,
+} from './lib/eval-tn-p010-graduation-gate-cli.mjs';
 
 const root = process.cwd();
 const args = process.argv.slice(2);
@@ -135,9 +139,13 @@ function probeEvidenceChain(targetSha) {
   const d24Ok = d24Dir && d24Log && /TT_TN_P1_D24_SURFACE_EVIDENCE: PASS/.test(fs.readFileSync(d24Log, 'utf8'));
   rows.push({ id: 'TN-P1-D24', ok: !!d24Ok, dir: d24Dir ? path.basename(d24Dir) : null });
 
-  const idxDir = latestEvidenceDir(pv, 'tn-p1-010-indexer-reconcile-');
-  const idxOk = idxDir && /PASS/.test(fs.readFileSync(path.join(idxDir, 'STATUS.txt'), 'utf8'));
-  rows.push({ id: 'TN-P1-010', ok: !!idxOk, dir: idxDir ? path.basename(idxDir) : null });
+  const tn010Gate = evalTnP010GraduationGateCli(root);
+  rows.push({
+    id: 'TN-P1-010',
+    ok: tn010Gate.pass === true,
+    dir: tn010Gate.report_dir || null,
+    note: tnP010GraduationNote(tn010Gate),
+  });
 
   let dgReport = path.join(dgRoot, 'latest-report.json');
   if (!fs.existsSync(dgReport)) {

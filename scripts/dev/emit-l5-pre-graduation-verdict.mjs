@@ -5,6 +5,11 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import {
+  evalTnP010GraduationGateCli,
+  tnP010GraduationNote,
+  tnP010GraduationStatus,
+} from './lib/eval-tn-p010-graduation-gate-cli.mjs';
 
 const args = process.argv.slice(2);
 function arg(name, def = '') {
@@ -38,6 +43,14 @@ const pkg = JSON.parse(
   fs.readFileSync(path.join(soakDir, 'phase2-graduation-package-manifest.v1.json'), 'utf8'),
 );
 
+const tn010Gate = evalTnP010GraduationGateCli(root);
+const tn010Pass =
+  m.gates?.tn_p1_010_graduation_pass === true ||
+  tn010Gate.pass === true;
+const tn010Status = tnP010GraduationStatus(tn010Pass ? { pass: true } : tn010Gate);
+const tn010Note = tnP010GraduationNote(tn010Gate);
+const g07Pass = tn010Pass && m.gates?.indexer_compound_pass === true && m.gates?.missing_projection === 0;
+
 const registry = {
   schema: 'traveltrust.phase2_remaining_blockers_registry.v1',
   standard: 'TT-PHASE2-TESTNET-CLOSURE-GOVERNANCE-STANDARD',
@@ -64,8 +77,13 @@ const registry = {
     },
     G06: { status: 'BLOCKED_SOAK', value: m.gates.p2fc_soak_completed, target: true },
     G07: {
-      status: 'PASS',
-      value: { compound: m.gates.indexer_compound_pass, missing: m.gates.missing_projection },
+      status: g07Pass ? 'PASS' : 'OPEN',
+      value: {
+        compound: m.gates.indexer_compound_pass,
+        missing: m.gates.missing_projection,
+        tn_p1_010_graduation_pass: tn010Pass,
+      },
+      note: tn010Note,
     },
     G08: {
       status: 'BLOCKED_SOAK',
@@ -143,7 +161,12 @@ const registry = {
     permissions_rbac: { status: 'CLEAR', note: 'D2/D3/D8 · ADM-U01/U02 · HAT 34+ combos' },
     governance: { status: 'CLEAR', note: 'D21–D23 100% · D10 admin/governance surfaces' },
     finance_psp_escrow: { status: 'CLEAR', note: 'D11 · TN-P1-005/006 · reconcile compound_pass' },
-    indexer_projection: { status: 'CLEAR', note: 'G-07 · TN-P1-010 closed · missing_projection=0' },
+    indexer_projection: {
+      status: g07Pass ? 'CLEAR' : 'OPEN',
+      note: g07Pass
+        ? 'G-07 · TN-P1-010 post-soak graduation gate · missing_projection=0'
+        : `G-07 OPEN · ${tn010Note}`,
+    },
     operations_admin: {
       status: 'CLEAR',
       note: 'D10 CMS/Growth/Official via D6 admin surfaces + ADM evidence',
@@ -158,7 +181,7 @@ const registry = {
     },
     exception_recovery: {
       status: 'SOAK_DEFERRED',
-      note: 'D12 PARTIAL until COMPLETED · D5 replay PASS · TN-P1-010 closed',
+      note: `D12 PARTIAL until COMPLETED · D5 replay PASS · TN-P1-010 ${tn010Status}`,
     },
     monitoring_alerts: { status: 'CLEAR', note: 'D18 PASS · P2FC soak health polling active' },
     evidence_chain: {
@@ -167,10 +190,11 @@ const registry = {
     },
   },
   reliability_closure: {
-    TN_P1_010: 'CLOSED',
+    TN_P1_010: tn010Status,
+    TN_P1_010_gate: tn010Gate,
     D6_52_surface: 'CLOSED',
     TN_P1_009: 'INFLIGHT',
-    indexer_reconcile: 'PASS',
+    indexer_reconcile: m.gates?.indexer_compound_pass ? 'PASS' : 'OPEN',
   },
   graduation_package: {
     manifest: 'evidence/P2FC_SOAK_72H_STAGING/phase2-graduation-package-manifest.v1.json',
@@ -251,7 +275,7 @@ const md = `# L5 Enterprise · Pre-Graduation Readiness Review
 | **Operational D16–D20** | 100% |
 | **Governance D21–D23** | 100% |
 | **D24 Surface** | 52/52 · 100% · untested 0/0 |
-| **Reliability Closure** | TN-P1-010 ✅ · D6 ✅ · TN-P1-009 INFLIGHT |
+| **Reliability Closure** | TN-P1-010 ${tn010Pass ? '✅' : '⏳'} (${tn010Status}) · D6 ✅ · TN-P1-009 INFLIGHT |
 | **Evidence Chain** | D7 ✅ · manifest ✅ · TN-P1-001～010 锚点 |
 | **Graduation Package** | manifest + phase3 backlog + post-soak orchestrator ✅ |
 | **Owner Sign-off** | NOT_STARTED |

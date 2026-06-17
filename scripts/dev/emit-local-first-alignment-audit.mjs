@@ -9,6 +9,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
+import {
+  evalTnP010GraduationGateCli,
+  tnP010GraduationNote,
+  tnP010GraduationStatus,
+} from './lib/eval-tn-p010-graduation-gate-cli.mjs';
 
 const root = process.cwd();
 const args = process.argv.slice(2);
@@ -112,8 +117,9 @@ const d6Dir = latestEvidenceDir(pv, 'tn-p1-d6-reliability-surface-');
 probes.D6 = probeRunPass(d6Dir, /TT_TN_P1_D6_RELIABILITY_SURFACE_EVIDENCE: PASS/);
 const d24Dir = latestEvidenceDir(pv, 'tn-p1-d24-surface-');
 probes.D24 = probeRunPass(d24Dir, /TT_TN_P1_D24_SURFACE_EVIDENCE: PASS/);
-const idxDir = latestEvidenceDir(pv, 'tn-p1-010-indexer-reconcile-');
-probes['TN-P1-010'] = !!(idxDir && /PASS/.test(fs.readFileSync(path.join(idxDir, 'STATUS.txt'), 'utf8')));
+const tn010Gate = evalTnP010GraduationGateCli(root);
+probes['TN-P1-010'] = tn010Gate.pass === true;
+probes['TN-P1-010_gate'] = tn010Gate;
 
 const dgRoot = path.join(root, 'evidence/GO_phase2_testnet_20260526/deep-release-gate');
 let dg = readJsonSafe(path.join(dgRoot, 'latest-report.json'));
@@ -157,7 +163,7 @@ if (webSha !== headSha) gaps.push({ id: 'GAP-WEB-SHA', sev: 'P0', note: `web=${w
 if (!dgOk) gaps.push({ id: 'GAP-DEEP-GATE', sev: 'P0', note: 'Deep gate not PASS/GO @ HEAD' });
 if (!g04Ok) gaps.push({ id: 'GAP-DEEP-GATE-G04', sev: 'P0', note: 'G04 ADM-U01 not PASS inline' });
 if (!admOk) gaps.push({ id: 'GAP-ADM-U01', sev: 'P0', note: 'GO_staging_admin_rbac_matrix latest not GO' });
-if (!probes.D6 || !probes.D24 || !probes['TN-P1-010']) gaps.push({ id: 'GAP-EVIDENCE', sev: 'P0', note: 'TN-P1-010/D24/D6 not all PASS @ HEAD' });
+if (!probes.D6 || !probes.D24 || !probes['TN-P1-010']) gaps.push({ id: 'GAP-EVIDENCE', sev: 'P0', note: `TN-P1-010/D24/D6 not all PASS @ HEAD · TN-P1-010: ${tnP010GraduationNote(tn010Gate)}` });
 if (!hatOk) gaps.push({ id: 'GAP-HAT', sev: 'P0', note: 'Phase28 HAT not PASS' });
 
 const p0 = gaps.filter((g) => g.sev === 'P0');

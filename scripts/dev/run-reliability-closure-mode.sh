@@ -3,6 +3,7 @@
 #
 # **毕业序 SSOT：** `scripts/dev/run-phase2-graduation-closure-program.sh`
 # 本脚本保留兼容；顺序已修正为 Soak → TN-P1-010（非 010 先于 soak）。
+# TESTNET_STAGING_FREEZE ACTIVE 时默认 exit 2 · Owner 取证：`LEGACY_ORCHESTRATOR_OK=1`
 #
 #   bash scripts/dev/run-reliability-closure-mode.sh
 #   bash scripts/dev/run-reliability-closure-mode.sh --audit-only
@@ -14,6 +15,10 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
+
+# shellcheck source=scripts/dev/lib/phase2-legacy-orchestrator-guard.sh
+source "$ROOT/scripts/dev/lib/phase2-legacy-orchestrator-guard.sh"
+phase2_legacy_orchestrator_guard "$ROOT" "$(basename "$0")" || exit $?
 
 AUDIT_ONLY=0
 [[ "${1:-}" == "--audit-only" ]] && AUDIT_ONLY=1

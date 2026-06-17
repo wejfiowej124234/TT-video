@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
-# Phase ② · Testnet Graduation Full Re-Validation @ pinned baseline SHA
+# SUPERSEDED · Phase ② · Testnet Graduation Full Re-Validation @ pinned baseline SHA
+#
+# **毕业序 SSOT：** `scripts/dev/run-phase2-graduation-closure-program.sh`
+# TESTNET_STAGING_FREEZE ACTIVE 时默认 exit 2 · Owner 取证：`LEGACY_ORCHESTRATOR_OK=1`
 #
 # 唯一真源：PHASE2_REVALIDATION_BASELINE_SHA 或 TESTNET_STAGING_FREEZE ACTIVE.json（默认 8dcd304a…）
 # 禁止继承旧 SHA 验收结论 · 全量重验 TN-P1-001～010 · D1–D24 · ADM-U01 · Deep Gate · HAT · 72h soak
@@ -15,6 +18,10 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
+
+# shellcheck source=scripts/dev/lib/phase2-legacy-orchestrator-guard.sh
+source "$ROOT/scripts/dev/lib/phase2-legacy-orchestrator-guard.sh"
+phase2_legacy_orchestrator_guard "$ROOT" "$(basename "$0")" || exit $?
 
 # shellcheck source=scripts/dev/lib/phase2-freeze-sha-lib.sh
 source "$ROOT/scripts/dev/lib/phase2-freeze-sha-lib.sh"

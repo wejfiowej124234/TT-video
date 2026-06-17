@@ -74,11 +74,11 @@ bash scripts/dev/run-phase2-open-items-closure-scan.sh
 | ID | 说明 | 备注 |
 |----|------|------|
 | **SHA-SYNC** | local HEAD = staging `/meta.build.git_sha` | **✅ CLOSED** · **`8dcd304a`** · freeze ACTIVE · 20260617T021847Z |
-| **TN-P1-010 / G-07** | Indexer deep reconcile | staging + `DATABASE_URL` · 可与 soak 并行 |
+| **TN-P1-010 / G-07** | Indexer deep reconcile | **Soak COMPLETED 后**复跑 · post-soak @ freeze SHA · `tn-p1-010-graduation-gate.mjs` |
 | **COM-②-4～6/8** | UGC 持久化 · drawer E2E · notifications · CDN video | staging 实施 · **非** Timelock |
 | **D-4555-B** | CountryPoolSettlement 合约 | **开发轨** · 非 cert-only · 不冒充 ② GO |
 
-> **纪律：** 上表 **运行时闸** 在 soak 窗口并行推进；**不**扩 governance 参数/Tokenomics；**不**跳 Wave 1 前触链。
+> **纪律：** 上表 **运行时闸** 在 soak 窗口可推进 **非 TN-P1-010 GO** 项（如 COM-②）；**TN-P1-010 毕业 GO** 须 **Soak COMPLETED 后**复跑 · **不**与 soak 并行写 GO report；**不**扩 governance 参数/Tokenomics；**不**跳 Wave 1 前触链。
 
 ---
 
@@ -87,8 +87,10 @@ bash scripts/dev/run-phase2-open-items-closure-scan.sh
 ```
 维护窗 daily ──► TL#1 ──► Wave 1 (#7+#8 queue) ──► TL#2 daily
      │                                              │
-     └─ TN-P1-010 indexer（并行）                    └─ soak 72h（并行）
-                                                      └─ CERT 10–12 human（并行）
+     └─ COM-② / OPS（非 010 GO）                    └─ 全新 soak 72h（P2FC_SOAK_SUPERSEDE=1）
+                                                      └─ TN-P1-010 复跑（post-soak · 串行）
+                                                      └─ HAT-R1 → CERT 10–12 human
+                                                      └─ Graduation Review
 ```
 
 ---
