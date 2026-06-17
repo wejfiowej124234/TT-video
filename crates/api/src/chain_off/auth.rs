@@ -1113,6 +1113,9 @@ pub async fn seed_test_accounts_if_empty(state: &ChainOffState) {
 
 const MERCHANT_WORKBENCH_DEMO_EMAIL: &str = "merchant@test.com";
 const PROVIDER_DID_RANK_WORKBENCH_EMAIL: &str = "provider-did-rank-demo@test.com";
+const MERCHANT_WORKBENCH_DEMO_USER_ID: Uuid = Uuid::from_u128(0x0000_0000_0000_4000_8000_0000_0000_0103);
+const PROVIDER_DID_RANK_WORKBENCH_USER_ID: Uuid =
+    Uuid::from_u128(0x0000_0000_0000_4000_8000_0000_0000_0101);
 
 fn merchant_workbench_demo_payload(shop_name: &str, bio: &str) -> serde_json::Value {
     serde_json::json!({
@@ -1158,7 +1161,7 @@ fn ensure_provider_application_chain_off(
         });
 }
 
-/// ① 本地 · 商家工作台烟测：`merchant@test.com` + 补齐 DID 榜演示商家的 chain_off 申请单（hydrate 不加载申请单）。
+/// ① 本地 · 商家工作台烟测：`merchant@test.com` + `provider-did-rank-demo@test.com`（五角色 merchant 登录）。
 pub async fn seed_merchant_workbench_demo_accounts(state: &ChainOffState) {
     const SEED_PASSWORD: &str = "Test123!";
     let password_hash = match bcrypt::hash(SEED_PASSWORD, bcrypt::DEFAULT_COST) {
@@ -1168,32 +1171,56 @@ pub async fn seed_merchant_workbench_demo_accounts(state: &ChainOffState) {
     let now = Utc::now();
     let strict_seed = strict_seed_db_write_enabled();
 
-    let merchant_exists = {
-        let store = state.store.read().await;
-        store
-            .users
-            .values()
-            .any(|u| u.email == MERCHANT_WORKBENCH_DEMO_EMAIL)
-    };
+    let demo_specs: [(
+        Uuid,
+        &str,
+        &str,
+        &str,
+        fn(&str, &str) -> serde_json::Value,
+        &str,
+        &str,
+    ); 2] = [
+        (
+            MERCHANT_WORKBENCH_DEMO_USER_ID,
+            MERCHANT_WORKBENCH_DEMO_EMAIL,
+            "provider",
+            "商家工作台演示",
+            merchant_workbench_demo_payload,
+            "商家工作台演示店",
+            "① 本地商家工作台 L5 烟测 · merchant@test.com",
+        ),
+        (
+            PROVIDER_DID_RANK_WORKBENCH_USER_ID,
+            PROVIDER_DID_RANK_WORKBENCH_EMAIL,
+            "provider",
+            "DID榜演示商家",
+            merchant_workbench_demo_payload,
+            "DID榜演示商家",
+            "DID 榜副榜演示 · provider-did-rank-demo",
+        ),
+    ];
 
-    if !merchant_exists {
-        let user_id = Uuid::from_u128(0x0000_0000_0000_4000_8000_0000_0000_0103);
+    for (user_id, email, role, nickname, payload_fn, shop_name, bio) in demo_specs {
+        let exists = {
+            let store = state.store.read().await;
+            store.users.values().any(|u| u.email == email)
+        };
+        if exists {
+            continue;
+        }
         let user = UserRow {
             id: user_id,
-            email: MERCHANT_WORKBENCH_DEMO_EMAIL.to_string(),
+            email: email.to_string(),
             password_hash: Some(password_hash.clone()),
-            role: "provider".to_string(),
+            role: role.to_string(),
             kyc_status: "none".to_string(),
-            nickname: Some("商家工作台演示".to_string()),
+            nickname: Some(nickname.to_string()),
             avatar_url: None,
             default_wallet_address: None,
             created_at: now,
             updated_at: now,
         };
-        let payload = merchant_workbench_demo_payload(
-            "商家工作台演示店",
-            "① 本地商家工作台 L5 烟测 · merchant@test.com",
-        );
+        let payload = payload_fn(shop_name, bio);
         {
             let mut store = state.store.write().await;
             store.users.insert(user_id, user.clone());
@@ -1216,18 +1243,13 @@ pub async fn seed_merchant_workbench_demo_accounts(state: &ChainOffState) {
             .await;
             if strict_seed {
                 if let Err(e) = insert {
-                    eprintln!(
-                        "[seed] merchant@test strict insert_user failed — memory only: {e}"
-                    );
+                    eprintln!("[seed] {email} strict insert_user failed — memory only: {e}");
                 }
             } else if let Err(e) = insert {
-                eprintln!("[seed] merchant@test insert_user failed: {e}");
+                eprintln!("[seed] {email} insert_user failed: {e}");
             }
         }
-        println!(
-            "seed: merchant workbench demo — {} (password: {})",
-            MERCHANT_WORKBENCH_DEMO_EMAIL, SEED_PASSWORD
-        );
+        println!("seed: merchant workbench demo — {email} (password: {SEED_PASSWORD})");
     }
 
     let sync_emails = [
@@ -1261,7 +1283,7 @@ pub async fn seed_merchant_workbench_demo_accounts(state: &ChainOffState) {
         };
         let mut store = state.store.write().await;
         if let Some(u) = store.users.get_mut(&user_id) {
-            if email == MERCHANT_WORKBENCH_DEMO_EMAIL {
+            if email == MERCHANT_WORKBENCH_DEMO_EMAIL || email == PROVIDER_DID_RANK_WORKBENCH_EMAIL {
                 u.role = "provider".to_string();
                 u.password_hash = Some(password_hash.clone());
                 u.updated_at = now;
