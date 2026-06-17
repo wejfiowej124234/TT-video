@@ -12,7 +12,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
 
-HAT_EVID="${HAT_R1_EVID_DIR:-$ROOT/evidence/GO_hat_r1_sepolia/20260616T063612Z}"
+HAT_EVID="$(hat_r1_resolve_evid_dir "$ROOT")"
 DRY=0
 RUN_AUDIT=0
 for arg in "$@"; do

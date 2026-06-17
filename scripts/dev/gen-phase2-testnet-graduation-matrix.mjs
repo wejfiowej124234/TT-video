@@ -182,15 +182,28 @@ for (const d of domains) {
   for (const a of dimensions) {
     let c = cellStatus(d.id, a.id);
     if (d.id === 'G12' && a.id === 'A7' && recon && !recon.error && !recon.skipped) {
-      c = compound && missing === 0
-        ? { status: 'PASS', note: 'live reconcile compound_pass', blocking: false }
-        : { status: 'OPEN', note: `compound=${compound} missing=${missing}`, blocking: true };
+      c =
+        tnP010GraduationPass && compound && missing === 0
+          ? { status: 'PASS', note: 'post-soak TN-P1-010 + live reconcile compound_pass', blocking: false }
+          : {
+              status: 'OPEN',
+              note: tnP010GraduationPass
+                ? `compound=${compound} missing=${missing}`
+                : tn010Graduation.note || 'TN-P1-010 graduation gate',
+              blocking: true,
+            };
     }
     if (d.id === 'G12' && a.id === 'A5' && recon && !recon.error && !recon.skipped) {
       c =
-        compound && missing === 0
-          ? { status: 'PASS', note: 'TN-P1-010 R1 backfill + replay/reconcile closed', blocking: false }
-          : { status: 'OPEN', note: `recovery reconcile compound=${compound}`, blocking: true };
+        tnP010GraduationPass && compound && missing === 0
+          ? { status: 'PASS', note: 'TN-P1-010 R1 backfill + post-soak reconcile closed', blocking: false }
+          : {
+              status: 'OPEN',
+              note: tnP010GraduationPass
+                ? `recovery reconcile compound=${compound}`
+                : tn010Graduation.note || 'TN-P1-010 graduation gate',
+              blocking: true,
+            };
     }
     cells.push({
       domain: d.id,

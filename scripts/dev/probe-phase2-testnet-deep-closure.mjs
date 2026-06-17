@@ -607,12 +607,14 @@ function probeD11() {
   const gaps = [];
   const notes = [];
   const recon = readEvidProbe('probe-indexer-reconcile.json');
-  if (recon?.reconcile_compound_pass === true) notes.push('reconcile compound_pass');
-  else gaps.push('reconcile compound_pass=false (TN-P1-010)');
+  const tn010Gate = evalTnP010GraduationGate();
+  if (tn010Gate.pass) notes.push(`TN-P1-010 graduation gate: ${tn010Gate.note}`);
+  else if (recon?.reconcile_compound_pass === true) notes.push('reconcile compound_pass (pre-graduation live)');
+  else gaps.push(`reconcile/TN-P1-010: ${tn010Gate.note || 'compound_pass=false'}`);
 
   const missing = recon?.orders_projection_reconcile_gate?.breakdown?.missing_projection;
   if (missing === 0) notes.push('missing_projection=0');
-  else gaps.push(`missing_projection=${missing ?? 'unknown'}`);
+  else if (!tn010Gate.pass) gaps.push(`missing_projection=${missing ?? 'unknown'}`);
 
   if (latestDir('evidence/GO_phase2_testnet_perfect_validation', 'tn-p1-006-')) {
     notes.push('TN-P1-006 Escrow financial leg');
@@ -630,7 +632,12 @@ function probeD11() {
     notes.push('FeeRouter observability partial (distribute ② defer OK)');
   }
 
-  const status = gaps.some((g) => g.includes('compound') || g.includes('missing_projection')) ? 'OPEN' : gaps.length === 0 ? 'PASS' : 'PARTIAL';
+  const status =
+    !tn010Gate.pass && gaps.some((g) => g.includes('TN-P1-010') || g.includes('missing_projection'))
+      ? 'OPEN'
+      : gaps.length === 0
+        ? 'PASS'
+        : 'PARTIAL';
   return mk(status, gaps, notes);
 }
 

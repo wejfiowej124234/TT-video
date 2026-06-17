@@ -4,7 +4,7 @@
 SSOT: frozen local git SHA (default from TESTNET_STAGING_FREEZE ACTIVE @ 8dcd304a…).
 
   python scripts/dev/gen-phase2-baseline-consistency-audit.py \\
-    --expect-sha 6c22eb56d34fdf68336afbaf55994daba0d84d5a \\
+    --expect-sha 8dcd304afae1bafe5a4de738175e171256a9501e \\
     --out-dir evidence/GO_phase2_baseline_consistency_audit/<stamp>
 """
 from __future__ import annotations

@@ -113,6 +113,11 @@ fi
 # --- S5: deploy staging ---
 if [[ "$DO_DEPLOY" -eq 1 ]]; then
   echo ""
+  echo "WARNING: --deploy during TESTNET_STAGING_FREEZE requires Owner TESTNET_FREEZE_OVERRIDE=1"
+  # shellcheck source=scripts/dev/lib/phase2-freeze-sha-lib.sh
+  source "$ROOT/scripts/dev/lib/phase2-freeze-sha-lib.sh"
+  phase2_require_staging_deploy_allowed "$ROOT" || fail "staging deploy blocked by freeze"
+  echo ""
   echo "=== S5 · 推 staging（API + Web）==="
   bash "$ROOT/scripts/dev/phase2-staging-fly-deploy-and-sync.sh"
   if [[ -f "$ROOT/scripts/dev/deploy-tt-web-staging.sh" ]]; then

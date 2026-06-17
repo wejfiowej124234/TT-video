@@ -11,6 +11,8 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+# shellcheck source=scripts/dev/lib/phase2-freeze-sha-lib.sh
+source "$ROOT/scripts/dev/lib/phase2-freeze-sha-lib.sh"
 SOAK_DIR="${P2FC_SOAK_DIR:-$ROOT/evidence/P2FC_SOAK_72H_STAGING}"
 API="${STAGING_API_BASE:-https://tt-api-staging.fly.dev}"
 API="${API%/}"
@@ -19,7 +21,7 @@ WEB="${WEB%/}"
 POLL="${P2FC_SOAK_POLL_SEC:-60}"
 REQUIRED="${P2FC_SOAK_REQUIRED_SEC:-259200}"
 MAX_CONSEC_FAIL="${P2FC_SOAK_MAX_CONSEC_FAIL:-10}"
-FREEZE_SHA="${P2FC_SOAK_EXPECT_GIT_SHA:-8dcd304afae1bafe5a4de738175e171256a9501e}"
+FREEZE_SHA="${P2FC_SOAK_EXPECT_GIT_SHA:-$(phase2_resolve_baseline_ssot_sha "$ROOT")}"
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 JOB="$SOAK_DIR/job-${STAMP}"
 

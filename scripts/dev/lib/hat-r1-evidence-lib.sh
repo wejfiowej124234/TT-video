@@ -25,7 +25,16 @@ hat_r1_resolve_evid_dir() {
       return 0
     fi
   fi
-  echo "$base/20260616T063612Z"
+  local d
+  for d in "$base"/*/; do
+    [[ -d "$d" ]] || continue
+    if [[ -f "${d%/}/EXECUTE_EARLIEST_UNIX.txt" ]]; then
+      echo "${d%/}"
+      return 0
+    fi
+  done
+  echo "hat_r1_resolve_evid_dir: no HAT-R1 evidence under $base — set HAT_R1_EVID_DIR" >&2
+  return 1
 }
 
 hat_r1_step_dir() {
