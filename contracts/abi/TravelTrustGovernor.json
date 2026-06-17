@@ -33,6 +33,11 @@
                            "internalType":  "uint256"
                        },
                        {
+                           "name":  "maxVotingPowerPerAddressBps_",
+                           "type":  "uint256",
+                           "internalType":  "uint256"
+                       },
+                       {
                            "name":  "orderRatingReviewWindowDays_",
                            "type":  "uint256",
                            "internalType":  "uint256"
@@ -119,6 +124,21 @@
                             "name":  "calldatas",
                             "type":  "bytes[]",
                             "internalType":  "bytes[]"
+                        }
+                    ],
+        "stateMutability":  "view"
+    },
+    {
+        "type":  "function",
+        "name":  "maxVotingPowerPerAddressBps",
+        "inputs":  [
+
+                   ],
+        "outputs":  [
+                        {
+                            "name":  "",
+                            "type":  "uint256",
+                            "internalType":  "uint256"
                         }
                     ],
         "stateMutability":  "view"

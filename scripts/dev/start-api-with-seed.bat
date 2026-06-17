@@ -13,6 +13,7 @@ setlocal EnableDelayedExpansion
 if /i "%TRAVELTRUST_UI_HANDOFF%"=="1" call :tt_cfg_ui_handoff
 if /i "%TRAVELTRUST_SITE_THEME_V1%"=="1" call :tt_cfg_site_theme_v1
 if /i "%TRAVELTRUST_MARKET_CLEAN%"=="1" call :tt_cfg_market_clean
+if /i "%TRAVELTRUST_CHAIN_ON%"=="1" call :tt_cfg_chain_on
 if /i "%TRAVELTRUST_MANUAL_ACCEPTANCE%"=="1" call :tt_cfg_manual_acceptance
 if /i "%TRAVELTRUST_MANUAL_QA%"=="1" if /i not "%TRAVELTRUST_MANUAL_ACCEPTANCE%"=="1" set "TRAVELTRUST_OPEN_ADMIN=1"
 if /i "%TRAVELTRUST_MANUAL_QA%"=="1" if /i not "%TRAVELTRUST_MANUAL_ACCEPTANCE%"=="1" call :tt_cfg_manual_qa
@@ -87,6 +88,31 @@ if not defined TRAVELTRUST_MARKET_PUBLIC_SHOWCASE set "TRAVELTRUST_MARKET_PUBLIC
 if not defined TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET set "TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=1"
 set "DID_RANK_SEED_MARKET_DEMO=0"
 echo     TRAVELTRUST_MARKET_CLEAN=1 market UI walkthrough profile + guide@test.com in /market guides list
+exit /b 0
+
+:tt_cfg_chain_on
+if not defined TRAVELTRUST_ANVIL_ALIGN set "TRAVELTRUST_ANVIL_ALIGN=1"
+if not defined TTG_ANVIL_FORCE_DEPLOY set "TTG_ANVIL_FORCE_DEPLOY=0"
+if not defined TRAVELTRUST_ABI_FORGE_VERIFY set "TRAVELTRUST_ABI_FORGE_VERIFY=1"
+if not defined TRAVELTRUST_POST_START_ABI_CHECK set "TRAVELTRUST_POST_START_ABI_CHECK=1"
+echo     TRAVELTRUST_CHAIN_ON=1 full stack: Anvil align + forge ABI verify + post-start chain env/meta check
+exit /b 0
+
+:tt_probe_chain_on_env
+if /i not "%TRAVELTRUST_CHAIN_ON%"=="0" (
+    if /i not "%TRAVELTRUST_CHAIN_ON%"=="1" (
+        findstr /C:"BEGIN TT FUNDSTACK ANVIL LOCAL" "%ROOT%\.env" >nul 2>&1
+        if not errorlevel 1 set "TRAVELTRUST_CHAIN_ON=1"
+        if /i not "%TRAVELTRUST_CHAIN_ON%"=="1" (
+            findstr /C:"BEGIN TT ANVIL LOCAL" "%ROOT%\.env" >nul 2>&1
+            if not errorlevel 1 set "TRAVELTRUST_CHAIN_ON=1"
+        )
+        if /i "%TRAVELTRUST_CHAIN_ON%"=="1" (
+            echo     AUTO: TRAVELTRUST_CHAIN_ON=1 [Anvil managed blocks in .env]
+            call :tt_cfg_chain_on
+        )
+    )
+)
 exit /b 0
 
 :tt_cfg_profiles_done
@@ -186,7 +212,7 @@ if /i "%SKIP_ABI_GATE%"=="1" (
     echo     SKIP SKIP_ABI_GATE=1 [local UI stack; run forge build + scripts\sync-abi-from-forge.ps1 for ABI refresh]
 ) else (
     if /i "%TRAVELTRUST_ABI_SYNC_FROM_FORGE%"=="1" (
-        echo     TRAVELTRUST_ABI_SYNC_FROM_FORGE=1: auto forge export if RegionStewardStakePool / CountryPoolSubVaultsV0 / CountryPoolRedemptionEpochV0 missing or verify-abi-forge drift
+        echo     TRAVELTRUST_ABI_SYNC_FROM_FORGE=1: auto forge export if protocol/governance ABIs missing or verify-abi-forge drift
     )
     if /i "%TRAVELTRUST_ABI_AUTO_ALIGN%"=="0" (
         echo     TRAVELTRUST_ABI_AUTO_ALIGN=0: 55-S13 check-only, no auto align write
@@ -434,11 +460,14 @@ if /i "%SKIP_ENSURE_COMMUNITY_MINIO%"=="1" (
     )
 )
 
-echo Step 3b4 - Unified Anvil align [FundStack + TTG + env supersede + bytecode verify + frontend sync]
+call :tt_probe_chain_on_env
+
+echo Step 3b4 - Unified Anvil align [FundStack + TTG reuse default TTG_ANVIL_FORCE_DEPLOY=0 + env supersede + frontend sync]
 set "ANVIL_ALIGN_RAN=0"
 set "ANVIL_ALIGN_AUTO=0"
 if /i not "%SKIP_ANVIL_ALIGN%"=="1" (
     if /i "%TRAVELTRUST_ANVIL_ALIGN%"=="1" set "ANVIL_ALIGN_AUTO=1"
+    if /i "%TRAVELTRUST_CHAIN_ON%"=="1" set "ANVIL_ALIGN_AUTO=1"
     if /i not "%ANVIL_ALIGN_AUTO%"=="1" (
         findstr /C:"BEGIN TT FUNDSTACK ANVIL LOCAL" "%ROOT%\.env" >nul 2>&1
         if not errorlevel 1 set "ANVIL_ALIGN_AUTO=1"
@@ -455,7 +484,7 @@ if /i "%SKIP_ANVIL_ALIGN%"=="1" (
 ) else if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
     echo     SKIP FE-only TRAVELTRUST_FRONTEND_ONLY=1
 ) else if /i not "%ANVIL_ALIGN_AUTO%"=="1" (
-    echo     SKIP no Anvil align profile [run: bash scripts/dev/align-anvil-local-stack.sh or set TRAVELTRUST_ANVIL_ALIGN=1]
+    echo     SKIP no Anvil align profile [daily: SKIP_ANVIL_ALIGN=1 to preserve stake; SSOT: docs/runbook/TT-STEWARD-ADMISSION-CHAIN-STATE-SSOT.md]
 ) else (
     set "GIT_BASH_OK=0"
     if defined GIT_BASH if exist "%GIT_BASH%" set "GIT_BASH_OK=1"
@@ -609,20 +638,7 @@ if /i not "%TRAVELTRUST_TTG_ANVIL%"=="1" (
 )
 :tt_after_ttg_anvil
 
-REM Auto chain-on when ¢Ù Anvil managed blocks present (unless user explicitly set TRAVELTRUST_CHAIN_ON=0)
-if /i not "%TRAVELTRUST_CHAIN_ON%"=="0" (
-    if /i not "%TRAVELTRUST_CHAIN_ON%"=="1" (
-        findstr /C:"BEGIN TT FUNDSTACK ANVIL LOCAL" "%ROOT%\.env" >nul 2>&1
-        if not errorlevel 1 set "TRAVELTRUST_CHAIN_ON=1"
-        if /i not "%TRAVELTRUST_CHAIN_ON%"=="1" (
-            findstr /C:"BEGIN TT ANVIL LOCAL" "%ROOT%\.env" >nul 2>&1
-            if not errorlevel 1 set "TRAVELTRUST_CHAIN_ON=1"
-        )
-        if /i "%TRAVELTRUST_CHAIN_ON%"=="1" (
-            echo     AUTO: TRAVELTRUST_CHAIN_ON=1 [Anvil managed blocks in .env; API uses P3_CHAIN_OFF from block]
-        )
-    )
-)
+call :tt_probe_chain_on_env
 
 echo Step 3b6 - FundStack USDC mint + guide DB stake align [Anvil local chain-on]
 if /i "%ANVIL_ALIGN_RAN%"=="1" (
@@ -843,6 +859,24 @@ if /i "%SKIP_POST_START_ABI_CHECK%"=="1" (
         pause
         exit /b 1
     )
+)
+
+echo Step 6c1 - Root .env vs GET /meta chain.contracts759 [TRAVELTRUST_CHAIN_ON=1]
+if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
+    echo     SKIP FE-only TRAVELTRUST_FRONTEND_ONLY=1
+) else if /i not "%TRAVELTRUST_CHAIN_ON%"=="1" (
+    echo     SKIP TRAVELTRUST_CHAIN_ON=0
+) else if /i "%SKIP_POST_START_CHAIN_ENV_VERIFY%"=="1" (
+    echo     SKIP SKIP_POST_START_CHAIN_ENV_VERIFY=1
+) else if /i "%TRAVELTRUST_POST_START_CHAIN_ENV_VERIFY_STRICT%"=="1" (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-verify-root-env-vs-meta-chain-contracts.ps1" -Port !BACKEND_PORT!
+    if errorlevel 1 (
+        echo FAIL: verify-root-env-vs-meta-chain-contracts - root .env vs API /meta chain keys drift
+        pause
+        exit /b 1
+    )
+) else (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-verify-root-env-vs-meta-chain-contracts.ps1" -Port !BACKEND_PORT! -WarnOnly
 )
 
 echo Step 6k - Admin CMS Growth Official OPS smoke [TRAVELTRUST_POST_START_ADMIN_OPS_SMOKE=1 or TRAVELTRUST_OPEN_ADMIN=1 or TRAVELTRUST_MANUAL_QA=1]

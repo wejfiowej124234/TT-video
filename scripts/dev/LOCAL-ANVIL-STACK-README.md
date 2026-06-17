@@ -1,5 +1,7 @@
 # ① 本地 Anvil 栈对齐（真人测试专用）
 
+**主理人准入 / TTG 质押 / 重启持久化 SSOT：** [`docs/runbook/TT-STEWARD-ADMISSION-CHAIN-STATE-SSOT.md`](../../docs/runbook/TT-STEWARD-ADMISSION-CHAIN-STATE-SSOT.md) · Gate：`bash scripts/gates/check-steward-admission-chain-state-ssot.sh`
+
 **阶段：** 仅 **① 本地** · **不**同步 **② 测试网** · **不**触碰 **③ 生产**
 
 **基线纪律：** Phase ② staging 冻结 @ `8dcd304a`（`evidence/TESTNET_STAGING_FREEZE/ACTIVE.json`）；本分支 **① 本地 Anvil** 工作 **不得** 合并进 soak 监控路径或 staging 部署脚本。
@@ -7,7 +9,7 @@
 ## 修复顺序（本分支）
 
 1. **Anvil 地址语义校验** — `ttg_anvil_try_reuse_deploy` 校验 `pool.ttg()`；`fundstack_anvil_try_reuse_deploy` 要求 provider/factory/fee_router 有 bytecode；`verify-anvil-local-bytecode.sh` 校验 Guide/Provider/Pool/TTG/USDC/Registry/Factory/**FeeRouter** 并拒绝池=USDC、TTG=Factory 碰撞。
-2. **管家/治理合约错指** — 部署顺序 **FundStack → TTG**（`TTG_ANVIL_FORCE_DEPLOY` 在 FundStack 后）；`DeployRegionStewardStakePool` 在 Anvil 31337 允许 deployer 作 pool owner。
+2. **管家/治理合约错指** — 部署顺序 **FundStack → TTG**（`TTG_ANVIL_FORCE_DEPLOY=1` 仅在地址碰撞修复时）；默认 **`TTG_ANVIL_FORCE_DEPLOY=0`** reuse 池以 **保留 TTG stake**（见 SSOT §5）。
 3. **`.env` Sepolia 残留** — `anvil-local-env-lib.sh` 注释托管块外 ② 键（dotenv first-read 安全）；`sync-frontend-env-local` last-wins。
 4. **`P3_CHAIN_OFF` 覆盖** — `start-api-with-seed.bat` 有 TT FUNDSTACK/TT ANVIL 块时自动 `TRAVELTRUST_CHAIN_ON=1`，API 不再默认 `P3_CHAIN_OFF=1` 盖掉块内 `P3_CHAIN_OFF=0`。
 

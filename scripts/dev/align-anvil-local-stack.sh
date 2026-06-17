@@ -22,7 +22,7 @@ SKIP_ANVIL_STOP=1 \
 
 echo "align-anvil-local-stack: TTG deploy + apply ..."
 SKIP_ANVIL_STOP=1 \
-  TTG_ANVIL_FORCE_DEPLOY="${TTG_ANVIL_FORCE_DEPLOY:-1}" \
+  TTG_ANVIL_FORCE_DEPLOY="${TTG_ANVIL_FORCE_DEPLOY:-0}" \
   bash "$ROOT/scripts/dev/deploy-ttg-anvil-local.sh" --apply
 
 # shellcheck source=scripts/dev/lib/anvil-local-env-lib.sh

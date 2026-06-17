@@ -22,7 +22,7 @@ function Invoke-Step {
 }
 
 if (-not $CheckOnly -and -not $FromForge) {
-    Write-Host "align-api-abi-local: protocol convergence ABI present (RegionStewardStakePool, CountryPoolSubVaultsV0, CountryPoolRedemptionEpochV0)"
+    Write-Host "align-api-abi-local: protocol + governance ABIs present (forge multiset via check-protocol-abi-present)"
     powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root "scripts\dev\check-protocol-abi-present.ps1")
     if ($LASTEXITCODE -ne 0) {
         if ($syncFromForgeEnabled) {
@@ -46,7 +46,7 @@ if (-not $CheckOnly -and -not $FromForge) {
                 $verify = Join-Path $Root "scripts\dev\verify-abi-forge.py"
                 if ($pyArgs) { & $py @pyArgs $verify } else { & $py $verify }
                 if ($LASTEXITCODE -ne 0) {
-                    Write-Host "align-api-abi-local: forge drift — syncing from forge" -ForegroundColor Yellow
+                    Write-Host "align-api-abi-local: forge drift - syncing from forge" -ForegroundColor Yellow
                     $FromForge = $true
                 }
             }

@@ -32,6 +32,17 @@
     },
     {
         "type":  "function",
+        "name":  "bootstrapProtocolSsotJurisdictionsOnce",
+        "inputs":  [
+
+                   ],
+        "outputs":  [
+
+                    ],
+        "stateMutability":  "nonpayable"
+    },
+    {
+        "type":  "function",
         "name":  "claimReleased",
         "inputs":  [
                        {
@@ -79,6 +90,36 @@
                            "type":  "bytes2",
                            "internalType":  "bytes2"
                        }
+                   ],
+        "outputs":  [
+                        {
+                            "name":  "",
+                            "type":  "bool",
+                            "internalType":  "bool"
+                        }
+                    ],
+        "stateMutability":  "view"
+    },
+    {
+        "type":  "function",
+        "name":  "initializeProxyStorage",
+        "inputs":  [
+                       {
+                           "name":  "owner_",
+                           "type":  "address",
+                           "internalType":  "address"
+                       }
+                   ],
+        "outputs":  [
+
+                    ],
+        "stateMutability":  "nonpayable"
+    },
+    {
+        "type":  "function",
+        "name":  "jurisdictionsBootstrapped",
+        "inputs":  [
+
                    ],
         "outputs":  [
                         {
@@ -185,6 +226,36 @@
                            "name":  "jurisdiction",
                            "type":  "bytes2",
                            "internalType":  "bytes2"
+                       }
+                   ],
+        "outputs":  [
+
+                    ],
+        "stateMutability":  "nonpayable"
+    },
+    {
+        "type":  "function",
+        "name":  "seatConcentrationRegistry",
+        "inputs":  [
+
+                   ],
+        "outputs":  [
+                        {
+                            "name":  "",
+                            "type":  "address",
+                            "internalType":  "contract ITtgSeatConcentrationRegistry"
+                        }
+                    ],
+        "stateMutability":  "view"
+    },
+    {
+        "type":  "function",
+        "name":  "setSeatConcentrationRegistry",
+        "inputs":  [
+                       {
+                           "name":  "registry",
+                           "type":  "address",
+                           "internalType":  "address"
                        }
                    ],
         "outputs":  [
@@ -385,6 +456,46 @@
     },
     {
         "type":  "event",
+        "name":  "ProtocolSsotJurisdictionsBootstrapped",
+        "inputs":  [
+
+                   ],
+        "anonymous":  false
+    },
+    {
+        "type":  "event",
+        "name":  "ProxyStorageInitialized",
+        "inputs":  [
+                       {
+                           "name":  "owner",
+                           "type":  "address",
+                           "indexed":  false,
+                           "internalType":  "address"
+                       }
+                   ],
+        "anonymous":  false
+    },
+    {
+        "type":  "event",
+        "name":  "SeatConcentrationRegistryUpdated",
+        "inputs":  [
+                       {
+                           "name":  "previousRegistry",
+                           "type":  "address",
+                           "indexed":  true,
+                           "internalType":  "address"
+                       },
+                       {
+                           "name":  "registry",
+                           "type":  "address",
+                           "indexed":  true,
+                           "internalType":  "address"
+                       }
+                   ],
+        "anonymous":  false
+    },
+    {
+        "type":  "event",
         "name":  "StewardReleaseRequested",
         "inputs":  [
                        {
@@ -501,6 +612,13 @@
     },
     {
         "type":  "error",
+        "name":  "JurisdictionsAlreadyBootstrapped",
+        "inputs":  [
+
+                   ]
+    },
+    {
+        "type":  "error",
         "name":  "NoActiveStake",
         "inputs":  [
 
@@ -516,6 +634,13 @@
     {
         "type":  "error",
         "name":  "OnlyOwner",
+        "inputs":  [
+
+                   ]
+    },
+    {
+        "type":  "error",
+        "name":  "ProxyStorageAlreadyInitialized",
         "inputs":  [
 
                    ]

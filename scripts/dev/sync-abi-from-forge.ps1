@@ -54,11 +54,13 @@ function Write-Abi($name) {
 }
 
 # Must match scripts/dev/sync-abi-from-forge.sh (incl. protocol convergence steward + redemption epoch)
+# Must match scripts/dev/sync-abi-from-forge.sh + scripts/dev/verify-abi-forge.py
 $required = @(
     "Escrow", "EscrowFactory", "GuideIdentityStakingPool", "ProviderIdentityStakingPool", "Registry",
     "FeeRouter", "RegionVault", "ReserveVault", "SlashRouter", "InvestorDistributionClaim",
     "GovernanceTimelock", "GovernanceTreasury", "GovernanceVotesToken", "TravelTrustGovernor",
-    "RegionStewardStakePool", "CountryPoolSubVaultsV0", "CountryPoolRedemptionEpochV0"
+    "RegionStewardStakePool", "CountryPoolSubVaultsV0", "CountryPoolRedemptionEpochV0",
+    "CountryPoolNetProfitLedger", "StewardPathVault", "UnallocatedStewardPathVault"
 )
 foreach ($c in $required) {
     if (-not (Write-Abi $c)) { Fail "forge inspect $c abi failed" }

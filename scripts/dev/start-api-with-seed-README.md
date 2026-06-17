@@ -20,6 +20,36 @@ Git Bash 在 Windows 上可：`bash scripts/start-api-with-seed.sh`（内部委�
 
 Runbook：`docs/runbook/TT-PH1-SITE-THEME-V1-UPGRADE-001.md` §6.1。
 
+## 链上全栈对齐（① · `TRAVELTRUST_CHAIN_ON=1`）
+
+**持久化 SSOT（必读）：** [`docs/runbook/TT-STEWARD-ADMISSION-CHAIN-STATE-SSOT.md`](../../docs/runbook/TT-STEWARD-ADMISSION-CHAIN-STATE-SSOT.md) · Gate：`bash scripts/gates/check-steward-admission-chain-state-ssot.sh`  
+**日常不重质押：** `set SKIP_ANVIL_ALIGN=1` 后启栈；**仅**地址碰撞修复时 `TTG_ANVIL_FORCE_DEPLOY=1`。
+
+**用途**：本地 Anvil 链 + API `/meta` 链字段 + 根 `.env` + 前端 `NEXT_PUBLIC_*` + 管理员种子 + ABI forge multiset **一次对齐**（**①**；**非** ② 测试网 GO）。
+
+| 命令 | 说明 |
+|------|------|
+| `set TRAVELTRUST_CHAIN_ON=1` | 启用 **chain-on profile**：`TRAVELTRUST_ANVIL_ALIGN=1` · `TRAVELTRUST_ABI_FORGE_VERIFY=1` · Step **6c1** env↔meta 校验 |
+| `scripts\start-api-with-seed.bat` | 全栈默认仍 **mock-pay**（`P3_CHAIN_OFF=1`）；chain-on 时 Step 5 **不**覆盖根 `.env` 的 `P3_CHAIN_OFF=0` |
+| `RESET_DOCKER_DB=1` | 首次或 schema drift 时与 chain-on 同批使用 |
+
+**Step 链路（chain-on）**：
+
+| Step | 对齐项 |
+|------|--------|
+| **1b** | `align-api-abi-local.ps1` — 协议 + 治理 ABI（`TravelTrustGovernor` · `RegionStewardStakePool` · CP net-profit 等）→ `frontend/dapp/abis` 子集 + 55-S13 gate |
+| **1b2** | `verify-abi-forge.py` multiset（chain-on profile 默认开） |
+| **1b4–1ba** | 前端路由 ↔ API 契约（steward/redemption/governance · admin · identity） |
+| **3d** | SQLx migrate + PG schema probe（through `20260613120000`） |
+| **3b4** | `align-anvil-local-stack` — FundStack + TTG 部署 · `.env` supersede · frontend sync · indexer reset |
+| **3b6** | USDC mint + guide DB stake ↔ chain |
+| **6b / 6b2** | seed + `bootstrap-local-admin-console`（SuperAdmin） |
+| **6c** | `post-start-api-abi-smoke` — `/meta` 728+807 · admin RBAC · CMS/Growth/Official |
+| **6c1** | `verify-root-env-vs-meta-chain-contracts` — 根 `.env` 链地址 vs `GET /meta`（默认 WARN；`TRAVELTRUST_POST_START_CHAIN_ENV_VERIFY_STRICT=1` 失败即停） |
+| **7** | `sync-frontend-env-local-from-root.ps1` — `NEXT_PUBLIC_*` |
+
+跳过：`SKIP_ANVIL_ALIGN=1` · `SKIP_POST_START_CHAIN_ENV_VERIFY=1` · `TRAVELTRUST_CHAIN_ON=0` 强制 mock-pay。
+
 ## Hero `/traveltrust` 模块化走查（layout lock v10）
 
 架构：`app/traveltrust` → `modules/traveltrust-home` → `@/lib/traveltrust/home/cinematic-bridge` → `components/traveltrust/cinematic`（cinematic **不得** import home module）。
@@ -224,7 +254,10 @@ scripts\start-api-with-seed.bat
 | 项 | 说明 |
 |----|------|
 | `P3_CHAIN_OFF` | **Step 5** 本地默认 **强制 `1`**（mock-pay + 公众 catalog）；根 `.env` 含 Anvil 块 `P3_CHAIN_OFF=0` 时仍被覆盖。**链上 / 测试网 E2E** 启动前设 **`TRAVELTRUST_CHAIN_ON=1`**，则沿用 `.env` |
-| `TRAVELTRUST_CHAIN_ON=1` | Step 5 **不**强制 `P3_CHAIN_OFF=1`；`dotenv` 读根 `.env`（Anvil / Sepolia 同源） |
+| `TRAVELTRUST_CHAIN_ON=1` | Step 5 **不**强制 `P3_CHAIN_OFF=1`；启用 Anvil align（Step **3b4**）+ forge ABI verify（**1b2**）+ Step **6c1** env↔meta；`dotenv` 读根 `.env` |
+| `TRAVELTRUST_ANVIL_ALIGN=1` | 强制 Step **3b4** `align-anvil-local-stack`（FundStack + TTG + env supersede + frontend sync） |
+| `SKIP_POST_START_CHAIN_ENV_VERIFY=1` | 跳过 Step **6c1** |
+| `TRAVELTRUST_POST_START_CHAIN_ENV_VERIFY_STRICT=1` | Step **6c1** 失败即停（默认 WARN 继续） |
 | Step **1b5** | **`check-frontend-api-routes-web3-itinerary.ps1`** — `lib/api.ts` ↔ `lib/api/routes.ts`（`orderPatchGuide` · `guideAvailability` · `confirm-final-plan` · `itineraries` · `discover`）。`SKIP_WEB3_ITINERARY_ROUTES_GATE=1` 跳过。 |
 | Step **6f** | 默认（6d+6e 均未跳过）跑 **`smoke-web3-itinerary-full-chain-local.sh`**（6e 断言创建/发布 **无 guide_id**；6d 绑定 + **reassign**）。`SKIP_POST_START_WEB3_ITINERARY_SMOKE=1` 跳过整段；仅跳过其一则仍跑 **6d** 或 **6e** 单项。 |
 | Step **6d** / **6e** | 仅当另一项被 `SKIP_*` 时单独跑；WARN：`TRAVELTRUST_POST_START_WEB3_ITINERARY_WARN=1` 或 legacy `TRAVELTRUST_POST_START_ESCROW_BIND_WARN` / `TRAVELTRUST_POST_START_LANDING_ITINERARY_WARN`。 |
@@ -426,7 +459,7 @@ Python 门禁列出的行首 **`?`** 表示：该路由已在代码里挂载，�
 | `TRAVELTRUST_ABI_AUTO_ALIGN=1` | **默认**：Step **1b0** 将 `contracts/abi` 六件套复制到 `frontend/dapp/abis`（55-S13 字节一致） |
 | `TRAVELTRUST_ABI_AUTO_ALIGN=0` | 跳过 1b0，仅跑 55-S13 门禁 |
 | `TRAVELTRUST_ABI_SYNC_FROM_FORGE=1` | **全栈默认**（未设即 `1`）：Step **1b** 先检 **RegionStewardStakePool** / **CountryPoolSubVaultsV0** / **CountryPoolRedemptionEpochV0** + **`verify-abi-forge`**；缺失或 drift 时自动 **`align-api-abi-local.ps1 -FromForge`**；55-S13 仍失败时同样重试 |
-| `TRAVELTRUST_ABI_SYNC_FROM_FORGE=0` | 关闭自动 forge 导出（仅复制 + 55-S13；缺协议 ABI 时 Step 1b 失败） |
+| `TRAVELTRUST_ABI_SYNC_FROM_FORGE=0` | 关闭自动 forge 导出（仅复制 + 55-S13；缺协议/治理 ABI 时 Step 1b 失败） |
 | `SKIP_AUTH_EMAIL_RESEND_GATE=1` | 跳过 Resend 检查 |
 | `NO_PAUSE=1` | 末尾不 pause |
 | `TRAVELTRUST_PREP_CLEAN=1` | 启动前 `npm run clean` |
@@ -554,7 +587,7 @@ Python 门禁列出的行首 **`?`** 表示：该路由已在代码里挂载，�
 
 **本轮机读结论（仓库根执行）**：`check-55-s13.ps1` **PASS**；`run-check-04-routes.ps1` **PASS**（含 `check-04-routes-vs-code`、`check-04-frontend-routes-vs-app`）。
 
-**改合约 / ABI 后**：勿长期 `SKIP_ABI_GATE=1`。推荐 `set TRAVELTRUST_ABI_SYNC_FROM_FORGE=1` 后重跑全栈（Step 1b 自动 `align-api-abi-local.ps1 -FromForge`，含 **CountryPoolSubVaultsV0**），或手动 `scripts\dev\align-api-abi-local.ps1 -FromForge` / `scripts\sync-abi-from-forge.ps1` + `check-55-s13.ps1`。
+**改合约 / ABI 后**：勿长期 `SKIP_ABI_GATE=1`。推荐 `set TRAVELTRUST_ABI_SYNC_FROM_FORGE=1` 后重跑全栈（Step 1b 自动 `align-api-abi-local.ps1 -FromForge`，含 **治理栈 + CountryPool net-profit**），或 `set TRAVELTRUST_CHAIN_ON=1` 走 chain-on profile，或手动 `scripts\dev\align-api-abi-local.ps1 -FromForge` / `scripts\sync-abi-from-forge.ps1` + `check-55-s13.ps1`。
 
 **不等于**发版级深度多维（`ci-local` / `local-delivery-expanded` / 31 全文 / 96-15 Tier C）— 见 [TT-GATE](../../docs/runbook/TT-GATE-COVERAGE-vs-96-15-GAP-REGISTRY-001.md)。
 

@@ -1445,7 +1445,10 @@ pub async fn seed_multi_identity_demo_account(state: &ChainOffState) {
             let mut store = state.store.write().await;
             if let Some(u) = store.users.get_mut(&uid) {
                 u.password_hash = Some(password_hash.clone());
-                u.role = "guide".to_string();
+                // Preserve A2 role-confirm across API restarts (PG hydrate may have region_steward).
+                if !u.role.eq_ignore_ascii_case("region_steward") {
+                    u.role = "guide".to_string();
+                }
                 if u.default_wallet_address
                     .as_ref()
                     .map(|w| multi_demo_wallet_needs_migration(w))
