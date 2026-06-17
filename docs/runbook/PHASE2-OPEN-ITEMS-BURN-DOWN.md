@@ -73,7 +73,7 @@ bash scripts/dev/run-phase2-open-items-closure-scan.sh
 
 | ID | 说明 | 备注 |
 |----|------|------|
-| **SHA-SYNC** | local HEAD = staging `/meta.build.git_sha` | `run-phase2-testnet-full-sync-deploy.sh --full` · 须 commit + 解除 staging freeze |
+| **SHA-SYNC** | local HEAD = staging `/meta.build.git_sha` | **✅ CLOSED** · **`8dcd304a`** · freeze ACTIVE · 20260617T021847Z |
 | **TN-P1-010 / G-07** | Indexer deep reconcile | staging + `DATABASE_URL` · 可与 soak 并行 |
 | **COM-②-4～6/8** | UGC 持久化 · drawer E2E · notifications · CDN video | staging 实施 · **非** Timelock |
 | **D-4555-B** | CountryPoolSettlement 合约 | **开发轨** · 非 cert-only · 不冒充 ② GO |

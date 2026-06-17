@@ -92,3 +92,40 @@ bash scripts/dev/run-phase25-coverage-hardening-staging.sh
 
 - [PHASE2-DUAL-LOOP-COMPLETION-REPORT.md](./PHASE2-DUAL-LOOP-COMPLETION-REPORT.md)
 - [PHASE2-LOCAL-STAGING-PARITY-LOOP.md](./PHASE2-LOCAL-STAGING-PARITY-LOOP.md)
+- [TTG-CERT-EXECUTION-SESSION-RUNBOOK.md](./TTG-CERT-EXECUTION-SESSION-RUNBOOK.md) §3 Phase B
+
+---
+
+## 6 · Phase B 冻结纪律（Owner · 2026-06-17）
+
+**冻结 SHA：** `8dcd304afae1bafe5a4de738175e171256a9501e`（`TESTNET_STAGING_FREEZE: ACTIVE`）  
+**禁止：** redeploy · restart · migrations · fly secrets · 功能扩面 — **仅**阻塞性 P0 缺陷可破例（`TESTNET_FREEZE_OVERRIDE=1` + Owner 书面决策）
+
+| 阶段 | 允许动作 | 禁止 |
+|------|----------|------|
+| **TL#1 前** | **仅** `run-phase-b-daily-maintenance.sh` | Wave 1 · Soak · redeploy |
+| **TL#1 后 · Wave 1** | **Owner 钱包** · Cert #7 + Cert #8 queue · **写入 TL#2** | spend execute · redeploy |
+| **Wave 1 后** | **全新** 72h Soak（`P2FC_SOAK_SUPERSEDE=1`） | 沿用僵死旧 job |
+| **Soak COMPLETED** | **复跑** TN-P1-010 | — |
+| **其后（依次）** | HAT-R1 → Cert #10–#12 → Graduation Review | redeploy |
+
+**序（Owner · 写死）：** maintenance → TL#1 Wave 1（Cert #7 + Cert #8 queue · 写入 TL#2 倒计时）→ **全新 Soak** → TN-P1-010 复跑 → HAT-R1 → Cert #10–#12 → Phase ② Graduation。（Cert #8 TL#2 spend execute **不在**本轮毕业序。）
+
+**每日唯一入口（当前 · PRE_TL1）：**
+
+```bash
+export HTTPS_PROXY=http://127.0.0.1:15715
+bash scripts/dev/run-phase-b-daily-maintenance.sh
+bash scripts/dev/run-phase2-graduation-closure-program.sh --status
+```
+
+**毕业闭环总程序 SSOT：** [PHASE2-GRADUATION-CLOSURE-PROGRAM.md](./PHASE2-GRADUATION-CLOSURE-PROGRAM.md)
+
+**TL#1 到期后（Owner 钱包 · 不在 Agent 默认代跑）：**
+
+```bash
+export HAT_R1_LIVE_WALLET_OK=1 HAT_R1_PHASE_B_PAUSED=0
+bash scripts/dev/run-phase-b-post-timelock-wave1.sh --signer "Sebastian Ward"
+export P2FC_SOAK_SUPERSEDE=1
+bash scripts/dev/record-tn-p1-009-p2fc-soak-start-staging-evidence.sh
+```

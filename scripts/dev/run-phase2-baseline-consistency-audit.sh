@@ -68,11 +68,12 @@ python "$ROOT/scripts/dev/gen-phase2-baseline-consistency-audit.py" \
   --deep-gate-report "$DG_REPORT"
 
 AUDIT_JSON="$EVID/audit.json"
-DIFF_COUNT="$(PYTHONIOENCODING=utf-8 python -c "import json; d=json.load(open(r'''$AUDIT_JSON''',encoding='utf-8')); print(d['diff_count'])")"
-SHA_MATCH="$(PYTHONIOENCODING=utf-8 python -c "import json; d=json.load(open(r'''$AUDIT_JSON''',encoding='utf-8')); print('yes' if d.get('sha_hard_match') else 'no')")"
-G03_P0_FAIL="$(PYTHONIOENCODING=utf-8 python -c "
+[[ -f "$AUDIT_JSON" ]] || fail_post="audit.json missing under $EVID"
+DIFF_COUNT="$(cd "$EVID" && PYTHONIOENCODING=utf-8 python -c "import json; print(json.load(open('audit.json',encoding='utf-8'))['diff_count'])")"
+SHA_MATCH="$(cd "$EVID" && PYTHONIOENCODING=utf-8 python -c "import json; d=json.load(open('audit.json',encoding='utf-8')); print('yes' if d.get('sha_hard_match') else 'no')")"
+G03_P0_FAIL="$(cd "$EVID/deep-release-gate" && PYTHONIOENCODING=utf-8 python -c "
 import json
-d=json.load(open(r'''$DG_REPORT''',encoding='utf-8'))
+d=json.load(open('report.json',encoding='utf-8'))
 g=next((x for x in d.get('gates',[]) if x.get('id')=='G03_FIVE_ROLE_LOGIN'), {})
 fails=[c for c in g.get('checks',[]) if c.get('verdict')=='FAIL' and c.get('severity','P0')=='P0']
 print(len(fails))
