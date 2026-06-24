@@ -82,6 +82,7 @@ const READ_CONTRACT_GOVERNANCE_ADMIN_GET_PATHS: &[&str] = &[
     "/api/v1/governance/protocol-reference",
     "/api/v1/governance/protocol-reference/pending",
     "/api/v1/governance/rewards",
+    "/api/v1/governance/ttg-exchange/quote",
     "/api/v1/governance/vault-forwards",
     "/api/v1/governance/voting-power",
 ];

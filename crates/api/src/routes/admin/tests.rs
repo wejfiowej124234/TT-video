@@ -117,6 +117,36 @@ fn auth_headers(uid: Uuid) -> HeaderMap {
     headers
 }
 
+/// RAII · 隔离 console role override（并行 `cargo test` · thread-local，不污染进程 env）
+struct AdminConsoleRoleOverrideGuard {
+    previous: Option<String>,
+}
+
+impl AdminConsoleRoleOverrideGuard {
+    fn clear() -> Self {
+        let previous = admin_rbac::test_console_role_override_snapshot();
+        admin_rbac::set_test_console_role_override(None);
+        Self { previous }
+    }
+
+    fn set(role: &str) -> Self {
+        let previous = admin_rbac::test_console_role_override_snapshot();
+        admin_rbac::set_test_console_role_override(Some(role));
+        Self { previous }
+    }
+}
+
+impl Drop for AdminConsoleRoleOverrideGuard {
+    fn drop(&mut self) {
+        admin_rbac::restore_test_console_role_override(self.previous.take());
+    }
+}
+
+/// 默认 RBAC（`users.role` → console 映射）· 无 DB 路径测试入口
+fn admin_rbac_default_env() -> AdminConsoleRoleOverrideGuard {
+    AdminConsoleRoleOverrideGuard::clear()
+}
+
 async fn body_json(resp: axum::response::Response) -> serde_json::Value {
     let collected = resp
         .into_body()
@@ -188,6 +218,7 @@ fn admin_attach_meta_build_replaces_stale_build_object() {
 
 #[tokio::test]
 async fn role_change_request_requires_db_pool() {
+    let _env = admin_rbac_default_env();
     let admin = user_with_role("admin");
     let target = user_with_role("tourist");
     let target_id = target.id;
@@ -209,6 +240,7 @@ async fn role_change_request_requires_db_pool() {
 
 #[tokio::test]
 async fn get_admin_approvals_returns_note_without_db() {
+    let _env = admin_rbac_default_env();
     let admin = user_with_role("super_admin");
     let resp = get_admin_approvals(
         State(build_state(vec![admin.clone()])),
@@ -252,7 +284,7 @@ async fn get_admin_approvals_forbidden_for_ops_console_role() {
 
 #[tokio::test]
 async fn admin_finance_summary_forbidden_for_cs_console_role() {
-    std::env::set_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE", "CS");
+    let _guard = AdminConsoleRoleOverrideGuard::set("CS");
     let admin = user_with_role("admin");
     let resp = get_admin_finance_summary(
         State(build_state(vec![admin.clone()])),
@@ -260,7 +292,6 @@ async fn admin_finance_summary_forbidden_for_cs_console_role() {
     )
     .await
     .into_response();
-    std::env::remove_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE");
     assert_eq!(resp.status(), StatusCode::FORBIDDEN);
     let body = body_json(resp).await;
     assert_eq!(body["error"], "admin_permission_denied");
@@ -268,7 +299,7 @@ async fn admin_finance_summary_forbidden_for_cs_console_role() {
 
 #[tokio::test]
 async fn admin_fee_router_forbidden_for_cs_console_role() {
-    std::env::set_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE", "CS");
+    let _guard = AdminConsoleRoleOverrideGuard::set("CS");
     let admin = user_with_role("admin");
     let resp = get_admin_fee_router_routed_events(
         State(build_state(vec![admin.clone()])),
@@ -281,7 +312,6 @@ async fn admin_fee_router_forbidden_for_cs_console_role() {
     )
     .await
     .into_response();
-    std::env::remove_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE");
     assert_eq!(resp.status(), StatusCode::FORBIDDEN);
     let body = body_json(resp).await;
     assert_eq!(body["error"], "admin_permission_denied");
@@ -289,7 +319,7 @@ async fn admin_fee_router_forbidden_for_cs_console_role() {
 
 #[tokio::test]
 async fn admin_audit_logs_ok_for_cs_console_role() {
-    std::env::set_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE", "CS");
+    let _guard = AdminConsoleRoleOverrideGuard::set("CS");
     let admin = user_with_role("admin");
     let resp = get_admin_audit_logs(
         State(build_state(vec![admin.clone()])),
@@ -303,7 +333,6 @@ async fn admin_audit_logs_ok_for_cs_console_role() {
     )
     .await
     .into_response();
-    std::env::remove_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE");
     assert_eq!(resp.status(), StatusCode::OK);
     let body = body_json(resp).await;
     assert_eq!(body["note"], "admin_audit_log_no_db");
@@ -311,9 +340,11 @@ async fn admin_audit_logs_ok_for_cs_console_role() {
 
 #[tokio::test]
 async fn cert3_console_role_rbac_matrix_sequential() {
+    let _env = admin_rbac_default_env();
     let admin = user_with_role("admin");
 
-    std::env::set_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE", "Finance");
+    {
+        let _role = AdminConsoleRoleOverrideGuard::set("Finance");
     let finance_summary = get_admin_finance_summary(
         State(build_state(vec![admin.clone()])),
         auth_headers(admin.id),
@@ -333,8 +364,10 @@ async fn cert3_console_role_rbac_matrix_sequential() {
     .await
     .into_response();
     assert_eq!(finance_approvals.status(), StatusCode::FORBIDDEN);
+    }
 
-    std::env::set_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE", "Risk");
+    {
+        let _role = AdminConsoleRoleOverrideGuard::set("Risk");
     let risk_community = get_admin_community_reports(
         State(build_state(vec![admin.clone()])),
         Query(AdminCommunityReportsQuery::default()),
@@ -352,8 +385,10 @@ async fn cert3_console_role_rbac_matrix_sequential() {
     .await
     .into_response();
     assert_eq!(risk_finance.status(), StatusCode::FORBIDDEN);
+    }
 
-    std::env::set_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE", "Auditor");
+    {
+        let _role = AdminConsoleRoleOverrideGuard::set("Auditor");
     let auditor_audit = get_admin_audit_logs(
         State(build_state(vec![admin.clone()])),
         Query(AdminAuditQuery {
@@ -383,8 +418,10 @@ async fn cert3_console_role_rbac_matrix_sequential() {
     .await
     .into_response();
     assert_eq!(auditor_penalty.status(), StatusCode::FORBIDDEN);
+    }
 
-    std::env::set_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE", "SuperAdmin");
+    {
+        let _role = AdminConsoleRoleOverrideGuard::set("SuperAdmin");
     let super_approvals = get_admin_approvals(
         State(build_state(vec![admin.clone()])),
         Query(AdminApprovalQuery {
@@ -396,8 +433,10 @@ async fn cert3_console_role_rbac_matrix_sequential() {
     .await
     .into_response();
     assert_eq!(super_approvals.status(), StatusCode::OK);
+    }
 
-    std::env::set_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE", "Ops");
+    {
+        let _role = AdminConsoleRoleOverrideGuard::set("Ops");
     let ops_finance = get_admin_finance_summary(
         State(build_state(vec![admin.clone()])),
         auth_headers(admin.id),
@@ -416,8 +455,10 @@ async fn cert3_console_role_rbac_matrix_sequential() {
     .await
     .into_response();
     assert_eq!(ops_approvals.status(), StatusCode::FORBIDDEN);
+    }
 
-    std::env::set_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE", "CS");
+    {
+        let _role = AdminConsoleRoleOverrideGuard::set("CS");
     let cs_finance = get_admin_finance_summary(
         State(build_state(vec![admin.clone()])),
         auth_headers(admin.id),
@@ -438,8 +479,7 @@ async fn cert3_console_role_rbac_matrix_sequential() {
     .await
     .into_response();
     assert_eq!(cs_audit.status(), StatusCode::OK);
-
-    std::env::remove_var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE");
+    }
 }
 
 #[tokio::test]
@@ -3255,6 +3295,7 @@ async fn admin_fee_router_routed_events_limit_zero_returns_400_before_db() {
 
 #[tokio::test]
 async fn admin_fee_router_routed_events_bad_cursor_returns_400_before_db() {
+    let _env = admin_rbac_default_env();
     let admin = user_with_role("admin");
     let resp = get_admin_fee_router_routed_events(
         State(build_state(vec![admin.clone()])),
@@ -4300,6 +4341,7 @@ async fn patch_admin_community_comment_requires_db() {
 
 #[tokio::test]
 async fn get_admin_community_risk_signals_requires_db() {
+    let _env = admin_rbac_default_env();
     let admin = user_with_role("admin");
     let resp = get_admin_community_risk_signals(
         State(build_state(vec![admin.clone()])),
@@ -4313,6 +4355,7 @@ async fn get_admin_community_risk_signals_requires_db() {
 
 #[tokio::test]
 async fn get_admin_community_policy_change_logs_requires_db() {
+    let _env = admin_rbac_default_env();
     let admin = user_with_role("admin");
     let resp = get_admin_community_policy_change_logs(
         State(build_state(vec![admin.clone()])),
@@ -4347,6 +4390,7 @@ async fn admin_community_policy_change_logs_invalid_actor_id_returns_400_without
 
 #[tokio::test]
 async fn patch_admin_community_abuse_policy_requires_super_admin() {
+    let _env = admin_rbac_default_env();
     let admin = user_with_role("admin");
     let resp = patch_admin_community_abuse_policy(
         State(build_state(vec![admin.clone()])),
@@ -4363,6 +4407,7 @@ async fn patch_admin_community_abuse_policy_requires_super_admin() {
 
 #[tokio::test]
 async fn patch_admin_community_abuse_policy_empty_patch_bad_request() {
+    let _env = admin_rbac_default_env();
     let sa = user_with_role("super_admin");
     let resp = patch_admin_community_abuse_policy(
         State(build_state(vec![sa.clone()])),
@@ -4376,6 +4421,7 @@ async fn patch_admin_community_abuse_policy_empty_patch_bad_request() {
 
 #[tokio::test]
 async fn patch_admin_community_abuse_policy_requires_db() {
+    let _env = admin_rbac_default_env();
     let sa = user_with_role("super_admin");
     let resp = patch_admin_community_abuse_policy(
         State(build_state(vec![sa.clone()])),

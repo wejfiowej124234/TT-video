@@ -269,7 +269,36 @@ pub fn users_role_to_console_role_70(users_role: &str) -> &'static str {
     }
 }
 
+#[cfg(test)]
+std::thread_local! {
+    static TEST_CONSOLE_ROLE_OVERRIDE: std::cell::RefCell<Option<String>> =
+        const { std::cell::RefCell::new(None) };
+}
+
+#[cfg(test)]
+pub fn test_console_role_override_snapshot() -> Option<String> {
+    TEST_CONSOLE_ROLE_OVERRIDE.with(|c| c.borrow().clone())
+}
+
+#[cfg(test)]
+pub fn set_test_console_role_override(role: Option<&str>) {
+    TEST_CONSOLE_ROLE_OVERRIDE.with(|c| {
+        *c.borrow_mut() = role
+            .map(|r| r.trim().to_string())
+            .filter(|s| !s.is_empty() && is_valid_console_role_70(s));
+    });
+}
+
+#[cfg(test)]
+pub fn restore_test_console_role_override(previous: Option<String>) {
+    TEST_CONSOLE_ROLE_OVERRIDE.with(|c| *c.borrow_mut() = previous);
+}
+
 pub fn console_role_70_override_from_env() -> Option<String> {
+    #[cfg(test)]
+    if let Some(v) = test_console_role_override_snapshot() {
+        return Some(v);
+    }
     std::env::var("TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE")
         .ok()
         .map(|s| s.trim().to_string())
