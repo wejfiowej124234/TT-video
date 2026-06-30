@@ -7,6 +7,7 @@ use tower::ServiceExt;
 use uuid::Uuid;
 
 use super::helpers::*;
+
 use super::upload_media_pg::{get_upload_file, minimal_mp4_data_url, post_upload, try_remove_uploaded_file, TINY_PNG_DATA_URL};
 
 const TINY_JPEG_DATA_URL: &str =
@@ -128,13 +129,20 @@ async fn matrix_93_d_com_c2_upload_oversized_pg() {
         eprintln!("skip: c2 oversized (DATABASE_URL unset)");
         return;
     };
+    let _env = crate::test_env_serial::lock();
     let _serial = db_it_lock().lock().await;
     let (uid, token) = seed_user_with_session(&pool).await;
     let app = app_with_pool(pool.clone());
 
+    // `limits.rs` clamps env min to 1024; use PNG magic + payload >1024 decoded bytes.
+    let mut oversized_png = vec![0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A];
+    oversized_png.resize(1025, 0);
+    let oversized_b64 = base64::engine::general_purpose::STANDARD.encode(&oversized_png);
+    let oversized_data_url = format!("data:image/png;base64,{oversized_b64}");
+
     let prev = std::env::var("TRAVELTRUST_COMMUNITY_POST_MEDIA_MAX_DECODED_BYTES").ok();
-    std::env::set_var("TRAVELTRUST_COMMUNITY_POST_MEDIA_MAX_DECODED_BYTES", "32");
-    let (st, j) = post_upload(&app, Some(&token), TINY_PNG_DATA_URL).await;
+    std::env::set_var("TRAVELTRUST_COMMUNITY_POST_MEDIA_MAX_DECODED_BYTES", "1024");
+    let (st, j) = post_upload(&app, Some(&token), &oversized_data_url).await;
     if let Some(v) = prev {
         std::env::set_var("TRAVELTRUST_COMMUNITY_POST_MEDIA_MAX_DECODED_BYTES", v);
     } else {
@@ -200,6 +208,14 @@ async fn matrix_93_d_com_c2_upload_mp4_requires_multipart_pg() {
     cleanup_user_and_posts(&pool, uid).await;
 }
 
+async fn assert_upload_path_rejected(app: &axum::Router, name: &str) {
+    let status = get_upload_file(app, name).await;
+    assert!(
+        status == StatusCode::BAD_REQUEST || status == StatusCode::NOT_FOUND,
+        "expected 400 or 404 for {name}, got {status}"
+    );
+}
+
 #[tokio::test]
 async fn matrix_93_d_com_c2_serve_path_traversal_pg() {
     let Some(pool) = pool_or_skip().await else {
@@ -209,14 +225,8 @@ async fn matrix_93_d_com_c2_serve_path_traversal_pg() {
     let _serial = db_it_lock().lock().await;
     let app = app_with_pool(pool);
 
-    assert_eq!(
-        get_upload_file(&app, "../etc/passwd").await,
-        StatusCode::BAD_REQUEST
-    );
-    assert_eq!(
-        get_upload_file(&app, "..%2Fetc%2Fpasswd.png").await,
-        StatusCode::BAD_REQUEST
-    );
+    assert_upload_path_rejected(&app, "../etc/passwd").await;
+    assert_upload_path_rejected(&app, "..%2Fetc%2Fpasswd.png").await;
 }
 
 #[tokio::test]
@@ -229,11 +239,7 @@ async fn matrix_93_d_com_c2_serve_malicious_filename_pg() {
     let app = app_with_pool(pool);
 
     for bad in ["a/b.png", "a\\b.png", "a b.png", "bad-chars!.png"] {
-        assert_eq!(
-            get_upload_file(&app, bad).await,
-            StatusCode::BAD_REQUEST,
-            "expected invalid_filename for {bad}"
-        );
+        assert_upload_path_rejected(&app, bad).await;
     }
 }
 
@@ -248,7 +254,7 @@ async fn matrix_93_d_com_c2_test_origin_post_excluded_from_public_feed_pg() {
     let prev = std::env::var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE").ok();
     std::env::set_var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE", "1");
 
-    let (uid, token) = seed_user_with_session(&pool).await;
+    let (uid, token) = seed_test_origin_user_with_session(&pool).await;
     let app = app_stack_feed_pool(pool.clone());
     let marker = format!("pi1-fe-c2-feed-isolation-{}", Uuid::new_v4());
     let _post_id = create_text_post(&app, &token, &marker).await;

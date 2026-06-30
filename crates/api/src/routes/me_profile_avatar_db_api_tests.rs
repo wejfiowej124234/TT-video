@@ -99,6 +99,9 @@ async fn cleanup_user_by_email(pool: &PgPool, email: &str) {
 
 #[tokio::test]
 async fn matrix_93_a_ava_001_f007_post_profile_avatar_local_persists_avatar_url_on_get_me_pg() {
+    let _env = crate::test_env_serial::lock();
+    let prev_local_avatar = std::env::var("TRAVELTRUST_ALLOW_LOCAL_PROFILE_AVATAR").ok();
+    std::env::set_var("TRAVELTRUST_ALLOW_LOCAL_PROFILE_AVATAR", "1");
     let Some(pool) = pool_or_skip().await else {
         eprintln!(
             "skip: matrix_93_a_ava_001_f007_post_profile_avatar_local_persists_avatar_url_on_get_me_pg (DATABASE_URL unset)"
@@ -201,12 +204,23 @@ async fn matrix_93_a_ava_001_f007_post_profile_avatar_local_persists_avatar_url_
     let _ = std::fs::remove_file(&path);
 
     cleanup_user_by_email(&pool, &email).await;
+    match prev_local_avatar {
+        Some(v) => std::env::set_var("TRAVELTRUST_ALLOW_LOCAL_PROFILE_AVATAR", v),
+        None => std::env::remove_var("TRAVELTRUST_ALLOW_LOCAL_PROFILE_AVATAR"),
+    }
 }
 
 /// **93 · A-AVA-001** → **§8.2 · F-007**：本机 **`POST …/profile-avatar`** → **`GET /me`**（**`router::app`**）。
 #[tokio::test]
 async fn matrix_93_a_ava_001b_f007_post_profile_avatar_local_persists_avatar_url_on_get_me_app_stack_ok_pg(
 ) {
+    let _env = crate::test_env_serial::lock();
+    let prev_local_avatar = std::env::var("TRAVELTRUST_ALLOW_LOCAL_PROFILE_AVATAR").ok();
+    std::env::set_var("TRAVELTRUST_ALLOW_LOCAL_PROFILE_AVATAR", "1");
+    let prev_api_rl = std::env::var("API_RATE_LIMIT_PER_MINUTE").ok();
+    std::env::set_var("API_RATE_LIMIT_PER_MINUTE", "0");
+    let prev_crit_rl = std::env::var("CRITICAL_WRITE_RATE_LIMIT_PER_MINUTE").ok();
+    std::env::set_var("CRITICAL_WRITE_RATE_LIMIT_PER_MINUTE", "0");
     let _lock = me_avatar_app_stack_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!(
@@ -310,4 +324,16 @@ async fn matrix_93_a_ava_001b_f007_post_profile_avatar_local_persists_avatar_url
     let _ = std::fs::remove_file(&path);
 
     cleanup_user_by_email(&pool, &email).await;
+    match prev_local_avatar {
+        Some(v) => std::env::set_var("TRAVELTRUST_ALLOW_LOCAL_PROFILE_AVATAR", v),
+        None => std::env::remove_var("TRAVELTRUST_ALLOW_LOCAL_PROFILE_AVATAR"),
+    }
+    match prev_api_rl {
+        Some(v) => std::env::set_var("API_RATE_LIMIT_PER_MINUTE", v),
+        None => std::env::remove_var("API_RATE_LIMIT_PER_MINUTE"),
+    }
+    match prev_crit_rl {
+        Some(v) => std::env::set_var("CRITICAL_WRITE_RATE_LIMIT_PER_MINUTE", v),
+        None => std::env::remove_var("CRITICAL_WRITE_RATE_LIMIT_PER_MINUTE"),
+    }
 }

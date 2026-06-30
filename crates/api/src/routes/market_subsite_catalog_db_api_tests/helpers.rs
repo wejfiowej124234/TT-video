@@ -46,6 +46,51 @@ impl Drop for RestoreP3ChainOff {
     }
 }
 
+struct RestoreEnvVar {
+    key: &'static str,
+    previous: Option<String>,
+}
+
+impl RestoreEnvVar {
+    fn set(key: &'static str, value: &str) -> Self {
+        let previous = std::env::var(key).ok();
+        std::env::set_var(key, value);
+        Self { key, previous }
+    }
+}
+
+impl Drop for RestoreEnvVar {
+    fn drop(&mut self) {
+        match &self.previous {
+            None => std::env::remove_var(self.key),
+            Some(v) => std::env::set_var(self.key, v),
+        }
+    }
+}
+
+/// Matrix IT：**`std::env` 串行** + 默认 **`P3_CHAIN_OFF=1`** + Admin direct + 关闭全局限流 + **PD-009 Admin 路由**（freeze 下不挂载 suspend HTTP）。
+pub(super) struct MktItEnvGuard {
+    _env: std::sync::MutexGuard<'static, ()>,
+    _p3: RestoreP3ChainOff,
+    _api_rl: RestoreEnvVar,
+    _crit_rl: RestoreEnvVar,
+    _admin_direct: RestoreEnvVar,
+    _complexity_freeze: RestoreEnvVar,
+}
+
+impl MktItEnvGuard {
+    pub(super) fn lock() -> Self {
+        Self {
+            _env: crate::test_env_serial::lock(),
+            _p3: RestoreP3ChainOff::set_chain_off(),
+            _api_rl: RestoreEnvVar::set("API_RATE_LIMIT_PER_MINUTE", "0"),
+            _crit_rl: RestoreEnvVar::set("CRITICAL_WRITE_RATE_LIMIT_PER_MINUTE", "0"),
+            _admin_direct: RestoreEnvVar::set("TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT", "1"),
+            _complexity_freeze: RestoreEnvVar::set("TRAVELTRUST_COMPLEXITY_CONVERGENCE_FREEZE", "0"),
+        }
+    }
+}
+
 pub(super) fn auth_bearer(token: &str) -> axum::http::HeaderValue {
     format!("Bearer {}", token).parse().expect("bearer header")
 }
@@ -172,11 +217,24 @@ pub(super) async fn app_stack_mkt_catalog_hydrated(pool: PgPool) -> Router {
 }
 
 /// [93 §2.1 · B-MKT-005] 种子：`users` + **`market_listings`**（**`variant=provider`**）；调用方负责 **`cleanup_listing_and_user`**。
+/// 默认 **`data_origin=production`**（**`P3_CHAIN_OFF=1`** 公众 catalog 可见）；测 **`test|demo` 过滤** 用 [`seed_b_mkt_005_test_origin_provider_listing`].
 pub(super) async fn seed_b_mkt_005_provider_listing(pool: &PgPool) -> (Uuid, Uuid) {
+    seed_b_mkt_005_provider_listing_with_origin(pool, "production").await
+}
+
+/// 公众 catalog 过滤 IT：**`data_origin=test`** 行（**`@example.com`** 邮箱 + 显式 test 列）。
+pub(super) async fn seed_b_mkt_005_test_origin_provider_listing(pool: &PgPool) -> (Uuid, Uuid) {
+    seed_b_mkt_005_provider_listing_with_origin(pool, "test").await
+}
+
+pub(super) async fn seed_b_mkt_005_provider_listing_with_origin(
+    pool: &PgPool,
+    data_origin: &str,
+) -> (Uuid, Uuid) {
     let owner_id = Uuid::new_v4();
     let listing_id = Uuid::new_v4();
     let now = Utc::now();
-    let email = format!("mkt-prov-{owner_id}@traveltrust.test");
+    let email = format!("mkt-prov-{owner_id}@example.com");
 
     cleanup_listing_and_user(pool, listing_id, owner_id).await;
 
@@ -190,7 +248,7 @@ pub(super) async fn seed_b_mkt_005_provider_listing(pool: &PgPool) -> (Uuid, Uui
         "kind": "merchant_showcase_studio_v1",
         "title": "b-mkt-005 catalog api it",
     });
-    insert_market_listing(pool, listing_id, "provider", owner_id, &payload, now, "test")
+    insert_market_listing(pool, listing_id, "provider", owner_id, &payload, now, data_origin)
         .await
         .expect("insert_market_listing");
 
@@ -443,10 +501,21 @@ pub(super) async fn run_b_mkt_005_provider_catalog_listing_flow(pool: &PgPool) -
 
 /// [93 §2.1 · B-MKT-006] 种子：**`variant=acquisition`**；调用方负责 **`cleanup_listing_and_user`**。
 pub(super) async fn seed_b_mkt_006_acquisition_listing(pool: &PgPool) -> (Uuid, Uuid) {
+    seed_b_mkt_006_acquisition_listing_with_origin(pool, "production").await
+}
+
+pub(super) async fn seed_b_mkt_006_test_origin_acquisition_listing(pool: &PgPool) -> (Uuid, Uuid) {
+    seed_b_mkt_006_acquisition_listing_with_origin(pool, "test").await
+}
+
+pub(super) async fn seed_b_mkt_006_acquisition_listing_with_origin(
+    pool: &PgPool,
+    data_origin: &str,
+) -> (Uuid, Uuid) {
     let owner_id = Uuid::new_v4();
     let listing_id = Uuid::new_v4();
     let now = Utc::now();
-    let email = format!("mkt-acq-{owner_id}@traveltrust.test");
+    let email = format!("mkt-acq-{owner_id}@example.com");
 
     cleanup_listing_and_user(pool, listing_id, owner_id).await;
 
@@ -460,7 +529,7 @@ pub(super) async fn seed_b_mkt_006_acquisition_listing(pool: &PgPool) -> (Uuid, 
         "kind": "acquisition_carry_studio_v1",
         "title": "b-mkt-006 catalog api it",
     });
-    insert_market_listing(pool, listing_id, "acquisition", owner_id, &payload, now, "test")
+    insert_market_listing(pool, listing_id, "acquisition", owner_id, &payload, now, data_origin)
         .await
         .expect("insert_market_listing");
 

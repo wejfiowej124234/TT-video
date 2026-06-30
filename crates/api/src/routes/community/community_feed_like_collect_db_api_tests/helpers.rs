@@ -97,11 +97,21 @@ pub(super) async fn cleanup_user_and_posts(pool: &PgPool, user_id: Uuid) {
         .await;
 }
 
+/// Default PG·IT user: **`@example.com`** so posts stay visible under **`P3_CHAIN_OFF=1`** public feed filter.
 pub(super) async fn seed_user_with_session(pool: &PgPool) -> (Uuid, String) {
+    seed_user_with_session_domain(pool, "example.com").await
+}
+
+/// Explicit **`@traveltrust.test`** seed for tests that assert **test-origin** catalog/feed isolation.
+pub(super) async fn seed_test_origin_user_with_session(pool: &PgPool) -> (Uuid, String) {
+    seed_user_with_session_domain(pool, "traveltrust.test").await
+}
+
+async fn seed_user_with_session_domain(pool: &PgPool, domain: &str) -> (Uuid, String) {
     let uid = Uuid::new_v4();
     let token = format!("tts_feed_like_collect_{}", Uuid::new_v4());
     let now = Utc::now();
-    let email = format!("feed-like-collect-{uid}@traveltrust.test");
+    let email = format!("feed-like-collect-{uid}@{domain}");
     insert_user(
         pool, uid, &email, None, "tourist", "none", None, None, None, now, now,
     )

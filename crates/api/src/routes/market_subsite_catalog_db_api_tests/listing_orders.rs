@@ -11,12 +11,13 @@ use crate::db::{insert_guide, insert_market_listing, insert_session, insert_user
 
 use super::helpers::{
     app_stack_mkt_catalog, auth_bearer, cleanup_listing_and_user, db_it_lock, pool_or_skip,
-    response_json,
+    response_json, MktItEnvGuard,
 };
 
 /// **`POST …/market/provider/listings/:id/orders`** 创建 **`Order`** 并返回 **`order.id`**。
 #[tokio::test]
 async fn matrix_94_provider_listing_post_order_app_stack_ok_pg() {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_94_provider_listing_post_order_app_stack_ok_pg (DATABASE_URL unset)");
@@ -28,8 +29,8 @@ async fn matrix_94_provider_listing_post_order_app_stack_ok_pg() {
     let guide_id = Uuid::new_v4();
     let now = Utc::now();
     let buyer_token = format!("tts_mkt_ord_{}", Uuid::new_v4());
-    let owner_email = format!("mkt-own-{owner_id}@traveltrust.test");
-    let buyer_email = format!("mkt-buy-{buyer_id}@traveltrust.test");
+    let owner_email = format!("mkt-own-{owner_id}@example.com");
+    let buyer_email = format!("mkt-buy-{buyer_id}@example.com");
 
     let _ = sqlx::query("DELETE FROM orders WHERE tourist_id = $1")
         .bind(buyer_id)
@@ -139,6 +140,7 @@ async fn matrix_94_provider_listing_post_order_app_stack_ok_pg() {
 /// **`POST …/market/acquisition/listings/:id/orders`** — 承运向导接单创 **`Order`**。
 #[tokio::test]
 async fn matrix_94_acquisition_listing_post_order_app_stack_ok_pg() {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!(
@@ -151,8 +153,8 @@ async fn matrix_94_acquisition_listing_post_order_app_stack_ok_pg() {
     let listing_id = Uuid::new_v4();
     let now = Utc::now();
     let carrier_token = format!("tts_mkt_acq_{}", Uuid::new_v4());
-    let owner_email = format!("mkt-acq-own-{owner_id}@traveltrust.test");
-    let carrier_email = format!("mkt-acq-car-{carrier_id}@traveltrust.test");
+    let owner_email = format!("mkt-acq-own-{owner_id}@example.com");
+    let carrier_email = format!("mkt-acq-car-{carrier_id}@example.com");
 
     let _ = sqlx::query("DELETE FROM orders WHERE tourist_id = $1")
         .bind(owner_id)

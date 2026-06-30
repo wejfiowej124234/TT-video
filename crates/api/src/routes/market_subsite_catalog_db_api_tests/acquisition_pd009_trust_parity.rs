@@ -26,8 +26,8 @@ async fn parity_for_users(pool: &sqlx::PgPool, user_ids: &[Uuid]) {
 /// 自包含：API 全链路后 **hydrate** → **PG == memory + listing_bonus**（owner + carrier）。
 #[tokio::test]
 async fn matrix_pd009_trust_pg_memory_parity_pg() {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
-    let _p3 = RestoreP3ChainOff::set_chain_off();
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_pd009_trust_pg_memory_parity_pg (DATABASE_URL unset)");
         return;
@@ -37,8 +37,8 @@ async fn matrix_pd009_trust_pg_memory_parity_pg() {
     let now = Utc::now();
     let owner_token = format!("tts_pd009_par_own_{}", Uuid::new_v4());
     let carrier_token = format!("tts_pd009_par_car_{}", Uuid::new_v4());
-    let owner_email = format!("pd009-par-own-{owner_id}@traveltrust.test");
-    let carrier_email = format!("pd009-par-car-{carrier_id}@traveltrust.test");
+    let owner_email = format!("pd009-par-own-{owner_id}@example.com");
+    let carrier_email = format!("pd009-par-car-{carrier_id}@example.com");
 
     for uid in [owner_id, carrier_id] {
         let _ = sqlx::query("DELETE FROM reviews WHERE order_id IN (SELECT id FROM orders WHERE tourist_id = $1 OR guide_id IN (SELECT id FROM guides WHERE user_id = $1))")
@@ -232,6 +232,7 @@ async fn matrix_pd009_trust_pg_memory_parity_pg() {
 /// **`smoke-acquisition-pd009-local.sh`** 收尾：读 env **`SMOKE_ACQUISITION_TRUST_PARITY_USER_IDS`**（逗号分隔 UUID）。
 #[tokio::test]
 async fn matrix_pd009_trust_pg_memory_parity_from_env_smoke() {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_pd009_trust_pg_memory_parity_from_env_smoke (DATABASE_URL unset)");

@@ -244,6 +244,60 @@ pub(super) async fn create_post(
         }))
         .into_response();
     }
+    let commerce_showcase_kind = j
+        .get("commerce_showcase_kind")
+        .and_then(|v| v.as_str())
+        .map(str::trim)
+        .filter(|s| !s.is_empty());
+    let commerce_listing_id = j
+        .get("commerce_market_listing_id")
+        .and_then(|v| v.as_str())
+        .and_then(|s| Uuid::parse_str(s.trim()).ok());
+    if commerce_showcase_kind.is_some() || commerce_listing_id.is_some() {
+        let Some(kind) = commerce_showcase_kind else {
+            return Json(json!({
+                "status": "error",
+                "error": "commerce_showcase_kind_required",
+                "message": "commerce_showcase_kind_required",
+            }))
+            .into_response();
+        };
+        let Some(listing_id) = commerce_listing_id else {
+            return Json(json!({
+                "status": "error",
+                "error": "commerce_market_listing_id_required",
+                "message": "commerce_market_listing_id_required",
+            }))
+            .into_response();
+        };
+        if !db::commerce_showcase_kind_valid(kind) {
+            return Json(json!({
+                "status": "error",
+                "error": "invalid_commerce_showcase_kind",
+                "message": "invalid_commerce_showcase_kind",
+            }))
+            .into_response();
+        }
+        match db::user_owns_published_market_listing(pool, uid, listing_id).await {
+            Ok(true) => {}
+            Ok(false) => {
+                return Json(json!({
+                    "status": "error",
+                    "error": "commerce_listing_not_owned_or_unpublished",
+                    "message": "commerce_listing_not_owned_or_unpublished",
+                }))
+                .into_response();
+            }
+            Err(_) => {
+                return Json(json!({
+                    "status": "error",
+                    "error": "create_post_failed",
+                    "message": "create_post_failed",
+                }))
+                .into_response();
+            }
+        }
+    }
     match db::insert_post(
         pool,
         uid,
@@ -255,12 +309,21 @@ pub(super) async fn create_post(
         cover_url.as_deref(),
         primary_media_asset_id,
         data_origin,
+        commerce_showcase_kind,
+        commerce_listing_id,
     )
     .await
     {
         Ok(id) => {
             db::observe_first_post(pool, uid, id).await;
-            Json(json!({ "status": "ok", "id": id.to_string() })).into_response()
+            let mut body = json!({ "status": "ok", "id": id.to_string() });
+            if let Some(kind) = commerce_showcase_kind {
+                body["commerce_showcase_kind"] = json!(kind);
+            }
+            if let Some(lid) = commerce_listing_id {
+                body["commerce_market_listing_id"] = json!(lid.to_string());
+            }
+            Json(body).into_response()
         }
         Err(_) => Json(json!({"status": "error", "error": "create_post_failed", "message": "create_post_failed"})).into_response(),
     }
@@ -602,6 +665,21 @@ pub(super) async fn get_post_detail(
                     }
                 }
             }
+            if let Ok(map) = db::commerce_fields_for_post_ids(pool, &[p.id]).await {
+                if let Some((kind, lid)) = map.get(&p.id) {
+                    if let Some(m) = post_json.as_object_mut() {
+                        if let Some(k) = kind {
+                            m.insert("commerce_showcase_kind".to_string(), json!(k));
+                        }
+                        if let Some(l) = lid {
+                            m.insert(
+                                "commerce_market_listing_id".to_string(),
+                                json!(l.to_string()),
+                            );
+                        }
+                    }
+                }
+            }
             Json(json!({ "status": "ok", "post": post_json })).into_response()
         }
         Ok(None) => Json(json!({"status": "ok", "post": null})).into_response(),
@@ -838,6 +916,7 @@ pub(super) async fn delete_like(
 pub(super) struct CommentsQuery {
     /// `chronological`（默认）| `latest` | `hot`（31 §2.2）
     sort: Option<String>,
+    cursor: Option<String>,
 }
 
 // GET/POST /api/v1/community/posts/:id/comments
@@ -847,6 +926,20 @@ pub(super) async fn get_comments(
     State(state): State<ApiMetaState>,
     headers: HeaderMap,
 ) -> impl IntoResponse {
+    let cursor_raw = q
+        .cursor
+        .as_deref()
+        .map(str::trim)
+        .filter(|s| !s.is_empty());
+    let sort_norm = normalize_comment_sort(q.sort.as_deref());
+    if cursor_raw.is_some() && sort_norm != "chronological" {
+        return Json(json!({
+            "status": "error",
+            "error": "comments_cursor_requires_chronological_sort",
+            "message": "comments_cursor_requires_chronological_sort",
+        }))
+        .into_response();
+    }
     let pool = state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref());
     if let Some(pool) = pool {
         if let Ok(post_id) = Uuid::parse_str(&id) {

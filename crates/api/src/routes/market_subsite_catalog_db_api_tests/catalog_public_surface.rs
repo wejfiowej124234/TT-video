@@ -15,7 +15,7 @@ fn restore_public_catalog_env(prev: Option<String>) {
 /// 企业级数据分离：**`TRAVELTRUST_PUBLIC_CATALOG_SURFACE=1`** 时公众 **`GET …/provider/listings`** 不含 **`data_origin=test|demo`** 行。
 #[tokio::test]
 async fn public_catalog_surface_hides_test_and_demo_provider_listings() {
-    let _env = crate::test_env_serial::lock();
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!(
@@ -26,7 +26,7 @@ async fn public_catalog_surface_hides_test_and_demo_provider_listings() {
     let prev = std::env::var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE").ok();
     std::env::set_var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE", "1");
 
-    let (test_listing_id, test_owner_id) = seed_b_mkt_005_provider_listing(&pool).await;
+    let (test_listing_id, test_owner_id) = seed_b_mkt_005_test_origin_provider_listing(&pool).await;
     let (prod_listing_id, prod_owner_id) = seed_production_provider_listing(&pool).await;
     let router = app_stack_mkt_catalog(pool.clone());
 
@@ -90,7 +90,7 @@ async fn public_catalog_surface_hides_test_and_demo_provider_listings() {
 /// 过滤关闭时（**`=0`**）烟测 listing 仍对 **`GET …/listings`** 可见（Admin/IT 直查）。
 #[tokio::test]
 async fn public_catalog_surface_off_includes_test_provider_listings() {
-    let _env = crate::test_env_serial::lock();
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!(
@@ -101,7 +101,7 @@ async fn public_catalog_surface_off_includes_test_provider_listings() {
     let prev = std::env::var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE").ok();
     std::env::set_var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE", "0");
 
-    let (listing_id, owner_id) = seed_b_mkt_005_provider_listing(&pool).await;
+    let (listing_id, owner_id) = seed_b_mkt_005_test_origin_provider_listing(&pool).await;
     let router = app_stack_mkt_catalog(pool.clone());
     assert_b_mkt_005_provider_catalog_listings(router, listing_id).await;
 
@@ -112,7 +112,7 @@ async fn public_catalog_surface_off_includes_test_provider_listings() {
 /// **`GET /api/v1/discover/orders`** 在公众过滤开启时隐藏 **`data_origin=test`** 草稿。
 #[tokio::test]
 async fn public_catalog_surface_hides_test_discover_draft_orders() {
-    let _env = crate::test_env_serial::lock();
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!(
@@ -166,7 +166,7 @@ async fn public_catalog_surface_hides_test_discover_draft_orders() {
 /// **`GET /api/v1/guides?city=`** 在公众过滤开启时隐藏 **`data_origin=test`** 向导。
 #[tokio::test]
 async fn public_catalog_surface_hides_test_guides() {
-    let _env = crate::test_env_serial::lock();
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: public_catalog_surface_hides_test_guides (DATABASE_URL unset)");
@@ -217,7 +217,7 @@ async fn public_catalog_surface_hides_test_guides() {
 /// **`GET /api/v1/internal/public-catalog-surface/stats`** 返回 **`data_origin`** 分桶。
 #[tokio::test]
 async fn public_catalog_surface_stats_returns_data_origin_counts() {
-    let _env = crate::test_env_serial::lock();
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!(
@@ -228,7 +228,7 @@ async fn public_catalog_surface_stats_returns_data_origin_counts() {
     let prev = std::env::var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE").ok();
     std::env::set_var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE", "1");
 
-    let (listing_id, owner_id) = seed_b_mkt_005_provider_listing(&pool).await;
+    let (listing_id, owner_id) = seed_b_mkt_005_test_origin_provider_listing(&pool).await;
     let router = app_stack_mkt_catalog(pool.clone());
 
     let res = router

@@ -349,6 +349,18 @@ fn p51b_mock_get_logs_country_ledger(
     json!([])
 }
 
+/// Mock **`eth_getBlockByNumber`** for **`advance_indexer_scan_watermark`** / reorg checks.
+fn b116_mock_eth_get_block_by_number(id: Value) -> Value {
+    json!({
+        "jsonrpc": "2.0",
+        "id": id,
+        "result": {
+            "hash": "0xdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "number": "0x1"
+        }
+    })
+}
+
 async fn b116_write_rpc_ok(socket: &mut tokio::net::TcpStream, body: &Value) {
     let s = body.to_string();
     let resp = format!(
@@ -468,6 +480,7 @@ async fn indexer_tick_persists_fee_router_and_region_vault_events_when_db_config
                 let id = v.get("id").cloned().unwrap_or(json!(1));
                 let resp = match method {
                     "eth_blockNumber" => json!({"jsonrpc":"2.0","id":id,"result":"0x1e"}),
+                    "eth_getBlockByNumber" => b116_mock_eth_get_block_by_number(id),
                     "eth_getLogs" => {
                         let p0 = v
                             .get("params")
@@ -755,6 +768,7 @@ async fn indexer_tick_persists_region_share_snapshot_line_when_db_configured() {
                 let id = v.get("id").cloned().unwrap_or(json!(1));
                 let resp = match method {
                     "eth_blockNumber" => json!({"jsonrpc":"2.0","id":id,"result":"0x1e"}),
+                    "eth_getBlockByNumber" => b116_mock_eth_get_block_by_number(id),
                     "eth_getLogs" => {
                         let p0 = v
                             .get("params")
@@ -839,7 +853,7 @@ async fn indexer_tick_persists_region_share_snapshot_line_when_db_configured() {
         config: ChainOffConfig::default(),
         db_pool: Some(pool.clone()),
     });
-    state2.indexer_state_path = idx_path_str;
+    state2.indexer_state_path = idx_path_str.clone();
     state2.chain_config = Some(chain::ChainConfig {
         rpc_url: format!("http://127.0.0.1:{port}"),
         chain_id: CHAIN as u64,
@@ -862,6 +876,12 @@ async fn indexer_tick_persists_region_share_snapshot_line_when_db_configured() {
         executor_retry_count: 3,
     });
     state2.finality_n = 12;
+    let runtime_path_str = format!("{}.runtime", idx_path_str);
+    let runtime_path = std::path::Path::new(&runtime_path_str);
+    state2.indexer_state = Some(chain::indexer::mount_runtime_indexer_state(
+        runtime_path,
+        CHAIN as u64,
+    ));
     let resp2 = indexer_tick(State(state2)).await.into_response();
     assert_eq!(resp2.status(), StatusCode::OK, "second indexer_tick should succeed");
     let body2 = resp2.into_body().collect().await.unwrap().to_bytes();
@@ -977,6 +997,7 @@ async fn indexer_tick_persists_country_ledger_credited_when_db_configured() {
                 let id = v.get("id").cloned().unwrap_or(json!(1));
                 let resp = match method {
                     "eth_blockNumber" => json!({"jsonrpc":"2.0","id":id,"result":"0x1e"}),
+                    "eth_getBlockByNumber" => b116_mock_eth_get_block_by_number(id),
                     "eth_getLogs" => {
                         let p0 = v
                             .get("params")

@@ -74,6 +74,8 @@ async fn seed_production_post(pool: &sqlx::PgPool, author_id: Uuid, body: &str) 
         None,
         None,
         "production",
+        None,
+        None,
     )
     .await
     .expect("insert production post")
@@ -148,6 +150,7 @@ async fn admin_content_remove(
                 .uri(format!("/api/v1/admin/community/moderation/{report_id}"))
                 .header(header::AUTHORIZATION, auth_bearer(admin_token))
                 .header(header::CONTENT_TYPE, "application/json")
+                .header("Idempotency-Key", format!("c3-content-remove-{report_id}"))
                 .body(Body::from(body.to_string()))
                 .unwrap(),
         )

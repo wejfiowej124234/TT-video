@@ -12,6 +12,7 @@ use tower::ServiceExt;
 /// **93 · B-MKT-007** → **§8.2 · F-021**：**`router::app`** **`POST /api/v1/market/provider/listings`**（**Bearer**）→**`GET …/market/provider/listings`** 含新 **`listing_id`**。
 #[tokio::test]
 async fn matrix_93_b_mkt_007_f021_post_provider_listing_then_get_catalog_app_stack_ok_pg() {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!(
@@ -22,7 +23,7 @@ async fn matrix_93_b_mkt_007_f021_post_provider_listing_then_get_catalog_app_sta
     let owner_id = Uuid::new_v4();
     let now = Utc::now();
     let token = format!("tts_mkt_pub_{}", Uuid::new_v4());
-    let email = format!("mkt-pub-prov-{owner_id}@traveltrust.test");
+    let email = format!("mkt-pub-prov-{owner_id}@example.com");
 
     let _ = sqlx::query("DELETE FROM sessions WHERE user_id = $1")
         .bind(owner_id)
@@ -76,6 +77,7 @@ async fn matrix_93_b_mkt_007_f021_post_provider_listing_then_get_catalog_app_sta
 /// **96-18 强闸**：无 **`onboarding_entitlements`** **`paid`** **`provider`** 时 **`POST …/market/provider/listings`** → **400** **`onboarding_entitlement_required`**。
 #[tokio::test]
 async fn matrix_93_b_mkt_007e_f021_post_provider_listing_without_onboarding_entitlement_400() {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!(
@@ -86,7 +88,7 @@ async fn matrix_93_b_mkt_007e_f021_post_provider_listing_without_onboarding_enti
     let owner_id = Uuid::new_v4();
     let now = Utc::now();
     let token = format!("tts_mkt_pub_gate_{}", Uuid::new_v4());
-    let email = format!("mkt-pub-gate-{owner_id}@traveltrust.test");
+    let email = format!("mkt-pub-gate-{owner_id}@example.com");
 
     let _ = sqlx::query("DELETE FROM sessions WHERE user_id = $1")
         .bind(owner_id)
@@ -141,6 +143,7 @@ async fn matrix_93_b_mkt_007e_f021_post_provider_listing_without_onboarding_enti
 #[tokio::test]
 async fn matrix_93_b_mkt_007c_f021_post_provider_listing_then_get_detail_payload_title_app_stack_ok_pg(
 ) {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!(
@@ -151,7 +154,7 @@ async fn matrix_93_b_mkt_007c_f021_post_provider_listing_then_get_detail_payload
     let owner_id = Uuid::new_v4();
     let now = Utc::now();
     let token = format!("tts_mkt_pubc_{}", Uuid::new_v4());
-    let email = format!("mkt-pubc-prov-{owner_id}@traveltrust.test");
+    let email = format!("mkt-pubc-prov-{owner_id}@example.com");
     let title = "matrix_93_b_mkt_007c provider publish detail title";
 
     let _ = sqlx::query("DELETE FROM sessions WHERE user_id = $1")

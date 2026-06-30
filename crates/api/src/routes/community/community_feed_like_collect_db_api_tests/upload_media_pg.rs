@@ -41,12 +41,16 @@ pub(super) async fn post_upload(
 }
 
 pub(super) async fn get_upload_file(app: &axum::Router, name: &str) -> StatusCode {
+    let uri = match format!("/api/v1/uploads/community-posts/{name}").parse::<axum::http::Uri>() {
+        Ok(u) => u,
+        Err(_) => return StatusCode::BAD_REQUEST,
+    };
     let res = app
         .clone()
         .oneshot(
             Request::builder()
                 .method(Method::GET)
-                .uri(format!("/api/v1/uploads/community-posts/{name}"))
+                .uri(uri)
                 .body(Body::empty())
                 .unwrap(),
         )

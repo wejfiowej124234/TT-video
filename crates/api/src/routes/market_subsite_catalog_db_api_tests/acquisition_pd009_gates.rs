@@ -14,6 +14,7 @@ use super::helpers::*;
 /// Admin **`PATCH …/acquisition-publish-suspend`** → 发布 **403** **`acquisition_publish_suspended`**。
 #[tokio::test]
 async fn matrix_pd009_admin_suspend_blocks_acquisition_publish_pg() {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_pd009_admin_suspend_blocks_acquisition_publish_pg (DATABASE_URL unset)");
@@ -24,8 +25,8 @@ async fn matrix_pd009_admin_suspend_blocks_acquisition_publish_pg() {
     let now = Utc::now();
     let admin_token = format!("tts_pd009_adm_{}", Uuid::new_v4());
     let owner_token = format!("tts_pd009_own_{}", Uuid::new_v4());
-    let admin_email = format!("pd009-adm-{admin_id}@traveltrust.test");
-    let owner_email = format!("pd009-own-{owner_id}@traveltrust.test");
+    let admin_email = format!("pd009-adm-{admin_id}@example.com");
+    let owner_email = format!("pd009-own-{owner_id}@example.com");
     let suspend_until = (Utc::now() + Duration::hours(24)).to_rfc3339();
 
     let _ = sqlx::query("DELETE FROM sessions WHERE user_id = $1")
@@ -87,6 +88,16 @@ async fn matrix_pd009_admin_suspend_blocks_acquisition_publish_pg() {
         .await
         .expect("insert owner session");
     seed_acquisition_market_publish_prereqs(&pool, owner_id).await;
+
+    let owner_row: Option<Uuid> = sqlx::query_scalar("SELECT id FROM users WHERE id = $1")
+        .bind(owner_id)
+        .fetch_optional(&pool)
+        .await
+        .expect("owner pg probe");
+    assert!(
+        owner_row.is_some(),
+        "owner must exist in PG before admin suspend IT (suite isolation / dirty PG)"
+    );
 
     let router = app_stack_mkt_catalog_hydrated(pool.clone()).await;
 
@@ -253,6 +264,7 @@ async fn matrix_pd009_admin_suspend_blocks_acquisition_publish_pg() {
 /// **`bountyMaxUsdc` ≥ 1000** 接单须 **`acquisition_fulfillment_bond`**。
 #[tokio::test]
 async fn matrix_pd009_fulfillment_bond_required_for_high_bounty_order_pg() {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!(
@@ -265,8 +277,8 @@ async fn matrix_pd009_fulfillment_bond_required_for_high_bounty_order_pg() {
     let listing_id = Uuid::new_v4();
     let now = Utc::now();
     let carrier_token = format!("tts_pd009_car_{}", Uuid::new_v4());
-    let owner_email = format!("pd009-own2-{owner_id}@traveltrust.test");
-    let carrier_email = format!("pd009-car2-{carrier_id}@traveltrust.test");
+    let owner_email = format!("pd009-own2-{owner_id}@example.com");
+    let carrier_email = format!("pd009-car2-{carrier_id}@example.com");
 
     let _ = sqlx::query("DELETE FROM orders WHERE tourist_id = $1")
         .bind(owner_id)

@@ -76,7 +76,7 @@ pub async fn fetch_review_by_order_and_reviewer(
             DateTime<Utc>,
         ),
     >(
-        "SELECT id, order_id, reviewer_id, reviewee_id, score, weight, comment, created_at \
+        "SELECT id, order_id, reviewer_id, reviewee_id, score, weight::float8, comment, created_at \
          FROM reviews WHERE order_id = $1 AND reviewer_id = $2 LIMIT 1",
     )
     .bind(order_id)
@@ -102,7 +102,7 @@ pub async fn fetch_review_by_order_and_reviewer(
 /// 加载所有评价（启动 hydrate）
 pub async fn list_reviews(pool: &PgPool) -> Result<Vec<DbReviewRow>, sqlx::Error> {
     let rows = sqlx::query_as::<_, (Uuid, Uuid, Uuid, Uuid, i16, f64, Option<String>, DateTime<Utc>)>(
-        "SELECT id, order_id, reviewer_id, reviewee_id, score, weight, comment, created_at FROM reviews",
+        "SELECT id, order_id, reviewer_id, reviewee_id, score, weight::float8, comment, created_at FROM reviews",
     )
     .fetch_all(pool)
     .await?;
@@ -144,7 +144,7 @@ pub async fn fetch_review_by_id(
             Option<Uuid>,
         ),
     >(
-        "SELECT r.id, r.order_id, r.reviewer_id, r.reviewee_id, r.score, r.weight, r.comment, r.created_at, \
+        "SELECT r.id, r.order_id, r.reviewer_id, r.reviewee_id, r.score, r.weight::float8, r.comment, r.created_at, \
          o.tourist_id AS order_tourist_id \
          FROM reviews r LEFT JOIN orders o ON o.id = r.order_id WHERE r.id = $1 LIMIT 1",
     )
@@ -188,7 +188,7 @@ pub async fn list_reviews_admin(
     max_score: Option<i16>,
 ) -> Result<Vec<DbReviewAdminRow>, sqlx::Error> {
     let mut qb = QueryBuilder::new(
-        "SELECT r.id, r.order_id, r.reviewer_id, r.reviewee_id, r.score, r.weight, r.comment, r.created_at, \
+        "SELECT r.id, r.order_id, r.reviewer_id, r.reviewee_id, r.score, r.weight::float8, r.comment, r.created_at, \
          o.tourist_id AS order_tourist_id FROM reviews r LEFT JOIN orders o ON o.id = r.order_id WHERE 1=1",
     );
     if let Some(mn) = min_score {

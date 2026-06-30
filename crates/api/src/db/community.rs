@@ -67,10 +67,15 @@ pub async fn insert_post(
     cover_url: Option<&str>,
     primary_media_asset_id: Option<Uuid>,
     data_origin: &str,
+    commerce_showcase_kind: Option<&str>,
+    commerce_market_listing_id: Option<Uuid>,
 ) -> Result<Uuid, sqlx::Error> {
     let row = sqlx::query_scalar::<_, Uuid>(
-        r#"INSERT INTO community_posts (user_id, body, post_type, destination, tags, media_urls, cover_url, primary_media_asset_id, data_origin)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id"#,
+        r#"INSERT INTO community_posts (
+               user_id, body, post_type, destination, tags, media_urls, cover_url,
+               primary_media_asset_id, data_origin, commerce_showcase_kind, commerce_market_listing_id
+           )
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id"#,
     )
     .bind(user_id)
     .bind(body)
@@ -81,9 +86,53 @@ pub async fn insert_post(
     .bind(cover_url)
     .bind(primary_media_asset_id)
     .bind(data_origin)
+    .bind(commerce_showcase_kind)
+    .bind(commerce_market_listing_id)
     .fetch_one(pool)
     .await?;
     Ok(row)
+}
+
+/// `commerce_showcase_kind` 合法枚举（与 migration CHECK 同源）。
+pub fn commerce_showcase_kind_valid(kind: &str) -> bool {
+    matches!(
+        kind,
+        "itinerary_led" | "lodging_led" | "acquisition_led" | "general_led"
+    )
+}
+
+pub async fn user_owns_published_market_listing(
+    pool: &PgPool,
+    user_id: Uuid,
+    listing_id: Uuid,
+) -> Result<bool, sqlx::Error> {
+    sqlx::query_scalar(
+        "SELECT EXISTS(
+            SELECT 1 FROM market_listings
+            WHERE id = $1 AND owner_user_id = $2 AND status = 'published'
+        )",
+    )
+    .bind(listing_id)
+    .bind(user_id)
+    .fetch_one(pool)
+    .await
+}
+
+pub async fn commerce_fields_for_post_ids(
+    pool: &PgPool,
+    ids: &[Uuid],
+) -> Result<std::collections::HashMap<Uuid, (Option<String>, Option<Uuid>)>, sqlx::Error> {
+    use std::collections::HashMap;
+    if ids.is_empty() {
+        return Ok(HashMap::new());
+    }
+    let rows: Vec<(Uuid, Option<String>, Option<Uuid>)> = sqlx::query_as(
+        "SELECT id, commerce_showcase_kind, commerce_market_listing_id FROM community_posts WHERE id = ANY($1)",
+    )
+    .bind(ids)
+    .fetch_all(pool)
+    .await?;
+    Ok(rows.into_iter().map(|r| (r.0, (r.1, r.2))).collect())
 }
 
 pub async fn get_post_by_id(pool: &PgPool, post_id: Uuid) -> Result<Option<PostRow>, sqlx::Error> {

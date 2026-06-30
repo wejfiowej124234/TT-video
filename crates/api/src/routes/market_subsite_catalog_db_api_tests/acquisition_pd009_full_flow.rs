@@ -14,8 +14,8 @@ use super::helpers::*;
 /// 旅行者发布收购 listing → 承运方接单 → 向导 **accept** → 委托方 **mock-pay** → **`escrowed`**。
 #[tokio::test]
 async fn matrix_pd009_full_flow_publish_order_accept_mock_pay_pg() {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
-    let _p3 = RestoreP3ChainOff::set_chain_off();
     let Some(pool) = pool_or_skip().await else {
         eprintln!(
             "skip: matrix_pd009_full_flow_publish_order_accept_mock_pay_pg (DATABASE_URL unset)"
@@ -27,8 +27,8 @@ async fn matrix_pd009_full_flow_publish_order_accept_mock_pay_pg() {
     let now = Utc::now();
     let owner_token = format!("tts_pd009_full_own_{}", Uuid::new_v4());
     let carrier_token = format!("tts_pd009_full_car_{}", Uuid::new_v4());
-    let owner_email = format!("pd009-full-own-{owner_id}@traveltrust.test");
-    let carrier_email = format!("pd009-full-car-{carrier_id}@traveltrust.test");
+    let owner_email = format!("pd009-full-own-{owner_id}@example.com");
+    let carrier_email = format!("pd009-full-car-{carrier_id}@example.com");
 
     let _ = sqlx::query("DELETE FROM orders WHERE tourist_id = $1")
         .bind(owner_id)

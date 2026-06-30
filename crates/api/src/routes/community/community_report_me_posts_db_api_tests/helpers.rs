@@ -121,8 +121,8 @@ pub(super) async fn run_d_com_010_report_flow(
     let author_id = Uuid::new_v4();
     let now = Utc::now();
     let token = format!("tts_report_{}", Uuid::new_v4());
-    let email_r = format!("report-r-{reporter_id}@traveltrust.test");
-    let email_a = format!("report-a-{author_id}@traveltrust.test");
+    let email_r = format!("report-r-{reporter_id}@example.com");
+    let email_a = format!("report-a-{author_id}@example.com");
 
     cleanup_users_posts_and_reports(pool, &[reporter_id, author_id], &[]).await;
 
@@ -162,6 +162,8 @@ pub(super) async fn run_d_com_010_report_flow(
         None,
         None,
         "production",
+        None,
+        None,
     )
     .await
     .expect("insert_post");
@@ -207,7 +209,7 @@ pub(super) async fn run_d_com_009_me_posts_flow(pool: &PgPool, app: Router) -> (
     let uid = Uuid::new_v4();
     let token = format!("tts_me_posts_{}", Uuid::new_v4());
     let now = Utc::now();
-    let email = format!("me-posts-{uid}@traveltrust.test");
+    let email = format!("me-posts-{uid}@example.com");
 
     cleanup_users_posts_and_reports(pool, &[uid], &[]).await;
 
@@ -231,6 +233,8 @@ pub(super) async fn run_d_com_009_me_posts_flow(pool: &PgPool, app: Router) -> (
         None,
         None,
         "production",
+        None,
+        None,
     )
     .await
     .expect("insert_post");

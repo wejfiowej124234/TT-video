@@ -16,8 +16,8 @@ const REVIEW_PAYLOAD: &str = r#"{"score":5,"comment":"pd009-l5-closure"}"#;
 /// **L5 · L4 闭环**：escrowed → **confirm-completion** → 双向 **reviews** → **`acquisition_trust_score`** 上升 + **`orders.order_kind`** 落库。
 #[tokio::test]
 async fn matrix_pd009_l5_full_closure_reviews_trust_pg() {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
-    let _p3 = RestoreP3ChainOff::set_chain_off();
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_pd009_l5_full_closure_reviews_trust_pg (DATABASE_URL unset)");
         return;
@@ -27,8 +27,8 @@ async fn matrix_pd009_l5_full_closure_reviews_trust_pg() {
     let now = Utc::now();
     let owner_token = format!("tts_pd009_l5_own_{}", Uuid::new_v4());
     let carrier_token = format!("tts_pd009_l5_car_{}", Uuid::new_v4());
-    let owner_email = format!("pd009-l5-own-{owner_id}@traveltrust.test");
-    let carrier_email = format!("pd009-l5-car-{carrier_id}@traveltrust.test");
+    let owner_email = format!("pd009-l5-own-{owner_id}@example.com");
+    let carrier_email = format!("pd009-l5-car-{carrier_id}@example.com");
 
     for uid in [owner_id, carrier_id] {
         let _ = sqlx::query("DELETE FROM reviews WHERE order_id IN (SELECT id FROM orders WHERE tourist_id = $1 OR guide_id IN (SELECT id FROM guides WHERE user_id = $1))")
@@ -284,6 +284,7 @@ async fn matrix_pd009_l5_full_closure_reviews_trust_pg() {
 /// **L5 · AQ-002**：缺 **`agree_escrow_copy`** → **400** **`acquisition_escrow_ack_required`**。
 #[tokio::test]
 async fn matrix_pd009_l5_escrow_ack_required_pg() {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_pd009_l5_escrow_ack_required_pg (DATABASE_URL unset)");
@@ -292,7 +293,7 @@ async fn matrix_pd009_l5_escrow_ack_required_pg() {
     let owner_id = Uuid::new_v4();
     let now = Utc::now();
     let owner_token = format!("tts_pd009_l5_ack_{}", Uuid::new_v4());
-    let owner_email = format!("pd009-l5-ack-{owner_id}@traveltrust.test");
+    let owner_email = format!("pd009-l5-ack-{owner_id}@example.com");
 
     insert_user(
         &pool, owner_id, &owner_email, None, "tourist", "none", None, None, None, now, now,
@@ -344,6 +345,7 @@ async fn matrix_pd009_l5_escrow_ack_required_pg() {
 /// **L5 · AQ-004**：超 **`acquisition_publish_daily_max`** → **429** **`acquisition_publish_rate_limited`**。
 #[tokio::test]
 async fn matrix_pd009_l5_publish_rate_limited_pg() {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_pd009_l5_publish_rate_limited_pg (DATABASE_URL unset)");
@@ -352,7 +354,7 @@ async fn matrix_pd009_l5_publish_rate_limited_pg() {
     let owner_id = Uuid::new_v4();
     let now = Utc::now();
     let owner_token = format!("tts_pd009_l5_rl_{}", Uuid::new_v4());
-    let owner_email = format!("pd009-l5-rl-{owner_id}@traveltrust.test");
+    let owner_email = format!("pd009-l5-rl-{owner_id}@example.com");
 
     insert_user(
         &pool, owner_id, &owner_email, None, "tourist", "none", None, None, None, now, now,
@@ -429,6 +431,7 @@ async fn matrix_pd009_l5_publish_rate_limited_pg() {
 /// **L5 · AQ-005**：信用 ≥ 免押阈 → 无发布保证金仍可 **`POST …/listings`**。
 #[tokio::test]
 async fn matrix_pd009_l5_trust_waive_publish_without_bond_pg() {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_pd009_l5_trust_waive_publish_without_bond_pg (DATABASE_URL unset)");
@@ -437,7 +440,7 @@ async fn matrix_pd009_l5_trust_waive_publish_without_bond_pg() {
     let owner_id = Uuid::new_v4();
     let now = Utc::now();
     let owner_token = format!("tts_pd009_l5_wv_{}", Uuid::new_v4());
-    let owner_email = format!("pd009-l5-wv-{owner_id}@traveltrust.test");
+    let owner_email = format!("pd009-l5-wv-{owner_id}@example.com");
     let wallet = "0xacquisitionpd009waiveaaaaaaaaaaaaaaaaaaaa";
 
     insert_user(
@@ -456,7 +459,7 @@ async fn matrix_pd009_l5_trust_waive_publish_without_bond_pg() {
         .expect("wallet");
 
     let reviewer_id = Uuid::new_v4();
-    let reviewer_email = format!("pd009-l5-rev-{reviewer_id}@traveltrust.test");
+    let reviewer_email = format!("pd009-l5-rev-{reviewer_id}@example.com");
     insert_user(
         &pool,
         reviewer_id,
@@ -607,8 +610,8 @@ async fn matrix_pd009_l5_trust_waive_publish_without_bond_pg() {
 /// **L5 · AQ-008**：收购池争议 **`refund_ratio ≥ 0.75`** → 发布方 **`acquisition_publish_bond`** **slashed**（PG）。
 #[tokio::test]
 async fn matrix_pd009_l5_dispute_resolve_slashes_publish_bond_pg() {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
-    let _p3 = RestoreP3ChainOff::set_chain_off();
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_pd009_l5_dispute_resolve_slashes_publish_bond_pg (DATABASE_URL unset)");
         return;
@@ -618,9 +621,9 @@ async fn matrix_pd009_l5_dispute_resolve_slashes_publish_bond_pg() {
     let now = Utc::now();
     let owner_token = format!("tts_pd009_l5_dsp_own_{}", Uuid::new_v4());
     let carrier_token = format!("tts_pd009_l5_dsp_car_{}", Uuid::new_v4());
-    let owner_email = format!("pd009-l5-dsp-own-{owner_id}@traveltrust.test");
-    let carrier_email = format!("pd009-l5-dsp-car-{carrier_id}@traveltrust.test");
-    let arb_email = format!("pd009-l5-dsp-arb-{owner_id}@traveltrust.test");
+    let owner_email = format!("pd009-l5-dsp-own-{owner_id}@example.com");
+    let carrier_email = format!("pd009-l5-dsp-car-{carrier_id}@example.com");
+    let arb_email = format!("pd009-l5-dsp-arb-{owner_id}@example.com");
 
     for uid in [owner_id, carrier_id] {
         let _ = sqlx::query("DELETE FROM disputes WHERE order_id IN (SELECT id FROM orders WHERE tourist_id = $1)")

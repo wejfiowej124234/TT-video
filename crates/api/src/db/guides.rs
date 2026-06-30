@@ -85,7 +85,7 @@ pub async fn insert_guide_with_data_origin(
         serde_json::to_value(&languages_norm).unwrap_or_else(|_| JsonValue::Array(vec![]));
     let svc_json =
         serde_json::to_value(&service_types_norm).unwrap_or_else(|_| JsonValue::Array(vec![]));
-    sqlx::query(
+    let r = sqlx::query(
         r#"
         INSERT INTO guides (id, user_id, city, country_code, languages, service_types, bio, wallet_address, real_name, passport_number_hash, id_photo_url, language_cert_url, guide_license_url, stake_amount, hourly_rate, avatar_url, status, created_at, updated_at, data_origin)
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)
@@ -114,6 +114,22 @@ pub async fn insert_guide_with_data_origin(
     .bind(data_origin)
     .execute(pool)
     .await?;
+    if r.rows_affected() > 0 {
+        super::role_identity::dual_write_after_guide_insert(
+            pool,
+            id,
+            user_id,
+            id_photo_url,
+            language_cert_url,
+            guide_license_url,
+            passport_number_hash,
+            status,
+            stake_amount,
+            created_at,
+            updated_at,
+        )
+        .await;
+    }
     Ok(())
 }
 
@@ -165,10 +181,28 @@ pub async fn update_guide_registration_review(
     .bind(id)
     .execute(pool)
     .await?;
+    if r.rows_affected() > 0 {
+        if let Ok(Some(user_id)) = sqlx::query_scalar::<_, Uuid>(
+            "SELECT user_id FROM guides WHERE id = $1",
+        )
+        .bind(id)
+        .fetch_optional(pool)
+        .await
+        {
+            super::role_identity::dual_write_after_guide_review_update(
+                pool,
+                id,
+                user_id,
+                status,
+                rejection_codes,
+                rejection_message,
+                updated_at,
+            )
+            .await;
+        }
+    }
     Ok(r.rows_affected())
 }
-
-/// 向导公开展示字段（`PATCH /api/v1/me/guide-profile`；有 DB 时双写）
 pub async fn update_guide_public_profile(
     pool: &PgPool,
     id: Uuid,

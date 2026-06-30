@@ -85,7 +85,7 @@ async fn post_community_create_post_binds_owned_published_listing() {
     let listing_id = Uuid::new_v4();
     let token = format!("tts_commerce_ok_{}", Uuid::new_v4());
     let now = Utc::now();
-    let email = format!("commerce-ok-{uid}@traveltrust.test");
+    let email = format!("commerce-ok-{uid}@example.com");
 
     cleanup_all(&pool, &[uid], &[listing_id]).await;
 
@@ -158,8 +158,8 @@ async fn post_community_create_post_rejects_other_users_published_listing() {
     let listing_b = Uuid::new_v4();
     let token_a = format!("tts_commerce_denied_{}", Uuid::new_v4());
     let now = Utc::now();
-    let email_a = format!("commerce-a-{uid_a}@traveltrust.test");
-    let email_b = format!("commerce-b-{uid_b}@traveltrust.test");
+    let email_a = format!("commerce-a-{uid_a}@example.com");
+    let email_b = format!("commerce-b-{uid_b}@example.com");
 
     cleanup_all(&pool, &[uid_a, uid_b], &[listing_b]).await;
 
@@ -236,7 +236,7 @@ async fn post_community_create_post_rejects_owned_non_published_listing() {
     let listing_id = Uuid::new_v4();
     let token = format!("tts_commerce_arch_{}", Uuid::new_v4());
     let now = Utc::now();
-    let email = format!("commerce-arch-{uid}@traveltrust.test");
+    let email = format!("commerce-arch-{uid}@example.com");
 
     cleanup_all(&pool, &[uid], &[listing_id]).await;
 

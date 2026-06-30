@@ -128,9 +128,18 @@ pub async fn get_governance_fee_routes(
                         })
                     })
                     .collect();
-                let next_cursor = rows
-                    .last()
-                    .map(|r| db::encode_fee_routes_cursor(r.block_number, r.log_index));
+                let next_cursor: serde_json::Value = if has_more {
+                    rows.last()
+                        .map(|r| {
+                            json!(db::encode_fee_routes_cursor(
+                                r.block_number,
+                                r.log_index
+                            ))
+                        })
+                        .unwrap_or(serde_json::Value::Null)
+                } else {
+                    serde_json::Value::Null
+                };
                 return Json(json!({
                     "status": "ok",
                     "items": items,
@@ -226,9 +235,18 @@ pub async fn get_governance_vault_forwards(
                         })
                     })
                     .collect();
-                let next_cursor = rows
-                    .last()
-                    .map(|r| db::encode_fee_routes_cursor(r.block_number, r.log_index));
+                let next_cursor: serde_json::Value = if has_more {
+                    rows.last()
+                        .map(|r| {
+                            json!(db::encode_fee_routes_cursor(
+                                r.block_number,
+                                r.log_index
+                            ))
+                        })
+                        .unwrap_or(serde_json::Value::Null)
+                } else {
+                    serde_json::Value::Null
+                };
                 return Json(json!({
                     "status": "ok",
                     "items": items,

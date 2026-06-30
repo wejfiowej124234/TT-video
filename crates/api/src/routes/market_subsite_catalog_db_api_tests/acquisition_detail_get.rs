@@ -12,6 +12,7 @@ use tower::ServiceExt;
 /// **93 · B-MKT-008** → **§8.2 · F-022**：**`router::app`** **`POST /api/v1/market/acquisition/listings`**（**Bearer**）→**`GET …/market/acquisition/listings`** 含新 **`listing_id`**。
 #[tokio::test]
 async fn matrix_93_b_mkt_008_f022_post_acquisition_listing_then_get_catalog_app_stack_ok_pg() {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!(
@@ -22,7 +23,7 @@ async fn matrix_93_b_mkt_008_f022_post_acquisition_listing_then_get_catalog_app_
     let owner_id = Uuid::new_v4();
     let now = Utc::now();
     let token = format!("tts_mkt_acq_{}", Uuid::new_v4());
-    let email = format!("mkt-pub-acq-{owner_id}@traveltrust.test");
+    let email = format!("mkt-pub-acq-{owner_id}@example.com");
 
     let _ = sqlx::query("DELETE FROM sessions WHERE user_id = $1")
         .bind(owner_id)
@@ -75,6 +76,7 @@ async fn matrix_93_b_mkt_008_f022_post_acquisition_listing_then_get_catalog_app_
 #[tokio::test]
 async fn matrix_93_b_mkt_008c_f022_post_acquisition_listing_then_get_detail_payload_title_app_stack_ok_pg(
 ) {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!(
@@ -85,7 +87,7 @@ async fn matrix_93_b_mkt_008c_f022_post_acquisition_listing_then_get_detail_payl
     let owner_id = Uuid::new_v4();
     let now = Utc::now();
     let token = format!("tts_mkt_acqc_{}", Uuid::new_v4());
-    let email = format!("mkt-pubc-acq-{owner_id}@traveltrust.test");
+    let email = format!("mkt-pubc-acq-{owner_id}@example.com");
     let title = "matrix_93_b_mkt_008c acquisition publish detail title";
 
     let _ = sqlx::query("DELETE FROM sessions WHERE user_id = $1")
@@ -154,6 +156,7 @@ async fn matrix_93_b_mkt_008c_f022_post_acquisition_listing_then_get_detail_payl
 /// **93 · B-MKT-009** → **§8.2 · F-021**：**`router::app`** **`GET /api/v1/market/provider/listings/:id`** **`listing`** **JSON**（**`postgres_catalog`**）。
 #[tokio::test]
 async fn matrix_93_b_mkt_009_f021_get_provider_listing_detail_app_stack_ok_pg() {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!(
@@ -170,6 +173,7 @@ async fn matrix_93_b_mkt_009_f021_get_provider_listing_detail_app_stack_ok_pg() 
 /// **93 · B-MKT-010** → **§8.2 · F-022**：**`router::app`** **`GET /api/v1/market/acquisition/listings/:id`** **`listing`** **JSON**（**`postgres_catalog`**）。
 #[tokio::test]
 async fn matrix_93_b_mkt_010_f022_get_acquisition_listing_detail_app_stack_ok_pg() {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!(

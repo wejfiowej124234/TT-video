@@ -433,6 +433,10 @@ pub(super) async fn posts_json_with_engagement_counts(
         _ => HashSet::new(),
     };
 
+    let commerce_by_id = db::commerce_fields_for_post_ids(pool, &ids)
+        .await
+        .unwrap_or_default();
+
     Ok(posts
         .into_iter()
         .map(|p| {
@@ -497,6 +501,14 @@ pub(super) async fn posts_json_with_engagement_counts(
                         "author_followed_by_me".to_string(),
                         json!(followed_authors.contains(&p.user_id)),
                     );
+                }
+            }
+            if let Some((kind, lid)) = commerce_by_id.get(&p.id) {
+                if let Some(k) = kind {
+                    row["commerce_showcase_kind"] = json!(k);
+                }
+                if let Some(l) = lid {
+                    row["commerce_market_listing_id"] = json!(l.to_string());
                 }
             }
             row

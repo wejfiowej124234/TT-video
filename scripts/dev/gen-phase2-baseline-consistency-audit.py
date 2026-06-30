@@ -108,6 +108,64 @@ def http_json(url: str, timeout: int = 45) -> tuple[int, Any]:
     return 0, {"error": str(last_err) if last_err else "http_json failed"}
 
 
+def http_get_json(
+    url: str,
+    headers: dict[str, str] | None = None,
+    timeout: int = 45,
+) -> tuple[int, Any]:
+    """GET with retry + curl fallback (Windows fly.dev SSL flakes)."""
+    import time
+
+    hdrs = {"Accept": "application/json", "User-Agent": "tt-baseline-audit/1"}
+    if headers:
+        hdrs.update(headers)
+    last_err: Exception | None = None
+    for attempt in range(4):
+        req = urllib.request.Request(url, headers=hdrs)
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                raw = resp.read().decode("utf-8", errors="replace")
+                return resp.getcode(), json.loads(raw) if raw else {}
+        except urllib.error.HTTPError as e:
+            raw = e.read().decode("utf-8", errors="replace")
+            try:
+                return e.code, json.loads(raw) if raw else {"http_error": e.code}
+            except json.JSONDecodeError:
+                return e.code, {"http_error": e.code, "raw": raw[:200]}
+        except Exception as e:
+            last_err = e
+            if attempt < 3:
+                time.sleep(1.5 * (attempt + 1))
+                continue
+            break
+    curl_args = ["curl", "-sS", "--max-time", str(timeout), "-w", "\n__HTTP_CODE__:%{http_code}", url]
+    for k, v in hdrs.items():
+        curl_args.extend(["-H", f"{k}: {v}"])
+    try:
+        proc = subprocess.run(
+            curl_args,
+            capture_output=True,
+            text=True,
+            timeout=timeout + 15,
+            check=False,
+        )
+        out = proc.stdout or ""
+        marker = "\n__HTTP_CODE__:"
+        if marker in out:
+            raw, _, code_tail = out.rpartition(marker)
+            status = int(code_tail.strip() or "0")
+        else:
+            raw, status = out, 200 if proc.returncode == 0 else 0
+        if status and raw.strip():
+            try:
+                return status, json.loads(raw)
+            except json.JSONDecodeError:
+                return status, raw
+    except Exception:
+        pass
+    return 0, {"fetch_error": str(last_err) if last_err else "http_get_json failed"}
+
+
 def probe_api_git_sha(api: str) -> tuple[str, str, dict[str, Any]]:
     """meta → meta/build fallback (same as p2fc-staging-probe-lib)."""
     api = api.rstrip("/")
@@ -452,15 +510,10 @@ def main() -> None:
     login = probe_login(api, "tourist@test.com")
     admin_mig: Any = None
     if login.get("token"):
-        req = urllib.request.Request(
+        _code, admin_mig = http_get_json(
             f"{api}/api/v1/admin/schema/migrations",
-            headers={"Authorization": f"Bearer {login['token']}", "Accept": "application/json"},
+            headers={"Authorization": f"Bearer {login['token']}"},
         )
-        try:
-            with urllib.request.urlopen(req, timeout=45) as resp:
-                admin_mig = json.loads(resp.read().decode())
-        except urllib.error.HTTPError as e:
-            admin_mig = {"http_error": e.code}
     if isinstance(admin_mig, dict) and admin_mig.get("http_error") == 403:
         add_finding(
             diffs,
@@ -471,6 +524,17 @@ def main() -> None:
             staging="403 non-admin token",
             severity="RISK",
             note="须 admin token 或 STAGING_DATABASE_URL sqlx migrate info 对拍",
+        )
+    elif isinstance(admin_mig, dict) and admin_mig.get("fetch_error"):
+        add_finding(
+            diffs,
+            risks,
+            domain="数据库迁移",
+            item="GET /admin/schema/migrations",
+            local=f"repo latest={local_mig}",
+            staging=str(admin_mig.get("fetch_error"))[:120],
+            severity="RISK",
+            note="staging HTTPS flake — 重跑或 curl fallback",
         )
     elif isinstance(admin_mig, dict) and "migrations" in admin_mig:
         applied = admin_mig.get("migrations") or []
@@ -510,31 +574,28 @@ def main() -> None:
 
     # governance proposals list
     if login.get("token"):
-        req = urllib.request.Request(
+        _code, gov = http_get_json(
             f"{api}/api/v1/governance/proposals",
-            headers={"Authorization": f"Bearer {login['token']}", "Accept": "application/json"},
+            headers={"Authorization": f"Bearer {login['token']}"},
         )
-        try:
-            with urllib.request.urlopen(req, timeout=45) as resp:
-                gov = json.loads(resp.read().decode())
-            if not isinstance(gov, (dict, list)):
-                add_finding(
-                    diffs,
-                    risks,
-                    domain="治理",
-                    item="GET /governance/proposals",
-                    local="JSON list/object",
-                    staging=type(gov).__name__,
-                    severity="WARN",
-                )
-        except Exception as e:
+        if not isinstance(gov, (dict, list)):
+            add_finding(
+                diffs,
+                risks,
+                domain="治理",
+                item="GET /governance/proposals",
+                local="JSON list/object",
+                staging=type(gov).__name__,
+                severity="WARN",
+            )
+        elif isinstance(gov, dict) and gov.get("fetch_error"):
             add_finding(
                 diffs,
                 risks,
                 domain="治理",
                 item="GET /governance/proposals",
                 local="200",
-                staging=str(e)[:120],
+                staging=str(gov.get("fetch_error"))[:120],
                 severity="DIFF",
             )
 

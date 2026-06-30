@@ -743,11 +743,12 @@ pub fn router() -> Router<ApiMetaState> {
         // ADM-U01 / Phase② post-soak：freeze 下仍须挂载只读 onboarding + trust-growth 探针路由
         .merge(admin_provider_application_http::router())
         .merge(admin_onboarding::router())
-        .merge(trust_growth_obs::router());
+        .merge(trust_growth_obs::router())
+        // PD-009 Phase①：收购发布 suspend 属 Booking Core · freeze 下仍挂载（与 ADM-U01 同源）
+        .merge(admin_acquisition_suspend_http::router());
 
     if !crate::complexity_convergence::freeze_active() {
         r = r
-            .merge(admin_acquisition_suspend_http::router())
             .merge(admin_steward_application_http::router())
             .merge(admin_growth_referral_http::router())
             .merge(admin_growth_ledger_http::router())

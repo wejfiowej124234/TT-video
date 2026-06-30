@@ -12,6 +12,7 @@ use tower::ServiceExt;
 /// **93 · B-MKT-011** → **§8.2 · F-021**：**`router::app`** **`POST …/market/provider/listings/drafts`**（**Bearer**）→**`GET …/drafts/:draft_id`** **`payload`** **PG 读回**。
 #[tokio::test]
 async fn matrix_93_b_mkt_007b_f021_post_provider_draft_then_get_app_stack_ok_pg() {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!(
@@ -22,7 +23,7 @@ async fn matrix_93_b_mkt_007b_f021_post_provider_draft_then_get_app_stack_ok_pg(
     let owner_id = Uuid::new_v4();
     let now = Utc::now();
     let token = format!("tts_mkt_draft_prov_{}", Uuid::new_v4());
-    let email = format!("mkt-draft-prov-{owner_id}@traveltrust.test");
+    let email = format!("mkt-draft-prov-{owner_id}@example.com");
 
     cleanup_drafts_sessions_user(&pool, owner_id).await;
 
@@ -87,6 +88,7 @@ async fn matrix_93_b_mkt_007b_f021_post_provider_draft_then_get_app_stack_ok_pg(
 /// **93 · B-MKT-012** → **§8.2 · F-022**：**`router::app`** **`POST …/market/acquisition/listings/drafts`**（**Bearer**）→**`GET …/drafts/:draft_id`** **`payload`** **PG 读回**。
 #[tokio::test]
 async fn matrix_93_b_mkt_008b_f022_post_acquisition_draft_then_get_app_stack_ok_pg() {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!(
@@ -97,7 +99,7 @@ async fn matrix_93_b_mkt_008b_f022_post_acquisition_draft_then_get_app_stack_ok_
     let owner_id = Uuid::new_v4();
     let now = Utc::now();
     let token = format!("tts_mkt_draft_acq_{}", Uuid::new_v4());
-    let email = format!("mkt-draft-acq-{owner_id}@traveltrust.test");
+    let email = format!("mkt-draft-acq-{owner_id}@example.com");
 
     cleanup_drafts_sessions_user(&pool, owner_id).await;
 
@@ -163,6 +165,7 @@ async fn matrix_93_b_mkt_008b_f022_post_acquisition_draft_then_get_app_stack_ok_
 #[tokio::test]
 async fn matrix_93_b_mkt_007d_f021_post_provider_draft_empty_body_then_get_payload_empty_object_pg()
 {
+    let _mkt = MktItEnvGuard::lock();
     let _guard = db_it_lock().lock().await;
     let Some(pool) = pool_or_skip().await else {
         eprintln!(
@@ -173,7 +176,7 @@ async fn matrix_93_b_mkt_007d_f021_post_provider_draft_empty_body_then_get_paylo
     let owner_id = Uuid::new_v4();
     let now = Utc::now();
     let token = format!("tts_mkt_draft_prov_empty_{}", Uuid::new_v4());
-    let email = format!("mkt-draft-prov-empty-{owner_id}@traveltrust.test");
+    let email = format!("mkt-draft-prov-empty-{owner_id}@example.com");
 
     cleanup_drafts_sessions_user(&pool, owner_id).await;
 
