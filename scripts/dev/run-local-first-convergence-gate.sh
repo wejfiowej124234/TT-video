@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# Local First · ① 本地收敛闸（推 staging 前 · 不 deploy）
+# L3 · Local First Convergence Gate（① 本地 · 含 L1–L4）
 #
-#   bash scripts/dev/run-local-first-convergence-gate.sh
+# 唯一发布主链 SSOT: docs/runbook/TT-LOCAL-FIRST-CONVERGENCE.md
+# 本脚本 = L3（可选 L1/L2/L4/baseline）；不含 L6/S5/S6/H1
 #   bash scripts/dev/run-local-first-convergence-gate.sh --with-baseline-audit
 #   bash scripts/dev/run-local-first-convergence-gate.sh --with-local-smoke
 #   bash scripts/dev/run-local-first-convergence-gate.sh --with-complexity

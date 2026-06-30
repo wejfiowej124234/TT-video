@@ -2,7 +2,7 @@
 
 **Stamp:** `20260630T075325Z`  
 **Git HEAD (pre-L5 commit):** `042b320c`  
-**Stage:** ① Local First · L0–L5 技术项完成 · **L6 Owner Sign-off 待签**
+**Stage:** ① Local First · L0–L5 技术项完成 · **L6 Technical Sign-off 待签**
 
 ## 末行机读
 
@@ -26,14 +26,14 @@
 | L3 | ✅ | `run.log` · `alignment-audit/` |
 | L4 | ✅ | `l4-local-smoke.log` · parity `20260630T075559Z` |
 | L5 | ✅ | 本 SUMMARY + runbook §1c + commit（同批） |
-| L6 | ⏳ | **Owner Sign-off 未签** — 不触发 S5 |
+| L6 | ⏳ | **Technical Sign-off 未签** — 不触发 S5（一致性在 S6 闭合） |
 
-## L6 Owner Sign-off（人工 · 未填）
+## L6 Technical Sign-off（人工 · 未填）
 
 | 字段 | 值 |
 |------|-----|
 | Signatory | _pending_ |
 | Date UTC | _pending_ |
-| Attestation | L0–L5 证据已阅 · 同意进入 S5 评审 |
+| Attestation | L0–L5 证据已阅 · 确认本地 L0–L5 已完成 · 批准进入 S5 Deploy |
 
 **诚实边界：** ① L3 PASS ≠ ② staging GO ≠ ③ Production GO · ISS-007 窄切片不得冒充全矩阵 GO。

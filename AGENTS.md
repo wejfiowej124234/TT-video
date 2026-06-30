@@ -12,6 +12,8 @@ Work is ordered in **three phases**. **Finish what the current phase means befor
 
 **Do not** present **① or ②** results as **③** unless the user explicitly asks to verify **③** in this session.
 
+**Release governance SSOT (single chain):** [docs/runbook/TT-LOCAL-FIRST-CONVERGENCE.md](docs/runbook/TT-LOCAL-FIRST-CONVERGENCE.md) — L0→L6→S5→S6→H1→Phase② CLOSED→③ Production Entry Review→Production GO. Runbooks, scripts, gates, and evidence dirs map to this chain only; no parallel release flows.
+
 ### Phase ② Sepolia governance broadcast (Agent proxy · test ETH only)
 
 When the **Owner explicitly authorizes** this session (**`TRAVELTRUST_PHASE2_SEPOLIA_BROADCAST_OK=1`**), the Agent **may** run:
@@ -51,6 +53,8 @@ If you are the **only** maintainer, treat **Owner** in checklists as **yourself*
 
 **旅行收购 PD-009（① · 2026-05-27 数据链已闭 · 非五主 · 非第五 `users.role`）**：**[`ME-IDENTITIES-UI-FREEZE.md`](frontend/evidence/GO_local_auth_l5/ME-IDENTITIES-UI-FREEZE.md)** · **[`app/market/acquisition/README.md`](frontend/app/market/acquisition/README.md)** · **[`app/me/identities/README.md`](frontend/app/me/identities/README.md)**（全链 **① 代码 SSOT**）；**`/me/identities`** 收购 **「进入子站」** → **`/market/acquisition`** → bond → listing（**`acquisition_publish_gate.rs`**；**非** **`region_steward`** / **96-18 准入费**）；**Hub UI 已锁** — **仅允许**数据链路 / trust / bond / listing 门闸 / Admin suspend；**禁止** Hub layout lock 回流；动 **`app/market/acquisition*`**、**`app/me/identities*`**、收购 **`GET /me.trust`** 字段或 **`acquisition_publish_gate`** 须 **`acquisitionL5` + `acquisitionL5FullScore` + `meTrust` + `meIdentitiesPage.contract`** **`exit 0`**；全链 API 烟测 **`bash scripts/dev/smoke-acquisition-pd009-local.sh`**（**①**；**非 ②③ GO**）。规则 **[acquisition-publish-trust-rules v1 §8.1](docs/spec/artifacts/acquisition-publish-trust-rules.v1.md#81-第一阶段--本地--closed2026-05-27)**。
 
+**Governance proposals L5（① · 非五主）**：**`/governance/proposals*`** · steward 发议题走廊；绿集 **`bash scripts/dev/smoke-governance-proposals-l5-local.sh`**（vitest · **①**；**非 ②③ GO** · **非** C1 已质押 UI 冒充链上 vote/claim GO）。
+
 **Phase ① Freeze + Phase ② Prepared/Not Started（2026-05-28 · ACTIVE · 阶段治理稳定态）**：① 封版**唯一剩余** `record-go-local-phase1-acceptance-log.sh`（G-0）· ② **严格 Not Started** — **任何** staging/Stripe/测试网/链上**实施或 GO 宣称须 G-1/G-2 清闸后**方合法 · [`PHASE2-REPOSITORY-STATUS`](docs/runbook/PHASE2-REPOSITORY-STATUS.md) · [`PHASE1-ENTERPRISE-CLOSURE-AUDIT`](docs/runbook/PHASE1-ENTERPRISE-CLOSURE-AUDIT.md) — **①** [`PHASE1-FREEZE-ONBOARDING-HUB`](frontend/evidence/GO_local_phase1/PHASE1-FREEZE-ONBOARDING-HUB.md) · [`GO_local_phase1`](frontend/evidence/GO_local_phase1/README.md)：**仅**维护型（bugfix · 证据 · 注释）；**禁止**新 onboarding/Hub/fee_schedule 功能直至 **G-1/G-2** 清零。**②** 证据/runbook/smoke/G 闸**已就绪**、**实施 NOT STARTED**（staging · Stripe 真 webhook · 测试网部署 · 链上 stake **OPEN**）；开工须 **[PHASE2-START-CHECKLIST · G-0～G-4](docs/runbook/PHASE2-START-CHECKLIST.md#0--总入口闸phase-②-任何工作流开工前)**；bugfix 仍须 **`run-go-local-phase1-acceptance.sh`** 或等价 **①** 绿集。
 
 **Cursor (always-on) rule:** [.cursor/rules/traveltrust-ai-collab.mdc](.cursor/rules/traveltrust-ai-collab.mdc).
@@ -80,5 +84,7 @@ If you are the **only** maintainer, treat **Owner** in checklists as **yourself*
 **`/` + `/market` 四页数据链（① · 与上段英文同源）**：**[`/` Web3旅行 + 三页市场`](frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** — **`localStorage`**（**非** sessionStorage）· **300ms debounce** · 收藏 **localStorage + F-020 best-effort**（**②** 跨设备 SLA）；绿集 **`run-web3-itinerary-l5-green.sh`** · **[dev-local-smoke §10](docs/dev-local-smoke-baseline.md)** · **[solo-dev-rhythm §6.5](docs/solo-dev-rhythm.md)**。
 
 **多重身份 · 旅行收购 PD-009（① · 与上段英文同源）**：**`/me/identities`** 收购 **「进入子站」** → **`/market/acquisition`**；门闸 **`acquisition_publish_gate.rs`**（**非** **`region_steward`** / **96-18 准入费**）；**Hub UI 已锁** — 仅数据链路；绿集 **`acquisitionL5` + `meTrust` + `meIdentitiesPage.contract`**；烟测 **`bash scripts/dev/smoke-acquisition-pd009-local.sh`**（**①**；**非 ②③ GO**）。SSOT **[market/acquisition README](frontend/app/market/acquisition/README.md)** · **[acquisition-publish-trust-rules §8.1](docs/spec/artifacts/acquisition-publish-trust-rules.v1.md#81-第一阶段--本地--closed2026-05-27)**。
+
+**治理提案 L5（① · 与上段英文同源）**：**`/governance/proposals*`**；绿集 **`bash scripts/dev/smoke-governance-proposals-l5-local.sh`**（**①**；**非 ②③ GO** · **非** C1 捷径冒充链上治理 GO）。
 
 **Phase ① Freeze + ② Prepared/Not Started（2026-05-28）**：**[PHASE2-REPOSITORY-STATUS](docs/runbook/PHASE2-REPOSITORY-STATUS.md)** — **仅**维护 onboarding/Hub/fee_schedule；**②** 实施须 **G-1/G-2** 后 **[PHASE2-START-CHECKLIST · G-0～G-4](docs/runbook/PHASE2-START-CHECKLIST.md#0--总入口闸phase-②-任何工作流开工前)**。

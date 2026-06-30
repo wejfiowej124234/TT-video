@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# Phase ② · 本地 ↔ staging 对齐闭环（S1–S6 编排 · 非毕业 SSOT）
+# S5/S6 编排实现（从属 SSOT · 非独立发布流程）
 #
-# 纪律：TESTNET_STAGING_FREEZE ACTIVE 时 --deploy 须 Owner TESTNET_FREEZE_OVERRIDE=1
-# TL#1 前默认 S1–S3（本地 smoke）；勿 --deploy
+# 唯一发布主链: docs/runbook/TT-LOCAL-FIRST-CONVERGENCE.md
+#   --local-test  → L4
+#   --deploy      → S5
+#   --staging-retest / --deep-release-gate → S6
+# TESTNET_STAGING_FREEZE ACTIVE 时 --deploy 须 TESTNET_FREEZE_OVERRIDE=1
 #
-#   bash scripts/dev/run-phase2-local-staging-parity-gate.sh              # S1+S2+S3（默认）
-#   bash scripts/dev/run-phase2-local-staging-parity-gate.sh --pull       # 仅 S1+S2
-#   bash scripts/dev/run-phase2-local-staging-parity-gate.sh --local-test # 仅 S3（须 API 已起）
-#   bash scripts/dev/run-phase2-local-staging-parity-gate.sh --deploy --staging-retest
-#   bash scripts/dev/run-phase2-local-staging-parity-gate.sh --deep-release-gate  # 仅多维 release gate
+#   bash scripts/dev/run-phase2-local-staging-parity-gate.sh --local-test   # L4
+#   bash scripts/dev/run-phase2-local-staging-parity-gate.sh --deploy --staging-retest  # S5+S6
 #
 # 末行机读：TT_PHASE2_LOCAL_STAGING_PARITY: PASS|FAIL
 set -euo pipefail

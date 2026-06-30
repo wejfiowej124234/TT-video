@@ -1,195 +1,214 @@
-# Local First · 本地真源收敛 SSOT
-
-**生效：** 2026-06-30  
-**阶段：** ① 本地（唯一开发真源）→ ② 测试网（验证已部署 qualified 基线）→ ③ 生产（另闸）
-
----
-
-## 0 · 一句话
-
-**本地仓库 = 唯一开发真源。** 先在本地收敛代码、部署配置、脚本与文档，再按 S5 标准流程推测试网；**禁止**用测试网 SHA 回退本地，**禁止**把工作区/证据 gap 误判为 staging runtime 漂移。
-
----
-
-## 1 · 真源分层
-
-| 层 | 含义 | 当前锚点（示例） |
-|----|------|------------------|
-| **本地 HEAD** | 开发 + 配置 SSOT | `14b894b6`（Local First L0–L5 技术收口 · L6 待签） |
-| **Staging runtime** | 已部署镜像 | `9979b35e`（Local First closure slice） |
-| **Graduation / Soak** | 历史冻结证据 | `fc9266ce`（**不覆写**） |
-| **Phase③ WIP** | stash / 未跟踪 | **隔离**，不混入 deploy |
-
-**本地领先未部署（LOCAL_AHEAD_UNDEPLOYED）** ≠ **runtime 漂移（DRIFT）**。
-
----
-
-## 1a · 最终固定流程（SSOT · 2026-06-30）
-
-**任何问题必须先判断属于哪一层，再动手。** 多维对拍（合约 / CORS / `/meta` / DB 等）是 **L0–L6 执行过程中的检查内容**，**不是**与 L 步平行的第二条主链。**阻断 S5 的唯一条件：L0–L6 全部完成 + L6 Owner 签字。**
-
-### ① Local First（唯一开发主链）
-
-```text
-L0  Root Cause Analysis
-        ↓
-L1  Complexity Convergence
-        ↓
-L2  Target Regression
-        ↓
-L3  Local First Convergence Gate
-        ↓
-L4  Local Smoke
-        ↓
-L5  Commit + SSOT + Runbook + Evidence
-        ↓
-L6  Owner Sign-off
-──────────────────────────────
-S5  Deploy（Owner 授权 · TESTNET_FREEZE_OVERRIDE=1）
-        ↓
-S6  Staging Validation
-```
-
-### ② Phase② Runtime Acceptance（S6 之后 · 测试网验收轨）
-
-Deep Gate · UAT · R-003 · FRCA · HAT · Graduation
-
-### ③ Production Readiness（另闸）
-
-PI3 · Go-Live · Production GO
-
-**持续维护（非 L 步替代）：** Runtime / 配置对拍、`emit-local-first-alignment-audit.mjs`、Runbook 互指 — 归入 **L3/L5** 或 **S5/S6** 执行时消费，不单开流程。
-
-**结构冻结（写死 · Local First + SSOT）：** **禁止**再新增与 L0–L6 / S5 / S6 / Phase② / Phase③ **平行的**流程、阶段名或独立门闸。新需求只能：(a) 归入既有 L/S/Phase 步的 **检查项**，或 (b) 扩展现有脚本在 **该步内** 被调用 — **不得**另起「D 轨 / X 闸 / 第 N 维审计线」。
-
----
-
-## 1d · 一致性检查项 D1–D12（各 L 步 **内部**清单 · 非独立流程）
-
-下列 **D** 项仅为 **归类与对拍清单**；执行时必须在 **§1a 主链** 某一步内完成，**不得**单独宣称「D 维审计 PASS = 可 Deploy」。
-
-| D | 检查项 | 归属步 | 典型命令 / 真源 |
-|---|--------|--------|-----------------|
-| D1 | Git / 制品 SHA · WT vs staging | **L5** commit 前 · **S5** 后验 | `git rev-parse` · staging `/meta.build.git_sha` |
-| D2 | Runtime 祖先 · DRIFT | **L3** | `emit-local-first-alignment-audit.mjs` |
-| D3 | `/meta` chain_id · 链模式 | **L4**（① 链下）· **S2/S5**（Sepolia 契约） | 本地 `P3_CHAIN_OFF=1` vs staging `11155111` |
-| D4 | 合约地址十键 | **L3** · **S5** | `check-staging-web-alignment.sh` · `build.env.local` |
-| D5 | 前端 `NEXT_PUBLIC_*` | **L3** · **S5** | `build.env.local` ↔ API `/meta` |
-| D6 | CORS / TLS / 站点可达 | **L3** · **S6** | `check-staging-web-alignment.sh` |
-| D7 | DB schema / migrations | **L2**（PG IT）· **S5/S6**（staging PG） | migrations · `ensure-api-db-migrations.sh` |
-| D8 | Stripe / PSP test vs live | **S6** · **Phase③** | secrets 人工 · alignment WARN |
-| D9 | 走廊行为 / smoke / UAT | **L4**（本地）· **S6**（staging） | `smoke-*-local.sh` · UAT 矩阵 |
-| D10 | 运维参数（限流 / indexer 窗） | **L2/L4** env · **S5** fly.toml | `API_RATE_LIMIT_*` · Fly `[env]` |
-| D11 | 构建可观测性 `git_sha` | **L5** · **S5** | `TRAVELTRUST_BUILD_GIT_SHA` / deploy arg |
-| D12 | Phase③ WIP 隔离 | **L3** · **L5** | alignment `GAP-PHASE3-WIP-ISOLATED` |
-
-**已有脚本映射（不增新闸）：** `emit-local-first-alignment-audit.mjs` → **L3**；`gen-phase2-baseline-consistency-audit.py` → **L3** 可选旁证；`check-staging-web-alignment.sh` → **L3** 只读 + **S5/S6**；`run-phase2-deep-release-gate.sh` → **S6 / Phase②**。
-
----
-
-## 1b · 跨层纪律（写死 · 防「到底该修哪里」）
-
-**必须先归类，再修复 / 验收 / 改文档。禁止跨层修复、跨层验收、跨层更新文档。**
-
-| 问题示例 | 唯一归属 | 禁止 |
-|----------|----------|------|
-| 本地 DB IT 失败 | **L2**（RCA 在 L0） | 去改 staging env / 在 staging 手修 |
-| 本地 smoke 失败 | **L4** | 用 ② `/meta` 绿冒充 ① 收口 |
-| alignment P0 / runtime DRIFT | **L0 + L3** | 未 L6 签字即 S5 |
-| Staging 验收失败 | **S6** | 回头改 Soak / Graduation @ `fc9266ce` 证据 |
-| Production 检查发现问题 | **Phase③** | 回头改 Phase② Graduation 或 ① 已冻结 UI |
-| WT / LOCAL_AHEAD 未部署 | **L5 + S5** | 为清 gap 而 deploy（无 L6） |
-
----
-
-## 1c · 当前位置（快照 · 2026-06-30）
-
-**① Local First 技术门闸（L0–L5）已 100% 完成**；**L6 Owner Sign-off 未签** · **S5/S6 未开始**。
-
-| 步 | 状态 |
-|----|------|
-| L0 | ✅ |
-| L1 | ✅ |
-| L2 | ✅ · 1197/0 |
-| L3 | ✅ · `TT_LOCAL_FIRST_CONVERGENCE_GATE: PASS` |
-| L4 | ✅ · `TT_PHASE2_LOCAL_STAGING_PARITY: PASS` |
-| L5 | ✅ · commit + runbook + evidence（同批） |
-| L6 | ⏳ Owner Sign-off |
-| S5 / S6 | 未开始 |
-
-证据目录：`evidence/GO_phase2_testnet_graduation/local-first-convergence-gate/20260630T075325Z/`
-
-**L3 关键 RCA（2026-06-30）：** `TRAVELTRUST_COMPLEXITY_CONVERGENCE_FREEZE=1` 曾误挂 PD-009 `acquisition-publish-suspend` → L2 IT 404 / L4 smoke 404；已移出 freeze 块（Booking Core 例外）。L2 前收敛闸 **停 :8080 API**；L4 前 **自动 sidecar 启 API**。
-
----
-
-## 2 · 本地开发流程（① · L0–L6 命令与通过标准）
-
-
-| 步 | 名称 | 命令 / 动作 | 通过标准 |
-|----|------|-------------|----------|
-| L0 | **RCA** | 对 FAIL 项写清根因（issue / 注释 / ADR 一句） | 可复述「为何改、为何不漂移」 |
-| L1 | **复杂度收敛** | `bash scripts/dev/validate-complexity-convergence-ledger-sync.sh` | `TT_COMPLEXITY_CONVERGENCE_SYNC: PASS` |
-| L2 | **Target Regression** | `cargo test -p traveltrust-api -- --test-threads=1`（须 `DATABASE_URL` + `P3_CHAIN_OFF=1` + `API_RATE_LIMIT_PER_MINUTE=0` + `CRITICAL_WRITE_RATE_LIMIT_PER_MINUTE=0` + `TRAVELTRUST_ALLOW_LOCAL_PROFILE_AVATAR=1` 等；见收敛闸脚本） | exit 0 · **1197 pass / 0 fail**（全量 PG IT） |
-| L3 | **Convergence Gate** | `bash scripts/dev/run-local-first-convergence-gate.sh --full-pre-deploy` | `TT_LOCAL_FIRST_CONVERGENCE_GATE: PASS` + `TT_LOCAL_FIRST_RUNTIME_DRIFT: NONE` · L2 前停 API · L4 前自动启 API |
-| L4 | **Local Smoke** | （含于 `--full-pre-deploy`）`run-phase2-local-staging-parity-gate.sh --local-test` | `TT_PHASE2_LOCAL_STAGING_PARITY: PASS` |
-| L5 | **Commit + SSOT + Runbook + Evidence** | 与 L0–L4 同批 commit；Runbook / 脚本头 / evidence pointer 与 HEAD 一致 | 与 commit 同批 · 无 deploy 路径长期 WT |
-| L6 | **Owner Sign-off** | 对照 L0–L5 证据目录签字 | `evidence/…/local-first-convergence-gate/` |
-| **S5** | **Deploy** | Owner 授权后 `run-phase2-local-staging-parity-gate.sh --deploy --staging-retest` | staging `/meta` = 新 HEAD |
-| **S6** | **Staging Validation** | Deep Gate · R-003 · ADM · UAT（**② 验收轨** · 非 ①） | ② 增量验证 PASS |
-
-**一键（L1–L4 · 本地 API 已起 · env 由收敛闸脚本注入）：**
-
-```bash
-bash scripts/dev/run-local-first-convergence-gate.sh --full-pre-deploy
-```
-
-**L2 注意：** 未设 `DATABASE_URL` 时 PG IT **skip**（约 1197 pass）≠ 全量 DB 回归。**全量 L2** 须干净 PG + 停 dev API，再跑 `cargo test`；与 dev API 共用脏库会导致误 FAIL。**未设 `API_RATE_LIMIT_PER_MINUTE=0`** 时 `app_stack` 类 IT 易在套件后半段 **429**（进程内限流桶累积）— 与 `start-api-for-playwright.sh` 同源。
-
-**L2 证据（2026-06-30 · gate `20260630T075325Z`）：** `cargo test -p traveltrust-api -- --test-threads=1` → **`1197 passed; 0 failed`**（`TRAVELTRUST_COMPLEXITY_CONVERGENCE_FREEZE=1` 全套件）。
-
-**L4 证据（2026-06-30 · gate `20260630T075325Z`）：** 收敛闸 L4 sidecar API + `run-phase2-local-staging-parity-gate.sh --local-test` → **`TT_PHASE2_LOCAL_STAGING_PARITY: PASS`**（含 PD-009 smoke · admin suspend）。
-
-**推荐顺序（① RCA · 2026-06-30）：** 干净 PG → **L2**（停 API）→ 再启 API @ HEAD → **L4**（烟测会写库；勿在 L4 后再跑全量 L2 而不重置）。
-
----
-
-## 2a · 漂移分类（机读 · 禁止误判）
-
-| 信号 | 含义 | 是否 deploy |
-|------|------|-------------|
-| `GAP-LOCAL-AHEAD-UNDEPLOYED` | 本地 HEAD 领先 staging | **否** — 等 S5 |
-| `GAP-PHASE3-WIP-ISOLATED` | Phase③ 在 worktree/stash | **否** — 隔离 |
-| `GAP-RUNTIME-DRIFT` / `runtime_drift: true` | 非祖先关系 SHA 错乱 | **停** — 先 RCA |
-| `TT_LOCAL_FIRST_RUNTIME_DRIFT: NONE` | 零运行时漂移 | 可进入 S5 评审 |
-
----
-
-## 3 · 机读闸
-
-```bash
-bash scripts/dev/run-local-first-convergence-gate.sh --full-pre-deploy   # L1–L4
-bash scripts/dev/run-local-first-convergence-gate.sh --with-baseline-audit
-
-# 对齐审计（单独）
-rm -f evidence/.tmp-ssot-meta.json evidence/.tmp-ssot-web-meta.json
-node scripts/dev/emit-local-first-alignment-audit.mjs
-
-# 多维 baseline 审计（只读 · 默认 @ git HEAD）
-python scripts/dev/gen-phase2-baseline-consistency-audit.py
-```
-
-**末行：** `TT_LOCAL_FIRST_ALIGNMENT: …` — `NOT_100_PERCENT_ALIGNED` 若仅含 `GAP-PHASE3-WIP`、`GAP-LOCAL-AHEAD-UNDEPLOYED`、`GAP-EVIDENCE`（历史闸）**不得**宣称 staging 漂移。
-
----
-
-## 4 · 禁止
-
-- 为清 WT gap 而 deploy staging（须 **L6 → S5**）
-- 把 Phase③ WIP 合入 Phase② deploy
-- 用 staging 覆盖本地 HEAD
-- 改写 Soak / Graduation / Final HA @ `fc9266ce` 证据
-- **跨层修复 / 跨层验收 / 跨层改文档**（见 **§1b**）
-- **新增平行流程 / 阶段 / 门闸**（见 **§1a 结构冻结** · D1–D12 仅作 **§1d** 步内清单）
-
-**诚实边界：** Local First（L0–L6）完成 ≠ S6 ② GO ≠ Phase③ Production GO。
+# TravelTrust · 唯一企业级发布流程 SSOT
+
+**生效：** 2026-06-30  
+**地位：** 仓库 **唯一发布治理主链**。Runbook · 脚本 · Gate · 证据目录 **均须映射到本页步骤**；**禁止**保留与本主链平行的第二套「发布 / 验收 / GO」流程描述。  
+**阶段：** ① 本地 → ② 测试网（Phase② CLOSED）→ ③ 生产（Production GO · 另闸）
+
+---
+
+## 0 · 一句话
+
+**本地仓库 = 唯一开发真源。** 按 **L0→L6→S5→S6→H1→Phase② CLOSED→③ Production Entry Review→Production GO** 顺序推进；**禁止跳阶**；**禁止**用 staging 旧 SHA 或 ① 本地绿冒充 ②/③ GO。
+
+**从属文档（消费本主链 · 非平行轨）：** [PHASE2-LOCAL-STAGING-PARITY-LOOP](./PHASE2-LOCAL-STAGING-PARITY-LOOP.md)（S5/S6 编排实现）· [TT-PHASE2-DEEP-RELEASE-GATE](./TT-PHASE2-DEEP-RELEASE-GATE.md)（S6）· [HUMAN-ACCEPTANCE-REPORT](./HUMAN-ACCEPTANCE-REPORT.md)（H1）· [go-live-checklist](../go-live-checklist.md)（③）· TT-9626/9627（竖切/段勾选 · **不替代**本主链）。
+
+---
+
+## 1 · 真源分层
+
+| 层 | 含义 | 当前锚点（示例） |
+|----|------|------------------|
+| **本地 HEAD** | 开发 + 配置 SSOT | `67aab8d7`（L0–L5 完成 · L6 Technical Sign-off 待签） |
+| **Staging runtime** | 已部署镜像 | `9979b35e`（Local First closure slice） |
+| **Graduation / Soak** | 历史冻结证据 | `fc9266ce`（**只读** · **不覆写**） |
+| **Phase③ WIP** | stash / 未跟踪 | **隔离** · **不混入** S5 deploy |
+
+**LOCAL_AHEAD_UNDEPLOYED** ≠ **RUNTIME_DRIFT**。
+
+---
+
+## 1a · 唯一发布主链（写死）
+
+```text
+① Local First
+──────────────────────────────
+L0  Root Cause Analysis
+        ↓
+L1  Complexity Convergence
+        ↓
+L2  Target Regression
+        ↓
+L3  Local First Convergence Gate
+        ↓
+L4  Local Smoke
+        ↓
+L5  Commit + SSOT + Runbook + Evidence
+        ↓
+L6  Technical Sign-off（技术签字 · 批准 S5 Deploy）
+──────────────────────────────
+S5  Deploy → Staging
+        ↓
+S6  Technical Validation（自动验证 + 部署后一致性）
+        ↓
+H1  Human Acceptance（人工验收）
+        ↓
+Phase② CLOSED
+──────────────────────────────
+③ Production Entry Review
+        ↓
+Production GO
+```
+
+### 阻断条件（写死）
+
+| 闸 | 条件 |
+|----|------|
+| **S5** | L0–L5 ✅ + **L6 Technical Sign-off** |
+| **H1** | **S6** 全绿 |
+| **Phase② CLOSED** | **H1** Owner 验收签字 |
+| **Production GO** | **Phase② CLOSED** + **③ Production Entry Review** 通过 |
+
+### 三类闸 · 不得混读
+
+| 步 | 类型 | 定义 | **不是** |
+|----|------|------|----------|
+| **L6** | 技术签字 | 本地 L0–L5 是否 **可 S5 Deploy** | 测试 · staging 一致 · H1 验收 |
+| **S6** | 机读/自动 | Deploy 后 SHA / Runtime / Config / Env / API / Web / Deep Gate / R-003 / UAT 自动项 | ① 替代 · L6 · H1 |
+| **H1** | 人工验收 | staging 五角色/走廊/体验 **Owner 可接受** | L6 · S6 替代 · Production GO |
+
+**P1 一致性问题（LOCAL_AHEAD、PD-009 staging 404、Deep Gate WARN 等）** → **S5 → S6** 闭合 · **不是 L6**。
+
+**结构冻结：** **禁止**新增与 **L0–L6 / S5 / S6 / H1 / Phase② CLOSED / ③ Production Entry Review / Production GO** **平行的**流程名或独立门闸。新检查项只能 **归入某步** 或 **在该步内调用脚本**。
+
+---
+
+## 1e · 步骤 ↔ 脚本 / Gate / 证据（映射 SSOT）
+
+| 步 | 典型脚本 / Gate | 证据目录（示例） | 机读末行（示例） |
+|----|-----------------|------------------|------------------|
+| **L1** | `validate-complexity-convergence-ledger-sync.sh` | — | `TT_COMPLEXITY_CONVERGENCE_SYNC: PASS` |
+| **L2** | `cargo test -p traveltrust-api -- --test-threads=1` | gate 内 `l2-cargo-test.log` | 1197 pass / 0 fail |
+| **L3** | `run-local-first-convergence-gate.sh --full-pre-deploy` | `evidence/GO_phase2_testnet_graduation/local-first-convergence-gate/<stamp>/` | `TT_LOCAL_FIRST_CONVERGENCE_GATE: PASS` |
+| **L4** | `run-phase2-local-staging-parity-gate.sh --local-test` | 同上 · `l4-local-smoke.log` | `TT_PHASE2_LOCAL_STAGING_PARITY: PASS` |
+| **L5** | git commit · runbook §1c 快照 | 同上 `SUMMARY.md` | HEAD SHA |
+| **L6** | 证据目录 **Technical Sign-off** 表 | 同上 `SUMMARY.md` §L6 | 人工签字 |
+| **S5** | `run-phase2-local-staging-parity-gate.sh --deploy --staging-retest` | `evidence/GO_phase2_testnet_20260526/local-staging-parity/<stamp>/` | deploy log |
+| **S6** | `run-phase2-deep-release-gate.sh` · `check-staging-web-alignment.sh` · R-003 staging · PD-009 staging smoke | deep-gate / alignment 子目录 | `TT_PHASE2_DEEP_RELEASE_GATE: PASS` |
+| **H1** | 五角色手验 · FRCA · phase28 HAT | [HUMAN-ACCEPTANCE-REPORT](./HUMAN-ACCEPTANCE-REPORT.md) · `evidence/…/phase28/` | HAT overall PASS + Owner 签 |
+| **Phase② CLOSED** | Graduation / soak 时间闸（若适用） | `evidence/GO_phase2_testnet_graduation/` | 项目 Phase② 收口声明 |
+| **③ Review** | `run-phase3-production-go-audit.sh` · PI3 清单 | `evidence/GO_phase2_testnet_20260526/phase3-production-prep/` | `TT_PHASE3_PRODUCTION_GO_AUDIT` |
+| **Production GO** | [go-live-checklist](../go-live-checklist.md) | `go-audit-*/go_no_go.json` | `PRODUCTION_GO_DECISION: GO` |
+
+**D1–D12** 仅为各步 **内部对拍清单**（见 §1d）· **不是**平行主链。
+
+---
+
+## 1d · D1–D12（步内清单 · 非独立流程）
+
+| D | 检查项 | 归属步 |
+|---|--------|--------|
+| D1 | Git / SHA · LOCAL_AHEAD | **L5** · **S6** |
+| D2 | Runtime DRIFT | **L3** |
+| D3 | chain_id / 链模式 | **L4**（①）· **S5/S6**（Sepolia） |
+| D4–D6 | 合约 · NEXT_PUBLIC · CORS | **L3** 只读 · **S6** 硬验 |
+| D7 | DB migrations | **L2** · **S6** |
+| D8 | Stripe test vs live | **S6** · **③** |
+| D9 | smoke / UAT | **L4** · **S6** · **H1** |
+| D10 | 运维 env | **L2/L4** · **S5** |
+| D11 | build git_sha | **L5** · **S5** |
+| D12 | Phase③ WIP 隔离 | **L3** · **L5** |
+
+---
+
+## 1b · 跨层纪律
+
+| 问题 | 归属 | 禁止 |
+|------|------|------|
+| 本地 IT / smoke FAIL | **L2 / L4** | 改 staging 冒充 ① |
+| LOCAL_AHEAD / PD-009 staging 差 | **S5 → S6** | 在 **L6** 要求 staging 一致 |
+| Deep Gate / alignment FAIL | **S6** | **H1** 手测代替 |
+| 体验 / 五角色 FAIL | **H1** | 在 **S6** 用文档冒充 |
+| Production 问题 | **③** | 回头改 Phase② CLOSED 证据 |
+
+---
+
+## 1c · 当前位置（快照 · 2026-06-30）
+
+| 步 | 状态 |
+|----|------|
+| L0–L5 | ✅ |
+| L6 | ⏳ Technical Sign-off |
+| S5 / S6 / H1 | 未开始 |
+| Phase② | 未 CLOSED |
+| ③ / Production GO | 未开始 |
+
+证据：`evidence/GO_phase2_testnet_graduation/local-first-convergence-gate/20260630T075325Z/`
+
+---
+
+## 2 · 命令与通过标准
+
+| 步 | 命令 / 动作 | 通过标准 |
+|----|-------------|----------|
+| **L0** | RCA 文档/注释 | 根因可复述 |
+| **L1** | `bash scripts/dev/validate-complexity-convergence-ledger-sync.sh` | `TT_COMPLEXITY_CONVERGENCE_SYNC: PASS` |
+| **L2** | `cargo test -p traveltrust-api -- --test-threads=1` | **1197/0** · 见 gate env |
+| **L3** | `bash scripts/dev/run-local-first-convergence-gate.sh --full-pre-deploy` | `TT_LOCAL_FIRST_CONVERGENCE_GATE: PASS` |
+| **L4** | （含于 L3）`--local-test` | `TT_PHASE2_LOCAL_STAGING_PARITY: PASS` |
+| **L5** | commit + runbook + evidence | HEAD = SSOT |
+| **L6** | `SUMMARY.md` Technical Sign-off 表 | L0–L5 ✅ · 批准 S5 |
+| **S5** | `run-phase2-local-staging-parity-gate.sh --deploy --staging-retest` | staging 已部署 |
+| **S6** | 见 **§2a** | Deep Gate + alignment + R-003 + staging smoke 全 PASS |
+| **H1** | [HUMAN-ACCEPTANCE-REPORT](./HUMAN-ACCEPTANCE-REPORT.md) | S6 全绿后 · Owner 签 |
+| **Phase② CLOSED** | Graduation / 项目收口声明 | H1 完成 |
+| **③ Review** | [PHASE3-PRODUCTION-PREPARATION](./PHASE3-PRODUCTION-PREPARATION.md) · PI3 | Entry Review PASS |
+| **Production GO** | [go-live-checklist](../go-live-checklist.md) | Owner **GO** 决定 |
+
+**L3 一键：**
+
+```bash
+bash scripts/dev/run-local-first-convergence-gate.sh --full-pre-deploy
+```
+
+### §2a · S6 Technical Validation 清单
+
+| 项 | 命令 / 真源 |
+|----|-------------|
+| SHA | staging `/meta` = deploy HEAD |
+| Runtime | `emit-local-first-alignment-audit.mjs` · `runtime_drift: false` |
+| Config / Env | `check-staging-web-alignment.sh` |
+| API / Web | health · CORS · 合约 · `NEXT_PUBLIC_*` |
+| Deep Gate | `run-phase2-deep-release-gate.sh` G01–G08 |
+| R-003 | `run_r003_staging_evidence_chain.py` |
+| UAT 自动 | `--staging-retest` · PD-009 staging smoke |
+
+```bash
+bash scripts/dev/run-phase2-local-staging-parity-gate.sh --staging-retest
+bash scripts/dev/run-phase2-deep-release-gate.sh
+bash scripts/dev/check-staging-web-alignment.sh
+```
+
+**L2 注意：** 全量 PG IT 须 `DATABASE_URL` + 停 :8080 API + `API_RATE_LIMIT_PER_MINUTE=0`。
+
+---
+
+## 2b · 漂移分类
+
+| 信号 | 含义 | Deploy? |
+|------|------|---------|
+| `GAP-LOCAL-AHEAD-UNDEPLOYED` | 本地领先 | **否** — S5 后 S6 闭 |
+| `GAP-RUNTIME-DRIFT` | SHA 非祖先 | **停** — L0 RCA |
+| `TT_LOCAL_FIRST_RUNTIME_DRIFT: NONE` | 无漂移 | 可进 L6 评审 |
+
+---
+
+## 3 · 禁止
+
+- 无 **L6** 即 **S5** · 无 **S6** 全绿即 **H1** · 无 **H1** 即 **Phase② CLOSED**
+- 用 ①/② 结果冒充 **③ Production GO**
+- 新增平行发布流程 / 门闸 / 阶段名
+- 为清 WT 而 deploy（须 **L6 → S5**）
+- 跨层修复 / 验收 / 改文档（§1b）
+
+**诚实边界：** L6 ≠ S6 ≠ H1 ≠ Phase② CLOSED ≠ Production GO。
+

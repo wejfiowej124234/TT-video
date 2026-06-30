@@ -16,6 +16,7 @@
 
 | 步 | 打开 | 目的 |
 |----|------|------|
+| **0** | **[TT-LOCAL-FIRST-CONVERGENCE](TT-LOCAL-FIRST-CONVERGENCE.md)** | **唯一企业级发布主链 SSOT**：L0→L6→S5→S6→H1→Phase② CLOSED→③→Production GO |
 | **1** | **[TT-9625](TT-9625-golden-path-system-spine.md)** | **一条用户脊**：注册 → `/meta` → `/market` → 创单 → `/escrow/:id`（Next → `apiUrl` → Axum → 数据/链） |
 | **1a** | **[LANDING-MARKET-PAGES-CODE-SSOT](../../frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md)** | **`/` + `/market` 三子页** 前端 **数据链** 真源（**localStorage** · **`getDiscoverOrders` debounce** · 收藏 **F-020 UI 未接**）；与 **TT-9625** 脊 **互补**（**UI** 仍 **FIVE-MAIN**） |
 | **2** | **[TT-9621](TT-9621-master-order-96-backend-db-chain-frontend.md)** | **每天执行顺序**：后端 → DB → 链 → 前端（Phase **A→D**） |
@@ -24,7 +25,7 @@
 | **5** | **[96-21](../spec/96-21-工程闭环扩展清单进阶.md)** | **9～17** 规则层 / 价值层闭环（与 **TT-9624** 互补） |
 | **6** | **[96-20](../spec/96-20-前后端页面对齐与UI生产级审计报告.md)** | **全站 URL × API** 矩阵（Phase **D** 主工具） |
 | **7** | **[96-18](../spec/96-18-未完成清单与多维检查.md)** | **台账与 P0**（**`#9618-one-page-priority`** 等） |
-| **8** | **[TT-9626](TT-9626-zero-to-production-go-single-path.md)** | **一条路到生产 GO**：闭环 → 竖切 → **R-002** → **go-live** → 签字（与 **主网 TT** 并联） |
+| **8** | **[TT-9626](TT-9626-zero-to-production-go-single-path.md)** | **竖切/段勾选消费指南**（**从属** [TT-LOCAL-FIRST-CONVERGENCE](TT-LOCAL-FIRST-CONVERGENCE.md) 主链 · **不替代**发布 SSOT） |
 | **9** | **[TT-9627](TT-9627-delivery-order-spine-then-full-site.md)** | **先主脊 → 再全站 → 再生产**：**段 1～6** 勾选总表（与 **TT-9625/9626** 串读） |
 | **10** | **[TT-9628](TT-9628-main-line-vs-branch-lines-delivery.md)** | **主线 vs 支线**：社区等扩展 **按 93 批次拆线验证**；发版/契约变更时再 **合线**（与 **§0.c** 增量裁剪叠加） |
 | **10b** | **[TT-9628 · 覆盖边界](TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-coverage-boundary)** | **读前**：**每页 / 每弹窗 / 分权限** 文档承诺边界（**93 §8.0**、**96-20**、**R-002**）；**不**把「矩阵在跑」当成「UI 已全穷举」 |
