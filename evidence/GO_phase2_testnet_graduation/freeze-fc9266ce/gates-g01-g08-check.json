@@ -1,0 +1,15 @@
+{
+  "checks": {
+    "G01_open_p0": true,
+    "G02_open_p1": true,
+    "G03_readiness": true,
+    "G04_perfect_validation": true,
+    "G05_blocking_open": true,
+    "G06_soak": true,
+    "G07_indexer": true,
+    "G08_deep_surface": true
+  },
+  "all": true,
+  "graduation_verdict": "CLOSED",
+  "ready_for_owner_signoff": true
+}

@@ -17,15 +17,30 @@ const root = path.resolve(arg('--root', process.cwd()));
 const soakDir = path.resolve(
   arg('--soak-dir', path.join(root, 'evidence/P2FC_SOAK_72H_STAGING')),
 );
-let freezeSha = arg('--freeze-sha', '').toLowerCase();
-if (!freezeSha) {
-  const active = path.join(root, 'evidence/TESTNET_STAGING_FREEZE/ACTIVE.json');
-  try {
-    freezeSha = String(JSON.parse(fs.readFileSync(active, 'utf8')).git_sha || '').toLowerCase();
-  } catch {
-    freezeSha = '8dcd304afae1bafe5a4de738175e171256a9501e';
+
+function resolveFreezeSha(cliSha, r) {
+  let sha = String(cliSha || '').toLowerCase();
+  if (sha) return sha;
+  for (const key of [
+    'PHASE2_BASELINE_SSOT_SHA',
+    'P2FC_RUNTIME_SHA_FROZEN',
+    'TN_P1_010_EXPECT_FREEZE_GIT_SHA',
+    'PHASE2_EXPECT_GIT_SHA',
+  ]) {
+    const v = String(process.env[key] || '').toLowerCase();
+    if (v) return v;
   }
+  const active = path.join(r, 'evidence/TESTNET_STAGING_FREEZE/ACTIVE.json');
+  try {
+    sha = String(JSON.parse(fs.readFileSync(active, 'utf8')).git_sha || '').toLowerCase();
+    if (sha) return sha;
+  } catch {
+    /* fall through */
+  }
+  return '8dcd304afae1bafe5a4de738175e171256a9501e';
 }
+
+let freezeSha = resolveFreezeSha(arg('--freeze-sha', ''), root);
 
 function stampToMs(stamp) {
   if (!stamp) return 0;
@@ -39,16 +54,7 @@ function stampToMs(stamp) {
 export function evalTnP010GraduationGate(opts = {}) {
   const r = path.resolve(opts.root || process.cwd());
   const sd = path.resolve(opts.soakDir || path.join(r, 'evidence/P2FC_SOAK_72H_STAGING'));
-  let fsha = (opts.freezeSha || '').toLowerCase();
-  if (!fsha) {
-    try {
-      fsha = String(
-        JSON.parse(fs.readFileSync(path.join(r, 'evidence/TESTNET_STAGING_FREEZE/ACTIVE.json'), 'utf8')).git_sha || '',
-      ).toLowerCase();
-    } catch {
-      fsha = '8dcd304afae1bafe5a4de738175e171256a9501e';
-    }
-  }
+  const fsha = resolveFreezeSha(opts.freezeSha, r);
   const out = { pass: false, state: 'no', note: 'no post-soak reconcile at freeze SHA', freeze_sha: fsha };
   const soakCompleted = path.join(sd, 'COMPLETED.json');
   if (!fs.existsSync(soakCompleted)) {

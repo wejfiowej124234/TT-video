@@ -104,11 +104,20 @@ function mk(status, gaps = [], notes = []) {
 }
 
 function evalTnP010GraduationGate() {
-  const r = spawnSync(
-    'node',
-    [path.join(root, 'scripts/dev/lib/tn-p1-010-graduation-gate.mjs'), '--root', root, '--status-only'],
-    { encoding: 'utf8' },
-  );
+  const freezeSha =
+    process.env.PHASE2_BASELINE_SSOT_SHA ||
+    process.env.P2FC_RUNTIME_SHA_FROZEN ||
+    process.env.TN_P1_010_EXPECT_FREEZE_GIT_SHA ||
+    process.env.PHASE2_EXPECT_GIT_SHA ||
+    '';
+  const gateArgs = [
+    path.join(root, 'scripts/dev/lib/tn-p1-010-graduation-gate.mjs'),
+    '--root',
+    root,
+    '--status-only',
+  ];
+  if (freezeSha) gateArgs.push('--freeze-sha', freezeSha);
+  const r = spawnSync('node', gateArgs, { encoding: 'utf8', env: process.env });
   try {
     return JSON.parse((r.stdout || '').trim() || '{}');
   } catch {

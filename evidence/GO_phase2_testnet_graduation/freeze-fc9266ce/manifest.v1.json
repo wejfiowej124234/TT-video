@@ -1,0 +1,124 @@
+{
+  "schema": "traveltrust.phase2_closure_graduation_freeze.v1",
+  "frozen_at_utc": "2026-06-30T02:55:56Z",
+  "phase": "② testnet",
+  "honest_boundary": "② phase2_closure=YES · graduation CLOSED ≠ ③ Production GO",
+  "sha_mapping": {
+    "runtime_staging_api": "fc9266ce94f18810420e720bb933946c086ce909",
+    "soak_baseline": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+    "local_repo_HEAD_at_freeze": "c6a8a4a4a79b7f7eb3b8993263c0bbb2d6f19ea2",
+    "state_b_fix_deploy_commit": "fc9266ce94f18810420e720bb933946c086ce909",
+    "closure_tooling_note": "ADM-U01 State B fix @ fc9266ce; soak @ 3bbedda unchanged"
+  },
+  "verdicts": {
+    "tt_testnet_graduation": "CLOSED",
+    "tt_phase2_l5_composite_score": 10,
+    "tt_p2fc_post_soak_one_shot": "PASS",
+    "tt_p2fc_staging_live_closure": "PASS",
+    "tt_live_closure_chain": {
+      "admin_go": "YES",
+      "phase2_closure": "YES",
+      "production_go": "NO"
+    },
+    "open_blocker_count": 0,
+    "priority_closure_steps": null
+  },
+  "evidence_roots": {
+    "graduation_audit_stamp": "evidence/GO_phase2_testnet_graduation/20260630T023734Z",
+    "graduation_freeze_bundle": "evidence/GO_phase2_testnet_graduation/freeze-fc9266ce",
+    "soak_completed": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+    "one_shot_checkpoint": "evidence/P2FC_SOAK_72H_STAGING/post-soak-one-shot/checkpoint.json",
+    "one_shot_log": "evidence/P2FC_SOAK_72H_STAGING/post-soak-one-shot/one-shot.log",
+    "staging_live_closure": "evidence/P2FC_SOAK_72H_STAGING/post-soak-staging-live-closure/staging-live-closure.latest.json",
+    "priority_closure_tracker": "evidence/P2FC_SOAK_72H_STAGING/post-soak-staging-live-closure/priority-closure-tracker.latest.json",
+    "adm_u01_live": "evidence/P2FC_SOAK_72H_STAGING/post-soak-staging-live-closure/adm-u01-live/report.json",
+    "adm_u02_live": "evidence/P2FC_SOAK_72H_STAGING/post-soak-staging-live-closure/adm-u02-live/report.json",
+    "p0_runtime": "evidence/P2FC_SOAK_72H_STAGING/post-soak-staging-live-closure/p0-rbac-bypass-runtime/latest.json",
+    "web3_live_risk": "evidence/P2FC_SOAK_72H_STAGING/post-soak-staging-live-closure/web3-live-risk-convergence.latest.json",
+    "tn_p1_010": "evidence/GO_phase2_testnet_perfect_validation/tn-p1-010-indexer-reconcile-20260630T023323Z"
+  },
+  "checkpoint_phases": {
+    "prep": {
+      "status": "PASS",
+      "at_utc": "2026-06-24T05:31:29.980Z",
+      "detail": "materials ready"
+    },
+    "wait_completed": {
+      "status": "PASS",
+      "at_utc": "2026-06-30T02:32:51.179Z",
+      "detail": "COMPLETED.json frozen"
+    },
+    "runtime_sha_frozen": {
+      "status": "PASS",
+      "at_utc": "2026-06-30T02:32:51.255Z",
+      "detail": "fc9266ce94f18810420e720bb933946c086ce909"
+    },
+    "tn_p1_010": {
+      "status": "PASS",
+      "at_utc": "2026-06-30T02:33:52.148Z",
+      "detail": "post-soak @ fc9266ce94f18810420e720bb933946c086ce909"
+    },
+    "apply_patches": {
+      "status": "SKIP",
+      "at_utc": "2026-06-30T02:33:52.224Z",
+      "detail": "state_b_fix_deploy_supersedes_backlog_patch"
+    },
+    "rollback_snapshot": {
+      "status": "SKIP",
+      "at_utc": "2026-06-30T02:33:52.298Z",
+      "detail": "no_redeploy"
+    },
+    "wave1_api_deploy": {
+      "status": "PASS",
+      "at_utc": "2026-06-30T02:33:52.370Z",
+      "detail": "state_b_fix_sha=fc9266ce94f18810420e720bb933946c086ce909 health=200"
+    },
+    "wave2_web_deploy": {
+      "status": "PASS",
+      "at_utc": "2026-06-30T02:33:53.561Z",
+      "detail": "verify_only http=307"
+    },
+    "meta_availability": {
+      "status": "PASS",
+      "at_utc": "2026-06-30T02:34:08.551Z",
+      "detail": ""
+    },
+    "g02_deep_gate": {
+      "status": "PASS",
+      "at_utc": "2026-06-30T02:37:20.076Z",
+      "detail": ""
+    },
+    "graduation": {
+      "status": "PASS",
+      "at_utc": "2026-06-30T02:38:52.714Z",
+      "detail": ""
+    }
+  },
+  "bundled_artifacts": [
+    "graduation-matrix.v1.json",
+    "gates-g01-g08-check.json",
+    "STATUS.txt",
+    "OWNER-SIGNOFF.md",
+    "probe-deep-closure.json"
+  ],
+  "graduation_gates_g01_g08": {
+    "checks": {
+      "G01_open_p0": true,
+      "G02_open_p1": true,
+      "G03_readiness": true,
+      "G04_perfect_validation": true,
+      "G05_blocking_open": true,
+      "G06_soak": true,
+      "G07_indexer": true,
+      "G08_deep_surface": true
+    },
+    "all": true,
+    "graduation_verdict": "CLOSED",
+    "ready_for_owner_signoff": true
+  },
+  "soak_summary": {
+    "completed_at": "2026-06-29T18:17:13.697Z",
+    "polls_ok": null,
+    "polls_fail": null
+  }
+}

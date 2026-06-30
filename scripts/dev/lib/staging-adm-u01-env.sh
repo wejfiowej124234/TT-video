@@ -73,6 +73,21 @@ staging_adm_u01_pg_probe() {
       return 0
     fi
   fi
+  # Prefer node `pg` on host (fly proxy on 127.0.0.1) — docker+host.docker.internal often hangs on Windows.
+  local pg_root="${REPO_ROOT:-.}/frontend"
+  if [[ -d "$pg_root/node_modules/pg" ]] && command -v node >/dev/null 2>&1; then
+    if (cd "$pg_root" && node -e "
+      const { Client } = require('pg');
+      const c = new Client({ connectionString: process.argv[1], connectionTimeoutMillis: 8000 });
+      c.connect()
+        .then(() => c.query('SELECT 1'))
+        .then(() => c.end())
+        .then(() => process.exit(0))
+        .catch(() => process.exit(1));
+    " "$dsn" >/dev/null 2>&1); then
+      return 0
+    fi
+  fi
   if ! command -v docker >/dev/null 2>&1; then
     return 1
   fi
@@ -83,11 +98,18 @@ staging_adm_u01_pg_probe() {
   port="$(node -e "const u=new URL(process.argv[1]); process.stdout.write(u.port||'5432');" "$dsn")"
   db="$(node -e "const u=new URL(process.argv[1]); process.stdout.write((u.pathname||'/').replace(/^\//,'')||'postgres');" "$dsn")"
   [[ "$host" == "localhost" || "$host" == "127.0.0.1" ]] && host="host.docker.internal"
-  docker run --rm -e "PGPASSWORD=${pass}" postgres:16-alpine \
-    psql "postgres://${user}@${host}:${port}/${db}" -v ON_ERROR_STOP=1 -tAc "SELECT 1" >/dev/null 2>&1
+  if command -v timeout >/dev/null 2>&1; then
+    timeout 12 docker run --rm -e "PGPASSWORD=${pass}" postgres:16-alpine \
+      psql "postgres://${user}@${host}:${port}/${db}" -v ON_ERROR_STOP=1 -tAc "SELECT 1" >/dev/null 2>&1
+  else
+    docker run --rm -e "PGPASSWORD=${pass}" postgres:16-alpine \
+      psql "postgres://${user}@${host}:${port}/${db}" -v ON_ERROR_STOP=1 -tAc "SELECT 1" >/dev/null 2>&1
+  fi
 }
 
 staging_adm_u01_prepare_dsn() {
+  export NO_PROXY="${NO_PROXY:+$NO_PROXY,}api.fly.io,fly.io,.fly.io,6pn.dev"
+  unset HTTPS_PROXY HTTP_PROXY ALL_PROXY 2>/dev/null || true
   [[ -n "${STAGING_DATABASE_URL:-}" ]] || {
     echo "staging-adm-u01-env: WARN — STAGING_DATABASE_URL unset (G04 ADM-U01 will FAIL)" >&2
     return 0
