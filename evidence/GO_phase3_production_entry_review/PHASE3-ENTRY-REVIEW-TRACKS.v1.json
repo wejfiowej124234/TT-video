@@ -1,0 +1,117 @@
+{
+  "schema": "traveltrust.phase3_entry_review_tracks.v1",
+  "stamp": "20260630T100000Z",
+  "updated_at_utc": "2026-06-30T10:00:13Z",
+  "runtime_baseline_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+  "phase2_reopen": "NO",
+  "tracks": [
+    {
+      "id": "P3-HYG",
+      "title": "Engineering hygiene",
+      "status": "IN_PROGRESS",
+      "items": [
+        {
+          "id": "HYG-01",
+          "title": "Deploy-path isolation manifest",
+          "status": "DONE"
+        },
+        {
+          "id": "HYG-02",
+          "title": "Revert unrelated tracked doc dirt",
+          "status": "DONE"
+        },
+        {
+          "id": "HYG-03",
+          "title": "Local /meta git_sha export",
+          "status": "DONE"
+        },
+        {
+          "id": "HYG-04",
+          "title": "WT untracked docs/WIP quarantine",
+          "status": "OPEN"
+        }
+      ]
+    },
+    {
+      "id": "P3-DEPLOY-GOV",
+      "title": "Deployment governance",
+      "status": "IN_PROGRESS",
+      "items": [
+        {
+          "id": "DG-01",
+          "title": "Runtime baseline frozen @ d5aa447f",
+          "status": "DONE"
+        },
+        {
+          "id": "DG-02",
+          "title": "Evidence-only commit policy (no S5/HAT)",
+          "status": "DONE"
+        },
+        {
+          "id": "DG-03",
+          "title": "TESTNET_STAGING_FREEZE LIFTED pointer",
+          "status": "DONE"
+        },
+        {
+          "id": "DG-04",
+          "title": "TTG cert registry present",
+          "status": "DONE"
+        }
+      ]
+    },
+    {
+      "id": "P3-ENV",
+      "title": "Production environment",
+      "status": "OPEN"
+    },
+    {
+      "id": "P3-MAINNET",
+      "title": "Mainnet configuration",
+      "status": "OPEN"
+    },
+    {
+      "id": "P3-KEYS",
+      "title": "Secrets / PSP credentials",
+      "status": "OPEN"
+    },
+    {
+      "id": "P3-SEC",
+      "title": "Security / RBAC prod promote",
+      "status": "OPEN"
+    },
+    {
+      "id": "P3-MON",
+      "title": "Monitoring / alerting",
+      "status": "OPEN"
+    },
+    {
+      "id": "P3-RB",
+      "title": "Rollback drill",
+      "status": "OPEN"
+    },
+    {
+      "id": "P3-GOLIVE",
+      "title": "Go-live cutover",
+      "status": "OPEN"
+    }
+  ],
+  "explicitly_deferred_from_phase3": [
+    {
+      "id": "ENT-P1-001",
+      "note": "b739fca3 evidence-only LOCAL_AHEAD — no S5 per deploy governance"
+    },
+    {
+      "id": "TN-P1-009",
+      "note": "P2FC soak legacy — not Phase② reopen"
+    },
+    {
+      "id": "TN-P1-010",
+      "note": "Indexer reconcile legacy"
+    }
+  ],
+  "machine_keys": {
+    "TT_PHASE3_PRODUCTION_ENTRY_REVIEW": "ACTIVE",
+    "TT_PHASE3_PRODUCTION_GO": "NO",
+    "TT_PHASE2_REOPEN": "NO"
+  }
+}

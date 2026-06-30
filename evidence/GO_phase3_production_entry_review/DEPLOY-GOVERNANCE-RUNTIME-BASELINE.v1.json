@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.deploy_governance_runtime_baseline.v1",
+  "frozen_at_utc": "2026-06-30T10:00:13Z",
+  "phase2_status": "CLOSED",
+  "runtime_baseline_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+  "runtime_baseline_evidence": "evidence/GO_phase2_testnet_graduation/PHASE2-CLOSED.latest.json",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "policy": {
+    "evidence_only_commits_no_s5": true,
+    "evidence_only_commits_no_hat_rerun": true,
+    "example_evidence_only_sha": "b739fca39384a73a182d1720e34b9635d7bbfdbd",
+    "code_change_requires_s5": true,
+    "ssot": "docs/runbook/TT-LOCAL-FIRST-CONVERGENCE.md"
+  },
+  "machine_keys": {
+    "TT_PHASE2_CLOSED": "YES",
+    "TT_PHASE2_REOPEN": "NO",
+    "TT_RUNTIME_BASELINE_FROZEN": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6"
+  }
+}

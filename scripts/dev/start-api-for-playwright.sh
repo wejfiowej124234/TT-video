@@ -4,6 +4,9 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 cd "$ROOT"
+# shellcheck source=lib/local-build-git-sha.sh
+source "$(dirname "$0")/lib/local-build-git-sha.sh"
+local_build_git_sha_export "$ROOT"
 export SEED_TEST_ACCOUNTS="${SEED_TEST_ACCOUNTS:-1}"
 export DID_RANK_SEED_MARKET_DEMO="${DID_RANK_SEED_MARKET_DEMO:-1}"
 export TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE="${TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE:-1}"

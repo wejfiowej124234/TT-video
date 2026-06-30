@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.deploy_path_isolation.v1",
+  "updated_at_utc": "2026-06-30T10:00:13Z",
+  "purpose": "Paths excluded from Phase② S5 until explicit Phase③ or code-track review",
+  "isolated_untracked_prefixes": [
+    "contracts/",
+    "config/jurisdiction_country_pool_net_profit",
+    "frontend/components/auth/AuthLoginGovernanceRemediationProgress.tsx",
+    "frontend/components/governance/GovernanceConvergencePathGate.tsx",
+    "frontend/lib/auth/authLoginGovernanceRemediationModel.ts",
+    "frontend/lib/complexityConvergenceSurface.ts",
+    "frontend/lib/complexityConvergenceSurface.test.ts"
+  ],
+  "note": "Untracked Phase③ / governance WIP — isolate; do not git add . before S5"
+}
