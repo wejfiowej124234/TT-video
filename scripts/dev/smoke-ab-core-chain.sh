@@ -5,6 +5,12 @@
 # DB 抽检：DATABASE_URL 已设时优先本机 psql，否则 docker exec ${SMOKE_PG_CONTAINER:-traveltrust-postgres} psql（见 docs/dev-local-smoke-baseline.md）。
 set -euo pipefail
 
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+# shellcheck source=scripts/dev/lib/local-smoke-preflight.sh
+source "$ROOT/scripts/dev/lib/local-smoke-preflight.sh"
+local_smoke_load_repo_env
+local_smoke_default_skip_chain_off_db
+
 API="${API_BASE_URL:-http://127.0.0.1:8080}"
 STAMP="$(date +%s)"
 EMAIL="${SMOKE_EMAIL:-ab.smoke.${STAMP}@example.com}"

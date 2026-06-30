@@ -32,6 +32,9 @@ npx vitest run lib/enterpriseLocal10Gate.contract.test.ts lib/web3ItineraryFullC
 
 if [[ "${SKIP_E2E:-}" != "1" ]]; then
   echo "== Playwright · web3-itinerary-corridor-10 (full-stack) =="
+  export COMMUNITY_ME_L5_GREEN_REUSE="${COMMUNITY_ME_L5_GREEN_REUSE:-1}"
+  export PLAYWRIGHT_SKIP_NEXT_PURGE="${PLAYWRIGHT_SKIP_NEXT_PURGE:-1}"
+  export PLAYWRIGHT_REUSE_API_SERVER="${PLAYWRIGHT_REUSE_API_SERVER:-1}"
   npm run e2e:web3-itinerary-10
 else
   echo "SKIP_E2E=1 → skipped Playwright corridor (vitest + API smokes only)"

@@ -18,7 +18,7 @@ $root = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 $apiBase = "http://127.0.0.1:$Port"
 $rootUnix = ($root -replace '\\', '/')
 
-Write-Host "Step 6p - L3 multi-identity closure smoke API_BASE=$apiBase"
+Write-Host "Step 6p - Matrix C1 multi-demo@test.com L3 multi-identity closure smoke API_BASE=$apiBase"
 $proc = Start-Process -FilePath $bash -ArgumentList @(
     '-lc',
     "cd '$rootUnix' && export API_BASE='$apiBase' && bash scripts/dev/smoke-multi-identity-closure-local.sh"
@@ -29,9 +29,9 @@ if ($proc.ExitCode -ne 0) {
         Write-Host "WARN: smoke-multi-identity-closure-local failed exit $($proc.ExitCode) - API still up"
         exit 0
     }
-    Write-Host "FAIL: smoke-multi-identity-closure-local exit $($proc.ExitCode)"
+    Write-Host "FAIL: Step 6p matrix C1 multi-demo - smoke-multi-identity-closure-local exit $($proc.ExitCode)"
     exit $proc.ExitCode
 }
 
-Write-Host "OK: smoke-multi-identity-closure-local (TT_L3_MULTI_IDENTITY_SMOKE)"
+Write-Host "OK: Step 6p matrix C1 multi-demo four-track (TT_L3_MULTI_IDENTITY_SMOKE)"
 exit 0

@@ -16,9 +16,13 @@ WEB="${STAGING_WEB_BASE:-https://tt-web-staging.fly.dev}"
 EXPECT_SHA="${PHASE2_EXPECT_GIT_SHA:-$(git -C "$ROOT" rev-parse HEAD 2>/dev/null || echo '')}"
 
 SKIP_RBAC=0
+META_OBS=0
+REQUIRE_META=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --skip-rbac) SKIP_RBAC=1; shift ;;
+    --meta-observability-only) META_OBS=1; shift ;;
+    --require-meta-green) REQUIRE_META=1; shift ;;
     --api-base) API="$2"; shift 2 ;;
     --web-base) WEB="$2"; shift 2 ;;
     --expect-git-sha) EXPECT_SHA="$2"; shift 2 ;;
@@ -57,6 +61,8 @@ fi
   export STAGING_API_BASE="$API"
   export STAGING_WEB_BASE="$WEB"
   export PHASE2_EXPECT_GIT_SHA="$EXPECT_SHA"
+  [[ "$META_OBS" -eq 1 ]] && export PHASE2_META_OBSERVABILITY_ONLY=1
+  [[ "$REQUIRE_META" -eq 1 ]] && export PHASE2_REQUIRE_META_GREEN=1
 
   set +e
   PYTHONIOENCODING=utf-8 python "$ROOT/scripts/dev/phase2-deep-release-gate.py" "${ARGS[@]}"

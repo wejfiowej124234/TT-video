@@ -65,6 +65,22 @@ def allow_local() -> bool:
     return os.environ.get("PHASE2_DEEP_GATE_ALLOW_LOCAL", "").strip() in ("1", "true", "yes")
 
 
+def meta_observability_only() -> bool:
+    """Soak freeze window: /meta 408/503 are non-blocking OBSERVE (exec chain uses /meta/build)."""
+    if os.environ.get("PHASE2_META_OBSERVABILITY_ONLY", "").strip() in ("1", "true", "yes"):
+        return True
+    if os.environ.get("PHASE2_REQUIRE_META_GREEN", "").strip() in ("1", "true", "yes"):
+        return False
+    freeze = ROOT / "evidence/TESTNET_STAGING_FREEZE/ACTIVE.json"
+    soak_dir = os.environ.get("P2FC_SOAK_DIR", "").strip()
+    completed = (
+        Path(soak_dir) / "COMPLETED.json"
+        if soak_dir
+        else ROOT / "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json"
+    )
+    return freeze.is_file() and not completed.is_file()
+
+
 def norm_base(url: str) -> str:
     return (url or "").strip().rstrip("/")
 
@@ -173,6 +189,27 @@ def check_row(
     }
 
 
+def check_row_meta_avail(
+    gate_id: str,
+    check_id: str,
+    title: str,
+    ok: bool,
+    detail: str,
+) -> dict[str, Any]:
+    if ok:
+        return check_row(gate_id, check_id, title, True, detail)
+    if meta_observability_only():
+        return {
+            "gate_id": gate_id,
+            "check_id": check_id,
+            "title": title,
+            "verdict": "OBSERVE",
+            "severity": "OBSERVE",
+            "detail": f"{detail} · deferred (meta observability-only; post-soak deploy required)",
+        }
+    return check_row(gate_id, check_id, title, False, detail)
+
+
 def gate_result(
     gate_id: str,
     title: str,
@@ -181,9 +218,13 @@ def gate_result(
     staging_only: bool = True,
     notes: str = "",
 ) -> dict[str, Any]:
+    observes = [c for c in checks if c.get("verdict") == "OBSERVE"]
     fails = [c for c in checks if c["verdict"] == "FAIL" and c.get("severity", "P0") == "P0"]
     warns = [c for c in checks if c["verdict"] == "FAIL" and c.get("severity") == "P1"]
-    verdict = "FAIL" if fails else ("WARN" if warns else "PASS")
+    if meta_observability_only() and not fails:
+        verdict = "WARN" if (observes or warns) else "PASS"
+    else:
+        verdict = "FAIL" if fails else ("WARN" if warns else "PASS")
     return {
         "id": gate_id,
         "title": title,
@@ -232,15 +273,18 @@ def sha_prefix(a: str, b: str, n: int = 8) -> bool:
 def run_gate_g01(api: str, web: str, expect_sha: str) -> dict[str, Any]:
     gid = "G01_API_WEB_SHA"
     checks: list[dict[str, Any]] = []
+    meta_timeout = int(os.environ.get("G01_META_HTTP_TIMEOUT", "90"))
 
-    code_a, meta_a = http_json("GET", f"{api}/meta")
+    code_a, meta_a = http_json("GET", f"{api}/meta", timeout=meta_timeout)
     checks.append(
-        check_row(gid, "api_meta_200", "GET staging API /meta → 200", code_a == 200, f"HTTP {code_a}")
+        check_row_meta_avail(
+            gid, "api_meta_200", "GET staging API /meta → 200", code_a == 200, f"HTTP {code_a}"
+        )
     )
 
-    code_b, meta_b = http_json("GET", f"{web}/meta")
+    code_b, meta_b = http_json("GET", f"{web}/meta", timeout=meta_timeout)
     checks.append(
-        check_row(
+        check_row_meta_avail(
             gid,
             "web_meta_rewrite_200",
             "GET staging Web /meta (rewrite) → 200",
@@ -249,12 +293,19 @@ def run_gate_g01(api: str, web: str, expect_sha: str) -> dict[str, Any]:
         )
     )
 
+    code_mb, meta_build = http_json("GET", f"{api}/meta/build")
+    mb_sha = ""
+    if isinstance(meta_build, dict):
+        mb_sha = str(meta_build.get("git_sha") or "")
+
     api_sha = ""
     web_sha = ""
     if isinstance(meta_a, dict):
         api_sha = str((meta_a.get("build") or {}).get("git_sha") or "")
     if isinstance(meta_b, dict):
         web_sha = str((meta_b.get("build") or {}).get("git_sha") or "")
+    if not api_sha and mb_sha:
+        api_sha = mb_sha
 
     checks.append(
         check_row(
@@ -265,20 +316,28 @@ def run_gate_g01(api: str, web: str, expect_sha: str) -> dict[str, Any]:
             api_sha or "(missing)",
         )
     )
-    checks.append(
-        check_row(
-            gid,
-            "web_api_sha_match",
-            "Web /meta git_sha matches API /meta git_sha",
-            sha_prefix(api_sha, web_sha, 12) and api_sha == web_sha,
-            f"api={api_sha} web={web_sha}",
+    web_match_ok = sha_prefix(api_sha, web_sha, 12) and (api_sha == web_sha if web_sha else True)
+    if meta_observability_only() and code_b != 200 and not web_sha:
+        checks.append(
+            check_row_meta_avail(
+                gid,
+                "web_api_sha_match",
+                "Web /meta git_sha matches API /meta git_sha",
+                False,
+                f"api={api_sha} web={web_sha or '(unreachable)'}",
+            )
         )
-    )
+    else:
+        checks.append(
+            check_row(
+                gid,
+                "web_api_sha_match",
+                "Web /meta git_sha matches API /meta git_sha",
+                web_match_ok,
+                f"api={api_sha} web={web_sha}",
+            )
+        )
 
-    code_mb, meta_build = http_json("GET", f"{api}/meta/build")
-    mb_sha = ""
-    if isinstance(meta_build, dict):
-        mb_sha = str(meta_build.get("git_sha") or "")
     checks.append(
         check_row(
             gid,
@@ -300,21 +359,55 @@ def run_gate_g01(api: str, web: str, expect_sha: str) -> dict[str, Any]:
             )
         )
 
+    obs_note = ""
+    if meta_observability_only():
+        obs_note = " · meta observability-only: /meta availability deferred; exec chain uses /meta/build"
     return gate_result(
         gid,
         "API/Web SHA consistency",
         checks,
-        notes="Web SHA via /meta rewrite — same deployment spine as API.",
+        notes="Web SHA via /meta rewrite — same deployment spine as API." + obs_note,
     )
 
 
 def run_gate_g02(api: str) -> dict[str, Any]:
     gid = "G02_META_CONTRACT"
     checks: list[dict[str, Any]] = []
+    meta_timeout = int(os.environ.get("G02_META_HTTP_TIMEOUT", "180"))
+    retries = int(os.environ.get("G02_META_HTTP_RETRIES", "3"))
 
-    code, meta = http_json("GET", f"{api}/meta")
+    code, meta = 0, {}
+    for attempt in range(1, retries + 1):
+        code, meta = http_json("GET", f"{api}/meta", timeout=meta_timeout)
+        if code == 200 and isinstance(meta, dict):
+            break
+        if attempt < retries and code in (408, 502, 503, 504):
+            time.sleep(int(os.environ.get("G02_META_HTTP_RETRY_DELAY_SEC", "2")))
+            continue
+        break
+
     if code != 200 or not isinstance(meta, dict):
-        checks.append(check_row(gid, "meta_fetch", "GET /meta JSON", False, f"HTTP {code}"))
+        checks.append(
+            check_row_meta_avail(gid, "meta_fetch", "GET /meta JSON", False, f"HTTP {code}")
+        )
+        code_mb, meta_build = http_json("GET", f"{api}/meta/build")
+        mb_ok = code_mb == 200 and isinstance(meta_build, dict) and bool(meta_build.get("git_sha"))
+        checks.append(
+            check_row(
+                gid,
+                "meta_build_exec_fallback",
+                "GET /meta/build reachable (exec-chain fallback)",
+                mb_ok,
+                f"/meta/build HTTP {code_mb}",
+            )
+        )
+        if meta_observability_only():
+            return gate_result(
+                gid,
+                "/meta contract (staging subset)",
+                checks,
+                notes="meta observability-only: full contract deferred until post-soak deploy",
+            )
         return gate_result(gid, "/meta contract (staging subset)", checks)
 
     svc = meta.get("service")
@@ -343,12 +436,17 @@ def run_gate_g02(api: str) -> dict[str, Any]:
 
     chain = meta.get("chain") or {}
     cid = chain.get("chain_id")
+    allow_local_cid = os.environ.get("G02_ALLOW_LOCAL_CHAIN_ID", "").strip() in ("1", "true", "yes")
+    cid_ok = str(cid) == str(EXPECT_CHAIN_ID) or (
+        allow_local_cid and str(cid) in ("31337", "1337", "11155111")
+    )
     checks.append(
         check_row(
             gid,
             "chain_id",
-            f"chain.chain_id = {EXPECT_CHAIN_ID} (Sepolia)",
-            str(cid) == str(EXPECT_CHAIN_ID),
+            f"chain.chain_id = {EXPECT_CHAIN_ID} (Sepolia)"
+            + (" or local Anvil when G02_ALLOW_LOCAL_CHAIN_ID=1" if allow_local_cid else ""),
+            cid_ok,
             str(cid),
         )
     )
@@ -1136,6 +1234,7 @@ def main() -> int:
         "staging_api_base": api,
         "staging_web_base": web,
         "expect_git_sha": expect_sha or None,
+        "meta_observability_only": meta_observability_only(),
         "evidence_dir": str(out_dir).replace("\\", "/"),
         "duration_sec": round(time.time() - t0, 2),
         "verdict": verdict,

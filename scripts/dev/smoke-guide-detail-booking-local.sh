@@ -37,17 +37,25 @@ fail() { echo "GD-L5-booking-smoke: FAIL $*" >&2; exit 1; }
 ok() { echo "GD-L5-booking-smoke: OK $*"; }
 
 json_field() {
-  node -e "const o=JSON.parse(process.argv[1]); process.stdout.write(String(o[process.argv[2]]??''));" "$1" "$2"
+  local body="$1" field="$2" tmp
+  tmp="$(mktemp)"
+  printf '%s' "$body" > "$tmp"
+  node -e "const o=JSON.parse(require('fs').readFileSync(process.argv[1],'utf8')); process.stdout.write(String(o[process.argv[2]]??''));" "$tmp" "$field"
+  rm -f "$tmp"
 }
 
 json_nested() {
+  local body="$1" path="$2" tmp
+  tmp="$(mktemp)"
+  printf '%s' "$body" > "$tmp"
   node -e "
-    const o=JSON.parse(process.argv[1]);
+    const o=JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'));
     const parts=process.argv[2].split('.');
     let v=o;
     for (const p of parts) { v=v?.[p]; }
     process.stdout.write(v==null?'':String(v));
-  " "$1" "$2"
+  " "$tmp" "$path"
+  rm -f "$tmp"
 }
 
 curl_json() {
@@ -151,15 +159,19 @@ resolve_bookable_guide_id() {
   list_code="${list_resp%%|*}"
   list_body="${list_resp#*|}"
   [[ "$list_code" == "200" ]] || fail "GET /guides list HTTP $list_code"
+  local list_tmp
+  list_tmp="$(mktemp)"
+  printf '%s' "$list_body" > "$list_tmp"
   node -e "
-    const items=JSON.parse(process.argv[1]).items||[];
+    const items=JSON.parse(require('fs').readFileSync(process.argv[1],'utf8')).items||[];
     const uid=process.argv[2];
     const hit=items.find(g=>String(g.user_id||'')===uid);
     if(hit?.id){ process.stdout.write(String(hit.id)); process.exit(0); }
     const active=items.find(g=>String(g.status||'active')==='active');
     if(active?.id){ process.stdout.write(String(active.id)); process.exit(0); }
     process.exit(1);
-  " "$list_body" "$user_id" || fail "no bookable guide in /guides list"
+  " "$list_tmp" "$user_id" || fail "no bookable guide in /guides list"
+  rm -f "$list_tmp"
 }
 
 cleanup_api() {
@@ -217,6 +229,26 @@ a_body="${avail#*|}"
 [[ "$a_code" == "200" ]] || fail "GET availability HTTP $a_code"
 ok "GET /guides/:id/availability"
 
+if [[ "$SKIP_PLAYWRIGHT" != "1" ]]; then
+  fe_code="$(curl -sS -o /dev/null -w '%{http_code}' "${PLAYWRIGHT_BASE_URL}/" 2>/dev/null || echo "000")"
+  if [[ "$fe_code" != "200" && "$fe_code" != "307" && "$fe_code" != "308" ]]; then
+    echo "GD-L5-booking-smoke: SKIP Playwright (frontend not on ${PLAYWRIGHT_BASE_URL}, HTTP $fe_code)"
+  else
+    echo "== GD-L5 Playwright b469 (before API POST /orders · avoid guide slot busy) =="
+    cd "$ROOT/frontend"
+    PLAYWRIGHT_API_BASE_URL="$API_BASE" \
+    PLAYWRIGHT_API_HEALTH_URL="${API_BASE}/health" \
+    PLAYWRIGHT_BASE_URL="$PLAYWRIGHT_BASE_URL" \
+      npx playwright test e2e/b469-guides-drawer-booking-convergence.spec.ts \
+        --project=chromium \
+        --grep "/guides/\\[id\\].*预约按钮" \
+        --workers=1 || fail "Playwright GD-L5 booking spec"
+    ok "Playwright /guides/[id] → BookGuideModal → escrow (GD-L5-P3)"
+    cd "$ROOT"
+    release_seed_guide_slot "$API_BASE"
+  fi
+fi
+
 AMOUNT="62.${RANDOM}"
 IDEM="$(node -e "process.stdout.write(require('crypto').randomUUID())")"
 create_code="$(curl -sS -o /tmp/gd-l5-order.json -w '%{http_code}' -X POST "${API_BASE}/api/v1/orders" \
@@ -234,24 +266,6 @@ ok "POST /orders order_id=$ORDER_ID amount=$AMOUNT (BookGuideModal → /orders/n
 
 echo "  UI deep link: ${PLAYWRIGHT_BASE_URL}/guides/${GUIDE_ID}"
 echo "  UI orders/new: ${PLAYWRIGHT_BASE_URL}/orders/new?guide_id=${GUIDE_ID}"
-
-if [[ "$SKIP_PLAYWRIGHT" != "1" ]]; then
-  fe_code="$(curl -sS -o /dev/null -w '%{http_code}' "${PLAYWRIGHT_BASE_URL}/" 2>/dev/null || echo "000")"
-  if [[ "$fe_code" != "200" && "$fe_code" != "307" && "$fe_code" != "308" ]]; then
-    echo "GD-L5-booking-smoke: SKIP Playwright (frontend not on ${PLAYWRIGHT_BASE_URL}, HTTP $fe_code)"
-  else
-    echo "== GD-L5 Playwright /guides/[id] book CTA =="
-    cd "$ROOT/frontend"
-    PLAYWRIGHT_API_BASE_URL="$API_BASE" \
-    PLAYWRIGHT_API_HEALTH_URL="${API_BASE}/health" \
-    PLAYWRIGHT_BASE_URL="$PLAYWRIGHT_BASE_URL" \
-      npx playwright test e2e/b469-guides-drawer-booking-convergence.spec.ts \
-        --project=chromium \
-        -g "/guides/\\[id\\].*BookGuideModal" \
-        --workers=1 || fail "Playwright GD-L5 booking spec"
-    ok "Playwright /guides/[id] → BookGuideModal → orders/new → create"
-  fi
-fi
 
 echo ""
 echo "TT_GD_L5_BOOKING_SMOKE: OK (① local · tourist@test.com · guide=${GUIDE_ID} · order=${ORDER_ID})"

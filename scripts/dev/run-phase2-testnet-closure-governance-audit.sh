@@ -54,8 +54,24 @@ if [[ "$MATRIX_ONLY" != "1" ]]; then
   echo "{\"http_code\":\"${hc}\"}" >"$EVID/probe-health.json"
 
   echo ""
-  echo "== probe: meta chain =="
-  curl --noproxy "*" -sS --max-time 30 "${API}/meta" >"$EVID/probe-meta.json" || echo '{"error":"meta_fetch_failed"}' >"$EVID/probe-meta.json"
+  echo "== probe: meta chain (fallback meta → meta/build) =="
+  # shellcheck source=scripts/ops/lib/p2fc-meta-observability-lib.sh
+  source "$ROOT/scripts/ops/lib/p2fc-meta-observability-lib.sh"
+  p2fc_record_meta_observability "$API" "$FE" "$EVID/meta-observability" || true
+  if [[ -f "$EVID/meta-observability/latest.json" ]]; then
+    cp -f "$EVID/meta-observability/latest.json" "$EVID/probe-meta-observability.json"
+  fi
+  curl --noproxy "*" -sS --max-time 90 "${API}/meta" >"$EVID/probe-meta.json" 2>/dev/null || echo '{"error":"meta_fetch_failed"}' >"$EVID/probe-meta.json"
+  if ! node -e "const j=require(process.argv[1]); process.exit(j.build&&j.build.git_sha?0:1)" "$EVID/probe-meta.json" 2>/dev/null; then
+    curl --noproxy "*" -sS --max-time 45 "${API}/meta/build" >"$EVID/probe-meta-build-fallback.json" 2>/dev/null || echo '{"error":"meta_build_failed"}' >"$EVID/probe-meta-build-fallback.json"
+    node -e "
+const fs=require('fs');
+const mb=JSON.parse(fs.readFileSync(process.argv[1],'utf8'));
+if(mb.git_sha){
+  const synth={service:'traveltrust-api',build:{git_sha:mb.git_sha},_probe:'meta_build_fallback'};
+  fs.writeFileSync(process.argv[2], JSON.stringify(synth,null,2));
+}" "$EVID/probe-meta-build-fallback.json" "$EVID/probe-meta.json" 2>/dev/null || true
+  fi
 
   SEC="${INTERNAL_API_SECRET:-}"
   if [[ -n "$SEC" ]]; then

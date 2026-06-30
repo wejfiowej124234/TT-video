@@ -8,6 +8,11 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+export DEPLOYMENT_THREE_STATE_ROOT="$ROOT"
+# shellcheck source=../ops/lib/deployment-three-state-lib.sh
+source "$ROOT/scripts/ops/lib/deployment-three-state-lib.sh"
+deployment_three_state_assert_fly_allowed
+
 FREEZE="$ROOT/evidence/TESTNET_STAGING_FREEZE/ACTIVE.json"
 if [[ -f "$FREEZE" && "${TESTNET_FREEZE_OVERRIDE:-}" != "1" ]]; then
   echo "phase2-staging-fly-deploy-and-sync: BLOCKED — testnet staging freeze active ($FREEZE)" >&2

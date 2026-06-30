@@ -50,6 +50,13 @@ if [[ ! -f "$COMPLETED" ]]; then
   exit 2
 fi
 
+# 验收链：Graduation 前须 staging /meta 200（post-soak deploy 后）
+if [[ "${PHASE2_REQUIRE_META_GREEN:-}" == "1" ]]; then
+  echo ""
+  echo "== acceptance: staging /meta availability (required for graduation) =="
+  bash "$ROOT/scripts/ops/p2fc-verify-staging-meta-availability.sh" --strict
+fi
+
 # Attest only — do not restart or kill in-flight soak jobs (superseded jobs are archived under superseded-*)
 if [[ -f "$COMPLETED" ]]; then
   job_dir="$(node -e "try{console.log(JSON.parse(require('fs').readFileSync(process.argv[1],'utf8')).job_dir||'')}catch{}" "$COMPLETED" 2>/dev/null || true)"

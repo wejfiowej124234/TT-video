@@ -18,6 +18,9 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
 # shellcheck source=scripts/dev/lib/release-seed-guide-slot.sh
 source "$ROOT/scripts/dev/lib/release-seed-guide-slot.sh"
+# shellcheck source=scripts/dev/lib/local-smoke-preflight.sh
+source "$ROOT/scripts/dev/lib/local-smoke-preflight.sh"
+local_smoke_load_repo_env
 
 API_BASE="${API_BASE:-http://127.0.0.1:8080}"
 API_BASE="${API_BASE%/}"
@@ -163,6 +166,8 @@ echo "== seed-tourist-guide-transaction smoke (① only) API=${API_BASE} =="
 
 health="$(curl -sS -o /dev/null -w '%{http_code}' "${API_BASE}/health" || true)"
 [[ "$health" == "200" ]] || fail "API /health not 200 (got $health); run start-api-with-seed first"
+
+local_smoke_require_mock_pay_api "$API_BASE"
 
 seed="$(curl_json POST "${API_BASE}/auth/seed-test-accounts" "{}")"
 seed_code="${seed%%|*}"

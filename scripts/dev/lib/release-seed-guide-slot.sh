@@ -27,9 +27,32 @@ release_seed_guide_slot() {
         }
       }
     }
+    async function resolveOpenDisputes(api){
+      const arbEmail=process.env.P3_SEED_ARBITRATOR_EMAIL||'oed-p0-arbitrator@traveltrust.test';
+      const lr=await fetch(api+'/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:arbEmail,password:'Test123!'})});
+      if(!lr.ok) return;
+      const {token}=await lr.json();
+      if(!token) return;
+      const dr=await fetch(api+'/api/v1/disputes',{headers:{Authorization:'Bearer '+token}});
+      if(!dr.ok) return;
+      const body=await dr.json();
+      const items=Array.isArray(body.items)?body.items:(Array.isArray(body.disputes)?body.disputes:[]);
+      for (const d of items) {
+        const id=String(d.id||'').trim();
+        const st=String(d.status||'').toLowerCase();
+        if(!id||st==='resolved') continue;
+        await fetch(api+'/api/v1/disputes/'+encodeURIComponent(id)+'/resolve',{
+          method:'POST',
+          headers:{Authorization:'Bearer '+token,'Content-Type':'application/json','Idempotency-Key':idem()},
+          body:JSON.stringify({refund_ratio:1.0,slash_guide:false}),
+        }).catch(()=>{});
+      }
+    }
     (async()=>{
       await releaseFor('guide@test.com');
       await releaseFor('tourist@test.com');
+      await resolveOpenDisputes(api);
+      await releaseFor('guide@test.com');
     })();
   " "$api_base" >/dev/null 2>&1 || true
 }

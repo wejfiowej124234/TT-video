@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 # Admin ① L5 绿集：首页 · Shell · 顶栏管理员入口（非 ②③ GO）
-# Windows 无 bash 时：node scripts/dev/run-admin-l5-green.mjs
+# Windows ARG_MAX：node scripts/dev/run-admin-l5-green.mjs
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+case "$(uname -s 2>/dev/null || echo unknown)" in
+  MINGW*|MSYS*|CYGWIN*)
+    exec node "$ROOT/scripts/dev/run-admin-l5-green.mjs"
+    ;;
+esac
 cd "$ROOT/frontend"
 npx vitest run \
   lib/admin/adminHomeKpiMetric.test.ts \
@@ -250,6 +255,9 @@ npx vitest run \
   'app/admin/compliance/requests/[requestId]/events/adminComplianceRequestEventsPage.contract.test.ts' \
   components/admin/adminRoutePermissionBanner.contract.test.ts \
   lib/admin/adminOpsPlaneUxL5.contract.test.ts \
+  lib/admin/adminOfficialGrowthOpsL5.contract.test.ts \
+  lib/admin/adminContentOpsL5.contract.test.ts \
+  lib/admin/adminAdminPerfectClosureL5.contract.test.ts \
   app/admin/content/adminContentCs1.contract.test.ts \
   app/admin/content/adminContentCs2.contract.test.ts \
   app/admin/content/adminContentCs3.contract.test.ts \

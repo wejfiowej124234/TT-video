@@ -373,8 +373,8 @@ def run_merchant() -> None:
     ]:
         probe_web_page(role, route, expect_patterns=patterns)
 
-    # Provider demo account if exists
-    login = seed_and_login("provider-did-rank-demo@test.com")
+    # Provider accounts: prefer merchant@test.com (C4), fallback demo
+    login = seed_and_login("merchant@test.com") or seed_and_login("provider-did-rank-demo@test.com")
     if login and login.get("token"):
         t, uid = login["token"], login.get("user_id")
         probe_api(role, "商家橱窗", "listings", "GET", "/api/v1/market/subsite/provider/catalog?limit=5", None, None)

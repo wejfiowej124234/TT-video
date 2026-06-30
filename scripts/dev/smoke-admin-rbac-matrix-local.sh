@@ -18,14 +18,9 @@ SUPER_2FA=""
 fail() { echo "smoke-admin-rbac-matrix-local: FAIL $*" >&2; exit 1; }
 ok() { echo "smoke-admin-rbac-matrix-local: OK $*"; }
 
-run_psql() {
-  if command -v psql >/dev/null 2>&1; then
-    psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q "$@"
-  else
-    docker exec "$PG_CONTAINER" psql -U traveltrust -d traveltrust -v ON_ERROR_STOP=1 -q "$@" \
-      || fail "psql unavailable (install psql or start $PG_CONTAINER)"
-  fi
-}
+# shellcheck source=scripts/dev/lib/tt-run-psql.sh
+source "$ROOT/scripts/dev/lib/tt-run-psql.sh"
+run_psql() { tt_run_psql "$@"; }
 
 json_field() {
   node -e "const o=JSON.parse(process.argv[1]); process.stdout.write(String(o[process.argv[2]]??''));" "$1" "$2"

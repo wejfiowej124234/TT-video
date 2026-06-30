@@ -12,6 +12,16 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+export DEPLOYMENT_THREE_STATE_ROOT="$ROOT"
+# shellcheck source=../ops/lib/deployment-three-state-lib.sh
+source "$ROOT/scripts/ops/lib/deployment-three-state-lib.sh"
+case "${DEPLOYMENT_STATE:-}" in
+  sync|fix) deployment_three_state_assert_fly_allowed ;;
+  *)
+    deployment_three_state_blocked "run-phase2-testnet-full-sync-deploy requires DEPLOYMENT_STATE=sync|fix — use run-deployment-three-state.sh"
+    ;;
+esac
+
 cd "$ROOT"
 
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"

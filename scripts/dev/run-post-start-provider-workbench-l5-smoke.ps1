@@ -38,7 +38,7 @@ $rootUnix = ($root -replace '\\', '/')
 
 
 
-Write-Host "Step 6r - PWB-L5 provider ops+order corridor vitest+API API_BASE=$apiBase (SKIP_PLAYWRIGHT=1)"
+Write-Host "Step 6r - Matrix C4 merchant@test.com PWB-L5 provider workbench vitest+API API_BASE=$apiBase (SKIP_PLAYWRIGHT=1)"
 
 $proc = Start-Process -FilePath $bash -ArgumentList @(
 
@@ -60,7 +60,7 @@ if ($proc.ExitCode -ne 0) {
 
     }
 
-    Write-Host "FAIL: smoke-provider-workbench-l5-local exit $($proc.ExitCode)"
+    Write-Host "FAIL: Step 6r matrix C4 merchant@test.com - smoke-provider-workbench-l5-local exit $($proc.ExitCode)"
 
     exit $proc.ExitCode
 
@@ -68,7 +68,7 @@ if ($proc.ExitCode -ne 0) {
 
 
 
-Write-Host "OK: smoke-provider-workbench-l5-local (TT_PROVIDER_WORKBENCH_L5_SMOKE)"
+Write-Host "OK: Step 6r matrix C4 merchant@test.com provider workbench (TT_PROVIDER_WORKBENCH_L5_SMOKE)"
 
 exit 0
 

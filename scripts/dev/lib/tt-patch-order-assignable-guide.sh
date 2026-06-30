@@ -30,7 +30,9 @@ tt_patch_order_assignable_guide() {
     return 1
   }
 
-  local gid patch_resp patch_code
+  local guides_tmp patch_tmp
+  guides_tmp="$(mktemp)"
+  printf '%s' "$guides_body" > "$guides_tmp"
   while IFS= read -r gid; do
     [[ -z "$gid" ]] && continue
     if [[ -n "$exclude_guide_id" && "$gid" == "$exclude_guide_id" ]]; then
@@ -42,13 +44,16 @@ tt_patch_order_assignable_guide() {
     patch_code="${patch_resp##*|}"
     if [[ "$patch_code" == "200" ]]; then
       TT_PATCHED_GUIDE_ID="$gid"
+      rm -f "$guides_tmp"
       return 0
     fi
     if [[ "$patch_code" != "409" ]]; then
+      rm -f "$guides_tmp"
       echo "tt-patch-order-assignable-guide: PATCH guide HTTP $patch_code body=${patch_resp%|*}" >&2
       return 1
     fi
-  done < <(node -e "const o=JSON.parse(process.argv[1]); (o.items||[]).forEach(g=>console.log(String(g.id||'')));" "$guides_body")
+  done < <(node -e "const o=JSON.parse(require('fs').readFileSync(process.argv[1],'utf8')); (o.items||[]).forEach(g=>console.log(String(g.id||'')));" "$guides_tmp")
+  rm -f "$guides_tmp"
 
   [[ -n "$fresh_guide_token" ]] || {
     echo "tt-patch-order-assignable-guide: no assignable catalog guide (all 409) and no fresh_guide_token" >&2
@@ -66,7 +71,10 @@ tt_patch_order_assignable_guide() {
     echo "tt-patch-order-assignable-guide: POST /guides HTTP $create_code body=$create_body" >&2
     return 1
   }
-  new_gid="$(node -e "const o=JSON.parse(process.argv[1]); process.stdout.write(String(o.guide?.id||o.id||''));" "$create_body")"
+  patch_tmp="$(mktemp)"
+  printf '%s' "$create_body" > "$patch_tmp"
+  new_gid="$(node -e "const o=JSON.parse(require('fs').readFileSync(process.argv[1],'utf8')); process.stdout.write(String(o.guide?.id||o.id||''));" "$patch_tmp")"
+  rm -f "$patch_tmp"
   [[ -n "$new_gid" ]] || {
     echo "tt-patch-order-assignable-guide: POST /guides missing guide.id" >&2
     return 1

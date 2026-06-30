@@ -18,7 +18,7 @@ $root = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 $apiBase = "http://127.0.0.1:$Port"
 $rootUnix = ($root -replace '\\', '/')
 
-Write-Host "Step 6t - SWB-L5 steward workbench vitest+API API_BASE=$apiBase (SKIP_PLAYWRIGHT=1)"
+Write-Host "Step 6t - Matrix C1 multi-demo@test.com SWB-L5 steward workbench vitest+API API_BASE=$apiBase (SKIP_PLAYWRIGHT=1)"
 $proc = Start-Process -FilePath $bash -ArgumentList @(
     '-lc',
     "cd '$rootUnix' && export API_BASE='$apiBase' SKIP_PLAYWRIGHT=1 && bash scripts/dev/smoke-steward-workbench-l5-local.sh"
@@ -32,5 +32,5 @@ if ($proc.ExitCode -ne 0) {
     exit $proc.ExitCode
 }
 
-Write-Host "run-post-start-steward-workbench-l5-smoke: OK"
+Write-Host "run-post-start-steward-workbench-l5-smoke: OK Step 6t matrix C1 multi-demo@test.com"
 exit 0

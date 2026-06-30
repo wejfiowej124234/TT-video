@@ -11,25 +11,17 @@ L5_P0_PG="${L5_P0_PG:-traveltrust-postgres}"
 l5_p0_fail() { echo "l5-p0: FAIL $*" >&2; exit 1; }
 l5_p0_ok() { echo "l5-p0: OK $*"; }
 
+# shellcheck source=scripts/dev/lib/tt-run-psql.sh
+source "$l5_p0_root/scripts/dev/lib/tt-run-psql.sh"
+
 l5_p0_api_up() {
   [[ "$(curl -sS -o /dev/null -w '%{http_code}' --max-time 3 "$L5_P0_API/health" 2>/dev/null || echo 000)" == "200" ]]
 }
 
-l5_p0_run_psql() {
-  if command -v psql >/dev/null 2>&1; then
-    psql "$L5_P0_DB" -v ON_ERROR_STOP=1 -q "$@"
-  else
-    docker exec "$L5_P0_PG" psql -U traveltrust -d traveltrust -v ON_ERROR_STOP=1 -q "$@" \
-      || l5_p0_fail "psql unavailable"
-  fi
-}
+l5_p0_run_psql() { tt_run_psql "$@"; }
 
 l5_p0_run_psql_t() {
-  if command -v psql >/dev/null 2>&1; then
-    psql "$L5_P0_DB" -tAc "$1" | tr -d '\r'
-  else
-    docker exec "$L5_P0_PG" psql -U traveltrust -d traveltrust -tAc "$1" | tr -d '\r'
-  fi
+  tt_run_psql -tAc "$1" | tr -d '\r'
 }
 
 l5_p0_json_field() {

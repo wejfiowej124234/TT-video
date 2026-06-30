@@ -3,6 +3,7 @@
 #
 # 覆盖：登录 → GET /me 五槽 → guide/merchant/steward/acquisition 资料读写
 #       → POST market/provider/listings · POST market/acquisition/listings
+#       （收购 listing：已存在 published 或 429 rate_limited 时幂等跳过 — PH-L5/重复跑栈）
 #
 # 前提：API 已起 · DATABASE_URL 可用 · SEED_TEST_ACCOUNTS=1（或已存在 multi-demo 账号）
 #
@@ -47,6 +48,53 @@ slot_state() {
     const s=slots.find(x=>x.id===id);
     process.stdout.write(s?.state||'missing');
   " "$me_json" "$slot_id"
+}
+
+acquisition_published_count() {
+  local token="$1"
+  local out code body
+  out="$(curl_json GET "$API_BASE/api/v1/me/acquisition-listings" "" "$token")"
+  code="${out%%|*}"
+  body="${out#*|}"
+  if [[ "$code" != "200" ]]; then
+    echo "0"
+    return 0
+  fi
+  node -e "
+    const o=JSON.parse(process.argv[1]);
+    process.stdout.write(String((o.published||[]).length));
+  " "$body"
+}
+
+assert_acquisition_listing_publish() {
+  local token="$1"
+  local existing
+  existing="$(acquisition_published_count "$token")"
+  if [[ "${existing:-0}" -gt 0 ]]; then
+    ok "acquisition listing publish (idempotent skip: ${existing} published already)"
+    return 0
+  fi
+
+  local acq_listing acq_code acq_body
+  acq_listing="$(curl_json POST "$API_BASE/api/v1/market/acquisition/listings" "{\"agree_escrow_copy\":true,\"payload\":{\"kind\":\"acquisition_carry_studio_v1\",\"title\":\"Multi-demo acq ${STAMP}\",\"bountyMinUsdc\":120,\"bountyMaxUsdc\":350,\"description\":\"L3 closure\"}}" "$token")"
+  acq_code="${acq_listing%%|*}"
+  acq_body="${acq_listing#*|}"
+
+  if [[ "$acq_code" == "200" || "$acq_code" == "201" ]]; then
+    ok "acquisition listing publish"
+    return 0
+  fi
+
+  if [[ "$acq_code" == "429" ]] && echo "$acq_body" | grep -q 'acquisition_publish_rate_limited'; then
+    existing="$(acquisition_published_count "$token")"
+    if [[ "${existing:-0}" -gt 0 ]]; then
+      ok "acquisition listing publish (idempotent: rate_limited with ${existing} published already)"
+      return 0
+    fi
+    fail "POST acquisition listing HTTP 429 rate_limited and no published listings body=$acq_body"
+  fi
+
+  fail "POST acquisition listing HTTP $acq_code body=$acq_body"
 }
 
 curl_json() {
@@ -131,11 +179,7 @@ prov_body="${provider_listing#*|}"
 [[ "$prov_code" == "200" || "$prov_code" == "201" ]] || fail "POST provider listing HTTP $prov_code body=$prov_body"
 ok "merchant listing publish"
 
-acq_listing="$(curl_json POST "$API_BASE/api/v1/market/acquisition/listings" "{\"agree_escrow_copy\":true,\"payload\":{\"kind\":\"acquisition_carry_studio_v1\",\"title\":\"Multi-demo acq ${STAMP}\",\"bountyMinUsdc\":120,\"bountyMaxUsdc\":350,\"description\":\"L3 closure\"}}" "$TOKEN")"
-acq_code="${acq_listing%%|*}"
-acq_body="${acq_listing#*|}"
-[[ "$acq_code" == "200" || "$acq_code" == "201" ]] || fail "POST acquisition listing HTTP $acq_code body=$acq_body"
-ok "acquisition listing publish"
+assert_acquisition_listing_publish "$TOKEN"
 
 acq_state="$(slot_state "$me_body" acquisition)"
 if [[ "$acq_state" == "active" ]]; then

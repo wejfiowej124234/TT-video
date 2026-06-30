@@ -12,13 +12,17 @@ mkdir -p "$OUT"
 
 export CDA_API_BASE="${CDA_API_BASE:-${API_BASE:-http://127.0.0.1:8080}}"
 export CDA_OUT="$OUT"
-export CDA_PASSWORD="${CDA_PASSWORD:-TestPass12!}"
+export CDA_PASSWORD="${CDA_PASSWORD:-Test123!}"
 export CDA_ADMIN_PASSWORD="${CDA_ADMIN_PASSWORD:-Test123!}"
+export CDA_ADMIN_EMAIL="${CDA_ADMIN_EMAIL:-tourist@test.com}"
 export CDA_ADMIN_EMAIL="${CDA_ADMIN_EMAIL:-tourist@test.com}"
 export CDA_SKIP_P2_GAPS="${CDA_SKIP_P2_GAPS:-1}"
 
-# shellcheck source=scripts/dev/lib/p2fc-audit-admin-prep.sh
-source "$ROOT/scripts/dev/lib/p2fc-audit-admin-prep.sh"
+# ① 本地：C2 SuperAdmin 种子 · ② staging 深审可设 CDA_USE_P2FC_ADMIN=1
+if [[ "${CDA_USE_P2FC_ADMIN:-0}" == "1" ]]; then
+  # shellcheck source=scripts/dev/lib/p2fc-audit-admin-prep.sh
+  source "$ROOT/scripts/dev/lib/p2fc-audit-admin-prep.sh"
+fi
 
 PY="${PYTHON:-}"
 if [[ -z "$PY" ]]; then

@@ -23,6 +23,8 @@ Runbook：`docs/runbook/TT-PH1-SITE-THEME-V1-UPGRADE-001.md` §6.1。
 ## 链上全栈对齐（① · `TRAVELTRUST_CHAIN_ON=1`）
 
 **持久化 SSOT（必读）：** [`docs/runbook/TT-STEWARD-ADMISSION-CHAIN-STATE-SSOT.md`](../../docs/runbook/TT-STEWARD-ADMISSION-CHAIN-STATE-SSOT.md) · Gate：`bash scripts/gates/check-steward-admission-chain-state-ssot.sh`  
+**测试账号矩阵 SSOT：** [`docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md`](../../docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md)（核心 4 + 扩展 2 · L0 `multi-demo` · **§9 覆盖边界**）  
+**① P0 手测（六账号 ≠ 全矩阵）：** [`docs/runbook/TT-LOCAL-P0-MANUAL-UAT-CHECKLIST.md`](../../docs/runbook/TT-LOCAL-P0-MANUAL-UAT-CHECKLIST.md)  
 **日常不重质押：** `set SKIP_ANVIL_ALIGN=1` 后启栈；**仅**地址碰撞修复时 `TTG_ANVIL_FORCE_DEPLOY=1`。
 
 **用途**：本地 Anvil 链 + API `/meta` 链字段 + 根 `.env` + 前端 `NEXT_PUBLIC_*` + 管理员种子 + ABI forge multiset **一次对齐**（**①**；**非** ② 测试网 GO）。
@@ -46,8 +48,11 @@ Runbook：`docs/runbook/TT-PH1-SITE-THEME-V1-UPGRADE-001.md` §6.1。
 | **6b / 6b2** | seed + `bootstrap-local-admin-console`（SuperAdmin） |
 | **6c** | `post-start-api-abi-smoke` — `/meta` 728+807 · admin RBAC · CMS/Growth/Official |
 | **6c1** | `verify-root-env-vs-meta-chain-contracts` — 根 `.env` 链地址 vs `GET /meta`（默认 WARN；`TRAVELTRUST_POST_START_CHAIN_ENV_VERIFY_STRICT=1` 失败即停） |
-| **6t** | `smoke-steward-workbench-l5-local` — multi-demo steward-application / steward-seat（`TRAVELTRUST_STEWARD_PERSIST=1` 默认开） |
-| **6t1** | `check-steward-admission-chain-state-ssot.sh` — SSOT 文档/脚本/钱包锚点机读闸（`TRAVELTRUST_STEWARD_PERSIST=1` 默认开） |
+| **6b5** | `verify-seed-test-accounts-login.ps1` — 矩阵 **C2+C3+C4+E2+C1** 登录（`TRAVELTRUST_VERIFY_SEED_ACCOUNTS=1` 默认） |
+| **6t** | `smoke-steward-workbench-l5-local` — 矩阵 **C1** `multi-demo@test.com`（`TRAVELTRUST_STEWARD_PERSIST=1` 默认开） |
+| **6t1** | `check-steward-admission-chain-state-ssot.sh` — SSOT 机读闸（`TRAVELTRUST_STEWARD_PERSIST=1` 默认开） |
+| **6p** | `smoke-multi-identity-closure-local` — 矩阵 **C1** 四轨 closure（全栈默认开） |
+| **6r** | `smoke-provider-workbench-l5-local` — 矩阵 **C4** `merchant@test.com`（全栈默认开） |
 | **7** | `sync-frontend-env-local-from-root.ps1` — `NEXT_PUBLIC_*` |
 
 跳过：`SKIP_ANVIL_ALIGN=1` · `SKIP_POST_START_CHAIN_ENV_VERIFY=1` · `TRAVELTRUST_CHAIN_ON=0` 强制 mock-pay。

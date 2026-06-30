@@ -51,8 +51,7 @@ assert_deep_release_gate_pass() {
 assert_deep_release_gate_pass
 
 OUT="${HAT_OUT:-$ROOT/evidence/phase28-human-acceptance/$(date -u +%Y%m%dT%H%M%SZ)}"
-FINDINGS_REL="evidence/phase28-human-acceptance/$(basename "$OUT")/hat-findings.json"
-FINDINGS="$ROOT/$FINDINGS_REL"
+FINDINGS="$OUT/hat-findings.json"
 WEB="${HAT_WEB_BASE:-https://tt-web-staging.fly.dev}"
 API="${HAT_API_BASE:-https://tt-api-staging.fly.dev}"
 

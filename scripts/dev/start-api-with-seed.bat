@@ -815,7 +815,7 @@ if /i "%SKIP_POST_SEED_TEST_ACCOUNTS%"=="1" (
     )
 )
 
-echo Step 6b5 - Verify seed login tourist+guide+merchant+provider-did-rank-demo+multi-demo + Hangzhou guides [VERIFY_SEED_ACCOUNTS default on full stack]
+echo Step 6b5 - Matrix seed login C2+C3+C4+E2+C1 [VERIFY_SEED_ACCOUNTS default - SSOT TT-LOCAL-TEST-ACCOUNTS-MATRIX]
 if /i "%SKIP_VERIFY_SEED_ACCOUNTS%"=="1" (
     echo     SKIP SKIP_VERIFY_SEED_ACCOUNTS=1
 ) else if /i not "%TRAVELTRUST_VERIFY_SEED_ACCOUNTS%"=="1" if /i not "%TRAVELTRUST_MANUAL_ACCEPTANCE%"=="1" (
@@ -824,12 +824,14 @@ if /i "%SKIP_VERIFY_SEED_ACCOUNTS%"=="1" (
     powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\verify-seed-test-accounts-login.ps1" -Port !BACKEND_PORT!
     if errorlevel 1 (
         if /i "%TRAVELTRUST_VERIFY_SEED_ACCOUNTS_STRICT%"=="1" (
-            echo FAIL: verify-seed-test-accounts-login - check Step 6b seed and DATABASE_URL hydrate
+            echo FAIL: Step 6b5 matrix C2 C3 C4 E2 C1 - verify-seed-test-accounts-login - check Step 6b seed and DATABASE_URL hydrate
             pause
             exit /b 1
         ) else (
-            echo     WARN: seed login verify failed - retry POST /auth/seed-test-accounts or RESET_DOCKER_DB=1
+            echo     WARN: Step 6b5 matrix C2 C3 C4 E2 C1 login verify failed - retry POST /auth/seed-test-accounts or RESET_DOCKER_DB=1
         )
+    ) else (
+        echo     OK Step 6b5 matrix C2 C3 C4 E2 C1 seed login verified
     )
 )
 
@@ -901,7 +903,7 @@ if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
     powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-verify-root-env-vs-meta-chain-contracts.ps1" -Port !BACKEND_PORT! -WarnOnly
 )
 
-echo Step 6t - SWB-L5 steward workbench vitest+API multi-demo [TRAVELTRUST_POST_START_STEWARD_WORKBENCH_SMOKE=1 or TRAVELTRUST_STEWARD_PERSIST=1]
+echo Step 6t - Matrix C1 SWB-L5 steward workbench vitest+API multi-demo@test.com [TRAVELTRUST_POST_START_STEWARD_WORKBENCH_SMOKE=1 or TRAVELTRUST_STEWARD_PERSIST=1]
 if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
     echo     SKIP FE-only TRAVELTRUST_FRONTEND_ONLY=1
 ) else if /i "%SKIP_POST_START_STEWARD_WORKBENCH_SMOKE%"=="1" (
@@ -913,9 +915,11 @@ if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
 ) else (
     powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-post-start-steward-workbench-l5-smoke.ps1" -Port !BACKEND_PORT!
     if errorlevel 1 (
-        echo FAIL: smoke-steward-workbench-l5-local - see docs/runbook/TT-STEWARD-ADMISSION-CHAIN-STATE-SSOT.md
+        echo FAIL: Step 6t matrix C1 multi-demo - smoke-steward-workbench-l5-local - see docs/runbook/TT-STEWARD-ADMISSION-CHAIN-STATE-SSOT.md
         pause
         exit /b 1
+    ) else (
+        echo     OK Step 6t matrix C1 multi-demo steward workbench smoke
     )
 )
 
@@ -1077,7 +1081,7 @@ if /i "%TRAVELTRUST_POST_START_SEED_TRANSACTION_SMOKE_WARN%"=="1" (
 )
 :tt_after_seed_transaction_smoke
 
-echo Step 6p - L3 multi-identity closure smoke multi-demo four-track [TRAVELTRUST_POST_START_L3_MULTI_IDENTITY_SMOKE=1 default]
+echo Step 6p - Matrix C1 L3 multi-identity closure smoke multi-demo@test.com four-track [TRAVELTRUST_POST_START_L3_MULTI_IDENTITY_SMOKE=1 default]
 if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
     echo     SKIP FE-only TRAVELTRUST_FRONTEND_ONLY=1
     goto :tt_after_l3_multi_identity_smoke
@@ -1095,9 +1099,11 @@ if /i "%TRAVELTRUST_POST_START_L3_MULTI_IDENTITY_WARN%"=="1" (
 ) else (
     powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-post-start-l3-multi-identity-smoke.ps1" -Port !BACKEND_PORT!
     if errorlevel 1 (
-        echo FAIL: smoke-multi-identity-closure-local - see scripts/dev/smoke-multi-identity-closure-local.sh
+        echo FAIL: Step 6p matrix C1 multi-demo - smoke-multi-identity-closure-local - see scripts/dev/smoke-multi-identity-closure-local.sh
         pause
         exit /b 1
+    ) else (
+        echo     OK Step 6p matrix C1 multi-demo four-track closure smoke
     )
 )
 :tt_after_l3_multi_identity_smoke
@@ -1127,7 +1133,7 @@ if /i "%TRAVELTRUST_POST_START_GUIDE_WORKBENCH_L5_SMOKE_WARN%"=="1" (
 )
 :tt_after_guide_workbench_smoke
 
-echo Step 6r - PWB-L5 provider workbench vitest+API merchant-listings [TRAVELTRUST_POST_START_PROVIDER_WORKBENCH_L5_SMOKE=1 default]
+echo Step 6r - Matrix C4 PWB-L5 provider workbench vitest+API merchant@test.com [TRAVELTRUST_POST_START_PROVIDER_WORKBENCH_L5_SMOKE=1 default]
 if /i "%TRAVELTRUST_FRONTEND_ONLY%"=="1" (
     echo     SKIP FE-only TRAVELTRUST_FRONTEND_ONLY=1
     goto :tt_after_provider_workbench_smoke
@@ -1145,9 +1151,11 @@ if /i "%TRAVELTRUST_POST_START_PROVIDER_WORKBENCH_L5_SMOKE_WARN%"=="1" (
 ) else (
     powershell -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\scripts\dev\run-post-start-provider-workbench-l5-smoke.ps1" -Port !BACKEND_PORT!
     if errorlevel 1 (
-        echo FAIL: smoke-provider-workbench-l5-local - see scripts/dev/smoke-provider-workbench-l5-local.sh
+        echo FAIL: Step 6r matrix C4 merchant@test.com - smoke-provider-workbench-l5-local - see scripts/dev/smoke-provider-workbench-l5-local.sh
         pause
         exit /b 1
+    ) else (
+        echo     OK Step 6r matrix C4 merchant provider workbench smoke
     )
 )
 :tt_after_provider_workbench_smoke
@@ -1457,18 +1465,19 @@ echo   DID rank: GET /api/v1/did-rank/travelers^|guides^|itineraries^?period=wee
 echo.
 echo Login: http://localhost:!FRONTEND_PORT!/auth/login
 echo.
-echo --- Manual acceptance test accounts [SEED_TEST_ACCOUNTS=1] ---
-echo   Tourist  email: tourist@test.com              password: Test123!   role: tourist
-echo   Guide    email: guide@test.com                password: Test123!   role: guide [Hangzhou walking+culture]
-echo   Merchant email: merchant@test.com             password: Test123!   role: merchant [/provider workbench]
-echo   DID rank email: provider-did-rank-demo@test.com password: Test123!   role: merchant [DID rank demo listing]
-echo   Multi    email: multi-demo@test.com           password: Test123!   role: multi [identities + publish hub]
-echo   Admin    same tourist@test.com               SuperAdmin after Step 6b2 [/admin]
-echo   Preset:  set TRAVELTRUST_MANUAL_ACCEPTANCE=1  then scripts\start-api-with-seed.bat
-echo   Chain B: tourist@test.com picks guide@test.com in /market guides UI [default TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=1]
-echo   Chain A public catalog: tg_guide_main@trustgate-e2e.local [Step 6b4 GD/P06; do not mix with Chain B orders]
-echo   Disable seed guide in market list only: set TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=0 before start
-echo --- end test accounts ---
+echo --- Test account matrix [SEED_TEST_ACCOUNTS=1] SSOT: docs\runbook\TT-LOCAL-TEST-ACCOUNTS-MATRIX.md ---
+echo   P0 manual UAT (6 accounts != full matrix): docs\runbook\TT-LOCAL-P0-MANUAL-UAT-CHECKLIST.md
+echo   C2  tourist@test.com                 Test123!  traveler + SuperAdmin [/admin]  probe: Step 6b5
+echo   C3  guide@test.com                   Test123!  guide Escrow chain B           probe: Step 6b5 6q
+echo   C4  merchant@test.com                Test123!  provider /provider             probe: Step 6b5 6r
+echo   E2  provider-did-rank-demo@test.com  Test123!  DID rank demo                  probe: Step 6b5
+echo   C1  multi-demo@test.com              Test123!  L0 Hub Publish steward         probe: Step 6b5 6p 6t
+echo   E1  tg_guide_main@trustgate-e2e.local Test123!  guide Escrow chain A catalog  probe: Step 6b4
+echo   Preset: set TRAVELTRUST_MANUAL_ACCEPTANCE=1  then scripts\start-api-with-seed.bat
+echo   Chain B hand test: C2 tourist + C3 guide@test.com in /market guides [TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=1]
+echo   Chain A hand test: C2 tourist + E1 tg_guide_main [Step 6b4 - do not mix with Chain B orders]
+echo   Disable C3 in market list only: set TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=0 before start
+echo --- end test account matrix ---
 echo.
 echo Admin local: tourist@test.com super_admin + console_role_70 SuperAdmin after Step 6b2
 echo Admin walkthrough preset: set TRAVELTRUST_OPEN_ADMIN=1 before start-api-with-seed
@@ -1495,8 +1504,8 @@ if /i "%TRAVELTRUST_STEWARD_PERSIST%"=="1" if /i not "%TRAVELTRUST_TTG_ANVIL%"==
 )
 if /i "%TRAVELTRUST_STEWARD_PERSIST%"=="1" (
     echo   Steward workbench: http://localhost:!FRONTEND_PORT!/governance?view=region#steward-ttg-stake
-    echo   multi-demo@test.com / Test123! wallet 0x104FCb93B5e097F92c93Ee4621C487C6C953D212
-    echo   SSOT: docs\runbook\TT-STEWARD-ADMISSION-CHAIN-STATE-SSOT.md
+    echo   C1 multi-demo@test.com / Test123! wallet 0x104FCb93B5e097F92c93Ee4621C487C6C953D212 [Step 6t]
+    echo   SSOT: docs\runbook\TT-STEWARD-ADMISSION-CHAIN-STATE-SSOT.md + TT-LOCAL-TEST-ACCOUNTS-MATRIX.md
     echo   Phase ? graduation: bash scripts/dev/run-phase-b-daily-maintenance.sh [PRE_TL1 - not this local stack]
 )
 echo.

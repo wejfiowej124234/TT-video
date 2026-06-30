@@ -12,7 +12,7 @@ mkdir -p "$OUT"
 
 export OED_API_BASE="${OED_API_BASE:-${API_BASE:-http://127.0.0.1:8080}}"
 export OED_OUT="$OUT"
-export OED_PASSWORD="${OED_PASSWORD:-TestPass12!}"
+export OED_PASSWORD="${OED_PASSWORD:-Test123!}"
 export OED_ADMIN_PASSWORD="${OED_ADMIN_PASSWORD:-Test123!}"
 export OED_ARBITRATOR_EMAIL="${OED_ARBITRATOR_EMAIL:-oed-arbitrator-${STAMP}@traveltrust.test}"
 export OED_ADMIN_EMAIL="${OED_ADMIN_EMAIL:-tourist@test.com}"
@@ -21,6 +21,37 @@ export OED_SKIP_P2_GAPS="${OED_SKIP_P2_GAPS:-1}"
 PY="${PYTHON:-}"
 if [[ -z "$PY" ]]; then
   command -v python >/dev/null 2>&1 && PY=python || PY=python3
+fi
+
+# Python 深审探针未入库时：降级为 P0 L3 bash smoke（① API 切片）
+if [[ ! -f "$ROOT/scripts/dev/order-escrow-dispute-deep-audit.py" ]]; then
+  echo "OED: order-escrow-dispute-deep-audit.py missing — fallback smoke-order-escrow-dispute-p0-local.sh"
+  export API_BASE="$OED_API_BASE"
+  export OED_ARBITRATOR_EMAIL="oed-p0-arbitrator@traveltrust.test"
+  if [[ "${OED_SKIP_API_RESTART:-0}" == "1" ]]; then
+    RESTART_API=0 bash "$ROOT/scripts/dev/smoke-order-escrow-dispute-p0-local.sh"
+  else
+    RESTART_API=1 bash "$ROOT/scripts/dev/smoke-order-escrow-dispute-p0-local.sh"
+  fi
+  exit $?
+fi
+
+# 裁决员角色：默认重启 API 并注入 P3_SEED_ARBITRATOR_EMAIL（与 CDIA 同源）
+if [[ "${OED_SKIP_API_RESTART:-0}" != "1" ]]; then
+  netstat -ano 2>/dev/null | grep ":8080" | grep LISTENING | awk '{print $5}' | head -1 | xargs -I{} taskkill //F //PID {} 2>/dev/null || true
+  sleep 2
+  set -a
+  [[ -f .env ]] && source .env
+  set +a
+  export P3_CHAIN_OFF=1
+  export SEED_TEST_ACCOUNTS="${SEED_TEST_ACCOUNTS:-1}"
+  export P3_SEED_ARBITRATOR_EMAIL="$OED_ARBITRATOR_EMAIL"
+  nohup bash scripts/dev/start-api-for-playwright.sh > /tmp/oed-api.log 2>&1 &
+  for _ in $(seq 1 60); do
+    health="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 3 "${OED_API_BASE}/health" 2>/dev/null || echo 000)"
+    [[ "$health" == "200" ]] && break
+    sleep 3
+  done
 fi
 
 if [[ -z "${P3_SEED_ARBITRATOR_EMAIL:-}" ]]; then
@@ -85,11 +116,15 @@ export PLAYWRIGHT_API_HEALTH_URL="${PLAYWRIGHT_API_HEALTH_URL:-$OED_API_BASE/hea
 export PLAYWRIGHT_ARBITRATOR_SEED_EMAIL="${PLAYWRIGHT_ARBITRATOR_SEED_EMAIL:-$OED_ARBITRATOR_EMAIL}"
 
 PW_RC=0
+if [[ "${OED_SKIP_PLAYWRIGHT:-0}" == "1" ]]; then
+  echo "OED: SKIP Playwright (OED_SKIP_PLAYWRIGHT=1)" | tee "$OUT/oed-playwright.log"
+else
 set +e
 (cd "$ROOT/frontend" && npx playwright test e2e/f024-f025-f026-request.spec.ts --grep "F-025|F-026" --project=chromium --reporter=list) \
   2>&1 | tee "$OUT/oed-playwright.log"
 PW_RC=$?
 set -e
+fi
 
 set +e
 "$PY" "$ROOT/scripts/dev/oed-phase2-pg-consistency-audit.py" 2>&1 | tee "$OUT/oed-phase2-pg.log"

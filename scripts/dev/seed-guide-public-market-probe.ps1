@@ -17,16 +17,19 @@ function Get-SeedGuideUserId {
         [int]$TimeoutSec = 30
     )
     $loginBody = (@{ email = $Script:SeedGuideEmail; password = $Script:SeedGuidePassword } | ConvertTo-Json -Compress)
-    $login = Invoke-RestMethod -Uri "$Base/auth/login" -Method Post -ContentType 'application/json' `
-        -Body $loginBody -TimeoutSec $TimeoutSec
+    $loginBytes = [System.Text.Encoding]::UTF8.GetBytes($loginBody)
+    $loginResp = Invoke-WebRequest -Uri "$Base/auth/login" -Method Post -ContentType 'application/json; charset=utf-8' `
+        -Body $loginBytes -TimeoutSec $TimeoutSec -UseBasicParsing
+    $login = ($loginResp.Content | ConvertFrom-Json)
     $uid = [string]$login.user_id
     if ([string]::IsNullOrWhiteSpace($uid)) {
         $token = [string]$login.token
         if ([string]::IsNullOrWhiteSpace($token)) {
             throw 'POST /auth/login guide@test.com missing user_id and token'
         }
-        $me = Invoke-RestMethod -Uri "$Base/api/v1/me" -Method Get -Headers @{ Authorization = "Bearer $token" } `
-            -TimeoutSec $TimeoutSec
+        $meResp = Invoke-WebRequest -Uri "$Base/api/v1/me" -Method Get -Headers @{ Authorization = "Bearer $token" } `
+            -TimeoutSec $TimeoutSec -UseBasicParsing
+        $me = ($meResp.Content | ConvertFrom-Json)
         if ($me.user) {
             $uid = [string]$me.user.id
         }

@@ -245,23 +245,60 @@ def compare_contracts(
 
 
 def probe_login(api: str, email: str, password: str = "Test123!") -> dict[str, Any]:
-    data = json.dumps({"email": email, "password": password}).encode()
-    req = urllib.request.Request(
-        f"{api}/auth/login",
-        data=data,
-        headers={"Content-Type": "application/json", "Accept": "application/json"},
-        method="POST",
-    )
+    import time
+
+    body = json.dumps({"email": email, "password": password}).encode()
+    headers = {"Content-Type": "application/json", "Accept": "application/json"}
+    last_err: Exception | None = None
+    for attempt in range(4):
+        req = urllib.request.Request(
+            f"{api.rstrip('/')}/auth/login",
+            data=body,
+            headers=headers,
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=45) as resp:
+                return json.loads(resp.read().decode())
+        except Exception as e:
+            last_err = e
+            if attempt < 3:
+                time.sleep(1.5 * (attempt + 1))
+                continue
+            break
     try:
-        with urllib.request.urlopen(req, timeout=45) as resp:
-            return json.loads(resp.read().decode())
-    except Exception as e:
-        return {"error": str(e)}
+        proc = subprocess.run(
+            [
+                "curl",
+                "-sS",
+                "--max-time",
+                "45",
+                "-X",
+                "POST",
+                f"{api.rstrip('/')}/auth/login",
+                "-H",
+                "Content-Type: application/json",
+                "-d",
+                json.dumps({"email": email, "password": password}),
+            ],
+            capture_output=True,
+            text=True,
+            timeout=50,
+            check=False,
+        )
+        if proc.stdout.strip():
+            return json.loads(proc.stdout)
+    except Exception:
+        pass
+    return {"error": str(last_err) if last_err else "probe_login failed"}
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--expect-sha", default=os.environ.get("PHASE2_BASELINE_SSOT_SHA", SSOT_DEFAULT))
+    ap.add_argument(
+        "--expect-sha",
+        default=os.environ.get("PHASE2_BASELINE_SSOT_SHA") or git_head(),
+    )
     ap.add_argument("--api-base", default=os.environ.get("STAGING_API_BASE", API_DEFAULT))
     ap.add_argument("--web-base", default=os.environ.get("STAGING_WEB_BASE", WEB_DEFAULT))
     ap.add_argument("--out-dir", default="")

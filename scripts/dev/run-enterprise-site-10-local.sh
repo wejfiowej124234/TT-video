@@ -19,6 +19,10 @@ load_database_url_from_root_env "$ROOT" || exit $?
 
 echo "== enterprise site 10 local (① · full-chain · L5 · not ②③) =="
 
+# shellcheck source=scripts/dev/lib/local-smoke-preflight.sh
+source "$ROOT/scripts/dev/lib/local-smoke-preflight.sh"
+local_smoke_require_mock_pay_api "${API_BASE_URL:-http://127.0.0.1:8080}" || exit $?
+
 bash "$ROOT/scripts/dev/run-go-local-phase1-acceptance.sh"
 # Phase1 已跑 cargo 子集；同编排内跳过 linkage 全量 cargo（API 常驻时 PG 烟测会互斥）
 export CI_LOCAL_SKIP_PHASE1_BACKEND_TRIPLE="${CI_LOCAL_SKIP_PHASE1_BACKEND_TRIPLE:-1}"
@@ -42,6 +46,14 @@ fi
 
 if [[ "${ENTERPRISE_SITE_10_FULL_E2E:-}" == "1" ]]; then
   echo "== Playwright chromium full matrix (optional · long run) =="
+  export COMMUNITY_ME_L5_GREEN_REUSE="${COMMUNITY_ME_L5_GREEN_REUSE:-1}"
+  export PLAYWRIGHT_SKIP_NEXT_PURGE="${PLAYWRIGHT_SKIP_NEXT_PURGE:-1}"
+  export PLAYWRIGHT_REUSE_API_SERVER="${PLAYWRIGHT_REUSE_API_SERVER:-1}"
+  export PLAYWRIGHT_REUSE_FE_SERVER="${PLAYWRIGHT_REUSE_FE_SERVER:-0}"
+  export PLAYWRIGHT_LOCAL_SITE10_MATRIX="${PLAYWRIGHT_LOCAL_SITE10_MATRIX:-1}"
+  export TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE="${TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE:-1}"
+  export NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_SHOWCASE="${NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_SHOWCASE:-1}"
+  echo "  PLAYWRIGHT_REUSE_FE_SERVER=${PLAYWRIGHT_REUSE_FE_SERVER} · NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_SHOWCASE=${NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_SHOWCASE}"
   bash "$ROOT/scripts/gates/local-e2e-chromium-full-matrix.sh"
 else
   echo "ENTERPRISE_SITE_10_FULL_E2E not set → skipped local-e2e-chromium-full-matrix (see ENTERPRISE-SITE-10-L5-MATRIX.md §1.1)"
