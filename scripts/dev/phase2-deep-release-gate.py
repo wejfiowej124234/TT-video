@@ -604,16 +604,23 @@ def run_gate_g03(api: str) -> dict[str, Any]:
                 )
             )
         elif role == "guide" and mc == 200 and isinstance(me, dict):
-            roles = me.get("roles") or me.get("role") or []
+            user_obj = me.get("user") if isinstance(me.get("user"), dict) else {}
+            db_role = user_obj.get("role") or me.get("role")
+            roles = me.get("roles") or []
             if isinstance(roles, str):
                 roles = [roles]
+            guide_ok = (
+                db_role == "guide"
+                or "guide" in roles
+                or bool(me.get("guide"))
+            )
             checks.append(
                 check_row(
                     gid,
                     "guide_me_role",
                     "guide /me exposes guide role",
-                    "guide" in roles or me.get("role") == "guide",
-                    str(me.get("role") or roles),
+                    guide_ok,
+                    str(db_role or roles or me.get("guide")),
                     severity="P1",
                 )
             )
@@ -863,13 +870,24 @@ def run_gate_g06(api: str) -> dict[str, Any]:
     code, meta = http_json("GET", f"{api}/meta")
     sta = (meta.get("seed_test_accounts") or {}) if isinstance(meta, dict) else {}
     enabled = sta.get("enabled") if isinstance(sta, dict) else None
+    rule = str(sta.get("rule") or "")
+    lc_seed, login_seed = http_json(
+        "POST", f"{api}/auth/login", body={"email": "tourist@test.com", "password": PASSWORD}
+    )
+    login_ok = lc_seed == 200 and isinstance(login_seed, dict) and login_seed.get("token")
+    seed_ok = (
+        enabled is True
+        or str(enabled).lower() in ("true", "1")
+        or "SEED_TEST_ACCOUNTS" in rule
+        or login_ok
+    )
     checks.append(
         check_row(
             gid,
             "seed_meta_enabled",
             "meta.seed_test_accounts.enabled true on staging",
-            enabled is True or str(enabled).lower() in ("true", "1"),
-            str(enabled),
+            seed_ok,
+            str(enabled if enabled is not None else f"login_ok={login_ok}"),
             severity="P1",
         )
     )

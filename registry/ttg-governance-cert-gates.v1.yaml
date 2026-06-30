@@ -1,0 +1,177 @@
+schema: traveltrust.ttg_governance_cert_gates_registry.v1
+phase: ② testnet
+ssot: scripts/dev/gen-ttg-cert-execution-ledger.py CERT_STEPS
+path_triggers:
+- contracts/src
+- contracts/script
+- docs/spec/governance-token
+- registry/ttg-governance-cert-gates.v1.yaml
+- scripts/dev/run-tt-governance-cert
+- scripts/dev/gen-ttg-cert
+- scripts/dev/gen-ttg-governance
+- evidence/GO_ttg_cert
+certs:
+  '1':
+    name: Human UAT
+    target_tier: HUMAN_DONE
+    evidence_subdir: human-uat
+    signoff_file: HUMAN-SCREEN-ACCEPTANCE-SIGNOFF.json
+    mtm_ids:
+    - CHK-CORE-01
+    - CHK-FE-01
+    - CHK-FE-02
+    - CHK-FE-03
+    - CHK-FE-09
+    - CHK-FE-10
+    - CHK-FE-13
+    - CHK-OPS-12
+    - CHK-BASE-06
+  '2':
+    name: Multi Identity Walkthrough
+    target_tier: HUMAN_DONE
+    evidence_subdir: walkthrough/multi-identity
+    signoff_file: MULTI-IDENTITY-WALKTHROUGH-SIGNOFF.json
+    mtm_ids:
+    - CHK-CORE-02
+    - CHK-CORE-23
+    - CHK-FE-15
+    - CHK-FE-12
+    - CHK-ID-01
+    - CHK-ID-02
+    - CHK-ID-03
+    - CHK-ID-04
+    - CHK-ID-05
+    - CHK-ID-06
+    - CHK-ID-07
+    runner: scripts/dev/run-tt-governance-cert-02-multi-identity-walkthrough.sh
+  '3':
+    name: Admin Walkthrough
+    target_tier: HUMAN_DONE
+    evidence_subdir: walkthrough/admin
+    signoff_file: ADMIN-WALKTHROUGH-SIGNOFF.json
+    mtm_ids:
+    - CHK-CORE-03
+    - CHK-CORE-24
+    - CHK-FE-14
+    - CHK-ADM-01
+    - CHK-ADM-02
+    - CHK-ADM-03
+    - CHK-ADM-04
+    - CHK-ADM-05
+    - CHK-ADM-06
+    - CHK-ADM-07
+    runner: scripts/dev/run-tt-governance-cert-03-admin-walkthrough.sh
+  '4':
+    name: Safe Walkthrough
+    target_tier: OPS_DONE
+    evidence_subdir: walkthrough/safe
+    signoff_file: SAFE-WALKTHROUGH-SIGNOFF.json
+    mtm_ids:
+    - CHK-CORE-17
+    - CHK-OPS-03
+    - CHK-ID-10
+    - CHK-SC-12
+    runner: scripts/dev/run-tt-governance-cert-04-safe-walkthrough.sh
+  '5':
+    name: Finance Walkthrough
+    target_tier: OPS_DONE
+    evidence_subdir: walkthrough/finance
+    signoff_file: FINANCE-WALKTHROUGH-SIGNOFF.json
+    mtm_ids:
+    - CHK-CORE-15
+    - CHK-OPS-02
+    - CHK-ID-09
+    - CHK-FN-11
+    runner: scripts/dev/run-tt-governance-cert-05-finance-walkthrough.sh
+  '6':
+    name: Phase B unpause
+    target_tier: OPS_DONE
+    evidence_subdir: phase-b/unpause
+    signoff_file: PHASE-B-UNPAUSE-SIGNOFF.json
+    mtm_ids:
+    - CHK-OPS-11
+    - CHK-BASE-05
+    - CHK-CORE-04
+    - CHK-CORE-05
+    - CHK-CORE-06
+    runner: scripts/dev/run-tt-governance-cert-06-phase-b-unpause.sh
+  '7':
+    name: Execute
+    target_tier: OPS_DONE
+    evidence_subdir: phase-b/execute
+    signoff_file: PHASE-B-EXECUTE-SIGNOFF.json
+    mtm_ids:
+    - CHK-CORE-07
+    - CHK-FE-08
+    - CHK-SC-01
+    - CHK-SC-02
+    - CHK-DR-01
+    runner: scripts/dev/run-tt-governance-cert-07-execute.sh
+  '8':
+    name: Treasury Spend
+    target_tier: OPS_DONE
+    evidence_subdir: phase-b/treasury-spend
+    signoff_file: PHASE-B-TREASURY-SPEND-SIGNOFF.json
+    mtm_ids:
+    - CHK-CORE-08
+    - CHK-CORE-14
+    - CHK-FN-02
+    - CHK-SC-04
+    runner: scripts/dev/run-tt-governance-cert-08-treasury-spend.sh
+  '9':
+    name: Unstake
+    target_tier: OPS_DONE
+    evidence_subdir: phase-b/unstake
+    signoff_file: PHASE-B-UNSTAKE-SIGNOFF.json
+    mtm_ids:
+    - CHK-SC-06
+    - CHK-CORE-10
+    - CHK-FE-12
+  '10':
+    name: Incident Tabletop
+    target_tier: DR_DONE
+    evidence_subdir: incidents/tabletop
+    signoff_file: INCIDENT-TABLETOP-SIGNOFF.json
+    mtm_ids:
+    - CHK-DR-10
+    - CHK-CORE-18
+    - CHK-OPS-07
+  '11':
+    name: Disaster Recovery Drill
+    target_tier: DR_DONE
+    evidence_subdir: drills
+    signoff_file: DR-DRILL-SIGNOFF.json
+    mtm_ids:
+    - CHK-DR-01
+    - CHK-DR-02
+    - CHK-DR-03
+    - CHK-DR-04
+    - CHK-DR-05
+    - CHK-DR-06
+    - CHK-DR-07
+    - CHK-DR-08
+    - CHK-DR-09
+    - CHK-CORE-27
+    - CHK-CORE-28
+    - CHK-CORE-29
+    - CHK-UP-01
+    - CHK-UP-04
+    - CHK-DB-08
+  '12':
+    name: GORP Signoff
+    target_tier: OPS_DONE
+    evidence_subdir: gorp-signoff
+    signoff_file: GORP-SIGNOFF.json
+    mtm_ids:
+    - CHK-OPS-01
+    - CHK-OPS-04
+    - CHK-OPS-05
+    - CHK-OPS-06
+    - CHK-OPS-08
+    - CHK-OPS-09
+    - CHK-OPS-10
+    - CHK-CORE-30
+    - CHK-ID-08
+    - CHK-ID-11
+    - CHK-ID-12
+    - CHK-UP-05

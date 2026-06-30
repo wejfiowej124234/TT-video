@@ -377,8 +377,24 @@ def run_merchant() -> None:
     login = seed_and_login("merchant@test.com") or seed_and_login("provider-did-rank-demo@test.com")
     if login and login.get("token"):
         t, uid = login["token"], login.get("user_id")
-        probe_api(role, "商家橱窗", "listings", "GET", "/api/v1/market/subsite/provider/catalog?limit=5", None, None)
-        probe_api(role, "入驻状态", "onboarding", "GET", "/api/v1/me/onboarding", t, uid)
+        probe_api(
+            role,
+            "商家橱窗",
+            "listings",
+            "GET",
+            "/api/v1/market/provider/listings?limit=5",
+            t,
+            uid,
+        )
+        probe_api(
+            role,
+            "入驻状态",
+            "onboarding",
+            "GET",
+            "/api/v1/onboarding/entitlements/me",
+            t,
+            uid,
+        )
     else:
         add_flow(role, "商家登录", "provider-did-rank-demo", "BLOCKED", "无种子商家账号；须自注册走 /provider/register")
         add_issue(
