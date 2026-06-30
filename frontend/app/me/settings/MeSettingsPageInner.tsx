@@ -73,8 +73,8 @@ export function MeSettingsPageInner() {
         />
       ) : null}
 
-      {loading ? <MeSettingsProfileCardSkeleton /> : null}
-      {!loading && user ? <MeSettingsProfileCard user={user} t={t} /> : null}
+      {loading && !user ? <MeSettingsProfileCardSkeleton /> : null}
+      {user ? <MeSettingsProfileCard user={user} t={t} /> : null}
       {!loading && error ? (
         <p className={TT_ME_SETTINGS_L5.subtitle} role="alert">
           {error}{" "}

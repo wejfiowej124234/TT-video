@@ -238,7 +238,7 @@ pub async fn delete_me_session_by_suffix(
     }
 
     let target_token = if let Some(ref pool) = co.db_pool {
-        match db::find_session_token_by_suffix_for_user(pool, uid, suffix).await {
+        match db::find_session_token_by_suffix_for_user(pool, uid, suffix, current.as_deref()).await {
             Ok(Some(t)) => Some(t),
             Ok(None) => None,
             Err(e) => {

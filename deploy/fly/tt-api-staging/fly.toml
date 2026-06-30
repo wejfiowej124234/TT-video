@@ -12,6 +12,9 @@ primary_region = 'sin'
 
 [env]
   PORT = '8080'
+  # GET /meta 治理聚合易超 30s → 408；与 meta-availability-hotfix 同源
+  REQUEST_TIMEOUT_SECS = '120'
+  TRAVELTRUST_COMPLEXITY_CONVERGENCE_FREEZE = '1'
   # TN-P1-010 · staging indexer backfill（freetier RPC + Fly HTTP 窗）
   INDEXER_ETH_GET_LOGS_MAX_BLOCK_SPAN = '9999'
   INDEXER_TICK_MAX_BLOCKS_PER_SCAN = '9999'

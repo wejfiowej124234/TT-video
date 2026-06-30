@@ -19,7 +19,7 @@ import { countOrdersListByTerminalState } from "@/lib/orders/ordersListStateCoun
 import { filterOrdersListByUrlStateParam } from "@/lib/orders/ordersListStateFilter";
 import { isGuideOrdersListHat } from "@/lib/guide/guideOrderCorridorModel";
 import { isMerchantOrdersListHat } from "@/lib/provider/merchantOrderCorridorModel";
-import { ordersListL5MainDataAttrs, TT_ORDERS_LIST_L5 } from "@/lib/orders/ordersListL5";
+import { ordersListL5ReadyMainDataAttrs, TT_ORDERS_LIST_L5 } from "@/lib/orders/ordersListL5";
 import OrderDetailDrawer from "@/components/market/OrderDetailDrawer";
 import { OrdersListDeleteConfirmDialog } from "@/components/orders/OrdersListDeleteConfirmDialog";
 
@@ -97,7 +97,7 @@ export default function OrdersListPageMain() {
             ? t("merchant_orders_list_title")
             : t("orders_myOrders")
       }
-      {...ordersListL5MainDataAttrs()}
+      {...ordersListL5ReadyMainDataAttrs()}
       {...(guideOrdersHat ? { "data-tt-orders-list-hat": "guide" } : {})}
       {...(merchantOrdersHat ? { "data-tt-orders-list-hat": "merchant" } : {})}
     >

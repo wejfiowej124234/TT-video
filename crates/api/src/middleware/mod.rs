@@ -55,6 +55,18 @@ pub fn idempotency_cache_max() -> usize {
     })
 }
 pub const REQUEST_TIMEOUT_SECS: u64 = 30;
+
+/// Axum TimeoutLayer + GET /meta.defaults 同源；`REQUEST_TIMEOUT_SECS` env 覆盖（5..=600，默认 30）。
+pub fn request_timeout_secs() -> u64 {
+    static SECS: OnceLock<u64> = OnceLock::new();
+    *SECS.get_or_init(|| {
+        env::var("REQUEST_TIMEOUT_SECS")
+            .ok()
+            .and_then(|s| s.parse().ok())
+            .filter(|&n| (5..=600).contains(&n))
+            .unwrap_or(REQUEST_TIMEOUT_SECS)
+    })
+}
 pub const REQUEST_BODY_LIMIT_BYTES: usize = 1024 * 1024;
 pub const GUIDE_UPLOAD_RATE_LIMIT: usize = 10;
 pub const GUIDE_UPLOAD_RATE_WINDOW_SECS: u64 = 60;

@@ -29,7 +29,7 @@ pub fn app(
         .with_state(meta_state)
         .layer(axum::middleware::from_fn(internal_api_secret_gate_layer))
         .layer(TimeoutLayer::new(Duration::from_secs(
-            middleware::REQUEST_TIMEOUT_SECS,
+            middleware::request_timeout_secs(),
         )))
         .layer(RequestBodyLimitLayer::new(
             middleware::REQUEST_BODY_LIMIT_BYTES,

@@ -26,6 +26,10 @@ import { useMeIdentitiesProfileLinkThumbs } from "@/lib/me/useMeIdentitiesProfil
 import { useMeIdentitiesCoreCardSignals } from "@/lib/me/useMeIdentitiesCoreCardSignals";
 import { useMeIdentityHubBlockedReasons } from "@/lib/me/useMeIdentityHubBlockedReasons";
 import { useMeIdentitySlots } from "@/lib/me/useMeIdentitySlots";
+import {
+  isComplexityConvergenceFreezeActive,
+  isExpansionIdentitySurfaceVisible,
+} from "@/lib/complexityConvergenceSurface";
 import { stewardAdmissionWorkbenchHref } from "@/lib/steward/stewardAdmissionNav";
 
 /** 顶栏「多重身份」Hub：基础能力（旅行者+收购）+ 经营身份申请/工作台（L5 暗壳）。 */
@@ -135,6 +139,7 @@ function MeIdentitiesHubInner() {
       className={TT_ME_IDENTITIES_L5.pageShell}
       aria-labelledby="me-identities-hub-title"
       data-tt-me-identities-surface="hub"
+      data-tt-complexity-convergence-freeze={isComplexityConvergenceFreezeActive() ? "1" : undefined}
       {...meIdentitiesL5MainDataAttrs(true)}
     >
       <AuthL5PageBackdrop />
@@ -162,6 +167,7 @@ function MeIdentitiesHubInner() {
             aria-label={t("me_identities_capabilities_grid_aria")}
             data-tt-me-identities-capabilities-grid="1"
           >
+            {isExpansionIdentitySurfaceVisible("acquisition") ? (
             <li className={TT_ME_IDENTITIES_L5.gridItem}>
               <MeIdentitiesL5IdentityCard
                 href={acquisitionCard.href}
@@ -174,6 +180,7 @@ function MeIdentitiesHubInner() {
                 blockedReasonLines={blockedReasonBySurface.acquisition}
               />
             </li>
+            ) : null}
           </ul>
         </section>
 
@@ -198,7 +205,13 @@ function MeIdentitiesHubInner() {
               aria-label={t("me_identities_operator_grid_aria")}
               data-tt-me-identities-operator-grid="1"
             >
-            {operatorCards.map(({ surfaceId, titleKey, descKey, applyHref, onboardingHref }) => {
+            {operatorCards
+              .filter(({ surfaceId }) =>
+                isExpansionIdentitySurfaceVisible(
+                  surfaceId === "provider" ? "merchant" : "region_steward",
+                ),
+              )
+              .map(({ surfaceId, titleKey, descKey, applyHref, onboardingHref }) => {
               const signals =
                 coreReady && coreSignals
                   ? surfaceId === "provider"

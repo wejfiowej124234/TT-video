@@ -215,7 +215,7 @@ pub async fn list_sessions_for_user(
         r#"
         SELECT token, user_id, created_at, last_seen_at, expires_at, idle_expires_at, revoked_at, revoked_reason
         FROM sessions
-        WHERE user_id = $1
+        WHERE user_id = $1 AND revoked_at IS NULL
         ORDER BY created_at DESC
         "#,
     )
@@ -253,15 +253,29 @@ pub async fn find_session_token_by_suffix_for_user(
     pool: &PgPool,
     user_id: Uuid,
     suffix: &str,
+    exclude_token: Option<&str>,
 ) -> Result<Option<String>, sqlx::Error> {
     if suffix.is_empty() {
         return Ok(None);
     }
-    let rows = list_sessions_for_user(pool, user_id).await?;
-    Ok(rows
-        .into_iter()
-        .find(|r| session_token_suffix(&r.token) == suffix || r.token == suffix)
-        .map(|r| r.token))
+    let rows = sqlx::query_as::<_, (String,)>(
+        r#"
+        SELECT token
+        FROM sessions
+        WHERE user_id = $1
+          AND revoked_at IS NULL
+          AND (token = $2 OR RIGHT(token, 6) = $2)
+          AND ($3::text IS NULL OR token <> $3)
+        ORDER BY last_seen_at DESC NULLS LAST, created_at DESC
+        LIMIT 1
+        "#,
+    )
+    .bind(user_id)
+    .bind(suffix)
+    .bind(exclude_token)
+    .fetch_all(pool)
+    .await?;
+    Ok(rows.into_iter().next().map(|(token,)| token))
 }
 
 fn session_token_suffix(token: &str) -> String {

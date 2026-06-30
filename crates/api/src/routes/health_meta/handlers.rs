@@ -913,7 +913,7 @@ pub(super) async fn meta(State(state): State<ApiMetaState>) -> impl IntoResponse
     }
 
     let mut defaults_section = json!({
-        "request_timeout_secs": middleware::REQUEST_TIMEOUT_SECS,
+        "request_timeout_secs": middleware::request_timeout_secs(),
         "request_body_limit_bytes": middleware::REQUEST_BODY_LIMIT_BYTES,
         "idempotency_cache_max": middleware::idempotency_cache_max(),
         "rule": "GET /meta.defaults mirrors middleware REQUEST_TIMEOUT_SECS / REQUEST_BODY_LIMIT_BYTES / idempotency cache max (routes/middleware); 754 GET /meta defaults 对象 defaults_top_keys / defaults_top_keys_contract_754 与 DEFAULTS_META_TOP_KEYS 六键顺序同源",

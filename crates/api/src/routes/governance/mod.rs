@@ -19,7 +19,6 @@ mod ttg_exchange_quote;
 
 /// `router` 与 `doc_params` 直连；**`get_protocol_reference`** 供 **`admin_cross_check`** 等同源组装；其余供契约测试。
 pub use doc_params::get_protocol_reference;
-pub use ttg_exchange_quote::get_ttg_exchange_quote;
 #[cfg(test)]
 pub use doc_params::{get_governance_params, get_protocol_reference_pending};
 pub use fee_pool_aggregate::{get_governance_fee_pool_aggregates, FeePoolAggregatesQuery};

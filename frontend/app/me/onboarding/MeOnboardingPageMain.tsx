@@ -105,6 +105,19 @@ export default function MeOnboardingPageMain() {
     router.replace(authReturnPath);
   }, [authReturnPath, quoteRole, router]);
 
+  const pendingSessionGate = !sessionChecked || sessionChecking;
+  const needsLoginGate =
+    fromRaw !== "settings" &&
+    sessionChecked &&
+    !sessionChecking &&
+    !loggedIn &&
+    !guestEntryAllowed;
+
+  useEffect(() => {
+    if (!needsLoginGate) return;
+    router.replace(`/auth/login?returnUrl=${encodeURIComponent(authReturnPath)}`);
+  }, [needsLoginGate, authReturnPath, router]);
+
   if (quoteRole === "region_steward") {
     return <MeOnboardingLoading data-tt-me-onboarding-steward-redirect="1" />;
   }
@@ -133,13 +146,6 @@ export default function MeOnboardingPageMain() {
   const loginPhaseGuest = !sessionChecking && flowPhase === "login" && !loggedIn;
   const integrateWalletSessionInNextStep = loginPhaseGuest && walletConnected;
   const showWalletSessionHintInNextStep = loginPhaseGuest && !walletConnected;
-  const pendingSessionGate = !sessionChecked || sessionChecking;
-  const needsLoginGate =
-    fromRaw !== "settings" &&
-    sessionChecked &&
-    !sessionChecking &&
-    !loggedIn &&
-    !guestEntryAllowed;
   const guestQuotePreview =
     guestEntryAllowed && !loggedIn && sessionChecked && !sessionChecking && quote != null && !quoteErr;
   const consoleProgressStep = guestQuotePreview
@@ -148,11 +154,6 @@ export default function MeOnboardingPageMain() {
   const progressCompactLabelOverride =
     flowPhase === "confirm" ? t("me_onboarding_progressConfirmProvider") : undefined;
   const hideConfirmNextStep = loggedIn && flowPhase === "confirm";
-
-  useEffect(() => {
-    if (!needsLoginGate) return;
-    router.replace(`/auth/login?returnUrl=${encodeURIComponent(authReturnPath)}`);
-  }, [needsLoginGate, authReturnPath, router]);
 
   if (pendingSessionGate || needsLoginGate) {
     return <MeOnboardingLoading data-tt-me-onboarding-gate-redirect="1" />;

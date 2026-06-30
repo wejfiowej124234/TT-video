@@ -46,7 +46,7 @@ export function GuideDashboardPageMain(props: GuideDashboardPageViewModel) {
     ordersLoading: inboxOrdersLoading,
     ordersError: inboxOrdersError,
     retryInbox,
-  } = useGuideWorkbenchInbox(isGuideRole, t);
+  } = useGuideWorkbenchInbox(isGuideRole, null, t);
 
   if (loading) return <MePageSkeleton t={t} ariaLabelKey="guide_dashboard_title" />;
 

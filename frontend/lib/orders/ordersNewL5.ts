@@ -84,3 +84,11 @@ export function ordersNewL5MainDataAttrs(): Record<string, string> {
     "data-tt-orders-new-l5-ssot": ORDERS_NEW_L5_SSOT_ID,
   };
 }
+
+/** 交互态创建页壳（排除 segment loading 占位）。 */
+export function ordersNewL5ReadyMainDataAttrs(): Record<string, string> {
+  return {
+    ...ordersNewL5MainDataAttrs(),
+    "data-tt-orders-new-page-ready": "1",
+  };
+}

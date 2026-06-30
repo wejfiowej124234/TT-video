@@ -296,3 +296,11 @@ export function ordersListL5MainDataAttrs(): Record<string, string> {
     ...ordersIaBoundaryPageDataAttrs(),
   };
 }
+
+/** 仅交互态列表壳（排除 loading/error 过渡 `main` · Playwright strict mode）。 */
+export function ordersListL5ReadyMainDataAttrs(): Record<string, string> {
+  return {
+    ...ordersListL5MainDataAttrs(),
+    "data-tt-orders-page-ready": "1",
+  };
+}

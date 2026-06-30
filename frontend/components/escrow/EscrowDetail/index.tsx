@@ -698,7 +698,9 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
     !quoteQuietSyncing &&
     !patchItinerarySuccess;
   const showExperienceOrderActions =
-    experienceDraft && !data.isDraft && (allowOrderAccept || data.state === "accepted");
+    experienceDraft &&
+    !data.isDraft &&
+    (allowOrderAccept || data.state === "accepted" || hasGuideAssigned);
 
   return (
     <main
@@ -874,7 +876,12 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
             variantExperience
             protocolPaused={protocolPaused}
             chainOffRestConfirmCompletionEnabled={chainOffRestConfirmCompletionEnabled}
-            allowAccept={allowOrderAccept}
+            allowAccept={
+              allowOrderAccept ||
+              (hasGuideAssigned &&
+                viewerIsGuideForBilateral &&
+                String(data.state ?? "").toLowerCase() === "created")
+            }
           />
         ) : null}
 

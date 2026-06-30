@@ -98,21 +98,25 @@ async fn merchant_slot_active_for_user(
     pool: &sqlx::PgPool,
     user_id: Uuid,
 ) -> Result<bool, axum::response::Response> {
+    // PG 为 durable SSOT（E2E seed / Admin 改 role 后 chain_off 内存可能滞后）
+    let user = match get_user_by_id(pool, user_id).await {
+        Ok(Some(u)) => Some(u),
+        Ok(None) => None,
+        Err(e) => {
+            eprintln!("WARN: get_user_by_id market gate slot: {e}");
+            return Err(onboarding_entitlement_lookup_failed_response());
+        }
+    };
+    if user.as_ref().is_some_and(|u| u.role == "provider") {
+        return Ok(true);
+    }
     if let Some(co) = state.chain_off.as_ref() {
         let store = co.store.read().await;
         if crate::chain_off::merchant_slot_active_in_store(&store, user_id) {
             return Ok(true);
         }
     }
-    let user = match get_user_by_id(pool, user_id).await {
-        Ok(Some(u)) => u,
-        Ok(None) => return Ok(false),
-        Err(e) => {
-            eprintln!("WARN: get_user_by_id market gate slot: {e}");
-            return Err(onboarding_entitlement_lookup_failed_response());
-        }
-    };
-    Ok(user.role == "provider")
+    Ok(false)
 }
 
 async fn ensure_paid_entitlement(

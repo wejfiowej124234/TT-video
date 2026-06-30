@@ -8,7 +8,7 @@ import OrderFlowSteps from "@/components/escrow/OrderFlowSteps";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import { marketHrefForPickGuide } from "@/lib/ordersGuideDeepLink";
 import { ordersListHrefAfterCreate } from "@/lib/ordersExpectOrderParam";
-import { ordersNewL5MainDataAttrs, TT_ORDERS_NEW_L5 } from "@/lib/orders/ordersNewL5";
+import { ordersNewL5MainDataAttrs, ordersNewL5ReadyMainDataAttrs, TT_ORDERS_NEW_L5 } from "@/lib/orders/ordersNewL5";
 import { OrdersNewGuideSummary } from "./OrdersNewGuideSummary";
 import { OrdersNewPageFooter } from "./OrdersNewPageFooter";
 import type { UseOrdersNewPageResult } from "./useOrdersNewPage";
@@ -57,7 +57,7 @@ export function OrdersNewPageMain(vm: UseOrdersNewPageResult) {
       <main
         className={TT_ORDERS_NEW_L5.createdShell}
         aria-label={t("orders_created")}
-        {...ordersNewL5MainDataAttrs()}
+        {...ordersNewL5ReadyMainDataAttrs()}
       >
         <div className={TT_ORDERS_NEW_L5.pageVignette} aria-hidden />
         <div className={TT_ORDERS_NEW_L5.ambient} aria-hidden />
@@ -93,7 +93,7 @@ export function OrdersNewPageMain(vm: UseOrdersNewPageResult) {
   }
 
   return (
-    <main className={TT_ORDERS_NEW_L5.pageShell} aria-label={t("orders_createTitle")} {...ordersNewL5MainDataAttrs()}>
+    <main className={TT_ORDERS_NEW_L5.pageShell} aria-label={t("orders_createTitle")} {...ordersNewL5ReadyMainDataAttrs()}>
       <div className={TT_ORDERS_NEW_L5.pageVignette} aria-hidden />
       <div className={TT_ORDERS_NEW_L5.ambient} aria-hidden />
       <div className={TT_ORDERS_NEW_L5.dotGrid} aria-hidden />

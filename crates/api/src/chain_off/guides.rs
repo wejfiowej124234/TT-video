@@ -506,12 +506,26 @@ pub async fn guide_create_impl(
         }
     }
 
+    if let Some(pool) = state.db_pool.as_ref() {
+        if let Ok(Some(_)) = crate::db::select_active_guide_id_for_user(pool, user_id).await {
+            return Err((
+                StatusCode::CONFLICT,
+                Json(crate::api_json::err_key("already_guide")),
+            ));
+        }
+    }
+
     let mut store = state.store.write().await;
     if store.guides_by_user.contains_key(&user_id) {
-        return Err((
-            StatusCode::CONFLICT,
-            Json(crate::api_json::err_key("already_guide")),
-        ));
+        if state.db_pool.is_some() {
+            // PG 无 active 行时清理 chain_off 陈旧索引（外部 seed / 清库后内存未同步）
+            store.guides_by_user.remove(&user_id);
+        } else {
+            return Err((
+                StatusCode::CONFLICT,
+                Json(crate::api_json::err_key("already_guide")),
+            ));
+        }
     }
     let id = Uuid::new_v4();
     let now = Utc::now();

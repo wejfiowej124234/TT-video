@@ -80,6 +80,7 @@ function GuidesPageInner() {
         className="relative min-h-screen"
         aria-label={t("guides_title")}
         aria-busy="true"
+        data-tt-guides-page="1"
         data-tt-guides-surface="list_loading"
       >
         <div className="fixed inset-0 z-0 bg-market-atmosphere pointer-events-none" aria-hidden />
@@ -116,7 +117,7 @@ function GuidesPageInner() {
   }
   if (error) {
     return (
-      <main className="relative min-h-screen p-8" aria-label={t("guides_title")}>
+      <main className="relative min-h-screen p-8" aria-label={t("guides_title")} data-tt-guides-page="1">
         <div className="fixed inset-0 z-0 bg-market-atmosphere pointer-events-none" aria-hidden />
         <div className="fixed inset-0 z-0 bg-web3-dot-grid opacity-[0.22] pointer-events-none" aria-hidden />
         <div className="relative z-10 max-w-2xl mx-auto space-y-4">
@@ -159,7 +160,7 @@ function GuidesPageInner() {
   }
 
   return (
-    <main className="relative min-h-screen" aria-label={t("guides_title")}>
+    <main className="relative min-h-screen" aria-label={t("guides_title")} data-tt-guides-page="1">
       <div className="fixed inset-0 z-0 bg-market-atmosphere pointer-events-none" aria-hidden />
       <div className="fixed inset-0 z-0 bg-web3-dot-grid opacity-[0.22] pointer-events-none" aria-hidden />
 

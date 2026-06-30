@@ -12,6 +12,7 @@ use std::env;
 
 mod api_json;
 mod catalog_geo_validation;
+mod complexity_convergence;
 mod chain;
 mod chain_off;
 mod db;

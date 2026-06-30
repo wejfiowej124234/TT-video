@@ -9249,6 +9249,16 @@ export default {
   governance_params_steward_context_jump_revenue: "Country revenue model",
   governance_params_diff_section_lead:
     "Check five order-fee split percentages against the pending package. This is not the same as country-pool net profit 45/55.",
+  governance_params_fee_split_kicker: "FeeRouter allocatable platform order fees",
+  governance_params_country_revenue_model_title: "Country revenue model (① draft · D-4555-B)",
+  governance_params_country_revenue_model_bullet_pool:
+    "Each country operates, accounts, and pools independently; that country's order profit goes into its country pool—not a blended global country pool.",
+  governance_params_country_revenue_model_bullet_net_profit_split:
+    "Within a settlement period (quarter/year), net profit in a single country pool: 45% to regional stewards and governance, 55% to TravelTrust Global Treasury. ② On-chain net-profit split is not built yet—do not mix with the FeeRouter first-layer 45/55 above.",
+  governance_params_country_revenue_model_bullet_fee_points:
+    "Fee Points grade country revenue allocation and Seat tier—they are not global country-pool weights; do not mix with TTG stake ratios or fundraising targets.",
+  governance_params_country_revenue_model_bullet_stake:
+    "Regional stewards must lock TTG collateral per Seat tier for 24 months, then unlock on the published schedule.",
   governance_params_fee_split_global_lead:
     "Inside the global 55% share: TTG staking incentive 65% · protocol reserve 20% · day-to-day operations 15%.",
   governance_params_phase1_lead:
