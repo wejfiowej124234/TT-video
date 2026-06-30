@@ -47,29 +47,121 @@ def http_json(
     headers: dict[str, str] | None = None,
     body: bytes | None = None,
 ) -> tuple[int, object]:
-    req = urllib.request.Request(url, data=body, method=method)
     merged: dict[str, str] = dict(headers or {})
     # localtunnel (*.loca.lt) may RST Python urllib without reminder header.
     if ".loca.lt" in url:
         merged.setdefault("Bypass-Tunnel-Reminder", "true")
         merged.setdefault("User-Agent", "TravelTrust-R003/1")
-    for k, v in merged.items():
-        req.add_header(k, v)
-    try:
-        with urllib.request.urlopen(req, timeout=120) as r:
-            raw = r.read().decode("utf-8", errors="replace")
-            try:
-                parsed: object = json.loads(raw) if raw.strip() else {}
-            except json.JSONDecodeError:
-                parsed = raw
-            return r.status, parsed
-    except urllib.error.HTTPError as e:
-        raw = e.read().decode("utf-8", errors="replace")
+    merged.setdefault("User-Agent", "TravelTrust-R003/1")
+
+    def _parse_response(status: int, raw: str) -> tuple[int, object]:
         try:
-            parsed = json.loads(raw) if raw.strip() else {}
+            parsed: object = json.loads(raw) if raw.strip() else {}
         except json.JSONDecodeError:
             parsed = raw
-        return e.code, parsed
+        return status, parsed
+
+    def _http_json_curl() -> tuple[int, object]:
+        cmd = [
+            "curl",
+            "-sS",
+            "--max-time",
+            "120",
+            "-w",
+            "\n__HTTP_CODE__:%{http_code}",
+            "-X",
+            method,
+        ]
+        for k, v in merged.items():
+            cmd.extend(["-H", f"{k}: {v}"])
+        if body is not None:
+            cmd.extend(["--data-binary", "@-"])
+        cmd.append(url)
+        last_err: BaseException | None = None
+        for attempt in range(5):
+            try:
+                proc = subprocess.run(
+                    cmd,
+                    input=body,
+                    capture_output=True,
+                    timeout=130,
+                    check=False,
+                )
+                out = proc.stdout.decode("utf-8", errors="replace")
+                marker = "\n__HTTP_CODE__:"
+                if marker in out:
+                    raw, _, code_tail = out.rpartition(marker)
+                    status = int(code_tail.strip() or "0")
+                else:
+                    raw = out
+                    status = proc.returncode if proc.returncode else 0
+                if status == 0 and proc.returncode != 0 and not raw.strip():
+                    raise RuntimeError(f"curl exit {proc.returncode}: {proc.stderr.decode()[:200]}")
+                return _parse_response(status, raw)
+            except (subprocess.SubprocessError, TimeoutError, OSError, ValueError) as e:
+                last_err = e
+                if attempt < 4:
+                    time.sleep(1.5 * (attempt + 1))
+                    continue
+                raise
+        if last_err is not None:
+            raise last_err
+        raise RuntimeError("http_json_curl: unreachable")
+
+    try:
+        import requests  # type: ignore
+    except ImportError:
+        requests = None  # type: ignore
+
+    if requests is not None:
+        last_err: BaseException | None = None
+        for attempt in range(5):
+            try:
+                resp = requests.request(
+                    method,
+                    url,
+                    headers=merged,
+                    data=body,
+                    timeout=120,
+                )
+                return _parse_response(resp.status_code, resp.text)
+            except requests.RequestException as e:
+                last_err = e
+                if attempt < 4:
+                    time.sleep(1.5 * (attempt + 1))
+                    continue
+                # Windows → fly.dev long chains: curl is more stable than urllib3/ssl
+                try:
+                    return _http_json_curl()
+                except Exception:
+                    raise last_err
+        if last_err is not None:
+            try:
+                return _http_json_curl()
+            except Exception:
+                raise last_err
+
+    last_err = None
+    for attempt in range(5):
+        req = urllib.request.Request(url, data=body, method=method)
+        for k, v in merged.items():
+            req.add_header(k, v)
+        try:
+            with urllib.request.urlopen(req, timeout=120) as r:
+                raw = r.read().decode("utf-8", errors="replace")
+                return _parse_response(r.status, raw)
+        except urllib.error.HTTPError as e:
+            raw = e.read().decode("utf-8", errors="replace")
+            return _parse_response(e.code, raw)
+        except (urllib.error.URLError, TimeoutError, OSError) as e:
+            last_err = e
+            if attempt < 4:
+                time.sleep(1.5 * (attempt + 1))
+                continue
+            raise
+    if last_err is not None:
+        raise last_err
+    raise RuntimeError("http_json: unreachable")
 
 
 def write_json(path: Path, obj: Any) -> None:

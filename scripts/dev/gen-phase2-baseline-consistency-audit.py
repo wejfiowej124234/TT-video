@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Phase ② · Baseline consistency audit (read-only · no fixes).
 
-SSOT: frozen local git SHA (default from TESTNET_STAGING_FREEZE ACTIVE @ 8dcd304a…).
+SSOT: Local First · expect-sha defaults to git HEAD (staging runtime may lag until S5 deploy).
 
   python scripts/dev/gen-phase2-baseline-consistency-audit.py \\
-    --expect-sha 8dcd304afae1bafe5a4de738175e171256a9501e \\
+    --expect-sha "$(git rev-parse HEAD)" \\
     --out-dir evidence/GO_phase2_baseline_consistency_audit/<stamp>
 """
 from __future__ import annotations
@@ -22,7 +22,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
-SSOT_DEFAULT = "8dcd304afae1bafe5a4de738175e171256a9501e"
+SSOT_DEFAULT = "9979b35efe562e8dd200e9f1a1e17fcc8182d170"
 API_DEFAULT = "https://tt-api-staging.fly.dev"
 WEB_DEFAULT = "https://tt-web-staging.fly.dev"
 CHAIN_ENV = ROOT / "scripts/dev/.env.phase2-chain-deploy.local"
@@ -60,19 +60,68 @@ def load_env(path: Path) -> dict[str, str]:
 
 
 def http_json(url: str, timeout: int = 45) -> tuple[int, Any]:
-    req = urllib.request.Request(url, headers={"Accept": "application/json", "User-Agent": "tt-baseline-audit/1"})
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            raw = resp.read().decode("utf-8", errors="replace")
-            return resp.getcode(), json.loads(raw) if raw else {}
-    except urllib.error.HTTPError as e:
-        raw = e.read().decode("utf-8", errors="replace")
+    import time
+
+    req_headers = {"Accept": "application/json", "User-Agent": "tt-baseline-audit/1"}
+    last_err: Exception | None = None
+    for attempt in range(4):
+        req = urllib.request.Request(url, headers=req_headers)
         try:
-            return e.code, json.loads(raw) if raw else {}
-        except json.JSONDecodeError:
-            return e.code, raw
-    except Exception as e:
-        return 0, {"error": str(e)}
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                raw = resp.read().decode("utf-8", errors="replace")
+                return resp.getcode(), json.loads(raw) if raw else {}
+        except urllib.error.HTTPError as e:
+            raw = e.read().decode("utf-8", errors="replace")
+            try:
+                return e.code, json.loads(raw) if raw else {}
+            except json.JSONDecodeError:
+                return e.code, raw
+        except Exception as e:
+            last_err = e
+            if attempt < 3:
+                time.sleep(1.5 * (attempt + 1))
+                continue
+            break
+    # curl fallback (Windows → fly.dev SSL flakes)
+    try:
+        proc = subprocess.run(
+            ["curl", "-sS", "--max-time", str(timeout), "-w", "\n__HTTP_CODE__:%{http_code}", url],
+            capture_output=True,
+            text=True,
+            timeout=timeout + 15,
+            check=False,
+        )
+        out = proc.stdout or ""
+        marker = "\n__HTTP_CODE__:"
+        if marker in out:
+            raw, _, code_tail = out.rpartition(marker)
+            status = int(code_tail.strip() or "0")
+        else:
+            raw, status = out, 200 if proc.returncode == 0 else 0
+        if status and raw.strip():
+            try:
+                return status, json.loads(raw)
+            except json.JSONDecodeError:
+                return status, raw
+    except Exception:
+        pass
+    return 0, {"error": str(last_err) if last_err else "http_json failed"}
+
+
+def probe_api_git_sha(api: str) -> tuple[str, str, dict[str, Any]]:
+    """meta → meta/build fallback (same as p2fc-staging-probe-lib)."""
+    api = api.rstrip("/")
+    code, meta = http_json(f"{api}/meta", timeout=90)
+    if isinstance(meta, dict):
+        sha = str((meta.get("build") or {}).get("git_sha") or "")
+        if sha:
+            return sha, "meta", meta
+    code_mb, meta_build = http_json(f"{api}/meta/build", timeout=45)
+    if isinstance(meta_build, dict):
+        sha = str(meta_build.get("git_sha") or "")
+        if sha:
+            return sha, "meta_build", meta if isinstance(meta, dict) else {}
+    return "", "none", meta if isinstance(meta, dict) else {}
 
 
 def registry_val(key: str) -> str:
@@ -100,6 +149,16 @@ def latest_migration_version() -> str | None:
 
 def git_head() -> str:
     return subprocess.check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip()
+
+
+def git_is_ancestor(ancestor: str, descendant: str) -> bool:
+    if not ancestor or not descendant:
+        return False
+    proc = subprocess.run(
+        ["git", "-C", str(ROOT), "merge-base", "--is-ancestor", ancestor, descendant],
+        capture_output=True,
+    )
+    return proc.returncode == 0
 
 
 def git_dirty_deploy_paths() -> list[str]:
@@ -223,19 +282,42 @@ def main() -> None:
     risks: list[dict[str, Any]] = []
 
     # --- SHA ---
-    _, meta_api = http_json(f"{api}/meta")
-    _, meta_web = http_json(f"{web}/meta")
-    api_sha = str(((meta_api.get("build") or {}) if isinstance(meta_api, dict) else {}).get("git_sha") or "")
+    api_sha, api_probe, meta_api = probe_api_git_sha(api)
+    _, meta_web = http_json(f"{web}/meta", timeout=60)
     web_sha = str(((meta_web.get("build") or {}) if isinstance(meta_web, dict) else {}).get("git_sha") or "")
 
     if head != expect:
-        add_finding(diffs, risks, domain="SHA", item="git HEAD vs SSOT pin", local=expect, staging=head, severity="DIFF")
-    if api_sha.lower() != expect:
-        add_finding(diffs, risks, domain="SHA", item="API /meta.build.git_sha", local=expect, staging=api_sha, severity="DIFF")
-    else:
-        pass  # match — no diff
+        add_finding(diffs, risks, domain="SHA", item="git HEAD vs --expect-sha", local=head, staging=expect, severity="DIFF")
+    api_sha_l = api_sha.lower()
+    expect_l = expect.lower()
+    staging_deployed = api_sha_l if api_sha_l else ""
+    local_ahead = False
+    if staging_deployed and head != staging_deployed:
+        local_ahead = git_is_ancestor(staging_deployed, head)
+    if api_sha_l and api_sha_l != expect_l:
+        if local_ahead and git_is_ancestor(api_sha_l, expect_l):
+            add_finding(
+                diffs,
+                risks,
+                domain="SHA",
+                item="Local First · staging runtime vs HEAD",
+                local=head[:12],
+                staging=f"{api_sha[:12]} (deployed)",
+                severity="WARN",
+                note="LOCAL_AHEAD_UNDEPLOYED — not runtime drift; S5 deploy only",
+            )
+        elif api_sha_l != expect_l:
+            add_finding(
+                diffs,
+                risks,
+                domain="SHA",
+                item=f"API git_sha (probe={api_probe})",
+                local=expect,
+                staging=api_sha or "(missing)",
+                severity="DIFF",
+            )
     if web_sha and web_sha.lower() != api_sha.lower():
-        add_finding(diffs, risks, domain="SHA", item="Web /meta vs API /meta", local=api_sha, staging=web_sha, severity="DIFF")
+        add_finding(diffs, risks, domain="SHA", item="Web /meta vs API git_sha", local=api_sha, staging=web_sha, severity="DIFF")
     if dirty:
         add_finding(
             diffs,
@@ -270,6 +352,20 @@ def main() -> None:
             staging="11155111",
             severity="DIFF",
         )
+    if isinstance(meta_api, dict):
+        meta_gov = str(((meta_api.get("chain") or {}).get("contracts") or {}).get("governor_address") or "")
+        be_gov = be.get("NEXT_PUBLIC_GOVERNOR_ADDRESS", "")
+        if meta_gov and be_gov and not addr_eq(meta_gov, be_gov):
+            add_finding(
+                diffs,
+                risks,
+                domain="前端",
+                item="build.env NEXT_PUBLIC_GOVERNOR vs /meta",
+                local=be_gov,
+                staging=meta_gov,
+                severity="DIFF",
+                note="fix locally before next Web deploy",
+            )
 
     # --- Governance / registry / env ---
     chain_env = load_env(CHAIN_ENV)
@@ -470,8 +566,9 @@ def main() -> None:
         "ssot_sha": expect,
         "git_head": head,
         "api_sha": api_sha,
+        "api_sha_probe": api_probe,
         "web_sha": web_sha,
-        "sha_hard_match": api_sha.lower() == expect and head == expect,
+        "sha_hard_match": bool(api_sha) and api_sha.lower() == expect and head == expect,
         "diff_count": len(diffs),
         "risk_count": len(risks),
         "diffs": diffs,
@@ -493,7 +590,7 @@ def main() -> None:
         f"| 项 | 值 |",
         f"|----|-----|",
         f"| git HEAD | `{head}` |",
-        f"| API /meta SHA | `{api_sha}` |",
+        f"| API git_sha (probe={api_probe}) | `{api_sha}` |",
         f"| Web /meta SHA | `{web_sha or 'n/a'}` |",
         f"| **SHA Hard Match** | **{'YES' if payload['sha_hard_match'] else 'NO'}** |",
         f"| 差异项 | {len(diffs)} |",

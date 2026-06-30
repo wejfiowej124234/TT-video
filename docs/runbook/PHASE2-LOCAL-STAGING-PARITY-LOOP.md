@@ -2,7 +2,7 @@
 
 **生效：** 2026-06-06  
 **问题：** 本地绿 → 上 staging 大量不通 → 在 staging 改很多 → 本地又落后 → 来回慢。  
-**解法：** **测试网已修好的兼容版本 = 真源** → **先对齐本地** → **本地改 + 本地全测** → **再推 staging** → **复跑 Phase ②** → **全绿才进 Phase ③**。
+**解法（Local First · 2026-06-30）：** **本地仓库 = 唯一开发真源** → **本地收敛 + 文档/脚本同步** → **S5 再推 staging 验证** → **全绿才进 Phase ③ 宽表**。测试网已部署 SHA 是 **runtime 验收锚**，不是开发回退目标。见 [TT-LOCAL-FIRST-CONVERGENCE](./TT-LOCAL-FIRST-CONVERGENCE.md)。
 
 **阶段纪律：** ① 本地开发 · ② 测试网验收 · ③ 公网/生产 — **禁止跳阶**；**禁止**用 staging 窄切片或 ① 绿集冒充 **Phase ② GO**。
 
@@ -13,10 +13,10 @@
 ## 0 · 一句话流程
 
 ```text
-staging 已修 ──► ① 拉齐代码+env ──► ② 本地全功能测 ──► ③ 本地修 bug ──► ④ 再跑 ②
+staging 已部署 runtime ──► ① 本地为 SSOT 收敛 ──► ② 本地全功能测 ──► ③ 本地修 + 文档/脚本 ──► ④ 再跑 ②
                                                               │
                                                               ▼
-                    Phase ③ ◄── ⑥ 复跑 Phase ② 全闸 ◄── ⑤ 推 staging
+                    Phase ③ ◄── ⑥ 复跑 Phase ② 全闸 ◄── ⑤ 推 staging（S5 · 正式 deploy）
 ```
 
 **铁律：** **不在 staging 上直接改功能**（staging 只允许 **bugfix 部署 / env / CORS / 证据复跑**）；新逻辑 **必须** 在本地先过闸再上 staging。
@@ -31,7 +31,7 @@ staging 已修 ──► ① 拉齐代码+env ──► ② 本地全功能测 �
 | **S2** | **本地对齐 env** | 合并 Sepolia 地址、同步 `frontend/.env.local`、本地 PG + API | `phase2-staging-merge-sepolia-env.sh` + `sync-frontend-env-local-from-root`；`curl localhost:8080/health` **200** |
 | **S3** | **本地全功能测** | 走廊烟测 + 域绿集 +（可选）R-003 本地链 | 见 §2 命令块 · 全部 **exit 0** |
 | **S4** | **本地修 + 再测** | 只修 FAIL 项；**禁止** 扩 scope / 改五主路由 UI | S3 **复跑全绿** |
-| **S5** | **推 staging** | API → Web 顺序部署；部署后 alignment + **deep release gate** | `phase2-staging-fly-deploy-and-sync.sh` + `deploy-tt-web-staging.sh`；alignment **FAIL=0**；[TT-PHASE2-DEEP-RELEASE-GATE](./TT-PHASE2-DEEP-RELEASE-GATE.md) **PASS** |
+| **S5** | **推 staging** | API → Web 顺序部署；部署后 alignment + **deep release gate** | **须先** [Deployment 三态分类](./TT-DEPLOYMENT-THREE-STATE-GOVERNANCE.md)（`sync` 或 `fix`）→ `run-deployment-three-state.sh` → `phase2-staging-fly-deploy-and-sync.sh` + `deploy-tt-web-staging.sh`；alignment **FAIL=0**；[TT-PHASE2-DEEP-RELEASE-GATE](./TT-PHASE2-DEEP-RELEASE-GATE.md) **PASS** |
 | **S6** | **复跑 Phase ②** | **Deep release gate (G01–G08)** → Closing Gap + UAT 六大域 + Phase 2.5 | 见 §3 · **`TT_PHASE2_DEEP_RELEASE_GATE: PASS`** 且 UAT **0 FAIL** |
 
 **Phase ③ 入口：** **✅ READY** · **Production Preparation ACTIVE** — 见 [PHASE3-PRODUCTION-PREPARATION](./PHASE3-PRODUCTION-PREPARATION.md)。**≠ Production GO**。
