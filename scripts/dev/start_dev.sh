@@ -2,7 +2,7 @@
 # 一键启动：先终止占用后端端口与 Next 端口的进程，再启动 traveltrust-api 与 Next（默认 3012）
 # 用法：在仓库根执行 ./scripts/start_dev.sh
 # 端口：后端默认 8080（或根 .env 的 PORT）；Next 默认 3012。二者不得相同（见 scripts/dev/_dev_stack_ports.sh）
-# 可选：FRONTEND_PORT=3000 ./scripts/start_dev.sh（当根 .env 将 PORT 设为 3012 仅跑 API 时，避免与 Next 3012 冲突）
+# 可选：FRONTEND_PORT=3000 ./scripts/start_dev.sh — **仅**当根 .env 将 PORT 设为 3012 仅跑 API 时的逃生口；**SSOT 前端端口 = 3012**（见 spec/38、dev-local-smoke-baseline §10）。勿将 :3000 写入 CORS 或长期默认。
 # 可选：TRAVELTRUST_CLEAN_FRONTEND_NEXT=1 ./scripts/start_dev.sh 在启动前端前执行 npm run clean（删 frontend/.next）
 # 可选：SKIP_ABI_GATE=1 跳过 check-55-s13；TRAVELTRUST_ABI_FORGE_VERIFY=1 额外跑 run-verify-abi-forge.sh（须 forge）
 # 可选：SKIP_FRONTEND_ENV_SYNC=1 跳过 frontend/.env.local 与根 .env 同步

@@ -121,8 +121,10 @@ fn chain_contracts_meta_top_keys_order_and_literals_759() {
 
 #[test]
 fn meta_build_top_keys_order_and_literals_730() {
-    assert_eq!(META_BUILD_TOP_KEYS[3], "build_top_keys");
-    assert_eq!(META_BUILD_TOP_KEYS[4], "build_top_keys_contract_730");
+    assert_eq!(META_BUILD_TOP_KEYS[2], "deployment_profile");
+    assert_eq!(META_BUILD_TOP_KEYS[3], "rule");
+    assert_eq!(META_BUILD_TOP_KEYS[4], "build_top_keys");
+    assert_eq!(META_BUILD_TOP_KEYS[5], "build_top_keys_contract_730");
     let c = format_meta_build_top_keys_contract_730();
     assert!(c.contains("730"), "contract: {c}");
     for k in META_BUILD_TOP_KEYS {

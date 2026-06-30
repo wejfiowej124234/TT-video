@@ -1,0 +1,487 @@
+{
+  "schema": "traveltrust-cfg-drift-v1",
+  "updated_utc": "2026-06-30T13:09:07Z",
+  "ssot": "evidence/manual-uat/summary/CFG-REGISTRY.md",
+  "batches": [
+    {
+      "id": "B1",
+      "name": "① 本地 UAT 阻断项",
+      "cfg_range": "CFG-001~CFG-016"
+    },
+    {
+      "id": "B2",
+      "name": "① 文档/脚本漂移",
+      "cfg_range": "CFG-017~CFG-019"
+    },
+    {
+      "id": "B3",
+      "name": "② staging 模板",
+      "cfg_range": "CFG-020~CFG-021"
+    },
+    {
+      "id": "B4",
+      "name": "③ production 模板与安全",
+      "cfg_range": "CFG-022~CFG-028"
+    }
+  ],
+  "items": [
+    {
+      "id": "CFG-001",
+      "title": "INTERNAL_API_SECRET ① 与 ② 同值",
+      "phase": "①②",
+      "type": "安全风险",
+      "status": "CLOSED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "bash scripts/dev/verify-cfg-drift-closure.sh --batch B1"
+      ],
+      "related_docs": [
+        "scripts/dev/staging-onboarding.env.example"
+      ],
+      "closed_basis": "① 已轮换；② Fly secrets 独立；example 含隔离声明",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-002",
+      "title": "真实第三方密钥仅存 gitignore/Fly",
+      "phase": "①②③",
+      "type": "安全风险",
+      "status": "CLOSED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "bash scripts/dev/verify-cfg-drift-closure.sh --batch B4"
+      ],
+      "related_docs": [
+        ".env.example",
+        "CONTRIBUTING.md"
+      ],
+      "closed_basis": "tracked 无真实密钥；Owner 轮换已暴露 key",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-003",
+      "title": "① DEPLOYMENT_PROFILE=production",
+      "phase": "①",
+      "type": "配置错误",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "powershell -File scripts/dev/apply-local-env-cfg-batch1.ps1"
+      ],
+      "related_docs": [
+        ".env.example",
+        "docs/dev-local-smoke-baseline.md"
+      ],
+      "closed_basis": "TRAVELTRUST_DEPLOYMENT_PROFILE=local",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-004",
+      "title": "NEXT_PUBLIC_API_BASE_URL 误指 3012",
+      "phase": "①",
+      "type": "配置错误",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "cd frontend && npx vitest run lib/api.browser-url.test.ts"
+      ],
+      "related_docs": [
+        "frontend/lib/api.ts",
+        "docs/测试账号与本地联调.md"
+      ],
+      "closed_basis": "sync :8080 + apiUrl 端口纠正",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-005",
+      "title": "frontend/.env.local 同步标记损坏",
+      "phase": "①",
+      "type": "配置错误",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "powershell -File scripts/dev/sync-frontend-env-local-from-root.ps1"
+      ],
+      "related_docs": [
+        "scripts/dev/sync-frontend-env-local-from-root.ps1"
+      ],
+      "closed_basis": "单对 BEGIN/END；bak 已归档",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-006",
+      "title": "MinIO :19000 未运行",
+      "phase": "①",
+      "type": "配置错误",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:19000/minio/health/live"
+      ],
+      "related_docs": [
+        "docs/dev-local-smoke-baseline.md",
+        "scripts/dev/setup-community-media-minio-local.sh"
+      ],
+      "closed_basis": "MinIO health 200 或文档标注可选",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-007",
+      "title": "Anvil :8545 未运行且 P3_CHAIN_OFF=0",
+      "phase": "①",
+      "type": "配置错误",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8545"
+      ],
+      "related_docs": [
+        "docs/dev-local-smoke-baseline.md"
+      ],
+      "closed_basis": "Anvil 可达或 P3_CHAIN_OFF=1 文档一致",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-008",
+      "title": "P3_CHAIN_OFF 与 mock-pay UI 不一致",
+      "phase": "①",
+      "type": "配置错误",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "powershell -File scripts/dev/apply-local-env-cfg-batch1.ps1"
+      ],
+      "related_docs": [
+        "frontend/.env.example"
+      ],
+      "closed_basis": "mock UI flag 已移除或 P3_CHAIN_OFF 对齐",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-009",
+      "title": "meta.build.git_sha=unknown",
+      "phase": "①②",
+      "type": "配置错误",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "curl -s http://127.0.0.1:8080/meta/build"
+      ],
+      "related_docs": [
+        "scripts/dev/start-api-with-seed.bat"
+      ],
+      "closed_basis": "TRAVELTRUST_GIT_SHA 注入",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-010",
+      "title": "SSOT_VERSION=unset ①",
+      "phase": "①",
+      "type": "合理差异",
+      "status": "CLOSED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [],
+      "related_docs": [
+        ".env.example"
+      ],
+      "closed_basis": "未开 STRICT_SSOT 允许",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-011",
+      "title": "Anvil 与 GovFreeze 块混放",
+      "phase": "①②",
+      "type": "配置错误",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "bash scripts/dev/verify-root-env-vs-meta-chain-contracts.sh"
+      ],
+      "related_docs": [
+        "scripts/dev/.env.govfreeze-v2-evidence.example"
+      ],
+      "closed_basis": "证据块迁至 example；/meta 仅 Anvil",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-012",
+      "title": "STEWARD pool proxy vs address",
+      "phase": "①②",
+      "type": "合理差异",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "bash scripts/dev/verify-root-env-vs-meta-chain-contracts.sh"
+      ],
+      "related_docs": [
+        "docs/spec/14-合约-API-ABI-前后端对齐.md"
+      ],
+      "closed_basis": "分阶段文档+verify 通过",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-013",
+      "title": "SEED_GUIDE_PUBLIC_MARKET 未写根 .env",
+      "phase": "①",
+      "type": "配置错误",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "powershell -File scripts/dev/apply-local-env-cfg-batch1.ps1"
+      ],
+      "related_docs": [
+        "docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md"
+      ],
+      "closed_basis": "根 .env =1",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-014",
+      "title": "社区 showcase 前后端变量不同",
+      "phase": "①",
+      "type": "合理差异",
+      "status": "CLOSED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [],
+      "related_docs": [
+        "frontend/lib/communityShowcase.ts"
+      ],
+      "closed_basis": "文档说明双变量",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-015",
+      "title": "WALLETCONNECT 未配置",
+      "phase": "①",
+      "type": "合理差异",
+      "status": "CLOSED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [],
+      "related_docs": [
+        "frontend/.env.example"
+      ],
+      "closed_basis": "可选 injected 钱包",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-016",
+      "title": "Resend 与 SMTP 占位并存",
+      "phase": "①",
+      "type": "配置错误",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "powershell -File scripts/dev/apply-local-env-cfg-batch1.ps1"
+      ],
+      "related_docs": [
+        ".env.example"
+      ],
+      "closed_basis": "仅 resend transport",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-017",
+      "title": "spec/38 Frontend :3000",
+      "phase": "①",
+      "type": "文档漂移",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "rg 'Frontend.*3000' docs/spec/38-端口与接口完整清单.md"
+      ],
+      "related_docs": [
+        "docs/spec/38-端口与接口完整清单.md"
+      ],
+      "closed_basis": "§1.1 为 3012",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-018",
+      "title": "smoke-acquisition :3000",
+      "phase": "①",
+      "type": "文档漂移",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "rg localhost:3000 scripts/dev/smoke-acquisition-pd009-local.sh"
+      ],
+      "related_docs": [
+        "scripts/dev/smoke-acquisition-pd009-local.sh"
+      ],
+      "closed_basis": "默认 3012",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-019",
+      "title": "E2E password123",
+      "phase": "①",
+      "type": "配置错误",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "rg password123 frontend/e2e"
+      ],
+      "related_docs": [
+        "docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md"
+      ],
+      "closed_basis": "Test123!",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-020",
+      "title": "staging build.env.example GOVERNOR 漂移",
+      "phase": "②",
+      "type": "配置错误",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "rg GOVERNOR deploy/fly/tt-web-staging/build.env.example"
+      ],
+      "related_docs": [
+        "deploy/fly/tt-web-staging/build.env.example"
+      ],
+      "closed_basis": "与 GovFreeze V2 Sepolia 一致",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-021",
+      "title": "staging example 缺 API_REWRITE_TARGET",
+      "phase": "②",
+      "type": "配置错误",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "rg API_REWRITE_TARGET deploy/fly/tt-web-staging/build.env.example"
+      ],
+      "related_docs": [
+        "frontend/next.config.js"
+      ],
+      "closed_basis": "example 含 rewrite target",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-022",
+      "title": ".env 重复 B-407 注释",
+      "phase": "①",
+      "type": "配置错误",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "powershell -File scripts/dev/apply-local-env-cfg-batch1.ps1"
+      ],
+      "related_docs": [
+        ".env.example"
+      ],
+      "closed_basis": "去重注释",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-023",
+      "title": "Redis 仅 spec 规划",
+      "phase": "①②③",
+      "type": "合理差异",
+      "status": "CLOSED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [],
+      "related_docs": [
+        "docs/spec/38-端口与接口完整清单.md"
+      ],
+      "closed_basis": "标注 planned",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-024",
+      "title": "CORS 缺 :3000",
+      "phase": "①",
+      "type": "配置错误",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "powershell -File scripts/dev/apply-local-env-cfg-batch1.ps1"
+      ],
+      "related_docs": [
+        ".env.example"
+      ],
+      "closed_basis": "四元组 origin",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-025",
+      "title": "DATABASE_URL localhost",
+      "phase": "①",
+      "type": "配置错误",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "powershell -File scripts/dev/apply-local-env-cfg-batch1.ps1"
+      ],
+      "related_docs": [
+        "docs/dev-local-smoke-baseline.md"
+      ],
+      "closed_basis": "127.0.0.1",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-026",
+      "title": "③ SEED_TEST_ACCOUNTS=0",
+      "phase": "③",
+      "type": "安全风险",
+      "status": "VERIFIED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "bash scripts/dev/verify-cfg-drift-closure.sh --batch B4"
+      ],
+      "related_docs": [
+        "scripts/dev/.env.production.example"
+      ],
+      "closed_basis": "production.example 强制 0",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-027",
+      "title": "③ 硬化模板预演",
+      "phase": "③",
+      "type": "文档漂移",
+      "status": "CLOSED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "bash scripts/dev/verify-cfg-drift-closure.sh --batch B4"
+      ],
+      "related_docs": [
+        ".env.preprod.local.example"
+      ],
+      "closed_basis": "预演指针+checklist",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    },
+    {
+      "id": "CFG-028",
+      "title": "③ prod build.env 对拍",
+      "phase": "③",
+      "type": "文档漂移",
+      "status": "CLOSED",
+      "fix_commit": "422aadb9",
+      "verify_commands": [
+        "bash scripts/dev/verify-cfg-drift-closure.sh --batch B4"
+      ],
+      "related_docs": [
+        "deploy/fly/tt-web-prod/build.env.example"
+      ],
+      "closed_basis": "example 完整+③ 证据",
+      "verified_utc": "2026-06-30T12:35:57Z"
+    }
+  ],
+  "zero_drift_gate": "PASS",
+  "zero_drift_gate_utc": "2026-06-30T12:37:39Z",
+  "zero_drift_fix_commit": "422aadb9",
+  "chapter_status": "FROZEN",
+  "chapter_frozen_utc": "2026-06-30T12:43:00Z",
+  "max_cfg_id": "CFG-028",
+  "new_cfg_policy": "No CFG-029+ unless new configuration is introduced; unlock with TRAVELTRUST_CFG_REGISTRY_UNLOCK=1",
+  "active_chapter": "Manual UAT → Business Defect → Regression → Production Entry Review → Testnet Sign-off → Mainnet Preparation",
+  "config_issue_discipline": "REGRESSION",
+  "config_issue_path": "DEFECT-NNN + REG-NNN — not Configuration Sprint unless new configuration surface",
+  "chapter_frozen_date": "2026-06-30",
+  "tt_configuration_zero_drift_status": "FROZEN",
+  "active_mainline": "Manual UAT → Business Defect → Regression → Production Entry Review → Testnet Sign-off → Mainnet Preparation",
+  "superseded_mainline": "Configuration → Governance → Convergence"
+}

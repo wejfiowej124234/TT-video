@@ -31,6 +31,14 @@ ok() { echo "phase2-staging-fly-deploy-and-sync: OK $*"; }
 SECRETS_ONLY=0
 [[ "${1:-}" == "--secrets-only" ]] && SECRETS_ONLY=1
 
+# shellcheck source=../ops/lib/deploy-governance-phase3-guard.sh
+source "$ROOT/scripts/ops/lib/deploy-governance-phase3-guard.sh"
+if [[ "$SECRETS_ONLY" -eq 1 ]]; then
+  deploy_governance_phase3_assert_s5_allowed "$ROOT" --secrets-only
+else
+  deploy_governance_phase3_assert_s5_allowed "$ROOT"
+fi
+
 command -v fly >/dev/null 2>&1 || fail "fly CLI not found"
 [[ -f "$FLY_CONFIG" ]] || fail "missing $FLY_CONFIG"
 
@@ -73,13 +81,26 @@ WEB_ORIGIN="${STAGING_WEB_BASE:-https://tt-web-staging.fly.dev}"
 add_secret CORS_ORIGINS "${CORS_ORIGINS:-${WEB_ORIGIN},http://localhost:3012,http://127.0.0.1:3012,http://localhost:3000,http://127.0.0.1:3000}"
 
 for k in CHAIN_RPC_URL CHAIN_ID TIMELOCK_ADDRESS GOVERNANCE_TOKEN_ADDRESS GOVERNANCE_VOTES_TOKEN_ADDRESS GOVERNOR_ADDRESS \
-  ESCROW_FACTORY_ADDRESS FEE_ROUTER_ADDRESS REGION_VAULT_ADDRESS TREASURY_ADDRESS \
+  ESCROW_FACTORY_ADDRESS FEE_ROUTER_ADDRESS REGISTRY_ADDRESS GUIDE_STAKING_ADDRESS STAKING_PROVIDER_ADDRESS \
+  REGION_VAULT_ADDRESS TREASURY_ADDRESS \
   RESERVE_VAULT_ADDRESS GUIDE_STAKING_POOL_ADDRESS PROVIDER_STAKING_POOL_ADDRESS \
   REGION_STEWARD_STAKE_POOL_ADDRESS STAKING_ADDRESS REDEMPTION_ASSET_ADDRESS \
   COUNTRY_POOL_REDEMPTION_EPOCH_CN_ADDRESS COUNTRY_POOL_LEDGER_PILOT_ADDRESS \
   COUNTRY_POOL_LEDGER_ADDRESS COUNTRY_LEDGER_SSOT_TOKEN_ADDRESS FUND_STACK_TOKEN_ADDRESS; do
   add_secret "$k" "${!k:-}"
 done
+# PER-S-01: align GUIDE_STAKING_* aliases with frontend NEXT_PUBLIC_* / meta
+if [[ -z "${GUIDE_STAKING_ADDRESS:-}" && -n "${GUIDE_STAKING_POOL_ADDRESS:-}" ]]; then
+  add_secret GUIDE_STAKING_ADDRESS "${GUIDE_STAKING_POOL_ADDRESS}"
+fi
+if [[ -z "${STAKING_PROVIDER_ADDRESS:-}" && -n "${PROVIDER_STAKING_POOL_ADDRESS:-}" ]]; then
+  add_secret STAKING_PROVIDER_ADDRESS "${PROVIDER_STAKING_POOL_ADDRESS}"
+fi
+if [[ -z "${REGISTRY_ADDRESS:-}" ]]; then
+  reg_example="$(grep -E '^NEXT_PUBLIC_REGISTRY_ADDRESS=' "$ROOT/deploy/fly/tt-web-staging/build.env.example" 2>/dev/null | head -1 | cut -d= -f2- || true)"
+  [[ -n "$reg_example" ]] && add_secret REGISTRY_ADDRESS "$reg_example"
+fi
+add_secret TRAVELTRUST_DEPLOYMENT_PROFILE "${TRAVELTRUST_DEPLOYMENT_PROFILE:-staging}"
 # /meta staking_address reads STAKING_ADDRESS; align with steward pool when unset
 if [[ -z "${STAKING_ADDRESS:-}" && -n "${REGION_STEWARD_STAKE_POOL_ADDRESS:-}" ]]; then
   add_secret STAKING_ADDRESS "${REGION_STEWARD_STAKE_POOL_ADDRESS}"

@@ -77,6 +77,9 @@ evidence/R003_local_evidence_chain/
 # 本地另存 `CARGO_TARGET_DIR` 的构建树（勿入仓；体积极大）
 target-r003-evidence/
 
+# Fly / Docker build-time env（勿提交真实 build.env.local）
+deploy/fly/**/build.env.local
+
 # Playwright 本地报告（勿入仓）
 frontend/playwright-report/
 frontend/test-results/

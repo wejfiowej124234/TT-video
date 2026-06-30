@@ -255,6 +255,7 @@ pub fn format_chain_contracts_meta_top_keys_contract_759() -> String {
 pub const META_BUILD_TOP_KEYS: &[&str] = &[
     "git_sha",
     "deployed_at",
+    "deployment_profile",
     "rule",
     "build_top_keys",
     "build_top_keys_contract_730",

@@ -14,6 +14,8 @@ Work is ordered in **three phases**. **Finish what the current phase means befor
 
 **Release governance SSOT (single chain):** [docs/runbook/TT-LOCAL-FIRST-CONVERGENCE.md](docs/runbook/TT-LOCAL-FIRST-CONVERGENCE.md) — L0→L6→S5→S6→H1→Phase② CLOSED→③ Production Entry Review→Production GO. Runbooks, scripts, gates, and evidence dirs map to this chain only; no parallel release flows.
 
+**`TT_CONFIGURATION_ZERO_DRIFT` (STATUS: FROZEN · 2026-06-30):** Configuration chapter **graduated** — **CFG-001～CFG-028** capped; **Configuration Sprint permanently closed** unless **new configuration surface** is introduced (unlock: `TRAVELTRUST_CFG_REGISTRY_UNLOCK=1`). **Config drift = PER Regression** (`DEFECT` + `REG`), not CFG sprint. **Active mainline (验产品):** Manual UAT → Business Defect → Regression → Production Entry Review → Testnet Sign-off → Mainnet Preparation. SSOT: [TT-CONFIGURATION-ZERO-DRIFT-FROZEN.md](docs/runbook/TT-CONFIGURATION-ZERO-DRIFT-FROZEN.md) · [TT-PROJECT-MAINLINE-PRODUCT-VERIFICATION.md](docs/runbook/TT-PROJECT-MAINLINE-PRODUCT-VERIFICATION.md) · [evidence/manual-uat/README.md](evidence/manual-uat/README.md).
+
 ### Phase ② Sepolia governance broadcast (Agent proxy · test ETH only)
 
 When the **Owner explicitly authorizes** this session (**`TRAVELTRUST_PHASE2_SEPOLIA_BROADCAST_OK=1`**), the Agent **may** run:
@@ -64,6 +66,8 @@ If you are the **only** maintainer, treat **Owner** in checklists as **yourself*
 ---
 
 ## 中文摘要（与上表同源）
+
+**`TT_CONFIGURATION_ZERO_DRIFT`（STATUS: FROZEN · 2026-06-30）**：Configuration **已毕业** — **CFG-001～028** 封顶；**Configuration Sprint 永久关闭**（无新配置面不得重开）。**配置复发 = PER Regression**。**主线（验产品）：** Manual UAT → Business Defect → Regression → Production Entry Review → Testnet Sign-off → Mainnet Preparation。SSOT：**[TT-CONFIGURATION-ZERO-DRIFT-FROZEN](docs/runbook/TT-CONFIGURATION-ZERO-DRIFT-FROZEN.md)** · **[TT-PROJECT-MAINLINE](docs/runbook/TT-PROJECT-MAINLINE-PRODUCT-VERIFICATION.md)** · **[manual-uat](evidence/manual-uat/README.md)**。
 
 **Phase ② Sepolia 治理栈 broadcast（测试 ETH · Agent 代跑）**：Owner **本轮明确授权** + **`TRAVELTRUST_PHASE2_SEPOLIA_BROADCAST_OK=1`** 时，Agent **可**执行 **`bash scripts/dev/phase2-sepolia-broadcast-governance-stack.sh`**（内嵌 pregate + dry-run + broadcast；**仅 chain_id=11155111**）。**禁止**裸 `forge … --broadcast`、**禁止 CI 默认**、**③ 主网仍 Owner-only** — **[Broadcast 确认单 §4.1](docs/runbook/TT-PHASE2-GOVERNANCE-STACK-SEPOLIA-BROADCAST-CHECKLIST.md)**。
 
