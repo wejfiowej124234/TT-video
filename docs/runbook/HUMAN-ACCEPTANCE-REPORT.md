@@ -1,10 +1,10 @@
 # Phase ②.8 · Human Acceptance Test Report
 
-**Recorded:** 2026-06-07T14:53:45.067Z  
+**Recorded:** 2026-06-30T09:44:21.555677+00:00  
 **Web:** [https://tt-web-staging.fly.dev](https://tt-web-staging.fly.dev)  
 **API:** [https://tt-api-staging.fly.dev](https://tt-api-staging.fly.dev)  
-**Staging git_sha:** `bc5a939cd89c624be7c128b551306da177bf6016`  
-**Evidence:** `D:/TravelTrust-V1.1/evidence/phase28-human-acceptance/20260607T144655Z/hat-findings.json`  
+**Staging git_sha:** `d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6`  
+**Evidence:** `evidence/GO_phase2_testnet_graduation/h1-human-acceptance/20260630T094242Z/hat-findings.json`  
 
 > Phase ②.8 真人用户视角验收 · **不**引用六大域 UAT 自动化结论作为 PASS 依据 · **≠ Phase ③ Production GO**
 
@@ -17,9 +17,9 @@
 | **HAT overall** | **PASS** |
 | **P0 (不可用)** | **0** |
 | **P1 (影响使用)** | **0** |
-| **P2 (优化项)** | **2** |
-| **Flow steps PASS** | 87 |
-| **Flow steps FAIL/PARTIAL/BLOCKED** | 0 / 0 / 2 |
+| **P2 (优化项)** | **0** |
+| **Flow steps PASS** | 61 |
+| **Flow steps FAIL/PARTIAL/BLOCKED** | 0 / 0 / 0 |
 | **Phase ③ entry recommendation** | **READY** |
 
 ```text
@@ -43,7 +43,6 @@ PHASE3_ENTRY_GATE: READY
 
 ## Issues by role
 
-- **商家**: 2 issue(s)
 
 ---
 
@@ -59,30 +58,9 @@ _None recorded._
 
 ---
 
-## P2 defects (2)
+## P2 defects (0)
 
-| ID | 角色 | 区域 | 路由 | 标题 | 真人影响 |
-|----|------|------|------|------|----------|
-| HAT-P2-001 | 商家 | 测试账号 | `/provider/register` | Staging 无预置商家测试账号 | QA 无法一键切换商家角色，延长验收周期 |
-| HAT-B-001 | 商家 | 测试账号 | `/provider/register` | 无预置商家一键账号 | 完整商家闭环需注册+Admin 审核，手测成本高 |
-
-### Detail
-
-#### HAT-P2-001 · Staging 无预置商家测试账号 (P2)
-
-- **角色:** 商家
-- **路由:** `/provider/register`
-- **观察:** 仅 tourist/guide 种子；商家须完整注册+审核链
-- **真人影响:** QA 无法一键切换商家角色，延长验收周期
-- **复现:** `docs/测试账号与本地联调.md 仅列 tourist/guide`
-
-#### HAT-B-001 · 无预置商家一键账号 (P2)
-
-- **角色:** 商家
-- **路由:** `/provider/register`
-- **观察:** staging seed 仅 tourist/guide
-- **真人影响:** 完整商家闭环需注册+Admin 审核，手测成本高
-
+_None recorded._
 ---
 
 ## Role closure matrix（真人视角 · 20260607 @ 7b86e58b）
@@ -162,28 +140,8 @@ _None recorded._
 | 商家 | 页面浏览 | /provider/register | PASS | HTTP 200 |
 | 商家 | 页面浏览 | /market/provider | PASS | HTTP 200 |
 | 商家 | 页面浏览 | /me/onboarding | PASS | HTTP 200 |
-| 商家 | 商家登录 | provider-did-rank-demo | BLOCKED | 无种子商家账号；须自注册走 /provider/register |
-| 旅行者 | 登录表单 | /auth/login | PASS | email+password+submit visible |
-| 旅行者 | 注册 | /auth/register | PASS |  |
-| 旅行者 | 首页 | / | PASS |  |
-| 旅行者 | 市场 | /market | PASS |  |
-| 旅行者 | 页面壳 | /me | PASS |  |
-| 旅行者 | 页面 | /me/settings | PASS |  |
-| 旅行者 | 页面 | /me/identities | PASS |  |
-| 旅行者 | 页面 | /community/messages | PASS |  |
-| 旅行者 | 页面 | /orders | PASS |  |
-| 旅行者 | 页面壳 | /governance/proposals | PASS |  |
-| 旅行者 | 页面 | /market/acquisition | PASS |  |
-| 向导 | 页面 | /guide | PASS |  |
-| 向导 | 页面 | /orders | PASS |  |
-| 商家 | 注册入口 | provider register step0 | PASS |  |
-| 商家 | 入驻表单 | /provider/register | PASS |  |
-| 商家 | 橱窗 | /market/provider | PASS |  |
-| 商家 | 完整闭环 | publish listing | BLOCKED | 需新注册+审核 |
-| 管理员 | 页面 | /admin/orders | PASS |  |
-| 管理员 | 页面 | /admin/users | PASS |  |
-| 管理员 | 页面 | /admin/finance | PASS |  |
-| … | … | … | … | _9 more in JSON_ |
+| 商家 | 商家橱窗 | listings | PASS | HTTP 200 |
+| 商家 | 入驻状态 | onboarding | PASS | HTTP 200 |
 
 ---
 

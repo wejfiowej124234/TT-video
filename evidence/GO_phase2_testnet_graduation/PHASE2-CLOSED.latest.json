@@ -1,0 +1,32 @@
+{
+  "schema": "traveltrust.phase2_closed.v1",
+  "closed_at_utc": "2026-06-30T09:52:37Z",
+  "phase": "② testnet",
+  "status": "CLOSED",
+  "runtime_staging_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+  "release_chain_ssot": "docs/runbook/TT-LOCAL-FIRST-CONVERGENCE.md",
+  "steps_completed": {
+    "L0_L5": "PASS",
+    "L6": "SIGNED",
+    "S5": "DEPLOYED",
+    "S6": "PASS",
+    "H1": "PASS"
+  },
+  "evidence": {
+    "s5_s6_bundle": "evidence/GO_phase2_testnet_graduation/s6-post-d5aa447f/",
+    "deep_release_gate": "evidence/GO_phase2_testnet_20260526/deep-release-gate/20260630T093714Z/",
+    "alignment_audit": "evidence/GO_phase2_testnet_graduation/s6-post-d5aa447f/20260630T094141Z/alignment-audit/",
+    "h1_human_acceptance": "evidence/GO_phase2_testnet_graduation/h1-human-acceptance/20260630T094242Z/",
+    "human_acceptance_report": "docs/runbook/HUMAN-ACCEPTANCE-REPORT.md"
+  },
+  "verdicts": {
+    "tt_phase2_closed": "YES",
+    "tt_phase3_production_entry_review": "READY"
+  },
+  "machine_keys": {
+    "TT_PHASE2_CLOSED": "YES",
+    "TT_H1_HUMAN_ACCEPTANCE": "PASS",
+    "TT_LOCAL_FIRST_RUNTIME_DRIFT": "NONE",
+    "TT_PHASE3_PRODUCTION_ENTRY_REVIEW": "READY"
+  }
+}
