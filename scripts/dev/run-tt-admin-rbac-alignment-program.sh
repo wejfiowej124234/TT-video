@@ -20,7 +20,7 @@ python "$ROOT/scripts/dev/gen-admin-rbac-gap-list.py" --out-dir "$EVID"
 echo "TT_ADMIN_RBAC_ALIGNMENT: cargo test four-cluster gates"
 cargo test -p traveltrust-api -- \
   admin_finance_summary_forbidden_for_cs_console_role \
-  admin_fee_router_forbidden_for_cs_console_role \
+  admin_fee_router_ok_for_cs_console_role \
   get_admin_approvals_forbidden_for_ops_console_role \
   admin_audit_logs_ok_for_cs_console_role \
   --nocapture

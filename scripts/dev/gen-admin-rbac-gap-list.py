@@ -19,7 +19,7 @@ CLUSTERS = ("finance", "community", "audit", "approval")
 HANDLER_EXPECTED = {
     "get_admin_finance_summary": ("finance", "require_finance_read_uid", "admin.finance.read"),
     "get_admin_finance_summary_export": ("finance", "require_finance_read_uid", "admin.finance.read"),
-    "get_admin_fee_router_routed_events": ("finance", "require_finance_read_uid", "admin.finance.read"),
+    "get_admin_fee_router_routed_events": ("finance", "require_fee_router_read_uid", "admin.fee_router.read"),
     "get_admin_region_vault_forwarded_events": ("finance", "require_finance_read_uid", "admin.finance.read"),
     "get_admin_region_vault_forwarded_events_export": ("finance", "require_finance_read_uid", "admin.finance.read"),
     "get_admin_community_reports": ("community", "require_admin_perm_uid", "admin.community.read"),
@@ -73,6 +73,7 @@ def scan_handler_auth(mod_text: str, handler: str) -> str:
     if "require_admin_actor(" in chunk.split("let actor", 1)[-1][:800]:
         return "legacy_require_admin_actor"
     for gate in (
+        "require_fee_router_read_uid",
         "require_finance_read_uid",
         "require_read_uid",
         "require_community_super_uid",

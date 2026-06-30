@@ -1,0 +1,43 @@
+{
+  "schema": "traveltrust.adm_u01_state_b_fix_proposal.v1",
+  "phase": "②",
+  "state": "B",
+  "soak_frozen": true,
+  "freeze_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "failure_evidence": "evidence/GO_staging_admin_rbac_matrix/adm_u01_priority_2026-06-30T012928Z/",
+  "fail_count": 17,
+  "root_causes": [
+    {
+      "bucket": "A",
+      "count": 12,
+      "symptom": "404",
+      "routes": [
+        "GET /api/v1/admin/provider-applications",
+        "GET /api/v1/admin/onboarding/entitlements"
+      ],
+      "root_cause": "TRAVELTRUST_COMPLEXITY_CONVERGENCE_FREEZE=1 on staging unmounts B-track admin routers including ADM-U01 probe routes — not deploy SHA drift",
+      "code_ssot": "crates/api/src/routes/admin/mod.rs freeze gate + deploy/fly/tt-api-staging/fly.toml"
+    },
+    {
+      "bucket": "B",
+      "count": 2,
+      "symptom": "403 expected 200 for CS/Risk",
+      "routes": ["GET /api/v1/admin/fee-router/routed-events"],
+      "root_cause": "Handler used PERM_FINANCE_READ; CS/Risk lack that perm; registry/admin-rbac-staging-probes.v1.yaml expects 200",
+      "fix": "PERM_FEE_ROUTER_READ + require_fee_router_read_uid"
+    },
+    {
+      "bucket": "C",
+      "count": 3,
+      "symptom": "404 expected 403 deny",
+      "routes": ["PATCH /api/v1/admin/trust-growth/control"],
+      "root_cause": "trust_growth_obs router unmounted under freeze — route missing masks RBAC deny test",
+      "fix": "Mount trust_growth_obs outside freeze survivor set"
+    }
+  ],
+  "target_regression": [
+    "cargo test -p traveltrust-api admin_fee_router_ok_for_cs_console_role",
+    "bash scripts/dev/run-tt-admin-rbac-alignment-program.sh"
+  ],
+  "forbidden": ["modify ADM-U01 probes to bypass", "re-run 72h soak", "assertion weakening"]
+}

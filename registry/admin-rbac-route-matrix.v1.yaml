@@ -17,7 +17,7 @@ routes:
     permission: admin.finance.read
   - method: GET
     path: /api/v1/admin/fee-router/routed-events
-    permission: admin.finance.read
+    permission: admin.fee_router.read
   - method: GET
     path: /api/v1/admin/region-vault/forwarded-events
     permission: admin.finance.read

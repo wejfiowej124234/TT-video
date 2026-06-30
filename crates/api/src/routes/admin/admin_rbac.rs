@@ -51,6 +51,8 @@ pub const PERM_COMMUNITY_READ: &str = "admin.community.read";
 pub const PERM_COMMUNITY_MODERATE: &str = "admin.community.moderate";
 pub const PERM_COMMUNITY_SUPER: &str = "admin.community.super";
 pub const PERM_FINANCE_READ: &str = "admin.finance.read";
+/// FeeRouter 路由事件只读（**ADM-U01** · CS/Risk 可读；**≠** `finance/summary` 全量财务读）
+pub const PERM_FEE_ROUTER_READ: &str = "admin.fee_router.read";
 pub const PERM_TRUST_GROWTH_WRITE: &str = "admin.trust_growth.write";
 pub const PERM_PLATFORM_READ: &str = "admin.platform.read";
 pub const PERM_PLATFORM_PUBLISH: &str = "admin.platform.publish";
@@ -81,6 +83,7 @@ const SUPER_ADMIN_PERMS: &[&str] = &[
     PERM_COMMUNITY_MODERATE,
     PERM_COMMUNITY_SUPER,
     PERM_FINANCE_READ,
+    PERM_FEE_ROUTER_READ,
     PERM_TRUST_GROWTH_WRITE,
     PERM_PLATFORM_READ,
     PERM_PLATFORM_PUBLISH,
@@ -110,6 +113,7 @@ const OPS_PERMS: &[&str] = &[
     PERM_COMMUNITY_READ,
     PERM_COMMUNITY_MODERATE,
     PERM_FINANCE_READ,
+    PERM_FEE_ROUTER_READ,
     PERM_TRUST_GROWTH_WRITE,
     PERM_PLATFORM_READ,
     PERM_ACQUISITION_SUSPEND,
@@ -131,6 +135,7 @@ const CS_PERMS: &[&str] = &[
     PERM_CONTENT_READ,
     PERM_OFFICIAL_READ,
     PERM_GROWTH_READ,
+    PERM_FEE_ROUTER_READ,
 ];
 
 const RISK_PERMS: &[&str] = &[
@@ -150,11 +155,13 @@ const RISK_PERMS: &[&str] = &[
     PERM_OFFICIAL_READ,
     PERM_GROWTH_READ,
     PERM_GROWTH_FRAUD,
+    PERM_FEE_ROUTER_READ,
 ];
 
 const FINANCE_PERMS: &[&str] = &[
     PERM_READ,
     PERM_FINANCE_READ,
+    PERM_FEE_ROUTER_READ,
     PERM_ORDERS_READ,
     PERM_ONBOARDING_READ,
     PERM_PLATFORM_READ,
@@ -167,6 +174,7 @@ const AUDITOR_PERMS: &[&str] = &[
     PERM_ORDERS_READ,
     PERM_COMMUNITY_READ,
     PERM_FINANCE_READ,
+    PERM_FEE_ROUTER_READ,
     PERM_ONBOARDING_READ,
     PERM_PLATFORM_READ,
     PERM_CONTENT_READ,
@@ -195,7 +203,7 @@ pub const ROUTE_DENY_MATRIX: &[(&str, &str, &str)] = &[
     ("PUT", "/api/v1/admin/users/:id/console-role", PERM_USERS_WRITE),
     // Finance cluster
     ("GET", "/api/v1/admin/finance/summary/export", PERM_FINANCE_READ),
-    ("GET", "/api/v1/admin/fee-router/routed-events", PERM_FINANCE_READ),
+    ("GET", "/api/v1/admin/fee-router/routed-events", PERM_FEE_ROUTER_READ),
     (
         "GET",
         "/api/v1/admin/region-vault/forwarded-events",

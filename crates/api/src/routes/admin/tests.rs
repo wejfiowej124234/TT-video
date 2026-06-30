@@ -298,7 +298,7 @@ async fn admin_finance_summary_forbidden_for_cs_console_role() {
 }
 
 #[tokio::test]
-async fn admin_fee_router_forbidden_for_cs_console_role() {
+async fn admin_fee_router_ok_for_cs_console_role() {
     let _guard = AdminConsoleRoleOverrideGuard::set("CS");
     let admin = user_with_role("admin");
     let resp = get_admin_fee_router_routed_events(
@@ -312,9 +312,9 @@ async fn admin_fee_router_forbidden_for_cs_console_role() {
     )
     .await
     .into_response();
-    assert_eq!(resp.status(), StatusCode::FORBIDDEN);
+    assert_eq!(resp.status(), StatusCode::SERVICE_UNAVAILABLE);
     let body = body_json(resp).await;
-    assert_eq!(body["error"], "admin_permission_denied");
+    assert_eq!(body["error"], "admin_db_required");
 }
 
 #[tokio::test]

@@ -525,7 +525,7 @@ async fn compute_admin_finance_summary(
 }
 
 pub fn router() -> Router<ApiMetaState> {
-    Router::new()
+    let router = Router::new()
         .route("/api/v1/admin/users", get(get_admin_users))
         .route(
             "/api/v1/admin/users/:id/role-change-request",
@@ -734,31 +734,40 @@ pub fn router() -> Router<ApiMetaState> {
         .route(
             "/api/v1/admin/drift-summary",
             get(get_admin_drift_summary),
-        )
-        .merge(trust_growth_obs::router())
-        .merge(admin_acquisition_suspend_http::router())
+        );
+
+    let mut r = router;
+    r = r
         .merge(admin_metrics_home_http::router())
-        .merge(admin_steward_application_http::router())
-        .merge(admin_provider_application_http::router())
         .merge(admin_guide_application_http::router())
-        .merge(admin_growth_referral_http::router())
-        .merge(admin_growth_ledger_http::router())
-        .merge(admin_growth_early_bird_http::router())
-        .merge(admin_growth_fraud_http::router())
-        .merge(admin_country_market_http::router())
-        .merge(admin_region_share_reconcile_http::router())
-        .merge(admin_growth_airdrop_http::router())
-        .merge(admin_growth_analytics_http::router())
-        .merge(admin_content_http::router())
-        .merge(admin_poi_media_http::router())
-        .merge(admin_catalog_ops_http::router())
-        .merge(admin_catalog_revision_http::router())
-        .merge(admin_official_accounts_http::router())
-        .merge(admin_official_guides_http::router())
-        .merge(admin_official_itinerary_templates_http::router())
-        .merge(admin_cold_start_http::router())
+        // ADM-U01 / Phase② post-soak：freeze 下仍须挂载只读 onboarding + trust-growth 探针路由
+        .merge(admin_provider_application_http::router())
         .merge(admin_onboarding::router())
-        .merge(admin_rbac::router())
+        .merge(trust_growth_obs::router());
+
+    if !crate::complexity_convergence::freeze_active() {
+        r = r
+            .merge(admin_acquisition_suspend_http::router())
+            .merge(admin_steward_application_http::router())
+            .merge(admin_growth_referral_http::router())
+            .merge(admin_growth_ledger_http::router())
+            .merge(admin_growth_early_bird_http::router())
+            .merge(admin_growth_fraud_http::router())
+            .merge(admin_country_market_http::router())
+            .merge(admin_region_share_reconcile_http::router())
+            .merge(admin_growth_airdrop_http::router())
+            .merge(admin_growth_analytics_http::router())
+            .merge(admin_content_http::router())
+            .merge(admin_poi_media_http::router())
+            .merge(admin_catalog_ops_http::router())
+            .merge(admin_catalog_revision_http::router())
+            .merge(admin_official_accounts_http::router())
+            .merge(admin_official_guides_http::router())
+            .merge(admin_official_itinerary_templates_http::router())
+            .merge(admin_cold_start_http::router());
+    }
+
+    r.merge(admin_rbac::router())
         .merge(admin_security_totp::router())
 }
 
@@ -1461,6 +1470,10 @@ async fn require_users_read_uid(state: &ApiMetaState, headers: &HeaderMap) -> Re
 
 async fn require_finance_read_uid(state: &ApiMetaState, headers: &HeaderMap) -> Result<Uuid, Response> {
     require_admin_perm_uid(state, headers, admin_rbac::PERM_FINANCE_READ).await
+}
+
+async fn require_fee_router_read_uid(state: &ApiMetaState, headers: &HeaderMap) -> Result<Uuid, Response> {
+    require_admin_perm_uid(state, headers, admin_rbac::PERM_FEE_ROUTER_READ).await
 }
 
 async fn require_platform_read_uid(state: &ApiMetaState, headers: &HeaderMap) -> Result<Uuid, Response> {
@@ -2600,7 +2613,7 @@ pub async fn get_admin_fee_router_routed_events(
     let Some(ref _co) = state.chain_off else {
         return not_impl_json("GET /api/v1/admin/fee-router/routed-events").into_response();
     };
-    let actor_id = match require_finance_read_uid(&state, &headers).await {
+    let actor_id = match require_fee_router_read_uid(&state, &headers).await {
         Ok(uid) => uid,
         Err(resp) => return resp,
     };
