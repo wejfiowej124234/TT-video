@@ -76,7 +76,8 @@ run_b1() {
     die "meta/build deployment_profile not local (restart API after PER)"
   fi
   if rg -q 'SYNCED_FROM_ROOT_ENV_SHA=' frontend/.env.local 2>/dev/null; then ok "frontend sync stamp"; else die "frontend/.env.local missing SYNCED_FROM_ROOT_ENV_SHA"; fi
-  if rg -q '^B407_' .env 2>/dev/null; then die "active B407_* in root .env (PER2-L-01)"; else ok "no active B407_* in .env"; fi
+  if rg -q '^B407_' .env 2>/dev/null; then die "active B407_* in root .env"; else ok "no active B407_* in .env"; fi
+  if rg -q '^LEGACY_' .env 2>/dev/null; then die "active LEGACY_* in root .env"; else ok "no active LEGACY_* in .env"; fi
   (cd frontend && npx vitest run lib/api.browser-url.test.ts >/dev/null 2>&1) && ok "vitest api.browser-url" || die "vitest api.browser-url"
 }
 
@@ -94,8 +95,9 @@ run_b3() {
   rg -q 'REGISTRY_ADDRESS' scripts/dev/phase2-staging-fly-deploy-and-sync.sh && ok "phase2 fly sync includes REGISTRY_ADDRESS" || die "phase2 fly sync missing REGISTRY_ADDRESS"
   rg -q 'CFG-001' scripts/dev/staging-onboarding.env.example && ok "staging secret isolation doc" || die "staging isolation doc"
   ! rg -q 'ONBOARDING_LOCAL_DEV_TOOLS' deploy/fly/tt-web-staging/build.env.example 2>/dev/null && ok "staging build.env no local-dev-tools" || die "staging build.env must not set ONBOARDING_LOCAL_DEV_TOOLS"
+  rg -q 'NEXT_PUBLIC_GOVERNANCE_TOKEN_ADDRESS=0x' deploy/fly/tt-web-staging/build.env.example && ok "staging GOVERNANCE_TOKEN in build.env.example" || die "staging GOVERNANCE_TOKEN example"
   if [[ "${TRAVELTRUST_STAGING_META_VERIFY:-0}" == "1" ]]; then
-    bash scripts/dev/verify-staging-per-final.sh && ok "staging PER final (live)" || die "staging PER final (live)"
+    bash scripts/dev/verify-staging-ssot-parity.sh && ok "staging SSOT parity (live)" || die "staging SSOT parity (live)"
   fi
 }
 

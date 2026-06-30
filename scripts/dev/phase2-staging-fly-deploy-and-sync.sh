@@ -78,7 +78,7 @@ add_secret TRAVELTRUST_STRIPE_SECRET_KEY "${TRAVELTRUST_STRIPE_SECRET_KEY:-}"
 add_secret TRAVELTRUST_STRIPE_WEBHOOK_SECRET "${TRAVELTRUST_STRIPE_WEBHOOK_SECRET:-}"
 add_secret SEED_TEST_ACCOUNTS "${SEED_TEST_ACCOUNTS:-1}"
 WEB_ORIGIN="${STAGING_WEB_BASE:-https://tt-web-staging.fly.dev}"
-add_secret CORS_ORIGINS "${CORS_ORIGINS:-${WEB_ORIGIN},http://localhost:3012,http://127.0.0.1:3012,http://localhost:3000,http://127.0.0.1:3000}"
+add_secret CORS_ORIGINS "${CORS_ORIGINS:-${WEB_ORIGIN},http://localhost:3012,http://127.0.0.1:3012}"
 
 for k in CHAIN_RPC_URL CHAIN_ID TIMELOCK_ADDRESS GOVERNANCE_TOKEN_ADDRESS GOVERNANCE_VOTES_TOKEN_ADDRESS GOVERNOR_ADDRESS \
   ESCROW_FACTORY_ADDRESS FEE_ROUTER_ADDRESS REGISTRY_ADDRESS GUIDE_STAKING_ADDRESS STAKING_PROVIDER_ADDRESS \
@@ -89,7 +89,7 @@ for k in CHAIN_RPC_URL CHAIN_ID TIMELOCK_ADDRESS GOVERNANCE_TOKEN_ADDRESS GOVERN
   COUNTRY_POOL_LEDGER_ADDRESS COUNTRY_LEDGER_SSOT_TOKEN_ADDRESS FUND_STACK_TOKEN_ADDRESS; do
   add_secret "$k" "${!k:-}"
 done
-# PER-S-01: align GUIDE_STAKING_* aliases with frontend NEXT_PUBLIC_* / meta
+# PER-AUDIT3-S01: /meta guide_staking reads STAKING_ADDRESS then GUIDE_STAKING_ADDRESS (never steward pool)
 if [[ -z "${GUIDE_STAKING_ADDRESS:-}" && -n "${GUIDE_STAKING_POOL_ADDRESS:-}" ]]; then
   add_secret GUIDE_STAKING_ADDRESS "${GUIDE_STAKING_POOL_ADDRESS}"
 fi
@@ -101,9 +101,15 @@ if [[ -z "${REGISTRY_ADDRESS:-}" ]]; then
   [[ -n "$reg_example" ]] && add_secret REGISTRY_ADDRESS "$reg_example"
 fi
 add_secret TRAVELTRUST_DEPLOYMENT_PROFILE "${TRAVELTRUST_DEPLOYMENT_PROFILE:-staging}"
-# /meta staking_address reads STAKING_ADDRESS; align with steward pool when unset
-if [[ -z "${STAKING_ADDRESS:-}" && -n "${REGION_STEWARD_STAKE_POOL_ADDRESS:-}" ]]; then
-  add_secret STAKING_ADDRESS "${REGION_STEWARD_STAKE_POOL_ADDRESS}"
+if [[ -z "${STAKING_ADDRESS:-}" ]]; then
+  if [[ -n "${GUIDE_STAKING_ADDRESS:-}" ]]; then
+    add_secret STAKING_ADDRESS "${GUIDE_STAKING_ADDRESS}"
+  elif [[ -n "${GUIDE_STAKING_POOL_ADDRESS:-}" ]]; then
+    add_secret STAKING_ADDRESS "${GUIDE_STAKING_POOL_ADDRESS}"
+  else
+    guide_example="$(grep -E '^NEXT_PUBLIC_GUIDE_STAKING_ADDRESS=' "$ROOT/deploy/fly/tt-web-staging/build.env.example" 2>/dev/null | head -1 | cut -d= -f2- || true)"
+    [[ -n "$guide_example" ]] && add_secret STAKING_ADDRESS "$guide_example" && add_secret GUIDE_STAKING_ADDRESS "$guide_example"
+  fi
 fi
 if [[ -z "${GOVERNANCE_VOTES_TOKEN_ADDRESS:-}" && -n "${GOVERNANCE_TOKEN_ADDRESS:-}" ]]; then
   add_secret GOVERNANCE_VOTES_TOKEN_ADDRESS "${GOVERNANCE_TOKEN_ADDRESS}"

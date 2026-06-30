@@ -4,7 +4,7 @@ set -euo pipefail
 
 APP="${FLY_STAGING_API_APP:-tt-api-staging}"
 WEB="${STAGING_WEB_BASE:-https://tt-web-staging.fly.dev}"
-ORIGINS="${WEB},http://localhost:3012,http://127.0.0.1:3012,http://localhost:3000,http://127.0.0.1:3000"
+ORIGINS="${WEB},http://localhost:3012,http://127.0.0.1:3012"
 
 echo "patch-tt-api-staging-cors: fly secrets set CORS_ORIGINS on $APP …"
 fly secrets set "CORS_ORIGINS=${ORIGINS}" -a "$APP"

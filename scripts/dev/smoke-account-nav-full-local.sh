@@ -5,7 +5,7 @@
 #   bash scripts/dev/smoke-account-nav-full-local.sh
 #
 # 可选环境变量：
-#   FRONTEND_BASE=http://127.0.0.1:3000     # HTTP 探活（设置 7 路由）
+#   FRONTEND_BASE=http://127.0.0.1:3012     # HTTP 探活（设置 7 路由）
 #   PLAYWRIGHT_ME_SETTINGS=1                # e2e/me-settings-l5-hub.spec.ts
 #   PLAYWRIGHT_ACCOUNT_NAV=1              # 顶栏 IA + Hub 举报抽屉
 #   PLAYWRIGHT_COMMUNITY_ME=1             # 社区 ME 全量 Playwright（跳过本子脚本已跑的 i18n/vitest）

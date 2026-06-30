@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ① 本地 · `/orders` → `/pay` · `/escrow/[id]` 链路烟测（HTTP + 可选登录后 API）
 #
-# 用法（仓库根，API :8080 可选、前端 :3000）：
+# 用法（仓库根，API :8080 可选、前端 :3012）：
 #   bash scripts/dev/smoke-orders-pay-escrow-local.sh
 #
 # 可选：

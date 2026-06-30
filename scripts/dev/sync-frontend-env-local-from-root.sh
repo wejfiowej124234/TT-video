@@ -13,8 +13,8 @@ MARK_END="# --- END TT NEXT_PUBLIC sync ---"
 if [[ -f "$OUT" ]]; then
   PRE="$(mktemp)"
   awk '
-    /^# --- BEGIN TT NEXT_PUBLIC sync/ { skip=1; next }
-    skip && /^# --- END TT NEXT_PUBLIC sync/ { skip=0; next }
+    /^BEGIN TT NEXT_PUBLIC sync/ { skip=1; next }
+    skip && /END TT NEXT_PUBLIC sync/ { skip=0; next }
     skip { next }
     { print }
   ' "$OUT" >"$PRE"

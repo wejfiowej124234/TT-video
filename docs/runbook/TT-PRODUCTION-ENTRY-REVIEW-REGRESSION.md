@@ -30,12 +30,11 @@ bash scripts/dev/verify-cfg-drift-closure.sh
 
 See [TT-PROJECT-MAINLINE-PRODUCT-VERIFICATION.md](TT-PROJECT-MAINLINE-PRODUCT-VERIFICATION.md).
 
-## ② staging（PER Final 已验）
+**② staging（PER / Audit3 已验）**
 
 ```bash
-TRAVELTRUST_PER_S01_FLY_OK=1 bash scripts/dev/apply-per-s01-staging-registry-fly.sh
-fly deploy -c deploy/fly/tt-api-staging/fly.toml -a tt-api-staging  # deployment_profile 须当前 API 镜像
-bash scripts/dev/verify-staging-per-final.sh
+TRAVELTRUST_PER_AUDIT3_FLY_OK=1 bash scripts/dev/apply-per-audit3-staging-fly.sh
+bash scripts/dev/verify-staging-ssot-parity.sh
 TRAVELTRUST_STAGING_META_VERIFY=1 bash scripts/dev/verify-cfg-drift-closure.sh --batch B3
 ```
 

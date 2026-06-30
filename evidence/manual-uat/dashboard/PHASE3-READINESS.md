@@ -1,6 +1,6 @@
 # Production Readiness Dashboard
 
-**AUTO-GENERATED** · `2026-06-30T13:41:36Z`
+**AUTO-GENERATED** · `2026-06-30T14:06:10Z`
 **Generator:** `python scripts/dev/generate-manual-uat-dashboard.py`
 
 > **证据口径：** 本页证明当前质量聚合态 · **非** ③ Production GO 签字。
@@ -15,7 +15,7 @@
 | **Open P0 Business Bugs** | **0** |
 | **Open P1 Business Bugs** | **1** |
 | **Manual UAT Coverage** | 0% (0/27 PASS · 0 FAIL · 0 blocked) |
-| **Regression** | Pending 0 · Passed 23 |
+| **Regression** | Pending 0 · Passed 41 |
 | **Production Readiness** | **IN_PROGRESS** |
 
 | 上下文 | 值 |
@@ -27,7 +27,7 @@
 | Open P3 Business Bugs | 0 |
 | Overdue P1 (>24h OPEN) | 0 |
 | Overdue P2 (>7d OPEN) | 0 |
-| Closed Bugs (累计) | 14 |
+| Closed Bugs (累计) | 25 |
 
 > **纪律：** 配置漂移复发 = **Regression**（DEFECT + REG）· **非** Configuration Sprint。见 [TT-CONFIGURATION-ZERO-DRIFT-FROZEN](../../docs/runbook/TT-CONFIGURATION-ZERO-DRIFT-FROZEN.md)。
 

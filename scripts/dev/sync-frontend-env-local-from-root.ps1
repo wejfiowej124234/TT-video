@@ -23,8 +23,8 @@ if (Test-Path -LiteralPath $OutFile) {
     $skip = $false
     Get-Content -LiteralPath $OutFile -Encoding UTF8 | ForEach-Object {
         $line = $_
-        if ($line -eq $MarkerBegin -or $line -match '^\# --- BEGIN TT NEXT_PUBLIC sync') { $skip = $true; return }
-        if ($skip -and ($line -eq $MarkerEnd -or $line -match '^\# --- END TT NEXT_PUBLIC sync')) { $skip = $false; return }
+        if ($line -match 'BEGIN TT NEXT_PUBLIC sync') { $skip = $true; return }
+        if ($skip -and ($line -match 'END TT NEXT_PUBLIC sync')) { $skip = $false; return }
         if ($skip) { return }
         $stripped.Add($line)
     }

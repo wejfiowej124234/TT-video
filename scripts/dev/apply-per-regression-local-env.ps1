@@ -34,7 +34,12 @@ $inB407 = $false
 foreach ($line in $lines) {
     if ($line -match '^# --- WEB3-P2-003 \+ B-407') { $inB407 = $true; $out.Add($line); continue }
     if ($line -match '^B407_') {
-        if ($line -notmatch '^\s*#') { $out.Add("# PER: archived B407 — use .env.govfreeze-v2-evidence.example — $line") }
+        if ($line -notmatch '^\s*#') { $out.Add("# PER: archived B407 - use .env.govfreeze-v2-evidence.example - $line") }
+        else { $out.Add($line) }
+        continue
+    }
+    if ($line -match '^LEGACY_') {
+        if ($line -notmatch '^\s*#') { $out.Add("# PER: archived LEGACY contracts - see .env.govfreeze-v2-evidence.example - $line") }
         else { $out.Add($line) }
         continue
     }

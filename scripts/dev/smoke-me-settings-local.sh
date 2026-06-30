@@ -7,7 +7,7 @@
 # 用法（仓库根）：
 #   bash scripts/dev/smoke-me-settings-local.sh
 #
-# 可选：若前端 dev 已起，追加 HTTP 探活 FRONTEND_BASE=http://127.0.0.1:3000
+# 可选：若前端 dev 已起，追加 HTTP 探活 FRONTEND_BASE=http://127.0.0.1:3012
 # 可选 Playwright（需 API + Next）：PLAYWRIGHT_ME_SETTINGS=1 bash scripts/dev/smoke-me-settings-local.sh
 set -euo pipefail
 
