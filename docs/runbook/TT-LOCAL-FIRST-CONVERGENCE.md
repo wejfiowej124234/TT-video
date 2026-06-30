@@ -15,7 +15,7 @@
 
 | 层 | 含义 | 当前锚点（示例） |
 |----|------|------------------|
-| **本地 HEAD** | 开发 + 配置 SSOT | `042b320c` + L5 commit（Local First L2 triage + gate 生命周期 + PD-009 freeze 例外） |
+| **本地 HEAD** | 开发 + 配置 SSOT | `14b894b6`（Local First L0–L5 技术收口 · L6 待签） |
 | **Staging runtime** | 已部署镜像 | `9979b35e`（Local First closure slice） |
 | **Graduation / Soak** | 历史冻结证据 | `fc9266ce`（**不覆写**） |
 | **Phase③ WIP** | stash / 未跟踪 | **隔离**，不混入 deploy |
