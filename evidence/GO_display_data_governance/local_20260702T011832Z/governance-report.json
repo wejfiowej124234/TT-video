@@ -1,0 +1,122 @@
+{
+  "env": "local",
+  "api": "http://127.0.0.1:8080",
+  "c3_id": "d45162a0-f9f2-4030-93a1-82003a9753ac",
+  "unpublish": [],
+  "publish": [],
+  "market": {
+    "Hangzhou": {
+      "total": 4,
+      "production": 2,
+      "test": 2,
+      "c3_visible": true,
+      "ids": [
+        {
+          "id": "274ab21a-eb69-4b2c-8821-cbddd7ac63d4",
+          "origin": "test",
+          "bio": "多重身份演示 · 向导轨"
+        },
+        {
+          "id": "f0e0b101-0001-4001-8001-000000000002",
+          "origin": "production",
+          "bio": "trust-gate e2e"
+        },
+        {
+          "id": "f0e0b101-0001-4001-8001-000000000001",
+          "origin": "production",
+          "bio": "trust-gate e2e"
+        },
+        {
+          "id": "d45162a0-f9f2-4030-93a1-82003a9753ac",
+          "origin": "test",
+          "bio": "测试向导账号，用于联调"
+        }
+      ]
+    },
+    "Beijing": {
+      "total": 1,
+      "production": 1,
+      "test": 0,
+      "c3_visible": false,
+      "ids": [
+        {
+          "id": "00000000-0000-4000-8000-000000000311",
+          "origin": "production",
+          "bio": "10 年北京地接，故宫、长城与胡同深度讲解，持证双语向导。"
+        }
+      ]
+    },
+    "Shanghai": {
+      "total": 1,
+      "production": 1,
+      "test": 0,
+      "c3_visible": false,
+      "ids": [
+        {
+          "id": "00000000-0000-4000-8000-000000000312",
+          "origin": "production",
+          "bio": "外滩、豫园与法租界美食路线，擅长城市故事与摄影点位。"
+        }
+      ]
+    },
+    "Kyoto": {
+      "total": 1,
+      "production": 1,
+      "test": 0,
+      "c3_visible": false,
+      "ids": [
+        {
+          "id": "00000000-0000-4000-8000-000000000313",
+          "origin": "production",
+          "bio": "Kyoto temples, tea districts, and season"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "status": "ok",
+    "filter_enabled": true,
+    "data_origin_counts": {
+      "guides": {
+        "demo": 16,
+        "production": 19,
+        "test": 1,
+        "total": 36
+      },
+      "orders": {
+        "production": 39,
+        "test": 5,
+        "total": 44
+      },
+      "market_listings": {
+        "production": 3,
+        "test": 3,
+        "total": 6
+      },
+      "market_listings_by_variant": {
+        "provider": {
+          "production": 2,
+          "total": 2
+        },
+        "acquisition": {
+          "production": 1,
+          "test": 3,
+          "total": 4
+        }
+      },
+      "community_posts": {
+        "production": 22,
+        "total": 22
+      }
+    },
+    "policy": {
+      "show_test_data": false,
+      "blocked_origins": [
+        "SMOKE"
+      ],
+      "updated_at": "2026-07-01T16:55:43.069394Z",
+      "updated_by": null
+    }
+  },
+  "pass": true
+}

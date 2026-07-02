@@ -1,0 +1,95 @@
+# TravelTrust · Display Data Governance (展示数据治理) · SSOT
+# Runbook: docs/runbook/TT-DISPLAY-DATA-GOVERNANCE.md
+# Script: scripts/dev/run-display-data-governance.sh
+
+schema: traveltrust.display_data_governance.v1
+version: 1
+effective_utc: "2026-07-01"
+
+phase:
+  name: Display Data Governance
+  placement: AFTER_ADMIN_COMPLETE_BEFORE_BUSINESS_MANUAL_UAT
+  mandatory: true
+  not_bugfix: true
+  not_admin_dev: true
+  not_pi3: true
+  not_mainnet: true
+
+machine_keys:
+  TT_DISPLAY_DATA_GOVERNANCE: ENFORCED
+  TT_DISPLAY_DATA_GOVERNANCE_PHASE: PRE_BUSINESS_UAT
+  TT_DISPLAY_DATA_GOVERNANCE_RUNBOOK: docs/runbook/TT-DISPLAY-DATA-GOVERNANCE.md
+
+surfaces:
+  - market_guides
+  - market_listings
+  - discover_orders
+  - community_feed
+  - official_campaign
+  - homepage_cold_start
+
+test_accounts_registry: registry/test-accounts-business-immutable.v1.yaml
+
+test_data_policy:
+  C3:
+    account_id: C3
+    email: guide@test.com
+    must_be_published: true
+    must_appear_in_market: true
+    market_city: Hangzhou
+    canonical_bio: 测试向导账号，用于联调
+    ui_label: "[TEST]"
+  C1:
+    account_id: C1
+    email: multi-demo@test.com
+    must_be_published: false
+    visible_when_env:
+      - TRAVELTRUST_SEED_MULTI_DEMO_PUBLIC_MARKET=1
+      - TRAVELTRUST_MANUAL_ACCEPTANCE=1
+    note: "Local/staging walkthrough only; hide from Production catalog"
+  unpublish_other_test_published: true
+  unpublish_demo_published: true
+
+canonical_production:
+  # Stable UUID prefixes — same rule local & staging (UUIDs differ per DB; prefixes/patterns align)
+  guide_id_prefixes:
+    - "f0e0b101-" # Trust Gate · Hangzhou E2E set (local)
+  guide_id_exact:
+    - "00000000-0000-4000-8000-000000000311" # Beijing showcase
+    - "00000000-0000-4000-8000-000000000312" # Shanghai showcase
+    - "00000000-0000-4000-8000-000000000313" # Kyoto showcase
+    - "00000000-0000-4000-8000-000000000314" # Hangzhou showcase (staging / sparse seed)
+
+market_expectations:
+  cities:
+    - query: Hangzhou
+      aliases: [杭州]
+      min_production: 1
+      max_production: 3
+      require_c3_visible: true
+    - query: Beijing
+      aliases: [北京]
+      min_production: 1
+      max_production: 1
+      require_c3_visible: false
+    - query: Shanghai
+      aliases: [上海]
+      min_production: 1
+      max_production: 1
+      require_c3_visible: false
+    - query: Kyoto
+      aliases: [京都]
+      min_production: 1
+      max_production: 1
+      require_c3_visible: false
+
+environments:
+  local:
+    api_default: http://127.0.0.1:8080
+    admin_email: tourist@test.com
+  staging:
+    api_default: https://tt-api-staging.fly.dev
+    web_default: https://tt-web-staging.fly.dev
+    admin_email: tourist@test.com
+
+evidence_root: evidence/GO_display_data_governance

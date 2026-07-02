@@ -1,0 +1,278 @@
+{
+  "env": "staging",
+  "api": "https://tt-api-staging.fly.dev",
+  "c3_id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b",
+  "unpublish": [
+    {
+      "id": "de9b3b54-ebd4-4b00-991c-bde9ebc82f4d",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "b811ae78-467d-4be5-b0f8-8da798561ecd",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "cbb024fb-bf8c-46ed-a8ee-bd43e1b61fef",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "cb640178-3c16-479a-b255-2f0f95acc2cb",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "68884b9a-81f3-4676-a4a8-fff4a2876156",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "333a2ed2-d439-47cd-b674-9542d2f3245d",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "7d47c345-fcf0-4ab7-86d9-c7dd6ec2144f",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "dd11edaf-6808-405a-a1dc-af5104376ef0",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "7f9baf58-0084-4bf7-a53e-73f71fd93339",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "61589606-8c17-4dae-90de-b528b181c1e9",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "9ab18296-c3a2-46ea-bbb4-ba752dcf0745",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "728a049b-4fd7-45bb-abe2-e338df7e29ff",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "ed10e139-398e-4343-bf6a-b9002f79ca8b",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "a80e452f-b426-4b02-b463-1b53ff108c3e",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "0cf842e2-2afc-4c61-a01d-dd5a38ef3bf6",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "eafa541d-3031-4cda-8a8f-41b97a8f5808",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "f30d4bf6-4e04-424f-b97f-e888cbb581d9",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "7bbb6a03-0e8b-45c2-8bdd-9f3859e61efb",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "f727e9b7-6571-45db-b400-59697f4fe4a5",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "84810710-57e0-4ba4-a9f4-b93df640a69f",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "29c6953f-bf0c-4e29-8101-72090227d5f3",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "a52c962d-8bb6-4f76-a21a-757505e68744",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "4b913013-0ed6-4de6-868a-c83c832b89af",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "3b81e120-1d0f-4969-9af2-738db3dfa9d9",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "3cb4217c-b29a-454a-8d89-3f02d6edf969",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "072cf0d0-4872-4783-bb6f-fe6197e7a64e",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "02c29957-33bf-477f-bd14-cf88581fe0c7",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "7b36aa9f-9de3-4490-b506-13be69399338",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "821ee683-2700-4f50-a630-5ff2ce5ea5e9",
+      "origin": "production",
+      "label": "北京 · CN"
+    },
+    {
+      "id": "ad18ad78-46fe-43ec-a14c-c8859bec0830",
+      "origin": "production",
+      "label": "杭州 · CN"
+    },
+    {
+      "id": "8c408ada-5c34-4fa1-a25e-5b564d0853d8",
+      "origin": "production",
+      "label": "杭州 · CN"
+    }
+  ],
+  "publish": [
+    "650fbaff-1d9e-4677-b970-16be8fdd9d7b"
+  ],
+  "market": {
+    "Hangzhou": {
+      "total": 3,
+      "production": 1,
+      "test": 2,
+      "c3_visible": true,
+      "ids": [
+        {
+          "id": "3e7c5a93-c3ee-49a4-aa2e-0c12177de8ea",
+          "origin": "test",
+          "bio": "多重身份演示 · 向导轨"
+        },
+        {
+          "id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b",
+          "origin": "test",
+          "bio": "Staging P2 smoke"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000314",
+          "origin": "production",
+          "bio": "西湖、灵隐与龙井茶乡深度讲解，持证双语向导。"
+        }
+      ]
+    },
+    "Beijing": {
+      "total": 1,
+      "production": 1,
+      "test": 0,
+      "c3_visible": false,
+      "ids": [
+        {
+          "id": "00000000-0000-4000-8000-000000000311",
+          "origin": "production",
+          "bio": "10 年北京地接，故宫、长城与胡同深度讲解，持证双语向导。"
+        }
+      ]
+    },
+    "Shanghai": {
+      "total": 1,
+      "production": 1,
+      "test": 0,
+      "c3_visible": false,
+      "ids": [
+        {
+          "id": "00000000-0000-4000-8000-000000000312",
+          "origin": "production",
+          "bio": "外滩、豫园与法租界美食路线，擅长城市故事与摄影点位。"
+        }
+      ]
+    },
+    "Kyoto": {
+      "total": 1,
+      "production": 1,
+      "test": 0,
+      "c3_visible": false,
+      "ids": [
+        {
+          "id": "00000000-0000-4000-8000-000000000313",
+          "origin": "production",
+          "bio": "Kyoto temples, tea districts, and season"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "status": "ok",
+    "filter_enabled": true,
+    "data_origin_counts": {
+      "guides": {
+        "demo": 17,
+        "production": 35,
+        "test": 4,
+        "total": 56
+      },
+      "orders": {
+        "production": 12,
+        "test": 52,
+        "total": 64
+      },
+      "market_listings": {
+        "demo": 18,
+        "production": 22,
+        "test": 20,
+        "total": 60
+      },
+      "market_listings_by_variant": {
+        "provider": {
+          "demo": 18,
+          "production": 13,
+          "total": 31
+        },
+        "acquisition": {
+          "production": 9,
+          "test": 20,
+          "total": 29
+        }
+      },
+      "community_posts": {
+        "production": 81,
+        "test": 1,
+        "total": 82
+      }
+    },
+    "policy": {
+      "show_test_data": false,
+      "blocked_origins": [
+        "SMOKE"
+      ],
+      "updated_at": "2026-07-02T00:35:29.850727Z",
+      "updated_by": "2760d445-cbf4-47d0-9461-fcba3db0516f"
+    }
+  },
+  "pass": true
+}
