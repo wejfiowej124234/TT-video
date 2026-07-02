@@ -1,0 +1,133 @@
+{
+  "env": "staging",
+  "api": "https://tt-api-staging.fly.dev",
+  "utc": "2026-07-02T01:35:30.465Z",
+  "strict_warnings": false,
+  "surfaces": {
+    "S00_MOCK_POLICY": {
+      "note": "Staging/Prod web: marketPublicShowcaseFallbackEnabled=false (NODE_ENV=production)",
+      "market_mock_detail_env": "must be unset on deploy"
+    },
+    "S01_MARKET_GUIDES": {
+      "checks": [],
+      "api_count": 6
+    },
+    "S02_MARKET_DISCOVER": {
+      "api_count": 1
+    },
+    "S03_COMMUNITY": {
+      "feed_count": 50
+    },
+    "S04_GOVERNANCE": {
+      "api_count": 3
+    },
+    "S05_OFFICIAL": {
+      "surfaces": {
+        "homepage": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "market": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "community": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "festival": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "holiday": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "regional": {
+          "status": 200,
+          "has_campaign": false
+        }
+      }
+    },
+    "S06_CONTENT": {
+      "catalog_countries": 0,
+      "admin_pois": 0
+    },
+    "S07_USER_CENTER": {
+      "role": "super_admin",
+      "email": "tourist@test.com",
+      "stats_ok": true
+    },
+    "S08_ORDERS": {
+      "api_count": 8,
+      "page": {
+        "limit": 50,
+        "next_cursor": null,
+        "has_more": false
+      }
+    },
+    "S09_MESSAGES": {
+      "api_count": 0
+    },
+    "S10_ADMIN_PUBLIC_OPS": {
+      "admin_published_guides": 5,
+      "public_api_guides": 6,
+      "stats_total": 56
+    },
+    "S11_GUIDE_DETAIL": {
+      "checked": 5,
+      "missing_availability": []
+    },
+    "S12_MARKET_LISTINGS": {
+      "provider": 13,
+      "acquisition": 9
+    }
+  },
+  "blocking": [],
+  "warnings": [
+    {
+      "id": "W001",
+      "surface": "S01_MARKET_GUIDES",
+      "code": "AVATAR_PLACEHOLDER_COLLISION",
+      "msg": "avatar:1 shared by 3 rows — visual duplicate risk in UI",
+      "detail": {
+        "ids": [
+          {
+            "id": "3e7c5a93-c3ee-49a4-aa2e-0c12177de8ea",
+            "city": "杭州",
+            "origin": "test"
+          },
+          {
+            "id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b",
+            "city": "Hangzhou",
+            "origin": "test"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000312",
+            "city": "上海",
+            "origin": "production"
+          }
+        ]
+      }
+    },
+    {
+      "id": "W002",
+      "surface": "S01_MARKET_GUIDES",
+      "code": "BIO_NOT_CANONICAL",
+      "msg": "test guide 650fbaff-1d9e-4677-b970-16be8fdd9d7b bio polluted by smoke",
+      "detail": {
+        "bio": "Staging P2 smoke"
+      }
+    },
+    {
+      "id": "W003",
+      "surface": "S01_MARKET_GUIDES",
+      "code": "C3_BIO_DRIFT",
+      "msg": "Hangzhou test guide 650fbaff-1d9e-4677-b970-16be8fdd9d7b bio not canonical",
+      "detail": {
+        "bio": "Staging P2 smoke"
+      }
+    }
+  ],
+  "pass": true
+}

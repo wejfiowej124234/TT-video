@@ -4,7 +4,7 @@
  */
 
 import type { GuideCardItem, OrderCardItem } from "@/lib/marketTypes";
-import { TRAVEL_IMAGES_POOL } from "@/lib/communityMockData/constants";
+import { AVATARS, TRAVEL_IMAGES_POOL } from "@/lib/communityMockData/constants";
 import { guideCardAvatarUrl } from "@/lib/marketMockData/helpers";
 
 const COVER_W = 640;
@@ -12,6 +12,26 @@ const COVER_W = 640;
 function unsplash(id: string): string {
   return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${COVER_W}&q=82`;
 }
+
+/** 24+ 唯一肖像 · 按 guide.id 分池，降低占位碰撞 */
+const GUIDE_PORTRAIT_POOL: readonly string[] = [
+  ...AVATARS.map((u) => u.replace("w=120", `w=${COVER_W}`).replace("q=80", "q=82")),
+  unsplash("photo-1519345182560-3f2917c472ef"),
+  unsplash("photo-1544005313-94ddf0286df2"),
+  unsplash("photo-1438761681033-6461ffad8d80"),
+  unsplash("photo-1506794778202-cad84cf45f1d"),
+  unsplash("photo-1552374196-c4e7ff6e292a"),
+  unsplash("photo-1547425260-76bcadfb4f2c"),
+  unsplash("photo-1524504388940-b1c1722653e1"),
+  unsplash("photo-1487412720507-e7ab37603c6f"),
+  unsplash("photo-1580489944761-15a19d654956"),
+  unsplash("photo-1607746882042-94463dfeaf51"),
+  unsplash("photo-1614283233556-f35d0a816c6a"),
+  unsplash("photo-1624561172888-ac93c6966454"),
+  unsplash("photo-1633332755192-727a05c4013b"),
+  unsplash("photo-1649970604341-9424162c72ea"),
+  unsplash("photo-1655077046704-b67a7a8b7a2b"),
+];
 
 /** 城市 / 目的地关键词 → 封面池（同城市多卡按 `id` 稳定分图，避免列表三张完全相同） */
 const CITY_ORDER_COVER_LISTS: Record<string, readonly string[]> = {
@@ -101,14 +121,14 @@ export function marketCoverGradientClass(seed: string): string {
   return COVER_GRADIENTS[stablePoolIndex(seed, COVER_GRADIENTS.length)];
 }
 
-/** 向导头像：API 头像优先，否则与社区头像池同源 */
+/** 向导头像：API 头像优先；占位图按 guide.id 在扩展肖像池分池 */
 export function resolveGuideAvatarUrl(guide: Pick<GuideCardItem, "id" | "avatar_url" | "city" | "user_id">): string {
   const explicit = nonEmptyUrl(guide.avatar_url);
   if (explicit) {
     return explicit.replace("w=120", `w=${COVER_W}`).replace("q=80", "q=82");
   }
-  const idx = stablePoolIndex(guide.user_id || guide.id || guide.city || "guide", 8);
-  return guideCardAvatarUrl(idx);
+  const idx = stablePoolIndex(guide.id || guide.user_id || guide.city || "guide", GUIDE_PORTRAIT_POOL.length);
+  return GUIDE_PORTRAIT_POOL[idx] ?? guideCardAvatarUrl(idx % 8);
 }
 
 /** 抽屉/详情标题：避免 country · city · destination 重复（如「中国 · 北京 · 中国」） */

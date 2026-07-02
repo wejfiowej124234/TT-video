@@ -18,6 +18,7 @@ struct ShowcaseGuideDef {
     service_types: &'static [&'static str],
     bio: &'static str,
     stake_amount: &'static str,
+    avatar_url: &'static str,
 }
 
 const SHOWCASE_GUIDES: &[ShowcaseGuideDef] = &[
@@ -32,6 +33,7 @@ const SHOWCASE_GUIDES: &[ShowcaseGuideDef] = &[
         service_types: &["walking", "culture"],
         bio: "10 年北京地接，故宫、长城与胡同深度讲解，持证双语向导。",
         stake_amount: "800",
+        avatar_url: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=640&q=82",
     },
     ShowcaseGuideDef {
         user_id: Uuid::from_u128(0x0000_0000_0000_4000_8000_0000_0000_0302),
@@ -44,6 +46,7 @@ const SHOWCASE_GUIDES: &[ShowcaseGuideDef] = &[
         service_types: &["walking", "food"],
         bio: "外滩、豫园与法租界美食路线，擅长城市故事与摄影点位。",
         stake_amount: "650",
+        avatar_url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=640&q=82",
     },
     ShowcaseGuideDef {
         user_id: Uuid::from_u128(0x0000_0000_0000_4000_8000_0000_0000_0303),
@@ -56,6 +59,7 @@ const SHOWCASE_GUIDES: &[ShowcaseGuideDef] = &[
         service_types: &["culture", "walking"],
         bio: "Kyoto temples, tea districts, and seasonal gardens — licensed local guide.",
         stake_amount: "720",
+        avatar_url: "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=640&q=82",
     },
 ];
 
@@ -111,7 +115,7 @@ pub async fn seed_market_public_showcase_if_sparse(pool: &PgPool, store: &mut Ch
             None,
             def.stake_amount,
             None,
-            None,
+            Some(def.avatar_url),
             "active",
             now,
             now,
@@ -131,7 +135,7 @@ pub async fn seed_market_public_showcase_if_sparse(pool: &PgPool, store: &mut Ch
                 role: "guide".to_string(),
                 kyc_status: "none".to_string(),
                 nickname: Some(def.nickname.to_string()),
-                avatar_url: None,
+                avatar_url: Some(def.avatar_url.to_string()),
                 default_wallet_address: None,
                 created_at: now,
                 updated_at: now,
@@ -153,12 +157,19 @@ pub async fn seed_market_public_showcase_if_sparse(pool: &PgPool, store: &mut Ch
             guide_license_url: None,
             stake_amount: def.stake_amount.to_string(),
             hourly_rate: None,
-            avatar_url: None,
+            avatar_url: Some(def.avatar_url.to_string()),
             public_title: None,
             status: "active".to_string(),
             rejection_codes: vec![],
             rejection_message: None,
             data_origin: "production".into(),
+            display_status: "published".into(),
+            display_origin: "REAL".into(),
+            featured: false,
+            display_priority: 0,
+            display_surfaces: vec![],
+            display_start_at: None,
+            display_end_at: None,
             created_at: now,
             updated_at: now,
         };

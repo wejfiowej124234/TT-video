@@ -1,0 +1,106 @@
+{
+  "env": "local",
+  "api": "http://127.0.0.1:8080",
+  "utc": "2026-07-02T01:37:47.752Z",
+  "strict_warnings": true,
+  "surfaces": {
+    "S01_MARKET_GUIDES": {
+      "checks": [],
+      "api_count": 7
+    },
+    "S02_MARKET_DISCOVER": {
+      "api_count": 4
+    },
+    "S03_COMMUNITY": {
+      "feed_count": 22
+    },
+    "S04_GOVERNANCE": {
+      "api_count": 2
+    },
+    "S05_OFFICIAL": {
+      "surfaces": {
+        "homepage": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "market": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "community": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "festival": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "holiday": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "regional": {
+          "status": 200,
+          "has_campaign": false
+        }
+      }
+    },
+    "S06_CONTENT": {
+      "catalog_countries": 0,
+      "admin_pois": 0
+    },
+    "S07_USER_CENTER": {
+      "role": "super_admin",
+      "email": "tourist@test.com",
+      "stats_ok": true
+    },
+    "S08_ORDERS": {
+      "api_count": 1,
+      "page": {
+        "limit": 50,
+        "next_cursor": null,
+        "has_more": false
+      }
+    },
+    "S09_MESSAGES": {
+      "api_count": 0
+    },
+    "S10_ADMIN_PUBLIC_OPS": {
+      "admin_published_guides": 7,
+      "public_api_guides": 7,
+      "stats_total": 36
+    },
+    "S11_GUIDE_DETAIL": {
+      "checked": 5,
+      "missing_availability": []
+    },
+    "S12_MARKET_LISTINGS": {
+      "provider": 2,
+      "acquisition": 1
+    }
+  },
+  "blocking": [],
+  "warnings": [
+    {
+      "id": "W001",
+      "surface": "S01_MARKET_GUIDES",
+      "code": "AVATAR_PLACEHOLDER_COLLISION",
+      "msg": "avatar:1 shared by 2 rows — visual duplicate risk in UI",
+      "detail": {
+        "ids": [
+          {
+            "id": "f0e0b101-0001-4001-8001-000000000001",
+            "city": "杭州",
+            "origin": "production"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000313",
+            "city": "京都",
+            "origin": "production"
+          }
+        ]
+      }
+    }
+  ],
+  "pass": false
+}

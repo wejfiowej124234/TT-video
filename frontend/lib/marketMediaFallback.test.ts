@@ -41,6 +41,13 @@ describe("marketMediaFallback", () => {
     expect(new Set(urls).size).toBeGreaterThan(1);
   });
 
+  it("varies guide avatars by guide id even when user_id matches", () => {
+    const base = { avatar_url: null as string | null, city: "杭州", user_id: "same-user" };
+    const a = resolveGuideAvatarUrl({ ...base, id: "guide-a" });
+    const b = resolveGuideAvatarUrl({ ...base, id: "guide-b" });
+    expect(a).not.toBe(b);
+  });
+
   it("resolves guide avatar from pool when missing", () => {
     const url = resolveGuideAvatarUrl({ id: "g-1", avatar_url: null, city: "杭州", user_id: "u-1" });
     expect(url).toContain("images.unsplash.com");

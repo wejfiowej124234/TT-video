@@ -68,12 +68,33 @@ surfaces:
     frontend: / · /market · /community
     surfaces: [homepage, market, community, festival, holiday, regional]
     checks: [published_only, draft_not_leaked]
-  - id: S06_CONTENT_PUBLIC
-    name: Content · Public POI/Landing
-    api: admin/content + consumer resolve paths
+  - id: S06_CONTENT
+    name: Content · Catalog / POI
+    api: GET /api/v1/catalog/countries · admin/content/pois
     frontend: landing · POI ambient
     checks: [admin_published_vs_public]
-    phase: browser_required
+  - id: S07_USER_CENTER
+    name: Admin · Public Ops
+    api: GET /api/v1/admin/official/public-operations/*
+    frontend: /admin/official/public-operations
+  - id: S11_GUIDE_DETAIL
+    name: Guide Detail · Availability
+    api: GET /api/v1/guides/:id · /availability
+  - id: S12_MARKET_LISTINGS
+    name: Market Listings
+    api: GET /api/v1/market/{provider|acquisition}/listings
+  - id: S07_USER_CENTER
+    name: User Center
+    api: GET /api/v1/me · /me/stats
+  - id: S08_ORDERS
+    name: Orders
+    api: GET /api/v1/orders
+  - id: S09_MESSAGES
+    name: Messages
+    api: GET /api/v1/community/conversations
+  - id: S10_ADMIN_PUBLIC_OPS
+  playwright: frontend/e2e/frontend-api-consistency-audit.spec.ts
+  checks: [visual_duplicate_img_src, feed_count_sanity, governance_no_mock]
 
 scripts:
   api_layer: scripts/dev/run-frontend-api-consistency-audit.sh

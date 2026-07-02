@@ -47,11 +47,18 @@ GUIDE_TOKEN="$(login "guide@test.com")"
 TOURIST_TOKEN="$(login "tourist@test.com")"
 
 probe_get "guide" "$GUIDE_TOKEN" "/api/v1/me/guide-profile" 0
+# C3 canonical bio（与 chain_off::auth seed 同源）；烟测后必须恢复，避免污染 /market 公众展示。
+CANONICAL_C3_BIO='测试向导账号，用于联调'
 patch_body='{"bio":"Staging P2 smoke"}'
 pg_code="$(curl -sS -o /dev/null -w '%{http_code}' -X PATCH "$API_BASE/api/v1/me/guide-profile" \
   -H "Authorization: Bearer $GUIDE_TOKEN" -H "Content-Type: application/json" -d "$patch_body")"
 [[ "$pg_code" == "200" ]] || fail "PATCH guide-profile HTTP $pg_code"
 ok "PATCH /api/v1/me/guide-profile"
+restore_body="$(node -e "process.stdout.write(JSON.stringify({bio:process.argv[1]}))" "$CANONICAL_C3_BIO")"
+pr_code="$(curl -sS -o /dev/null -w '%{http_code}' -X PATCH "$API_BASE/api/v1/me/guide-profile" \
+  -H "Authorization: Bearer $GUIDE_TOKEN" -H "Content-Type: application/json" -d "$restore_body")"
+[[ "$pr_code" == "200" ]] || fail "PATCH guide-profile restore canonical C3 bio HTTP $pr_code"
+ok "PATCH /api/v1/me/guide-profile — restored canonical C3 bio"
 
 probe_get "merchant" "$TOURIST_TOKEN" "/api/v1/me/merchant-profile" 1
 probe_get "steward" "$TOURIST_TOKEN" "/api/v1/me/region-steward-profile" 1

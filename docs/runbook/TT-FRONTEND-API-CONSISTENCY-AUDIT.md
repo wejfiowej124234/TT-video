@@ -96,7 +96,20 @@ API_BASE=https://tt-api-staging.fly.dev ENV_LABEL=staging \
 
 产物：`evidence/GO_frontend_api_consistency_audit/<env>_<UTC>/audit-report.json`
 
-### 4.2 Browser 层（Staging 手验 / Playwright · 推荐）
+### 4.3 Strict 模式（Phase 3 复跑 · Warning 清零）
+
+```bash
+STRICT_WARNINGS=1 bash scripts/dev/run-frontend-api-consistency-audit.sh
+```
+
+**PASS 条件：** `blocking: 0` · `warnings: 0`
+
+### 4.4 Visual Consistency 修复（Warning 修复脚本）
+
+```bash
+# 测试向导唯一 avatar_url
+API_BASE=https://tt-api-staging.fly.dev node scripts/dev/assign-public-guide-display-avatars.cjs
+```
 
 ```bash
 cd frontend

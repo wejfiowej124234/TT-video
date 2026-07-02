@@ -31,10 +31,13 @@ lifecycle_history:
     runbook: docs/runbook/TT-BUSINESS-MANUAL-UAT.md
     signoff: evidence/manual-uat/signoff/BUSINESS-MANUAL-UAT-SIGNOFF-20260702T011941Z.md
   frontend_api_consistency_audit:
-    status: PENDING_FIRST_FULL_BROWSER_PASS
+    status: PASS
+    strict_warnings_zero: true
     registry: registry/frontend-api-consistency-audit.v1.yaml
     runbook: docs/runbook/TT-FRONTEND-API-CONSISTENCY-AUDIT.md
     api_layer_script: scripts/dev/run-frontend-api-consistency-audit.sh
+    browser_layer_script: frontend/e2e/frontend-api-consistency-audit.spec.ts
+    evidence: evidence/GO_frontend_api_consistency_audit/
 
 # 当前唯一执行主线（2026-07-02）
 current_mainline:
