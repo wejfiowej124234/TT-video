@@ -7,7 +7,7 @@
 
 **最高裁决入口：** [`TT-DELIVERY-DECISION-POLICY.md`](TT-DELIVERY-DECISION-POLICY.md) · `TT_DELIVERY_DECISION_POLICY: ENFORCED`
 
-**互指：** [`TT-ADMIN-PLATFORM-GOVERNANCE-DISCIPLINE.md`](TT-ADMIN-PLATFORM-GOVERNANCE-DISCIPLINE.md)（纪律 ①～③）· [`PHASE3-PRODUCTION-PREPARATION.md`](PHASE3-PRODUCTION-PREPARATION.md)
+**互指：** [`TT-RELEASE-PIPELINE.md`](TT-RELEASE-PIPELINE.md)（每次发布强制流程）· [`TT-ADMIN-PLATFORM-GOVERNANCE-DISCIPLINE.md`](TT-ADMIN-PLATFORM-GOVERNANCE-DISCIPLINE.md)（纪律 ①～③）· [`PHASE3-PRODUCTION-PREPARATION.md`](PHASE3-PRODUCTION-PREPARATION.md)
 
 ---
 
@@ -17,7 +17,13 @@
 TT_PROGRAM_MAINLINE_DISCIPLINE: ENFORCED
 TT_PROJECT_PHASE: PRODUCT_DELIVERY
 TT_PREVIOUS_PHASE: PRODUCT_DEVELOPMENT
-TT_CURRENT_MAINLINE: DISPLAY_DATA_GOVERNANCE,BUSINESS_MANUAL_UAT,PI3,PRODUCTION_READINESS,MAINNET,PRODUCTION_GO
+TT_CURRENT_MAINLINE: PI3,PRODUCTION_READINESS,MAINNET,PRODUCTION_GO
+TT_RELEASE_PIPELINE: ENFORCED
+TT_PHASE_1_LOCAL: CLOSED
+TT_PHASE_2_TESTNET_STAGING: CLOSED
+TT_ADMIN_PLATFORM: CLOSED
+TT_DISPLAY_DATA_GOVERNANCE: PASS
+TT_BUSINESS_MANUAL_UAT: PASS
 TT_MAINLINE_QUEUE: SINGLE
 TT_CROSS_MAINLINE_DEVELOPMENT: FORBIDDEN
 ```
@@ -52,7 +58,7 @@ TT_PROGRAM_MAINLINE_DISCIPLINE: ENFORCED
 |---|------|----------|------|
 | **①** | **Production Infrastructure（PI3）** | 🟡 **IN_PROGRESS** | PI3-001 备份缺失 → ✅ 立即处理 |
 | **②** | **Mainnet** | ⏳ PENDING | 合约部署问题 → ✅ 立即处理 |
-| **③** | **Business Manual UAT** | ✅ **PASS**（2026-07-02 · 展示数据治理后探针） | 真人验收阻断 → ✅ 立即处理 |
+| **③** | **Business Manual UAT** | ✅ **PASS**（2026-07-02 · 已纳入发布流程 · 每次发布必跑） | 阻断 → ✅ 立即处理 |
 | **④** | **Production GO** | ⏳ PENDING | Go-Live Checklist 未闭 → ✅ 立即处理 |
 | **⑤** | **Post-GO Feature Roadmap** | 🔒 DEFERRED | Official Ops 1.1+ · **Production GO 后** |
 
@@ -73,45 +79,53 @@ TT_PROGRAM_MAINLINE_DISCIPLINE: ENFORCED
 
 ---
 
-## 3 · Current Mainline（执行顺序）
+## 3 · 生命周期与 Current Mainline
 
+### 3.1 · v1.0 阶段 ladder（历史 + 当前）
+
+```text
+✅ Phase ① Local Development               CLOSED
+✅ Phase ② Testnet / Staging              CLOSED
+✅ Admin Platform Enterprise Complete     CLOSED
+✅ Display Data Governance                PASS
+✅ Business Manual UAT                    PASS
+────────────────────────────────────
+🟡 Phase ③ Production Infrastructure（PI3）← 当前主线
+        ▼
+Production GO
 ```
-Admin Platform Complete
-    ↓
+
+### 3.2 · 每次 Production 发布固定流程（v1.0+ · v1.1+ · 未来版本）
+
+见 [`TT-RELEASE-PIPELINE.md`](TT-RELEASE-PIPELINE.md) · [`TT-FRONTEND-API-CONSISTENCY-AUDIT.md`](TT-FRONTEND-API-CONSISTENCY-AUDIT.md) · `TT_RELEASE_PIPELINE: ENFORCED`
+
+```text
+Product Capability Complete
+        ▼
+Frontend ↔ API Consistency Audit
+        ▼
 Display Data Governance
-    ↓
+        ▼
 Business Manual UAT
-    ↓
-PI3
+        ▼
+Production Infrastructure（PI3）
+        ▼
+Production GO
+```
+
+### 3.3 · Current Mainline（唯一剩余工程）
+
+```text
+PI3（PI3-001～006）
     ↓
 Production Readiness
     ↓
 Mainnet
     ↓
 Production GO
-    ↓
-（Post-GO）Official Ops 1.1 · Feature Level STANDARD
 ```
 
-**展示数据治理**（[`TT-DISPLAY-DATA-GOVERNANCE.md`](TT-DISPLAY-DATA-GOVERNANCE.md)）为 **Business Manual UAT 前强制门禁** · `TT_DISPLAY_DATA_GOVERNANCE: ENFORCED` · **非 Admin 开发 · 非 PI3 · 非 Bug 修复**。
-
----
-
-## 3b · Legacy 队列参考（Production 轨内）
-
-```
-PI3
-    ↓
-Production Readiness
-    ↓
-Mainnet
-    ↓
-Business Manual UAT
-    ↓
-Production GO
-```
-
-*Display Data Governance 在 Business Manual UAT 之前完成；PI3 / Mainnet 与 UAT 并行度以 [`TT-DELIVERY-DECISION-POLICY.md`](TT-DELIVERY-DECISION-POLICY.md) 为准。*
+**Product Capability = Enterprise Complete** · **Production Capability = PI3 In Progress** · 不再补页面/后台/运营功能。
 
 ---
 
@@ -126,23 +140,17 @@ Production GO
 ## Product Capability
 Enterprise Complete
 
-（含：前端 · 后端 · DB · Admin · 四大中心 · RBAC · Official Ops · Content Center · Business Flow · Operational Scenario）
+（含：前端 · 后端 · DB · Admin · 四大中心 · Official Ops · Content · Business Flow · Operational Scenario · 测试网对齐 · Display Data Governance · Business Manual UAT）
 
 ## Production Capability
-In Progress
-
-（唯一剩余工程 — 与 Admin 无关）
+In Progress — **唯一剩余：Production Engineering（PI3-001～006）**
 
 ## Evidence Completeness
 Product Evidence      Complete
 Production Evidence   In Progress
 
 ## Current Mainline
-Display Data Governance
-  ↓
-Business Manual UAT
-  ↓
-PI3
+PI3（Production Infrastructure）
   ↓
 Production Readiness
   ↓
@@ -150,8 +158,12 @@ Mainnet
   ↓
 Production GO
 
+## Pre-Production Gates（每次发布必跑）
+Display Data Governance → Business Manual UAT
+（见 TT-RELEASE-PIPELINE.md）
+
 ## Current Blocking Items
-（只列 PI3-001～006 · Mainnet · Business UAT · Go-Live · 生产证据缺口）
+（只列 PI3-001～006 · Go-Live · 生产证据缺口）
 
 ## Release Decision
 NO-GO | GO
@@ -161,10 +173,12 @@ NO-GO | GO
 
 ```text
 TT_PROJECT_REPORTING_TEMPLATE: FIXED_20260702
+TT_RELEASE_PIPELINE: ENFORCED
 TT_DISPLAY_DATA_GOVERNANCE: PASS
 TT_BUSINESS_MANUAL_UAT: PASS
 TT_PRODUCT_CAPABILITY: ENTERPRISE_COMPLETE
 TT_PRODUCTION_CAPABILITY: IN_PROGRESS
+TT_PRODUCTION_ENGINEERING_ONLY: true
 TT_EVIDENCE_PRODUCT_TRACK: COMPLETE
 TT_EVIDENCE_PRODUCTION_TRACK: IN_PROGRESS
 TT_FORBIDDEN_REPORT_TOPICS: ADMIN_DAILY_PROGRESS,OFFICIAL_OPS_DAILY,CMS_DAILY,CONTENT_CENTER_DAILY

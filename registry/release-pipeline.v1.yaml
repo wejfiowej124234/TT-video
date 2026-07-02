@@ -1,0 +1,114 @@
+# TravelTrust · Release Pipeline · SSOT
+# Runbook: docs/runbook/TT-RELEASE-PIPELINE.md
+# 适用：v1.0 · v1.1 · 及未来所有大/小版本 Production 发布
+
+schema: traveltrust.release_pipeline.v1
+version: 1
+effective_utc: "2026-07-02"
+
+machine_keys:
+  TT_RELEASE_PIPELINE: ENFORCED
+  TT_RELEASE_PIPELINE_VERSION: v1
+  TT_RELEASE_PIPELINE_RUNBOOK: docs/runbook/TT-RELEASE-PIPELINE.md
+
+# 历史阶段（v1.0 首次交付 — 均已 CLOSED / PASS）
+lifecycle_history:
+  phase_1_local_development:
+    status: CLOSED
+  phase_2_testnet_staging:
+    status: CLOSED
+    signoff: evidence/manual-uat/signoff/TESTNET-SIGNOFF-20260701T002252Z.md
+  admin_platform_enterprise_complete:
+    status: CLOSED
+    signoff: evidence/manual-uat/signoff/PHASE2-ADMIN-FINAL-VALIDATION-SIGNOFF-20260702.md
+  display_data_governance:
+    status: PASS
+    registry: registry/display-data-governance.v1.yaml
+    runbook: docs/runbook/TT-DISPLAY-DATA-GOVERNANCE.md
+    evidence: evidence/GO_display_data_governance/
+  business_manual_uat:
+    status: PASS
+    runbook: docs/runbook/TT-BUSINESS-MANUAL-UAT.md
+    signoff: evidence/manual-uat/signoff/BUSINESS-MANUAL-UAT-SIGNOFF-20260702T011941Z.md
+  frontend_api_consistency_audit:
+    status: PENDING_FIRST_FULL_BROWSER_PASS
+    registry: registry/frontend-api-consistency-audit.v1.yaml
+    runbook: docs/runbook/TT-FRONTEND-API-CONSISTENCY-AUDIT.md
+    api_layer_script: scripts/dev/run-frontend-api-consistency-audit.sh
+
+# 当前唯一执行主线（2026-07-02）
+current_mainline:
+  name: Phase 3 Production Infrastructure
+  short: PI3
+  status: IN_PROGRESS
+  items:
+    - id: PI3-001
+      name: Production Database / Backup
+    - id: PI3-002
+      name: Domain / TLS / CDN
+    - id: PI3-003
+      name: Stripe Live
+    - id: PI3-004
+      name: Production Validation
+    - id: PI3-005
+      name: Mainnet
+    - id: PI3-006
+      name: Go-Live Checklist
+
+# 每次 Production 发布必须执行（v1.0+ · v1.1+ · 未来版本均适用）
+mandatory_pre_production_gates:
+  - id: PRODUCT_CAPABILITY_COMPLETE
+    description: 产品能力 Enterprise Complete（含前后端 · Admin · 业务流 · 运营场景）
+    one_time_for_v1: CLOSED
+    repeat_per_release: confirm_no_regression
+  - id: FRONTEND_API_CONSISTENCY_AUDIT
+    description: 前端–API 全链路一致性 — Database→API→Mapping→Store→UI→Browser
+    every_release: true
+    script: scripts/dev/run-frontend-api-consistency-audit.sh
+    gate: scripts/gates/check-frontend-api-consistency-audit-ssot.sh
+    registry: registry/frontend-api-consistency-audit.v1.yaml
+  - id: DISPLAY_DATA_GOVERNANCE
+    description: 展示数据治理 — Canonical Seed · Production · Test Policy · Market/Community/Official
+    every_release: true
+    script: scripts/dev/run-display-data-governance.sh
+    gate: scripts/gates/check-display-data-governance-ssot.sh
+    registry: registry/display-data-governance.v1.yaml
+  - id: BUSINESS_MANUAL_UAT
+    description: 业务人工验收 — 真实角色走核心流程 · 公众可见数据符合产品设计
+    every_release: true
+    script: scripts/dev/run-business-manual-uat-probes.sh
+    runbook: docs/runbook/TT-BUSINESS-MANUAL-UAT.md
+  - id: PRODUCTION_INFRASTRUCTURE
+    description: PI3-001～006 · 生产环境基础设施
+    every_release: true
+    runbook: docs/runbook/PHASE3-PRODUCTION-PREPARATION.md
+  - id: PRODUCTION_GO
+    description: Release Decision GO · Go-Live Checklist 全闭
+    every_release: true
+
+pipeline_order:
+  - PRODUCT_CAPABILITY_COMPLETE
+  - FRONTEND_API_CONSISTENCY_AUDIT
+  - DISPLAY_DATA_GOVERNANCE
+  - BUSINESS_MANUAL_UAT
+  - PRODUCTION_INFRASTRUCTURE
+  - PRODUCTION_GO
+
+product_capability:
+  status: ENTERPRISE_COMPLETE
+  includes:
+    - frontend
+    - backend
+    - database_business_model
+    - admin_four_centers
+    - official_ops
+    - content_center
+    - business_flow
+    - operational_scenario
+    - testnet_staging_alignment
+
+production_capability:
+  status: IN_PROGRESS
+  sole_remaining: production_engineering
+
+release_decision: NO_GO

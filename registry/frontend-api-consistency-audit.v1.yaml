@@ -1,0 +1,85 @@
+# TravelTrust · Enterprise Frontend–API Consistency Audit · SSOT
+# Runbook: docs/runbook/TT-FRONTEND-API-CONSISTENCY-AUDIT.md
+# Script: scripts/dev/run-frontend-api-consistency-audit.sh
+
+schema: traveltrust.frontend_api_consistency_audit.v1
+version: 1
+effective_utc: "2026-07-02"
+
+machine_keys:
+  TT_FRONTEND_API_CONSISTENCY_AUDIT: ENFORCED
+  TT_FRONTEND_API_CONSISTENCY_AUDIT_RUNBOOK: docs/runbook/TT-FRONTEND-API-CONSISTENCY-AUDIT.md
+
+placement:
+  after: PRODUCT_CAPABILITY_COMPLETE
+  before: DISPLAY_DATA_GOVERNANCE
+  every_release: true
+
+layer_stack:
+  - database
+  - api
+  - frontend_mapping
+  - state_store
+  - ui
+  - browser
+
+check_dimensions:
+  - api_count_equals_ui_count
+  - uuid_consistent
+  - status_consistent
+  - sort_consistent
+  - filter_consistent
+  - pagination_consistent
+  - placeholder_not_misleading
+  - skeleton_not_misleading
+  - cache_no_duplicate
+  - hydration_no_duplicate
+  - mock_no_leak
+  - data_origin_consistent
+  - city_consistent
+  - avatar_consistent
+  - bio_consistent
+
+surfaces:
+  - id: S01_MARKET_GUIDES
+    name: Market · Guide Cards
+    api: GET /api/v1/guides
+    frontend: /market?view=guides · GuideCard · useMarketPage
+    checks: [count, uuid, city, avatar, bio, data_origin, filter, pagination, mock_leak]
+  - id: S02_MARKET_DISCOVER
+    name: Market · Discover Orders
+    api: GET /api/v1/discover/orders
+    frontend: /market · MarketContentOrdersSection
+    checks: [count, uuid, data_origin, mock_leak]
+  - id: S03_COMMUNITY_FEED
+    name: Community · Feed
+    api: GET /api/v1/community/feed
+    frontend: /community · useCommunityFeed · drawer
+    checks: [count, uuid, pagination, posts_vs_feed]
+  - id: S04_GOVERNANCE
+    name: Governance · Proposals
+    api: GET /api/v1/governance/proposals
+    frontend: /governance
+    checks: [count, uuid, auth_required]
+    note: "Public read may require Bearer; audit uses tourist@test.com"
+  - id: S05_OFFICIAL_CAMPAIGN
+    name: Official Ops · Cold Start Surfaces
+    api: GET /api/v1/official/cold-start/surfaces/:surface
+    frontend: / · /market · /community
+    surfaces: [homepage, market, community, festival, holiday, regional]
+    checks: [published_only, draft_not_leaked]
+  - id: S06_CONTENT_PUBLIC
+    name: Content · Public POI/Landing
+    api: admin/content + consumer resolve paths
+    frontend: landing · POI ambient
+    checks: [admin_published_vs_public]
+    phase: browser_required
+
+scripts:
+  api_layer: scripts/dev/run-frontend-api-consistency-audit.sh
+  gate: scripts/gates/check-frontend-api-consistency-audit-ssot.sh
+  browser_layer: frontend/e2e/frontend-api-consistency-audit.spec.ts
+
+evidence_root: evidence/GO_frontend_api_consistency_audit
+
+release_pipeline: registry/release-pipeline.v1.yaml

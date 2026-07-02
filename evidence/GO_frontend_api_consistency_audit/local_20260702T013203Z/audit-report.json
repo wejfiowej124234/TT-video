@@ -1,0 +1,165 @@
+{
+  "env": "local",
+  "api": "http://127.0.0.1:8080",
+  "utc": "2026-07-02T01:32:03.115Z",
+  "surfaces": {
+    "S00_MOCK_GATES": {
+      "staging_production_build": false,
+      "checks": [
+        {
+          "name": "marketPublicShowcaseFallback_staging_off",
+          "ok": true,
+          "note": "NODE_ENV=production on Staging web — verified in frontend/lib/marketPublicDisplayGate.ts"
+        }
+      ]
+    },
+    "S01_MARKET_GUIDES": {
+      "checks": [
+        {
+          "name": "api_reachable",
+          "ok": true
+        },
+        {
+          "name": "uuid_unique",
+          "ok": true,
+          "dups": []
+        },
+        {
+          "name": "filter_hangzhou_alias",
+          "ok": true,
+          "en": 4,
+          "zh": 4
+        },
+        {
+          "name": "avatar_placeholder_unique",
+          "ok": false
+        },
+        {
+          "name": "production_published_alignment",
+          "ok": true,
+          "extra": []
+        }
+      ],
+      "api_count": 7,
+      "avatar_placeholder_collisions": [
+        {
+          "idx": "0",
+          "guides": [
+            {
+              "id": "00000000-0000-4000-8000-000000000311",
+              "city": "北京",
+              "origin": "production"
+            },
+            {
+              "id": "d45162a0-f9f2-4030-93a1-82003a9753ac",
+              "city": "杭州",
+              "origin": "test"
+            }
+          ]
+        },
+        {
+          "idx": "2",
+          "guides": [
+            {
+              "id": "274ab21a-eb69-4b2c-8821-cbddd7ac63d4",
+              "city": "杭州",
+              "origin": "test"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000313",
+              "city": "京都",
+              "origin": "production"
+            }
+          ]
+        }
+      ]
+    },
+    "S02_MARKET_DISCOVER": {
+      "checks": [
+        {
+          "name": "api_reachable",
+          "ok": true
+        },
+        {
+          "name": "no_test_demo_public",
+          "ok": true,
+          "count": 0
+        }
+      ],
+      "api_count": 4
+    },
+    "S03_COMMUNITY_FEED": {
+      "checks": [
+        {
+          "name": "feed_reachable",
+          "ok": true
+        },
+        {
+          "name": "pagination_no_overlap",
+          "ok": true,
+          "overlap": 0
+        },
+        {
+          "name": "posts_not_list_endpoint",
+          "ok": true
+        }
+      ],
+      "feed_count": 22,
+      "page1_count": 10,
+      "posts_endpoint_status": 405
+    },
+    "S04_GOVERNANCE": {
+      "checks": [
+        {
+          "name": "auth_reachable",
+          "ok": true
+        }
+      ],
+      "anon_status": 401,
+      "api_count": 2
+    },
+    "S05_OFFICIAL_CAMPAIGN": {
+      "surfaces": {
+        "homepage": {
+          "status": 200,
+          "campaign": null
+        },
+        "market": {
+          "status": 200,
+          "campaign": null
+        },
+        "community": {
+          "status": 200,
+          "campaign": null
+        },
+        "festival": {
+          "status": 200,
+          "campaign": null
+        },
+        "holiday": {
+          "status": 200,
+          "campaign": null
+        },
+        "regional": {
+          "status": 200,
+          "campaign": null
+        }
+      },
+      "admin_campaign_count": 0
+    }
+  },
+  "blocking": [],
+  "warnings": [
+    {
+      "surface": "S01_MARKET_GUIDES",
+      "code": "AVATAR_PLACEHOLDER_COLLISION",
+      "msg": "avatar pool index 0 shared by 2 guides (北京, 杭州) — UI may look like duplicate person"
+    },
+    {
+      "surface": "S01_MARKET_GUIDES",
+      "code": "AVATAR_PLACEHOLDER_COLLISION",
+      "msg": "avatar pool index 2 shared by 2 guides (杭州, 京都) — UI may look like duplicate person"
+    }
+  ],
+  "pass": true
+}
