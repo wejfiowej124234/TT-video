@@ -261,30 +261,45 @@ market_subsite_frontend_race_fix:
   classification: Market Subsite Frontend Race Fix
   status: CLOSED
   not_data_governance: true
+  shared_frontend_ssot: true
   governance_gates:
     OCS: CLOSED
     DDG: CLOSED
     SOPCP: CLOSED
     evidence_reuse: ENFORCED
-  stamp: "20260703T091200Z"
-  evidence: evidence/GO_market_subsite_frontend_race_fix/20260703T091200Z/race-fix-closure.json
-  signoff: evidence/manual-uat/signoff/MARKET-SUBSITE-FRONTEND-RACE-FIX-SIGNOFF-20260703T091200Z.md
+  stamp: "20260703T101200Z"
+  git_commit: c741aae662eff99a74bde667956d463f3efef1f7
+  evidence: evidence/GO_market_subsite_frontend_race_fix/20260703T101200Z/race-fix-closure.json
+  source_truth_audit: evidence/GO_market_subsite_frontend_race_fix/20260703T101200Z/source-truth-audit.json
+  signoff: evidence/manual-uat/signoff/MARKET-SUBSITE-FRONTEND-RACE-FIX-SIGNOFF-20260703T101200Z.md
   staging_web: https://tt-web-staging.fly.dev
   staging_api: https://tt-api-staging.fly.dev
   web_deploy:
     app: tt-web-staging
-    release_version: 45
-    deployment_id: deployment-01KWKHQBCBBDNG5DCM17WJ0QWK
+    release_version: 46
+    deployment_id: deployment-01KWKP3Q2SPJVRG70PZ7R3HZ2Z
+  phase1_local_mirror:
+    web: http://127.0.0.1:3012
+    api: http://127.0.0.1:8080
+    playwright_log: evidence/GO_market_subsite_frontend_race_fix/20260703T101200Z/playwright-local-mirror.log
+    scenarios_passed: 12
+  phase2_staging:
+    playwright_log: evidence/GO_market_subsite_frontend_race_fix/20260703T101200Z/playwright-staging.log
+    scenarios_passed: 12
+  blocking_count: 0
   fix_files:
     - frontend/components/market/useMarketStandaloneBusinessPage.ts
     - frontend/components/market/MarketSubsiteFilterBar.tsx
     - frontend/components/market/MarketSubsiteMasonry.tsx
     - frontend/e2e/market-subsite-catalog-race-regression.spec.ts
+    - scripts/dev/audit-market-subsite-race-fix-source-truth.cjs
   issue_taxonomy:
+    refresh_shows_2: Fixed — frontend race + hydration, not user-filter-only
     staging_cold_start: Fixed
     duplicate_data_listing_id: Fixed
     acquisition_jp_zero: Expected Difference
     err_connection_closed: Transient Flake
+    api_transient_non_ok: Fixed
   regression: frontend/e2e/market-subsite-catalog-race-regression.spec.ts
   close_script: scripts/dev/close-market-subsite-frontend-race-fix.sh
   verdict: CLOSED

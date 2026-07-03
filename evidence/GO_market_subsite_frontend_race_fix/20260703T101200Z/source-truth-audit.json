@@ -1,0 +1,56 @@
+{
+  "schema": "traveltrust.market_subsite_race_fix_source_truth.v1",
+  "stamp": "20260703T101200Z",
+  "classification": "Market Subsite Frontend Race Fix",
+  "not_data_governance": true,
+  "governance_gates": {
+    "OCS": "CLOSED",
+    "DDG": "CLOSED",
+    "SOPCP": "CLOSED"
+  },
+  "phase1": {
+    "label": "local_staging_mirror",
+    "api_base": "http://127.0.0.1:8080",
+    "counts": {
+      "provider_all": 10,
+      "acquisition_all": 10,
+      "provider_jp": 2,
+      "acquisition_jp": 0
+    }
+  },
+  "phase2": {
+    "label": "staging",
+    "api_base": "https://tt-api-staging.fly.dev",
+    "counts": {
+      "provider_all": 10,
+      "acquisition_all": 10,
+      "provider_jp": 2,
+      "acquisition_jp": 0
+    }
+  },
+  "expected": {
+    "provider_all": 10,
+    "acquisition_all": 10,
+    "provider_jp": 2,
+    "acquisition_jp": 0
+  },
+  "fix_markers": {
+    "epoch_guard": true,
+    "layout_hydration": true,
+    "debounce_ms": true,
+    "filterbar_no_dup_hydration": true,
+    "masonry_single_listing_id": true,
+    "e2e_dedupe": true,
+    "e2e_dual_target": true
+  },
+  "fix_files": [
+    "frontend/components/market/useMarketStandaloneBusinessPage.ts",
+    "frontend/components/market/MarketSubsiteFilterBar.tsx",
+    "frontend/components/market/MarketSubsiteMasonry.tsx",
+    "frontend/e2e/market-subsite-catalog-race-regression.spec.ts"
+  ],
+  "shared_frontend_ssot": true,
+  "verdict": "PASS",
+  "blocking_count": 0,
+  "blockers": []
+}

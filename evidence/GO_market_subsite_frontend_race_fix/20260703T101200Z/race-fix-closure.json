@@ -1,0 +1,106 @@
+{
+  "schema": "traveltrust.market_subsite_frontend_race_fix.v2",
+  "stamp": "20260703T101200Z",
+  "status": "CLOSED",
+  "classification": "Market Subsite Frontend Race Fix",
+  "not_data_governance": true,
+  "governance_gates": {
+    "OCS": "CLOSED",
+    "DDG": "CLOSED",
+    "SOPCP": "CLOSED",
+    "evidence_reuse": "ENFORCED"
+  },
+  "shared_frontend_ssot": true,
+  "git_commit": "c741aae662eff99a74bde667956d463f3efef1f7",
+  "git_commit_message": "fix(market): close subsite catalog race — shared Phase①/② frontend SSOT",
+  "phase1": {
+    "label": "local_staging_mirror",
+    "web_base": "http://127.0.0.1:3012",
+    "api_base": "http://127.0.0.1:8080",
+    "playwright": "evidence/GO_market_subsite_frontend_race_fix/20260703T101200Z/playwright-local-mirror.log",
+    "scenarios": 12,
+    "passed": 12,
+    "ui_api_parity": {
+      "provider_all": {
+        "ui": 10,
+        "api": 10
+      },
+      "acquisition_all": {
+        "ui": 10,
+        "api": 10
+      },
+      "provider_jp": {
+        "ui": 2,
+        "api": 2
+      },
+      "acquisition_jp": {
+        "ui": 0,
+        "api": 0
+      }
+    }
+  },
+  "phase2": {
+    "label": "staging",
+    "web_base": "https://tt-web-staging.fly.dev",
+    "api_base": "https://tt-api-staging.fly.dev",
+    "playwright": "evidence/GO_market_subsite_frontend_race_fix/20260703T101200Z/playwright-staging.log",
+    "scenarios": 12,
+    "passed": 12,
+    "ui_api_parity": {
+      "provider_all": {
+        "ui": 10,
+        "api": 10
+      },
+      "acquisition_all": {
+        "ui": 10,
+        "api": 10
+      },
+      "provider_jp": {
+        "ui": 2,
+        "api": 2
+      },
+      "acquisition_jp": {
+        "ui": 0,
+        "api": 0
+      }
+    }
+  },
+  "source_truth_audit": "evidence/GO_market_subsite_frontend_race_fix/20260703T101200Z/source-truth-audit.json",
+  "source_truth_verdict": "PASS",
+  "blocking_count": 0,
+  "web_deploy": {
+    "app": "tt-web-staging",
+    "release_version": 46,
+    "deployment_id": "deployment-01KWKP3Q2SPJVRG70PZ7R3HZ2Z"
+  },
+  "fix_files": [
+    "frontend/components/market/useMarketStandaloneBusinessPage.ts",
+    "frontend/components/market/MarketSubsiteFilterBar.tsx",
+    "frontend/components/market/MarketSubsiteMasonry.tsx",
+    "frontend/e2e/market-subsite-catalog-race-regression.spec.ts",
+    "scripts/dev/audit-market-subsite-race-fix-source-truth.cjs"
+  ],
+  "audit_dimensions": [
+    "frontend_hook_epoch_guard_B061",
+    "layoutEffect_country_pref_hydration",
+    "debounced_refetch_300ms",
+    "filterbar_no_duplicate_hydration",
+    "masonry_single_data_listing_id",
+    "localStorage_country_pref",
+    "url_country_param",
+    "api_source_truth",
+    "ui_render_count",
+    "data_listing_id_dedupe",
+    "phase1_phase2_api_parity"
+  ],
+  "issue_taxonomy": {
+    "refresh_shows_2_not_user_filter_only": "Root cause frontend race + localStorage jp hydration — not catalog-only-2 defect",
+    "staging_cold_start": "Fixed",
+    "duplicate_data_listing_id": "Fixed",
+    "acquisition_jp_zero": "Expected Difference",
+    "err_connection_closed": "Transient Flake",
+    "api_transient_non_ok": "Fixed — e2e API retry"
+  },
+  "regression": "frontend/e2e/market-subsite-catalog-race-regression.spec.ts",
+  "verdict": "CLOSED"
+}

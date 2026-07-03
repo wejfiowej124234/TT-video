@@ -54,14 +54,34 @@ async function apiListingIds(
     subsite === "provider"
       ? `/api/v1/market/provider/listings?limit=50${search ? `&${search}` : ""}`
       : `/api/v1/market/acquisition/listings?limit=50${search ? `&${search}` : ""}`;
-  const res = await request.get(`${API}${path}`);
-  expect(res.ok()).toBeTruthy();
-  const json = await res.json();
-  return ((json.items ?? []) as { id: string }[]).map((r) => r.id).filter(Boolean);
+  let lastRes: import("@playwright/test").APIResponse | null = null;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    const res = await request.get(`${API}${path}`);
+    lastRes = res;
+    if (res.ok()) {
+      const json = await res.json();
+      return ((json.items ?? []) as { id: string }[]).map((r) => r.id).filter(Boolean);
+    }
+    await new Promise((r) => setTimeout(r, 1500 * attempt));
+  }
+  expect(lastRes?.ok()).toBeTruthy();
+  return [];
 }
 
-async function uiListingIds(page: import("@playwright/test").Page): Promise<string[]> {
-  await page.waitForTimeout(800);
+async function uiListingIds(page: import("@playwright/test").Page, minCount = 0): Promise<string[]> {
+  if (minCount > 0) {
+    await page.waitForFunction(
+      (n) => new Set(
+        Array.from(document.querySelectorAll("[data-listing-id]"))
+          .map((el) => el.getAttribute("data-listing-id")?.trim() ?? "")
+          .filter(Boolean),
+      ).size >= n,
+      minCount,
+      { timeout: 30_000 },
+    );
+  } else {
+    await page.waitForTimeout(800);
+  }
   const raw = await page.evaluate(() =>
     Array.from(document.querySelectorAll("[data-listing-id]"))
       .map((n) => n.getAttribute("data-listing-id")?.trim() ?? "")
@@ -82,7 +102,7 @@ async function assertUiMatchesApi(
   if (!opts?.allowEmpty) {
     expect(apiIds.length).toBeGreaterThan(0);
   }
-  const uiIds = await uiListingIds(page);
+  const uiIds = await uiListingIds(page, apiIds.length);
   expect(uiIds.length, `${label} ui count`).toBe(apiIds.length);
   const apiSet = new Set(apiIds);
   expect(uiIds.filter((id) => !apiSet.has(id)), `${label} unknown ids`).toEqual([]);

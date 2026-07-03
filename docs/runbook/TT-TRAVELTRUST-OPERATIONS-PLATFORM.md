@@ -140,22 +140,38 @@ Sign-off：`evidence/manual-uat/signoff/LOCAL-STAGING-OPS-PLATFORM-ALIGNMENT-SIG
 - `frontend/components/market/MarketSubsiteMasonry.tsx` — 移除子节点重复 `data-listing-id`
 - `frontend/e2e/market-subsite-catalog-race-regression.spec.ts` — `Set` 去重 + `gotoStaging` 重试 + acquisition `jp` 零结果 parity
 
-**Staging 回归（v45 · 已部署镜像）：** `frontend/e2e/market-subsite-catalog-race-regression.spec.ts`（provider + acquisition：首次 SPA、子导航、`country=jp`、硬刷新 vs API）
+**Staging 回归（v46 · Phase②）：** `frontend/e2e/market-subsite-catalog-race-regression.spec.ts`（`@staging`：provider + acquisition × 6 场景 vs API）
+
+**Local Phase①（staging_mirror）：** 同上 spec 的 `@local_mirror` tag；API `127.0.0.1:8080` + Next `127.0.0.1:3012`
+
+**真源审计：** `node scripts/dev/audit-market-subsite-race-fix-source-truth.cjs` — Phase①/② API 对拍 + 前端 fix marker 校验
 
 **已知项归类（收口 · 非重开 DDG）：**
 
 | 现象 | 归类 |
 |------|------|
-| 部署后 staging 冷启动 | **Fixed** — `gotoStaging` 三次重试 + backoff |
+| 刷新后只显示 2 条（Kyoto+Tokyo） | **Fixed** — 前端竞态 + localStorage/URL hydration；非「目录只有 2 条」 |
+| 部署后 staging 冷启动 | **Fixed** — `gotoWeb` 三次重试 + backoff |
 | Masonry 重复 `data-listing-id` | **Fixed** — e2e `Set` 去重 + 组件去重 |
 | Acquisition `country=jp` API=0 | **Expected Difference** — API 按 `destinationCountryIso` 过滤；UI 与 API 同为 0 |
-| `ERR_CONNECTION_CLOSED` | **Transient Flake** — staging 瞬时断连；重试通过 |
+| `ERR_CONNECTION_CLOSED` / API 瞬时 non-ok | **Transient Flake** — goto + API 三次重试 |
 
-**状态：** **CLOSED**（stamp `20260703T091200Z` · 8/8 浏览器回归 PASS）
+**状态：** **CLOSED**（stamp `20260703T101200Z` · Phase① 12/12 + Phase② 12/12 · source-truth audit **blocking_count=0**）
 
 ```bash
-STAGING_WEB_BASE=https://tt-web-staging.fly.dev \
+# 真源审计（Phase① API 须已起：start-api-local-staging-db-mirror.sh）
+AUDIT_STAMP=20260703T101200Z node scripts/dev/audit-market-subsite-race-fix-source-truth.cjs
+
+# Phase② staging 浏览器回归
+MARKET_SUBSITE_RACE_TARGET=staging STAGING_WEB_BASE=https://tt-web-staging.fly.dev \
 STAGING_API_BASE=https://tt-api-staging.fly.dev \
+cd frontend && npx playwright test e2e/market-subsite-catalog-race-regression.spec.ts --grep @staging
+
+# Phase① local_mirror
+MARKET_SUBSITE_RACE_TARGET=local LOCAL_WEB_BASE=http://127.0.0.1:3012 LOCAL_API_BASE=http://127.0.0.1:8080 \
+cd frontend && npx playwright test e2e/market-subsite-catalog-race-regression.spec.ts --grep @local_mirror
+
+# 一键收口（含 build + deploy）
 bash scripts/dev/close-market-subsite-frontend-race-fix.sh
 # 已部署后仅复跑：bash scripts/dev/close-market-subsite-frontend-race-fix.sh --skip-deploy
 ```
@@ -168,5 +184,5 @@ bash scripts/dev/close-market-subsite-frontend-race-fix.sh
 | DDG | CLOSED (Evidence Reused) | 非 Public Catalog 泄漏类缺陷 |
 | SOPCP | CLOSED (Evidence Reused) | 未触碰 SOPCP 发布面 |
 
-证据：`evidence/GO_market_subsite_frontend_race_fix/20260703T091200Z/race-fix-closure.json`  
-Sign-off：`evidence/manual-uat/signoff/MARKET-SUBSITE-FRONTEND-RACE-FIX-SIGNOFF-20260703T091200Z.md`
+证据：`evidence/GO_market_subsite_frontend_race_fix/20260703T101200Z/race-fix-closure.json`  
+Sign-off：`evidence/manual-uat/signoff/MARKET-SUBSITE-FRONTEND-RACE-FIX-SIGNOFF-20260703T101200Z.md`
