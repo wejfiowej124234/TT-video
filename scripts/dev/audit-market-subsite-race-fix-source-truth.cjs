@@ -71,9 +71,9 @@ function readFixMarkers() {
   const masonry = fs.readFileSync(path.join(ROOT, FIX_FILES[2]), 'utf8');
   return {
     epoch_guard: hook.includes('listingsFetchGeneration') && hook.includes('B-061'),
-    layout_hydration: hook.includes('useLayoutEffect') && hook.includes('MARKET_SUBSITE_COUNTRY_STORAGE'),
+    layout_hydration: hook.includes('useLayoutEffect') && hook.includes('useEffectiveSubsiteCountry'),
     debounce_ms: hook.includes('SUBSITE_LISTINGS_REFETCH_DEBOUNCE_MS'),
-    filterbar_no_dup_hydration: fs.readFileSync(path.join(ROOT, FIX_FILES[1]), 'utf8').includes('useMarketStandaloneBusinessPage` useLayoutEffect'),
+    filterbar_no_dup_hydration: fs.readFileSync(path.join(ROOT, FIX_FILES[1]), 'utf8').includes('useEffectiveSubsiteCountry'),
     masonry_single_listing_id:
       (masonry.match(/data-listing-id=\{item\.listingId\}/g) || []).length === 1,
     e2e_dedupe: fs.readFileSync(path.join(ROOT, FIX_FILES[3]), 'utf8').includes('[...new Set(raw)]'),

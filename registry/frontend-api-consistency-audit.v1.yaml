@@ -96,26 +96,27 @@ surfaces:
     name: Market Listings
     api: GET /api/v1/market/{provider|acquisition}/listings
     note: >
-      Market Subsite Frontend Race Fix CLOSED (20260703T101200Z): Phase① staging_mirror +
+      Market Subsite Frontend Race Fix CLOSED (20260703T104800Z): Phase① staging_mirror +
       Phase② staging dual regression — UI=API parity (all=10, jp=2/0), source-truth audit PASS.
-      evidence/GO_market_subsite_frontend_race_fix/20260703T101200Z/
+      evidence/GO_market_subsite_frontend_race_fix/20260703T104800Z/
 
 market_subsite_race_fix:
-  stamp: "20260703T101200Z"
+  stamp: "20260703T104800Z"
   status: CLOSED
   classification: Market Subsite Frontend Race Fix
   not_data_governance: true
   shared_frontend_ssot: true
   governance_gates: { OCS: CLOSED, DDG: CLOSED, SOPCP: CLOSED }
-  git_commit: c741aae662eff99a74bde667956d463f3efef1f7
-  evidence: evidence/GO_market_subsite_frontend_race_fix/20260703T101200Z/race-fix-closure.json
-  source_truth_audit: evidence/GO_market_subsite_frontend_race_fix/20260703T101200Z/source-truth-audit.json
-  signoff: evidence/manual-uat/signoff/MARKET-SUBSITE-FRONTEND-RACE-FIX-SIGNOFF-20260703T101200Z.md
+  git_commit: bb1fb63929afc213315ed0142d05e490c3ee5d97
+  evidence: evidence/GO_market_subsite_frontend_race_fix/20260703T104800Z/race-fix-closure.json
+  source_truth_audit: evidence/GO_market_subsite_frontend_race_fix/20260703T104800Z/source-truth-audit.json
+  signoff: evidence/manual-uat/signoff/MARKET-SUBSITE-FRONTEND-RACE-FIX-SIGNOFF-20260703T104800Z.md
   playwright: frontend/e2e/market-subsite-catalog-race-regression.spec.ts
-  web_deploy: { app: tt-web-staging, release_version: 46, deployment_id: deployment-01KWKP3Q2SPJVRG70PZ7R3HZ2Z }
+  web_deploy: { app: tt-web-staging, release_version: 48, deployment_id: deployment-01KWKTAYPE5Q61Q4X80S6Y3R9F }
   phase1_local_mirror: { web: http://127.0.0.1:3012, api: http://127.0.0.1:8080, scenarios_passed: 12 }
   phase2_staging: { web: https://tt-web-staging.fly.dev, api: https://tt-api-staging.fly.dev, scenarios_passed: 12 }
   blocking_count: 0
+  browser_truth_attrs: [data-tt-subsite-country, data-tt-subsite-list-count]
   issue_taxonomy:
     refresh_shows_2: Fixed — frontend race + hydration, not catalog-only-2
     staging_cold_start: Fixed

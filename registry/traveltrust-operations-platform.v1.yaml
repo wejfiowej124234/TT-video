@@ -267,26 +267,27 @@ market_subsite_frontend_race_fix:
     DDG: CLOSED
     SOPCP: CLOSED
     evidence_reuse: ENFORCED
-  stamp: "20260703T101200Z"
-  git_commit: c741aae662eff99a74bde667956d463f3efef1f7
-  evidence: evidence/GO_market_subsite_frontend_race_fix/20260703T101200Z/race-fix-closure.json
-  source_truth_audit: evidence/GO_market_subsite_frontend_race_fix/20260703T101200Z/source-truth-audit.json
-  signoff: evidence/manual-uat/signoff/MARKET-SUBSITE-FRONTEND-RACE-FIX-SIGNOFF-20260703T101200Z.md
+  stamp: "20260703T104800Z"
+  git_commit: bb1fb63929afc213315ed0142d05e490c3ee5d97
+  evidence: evidence/GO_market_subsite_frontend_race_fix/20260703T104800Z/race-fix-closure.json
+  source_truth_audit: evidence/GO_market_subsite_frontend_race_fix/20260703T104800Z/source-truth-audit.json
+  signoff: evidence/manual-uat/signoff/MARKET-SUBSITE-FRONTEND-RACE-FIX-SIGNOFF-20260703T104800Z.md
   staging_web: https://tt-web-staging.fly.dev
   staging_api: https://tt-api-staging.fly.dev
   web_deploy:
     app: tt-web-staging
-    release_version: 46
-    deployment_id: deployment-01KWKP3Q2SPJVRG70PZ7R3HZ2Z
+    release_version: 48
+    deployment_id: deployment-01KWKTAYPE5Q61Q4X80S6Y3R9F
   phase1_local_mirror:
     web: http://127.0.0.1:3012
     api: http://127.0.0.1:8080
-    playwright_log: evidence/GO_market_subsite_frontend_race_fix/20260703T101200Z/playwright-local-mirror.log
+    playwright_log: evidence/GO_market_subsite_frontend_race_fix/20260703T104800Z/playwright-local-mirror.log
     scenarios_passed: 12
   phase2_staging:
-    playwright_log: evidence/GO_market_subsite_frontend_race_fix/20260703T101200Z/playwright-staging.log
+    playwright_log: evidence/GO_market_subsite_frontend_race_fix/20260703T104800Z/playwright-staging.log
     scenarios_passed: 12
   blocking_count: 0
+  browser_truth_attrs: [data-tt-subsite-country, data-tt-subsite-list-count]
   fix_files:
     - frontend/components/market/useMarketStandaloneBusinessPage.ts
     - frontend/components/market/MarketSubsiteFilterBar.tsx

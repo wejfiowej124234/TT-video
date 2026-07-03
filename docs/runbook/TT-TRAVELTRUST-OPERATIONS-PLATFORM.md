@@ -140,7 +140,7 @@ Sign-off：`evidence/manual-uat/signoff/LOCAL-STAGING-OPS-PLATFORM-ALIGNMENT-SIG
 - `frontend/components/market/MarketSubsiteMasonry.tsx` — 移除子节点重复 `data-listing-id`
 - `frontend/e2e/market-subsite-catalog-race-regression.spec.ts` — `Set` 去重 + `gotoStaging` 重试 + acquisition `jp` 零结果 parity
 
-**Staging 回归（v46 · Phase②）：** `frontend/e2e/market-subsite-catalog-race-regression.spec.ts`（`@staging`：provider + acquisition × 6 场景 vs API）
+**Staging 回归（v48 · Phase②）：** `frontend/e2e/market-subsite-catalog-race-regression.spec.ts`（`@staging`：provider + acquisition × 6 场景 vs API + **`data-tt-subsite-country` / `data-tt-subsite-list-count`**）
 
 **Local Phase①（staging_mirror）：** 同上 spec 的 `@local_mirror` tag；API `127.0.0.1:8080` + Next `127.0.0.1:3012`
 
@@ -156,11 +156,11 @@ Sign-off：`evidence/manual-uat/signoff/LOCAL-STAGING-OPS-PLATFORM-ALIGNMENT-SIG
 | Acquisition `country=jp` API=0 | **Expected Difference** — API 按 `destinationCountryIso` 过滤；UI 与 API 同为 0 |
 | `ERR_CONNECTION_CLOSED` / API 瞬时 non-ok | **Transient Flake** — goto + API 三次重试 |
 
-**状态：** **CLOSED**（stamp `20260703T101200Z` · Phase① 12/12 + Phase② 12/12 · source-truth audit **blocking_count=0**）
+**状态：** **CLOSED**（stamp `20260703T104800Z` · Phase① 12/12 + Phase② 12/12 · source-truth audit **blocking_count=0**）
 
 ```bash
 # 真源审计（Phase① API 须已起：start-api-local-staging-db-mirror.sh）
-AUDIT_STAMP=20260703T101200Z node scripts/dev/audit-market-subsite-race-fix-source-truth.cjs
+AUDIT_STAMP=20260703T104800Z node scripts/dev/audit-market-subsite-race-fix-source-truth.cjs
 
 # Phase② staging 浏览器回归
 MARKET_SUBSITE_RACE_TARGET=staging STAGING_WEB_BASE=https://tt-web-staging.fly.dev \
@@ -184,5 +184,5 @@ bash scripts/dev/close-market-subsite-frontend-race-fix.sh
 | DDG | CLOSED (Evidence Reused) | 非 Public Catalog 泄漏类缺陷 |
 | SOPCP | CLOSED (Evidence Reused) | 未触碰 SOPCP 发布面 |
 
-证据：`evidence/GO_market_subsite_frontend_race_fix/20260703T101200Z/race-fix-closure.json`  
-Sign-off：`evidence/manual-uat/signoff/MARKET-SUBSITE-FRONTEND-RACE-FIX-SIGNOFF-20260703T101200Z.md`
+证据：`evidence/GO_market_subsite_frontend_race_fix/20260703T104800Z/race-fix-closure.json`  
+Sign-off：`evidence/manual-uat/signoff/MARKET-SUBSITE-FRONTEND-RACE-FIX-SIGNOFF-20260703T104800Z.md`
