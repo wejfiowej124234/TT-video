@@ -19,6 +19,7 @@ import {
   parseCountryParam,
   parseMerchantCategoryParam,
   parseMerchantSortParam,
+  resolveEffectiveSubsiteCountry,
   type MarketSubsiteCountryParam,
 } from "@/lib/marketSubsiteFilters";
 import {
@@ -222,12 +223,22 @@ export function marketSubsiteFilterStateFromSearchParams(
 export function marketSubsiteListingsQueryFromSearchParams(
   searchParams: Pick<URLSearchParams, "get">,
   variant: "provider" | "acquisition",
+  effectiveCountry?: MarketSubsiteCountryParam,
 ): string {
   const filters = marketSubsiteFilterStateFromSearchParams(searchParams);
+  const country = effectiveCountry ?? resolveEffectiveSubsiteCountry(searchParams, variant);
   const isProvider = variant === "provider";
   return buildMarketSubsiteListingsQueryString({
-    country: filters.country,
+    country,
     category: isProvider ? filters.categoryMerchant : filters.categoryAcquisition,
     sort: isProvider ? filters.sortMerchant : filters.sortAcquisition,
   });
+}
+
+export function marketSubsiteFilterStateEffective(
+  searchParams: Pick<URLSearchParams, "get">,
+  variant: "provider" | "acquisition",
+): MarketSubsiteFilterState {
+  const base = marketSubsiteFilterStateFromSearchParams(searchParams);
+  return { ...base, country: resolveEffectiveSubsiteCountry(searchParams, variant) };
 }

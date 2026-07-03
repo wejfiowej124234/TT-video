@@ -78,6 +78,9 @@ function readFixMarkers() {
       (masonry.match(/data-listing-id=\{item\.listingId\}/g) || []).length === 1,
     e2e_dedupe: fs.readFileSync(path.join(ROOT, FIX_FILES[3]), 'utf8').includes('[...new Set(raw)]'),
     e2e_dual_target: fs.readFileSync(path.join(ROOT, FIX_FILES[3]), 'utf8').includes('MARKET_SUBSITE_RACE_TARGET'),
+    sync_effective_country: hook.includes('resolveEffectiveSubsiteCountry') || fs.readFileSync(path.join(ROOT, 'frontend/lib/marketSubsiteFilters.ts'), 'utf8').includes('resolveEffectiveSubsiteCountry'),
+    browser_truth_attrs: fs.readFileSync(path.join(ROOT, 'frontend/components/market/MarketStandaloneBusinessPage.tsx'), 'utf8').includes('data-tt-subsite-country'),
+    e2e_browser_truth: fs.readFileSync(path.join(ROOT, FIX_FILES[3]), 'utf8').includes('data-tt-subsite-list-count'),
   };
 }
 

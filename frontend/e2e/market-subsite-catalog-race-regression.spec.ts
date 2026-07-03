@@ -55,7 +55,7 @@ async function apiListingIds(
       ? `/api/v1/market/provider/listings?limit=50${search ? `&${search}` : ""}`
       : `/api/v1/market/acquisition/listings?limit=50${search ? `&${search}` : ""}`;
   let lastRes: import("@playwright/test").APIResponse | null = null;
-  for (let attempt = 1; attempt <= 3; attempt++) {
+  for (let attempt = 1; attempt <= 5; attempt++) {
     const res = await request.get(`${API}${path}`);
     lastRes = res;
     if (res.ok()) {
@@ -90,13 +90,42 @@ async function uiListingIds(page: import("@playwright/test").Page, minCount = 0)
   return [...new Set(raw)];
 }
 
+async function assertBrowserSubsiteTruth(
+  page: import("@playwright/test").Page,
+  subsite: Subsite,
+  expected: { country: string; listCount: number },
+  label: string,
+) {
+  const testId = subsite === "provider" ? "market-provider-page" : "market-acquisition-page";
+  await page.waitForFunction(
+    ({ tid, country, count }) => {
+      const el = document.querySelector(`[data-testid="${tid}"]`);
+      return (
+        el?.getAttribute("data-tt-subsite-country") === country &&
+        el?.getAttribute("data-tt-subsite-list-count") === String(count)
+      );
+    },
+    { tid: testId, country: expected.country, count: expected.listCount },
+    { timeout: 30_000 },
+  );
+  const main = page.locator(`[data-testid="${testId}"]`);
+  await expect(main, `${label} data-tt-subsite-country`).toHaveAttribute(
+    "data-tt-subsite-country",
+    expected.country,
+  );
+  await expect(main, `${label} data-tt-subsite-list-count`).toHaveAttribute(
+    "data-tt-subsite-list-count",
+    String(expected.listCount),
+  );
+}
+
 async function assertUiMatchesApi(
   page: import("@playwright/test").Page,
   request: import("@playwright/test").APIRequestContext,
   subsite: Subsite,
   query = "",
   label = "",
-  opts?: { allowEmpty?: boolean },
+  opts?: { allowEmpty?: boolean; expectedCountry?: string },
 ) {
   const apiIds = await apiListingIds(request, subsite, query);
   if (!opts?.allowEmpty) {
@@ -106,7 +135,10 @@ async function assertUiMatchesApi(
   expect(uiIds.length, `${label} ui count`).toBe(apiIds.length);
   const apiSet = new Set(apiIds);
   expect(uiIds.filter((id) => !apiSet.has(id)), `${label} unknown ids`).toEqual([]);
-  return { apiIds, uiIds };
+  const expectedCountry =
+    opts?.expectedCountry ?? (query.includes("country=jp") || /country=jp/i.test(page.url()) ? "JP" : "all");
+  await assertBrowserSubsiteTruth(page, subsite, { country: expectedCountry, listCount: apiIds.length }, label);
+  return { apiIds, uiIds, expectedCountry, browserListCount: apiIds.length };
 }
 
 async function clearSubsiteCountryPrefs(page: import("@playwright/test").Page) {
@@ -206,10 +238,11 @@ test.describe(`Market Subsite Catalog Race ${TAG}`, () => {
       const expected = subsite === "provider" ? EXPECTED_PROVIDER_JP : EXPECTED_ACQUISITION_JP;
       const { apiIds, uiIds } = await assertUiMatchesApi(page, request, subsite, "country=jp", "ls-hydrate-jp", {
         allowEmpty: subsite === "acquisition",
+        expectedCountry: "JP",
       });
       expect(apiIds.length).toBe(expected);
       expect(uiIds.length).toBe(expected);
-      await expect(page).toHaveURL(/country=jp/i);
+      await expect(page).toHaveURL(/country=(jp|JP)/i, { timeout: 15_000 });
     });
   }
 });

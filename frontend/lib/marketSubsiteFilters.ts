@@ -1,5 +1,6 @@
 import type { ProductCountryIso } from "@/lib/productCountries";
 import { isAllowedProductIso3166 } from "@/lib/productCountries";
+import { useSyncExternalStore } from "react";
 import type {
   AcquisitionCategorySlug,
   DemoAcquisitionListing,
@@ -97,6 +98,42 @@ export const MARKET_SUBSITE_COUNTRY_STORAGE = {
   provider: "tt_market_subsite_country_pref_provider",
   acquisition: "tt_market_subsite_country_pref_acquisition",
 } as const;
+
+/** Client-only: persisted subsite country pref (empty URL → read before first catalog fetch). */
+export function readStoredSubsiteCountryPref(
+  variant: keyof typeof MARKET_SUBSITE_COUNTRY_STORAGE,
+): MarketSubsiteCountryParam {
+  if (typeof window === "undefined") return "all";
+  try {
+    return parseCountryParam(localStorage.getItem(MARKET_SUBSITE_COUNTRY_STORAGE[variant]));
+  } catch {
+    return "all";
+  }
+}
+
+/** URL `country` wins; otherwise localStorage pref (runtime SSOT for API query + filter UI). */
+export function resolveEffectiveSubsiteCountry(
+  searchParams: Pick<URLSearchParams, "get">,
+  variant: keyof typeof MARKET_SUBSITE_COUNTRY_STORAGE,
+): MarketSubsiteCountryParam {
+  const fromUrl = parseCountryParam(searchParams.get("country"));
+  if (fromUrl !== "all") return fromUrl;
+  return readStoredSubsiteCountryPref(variant);
+}
+
+/** Client hook: avoids SSR "all" flash before localStorage hydration on dev/strict mode. */
+export function useEffectiveSubsiteCountry(
+  searchParams: Pick<URLSearchParams, "get">,
+  variant: keyof typeof MARKET_SUBSITE_COUNTRY_STORAGE,
+): MarketSubsiteCountryParam {
+  const fromUrl = parseCountryParam(searchParams.get("country"));
+  const stored = useSyncExternalStore(
+    () => () => {},
+    () => readStoredSubsiteCountryPref(variant),
+    () => "all" as MarketSubsiteCountryParam,
+  );
+  return fromUrl !== "all" ? fromUrl : stored;
+}
 
 export type MarketSubsiteListingsQueryParams = {
   country: MarketSubsiteCountryParam;

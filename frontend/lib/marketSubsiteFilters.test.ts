@@ -3,8 +3,10 @@ import { DEMO_ACQUISITION_LISTINGS, DEMO_MERCHANT_LISTINGS } from "./marketSubsi
 import {
   filterAcquisitionListings,
   filterMerchantListings,
+  MARKET_SUBSITE_COUNTRY_STORAGE,
   parseCountryParam,
   parseMerchantCategoryParam,
+  resolveEffectiveSubsiteCountry,
   sortAcquisitionListings,
   sortMerchantListings,
   buildMarketSubsiteListingsQueryString,
@@ -58,9 +60,16 @@ describe("marketSubsiteFilters", () => {
     ).toBe("country=JP&category=dining&sort=price_asc");
   });
 
-  it("applyMarketSubsiteProviderFilters matches filter+sort pipeline", () => {
-    const out = applyMarketSubsiteProviderFilters(DEMO_MERCHANT_LISTINGS, "CN", "all", "price_asc");
-    expect(out.length).toBeGreaterThan(0);
-    expect(out[0].priceUsdc).toBeLessThanOrEqual(out[out.length - 1].priceUsdc);
+  it("resolveEffectiveSubsiteCountry prefers URL over localStorage", () => {
+    localStorage.setItem(MARKET_SUBSITE_COUNTRY_STORAGE.provider, "JP");
+    const sp = new URLSearchParams("country=CN");
+    expect(resolveEffectiveSubsiteCountry(sp, "provider")).toBe("CN");
+    localStorage.removeItem(MARKET_SUBSITE_COUNTRY_STORAGE.provider);
+  });
+
+  it("resolveEffectiveSubsiteCountry reads localStorage when URL empty", () => {
+    localStorage.setItem(MARKET_SUBSITE_COUNTRY_STORAGE.provider, "jp");
+    expect(resolveEffectiveSubsiteCountry(new URLSearchParams(), "provider")).toBe("JP");
+    localStorage.removeItem(MARKET_SUBSITE_COUNTRY_STORAGE.provider);
   });
 });

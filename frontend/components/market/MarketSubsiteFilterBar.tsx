@@ -9,9 +9,9 @@ import {
   MERCHANT_CATEGORY_SLUGS,
   parseAcquisitionCategoryParam,
   parseAcquisitionSortParam,
-  parseCountryParam,
   parseMerchantCategoryParam,
   parseMerchantSortParam,
+  useEffectiveSubsiteCountry,
   type MarketSubsiteCountryParam,
 } from "@/lib/marketSubsiteFilters";
 import { useCatalogProductCountries } from "@/lib/catalogApi/useCatalogGeo";
@@ -51,7 +51,7 @@ export default function MarketSubsiteFilterBar({
   const pathname = usePathname() ?? "";
   const searchParams = useSearchParams();
 
-  const country = parseCountryParam(searchParams.get("country"));
+  const country = useEffectiveSubsiteCountry(searchParams, variant);
   const categoryMerchant = parseMerchantCategoryParam(searchParams.get("category"));
   const categoryAcquisition = parseAcquisitionCategoryParam(searchParams.get("category"));
   const sortMerchant = parseMerchantSortParam(searchParams.get("sort"));

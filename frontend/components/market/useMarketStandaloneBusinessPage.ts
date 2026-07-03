@@ -10,14 +10,11 @@ import {
   buildFilteredSubsiteMasonryItems,
   fetchMarketStandaloneCatalog,
   invalidateMarketStandaloneCatalogCache,
-  marketSubsiteFilterStateFromSearchParams,
+  marketSubsiteFilterStateEffective,
   marketSubsiteListingsQueryFromSearchParams,
   pushWithListingParam,
 } from "./marketStandaloneBusinessPageUtils";
-import {
-  MARKET_SUBSITE_COUNTRY_STORAGE,
-  parseCountryParam,
-} from "@/lib/marketSubsiteFilters";
+import { useEffectiveSubsiteCountry } from "@/lib/marketSubsiteFilters";
 import { buildPathnameSearchHref } from "@/lib/marketLoginReturnPath";
 
 export type MarketStandaloneBusinessVariant = "provider" | "acquisition";
@@ -64,14 +61,16 @@ export function useMarketStandaloneBusinessPage(variant: MarketStandaloneBusines
 
   const demoAllowed = marketSubsiteDemoStudioFallbackEnabled();
 
+  const effectiveCountry = useEffectiveSubsiteCountry(searchParams, variant);
+
   const filterState = useMemo(
-    () => marketSubsiteFilterStateFromSearchParams(searchParams),
-    [searchParams],
+    () => marketSubsiteFilterStateEffective(searchParams, variant),
+    [searchParams, variant],
   );
 
   const listingsQuery = useMemo(
-    () => marketSubsiteListingsQueryFromSearchParams(searchParams, variant),
-    [searchParams, variant],
+    () => marketSubsiteListingsQueryFromSearchParams(searchParams, variant, effectiveCountry),
+    [searchParams, variant, effectiveCountry],
   );
 
   const applyCatalogResult = useCallback(
@@ -125,26 +124,19 @@ export function useMarketStandaloneBusinessPage(variant: MarketStandaloneBusines
 
   /** B-061 parity: subsite catalog races (unfiltered vs localStorage country) must not overwrite latest query. */
   const listingsFetchGeneration = useRef(0);
-  const didHydrateCountry = useRef(false);
+  const syncedCountryToUrlRef = useRef<string | null>(null);
 
-  /** Restore country pref into URL before first catalog fetch (same as FilterBar, but runs earlier). */
+  /** Mirror effective country into URL (bookmark/share); catalog fetch already uses effectiveCountry synchronously. */
   useLayoutEffect(() => {
-    if (typeof window === "undefined" || didHydrateCountry.current) return;
-    didHydrateCountry.current = true;
+    if (typeof window === "undefined") return;
     if (searchParams.get("country")?.trim()) return;
-    try {
-      const raw = localStorage.getItem(MARKET_SUBSITE_COUNTRY_STORAGE[variant]);
-      const c = parseCountryParam(raw);
-      if (c !== "all") {
-        const next = new URLSearchParams(searchParams.toString());
-        next.set("country", c);
-        const q = next.toString();
-        router.replace(buildPathnameSearchHref(pathname, q), { scroll: false });
-      }
-    } catch {
-      /* ignore */
-    }
-  }, [pathname, router, searchParams, variant]);
+    if (effectiveCountry === "all") return;
+    if (syncedCountryToUrlRef.current === effectiveCountry) return;
+    syncedCountryToUrlRef.current = effectiveCountry;
+    const next = new URLSearchParams(searchParams.toString());
+    next.set("country", effectiveCountry);
+    router.replace(buildPathnameSearchHref(pathname, next.toString()), { scroll: false });
+  }, [effectiveCountry, pathname, router, searchParams, variant]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -215,5 +207,6 @@ export function useMarketStandaloneBusinessPage(variant: MarketStandaloneBusines
     closeListing,
     refetchCatalog,
     searchParams,
+    effectiveCountry,
   };
 }

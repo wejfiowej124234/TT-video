@@ -65,6 +65,8 @@ export default function MarketStandaloneBusinessPage({ variant }: { variant: "pr
       data-testid={testId}
       data-tt-market-provider-page={isProvider ? "1" : undefined}
       data-tt-market-acquisition-page={!isProvider ? "1" : undefined}
+      data-tt-subsite-country={page.effectiveCountry}
+      data-tt-subsite-list-count={page.masonryItems.length}
     >
       <MarketAmbientBackdrop />
       <div className="relative z-10 isolate min-h-screen">
