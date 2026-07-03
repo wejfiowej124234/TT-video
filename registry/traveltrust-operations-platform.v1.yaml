@@ -314,6 +314,7 @@ market_subsite_frontend_race_fix:
 ci_build_stability:
   registry: registry/ci-build-stability.v1.yaml
   runbook: docs/runbook/TT-CI-BUILD-STABILITY.md
+  issue_registry: registry/open-issues.v1.yaml
   open_count: 1
   open_issues:
     - id: CI-BUILD-20260703-V49-OOM

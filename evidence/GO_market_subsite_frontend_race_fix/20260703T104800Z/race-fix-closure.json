@@ -116,12 +116,11 @@
     "not_acceptable": "localStorage.removeItem as user verification step",
     "debug_procedure_runbook": "docs/runbook/TT-TRAVELTRUST-OPERATIONS-PLATFORM.md#market-subsite-frontend-race-fix"
   },
-  "ci_build_out_of_scope": {
+  "open_issues": {
     "id": "CI-BUILD-20260703-V49-OOM",
-    "severity": "LOW",
-    "category": "Build Infrastructure",
-    "status": "OPEN",
-    "registry": "registry/ci-build-stability.v1.yaml",
-    "evidence": "evidence/GO_ci_build_stability/20260703T113000Z/v49-remote-build-oom.json"
+    "registry": "registry/open-issues.v1.yaml",
+    "runbook": "docs/runbook/TT-OPEN-ISSUES-REGISTRY.md",
+    "evidence": "evidence/GO_ci_build_stability/20260703T113000Z/v49-remote-build-oom.json",
+    "not_market_race_fix": true
   }
 }

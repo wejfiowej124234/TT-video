@@ -10,6 +10,9 @@ machine_keys:
   TT_CI_BUILD_STABILITY: ENFORCED
   TT_CI_BUILD_STABILITY_RUNBOOK: docs/runbook/TT-CI-BUILD-STABILITY.md
 
+# Canonical issue ledger (Dashboard SSOT): registry/open-issues.v1.yaml
+issue_registry: registry/open-issues.v1.yaml
+
 scope:
   includes: [fly_remote_build, docker_npm_build, tt_web_staging_deploy, tt_web_production_deploy]
   excludes: [market_runtime, ocs, ddg, frontend_runtime_consistency_gate]

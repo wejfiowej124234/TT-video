@@ -78,6 +78,32 @@ Sepolia Production GO → 正式运营 → Mainnet Decision（独立里程碑）
 node scripts/dev/audit-executive-dashboard-gate-consistency.cjs
 ```
 
+---
+
+## Open Issues（问题总账）
+
+**SSOT：** [`registry/open-issues.v1.yaml`](../../registry/open-issues.v1.yaml) · Runbook：[`TT-OPEN-ISSUES-REGISTRY.md`](TT-OPEN-ISSUES-REGISTRY.md)
+
+| 开放 | Blocking | id | Category | Severity |
+|------|----------|-----|----------|----------|
+| 1 | 0 | `CI-BUILD-20260703-V49-OOM` | Build Infrastructure | LOW |
+
+PI3 Gate 与 Owner Live 项见 `remaining_work` / `pi3_release_gates` — 与 Build Infrastructure 问题分账。
+
+---
+
+## 程序主线（Production Engineering）
+
+Phase ②：**CLOSED**（Product · Operations · Governance · Alignment）
+
+Phase ③ 当前焦点：
+
+```text
+Production Infrastructure → Security → Observability → Performance → Production Validation → Production GO
+```
+
+后续：**生产可靠性 · 运维 · 安全 · 发布** — 非功能扩张。
+
 证据：`evidence/GO_executive_dashboard_gate_consistency/`  
 Sign-off：`evidence/manual-uat/signoff/EXECUTIVE-DASHBOARD-GATE-SEMANTICS-SIGNOFF-20260703T093000Z.md`
 

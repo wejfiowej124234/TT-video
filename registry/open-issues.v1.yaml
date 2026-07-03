@@ -1,0 +1,84 @@
+# TravelTrust · Open Issues Registry (问题总账) · SSOT
+# Human view: docs/runbook/TT-OPEN-ISSUES-REGISTRY.md
+# Dashboard: registry/executive-dashboard.v1.yaml → open_issues
+# Module registries (e.g. ci-build-stability) hold detail; this file is the unified ledger.
+
+schema: traveltrust.open_issues.v1
+version: 1
+effective_utc: "2026-07-03"
+
+machine_keys:
+  TT_OPEN_ISSUES_REGISTRY: ENFORCED
+  TT_OPEN_ISSUES_RUNBOOK: docs/runbook/TT-OPEN-ISSUES-REGISTRY.md
+
+# Canonical field set for every issue row
+field_schema:
+  id: { required: true, example: CI-BUILD-20260703-V49-OOM }
+  category: { required: true, examples: [Build Infrastructure, Frontend Runtime, Security, PI3 Owner Live] }
+  severity: { required: true, enum: [LOW, MEDIUM, HIGH, CRITICAL] }
+  owner: { required: true, description: team or role accountable }
+  status: { required: true, enum: [OPEN, IN_PROGRESS, CLOSED, WONTFIX] }
+  blocking: { required: true, description: blocks Target Gate or Release Decision when true }
+  target_gate: { required: true, description: gate or track this issue rolls up to }
+  evidence: { required: true, description: evidence path or folder }
+  closed_utc: { required: false, null_when_open: true }
+  opened_utc: { required: true }
+  summary: { required: true }
+  module_registry: { required: false, description: optional deep-dive registry anchor }
+  runbook: { required: false }
+
+rollup:
+  open_count: 1
+  blocking_open_count: 0
+  by_severity: { LOW: 1, MEDIUM: 0, HIGH: 0, CRITICAL: 0 }
+
+issues:
+  - id: CI-BUILD-20260703-V49-OOM
+    category: Build Infrastructure
+    severity: LOW
+    owner: platform_engineering
+    status: OPEN
+    blocking: false
+    target_gate: CI_BUILD_STABILITY
+    evidence: evidence/GO_ci_build_stability/20260703T113000Z/v49-remote-build-oom.json
+    opened_utc: "2026-07-03T11:30:00Z"
+    closed_utc: null
+    summary: >
+      tt-web-staging v49 Fly remote npm run build failed (OOM / exit 1).
+      Active staging v48 unaffected; remote build chain remains flaky without OOM fix deploy.
+    module_registry: registry/ci-build-stability.v1.yaml#CI-BUILD-20260703-V49-OOM
+    runbook: docs/runbook/TT-CI-BUILD-STABILITY.md
+    not_market_race_fix: true
+
+closed_issues: []
+
+program_phase:
+  phase2:
+    product: CLOSED
+    operations: CLOSED
+    governance: CLOSED
+    alignment: CLOSED
+  active_mainline: PI3
+  phase3_production_engineering:
+    note: >
+      Product development complete — focus is production reliability, ops, security, and release.
+      Not feature expansion.
+    flow:
+      - Production Infrastructure
+      - Security
+      - Observability
+      - Performance
+      - Production Validation
+      - Production GO
+
+pointers:
+  executive_dashboard: registry/executive-dashboard.v1.yaml
+  release_pipeline: registry/release-pipeline.v1.yaml
+  ci_build_module: registry/ci-build-stability.v1.yaml
+
+maintenance:
+  rule: >
+    New issues: append to issues[] with full field_schema; set closed_utc when closing and move
+    to closed_issues[] or keep row with status CLOSED. Update rollup counts. Mirror non-blocking
+    open IDs to executive-dashboard open_issues.summary. Module registries may duplicate detail
+    but must reference issue id here.

@@ -168,11 +168,29 @@ roadmap:
       - { id: governance, status: COMPLETE }
       - { id: alignment, status: COMPLETE }
   active_track:
-    label: PI3
+    label: PI3 · Production Engineering
     flow:
       - Production Infrastructure
+      - Security
+      - Observability
+      - Performance
       - Production Validation
       - Production GO
+    note: Product development complete — reliability, ops, security, release (not feature expansion)
+
+open_issues:
+  registry: registry/open-issues.v1.yaml
+  runbook: docs/runbook/TT-OPEN-ISSUES-REGISTRY.md
+  rollup:
+    open_count: 1
+    blocking_open_count: 0
+  summary:
+    - id: CI-BUILD-20260703-V49-OOM
+      category: Build Infrastructure
+      severity: LOW
+      blocking: false
+      target_gate: CI_BUILD_STABILITY
+      status: OPEN
 
 rows:
   - id: product
@@ -244,6 +262,8 @@ pointers:
   gate_audit_script: scripts/dev/audit-executive-dashboard-gate-consistency.cjs
   gate_consistency_evidence: evidence/GO_executive_dashboard_gate_consistency/20260703T093000Z/gate-consistency-audit.json
   gate_consistency_signoff: evidence/manual-uat/signoff/EXECUTIVE-DASHBOARD-GATE-SEMANTICS-SIGNOFF-20260703T093000Z.md
+  open_issues_registry: registry/open-issues.v1.yaml
+  open_issues_runbook: docs/runbook/TT-OPEN-ISSUES-REGISTRY.md
   pi3_registry: registry/phase3-production-infrastructure.v1.yaml
   release_pipeline: registry/release-pipeline.v1.yaml
 

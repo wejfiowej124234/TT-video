@@ -33,6 +33,8 @@ TT_CI_BUILD_STABILITY: ENFORCED
 | **Active staging** | **v48** · `deployment-01KWKTAYPE5Q61Q4X80S6Y3R9F` |
 | **Evidence** | `evidence/GO_ci_build_stability/20260703T113000Z/v49-remote-build-oom.json` |
 
+**Issue Registry（总账 SSOT）：** [`registry/open-issues.v1.yaml`](../../registry/open-issues.v1.yaml) — Dashboard 与发布决策统一引用此 ID，本 Runbook 为模块细节。
+
 **含义：** v48 可部署 ≠ 远程构建链路无风险；v50+ 可能复现 OOM，须单独消项。
 
 ### 缓解（运维 · 非产品修复）
@@ -57,6 +59,8 @@ bash scripts/dev/deploy-tt-web-staging.sh
 
 ## 登记新 Build 事件
 
-1. 写入 `evidence/GO_ci_build_stability/<UTC>/`
-2. 追加 `registry/ci-build-stability.v1.yaml` → `open_issues`
-3. **不要** 修改 `GO_market_subsite_frontend_race_fix` 或 Market Runtime Sign-off
+1. **先**写入 `registry/open-issues.v1.yaml` → `issues[]`（总账）
+2. 写入 `evidence/GO_ci_build_stability/<UTC>/`
+3. 追加 `registry/ci-build-stability.v1.yaml` 模块细节（引用同一 `id`）
+4. 更新 `executive-dashboard.v1.yaml` → `open_issues.summary`
+5. **不要** 修改 `GO_market_subsite_frontend_race_fix` 或 Market Runtime Sign-off

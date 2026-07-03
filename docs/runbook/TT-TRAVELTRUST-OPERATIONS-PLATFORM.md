@@ -194,6 +194,7 @@ location.reload();
 | **Status** | **OPEN** |
 | **说明** | v49 remote `npm run build` OOM；**v48 已上线** · 不挡 Market Runtime CLOSED |
 | **Runbook** | [`TT-CI-BUILD-STABILITY.md`](TT-CI-BUILD-STABILITY.md) |
+| **Issue Registry（总账）** | [`registry/open-issues.v1.yaml`](../../registry/open-issues.v1.yaml) → `CI-BUILD-20260703-V49-OOM` |
 | **Evidence** | `evidence/GO_ci_build_stability/20260703T113000Z/` |
 
 ```bash
