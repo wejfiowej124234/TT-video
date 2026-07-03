@@ -1,0 +1,388 @@
+# TravelTrust unified capability matrix · three-dimension status
+# SSOT docs:
+#   - docs/runbook/TT-CAPABILITY-MATRIX-UNIFIED.md (project-wide table)
+#   - docs/runbook/TT-TRAVELTRUST-THREE-DIMENSION-STATUS-SSOT.md (IA + policy)
+#   - docs/runbook/TT-OFFICIAL-OPS-CAPABILITY-MATRIX.md (Official Ops domain detail)
+version: traveltrust-three-dimension-status-2026-07-03-v5
+
+model: THREE_DIMENSION
+capability_matrix_unified: docs/runbook/TT-CAPABILITY-MATRIX-UNIFIED.md
+executive_dashboard: registry/executive-dashboard.v1.yaml
+executive_dashboard_doc: docs/runbook/TT-TRAVELTRUST-EXECUTIVE-DASHBOARD.md
+
+phase2:
+  status: CLOSED
+  label: Phase2 Closed
+  closed_items: [product, operations, governance, alignment]
+active_mainline: PI3
+
+# Executive Summary — avoid misreading NO_GO as product failure (2026-07-03)
+# Full dashboard: registry/executive-dashboard.v1.yaml · docs/runbook/TT-TRAVELTRUST-EXECUTIVE-DASHBOARD.md
+executive_summary:
+  updated_utc: "2026-07-03T09:30:00Z"
+  dashboard: registry/executive-dashboard.v1.yaml
+  phase2_closed_note: >
+    Phase2 Closed = product · operations platform · governance (RC/DDG/OCS/SOPCP/OCIP) ·
+    workflow · local_staging_alignment. NOT whole-project complete.
+  pi3_note: >
+    PI3 is not missing code — Owner Live Resources (brand domain, Stripe Live, final prod UAT) not fully in place.
+  release_readiness:
+    metric: gate_three_state_rollup
+    overall: IN_PROGRESS
+    release_decision: NO_GO
+    rollup:
+      closed: 1
+      interim: 2
+      open: 2
+    pi3_release_gates:
+      PI3-001: CLOSED
+      PI3-002: INTERIM_GO
+      PI3-003: WAITING_OWNER
+      PI3-004: INTERIM_GO
+      PI3-006: PENDING
+    p2_optional:
+      PI3-005: OPTIONAL
+  p0_release_blockers:
+    - brand_domain_dns_tls
+    - stripe_live
+    - production_browser_uat_final
+  mainnet:
+    blocks_sepolia_production_go: false
+    priority: P2_optional
+  evidence_reuse_policy: ENFORCED
+  dimensions:
+    - id: product_quality
+      label: Product Quality
+      status: COMPLETE
+      color: green
+    - id: operations_baseline
+      label: Operations Baseline
+      status: COMPLETE
+      color: green
+      note: OCS · OCIP · SOPCP · Workflow · Operations Platform
+    - id: data_governance
+      label: Data Governance
+      status: COMPLETE
+      color: green
+      note: DDG CLOSED (Evidence Reused)
+    - id: local_staging_alignment
+      label: Local ↔ Staging Alignment
+      status: COMPLETE
+      color: green
+      evidence: evidence/GO_operations_platform_alignment/20260703T075355Z/alignment-audit.json
+    - id: release_governance
+      label: Release Governance
+      status: COMPLETE
+      color: green
+      note: RC · DDG · OCS CLOSED (Evidence Reused · CLOSED_UNLESS_TOUCHED)
+    - id: production_readiness
+      label: Production Readiness
+      status: IN_PROGRESS
+      color: yellow
+      note: Gate rollup — Closed 1 · Interim 2 · Open 2; INTERIM_GO ≠ CLOSED
+    - id: production_go_live
+      label: Production Go-Live
+      status: PENDING
+      color: pending
+      release_decision: NO_GO
+      note: NO_GO until PI3 P0 gates CLOSED — Mainnet P2 optional
+  governance_gates_closed:
+    policy: registry/evidence-reuse-policy.v1.yaml
+    gates:
+      RC: { status: CLOSED, mode: Evidence Reused }
+      DDG: { status: CLOSED, mode: Evidence Reused }
+      OCS: { status: CLOSED, mode: Evidence Reused }
+
+# Owner final status declaration (2026-07-02 — Enterprise Capability Complete · Phase② Admin GO)
+project_status_final:
+  admin_platform:
+    status_line: "Admin Platform: Enterprise Architecture Ready; Enterprise Governance Ready; Enterprise Capability Complete (40/40 · 6/6); Production Ready (Admin Domain, Not Blocking); Dev & Validation CLOSED"
+    production_ready_scope: admin_domain
+    whole_system_production_go_mainline:
+      - PI3
+      - PRODUCTION_READINESS
+      - MAINNET
+      - PRODUCTION_GO
+    pre_production_gates_every_release:
+      - DISPLAY_DATA_GOVERNANCE
+      - BUSINESS_MANUAL_UAT
+      - FRONTEND_API_CONSISTENCY_AUDIT
+      - PHASE12_FINAL_CONVERGENCE_ONE_TIME_CLOSED
+      - PRODUCTION_RELEASE_REVIEW_CLOSED
+      - FULL_TEST_ACCOUNT_E2E_CLOSED
+    release_pipeline: docs/runbook/TT-RELEASE-PIPELINE.md
+    enterprise_architecture_ready: true
+    enterprise_governance_ready: true
+    capability_level: ENTERPRISE_COMPLETE
+    enterprise_capability_score: "6/6"
+    feature_capability_score: "40/40"
+    enterprise_capability_complete: true
+    production_ready: true
+    blocking_production_go: false
+    dev_validation: CLOSED
+    phase2_admin_final_validation: GO
+    closure_doc: docs/runbook/TT-ADMIN-PLATFORM-CLOSURE-20260702.md
+    post_go_target: OFFICIAL_OPS_1_1_STANDARD_PLUS
+    completion_manifest: docs/runbook/TT-OFFICIAL-OPS-1.1-DELIVERY-MANIFEST.md
+    enterprise_audit: docs/runbook/TT-ADMIN-FOUR-CENTERS-ENTERPRISE-CAPABILITY-AUDIT-20260701.md
+    functional_usability_audit_final: docs/runbook/TT-ADMIN-FUNCTIONAL-USABILITY-AUDIT-20260701.md
+    phase2_signoff: evidence/manual-uat/signoff/PHASE2-ADMIN-FINAL-VALIDATION-SIGNOFF-20260702.md
+    four_layers:
+      architecture_percent: 100
+      governance_percent: 100
+      platform_percent: 100
+      enterprise_operations_percent: 100
+  architecture:
+    completion_percent: 100
+    status: PERMANENT_FROZEN
+    note: Admin four centers + domain IA complete; no further architecture work
+  governance:
+    completion_percent: 100
+    status: LONG_TERM_ENFORCED
+    closed_loop: true
+    principles: EIGHT_PERMANENT
+    principle_p8: SSOT_BEFORE_DEVELOP
+    stack:
+      - docs/runbook/TT-DELIVERY-DECISION-POLICY.md
+      - docs/runbook/TT-PROGRAM-MAINLINE-DISCIPLINE.md
+      - docs/runbook/TT-ADMIN-PLATFORM-GOVERNANCE-DISCIPLINE.md
+      - docs/runbook/TT-ADMIN-THREE-CENTERS-ARCHITECTURE.md
+      - registry/admin-four-centers-governance.v1.yaml
+  feature:
+    status: ROADMAP_EVOLUTION
+    affects_architecture_stability: false
+    post_go_entry: OFFICIAL_OPS_1_1
+    delivery_manifest: docs/runbook/TT-OFFICIAL-OPS-1.1-DELIVERY-MANIFEST.md
+    delivery_manifest_registry: registry/official-ops-1.1-delivery-manifest.v1.yaml
+  current_mainline:
+    unchanged: false
+    updated_utc: "2026-07-02"
+    queue:
+      - PI3
+      - PRODUCTION_READINESS
+      - MAINNET
+      - PRODUCTION_GO
+    pre_production_gates:
+      display_data_governance: PASS
+      business_manual_uat: PASS
+      frontend_api_consistency_audit: PASS
+      phase12_final_convergence: CLOSED
+      production_release_review: CLOSED
+      full_test_account_e2e: CLOSED
+      every_release_mandatory: true
+template:
+  columns:
+    - architecture
+    - feature_level
+    - production
+  feature_levels:
+    - MVP
+    - STANDARD
+    - ADVANCED
+    - ENTERPRISE
+    - COMPLETE
+  architecture_values:
+    - STABLE
+  production_values:
+    - READY
+    - IN_PROGRESS
+    - PENDING
+
+
+delivery_decision_policy:
+  status: ENFORCED
+  doc: docs/runbook/TT-DELIVERY-DECISION-POLICY.md
+  decision_gate_questions:
+    - blocks_current_mainline
+    - belongs_to_current_mainline
+    - complies_with_freeze_discipline
+  review_questions:
+    - is_current_mainline
+    - is_production_blocker
+    - violates_freeze_discipline
+    - which_roadmap_if_not
+
+governance_hierarchy:
+  - docs/runbook/TT-DELIVERY-DECISION-POLICY.md
+  - docs/runbook/TT-PROGRAM-MAINLINE-DISCIPLINE.md
+  - docs/runbook/TT-ADMIN-PLATFORM-GOVERNANCE-DISCIPLINE.md
+
+project_phase: PRODUCT_DELIVERY
+previous_phase: PRODUCT_DEVELOPMENT
+
+product_development_freeze:
+  status: FROZEN
+  effective_utc: "2026-07-02"
+  machine_key: TT_PRODUCT_DEVELOPMENT_FREEZE
+  doc: docs/runbook/TT-PROGRAM-MAINLINE-DISCIPLINE.md#23--产品开发冻结product-development-freeze--2026-07-02-起
+  exceptions_only:
+    - SECURITY
+    - CRITICAL_BUG
+    - PRODUCTION_INCIDENT
+  forbidden:
+    - new_product_features
+    - new_product_audit_dimensions
+    - repeat_full_site_review_without_release_pipeline_mandate
+  product_acceptance_closed:
+    - functional_audit
+    - enterprise_capability_audit
+    - frontend_api_consistency_audit
+    - business_manual_uat
+    - display_data_governance
+    - phase12_final_convergence
+    - production_release_review
+    - full_test_account_e2e
+  issue_classification:
+    product_defect:
+      phase12_scope_expected_open: 0
+      route: fix_only_via_exceptions
+    test_automation_issue:
+      expected_open: 0
+      route: fix_automation_then_rerun
+    production_engineering:
+      mainline: PI3
+      items: PI3-001..PI3-006
+
+program_mainline_discipline:
+  status: ENFORCED
+  doc: docs/runbook/TT-PROGRAM-MAINLINE-DISCIPLINE.md
+  cross_mainline_development: FORBIDDEN
+  mainline_queue: SINGLE
+  legal_tracks:
+    - id: "1"
+      name: Production_Infrastructure_PI3
+      status: IN_PROGRESS
+    - id: "2"
+      name: Mainnet
+      status: PENDING
+    - id: "3"
+      name: Business_Manual_UAT
+      status: PASS
+      note: testnet/staging PASS; production UAT at PI3 exit
+    - id: "4"
+      name: Production_GO
+      status: PENDING
+    - id: "5"
+      name: Post_GO_Feature_Roadmap
+      status: DEFERRED
+      defer_until: PRODUCTION_GO
+  daily_report_template: docs/runbook/TT-PROGRAM-MAINLINE-DISCIPLINE.md#4--统一日报格式强制
+
+active_program: PHASE3_PRODUCTION_READINESS
+active_program_doc: docs/runbook/PHASE3-PRODUCTION-PREPARATION.md
+
+program_mainline:
+  - id: PI3
+    label: Production Infrastructure
+    status: IN_PROGRESS
+    blockers_p0: [PI3-002, PI3-003, PI3-004_final_uat]
+    blockers_p1: [PI3-006, security_audit, observability, performance_baseline]
+    blockers_p2_optional: [PI3-005_mainnet]
+    note: Owner Live Resources — not missing product code
+  - id: PRODUCTION_READINESS
+    label: Production Readiness
+    status: IN_PROGRESS
+    note: TT_PHASE3_CONVERGENCE_GATE PASS on staging-closable items
+  - id: MAINNET
+    label: Mainnet
+    status: PENDING
+    priority: P2_optional
+    blocks_sepolia_production_go: false
+  - id: BUSINESS_MANUAL_UAT
+    label: Business Manual UAT
+    status: PENDING
+  - id: PRODUCTION_GO
+    label: Production GO
+    status: PENDING
+    key: PHASE3_PRODUCTION_GO
+    value: NO_GO
+  - id: OFFICIAL_OPS_1_1
+    label: Official Ops 1.1 Feature Level STANDARD
+    status: DEFERRED
+    defer_until: PRODUCTION_GO
+
+admin_ia:
+  status: FROZEN
+  policy: no_new_modules_no_nav_changes
+
+# Unified matrix rows — single language for all status reporting
+capability_matrix:
+  - module: Admin Platform
+    architecture: STABLE_FINAL
+    feature_level: ENTERPRISE_COMPLETE
+    permanent_freeze: true
+    dev_validation: CLOSED
+    production: READY
+    registry: registry/admin-platform-production-readiness.v1.yaml
+    feature_detail_percent: 100
+  - module: Content Center
+    architecture: STABLE
+    feature_level: COMPLETE
+    production: READY
+    feature_detail_percent: 92
+    ssot: docs/handbook/engineering/101-CMS与内容运营中心实施蓝图.md
+  - module: Official Ops
+    architecture: STABLE
+    architecture_version: "1.0"
+    feature_level: ENTERPRISE_COMPLETE
+    production: READY
+    registry: registry/official-ops-domain.v1.yaml
+  - module: Public Operations
+    architecture: STABLE
+    feature_level: COMPLETE
+    production: READY
+    parent: Official Ops
+    mvp_completion_percent: 100
+    admin_40_40_scope: COMPLETE
+    full_vision_completion_percent: 40
+    vision_gap: ROADMAP_NOT_DEFECT
+    feature_level_next: STANDARD
+    registry: registry/public-operations-mvp.v1.yaml
+  - module: Market
+    architecture: STABLE
+    feature_level: STANDARD
+    production: READY
+    ssot: frontend/app/market/README.md
+  - module: Community
+    architecture: STABLE
+    feature_level: STANDARD
+    production: READY
+    note: C8 staging GO · admin/community
+  - module: Governance
+    architecture: STABLE
+    feature_level: ADVANCED
+    production: READY
+  - module: Production Infrastructure
+    architecture: STABLE
+    feature_level: null
+    production: IN_PROGRESS
+    blockers_p0: [PI3-002, PI3-003, PI3-004_final_uat]
+    blockers_p2_optional: [PI3-005_mainnet]
+  - module: Mainnet
+    architecture: null
+    feature_level: null
+    production: PENDING
+    priority: P2_optional
+
+feature_level_roadmap:
+  global_order:
+    - MVP
+    - STANDARD
+    - ADVANCED
+    - ENTERPRISE
+  public_operations:
+    current: MVP
+    next: STANDARD
+    maps_to_official_ops_version: "1.1"
+
+naming_policy:
+  status_reporting:
+    use: capability_matrix_template
+    forbid:
+      - Phase2 as status
+      - SprintN as status
+      - Roadmap percent as defect
+  deprecated_keys:
+    - TT_PUBLIC_DISPLAY_PHASE2
+    - TT_PUBLIC_DISPLAY_PHASE3
+    - TT_PUBLIC_DISPLAY_PHASE4

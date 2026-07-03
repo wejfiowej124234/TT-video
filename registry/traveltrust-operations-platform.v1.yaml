@@ -1,0 +1,290 @@
+# TravelTrust Operations Platform (TTOP) · Taxonomy SSOT
+# Runbook: docs/runbook/TT-TRAVELTRUST-OPERATIONS-PLATFORM.md
+# Admin architecture (frozen implementation): docs/runbook/TT-ADMIN-THREE-CENTERS-ARCHITECTURE.md
+# Operator map: docs/runbook/TT-ADMIN-OPERATOR-MAP-SSOT.md
+
+schema: traveltrust.operations_platform.v1
+version: 2
+effective_utc: "2026-07-03"
+
+machine_keys:
+  TT_OPERATIONS_PLATFORM: TravelTrust_Operations_Platform
+  TT_ADMIN_PRODUCT_NAME: TravelTrust Operations Platform
+  TT_ADMIN_LEGACY_ALIAS: Admin_Console
+  TT_ADMIN_FOUR_CENTERS: FROZEN
+  TT_OPS_ORGANIZATION_MODEL: operations_function_first
+  TT_OPERATIONS_WORKFLOW: registry/traveltrust-operations-workflow.v1.yaml
+
+three_layer_stack:
+  L1_data_governance: [DDG, SOPCP, OCIP, OCS]
+  L2_operations_platform: registry/traveltrust-operations-platform.v1.yaml
+  L3_operations_workflow: registry/traveltrust-operations-workflow.v1.yaml
+
+operations_workflow: registry/traveltrust-operations-workflow.v1.yaml
+
+naming:
+  product: TravelTrust Operations Platform
+  short: TTOP
+  legacy_aliases: [Admin, Admin Console, 后台]
+  organization_principle: >
+    Production-phase UI, documentation, RBAC, and team boundaries organize by
+    operations function — not by technical module names. Four Centers remain the
+    frozen implementation architecture underneath.
+
+# ── Primary taxonomy (production · operations-function-first) ─────────
+
+operations_domains:
+  content_operations:
+    id: CONTENT_OPS
+    label: Content Operations
+    label_zh: 内容运营
+    scope:
+      - scenic_background_images
+      - homepage_banner
+      - city_hero
+      - official_images_videos
+      - copy_and_body_text
+      - topic_featured_images
+      - poi_images
+      - landing_ambient
+      - official_guide_editorial_content
+      - catalog_countries_cities_pois_editorial
+    operator_frequency: daily
+    operator_persona: content_ops_not_engineering
+    admin_routes:
+      - /admin/content
+      - /admin/content/media-assets
+      - /admin/content/landing-ambient
+      - /admin/content/poi-images
+      - /admin/content/countries
+      - /admin/content/cities
+      - /admin/content/pois
+    frozen_center: CONTENT_CENTER
+    rbac_future: [content_editor, content_publisher, content_lead]
+    workflow: registry/traveltrust-operations-workflow.v1.yaml#workflows.content_operations
+
+  catalog_operations:
+    id: CATALOG_OPS
+    label: Catalog Operations
+    label_zh: 目录运营
+    scope:
+      - guide_publish_and_maintain
+      - provider_publish_and_maintain
+      - acquisition_publish_and_maintain
+      - official_guide_publish_and_maintain
+      - public_catalog_publish_unpublish
+      - featured
+      - display_priority
+      - display_surfaces_non_campaign
+      - official_accounts_linking
+      - cold_start_dataset_baseline
+      - data_origin_public_ops
+    policies:
+      - registry/single-official-public-catalog-policy.v1.yaml
+      - registry/official-catalog-identity-policy.v1.yaml
+      - registry/official-cold-start-dataset.v1.yaml
+    admin_routes:
+      - /admin/official/public-operations
+      - /admin/official/accounts
+      - /admin/official/guides
+      - /admin/guides
+    frozen_center: OFFICIAL_OPS
+    rbac_future: [catalog_ops, catalog_publisher, catalog_lead]
+    workflow: registry/traveltrust-operations-workflow.v1.yaml#workflows.catalog_operations
+
+  campaign_operations:
+    id: CAMPAIGN_OPS
+    label: Campaign Operations
+    label_zh: 活动运营
+    scope:
+      - campaign_create
+      - campaign_items
+      - campaign_deploy_undeploy
+      - campaign_surfaces
+      - seasonal_and_theme_campaigns
+      - homepage_cold_start_campaign_slots
+    admin_routes:
+      - /admin/official/cold-start
+    frozen_center: OFFICIAL_OPS
+    examples: [东京摄影节, 樱花季, 暑期活动, 双十一, 圣诞专题]
+    rbac_future: [campaign_ops, campaign_publisher]
+    workflow: registry/traveltrust-operations-workflow.v1.yaml#workflows.campaign_operations
+
+  moderation_operations:
+    id: MODERATION_OPS
+    label: Moderation Operations
+    label_zh: 审核与风控运营
+    scope:
+      - merchant_review
+      - guide_review
+      - acquisition_review
+      - official_guide_review
+      - report_handling
+      - violation_and_penalty
+      - appeals
+      - community_moderation_cases
+      - abuse_policy
+    admin_routes:
+      - /admin/onboarding
+      - /admin/approvals
+      - /admin/guide-applications
+      - /admin/provider-applications
+      - /admin/community/reports
+      - /admin/community/moderation
+      - /admin/community/penalties
+      - /admin/community/appeals
+    frozen_centers: [USER_MANAGEMENT, COMMUNITY]
+    rbac_future: [moderator, trust_safety_lead]
+    workflow: registry/traveltrust-operations-workflow.v1.yaml#workflows.moderation_operations
+
+  business_operations:
+    id: BUSINESS_OPS
+    label: Business Operations
+    label_zh: 业务运营
+    scope:
+      - merchant_business_management
+      - guide_business_management
+      - acquisition_business_management
+      - orders_corridor
+      - disputes
+      - reviews_business_view
+      - onboarding_entitlements
+      - steward_applications
+    admin_routes:
+      - /admin/users
+      - /admin/orders
+      - /admin/disputes
+      - /admin/reviews
+      - /admin/onboarding/entitlements
+    frozen_center: USER_MANAGEMENT
+    note: Business lifecycle and corridor ops — distinct from Moderation review queues
+    rbac_future: [business_ops, ops_lead]
+    workflow: registry/traveltrust-operations-workflow.v1.yaml#workflows.business_operations
+
+  analytics_growth:
+    id: ANALYTICS_GROWTH
+    label: Analytics & Growth
+    label_zh: 分析与增长运营
+    scope:
+      - analytics_dashboards
+      - recommendation_order
+      - hot_cities_hot_guides
+      - seo
+      - push_email
+      - referral_kol_airdrop
+      - conversion_funnels
+      - growth_experiments
+    admin_routes:
+      - /admin/growth
+      - /admin/conversion-analytics
+      - /admin/official/public-operations/stats
+    frozen_centers: [GROWTH, OFFICIAL_OPS.statistics_subset]
+    rbac_future: [growth_ops, growth_analyst, growth_lead]
+    workflow: registry/traveltrust-operations-workflow.v1.yaml#workflows.analytics_growth
+
+# ── Recommended production navigation (function-first) ──────────────
+
+navigation_model:
+  principle: operations_function_first_not_technical_module
+  sidebar_groups:
+    - id: content_operations
+      label: Content Operations
+    - id: catalog_operations
+      label: Catalog Operations
+    - id: campaign_operations
+      label: Campaign Operations
+    - id: moderation_operations
+      label: Moderation Operations
+    - id: business_operations
+      label: Business Operations
+    - id: analytics_growth
+      label: Analytics & Growth
+    - id: platform_settings
+      label: Platform Settings
+      maps_to: PLATFORM_CENTER
+      note: RBAC · jobs · compliance · feature flags — not daily ops
+  implementation_status: taxonomy_ssot_adopted_ui_migration_post_go
+
+# ── Frozen Four Centers (implementation · do not expand) ────────────
+
+four_centers_mapping:
+  CONTENT_CENTER: [content_operations]
+  OFFICIAL_OPS: [catalog_operations, campaign_operations, analytics_growth.statistics_subset]
+  USER_MANAGEMENT: [business_operations, moderation_operations.onboarding_subset]
+  COMMUNITY: [moderation_operations.community_subset]
+  GROWTH: [analytics_growth]
+  PLATFORM_CENTER: [platform_settings]
+
+legacy_operations_layers:
+  status: superseded_by_operations_domains_v2
+  note: L1 split into catalog_operations + campaign_operations; L3 split into moderation + business
+  map:
+    L1_platform_operations: catalog_operations
+    L2_content_operations: content_operations
+    L3_business_operations: [moderation_operations, business_operations]
+    L4_campaign_operations: campaign_operations
+    L5_growth_operations: analytics_growth
+
+content_vs_catalog_split:
+  rule: editorial_vs_publish
+  content_operations: what_the_asset_says_and_looks_like
+  catalog_operations: what_is_published_where_with_which_identity
+  example_official_guide:
+    body_cover_tags: content_operations
+    publish_featured_priority_surface: catalog_operations
+
+rbac_and_teams:
+  production_phase: organize_permissions_by_operations_domain
+  principles:
+    - one_primary_ops_domain_per_role_template
+    - super_admin_cross_domain_emergency_only
+    - catalog_publish_separate_from_content_edit
+    - moderation_separate_from_business_corridor
+  persona_registry: docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md#tt-admin-console-personas
+  future_role_templates: see operations_domains.*.rbac_future
+
+test_account_alignment:
+  policy: map_by_operations_domain_do_not_rename_immutable_ids
+  registry: registry/test-accounts-business-immutable.v1.yaml
+  rules:
+    - immutable_logical_ids_C1_C4_E1_E2_must_not_rename
+    - business_personas_test_consumer_market_not_ops_domains
+    - admin_rbac_uses_ephemeral_personas_per_ops_domain
+    - ocs_accounts_are_catalog_ops_production_identities
+  domain_mapping:
+    consumer_C1_C4: consumer_market_not_ops_console
+    admin_rbac_ephemeral: [moderation_operations, catalog_operations, business_operations]
+    tourist_superadmin_shortcut: cross_domain_dev_only
+    ocs_traveltrust_app: catalog_operations
+
+market_subsite_frontend_race_fix:
+  classification: Market Subsite Frontend Race Fix
+  status: CLOSED
+  not_data_governance: true
+  governance_gates:
+    OCS: CLOSED
+    DDG: CLOSED
+    SOPCP: CLOSED
+    evidence_reuse: ENFORCED
+  stamp: "20260703T091200Z"
+  evidence: evidence/GO_market_subsite_frontend_race_fix/20260703T091200Z/race-fix-closure.json
+  signoff: evidence/manual-uat/signoff/MARKET-SUBSITE-FRONTEND-RACE-FIX-SIGNOFF-20260703T091200Z.md
+  staging_web: https://tt-web-staging.fly.dev
+  staging_api: https://tt-api-staging.fly.dev
+  web_deploy:
+    app: tt-web-staging
+    release_version: 45
+    deployment_id: deployment-01KWKHQBCBBDNG5DCM17WJ0QWK
+  fix_files:
+    - frontend/components/market/useMarketStandaloneBusinessPage.ts
+    - frontend/components/market/MarketSubsiteFilterBar.tsx
+    - frontend/components/market/MarketSubsiteMasonry.tsx
+    - frontend/e2e/market-subsite-catalog-race-regression.spec.ts
+  issue_taxonomy:
+    staging_cold_start: Fixed
+    duplicate_data_listing_id: Fixed
+    acquisition_jp_zero: Expected Difference
+    err_connection_closed: Transient Flake
+  regression: frontend/e2e/market-subsite-catalog-race-regression.spec.ts
+  close_script: scripts/dev/close-market-subsite-frontend-race-fix.sh
+  verdict: CLOSED

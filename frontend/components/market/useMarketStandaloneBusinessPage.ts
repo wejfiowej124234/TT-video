@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import type { MarketCatalogListRow } from "@/lib/marketCatalogAdapter";
 import { mapApiReadError } from "@/lib/mapApiReadError";
@@ -14,6 +14,11 @@ import {
   marketSubsiteListingsQueryFromSearchParams,
   pushWithListingParam,
 } from "./marketStandaloneBusinessPageUtils";
+import {
+  MARKET_SUBSITE_COUNTRY_STORAGE,
+  parseCountryParam,
+} from "@/lib/marketSubsiteFilters";
+import { buildPathnameSearchHref } from "@/lib/marketLoginReturnPath";
 
 export type MarketStandaloneBusinessVariant = "provider" | "acquisition";
 
@@ -96,37 +101,63 @@ export function useMarketStandaloneBusinessPage(variant: MarketStandaloneBusines
   );
 
   const loadCatalog = useCallback(
-    (query: string, showLoading: boolean, bypassCache = false) => {
+    (query: string, showLoading: boolean, epoch: number, bypassCache = false) => {
       if (showLoading) {
         setListLoading(true);
         setListError(null);
       }
       void fetchMarketStandaloneCatalog(isProvider, query, { bypassCache })
         .then(({ rows, catalogSourced: sourced, catalogHasMore: hasMore }) => {
+          if (epoch !== listingsFetchGeneration.current) return;
           applyCatalogResult(rows, sourced, hasMore);
         })
-        .catch(handleCatalogError)
+        .catch((e) => {
+          if (epoch !== listingsFetchGeneration.current) return;
+          handleCatalogError(e);
+        })
         .finally(() => {
+          if (epoch !== listingsFetchGeneration.current) return;
           if (showLoading) setListLoading(false);
         });
     },
     [applyCatalogResult, handleCatalogError, isProvider],
   );
 
+  /** B-061 parity: subsite catalog races (unfiltered vs localStorage country) must not overwrite latest query. */
   const listingsFetchGeneration = useRef(0);
+  const didHydrateCountry = useRef(false);
+
+  /** Restore country pref into URL before first catalog fetch (same as FilterBar, but runs earlier). */
+  useLayoutEffect(() => {
+    if (typeof window === "undefined" || didHydrateCountry.current) return;
+    didHydrateCountry.current = true;
+    if (searchParams.get("country")?.trim()) return;
+    try {
+      const raw = localStorage.getItem(MARKET_SUBSITE_COUNTRY_STORAGE[variant]);
+      const c = parseCountryParam(raw);
+      if (c !== "all") {
+        const next = new URLSearchParams(searchParams.toString());
+        next.set("country", c);
+        const q = next.toString();
+        router.replace(buildPathnameSearchHref(pathname, q), { scroll: false });
+      }
+    } catch {
+      /* ignore */
+    }
+  }, [pathname, router, searchParams, variant]);
+
   useEffect(() => {
-    const generation = ++listingsFetchGeneration.current;
-    const isInitial = generation === 1;
-    const delay = isInitial ? 0 : SUBSITE_LISTINGS_REFETCH_DEBOUNCE_MS;
     const timer = window.setTimeout(() => {
-      loadCatalog(listingsQuery, isInitial);
-    }, delay);
+      const epoch = ++listingsFetchGeneration.current;
+      loadCatalog(listingsQuery, true, epoch);
+    }, SUBSITE_LISTINGS_REFETCH_DEBOUNCE_MS);
     return () => window.clearTimeout(timer);
   }, [listingsQuery, loadCatalog, isProvider]);
 
   const refetchCatalog = useCallback(() => {
     invalidateMarketStandaloneCatalogCache();
-    loadCatalog(listingsQuery, true, true);
+    const epoch = ++listingsFetchGeneration.current;
+    loadCatalog(listingsQuery, true, epoch, true);
   }, [loadCatalog, listingsQuery]);
 
   const masonryItems = useMemo(

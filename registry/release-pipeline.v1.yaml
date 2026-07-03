@@ -10,6 +10,82 @@ machine_keys:
   TT_RELEASE_PIPELINE: ENFORCED
   TT_RELEASE_PIPELINE_VERSION: v1
   TT_RELEASE_PIPELINE_RUNBOOK: docs/runbook/TT-RELEASE-PIPELINE.md
+  TT_EXECUTIVE_DASHBOARD: docs/runbook/TT-TRAVELTRUST-EXECUTIVE-DASHBOARD.md
+  TT_PHASE2_STATUS: CLOSED
+  TT_ACTIVE_MAINLINE: PI3
+  TT_EVIDENCE_REUSE_POLICY: ENFORCED
+  TT_PRODUCT_DEVELOPMENT_FREEZE: ENFORCED
+  TT_MARKET_LISTINGS_DISPLAY_GOVERNANCE: CLOSED
+  TT_FULL_TEST_ACCOUNT_E2E: CLOSED
+  TT_OFFICIAL_COLD_START_DATASET: CLOSED
+  TT_OFFICIAL_COLD_START_RERUN_POLICY: CLOSED_UNLESS_TOUCHED
+
+# CLOSED graduation gates → three-layer evidence reuse (Rule 1–3).
+# SSOT: registry/evidence-reuse-policy.v1.yaml
+evidence_reuse_policy:
+  registry: registry/evidence-reuse-policy.v1.yaml
+  rules:
+    rule_1: CLOSED_UNLESS_TOUCHED
+    rule_2: REUSE_EXISTING_EVIDENCE
+    rule_3: INCIDENT_OVERRIDE
+  principle: >
+    Default: reuse existing evidence for CLOSED gates (Rule 2).
+    Re-run when rerun trigger categories 1–4 match since latest evidence (Rule 1).
+    Re-run on production incident, security event, critical regression, or data integrity
+    issue even without code diffs (Rule 3 — highest priority).
+  rerun_trigger_categories:
+    - "1_code_paths"
+    - "2_deployment"
+    - "3_runtime_configuration"
+    - "4_data_model_and_contract"
+  decision_flow:
+    - CHECK_INCIDENT_OVERRIDE
+    - CHECK_GATE_CLOSED
+    - CHECK_RERUN_TRIGGERS
+    - REUSE_EXISTING_EVIDENCE
+    - RE_EXECUTE_GATE
+  closed_gates:
+    RELEASE_CANDIDATE: CLOSED_UNLESS_TOUCHED
+    PHASE12_FINAL_CONVERGENCE: CLOSED_UNLESS_TOUCHED
+    MARKET_LISTINGS_DISPLAY_GOVERNANCE: CLOSED_UNLESS_TOUCHED
+    STAGING_FULL_SITE_DDG: CLOSED_UNLESS_TOUCHED
+    OFFICIAL_COLD_START_DATASET: CLOSED_UNLESS_TOUCHED
+    ADMIN_40_40: CLOSED_UNLESS_TOUCHED
+
+# 毕业门禁治理层级（产品 → 展示 → 官方基线 → 生产）
+governance_ladder:
+  - id: RELEASE_CANDIDATE
+    short: RC
+    status: CLOSED
+  - id: STAGING_FULL_SITE_DDG
+    short: DDG
+    status: CLOSED
+  - id: OFFICIAL_COLD_START_DATASET
+    short: OCS
+    status: CLOSED
+    role: production_official_content_baseline
+    rerun_policy: CLOSED_UNLESS_TOUCHED
+  - id: PRODUCTION_INFRASTRUCTURE
+    short: PI3
+    status: IN_PROGRESS
+  - id: PRODUCTION_GO
+    short: GO
+    status: NO_GO
+  note: >
+    Product (RC + DDG + OCS) graduation gates are CLOSED. Remaining blockers to Go Live
+    are production engineering: PI3 (domain/TLS, Stripe Live, Mainnet) then Production GO.
+
+# 产品开发冻结 — 2026-07-02 · 产品验收已闭 · 唯一主线 PI3→GO
+product_development_freeze:
+  status: FROZEN
+  effective_utc: "2026-07-02"
+  discipline: docs/runbook/TT-PROGRAM-MAINLINE-DISCIPLINE.md#23--产品开发冻结product-development-freeze--2026-07-02-起
+  current_mainline_only:
+    - PI3
+    - PRODUCTION_INFRASTRUCTURE
+    - MAINNET
+    - PRODUCTION_BUSINESS_UAT
+    - PRODUCTION_GO
 
 # 历史阶段（v1.0 首次交付 — 均已 CLOSED / PASS）
 lifecycle_history:
@@ -33,17 +109,108 @@ lifecycle_history:
   frontend_api_consistency_audit:
     status: PASS
     strict_warnings_zero: true
+    browser_layer_staging: PASS
     registry: registry/frontend-api-consistency-audit.v1.yaml
     runbook: docs/runbook/TT-FRONTEND-API-CONSISTENCY-AUDIT.md
     api_layer_script: scripts/dev/run-frontend-api-consistency-audit.sh
     browser_layer_script: frontend/e2e/frontend-api-consistency-audit.spec.ts
-    evidence: evidence/GO_frontend_api_consistency_audit/
+    browser_record_script: scripts/dev/record-frontend-api-consistency-audit-staging.sh
+    evidence: evidence/GO_frontend_api_consistency_audit/staging_browser_20260702T021003Z/
+    signoff: evidence/manual-uat/signoff/FRONTEND-API-CONSISTENCY-AUDIT-SIGNOFF-20260702T021250Z.md
+  phase12_final_convergence:
+    status: CLOSED
+    registry: registry/phase12-final-convergence.v1.yaml
+    runbook: docs/runbook/TT-PHASE12-FINAL-CONVERGENCE-REVIEW.md
+    script: scripts/dev/run-phase12-final-convergence-review.sh
+    evidence: evidence/GO_phase12_final_convergence/20260702T023014Z/
+    signoff: evidence/manual-uat/signoff/PHASE12-FINAL-CONVERGENCE-SIGNOFF-20260702T023014Z.md
+    product_defects_open: 0
+    phase12_production_blockers_open: 0
+  production_release_review:
+    status: CLOSED
+    registry: registry/production-release-review.v1.yaml
+    runbook: docs/runbook/TT-PRODUCTION-RELEASE-REVIEW.md
+    script: scripts/dev/run-production-release-review.sh
+    evidence: evidence/GO_production_release_review/20260702T114024Z/
+    signoff: evidence/manual-uat/signoff/PRODUCTION-RELEASE-REVIEW-SIGNOFF-20260702T114024Z.md
+    staging_web_deploy: deployment-01KWH932M1RT388ZQ6QHQ8SK2A
+    domains_pass: 12
+    domains_partial: 0
+    domains_gap: 0
+    product_defects_open: 0
+  enterprise_final_acceptance:
+    status: CLOSED
+    registry: registry/enterprise-final-acceptance.v1.yaml
+    runbook: docs/runbook/TT-ENTERPRISE-FINAL-ACCEPTANCE-AUDIT.md
+    script: scripts/dev/run-enterprise-final-acceptance-audit.sh
+    evidence: evidence/GO_enterprise_final_acceptance/20260702T144513Z/
+    signoff: evidence/manual-uat/signoff/ENTERPRISE-FINAL-ACCEPTANCE-SIGNOFF-20260702T144513Z.md
+    release_candidate_signoff: evidence/manual-uat/signoff/RELEASE-CANDIDATE-SIGNOFF-20260702T144513Z.md
+    staging_web_deploy: deployment-01KWH932M1RT388ZQ6QHQ8SK2A
+    staging_api_deploy: deployment-01KWH6XESXJG093YWFHRQC5NED
+    product_defects_open: 0
+    domains_pass: 12
+  full_test_account_e2e:
+    status: CLOSED
+    registry: registry/full-test-account-e2e.v1.yaml
+    runbook: docs/runbook/TT-FULL-TEST-ACCOUNT-E2E.md
+    script: scripts/dev/run-full-test-account-e2e-validation.sh
+    evidence: evidence/GO_full_test_account_e2e/20260702T114733Z/
+    signoff: evidence/manual-uat/signoff/FTAE-SIGNOFF-20260702T114733Z.md
+    supplement: evidence/manual-uat/signoff/RELEASE-PIPELINE-FTAE-SUPPLEMENT-20260702T100329Z.md
+    accounts_pass: 6
+    product_defects_open: 0
+    test_automation_issues_open: 0
+  market_listings_display_governance:
+    status: CLOSED
+    registry: registry/market-listings-display-governance.v1.yaml
+    runbook: docs/runbook/TT-MARKET-LISTINGS-DISPLAY-GOVERNANCE.md
+    script: scripts/dev/run-market-listings-display-governance-audit.sh
+    api_deploy: deployment-01KWH6XESXJG093YWFHRQC5NED
+    evidence: evidence/GO_market_listings_display_governance/20260702T105227Z/
+    signoff: evidence/manual-uat/signoff/MARKET-LISTINGS-DISPLAY-GOVERNANCE-SIGNOFF-20260702T105227Z.md
+    product_defects_open: 0
+    enhancements_open: 2
+  official_cold_start_dataset:
+    status: CLOSED
+    rerun_policy: CLOSED_UNLESS_TOUCHED
+    registry: registry/official-cold-start-dataset.v1.yaml
+    runbook: docs/runbook/TT-OFFICIAL-COLD-START-DATASET.md
+    script: scripts/dev/run-official-cold-start-dataset.sh
+    validation: scripts/dev/validate-official-cold-start-dataset.cjs
+    evidence: evidence/GO_official_cold_start_dataset/20260703T044855Z/
+    signoff: evidence/manual-uat/signoff/OCS-PHASE1-SIGNOFF-20260703T044855Z.md
+    staging_api_deploy: deployment-01KWK533SGKGS5PBAVB6NMTKN0
+    coverage_chains: "10/10"
+    role: production_official_content_baseline
+    l5_audit:
+      script: scripts/dev/audit-official-cold-start-dataset-l5.cjs
+      verdict: PASS
+      tier: L5_ENTERPRISE_BASELINE
+      score: "120/120"
+      stamp: "20260703T051500Z"
+      signoff: evidence/manual-uat/signoff/OCS-L5-ENTERPRISE-AUDIT-SIGNOFF-20260703T051500Z.md
+    baseline_readiness_audit:
+      script: scripts/dev/audit-official-cold-start-baseline-readiness.cjs
+      verdict: PASS
+      tier: L5_ENTERPRISE_READINESS
+      score: "100/100"
+      stamp: "20260703T052100Z"
+      signoff: evidence/manual-uat/signoff/OCS-BASELINE-READINESS-SIGNOFF-20260703T052100Z.md
+      phase1_freeze: true
+      production_baseline: APPROVED_AFTER_STAGING_PARITY_APPLY_AND_PI3
 
 # 当前唯一执行主线（2026-07-02）
 current_mainline:
   name: Phase 3 Production Infrastructure
   short: PI3
   status: IN_PROGRESS
+  runbook: docs/runbook/TT-PI3-PRODUCTION-INFRASTRUCTURE-PREP.md
+  registry: registry/phase3-production-infrastructure.v1.yaml
+  orchestrator: scripts/dev/run-pi3-production-infra-prep.sh
+  owner_checklist: docs/runbook/PI3-OWNER-MINIMAL-CONFIG-CHECKLIST.md
+  dependency_order: [PI3-002, PI3-001, PI3-003, PI3-004]
+  deferred: [PI3-005, PI3-006]
   items:
     - id: PI3-001
       name: Production Database / Backup
@@ -93,7 +260,15 @@ pipeline_order:
   - PRODUCT_CAPABILITY_COMPLETE
   - FRONTEND_API_CONSISTENCY_AUDIT
   - DISPLAY_DATA_GOVERNANCE
+  - OFFICIAL_COLD_START_DATASET
   - BUSINESS_MANUAL_UAT
+  - PRODUCTION_INFRASTRUCTURE
+  - PRODUCTION_GO
+
+graduation_governance_order:
+  - RELEASE_CANDIDATE
+  - STAGING_FULL_SITE_DDG
+  - OFFICIAL_COLD_START_DATASET
   - PRODUCTION_INFRASTRUCTURE
   - PRODUCTION_GO
 
@@ -112,6 +287,27 @@ product_capability:
 
 production_capability:
   status: IN_PROGRESS
-  sole_remaining: production_engineering
+  sole_remaining: production_engineering_and_owner_live
+  pi3_framing: Owner Live Resources not fully in place — INTERIM_GO is not final GO
+  gate_rollup:
+    closed: 1
+    interim: 2
+    open: 2
+  p0_release_blockers:
+    - PI3-002_domain_tls_cdn
+    - PI3-003_stripe_live
+    - PI3-004_production_browser_uat_final
+  p1_pre_go:
+    - production_security_audit
+    - observability
+    - performance_baseline_production
+    - PI3-006_go_live_checklist
+  p2_optional:
+    - PI3-005_mainnet_scope
+  mainnet_blocks_sepolia_go: false
+  product_graduation_closed:
+    - RELEASE_CANDIDATE
+    - STAGING_FULL_SITE_DDG
+    - OFFICIAL_COLD_START_DATASET
 
 release_decision: NO_GO

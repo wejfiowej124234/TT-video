@@ -139,7 +139,7 @@ function MarketSubsiteMasonry({
           );
 
           return (
-            <li key={item.listingId} className="mb-4 break-inside-avoid">
+            <li key={item.listingId} className="mb-4 break-inside-avoid" data-listing-id={item.listingId}>
               {previewOnly ? (
                 <div className={cardFrame} data-tt-market-masonry-preview-only="1">
                   {cardInner}

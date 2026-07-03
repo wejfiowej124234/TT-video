@@ -1,0 +1,141 @@
+# Phase 3 · Production Infrastructure · SSOT (Owner Live · interim *.fly.dev)
+# Runbook: docs/runbook/TT-PI3-PRODUCTION-INFRASTRUCTURE-PREP.md
+# Owner checklist: docs/runbook/PI3-OWNER-MINIMAL-CONFIG-CHECKLIST.md
+
+schema: traveltrust.phase3_production_infrastructure.v1
+version: 1
+effective_utc: "2026-07-02"
+
+machine_keys:
+  TT_PI3_PRODUCTION_INFRA_PREP: CLOSED
+  TT_PRODUCTION_CAPABILITY: INTERIM_LIVE
+  TT_RELEASE_DECISION: NO_GO
+  TT_PRODUCT_CAPABILITY: ENTERPRISE_COMPLETE
+  TT_PRODUCT_DEVELOPMENT_FREEZE: ENFORCED
+
+dependency_order:
+  - PI3-002
+  - PI3-001
+  - PI3-003
+  - PI3-004
+
+deferred_until_owner_live:
+  - PI3-005
+  - PI3-006
+
+gate_status_deferred:
+  PI3-005:
+    gate_status: OPTIONAL
+    blocks_sepolia_production_go: false
+  PI3-006:
+    gate_status: PENDING
+
+production_scope_default: PRODUCTION_SCOPE_SEPOLIA
+
+interim_prod_hosts:
+  api: https://tt-api-prod.fly.dev
+  web: https://tt-web-prod.fly.dev
+  mpg_cluster_id: q49ypo4e98pr17ln
+  note: "*.fly.dev interim — brand domain + Stripe Live block final GO"
+
+orchestrator:
+  prep: scripts/dev/run-pi3-production-infra-prep.sh
+  owner_live_closure: evidence/GO_phase2_testnet_20260526/phase3-production-prep/pi3-owner-live-closure-20260702T171126Z/
+  ledger: scripts/dev/gen-pi3-prep-ledger.cjs
+  ssot_gate: scripts/gates/check-phase3-production-infrastructure-ssot.sh
+
+items:
+  PI3-002:
+    name: Production Domain / TLS / CDN / CORS
+    gate_status: INTERIM_GO
+    sprint: "151"
+    execution_gate: scripts/check-pi3-002-production-domain-tls-cdn-cors-execution.sh
+    runbook: docs/handbook/engineering/151-PI3-002-Production-Domain-TLS-CDN-CORS-Execution-Report.md
+    status: INTERIM_GO
+    execution_prep: COMPLETE
+    owner_live: INTERIM_CLOSED
+    evidence: evidence/GO_phase2_testnet_20260526/phase3-production-prep/pi3-002-exec-20260702T171126Z/
+  PI3-001:
+    name: Production Database / Backup
+    gate_status: CLOSED
+    sprint: "152"
+    execution_gate: scripts/check-pi3-001-fly-pg-backup-disaster-recovery-execution.sh
+    b475_baseline: evidence/b475_pg_backup_pitr_baseline/baseline_record.v1.json
+    runbook: docs/handbook/engineering/152-PI3-001-FlyPG-Backup-Disaster-Recovery-Report.md
+    status: GO
+    execution_prep: COMPLETE
+    owner_live: CLOSED
+    evidence: evidence/GO_phase2_testnet_20260526/phase3-production-prep/pi3-001-exec-20260702T171201Z/
+    prod_drill: evidence/GO_phase2_testnet_20260526/phase3-production-prep/prod-db-restore-drill-20260702T164909Z/
+  PI3-003:
+    name: Stripe Live
+    gate_status: WAITING_OWNER
+    sprint: "153"
+    execution_gate: scripts/check-pi3-003-stripe-live-production-webhook-execution.sh
+    baseline: evidence/pi3_003_stripe_live_production_webhook/baseline_record.v1.json
+    runbook: docs/handbook/engineering/153-PI3-003-Stripe-Live-Production-Webhook-Report.md
+    status: WAITING_OWNER_STRIPE
+    execution_prep: COMPLETE
+    owner_live: OPEN
+    depends_on: [PI3-002]
+    evidence: evidence/GO_phase2_testnet_20260526/phase3-production-prep/pi3-003-exec-20260702T171212Z/
+  PI3-004:
+    name: Production Validation
+    gate_status: INTERIM_GO
+    sprint: "154"
+    execution_gate: scripts/check-pi3-004-production-readiness-verification-execution.sh
+    baseline: evidence/pi3_004_production_readiness_verification/baseline_record.v1.json
+    runbook: docs/handbook/engineering/154-PI3-004-Production-Readiness-Verification-Report.md
+    status: INTERIM_GO
+    execution_prep: COMPLETE
+    owner_live: INTERIM_CLOSED
+    depends_on: [PI3-002, PI3-003]
+    evidence: evidence/GO_phase2_testnet_20260526/phase3-production-prep/pi3-004-exec-20260702T171224Z/
+    r003_production: evidence/pi3_004_production_readiness_verification/r003-production-20260702T170051Z/
+    prod_uat: evidence/pi3_004_production_readiness_verification/prod-uat-six-domains-20260702T170211Z/
+
+exit_criteria_live:
+  PI3-002: TT_PI3_002 equals PI3-002_GO or PI3-002_INTERIM_GO
+  PI3-001: B-475 status equals PASS and prod drill READY
+  PI3-003: PI3-003_GO or WAITING_OWNER_STRIPE (infra track continues)
+  PI3-004: PI3-004_GO or PI3-004_INTERIM_GO with R-003 PARTIAL_GO+ and six-domain UAT evidence
+
+remaining_blockers_for_tt_release_go:
+  p0:
+    - brand_domain_dns_tls
+    - stripe_live_sk_live_whsec
+    - production_browser_uat_final
+  p1:
+    - production_security_audit
+    - observability_production
+    - performance_baseline_production
+    - PI3-006_go_live_cutover
+  p2_optional:
+    - PI3-005_mainnet_scope
+
+mainnet_milestone:
+  blocks_sepolia_production_go: false
+  priority: P2_optional
+  flow: >
+    Sepolia Production GO → Production Validation final → 正式运营 → Mainnet Decision (independent)
+
+executive_dashboard_gates:
+  ssot: registry/executive-dashboard.v1.yaml
+  semantics: docs/runbook/TT-EXECUTIVE-DASHBOARD-GATE-SEMANTICS.md
+  audit: scripts/dev/audit-executive-dashboard-gate-consistency.cjs
+  rollup:
+    closed: 1
+    interim: 2
+    open: 2
+  rule: INTERIM_GO and WAITING_OWNER must not count as CLOSED
+
+latest_owner_live_closure:
+  stamp: "20260702T171126Z"
+  evidence: evidence/GO_phase2_testnet_20260526/phase3-production-prep/pi3-owner-live-closure-20260702T171126Z/
+  go_audit: evidence/GO_phase2_testnet_20260526/phase3-production-prep/go-audit-20260702T171226Z/
+  signoff: evidence/manual-uat/signoff/PI3-OWNER-LIVE-INTERIM-SIGNOFF-20260702T171126Z.md
+
+latest_prep_run:
+  stamp: "20260702T153017Z"
+  evidence: evidence/GO_phase2_testnet_20260526/phase3-production-prep/pi3-infra-prep-20260702T153017Z/
+  signoff: evidence/manual-uat/signoff/PI3-INFRASTRUCTURE-PREP-SIGNOFF-20260702T153017Z.md

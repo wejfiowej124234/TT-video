@@ -1,0 +1,253 @@
+# TravelTrust Executive Dashboard · SSOT (at-a-glance program status)
+# Human view: docs/runbook/TT-TRAVELTRUST-EXECUTIVE-DASHBOARD.md
+# Gate semantics: docs/runbook/TT-EXECUTIVE-DASHBOARD-GATE-SEMANTICS.md
+# Consistency audit: scripts/dev/audit-executive-dashboard-gate-consistency.cjs
+
+schema: traveltrust.executive_dashboard.v1
+version: 3
+effective_utc: "2026-07-03"
+updated_utc: "2026-07-03T09:30:00Z"
+
+machine_keys:
+  TT_EXECUTIVE_DASHBOARD: docs/runbook/TT-TRAVELTRUST-EXECUTIVE-DASHBOARD.md
+  TT_PHASE2_STATUS: CLOSED
+  TT_ACTIVE_MAINLINE: PI3
+  TT_RELEASE_DECISION: NO_GO
+
+naming:
+  phase2_label: Phase2 Closed
+  forbid_active_phase2: true
+  active_program: PI3 Production Infrastructure
+  forbid_subjective_release_percent: true
+  forbid_interim_as_closed: true
+
+gate_semantics:
+  runbook: docs/runbook/TT-EXECUTIVE-DASHBOARD-GATE-SEMANTICS.md
+  allowed_status:
+    - CLOSED
+    - INTERIM_GO
+    - WAITING_OWNER
+    - IN_PROGRESS
+    - PENDING
+    - OPTIONAL
+  rollup_rules:
+    closed: "status == CLOSED only — INTERIM_GO must NOT increment closed"
+    interim: "status == INTERIM_GO"
+    open: "status in [WAITING_OWNER, IN_PROGRESS, PENDING, OPEN]"
+    optional_excluded_from_release_rollup: "status == OPTIONAL (P2 Mainnet)"
+  release_decision:
+    NO_GO_when: "any PI3 P0 gate is not CLOSED (interim/waiting/pending all block final GO)"
+
+framing:
+  phase2_closed_scope: >
+    Phase2 Closed = Product · Operations Platform · Data Governance (RC/DDG/OCS/SOPCP/OCIP) ·
+    Operations Workflow · Local↔Staging Alignment. NOT whole-project complete.
+  pi3_status: >
+    PI3 engineering prep on interim *.fly.dev is largely done; Owner Live Resources not fully in place.
+    INTERIM_GO is not final GO.
+  release_decision_note: >
+    NO_GO until PI3 P0 gates reach CLOSED — not product/ops/governance failure.
+  mainnet_policy:
+    blocks_sepolia_production_go: false
+    priority: P2_optional
+    milestone: independent_after_sepolia_production_go
+    default_scope: Sepolia Production
+
+release_readiness:
+  metric: gate_three_state_rollup
+  overall: IN_PROGRESS
+  release_decision: NO_GO
+  phase2:
+    product: COMPLETE
+    operations: COMPLETE
+    governance: COMPLETE
+    alignment: COMPLETE
+  production:
+    infrastructure: INTERIM_GO
+    validation: INTERIM_GO
+    security: IN_PROGRESS
+    observability: IN_PROGRESS
+    performance: IN_PROGRESS
+    go_live: PENDING
+  rollup:
+    closed: 1
+    interim: 2
+    open: 2
+    note: Auto-derived from pi3_release_gates — run audit script to verify
+  pi3_release_gates:
+    - id: PI3-001
+      label: Production Database / Backup / Restore drill
+      status: CLOSED
+      pi3_item_status: GO
+      owner_live: CLOSED
+    - id: PI3-002
+      label: Production Domain / TLS / CDN / CORS
+      status: INTERIM_GO
+      pi3_item_status: INTERIM_GO
+      owner_live: INTERIM_CLOSED
+      blocks_final_go: true
+      note: interim *.fly.dev closed — brand domain owner live pending
+    - id: PI3-003
+      label: Stripe Live + production webhook
+      status: WAITING_OWNER
+      pi3_item_status: WAITING_OWNER_STRIPE
+      owner_live: OPEN
+      blocks_final_go: true
+    - id: PI3-004
+      label: Production Validation / Browser UAT
+      status: INTERIM_GO
+      pi3_item_status: INTERIM_GO
+      owner_live: INTERIM_CLOSED
+      blocks_final_go: true
+      note: six-domain interim UAT on *.fly.dev — final PASS after P0 owner live
+    - id: PI3-006
+      label: Go-Live Checklist + cutover smoke
+      status: PENDING
+      pi3_item_status: deferred
+      blocks_final_go: true
+  production_readiness_gates:
+    - id: production_security_audit
+      label: Production Security Audit
+      status: IN_PROGRESS
+      priority: P1
+    - id: observability_production
+      label: Observability / monitoring (production)
+      status: IN_PROGRESS
+      priority: P1
+    - id: performance_baseline_production
+      label: Performance baseline (production)
+      status: IN_PROGRESS
+      priority: P1
+      note: Staging 72h soak CLOSED — production re-run pending final config
+  p2_optional_gates:
+    - id: PI3-005
+      label: Mainnet scope decision
+      status: OPTIONAL
+      blocks_sepolia_production_go: false
+
+remaining_work:
+  - priority: P0
+    gate: PI3-002
+    work: Brand domain / DNS / TLS (owner live → CLOSED)
+    status: INTERIM_GO
+  - priority: P0
+    gate: PI3-003
+    work: Stripe Live keys + prod webhook
+    status: WAITING_OWNER
+  - priority: P0
+    gate: PI3-004
+    work: Production Browser UAT final PASS
+    status: INTERIM_GO
+  - priority: P1
+    gate: production_security_audit
+    work: Production Security Audit
+    status: IN_PROGRESS
+  - priority: P1
+    gate: observability_production
+    work: Observability (production)
+    status: IN_PROGRESS
+  - priority: P1
+    gate: performance_baseline_production
+    work: Performance Baseline (production)
+    status: IN_PROGRESS
+  - priority: P1
+    gate: PI3-006
+    work: Go-Live Checklist
+    status: PENDING
+  - priority: P2
+    gate: PI3-005
+    work: Mainnet Scope
+    status: OPTIONAL
+
+roadmap:
+  closed_track:
+    label: Phase2 Closed
+    items:
+      - { id: product, status: COMPLETE }
+      - { id: operations, status: COMPLETE }
+      - { id: governance, status: COMPLETE }
+      - { id: alignment, status: COMPLETE }
+  active_track:
+    label: PI3
+    flow:
+      - Production Infrastructure
+      - Production Validation
+      - Production GO
+
+rows:
+  - id: product
+    label: Product
+    status: COMPLETE
+    indicator: green
+
+  - id: operations
+    label: Operations
+    status: COMPLETE
+    indicator: green
+
+  - id: governance
+    label: Governance
+    status: COMPLETE
+    indicator: green
+
+  - id: alignment
+    label: Alignment
+    status: COMPLETE
+    indicator: green
+
+  - id: production_infrastructure
+    label: Production Infrastructure
+    status: INTERIM_GO
+    indicator: yellow
+    gate: PI3-002
+    registry: registry/phase3-production-infrastructure.v1.yaml
+
+  - id: production_validation
+    label: Production Validation
+    status: INTERIM_GO
+    indicator: yellow
+    gate: PI3-004
+
+  - id: security
+    label: Security
+    status: IN_PROGRESS
+    indicator: yellow
+    gate: production_security_audit
+
+  - id: observability
+    label: Observability
+    status: IN_PROGRESS
+    indicator: yellow
+    gate: observability_production
+
+  - id: performance
+    label: Performance
+    status: IN_PROGRESS
+    indicator: yellow
+    gate: performance_baseline_production
+
+  - id: go_live
+    label: Go-Live
+    status: PENDING
+    indicator: pending
+    gate: PI3-006
+
+  - id: production_go
+    label: Production GO
+    status: PENDING
+    indicator: pending
+    summary: Release Decision NO_GO — PI3 rollup closed 1 · interim 2 · open 2
+    registry: registry/release-pipeline.v1.yaml
+
+pointers:
+  gate_semantics: docs/runbook/TT-EXECUTIVE-DASHBOARD-GATE-SEMANTICS.md
+  gate_audit_script: scripts/dev/audit-executive-dashboard-gate-consistency.cjs
+  gate_consistency_evidence: evidence/GO_executive_dashboard_gate_consistency/20260703T093000Z/gate-consistency-audit.json
+  gate_consistency_signoff: evidence/manual-uat/signoff/EXECUTIVE-DASHBOARD-GATE-SEMANTICS-SIGNOFF-20260703T093000Z.md
+  pi3_registry: registry/phase3-production-infrastructure.v1.yaml
+  release_pipeline: registry/release-pipeline.v1.yaml
+
+maintenance:
+  rule: >
+    Update gate.status on PI3 items first (phase3 SSOT), mirror to executive-dashboard pi3_release_gates,
+    recompute rollup (closed/interim/open) via audit script. Never count INTERIM_GO as CLOSED.

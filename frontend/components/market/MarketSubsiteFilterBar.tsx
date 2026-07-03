@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTranslation } from "@/components/LocaleProvider";
 import {
@@ -50,7 +50,6 @@ export default function MarketSubsiteFilterBar({
   const router = useRouter();
   const pathname = usePathname() ?? "";
   const searchParams = useSearchParams();
-  const didHydrateCountry = useRef(false);
 
   const country = parseCountryParam(searchParams.get("country"));
   const categoryMerchant = parseMerchantCategoryParam(searchParams.get("category"));
@@ -71,28 +70,7 @@ export default function MarketSubsiteFilterBar({
     [pathname, router, searchParams],
   );
 
-  /** 推荐 B：无 URL 参数时从 localStorage 恢复一次国家偏好 */
-  useEffect(() => {
-    if (typeof window === "undefined" || didHydrateCountry.current) return;
-    const existing = new URLSearchParams(window.location.search).get("country");
-    if (existing) {
-      didHydrateCountry.current = true;
-      return;
-    }
-    try {
-      const raw = localStorage.getItem(MARKET_SUBSITE_COUNTRY_STORAGE[variant]);
-      const c = parseCountryParam(raw);
-      if (c !== "all") {
-        const next = new URLSearchParams(searchParams?.toString() ?? "");
-        next.set("country", c);
-        const q = next.toString();
-        router.replace(buildPathnameSearchHref(pathname, q), { scroll: false });
-      }
-    } catch {
-      /* ignore */
-    }
-    didHydrateCountry.current = true;
-  }, [pathname, router, searchParams, variant]);
+  /** Country pref hydration: `useMarketStandaloneBusinessPage` useLayoutEffect (avoid double fetch race). */
 
   const pickCountry = (c: MarketSubsiteCountryParam) => {
     if (c === "all") {
