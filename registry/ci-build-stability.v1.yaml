@@ -1,0 +1,41 @@
+# TravelTrust · CI / Remote Build Stability · SSOT
+# Runbook: docs/runbook/TT-CI-BUILD-STABILITY.md
+# Scope: Fly remote build · Docker npm build · deploy pipeline reliability (NOT product runtime gates)
+
+schema: traveltrust.ci_build_stability.v1
+version: 1
+effective_utc: "2026-07-03"
+
+machine_keys:
+  TT_CI_BUILD_STABILITY: ENFORCED
+  TT_CI_BUILD_STABILITY_RUNBOOK: docs/runbook/TT-CI-BUILD-STABILITY.md
+
+scope:
+  includes: [fly_remote_build, docker_npm_build, tt_web_staging_deploy, tt_web_production_deploy]
+  excludes: [market_runtime, ocs, ddg, frontend_runtime_consistency_gate]
+
+open_issues:
+  - id: CI-BUILD-20260703-V49-OOM
+    stamp: "20260703T113000Z"
+    severity: LOW
+    category: Build Infrastructure
+    status: OPEN
+    summary: tt-web-staging v49 Fly remote build failed — npm run build OOM / exit 1
+    app: tt-web-staging
+    failed_release_attempt: 49
+    active_staging_release:
+      version: 48
+      deployment_id: deployment-01KWKTAYPE5Q61Q4X80S6Y3R9F
+      web: https://tt-web-staging.fly.dev
+    git_commit_at_failure: bb1fb63929afc213315ed0142d05e490c3ee5d97
+    deploy_ledger: BOOK-FRC-V48-CLOSE
+    evidence: evidence/GO_ci_build_stability/20260703T113000Z/v49-remote-build-oom.json
+    log_hint: Fly remote builder — NODE_OPTIONS max-old-space-size exhausted during next build
+    mitigation_script: scripts/dev/tt-web-staging-oom-fix-deploy.sh
+    mitigation_env:
+      FLY_WEB_OOM_FIX: "1"
+      BUILD_NODE_MAX_OLD_SPACE_SIZE: "6144"
+      FLY_WEB_BUILDER_MEMORY_MB: "8192"
+    not_market_race_fix: true
+    blocks_market_runtime_closure: false
+    blocks_product_go: false

@@ -304,3 +304,24 @@ market_subsite_frontend_race_fix:
   regression: frontend/e2e/market-subsite-catalog-race-regression.spec.ts
   close_script: scripts/dev/close-market-subsite-frontend-race-fix.sh
   verdict: CLOSED
+  market_runtime:
+    api_truth: PASS
+    frontend_runtime: PASS
+    browser_runtime: PASS
+    source_truth: PASS
+    evidence: CLOSED
+
+ci_build_stability:
+  registry: registry/ci-build-stability.v1.yaml
+  runbook: docs/runbook/TT-CI-BUILD-STABILITY.md
+  open_count: 1
+  open_issues:
+    - id: CI-BUILD-20260703-V49-OOM
+      stamp: "20260703T113000Z"
+      severity: LOW
+      category: Build Infrastructure
+      status: OPEN
+      evidence: evidence/GO_ci_build_stability/20260703T113000Z/v49-remote-build-oom.json
+      not_market_race_fix: true
+      active_staging_release: 48
+      failed_release_attempt: 49

@@ -1,0 +1,23 @@
+{
+  "schema": "traveltrust.ci_build_incident.v1",
+  "stamp": "20260703T113000Z",
+  "id": "CI-BUILD-20260703-V49-OOM",
+  "severity": "LOW",
+  "category": "Build Infrastructure",
+  "status": "OPEN",
+  "not_market_race_fix": true,
+  "app": "tt-web-staging",
+  "failed_release_attempt": 49,
+  "active_staging_release": {
+    "version": 48,
+    "deployment_id": "deployment-01KWKTAYPE5Q61Q4X80S6Y3R9F",
+    "web": "https://tt-web-staging.fly.dev"
+  },
+  "git_commit_at_failure": "bb1fb63929afc213315ed0142d05e490c3ee5d97",
+  "symptom": "Fly remote build: npm run build did not complete (OOM / exit code 1)",
+  "deploy_command": "DEPLOYMENT_STATE=fix FIX_DEPLOY_LEDGER_ID=BOOK-FRC-V48-CLOSE FLY_WEB_REMOTE_BUILD=1 deploy-tt-web-staging.sh",
+  "mitigation": "scripts/dev/tt-web-staging-oom-fix-deploy.sh",
+  "blocks_market_runtime": false,
+  "blocks_product_go": false,
+  "registry": "registry/ci-build-stability.v1.yaml"
+}

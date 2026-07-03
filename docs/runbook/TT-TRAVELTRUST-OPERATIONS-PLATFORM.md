@@ -158,6 +158,44 @@ Sign-off：`evidence/manual-uat/signoff/LOCAL-STAGING-OPS-PLATFORM-ALIGNMENT-SIG
 
 **状态：** **CLOSED**（stamp `20260703T104800Z` · Phase① 12/12 + Phase② 12/12 · source-truth audit **blocking_count=0**）
 
+### Market Runtime 收口状态（与 CI Build 分离）
+
+| 层 | 状态 |
+|----|------|
+| **API Truth** | **PASS** |
+| **Frontend Runtime** | **PASS** |
+| **Browser Runtime** | **PASS**（`data-tt-subsite-country` / `data-tt-subsite-list-count`） |
+| **Source Truth** | **PASS** |
+| **Evidence** | **CLOSED** |
+
+**用户验收（首次打开即正确 · 非 Debug）：**
+
+1. 打开 https://tt-web-staging.fly.dev/market/provider（或 `/market/acquisition`）
+2. DevTools → Elements → `<main data-testid="market-provider-page">`
+3. 期望：**`data-tt-subsite-country="all"`** · **`data-tt-subsite-list-count="10"`**
+4. 子站筛选条点 **「全部国家」** 后条数仍为 10；点 **日本** 后 provider=2 / acquisition=0
+
+**Debug Procedure（仅运维 · 不得作为用户验收步骤）：**
+
+```javascript
+// 仅当怀疑旧 prefs 污染时使用 — 见 Runbook Debug，非产品正常路径
+localStorage.removeItem('tt_market_subsite_country_pref_provider');
+localStorage.removeItem('tt_market_subsite_country_pref_acquisition');
+location.reload();
+```
+
+### CI Build（单独登记 · 不属于 Market Race Fix）
+
+| 项 | 值 |
+|----|-----|
+| **ID** | `CI-BUILD-20260703-V49-OOM` |
+| **Severity** | **Low** |
+| **Category** | **Build Infrastructure** |
+| **Status** | **OPEN** |
+| **说明** | v49 remote `npm run build` OOM；**v48 已上线** · 不挡 Market Runtime CLOSED |
+| **Runbook** | [`TT-CI-BUILD-STABILITY.md`](TT-CI-BUILD-STABILITY.md) |
+| **Evidence** | `evidence/GO_ci_build_stability/20260703T113000Z/` |
+
 ```bash
 # 真源审计（Phase① API 须已起：start-api-local-staging-db-mirror.sh）
 AUDIT_STAMP=20260703T104800Z node scripts/dev/audit-market-subsite-race-fix-source-truth.cjs

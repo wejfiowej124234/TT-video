@@ -117,6 +117,13 @@ market_subsite_race_fix:
   phase2_staging: { web: https://tt-web-staging.fly.dev, api: https://tt-api-staging.fly.dev, scenarios_passed: 12 }
   blocking_count: 0
   browser_truth_attrs: [data-tt-subsite-country, data-tt-subsite-list-count]
+  market_runtime:
+    api_truth: PASS
+    frontend_runtime: PASS
+    browser_runtime: PASS
+    source_truth: PASS
+    evidence: CLOSED
+  ci_build_separate: CI-BUILD-20260703-V49-OOM
   issue_taxonomy:
     refresh_shows_2: Fixed — frontend race + hydration, not catalog-only-2
     staging_cold_start: Fixed

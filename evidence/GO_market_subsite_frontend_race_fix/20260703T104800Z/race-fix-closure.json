@@ -16,8 +16,7 @@
   "web_deploy": {
     "app": "tt-web-staging",
     "release_version": 48,
-    "deployment_id": "deployment-01KWKTAYPE5Q61Q4X80S6Y3R9F",
-    "note": "v49 redeploy build failed; v48 includes effectiveCountry + data-tt-subsite-* browser truth"
+    "deployment_id": "deployment-01KWKTAYPE5Q61Q4X80S6Y3R9F"
   },
   "browser_truth": {
     "attrs": [
@@ -104,5 +103,25 @@
     "B-061 listingsFetchGeneration epoch guard",
     "data-tt-subsite-country / data-tt-subsite-list-count browser SSOT"
   ],
-  "verdict": "CLOSED"
+  "verdict": "CLOSED",
+  "market_runtime": {
+    "api_truth": "PASS",
+    "frontend_runtime": "PASS",
+    "browser_runtime": "PASS",
+    "source_truth": "PASS",
+    "evidence": "CLOSED"
+  },
+  "user_verification": {
+    "procedure": "First open /market/provider or /market/acquisition; assert data-tt-subsite-country=all and data-tt-subsite-list-count=10",
+    "not_acceptable": "localStorage.removeItem as user verification step",
+    "debug_procedure_runbook": "docs/runbook/TT-TRAVELTRUST-OPERATIONS-PLATFORM.md#market-subsite-frontend-race-fix"
+  },
+  "ci_build_out_of_scope": {
+    "id": "CI-BUILD-20260703-V49-OOM",
+    "severity": "LOW",
+    "category": "Build Infrastructure",
+    "status": "OPEN",
+    "registry": "registry/ci-build-stability.v1.yaml",
+    "evidence": "evidence/GO_ci_build_stability/20260703T113000Z/v49-remote-build-oom.json"
+  }
 }
