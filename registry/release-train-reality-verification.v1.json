@@ -4,14 +4,37 @@
   "effective_utc": "2026-07-04",
   "human_runbook": "docs/runbook/TT-RELEASE-TRAIN-REALITY-VERIFICATION.md",
   "release_train_layers": [
+    "Platform Frozen",
+    "Platform Adoption 100%",
     "Reality Audit",
-    "Reality Gap Report",
     "Reality Fix",
     "Platform Coverage Audit",
     "Reality Verification",
     "Formal Acceptance",
-    "Gate PASS"
+    "Gate PASS",
+    "Production GO"
   ],
+  "release_train_fixed": {
+    "effective_utc": "2026-07-04",
+    "platform_frozen": true,
+    "note": "No new Registry/Guard/Verification Layer/Capability unless Architecture Review Approve",
+    "sequence": [
+      "Platform Frozen",
+      "Platform Adoption 100%",
+      "Reality Audit",
+      "Reality Fix",
+      "Platform Coverage Audit",
+      "Reality Verification",
+      "Formal Acceptance",
+      "Gate PASS",
+      "Production GO"
+    ],
+    "distinctions": {
+      "reality_verification_complete": "Sets TT_G2_REALITY_VERIFICATION COMPLETE · TT_WAVE2_FORMAL_ACCEPTANCE READY",
+      "formal_acceptance_complete": "Sets TT_WAVE2_FORMAL_ACCEPTANCE COMPLETE · enables G2 Gate validate",
+      "g2_gate_pass": "Only after Formal Acceptance · validate-production-readiness-g2-gate.cjs exit 0"
+    }
+  },
   "platform_coverage_audit": {
     "script": "bash scripts/dev/run-platform-coverage-audit.sh",
     "gate_validator": "node scripts/dev/validate-platform-coverage-gate.cjs",

@@ -27,16 +27,18 @@ function parseArgs() {
   return args;
 }
 
-function closeGapInYaml(yaml, gapId, evidencePath, auditLayer) {
-  const re = new RegExp(`(  - id: ${gapId}[\\s\\S]*?    status: )OPEN`, 'm');
-  if (!re.test(yaml)) return yaml;
-  const closedUtc = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
-  let out = yaml.replace(re, `$1CLOSED`);
-  if (!out.match(new RegExp(`(  - id: ${gapId}[\\s\\S]*?)    closed_utc:`, 'm'))) {
-    out = out.replace(
-      new RegExp(`(  - id: ${gapId}\\r?\\n[\\s\\S]*?    status: CLOSED)`, 'm'),
-      `$1\n    closed_utc: "${closedUtc}"`
-    );
+function upsertClosedEvidence(yaml, gapId, evidencePath, auditLayer) {
+  let out = yaml;
+  const blockRe = new RegExp(`(  - id: ${gapId}[\\s\\S]*?    status: )OPEN`, 'm');
+  if (blockRe.test(out)) {
+    const closedUtc = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
+    out = out.replace(blockRe, `$1CLOSED`);
+    if (!out.match(new RegExp(`(  - id: ${gapId}[\\s\\S]*?)    closed_utc:`, 'm'))) {
+      out = out.replace(
+        new RegExp(`(  - id: ${gapId}\\r?\\n[\\s\\S]*?    status: CLOSED)`, 'm'),
+        `$1\n    closed_utc: "${closedUtc}"`
+      );
+    }
   }
   if (auditLayer && !out.match(new RegExp(`(  - id: ${gapId}[\\s\\S]*?)    audit_layer:`, 'm'))) {
     out = out.replace(
@@ -50,10 +52,20 @@ function closeGapInYaml(yaml, gapId, evidencePath, auditLayer) {
       `$1${evidencePath}`
     );
   }
+  if (out.match(new RegExp(`(  - id: ${gapId}[\\s\\S]*?)(    closure: [^\\n]+)`, 'm'))) {
+    return out.replace(
+      new RegExp(`(  - id: ${gapId}[\\s\\S]*?)(    closure: [^\\n]+)`, 'm'),
+      `$1    closed_evidence: ${evidencePath}\n$2`
+    );
+  }
   return out.replace(
-    new RegExp(`(  - id: ${gapId}[\\s\\S]*?)(    closure: [^\\n]+)`, 'm'),
-    `$1    closed_evidence: ${evidencePath}\n$2`
+    new RegExp(`(  - id: ${gapId}[\\s\\S]*?    status: CLOSED\\r?\\n)`, 'm'),
+    `$1    closed_evidence: ${evidencePath}\n`
   );
+}
+
+function closeGapInYaml(yaml, gapId, evidencePath, auditLayer) {
+  return upsertClosedEvidence(yaml, gapId, evidencePath, auditLayer);
 }
 
 function gapBlock(yaml, gapId) {
@@ -117,7 +129,9 @@ function recomputeG2Gate(yaml) {
     if (!block.includes('classification: BLOCKER')) continue;
     if (block.includes('status: OPEN')) openG2++;
   }
-  const status = openG2 === 0 ? 'PASS' : 'IN_PROGRESS';
+  const formal = yaml.match(/TT_WAVE2_FORMAL_ACCEPTANCE: (\w+)/)?.[1] || 'BLOCKED';
+  const formalDone = formal === 'COMPLETE' || formal === 'PASS';
+  const status = openG2 === 0 && formalDone ? 'PASS' : 'IN_PROGRESS';
   yaml = yaml.replace(/TT_PRODUCTION_READINESS_G2_GATE: \w+/, `TT_PRODUCTION_READINESS_G2_GATE: ${status}`);
   yaml = yaml.replace(/(  G2:[\s\S]*?    status: )\w+/, `$1${status}`);
   yaml = yaml.replace(/(    open_blockers: )\d+(\r?\n    domains: \[security)/, `$1${openG2}$2`);

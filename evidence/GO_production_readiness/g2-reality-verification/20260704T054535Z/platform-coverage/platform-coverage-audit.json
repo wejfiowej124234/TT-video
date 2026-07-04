@@ -1,0 +1,693 @@
+{
+  "review_id": "PLATFORM-COVERAGE-AUDIT",
+  "stamp": "20260704T054535Z",
+  "registry": "registry/platform-capability-registry.v1.json",
+  "priority_ladder": "registry/production-readiness-priority-ladder.v1.json",
+  "machine_key": "TT_PLATFORM_COVERAGE_AUDIT",
+  "capabilities": [
+    {
+      "capability": "RuntimeIdentity",
+      "id": "runtime_identity",
+      "coverage_pct": 100,
+      "target_pct": 100,
+      "pass": true,
+      "status": "ACTIVE",
+      "runtime": "✅",
+      "verification": "✅",
+      "unmigrated_modules": []
+    },
+    {
+      "capability": "ConfigurationTruth",
+      "id": "configuration_truth",
+      "coverage_pct": 100,
+      "target_pct": 100,
+      "pass": true,
+      "status": "ACTIVE",
+      "runtime": "✅",
+      "verification": "✅",
+      "unmigrated_modules": []
+    },
+    {
+      "capability": "DDG",
+      "id": "ddg",
+      "coverage_pct": 100,
+      "target_pct": 100,
+      "pass": true,
+      "status": "CLOSED",
+      "runtime": "✅",
+      "verification": "✅",
+      "unmigrated_modules": []
+    },
+    {
+      "capability": "PCP Governance",
+      "id": "pcp_governance",
+      "coverage_pct": 100,
+      "target_pct": 100,
+      "pass": true,
+      "status": "FROZEN",
+      "runtime": "✅",
+      "verification": "✅",
+      "unmigrated_modules": []
+    },
+    {
+      "capability": "Public Builder",
+      "id": "public_builder",
+      "coverage_pct": 100,
+      "target_pct": 100,
+      "pass": true,
+      "status": "FROZEN",
+      "runtime": "✅",
+      "verification": "✅",
+      "unmigrated_modules": []
+    },
+    {
+      "capability": "OCS",
+      "id": "ocs",
+      "coverage_pct": 100,
+      "target_pct": 100,
+      "pass": true,
+      "status": "CLOSED",
+      "runtime": "✅",
+      "verification": "✅",
+      "unmigrated_modules": []
+    },
+    {
+      "capability": "Community Media Guard",
+      "id": "community_media_guard",
+      "coverage_pct": 100,
+      "target_pct": 100,
+      "pass": true,
+      "status": "ENFORCED",
+      "runtime": "✅",
+      "verification": "✅",
+      "unmigrated_modules": []
+    }
+  ],
+  "platform_adoption": {
+    "machine_key": "TT_PLATFORM_ADOPTION",
+    "label": "Platform Adoption",
+    "priority_tier": "P2",
+    "adoption_pct": 88,
+    "dimensions": [
+      {
+        "id": "runtime_identity",
+        "label": "RuntimeIdentity",
+        "coverage_pct": 100,
+        "weight": 20
+      },
+      {
+        "id": "configuration_truth",
+        "label": "ConfigurationTruth",
+        "coverage_pct": 100,
+        "weight": 20
+      },
+      {
+        "id": "guard",
+        "label": "Guards",
+        "coverage_pct": 100,
+        "weight": 15
+      },
+      {
+        "id": "verification_platform",
+        "label": "Verification",
+        "coverage_pct": 100,
+        "weight": 15
+      },
+      {
+        "id": "release_train",
+        "label": "Release Train",
+        "coverage_pct": 17,
+        "weight": 15
+      },
+      {
+        "id": "platform_registry",
+        "label": "Platform Registry",
+        "coverage_pct": 100,
+        "weight": 15
+      }
+    ],
+    "summary_line": "Platform Adoption 88%"
+  },
+  "all_pass": true,
+  "details": [
+    {
+      "id": "runtime_identity",
+      "label": "RuntimeIdentity",
+      "owner": "Sebastian Ward",
+      "status": "ACTIVE",
+      "runtime_used": true,
+      "verification_used": true,
+      "ssot": "registry/runtime-identity-ssot.v1.json",
+      "coverage_pct": 100,
+      "coverage_target_pct": 100,
+      "pass": true,
+      "modules": [
+        {
+          "id": "community_showcase_seed",
+          "label": "Community showcase seed",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "market_public_surface",
+          "label": "Market public surface",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "community_media_guard",
+          "label": "Community Media Guard",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "g2_reality_verification",
+          "label": "G2 Reality Verification",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "production_identity_guard",
+          "label": "Production Identity Guard",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "community_admin_routes",
+          "label": "Community Admin",
+          "coverage_pct": 100,
+          "files_total": 2,
+          "files_migrated": 2,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "stripe_onboarding",
+          "label": "Stripe onboarding",
+          "coverage_pct": 100,
+          "files_total": 2,
+          "files_migrated": 2,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "monitoring_baseline",
+          "label": "Monitoring baseline",
+          "coverage_pct": 100,
+          "files_total": 2,
+          "files_migrated": 2,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "per_staging_verify",
+          "label": "PER staging verify",
+          "coverage_pct": 100,
+          "files_total": 2,
+          "files_migrated": 2,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "cfg_drift_closure",
+          "label": "CFG drift closure",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "phase2_staging_deploy",
+          "label": "Phase2 staging Fly deploy",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        }
+      ],
+      "unmigrated_modules": [],
+      "runtime_marker": "✅",
+      "verification_marker": "✅"
+    },
+    {
+      "id": "configuration_truth",
+      "label": "ConfigurationTruth",
+      "owner": "Sebastian Ward",
+      "status": "ACTIVE",
+      "runtime_used": true,
+      "verification_used": true,
+      "ssot": "registry/configuration-truth-ssot.v1.json",
+      "coverage_pct": 100,
+      "coverage_target_pct": 100,
+      "pass": true,
+      "modules": [
+        {
+          "id": "production_identity_guard",
+          "label": "Production Identity Guard",
+          "coverage_pct": 100,
+          "files_total": 2,
+          "files_migrated": 2,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "g2_reality_verification",
+          "label": "G2 Reality Verification",
+          "coverage_pct": 100,
+          "files_total": 2,
+          "files_migrated": 2,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "g3_reality_verification",
+          "label": "G3 Reality Verification",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "fly_deploy_prod",
+          "label": "Fly Deploy prod",
+          "coverage_pct": 100,
+          "files_total": 2,
+          "files_migrated": 2,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "fly_deploy_staging",
+          "label": "Fly Deploy staging",
+          "coverage_pct": 100,
+          "files_total": 2,
+          "files_migrated": 2,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "env_production_example",
+          "label": ".env.production example",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "github_actions_workflows",
+          "label": "GitHub Actions",
+          "coverage_pct": 100,
+          "files_total": 3,
+          "files_migrated": 3,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "cfg_drift_closure",
+          "label": "CFG drift closure",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "g2_prod_probes",
+          "label": "G2 prod probes",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        }
+      ],
+      "unmigrated_modules": [],
+      "runtime_marker": "✅",
+      "verification_marker": "✅"
+    },
+    {
+      "id": "ddg",
+      "label": "DDG",
+      "owner": "Sebastian Ward",
+      "status": "CLOSED",
+      "runtime_used": true,
+      "verification_used": true,
+      "ssot": "registry/display-data-governance.v1.yaml",
+      "coverage_pct": 100,
+      "coverage_target_pct": 100,
+      "pass": true,
+      "modules": [
+        {
+          "id": "market_public_surface",
+          "label": "Market public surface filters",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "discover_governed",
+          "label": "Discover governed view",
+          "coverage_pct": 100,
+          "files_total": 2,
+          "files_migrated": 2,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "guides_governed",
+          "label": "Guides governed catalog",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "market_listings_governed",
+          "label": "Market listings governed",
+          "coverage_pct": 100,
+          "files_total": 2,
+          "files_migrated": 2,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "ddg_gate",
+          "label": "DDG gate script",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        }
+      ],
+      "unmigrated_modules": [],
+      "runtime_marker": "✅",
+      "verification_marker": "✅"
+    },
+    {
+      "id": "pcp_governance",
+      "label": "PCP Governance",
+      "owner": "Sebastian Ward",
+      "status": "FROZEN",
+      "runtime_used": true,
+      "verification_used": true,
+      "ssot": "registry/public-content-platform.v1.yaml",
+      "coverage_pct": 100,
+      "coverage_target_pct": 100,
+      "pass": true,
+      "modules": [
+        {
+          "id": "feed_builder",
+          "label": "FeedBuilder",
+          "coverage_pct": 100,
+          "files_total": 2,
+          "files_migrated": 2,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "market_builder",
+          "label": "MarketBuilder",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "campaign_builder",
+          "label": "CampaignBuilder",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "governed_community",
+          "label": "Governed community",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "governed_market",
+          "label": "Governed market",
+          "coverage_pct": 100,
+          "files_total": 2,
+          "files_migrated": 2,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "pcp_audit",
+          "label": "PCP audit scripts",
+          "coverage_pct": 100,
+          "files_total": 2,
+          "files_migrated": 2,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        }
+      ],
+      "unmigrated_modules": [],
+      "runtime_marker": "✅",
+      "verification_marker": "✅"
+    },
+    {
+      "id": "public_builder",
+      "label": "Public Builder",
+      "owner": "Sebastian Ward",
+      "status": "FROZEN",
+      "runtime_used": true,
+      "verification_used": true,
+      "ssot": "registry/public-content-platform.v1.yaml",
+      "coverage_pct": 100,
+      "coverage_target_pct": 100,
+      "pass": true,
+      "modules": [
+        {
+          "id": "feed_builder_route",
+          "label": "Community feed route",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "discover_public",
+          "label": "Discover public",
+          "coverage_pct": 100,
+          "files_total": 2,
+          "files_migrated": 2,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "official_campaign",
+          "label": "Official campaign",
+          "coverage_pct": 100,
+          "files_total": 2,
+          "files_migrated": 2,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        }
+      ],
+      "unmigrated_modules": [],
+      "runtime_marker": "✅",
+      "verification_marker": "✅"
+    },
+    {
+      "id": "ocs",
+      "label": "OCS",
+      "owner": "Sebastian Ward",
+      "status": "CLOSED",
+      "runtime_used": true,
+      "verification_used": true,
+      "ssot": "registry/official-cold-start-dataset.v1.yaml",
+      "coverage_pct": 100,
+      "coverage_target_pct": 100,
+      "pass": true,
+      "modules": [
+        {
+          "id": "cold_start_consumer",
+          "label": "Cold start consumer",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "official_handlers",
+          "label": "Official handlers",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "ocs_dataset",
+          "label": "OCS dataset",
+          "coverage_pct": 100,
+          "files_total": 2,
+          "files_migrated": 2,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        }
+      ],
+      "unmigrated_modules": [],
+      "runtime_marker": "✅",
+      "verification_marker": "✅"
+    },
+    {
+      "id": "community_media_guard",
+      "label": "Community Media Guard",
+      "owner": "Sebastian Ward",
+      "status": "ENFORCED",
+      "runtime_used": true,
+      "verification_used": true,
+      "ssot": "scripts/dev/validate-community-media-guard.cjs",
+      "coverage_pct": 100,
+      "coverage_target_pct": 100,
+      "pass": true,
+      "modules": [
+        {
+          "id": "guard_validator",
+          "label": "Guard validator",
+          "coverage_pct": 100,
+          "files_total": 2,
+          "files_migrated": 2,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "ci_workflow",
+          "label": "CI workflow",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        },
+        {
+          "id": "community_seeds",
+          "label": "Community seeds",
+          "coverage_pct": 100,
+          "files_total": 1,
+          "files_migrated": 1,
+          "files_legacy": 0,
+          "files_missing": 0,
+          "unmigrated": [],
+          "status": "MIGRATED"
+        }
+      ],
+      "unmigrated_modules": [],
+      "runtime_marker": "✅",
+      "verification_marker": "✅"
+    }
+  ]
+}

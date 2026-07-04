@@ -1,0 +1,1 @@
+{"status":"ok","multipart_enabled":false,"public_video_publish_ready":false,"public_video_spec_required":false,"head_bucket_probe_impl":"head_bucket_cached_ttl15s_v1","head_bucket_cache_hit":false,"public_video_publish_error":"community_media_object_storage_not_configured","max_video_seconds":0,"max_video_bytes":524288,"supported_content_types":["video/mp4","video/webm"]}

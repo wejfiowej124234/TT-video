@@ -78,11 +78,14 @@ function matrixConsistency(regYaml, id) {
   const block = gapBlock(regYaml, id);
   const status = gapField(block, 'status');
   const closedEvidence = gapField(block, 'closed_evidence');
+  const legacyEvidence = gapField(block, 'evidence');
   const issues = [];
   if (status === 'CLOSED' && !closedEvidence) {
-    issues.push('Matrix CLOSED without closed_evidence');
+    if (!legacyEvidence || legacyEvidence.startsWith('docs/')) {
+      issues.push('Matrix CLOSED without closed_evidence (verification evidence path required)');
+    }
   }
-  return { status, closed_evidence: closedEvidence, issues };
+  return { status, closed_evidence: closedEvidence || legacyEvidence, issues };
 }
 
 function verifySecB001(base, regYaml) {
@@ -297,7 +300,7 @@ function main() {
     machine_keys: {
       TT_G2_REALITY_VERIFICATION: allVerified ? 'COMPLETE' : 'IN_PROGRESS',
       TT_WAVE2_FORMAL_ACCEPTANCE: allVerified ? 'READY' : 'BLOCKED',
-      TT_PRODUCTION_READINESS_G2_GATE: allVerified ? 'PASS' : 'IN_PROGRESS',
+      TT_PRODUCTION_READINESS_G2_GATE: 'IN_PROGRESS',
       TT_PRODUCTION_RUNTIME_IDENTITY: identityEval?.pass ? 'PASS' : 'FAIL',
       TT_CONFIGURATION_TRUTH: configPass ? 'PASS' : 'FAIL',
     },

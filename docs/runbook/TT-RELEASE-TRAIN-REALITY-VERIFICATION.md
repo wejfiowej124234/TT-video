@@ -6,29 +6,39 @@
 
 ---
 
-## Release Train 统一层（所有 Gate 同源）
+## Release Train 固定序列（2026-07-04 · 写死）
 
 ```text
+Platform Frozen
+        │
+Platform Adoption 100%
+        │
 Reality Audit
-      ↓
-Reality Gap Report
-      ↓
+        │
 Reality Fix
-      ↓
-Platform Coverage Audit    ← RuntimeIdentity / ConfigurationTruth 覆盖率
-      ↓
-Reality Verification
-      ↓
-Formal Acceptance
-      ↓
-Gate PASS
+        │
+Platform Coverage Audit
+        │
+Reality Verification    ← 六真源 · 不等于 Formal
+        │
+Formal Acceptance       ← 独立签字闸
+        │
+Gate PASS               ← validate-production-readiness-g2-gate.cjs
+        │
+Production GO           ← 仍 NO_GO 直至 G3 + Owner Decision
 ```
 
-**Coverage 低于 100% 或存在未迁移模块 → `TT_PLATFORM_COVERAGE_AUDIT: FAIL` → Formal BLOCKED**（G2/G3：**RuntimeIdentity 100% · ConfigurationTruth 100% · 0 unmigrated modules**）
+**Coverage 低于 100% 或存在未迁移模块 → `TT_PLATFORM_COVERAGE_AUDIT: FAIL` → 不得进入 Formal**
 
-**平台架构冻结（2026-07-04）：** 禁止新增 Registry / Guard / Verification Layer / Truth Source / Capability — **除非 Architecture Review Approve**。
+**平台架构冻结：** 禁止新增 Registry / Guard / Verification Layer / Capability — 除非 Architecture Review Approve。
 
-**下一阶段目标（写死）：** **Platform Adoption 100%** — 只允许 P0 运行态阻塞 · P1-B 全仓 Adoption · P1-C 仓库固化；禁止「新增 XXX 架构」叙事。
+**三层不得混淆：**
+
+| 层 | Machine key | 完成含义 |
+|----|-------------|----------|
+| Reality Verification | `TT_G2_REALITY_VERIFICATION: COMPLETE` | 六真源 VERIFIED · 证据落盘 · validator exit 0 |
+| Formal Acceptance | `TT_WAVE2_FORMAL_ACCEPTANCE: COMPLETE` | Wave 2 签字 · **Verification 之后** |
+| G2 Gate | `TT_PRODUCTION_READINESS_G2_GATE: PASS` | **Formal 之后** · `validate-production-readiness-g2-gate.cjs` exit 0 |
 
 | Gate | Verification 入口 | Formal 前置 |
 |------|-------------------|-------------|

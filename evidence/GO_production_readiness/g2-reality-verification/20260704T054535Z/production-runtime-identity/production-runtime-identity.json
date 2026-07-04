@@ -1,0 +1,78 @@
+{
+  "review_id": "PRODUCTION-RUNTIME-IDENTITY-GUARD",
+  "ssot": "registry/runtime-identity-ssot.v1.json",
+  "configuration_truth_ssot": "registry/configuration-truth-ssot.v1.json",
+  "stamp": "20260704T054535Z",
+  "gate": "G2",
+  "layer": "Reality Verification",
+  "pass": true,
+  "machine_key": "TT_PRODUCTION_RUNTIME_IDENTITY",
+  "profile": "production",
+  "deployment_profile_raw": "production",
+  "deployment_profile_meta": "production",
+  "public_content_profile": "production",
+  "checks": {
+    "deployment_profile_fly": true,
+    "deployment_profile_meta": true,
+    "profile_alias": true,
+    "seed_off": true,
+    "community_showcase_off": true,
+    "market_showcase_off": true,
+    "demo_off": true,
+    "public_content_profile": true
+  },
+  "verdict": "PASS",
+  "configuration_truth": {
+    "pass": true,
+    "target_profile": "production",
+    "machine_key": "TT_CONFIGURATION_TRUTH",
+    "layers": {
+      "registry": {
+        "deployment_profile": "production",
+        "seed": "0",
+        "community_showcase": "0",
+        "market_showcase": "0",
+        "demo": "0",
+        "public_content_profile": "production"
+      },
+      "fly_secrets": {
+        "TRAVELTRUST_DEPLOYMENT_PROFILE": "production",
+        "SEED_TEST_ACCOUNTS": "0",
+        "TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE": "0",
+        "TRAVELTRUST_MARKET_PUBLIC_SHOWCASE": "0",
+        "DID_RANK_SEED_MARKET_DEMO": ""
+      },
+      "fly_config": {
+        "PORT": "8080"
+      },
+      "env_production": {
+        "example": {
+          "TRAVELTRUST_DEPLOYMENT_PROFILE": null,
+          "SEED_TEST_ACCOUNTS": null,
+          "TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE": null,
+          "TRAVELTRUST_MARKET_PUBLIC_SHOWCASE": null,
+          "DID_RANK_SEED_MARKET_DEMO": null
+        },
+        "local_declared": [
+          "SEED_TEST_ACCOUNTS"
+        ]
+      },
+      "github_actions": {
+        "SEED_TEST_ACCOUNTS": [
+          ".github/workflows/build.yml",
+          ".github/workflows/dev-local-smoke-baseline.yml",
+          ".github/workflows/production-gate.yml"
+        ]
+      },
+      "runtime_meta": {
+        "deployment_profile": "production"
+      }
+    },
+    "drifts": [],
+    "verdict": "PASS",
+    "reason": "Configuration layers aligned with Registry and Runtime /meta"
+  },
+  "matrix_gap_id": "PRM-SEC-B002",
+  "meta_deployment_profile": "production",
+  "reason": "Production Runtime Identity + Configuration Truth verified — deployment_profile=production"
+}

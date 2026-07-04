@@ -1,0 +1,58 @@
+{
+  "review_id": "CALL-GRAPH-TRUTH",
+  "stamp": "20260704T054535Z",
+  "gate": "G2",
+  "pass": true,
+  "anchors_total": 8,
+  "anchors_fail": 0,
+  "anchors": [
+    {
+      "id": "RT-COMM-FEED",
+      "label": "Community Feed → feed_builder → governed view + content filter",
+      "status": "PASS",
+      "detail": "anchors OK"
+    },
+    {
+      "id": "RT-COMM-DETAIL",
+      "label": "Community Detail → public_post_json_for_content_readiness",
+      "status": "PASS",
+      "detail": "anchors OK"
+    },
+    {
+      "id": "RT-COMM-PROFILE",
+      "label": "Community public profile → filter_feed_posts_content_readiness when public_only",
+      "status": "PASS",
+      "detail": "anchors OK"
+    },
+    {
+      "id": "RT-MKT-DISCOVER",
+      "label": "Discover list intersects governed_discover_orders_v1 in production profile",
+      "status": "PASS",
+      "detail": "anchors OK"
+    },
+    {
+      "id": "RT-MKT-GUIDES-OK",
+      "label": "Guides catalog → list_governed_market_guides",
+      "status": "PASS",
+      "detail": "anchors OK"
+    },
+    {
+      "id": "RT-MKT-LISTINGS-OK",
+      "label": "Market listings production path → governed_market_listings_v1",
+      "status": "PASS",
+      "detail": "anchors OK"
+    },
+    {
+      "id": "RT-CAMP-OK",
+      "label": "Official cold-start consumer → governed campaign adapter chain",
+      "status": "PASS",
+      "detail": "anchors OK"
+    },
+    {
+      "id": "RT-FEED-BUILDER-REEXPORT",
+      "label": "feed_builder re-exports db (Builder contract via re-export)",
+      "status": "PASS",
+      "detail": "anchors OK"
+    }
+  ]
+}

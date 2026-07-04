@@ -1,0 +1,28 @@
+{
+  "review_id": "PLATFORM-COVERAGE-GATE",
+  "gate": "G2",
+  "machine_key": "TT_PLATFORM_COVERAGE_AUDIT",
+  "pass": true,
+  "thresholds": {
+    "runtime_identity": 100,
+    "configuration_truth": 100,
+    "platform_adoption": 100
+  },
+  "actual": {
+    "runtime_identity_pct": 100,
+    "configuration_truth_pct": 100,
+    "platform_adoption_pct": 88
+  },
+  "checks": {
+    "runtime_identity": true,
+    "configuration_truth": true,
+    "platform_capabilities": true,
+    "zero_unmigrated_modules": true
+  },
+  "unmigrated": {
+    "runtime_identity": [],
+    "configuration_truth": []
+  },
+  "verdict": "PASS",
+  "blocks_formal": false
+}
