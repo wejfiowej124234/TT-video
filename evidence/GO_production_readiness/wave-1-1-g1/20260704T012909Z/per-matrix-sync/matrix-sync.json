@@ -1,0 +1,34 @@
+{
+  "sync": "G1_MATRIX_SYNC",
+  "closed": [
+    "PRM-MVAL-B003"
+  ],
+  "g1_per": {
+    "schema": "traveltrust.g1_production_entry_review.v1",
+    "stamp": "20260704T012909Z",
+    "opened_at_utc": "2026-07-04T01:45:22Z",
+    "phase": "G1 · Wave 1.1",
+    "go_gate": "G1",
+    "status": "PASS",
+    "commit": "fea685b0",
+    "runtime_truth_p0_baseline": "20260704",
+    "machine_keys": {
+      "TT_PRODUCTION_READINESS_G1_PER": "PASS",
+      "TT_PRODUCTION_GO": "NO_GO"
+    },
+    "inputs": {
+      "manual_uat_session": "evidence/manual-uat/sessions/20260704T012909Z",
+      "manual_uat_pass": "27/27",
+      "staging_persona_matrix": "evidence/GO_production_readiness/wave-1-1-g1/20260704T012909Z/staging-persona-matrix/staging-persona-matrix-summary.json",
+      "defects_registry": "evidence/manual-uat/summary/defects-registry.json"
+    },
+    "verdicts": {
+      "runtime_truth_p0_baseline": "SATISFIED",
+      "local_browser_uat": "PASS",
+      "staging_persona_matrix": "PASS",
+      "business_defects": "CLOSED",
+      "g1_per": "PASS"
+    },
+    "honest_boundary": "G1 PER = fresh RT-P0-baseline UAT + staging persona matrix + defect gate · does not replace Phase③ full PER (PRM-MVAL-B004) · not Production GO"
+  }
+}

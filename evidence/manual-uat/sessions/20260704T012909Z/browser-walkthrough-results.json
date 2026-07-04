@@ -1,0 +1,137 @@
+[
+  {
+    "id": "C1-1",
+    "status": "PASS",
+    "note": "UI login multi-demo → identities"
+  },
+  {
+    "id": "C1-2",
+    "status": "PASS",
+    "note": "identities hub heading visible"
+  },
+  {
+    "id": "C1-3",
+    "status": "PASS",
+    "note": "publish hub visible"
+  },
+  {
+    "id": "C1-4",
+    "status": "PASS",
+    "note": "governance region workbench"
+  },
+  {
+    "id": "C1-5",
+    "status": "PASS",
+    "note": "acquisition subsite"
+  },
+  {
+    "id": "C1-6",
+    "status": "PASS",
+    "note": "§0 no white screen / no app error"
+  },
+  {
+    "id": "C2-1",
+    "status": "PASS",
+    "note": "UI login tourist → home"
+  },
+  {
+    "id": "C2-2",
+    "status": "PASS",
+    "note": "landing hero form visible"
+  },
+  {
+    "id": "C2-3",
+    "status": "PASS",
+    "note": "/market content visible"
+  },
+  {
+    "id": "C2-4",
+    "status": "PASS",
+    "note": "/community content visible"
+  },
+  {
+    "id": "C2-5",
+    "status": "PASS",
+    "note": "/orders content visible"
+  },
+  {
+    "id": "C2-6",
+    "status": "PASS",
+    "note": "admin entry reachable"
+  },
+  {
+    "id": "C2-7",
+    "status": "PASS",
+    "note": "§0 healthy"
+  },
+  {
+    "id": "C3-1",
+    "status": "PASS",
+    "note": "UI login guide → workbench"
+  },
+  {
+    "id": "C3-2",
+    "status": "PASS",
+    "note": "guide workbench shell"
+  },
+  {
+    "id": "C3-3",
+    "status": "PASS",
+    "note": "market guides view"
+  },
+  {
+    "id": "C3-4",
+    "status": "PASS",
+    "note": "§0 healthy"
+  },
+  {
+    "id": "C4-1",
+    "status": "PASS",
+    "note": "UI login merchant → provider"
+  },
+  {
+    "id": "C4-2",
+    "status": "PASS",
+    "note": "provider workbench"
+  },
+  {
+    "id": "C4-3",
+    "status": "PASS",
+    "note": "merchant identity settings"
+  },
+  {
+    "id": "C4-4",
+    "status": "PASS",
+    "note": "§0 healthy"
+  },
+  {
+    "id": "E1-1",
+    "status": "PASS",
+    "note": "tourist orders entry"
+  },
+  {
+    "id": "E1-2",
+    "status": "PASS",
+    "note": "trustgate guide UI login → workbench"
+  },
+  {
+    "id": "E1-3",
+    "status": "PASS",
+    "note": "§0 healthy"
+  },
+  {
+    "id": "E2-1",
+    "status": "PASS",
+    "note": "did-rank main"
+  },
+  {
+    "id": "E2-2",
+    "status": "PASS",
+    "note": "acquisition board"
+  },
+  {
+    "id": "E2-3",
+    "status": "PASS",
+    "note": "§0 healthy"
+  }
+]

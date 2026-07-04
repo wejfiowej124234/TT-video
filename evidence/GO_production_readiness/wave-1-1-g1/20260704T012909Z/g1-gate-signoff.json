@@ -1,0 +1,17 @@
+{
+  "wave": "1.1",
+  "go_gate": "G1",
+  "stamp": "20260704T014522Z",
+  "machine_keys": {
+    "TT_PRODUCTION_READINESS_G1_GATE": "PASS",
+    "TT_PRODUCTION_GO": "NO_GO"
+  },
+  "open_g1_blockers": [],
+  "verdict": "G1_PASS",
+  "domains": [
+    "browser_uat",
+    "manual_validation",
+    "content_readiness"
+  ],
+  "honest_boundary": "G1 PASS = Matrix go_gate:G1 BLOCKER=0 · does not imply Production GO · PER may remain separate"
+}

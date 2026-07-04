@@ -8,6 +8,7 @@ use serde_json::json;
 use uuid::Uuid;
 
 use crate::db;
+use crate::pcp::feed_builder;
 use crate::state::{extract_user_with_session_check, ApiMetaState};
 
 use super::feed_geo::{enrich_and_filter_feed_posts, FeedGeoContext};
@@ -384,7 +385,7 @@ pub(super) async fn get_feed(
                 .into_response()
             }
         };
-        match db::list_feed_by_following(pool, uid, feed_cursor, limit, tag_filter, production_only).await {
+        match feed_builder::list_feed_by_following(pool, uid, feed_cursor, limit, tag_filter, production_only).await {
             Ok((posts, next_cursor)) => {
                 let posts = match merge_viewer_own_non_production_feed_page(
                     pool,
@@ -401,7 +402,9 @@ pub(super) async fn get_feed(
                     Err(_) => return placeholder_ok("posts", json!([])),
                 };
                 let list = match posts_json_with_engagement_counts(pool, posts, Some(uid)).await {
-                    Ok(l) => enrich_and_filter_feed_posts(l, &geo),
+                    Ok(l) => crate::chain_off::filter_feed_posts_content_readiness(
+                        enrich_and_filter_feed_posts(l, &geo),
+                    ),
                     Err(_) => return placeholder_ok("posts", json!([])),
                 };
                 let mut out = json!({ "status": "ok", "posts": list });
@@ -413,7 +416,7 @@ pub(super) async fn get_feed(
             Err(_) => placeholder_ok("posts", json!([])),
         }
     } else if is_hot && text_q_ref.is_none() {
-        match db::list_feed_hot(pool, feed_cursor, limit, tag_filter, production_only).await {
+        match feed_builder::list_feed_hot(pool, feed_cursor, limit, tag_filter, production_only).await {
             Ok((posts, next_cursor)) => {
                 let posts = match merge_viewer_own_non_production_feed_page(
                     pool,
@@ -430,7 +433,9 @@ pub(super) async fn get_feed(
                     Err(_) => return placeholder_ok("posts", json!([])),
                 };
                 let list = match posts_json_with_engagement_counts(pool, posts, viewer).await {
-                    Ok(l) => enrich_and_filter_feed_posts(l, &geo),
+                    Ok(l) => crate::chain_off::filter_feed_posts_content_readiness(
+                        enrich_and_filter_feed_posts(l, &geo),
+                    ),
                     Err(_) => return placeholder_ok("posts", json!([])),
                 };
                 let mut out = json!({ "status": "ok", "posts": list });
@@ -442,7 +447,7 @@ pub(super) async fn get_feed(
             Err(_) => placeholder_ok("posts", json!([])),
         }
     } else {
-        match db::list_feed(pool, feed_cursor, limit, tag_filter, production_only, text_q_ref).await {
+        match feed_builder::list_feed(pool, feed_cursor, limit, tag_filter, production_only, text_q_ref).await {
             Ok((posts, next_cursor)) => {
                 let posts = match merge_viewer_own_non_production_feed_page(
                     pool,
@@ -459,7 +464,9 @@ pub(super) async fn get_feed(
                     Err(_) => return placeholder_ok("posts", json!([])),
                 };
                 let list = match posts_json_with_engagement_counts(pool, posts, viewer).await {
-                    Ok(l) => enrich_and_filter_feed_posts(l, &geo),
+                    Ok(l) => crate::chain_off::filter_feed_posts_content_readiness(
+                        enrich_and_filter_feed_posts(l, &geo),
+                    ),
                     Err(_) => return placeholder_ok("posts", json!([])),
                 };
                 let mut out = json!({ "status": "ok", "posts": list });
@@ -541,6 +548,11 @@ pub(super) async fn get_user_posts(
                 Ok(l) => l,
                 Err(_) => return placeholder_ok("posts", json!([])),
             };
+            let list = if public_only {
+                crate::chain_off::filter_feed_posts_content_readiness(list)
+            } else {
+                list
+            };
             let mut out = json!({ "status": "ok", "posts": list });
             if let Some(c) = next_cursor {
                 out["next_cursor"] = json!(c);
@@ -564,12 +576,16 @@ pub(super) async fn get_post_detail(
         return Json(json!({"status": "error", "error": "invalid_id", "message": "invalid_id"}))
             .into_response();
     };
-    match db::get_post_by_id(pool, post_id).await {
-        Ok(Some(p)) => {
-            let viewer = extract_user_with_session_check(&state, &headers).await;
-            if p.visibility_status != "public" && viewer != Some(p.user_id) {
-                return Json(json!({ "status": "ok", "post": null })).into_response();
-            }
+    let viewer = extract_user_with_session_check(&state, &headers).await;
+    let p = match db::get_post_by_id(pool, post_id).await {
+        Ok(Some(raw)) if viewer == Some(raw.user_id) => Some(raw),
+        _ => db::get_governed_public_post_by_id(pool, post_id)
+            .await
+            .ok()
+            .flatten(),
+    };
+    match p {
+        Some(p) => {
             let hide_for_limit_feed =
                 match db::subject_has_active_limit_feed_penalty(pool, p.user_id).await {
                     Ok(v) => v,
@@ -680,11 +696,15 @@ pub(super) async fn get_post_detail(
                     }
                 }
             }
+            let viewer_is_author = viewer == Some(p.user_id);
+            let Some(post_json) =
+                crate::chain_off::public_post_json_for_content_readiness(post_json, viewer_is_author)
+            else {
+                return Json(json!({ "status": "ok", "post": null })).into_response();
+            };
             Json(json!({ "status": "ok", "post": post_json })).into_response()
         }
-        Ok(None) => Json(json!({"status": "ok", "post": null})).into_response(),
-        Err(_) => Json(json!({"status": "error", "error": "db_error", "message": "db_error"}))
-            .into_response(),
+        None => Json(json!({"status": "ok", "post": null})).into_response(),
     }
 }
 

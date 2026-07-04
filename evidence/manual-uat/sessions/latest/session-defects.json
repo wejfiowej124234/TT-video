@@ -1,7 +1,0 @@
-{
-  "session_id": "S001",
-  "session_stamp": "20260630T112505Z",
-  "touched_defects": ["DEFECT-001", "DEFECT-002", "DEFECT-003"],
-  "new_defects": ["DEFECT-001", "DEFECT-002", "DEFECT-003"],
-  "closed_this_session": []
-}

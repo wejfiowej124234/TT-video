@@ -1,0 +1,839 @@
+# TravelTrust · Production Readiness Master Matrix · Machine SSOT
+# Human: docs/runbook/TT-PRODUCTION-READINESS-MASTER-MATRIX.md
+# Gap report: docs/runbook/PRODUCTION-READINESS-MASTER-GAP-REPORT.md
+# Runtime Truth: docs/runbook/RUNTIME-TRUTH-GAP-REPORT.md
+# Parent program: registry/production-readiness-program.v1.yaml
+
+schema: traveltrust.production_readiness_master_matrix.v1
+version: 1
+effective_utc: "2026-07-04"
+updated_utc: "2026-07-04T01:45:22Z"
+review_id: PRM-GAP-REVIEW-20260704
+runtime_truth_review_id: RT-AUDIT-20260704
+
+machine_keys:
+  TT_PRODUCTION_READINESS_SOLE_EXECUTION_ENTRY: ENFORCED
+  TT_RELEASE_TRAIN: ACTIVE
+  TT_PRODUCTION_READINESS_MASTER_MATRIX: ACTIVE
+  TT_PRODUCTION_READINESS_MASTER_GAP_REVIEW: COMPLETE
+  TT_PRODUCTION_READINESS_PROGRAM: ACTIVE
+  TT_PRODUCTION_GO: NO_GO
+  TT_PRODUCTION_READINESS_G1_GATE: PASS
+  TT_PRODUCTION_READINESS_G2_GATE: NOT_STARTED
+  TT_PRODUCTION_READINESS_G3_GATE: NOT_STARTED
+  TT_PCP_ARCHITECTURE: FROZEN
+  TT_PCP_PHASE_2: NOT_STARTED
+  TT_COMMUNITY_PRODUCTION_READY_G1_DOMAIN: PASS
+  TT_COMMUNITY_CONTENT_READINESS_DOMAIN: MAINTENANCE
+  TT_COMMUNITY_MEDIA_RUNTIME_READINESS_G1: PASS
+  TT_COMMUNITY_MEDIA_GUARD: ENFORCED
+  TT_COMMUNITY_PLATFORM: MAINTENANCE
+  TT_COMMUNITY_G1_STAGING_ALIGNMENT: PASS
+  TT_IMPLEMENTATION_REALITY_AUDIT: COMPLETE
+  TT_RUNTIME_TRUTH_AUDIT: ACTIVE
+  TT_RUNTIME_TRUTH_GAP_REVIEW: COMPLETE
+  TT_RUNTIME_TRUTH_P0: PASS
+  TT_G1_REALITY_AUDIT: COMPLETE
+
+go_gates:
+  production_go_rule: G1 PASS AND G2 PASS AND G3 PASS → Production GO decision
+  G1:
+    label: Product Verification
+    wave: "1.1"
+    status: PASS
+    open_blockers: 0
+    domains: [browser_uat, manual_validation, content_readiness]
+    runbook: docs/runbook/TT-LOCAL-UI-MANUAL-UAT-CHECKLIST.md
+    execute: bash scripts/dev/run-production-readiness-wave-1-1-g1.sh
+    validate: node scripts/dev/validate-production-readiness-g1-gate.cjs
+  G2:
+    label: Production Hardening
+    wave: "2"
+    status: NOT_STARTED
+    open_blockers: 4
+    domains: [security, performance, monitoring]
+  G3:
+    label: Production Cutover
+    wave: "3"
+    status: NOT_STARTED
+    open_blockers: 4
+    domains: [stripe_live, domain_cdn, disaster_recovery, deployment]
+
+owner_default: Sebastian Ward
+
+classification_ladder:
+  - BLOCKER
+  - DEFECT
+  - EXPECTED_DIFFERENCE
+  - ENHANCEMENT
+
+workflow:
+  - discover_or_intake
+  - master_matrix_register
+  - locate_domain_in_matrix
+  - assign_go_gate
+  - classify_blocking
+  - fix_or_confirm
+  - attach_evidence
+  - close_in_matrix
+
+sole_execution_entry:
+  enforced: true
+  parent: registry/production-readiness-program.v1.yaml
+  rule: Production Readiness = ONLY execution entry — no fix before Matrix registration
+
+status_legend:
+  GREEN: blocking_count == 0 at current phase gate
+  YELLOW: blocking_count > 0 or open defects; not sole GO veto domain
+  RED: blocking_count > 0 and domain on Production GO critical path
+
+domains:
+  - id: security
+    label: Security
+    go_gate: G2
+    status: YELLOW
+    blocking_count: 2
+    owner: Sebastian Ward
+    evidence:
+      - docs/runbook/PRODUCTION-READINESS-REPORT.md
+      - docs/go-live-checklist.md
+      - evidence/GO_phase2_testnet_20260526/phase3-production-prep/go-audit-20260607T073403Z/go_no_go.json
+    ssot_runbook: docs/runbook/PRODUCTION-READINESS-REPORT.md
+
+  - id: browser_uat
+    label: Browser UAT
+    go_gate: G1
+    status: YELLOW
+    blocking_count: 4
+    owner: Sebastian Ward
+    evidence:
+      - docs/runbook/TT-LOCAL-UI-MANUAL-UAT-CHECKLIST.md
+      - docs/runbook/TT-PROJECT-MAINLINE-PRODUCT-VERIFICATION.md
+    ssot_runbook: docs/runbook/TT-LOCAL-UI-MANUAL-UAT-CHECKLIST.md
+
+  - id: manual_validation
+    label: Manual Validation
+    go_gate: G1
+    status: YELLOW
+    blocking_count: 3
+    owner: Sebastian Ward
+    evidence:
+      - docs/runbook/TT-PROJECT-MAINLINE-PRODUCT-VERIFICATION.md
+      - docs/runbook/TT-PRODUCTION-ENTRY-REVIEW-REGRESSION.md
+    ssot_runbook: docs/runbook/TT-PROJECT-MAINLINE-PRODUCT-VERIFICATION.md
+
+  - id: content_readiness
+    label: Community Content Readiness
+    go_gate: G1
+    status: GREEN
+    blocking_count: 0
+    g1_domain_verdict: Community Production Ready (G1 Domain)
+    media_runtime_g1: PASS
+    maintenance_mode: true
+    active_development: false
+    owner: Sebastian Ward
+    pcp_boundary: >
+      PCP Governance CLOSED — G1 Content domain PASS; TravelTrust Production GO still NO_GO.
+    gap_policy: >
+      PRM-CONTENT-B001 is CLOSED and archival — do NOT reopen.
+      New Community production issues → register PRM-CONTENT-B00X (new ID).
+    content_layers:
+      A_api_ugc: { production_ready: true, label: API real UGC + Official + Campaign }
+      B_pg_showcase_seed: { production_ready: false, label: PG showcase seed · Unsplash · TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE }
+      C_frontend_showcase: { production_ready: false, label: Frontend tt-showcase-* · sample MP4 · dev-only injection }
+      D_campaign_derived: { production_ready: true, label: Campaign surfaces · governed embed }
+    evidence:
+      - docs/runbook/COMMUNITY-G1-STAGING-ALIGNMENT.md
+      - evidence/GO_production_readiness/community-g1-staging-alignment/20260704T005621Z/
+    ssot_runbook: frontend/app/community/README.md
+    execute: bash scripts/dev/run-community-media-runtime-readiness-g1-closure.sh
+    validate: node scripts/dev/validate-community-media-runtime-readiness-g1.cjs
+    note: >
+      Community Production Ready (G1 Domain) — PRM-CONTENT-B001 CLOSED · maintenance.
+      Runtime Truth P0 CLOSED 2026-07-04 (PRM-RT-B001/B002 detail+profile filter parity).
+      Active media track PRM-MEDIA-B001 CLOSED 2026-07-04 — maintenance; new issues PRM-MEDIA-B00X.
+      Unified answer: Community = Production Ready (G1 Domain) · Maintenance.
+      Staging alignment PRM-CONTENT-B002 CLOSED 20260704T005621Z (② independent evidence).
+      Guardrail: TT_COMMUNITY_MEDIA_GUARD (scripts/gates/run-community-media-guard.sh) — not a Blocker gap.
+
+  - id: performance
+    label: Performance
+    go_gate: G2
+    status: YELLOW
+    blocking_count: 1
+    owner: Sebastian Ward
+    evidence:
+      - docs/runbook/FINAL-SYSTEM-AUDIT-REPORT.md
+      - docs/runbook/PRODUCTION-READINESS-REPORT.md
+    ssot_runbook: docs/runbook/FINAL-SYSTEM-AUDIT-REPORT.md
+
+  - id: observability
+    label: Observability
+    go_gate: G2
+    status: GREEN
+    blocking_count: 0
+    owner: Sebastian Ward
+    evidence:
+      - docs/runbook/PRODUCTION-READINESS-REPORT.md
+      - evidence/GO_phase2_testnet_20260526/phase3-production-prep/go-audit-20260607T073403Z/go_no_go.json
+    ssot_runbook: docs/runbook/PRODUCTION-OPS-RUNBOOK.md
+    note: Staging C8 monitoring smoke PASS; prod observability cutover tracked under monitoring domain
+
+  - id: deployment
+    label: Deployment
+    go_gate: G3
+    status: GREEN
+    blocking_count: 0
+    owner: Sebastian Ward
+    evidence:
+      - docs/runbook/TT-LOCAL-FIRST-CONVERGENCE.md
+      - docs/runbook/PRODUCTION-READINESS-REPORT.md
+    ssot_runbook: docs/runbook/TT-LOCAL-FIRST-CONVERGENCE.md
+    note: Staging Fly deploy + rollback drill OK; prod app pair not yet cutover
+
+  - id: domain_cdn
+    label: Domain / CDN
+    go_gate: G3
+    status: YELLOW
+    blocking_count: 1
+    owner: Sebastian Ward
+    evidence:
+      - docs/runbook/PRODUCTION-READINESS-REPORT.md#pi3-002
+      - docs/runbook/PRODUCTION-GO-DECISION-PACKAGE.md
+    ssot_runbook: docs/runbook/PRODUCTION-OPS-RUNBOOK.md
+    pi3_ref: PI3-002
+
+  - id: stripe_live
+    label: Stripe Live
+    go_gate: G3
+    status: RED
+    blocking_count: 1
+    owner: Sebastian Ward
+    evidence:
+      - docs/runbook/PRODUCTION-READINESS-REPORT.md#pi3-003
+      - docs/go-live-checklist.md
+    ssot_runbook: docs/go-live-checklist.md
+    pi3_ref: PI3-003
+
+  - id: disaster_recovery
+    label: Disaster Recovery
+    go_gate: G3
+    status: YELLOW
+    blocking_count: 2
+    owner: Sebastian Ward
+    evidence:
+      - docs/runbook/PRODUCTION-READINESS-REPORT.md#pi3-001
+      - registry/baseline_record.v1.json
+    ssot_runbook: docs/runbook/PRODUCTION-READINESS-REPORT.md
+    pi3_ref: PI3-001
+
+  - id: monitoring
+    label: Monitoring
+    go_gate: G2
+    status: YELLOW
+    blocking_count: 1
+    owner: Sebastian Ward
+    evidence:
+      - docs/runbook/PRODUCTION-READINESS-REPORT.md
+      - docs/runbook/PRODUCTION-OPS-RUNBOOK.md
+    ssot_runbook: docs/runbook/PRODUCTION-OPS-RUNBOOK.md
+    note: Staging prom rules + C8 PASS; prod synthetic/on-call cutover open
+
+gaps:
+  - id: PRM-SEC-B001
+    domain: security
+    go_gate: G2
+    classification: BLOCKER
+    title: Production cutover secrets and internal API hygiene not closed
+    status: OPEN
+    owner: Sebastian Ward
+    source: go-audit-20260607T073403Z
+    evidence: docs/go-live-checklist.md
+    closure: Prod Fly secrets aligned · internal routes 403 verified on prod bases
+
+  - id: PRM-SEC-B002
+    domain: security
+    go_gate: G2
+    classification: BLOCKER
+    title: Demo/seed surface policy for production (SEED off on prod)
+    status: OPEN
+    owner: Sebastian Ward
+    source: go-audit-20260607T073403Z
+    evidence: docs/runbook/PRODUCTION-READINESS-REPORT.md
+    closure: Written prod seed policy + audit PASS on prod API base
+
+  - id: PRM-UAT-B001
+    domain: browser_uat
+    go_gate: G1
+    classification: BLOCKER
+    title: No signed Browser/Manual UAT master session for Production Entry Review
+    status: CLOSED
+    owner: Sebastian Ward
+    source: TT-PROJECT-MAINLINE step 1
+    evidence: docs/runbook/TT-LOCAL-UI-MANUAL-UAT-CHECKLIST.md
+    closed_evidence: evidence/manual-uat/sessions/20260704T012909Z/SUMMARY.json
+    closure: evidence/manual-uat/sessions/<stamp>/ + checklist sign-off
+
+  - id: PRM-UAT-B002
+    domain: browser_uat
+    go_gate: G1
+    classification: BLOCKER
+    title: Persona C1 core corridor not signed (traveler escrow path)
+    status: CLOSED
+    owner: Sebastian Ward
+    source: TT-LOCAL-UI-MANUAL-UAT-CHECKLIST
+    closure: Session log + screenshot evidence per corridor
+
+  - id: PRM-UAT-B003
+    domain: browser_uat
+    go_gate: G1
+    classification: BLOCKER
+    title: Persona C2 merchant/provider corridor not signed
+    status: CLOSED
+    owner: Sebastian Ward
+    source: TT-LOCAL-UI-MANUAL-UAT-CHECKLIST
+    closure: Session log + checklist § merchant rows
+
+  - id: PRM-UAT-B004
+    domain: browser_uat
+    go_gate: G1
+    classification: BLOCKER
+    title: Staging persona matrix (C1–C4, E2) browser corridors incomplete
+    status: CLOSED
+    owner: Sebastian Ward
+    source: TT-TEST-ACCOUNTS-MATRIX
+    closure: Staging UAT sessions; E1 skipped on staging per registry
+
+  - id: PRM-UAT-B005
+    domain: browser_uat
+    go_gate: G1
+    classification: BLOCKER
+    title: Open business defects block PER sign-off
+    status: CLOSED
+    closed_utc: "2026-07-04T01:20:00Z"
+    owner: Sebastian Ward
+    source: TT-PROJECT-MAINLINE
+    audit_layer: g1_reality
+    closure: >
+      evidence/manual-uat/summary/defects-registry.json P0/P1 = 0 (in repo) ·
+      G1 Reality Audit 20260704 — defect gate no longer blocks PER prep
+    evidence:
+      - evidence/manual-uat/summary/defects-registry.json
+      - docs/runbook/G1-REALITY-GAP-REPORT.md
+
+  - id: PRM-UAT-B006
+    domain: browser_uat
+    go_gate: G1
+    classification: BLOCKER
+    title: Local runtime stack not ready for Browser UAT (API :8080 / smoke corridors)
+    status: CLOSED
+    closed_utc: "2026-07-04T01:20:00Z"
+    owner: Sebastian Ward
+    source: local_runtime
+    audit_layer: g1_reality
+    closure: >
+      G1 Reality probe 20260704 — GET :8080/health/ready + FE :3012 UP ·
+      Wave 1.1 preflight satisfied; Browser UAT execution remains via PRM-UAT-B001…B004
+    evidence:
+      - evidence/GO_production_readiness/g1-reality-audit/
+      - docs/runbook/G1-REALITY-GAP-REPORT.md
+    note: Local Runtime — not PCP · not Production cutover
+
+  - id: PRM-CONTENT-B001
+    domain: content_readiness
+    go_gate: G1
+    classification: BLOCKER
+    title: Community Content Production Readiness — legacy/demo/showcase density vs UGC+Official+Campaign baseline
+    status: CLOSED
+    closed_utc: "2026-07-04T00:05:27Z"
+    archival: true
+    do_not_reopen: true
+    successor_gap_rule: New Community production issues → PRM-CONTENT-B00X (never reopen B001)
+    owner: Sebastian Ward
+    source: community_content_audit_20260704
+    pcp_boundary: Governance platform CLOSED — G1 Content domain closed with evidence
+    layers_open: []
+    closure: >
+      Production profile · Community Feed 100% governed · No Frontend Showcase
+      (tt-showcase-*) · No sample/external demo MP4 · No Unsplash PG seed visible
+      · Only real UGC + Official + Campaign (layers A+D) ·
+      bash scripts/dev/run-community-production-ready-runtime-closure.sh ·
+      verdict COMMUNITY_PRODUCTION_READY_G1_DOMAIN · L5 17/17 PASS ·
+      evidence/GO_production_readiness/community-production-ready/20260704T000527Z/
+    implementation_20260704:
+      - crates/api/migrations/20260704130000_community_content_readiness_governed.sql
+      - seed_community_public_showcase.rs demo/SHOWCASE/draft + staging profile off
+      - frontend/lib/communityContentProductionProfile.ts
+      - scripts/dev/validate-community-content-readiness-g1.cjs
+      - scripts/dev/validate-community-production-ready-runtime.cjs
+    evidence_status: RUNTIME_PASS · COMMUNITY_PRODUCTION_READY_G1_DOMAIN · L5_17_OF_17
+    evidence:
+      - evidence/GO_production_readiness/community-production-ready/20260704T000527Z/community-production-ready-signoff.json
+      - evidence/GO_production_readiness/community-production-ready/20260704T000527Z/COMMUNITY-PRODUCTION-READY-CHECKLIST.md
+      - docs/runbook/COMMUNITY-PRODUCTION-READY-L5-CHECKLIST.md
+    acceptance:
+      profile: production
+      terminology: Community Production Ready (G1 Domain)
+      traveltrust_production_go: false
+      not_feed_ready: true
+      l5_checklist:
+        - { id: feed, label: Feed }
+        - { id: detail, label: Detail }
+        - { id: explore, label: Explore }
+        - { id: hot, label: Hot }
+        - { id: search, label: Search }
+        - { id: profile, label: Profile }
+        - { id: official, label: Official }
+        - { id: campaign, label: Campaign }
+        - { id: images, label: Images }
+        - { id: videos, label: Videos }
+        - { id: media_cdn, label: Media CDN }
+        - { id: recommendation, label: Recommendation }
+        - { id: admin_publish, label: Admin Publish }
+        - { id: admin_unpublish, label: Admin Unpublish }
+        - { id: surface, label: Surface }
+        - { id: priority, label: Priority }
+        - { id: schedule, label: Schedule }
+      all_must_pass: true
+      runtime_validator: node scripts/dev/validate-community-production-ready-runtime.cjs
+      runtime_closure: bash scripts/dev/run-community-production-ready-runtime-closure.sh
+      close_rule: CLOSED 2026-07-04 — historical; do not reopen; new issues use PRM-CONTENT-B00X
+
+  - id: PRM-CONTENT-E001
+    domain: content_readiness
+    go_gate: G1
+    classification: EXPECTED_DIFFERENCE
+    title: Local ① profile allows demo/showcase/seed density for walkthrough
+    status: CONFIRMED
+    owner: Sebastian Ward
+    disposition: CONFIRM_DESIGN
+    evidence:
+      - frontend/lib/communityShowcase.ts
+      - crates/api/src/db/seed_community_public_showcase.rs
+      - docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md
+    note: >
+      Local/dev may show layers B+C with Demo badge — Production profile forbids (closed PRM-CONTENT-B001).
+
+  - id: PRM-MEDIA-B001
+    domain: content_readiness
+    go_gate: G1
+    classification: BLOCKER
+    title: Community Media Runtime Readiness — legacy/demo/stale playback URLs in governed public surfaces
+    status: CLOSED
+    closed_utc: "2026-07-04T00:14:46Z"
+    owner: Sebastian Ward
+    source: community_media_runtime_audit_20260704
+    pcp_boundary: Content/media layer only — not PCP Builder/Governance architecture
+    archival: true
+    do_not_reopen: true
+    successor_gap_rule: New media production issues → PRM-MEDIA-B00X (never reopen B001)
+    closure: >
+      Migration 20260704140000 · API is_non_governed_community_media_url filter ·
+      audit + runtime HEAD-clean on governed surfaces;
+      bash scripts/dev/run-community-media-runtime-readiness-g1-closure.sh ·
+      verdict COMMUNITY_MEDIA_RUNTIME_READY_G1 ·
+      evidence/GO_production_readiness/community-media-runtime-ready/20260704T001446Z/
+    implementation_20260704:
+      - crates/api/migrations/20260704140000_community_media_runtime_readiness_g1.sql
+      - crates/api/src/chain_off/community_public_surface.rs
+      - scripts/dev/lib/community-media-legacy-policy.cjs
+      - scripts/dev/audit-community-media-runtime-readiness.cjs
+      - scripts/dev/validate-community-media-runtime-readiness-g1.cjs
+    evidence_status: RUNTIME_PASS · COMMUNITY_MEDIA_RUNTIME_READY_G1
+    evidence:
+      - evidence/GO_production_readiness/community-media-runtime-ready/20260704T001446Z/community-media-runtime-signoff.json
+      - docs/runbook/COMMUNITY-MEDIA-RUNTIME-READINESS-G1.md
+    acceptance:
+      terminology: Community Media Runtime Ready (G1 Domain)
+      surfaces: [feed, hot, search, detail, profile, explore, campaign, images, videos, playback_network]
+      all_must_pass: true
+      runtime_closure: bash scripts/dev/run-community-media-runtime-readiness-g1-closure.sh
+      close_rule: CLOSED 2026-07-04 — do not reopen; new issues PRM-MEDIA-B00X
+
+  - id: PRM-CONTENT-B002
+    domain: content_readiness
+    go_gate: G1
+    classification: BLOCKER
+    title: Community G1 Content/Media remediation — Phase ② Staging alignment
+    status: CLOSED
+    closed_utc: "2026-07-04T00:56:21Z"
+    owner: Sebastian Ward
+    source: staging_feed_legacy_media_20260704
+    phase: "②_staging"
+    pcp_boundary: Content/media layer only — deploy + migrate + staging evidence; not PCP architecture
+    successor_gap_rule: Staging-only alignment — do not reopen B001/B002; new staging regressions → PRM-CONTENT-B00X
+    closure: >
+      Deploy tt-api-staging + tt-web-staging · migrations 20260704130000 + 20260704140000 applied ·
+      L5 17/17 + Media runtime PASS on staging · Public Ops loop PASS ·
+      evidence/GO_production_readiness/community-g1-staging-alignment/20260704T005621Z/ ·
+      TT_COMMUNITY_G1_STAGING_ALIGNMENT PASS · independent ② evidence (not local 20260704T*)
+    migrations:
+      - crates/api/migrations/20260704130000_community_content_readiness_governed.sql
+      - crates/api/migrations/20260704140000_community_media_runtime_readiness_g1.sql
+    implementation_20260704:
+      - scripts/dev/run-community-g1-staging-alignment-closure.sh
+      - scripts/dev/validate-community-g1-staging-alignment.cjs
+      - docs/runbook/COMMUNITY-G1-STAGING-ALIGNMENT.md
+      - migration fix removed community_posts.updated_at (staging schema uses created_at)
+    evidence_status: STAGING_PASS · COMMUNITY_G1_STAGING_ALIGNMENT · L5_17_OF_17
+    evidence:
+      - evidence/GO_production_readiness/community-g1-staging-alignment/20260704T005621Z/community-g1-staging-alignment-signoff.json
+      - docs/runbook/COMMUNITY-G1-STAGING-ALIGNMENT.md
+    execute: bash scripts/dev/run-community-g1-staging-alignment-closure.sh
+    validate: node scripts/dev/validate-community-g1-staging-alignment.cjs
+    ssot_runbook: docs/runbook/COMMUNITY-G1-STAGING-ALIGNMENT.md
+    note: >
+      CLOSED 2026-07-04 — staging aligned; playback HEAD skipped on ② (CDN pending · C4).
+      Local G1 evidence remains separate; do not conflate with ② PASS.
+
+  - id: PRM-MVAL-B001
+    domain: manual_validation
+    go_gate: G1
+    classification: BLOCKER
+    title: Manual UAT coverage incomplete vs product mainline
+    status: CLOSED
+    owner: Sebastian Ward
+    source: TT-PROJECT-MAINLINE
+    closed_evidence: evidence/GO_production_readiness/wave-1-1-g1/20260704T012909Z/staging-persona-matrix/staging-persona-matrix-summary.json
+    closure: Manual UAT step marked complete with evidence
+
+  - id: PRM-MVAL-B002
+    domain: manual_validation
+    go_gate: G1
+    classification: BLOCKER
+    title: Business defect register not closed for PER
+    status: CLOSED
+    closed_utc: "2026-07-04T01:20:00Z"
+    owner: Sebastian Ward
+    source: TT-PRODUCTION-ENTRY-REVIEW-REGRESSION
+    audit_layer: g1_reality
+    closed_evidence: evidence/manual-uat/sessions/20260704T012909Z/SUMMARY.json
+    closure: >
+      defects-registry.json P0/P1 = 0 · linked PRM-UAT-B005 · G1 Reality Audit 20260704
+    evidence:
+      - evidence/manual-uat/summary/defects-registry.json
+      - docs/runbook/G1-REALITY-GAP-REPORT.md
+
+  - id: PRM-MVAL-B003
+    domain: manual_validation
+    go_gate: G1
+    classification: BLOCKER
+    title: Production Entry Review (PER) not opened / not passed
+    status: CLOSED
+    owner: Sebastian Ward
+    source: TT-PROJECT-MAINLINE
+    closed_evidence: evidence/GO_production_readiness/wave-1-1-g1/20260704T012909Z/g1-per/g1-per-signoff.json
+    closure: PER dashboard green · verify-cfg-drift-closure if config touched
+
+  - id: PRM-MVAL-B004
+    domain: manual_validation
+    go_gate: G3
+    classification: BLOCKER
+    title: R-002 / R-003 staging full-matrix not signed for prod gate
+    status: CLOSED
+    owner: Sebastian Ward
+    source: PI3-004
+    pi3_ref: PI3-004
+    closure: R-003 prod first full run · report.json GO · validate-regression-report.py
+
+  - id: PRM-PER-B001
+    domain: performance
+    go_gate: G2
+    classification: BLOCKER
+    title: No production-environment performance / SLO evidence
+    status: CLOSED
+    owner: Sebastian Ward
+    source: PRODUCTION-READINESS-REPORT
+    closure: Prod load smoke or documented SLO baseline on prod bases
+
+  - id: PRM-DOM-B001
+    domain: domain_cdn
+    go_gate: G3
+    classification: BLOCKER
+    title: No dedicated production domain / TLS / locked CORS (PI3-002)
+    status: OPEN
+    owner: Sebastian Ward
+    source: PI3-002
+    pi3_ref: PI3-002
+    closure: app.<domain> + api.<domain> · Fly certs · CORS_ORIGINS locked
+
+  - id: PRM-DOM-D001
+    domain: domain_cdn
+    classification: DEFECT
+    title: CDN / HLS (P3-COM-1) not started for prod media path
+    status: OPEN
+    owner: Sebastian Ward
+    source: PRODUCTION-READINESS-REPORT
+    closure: Scope decision + CDN cutover or documented defer with Owner sign-off
+
+  - id: PRM-STR-B001
+    domain: stripe_live
+    go_gate: G3
+    classification: BLOCKER
+    title: Stripe Live PSP + production webhook not configured (PI3-003)
+    status: OPEN
+    owner: Sebastian Ward
+    source: PI3-003
+    pi3_ref: PI3-003
+    closure: sk_live · webhook URL · one live smoke transaction evidence
+
+  - id: PRM-DR-B001
+    domain: disaster_recovery
+    go_gate: G3
+    classification: BLOCKER
+    title: B-475 baseline status=PLANNED (not PASS)
+    status: OPEN
+    owner: Sebastian Ward
+    source: PI3-001
+    pi3_ref: PI3-001
+    closure: registry/baseline_record.v1.json status=PASS
+
+  - id: PRM-DR-B002
+    domain: disaster_recovery
+    go_gate: G3
+    classification: BLOCKER
+    title: Production Fly Postgres backup plan not enabled
+    status: OPEN
+    owner: Sebastian Ward
+    source: PI3-001
+    pi3_ref: PI3-001
+    closure: tt-traveltrust-prod backup enabled · restore drill on prod plan
+
+  - id: PRM-MON-B001
+    domain: monitoring
+    go_gate: G2
+    classification: BLOCKER
+    title: Production synthetic monitoring / on-call cutover not verified
+    status: OPEN
+    owner: Sebastian Ward
+    source: go-live-checklist
+    closure: Prod probes green · runbook on-call path documented
+
+  - id: PRM-DEP-E001
+    domain: deployment
+    classification: EXPECTED_DIFFERENCE
+    title: Staging Fly apps vs future prod app names
+    status: CONFIRMED
+    owner: Sebastian Ward
+    disposition: CONFIRM_DESIGN
+    evidence: docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md
+
+  - id: PRM-OBS-E001
+    domain: observability
+    classification: EXPECTED_DIFFERENCE
+    title: Staging log volume and retention differ from prod targets
+    status: CONFIRMED
+    owner: Sebastian Ward
+    disposition: CONFIRM_DESIGN
+    evidence: docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md
+
+  - id: PRM-STR-E001
+    domain: stripe_live
+    classification: EXPECTED_DIFFERENCE
+    title: Stripe test mode on staging vs live mode on production
+    status: CONFIRMED
+    owner: Sebastian Ward
+    disposition: CONFIRM_DESIGN
+    evidence: docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md
+
+  - id: PRM-PER-E001
+    domain: performance
+    classification: ENHANCEMENT
+    title: Post-GO CDN edge caching optimization
+    status: DEFERRED
+    owner: Sebastian Ward
+    disposition: POST_GO
+
+  - id: PRM-UAT-E001
+    domain: browser_uat
+    classification: ENHANCEMENT
+    title: Expanded persona cross-browser matrix (Firefox/Safari)
+    status: DEFERRED
+    owner: Sebastian Ward
+    disposition: POST_GO
+
+  - id: PRM-EVID-B001
+    domain: manual_validation
+    go_gate: G1
+    classification: BLOCKER
+    title: Production Readiness closure evidence not committed — clean clone cannot reproduce
+    status: CLOSED
+    closed_utc: "2026-07-04T01:15:00Z"
+    owner: Sebastian Ward
+    source: implementation_reality_audit
+    alias_id: RG-EVID-001
+    audit_layer: implementation_reality
+    closure: >
+      Runtime Truth P0 evidence package committed under evidence/GO_production_readiness/runtime-truth-p0/
+      · bash scripts/dev/run-runtime-truth-p0-closure.sh exit 0 from clean clone
+    evidence:
+      - evidence/GO_production_readiness/runtime-truth-p0/
+      - scripts/dev/run-runtime-truth-p0-closure.sh
+      - scripts/dev/validate-runtime-truth-p0.cjs
+
+  - id: PRM-REG-B001
+    domain: manual_validation
+    go_gate: G1
+    classification: BLOCKER
+    title: Registry CLOSED claims not verifiable from repository alone
+    status: CLOSED
+    closed_utc: "2026-07-04T01:15:00Z"
+    owner: Sebastian Ward
+    source: implementation_reality_audit
+    alias_id: RG-REG-001
+    audit_layer: implementation_reality
+    closure: >
+      P0 gaps CLOSED with in-repo evidence + validate-production-readiness-master-matrix.cjs reconcile PASS
+    evidence:
+      - evidence/GO_production_readiness/runtime-truth-p0/
+      - registry/production-readiness-master-matrix.v1.yaml
+
+  - id: PRM-RT-B001
+    domain: content_readiness
+    go_gate: G1
+    classification: BLOCKER
+    title: Community post detail lacks Feed-equivalent content_readiness JSON filter
+    status: CLOSED
+    closed_utc: "2026-07-04T01:15:00Z"
+    owner: Sebastian Ward
+    source: runtime_truth_audit
+    alias_id: RG-COMM-001
+    audit_layer: runtime_truth
+    bypass_type: BYPASS_FILTER
+    implementation_20260704:
+      - crates/api/src/chain_off/community_public_surface.rs
+      - crates/api/src/routes/community/posts.rs
+    closure: >
+      public_post_json_for_content_readiness on GET /api/v1/community/posts/:id for non-author viewers
+    evidence:
+      - evidence/GO_production_readiness/runtime-truth-p0/
+      - scripts/dev/audit-runtime-truth-call-graph.cjs
+
+  - id: PRM-RT-B002
+    domain: content_readiness
+    go_gate: G1
+    classification: BLOCKER
+    title: Community public profile posts lack content_readiness JSON filter
+    status: CLOSED
+    closed_utc: "2026-07-04T01:15:00Z"
+    owner: Sebastian Ward
+    source: runtime_truth_audit
+    audit_layer: runtime_truth
+    bypass_type: BYPASS_FILTER
+    implementation_20260704:
+      - crates/api/src/routes/community/posts.rs
+    closure: >
+      filter_feed_posts_content_readiness on GET /api/v1/community/users/:id/posts when public_only
+    evidence:
+      - evidence/GO_production_readiness/runtime-truth-p0/
+
+  - id: PRM-RT-B003
+    domain: manual_validation
+    go_gate: G1
+    classification: BLOCKER
+    title: Discover orders list uses chain_off memory store — not governed_discover_orders_v1
+    status: CLOSED
+    closed_utc: "2026-07-04T01:15:00Z"
+    owner: Sebastian Ward
+    source: runtime_truth_audit
+    audit_layer: runtime_truth
+    bypass_type: DUAL_PATH
+    implementation_20260704:
+      - crates/api/src/chain_off/discover.rs
+      - crates/api/src/db/market_catalog.rs
+    closure: >
+      Production profile intersects discover candidates with filter_order_ids_in_governed_discover_view
+    evidence:
+      - evidence/GO_production_readiness/runtime-truth-p0/
+      - scripts/dev/audit-runtime-truth-call-graph.cjs
+
+  - id: PRM-CI-D001
+    domain: deployment
+    classification: DEFECT
+    title: Community content/media/L5 closure validators not in default CI delivery minimum
+    status: OPEN
+    owner: Sebastian Ward
+    source: implementation_reality_audit
+    alias_id: RG-CI-001
+    audit_layer: implementation_reality
+    closure: Wire run-community-*-closure validators into ci-local-delivery-minimum or documented pre-push set
+
+  - id: PRM-GUARD-D001
+    domain: content_readiness
+    classification: DEFECT
+    title: Community media guard skips live DB scan in CI workflow
+    status: OPEN
+    owner: Sebastian Ward
+    source: implementation_reality_audit
+    alias_id: RG-GUARD-001
+    audit_layer: implementation_reality
+    closure: Optional staged DB scan job or document SKIP as EXPECTED_DIFFERENCE with Owner sign-off
+
+  - id: PRM-MIG-D001
+    domain: deployment
+    classification: DEFECT
+    title: Community content/media migrations lack automated compatibility regression gate
+    status: OPEN
+    owner: Sebastian Ward
+    source: implementation_reality_audit
+    alias_id: RG-MIG-001
+    audit_layer: implementation_reality
+    closure: Add migration compatibility test harness (staging schema fixtures) before merge
+
+  - id: PRM-RT-E001
+    domain: content_readiness
+    classification: EXPECTED_DIFFERENCE
+    title: Owner me/posts reads community_posts directly for private/archived visibility
+    status: CONFIRMED
+    owner: Sebastian Ward
+    source: runtime_truth_audit
+    audit_layer: runtime_truth
+    bypass_type: DUAL_PATH
+    disposition: CONFIRM_DESIGN
+    call_graph: >
+      GET /api/v1/community/me/posts → list_posts_by_user with public_only=false → community_posts table
+    note: Author-facing path; public visitors use governed view via get_user_posts
+
+closure_plan:
+  production_go_rule: G1 PASS + G2 PASS + G3 PASS → Production GO
+  waves:
+    - wave: "1.1"
+      go_gate: G1
+      title: Browser UAT + Manual Validation (G1 active)
+      domains: [browser_uat, manual_validation]
+      content_readiness_note: >
+        Community local G1 PASS · Runtime Truth P0 CLOSED · G1 Reality Audit closed B005/B006/MVAL-B002
+      execute: bash scripts/dev/run-production-readiness-wave-1-1-g1.sh
+      gaps:
+        - PRM-UAT-B001
+        - PRM-UAT-B002
+        - PRM-UAT-B003
+        - PRM-UAT-B004
+        - PRM-MVAL-B001
+        - PRM-MVAL-B003
+    - wave: "2"
+      go_gate: G2
+      title: Production Hardening
+      domains: [security, performance, monitoring]
+      gaps:
+        - PRM-SEC-B001
+        - PRM-SEC-B002
+        - PRM-PER-B001
+        - PRM-MON-B001
+    - wave: "3"
+      go_gate: G3
+      title: Production Cutover + Go Live
+      domains: [stripe_live, domain_cdn, disaster_recovery, deployment]
+      gaps:
+        - PRM-STR-B001
+        - PRM-DOM-B001
+        - PRM-DR-B001
+        - PRM-DR-B002
+        - PRM-MVAL-B004
+      final_audit: bash scripts/dev/run-phase3-production-go-audit.sh
+
+forbidden_until_production_go:
+  - pcp_phase_2
+  - pcp_architecture_changes_without_review
+  - search_builder
+  - recommendation_builder

@@ -1,0 +1,45 @@
+{
+  "sync": "G1_MATRIX_SYNC",
+  "closed": [
+    "PRM-UAT-B001",
+    "PRM-MVAL-B001",
+    "PRM-UAT-B002",
+    "PRM-UAT-B003",
+    "PRM-UAT-B005",
+    "PRM-MVAL-B002"
+  ],
+  "session": "evidence/manual-uat/sessions/20260704T012909Z",
+  "manual_test": {
+    "pass": 27,
+    "fail": 0,
+    "blocked": 0,
+    "total": 27
+  },
+  "all_pass": true,
+  "persona": {
+    "C1": {
+      "pass": 6,
+      "total": 6
+    },
+    "C2": {
+      "pass": 7,
+      "total": 7
+    },
+    "C3": {
+      "pass": 4,
+      "total": 4
+    },
+    "C4": {
+      "pass": 4,
+      "total": 4
+    },
+    "E1": {
+      "pass": 3,
+      "total": 3
+    },
+    "E2": {
+      "pass": 3,
+      "total": 3
+    }
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "review_id": "RT-P0-CLOSURE-20260704",
+  "stamp": "20260704T012513Z-recheck",
+  "machine_keys": {
+    "TT_RUNTIME_TRUTH_AUDIT": "ACTIVE",
+    "TT_RUNTIME_TRUTH_P0": "PASS"
+  },
+  "closed_gaps": [
+    "PRM-RT-B001",
+    "PRM-RT-B002",
+    "PRM-RT-B003",
+    "PRM-EVID-B001",
+    "PRM-REG-B001"
+  ],
+  "checks": [
+    {
+      "id": "RT-P0-B001",
+      "label": "Detail uses public_post_json_for_content_readiness",
+      "status": "PASS",
+      "detail": "posts.rs"
+    },
+    {
+      "id": "RT-P0-B002",
+      "label": "Public profile applies filter_feed_posts_content_readiness when public_only",
+      "status": "PASS",
+      "detail": "get_user_posts scope"
+    },
+    {
+      "id": "RT-P0-B003",
+      "label": "Discover intersects governed_discover_orders_v1 when production profile",
+      "status": "PASS",
+      "detail": "discover.rs + market_catalog.rs"
+    },
+    {
+      "id": "RT-P0-HELPER",
+      "label": "Shared public_post_json_for_content_readiness helper",
+      "status": "PASS",
+      "detail": "community_public_surface.rs"
+    },
+    {
+      "id": "doc_RUNTIME-TRUTH-GAP-REPORT.md",
+      "label": "docs/runbook/RUNTIME-TRUTH-GAP-REPORT.md",
+      "status": "PASS",
+      "detail": "present"
+    },
+    {
+      "id": "doc_RUNTIME-TRUTH-AUDIT-RUNBOOK.md",
+      "label": "docs/runbook/RUNTIME-TRUTH-AUDIT-RUNBOOK.md",
+      "status": "PASS",
+      "detail": "present"
+    },
+    {
+      "id": "doc_production-readiness-master-matrix.v1.yaml",
+      "label": "registry/production-readiness-master-matrix.v1.yaml",
+      "status": "PASS",
+      "detail": "present"
+    },
+    {
+      "id": "matrix_PRM-RT-B001",
+      "label": "PRM-RT-B001 CLOSED in matrix",
+      "status": "PASS",
+      "detail": "CLOSED"
+    },
+    {
+      "id": "matrix_PRM-RT-B002",
+      "label": "PRM-RT-B002 CLOSED in matrix",
+      "status": "PASS",
+      "detail": "CLOSED"
+    },
+    {
+      "id": "matrix_PRM-RT-B003",
+      "label": "PRM-RT-B003 CLOSED in matrix",
+      "status": "PASS",
+      "detail": "CLOSED"
+    },
+    {
+      "id": "matrix_PRM-EVID-B001",
+      "label": "PRM-EVID-B001 CLOSED in matrix",
+      "status": "PASS",
+      "detail": "CLOSED"
+    },
+    {
+      "id": "matrix_PRM-REG-B001",
+      "label": "PRM-REG-B001 CLOSED in matrix",
+      "status": "PASS",
+      "detail": "CLOSED"
+    }
+  ],
+  "all_pass": true,
+  "reproducibility": {
+    "clean_clone": true,
+    "evidence_in_repo": true,
+    "validators": [
+      "node scripts/dev/audit-runtime-truth-call-graph.cjs",
+      "node scripts/dev/validate-runtime-truth-p0.cjs",
+      "node scripts/dev/validate-production-readiness-master-matrix.cjs"
+    ]
+  }
+}

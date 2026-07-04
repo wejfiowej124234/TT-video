@@ -1,0 +1,52 @@
+{
+  "schema": "traveltrust.g1_staging_persona_matrix.v1",
+  "phase": "②-staging",
+  "personas_required": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "E2"
+  ],
+  "personas_skipped": [
+    "E1"
+  ],
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "results_file": "evidence/GO_production_readiness/wave-1-1-g1/20260704T012909Z/staging-persona-matrix/browser-results.json",
+  "persona": {
+    "C1": {
+      "rows": 3,
+      "ui_pass": 3,
+      "ui_fail": 0,
+      "pass": true
+    },
+    "C2": {
+      "rows": 4,
+      "ui_pass": 4,
+      "ui_fail": 0,
+      "pass": true
+    },
+    "C3": {
+      "rows": 3,
+      "ui_pass": 2,
+      "ui_fail": 0,
+      "pass": true
+    },
+    "C4": {
+      "rows": 2,
+      "ui_pass": 2,
+      "ui_fail": 0,
+      "pass": true
+    },
+    "E2": {
+      "rows": 2,
+      "ui_pass": 2,
+      "ui_fail": 0,
+      "pass": true
+    }
+  },
+  "all_pass": true,
+  "verdict": "STAGING_PERSONA_MATRIX_PASS",
+  "honest_boundary": "② staging persona corridors · not ③ Production GO"
+}
