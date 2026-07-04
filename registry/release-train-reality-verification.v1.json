@@ -10,6 +10,7 @@
     "Reality Fix",
     "Platform Coverage Audit",
     "Reality Verification",
+    "Evidence Integrity Audit",
     "Formal Acceptance",
     "Gate PASS",
     "Production GO"
@@ -25,6 +26,7 @@
       "Reality Fix",
       "Platform Coverage Audit",
       "Reality Verification",
+      "Evidence Integrity Audit",
       "Formal Acceptance",
       "Gate PASS",
       "Production GO"
@@ -35,7 +37,14 @@
       "g2_gate_pass": "Only after Formal Acceptance · validate-production-readiness-g2-gate.cjs exit 0"
     }
   },
-  "platform_coverage_audit": {
+  "evidence_integrity_audit": {
+    "machine_key": "TT_EVIDENCE_INTEGRITY_AUDIT",
+    "script": "bash scripts/dev/run-evidence-integrity-audit.sh",
+    "validator": "node scripts/dev/validate-evidence-integrity-audit.cjs",
+    "runbook": "docs/runbook/TT-EVIDENCE-INTEGRITY-AUDIT.md",
+    "position": "after_reality_verification_before_formal",
+    "blocks_formal_when_fail": true
+  },
     "script": "bash scripts/dev/run-platform-coverage-audit.sh",
     "gate_validator": "node scripts/dev/validate-platform-coverage-gate.cjs",
     "registry": "registry/platform-capability-registry.v1.json",
@@ -113,7 +122,8 @@
     "six_way_consistent != true",
     "TT_PRODUCTION_RUNTIME_IDENTITY != PASS (when required)",
     "TT_CONFIGURATION_TRUTH != PASS (when required)",
-    "TT_PLATFORM_COVERAGE_AUDIT != PASS (when below gate threshold)"
+    "TT_G2_REALITY_VERIFICATION != COMPLETE (when required)",
+    "TT_EVIDENCE_INTEGRITY_AUDIT != PASS (pre-Formal)",
   ],
   "next_phase_goal": {
     "label": "Platform Adoption 100%",

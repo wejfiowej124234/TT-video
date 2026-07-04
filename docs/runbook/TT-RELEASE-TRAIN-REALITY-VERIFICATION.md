@@ -21,7 +21,9 @@ Platform Coverage Audit
         │
 Reality Verification    ← 六真源 · 不等于 Formal
         │
-Formal Acceptance       ← 独立签字闸
+Evidence Integrity Audit ← Matrix ↔ Evidence ↔ Sign-off
+        │
+Formal Acceptance       ← 独立签字闸 · 发布流程
         │
 Gate PASS               ← validate-production-readiness-g2-gate.cjs
         │
@@ -37,7 +39,8 @@ Production GO           ← 仍 NO_GO 直至 G3 + Owner Decision
 | 层 | Machine key | 完成含义 |
 |----|-------------|----------|
 | Reality Verification | `TT_G2_REALITY_VERIFICATION: COMPLETE` | 六真源 VERIFIED · 证据落盘 · validator exit 0 |
-| Formal Acceptance | `TT_WAVE2_FORMAL_ACCEPTANCE: COMPLETE` | Wave 2 签字 · **Verification 之后** |
+| Evidence Integrity | `TT_EVIDENCE_INTEGRITY_AUDIT: PASS` | CLOSED↔Evidence↔Signoff 无漂移 · [`TT-EVIDENCE-INTEGRITY-AUDIT.md`](TT-EVIDENCE-INTEGRITY-AUDIT.md) |
+| Formal Acceptance | `TT_WAVE2_FORMAL_ACCEPTANCE: COMPLETE` | Wave 2 签字 · **Verification + Integrity 之后** |
 | G2 Gate | `TT_PRODUCTION_READINESS_G2_GATE: PASS` | **Formal 之后** · `validate-production-readiness-g2-gate.cjs` exit 0 |
 
 | Gate | Verification 入口 | Formal 前置 |
