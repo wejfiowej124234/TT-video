@@ -117,7 +117,7 @@ fn posts_catalog() -> Vec<ShowcasePost> {
 }
 
 pub fn community_public_showcase_enabled() -> bool {
-    std::env::var("TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE").as_deref() == Ok("1")
+    crate::runtime_identity::RuntimeIdentity::current().allows_community_showcase_seed()
 }
 
 async fn production_public_post_count(pool: &PgPool) -> Result<i64, sqlx::Error> {
@@ -186,8 +186,9 @@ pub async fn seed_community_public_showcase_if_sparse(pool: &PgPool, store: &mut
         let media: Vec<String> = post.media_urls.iter().map(|s| (*s).to_string()).collect();
         let r = sqlx::query(
             r#"INSERT INTO community_posts
-               (id, user_id, body, post_type, destination, tags, media_urls, cover_url, visibility_status, data_origin, created_at)
-               VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'public', 'production', $9)
+               (id, user_id, body, post_type, destination, tags, media_urls, cover_url,
+                visibility_status, data_origin, display_status, display_origin, display_surfaces, created_at)
+               VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'public', 'demo', 'draft', 'SHOWCASE', '{}', $9)
                ON CONFLICT (id) DO NOTHING"#,
         )
         .bind(post.id)
@@ -209,7 +210,29 @@ pub async fn seed_community_public_showcase_if_sparse(pool: &PgPool, store: &mut
     }
     if authors_inserted > 0 || posts_inserted > 0 {
         eprintln!(
-            "[community-showcase] seeded authors={authors_inserted} posts={posts_inserted} (production public UGC)"
+            "[community-showcase] seeded authors={authors_inserted} posts={posts_inserted} (demo/SHOWCASE/draft — not governed feed until Ops publish)"
         );
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn showcase_disabled_on_staging_profile() {
+        let saved = std::env::var("TRAVELTRUST_DEPLOYMENT_PROFILE").ok();
+        let saved_showcase = std::env::var("TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE").ok();
+        std::env::set_var("TRAVELTRUST_DEPLOYMENT_PROFILE", "staging");
+        std::env::set_var("TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE", "1");
+        assert!(!community_public_showcase_enabled());
+        match saved {
+            Some(v) => std::env::set_var("TRAVELTRUST_DEPLOYMENT_PROFILE", v),
+            None => std::env::remove_var("TRAVELTRUST_DEPLOYMENT_PROFILE"),
+        }
+        match saved_showcase {
+            Some(v) => std::env::set_var("TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE", v),
+            None => std::env::remove_var("TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE"),
+        }
     }
 }

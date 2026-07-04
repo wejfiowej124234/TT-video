@@ -45,8 +45,17 @@ while IFS= read -r line; do
   fi
 done <"$EXAMPLE"
 
-profile="$(curl -sf --max-time 45 "${API_BASE}/meta/build" | python -c "import json,sys; print(json.load(sys.stdin).get('deployment_profile') or '')" 2>/dev/null || true)"
-[[ "$profile" == "staging" ]] && ok "deployment_profile=staging" || die "deployment_profile=${profile:-null}"
+profile_ok=0
+for i in 1 2 3 4 5 6; do
+  if node "$ROOT/scripts/dev/lib/runtime-identity-cli.cjs" assert-meta-profile "${API_BASE}/meta/build" staging 2>/dev/null; then
+    profile_ok=1
+    echo "OK   staging meta/build profile=staging (attempt $i)"
+    break
+  fi
+  echo "WARN meta profile attempt $i (retry in 10s)"
+  sleep 10
+done
+[[ "$profile_ok" -eq 1 ]] || die "meta profile not staging after retries"
 
 if [[ "$fail" -eq 0 ]]; then
   echo "TT_STAGING_SSOT_PARITY: PASS"

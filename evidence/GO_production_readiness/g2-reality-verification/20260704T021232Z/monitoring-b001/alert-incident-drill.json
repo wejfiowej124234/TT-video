@@ -1,0 +1,62 @@
+{
+  "prod_api_base": "https://tt-api-prod.fly.dev",
+  "secret_available": true,
+  "steps": [
+    {
+      "step": "alert_test_fire_no_secret",
+      "http": "403",
+      "body": {
+        "error": "internal_api_forbidden",
+        "message": "internal_api_forbidden",
+        "detail": "INTERNAL_API_SECRET is set: send header X-Internal-Api-Secret with the same value"
+      }
+    },
+    {
+      "step": "incident_open_no_secret",
+      "http": "403",
+      "body": {
+        "error": "internal_api_forbidden",
+        "message": "internal_api_forbidden",
+        "detail": "INTERNAL_API_SECRET is set: send header X-Internal-Api-Secret with the same value"
+      }
+    },
+    {
+      "step": "alert_test_fire_with_secret",
+      "http": "200",
+      "body": {
+        "status": "accepted",
+        "task": "alerts_test_fire",
+        "severity": "P2",
+        "source": "internal",
+        "snapshot": {
+          "finality_n": 12,
+          "lag_blocks": 0,
+          "reorg_detected": false
+        }
+      }
+    },
+    {
+      "step": "incident_open_with_secret",
+      "http": "200",
+      "body": {
+        "status": "accepted",
+        "task": "incident_open",
+        "incident": {
+          "id": "INC-20260704021527",
+          "state": "opened",
+          "owner_group": "ops"
+        },
+        "context": {
+          "finality_n": 12,
+          "lag_blocks": 0
+        }
+      }
+    }
+  ],
+  "incident_record": {
+    "opened_id": "INC-20260704021527",
+    "resolve_note": "Resolve path is runbook-driven until /internal/incident/resolve exists",
+    "runbook": "docs/runbook/PRODUCTION-INCIDENT-RESPONSE.md",
+    "drill_complete": true
+  }
+}

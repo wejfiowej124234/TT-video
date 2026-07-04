@@ -9,6 +9,7 @@ use uuid::Uuid;
 
 use crate::db;
 use crate::pcp::feed_builder;
+use crate::runtime_identity::RuntimeIdentity;
 use crate::state::{extract_user_with_session_check, ApiMetaState};
 
 use super::feed_geo::{enrich_and_filter_feed_posts, FeedGeoContext};
@@ -364,7 +365,8 @@ pub(super) async fn get_feed(
     let text_q = db::normalize_feed_text_q(q.q.as_deref());
     let text_q_ref = text_q.as_deref();
 
-    let production_only = crate::chain_off::public_community_feed_filter_enabled();
+    let production_only =
+        RuntimeIdentity::current().is_production() || crate::chain_off::public_community_feed_filter_enabled();
 
     let viewer = extract_user_with_session_check(&state, &headers).await;
     let is_first_feed_page = cursor_raw.map(str::trim).filter(|s| !s.is_empty()).is_none();

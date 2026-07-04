@@ -1,0 +1,116 @@
+{
+  "review_id": "G2-REALITY-AUDIT-20260704",
+  "stamp": "_probe",
+  "machine_keys": {
+    "TT_G2_REALITY_AUDIT": "COMPLETE",
+    "TT_PRODUCTION_READINESS_G2_GATE": "IN_PROGRESS",
+    "TT_PRODUCTION_GO": "NO_GO"
+  },
+  "g1_prerequisite": {
+    "TT_PRODUCTION_READINESS_G1_GATE": "UNKNOWN",
+    "session": "evidence/manual-uat/sessions/20260704T012909Z"
+  },
+  "implementation_checks": {
+    "internal_api_gate_in_router": true,
+    "seed_route_guard": true,
+    "seed_demo_profile_gates": true,
+    "prod_seed_policy_doc": true,
+    "internal_gate_layer": true,
+    "prometheus_rules_script": true,
+    "c8_monitoring_smoke": true,
+    "go_audit_evidence": true,
+    "c8_evidence_dir": true,
+    "prod_fly_manifest": true,
+    "cutover_runbook": true
+  },
+  "staging_runtime_probe": {
+    "api_reachable": true,
+    "deployment_profile": "staging",
+    "git_sha": "fea685b08156f6e9f7c1e3f3e5e4029b19b654d9",
+    "internal_api_secret_configured": true,
+    "internal_route_without_secret_http": "403",
+    "seed_endpoint_http": "200",
+    "probed_utc": "2026-07-04T01:51:39.528Z"
+  },
+  "matrix_actions": {
+    "close": [],
+    "reopen": [],
+    "remain_open": [
+      "PRM-SEC-B001",
+      "PRM-SEC-B002",
+      "PRM-PER-B001",
+      "PRM-MON-B001"
+    ]
+  },
+  "findings": [
+    {
+      "id": "PRM-SEC-B001",
+      "verdict": "STILL_BLOCKS",
+      "matrix_status_before": null,
+      "implementation": "SATISFIED",
+      "runtime_staging": "VERIFIED",
+      "prod_cutover": "NOT_VERIFIED",
+      "reason": "Internal API gate implemented + staging runtime 403 without secret · prod Fly secrets / prod-base hygiene audit not re-run in this review",
+      "action": "Wave 2: fly secrets parity + POST /internal/* 403 on prod base · evidence in g2 wave package",
+      "evidence": [
+        "crates/api/src/router.rs",
+        "crates/api/src/middleware/auth_pause_metrics/mod.rs",
+        "deploy/fly/tt-api-prod/fly.toml",
+        "scripts/dev/run-phase3-production-go-audit.sh"
+      ]
+    },
+    {
+      "id": "PRM-SEC-B002",
+      "verdict": "STILL_BLOCKS",
+      "matrix_status_before": null,
+      "implementation": "SATISFIED",
+      "runtime_staging": "EXPECTED_SEED_ENABLED_②",
+      "prod_cutover": "NOT_VERIFIED",
+      "reason": "Prod seed policy documented + code gates exist · staging seed ON is expected ② · prod SEED=0 fly audit not verified here",
+      "action": "Wave 2: verify tt-api-prod SEED_TEST_ACCOUNTS=0 + POST /auth/seed-test-accounts → 403 on prod",
+      "evidence": [
+        "scripts/dev/.env.production.example",
+        "crates/api/src/routes/auth.rs",
+        "crates/api/src/chain_off/market_public_surface.rs",
+        "docs/runbook/PRODUCTION-CUTOVER-RUNBOOK-SEPOLIA-SCOPE.md"
+      ]
+    },
+    {
+      "id": "PRM-PER-B001",
+      "verdict": "STILL_BLOCKS",
+      "matrix_status_before": null,
+      "implementation": "NOT_SATISFIED",
+      "runtime_staging": "N/A",
+      "prod_cutover": "NOT_VERIFIED",
+      "reason": "No production-environment performance / SLO evidence committed",
+      "action": "Wave 2: prod load smoke or documented SLO baseline on prod bases · commit evidence",
+      "evidence": [
+        "docs/runbook/FINAL-SYSTEM-AUDIT-REPORT.md",
+        "docs/runbook/PRODUCTION-READINESS-REPORT.md"
+      ]
+    },
+    {
+      "id": "PRM-MON-B001",
+      "verdict": "STILL_BLOCKS",
+      "matrix_status_before": null,
+      "implementation": "PARTIAL_②",
+      "runtime_staging": "C8_EVIDENCE_IN_REPO",
+      "prod_cutover": "NOT_VERIFIED",
+      "reason": "② C8 staging monitoring smoke + prometheus rules script exist · ≠ prod synthetic probes / on-call cutover verified",
+      "action": "Wave 2: prod synthetic monitoring green + on-call path evidence · not reuse C8 alone",
+      "evidence": [
+        "evidence/GO_phase2_testnet_20260526/community/C8/",
+        "scripts/dev/smoke-community-c8-staging-monitoring.sh",
+        "scripts/gates/check-ops-monitoring-prometheus-examples.sh"
+      ]
+    }
+  ],
+  "release_train": {
+    "route": "B — G1 PASS → G2 → G3",
+    "g2_blockers_total": 4,
+    "auto_closed": 0,
+    "reopened": 0,
+    "remain_open": 4
+  },
+  "honest_boundary": "G2 Reality Audit closes only false/stale blockers · ② staging evidence ≠ ③ prod cutover · G2 PASS still requires Wave 2 formal acceptance"
+}

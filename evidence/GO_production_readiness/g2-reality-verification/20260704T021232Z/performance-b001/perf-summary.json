@@ -1,0 +1,49 @@
+{
+  "api_base": "https://tt-api-prod.fly.dev",
+  "hot_paths_ssot": "g2-perf-hot-paths-ssot.v1",
+  "endpoints": {
+    "campaign_surface": {
+      "p95_s": 0.8229,
+      "p95_max_s": 2.0,
+      "pass": true,
+      "count": 10
+    },
+    "community_feed": {
+      "p95_s": 0.8202,
+      "p95_max_s": 2.0,
+      "pass": true,
+      "count": 10
+    },
+    "discover_orders": {
+      "p95_s": 0.8116,
+      "p95_max_s": 2.0,
+      "pass": true,
+      "count": 10
+    },
+    "guides": {
+      "p95_s": 0.8186,
+      "p95_max_s": 2.0,
+      "pass": true,
+      "count": 10
+    },
+    "health": {
+      "p95_s": 0.8103,
+      "p95_max_s": 2.0,
+      "pass": true,
+      "count": 10
+    },
+    "market_provider_listings": {
+      "p95_s": 0.7856,
+      "p95_max_s": 2.0,
+      "pass": true,
+      "count": 10
+    },
+    "meta": {
+      "p95_s": 5.4409,
+      "p95_max_s": 6.0,
+      "pass": true,
+      "count": 10
+    }
+  },
+  "pass": true
+}

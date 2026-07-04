@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # CFG maintenance regression guard — TT_CONFIGURATION_ZERO_DRIFT is FROZEN.
+# TT_CONFIGURATION_TRUTH · evaluateConfigurationTruth · configuration-truth-ssot · run-platform-coverage-audit
 # Configuration Sprint is permanently closed unless new configuration is introduced.
 # If verify fails: file DEFECT-NNN + REG-NNN (Regression) — do NOT reopen CFG sprint or add CFG-029+.
 # Usage:
@@ -57,7 +58,7 @@ else
 fi
 
 run_b1() {
-  rg -q '^TRAVELTRUST_DEPLOYMENT_PROFILE=local' .env 2>/dev/null && ok "DEPLOYMENT_PROFILE=local" || die "DEPLOYMENT_PROFILE not local"
+  node scripts/dev/lib/runtime-identity-cli.cjs assert-local-env-profile local && ok "DEPLOYMENT_PROFILE=local (RuntimeIdentity)" || die "DEPLOYMENT_PROFILE not local"
   rg -q 'TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=1' .env 2>/dev/null && ok "SEED_GUIDE_PUBLIC_MARKET=1" || die "SEED_GUIDE_PUBLIC_MARKET missing"
   rg -q '127.0.0.1:5432' .env 2>/dev/null && ok "DATABASE_URL 127.0.0.1" || die "DATABASE_URL not 127.0.0.1"
   if rg -q 'localhost:3012' .env 2>/dev/null && rg -q '127.0.0.1:3012' .env 2>/dev/null; then ok "CORS includes :3012"; else die "CORS missing :3012"; fi
@@ -70,10 +71,10 @@ run_b1() {
   else
     die "meta/build git_sha unknown"
   fi
-  if curl -sf "http://127.0.0.1:8080/meta/build" 2>/dev/null | python -c "import json,sys; d=json.load(sys.stdin); sys.exit(0 if d.get('deployment_profile')=='local' else 1)" 2>/dev/null; then
-    ok "meta/build deployment_profile=local"
+  if node scripts/dev/lib/runtime-identity-cli.cjs assert-meta-profile http://127.0.0.1:8080/meta/build local 2>/dev/null; then
+    ok "meta/build profile local (RuntimeIdentity)"
   else
-    die "meta/build deployment_profile not local (restart API after PER)"
+    die "meta/build profile not local (restart API after PER)"
   fi
   if rg -q 'SYNCED_FROM_ROOT_ENV_SHA=' frontend/.env.local 2>/dev/null; then ok "frontend sync stamp"; else die "frontend/.env.local missing SYNCED_FROM_ROOT_ENV_SHA"; fi
   if rg -q '^B407_' .env 2>/dev/null; then die "active B407_* in root .env"; else ok "no active B407_* in .env"; fi

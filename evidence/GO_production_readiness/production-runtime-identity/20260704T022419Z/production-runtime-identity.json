@@ -1,0 +1,28 @@
+{
+  "review_id": "PRODUCTION-RUNTIME-IDENTITY-GUARD",
+  "ssot": "registry/production-runtime-identity-ssot.v1.json",
+  "stamp": "20260704T022419Z",
+  "profile": "production",
+  "pass": false,
+  "machine_key": "TT_PRODUCTION_RUNTIME_IDENTITY",
+  "matrix_gap_id": "PRM-SEC-B002",
+  "verdict": "FAIL",
+  "meta_deployment_profile": "None",
+  "checks": {
+    "deployment_profile": false,
+    "profile": false,
+    "seed_fly_zero": true,
+    "seed_meta_disabled": true,
+    "seed": true,
+    "community_showcase": true,
+    "market_showcase": true,
+    "demo": true,
+    "public_content_profile": false,
+    "public_content_profile_value": "None_mixed",
+    "staging_profile_staging": true,
+    "profiles_distinct": true,
+    "seed_endpoint_deny": true,
+    "fly_deployment_profile_secret": false
+  },
+  "reason": "Production Runtime Identity FAIL — deployment_profile=None (expected production) · see checks"
+}

@@ -1,0 +1,26 @@
+name: Community Media Guard
+# Release Train · TT_CONFIGURATION_TRUTH · RuntimeIdentity · run-platform-coverage-audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  community-media-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Community Media Guard (repo scan)
+        run: |
+          set -euo pipefail
+          SKIP_COMMUNITY_MEDIA_GUARD_DB=1 node scripts/dev/validate-community-media-guard.cjs
+
+      - name: Summary
+        if: always()
+        run: echo "TT_COMMUNITY_MEDIA_GUARD: repo scan on every push/PR"

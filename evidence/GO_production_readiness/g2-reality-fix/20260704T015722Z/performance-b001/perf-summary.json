@@ -1,0 +1,25 @@
+{
+  "api_base": "https://tt-api-prod.fly.dev",
+  "samples_per_endpoint": 25,
+  "endpoints": {
+    "/api/v1/community/feed?limit=5": {
+      "count": 25,
+      "p50_s": 0.7825,
+      "p95_s": 0.8212,
+      "max_s": 0.9095
+    },
+    "/health": {
+      "count": 25,
+      "p50_s": 0.7719,
+      "p95_s": 0.8061,
+      "max_s": 0.9772
+    },
+    "/meta": {
+      "count": 25,
+      "p50_s": 5.3372,
+      "p95_s": 5.4495,
+      "max_s": 5.5897
+    }
+  },
+  "pass": true
+}

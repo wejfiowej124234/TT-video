@@ -1,0 +1,106 @@
+{
+  "schema": "traveltrust.release_train_reality_verification.v1",
+  "version": 2,
+  "effective_utc": "2026-07-04",
+  "human_runbook": "docs/runbook/TT-RELEASE-TRAIN-REALITY-VERIFICATION.md",
+  "release_train_layers": [
+    "Reality Audit",
+    "Reality Gap Report",
+    "Reality Fix",
+    "Platform Coverage Audit",
+    "Reality Verification",
+    "Formal Acceptance",
+    "Gate PASS"
+  ],
+  "platform_coverage_audit": {
+    "script": "bash scripts/dev/run-platform-coverage-audit.sh",
+    "gate_validator": "node scripts/dev/validate-platform-coverage-gate.cjs",
+    "registry": "registry/platform-capability-registry.v1.json",
+    "gate_thresholds": {
+      "G2": { "runtime_identity": 100, "configuration_truth": 100, "platform_adoption": 100, "unmigrated_modules": 0 },
+      "G3": { "runtime_identity": 100, "configuration_truth": 100, "platform_adoption": 100, "unmigrated_modules": 0 }
+    },
+    "blocks_formal_when_below_target": true
+  },
+  "truth_sources": [
+    "evidence",
+    "matrix",
+    "registry",
+    "configuration",
+    "runtime",
+    "call_graph"
+  ],
+  "runtime_identity_module": "scripts/dev/lib/runtime-identity.cjs",
+  "configuration_truth_module": "scripts/dev/lib/configuration-truth.cjs",
+  "gates": {
+    "G1": {
+      "label": "Product Verification",
+      "machine_keys": {
+        "verification": "TT_G1_REALITY_VERIFICATION",
+        "formal": "TT_WAVE1_FORMAL_ACCEPTANCE",
+        "gate": "TT_PRODUCTION_READINESS_G1_GATE"
+      },
+      "execute_verification": "bash scripts/dev/run-g1-reality-verification.sh",
+      "validate_verification": "node scripts/dev/validate-g1-reality-verification.cjs",
+      "production_runtime_identity": { "required": false },
+      "configuration_truth": { "required": false, "profile": "staging" },
+      "call_graph_anchors": ["RT-COMM-FEED", "RT-COMM-DETAIL", "RT-MKT-DISCOVER"]
+    },
+    "G2": {
+      "label": "Production Hardening",
+      "machine_keys": {
+        "verification": "TT_G2_REALITY_VERIFICATION",
+        "formal": "TT_WAVE2_FORMAL_ACCEPTANCE",
+        "gate": "TT_PRODUCTION_READINESS_G2_GATE",
+        "runtime_identity": "TT_PRODUCTION_RUNTIME_IDENTITY",
+        "configuration_truth": "TT_CONFIGURATION_TRUTH"
+      },
+      "execute_verification": "bash scripts/dev/run-g2-reality-verification.sh",
+      "validate_verification": "node scripts/dev/validate-g2-reality-verification.cjs",
+      "production_runtime_identity": {
+        "required": true,
+        "profile": "production",
+        "matrix_gap_on_fail": "PRM-SEC-B002"
+      },
+      "configuration_truth": { "required": true, "profile": "production" },
+      "call_graph_anchors": "all"
+    },
+    "G3": {
+      "label": "Production Cutover",
+      "machine_keys": {
+        "verification": "TT_G3_REALITY_VERIFICATION",
+        "formal": "TT_WAVE3_FORMAL_ACCEPTANCE",
+        "gate": "TT_PRODUCTION_READINESS_G3_GATE",
+        "runtime_identity": "TT_PRODUCTION_RUNTIME_IDENTITY",
+        "configuration_truth": "TT_CONFIGURATION_TRUTH"
+      },
+      "execute_verification": "bash scripts/dev/run-g3-reality-verification.sh",
+      "validate_verification": "node scripts/dev/validate-g3-reality-verification.cjs",
+      "production_runtime_identity": {
+        "required": true,
+        "profile": "production",
+        "matrix_gap_on_fail": "PRM-SEC-B002"
+      },
+      "configuration_truth": { "required": true, "profile": "production" },
+      "call_graph_anchors": "all"
+    }
+  },
+  "formal_blocked_when": [
+    "any blocker verdict != VERIFIED",
+    "six_way_consistent != true",
+    "TT_PRODUCTION_RUNTIME_IDENTITY != PASS (when required)",
+    "TT_CONFIGURATION_TRUTH != PASS (when required)",
+    "TT_PLATFORM_COVERAGE_AUDIT != PASS (when below gate threshold)"
+  ],
+  "next_phase_goal": {
+    "label": "Platform Adoption 100%",
+    "machine_key": "TT_PLATFORM_ADOPTION",
+    "allowed_work_classes": [
+      "P0_runtime_blocking",
+      "P1B_runtime_identity_migration",
+      "P1B_configuration_truth_migration",
+      "P1C_repository_hygiene"
+    ],
+    "disallowed_narrative": "新增 XXX architecture"
+  }
+}

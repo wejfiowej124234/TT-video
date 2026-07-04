@@ -1,0 +1,199 @@
+{
+  "schema": "traveltrust.platform_capability_registry.v1",
+  "version": 1,
+  "effective_utc": "2026-07-04",
+  "owner_default": "Sebastian Ward",
+  "human_runbook": "docs/runbook/TT-PLATFORM-CAPABILITY-REGISTRY.md",
+  "machine_keys": {
+    "TT_PLATFORM_CAPABILITY_REGISTRY": "ACTIVE",
+    "TT_PLATFORM_COVERAGE_AUDIT": "ENFORCED",
+    "TT_PLATFORM_ADOPTION": "COMPUTED_BY_AUDIT"
+  },
+  "audit": {
+    "script": "scripts/dev/audit-platform-coverage.cjs",
+    "orchestration": "scripts/dev/run-platform-coverage-audit.sh",
+    "evidence_dir": "evidence/GO_platform_capability/coverage-audit"
+  },
+  "capabilities": [
+    {
+      "id": "runtime_identity",
+      "label": "RuntimeIdentity",
+      "owner": "Sebastian Ward",
+      "status": "ACTIVE",
+      "runtime_used": true,
+      "verification_used": true,
+      "ssot": "registry/runtime-identity-ssot.v1.json",
+      "coverage_target_pct": 100,
+      "modules": [
+        { "id": "community_showcase_seed", "label": "Community showcase seed", "paths": ["crates/api/src/db/seed_community_public_showcase.rs"] },
+        { "id": "market_public_surface", "label": "Market public surface", "paths": ["crates/api/src/chain_off/market_public_surface.rs"] },
+        { "id": "community_media_guard", "label": "Community Media Guard", "paths": ["scripts/dev/validate-community-media-guard.cjs"] },
+        { "id": "g2_reality_verification", "label": "G2 Reality Verification", "paths": ["scripts/dev/validate-g2-reality-verification.cjs"] },
+        { "id": "production_identity_guard", "label": "Production Identity Guard", "paths": ["scripts/dev/lib/production-runtime-identity-guard.cjs"] },
+        { "id": "community_admin_routes", "label": "Community Admin", "paths": ["crates/api/src/routes/admin/admin_official_public_operations_http.rs", "crates/api/src/routes/community/posts.rs"] },
+        { "id": "stripe_onboarding", "label": "Stripe onboarding", "paths": ["crates/api/src/stripe_onboarding/mod.rs", "scripts/dev/verify-staging-ssot-parity.sh"] },
+        { "id": "monitoring_baseline", "label": "Monitoring baseline", "paths": ["scripts/dev/smoke-g2-prod-monitoring-baseline.sh", "scripts/dev/validate-g2-reality-audit.cjs"] },
+        { "id": "per_staging_verify", "label": "PER staging verify", "paths": ["scripts/dev/verify-staging-per-final.sh", "scripts/dev/verify-staging-ssot-parity.sh"] },
+        { "id": "cfg_drift_closure", "label": "CFG drift closure", "paths": ["scripts/dev/verify-cfg-drift-closure.sh"] },
+        { "id": "phase2_staging_deploy", "label": "Phase2 staging Fly deploy", "paths": ["scripts/dev/phase2-staging-fly-deploy-and-sync.sh"] }
+      ]
+    },
+    {
+      "id": "configuration_truth",
+      "label": "ConfigurationTruth",
+      "owner": "Sebastian Ward",
+      "status": "ACTIVE",
+      "runtime_used": true,
+      "verification_used": true,
+      "ssot": "registry/configuration-truth-ssot.v1.json",
+      "coverage_target_pct": 100,
+      "modules": [
+        { "id": "production_identity_guard", "label": "Production Identity Guard", "paths": ["scripts/dev/lib/production-runtime-identity-guard.cjs", "scripts/dev/run-production-runtime-identity-guard.sh"] },
+        { "id": "g2_reality_verification", "label": "G2 Reality Verification", "paths": ["scripts/dev/validate-g2-reality-verification.cjs", "scripts/dev/run-g2-reality-verification.sh"] },
+        { "id": "g3_reality_verification", "label": "G3 Reality Verification", "paths": ["scripts/dev/validate-g3-reality-verification.cjs"] },
+        { "id": "fly_deploy_prod", "label": "Fly Deploy prod", "paths": ["scripts/dev/phase3-production-fly-deploy-and-sync.sh", "deploy/fly/tt-api-prod/fly.toml"] },
+        { "id": "fly_deploy_staging", "label": "Fly Deploy staging", "paths": ["scripts/dev/phase2-staging-fly-deploy-and-sync.sh", "deploy/fly/tt-api-staging/fly.toml"] },
+        { "id": "env_production_example", "label": ".env.production example", "paths": ["scripts/dev/.env.production.example"] },
+        { "id": "github_actions_workflows", "label": "GitHub Actions", "paths": [".github/workflows/production-gate.yml", ".github/workflows/build.yml", ".github/workflows/community-media-guard.yml"] },
+        { "id": "cfg_drift_closure", "label": "CFG drift closure", "paths": ["scripts/dev/verify-cfg-drift-closure.sh"] },
+        { "id": "g2_prod_probes", "label": "G2 prod probes", "paths": ["scripts/dev/lib/g2-prod-probe.sh"] }
+      ]
+    },
+    {
+      "id": "ddg",
+      "label": "DDG",
+      "owner": "Sebastian Ward",
+      "status": "CLOSED",
+      "runtime_used": true,
+      "verification_used": true,
+      "ssot": "registry/display-data-governance.v1.yaml",
+      "coverage_target_pct": 100,
+      "modules": [
+        { "id": "market_public_surface", "label": "Market public surface filters", "paths": ["crates/api/src/chain_off/market_public_surface.rs"] },
+        { "id": "discover_governed", "label": "Discover governed view", "paths": ["crates/api/src/chain_off/discover.rs", "crates/api/src/db/market_catalog.rs"] },
+        { "id": "guides_governed", "label": "Guides governed catalog", "paths": ["crates/api/src/chain_off/guides.rs"] },
+        { "id": "market_listings_governed", "label": "Market listings governed", "paths": ["crates/api/src/db/market_listings.rs", "crates/api/src/routes/market_subsite.rs"] },
+        { "id": "ddg_gate", "label": "DDG gate script", "paths": ["scripts/dev/run-display-data-governance.sh"] }
+      ]
+    },
+    {
+      "id": "pcp_governance",
+      "label": "PCP Governance",
+      "owner": "Sebastian Ward",
+      "status": "FROZEN",
+      "runtime_used": true,
+      "verification_used": true,
+      "ssot": "registry/public-content-platform.v1.yaml",
+      "coverage_target_pct": 100,
+      "modules": [
+        { "id": "feed_builder", "label": "FeedBuilder", "paths": ["crates/api/src/pcp/feed_builder.rs", "crates/api/src/routes/community/posts.rs"] },
+        { "id": "market_builder", "label": "MarketBuilder", "paths": ["crates/api/src/pcp/market_builder.rs"] },
+        { "id": "campaign_builder", "label": "CampaignBuilder", "paths": ["crates/api/src/pcp/campaign_builder.rs"] },
+        { "id": "governed_community", "label": "Governed community", "paths": ["crates/api/src/db/governed_community_posts.rs"] },
+        { "id": "governed_market", "label": "Governed market", "paths": ["crates/api/src/db/governed_market.rs", "crates/api/src/db/governed_campaign.rs"] },
+        { "id": "pcp_audit", "label": "PCP audit scripts", "paths": ["scripts/dev/audit-pcp-architecture-compliance.cjs", "scripts/dev/audit-runtime-truth-call-graph.cjs"] }
+      ]
+    },
+    {
+      "id": "public_builder",
+      "label": "Public Builder",
+      "owner": "Sebastian Ward",
+      "status": "FROZEN",
+      "runtime_used": true,
+      "verification_used": true,
+      "ssot": "registry/public-content-platform.v1.yaml",
+      "coverage_target_pct": 100,
+      "modules": [
+        { "id": "feed_builder_route", "label": "Community feed route", "paths": ["crates/api/src/routes/community/posts.rs"] },
+        { "id": "discover_public", "label": "Discover public", "paths": ["crates/api/src/routes/market_subsite.rs", "crates/api/src/chain_off/discover.rs"] },
+        { "id": "official_campaign", "label": "Official campaign", "paths": ["crates/api/src/routes/official/handlers.rs", "crates/api/src/db/ops_cold_start_campaigns_consumer.rs"] }
+      ]
+    },
+    {
+      "id": "ocs",
+      "label": "OCS",
+      "owner": "Sebastian Ward",
+      "status": "CLOSED",
+      "runtime_used": true,
+      "verification_used": true,
+      "ssot": "registry/official-cold-start-dataset.v1.yaml",
+      "coverage_target_pct": 100,
+      "modules": [
+        { "id": "cold_start_consumer", "label": "Cold start consumer", "paths": ["crates/api/src/db/ops_cold_start_campaigns_consumer.rs"] },
+        { "id": "official_handlers", "label": "Official handlers", "paths": ["crates/api/src/routes/official/handlers.rs"] },
+        { "id": "ocs_dataset", "label": "OCS dataset", "paths": ["registry/official-cold-start-dataset.v1.yaml", "data/official-cold-start/dataset.v1.json"] }
+      ]
+    },
+    {
+      "id": "community_media_guard",
+      "label": "Community Media Guard",
+      "owner": "Sebastian Ward",
+      "status": "ENFORCED",
+      "runtime_used": true,
+      "verification_used": true,
+      "ssot": "scripts/dev/validate-community-media-guard.cjs",
+      "coverage_target_pct": 100,
+      "modules": [
+        { "id": "guard_validator", "label": "Guard validator", "paths": ["scripts/dev/validate-community-media-guard.cjs", "scripts/dev/lib/community-media-legacy-policy.cjs"] },
+        { "id": "ci_workflow", "label": "CI workflow", "paths": [".github/workflows/community-media-guard.yml"] },
+        { "id": "community_seeds", "label": "Community seeds", "paths": ["crates/api/src/db/seed_community_public_showcase.rs"] }
+      ]
+    }
+  ],
+  "platform_adoption": {
+    "machine_key": "TT_PLATFORM_ADOPTION",
+    "human_label": "Platform Adoption",
+    "priority_tier": "P2",
+    "dimensions": [
+      { "id": "runtime_identity", "label": "RuntimeIdentity", "weight": 20, "source": { "type": "capability", "id": "runtime_identity" } },
+      { "id": "configuration_truth", "label": "ConfigurationTruth", "weight": 20, "source": { "type": "capability", "id": "configuration_truth" } },
+      { "id": "guard", "label": "Guards", "weight": 15, "source": { "type": "capability", "id": "community_media_guard" } },
+      {
+        "id": "verification_platform",
+        "label": "Verification",
+        "weight": 15,
+        "source": { "type": "capability_avg", "ids": ["ddg", "pcp_governance", "public_builder", "ocs"] }
+      },
+      { "id": "release_train", "label": "Release Train", "weight": 15, "source": { "type": "matrix_verification" } },
+      {
+        "id": "platform_registry",
+        "label": "Platform Registry",
+        "weight": 15,
+        "source": { "type": "file_present", "path": "registry/platform-capability-registry.v1.json" }
+      }
+    ]
+  },
+  "audit_rules": {
+    "runtime_identity": {
+      "migrated": ["RuntimeIdentity::current", "RuntimeIdentity.current", "runtime_identity::", "require('./lib/runtime-identity.cjs')", "require(\"./lib/runtime-identity.cjs\")", "fromProbeEvidence", "evaluateProductionRuntimeIdentity", "production-runtime-identity-guard"],
+      "legacy": ["TRAVELTRUST_DEPLOYMENT_PROFILE", "deployment_profile ===", "deployment_profile="],
+      "exclude_in_file": ["crates/api/src/runtime_identity.rs", "scripts/dev/lib/runtime-identity.cjs", "scripts/dev/lib/production-runtime-identity-guard.cjs", "scripts/dev/lib/configuration-truth.cjs", "scripts/dev/lib/g2-prod-probe.sh", "scripts/dev/phase3-production-fly-deploy-and-sync.sh", "scripts/dev/phase2-staging-fly-deploy-and-sync.sh", "scripts/dev/.env.production.example", "deploy/fly/", "saved_profile", "std::env::set_var(\"TRAVELTRUST_DEPLOYMENT_PROFILE\""]
+    },
+    "configuration_truth": {
+      "migrated": ["configuration-truth.cjs", "evaluateConfigurationTruth", "writeConfigurationTruthEvidence", "configuration-truth-ssot", "TT_CONFIGURATION_TRUTH", "collectConfigurationLayers", "production-runtime-identity-guard", "run-production-runtime-identity-guard", "run-g2-reality-verification", "run-g3-reality-verification"],
+      "legacy": ["TRAVELTRUST_DEPLOYMENT_PROFILE=", "deployment_profile not production", "deployment_profile=staging"],
+      "allow_legacy_producers": ["scripts/dev/phase3-production-fly-deploy-and-sync.sh", "scripts/dev/phase2-staging-fly-deploy-and-sync.sh", "scripts/dev/.env.production.example", "deploy/fly/", "scripts/dev/lib/g2-prod-probe.sh", "scripts/dev/apply-per-s01-staging-registry-fly.sh"]
+    },
+    "ddg": {
+      "migrated": ["public_catalog_surface_filter_enabled", "list_governed_market", "governed_", "GOVERNED_", "filter_order_ids_in_governed", "run-display-data-governance", "TT_DISPLAY_DATA_GOVERNANCE", "RuntimeIdentity"],
+      "legacy": []
+    },
+    "pcp_governance": {
+      "migrated": ["feed_builder", "market_builder", "campaign_builder", "governed_community_posts", "governed_market", "governed_campaign", "GOVERNED_VIEW", "BUILDER_ID"],
+      "legacy": []
+    },
+    "public_builder": {
+      "migrated": ["feed_builder::", "market_builder", "campaign_builder", "get_deployed_campaign_for_surface", "list_governed"],
+      "legacy": []
+    },
+    "ocs": {
+      "migrated": ["get_deployed_campaign_for_surface", "get_governed_campaign_for_surface", "official-cold-start", "ops_cold_start"],
+      "legacy": []
+    },
+    "community_media_guard": {
+      "migrated": ["validate-community-media-guard", "community-media-legacy-policy", "TT_COMMUNITY_MEDIA_GUARD", "isLegacyDemoHost", "isNonGovernedCommunityMediaUrl", "RuntimeIdentity"],
+      "legacy": [],
+      "exclude_in_file": ["crates/api/src/db/seed_community_public_showcase.rs"]
+    }
+  }
+}

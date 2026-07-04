@@ -1,0 +1,29 @@
+{
+  "schema": "g2-internal-routes-ssot.v1",
+  "source": "crates/api/src/routes/internal/mod.rs + growth.rs + region_share_reconcile.rs + investor_distribution.rs",
+  "gate": "middleware/auth_pause_metrics/mod.rs internal_api_secret_gate_layer on /api/v1/internal/*",
+  "routes": [
+    { "method": "POST", "path": "/api/v1/internal/process-resolution-outbox", "body": "{}" },
+    { "method": "POST", "path": "/api/v1/internal/indexer-tick", "body": "{}" },
+    { "method": "POST", "path": "/api/v1/internal/indexer-replay", "body": "{}" },
+    { "method": "POST", "path": "/api/v1/internal/indexer-reorg-rewind", "body": "{}" },
+    { "method": "POST", "path": "/api/v1/internal/indexer-reconcile", "body": "{\"persist\":false}" },
+    { "method": "GET", "path": "/api/v1/internal/indexer-status", "body": null },
+    { "method": "POST", "path": "/api/v1/internal/region-share-snapshot-line", "body": "{}" },
+    { "method": "POST", "path": "/api/v1/internal/alerts/test-fire", "body": "{}" },
+    { "method": "POST", "path": "/api/v1/internal/incident/open", "body": "{}" },
+    { "method": "PATCH", "path": "/api/v1/internal/community/feedback/00000000-0000-4000-8000-000000000001", "body": "{}" },
+    { "method": "POST", "path": "/api/v1/internal/community/ranking/snapshot", "body": "{}" },
+    { "method": "POST", "path": "/api/v1/internal/scheduler/enqueue", "body": "{}" },
+    { "method": "POST", "path": "/api/v1/internal/scheduler/run-next", "body": "{}" },
+    { "method": "GET", "path": "/api/v1/internal/public-catalog-surface/stats", "body": null },
+    { "method": "POST", "path": "/api/v1/internal/onboarding/payments/webhook", "body": "{}" },
+    { "method": "POST", "path": "/api/v1/internal/growth/award-points", "body": "{\"user_id\":\"00000000-0000-4000-8000-000000000002\",\"source\":\"g2-verify\"}" },
+    { "method": "POST", "path": "/api/v1/internal/growth/observe", "body": "{\"user_id\":\"00000000-0000-4000-8000-000000000002\",\"event\":\"g2_verify\"}" },
+    { "method": "GET", "path": "/api/v1/internal/growth/reconcile", "body": null },
+    { "method": "POST", "path": "/api/v1/internal/growth/fraud-scan", "body": "{\"user_id\":\"00000000-0000-4000-8000-000000000002\",\"trigger\":\"g2_verify\"}" },
+    { "method": "POST", "path": "/api/v1/internal/region-share-reconcile", "body": "{\"persist\":false}" },
+    { "method": "POST", "path": "/api/v1/internal/investor-distribution-accrual", "body": "{}" },
+    { "method": "POST", "path": "/api/v1/internal/investor-distribution-register-accrual", "body": "{}" }
+  ]
+}

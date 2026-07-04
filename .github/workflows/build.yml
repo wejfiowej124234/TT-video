@@ -1,4 +1,5 @@
 # 仓库构建与门禁：check-invariants → Rust 构建与测试 → 前端 lint/tsc/test → 依赖审计（可选不阻塞）
+# Release Train · TT_CONFIGURATION_TRUTH · configuration-truth-ssot · run-platform-coverage-audit
 # 非 batch 的 job 均 continue-on-error：失败不阻断 workflow；合并阻断仅依赖 workflow「Broadcast batch blockers」三门禁（见 broadcast-batch-blockers.yml）。
 # 见 08-5、README 实现状态；前端见 项目优化与问题清单 §六 CI
 name: Build

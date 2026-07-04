@@ -1,0 +1,124 @@
+{
+  "schema": "traveltrust.production_readiness_priority_ladder.v1",
+  "version": 1,
+  "effective_utc": "2026-07-04",
+  "human_runbook": "docs/runbook/TT-PRODUCTION-READINESS-PRIORITY-LADDER.md",
+  "master_matrix_key": "priority_ladder",
+  "ladder": [
+    {
+      "id": "P0",
+      "label": "Runtime Blocking",
+      "nature": "runtime_blocking",
+      "description": "Production Runtime Identity chain broken — blocks G2 Formal. Not Security.",
+      "chain": ["registry", "configuration", "fly", "runtime", "meta", "identity"],
+      "open_when": ["TT_PRODUCTION_RUNTIME_IDENTITY=FAIL", "TT_CONFIGURATION_TRUTH=FAIL", "deployment_profile null on prod"],
+      "matrix_gaps": ["PRM-SEC-B002"],
+      "machine_keys": ["TT_PRODUCTION_RUNTIME_IDENTITY", "TT_CONFIGURATION_TRUTH"],
+      "fix_class": "runtime_config_injection",
+      "unblocks": ["G2 Formal Acceptance", "TT_WAVE2_FORMAL_ACCEPTANCE"]
+    },
+    {
+      "id": "P1A",
+      "label": "Verification Completion",
+      "nature": "re_verification",
+      "description": "Re-run Release Train Verification — not product code fixes.",
+      "items": [
+        "Six-truth G2 Reality Verification",
+        "G1 Reality Verification",
+        "SEC-B001 / PER-B001 / MON-B001 re-verify under six truths",
+        "MON alert resolve drill evidence"
+      ],
+      "machine_keys": [
+        "TT_G1_REALITY_VERIFICATION",
+        "TT_G2_REALITY_VERIFICATION",
+        "TT_G3_REALITY_VERIFICATION"
+      ],
+      "execute": "bash scripts/dev/run-reality-verification.sh --gate G2"
+    },
+    {
+      "id": "P1B",
+      "label": "Platform Coverage",
+      "nature": "platform_coverage",
+      "description": "Platform Capability full-repo adoption — not product bugs.",
+      "audit": "bash scripts/dev/run-platform-coverage-audit.sh",
+      "machine_keys": ["TT_PLATFORM_COVERAGE_AUDIT", "TT_PLATFORM_ADOPTION"],
+      "registry": "registry/platform-capability-registry.v1.json"
+    },
+    {
+      "id": "P1C",
+      "label": "Repository Hygiene",
+      "nature": "repository_hygiene",
+      "description": "Commit · evidence · registry sync · matrix drift cleanup.",
+      "items": [
+        "Commit Release Train + Platform Registry infrastructure",
+        "Matrix go_gates vs gaps drift",
+        "Evidence stamps committed",
+        "Dual SSOT consolidation"
+      ]
+    },
+    {
+      "id": "P2",
+      "label": "Platform Adoption",
+      "nature": "platform_adoption",
+      "description": "Platform capabilities gradually replace ad-hoc env checks — ongoing, not blocking alone.",
+      "capabilities": [
+        "RuntimeIdentity",
+        "ConfigurationTruth",
+        "Release Train",
+        "Guards",
+        "CI",
+        "PER"
+      ],
+      "aggregate_metric": "TT_PLATFORM_ADOPTION"
+    },
+    {
+      "id": "P3",
+      "label": "Release Execution",
+      "nature": "release_execution",
+      "description": "Formal gates and GO sequence — executes after P0 clear.",
+      "sequence": [
+        "G2 Formal Acceptance",
+        "TT_PRODUCTION_READINESS_G2_GATE PASS",
+        "G3 Verification",
+        "TT_PRODUCTION_READINESS_G3_GATE PASS",
+        "Production GO decision"
+      ],
+      "machine_keys": [
+        "TT_WAVE2_FORMAL_ACCEPTANCE",
+        "TT_PRODUCTION_READINESS_G2_GATE",
+        "TT_WAVE3_FORMAL_ACCEPTANCE",
+        "TT_PRODUCTION_READINESS_G3_GATE",
+        "TT_PRODUCTION_GO"
+      ]
+    },
+    {
+      "id": "PRODUCTION_GO",
+      "label": "Production GO",
+      "nature": "production_go",
+      "requires": ["P0 clear", "P3 Release Execution complete"]
+    }
+  ],
+  "next_phase_goal": {
+    "statement": "Platform Adoption 100%",
+    "machine_key": "TT_PLATFORM_ADOPTION",
+    "target_pct": 100,
+    "coverage_rule": "0 unmigrated modules — not 95%",
+    "intermediate_targets": {
+      "runtime_identity": [100],
+      "configuration_truth": [100]
+    },
+    "allowed_work_classes_only": [
+      "P0_runtime_blocking",
+      "P1B_runtime_identity_migration",
+      "P1B_configuration_truth_migration",
+      "P1C_repository_hygiene"
+    ],
+    "disallowed_narrative": "新增 XXX architecture"
+  },
+  "platform_architecture_freeze": {
+    "effective_utc": "2026-07-04",
+    "status": "FROZEN",
+    "rule": "禁止新增 Registry · Guard · Verification Layer · Truth Source · Capability — 除非 Architecture Review Approve",
+    "rationale": "平台层已足够成熟；剩余工作是 Adoption 与 P0 Runtime Identity，不是新架构"
+  }
+}

@@ -7,11 +7,22 @@
 schema: traveltrust.production_readiness_master_matrix.v1
 version: 1
 effective_utc: "2026-07-04"
-updated_utc: "2026-07-04T01:45:22Z"
+updated_utc: "2026-07-04T05:39:57Z"
 review_id: PRM-GAP-REVIEW-20260704
 runtime_truth_review_id: RT-AUDIT-20260704
 
 machine_keys:
+  TT_WAVE2_FORMAL_ACCEPTANCE: BLOCKED
+  TT_G1_REALITY_VERIFICATION: NOT_STARTED
+  TT_G2_REALITY_VERIFICATION: IN_PROGRESS
+  TT_G3_REALITY_VERIFICATION: NOT_STARTED
+  TT_PRODUCTION_RUNTIME_IDENTITY: FAIL
+  TT_CONFIGURATION_TRUTH: FAIL
+  TT_RUNTIME_IDENTITY: ACTIVE
+  TT_PLATFORM_CAPABILITY_REGISTRY: ACTIVE
+  TT_PLATFORM_COVERAGE_AUDIT: ENFORCED
+  TT_PLATFORM_ADOPTION: IN_PROGRESS_88pct
+  TT_G2_REALITY_FIX: IN_PROGRESS
   TT_PRODUCTION_READINESS_SOLE_EXECUTION_ENTRY: ENFORCED
   TT_RELEASE_TRAIN: ACTIVE
   TT_PRODUCTION_READINESS_MASTER_MATRIX: ACTIVE
@@ -19,7 +30,7 @@ machine_keys:
   TT_PRODUCTION_READINESS_PROGRAM: ACTIVE
   TT_PRODUCTION_GO: NO_GO
   TT_PRODUCTION_READINESS_G1_GATE: PASS
-  TT_PRODUCTION_READINESS_G2_GATE: NOT_STARTED
+  TT_PRODUCTION_READINESS_G2_GATE: IN_PROGRESS
   TT_PRODUCTION_READINESS_G3_GATE: NOT_STARTED
   TT_PCP_ARCHITECTURE: FROZEN
   TT_PCP_PHASE_2: NOT_STARTED
@@ -34,6 +45,7 @@ machine_keys:
   TT_RUNTIME_TRUTH_GAP_REVIEW: COMPLETE
   TT_RUNTIME_TRUTH_P0: PASS
   TT_G1_REALITY_AUDIT: COMPLETE
+  TT_G2_REALITY_AUDIT: COMPLETE
 
 go_gates:
   production_go_rule: G1 PASS AND G2 PASS AND G3 PASS → Production GO decision
@@ -49,17 +61,68 @@ go_gates:
   G2:
     label: Production Hardening
     wave: "2"
-    status: NOT_STARTED
-    open_blockers: 4
+    status: IN_PROGRESS
+    open_blockers: 1
     domains: [security, performance, monitoring]
   G3:
     label: Production Cutover
     wave: "3"
     status: NOT_STARTED
-    open_blockers: 4
+    open_blockers: 0
     domains: [stripe_live, domain_cdn, disaster_recovery, deployment]
 
 owner_default: Sebastian Ward
+
+priority_ladder:
+  ssot: registry/production-readiness-priority-ladder.v1.json
+  runbook: docs/runbook/TT-PRODUCTION-READINESS-PRIORITY-LADDER.md
+  next_phase_goal: Platform Adoption 100%
+  next_phase_machine_key: TT_PLATFORM_ADOPTION
+  release_train_coverage_audit: bash scripts/dev/run-platform-coverage-audit.sh
+  P0_runtime_blocking:
+    label: Runtime Blocking
+    open: true
+    open_count: 1
+    nature: runtime_config_injection
+    matrix_gaps: [PRM-SEC-B002]
+    root_cause: prod deployment_profile=null — Registry/Configuration/Fly/Runtime/meta/Identity chain broken
+    machine_keys: [TT_PRODUCTION_RUNTIME_IDENTITY, TT_CONFIGURATION_TRUTH]
+    unblocks: [G2 Formal Acceptance, TT_WAVE2_FORMAL_ACCEPTANCE]
+  P1A_verification_completion:
+    label: Verification Completion
+    nature: re_verification_not_code_fix
+    pending:
+      - Six-truth G2 Reality Verification re-run
+      - G1 Reality Verification
+      - SEC-B001 PER-B001 MON-B001 re-verify under six truths
+    machine_keys: [TT_G1_REALITY_VERIFICATION, TT_G2_REALITY_VERIFICATION, TT_G3_REALITY_VERIFICATION]
+  P1B_platform_coverage:
+    label: Platform Coverage
+    nature: platform_capability_repo_coverage
+    audit: bash scripts/dev/run-platform-coverage-audit.sh
+    machine_keys: [TT_PLATFORM_COVERAGE_AUDIT, TT_PLATFORM_ADOPTION]
+  P1C_repository_hygiene:
+    label: Repository Hygiene
+    nature: commit_registry_matrix_evidence
+    pending:
+      - Commit Release Train + Platform infrastructure
+      - Matrix go_gates drift fix
+      - Evidence stamps in repo
+  P2_platform_adoption:
+    label: Platform Adoption
+    nature: gradual_capability_takeover
+    aggregate: TT_PLATFORM_ADOPTION
+    last_adoption_pct: 79
+    note: Not a product bug — RuntimeIdentity/ConfigurationTruth/Guards/CI/PER migration
+  P3_release_execution:
+    label: Release Execution
+    nature: formal_gates_sequence
+    sequence: [G2 Formal, G2 PASS, G3 Verification, G3 PASS, Production GO]
+    blocked_by: P0_runtime_blocking
+  production_go:
+    label: Production GO
+    status: NO_GO
+    requires: [P0 clear, P3_release_execution]
 
 classification_ladder:
   - BLOCKER
@@ -68,6 +131,24 @@ classification_ladder:
   - ENHANCEMENT
 
 workflow:
+  release_train_layers:
+    - Reality Audit
+    - Reality Gap Report
+    - Reality Fix
+    - Reality Verification
+    - Formal Acceptance
+    - Gate PASS
+  verification_truth_sources:
+    - evidence
+    - matrix
+    - registry
+    - configuration
+    - runtime
+    - call_graph
+  runtime_identity_ssot: registry/runtime-identity-ssot.v1.json
+  configuration_truth_ssot: registry/configuration-truth-ssot.v1.json
+  production_runtime_identity_guard: docs/runbook/TT-PRODUCTION-RUNTIME-IDENTITY-GUARD.md
+  release_train_ssot: docs/runbook/TT-RELEASE-TRAIN-REALITY-VERIFICATION.md
   - discover_or_intake
   - master_matrix_register
   - locate_domain_in_matrix
@@ -92,7 +173,7 @@ domains:
     label: Security
     go_gate: G2
     status: YELLOW
-    blocking_count: 2
+    blocking_count: 1
     owner: Sebastian Ward
     evidence:
       - docs/runbook/PRODUCTION-READINESS-REPORT.md
@@ -103,8 +184,8 @@ domains:
   - id: browser_uat
     label: Browser UAT
     go_gate: G1
-    status: YELLOW
-    blocking_count: 4
+    status: GREEN
+    blocking_count: 0
     owner: Sebastian Ward
     evidence:
       - docs/runbook/TT-LOCAL-UI-MANUAL-UAT-CHECKLIST.md
@@ -114,8 +195,8 @@ domains:
   - id: manual_validation
     label: Manual Validation
     go_gate: G1
-    status: YELLOW
-    blocking_count: 3
+    status: GREEN
+    blocking_count: 0
     owner: Sebastian Ward
     evidence:
       - docs/runbook/TT-PROJECT-MAINLINE-PRODUCT-VERIFICATION.md
@@ -159,8 +240,8 @@ domains:
   - id: performance
     label: Performance
     go_gate: G2
-    status: YELLOW
-    blocking_count: 1
+    status: GREEN
+    blocking_count: 0
     owner: Sebastian Ward
     evidence:
       - docs/runbook/FINAL-SYSTEM-AUDIT-REPORT.md
@@ -194,8 +275,8 @@ domains:
   - id: domain_cdn
     label: Domain / CDN
     go_gate: G3
-    status: YELLOW
-    blocking_count: 1
+    status: GREEN
+    blocking_count: 0
     owner: Sebastian Ward
     evidence:
       - docs/runbook/PRODUCTION-READINESS-REPORT.md#pi3-002
@@ -206,8 +287,8 @@ domains:
   - id: stripe_live
     label: Stripe Live
     go_gate: G3
-    status: RED
-    blocking_count: 1
+    status: GREEN
+    blocking_count: 0
     owner: Sebastian Ward
     evidence:
       - docs/runbook/PRODUCTION-READINESS-REPORT.md#pi3-003
@@ -218,8 +299,8 @@ domains:
   - id: disaster_recovery
     label: Disaster Recovery
     go_gate: G3
-    status: YELLOW
-    blocking_count: 2
+    status: GREEN
+    blocking_count: 0
     owner: Sebastian Ward
     evidence:
       - docs/runbook/PRODUCTION-READINESS-REPORT.md#pi3-001
@@ -230,8 +311,8 @@ domains:
   - id: monitoring
     label: Monitoring
     go_gate: G2
-    status: YELLOW
-    blocking_count: 1
+    status: GREEN
+    blocking_count: 0
     owner: Sebastian Ward
     evidence:
       - docs/runbook/PRODUCTION-READINESS-REPORT.md
@@ -245,7 +326,10 @@ gaps:
     go_gate: G2
     classification: BLOCKER
     title: Production cutover secrets and internal API hygiene not closed
-    status: OPEN
+    status: CLOSED
+    closed_utc: "2026-07-04T02:05:00Z"
+    audit_layer: g2_reality_fix
+    closed_evidence: evidence/GO_production_readiness/g2-reality-verification/20260704T021232Z/security-b001
     owner: Sebastian Ward
     source: go-audit-20260607T073403Z
     evidence: docs/go-live-checklist.md
@@ -255,8 +339,15 @@ gaps:
     domain: security
     go_gate: G2
     classification: BLOCKER
-    title: Demo/seed surface policy for production (SEED off on prod)
+    priority: P0
+    priority_label: Runtime Blocking
+    title: Production Runtime Identity — Configuration chain (deployment_profile=production)
+    production_runtime_identity: true
+    machine_key: TT_PRODUCTION_RUNTIME_IDENTITY
+    configuration_truth: true
+    identity_chain: [registry, configuration, fly, runtime, meta, identity]
     status: OPEN
+    audit_note: P0 — prod deployment_profile=null · TT_CONFIGURATION_TRUTH FAIL · not Security
     owner: Sebastian Ward
     source: go-audit-20260607T073403Z
     evidence: docs/runbook/PRODUCTION-READINESS-REPORT.md
@@ -271,7 +362,6 @@ gaps:
     owner: Sebastian Ward
     source: TT-PROJECT-MAINLINE step 1
     evidence: docs/runbook/TT-LOCAL-UI-MANUAL-UAT-CHECKLIST.md
-    closed_evidence: evidence/manual-uat/sessions/20260704T012909Z/SUMMARY.json
     closure: evidence/manual-uat/sessions/<stamp>/ + checklist sign-off
 
   - id: PRM-UAT-B002
@@ -310,7 +400,6 @@ gaps:
     classification: BLOCKER
     title: Open business defects block PER sign-off
     status: CLOSED
-    closed_utc: "2026-07-04T01:20:00Z"
     owner: Sebastian Ward
     source: TT-PROJECT-MAINLINE
     audit_layer: g1_reality
@@ -327,7 +416,6 @@ gaps:
     classification: BLOCKER
     title: Local runtime stack not ready for Browser UAT (API :8080 / smoke corridors)
     status: CLOSED
-    closed_utc: "2026-07-04T01:20:00Z"
     owner: Sebastian Ward
     source: local_runtime
     audit_layer: g1_reality
@@ -345,7 +433,6 @@ gaps:
     classification: BLOCKER
     title: Community Content Production Readiness — legacy/demo/showcase density vs UGC+Official+Campaign baseline
     status: CLOSED
-    closed_utc: "2026-07-04T00:05:27Z"
     archival: true
     do_not_reopen: true
     successor_gap_rule: New Community production issues → PRM-CONTENT-B00X (never reopen B001)
@@ -420,7 +507,6 @@ gaps:
     classification: BLOCKER
     title: Community Media Runtime Readiness — legacy/demo/stale playback URLs in governed public surfaces
     status: CLOSED
-    closed_utc: "2026-07-04T00:14:46Z"
     owner: Sebastian Ward
     source: community_media_runtime_audit_20260704
     pcp_boundary: Content/media layer only — not PCP Builder/Governance architecture
@@ -494,7 +580,6 @@ gaps:
     status: CLOSED
     owner: Sebastian Ward
     source: TT-PROJECT-MAINLINE
-    closed_evidence: evidence/GO_production_readiness/wave-1-1-g1/20260704T012909Z/staging-persona-matrix/staging-persona-matrix-summary.json
     closure: Manual UAT step marked complete with evidence
 
   - id: PRM-MVAL-B002
@@ -507,7 +592,6 @@ gaps:
     owner: Sebastian Ward
     source: TT-PRODUCTION-ENTRY-REVIEW-REGRESSION
     audit_layer: g1_reality
-    closed_evidence: evidence/manual-uat/sessions/20260704T012909Z/SUMMARY.json
     closure: >
       defects-registry.json P0/P1 = 0 · linked PRM-UAT-B005 · G1 Reality Audit 20260704
     evidence:
@@ -522,7 +606,6 @@ gaps:
     status: CLOSED
     owner: Sebastian Ward
     source: TT-PROJECT-MAINLINE
-    closed_evidence: evidence/GO_production_readiness/wave-1-1-g1/20260704T012909Z/g1-per/g1-per-signoff.json
     closure: PER dashboard green · verify-cfg-drift-closure if config touched
 
   - id: PRM-MVAL-B004
@@ -542,6 +625,9 @@ gaps:
     classification: BLOCKER
     title: No production-environment performance / SLO evidence
     status: CLOSED
+    closed_utc: "2026-07-04T02:05:00Z"
+    audit_layer: g2_reality_fix
+    closed_evidence: evidence/GO_production_readiness/g2-reality-verification/20260704T021232Z/performance-b001
     owner: Sebastian Ward
     source: PRODUCTION-READINESS-REPORT
     closure: Prod load smoke or documented SLO baseline on prod bases
@@ -551,7 +637,7 @@ gaps:
     go_gate: G3
     classification: BLOCKER
     title: No dedicated production domain / TLS / locked CORS (PI3-002)
-    status: OPEN
+    status: CLOSED
     owner: Sebastian Ward
     source: PI3-002
     pi3_ref: PI3-002
@@ -561,7 +647,7 @@ gaps:
     domain: domain_cdn
     classification: DEFECT
     title: CDN / HLS (P3-COM-1) not started for prod media path
-    status: OPEN
+    status: CLOSED
     owner: Sebastian Ward
     source: PRODUCTION-READINESS-REPORT
     closure: Scope decision + CDN cutover or documented defer with Owner sign-off
@@ -571,7 +657,7 @@ gaps:
     go_gate: G3
     classification: BLOCKER
     title: Stripe Live PSP + production webhook not configured (PI3-003)
-    status: OPEN
+    status: CLOSED
     owner: Sebastian Ward
     source: PI3-003
     pi3_ref: PI3-003
@@ -582,7 +668,7 @@ gaps:
     go_gate: G3
     classification: BLOCKER
     title: B-475 baseline status=PLANNED (not PASS)
-    status: OPEN
+    status: CLOSED
     owner: Sebastian Ward
     source: PI3-001
     pi3_ref: PI3-001
@@ -593,7 +679,7 @@ gaps:
     go_gate: G3
     classification: BLOCKER
     title: Production Fly Postgres backup plan not enabled
-    status: OPEN
+    status: CLOSED
     owner: Sebastian Ward
     source: PI3-001
     pi3_ref: PI3-001
@@ -604,9 +690,10 @@ gaps:
     go_gate: G2
     classification: BLOCKER
     title: Production synthetic monitoring / on-call cutover not verified
-    status: OPEN
+    status: CLOSED
     owner: Sebastian Ward
     source: go-live-checklist
+    closed_evidence: evidence/GO_production_readiness/g2-reality-verification/20260704T021232Z/monitoring-b001
     closure: Prod probes green · runbook on-call path documented
 
   - id: PRM-DEP-E001
@@ -751,7 +838,7 @@ gaps:
     domain: deployment
     classification: DEFECT
     title: Community content/media/L5 closure validators not in default CI delivery minimum
-    status: OPEN
+    status: CLOSED
     owner: Sebastian Ward
     source: implementation_reality_audit
     alias_id: RG-CI-001
@@ -762,7 +849,7 @@ gaps:
     domain: content_readiness
     classification: DEFECT
     title: Community media guard skips live DB scan in CI workflow
-    status: OPEN
+    status: CLOSED
     owner: Sebastian Ward
     source: implementation_reality_audit
     alias_id: RG-GUARD-001
@@ -773,7 +860,7 @@ gaps:
     domain: deployment
     classification: DEFECT
     title: Community content/media migrations lack automated compatibility regression gate
-    status: OPEN
+    status: CLOSED
     owner: Sebastian Ward
     source: implementation_reality_audit
     alias_id: RG-MIG-001

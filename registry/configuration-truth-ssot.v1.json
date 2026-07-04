@@ -1,0 +1,80 @@
+{
+  "schema": "traveltrust.configuration_truth_ssot.v1",
+  "version": 1,
+  "effective_utc": "2026-07-04",
+  "human_runbook": "docs/runbook/TT-CONFIGURATION-TRUTH.md",
+  "purpose": "Detect Configuration Drift — Registry/Fly/.env declare production but Runtime /meta returns null.",
+  "truth_source_order": [
+    "evidence",
+    "matrix",
+    "registry",
+    "configuration",
+    "runtime",
+    "call_graph"
+  ],
+  "configuration_layers": [
+    {
+      "id": "registry",
+      "label": "Registry SSOT",
+      "source": "registry/runtime-identity-ssot.v1.json",
+      "keys": ["deployment_profile", "seed", "community_showcase", "market_showcase", "demo", "public_content_profile"]
+    },
+    {
+      "id": "fly_secrets",
+      "label": "Fly Secrets",
+      "evidence_files": ["fly-secrets-inventory.txt", "fly-env-redacted.txt"],
+      "keys": [
+        "TRAVELTRUST_DEPLOYMENT_PROFILE",
+        "SEED_TEST_ACCOUNTS",
+        "TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE",
+        "TRAVELTRUST_MARKET_PUBLIC_SHOWCASE",
+        "DID_RANK_SEED_MARKET_DEMO"
+      ]
+    },
+    {
+      "id": "fly_config",
+      "label": "Fly Config",
+      "paths": {
+        "production": "deploy/fly/tt-api-prod/fly.toml",
+        "staging": "deploy/fly/tt-api-staging/fly.toml"
+      },
+      "keys": ["TRAVELTRUST_DEPLOYMENT_PROFILE"]
+    },
+    {
+      "id": "env_production",
+      "label": ".env.production",
+      "paths": {
+        "example": "scripts/dev/.env.production.example",
+        "local": "scripts/dev/.env.production.local"
+      },
+      "keys": [
+        "TRAVELTRUST_DEPLOYMENT_PROFILE",
+        "SEED_TEST_ACCOUNTS",
+        "TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE",
+        "TRAVELTRUST_MARKET_PUBLIC_SHOWCASE",
+        "DID_RANK_SEED_MARKET_DEMO"
+      ]
+    },
+    {
+      "id": "github_actions",
+      "label": "GitHub Actions Variables",
+      "scan_globs": [".github/workflows/*.yml"],
+      "expect_declared_in": [
+        "scripts/dev/phase3-production-fly-deploy-and-sync.sh",
+        "scripts/dev/phase2-staging-fly-deploy-and-sync.sh"
+      ],
+      "keys": ["TRAVELTRUST_DEPLOYMENT_PROFILE", "SEED_TEST_ACCOUNTS"]
+    },
+    {
+      "id": "runtime_meta",
+      "label": "Runtime /meta/build",
+      "evidence_files": ["meta-build.json", "meta-summary.txt"],
+      "keys": ["deployment_profile"]
+    }
+  ],
+  "drift_classes": {
+    "configuration_drift": "Registry/Fly/.env agree but Runtime meta differs — process not receiving injected config",
+    "secret_without_runtime": "Fly secret present but meta/build deployment_profile null",
+    "registry_fly_mismatch": "Registry expected value != Fly secret value"
+  }
+}

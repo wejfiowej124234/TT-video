@@ -1,0 +1,91 @@
+{
+  "schema": "traveltrust.production_runtime_identity_ssot.v1",
+  "version": 1,
+  "canonical_ssot": "registry/runtime-identity-ssot.v1.json",
+  "effective_utc": "2026-07-04",
+  "machine_key": "TT_PRODUCTION_RUNTIME_IDENTITY",
+  "matrix_gap_id": "PRM-SEC-B002",
+  "human_runbook": "docs/runbook/TT-PRODUCTION-RUNTIME-IDENTITY-GUARD.md",
+  "purpose": "Prove the runtime is Production — not merely seed-off. deployment_profile=null is a Production Readiness blocker.",
+  "profiles": {
+    "production": {
+      "label": "Production Runtime Identity",
+      "api_base_env": "PROD_API_BASE",
+      "api_base_default": "https://tt-api-prod.fly.dev",
+      "fly_app_env": "FLY_PROD_API_APP",
+      "fly_app_default": "tt-api-prod",
+      "required": {
+        "deployment_profile": {
+          "meta_build_key": "deployment_profile",
+          "fly_env": "TRAVELTRUST_DEPLOYMENT_PROFILE",
+          "expected": "production"
+        },
+        "profile": {
+          "alias_of": "deployment_profile",
+          "expected": "production"
+        },
+        "seed": {
+          "fly_env": "SEED_TEST_ACCOUNTS",
+          "meta_path": "seed_test_accounts.enabled",
+          "expected_fly": "0",
+          "expected_meta_enabled": false
+        },
+        "community_showcase": {
+          "fly_env": "TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE",
+          "expected_fly": ["0", "", null]
+        },
+        "market_showcase": {
+          "fly_env": "TRAVELTRUST_MARKET_PUBLIC_SHOWCASE",
+          "expected_fly": ["0", "", null]
+        },
+        "demo": {
+          "fly_env": "DID_RANK_SEED_MARKET_DEMO",
+          "expected_fly": ["0", "", null]
+        },
+        "public_content_profile": {
+          "derived": true,
+          "rule": "production when deployment_profile=production AND all showcase/demo flags off",
+          "expected": "production"
+        }
+      },
+      "cross_checks": {
+        "staging_profile_must_differ": true,
+        "staging_expected_profile": "staging",
+        "seed_endpoint_must_deny": {
+          "method": "POST",
+          "path": "/auth/seed-test-accounts",
+          "expected_http": ["403", "404"]
+        }
+      }
+    },
+    "staging": {
+      "label": "Staging Runtime Identity",
+      "api_base_env": "STAGING_API_BASE",
+      "api_base_default": "https://tt-api-staging.fly.dev",
+      "required": {
+        "deployment_profile": {
+          "meta_build_key": "deployment_profile",
+          "expected": "staging"
+        }
+      }
+    },
+    "local": {
+      "label": "Local Runtime Identity",
+      "api_base_default": "http://127.0.0.1:8080",
+      "required": {
+        "deployment_profile": {
+          "meta_build_key": "deployment_profile",
+          "expected": "local"
+        }
+      }
+    }
+  },
+  "forbidden_production_states": [
+    "deployment_profile is null or empty on prod base",
+    "deployment_profile=staging on prod base",
+    "SEED_TEST_ACCOUNTS=1 on prod",
+    "TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE=1 on prod",
+    "TRAVELTRUST_MARKET_PUBLIC_SHOWCASE=1 on prod",
+    "DID_RANK_SEED_MARKET_DEMO=1 on prod"
+  ]
+}

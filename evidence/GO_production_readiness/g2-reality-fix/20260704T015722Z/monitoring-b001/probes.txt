@@ -1,0 +1,5 @@
+health_http=200
+meta_http=200
+community_feed_http=200
+media_capabilities_http=200
+prometheus_rules=PASS

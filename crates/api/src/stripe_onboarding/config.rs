@@ -1,5 +1,10 @@
 //! Env/feature flags for optional Stripe onboarding PSP.
 
+/// Stripe onboarding gates respect [`RuntimeIdentity::current()`] profile semantics.
+pub fn stripe_onboarding_runtime_profile() -> crate::runtime_identity::RuntimeProfile {
+    crate::runtime_identity::RuntimeIdentity::current().profile
+}
+
 /// **Opt-in** PSP path (never implied by DB-only mode).
 pub fn stripe_onboarding_enabled() -> bool {
     stripe_secret_key().is_some()

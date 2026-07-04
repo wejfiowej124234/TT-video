@@ -1,0 +1,63 @@
+{
+  "schema": "traveltrust.runtime_identity_ssot.v1",
+  "version": 1,
+  "effective_utc": "2026-07-04",
+  "machine_key": "TT_RUNTIME_IDENTITY",
+  "production_guard_key": "TT_PRODUCTION_RUNTIME_IDENTITY",
+  "matrix_gap_id": "PRM-SEC-B002",
+  "human_runbook": "docs/runbook/TT-RUNTIME-IDENTITY.md",
+  "node_module": "scripts/dev/lib/runtime-identity.cjs",
+  "rust_module": "crates/api/src/runtime_identity.rs",
+  "purpose": "Single platform identity resolver — all guards/scripts call RuntimeIdentity::current(), never ad-hoc env checks.",
+  "profiles": {
+    "production": {
+      "label": "Production",
+      "deployment_profile": "production",
+      "aliases": ["prod"],
+      "seed": "0",
+      "community_showcase": "0",
+      "market_showcase": "0",
+      "demo": "0",
+      "public_content_profile": "production"
+    },
+    "staging": {
+      "label": "Staging",
+      "deployment_profile": "staging",
+      "aliases": ["staging_mirror"],
+      "public_content_profile": "staging"
+    },
+    "local": {
+      "label": "Local",
+      "deployment_profile": "local",
+      "public_content_profile": "local"
+    },
+    "development": {
+      "label": "Development",
+      "deployment_profile": ["local", "", null],
+      "seed": "1",
+      "requires_empty_cors": true,
+      "public_content_profile": "development"
+    },
+    "demo": {
+      "label": "Demo",
+      "deployment_profile": ["local", "staging", "", null],
+      "showcase_or_demo_flag": true,
+      "public_content_profile": "demo"
+    }
+  },
+  "identity_env_keys": [
+    "TRAVELTRUST_DEPLOYMENT_PROFILE",
+    "SEED_TEST_ACCOUNTS",
+    "TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE",
+    "TRAVELTRUST_MARKET_PUBLIC_SHOWCASE",
+    "DID_RANK_SEED_MARKET_DEMO",
+    "CORS_ORIGINS"
+  ],
+  "forbidden_on_production": [
+    "deployment_profile null on prod base",
+    "SEED_TEST_ACCOUNTS=1",
+    "TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE=1",
+    "TRAVELTRUST_MARKET_PUBLIC_SHOWCASE=1",
+    "DID_RANK_SEED_MARKET_DEMO=1"
+  ]
+}

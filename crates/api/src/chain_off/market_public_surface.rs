@@ -51,16 +51,10 @@ pub fn market_public_surface_filter_enabled() -> bool {
 }
 
 /// 本地手测：`guide@test.com` 出现在自由市场向导列表（正常客户选向导 UI）。
+/// **Staging / Production 默认关闭** — 须显式 `TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=1` 或 `TRAVELTRUST_MANUAL_ACCEPTANCE=1`。
+/// OCS 基线 CLOSED 后公众 catalog 仅展示官方冷启动 10 城向导，C3 不得隐式曝光。
 pub fn seed_guide_public_market_enabled() -> bool {
-    if let Some(v) = env_flag_on("TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET") {
-        return v;
-    }
-    if env_flag_on("TRAVELTRUST_MANUAL_ACCEPTANCE").unwrap_or(false) {
-        return true;
-    }
-    // ① start-api-with-seed 默认栈：SEED_TEST_ACCOUNTS=1 且公众 catalog 过滤已开
-    std::env::var("SEED_TEST_ACCOUNTS").as_deref() == Ok("1")
-        && public_catalog_surface_filter_enabled()
+    crate::runtime_identity::RuntimeIdentity::current().allows_seed_guide_public_market()
 }
 
 fn is_seed_guide_public_market_walkthrough(g: &GuideRow, store: &ChainOffStore) -> bool {
@@ -74,16 +68,10 @@ fn is_seed_guide_public_market_walkthrough(g: &GuideRow, store: &ChainOffStore) 
     })
 }
 
-/// 本地手测：`multi-demo@test.com` 向导挂牌可在市场曝光 / `GET /guides` 出现（默认随 seed 栈开启）。
+/// 本地手测：`multi-demo@test.com` 向导挂牌可在市场曝光 / `GET /guides` 出现。
+/// **Staging / Production 默认关闭** — 须显式 `TRAVELTRUST_SEED_MULTI_DEMO_PUBLIC_MARKET=1` 或 `TRAVELTRUST_MANUAL_ACCEPTANCE=1`。
 pub fn seed_multi_demo_public_market_enabled() -> bool {
-    if let Some(v) = env_flag_on("TRAVELTRUST_SEED_MULTI_DEMO_PUBLIC_MARKET") {
-        return v;
-    }
-    if env_flag_on("TRAVELTRUST_MANUAL_ACCEPTANCE").unwrap_or(false) {
-        return true;
-    }
-    std::env::var("SEED_TEST_ACCOUNTS").as_deref() == Ok("1")
-        && public_catalog_surface_filter_enabled()
+    crate::runtime_identity::RuntimeIdentity::current().allows_seed_multi_demo_public_market()
 }
 
 fn is_seed_multi_demo_public_market_walkthrough(g: &GuideRow, store: &ChainOffStore) -> bool {
@@ -110,25 +98,42 @@ pub fn is_dev_catalog_email(email: &str) -> bool {
         e.as_str(),
         "tourist@test.com"
             | "guide@test.com"
+            | "multi-demo@test.com"
             | "provider-did-rank-demo@test.com"
             | "steward-did-rank-demo@test.com"
     )
 }
 
-/// 内置/烟测 `market_listings.payload` 标题等（DID rank demo、smoke 等）。
-pub fn is_dev_market_listing_payload(payload: &Value) -> bool {
+fn payload_text_is_smoke_market_listing(payload: &Value) -> bool {
     let Some(obj) = payload.as_object() else {
         return false;
     };
-    let Some(title) = obj.get("title").and_then(|v| v.as_str()) else {
+    let mut parts: Vec<String> = Vec::new();
+    for key in ["title", "description", "summary", "subtitle"] {
+        if let Some(s) = obj.get(key).and_then(|v| v.as_str()) {
+            let t = s.trim();
+            if !t.is_empty() {
+                parts.push(t.to_lowercase());
+            }
+        }
+    }
+    let combined = parts.join(" ");
+    if combined.is_empty() {
         return false;
-    };
-    let t = title.trim().to_lowercase();
-    t.contains("did rank demo")
-        || t.contains("smoke")
-        || t.starts_with("demo ")
-        || t.contains("演示")
-        || t.contains("联调")
+    }
+    combined.contains("multi-demo")
+        || combined.contains("l3 closure")
+        || combined.contains("probe")
+        || combined.contains("did rank demo")
+        || combined.contains("smoke")
+        || combined.starts_with("demo ")
+        || combined.contains("演示")
+        || combined.contains("联调")
+}
+
+/// 内置/烟测 `market_listings.payload` 标题等（DID rank demo、smoke 等）。
+pub fn is_dev_market_listing_payload(payload: &Value) -> bool {
+    payload_text_is_smoke_market_listing(payload)
 }
 
 pub fn is_dev_market_listing(owner_email: &str, payload: &Value) -> bool {
@@ -203,6 +208,24 @@ pub fn is_dev_guide_bio(bio: Option<&str>) -> bool {
     b.contains("测试向导") || b.contains("用于联调") || b.contains("test guide")
 }
 
+/// 公众 catalog 排序：featured DESC · display_priority DESC · 时间 DESC · id DESC
+pub fn cmp_public_display_sort<T: Ord>(
+    featured_a: bool,
+    priority_a: i32,
+    ts_a: T,
+    id_a: uuid::Uuid,
+    featured_b: bool,
+    priority_b: i32,
+    ts_b: T,
+    id_b: uuid::Uuid,
+) -> std::cmp::Ordering {
+    featured_b
+        .cmp(&featured_a)
+        .then(priority_b.cmp(&priority_a))
+        .then(ts_b.cmp(&ts_a))
+        .then(id_b.cmp(&id_a))
+}
+
 /// 公众 catalog 列表：同一 `user_id` 仅保留 `updated_at` 最新的一条 active 向导。
 pub fn dedupe_guides_latest_per_user<'a>(
     guides: impl IntoIterator<Item = &'a GuideRow>,
@@ -256,8 +279,8 @@ pub fn is_internal_guide_for_travel_booking(g: &GuideRow) -> bool {
     false
 }
 
-/// 向导是否应从公众 catalog（列表 + 详情）隐藏。
-pub fn should_hide_guide_from_public_catalog(g: &GuideRow, store: &ChainOffStore) -> bool {
+/// DDG / OCIP / SOPCP filters for guides already passing PCP Governance (Governed View).
+pub fn should_hide_guide_ddg_from_public_catalog(g: &GuideRow, store: &ChainOffStore) -> bool {
     if is_seed_guide_public_market_walkthrough(g, store)
         || is_seed_multi_demo_public_market_walkthrough(g, store)
     {
@@ -280,7 +303,42 @@ pub fn should_hide_guide_from_public_catalog(g: &GuideRow, store: &ChainOffStore
             return true;
         }
     }
+    if public_catalog_surface_filter_enabled()
+        && !crate::db::entity_visible_by_display_origin_policy(
+            &g.display_origin,
+            &store.public_ops_policy,
+        )
+    {
+        return true;
+    }
     false
+}
+
+/// 向导是否应从公众 catalog（列表 + 详情）隐藏。
+pub fn should_hide_guide_from_public_catalog(g: &GuideRow, store: &ChainOffStore) -> bool {
+    if is_seed_guide_public_market_walkthrough(g, store)
+        || is_seed_multi_demo_public_market_walkthrough(g, store)
+    {
+        return false;
+    }
+    if g.display_status != "published" {
+        return true;
+    }
+    if public_catalog_surface_filter_enabled()
+        && !crate::db::entity_visible_on_public_surface(&g.display_surfaces, "market_feed")
+    {
+        return true;
+    }
+    if public_catalog_surface_filter_enabled()
+        && !crate::db::entity_visible_in_public_schedule(
+            g.display_start_at,
+            g.display_end_at,
+            chrono::Utc::now(),
+        )
+    {
+        return true;
+    }
+    should_hide_guide_ddg_from_public_catalog(g, store)
 }
 
 fn day_text_is_smoke_placeholder(text: &str) -> bool {
@@ -319,6 +377,28 @@ pub fn is_smoke_discover_order(
     o: &OrderRow,
     bundle: &ItineraryBundle,
 ) -> bool {
+    if o.display_status != "published" {
+        return true;
+    }
+    if public_catalog_surface_filter_enabled()
+        && !crate::db::entity_visible_on_public_surface(&o.display_surfaces, "market_feed")
+    {
+        return true;
+    }
+    if public_catalog_surface_filter_enabled()
+        && !crate::db::entity_visible_in_public_schedule(
+            o.display_start_at,
+            o.display_end_at,
+            chrono::Utc::now(),
+        )
+    {
+        return true;
+    }
+    if public_catalog_surface_filter_enabled()
+        && !crate::db::entity_visible_by_display_origin_policy(&o.display_origin, &store.public_ops_policy)
+    {
+        return true;
+    }
     if is_non_production_data_origin(&o.data_origin) {
         return true;
     }
@@ -390,8 +470,16 @@ mod tests {
     fn dev_catalog_email_and_listing_payload() {
         assert!(is_dev_catalog_email("landing-smoke-1@traveltrust.test"));
         assert!(is_dev_catalog_email("guide@test.com"));
+        assert!(is_dev_catalog_email("multi-demo@test.com"));
+        assert!(!is_dev_catalog_email("merchant@test.com"));
         assert!(!is_dev_catalog_email("real.user@example.com"));
         assert!(is_dev_market_listing_payload(&json!({"title": "DID Rank Demo Shop"})));
+        assert!(is_dev_market_listing_payload(&json!({"title": "Multi-demo acq 1781486914"})));
+        assert!(is_dev_market_listing_payload(&json!({"title": "probe 1781408670"})));
+        assert!(is_dev_market_listing_payload(&json!({"title": "TEST probe acquisition entitlement"})));
+        assert!(is_dev_market_listing_payload(
+            &json!({"title": "Shop", "description": "L3 closure"})
+        ));
         assert!(!is_dev_market_listing_payload(&json!({"title": "Kyoto Tea House Tour"})));
     }
 
@@ -425,6 +513,20 @@ mod tests {
             ),
             "production"
         );
+        assert_eq!(
+            infer_market_listing_data_origin(
+                "multi-demo@test.com",
+                &json!({"title": "Kyoto Tea House"})
+            ),
+            "test"
+        );
+        assert_eq!(
+            infer_market_listing_data_origin(
+                "merchant@test.com",
+                &json!({"title": "Multi-demo shop 1782831275"})
+            ),
+            "demo"
+        );
     }
 
     #[test]
@@ -438,6 +540,16 @@ mod tests {
             "production",
             "real@example.com",
             &json!({"title": "Ok"})
+        ));
+        assert!(is_non_production_market_listing(
+            "production",
+            "multi-demo@test.com",
+            &json!({"title": "Kyoto Tea House"})
+        ));
+        assert!(is_non_production_market_listing(
+            "production",
+            "merchant@test.com",
+            &json!({"title": "Multi-demo shop 1782831275"})
         ));
     }
 
@@ -497,10 +609,12 @@ mod tests {
         let saved_acceptance = std::env::var("TRAVELTRUST_MANUAL_ACCEPTANCE").ok();
         let saved_seed = std::env::var("SEED_TEST_ACCOUNTS").ok();
         let saved_p3 = std::env::var("P3_CHAIN_OFF").ok();
+        let saved_profile = std::env::var("TRAVELTRUST_DEPLOYMENT_PROFILE").ok();
         std::env::remove_var("TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET");
         std::env::remove_var("TRAVELTRUST_MANUAL_ACCEPTANCE");
         std::env::set_var("SEED_TEST_ACCOUNTS", "1");
         std::env::set_var("P3_CHAIN_OFF", "1");
+        std::env::set_var("TRAVELTRUST_DEPLOYMENT_PROFILE", "local");
 
         assert!(seed_guide_public_market_enabled());
 
@@ -543,6 +657,40 @@ mod tests {
         match saved_p3 {
             Some(v) => std::env::set_var("P3_CHAIN_OFF", v),
             None => std::env::remove_var("P3_CHAIN_OFF"),
+        }
+        match saved_profile {
+            Some(v) => std::env::set_var("TRAVELTRUST_DEPLOYMENT_PROFILE", v),
+            None => std::env::remove_var("TRAVELTRUST_DEPLOYMENT_PROFILE"),
+        }
+    }
+
+    #[test]
+    fn should_hide_seed_guide_on_staging_profile_without_explicit_flag() {
+        let _env = crate::test_env_serial::lock();
+        let saved_market = std::env::var("TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET").ok();
+        let saved_seed = std::env::var("SEED_TEST_ACCOUNTS").ok();
+        let saved_p3 = std::env::var("P3_CHAIN_OFF").ok();
+        let saved_profile = std::env::var("TRAVELTRUST_DEPLOYMENT_PROFILE").ok();
+        std::env::remove_var("TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET");
+        std::env::set_var("SEED_TEST_ACCOUNTS", "1");
+        std::env::set_var("P3_CHAIN_OFF", "1");
+        std::env::set_var("TRAVELTRUST_DEPLOYMENT_PROFILE", "staging");
+        assert!(!seed_guide_public_market_enabled());
+        match saved_market {
+            Some(v) => std::env::set_var("TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET", v),
+            None => std::env::remove_var("TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET"),
+        }
+        match saved_seed {
+            Some(v) => std::env::set_var("SEED_TEST_ACCOUNTS", v),
+            None => std::env::remove_var("SEED_TEST_ACCOUNTS"),
+        }
+        match saved_p3 {
+            Some(v) => std::env::set_var("P3_CHAIN_OFF", v),
+            None => std::env::remove_var("P3_CHAIN_OFF"),
+        }
+        match saved_profile {
+            Some(v) => std::env::set_var("TRAVELTRUST_DEPLOYMENT_PROFILE", v),
+            None => std::env::remove_var("TRAVELTRUST_DEPLOYMENT_PROFILE"),
         }
     }
 

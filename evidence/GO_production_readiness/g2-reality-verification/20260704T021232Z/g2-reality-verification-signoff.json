@@ -1,0 +1,120 @@
+{
+  "review_id": "G2-REALITY-VERIFICATION",
+  "stamp": "20260704T021232Z",
+  "fix_baseline": "evidence/GO_production_readiness/g2-reality-fix/20260704T015722Z",
+  "machine_keys": {
+    "TT_G2_REALITY_VERIFICATION": "IN_PROGRESS",
+    "TT_WAVE2_FORMAL_ACCEPTANCE": "BLOCKED",
+    "TT_PRODUCTION_READINESS_G2_GATE": "IN_PROGRESS"
+  },
+  "four_way": {
+    "evidence": true,
+    "matrix": true,
+    "registry": true,
+    "runtime": true,
+    "consistent": false
+  },
+  "matrix_actions": {
+    "close": [
+      "PRM-SEC-B001",
+      "PRM-PER-B001",
+      "PRM-MON-B001"
+    ],
+    "reopen": [
+      "PRM-SEC-B002"
+    ],
+    "verified": [
+      "PRM-SEC-B001",
+      "PRM-PER-B001",
+      "PRM-MON-B001"
+    ],
+    "verification_fail": [
+      "PRM-SEC-B002"
+    ]
+  },
+  "findings": [
+    {
+      "id": "PRM-SEC-B001",
+      "verdict": "VERIFIED",
+      "checks": {
+        "code_router_gate": true,
+        "code_middleware_prefix": true,
+        "ssot_route_count_match": true,
+        "all_internal_routes_gate_403": true,
+        "prod_internal_secret": true,
+        "fly_internal_secret": true,
+        "matrix_consistent": true
+      },
+      "matrix": {
+        "status": "CLOSED",
+        "closed_evidence": "evidence/GO_production_readiness/g2-reality-verification/20260704T021232Z/security-b001",
+        "issues": []
+      },
+      "reason": "All SSOT internal routes deny without secret · code gate · Fly secret · Matrix consistent"
+    },
+    {
+      "id": "PRM-SEC-B002",
+      "verdict": "VERIFICATION_FAIL",
+      "checks": {
+        "prod_profile_production": false,
+        "staging_profile_staging": true,
+        "profiles_distinct": true,
+        "seed_fly_zero": true,
+        "seed_endpoint_403": true,
+        "fly_deployment_profile_secret": false,
+        "matrix_open_or_consistent": false
+      },
+      "matrix": {
+        "status": "CLOSED",
+        "closed_evidence": null,
+        "issues": [
+          "Matrix CLOSED without closed_evidence"
+        ]
+      },
+      "reason": "deployment_profile not production on prod base — run phase3-production-fly-deploy-and-sync.sh --secrets-only"
+    },
+    {
+      "id": "PRM-PER-B001",
+      "verdict": "VERIFIED",
+      "checks": {
+        "hot_paths_ssot_covered": true,
+        "perf_summary_pass": true,
+        "prod_api_base": true,
+        "matrix_consistent": true,
+        "missing_hot_paths": []
+      },
+      "matrix": {
+        "status": "CLOSED",
+        "closed_evidence": "evidence/GO_production_readiness/g2-reality-verification/20260704T021232Z/performance-b001",
+        "issues": []
+      },
+      "reason": "All hot-path SSOT endpoints sampled on prod · p95 within limits"
+    },
+    {
+      "id": "PRM-MON-B001",
+      "verdict": "VERIFIED",
+      "checks": {
+        "synthetic_health": true,
+        "synthetic_meta": true,
+        "synthetic_community": true,
+        "prom_rules": true,
+        "alert_path_no_secret_blocked": true,
+        "alert_fire_with_secret": true,
+        "incident_record_present": true,
+        "on_call_runbook": true,
+        "matrix_consistent": true
+      },
+      "matrix": {
+        "status": "CLOSED",
+        "closed_evidence": "evidence/GO_production_readiness/g2-reality-verification/20260704T021232Z/monitoring-b001",
+        "issues": []
+      },
+      "reason": "Synthetic green · alert fire + incident open with secret · runbook linked"
+    }
+  ],
+  "release_train": {
+    "step": "Reality Verification",
+    "next": "Reality Fix gaps then re-verify"
+  },
+  "honest_boundary": "Verification REOPENs falsely-closed Matrix rows · Formal Acceptance only when all four VERIFIED + four-way consistent"
+}

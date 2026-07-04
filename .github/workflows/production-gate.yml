@@ -1,4 +1,5 @@
 # Production gate — Enforcement layer（Policy: docs/ci/CI-REQUIRED-PRODUCTION-GATE.md）
+# Release Train · TT_CONFIGURATION_TRUTH · configuration-truth-ssot · run-platform-coverage-audit
 # SSOT: gates/production_gate.yaml + Gate Audit 机器清单 gates/gate_audit.machine.json（42+43=85）
 # 校验: python3 scripts/gates/verify_production_gate_config.py
 # PR/push 默认触发；子 job 不设 continue-on-error；96-15 可 gates/waivers/96-15.waiver.json 豁免。
@@ -28,6 +29,9 @@ jobs:
         run: python3 scripts/gates/verify_production_gate_config.py
       - name: Auth email Resend env (fail-closed when transport=resend)
         run: bash scripts/gates/check-auth-email-resend-gate.sh
+
+      - name: Platform Coverage Audit (Release Train · Configuration Truth)
+        run: node scripts/dev/audit-platform-coverage.cjs --evidence-dir /tmp/ci-platform-coverage
 
   b421-doclink:
     name: B-421 runbook / go-live doclink

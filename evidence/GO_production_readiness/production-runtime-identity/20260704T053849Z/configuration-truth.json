@@ -1,0 +1,53 @@
+{
+  "review_id": "CONFIGURATION-TRUTH",
+  "ssot": "registry/configuration-truth-ssot.v1.json",
+  "stamp": "20260704T053849Z",
+  "pass": true,
+  "target_profile": "production",
+  "machine_key": "TT_CONFIGURATION_TRUTH",
+  "layers": {
+    "registry": {
+      "deployment_profile": "production",
+      "seed": "0",
+      "community_showcase": "0",
+      "market_showcase": "0",
+      "demo": "0",
+      "public_content_profile": "production"
+    },
+    "fly_secrets": {
+      "TRAVELTRUST_DEPLOYMENT_PROFILE": "<secret_present>",
+      "SEED_TEST_ACCOUNTS": "<secret_present>",
+      "TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE": null,
+      "TRAVELTRUST_MARKET_PUBLIC_SHOWCASE": null,
+      "DID_RANK_SEED_MARKET_DEMO": null
+    },
+    "fly_config": {
+      "PORT": "8080"
+    },
+    "env_production": {
+      "example": {
+        "TRAVELTRUST_DEPLOYMENT_PROFILE": null,
+        "SEED_TEST_ACCOUNTS": null,
+        "TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE": null,
+        "TRAVELTRUST_MARKET_PUBLIC_SHOWCASE": null,
+        "DID_RANK_SEED_MARKET_DEMO": null
+      },
+      "local_declared": [
+        "SEED_TEST_ACCOUNTS"
+      ]
+    },
+    "github_actions": {
+      "SEED_TEST_ACCOUNTS": [
+        ".github/workflows/build.yml",
+        ".github/workflows/dev-local-smoke-baseline.yml",
+        ".github/workflows/production-gate.yml"
+      ]
+    },
+    "runtime_meta": {
+      "deployment_profile": "production"
+    }
+  },
+  "drifts": [],
+  "verdict": "PASS",
+  "reason": "Configuration layers aligned with Registry and Runtime /meta"
+}

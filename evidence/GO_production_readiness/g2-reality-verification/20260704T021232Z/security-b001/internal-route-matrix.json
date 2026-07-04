@@ -1,0 +1,141 @@
+{
+  "prod_api_base": "https://tt-api-prod.fly.dev",
+  "routes_total": 22,
+  "routes_gate_ok": 22,
+  "routes_gate_fail": 0,
+  "pass": true,
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/process-resolution-outbox",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/indexer-tick",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/indexer-replay",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/indexer-reorg-rewind",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/indexer-reconcile",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/internal/indexer-status",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/region-share-snapshot-line",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/alerts/test-fire",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/incident/open",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/internal/community/feedback/00000000-0000-4000-8000-000000000001",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/community/ranking/snapshot",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/scheduler/enqueue",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/scheduler/run-next",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/internal/public-catalog-surface/stats",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/onboarding/payments/webhook",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/growth/award-points",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/growth/observe",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/internal/growth/reconcile",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/growth/fraud-scan",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/region-share-reconcile",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/investor-distribution-accrual",
+      "http": "403",
+      "gate_ok": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/internal/investor-distribution-register-accrual",
+      "http": "403",
+      "gate_ok": true
+    }
+  ]
+}

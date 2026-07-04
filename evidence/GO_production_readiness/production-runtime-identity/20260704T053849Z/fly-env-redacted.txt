@@ -1,0 +1,6 @@
+Connecting to fdaa:7a:3e05:a7b:2c:6739:e982:2...
+0
+production
+0
+0
+Error: ssh shell: Process exited with status 1

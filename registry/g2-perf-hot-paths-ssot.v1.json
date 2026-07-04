@@ -1,0 +1,13 @@
+{
+  "schema": "g2-perf-hot-paths-ssot.v1",
+  "description": "G2 PRM-PER-B001 prod read-only hot paths",
+  "endpoints": [
+    { "id": "health", "path": "/health", "p95_max_s": 2.0 },
+    { "id": "meta", "path": "/meta", "p95_max_s": 6.0 },
+    { "id": "community_feed", "path": "/api/v1/community/feed?limit=5", "p95_max_s": 2.0 },
+    { "id": "discover_orders", "path": "/api/v1/discover/orders?limit=5", "p95_max_s": 2.0 },
+    { "id": "market_provider_listings", "path": "/api/v1/market/provider/listings?limit=5", "p95_max_s": 2.0 },
+    { "id": "guides", "path": "/api/v1/guides?limit=5", "p95_max_s": 2.0 },
+    { "id": "campaign_surface", "path": "/api/v1/official/cold-start/surfaces/home", "p95_max_s": 2.0 }
+  ]
+}

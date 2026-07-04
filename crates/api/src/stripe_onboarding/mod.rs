@@ -1,4 +1,5 @@
 //! Optional **Stripe** **PaymentIntent** or **Checkout Session** for **96-18** onboarding (test / staging / production).
+//! Profile gates: [`RuntimeIdentity::current()`] via [`config::stripe_onboarding_runtime_profile`].
 //!
 //! Enabled only when **`TRAVELTRUST_STRIPE_SECRET_KEY`** (or legacy **`STRIPE_SECRET_KEY`**) is non-empty
 //! **and** **`TRAVELTRUST_ONBOARDING_STRIPE_ENABLED=1`**. **Checkout**：再加 **`TRAVELTRUST_ONBOARDING_STRIPE_CHECKOUT=1`**
@@ -20,7 +21,7 @@ mod webhook;
 mod tests;
 
 pub use admin_refund::try_admin_psp_refund_after_financial_reversal;
-pub use config::{stripe_checkout_enabled, stripe_onboarding_enabled};
+pub use config::{stripe_checkout_enabled, stripe_onboarding_enabled, stripe_onboarding_runtime_profile};
 pub use ensure::{ensure_checkout_session_for_entitlement, ensure_payment_intent_for_entitlement};
 #[cfg(test)]
 pub(crate) use signature::build_stripe_webhook_signature_header;

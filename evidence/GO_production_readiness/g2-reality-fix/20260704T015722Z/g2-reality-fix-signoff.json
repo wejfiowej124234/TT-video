@@ -1,0 +1,81 @@
+{
+  "review_id": "G2-REALITY-FIX",
+  "stamp": "20260704T015722Z",
+  "machine_keys": {
+    "TT_G2_REALITY_FIX": "IN_PROGRESS",
+    "TT_G2_REALITY_RE_AUDIT": "NOT_STARTED",
+    "TT_PRODUCTION_READINESS_G2_GATE": "IN_PROGRESS"
+  },
+  "prod_api_base": "https://tt-api-prod.fly.dev",
+  "matrix_actions": {
+    "close": [
+      "PRM-SEC-B001",
+      "PRM-PER-B001",
+      "PRM-MON-B001"
+    ],
+    "reopen": [],
+    "verified": [
+      "PRM-SEC-B001",
+      "PRM-PER-B001",
+      "PRM-MON-B001"
+    ],
+    "fix_incomplete": [
+      "PRM-SEC-B002"
+    ]
+  },
+  "findings": [
+    {
+      "id": "PRM-SEC-B001",
+      "verdict": "VERIFIED",
+      "checks": {
+        "prod_internal_secret_configured": true,
+        "prod_internal_no_secret_http": true,
+        "fly_internal_secret_present": true,
+        "staging_distinct": false
+      },
+      "reason": "Prod INTERNAL_API_SECRET configured · internal route 403 without secret · Fly secret present"
+    },
+    {
+      "id": "PRM-SEC-B002",
+      "verdict": "FIX_INCOMPLETE",
+      "checks": {
+        "prod_profile_not_staging": true,
+        "prod_profile_production": false,
+        "seed_fly_zero": true,
+        "seed_endpoint_blocked": true,
+        "showcase_off": true,
+        "market_showcase_off": true,
+        "demo_off": true,
+        "staging_profile_staging": true
+      },
+      "reason": "Prod TRAVELTRUST_DEPLOYMENT_PROFILE=production or meta profile missing · or seed/showcase/demo policy incomplete"
+    },
+    {
+      "id": "PRM-PER-B001",
+      "verdict": "VERIFIED",
+      "checks": {
+        "perf_summary_present": true,
+        "prod_api_base": "https://tt-api-prod.fly.dev",
+        "p95_pass": true
+      },
+      "reason": "Prod read-only perf baseline committed · p95 within threshold"
+    },
+    {
+      "id": "PRM-MON-B001",
+      "verdict": "VERIFIED",
+      "checks": {
+        "health_http": "200",
+        "meta_http": "200",
+        "community_feed_http": "200",
+        "on_call_runbook": "docs/runbook/PRODUCTION-INCIDENT-RESPONSE.md",
+        "prometheus_rules": "PASS"
+      },
+      "reason": "Prod synthetic probes green · on-call path documented · prom rules checked"
+    }
+  ],
+  "release_train": {
+    "step": "Reality Fix",
+    "next": "Complete fix evidence · re-run fix"
+  },
+  "honest_boundary": "Reality Fix closes Matrix only for VERIFIED items with prod evidence · ② staging ≠ ③ prod · Formal Acceptance follows Re-Audit"
+}
