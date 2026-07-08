@@ -1,7 +1,7 @@
 {
   "schema": "traveltrust.g3_production_go_execution_tracker.v1",
-  "stamp": "20260708T052500Z",
-  "recorded_at_utc": "2026-07-08T05:25:00.000Z",
+  "stamp": "20260708T054600Z",
+  "recorded_at_utc": "2026-07-08T05:46:40Z",
   "phase": "g3_infrastructure_only",
   "target_machine_key": "TT_PRODUCTION_GO",
   "target_value": "GO",
@@ -38,71 +38,78 @@
     4,
     5,
     6,
-    7
+    7,
+    8,
+    9
   ],
   "execution_steps": [
     {
       "step": 1,
-      "id": "G3-STRIPE-LIVE",
+      "id": "OCS-PROD-BOOTSTRAP",
+      "priority": "P0",
       "status": "NOT_STARTED",
-      "registry": "G3-02",
-      "pi3": "PI3-003",
-      "gate_script": "scripts/check-pi3-003-stripe-live-production-webhook-execution.sh",
-      "owner_inputs": [
-        "sk_live_*",
-        "whsec_*",
-        "prod API base for webhook URL"
-      ]
+      "title": "OCS Production Bootstrap"
     },
     {
       "step": 2,
-      "id": "G3-CDN-MEDIA",
-      "status": "NOT_STARTED",
-      "registry": "G3-01",
-      "prep": "TT_G3_PRODUCTION_CDN_PREP=READY",
-      "gate_scripts": [
-        "scripts/dev/configure-production-media-r2-cdn.sh",
-        "scripts/dev/run-media-cdn-production-acceptance-gate.sh"
-      ]
+      "id": "STRIPE-LIVE",
+      "priority": "P0",
+      "status": "WAITING_OWNER_STRIPE",
+      "title": "Stripe Live"
     },
     {
       "step": 3,
-      "id": "G3-DOMAIN-TLS",
-      "status": "NOT_STARTED",
-      "registry": "G3-01",
-      "pi3": "PI3-002",
-      "gate_script": "scripts/check-pi3-002-production-domain-tls-cdn-cors-execution.sh"
+      "id": "CDN-MEDIA-HLS",
+      "priority": "P0",
+      "status": "PREP_ONLY",
+      "title": "CDN / Media / HLS"
     },
     {
       "step": 4,
-      "id": "G3-SECURITY-REVIEW",
+      "id": "DOMAIN-TLS-CORS",
+      "priority": "P0",
       "status": "NOT_STARTED",
-      "rule": "All secrets in Fly Secret Manager only"
+      "title": "Domain / TLS / CORS"
     },
     {
       "step": 5,
-      "id": "G3-MONITORING",
+      "id": "MONITORING",
+      "priority": "P0",
       "status": "NOT_STARTED",
-      "registry": "G3-04",
-      "gate_script": "scripts/check-pi3-004-production-readiness-verification-execution.sh"
+      "title": "Production Monitoring"
     },
     {
       "step": 6,
-      "id": "G3-BACKUP-ROLLBACK",
+      "id": "BACKUP-ROLLBACK",
+      "priority": "P0",
       "status": "PARTIAL",
-      "registry": "G3-03+G3-05",
-      "pi3": "PI3-001",
-      "gate_script": "scripts/check-pi3-001-fly-pg-backup-disaster-recovery-execution.sh"
+      "title": "Backup / Restore / Rollback drill"
     },
     {
       "step": 7,
-      "id": "OWNER-FINAL-SIGNOFF",
+      "id": "CMS-FULL-OPS-UAT",
+      "priority": "P1",
+      "status": "PARTIAL",
+      "title": "CMS full operations UAT"
+    },
+    {
+      "step": 8,
+      "id": "API-DATA-LINEAGE",
+      "priority": "P1",
+      "status": "NOT_STARTED",
+      "title": "API / Data lineage final audit"
+    },
+    {
+      "step": 9,
+      "id": "OWNER-SIGNOFF",
+      "priority": "P0",
       "status": "PENDING",
-      "validator": "scripts/dev/validate-production-go-decision-package.cjs --write-matrix"
+      "title": "Owner Final Sign-off"
     }
   ],
   "owner_final_signoff": {
     "template": "evidence/GO_production_readiness/G3-06/OWNER-FINAL-SIGNOFF-LATEST.md",
     "decision_package": "evidence/GO_production_readiness/G3-06/PRODUCTION-GO-DECISION-PACKAGE-LATEST.json"
-  }
+  },
+  "supersedes_note": "Step 1 is OCS Production Bootstrap (highest priority); Stripe is step 2"
 }

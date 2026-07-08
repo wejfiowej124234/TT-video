@@ -1,0 +1,226 @@
+{
+  "schema": "traveltrust.production_pre_go_closure_plan.v1",
+  "stamp": "20260708T054600Z",
+  "recorded_at_utc": "2026-07-08T05:46:40Z",
+  "authority": "Owner-approved closure sequence",
+  "frozen_discipline": {
+    "do_not": [
+      "Re-run HAT",
+      "Re-run Manual",
+      "UI changes",
+      "New features",
+      "Business logic changes"
+    ],
+    "entry_ready": "TT_PRODUCTION_ENTRY_READY=YES",
+    "operations_go": "TT_PRODUCTION_OPERATIONS_GO=GO (narrow CMS sample only)"
+  },
+  "execution_rule": "Sequential \u2014 one step at a time; do not parallelize P0 lanes",
+  "steps": [
+    {
+      "order": 1,
+      "id": "OCS-PROD-BOOTSTRAP",
+      "priority": "P0",
+      "title": "OCS Production Bootstrap",
+      "goal": "Production Public Catalog = OCS SSOT",
+      "current_gap": {
+        "prod": {
+          "guides": 0,
+          "provider_listings": 0,
+          "acquisition_listings": 0,
+          "countries": 1,
+          "landing_ambient": 1,
+          "community_posts": 0,
+          "cities": 0,
+          "pois": 0
+        },
+        "staging_ref": {
+          "guides": "5+",
+          "provider_listings": "11",
+          "acquisition_listings": "10",
+          "countries": 10,
+          "landing_ambient": 10
+        }
+      },
+      "checklist": [
+        "10 countries",
+        "cities",
+        "POI",
+        "Hero media",
+        "Official guides",
+        "Provider listings",
+        "Acquisition listings",
+        "Community showcase",
+        "home_hero + market_feed campaigns"
+      ],
+      "scripts": [
+        "API_BASE=https://tt-api-prod.fly.dev node scripts/dev/run-official-cold-start-dataset.cjs",
+        "node scripts/dev/validate-official-cold-start-dataset.cjs"
+      ],
+      "registry": "registry/official-cold-start-dataset.v1.yaml",
+      "policy": "registry/single-official-public-catalog-policy.v1.yaml",
+      "status": "NOT_STARTED",
+      "risk_if_skipped": "Homepage has content; Market/Community/Guides empty \u2014 largest user-facing risk"
+    },
+    {
+      "order": 2,
+      "id": "STRIPE-LIVE",
+      "priority": "P0",
+      "title": "Stripe Live",
+      "goal": "Checkout \u2192 PaymentIntent \u2192 Webhook \u2192 Order \u2192 Escrow \u2192 Settlement",
+      "checklist": [
+        "success payment",
+        "failed payment",
+        "duplicate webhook",
+        "refund",
+        "webhook delay"
+      ],
+      "scripts": [
+        "bash scripts/dev/sync-fly-stripe-onboarding-secrets-prod.sh",
+        "bash scripts/dev/register-stripe-live-webhook-prod.sh",
+        "bash scripts/check-pi3-003-stripe-live-production-webhook-execution.sh",
+        "bash scripts/dev/smoke-stripe-live-webhook-prod.sh"
+      ],
+      "status": "WAITING_OWNER_STRIPE",
+      "current": {
+        "mock_pay_prod": false,
+        "stripe_live": "NOT_CONNECTED"
+      }
+    },
+    {
+      "order": 3,
+      "id": "CDN-MEDIA-HLS",
+      "priority": "P0",
+      "title": "CDN / Media / HLS",
+      "goal": "CMS \u2192 Storage (R2) \u2192 CDN edge \u2192 User",
+      "checklist": [
+        "image CDN",
+        "video CDN",
+        "HLS",
+        "cache headers",
+        "hotlink protection",
+        "404 fallback"
+      ],
+      "scripts": [
+        "bash scripts/dev/configure-production-media-r2-cdn.sh",
+        "bash scripts/dev/run-media-cdn-production-acceptance-gate.sh"
+      ],
+      "status": "PREP_ONLY",
+      "current": {
+        "media_origin": "fly uploads",
+        "TT_G3_PRODUCTION_CDN_VERIFIED": "PLANNED"
+      }
+    },
+    {
+      "order": 4,
+      "id": "DOMAIN-TLS-CORS",
+      "priority": "P0",
+      "title": "Domain / TLS / CORS",
+      "goal": "www / api / cdn custom hostnames",
+      "scripts": [
+        "bash scripts/check-pi3-002-production-domain-tls-cdn-cors-execution.sh"
+      ],
+      "status": "NOT_STARTED",
+      "current": {
+        "hostnames": "*.fly.dev"
+      }
+    },
+    {
+      "order": 5,
+      "id": "MONITORING",
+      "priority": "P0",
+      "title": "Production Monitoring",
+      "checklist": {
+        "api": [
+          "5xx",
+          "latency",
+          "timeout",
+          "health"
+        ],
+        "business": [
+          "register/day",
+          "login/day",
+          "orders/day",
+          "payment success",
+          "provider online"
+        ],
+        "web3": [
+          "RPC error",
+          "transaction fail"
+        ]
+      },
+      "scripts": [
+        "bash scripts/dev/run-phase3-production-go-audit.sh",
+        "bash scripts/check-pi3-004-production-readiness-verification-execution.sh"
+      ],
+      "status": "NOT_STARTED"
+    },
+    {
+      "order": 6,
+      "id": "BACKUP-ROLLBACK",
+      "priority": "P0",
+      "title": "Backup / Restore / Rollback drill",
+      "goal": "Backup \u2192 Restore \u2192 verify data; deploy fail \u2192 rollback \u2192 smoke PASS",
+      "scripts": [
+        "bash scripts/check-pi3-001-fly-pg-backup-disaster-recovery-execution.sh",
+        "bash scripts/dev/run-phase3-db-restore-drill-prod.sh"
+      ],
+      "status": "PARTIAL"
+    },
+    {
+      "order": 7,
+      "id": "CMS-FULL-OPS-UAT",
+      "priority": "P1",
+      "title": "CMS full operations UAT",
+      "goal": "Country\u2192City\u2192POI, Guide review/publish, Provider approve/publish \u2014 Admin \u2192 user page",
+      "current_verified": [
+        "homepage announcement",
+        "homepage video TH",
+        "homepage campaign"
+      ],
+      "status": "PARTIAL"
+    },
+    {
+      "order": 8,
+      "id": "API-DATA-LINEAGE",
+      "priority": "P1",
+      "title": "API / Data lineage final audit",
+      "goal": "Database \u2192 API \u2192 Frontend for all public surfaces; no frontend direct DB",
+      "surfaces": [
+        "Market",
+        "Community",
+        "Homepage",
+        "Governance"
+      ],
+      "status": "NOT_STARTED"
+    },
+    {
+      "order": 9,
+      "id": "OWNER-SIGNOFF",
+      "priority": "P0",
+      "title": "Owner Final Sign-off",
+      "template": "evidence/GO_production_readiness/G3-06/OWNER-FINAL-SIGNOFF-LATEST.md",
+      "validator": "node scripts/dev/validate-production-go-decision-package.cjs --write-matrix",
+      "target": "TT_PRODUCTION_GO: GO",
+      "status": "PENDING"
+    }
+  ],
+  "p2_deferred": [
+    {
+      "id": "OWNER-LONG-LIVED-ACCOUNTS",
+      "note": "Replace adm-u01-* enablement personas post-GO"
+    },
+    {
+      "id": "WEB3-MAINNET",
+      "note": "Sepolia OK for scope; mainnet contracts later"
+    },
+    {
+      "id": "GROWTH-CRM",
+      "note": "Not GO blocking"
+    }
+  ],
+  "machine_keys": {
+    "TT_PRODUCTION_GO": "NO_GO",
+    "TT_PRODUCTION_PRE_GO_CLOSURE": "ACTIVE",
+    "TT_OCS_PROD_BOOTSTRAP": "NOT_STARTED"
+  }
+}
