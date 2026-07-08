@@ -1,13 +1,13 @@
 # Production Readiness · RC Registry Freeze Record
-# IMMUTABLE after stamp 20260708T041200Z — bump only via new RC cycle
+# IMMUTABLE after stamp 20260708T041259Z — bump only via new RC cycle
 
 schema: traveltrust.production_readiness_rc_registry_freeze.v1
 version: 1
 effective_utc: "2026-07-08"
 machine_key: TT_PRODUCTION_READINESS_RC_REGISTRY_FREEZE
 status: FROZEN
-frozen_at_utc: "2026-07-08T04:12:00.780Z"
-git_sha: "9b90696d5ff18f7e095f427f48d2f6e193b304d9"
+frozen_at_utc: "2026-07-08T04:12:59.479Z"
+git_sha: "f2e3fbc53122fb6a8f75f96f6e2b14006ac98842"
 anchor:
   path: registry/production-readiness-open-issues.v1.yaml
   version: 17
