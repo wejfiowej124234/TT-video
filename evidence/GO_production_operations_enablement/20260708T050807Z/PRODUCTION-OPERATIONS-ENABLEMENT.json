@@ -1,0 +1,122 @@
+{
+  "schema": "traveltrust.production_operations_enablement.v1",
+  "stamp": "20260708T050807Z",
+  "recorded_at_utc": "2026-07-08T05:08:29.368Z",
+  "environment": {
+    "api": "https://tt-api-prod.fly.dev",
+    "web": "https://tt-web-prod.fly.dev",
+    "git_sha": "013425d5513420613102d28be65ac0c28211f262"
+  },
+  "personas": {
+    "primary": [
+      "SuperAdmin",
+      "Ops",
+      "Risk"
+    ],
+    "credentials": {
+      "storage": "fly_prod_database_admin_console_roles",
+      "password_in_repo": false,
+      "note": "Provisioned at enablement; not stored in git."
+    },
+    "adm_u01_full_matrix": "six roles via ADM-U01 auto-provision"
+  },
+  "phases": {
+    "adm_u01": {
+      "verdict": "GO",
+      "evidence_dir": "evidence\\GO_production_operations_enablement\\20260708T045839Z\\adm-u01"
+    },
+    "cms_publish_loop": {
+      "verdict": "NO_GO"
+    },
+    "consumer_sync": {
+      "verdict": "GO"
+    }
+  },
+  "checks": [
+    {
+      "id": "adm_u01_matrix",
+      "label": "ADM-U01 Production RBAC matrix",
+      "status": "PASS",
+      "detail": "pass=102/102 gate=GO"
+    },
+    {
+      "id": "persona_superadmin",
+      "label": "Production Admin Persona \u00b7 SuperAdmin",
+      "status": "PASS",
+      "detail": "email=[persona]@traveltrust.prod",
+      "console_role": "SuperAdmin",
+      "login_role": "super_admin"
+    },
+    {
+      "id": "persona_ops",
+      "label": "Production Admin Persona \u00b7 Ops",
+      "status": "PASS",
+      "detail": "email=[persona]@traveltrust.prod",
+      "console_role": "Ops",
+      "login_role": "admin"
+    },
+    {
+      "id": "persona_risk",
+      "label": "Production Admin Persona \u00b7 Risk",
+      "status": "PASS",
+      "detail": "email=[persona]@traveltrust.prod",
+      "console_role": "Risk",
+      "login_role": "admin"
+    },
+    {
+      "id": "cms_landing_ambient",
+      "label": "Homepage video / landing ambient (TH)",
+      "status": "FAIL",
+      "detail": "HTTP 422"
+    },
+    {
+      "id": "cms_campaign_deploy",
+      "label": "Homepage announcement campaign deploy",
+      "status": "PASS",
+      "detail": "campaign=35123a1d-b5dc-409e-b9de-fcf600e7cd2b guide=89dd6ac9-31a1-4376-a258-1f50786c0bf9",
+      "campaign_id": "35123a1d-b5dc-409e-b9de-fcf600e7cd2b",
+      "guide_id": "89dd6ac9-31a1-4376-a258-1f50786c0bf9"
+    },
+    {
+      "id": "consumer_home_hero",
+      "label": "Consumer sync \u00b7 /api/v1/official/cold-start/surfaces/home_hero \u2192 /",
+      "status": "PASS",
+      "detail": "api campaign=present web=200",
+      "api_route": "/api/v1/official/cold-start/surfaces/home_hero",
+      "web_route": "/",
+      "expected_campaign_id": "35123a1d-b5dc-409e-b9de-fcf600e7cd2b"
+    },
+    {
+      "id": "consumer_market_feed",
+      "label": "Consumer sync \u00b7 /api/v1/official/cold-start/surfaces/market_feed \u2192 /market",
+      "status": "PASS",
+      "detail": "api campaign=null web=200",
+      "api_route": "/api/v1/official/cold-start/surfaces/market_feed",
+      "web_route": "/market"
+    },
+    {
+      "id": "consumer_community_feed",
+      "label": "Consumer sync \u00b7 /api/v1/official/cold-start/surfaces/community_feed \u2192 /community",
+      "status": "PASS",
+      "detail": "api campaign=null web=200",
+      "api_route": "/api/v1/official/cold-start/surfaces/community_feed",
+      "web_route": "/community"
+    }
+  ],
+  "resources": {
+    "campaign_id": "35123a1d-b5dc-409e-b9de-fcf600e7cd2b",
+    "guide_id": "89dd6ac9-31a1-4376-a258-1f50786c0bf9",
+    "super_admin_email": "[REDACTED]"
+  },
+  "machine_keys": {
+    "TT_PRODUCTION_OPERATIONS_ENABLEMENT": "NO_GO",
+    "TT_PRODUCTION_OPERATIONS_GO": "NO_GO",
+    "TT_ADMIN_RBAC_PRODUCTION_MATRIX": "OK",
+    "TT_PRODUCTION_INDEPENDENT_OPS": "NOT_READY"
+  },
+  "summary": {
+    "total_checks": 9,
+    "pass": 8,
+    "fail": 1
+  }
+}

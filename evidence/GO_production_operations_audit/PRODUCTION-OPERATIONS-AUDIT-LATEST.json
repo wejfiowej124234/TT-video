@@ -1,0 +1,396 @@
+{
+  "schema": "traveltrust.production_operations_audit.v1",
+  "stamp": "20260708T043636Z",
+  "recorded_at_utc": "2026-07-08T04:37:05.188Z",
+  "mode": "read_only",
+  "rc_freeze": true,
+  "verdict": "FAIL",
+  "machine_keys": {
+    "TT_PRODUCTION_OPERATIONS_AUDIT": "FAIL",
+    "TT_ADMIN_CHECKLIST": "CLOSED_LOCAL",
+    "TT_PRODUCTION_GO": "NO_GO"
+  },
+  "registry": {
+    "admin_40_40": "40/40 COMPLETE"
+  },
+  "findings": {
+    "missing": [
+      {
+        "id": "prod_adm_u01",
+        "severity": "P0",
+        "note": "Production 六角色 RBAC 矩阵未跑"
+      },
+      {
+        "id": "prod_owner_persona",
+        "severity": "P0",
+        "note": "缺 Production Admin 凭证"
+      },
+      {
+        "id": "prod_sync_uat",
+        "severity": "P1",
+        "note": "未做 Admin 发布→Consumer 实时同步 prod 抽测"
+      },
+      {
+        "id": "prod_guides_empty",
+        "severity": "P1",
+        "note": "Prod 公共 guides=0"
+      }
+    ],
+    "permission_boundaries": [
+      {
+        "route": "/api/v1/admin/content/media-assets?limit=1",
+        "verdict": "AUTH_OK",
+        "status": 401
+      },
+      {
+        "route": "/api/v1/admin/official/public-operations/campaigns?limit=5",
+        "verdict": "AUTH_OK",
+        "status": 401
+      },
+      {
+        "route": "/api/v1/admin/official/public-operations/publish-queue?limit=1",
+        "verdict": "AUTH_OK",
+        "status": 401
+      },
+      {
+        "route": "/api/v1/admin/official/accounts?limit=1",
+        "verdict": "AUTH_OK",
+        "status": 401
+      },
+      {
+        "route": "/api/v1/admin/community/reports?limit=1",
+        "verdict": "AUTH_OK",
+        "status": 401
+      },
+      {
+        "route": "/api/v1/admin/users?limit=1",
+        "verdict": "AUTH_OK",
+        "status": 401
+      },
+      {
+        "route": "/api/v1/admin/onboarding/entitlements?limit=1",
+        "verdict": "AUTH_OK",
+        "status": 401
+      },
+      {
+        "route": "/api/v1/admin/capabilities",
+        "verdict": "AUTH_OK",
+        "status": 401
+      },
+      {
+        "route": "/api/v1/admin/rbac/route-matrix",
+        "verdict": "AUTH_OK",
+        "status": 401
+      },
+      {
+        "route": "/api/v1/admin/audit-logs?limit=1",
+        "verdict": "AUTH_OK",
+        "status": 401
+      },
+      {
+        "route": "/api/v1/admin/content/publish-queue?limit=1",
+        "verdict": "AUTH_OK",
+        "status": 401
+      },
+      {
+        "route": "/api/v1/admin/approvals?limit=1",
+        "verdict": "AUTH_OK",
+        "status": 401
+      },
+      {
+        "route": "/api/v1/admin/flags?limit=1",
+        "verdict": "AUTH_OK",
+        "status": 401
+      },
+      {
+        "route": "/api/v1/admin/observability/overview",
+        "verdict": "AUTH_OK",
+        "status": 401
+      }
+    ],
+    "non_operable": [
+      {
+        "id": "prod_admin_crud",
+        "note": "Prod SEED=0 · 无 Owner Admin Persona · live CRUD 不可审计"
+      },
+      {
+        "id": "growth_freeze",
+        "note": "Growth 写受 freeze"
+      },
+      {
+        "id": "onchain",
+        "note": "链上参数非 CMS CRUD"
+      }
+    ],
+    "blockers": [
+      {
+        "route": "/api/v1/community/feed?limit=3",
+        "verdict": "UNAUTH_ALLOW"
+      }
+    ]
+  },
+  "probes": {
+    "prod": {
+      "homepage": {
+        "api": {
+          "/api/v1/admin/content/media-assets?limit=1": {
+            "status": 401,
+            "ok": false
+          },
+          "/api/v1/admin/official/public-operations/campaigns?limit=5": {
+            "status": 401,
+            "ok": false
+          }
+        },
+        "web": {
+          "/admin/content/landing-ambient": {
+            "status": 307,
+            "ok": true
+          },
+          "/admin/content/media-assets": {
+            "status": 307,
+            "ok": true
+          },
+          "/admin/official/public-operations/campaigns": {
+            "status": 307,
+            "ok": true
+          }
+        },
+        "consumer": {
+          "/": {
+            "status": 200,
+            "ok": true
+          },
+          "/market": {
+            "status": 200,
+            "ok": true
+          }
+        }
+      },
+      "official": {
+        "api": {
+          "/api/v1/admin/official/public-operations/publish-queue?limit=1": {
+            "status": 401,
+            "ok": false
+          },
+          "/api/v1/admin/official/accounts?limit=1": {
+            "status": 401,
+            "ok": false
+          }
+        },
+        "web": {
+          "/admin/official/public-operations": {
+            "status": 307,
+            "ok": true
+          },
+          "/admin/official/accounts": {
+            "status": 307,
+            "ok": true
+          }
+        },
+        "consumer": {
+          "/market": {
+            "status": 200,
+            "ok": true
+          }
+        }
+      },
+      "market_community": {
+        "api": {
+          "/api/v1/admin/community/reports?limit=1": {
+            "status": 401,
+            "ok": false
+          },
+          "/api/v1/community/feed?limit=3": {
+            "status": 200,
+            "ok": true
+          }
+        },
+        "web": {
+          "/admin/community/reports": {
+            "status": 307,
+            "ok": true
+          }
+        },
+        "consumer": {
+          "/market": {
+            "status": 200,
+            "ok": true
+          },
+          "/community": {
+            "status": 200,
+            "ok": true
+          }
+        }
+      },
+      "users": {
+        "api": {
+          "/api/v1/admin/users?limit=1": {
+            "status": 401,
+            "ok": false
+          },
+          "/api/v1/admin/onboarding/entitlements?limit=1": {
+            "status": 401,
+            "ok": false
+          }
+        },
+        "web": {
+          "/admin/users": {
+            "status": 307,
+            "ok": true
+          },
+          "/admin/onboarding": {
+            "status": 307,
+            "ok": true
+          }
+        },
+        "consumer": {}
+      },
+      "rbac": {
+        "api": {
+          "/api/v1/admin/capabilities": {
+            "status": 401,
+            "ok": false
+          },
+          "/api/v1/admin/rbac/route-matrix": {
+            "status": 401,
+            "ok": false
+          },
+          "/api/v1/admin/audit-logs?limit=1": {
+            "status": 401,
+            "ok": false
+          }
+        },
+        "web": {
+          "/admin/permissions": {
+            "status": 307,
+            "ok": true
+          },
+          "/admin/audit": {
+            "status": 307,
+            "ok": true
+          }
+        },
+        "consumer": {}
+      },
+      "review": {
+        "api": {
+          "/api/v1/admin/content/publish-queue?limit=1": {
+            "status": 401,
+            "ok": false
+          },
+          "/api/v1/admin/approvals?limit=1": {
+            "status": 401,
+            "ok": false
+          }
+        },
+        "web": {
+          "/admin/content/publish-queue": {
+            "status": 307,
+            "ok": true
+          },
+          "/admin/approvals": {
+            "status": 307,
+            "ok": true
+          }
+        },
+        "consumer": {}
+      },
+      "config": {
+        "api": {
+          "/api/v1/admin/flags?limit=1": {
+            "status": 401,
+            "ok": false
+          },
+          "/api/v1/admin/observability/overview": {
+            "status": 401,
+            "ok": false
+          }
+        },
+        "web": {
+          "/admin/config": {
+            "status": 307,
+            "ok": true
+          },
+          "/admin/flags": {
+            "status": 307,
+            "ok": true
+          },
+          "/admin/observability": {
+            "status": 307,
+            "ok": true
+          }
+        },
+        "consumer": {}
+      },
+      "public": {
+        "sha": "013425d5513420613102d28be65ac0c28211f262",
+        "db": true,
+        "guides": 0,
+        "admin_login": false
+      }
+    },
+    "staging": {
+      "auth": {
+        "ok": true,
+        "role": "admin"
+      },
+      "crud": {
+        "/api/v1/admin/content/countries?limit=1": {
+          "status": 200,
+          "ok": true
+        },
+        "/api/v1/admin/content/media-assets?limit=1": {
+          "status": 200,
+          "ok": true
+        },
+        "/api/v1/admin/official/public-operations/publish-queue?limit=1": {
+          "status": 200,
+          "ok": true
+        },
+        "/api/v1/admin/official/public-operations/campaigns?limit=1": {
+          "status": 200,
+          "ok": true
+        },
+        "/api/v1/admin/users?limit=1": {
+          "status": 200,
+          "ok": true
+        },
+        "/api/v1/admin/community/reports?limit=1": {
+          "status": 200,
+          "ok": true
+        },
+        "/api/v1/admin/content/publish-queue?limit=1": {
+          "status": 200,
+          "ok": true
+        },
+        "/api/v1/admin/approvals?limit=1": {
+          "status": 200,
+          "ok": true
+        },
+        "/api/v1/admin/flags?limit=1": {
+          "status": 200,
+          "ok": true
+        },
+        "/api/v1/admin/audit-logs?limit=1": {
+          "status": 200,
+          "ok": true
+        },
+        "/api/v1/admin/capabilities": {
+          "status": 200,
+          "ok": true
+        }
+      },
+      "sync": {
+        "guides": 200,
+        "pq": 200
+      }
+    }
+  },
+  "readiness": {
+    "capability": "COMPLETE",
+    "prod_live": "PARTIAL",
+    "sync_prod": "NOT_VERIFIED",
+    "sync_staging_ref": "READ_OK"
+  }
+}

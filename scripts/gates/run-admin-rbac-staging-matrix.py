@@ -32,7 +32,10 @@ except ImportError:
     yaml = None  # type: ignore
 
 ROOT = Path(__file__).resolve().parents[2]
-REGISTRY = ROOT / "registry" / "admin-rbac-staging-probes.v1.yaml"
+REGISTRY = Path(
+    os.environ.get("ADM_U01_REGISTRY", "").strip()
+    or str(ROOT / "registry" / "admin-rbac-staging-probes.v1.yaml")
+)
 ROLES = ["SuperAdmin", "Ops", "CS", "Risk", "Finance", "Auditor"]
 ROLE_ENV = {
     "SuperAdmin": "TRAVELTRUST_ADMIN_TOKEN_SUPER",
@@ -91,6 +94,7 @@ def http_json_curl(
     url: str,
     token: str | None = None,
     body: dict | None = None,
+    extra_headers: dict[str, str] | None = None,
 ) -> tuple[int, dict | list | str]:
     timeout_s = int(os.environ.get("ADM_U01_HTTP_TIMEOUT", "45"))
     cmd = [
@@ -113,6 +117,12 @@ def http_json_curl(
         cmd += ["-H", f"Authorization: Bearer {token}"]
     if body is not None:
         cmd += ["-H", "Content-Type: application/json", "-d", json.dumps(body)]
+        if method in ("POST", "PUT", "PATCH", "DELETE"):
+            idem = f"adm-u01-{method.lower()}-{int(time.time() * 1000)}-{os.getpid()}"
+            cmd += ["-H", f"Idempotency-Key: {idem}"]
+    if extra_headers:
+        for k, v in extra_headers.items():
+            cmd += ["-H", f"{k}: {v}"]
     cmd.append(url)
     try:
         proc = subprocess.run(cmd, capture_output=True, check=False)
@@ -410,16 +420,22 @@ def promote_admin_via_pg(dsn: str, uid: str, console_role: str) -> None:
     )
 
 
+def email_domain() -> str:
+    raw = os.environ.get("ADM_U01_EMAIL_DOMAIN", "@traveltrust.staging").strip()
+    return raw if raw.startswith("@") else f"@{raw}"
+
+
 def provision_tokens(base: str, dsn: str) -> dict[str, str]:
     """Register via staging API + PG console_role（持久 Fly 多实例安全；不依赖 seed_promote 内存）。"""
     stamp = int(time.time())
+    domain = email_domain()
     emails = {
-        "SuperAdmin": f"adm-u01-super-{stamp}@traveltrust.staging",
-        "Ops": f"adm-u01-ops-{stamp}@traveltrust.staging",
-        "CS": f"adm-u01-cs-{stamp}@traveltrust.staging",
-        "Risk": f"adm-u01-risk-{stamp}@traveltrust.staging",
-        "Finance": f"adm-u01-fin-{stamp}@traveltrust.staging",
-        "Auditor": f"adm-u01-aud-{stamp}@traveltrust.staging",
+        "SuperAdmin": f"adm-u01-super-{stamp}{domain}",
+        "Ops": f"adm-u01-ops-{stamp}{domain}",
+        "CS": f"adm-u01-cs-{stamp}{domain}",
+        "Risk": f"adm-u01-risk-{stamp}{domain}",
+        "Finance": f"adm-u01-fin-{stamp}{domain}",
+        "Auditor": f"adm-u01-aud-{stamp}{domain}",
     }
     ids: dict[str, str] = {}
     tokens: dict[str, str] = {}

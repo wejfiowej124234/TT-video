@@ -83,3 +83,4 @@ deploy/fly/**/build.env.local
 # Playwright 本地报告（勿入仓）
 frontend/playwright-report/
 frontend/test-results/
+**/adm-u01-tokens.env

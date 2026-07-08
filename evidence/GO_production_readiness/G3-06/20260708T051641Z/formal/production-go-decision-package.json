@@ -1,0 +1,164 @@
+{
+  "schema": "traveltrust.production_go_decision_package.v1",
+  "stamp": "20260708T051641Z",
+  "commit": "013425d5",
+  "phase": "owner_final_sign_off",
+  "recorded_at_utc": "2026-07-08T05:16:46.450Z",
+  "verdict": "PENDING_OWNER_SIGNOFF",
+  "machine_keys": {
+    "TT_PRODUCTION_READINESS_G1_GATE": "PASS",
+    "TT_PRODUCTION_READINESS_G2_GATE": "PASS",
+    "TT_PRODUCTION_READINESS_G3_GATE": "NOT_STARTED",
+    "TT_PRODUCTION_GO": "NO_GO",
+    "TT_PRODUCTION_ENTRY_READY": "YES",
+    "TT_PRODUCTION_OPERATIONS_GO": "GO",
+    "TT_PRODUCTION_INDEPENDENT_OPS": "READY",
+    "TT_OWNER_FINAL_SIGNOFF": "PENDING"
+  },
+  "g3_domains_complete": [],
+  "g3_domains_status": {
+    "G3-01": "PLANNED",
+    "G3-02": "PLANNED",
+    "G3-03": "PLANNED",
+    "G3-04": "PLANNED",
+    "G3-05": "PLANNED",
+    "G3-06": "IMPLEMENTING"
+  },
+  "evidence_lanes": {
+    "rc_freeze": {
+      "verdict": "FROZEN",
+      "stamp": "20260708T041259Z",
+      "entry_ready": "YES",
+      "refs": [
+        "evidence/GO_production_readiness/rc-freeze/RC-FREEZE-MANIFEST-LATEST.json",
+        "evidence/GO_production_readiness/rc-freeze/RELEASE-CANDIDATE-FINAL-SIGNOFF-LATEST.json",
+        "evidence/GO_production_readiness/rc-freeze/PRODUCTION-DEPLOYMENT-PLAN-LATEST.md",
+        "registry/production-readiness-rc-registry-freeze.v1.yaml"
+      ],
+      "tag": "v1.1.0-rc.20260708",
+      "rc_git_sha": "f2e3fbc53122fb6a8f75f96f6e2b14006ac98842"
+    },
+    "deployment": {
+      "verdict": "DEPLOYED",
+      "api": "https://tt-api-prod.fly.dev",
+      "web": "https://tt-web-prod.fly.dev",
+      "prod_git_sha": "013425d5513420613102d28be65ac0c28211f262",
+      "deployment_profile": "production",
+      "database_connected": true,
+      "scripts": [
+        "scripts/dev/phase3-production-fly-deploy-and-sync.sh",
+        "scripts/dev/deploy-tt-web-production.sh"
+      ],
+      "note": "PI3 deploy from RC tag; secrets not in repo."
+    },
+    "smoke": {
+      "verdict": "CORE_PASS",
+      "probes": [
+        {
+          "route": "/health",
+          "expected": 200
+        },
+        {
+          "route": "/meta",
+          "expected": 200,
+          "git_sha_match": true
+        },
+        {
+          "route": "/",
+          "base": "https://tt-web-prod.fly.dev",
+          "expected": 200
+        }
+      ],
+      "order_mock_pay_prod": "PASS (disabled)"
+    },
+    "operations_audit": {
+      "verdict": "FAIL",
+      "mode": "read_only",
+      "stamp": "20260708T043636Z",
+      "ref": "evidence/GO_production_operations_audit/PRODUCTION-OPERATIONS-AUDIT-LATEST.json",
+      "note": "Read-only pre-enablement audit; superseded by operations enablement GO."
+    },
+    "operations_enablement": {
+      "verdict": "GO",
+      "independent_ops": "READY",
+      "stamp": "20260708T050905Z",
+      "refs": [
+        "evidence/GO_production_operations_enablement/PRODUCTION-OPERATIONS-GO-LATEST-REDACTED.json",
+        "evidence/GO_production_operations_enablement/PRODUCTION-OPERATIONS-GO-LATEST.md"
+      ],
+      "checks_pass": 9,
+      "checks_total": 9
+    },
+    "rbac_adm_u01": {
+      "verdict": "GO",
+      "environment": "production",
+      "api_base": "https://tt-api-prod.fly.dev",
+      "matrix_pass": 102,
+      "matrix_total": 102,
+      "registry": "registry/admin-rbac-production-probes.v1.yaml",
+      "ref": "evidence/GO_production_operations_enablement/20260708T045839Z/adm-u01/report.json",
+      "personas": [
+        "SuperAdmin",
+        "Ops",
+        "Risk"
+      ]
+    },
+    "cms_publish_loop": {
+      "verdict": "GO",
+      "consumer_sync": "GO",
+      "surfaces": [
+        "landing_ambient TH",
+        "homepage campaign home_hero",
+        "consumer / /market /community"
+      ],
+      "campaign_id": "a4a91292-657b-4871-83f2-b73e21b92657"
+    }
+  },
+  "operations_track": {
+    "ready_for_owner_review": true,
+    "summary": "RC Freeze + PI3 deploy + prod smoke + ADM-U01 RBAC + CMS publish loop + consumer sync — evidence attached. No business code changes in enablement lane."
+  },
+  "remaining_blockers": [
+    {
+      "id": "G3_GATE",
+      "severity": "P0",
+      "note": "TT_PRODUCTION_READINESS_G3_GATE=NOT_STARTED — G3-01..G3-06 production VERIFIED required"
+    },
+    {
+      "id": "STRIPE_LIVE",
+      "severity": "P0",
+      "note": "PI3-003 Stripe Live + prod webhook smoke"
+    },
+    {
+      "id": "CDN_HLS",
+      "severity": "P1",
+      "note": "G3-01 production CDN/HLS edge probes"
+    },
+    {
+      "id": "OWNER_SIGNOFF",
+      "severity": "P0",
+      "note": "Owner attestation GO + signed_utc on this package"
+    }
+  ],
+  "artifacts": {
+    "go_decision_package_json": "evidence/GO_production_readiness/G3-06/20260708T051641Z/formal/production-go-decision-package.json",
+    "owner_final_signoff_md": "evidence/GO_production_readiness/G3-06/20260708T051641Z/formal/OWNER-FINAL-SIGNOFF.md",
+    "launch_checklist": "docs/runbook/TT-9626-zero-to-production-go-single-path.md",
+    "production_sign_off": "evidence/GO_production_readiness/G3-06/20260708T051641Z/formal/OWNER-FINAL-SIGNOFF.md",
+    "final_per": "evidence/GO_production_readiness/g1-per/",
+    "operations_go_redacted": "evidence/GO_production_operations_enablement/PRODUCTION-OPERATIONS-GO-LATEST-REDACTED.json"
+  },
+  "owner_attestation": {
+    "name": null,
+    "role": "Owner / Release Authority",
+    "decision": "PENDING",
+    "signed_utc": null,
+    "scope": "Review evidence_lanes; confirm G3 infrastructure blockers; authorize TT_PRODUCTION_GO: GO or NO_GO."
+  },
+  "validator_note": "validate-production-go-decision-package.cjs exit 0 requires G3 PASS + owner decision GO — not satisfied until G3-01..G3-06 VERIFIED and Owner signs.",
+  "forbidden_claims": [
+    "TT_PRODUCTION_GO: GO from operations enablement alone",
+    "G3 PASS without per-domain production VERIFIED",
+    "Staging evidence as production VERIFIED"
+  ]
+}
