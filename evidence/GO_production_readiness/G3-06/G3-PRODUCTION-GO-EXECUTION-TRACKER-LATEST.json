@@ -1,0 +1,108 @@
+{
+  "schema": "traveltrust.g3_production_go_execution_tracker.v1",
+  "stamp": "20260708T052500Z",
+  "recorded_at_utc": "2026-07-08T05:25:00.000Z",
+  "phase": "g3_infrastructure_only",
+  "target_machine_key": "TT_PRODUCTION_GO",
+  "target_value": "GO",
+  "current_state": {
+    "TT_PRODUCTION_ENTRY_READY": "YES",
+    "TT_PRODUCTION_OPERATIONS_GO": "GO",
+    "TT_PRODUCTION_INDEPENDENT_OPS": "READY",
+    "TT_PRODUCTION_READINESS_G1_GATE": "PASS",
+    "TT_PRODUCTION_READINESS_G2_GATE": "PASS",
+    "TT_PRODUCTION_READINESS_G3_GATE": "NOT_STARTED",
+    "TT_PRODUCTION_GO": "NO_GO",
+    "TT_OWNER_FINAL_SIGNOFF": "PENDING",
+    "prod_surfaces": {
+      "api": "https://tt-api-prod.fly.dev",
+      "web": "https://tt-web-prod.fly.dev"
+    },
+    "mock_pay_prod": "disabled",
+    "stripe_live": "NOT_CONNECTED"
+  },
+  "frozen_discipline": {
+    "do_not": [
+      "Re-run HAT six-role matrix",
+      "Re-run Manual validation checklist",
+      "Change UI or product features",
+      "Modify business logic or Registry RC freeze bundle",
+      "Claim TT_PRODUCTION_GO from operations enablement alone"
+    ],
+    "rationale": "TT_PRODUCTION_ENTRY_READY=YES closes product validation. Remaining work is G3 infrastructure + Owner sign-off only."
+  },
+  "execution_steps_order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "execution_steps": [
+    {
+      "step": 1,
+      "id": "G3-STRIPE-LIVE",
+      "status": "NOT_STARTED",
+      "registry": "G3-02",
+      "pi3": "PI3-003",
+      "gate_script": "scripts/check-pi3-003-stripe-live-production-webhook-execution.sh",
+      "owner_inputs": [
+        "sk_live_*",
+        "whsec_*",
+        "prod API base for webhook URL"
+      ]
+    },
+    {
+      "step": 2,
+      "id": "G3-CDN-MEDIA",
+      "status": "NOT_STARTED",
+      "registry": "G3-01",
+      "prep": "TT_G3_PRODUCTION_CDN_PREP=READY",
+      "gate_scripts": [
+        "scripts/dev/configure-production-media-r2-cdn.sh",
+        "scripts/dev/run-media-cdn-production-acceptance-gate.sh"
+      ]
+    },
+    {
+      "step": 3,
+      "id": "G3-DOMAIN-TLS",
+      "status": "NOT_STARTED",
+      "registry": "G3-01",
+      "pi3": "PI3-002",
+      "gate_script": "scripts/check-pi3-002-production-domain-tls-cdn-cors-execution.sh"
+    },
+    {
+      "step": 4,
+      "id": "G3-SECURITY-REVIEW",
+      "status": "NOT_STARTED",
+      "rule": "All secrets in Fly Secret Manager only"
+    },
+    {
+      "step": 5,
+      "id": "G3-MONITORING",
+      "status": "NOT_STARTED",
+      "registry": "G3-04",
+      "gate_script": "scripts/check-pi3-004-production-readiness-verification-execution.sh"
+    },
+    {
+      "step": 6,
+      "id": "G3-BACKUP-ROLLBACK",
+      "status": "PARTIAL",
+      "registry": "G3-03+G3-05",
+      "pi3": "PI3-001",
+      "gate_script": "scripts/check-pi3-001-fly-pg-backup-disaster-recovery-execution.sh"
+    },
+    {
+      "step": 7,
+      "id": "OWNER-FINAL-SIGNOFF",
+      "status": "PENDING",
+      "validator": "scripts/dev/validate-production-go-decision-package.cjs --write-matrix"
+    }
+  ],
+  "owner_final_signoff": {
+    "template": "evidence/GO_production_readiness/G3-06/OWNER-FINAL-SIGNOFF-LATEST.md",
+    "decision_package": "evidence/GO_production_readiness/G3-06/PRODUCTION-GO-DECISION-PACKAGE-LATEST.json"
+  }
+}
