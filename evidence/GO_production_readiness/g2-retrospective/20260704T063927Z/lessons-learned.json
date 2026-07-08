@@ -1,0 +1,59 @@
+[
+  {
+    "id": "LL-G2-001",
+    "category": "matrix_sync",
+    "title": "G2 Gate recompute order",
+    "issue": "sync-production-readiness-g2-matrix.cjs ran recomputeG2Gate() before upserting TT_WAVE2_FORMAL_ACCEPTANCE: COMPLETE, leaving TT_PRODUCTION_READINESS_G2_GATE stuck at IN_PROGRESS after Formal.",
+    "fix": "Move recomputeG2Gate() after all machine key upserts in formal (and all) modes.",
+    "files": [
+      "scripts/dev/sync-production-readiness-g2-matrix.cjs"
+    ],
+    "prevention": "Formal script step 5 must end with G2_GATE PASS in registry before gate validator."
+  },
+  {
+    "id": "LL-G2-002",
+    "category": "runtime_probe",
+    "title": "Fly env probe KEY=value format",
+    "issue": "g2-prod-probe.sh emitted bare values; production runtime identity guard failed on Fly layer parse.",
+    "fix": "Probe outputs deployment_profile=production style KEY=value lines.",
+    "files": [
+      "scripts/dev/lib/g2-prod-probe.sh"
+    ],
+    "prevention": "Re-run run-production-runtime-identity-guard.sh after any prod probe change."
+  },
+  {
+    "id": "LL-G2-003",
+    "category": "release_train_semantics",
+    "title": "Verification COMPLETE ≠ G2 Gate PASS",
+    "issue": "validate-g2-reality-verification.cjs initially set TT_PRODUCTION_READINESS_G2_GATE: PASS on verification alone.",
+    "fix": "Verification sets TT_WAVE2_FORMAL_ACCEPTANCE: READY and G2_GATE: IN_PROGRESS; PASS only after Formal + gate validator.",
+    "files": [
+      "scripts/dev/validate-g2-reality-verification.cjs",
+      "scripts/dev/sync-production-readiness-g2-matrix.cjs"
+    ],
+    "prevention": "Never conflate Reality Verification, Formal Acceptance, and Gate PASS in machine keys."
+  },
+  {
+    "id": "LL-G2-004",
+    "category": "matrix_evidence",
+    "title": "CLOSED gaps require closed_evidence paths",
+    "issue": "Matrix gaps marked CLOSED without repo evidence paths caused integrity audit and re-validate drift.",
+    "fix": "upsertClosedEvidence() in sync script; integrity audit enforces CLOSED ↔ evidence ↔ signoff.",
+    "files": [
+      "scripts/dev/sync-production-readiness-g2-matrix.cjs",
+      "scripts/dev/lib/evidence-integrity-audit.cjs"
+    ],
+    "prevention": "Run evidence integrity audit before every Formal Acceptance."
+  },
+  {
+    "id": "LL-G2-005",
+    "category": "platform_freeze",
+    "title": "G2 closed without new platform capabilities",
+    "issue": "Temptation to add Registry/Guard layers during hardening.",
+    "fix": "Platform frozen; adoption migrations + release train scripts only; Architecture Review required for new surfaces.",
+    "files": [
+      "registry/release-train-reality-verification.v1.json"
+    ],
+    "prevention": "G3 work limited to production go-live domains only."
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "schema": "traveltrust.bd003_discovery_summary.v1",
+  "recorded_at_utc": "2026-07-07T23:44:20.732Z",
+  "issue_id": "BD-003",
+  "mode": "discovery_only",
+  "hypothesis_verdict": "REJECTED",
+  "root_cause_candidate": "premature_listings_cover_hypothesis_on_staging",
+  "open_root_causes": 2,
+  "TT_SPRINT_B_ACTIVE": false,
+  "evidence": [
+    "evidence/GO_production_readiness/step3/BD-003-LISTINGS-COVER-DISCOVERY-LATEST.json",
+    "evidence/GO_production_readiness/sprints/BD-003-DISCOVERY-RESULT.md"
+  ]
+}

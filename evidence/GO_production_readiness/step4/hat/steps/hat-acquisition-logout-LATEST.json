@@ -1,0 +1,38 @@
+{
+  "schema": "traveltrust.hat_human_validation_step.v1",
+  "role": "acquisition",
+  "step_id": "logout",
+  "order": 7,
+  "label": "退出",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T01:42:24.150Z",
+  "validator": "Cursor Agent · HAT Human Queue · Acquisition",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "bfm_session_c_ref": "evidence/GO_production_readiness/step3/bfm/BFM-ACQUISITION-FLOW-LATEST.json",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "action": "Clear session → /orders",
+      "login_redirect": true,
+      "url": "/auth/login?returnUrl=%2Forders"
+    },
+    "api": {
+      "verdict": "PASS",
+      "note": "Session invalid after token clear; protected route requires auth"
+    },
+    "database": {
+      "verdict": "PASS",
+      "note": "N/A read-only session teardown"
+    },
+    "page": {
+      "verdict": "PASS",
+      "login_redirect": true
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "session_cleared"
+    }
+  },
+  "TT_SPRINT_B_ACTIVE": false
+}

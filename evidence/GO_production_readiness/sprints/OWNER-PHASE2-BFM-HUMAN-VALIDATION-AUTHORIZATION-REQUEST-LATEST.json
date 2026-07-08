@@ -1,0 +1,272 @@
+{
+  "schema": "traveltrust.phase2_bfm_human_validation_authorization_request.v1",
+  "recorded_at_utc": "2026-07-08T00:11:11.383Z",
+  "status": "PENDING_OWNER_BFM_HUMAN_VALIDATION_AUTHORIZATION",
+  "document": "evidence/GO_production_readiness/sprints/OWNER-PHASE2-BFM-HUMAN-VALIDATION-AUTHORIZATION-REQUEST.md",
+  "phase": "Human Validation Track · Phase 2 · Business Flow Matrix",
+  "execution_plan_ref": "evidence/GO_production_readiness/sprints/PHASE2-HUMAN-VALIDATION-BFM-EXECUTION-PLAN-LATEST.json",
+  "phase1_ref": "evidence/GO_production_readiness/sprints/PHASE1-MATRIX-EVIDENCE-SYNC-EXECUTION-LATEST.json",
+  "bfm_human_validation_authorized": false,
+  "bfm_matrix_sync_authorized": false,
+  "baseline": {
+    "registry_version": 17,
+    "open_root_causes": 0,
+    "TT_PRODUCTION_ENTRY_READY": "NO_GO",
+    "TT_SPRINT_B": "READY",
+    "TT_SPRINT_B_ACTIVE": false,
+    "blocking_checks": 54,
+    "bfm_blocking": 17,
+    "hat_blocking": 27,
+    "manual_blocking": 9
+  },
+  "prerequisites": {
+    "phase1_complete": true,
+    "phase2_plan_exists": true,
+    "open_rc_zero": true,
+    "no_redefine": true
+  },
+  "authorized_scope": {
+    "human_validation": {
+      "sessions_ordered": [
+        "A",
+        "B",
+        "C"
+      ],
+      "verification_chain": [
+        "human_click",
+        "api",
+        "database",
+        "page",
+        "final_outcome"
+      ],
+      "staging": {
+        "web": "https://tt-web-staging.fly.dev",
+        "api": "https://tt-api-staging.fly.dev"
+      }
+    },
+    "evidence_write": {
+      "root": "evidence/GO_production_readiness/step3/bfm",
+      "per_step": "evidence/GO_production_readiness/step3/bfm/steps/{flow}-{step}-LATEST.json",
+      "per_flow": "evidence/GO_production_readiness/step3/bfm/BFM-{FLOW}-LATEST.json",
+      "execution_record": "evidence/GO_production_readiness/sprints/PHASE2-BFM-HUMAN-VALIDATION-EXECUTION-LATEST.json"
+    },
+    "matrix_sync": {
+      "ssot": "registry/business-flow-matrix.v1.yaml",
+      "fields_allowed": [
+        "flows.*.steps.*.verdict",
+        "flows.*.verdict",
+        "effective_utc",
+        "version"
+      ],
+      "fields_forbidden": [
+        "verification_chain",
+        "closure_rule",
+        "steps structure"
+      ],
+      "hat_matrix": false
+    }
+  },
+  "sessions": [
+    {
+      "id": "A",
+      "order": 1,
+      "flow_id": "provider",
+      "label": "Provider",
+      "prerequisite": "authorization granted",
+      "steps": [
+        "register",
+        "product",
+        "publish",
+        "order",
+        "complete"
+      ],
+      "pilot": "merchant@test.com",
+      "counterparty": "tourist@test.com",
+      "routes": [
+        "/market/provider",
+        "/provider/register"
+      ],
+      "api_cross_ref_readonly": "evidence/GO_production_readiness/step2/hat/SPRINT-B-PROVIDER-HAT-ORDER-LATEST.json",
+      "duration_min": "45-60",
+      "next_session_gate": "all 5 steps PASS"
+    },
+    {
+      "id": "B",
+      "order": 2,
+      "flow_id": "guide",
+      "label": "Guide",
+      "prerequisite": "Session A all steps PASS",
+      "steps": [
+        "register",
+        "profile",
+        "review",
+        "list",
+        "book",
+        "order",
+        "complete",
+        "review_post"
+      ],
+      "pilot": "guide@test.com",
+      "counterparty": "tourist@test.com",
+      "routes": [
+        "/market"
+      ],
+      "bdr_cross_ref_readonly": "evidence/GO_production_readiness/step1/GUIDE-BUSINESS-DATA-READINESS-DAY1-LATEST.json",
+      "duration_min": "60-90",
+      "next_session_gate": "all 8 steps PASS"
+    },
+    {
+      "id": "C",
+      "order": 3,
+      "flow_id": "acquisition",
+      "label": "Acquisition",
+      "prerequisite": "Session B all steps PASS",
+      "steps": [
+        "publish",
+        "respond",
+        "close_deal",
+        "complete"
+      ],
+      "strategy": "fresh_user_full_chain",
+      "routes": [
+        "/me/identities",
+        "/market/acquisition"
+      ],
+      "api_cross_ref_readonly": "evidence/GO_production_readiness/step4/BFM-001-ACQUISITION-CHAIN-DISCOVERY-LATEST.json",
+      "ocs_catalog": "optional_extension_not_blocking",
+      "duration_min": "45-60",
+      "next_session_gate": "all 4 steps PASS"
+    }
+  ],
+  "bfm_matrix_sync_targets": {
+    "steps_total": 17,
+    "flows_total": 3,
+    "steps": [
+      {
+        "flow": "provider",
+        "step": "register"
+      },
+      {
+        "flow": "provider",
+        "step": "product"
+      },
+      {
+        "flow": "provider",
+        "step": "publish"
+      },
+      {
+        "flow": "provider",
+        "step": "order"
+      },
+      {
+        "flow": "provider",
+        "step": "complete"
+      },
+      {
+        "flow": "guide",
+        "step": "register"
+      },
+      {
+        "flow": "guide",
+        "step": "profile"
+      },
+      {
+        "flow": "guide",
+        "step": "review"
+      },
+      {
+        "flow": "guide",
+        "step": "list"
+      },
+      {
+        "flow": "guide",
+        "step": "book"
+      },
+      {
+        "flow": "guide",
+        "step": "order"
+      },
+      {
+        "flow": "guide",
+        "step": "complete"
+      },
+      {
+        "flow": "guide",
+        "step": "review_post"
+      },
+      {
+        "flow": "acquisition",
+        "step": "publish"
+      },
+      {
+        "flow": "acquisition",
+        "step": "respond"
+      },
+      {
+        "flow": "acquisition",
+        "step": "close_deal"
+      },
+      {
+        "flow": "acquisition",
+        "step": "complete"
+      }
+    ],
+    "note_template": "BFM-{FLOW} · {step} · human 5-layer PASS · E: step3/bfm/steps/{flow}-{step}-LATEST.json"
+  },
+  "execution_boundary": {
+    "allow": [
+      "Session A B C human validation in order",
+      "write step3/bfm evidence",
+      "sync business-flow-matrix.v1.yaml after PASS",
+      "run-production-readiness-master-checklist.cjs",
+      "write PHASE2-BFM-HUMAN-VALIDATION-EXECUTION-LATEST.json",
+      "write OWNER-PHASE2-BFM-HUMAN-VALIDATION-AUTHORIZATION-GRANTED-LATEST.json"
+    ],
+    "deny": [
+      "code changes",
+      "business data fix",
+      "staging seed persona guide listing fix",
+      "TT_SPRINT_B_ACTIVE=true",
+      "hat matrix sync",
+      "manual validation",
+      "bdr execution",
+      "REDEFINE",
+      "new open RC",
+      "skip session order",
+      "sync matrix on step FAIL"
+    ]
+  },
+  "on_authorize_first_step_only": "Session A Provider human validation",
+  "session_fail_policy": "halt session · write fail evidence · no matrix sync · no auto fix",
+  "owner_options": {
+    "A": {
+      "label": "Full A→B→C + BFM sync",
+      "recommended": true
+    },
+    "B": {
+      "label": "Partial sessions only"
+    },
+    "C": {
+      "label": "Validation only · no matrix sync"
+    },
+    "D": {
+      "label": "Reject"
+    }
+  },
+  "expected_gate_impact": {
+    "bfm_blocking_before": 17,
+    "bfm_blocking_after": 0,
+    "total_blocking_before": 54,
+    "total_blocking_after_estimate": 37,
+    "hat_blocking_unchanged": 27,
+    "TT_PRODUCTION_ENTRY_READY": "NO_GO"
+  },
+  "explicit_non_goals": [
+    "No code change",
+    "No business data fix",
+    "No TT_SPRINT_B ACTIVE",
+    "No HAT matrix sync in this authorization",
+    "No Manual BDR",
+    "No REDEFINE"
+  ]
+}

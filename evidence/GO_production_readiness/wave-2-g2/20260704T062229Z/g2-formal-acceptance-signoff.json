@@ -1,0 +1,69 @@
+{
+  "review_id": "G2-FORMAL-ACCEPTANCE",
+  "wave": "2",
+  "stamp": "20260704T062229Z",
+  "formal_acceptance": true,
+  "release_process": true,
+  "platform_changes": false,
+  "owner": "Sebastian Ward",
+  "attestation": "G2 Formal Acceptance — checklist · evidence · sign-off on prod hardening blockers. Not Production GO.",
+  "preflight": {
+    "TT_PRODUCTION_READINESS_G1_GATE": "PASS",
+    "TT_G2_REALITY_VERIFICATION": "COMPLETE",
+    "TT_EVIDENCE_INTEGRITY_AUDIT": "PASS",
+    "TT_WAVE2_FORMAL_ACCEPTANCE": "READY",
+    "TT_PRODUCTION_GO": "NO_GO"
+  },
+  "verification_baseline": "evidence/GO_production_readiness/wave-2-g2/20260704T062229Z/g2-reality-verification-signoff.json",
+  "integrity_audit": {
+    "stamp": "20260704T062229Z",
+    "verdict": "PASS",
+    "path": "evidence/GO_production_readiness/evidence-integrity/20260704T062229Z"
+  },
+  "checklist": [
+    {
+      "id": "PRM-SEC-B001",
+      "wave": "2.1",
+      "label": "Prod secrets / internal API hygiene",
+      "evidence_dir": "evidence/GO_production_readiness/wave-2-g2/20260704T062229Z/security-b001",
+      "evidence_present": true,
+      "verification_verdict": "VERIFIED",
+      "pass": true
+    },
+    {
+      "id": "PRM-SEC-B002",
+      "wave": "2.1",
+      "label": "Production Runtime Identity",
+      "evidence_dir": "evidence/GO_production_readiness/wave-2-g2/20260704T062229Z/security-b002",
+      "evidence_present": true,
+      "verification_verdict": "VERIFIED",
+      "pass": true
+    },
+    {
+      "id": "PRM-PER-B001",
+      "wave": "2.2",
+      "label": "Prod performance / SLO evidence",
+      "evidence_dir": "evidence/GO_production_readiness/wave-2-g2/20260704T062229Z/performance-b001",
+      "evidence_present": true,
+      "verification_verdict": "VERIFIED",
+      "pass": true
+    },
+    {
+      "id": "PRM-MON-B001",
+      "wave": "2.3",
+      "label": "Prod synthetic monitoring / on-call",
+      "evidence_dir": "evidence/GO_production_readiness/wave-2-g2/20260704T062229Z/monitoring-b001",
+      "evidence_present": true,
+      "verification_verdict": "VERIFIED",
+      "pass": true
+    }
+  ],
+  "open_g2_blockers": [],
+  "machine_keys": {
+    "TT_WAVE2_FORMAL_ACCEPTANCE": "COMPLETE",
+    "TT_PRODUCTION_READINESS_G2_GATE": "IN_PROGRESS",
+    "TT_PRODUCTION_GO": "NO_GO"
+  },
+  "honest_boundary": "Formal Acceptance COMPLETE enables G2 Gate validate · G2 PASS ≠ Production GO · G3 cutover remains",
+  "verdict": "FORMAL_COMPLETE"
+}

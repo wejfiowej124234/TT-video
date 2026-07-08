@@ -1,0 +1,52 @@
+{
+  "schema": "traveltrust.hat_human_validation_step.v1",
+  "role": "acquisition",
+  "step_id": "register",
+  "order": 1,
+  "label": "注册",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T01:42:24.150Z",
+  "validator": "Cursor Agent · HAT Human Queue · Acquisition",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "bfm_session_c_ref": "evidence/GO_production_readiness/step3/bfm/BFM-ACQUISITION-FLOW-LATEST.json",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "route": "/auth/register",
+      "register_form": true,
+      "fresh_user_chain": {
+        "owner": "bfm2-own-1783474756901@traveltrust.test",
+        "carrier": "bfm2-car-1783474756901@traveltrust.test"
+      },
+      "note": "Register UI shell + Session C fresh_user owner/carrier created"
+    },
+    "api": {
+      "verdict": "PASS",
+      "owner_login": 200,
+      "carrier_login": 200,
+      "note": "POST /auth/login 200 for both acquisition personas"
+    },
+    "database": {
+      "verdict": "PASS",
+      "entity": "users",
+      "owner_email": "bfm2-own-1783474756901@traveltrust.test",
+      "carrier_email": "bfm2-car-1783474756901@traveltrust.test"
+    },
+    "page": {
+      "verdict": "PASS",
+      "route": "/auth/register",
+      "http": 200,
+      "has_register_heading": true
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "registered",
+      "personas": [
+        "owner",
+        "carrier"
+      ]
+    }
+  },
+  "TT_SPRINT_B_ACTIVE": false
+}

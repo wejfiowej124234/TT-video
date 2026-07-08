@@ -1,0 +1,9 @@
+TT_G3_PRODUCTION_CDN_PREP: READY
+TT_G3_PRODUCTION_CDN_VERIFIED: PLANNED
+TT_PRODUCTION_GO: NO_GO
+environment: preparation
+at=20260704T090506Z
+prep_dir=preparation
+official_assets=60
+note=Release prep complete — Owner cutover deferred — not Production GO
+honest_boundary=PREP READY only

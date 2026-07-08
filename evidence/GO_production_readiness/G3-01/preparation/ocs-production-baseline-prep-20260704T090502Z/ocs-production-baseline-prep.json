@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust.ocs_production_baseline_prep.v1",
+  "stamp": "20260704T090502Z",
+  "baseline": "Official Asset Baseline V1",
+  "staging_verified": "evidence/GO_official_cold_start_dataset/ocs-official-asset-baseline/20260704T085638Z",
+  "production_target": "https://cdn.traveltrust.app/official-cold-start/v1/",
+  "asset_count": 60,
+  "cutover_scripts": [
+    "scripts/dev/bootstrap-ocs-official-assets-to-r2.cjs --apply",
+    "scripts/dev/configure-production-media-r2-cdn.sh",
+    "scripts/dev/remediate-ocs-official-media-bindings-staging.cjs (production DATABASE_URL + CDN URLs)"
+  ],
+  "machine_keys": {
+    "TT_OCS_OFFICIAL_ASSET_BASELINE_V1": "VERIFIED",
+    "TT_OCS_OFFICIAL_ASSET_BASELINE_PRODUCTION": "PLANNED",
+    "TT_G3_PRODUCTION_CDN_VERIFIED": "PLANNED"
+  },
+  "honest_boundary": "Staging VERIFIED + prep map ≠ Production asset delivery on CDN edge"
+}

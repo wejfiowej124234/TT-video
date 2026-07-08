@@ -1,0 +1,52 @@
+{
+  "schema": "traveltrust.bfm_human_validation_flow.v1",
+  "session": "B",
+  "flow_id": "guide",
+  "label": "Guide",
+  "recorded_at_utc": "2026-07-08T00:14:56.378Z",
+  "validator": "Cursor Agent · Session B",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "pilot": "guide@test.com",
+  "counterparty": "tourist@test.com",
+  "TT_BFM_GUIDE_FLOW": "PASS",
+  "steps": [
+    {
+      "step_id": "register",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "profile",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "review",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "list",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "book",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "order",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "complete",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "review_post",
+      "verdict": "PASS"
+    }
+  ],
+  "failed_step": null,
+  "halt_session": false,
+  "order_id": "0d5275f2-2537-4fef-830b-d1bf6f216b7c",
+  "authorization": "evidence/GO_production_readiness/sprints/OWNER-PHASE2-BFM-HUMAN-VALIDATION-AUTHORIZATION-GRANTED-LATEST.json",
+  "TT_SPRINT_B_ACTIVE": false
+}

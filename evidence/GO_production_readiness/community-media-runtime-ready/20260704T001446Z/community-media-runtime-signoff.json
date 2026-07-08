@@ -1,0 +1,92 @@
+{
+  "stamp": "20260704T001446Z",
+  "gap_id": "PRM-MEDIA-B001",
+  "verdict": "COMMUNITY_MEDIA_RUNTIME_READY_G1",
+  "machine_keys": {
+    "TT_COMMUNITY_MEDIA_RUNTIME_READINESS_G1": "PASS",
+    "TT_PRODUCTION_GO": "NO_GO"
+  },
+  "checklist": [
+    {
+      "id": "feed",
+      "label": "feed",
+      "production": "PASS",
+      "detail": "posts=0 legacy=0"
+    },
+    {
+      "id": "hot",
+      "label": "hot",
+      "production": "PASS",
+      "detail": "posts=0 legacy=0"
+    },
+    {
+      "id": "search",
+      "label": "search",
+      "production": "PASS",
+      "detail": "posts=0 legacy=0"
+    },
+    {
+      "id": "explore",
+      "label": "explore",
+      "production": "PASS",
+      "detail": "catalog=api-aggregate-v1"
+    },
+    {
+      "id": "campaign",
+      "label": "campaign",
+      "production": "PASS",
+      "detail": "deployed=n/a"
+    },
+    {
+      "id": "detail",
+      "label": "detail",
+      "production": "PASS",
+      "detail": "empty governed catalog — detail route OK"
+    },
+    {
+      "id": "profile",
+      "label": "profile",
+      "production": "PASS",
+      "detail": "empty — no public author sample"
+    },
+    {
+      "id": "images",
+      "label": "images",
+      "production": "PASS",
+      "detail": "urls=0"
+    },
+    {
+      "id": "videos",
+      "label": "videos",
+      "production": "PASS",
+      "detail": "urls=0"
+    },
+    {
+      "id": "playback_network",
+      "label": "playback_network",
+      "production": "PASS",
+      "detail": "no media URLs in governed surfaces"
+    },
+    {
+      "id": "frontend_showcase",
+      "label": "frontend_showcase",
+      "production": "PASS",
+      "detail": "API + frontend production profile media gates"
+    },
+    {
+      "id": "db_remediation",
+      "label": "db_remediation",
+      "production": "PASS",
+      "detail": "migration 20260704140000 present"
+    },
+    {
+      "id": "media_cdn",
+      "label": "media_cdn",
+      "production": "PASS",
+      "detail": "status=degraded"
+    }
+  ],
+  "legacy_violations": [],
+  "head_probe": [],
+  "prm_media_b001_status": "READY_TO_CLOSE"
+}

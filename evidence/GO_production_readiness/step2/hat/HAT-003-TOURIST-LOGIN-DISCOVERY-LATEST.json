@@ -1,0 +1,138 @@
+{
+  "schema": "traveltrust.hat003_tourist_login_discovery.v1",
+  "recorded_at_utc": "2026-07-07T16:09:44.338Z",
+  "mode": "discovery_only",
+  "issue_id": "HAT-003",
+  "api": "https://tt-api-staging.fly.dev",
+  "accounts": {
+    "tourist": "tourist@test.com",
+    "password": "Test123!"
+  },
+  "TT_SPRINT_B": "READY",
+  "TT_SPRINT_B_ACTIVE": false,
+  "policy": "Discovery only · no Fix · no staging mutations · no ACTIVE",
+  "hypothesis": "Tourist 登录异常",
+  "hypothesis_verdict": "REDEFINE",
+  "failure_signature": {
+    "login_http_fail": false,
+    "login_role_mismatch": true,
+    "logout_naive_post_415": true,
+    "admin_capabilities_bleed": true
+  },
+  "steps": [
+    {
+      "step": "seed_test_accounts",
+      "http": 200,
+      "verdict": "PASS",
+      "detail": "POST /auth/seed-test-accounts default body"
+    },
+    {
+      "step": "login_attempt_1",
+      "http": 200,
+      "has_token": true,
+      "role": "super_admin",
+      "verdict": "PASS"
+    },
+    {
+      "step": "login_attempt_2",
+      "http": 200,
+      "has_token": true,
+      "role": "super_admin",
+      "verdict": "PASS"
+    },
+    {
+      "step": "login_attempt_3",
+      "http": 200,
+      "has_token": true,
+      "role": "super_admin",
+      "verdict": "PASS"
+    },
+    {
+      "step": "me_after_login",
+      "http": 200,
+      "role": "super_admin",
+      "identity_traveler_state": "active",
+      "verdict": "PASS",
+      "note": "HTTP PASS but role != tourist/traveler"
+    },
+    {
+      "step": "browse_orders",
+      "http": 200,
+      "verdict": "PASS",
+      "detail": "GET /api/v1/orders?limit=3"
+    },
+    {
+      "step": "admin_capabilities",
+      "http": 200,
+      "verdict": "FAIL",
+      "expected": [
+        401,
+        403
+      ],
+      "note": "Tourist HAT corridor expects deny; super_admin returns 200"
+    },
+    {
+      "step": "logout_no_content_type",
+      "http": 415,
+      "verdict": "FAIL",
+      "note": "POST /auth/logout without Content-Type JSON body"
+    },
+    {
+      "step": "logout_with_json_body",
+      "http": 200,
+      "verdict": "PASS",
+      "note": "POST /auth/logout with empty JSON body"
+    },
+    {
+      "step": "session_invalid_after_logout",
+      "http": 401,
+      "verdict": "PASS",
+      "detail": "GET /api/v1/me after logout"
+    },
+    {
+      "step": "wrong_password_control",
+      "http": 401,
+      "error": "invalid_credentials",
+      "verdict": "PASS",
+      "note": "auth rejects bad password as expected"
+    }
+  ],
+  "triple_pass_login": {
+    "rule": "Exit Condition: Tourist 登录连续 3 次 PASS",
+    "api_credential_pass": true,
+    "attempts": 3,
+    "all_http_200": true,
+    "semantic_pass": false,
+    "semantic_blockers": [
+      "role super_admin not tourist/traveler",
+      "admin /api/v1/admin/capabilities returns 200",
+      "logout naive POST returns 415"
+    ]
+  },
+  "root_cause_candidate": {
+    "id": "staging_tourist_seed_persona_contamination",
+    "statement": "staging PG persisted tourist@test.com as super_admin (historical promote_admin_email E2E/HAT seeds); HAT Tourist corridor persona fidelity broken despite login HTTP 200",
+    "secondary": "POST /auth/logout requires Content-Type application/json (415 otherwise)"
+  },
+  "hat_matrix_impact": {
+    "role": "tourist",
+    "blocking_cells": [
+      "register",
+      "login",
+      "browse",
+      "order",
+      "pay",
+      "complete",
+      "logout"
+    ],
+    "login_cell_note": "HAT-003 待复现",
+    "primary_blocker_for_row": "persona role drift + logout contract"
+  },
+  "governance": {
+    "failure_signature_confirmed": true,
+    "business_rule_confirmed": false,
+    "root_cause_confirmed": false,
+    "fix_authorized": false
+  },
+  "recommendation": "REDEFINE HAT-003 scope · Owner 裁定 Tourist seed persona 期望 · 未 Fix · 未 ACTIVE"
+}

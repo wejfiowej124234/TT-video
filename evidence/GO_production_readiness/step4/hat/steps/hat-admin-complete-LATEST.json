@@ -1,0 +1,56 @@
+{
+  "schema": "traveltrust.hat_human_validation_step.v1",
+  "role": "admin",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T01:56:30.000Z",
+  "validator": "Cursor Agent · HAT Human Queue · Admin",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "pilot": "multi-demo@test.com",
+  "user_id": "cf1e4c30-34b8-40b6-b747-474cf24517c3",
+  "console_role_70": "Ops",
+  "rbac_ssot": [
+    "registry/admin-rbac-permissions.v1.yaml",
+    "registry/admin-rbac-staging-probes.v1.yaml",
+    "registry/admin-rbac-route-matrix.v1.yaml",
+    "docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md §0.1 Admin Persona",
+    "frontend/app/admin/README.md"
+  ],
+  "adm_u01_cross_ref": "evidence/adm-u01-shell-browser-audit/20260607T052800Z/adm-u01-shell-browser-findings.json",
+  "TT_SPRINT_B_ACTIVE": false,
+  "step_id": "complete",
+  "order": 4,
+  "label": "完成",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "action": "Read-only admin ops.users_list browse",
+      "route": "/admin/users",
+      "users_table_rows": 100,
+      "note": "Action = read-only admin probe per ADM-U01 ops.users_list · no writes"
+    },
+    "api": {
+      "verdict": "PASS",
+      "probe_id": "ops.users_list",
+      "path": "/api/v1/admin/users?limit=1",
+      "http": 200,
+      "capabilities_http": 200
+    },
+    "database": {
+      "verdict": "PASS",
+      "entity": "users",
+      "note": "List returned items · read-only"
+    },
+    "page": {
+      "verdict": "PASS",
+      "route": "/admin/users",
+      "has_users_table": true,
+      "matches_api": true
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "admin_read_action_ok",
+      "probe_ssot": "registry/admin-rbac-staging-probes.v1.yaml#ops.users_list"
+    }
+  }
+}

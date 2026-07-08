@@ -1,0 +1,267 @@
+{
+  "schema": "traveltrust.phase4_manual_validation_execution_plan.v1",
+  "recorded_at_utc": "2026-07-08T00:20:59.997Z",
+  "mode": "plan_only",
+  "phase": "Human Validation Track · Phase 4 · Manual Validation",
+  "rhythm": "Manual N → Evidence → Checklist Sync → (repeat) → Final Gate",
+  "no_per_item_authorization": true,
+  "prerequisite": {
+    "phase1_complete": true,
+    "phase2_bfm_complete": true,
+    "phase3_bdr_ready": true,
+    "open_root_causes": 0
+  },
+  "discipline": {
+    "modify_manual_matrix": false,
+    "modify_hat_matrix": false,
+    "modify_code": false,
+    "modify_staging_data": false,
+    "toggle_sprint_b_active": false,
+    "execute_manual_validation": false
+  },
+  "baseline": {
+    "TT_PRODUCTION_ENTRY_READY": "NO_GO",
+    "blocking_checks": 37,
+    "blocking_by_module": {
+      "business_data_readiness": 0,
+      "hat": 27,
+      "business_flow_matrix": 0,
+      "manual_validation": 9,
+      "production_entry": 1
+    },
+    "manual_checks_pending": 9
+  },
+  "ssot": {
+    "manual_validation_checklist": "registry/manual-validation-checklist.v1.yaml",
+    "master_checklist": "evidence/GO_production_readiness/PRODUCTION-READINESS-MASTER-CHECKLIST-LATEST.json",
+    "phase2_execution": "evidence/GO_production_readiness/sprints/PHASE2-BFM-HUMAN-VALIDATION-EXECUTION-LATEST.json",
+    "phase3_execution": "evidence/GO_production_readiness/sprints/PHASE3-BDR-DAY2-5-EXECUTION-LATEST.json"
+  },
+  "staging": {
+    "web": "https://tt-web-staging.fly.dev",
+    "api": "https://tt-api-staging.fly.dev",
+    "default_password": "Test123!",
+    "pilots": [
+      "tourist@test.com",
+      "guide@test.com",
+      "merchant@test.com"
+    ]
+  },
+  "evidence_schema": "traveltrust.manual_validation_check.v1",
+  "evidence_root": "evidence/GO_production_readiness/step4/manual",
+  "evidence_per_check": [
+    "evidence/GO_production_readiness/step4/manual/steps/manual-chrome_desktop-LATEST.json",
+    "evidence/GO_production_readiness/step4/manual/steps/manual-mobile-LATEST.json",
+    "evidence/GO_production_readiness/step4/manual/steps/manual-edge-LATEST.json",
+    "evidence/GO_production_readiness/step4/manual/steps/manual-wallet-LATEST.json",
+    "evidence/GO_production_readiness/step4/manual/steps/manual-weak_network-LATEST.json",
+    "evidence/GO_production_readiness/step4/manual/steps/manual-login_flow-LATEST.json",
+    "evidence/GO_production_readiness/step4/manual/steps/manual-pay_mock-LATEST.json",
+    "evidence/GO_production_readiness/step4/manual/steps/manual-cancel_refund-LATEST.json",
+    "evidence/GO_production_readiness/step4/manual/steps/manual-refresh_recovery-LATEST.json"
+  ],
+  "evidence_execution_record": "evidence/GO_production_readiness/sprints/PHASE4-MANUAL-VALIDATION-EXECUTION-LATEST.json",
+  "verification_layers": [
+    "human_click",
+    "page",
+    "api",
+    "final_outcome",
+    "recovery"
+  ],
+  "fail_policy": "write fail evidence · no sync for item · optional continue",
+  "checks": [
+    {
+      "order": 1,
+      "id": "chrome_desktop",
+      "label": "Chrome 桌面",
+      "scope": "Baseline desktop UAT shell · core routes render",
+      "routes": [
+        "/",
+        "/market",
+        "/market/provider",
+        "/market/acquisition",
+        "/auth/login"
+      ],
+      "acceptance": [
+        "Chrome latest · 1920×1080 · no console error blocking",
+        "Each route HTTP 200 · layout renders · no blank shell",
+        "Navigation between routes without hard crash"
+      ],
+      "cross_ref": "BFM flows validated API layer · this check validates UI shell",
+      "evidence_out": "evidence/GO_production_readiness/step4/manual/steps/manual-chrome_desktop-LATEST.json",
+      "fail_policy": "halt_manual_item · no matrix sync · continue plan optional on Owner call"
+    },
+    {
+      "order": 2,
+      "id": "mobile",
+      "label": "手机",
+      "scope": "Responsive / mobile viewport UAT",
+      "routes": [
+        "/",
+        "/market",
+        "/orders",
+        "/auth/login"
+      ],
+      "acceptance": [
+        "Viewport 390×844 (or real device) · touch targets usable",
+        "Mobile nav / drawer reachable",
+        "No horizontal scroll overflow on market list"
+      ],
+      "device": "Chrome DevTools iPhone 14 Pro or physical device",
+      "evidence_out": "evidence/GO_production_readiness/step4/manual/steps/manual-mobile-LATEST.json"
+    },
+    {
+      "order": 3,
+      "id": "edge",
+      "label": "Edge",
+      "scope": "Cross-browser parity on critical paths",
+      "routes": [
+        "/auth/login",
+        "/market",
+        "/market/provider"
+      ],
+      "acceptance": [
+        "Microsoft Edge latest · same flows as Chrome smoke",
+        "Login + browse provider catalog without JS fatal"
+      ],
+      "evidence_out": "evidence/GO_production_readiness/step4/manual/steps/manual-edge-LATEST.json"
+    },
+    {
+      "order": 4,
+      "id": "wallet",
+      "label": "钱包连接",
+      "scope": "Wallet connect UX on staging (mock/sandbox)",
+      "routes": [
+        "/me/identities",
+        "/me/settings",
+        "/market/acquisition"
+      ],
+      "acceptance": [
+        "Wallet connect prompt appears when required",
+        "Bind/save default wallet address succeeds or shows expected sandbox message",
+        "No wallet crash blocking acquisition publish path"
+      ],
+      "pilot_note": "Acquisition BFM used API wallet bind · UI wallet connect validated here",
+      "evidence_out": "evidence/GO_production_readiness/step4/manual/steps/manual-wallet-LATEST.json"
+    },
+    {
+      "order": 5,
+      "id": "weak_network",
+      "label": "弱网",
+      "scope": "Degraded network resilience",
+      "setup": "Chrome DevTools → Network → Slow 3G or Fast 3G",
+      "routes": [
+        "/market",
+        "/orders"
+      ],
+      "acceptance": [
+        "Pages show loading state · no infinite spinner >30s on primary route",
+        "Retry/refresh recovers to usable state",
+        "No uncaught network error toast loop"
+      ],
+      "evidence_out": "evidence/GO_production_readiness/step4/manual/steps/manual-weak_network-LATEST.json"
+    },
+    {
+      "order": 6,
+      "id": "login_flow",
+      "label": "登录/登出",
+      "scope": "Auth session lifecycle · UI layer",
+      "routes": [
+        "/auth/login",
+        "/orders",
+        "/auth/logout"
+      ],
+      "pilots": {
+        "tourist": "tourist@test.com",
+        "guide": "guide@test.com",
+        "merchant": "merchant@test.com"
+      },
+      "acceptance": [
+        "Login 200 · role correct on /me or header",
+        "Protected route accessible when logged in",
+        "Logout clears session · protected route redirects 401/ login"
+      ],
+      "cross_ref": "HAT-003 tourist login PASS · reduces duplicate API-only proof · UI still required",
+      "evidence_out": "evidence/GO_production_readiness/step4/manual/steps/manual-login_flow-LATEST.json"
+    },
+    {
+      "order": 7,
+      "id": "pay_mock",
+      "label": "支付(Mock)",
+      "scope": "Mock-pay escrow UI on completed order path",
+      "routes": [
+        "/escrow/[order_id]",
+        "/orders"
+      ],
+      "acceptance": [
+        "Tourist initiates mock-pay from UI",
+        "Order transitions to escrowed · UI reflects status",
+        "Aligns with BFM Provider/Guide mock-pay chain"
+      ],
+      "cross_ref": "BFM Session A/B/C API mock-pay PASS · UI confirmation required",
+      "evidence_out": "evidence/GO_production_readiness/step4/manual/steps/manual-pay_mock-LATEST.json"
+    },
+    {
+      "order": 8,
+      "id": "cancel_refund",
+      "label": "取消/异常",
+      "scope": "Cancel / exception handling UX",
+      "routes": [
+        "/orders",
+        "/escrow/[order_id]"
+      ],
+      "acceptance": [
+        "Cancel or dispute path reachable from pending/accepted order",
+        "Error states show human-readable message (not raw 500)",
+        "App remains navigable after exception"
+      ],
+      "evidence_out": "evidence/GO_production_readiness/step4/manual/steps/manual-cancel_refund-LATEST.json"
+    },
+    {
+      "order": 9,
+      "id": "refresh_recovery",
+      "label": "刷新/恢复",
+      "scope": "Hard refresh mid-flow recovery",
+      "routes": [
+        "/market",
+        "/orders",
+        "/escrow/[order_id]"
+      ],
+      "acceptance": [
+        "F5/Ctrl+R on in-progress page restores consistent state",
+        "Session preserved where expected · re-login if expired",
+        "No duplicate submit on refresh recovery"
+      ],
+      "evidence_out": "evidence/GO_production_readiness/step4/manual/steps/manual-refresh_recovery-LATEST.json"
+    }
+  ],
+  "sync_plan": {
+    "ssot": "registry/manual-validation-checklist.v1.yaml",
+    "per_item": "verdict + note after PASS evidence",
+    "checklist_rerun": "scripts/dev/run-production-readiness-master-checklist.cjs",
+    "note_template": "Manual-{id} · UAT PASS · E: step4/manual/steps/manual-{id}-LATEST.json",
+    "manual_blocking_before": 9,
+    "manual_blocking_after": 0
+  },
+  "final_gate": {
+    "script": "scripts/dev/run-production-readiness-master-checklist.cjs",
+    "expected_total_blocking_after_manual": 28,
+    "TT_PRODUCTION_ENTRY_READY_likely": "NO_GO",
+    "remaining_gates": [
+      "HAT 27 cells",
+      "production_entry composite"
+    ]
+  },
+  "suggested_runners": [
+    "scripts/dev/run-manual-validation-check.cjs",
+    "scripts/dev/run-manual-matrix-sync-check.cjs"
+  ],
+  "explicit_non_goals": [
+    "No Matrix modify in this plan",
+    "No code change",
+    "No staging data change",
+    "No TT_SPRINT_B ACTIVE",
+    "No per-manual authorization docs",
+    "No HAT matrix sync in Phase 4"
+  ]
+}

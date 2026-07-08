@@ -1,0 +1,50 @@
+{
+  "schema": "traveltrust.hat_admin_human_queue.v1",
+  "recorded_at_utc": "2026-07-08T01:56:30.000Z",
+  "role": "admin",
+  "verdict": "PASS",
+  "steps_synced": [
+    "register",
+    "login",
+    "browse",
+    "complete",
+    "logout"
+  ],
+  "steps_na": [
+    "order",
+    "pay"
+  ],
+  "steps": [
+    {
+      "step_id": "register",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "login",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "browse",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "complete",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "logout",
+      "verdict": "PASS"
+    }
+  ],
+  "pilot": "multi-demo@test.com",
+  "user_id": "cf1e4c30-34b8-40b6-b747-474cf24517c3",
+  "console_role_70": "Ops",
+  "discipline": {
+    "no_code_change": true,
+    "no_staging_config_change": true,
+    "no_permission_logic_change": true,
+    "no_business_data_mutation": true,
+    "read_only_admin_probes": true,
+    "TT_SPRINT_B_ACTIVE": false
+  }
+}

@@ -1,0 +1,154 @@
+# TravelTrust · Production Readiness Master Checklist · Phase B 每日总表
+# Human: docs/runbook/TT-PRODUCTION-READINESS-MASTER-CHECKLIST.md
+
+schema: traveltrust.production_readiness_master_checklist.v1
+version: 4
+effective_utc: "2026-07-07"
+phase: B
+phase_label: Production Readiness（上线准备）
+machine_key: TT_PRODUCTION_READINESS_MASTER_CHECKLIST
+
+parent_program: registry/production-readiness-program.v1.yaml
+parent_matrix: registry/production-readiness-master-matrix.v1.yaml
+cms_registry: registry/cms-master-registry.v1.yaml
+
+child_ssot:
+  business_data_readiness: registry/business-data-readiness.v1.yaml
+  hat_six_role_matrix: registry/hat-six-role-matrix.v1.yaml
+  business_flow_matrix: registry/business-flow-matrix.v1.yaml
+  manual_validation: registry/manual-validation-checklist.v1.yaml
+  open_issues: registry/production-readiness-open-issues.v1.yaml
+
+metrics:
+  open_root_causes:
+    label: Open Root Causes
+    rule: production-readiness-open-issues.v1.yaml 中 status=open 的唯一根因数 · 不 double count
+    ssot: registry/production-readiness-open-issues.v1.yaml
+  blocking_checks:
+    label: Blocking Checks
+    rule: 各 child SSOT 中 pending/fail/blocked 检查点总数 · 可反映同一根因的多处影响
+  mttc:
+    label: Mean Time To Close (days)
+    ssot: registry/production-readiness-open-issues.v1.yaml
+    rule: closed_at - discovered_at · open issues 报告 open_age_days
+
+phase_a:
+  label: CMS Foundation + P1 Framework
+  status: FROZEN
+  closed_utc: "2026-07-07"
+  policy: 不继续 CMS Discovery · 不进入 Hotel WP0
+
+phase_b:
+  label: Production Readiness Sprint
+  status: ACTIVE
+  framework_status: FROZEN
+  framework_note: >-
+    不再讨论 Registry/Matrix/Checklist/Sprint/Gate 设计 · 每天只答三个问题 · 执行 Sprint 关闭 Root Cause
+  progress_metric: Open Root Causes 5→4→3→2→1→0（非功能完成数）
+  started_utc: "2026-07-07"
+  execution_started_utc: "2026-07-08"
+  active_sprint: BD-001
+  execution_policy: one_root_cause_at_a_time
+  current_execution: Sprint A · BD-001
+  paradigm_shift: >-
+    从「建设平台能力（CMS/治理/Content）」转向「验证平台能否投入使用（真实数据/真人流程/业务闭环/上线）」
+  execution_order:
+    - { step: 1, id: business_data_readiness, label: Business Data Readiness, priority: P0 }
+    - { step: 2, id: hat, label: HAT 六角色二维矩阵, priority: P1 }
+    - { step: 3, id: business_flow_matrix, label: Business Flow Matrix, priority: P2 }
+    - { step: 4, id: manual_validation, label: Manual Validation, priority: P3 }
+    - { step: 5, id: production_entry, label: Production Entry, priority: FINAL }
+
+owner_default: Solo Founder
+blocking_metrics_rule: >-
+  两层统计：open_root_causes（唯一根因 · open-issues SSOT）与 blocking_checks（影响次数 · 各矩阵 pending 计数）
+
+rows:
+  - id: cms
+    module: CMS
+    phase: A
+    execute_step: —
+    status: Frozen
+    blocker: No
+    blocking_checks: 0
+
+  - id: business_data_readiness
+    module: Business Data Readiness
+    phase: B
+    execute_step: 1
+    priority: P0
+    status: Pending
+    blocker: Yes
+    blocking_checks: computed
+    open_root_causes: linked
+    ssot: registry/business-data-readiness.v1.yaml
+    issues_ssot: registry/production-readiness-open-issues.v1.yaml
+    next: 六模块真实度盘点 → Market Readiness · 避免 HAT 假 Bug
+
+  - id: hat
+    module: HAT
+    phase: B
+    execute_step: 2
+    priority: P1
+    status: Pending
+    blocker: Yes
+    blocking_checks: computed
+    open_root_causes: linked
+    ssot: registry/hat-six-role-matrix.v1.yaml
+    next: 六角色 × 七步二维矩阵 · 测功能不是测数据
+
+  - id: business_flow_matrix
+    module: Business Flow Matrix
+    phase: B
+    execute_step: 3
+    priority: P2
+    status: Pending
+    blocker: Yes
+    blocking_checks: computed
+    open_root_causes: linked
+    ssot: registry/business-flow-matrix.v1.yaml
+    next: 真人点击→API→DB→页面→结果 全链一致
+
+  - id: manual_validation
+    module: Manual Validation
+    phase: B
+    execute_step: 4
+    priority: P3
+    status: Pending
+    blocker: Yes
+    blocking_checks: computed
+    ssot: registry/manual-validation-checklist.v1.yaml
+    next: Chrome/手机/Edge/钱包/弱网 真人体验
+
+  - id: production_entry
+    module: Production Entry
+    phase: B
+    execute_step: 5
+    priority: FINAL
+    status: Pending
+    blocker: Yes
+    blocking_checks: computed
+    next: 今天可以上线吗？ · open_root_causes=0 且 blocking_checks=0 时方可 GO
+
+today_focus:
+  sprint_label: TT_SPRINT_B READY · Discovery
+  reason: Provider Day 2 Probe · 不修 · 证明 BD-002 是否存在
+  next: Evidence 归因 → CONFIRMED 才 ACTIVE · 否则 REDEFINE
+
+production_entry_gate:
+  machine_key: TT_PRODUCTION_ENTRY_READY
+  verdict_yes: YES
+  verdict_no: NO_GO
+  requires_all:
+    business_data_readiness: READY
+    hat: PASS
+    business_flow_matrix: PASS
+    manual_validation: PASS
+    open_root_causes: 0
+
+production_go:
+  current: NO_GO
+  ssot: TT_PRODUCTION_ENTRY_READY
+
+evidence_script: scripts/dev/run-production-readiness-master-checklist.cjs
+latest_evidence: evidence/GO_production_readiness/PRODUCTION-READINESS-MASTER-CHECKLIST-LATEST.json

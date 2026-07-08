@@ -1,0 +1,44 @@
+{
+  "schema": "traveltrust.guide_business_data_probe.v3",
+  "recorded_at_utc": "2026-07-07T14:23:59.927Z",
+  "check_id": "images",
+  "label": "Images",
+  "ssot": "CMS",
+  "probe": "HEAD + Decode",
+  "api": "https://tt-api-staging.fly.dev",
+  "exit_condition": "全部可访问",
+  "verdict": "WARN-C",
+  "root_cause": null,
+  "cascade_from": null,
+  "attribution": null,
+  "fail_reasons": [],
+  "warn_reasons": [
+    "missing_optional_id_photo_url",
+    "missing_optional_language_cert_url",
+    "missing_optional_guide_license_url"
+  ],
+  "warn_classification": {
+    "C": [
+      "missing_optional_id_photo_url",
+      "missing_optional_language_cert_url",
+      "missing_optional_guide_license_url"
+    ],
+    "D": [],
+    "P": []
+  },
+  "detail": {
+    "fail": [],
+    "warn": [
+      "missing_optional_id_photo_url",
+      "missing_optional_language_cert_url",
+      "missing_optional_guide_license_url"
+    ],
+    "results": {
+      "avatar_url": {
+        "ok": true,
+        "status": 200
+      }
+    }
+  },
+  "TT_GUIDE_PROBE": "WARN-C"
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "traveltrust.hat_human_validation_step.v1",
+  "role": "admin",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T01:56:30.000Z",
+  "validator": "Cursor Agent · HAT Human Queue · Admin",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "pilot": "multi-demo@test.com",
+  "user_id": "cf1e4c30-34b8-40b6-b747-474cf24517c3",
+  "console_role_70": "Ops",
+  "rbac_ssot": [
+    "registry/admin-rbac-permissions.v1.yaml",
+    "registry/admin-rbac-staging-probes.v1.yaml",
+    "registry/admin-rbac-route-matrix.v1.yaml",
+    "docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md §0.1 Admin Persona",
+    "frontend/app/admin/README.md"
+  ],
+  "adm_u01_cross_ref": "evidence/adm-u01-shell-browser-audit/20260607T052800Z/adm-u01-shell-browser-findings.json",
+  "TT_SPRINT_B_ACTIVE": false,
+  "step_id": "login",
+  "order": 2,
+  "label": "登录",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "action": "multi-demo session → /admin",
+      "route": "/admin",
+      "title": "运维控制台 | TravelTrust",
+      "login_state": "authenticated",
+      "session_pattern": "admin-l5-staging-closure e2e cookie+localStorage bootstrap"
+    },
+    "api": {
+      "verdict": "PASS",
+      "login_http": 200,
+      "me_http": 200,
+      "capabilities_http": 200,
+      "email": "multi-demo@test.com",
+      "role": "admin"
+    },
+    "database": {
+      "verdict": "PASS",
+      "user_id": "cf1e4c30-34b8-40b6-b747-474cf24517c3",
+      "role": "admin"
+    },
+    "page": {
+      "verdict": "PASS",
+      "route": "/admin",
+      "has_admin_capability_strip": true,
+      "console_role_label": "运营"
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "authenticated_admin"
+    }
+  }
+}

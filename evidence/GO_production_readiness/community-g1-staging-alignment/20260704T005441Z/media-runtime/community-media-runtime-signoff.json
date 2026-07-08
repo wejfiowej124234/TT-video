@@ -1,0 +1,280 @@
+{
+  "stamp": "20260704T005441Z",
+  "gap_id": "PRM-CONTENT-B002",
+  "validation_profile": "staging",
+  "staging_api_base": "https://tt-api-staging.fly.dev",
+  "verdict": "COMMUNITY_MEDIA_RUNTIME_READY_G1_IN_PROGRESS",
+  "machine_keys": {
+    "TT_COMMUNITY_MEDIA_RUNTIME_READINESS_G1": "IN_PROGRESS",
+    "TT_PRODUCTION_GO": "NO_GO"
+  },
+  "checklist": [
+    {
+      "id": "feed",
+      "label": "feed",
+      "production": "PASS",
+      "detail": "posts=55 legacy=0"
+    },
+    {
+      "id": "hot",
+      "label": "hot",
+      "production": "PASS",
+      "detail": "posts=55 legacy=0"
+    },
+    {
+      "id": "search",
+      "label": "search",
+      "production": "PASS",
+      "detail": "posts=0 legacy=0"
+    },
+    {
+      "id": "explore",
+      "label": "explore",
+      "production": "PASS",
+      "detail": "catalog=api-aggregate-v1"
+    },
+    {
+      "id": "campaign",
+      "label": "campaign",
+      "production": "PASS",
+      "detail": "deployed=n/a"
+    },
+    {
+      "id": "detail",
+      "label": "detail",
+      "production": "PASS",
+      "detail": "HTTP 200 legacy=0"
+    },
+    {
+      "id": "profile",
+      "label": "profile",
+      "production": "PASS",
+      "detail": "posts=1 legacy=0"
+    },
+    {
+      "id": "images",
+      "label": "images",
+      "production": "PASS",
+      "detail": "urls=19"
+    },
+    {
+      "id": "videos",
+      "label": "videos",
+      "production": "PASS",
+      "detail": "urls=18"
+    },
+    {
+      "id": "playback_network",
+      "label": "playback_network",
+      "production": "FAIL",
+      "detail": "probed=37 fail=37"
+    },
+    {
+      "id": "frontend_showcase",
+      "label": "frontend_showcase",
+      "production": "PASS",
+      "detail": "API + frontend production profile media gates"
+    },
+    {
+      "id": "db_remediation",
+      "label": "db_remediation",
+      "production": "PASS",
+      "detail": "migration 20260704140000 present"
+    },
+    {
+      "id": "media_cdn",
+      "label": "media_cdn",
+      "production": "PASS",
+      "detail": "status=ok"
+    }
+  ],
+  "legacy_violations": [],
+  "head_probe": [
+    {
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/4711577b-fe5d-48aa-aee7-6c048d77d0f4.png",
+      "ok": false,
+      "status": 404
+    },
+    {
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/8df5cb05-ec50-4385-b120-34a34caa3fbe.png",
+      "ok": false,
+      "status": 404
+    },
+    {
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/64edb0f4-7fd7-41d1-a064-9abc546cea6d.png",
+      "ok": false,
+      "status": 404
+    },
+    {
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/cae522f7-c6c4-495c-b6e3-b3a0ada00894.png",
+      "ok": false,
+      "status": 404
+    },
+    {
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/9faa6a49-74fa-4fff-97d0-a4d1b21dda87.png",
+      "ok": false,
+      "status": 404
+    },
+    {
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/3d99c69f-e420-4b59-a178-1a13f548358c.png",
+      "ok": false,
+      "status": 404
+    },
+    {
+      "url": "https://thirty-dryers-give.loca.lt/traveltrust-community-media/community-media/v1/3be67be6-9356-4f10-96b4-6b73b6de9230/af5077ff-c81e-4041-ad1e-dff602e1ce7f.mp4",
+      "ok": false,
+      "status": 503
+    },
+    {
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/3b119d22-fa09-45e1-92d9-c0ae59ee47aa.png",
+      "ok": false,
+      "status": 404
+    },
+    {
+      "url": "https://thirty-dryers-give.loca.lt/traveltrust-community-media/community-media/v1/3507ac48-b30f-4e90-b433-f62b53d14e9b/48889e83-6ff4-48f5-b567-486cd9425e2d.mp4",
+      "ok": false,
+      "status": 503
+    },
+    {
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/9297e227-4a7f-449f-b7fc-9641c0ec1ffa.png",
+      "ok": false,
+      "status": 404
+    },
+    {
+      "url": "https://thirty-dryers-give.loca.lt/traveltrust-community-media/community-media/v1/2d34c2e9-be2b-46ba-8b73-8c295635b2f8/0d16fe22-b150-46ce-a9c5-9fd7a03f6ca1.mp4",
+      "ok": false,
+      "status": 503
+    },
+    {
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/f9d431a1-523e-45ba-8674-ea7ebbaa3fa9.png",
+      "ok": false,
+      "status": 404
+    },
+    {
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/e0943215-7b99-40cd-bef7-dcf70d76b7bf.png",
+      "ok": false,
+      "status": 404
+    },
+    {
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/e2a826df-6dc3-4ba6-956b-fc433be428ab.png",
+      "ok": false,
+      "status": 404
+    },
+    {
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/e28c30b5-05d5-4a5f-8226-bfcd72b12f08.png",
+      "ok": false,
+      "status": 404
+    },
+    {
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/dd3a84e5-7331-45c7-a97a-331da75f9f16.png",
+      "ok": false,
+      "status": 404
+    },
+    {
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/29ebc25a-266d-4a12-a8d0-daba81a66145.png",
+      "ok": false,
+      "status": 404
+    },
+    {
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/429ca1e2-da10-4676-8095-9b30d573d78d.png",
+      "ok": false,
+      "status": 404
+    },
+    {
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/679ff1da-b87d-41fb-95b0-c7ed7dc1fb90.png",
+      "ok": false,
+      "status": 404
+    },
+    {
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/5947710c-8a86-435a-bb07-a9dbd1477734.png",
+      "ok": false,
+      "status": 404
+    },
+    {
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/e4be1db9-c953-462c-bf0a-378855c43acf.png",
+      "ok": false,
+      "status": 404
+    },
+    {
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/b6614474-42dc-4b41-9bc6-fb82e8e16887.png",
+      "ok": false,
+      "status": 404
+    },
+    {
+      "url": "https://thirty-dryers-give.loca.lt/traveltrust-community-media/community-media/v1/76bea3da-9085-42d5-8777-b351d280cc7f/82a7c98b-4e02-4ddd-a5f8-06bfcf1bee4c.mp4",
+      "ok": false,
+      "status": 503
+    },
+    {
+      "url": "https://thirty-dryers-give.loca.lt/traveltrust-community-media/community-media/v1/6934f5e1-5b9b-49f7-8287-9cd165261280/5590388a-b8ce-4f7e-9831-41f276d9265e.mp4",
+      "ok": false,
+      "status": 503
+    },
+    {
+      "url": "https://thirty-dryers-give.loca.lt/traveltrust-community-media/community-media/v1/472040d5-8792-434c-8805-624134972255/24c9e898-3a09-465f-bfe1-4798be3e0845.mp4",
+      "ok": false,
+      "status": 503
+    },
+    {
+      "url": "https://thirty-dryers-give.loca.lt/traveltrust-community-media/community-media/v1/b38b5c06-3eca-45d5-8ee6-64a5d9f498c9/a47f0c11-2da4-4b56-ad37-a5f2aa4d2c78.mp4",
+      "ok": false,
+      "status": 503
+    },
+    {
+      "url": "https://thirty-dryers-give.loca.lt/traveltrust-community-media/community-media/v1/71c801e4-cae0-4873-ac15-bf4a1533367c/e7065b12-dba0-48a3-984d-640624b1236a.mp4",
+      "ok": false,
+      "status": 503
+    },
+    {
+      "url": "https://thirty-dryers-give.loca.lt/traveltrust-community-media/community-media/v1/3685c3f9-a471-4d1c-aa29-74ddd5a96135/af99171b-8483-48e7-a539-6a4a9b156246.mp4",
+      "ok": false,
+      "status": 503
+    },
+    {
+      "url": "https://thirty-dryers-give.loca.lt/traveltrust-community-media/community-media/v1/a8d6d5dd-6017-4de8-9873-7c73642e54a3/b0c306d4-27d0-4a42-a469-a8720f6732a9.mp4",
+      "ok": false,
+      "status": 503
+    },
+    {
+      "url": "https://thirty-dryers-give.loca.lt/traveltrust-community-media/community-media/v1/842cf591-b036-4951-a765-815c3fd37527/54b36b3a-9288-444f-b141-0f0273735deb.mp4",
+      "ok": false,
+      "status": 503
+    },
+    {
+      "url": "https://thirty-dryers-give.loca.lt/traveltrust-community-media/community-media/v1/b10c8b5f-a037-40ea-8941-871bee8325cd/de14d047-bd29-41d6-b82e-b759ffd80967.mp4",
+      "ok": false,
+      "status": 503
+    },
+    {
+      "url": "https://thirty-dryers-give.loca.lt/traveltrust-community-media/community-media/v1/e60e0296-f05d-4c91-b1da-88e462a8ad7a/c2d95c3a-0c0c-4e29-8191-18eaa6085573.mp4",
+      "ok": false,
+      "status": 503
+    },
+    {
+      "url": "https://thirty-dryers-give.loca.lt/traveltrust-community-media/community-media/v1/b61c315e-e59c-41d2-a3b5-36f48c7aee03/2cea9b17-730d-4fcc-be0c-fc82b7c38bd2.mp4",
+      "ok": false,
+      "status": 503
+    },
+    {
+      "url": "https://thirty-dryers-give.loca.lt/traveltrust-community-media/community-media/v1/63f73c91-91d1-4055-b934-63f7c25e695d/63370cca-9d23-4dee-a382-dd6449e86873.mp4",
+      "ok": false,
+      "status": 503
+    },
+    {
+      "url": "https://thirty-dryers-give.loca.lt/traveltrust-community-media/community-media/v1/9e996a70-3961-4098-a0e0-f41898463c2e/80d916b2-de3d-4787-8167-12f5a2cb5c53.mp4",
+      "ok": false,
+      "status": 503
+    },
+    {
+      "url": "https://thirty-dryers-give.loca.lt/traveltrust-community-media/community-media/v1/9710799d-dff2-4c44-853e-af993006ee4a/13651650-7333-43cf-a872-d5fcbcff54c3.mp4",
+      "ok": false,
+      "status": 503
+    },
+    {
+      "url": "https://thirty-dryers-give.loca.lt/traveltrust-community-media/community-media/v1/c9d72626-fa80-4e42-8de6-9a201654d95e/ad76df98-159f-405d-963c-fcad75f86951.mp4",
+      "ok": false,
+      "status": 503
+    }
+  ],
+  "prm_gap_status": "OPEN"
+}

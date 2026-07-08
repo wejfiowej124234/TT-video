@@ -1,0 +1,41 @@
+{
+  "schema": "traveltrust.g3_domain_entry_checklist.v1",
+  "domains": [
+    {
+      "domain": "G3-01",
+      "status": "PLANNED",
+      "evidence_root": "evidence/GO_production_readiness/G3-01/",
+      "verified_requires": "production environment probes + formal acceptance"
+    },
+    {
+      "domain": "G3-02",
+      "status": "PLANNED",
+      "evidence_root": "evidence/GO_production_readiness/G3-02/",
+      "verified_requires": "production environment probes + formal acceptance"
+    },
+    {
+      "domain": "G3-03",
+      "status": "PLANNED",
+      "evidence_root": "evidence/GO_production_readiness/G3-03/",
+      "verified_requires": "production environment probes + formal acceptance"
+    },
+    {
+      "domain": "G3-04",
+      "status": "PLANNED",
+      "evidence_root": "evidence/GO_production_readiness/G3-04/",
+      "verified_requires": "production environment probes + formal acceptance"
+    },
+    {
+      "domain": "G3-05",
+      "status": "PLANNED",
+      "evidence_root": "evidence/GO_production_readiness/G3-05/",
+      "verified_requires": "production environment probes + formal acceptance"
+    },
+    {
+      "domain": "G3-06",
+      "status": "PLANNED",
+      "evidence_root": "evidence/GO_production_readiness/G3-06/",
+      "verified_requires": "production environment probes + formal acceptance"
+    }
+  ]
+}

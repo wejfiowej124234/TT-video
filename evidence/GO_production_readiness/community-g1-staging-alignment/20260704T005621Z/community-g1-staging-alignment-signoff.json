@@ -1,0 +1,37 @@
+{
+  "stamp": "20260704T005621Z",
+  "gap_id": "PRM-CONTENT-B002",
+  "phase": "②_staging",
+  "verdict": "COMMUNITY_G1_STAGING_ALIGNMENT_PASS",
+  "staging_api_base": "https://tt-api-staging.fly.dev",
+  "staging_web_base": "https://tt-web-staging.fly.dev",
+  "local_git_sha": "fea685b08156f6e9f7c1e3f3e5e4029b19b654d9",
+  "staging_git_sha": null,
+  "machine_keys": {
+    "TT_COMMUNITY_G1_STAGING_ALIGNMENT": "PASS",
+    "TT_COMMUNITY_PRODUCTION_READY_G1_DOMAIN": "PASS",
+    "TT_COMMUNITY_MEDIA_RUNTIME_READINESS_G1": "PASS",
+    "TT_PRODUCTION_GO": "NO_GO"
+  },
+  "policy": "Independent staging evidence — do NOT reuse local 20260704T* directories as ② PASS",
+  "l5_signoff": "evidence\\GO_production_readiness\\community-g1-staging-alignment\\20260704T005621Z\\l5-runtime\\community-production-ready-signoff.json",
+  "media_signoff": "evidence\\GO_production_readiness\\community-g1-staging-alignment\\20260704T005621Z\\media-runtime\\community-media-runtime-readiness-signoff.json",
+  "checks": [
+    {
+      "id": "staging_api_ready",
+      "status": "PASS",
+      "detail": "https://tt-api-staging.fly.dev HTTP 200"
+    },
+    {
+      "id": "staging_build_meta",
+      "status": "PASS",
+      "detail": "git_sha=fea685b08156f6e9f7c1e3f3e5e4029b19b654d9 local=fea685b08156"
+    },
+    {
+      "id": "staging_db_media_guard",
+      "status": "SKIP",
+      "detail": "SKIP_COMMUNITY_MEDIA_GUARD_DB=1"
+    }
+  ],
+  "prm_content_b002_status": "CLOSED"
+}

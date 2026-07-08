@@ -1,0 +1,118 @@
+{
+  "schema": "traveltrust.phase1_matrix_evidence_sync_execution.v1",
+  "recorded_at_utc": "2026-07-08T00:08:35.653Z",
+  "mode": "matrix_evidence_sync_only",
+  "authorization": {
+    "schema": "traveltrust.phase1_matrix_evidence_sync_authorization_granted.v1",
+    "recorded_at_utc": "2026-07-08T00:08:35.653Z",
+    "status": "GRANTED",
+    "granted_by": "Solo Founder",
+    "owner_option": "A",
+    "matrix_sync_authorized": true,
+    "authorization_request": "evidence/GO_production_readiness/sprints/OWNER-PHASE1-MATRIX-EVIDENCE-SYNC-AUTHORIZATION-REQUEST-LATEST.json",
+    "document": "evidence/GO_production_readiness/sprints/OWNER-PHASE1-MATRIX-EVIDENCE-SYNC-AUTHORIZATION-REQUEST.md",
+    "scope": "Phase 1 · 8 cells · HAT-003 tourist + BD-005 provider",
+    "TT_SPRINT_B": "READY",
+    "TT_SPRINT_B_ACTIVE": false,
+    "execution_boundary": {
+      "allow": [
+        "hat-six-role-matrix.v1.yaml verdict+note sync",
+        "run-production-readiness-master-checklist.cjs",
+        "write execution evidence"
+      ],
+      "deny": [
+        "rerun probes",
+        "code changes",
+        "staging data changes",
+        "TT_SPRINT_B_ACTIVE=true",
+        "BFM Manual BDR"
+      ]
+    }
+  },
+  "matrix_ssot": "registry/hat-six-role-matrix.v1.yaml",
+  "matrix_version_before": 2,
+  "matrix_version_after": 3,
+  "effective_utc": "2026-07-08",
+  "cells_synced": [
+    {
+      "sync_id": "SYNC-HAT-003-TOURIST",
+      "role": "tourist",
+      "cell": "login",
+      "verdict": "pass",
+      "evidence": "evidence/GO_production_readiness/step2/hat/HAT-003-TOURIST-LOGIN-VALIDATION-LATEST.json"
+    },
+    {
+      "sync_id": "SYNC-HAT-003-TOURIST",
+      "role": "tourist",
+      "cell": "browse",
+      "verdict": "pass",
+      "evidence": "evidence/GO_production_readiness/step2/hat/HAT-003-TOURIST-LOGIN-VALIDATION-LATEST.json"
+    },
+    {
+      "sync_id": "SYNC-HAT-003-TOURIST",
+      "role": "tourist",
+      "cell": "logout",
+      "verdict": "pass",
+      "evidence": "evidence/GO_production_readiness/step2/hat/HAT-003-TOURIST-LOGIN-VALIDATION-LATEST.json"
+    },
+    {
+      "sync_id": "SYNC-BD-005-PROVIDER",
+      "role": "provider",
+      "cell": "login",
+      "verdict": "pass",
+      "evidence": "evidence/GO_production_readiness/step2/hat/SPRINT-B-PROVIDER-HAT-ORDER-LATEST.json"
+    },
+    {
+      "sync_id": "SYNC-BD-005-PROVIDER",
+      "role": "provider",
+      "cell": "browse",
+      "verdict": "pass",
+      "evidence": "evidence/GO_production_readiness/step2/hat/SPRINT-B-PROVIDER-HAT-ORDER-LATEST.json"
+    },
+    {
+      "sync_id": "SYNC-BD-005-PROVIDER",
+      "role": "provider",
+      "cell": "order",
+      "verdict": "pass",
+      "evidence": "evidence/GO_production_readiness/step2/hat/SPRINT-B-PROVIDER-HAT-ORDER-LATEST.json"
+    },
+    {
+      "sync_id": "SYNC-BD-005-PROVIDER",
+      "role": "provider",
+      "cell": "pay",
+      "verdict": "pass",
+      "evidence": "evidence/GO_production_readiness/step2/hat/SPRINT-B-PROVIDER-HAT-ORDER-LATEST.json"
+    },
+    {
+      "sync_id": "SYNC-BD-005-PROVIDER",
+      "role": "provider",
+      "cell": "complete",
+      "verdict": "pass",
+      "evidence": "evidence/GO_production_readiness/step2/hat/SPRINT-B-PROVIDER-HAT-ORDER-LATEST.json"
+    }
+  ],
+  "cells_synced_count": 8,
+  "checklist_rerun": true,
+  "checklist_evidence": "evidence/GO_production_readiness/PRODUCTION-READINESS-MASTER-CHECKLIST-LATEST.json",
+  "gate_impact": {
+    "TT_PRODUCTION_ENTRY_READY": "NO_GO",
+    "blocking_checks_before": 62,
+    "blocking_checks_after": 54,
+    "blocking_checks_delta": 8,
+    "hat_blocking_before": 35,
+    "hat_blocking_after": 27,
+    "bfm_blocking": 17,
+    "manual_blocking": 9,
+    "bdr_blocking": 0
+  },
+  "probes_rerun": false,
+  "TT_SPRINT_B_ACTIVE": false,
+  "explicit_non_actions": [
+    "No HAT-003 retest",
+    "No BD-005 retest",
+    "No BFM execution",
+    "No Manual execution",
+    "No BDR execution",
+    "No TT_SPRINT_B ACTIVE"
+  ]
+}

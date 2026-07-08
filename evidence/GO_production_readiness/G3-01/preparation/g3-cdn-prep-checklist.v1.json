@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.g3_cdn_prep_checklist.v1",
+  "generated_at": "2026-07-04T09:05:07.171Z",
+  "registry": "registry/g3-production-cdn-official-assets.v1.yaml",
+  "owner_steps_before_verified": [
+    "Cloudflare R2 bucket + API token",
+    "cdn.traveltrust.app DNS → R2 public bucket",
+    "fly secrets on tt-api-prod (COMMUNITY_MEDIA_S3_*)",
+    "bash scripts/dev/configure-production-media-r2-cdn.sh",
+    "node scripts/dev/bootstrap-ocs-official-assets-to-r2.cjs --apply",
+    "Production HEAD probes on CDN host + cf-cache-status",
+    "bash scripts/dev/run-reality-verification.sh --gate G3 --domain G3-01"
+  ],
+  "machine_key_prep": "TT_G3_PRODUCTION_CDN_PREP",
+  "machine_key_verified": "TT_G3_PRODUCTION_CDN_VERIFIED",
+  "honest_boundary": "PREP READY ≠ VERIFIED — Staging asset baseline does not close G3-01 CDN items"
+}

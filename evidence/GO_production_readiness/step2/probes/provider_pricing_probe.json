@@ -1,0 +1,27 @@
+{
+  "schema": "traveltrust.provider_business_data_probe.v1",
+  "recorded_at_utc": "2026-07-08T00:19:07.428Z",
+  "mode": "discovery_only",
+  "check_id": "pricing",
+  "label": "Pricing",
+  "ssot": "Pricing API",
+  "probe": "listing.payload.priceUsdc",
+  "api": "https://tt-api-staging.fly.dev",
+  "verdict": "PASS",
+  "root_cause": null,
+  "candidate_issue": "BD-002",
+  "fail_reasons": [],
+  "warn_reasons": [],
+  "warn_classification": {
+    "C": [],
+    "D": [],
+    "P": []
+  },
+  "detail": {
+    "fail": [],
+    "warn": [],
+    "count_with_price": 11,
+    "count_valid": 11
+  },
+  "TT_PROVIDER_PROBE": "PASS"
+}

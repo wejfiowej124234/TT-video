@@ -1,0 +1,88 @@
+{
+  "schema": "traveltrust.bfm001_redefine_confirmation.v1",
+  "recorded_at_utc": "2026-07-07T23:59:45.117Z",
+  "issue_id": "BFM-001",
+  "document": "evidence/GO_production_readiness/sprints/BFM-001-REDEFINE-CONFIRMATION.md",
+  "mode": "discovery_only",
+  "TT_SPRINT_B": "READY",
+  "TT_SPRINT_B_ACTIVE": false,
+  "root_cause_confirmed_for_active": false,
+  "original_hypothesis": {
+    "root_cause": "Acquisition 响应链路未真人走通",
+    "status": "RECLASSIFIED",
+    "api_layer": "REJECTED",
+    "human_layer": "CONFIRMED",
+    "rejected_by": [
+      "evidence/GO_production_readiness/step4/BFM-001-ACQUISITION-CHAIN-DISCOVERY-LATEST.json",
+      "scripts/dev/smoke-acquisition-pd009-staging.sh"
+    ],
+    "reclassification_reason": "API respond/full-chain PASS on pilot; human BFM/HAT/Manual never executed — mixed hypothesis must split"
+  },
+  "pilot_api_exit": {
+    "met": true,
+    "tracks_pass": [
+      "fresh_user_full_chain",
+      "seed_persona_chain",
+      "high_bounty_fulfillment_gate"
+    ],
+    "ocs_catalog": "PARTIAL · close_deal · OCS owner persona gap"
+  },
+  "candidate_root_causes": {
+    "primary": {
+      "id": "acquisition_human_verification_not_executed",
+      "status": "CONFIRMED_CANDIDATE"
+    },
+    "secondary": {
+      "id": "staging_ocs_acquisition_owner_not_in_hat_pilot",
+      "status": "CONFIRMED_CANDIDATE",
+      "blocked_at": "close_deal",
+      "failure_signature": {
+        "http": 403,
+        "error": "not_tourist"
+      }
+    }
+  },
+  "bfm_matrix_discovery": {
+    "publish": {
+      "api": "PASS",
+      "human": "NOT_EXECUTED"
+    },
+    "respond": {
+      "api": "PASS",
+      "human": "NOT_EXECUTED"
+    },
+    "close_deal": {
+      "api": "PARTIAL",
+      "human": "NOT_EXECUTED"
+    },
+    "complete": {
+      "api": "PASS",
+      "human": "NOT_EXECUTED"
+    }
+  },
+  "supporting_evidence": [
+    "evidence/GO_production_readiness/step4/BFM-001-ACQUISITION-CHAIN-DISCOVERY-LATEST.json",
+    "evidence/GO_production_readiness/sprints/BFM-001-DISCOVERY-RESULT.md",
+    "scripts/dev/run-bfm-001-acquisition-chain-discovery.cjs",
+    "scripts/dev/smoke-acquisition-pd009-staging.sh",
+    "registry/business-flow-matrix.v1.yaml",
+    "registry/hat-six-role-matrix.v1.yaml",
+    "registry/manual-validation-checklist.v1.yaml"
+  ],
+  "recommendation": {
+    "preferred": "close_and_downgrade_human_validation_track",
+    "close_bfm001": "CLOSED — hypothesis_reclassified_api_pass_human_deferred",
+    "route_to": [
+      "business-flow-matrix.v1.yaml",
+      "hat-six-role-matrix.v1.yaml",
+      "manual-validation-checklist.v1.yaml"
+    ],
+    "alternative_rejected": "split_new_hat_manual_rc",
+    "rationale": "Aligns with BD-003; API not Fix target; human verification on existing tracks"
+  },
+  "owner_decision_ref": "evidence/GO_production_readiness/sprints/OWNER-BFM-001-DISPOSITION-DECISION-LATEST.json",
+  "redefine_confirmed_by_document": true,
+  "registry_updated": false,
+  "fix_applied": false,
+  "data_changed": false
+}

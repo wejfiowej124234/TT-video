@@ -1,0 +1,31 @@
+{
+  "schema": "traveltrust.owner_fulfillment_guide_decision.v1",
+  "recorded_at_utc": "2026-07-07T15:03:26.141Z",
+  "decision_id": "OWNER-FULFILLMENT-GUIDE-DECISION",
+  "document": "evidence/GO_production_readiness/sprints/OWNER-FULFILLMENT-GUIDE-DECISION.md",
+  "selected_option": "A",
+  "rejected_option": "B",
+  "business_rule": {
+    "statement": "Provider listing order requires listing owner to have an active guides row; guide_id is fulfillment party for merchant_listing orders",
+    "by_design": true,
+    "ssot_refs": [
+      "docs/spec/04-后端与API.md §3.4",
+      "docs/spec/94-自由市场-商家橱窗与旅行收购-链上托管技术规格.md §3.2",
+      "crates/api/src/chain_off/market_listing_orders.rs"
+    ]
+  },
+  "governance": {
+    "failure_signature_confirmed": true,
+    "root_cause_candidate": "provider_fulfillment_guide_missing",
+    "business_rule_confirmed": true,
+    "root_cause_confirmed": false,
+    "fix_authorized": false
+  },
+  "bd005_implication": "Order Lifecycle Readiness gap (data/onboarding), not pricing; not rule removal",
+  "TT_SPRINT_B": "READY",
+  "TT_SPRINT_B_ACTIVE": false,
+  "registry_updated": false,
+  "code_changed": false,
+  "data_changed": false,
+  "fix_applied": false
+}

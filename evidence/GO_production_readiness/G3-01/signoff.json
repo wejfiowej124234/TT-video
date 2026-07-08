@@ -1,0 +1,22 @@
+{
+  "schema": "traveltrust.g3_domain_signoff.v1",
+  "domain_id": "G3-01",
+  "label": "Production Network",
+  "status": "PLANNED",
+  "scope_frozen_utc": "2026-07-04",
+  "environment_required_for_verified": "production",
+  "matrix_gaps": ["PRM-DOM-B001"],
+  "execution_step": "freeze_scope_complete",
+  "checklist": "checklist.v1.json",
+  "steps": {
+    "freeze_scope": "COMPLETE",
+    "write_checklist": "COMPLETE",
+    "implementation": "PENDING",
+    "reality_verification": "PENDING",
+    "evidence_integrity": "PENDING",
+    "formal_acceptance": "PENDING"
+  },
+  "verified_utc": null,
+  "closed_utc": null,
+  "owner": null
+}

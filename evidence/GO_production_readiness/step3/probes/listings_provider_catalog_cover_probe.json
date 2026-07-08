@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.listings_business_data_probe.v1",
+  "check_id": "provider_catalog_cover",
+  "recorded_at_utc": "2026-07-08T00:19:09.661Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "verdict": "PASS",
+  "production_count": 11,
+  "total_count": 11
+}

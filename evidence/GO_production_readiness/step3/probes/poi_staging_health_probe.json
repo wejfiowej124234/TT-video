@@ -1,0 +1,6 @@
+{
+  "check_id": "staging_health",
+  "verdict": "PASS",
+  "http": 200,
+  "recorded_at_utc": "2026-07-08T00:19:12.280Z"
+}

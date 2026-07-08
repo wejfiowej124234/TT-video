@@ -1,0 +1,45 @@
+{
+  "schema": "traveltrust.hat_human_validation_step.v1",
+  "role": "guide",
+  "step_id": "login",
+  "order": 2,
+  "label": "登录",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T01:45:10.208Z",
+  "validator": "Cursor Agent · HAT Human Queue · Guide",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "pilot": "guide@test.com",
+  "guide_id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b",
+  "bfm_session_b_ref": "evidence/GO_production_readiness/step3/bfm/BFM-GUIDE-FLOW-LATEST.json",
+  "sprint_a_ref": "registry/hat-six-role-matrix.v1.yaml · order/pay/complete pre-closed",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "action": "guide@test.com session → /guide",
+      "route": "/guide",
+      "title": "向导工作台 | TravelTrust",
+      "login_state": "authenticated"
+    },
+    "api": {
+      "verdict": "PASS",
+      "me_http": 200,
+      "email": "guide@test.com",
+      "guide_status": "active"
+    },
+    "database": {
+      "verdict": "PASS",
+      "user_id": "4b389c45-bfca-4f3a-a897-42cf95c91a6e"
+    },
+    "page": {
+      "verdict": "PASS",
+      "route": "/guide",
+      "has_guide_shell": true
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "authenticated"
+    }
+  },
+  "TT_SPRINT_B_ACTIVE": false
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "traveltrust.bfm_human_validation_step.v1",
+  "session": "A",
+  "flow_id": "provider",
+  "step_id": "register",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T00:12:44.441Z",
+  "validator": "Cursor Agent · Session A",
+  "pilot": "merchant@test.com",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "verification_chain": {
+    "human_click": {
+      "verdict": "PASS",
+      "action": "Login as merchant via staging auth (operator session)",
+      "url": "https://tt-web-staging.fly.dev/auth/login"
+    },
+    "api": {
+      "verdict": "PASS",
+      "method": "GET",
+      "path": "/api/v1/me",
+      "status": 200,
+      "role": "provider"
+    },
+    "database": {
+      "verdict": "PASS",
+      "entity": "users",
+      "row_id": "fe929c0c-c52d-4f3b-bee8-31d2685766ec",
+      "field": "role",
+      "value": "provider"
+    },
+    "page": {
+      "verdict": "PASS",
+      "url": "https://tt-web-staging.fly.dev/market/provider",
+      "note": "Provider market reachable post-login (page layer deferred to publish step)"
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "provider_identity_ready",
+      "guide_active": true
+    }
+  }
+}

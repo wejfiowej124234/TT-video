@@ -1,0 +1,71 @@
+{
+  "stamp": "20260704T000527Z",
+  "gap_id": "PRM-CONTENT-B001",
+  "go_gate": "G1",
+  "domain": "content_readiness",
+  "machine_keys": {
+    "TT_COMMUNITY_CONTENT_READINESS_G1": "PASS",
+    "TT_PRODUCTION_GO": "NO_GO"
+  },
+  "acceptance": {
+    "feed_governed": true,
+    "no_frontend_showcase_in_feed": true,
+    "no_sample_video_urls": true,
+    "no_unsplash_seed": true,
+    "allow_only": [
+      "ugc",
+      "official",
+      "campaign"
+    ]
+  },
+  "checks": [
+    {
+      "id": "gov_view_excludes_showcase",
+      "status": "PASS",
+      "detail": "governed_community_posts_v1 excludes SHOWCASE/TEST/SMOKE"
+    },
+    {
+      "id": "seed_demo_showcase_draft",
+      "status": "PASS",
+      "detail": "PG seed inserts demo/SHOWCASE/draft"
+    },
+    {
+      "id": "seed_off_on_staging_profile",
+      "status": "PASS",
+      "detail": "Showcase seed disabled on staging/production profile"
+    },
+    {
+      "id": "frontend_production_filter",
+      "status": "PASS",
+      "detail": "Frontend strips B/C layers from API-mapped feed"
+    },
+    {
+      "id": "api_feed_content_filter",
+      "status": "PASS",
+      "detail": "API response filters legacy demo media when public catalog filter on"
+    },
+    {
+      "id": "promo_preview_production",
+      "status": "PASS",
+      "detail": "Promo preview uses governed posts in production profile"
+    },
+    {
+      "id": "showcase_deep_link_production",
+      "status": "PASS",
+      "detail": "Showcase deep links disabled in production profile"
+    },
+    {
+      "id": "legacy_read_path_governed",
+      "status": "PASS",
+      "detail": "Community public reads use governed view"
+    },
+    {
+      "id": "runtime_feed_clean",
+      "status": "PASS",
+      "detail": "feed posts=0 · zero legacy/demo violations"
+    }
+  ],
+  "runtime_violations": [],
+  "verdict": "CONTENT_READINESS_G1_PASS",
+  "pcp_boundary": "PCP Governance CLOSED — this gate is Content baseline only"
+}

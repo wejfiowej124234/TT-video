@@ -317,8 +317,9 @@ fn orders_meta_top_keys_order_and_literals_744() {
     assert_eq!(ORDERS_META_TOP_KEYS[3], "list_pagination");
     assert_eq!(ORDERS_META_TOP_KEYS[4], "fee_route_country_ssot");
     assert_eq!(ORDERS_META_TOP_KEYS[5], "deadline_rating_observability");
-    assert_eq!(ORDERS_META_TOP_KEYS[6], "orders_top_keys");
-    assert_eq!(ORDERS_META_TOP_KEYS[7], "orders_top_keys_contract_744");
+    assert_eq!(ORDERS_META_TOP_KEYS[6], "order_mock_pay_enabled");
+    assert_eq!(ORDERS_META_TOP_KEYS[7], "orders_top_keys");
+    assert_eq!(ORDERS_META_TOP_KEYS[8], "orders_top_keys_contract_744");
     let c = format_orders_meta_top_keys_contract_744();
     assert!(c.contains("744"), "contract: {c}");
     for k in ORDERS_META_TOP_KEYS {

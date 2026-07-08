@@ -1,0 +1,58 @@
+{
+  "schema": "traveltrust.hat_evidence_sync.v1",
+  "recorded_at_utc": "2026-07-08T01:36:44.794Z",
+  "transaction": "HAT Evidence Sync · independent",
+  "mode": "evidence_mapping_only",
+  "discipline": {
+    "no_code_change": true,
+    "no_staging_config_change": true,
+    "no_business_data_change": true,
+    "TT_SPRINT_B_ACTIVE": false,
+    "no_bulk_pending_sync": true
+  },
+  "registry_ssot": "registry/hat-six-role-matrix.v1.yaml",
+  "registry_version_before": 3,
+  "registry_version_after": 4,
+  "synced": [
+    {
+      "role": "tourist",
+      "step": "order",
+      "verdict": "pass",
+      "evidence": [
+        "evidence/GO_production_readiness/step4/manual/steps/manual-cancel_refund-LATEST.json",
+        "evidence/GO_production_readiness/step4/manual/steps/manual-refresh_recovery-LATEST.json"
+      ],
+      "proof": "created order 61aed01a · cancel UX · API created status"
+    },
+    {
+      "role": "tourist",
+      "step": "complete",
+      "verdict": "pass",
+      "evidence": [
+        "evidence/GO_production_readiness/step4/manual/steps/manual-cancel_refund-LATEST.json",
+        "evidence/GO_production_readiness/step4/manual/steps/manual-refresh_recovery-LATEST.json"
+      ],
+      "proof": "escrow 1bbb38dc completed · post-refresh UI+API consistent"
+    },
+    {
+      "role": "tourist",
+      "step": "pay",
+      "verdict": "pass",
+      "sync_mode": "api_pass_ui_deferred",
+      "evidence": [
+        "evidence/GO_production_readiness/step4/manual/steps/manual-pay_mock-LATEST.json"
+      ],
+      "proof": "POST mock-pay 200 escrowed · UI blocked by order_mock_pay_enabled meta"
+    }
+  ],
+  "skipped": [
+    {
+      "role": "provider",
+      "step": "logout",
+      "reason": "no_direct_logout_evidence_in_BD-005_or_HAT-003_for_provider_persona",
+      "action": "Human Validation Queue"
+    }
+  ],
+  "pending_remaining_estimate": 24,
+  "final_gate_ref": "evidence/GO_production_readiness/sprints/PRODUCTION-READINESS-FINAL-GATE-CLOSURE-LATEST.json"
+}

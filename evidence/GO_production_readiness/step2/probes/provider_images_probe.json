@@ -1,0 +1,26 @@
+{
+  "schema": "traveltrust.provider_business_data_probe.v1",
+  "recorded_at_utc": "2026-07-08T00:19:07.428Z",
+  "mode": "discovery_only",
+  "check_id": "images",
+  "label": "Images",
+  "ssot": "CMS",
+  "probe": "HEAD cover_url",
+  "api": "https://tt-api-staging.fly.dev",
+  "verdict": "PASS",
+  "root_cause": null,
+  "candidate_issue": null,
+  "fail_reasons": [],
+  "warn_reasons": [],
+  "warn_classification": {
+    "C": [],
+    "D": [],
+    "P": []
+  },
+  "detail": {
+    "fail": [],
+    "warn": [],
+    "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-provider-cover.jpg"
+  },
+  "TT_PROVIDER_PROBE": "PASS"
+}

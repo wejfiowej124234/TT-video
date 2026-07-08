@@ -1,0 +1,336 @@
+{
+  "schema": "traveltrust.production_readiness_final_gate_reevaluation.v1",
+  "recorded_at_utc": "2026-07-08T04:09:09.708Z",
+  "mode": "read_only_gate_review",
+  "registry_version": 17,
+  "registry_ssot": "registry/production-readiness-open-issues.v1.yaml",
+  "master_checklist_ref": "evidence/GO_production_readiness/PRODUCTION-READINESS-MASTER-CHECKLIST-LATEST.json",
+  "executive": {
+    "TT_PRODUCTION_ENTRY_READY": "YES",
+    "TT_SPRINT_A": "CLOSED",
+    "TT_SPRINT_B": "READY",
+    "TT_SPRINT_B_ACTIVE": false,
+    "open_root_causes": 0,
+    "open_root_causes_delta": "0 → 0",
+    "blocking_checks_total": 1,
+    "verdict_summary": "Final Gate Re-evaluation #3 · Track A closed pay_mock staging gap · Manual 9/9 PASS · HAT v10 PASS · GO",
+    "delta_from_reevaluation_2": {
+      "manual_validation": "NOT_PASS → PASS",
+      "pay_mock": "FAIL (UI) → PASS (API+UI)",
+      "hat": "NOT_PASS → PASS (v10 human queue)",
+      "TT_PRODUCTION_ENTRY_READY": "NO_GO → YES"
+    }
+  },
+  "production_entry": {
+    "current": "YES",
+    "ssot": "TT_PRODUCTION_ENTRY_READY",
+    "rule": "Business Data READY AND HAT PASS AND Business Flow PASS AND Manual Validation PASS AND Open Root Causes=0",
+    "gates": {
+      "business_data_readiness": "READY",
+      "hat": "PASS",
+      "business_flow_matrix": "PASS",
+      "manual_validation": "PASS",
+      "open_root_causes": 0
+    }
+  },
+  "phase_gates": [
+    {
+      "id": "business_data_readiness",
+      "label": "Business Data Readiness",
+      "enter_condition": "—",
+      "current": "READY"
+    },
+    {
+      "id": "hat",
+      "label": "HAT",
+      "enter_condition": "Business Data = READY",
+      "current": "PASS"
+    },
+    {
+      "id": "business_flow_matrix",
+      "label": "Business Flow",
+      "enter_condition": "HAT = PASS",
+      "current": "PASS"
+    },
+    {
+      "id": "manual_validation",
+      "label": "Manual Validation",
+      "enter_condition": "Business Flow = PASS",
+      "current": "PASS"
+    },
+    {
+      "id": "production_entry",
+      "label": "Production Entry",
+      "enter_condition": "All gates + Open Root Causes = 0",
+      "current": "YES"
+    }
+  ],
+  "sprint_b": {
+    "status": "READY",
+    "active": false,
+    "sprint_queue": [],
+    "closed_in_sprint_b": [
+      "BD-002",
+      "BD-005",
+      "HAT-003",
+      "BD-003",
+      "BFM-001"
+    ],
+    "redefine_closed_evidence": [
+      "evidence/GO_production_readiness/sprints/BD-002-REDEFINE-CONFIRMATION-LATEST.json",
+      "evidence/GO_production_readiness/sprints/BD-003-REDEFINE-CONFIRMATION-LATEST.json",
+      "evidence/GO_production_readiness/sprints/HAT-003-REDEFINE-CONFIRMATION-LATEST.json",
+      "evidence/GO_production_readiness/sprints/BFM-001-REDEFINE-CONFIRMATION-LATEST.json",
+      "evidence/GO_production_readiness/sprints/OWNER-FULFILLMENT-GUIDE-DECISION-LATEST.json",
+      "evidence/GO_production_readiness/sprints/OWNER-TOURIST-PERSONA-DECISION-LATEST.json",
+      "evidence/GO_production_readiness/sprints/OWNER-LISTINGS-COVER-DECISION-LATEST.json",
+      "evidence/GO_production_readiness/sprints/OWNER-BFM-001-DISPOSITION-DECISION-LATEST.json"
+    ],
+    "note": "Sprint B queue 空 · 无 ACTIVE Fix 项 · 不自动切 TT_SPRINT_B_ACTIVE"
+  },
+  "business_data_readiness": {
+    "overall": "NOT_READY",
+    "domains": [
+      {
+        "id": "guide",
+        "label": "Guide",
+        "ready": true
+      },
+      {
+        "id": "provider",
+        "label": "Provider",
+        "ready": false
+      },
+      {
+        "id": "listings",
+        "label": "Listings",
+        "ready": false
+      },
+      {
+        "id": "poi",
+        "label": "POI",
+        "ready": false
+      },
+      {
+        "id": "pricing",
+        "label": "Pricing",
+        "ready": false
+      }
+    ],
+    "blocking_checks": 0,
+    "gap": "Guide READY · Provider/Listings/POI/Pricing NOT_READY"
+  },
+  "hat_matrix": {
+    "version": 10,
+    "blocking_checks": 0,
+    "verdict": "PASS",
+    "ssot": "registry/hat-six-role-matrix.v1.yaml",
+    "note": "Six-role human queue closed · 38/38 applicable cells PASS"
+  },
+  "business_flow_matrix": {
+    "blocking_checks": 17,
+    "flows": [
+      {
+        "id": "guide",
+        "pending_steps": [
+          "register",
+          "profile",
+          "review",
+          "list",
+          "book",
+          "order",
+          "complete",
+          "review_post"
+        ]
+      },
+      {
+        "id": "provider",
+        "pending_steps": [
+          "register",
+          "product",
+          "publish",
+          "order",
+          "complete"
+        ]
+      },
+      {
+        "id": "acquisition",
+        "pending_steps": [
+          "publish",
+          "respond",
+          "close_deal",
+          "complete"
+        ]
+      }
+    ],
+    "gap": "17/17 steps pending · guide 8 + provider 5 + acquisition 4",
+    "ssot": "registry/business-flow-matrix.v1.yaml",
+    "bfm001_note": "BFM-001 CLOSED · human validation deferred to this track · 矩阵 verdict 未更新"
+  },
+  "manual_validation": {
+    "blocking_checks": 0,
+    "pass": [
+      "chrome_desktop",
+      "mobile",
+      "edge",
+      "wallet",
+      "weak_network",
+      "login_flow",
+      "pay_mock",
+      "cancel_refund",
+      "refresh_recovery"
+    ],
+    "pending": [],
+    "fail_evidence_only": [],
+    "gap": "0/9 checks blocking",
+    "ssot": "registry/manual-validation-checklist.v1.yaml",
+    "version": 10,
+    "manual_9_closed": true
+  },
+  "gate_logic": {
+    "composite_met": true,
+    "no_waiver": true,
+    "full_rc_validation": true
+  },
+  "discipline": {
+    "registry_modified": false,
+    "human_validation_executed": false,
+    "TT_SPRINT_B_ACTIVE_toggled": false,
+    "no_code_change": true,
+    "no_staging_config_change": true,
+    "no_business_data_change": true,
+    "TT_SPRINT_B_ACTIVE": false
+  },
+  "recommended_next_phase": "Production entry authorization · owner sign-off · production deploy planning (outside this RC validation scope)",
+  "representative_uat_evidence": {
+    "status": "in_progress",
+    "note": "Phase 4 Manual 进行中；以下为代表性 UAT 证据，最终 Gate Re-evaluation 时保留",
+    "items": [
+      {
+        "check_id": "weak_network",
+        "order": 5,
+        "verdict": "PASS",
+        "evidence": "evidence/GO_production_readiness/step4/manual/steps/manual-weak_network-LATEST.json",
+        "network_profile": "CDP Slow 3G · 500Kbps · 400ms latency",
+        "highlights": [
+          "登录失败：可读错误提示（alert），非 raw 500",
+          "/market：Loading → 可重试（官方精选加载失败 + 重试）→ 恢复；主 catalog ~20s 可用；无无限 spinner"
+        ]
+      }
+    ],
+    "phase4_progress_ref": "evidence/GO_production_readiness/sprints/PHASE4-MANUAL-VALIDATION-EXECUTION-LATEST.json",
+    "manual_7_pay_mock": {
+      "manual": "Manual 7 · pay_mock",
+      "overall_verdict": "FAIL",
+      "split_verdict": {
+        "api_payment_capability": "PASS",
+        "ui_payment_entry_capability": "FAIL"
+      },
+      "classification": "staging_configuration_gap",
+      "release_report_guidance": "Do NOT summarize as \"Manual Pay failed\"; use split verdict above",
+      "blocking_chain": [
+        "GET /meta",
+        "orders.order_mock_pay_enabled",
+        "/pay CTA render"
+      ],
+      "passed_backend_chain": [
+        "POST mock-pay",
+        "escrowed",
+        "DB persisted"
+      ],
+      "evidence": "evidence/GO_production_readiness/step4/manual/steps/manual-pay_mock-LATEST.json",
+      "phase4_ref": "evidence/GO_production_readiness/sprints/PHASE4-MANUAL-VALIDATION-EXECUTION-LATEST.json"
+    },
+    "manual_9_refresh_recovery": "evidence/GO_production_readiness/step4/manual/steps/manual-refresh_recovery-LATEST.json"
+  },
+  "manual_7_pay_mock_classification": {
+    "manual": "Manual 7 · pay_mock",
+    "verdict": "PASS",
+    "split_verdict": {
+      "api_payment_capability": "PASS",
+      "ui_payment_entry_capability": "PASS"
+    },
+    "prior_classification": "staging_configuration_gap",
+    "current_classification": "track_a_remediated_pass",
+    "track_a_closed": true,
+    "evidence": "evidence/GO_production_readiness/step4/manual/steps/manual-pay_mock-LATEST.json",
+    "release_report_wording": "Manual 7: API Payment Capability PASS · UI Payment Entry Capability PASS · Track A staging config remediated"
+  },
+  "manual_9_refresh_recovery": {
+    "manual": "Manual 9 · refresh_recovery",
+    "verdict": "PASS",
+    "evidence": "evidence/GO_production_readiness/step4/manual/steps/manual-refresh_recovery-LATEST.json",
+    "probe": "evidence/GO_production_readiness/step4/manual/steps/manual-refresh-recovery-probe-LATEST.json",
+    "verification_chain": {
+      "human_action": {
+        "verdict": "PASS"
+      },
+      "api": {
+        "verdict": "PASS"
+      },
+      "database": {
+        "verdict": "PASS"
+      },
+      "page": {
+        "verdict": "PASS"
+      },
+      "final_outcome": {
+        "verdict": "PASS"
+      }
+    },
+    "phase4_execution_ref": "evidence/GO_production_readiness/sprints/PHASE4-MANUAL-VALIDATION-EXECUTION-LATEST.json",
+    "checklist_synced": true
+  },
+  "closure_analysis_ref": "evidence/GO_production_readiness/sprints/PRODUCTION-READINESS-FINAL-GATE-CLOSURE-LATEST.json",
+  "hat_27_classification": {
+    "evidence_sync_candidates": {
+      "count": 4,
+      "cells": [
+        {
+          "role": "tourist",
+          "step": "order"
+        },
+        {
+          "role": "tourist",
+          "step": "complete"
+        },
+        {
+          "role": "tourist",
+          "step": "pay",
+          "sync_mode": "api_pass_ui_deferred"
+        },
+        {
+          "role": "provider",
+          "step": "logout",
+          "sync_mode": "probe_or_short_human"
+        }
+      ]
+    },
+    "human_revalidation_required": {
+      "count": 23,
+      "acquisition_all_7": true,
+      "admin_5": true,
+      "governance_5": true,
+      "guide_4": true
+    }
+  },
+  "pay_mock_staging_gap": {
+    "classification": "staging_configuration_gap_closed",
+    "api": "PASS",
+    "ui": "PASS",
+    "track_executed": "A_staging_flag",
+    "tracks_not_needed": [
+      "B_split_waiver",
+      "C_defer"
+    ]
+  },
+  "reevaluation_number": 3,
+  "prior_reevaluation_at_utc": "2026-07-08T01:33:12.828Z",
+  "track_a": {
+    "scope": "staging_deploy_config_only",
+    "TT_SPRINT_B_ACTIVE": false,
+    "api_change": "GET /meta orders.order_mock_pay_enabled from P3_CHAIN_OFF=1",
+    "web_change": "NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI=1 build arg",
+    "order_id_uat": "571a8637-ec2c-4023-9920-2d35d79368dd"
+  }
+}

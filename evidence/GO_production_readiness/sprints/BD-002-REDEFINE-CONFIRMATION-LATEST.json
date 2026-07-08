@@ -1,0 +1,63 @@
+{
+  "schema": "traveltrust.bd002_redefine_confirmation.v1",
+  "recorded_at_utc": "2026-07-07T14:58:03.143Z",
+  "issue_id": "BD-002",
+  "document": "evidence/GO_production_readiness/sprints/BD-002-REDEFINE-CONFIRMATION.md",
+  "mode": "discovery_only",
+  "TT_SPRINT_B": "READY",
+  "TT_SPRINT_B_ACTIVE": false,
+  "root_cause_confirmed_for_active": false,
+  "original_hypothesis": {
+    "root_cause": "Provider Pricing 不完整",
+    "status": "REJECTED",
+    "rejected_by": [
+      "evidence/GO_production_readiness/step2/PROVIDER-BUSINESS-DATA-READINESS-DAY2-LATEST.json",
+      "evidence/GO_production_readiness/step2/hat/SPRINT-B-PROVIDER-HAT-ORDER-LATEST.json"
+    ]
+  },
+  "candidate_new_root_cause": {
+    "label": "Provider Order Lifecycle / Fulfillment Guide 缺失导致下单 422",
+    "failure_signature": {
+      "http": 422,
+      "error": "market_listing_fulfillment_guide_required",
+      "hint": "fulfillment party must have an active guide profile"
+    },
+    "blocked_chain": [
+      "create_order",
+      "provider_accept",
+      "mock_pay",
+      "confirm_completion"
+    ]
+  },
+  "supporting_evidence": [
+    "evidence/GO_production_readiness/step2/PROVIDER-BUSINESS-DATA-READINESS-DAY2-LATEST.json",
+    "evidence/GO_production_readiness/step2/probes/provider_pricing_probe.json",
+    "evidence/GO_production_readiness/step2/hat/SPRINT-B-PROVIDER-HAT-ORDER-LATEST.json",
+    "evidence/GO_production_readiness/sprints/SPRINT-B-DISCOVERY-RESULT.md",
+    "scripts/dev/run-sprint-b-provider-hat-order-validation.cjs",
+    "scripts/dev/run-provider-business-data-readiness-probes.cjs"
+  ],
+  "impact": {
+    "catalog_market": "PASS",
+    "order_create": "FAIL",
+    "mock_pay": "NOT_REACHED",
+    "confirm_completion": "NOT_REACHED",
+    "provider_business_ready": false
+  },
+  "exit_condition": {
+    "bd002_pricing_hypothesis_close": "Day2 Pricing PASS + HAT proves non-pricing blocker — close as hypothesis rejected, no fix",
+    "new_rc_close": "HAT full chain PASS on production catalog listing — TT_SPRINT_B_PROVIDER_HAT_ORDER=PASS"
+  },
+  "recommendation": {
+    "preferred": "split",
+    "close_bd002": "CLOSED — hypothesis rejected (Provider Pricing 不完整)",
+    "new_issue_suggested_id": "BD-005",
+    "new_issue_root_cause": "Provider Order Lifecycle / Fulfillment Guide 缺失",
+    "alternative": "reuse_bd002_in_place — rewrite root_cause, keep OPEN",
+    "rationale": "Aligns with Sprint A BD-001 rejected + BD-004 split; separates non-fix hypothesis from actionable order lifecycle blocker"
+  },
+  "redefine_confirmed_by_document": true,
+  "registry_updated": false,
+  "fix_applied": false,
+  "data_changed": false
+}

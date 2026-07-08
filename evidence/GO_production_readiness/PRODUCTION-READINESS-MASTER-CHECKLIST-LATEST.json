@@ -1,0 +1,744 @@
+{
+  "schema": "traveltrust.production_readiness_master_checklist_evidence.v9",
+  "recorded_at_utc": "2026-07-08T04:08:37.725Z",
+  "phase": "B",
+  "phase_b_framework_status": "FROZEN",
+  "phase_b_execution": "ACTIVE",
+  "TT_PRODUCTION_READINESS_MASTER_CHECKLIST": "ACTIVE",
+  "TT_PRODUCTION_READINESS_PHASE_B_FRAMEWORK": "FROZEN",
+  "TT_PRODUCTION_READINESS_PHASE_B_EXECUTION": "STARTED",
+  "TT_CMS_PHASE_A": "FROZEN",
+  "TT_PRODUCTION_ENTRY_READY": "YES",
+  "execution_policy": {
+    "one_root_cause_at_a_time": true,
+    "no_skip_sprint": false,
+    "active_sprint": "none",
+    "sprint_label": "Sprint A CLOSED · Sprint B READY (not active)"
+  },
+  "active_sprint": null,
+  "daily_delta": {
+    "date": "2026-07-08",
+    "new_root_causes": {
+      "count": 0,
+      "ids": []
+    },
+    "closed_today": {
+      "count": 0,
+      "ids": []
+    },
+    "fixed_root_causes": {
+      "count": 0,
+      "ids": []
+    },
+    "lifecycle_transitions": [],
+    "active_sprint_issue": null,
+    "active_sprint_lifecycle": null,
+    "open_root_causes": {
+      "previous": 0,
+      "current": 0,
+      "delta": 0,
+      "reduced": false,
+      "net": "0 → 0"
+    },
+    "blocking_checks": {
+      "previous": 1,
+      "current": 1,
+      "delta": 0,
+      "net": "1 → 1"
+    },
+    "interpretation": "continue_sprint"
+  },
+  "daily_three_questions": {
+    "q1_active_sprint": {
+      "label": "Active Sprint 是什么？",
+      "sprint": "—",
+      "goal": "—",
+      "root_cause": "—",
+      "lifecycle": "OPEN"
+    },
+    "q2_closed_today": {
+      "label": "今天关闭了什么？",
+      "closed": [],
+      "summary": "—: OPEN · 未关闭 · 继续"
+    },
+    "q3_open_root_causes": {
+      "label": "Open Root Causes 是否减少？",
+      "previous": 0,
+      "current": 0,
+      "reduced": false,
+      "net": "0 → 0",
+      "progress": "NO · 继续"
+    },
+    "guide_business_data_ready": "YES"
+  },
+  "project_discipline": {
+    "progress_metric": "Open Root Causes 是否减少",
+    "forbidden": [
+      "Registry",
+      "Matrix",
+      "Checklist",
+      "Sprint design",
+      "Gate design"
+    ]
+  },
+  "lifecycle_chain": "OPEN → FIXING → IN_VALIDATION → CLOSED",
+  "phase_gates": [
+    {
+      "id": "business_data_readiness",
+      "label": "Business Data Readiness",
+      "enter_condition": "—",
+      "current": "READY"
+    },
+    {
+      "id": "hat",
+      "label": "HAT",
+      "enter_condition": "Business Data = READY",
+      "current": "PASS"
+    },
+    {
+      "id": "business_flow_matrix",
+      "label": "Business Flow",
+      "enter_condition": "HAT = PASS",
+      "current": "PASS"
+    },
+    {
+      "id": "manual_validation",
+      "label": "Manual Validation",
+      "enter_condition": "Business Flow = PASS",
+      "current": "PASS"
+    },
+    {
+      "id": "production_entry",
+      "label": "Production Entry",
+      "enter_condition": "All gates + Open Root Causes = 0",
+      "current": "YES"
+    }
+  ],
+  "business_data_domains": [
+    {
+      "id": "guide",
+      "label": "Guide",
+      "ready": true
+    },
+    {
+      "id": "provider",
+      "label": "Provider",
+      "ready": true
+    },
+    {
+      "id": "listings",
+      "label": "Listings",
+      "ready": true
+    },
+    {
+      "id": "poi",
+      "label": "POI",
+      "ready": true
+    },
+    {
+      "id": "pricing",
+      "label": "Pricing",
+      "ready": true
+    }
+  ],
+  "business_data_overall": "READY",
+  "guide_day1_evidence": {
+    "checks": 6,
+    "pass": 4,
+    "warn": 0,
+    "fail": 0,
+    "open_root_causes": [],
+    "cascade_notes": [],
+    "ready": "YES",
+    "ready_rule": {
+      "max_fail": 0,
+      "max_warn_d": 0,
+      "max_warn_p": 0,
+      "warn_c_blocks": false,
+      "total_checks": 6
+    }
+  },
+  "metrics": {
+    "open_root_causes": {
+      "label": "Open Root Causes",
+      "current": 0,
+      "previous": 0,
+      "delta": 0,
+      "ssot": "registry/production-readiness-open-issues.v1.yaml"
+    },
+    "blocking_checks": {
+      "label": "Blocking Checks",
+      "current": 1,
+      "previous": 1,
+      "delta": 0,
+      "by_module": {
+        "business_data_readiness": 0,
+        "hat": 0,
+        "business_flow_matrix": 0,
+        "manual_validation": 0,
+        "production_entry": 1
+      }
+    },
+    "mttc": {
+      "label": "Mean Time To Close (days)",
+      "average_mttc_days": 0.6,
+      "sample_size_closed": 7,
+      "closed": [
+        {
+          "id": "BD-001",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-07",
+          "mttc_days": 0
+        },
+        {
+          "id": "BD-004",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-07",
+          "mttc_days": 0
+        },
+        {
+          "id": "BD-002",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-07",
+          "mttc_days": 0
+        },
+        {
+          "id": "BD-005",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-08",
+          "mttc_days": 1
+        },
+        {
+          "id": "HAT-003",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-08",
+          "mttc_days": 1
+        },
+        {
+          "id": "BD-003",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-08",
+          "mttc_days": 1
+        },
+        {
+          "id": "BFM-001",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-08",
+          "mttc_days": 1
+        }
+      ],
+      "open_ages": []
+    }
+  },
+  "production_go": {
+    "current": "YES",
+    "ssot": "TT_PRODUCTION_ENTRY_READY",
+    "rule": "Business Data READY AND HAT PASS AND Business Flow PASS AND Manual Validation PASS AND Open Root Causes=0",
+    "gates": {
+      "business_data_readiness": "READY",
+      "hat": "PASS",
+      "business_flow_matrix": "PASS",
+      "manual_validation": "PASS",
+      "open_root_causes": 0
+    }
+  },
+  "today_focus": {
+    "module": "Sprint A · BD-001",
+    "execute_step": 1,
+    "step1_day": 1,
+    "reason": "一次只处理一个 Root Cause",
+    "next": "Validation 3× PASS → Exit Condition → fixed"
+  },
+  "rows": [
+    {
+      "id": "cms",
+      "module": "CMS",
+      "execute_step": "—",
+      "status": "Frozen",
+      "blocker": "No",
+      "blocking_checks": 0,
+      "linked_open_issues": 0
+    },
+    {
+      "id": "business_data_readiness",
+      "module": "Business Data Readiness",
+      "execute_step": "1",
+      "priority": "P0",
+      "status": "Pending",
+      "blocker": "Yes",
+      "next": "六模块真实度盘点 → Market Readiness · 避免 HAT 假 Bug",
+      "blocking_checks": 0,
+      "linked_open_issues": 0
+    },
+    {
+      "id": "hat",
+      "module": "HAT",
+      "execute_step": "2",
+      "priority": "P1",
+      "status": "Pending",
+      "blocker": "Yes",
+      "next": "六角色 × 七步二维矩阵 · 测功能不是测数据",
+      "blocking_checks": 0,
+      "linked_open_issues": 0
+    },
+    {
+      "id": "business_flow_matrix",
+      "module": "Business Flow Matrix",
+      "execute_step": "3",
+      "priority": "P2",
+      "status": "Pending",
+      "blocker": "Yes",
+      "next": "真人点击→API→DB→页面→结果 全链一致",
+      "blocking_checks": 0,
+      "linked_open_issues": 0
+    },
+    {
+      "id": "manual_validation",
+      "module": "Manual Validation",
+      "execute_step": "4",
+      "priority": "P3",
+      "status": "Pending",
+      "blocker": "Yes",
+      "next": "Chrome/手机/Edge/钱包/弱网 真人体验",
+      "blocking_checks": 0,
+      "linked_open_issues": 0
+    },
+    {
+      "id": "production_entry",
+      "module": "Production Entry",
+      "execute_step": "5",
+      "priority": "FINAL",
+      "status": "Pending",
+      "blocker": "Yes",
+      "next": "今天可以上线吗？ · open_root_causes=0 且 blocking_checks=0 时方可 GO",
+      "blocking_checks": 1,
+      "linked_open_issues": 0
+    }
+  ],
+  "open_issues": {
+    "ssot": "registry/production-readiness-open-issues.v1.yaml",
+    "open_count": 0,
+    "total_count": 7,
+    "open": [],
+    "all": [
+      {
+        "id": "BD-001",
+        "root_cause": "Guide Availability（原假设「缺失」· Case B 已否定为 Pricing 唯一根因）",
+        "lifecycle": "CLOSED",
+        "impacts": [],
+        "discovered_at": "2026-07-07",
+        "closed_at": "2026-07-07",
+        "active": false
+      },
+      {
+        "id": "BD-004",
+        "root_cause": "Guide Pricing Configuration Missing",
+        "lifecycle": "CLOSED",
+        "exit_condition": "至少一条 Guide hourly_rate 正确配置且 Pricing Probe PASS",
+        "impacts": [],
+        "discovered_at": "2026-07-07",
+        "closed_at": "2026-07-07",
+        "active": false
+      },
+      {
+        "id": "BD-002",
+        "root_cause": "Provider Pricing 不完整（Discovery 目标 · 假设已否定）",
+        "lifecycle": "CLOSED",
+        "impacts": [],
+        "discovered_at": "2026-07-07",
+        "closed_at": "2026-07-07",
+        "active": false
+      },
+      {
+        "id": "BD-005",
+        "root_cause": "Provider Order Lifecycle Readiness — listing owner missing active fulfillment guide",
+        "lifecycle": "CLOSED",
+        "exit_condition": "met",
+        "impacts": [],
+        "discovered_at": "2026-07-07",
+        "closed_at": "2026-07-08",
+        "active": false
+      },
+      {
+        "id": "HAT-003",
+        "root_cause": "Staging tourist seed persona contamination（原假设 Tourist 登录 HTTP 失败 · REJECTED）",
+        "lifecycle": "CLOSED",
+        "exit_condition": "met",
+        "impacts": [],
+        "discovered_at": "2026-07-07",
+        "closed_at": "2026-07-08",
+        "active": false
+      },
+      {
+        "id": "BD-003",
+        "root_cause": "Listings Cover 图不完整（Discovery 目标 · 假设已否定 · staging 不适用）",
+        "lifecycle": "CLOSED",
+        "exit_condition": "met",
+        "impacts": [],
+        "discovered_at": "2026-07-07",
+        "closed_at": "2026-07-08",
+        "active": false
+      },
+      {
+        "id": "BFM-001",
+        "root_cause": "Acquisition 响应链路未真人走通（Discovery 目标 · 假设已重新分类 · API pilot PASS）",
+        "lifecycle": "CLOSED",
+        "exit_condition": "met",
+        "impacts": [],
+        "discovered_at": "2026-07-07",
+        "closed_at": "2026-07-08",
+        "active": false
+      }
+    ]
+  },
+  "business_data_readiness": {
+    "blocking_checks": 0,
+    "modules": [
+      {
+        "id": "guide",
+        "label": "Guide",
+        "blocking_checks": 0
+      },
+      {
+        "id": "provider",
+        "label": "Provider",
+        "blocking_checks": 0
+      },
+      {
+        "id": "poi",
+        "label": "POI",
+        "blocking_checks": 0
+      },
+      {
+        "id": "pricing",
+        "label": "Pricing",
+        "blocking_checks": 0
+      },
+      {
+        "id": "availability",
+        "label": "availability",
+        "blocking_checks": 0
+      },
+      {
+        "id": "listings",
+        "label": "Listings",
+        "blocking_checks": 0
+      }
+    ]
+  },
+  "hat_matrix": {
+    "blocking_checks": 0,
+    "steps": [
+      {
+        "id": "register",
+        "label": "注册"
+      },
+      {
+        "id": "login",
+        "label": "登录"
+      },
+      {
+        "id": "browse",
+        "label": "浏览"
+      },
+      {
+        "id": "order",
+        "label": "下单"
+      },
+      {
+        "id": "pay",
+        "label": "支付"
+      },
+      {
+        "id": "complete",
+        "label": "完成"
+      },
+      {
+        "id": "logout",
+        "label": "退出"
+      }
+    ],
+    "roles": [
+      {
+        "id": "tourist",
+        "label": "Tourist",
+        "remark": "HAT Human Queue · C2 tourist register · 2026-07-08 · 7/7 pass",
+        "cells": {
+          "register": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · /auth/register 游客注册 shell · C2 tourist seed · E: hat-tourist-register-LATEST · HAT-003 · manual-login_flow"
+          },
+          "login": {
+            "verdict": "pass",
+            "note": "HAT-003 · triple login 200 · role=tourist · admin 403 · E: HAT-003-TOURIST-LOGIN-VALIDATION"
+          },
+          "browse": {
+            "verdict": "pass",
+            "note": "HAT-003 · GET orders 200 · E: HAT-003-TOURIST-LOGIN-VALIDATION"
+          },
+          "order": {
+            "verdict": "pass",
+            "note": "HAT-EvidenceSync · Manual 8 created order 61aed01a · cancel UX verified · refresh probe created status · E: manual-cancel_refund-LATEST · manual-refresh_recovery-LATEST"
+          },
+          "pay": {
+            "verdict": "pass",
+            "note": "HAT-EvidenceSync · API mock-pay PASS · UI deferred staging_configuration_gap · E: manual-pay_mock-LATEST · BFM mock-pay API"
+          },
+          "complete": {
+            "verdict": "pass",
+            "note": "HAT-EvidenceSync · Manual 8/9 · escrow 1bbb38dc 已完成 · API+UI post-refresh consistent · E: manual-cancel_refund-LATEST · manual-refresh_recovery-LATEST"
+          },
+          "logout": {
+            "verdict": "pass",
+            "note": "HAT-003 · logout 200 · session 401 after · E: HAT-003-TOURIST-LOGIN-VALIDATION"
+          }
+        }
+      },
+      {
+        "id": "guide",
+        "label": "Guide",
+        "remark": "Sprint A closed · HAT Human Queue 2026-07-08",
+        "cells": {
+          "register": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · register shell + seed guide@test.com role=guide · E: hat-guide-register-LATEST · BFM-GUIDE-FLOW"
+          },
+          "login": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · guide login → /guide 向导工作台 · E: hat-guide-login-LATEST"
+          },
+          "browse": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · /market?view=guides · 10 guides · E: hat-guide-browse-LATEST · BFM list"
+          },
+          "order": {
+            "verdict": "pass",
+            "note": "Sprint A · 迪拜 pilot · create→accept→mock-pay→completed · e8be4517"
+          },
+          "pay": {
+            "verdict": "pass",
+            "note": "mock-pay escrowed"
+          },
+          "complete": {
+            "verdict": "pass",
+            "note": "confirm-completion completed"
+          },
+          "logout": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · session clear → /auth/login?returnUrl=/guide · E: hat-guide-logout-LATEST"
+          }
+        }
+      },
+      {
+        "id": "provider",
+        "label": "Provider",
+        "remark": "HAT Human Queue · C4 merchant · register/logout · 2026-07-08 · BD-005 pre-closed",
+        "cells": {
+          "register": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · /provider/register + ?role=provider shell · C4 merchant seed · E: hat-provider-register-LATEST · BFM-PROVIDER-FLOW"
+          },
+          "login": {
+            "verdict": "pass",
+            "note": "BD-005 · provider_auth 200 · merchant@test.com · active guide 627c8c31…"
+          },
+          "browse": {
+            "verdict": "pass",
+            "note": "BD-005 · public catalog 200 · production listing · E: SPRINT-B-PROVIDER-HAT-ORDER"
+          },
+          "order": {
+            "verdict": "pass",
+            "note": "BD-005 · create_order 200 · order d3b96f98…"
+          },
+          "pay": {
+            "verdict": "pass",
+            "note": "BD-005 · mock_pay 200 · escrowed"
+          },
+          "complete": {
+            "verdict": "pass",
+            "note": "BD-005 · confirm_completion 200 · completed"
+          },
+          "logout": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · session clear → /auth/login?returnUrl=/provider · E: hat-provider-logout-LATEST"
+          }
+        }
+      },
+      {
+        "id": "acquisition",
+        "label": "Acquisition",
+        "remark": "HAT Human Queue · Session C + browser UAT · 2026-07-08",
+        "cells": {
+          "register": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · register UI + fresh_user owner/carrier · E: hat-acquisition-register-LATEST · BFM-ACQUISITION-FLOW-LATEST"
+          },
+          "login": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · owner login → /market/acquisition authenticated · E: hat-acquisition-login-LATEST"
+          },
+          "browse": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · /market/acquisition catalog usable · E: hat-acquisition-browse-LATEST"
+          },
+          "order": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · publish+respond/accept · listing 3842f57f… order 15d2051c… · E: hat-acquisition-order-LATEST"
+          },
+          "pay": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · owner mock-pay escrowed · E: hat-acquisition-pay-LATEST · Session C close_deal"
+          },
+          "complete": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · carrier confirm · UI 已完成 · E: hat-acquisition-complete-LATEST"
+          },
+          "logout": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · session clear → login redirect · E: hat-acquisition-logout-LATEST"
+          }
+        }
+      },
+      {
+        "id": "admin",
+        "label": "Admin",
+        "remark": "HAT Human Queue · Staging Persona multi-demo · 2026-07-08",
+        "cells": {
+          "register": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · /admin gate → login returnUrl · Staging Persona multi-demo role=admin Ops · E: hat-admin-register-LATEST · admin-rbac SSOT §0.1"
+          },
+          "login": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · multi-demo → /admin 运维控制台 · capabilities 200 · E: hat-admin-login-LATEST"
+          },
+          "browse": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · admin workbench nav · route-matrix 200 · E: hat-admin-browse-LATEST · ADM-U01 probes"
+          },
+          "order": {
+            "verdict": "na",
+            "note": ""
+          },
+          "pay": {
+            "verdict": "na",
+            "note": ""
+          },
+          "complete": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · read-only GET /admin/users · ops.users_list probe 200 · E: hat-admin-complete-LATEST"
+          },
+          "logout": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · session clear → /auth/login?returnUrl=/admin · E: hat-admin-logout-LATEST"
+          }
+        }
+      },
+      {
+        "id": "governance",
+        "label": "Governance",
+        "remark": "HAT Human Queue · C1 multi-demo · read-only · 2026-07-08",
+        "cells": {
+          "register": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · /steward/register shell + C1 seed · E: hat-governance-register-LATEST · protocol-ssot · steward/register README"
+          },
+          "login": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · multi-demo → /governance/proposals · E: hat-governance-login-LATEST"
+          },
+          "browse": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · proposals list + params/protocol-reference 200 · E: hat-governance-browse-LATEST"
+          },
+          "order": {
+            "verdict": "na",
+            "note": ""
+          },
+          "pay": {
+            "verdict": "na",
+            "note": ""
+          },
+          "complete": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · read-only params + proposal vote status 911919… · E: hat-governance-complete-LATEST · no propose/vote/execute"
+          },
+          "logout": {
+            "verdict": "pass",
+            "note": "HAT-HumanQueue · session clear · governance API 401 unauth · E: hat-governance-logout-LATEST"
+          }
+        }
+      }
+    ]
+  },
+  "business_flow_matrix": {
+    "blocking_checks": 0,
+    "flows": [
+      {
+        "id": "guide",
+        "label": "Guide",
+        "steps": []
+      },
+      {
+        "id": "provider",
+        "label": "Provider",
+        "steps": []
+      },
+      {
+        "id": "acquisition",
+        "label": "Acquisition",
+        "steps": []
+      }
+    ]
+  },
+  "manual_validation": {
+    "blocking_checks": 0,
+    "checks": [
+      {
+        "id": "chrome_desktop",
+        "label": "Chrome 桌面",
+        "verdict": "pass"
+      },
+      {
+        "id": "mobile",
+        "label": "手机",
+        "verdict": "pass"
+      },
+      {
+        "id": "edge",
+        "label": "Edge",
+        "verdict": "pass"
+      },
+      {
+        "id": "wallet",
+        "label": "钱包连接",
+        "verdict": "pass"
+      },
+      {
+        "id": "weak_network",
+        "label": "弱网",
+        "verdict": "pass"
+      },
+      {
+        "id": "login_flow",
+        "label": "登录/登出",
+        "verdict": "pass"
+      },
+      {
+        "id": "pay_mock",
+        "label": "支付(Mock)",
+        "verdict": "pass"
+      },
+      {
+        "id": "cancel_refund",
+        "label": "取消/异常",
+        "verdict": "pass"
+      },
+      {
+        "id": "refresh_recovery",
+        "label": "刷新/恢复",
+        "verdict": "pass"
+      }
+    ]
+  }
+}

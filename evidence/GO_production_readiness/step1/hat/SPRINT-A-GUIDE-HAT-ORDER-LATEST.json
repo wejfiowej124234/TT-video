@@ -1,0 +1,58 @@
+{
+  "schema": "traveltrust.sprint_a_guide_hat_order_validation.v1",
+  "recorded_at_utc": "2026-07-07T14:30:30.613Z",
+  "sprint": "A",
+  "pilot": {
+    "guide_id": "cd69b54b-6407-4a34-90c6-f36c0c658dd7",
+    "guide_user_id": "41727802-1a7d-41fc-a638-ca8b6e7af285",
+    "city": "迪拜",
+    "hourly_rate": "85"
+  },
+  "TT_SPRINT_A_GUIDE_HAT_ORDER": "PASS",
+  "order_id": "04d1398c-dad2-4e7b-8b79-4b89d731f53d",
+  "amount": "120.00",
+  "chain": [
+    "create_order",
+    "guide_accept",
+    "mock_pay",
+    "confirm_completion"
+  ],
+  "steps": [
+    {
+      "step": "availability_precheck",
+      "http": 200,
+      "verdict": "PASS"
+    },
+    {
+      "step": "create_order",
+      "http": 200,
+      "order_id": "04d1398c-dad2-4e7b-8b79-4b89d731f53d",
+      "verdict": "PASS"
+    },
+    {
+      "step": "guide_accept",
+      "http": 200,
+      "status": "accepted",
+      "verdict": "PASS"
+    },
+    {
+      "step": "mock_pay",
+      "http": 200,
+      "status": "escrowed",
+      "verdict": "PASS"
+    },
+    {
+      "step": "confirm_completion",
+      "http": 200,
+      "status": "completed",
+      "verdict": "PASS"
+    }
+  ],
+  "accounts": {
+    "tourist": "tourist@test.com",
+    "guide_auth": "X-User-Id pilot guide owner"
+  },
+  "api": "https://tt-api-staging.fly.dev",
+  "exit_condition_met": true,
+  "recommendation": "BD-004 CLOSED · BD-001 重新评估 CLOSED · Sprint A Review"
+}

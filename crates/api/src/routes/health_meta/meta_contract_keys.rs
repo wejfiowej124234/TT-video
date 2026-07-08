@@ -622,6 +622,7 @@ pub const ORDERS_META_TOP_KEYS: &[&str] = &[
     "list_pagination",
     "fee_route_country_ssot",
     "deadline_rating_observability",
+    "order_mock_pay_enabled",
     "orders_top_keys",
     "orders_top_keys_contract_744",
 ];

@@ -1,0 +1,38 @@
+{
+  "schema": "traveltrust.bfm_human_validation_step.v1",
+  "session": "B",
+  "flow_id": "guide",
+  "step_id": "register",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T00:14:56.378Z",
+  "validator": "Cursor Agent · Session B",
+  "pilot": "guide@test.com",
+  "verification_chain": {
+    "human_click": {
+      "verdict": "PASS",
+      "action": "Login guide seed account",
+      "url": "https://tt-web-staging.fly.dev/auth/login"
+    },
+    "api": {
+      "verdict": "PASS",
+      "path": "/api/v1/me",
+      "status": 200,
+      "role": "guide"
+    },
+    "database": {
+      "verdict": "PASS",
+      "entity": "users",
+      "row_id": "4b389c45-bfca-4f3a-a897-42cf95c91a6e",
+      "field": "role",
+      "value": "guide"
+    },
+    "page": {
+      "verdict": "PASS",
+      "url": "https://tt-web-staging.fly.dev/guide"
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "guide_registered"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "traveltrust.hat003_discovery_summary.v1",
+  "recorded_at_utc": "2026-07-07T16:09:44.338Z",
+  "issue_id": "HAT-003",
+  "mode": "discovery_only",
+  "TT_SPRINT_B": "READY",
+  "TT_SPRINT_B_ACTIVE": false,
+  "hypothesis": "Tourist 登录异常",
+  "hypothesis_verdict": "REDEFINE",
+  "exit_condition": "Tourist 登录连续 3 次 PASS",
+  "exit_condition_status": {
+    "api_http_pass_3x": true,
+    "hat_semantic_pass": false
+  },
+  "open_root_causes": 3,
+  "root_cause_candidate": "staging_tourist_seed_persona_contamination",
+  "evidence": [
+    "evidence/GO_production_readiness/step2/hat/HAT-003-TOURIST-LOGIN-DISCOVERY-LATEST.json",
+    "evidence/GO_production_readiness/sprints/HAT-003-DISCOVERY-RESULT.md"
+  ],
+  "next": "Owner REDEFINE / business rule on tourist@test.com persona · then Fix Authorization if needed"
+}

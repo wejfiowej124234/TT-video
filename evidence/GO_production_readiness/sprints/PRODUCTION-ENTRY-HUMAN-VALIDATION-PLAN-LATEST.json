@@ -1,0 +1,318 @@
+{
+  "schema": "traveltrust.production_entry_human_validation_plan.v1",
+  "recorded_at_utc": "2026-07-08T00:05:22.121Z",
+  "mode": "plan_only",
+  "registry_version": 17,
+  "open_root_causes": 0,
+  "TT_PRODUCTION_ENTRY_READY": "NO_GO",
+  "TT_SPRINT_B": "READY",
+  "TT_SPRINT_B_ACTIVE": false,
+  "phase": "Human Validation Track + Matrix 收口",
+  "no_redefine": true,
+  "no_open_rc": true,
+  "baseline_ref": "evidence/GO_production_readiness/sprints/PRODUCTION-READINESS-FINAL-GATE-REEVALUATION-LATEST.json",
+  "discipline": {
+    "modify_matrix": false,
+    "execute_human_validation": false,
+    "toggle_sprint_b_active": false,
+    "repeat_pass_probes": false
+  },
+  "priority_order": [
+    {
+      "rank": 1,
+      "track": "matrix_evidence_sync",
+      "label": "Matrix Evidence Sync（已有 PASS · 不重复测试）"
+    },
+    {
+      "rank": 2,
+      "track": "human_validation_bfm",
+      "label": "Human Validation · Business Flow Matrix"
+    },
+    {
+      "rank": 3,
+      "track": "business_data_readiness",
+      "label": "BDR Day2-5 收口"
+    },
+    {
+      "rank": 4,
+      "track": "manual_validation",
+      "label": "Manual Validation · 上线前 UAT"
+    }
+  ],
+  "phase_1_matrix_evidence_sync": {
+    "goal": "将已 CLOSED RC 的 Fix Validation Evidence 映射写入 Matrix verdict（授权后执行 · 本文仅计划）",
+    "do_not_retest": true,
+    "targets": [
+      {
+        "id": "SYNC-HAT-003-TOURIST",
+        "role": "tourist",
+        "ssot": "registry/hat-six-role-matrix.v1.yaml",
+        "issue_closed": "HAT-003",
+        "evidence_primary": "evidence/GO_production_readiness/step2/hat/HAT-003-TOURIST-LOGIN-VALIDATION-LATEST.json",
+        "evidence_supporting": [
+          "evidence/GO_production_readiness/sprints/HAT-003-FIX-VALIDATION-LATEST.json",
+          "evidence/GO_production_readiness/sprints/OWNER-TOURIST-PERSONA-DECISION-LATEST.json"
+        ],
+        "signal": "TT_HAT003_TOURIST_PERSONA_VALIDATION: PASS",
+        "proposed_cell_updates": [
+          {
+            "cell": "login",
+            "verdict": "pass",
+            "note": "HAT-003 · triple login 200 · role=tourist · E: HAT-003-TOURIST-LOGIN-VALIDATION"
+          },
+          {
+            "cell": "logout",
+            "verdict": "pass",
+            "note": "HAT-003 · logout JSON body 200 · session 401 after · E: same"
+          },
+          {
+            "cell": "browse",
+            "verdict": "pass",
+            "note": "HAT-003 · GET orders 200 · browse_orders step PASS"
+          }
+        ],
+        "remain_pending": [
+          "register",
+          "order",
+          "pay",
+          "complete"
+        ],
+        "blocking_reduction_estimate": "3 of 7 tourist cells"
+      },
+      {
+        "id": "SYNC-BD-005-PROVIDER",
+        "role": "provider",
+        "ssot": "registry/hat-six-role-matrix.v1.yaml",
+        "issue_closed": "BD-005",
+        "evidence_primary": "evidence/GO_production_readiness/step2/hat/SPRINT-B-PROVIDER-HAT-ORDER-LATEST.json",
+        "evidence_supporting": [
+          "evidence/GO_production_readiness/sprints/BD-005-FIX-VALIDATION-LATEST.json",
+          "evidence/GO_production_readiness/sprints/OWNER-FULFILLMENT-GUIDE-DECISION-LATEST.json"
+        ],
+        "signal": "TT_SPRINT_B_PROVIDER_HAT_ORDER: PASS",
+        "proposed_cell_updates": [
+          {
+            "cell": "login",
+            "verdict": "pass",
+            "note": "BD-005 · provider_auth 200 · merchant@test.com · active guide"
+          },
+          {
+            "cell": "browse",
+            "verdict": "pass",
+            "note": "BD-005 · market_visible_catalog 200 · production listing"
+          },
+          {
+            "cell": "order",
+            "verdict": "pass",
+            "note": "BD-005 · create_order 200 · order d3b96f98…"
+          },
+          {
+            "cell": "pay",
+            "verdict": "pass",
+            "note": "BD-005 · mock_pay 200 · escrowed"
+          },
+          {
+            "cell": "complete",
+            "verdict": "pass",
+            "note": "BD-005 · confirm_completion 200 · completed"
+          }
+        ],
+        "remain_pending": [
+          "register"
+        ],
+        "warn_cells": [
+          {
+            "cell": "browse",
+            "alt": "market_visible_own_listing",
+            "verdict": "WARN",
+            "note": "public surface filter · non-blocking per BD-005"
+          }
+        ],
+        "blocking_reduction_estimate": "5 of 7 provider cells (register pending)"
+      }
+    ],
+    "execution_prerequisite": "Owner authorization · Matrix SSOT update · re-run master checklist",
+    "scripts_after_sync": [
+      "scripts/dev/run-production-readiness-master-checklist.cjs"
+    ]
+  },
+  "phase_2_human_validation_bfm": {
+    "goal": "Business Flow Matrix 17/17 pending → 真人五层链验收",
+    "ssot": "registry/business-flow-matrix.v1.yaml",
+    "verification_chain": [
+      "human_click",
+      "api",
+      "database",
+      "page",
+      "final_outcome"
+    ],
+    "current_gap": "17/17 steps pending · largest blocking bucket after Phase 1 sync",
+    "flows": [
+      {
+        "id": "guide",
+        "label": "Guide",
+        "pending_steps": 8,
+        "steps": [
+          "register",
+          "profile",
+          "review",
+          "list",
+          "book",
+          "order",
+          "complete",
+          "review_post"
+        ],
+        "plan": "Extend Sprint A Guide HAT evidence · 补 register/profile/review 真人 UI · order/complete 可引用 Sprint A pilot",
+        "cross_ref": "evidence/GO_production_readiness/step1/hat/SPRINT-A-GUIDE-HAT-ORDER-LATEST.json",
+        "priority": "P2a — after Matrix sync · parallel with Provider BFM"
+      },
+      {
+        "id": "provider",
+        "label": "Provider",
+        "pending_steps": 5,
+        "steps": [
+          "register",
+          "product",
+          "publish",
+          "order",
+          "complete"
+        ],
+        "plan": "Map BD-005 API chain to BFM steps · 真人 UI 走 /market/provider + merchant 工作台 · publish→order→complete",
+        "cross_ref": "evidence/GO_production_readiness/step2/hat/SPRINT-B-PROVIDER-HAT-ORDER-LATEST.json",
+        "priority": "P2b — high · API already PASS"
+      },
+      {
+        "id": "acquisition",
+        "label": "Acquisition",
+        "pending_steps": 4,
+        "steps": [
+          "publish",
+          "respond",
+          "close_deal",
+          "complete"
+        ],
+        "plan": "BFM-001 deferred track · 真人 /market/acquisition + /me/identities · pilot-owned 全链 · OCS owner optional phase",
+        "cross_ref": "evidence/GO_production_readiness/step4/BFM-001-ACQUISITION-CHAIN-DISCOVERY-LATEST.json",
+        "probe_script": "scripts/dev/run-bfm-001-acquisition-chain-discovery.cjs",
+        "priority": "P2c — after Provider BFM template"
+      }
+    ],
+    "exit_condition": "Each flow all steps pass with five-layer chain · Matrix flow verdict pass"
+  },
+  "phase_3_business_data_readiness": {
+    "goal": "1/5 READY → 5/5 READY",
+    "ssot": "registry/business-data-readiness.v1.yaml",
+    "current": {
+      "guide": "READY (Day1 evidence)",
+      "provider": "NOT_READY",
+      "listings": "NOT_READY",
+      "poi": "NOT_READY",
+      "pricing": "NOT_READY"
+    },
+    "schedule": [
+      {
+        "day": 2,
+        "domain": "provider",
+        "probe_script": "scripts/dev/run-provider-business-data-readiness-probes.cjs",
+        "day_evidence": "evidence/GO_production_readiness/step2/PROVIDER-BUSINESS-DATA-READINESS-DAY2-LATEST.json",
+        "note": "Day2 6/6 PASS on catalog · re-run for domain READY flag · no new RC"
+      },
+      {
+        "day": 3,
+        "domain": "listings",
+        "probe_script": "pending — define before execute",
+        "note": "Listings BDR · post BD-003 close"
+      },
+      {
+        "day": 4,
+        "domain": "poi",
+        "probe_script": "pending"
+      },
+      {
+        "day": 5,
+        "domain": "pricing",
+        "probe_script": "pending"
+      }
+    ],
+    "exit_condition": "五域 ready: true → business_data_readiness gate READY"
+  },
+  "phase_4_manual_validation": {
+    "goal": "9/9 pending → PASS · 上线前真人 UAT",
+    "ssot": "registry/manual-validation-checklist.v1.yaml",
+    "checks": [
+      {
+        "id": "chrome_desktop",
+        "label": "Chrome 桌面",
+        "order": 1
+      },
+      {
+        "id": "mobile",
+        "label": "手机",
+        "order": 2
+      },
+      {
+        "id": "edge",
+        "label": "Edge",
+        "order": 3
+      },
+      {
+        "id": "wallet",
+        "label": "钱包连接",
+        "order": 4
+      },
+      {
+        "id": "weak_network",
+        "label": "弱网",
+        "order": 5
+      },
+      {
+        "id": "login_flow",
+        "label": "登录/登出",
+        "order": 6,
+        "cross_ref": "HAT-003 sync reduces duplicate"
+      },
+      {
+        "id": "pay_mock",
+        "label": "支付(Mock)",
+        "order": 7,
+        "cross_ref": "Guide/Provider HAT mock-pay"
+      },
+      {
+        "id": "cancel_refund",
+        "label": "取消/异常",
+        "order": 8
+      },
+      {
+        "id": "refresh_recovery",
+        "label": "刷新/恢复",
+        "order": 9
+      }
+    ],
+    "exit_condition": "All checks verdict pass",
+    "timing": "After BFM major flows · pre Production Entry GO"
+  },
+  "expected_blocking_trajectory": {
+    "current": {
+      "total": 62,
+      "hat": 35,
+      "bfm": 17,
+      "manual": 9,
+      "bdr": 0
+    },
+    "after_phase_1_estimate": {
+      "hat": "~27",
+      "note": "-8 cells from HAT-003+BD-005 sync"
+    },
+    "after_phase_2_target": {
+      "bfm": 0,
+      "note": "requires human execution"
+    },
+    "production_entry_go_requires": "blocking_checks → 0 AND all gates PASS"
+  },
+  "explicit_non_goals": [
+    "No REDEFINE / no new Open RC",
+    "No repeat HAT-003 login triple probe",
+    "No repeat BD-005 provider HAT order probe",
+    "No TT_SPRINT_B ACTIVE without Owner toggle"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "review_id": "EVIDENCE-INTEGRITY-AUDIT",
+  "stamp": "20260704T062229Z",
+  "gate": "G2",
+  "machine_key": "TT_EVIDENCE_INTEGRITY_AUDIT",
+  "matrix": "registry/production-readiness-master-matrix.v1.yaml",
+  "verification_signoff": "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z",
+  "scope": "go_gate:G2 BLOCKER gaps",
+  "gaps_scoped": 4,
+  "findings": [
+    {
+      "id": "SIGNOFF",
+      "kind": "signoff_registry",
+      "severity": "INFO",
+      "detail": "Verification signoff: evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/g2-reality-verification-signoff.json"
+    }
+  ],
+  "fail_count": 0,
+  "warn_count": 0,
+  "pass": true,
+  "verdict": "PASS",
+  "blocks_formal": false,
+  "reproduce_hint": "bash scripts/dev/run-reality-verification.sh --gate G2 · node scripts/dev/validate-evidence-integrity-audit.cjs --gate G2"
+}

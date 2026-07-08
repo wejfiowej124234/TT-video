@@ -1,0 +1,158 @@
+{
+  "schema": "traveltrust.guide_business_data_readiness_day1.v3",
+  "recorded_at_utc": "2026-07-07T14:23:59.927Z",
+  "domain": "guide",
+  "step1_day": 1,
+  "mode": "evidence_driven",
+  "verdict_enum": [
+    "PASS",
+    "WARN-C",
+    "WARN-D",
+    "WARN-P",
+    "FAIL"
+  ],
+  "ready_rule": {
+    "max_fail": 0,
+    "max_warn_d": 0,
+    "max_warn_p": 0,
+    "warn_c_blocks": false,
+    "total_checks": 6
+  },
+  "checks_total": 6,
+  "pass": 4,
+  "warn_c": 2,
+  "warn_d": 0,
+  "warn_p": 0,
+  "fail": 0,
+  "open_root_causes": [],
+  "new_root_cause_candidates": [],
+  "cascade_notes": [],
+  "ready": "YES",
+  "TT_GUIDE_BUSINESS_DATA_READINESS_DAY1": "READY",
+  "rule": {
+    "max_fail": 0,
+    "max_warn_d": 0,
+    "max_warn_p": 0,
+    "warn_c_blocks": false,
+    "total_checks": 6
+  },
+  "results": [
+    {
+      "id": "profile",
+      "label": "Profile",
+      "ssot": "API + DB",
+      "probe": "GET /api/v1/guides",
+      "exit_condition": "API、DB、UI 一致",
+      "primary_issue": null,
+      "verdict": "WARN-C",
+      "root_cause": null,
+      "cascade": false,
+      "attribution": null,
+      "evidence": "evidence/GO_production_readiness/step1/probes/guide_profile_probe.json",
+      "fail_reasons": [],
+      "warn_reasons": [
+        "missing_public_title_and_real_name"
+      ]
+    },
+    {
+      "id": "availability",
+      "label": "Availability",
+      "ssot": "API",
+      "probe": "GET /api/v1/guides/:id/availability",
+      "exit_condition": "可预约且 HAT Guide 下单 PASS",
+      "primary_issue": "BD-001",
+      "verdict": "PASS",
+      "root_cause": null,
+      "cascade": false,
+      "attribution": null,
+      "evidence": "evidence/GO_production_readiness/step1/probes/guide_availability_probe.json",
+      "fail_reasons": [],
+      "warn_reasons": []
+    },
+    {
+      "id": "hero",
+      "label": "Hero",
+      "ssot": "CMS",
+      "probe": "HEAD avatar_url",
+      "exit_condition": "图片可加载且 Runtime 一致",
+      "primary_issue": null,
+      "verdict": "PASS",
+      "root_cause": null,
+      "cascade": false,
+      "attribution": null,
+      "evidence": "evidence/GO_production_readiness/step1/probes/guide_hero_probe.json",
+      "fail_reasons": [],
+      "warn_reasons": []
+    },
+    {
+      "id": "pricing",
+      "label": "Pricing",
+      "ssot": "Pricing API",
+      "probe": "GET /api/v1/guides hourly_rate",
+      "exit_condition": "金额一致 · API 与 Market 展示",
+      "primary_issue": null,
+      "cascade_from": "BD-001",
+      "candidate_issue": "BD-004",
+      "candidate_label": "Guide Pricing Configuration Missing",
+      "verdict": "PASS",
+      "root_cause": null,
+      "cascade": false,
+      "evidence": "evidence/GO_production_readiness/step1/probes/guide_pricing_probe.json",
+      "fail_reasons": [],
+      "warn_reasons": []
+    },
+    {
+      "id": "images",
+      "label": "Images",
+      "ssot": "CMS",
+      "probe": "HEAD + Decode",
+      "exit_condition": "全部可访问",
+      "primary_issue": null,
+      "verdict": "WARN-C",
+      "root_cause": null,
+      "cascade": false,
+      "attribution": null,
+      "evidence": "evidence/GO_production_readiness/step1/probes/guide_images_probe.json",
+      "fail_reasons": [],
+      "warn_reasons": [
+        "missing_optional_id_photo_url",
+        "missing_optional_language_cert_url",
+        "missing_optional_guide_license_url"
+      ]
+    },
+    {
+      "id": "status",
+      "label": "Status",
+      "ssot": "API",
+      "probe": "GET /api/v1/guides display_status",
+      "exit_condition": "状态一致且可运营",
+      "primary_issue": null,
+      "verdict": "PASS",
+      "root_cause": null,
+      "cascade": false,
+      "attribution": null,
+      "evidence": "evidence/GO_production_readiness/step1/probes/guide_status_probe.json",
+      "fail_reasons": [],
+      "warn_reasons": []
+    }
+  ],
+  "conclusion": {
+    "checks": 6,
+    "pass": 4,
+    "warn_c": 2,
+    "warn_d": 0,
+    "warn_p": 0,
+    "fail": 0,
+    "open_root_causes": [],
+    "ready": "YES"
+  },
+  "execution_loop": [
+    "修复一个 Root Cause",
+    "重跑 Probe",
+    "Root Cause Validation（关闭前）",
+    "Exit Condition 满足后 fixed",
+    "更新 Daily Delta",
+    "下一个 Root Cause"
+  ],
+  "closed_loop": "Evidence → Probe → Root Cause → Attribution → Fix → Root Cause Validation → Exit Condition → PASS"
+}

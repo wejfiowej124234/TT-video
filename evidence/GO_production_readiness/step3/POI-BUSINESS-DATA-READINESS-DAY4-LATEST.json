@@ -1,0 +1,44 @@
+{
+  "schema": "traveltrust.poi_business_data_readiness_day4.v1",
+  "recorded_at_utc": "2026-07-08T00:19:12.280Z",
+  "domain": "poi",
+  "step1_day": 4,
+  "mode": "evidence_driven",
+  "checks_total": 5,
+  "pass": 5,
+  "fail": 0,
+  "ready": "YES",
+  "TT_POI_BUSINESS_DATA_READINESS_DAY4": "READY",
+  "results": [
+    {
+      "id": "poi_catalog",
+      "label": "POI Catalog",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step3/probes/poi_poi_catalog_probe.json"
+    },
+    {
+      "id": "cms_media_catalog",
+      "label": "CMS Media Catalog",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step3/probes/poi_cms_media_catalog_probe.json"
+    },
+    {
+      "id": "guide_hero_images",
+      "label": "Guide Hero Images",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step3/probes/poi_guide_hero_images_probe.json"
+    },
+    {
+      "id": "poi_sample_head",
+      "label": "POI Sample HEAD",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step3/probes/poi_poi_sample_head_probe.json"
+    },
+    {
+      "id": "staging_health",
+      "label": "Staging Health",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step3/probes/poi_staging_health_probe.json"
+    }
+  ]
+}

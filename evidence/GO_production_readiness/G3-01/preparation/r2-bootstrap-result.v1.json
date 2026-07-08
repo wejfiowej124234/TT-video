@@ -1,0 +1,371 @@
+{
+  "schema": "traveltrust.g3_ocs_r2_bootstrap_result.v1",
+  "mode": "dry_run",
+  "bucket": "traveltrust-community-media",
+  "object_count": 60,
+  "ok_count": 60,
+  "ok": true,
+  "results": [
+    {
+      "key": "official-cold-start/v1/ocs-tokyo-photo-guide-avatar.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-tokyo-photo-provider-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-tokyo-photo-acquisition-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-tokyo-photo-community-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-tokyo-photo-community-media.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-kyoto-culture-guide-avatar.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-kyoto-culture-provider-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-kyoto-culture-acquisition-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-kyoto-culture-official-guide-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-kyoto-culture-community-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-kyoto-culture-community-media.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-seoul-food-guide-avatar.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-seoul-food-provider-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-seoul-food-acquisition-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-seoul-food-official-guide-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-seoul-food-community-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-seoul-food-community-media.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-bangkok-temple-guide-avatar.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-bangkok-temple-provider-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-bangkok-temple-acquisition-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-bangkok-temple-official-guide-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-bangkok-temple-community-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-bangkok-temple-community-media.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-singapore-family-guide-avatar.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-singapore-family-provider-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-singapore-family-acquisition-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-singapore-family-official-guide-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-singapore-family-community-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-singapore-family-community-media.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-paris-art-guide-avatar.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-paris-art-provider-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-paris-art-acquisition-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-paris-art-official-guide-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-paris-art-community-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-paris-art-community-media.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-nyc-skyline-guide-avatar.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-nyc-skyline-provider-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-nyc-skyline-acquisition-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-nyc-skyline-official-guide-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-nyc-skyline-community-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-nyc-skyline-community-media.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-sydney-coast-guide-avatar.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-sydney-coast-provider-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-sydney-coast-acquisition-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-sydney-coast-official-guide-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-sydney-coast-community-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-sydney-coast-community-media.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-barcelona-arch-guide-avatar.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-barcelona-arch-provider-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-barcelona-arch-acquisition-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-barcelona-arch-official-guide-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-barcelona-arch-community-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-barcelona-arch-community-media.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-dubai-luxury-guide-avatar.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-dubai-luxury-provider-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-dubai-luxury-acquisition-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-dubai-luxury-official-guide-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-dubai-luxury-community-cover.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    },
+    {
+      "key": "official-cold-start/v1/ocs-dubai-luxury-community-media.jpg",
+      "ok": true,
+      "mode": "dry_run",
+      "bytes": 287
+    }
+  ],
+  "honest_boundary": "Dry-run only — Owner must --apply after production secrets configured"
+}

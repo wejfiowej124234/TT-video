@@ -1,0 +1,96 @@
+# Phase ①② 发布前准备 + Phase ③ 切线准备（非 Production GO）
+# Human: docs/runbook/TT-PRODUCTION-RELEASE-PREP.md
+
+schema: traveltrust.production_release_prep.v1
+version: 1
+effective_utc: "2026-07-04"
+
+machine_keys:
+  TT_PRODUCTION_RELEASE_PREP: READY
+  TT_PRODUCTION_GO: NO_GO
+  TT_G3_PRODUCTION_CDN_PREP: READY
+  TT_G3_PRODUCTION_CDN_VERIFIED: PLANNED
+  TT_OCS_OFFICIAL_ASSET_BASELINE_V1: VERIFIED
+
+phase_discipline:
+  phase1_local: COMPLETE
+  phase2_staging: COMPLETE
+  phase3_production_cutover: DEFERRED
+  production_go: DEFERRED
+  note: 发布等一下 — prep READY ≠ release GO
+
+completed_tracks:
+  official_content_baseline:
+    status: READY
+    machine_key: TT_OCS_OFFICIAL_CONTENT_BASELINE
+    version: V1
+  ocs_surface_expansion:
+    status: VERIFIED
+    environment: staging
+    machine_key: TT_OCS_SURFACE_EXPANSION
+  ocs_post_apply_ddg:
+    status: PASS
+    machine_key: TT_OCS_POST_APPLY_DDG
+  official_asset_baseline_v1:
+    status: VERIFIED
+    environment: staging
+    machine_key: TT_OCS_OFFICIAL_ASSET_BASELINE_V1
+    evidence: evidence/GO_official_cold_start_dataset/ocs-official-asset-baseline/20260704T085638Z
+    delivery: 60/60
+    bootstrap_mode: docker_copy_http_probe
+
+prepared_not_verified:
+  g3_production_cdn:
+    status: PREP_READY
+    machine_key: TT_G3_PRODUCTION_CDN_PREP
+    verified_key: TT_G3_PRODUCTION_CDN_VERIFIED
+    verified_status: PLANNED
+    scope:
+      - global_edge_cache
+      - cache_policy
+      - version_management
+      - object_lifecycle
+      - r2_bootstrap_manifest
+      - production_configure_script
+    blocks_verified_until:
+      - owner_cloudflare_r2_dns
+      - production_fly_secrets
+      - production_cdn_probes
+    registry: registry/g3-production-cdn-official-assets.v1.yaml
+  production_go:
+    status: PREP_READY
+    machine_key: TT_PRODUCTION_GO_PREP
+    verdict_key: TT_PRODUCTION_GO
+    verdict: NO_GO
+    requires:
+      - G3-01 VERIFIED
+      - G3-02 VERIFIED
+      - G3-03 VERIFIED
+      - G3-04 VERIFIED
+      - G3-05 VERIFIED
+      - G3-06 VERIFIED
+      - signed_production_go_decision_package
+    template: registry/production-go-decision-package.v1.template.json
+    prep_evidence: evidence/GO_production_readiness/G3-06/preparation
+
+enterprise_chain:
+  ssot: registry/official-cold-start-dataset.v1.yaml
+  flow:
+    - Official Catalog
+    - Official Asset
+    - Feed
+    - Guide
+    - Provider
+    - Community
+    - Campaign
+    - Acquisition
+
+scripts:
+  master: scripts/dev/run-phase12-production-release-prep.sh
+  g3_cdn_prep: scripts/dev/run-g3-production-cdn-prep.sh
+  production_go_prep: scripts/dev/run-production-go-prep.sh
+
+forbidden_claims:
+  - Production GO
+  - G3 Production CDN VERIFIED
+  - Phase ③ CDN edge GO from Staging evidence

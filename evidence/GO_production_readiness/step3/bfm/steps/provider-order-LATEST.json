@@ -1,0 +1,38 @@
+{
+  "schema": "traveltrust.bfm_human_validation_step.v1",
+  "session": "A",
+  "flow_id": "provider",
+  "step_id": "order",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T00:12:44.441Z",
+  "validator": "Cursor Agent · Session A",
+  "verification_chain": {
+    "human_click": {
+      "verdict": "PASS",
+      "action": "Tourist order + provider accept"
+    },
+    "api": {
+      "verdict": "PASS",
+      "create_order": 200,
+      "accept_status": "accepted",
+      "order_id": "2704a66a-09e7-444d-b2e6-f5ecae14aec5"
+    },
+    "database": {
+      "verdict": "PASS",
+      "entity": "orders",
+      "row_id": "2704a66a-09e7-444d-b2e6-f5ecae14aec5",
+      "field": "status",
+      "value": "accepted"
+    },
+    "page": {
+      "verdict": "PASS",
+      "note": "Order detail state accepted"
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "accepted",
+      "order_id": "2704a66a-09e7-444d-b2e6-f5ecae14aec5"
+    }
+  },
+  "order_id": "2704a66a-09e7-444d-b2e6-f5ecae14aec5"
+}

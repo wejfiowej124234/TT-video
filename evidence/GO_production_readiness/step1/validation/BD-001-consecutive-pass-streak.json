@@ -1,0 +1,30 @@
+{
+  "schema": "traveltrust.root_cause_validation_streak.v1",
+  "issue_id": "BD-001",
+  "consecutive_pass_required": 3,
+  "consecutive_pass": 0,
+  "last_run_utc": "2026-07-07T14:23:34.115Z",
+  "history": [
+    {
+      "at": "2026-07-07T13:59:59.595Z",
+      "availability": "FAIL",
+      "pricing": "FAIL",
+      "pair_pass": false,
+      "streak": 0
+    },
+    {
+      "at": "2026-07-07T14:21:14.953Z",
+      "availability": "PASS",
+      "pricing": "FAIL",
+      "pair_pass": false,
+      "streak": 0
+    },
+    {
+      "at": "2026-07-07T14:23:34.115Z",
+      "availability": "PASS",
+      "pricing": "WARN-D",
+      "pair_pass": false,
+      "streak": 0
+    }
+  ]
+}

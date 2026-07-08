@@ -1,0 +1,42 @@
+{
+  "schema": "traveltrust.hat_human_validation_step.v1",
+  "role": "acquisition",
+  "step_id": "browse",
+  "order": 3,
+  "label": "浏览",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T01:42:24.150Z",
+  "validator": "Cursor Agent · HAT Human Queue · Acquisition",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "bfm_session_c_ref": "evidence/GO_production_readiness/step3/bfm/BFM-ACQUISITION-FLOW-LATEST.json",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "route": "/market/acquisition",
+      "has_acquisition": true,
+      "has_listings": true,
+      "login_state": "authenticated"
+    },
+    "api": {
+      "verdict": "PASS",
+      "catalog_http": 200,
+      "catalog_count": 10,
+      "cross_ref": "BFM publish catalog probe"
+    },
+    "database": {
+      "verdict": "PASS",
+      "note": "acquisition_listings catalog readable"
+    },
+    "page": {
+      "verdict": "PASS",
+      "route": "/market/acquisition",
+      "no_crash": true
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "catalog_usable"
+    }
+  },
+  "TT_SPRINT_B_ACTIVE": false
+}

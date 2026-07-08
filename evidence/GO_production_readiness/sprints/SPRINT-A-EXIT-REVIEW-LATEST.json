@@ -1,0 +1,44 @@
+{
+  "schema": "traveltrust.sprint_exit_review.v1",
+  "recorded_at_utc": "2026-07-07T14:32:33.555Z",
+  "sprint": "A",
+  "TT_SPRINT_A": "CLOSED",
+  "TT_SPRINT_B": "READY",
+  "checks": [
+    {
+      "id": "sprint_goal",
+      "label": "Sprint Goal",
+      "expected": "Guide Business Data Ready = YES",
+      "actual": "YES",
+      "pass": true
+    },
+    {
+      "id": "root_cause",
+      "label": "Root Cause",
+      "expected": "BD-001、BD-004 CLOSED",
+      "actual": "BD-001 CLOSED · BD-004 CLOSED",
+      "pass": true
+    },
+    {
+      "id": "evidence",
+      "label": "Evidence",
+      "expected": "Probe · HAT · Review",
+      "actual": "guide_probes · hat_pass · sprint_review",
+      "pass": true
+    },
+    {
+      "id": "open_rc",
+      "label": "Open RC",
+      "expected": "6 → 4",
+      "actual": "6 → 4",
+      "pass": true
+    }
+  ],
+  "chain_validated": "Evidence → Root Cause → Validation → Fix → Probe → HAT → Review → Close",
+  "sprint_b_preflight": {
+    "status": "PENDING",
+    "note": "Sprint B 未启动 · 先确认 BD-002 三问",
+    "issue_id": "BD-002"
+  },
+  "recommendation": "Sprint A 正式收尾 · 不立刻 Sprint B · 先 BD-002 三问确认"
+}

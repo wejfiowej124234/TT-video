@@ -1,0 +1,128 @@
+{
+  "schema": "traveltrust.manual_validation_probe.v1",
+  "check_id": "refresh_recovery",
+  "probe_round": "A",
+  "recorded_at_utc": "2026-07-08T01:19:12.317Z",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "sample_orders": {
+    "completed": "1bbb38dc-b333-41b2-a0ef-307586b17d46",
+    "created": "61aed01a-a247-4922-8e21-ba3120833f7b"
+  },
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PENDING",
+      "note": "Round B browser — hard refresh, session restore, hydration",
+      "routes": [
+        "/market",
+        "/orders",
+        "/escrow/1bbb38dc-b333-41b2-a0ef-307586b17d46"
+      ]
+    },
+    "api": {
+      "verdict": "PASS",
+      "login": {
+        "http": 200,
+        "ok": true,
+        "user_id": "2760d445-cbf4-47d0-9461-fcba3db0516f"
+      },
+      "me": {
+        "http": 200,
+        "email": "tourist@test.com"
+      },
+      "orders": {
+        "http": 200,
+        "count": 28
+      },
+      "sample_completed": {
+        "order_id": "1bbb38dc-b333-41b2-a0ef-307586b17d46",
+        "http": 200,
+        "status": "completed"
+      },
+      "sample_created": {
+        "order_id": "61aed01a-a247-4922-8e21-ba3120833f7b",
+        "http": 200,
+        "status": "created"
+      },
+      "invalid_token_me": {
+        "http": 401,
+        "expected": 401,
+        "not_500": true
+      }
+    },
+    "database": {
+      "verdict": "PASS",
+      "note": "Read-only staging · order list + detail status consistent with probe expectations",
+      "orders_count": 28,
+      "completed_status": "completed",
+      "created_status": "created",
+      "tourist_id": "2760d445-cbf4-47d0-9461-fcba3db0516f"
+    },
+    "page": {
+      "verdict": "PASS",
+      "note": "Round A HTML app shell only · Round B adds post-refresh UI state",
+      "routes": [
+        {
+          "route": "/market",
+          "http": 200,
+          "hasAppShell": true,
+          "body_length": 128956
+        },
+        {
+          "route": "/orders",
+          "http": 200,
+          "hasAppShell": true,
+          "body_length": 44680
+        },
+        {
+          "route": "/escrow/1bbb38dc-b333-41b2-a0ef-307586b17d46",
+          "http": 200,
+          "hasAppShell": true,
+          "body_length": 32179
+        }
+      ],
+      "shell_pass": true
+    },
+    "final_outcome": {
+      "verdict": "PENDING",
+      "note": "Await Round B browser + merge"
+    }
+  },
+  "route_shell": [
+    {
+      "route": "/market",
+      "url": "https://tt-web-staging.fly.dev/market",
+      "http": 200,
+      "ok": true,
+      "body_length": 128956,
+      "hasAppShell": true
+    },
+    {
+      "route": "/orders",
+      "url": "https://tt-web-staging.fly.dev/orders",
+      "http": 200,
+      "ok": true,
+      "body_length": 44680,
+      "hasAppShell": true
+    },
+    {
+      "route": "/escrow/1bbb38dc-b333-41b2-a0ef-307586b17d46",
+      "url": "https://tt-web-staging.fly.dev/escrow/1bbb38dc-b333-41b2-a0ef-307586b17d46",
+      "http": 200,
+      "ok": true,
+      "body_length": 32179,
+      "hasAppShell": true
+    }
+  ],
+  "layers_complete": [
+    "api",
+    "database",
+    "page_shell"
+  ],
+  "browser_todo": [
+    "Hard refresh /market — order_count + guide_count stable",
+    "Hard refresh /orders — list loads, no duplicate submit",
+    "Hard refresh /escrow/1bbb38dc-b333-41b2-a0ef-307586b17d46 — status completed",
+    "Clear session token → /orders redirects login → re-login restores"
+  ]
+}

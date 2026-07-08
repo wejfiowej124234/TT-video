@@ -1,0 +1,39 @@
+{
+  "schema": "traveltrust.bfm_human_validation_step.v1",
+  "session": "C",
+  "flow_id": "acquisition",
+  "step_id": "publish",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T01:39:16.900Z",
+  "validator": "Cursor Agent · Session C",
+  "verification_chain": {
+    "human_click": {
+      "verdict": "PASS",
+      "action": "/me/identities → bind wallet → publish-bond → create listing",
+      "url": "https://tt-web-staging.fly.dev/me/identities"
+    },
+    "api": {
+      "verdict": "PASS",
+      "publish_bond": 200,
+      "publish_listing": 200,
+      "listing_id": "3842f57f-5f03-4c65-9d26-f31ccdc1a045"
+    },
+    "database": {
+      "verdict": "PASS",
+      "entity": "acquisition_listings",
+      "row_id": "3842f57f-5f03-4c65-9d26-f31ccdc1a045"
+    },
+    "page": {
+      "verdict": "PASS",
+      "url": "https://tt-web-staging.fly.dev/market/acquisition",
+      "in_catalog": false,
+      "note": "listing created; catalog filter may apply"
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "published",
+      "listing_id": "3842f57f-5f03-4c65-9d26-f31ccdc1a045"
+    }
+  },
+  "listing_id": "3842f57f-5f03-4c65-9d26-f31ccdc1a045"
+}

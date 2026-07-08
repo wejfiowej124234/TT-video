@@ -1,0 +1,48 @@
+{
+  "schema": "traveltrust.guide_business_data_probe.v3",
+  "recorded_at_utc": "2026-07-07T14:23:59.927Z",
+  "check_id": "status",
+  "label": "Status",
+  "ssot": "API",
+  "probe": "GET /api/v1/guides display_status",
+  "api": "https://tt-api-staging.fly.dev",
+  "exit_condition": "状态一致且可运营",
+  "verdict": "PASS",
+  "root_cause": null,
+  "cascade_from": null,
+  "attribution": null,
+  "fail_reasons": [],
+  "warn_reasons": [],
+  "warn_classification": {
+    "C": [],
+    "D": [],
+    "P": []
+  },
+  "detail": {
+    "fail": [],
+    "warn": [],
+    "statuses": [
+      {
+        "id": "cd69b54b-6407-4a34-90c6-f36c0c658dd7",
+        "status": "active"
+      },
+      {
+        "id": "dddf81f0-28b7-4aba-b744-70026d9fb148",
+        "status": "active"
+      },
+      {
+        "id": "e551bed7-f455-4102-9fa3-b791a68e06d5",
+        "status": "active"
+      },
+      {
+        "id": "c5d963f9-e679-43a6-9b84-5f7073a51109",
+        "status": "active"
+      },
+      {
+        "id": "692a940e-1d25-452d-83f8-5b37f9141f60",
+        "status": "active"
+      }
+    ]
+  },
+  "TT_GUIDE_PROBE": "PASS"
+}

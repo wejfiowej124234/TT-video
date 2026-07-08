@@ -1,0 +1,89 @@
+{
+  "schema": "traveltrust.bd003_redefine_confirmation.v1",
+  "recorded_at_utc": "2026-07-07T23:48:32.054Z",
+  "issue_id": "BD-003",
+  "document": "evidence/GO_production_readiness/sprints/BD-003-REDEFINE-CONFIRMATION.md",
+  "mode": "discovery_only",
+  "TT_SPRINT_B": "READY",
+  "TT_SPRINT_B_ACTIVE": false,
+  "root_cause_confirmed_for_active": false,
+  "original_hypothesis": {
+    "root_cause": "Listings Cover 图不完整",
+    "status": "REJECTED",
+    "rejected_by": [
+      "evidence/GO_production_readiness/step3/BD-003-LISTINGS-COVER-DISCOVERY-LATEST.json",
+      "evidence/GO_production_readiness/step3/BD-003-DATA-LINEAGE-AUDIT-LATEST.json",
+      "evidence/GO_production_readiness/sprints/BD-003-DISCOVERY-RESULT.md"
+    ],
+    "rejection_reason": "staging public provider+acquisition 10/10 cover HEAD PASS; fixing cover would mis-target"
+  },
+  "exit_condition": {
+    "registry_text": "Provider + Acquisition listings cover 完整且 Market 可读",
+    "met": true,
+    "provider": {
+      "total": 10,
+      "missing_cover": 0,
+      "head_fail": 0,
+      "market_readable": true
+    },
+    "acquisition": {
+      "total": 10,
+      "missing_cover": 0,
+      "head_fail": 0,
+      "market_readable": true
+    }
+  },
+  "candidate_explanation": {
+    "id": "premature_listings_cover_hypothesis_on_staging",
+    "label": "BD-003 registered before Listings Day3 probe and OCS public baseline verification",
+    "status": "CONFIRMED_CANDIDATE"
+  },
+  "secondary_signals_routed": [
+    {
+      "id": "cover_path_not_ocs_manifest",
+      "track": "market-media-ddg-remediation.v1.yaml"
+    },
+    {
+      "id": "listings_bdr_day3_unprobed",
+      "track": "business-data-readiness.v1.yaml listings day3"
+    },
+    {
+      "id": "automation_db_bloat",
+      "track": "future_data_governance_rc_not_bd003"
+    },
+    {
+      "id": "market_page_bypass_catalog",
+      "track": "future_architecture_lineage_not_bd003"
+    }
+  ],
+  "supporting_evidence": [
+    "evidence/GO_production_readiness/step3/BD-003-LISTINGS-COVER-DISCOVERY-LATEST.json",
+    "evidence/GO_production_readiness/sprints/BD-003-DISCOVERY-RESULT.md",
+    "evidence/GO_production_readiness/step3/BD-003-DATA-LINEAGE-AUDIT-LATEST.json",
+    "evidence/GO_production_readiness/sprints/BD-003-DATA-LINEAGE-AUDIT.md",
+    "evidence/GO_production_readiness/step2/PROVIDER-BUSINESS-DATA-READINESS-DAY2-LATEST.json",
+    "scripts/dev/run-provider-business-data-readiness-probes.cjs",
+    "registry/market-media-ddg-remediation.v1.yaml",
+    "registry/business-data-readiness.v1.yaml"
+  ],
+  "impact": {
+    "public_market_cover": "PASS",
+    "sprint_b_cover_blocker": false,
+    "fix_value": "NONE"
+  },
+  "recommendation": {
+    "preferred": "close_and_split",
+    "close_bd003": "CLOSED — hypothesis rejected · staging exit met · no fix",
+    "split_to": [
+      "Listings BDR Day3",
+      "Market Media DDG Remediation"
+    ],
+    "alternative_rejected": "redefine_in_place_to_data_lineage",
+    "rationale": "Aligns with BD-002 rejected-hypothesis close; residual to existing independent tracks"
+  },
+  "owner_decision_ref": "evidence/GO_production_readiness/sprints/OWNER-LISTINGS-COVER-DECISION-LATEST.json",
+  "redefine_confirmed_by_document": true,
+  "registry_updated": false,
+  "fix_applied": false,
+  "data_changed": false
+}

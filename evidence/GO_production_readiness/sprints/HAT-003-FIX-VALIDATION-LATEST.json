@@ -1,0 +1,8 @@
+{
+  "schema": "traveltrust.hat003_fix_validation.v1",
+  "recorded_at_utc": "2026-07-07T16:17:17.355Z",
+  "issue_id": "HAT-003",
+  "pilot": "tourist@test.com",
+  "TT_HAT003_TOURIST_PERSONA_VALIDATION": "PASS",
+  "evidence": "evidence/GO_production_readiness/step2/hat/HAT-003-TOURIST-LOGIN-VALIDATION-LATEST.json"
+}

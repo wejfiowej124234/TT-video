@@ -1,0 +1,37 @@
+{
+  "schema": "traveltrust.hat_provider_human_queue.v1",
+  "recorded_at_utc": "2026-07-08T02:10:00.000Z",
+  "role": "provider",
+  "verdict": "PASS",
+  "steps_synced": [
+    "register",
+    "logout"
+  ],
+  "steps_preclosed": [
+    "login",
+    "browse",
+    "order",
+    "pay",
+    "complete"
+  ],
+  "steps": [
+    {
+      "step_id": "register",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "logout",
+      "verdict": "PASS"
+    }
+  ],
+  "pilot": "merchant@test.com",
+  "immutable_id": "C4",
+  "user_id": "fe929c0c-c52d-4f3b-bee8-31d2685766ec",
+  "guide_id": "627c8c31-3e60-480a-8cd8-f50b0d1e3145",
+  "discipline": {
+    "no_code_change": true,
+    "no_staging_config_change": true,
+    "no_business_data_mutation": true,
+    "TT_SPRINT_B_ACTIVE": false
+  }
+}

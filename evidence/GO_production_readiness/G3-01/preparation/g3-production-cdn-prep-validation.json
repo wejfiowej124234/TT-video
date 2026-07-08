@@ -1,0 +1,27 @@
+{
+  "schema": "traveltrust.g3_production_cdn_prep_validation.v1",
+  "prep_dir": "D:/TravelTrust-V1.1/evidence/GO_production_readiness/G3-01/preparation",
+  "recorded_at": "2026-07-04T09:05:06.875Z",
+  "verdict": "READY",
+  "machine_keys": {
+    "TT_G3_PRODUCTION_CDN_PREP": "READY",
+    "TT_G3_PRODUCTION_CDN_VERIFIED": "PLANNED"
+  },
+  "passes": [
+    "cloudflare-cache-rules.v1.json",
+    "r2-lifecycle-policy.v1.json",
+    "ocs-r2-upload-manifest.v1.json",
+    "production-cdn-url-map.v1.json",
+    "g3-cdn-prep-checklist.v1.json",
+    "registry",
+    "assets_manifest_60",
+    "staging_asset_baseline_verified",
+    "r2_bootstrap_dry_run_60"
+  ],
+  "failures": [],
+  "honest_boundary": "PREP READY ≠ G3-01 CDN VERIFIED — requires production DNS cutover + CDN probes",
+  "forbidden_claims": [
+    "G3 Production CDN VERIFIED",
+    "Production GO"
+  ]
+}

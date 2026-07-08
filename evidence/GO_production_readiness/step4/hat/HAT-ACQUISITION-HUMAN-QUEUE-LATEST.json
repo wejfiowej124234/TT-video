@@ -1,0 +1,80 @@
+{
+  "schema": "traveltrust.hat_acquisition_human_queue.v1",
+  "recorded_at_utc": "2026-07-08T01:42:24.150Z",
+  "role": "acquisition",
+  "verdict": "PASS",
+  "steps": [
+    {
+      "step_id": "register",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "login",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "browse",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "order",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "pay",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "complete",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "logout",
+      "verdict": "PASS"
+    }
+  ],
+  "flow_ref": {
+    "schema": "traveltrust.bfm_human_validation_flow.v1",
+    "session": "C",
+    "flow_id": "acquisition",
+    "label": "Acquisition",
+    "recorded_at_utc": "2026-07-08T01:39:16.900Z",
+    "validator": "Cursor Agent · Session C",
+    "staging_web": "https://tt-web-staging.fly.dev",
+    "staging_api": "https://tt-api-staging.fly.dev",
+    "strategy": "fresh_user_full_chain",
+    "owner_email": "bfm2-own-1783474756901@traveltrust.test",
+    "carrier_email": "bfm2-car-1783474756901@traveltrust.test",
+    "listing_id": "3842f57f-5f03-4c65-9d26-f31ccdc1a045",
+    "order_id": "15d2051c-1b96-4013-82b6-06d961e3db45",
+    "TT_BFM_ACQUISITION_FLOW": "PASS",
+    "steps": [
+      {
+        "step_id": "publish",
+        "verdict": "PASS"
+      },
+      {
+        "step_id": "respond",
+        "verdict": "PASS"
+      },
+      {
+        "step_id": "close_deal",
+        "verdict": "PASS"
+      },
+      {
+        "step_id": "complete",
+        "verdict": "PASS"
+      }
+    ],
+    "failed_step": null,
+    "halt_session": false,
+    "authorization": "evidence/GO_production_readiness/sprints/OWNER-PHASE2-BFM-HUMAN-VALIDATION-AUTHORIZATION-GRANTED-LATEST.json",
+    "TT_SPRINT_B_ACTIVE": false
+  },
+  "discipline": {
+    "no_code_change": true,
+    "no_staging_config_change": true,
+    "TT_SPRINT_B_ACTIVE": false,
+    "no_new_rc": true
+  }
+}

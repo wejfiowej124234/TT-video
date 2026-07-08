@@ -1,0 +1,45 @@
+{
+  "schema": "traveltrust.phase2_bfm_human_validation_execution.v1",
+  "recorded_at_utc": "2026-07-08T00:16:28.285Z",
+  "rhythm": "Session→Evidence→Matrix Sync",
+  "authorization": "evidence/GO_production_readiness/sprints/OWNER-PHASE2-BFM-HUMAN-VALIDATION-AUTHORIZATION-GRANTED-LATEST.json",
+  "sessions_completed": [
+    "A",
+    "B",
+    "C"
+  ],
+  "sessions_pending": [],
+  "phase2_bfm_complete": true,
+  "session_A": {
+    "verdict": "PASS",
+    "flow": "provider",
+    "steps": 5
+  },
+  "session_B": {
+    "verdict": "PASS",
+    "flow": "guide",
+    "steps": 8
+  },
+  "session_C": {
+    "verdict": "PASS",
+    "flow": "acquisition",
+    "steps": 4,
+    "evidence": "evidence/GO_production_readiness/step3/bfm/BFM-ACQUISITION-FLOW-LATEST.json",
+    "matrix_synced": true
+  },
+  "bfm_matrix_version": 5,
+  "gate_after_phase2": {
+    "label": "Blocking Checks",
+    "current": 37,
+    "previous": 41,
+    "delta": 4,
+    "by_module": {
+      "business_data_readiness": 0,
+      "hat": 27,
+      "business_flow_matrix": 0,
+      "manual_validation": 9,
+      "production_entry": 1
+    }
+  },
+  "TT_SPRINT_B_ACTIVE": false
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "traveltrust.hat_human_validation_step.v1",
+  "role": "tourist",
+  "step_id": "register",
+  "order": 1,
+  "label": "注册",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T02:16:00.000Z",
+  "validator": "Cursor Agent · HAT Human Queue · Tourist",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "pilot": "tourist@test.com",
+  "immutable_id": "C2",
+  "user_id": "2760d445-cbf4-47d0-9461-fcba3db0516f",
+  "hat003_ref": "evidence/GO_production_readiness/step2/hat/HAT-003-TOURIST-LOGIN-VALIDATION-LATEST.json",
+  "manual_login_flow_ref": "evidence/GO_production_readiness/step4/manual/steps/manual-login_flow-LATEST.json",
+  "accounts_ssot": "docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md §3 C2",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "route": "/auth/register",
+      "heading": "游客注册",
+      "register_form": true,
+      "email_verification_flow": true,
+      "login_link": true,
+      "seed_account": "tourist@test.com",
+      "note": "Register shell verified · C2 seed post-login → /orders · no new account created"
+    },
+    "api": {
+      "verdict": "PASS",
+      "login": 200,
+      "me_http": 200,
+      "role": "tourist",
+      "role_traveltrust": "traveler",
+      "cross_ref": {
+        "hat003_triple_login": "PASS",
+        "admin_capabilities": 403
+      }
+    },
+    "database": {
+      "verdict": "PASS",
+      "entity": "users",
+      "row_id": "2760d445-cbf4-47d0-9461-fcba3db0516f",
+      "field": "role",
+      "value": "tourist",
+      "email": "tourist@test.com"
+    },
+    "page": {
+      "verdict": "PASS",
+      "route": "/auth/register",
+      "has_register_heading": true,
+      "post_login_route": "/orders",
+      "post_login_heading": "我的订单"
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "tourist_seed_registered",
+      "note": "C2 tourist seed verified · HAT-003 + Manual 6 cross-ref"
+    }
+  },
+  "TT_SPRINT_B_ACTIVE": false
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "traveltrust.hat_human_validation_step.v1",
+  "role": "acquisition",
+  "step_id": "pay",
+  "order": 5,
+  "label": "支付",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T01:42:24.150Z",
+  "validator": "Cursor Agent · HAT Human Queue · Acquisition",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "bfm_session_c_ref": "evidence/GO_production_readiness/step3/bfm/BFM-ACQUISITION-FLOW-LATEST.json",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "action": "Owner mock-pay close deal",
+      "order_id": "15d2051c-1b96-4013-82b6-06d961e3db45",
+      "bfm_step": "close_deal"
+    },
+    "api": {
+      "verdict": "PASS",
+      "mock_pay": 200,
+      "status": "escrowed"
+    },
+    "database": {
+      "verdict": "PASS",
+      "entity": "orders",
+      "row_id": "15d2051c-1b96-4013-82b6-06d961e3db45",
+      "field": "status",
+      "value": "escrowed"
+    },
+    "page": {
+      "verdict": "PASS",
+      "note": "API escrowed; UI defers to escrow route"
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "escrowed",
+      "order_id": "15d2051c-1b96-4013-82b6-06d961e3db45"
+    }
+  },
+  "TT_SPRINT_B_ACTIVE": false
+}

@@ -1,0 +1,36 @@
+{
+  "schema": "traveltrust.g3_cloudflare_cache_rules.v1",
+  "provider": "cloudflare",
+  "rules": [
+    {
+      "id": "official-cold-start-v1-immutable",
+      "description": "Official Asset Baseline V1 — global edge cache · immutable",
+      "match": "https://cdn.traveltrust.app/official-cold-start/v1/*",
+      "cache": {
+        "edge_ttl_seconds": 31536000,
+        "browser_ttl_seconds": 31536000,
+        "cache_control_override": "public, max-age=31536000, immutable",
+        "respect_origin": false
+      }
+    },
+    {
+      "id": "community-media-v1",
+      "description": "User/community upload prefix — 24h immutable",
+      "match": "https://cdn.traveltrust.app/community-media/v1/*",
+      "cache": {
+        "edge_ttl_seconds": 86400,
+        "browser_ttl_seconds": 86400,
+        "cache_control_override": "public, max-age=86400, immutable",
+        "respect_origin": true
+      }
+    }
+  ],
+  "global_edge": {
+    "compression": [
+      "brotli",
+      "gzip"
+    ],
+    "http3": true,
+    "geo": "cloudflare_anycast"
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "schema": "traveltrust.manual_validation_check.v1",
+  "check_id": "pay_mock",
+  "order": 7,
+  "label": "支付(Mock)",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T04:08:06.268Z",
+  "validator": "Cursor Agent · Phase 4 Manual 7 · Track A staging config validation",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "track_a_remediation": {
+    "api_meta_exposure": "GET /meta orders.order_mock_pay_enabled=true (P3_CHAIN_OFF=1)",
+    "web_build_flag": "NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI=1",
+    "deploy_refs": [
+      "deploy/fly/tt-api-staging (handlers.rs meta key)",
+      "deploy/fly/tt-web-staging/build.env.local + Dockerfile.fly-staging"
+    ]
+  },
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "action": "Mock-pay UI UAT · tourist browser on /pay and /escrow after Track A deploy",
+      "routes": [
+        "/pay?orderId=571a8637-ec2c-4023-9920-2d35d79368dd",
+        "/escrow/571a8637-ec2c-4023-9920-2d35d79368dd",
+        "/orders"
+      ],
+      "precondition_order": {
+        "order_id": "571a8637-ec2c-4023-9920-2d35d79368dd",
+        "status_before_pay": "accepted",
+        "amount": "88.66 USD",
+        "guide_id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b",
+        "tourist": "tourist@test.com"
+      },
+      "browser_human": {
+        "pay_page": {
+          "route": "/pay?orderId=571a8637-ec2c-4023-9920-2d35d79368dd",
+          "order_summary_visible": true,
+          "amount": "88.66 USD",
+          "mock_pay_cta_visible": true,
+          "mock_pay_cta_label": "模拟入金（链下）",
+          "mock_pay_disabled_explainer": false,
+          "mock_pay_clicked": true,
+          "post_click_notice": "模拟入金已登记。请打开订单详情刷新查看最新状态。",
+          "loading_then_stable": true
+        },
+        "escrow_page": {
+          "route": "/escrow/571a8637-ec2c-4023-9920-2d35d79368dd",
+          "status_after_pay_ui": "已入金·待履约",
+          "amount_ui": "88.66 USDC",
+          "order_id_visible": true,
+          "bilateral_next_step_visible": true
+        },
+        "ui_initiation_blocked": false,
+        "note": "Track A closed staging_configuration_gap — CTA rendered and human click succeeded"
+      }
+    },
+    "api": {
+      "verdict": "PASS",
+      "meta_order_mock_pay_enabled": true,
+      "chain_off_mounted": true,
+      "pre_status": "accepted",
+      "mock_pay_via_ui_then_api_verify": {
+        "get_order_after_ui_click": {
+          "http": 200,
+          "status": "escrowed",
+          "escrowed_at": "2026-07-08T04:04:38.046409688+00:00"
+        }
+      },
+      "get_order_after": {
+        "http": 200,
+        "status": "escrowed",
+        "escrowed_at": true
+      },
+      "consistency_api_layers": true,
+      "cross_ref": "BFM Session A/B/C API mock-pay PASS · UI PASS after Track A meta + build flag"
+    },
+    "database": {
+      "verdict": "PASS",
+      "entity": "orders",
+      "row_id": "571a8637-ec2c-4023-9920-2d35d79368dd",
+      "field": "status",
+      "value_before": "accepted",
+      "value_after": "escrowed",
+      "tourist_id": "2760d445-cbf4-47d0-9461-fcba3db0516f",
+      "escrowed_at_set": true,
+      "verification": "API GET /api/v1/orders/:id cross-check after UI mock-pay"
+    },
+    "page": {
+      "verdict": "PASS",
+      "routes": [
+        {
+          "route": "/pay?orderId=571a8637-ec2c-4023-9920-2d35d79368dd",
+          "http": 200,
+          "note": "Mock-pay CTA visible and clickable"
+        },
+        {
+          "route": "/escrow/571a8637-ec2c-4023-9920-2d35d79368dd",
+          "http": 200,
+          "note": "Post-pay UI shows 已入金·待履约 · 88.66 USDC"
+        },
+        {
+          "route": "/orders",
+          "http": 200,
+          "note": "List shell reachable after pay flow"
+        }
+      ],
+      "ui_result_consistency_verified": true
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "outcome": "mock_pay_ui_and_api_consistent",
+      "summary": "API Payment Capability PASS · UI Payment Entry Capability PASS · Track A staging config remediated",
+      "api_payment_capability": "PASS",
+      "ui_payment_entry_capability": "PASS",
+      "classification": "staging_configuration_gap_closed",
+      "order_id": "571a8637-ec2c-4023-9920-2d35d79368dd"
+    }
+  },
+  "overall_manual_verdict": "PASS",
+  "classification": {
+    "manual_7": "pay_mock",
+    "split_verdict": {
+      "api_payment_capability": "PASS",
+      "ui_payment_entry_capability": "PASS"
+    },
+    "prior_classification": "staging_configuration_gap",
+    "current_classification": "track_a_remediated_pass",
+    "track_a": true,
+    "not_a_fund_flow_logic_defect": true,
+    "remediated_chain": [
+      "GET /meta orders.order_mock_pay_enabled=true",
+      "NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI=1 at web build",
+      "/pay mock-pay CTA rendered",
+      "UI click → escrowed",
+      "GET /api/v1/orders/:id status=escrowed"
+    ],
+    "release_note": "Manual 7 PASS · API PASS / UI PASS · staging_configuration_gap closed via Track A deploy config only",
+    "bfm_cross_ref": "BFM Session A/B/C API mock-pay PASS"
+  }
+}

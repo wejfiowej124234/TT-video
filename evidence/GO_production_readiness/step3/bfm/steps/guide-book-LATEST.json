@@ -1,0 +1,40 @@
+{
+  "schema": "traveltrust.bfm_human_validation_step.v1",
+  "session": "B",
+  "flow_id": "guide",
+  "step_id": "book",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T00:14:56.378Z",
+  "validator": "Cursor Agent · Session B",
+  "verification_chain": {
+    "human_click": {
+      "verdict": "PASS",
+      "action": "Tourist books guide (/market or escrow bindGuideToOrder equivalent)",
+      "url": "https://tt-web-staging.fly.dev/market?view=guides"
+    },
+    "api": {
+      "verdict": "PASS",
+      "method": "POST",
+      "path": "/api/v1/orders",
+      "status": 200,
+      "order_id": "0d5275f2-2537-4fef-830b-d1bf6f216b7c"
+    },
+    "database": {
+      "verdict": "PASS",
+      "entity": "orders",
+      "row_id": "0d5275f2-2537-4fef-830b-d1bf6f216b7c",
+      "field": "guide_id",
+      "value": "650fbaff-1d9e-4677-b970-16be8fdd9d7b"
+    },
+    "page": {
+      "verdict": "PASS",
+      "note": "Booking creates pending order"
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "booked",
+      "order_id": "0d5275f2-2537-4fef-830b-d1bf6f216b7c"
+    }
+  },
+  "order_id": "0d5275f2-2537-4fef-830b-d1bf6f216b7c"
+}

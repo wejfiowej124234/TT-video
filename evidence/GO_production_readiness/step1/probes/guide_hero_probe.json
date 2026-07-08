@@ -1,0 +1,28 @@
+{
+  "schema": "traveltrust.guide_business_data_probe.v3",
+  "recorded_at_utc": "2026-07-07T14:23:59.927Z",
+  "check_id": "hero",
+  "label": "Hero",
+  "ssot": "CMS",
+  "probe": "HEAD avatar_url",
+  "api": "https://tt-api-staging.fly.dev",
+  "exit_condition": "图片可加载且 Runtime 一致",
+  "verdict": "PASS",
+  "root_cause": null,
+  "cascade_from": null,
+  "attribution": null,
+  "fail_reasons": [],
+  "warn_reasons": [],
+  "warn_classification": {
+    "C": [],
+    "D": [],
+    "P": []
+  },
+  "detail": {
+    "fail": [],
+    "warn": [],
+    "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-dubai-luxury-guide-avatar.jpg",
+    "http": 200
+  },
+  "TT_GUIDE_PROBE": "PASS"
+}

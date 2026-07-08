@@ -1,0 +1,162 @@
+{
+  "schema": "traveltrust.manual_validation_check.v1",
+  "check_id": "cancel_refund",
+  "order": 8,
+  "label": "取消/异常",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T01:00:30.914Z",
+  "validator": "Cursor Agent · Phase 4 Manual 8",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "action": "Cancel/dispute/exception UX UAT · tourist browser + API cross-check",
+      "routes": [
+        "/orders",
+        "/escrow/22591757-6294-48e7-856e-340761b07d00",
+        "/escrow/af7fe73b-1572-4858-be93-2844bb6ba96b",
+        "/escrow/60955973-2e81-4124-b252-dfff73b9555a",
+        "/escrow/1bbb38dc-b333-41b2-a0ef-307586b17d46",
+        "/escrow/61aed01a-a247-4922-8e21-ba3120833f7b",
+        "/market"
+      ],
+      "browser_human": {
+        "cancel_flow": {
+          "order_id": "22591757-6294-48e7-856e-340761b07d00",
+          "pre_status": "created",
+          "action": "订单操作 → 取消订单",
+          "processing_state": "提交中…",
+          "post_status_ui": "订单已取消，无需进一步操作",
+          "post_badge": "已取消",
+          "cancel_refund_rules_visible": true
+        },
+        "dispute_flow": {
+          "reachable_on_accepted": true,
+          "order_id": "60955973-2e81-4124-b252-dfff73b9555a",
+          "action": "发起争议（链下）",
+          "processing_state": "提交中…",
+          "readable_error": "订单状态已变更，请刷新查看最新状态。",
+          "not_raw_500": true
+        },
+        "disputed_order_view": {
+          "order_id": "af7fe73b-1572-4858-be93-2844bb6ba96b",
+          "status_ui": "争议中",
+          "next_step": "争议处理中，请留意通知并按指引配合",
+          "cancel_refund_rules_visible": true
+        },
+        "exception_prevention": {
+          "completed_order_id": "1bbb38dc-b333-41b2-a0ef-307586b17d46",
+          "cancel_button_absent": true,
+          "rating_cta_present": true
+        },
+        "created_order": {
+          "order_id": "61aed01a-a247-4922-8e21-ba3120833f7b",
+          "cancel_button_present": true,
+          "dispute_button_absent": true
+        },
+        "recovery": {
+          "after_cancel_navigate": "/orders",
+          "after_exception_navigate": "/market",
+          "market_usable": true,
+          "no_crash": true
+        }
+      }
+    },
+    "api": {
+      "verdict": "PASS",
+      "cancel_valid": {
+        "order_id": "22591757-6294-48e7-856e-340761b07d00",
+        "http": 200,
+        "status": "cancelled"
+      },
+      "cancel_invalid_completed": {
+        "order_id": "1bbb38dc-b333-41b2-a0ef-307586b17d46",
+        "http": 409,
+        "error": "invalid_state",
+        "message": "invalid_state",
+        "not_500": true
+      },
+      "dispute_valid": {
+        "order_id": "af7fe73b-1572-4858-be93-2844bb6ba96b",
+        "status": "disputed"
+      },
+      "dispute_invalid_created": {
+        "order_id": "61aed01a-a247-4922-8e21-ba3120833f7b",
+        "http": 409,
+        "error": "invalid_state",
+        "not_500": true
+      },
+      "cancel_duplicate_idempotent": {
+        "http1": 409,
+        "http2": 409
+      },
+      "dispute_attempt_order": {
+        "order_id": "60955973-2e81-4124-b252-dfff73b9555a",
+        "status": "accepted"
+      },
+      "tourist_id": "2760d445-cbf4-47d0-9461-fcba3db0516f"
+    },
+    "database": {
+      "verdict": "PASS",
+      "entities": [
+        {
+          "entity": "orders",
+          "row_id": "22591757-6294-48e7-856e-340761b07d00",
+          "field": "status",
+          "value": "cancelled"
+        },
+        {
+          "entity": "orders",
+          "row_id": "af7fe73b-1572-4858-be93-2844bb6ba96b",
+          "field": "status",
+          "value": "disputed"
+        }
+      ],
+      "list_consistency": {
+        "cancelled_in_list": true,
+        "disputed_in_list": true
+      }
+    },
+    "page": {
+      "verdict": "PASS",
+      "routes": [
+        {
+          "route": "/orders",
+          "http": 200,
+          "filter_tabs": "已取消·争议中",
+          "list_loaded": true
+        },
+        {
+          "route": "/escrow/22591757-6294-48e7-856e-340761b07d00",
+          "http": 200,
+          "post_cancel_shell": true
+        },
+        {
+          "route": "/escrow/af7fe73b-1572-4858-be93-2844bb6ba96b",
+          "http": 200,
+          "disputed_shell": true
+        },
+        {
+          "route": "/market",
+          "http": 200,
+          "recovery_after_exception": true
+        }
+      ],
+      "error_ux_human_readable": true,
+      "no_infinite_spinner": true
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "outcome": "cancel_refund_uat_pass",
+      "summary": "Cancel + dispute + exception paths verified; readable errors; app navigable after exceptions",
+      "orders_exercised": [
+        "22591757-6294-48e7-856e-340761b07d00",
+        "af7fe73b-1572-4858-be93-2844bb6ba96b",
+        "60955973-2e81-4124-b252-dfff73b9555a",
+        "1bbb38dc-b333-41b2-a0ef-307586b17d46",
+        "61aed01a-a247-4922-8e21-ba3120833f7b"
+      ]
+    }
+  }
+}

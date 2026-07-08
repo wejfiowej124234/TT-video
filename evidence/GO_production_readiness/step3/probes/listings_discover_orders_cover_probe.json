@@ -1,0 +1,7 @@
+{
+  "schema": "traveltrust.listings_business_data_probe.v1",
+  "check_id": "discover_orders_cover",
+  "recorded_at_utc": "2026-07-08T00:19:09.661Z",
+  "verdict": "PASS",
+  "count": 1
+}

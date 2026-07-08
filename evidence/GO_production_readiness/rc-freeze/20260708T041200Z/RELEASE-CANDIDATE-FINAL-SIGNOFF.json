@@ -1,0 +1,86 @@
+{
+  "schema": "traveltrust.production_readiness_rc_final_signoff.v1",
+  "stamp": "20260708T041200Z",
+  "signed_at_utc": "2026-07-08T04:12:00.780Z",
+  "environment": {
+    "staging_api": "https://tt-api-staging.fly.dev",
+    "staging_web": "https://tt-web-staging.fly.dev"
+  },
+  "verdict": "GO",
+  "machine_keys": {
+    "TT_PRODUCTION_ENTRY_READY": "YES",
+    "TT_PRODUCTION_READINESS_RC": "CLOSED",
+    "TT_PRODUCTION_READINESS_RC_FREEZE": "FROZEN",
+    "TT_SPRINT_A": "CLOSED",
+    "TT_SPRINT_B": "READY",
+    "TT_SPRINT_B_ACTIVE": false
+  },
+  "validation_summary": {
+    "bdr": "READY (5/5)",
+    "hat": "PASS (v11 · six-role human queue)",
+    "bfm": "PASS",
+    "manual": "PASS (9/9 · Manual 7 API+UI PASS after Track A)",
+    "open_root_causes": 0,
+    "final_gate": "PRODUCTION-READINESS-FINAL-GATE-REEVALUATION #3"
+  },
+  "registry_freeze": {
+    "anchor_version": 17,
+    "anchor_sha256": "60cb7b5e0ab7e78c8d9f5c59a8d1f49a0729ced92a85bf3e47ac379d61acbbaa",
+    "files": [
+      {
+        "path": "registry/production-readiness-open-issues.v1.yaml",
+        "version": 17,
+        "sha256": "60cb7b5e0ab7e78c8d9f5c59a8d1f49a0729ced92a85bf3e47ac379d61acbbaa"
+      },
+      {
+        "path": "registry/production-readiness-phase-gates.v1.yaml",
+        "version": 2,
+        "sha256": "b5cc8452716485a1b142ecda3fddc6fbd7512ed561da109c6f0c1673711d36ba"
+      },
+      {
+        "path": "registry/production-readiness-master-checklist.v1.yaml",
+        "version": 4,
+        "sha256": "422d14185ec923f307d1e10d85fe7d1c890ee2a4cd2d3783cbcd11c5007a7f06"
+      },
+      {
+        "path": "registry/business-data-readiness.v1.yaml",
+        "version": 5,
+        "sha256": "209975637c05ee2a44f79025a44be0806c56f5f674d56af653757a87955f7a8a"
+      },
+      {
+        "path": "registry/business-flow-matrix.v1.yaml",
+        "version": 5,
+        "sha256": "f5e9edbf30fc9e366a7584a9a0074fc61750b7110c458996372ebc6dfdbcf71c"
+      },
+      {
+        "path": "registry/hat-six-role-matrix.v1.yaml",
+        "version": 11,
+        "sha256": "34f4b0d5d1863191123a280e870dd7dd3b01508c7d77064375507420eb0b79ac"
+      },
+      {
+        "path": "registry/manual-validation-checklist.v1.yaml",
+        "version": 10,
+        "sha256": "f5666b5e1cca43078c13167868849151a3152e4ac1f8494397a34978a072d396"
+      }
+    ]
+  },
+  "evidence_freeze": {
+    "manifest": "evidence/GO_production_readiness/rc-freeze/20260708T041200Z/RC-FREEZE-MANIFEST.json",
+    "latest_pointer": "evidence/GO_production_readiness/rc-freeze/RC-FREEZE-MANIFEST-LATEST.json",
+    "file_count": 118
+  },
+  "git_sha": "9b90696d5ff18f7e095f427f48d2f6e193b304d9",
+  "reevaluation_ref": "2026-07-08T04:09:09.708Z",
+  "owner_attestation": {
+    "role": "Release Candidate Freeze · Agent-generated package",
+    "decision": "GO",
+    "note": "Owner countersign required before Production cutover",
+    "signed_utc": null,
+    "name": null
+  },
+  "forbidden_after_freeze": [
+    "New HAT / Manual / BFM validation runs",
+    "Registry version bumps without new RC cycle",
+    "Business logic changes under TT_SPRINT_B_ACTIVE"
+  ]
+}

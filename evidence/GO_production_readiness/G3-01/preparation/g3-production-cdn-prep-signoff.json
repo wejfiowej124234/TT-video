@@ -1,0 +1,42 @@
+{
+  "schema": "traveltrust.g3_production_cdn_prep.signoff.v1",
+  "stamp": "20260704T090506Z",
+  "environment": "preparation",
+  "phase": "phase12_release_prep",
+  "baseline": "Official Asset Baseline V1",
+  "recorded_at": "2026-07-04T09:05:06.944Z",
+  "verdict": "PREP_READY",
+  "machine_keys": {
+    "TT_G3_PRODUCTION_CDN_PREP": "READY",
+    "TT_G3_PRODUCTION_CDN_VERIFIED": "PLANNED",
+    "TT_OCS_OFFICIAL_ASSET_BASELINE_V1": "VERIFIED",
+    "TT_PRODUCTION_GO": "NO_GO"
+  },
+  "cdn_policy": {
+    "public_base": "https://cdn.traveltrust.app",
+    "official_prefix": "official-cold-start/v1",
+    "cache": "public, max-age=31536000, immutable",
+    "lifecycle": "r2-lifecycle-policy.v1.json",
+    "version_management": "V1 prefix — bump on expansion"
+  },
+  "r2_bootstrap": {
+    "mode": "dry_run",
+    "ok_count": 60,
+    "object_count": 60
+  },
+  "production_url_map_count": 60,
+  "staging_asset_evidence": "evidence/GO_official_cold_start_dataset/ocs-official-asset-baseline/20260704T085638Z",
+  "owner_cutover_steps": [
+    "Cloudflare R2 + cdn.traveltrust.app DNS",
+    "PRODUCTION_CDN_DRY_RUN=0 configure-production-media-r2-cdn.sh",
+    "bootstrap-ocs-official-assets-to-r2.cjs --apply",
+    "Production CDN HEAD + cf-cache-status probes",
+    "run-reality-verification.sh --gate G3 --domain G3-01"
+  ],
+  "honest_boundary": "TT_G3_PRODUCTION_CDN_PREP READY = artifacts + validators complete. NOT Production CDN VERIFIED. NOT Production GO.",
+  "forbidden_claims": [
+    "G3 Production CDN VERIFIED",
+    "Production GO",
+    "Phase ③ complete from Staging"
+  ]
+}

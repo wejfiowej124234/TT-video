@@ -1,0 +1,295 @@
+{
+  "schema": "traveltrust.bfm001_acquisition_chain_discovery.v1",
+  "recorded_at_utc": "2026-07-07T23:58:07.007Z",
+  "issue_id": "BFM-001",
+  "mode": "discovery_only",
+  "api": "https://tt-api-staging.fly.dev",
+  "TT_SPRINT_B": "READY",
+  "TT_SPRINT_B_ACTIVE": false,
+  "hypothesis": "Acquisition 响应链路未真人走通",
+  "hypothesis_verdict": "REDEFINE_CANDIDATE",
+  "exit_condition": "发布→响应→成交→完成 全链 PASS",
+  "exit_condition_assessment": {
+    "pilot_owned_api_chain": "MET",
+    "ocs_catalog_api_chain": "PARTIAL",
+    "human_verification": "NOT_EXECUTED",
+    "bfm_registry_all_pending": true
+  },
+  "root_cause_candidate": {
+    "id": "acquisition_human_verification_not_executed",
+    "statement": "BFM-001 opened at bootstrap; BFM/HAT acquisition steps all pending; API pilot chain PASS; 真人 five-layer verification never executed",
+    "status": "CONFIRMED_CANDIDATE",
+    "secondary": {
+      "id": "staging_ocs_acquisition_owner_not_in_hat_pilot",
+      "statement": "OCS catalog close_deal requires listing.owner_user_id mock-pay; seed HAT accounts are not OCS owners",
+      "blocked_at": "close_deal",
+      "failure_signature": {
+        "http": 403,
+        "error": "not_tourist"
+      }
+    }
+  },
+  "api_summary": {
+    "pilot_owned_full_chain": "fresh_user_full_chain, seed_persona_chain, high_bounty_fulfillment_gate",
+    "ocs_catalog_close_deal": "PARTIAL · blocked at close_deal",
+    "respond_api_on_ocs_catalog": "PASS",
+    "scripts_reference": [
+      "scripts/dev/smoke-acquisition-pd009-staging.sh",
+      "scripts/dev/smoke-acquisition-pd009-local.sh",
+      "scripts/dev/smoke-phase25-h2-acquisition-fulfillment-staging.sh",
+      "scripts/dev/run-bfm-001-acquisition-chain-discovery.cjs"
+    ]
+  },
+  "registry_refs": {
+    "bfm001": "registry/production-readiness-open-issues.v1.yaml",
+    "business_flow_matrix": "registry/business-flow-matrix.v1.yaml",
+    "hat_acquisition_role": "registry/hat-six-role-matrix.v1.yaml",
+    "manual_validation": "registry/manual-validation-checklist.v1.yaml"
+  },
+  "code_refs": {
+    "order_create": "crates/api/src/chain_off/market_listing_orders.rs",
+    "mock_pay": "crates/api/src/chain_off/orders_flow/accept_cancel_pay_complete.rs",
+    "acquisition_semantics": "acquisition: tourist_id=listing.owner · guide_user_id=carrier (responder)"
+  },
+  "bfm_matrix": {
+    "publish": {
+      "registry_verdict": "pending",
+      "api_verdict": "PASS",
+      "human_verdict": "NOT_EXECUTED"
+    },
+    "respond": {
+      "registry_verdict": "pending",
+      "api_verdict": "PASS",
+      "human_verdict": "NOT_EXECUTED"
+    },
+    "close_deal": {
+      "registry_verdict": "pending",
+      "api_verdict": "PARTIAL",
+      "human_verdict": "NOT_EXECUTED"
+    },
+    "complete": {
+      "registry_verdict": "pending",
+      "api_verdict": "PASS",
+      "human_verdict": "NOT_EXECUTED"
+    }
+  },
+  "tracks": [
+    {
+      "track": "fresh_user_full_chain",
+      "owner_email": "bfm001-own-1783468659524@traveltrust.test",
+      "carrier_email": "bfm001-car-1783468659524@traveltrust.test",
+      "listing_id": "0824dce5-b7ac-4524-b46a-a18d86d80d72",
+      "order_id": "36bad76d-e0fc-4a46-a38d-74988ad55038",
+      "steps": [
+        {
+          "step": "register_owner",
+          "verdict": "PASS",
+          "detail": "bfm001-own-1783468659524@traveltrust.test"
+        },
+        {
+          "step": "register_carrier",
+          "verdict": "PASS",
+          "detail": "bfm001-car-1783468659524@traveltrust.test"
+        },
+        {
+          "step": "bind_wallet",
+          "verdict": "PASS"
+        },
+        {
+          "step": "publish_bond",
+          "bfm": "publish",
+          "verdict": "PASS",
+          "http": 200
+        },
+        {
+          "step": "publish_listing",
+          "bfm": "publish",
+          "verdict": "PASS",
+          "http": 200,
+          "listing_id": "0824dce5-b7ac-4524-b46a-a18d86d80d72"
+        },
+        {
+          "step": "respond_create_order",
+          "bfm": "respond",
+          "verdict": "PASS",
+          "http": 200,
+          "order_id": "36bad76d-e0fc-4a46-a38d-74988ad55038"
+        },
+        {
+          "step": "accept",
+          "bfm": "respond",
+          "verdict": "PASS",
+          "http": 200
+        },
+        {
+          "step": "mock_pay",
+          "bfm": "close_deal",
+          "verdict": "PASS",
+          "http": 200,
+          "status": "escrowed"
+        },
+        {
+          "step": "confirm_completion",
+          "bfm": "complete",
+          "verdict": "PASS",
+          "http": 200,
+          "status": "completed"
+        }
+      ],
+      "flow_verdict": "PASS"
+    },
+    {
+      "track": "seed_persona_chain",
+      "owner": "multi-demo@test.com",
+      "carrier": "bfm001-seed-car-1783468659524@traveltrust.test",
+      "listing_id": "f86bc720-05e9-42e2-a3b7-ef9dd1d82da0",
+      "order_id": "73eba886-6a55-4028-90b4-4510c4010a41",
+      "steps": [
+        {
+          "step": "login_multi_demo",
+          "verdict": "PASS"
+        },
+        {
+          "step": "register_fresh_carrier",
+          "verdict": "PASS",
+          "detail": "bfm001-seed-car-1783468659524@traveltrust.test"
+        },
+        {
+          "step": "publish_bond",
+          "bfm": "publish",
+          "verdict": "PASS",
+          "http": 200
+        },
+        {
+          "step": "publish_listing",
+          "bfm": "publish",
+          "verdict": "PASS",
+          "http": 200,
+          "listing_id": "f86bc720-05e9-42e2-a3b7-ef9dd1d82da0"
+        },
+        {
+          "step": "respond_create_order",
+          "bfm": "respond",
+          "verdict": "PASS",
+          "http": 200,
+          "order_id": "73eba886-6a55-4028-90b4-4510c4010a41"
+        },
+        {
+          "step": "accept",
+          "bfm": "respond",
+          "verdict": "PASS",
+          "http": 200
+        },
+        {
+          "step": "mock_pay",
+          "bfm": "close_deal",
+          "verdict": "PASS",
+          "http": 200,
+          "status": "escrowed"
+        },
+        {
+          "step": "confirm_completion",
+          "bfm": "complete",
+          "verdict": "PASS",
+          "http": 200,
+          "status": "completed"
+        }
+      ],
+      "flow_verdict": "PASS"
+    },
+    {
+      "track": "ocs_production_catalog",
+      "listing_id": "c3a45398-9677-4cf4-879b-011d1f1323b1",
+      "owner_user_id": "bf2e447c-0733-4cba-95a4-29f353cfc404",
+      "order_id": "c6c81720-79ed-4889-a082-e8b6ad612f21",
+      "steps": [
+        {
+          "step": "catalog_pilot",
+          "verdict": "PASS",
+          "listing_id": "c3a45398-9677-4cf4-879b-011d1f1323b1",
+          "title": "东京限定镜头代购 · 悬赏",
+          "bounty_max": 480,
+          "data_origin": "production",
+          "owner_user_id": "bf2e447c-0733-4cba-95a4-29f353cfc404"
+        },
+        {
+          "step": "register_fresh_carrier",
+          "verdict": "PASS",
+          "detail": "bfm001-ocs-car-1783468673237@traveltrust.test"
+        },
+        {
+          "step": "respond_create_order",
+          "bfm": "respond",
+          "verdict": "PASS",
+          "http": 200,
+          "order_id": "c6c81720-79ed-4889-a082-e8b6ad612f21"
+        },
+        {
+          "step": "accept",
+          "bfm": "respond",
+          "verdict": "PASS",
+          "http": 200
+        },
+        {
+          "step": "mock_pay",
+          "bfm": "close_deal",
+          "verdict": "FAIL",
+          "attempts": [
+            {
+              "email": "multi-demo@test.com",
+              "http": 403,
+              "error": "not_tourist"
+            },
+            {
+              "email": "merchant@test.com",
+              "http": 403,
+              "error": "not_tourist"
+            },
+            {
+              "email": "tourist@test.com",
+              "http": 403,
+              "error": "not_tourist"
+            }
+          ],
+          "note": "mock-pay requires order.tourist_id = listing.owner_user_id (acquisition_listing)"
+        },
+        {
+          "step": "confirm_completion",
+          "bfm": "complete",
+          "verdict": "BLOCKED",
+          "note": "blocked by close_deal"
+        }
+      ],
+      "flow_verdict": "PARTIAL",
+      "blocked_at": "close_deal"
+    },
+    {
+      "track": "high_bounty_fulfillment_gate",
+      "steps": [
+        {
+          "step": "publish_high_bounty",
+          "verdict": "PASS",
+          "listing_id": "d44b0b62-009b-4a9f-92da-4470efc06938",
+          "bounty_max": 1500
+        },
+        {
+          "step": "respond_without_fulfillment_bond",
+          "verdict": "PASS",
+          "http": 400,
+          "error": "acquisition_fulfillment_bond_required",
+          "note": "by design · bountyMaxUsdc >= 1000"
+        },
+        {
+          "step": "respond_with_fulfillment_bond",
+          "verdict": "PASS",
+          "http": 200,
+          "order_id": "d2cda4f1-a3f4-4d72-9b19-5174b5e0a08d"
+        }
+      ],
+      "flow_verdict": "PASS"
+    }
+  ],
+  "open_root_causes": 1,
+  "fix_authorized": false,
+  "recommendation": "Owner REDEFINE: API pilot PASS vs Human BFM pending; optional OCS owner pilot for catalog close_deal"
+}

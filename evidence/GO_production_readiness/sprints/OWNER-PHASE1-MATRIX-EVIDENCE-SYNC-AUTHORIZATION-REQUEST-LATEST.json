@@ -1,0 +1,216 @@
+{
+  "schema": "traveltrust.phase1_matrix_evidence_sync_authorization_request.v1",
+  "recorded_at_utc": "2026-07-08T00:07:35.274Z",
+  "status": "PENDING_OWNER_MATRIX_EVIDENCE_SYNC_AUTHORIZATION",
+  "document": "evidence/GO_production_readiness/sprints/OWNER-PHASE1-MATRIX-EVIDENCE-SYNC-AUTHORIZATION-REQUEST.md",
+  "phase": "Human Validation Track · Phase 1",
+  "plan_ref": "evidence/GO_production_readiness/sprints/PRODUCTION-ENTRY-HUMAN-VALIDATION-PLAN-LATEST.json",
+  "baseline": {
+    "registry_version": 17,
+    "open_root_causes": 0,
+    "TT_PRODUCTION_ENTRY_READY": "NO_GO",
+    "TT_SPRINT_B": "READY",
+    "TT_SPRINT_B_ACTIVE": false,
+    "hat_blocking_cells": 35
+  },
+  "matrix_sync_authorized": false,
+  "prerequisites": {
+    "hat003_closed": true,
+    "bd005_closed": true,
+    "no_redefine": true,
+    "pass_evidence_exists": true
+  },
+  "authorized_scope": {
+    "ssot": "registry/hat-six-role-matrix.v1.yaml",
+    "fields_allowed": [
+      "cells.*.verdict",
+      "cells.*.note",
+      "effective_utc",
+      "version"
+    ],
+    "fields_forbidden": [
+      "roles structure",
+      "steps",
+      "probe_script",
+      "other roles cells"
+    ]
+  },
+  "sync_targets": [
+    {
+      "id": "SYNC-HAT-003-TOURIST",
+      "issue_closed": "HAT-003",
+      "role": "tourist",
+      "evidence_primary": "evidence/GO_production_readiness/step2/hat/HAT-003-TOURIST-LOGIN-VALIDATION-LATEST.json",
+      "signal": "TT_HAT003_TOURIST_PERSONA_VALIDATION",
+      "signal_value": "PASS",
+      "pilot": "tourist@test.com",
+      "validation_recorded_at_utc": "2026-07-07T16:17:17.355Z",
+      "cell_updates": [
+        {
+          "cell": "login",
+          "verdict_from": "pending",
+          "verdict_to": "pass",
+          "evidence_steps": [
+            "login_triple",
+            "role_persona",
+            "admin_capabilities_deny"
+          ],
+          "note": "HAT-003 · triple login 200 · role=tourist · admin 403 · E: HAT-003-TOURIST-LOGIN-VALIDATION"
+        },
+        {
+          "cell": "browse",
+          "verdict_from": "pending",
+          "verdict_to": "pass",
+          "evidence_steps": [
+            "browse_orders"
+          ],
+          "note": "HAT-003 · GET orders 200 · E: HAT-003-TOURIST-LOGIN-VALIDATION"
+        },
+        {
+          "cell": "logout",
+          "verdict_from": "pending",
+          "verdict_to": "pass",
+          "evidence_steps": [
+            "logout_json_body",
+            "session_invalid_after_logout"
+          ],
+          "note": "HAT-003 · logout 200 · session 401 after · E: HAT-003-TOURIST-LOGIN-VALIDATION"
+        }
+      ],
+      "remain_pending": [
+        "register",
+        "order",
+        "pay",
+        "complete"
+      ],
+      "supporting_evidence": [
+        "evidence/GO_production_readiness/sprints/HAT-003-FIX-VALIDATION-LATEST.json",
+        "evidence/GO_production_readiness/sprints/HAT-003-FIX-AUTHORIZATION-GRANTED-LATEST.json",
+        "evidence/GO_production_readiness/sprints/OWNER-TOURIST-PERSONA-DECISION-LATEST.json"
+      ]
+    },
+    {
+      "id": "SYNC-BD-005-PROVIDER",
+      "issue_closed": "BD-005",
+      "role": "provider",
+      "evidence_primary": "evidence/GO_production_readiness/step2/hat/SPRINT-B-PROVIDER-HAT-ORDER-LATEST.json",
+      "signal": "TT_SPRINT_B_PROVIDER_HAT_ORDER",
+      "signal_value": "PASS",
+      "pilot": "merchant@test.com",
+      "order_id": "d3b96f98-8739-433b-905e-a9c0c8fb61cb",
+      "validation_recorded_at_utc": "2026-07-07T16:04:28.323Z",
+      "cell_updates": [
+        {
+          "cell": "login",
+          "verdict_from": "pending",
+          "verdict_to": "pass",
+          "evidence_steps": [
+            "provider_auth"
+          ],
+          "note": "BD-005 · provider_auth 200 · merchant@test.com · active guide 627c8c31…"
+        },
+        {
+          "cell": "browse",
+          "verdict_from": "pending",
+          "verdict_to": "pass",
+          "evidence_steps": [
+            "market_visible_catalog"
+          ],
+          "note": "BD-005 · public catalog 200 · production listing · E: SPRINT-B-PROVIDER-HAT-ORDER"
+        },
+        {
+          "cell": "order",
+          "verdict_from": "pending",
+          "verdict_to": "pass",
+          "evidence_steps": [
+            "create_order"
+          ],
+          "note": "BD-005 · create_order 200 · order d3b96f98…"
+        },
+        {
+          "cell": "pay",
+          "verdict_from": "pending",
+          "verdict_to": "pass",
+          "evidence_steps": [
+            "mock_pay"
+          ],
+          "note": "BD-005 · mock_pay 200 · escrowed"
+        },
+        {
+          "cell": "complete",
+          "verdict_from": "pending",
+          "verdict_to": "pass",
+          "evidence_steps": [
+            "confirm_completion"
+          ],
+          "note": "BD-005 · confirm_completion 200 · completed"
+        }
+      ],
+      "remain_pending": [
+        "register",
+        "logout"
+      ],
+      "non_blocking_warn": {
+        "step": "market_visible_own_listing",
+        "verdict": "WARN",
+        "note": "merchant own listing filtered from public catalog · browse pass uses market_visible_catalog"
+      },
+      "supporting_evidence": [
+        "evidence/GO_production_readiness/sprints/BD-005-FIX-VALIDATION-LATEST.json",
+        "evidence/GO_production_readiness/sprints/BD-005-FIX-AUTHORIZATION-GRANTED-LATEST.json",
+        "evidence/GO_production_readiness/sprints/OWNER-FULFILLMENT-GUIDE-DECISION-LATEST.json"
+      ]
+    }
+  ],
+  "execution_boundary": {
+    "allow": [
+      "update hat-six-role-matrix.v1.yaml verdict+note for 8 authorized cells",
+      "bump matrix effective_utc/version if convention requires",
+      "run-production-readiness-master-checklist.cjs recalculation only",
+      "write PHASE1-MATRIX-EVIDENCE-SYNC-EXECUTION-LATEST.json",
+      "write OWNER-PHASE1-MATRIX-EVIDENCE-SYNC-AUTHORIZATION-GRANTED-LATEST.json"
+    ],
+    "deny": [
+      "rerun HAT-003 tourist login validation",
+      "rerun BD-005 provider HAT order validation",
+      "rerun tn-p1-hat-six-role-matrix-probe.py",
+      "code changes",
+      "staging data changes",
+      "reopen HAT-003 or BD-005",
+      "REDEFINE",
+      "TT_SPRINT_B_ACTIVE=true",
+      "BFM Manual BDR matrix updates"
+    ]
+  },
+  "on_authorize_first_step_only": [
+    "registry/hat-six-role-matrix.v1.yaml cell sync per sync_targets",
+    "run-production-readiness-master-checklist.cjs",
+    "PHASE1-MATRIX-EVIDENCE-SYNC-EXECUTION-LATEST.json",
+    "OWNER-PHASE1-MATRIX-EVIDENCE-SYNC-AUTHORIZATION-GRANTED-LATEST.json"
+  ],
+  "owner_options": {
+    "A": {
+      "label": "Full sync · 8 cells",
+      "recommended": true
+    },
+    "B": {
+      "label": "Partial sync · owner-specified subset"
+    },
+    "C": {
+      "label": "Reject · defer to Phase 2 human HAT retest"
+    }
+  },
+  "expected_gate_impact": {
+    "hat_blocking_before": 35,
+    "hat_blocking_after_estimate": 27,
+    "TT_PRODUCTION_ENTRY_READY": "NO_GO"
+  },
+  "explicit_non_goals": [
+    "No retest",
+    "No business logic change",
+    "No staging data change",
+    "No TT_SPRINT_B ACTIVE",
+    "No new Open RC",
+    "No REDEFINE"
+  ]
+}

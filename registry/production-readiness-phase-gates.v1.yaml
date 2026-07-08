@@ -1,0 +1,65 @@
+# Production Readiness · Phase B Gates
+# 进入下一阶段须满足上一 Gate · 与 Evidence 绑定
+
+schema: traveltrust.production_readiness_phase_gates.v1
+version: 2
+effective_utc: "2026-07-07"
+machine_key: TT_PRODUCTION_READINESS_PHASE_GATES
+
+gates:
+  - id: business_data_readiness
+    label: Business Data Readiness
+    exit_verdict: READY
+    current: NOT_READY
+    enter_next: hat
+    domains:
+      - { id: guide, label: Guide, ready: false, step1_day: 1 }
+      - { id: provider, label: Provider, ready: false, step1_day: 2 }
+      - { id: listings, label: Listings, ready: false, step1_day: 3 }
+      - { id: poi, label: POI, ready: false, step1_day: 4 }
+      - { id: pricing, label: Pricing, ready: false, step1_day: 5 }
+    overall_rule: 五域全部 ready → READY
+
+  - id: hat
+    label: HAT
+    exit_verdict: PASS
+    current: NOT_STARTED
+    enter_condition: business_data_readiness = READY
+    enter_next: business_flow_matrix
+
+  - id: business_flow_matrix
+    label: Business Flow Matrix
+    exit_verdict: PASS
+    current: NOT_STARTED
+    enter_condition: hat = PASS
+    enter_next: manual_validation
+
+  - id: manual_validation
+    label: Manual Validation
+    exit_verdict: PASS
+    current: NOT_STARTED
+    enter_condition: business_flow_matrix = PASS
+    enter_next: production_entry
+
+  - id: production_entry
+    label: Production Entry
+    exit_verdict: GO
+    current: NOT_STARTED
+    enter_condition: manual_validation = PASS
+    machine_key: TT_PRODUCTION_ENTRY_READY
+    hard_gate:
+      verdict_yes: YES
+      verdict_no: NO_GO
+      requires_all:
+        business_data_readiness: READY
+        hat: PASS
+        business_flow_matrix: PASS
+        manual_validation: PASS
+        open_root_causes: 0
+      rule: 全部满足 → TT_PRODUCTION_ENTRY_READY=YES · 否则 NO_GO · 不依赖主观判断
+
+chain: >-
+  Business Data READY → HAT PASS → Business Flow PASS → Manual Validation PASS
+  → Open Root Causes=0 → TT_PRODUCTION_ENTRY_READY=YES
+
+evidence_script: scripts/dev/run-production-readiness-master-checklist.cjs

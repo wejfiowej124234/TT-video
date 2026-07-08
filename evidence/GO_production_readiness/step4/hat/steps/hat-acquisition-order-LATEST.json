@@ -1,0 +1,57 @@
+{
+  "schema": "traveltrust.hat_human_validation_step.v1",
+  "role": "acquisition",
+  "step_id": "order",
+  "order": 4,
+  "label": "下单",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T01:42:24.150Z",
+  "validator": "Cursor Agent · HAT Human Queue · Acquisition",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "bfm_session_c_ref": "evidence/GO_production_readiness/step3/bfm/BFM-ACQUISITION-FLOW-LATEST.json",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "action": "Owner publish listing + carrier respond/accept",
+      "listing_id": "3842f57f-5f03-4c65-9d26-f31ccdc1a045",
+      "order_id": "15d2051c-1b96-4013-82b6-06d961e3db45",
+      "bfm_steps": [
+        "publish",
+        "respond"
+      ]
+    },
+    "api": {
+      "verdict": "PASS",
+      "publish": {
+        "verdict": "PASS",
+        "publish_bond": 200,
+        "publish_listing": 200,
+        "listing_id": "3842f57f-5f03-4c65-9d26-f31ccdc1a045"
+      },
+      "respond": {
+        "verdict": "PASS",
+        "respond": 200,
+        "accept": 200,
+        "order_id": "15d2051c-1b96-4013-82b6-06d961e3db45"
+      }
+    },
+    "database": {
+      "verdict": "PASS",
+      "listing_id": "3842f57f-5f03-4c65-9d26-f31ccdc1a045",
+      "order_id": "15d2051c-1b96-4013-82b6-06d961e3db45",
+      "order_status": "accepted"
+    },
+    "page": {
+      "verdict": "PASS",
+      "route": "/escrow/15d2051c-1b96-4013-82b6-06d961e3db45",
+      "has_order_detail": true
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "accepted",
+      "order_id": "15d2051c-1b96-4013-82b6-06d961e3db45"
+    }
+  },
+  "TT_SPRINT_B_ACTIVE": false
+}

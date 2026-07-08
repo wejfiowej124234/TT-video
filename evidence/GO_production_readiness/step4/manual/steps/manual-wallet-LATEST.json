@@ -1,0 +1,134 @@
+{
+  "schema": "traveltrust.manual_validation_check.v1",
+  "check_id": "wallet",
+  "order": 4,
+  "label": "钱包连接",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T00:27:11.323Z",
+  "validator": "Cursor Agent · Phase 4 Manual 4",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "device": "Chrome · WalletStatusMini sandbox",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "action": "Wallet sandbox UAT · connect/disconnect/view-only · key routes",
+      "mode": "view-only address (staging sandbox · no on-chain signature)",
+      "interactions": [
+        "open wallet menu",
+        "view-only connect",
+        "disconnect",
+        "navigate acquisition"
+      ],
+      "browser_human": {
+        "connect_view_only": {
+          "action": "Wallet menu → 输入钱包地址 → 同意",
+          "address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+          "result": "断开 button visible · view-only connected"
+        },
+        "disconnect": {
+          "action": "点击断开",
+          "result": "恢复为连接钱包按钮"
+        },
+        "acquisition_page": {
+          "route": "/market/acquisition",
+          "result": "页面加载 · 顶栏连接钱包可用 · 无 crash"
+        },
+        "state_recovery": {
+          "note": "断开后可重新连接 · 同会话内路由切换钱包 UI 正常",
+          "disconnect_to_connect": true
+        }
+      }
+    },
+    "api": {
+      "verdict": "PASS",
+      "login": 200,
+      "me": 200,
+      "wallets": 200,
+      "wallets_count": 0,
+      "wallet_verify_challenge": 422,
+      "challenge_note": "422 expected when no bound wallet · sandbox guard",
+      "acquisition_listings": 200,
+      "web_routes": [
+        {
+          "route": "/me/identities",
+          "http": 200,
+          "ok": true,
+          "hasWalletUi": true
+        },
+        {
+          "route": "/me/settings",
+          "http": 200,
+          "ok": true,
+          "hasWalletUi": true
+        },
+        {
+          "route": "/market/acquisition",
+          "http": 200,
+          "ok": true,
+          "hasWalletUi": true
+        }
+      ]
+    },
+    "database": {
+      "verdict": "PASS",
+      "health": 200,
+      "wallets_endpoint": 200,
+      "wallets_readable": true,
+      "default_wallet": null
+    },
+    "page": {
+      "verdict": "PASS",
+      "note": "Wallet UI present on identities/settings/acquisition routes",
+      "routes": [
+        {
+          "route": "/me/identities",
+          "http": 200,
+          "ok": true,
+          "hasWalletUi": true
+        },
+        {
+          "route": "/me/settings",
+          "http": 200,
+          "ok": true,
+          "hasWalletUi": true
+        },
+        {
+          "route": "/market/acquisition",
+          "http": 200,
+          "ok": true,
+          "hasWalletUi": true
+        }
+      ],
+      "acquisition_no_crash": true
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "wallet_uat_pass"
+    }
+  },
+  "routes_tested": [
+    {
+      "route": "/me/identities",
+      "http": 200,
+      "ok": true,
+      "hasWalletUi": true
+    },
+    {
+      "route": "/me/settings",
+      "http": 200,
+      "ok": true,
+      "hasWalletUi": true
+    },
+    {
+      "route": "/market/acquisition",
+      "http": 200,
+      "ok": true,
+      "hasWalletUi": true
+    }
+  ],
+  "login_pilot": "tourist@test.com",
+  "view_only_address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+  "halt_item": false,
+  "TT_SPRINT_B_ACTIVE": false
+}

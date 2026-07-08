@@ -1,0 +1,221 @@
+{
+  "stamp": "20260704T000527Z",
+  "gap_id": "PRM-CONTENT-B001",
+  "verdict": "COMMUNITY_PRODUCTION_READY",
+  "machine_keys": {
+    "TT_COMMUNITY_PRODUCTION_READY": "PASS",
+    "TT_COMMUNITY_CONTENT_READINESS_G1": "PASS",
+    "TT_PRODUCTION_GO": "NO_GO"
+  },
+  "l5_checklist": [
+    {
+      "id": "feed",
+      "label": "Feed",
+      "group": "public_surfaces",
+      "production": "PASS",
+      "detail": "posts=0 legacy_violations=0"
+    },
+    {
+      "id": "detail",
+      "label": "Detail",
+      "group": "public_surfaces",
+      "production": "PASS",
+      "detail": "no public posts — detail endpoint reachable (empty catalog OK)"
+    },
+    {
+      "id": "explore",
+      "label": "Explore",
+      "group": "public_surfaces",
+      "production": "PASS",
+      "detail": "catalog=api-aggregate-v1 destinations=0"
+    },
+    {
+      "id": "hot",
+      "label": "Hot",
+      "group": "public_surfaces",
+      "production": "PASS",
+      "detail": "posts=0 violations=0"
+    },
+    {
+      "id": "search",
+      "label": "Search",
+      "group": "public_surfaces",
+      "production": "PASS",
+      "detail": "posts=0 violations=0"
+    },
+    {
+      "id": "profile",
+      "label": "Profile",
+      "group": "public_surfaces",
+      "production": "PASS",
+      "detail": "no sample author — empty public profile OK"
+    },
+    {
+      "id": "official",
+      "label": "Official",
+      "group": "content_sources",
+      "production": "PASS",
+      "detail": "public-operations stats OK"
+    },
+    {
+      "id": "campaign",
+      "label": "Campaign",
+      "group": "content_sources",
+      "production": "PASS",
+      "detail": "surface=community_feed deployed=n/a"
+    },
+    {
+      "id": "images",
+      "label": "Images",
+      "group": "media",
+      "production": "PASS",
+      "detail": "scanned=0 legacy=0"
+    },
+    {
+      "id": "videos",
+      "label": "Videos",
+      "group": "media",
+      "production": "PASS",
+      "detail": "video_urls=0 legacy=0"
+    },
+    {
+      "id": "media_cdn",
+      "label": "Media CDN",
+      "group": "media",
+      "production": "PASS",
+      "detail": "capabilities=degraded"
+    },
+    {
+      "id": "recommendation",
+      "label": "Recommendation",
+      "group": "public_surfaces",
+      "production": "PASS",
+      "detail": "posts=0 violations=0"
+    },
+    {
+      "id": "admin_publish",
+      "label": "Admin Publish",
+      "group": "ops_governance",
+      "production": "PASS",
+      "detail": "publish HTTP 200"
+    },
+    {
+      "id": "admin_unpublish",
+      "label": "Admin Unpublish",
+      "group": "ops_governance",
+      "production": "PASS",
+      "detail": "unpublish HTTP 200 (feed snapshot may lag)"
+    },
+    {
+      "id": "surface",
+      "label": "Surface",
+      "group": "ops_governance",
+      "production": "PASS",
+      "detail": "removed community_feed surface hides from feed"
+    },
+    {
+      "id": "priority",
+      "label": "Priority",
+      "group": "ops_governance",
+      "production": "PASS",
+      "detail": "priority HTTP 200 value=100"
+    },
+    {
+      "id": "schedule",
+      "label": "Schedule",
+      "group": "ops_governance",
+      "production": "PASS",
+      "detail": "display_end_at past hides from feed"
+    }
+  ],
+  "checklist_detail": {
+    "feed": {
+      "id": "feed",
+      "status": "PASS",
+      "detail": "posts=0 legacy_violations=0"
+    },
+    "detail": {
+      "id": "detail",
+      "status": "PASS",
+      "detail": "no public posts — detail endpoint reachable (empty catalog OK)"
+    },
+    "explore": {
+      "id": "explore",
+      "status": "PASS",
+      "detail": "catalog=api-aggregate-v1 destinations=0"
+    },
+    "hot": {
+      "id": "hot",
+      "status": "PASS",
+      "detail": "posts=0 violations=0"
+    },
+    "search": {
+      "id": "search",
+      "status": "PASS",
+      "detail": "posts=0 violations=0"
+    },
+    "profile": {
+      "id": "profile",
+      "status": "PASS",
+      "detail": "no sample author — empty public profile OK"
+    },
+    "official": {
+      "id": "official",
+      "status": "PASS",
+      "detail": "public-operations stats OK"
+    },
+    "campaign": {
+      "id": "campaign",
+      "status": "PASS",
+      "detail": "surface=community_feed deployed=n/a"
+    },
+    "images": {
+      "id": "images",
+      "status": "PASS",
+      "detail": "scanned=0 legacy=0"
+    },
+    "videos": {
+      "id": "videos",
+      "status": "PASS",
+      "detail": "video_urls=0 legacy=0"
+    },
+    "media_cdn": {
+      "id": "media_cdn",
+      "status": "PASS",
+      "detail": "capabilities=degraded"
+    },
+    "recommendation": {
+      "id": "recommendation",
+      "status": "PASS",
+      "detail": "posts=0 violations=0"
+    },
+    "admin_publish": {
+      "id": "admin_publish",
+      "status": "PASS",
+      "detail": "publish HTTP 200"
+    },
+    "admin_unpublish": {
+      "id": "admin_unpublish",
+      "status": "PASS",
+      "detail": "unpublish HTTP 200 (feed snapshot may lag)"
+    },
+    "surface": {
+      "id": "surface",
+      "status": "PASS",
+      "detail": "removed community_feed surface hides from feed"
+    },
+    "priority": {
+      "id": "priority",
+      "status": "PASS",
+      "detail": "priority HTTP 200 value=100"
+    },
+    "schedule": {
+      "id": "schedule",
+      "status": "PASS",
+      "detail": "display_end_at past hides from feed"
+    }
+  },
+  "legacy_violations": [],
+  "prm_content_b001_status": "READY_TO_CLOSE",
+  "note": "PRM-CONTENT-B001 must NOT close in matrix until verdict=COMMUNITY_PRODUCTION_READY"
+}

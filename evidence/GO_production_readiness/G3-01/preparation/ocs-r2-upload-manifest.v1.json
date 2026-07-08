@@ -1,0 +1,549 @@
+{
+  "schema": "traveltrust.g3_ocs_r2_upload_manifest.v1",
+  "baseline": "Official Asset Baseline V1",
+  "bucket": "traveltrust-community-media",
+  "prefix": "official-cold-start/v1",
+  "cache_control": "public, max-age=31536000, immutable",
+  "objects": [
+    {
+      "asset_id": "ocs/tokyo-photo/guide-avatar",
+      "filename": "ocs-tokyo-photo-guide-avatar.jpg",
+      "r2_key": "official-cold-start/v1/ocs-tokyo-photo-guide-avatar.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-tokyo-photo-guide-avatar.jpg",
+      "local_source": "data/official-cold-start/media/ocs-tokyo-photo-guide-avatar.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/tokyo-photo/provider-cover",
+      "filename": "ocs-tokyo-photo-provider-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-tokyo-photo-provider-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-tokyo-photo-provider-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-tokyo-photo-provider-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/tokyo-photo/acquisition-cover",
+      "filename": "ocs-tokyo-photo-acquisition-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-tokyo-photo-acquisition-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-tokyo-photo-acquisition-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-tokyo-photo-acquisition-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/tokyo-photo/official-guide-cover",
+      "filename": "ocs-tokyo-photo-official-guide-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-tokyo-photo-official-guide-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/tokyo-photo/community-cover",
+      "filename": "ocs-tokyo-photo-community-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-tokyo-photo-community-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-tokyo-photo-community-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-tokyo-photo-community-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/tokyo-photo/community-media",
+      "filename": "ocs-tokyo-photo-community-media.jpg",
+      "r2_key": "official-cold-start/v1/ocs-tokyo-photo-community-media.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-tokyo-photo-community-media.jpg",
+      "local_source": "data/official-cold-start/media/ocs-tokyo-photo-community-media.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/kyoto-culture/guide-avatar",
+      "filename": "ocs-kyoto-culture-guide-avatar.jpg",
+      "r2_key": "official-cold-start/v1/ocs-kyoto-culture-guide-avatar.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-kyoto-culture-guide-avatar.jpg",
+      "local_source": "data/official-cold-start/media/ocs-kyoto-culture-guide-avatar.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/kyoto-culture/provider-cover",
+      "filename": "ocs-kyoto-culture-provider-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-kyoto-culture-provider-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-kyoto-culture-provider-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-kyoto-culture-provider-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/kyoto-culture/acquisition-cover",
+      "filename": "ocs-kyoto-culture-acquisition-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-kyoto-culture-acquisition-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-kyoto-culture-acquisition-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-kyoto-culture-acquisition-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/kyoto-culture/official-guide-cover",
+      "filename": "ocs-kyoto-culture-official-guide-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-kyoto-culture-official-guide-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-kyoto-culture-official-guide-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-kyoto-culture-official-guide-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/kyoto-culture/community-cover",
+      "filename": "ocs-kyoto-culture-community-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-kyoto-culture-community-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-kyoto-culture-community-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-kyoto-culture-community-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/kyoto-culture/community-media",
+      "filename": "ocs-kyoto-culture-community-media.jpg",
+      "r2_key": "official-cold-start/v1/ocs-kyoto-culture-community-media.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-kyoto-culture-community-media.jpg",
+      "local_source": "data/official-cold-start/media/ocs-kyoto-culture-community-media.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/seoul-food/guide-avatar",
+      "filename": "ocs-seoul-food-guide-avatar.jpg",
+      "r2_key": "official-cold-start/v1/ocs-seoul-food-guide-avatar.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-seoul-food-guide-avatar.jpg",
+      "local_source": "data/official-cold-start/media/ocs-seoul-food-guide-avatar.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/seoul-food/provider-cover",
+      "filename": "ocs-seoul-food-provider-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-seoul-food-provider-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-seoul-food-provider-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-seoul-food-provider-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/seoul-food/acquisition-cover",
+      "filename": "ocs-seoul-food-acquisition-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-seoul-food-acquisition-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-seoul-food-acquisition-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-seoul-food-acquisition-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/seoul-food/official-guide-cover",
+      "filename": "ocs-seoul-food-official-guide-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-seoul-food-official-guide-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-seoul-food-official-guide-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-seoul-food-official-guide-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/seoul-food/community-cover",
+      "filename": "ocs-seoul-food-community-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-seoul-food-community-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-seoul-food-community-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-seoul-food-community-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/seoul-food/community-media",
+      "filename": "ocs-seoul-food-community-media.jpg",
+      "r2_key": "official-cold-start/v1/ocs-seoul-food-community-media.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-seoul-food-community-media.jpg",
+      "local_source": "data/official-cold-start/media/ocs-seoul-food-community-media.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/bangkok-temple/guide-avatar",
+      "filename": "ocs-bangkok-temple-guide-avatar.jpg",
+      "r2_key": "official-cold-start/v1/ocs-bangkok-temple-guide-avatar.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-bangkok-temple-guide-avatar.jpg",
+      "local_source": "data/official-cold-start/media/ocs-bangkok-temple-guide-avatar.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/bangkok-temple/provider-cover",
+      "filename": "ocs-bangkok-temple-provider-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-bangkok-temple-provider-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-bangkok-temple-provider-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-bangkok-temple-provider-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/bangkok-temple/acquisition-cover",
+      "filename": "ocs-bangkok-temple-acquisition-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-bangkok-temple-acquisition-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-bangkok-temple-acquisition-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-bangkok-temple-acquisition-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/bangkok-temple/official-guide-cover",
+      "filename": "ocs-bangkok-temple-official-guide-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-bangkok-temple-official-guide-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-bangkok-temple-official-guide-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-bangkok-temple-official-guide-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/bangkok-temple/community-cover",
+      "filename": "ocs-bangkok-temple-community-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-bangkok-temple-community-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-bangkok-temple-community-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-bangkok-temple-community-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/bangkok-temple/community-media",
+      "filename": "ocs-bangkok-temple-community-media.jpg",
+      "r2_key": "official-cold-start/v1/ocs-bangkok-temple-community-media.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-bangkok-temple-community-media.jpg",
+      "local_source": "data/official-cold-start/media/ocs-bangkok-temple-community-media.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/singapore-family/guide-avatar",
+      "filename": "ocs-singapore-family-guide-avatar.jpg",
+      "r2_key": "official-cold-start/v1/ocs-singapore-family-guide-avatar.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-singapore-family-guide-avatar.jpg",
+      "local_source": "data/official-cold-start/media/ocs-singapore-family-guide-avatar.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/singapore-family/provider-cover",
+      "filename": "ocs-singapore-family-provider-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-singapore-family-provider-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-singapore-family-provider-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-singapore-family-provider-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/singapore-family/acquisition-cover",
+      "filename": "ocs-singapore-family-acquisition-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-singapore-family-acquisition-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-singapore-family-acquisition-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-singapore-family-acquisition-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/singapore-family/official-guide-cover",
+      "filename": "ocs-singapore-family-official-guide-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-singapore-family-official-guide-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-singapore-family-official-guide-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-singapore-family-official-guide-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/singapore-family/community-cover",
+      "filename": "ocs-singapore-family-community-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-singapore-family-community-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-singapore-family-community-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-singapore-family-community-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/singapore-family/community-media",
+      "filename": "ocs-singapore-family-community-media.jpg",
+      "r2_key": "official-cold-start/v1/ocs-singapore-family-community-media.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-singapore-family-community-media.jpg",
+      "local_source": "data/official-cold-start/media/ocs-singapore-family-community-media.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/paris-art/guide-avatar",
+      "filename": "ocs-paris-art-guide-avatar.jpg",
+      "r2_key": "official-cold-start/v1/ocs-paris-art-guide-avatar.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-paris-art-guide-avatar.jpg",
+      "local_source": "data/official-cold-start/media/ocs-paris-art-guide-avatar.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/paris-art/provider-cover",
+      "filename": "ocs-paris-art-provider-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-paris-art-provider-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-paris-art-provider-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-paris-art-provider-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/paris-art/acquisition-cover",
+      "filename": "ocs-paris-art-acquisition-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-paris-art-acquisition-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-paris-art-acquisition-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-paris-art-acquisition-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/paris-art/official-guide-cover",
+      "filename": "ocs-paris-art-official-guide-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-paris-art-official-guide-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-paris-art-official-guide-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-paris-art-official-guide-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/paris-art/community-cover",
+      "filename": "ocs-paris-art-community-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-paris-art-community-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-paris-art-community-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-paris-art-community-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/paris-art/community-media",
+      "filename": "ocs-paris-art-community-media.jpg",
+      "r2_key": "official-cold-start/v1/ocs-paris-art-community-media.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-paris-art-community-media.jpg",
+      "local_source": "data/official-cold-start/media/ocs-paris-art-community-media.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/nyc-skyline/guide-avatar",
+      "filename": "ocs-nyc-skyline-guide-avatar.jpg",
+      "r2_key": "official-cold-start/v1/ocs-nyc-skyline-guide-avatar.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-nyc-skyline-guide-avatar.jpg",
+      "local_source": "data/official-cold-start/media/ocs-nyc-skyline-guide-avatar.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/nyc-skyline/provider-cover",
+      "filename": "ocs-nyc-skyline-provider-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-nyc-skyline-provider-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-nyc-skyline-provider-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-nyc-skyline-provider-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/nyc-skyline/acquisition-cover",
+      "filename": "ocs-nyc-skyline-acquisition-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-nyc-skyline-acquisition-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-nyc-skyline-acquisition-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-nyc-skyline-acquisition-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/nyc-skyline/official-guide-cover",
+      "filename": "ocs-nyc-skyline-official-guide-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-nyc-skyline-official-guide-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-nyc-skyline-official-guide-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-nyc-skyline-official-guide-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/nyc-skyline/community-cover",
+      "filename": "ocs-nyc-skyline-community-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-nyc-skyline-community-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-nyc-skyline-community-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-nyc-skyline-community-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/nyc-skyline/community-media",
+      "filename": "ocs-nyc-skyline-community-media.jpg",
+      "r2_key": "official-cold-start/v1/ocs-nyc-skyline-community-media.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-nyc-skyline-community-media.jpg",
+      "local_source": "data/official-cold-start/media/ocs-nyc-skyline-community-media.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/sydney-coast/guide-avatar",
+      "filename": "ocs-sydney-coast-guide-avatar.jpg",
+      "r2_key": "official-cold-start/v1/ocs-sydney-coast-guide-avatar.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-sydney-coast-guide-avatar.jpg",
+      "local_source": "data/official-cold-start/media/ocs-sydney-coast-guide-avatar.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/sydney-coast/provider-cover",
+      "filename": "ocs-sydney-coast-provider-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-sydney-coast-provider-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-sydney-coast-provider-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-sydney-coast-provider-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/sydney-coast/acquisition-cover",
+      "filename": "ocs-sydney-coast-acquisition-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-sydney-coast-acquisition-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-sydney-coast-acquisition-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-sydney-coast-acquisition-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/sydney-coast/official-guide-cover",
+      "filename": "ocs-sydney-coast-official-guide-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-sydney-coast-official-guide-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-sydney-coast-official-guide-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-sydney-coast-official-guide-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/sydney-coast/community-cover",
+      "filename": "ocs-sydney-coast-community-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-sydney-coast-community-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-sydney-coast-community-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-sydney-coast-community-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/sydney-coast/community-media",
+      "filename": "ocs-sydney-coast-community-media.jpg",
+      "r2_key": "official-cold-start/v1/ocs-sydney-coast-community-media.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-sydney-coast-community-media.jpg",
+      "local_source": "data/official-cold-start/media/ocs-sydney-coast-community-media.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/barcelona-arch/guide-avatar",
+      "filename": "ocs-barcelona-arch-guide-avatar.jpg",
+      "r2_key": "official-cold-start/v1/ocs-barcelona-arch-guide-avatar.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-barcelona-arch-guide-avatar.jpg",
+      "local_source": "data/official-cold-start/media/ocs-barcelona-arch-guide-avatar.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/barcelona-arch/provider-cover",
+      "filename": "ocs-barcelona-arch-provider-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-barcelona-arch-provider-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-barcelona-arch-provider-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-barcelona-arch-provider-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/barcelona-arch/acquisition-cover",
+      "filename": "ocs-barcelona-arch-acquisition-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-barcelona-arch-acquisition-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-barcelona-arch-acquisition-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-barcelona-arch-acquisition-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/barcelona-arch/official-guide-cover",
+      "filename": "ocs-barcelona-arch-official-guide-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-barcelona-arch-official-guide-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-barcelona-arch-official-guide-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-barcelona-arch-official-guide-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/barcelona-arch/community-cover",
+      "filename": "ocs-barcelona-arch-community-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-barcelona-arch-community-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-barcelona-arch-community-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-barcelona-arch-community-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/barcelona-arch/community-media",
+      "filename": "ocs-barcelona-arch-community-media.jpg",
+      "r2_key": "official-cold-start/v1/ocs-barcelona-arch-community-media.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-barcelona-arch-community-media.jpg",
+      "local_source": "data/official-cold-start/media/ocs-barcelona-arch-community-media.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/dubai-luxury/guide-avatar",
+      "filename": "ocs-dubai-luxury-guide-avatar.jpg",
+      "r2_key": "official-cold-start/v1/ocs-dubai-luxury-guide-avatar.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-dubai-luxury-guide-avatar.jpg",
+      "local_source": "data/official-cold-start/media/ocs-dubai-luxury-guide-avatar.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/dubai-luxury/provider-cover",
+      "filename": "ocs-dubai-luxury-provider-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-dubai-luxury-provider-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-dubai-luxury-provider-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-dubai-luxury-provider-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/dubai-luxury/acquisition-cover",
+      "filename": "ocs-dubai-luxury-acquisition-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-dubai-luxury-acquisition-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-dubai-luxury-acquisition-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-dubai-luxury-acquisition-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/dubai-luxury/official-guide-cover",
+      "filename": "ocs-dubai-luxury-official-guide-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-dubai-luxury-official-guide-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-dubai-luxury-official-guide-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-dubai-luxury-official-guide-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/dubai-luxury/community-cover",
+      "filename": "ocs-dubai-luxury-community-cover.jpg",
+      "r2_key": "official-cold-start/v1/ocs-dubai-luxury-community-cover.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-dubai-luxury-community-cover.jpg",
+      "local_source": "data/official-cold-start/media/ocs-dubai-luxury-community-cover.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    },
+    {
+      "asset_id": "ocs/dubai-luxury/community-media",
+      "filename": "ocs-dubai-luxury-community-media.jpg",
+      "r2_key": "official-cold-start/v1/ocs-dubai-luxury-community-media.jpg",
+      "cdn_url": "https://cdn.traveltrust.app/official-cold-start/v1/ocs-dubai-luxury-community-media.jpg",
+      "local_source": "data/official-cold-start/media/ocs-dubai-luxury-community-media.jpg",
+      "mime": "image/jpeg",
+      "content_length_expected": null
+    }
+  ]
+}

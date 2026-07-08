@@ -1,0 +1,26 @@
+{
+  "schema": "traveltrust.guide_business_data_probe.v3",
+  "recorded_at_utc": "2026-07-07T14:23:59.927Z",
+  "check_id": "availability",
+  "label": "Availability",
+  "ssot": "API",
+  "probe": "GET /api/v1/guides/:id/availability",
+  "api": "https://tt-api-staging.fly.dev",
+  "exit_condition": "可预约且 HAT Guide 下单 PASS",
+  "verdict": "PASS",
+  "root_cause": null,
+  "cascade_from": null,
+  "attribution": null,
+  "fail_reasons": [],
+  "warn_reasons": [],
+  "warn_classification": {
+    "C": [],
+    "D": [],
+    "P": []
+  },
+  "detail": {
+    "fail": [],
+    "warn": []
+  },
+  "TT_GUIDE_PROBE": "PASS"
+}

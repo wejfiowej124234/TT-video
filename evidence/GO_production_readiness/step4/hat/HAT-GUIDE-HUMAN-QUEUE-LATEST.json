@@ -1,0 +1,41 @@
+{
+  "schema": "traveltrust.hat_guide_human_queue.v1",
+  "recorded_at_utc": "2026-07-08T01:45:10.208Z",
+  "role": "guide",
+  "verdict": "PASS",
+  "steps_synced": [
+    "register",
+    "login",
+    "browse",
+    "logout"
+  ],
+  "steps_preclosed": [
+    "order",
+    "pay",
+    "complete"
+  ],
+  "steps": [
+    {
+      "step_id": "register",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "login",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "browse",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "logout",
+      "verdict": "PASS"
+    }
+  ],
+  "discipline": {
+    "no_code_change": true,
+    "no_staging_config_change": true,
+    "no_business_data_mutation": true,
+    "TT_SPRINT_B_ACTIVE": false
+  }
+}

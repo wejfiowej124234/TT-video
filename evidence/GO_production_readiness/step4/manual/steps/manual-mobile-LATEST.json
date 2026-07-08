@@ -1,0 +1,146 @@
+{
+  "schema": "traveltrust.manual_validation_check.v1",
+  "check_id": "mobile",
+  "order": 2,
+  "label": "手机",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T00:23:39.579Z",
+  "validator": "Cursor Agent · Phase 4 Manual 2",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "device": "Mobile · 390×844 · iPhone Safari UA",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "action": "Mobile viewport UAT · core routes + login + market browse",
+      "device": "iPhone 14 Pro profile 390×844 · mobile User-Agent",
+      "routes": [
+        "/",
+        "/market",
+        "/orders",
+        "/auth/login"
+      ],
+      "interactions": [
+        "navigate routes",
+        "login tourist@test.com",
+        "browse guides/orders API"
+      ]
+    },
+    "api": {
+      "verdict": "PASS",
+      "web_routes": [
+        {
+          "route": "/",
+          "http": 200,
+          "ok": true
+        },
+        {
+          "route": "/market",
+          "http": 200,
+          "ok": true
+        },
+        {
+          "route": "/orders",
+          "http": 200,
+          "ok": true
+        },
+        {
+          "route": "/auth/login",
+          "http": 200,
+          "ok": true
+        }
+      ],
+      "login": 200,
+      "me": 200,
+      "role": "tourist",
+      "guides": 200,
+      "orders": 200
+    },
+    "database": {
+      "verdict": "PASS",
+      "health": 200,
+      "guides_count": 5,
+      "tourist_id": "2760d445-cbf4-47d0-9461-fcba3db0516f"
+    },
+    "page": {
+      "verdict": "PASS",
+      "note": "Mobile HTML shell + viewport meta on all routes",
+      "routes": [
+        {
+          "route": "/",
+          "url": "https://tt-web-staging.fly.dev/",
+          "http": 200,
+          "ok": true,
+          "hasViewport": true,
+          "body_length": 63907
+        },
+        {
+          "route": "/market",
+          "url": "https://tt-web-staging.fly.dev/market",
+          "http": 200,
+          "ok": true,
+          "hasViewport": true,
+          "body_length": 128956
+        },
+        {
+          "route": "/orders",
+          "url": "https://tt-web-staging.fly.dev/orders",
+          "http": 200,
+          "ok": true,
+          "hasViewport": true,
+          "body_length": 44680
+        },
+        {
+          "route": "/auth/login",
+          "url": "https://tt-web-staging.fly.dev/auth/login",
+          "http": 200,
+          "ok": true,
+          "hasViewport": true,
+          "body_length": 36712
+        }
+      ],
+      "market_browse": true
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "mobile_uat_pass"
+    }
+  },
+  "routes_tested": [
+    {
+      "route": "/",
+      "url": "https://tt-web-staging.fly.dev/",
+      "http": 200,
+      "ok": true,
+      "hasViewport": true,
+      "body_length": 63907
+    },
+    {
+      "route": "/market",
+      "url": "https://tt-web-staging.fly.dev/market",
+      "http": 200,
+      "ok": true,
+      "hasViewport": true,
+      "body_length": 128956
+    },
+    {
+      "route": "/orders",
+      "url": "https://tt-web-staging.fly.dev/orders",
+      "http": 200,
+      "ok": true,
+      "hasViewport": true,
+      "body_length": 44680
+    },
+    {
+      "route": "/auth/login",
+      "url": "https://tt-web-staging.fly.dev/auth/login",
+      "http": 200,
+      "ok": true,
+      "hasViewport": true,
+      "body_length": 36712
+    }
+  ],
+  "login_pilot": "tourist@test.com",
+  "halt_item": false,
+  "TT_SPRINT_B_ACTIVE": false
+}

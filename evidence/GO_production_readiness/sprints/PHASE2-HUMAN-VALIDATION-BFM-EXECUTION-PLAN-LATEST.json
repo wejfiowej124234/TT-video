@@ -1,0 +1,419 @@
+{
+  "schema": "traveltrust.phase2_bfm_human_validation_execution_plan.v1",
+  "recorded_at_utc": "2026-07-08T00:10:15.468Z",
+  "mode": "plan_only",
+  "phase": "Human Validation Track · Phase 2 · Business Flow Matrix",
+  "prerequisite": {
+    "phase1_complete": true,
+    "phase1_ref": "evidence/GO_production_readiness/sprints/PHASE1-MATRIX-EVIDENCE-SYNC-EXECUTION-LATEST.json",
+    "hat_matrix_version": 3,
+    "registry_version": 17,
+    "open_root_causes": 0
+  },
+  "discipline": {
+    "modify_bfm_matrix": false,
+    "modify_hat_matrix": false,
+    "modify_code": false,
+    "modify_staging_data": false,
+    "toggle_sprint_b_active": false,
+    "execute_human_validation": false
+  },
+  "baseline": {
+    "TT_PRODUCTION_ENTRY_READY": "NO_GO",
+    "blocking_checks": 54,
+    "blocking_by_module": {
+      "business_data_readiness": 0,
+      "hat": 27,
+      "business_flow_matrix": 17,
+      "manual_validation": 9,
+      "production_entry": 1
+    },
+    "bfm_steps_pending": 17,
+    "bfm_flows_not_started": 3
+  },
+  "ssot": {
+    "business_flow_matrix": "registry/business-flow-matrix.v1.yaml",
+    "hat_six_role_matrix": "registry/hat-six-role-matrix.v1.yaml",
+    "master_checklist": "evidence/GO_production_readiness/PRODUCTION-READINESS-MASTER-CHECKLIST-LATEST.json",
+    "parent_plan": "evidence/GO_production_readiness/sprints/PRODUCTION-ENTRY-HUMAN-VALIDATION-PLAN-LATEST.json"
+  },
+  "staging": {
+    "web": "https://tt-web-staging.fly.dev",
+    "api": "https://tt-api-staging.fly.dev",
+    "routes": {
+      "provider_market": "/market/provider",
+      "provider_onboarding": "/provider/register",
+      "acquisition_market": "/market/acquisition",
+      "acquisition_hub": "/me/identities",
+      "guide_discover": "/market"
+    },
+    "default_password": "Test123!"
+  },
+  "verification_chain": [
+    "human_click",
+    "api",
+    "database",
+    "page",
+    "final_outcome"
+  ],
+  "step_pass_rule": "All five layers consistent for the BFM step semantic",
+  "flow_pass_rule": "All steps in flow pass",
+  "matrix_pass_rule": "guide + provider + acquisition flows all pass",
+  "execution_order": [
+    {
+      "rank": 1,
+      "flow_id": "provider",
+      "label": "Provider",
+      "steps_count": 5,
+      "rationale": "BD-005 API PASS · Phase1 HAT 5 cells · shortest template",
+      "pilot": "merchant@test.com",
+      "counterparty": "tourist@test.com",
+      "api_cross_ref": "evidence/GO_production_readiness/step2/hat/SPRINT-B-PROVIDER-HAT-ORDER-LATEST.json"
+    },
+    {
+      "rank": 2,
+      "flow_id": "guide",
+      "label": "Guide",
+      "steps_count": 8,
+      "rationale": "Sprint A partial HAT · BDR Day1 READY",
+      "pilot": "guide@test.com",
+      "counterparty": "tourist@test.com",
+      "hat_cross_ref": "guide.order/pay/complete already pass in HAT v3"
+    },
+    {
+      "rank": 3,
+      "flow_id": "acquisition",
+      "label": "Acquisition",
+      "steps_count": 4,
+      "rationale": "BFM-001 pilot-owned API PASS · human NOT_EXECUTED",
+      "strategy": "fresh_user_full_chain",
+      "ocs_catalog": "optional_extension_not_blocking",
+      "api_cross_ref": "evidence/GO_production_readiness/step4/BFM-001-ACQUISITION-CHAIN-DISCOVERY-LATEST.json"
+    }
+  ],
+  "flows": [
+    {
+      "id": "provider",
+      "label": "Provider",
+      "verdict_current": "not_started",
+      "steps_pending": 5,
+      "steps": [
+        {
+          "id": "register",
+          "order": 1,
+          "human_path": "/auth/register?role=provider → /provider/register",
+          "acceptance": {
+            "human_click": "Onboarding completed or merchant approved",
+            "api": "POST /auth/register 201/200",
+            "database": "users.role=provider",
+            "page": "Provider dashboard reachable",
+            "final_outcome": "Provider identity ready"
+          },
+          "hat_cross_map": [
+            {
+              "role": "provider",
+              "cell": "register",
+              "current": "pending"
+            }
+          ],
+          "evidence_out": "evidence/GO_production_readiness/step3/bfm/steps/provider-register-LATEST.json"
+        },
+        {
+          "id": "product",
+          "order": 2,
+          "human_path": "Provider workbench create listing draft",
+          "acceptance": {
+            "api": "POST /market/provider/listings 200",
+            "database": "listings.status=draft",
+            "final_outcome": "Draft listing exists"
+          },
+          "evidence_out": "evidence/GO_production_readiness/step3/bfm/steps/provider-product-LATEST.json"
+        },
+        {
+          "id": "publish",
+          "order": 3,
+          "human_path": "/market/provider catalog visible",
+          "acceptance": {
+            "api": "GET /market/provider/listings includes production listing",
+            "page": "Listing card visible on public catalog",
+            "final_outcome": "Published listing live"
+          },
+          "hat_cross_map": [
+            {
+              "role": "provider",
+              "cell": "browse",
+              "current": "pass",
+              "action": "add_bfm_human_ref"
+            }
+          ],
+          "evidence_out": "evidence/GO_production_readiness/step3/bfm/steps/provider-publish-LATEST.json"
+        },
+        {
+          "id": "order",
+          "order": 4,
+          "human_path": "Tourist order + provider accept",
+          "acceptance": {
+            "api": "create_order + accept 200",
+            "final_outcome": "order.status=accepted"
+          },
+          "hat_cross_map": [
+            {
+              "role": "provider",
+              "cell": "order",
+              "current": "pass",
+              "action": "add_bfm_human_ref"
+            }
+          ],
+          "evidence_out": "evidence/GO_production_readiness/step3/bfm/steps/provider-order-LATEST.json"
+        },
+        {
+          "id": "complete",
+          "order": 5,
+          "human_path": "Mock pay → confirm completion",
+          "acceptance": {
+            "api": "mock_pay + confirm_completion 200",
+            "final_outcome": "order.status=completed"
+          },
+          "hat_cross_map": [
+            {
+              "role": "provider",
+              "cell": "pay",
+              "current": "pass",
+              "action": "add_bfm_human_ref"
+            },
+            {
+              "role": "provider",
+              "cell": "complete",
+              "current": "pass",
+              "action": "add_bfm_human_ref"
+            }
+          ],
+          "evidence_out": "evidence/GO_production_readiness/step3/bfm/steps/provider-complete-LATEST.json"
+        }
+      ],
+      "evidence_bundle": "evidence/GO_production_readiness/step3/bfm/BFM-PROVIDER-FLOW-LATEST.json",
+      "probe_refs_readonly": [
+        "scripts/dev/run-sprint-b-provider-hat-order-validation.cjs",
+        "scripts/dev/smoke-provider-onboarding-staging.sh"
+      ]
+    },
+    {
+      "id": "guide",
+      "label": "Guide",
+      "verdict_current": "not_started",
+      "steps_pending": 8,
+      "steps": [
+        {
+          "id": "register",
+          "order": 1,
+          "hat_cross_map": [
+            {
+              "role": "guide",
+              "cell": "register"
+            }
+          ]
+        },
+        {
+          "id": "profile",
+          "order": 2,
+          "hat_cross_map": [
+            {
+              "role": "guide",
+              "cell": "login"
+            },
+            {
+              "role": "guide",
+              "cell": "browse"
+            }
+          ]
+        },
+        {
+          "id": "review",
+          "order": 3,
+          "acceptance": {
+            "final_outcome": "guides.status=active"
+          }
+        },
+        {
+          "id": "list",
+          "order": 4,
+          "acceptance": {
+            "page": "Public guide/listing visible"
+          }
+        },
+        {
+          "id": "book",
+          "order": 5,
+          "hat_cross_map": [
+            {
+              "role": "tourist",
+              "cell": "order"
+            }
+          ]
+        },
+        {
+          "id": "order",
+          "order": 6,
+          "hat_cross_map": [
+            {
+              "role": "guide",
+              "cell": "order",
+              "current": "pass",
+              "action": "add_bfm_human_ref"
+            }
+          ]
+        },
+        {
+          "id": "complete",
+          "order": 7,
+          "hat_cross_map": [
+            {
+              "role": "guide",
+              "cell": "pay",
+              "current": "pass"
+            },
+            {
+              "role": "guide",
+              "cell": "complete",
+              "current": "pass"
+            }
+          ]
+        },
+        {
+          "id": "review_post",
+          "order": 8,
+          "acceptance": {
+            "final_outcome": "Review record persisted"
+          }
+        }
+      ],
+      "evidence_bundle": "evidence/GO_production_readiness/step3/bfm/BFM-GUIDE-FLOW-LATEST.json"
+    },
+    {
+      "id": "acquisition",
+      "label": "Acquisition",
+      "verdict_current": "not_started",
+      "steps_pending": 4,
+      "strategy": "fresh_user_full_chain",
+      "steps": [
+        {
+          "id": "publish",
+          "order": 1,
+          "human_path": "/me/identities → wallet → publish-bond → listing",
+          "hat_cross_map": [
+            {
+              "role": "acquisition",
+              "cell": "register"
+            },
+            {
+              "role": "acquisition",
+              "cell": "login"
+            },
+            {
+              "role": "acquisition",
+              "cell": "browse"
+            }
+          ]
+        },
+        {
+          "id": "respond",
+          "order": 2,
+          "hat_cross_map": [
+            {
+              "role": "acquisition",
+              "cell": "order"
+            }
+          ]
+        },
+        {
+          "id": "close_deal",
+          "order": 3,
+          "hat_cross_map": [
+            {
+              "role": "acquisition",
+              "cell": "pay"
+            }
+          ]
+        },
+        {
+          "id": "complete",
+          "order": 4,
+          "hat_cross_map": [
+            {
+              "role": "acquisition",
+              "cell": "complete"
+            }
+          ]
+        }
+      ],
+      "evidence_bundle": "evidence/GO_production_readiness/step3/bfm/BFM-ACQUISITION-FLOW-LATEST.json",
+      "probe_refs_readonly": [
+        "scripts/dev/run-bfm-001-acquisition-chain-discovery.cjs",
+        "scripts/dev/smoke-acquisition-pd009-staging.sh"
+      ],
+      "ocs_catalog_track": "optional_extension_not_blocking"
+    }
+  ],
+  "evidence_outputs": {
+    "root": "evidence/GO_production_readiness/step3/bfm",
+    "per_flow": [
+      "evidence/GO_production_readiness/step3/bfm/BFM-PROVIDER-FLOW-LATEST.json",
+      "evidence/GO_production_readiness/step3/bfm/BFM-GUIDE-FLOW-LATEST.json",
+      "evidence/GO_production_readiness/step3/bfm/BFM-ACQUISITION-FLOW-LATEST.json"
+    ],
+    "execution_record": "evidence/GO_production_readiness/sprints/PHASE2-BFM-HUMAN-VALIDATION-EXECUTION-LATEST.json",
+    "step_schema": "traveltrust.bfm_human_validation_step.v1",
+    "required_fields_per_step": [
+      "flow_id",
+      "step_id",
+      "verdict",
+      "verification_chain",
+      "recorded_at_utc",
+      "validator",
+      "staging_web",
+      "staging_api"
+    ]
+  },
+  "matrix_mapping_plan": {
+    "mode": "post_execution_owner_authorized_sync",
+    "bfm_ssot": "registry/business-flow-matrix.v1.yaml",
+    "hat_ssot": "registry/hat-six-role-matrix.v1.yaml",
+    "bfm_updates": "17 step verdicts + 3 flow verdicts",
+    "hat_collateral_estimate": "guide/acquisition/tourist cells ~8-12 additional",
+    "checklist_rerun": "scripts/dev/run-production-readiness-master-checklist.cjs"
+  },
+  "expected_gate_impact": {
+    "bfm_blocking_before": 17,
+    "bfm_blocking_after": 0,
+    "total_blocking_before": 54,
+    "total_blocking_after_estimate": "37-42",
+    "hat_blocking_after_estimate": "15-20",
+    "TT_PRODUCTION_ENTRY_READY": "NO_GO"
+  },
+  "sessions": [
+    {
+      "id": "A",
+      "flow": "provider",
+      "duration_min": "45-60"
+    },
+    {
+      "id": "B",
+      "flow": "guide",
+      "duration_min": "60-90"
+    },
+    {
+      "id": "C",
+      "flow": "acquisition",
+      "duration_min": "45-60"
+    }
+  ],
+  "explicit_non_goals": [
+    "No Matrix modify in this plan",
+    "No code change",
+    "No staging data change",
+    "No TT_SPRINT_B ACTIVE",
+    "No REDEFINE / no new Open RC",
+    "No repeat BD-005/HAT-003 fix validation as PASS basis"
+  ],
+  "next_recommended": "OWNER-PHASE2-BFM-HUMAN-VALIDATION-AUTHORIZATION-REQUEST"
+}

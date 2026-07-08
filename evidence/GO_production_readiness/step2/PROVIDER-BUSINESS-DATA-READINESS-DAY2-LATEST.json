@@ -1,0 +1,119 @@
+{
+  "schema": "traveltrust.provider_business_data_readiness_day2.v1",
+  "recorded_at_utc": "2026-07-08T00:19:07.428Z",
+  "domain": "provider",
+  "step1_day": 2,
+  "mode": "discovery_only",
+  "policy": "不修 Provider · 只 Evidence · 证明 BD-002 是否存在",
+  "verdict_enum": [
+    "PASS",
+    "WARN-C",
+    "WARN-D",
+    "WARN-P",
+    "FAIL"
+  ],
+  "ready_rule": {
+    "max_fail": 0,
+    "max_warn_d": 0,
+    "max_warn_p": 0,
+    "warn_c_blocks": false,
+    "total_checks": 6
+  },
+  "checks_total": 6,
+  "pass": 5,
+  "warn_c": 1,
+  "warn_d": 0,
+  "warn_p": 0,
+  "fail": 0,
+  "ready": "YES",
+  "TT_PROVIDER_BUSINESS_DATA_READINESS_DAY2": "READY",
+  "discovery": {
+    "sprint": "B",
+    "phase": "Discovery",
+    "evidence_ready": true,
+    "root_cause_confirmed": false,
+    "TT_SPRINT_B": "READY",
+    "TT_SPRINT_B_ACTIVE": false,
+    "entry_rule": "Evidence READY AND Root Cause CONFIRMED → TT_SPRINT_B ACTIVE",
+    "bd002_attribution": {
+      "candidate": "BD-002",
+      "status": "REJECTED",
+      "reason": "Provider Day2 全 Probe 无 FAIL · BD-002（Provider Pricing 不完整）在 staging 不成立",
+      "note": "可能为本地假设或未覆盖的 Provider 子集 · 需 HAT Provider 或 DB 子集再验证"
+    }
+  },
+  "results": [
+    {
+      "id": "profile",
+      "label": "Profile",
+      "ssot": "Market API",
+      "probe": "GET /api/v1/market/provider/listings payload",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step2/probes/provider_profile_probe.json",
+      "fail_reasons": [],
+      "warn_reasons": []
+    },
+    {
+      "id": "pricing",
+      "label": "Pricing",
+      "ssot": "Pricing API",
+      "probe": "listing.payload.priceUsdc",
+      "candidate_issue": "BD-002",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step2/probes/provider_pricing_probe.json",
+      "fail_reasons": [],
+      "warn_reasons": []
+    },
+    {
+      "id": "images",
+      "label": "Images",
+      "ssot": "CMS",
+      "probe": "HEAD cover_url",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step2/probes/provider_images_probe.json",
+      "fail_reasons": [],
+      "warn_reasons": []
+    },
+    {
+      "id": "status",
+      "label": "Status",
+      "ssot": "API",
+      "probe": "data_origin + listing id",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step2/probes/provider_status_probe.json",
+      "fail_reasons": [],
+      "warn_reasons": []
+    },
+    {
+      "id": "listings",
+      "label": "Listings",
+      "ssot": "Market API",
+      "probe": "GET list + GET :id detail",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step2/probes/provider_listings_probe.json",
+      "fail_reasons": [],
+      "warn_reasons": []
+    },
+    {
+      "id": "availability",
+      "label": "Availability",
+      "ssot": "Market",
+      "probe": "bookable fields (title+price+cover)",
+      "verdict": "WARN-C",
+      "evidence": "evidence/GO_production_readiness/step2/probes/provider_availability_probe.json",
+      "fail_reasons": [],
+      "warn_reasons": [
+        "partial_not_bookable"
+      ]
+    }
+  ],
+  "workflow": [
+    "Discovery",
+    "Evidence",
+    "Root Cause",
+    "Sprint ACTIVE",
+    "Fix",
+    "Validation",
+    "Close"
+  ]
+}

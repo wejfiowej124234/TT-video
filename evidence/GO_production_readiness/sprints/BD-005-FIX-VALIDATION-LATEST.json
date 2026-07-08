@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.bd005_fix_validation.v1",
+  "recorded_at_utc": "2026-07-07T16:04:28.323Z",
+  "issue_id": "BD-005",
+  "pilot": "merchant@test.com",
+  "pilot_guide_id": "627c8c31-3e60-480a-8cd8-f50b0d1e3145",
+  "hat_order_id": "d3b96f98-8739-433b-905e-a9c0c8fb61cb",
+  "TT_SPRINT_B_PROVIDER_HAT_ORDER": "PASS",
+  "governance_after_hat": {
+    "root_cause_confirmed": true,
+    "bd005_closed": true
+  }
+}

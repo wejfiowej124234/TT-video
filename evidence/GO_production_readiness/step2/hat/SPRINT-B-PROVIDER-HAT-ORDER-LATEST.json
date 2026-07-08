@@ -1,0 +1,93 @@
+{
+  "schema": "traveltrust.sprint_b_provider_hat_order_validation.v1",
+  "recorded_at_utc": "2026-07-07T16:04:28.323Z",
+  "sprint": "B",
+  "mode": "fix_validation",
+  "policy": "BD-005 Fix Validation · pilot merchant active guide · TT_SPRINT_B ACTIVE=false until Owner toggle",
+  "api": "https://tt-api-staging.fly.dev",
+  "accounts": {
+    "merchant": "merchant@test.com",
+    "tourist": "tourist@test.com"
+  },
+  "TT_SPRINT_B_PROVIDER_HAT_ORDER": "PASS",
+  "order_id": "d3b96f98-8739-433b-905e-a9c0c8fb61cb",
+  "chain": [
+    "create_listing",
+    "market_visible",
+    "create_order",
+    "provider_accept",
+    "mock_pay",
+    "confirm_completion"
+  ],
+  "steps": [
+    {
+      "step": "provider_auth",
+      "http": 200,
+      "role": "provider",
+      "has_active_guide": true,
+      "verdict": "PASS",
+      "detail": "role=provider guide=627c8c31-3e60-480a-8cd8-f50b0d1e3145"
+    },
+    {
+      "step": "create_listing",
+      "http": 200,
+      "listing_id": "6df19cf1-165c-40f4-a635-2cfde8746771",
+      "title": "Sprint B HAT Probe 1783440270815",
+      "verdict": "PASS",
+      "detail": "6df19cf1-165c-40f4-a635-2cfde8746771"
+    },
+    {
+      "step": "market_visible_own_listing",
+      "http": 200,
+      "listing_id": "6df19cf1-165c-40f4-a635-2cfde8746771",
+      "public_catalog_count": 10,
+      "verdict": "WARN",
+      "detail": "merchant@test.com listing filtered from public catalog (dev/smoke data_origin)"
+    },
+    {
+      "step": "market_visible_catalog",
+      "http": 200,
+      "sample_listing_id": "c6f938af-4fb6-4059-bcac-5dd3e2015655",
+      "verdict": "PASS",
+      "detail": "public provider listings=10"
+    },
+    {
+      "step": "create_order",
+      "http": 200,
+      "listing_id": "6df19cf1-165c-40f4-a635-2cfde8746771",
+      "order_id": "d3b96f98-8739-433b-905e-a9c0c8fb61cb",
+      "verdict": "PASS",
+      "detail": "d3b96f98-8739-433b-905e-a9c0c8fb61cb"
+    },
+    {
+      "step": "provider_accept",
+      "http": 200,
+      "status": "accepted",
+      "verdict": "PASS",
+      "detail": "accepted"
+    },
+    {
+      "step": "mock_pay",
+      "http": 200,
+      "status": "escrowed",
+      "verdict": "PASS",
+      "detail": "escrowed"
+    },
+    {
+      "step": "confirm_completion",
+      "http": 200,
+      "status": "completed",
+      "verdict": "PASS",
+      "detail": "completed"
+    }
+  ],
+  "bd005_attribution": {
+    "status": "CLOSE_CANDIDATE",
+    "reason": "Provider HAT 全链 PASS · BD-005 可设 root_cause_confirmed=true · CLOSED"
+  },
+  "fix_pilot": "merchant@test.com",
+  "TT_SPRINT_B": "READY",
+  "TT_SPRINT_B_ACTIVE": false,
+  "root_cause_confirmed": true,
+  "recommendation": "BD-005 Validation PASS · registry 可 CLOSED · root_cause_confirmed=true"
+}

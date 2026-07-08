@@ -1,0 +1,75 @@
+{
+  "schema": "traveltrust.hat003_fix_authorization_request.v1",
+  "recorded_at_utc": "2026-07-07T16:13:47.844Z",
+  "issue_id": "HAT-003",
+  "status": "PENDING_OWNER_FIX_AUTHORIZATION",
+  "document": "evidence/GO_production_readiness/sprints/HAT-003-FIX-AUTHORIZATION-REQUEST.md",
+  "prerequisites": {
+    "business_rule_confirmed": true,
+    "owner_decision": "OWNER-TOURIST-PERSONA-DECISION",
+    "option": "A",
+    "original_hypothesis": "REJECTED",
+    "root_cause_candidate": "staging_tourist_seed_persona_contamination"
+  },
+  "governance_current": {
+    "failure_signature_confirmed": true,
+    "business_rule_confirmed": true,
+    "root_cause_confirmed": false,
+    "fix_authorized": false
+  },
+  "proposed_fix_scope": {
+    "A": {
+      "label": "Restore tourist@test.com to tourist/traveler persona on staging; data fix only",
+      "pilot": "tourist@test.com",
+      "isolate_admin_promote_from_tourist": true,
+      "required_for_close": true
+    },
+    "B": {
+      "label": "Document/isolate Admin HAT promote target (separate account)",
+      "required_for_close": false,
+      "optional_follow_up": true
+    }
+  },
+  "forbidden_fix_paths": [
+    "modify /auth/login authentication logic",
+    "close HAT-003 on HTTP 200 alone without persona semantic PASS",
+    "retain super_admin on tourist@test.com as Tourist HAT primary account (Option B)"
+  ],
+  "on_authorize_registry_only_first": [
+    "governance.fix_authorized=true",
+    "fix_authorization.scope",
+    "fix_authorization.pilot",
+    "fix_authorization.admin_promote_target",
+    "fix_authorization.execution_boundary"
+  ],
+  "forbidden_until_authorized": [
+    "registry",
+    "staging_data",
+    "code",
+    "hat_rerun",
+    "TT_SPRINT_B_ACTIVE"
+  ],
+  "governance_on_authorize": {
+    "business_rule_confirmed": true,
+    "fix_authorized": true,
+    "root_cause_confirmed": false,
+    "rule": "Never set root_cause_confirmed=true at fix authorization; only after HAT persona Validation PASS"
+  },
+  "hat003_close_requires_validation": {
+    "login_triple_pass": true,
+    "role_in": [
+      "tourist",
+      "traveler"
+    ],
+    "admin_capabilities_deny": [
+      401,
+      403
+    ]
+  },
+  "TT_SPRINT_B": "READY",
+  "TT_SPRINT_B_ACTIVE": false,
+  "registry_fix_authorized": false,
+  "registry_updated": false,
+  "staging_data_changed": false,
+  "hat_rerun": false
+}

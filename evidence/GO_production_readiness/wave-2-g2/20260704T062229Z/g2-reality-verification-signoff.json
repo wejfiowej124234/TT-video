@@ -1,0 +1,252 @@
+{
+  "review_id": "G2-REALITY-VERIFICATION",
+  "stamp": "20260704T054535Z",
+  "fix_baseline": "evidence/GO_production_readiness/g2-reality-fix/20260704T015722Z",
+  "release_train": {
+    "gate": "G2",
+    "step": "Reality Verification",
+    "truth_sources": [
+      "evidence",
+      "matrix",
+      "registry",
+      "configuration",
+      "runtime",
+      "call_graph"
+    ],
+    "production_runtime_identity_guard": "required",
+    "configuration_truth": "required",
+    "next": "G2 Formal Acceptance",
+    "formal_blocked": false
+  },
+  "machine_keys": {
+    "TT_G2_REALITY_VERIFICATION": "COMPLETE",
+    "TT_WAVE2_FORMAL_ACCEPTANCE": "READY",
+    "TT_PRODUCTION_READINESS_G2_GATE": "IN_PROGRESS",
+    "TT_PRODUCTION_RUNTIME_IDENTITY": "PASS",
+    "TT_CONFIGURATION_TRUTH": "PASS"
+  },
+  "truth_sources": [
+    "evidence",
+    "matrix",
+    "registry",
+    "configuration",
+    "runtime",
+    "call_graph"
+  ],
+  "six_way": {
+    "evidence": true,
+    "matrix": true,
+    "registry": true,
+    "configuration": true,
+    "runtime": true,
+    "call_graph": true,
+    "production_runtime_identity": "PASS",
+    "consistent": true
+  },
+  "call_graph": {
+    "pass": true,
+    "anchors_total": 8,
+    "anchors_fail": 0,
+    "evidence": "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/call-graph-truth.json"
+  },
+  "production_runtime_identity": {
+    "pass": true,
+    "machine_key": "TT_PRODUCTION_RUNTIME_IDENTITY",
+    "matrix_gap_id": "PRM-SEC-B002",
+    "evidence": "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/production-runtime-identity/production-runtime-identity.json",
+    "meta_deployment_profile": "production"
+  },
+  "configuration_truth": {
+    "pass": true,
+    "machine_key": "TT_CONFIGURATION_TRUTH",
+    "evidence": "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/production-runtime-identity/configuration-truth.json",
+    "drifts": []
+  },
+  "platform_coverage": {
+    "pass": true,
+    "machine_key": "TT_PLATFORM_COVERAGE_AUDIT",
+    "evidence": "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/platform-coverage/platform-coverage-gate.json",
+    "actual": {
+      "runtime_identity_pct": 100,
+      "configuration_truth_pct": 100,
+      "platform_adoption_pct": 88
+    },
+    "thresholds": {
+      "runtime_identity": 100,
+      "configuration_truth": 100,
+      "platform_adoption": 100
+    }
+  },
+  "matrix_actions": {
+    "close": [
+      "PRM-SEC-B001",
+      "PRM-SEC-B002",
+      "PRM-PER-B001",
+      "PRM-MON-B001"
+    ],
+    "reopen": [],
+    "verified": [
+      "PRM-SEC-B001",
+      "PRM-SEC-B002",
+      "PRM-PER-B001",
+      "PRM-MON-B001"
+    ],
+    "verification_fail": []
+  },
+  "findings": [
+    {
+      "id": "PRM-SEC-B001",
+      "verdict": "VERIFIED",
+      "checks": {
+        "code_router_gate": true,
+        "code_middleware_prefix": true,
+        "ssot_route_count_match": true,
+        "all_internal_routes_gate_403": true,
+        "prod_internal_secret": true,
+        "fly_internal_secret": true,
+        "matrix_consistent": true
+      },
+      "matrix": {
+        "status": "CLOSED",
+        "closed_evidence": "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/security-b001",
+        "issues": []
+      },
+      "reason": "All SSOT internal routes deny without secret · code gate · Fly secret · Matrix consistent"
+    },
+    {
+      "id": "PRM-SEC-B002",
+      "alias": "Production Runtime Identity",
+      "machine_key": "TT_PRODUCTION_RUNTIME_IDENTITY",
+      "verdict": "VERIFIED",
+      "checks": {
+        "deployment_profile_fly": true,
+        "deployment_profile_meta": true,
+        "profile_alias": true,
+        "seed_off": true,
+        "community_showcase_off": true,
+        "market_showcase_off": true,
+        "demo_off": true,
+        "public_content_profile": true,
+        "matrix_consistent": true,
+        "identity_guard": true
+      },
+      "matrix": {
+        "status": "CLOSED",
+        "closed_evidence": "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/production-runtime-identity",
+        "issues": []
+      },
+      "identity": {
+        "pass": true,
+        "machine_key": "TT_PRODUCTION_RUNTIME_IDENTITY",
+        "profile": "production",
+        "deployment_profile_raw": "production",
+        "deployment_profile_meta": "production",
+        "public_content_profile": "production",
+        "checks": {
+          "deployment_profile_fly": true,
+          "deployment_profile_meta": true,
+          "profile_alias": true,
+          "seed_off": true,
+          "community_showcase_off": true,
+          "market_showcase_off": true,
+          "demo_off": true,
+          "public_content_profile": true
+        },
+        "verdict": "PASS",
+        "configuration_truth": {
+          "pass": true,
+          "target_profile": "production",
+          "machine_key": "TT_CONFIGURATION_TRUTH",
+          "layers": {
+            "registry": {
+              "deployment_profile": "production",
+              "seed": "0",
+              "community_showcase": "0",
+              "market_showcase": "0",
+              "demo": "0",
+              "public_content_profile": "production"
+            },
+            "fly_secrets": {
+              "TRAVELTRUST_DEPLOYMENT_PROFILE": "production",
+              "SEED_TEST_ACCOUNTS": "0",
+              "TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE": "0",
+              "TRAVELTRUST_MARKET_PUBLIC_SHOWCASE": "0",
+              "DID_RANK_SEED_MARKET_DEMO": ""
+            },
+            "fly_config": {
+              "PORT": "8080"
+            },
+            "env_production": {
+              "example": {
+                "TRAVELTRUST_DEPLOYMENT_PROFILE": null,
+                "SEED_TEST_ACCOUNTS": null,
+                "TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE": null,
+                "TRAVELTRUST_MARKET_PUBLIC_SHOWCASE": null,
+                "DID_RANK_SEED_MARKET_DEMO": null
+              },
+              "local_declared": [
+                "SEED_TEST_ACCOUNTS"
+              ]
+            },
+            "github_actions": {
+              "SEED_TEST_ACCOUNTS": [
+                ".github/workflows/build.yml",
+                ".github/workflows/dev-local-smoke-baseline.yml",
+                ".github/workflows/production-gate.yml"
+              ]
+            },
+            "runtime_meta": {
+              "deployment_profile": "production"
+            }
+          },
+          "drifts": [],
+          "verdict": "PASS",
+          "reason": "Configuration layers aligned with Registry and Runtime /meta"
+        },
+        "matrix_gap_id": "PRM-SEC-B002",
+        "meta_deployment_profile": "production",
+        "reason": "Production Runtime Identity + Configuration Truth verified — deployment_profile=production"
+      },
+      "reason": "Production Runtime Identity + Configuration Truth verified — deployment_profile=production"
+    },
+    {
+      "id": "PRM-PER-B001",
+      "verdict": "VERIFIED",
+      "checks": {
+        "hot_paths_ssot_covered": true,
+        "perf_summary_pass": true,
+        "prod_api_base": true,
+        "matrix_consistent": true,
+        "missing_hot_paths": []
+      },
+      "matrix": {
+        "status": "CLOSED",
+        "closed_evidence": "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/performance-b001",
+        "issues": []
+      },
+      "reason": "All hot-path SSOT endpoints sampled on prod · p95 within limits"
+    },
+    {
+      "id": "PRM-MON-B001",
+      "verdict": "VERIFIED",
+      "checks": {
+        "synthetic_health": true,
+        "synthetic_meta": true,
+        "synthetic_community": true,
+        "prom_rules": true,
+        "alert_path_no_secret_blocked": true,
+        "alert_fire_with_secret": true,
+        "incident_record_present": true,
+        "on_call_runbook": true,
+        "matrix_consistent": true
+      },
+      "matrix": {
+        "status": "CLOSED",
+        "closed_evidence": "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/monitoring-b001",
+        "issues": []
+      },
+      "reason": "Synthetic green · alert fire + incident open with secret · runbook linked"
+    }
+  ],
+  "honest_boundary": "Six-way Verification (Configuration + Call Graph + RuntimeIdentity) · Formal only when all VERIFIED · Configuration Drift auto-reopens PRM-SEC-B002"
+}

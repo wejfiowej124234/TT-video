@@ -1,0 +1,130 @@
+{
+  "date": "2026-07-08",
+  "daily_three_questions": {
+    "q1_active_sprint": {
+      "label": "Active Sprint 是什么？",
+      "sprint": "—",
+      "goal": "—",
+      "root_cause": "—",
+      "lifecycle": "OPEN"
+    },
+    "q2_closed_today": {
+      "label": "今天关闭了什么？",
+      "closed": [],
+      "summary": "—: OPEN · 未关闭 · 继续"
+    },
+    "q3_open_root_causes": {
+      "label": "Open Root Causes 是否减少？",
+      "previous": 0,
+      "current": 0,
+      "reduced": false,
+      "net": "0 → 0",
+      "progress": "NO · 继续"
+    },
+    "guide_business_data_ready": "YES"
+  },
+  "daily_delta": {
+    "date": "2026-07-08",
+    "new_root_causes": {
+      "count": 0,
+      "ids": []
+    },
+    "closed_today": {
+      "count": 0,
+      "ids": []
+    },
+    "fixed_root_causes": {
+      "count": 0,
+      "ids": []
+    },
+    "lifecycle_transitions": [],
+    "active_sprint_issue": null,
+    "active_sprint_lifecycle": null,
+    "open_root_causes": {
+      "previous": 0,
+      "current": 0,
+      "delta": 0,
+      "reduced": false,
+      "net": "0 → 0"
+    },
+    "blocking_checks": {
+      "previous": 1,
+      "current": 1,
+      "delta": 0,
+      "net": "1 → 1"
+    },
+    "interpretation": "continue_sprint"
+  },
+  "metrics": {
+    "open_root_causes": {
+      "label": "Open Root Causes",
+      "current": 0,
+      "previous": 0,
+      "delta": 0,
+      "ssot": "registry/production-readiness-open-issues.v1.yaml"
+    },
+    "blocking_checks": {
+      "label": "Blocking Checks",
+      "current": 1,
+      "previous": 1,
+      "delta": 0,
+      "by_module": {
+        "business_data_readiness": 0,
+        "hat": 0,
+        "business_flow_matrix": 0,
+        "manual_validation": 0,
+        "production_entry": 1
+      }
+    },
+    "mttc": {
+      "label": "Mean Time To Close (days)",
+      "average_mttc_days": 0.6,
+      "sample_size_closed": 7,
+      "closed": [
+        {
+          "id": "BD-001",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-07",
+          "mttc_days": 0
+        },
+        {
+          "id": "BD-004",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-07",
+          "mttc_days": 0
+        },
+        {
+          "id": "BD-002",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-07",
+          "mttc_days": 0
+        },
+        {
+          "id": "BD-005",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-08",
+          "mttc_days": 1
+        },
+        {
+          "id": "HAT-003",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-08",
+          "mttc_days": 1
+        },
+        {
+          "id": "BD-003",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-08",
+          "mttc_days": 1
+        },
+        {
+          "id": "BFM-001",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-08",
+          "mttc_days": 1
+        }
+      ],
+      "open_ages": []
+    }
+  }
+}

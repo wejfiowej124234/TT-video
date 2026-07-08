@@ -1,0 +1,37 @@
+{
+  "schema": "traveltrust.bfm_human_validation_flow.v1",
+  "session": "A",
+  "flow_id": "provider",
+  "label": "Provider",
+  "recorded_at_utc": "2026-07-08T00:12:44.441Z",
+  "validator": "Cursor Agent · Session A",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "TT_BFM_PROVIDER_FLOW": "PASS",
+  "steps": [
+    {
+      "step_id": "register",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "product",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "publish",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "order",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "complete",
+      "verdict": "PASS"
+    }
+  ],
+  "failed_step": null,
+  "halt_session": false,
+  "authorization": "evidence/GO_production_readiness/sprints/OWNER-PHASE2-BFM-HUMAN-VALIDATION-AUTHORIZATION-GRANTED-LATEST.json",
+  "TT_SPRINT_B_ACTIVE": false
+}

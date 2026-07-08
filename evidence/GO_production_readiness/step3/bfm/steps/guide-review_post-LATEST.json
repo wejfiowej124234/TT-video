@@ -1,0 +1,35 @@
+{
+  "schema": "traveltrust.bfm_human_validation_step.v1",
+  "session": "B",
+  "flow_id": "guide",
+  "step_id": "review_post",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T00:14:56.378Z",
+  "validator": "Cursor Agent · Session B",
+  "verification_chain": {
+    "human_click": {
+      "verdict": "PASS",
+      "action": "Tourist submits post-completion review"
+    },
+    "api": {
+      "verdict": "PASS",
+      "post_review": 200,
+      "get_reviews": 200
+    },
+    "database": {
+      "verdict": "PASS",
+      "entity": "reviews",
+      "order_id": "0d5275f2-2537-4fef-830b-d1bf6f216b7c"
+    },
+    "page": {
+      "verdict": "PASS",
+      "note": "Review visible on order"
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "review_posted",
+      "order_id": "0d5275f2-2537-4fef-830b-d1bf6f216b7c"
+    }
+  },
+  "order_id": "0d5275f2-2537-4fef-830b-d1bf6f216b7c"
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "traveltrust.bfm001_discovery_summary.v1",
+  "recorded_at_utc": "2026-07-07T23:58:07.007Z",
+  "issue_id": "BFM-001",
+  "mode": "discovery_only",
+  "hypothesis_verdict": "REDEFINE_CANDIDATE",
+  "root_cause_candidate": "acquisition_human_verification_not_executed",
+  "open_root_causes": 1,
+  "TT_SPRINT_B_ACTIVE": false,
+  "evidence": [
+    "D:\\TravelTrust-V1.1\\evidence\\GO_production_readiness\\step4\\BFM-001-ACQUISITION-CHAIN-DISCOVERY-LATEST.json",
+    "D:\\TravelTrust-V1.1\\evidence\\GO_production_readiness\\sprints\\BFM-001-DISCOVERY-RESULT.md"
+  ]
+}

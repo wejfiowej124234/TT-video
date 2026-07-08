@@ -1,0 +1,76 @@
+{
+  "schema": "traveltrust.hat_human_validation_step.v1",
+  "role": "governance",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T02:04:00.000Z",
+  "validator": "Cursor Agent · HAT Human Queue · Governance",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "pilot": "multi-demo@test.com",
+  "immutable_id": "C1",
+  "user_id": "cf1e4c30-34b8-40b6-b747-474cf24517c3",
+  "default_wallet_address": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "governance_ssot": [
+    "docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md",
+    "docs/spec/governance-token/protocol-ssot.v1.md",
+    "docs/spec/governance-token/ttg-allocation-permissions-flows-ssot-v1.md",
+    "docs/spec/governance-token/TTG-GOVERNANCE-MASTER-TRACEABILITY-MATRIX.md",
+    "frontend/app/governance/params/README.md",
+    "frontend/app/steward/register/README.md",
+    "docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md §3 C1"
+  ],
+  "prior_evidence_ref": [
+    "evidence/admin-governance-audit/20260613T092111Z/governance-control-matrix.v1.json",
+    "evidence/archive-evidence/GO_ai_pre_human_uat/20260616T104507Z/screenshots/multi-governance-after-hub.png"
+  ],
+  "TT_SPRINT_B_ACTIVE": false,
+  "step_id": "complete",
+  "order": 4,
+  "label": "完成",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "action": "Read-only governance params + proposal vote status",
+      "routes": [
+        "/governance/params",
+        "/governance/proposals/911919911919911919911919911919911919"
+      ],
+      "params_heading": "协议参数公示",
+      "proposal_status_ui": "active",
+      "note": "No propose/vote/execute · read-only only"
+    },
+    "api": {
+      "verdict": "PASS",
+      "params_http": 200,
+      "proposal_detail_http": 200,
+      "proposal_status_http": 200,
+      "vote_counts": {
+        "yes": "0",
+        "no": "0",
+        "abstain": "0"
+      },
+      "doc_version": "1.0.22"
+    },
+    "database": {
+      "verdict": "PASS",
+      "entity": "governance_proposals_projection",
+      "proposal_id": "911919911919911919911919911919911919",
+      "status": "active"
+    },
+    "page": {
+      "verdict": "PASS",
+      "has_vote_section": true,
+      "matches_api": true
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "governance_read_action_ok",
+      "forbidden": [
+        "POST proposals",
+        "POST vote",
+        "execute",
+        "on-chain state change"
+      ]
+    }
+  }
+}

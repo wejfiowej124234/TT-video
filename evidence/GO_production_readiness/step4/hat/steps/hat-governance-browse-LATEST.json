@@ -1,0 +1,59 @@
+{
+  "schema": "traveltrust.hat_human_validation_step.v1",
+  "role": "governance",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T02:04:00.000Z",
+  "validator": "Cursor Agent · HAT Human Queue · Governance",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "pilot": "multi-demo@test.com",
+  "immutable_id": "C1",
+  "user_id": "cf1e4c30-34b8-40b6-b747-474cf24517c3",
+  "default_wallet_address": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "governance_ssot": [
+    "docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md",
+    "docs/spec/governance-token/protocol-ssot.v1.md",
+    "docs/spec/governance-token/ttg-allocation-permissions-flows-ssot-v1.md",
+    "docs/spec/governance-token/TTG-GOVERNANCE-MASTER-TRACEABILITY-MATRIX.md",
+    "frontend/app/governance/params/README.md",
+    "frontend/app/steward/register/README.md",
+    "docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md §3 C1"
+  ],
+  "prior_evidence_ref": [
+    "evidence/admin-governance-audit/20260613T092111Z/governance-control-matrix.v1.json",
+    "evidence/archive-evidence/GO_ai_pre_human_uat/20260616T104507Z/screenshots/multi-governance-after-hub.png"
+  ],
+  "TT_SPRINT_B_ACTIVE": false,
+  "step_id": "browse",
+  "order": 3,
+  "label": "浏览",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "route": "/governance/proposals",
+      "proposal_count_ui": 10,
+      "seed_proposal_visible": "911919911919911919911919911919911919",
+      "login_state": "authenticated"
+    },
+    "api": {
+      "verdict": "PASS",
+      "proposals_http": 200,
+      "params_http": 200,
+      "protocol_reference_http": 200,
+      "items_sample": 3
+    },
+    "database": {
+      "verdict": "PASS",
+      "note": "governance_proposals_projection read-only"
+    },
+    "page": {
+      "verdict": "PASS",
+      "route": "/governance/proposals",
+      "no_crash": true
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "governance_proposals_browsable"
+    }
+  }
+}

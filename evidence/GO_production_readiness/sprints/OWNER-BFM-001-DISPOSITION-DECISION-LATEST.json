@@ -1,0 +1,51 @@
+{
+  "schema": "traveltrust.owner_bfm001_disposition_decision.v1",
+  "recorded_at_utc": "2026-07-07T23:59:45.117Z",
+  "decision_id": "OWNER-BFM-001-DISPOSITION-DECISION",
+  "document": "evidence/GO_production_readiness/sprints/OWNER-BFM-001-DISPOSITION-DECISION.md",
+  "issue_id": "BFM-001",
+  "selected_option": "B",
+  "rejected_options": [
+    "C"
+  ],
+  "partial_option": "A",
+  "disposition": {
+    "close_bfm001": true,
+    "close_reason": "hypothesis_reclassified_api_pass_human_deferred",
+    "downgrade_to": [
+      "registry/business-flow-matrix.v1.yaml acquisition flow",
+      "registry/hat-six-role-matrix.v1.yaml acquisition role",
+      "registry/manual-validation-checklist.v1.yaml"
+    ],
+    "new_sprint_b_rc": false,
+    "ocs_owner_pilot": "optional_deferred"
+  },
+  "business_rule": {
+    "statement": "BFM-001 API pilot chain PASS closes Sprint B RC; human five-layer verification continues on Human Validation Track not as respond API Fix",
+    "category": "sprint_b_disposition",
+    "ssot_refs": [
+      "registry/production-readiness-open-issues.v1.yaml BFM-001 exit_condition",
+      "registry/business-flow-matrix.v1.yaml",
+      "evidence/GO_production_readiness/step4/BFM-001-ACQUISITION-CHAIN-DISCOVERY-LATEST.json"
+    ]
+  },
+  "governance": {
+    "failure_signature_confirmed": true,
+    "original_hypothesis": "RECLASSIFIED",
+    "api_hypothesis": "REJECTED",
+    "human_hypothesis": "CONFIRMED",
+    "root_cause_candidate": "acquisition_human_verification_not_executed",
+    "secondary_candidate": "staging_ocs_acquisition_owner_not_in_hat_pilot",
+    "pilot_api_exit_met": true,
+    "business_rule_confirmed": true,
+    "root_cause_confirmed": false,
+    "fix_authorized": false
+  },
+  "bfm001_implication": "Close RC; human BFM/HAT/Manual on existing tracks; OCS owner pilot optional",
+  "TT_SPRINT_B": "READY",
+  "TT_SPRINT_B_ACTIVE": false,
+  "registry_updated": false,
+  "code_changed": false,
+  "staging_data_changed": false,
+  "fix_applied": false
+}

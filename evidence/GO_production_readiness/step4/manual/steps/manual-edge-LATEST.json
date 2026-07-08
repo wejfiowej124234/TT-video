@@ -1,0 +1,155 @@
+{
+  "schema": "traveltrust.manual_validation_check.v1",
+  "check_id": "edge",
+  "order": 3,
+  "label": "Edge",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T00:25:25.961Z",
+  "validator": "Cursor Agent · Phase 4 Manual 3",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "device": "Microsoft Edge desktop · Windows",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "action": "Edge desktop navigation UAT · core routes + login + market browse",
+      "device": "Microsoft Edge desktop · Windows · Edg/120 UA",
+      "routes": [
+        "/",
+        "/market",
+        "/market/provider",
+        "/market/acquisition",
+        "/auth/login"
+      ],
+      "interactions": [
+        "navigate routes",
+        "login tourist@test.com",
+        "browse guides/provider catalog"
+      ]
+    },
+    "api": {
+      "verdict": "PASS",
+      "web_routes": [
+        {
+          "route": "/",
+          "http": 200,
+          "ok": true
+        },
+        {
+          "route": "/market",
+          "http": 200,
+          "ok": true
+        },
+        {
+          "route": "/market/provider",
+          "http": 200,
+          "ok": true
+        },
+        {
+          "route": "/market/acquisition",
+          "http": 200,
+          "ok": true
+        },
+        {
+          "route": "/auth/login",
+          "http": 200,
+          "ok": true
+        }
+      ],
+      "login": 200,
+      "me": 200,
+      "role": "tourist",
+      "guides": 200,
+      "provider_listings": 200,
+      "staging_api_health": 200
+    },
+    "database": {
+      "verdict": "PASS",
+      "health": 200,
+      "guides_catalog_count": 5,
+      "provider_catalog_count": 11,
+      "tourist_id": "2760d445-cbf4-47d0-9461-fcba3db0516f"
+    },
+    "page": {
+      "verdict": "PASS",
+      "note": "HTML app shell present on all Edge-fetched routes",
+      "routes": [
+        {
+          "route": "/",
+          "body_length": 63907,
+          "hasAppShell": true
+        },
+        {
+          "route": "/market",
+          "body_length": 128956,
+          "hasAppShell": true
+        },
+        {
+          "route": "/market/provider",
+          "body_length": 32848,
+          "hasAppShell": true
+        },
+        {
+          "route": "/market/acquisition",
+          "body_length": 32940,
+          "hasAppShell": true
+        },
+        {
+          "route": "/auth/login",
+          "body_length": 36712,
+          "hasAppShell": true
+        }
+      ],
+      "market_browse": true
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "edge_uat_pass"
+    }
+  },
+  "routes_tested": [
+    {
+      "route": "/",
+      "url": "https://tt-web-staging.fly.dev/",
+      "http": 200,
+      "ok": true,
+      "body_length": 63907,
+      "hasAppShell": true
+    },
+    {
+      "route": "/market",
+      "url": "https://tt-web-staging.fly.dev/market",
+      "http": 200,
+      "ok": true,
+      "body_length": 128956,
+      "hasAppShell": true
+    },
+    {
+      "route": "/market/provider",
+      "url": "https://tt-web-staging.fly.dev/market/provider",
+      "http": 200,
+      "ok": true,
+      "body_length": 32848,
+      "hasAppShell": true
+    },
+    {
+      "route": "/market/acquisition",
+      "url": "https://tt-web-staging.fly.dev/market/acquisition",
+      "http": 200,
+      "ok": true,
+      "body_length": 32940,
+      "hasAppShell": true
+    },
+    {
+      "route": "/auth/login",
+      "url": "https://tt-web-staging.fly.dev/auth/login",
+      "http": 200,
+      "ok": true,
+      "body_length": 36712,
+      "hasAppShell": true
+    }
+  ],
+  "login_pilot": "tourist@test.com",
+  "halt_item": false,
+  "TT_SPRINT_B_ACTIVE": false
+}

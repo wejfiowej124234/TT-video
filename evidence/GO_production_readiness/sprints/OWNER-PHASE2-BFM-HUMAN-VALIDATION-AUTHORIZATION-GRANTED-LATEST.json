@@ -1,0 +1,12 @@
+{
+  "schema": "traveltrust.phase2_bfm_human_validation_authorization_granted.v1",
+  "recorded_at_utc": "2026-07-08T00:12:10.019Z",
+  "status": "GRANTED",
+  "granted_by": "Solo Founder",
+  "owner_option": "A",
+  "bfm_human_validation_authorized": true,
+  "bfm_matrix_sync_authorized": true,
+  "authorization_request": "evidence/GO_production_readiness/sprints/OWNER-PHASE2-BFM-HUMAN-VALIDATION-AUTHORIZATION-REQUEST-LATEST.json",
+  "session_rhythm": "Session→Evidence→Matrix Sync per flow; no per-session auth docs",
+  "TT_SPRINT_B_ACTIVE": false
+}

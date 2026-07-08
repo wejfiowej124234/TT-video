@@ -1,0 +1,234 @@
+{
+  "schema": "traveltrust.phase4_manual_validation_execution.v1",
+  "recorded_at_utc": "2026-07-08T01:26:49.804Z",
+  "rhythm": "Manual N → Evidence → Checklist Sync",
+  "completed": [
+    "chrome_desktop",
+    "mobile",
+    "edge",
+    "wallet",
+    "weak_network",
+    "login_flow",
+    "cancel_refund",
+    "refresh_recovery"
+  ],
+  "pending": [
+    "pay_mock"
+  ],
+  "checks": {
+    "chrome_desktop": {
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step4/manual/steps/manual-chrome_desktop-LATEST.json",
+      "matrix_synced": true,
+      "order": 1
+    },
+    "mobile": {
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step4/manual/steps/manual-mobile-LATEST.json",
+      "matrix_synced": true,
+      "order": 2,
+      "browser_viewport": "390×844 iPhone CDP · /market 142 refs · /auth/login form visible"
+    },
+    "edge": {
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step4/manual/steps/manual-edge-LATEST.json",
+      "matrix_synced": true,
+      "order": 3,
+      "browser_human": "/market 222 refs · /market/provider shell · Edge UA fetch"
+    },
+    "wallet": {
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step4/manual/steps/manual-wallet-LATEST.json",
+      "matrix_synced": true,
+      "order": 4,
+      "browser_human": "view-only connect/disconnect · /market/acquisition shell OK"
+    },
+    "weak_network": {
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step4/manual/steps/manual-weak_network-LATEST.json",
+      "matrix_synced": true,
+      "order": 5,
+      "browser_human": "Slow 3G · loading/error/retry · catalog <30s · recovery OK"
+    },
+    "login_flow": {
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step4/manual/steps/manual-login_flow-LATEST.json",
+      "matrix_synced": true,
+      "order": 6,
+      "browser_human": "login → orders 18 · logout confirm · session invalid redirect · re-login"
+    },
+    "pay_mock": {
+      "verdict": "FAIL",
+      "evidence": "evidence/GO_production_readiness/step4/manual/steps/manual-pay_mock-LATEST.json",
+      "matrix_synced": false,
+      "order": 7,
+      "split_verdict": {
+        "api_payment_capability": "PASS",
+        "ui_payment_entry_capability": "FAIL"
+      },
+      "classification": "staging_configuration_gap",
+      "release_report_wording": "Manual 7: API Payment Capability PASS · UI Payment Entry Capability FAIL · staging configuration gap",
+      "note": "非资金流逻辑缺陷；阻断链 /meta → order_mock_pay_enabled → /pay CTA"
+    },
+    "cancel_refund": {
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step4/manual/steps/manual-cancel_refund-LATEST.json",
+      "matrix_synced": true,
+      "order": 8,
+      "browser_human": "cancel created→已取消 · dispute accepted→readable error · disputed view · /market recovery"
+    },
+    "refresh_recovery": {
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step4/manual/steps/manual-refresh_recovery-LATEST.json",
+      "matrix_synced": true,
+      "order": 9,
+      "browser_human": "compact CDP · /market /orders /escrow hard refresh · session expire→login→restore",
+      "probe_ref": "evidence/GO_production_readiness/step4/manual/steps/manual-refresh-recovery-probe-LATEST.json",
+      "verification_chain": {
+        "human_action": "PASS",
+        "api": "PASS",
+        "database": "PASS",
+        "page": "PASS",
+        "final_outcome": "PASS"
+      }
+    }
+  },
+  "TT_SPRINT_B_ACTIVE": false,
+  "gate_after_manual_6": {
+    "label": "Blocking Checks",
+    "current": 31,
+    "previous": 32,
+    "delta": 1,
+    "by_module": {
+      "business_data_readiness": 0,
+      "hat": 27,
+      "business_flow_matrix": 0,
+      "manual_validation": 3,
+      "production_entry": 1
+    }
+  },
+  "representative_uat_evidence": [
+    {
+      "check_id": "weak_network",
+      "order": 5,
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step4/manual/steps/manual-weak_network-LATEST.json",
+      "network_profile": "CDP Slow 3G · 500Kbps · 400ms latency",
+      "highlights": [
+        {
+          "id": "login_degraded_error_ux",
+          "route": "/auth/login",
+          "finding": "弱网下登录失败显示可读错误提示（alert「登录失败」），而非原始 500 错误页",
+          "observed": "登录中… → 登录失败 alert (human-readable) · spinner <30s · 无 toast 循环"
+        },
+        {
+          "id": "market_weak_network_resilience",
+          "route": "/market",
+          "finding": "弱网下具备 Loading → 可重试 → 恢复的完整体验，无无限加载",
+          "observed": "正在加载官方精选… → 官方精选加载失败，请稍后重试。+ 重试按钮 → 解除限速后恢复；主 catalog（订单/向导）~20s 内可用"
+        }
+      ],
+      "retained_for": "最终发布报告 · 代表性 UAT 证据",
+      "recorded_at_utc": "2026-07-08T00:42:04.945Z"
+    }
+  ],
+  "failed": [
+    "pay_mock"
+  ],
+  "gate_after_manual_8": {
+    "open_root_causes": {
+      "label": "Open Root Causes",
+      "current": 0,
+      "previous": 0,
+      "delta": 0,
+      "ssot": "registry/production-readiness-open-issues.v1.yaml"
+    },
+    "blocking_checks": {
+      "label": "Blocking Checks",
+      "current": 30,
+      "previous": 31,
+      "delta": 1,
+      "by_module": {
+        "business_data_readiness": 0,
+        "hat": 27,
+        "business_flow_matrix": 0,
+        "manual_validation": 2,
+        "production_entry": 1
+      }
+    },
+    "mttc": {
+      "label": "Mean Time To Close (days)",
+      "average_mttc_days": 0.6,
+      "sample_size_closed": 7,
+      "closed": [
+        {
+          "id": "BD-001",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-07",
+          "mttc_days": 0
+        },
+        {
+          "id": "BD-004",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-07",
+          "mttc_days": 0
+        },
+        {
+          "id": "BD-002",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-07",
+          "mttc_days": 0
+        },
+        {
+          "id": "BD-005",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-08",
+          "mttc_days": 1
+        },
+        {
+          "id": "HAT-003",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-08",
+          "mttc_days": 1
+        },
+        {
+          "id": "BD-003",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-08",
+          "mttc_days": 1
+        },
+        {
+          "id": "BFM-001",
+          "discovered_at": "2026-07-07",
+          "closed_at": "2026-07-08",
+          "mttc_days": 1
+        }
+      ],
+      "open_ages": []
+    }
+  },
+  "manual_7_release_classification": {
+    "verdict": "PASS",
+    "evidence": "evidence/GO_production_readiness/step4/manual/steps/manual-pay_mock-LATEST.json",
+    "matrix_synced": true,
+    "order": 7,
+    "split_verdict": {
+      "api_payment_capability": "PASS",
+      "ui_payment_entry_capability": "PASS"
+    },
+    "classification": "track_a_remediated_pass",
+    "track_a": true,
+    "release_report_wording": "Manual 7: API Payment Capability PASS · UI Payment Entry Capability PASS · Track A staging config remediated",
+    "note": "staging_configuration_gap closed via deploy config only"
+  },
+  "summary": {
+    "pass_count": 8,
+    "fail_count": 1,
+    "pending_count": 1,
+    "manual_validation_gate": "NOT_PASS"
+  },
+  "status": "COMPLETE",
+  "completed_checks": 9,
+  "pending_checks": [],
+  "completed_at_utc": "2026-07-08T04:09:09.708Z"
+}

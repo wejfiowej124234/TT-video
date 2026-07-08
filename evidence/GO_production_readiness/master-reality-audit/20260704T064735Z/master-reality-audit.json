@@ -1,0 +1,1044 @@
+{
+  "schema": "traveltrust.production_readiness_master_reality_audit.v1",
+  "stamp": "20260704T064735Z",
+  "purpose": "Last whole-project reality check before G3-01 Production Network",
+  "honest_boundary": "Audit does not add platform capabilities · tri-state VERIFIED | PLANNED | DRIFT only",
+  "categories": [
+    "implementation_reality",
+    "runtime_reality",
+    "call_graph_reality",
+    "evidence_reality",
+    "platform_adoption_reality",
+    "production_readiness_reality"
+  ],
+  "gate": {
+    "drift_count": 28,
+    "planned_count": 7,
+    "verified_count": 21,
+    "planned_outside_g3": 0,
+    "planned_without_g3_domain": 0,
+    "g3_entry_allowed": false
+  },
+  "machine_keys": {
+    "TT_PRODUCTION_READINESS_MASTER_REALITY_AUDIT": "FAIL"
+  },
+  "findings": [
+    {
+      "id": "IMP-TT_PRODUCTION_READINESS_G1_GATE",
+      "category": "implementation_reality",
+      "subject": "TT_PRODUCTION_READINESS_G1_GATE",
+      "verdict": "VERIFIED",
+      "detail": "Machine key PASS with repo evidence under evidence/GO_production_readiness/wave-1-1-g1",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "IMP-TT_PRODUCTION_READINESS_G2_GATE",
+      "category": "implementation_reality",
+      "subject": "TT_PRODUCTION_READINESS_G2_GATE",
+      "verdict": "VERIFIED",
+      "detail": "Machine key PASS with repo evidence under evidence/GO_production_readiness/wave-2-g2",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "IMP-TT_WAVE2_FORMAL_ACCEPTANCE",
+      "category": "implementation_reality",
+      "subject": "TT_WAVE2_FORMAL_ACCEPTANCE",
+      "verdict": "VERIFIED",
+      "detail": "Machine key COMPLETE with repo evidence under evidence/GO_production_readiness/wave-2-g2",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "IMP-TT_G2_RETROSPECTIVE",
+      "category": "implementation_reality",
+      "subject": "TT_G2_RETROSPECTIVE",
+      "verdict": "VERIFIED",
+      "detail": "Machine key COMPLETE with repo evidence under evidence/GO_production_readiness/g2-retrospective",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "IMP-G1-VERIFICATION-GATE-MISMATCH",
+      "category": "implementation_reality",
+      "subject": "TT_G1_REALITY_VERIFICATION vs G1_GATE",
+      "verdict": "DRIFT",
+      "detail": "G1 Gate PASS while TT_G1_REALITY_VERIFICATION NOT_STARTED",
+      "g3_domain": null,
+      "remediation": "Align Release Train keys or complete G1 verification"
+    },
+    {
+      "id": "IMP-PRM-SEC-B001",
+      "category": "implementation_reality",
+      "subject": "PRM-SEC-B001",
+      "verdict": "VERIFIED",
+      "detail": "CLOSED with repo evidence evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/security-b001",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "IMP-PRM-SEC-B002",
+      "category": "implementation_reality",
+      "subject": "PRM-SEC-B002",
+      "verdict": "VERIFIED",
+      "detail": "CLOSED with repo evidence evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/security-b002",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "IMP-PRM-UAT-B001",
+      "category": "implementation_reality",
+      "subject": "PRM-UAT-B001",
+      "verdict": "DRIFT",
+      "detail": "CLOSED BLOCKER without closed_evidence repo path",
+      "g3_domain": null,
+      "remediation": "Add closed_evidence or REOPEN"
+    },
+    {
+      "id": "IMP-PRM-UAT-B002",
+      "category": "implementation_reality",
+      "subject": "PRM-UAT-B002",
+      "verdict": "DRIFT",
+      "detail": "CLOSED BLOCKER without closed_evidence repo path",
+      "g3_domain": null,
+      "remediation": "Add closed_evidence or REOPEN"
+    },
+    {
+      "id": "IMP-PRM-UAT-B003",
+      "category": "implementation_reality",
+      "subject": "PRM-UAT-B003",
+      "verdict": "DRIFT",
+      "detail": "CLOSED BLOCKER without closed_evidence repo path",
+      "g3_domain": null,
+      "remediation": "Add closed_evidence or REOPEN"
+    },
+    {
+      "id": "IMP-PRM-UAT-B004",
+      "category": "implementation_reality",
+      "subject": "PRM-UAT-B004",
+      "verdict": "DRIFT",
+      "detail": "CLOSED BLOCKER without closed_evidence repo path",
+      "g3_domain": null,
+      "remediation": "Add closed_evidence or REOPEN"
+    },
+    {
+      "id": "IMP-PRM-UAT-B005",
+      "category": "implementation_reality",
+      "subject": "PRM-UAT-B005",
+      "verdict": "DRIFT",
+      "detail": "CLOSED BLOCKER without closed_evidence repo path",
+      "g3_domain": null,
+      "remediation": "Add closed_evidence or REOPEN"
+    },
+    {
+      "id": "IMP-PRM-UAT-B006",
+      "category": "implementation_reality",
+      "subject": "PRM-UAT-B006",
+      "verdict": "DRIFT",
+      "detail": "CLOSED BLOCKER without closed_evidence repo path",
+      "g3_domain": null,
+      "remediation": "Add closed_evidence or REOPEN"
+    },
+    {
+      "id": "IMP-PRM-CONTENT-B001",
+      "category": "implementation_reality",
+      "subject": "PRM-CONTENT-B001",
+      "verdict": "DRIFT",
+      "detail": "CLOSED BLOCKER without closed_evidence repo path",
+      "g3_domain": null,
+      "remediation": "Add closed_evidence or REOPEN"
+    },
+    {
+      "id": "IMP-PRM-MEDIA-B001",
+      "category": "implementation_reality",
+      "subject": "PRM-MEDIA-B001",
+      "verdict": "DRIFT",
+      "detail": "CLOSED BLOCKER without closed_evidence repo path",
+      "g3_domain": null,
+      "remediation": "Add closed_evidence or REOPEN"
+    },
+    {
+      "id": "IMP-PRM-CONTENT-B002",
+      "category": "implementation_reality",
+      "subject": "PRM-CONTENT-B002",
+      "verdict": "DRIFT",
+      "detail": "CLOSED BLOCKER without closed_evidence repo path",
+      "g3_domain": null,
+      "remediation": "Add closed_evidence or REOPEN"
+    },
+    {
+      "id": "IMP-PRM-MVAL-B001",
+      "category": "implementation_reality",
+      "subject": "PRM-MVAL-B001",
+      "verdict": "DRIFT",
+      "detail": "CLOSED BLOCKER without closed_evidence repo path",
+      "g3_domain": null,
+      "remediation": "Add closed_evidence or REOPEN"
+    },
+    {
+      "id": "IMP-PRM-MVAL-B002",
+      "category": "implementation_reality",
+      "subject": "PRM-MVAL-B002",
+      "verdict": "DRIFT",
+      "detail": "CLOSED BLOCKER without closed_evidence repo path",
+      "g3_domain": null,
+      "remediation": "Add closed_evidence or REOPEN"
+    },
+    {
+      "id": "IMP-PRM-MVAL-B003",
+      "category": "implementation_reality",
+      "subject": "PRM-MVAL-B003",
+      "verdict": "DRIFT",
+      "detail": "CLOSED BLOCKER without closed_evidence repo path",
+      "g3_domain": null,
+      "remediation": "Add closed_evidence or REOPEN"
+    },
+    {
+      "id": "IMP-PRM-MVAL-B004",
+      "category": "implementation_reality",
+      "subject": "PRM-MVAL-B004",
+      "verdict": "DRIFT",
+      "detail": "Matrix CLOSED but no repo evidence (only docs/plan: none)",
+      "g3_domain": "G3-05",
+      "remediation": "REOPEN gap or complete G3 domain verification before CLOSED"
+    },
+    {
+      "id": "IMP-PRM-PER-B001",
+      "category": "implementation_reality",
+      "subject": "PRM-PER-B001",
+      "verdict": "VERIFIED",
+      "detail": "CLOSED with repo evidence evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/performance-b001",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "IMP-PRM-DOM-B001",
+      "category": "implementation_reality",
+      "subject": "PRM-DOM-B001",
+      "verdict": "DRIFT",
+      "detail": "Matrix CLOSED but no repo evidence (only docs/plan: none)",
+      "g3_domain": "G3-01",
+      "remediation": "REOPEN gap or complete G3 domain verification before CLOSED"
+    },
+    {
+      "id": "IMP-PRM-STR-B001",
+      "category": "implementation_reality",
+      "subject": "PRM-STR-B001",
+      "verdict": "DRIFT",
+      "detail": "Matrix CLOSED but no repo evidence (only docs/plan: none)",
+      "g3_domain": "G3-02",
+      "remediation": "REOPEN gap or complete G3 domain verification before CLOSED"
+    },
+    {
+      "id": "IMP-PRM-DR-B001",
+      "category": "implementation_reality",
+      "subject": "PRM-DR-B001",
+      "verdict": "DRIFT",
+      "detail": "Matrix CLOSED but no repo evidence (only docs/plan: none)",
+      "g3_domain": "G3-03",
+      "remediation": "REOPEN gap or complete G3 domain verification before CLOSED"
+    },
+    {
+      "id": "IMP-PRM-DR-B002",
+      "category": "implementation_reality",
+      "subject": "PRM-DR-B002",
+      "verdict": "DRIFT",
+      "detail": "Matrix CLOSED but no repo evidence (only docs/plan: none)",
+      "g3_domain": "G3-03",
+      "remediation": "REOPEN gap or complete G3 domain verification before CLOSED"
+    },
+    {
+      "id": "IMP-PRM-MON-B001",
+      "category": "implementation_reality",
+      "subject": "PRM-MON-B001",
+      "verdict": "VERIFIED",
+      "detail": "CLOSED with repo evidence evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/monitoring-b001",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "IMP-PRM-EVID-B001",
+      "category": "implementation_reality",
+      "subject": "PRM-EVID-B001",
+      "verdict": "DRIFT",
+      "detail": "CLOSED BLOCKER without closed_evidence repo path",
+      "g3_domain": null,
+      "remediation": "Add closed_evidence or REOPEN"
+    },
+    {
+      "id": "IMP-PRM-REG-B001",
+      "category": "implementation_reality",
+      "subject": "PRM-REG-B001",
+      "verdict": "DRIFT",
+      "detail": "CLOSED BLOCKER without closed_evidence repo path",
+      "g3_domain": null,
+      "remediation": "Add closed_evidence or REOPEN"
+    },
+    {
+      "id": "IMP-PRM-RT-B001",
+      "category": "implementation_reality",
+      "subject": "PRM-RT-B001",
+      "verdict": "DRIFT",
+      "detail": "CLOSED BLOCKER without closed_evidence repo path",
+      "g3_domain": null,
+      "remediation": "Add closed_evidence or REOPEN"
+    },
+    {
+      "id": "IMP-PRM-RT-B002",
+      "category": "implementation_reality",
+      "subject": "PRM-RT-B002",
+      "verdict": "DRIFT",
+      "detail": "CLOSED BLOCKER without closed_evidence repo path",
+      "g3_domain": null,
+      "remediation": "Add closed_evidence or REOPEN"
+    },
+    {
+      "id": "IMP-PRM-RT-B003",
+      "category": "implementation_reality",
+      "subject": "PRM-RT-B003",
+      "verdict": "DRIFT",
+      "detail": "CLOSED BLOCKER without closed_evidence repo path",
+      "g3_domain": null,
+      "remediation": "Add closed_evidence or REOPEN"
+    },
+    {
+      "id": "RT-TT_PRODUCTION_RUNTIME_IDENTITY",
+      "category": "runtime_reality",
+      "subject": "TT_PRODUCTION_RUNTIME_IDENTITY",
+      "verdict": "VERIFIED",
+      "detail": "TT_PRODUCTION_RUNTIME_IDENTITY=PASS backed by latest evidence stamp",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "RT-TT_CONFIGURATION_TRUTH",
+      "category": "runtime_reality",
+      "subject": "TT_CONFIGURATION_TRUTH",
+      "verdict": "VERIFIED",
+      "detail": "TT_CONFIGURATION_TRUTH=PASS backed by latest evidence stamp",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "RT-TT_G2_REALITY_VERIFICATION",
+      "category": "runtime_reality",
+      "subject": "TT_G2_REALITY_VERIFICATION",
+      "verdict": "VERIFIED",
+      "detail": "TT_G2_REALITY_VERIFICATION=COMPLETE backed by latest evidence stamp",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "RT-TT_EVIDENCE_INTEGRITY_AUDIT",
+      "category": "runtime_reality",
+      "subject": "TT_EVIDENCE_INTEGRITY_AUDIT",
+      "verdict": "VERIFIED",
+      "detail": "TT_EVIDENCE_INTEGRITY_AUDIT=PASS backed by latest evidence stamp",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "CG-RT-COMM-FEED",
+      "category": "call_graph_reality",
+      "subject": "RT-COMM-FEED",
+      "verdict": "VERIFIED",
+      "detail": "anchors OK",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "CG-RT-COMM-DETAIL",
+      "category": "call_graph_reality",
+      "subject": "RT-COMM-DETAIL",
+      "verdict": "VERIFIED",
+      "detail": "anchors OK",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "CG-RT-COMM-PROFILE",
+      "category": "call_graph_reality",
+      "subject": "RT-COMM-PROFILE",
+      "verdict": "VERIFIED",
+      "detail": "anchors OK",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "CG-RT-MKT-DISCOVER",
+      "category": "call_graph_reality",
+      "subject": "RT-MKT-DISCOVER",
+      "verdict": "VERIFIED",
+      "detail": "anchors OK",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "CG-RT-MKT-GUIDES-OK",
+      "category": "call_graph_reality",
+      "subject": "RT-MKT-GUIDES-OK",
+      "verdict": "VERIFIED",
+      "detail": "anchors OK",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "CG-RT-MKT-LISTINGS-OK",
+      "category": "call_graph_reality",
+      "subject": "RT-MKT-LISTINGS-OK",
+      "verdict": "VERIFIED",
+      "detail": "anchors OK",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "CG-RT-CAMP-OK",
+      "category": "call_graph_reality",
+      "subject": "RT-CAMP-OK",
+      "verdict": "VERIFIED",
+      "detail": "anchors OK",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "CG-RT-FEED-BUILDER-REEXPORT",
+      "category": "call_graph_reality",
+      "subject": "RT-FEED-BUILDER-REEXPORT",
+      "verdict": "VERIFIED",
+      "detail": "anchors OK",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "PA-COVERAGE-AUDIT",
+      "category": "platform_adoption_reality",
+      "subject": "TT_PLATFORM_COVERAGE_AUDIT",
+      "verdict": "VERIFIED",
+      "detail": "All capabilities at coverage target with 0 unmigrated modules",
+      "g3_domain": null,
+      "remediation": null
+    },
+    {
+      "id": "PR-G3-01",
+      "category": "production_readiness_reality",
+      "subject": "Production Network",
+      "verdict": "PLANNED",
+      "detail": "G3 domain work not started — only runbook/matrix/plan until G3 verification",
+      "g3_domain": "G3-01",
+      "remediation": null
+    },
+    {
+      "id": "PR-GAP-PRM-DOM-B001",
+      "category": "production_readiness_reality",
+      "subject": "PRM-DOM-B001",
+      "verdict": "DRIFT",
+      "detail": "Matrix CLOSED without repo evidence — actual work PLANNED in G3-01",
+      "g3_domain": "G3-01",
+      "remediation": "REOPEN PRM-DOM-B001 until G3-01 verification closes with evidence"
+    },
+    {
+      "id": "PR-G3-02",
+      "category": "production_readiness_reality",
+      "subject": "Payment",
+      "verdict": "PLANNED",
+      "detail": "G3 domain work not started — only runbook/matrix/plan until G3 verification",
+      "g3_domain": "G3-02",
+      "remediation": null
+    },
+    {
+      "id": "PR-GAP-PRM-STR-B001",
+      "category": "production_readiness_reality",
+      "subject": "PRM-STR-B001",
+      "verdict": "DRIFT",
+      "detail": "Matrix CLOSED without repo evidence — actual work PLANNED in G3-02",
+      "g3_domain": "G3-02",
+      "remediation": "REOPEN PRM-STR-B001 until G3-02 verification closes with evidence"
+    },
+    {
+      "id": "PR-G3-03",
+      "category": "production_readiness_reality",
+      "subject": "Disaster Recovery",
+      "verdict": "PLANNED",
+      "detail": "G3 domain work not started — only runbook/matrix/plan until G3 verification",
+      "g3_domain": "G3-03",
+      "remediation": null
+    },
+    {
+      "id": "PR-GAP-PRM-DR-B001",
+      "category": "production_readiness_reality",
+      "subject": "PRM-DR-B001",
+      "verdict": "DRIFT",
+      "detail": "Matrix CLOSED without repo evidence — actual work PLANNED in G3-03",
+      "g3_domain": "G3-03",
+      "remediation": "REOPEN PRM-DR-B001 until G3-03 verification closes with evidence"
+    },
+    {
+      "id": "PR-GAP-PRM-DR-B002",
+      "category": "production_readiness_reality",
+      "subject": "PRM-DR-B002",
+      "verdict": "DRIFT",
+      "detail": "Matrix CLOSED without repo evidence — actual work PLANNED in G3-03",
+      "g3_domain": "G3-03",
+      "remediation": "REOPEN PRM-DR-B002 until G3-03 verification closes with evidence"
+    },
+    {
+      "id": "PR-G3-04",
+      "category": "production_readiness_reality",
+      "subject": "Monitoring",
+      "verdict": "PLANNED",
+      "detail": "G3 domain work not started — only runbook/matrix/plan until G3 verification",
+      "g3_domain": "G3-04",
+      "remediation": null
+    },
+    {
+      "id": "PR-G3-05",
+      "category": "production_readiness_reality",
+      "subject": "Production Cutover",
+      "verdict": "PLANNED",
+      "detail": "G3 domain work not started — only runbook/matrix/plan until G3 verification",
+      "g3_domain": "G3-05",
+      "remediation": null
+    },
+    {
+      "id": "PR-GAP-PRM-MVAL-B004",
+      "category": "production_readiness_reality",
+      "subject": "PRM-MVAL-B004",
+      "verdict": "DRIFT",
+      "detail": "Matrix CLOSED without repo evidence — actual work PLANNED in G3-05",
+      "g3_domain": "G3-05",
+      "remediation": "REOPEN PRM-MVAL-B004 until G3-05 verification closes with evidence"
+    },
+    {
+      "id": "PR-G3-06-DECISION-PACKAGE",
+      "category": "production_readiness_reality",
+      "subject": "G3-06",
+      "verdict": "PLANNED",
+      "detail": "Production GO Decision Package not yet signed (expected pre-GO)",
+      "g3_domain": "G3-06",
+      "remediation": null
+    },
+    {
+      "id": "PR-G3-GATE-NOT-STARTED",
+      "category": "production_readiness_reality",
+      "subject": "TT_PRODUCTION_READINESS_G3_GATE",
+      "verdict": "PLANNED",
+      "detail": "G3 Gate not started — expected before Production GO",
+      "g3_domain": "G3-06",
+      "remediation": null
+    }
+  ],
+  "by_verdict": {
+    "VERIFIED": [
+      {
+        "id": "IMP-TT_PRODUCTION_READINESS_G1_GATE",
+        "category": "implementation_reality",
+        "subject": "TT_PRODUCTION_READINESS_G1_GATE",
+        "verdict": "VERIFIED",
+        "detail": "Machine key PASS with repo evidence under evidence/GO_production_readiness/wave-1-1-g1",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "IMP-TT_PRODUCTION_READINESS_G2_GATE",
+        "category": "implementation_reality",
+        "subject": "TT_PRODUCTION_READINESS_G2_GATE",
+        "verdict": "VERIFIED",
+        "detail": "Machine key PASS with repo evidence under evidence/GO_production_readiness/wave-2-g2",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "IMP-TT_WAVE2_FORMAL_ACCEPTANCE",
+        "category": "implementation_reality",
+        "subject": "TT_WAVE2_FORMAL_ACCEPTANCE",
+        "verdict": "VERIFIED",
+        "detail": "Machine key COMPLETE with repo evidence under evidence/GO_production_readiness/wave-2-g2",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "IMP-TT_G2_RETROSPECTIVE",
+        "category": "implementation_reality",
+        "subject": "TT_G2_RETROSPECTIVE",
+        "verdict": "VERIFIED",
+        "detail": "Machine key COMPLETE with repo evidence under evidence/GO_production_readiness/g2-retrospective",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "IMP-PRM-SEC-B001",
+        "category": "implementation_reality",
+        "subject": "PRM-SEC-B001",
+        "verdict": "VERIFIED",
+        "detail": "CLOSED with repo evidence evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/security-b001",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "IMP-PRM-SEC-B002",
+        "category": "implementation_reality",
+        "subject": "PRM-SEC-B002",
+        "verdict": "VERIFIED",
+        "detail": "CLOSED with repo evidence evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/security-b002",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "IMP-PRM-PER-B001",
+        "category": "implementation_reality",
+        "subject": "PRM-PER-B001",
+        "verdict": "VERIFIED",
+        "detail": "CLOSED with repo evidence evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/performance-b001",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "IMP-PRM-MON-B001",
+        "category": "implementation_reality",
+        "subject": "PRM-MON-B001",
+        "verdict": "VERIFIED",
+        "detail": "CLOSED with repo evidence evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/monitoring-b001",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "RT-TT_PRODUCTION_RUNTIME_IDENTITY",
+        "category": "runtime_reality",
+        "subject": "TT_PRODUCTION_RUNTIME_IDENTITY",
+        "verdict": "VERIFIED",
+        "detail": "TT_PRODUCTION_RUNTIME_IDENTITY=PASS backed by latest evidence stamp",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "RT-TT_CONFIGURATION_TRUTH",
+        "category": "runtime_reality",
+        "subject": "TT_CONFIGURATION_TRUTH",
+        "verdict": "VERIFIED",
+        "detail": "TT_CONFIGURATION_TRUTH=PASS backed by latest evidence stamp",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "RT-TT_G2_REALITY_VERIFICATION",
+        "category": "runtime_reality",
+        "subject": "TT_G2_REALITY_VERIFICATION",
+        "verdict": "VERIFIED",
+        "detail": "TT_G2_REALITY_VERIFICATION=COMPLETE backed by latest evidence stamp",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "RT-TT_EVIDENCE_INTEGRITY_AUDIT",
+        "category": "runtime_reality",
+        "subject": "TT_EVIDENCE_INTEGRITY_AUDIT",
+        "verdict": "VERIFIED",
+        "detail": "TT_EVIDENCE_INTEGRITY_AUDIT=PASS backed by latest evidence stamp",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "CG-RT-COMM-FEED",
+        "category": "call_graph_reality",
+        "subject": "RT-COMM-FEED",
+        "verdict": "VERIFIED",
+        "detail": "anchors OK",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "CG-RT-COMM-DETAIL",
+        "category": "call_graph_reality",
+        "subject": "RT-COMM-DETAIL",
+        "verdict": "VERIFIED",
+        "detail": "anchors OK",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "CG-RT-COMM-PROFILE",
+        "category": "call_graph_reality",
+        "subject": "RT-COMM-PROFILE",
+        "verdict": "VERIFIED",
+        "detail": "anchors OK",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "CG-RT-MKT-DISCOVER",
+        "category": "call_graph_reality",
+        "subject": "RT-MKT-DISCOVER",
+        "verdict": "VERIFIED",
+        "detail": "anchors OK",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "CG-RT-MKT-GUIDES-OK",
+        "category": "call_graph_reality",
+        "subject": "RT-MKT-GUIDES-OK",
+        "verdict": "VERIFIED",
+        "detail": "anchors OK",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "CG-RT-MKT-LISTINGS-OK",
+        "category": "call_graph_reality",
+        "subject": "RT-MKT-LISTINGS-OK",
+        "verdict": "VERIFIED",
+        "detail": "anchors OK",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "CG-RT-CAMP-OK",
+        "category": "call_graph_reality",
+        "subject": "RT-CAMP-OK",
+        "verdict": "VERIFIED",
+        "detail": "anchors OK",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "CG-RT-FEED-BUILDER-REEXPORT",
+        "category": "call_graph_reality",
+        "subject": "RT-FEED-BUILDER-REEXPORT",
+        "verdict": "VERIFIED",
+        "detail": "anchors OK",
+        "g3_domain": null,
+        "remediation": null
+      },
+      {
+        "id": "PA-COVERAGE-AUDIT",
+        "category": "platform_adoption_reality",
+        "subject": "TT_PLATFORM_COVERAGE_AUDIT",
+        "verdict": "VERIFIED",
+        "detail": "All capabilities at coverage target with 0 unmigrated modules",
+        "g3_domain": null,
+        "remediation": null
+      }
+    ],
+    "PLANNED": [
+      {
+        "id": "PR-G3-01",
+        "category": "production_readiness_reality",
+        "subject": "Production Network",
+        "verdict": "PLANNED",
+        "detail": "G3 domain work not started — only runbook/matrix/plan until G3 verification",
+        "g3_domain": "G3-01",
+        "remediation": null
+      },
+      {
+        "id": "PR-G3-02",
+        "category": "production_readiness_reality",
+        "subject": "Payment",
+        "verdict": "PLANNED",
+        "detail": "G3 domain work not started — only runbook/matrix/plan until G3 verification",
+        "g3_domain": "G3-02",
+        "remediation": null
+      },
+      {
+        "id": "PR-G3-03",
+        "category": "production_readiness_reality",
+        "subject": "Disaster Recovery",
+        "verdict": "PLANNED",
+        "detail": "G3 domain work not started — only runbook/matrix/plan until G3 verification",
+        "g3_domain": "G3-03",
+        "remediation": null
+      },
+      {
+        "id": "PR-G3-04",
+        "category": "production_readiness_reality",
+        "subject": "Monitoring",
+        "verdict": "PLANNED",
+        "detail": "G3 domain work not started — only runbook/matrix/plan until G3 verification",
+        "g3_domain": "G3-04",
+        "remediation": null
+      },
+      {
+        "id": "PR-G3-05",
+        "category": "production_readiness_reality",
+        "subject": "Production Cutover",
+        "verdict": "PLANNED",
+        "detail": "G3 domain work not started — only runbook/matrix/plan until G3 verification",
+        "g3_domain": "G3-05",
+        "remediation": null
+      },
+      {
+        "id": "PR-G3-06-DECISION-PACKAGE",
+        "category": "production_readiness_reality",
+        "subject": "G3-06",
+        "verdict": "PLANNED",
+        "detail": "Production GO Decision Package not yet signed (expected pre-GO)",
+        "g3_domain": "G3-06",
+        "remediation": null
+      },
+      {
+        "id": "PR-G3-GATE-NOT-STARTED",
+        "category": "production_readiness_reality",
+        "subject": "TT_PRODUCTION_READINESS_G3_GATE",
+        "verdict": "PLANNED",
+        "detail": "G3 Gate not started — expected before Production GO",
+        "g3_domain": "G3-06",
+        "remediation": null
+      }
+    ],
+    "DRIFT": [
+      {
+        "id": "IMP-G1-VERIFICATION-GATE-MISMATCH",
+        "category": "implementation_reality",
+        "subject": "TT_G1_REALITY_VERIFICATION vs G1_GATE",
+        "verdict": "DRIFT",
+        "detail": "G1 Gate PASS while TT_G1_REALITY_VERIFICATION NOT_STARTED",
+        "g3_domain": null,
+        "remediation": "Align Release Train keys or complete G1 verification"
+      },
+      {
+        "id": "IMP-PRM-UAT-B001",
+        "category": "implementation_reality",
+        "subject": "PRM-UAT-B001",
+        "verdict": "DRIFT",
+        "detail": "CLOSED BLOCKER without closed_evidence repo path",
+        "g3_domain": null,
+        "remediation": "Add closed_evidence or REOPEN"
+      },
+      {
+        "id": "IMP-PRM-UAT-B002",
+        "category": "implementation_reality",
+        "subject": "PRM-UAT-B002",
+        "verdict": "DRIFT",
+        "detail": "CLOSED BLOCKER without closed_evidence repo path",
+        "g3_domain": null,
+        "remediation": "Add closed_evidence or REOPEN"
+      },
+      {
+        "id": "IMP-PRM-UAT-B003",
+        "category": "implementation_reality",
+        "subject": "PRM-UAT-B003",
+        "verdict": "DRIFT",
+        "detail": "CLOSED BLOCKER without closed_evidence repo path",
+        "g3_domain": null,
+        "remediation": "Add closed_evidence or REOPEN"
+      },
+      {
+        "id": "IMP-PRM-UAT-B004",
+        "category": "implementation_reality",
+        "subject": "PRM-UAT-B004",
+        "verdict": "DRIFT",
+        "detail": "CLOSED BLOCKER without closed_evidence repo path",
+        "g3_domain": null,
+        "remediation": "Add closed_evidence or REOPEN"
+      },
+      {
+        "id": "IMP-PRM-UAT-B005",
+        "category": "implementation_reality",
+        "subject": "PRM-UAT-B005",
+        "verdict": "DRIFT",
+        "detail": "CLOSED BLOCKER without closed_evidence repo path",
+        "g3_domain": null,
+        "remediation": "Add closed_evidence or REOPEN"
+      },
+      {
+        "id": "IMP-PRM-UAT-B006",
+        "category": "implementation_reality",
+        "subject": "PRM-UAT-B006",
+        "verdict": "DRIFT",
+        "detail": "CLOSED BLOCKER without closed_evidence repo path",
+        "g3_domain": null,
+        "remediation": "Add closed_evidence or REOPEN"
+      },
+      {
+        "id": "IMP-PRM-CONTENT-B001",
+        "category": "implementation_reality",
+        "subject": "PRM-CONTENT-B001",
+        "verdict": "DRIFT",
+        "detail": "CLOSED BLOCKER without closed_evidence repo path",
+        "g3_domain": null,
+        "remediation": "Add closed_evidence or REOPEN"
+      },
+      {
+        "id": "IMP-PRM-MEDIA-B001",
+        "category": "implementation_reality",
+        "subject": "PRM-MEDIA-B001",
+        "verdict": "DRIFT",
+        "detail": "CLOSED BLOCKER without closed_evidence repo path",
+        "g3_domain": null,
+        "remediation": "Add closed_evidence or REOPEN"
+      },
+      {
+        "id": "IMP-PRM-CONTENT-B002",
+        "category": "implementation_reality",
+        "subject": "PRM-CONTENT-B002",
+        "verdict": "DRIFT",
+        "detail": "CLOSED BLOCKER without closed_evidence repo path",
+        "g3_domain": null,
+        "remediation": "Add closed_evidence or REOPEN"
+      },
+      {
+        "id": "IMP-PRM-MVAL-B001",
+        "category": "implementation_reality",
+        "subject": "PRM-MVAL-B001",
+        "verdict": "DRIFT",
+        "detail": "CLOSED BLOCKER without closed_evidence repo path",
+        "g3_domain": null,
+        "remediation": "Add closed_evidence or REOPEN"
+      },
+      {
+        "id": "IMP-PRM-MVAL-B002",
+        "category": "implementation_reality",
+        "subject": "PRM-MVAL-B002",
+        "verdict": "DRIFT",
+        "detail": "CLOSED BLOCKER without closed_evidence repo path",
+        "g3_domain": null,
+        "remediation": "Add closed_evidence or REOPEN"
+      },
+      {
+        "id": "IMP-PRM-MVAL-B003",
+        "category": "implementation_reality",
+        "subject": "PRM-MVAL-B003",
+        "verdict": "DRIFT",
+        "detail": "CLOSED BLOCKER without closed_evidence repo path",
+        "g3_domain": null,
+        "remediation": "Add closed_evidence or REOPEN"
+      },
+      {
+        "id": "IMP-PRM-MVAL-B004",
+        "category": "implementation_reality",
+        "subject": "PRM-MVAL-B004",
+        "verdict": "DRIFT",
+        "detail": "Matrix CLOSED but no repo evidence (only docs/plan: none)",
+        "g3_domain": "G3-05",
+        "remediation": "REOPEN gap or complete G3 domain verification before CLOSED"
+      },
+      {
+        "id": "IMP-PRM-DOM-B001",
+        "category": "implementation_reality",
+        "subject": "PRM-DOM-B001",
+        "verdict": "DRIFT",
+        "detail": "Matrix CLOSED but no repo evidence (only docs/plan: none)",
+        "g3_domain": "G3-01",
+        "remediation": "REOPEN gap or complete G3 domain verification before CLOSED"
+      },
+      {
+        "id": "IMP-PRM-STR-B001",
+        "category": "implementation_reality",
+        "subject": "PRM-STR-B001",
+        "verdict": "DRIFT",
+        "detail": "Matrix CLOSED but no repo evidence (only docs/plan: none)",
+        "g3_domain": "G3-02",
+        "remediation": "REOPEN gap or complete G3 domain verification before CLOSED"
+      },
+      {
+        "id": "IMP-PRM-DR-B001",
+        "category": "implementation_reality",
+        "subject": "PRM-DR-B001",
+        "verdict": "DRIFT",
+        "detail": "Matrix CLOSED but no repo evidence (only docs/plan: none)",
+        "g3_domain": "G3-03",
+        "remediation": "REOPEN gap or complete G3 domain verification before CLOSED"
+      },
+      {
+        "id": "IMP-PRM-DR-B002",
+        "category": "implementation_reality",
+        "subject": "PRM-DR-B002",
+        "verdict": "DRIFT",
+        "detail": "Matrix CLOSED but no repo evidence (only docs/plan: none)",
+        "g3_domain": "G3-03",
+        "remediation": "REOPEN gap or complete G3 domain verification before CLOSED"
+      },
+      {
+        "id": "IMP-PRM-EVID-B001",
+        "category": "implementation_reality",
+        "subject": "PRM-EVID-B001",
+        "verdict": "DRIFT",
+        "detail": "CLOSED BLOCKER without closed_evidence repo path",
+        "g3_domain": null,
+        "remediation": "Add closed_evidence or REOPEN"
+      },
+      {
+        "id": "IMP-PRM-REG-B001",
+        "category": "implementation_reality",
+        "subject": "PRM-REG-B001",
+        "verdict": "DRIFT",
+        "detail": "CLOSED BLOCKER without closed_evidence repo path",
+        "g3_domain": null,
+        "remediation": "Add closed_evidence or REOPEN"
+      },
+      {
+        "id": "IMP-PRM-RT-B001",
+        "category": "implementation_reality",
+        "subject": "PRM-RT-B001",
+        "verdict": "DRIFT",
+        "detail": "CLOSED BLOCKER without closed_evidence repo path",
+        "g3_domain": null,
+        "remediation": "Add closed_evidence or REOPEN"
+      },
+      {
+        "id": "IMP-PRM-RT-B002",
+        "category": "implementation_reality",
+        "subject": "PRM-RT-B002",
+        "verdict": "DRIFT",
+        "detail": "CLOSED BLOCKER without closed_evidence repo path",
+        "g3_domain": null,
+        "remediation": "Add closed_evidence or REOPEN"
+      },
+      {
+        "id": "IMP-PRM-RT-B003",
+        "category": "implementation_reality",
+        "subject": "PRM-RT-B003",
+        "verdict": "DRIFT",
+        "detail": "CLOSED BLOCKER without closed_evidence repo path",
+        "g3_domain": null,
+        "remediation": "Add closed_evidence or REOPEN"
+      },
+      {
+        "id": "PR-GAP-PRM-DOM-B001",
+        "category": "production_readiness_reality",
+        "subject": "PRM-DOM-B001",
+        "verdict": "DRIFT",
+        "detail": "Matrix CLOSED without repo evidence — actual work PLANNED in G3-01",
+        "g3_domain": "G3-01",
+        "remediation": "REOPEN PRM-DOM-B001 until G3-01 verification closes with evidence"
+      },
+      {
+        "id": "PR-GAP-PRM-STR-B001",
+        "category": "production_readiness_reality",
+        "subject": "PRM-STR-B001",
+        "verdict": "DRIFT",
+        "detail": "Matrix CLOSED without repo evidence — actual work PLANNED in G3-02",
+        "g3_domain": "G3-02",
+        "remediation": "REOPEN PRM-STR-B001 until G3-02 verification closes with evidence"
+      },
+      {
+        "id": "PR-GAP-PRM-DR-B001",
+        "category": "production_readiness_reality",
+        "subject": "PRM-DR-B001",
+        "verdict": "DRIFT",
+        "detail": "Matrix CLOSED without repo evidence — actual work PLANNED in G3-03",
+        "g3_domain": "G3-03",
+        "remediation": "REOPEN PRM-DR-B001 until G3-03 verification closes with evidence"
+      },
+      {
+        "id": "PR-GAP-PRM-DR-B002",
+        "category": "production_readiness_reality",
+        "subject": "PRM-DR-B002",
+        "verdict": "DRIFT",
+        "detail": "Matrix CLOSED without repo evidence — actual work PLANNED in G3-03",
+        "g3_domain": "G3-03",
+        "remediation": "REOPEN PRM-DR-B002 until G3-03 verification closes with evidence"
+      },
+      {
+        "id": "PR-GAP-PRM-MVAL-B004",
+        "category": "production_readiness_reality",
+        "subject": "PRM-MVAL-B004",
+        "verdict": "DRIFT",
+        "detail": "Matrix CLOSED without repo evidence — actual work PLANNED in G3-05",
+        "g3_domain": "G3-05",
+        "remediation": "REOPEN PRM-MVAL-B004 until G3-05 verification closes with evidence"
+      }
+    ]
+  },
+  "g3_entry_rule": "g3_entry_allowed when drift_count=0 and all PLANNED items map to G3-01..G3-06"
+}

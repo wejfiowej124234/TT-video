@@ -1,0 +1,57 @@
+{
+  "schema": "traveltrust.listings_business_data_readiness_day3.v1",
+  "recorded_at_utc": "2026-07-08T00:19:09.661Z",
+  "domain": "listings",
+  "step1_day": 3,
+  "mode": "evidence_driven",
+  "ready_rule": {
+    "max_fail": 0,
+    "max_warn_d": 0,
+    "max_warn_p": 0,
+    "warn_c_blocks": false
+  },
+  "checks_total": 6,
+  "pass": 6,
+  "fail": 0,
+  "ready": "YES",
+  "TT_LISTINGS_BUSINESS_DATA_READINESS_DAY3": "READY",
+  "bd003_note": "Staging public catalog cover 10+10 · automation bloat non-blocking per BD-003 close",
+  "results": [
+    {
+      "id": "provider_catalog_cover",
+      "label": "Provider Catalog Cover",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step3/probes/listings_provider_catalog_cover_probe.json"
+    },
+    {
+      "id": "acquisition_catalog_cover",
+      "label": "Acquisition Catalog Cover",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step3/probes/listings_acquisition_catalog_cover_probe.json"
+    },
+    {
+      "id": "provider_detail",
+      "label": "Provider Detail",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step3/probes/listings_provider_detail_probe.json"
+    },
+    {
+      "id": "acquisition_detail",
+      "label": "Acquisition Detail",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step3/probes/listings_acquisition_detail_probe.json"
+    },
+    {
+      "id": "discover_orders_cover",
+      "label": "Discover Orders Cover",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step3/probes/listings_discover_orders_cover_probe.json"
+    },
+    {
+      "id": "cross_surface_integrity",
+      "label": "Cross Surface Integrity",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step3/probes/listings_cross_surface_integrity_probe.json"
+    }
+  ]
+}

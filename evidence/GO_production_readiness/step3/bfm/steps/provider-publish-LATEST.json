@@ -1,0 +1,40 @@
+{
+  "schema": "traveltrust.bfm_human_validation_step.v1",
+  "session": "A",
+  "flow_id": "provider",
+  "step_id": "publish",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T00:12:44.441Z",
+  "validator": "Cursor Agent · Session A",
+  "verification_chain": {
+    "human_click": {
+      "verdict": "PASS",
+      "action": "Publish listing to public provider catalog",
+      "url": "https://tt-web-staging.fly.dev/market/provider"
+    },
+    "api": {
+      "verdict": "PASS",
+      "method": "GET",
+      "path": "/api/v1/market/provider/listings",
+      "status": 200,
+      "count": 11
+    },
+    "database": {
+      "verdict": "PASS",
+      "entity": "listings",
+      "note": "public catalog count=11",
+      "sample_id": "fdec611e-f140-4b34-9ef1-a356ad47c247"
+    },
+    "page": {
+      "verdict": "PASS",
+      "url": "https://tt-web-staging.fly.dev/market/provider",
+      "note": "Public catalog has production listings"
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "published_visible",
+      "listing_id": "fdec611e-f140-4b34-9ef1-a356ad47c247",
+      "own_in_catalog": true
+    }
+  }
+}

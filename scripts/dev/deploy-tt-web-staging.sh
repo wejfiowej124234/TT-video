@@ -34,6 +34,14 @@ info() { echo "deploy-tt-web-staging: $*"; }
 CHECK_ONLY=0
 [[ "${1:-}" == "--check-only" ]] && CHECK_ONLY=1
 
+# shellcheck source=../ops/lib/deploy-governance-phase3-guard.sh
+source "$ROOT/scripts/ops/lib/deploy-governance-phase3-guard.sh"
+[[ "$CHECK_ONLY" -eq 1 ]] || deploy_governance_phase3_assert_s5_allowed "$ROOT"
+
+# shellcheck source=lib/staging-rc-baseline-gate.sh
+source "$ROOT/scripts/dev/lib/staging-rc-baseline-gate.sh"
+[[ "$CHECK_ONLY" -eq 1 ]] || staging_rc_baseline_gate_pre_deploy pre-deploy || fail "TT_STAGING_RC_BASELINE gate"
+
 command -v fly >/dev/null 2>&1 || fail "fly CLI not found"
 [[ -f "$FLY_CONFIG" ]] || fail "missing $FLY_CONFIG"
 
@@ -77,6 +85,8 @@ export NEXT_PUBLIC_GOVERNOR_ADDRESS="${NEXT_PUBLIC_GOVERNOR_ADDRESS:-${GOVERNOR_
 export NEXT_PUBLIC_REGISTRY_ADDRESS="${NEXT_PUBLIC_REGISTRY_ADDRESS:-${REGISTRY_ADDRESS:-}}"
 export NEXT_PUBLIC_GUIDE_STAKING_ADDRESS="${NEXT_PUBLIC_GUIDE_STAKING_ADDRESS:-${GUIDE_STAKING_POOL_ADDRESS:-}}"
 export NEXT_PUBLIC_STAKING_PROVIDER_ADDRESS="${NEXT_PUBLIC_STAKING_PROVIDER_ADDRESS:-${PROVIDER_STAKING_POOL_ADDRESS:-}}"
+export NEXT_PUBLIC_CATALOG_API_ENABLED="${NEXT_PUBLIC_CATALOG_API_ENABLED:-0}"
+export NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI="${NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI:-0}"
 
 [[ -n "${NEXT_PUBLIC_API_BASE_URL:-}" ]] || fail "NEXT_PUBLIC_API_BASE_URL empty"
 [[ -n "${NEXT_PUBLIC_SITE_URL:-}" ]] || fail "NEXT_PUBLIC_SITE_URL empty"
@@ -137,6 +147,8 @@ declare -a BUILD_ARGS=(
   --build-arg "NEXT_PUBLIC_REGISTRY_ADDRESS=${NEXT_PUBLIC_REGISTRY_ADDRESS}"
   --build-arg "NEXT_PUBLIC_GUIDE_STAKING_ADDRESS=${NEXT_PUBLIC_GUIDE_STAKING_ADDRESS}"
   --build-arg "NEXT_PUBLIC_STAKING_PROVIDER_ADDRESS=${NEXT_PUBLIC_STAKING_PROVIDER_ADDRESS}"
+  --build-arg "NEXT_PUBLIC_CATALOG_API_ENABLED=${NEXT_PUBLIC_CATALOG_API_ENABLED}"
+  --build-arg "NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI=${NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI}"
   --build-arg "BUILD_NODE_MAX_OLD_SPACE_SIZE=${BUILD_NODE_MAX_OLD_SPACE_SIZE:-4096}"
 )
 
@@ -173,3 +185,7 @@ hc="$(curl -sS -o /dev/null -w "%{http_code}" --max-time 60 "${WEB_BASE}/" 2>/de
 [[ "$hc" == "200" ]] || fail "${WEB_BASE}/ not 200 (got $hc) — DNS 传播或首次冷启动可能需重试"
 
 ok "$APP deployed · ${WEB_BASE} · staging UI only · ≠ Production GO"
+
+if [[ "$CHECK_ONLY" -ne 1 ]]; then
+  staging_rc_baseline_gate_post_deploy || fail "post-deploy TT_STAGING_RC_BASELINE — run run-staging-rc-baseline-final-alignment.sh"
+fi

@@ -1,0 +1,78 @@
+{
+  "ready_for_g3": true,
+  "checks": [
+    {
+      "id": "G3-ENTRY-001",
+      "requirement": "G2 Gate PASS (immutable baseline)",
+      "machine_key": "TT_PRODUCTION_READINESS_G2_GATE",
+      "expected": "PASS",
+      "actual": "PASS",
+      "pass": true
+    },
+    {
+      "id": "G3-ENTRY-002",
+      "requirement": "G2 Formal Acceptance COMPLETE",
+      "machine_key": "TT_WAVE2_FORMAL_ACCEPTANCE",
+      "expected": "COMPLETE",
+      "actual": "COMPLETE",
+      "pass": true
+    },
+    {
+      "id": "G3-ENTRY-003",
+      "requirement": "G2 Retrospective COMPLETE (this artifact)",
+      "machine_key": "TT_G2_RETROSPECTIVE",
+      "expected": "COMPLETE",
+      "actual": "COMPLETE",
+      "pass": true
+    },
+    {
+      "id": "G3-ENTRY-004",
+      "requirement": "Platform architecture frozen — no new Registry/Guard/Capability without Architecture Review",
+      "expected": "FROZEN",
+      "actual": "FROZEN",
+      "pass": true
+    },
+    {
+      "id": "G3-ENTRY-005",
+      "requirement": "Production Runtime Identity PASS on prod profile",
+      "machine_key": "TT_PRODUCTION_RUNTIME_IDENTITY",
+      "expected": "PASS",
+      "actual": "PASS",
+      "pass": true
+    },
+    {
+      "id": "G3-ENTRY-006",
+      "requirement": "G3 Gate not yet started",
+      "machine_key": "TT_PRODUCTION_READINESS_G3_GATE",
+      "expected": "NOT_STARTED",
+      "actual": "NOT_STARTED",
+      "pass": true
+    },
+    {
+      "id": "G3-ENTRY-007",
+      "requirement": "Production GO remains NO_GO until G3 + Owner Decision",
+      "machine_key": "TT_PRODUCTION_GO",
+      "expected": "NO_GO",
+      "actual": "NO_GO",
+      "pass": true
+    }
+  ],
+  "g3_open_blockers_in_matrix": [],
+  "g3_scope_production_only": [
+    "Domain / DNS / TLS / CDN (production)",
+    "Stripe Live payment + production webhooks",
+    "Disaster Recovery — backup verification + restore drill",
+    "Production Monitoring — alerts, on-call, synthetic probes",
+    "Production Cutover — go-live switch plan + execution evidence",
+    "Production Evidence — attach repo paths for all G3 blockers"
+  ],
+  "forbidden_without_architecture_review": [
+    "New Registry",
+    "New Guard",
+    "New Verification Layer",
+    "New Runtime Framework",
+    "PCP architecture changes",
+    "Platform Capability additions"
+  ],
+  "g3_release_train": "G3 Reality Verification → Evidence Integrity Audit → G3 Formal Acceptance → TT_PRODUCTION_READINESS_G3_GATE PASS → Production GO Decision"
+}

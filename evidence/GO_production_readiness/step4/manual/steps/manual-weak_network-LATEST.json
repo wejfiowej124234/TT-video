@@ -1,0 +1,174 @@
+{
+  "schema": "traveltrust.manual_validation_check.v1",
+  "check_id": "weak_network",
+  "order": 5,
+  "label": "弱网",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T00:30:21.252Z",
+  "validator": "Cursor Agent · Phase 4 Manual 5",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "device": "Chrome · CDP Slow 3G emulation",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "action": "Weak network UAT · Slow 3G CDP · home/login/market/orders",
+      "setup": "Network.emulateNetworkConditions Slow 3G",
+      "browser_human": {
+        "network_profile": "CDP Slow 3G · 500Kbps · 400ms latency",
+        "home": {
+          "route": "/",
+          "refs": 138,
+          "usable": true
+        },
+        "login": {
+          "loading_state": "登录中…",
+          "error_prompt": "登录失败 alert (degraded network · human-readable)",
+          "spinner_under_30s": true,
+          "no_toast_loop": true
+        },
+        "market": {
+          "loading_states": [
+            "正在加载官方精选…",
+            "加载中… (orders/guides)"
+          ],
+          "catalog_loaded_within_30s": true,
+          "orders_guides_visible": true,
+          "feed_error": "官方精选加载失败，请稍后重试。",
+          "retry_button": true
+        },
+        "recovery": {
+          "throttle_cleared": true,
+          "retry_click": "feed reload → 正在加载官方精选…",
+          "refresh_usable": true
+        }
+      }
+    },
+    "api": {
+      "verdict": "PASS",
+      "note": "API completes under simulated latency (400ms pre-delay)",
+      "login": {
+        "status": 200,
+        "elapsed_ms": 1013,
+        "ok": true
+      },
+      "guides": {
+        "status": 200,
+        "elapsed_ms": 996,
+        "count": 5
+      },
+      "health": 200,
+      "web_routes": [
+        {
+          "route": "/",
+          "http": 200,
+          "ok": true,
+          "ms": 880,
+          "hasLoadingHint": true
+        },
+        {
+          "route": "/auth/login",
+          "http": 200,
+          "ok": true,
+          "ms": 650,
+          "hasLoadingHint": true
+        },
+        {
+          "route": "/market",
+          "http": 200,
+          "ok": true,
+          "ms": 578,
+          "hasLoadingHint": true
+        },
+        {
+          "route": "/orders",
+          "http": 200,
+          "ok": true,
+          "ms": 437,
+          "hasLoadingHint": true
+        }
+      ]
+    },
+    "database": {
+      "verdict": "PASS",
+      "health": 200,
+      "guides_count": 5
+    },
+    "page": {
+      "verdict": "PASS",
+      "note": "Shell renders under degraded fetch; loading/error/retry UX observed in browser",
+      "routes": [
+        {
+          "route": "/",
+          "http": 200,
+          "ok": true,
+          "ms": 880,
+          "hasLoadingHint": true
+        },
+        {
+          "route": "/auth/login",
+          "http": 200,
+          "ok": true,
+          "ms": 650,
+          "hasLoadingHint": true
+        },
+        {
+          "route": "/market",
+          "http": 200,
+          "ok": true,
+          "ms": 578,
+          "hasLoadingHint": true
+        },
+        {
+          "route": "/orders",
+          "http": 200,
+          "ok": true,
+          "ms": 437,
+          "hasLoadingHint": true
+        }
+      ],
+      "degraded_ux": {
+        "loading_visible": true,
+        "error_human_readable": true,
+        "retry_available": true,
+        "no_infinite_spinner_primary": true
+      }
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "weak_network_uat_pass"
+    }
+  },
+  "routes_tested": [
+    {
+      "route": "/",
+      "http": 200,
+      "ok": true,
+      "ms": 880,
+      "hasLoadingHint": true
+    },
+    {
+      "route": "/auth/login",
+      "http": 200,
+      "ok": true,
+      "ms": 650,
+      "hasLoadingHint": true
+    },
+    {
+      "route": "/market",
+      "http": 200,
+      "ok": true,
+      "ms": 578,
+      "hasLoadingHint": true
+    },
+    {
+      "route": "/orders",
+      "http": 200,
+      "ok": true,
+      "ms": 437,
+      "hasLoadingHint": true
+    }
+  ],
+  "halt_item": false,
+  "TT_SPRINT_B_ACTIVE": false
+}

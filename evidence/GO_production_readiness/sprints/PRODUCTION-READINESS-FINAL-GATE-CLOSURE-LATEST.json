@@ -1,0 +1,95 @@
+{
+  "schema": "traveltrust.production_readiness_final_gate_closure.v1",
+  "recorded_at_utc": "2026-07-08T01:33:12.828Z",
+  "report_type": "production_readiness_final_gate_closure_analysis",
+  "mode": "read_only_gate_review",
+  "discipline": {
+    "no_code_change": true,
+    "no_staging_config_change": true,
+    "no_business_data_change": true,
+    "TT_SPRINT_B_ACTIVE": false
+  },
+  "executive": {
+    "TT_PRODUCTION_ENTRY_READY": "NO_GO",
+    "verdict": "NO_GO",
+    "phase": "release_admission_audit",
+    "prior_phase": "development_bugfix",
+    "blocking_checks_total": 29,
+    "open_root_causes": 0,
+    "TT_SPRINT_B_ACTIVE": false,
+    "summary": "BDR READY · BFM PASS · Manual 8/9 PASS · HAT 27 pending · pay_mock staging gap"
+  },
+  "gate_status": {
+    "business_data_readiness": {
+      "current": "READY",
+      "blocking": 0
+    },
+    "hat": {
+      "current": "NOT_PASS",
+      "blocking": 27,
+      "pass_cells": 11
+    },
+    "business_flow_matrix": {
+      "current": "PASS",
+      "blocking": 0
+    },
+    "manual_validation": {
+      "current": "NOT_PASS",
+      "blocking": 1,
+      "pass": 8,
+      "fail": 1
+    },
+    "production_entry": {
+      "current": "NO_GO"
+    }
+  },
+  "hat_27_classification": {
+    "evidence_sync_candidates": {
+      "count": 4,
+      "cells": [
+        {
+          "role": "tourist",
+          "step": "order"
+        },
+        {
+          "role": "tourist",
+          "step": "complete"
+        },
+        {
+          "role": "tourist",
+          "step": "pay",
+          "sync_mode": "api_pass_ui_deferred"
+        },
+        {
+          "role": "provider",
+          "step": "logout",
+          "sync_mode": "probe_or_short_human"
+        }
+      ]
+    },
+    "human_revalidation_required": {
+      "count": 23,
+      "acquisition_all_7": true,
+      "admin_5": true,
+      "governance_5": true,
+      "guide_4": true
+    }
+  },
+  "pay_mock_staging_gap": {
+    "classification": "staging_configuration_gap",
+    "api": "PASS",
+    "ui": "FAIL",
+    "tracks": [
+      "A_staging_flag",
+      "B_split_waiver",
+      "C_defer"
+    ]
+  },
+  "recommended_next_phase": [
+    "final_gate_classification",
+    "hat_evidence_sync_audit",
+    "pay_mock_staging_flag_decision",
+    "hat_human_queue_acquisition_first",
+    "final_gate_reevaluation"
+  ]
+}

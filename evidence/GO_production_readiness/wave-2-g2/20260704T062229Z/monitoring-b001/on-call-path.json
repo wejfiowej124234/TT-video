@@ -1,0 +1,8 @@
+{
+  "on_call_runbook": "docs/runbook/PRODUCTION-INCIDENT-RESPONSE.md",
+  "ops_runbook": "docs/runbook/PRODUCTION-OPS-RUNBOOK.md",
+  "synthetic_probes": ["GET /health", "GET /meta", "GET /api/v1/community/feed", "GET /api/v1/community/media/capabilities"],
+  "alert_rules_script": "scripts/gates/check-ops-monitoring-prometheus-examples.sh",
+  "attestation": "Owner confirms on-call path reachable before G2 Formal Acceptance",
+  "prod_api_base": "https://tt-api-prod.fly.dev"
+}

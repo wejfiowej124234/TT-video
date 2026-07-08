@@ -1,0 +1,33 @@
+{
+  "schema": "traveltrust.guide_business_data_probe.v3",
+  "recorded_at_utc": "2026-07-07T14:23:59.927Z",
+  "check_id": "profile",
+  "label": "Profile",
+  "ssot": "API + DB",
+  "probe": "GET /api/v1/guides",
+  "api": "https://tt-api-staging.fly.dev",
+  "exit_condition": "API、DB、UI 一致",
+  "verdict": "WARN-C",
+  "root_cause": null,
+  "cascade_from": null,
+  "attribution": null,
+  "fail_reasons": [],
+  "warn_reasons": [
+    "missing_public_title_and_real_name"
+  ],
+  "warn_classification": {
+    "C": [
+      "missing_public_title_and_real_name"
+    ],
+    "D": [],
+    "P": []
+  },
+  "detail": {
+    "fail": [],
+    "warn": [
+      "missing_public_title_and_real_name"
+    ],
+    "sample_id": "cd69b54b-6407-4a34-90c6-f36c0c658dd7"
+  },
+  "TT_GUIDE_PROBE": "WARN-C"
+}

@@ -1,0 +1,7 @@
+{
+  "schema": "traveltrust.g3_production_r2_cdn_configure.v1",
+  "mode": "dry_run",
+  "fly_app": "tt-api-prod",
+  "env_file_expected": "/d/TravelTrust-V1.1/scripts/dev/.env.production-media-r2.local",
+  "note": "Owner cutover step — not executed in prep-only mode"
+}

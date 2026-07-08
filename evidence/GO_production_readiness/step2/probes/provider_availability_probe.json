@@ -1,0 +1,32 @@
+{
+  "schema": "traveltrust.provider_business_data_probe.v1",
+  "recorded_at_utc": "2026-07-08T00:19:07.428Z",
+  "mode": "discovery_only",
+  "check_id": "availability",
+  "label": "Availability",
+  "ssot": "Market",
+  "probe": "bookable fields (title+price+cover)",
+  "api": "https://tt-api-staging.fly.dev",
+  "verdict": "WARN-C",
+  "root_cause": null,
+  "candidate_issue": null,
+  "fail_reasons": [],
+  "warn_reasons": [
+    "partial_not_bookable"
+  ],
+  "warn_classification": {
+    "C": [
+      "partial_not_bookable"
+    ],
+    "D": [],
+    "P": []
+  },
+  "detail": {
+    "fail": [],
+    "warn": [
+      "partial_not_bookable"
+    ],
+    "bookable_count": 11
+  },
+  "TT_PROVIDER_PROBE": "WARN-C"
+}

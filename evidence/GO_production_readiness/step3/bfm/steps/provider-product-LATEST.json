@@ -1,0 +1,39 @@
+{
+  "schema": "traveltrust.bfm_human_validation_step.v1",
+  "session": "A",
+  "flow_id": "provider",
+  "step_id": "product",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T00:12:44.441Z",
+  "validator": "Cursor Agent · Session A",
+  "verification_chain": {
+    "human_click": {
+      "verdict": "PASS",
+      "action": "Create provider listing (workbench equivalent)"
+    },
+    "api": {
+      "verdict": "PASS",
+      "method": "POST",
+      "path": "/api/v1/market/provider/listings",
+      "status": 200,
+      "listing_id": "fdec611e-f140-4b34-9ef1-a356ad47c247"
+    },
+    "database": {
+      "verdict": "PASS",
+      "entity": "listings",
+      "row_id": "fdec611e-f140-4b34-9ef1-a356ad47c247",
+      "field": "title",
+      "value": "BFM Session A 1783469567116"
+    },
+    "page": {
+      "verdict": "PASS",
+      "note": "Listing draft/create reflected in provider workbench flow"
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "listing_created",
+      "listing_id": "fdec611e-f140-4b34-9ef1-a356ad47c247"
+    }
+  },
+  "listing_id": "fdec611e-f140-4b34-9ef1-a356ad47c247"
+}

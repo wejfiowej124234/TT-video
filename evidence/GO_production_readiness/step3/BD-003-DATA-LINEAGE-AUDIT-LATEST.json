@@ -1,0 +1,205 @@
+{
+  "schema": "traveltrust.bd003_data_lineage_audit.v1",
+  "recorded_at_utc": "2026-07-07T23:46:36.179Z",
+  "mode": "read_only_audit",
+  "issue_id": "BD-003",
+  "api": "https://tt-api-staging.fly.dev",
+  "TT_SPRINT_B_ACTIVE": false,
+  "historical_layers": {
+    "layer1_public_api_filter_gap": {
+      "status": "CONFIRMED_HISTORICAL",
+      "note": "display_status/surface/schedule/data_origin gaps existed; staging now uses governed_market_listings_v1 + DDG when PUBLIC_CATALOG_SURFACE=1",
+      "evidence_ref": "crates/api/migrations/20260704110000_governed_market_catalog_v1.sql"
+    },
+    "layer2_automation_seed_accumulation": {
+      "status": "CONFIRMED_CURRENT",
+      "admin_queue_total": 110,
+      "admin_published": 20,
+      "automation_smoke_probe_rows": 69,
+      "public_provider_count": 10,
+      "public_acquisition_count": 10,
+      "note": "DB holds draft/demo/probe rows; Public Catalog outputs published production baseline only"
+    },
+    "layer3_cms_ownership": {
+      "status": "LOW_PROBABILITY_FOR_DUP",
+      "note": "CMS owns content not provider entities"
+    },
+    "layer4_ocs": {
+      "status": "LOW_PROBABILITY_FOR_DUP",
+      "note": "OCS seeds official media; does not create merchant listing duplicates"
+    }
+  },
+  "hypothesis_ranking": [
+    {
+      "rank": 1,
+      "id": "automation_seed_accumulation",
+      "verdict": "CONFIRMED",
+      "staging": "69/110 admin rows are smoke/probe/automation"
+    },
+    {
+      "rank": 2,
+      "id": "partial_pages_bypass_catalog",
+      "verdict": "CONFIRMED_ARCHITECTURAL",
+      "staging": "/market uses discover/orders+guides NOT market_listings catalog"
+    },
+    {
+      "rank": 3,
+      "id": "api_scope_not_unified",
+      "verdict": "CONFIRMED_BY_DESIGN",
+      "staging": "3 surfaces / 3 APIs; no unified /market/catalog"
+    },
+    {
+      "rank": 4,
+      "id": "frontend_merge_without_dedupe",
+      "verdict": "PARTIAL",
+      "staging": "/market orders merge+dedupe; provider/acquisition no merge"
+    },
+    {
+      "rank": 5,
+      "id": "cms_ocs_content_dup",
+      "verdict": "LOW",
+      "staging": "no cross-surface ID overlap provider∩acquisition"
+    }
+  ],
+  "pages": [
+    {
+      "route": "/market",
+      "frontend": [
+        "frontend/app/market/MarketPageClient.tsx",
+        "frontend/components/market/useMarketPage.ts"
+      ],
+      "apis": [
+        {
+          "method": "GET",
+          "path": "/api/v1/discover/orders",
+          "entity": "discover_orders",
+          "staging_count": 1
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/guides",
+          "entity": "guides",
+          "staging_count": 10
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/orders",
+          "entity": "own_orders_merge_when_logged_in",
+          "note": "merged client-side with dedupe"
+        }
+      ],
+      "backend_lineage": [
+        "discover/orders → chain_off/discover.rs (NOT market_listings)",
+        "guides → guides table / chain_off"
+      ],
+      "passes_public_catalog": false,
+      "passes_governed_market_listings_v1": false,
+      "client_dedupe": true,
+      "filters": [
+        "discover public surface filter when enabled",
+        "separate from provider catalog"
+      ]
+    },
+    {
+      "route": "/market/provider",
+      "frontend": [
+        "frontend/app/market/provider/page.tsx",
+        "frontend/components/market/useMarketStandaloneBusinessPage.ts",
+        "frontend/lib/apiClient/marketSubsite/http.ts"
+      ],
+      "apis": [
+        {
+          "method": "GET",
+          "path": "/api/v1/market/provider/listings",
+          "entity": "market_listings variant=provider",
+          "staging_count": 10,
+          "meta": {
+            "variant": "provider",
+            "source": "postgres_catalog",
+            "count": 10,
+            "limit": 200,
+            "has_more": false,
+            "next_cursor": null
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/market/provider/listings/:id",
+          "entity": "detail drawer"
+        }
+      ],
+      "backend_lineage": [
+        "market_subsite.rs listings_for_variant(provider)",
+        "db/market_listings.rs list_market_listings_by_variant",
+        "db/market_catalog.rs → governed_market_listings_v1 (PUBLIC_CATALOG_SURFACE=1)",
+        "filters: display_status, schedule, data_origin=production, surface=market_provider",
+        "handler DDG: market_public_surface.rs"
+      ],
+      "passes_public_catalog": true,
+      "passes_governed_market_listings_v1": true,
+      "client_dedupe": false,
+      "staging_count": 10
+    },
+    {
+      "route": "/market/acquisition",
+      "frontend": [
+        "frontend/app/market/acquisition/page.tsx",
+        "frontend/components/market/MarketStandaloneBusinessPage.tsx (variant=acquisition)"
+      ],
+      "apis": [
+        {
+          "method": "GET",
+          "path": "/api/v1/market/acquisition/listings",
+          "entity": "market_listings variant=acquisition",
+          "staging_count": 10,
+          "meta": {
+            "variant": "acquisition",
+            "source": "postgres_catalog",
+            "count": 10,
+            "limit": 200,
+            "has_more": false,
+            "next_cursor": null
+          }
+        }
+      ],
+      "backend_lineage": [
+        "same pipeline as provider with variant=acquisition",
+        "surface=market_acquisition"
+      ],
+      "passes_public_catalog": true,
+      "passes_governed_market_listings_v1": true,
+      "client_dedupe": false,
+      "staging_count": 10
+    }
+  ],
+  "staging_snapshot": {
+    "public_provider": {
+      "total": 10,
+      "data_origins": [
+        "production"
+      ],
+      "id_duplicates": 0
+    },
+    "public_acquisition": {
+      "total": 10,
+      "data_origins": [
+        "production"
+      ],
+      "id_duplicates": 0
+    },
+    "owner_merchant_total": 10,
+    "owner_rows_not_on_public": 0,
+    "cross_surface_same_id": 0,
+    "meta_source": "postgres_catalog"
+  },
+  "bd003_implication": {
+    "cover_on_public": "COMPLETE (10/10 both variants)",
+    "duplicate_on_public": "NONE by ID on current staging",
+    "root_cause_redefine": "Data drift / lineage split (DB bloat vs Public Catalog) not missing cover URL"
+  },
+  "code_refs": {
+    "backend": "crates/api/src/routes/market_subsite.rs",
+    "governed_view": "crates/api/migrations/20260704110000_governed_market_catalog_v1.sql",
+    "policy": "registry/single-official-public-catalog-policy.v1.yaml"
+  }
+}

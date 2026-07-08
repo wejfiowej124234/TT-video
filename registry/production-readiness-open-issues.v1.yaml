@@ -1,0 +1,369 @@
+# Production Readiness · Open Issues
+
+schema: traveltrust.production_readiness_open_issues.v1
+version: 17
+effective_utc: "2026-07-08"
+machine_key: TT_PRODUCTION_READINESS_OPEN_ISSUES
+
+execution_policy:
+  one_root_cause_at_a_time: true
+  active_sprint: none
+  sprint_label: Sprint A CLOSED · Sprint B READY (not active)
+  sprint_queue: []
+  rule: >-
+    TT_SPRINT_B=READY · BFM-001 CLOSED · BD-003 CLOSED · BD-005 CLOSED · HAT-003 CLOSED · ACTIVE=false
+
+sprint_signals:
+  TT_SPRINT_A: CLOSED
+  TT_SPRINT_B: READY
+  TT_SPRINT_B_ACTIVE: false
+  sprint_b_entry:
+    requires_all: [evidence_ready, business_rule_confirmed, root_cause_confirmed, fix_authorized]
+    rule: >-
+      Evidence READY AND business_rule_confirmed AND root_cause_confirmed AND fix_authorized
+      → TT_SPRINT_B ACTIVE · 否则保持 READY
+    governance_semantics:
+      failure_signature_confirmed: 已确认 API 失败位置与签名（422 fulfillment_guide）
+      business_rule_confirmed: Owner 已裁定业务设计（方案 A · By Design）
+      root_cause_confirmed: 最终根因确认且批准进入 Fix/Validation 关闭路径
+      fix_authorized: Owner 显式授权工程或数据 Fix
+  sprint_b_phase: BD-005 CLOSED · HAT PASS · Sprint B validation complete
+  bd005_fix_validation: evidence/GO_production_readiness/sprints/BD-005-FIX-VALIDATION-LATEST.json
+  provider_day2_probe: scripts/dev/run-provider-business-data-readiness-probes.cjs
+  provider_day2_evidence: evidence/GO_production_readiness/step2/PROVIDER-BUSINESS-DATA-READINESS-DAY2-LATEST.json
+  provider_hat_probe: scripts/dev/run-sprint-b-provider-hat-order-validation.cjs
+  provider_hat_evidence: evidence/GO_production_readiness/step2/hat/SPRINT-B-PROVIDER-HAT-ORDER-LATEST.json
+  bd002_redefine_confirmation: evidence/GO_production_readiness/sprints/BD-002-REDEFINE-CONFIRMATION-LATEST.json
+  owner_fulfillment_guide_decision: evidence/GO_production_readiness/sprints/OWNER-FULFILLMENT-GUIDE-DECISION-LATEST.json
+  bd005_fix_authorization: evidence/GO_production_readiness/sprints/BD-005-FIX-AUTHORIZATION-GRANTED-LATEST.json
+  hat003_fix_validation: evidence/GO_production_readiness/sprints/HAT-003-FIX-VALIDATION-LATEST.json
+  owner_tourist_persona_decision: evidence/GO_production_readiness/sprints/OWNER-TOURIST-PERSONA-DECISION-LATEST.json
+  bd003_redefine_confirmation: evidence/GO_production_readiness/sprints/BD-003-REDEFINE-CONFIRMATION-LATEST.json
+  owner_listings_cover_decision: evidence/GO_production_readiness/sprints/OWNER-LISTINGS-COVER-DECISION-LATEST.json
+  bd003_data_lineage_audit: evidence/GO_production_readiness/step3/BD-003-DATA-LINEAGE-AUDIT-LATEST.json
+  bfm001_discovery: evidence/GO_production_readiness/step4/BFM-001-ACQUISITION-CHAIN-DISCOVERY-LATEST.json
+  bfm001_redefine_confirmation: evidence/GO_production_readiness/sprints/BFM-001-REDEFINE-CONFIRMATION-LATEST.json
+  owner_bfm001_disposition_decision: evidence/GO_production_readiness/sprints/OWNER-BFM-001-DISPOSITION-DECISION-LATEST.json
+  gate_review: evidence/GO_production_readiness/sprints/PRODUCTION-READINESS-GATE-REVIEW-LATEST.json
+  exit_review: evidence/GO_production_readiness/sprints/SPRINT-A-EXIT-REVIEW-LATEST.json
+
+sprint_b_workflow:
+  - Discovery
+  - Evidence
+  - Root Cause
+  - Sprint ACTIVE
+  - Fix
+  - Validation
+  - Close
+  not: [发现一个名字, 直接开始修]
+
+sprints:
+  - id: A
+    label: Sprint A
+    status: closed
+    TT_SPRINT_A: CLOSED
+    goal: Guide Business Data Ready
+    result: Guide Business Data Ready YES
+    exit_review: evidence/GO_production_readiness/sprints/SPRINT-A-EXIT-REVIEW-LATEST.json
+    sprint_review: evidence/GO_production_readiness/sprints/SPRINT-A-REVIEW.md
+    hat_evidence: evidence/GO_production_readiness/step1/hat/SPRINT-A-GUIDE-HAT-ORDER-LATEST.json
+  - id: B
+    label: Sprint B
+    status: ready
+    TT_SPRINT_B: READY
+    TT_SPRINT_B_ACTIVE: false
+    phase: Provider Order Lifecycle · BD-005 · Option A confirmed
+    goal: Provider Order Lifecycle Ready
+    candidate_root_cause: BD-005
+    probe_script: scripts/dev/run-sprint-b-provider-hat-order-validation.cjs
+    entry_requires: [evidence_ready, business_rule_confirmed, root_cause_confirmed, fix_authorized]
+
+issues:
+  - id: BD-001
+    root_cause: Guide Availability（原假设「缺失」· Case B 已否定为 Pricing 唯一根因）
+    lifecycle: CLOSED
+    owner: Solo Founder
+    discovered_at: "2026-07-07"
+    closed_at: "2026-07-07"
+    sprint: A
+    active: false
+    close_note: >-
+      重新评估 CLOSED · Availability 401=By Design(F-023) · 带身份 PASS ·
+      Pricing 独立为 BD-004 · HAT 下单 PASS(e8be4517) · 非「Availability 缺失」
+    evidence:
+      - evidence/GO_production_readiness/step1/validation/BD-001-ROOT-CAUSE-VALIDATION-LATEST.json
+      - evidence/GO_production_readiness/step1/hat/SPRINT-A-GUIDE-HAT-ORDER-LATEST.json
+
+  - id: BD-004
+    root_cause: Guide Pricing Configuration Missing
+    lifecycle: CLOSED
+    owner: Solo Founder
+    discovered_at: "2026-07-07"
+    closed_at: "2026-07-07"
+    sprint: A
+    active: false
+    exit_condition: 至少一条 Guide hourly_rate 正确配置且 Pricing Probe PASS
+    staging_pilot_guide_id: cd69b54b-6407-4a34-90c6-f36c0c658dd7
+    close_note: hourly_rate=85 · Pricing Probe PASS · HAT 下单 PASS
+    evidence:
+      - evidence/GO_production_readiness/step1/probes/guide_pricing_probe.json
+      - evidence/GO_production_readiness/step1/hat/SPRINT-A-GUIDE-HAT-ORDER-LATEST.json
+
+  - id: BD-002
+    root_cause: Provider Pricing 不完整（Discovery 目标 · 假设已否定）
+    lifecycle: CLOSED
+    owner: Solo Founder
+    discovered_at: "2026-07-07"
+    closed_at: "2026-07-07"
+    sprint: B
+    active: false
+    resolution:
+      hypothesis: Provider Pricing incomplete
+      verdict: REJECTED
+      discovery_goal: Provider Pricing 是否导致 Provider Order Failure
+      evidence_summary:
+        - Day2 Pricing PASS（10/10 priceUsdc）
+        - Catalog Pricing PASS
+        - Provider HAT Market PASS
+        - Order failure unrelated to pricing（422 fulfillment_guide · 已拆至 BD-005）
+      evidence:
+        - evidence/GO_production_readiness/step2/PROVIDER-BUSINESS-DATA-READINESS-DAY2-LATEST.json
+        - evidence/GO_production_readiness/step2/probes/provider_pricing_probe.json
+        - evidence/GO_production_readiness/step2/hat/SPRINT-B-PROVIDER-HAT-ORDER-LATEST.json
+        - evidence/GO_production_readiness/sprints/BD-002-REDEFINE-CONFIRMATION-LATEST.json
+    close_note: >-
+      Discovery 完成 · Pricing 不是 staging Provider 阻塞点 · 假设 REJECTED ·
+      无 Fix · 生命周期问题拆至 BD-005
+
+  - id: BD-005
+    root_cause: Provider Order Lifecycle Readiness — listing owner missing active fulfillment guide
+    lifecycle: CLOSED
+    owner: Solo Founder
+    discovered_at: "2026-07-07"
+    closed_at: "2026-07-08"
+    sprint: TT_SPRINT_B_PROVIDER_HAT_ORDER
+    category: Provider Order Lifecycle
+    active: false
+    hypothesis: Provider listing owner missing active fulfillment guide
+    blocker: provider_order_lifecycle_not_ready
+    failure_signature:
+      http: 422
+      error: market_listing_fulfillment_guide_required
+      hint: fulfillment party must have an active guide profile
+    business_rule_decision:
+      id: OWNER-FULFILLMENT-GUIDE-DECISION
+      selected_option: A
+      statement: >-
+        Provider listing order requires listing owner active guides row;
+        guide_id is fulfillment party for merchant_listing (By Design · 04 §3.4 · 94 §3.2)
+      evidence: evidence/GO_production_readiness/sprints/OWNER-FULFILLMENT-GUIDE-DECISION-LATEST.json
+    governance:
+      failure_signature_confirmed: true
+      root_cause_candidate: provider_fulfillment_guide_missing
+      business_rule_confirmed: true
+      root_cause_confirmed: true
+      fix_authorized: true
+    fix_authorization:
+      granted_at_utc: "2026-07-08"
+      granted_by: Solo Founder
+      scope: A only
+      pilot: merchant@test.com
+      root_cause_confirmed_until: HAT PASS
+      TT_SPRINT_B_ACTIVE: false
+      execution_boundary:
+        allow:
+          - staging pilot active fulfillment guide profile for merchant@test.com
+          - provider HAT full chain rerun after fix
+        deny:
+          - change market_listing_fulfillment_guide_required rule
+          - option B provider fulfill without guide
+          - set root_cause_confirmed true before HAT PASS
+          - TT_SPRINT_B ACTIVE without explicit Owner toggle
+      evidence: evidence/GO_production_readiness/sprints/BD-005-FIX-AUTHORIZATION-GRANTED-LATEST.json
+    discovery_status: CLOSED
+    fix_validation:
+      pilot_guide_id: 627c8c31-3e60-480a-8cd8-f50b0d1e3145
+      hat_order_id: d3b96f98-8739-433b-905e-a9c0c8fb61cb
+      TT_SPRINT_B_PROVIDER_HAT_ORDER: PASS
+      evidence: evidence/GO_production_readiness/sprints/BD-005-FIX-VALIDATION-LATEST.json
+    close_note: >-
+      Scope A Fix · merchant@test.com active guide · HAT 全链 PASS · 422 规则未改
+    exit_condition: met
+    evidence:
+      - evidence/GO_production_readiness/sprints/SPRINT-B-DISCOVERY-RESULT.md
+      - evidence/GO_production_readiness/step2/hat/SPRINT-B-PROVIDER-HAT-ORDER-LATEST.json
+      - evidence/GO_production_readiness/sprints/BD-002-REDEFINE-CONFIRMATION-LATEST.json
+      - evidence/GO_production_readiness/sprints/OWNER-FULFILLMENT-GUIDE-DECISION-LATEST.json
+      - evidence/GO_production_readiness/sprints/PRODUCTION-READINESS-GATE-REVIEW-LATEST.json
+      - evidence/GO_production_readiness/sprints/BD-005-FIX-AUTHORIZATION-GRANTED-LATEST.json
+      - evidence/GO_production_readiness/sprints/BD-005-FIX-VALIDATION-LATEST.json
+
+  - id: HAT-003
+    root_cause: Staging tourist seed persona contamination（原假设 Tourist 登录 HTTP 失败 · REJECTED）
+    lifecycle: CLOSED
+    owner: Solo Founder
+    discovered_at: "2026-07-07"
+    closed_at: "2026-07-08"
+    sprint: queue
+    category: Test Identity Governance
+    active: false
+    hypothesis: Tourist 登录 HTTP 失败
+    hypothesis_verdict: REJECTED
+    root_cause_candidate: staging_tourist_seed_persona_contamination
+    failure_signature:
+      login_http: 200
+      login_role_contamination: super_admin
+      admin_capabilities_bleed: true
+    business_rule_decision:
+      id: OWNER-TOURIST-PERSONA-DECISION
+      selected_option: A
+      statement: >-
+        HAT Tourist corridor requires tourist/traveler persona;
+        tourist@test.com must not persist as admin/super_admin for Tourist HAT
+      evidence: evidence/GO_production_readiness/sprints/OWNER-TOURIST-PERSONA-DECISION-LATEST.json
+    governance:
+      failure_signature_confirmed: true
+      business_rule_confirmed: true
+      root_cause_confirmed: true
+      fix_authorized: true
+    fix_authorization:
+      granted_at_utc: "2026-07-08"
+      granted_by: Solo Founder
+      scope: A only
+      pilot: tourist@test.com
+      admin_promote_isolated_to: multi-demo@test.com
+      TT_SPRINT_B_ACTIVE: false
+      execution_boundary:
+        allow:
+          - staging persona restore super_admin to tourist via admin approval
+          - isolate promote_admin_email to multi-demo@test.com
+          - HAT-003 persona validation rerun
+        deny:
+          - modify /auth/login authentication logic
+          - promote_admin_email tourist@test.com for admin HAT
+          - TT_SPRINT_B ACTIVE without explicit Owner toggle
+      evidence: evidence/GO_production_readiness/sprints/HAT-003-FIX-AUTHORIZATION-GRANTED-LATEST.json
+    fix_validation:
+      pilot: tourist@test.com
+      role_after: tourist
+      admin_capabilities_http: 403
+      TT_HAT003_TOURIST_PERSONA_VALIDATION: PASS
+      evidence: evidence/GO_production_readiness/sprints/HAT-003-FIX-VALIDATION-LATEST.json
+    close_note: >-
+      Scope A · persona restore · admin promote 隔离至 multi-demo · Validation PASS · auth 未改
+    exit_condition: met
+    evidence:
+      - evidence/GO_production_readiness/step2/hat/HAT-003-TOURIST-LOGIN-DISCOVERY-LATEST.json
+      - evidence/GO_production_readiness/sprints/HAT-003-REDEFINE-CONFIRMATION-LATEST.json
+      - evidence/GO_production_readiness/sprints/OWNER-TOURIST-PERSONA-DECISION-LATEST.json
+      - evidence/GO_production_readiness/sprints/HAT-003-FIX-AUTHORIZATION-GRANTED-LATEST.json
+      - evidence/GO_production_readiness/sprints/HAT-003-FIX-VALIDATION-LATEST.json
+      - evidence/GO_production_readiness/step2/hat/HAT-003-TOURIST-LOGIN-VALIDATION-LATEST.json
+
+  - id: BD-003
+    root_cause: Listings Cover 图不完整（Discovery 目标 · 假设已否定 · staging 不适用）
+    lifecycle: CLOSED
+    owner: Solo Founder
+    discovered_at: "2026-07-07"
+    closed_at: "2026-07-08"
+    sprint: queue
+    active: false
+    hypothesis: Listings Cover 图不完整
+    hypothesis_verdict: REJECTED
+    close_reason: hypothesis_rejected_staging_exit_met
+    root_cause_candidate: premature_listings_cover_hypothesis_on_staging
+    business_rule_decision:
+      id: OWNER-LISTINGS-COVER-DECISION
+      selected_option: B
+      statement: >-
+        BD-003 closes without Fix; staging public cover 10/10+10/10 HEAD PASS;
+        residual routed to Listings BDR Day3 and Market Media DDG independent tracks
+      evidence: evidence/GO_production_readiness/sprints/OWNER-LISTINGS-COVER-DECISION-LATEST.json
+    governance:
+      failure_signature_confirmed: true
+      business_rule_confirmed: true
+      root_cause_confirmed: false
+      fix_authorized: false
+    resolution:
+      hypothesis: Listings Cover incomplete
+      verdict: REJECTED
+      discovery_goal: Listings Cover 是否导致 Public Market 阻塞
+      evidence_summary:
+        - Provider public 10/10 cover HEAD PASS
+        - Acquisition public 10/10 cover HEAD PASS
+        - Market HTTP 200 · data_origin=production
+        - Exit Condition MET on staging · 无 public ID 重复
+      split_residual_to:
+        - registry/business-data-readiness.v1.yaml listings step1_day 3
+        - registry/market-media-ddg-remediation.v1.yaml
+    exit_condition: met
+    close_note: >-
+      Discovery + REDEFINE + Owner Decision · Cover 假设 REJECTED · staging Exit MET ·
+      无 Fix · 残余路由 Listings BDR Day3 / Market Media DDG
+    evidence:
+      - evidence/GO_production_readiness/step3/BD-003-LISTINGS-COVER-DISCOVERY-LATEST.json
+      - evidence/GO_production_readiness/sprints/BD-003-DISCOVERY-RESULT.md
+      - evidence/GO_production_readiness/sprints/BD-003-REDEFINE-CONFIRMATION-LATEST.json
+      - evidence/GO_production_readiness/sprints/OWNER-LISTINGS-COVER-DECISION-LATEST.json
+      - evidence/GO_production_readiness/step3/BD-003-DATA-LINEAGE-AUDIT-LATEST.json
+      - evidence/GO_production_readiness/sprints/BD-003-DATA-LINEAGE-AUDIT.md
+
+  - id: BFM-001
+    root_cause: Acquisition 响应链路未真人走通（Discovery 目标 · 假设已重新分类 · API pilot PASS）
+    lifecycle: CLOSED
+    owner: Solo Founder
+    discovered_at: "2026-07-07"
+    closed_at: "2026-07-08"
+    sprint: queue
+    active: false
+    hypothesis: Acquisition 响应链路未真人走通
+    hypothesis_verdict: RECLASSIFIED
+    close_reason: hypothesis_reclassified_api_pass_human_deferred
+    root_cause_candidate: acquisition_human_verification_not_executed
+    secondary_candidate: staging_ocs_acquisition_owner_not_in_hat_pilot
+    business_rule_decision:
+      id: OWNER-BFM-001-DISPOSITION-DECISION
+      selected_option: B
+      statement: >-
+        BFM-001 closes without Fix; pilot API chain PASS; human five-layer verification
+        deferred to existing Human Validation Track (BFM Matrix + HAT acquisition + Manual)
+      evidence: evidence/GO_production_readiness/sprints/OWNER-BFM-001-DISPOSITION-DECISION-LATEST.json
+    governance:
+      failure_signature_confirmed: true
+      business_rule_confirmed: true
+      api_hypothesis: REJECTED
+      human_hypothesis: CONFIRMED
+      root_cause_confirmed: false
+      fix_authorized: false
+    resolution:
+      hypothesis: Acquisition respond chain not human-verified
+      verdict: RECLASSIFIED
+      api_layer: REJECTED
+      human_layer: CONFIRMED
+      discovery_goal: Acquisition 发布→响应→成交→完成 是否 staging 阻塞
+      evidence_summary:
+        - Pilot API full chain PASS (fresh_user · seed_persona · high_bounty_gate)
+        - Respond API PASS on OCS production catalog
+        - OCS catalog close_deal PARTIAL (owner persona gap · 403 not_tourist)
+        - BFM/HAT acquisition/Manual all pending — human NOT_EXECUTED
+      pilot_api_exit: met
+      human_validation_track_deferred:
+        note: retained in existing Matrix SSOT — registry not modified for track execution
+        ssot:
+          - registry/business-flow-matrix.v1.yaml
+          - registry/hat-six-role-matrix.v1.yaml
+          - registry/manual-validation-checklist.v1.yaml
+    exit_condition: met
+    exit_condition_note: API pilot-owned semantic MET; human layer deferred not Sprint B Fix scope
+    close_note: >-
+      Discovery + REDEFINE + Owner Decision · API 响应 REJECTED as blocker · pilot PASS ·
+      无 Fix · Human Validation 降级既有 Matrix 轨
+    evidence:
+      - evidence/GO_production_readiness/step4/BFM-001-ACQUISITION-CHAIN-DISCOVERY-LATEST.json
+      - evidence/GO_production_readiness/sprints/BFM-001-DISCOVERY-RESULT.md
+      - evidence/GO_production_readiness/sprints/BFM-001-DISCOVERY-LATEST.json
+      - evidence/GO_production_readiness/sprints/BFM-001-REDEFINE-CONFIRMATION-LATEST.json
+      - evidence/GO_production_readiness/sprints/OWNER-BFM-001-DISPOSITION-DECISION-LATEST.json
+      - scripts/dev/run-bfm-001-acquisition-chain-discovery.cjs
+
+evidence_script: scripts/dev/run-production-readiness-master-checklist.cjs

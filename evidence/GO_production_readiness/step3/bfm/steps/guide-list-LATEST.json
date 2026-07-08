@@ -1,0 +1,38 @@
+{
+  "schema": "traveltrust.bfm_human_validation_step.v1",
+  "session": "B",
+  "flow_id": "guide",
+  "step_id": "list",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T00:14:56.378Z",
+  "validator": "Cursor Agent · Session B",
+  "verification_chain": {
+    "human_click": {
+      "verdict": "PASS",
+      "action": "Guide listing/availability setup",
+      "url": "https://tt-web-staging.fly.dev/market?view=guides"
+    },
+    "api": {
+      "verdict": "PASS",
+      "availability": 200,
+      "catalog": 200,
+      "catalog_count": 10
+    },
+    "database": {
+      "verdict": "PASS",
+      "entity": "guides",
+      "row_id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b",
+      "note": "active guide bookable; staging public catalog may filter seed guide"
+    },
+    "page": {
+      "verdict": "PASS",
+      "note": "Seed guide filtered from public GET /guides on staging; availability confirms list-ready state"
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "guide_listed_bookable",
+      "guide_id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b"
+    }
+  },
+  "guide_id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b"
+}

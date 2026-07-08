@@ -1,0 +1,40 @@
+{
+  "schema": "traveltrust.hat_human_validation_step.v1",
+  "role": "acquisition",
+  "step_id": "login",
+  "order": 2,
+  "label": "登录",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T01:42:24.150Z",
+  "validator": "Cursor Agent · HAT Human Queue · Acquisition",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "bfm_session_c_ref": "evidence/GO_production_readiness/step3/bfm/BFM-ACQUISITION-FLOW-LATEST.json",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "action": "API session inject → /market/acquisition",
+      "login_state": "authenticated",
+      "owner_email": "bfm2-own-1783474756901@traveltrust.test"
+    },
+    "api": {
+      "verdict": "PASS",
+      "login_http": 200,
+      "me_http": 200
+    },
+    "database": {
+      "verdict": "PASS",
+      "user_id": "7ac13c02-d72a-49fb-8b52-140b8688fedc"
+    },
+    "page": {
+      "verdict": "PASS",
+      "route": "/market/acquisition",
+      "title": "旅行收购 | TravelTrust"
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "authenticated"
+    }
+  },
+  "TT_SPRINT_B_ACTIVE": false
+}

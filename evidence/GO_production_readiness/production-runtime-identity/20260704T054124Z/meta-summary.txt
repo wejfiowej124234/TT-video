@@ -1,0 +1,6 @@
+staging_deployment_profile=staging
+staging_internal_api_secret_configured=True
+staging_git_sha=fea685b08156f6e9f7c1e3f3e5e4029b19b654d9
+prod_deployment_profile=production
+prod_internal_api_secret_configured=True
+prod_git_sha=6f197a28d06af8924df66e630ecc348889bf579a

@@ -1,0 +1,7 @@
+TT_PRODUCTION_RELEASE_PREP: READY
+TT_G3_PRODUCTION_CDN_PREP: READY
+TT_G3_PRODUCTION_CDN_VERIFIED: PLANNED
+TT_PRODUCTION_GO: NO_GO
+at=20260704T090506Z
+note=Phase ①② prep complete · Phase ③ cutover deferred · 发布等一下
+honest_boundary=NOT Production GO

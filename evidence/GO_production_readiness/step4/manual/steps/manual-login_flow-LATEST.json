@@ -1,0 +1,183 @@
+{
+  "schema": "traveltrust.manual_validation_check.v1",
+  "check_id": "login_flow",
+  "order": 6,
+  "label": "登录/登出",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T00:34:29.514Z",
+  "validator": "Cursor Agent · Phase 4 Manual 6",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "action": "Login/logout/session lifecycle UAT · tourist UI + 3-pilot API",
+      "routes": [
+        "/auth/login",
+        "/orders",
+        "/auth/login?returnUrl=%2Forders"
+      ],
+      "browser_human": {
+        "login_ui": {
+          "route": "/auth/login",
+          "password_via_type": true,
+          "loading_state": "登录中…"
+        },
+        "session_persist": {
+          "route": "/orders",
+          "user_menu": "用户菜单，已开通身份：旅行者、向导",
+          "orders_loaded": 18
+        },
+        "logout_ui": {
+          "action": "用户菜单 → 退出 → 确认退出登录？",
+          "confirm": true
+        },
+        "session_invalid": {
+          "cleared_storage": true,
+          "redirect": "/auth/login?returnUrl=%2Forders",
+          "header_shows_login": true
+        },
+        "re_login": {
+          "action": "re-auth → /orders",
+          "user_menu_restored": true,
+          "orders_loaded": 18
+        }
+      },
+      "pilots": [
+        "tourist@test.com",
+        "guide@test.com",
+        "merchant@test.com"
+      ]
+    },
+    "api": {
+      "verdict": "PASS",
+      "pilot_results": [
+        {
+          "email": "tourist@test.com",
+          "login": 200,
+          "role": "tourist",
+          "roleOk": true,
+          "orders_authenticated": 200,
+          "logout": 200,
+          "session_invalid_me": 401,
+          "session_invalid_orders": 401,
+          "re_login": 200,
+          "re_login_token": true
+        },
+        {
+          "email": "guide@test.com",
+          "login": 200,
+          "role": "guide",
+          "roleOk": true,
+          "orders_authenticated": 200,
+          "logout": 200,
+          "session_invalid_me": 401,
+          "session_invalid_orders": 401,
+          "re_login": 200,
+          "re_login_token": true
+        },
+        {
+          "email": "merchant@test.com",
+          "login": 200,
+          "role": "provider",
+          "roleOk": true,
+          "orders_authenticated": 200,
+          "logout": 200,
+          "session_invalid_me": 401,
+          "session_invalid_orders": 401,
+          "re_login": 200,
+          "re_login_token": true
+        }
+      ],
+      "orders_no_token": 401,
+      "logout_invalidates_token": true
+    },
+    "database": {
+      "verdict": "PASS",
+      "note": "Role persisted correctly per pilot on /me",
+      "roles": [
+        {
+          "email": "tourist@test.com",
+          "role": "tourist",
+          "ok": true
+        },
+        {
+          "email": "guide@test.com",
+          "role": "guide",
+          "ok": true
+        },
+        {
+          "email": "merchant@test.com",
+          "role": "provider",
+          "ok": true
+        }
+      ]
+    },
+    "page": {
+      "verdict": "PASS",
+      "note": "Protected /orders accessible when logged in; redirects to login when session cleared",
+      "routes": [
+        {
+          "route": "/auth/login",
+          "http": 200,
+          "location": null
+        },
+        {
+          "route": "/orders",
+          "http": 200,
+          "location": null
+        },
+        {
+          "route": "/auth/login?returnUrl=%2Forders",
+          "http": 200,
+          "location": null
+        }
+      ],
+      "logout_redirect": "/auth/login?returnUrl=%2Forders"
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "login_flow_uat_pass"
+    }
+  },
+  "pilot_results": [
+    {
+      "email": "tourist@test.com",
+      "login": 200,
+      "role": "tourist",
+      "roleOk": true,
+      "orders_authenticated": 200,
+      "logout": 200,
+      "session_invalid_me": 401,
+      "session_invalid_orders": 401,
+      "re_login": 200,
+      "re_login_token": true
+    },
+    {
+      "email": "guide@test.com",
+      "login": 200,
+      "role": "guide",
+      "roleOk": true,
+      "orders_authenticated": 200,
+      "logout": 200,
+      "session_invalid_me": 401,
+      "session_invalid_orders": 401,
+      "re_login": 200,
+      "re_login_token": true
+    },
+    {
+      "email": "merchant@test.com",
+      "login": 200,
+      "role": "provider",
+      "roleOk": true,
+      "orders_authenticated": 200,
+      "logout": 200,
+      "session_invalid_me": 401,
+      "session_invalid_orders": 401,
+      "re_login": 200,
+      "re_login_token": true
+    }
+  ],
+  "halt_item": false,
+  "TT_SPRINT_B_ACTIVE": false
+}

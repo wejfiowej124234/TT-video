@@ -5,11 +5,49 @@ use serde_json::json;
 use std::env;
 use std::fmt::Write as _;
 
+use crate::db;
 use crate::middleware;
 use crate::state::{any_traveltrust_strict_db_write, dual_write_failure_policy, ApiMetaState};
 use traveltrust_core::FEE_ROUTE_COUNTRY_SSOT_FIELD;
 
 use super::*;
+
+/// GET /health/ready — readiness with PostgreSQL ping when pool is mounted.
+pub(super) async fn health_ready(State(state): State<ApiMetaState>) -> impl IntoResponse {
+    let Some(pool) = state
+        .chain_off
+        .as_ref()
+        .and_then(|co| co.db_pool.as_ref())
+    else {
+        return (
+            axum::http::StatusCode::OK,
+            Json(json!({
+                "status": "ok",
+                "database": "not_configured",
+            })),
+        )
+            .into_response();
+    };
+    match db::ping_pool(pool).await {
+        Ok(()) => (
+            axum::http::StatusCode::OK,
+            Json(json!({
+                "status": "ok",
+                "database": "ok",
+            })),
+        )
+            .into_response(),
+        Err(e) => (
+            axum::http::StatusCode::SERVICE_UNAVAILABLE,
+            Json(json!({
+                "status": "error",
+                "database": "ping_failed",
+                "error": e.to_string(),
+            })),
+        )
+            .into_response(),
+    }
+}
 
 pub(super) async fn meta_build_only() -> Json<serde_json::Value> {
     Json(meta_build_value())
@@ -622,6 +660,7 @@ pub(super) async fn meta(State(state): State<ApiMetaState>) -> impl IntoResponse
             FEE_ROUTE_COUNTRY_SSOT_FIELD
         ),
         "deadline_rating_observability": orders_deadline_rating_observability_meta,
+        "order_mock_pay_enabled": env::var("P3_CHAIN_OFF").as_deref() == Ok("1"),
     });
     if let Some(ord) = orders_section.as_object_mut() {
         let keys744: serde_json::Value = serde_json::to_value(ORDERS_META_TOP_KEYS)
@@ -1130,6 +1169,18 @@ pub(super) async fn metrics(State(state): State<ApiMetaState>) -> impl IntoRespo
         "# HELP traveltrust_chain_config_loaded 1 if chain RPC/config snapshot is mounted (CHAIN_RPC_URL path).\n\
          # TYPE traveltrust_chain_config_loaded gauge\ntraveltrust_chain_config_loaded {}",
         chain_config_loaded
+    );
+    let _ = writeln!(
+        body,
+        "# HELP traveltrust_pg_transient_retry_total Retries after transient PostgreSQL errors (EOF/stale pool).\n\
+         # TYPE traveltrust_pg_transient_retry_total counter\ntraveltrust_pg_transient_retry_total {}",
+        db::pg_transient_retry_total()
+    );
+    let _ = writeln!(
+        body,
+        "# HELP traveltrust_pg_transient_retry_exhausted_total Transient PG errors that failed after all retries.\n\
+         # TYPE traveltrust_pg_transient_retry_exhausted_total counter\ntraveltrust_pg_transient_retry_exhausted_total {}",
+        db::pg_transient_retry_exhausted_total()
     );
     (
         [(

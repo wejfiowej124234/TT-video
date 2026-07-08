@@ -1,0 +1,41 @@
+{
+  "schema": "traveltrust.hat_human_validation_step.v1",
+  "role": "acquisition",
+  "step_id": "complete",
+  "order": 6,
+  "label": "完成",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T01:42:24.150Z",
+  "validator": "Cursor Agent · HAT Human Queue · Acquisition",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "bfm_session_c_ref": "evidence/GO_production_readiness/step3/bfm/BFM-ACQUISITION-FLOW-LATEST.json",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "route": "/escrow/15d2051c-1b96-4013-82b6-06d961e3db45",
+      "status_ui": "completed"
+    },
+    "api": {
+      "verdict": "PASS",
+      "confirm": 200,
+      "status": "completed"
+    },
+    "database": {
+      "verdict": "PASS",
+      "order_id": "15d2051c-1b96-4013-82b6-06d961e3db45",
+      "status": "completed"
+    },
+    "page": {
+      "verdict": "PASS",
+      "status_ui": "completed",
+      "matches_api": true
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "completed",
+      "order_id": "15d2051c-1b96-4013-82b6-06d961e3db45"
+    }
+  },
+  "TT_SPRINT_B_ACTIVE": false
+}

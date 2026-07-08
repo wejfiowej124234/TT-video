@@ -1,0 +1,44 @@
+{
+  "schema": "traveltrust.pricing_business_data_readiness_day5.v1",
+  "recorded_at_utc": "2026-07-08T00:19:17.543Z",
+  "domain": "pricing",
+  "step1_day": 5,
+  "mode": "evidence_driven",
+  "checks_total": 5,
+  "pass": 5,
+  "fail": 0,
+  "ready": "YES",
+  "TT_PRICING_BUSINESS_DATA_READINESS_DAY5": "READY",
+  "results": [
+    {
+      "id": "guide_pricing",
+      "label": "Guide Pricing",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step3/probes/pricing_guide_pricing_probe.json"
+    },
+    {
+      "id": "provider_pricing",
+      "label": "Provider Pricing",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step3/probes/pricing_provider_pricing_probe.json"
+    },
+    {
+      "id": "acquisition_bounty",
+      "label": "Acquisition Bounty",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step3/probes/pricing_acquisition_bounty_probe.json"
+    },
+    {
+      "id": "pricing_consistency_sample",
+      "label": "Pricing Consistency Sample",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step3/probes/pricing_pricing_consistency_sample_probe.json"
+    },
+    {
+      "id": "bd001_cascade_clear",
+      "label": "BD-001 Cascade Clear",
+      "verdict": "PASS",
+      "evidence": "evidence/GO_production_readiness/step3/probes/pricing_bd001_cascade_clear_probe.json"
+    }
+  ]
+}

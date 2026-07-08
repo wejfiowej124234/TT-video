@@ -1,0 +1,179 @@
+{
+  "schema": "traveltrust.production_readiness_gate_review.v1",
+  "recorded_at_utc": "2026-07-07T15:01:42.495Z",
+  "review_type": "full_gate_review",
+  "mode": "read_only",
+  "registry_version": 11,
+  "phase": {
+    "id": "B",
+    "label": "Production Readiness Sprint",
+    "framework": "FROZEN",
+    "execution": "ACTIVE"
+  },
+  "production_entry": {
+    "TT_PRODUCTION_ENTRY_READY": "NO_GO"
+  },
+  "sprint_signals": {
+    "TT_SPRINT_A": "CLOSED",
+    "TT_SPRINT_B": "READY",
+    "TT_SPRINT_B_ACTIVE": false,
+    "active_sprint": "none",
+    "sprint_queue": [
+      "BD-005",
+      "HAT-003",
+      "BD-003",
+      "BFM-001"
+    ]
+  },
+  "closed_root_causes_session": [
+    "BD-001",
+    "BD-004",
+    "BD-002"
+  ],
+  "open_root_causes": {
+    "count": 4,
+    "ids": [
+      "BD-005",
+      "HAT-003",
+      "BD-003",
+      "BFM-001"
+    ],
+    "trend": "6→4→4 (BD-002 closed, BD-005 opened)"
+  },
+  "highest_priority_blocker": {
+    "id": "BD-005",
+    "category": "Provider Order Lifecycle",
+    "layer": "Order Creation / Fulfillment Requirement Check",
+    "failure_signature_confirmed": true,
+    "failure_signature": {
+      "http": 422,
+      "error": "market_listing_fulfillment_guide_required"
+    },
+    "business_rule_confirmed": false,
+    "fix_authorized": false,
+    "root_cause_confirmed_registry_v11": true,
+    "root_cause_confirmed_semantic_note": "Registry v11 root_cause_confirmed=true overstates; means failure location known, NOT business design approved for fix. Recommend v12 split fields.",
+    "blocker": "provider_order_lifecycle_not_ready",
+    "hat_verdict": "FAIL at create_order"
+  },
+  "bd005_governance_split_recommended": {
+    "failure_signature_confirmed": true,
+    "root_cause_candidate": "provider_fulfillment_guide_missing",
+    "business_rule_confirmed": false,
+    "fix_authorized": false,
+    "root_cause_confirmed": false
+  },
+  "remaining_open_rcs": [
+    {
+      "id": "BD-005",
+      "priority": "P0",
+      "sprint": "B head",
+      "blocker": true,
+      "note": "Provider HAT order chain blocked"
+    },
+    {
+      "id": "HAT-003",
+      "priority": "queue",
+      "sprint": "queue",
+      "blocker": false,
+      "note": "Tourist login anomaly — not Sprint B active"
+    },
+    {
+      "id": "BD-003",
+      "priority": "queue",
+      "sprint": "queue",
+      "blocker": false,
+      "note": "Cover incomplete — Day2 Images PASS for provider catalog"
+    },
+    {
+      "id": "BFM-001",
+      "priority": "queue",
+      "sprint": "queue",
+      "blocker": false,
+      "note": "Acquisition full chain not walked"
+    }
+  ],
+  "sprint_b_active_gate": {
+    "all_required": [
+      {
+        "gate": "owner_fulfillment_guide_decision",
+        "status": "PENDING",
+        "options": [
+          "A: listing requires active fulfillment guide",
+          "B: provider can fulfill without guide"
+        ]
+      },
+      {
+        "gate": "business_rule_confirmed",
+        "status": false
+      },
+      {
+        "gate": "fix_path_selected",
+        "status": false
+      },
+      {
+        "gate": "fix_applied_if_needed",
+        "status": false
+      },
+      {
+        "gate": "TT_SPRINT_B_PROVIDER_HAT_ORDER",
+        "status": "FAIL",
+        "required": "PASS"
+      },
+      {
+        "gate": "owner_explicit_active",
+        "status": false,
+        "note": "Even after HAT PASS, ACTIVE requires explicit Owner toggle"
+      }
+    ],
+    "can_active_now": false,
+    "reason": "Owner business design decision pending; HAT FAIL; fix_authorized=false"
+  },
+  "phase_gates_snapshot": {
+    "business_data_readiness": "PARTIAL (Guide YES · Provider catalog YES · Provider order NO)",
+    "hat": "NOT_PASS (Guide pass · Provider fail at order)",
+    "business_flow_matrix": "Pending",
+    "manual_validation": "Pending",
+    "production_entry": "NO_GO"
+  },
+  "evidence_refs": [
+    "registry/production-readiness-open-issues.v1.yaml",
+    "evidence/GO_production_readiness/step2/hat/SPRINT-B-PROVIDER-HAT-ORDER-LATEST.json",
+    "evidence/GO_production_readiness/step2/PROVIDER-BUSINESS-DATA-READINESS-DAY2-LATEST.json",
+    "evidence/GO_production_readiness/sprints/BD-002-REDEFINE-CONFIRMATION-LATEST.json",
+    "evidence/GO_production_readiness/sprints/SPRINT-A-EXIT-REVIEW-LATEST.json"
+  ],
+  "single_next_task": {
+    "id": "OWNER-FULFILLMENT-GUIDE-DECISION",
+    "label": "Fulfillment Guide Requirement Decision",
+    "owner": "Solo Founder",
+    "type": "business_design_decision",
+    "not_allowed": [
+      "create guide profile",
+      "modify merchant data",
+      "change 422 rule",
+      "rerun HAT",
+      "TT_SPRINT_B ACTIVE"
+    ],
+    "decision_options": {
+      "A": {
+        "label": "Provider listing requires active fulfillment guide",
+        "then": [
+          "create/complete test profile",
+          "HAT rerun",
+          "BD-005 Fix Validation"
+        ]
+      },
+      "B": {
+        "label": "Provider can fulfill without guide",
+        "then": [
+          "adjust Order Lifecycle rule",
+          "update API contract",
+          "HAT rerun"
+        ]
+      }
+    },
+    "after_decision": "Only TT_SPRINT_B_PROVIDER_HAT_ORDER=PASS permits considering TT_SPRINT_B ACTIVE=true"
+  },
+  "registry_v12_recommendation": "Patch BD-005 governance fields per bd005_governance_split_recommended; set sprint_b_phase to awaiting_owner_decision"
+}

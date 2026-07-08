@@ -1,0 +1,155 @@
+{
+  "schema": "traveltrust.manual_validation_check.v1",
+  "check_id": "refresh_recovery",
+  "order": 9,
+  "label": "刷新/恢复",
+  "verdict": "PASS",
+  "checkpoint": false,
+  "checkpoint_round": "C-final",
+  "recorded_at_utc": "2026-07-08T01:22:13.327Z",
+  "validator": "Cursor Agent · Phase 4 Manual 9 · Transaction mode",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "action": "Hard refresh + session restore UAT · compact CDP only",
+      "routes": [
+        "/market",
+        "/orders",
+        "/escrow/1bbb38dc-b333-41b2-a0ef-307586b17d46"
+      ],
+      "browser_compact": {
+        "market": {
+          "pre_reload": {
+            "login_state": "authenticated",
+            "order_count": "2",
+            "guide_count": "8"
+          },
+          "post_reload": {
+            "login_state": "authenticated",
+            "order_count": "1",
+            "has_grab_order": true,
+            "no_infinite_spinner": true
+          },
+          "hard_refresh": "navigate_reload",
+          "session_preserved": true,
+          "no_duplicate_submit": true
+        },
+        "orders": {
+          "pre_reload": {
+            "login_state": "authenticated",
+            "has_orders_list": true
+          },
+          "post_reload": {
+            "login_state": "authenticated",
+            "has_orders_list": true,
+            "no_infinite_spinner": true
+          },
+          "hard_refresh": "navigate_reload",
+          "session_preserved": true,
+          "no_duplicate_submit": true
+        },
+        "escrow": {
+          "order_id": "1bbb38dc-b333-41b2-a0ef-307586b17d46",
+          "pre_reload": {
+            "status_ui": "completed",
+            "amount_ui": true
+          },
+          "post_reload": {
+            "status_ui": "completed",
+            "status_consistent": true,
+            "amount_ui": true,
+            "no_infinite_spinner": true
+          },
+          "hard_refresh": "navigate_reload",
+          "api_status": "completed"
+        },
+        "session_recovery": {
+          "expired": {
+            "url": "https://tt-web-staging.fly.dev/auth/login?returnUrl=%2Forders",
+            "login_redirect": true
+          },
+          "restored": {
+            "url": "https://tt-web-staging.fly.dev/orders",
+            "login_state": "authenticated",
+            "has_orders_list": true,
+            "no_crash": true
+          }
+        }
+      }
+    },
+    "api": {
+      "verdict": "PASS",
+      "login": {
+        "http": 200,
+        "ok": true,
+        "user_id": "2760d445-cbf4-47d0-9461-fcba3db0516f"
+      },
+      "me": {
+        "http": 200,
+        "email": "tourist@test.com"
+      },
+      "orders": {
+        "http": 200,
+        "count": 28
+      },
+      "sample_completed": {
+        "order_id": "1bbb38dc-b333-41b2-a0ef-307586b17d46",
+        "http": 200,
+        "status": "completed"
+      },
+      "sample_created": {
+        "order_id": "61aed01a-a247-4922-8e21-ba3120833f7b",
+        "http": 200,
+        "status": "created"
+      },
+      "invalid_token_me": {
+        "http": 401,
+        "expected": 401,
+        "not_500": true
+      }
+    },
+    "database": {
+      "verdict": "PASS",
+      "note": "Read-only staging · order list + detail status consistent with probe expectations",
+      "orders_count": 28,
+      "completed_status": "completed",
+      "created_status": "created",
+      "tourist_id": "2760d445-cbf4-47d0-9461-fcba3db0516f"
+    },
+    "page": {
+      "verdict": "PASS",
+      "note": "Post-refresh UI consistent · no infinite spinner · order status matches API",
+      "routes": [
+        {
+          "route": "/market",
+          "post_refresh_ok": true,
+          "session_preserved": true
+        },
+        {
+          "route": "/orders",
+          "post_refresh_ok": true,
+          "session_preserved": true
+        },
+        {
+          "route": "/escrow/1bbb38dc-b333-41b2-a0ef-307586b17d46",
+          "post_refresh_ok": true,
+          "status_ui": "completed",
+          "matches_api": true
+        }
+      ],
+      "session_recovery": {
+        "expired_redirect_login": true,
+        "restore_to_orders": true
+      }
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "refresh_recovery_uat_pass",
+      "no_duplicate_submit": true,
+      "exception_recovery": true
+    }
+  },
+  "probe_ref": "evidence/GO_production_readiness/step4/manual/steps/manual-refresh-recovery-probe-LATEST.json"
+}

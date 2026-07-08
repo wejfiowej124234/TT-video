@@ -1,0 +1,93 @@
+{
+  "schema": "traveltrust.hat003_tourist_login_validation.v1",
+  "recorded_at_utc": "2026-07-07T16:17:17.355Z",
+  "mode": "fix_validation",
+  "issue_id": "HAT-003",
+  "api": "https://tt-api-staging.fly.dev",
+  "pilot": "tourist@test.com",
+  "admin_promote_isolated_to": "multi-demo@test.com",
+  "TT_HAT003_TOURIST_PERSONA_VALIDATION": "PASS",
+  "TT_SPRINT_B": "READY",
+  "TT_SPRINT_B_ACTIVE": false,
+  "triple_pass": [
+    {
+      "attempt": 1,
+      "http": 200,
+      "role": "tourist",
+      "has_token": true,
+      "verdict": "PASS"
+    },
+    {
+      "attempt": 2,
+      "http": 200,
+      "role": "tourist",
+      "has_token": true,
+      "verdict": "PASS"
+    },
+    {
+      "attempt": 3,
+      "http": 200,
+      "role": "tourist",
+      "has_token": true,
+      "verdict": "PASS"
+    }
+  ],
+  "steps": [
+    {
+      "step": "login_triple",
+      "verdict": "PASS",
+      "triple": [
+        {
+          "attempt": 1,
+          "http": 200,
+          "role": "tourist",
+          "has_token": true,
+          "verdict": "PASS"
+        },
+        {
+          "attempt": 2,
+          "http": 200,
+          "role": "tourist",
+          "has_token": true,
+          "verdict": "PASS"
+        },
+        {
+          "attempt": 3,
+          "http": 200,
+          "role": "tourist",
+          "has_token": true,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "step": "role_persona",
+      "role": "tourist",
+      "verdict": "PASS"
+    },
+    {
+      "step": "admin_capabilities_deny",
+      "http": 403,
+      "verdict": "PASS"
+    },
+    {
+      "step": "browse_orders",
+      "http": 200,
+      "verdict": "PASS"
+    },
+    {
+      "step": "logout_json_body",
+      "http": 200,
+      "verdict": "PASS"
+    },
+    {
+      "step": "session_invalid_after_logout",
+      "http": 401,
+      "verdict": "PASS"
+    }
+  ],
+  "governance_after_validation": {
+    "root_cause_confirmed": true,
+    "hat003_close_candidate": true
+  }
+}

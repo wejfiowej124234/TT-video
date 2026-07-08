@@ -1,0 +1,104 @@
+# Business Data Readiness · Evidence-driven Step 1
+# Phase 3 synced from day evidence · 2026-07-08
+
+schema: traveltrust.business_data_readiness.v1
+version: 5
+effective_utc: "2026-07-08"
+machine_key: TT_BUSINESS_DATA_READINESS
+mode: evidence_driven
+verdict_enum: [PASS, WARN, FAIL]
+
+ready_rule:
+  per_domain:
+    max_fail: 0
+    max_warn: 1
+  overall: 五域均 READY → Business Data Gate READY
+
+step1_schedule:
+  days:
+    - { day: 1, domain: guide, probe_script: scripts/dev/run-guide-business-data-readiness-probes.cjs }
+    - { day: 2, domain: provider, probe_script: scripts/dev/run-provider-business-data-readiness-probes.cjs }
+    - { day: 3, domain: listings, probe_script: scripts/dev/run-listings-business-data-readiness-probes.cjs }
+    - { day: 4, domain: poi, probe_script: scripts/dev/run-poi-business-data-readiness-probes.cjs }
+    - { day: 5, domain: pricing, probe_script: scripts/dev/run-pricing-business-data-readiness-probes.cjs }
+
+domain_ready_rule: 该域全部 probe PASS → domain READY · 五域 READY → Business Data Gate READY → 可进入 HAT
+
+modules:
+  - id: guide
+    label: Guide
+    step1_day: 1
+    ready: true
+    probe_script: scripts/dev/run-guide-business-data-readiness-probes.cjs
+    day_evidence: evidence/GO_production_readiness/step1/GUIDE-BUSINESS-DATA-READINESS-DAY1-LATEST.json
+    checks:
+      - { id: profile, label: Profile, verdict: warn }
+      - { id: availability, label: Availability, verdict: pass }
+      - { id: hero, label: Hero, verdict: pass }
+      - { id: pricing, label: Pricing, verdict: pass }
+      - { id: images, label: Images, verdict: warn }
+      - { id: status, label: Status, verdict: pass }
+
+  - id: provider
+    label: Provider
+    step1_day: 2
+    ready: true
+    probe_script: scripts/dev/run-provider-business-data-readiness-probes.cjs
+    day_evidence: evidence/GO_production_readiness/step2/PROVIDER-BUSINESS-DATA-READINESS-DAY2-LATEST.json
+    checks:
+      - { id: profile, label: Profile, verdict: pass }
+      - { id: pricing, label: Pricing, verdict: pass }
+      - { id: images, label: Images, verdict: pass }
+      - { id: status, label: Status, verdict: pass }
+      - { id: listings, label: Listings, verdict: pass }
+      - { id: availability, label: Availability, verdict: warn }
+
+  - id: listings
+    label: Listings
+    step1_day: 3
+    ready: true
+    probe_script: scripts/dev/run-listings-business-data-readiness-probes.cjs
+    day_evidence: evidence/GO_production_readiness/step3/LISTINGS-BUSINESS-DATA-READINESS-DAY3-LATEST.json
+    checks:
+      - { id: provider_catalog_cover, label: Provider Catalog Cover, verdict: pass, note: "BDR-listings-provider_catalog_cover · E: evidence/GO_production_readiness/step3/probes/listings_provider_catalog_cover_probe.json" }
+      - { id: acquisition_catalog_cover, label: Acquisition Catalog Cover, verdict: pass, note: "BDR-listings-acquisition_catalog_cover · E: evidence/GO_production_readiness/step3/probes/listings_acquisition_catalog_cover_probe.json" }
+      - { id: provider_detail, label: Provider Detail, verdict: pass, note: "BDR-listings-provider_detail · E: evidence/GO_production_readiness/step3/probes/listings_provider_detail_probe.json" }
+      - { id: acquisition_detail, label: Acquisition Detail, verdict: pass, note: "BDR-listings-acquisition_detail · E: evidence/GO_production_readiness/step3/probes/listings_acquisition_detail_probe.json" }
+      - { id: discover_orders_cover, label: Discover Orders Cover, verdict: pass, note: "BDR-listings-discover_orders_cover · E: evidence/GO_production_readiness/step3/probes/listings_discover_orders_cover_probe.json" }
+      - { id: cross_surface_integrity, label: Cross Surface Integrity, verdict: pass, note: "BDR-listings-cross_surface_integrity · E: evidence/GO_production_readiness/step3/probes/listings_cross_surface_integrity_probe.json" }
+
+  - id: poi
+    label: POI
+    step1_day: 4
+    ready: true
+    probe_script: scripts/dev/run-poi-business-data-readiness-probes.cjs
+    day_evidence: evidence/GO_production_readiness/step3/POI-BUSINESS-DATA-READINESS-DAY4-LATEST.json
+    checks:
+      - { id: poi_catalog, label: POI Catalog, verdict: pass, note: "BDR-poi-poi_catalog · E: evidence/GO_production_readiness/step3/probes/poi_poi_catalog_probe.json" }
+      - { id: cms_media_catalog, label: CMS Media Catalog, verdict: pass, note: "BDR-poi-cms_media_catalog · E: evidence/GO_production_readiness/step3/probes/poi_cms_media_catalog_probe.json" }
+      - { id: guide_hero_images, label: Guide Hero Images, verdict: pass, note: "BDR-poi-guide_hero_images · E: evidence/GO_production_readiness/step3/probes/poi_guide_hero_images_probe.json" }
+      - { id: poi_sample_head, label: POI Sample HEAD, verdict: pass, note: "BDR-poi-poi_sample_head · E: evidence/GO_production_readiness/step3/probes/poi_poi_sample_head_probe.json" }
+      - { id: staging_health, label: Staging Health, verdict: pass, note: "BDR-poi-staging_health · E: evidence/GO_production_readiness/step3/probes/poi_staging_health_probe.json" }
+
+  - id: pricing
+    label: Pricing
+    step1_day: 5
+    ready: true
+    probe_script: scripts/dev/run-pricing-business-data-readiness-probes.cjs
+    day_evidence: evidence/GO_production_readiness/step3/PRICING-BUSINESS-DATA-READINESS-DAY5-LATEST.json
+    checks:
+      - { id: guide_pricing, label: Guide Pricing, verdict: pass, note: "BDR-pricing-guide_pricing · E: evidence/GO_production_readiness/step3/probes/pricing_guide_pricing_probe.json" }
+      - { id: provider_pricing, label: Provider Pricing, verdict: pass, note: "BDR-pricing-provider_pricing · E: evidence/GO_production_readiness/step3/probes/pricing_provider_pricing_probe.json" }
+      - { id: acquisition_bounty, label: Acquisition Bounty, verdict: pass, note: "BDR-pricing-acquisition_bounty · E: evidence/GO_production_readiness/step3/probes/pricing_acquisition_bounty_probe.json" }
+      - { id: pricing_consistency_sample, label: Pricing Consistency Sample, verdict: pass, note: "BDR-pricing-pricing_consistency_sample · E: evidence/GO_production_readiness/step3/probes/pricing_pricing_consistency_sample_probe.json" }
+      - { id: bd001_cascade_clear, label: BD-001 Cascade Clear, verdict: pass, note: "BDR-pricing-bd001_cascade_clear · E: evidence/GO_production_readiness/step3/probes/pricing_bd001_cascade_clear_probe.json" }
+
+overall:
+  guide: READY
+  provider: READY
+  listings: READY
+  poi: READY
+  pricing: READY
+  business_data_readiness: READY
+
+evidence_script: scripts/dev/run-production-readiness-master-checklist.cjs

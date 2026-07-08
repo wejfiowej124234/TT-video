@@ -1,0 +1,36 @@
+{
+  "schema": "traveltrust.g3_r2_lifecycle_policy.v1",
+  "bucket": "traveltrust-community-media",
+  "rules": [
+    {
+      "id": "official_v1_current",
+      "prefix": "official-cold-start/v1/",
+      "status": "ACTIVE",
+      "expiration_days": null,
+      "superseded_after_days": null,
+      "transition": null,
+      "delete": false,
+      "note": null
+    },
+    {
+      "id": "official_superseded_prefix",
+      "prefix": "official-cold-start/",
+      "status": "ACTIVE",
+      "expiration_days": null,
+      "superseded_after_days": 90,
+      "transition": "STANDARD_IA",
+      "delete": false,
+      "note": "Governance unpublish required before hard delete"
+    },
+    {
+      "id": "community_media_current",
+      "prefix": "community-media/v1/",
+      "status": "ACTIVE",
+      "expiration_days": null,
+      "superseded_after_days": null,
+      "transition": null,
+      "delete": false,
+      "note": null
+    }
+  ]
+}

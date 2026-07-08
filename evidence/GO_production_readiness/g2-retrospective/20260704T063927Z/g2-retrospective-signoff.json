@@ -1,0 +1,53 @@
+{
+  "schema": "traveltrust.g2_retrospective.v1",
+  "stamp": "20260704T063927Z",
+  "commit": "9b90696d",
+  "purpose": "Freeze immutable G2 baseline before G3 production go-live work",
+  "honest_boundary": "G2 Retrospective does not re-run probes · does not change G2 Gate · G3 work must not mutate G2 evidence paths",
+  "preflight": {
+    "TT_PRODUCTION_READINESS_G2_GATE": "PASS",
+    "TT_WAVE2_FORMAL_ACCEPTANCE": "COMPLETE",
+    "TT_G2_REALITY_VERIFICATION": "COMPLETE"
+  },
+  "machine_keys": {
+    "TT_G2_RETROSPECTIVE": "COMPLETE",
+    "TT_PRODUCTION_READINESS_G2_GATE": "PASS",
+    "TT_WAVE2_FORMAL_ACCEPTANCE": "COMPLETE",
+    "TT_PRODUCTION_READINESS_G3_GATE": "NOT_STARTED",
+    "TT_PRODUCTION_GO": "NO_GO"
+  },
+  "evidence_index_path": "evidence/GO_production_readiness/g2-retrospective/20260704T063927Z/g2-evidence-index.json",
+  "matrix_snapshot_path": "evidence/GO_production_readiness/g2-retrospective/20260704T063927Z/g2-master-matrix-snapshot.yaml",
+  "formal_baseline": "evidence/GO_production_readiness/wave-2-g2/20260704T062229Z",
+  "verification_baseline": "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z",
+  "g2_blockers": [
+    {
+      "id": "PRM-SEC-B001",
+      "status": "CLOSED",
+      "closed_evidence": "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/security-b001",
+      "exists": true
+    },
+    {
+      "id": "PRM-SEC-B002",
+      "status": "CLOSED",
+      "closed_evidence": "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/security-b002",
+      "exists": true
+    },
+    {
+      "id": "PRM-PER-B001",
+      "status": "CLOSED",
+      "closed_evidence": "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/performance-b001",
+      "exists": true
+    },
+    {
+      "id": "PRM-MON-B001",
+      "status": "CLOSED",
+      "closed_evidence": "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/monitoring-b001",
+      "exists": true
+    }
+  ],
+  "lessons_count": 5,
+  "g3_entry_checklist_path": "evidence/GO_production_readiness/g2-retrospective/20260704T063927Z/g3-entry-checklist.json",
+  "g3_ready": true,
+  "verdict": "G2_RETROSPECTIVE_COMPLETE"
+}

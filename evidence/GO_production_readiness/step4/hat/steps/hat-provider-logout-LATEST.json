@@ -1,0 +1,48 @@
+{
+  "schema": "traveltrust.hat_human_validation_step.v1",
+  "role": "provider",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T02:10:00.000Z",
+  "validator": "Cursor Agent · HAT Human Queue · Provider",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "pilot": "merchant@test.com",
+  "immutable_id": "C4",
+  "user_id": "fe929c0c-c52d-4f3b-bee8-31d2685766ec",
+  "guide_id": "627c8c31-3e60-480a-8cd8-f50b0d1e3145",
+  "bfm_session_a_ref": "evidence/GO_production_readiness/step3/bfm/BFM-PROVIDER-FLOW-LATEST.json",
+  "bfm_register_ref": "evidence/GO_production_readiness/step3/bfm/steps/provider-register-LATEST.json",
+  "bd005_ref": "evidence/GO_production_readiness/step2/hat/SPRINT-B-PROVIDER-HAT-ORDER-LATEST.json",
+  "provider_ssot": "frontend/app/provider/register/README.md",
+  "TT_SPRINT_B_ACTIVE": false,
+  "step_id": "logout",
+  "order": 2,
+  "label": "退出",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "action": "Clear session → GET /provider",
+      "login_redirect": true,
+      "url": "/auth/login?returnUrl=%2Fprovider"
+    },
+    "api": {
+      "verdict": "PASS",
+      "logout_http": 200,
+      "me_after_logout_http": 401
+    },
+    "database": {
+      "verdict": "PASS",
+      "note": "N/A session teardown read-only"
+    },
+    "page": {
+      "verdict": "PASS",
+      "login_redirect": true,
+      "returnUrl": "/provider",
+      "token_cleared": true
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "session_cleared"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+# Manual Validation · 真人 UAT 清单
+# 不是 Playwright · Chrome / 手机 / Edge / 钱包 / 弱网
+# Parent: registry/production-readiness-master-checklist.v1.yaml
+
+schema: traveltrust.manual_validation_checklist.v1
+version: 10
+effective_utc: "2026-07-08"
+machine_key: TT_MANUAL_VALIDATION_CHECKLIST
+execute_order: 4
+priority: P3
+
+goal: 真人点击 · 填写 · 付款 · 取消 · 异常 · 刷新 · 恢复 · 全设备体验
+
+verdict_enum: [pass, fail, pending]
+
+checks:
+  - { id: chrome_desktop, label: Chrome 桌面, verdict: pass, note: "Manual-chrome_desktop · UAT PASS · E: evidence/GO_production_readiness/step4/manual/steps/manual-chrome_desktop-LATEST.json" }
+  - { id: mobile, label: 手机, verdict: pass, note: "Manual-mobile · UAT PASS · E: evidence/GO_production_readiness/step4/manual/steps/manual-mobile-LATEST.json" }
+  - { id: edge, label: Edge, verdict: pass, note: "Manual-edge · UAT PASS · E: evidence/GO_production_readiness/step4/manual/steps/manual-edge-LATEST.json" }
+  - { id: wallet, label: 钱包连接, verdict: pass, note: "Manual-wallet · UAT PASS · E: evidence/GO_production_readiness/step4/manual/steps/manual-wallet-LATEST.json" }
+  - { id: weak_network, label: 弱网, verdict: pass, note: "Manual-weak_network · UAT PASS · E: evidence/GO_production_readiness/step4/manual/steps/manual-weak_network-LATEST.json" }
+  - { id: login_flow, label: 登录/登出, verdict: pass, note: "Manual-login_flow · UAT PASS · E: evidence/GO_production_readiness/step4/manual/steps/manual-login_flow-LATEST.json" }
+  - { id: pay_mock, label: 支付(Mock), verdict: pass, note: "Manual-pay_mock · UAT PASS · E: evidence/GO_production_readiness/step4/manual/steps/manual-pay_mock-LATEST.json" }
+  - { id: cancel_refund, label: 取消/异常, verdict: pass, note: "Manual-cancel_refund · UAT PASS · E: evidence/GO_production_readiness/step4/manual/steps/manual-cancel_refund-LATEST.json" }
+  - { id: refresh_recovery, label: 刷新/恢复, verdict: pass, note: "Manual-refresh_recovery · UAT PASS · E: evidence/GO_production_readiness/step4/manual/steps/manual-refresh_recovery-LATEST.json" }
+
+evidence_script: scripts/dev/run-production-readiness-master-checklist.cjs

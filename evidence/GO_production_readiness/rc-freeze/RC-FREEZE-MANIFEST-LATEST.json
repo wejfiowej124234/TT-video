@@ -1,0 +1,676 @@
+{
+  "schema": "traveltrust.production_readiness_rc_freeze_manifest.v1",
+  "stamp": "20260708T041200Z",
+  "frozen_at_utc": "2026-07-08T04:12:00.780Z",
+  "mode": "release_candidate_freeze",
+  "git_sha": "9b90696d5ff18f7e095f427f48d2f6e193b304d9",
+  "machine_keys": {
+    "TT_PRODUCTION_READINESS_RC_FREEZE": "FROZEN",
+    "TT_PRODUCTION_ENTRY_READY": "YES",
+    "TT_SPRINT_B_ACTIVE": false
+  },
+  "registry_anchor": {
+    "ssot": "registry/production-readiness-open-issues.v1.yaml",
+    "version": 17,
+    "sha256": "60cb7b5e0ab7e78c8d9f5c59a8d1f49a0729ced92a85bf3e47ac379d61acbbaa"
+  },
+  "registries": [
+    {
+      "path": "registry/production-readiness-open-issues.v1.yaml",
+      "version": 17,
+      "sha256": "60cb7b5e0ab7e78c8d9f5c59a8d1f49a0729ced92a85bf3e47ac379d61acbbaa",
+      "bytes": 18075
+    },
+    {
+      "path": "registry/production-readiness-phase-gates.v1.yaml",
+      "version": 2,
+      "sha256": "b5cc8452716485a1b142ecda3fddc6fbd7512ed561da109c6f0c1673711d36ba",
+      "bytes": 2130
+    },
+    {
+      "path": "registry/production-readiness-master-checklist.v1.yaml",
+      "version": 4,
+      "sha256": "422d14185ec923f307d1e10d85fe7d1c890ee2a4cd2d3783cbcd11c5007a7f06",
+      "bytes": 5426
+    },
+    {
+      "path": "registry/business-data-readiness.v1.yaml",
+      "version": 5,
+      "sha256": "209975637c05ee2a44f79025a44be0806c56f5f674d56af653757a87955f7a8a",
+      "bytes": 6553
+    },
+    {
+      "path": "registry/business-flow-matrix.v1.yaml",
+      "version": 5,
+      "sha256": "f5e9edbf30fc9e366a7584a9a0074fc61750b7110c458996372ebc6dfdbcf71c",
+      "bytes": 3828
+    },
+    {
+      "path": "registry/hat-six-role-matrix.v1.yaml",
+      "version": 11,
+      "sha256": "34f4b0d5d1863191123a280e870dd7dd3b01508c7d77064375507420eb0b79ac",
+      "bytes": 7004
+    },
+    {
+      "path": "registry/manual-validation-checklist.v1.yaml",
+      "version": 10,
+      "sha256": "f5666b5e1cca43078c13167868849151a3152e4ac1f8494397a34978a072d396",
+      "bytes": 2239
+    }
+  ],
+  "evidence": {
+    "root": "evidence/GO_production_readiness",
+    "count": 118,
+    "files": [
+      {
+        "path": "evidence/GO_production_readiness/PRODUCTION-READINESS-MASTER-CHECKLIST-LATEST.json",
+        "sha256": "8b82d8960afe294308495507474634334e7d301a5a72f7b3d747ffc68b93f0ea",
+        "bytes": 21489
+      },
+      {
+        "path": "evidence/GO_production_readiness/PRODUCTION-READINESS-MASTER-CHECKLIST-LATEST.md",
+        "sha256": "e0e900f6d622e2000afe3f78f4d339d88eabb38f684cc748ef5d7299dbbf8af8",
+        "bytes": 4841
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/BD-002-REDEFINE-CONFIRMATION-LATEST.json",
+        "sha256": "3135e3a7726d1f4980966810f415db70ff76c59d4844015bd01499d701dacbbe",
+        "bytes": 2660
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/BD-003-DISCOVERY-LATEST.json",
+        "sha256": "9936bc3e356abbeb673f04fb00f52b2a025fa561cdec3517cf9d3ec5a030e503",
+        "bytes": 511
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/BD-003-REDEFINE-CONFIRMATION-LATEST.json",
+        "sha256": "ee4e31571325bae91db57810e75995a75bf9680c9aa915e844b1bd67465e56a6",
+        "bytes": 3306
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/BD-005-FIX-AUTHORIZATION-GRANTED-LATEST.json",
+        "sha256": "d7475b122c04be1fc1ef1bc456bd2e547a9da2a1d44013d80cc856b26d782af9",
+        "bytes": 593
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/BD-005-FIX-AUTHORIZATION-REQUEST-LATEST.json",
+        "sha256": "e3f34e0131e73fbb2a5a9fbd074c422f177b94abd1881ba6a5fd242e0276be36",
+        "bytes": 1568
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/BD-005-FIX-VALIDATION-LATEST.json",
+        "sha256": "c24fdb61bbd67bfcfe23fb1607b52cd29e657f3f7f504a51e84dc718a3fd17a0",
+        "bytes": 413
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/BFM-001-DISCOVERY-LATEST.json",
+        "sha256": "32e507f4a1b202ac81ef54ff219e0c6988e5b5c77822f13b9019c50215c84e4d",
+        "bytes": 575
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/BFM-001-REDEFINE-CONFIRMATION-LATEST.json",
+        "sha256": "ff4691c920b1dc6fb1626b435cff80d77a5af1ad62911782b5ddc4aeac063ba5",
+        "bytes": 2999
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/HAT-003-DISCOVERY-LATEST.json",
+        "sha256": "699c67d8a263f53e39821868dee4872de7ca79c4cf1444da5174c97c50d77522",
+        "bytes": 838
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/HAT-003-FIX-AUTHORIZATION-GRANTED-LATEST.json",
+        "sha256": "9d9d218edbc8ee6278802d3bfee4232482de4c508b003530cb048d26fc5a8309",
+        "bytes": 680
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/HAT-003-FIX-AUTHORIZATION-REQUEST-LATEST.json",
+        "sha256": "59454e33248ebd9fdcf2e6688af78d1f491f34da124acede3d7947c12f5f70e2",
+        "bytes": 2348
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/HAT-003-FIX-VALIDATION-LATEST.json",
+        "sha256": "414e0e52b30a750dbc72acb496c52c66dee44889a4459eb864af243192dcfea3",
+        "bytes": 315
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/HAT-003-REDEFINE-CONFIRMATION-LATEST.json",
+        "sha256": "0a2a5b7ff0057ea3089d50d3546b19669960e06a7ebe08e52ac918ad0bc23c25",
+        "bytes": 1682
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/HAT-EVIDENCE-SYNC-LATEST.json",
+        "sha256": "3b08ea3df610659fb9e66a11863a9317717530f3afc4e8cecdd88dcf66528d1d",
+        "bytes": 2048
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/OWNER-BFM-001-DISPOSITION-DECISION-LATEST.json",
+        "sha256": "b18ec5e77ee2ff9efdc0ec35c99312cc7b24bdedfa156412bc33c2629a012f72",
+        "bytes": 1989
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/OWNER-FULFILLMENT-GUIDE-DECISION-LATEST.json",
+        "sha256": "8a7e1976a6ac71823e223e6637811c52d2f967316f70106d55a9c3946702bfd6",
+        "bytes": 1236
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/OWNER-LISTINGS-COVER-DECISION-LATEST.json",
+        "sha256": "aeccc77e6400be06f0a7be48eb7844c612ded3551c7cb0c0c91c024a58ddffbe",
+        "bytes": 1726
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/OWNER-PHASE1-MATRIX-EVIDENCE-SYNC-AUTHORIZATION-GRANTED-LATEST.json",
+        "sha256": "1618cb008db681cc00ae28ad7b97877fbbbde36d0a1bf4498f312d149818ecd6",
+        "bytes": 973
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/OWNER-PHASE1-MATRIX-EVIDENCE-SYNC-AUTHORIZATION-REQUEST-LATEST.json",
+        "sha256": "93be7c19901a882aec8547f6d9f3306e1ccd1b793b2b16fd9001c34e2389852c",
+        "bytes": 7126
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/OWNER-PHASE2-BFM-HUMAN-VALIDATION-AUTHORIZATION-GRANTED-LATEST.json",
+        "sha256": "2c1f8e5919a203ab26a19c313f017737fa74ba8d6c6d7b4537ac68ea3f2b7fd6",
+        "bytes": 552
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/OWNER-PHASE2-BFM-HUMAN-VALIDATION-AUTHORIZATION-REQUEST-LATEST.json",
+        "sha256": "24107f9a7e1035fd989a711179a3bad1964b48270851991769dc75a2752c37bb",
+        "bytes": 7226
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/OWNER-TOURIST-PERSONA-DECISION-LATEST.json",
+        "sha256": "6308acce2b4eae7edeeacc05293f54a9cde55cf165551a24bd8309efbd19b7b4",
+        "bytes": 1308
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/PHASE1-MATRIX-EVIDENCE-SYNC-EXECUTION-LATEST.json",
+        "sha256": "9395e7606759aff35ae1cb687270e55fc54eb81b1c594899f9f6a07394cb25e5",
+        "bytes": 3944
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/PHASE2-BFM-HUMAN-VALIDATION-EXECUTION-LATEST.json",
+        "sha256": "d873eae5ecad36e0ea8c21068d0ea4d0d2cfba89b416e532589f5ba11d2d0639",
+        "bytes": 1131
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/PHASE2-HUMAN-VALIDATION-BFM-EXECUTION-PLAN-LATEST.json",
+        "sha256": "b2689f33ed7ef1ba1cb50c63ca1c0a211f3e499eae6f936d39f560da019827eb",
+        "bytes": 12590
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/PHASE3-BDR-DAY2-5-EXECUTION-LATEST.json",
+        "sha256": "522e2b54c9ebf9f3036bdd59ff72dc787410530399567c97a6d4dd6edd0b2236",
+        "bytes": 806
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/PHASE4-MANUAL-VALIDATION-EXECUTION-LATEST.json",
+        "sha256": "8c321d1ca2f4ea23ada4b6b19a1c449e80a6598beb6582cfbcd5b698c14169aa",
+        "bytes": 7769
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/PHASE4-MANUAL-VALIDATION-EXECUTION-PLAN-LATEST.json",
+        "sha256": "066e8f1a8d4ee88a1aaa78e4454366abd2d85bb9130804884af9ca342d01956c",
+        "bytes": 9663
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/PRODUCTION-ENTRY-HUMAN-VALIDATION-PLAN-LATEST.json",
+        "sha256": "c218c133a52ce029af6bcc374ace28d42a2a613a3f6f1d49341b4714a91a0b5b",
+        "bytes": 10043
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/PRODUCTION-READINESS-FINAL-GATE-CLOSURE-LATEST.json",
+        "sha256": "26cff71e06f8d12fbbacd4dfcdc3356bccf93027e591bfadefb1d967f53269b1",
+        "bytes": 2402
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/PRODUCTION-READINESS-FINAL-GATE-REEVALUATION-LATEST.json",
+        "sha256": "48ebc152eed63856843ebf1159cefddaae9292c552bd845a1e81e71d237df004",
+        "bytes": 10601
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/PRODUCTION-READINESS-GATE-REVIEW-LATEST.json",
+        "sha256": "bfd465b25fa5a9be339c197a771cc8163aaae8a1a4f40998cad01406478b4eea",
+        "bytes": 5338
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/PRODUCTION-READINESS-GATE-REVIEW-LATEST.md",
+        "sha256": "9dbd0973c3a82d62b2573f1f33c40cb86fbbc69b8e9aae2bfb751059f13fade5",
+        "bytes": 5517
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/SPRINT-A-EXIT-REVIEW-LATEST.json",
+        "sha256": "e15a01082e2d9a8719ddb969534af7b6316e4cb5029b0d6249d39e8ad335f521",
+        "bytes": 1206
+      },
+      {
+        "path": "evidence/GO_production_readiness/sprints/SPRINT-A-EXIT-REVIEW-LATEST.md",
+        "sha256": "86e978215f579dc12c6f2905400e4f9405ba8e91ba57c81a47d623b9c0e7d029",
+        "bytes": 514
+      },
+      {
+        "path": "evidence/GO_production_readiness/step1/GUIDE-BUSINESS-DATA-READINESS-DAY1-LATEST.json",
+        "sha256": "7658fee624abbc4ff36cb36f2ddb5ede367e37691736de61ef1f7f472121f9e2",
+        "bytes": 4362
+      },
+      {
+        "path": "evidence/GO_production_readiness/step1/GUIDE-BUSINESS-DATA-READINESS-DAY1-LATEST.md",
+        "sha256": "04460af47b9dd46ace7282e3f2bf1debd292e4d00e1d09037a4f2c7697a676c7",
+        "bytes": 1127
+      },
+      {
+        "path": "evidence/GO_production_readiness/step1/hat/SPRINT-A-GUIDE-HAT-ORDER-LATEST.json",
+        "sha256": "0eb2effdba2f3ebb049db49ee38a263ac1bc4cde2bc1157d4a6f4b97cb5fbf38",
+        "bytes": 1396
+      },
+      {
+        "path": "evidence/GO_production_readiness/step1/hat/SPRINT-A-GUIDE-HAT-ORDER-LATEST.md",
+        "sha256": "9cd47e09519b175a1e7d968989625e2dbcf5bf1a75793dc9f4ceccf92e1e7220",
+        "bytes": 201
+      },
+      {
+        "path": "evidence/GO_production_readiness/step1/validation/BD-001-ROOT-CAUSE-VALIDATION-LATEST.json",
+        "sha256": "7cc8d811b69cfc0c6f0494b4ea7ec468f0212c221cabe625074f6c506509aa6b",
+        "bytes": 1248
+      },
+      {
+        "path": "evidence/GO_production_readiness/step1/validation/BD-001-ROOT-CAUSE-VALIDATION-LATEST.md",
+        "sha256": "678991e198760a86702d2ae66d93aecfcd1416b2ed7bc1f27e80101d300b85ed",
+        "bytes": 409
+      },
+      {
+        "path": "evidence/GO_production_readiness/step2/PROVIDER-BUSINESS-DATA-READINESS-DAY2-LATEST.json",
+        "sha256": "8e794d93a89d40ce189d16c59d6961b2f445dd70d18986902f0bd56f056e0c78",
+        "bytes": 3318
+      },
+      {
+        "path": "evidence/GO_production_readiness/step2/PROVIDER-BUSINESS-DATA-READINESS-DAY2-LATEST.md",
+        "sha256": "32dd3c484b8416867ec5c0bd641da5ad72e632bba1d0c25d8366df20eb84e1d3",
+        "bytes": 348
+      },
+      {
+        "path": "evidence/GO_production_readiness/step2/hat/HAT-003-TOURIST-LOGIN-DISCOVERY-LATEST.json",
+        "sha256": "16345d470446441ae3798742f5c5ae6c4948cf4ebd7c9eaa24bdde6789b9e645",
+        "bytes": 3818
+      },
+      {
+        "path": "evidence/GO_production_readiness/step2/hat/HAT-003-TOURIST-LOGIN-VALIDATION-LATEST.json",
+        "sha256": "3c2de40c9e32b0be5274cca851ea81060cdbbef1fcd8685d599f0d84e09b8907",
+        "bytes": 1952
+      },
+      {
+        "path": "evidence/GO_production_readiness/step2/hat/SPRINT-B-PROVIDER-HAT-ORDER-LATEST.json",
+        "sha256": "4e9d752c9de20cac73ae1d448a329f196405cd93940d45936c3a98b846c7e6fd",
+        "bytes": 2728
+      },
+      {
+        "path": "evidence/GO_production_readiness/step2/hat/SPRINT-B-PROVIDER-HAT-ORDER-LATEST.md",
+        "sha256": "7eb6b32348549f74a8a9b486ac3a2f7bf592951adc9739f89f27ca39225caba8",
+        "bytes": 852
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/BD-003-DATA-LINEAGE-AUDIT-LATEST.json",
+        "sha256": "14afb36df42e4833a58f927998a32748ea40df700d0ebcadeb1e917de0486acf",
+        "bytes": 6520
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/BD-003-LISTINGS-COVER-DISCOVERY-LATEST.json",
+        "sha256": "7d4737961ae17817606bfb15b0a78ee50706d99a02d25e05bdf251ef742f443e",
+        "bytes": 11498
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/LISTINGS-BUSINESS-DATA-READINESS-DAY3-LATEST.json",
+        "sha256": "f909913f1cc54e67c45b5ca6095523da122acfa80bfabad88bf17426a4c91280",
+        "bytes": 1877
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/POI-BUSINESS-DATA-READINESS-DAY4-LATEST.json",
+        "sha256": "c62aa6c52e58a4f5d5399111e0d6eb04da21269ef4779aae01bde1f353540fd1",
+        "bytes": 1312
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/PRICING-BUSINESS-DATA-READINESS-DAY5-LATEST.json",
+        "sha256": "7ab7490e00f102f0810fb96f9c22b8d8342afced4ad201697193f9e608f8f32c",
+        "bytes": 1399
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/BFM-ACQUISITION-FLOW-LATEST.json",
+        "sha256": "49bb1a3470de35b7804b96cab839395c9a95d15a844dc0cfdf7c0f2fac301445",
+        "bytes": 1125
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/BFM-ACQUISITION-FLOW-LATEST.md",
+        "sha256": "61b05ff15d864f9708c02150a538d6d5466a8ed0b0a9fb0dd2d684fada7cf4b6",
+        "bytes": 296
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/BFM-GUIDE-FLOW-LATEST.json",
+        "sha256": "102f9fdc60501de0193b76031882fb8a540d270e608d0fa1ae9fd46e2a25dce4",
+        "bytes": 1210
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/BFM-GUIDE-FLOW-LATEST.md",
+        "sha256": "3aee741735043806d2380288e01df6820a935343ecdbff7134156c14eeec057e",
+        "bytes": 325
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/BFM-PROVIDER-FLOW-LATEST.json",
+        "sha256": "ded849cb34be2878303cd0ed2032d64ad0a413ddc415c76244eb8a7866905c2d",
+        "bytes": 906
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/BFM-PROVIDER-FLOW-LATEST.md",
+        "sha256": "5a316136d463226b30ecf05e0ff4539fa6b8d06bf0c251e1a643d245fa905d39",
+        "bytes": 277
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/steps/acquisition-close_deal-LATEST.json",
+        "sha256": "815be58ac71930b7e9b5e628565a953a9a639c21f91ce99b5cc8eb51951dc85b",
+        "bytes": 959
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/steps/acquisition-complete-LATEST.json",
+        "sha256": "0b32a074624dd2f250edcf6832cc62d00134aad1791c22b8c4ad5675441f5fb2",
+        "bytes": 892
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/steps/acquisition-publish-LATEST.json",
+        "sha256": "26ab5fd9557b28d76806f90430a963344ff8118b9dea6d3b2e3c5cb0e78d329d",
+        "bytes": 1174
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/steps/acquisition-respond-LATEST.json",
+        "sha256": "9601a4ac6b779682be5f95cd4018493b3a0009ea1fb512f0db26318d9a7b5e09",
+        "bytes": 1073
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/steps/guide-book-LATEST.json",
+        "sha256": "fce09d1ddf81e23a994c1d32ce5ac97266ec5fa15c2867af51c9c103c8e9ea8d",
+        "bytes": 1145
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/steps/guide-complete-LATEST.json",
+        "sha256": "3d7fbaa02cc7feed6ad59c84a869151b3e706f93de0af661319fb33e9edfacbd",
+        "bytes": 917
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/steps/guide-list-LATEST.json",
+        "sha256": "10fc526d4ab27596ae0b393b3338c487afbc2d77a7d592e28798aef44c397ae2",
+        "bytes": 1134
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/steps/guide-order-LATEST.json",
+        "sha256": "7ae9401873946863e89ff85b5995f1ee0f1abfd342fd64da69ea9162b9b02fcc",
+        "bytes": 973
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/steps/guide-profile-LATEST.json",
+        "sha256": "fc2103e2484e2416a076c76e6bda669d54ac8133f9876c3622b03e4587fd0b00",
+        "bytes": 783
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/steps/guide-register-LATEST.json",
+        "sha256": "4177e71814dad46d3967b1be616fb30dd6be1654a50d31ee2ca1cb067d16d03d",
+        "bytes": 932
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/steps/guide-review-LATEST.json",
+        "sha256": "f4cb0bd1530d0898d4d16dffc4406448e05825ae1ef3b7385b169f9e826fd7f3",
+        "bytes": 914
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/steps/guide-review_post-LATEST.json",
+        "sha256": "11e752486e55cdff01ab34740a3636d93e96ba439da8695ca68aa5deaa56d0f7",
+        "bytes": 896
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/steps/provider-complete-LATEST.json",
+        "sha256": "63fcab8f049c877ed93ff0c07719f8639418855404e07f4797324d0a14dab496",
+        "bytes": 1000
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/steps/provider-order-LATEST.json",
+        "sha256": "66e22f87c30a527872222bbc85f160eb8125a0315a185e08feaae721892fd37a",
+        "bytes": 1002
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/steps/provider-product-LATEST.json",
+        "sha256": "7c2d8dd0f3e3819420c8895abaf79dba63cd2a8b2110e2f24c384a99aae6503e",
+        "bytes": 1115
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/steps/provider-publish-LATEST.json",
+        "sha256": "762d0603262d50203ed0769c13d5ed24166b41bf753a39568c533d9f4f4e7b38",
+        "bytes": 1126
+      },
+      {
+        "path": "evidence/GO_production_readiness/step3/bfm/steps/provider-register-LATEST.json",
+        "sha256": "d9311e04bb07f6d5596240b742d071539a22f74fc387fbc9a68ed1981594c035",
+        "bytes": 1235
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/BFM-001-ACQUISITION-CHAIN-DISCOVERY-LATEST.json",
+        "sha256": "657f263d46cb148592708aeb581534876e967ad78bcabc766b8ad70054afb7c1",
+        "bytes": 9135
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/HAT-ACQUISITION-HUMAN-QUEUE-LATEST.json",
+        "sha256": "cb43a7c44bfc8e669c64584271c1ed1edb728339b9264d6163a44a5ba558adaa",
+        "bytes": 2058
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/HAT-ADMIN-HUMAN-QUEUE-LATEST.json",
+        "sha256": "86acab21b293246e70188ebe4599137b7e2687ff5f06af20ecce0e4f434af6ea",
+        "bytes": 976
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/HAT-GOVERNANCE-HUMAN-QUEUE-LATEST.json",
+        "sha256": "431ba9112c72b219522b26608dbda7e5045dc65d6803f440dc4aa202707cc122",
+        "bytes": 1076
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/HAT-GUIDE-HUMAN-QUEUE-LATEST.json",
+        "sha256": "650d1f307fe14283d3652bf8ef019c85225c40d81f89469b2884e7dbdb0eb561",
+        "bytes": 767
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/HAT-PROVIDER-HUMAN-QUEUE-LATEST.json",
+        "sha256": "ddd4b3b02bbb0056f39fddb300ffb6b2b909155d16c6d284c2fc67a6df6afaec",
+        "bytes": 768
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/HAT-TOURIST-HUMAN-QUEUE-LATEST.json",
+        "sha256": "6e6ba3ce8bdcb5e1907c4bce6aa6850712e1bf74cf1352b3c12448b57e005930",
+        "bytes": 647
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-acquisition-browse-LATEST.json",
+        "sha256": "e0766228c178db532d5950c105d633b96609b354fdfcf963b55cab22ff60cbe0",
+        "bytes": 1217
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-acquisition-complete-LATEST.json",
+        "sha256": "4f8a92f7f4e955b842f5bd9f0ae9f821e2199b1dd9dd8ee8b1b9e783a539c918",
+        "bytes": 1209
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-acquisition-login-LATEST.json",
+        "sha256": "17988d3111e5046f6793101e07e09ec9cc05ba2cdf3873ad6110bdcaf99f9edc",
+        "bytes": 1210
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-acquisition-logout-LATEST.json",
+        "sha256": "855275a27e24489d534ef231586bbc9ba8f17d3bcd5ae40f2e8c0347ad0dbf9e",
+        "bytes": 1143
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-acquisition-order-LATEST.json",
+        "sha256": "7e700c319d4c0cdf012351f15214c28290fbbb211703be53d9cbd1c640e0d532",
+        "bytes": 1765
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-acquisition-pay-LATEST.json",
+        "sha256": "aaf049f5dc66ddfd3d28d53e0948b35932edebbfc65fa10a9f53e064e23eb760",
+        "bytes": 1290
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-acquisition-register-LATEST.json",
+        "sha256": "37e805cf88847651c7cb3965b3ecce4256da34e602be028c595bdc812b428598",
+        "bytes": 1600
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-admin-browse-LATEST.json",
+        "sha256": "8fd6dcfa49f6c5097d405ba18791a69fb2befe016a4d7a3457c088b6bff7983a",
+        "bytes": 1693
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-admin-complete-LATEST.json",
+        "sha256": "a20f1f22b9ade11a13c5275690a66ad049daa7e08497896064b15b3a72a5f9d5",
+        "bytes": 1805
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-admin-login-LATEST.json",
+        "sha256": "62db214619b0bc2f1348eb5f78240b20d93443b17a75180aad897c166902ccfe",
+        "bytes": 1789
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-admin-logout-LATEST.json",
+        "sha256": "83c6e8799ac7b3c6cbacccf6f298d6ac71a60a3911daa0654e03c461c5fcec1e",
+        "bytes": 1531
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-admin-register-LATEST.json",
+        "sha256": "69249c714e76772d602d6f3b79faa85f4b7734cc0c9908e052ceb12e1c121fd1",
+        "bytes": 2003
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-governance-browse-LATEST.json",
+        "sha256": "3e95ba8b0531c2d8f341fa9583302752d93f91f428d078691c4a0513c8a00b80",
+        "bytes": 2027
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-governance-complete-LATEST.json",
+        "sha256": "bbdf40b2aa9f84535ac8fb97f7e1557aa85018a563eda21e0312cc8351acd50b",
+        "bytes": 2488
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-governance-login-LATEST.json",
+        "sha256": "ee43178836313323bce99a7241ee1d945b2c4a4ac3e546dc47a4d7cae0be2d60",
+        "bytes": 2034
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-governance-logout-LATEST.json",
+        "sha256": "4df2d5774f48ac44352d726ee2008d55749639d727a7e21c4c565e9b2be2c117",
+        "bytes": 2025
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-governance-register-LATEST.json",
+        "sha256": "da0236ad4f494b162594733187d468ad337b66a32b457e1b103605ca12c0908e",
+        "bytes": 2323
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-guide-browse-LATEST.json",
+        "sha256": "63a273487c545542a59563816fcc56a2d71dd4e77c10a3e6ccfb5b67c7753380",
+        "bytes": 1502
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-guide-login-LATEST.json",
+        "sha256": "c9c22fec67e672c6663b5da1312b4e07031d07b691b0f1c805bcd1c2de89f5b8",
+        "bytes": 1384
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-guide-logout-LATEST.json",
+        "sha256": "35253c8178115076e964bdd6b374d75ff87e47af855de91b3362571e433b1926",
+        "bytes": 1284
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-guide-register-LATEST.json",
+        "sha256": "d681375fad8a2f3fa93416d831d0d7d90cc228024b47bd223d969a27e050fe76",
+        "bytes": 1702
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-provider-logout-LATEST.json",
+        "sha256": "05a859775399bb9f38ea7155dadb56da7aaeab5a2a9d82d53631f85b692e9fb0",
+        "bytes": 1575
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-provider-register-LATEST.json",
+        "sha256": "8150f8b7107accd4f80aed42c4c42f805273a5c9c79043862e0c8da555b6cb32",
+        "bytes": 2039
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/hat/steps/hat-tourist-register-LATEST.json",
+        "sha256": "1b47e871bcba793698e08bb4e25e2f3f12e9912de396da01f4cbef55d39e90ef",
+        "bytes": 2024
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/manual/steps/manual-cancel_refund-LATEST.json",
+        "sha256": "b52c2178dfc18447e71180776d3716ba5582e9c200463ce79b93d9f913680637",
+        "bytes": 5177
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/manual/steps/manual-chrome_desktop-LATEST.json",
+        "sha256": "6fe5e33ddb4417ffffb5c154339202e60db97dd6df6a45e0e131105992bc671a",
+        "bytes": 3825
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/manual/steps/manual-edge-LATEST.json",
+        "sha256": "cc60d37cc8b03692f9210b3b4b8ffc53cdfe3a51b837c71d6242b44666ff8e09",
+        "bytes": 3723
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/manual/steps/manual-login_flow-LATEST.json",
+        "sha256": "bc4957624ba464d194c8d9d297ffc40cf6d7ce8452851f92c3f453bb241e7c12",
+        "bytes": 4779
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/manual/steps/manual-mobile-LATEST.json",
+        "sha256": "0170e975d73435f80412fafe134648ad172343360b05b97eea93d1829905060c",
+        "bytes": 3528
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/manual/steps/manual-pay_mock-LATEST.json",
+        "sha256": "978eccd8335236999b1fac7d29761a20de5af804c85dc23cd64f493c3495896d",
+        "bytes": 5212
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/manual/steps/manual-refresh-recovery-probe-LATEST.json",
+        "sha256": "2067fe70389ef8f5879a5f1a2d0bce1584bb0bcc84ec5c2dd03e478bd74848d3",
+        "bytes": 3478
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/manual/steps/manual-refresh_recovery-LATEST.json",
+        "sha256": "42f8378e6c304deaafb870352154408ea7273b2ce8e50ce82af95b4f7dfa1d47",
+        "bytes": 4550
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/manual/steps/manual-wallet-LATEST.json",
+        "sha256": "d2623d8f41eb88e03b7c9e9ddb3a768dfb3d4321536531be40215940fdeae8cf",
+        "bytes": 3574
+      },
+      {
+        "path": "evidence/GO_production_readiness/step4/manual/steps/manual-weak_network-LATEST.json",
+        "sha256": "b1f94023cec0f0304f5665f9fb6c9e4e3ace1de3cf505de2eeb0510eb1c4384e",
+        "bytes": 4225
+      }
+    ]
+  },
+  "gates": {
+    "business_data_readiness": "READY",
+    "hat": "PASS",
+    "business_flow_matrix": "PASS",
+    "manual_validation": "PASS",
+    "open_root_causes": 0,
+    "production_entry": "YES"
+  },
+  "capstone_evidence": [
+    "evidence/GO_production_readiness/PRODUCTION-READINESS-MASTER-CHECKLIST-LATEST.json",
+    "evidence/GO_production_readiness/sprints/PRODUCTION-READINESS-FINAL-GATE-REEVALUATION-LATEST.json",
+    "evidence/GO_production_readiness/sprints/PHASE4-MANUAL-VALIDATION-EXECUTION-LATEST.json"
+  ],
+  "discipline": {
+    "no_new_validation": true,
+    "no_new_features": true,
+    "no_sprint_b_active": true,
+    "next_phase": "production_deployment_planning"
+  }
+}

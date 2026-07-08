@@ -1,0 +1,35 @@
+{
+  "schema": "traveltrust.guide_business_data_probe.v3",
+  "recorded_at_utc": "2026-07-07T14:23:59.927Z",
+  "check_id": "pricing",
+  "label": "Pricing",
+  "ssot": "Pricing API",
+  "probe": "GET /api/v1/guides hourly_rate",
+  "api": "https://tt-api-staging.fly.dev",
+  "exit_condition": "金额一致 · API 与 Market 展示",
+  "verdict": "PASS",
+  "root_cause": null,
+  "cascade_from": null,
+  "attribution": null,
+  "fail_reasons": [],
+  "warn_reasons": [],
+  "warn_classification": {
+    "C": [],
+    "D": [],
+    "P": []
+  },
+  "detail": {
+    "fail": [],
+    "warn": [],
+    "count_with_rate": 1,
+    "count_valid": 1,
+    "has_any_valid_rate": true,
+    "pricing_attribution": {
+      "root_cause": null,
+      "cascade": false,
+      "explainable_by_bd001": false,
+      "new_root_cause_candidate": null
+    }
+  },
+  "TT_GUIDE_PROBE": "PASS"
+}

@@ -1,0 +1,8 @@
+{
+  "schema": "traveltrust.listings_business_data_probe.v1",
+  "check_id": "provider_detail",
+  "recorded_at_utc": "2026-07-08T00:19:09.661Z",
+  "verdict": "PASS",
+  "sample_id": "fdec611e-f140-4b34-9ef1-a356ad47c247",
+  "http": 200
+}

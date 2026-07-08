@@ -1,0 +1,34 @@
+{
+  "schema": "traveltrust.phase3_bdr_day2_5_execution.v1",
+  "recorded_at_utc": "2026-07-08T00:19:19.553Z",
+  "mode": "verify_and_closeout",
+  "domains": [
+    {
+      "domain": "guide",
+      "ready": "YES",
+      "signal": "TT_GUIDE_BUSINESS_DATA_READINESS_DAY1"
+    },
+    {
+      "domain": "provider",
+      "ready": "YES",
+      "signal": "TT_PROVIDER_BUSINESS_DATA_READINESS_DAY2"
+    },
+    {
+      "domain": "listings",
+      "ready": "YES",
+      "signal": "TT_LISTINGS_BUSINESS_DATA_READINESS_DAY3"
+    },
+    {
+      "domain": "poi",
+      "ready": "YES",
+      "signal": "TT_POI_BUSINESS_DATA_READINESS_DAY4"
+    },
+    {
+      "domain": "pricing",
+      "ready": "YES",
+      "signal": "TT_PRICING_BUSINESS_DATA_READINESS_DAY5"
+    }
+  ],
+  "all_ready": true,
+  "TT_SPRINT_B_ACTIVE": false
+}

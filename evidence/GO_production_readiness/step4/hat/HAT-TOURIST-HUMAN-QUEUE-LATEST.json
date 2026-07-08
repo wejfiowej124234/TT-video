@@ -1,0 +1,32 @@
+{
+  "schema": "traveltrust.hat_tourist_human_queue.v1",
+  "recorded_at_utc": "2026-07-08T02:16:00.000Z",
+  "role": "tourist",
+  "verdict": "PASS",
+  "steps_synced": [
+    "register"
+  ],
+  "steps_preclosed": [
+    "login",
+    "browse",
+    "order",
+    "pay",
+    "complete",
+    "logout"
+  ],
+  "steps": [
+    {
+      "step_id": "register",
+      "verdict": "PASS"
+    }
+  ],
+  "pilot": "tourist@test.com",
+  "immutable_id": "C2",
+  "user_id": "2760d445-cbf4-47d0-9461-fcba3db0516f",
+  "discipline": {
+    "no_code_change": true,
+    "no_staging_config_change": true,
+    "no_business_data_mutation": true,
+    "TT_SPRINT_B_ACTIVE": false
+  }
+}

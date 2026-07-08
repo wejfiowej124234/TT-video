@@ -1,0 +1,107 @@
+{
+  "roots": [
+    {
+      "path": "evidence/GO_production_readiness/g2-reality-audit",
+      "stamps": [
+        "20260704T014938Z",
+        "20260704T015103Z",
+        "20260704T015117Z",
+        "20260704T015213Z",
+        "_probe"
+      ],
+      "latest": "_probe"
+    },
+    {
+      "path": "evidence/GO_production_readiness/g2-reality-fix",
+      "stamps": [
+        "20260704T015722Z"
+      ],
+      "latest": "20260704T015722Z"
+    },
+    {
+      "path": "evidence/GO_production_readiness/g2-reality-verification",
+      "stamps": [
+        "20260704T020822Z",
+        "20260704T021232Z",
+        "20260704T054535Z"
+      ],
+      "latest": "20260704T054535Z"
+    },
+    {
+      "path": "evidence/GO_production_readiness/wave-2-g2",
+      "stamps": [
+        "20260704T062229Z"
+      ],
+      "latest": "20260704T062229Z"
+    },
+    {
+      "path": "evidence/GO_production_readiness/evidence-integrity",
+      "stamps": [
+        "20260704T062003Z",
+        "20260704T062229Z"
+      ],
+      "latest": "20260704T062229Z"
+    },
+    {
+      "path": "evidence/GO_production_readiness/production-runtime-identity",
+      "stamps": [
+        "20260704T022308Z",
+        "20260704T022419Z",
+        "20260704T053849Z",
+        "20260704T054124Z",
+        "20260704T054306Z",
+        "20260704T062229Z"
+      ],
+      "latest": "20260704T062229Z"
+    },
+    {
+      "path": "evidence/GO_platform_capability/coverage-audit",
+      "stamps": [
+        "20260704T052800Z",
+        "20260704T052812Z",
+        "20260704T052824Z",
+        "20260704T052829Z",
+        "20260704T053031Z",
+        "20260704T053322Z",
+        "20260704T053957Z"
+      ],
+      "latest": "20260704T053957Z"
+    }
+  ],
+  "signoffs": [
+    "evidence/GO_production_readiness/g2-reality-verification/20260704T021232Z/g2-reality-verification-signoff.json",
+    "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/g2-reality-verification-signoff.json",
+    "evidence/GO_production_readiness/wave-2-g2/20260704T062229Z/g2-formal-acceptance-signoff.json",
+    "evidence/GO_production_readiness/wave-2-g2/20260704T062229Z/g2-gate-signoff.json",
+    "evidence/GO_production_readiness/evidence-integrity/20260704T062003Z/evidence-integrity-audit.json",
+    "evidence/GO_production_readiness/evidence-integrity/20260704T062229Z/evidence-integrity-audit.json"
+  ],
+  "blockers": [
+    {
+      "id": "PRM-SEC-B001",
+      "status": "CLOSED",
+      "closed_evidence": "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/security-b001",
+      "exists": true
+    },
+    {
+      "id": "PRM-SEC-B002",
+      "status": "CLOSED",
+      "closed_evidence": "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/security-b002",
+      "exists": true
+    },
+    {
+      "id": "PRM-PER-B001",
+      "status": "CLOSED",
+      "closed_evidence": "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/performance-b001",
+      "exists": true
+    },
+    {
+      "id": "PRM-MON-B001",
+      "status": "CLOSED",
+      "closed_evidence": "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/monitoring-b001",
+      "exists": true
+    }
+  ],
+  "formal_baseline": "evidence/GO_production_readiness/wave-2-g2/20260704T062229Z",
+  "verification_baseline": "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z"
+}

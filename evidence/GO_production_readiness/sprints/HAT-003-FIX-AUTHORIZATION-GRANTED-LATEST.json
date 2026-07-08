@@ -1,0 +1,23 @@
+{
+  "schema": "traveltrust.hat003_fix_authorization_granted.v1",
+  "recorded_at_utc": "2026-07-07T16:17:29.341Z",
+  "issue_id": "HAT-003",
+  "granted_by": "Solo Founder",
+  "scope": "A only",
+  "pilot": "tourist@test.com",
+  "admin_promote_isolated_to": "multi-demo@test.com",
+  "role_change_approval_id": "63e0189b-66bf-46af-88aa-5bd5ad33ad9b",
+  "TT_SPRINT_B_ACTIVE": false,
+  "execution_boundary": {
+    "allow": [
+      "staging persona restore",
+      "admin promote isolated to multi-demo@test.com",
+      "HAT-003 validation rerun"
+    ],
+    "deny": [
+      "modify auth login logic",
+      "TT_SPRINT_B ACTIVE",
+      "promote tourist@test.com for admin HAT"
+    ]
+  }
+}

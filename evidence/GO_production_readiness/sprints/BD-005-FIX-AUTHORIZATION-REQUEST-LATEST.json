@@ -1,0 +1,55 @@
+{
+  "schema": "traveltrust.bd005_fix_authorization_request.v1",
+  "recorded_at_utc": "2026-07-07T15:05:26.800Z",
+  "issue_id": "BD-005",
+  "status": "PENDING_OWNER_FIX_AUTHORIZATION",
+  "document": "evidence/GO_production_readiness/sprints/BD-005-FIX-AUTHORIZATION-REQUEST.md",
+  "prerequisites": {
+    "business_rule_confirmed": true,
+    "option": "A"
+  },
+  "governance_current": {
+    "failure_signature_confirmed": true,
+    "business_rule_confirmed": true,
+    "root_cause_confirmed": false,
+    "fix_authorized": false
+  },
+  "proposed_fix_scope": {
+    "A": {
+      "label": "staging pilot active fulfillment guide profile",
+      "required_for_hat_pass": true
+    },
+    "B": {
+      "label": "onboarding constraint declaration",
+      "required_for_hat_pass": false,
+      "optional_follow_up": true
+    }
+  },
+  "on_authorize_registry_only_first": [
+    "governance.fix_authorized=true",
+    "fix_authorization.scope",
+    "fix_authorization.pilot",
+    "fix_authorization.execution_boundary"
+  ],
+  "forbidden_until_authorized": [
+    "code",
+    "data",
+    "hat_rerun",
+    "TT_SPRINT_B_ACTIVE"
+  ],
+  "TT_SPRINT_B": "READY",
+  "TT_SPRINT_B_ACTIVE": false,
+  "registry_fix_authorized": false,
+  "governance_on_authorize": {
+    "business_rule_confirmed": true,
+    "fix_authorized": true,
+    "root_cause_confirmed": false,
+    "rule": "Never set root_cause_confirmed=true at fix authorization; only after HAT chain PASS"
+  },
+  "bd005_close_requires_hat_pass": [
+    "create_order",
+    "provider_accept",
+    "mock_pay",
+    "confirm_completion"
+  ]
+}

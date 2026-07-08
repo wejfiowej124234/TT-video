@@ -1,0 +1,49 @@
+{
+  "schema": "traveltrust.hat003_redefine_confirmation.v1",
+  "recorded_at_utc": "2026-07-07T16:11:22.741Z",
+  "issue_id": "HAT-003",
+  "document": "evidence/GO_production_readiness/sprints/HAT-003-REDEFINE-CONFIRMATION.md",
+  "mode": "redefine_only",
+  "TT_SPRINT_B": "READY",
+  "TT_SPRINT_B_ACTIVE": false,
+  "original_hypothesis": {
+    "root_cause": "Tourist 登录 HTTP 失败",
+    "status": "REJECTED",
+    "rejected_by": [
+      "evidence/GO_production_readiness/step2/hat/HAT-003-TOURIST-LOGIN-DISCOVERY-LATEST.json",
+      "evidence/GO_production_readiness/sprints/HAT-003-DISCOVERY-RESULT.md"
+    ],
+    "rejection_reason": "POST /auth/login 200 with valid token x3; fixing login would mis-target"
+  },
+  "candidate_new_root_cause": {
+    "id": "staging_tourist_seed_persona_contamination",
+    "label": "Staging tourist@test.com persona contaminated to super_admin",
+    "status": "CONFIRMED_CANDIDATE",
+    "failure_signature": {
+      "login_http": 200,
+      "login_role": "super_admin",
+      "expected_role": [
+        "tourist",
+        "traveler"
+      ],
+      "admin_capabilities_http": 200,
+      "admin_capabilities_expected": [
+        401,
+        403
+      ],
+      "logout_naive_http": 415
+    },
+    "secondary_signature": "logout_content_type_required"
+  },
+  "owner_decision_ref": "evidence/GO_production_readiness/sprints/OWNER-TOURIST-PERSONA-DECISION-LATEST.json",
+  "governance": {
+    "failure_signature_confirmed": true,
+    "business_rule_confirmed": true,
+    "root_cause_confirmed": false,
+    "fix_authorized": false
+  },
+  "registry_updated": false,
+  "hat_matrix_updated": false,
+  "staging_data_changed": false,
+  "code_changed": false
+}

@@ -1,0 +1,274 @@
+{
+  "review_id": "PRM-GAP-REVIEW-20260704",
+  "stamp": "20260703T233354Z",
+  "machine_keys": {
+    "TT_PRODUCTION_READINESS_MASTER_MATRIX": "ACTIVE",
+    "TT_PRODUCTION_READINESS_MASTER_GAP_REVIEW": "COMPLETE",
+    "TT_PRODUCTION_GO": "NO_GO",
+    "TT_PCP_ARCHITECTURE": "FROZEN",
+    "TT_PCP_PHASE_2": "NOT_STARTED"
+  },
+  "totals": {
+    "open_blocker": 17,
+    "open_defect": 1,
+    "domains": 10,
+    "gaps": 23
+  },
+  "matrix": [
+    {
+      "domain": "Security",
+      "status": "🟡",
+      "blocking": 2,
+      "owner": "You"
+    },
+    {
+      "domain": "Browser UAT",
+      "status": "🟡",
+      "blocking": 5,
+      "owner": "You"
+    },
+    {
+      "domain": "Manual Validation",
+      "status": "🟡",
+      "blocking": 3,
+      "owner": "You"
+    },
+    {
+      "domain": "Performance",
+      "status": "🟡",
+      "blocking": 1,
+      "owner": "You"
+    },
+    {
+      "domain": "Observability",
+      "status": "🟢",
+      "blocking": 0,
+      "owner": "You"
+    },
+    {
+      "domain": "Deployment",
+      "status": "🟢",
+      "blocking": 0,
+      "owner": "You"
+    },
+    {
+      "domain": "Domain / CDN",
+      "status": "🟡",
+      "blocking": 1,
+      "owner": "You"
+    },
+    {
+      "domain": "Stripe Live",
+      "status": "🔴",
+      "blocking": 1,
+      "owner": "You"
+    },
+    {
+      "domain": "Disaster Recovery",
+      "status": "🟡",
+      "blocking": 2,
+      "owner": "You"
+    },
+    {
+      "domain": "Monitoring",
+      "status": "🟡",
+      "blocking": 1,
+      "owner": "You"
+    }
+  ],
+  "checks": [
+    {
+      "id": "doc_docs_runbook_TT_PRODUCTION_READINESS_MASTER_MATRIX_md",
+      "label": "docs/runbook/TT-PRODUCTION-READINESS-MASTER-MATRIX.md",
+      "status": "PASS",
+      "detail": "present"
+    },
+    {
+      "id": "doc_docs_runbook_PRODUCTION_READINESS_MASTER_GAP_REPORT_md",
+      "label": "docs/runbook/PRODUCTION-READINESS-MASTER-GAP-REPORT.md",
+      "status": "PASS",
+      "detail": "present"
+    },
+    {
+      "id": "doc_docs_runbook_TT_PRODUCTION_READINESS_PROGRAM_md",
+      "label": "docs/runbook/TT-PRODUCTION-READINESS-PROGRAM.md",
+      "status": "PASS",
+      "detail": "present"
+    },
+    {
+      "id": "doc_registry_production_readiness_master_matrix_v1_yaml",
+      "label": "registry/production-readiness-master-matrix.v1.yaml",
+      "status": "PASS",
+      "detail": "present"
+    },
+    {
+      "id": "key_TT_PRODUCTION_READINESS_MASTER_MATRIX",
+      "label": "TT_PRODUCTION_READINESS_MASTER_MATRIX",
+      "status": "PASS",
+      "detail": "ACTIVE"
+    },
+    {
+      "id": "key_TT_PRODUCTION_READINESS_PROGRAM",
+      "label": "TT_PRODUCTION_READINESS_PROGRAM",
+      "status": "PASS",
+      "detail": "ACTIVE"
+    },
+    {
+      "id": "key_TT_PCP_ARCHITECTURE",
+      "label": "TT_PCP_ARCHITECTURE",
+      "status": "PASS",
+      "detail": "FROZEN"
+    },
+    {
+      "id": "key_TT_PCP_PHASE_2",
+      "label": "TT_PCP_PHASE_2",
+      "status": "PASS",
+      "detail": "NOT_STARTED"
+    },
+    {
+      "id": "domain_security",
+      "label": "domain security",
+      "status": "PASS",
+      "detail": "registered"
+    },
+    {
+      "id": "domain_browser_uat",
+      "label": "domain browser_uat",
+      "status": "PASS",
+      "detail": "registered"
+    },
+    {
+      "id": "domain_manual_validation",
+      "label": "domain manual_validation",
+      "status": "PASS",
+      "detail": "registered"
+    },
+    {
+      "id": "domain_performance",
+      "label": "domain performance",
+      "status": "PASS",
+      "detail": "registered"
+    },
+    {
+      "id": "domain_observability",
+      "label": "domain observability",
+      "status": "PASS",
+      "detail": "registered"
+    },
+    {
+      "id": "domain_deployment",
+      "label": "domain deployment",
+      "status": "PASS",
+      "detail": "registered"
+    },
+    {
+      "id": "domain_domain_cdn",
+      "label": "domain domain_cdn",
+      "status": "PASS",
+      "detail": "registered"
+    },
+    {
+      "id": "domain_stripe_live",
+      "label": "domain stripe_live",
+      "status": "PASS",
+      "detail": "registered"
+    },
+    {
+      "id": "domain_disaster_recovery",
+      "label": "domain disaster_recovery",
+      "status": "PASS",
+      "detail": "registered"
+    },
+    {
+      "id": "domain_monitoring",
+      "label": "domain monitoring",
+      "status": "PASS",
+      "detail": "registered"
+    },
+    {
+      "id": "class_BLOCKER",
+      "label": "classification BLOCKER",
+      "status": "PASS",
+      "detail": "in use"
+    },
+    {
+      "id": "class_DEFECT",
+      "label": "classification DEFECT",
+      "status": "PASS",
+      "detail": "in use"
+    },
+    {
+      "id": "class_EXPECTED_DIFFERENCE",
+      "label": "classification EXPECTED_DIFFERENCE",
+      "status": "PASS",
+      "detail": "in use"
+    },
+    {
+      "id": "class_ENHANCEMENT",
+      "label": "classification ENHANCEMENT",
+      "status": "PASS",
+      "detail": "in use"
+    },
+    {
+      "id": "reconcile_security",
+      "label": "Security blocking_count",
+      "status": "PASS",
+      "detail": "matrix=2 computed=2"
+    },
+    {
+      "id": "reconcile_browser_uat",
+      "label": "Browser UAT blocking_count",
+      "status": "PASS",
+      "detail": "matrix=5 computed=5"
+    },
+    {
+      "id": "reconcile_manual_validation",
+      "label": "Manual Validation blocking_count",
+      "status": "FAIL",
+      "detail": "matrix=3 computed=4"
+    },
+    {
+      "id": "reconcile_performance",
+      "label": "Performance blocking_count",
+      "status": "PASS",
+      "detail": "matrix=1 computed=1"
+    },
+    {
+      "id": "reconcile_observability",
+      "label": "Observability blocking_count",
+      "status": "PASS",
+      "detail": "matrix=0 computed=0"
+    },
+    {
+      "id": "reconcile_deployment",
+      "label": "Deployment blocking_count",
+      "status": "PASS",
+      "detail": "matrix=0 computed=0"
+    },
+    {
+      "id": "reconcile_domain_cdn",
+      "label": "Domain / CDN blocking_count",
+      "status": "PASS",
+      "detail": "matrix=1 computed=1"
+    },
+    {
+      "id": "reconcile_stripe_live",
+      "label": "Stripe Live blocking_count",
+      "status": "PASS",
+      "detail": "matrix=1 computed=1"
+    },
+    {
+      "id": "reconcile_disaster_recovery",
+      "label": "Disaster Recovery blocking_count",
+      "status": "PASS",
+      "detail": "matrix=2 computed=2"
+    },
+    {
+      "id": "reconcile_monitoring",
+      "label": "Monitoring blocking_count",
+      "status": "PASS",
+      "detail": "matrix=1 computed=1"
+    }
+  ],
+  "all_pass": false
+}

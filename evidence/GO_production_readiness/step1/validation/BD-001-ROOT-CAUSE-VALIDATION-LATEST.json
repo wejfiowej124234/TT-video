@@ -1,0 +1,39 @@
+{
+  "schema": "traveltrust.root_cause_validation.v3",
+  "recorded_at_utc": "2026-07-07T14:23:34.115Z",
+  "issue_id": "BD-001",
+  "sprint": "A",
+  "sprint_goal": "Guide Business Data Ready",
+  "execution_one_liner": "只验证并关闭 BD-001 · 不改 Pricing/HAT/其它数据",
+  "TT_BD001_ROOT_CAUSE_VALIDATION": "PENDING",
+  "validation_case": null,
+  "consecutive_pass_required": 3,
+  "consecutive_pass": 0,
+  "probes": {
+    "availability": {
+      "verdict": "PASS",
+      "evidence": "guide_availability_probe.json"
+    },
+    "pricing": {
+      "verdict": "WARN-D",
+      "root_cause": null,
+      "evidence": "guide_pricing_probe.json"
+    }
+  },
+  "decision_tree": {
+    "case_a": "Availability PASS + Pricing PASS → CONFIRMED → 3x PASS → Step 3 Exit",
+    "case_b": "Availability PASS + Pricing FAIL → BD-001 CLOSED(Avail) → BD-004（验证后登记）"
+  },
+  "recommendation": "Step 1 · 仅配置一条正确的 Guide Availability（staging）· 不改 Pricing/HAT/其它数据",
+  "next_steps": [
+    "配置 Availability 后重跑本脚本",
+    "Case A: Avail+Pricing PASS → 进入 Step 2 连续 3 次验证"
+  ],
+  "forbidden": [
+    "修 Pricing",
+    "修 HAT",
+    "BD-002",
+    "HAT-003",
+    "框架扩展"
+  ]
+}

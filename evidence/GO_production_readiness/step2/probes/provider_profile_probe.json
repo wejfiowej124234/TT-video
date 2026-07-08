@@ -1,0 +1,27 @@
+{
+  "schema": "traveltrust.provider_business_data_probe.v1",
+  "recorded_at_utc": "2026-07-08T00:19:07.428Z",
+  "mode": "discovery_only",
+  "check_id": "profile",
+  "label": "Profile",
+  "ssot": "Market API",
+  "probe": "GET /api/v1/market/provider/listings payload",
+  "api": "https://tt-api-staging.fly.dev",
+  "verdict": "PASS",
+  "root_cause": null,
+  "candidate_issue": null,
+  "fail_reasons": [],
+  "warn_reasons": [],
+  "warn_classification": {
+    "C": [],
+    "D": [],
+    "P": []
+  },
+  "detail": {
+    "fail": [],
+    "warn": [],
+    "sample_id": "fdec611e-f140-4b34-9ef1-a356ad47c247",
+    "count": 11
+  },
+  "TT_PROVIDER_PROBE": "PASS"
+}

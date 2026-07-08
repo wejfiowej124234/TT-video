@@ -1,0 +1,48 @@
+{
+  "schema": "traveltrust.hat_human_validation_step.v1",
+  "role": "guide",
+  "step_id": "browse",
+  "order": 3,
+  "label": "浏览",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T01:45:10.208Z",
+  "validator": "Cursor Agent · HAT Human Queue · Guide",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "pilot": "guide@test.com",
+  "guide_id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b",
+  "bfm_session_b_ref": "evidence/GO_production_readiness/step3/bfm/BFM-GUIDE-FLOW-LATEST.json",
+  "sprint_a_ref": "registry/hat-six-role-matrix.v1.yaml · order/pay/complete pre-closed",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "route": "/market?view=guides",
+      "guides_tab": true,
+      "guide_count": "10",
+      "has_view_guide": true,
+      "login_state": "authenticated"
+    },
+    "api": {
+      "verdict": "PASS",
+      "catalog_http": 200,
+      "catalog_count": 5,
+      "availability": 200
+    },
+    "database": {
+      "verdict": "PASS",
+      "entity": "guides",
+      "row_id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b",
+      "note": "active guide bookable; staging public catalog may filter seed guide"
+    },
+    "page": {
+      "verdict": "PASS",
+      "route": "/market?view=guides",
+      "no_crash": true
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "guide_catalog_browsable"
+    }
+  },
+  "TT_SPRINT_B_ACTIVE": false
+}

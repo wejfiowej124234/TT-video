@@ -1,0 +1,25 @@
+{
+  "stamp": "20260704T001446Z",
+  "gap_id": "PRM-MEDIA-B001",
+  "db": {
+    "ok": true,
+    "published_count": 0,
+    "violations": [],
+    "rows": []
+  },
+  "api": {
+    "ok": true,
+    "bySurface": {
+      "feed": 0,
+      "hot": 0,
+      "search": 0
+    },
+    "explore_catalog": "api-aggregate-v1",
+    "campaign_status": 200,
+    "violations": []
+  },
+  "summary": {
+    "db_published_legacy": 0,
+    "api_surface_legacy": 0
+  }
+}

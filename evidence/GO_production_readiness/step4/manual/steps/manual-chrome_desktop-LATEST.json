@@ -1,0 +1,153 @@
+{
+  "schema": "traveltrust.manual_validation_check.v1",
+  "check_id": "chrome_desktop",
+  "order": 1,
+  "label": "Chrome 桌面",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T00:22:08.616Z",
+  "validator": "Cursor Agent · Phase 4 Manual 1",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "device": "Chrome desktop",
+  "verification_chain": {
+    "human_action": {
+      "verdict": "PASS",
+      "action": "Chrome desktop navigation smoke · 5 core routes",
+      "device": "Chrome desktop 1920×1080 (automation + staging fetch)",
+      "routes": [
+        "/",
+        "/market",
+        "/market/provider",
+        "/market/acquisition",
+        "/auth/login"
+      ],
+      "browser_snapshot": "https://tt-web-staging.fly.dev/market · title=自由市场|TravelTrust · 222 a11y refs · guides/orders visible"
+    },
+    "api": {
+      "verdict": "PASS",
+      "web_routes": [
+        {
+          "route": "/",
+          "http": 200,
+          "ok": true
+        },
+        {
+          "route": "/market",
+          "http": 200,
+          "ok": true
+        },
+        {
+          "route": "/market/provider",
+          "http": 200,
+          "ok": true
+        },
+        {
+          "route": "/market/acquisition",
+          "http": 200,
+          "ok": true
+        },
+        {
+          "route": "/auth/login",
+          "http": 200,
+          "ok": true
+        }
+      ],
+      "staging_api_health": 200
+    },
+    "database": {
+      "verdict": "PASS",
+      "note": "Read-only staging data availability for page feeds",
+      "health": 200,
+      "guides_catalog_count": 5,
+      "provider_catalog_count": 11
+    },
+    "page": {
+      "verdict": "PASS",
+      "note": "HTML app shell present on all routes (length + keyword heuristic)",
+      "routes": [
+        {
+          "route": "/",
+          "body_length": 63907,
+          "hasAppShell": true
+        },
+        {
+          "route": "/market",
+          "body_length": 128956,
+          "hasAppShell": true
+        },
+        {
+          "route": "/market/provider",
+          "body_length": 32848,
+          "hasAppShell": true
+        },
+        {
+          "route": "/market/acquisition",
+          "body_length": 32940,
+          "hasAppShell": true
+        },
+        {
+          "route": "/auth/login",
+          "body_length": 36712,
+          "hasAppShell": true
+        }
+      ],
+      "browser_verified": true,
+      "snapshot_title": "自由市场 | TravelTrust"
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "chrome_desktop_uat_pass"
+    }
+  },
+  "routes_tested": [
+    {
+      "route": "/",
+      "url": "https://tt-web-staging.fly.dev/",
+      "http": 200,
+      "ok": true,
+      "body_length": 63907,
+      "hasAppShell": true
+    },
+    {
+      "route": "/market",
+      "url": "https://tt-web-staging.fly.dev/market",
+      "http": 200,
+      "ok": true,
+      "body_length": 128956,
+      "hasAppShell": true
+    },
+    {
+      "route": "/market/provider",
+      "url": "https://tt-web-staging.fly.dev/market/provider",
+      "http": 200,
+      "ok": true,
+      "body_length": 32848,
+      "hasAppShell": true
+    },
+    {
+      "route": "/market/acquisition",
+      "url": "https://tt-web-staging.fly.dev/market/acquisition",
+      "http": 200,
+      "ok": true,
+      "body_length": 32940,
+      "hasAppShell": true
+    },
+    {
+      "route": "/auth/login",
+      "url": "https://tt-web-staging.fly.dev/auth/login",
+      "http": 200,
+      "ok": true,
+      "body_length": 36712,
+      "hasAppShell": true
+    }
+  ],
+  "halt_item": false,
+  "TT_SPRINT_B_ACTIVE": false,
+  "browser_uat": {
+    "view": "market",
+    "title": "自由市场 | TravelTrust",
+    "interactive_refs": 106,
+    "guides_listed": 10,
+    "orders_listed": 1
+  }
+}

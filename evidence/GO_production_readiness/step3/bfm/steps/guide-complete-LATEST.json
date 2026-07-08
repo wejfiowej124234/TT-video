@@ -1,0 +1,37 @@
+{
+  "schema": "traveltrust.bfm_human_validation_step.v1",
+  "session": "B",
+  "flow_id": "guide",
+  "step_id": "complete",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T00:14:56.378Z",
+  "validator": "Cursor Agent · Session B",
+  "verification_chain": {
+    "human_click": {
+      "verdict": "PASS",
+      "action": "Mock pay + confirm completion"
+    },
+    "api": {
+      "verdict": "PASS",
+      "mock_pay": 200,
+      "confirm": 200,
+      "final_status": "completed"
+    },
+    "database": {
+      "verdict": "PASS",
+      "entity": "orders",
+      "row_id": "0d5275f2-2537-4fef-830b-d1bf6f216b7c",
+      "field": "status",
+      "value": "completed"
+    },
+    "page": {
+      "verdict": "PASS"
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "completed",
+      "order_id": "0d5275f2-2537-4fef-830b-d1bf6f216b7c"
+    }
+  },
+  "order_id": "0d5275f2-2537-4fef-830b-d1bf6f216b7c"
+}

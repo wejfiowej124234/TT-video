@@ -1,0 +1,55 @@
+{
+  "schema": "traveltrust.hat_governance_human_queue.v1",
+  "recorded_at_utc": "2026-07-08T02:04:00.000Z",
+  "role": "governance",
+  "verdict": "PASS",
+  "steps_synced": [
+    "register",
+    "login",
+    "browse",
+    "complete",
+    "logout"
+  ],
+  "steps_na": [
+    "order",
+    "pay"
+  ],
+  "steps": [
+    {
+      "step_id": "register",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "login",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "browse",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "complete",
+      "verdict": "PASS"
+    },
+    {
+      "step_id": "logout",
+      "verdict": "PASS"
+    }
+  ],
+  "pilot": "multi-demo@test.com",
+  "immutable_id": "C1",
+  "user_id": "cf1e4c30-34b8-40b6-b747-474cf24517c3",
+  "discipline": {
+    "no_code_change": true,
+    "no_staging_config_change": true,
+    "no_business_data_mutation": true,
+    "read_only_governance_probes": true,
+    "forbidden_actions": [
+      "create_proposal",
+      "vote",
+      "execute_proposal",
+      "on_chain_state_change"
+    ],
+    "TT_SPRINT_B_ACTIVE": false
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schema": "traveltrust.bfm_human_validation_step.v1",
+  "session": "C",
+  "flow_id": "acquisition",
+  "step_id": "close_deal",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T01:39:16.900Z",
+  "validator": "Cursor Agent · Session C",
+  "verification_chain": {
+    "human_click": {
+      "verdict": "PASS",
+      "action": "Owner mock-pay to close deal (acquisition_listing)"
+    },
+    "api": {
+      "verdict": "PASS",
+      "mock_pay": 200,
+      "status": "escrowed"
+    },
+    "database": {
+      "verdict": "PASS",
+      "entity": "orders",
+      "row_id": "15d2051c-1b96-4013-82b6-06d961e3db45",
+      "field": "status",
+      "value": "escrowed"
+    },
+    "page": {
+      "verdict": "PASS",
+      "note": "Escrowed terminal UI state"
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "escrowed",
+      "order_id": "15d2051c-1b96-4013-82b6-06d961e3db45"
+    }
+  },
+  "order_id": "15d2051c-1b96-4013-82b6-06d961e3db45"
+}

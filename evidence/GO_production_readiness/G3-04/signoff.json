@@ -1,0 +1,16 @@
+{
+  "schema": "traveltrust.g3_domain_signoff.v1",
+  "domain_id": "G3-04",
+  "label": "Monitoring",
+  "status": "PLANNED",
+  "matrix_gaps": [],
+  "steps": {
+    "implementation": "PENDING",
+    "reality_verification": "PENDING",
+    "evidence_integrity": "PENDING",
+    "formal_acceptance": "PENDING"
+  },
+  "verified_utc": null,
+  "closed_utc": null,
+  "owner": null
+}

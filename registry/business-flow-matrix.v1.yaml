@@ -1,0 +1,55 @@
+# Business Flow Matrix · Guide / Provider / Acquisition 业务闭环 SSOT
+# 一条矩阵看三条链 · 全链一致：真人点击 → API → DB → 页面 → 最终结果
+# Parent: registry/production-readiness-master-checklist.v1.yaml
+
+schema: traveltrust.business_flow_matrix.v1
+version: 5
+effective_utc: "2026-07-08"
+machine_key: TT_BUSINESS_FLOW_MATRIX
+execute_order: 3
+priority: P2
+
+goal: >-
+  业务有没有真正闭环？不是页面有没有 ·
+  每步须全链一致：真人点击 → API → 数据库 → 页面 → 最终结果
+
+verification_chain: [human_click, api, database, page, final_outcome]
+step_verdict_enum: [pass, fail, pending, blocked]
+flow_verdict_enum: [pass, fail, in_progress, not_started]
+
+flows:
+  - id: guide
+    label: Guide
+    verdict: pass
+    steps:
+      - { id: register, label: 注册, verdict: pass, note: "BFM-guide · register · human 5-layer PASS · E: step3/bfm/steps/guide-register-LATEST.json" }
+      - { id: profile, label: 资料, verdict: pass, note: "BFM-guide · profile · human 5-layer PASS · E: step3/bfm/steps/guide-profile-LATEST.json" }
+      - { id: review, label: 审核, verdict: pass, note: "BFM-guide · review · human 5-layer PASS · E: step3/bfm/steps/guide-review-LATEST.json" }
+      - { id: list, label: 上架, verdict: pass, note: "BFM-guide · list · human 5-layer PASS · E: step3/bfm/steps/guide-list-LATEST.json" }
+      - { id: book, label: 预约, verdict: pass, note: "BFM-guide · book · human 5-layer PASS · E: step3/bfm/steps/guide-book-LATEST.json" }
+      - { id: order, label: 订单, verdict: pass, note: "BFM-guide · order · human 5-layer PASS · E: step3/bfm/steps/guide-order-LATEST.json" }
+      - { id: complete, label: 完成, verdict: pass, note: "BFM-guide · complete · human 5-layer PASS · E: step3/bfm/steps/guide-complete-LATEST.json" }
+      - { id: review_post, label: 评价, verdict: pass, note: "BFM-guide · review_post · human 5-layer PASS · E: step3/bfm/steps/guide-review_post-LATEST.json" }
+
+  - id: provider
+    label: Provider
+    verdict: pass
+    steps:
+      - { id: register, label: 注册, verdict: pass, note: "BFM-provider · register · human 5-layer PASS · E: step3/bfm/steps/provider-register-LATEST.json" }
+      - { id: product, label: 商品, verdict: pass, note: "BFM-provider · product · human 5-layer PASS · E: step3/bfm/steps/provider-product-LATEST.json" }
+      - { id: publish, label: 发布, verdict: pass, note: "BFM-provider · publish · human 5-layer PASS · E: step3/bfm/steps/provider-publish-LATEST.json" }
+      - { id: order, label: 订单, verdict: pass, note: "BFM-provider · order · human 5-layer PASS · E: step3/bfm/steps/provider-order-LATEST.json" }
+      - { id: complete, label: 完成, verdict: pass, note: "BFM-provider · complete · human 5-layer PASS · E: step3/bfm/steps/provider-complete-LATEST.json" }
+
+  - id: acquisition
+    label: Acquisition
+    verdict: pass
+    steps:
+      - { id: publish, label: 发布, verdict: pass, note: "BFM-acquisition · publish · human 5-layer PASS · E: step3/bfm/steps/acquisition-publish-LATEST.json" }
+      - { id: respond, label: 响应, verdict: pass, note: "BFM-acquisition · respond · human 5-layer PASS · E: step3/bfm/steps/acquisition-respond-LATEST.json" }
+      - { id: close_deal, label: 成交, verdict: pass, note: "BFM-acquisition · close_deal · human 5-layer PASS · E: step3/bfm/steps/acquisition-close_deal-LATEST.json" }
+      - { id: complete, label: 完成, verdict: pass, note: "BFM-acquisition · complete · human 5-layer PASS · E: step3/bfm/steps/acquisition-complete-LATEST.json" }
+
+closure_rule: 每条 flow 全部 step pass（含五层链一致）→ flow PASS · 三 flow 全 PASS → Matrix PASS
+
+evidence_script: scripts/dev/run-production-readiness-master-checklist.cjs

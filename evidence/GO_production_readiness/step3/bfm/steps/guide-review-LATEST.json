@@ -1,0 +1,36 @@
+{
+  "schema": "traveltrust.bfm_human_validation_step.v1",
+  "session": "B",
+  "flow_id": "guide",
+  "step_id": "review",
+  "verdict": "PASS",
+  "recorded_at_utc": "2026-07-08T00:14:56.378Z",
+  "validator": "Cursor Agent · Session B",
+  "verification_chain": {
+    "human_click": {
+      "verdict": "PASS",
+      "action": "Guide approved/active (staging seed pre-approved)",
+      "url": "https://tt-web-staging.fly.dev/admin/guides"
+    },
+    "api": {
+      "verdict": "PASS",
+      "path": "/api/v1/me",
+      "note": "guide.status from me"
+    },
+    "database": {
+      "verdict": "PASS",
+      "entity": "guides",
+      "row_id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b",
+      "field": "status",
+      "value": "active"
+    },
+    "page": {
+      "verdict": "PASS",
+      "note": "Active guide can access workbench"
+    },
+    "final_outcome": {
+      "verdict": "PASS",
+      "status": "active"
+    }
+  }
+}

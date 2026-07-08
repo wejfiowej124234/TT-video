@@ -1,0 +1,24 @@
+{
+  "schema": "traveltrust.bd005_fix_authorization_granted.v1",
+  "recorded_at_utc": "2026-07-07T16:03:52.426Z",
+  "issue_id": "BD-005",
+  "granted_by": "Solo Founder",
+  "fix_authorized": true,
+  "scope": "A only",
+  "pilot": "merchant@test.com",
+  "root_cause_confirmed_until": "HAT PASS",
+  "TT_SPRINT_B_ACTIVE": false,
+  "registry_version": 13,
+  "execution_boundary": {
+    "allow": [
+      "staging pilot active fulfillment guide",
+      "HAT rerun"
+    ],
+    "deny": [
+      "422 rule change",
+      "option B",
+      "root_cause_confirmed before HAT",
+      "AUTO ACTIVE"
+    ]
+  }
+}
